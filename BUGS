@@ -112,6 +112,7 @@ r.info
 
 r.los
  - segmentation fault in mark_pts.c line 37
+ -> seems to be fixed 7/2000
 
 src/raster/r.mapcalc/polish: (when compiling)
 make[2]: Entering directory
@@ -177,6 +178,9 @@ The problem with v.reclass seems to stem from an input field for old=new
 reclass rule that cannot be more than 7 characters long (i.e. 11250=16 is       
 eight characters long and will cause v.reclass to return an error). Someone     
 needs to look at correcting this perhaps.
+
+v.surf.rst:
+- outputs one elevation only. Bug seems to be introduced in GRASS 5 beta3
 
 --------------------------------------------------
 
@@ -280,7 +284,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.3  2000-07-12 14:56:33  markus
+ Revision 1.4  2000-07-25 11:43:58  markus
+ added v.surf.rst bug
+
+ Revision 1.3  2000/07/12 14:56:33  markus
  added CELL driver color bug
 
  Revision 1.2  2000/07/12 13:29:51  markus

@@ -1,8 +1,8 @@
-$Id: TODO,v 1.8 2000-07-10 09:49:17 markus Exp $
+$Id: TODO,v 1.9 2000-07-25 11:43:58 markus Exp $
 
 TODO for GRASS GIS:
 
-- Fix the bugs in documents/know_bugs.list
+- Fix the bugs in BUGS
   (Being worked on by )
 
 
