@@ -57,6 +57,7 @@ int main (int argc, char **argv)
 #ifdef RAM
     struct Flag *ram_flag;
 #endif /*RAM*/
+   struct GModule *module;
    struct Option *map, *s_val;
    struct Flag *ident, *s_flag, *p_flag;
 
@@ -65,6 +66,10 @@ int main (int argc, char **argv)
 
 /* Show advertising */
     G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Process spaghetti-digitized binary vector file.";
 
 /*****************************COMMAND PARSER******************************/
     map = G_define_option();

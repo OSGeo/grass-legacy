@@ -128,6 +128,7 @@ int main ( int argc, char *argv[])
   struct multtree *tree;
   int open_check;
 
+  struct GModule *module;
   struct
   {
     struct Option *input, *elev, *slope, *aspect, *pcurv, *tcurv, *mcurv, *treefile,
@@ -141,6 +142,12 @@ int main ( int argc, char *argv[])
 
 
   G_gisinit (argv[0]);
+
+  module = G_define_module();
+  module->description =
+	"Interpolation and topographic analysis from given "
+	"contour data in vector format to GRASS floating point "
+	"raster format using regularized spline with tension.";
 
   if (G_get_set_window (&cellhd) == -1)
     exit (0);

@@ -30,6 +30,7 @@ int
 main (int argc, char *argv[])
 {
 
+	struct GModule *module;
 	struct Option *option, *map, *s_val;
 	int opt;
 	struct Flag *s_flag, *p_flag, *r_flag;
@@ -42,6 +43,11 @@ main (int argc, char *argv[])
 	/*  store filename and path  */
 
 	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Creates GRASS support files for "
+		"(binary) GRASS vector data.";
 
 	/*****************************COMMAND PARSER******************************/
 
