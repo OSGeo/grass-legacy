@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include "gis.h"
 #include "local_proto.h"
@@ -194,7 +195,7 @@ int main (int argc, char *argv[])
     parm.dx->required   = NO ;
     parm.dx->answer     = NULL ;
     parm.dx->gisprompt  = "any,cell,raster" ;
-    parm.dx->description= "Output E-W slope filename" ;
+    parm.dx->description= "Output first order partial derivative dx (E-W slope) filename" ;
 
     parm.dy = G_define_option() ;
     parm.dy->key        = "dy" ;
@@ -202,7 +203,7 @@ int main (int argc, char *argv[])
     parm.dy->required   = NO ;
     parm.dy->answer     = NULL ;
     parm.dy->gisprompt  = "any,cell,raster" ;
-    parm.dy->description= "Output N-S slope filename" ;
+    parm.dy->description= "Output first order partial derivative dy (N-S slope) filename" ;
 
     parm.dxx = G_define_option() ;
     parm.dxx->key        = "dxx" ;
@@ -210,7 +211,7 @@ int main (int argc, char *argv[])
     parm.dxx->required   = NO ;
     parm.dxx->answer     = NULL ;
     parm.dxx->gisprompt  = "any,cell,raster" ;
-    parm.dxx->description= "Output partial derivative dxx filename" ;
+    parm.dxx->description= "Output second order partial derivative dxx filename" ;
 
     parm.dyy = G_define_option() ;
     parm.dyy->key        = "dyy" ;
@@ -218,7 +219,7 @@ int main (int argc, char *argv[])
     parm.dyy->required   = NO ;
     parm.dyy->answer     = NULL ;
     parm.dyy->gisprompt  = "any,cell,raster" ;
-    parm.dyy->description= "Output partial derivative dyy filename" ;
+    parm.dyy->description= "Output second order partial derivative dyy filename" ;
 
     parm.dxy = G_define_option() ;
     parm.dxy->key        = "dxy" ;
@@ -226,7 +227,7 @@ int main (int argc, char *argv[])
     parm.dxy->required   = NO ;
     parm.dxy->answer     = NULL ;
     parm.dxy->gisprompt  = "any,cell,raster" ;
-    parm.dxy->description= "Output partial derivative dxy filename" ;
+    parm.dxy->description= "Output second order partial derivative dxy filename" ;
 
     parm.zfactor = G_define_option();
     parm.zfactor->key         = "zfactor";
