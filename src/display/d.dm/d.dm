@@ -12,7 +12,7 @@ set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
 set env(MAPSET) [exec g.gisenv get=MAPSET]
 
 lappend auto_path $env(GISBASE)/bwidget
-package require BWidget 
+package require -exact BWidget 1.2.1
 
 # ----- PROCS -----
 # ----- set procs
