@@ -5,10 +5,15 @@ Maintained by
    neteler@geog.uni-hannover.de
 
 
+----------------------------------------------------------------
 [In sync with GRASS 5 beta 6f]
-$Log$
-Revision 1.1  2000-01-10 19:14:53  markus
-*** empty log message ***
+
+ $Log$
+ Revision 1.2  2000-01-11 09:52:35  markus
+ added i.rectify/2 problem
+
+ Revision 1.1  2000/01/10 19:14:53  markus
+ *** empty log message ***
 
 
 
@@ -35,6 +40,9 @@ d.sites.qual: not all the sites are used/displayed
 i.ortho.photo
  - if second control point is set by mouse, it is not indicated
    immediately in orange color (right window)
+
+i.rectify/i.rectify2
+ - do not work properly
 
 r.drain - segm. fault
 
