@@ -33,6 +33,7 @@ the <a href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS</a> version
 <li> r.in.ppm memory bugfix (Alex Shevlakov)
 <li> r.out.png added (Alex Shevlakov)
 <li> s.in.ascii bugfix on string import (Roger Bivand)
+<li> v.build.polylines added (Mark Lake)
 <li> v.distance added from 4.x (Janne Soimasuo)
 <li> v.in.dxf3d added from 4.x (Evaristo Quiroga)
 <li> v.in.shape updated/rewritten (David D Gray)
@@ -45,9 +46,18 @@ the <a href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS</a> version
 s.in.ascii now), fixed i.gensigset/i.smap entry (Markus Neteler)
 </menu>
 
-<b>CELL driver</b>
+<b>Libraries</b>
 <menu>
-<li> update on font management (Ludovic Drolez)
+<li> segment/-library fixed (Pierre de Mouveaux)
+</menu>
+
+<b>Drivers</b>
+<menu>
+<li> CELL driver: update on font management (Ludovic Drolez)
+<li> HTMLMAP: new driver to produce HTML image maps, usage like CELL 
+     driver (Tom Poindexter)
+<li> XDRIVER: fixes to support various video cards in various environments
+     (color table management) (Carl Anderson)
 </menu>
 
 <b>NVIZ</b>
