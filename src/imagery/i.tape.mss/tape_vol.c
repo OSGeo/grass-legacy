@@ -1,4 +1,3 @@
-/* %W% %G% */
 tape_vol(v)
     unsigned char v ;
 {
