@@ -37,7 +37,7 @@
  */
 #if !defined ( __CYGWIN32__ )
 
-#  if !defined( !defined(uint8_t)
+#  if !defined(uint8_t)
       typedef unsigned char uint8_t;
 #  endif
 #  if !defined(uint32_t)
