@@ -3,6 +3,7 @@
  */
 /*
 *		Alex Shevlakov, sixote@yahoo.com, 03/2000
+*               Added -h option MN 6/2000
 */
 
 #include 	<stdio.h>
@@ -196,7 +197,9 @@ int main(int argc, char *argv[])
   type_string = alpha_string = "";
   
 
-	/* Access and prepare the PNG file */
+/* *********************************************************************
+ * Access and prepare the PNG file 
+ */
 
 	G_gisinit (argv[0]);
 
@@ -220,10 +223,10 @@ int main(int argc, char *argv[])
 	titleopt->required	= NO;
 	titleopt->description	= "Title for new raster file";
 
-/*	hflag = G_define_flag();
+	hflag = G_define_flag();
 	hflag->key		= 'h';
 	hflag->description	= "Output image file header only.";
-*/
+
 	vflag = G_define_flag();
 	vflag->key		= 'v';
 	vflag->description	= "Verbose mode on.";
@@ -234,7 +237,7 @@ int main(int argc, char *argv[])
 	input = inopt->answer;
 	layer = outopt->answer;
 	Verbose = vflag->answer;
-/*	Header = hflag->answer;*/
+	Header = hflag->answer;
 	*title = '\0';
 	if (titleopt->answer != NULL)
 		G_strcpy(title,titleopt->answer);
@@ -262,8 +265,8 @@ int main(int argc, char *argv[])
 /*****************************************************/	
 
 
-	ifp = fopen (input, "rb");
-	if (ifp == NULL)
+  ifp = fopen (input, "rb");
+  if (ifp == NULL)
 		G_fatal_error("Can't open PNG file.");
 		
   if (fread (sig_buf, 1, SIG_CHECK_SIZE, ifp) != SIG_CHECK_SIZE) {
@@ -305,35 +308,73 @@ int main(int argc, char *argv[])
   png_set_sig_bytes (png_ptr, SIG_CHECK_SIZE);
   png_read_info (png_ptr, info_ptr);
 
-	if (Verbose) {
+  /* output header only for r.in.geopng and exit: MN 6/2000 */
+   if (Header)
+   {
     switch (info_ptr->color_type) {
       case PNG_COLOR_TYPE_GRAY:
         type_string = "gray";
-fprintf(stderr,"\nType of png image is grey\n");
         alpha_string = "";
         break;
 
       case PNG_COLOR_TYPE_GRAY_ALPHA:
         type_string = "gray";
-fprintf(stderr,"\nType of png image is grey with alpha\n");
         alpha_string = "+alpha";
         break;
 
       case PNG_COLOR_TYPE_PALETTE:
         type_string = "palette";
-fprintf(stderr,"\nType of png image is palette\n");
         alpha_string = "";
         break;
 
       case PNG_COLOR_TYPE_RGB:
         type_string = "truecolor";
-fprintf(stderr,"\nType of png image is rgb\n");
         alpha_string = "";
         break;
 
       case PNG_COLOR_TYPE_RGB_ALPHA:
         type_string = "truecolor";
-fprintf(stderr,"\nType of png image is rgb with alpha\n");
+        alpha_string = "+alpha";
+        break;
+    }
+    fprintf(stderr,"%d x %d image, %d bit%s %s%s\n",
+		  info_ptr->width, info_ptr->height,
+		  info_ptr->bit_depth, info_ptr->bit_depth > 1 ? "s" : "",
+		  type_string, alpha_string, gamma_string);
+
+    fclose (ifp);    
+    exit(-1);
+   } /* HEADER */
+
+   if (Verbose) {
+    switch (info_ptr->color_type) {
+      case PNG_COLOR_TYPE_GRAY:
+        type_string = "gray";
+	fprintf(stderr,"\nType of png image is grey\n");
+        alpha_string = "";
+        break;
+
+      case PNG_COLOR_TYPE_GRAY_ALPHA:
+        type_string = "gray";
+	fprintf(stderr,"\nType of png image is grey with alpha\n");
+        alpha_string = "+alpha";
+        break;
+
+      case PNG_COLOR_TYPE_PALETTE:
+        type_string = "palette";
+	fprintf(stderr,"\nType of png image is palette\n");
+        alpha_string = "";
+        break;
+
+      case PNG_COLOR_TYPE_RGB:
+        type_string = "truecolor";
+	fprintf(stderr,"\nType of png image is rgb\n");
+        alpha_string = "";
+        break;
+
+      case PNG_COLOR_TYPE_RGB_ALPHA:
+        type_string = "truecolor";
+	fprintf(stderr,"\nType of png image is rgb with alpha\n");
         alpha_string = "+alpha";
         break;
     }
@@ -344,11 +385,11 @@ fprintf(stderr,"\nType of png image is rgb with alpha\n");
 		fprintf (stdout,"Hit RETURN if you're not sure\n");
 		fprintf (stdout,"> ");
 		fgets(tmpbuf,80,stdin);
-/*************************************************************************/
+   /*************************************************************************/
    /*****!!!!!! hier eine Zeile eingefuegt,ebenso bei allen anderen fgets *****/
 
               tmpbuf[strlen(tmpbuf)-1]='\0';
-/********************************************************************/
+   /********************************************************************/
                 
 
 		if (!strlen(tmpbuf)) {
@@ -368,7 +409,7 @@ fprintf(stderr,"\nType of png image is rgb with alpha\n");
 		}
 	
 /*	ppm_color = (mycolor*) malloc(longcolor * sizeof(mycolor));
-  
+                
   	if (ppm_color == NULL) {
     		fprintf(stderr,"\nCouldn't allocate space for image.\n Try reduce MAXCOLOR to 16bit,\nor - increase your comp's RAM\n");
     	exit(-1);
@@ -383,7 +424,8 @@ fprintf(stderr,"\nType of png image is rgb with alpha\n");
     		fprintf(stderr,"\nCouldn't allocate space for image.\n Try increase your comp's RAM (256 Mb should do)\n");
     		exit(-1);
   	}
-   }
+    }
+    
     if (info_ptr->valid & PNG_INFO_tRNS) {
       alpha_string = "+transparency";
     }
@@ -401,19 +443,6 @@ fprintf(stderr,"\nType of png image is rgb with alpha\n");
 		  type_string, alpha_string, gamma_string,
 		  info_ptr->interlace_type ? ", Adam7 interlaced" : "");
 
-    /* output header only for r.in.geopng and exit: */
-/*    if (Header)
- *   {
- *     fprintf(stderr,"\nreading a %d x %d image, %d bit%s %s%s%s%s",
- *		  info_ptr->width, info_ptr->height,
- *		  info_ptr->bit_depth, info_ptr->bit_depth > 1 ? "s" : "",
- *		  type_string, alpha_string, gamma_string,
- *		  info_ptr->interlace_type ? ", Adam7 interlaced" : "");
- *	fclose (ifp);    
- *	exit (-1);
- *   }
- */
- 
   }
 
   png_image = (png_byte **)malloc (info_ptr->height * sizeof (png_byte*));
@@ -599,7 +628,7 @@ fprintf(stderr,"\nType of png image is rgb with alpha\n");
 
   if (background > -1)
   {
-/*	Here avoid ppm_parsecolor to no use ppm, pnm, ... libs in gmakefile -ash*/
+/*    Here avoid ppm_parsecolor to no use ppm, pnm, ... libs in gmakefile -ash*/
 
 /*    backcolor = ppm_parsecolor (backstring, maxval);
     switch (info_ptr->color_type) {
@@ -724,7 +753,7 @@ if (info_ptr->color_type == PNG_COLOR_TYPE_RGB){
       			c = get_png_val (png_pixel);
       			c2 = get_png_val (png_pixel);
       			c3 = get_png_val (png_pixel);
-      			fill_color_tab(c,c2,c3);
+			fill_color_tab(c,c2,c3);
       
     		}
 	}
