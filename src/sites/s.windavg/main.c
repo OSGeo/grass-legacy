@@ -46,6 +46,7 @@ int main (argc, argv)
   double avg,N,S,E,W;
   int i, j, k, n, nread, verbose, suppress_zeros,gnuplot;
   struct Cell_head window;
+  struct GModule *module;
   struct Categories cats;
   struct
   {
@@ -62,6 +63,11 @@ int main (argc, argv)
 
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =        
+                  "Average an attribute of a site_list for all the sites "
+                  "within each cell of the current region.";
+                  
   parm.input = G_define_option ();
   parm.input->key = "input";
   parm.input->type = TYPE_STRING;

@@ -39,6 +39,7 @@ int main( int argc, char *argv[])
     int ns, *id;		/* number of sites */
     int dims, strs, dbls;
     struct Cell_head region;
+    struct GModule *module;
     Site *site;
 
     struct {
@@ -49,6 +50,10 @@ int main( int argc, char *argv[])
 
     G_gisinit (argv[0]);
 
+    module = G_define_module();
+    module->description =        
+                    "Write an Arc-Info point coverage in e00 format.";
+                    
     /* define the different options */
 
     parm.input = G_define_option() ;

@@ -34,6 +34,7 @@ int main (int argc, char *argv[])
     FILE *fd;
     Site *s;
     struct Cell_head window;
+    struct GModule *module;
     struct Categories cats;
     char *layer;
     char *name, *mapset;
@@ -64,6 +65,10 @@ int main (int argc, char *argv[])
 
     G_gisinit (argv[0]);
 
+    module = G_define_module();
+    module->description =        
+                    "Converts a site file to a raster map";
+                    
     input = G_define_option();
     input->key          ="input";
     input->description  ="Name of input site list";

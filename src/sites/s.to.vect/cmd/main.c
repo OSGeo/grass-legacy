@@ -47,6 +47,7 @@ int main (int argc, char *argv[])
     FILE *fopen(), *attr, *site, *cats, *tmp ;
     struct Option *sitein, *outvect, *opt_desc;
     struct Cell_head window;
+    struct GModule *module;
     struct Map_info Map;
     struct line_pnts *Points ;
     Site *s;
@@ -76,6 +77,11 @@ int main (int argc, char *argv[])
     opt_desc->answer      = "1";
 	
     G_gisinit(argv[0]);
+    
+    module = G_define_module();
+    module->description =        
+                    "Converts a GRASS site_lists file into a vector file.";
+                    
     if (G_parser(argc, argv)) exit(-1);
 
     G_get_window (&window);

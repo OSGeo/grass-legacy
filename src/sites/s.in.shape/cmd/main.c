@@ -62,7 +62,8 @@ int main( int argc, char *argv[] ) {
   /* Parser stuff */
   struct Option *pnt_input, *pnt_att, *pnt_height;
   struct Flag *listflag, *zflag, *mflag;
-
+  struct GModule *module;
+  
   /* Height handling values */
   int hasz;
   double zval;
@@ -92,6 +93,11 @@ int main( int argc, char *argv[] ) {
   /* Initialise parser with options from command line */
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =        
+                "Read an ArcView Shapefile with points or multipoint "
+                "shapes";
+                
   /* Options */
 
   pnt_input = G_define_option() ;
