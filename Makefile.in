@@ -27,7 +27,7 @@ PREFIX=			@prefix@
 prefix=                 @prefix@
 exec_prefix=            @exec_prefix@
 BINDIR=			@BINDIR@
-DIST_DIR=		${prefix}/grass@NAME_VER@
+INST_DIR=		${prefix}/grass@NAME_VER@
 
 # Compile directories
 SRCDIR=			@SRCDIR@
@@ -47,12 +47,11 @@ NAME_VER=   	    	@NAME_VER@
 MAKE_DIR_CMD=		mkdir -p -m 755
 MAKE=			make
 
-# The cutline command is needed to shorten the ChangeLog:
-CUTLINE=		`grep -n '1999-12-29 16:12' ChangeLog |cut -d':' -f1 | head -1`
-
 # Miscellaneous variables
 ENV=			@ENV@
 USE_OPENGL=             @USE_OPENGL@
+# The cutline command is needed to shorten the ChangeLog:
+CUTLINE=		`grep -n '1999-12-29 16:12' ChangeLog |cut -d':' -f1 | head -1`
 
 # These variables will be passed to the scripts below:
 MAKE_ENV=		GRASSSRC=${SRCDIR}/src GMAKE=${SRCDIR}/src/CMD/gmake5.0 HEADER=head.${ARCH} MAKE=${MAKE}
@@ -141,14 +140,33 @@ install:
 	@ # Make creates a new shell for each action listed for a target.
 	@ # Therefore, the only way exit will quit Make is if there is only
 	@ # a single action for the target.
-	@ # Check if grass has been compiled and if grass is part of DIST_DIR
+	@ # Check if grass has been compiled, if INST_DIR is writable, and if
+	@ # grass is part of INST_DIR
 	@ if [ ! -f ${GRASS_BIN}/grass${NAME_VER} ] ; then \
 		echo "ERROR: Grass has not been compiled. Try \"make\" first."; \
+		echo "  Installation aborted, exiting Make."; \
 		exit; \
 	fi; \
-	result=`echo "${DIST_DIR}" | awk '{ if ($$1 ~ /grass/) print $$1 }'`; \
+	INST_PATH=`dirname ${INST_DIR}`; \
+	while [ ! -d $$INST_PATH ]; do \
+		INST_PATH=`dirname $$INST_PATH`; \
+	done; \
+	if [ ! -d "${INST_DIR}" -a ! -w "$$INST_PATH" ] ; then \
+		echo "ERROR: Directory $$INST_PATH is a parent directory of your"; \
+		echo "  install directory ${INST_DIR} and is not writable."; \
+		echo "  Perhaps you need root access."; \
+		echo "  Installation aborted, exiting Make."; \
+		exit; \
+	fi; \
+	if [ -d ${INST_DIR} -a ! -w "${INST_DIR}" ] ; then \
+		echo "ERROR: Your install directory ${INST_DIR} is not writable."; \
+		echo "  Perhaps you need root access."; \
+		echo "  Installation aborted, exiting Make."; \
+		exit; \
+	fi; \
+	result=`echo "${INST_DIR}" | awk '{ if ($$1 ~ /grass/) print $$1 }'`; \
     	if [ "$$result" = "" ] ; then \
-    		echo "WARNING: Your install directory ${DIST_DIR}"; \
+    		echo "WARNING: Your install directory ${INST_DIR}"; \
 		echo "  does not contain the word 'grass'."; \
 		echo "  It is highly recommended that the word 'grass' be part"; \
 		echo "  of your install directory to avoid conflicts."; \
@@ -163,34 +181,34 @@ install:
 	${MAKE} real-install
 	
 real-install:
-	test -d ${DIST_DIR} || ${MAKE_DIR_CMD} ${DIST_DIR}
+	test -d ${INST_DIR} || ${MAKE_DIR_CMD} ${INST_DIR}
 	test -d ${BINDIR} || ${MAKE_DIR_CMD} ${BINDIR}
-	${SHELL} -c "sed -e \"s#^GISBASE.*#GISBASE=${DIST_DIR}#\" ${GRASS_BIN}/grass${NAME_VER} > ${BINDIR}/grass${NAME_VER} ; true"
+	${SHELL} -c "sed -e \"s#^GISBASE.*#GISBASE=${INST_DIR}#\" ${GRASS_BIN}/grass${NAME_VER} > ${BINDIR}/grass${NAME_VER} ; true"
 	${SHELL} -c "chmod a+x ${BINDIR}/grass${NAME_VER} ; true"
 	${SHELL} -c "cp ${GRASS_BIN}/gmake${NAME_VER} ${BINDIR} ; true"
 	${SHELL} -c "cp ${GRASS_BIN}/gmakelinks${NAME_VER} ${BINDIR} ; true"
-	${SHELL} -c "cp -r ${GISBASE}/bin/ ${DIST_DIR} ; true"
-	${SHELL} -c "cp -r ${GISBASE}/bwidget/ ${DIST_DIR} ; true"
-	${SHELL} -c "cp -r ${GISBASE}/documents/ ${DIST_DIR} ; true"
-	${SHELL} -c "cp -r ${GISBASE}/driver/ ${DIST_DIR} ; true"
-	${SHELL} -c "cp -r ${GISBASE}/etc/ ${DIST_DIR} ; true"
-	${SHELL} -c "cp -r ${GISBASE}/fonts/ ${DIST_DIR} ; true"
-	${SHELL} -c "cp -r ${GISBASE}/locks/ ${DIST_DIR} ; true"
-	${SHELL} -c "cp -r ${GISBASE}/scripts/ ${DIST_DIR} ; true"
-	${SHELL} -c "cp -r ${GISBASE}/tcltkgrass/ ${DIST_DIR}; true"
-	${SHELL} -c "cp -r ${GISBASE}/txt/ ${DIST_DIR} ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - bin/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - bwidget/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - documents/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - driver/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - etc/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - fonts/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - locks/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - scripts/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - tcltkgrass/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - txt/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
 	@ # The man, include, and lib could go to ${PREFIX}/ BUT if this is
 	@ # done, then the corresponding uninstall instructions must delete
 	@ # the grass files BY FILENAME NOT DIRECTORY!! Otherwise there is a
 	@ # high risk of deleteing system files since PREFIX is defined by
 	@ # default to be /usr/local
-	${SHELL} -c "cp -r ${GISBASE}/man/ ${DIST_DIR} ; true"
-	${SHELL} -c "cp -r ${GISBASE}/include/ ${DIST_DIR} ; true"
-	${SHELL} -c "cp -r ${GISBASE}/lib/ ${DIST_DIR} ; true"
-	${SHELL} -c "${SHELL} ${SRCDIR}/src/scripts/shells/create_fifos.sh ${DIST_DIR} 2>/dev/null ; true"
-	${SHELL} -c "cp ${GISBASE}/dev/create_fifos.sh ${DIST_DIR}/dev ; true"
-	${SHELL} -c "sed 's#'${GISBASE}'#'${DIST_DIR}'#g' ${GISBASE}/etc/monitorcap > ${DIST_DIR}/etc/monitorcap ; true"
-	${SHELL} -c "chmod -R 1777 ${DIST_DIR}/locks 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - man/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - include/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - lib/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "${SHELL} ${SRCDIR}/src/scripts/shells/create_fifos.sh ${INST_DIR} 2>/dev/null ; true"
+	${SHELL} -c "cp ${GISBASE}/dev/create_fifos.sh ${INST_DIR}/dev ; true"
+	${SHELL} -c "sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/monitorcap > ${INST_DIR}/etc/monitorcap ; true"
+	${SHELL} -c "chmod -R 1777 ${INST_DIR}/locks 2>/dev/null ; true"
 
 uninstall:
 	@ # The following action MUST be a single action. That is, all lines
@@ -200,19 +218,19 @@ uninstall:
 	@ # Make creates a new shell for each action listed for a target.
 	@ # Therefore, the only way exit will quit Make is if there is only
 	@ # a single action for the target.
-	@ # Check if grass is part of DIST_DIR
-	@ result=`echo "${DIST_DIR}" | awk '{ if ($$1 ~ /grass/) print $$1 }'`; \
+	@ # Check if grass is part of INST_DIR
+	@ result=`echo "${INST_DIR}" | awk '{ if ($$1 ~ /grass/) print $$1 }'`; \
     	if [ "$$result" = "" ] ; then \
-    		echo "WARNING: Your install directory ${DIST_DIR}"; \
+    		echo "WARNING: Your install directory ${INST_DIR}"; \
 		echo "  does not contain the word 'grass'."; \
 		echo "  There is a possibility that this directory conflicts"; \
 		echo "  with a system directory. If you proceed the following"; \
 		echo "  directories will be deleted:"; \
-		echo "  ${DIST_DIR}/bin, ${DIST_DIR}/bwidget, ${DIST_DIR}/dev,"; \
-		echo "  ${DIST_DIR}/documents, ${DIST_DIR}/driver, ${DIST_DIR}/etc,"; \
-		echo "  ${DIST_DIR}/fonts, ${DIST_DIR}/include, ${DIST_DIR}/lib,"; \
-		echo "  ${DIST_DIR}/locks, ${DIST_DIR}/man, ${DIST_DIR}/scripts,"; \
-		echo "  ${DIST_DIR}/tcltkgrass, ${DIST_DIR}/txt"; \
+		echo "  ${INST_DIR}/bin, ${INST_DIR}/bwidget, ${INST_DIR}/dev,"; \
+		echo "  ${INST_DIR}/documents, ${INST_DIR}/driver, ${INST_DIR}/etc,"; \
+		echo "  ${INST_DIR}/fonts, ${INST_DIR}/include, ${INST_DIR}/lib,"; \
+		echo "  ${INST_DIR}/locks, ${INST_DIR}/man, ${INST_DIR}/scripts,"; \
+		echo "  ${INST_DIR}/tcltkgrass, ${INST_DIR}/txt"; \
 		echo "  as well as the files ${BINDIR}/grass${NAME_VER},"; \
 		echo "  ${BINDIR}/gmake${NAME_VER}, and ${BINDIR}/gmakelinks${NAME_VER}."; \
         	echo "  Do you want to continue? [y/n]"; \
@@ -223,7 +241,7 @@ uninstall:
 			exit; \
         	fi; \
 	else \
-		echo "WARNING: You are about to delete all files in ${DIST_DIR}"; \
+		echo "WARNING: You are about to delete all files in ${INST_DIR}"; \
 		echo "  as well as the files ${BINDIR}/grass${NAME_VER},"; \
 		echo "  ${BINDIR}/gmake${NAME_VER}, and ${BINDIR}/gmakelinks${NAME_VER}."; \
         	echo "  Do you want to continue? [y/n]"; \
@@ -237,30 +255,30 @@ uninstall:
 	${MAKE} real-uninstall
 	
 real-uninstall:
-	@ # Only recursively remove directories under DIST_DIR any other
+	@ # Only recursively remove directories under INST_DIR any other
 	@ # directory needs to have the grass files removed individually
 	${SHELL} -c "rm -f ${BINDIR}/grass${NAME_VER} ; true"
 	${SHELL} -c "rm -f ${BINDIR}/gmake${NAME_VER} ; true"
 	${SHELL} -c "rm -f ${BINDIR}/gmakelinks${NAME_VER} ; true"
-	${SHELL} -c "rm -rf ${DIST_DIR}/bin ; true"
-	${SHELL} -c "rm -rf ${DIST_DIR}/bwidget ; true"
-	${SHELL} -c "rm -rf ${DIST_DIR}/dev ; true"
-	${SHELL} -c "rm -rf ${DIST_DIR}/documents ; true"
-	${SHELL} -c "rm -rf ${DIST_DIR}/driver ; true"
-	${SHELL} -c "rm -rf ${DIST_DIR}/etc ; true"
-	${SHELL} -c "rm -rf ${DIST_DIR}/fonts ; true"
-	${SHELL} -c "rm -rf ${DIST_DIR}/locks ; true"
-	${SHELL} -c "rm -rf ${DIST_DIR}/scripts ; true"
-	${SHELL} -c "rm -rf ${DIST_DIR}/tcltkgrass ; true"
-	${SHELL} -c "rm -rf ${DIST_DIR}/txt ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/bin ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/bwidget ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/dev ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/documents ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/driver ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/etc ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/fonts ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/locks ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/scripts ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/tcltkgrass ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/txt ; true"
 	@ # If man, include, and lib are changed to ${PREFIX}/ in the install
 	@ # target then the grass files MUST BE REMOVED BY FILENAME NOT BY
 	@ # DIRECTORY!! Otherwise there is a high risk of deleteing system
 	@ # files since PREFIX is defined by default to be /usr/local
-	${SHELL} -c "rm -rf ${DIST_DIR}/man ; true"
-	${SHELL} -c "rm -rf ${DIST_DIR}/include ; true"
-	${SHELL} -c "rm -rf ${DIST_DIR}/lib ; true"
-	${SHELL} -c "rmdir ${DIST_DIR} ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/man ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/include ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/lib ; true"
+	${SHELL} -c "rmdir ${INST_DIR} ; true"
 
 # GRASS source code cleaning options:
 #
@@ -383,30 +401,55 @@ bindist:
 	@ # Check if the user is root and check if grass has been installed
 	@ if [ `whoami` != "root" ] ; then \
 		echo "ERROR: You need to be user root to create a binary distribution."; \
+		echo "  Creation of binary distribution aborted, exiting Make."; \
 		exit; \
 	fi; \
 	if [ ! -f ${BINDIR}/grass${NAME_VER} ] ; then \
 		echo "ERROR: Grass has not been installed yet."; \
-		echo "  Creation of binary distribution aborted. Exiting Make."; \
+		echo "  Creation of binary distribution aborted, exiting Make."; \
 		exit; \
+	fi; \
+	INST_MOD_TIME=`${INST_DIR}/etc/getModTime ${BINDIR}/grass${NAME_VER}`; \
+	if [ "$$INST_MOD_TIME" = "-1" ]; then \
+		echo "ERROR: Invalid file: ${BINDIR}/grass${NAME_VER}"; \
+		echo "  Please advise the GRASS developers of this error."; \
+		echo "  Creation of binary distribution aborted, exiting Make."; \
+		exit; \
+	fi; \
+	COMP_MOD_TIME=`${INST_DIR}/etc/getModTime ${GRASS_BIN}/grass${NAME_VER}`; \
+	if [ "$$COMP_MOD_TIME" = "-1" ]; then \
+		echo "ERROR: Invalid file: ${GRASS_BIN}/grass${NAME_VER}"; \
+		echo "  Please advise the GRASS developers of this error."; \
+		echo "  Creation of binary distribution aborted, exiting Make."; \
+		exit; \
+	fi; \
+	if [ "$$COMP_MOD_TIME" -gt "$$INST_MOD_TIME" ] ; then \
+		echo "WARNING: The GRASS installation is not up to date."; \
+		echo "  Do you want to exit and run 'make install'? [y/n]"; \
+        	read ans; \
+		ans=`echo "$$ans" | tr A-Z a-z`; \
+		if [ "$$ans" != "n" ] ; then \
+            		echo "Creation of binary distribution aborted, exiting Make."; \
+			exit; \
+        	fi; \
 	fi; \
 	${MAKE} real-bindist
 
 real-bindist:
-	${SHELL} -c "cp -f AUTHORS BUGS COPYING NEWS.html README REQUIREMENTS TODO ${DIST_DIR}/  ; true"
-	${SHELL} -c "cp -f ${BINDIR}/grass${NAME_VER} ${DIST_DIR}/  ; true"
-	${SHELL} -c "sed -e \"s/BIN_DIST_VERSION/${NAME_VER}/\" -e \"s#BIN_DIST_DIR#'${DIST_DIR}'#\" -e \"s/TEST_STR=/TEST_STR=executable/\" -e \"s#IMPORTANT.*#Generated from the binaryInstall.src file using the command make bindist#\" -e \"s/# executable shell.*//\" -e \"s/# make bindist.*//\"  binaryInstall.src > grass${NAME_VER}install.sh 2>/dev/null ; true"
+	${SHELL} -c "cp -f AUTHORS BUGS COPYING NEWS.html README REQUIREMENTS TODO ${INST_DIR}/  ; true"
+	${SHELL} -c "cp -f ${BINDIR}/grass${NAME_VER} ${INST_DIR}/  ; true"
+	${SHELL} -c "sed -e \"s/BIN_DIST_VERSION/${NAME_VER}/\" -e \"s#BIN_DIST_DIR#'${INST_DIR}'#\" -e \"s/TEST_STR=/TEST_STR=executable/\" -e \"s#IMPORTANT.*#Generated from the binaryInstall.src file using the command make bindist#\" -e \"s/# executable shell.*//\" -e \"s/# make bindist.*//\"  binaryInstall.src > grass${NAME_VER}install.sh 2>/dev/null ; true"
 	${SHELL} -c "chmod a+x grass${NAME_VER}install.sh  2>/dev/null ; true"
-	(cd ${DIST_DIR}; tar cf - ${BIN_DIST_FILES} | gzip -fc > ${SRCDIR}/grass${VERSION}_${SYSTEM}_bin.tar.gz )
-	${SHELL} -c "rm -f ${DIST_DIR}/AUTHORS ${DIST_DIR}/BUGS ${DIST_DIR}/COPYING ${DIST_DIR}/NEWS.html ${DIST_DIR}/README ${DIST_DIR}/REQUIREMENTS ${DIST_DIR}/TODO ; true"
-	${SHELL} -c "rm -f ${DIST_DIR}/grass${NAME_VER} ; true"
+	(cd ${INST_DIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ${SRCDIR}/grass${VERSION}_${SYSTEM}_bin.tar.gz )
+	${SHELL} -c "rm -f ${INST_DIR}/AUTHORS ${INST_DIR}/BUGS ${INST_DIR}/COPYING ${INST_DIR}/NEWS.html ${INST_DIR}/README ${INST_DIR}/REQUIREMENTS ${INST_DIR}/TODO ; true"
+	${SHELL} -c "rm -f ${INST_DIR}/grass${NAME_VER} ; true"
 	@ echo "Distribution binary package: grass${VERSION}_${SYSTEM}_bin.tar.gz ready."
 	@ echo "DO NOT FORGET!! Upload grass${VERSION}_${SYSTEM}_bin.tar.gz and grass${NAME_VER}install.sh to the GRASS ftp server."
 	@ echo "The binary package is stored at ${SRCDIR}."
 
 # automatically run DejaGNU tests:
 # added 10/2000 by Andreas Lange
-check: install
+check: binaries
 	@ echo "running tests on GRASS ${VERSION}"
 	@ echo "logfile for all tests is in ./testsuite/grass.log,"
 	@ echo "a summary of all test results is in ./testsuite/grass.sum"
