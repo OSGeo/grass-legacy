@@ -43,7 +43,7 @@ static void _set_default_head_info (struct dig_head *head)
         head->N = wind.north;
         head->S = wind.south;
 	head->plani_zone = G_zone ();
-	snprintf (head->line_3, 59, "Projection: %s", 
+	sprintf (head->line_3, "Projection: %s", 
 			G_database_projection_name());
 
         /* avoid 1:0 scale */

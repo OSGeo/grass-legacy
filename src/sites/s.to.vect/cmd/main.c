@@ -37,18 +37,26 @@
 #define	SITE_DIR	"site_lists"
 
 static char *N_dig_file;
+static size_t N_dig_file_size;
 static char *N_att_file;
+static size_t N_att_file_size;
 static char *N_cat_file;
+static size_t N_cat_file_size;
 static char *N_site_file;
+static size_t N_site_file_size;
 static char *temp_file;
+static size_t temp_file_size;
 static char *N_path;
+static size_t N_path_size;
 static char *N_name;
+static size_t N_name_size;
 static char *S_name;
+static size_t S_name_size;
 
 int main (int argc, char *argv[])
 {
     char *sname, *mapset, *cptr;
-    char path[512], *map_name, buf[1024], command[512];
+    char *map_name, buf[1024], *command;
     int type, vect_read, ier, count, index, field;
     int alloc_points, n_points, dims, dbls, strs ;
     double *xarray, *yarray;
@@ -97,10 +105,11 @@ int main (int argc, char *argv[])
     opt_desc->required    = NO;
     
                     
-    if (G_parser(argc, argv)) exit(-1);
+    if (G_parser(argc, argv)) exit(EXIT_FAILURE);
 
-    snprintf(path, 512, "%s/%s", G_location_path(), G_mapset());
-    N_path = path;
+    N_path_size = strlen(G_location_path()) + strlen(G_mapset()) + 1;
+    N_path = G_calloc (N_path_size + 1, 1);
+    sprintf(N_path, "%s/%s", G_location_path(), G_mapset());
 
     map_name = outvect->answer ;
     sname    = sitein->answer  ;
@@ -108,19 +117,19 @@ int main (int argc, char *argv[])
     mapset = G_find_vector (map_name, G_mapset());
     if (mapset != NULL)
 	{
-	snprintf(buf, 1024, "Vector file [%s] already in mapset [%s]\n",
+	    G_fatal_error ("Vector file [%s] already in mapset [%s]\n",
 					 map_name, G_mapset());
-	G_fatal_error(buf) ;
 	}
     N_name = map_name;
+    N_name_size = strlen(N_name);
 
     mapset = G_find_file2 (SITE_DIR,sname,"");
     if (mapset == NULL)
 	{
-	snprintf(buf, 1024, "Site file file [%s] not available\n",sname);
-	G_fatal_error(buf) ;
+	    G_fatal_error("Site file file [%s] not available\n",sname);
 	}
     S_name = sname;
+    S_name_size = strlen (S_name);
 
     /* figure out what to use for category values */
     if (opt_desc->answer != NULL && (cptr = opt_desc->answers[0]) != NULL)
@@ -170,25 +179,27 @@ int main (int argc, char *argv[])
 
     /* store the original file names */
     {
+        N_dig_file_size = N_path_size + 1 + strlen(B_DIG) + 1 + N_name_size;
+        N_dig_file = G_calloc (N_dig_file_size + 1, 1);
+	sprintf (N_dig_file, "%s/%s/%s", N_path, B_DIG, N_name);
 
-	snprintf (buf, 1024, "%s/%s/%s", N_path, "dig", N_name);
-	N_dig_file= G_store (buf);
+        N_att_file_size = N_path_size + 1 + strlen(DIG_ATT) + 1 + N_name_size;
+        N_att_file = G_calloc (N_att_file_size + 1, 1);
+	sprintf (N_att_file, "%s/%s/%s", N_path, DIG_ATT, N_name);
 
-	snprintf (buf, 1024, "%s/%s/%s", N_path, "dig_att", N_name);
-	N_att_file = G_store (buf);
+        N_cat_file_size = N_path_size + 1 + strlen(DIG_CAT) + 1 + N_name_size;
+        N_cat_file = G_calloc (N_cat_file_size + 1, 1);
+	sprintf (N_cat_file, "%s/%s/%s", N_path, DIG_CAT, N_name);
 
-	snprintf (buf, 1024, "%s/%s/%s", N_path, "dig_cats", N_name);
-	N_cat_file = G_store (buf);
-
-	snprintf (buf, 1024, "%s/%s/%s", N_path, "site_lists", S_name);
-	N_site_file = G_store (buf);
+        N_site_file_size = N_path_size + 1 + strlen(SITE_DIR) + 1 + S_name_size;
+        N_site_file = G_calloc (N_site_file_size + 1, 1);
+	sprintf (N_site_file, "%s/%s/%s", N_path, SITE_DIR, S_name);
     }
 
     if ((site = G_sites_open_old (S_name, mapset)) == NULL)
     {
-        snprintf (buf, 1024, "Not able to open site file <%s@%s>\n", 
+        G_fatal_error ("Not able to open site file <%s@%s>\n", 
                 S_name, mapset);
-        G_fatal_error (buf);
     }
 
     if (G_site_describe(site, &dims, &map_type, &strs, &dbls) != 0) {
@@ -235,29 +246,27 @@ int main (int argc, char *argv[])
                 "Using sequential integer instead\n");
     }
     
-    G__make_mapset_element ("dig");
-    G__make_mapset_element ("dig_att");
-    G__make_mapset_element ("dig_cats");
+    G__make_mapset_element (B_DIG);
+    G__make_mapset_element (DIG_ATT);
+    G__make_mapset_element (DIG_CAT);
                      /* Create new digit file */
     if ((vect_read = Vect_open_new (&Map, map_name)) < 0)
     {
 	G_fatal_error("Creating new vector file.\n") ;
-	exit(-1) ;
     }
 
     if ( (attr = fopen(N_att_file, "w+") ) == NULL )
     {
-        snprintf (buf, 1024, "Not able to open attribute file <%s>\n", 
+        G_fatal_error ("Not able to open attribute file <%s>\n", 
                 N_att_file);
-        G_fatal_error (buf);
     }
 
     temp_file = G_tempfile();
+    temp_file_size = strlen(temp_file);
     if ( (tmp = fopen(temp_file, "w+") ) == NULL )
     {
-       snprintf (buf, 1024, "Not able to open temporary category file <%s>\n", 
+       G_fatal_error ("Not able to open temporary category file <%s>\n", 
                temp_file);
-       G_fatal_error (buf);
     }
 
     G_get_window (&window);
@@ -273,9 +282,11 @@ int main (int argc, char *argv[])
         if (get_head_info(&(Map.head)) < 0)
         {
             /* user break, but maybe ugly exit:*/
-            sprintf(buf, "g.remove vect=%s > /dev/null ", map_name);
-            system(buf);
-            exit(-1);
+            Vect_close (&Map);
+            command = G_calloc (N_name_size + 30, 1);
+            sprintf(command, "g.remove vect=%s > /dev/null ", N_name);
+            system(command);
+            exit(EXIT_FAILURE);
         }
     }
 
@@ -343,23 +354,24 @@ int main (int argc, char *argv[])
 	G_site_free_struct(s);
 
     /************* added by PWC 2/6/95 **************/
-    sprintf(buf, "sort -o%s -t: +0n -1 %s", temp_file, temp_file);
-    system(buf);
+    command = G_calloc (2 * temp_file_size + 30, 1);
+    sprintf(command, "sort -o%s -t: +0n -1 %s", temp_file, temp_file);
+    system(command);
+    G_free (command);
+    command = NULL;
     /************************************************/
 
     fprintf (stdout,"creating support files ...\n");
     if ( (cats = fopen(N_cat_file, "w+") ) == NULL )
        {
-       snprintf (buf, 1024, "Not able to open category file <%s>\n", 
+          G_fatal_error ("Not able to open category file <%s>\n", 
                N_cat_file);
-       G_fatal_error (buf);
        }
 
     if ( (tmp = fopen(temp_file, "r") ) == NULL )
        {
-       snprintf (buf, 1024, "Not able to open temporary category file <%s>\n", 
+          G_fatal_error ("Not able to open temporary category file <%s>\n", 
                temp_file);
-       G_fatal_error (buf);
        }
 
                      /* make a category file header */
@@ -370,14 +382,13 @@ int main (int argc, char *argv[])
 
     fclose(cats);
     fclose(tmp);
-    snprintf( command, 512, "%s/etc/v.build map=%s thresh=no",
-            G_gisbase(), N_name) ;
+    command = G_calloc (strlen(G_gisbase()) + N_name_size + 30, 1);
+    sprintf(command, "%s/etc/v.build map=%s thresh=no", G_gisbase(), N_name) ;
     ier = system ( command );
     if (ier && 0xff00)
 	{
-	fprintf(stderr, "ERROR(%s):  Could not build digit file: '%s'\n"
+	   G_fatal_error("%s:  Could not build digit file: '%s'\n"
 			, "v.build", N_name) ;
-	exit(-1) ;
 	}
 
     fprintf (stdout,"\n<%s> vector file complete\n", N_name); 
