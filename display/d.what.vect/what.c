@@ -16,7 +16,7 @@ static int nlines = 50;
 
 int what(int once, int txt, int terse, int width, int mwidth )
 {
-    int type;
+    int type, edit_mode;
     int row, col;
     int nrows, ncols;
     struct Cell_head window;
@@ -269,8 +269,10 @@ int what(int once, int txt, int terse, int width, int mwidth )
 			    db_append_string (&html, buf);
 			}
 			
+			if ( strcmp(Map[i].mapset, G_mapset() ) == 0 ) edit_mode = F_EDIT;
+			else edit_mode = F_VIEW;
 			F_generate ( Fi->driver, Fi->database, Fi->table, Fi->key, Cats->cat[j], 
-				 NULL, NULL, F_EDIT, F_HTML, &form);
+				 NULL, NULL, edit_mode, F_HTML, &form);
 			
 			if ( txt ) {
 			    fprintf( stdout, "%s", db_get_string ( &html) );
