@@ -1,0 +1,6 @@
+OBJ = r.le.null.o user_input.o
+
+$(BIN_ALPHA_CMD)/r.le.null: $(OBJ) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(MATHLIB)
+
+$(GISLIB):
