@@ -270,18 +270,18 @@ then
 	exit
 fi
 
-(cd src/display/devices/XDRIVER && $GMAKE5)
-(cd src/libes/raster && $GMAKE5)
+(cd src/display/devices/XDRIVER && $GMAKE5 -i)
+(cd src/libes/raster && $GMAKE5 -i)
 
 if [ $dmon -eq 1 ]
 then
-	(cd src/display/d.mon && $GMAKE5)
+	(cd src/display/d.mon && $GMAKE5 -i)
 else
-	(cd src/display && $GMAKE5)
-	(cd src/raster && $GMAKE5)
-	(cd src/mapdev && $GMAKE5)
-	(cd src/paint/Drivers/preview && $GMAKE5)
-	(cd src/paint/Drivers/preview2 && $GMAKE5)
+	(cd src/display && $GMAKE5 -i)
+	(cd src/raster && $GMAKE5 -i)
+	(cd src/mapdev && $GMAKE5 -i)
+	(cd src/paint/Drivers/preview && $GMAKE5 -i)
+	(cd src/paint/Drivers/preview2 && $GMAKE5 -i)
 fi
 
 
