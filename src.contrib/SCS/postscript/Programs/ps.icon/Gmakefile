@@ -1,0 +1,19 @@
+PGM = ps.icon
+OFILES = \
+	main.o \
+	icon_file.o \
+	draw_grid.o \
+	make_icon.o \
+	save_icon.o \
+	show_icon.o
+
+#$(BIN_ALPHA_CMD)/$(PGM): $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB)
+	mv a.out $@
+
+$(OFILES): ps_icon.h
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
