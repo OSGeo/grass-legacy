@@ -24,6 +24,7 @@
 : ${GISBASE?}
 
 echo "Starting GRASS ..."
+
 if [ ! "$GRASS_TCLSH" ] ; then
     GRASS_TCLSH=tclsh
     export GRASS_TCLSH
