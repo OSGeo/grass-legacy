@@ -1,55 +1,61 @@
 /**********************************************************************
  *
- *  G_make_color_wave (pcolr, min, max)
+ *  G_make_wave_colors (colors, min, max)
  *
- *   struct Colors *pcolr    struct to hold colors
+ *   struct Colors *colors   struct to hold colors
  *   CELL min,max            min,max color numbers
  *
- *  Generates color wave that is stored in the pcolr structure. 
+ *  Generates color wave that is stored in the colors structure. 
  *
- * Uses $MATHLIB routines
  **********************************************************************/
 
 #include "gis.h"
 
-#define PI	3.14159
-
-G_make_color_wave (pcolr,min,max)
-    struct Colors *pcolr ;
+G_make_wave_colors  (colors,min,max)
+    struct Colors *colors ;
     CELL min,max;
 {
-    double cos() ;
-    double incr ;
-    double degrees ;
-    double red_shift, blu_shift, grn_shift ;
-    int i ;
-    int num;
-    int red, grn, blu;
+    G_init_colors (colors);
+    return G_add_wave_colors  (colors,min,max) ;
+}
 
-    G_init_colors (pcolr);
+G_make_color_wave  (colors,min,max) /* for 3.0 compatibility */
+    struct Colors *colors ;
+    CELL min,max;
+{
+    return G_make_wave_colors(colors,min,max);
+}
+
+G_add_wave_colors  (colors,min,max)
+    struct Colors *colors ;
+    CELL min,max;
+{
+    CELL x1,x2,x3,x4,x5;
+
     if (max < min)
 	return -1;
 
     if (min == 1) min = 0;
     if (max == -1) max = 0;
-    num = max - min + 1;
 
-    incr = 2.0 * PI / (float)num ;
-    red_shift = 0.0 ;
-    blu_shift = 2. * PI / 3.0 ;
-    grn_shift = blu_shift * 2. ;
+    x1 = (5.0*min + 1.0*max)/6.0;
+    x2 = (4.0*min + 2.0*max)/6.0;
+    x3 = (3.0*min + 3.0*max)/6.0;
+    x4 = (2.0*min + 4.0*max)/6.0;
+    x5 = (1.0*min + 5.0*max)/6.0;
 
-    degrees = 0.0 ;
-    i = 0 ;
-    while(i < num)
-    {
-	red = ((1. + cos(degrees + red_shift)) / 2.0) * 256 ;
-	grn = ((1. + cos(degrees + grn_shift)) / 2.0) * 256 ;
-	blu = ((1. + cos(degrees + blu_shift)) / 2.0) * 256 ;
-	G_set_color ((CELL)(i+min), red, grn, blu, pcolr);
-	degrees += incr ;
-	i++ ;
-    }
+    if (min <= x1)
+	G_add_color_rule (min, 255, 85, 85, x1, 170, 170, 0, colors);
+    if (x1 <= x2)
+	G_add_color_rule (x1, 170, 170, 0, x2, 85, 255, 85, colors);
+    if (x2 <= x3)
+	G_add_color_rule (x2, 85, 255, 85, x3, 0, 170, 170, colors);
+    if (x3 <= x4)
+	G_add_color_rule (x3, 0, 170, 170, x4, 85, 85, 255, colors);
+    if (x4 <= x5)
+	G_add_color_rule (x4, 85, 85, 255, x5, 170, 0, 170, colors);
+    if (x5 <= max)
+	G_add_color_rule (x5, 170, 0, 170, max, 255, 85, 85, colors);
 
     return 1;
 }
