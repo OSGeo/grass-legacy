@@ -5,7 +5,7 @@
 #include "raster.h"
 #define   GLOBAL
 #include "global.h"
-#include "stdio.h"
+#include <stdio.h>
 
 int main (int argc, char **argv)
 {
