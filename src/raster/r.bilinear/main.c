@@ -116,7 +116,7 @@ int main( int argc, char *argv[])
 	    
 	    /* in region? */
 	    if(north > mapw.north || north <= mapw.south){
-		G_zero_raster_buf(outbuf, FCELL_TYPE); /* NULL? */
+		G_set_f_null_value(outbuf, w.cols);
 		G_put_f_raster_row(outfile, outbuf);
 		continue;
 	    }
@@ -152,9 +152,9 @@ fprintf(stderr,"row %d maprow1 %d maprow2 %d\n", row, maprow1, maprow2);
 
 	    if(bufrow1 < 0){  /* read both */
 		G_set_window(&mapw);
-		G_get_map_row(infile, inbuf1, maprow1);
+		G_get_c_raster_row(infile, inbuf1, maprow1);
 		bufrow1 = maprow1;
-		G_get_map_row(infile, inbuf2, maprow2);
+		G_get_c_raster_row(infile, inbuf2, maprow2);
 		bufrow2 = maprow2;
 		G_set_window(&w);
 	    }
@@ -166,15 +166,15 @@ fprintf(stderr,"row %d maprow1 %d maprow2 %d\n", row, maprow1, maprow2);
 		    inbuf2 = tmp;
 		    bufrow1 = maprow1;
 		    G_set_window(&mapw);
-		    G_get_map_row(infile, inbuf2, maprow2);
+		    G_get_c_raster_row(infile, inbuf2, maprow2);
 		    bufrow2 = maprow2;
 		    G_set_window(&w);
 		}
 		else{ /* need to read both */
 		    G_set_window(&mapw);
-		    G_get_map_row(infile, inbuf1, maprow1);
+		    G_get_c_raster_row(infile, inbuf1, maprow1);
 		    bufrow1 = maprow1;
-		    G_get_map_row(infile, inbuf2, maprow2);
+		    G_get_c_raster_row(infile, inbuf2, maprow2);
 		    bufrow2 = maprow2;
 		    G_set_window(&w);
 		}
@@ -221,12 +221,22 @@ fprintf(stderr,"row %d maprow1 %d maprow2 %d\n", row, maprow1, maprow2);
 		c3 = inbuf2[mapcol1];
 		c4 = inbuf2[mapcol2];
 
-		new = (1.0 - t) * (1.0 - u) * c1 +
-			      t * (1.0 - u) * c2 +
-			      t * u * c4 +
-			      u * (1.0 - t) * c3;
+		if (G_is_c_null_value(&c1) ||
+		    G_is_c_null_value(&c2) ||
+		    G_is_c_null_value(&c3) ||
+		    G_is_c_null_value(&c4))
+		{
+			G_set_f_null_value(&outbuf[col], 1);
+		}
+		else
+		{
+		    new = (1.0 - t) * (1.0 - u) * c1 +
+			t * (1.0 - u) * c2 +
+			t * u * c4 +
+			u * (1.0 - t) * c3;
 
-		outbuf[col] =  (new + .5);
+		    outbuf[col] =  (new + .5);
+		}
 	    }
 	    G_put_f_raster_row(outfile, outbuf);
 
