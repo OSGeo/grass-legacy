@@ -96,6 +96,7 @@ int DumpFromDBF (char *infile, char *outfile, char *timestamp, int third) {
 	
 	int i, m;
 	char *pp;
+	int dummy;
 	
 	struct my_string SQL_create;
 	struct my_string SQL_insert;
@@ -215,14 +216,21 @@ int DumpFromDBF (char *infile, char *outfile, char *timestamp, int third) {
 	append(&headerT, timestamp);
 	
 	/* reorder header: first int and float as it comes */
+	dummy=1-dimension; /* don't count the dimension fields */
         for( k = 0; k < DBFGetFieldCount(hDBF); k++ )
         {
           DBFFieldType ftype;
 	  ftype=DBFGetFieldInfo( hDBF, k, fname, NULL, NULL );
 	  if (ftype != 0) /* no text */
 	  {
+	    if (dummy > 0) /* don't number coordinate fields */
+	    {
+	    	sprintf(buf, "%i:", dummy); /*enumber the fields */
+	    	append(&headerD, buf);
+	    }
 	    append(&headerD, fname );
 	    append(&headerD, " " );
+	    dummy=dummy + 1;
 	  }
         }
 
@@ -233,8 +241,14 @@ int DumpFromDBF (char *infile, char *outfile, char *timestamp, int third) {
 	  ftype=DBFGetFieldInfo( hDBF, k, fname, NULL, NULL );
 	  if (ftype == 0) /* text */
 	  {
+	    if (dummy > 0) /* don't number coordinate fields */
+	    {
+	    	sprintf(buf, "%i:", dummy); /*enumber the fields */
+	    	append(&headerD, buf);
+	    }
 	    append(&headerD, fname );
 	    append(&headerD, " " );
+	    dummy=dummy + 1;
 	  }
         }
 
