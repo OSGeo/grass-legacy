@@ -3,37 +3,36 @@
 <HEAD><TITLE>GRASS GIS on WINDOWS/Cygnus</TITLE>
 <META content="text/html; charset=windows-1252" http-equiv=Content-Type>
 <META content="MSHTML 5.00.2920.0" name=GENERATOR></HEAD>
-<BODY>8. Feb. 2001
+<BODY>
+20. Feb. 2001
 <p>
-This directory contains the WINDOWS/Cygwin binary code for
-GRASS 5.0 as of February 2, 2001 in zipped format.
+This directory contains the WINDOWS/Cygwin binary code of
+GRASS 5.0 in zipped format.
 <p>
 This is the first version with experimental graphical map output.
 <p>
 <HR>
-Installation of binaries:<br>
- It is a relative root path so someone can unzip it to
- their D: drive if necessary.   Depending upon where
- you have your cygwin installed, it could go under that
- root. 
+<b>REQUIREMENTS:</b><br>
+There are three major requirements to run GRASS 5 on WINDOWS: The "CygWin"
+which provides a UNIX compliant environment and the Xserver which allows
+to use GRASS' graphical output. Finally the "IPC" package is needed to
+allow GRASS communication with graphical driver.<p>
 
+a) You must have installed Cygwin for WINDOWS from
+<a
+href=http://sources.redhat.com/cygwin/download.html>http://sources.redhat.com/cygwin/download.html</a><br>
+Get "Cygwin" package there (setup.exe).
+
+Cygnus is required to run UNIX compliant applications on WINDOWS.<p>
+
+b) Additionally get the XWindows precompiled client (Xfree) from
+<a
+href=http://sources.redhat.com/cygwin/xfree/>http://sources.redhat.com/cygwin/xfree/</a>.
+Get the packages: DLLs, fonts, Xterm, Xwin, Prog.
+(<a href=http://sources.redhat.com/cygwin/xfree/docs/howto/book1.htm>Xfree install guide</a>)
 <p>
-Starting Grass5:<br>
- The package includes a StartGrass script in the /usr/local/grass5.
- This sets the PATH, start the ipc daemon, and spawns an xterm
-   window.  From within that window run 'grass5'. 
-   You must have WINDOWS/Cygwin from
-<a href=http://sources.redhat.com/cygwin>
-http://sources.redhat.com/cygwin</a><p>
 
-Get the X11R6.4 binaries from
-<a href=http://sources.redhat.com/cygwin/xfree/>
-http://sources.redhat.com/cygwin/xfree/</a><p>
-
-<p>
-<HR>
-Requirements:<br>
-Building IPC for Grass5:<br>
+c) Building IPC for Grass5:<br>
  You will need the Inter-process communication (IPC) code:
  <a href=http://www.neuro.gatech.edu/users/cwilson/cygutils/V1.1/cygipc/>
 http://www.neuro.gatech.edu/users/cwilson/cygutils/V1.1/cygipc/</a>
@@ -44,7 +43,20 @@ See <a href=http://freegis.org/cgi-bin/viewcvs.cgi/~checkout~/grass/documents/co
 See compile_grass_with_wincygnus.txt</a>
 for more details.
 
+<hr>
+
+Installation of GRASS 5 Windows binaries:<br>
+ It is a relative root path so someone can unzip it to
+ their D: drive if necessary.   Depending upon where
+ you have your cygwin installed, it could go under that
+ root. 
+
 <p>
+Starting Grass5:<br>
+ The package includes a StartGrass script in the /usr/local/grass5.
+ This sets the PATH, start the ipc daemon, and spawns an xterm
+   window.  From within that window run 'grass5'. 
+
 <HR>
 Compiling the GRASS 5 locally - CVS Grass5:<br>
 See Grass5 from a version control perspective on
