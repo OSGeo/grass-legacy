@@ -3,3 +3,6 @@ all:
 	make check1
 	make check2
 	make docs
+	make install
+#	make clean
+#	make distclean
