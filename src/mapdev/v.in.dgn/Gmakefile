@@ -1,17 +1,20 @@
 PGM=v.in.dgn
 
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
 OBJ = main.o
 
-DGNLIB=$(LIBDIR)/libdgn.a
-CPLLIB=$(LIBDIR)/libcpl.a
+#DGNLIB=$(LIBDIR)/libdgn.a
+#CPLLIB=$(LIBDIR)/libcpl.a
 
-LIBES=$(VECTLIB) $(GISLIB) $(DGNLIB) $(CPLLIB) $(MATHLIB) $(GDAL_LIBS) -lz
-DEPLIBS=$(DEPVECTLIB) $(DEPGISLIB) $(DGNLIB) $(CPLLIB) $(MATHLIB) $(GDAL_LIBS) -lz
+#DGNLIB=$(LIBDIR)/ogrsf_frmts.a
+#CPLLIB=$(LIBDIR)/ogrsf_frmts.a
 
+LIBES=$(VECTLIB) $(GISLIB)
+DEPLIBS=$(DEPVECTLIB) $(DEPGISLIB)
 
 $(BIN_CMD)/$(PGM):  $(OBJ) $(DEPLIBS) 
-	$(CC) -o $@ $(OBJ) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(GDAL_LIBS) $(MATHLIB) $(XDRLIB)
 
 $(DEPVECTLIB): #
 $(DEPGISLIB): #
-

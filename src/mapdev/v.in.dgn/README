@@ -4,4 +4,5 @@ written by Frank Warmerdam.
 See http://www.remotesensing.org/gdal/index.html.
 
 
-
+The dgn-header files are copied from"
+ gdal/ogr/ogrsf_frmts/dgn/
