@@ -982,6 +982,13 @@ G_get_null_value_row_nomask (int fd, char *flags, int row)
             }
          }
          /* remember the null row for i for the future reference */
+	 
+	 /*bf-We should take of the size - or we get 
+	 zeros running on their own after flags convertions -A.Sh.*/
+	 FCB.NULL_ROWS[i] = (unsigned char *) realloc(FCB.NULL_ROWS[i],
+	 	sizeof(unsigned char)*G__null_bitstream_size(WINDOW.cols)+1);
+		if (FCB.NULL_ROWS[i] == NULL) G_fatal_error ("Could not realloc buffer");
+		
          G__convert_01_flags(flags, FCB.NULL_ROWS[i], WINDOW.cols);
 
      }  /* for loop */
