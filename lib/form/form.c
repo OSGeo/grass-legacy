@@ -256,7 +256,7 @@ main ( int argc, char *argv[] )
     static FILE *child_send, *child_recv;
     static      Tcl_Interp *interp;
     static int  frmid = 0;
-    char * encoding_val; 
+    char * encoding_val;
 
     G_debug ( 2, "Form: main()" );
     
@@ -265,9 +265,9 @@ main ( int argc, char *argv[] )
     child_recv = stdin;
     child_send = stdout;
 
-    fcntl ( fileno(child_recv), F_SETFL, O_NONBLOCK); /* Don't wait if pipe is empty */
     while ( 1 ) {
 	ret = read ( fileno(stdin) , &(buf[0]), 1);
+	fcntl ( fileno(child_recv), F_SETFL, O_NONBLOCK); /* Don't wait if pipe is empty */
 	if ( ret == 0 ) break; /* Pipe was closed by parent -> quit */
 	if ( ret == 1 ) {
 	    G_debug ( 3, "Form: received = '%c'", buf[0] );
