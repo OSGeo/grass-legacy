@@ -89,6 +89,8 @@ char *G_ask_any(char *, char *, char *, char *, int);
 char *G_ask_any_ext(char *, char *, char *, char *, int, char *, int (*)());
 char *G_ask_in_mapset(char *, char *, char *, char *);
 char *G_ask_in_mapset_ext(char *, char *, char *, char *, char *, int (*)());
+char *G_ask_new_file(char *, char *, char *, char *);
+char *G_ask_old_file(char *, char *, char *, char *);
 int G_set_ask_return_msg(char *);
 char *G_get_ask_return_msg(void);
 
