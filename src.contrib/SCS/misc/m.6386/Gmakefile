@@ -1,0 +1,23 @@
+OFILES = \
+	get_dir.o \
+	check_dir.o \
+	show_dir.o
+
+all:	progs
+progs:	$(BIN_CONTRIB_CMD)/m.6386 \
+	$(ETC)/6386.list \
+	$(ETC)/6386.save \
+	$(ETC)/6386.show \
+	$(ETC)/6386.delete
+
+$(BIN_CONTRIB_CMD)/m.6386:	main.o $(OFILES) $(GISLIB)
+	cc $(LDFLAGS) main.o $(OFILES) $(GISLIB) -o $@
+$(ETC)/6386.show:	show.o $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	cc $(LDFLAGS) show.o $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -o $@
+$(ETC)/6386.save:	save.o $(OFILES) $(RASTERLIB) $(GISLIB)
+	cc $(LDFLAGS) save.o $(OFILES) $(GISLIB) $(RASTERLIB) -o $@
+$(ETC)/6386.delete:	delete.o $(OFILES) $(RASTERLIB) $(GISLIB)
+	cc $(LDFLAGS) delete.o $(OFILES) $(RASTERLIB) $(GISLIB) -o $@
+$(ETC)/6386.list:	list.o $(OFILES) $(GISLIB)
+	cc $(LDFLAGS) list.o $(OFILES) $(GISLIB) -o $@
+
