@@ -57,7 +57,7 @@ int main (int argc, char *argv[])
     driver_opt->answer      = db_get_default_driver_name();
 
     database_opt 	      = G_define_option();
-    database_opt->key 	      = "Database name";
+    database_opt->key 	      = "database";
     database_opt->type        = TYPE_STRING;
     database_opt->required    = YES;
     database_opt->description = "Input database name";
