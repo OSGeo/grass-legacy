@@ -86,6 +86,7 @@
  **********************************************************************/
 
 #include "gis.h"
+#include "glocale.h"
 #include <stdlib.h>
 
 #define LIST struct Histogram_list
@@ -119,14 +120,14 @@ int G_read_histogram (
     sprintf (buf,"cell_misc/%s", name);
     if (G_find_file (buf, "histogram", mapset) == NULL)
     {
-	sprintf (buf, "Histogram for [%s in %s] missing (run r.support)", name, mapset);
+	sprintf (buf, _("Histogram for [%s in %s] missing (run r.support)"), name, mapset);
 	G_warning (buf);
 	return 0;
     }
     fd = G_fopen_old (buf, "histogram", mapset);
     if (!fd)
     {
-	sprintf (buf, "Can't read histogram for [%s in %s]", name, mapset);
+	sprintf (buf, _("Can't read histogram for [%s in %s]"), name, mapset);
 	G_warning (buf);
 	return -1;
     }
@@ -137,7 +138,7 @@ int G_read_histogram (
 	{
 	    G_free_histogram (histogram);
 	    fclose (fd);
-	    sprintf (buf,"Invalid histogram file for [%s in %s]", name, mapset);
+	    sprintf (buf,_("Invalid histogram file for [%s in %s]"), name, mapset);
 	    G_warning (buf);
 	    return -1;
 	}
@@ -146,7 +147,7 @@ int G_read_histogram (
     fclose (fd);
     if (histogram->num == 0)
     {
-	sprintf (buf,"Invalid histogram file for [%s in %s]", name, mapset);
+	sprintf (buf,_("Invalid histogram file for [%s in %s]"), name, mapset);
 	G_warning (buf);
 	return -1;
     }
@@ -327,7 +328,7 @@ static FILE *fopen_histogram_new ( char *name)
     fd = G_fopen_new (buf, "histogram");
     if (fd == NULL)
     {
-	sprintf (buf,"can't create histogram for [%s in %s]", name, G_mapset());
+	sprintf (buf,_("can't create histogram for [%s in %s]"), name, G_mapset());
 	G_warning (buf);
     }
     return fd;

@@ -28,6 +28,7 @@
  **********************************************************************/
 
 #include "gis.h"
+#include "glocale.h"
 #include <unistd.h>
 #include <stdlib.h>
 #define GEN_HELP	"gen_help"
@@ -45,13 +46,13 @@ int G_gishelp( char *helpfile , char *request )
 
     if (! access(file, 04))
     {
-	fprintf(stderr, "one moment...\n") ;
+	fprintf(stderr, _("one moment...\n")) ;
 	sprintf(buffer, "$GRASS_PAGER %s", file) ;
 	system(buffer) ;
     }
     else
     {
-	fprintf(stderr, "No help available for command [%s]\n", request) ;
+	fprintf(stderr, _("No help available for command [%s]\n"), request) ;
     }
 
     return 0;
