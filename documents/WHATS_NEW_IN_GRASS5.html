@@ -22,6 +22,7 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <p>
 <b>Modules</b>
 <menu>
+<li> d.what.db added: view/edit DB sites attributes (Radim Blazek)
 <li> i.colors: automated refresh added (Markus Neteler)
 <li> r.agnps.*: updated to make it work within GRASS 5 (Markus Neteler)
 <li> r.cn, r.cn2: updated (Markus Neteler, John Huddleston)
@@ -36,7 +37,7 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <li> r.to.sites: bugfix for seg. fault (Bill Brown)
 <li> s.in.shape: added, reads an ArcView Shapefile with points or
      multipoint SHAPES (David D. Gray)
-<li> v.autocorr: compile and bug fix (David D. Gray)
+<li> v.autocorr: bugfix (David D. Gray)
 <li> v.extract: writes cats now (David D. Gray)
 <li> v.in.shape: Splitting of shapefile rings to arc-node segments,
       Correction (through options) of some common topological problems with imported
@@ -50,13 +51,15 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <li> v.spag: fixed loop error, new flags (Radim Blazek)
 <li> v.timestamp: added (Markus Neteler, based on r.timestamp)
 <li> v.to.db: added to load values from vector to database (Radim Blazek)
+<p>
+<li> NVIZ: fixed image dump bug on FreeBSD and Linux (Huidae Cho)
 </menu>
 
 <b>Database Management System support (DBMS)</b>
 <menu>
 <li>new ODBC driver (based on <a href=http://www.unixodbc.org>unixODBC</a>
 to link GRASS to PostgreSQL, Oracle, MySQL, ... (Radim Blazek)
-<li>d.db, v.db.reclass, v.to.db: using ODBC (Radim Blazek)
+<li>db.attr, d.db, d.what.db, v.db.reclass, v.to.db: using ODBC (Radim Blazek)
 </menu>
 
 <b>G3D-support</b> (new 3D raster format "voxels")
@@ -83,6 +86,7 @@ to link GRASS to PostgreSQL, Oracle, MySQL, ... (Radim Blazek)
  cvs -z3 co -r "release_grass5beta7_20_april_2000" grass/src/xgrass<br>
  cvs -z3 co -r "release_grass5beta7_20_april_2000" grass/src/include
 <li> WINDOWS/NT: improved portability (John Huddleston)
+<li> libes: fixes for src/libes/ogsf and src/libes/ and src/libes/libimage
 </menu>
 
 <hr>
