@@ -31,8 +31,10 @@ LIST =	y.tab.o\
 	xlog.o\
 	xlt.o\
 	xmax.o\
+	xmedian.o\
 	xmin.o\
 	xmod.o\
+	xmode.o\
 	xmul.o\
 	xne.o\
 	xneg.o\
@@ -48,8 +50,6 @@ LIST =	y.tab.o\
 	xsqrt.o\
 	xsub.o\
 	xtan.o
-#	xmedian.o\
-#	xmode.o
 
 LIBES = $(GISLIB) $(BTREELIB) $(ROWIOLIB)
 

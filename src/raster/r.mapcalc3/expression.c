@@ -161,7 +161,7 @@ expression *function(const char *name, expr_list *arglist)
 	void **argv = malloc((argc + 1) * sizeof(void *));
 	expression *e;
 	expr_list *l;
-	int i, n;
+	int i;
 
 	for (l = arglist, i = 1; l; l = l->next, i++)
 		args[i] = l->exp;
@@ -309,6 +309,7 @@ void print_map(FILE *fp, const expression *e)
 	default:
 		fprintf(stderr, "Invalid map modifier: '%c'\n",
 			e->data.map.mod);
+		mod = "?";
 		break;
 	}
 	fprintf(fp, "%s%s[%d,%d]",

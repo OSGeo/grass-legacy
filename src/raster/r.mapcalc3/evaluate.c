@@ -224,7 +224,6 @@ int execute(expr_list *ee)
 		{
 			expression *e = l->exp;
 			const char *var = e->data.bind.var;
-			expression *val = e->data.bind.val;
 			int fd = e->data.bind.fd;
 
 			if (evaluate(e) != 0)

@@ -139,8 +139,6 @@ c_cmpop(int argc, int *argt)
 int 
 c_logop(int argc, int *argt)
 {
-	int arg_type;
-
 	if (argc < 2)
 		return E_ARG_LO;
 	if (argc > 2)

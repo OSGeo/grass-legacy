@@ -1,188 +1,146 @@
-/* mode function contributed by
- *  Lars Schylberg
- *  Department of Geodesy and Photogrammetry,
- *  Royal Inst. of Technology, Stockholm, Sweden
- */
 
 #include <stdlib.h>
-#include "glob.h"
 
-static int 
-icmp (const void *ii, const void *jj)
+#include "expression.h"
+#include "func_proto.h"
+
+/**********************************************************************
+mode(x1,x2,..,xn)
+   return mode of arguments
+**********************************************************************/
+
+static int dcmp(const void *aa, const void *bb)
 {
-    const CELL *i = ii, *j = jj;
-    return(*i - *j);
+	const double *a = aa;
+	const double *b = bb;
+	if (*a < *b) return -1;
+	if (*a > *b) return 1;
+	return 0;
 }
 
-static int 
-dcmp (const void *ii, const void *jj)
+static double mode(double *value, int argc)
 {
-    const double *i = ii, *j = jj;
-    if (*i < *j) return -1;
-    if (*i > *j) return 1;
-    return 0;
+	static int *count;
+	static int n_count;
+	int i, j, k;
+
+	if (argc > n_count)
+	{
+		n_count = argc;
+		count = G_realloc(count, n_count * sizeof(int));
+	}
+
+	qsort(value, argc, sizeof(double), dcmp);
+
+	for (i = j = 0; i < argc; j++)
+	{
+		count[j] = 1;
+
+		value[j] = value[i];
+
+		for (; i < argc; i++)
+		{
+			if (value[i] != value[j])
+				break;
+			count[j]++;
+		}
+	}
+
+	for (k = 0, i = 1; i < j; i++)
+		if (count[i] > count[k])
+			k = i;
+
+
+	return value[k];
 }
 
 int 
-i_mode (int argc, CELL *argv[], register CELL *cell, register int ncols)
+f_mode(int argc, const int *argt, void **args)
 {
-    register int i, k, m, max_freq_i ,max_value_i;
-    static int nargs = 0;
-    int nv;
-    static CELL *arr = NULL;
-    static CELL *mfq_value = NULL;
-    static CELL *mfq_count = NULL;
+	static double *value;
+	static int value_size;
+	int size = argc * G_raster_size(argt[0]);
+	int i, j;
 
-    if ( argc > nargs )
-    {
-       arr = (CELL *) G_realloc ( arr, argc*sizeof(CELL));
-       mfq_count = (CELL *) G_realloc ( mfq_count, argc*sizeof(CELL)+1);
-       mfq_value = (CELL *) G_realloc ( mfq_value, argc*sizeof(CELL)+1);
-       nargs = argc;
-    }
-
-    while (ncols-- > 0)
-    {
-	nv = 0;
-	for ( i=0; i<argc && nv == 0; i++)
+	if (size > value_size)
 	{
-	    if (ISNULL(&argv[i][ncols]))
-		nv=1;
-	    else
-		arr[i] = argv[i][ncols];
+		value_size = size;
+		value = G_realloc(value, value_size);
 	}
-	if(nv)
+
+	switch (argt[argc])
 	{
-	    SETNULL(&cell[ncols]);
-	    continue;
+	case CELL_TYPE:
+	{
+		CELL *res = args[0];
+		CELL **argv = (CELL **) &args[1];
+		for (i = 0; i < columns; i++)
+		{
+			int nv = 0;
+
+			for (j = 0; j < argc && !nv; j++)
+			{
+				if (IS_NULL_C(&argv[j][i]))
+					nv = 1;
+				else
+					value[i] = (double) argv[j][i];
+			}
+
+			if (nv)
+				SET_NULL_C(&res[i]);
+			else
+				res[i] = (CELL) mode(value, argc);
+		}
+		return 0;
 	}
-                                                /* sort all values */
-        qsort( arr, argc, sizeof(CELL), icmp);
-
-                                                /* sort by frequency */
-        for ( m=0; m<argc; m++) 
-           mfq_count[m] = 0;
-        mfq_value[0] = arr[0];
-        mfq_count[0] = 1;
-        i = 0;
-
-        for ( m=0; m<argc; m++)
+	case FCELL_TYPE:
 	{
-            if ( arr[m] == arr[m -1])
-                mfq_count[i]++;
-            else
-            {
-               i++;
-               mfq_value[i] = arr[m];
-               mfq_count[i]++;
-            }
-        }
-                                      /* determine which frequency that  */
-                                      /* occurs the most                 */
-                                      /* > for lowest value when ties    */
-                                      /* >= for higest value when ties   */
-        max_freq_i = 0;               /* don't return a zero value       */
-        max_value_i = 0;              /* unless all zeros                */
-        for (k=0; k<=i; k++ )
-        {                            
-            if ( ((mfq_count[k]) > max_freq_i) && !(mfq_value[k] == 0) )  
-            {
-                max_value_i = k;             
-                max_freq_i = mfq_count[k];
-            }
-        }       
-        cell[ncols] = mfq_value[max_value_i];
-    }
+		FCELL *res = args[0];
+		FCELL **argv = (FCELL **) &args[1];
+		for (i = 0; i < columns; i++)
+		{
+			int nv = 0;
 
-    return 0;
+			for (j = 0; j < argc && !nv; j++)
+			{
+				if (IS_NULL_F(&argv[j][i]))
+					nv = 1;
+				else
+					value[i] = (double) argv[j][i];
+			}
+
+			if (nv)
+				SET_NULL_F(&res[i]);
+			else
+				res[i] = (FCELL) mode(value, argc);
+		}
+		return 0;
+	}
+	case DCELL_TYPE:
+	{
+		DCELL *res = args[0];
+		DCELL **argv = (DCELL **) &args[1];
+		for (i = 0; i < columns; i++)
+		{
+			int nv = 0;
+
+			for (j = 0; j < argc && !nv; j++)
+			{
+				if (IS_NULL_D(&argv[j][i]))
+					nv = 1;
+				else
+					value[i] = (double) argv[j][i];
+			}
+
+			if (nv)
+				SET_NULL_D(&res[i]);
+			else
+				res[i] = (DCELL) mode(value, argc);
+		}
+		return 0;
+	}
+	default:
+		return E_INV_TYPE;
+	}
 }
 
-int 
-x_mode (int argc, double *argv[], register double *xcell, register int ncols)
-{
-    register int i, k, m, max_freq_i ,max_value_i;
-    int nv;
-    static int nargs = 0;
-    static double *arr = NULL;
-    static double *mfq_value = NULL;
-    static double *mfq_count = NULL;
-
-    if ( argc > nargs )
-    {
-       arr = (double *) G_realloc ( arr, argc*sizeof(double));
-       mfq_count = (double *) G_realloc ( mfq_count, argc*sizeof(double)+1);
-       mfq_value = (double *) G_realloc ( mfq_value, argc*sizeof(double)+1);
-       nargs = argc;
-    }
-
-
-    while (ncols-- > 0)
-    {
-	nv = 0;
-	for ( i=0; i<argc && nv==0; i++)
-	{
-	    if (ISNULL_D(&argv[i][ncols]))
-		nv = 1;
-	    else
-		arr[i] = argv[i][ncols];
-	}
-	if(nv)
-	{
-	    SETNULL_D(&xcell[ncols]);
-	    continue;
-	}
-                                                /* sort all values */
-        qsort( arr, argc, sizeof(CELL), icmp);
-                                                /* sort all values */
-        qsort( arr, argc, sizeof(double), dcmp);
-
-                                                /* sort by frequency */
-        for ( m=0; m<argc; m++) 
-           mfq_count[m] = 0;
-        mfq_value[0] = arr[0];
-        mfq_count[0] = 1;
-        i = 0;
-
-        for ( m=0; m<argc; m++)
-	{
-            if ( arr[m] == arr[m -1])
-                mfq_count[i]++;
-            else
-            {
-               i++;
-               mfq_value[i] = arr[m];
-               mfq_count[i]++;
-            }
-        }
-                                      /* determine which frequency that  */
-                                      /* occurs the most                 */
-                                      /* > for lowest value when ties    */
-                                      /* >= for higest value when ties   */
-        max_freq_i = 0;               /* don't return a zero value       */
-        max_value_i = 0;              /* unless all zeros                */
-        for (k=0; k<=i; k++ )
-        {                            
-            if ( ((mfq_count[k]) > max_freq_i) && !(mfq_value[k] == 0) )  
-            {
-                max_value_i = k;
-                max_freq_i = mfq_count[k];
-            }
-        }       
-        xcell[ncols] = mfq_value[max_value_i];
-    }
-
-    return 0;
-}
-
-int 
-n_mode (int n, char *name)
-{
-    if (n>1) return 1;
-    fprintf (stderr, "%s - ", name);
-    if (n==0)
-	fprintf (stderr, "no arguments ");
-    else
-	fprintf (stderr, "only one argument ");
-    fprintf (stderr, "specified. usage: %s(x,y[,z...])\n", name);
-    return 0;
-}
