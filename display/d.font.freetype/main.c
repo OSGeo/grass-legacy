@@ -23,7 +23,7 @@ int release();
 #define	USE_FREETYPECAP
 #ifdef	USE_FREETYPECAP
 typedef struct	{
-	char	*font, *path, *charset, *color, *size;
+	char	*font, *path, *charset;
 } capinfo;
 
 static int read_capfile(char *capfile, capinfo **fonts, int *fonts_count,
@@ -37,6 +37,12 @@ main( int argc , char **argv )
     struct GModule *module;
     struct Option *opt1;
     struct Option *opt2;
+#ifdef	USE_FREETYPECAP
+    struct Flag *flag1;
+
+    capinfo *fonts;
+    int fonts_count, i;
+#endif
     char *font, *charset;
 
 	G_gisinit(argv[0]);
@@ -60,12 +66,29 @@ main( int argc , char **argv )
     opt2->answer     = "EUC-JP";
     opt2->description= _("Character encoding");
 
+#ifdef	USE_FREETYPECAP
+    flag1 = G_define_flag();
+    flag1->key         = 'l';
+    flag1->description = "list fonts defined in freetypecap";
+#endif
+
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
     /* Check command line */
     if (G_parser(argc, argv))
             exit(-1);
+
+#ifdef	USE_FREETYPECAP
+    read_capfile(getenv("GRASS_FREETYPECAP"), &fonts, &fonts_count, NULL, NULL);
+    if(flag1->answer){
+	    if(fonts_count){
+		    for(i=0; i<fonts_count; i++)
+			    fprintf(stdout, "%s\n", fonts[i].font);
+	    }
+	    exit(0);
+    }
+#endif
 
     font = opt1->answer;
     charset = opt2->answer;
@@ -84,18 +107,12 @@ main( int argc , char **argv )
 			exit(-1);
 		}
 #ifdef	USE_FREETYPECAP
-		{
-		capinfo *fonts;
-		int fonts_count, i;
-		read_capfile(getenv("GRASS_FREETYPECAP"), &fonts, &fonts_count,
-				NULL, NULL);
 		if(fonts_count){
 			i = find_font(fonts, fonts_count, font);
 			if(i >= 0){
 				font = fonts[i].path;
 				charset = fonts[i].charset;
 			}
-		}
 		}
 #endif
 	}
@@ -157,8 +174,7 @@ read_capfile(char *capfile, capinfo **fonts, int *fonts_count, int *cur_font,
 {
 	char	file[4096], *ptr;
 	int	i, font_names_size = 0;
-	char	buf[4096],
-		ifont[128], ipath[4096], icharset[32], icolor[128], isize[10];
+	char	buf[4096], ifont[128], ipath[4096], icharset[32];
 	FILE	*fp;
 
 	*fonts = NULL;
@@ -198,8 +214,7 @@ read_capfile(char *capfile, capinfo **fonts, int *fonts_count, int *cur_font,
 		if(p)
 			*p = 0;
 
-		if(sscanf(buf, "%[^:]:%[^:]:%[^:]:%[^:]:%[^:]",
-			  ifont, ipath, icharset, icolor, isize) != 5)
+		if(sscanf(buf, "%[^:]:%[^:]:%[^:]", ifont,ipath,icharset) != 3)
 			continue;
 
 		if(access(ipath, R_OK))
@@ -218,8 +233,6 @@ read_capfile(char *capfile, capinfo **fonts, int *fonts_count, int *cur_font,
 		font->font    = G_store(ifont + offset);
 		font->path    = G_store(ipath);
 		font->charset = G_store(icharset);
-		font->color   = G_store(icolor);
-		font->size    = G_store(isize);
 
 		(*fonts_count)++;
 	}

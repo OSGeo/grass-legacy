@@ -63,7 +63,7 @@
 
 
 typedef struct	{
-	char	*font, *path, *charset, *color, *size;
+	char	*font, *path, *charset;
 } capinfo;
 
 typedef	struct	{
@@ -277,8 +277,6 @@ main(int argc, char **argv)
 
 		path = fonts[cur_font].path;
 		charset = transform_string(fonts[cur_font].charset, toupper);
-		tcolor = transform_string(fonts[cur_font].color, tolower);
-		size = atof(fonts[cur_font].size);
 	}
 
 	if(param.path->answer)
@@ -655,8 +653,7 @@ read_capfile(char *capfile, capinfo **fonts, int *fonts_count, int *cur_font,
 {
 	char	file[4096], *ptr;
 	int	i, font_names_size = 0;
-	char	buf[4096],
-		ifont[128], ipath[4096], icharset[32], icolor[128], isize[10];
+	char	buf[4096], ifont[128], ipath[4096], icharset[32];
 	FILE	*fp;
 
 	*fonts = NULL;
@@ -696,8 +693,7 @@ read_capfile(char *capfile, capinfo **fonts, int *fonts_count, int *cur_font,
 		if(p)
 			*p = 0;
 
-		if(sscanf(buf, "%[^:]:%[^:]:%[^:]:%[^:]:%[^:]",
-			  ifont, ipath, icharset, icolor, isize) != 5)
+		if(sscanf(buf, "%[^:]:%[^:]:%[^:]", ifont,ipath,icharset) != 3)
 			continue;
 
 		if(access(ipath, R_OK))
@@ -716,8 +712,6 @@ read_capfile(char *capfile, capinfo **fonts, int *fonts_count, int *cur_font,
 		font->font    = G_store(ifont + offset);
 		font->path    = G_store(ipath);
 		font->charset = G_store(icharset);
-		font->color   = G_store(icolor);
-		font->size    = G_store(isize);
 
 		(*fonts_count)++;
 	}
