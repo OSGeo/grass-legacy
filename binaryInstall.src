@@ -298,6 +298,11 @@ rm -f $DESTDIR/dev/fifo.*
 # Create the fifos
 sh $DESTDIR/dev/create_fifos.sh $DESTDIR
 
+if [ $? -eq 1 ] ; then
+    echo "An error occured or user break while installing binaries! Exiting."
+    exit
+fi
+
 # Create the binary uninstall script
 cd $BINDIR
 echo "#!/bin/sh" > $UNINSTALL
