@@ -21,7 +21,7 @@ main ()
  * pointer to index is written at top of file. write zero now
  */
     offset = 0;
-    write (font, offset, sizeof offset);
+    write (font, &offset, sizeof offset);
 
 /* as each character comes in, add it to the index
  * then write the character to the font file
