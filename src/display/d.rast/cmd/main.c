@@ -45,4 +45,6 @@ main(argc, argv)
     Dcell(name, mapset, overlay) ;
 
     R_close_driver();
+
+    exit(0);
 }
