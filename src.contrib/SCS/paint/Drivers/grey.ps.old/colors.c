@@ -1,0 +1,98 @@
+#include <stdio.h>
+#define MAXGREY 220
+static int nlevels=3 ;
+static int ncolors=256;
+
+Pset_color_levels(n)
+{
+/*    nlevels = n;
+    ncolors = n*n*n;
+	*/
+}
+
+Pcolorlevels (red, grn, blu)
+    int *red, *grn, *blu;
+{
+    *red = nlevels;
+    *grn = nlevels;
+    *blu = nlevels;
+}
+
+Pcolormultipliers (red, grn, blu)
+    int *red, *grn, *blu;
+{
+    *red = nlevels*nlevels;
+    *grn = nlevels;
+    *blu = 1;
+
+
+}
+
+Pcolornum (red, green, blue)
+    float red, green, blue ;
+{
+    register int r;
+    register int g;
+    register int b;
+    int max;
+
+	if (red == green && red == blue) {
+		r = red * MAXGREY;
+		return(r);
+		}
+
+    max = nlevels - 1;
+
+    r = red * nlevels;
+    g = green * nlevels;
+    b = blue * nlevels;
+
+    if (r < 0) r = 0;
+    if (r > max) r = max;
+
+    if (g < 0) g = 0;
+    if (g > max) g = max;
+
+    if (b < 0) b = 0;
+    if (b > max) b = max;
+
+
+    return (r*nlevels*nlevels + g*nlevels+ b + MAXGREY);
+}
+
+Pcolorvalue (n, red, grn, blu)
+    float *red, *grn, *blu;
+{
+	int r,g,b;
+	int max, n2;
+	double n1;
+
+	if ( n <= MAXGREY ) {
+		n1 = MAXGREY;
+		*red = n/n1;
+		*grn = n/n1;
+		*blu = n/n1;
+		}
+	else {
+		n2 = nlevels * nlevels;
+		max = ncolors - 1;
+		n1 = nlevels - 1;
+		if (n < 0) n = 0;
+		if (n > max) n = max;
+
+		max = n - MAXGREY;
+    	r = max  / n2 ;
+    	g = (max % n2) / nlevels;
+    	b = max % nlevels ;
+
+    	*red = r / n1 ;
+    	*grn = g / n1 ;
+    	*blu = b / n1 ;
+		}
+
+}
+
+Pncolors()
+{
+    return ncolors;
+}
