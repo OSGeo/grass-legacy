@@ -94,7 +94,7 @@ Adot ( x, y, string)
 		ypos = YADJ(*y) ;
 		R_move_abs(xpos+1, ypos) ;
 		R_text(string) ;
-		R_flush ();
+		V_flush ();
 		return ;
 	}
 }
@@ -118,7 +118,7 @@ Dot (x, y)
 		ypos = YADJ(*y) ;
 		R_move_abs(xpos, ypos) ;
 		R_cont_abs(xpos, ypos) ;
-		R_flush ();
+		V_flush ();
 		return ;
 	}
 }
@@ -146,7 +146,7 @@ Blot ( x, y)
 		R_cont_abs(xpos,   ypos+1) ;
 		R_cont_abs(xpos+1, ypos  ) ;
 		R_cont_abs(xpos,   ypos-1) ;
-		R_flush ();
+		V_flush ();
 		return ;
 	}
 }
