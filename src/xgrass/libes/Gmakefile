@@ -1,0 +1,10 @@
+Files = \
+	Xgi \
+	Xgd \
+	Xpm 
+
+all::
+	$(MAKEALL)
+
+xgrass::
+	$(MAKEALL)
