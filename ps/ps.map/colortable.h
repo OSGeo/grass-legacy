@@ -9,6 +9,8 @@ struct colortable {
 	double x, y, width;
 	double height; /* fp legend height */
 	char *font;
+	char *name;
+	char *mapset;
 	int fontsize;
 	int color;
 	int cols;
