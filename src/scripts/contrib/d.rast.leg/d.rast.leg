@@ -52,7 +52,7 @@ then
     	exit 1
 fi
 
-#for -o flag of d.legend
+#for -n flag of d.legend
 eval `g.findfile el=cell file=$1`
 filemapset="${mapset}"
 HISTFILEDIR=$GISDBASE/$LOCATION_NAME/$filemapset/cell_misc/
@@ -92,7 +92,7 @@ else
         if test -f $HISTFILEDIR/$1/histogram
           then
              d.erase col=white
-    	     d.legend -o map=$1 col=black
+    	     d.legend -n map=$1 col=black
           else
              d.erase col=white
              d.legend map=$1 col=black
@@ -114,7 +114,7 @@ else
         if test -f $HISTFILEDIR/$1/histogram
           then
              d.erase col=white
-             d.legend -o map=$1 col=black lines=$2
+             d.legend -n map=$1 col=black lines=$2
           else
              d.erase col=white
              d.legend map=$1 col=black
