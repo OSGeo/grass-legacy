@@ -354,6 +354,8 @@ calc_floodplain( event )
          /* Create sites from cross section map of water surface elevations */
          /*-----------------------------------------------------------------*/
          G__file_name( xsect_sloc, "dig_ascii", xsect_vname, f_mapset );
+
+/* Altered 10/8/93
          sprintf( command, "v.out.point input=%s > %s", 
                             xsect_vname, xsect_sloc );
          system( command );
@@ -361,6 +363,12 @@ calc_floodplain( event )
          sprintf( command, "s.in.ascii sites=%s input=%s fs='|' >> %s", 
                             xsect_vname, xsect_sloc, log_fname );
          system( command );
+*/
+
+	 sprintf( command, "v.to.sites input=%s output=%s -a",xsect_vname,
+			    xsect_vname);
+
+	 system( command );
 
          /*----------------------------------*/
          /* use event-specific map names to  */
