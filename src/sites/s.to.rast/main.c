@@ -47,7 +47,7 @@ int main (int argc, char *argv[])
     int temp_fd;
     char *temp_name;
     int rows, cols, row;
-    int num_index, str_index;
+    int num_index, str_index, rec_count, region_check;
     int scan_int, num_type;
  
     struct Option *input;
@@ -293,11 +293,17 @@ int main (int argc, char *argv[])
 
     if (!quiet)
         fprintf (stdout, "transferring sites to raster file...\n");
-
+    
+    region_check = 0;
+    rec_count = 1;
     said_it = 0;
     fseek (fd,0L,0);
     while  ((retcode = G_site_get (fd, s))==0)
     {
+        rec_count++;
+        if(!G_site_in_region(s, &window)) {
+            region_check = 1;
+        }
         if(!zero_one)
         {
 	    switch(num_type) {
@@ -361,15 +367,19 @@ int main (int argc, char *argv[])
                  fprintf(stderr, "Site list read successfully.\n");
                  break;
              case 1:
-                 G_warning("Extra attributes found in a site record. "
-                                 "Data may be invalid.");
+                 G_warning("Extra attributes found in a site record %d "
+                                 "Remaining data skipped", rec_count);
                  break;
              case -2:
-                 G_warning("Error reading sites list. Remaining data skipped.");
+                 G_warning("Error reading sites list at record %d. "
+                         "Remaining data skipped.", rec_count);
                  break;
              default: /* Unknown return code */
                  G_warning("Got unknown return code: %d", retcode);
         }
+        if (region_check) /* Some sites out of region */
+            G_warning("Some sites were outside the current region "
+                    "and were not included.");
     }
 
      if(zero_one)
