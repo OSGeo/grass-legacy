@@ -114,7 +114,7 @@
 /* Until the zlib stuff gets worked out, comment out if you want to try
  * the G_zlib_*() functions, also do the same in put_row.c
  */
-#define USE_LZW_COMPRESSION
+/* #define USE_LZW_COMPRESSION */
 
 /*--------------------------------------------------------------------------*/
 
