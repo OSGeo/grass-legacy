@@ -19,6 +19,7 @@
 # should be placed in the directory $GISBASE/etc/nad/.
 #
 ire65	"towgs84=482.530,-130.596,564.557,-1.042,-0.214,-0.631,8.15" "Ireland (North & South)"	"OSi/OSNI Helmert Transformation, Accuracy 0.4m"
+# http://www.ngs.noaa.gov/TOOLS/Nadcon/Nadcon.html
 nad27	"nadgrids=conus"        "Conterminous United States"	  " "
 nad27	"nadgrids=ntv1_can.dat" "Canada"	  " "
 nad27	"nadgrids=alaska"       "Alaska" " "
@@ -27,8 +28,8 @@ nad27	"nadgrids=prvi"         "Puerto Rico-Virgin Is." " "
 nad27	"nadgrids=stgeorge"     "St. George Is., AK" " "
 nad27	"nadgrids=stlrnc"       "St. Lawrence Island, AK" " "
 nad27	"nadgrids=stpaul"       "St. Paul Island, AK" " "
-nad27	"nadgrids=FL"           "Florida" "High Precision"
-nad27	"nadgrids=MD"           "Maryland" "High Precision"
-nad27	"nadgrids=TN"           "Tennessee" "High Precision"
-nad27	"nadgrids=WI"           "Wisconsin" "High Precision"
-nad27	"nadgrids=WO"           "Washington - Oregon" "High Precision"
+nad83	"nadgrids=FL"           "Florida" "Transforms 'Old NAD83' to 'HPGN NAD83'"
+nad83	"nadgrids=MD"           "Maryland" "Transforms 'Old NAD83' to 'HPGN NAD83'"
+nad83	"nadgrids=TN"           "Tennessee" "Transforms 'Old NAD83' to 'HPGN NAD83'"
+nad83	"nadgrids=WI"           "Wisconsin" "Transforms 'Old NAD83' to 'HPGN NAD83'"
+nad83	"nadgrids=WO"           "Washington - Oregon" "Transforms 'Old NAD83' to 'HPGN NAD83'"
