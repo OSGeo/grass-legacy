@@ -56,10 +56,16 @@ int prnmsg ( char *msg, ...) {
 */
 int
 Vect_build ( struct Map_info *Map, FILE *msgout ) {
+    int    i;
     struct Plus_head *plus ;
     char   fname[1024], buf[1024];
     FILE   *fp;
-    int ret;
+    int    ret;
+    char   *k, *d;
+    int    *key;
+    double *coor, x, y, z;
+    BOUND_BOX box;
+    struct ilist  *list;
     
     G_debug (1, "Vect_build()"); 
 
@@ -103,7 +109,27 @@ Vect_build ( struct Map_info *Map, FILE *msgout ) {
     fclose( fp );
 
     prnmsg ("Topology was built.\n") ;
+   
+    /* print spatial index */
+    /*
+    btree_rewind ( &(plus->Node_spidx) );
+    while ( btree_next (&(plus->Node_spidx), &k, &d) ) {
+	coor = (double *) k; 
+	key = (int *) d;
+	fprintf (stdout,"%d: %f, %f, %f\n", *key, coor[0], coor[1], coor[2]);
+    }
+    list = Vect_new_list();
     
+    box.W = 2724.132; box.E = 5459.956;
+    box.S = -10000; box.N = 10000;
+    box.B = box.T = 0;
+    
+    dig_select_nodes ( plus, &box, list );
+    for ( i = 0; i < list->n_values; i++) { 
+        fprintf (stdout,"node (%d) = %d\n", i, list->value[i]);
+    }
+    */
+    prnmsg ("Number of nodes     :   %d\n", plus->n_nodes) ;
     prnmsg ("Number of primitives:   %d\n", plus->n_lines) ;
     prnmsg ("Number of points    :   %d\n", plus->n_plines) ;
     prnmsg ("Number of lines     :   %d\n", plus->n_llines) ;
@@ -153,6 +179,8 @@ Vect_topo_dump ( struct Plus_head *plus, FILE *out ) {
 	fprintf (out, "line = %d, type = %d, offset = %d n1 = %d, n2 = %d, left = %d, right = %d\n", 
 		       i, Line->type, Line->offset, Line->N1, Line->N2,
 	               Line->left, Line->right); 
+	fprintf (out, "N,S,E,W,T,B: %f, %f, %f, %f, %f, %f\n", Line->N, Line->S,
+	                       Line->E, Line->W, Line->T, Line->B);	
     }
     
     /* areas */
@@ -160,8 +188,13 @@ Vect_topo_dump ( struct Plus_head *plus, FILE *out ) {
     for (i = 1; i <= plus->n_areas; i++) {
 	if ( plus->Area[i] == NULL ) { continue; }
 	Area = plus->Area[i];
+	
 	fprintf (out, "area = %d, n_lines = %d, n_centroids = %d n_isles = %d\n", 
 		 i, Area->n_lines, Area->n_centroids, Area->n_isles ); 
+	
+	fprintf (out, "N,S,E,W,T,B: %f, %f, %f, %f, %f, %f\n", Area->N, Area->S,
+	                       Area->E, Area->W, Area->T, Area->B);	
+		
         for (j = 0; j < Area->n_lines; j++) {
 	    line = Area->lines[j];
 	    Line = plus->Line[abs(line)];
@@ -183,8 +216,13 @@ Vect_topo_dump ( struct Plus_head *plus, FILE *out ) {
     for (i = 1; i <= plus->n_isles; i++) {
 	if ( plus->Isle[i] == NULL ) { continue; }
 	Isle = plus->Isle[i];
+	
 	fprintf (out, "isle = %d, n_lines = %d area = %d\n", i, Isle->n_lines, 
 		           Isle->area ); 
+	
+	fprintf (out, "N,S,E,W,T,B: %f, %f, %f, %f, %f, %f\n", Isle->N, Isle->S,
+	                       Isle->E, Isle->W, Isle->T, Isle->B);	
+	
         for (j = 0; j < Isle->n_lines; j++) {
 	    line = Isle->lines[j];
 	    Line = plus->Line[abs(line)];
