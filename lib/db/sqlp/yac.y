@@ -105,7 +105,7 @@ y_select:
 	
 y_delete:
 		DELETE FROM y_table				{ sqpCommand(SQLP_DELETE); }
-		DELETE FROM y_table WHERE y_condition			{ sqpCommand(SQLP_DELETE); }
+        |	DELETE FROM y_table WHERE y_condition		{ sqpCommand(SQLP_DELETE); }
 	;
 
 y_insert:
