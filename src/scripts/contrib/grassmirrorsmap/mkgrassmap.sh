@@ -199,7 +199,7 @@ g.region -d  >$out 2>&1
 
 echo "<html><head><title>GRASS Web Sites</title></head>"         >grassmap.html
 echo "<body><h1>GRASS Web Sites</h1><br><br>"                   >>grassmap.html
-echo "<img src=\"$giffile\" usemap=\"#map\" alt=\"grass\">"     >>grassmap.html
+echo "<img src=\"$giffile\" usemap=\"#map\" alt=\"GRASS GIS mirror sites map\">"     >>grassmap.html
 cat $GRASS_HTMLFILE                                             >>grassmap.html
 echo "<br><br><br></body></html>"                               >>grassmap.html
 

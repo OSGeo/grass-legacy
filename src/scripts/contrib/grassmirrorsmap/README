@@ -19,6 +19,9 @@ How to update the current map:
     grass.sites.mirror
    -> add new mirror site
 
+    grass.sites.main
+   -> remove/re-add new/broken sites (EU region only)
+
 4. Build the map:
     mkgrassmap.sh
 
