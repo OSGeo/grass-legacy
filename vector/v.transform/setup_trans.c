@@ -26,6 +26,8 @@
 
 #include	<stdlib.h>
 #include	<stdio.h>
+#include        "glocale.h"
+#include        "gis.h"
 #include	"trans.h"
 
 int 
@@ -80,26 +82,18 @@ print_transform_error (int stat)
 {
     char buff[128];
 
-	switch(stat)
-	{
-		case POINTS_NOT_SPREAD:
-			fprintf (stdout,"  The points weren't spread out enough.\n\n");
-			break ;
-		case NEED_MORE_POINTS:
-			fprintf (stdout,"  You need to enter more points.") ;
-			fprintf (stdout,"  You need at least %d points\n", MIN_COOR);
-			break ;
-		default:
-			fprintf (stdout,"\n\n  Program ERROR:  Your calling print_transform_error() with no error.\n");
-			break ;
-	}
-
-
-fprintf (stdout,"\n\n\n\n                    <Hit return to continue>");
-
-if (NULL == fgets(buff,128,stdin))
-	exit(-1) ;
-
+    switch(stat)
+    {
+	case POINTS_NOT_SPREAD:
+		G_fatal_error ( _("The points weren't spread out enough.") );
+		break ;
+	case NEED_MORE_POINTS:
+		G_fatal_error ( _("You need to enter at least %d points."), MIN_COOR) ;
+		break ;
+	default:
+		G_fatal_error ( "Your calling print_transform_error() with no error." );
+		break ;
+    }
 
   return 0;
 }
