@@ -50,6 +50,7 @@ int main (int argc, char **argv)
 {
 	char **pads;
 	char **items;
+	char **list;
 	int npads;
 	int nitems;
 	int p;
@@ -58,6 +59,8 @@ int main (int argc, char **argv)
 	int redraw;
 	int total_rno, *rno;
 	int total_mno, **mno;
+	int nlists, *live;
+	int from, to, tmp;
 	struct list_struct *temp_list;
 	struct Flag *all_flag;
 	struct Flag *cur_frame;
@@ -193,9 +196,6 @@ int main (int argc, char **argv)
 
 			if (total_rno || total_mno)
 			{
-				char **list;
-				int nlists, *live;
-
 				stat = R_pad_get_item("list", &list, &nlists);
 				if (stat || !nlists) {
 					R_pad_perror ("echo     ERROR", stat);
@@ -224,8 +224,6 @@ int main (int argc, char **argv)
 
 				if (total_mno)
 				{
-					int from, to, tmp;
-
 					for (i=0; i<total_mno; i++)
 					{
 						from = mno[i][0];
