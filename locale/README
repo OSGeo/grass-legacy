@@ -64,7 +64,7 @@ DETAILED PROCEDURE:
    Maybe you have to change it (example for Japanese):
    - for bash shell:
        export LANG=ja_JP
-       export $LANGUAGE=ja_JP
+       export LANGUAGE=ja_JP
    - for (t)csh shell:
        setenv LANG ja_JP
        setenv LANGUAGE ja_JP
@@ -92,12 +92,12 @@ DETAILED PROCEDURE:
         make pot
         make update-po
  
-       Rename the generated file in the ./po/ directory:
-   
-       For example (German):
-        mv ./po/grasslibs.pot ./po/grasslibs_de.po
-        mv ./po/grassmods.pot ./po/grassmods_de.po
+       Copy the generated file from the ./template/ directory
+       to the ./po/ directory (for example German language):
+        mv ./template/grasslibs.pot ./po/grasslibs_de.po
+        mv ./template/grassmods.pot ./po/grassmods_de.po
 
+       Then continue with 4. below.
 
   3.b) Second CASE: Some messages have already been translated to 
        your language (files present in ./po/ directory), and
