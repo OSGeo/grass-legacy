@@ -1,12 +1,11 @@
 <HTML>
 <HEAD>
-   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; IRIX64 6.4 IP30) [Netscape]">
    <TITLE>r.contour</TITLE>
 </HEAD>
 <BODY BGCOLOR="#FFFFFF">
 <IMG SRC="grass.smlogo.gif" >&nbsp;
 <HR width=100% align=center size=6 no shade>
+
 <H2>
 NAME</H2>
 <B><I>r.contour</I></B> - Produces a GRASS binary vector map of specified
@@ -16,9 +15,15 @@ contours from GRASS raster map layer.
 SYNOPSIS</H2>
 <B>r.contour</B>
 <BR><B>r.contour help</B>
-<BR><B>r.contour [-qn]&nbsp;</B> <B>input=</B><I>name</I> <B>output=</B><I>name</I>
-[<B>levels=</B><I>value</I>,<I>value</I>,...,<I>value</I>] [<B>minlevel=</B><I>value</I>]
-[<B>maxlevel=</B><I>value</I>] [<B>step=</B><I>value</I>]
+<BR><B>r.contour [-qn]</B>
+<B>input=</B><I>name</I> 
+<B>output=</B><I>name</I>
+[<B>levels=</B><I>value</I>,<I>value</I>,...,<I>value</I>] 
+[<B>minlevel=</B><I>value</I>]
+[<B>maxlevel=</B><I>value</I>] 
+[<B>step=</B><I>value</I>]
+[<B>cut=</B><I>value</I>]
+
 <H2>
 DESCRIPTION</H2>
 <I>r.contour</I> produces a contour map of user-specified levels from a
@@ -39,12 +44,16 @@ OPTIONS</H2>
 the program non-interactively, the user must specify the input and output
 file names, either a list of levels or a step value and, optionally, minimum
 and maximum levels:
+
 <DL>
 <DD>
 <B>r.contour [-qn]</B> <B>input=</B><I>name</I> <B>output=</B><I>name</I>
 [<B>levels=</B><I>value</I>,<I>value</I>,...,<I>value</I>] [<B>minlevel=</B><I>value</I>]
-[<B>maxlevel=</B><I>value</I>] [<B>step=</B><I>value</I>]</DD>
+[<B>maxlevel=</B><I>value</I>] [<B>step=</B><I>value</I>]
+[<B>cut=</B><I>value</I>] 
+</DD>
 </DL>
+
 To run the program interactively, the user may simply type <B>r.contour</B>
 at the command line and will be prompted for parameter values.
 <BR>&nbsp;
@@ -58,41 +67,41 @@ Parameters:</H3>
 <DL>
 <DT>
 <B>input=</B><I>name</I></DT>
-
 <DD>
 Name of input raster map layer.</DD>
 
 <DT>
 <B>output=</B><I>name</I></DT>
-
 <DD>
 Name of the binary vector file created.</DD>
 
 <DT>
 <B>levels=</B><I>value</I>,<I>value</I>,...,<I>value</I></DT>
-
 <DD>
 Comma separated list of desired levels.</DD>
 
 <DT>
 <B>minlevel=</B><I>value</I></DT>
-
 <DD>
 Beginning (lowest) value to be used when stepping through contours. Default
 is minimum data value.</DD>
 
 <DT>
 <B>maxlevel=</B><I>value</I></DT>
-
 <DD>
 Ending (highest) value to be used when stepping through contours. Default
 is maximum data value.</DD>
 
 <DT>
 <B>step=</B><I>value</I></DT>
-
 <DD>
 Increment between contour levels.</DD>
+
+<DT>
+<B>cut=</B><I>value</I></DT>
+<DD>
+Minimum number of points for a contour line (0 -> no limit, default: 0)
+</DD>
 </DL>
 &nbsp;
 <H2>
@@ -106,8 +115,16 @@ a step are specified, the list will be produced and the step will be ignored.
 <P>If a contour level exactly matches a category value in the raster file,
 the contour line may backtrack on itself, causing illegal arcs to be produced
 in the output GRASS vector file.
+
+<P>The optional <em>cut</em> parameter allows to specify a minimum number of
+point for a contour line to be put into output vector map, so that small
+spurs, single points and so on won't be present and the output will be more
+clear.
+
 <H2>
-AUTHOR</H2>
-Terry Baker, U.S. Army Construction Engineering Research Laboratory
+AUTHORS</H2>
+Terry Baker, U.S. Army Construction Engineering Research Laboratory<br>
+3/2001: cut parameter and fixes by Andrea Aime (aaime@libero.it)
+
 </BODY>
 </HTML>
