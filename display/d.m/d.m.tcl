@@ -201,6 +201,23 @@ proc Dm::display { } {
     DmGroup::display "root"
 }
 
+# display all
+proc Dm::displayall { } {
+    
+    set cmd "g.region -d"
+    Dm::execute $cmd 
+
+    Dm::display
+}
+
+# zoom
+proc Dm::zoom { } {
+    
+    set cmd "d.zoom"
+    Dm::execute $cmd 
+
+}
+
 # display node
 proc Dm::display_node { node } {
     variable tree

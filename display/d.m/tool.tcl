@@ -17,6 +17,18 @@ proc DmToolBar::create { tb  } {
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
         -helptext "Display layers"
 
+    # display all
+    $bbox1 add -image [image create photo -file "$dmpath/display.all.gif"] \
+        -command "Dm::displayall" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
+        -helptext "Display all (default region)"
+
+    # zoom
+    $bbox1 add -image [image create photo -file "$dmpath/zoom.gif"] \
+        -command "Dm::zoom" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
+        -helptext "Zoom"
+
     # query
     $bbox1 add -image [image create photo -file "$dmpath/query.gif"] \
         -command "Dm::query" \
