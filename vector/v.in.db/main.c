@@ -130,7 +130,10 @@ int main (int argc, char *argv[])
     sprintf ( buf, "select %s, %s, %s", keycol_opt->answer, xcol_opt->answer, ycol_opt->answer );
     db_set_string ( &sql, buf);
   
-    if ( with_z ) db_append_string ( &sql,  zcol_opt->answer );
+    if ( with_z ) {
+        sprintf ( buf, ", %s", zcol_opt->answer );
+	db_append_string ( &sql,  buf );
+    }
 
     sprintf ( buf, " from %s", table_opt->answer );
     db_append_string ( &sql, buf);
