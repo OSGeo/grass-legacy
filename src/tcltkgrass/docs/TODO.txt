@@ -1,0 +1,17 @@
+This is the wish-list for TCLTKGRASS
+
+
+Medium:
+- add a r.mapcalc gui similar to xgmapcalc
+- change of database directory, LOCATION and MAPSET online
+
+
+Future (far away?):
+- create a running, platform independent superview :)
+
+
+--------------------------------------------------------------
+Send your comments and new code to
+
+   Jacques Bouchard    and/or   Markus Neteler 1998
+   bouchard@onera.fr            neteler@geog.uni-hannover.de
