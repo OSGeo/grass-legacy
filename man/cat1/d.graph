@@ -1,7 +1,7 @@
 
 
 
-d.graph              GRASS Reference Manual               d.graph
+d.graph <main>       GRASS Reference Manual        <main> d.graph
 
 
 
@@ -60,14 +60,14 @@ DESCRIPTION
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-d.graph              GRASS Reference Manual               d.graph
+d.graph <main>       GRASS Reference Manual        <main> d.graph
 
 
 
@@ -126,14 +126,14 @@ d.graph              GRASS Reference Manual               d.graph
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-d.graph              GRASS Reference Manual               d.graph
+d.graph <main>       GRASS Reference Manual        <main> d.graph
 
 
 
@@ -192,7 +192,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
