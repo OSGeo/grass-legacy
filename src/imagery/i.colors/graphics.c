@@ -44,7 +44,7 @@ Init_graphics()
     R_color_table_fixed();
     R_color_offset (0);
 
-    Dclearscreen();
+    Dscreen();
 
     SCREEN_TOP    = R_screen_top();
     SCREEN_BOTTOM = R_screen_bot();
