@@ -1,0 +1,11 @@
+LIBES = $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(GISLIB) -lpq 
+EXTRA_CFLAGS=-g -I/usr/local/pgsql/include 
+PGM       = $(BIN_ALPHA_CMD)/pg.where
+
+LIST = \
+	where2.o order.o readfile.o SQL.o 
+        
+$(PGM): $(LIST) $(LIBES)
+	$(CC) -g $(LDFLAGS) -I/usr/local/pgsql/include -o $@  $(LIST) $(LIBES) $(MATHLIB)
+
+$(LIBES): #
