@@ -1,4 +1,6 @@
+#include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
@@ -6,68 +8,107 @@
 
 static int max(int,int);
 
-int make_window_box ( struct Cell_head *window, double magnify)
+int make_window_box ( struct Cell_head *window, double magnify, int full, int hand)
 {
-    char buffer[64] ;
+    char buffer[1000] ;
     int screen_x, screen_y ;
     double px, py, ux1, uy1, ux2, uy2 ;
-    double north,south,east,west, ns, ew;
+    double ns, ew;
     int button ;
     int cur_screen_x, cur_screen_y ;
-    int quitonly;  /* required if user just wants to quit d.zoom */
-    int prebutton; /* which previous button was pressed? */
     int mode; /* 1, 2 */
-    int resetwin;
+    int resetwin, resetres;
     struct Cell_head defwin;
     int printmenu = 1;
-    int limit;
+    int limit, t;
     
     G_get_default_window(&defwin);
-    
+
     mode = 1;
     while (1) {
 	resetwin = 0;
-	if ( printmenu ) {
-	    fprintf(stderr, "\n\nButtons:\n") ;
-	    fprintf(stderr, "%s 1. corner\n", LBTN) ;
-	    fprintf(stderr, "%s Unzoom\n", MBTN) ;
-	    fprintf(stderr, "%s Main menu\n\n", RBTN) ;
-	    printmenu = 0;
-	}
+        if ( !hand ) {
+	    if ( printmenu ) {
+		fprintf(stderr, "\n\nButtons:\n") ;
+		fprintf(stderr, "%s 1. corner\n", LBTN) ;
+		fprintf(stderr, "%s Unzoom\n", MBTN) ;
+		if ( full )
+		    fprintf(stderr, "%s Main menu\n\n", RBTN) ;
+		else 
+		    fprintf(stderr, "%s Quit\n\n", RBTN) ;
 
+		printmenu = 0;
+	    }
+	} else {
+	    if ( mode == 1 )
+		fprintf(stderr, "\r1. corner") ;
+	    else
+		fprintf(stderr, "\r2. corner") ;
+	}
 	if ( mode == 1 ) {
-            R_get_location_with_pointer(&screen_x, &screen_y, &button);
+	    if ( !hand ) {
+		R_get_location_with_pointer(&screen_x, &screen_y, &button);
+	    } else {
+	        R_get_location_with_box(0, 0, &screen_x, &screen_y, &button) ;
+	    }
 	    cur_screen_x = screen_x;
 	    cur_screen_y = screen_y;
-	}
-	else
+	} else	{
 	    R_get_location_with_box(cur_screen_x, cur_screen_y, &screen_x, &screen_y, &button) ;
+	}
 	
 	/* For print only */
 	px = D_d_to_u_col((double)screen_x)  ;
 	py = D_d_to_u_row((double)screen_y)  ;
-        print_coor ( window, py, px );
+        if ( !hand ) 
+            print_coor ( window, py, px );
 	
 	switch(button) {
 	    case LEFTB:
-		if ( mode == 1 ) {
-	            fprintf(stderr, "\n\nButtons:\n") ;
-		    fprintf(stderr, "%s 1. corner (reset)\n", LBTN) ;
-		    fprintf(stderr, "%s 2. corner\n", MBTN) ;
-		    fprintf(stderr, "%s Main menu\n\n", RBTN) ;
+		if ( !hand ) {
+		    if ( mode == 1 ) {
+			fprintf(stderr, "\n\nButtons:\n") ;
+			fprintf(stderr, "%s 1. corner (reset)\n", LBTN) ;
+			fprintf(stderr, "%s 2. corner\n", MBTN) ;
+			if ( full )
+			    fprintf(stderr, "%s Main menu\n\n", RBTN) ;
+			else 
+			    fprintf(stderr, "%s Quit\n\n", RBTN) ;
+		        mode = 2;
+		    }
+		    if ( mode == 2 ) {
+		      cur_screen_x = screen_x ;
+		      cur_screen_y = screen_y ;
+		    }
+		} else { /* hand */
+		    if ( mode == 1 ) {
+                        mode = 2;
+		    } else {
+			ux1 = D_d_to_u_col((double)cur_screen_x)  ;
+			uy1 = D_d_to_u_row((double)cur_screen_y)  ;
+			ux2 = D_d_to_u_col((double)screen_x)  ;
+			uy2 = D_d_to_u_row((double)screen_y)  ;
+		        resetwin = 1;
+		        mode = 1;
+		    }
 		}
-		if ( mode == 2 ) {
-		  cur_screen_x = screen_x ;
-		  cur_screen_y = screen_y ;
-		}
-		mode = 2;
 		break ;
 	    case MIDDLEB:
 		if ( mode == 1 ) { /* unzoom */
 	            ux2 = D_d_to_u_col((double)screen_x)  ;
 	            uy2 = D_d_to_u_row((double)screen_y)  ;
-		    ew = (window->east - window->west)/magnify;
-		    ns = (window->north - window->south)/magnify;
+		    ew = window->east - window->west;
+		    ns = window->north - window->south;
+
+		    if ( ns <= window->ns_res )
+		        ns = 2 * window->ns_res;
+		    else
+		        ew /= magnify;
+
+		    if ( ew <= window->ew_res ) 
+			ew = 2 * window->ew_res;
+		    else
+		        ns /= magnify;
 
 		    ux1 = window->east + ew/2;
 		    ux2 = window->west - ew/2;
@@ -80,60 +121,21 @@ int make_window_box ( struct Cell_head *window, double magnify)
 	            uy2 = D_d_to_u_row((double)screen_y)  ;
 	            printmenu = 1;
 		    mode = 1;
-	            fprintf(stderr, "\n") ;
 		}
+	        fprintf(stderr, "\n") ;
 		resetwin = 1;
 		break;
 	    case RIGHTB:
+                fprintf(stderr, "\n") ;
 		return 1;
 		break;
 	}
 	if ( resetwin ) {
-	    north = uy1>uy2?uy1:uy2 ;
-	    south = uy1<uy2?uy1:uy2 ;
-	    west  = ux1<ux2?ux1:ux2 ;
-	    east  = ux1>ux2?ux1:ux2 ;
-	    
-            limit = 0;
-	    if ( north > defwin.north ) {
-	       /* north = defwin.north; */
-	       fprintf(stderr, "\nNorth limit of region reached") ;
-               limit = 1;
-	    } 
-	    if ( south < defwin.south ) {
-	       /* south = defwin.south; */
-	       fprintf(stderr, "\nSouth limit of region reached") ;
-               limit = 1;
-	    } 
-	    if ( east > defwin.east ) {
-	       /* east = defwin.east; */
-	       fprintf(stderr, "\nEast limit of region reached") ;
-               limit = 1;
-	    } 
-	    if ( west < defwin.west ) {
-	       /* west = defwin.west; */
-	       fprintf(stderr, "\nWest limit of region reached") ;
-               limit = 1;
-	    } 
-	    if ( limit ) {
-		printmenu = 1;
-                fprintf(stderr, "\n\n") ;
-	    }
-	    
-	    window->north = north;
-	    window->south = south;
-	    window->east  = east ;
-	    window->west  = west ;
-	    
-	    print_win ( window, north, south, east, west );
-
-	    G_put_window(window);
-	    G_set_window(window);
-	    redraw();
-
+	    set_win ( window, ux1, uy1, ux2, uy2, hand);
 	}
-    } ;
+    } 
 
+    fprintf(stderr, "\n") ;
     return 1; /* not reached */
 }
 
