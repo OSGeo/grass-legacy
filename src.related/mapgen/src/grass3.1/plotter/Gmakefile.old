@@ -1,0 +1,37 @@
+
+
+# @(#)Gmakefile	2.2   7/24/87
+
+
+UNIX_BIN = $(GRAPH)/bin
+INCL = $(GRAPH)/src/include
+INCLG = $(GRASS)/src/libes
+
+
+DEVLST = $(GRAPH)/src/graphics/plotter/devlist.o
+MAPGEN =$(DEVLST)\
+	$(GRAPH)/src/graphics/plotter/libplt.a \
+	$(GRAPH)/src/graphics/plotter/libdev.a \
+	$(GRAPH)/src/lib/libgraph.a
+
+LDFLAGS = -s
+
+OPT = -O
+
+CFLAGS = $(OPT) -I$(INCL) -I$(INCLG)  -D_GENVB=\"GRAPHB\"
+
+
+OFILES = \
+	$(GRAPH)/src/graphics/plotter/plotter.o DGRASS.o
+
+
+$(UNIX_BIN)/plotter: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(DEVLST)
+	cp plotter.o $(GRAPH)/src/graphics/plotter/plotter.o
+	cp devlist.o $(GRAPH)/src/graphics/plotter/devlist.o
+	$(CC) $(LDFLAGS) -o $@ $(CFLAGS) $(OFILES) $(MAPGEN) $(DISPLAYLIB) $(RASTERLIB) $(DAVESLIB) $(GISLIB) $(MATHLIB)
+
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+
