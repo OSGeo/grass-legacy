@@ -33,11 +33,12 @@
 
 
 
-struct quadruple *point_new(x,y,z,w)
+struct quadruple *point_new(x,y,z,w,sm)
  double x;
  double y;
  double z;
  double w;
+ double sm;
 {
 struct quadruple *point;
 
@@ -49,6 +50,7 @@ point->x = x;
 point->y = y;
 point->z = z;
 point->w = w;
+point->sm = sm;
 
 return point;
 }
@@ -88,6 +90,7 @@ for (i=0;i<=KMAX;i++) {
   data->points[i].y=0;
   data->points[i].z=0;
   data->points[i].w=0;
+  data->points[i].sm=0;
 }
 
 return data;
@@ -168,6 +171,7 @@ int oct_add_data(point,data)
        data->points[n].y=point->y;
        data->points[n].z=point->z;
        data->points[n].w=point->w;
+       data->points[n].sm=point->sm;
      }
   return cond;
 }
@@ -320,6 +324,7 @@ int oct_get_points(points,data,xmin,xmax,ymin,ymax,zmin,zmax,MAX)
 	points[l].y = point->y;
         points[l].z = point->z;
         points[l].w = point->w;
+	points[l].sm = point->sm;
 	l++;
       }
     }

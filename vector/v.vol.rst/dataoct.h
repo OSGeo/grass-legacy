@@ -14,6 +14,7 @@ struct quadruple   {
   double y;
   double z;
   double w;
+  double sm;
 };
 
 struct octdata {
