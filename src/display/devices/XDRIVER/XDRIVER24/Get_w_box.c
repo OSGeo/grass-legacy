@@ -51,7 +51,7 @@ int Get_location_with_box (
 
     /* Get events that track the pointer to resize the RubberBox until
      * ButtonReleased */
-    event_mask = ButtonPressMask | PointerMotionMask; 
+    event_mask = ButtonPressMask | PointerMotionMask | ExposureMask; 
     XSelectInput(dpy, grwin, event_mask);
 
     /* XOR, so double drawing returns pixels to original state */
@@ -68,8 +68,17 @@ int Get_location_with_box (
 
     while (1) {
         XWindowEvent(dpy, grwin, event_mask, &event);
-
+	/*********************
+	while (XCheckWindowEvent(dpy, grwin, event_mask, &event) == False)
+	{
+	    Service_Xevent();
+	    sleep(1); 
+	}
+	**********************/
         switch (event.type) {
+	case Expose:
+	    handleExposeEvent();
+	    break;
         case ButtonPress:
             *button = event.xbutton.button;
             *nx = event.xbutton.x;

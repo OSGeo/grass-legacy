@@ -137,6 +137,22 @@ int Service_Xevent (void)
     }
     else if (do_expose)
     {
+       return handleExposeEvent();
+    }
+
+    return 0;
+}
+
+int _time_stamp (PAD *pad)
+{
+    delete_item(pad,"time");
+    append_item(pad,"time","1");
+
+    return 0;
+}
+
+int handleExposeEvent (void)
+{
         XWindowAttributes xwa;
 
         /* Get the window's current attributes. */
@@ -153,19 +169,8 @@ int Service_Xevent (void)
         if (!backing_store)
             XCopyArea(dpy, bkupmap, grwin, gc, 0, 0, SC_WID, SC_HITE,
                 0, 0);
-    }
 
-    return 0;
+        return 0;
 }
-
-int _time_stamp (PAD *pad)
-{
-    delete_item(pad,"time");
-    append_item(pad,"time","1");
-
-    return 0;
-}
-
-
 /*** end Serve_Xevent.c ***/
 /* vim: set softtabstop=4 shiftwidth=4 expandtab : */
