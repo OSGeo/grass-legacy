@@ -35,6 +35,7 @@ src/display/devices/lib
 src/display/devices/monitorcap
 src/display/devices/CELL
 src/display/devices/XDRIVER
+src/display/devices/HTMLMAP
 src/fonts/for_grass
 src/front.end
 ################
