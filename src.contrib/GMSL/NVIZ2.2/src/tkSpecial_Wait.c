@@ -57,13 +57,14 @@ static void		WaitWindowProc _ANSI_ARGS_((ClientData clientData,
  */
 
 	/* ARGSUSED */
-int
-Tk_Tkspecial_waitCmd(clientData, interp, argc, argv)
-    ClientData clientData;	/* Main window associated with
+int 
+Tk_Tkspecial_waitCmd (
+    ClientData clientData,	/* Main window associated with
 				 * interpreter. */
-    Tcl_Interp *interp;		/* Current interpreter. */
-    int argc;			/* Number of arguments. */
-    char **argv;		/* Argument strings. */
+    Tcl_Interp *interp,		/* Current interpreter. */
+    int argc,			/* Number of arguments. */
+    char **argv		/* Argument strings. */
+)
 {
     Tk_Window tkwin = (Tk_Window) clientData;
     int c, done;
@@ -161,12 +162,13 @@ Tk_Tkspecial_waitCmd(clientData, interp, argc, argv)
 
 	/* ARGSUSED */
 static char *
-WaitVariableProc(clientData, interp, name1, name2, flags)
-    ClientData clientData;	/* Pointer to integer to set to 1. */
-    Tcl_Interp *interp;		/* Interpreter containing variable. */
-    char *name1;		/* Name of variable. */
-    char *name2;		/* Second part of variable name. */
-    int flags;			/* Information about what happened. */
+WaitVariableProc (
+    ClientData clientData,	/* Pointer to integer to set to 1. */
+    Tcl_Interp *interp,		/* Interpreter containing variable. */
+    char *name1,		/* Name of variable. */
+    char *name2,		/* Second part of variable name. */
+    int flags			/* Information about what happened. */
+)
 {
     int *donePtr = (int *) clientData;
 
@@ -175,19 +177,21 @@ WaitVariableProc(clientData, interp, name1, name2, flags)
 }
 
 	/*ARGSUSED*/
-static void
-WaitVisibilityProc(clientData, eventPtr)
-    ClientData clientData;	/* Pointer to integer to set to 1. */
-    XEvent *eventPtr;		/* Information about event (not used). */
+static void 
+WaitVisibilityProc (
+    ClientData clientData,	/* Pointer to integer to set to 1. */
+    XEvent *eventPtr		/* Information about event (not used). */
+)
 {
     int *donePtr = (int *) clientData;
     *donePtr = 1;
 }
 
-static void
-WaitWindowProc(clientData, eventPtr)
-    ClientData clientData;	/* Pointer to integer to set to 1. */
-    XEvent *eventPtr;		/* Information about event. */
+static void 
+WaitWindowProc (
+    ClientData clientData,	/* Pointer to integer to set to 1. */
+    XEvent *eventPtr		/* Information about event. */
+)
 {
     int *donePtr = (int *) clientData;
 

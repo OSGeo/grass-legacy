@@ -109,9 +109,8 @@ extern int
 
 extern Tk_Window mainWindow;
 
-init_commands(interp, data)
-     Tcl_Interp *interp;
-     Nv_data *data;
+int 
+init_commands (Tcl_Interp *interp, Nv_data *data)
 {
   /* Disabled security version of send */
 /*  Tcl_CreateCommand(interp, "send", Tk_SendCmd,
