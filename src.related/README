@@ -1,0 +1,10 @@
+The following directories in "src.related" contain source code that,
+though not integrated into GRASS, is related to GRASS.  They are each
+complete stand-alone systems.   Only bnoise has built-in capabilities
+for generating GRASS files.   All of the others have been experimentally
+linked with GRASS for various demonstrations, but do not contain user
+supported GRASS links.
+
+bnoise          - Fortran blast-noise analysis program (CERL) with C user
+    		      front-end for GRASS users.
+grass.armsed    - Fortran watershed analysis program.
