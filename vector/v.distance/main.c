@@ -185,7 +185,6 @@ int main (int argc, char *argv[])
     to_field = atoi ( to_field_opt->answer); 
     
     max = atof (max_opt->answer);
-    G_debug (0, "max = %f", max );
 
     /* Read upload and column options */
     /* count */
