@@ -1,0 +1,4 @@
+$(BIN)/Dcell+legend: script.sh
+	rm -f $@
+	cp $? $@
+	chmod +rx $@
