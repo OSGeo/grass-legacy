@@ -1,0 +1,61 @@
+shell=grass$(VERSION_NUMBER)
+
+EXTRA_CFLAGS = -DD_LOCATION_NAME=\"$(DEFAULT_LOCATION)\" -DD_GISDBASE=\"$(DEFAULT_DATABASE)\" -DVERSION_NUMBER=\"'$(VERSION_NUMBER)'\"
+
+all: unix \
+     $(ETC)/GIS.sh \
+     $(ETC)/gis_set \
+     $(ETC)/clean_temp \
+     $(ETC)/lock \
+     $(ETC)/run \
+     $(ETC)/echo \
+     $(ETC)/gis_intro
+
+unix:
+	@test -d $(UNIX_BIN) || (echo 'UNIX_BIN($(UNIX_BIN))' not found; exit 1)
+	@test -w $(UNIX_BIN) || (echo 'UNIX_BIN($(UNIX_BIN))' not writeable; exit 1)
+	@echo making $(UNIX_BIN)/$(shell)
+	rm -f $(UNIX_BIN)/$(shell)
+	echo '#!/bin/sh' > $(UNIX_BIN)/$(shell)
+	echo GISBASE=$(GISBASE) >> $(UNIX_BIN)/$(shell)
+	echo export GISBASE >> $(UNIX_BIN)/$(shell)
+	echo exec '$$'GISBASE/etc/GIS.sh >> $(UNIX_BIN)/$(shell)
+	chmod +x $(UNIX_BIN)/$(shell)
+	@echo ""
+
+$(ETC)/GIS.sh: gis.head gis.shell gis.tail
+	@echo making $@
+	rm -f $@
+	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" gis.head > $@
+	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" gis.shell >> $@
+	cat gis.tail >> $@
+	chmod +x $@
+	@echo ""
+
+$(ETC)/gis_set: gis_set.o mke_mapset.o mke_loc.o chk_dbase.o $(GISLIB)
+	@echo making $@
+	$(CC) $(LDFLAGS) -o $@ gis_set.o mke_mapset.o mke_loc.o chk_dbase.o $(GISLIB) $(VASK)
+	@echo ""
+
+$(ETC)/echo: echo.o
+	$(CC) $(LDFLAGS) echo.o -o $@
+
+$(ETC)/clean_temp: clean_temp.o $(GISLIB)
+	$(CC) $(LDFLAGS) clean_temp.o $(GISLIB) -o $@
+
+$(ETC)/run: run.o
+	$(CC) $(LDFLAGS) run.o -o $@
+
+$(ETC)/lock: lock.o
+	$(CC) $(LDFLAGS) lock.o -o $@
+
+$(BIN)/exit:
+	touch $@
+	chmod 600 $@
+
+$(ETC)/gis_intro: gis_intro.tx
+	rm -f $@
+	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" gis_intro.tx > $@
+	chmod +r $@
+
+$(GISLIB): # in case library changes
