@@ -29,18 +29,20 @@ SUBDIRS1 = \
 	v.to.db \
 	v.to.rast
 
-OGRBASED = v.out.ogr v.in.ogr
-OPENDWGBASED = v.in.dwg
-
 include $(MODULE_TOPDIR)/include/Make/Dir.make
+
+OGRBASED = v.out.ogr v.in.ogr
 
 #compile if OGR present:
 ifneq ($(strip $(GDALLIBS)),)
     SUBDIRS2 = $(OGRBASED)
 endif
 
+
+OPENDWGBASED = v.in.dwg
+
 #compile if OPENDWG present:
-ifneq ($(strip $(OPENDWGINC)),)
+ifneq ($(strip $(OPENDWGINCPATH)),)
     SUBDIRS3 = $(OPENDWGBASED)
 endif
 
