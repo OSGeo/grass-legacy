@@ -1,0 +1,19 @@
+$Id$
+
+
+Rules to migrate GRASS 5.0 modules into GRASS 5.1
+
+While implementing GRASS 5.1 a major cleanup of GRASS modules
+has to be done. The following rules shall help the programmer
+to migrate a 5.0 module into the 5.1 environment.
+
+
+1. Add GPL statement
+
+
+2. Programming details:
+   o String buffer length:
+     - to be identical for all modules
+
+
+... to be extended...
