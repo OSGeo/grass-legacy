@@ -145,6 +145,8 @@ Polygon_abs(int *xarray, int *yarray, int count)
 
 	poly(points, count);
 
+	modified = 1;
+
 	return 0;
 }
 

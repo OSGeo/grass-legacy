@@ -27,11 +27,13 @@ int currentColor;
 unsigned int *xpixels;
 int true_color;
 int auto_write;
+int has_alpha;
 
 int width, height;
 unsigned int *grid;
 unsigned char palette[256][4];
 unsigned int transparent;
+int modified;
 
 static void 
 clear(int color)
@@ -94,7 +96,6 @@ Graph_Set(int argc, char **argv)
 		clear(color);
 	}
 
-
 	p = getenv("GRASS_TRANSPARENT");
 	if (p && strcmp(p, "TRUE") == 0)
 	{
@@ -103,10 +104,13 @@ Graph_Set(int argc, char **argv)
 			: transparent;
 
 		clear(color);
+		has_alpha = 1;
 	}
 
 	fprintf(stderr, "PNG: collecting to file: %s,\n     GRASS_WIDTH=%d, GRASS_HEIGHT=%d\n",
 		file_name, width, height);
+
+	modified = 1;
 
 	return 0;
 }
