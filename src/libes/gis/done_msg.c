@@ -5,10 +5,14 @@
 
 int G_done_msg(char *msg)
 {
-	char *user, *me;
+	char *me;
 	FILE *out;
 
-	user = getlogin();
+#ifdef __MINGW32__
+        static char *user = "mingw_user_name";
+#else
+	char *user = getlogin();
+#endif
 	if (user == NULL)
 		return 1;
 	me = G_whoami();
