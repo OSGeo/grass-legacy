@@ -1,0 +1,10 @@
+Mh2rmain	h2rmain.c	/^main(argc, argv)$/
+Mr2hmain	r2hmain.c	/^main(argc, argv)$/
+closefiles	closefiles.c	/^closefiles(rowbuf)$/
+getinput	getinput.c	/^void getinput()$/
+his2rgb	his2rgb.c	/^void his2rgb(rowbuffer, columns)$/
+openfiles	openfiles.c	/^void openfiles(rowbuf)$/
+putoutput	putoutput.c	/^putoutput()$/
+rgb2his	rgb2his.c	/^void rgb2his(rowbuffer, columns)$/
+save_args	command.c	/^save_args(pos, value)$/
+set_default_args	command.c	/^set_default_args()$/
