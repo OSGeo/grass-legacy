@@ -25,7 +25,7 @@ int R_RGB_raster(int n, int nrows,
 	_send_char_array(n,grn) ;
 	_send_char_array(n,blu) ;
 	_send_char_array(n,nul ? nul : red) ;
-	z = nul ;
+	z = (int) nul ;
 	_send_int(&z) ;
 
 	return 0;
