@@ -29,7 +29,7 @@ main( argc, argv)
 	exit( -1) ;
     }
 
-    G_gisinit ("GEO_POINT");
+    G_gisinit(argv[0]) ;
 
 /*  control_file contains info about the digitizer, tty, and the control
     points.
