@@ -1,4 +1,4 @@
-$Id: README,v 1.3 2000-11-01 16:47:40 markus Exp $
+$Id: README,v 1.4 2000-11-01 17:15:37 markus Exp $
 
 Contents of this directory:
 
@@ -12,12 +12,11 @@ python/
 	descriptions.
 
         Requirements:
-         Python     (python.rpm)
-         Python-XML (pyxml.rpm)
-         wxWindows  (wxwin.rpm)
-         wxPython   (wxPython.rpm)
-         wxgtk      (wxgtk.rpm)
-         wxGTK-gl   (wxGTK-gk.rpm)
+         Python     (python.rpm)   V.1.5
+         Python-XML (pyxml.rpm)    V.0.5.5
+         wxPython   (wxPython.rpm) V.2.2.2
+         wxgtk      (wxGTK.rpm)    V.2.2.2
+         wxGTK-gl   (wxGTK-gk.rpm) V.2.2.2
 
 Useful search engine:
  http://rpmfind.net/
