@@ -5,7 +5,7 @@
   -->
 <title>GRASS Imagery Library</title>
 
-\section intro Introduction to Imagery Library
+\section imageryintro Introduction to Imagery Library
 
 The <I>Imagery Library</I> was created for version 3.0 of GRASS to
 support integrated image processing directly in GRASS. It contains
