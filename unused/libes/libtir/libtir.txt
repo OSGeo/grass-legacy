@@ -1,7 +1,9 @@
 libtir: GRASS Type-Independent Raster library
 =============================================
 
+
 1. Data types
+=============
 
 @   typedef union _RASTER_MAP_ROW
 @   {
@@ -14,64 +16,65 @@ libtir: GRASS Type-Independent Raster library
     RASTER_MAP_ROW is a union which has pointers to all types of raster.
     This union can be easily used for any data type without a complicated
     type-casting.  See the following:
-    
+
         void *v;
         CELL cell;
-    
+
         v = (void *)G_malloc(...);
         ...
         cell = (CELL)((CELL *)v)[10];
-    
+
     Now you can use RASTER_MAP_ROW as follows:
-    
+
         RASTER_MAP_ROW buf;
         CELL cell;
-    
+
         buf.v = (void *)G_malloc(...);
         ...
         cell = buf.c[10];
-    
-    
+
+
 @   typedef struct _RASTER_ROW
 @   {
 @       RASTER_MAP_TYPE type;
 @       RASTER_MAP_ROW  row;
 @   } RASTER_ROW
-    
+
     RASTER_ROW has a type of raster and a RASTER_MAP_ROW buffer.  With this,
     we can bring all required info as one variable.
-    
-    
+
+
 @   typedef struct _RASTER_ROW2
 @   {
 @       RASTER_MAP_TYPE type;
 @       RASTER_MAP_ROW  *row;
 @   } RASTER_ROW2
-    
+
     Unlike RASTER_ROW, RASTER_ROW2 has a pointer to RASTER_MAP_ROW to contain
     a whole raster map in it.
-    
-    
+
+
 @   static char *G_type_name[] = { "CELL", "FCELL", "DCELL" }
-    
+
     This can be used to print a current type of raster.
-    
-    
+
+
 @   static char *G_type_spec[] = { "%%d",  "%%f",   "%%lf"  }
-    
+
     This may not be used. :-)
-    
-    
-    
+
+
+
 2. Base functions
-    
+=================
+
 @   double G_get_[cfd](RASTER_MAP_ROW buf, int col)
 
     gets double-casted col'th value from buf.
  G_get_[cfd] represents G_get_c for CELL, G_get_f for FCELL and
  G_get_d for DCELL respectively.
 
-    
+
 @   double *G_get_?s(RASTER_MAP_ROW buf, int col, int num, double *val, int idx)
 
     puts a num of values into (double *)(val+idx) from buf[col] value.
@@ -112,23 +115,23 @@ libtir: GRASS Type-Independent Raster library
 @   {
 @    G_get_cs, G_get_fs, G_get_ds
 @   }
-   
+
 @   static void (*G__set_r[])(RASTER_MAP_ROW buf, int col,
 @           double val, int num) =
 @   {
 @    G_set_c, G_set_f, G_set_d
 @   }
-   
+
 @   static void (*G__set_null_r[])(RASTER_MAP_ROW buf, int col, int num) =
 @   {
 @    G_set_null_c, G_set_null_f, G_set_null_d
 @   }
-   
+
 @   static int (*G__is_null_r[])(RASTER_MAP_ROW buf, int col) =
 @   {
 @    G_is_null_c, G_is_null_f, G_is_null_d
 @   }
-   
+
 @   static int (*G__str_r[])(RASTER_MAP_ROW buf, int col,
 @           char *str, int width, int prec) =
 @   {
@@ -144,6 +147,7 @@ libtir: GRASS Type-Independent Raster library
 
 
 3. User functions
+=================
 
     We don't need to use base functions directly.
 
@@ -157,7 +161,7 @@ libtir: GRASS Type-Independent Raster library
 
     == G__get_r[row1.type](row1.row, col)
 
-    
+
 @   void G_set_r(RASTER_ROW row1, int col, double val)
 
     == G__set_r[row1.type](row1.row, col, val, 1)
@@ -177,7 +181,7 @@ libtir: GRASS Type-Independent Raster library
 
     == G__str_r[row1.type](row1.row, col, str, width, prec)
 
- 
+
     We also have RASTER_ROW2 data type which is able to contain all cells
     in a map.  With this data type, we should give a row number to functions.
 
@@ -237,7 +241,7 @@ libtir: GRASS Type-Independent Raster library
 
     == G__get_rs[row1.type](row1.row, col, num, val, idx)
 
-   
+
 @   void G_set_rs(RASTER_ROW row1, int col, double val, int num)
 
     == G__set_r[row1.type](row1.row, col, val, num)
@@ -266,5 +270,6 @@ libtir: GRASS Type-Independent Raster library
 
 
 4. How to use
+=============
 
     On going
