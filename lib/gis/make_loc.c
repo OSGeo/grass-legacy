@@ -146,7 +146,7 @@ G_compare_projections( struct Key_Value *proj_info1,
 /* -------------------------------------------------------------------- */
     if( proj_units1 != NULL && proj_units2 != NULL
         && G_find_key_value( "meter", proj_units1 ) != NULL
-        && G_find_key_value( "meter", proj_units1 ) != NULL
+        && G_find_key_value( "meter", proj_units2 ) != NULL
         && atof(G_find_key_value( "meter", proj_units1 ))
            != atof(G_find_key_value( "meter", proj_units2 )) )
         return -2;
