@@ -557,11 +557,12 @@ segments_x_ray ( double X, double Y, struct line_pnts *Points)
     
     n_intersects = 0;
     for ( n = 0; n < Points->n_points-1; n++) {
-        G_debug ( 3, "X = %f Y = %f x1 = %f y1 = %f x2 = %f y2 = %f", X, Y, x1, y1, x2, y2 );
 	x1 = Points->x[n];
 	y1 = Points->y[n];
 	x2 = Points->x[n+1];
 	y2 = Points->y[n+1];
+
+        G_debug ( 3, "X = %f Y = %f x1 = %f y1 = %f x2 = %f y2 = %f", X, Y, x1, y1, x2, y2 );
 	
         /* I know, it should be possible to do that with less conditions, but it should be 
 	 * enough readable also! */
