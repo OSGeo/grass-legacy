@@ -195,9 +195,12 @@ color_menu (char *title)
     int div_color;
     int answer;
 
+/*
     if(strlen(title) > 20)
         error(1, "color_menu: title too long");
-   
+*/
+    options[0] = (char *) malloc(sizeof(char) * strlen(title) + 1);
+
     strcpy(options[0], title);
 
     background_color = D_translate_color("indigo");
