@@ -55,7 +55,8 @@ if test ! -f $INFILE_RAW
 fi
 
 # is it a .dgm file? Just see if .dgm extension is there:
-echo $INFILE | sed 's/\.dgm$//' >/dev/null
+#echo $INFILE | sed 's/\.dgm$//' >/dev/null
+echo $INFILE | grep .dgm >/dev/null
 if [ $? != 0 ]; then
  echo "ERROR: $INFILE_RAW is not a dgmfile (no .dgm extension)"
  echo "  usage: s.in.atkisdgm dgmfile"
@@ -63,7 +64,7 @@ if [ $? != 0 ]; then
 fi
 
 #summary of errors check
-if [ ERROR == 1 ]
+if [ $ERROR -ge 1 ]
 then
  echo "Stopped."
  exit 1
@@ -90,11 +91,13 @@ fi
 
 # ATKIS.dgm files in /tmp/$INFILE
 echo "Importing $INFILE_RAW..."
-#get map's date:
-`cat ./$INFILE_RAW | grep DATUM > /tmp/$INFILE.date`
+#get map's date and eliminate WINDOWS ^M CR:
+`cat ./$INFILE_RAW | grep DATUM  |sed -e "s/
+//g"  > /tmp/$INFILE.date`
 
 # get data
-`cat ./$INFILE_RAW | grep -v DATUM > /tmp/$INFILE`
+`cat ./$INFILE_RAW | grep -v DATUM |sed -e "s/
+//g"> /tmp/$INFILE`
 
 # converting /tmp/$INFILE in $LOCATION/site_lists/xxx.dgm
 
@@ -108,7 +111,7 @@ paste /tmp/mxy3 /tmp/mxy5 > /tmp/mxy6
 
 #add map's date:
 DATESTRING=`cat /tmp/$INFILE.date`
-echo $DATESTRING |sed -e "s/D/#D/1" > $LOCATION/site_lists/$INFILE
+echo $DATESTRING |sed -e "s/FILE/#FILE/g" > $LOCATION/site_lists/$INFILE
 
 #add comments:
 echo "#X    Y     Cat Attr1 Attr2 Attr3 Attr4 Attr5"   >> $LOCATION/site_lists/$INFILE
@@ -116,6 +119,7 @@ echo "# East North no. elev  RR    HH    slope aspect" >> $LOCATION/site_lists/$
 echo "#" >> $LOCATION/site_lists/$INFILE
 echo "# RR: Rechtswertkomponente des Gradientenvektors (in gon)"  >> $LOCATION/site_lists/$INFILE
 echo "# HH: Hochwertkomponente des Gradientenvektors (in gon)" >> $LOCATION/site_lists/$INFILE
+echo "#" >> $LOCATION/site_lists/$INFILE
 
 #fill in elevation data:
 cat /tmp/mxy6 | tr "[\t]" "[+]" | tr -d '+' >> $LOCATION/site_lists/$INFILE
