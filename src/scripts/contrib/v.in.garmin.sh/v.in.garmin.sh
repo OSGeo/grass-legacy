@@ -180,13 +180,13 @@ if [ $WPT -eq 1 ] ; then
 
     case "$PROJ" in
 	UTM)
-	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %lf %lf\n", $8, $7) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P
+	    tac $TMP | awk 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %f %f\n", $8, $7) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P
 	    ;;
 	DDD)
-	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %lf %lf\n", $5, $6) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P_raw
+	    tac $TMP | awk 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %f %f\n", $5, $6) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P_raw
 	    ;;
 	GKK)
-	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %lf %lf\n", $6, $5) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P
+	    tac $TMP | awk 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %f %f\n", $6, $5) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P
 	    ;;
 	*)
 	    echo "Unsupported format [$PROJ]" 1>&2
@@ -213,13 +213,13 @@ if [ $RTE -eq 1 ] ; then
 
     case "$PROJ" in
 	UTM)
-	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %lf %lf\n", $8, $7) ; R=R+1 } $1=="R" { printf("L %u\n", R) ; R=0 }' | tac >> ${TMP}_P
+	    tac $TMP | awk 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %f %f\n", $8, $7) ; R=R+1 } $1=="R" { printf("L %u\n", R) ; R=0 }' | tac >> ${TMP}_P
 	    ;;
 	DDD)
-	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %lf %lf\n", $5, $6) ; R=R+1 } $1=="R" { printf("L %d\n", R) ; R=0 }' | tac >> ${TMP}_P_raw
+	    tac $TMP | awk 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %f %f\n", $5, $6) ; R=R+1 } $1=="R" { printf("L %d\n", R) ; R=0 }' | tac >> ${TMP}_P_raw
 	    ;;
 	GKK)
-	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %lf %lf\n", $6, $5) ; R=R+1 } $1=="R" { printf("L %u\n", R) ; R=0 }' | tac >> ${TMP}_P
+	    tac $TMP | awk 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %f %f\n", $6, $5) ; R=R+1 } $1=="R" { printf("L %u\n", R) ; R=0 }' | tac >> ${TMP}_P
 	    ;;
 	*)
 	    echo "Unsupported format [$PROJ]" 1>&2
@@ -245,13 +245,13 @@ if [ $TRK -eq 1 ] ; then
 
     case "$PROJ" in
 	UTM)
-	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="T" { printf(" %lf %lf\n", $5, $6) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P
+	    tac $TMP | awk 'BEGIN { FS="\t" ; R=0 } $1=="T" { printf(" %f %f\n", $5, $6) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P
 	    ;;
 	DDD)
-	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="T" { printf(" %lf %lf\n", $3, $4) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P_raw
+	    tac $TMP | awk 'BEGIN { FS="\t" ; R=0 } $1=="T" { printf(" %f %f\n", $3, $4) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P_raw
 	    ;;
 	GKK)
-	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="T" { printf(" %lf %lf\n", $4, $3) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P
+	    tac $TMP | awk 'BEGIN { FS="\t" ; R=0 } $1=="T" { printf(" %f %f\n", $4, $3) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P
 	    ;;
 	*)
 	    echo "Unsupported format [$PROJ]" 1>&2
