@@ -31,10 +31,11 @@
 #include "gis.h"
 /* Include "/user/grass3.1/src/mapdev/lib/dig_structs.h while being at       */
 /* location:  "/user/grass3.1/src.alpha/D/prog_inter/distance".              */
-#include "/home/archive/grass3/src/mapdev/lib/dig_structs.h"
+#include "/usr/local/grass42/src421/src/mapdev/diglib/dig_structs.h"
+
 /* Include "/user/grass3.1/src/mapdev/lib/dig_defines.h while being at       */
 /* location:  "/user/grass3.1/src.alpha/D/prog_inter/distance".              */
-#include "/home/archive/grass3/src/mapdev/lib/dig_defines.h"
+#include "/usr/local/grass42/src421/src/mapdev/diglib/dig_defines.h"
 
 #include <stdio.h>
 #define abs(x)			(x>=0 ? x : -(x))
