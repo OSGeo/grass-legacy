@@ -1,9 +1,13 @@
+/* $Id$ */
 #include <string.h>
 #include <unistd.h>
+#include <ctype.h>
+
 #include "gis.h"
 #include "site.h"
+
 #include "local_proto.h"
-#include <ctype.h>
+
 
 #define isnull(c) (c=='\0')
 
@@ -16,7 +20,7 @@ Site *get_site (FILE *fd, int dims, char *fs, int *has_cat)
     char *b;
     char ebuf[256], nbuf[256];
     static int first = 1;
-    static int line = 0;
+    static unsigned int line = 0;
     static int tty;
     static int proj;
     int i, err,itmp;
@@ -27,7 +31,7 @@ Site *get_site (FILE *fd, int dims, char *fs, int *has_cat)
     static Site *site;
 
     if (first) {
-        site = G_site_new_struct (-1, dims, 0, 0);
+	site = G_site_new_struct (-1, dims, 0, 0);
 
         ibuf = G_malloc (1024 * sizeof (char));
         buf = G_malloc (1024 * sizeof (char));
@@ -54,10 +58,26 @@ Site *get_site (FILE *fd, int dims, char *fs, int *has_cat)
             line++;
 
         if (!G_getl (ibuf, 1024, fd)) return (Site *) NULL;
-        buf = save;
 
+	/* G_squeeze cleans DOS newlines, but that makes Mac OS9 impossible
+	     to check for, so we do this test first */
+	if(strchr(ibuf,'\r') != NULL) {
+	    if('\r' == ibuf[strlen(ibuf)-1]) {
+		ibuf[strlen(ibuf)-1] = '\0';  /* cleanse */
+		if(strchr(ibuf,'\r') != NULL) /* any left, eg a short Mac OS9 file */
+		    G_fatal_error("Input file not in UNIX format (invalid newline)");
+		else if(1 == line) /* ie DOS '\r\n' newline */
+		    G_warning("Input file is DOS format. Attempting anyway ..");
+	    }
+	    else /* any others, eg Mac OS9 '\r' or a backwards DOS newline */
+		 /* fgets() gets it wrong, so there is little we can do.   */
+		G_fatal_error("Line %d: Input file not in UNIX format (invalid newline)", line);
+	}
+
+        buf = save;
         strcpy (buf, ibuf);
         buf = G_squeeze (buf);
+
         if (*buf == 0) return (Site *) NULL;
         if (strcmp (buf, "end") == 0) return (Site *) NULL;
         if (fs) {
@@ -122,7 +142,7 @@ Site *get_site (FILE *fd, int dims, char *fs, int *has_cat)
                             site->dbl_alloc * sizeof (double));
                 }
                 if ((err = sscanf (buf, "%%%lf", &(site->dbl_att[d++]))) < 1)
-                    G_warning ("error scanning floating point attribute: %s", buf);
+                    G_warning ("error scanning floating point attribute: [%s]", buf);
                 buf = my_next_att (buf);
                 break;
             case '@':			/* string attribute */
@@ -153,6 +173,9 @@ Site *get_site (FILE *fd, int dims, char *fs, int *has_cat)
                     buf = my_next_att (buf);
                     break; /* end of modification 2/00 rsb */
                 }
+	    case '\0':  /* EOL, null encountered */
+		buf = my_next_att (buf);
+		break;
             default: /* changed to unprefixed decimals */
 /* commented 12/99: default shall be decimal field! M.N.*/
     /* defaults to string attribute */
@@ -187,7 +210,7 @@ Site *get_site (FILE *fd, int dims, char *fs, int *has_cat)
                             site->dbl_alloc * sizeof (double));
                 }
                 if ((err = sscanf (buf, "%lf", &(site->dbl_att[d++]))) < 1)
-                    G_warning ("error scanning floating point attribute: %s", buf);
+                    G_warning ("error scanning floating point attribute: <%s>", buf);
                 buf = my_next_att (buf);
                 break;
 #else
@@ -198,8 +221,8 @@ Site *get_site (FILE *fd, int dims, char *fs, int *has_cat)
                                 site->dbl_alloc * sizeof (double));
                     }
                     if ((err = sscanf (buf, "%lf", &(site->dbl_att[d++]))) < 1)
-                        G_warning ("error scanning floating point attribute: %s", buf);
-                    buf = my_next_att (buf);
+                        G_warning ("error scanning floating point attribute: '%s'", buf);
+		    buf = my_next_att (buf);
                 }
                 else { /* Convert as string */
                     if (c >= site->str_alloc) {
