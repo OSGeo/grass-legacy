@@ -1,0 +1,106 @@
+.nr LL 5.5i
+.ad b
+.hy 1
+.TH NAD27 1 2/20/89 "USGS/OEMG Systems"
+.SH NAME
+NAD27, for27, inv27 \- NAD27 State plane projections
+.SH SYNOPSIS
+.B NAD27
+[
+.I state
+]
+.br
+.BI for27 " state"
+[
+.B \-F
+] [
+.BI proj "\(emparameters"
+] [
+.I file
+\&... ]
+.br
+.BI inv27 " state"
+[
+.B \-M
+] [
+.BI proj "\(emparameters"
+] [
+.I file
+\&... ]
+.SH DESCRIPTION
+.B For27
+and
+.B inv27
+provide a convenient method for specifications of respective
+forward and inverse projection of geographic and state plane
+coordinates.
+The parameter
+.I state
+refers to one of the state plane systems
+(listed below)
+which are abbreviated by state Postal identifier
+and possible sub-zone within the state.
+.P
+Execution of
+.B NAD27
+without an argument will give a complete listing of state
+plane systems supported.
+If the postal id is substituted employed
+as the argument
+.I state
+then only the applicable state zones will be listed.
+.sp .5
+.TS
+center box;
+l l l l l l l l.
+AK1	AZw	GAw	KSs	MNc	NJ	PAn	VAn
+AK2	CA1	GU	KYn	MNn	NMc	PAs	VAs
+AK3	CA2	HI1	KYs	MNs	NMe	PR	VI
+AK4	CA3	HI2	LAn	MOc	NMw	RI	VIsc
+AK5	CA4	HI3	LAos	MOe	NVc	SCn	VT
+AK6	CA5	HI4	LAs	MOw	NVe	SCs	WAn
+AK7	CA6	HI5	MAi	MSe	NVw	SDn	WAs
+AK8	CA7	IAn	MAm	MSw	NYc	SDs	WIc
+AK9	COc	IAs	MD	MTc	NYe	TN	WIn
+AK10	COn	IDc	MEe	MTn	NYli	TXc	WIs
+ALe	COs	IDe	MEw	MTs	NYw	TXn	WVn
+ALw	CT	IDw	MIcl	NC	OHn	TXnc	WVs
+ARn	DE	ILe	MIcm	NDn	OHs	TXs	WYe
+ARs	FLe	ILw	MIe	NDs	OKn	TXsc	WYec
+AS	FLn	INe	MIn	NEn	OKs	UTc	WYw
+AZc	FLw	INw	MIs	NEs	ORn	UTn	WYwc
+AZe	GAe	KSn	MIw	NH	ORs	UTs	
+.TE
+.P
+The parameter
+.B \-M
+allows the specification of
+.I meters
+as the unit of the cartesian system.
+.P
+Other control parameters for program
+.B proj
+may follow including input file names.
+.SH UNITS/ACCURACY
+Standard foot-meter conversion is based upon the exact
+relation of 2.54 cm equals 1 inch.
+Unfortunately, state plane usually use the archaic
+exact relation of 39.37 inches equals 1 m which is employed
+(with apologies)
+in this procedure.
+.SH CAVEATS
+Although some checking of the information contained in
+this procedure has been made, the user is cautioned to perform
+his own tests against conversions authorized as accurate by
+appropriate state authorities.
+Any discrepencies should be reported to the author.
+.SH ACKNOWLEDGEMENTS
+The tables were compiled from information distributed by
+Atef Elassal of
+.SM NOAA.
+.SH FILES
+/usr/local/lib/state27
+.SH SEE ALSO
+proj(1)
+.SH AUTHOR/MAINTENANCE
+Gerald I. Evenden, USGS, Woods Hole, MA
