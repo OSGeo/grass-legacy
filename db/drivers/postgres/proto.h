@@ -5,6 +5,7 @@ int free_table(int);
 int find_table(char *);
 /*int load_table_head( int );*/
 int load_table(int, char *);
+int make_table_brand_new(int);
 
 int describe_table(int, int *, int, dbTable **);
 int add_column(int table, int type, char *name, int width);

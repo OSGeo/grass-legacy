@@ -47,6 +47,25 @@ int add_table(char *table)
     return DB_OK;
 }
 
+/* strip table of all data and attribs */
+int make_table_brand_new(int i)
+{
+
+    free_table(i);
+
+    db.tables[i].alive = TRUE;
+    db.tables[i].described = FALSE;
+    db.tables[i].loaded = FALSE;
+    db.tables[i].updated = FALSE;
+    db.tables[i].cols = NULL;
+    db.tables[i].rows = NULL;
+    db.tables[i].acols = 0;
+    db.tables[i].ncols = 0;
+    db.tables[i].arows = 0;
+    db.tables[i].nrows = 0;
+
+    return DB_OK;
+}
 
 /* returns table index or -1 */
 int find_table(char *table)
@@ -86,14 +105,20 @@ int load_table(int t, char *stmt)
     VALUE *val;
     int i, j;
     int header_only = 0;
-    
-    if (db.tables[t].loaded == TRUE)	/*already loaded */
+
+    G_debug(3, "load_table()");
+        
+    if (db.tables[t].loaded == TRUE)
 	return DB_OK;
-    if (stmt == NULL) {
+    G_debug(3, "load_table() - not loaded");
+
+   if (stmt == NULL) {
 	memset(stmtbuf, '\0', sizeof(stmtbuf));
 	sprintf(stmtbuf, "select * from %s", db.tables[t].name);
 	stmt = stmtbuf;
 	header_only = 1;
+        G_debug(3, "load_table() - only header");
+ 	
     }
 
     res = PQexec(pg_conn, stmt);
@@ -145,6 +170,8 @@ int load_table(int t, char *stmt)
 	}
 
 	add_column(t, type, fname, fsize);
+	
+	G_debug(3, "load_table() - number of cols is %d", db.tables[t].ncols);
     }
 
     if (!header_only) {
@@ -200,6 +227,8 @@ int free_table(int tab)
     }
 
     free(db.tables[tab].rows);
+    free(db.tables[tab].cols);
+
 
     return DB_OK;
 }

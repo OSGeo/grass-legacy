@@ -45,6 +45,7 @@ int describe_table(int tab, int *scols, int nscols, dbTable ** table)
 
 /*    load_table_head ( tab );*/
 
+    G_debug (3, "describe_table()");
     load_table(tab, NULL);
 
     ncols = db.tables[tab].ncols;
