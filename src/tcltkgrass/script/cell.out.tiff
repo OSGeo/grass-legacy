@@ -436,7 +436,7 @@ sleep 1s
 
 # Clean CELL
 g.remove rast=D_cell > /dev/null
-sleep "$stime"s
+sleep "$STIME"s
 
 # trap "exit_func" 1 2 3 15 # Unfortunately, this doesn't work as I want it.
 # Write to D_Cell
@@ -444,7 +444,7 @@ echo "Starting cell driver..."
 d.mon start=CELL 
 d.mon select=CELL
 
-sleep "$stime"s
+sleep "$STIME"s
 
 echo "Plotting in D_cell..."
 
