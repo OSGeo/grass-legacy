@@ -1,0 +1,20 @@
+# %W% %G%
+NAME=CAL5800
+LIB = $(SRC)/paint/Interface/driverlib
+INTERFACE = $(LIB)/main.o
+PAINT = $(ETC)/paint
+LIST = alpha.o close.o colornum.o colorvalue.o data.o flush.o \
+       ncolors.o open.o out.o pictsize.o raster.o rle.o text.o\
+       init.o npixels.o colorlevel.o finish.o plotfile.o
+
+all: $(PAINT)/driver.sh/$(NAME) $(PAINT)/driver/$(NAME)
+
+$(PAINT)/driver/$(NAME): $(LIST) $(LOCKLIB)
+	$(CC) $(LDFLAGS) $(INTERFACE) $(LIST) $(LOCKLIB) -lcal -lF77 -lI77 -o $@
+$(PAINT)/driver.sh/$(NAME): DRIVER.sh
+	cp $? $@
+	chmod +x $@
+
+$(LIST): P.h
+
+$(LOCKLIB): #
