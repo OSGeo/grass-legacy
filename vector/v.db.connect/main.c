@@ -33,7 +33,7 @@ int main (int argc, char **argv)
     char *input, *mapset;
     struct GModule *module;
     struct Option *inopt, *dbdriver, *dbdatabase, *dbtable, *field_opt, *dbkey;
-    struct Flag *overwrite, *print, *columns;
+    struct Flag *overwrite, *print, *columns, *delete;
     dbDriver *driver;
     dbString table_name;
     dbTable *table;
@@ -92,6 +92,10 @@ int main (int argc, char **argv)
     overwrite = G_define_flag();
     overwrite->key               = 'o';
     overwrite->description       = "overwrite connection parameter for certain field";
+    
+    delete = G_define_flag();
+    delete->key               = 'd';
+    delete->description       = "Delete connection for certain field (not the table)";
 
     G_gisinit (argv[0]);
 
@@ -167,52 +171,56 @@ int main (int argc, char **argv)
         }
       } /* end else num_dblinks */
     } /* end print/columns */
-    else /* define new dbln settings */
+    else /* define new dbln settings or delete */
     {
-       if (field_opt->answer && dbtable->answer && dbkey->answer
-           && dbdatabase->answer && dbdriver->answer)
-       {
-         fi = (struct field_info *) G_malloc( sizeof(struct field_info) );
-         fi->name     = NULL;
-         fi->table    = dbtable->answer;
-         fi->key      = dbkey->answer;
-         fi->database = dbdatabase->answer;
-         fi->driver   = dbdriver->answer;
-       
-         ret = Vect_map_check_dblink ( &Map, atoi(field_opt->answer) );
-         G_debug(3, "Vect_map_check_dblink = %d", ret);
-         if ( ret == 1) {
-           /* field already defined */
-           if( !overwrite->answer )
-               G_fatal_error("Use -o to overwrite existing link for field <%d>",atoi(field_opt->answer));
-           else
-           {
-               if( db_table_exists ( dbdriver->answer, dbdatabase->answer, dbtable->answer) < 1 )
-                   G_fatal_error("Table <%s> does not exist in database <%s>",dbtable->answer, dbdatabase->answer);
-	       ret = Vect_map_del_dblink (  &Map, atoi(field_opt->answer) );
-               if( Vect_map_add_dblink ( &Map, atoi(field_opt->answer), 
-			                 fi->name, fi->table, fi->key, fi->database, fi->driver) == 0) 
+	if ( delete->answer ) {
+            Vect_map_del_dblink (  &Map, atoi(field_opt->answer) );
+	} else { 
+	   if (field_opt->answer && dbtable->answer && dbkey->answer
+	       && dbdatabase->answer && dbdriver->answer)
+	   {
+	     fi = (struct field_info *) G_malloc( sizeof(struct field_info) );
+	     fi->name     = NULL;
+	     fi->table    = dbtable->answer;
+	     fi->key      = dbkey->answer;
+	     fi->database = dbdatabase->answer;
+	     fi->driver   = dbdriver->answer;
+	   
+	     ret = Vect_map_check_dblink ( &Map, atoi(field_opt->answer) );
+	     G_debug(3, "Vect_map_check_dblink = %d", ret);
+	     if ( ret == 1) {
+	       /* field already defined */
+	       if( !overwrite->answer )
+		   G_fatal_error("Use -o to overwrite existing link for field <%d>",atoi(field_opt->answer));
+	       else
 	       {
-                   G_warning ( "The table <%s> is now part of vector map <%s> and may be deleted "
-			       "or overwritten by GRASS modules.", dbtable->answer, input);
+		   if( db_table_exists ( dbdriver->answer, dbdatabase->answer, dbtable->answer) < 1 )
+		       G_fatal_error("Table <%s> does not exist in database <%s>",dbtable->answer, dbdatabase->answer);
+		   ret = Vect_map_del_dblink (  &Map, atoi(field_opt->answer) );
+		   if( Vect_map_add_dblink ( &Map, atoi(field_opt->answer), 
+					     fi->name, fi->table, fi->key, fi->database, fi->driver) == 0) 
+		   {
+		       G_warning ( "The table <%s> is now part of vector map <%s> and may be deleted "
+				   "or overwritten by GRASS modules.", dbtable->answer, input);
+		   }
 	       }
-           }
-         }
-         else
-         { /* field not yet defined, add new field */
-            if( db_table_exists ( dbdriver->answer, dbdatabase->answer, dbtable->answer) < 1 )
-               G_fatal_error("Table <%s> does not exist in database <%s>",dbtable->answer, dbdatabase->answer);
+	     }
+	     else
+	     { /* field not yet defined, add new field */
+		if( db_table_exists ( dbdriver->answer, dbdatabase->answer, dbtable->answer) < 1 )
+		   G_fatal_error("Table <%s> does not exist in database <%s>",dbtable->answer, dbdatabase->answer);
 
-            if( Vect_map_add_dblink ( &Map, atoi(field_opt->answer), 
-			              fi->name, fi->table, fi->key, fi->database, fi->driver) == 0) 
-	    {
-               G_warning ( "The table <%s> is now part of vector map <%s> and may be deleted "
-		           "or overwritten by GRASS modules.", dbtable->answer, input);
-	    }
-         }
-       }
-       else /* incomplete parameters given */
-          G_fatal_error("For defining a new connection you have to specify these parameters: driver, database, table [, key [, field]]");
+		if( Vect_map_add_dblink ( &Map, atoi(field_opt->answer), 
+					  fi->name, fi->table, fi->key, fi->database, fi->driver) == 0) 
+		{
+		   G_warning ( "The table <%s> is now part of vector map <%s> and may be deleted "
+			       "or overwritten by GRASS modules.", dbtable->answer, input);
+		}
+	     }
+	   }
+	   else /* incomplete parameters given */
+	      G_fatal_error("For defining a new connection you have to specify these parameters: driver, database, table [, key [, field]]");
+	}
     } /* end define new dbln settings */
 
     Vect_close ( &Map);
