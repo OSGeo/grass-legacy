@@ -232,7 +232,7 @@ int main(int argc, char **argv) {
     output->key = "output";
     output->type = TYPE_STRING;
     output->required = YES;
-    output->description = "name of a vector file to be output";
+    output->description = "name of a vector area map to be output";
     output->gisprompt = "new,dig,binary file,output";
 
     all = G_define_flag ();
