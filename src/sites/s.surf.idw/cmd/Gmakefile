@@ -5,3 +5,5 @@ LIST=main.o read_sites.o
 
 $(HOME)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB)
+
+$(GISLIB): #
