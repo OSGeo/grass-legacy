@@ -13,8 +13,9 @@ static int first = 1;
 double line_length ();
 
 
-intersect (Map)
+intersect (Map, ident_only)
     struct Map_info *Map;
+    int ident_only;
 {
     int A, B;
     P_LINE *Aline, *Bline;
@@ -41,7 +42,9 @@ intersect (Map)
 	    if (!LINE_ALIVE (Bline))
 		continue;
 
-	    if (bboxes_cross (Aline, Bline))
+	    /* if Nodes match up */
+	    if  ( (Aline->N1 == Bline->N1 && Aline->N2 == Bline->N2) ||
+		  (Aline->N1 == Bline->N2 && Aline->N2 == Bline->N1) )
 	    {
 		/* Are worth checking in detail */
 		if (Same_lines (Map, A, B))
@@ -49,6 +52,11 @@ intersect (Map)
 	    }
 	}
     }    
+
+    if (ident_only)	/* 4.1 */
+	return;
+
+
 
     for (A = 1 ; A <= Map->n_lines ; A++)
     {
@@ -231,6 +239,7 @@ Same_lines (Map, A, B)
     Aline = &(Map->Line[A]);
     Bline = &(Map->Line[B]);
 
+#ifdef FOO 		/* already checked this above */
     /* if Nodes don't match up */
     if  ( ! ( (Aline->N1 == Bline->N1 && Aline->N2 == Bline->N2) ||
               (Aline->N1 == Bline->N2 && Aline->N2 == Bline->N1) ) 
@@ -239,6 +248,7 @@ Same_lines (Map, A, B)
 /*DEBUG debugf2 ("SAME:   Nodes DONT match %d %d\n", A, B );*/
 	return (0);
     }
+#endif
 
     V1_read_line (Map, &APoints, Aline->offset);
     V1_read_line (Map, &BPoints, Bline->offset);
