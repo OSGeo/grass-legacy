@@ -59,8 +59,8 @@ int getarcs( char *name, int cover_type, int prec)
 	}
 	if (debug > 4)
 	    fprintf( fdlog, "line %d (%d pnts) id=%d\n", j, npts, covnum);
-	x = (double *)G_malloc( sizeof(double) * npts);
-	y = (double *)G_malloc( sizeof(double) * npts);
+	x = (double *)G_malloc( sizeof(double) * (npts+1));
+	y = (double *)G_malloc( sizeof(double) * (npts+1));
 
 	if (prec) {	/* double precision : 1 coord pair / line */
 	    for (i = 0; i < npts; i++) {
