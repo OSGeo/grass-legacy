@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 main(argc,argv) char *argv[];
 {
     int n;
@@ -15,7 +17,7 @@ main(argc,argv) char *argv[];
 	else if (sscanf (argv[n], "%[^=]%s", xname, xvalue) == 2)
 	    G_unsetenv (xname);
 	else if (value = G__getenv (argv[n]))
-	    printf ("%s\n", value);
+	    fprintf (stdout, "%s\n", value);
     }
     if (argc < 2)
     {
@@ -23,8 +25,9 @@ main(argc,argv) char *argv[];
 	for (n=0; name = G__env_name (n); n++)
 	    if (value = G__getenv(name))
 		if (tty)
-		    printf ("%s=%s\n", name, value);
+		    fprintf (stdout, "%s=%s\n", name, value);
 		else
-		    printf ("%s='%s'; export %s;\n", name, value, name);
+		    fprintf (stdout, "%s='%s'; export %s;\n", name, value, name);
     }
+    return 0;
 }
