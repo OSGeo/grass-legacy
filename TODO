@@ -1,4 +1,4 @@
-$Id: TODO,v 1.19 2000-09-20 13:53:26 markus Exp $
+$Id: TODO,v 1.20 2000-09-25 14:08:27 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -113,11 +113,15 @@ Modules:
   (Being worked on by )
 
 - etc/monitorcap: use relative paths based on $GISBASE
-  (Being worked on by )
+  (Being worked on by Justin)
 
 - fix s.to.rast and s.to.vect to accept site lists created
   by r.to.sites
-  (Being worked on by Markus)
+  (Being worked on by )
+
+- v.digit:
+   Label: M- multiple un-label: it would be a good idea to first select
+          all lines/areas, then confirmation *once* only
 
 - NVIZ:
     - Z axis scalable when displaying 3D sites
