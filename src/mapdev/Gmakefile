@@ -4,12 +4,12 @@ all:
 	$(GMAKE) libes
 	$(GMAKE) Vlib
 	$(GMAKE) diglib
-	$(GMAKE) bin_digit
 	$(GMAKE) v.area
 	$(GMAKE) v.build
 	$(GMAKE) v.cadlabel
 	$(GMAKE) v.clean
 	$(GMAKE) v.digit
+	$(GMAKE) v.digit2
 	$(GMAKE) v.from.3
 	$(GMAKE) v.import
 	$(GMAKE) v.in.ascii
@@ -21,12 +21,13 @@ all:
 	$(GMAKE) v.out.dxf
 	$(GMAKE) v.patch
 	$(GMAKE) v.prune
+	$(GMAKE) v.spag
 	$(GMAKE) v.stats
 	$(GMAKE) v.support
 	$(GMAKE) v.to.rast
-	$(GMAKE) v.to.sites
 	$(GMAKE) v.transform
 	$(GMAKE) v.trim
-	$(GMAKE) dlg_to_bdlg
-	$(GMAKE) dlg_to_dig
 	$(GMAKE) georef
+
+#	$(GMAKE) bin_digit
+
