@@ -384,7 +384,7 @@ src/sites/s.perturb
 src/sites/s.probplt
 src/sites/s.proj
 src/sites/s.qcount
-src/sites/s.rand
+src/sites/s.random
 src/sites/s.sample
 src/sites/s.surf.idw
 src/sites/s.surf.rst
