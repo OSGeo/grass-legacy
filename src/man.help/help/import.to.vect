@@ -1,0 +1,4 @@
+MAPDEV program which performs all necessary processes needed to convert ascii
+dlg files, binary dlg files, ascii vector (digit) files or binary vector
+(digit) files into the GRASS Vector Format.
+
