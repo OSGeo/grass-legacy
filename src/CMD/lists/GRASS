@@ -32,7 +32,7 @@ src/libes/vect32/diglib
 src/libes/vect32/georef
 src/libes/image3
 src/libes/bwidget
-src/general/gis
+src/general/init
 src/display/devices/lib
 src/display/devices/monitorcap
 src/display/devices/CELL
