@@ -1,0 +1,3 @@
+all:
+	$(SRC)/../man/utilities/Nroff "$(VERSION_NUMBER)" "$(VERSION_DATE)" $(SRC)/..
+	cp cat1/* $(MAN1)/.
