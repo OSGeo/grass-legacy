@@ -1,0 +1,23 @@
+D__read	dig_dev.c	/^int  D__read (alarm_time)$/
+D_ask_driver_raw	interface.c	/^D_ask_driver_raw( x, y)$/
+D_ask_if_err	dig_dev.c	/^D_ask_if_err()$/
+D_clear_driver	interface.c	/^D_clear_driver ()$/
+D_cursor_buttons	interface.c	/^D_cursor_buttons()$/
+D_digit_init	dig_dev.c	/^D_digit_init()$/
+D_end_digit	dig_dev.c	/^D_end_digit ()$/
+D_flush	dig_dev.c	/^D_flush()$/
+D_foot_switch	interface.c	/^D_foot_switch()$/
+D_get_scale	dig_dev.c	/^D_get_scale(scale)$/
+D_open_failed	dig_dev.c	/^D_open_failed()$/
+D_open_serial	dig_dev.c	/^D_open_serial (tty_name)$/
+D_read_raw	interface.c	/^D_read_raw (Xraw, Yraw)$/
+D_readall	dig_dev.c	/^D_readall (Xraw, Yraw)$/
+D_setup_driver	setup_driver.c	/^D_setup_driver(dev)$/
+D_setup_origin	interface.c	/^D_setup_origin()$/
+D_start_button	interface.c	/^D_start_button()$/
+D_write_digit	dig_dev.c	/^D_write_digit( string)$/
+Mgeo_point	geo_point.c	/^main(argc, argv)$/
+Mgeo_reg	geo_reg.c	/^main(argc, argv)$/
+collect_points	coll_pts.c	/^collect_points(mode, type, n_points, xarr, yarr)$/
+delay	interface.c	/^delay(n) \/* delay n milliseconds *\/$/
+jtimeout	dig_dev.c	/^jtimeout ()$/
