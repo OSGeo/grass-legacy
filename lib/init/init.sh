@@ -137,21 +137,21 @@ export PATH
 # first search local libs, then in GRASS lib/
 #
 # Of course MacOSX wants it's private solution:
-if [ "$HOSTTYPE" != "macintosh" -o "$HOSTTYPE" != "powermac" ] ; then
-  if [ ! "$LD_LIBRARY_PATH" ] ; then
-    LD_LIBRARY_PATH=$GISBASE/lib
-    export LD_LIBRARY_PATH
-  else
-    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GISBASE/lib
-    export LD_LIBRARY_PATH
-  fi
-else
+if [ "$HOSTTYPE" = "macintosh" -o "$HOSTTYPE" = "powermac" ] ; then
   if [ ! "$DYLD_LIBRARY_PATH" ] ; then
     DYLD_LIBRARY_PATH=$GISBASE/lib
     export DYLD_LIBRARY_PATH
   else
     DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$GISBASE/lib
     export DYLD_LIBRARY_PATH
+  fi
+else
+  if [ ! "$LD_LIBRARY_PATH" ] ; then
+    LD_LIBRARY_PATH=$GISBASE/lib
+    export LD_LIBRARY_PATH
+  else
+    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GISBASE/lib
+    export LD_LIBRARY_PATH
   fi
 fi
    
