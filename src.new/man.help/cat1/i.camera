@@ -1,0 +1,66 @@
+
+
+
+i.camera(1)          GRASS Reference Manual           i.camera(1)
+
+
+
+NAME
+     i.camera - An imagery function that establishes a camera
+                reference file for an imagery group
+                (GRASS Imagery Tool)
+
+SYNOPSIS
+     i.camera
+
+DESCRIPTION
+     i.camera selects a camera reference file for an imagery
+     group.  In the imagery programs, i.ortho.reference,
+     i.ortho.control, and i.ortho.rectify, a camera reference
+     file is required for computation of reference points, and
+     ortho-rectification parameters.  i.camera enables you to
+     specify an existing camera reference file for a selected
+     group.
+
+     The first prompt in the program will ask you for the name of
+     the imagery group that needs a camera reference file.  The
+     imagery group must be present in the current LOCATION.
+
+     The next prompt in the program will ask you for the name of
+     an existing camera reference file to be used with the
+     imagery group selected above.
+
+
+SEE ALSO
+     i.mod.camera[1], i.ortho.reference[1], i.ortho.control[1],
+     i.ortho.rectify[1],
+
+
+AUTHOR
+     Mike Baba
+     DBA Systems, Inc.
+     10560 Arrowhead Drive
+     Fairfax, Virginia 22030
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
