@@ -12,12 +12,17 @@ without extraneous output. In addition, map search is also available.
 
 List all vector maps starting with letter "r":
 <BR>
-<TT>g.mlist type=vect "r*"</TT>
+<TT>g.mlist type=vect pattern="r*"</TT>
+<P>
+
+List certain raster maps with one variable character/number:
+<BR>
+<TT>g.mlist type=rast pattern="N45E00?.meters"</TT>
 
 <H3>Regular expressions:</H3>
-<BR>
+
 Print out all soils map with "soils" in their name:<BR>
-<TT>g.mlist -r type=rast '^soils'</TT>
+<TT>g.mlist -r type=rast pattern='^soils'</TT>
 <P>
 
 Print out "tmp" if "tmp" raster map exists:<BR>
@@ -29,14 +34,16 @@ Print out "tmp0" ..."tmp9" if corresponding vector map exists (each map name lin
 <P>
 
 Print out "tmp0" ..."tmp9" if corresponding vector map exists (each map name comma separated):<BR>
-<TT>g.mlist -r type=vect sep=, pattern='^tmp[0-9]$'</TT><BR>
+<TT>g.mlist -r type=vect sep=, pattern='^tmp[0-9]$'</TT>
+<P>
 This may be useful for other programs' parameter input 
 (e.g. <EM><a href="r.series.html">r.series</a></EM>).
 
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="g.list.html">g.list</A></EM>
-
+<P>
+<A HREF="http://en.wikipedia.org/wiki/Regular_expression">Regular expression</A> (from Wikipedia, the free encyclopedia)
 
 <H2>AUTHOR</H2>
 Huidae Cho
