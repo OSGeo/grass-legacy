@@ -32,6 +32,7 @@ main (int argc, char **argv)
 	struct Colors gray_colors ;
 	struct GModule *module;
 	struct Option *opt_h, *opt_i, *opt_s;
+	struct Flag *nullignore;
 	int offset ;
 	char window_name[64] ;
 	int t, b, l, r ;
@@ -64,6 +65,11 @@ main (int argc, char **argv)
 	opt_s->required   = NO ;
 	opt_s->gisprompt  = "old,cell,raster" ;
 	opt_s->description= "Name of layer to be used for SATURATION" ;
+	
+	nullignore = G_define_flag();
+	nullignore->key = 'i';
+	nullignore->description = "Ignore NULL values when drawing";
+
 
 	if (G_parser(argc, argv))
 		exit(-1);
@@ -200,14 +206,17 @@ main (int argc, char **argv)
 
 		for (atcol=0; atcol<window.cols; atcol++)
 		{
-			if (hue_n[atcol]
-			    || (int_used && int_n[atcol])
-			    || (sat_used && sat_n[atcol]))
+			if (!nullignore->answer)
 			{
-				G_set_c_null_value(&r_array[atcol], 1);
-				G_set_c_null_value(&g_array[atcol], 1);
-				G_set_c_null_value(&b_array[atcol], 1);
-				continue;
+				if (hue_n[atcol]
+				    || (int_used && int_n[atcol])
+				    || (sat_used && sat_n[atcol]))
+				{
+					G_set_c_null_value(&r_array[atcol], 1);
+					G_set_c_null_value(&g_array[atcol], 1);
+					G_set_c_null_value(&b_array[atcol], 1);
+					continue;
+				}
 			}
 
 			if (int_used)
