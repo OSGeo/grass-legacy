@@ -35,7 +35,7 @@ int getSelectOpts (argc, argv)
     	static char SQL_stmt[1024];
 
 	struct Option *map,*color, *sql;
-	struct Flag *select, *flag1;
+	struct Flag *select, *flag1, *flag2;
 
 	retval = 0;
 
@@ -69,6 +69,11 @@ int getSelectOpts (argc, argv)
 	flag1 = G_define_flag() ;
 	flag1->key         = 'f' ;
 	flag1->description = _("Fill polygons") ;
+	
+	flag2 = G_define_flag() ;
+	flag2->key         = 'e' ;
+	flag2->description = _("Extract vector objects to new map") ;
+
 
 
         /* Check for help flag */
@@ -92,6 +97,7 @@ int getSelectOpts (argc, argv)
 	
 	
 	fillcolr = flag1->answer;
+	extract_yes = flag2->answer;
 	
 
 

@@ -26,6 +26,8 @@
 
 #define MAIN
 
+int extract_yes = 0;
+
 
 int main(argc, argv)
 int argc ;
