@@ -1,0 +1,96 @@
+.TH r.proj
+.SH NAME
+\fIr.proj\fR \- projects raster maps between two projections
+.br
+.I "(GRASS Raster Program)"
+.SH SYNOPSIS
+\fBr.proj\fR
+.br
+\fBr.proj help\fR
+.br
+\fBr.proj\fR \fBinput=\fIname\fR \fBlocation=\fIname\fR \fB[output=\fIname\fR]
+\fB[mapset=\fIname\fR] \fB[dbase=\fIname\fR] \fB[method=\fIname\fR]
+\fB[res=\fIvalue\fR]
+.SH DESCRIPTION
+\fIr.proj\fR projects a raster map in a specified mapset of a specified
+location from the projection of the input location to a raster map in the
+current location. The projection information is taken from the momentary
+\fBPROJ_INFO\fR files. 
+
+.SH "COMMAND LINE OPTIONS"
+.LP
+Parameters
+.IP \fIinput\fR=name
+input raster map.
+.IP \fIlocation\fR=name
+location of input map.
+.IP \fIoutput\fR=name
+output raster map (default: same name as input map).
+.IP \fImapset\fR=name
+mapset of input map (default: same name as current mapset).
+.IP \fIdbase\fR=name
+database of input map (default: current database).
+.IP \fImethod\fR=name
+interpolation method to use
+.br
+options: nearest, bilinear, cubic
+.br
+default: nearest
+.IP \fIres\fR=value
+resolution of output map (default: calculated from the number of cols in
+input map). 
+.br
+
+.SH NOTES
+\fIr.proj\fR uses three alternative resampling algorithms:
+.br
+
+	\fBnearest\fR	-  nearest neighbor
+.br
+	\fBbilinear\fR	-  bilinear interpolation
+.br
+	\fBcubic\fR	-  cubic convolution
+.LP
+
+The \fBnearest\fR option, which performs a nearest neighbor assignment is the
+fastest of the three resampling methods. It is primarily used for
+categorical data such as a land use classification, since it will not change
+the values of the data cells. The \fBbilinear\fR option determines the new value of the cell based on a
+weighted distance average of the 4 surrounding cells in the input map. The \fBcubic\fR option determines the new value of the cell based on a
+weighted distance average of the 16 surrounding cells in the input map. 
+.br
+
+The \fBbilinear\fR and \fBcubic\fR interpolation methods are most appropriate
+for continuous data and cause some smoothing. Both options shouldn't be used
+with categorical data, since the cell values will be altered.
+.br 
+
+If nearest neighbor assignment is used, the output map
+has the same raster format as the input map. If any of the both
+interpolations is used, the output map is written as floating point.
+
+.SH BUGS
+The entire input map is read into memory. This requires a large amount of
+memory if large raster layers where projected.
+
+.SH "SEE ALSO"
+r.bilinear, r.resample, s.sample, v.proj 
+
+.SH AUTHOR
+.br
+Martin Schroeder
+.br
+University of Heidelberg
+.br
+Dept. of Geography
+.br
+\fIemes@geo0.geog.uni-heidelberg.de\fR
+
+.SH REFERENCES
+Press, W.H. et al. (1992), Numerical Recipes in C, Cambridge
+University Press, Cambridge, 2nd edition.
+.br
+Richards, John A. (1993), Remote Sensing Digital Image Analysis,
+Springer-Verlag, Berlin, 2nd edition.
+
+ 
