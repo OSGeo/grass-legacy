@@ -1,0 +1,17 @@
+# %W%  %G%
+OFILES =  \
+    command.o \
+    curses.o \
+    get_info.o \
+    interact.o \
+    set_sigs.o \
+    sigint.o \
+    tbl_toggle.o \
+    tty.o \
+    main.o
+
+GRAPHLIB = $(DISPLAYLIB) $(RASTERLIB)
+$(BIN)/d.colors: $(OFILES) $(GISLIB) $(GRAPHLIB)
+	$(CC) $(LDFLAGS) -o $(BIN)/d.colors $(OFILES) $(GRAPHLIB) $(GISLIB) $(CURSES) $(MATHLIB)
+
+$(GISLIB) $(GRAPHLIB): #
