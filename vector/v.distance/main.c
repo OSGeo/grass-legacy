@@ -564,6 +564,7 @@ int main (int argc, char *argv[])
 
     if ( !all ) count = nfcats;
     
+    db_begin_transaction ( driver );
     for ( i = 0; i < count; i++ ) {
 	/* Write line connecting nearest points */
 	if ( Outp != NULL ) {
@@ -736,6 +737,7 @@ int main (int argc, char *argv[])
 	}
 
     }
+    db_commit_transaction ( driver );
     
     /* print stats */
     fprintf (stderr,"\nStatistics:\n");
