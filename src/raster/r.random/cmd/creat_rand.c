@@ -2,8 +2,14 @@
 
 #include <sys/types.h>
 
-extern long lrand48();
+#ifdef __CYGWIN__
+#define drand48() rand()/32767.0
+#define srand48(sv) (srand((unsigned)(sv)))
+#else
+extern long drand48();
 extern void srand48();
+#endif 
+
 extern time_t time();
 
 long 
