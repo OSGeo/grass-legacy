@@ -162,6 +162,7 @@ getCat (Map, Cats,colr,fillcolr,fill)
 		} 
 	  
 	  }
-	} 
+	}
+Rflush(); 
 return(button);
 }
