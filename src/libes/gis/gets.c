@@ -40,8 +40,8 @@ G_gets (buf)
 #ifdef SIGTSTP
 	if (tty = isatty(0))
 	{
-		sigtstp = signal (SIGTSTP, catch_ctrlz);
-		if (sigtstp != SIG_DFL)
+		sigtstp = (int (*)()) signal (SIGTSTP, catch_ctrlz);
+		if (sigtstp != (int (*)()) SIG_DFL)
 		    signal (SIGTSTP, sigtstp);
 	}
 #endif
@@ -69,7 +69,7 @@ static catch_ctrlz(n)
 	kill (0, n);
 
 /* for berkley systems, ctrlz will not cause eof on read */
-	sigint = signal (SIGINT, catch_int);
+	sigint = (int (*)()) signal (SIGINT, catch_int);
 	kill (getpid(), SIGINT);
 	signal (SIGINT, sigint);
 }
