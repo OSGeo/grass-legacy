@@ -19,7 +19,7 @@ Reset_colors(min, max, red, grn, blu)
 		_float_Reset_colors(min, max, red, grn, blu) ;
 
 		/*  Force an active process for "d.colors" .  */
-		Activate_process() ;
+		/*Activate_process() ;*/
 		load_color_table() ;
 		Wait_timer(2) ;
 	}
