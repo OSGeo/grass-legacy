@@ -15,7 +15,7 @@ infxTables()
     char	*pgdbase;
     int	       rec_num;
 
-pghost = G_getenv ("PG_HOST");
+pghost = G__getenv ("PG_HOST");
 pgdbase = G_getenv ("PG_DBASE");
 pg_conn = PQsetdb(pghost,NULL,NULL,NULL,pgdbase);
 
