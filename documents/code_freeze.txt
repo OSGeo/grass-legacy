@@ -29,8 +29,8 @@ Things to focus on for GRASS 5.0 stable
          under GPL
       -> time consuming to reach involved people (former programmers)
 
- 6) sockets Xdriver (Carl Anderson)
-      -> no idea about status, but required for Windows port finalization
+ 6) introduce G_readsites() function, replace all individual
+    readz.c and readsites.c files
 
 
 Things to go into GRASS 5.1 development (after Oct. 15th):
@@ -53,9 +53,12 @@ Things to go into GRASS 5.1 development (after Oct. 15th):
     * needs modification of all vector modules
     * link DMBS to vector model tightly
 
- 5) layered XDRIVER (Pierre de Mouveaux)
+ 5) sockets Xdriver (Carl Anderson)
+      -> no idea about status, but required for Windows port finalization
+ 
+ 6) layered XDRIVER (Pierre de Mouveaux)
   
- 6) full RGB support in all display modules (Pierre de Mouveaux)
+ 7) full RGB support in all display modules (Pierre de Mouveaux)
 
  
  X) tons of other stuff (see TODO file)
