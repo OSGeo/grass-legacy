@@ -1,5 +1,7 @@
 src/libes/tools
 html
+#next generates version.h file as well:
+src/libes/gis
 src/libes/vask
 src/libes/segment
 src/libes/rowio
@@ -7,7 +9,6 @@ src/libes/raster
 src/libes/lock
 src/libes/imagery
 src/libes/icon
-src/libes/gis
 src/libes/dlg
 #lib for display files (dspf) of isosurfaces from volume data (grid3 files):
 src/libes/dspf
