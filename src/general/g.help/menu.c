@@ -153,7 +153,7 @@ int Curline ;
 				break ;
 				}
 
-			case LINEDOWN: /* line down */
+			case ARROWDOWN: /* line down */
 				{
 				if (Curline <
 					((Menlength - (MENWINHITE - 3)))) 
@@ -173,7 +173,7 @@ int Curline ;
 				break;
 				}
 
-			case LINEUP: /* line up */
+			case ARROWUP: /* line up */
 				{
 				if (Curline > 1)
 					Curline--;

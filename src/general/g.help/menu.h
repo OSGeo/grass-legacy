@@ -50,8 +50,8 @@ static int HELPWINHITE ;
 #define HELP   	 '?'  
 #define PAGEUP       '\065'
 #define PAGEDOWN     '\066'
-#define LINEUP       'u' /* bug: what's correct number? */
-#define LINEDOWN     'd' /* bug: what's correct number? */
+#define ARROWUP       'u' /*u bug: what's correct number? */
+#define ARROWDOWN     'd' /* bug: what's correct number? */
 
 #define MICRORESP	1
 #define MICROMESG	"Immediate response"
