@@ -1,6 +1,7 @@
 /*! \mainpage GRASS GIS Library
-<!-- doxygenized from "GRASS 5 Programmer's Manual"
-     by M. Neteler 2/2004
+<!-- * doxygenized from "GRASS 5 Programmer's Manual"
+       by M. Neteler 2/2004
+     * updated 2005
   -->
 
 <h2>GRASS 6.0 Programmer's Manual</h2>
@@ -29,7 +30,8 @@ This manual comes with ABSOLUTELY NO WARRANTY. The development of GRASS
 software and this manual is kindly supported by Intevation GmbH, 
 Osnabr&uuml;ck, Germany, who provide the GRASS CVS repository.
 
-Main web site: http://grass.itc.it
+Main web site: <a href="http://grass.itc.it">http://grass.itc.it</a>
+
 <P>
 <I>Missing entries here are either not yet uploaded to CVS or simply undocumented</i>
 <ul>
@@ -51,7 +53,7 @@ Main web site: http://grass.itc.it
 <ul>
  <li> <a href="gisrasterlib.html">Raster File Processing</a>
 </ul>
-<li>gmath <!-- a href="gmathlib.html" -->generic mathematical functions (matrix, fft etc., to be extended, BLAS/LAPACK library)</a>
+<li>gmath <!-- a href="gmathlib.html" -->generic mathematical functions (matrix functions, fft2 etc., to be extended: BLAS/LAPACK library)</a>
 <li>ibtree <!-- a href="ibtreelib.html" -->integer clone of binary tree library (btree)</a>
 <li>icon <!-- a href="iconlib.html" -->icon library (required for PS/Paint icons, read, write, manipulate icons)</a>
 <li>imagery <a href="imagerylib.html">imagery library</a>
@@ -70,3 +72,4 @@ Main web site: http://grass.itc.it
 </ul>
 
 */
+
