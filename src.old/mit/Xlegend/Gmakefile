@@ -1,0 +1,13 @@
+PGM=Xlegend
+OFILES = \
+	command.o\
+	main.o
+LIBES = $(GISLIB) $(XDISPLAYLIB) $(DISPLAYLIB)
+
+$(BIN)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) -lX11
+
+$(LIBES):	#
+
+command.o:	options.h
+main.o:	options.h
