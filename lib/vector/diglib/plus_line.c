@@ -128,7 +128,7 @@ dig_del_line (struct Plus_head *plus, int line)
     P_NODE *Node;
   
     /* TODO: free structures */
-    G_debug (0, "dig_del_line() line =  %d", line);
+    G_debug (3, "dig_del_line() line =  %d", line);
     
     Line = plus->Line[line]; 
     dig_spidx_del_line ( plus, line );
