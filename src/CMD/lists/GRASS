@@ -232,7 +232,8 @@ src/mapdev/v.to.db
 src/mapdev/v.to.rast
 src/mapdev/v.to.sites
 src/mapdev/v.transform
-src/mapdev/v.trim
+#not working:
+#src/mapdev/v.trim
 src/mapdev/v.what
 src/misc/m.datum.shift
 src/misc/m.dem.examine
