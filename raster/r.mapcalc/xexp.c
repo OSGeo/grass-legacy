@@ -22,7 +22,7 @@ f_exp(int argc, const int *argt, void **args)
 
 	if (argc < 1)
 		return E_ARG_LO;
-	if (argc > 1)
+	if (argc > 2)
 		return E_ARG_HI;
 
 	if (argt[0] != DCELL_TYPE)
