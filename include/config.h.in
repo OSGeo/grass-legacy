@@ -137,15 +137,6 @@
 /* define if jpeglib.h exists */
 #undef HAVE_JPEGLIB_H
 
-/* define if gdImageGif() exists */
-#undef HAVE_GDIMAGEGIF
-
-/* define if gdImagePng() exists */
-#undef HAVE_GDIMAGEPNG
-
-/* define if gdImageCreateTrueColor() exists */
-#undef HAVE_GDIMAGECREATETRUECOLOR
-
 /* define if fftw.h exists */
 #undef HAVE_FFTW_H
 
