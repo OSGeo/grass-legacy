@@ -209,7 +209,7 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag, int z_f
 	    fprintf (stdout, "mid_e_la %f \n",mid_e_la);
 #endif
 	    G_format_easting ((mid_n_lo+mid_s_lo)/2., buf, PROJECTION_LL);
-	    fprintf (stdout, "Center Longitude: %11s [%.5f]\n", buf, (mid_n_lo+mid_s_lo)/2.);
+	    fprintf (stdout, "Center longitude: %11s [%.5f]\n", buf, (mid_n_lo+mid_s_lo)/2.);
 
 	    G_format_northing((mid_n_la+mid_s_la)/2., buf, PROJECTION_LL);
 	    fprintf (stdout, "Center latitude:  %11s [%.5f]\n", buf, (mid_n_la+mid_s_la)/2.);
