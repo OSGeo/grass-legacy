@@ -110,7 +110,6 @@ int main (int argc, char *argv[])
     parm.target->type = TYPE_STRING;
     parm.target->required = NO;
     parm.target->description = "Name of location to read projection from for GCPs transformation";
-    parm.target->gisprompt = "";
 
     parm.title = G_define_option();
     parm.title->key = "title";
