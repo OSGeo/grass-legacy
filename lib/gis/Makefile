@@ -206,38 +206,31 @@ $(ARCH_INCDIR)/version.h:
 
 $(ETC)/ellipse.table: ellipse.table
 	rm -f $@
-	cp $? $@
-	chmod +r $@
+	$(INSTALL) -m 644 $? $@
 
 $(ETC)/datum.table: datum.table
 	rm -f $@
-	cp $? $@
-	chmod +r $@
+	$(INSTALL) -m 644 $? $@
 
 $(ETC)/datumtransform.table: datumtransform.table
 	rm -f $@
-	cp $? $@
-	chmod +r $@
+	$(INSTALL) -m 644 $? $@
 
 $(ETC)/FIPS.code: FIPS.code
 	rm -f $@
-	cp $? $@
-	chmod +r $@
+	$(INSTALL) -m 644 $? $@
 
 $(ETC)/state27: state27
 	rm -f $@
-	cp $? $@
-	chmod +r $@
+	$(INSTALL) -m 644 $? $@
 
 $(ETC)/state83: state83
 	rm -f $@
-	cp $? $@
-	chmod +r $@
+	$(INSTALL) -m 644 $? $@
 
 $(ETC)/projections: projections
 	rm -f $@
-	cp $? $@
-	chmod +r $@
+	$(INSTALL) -m 644 $? $@
 
 
 $(OBJDIR)/area_ellipse.o: pi.h

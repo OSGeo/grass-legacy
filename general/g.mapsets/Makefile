@@ -28,6 +28,5 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 default: cmd inter $(GUI)
 
 $(GUI): g.mapsets.tcl
-	if [ ! -d $(GISBASE)/etc ]; then mkdir $(GISBASE)/etc; fi
-	cp g.mapsets.tcl $(GUI)
-	chmod 0755 $(GUI)
+	if [ ! -d $(GISBASE)/etc ]; then $(MKDIR) $(GISBASE)/etc; fi
+	$(INSTALL) -m 755 g.mapsets.tcl $(GUI)

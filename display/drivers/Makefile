@@ -16,8 +16,8 @@ ifneq ($(USE_PNG),)
 endif
 
 default: subdirs
-	mkdir -p $(GISBASE)/docs/html
-	cp description.html $(GISBASE)/docs/html/displaydrivers.html
+	$(MKDIR) $(GISBASE)/docs/html
+	$(INSTALL) -m 644 description.html $(GISBASE)/docs/html/displaydrivers.html
 
 
 clean: cleansubdirs

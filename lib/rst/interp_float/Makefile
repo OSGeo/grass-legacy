@@ -17,5 +17,5 @@ EXTRA_CFLAGS = $(VECT_CFLAGS)
 default: $(ARCH_INCDIR)/interpf.h lib
 
 $(ARCH_INCDIR)/interpf.h: interpf.h
-	cp interpf.h $(ARCH_INCDIR)/interpf.h
+	$(INSTALL) -m 644 interpf.h $(ARCH_INCDIR)/interpf.h
 

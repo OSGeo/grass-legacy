@@ -8,8 +8,8 @@ DEPENDENCIES = $(GISDEP) $(SEGMENTDEP)
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: etc
-	mkdir -p $(ETC)/water
-	mv $(ETC)/$(PGM) $(ETC)/water
+	$(MKDIR) $(ETC)/water
+	$(INSTALL) -m 644 $(ETC)/$(PGM) $(ETC)/water
 
 htmletc:
 	@echo "No docs to generate."

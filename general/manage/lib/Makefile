@@ -17,8 +17,8 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 default: lib $(ETC)/element_list $(ETC)/copy
 
 $(ETC)/element_list: Element_List
-	if [ ! -d $(ETC) ]; then mkdir $(ETC); fi
-	cp $? $@ ; chmod 0444 $@ ;
+	if [ ! -d $(ETC) ]; then $(MKDIR) $(ETC); fi
+	$(INSTALL) -m 444 $? $@
 
 $(ETC)/copy: copy.sh
-	cp $? $@ ; chmod 0755 $@ ;
+	$(INSTALL) -m 755 $? $@

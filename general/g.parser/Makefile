@@ -16,5 +16,5 @@ htmlcmd:
 	echo "<HR>" >> $(PGM).html
 	echo "<P><a href=index.html>Help Index</a>" >> $(PGM).html
 	echo "</body></html>" >> $(PGM).html
-	mkdir -p $(GISBASE)/docs/html
-	mv $(PGM).html $(GISBASE)/docs/html
+	$(MKDIR) $(GISBASE)/docs/html
+	$(INSTALL) -m 644 $(PGM).html $(GISBASE)/docs/html

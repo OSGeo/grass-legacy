@@ -1,4 +1,3 @@
-
 MODULE_TOPDIR = ../..
 
 PGM=d.m
@@ -13,16 +12,14 @@ default: $(PROG1) $(PROG2) htmlscript
 TCL = cmd.tcl grassabout.tcl group.tcl print.tcl raster.tcl tksys.tcl tool.tcl tree.tcl vector.tcl labels.tcl
 
 $(PROG1): $(PGM)
-	if [ ! -d $(GISBASE)/scripts ]; then mkdir $(GISBASE)/scripts; fi
-	cp $(PGM) $(PROG1)
-	chmod 0755 $(PROG1)
+	if [ ! -d $(GISBASE)/scripts ]; then $(MKDIR) $(GISBASE)/scripts; fi
+	$(INSTALL) -m 755 $(PGM) $(PROG1)
 
 $(PROG2): *.gif *.tcl 
-	if [ ! -d $(ETC)/dm ]; then mkdir $(ETC)/dm; fi
-	cp *.gif $(ETC)/dm/
+	if [ ! -d $(ETC)/dm ]; then $(MKDIR) $(ETC)/dm; fi
+	$(INSTALL) -m 644 *.gif $(ETC)/dm/
 	for tcl in $(TCL); do \
-	    cp $$tcl $(ETC)/dm/ ; \
+	    $(INSTALL) $$tcl $(ETC)/dm/ ; \
 	done
-	chmod a+x $(ETC)/dm/tksys.tcl
-	cp $(PGM2) $(PROG2)
-	chmod 0755 $(PROG2)
+	$(CHMOD) 755 $(ETC)/dm/tksys.tcl
+	$(INSTALL) -m 755 $(PGM2) $(PROG2)

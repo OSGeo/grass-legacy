@@ -44,7 +44,7 @@ default: $(ARCH_INCDIR)/portable.h lib $(OBJDIR)/test
 
 #  Test the machine size and orientation for the Portable Library
 $(ARCH_INCDIR)/portable.h: $(DEPENDENCIES)
-	@test -d $(OBJDIR) || mkdir $(OBJDIR)
+	@test -d $(OBJDIR) || $(MKDIR) $(OBJDIR)
 	$(CC) $(LDFLAGS) $(COMPILE_FLAGS) $(VECT_CFLAGS) $(INC) $(VECT_INC) -o $(OBJDIR)/port_test port_test.c
 	echo "/* Architecture: $(ARCH) */" > $(ARCH_INCDIR)/portable.h
 	$(OBJDIR)/port_test >> $(ARCH_INCDIR)/portable.h

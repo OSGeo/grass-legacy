@@ -1,4 +1,3 @@
-
 MODULE_TOPDIR = ../../..
 
 LIB_NAME = $(RTREE_LIBNAME)
@@ -18,24 +17,23 @@ default: $(RTLINC)/card.h $(RTLINC)/index.h $(RTLINC)/split_l.h $(RTLINC)/split_
 	$(ARCH_INCDIR)/rtree.h lib
 
 $(RTLINC)/card.h: card.h
-	mkdir -p $(RTLINC)
-	cp card.h $(RTLINC)/card.h
+	$(MKDIR) $(RTLINC)
+	$(INSTALL) -m 644 card.h $(RTLINC)/card.h
 
 $(RTLINC)/index.h: index.h
-	cp index.h $(RTLINC)/index.h
+	$(INSTALL) -m 644 index.h $(RTLINC)/index.h
 
 $(RTLINC)/split_l.h: split_l.h
-	cp split_l.h $(RTLINC)/split_l.h
+	$(INSTALL) -m 644 split_l.h $(RTLINC)/split_l.h
 
 # not used
 $(RTLINC)/split_q.h: split_q.h
-	cp split_q.h $(RTLINC)/split_q.h
+	$(INSTALL) -m 644 split_q.h $(RTLINC)/split_q.h
 
 $(ARCH_INCDIR)/rtree.h: rtree.h
-	cp rtree.h $(ARCH_INCDIR)/rtree.h
+	$(INSTALL) -m 644 rtree.h $(ARCH_INCDIR)/rtree.h
 
 $(OBJDIR)/test: test.c
 	$(CC) $(LDFLAGS) $(INC) -o $@ test.c $(RTREELIB) -lm
 	cd $(OBJDIR); ./test
-
 

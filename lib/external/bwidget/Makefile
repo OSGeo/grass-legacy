@@ -1,4 +1,3 @@
-
 MODULE_TOPDIR = ../../..
 
 include $(MODULE_TOPDIR)/include/Make/Platform.make
@@ -9,7 +8,7 @@ include $(MODULE_TOPDIR)/include/Make/Grass.make
 #
 
 default:
-	if [ ! -d $(GISBASE)/bwidget ]; then mkdir $(GISBASE)/bwidget; fi
+	if [ ! -d $(GISBASE)/bwidget ]; then $(MKDIR) $(GISBASE)/bwidget; fi
 	tar cf - images/* lang/* *.txt *.tcl README.grass | (cd $(GISBASE)/bwidget; tar xf -)
 
 clean:

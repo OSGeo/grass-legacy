@@ -1,12 +1,11 @@
 #############################################################################
 #
-# $Id$
-#
-# MODULE:   	Grass Initialization
+# MODULE:   	GRASS Initialization
 # AUTHOR(S):	Original author unknown - probably CERL
 #   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
+#               Markus Neteler, Andrea Antonello
 # PURPOSE:  	To create the various scripts and programs which are required
-#   	    	to start grass.
+#   	    	to start GRASS.
 # COPYRIGHT:    (C) 2000 by the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
@@ -41,8 +40,8 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/gis_set.tcl \
 	$(ETC)/epsg_option.tcl \
 	$(ETC)/make_location_epsg_g57.sh
-	mkdir -p $(GISBASE)/docs/html
-	cp variables.html $(GISBASE)/docs/html/variables.html
+	$(MKDIR) $(GISBASE)/docs/html
+	$(INSTALL) -m 644 variables.html $(GISBASE)/docs/html/variables.html
 
 
 $(ARCH_BINDIR)/$(START_UP): init.sh 
@@ -97,21 +96,17 @@ $(ETC)/license: license.txt version.sed
 
 $(ETC)/msgs: msgs
 	rm -rf $@
-	mkdir $@
-	cp msgs/*.msg $@	
-	chmod +r $@
+	$(MKDIR) $@
+	$(INSTALL) -m 644 msgs/*.msg $@	
 	
 $(ETC)/gis_set.tcl: gis_set.tcl
 	rm -f $@
-	cp gis_set.tcl $(ETC)
-	chmod +x $@
+	$(INSTALL) -m 755 gis_set.tcl $(ETC)
 	
 $(ETC)/epsg_option.tcl: epsg_option.tcl
 	rm -f $@
-	cp epsg_option.tcl $(ETC)
-	chmod +x $@
+	$(INSTALL) -m 755 epsg_option.tcl $(ETC)
 	
 $(ETC)/make_location_epsg_g57.sh: make_location_epsg_g57.sh
 	rm -f $@
-	cp make_location_epsg_g57.sh $(ETC)
-	chmod +x $@
+	$(INSTALL) -m 755 make_location_epsg_g57.sh $(ETC)

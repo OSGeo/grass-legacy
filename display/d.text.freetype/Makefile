@@ -12,5 +12,5 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 default: cmd $(ETC)/$(CAPFILE)
 
 $(ETC)/$(CAPFILE): $(CAPFILE)
-	cp $(CAPFILE) $(ETC)/$(CAPFILE)
+	$(INSTALL) -m 644 $(CAPFILE) $(ETC)/$(CAPFILE)
 
