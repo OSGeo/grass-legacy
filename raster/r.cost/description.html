@@ -241,6 +241,24 @@ can be done using <EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM> or
 other programs. The map resolution can be found using <EM><A HREF="g.region.html">g.region</A></EM>.
 This problem doesn't arise with floating point maps.</P>
 
+
+<H2>Shortest distance surfaces</H2>
+The command <em>r.cost</em> allows for computing the shortest distance 
+of each pixel from raster lines, such as determining the shortest distances 
+of households to the nearby road. For this cost surfaces with cost value 1 are
+used. The calculation is done with \grass{r.cost} as follows (example for Spearfish region):
+
+<pre>
+  g.region rast=roads -p
+  r.mapcalc "area.one=1"
+  r.cost -k input=area.one output=distance start_rast=roads
+  d.rast distance
+  d.rast.num distance
+  #transform to metric distances using the raster resolution:
+  r.mapcalc "dist_meters=distance * (ewres()+nsres())/2."
+  d.rast dist_meters
+</pre>
+
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="g.copy.html">g.copy</A></EM><BR>
