@@ -41,15 +41,20 @@ if [ $# = "help" ]; then
  exit 1
 fi
 
-# remove .dgm extension, if there (to avoid caps problems):
-INFILE=`echo $1 | sed s/dgm=// | sed 's/\.dgm$//'`
-# could be in caps
-INFILE=`echo $1 | sed s/DGM=// | sed 's/\.DGM$//'`
+if [ ! -f "*.dgm" ]; then
+ echo "ERROR: $1 is not a dgmfile"
+ echo "  usage: s.in.atkisdgm dgmfile"
+ exit
+else 
+   [ -f ! "*.DGM" ]
+ echo "ERROR: $1 is not a dgmfile"
+ echo "  usage: s.in.atkisdgm dgmfile"
+ exit
+fi
 
-#add back defined .dgm extension:
-INFILE=$INFILE.dgm
+INFILE=$1
 
-#check locally:
+# check locally:
 if test ! -f $INFILE
  then
   echo "ERROR: $INFILE not found."
@@ -74,9 +79,10 @@ fi
 # ATKIS.dgm files in /tmp/$INFILE
 echo "Importing $INFILE..."
 #get map's date:
-find ./$INFILE -name \*.dgm -exec cat {} \; | grep DATUM > /tmp/$INFILE.date
-#get data
-find ./$INFILE -name \*.dgm -exec cat {} \; | grep -v DATUM > /tmp/$INFILE
+`cat ./$INFILE | grep DATUM > /tmp/$INFILE.date`
+
+# get data
+`cat ./$INFILE | grep -v DATUM > /tmp/$INFILE`
 
 # converting /tmp/$INFILE in $LOCATION/site_lists/xxx.dgm
 
