@@ -1,0 +1,25 @@
+# %W%  %G%
+
+GRAPH = 
+
+OFILES =  \
+	tek.o\
+	Can_do.o\
+	Color.o\
+	Draw_line.o\
+	Erase.o\
+	Get_w_box.o\
+	Get_w_line.o\
+	Get_w_pnt.o\
+	Graph_Clse.o\
+	Graph_Set.o\
+	Panel.o\
+	Polygn_abs.o\
+	Reset_clr.o \
+	Returns.o
+
+$(GIS)/driver/TEK: TEK
+	mv TEK $@
+
+TEK: $(OFILES) $(GIS)/src/D/devices/lib/driverlib.a
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GIS)/src/D/devices/lib/driverlib.a $(GRAPH)
