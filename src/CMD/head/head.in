@@ -4,6 +4,8 @@ LEX                 = @LEX@
 YACC                = yacc
 ARCH                = @host@
 MAKE                = make
+prefix              = @prefix@
+exec_prefix         = @exec_prefix@
 
 GISBASE             = @prefix@
 UNIX_BIN            = @BINDIR@
@@ -34,6 +36,7 @@ TERMLIB             = @TERMLIB@
 CURSES              = @CURSESLIB@ $(TERMLIB) $(COMPATLIB)
 MATHLIB             = -lm
 XDRLIB              = @XDRLIB@
+ZLIB                = @ZLIB@
 
 #PostgreSQL:
 PQINCPATH           = @PQINCPATH@

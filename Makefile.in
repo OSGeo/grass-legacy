@@ -5,6 +5,8 @@ SHELL=			/bin/sh
 
 PREFIX=			@prefix@
 
+prefix=                 @prefix@
+
 exec_prefix=            @exec_prefix@
 
 BINDIR=			@BINDIR@
@@ -87,7 +89,7 @@ pre-install:
 	test -d ${PREFIX} || ${INSTALL_DATA_DIR} ${PREFIX}
 	test -d src/CMD/next_step || mkdir -p src/CMD/next_step
 	test ! -f src/CMD/head/head || mv src/CMD/head/head src/CMD/head/head.${ARCH}
-	${MAKE_GMAKE_ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/CREATE_GMAKE.sh ${ARCH}
+	${MAKE_GMAKE_ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/CREATE_GMAKE.sh ${ARCH} ${BINDIR}
 	${SHELL} ${IS64BIT} ${ARCH}
 	@ echo "Now proceed with make install"
 
