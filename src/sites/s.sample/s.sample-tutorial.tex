@@ -1,0 +1,259 @@
+\documentstyle[transfig]{article}
+\title{Image Sampling Methods\\ {\large GRASS Tutorial on {\tt s.sample}}}
+\author{James Darrell McCauley}
+\date{04 January 1993}
+\def\fphi#1{\phi\left(#1\right)}
+\begingroup\makeatletter
+% extract first six characters in \fmtname
+\def\x#1#2#3#4#5#6#7\relax{\def\x{#1#2#3#4#5#6}}
+\expandafter\x\fmtname xxxxxx\relax \def\y{splain}
+\ifx\x\y   % LaTeX or SliTeX?
+\gdef\SetFigFont#1#2#3{%
+  \ifnum #1<17 \tiny\else \ifnum #1<20 \small\else
+  \ifnum #1<24 \normalsize\else \ifnum #1<29 \large\else
+  \ifnum #1<34 \Large\else \ifnum #1<41 \LARGE\else
+     \huge\fi\fi\fi\fi\fi\fi
+  \csname #3\endcsname}
+\else
+\gdef\SetFigFont#1#2#3{\begingroup
+  \count@#1\relax \ifnum 25<\count@ \count@25 \fi
+  \def\x{\endgroup\@setsize\SetFigFont{#2pt}}%
+  \expandafter\x
+    \csname \romannumeral\the\count@ pt\expandafter\endcsname
+    \csname @\romannumeral\the\count@ pt\endcsname
+  \csname #3\endcsname}
+\fi
+\endgroup
+\begin{document}
+\bibliographystyle{plain}
+\maketitle
+
+\begin{abstract}
+The sampling methods used by the GRASS program {\tt s.sample}~\cite{s.sample}
+are presented. These are: nearest neighbor sampling, 
+bilinear interpolation, and cubic convolution
+interpolation.
+\end{abstract}
+
+Interpolation software often writes output as images rather
+than punctual form. With a defined resolution in the {\em x-y\/}
+plane, picture elements, known as {\em pixels\/} or {\em cells},
+assume a value for a small rectangular region. This value is
+the result of interpolating at the center of the pixel.
+
+This output representation poses problems for cross-validation.
+Data for cross validation, like the data used for interpolation,
+are not gridded but rather scattered. Their locations in the
+{\em x-y\/} plane will not necessarily coincide with the
+centers of pixels. Therefore, a {\em z}-value at the
+exact location of the point used for cross-validation
+may not be obtainable from the output image. However, there
+are ways of approximating values. Three such methods are
+nearest neighbor, bilinear interpolation, and cubic convolution
+interpolation~\cite{richards93}. These are implemented
+in the GRASS program {\tt s.sample}~\cite{s.sample} and discussed below.
+
+\begin{figure}
+\begin{center}
+\par
+\setlength{\unitlength}{0.007500in}%
+\begin{picture}(267,130)(3,690)
+\thicklines
+\put( 80,820){\line( 0,-1){120}}
+\put(160,820){\line( 0,-1){120}}
+\put( 40,800){\line( 1, 0){160}}
+\put( 40,720){\line( 1, 0){160}}
+\multiput(130,820)(0.00000,-7.74194){16}{\line( 0,-1){  3.871}}
+\put( 80,710){\vector(-1, 0){  0}}
+\put( 80,710){\vector( 1, 0){ 50}}
+\put(180,800){\vector( 0, 1){  0}}
+\put(180,800){\vector( 0,-1){ 50}}
+\multiput( 40,750)(7.80488,0.00000){21}{\line( 1, 0){  3.902}}
+\put( 70,805){\makebox(0,0)[rb]{\smash{\SetFigFont{7}{8.4}{rm}$\fphi{i,j}$}}}
+\put( 70,700){\makebox(0,0)[rb]{\smash{\SetFigFont{7}{8.4}{rm}$\fphi{i+1,j}$}}}
+\put(170,805){\makebox(0,0)[lb]{\smash{\SetFigFont{7}{8.4}{rm}$\fphi{i,j+1}$}}}
+\put(105,690){\makebox(0,0)[b]{\smash{\SetFigFont{7}{8.4}{rm}$j'$}}}
+\put(190,770){\makebox(0,0)[lb]{\smash{\SetFigFont{7}{8.4}{rm}$i'$}}}
+\put(270,700){\makebox(0,0)[lb]{\smash{\SetFigFont{7}{8.4}{rm}This value used.}}}
+\put(260,700){\makebox(0,0)[rb]{\smash{\SetFigFont{7}{8.4}{rm}$\fphi{i+1,j+1}$}}}
+\put(260,805){\makebox(0,0)[lb]{\smash{\SetFigFont{7}{8.4}{rm}Pixel values}}}
+\end{picture}
+\centerline{(a) nearest neighbor}
+\vspace{\baselineskip}
+\par
+\setlength{\unitlength}{0.007500in}%
+\begin{picture}(461,181)(8,635)
+\thicklines
+\put(160,755){\line( 0, 1){ 60}}
+\put(320,775){\line( 0,-1){ 20}}
+\multiput(180,710)(31.48853,31.48853){3}{\line( 1, 1){ 17.023}}
+\put(260,790){\line( 0,-1){ 35}}
+\put(240,735){\line( 0, 1){ 35}}
+\multiput( 80,735)(45.54824,-11.38706){4}{\line( 4,-1){ 23.355}}
+\multiput(160,816)(45.54824,-11.38706){4}{\line( 4,-1){ 23.355}}
+\put( 80,735){\line( 0,-1){ 60}}
+\put(240,695){\line( 0,-1){ 20}}
+\put(180,710){\line( 0,-1){ 35}}
+\put( 40,635){\line( 1, 1){160}}
+\put(200,635){\line( 1, 1){160}}
+\put( 40,675){\line( 1, 0){240}}
+\put(120,755){\line( 1, 0){240}}
+\multiput(170,665)(30.99235,30.99235){4}{\line( 1, 1){ 17.023}}
+\multiput(100,735)(7.86885,0.00000){31}{\line( 1, 0){  3.934}}
+\put(240,750){\line( 2,-1){ 60}}
+\put(155,785){\makebox(0,0)[rb]{\smash{\SetFigFont{7}{8.4}{rm}$\fphi{i,j}$}}}
+\put( 75,700){\makebox(0,0)[rb]{\smash{\SetFigFont{7}{8.4}{rm}$\fphi{i+1,j}$}}}
+\put(265,680){\makebox(0,0)[lb]{\smash{\SetFigFont{7}{8.4}{rm}$\fphi{i+1,j+1}$}}}
+\put(340,760){\makebox(0,0)[lb]{\smash{\SetFigFont{7}{8.4}{rm}$\fphi{i,j+1}$}}}
+\put(270,800){\makebox(0,0)[b]{\smash{\SetFigFont{7}{8.4}{rm}$\fphi{i,j'}$}}}
+\put(160,645){\makebox(0,0)[b]{\smash{\SetFigFont{7}{8.4}{rm}$\fphi{i+1,j'}$}}}
+\put(370,715){\makebox(0,0)[lb]{\smash{\SetFigFont{7}{8.4}{rm}Pixel value required}}}
+\put(360,715){\makebox(0,0)[rb]{\smash{\SetFigFont{7}{8.4}{rm}$\fphi{i',j'}$}}}
+\end{picture}
+\centerline{(b) bilinear interpolation}
+\vspace{\baselineskip}
+\par
+\setlength{\unitlength}{0.007500in}%
+\begin{picture}(474,302)(21,510)
+\thicklines
+\multiput(185,725)(-0.66667,-0.66667){16}{\makebox(0.7407,1.1111){\SetFigFont{7}{8.4}{rm}.}}
+\multiput(175,725)(0.66667,-0.66667){16}{\makebox(0.7407,1.1111){\SetFigFont{7}{8.4}{rm}.}}
+\multiput(185,665)(-0.66667,-0.66667){16}{\makebox(0.7407,1.1111){\SetFigFont{7}{8.4}{rm}.}}
+\multiput(175,665)(0.66667,-0.66667){16}{\makebox(0.7407,1.1111){\SetFigFont{7}{8.4}{rm}.}}
+\multiput(185,605)(-0.66667,-0.66667){16}{\makebox(0.7407,1.1111){\SetFigFont{7}{8.4}{rm}.}}
+\multiput(175,605)(0.66667,-0.66667){16}{\makebox(0.7407,1.1111){\SetFigFont{7}{8.4}{rm}.}}
+\multiput(185,545)(-0.66667,-0.66667){16}{\makebox(0.7407,1.1111){\SetFigFont{7}{8.4}{rm}.}}
+\multiput(175,545)(0.66667,-0.66667){16}{\makebox(0.7407,1.1111){\SetFigFont{7}{8.4}{rm}.}}
+\put( 80,740){\line( 0,-1){220}}
+\put(200,740){\line( 0,-1){220}}
+\put(260,740){\line( 0,-1){220}}
+\put(140,740){\line( 0,-1){220}}
+\put( 60,720){\line( 1, 0){220}}
+\put( 60,660){\line( 1, 0){220}}
+\put( 60,540){\line( 1, 0){220}}
+\multiput(180,740)(0.00000,-8.00000){28}{\line( 0,-1){  4.000}}
+\put(220,660){\vector( 0, 1){  0}}
+\put(220,660){\vector( 0,-1){ 40}}
+\put( 60,600){\line( 1, 0){220}}
+\multiput( 60,620)(8.00000,0.00000){28}{\line( 1, 0){  4.000}}
+\put(140,525){\vector(-1, 0){  0}}
+\put(140,525){\vector( 1, 0){ 40}}
+\put(340,720){\vector(-1, 0){ 40}}
+\put(340,660){\vector(-1, 0){ 40}}
+\put(340,600){\vector(-1, 0){ 40}}
+\put(340,540){\vector(-1, 0){ 40}}
+\put(340,720){\line( 2,-3){ 60}}
+\put(340,660){\line( 2,-1){ 60}}
+\put(340,600){\line( 2, 1){ 60}}
+\put(340,540){\line( 2, 3){ 60}}
+\put(180,790){\vector( 0,-1){ 40}}
+\put(410,617){\makebox(0,0)[lb]{\smash{\SetFigFont{7}{8.4}{rm}interpolations}}}
+\put(410,635){\makebox(0,0)[lb]{\smash{\SetFigFont{7}{8.4}{rm}Cubic polynomial}}}
+\put(270,520){\makebox(0,0)[lb]{\smash{\SetFigFont{7}{8.4}{rm}$\fphi{i+3,j+3}$}}}
+\put(225,635){\makebox(0,0)[lb]{\smash{\SetFigFont{7}{8.4}{rm}$i'$}}}
+\put(160,510){\makebox(0,0)[b]{\smash{\SetFigFont{7}{8.4}{rm}$j'$}}}
+\put(180,800){\makebox(0,0)[b]{\smash{\SetFigFont{7}{8.4}{rm}Cubic polynomial interpolation}}}
+\put( 75,730){\makebox(0,0)[rb]{\smash{\SetFigFont{7}{8.4}{rm}$\fphi{i,j}$}}}
+\end{picture}
+\centerline{(c) cubic convolution interpolation}
+\end{center}
+
+\caption{Image sampling using (a) nearest neighbor, (b) bilinear interpolation,
+and (c) cubic convolution interpolation; pixel centers are at crossings, 
+unknown point is located at $(i',j')$, grid spacing of unity is assumed.
+Adapted from Richards~\protect\cite{richards93}.}
+\label{fig:sampling}
+\end{figure}
+
+{\em Nearest neighbor\/} sampling is probably the simplest approach
+to approximating values.
+In this method, the value of the pixel whose center is nearest to 
+the cross-validation point is used. Figure~\ref{fig:sampling}
+shows this graphically.
+
+{\em Bilinear interpolation\/} is another method. It uses a 
+pixel values ($\phi$) of a
+$2\times2\/$ neighborhood of pixels to perform three linear
+interpolations (see fig.~\ref{fig:sampling}). First, two
+interpolations are performed, one along the row of pixels above the
+point and one along the row of pixels below the point, yielding
+the interpolants $\fphi{i, j'}\/$ and $\fphi{i+1, j'}\/$ given
+by:
+
+\begin{eqnarray}
+  \fphi{i, j'} & = & j' \fphi{i,j+1} + \left(1-j'\right)\fphi{i,j}\\
+\fphi{i+1, j'} & = & j' \fphi{i+1,j+1} + \left(1-j'\right)\fphi{i+1,j}
+\end{eqnarray}
+
+\noindent These equations assume a grid spacing of unity.
+The position of the cross validation point, $\left(i',j'\right),$ 
+is measured relative to $\left(i,j\right).$  The final
+step is to interpolate linearly over the two interpolants
+$\fphi{i, j'}\/$ and $\fphi{i+1, j'},$ yielding:
+
+\begin{eqnarray}
+  \fphi{i',j'} & = & \left(1-i'\right)\left[j'\fphi{i,j+1}+\left(1-j'\right)
+                                           \fphi{i,j}\right]\\ \nonumber
+                &   & + i'\left[j'\fphi{i+1,j+1}+\left(1-j'\right)
+                             \fphi{i+1,j}\right]
+\end{eqnarray}
+where $\fphi{i',j'}\/$ is the estimated value of the cross
+validation point.
+
+{\em Cubic convolution interpolation\/} is another method of finding
+a value at $\left(i',j'\right).$ It uses a $4\times4\/$ neighborhood 
+of pixels. The algorithm that is used to perform this
+operation follows the following equation:
+\begin{eqnarray}
+\fphi{i,j'} & = & j'\left\{j'\left(j'\left[\fphi{i,j+3}-\fphi{i,j+2}
+                  + \fphi{i,j+1}-\fphi{i,j}\right]\right.\right.\\
+                  \nonumber
+            &   & + \left.\left.\left[\fphi{i,j+2}-\fphi{i,j+3}-2\fphi{i,j+1}
+                  + 2\fphi{i,j}\right]\right)\right.\\
+                  \nonumber
+            &   & + \left.\left[\fphi{i,j+2} - \fphi{i,j}\right]\right\}\\
+                  \nonumber
+            &   & + \fphi{i,j+1}
+\end{eqnarray}
+This expression is evaluated for each row of the $4\times4\/$ neighborhood
+shown in figure~\ref{fig:sampling} to yield the four interpolants
+$\fphi{i,j'}$, $\fphi{i+1,j'}$, $\fphi{i+2,j'}$, $\fphi{i+3,j'}$.
+These are interpolated parallel to pixel columns according to:
+\begin{eqnarray}
+\fphi{i',j'} & = & i'\left\{i'\left(i'\left[\fphi{i+3,j'}-\fphi{i+2,j'}
+                  + \fphi{i+1,j'}-\fphi{i,j'}\right]\right.\right.\\
+                  \nonumber
+            &   & + \left.\left.\left[\fphi{i+2,j'}-\fphi{i+3,j'}-2\fphi{i+1,j'}
+                  + 2\fphi{i,j'}\right]\right)\right.\\
+                  \nonumber
+            &   & + \left.\left[\fphi{i+2,j'} - \fphi{i,j'}\right]\right\}\\
+                  \nonumber
+            &   & + \fphi{i+1,j'}
+\end{eqnarray}
+
+Nearest neighbor sampling is the simplest method and
+retains original pixel values. This may be desirable if the
+purpose for sampling is to perform
+classifications~\cite{richards93}.  Bilinear interpolation
+is very intuitive and requires few operations.  Cubic
+convolution also requires few operations but requires 4
+times as many pixels to be stored. The size of the
+neighborhood considered for sampling becomes important when
+considering locations near edges of image boundaries.
+
+\begin{thebibliography}{1}
+\bibitem{s.sample}
+James~Darrell McCauley.
+\newblock {\em s.sample: software to sample raster maps. {GRASS} 4.2 Reference
+  Manual}.
+\newblock U.S. Army Corps of Engineers, Construction Engineering Research
+  Laboratories, Champaign, Illinois, to appear 1994.
+ 
+\bibitem{richards93}
+John~A. Richards.
+\newblock {\em Remote Sensing Digital Image Analysis}.
+\newblock Springer-Verlag, Berlin, 2nd edition, 1993.
+ 
+\end{thebibliography}
+
+\end{document}
