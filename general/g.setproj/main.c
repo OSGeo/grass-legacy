@@ -806,8 +806,9 @@ int main(int argc, char *argv[])
 		}
 		G_free_key_value(in_unit_keys);
 	}			/* if */
-
-	G__put_window(&cellhd, "", "DEFAULT_WIND");
+	
+	if ( G__put_window(&cellhd, "", "DEFAULT_WIND") < 0) 
+		G_fatal_error("Could not write to DEFAULT_WIND region file");
 	fprintf(stderr, "\nProjection information has been recorded for this location\n\n");
 	if ( (old_zone != zone) | (old_proj != cellhd.proj) ) {
 		fprintf(stderr, "The geographic region information in WIND is now obsolete\n");
