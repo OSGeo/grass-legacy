@@ -1,7 +1,7 @@
 
 
 
-m.dem.examine        GRASS Reference Manual         m.dem.examine
+m.dem.examine <main> GRASS Reference Manual  <main> m.dem.examine
 
 
 
@@ -60,7 +60,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
