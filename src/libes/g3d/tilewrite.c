@@ -243,8 +243,10 @@ G3d_flushTile (map, tileIndex)
 
 /*---------------------------------------------------------------------------*/
 
+#ifndef MIN
 #define MIN(a,b) (a < b ? a : b)
 #define MAX(a,b) (a > b ? a : b)
+#endif
 
 int
 G3d_flushTileCube (map, xMin, yMin, zMin, xMax, yMax, zMax)
@@ -341,11 +343,7 @@ G3d_flushTilesInCube (map, xMin, yMin, zMin, xMax, yMax, zMax)
 int G3d_putDouble ();
 
 int
-G3d_putFloat (map, x, y, z, value)
-
-     G3D_Map *map;
-     int x, y, z;
-     float value;
+G3d_putFloat (G3D_Map *map, int x, int y, int z, float value)
 
 {
   int tileIndex, offs;
