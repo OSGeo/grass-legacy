@@ -33,6 +33,9 @@ int main (int argc, char *argv[])
     char *D_color_list();
     ICON icon1, icon2;
 
+    /* Initialize the GIS calls */
+    G_gisinit(argv[0]) ;
+
 	module = G_define_module();
 	module->description =
 		"Displays points, as icons, at user-defined locations "
@@ -72,9 +75,6 @@ int main (int argc, char *argv[])
     flag.reversed = G_define_flag();
     flag.reversed->key = 'r';
     flag.reversed->description = "Input coordinates reversed (north east)";
-
-    /* Initialize the GIS calls */
-    G_gisinit(argv[0]) ;
 
     /* Check command line */
 
