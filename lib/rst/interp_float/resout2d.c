@@ -82,7 +82,7 @@ IL_resample_output_2d (
 
   if (params->elev != NULL)
   {
-    cf1 = G_open_fp_cell_new_uncompressed (params->elev);
+    cf1 = G_open_fp_cell_new (params->elev);
     if (cf1 < 0)
     {
       fprintf (stderr, "unable to create raster map %s\n", params->elev);
