@@ -623,15 +623,15 @@ if test "$GDAL_CONFIG" != "" ; then
   fi
 fi
 
-ac_save_ldflags="$LDFLAGS"
-LDFLAGS="$LDFLAGS $GDAL_LIBS"
+ac_save_libs="$LIBS"
+LIBS="$GDAL_LIBS $LIBS"
 AC_CHECK_FUNC(GDALOpen,[],[
-LDFLAGS="$LDFLAGS $GDAL_DEP_LIBS"
+LIBS="$GDAL_DEP_LIBS $LIBS"
 AC_CHECK_FUNC(GDALOpen,[GDAL_LIBS="$GDAL_LIBS $GDAL_DEP_LIBS"],[
     AC_MSG_ERROR([*** Unable to locate GDAL library.])
 ])
 ])
-LDFLAGS=${ac_save_ldflags}
+LIBS=$ac_save_libs
 
 AC_SUBST(GDAL_LIBS)
 AC_SUBST(GDAL_CFLAGS)
