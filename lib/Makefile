@@ -8,6 +8,7 @@ SUBDIRS = \
 	datetime \
 	db \
 	display \
+	edit \
 	external \
 	fonts \
 	gis \

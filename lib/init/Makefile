@@ -50,7 +50,7 @@ $(ETC)/Init.sh: init.sh version.sed
 	chmod +x $@
 
 $(ETC)/set_data: $(SET_DATA)
-	$(CC) $(LDFLAGS) -o $@ $(SET_DATA) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(SET_DATA) $(EDITLIB) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(ETC)/echo: $(OBJDIR)/echo.o
 	$(CC) $(LDFLAGS) $(OBJDIR)/echo.o -o $@
