@@ -35,8 +35,6 @@ int main (int argc, char *argv[])
   firstrow = lastrow = firstcol = lastcol = 0;
 
   G_gisinit(argv[0]);
-  I_must_be_imagery_projection();
-  G_want_histogram(1);
 
   parm.input = G_define_option();
   parm.input->key         ="input";
@@ -97,6 +95,9 @@ int main (int argc, char *argv[])
 
   if (G_parser(argc,argv))
         exit(-1);
+        
+  I_must_be_imagery_projection();
+  G_want_histogram(1);
 
   inf = parm.input->answer;
   outf = parm.group->answer;
@@ -147,7 +148,7 @@ int main (int argc, char *argv[])
   tape.lastrow=lastrow;
   tape.firstcol=firstcol;
   tape.lastcol=lastcol;
-  strcpy(tape.info.title, parm.title->answer);
+  strcpy(tape.info.title, parm.title); 
 
 /* examine file name */
   if (test_pathname(inf) == 0)
