@@ -1,7 +1,7 @@
 
 
 
-m.datum.shift        GRASS Reference Manual         m.datum.shift
+m.datum.shift <main> GRASS Reference Manual  <main> m.datum.shift
 
 
 
@@ -60,14 +60,14 @@ EXAMPLE
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-m.datum.shift        GRASS Reference Manual         m.datum.shift
+m.datum.shift <main> GRASS Reference Manual  <main> m.datum.shift
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
