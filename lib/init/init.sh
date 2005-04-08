@@ -156,7 +156,7 @@ else
 	LCL=`echo "$LANG" | sed 's/\(..\)\(.*\)/\1/'`
 fi
 
-PATH=$GISBASE/bin:$GISBASE/scripts:/usr/X11R6/bin:/usr/local/bin:/usr/local/grasslib/bin:$PATH:$GRASS_ADDON_PATH
+PATH=$GISBASE/bin:$GISBASE/scripts:$PATH:$GRASS_ADDON_PATH:/usr/X11R6/bin:/usr/local/bin:/usr/local/grasslib/bin
 export PATH
 
 # Set LD_LIBRARY_PATH to find GRASS shared libraries
