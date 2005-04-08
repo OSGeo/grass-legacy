@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: grassmods_zh\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-03-05 17:02+0800\n"
-"PO-Revision-Date: 2005-04-01 14:15+0800\n"
+"PO-Revision-Date: 2005-04-08 16:04+0800\n"
 "Last-Translator: zhangjun <nilarcs@gmail.com>\n"
 "Language-Team: Chinese <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -245,7 +245,7 @@ msgstr "无法描述表"
 
 #: ../db/base/describe.c:81
 msgid "print column names only instead of full column descriptions"
-msgstr "仅输出列名而不是完整的描述"
+msgstr "仅输出列名，不输出完整的描述"
 
 #: ../db/base/describe.c:108
 msgid "Describe a table (in detail)."
@@ -795,7 +795,7 @@ msgstr "叠加栅格图"
 
 #: ../raster/r.median/main.c:49
 msgid "Resultant raster map"
-msgstr "合成栅格图"
+msgstr "结果图"
 
 #: ../raster/r.profile/main.c:56
 msgid "Outputs the raster map layer values lying on user-defined line(s)."
@@ -2984,112 +2984,112 @@ msgstr ""
 
 #: ../raster/r.buffer/main.c:48
 msgid "Creates a raster map layer showing buffer zones surrounding cells that contain non-NULL category values."
-msgstr ""
+msgstr "创建一个栅格图层，显示非空值像元的缓冲区。"
 
 #: ../raster/r.buffer/main.c:56
 msgid "Name of input map"
-msgstr ""
+msgstr "输入地图的名称"
 
 #: ../raster/r.buffer/main.c:63
 msgid "Name of output map"
-msgstr ""
+msgstr "输出地图的名称"
 
 #: ../raster/r.buffer/main.c:70
 msgid "Distance zone(s)"
-msgstr ""
+msgstr "缓冲区距离"
 
 #: ../raster/r.buffer/main.c:77
 msgid "Units of distance"
-msgstr ""
+msgstr "距离的单位"
 
 #: ../raster/r.buffer/main.c:86
 msgid "Ignore zero (0) data cells instead of NULL cells"
-msgstr ""
+msgstr "忽略零值像元而不是空值像元"
 
 #: ../raster/r.composite/main.c:71
 msgid "Combines red, green and blue map layers into a single composite map layer."
-msgstr ""
+msgstr "将红、绿、蓝图层合并为一个复合图层"
 
 #: ../raster/r.composite/main.c:89
 #, c-format
 msgid "Name of raster map layer to be used for <%s>"
-msgstr ""
+msgstr "将要使用的栅格图层的名称<%s>"
 
 #: ../raster/r.composite/main.c:100
 msgid "Number of levels to be used for each component"
-msgstr ""
+msgstr "每部分的等级数"
 
 #: ../raster/r.composite/main.c:116
 #, c-format
 msgid "Number of levels to be used for <%s>"
-msgstr ""
+msgstr "将要使用的等级数<%s>"
 
 #: ../raster/r.composite/main.c:130
 msgid "Dither"
-msgstr ""
+msgstr "抖动(Dither)"
 
 #: ../raster/r.composite/main.c:134
 msgid "Use closest color"
-msgstr ""
+msgstr "使用最接近的颜色"
 
 #: ../raster/r.colors/rules.c:45
 #, c-format
 msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
-msgstr ""
+msgstr "输入规则，完成时输入\"end\"，如果需要帮助请输入\"help\"。\n"
 
 #: ../raster/r.colors/rules.c:47
 #, c-format
 msgid "fp: Data range is %.25f to %.25f\n"
-msgstr ""
+msgstr "fp：数据范围是%.25f至%.25f\n"
 
 #: ../raster/r.colors/rules.c:49
 #, c-format
 msgid "Data range is %ld to %ld\n"
-msgstr ""
+msgstr "数据范围是%ld至%ld\n"
 
 #: ../raster/r.colors/rules.c:118
 msgid "Your color rules do not cover the whole range of data!"
-msgstr ""
+msgstr "您的颜色规则并未覆盖整个数据范围！"
 
 #: ../raster/r.colors/rules.c:191
 #, c-format
 msgid "Enter a rule in one of these formats:\n"
-msgstr ""
+msgstr "使用以下任意一种格式输入一个规则：\n"
 
 #: ../raster/r.colors/rules.c:193
 #, c-format
 msgid " val color\n"
-msgstr ""
+msgstr " val color\n"
 
 #: ../raster/r.colors/rules.c:194
 #, c-format
 msgid " n%% color\n"
-msgstr ""
+msgstr " n%% color\n"
 
 #: ../raster/r.colors/rules.c:195
 #, c-format
 msgid " nv color\n"
-msgstr ""
+msgstr " nv color\n"
 
 #: ../raster/r.colors/rules.c:196
 #, c-format
 msgid " default color\n"
-msgstr ""
+msgstr " 默认颜色\n"
 
 #: ../raster/r.colors/rules.c:197
 #, c-format
 msgid "color can be one of:\n"
-msgstr ""
+msgstr "颜色是其中一种：\n"
 
 #: ../raster/r.colors/rules.c:199
 #, c-format
 msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
-msgstr ""
+msgstr "或者是R:G:B形式的，例如 0:127:255\n"
 
 #: ../raster/r.colors/rules.c:240
 #, c-format
 msgid "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n"
-msgstr ""
+msgstr "** 警告：R:G:B值超出范围[0..255]： %d:%d:%d **\n"
 
 #: ../raster/r.colors/rules.c:241
 #: ../raster/r.colors/rules.c:257
@@ -3101,79 +3101,79 @@ msgstr ""
 #: ../raster/r.colors/rules.c:407
 #, c-format
 msgid "** rule is not added **\n"
-msgstr ""
+msgstr "** 规则没有添加 **\n"
 
 #: ../raster/r.colors/rules.c:256
 #, c-format
 msgid "** warning: R G B value(s) out of range [0..255]: %d %d %d **\n"
-msgstr ""
+msgstr "** 警告：R G B值超出范围[0..255]： %d %d %d **\n"
 
 #: ../raster/r.colors/rules.c:269
 #: ../raster/r.colors/rules.c:291
 #, c-format
 msgid "** warning: no such value **\n"
-msgstr ""
+msgstr "** 警告：没有这样的值 **\n"
 
 #: ../raster/r.colors/rules.c:405
 #, c-format
 msgid "%s:line %d:%s\n"
-msgstr ""
+msgstr "%s：行%d：%s\n"
 
 #: ../raster/r.colors/rules.c:406
 #, c-format
 msgid "** bad color specification **\n"
-msgstr ""
+msgstr "** 错误的颜色规范 **\n"
 
 #: ../raster/r.colors/rules.c:427
 #, c-format
 msgid "%s - unknown color\n"
-msgstr ""
+msgstr "%s - 未知的颜色\n"
 
 #: ../raster/r.colors/rules.c:428
 #, c-format
 msgid "Valid colors are:\n"
-msgstr ""
+msgstr "有效的颜色是：\n"
 
 #: ../raster/r.colors/main.c:135
 msgid "Creates/Modifies the color table associated with a raster map layer."
-msgstr ""
+msgstr "根据栅格图层创建/修改色彩表。"
 
 #: ../raster/r.colors/main.c:143
 #: ../raster/r.timestamp/main.c:26
 msgid "Raster map name"
-msgstr ""
+msgstr "栅格图名称"
 
 #: ../raster/r.colors/main.c:151
 msgid "Type of color table"
-msgstr ""
+msgstr "色彩表类型"
 
 #: ../raster/r.colors/main.c:158
 msgid "Raster map name from which to copy color table"
-msgstr ""
+msgstr "提供色彩表的栅格图名称"
 
 #: ../raster/r.colors/main.c:164
 msgid "Name of predefined rules file"
-msgstr ""
+msgstr "规则文件的名称"
 
 #: ../raster/r.colors/main.c:169
 msgid "Keep existing color table"
-msgstr ""
+msgstr "保留已有的色彩表"
 
 #: ../raster/r.colors/main.c:177
 msgid "List rules"
-msgstr ""
+msgstr "列出规则"
 
 #: ../raster/r.describe/main.c:39
 msgid "Prints terse list of category values found in a raster map layer."
-msgstr ""
+msgstr "打印栅格图层分类值的简要列表"
 
 #: ../raster/r.describe/main.c:47
 msgid "Name of raster map"
-msgstr ""
+msgstr "栅格图的名称"
 
 #: ../raster/r.describe/main.c:56
 msgid "string representing no data cell value"
-msgstr ""
+msgstr "代表无数据像元的字符"
 
 #: ../raster/r.describe/main.c:64
 msgid "number of quantization steps"
@@ -3181,99 +3181,99 @@ msgstr ""
 
 #: ../raster/r.describe/main.c:70
 msgid "Print the output one value per line"
-msgstr ""
+msgstr "一行输出一个值"
 
 #: ../raster/r.describe/main.c:74
 msgid "Only print the range of the data"
-msgstr ""
+msgstr "只打印数据的范围"
 
 #: ../raster/r.describe/main.c:82
 msgid "Use the current region"
-msgstr ""
+msgstr "使用当前的区域"
 
 #: ../raster/r.describe/main.c:86
 msgid "Read fp map as integer"
-msgstr ""
+msgstr "将fp地图以整数读取"
 
 #: ../raster/r.in.gdal/main.c:71
 msgid "Import GDAL supported raster file into a binary raster map layer."
-msgstr ""
+msgstr "将GDAL支持的栅格文件导入到二元栅格图层中。"
 
 #: ../raster/r.in.gdal/main.c:80
 msgid "Raster file to be imported"
-msgstr ""
+msgstr "将要导入的栅格文件"
 
 #: ../raster/r.in.gdal/main.c:94
 msgid "Band to select (default is all bands)"
-msgstr ""
+msgstr "选择波段(默认选择所有波段)"
 
 #: ../raster/r.in.gdal/main.c:100
 msgid "Name of location to read projection from for GCPs transformation"
-msgstr ""
+msgstr "区域的名称，从该位置读取用于GCP转换的投影信息"
 
 #: ../raster/r.in.gdal/main.c:113
 msgid "Name for new location to create"
-msgstr ""
+msgstr "将要创建的新区域的名称"
 
 #: ../raster/r.in.gdal/main.c:117
 msgid "Override projection (use location's projection)"
-msgstr ""
+msgstr "覆盖投影(使用区域的投影)"
 
 #: ../raster/r.in.gdal/main.c:121
 msgid "Extend location extents based on new dataset"
-msgstr ""
+msgstr "基于新的数据集扩展区域的范围"
 
 #: ../raster/r.in.gdal/main.c:125
 msgid "List supported formats then exit"
-msgstr ""
+msgstr "列出支持的格式然后退出"
 
 #: ../raster/r.in.gdal/main.c:129
 msgid "Keep band numbers instead of using band color names"
-msgstr ""
+msgstr "使用波段数，而不使用波段的颜色名称"
 
 #: ../raster/r.in.poly/main.c:16
 msgid "Create raster maps from ascii polygon/line data files in the current directory."
-msgstr ""
+msgstr "以当前目录中的ASCII格式的(多边形/线形)数据文件来创建栅格地图。"
 
 #: ../raster/r.in.poly/main.c:24
 msgid "Input file"
-msgstr ""
+msgstr "输入文件"
 
 #: ../raster/r.in.poly/main.c:32
 msgid "Raster output file"
-msgstr ""
+msgstr "输出的栅格文件"
 
 #: ../raster/r.in.poly/main.c:46
 msgid "Number of rows to hold in memory"
-msgstr ""
+msgstr "载入内存的行数"
 
 #: ../raster/r.timestamp/main.c:19
 msgid "Print/add/remove a timestamp for a raster map."
-msgstr ""
+msgstr "打印/添加/删除 栅格图的时间戳。"
 
 #: ../raster/r.timestamp/main.c:33
 msgid "Datetime, datetime1/datetime2, or none"
-msgstr ""
+msgstr "日期时间，日期时间1/日期时间2，或者为空"
 
 #: ../raster/r.average/main.c:31
 msgid "Finds the average of values in a cover map within areas assigned the same category value in a user-specified base map."
-msgstr ""
+msgstr "以基础图中具有相同类别值的区域为界，在叠加图上找到均值。"
 
 #: ../raster/r.average/main.c:40
 msgid "base raster map"
-msgstr ""
+msgstr "基础栅格图"
 
 #: ../raster/r.average/main.c:47
 msgid "cover raster map"
-msgstr ""
+msgstr "叠加栅格图"
 
 #: ../raster/r.average/main.c:54
 msgid "resultant raster map"
-msgstr ""
+msgstr "结果图"
 
 #: ../raster/r.average/main.c:58
 msgid "cover values extracted from the category labels of the cover map"
-msgstr ""
+msgstr "叠加值从叠加图的类别标签中提取"
 
 #: ../raster/r.random.surface/main.c:30
 msgid "Generates random surface(s) with spatial dependence."
@@ -3297,7 +3297,7 @@ msgstr "小数位的位数"
 
 #: ../raster/r.out.arc/main.c:91
 msgid "List one entry per line instead of full row"
-msgstr "每行只列一个值，而不是将一排值列于一行"
+msgstr "每行只列一个值，而不是将整排值列于一行"
 
 #: ../raster/r.out.bin/main.c:69
 msgid "Exports a GRASS raster to a binary array."
