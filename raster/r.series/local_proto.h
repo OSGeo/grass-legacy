@@ -17,5 +17,8 @@ extern cfunc c_sum;
 extern cfunc c_var;
 extern cfunc c_reg_m;
 extern cfunc c_reg_c;
+extern cfunc c_quart1;
+extern cfunc c_quart3;
+extern cfunc c_perc90;
 
 extern int sort_cell(DCELL *, int);
