@@ -33,7 +33,7 @@ set GRASSVERSION [read -nonewline $fp]
 close $fp
 
 #HTML help
-source $env(GISBASE)/docs/nviz/help.tcl
+source $env(GISBASE)/etc/help.tcl
 proc make_help_window { w } {
 
         frame $w

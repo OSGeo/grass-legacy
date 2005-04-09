@@ -41,6 +41,7 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/msgs \
 	$(ETC)/gis_set.tcl \
 	$(ETC)/epsg_option.tcl \
+	$(ETC)/help.tcl \
 	$(ETC)/make_location_epsg.sh \
 	$(ETC)/grass-run.sh
 	$(MKDIR) $(GISBASE)/docs/html
@@ -120,7 +121,11 @@ $(ETC)/gis_set.tcl: gis_set.tcl
 $(ETC)/epsg_option.tcl: epsg_option.tcl
 	rm -f $@
 	$(INSTALL) -m 755 epsg_option.tcl $(ETC)
-	
+
+$(ETC)/help.tcl: help.tcl
+	rm -f $@
+	$(INSTALL) -m 755 help.tcl $(ETC)
+
 $(ETC)/make_location_epsg.sh: make_location_epsg_g57.sh
 	rm -f $@
 	$(INSTALL) -m 755 make_location_epsg_g57.sh $(ETC)/make_location_epsg.sh
