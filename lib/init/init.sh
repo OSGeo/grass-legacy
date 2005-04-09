@@ -170,14 +170,6 @@ export LD_LIBRARY_PATH_VAR
 GRASS_LD_LIBRARY_PATH=$LD_LIBRARY_PATH_VAR
 export GRASS_LD_LIBRARY_PATH
 
-# Set DLD_LIBRARY_PATH to find GRASS shared libraries
-if [ ! "$DYLD_LIBRARY_PATH" ] ; then
-  DYLD_LIBRARY_PATH=$GISBASE/lib
-else
-  DYLD_LIBRARY_PATH=$GISBASE/lib:$DYLD_LIBRARY_PATH
-fi
-export DYLD_LIBRARY_PATH
-
 # Once the new environment system is committed we can delete these lines
 # Export the PAGER environment variable for those who have it set
 if [ "$PAGER" ] ; then
