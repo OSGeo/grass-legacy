@@ -48,7 +48,7 @@ main (int argc, char *argv[])
 {
     struct GModule *module;
     struct Option *out_opt, *in_opt;
-    struct Flag *z_flag, *circle_flag, *l_flag;
+    struct Flag *z_flag, *circle_flag, *l_flag, *int_flag;
     char   buf[2000];
 
     /* DWG */
@@ -62,13 +62,13 @@ main (int argc, char *argv[])
     G_gisinit(argv[0]);
     
     module = G_define_module();
-    module->description = "Convert DWG/DXF to GRASS vector";
+    module->description = "Convert DWG/DXF to GRASS vector map";
 
     in_opt = G_define_option();
     in_opt->key = "input";
     in_opt->type =  TYPE_STRING;
     in_opt->required = YES;
-    in_opt->description = "DWG or DXF file.";
+    in_opt->description = "DWG or DXF file";
     in_opt->gisprompt = "file,file,file";
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
@@ -79,7 +79,7 @@ main (int argc, char *argv[])
     layers_opt->type =  TYPE_STRING;
     layers_opt->required = NO;
     layers_opt->multiple = YES;
-    layers_opt->description = "List of layers to import.";
+    layers_opt->description = "List of layers to import";
 
     invert_flag = G_define_flag();
     invert_flag->key         = 'i';
@@ -95,7 +95,11 @@ main (int argc, char *argv[])
 
     l_flag = G_define_flag();
     l_flag->key               = 'l';
-    l_flag->description       = "List available layers and exit.";
+    l_flag->description       = "List available layers and exit";
+
+    int_flag = G_define_flag();
+    int_flag->key               = 'n';
+    int_flag->description       = "Use numeric type for attribute \"layer\"";
 
     if (G_parser (argc, argv)) exit(-1); 
 
@@ -173,8 +177,14 @@ main (int argc, char *argv[])
     db_begin_transaction ( driver );
     
     /* Create table */
-    sprintf ( buf, "create table %s ( cat integer, entity_name varchar(20), color int, weight int, "
+    if ( int_flag->answer ) { /* List layers */
+      sprintf ( buf, "create table %s ( cat integer, entity_name varchar(20), color int, weight int, "
+		"layer real, block varchar(100), txt varchar(100) )", Fi->table );
+
+    }else{
+      sprintf ( buf, "create table %s ( cat integer, entity_name varchar(20), color int, weight int, "
 	           "layer varchar(100), block varchar(100), txt varchar(100) )", Fi->table );
+    }
     db_set_string ( &sql, buf);
     G_debug ( 3, db_get_string ( &sql ) );
 
