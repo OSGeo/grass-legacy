@@ -1346,8 +1346,8 @@ AC_DEFUN([AC_SYS_LARGEFILE_MACRO_VALUE],
 
 AC_DEFUN([AC_SYS_LARGEFILE],
   [AC_ARG_ENABLE(largefile,
-     [  --disable-largefile     omit support for large files])
-   if test "$enable_largefile" != no; then
+     [  --enable-largefile     enable support for large files (LFS)])
+   if test "$enable_largefile" = yes; then
 
      AC_CACHE_CHECK([for special C compiler options needed for large files],
        ac_cv_sys_largefile_CC,
