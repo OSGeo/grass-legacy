@@ -31,7 +31,7 @@ int G_is_little_endian (void)
     union
     {
         int testWord;
-        char testByte[4];
+        char testByte[sizeof(int)];
     } endianTest;
     
     int swapFlag;
