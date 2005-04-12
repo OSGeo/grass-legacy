@@ -608,7 +608,7 @@ int main (int argc, char *argv[])
 	ncatexist = db_select_int( driver, Fi->table, Fi->key, NULL, &catexist);
         G_debug (1, "%d cats selected from the table", ncatexist );	
     }
-    update_ok = update_err = update_exist = update_notexist = update_dupl = update_notfound;
+    update_ok = update_err = update_exist = update_notexist = update_dupl = update_notfound = 0;
 
     if ( !all ) count = nfcats;
     
