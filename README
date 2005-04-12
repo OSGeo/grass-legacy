@@ -24,3 +24,7 @@ which refers to further document repositories in
 
 The master file is: ./grassrefman.dox where all sub-documents have to
 be linked into.
+
+To generate the documents in PDF format, run
+   make pdfdocs
+
