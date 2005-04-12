@@ -4,6 +4,7 @@
 #include "dbmi.h"
 #include "Vect.h"
 #include "local.h"
+#include "glocale.h"
 
 int main (int argc, char *argv[])
 {
@@ -15,8 +16,8 @@ int main (int argc, char *argv[])
     G_gisinit (argv[0]);
 
     module = G_define_module();
-    module->description = "Converts a binary GRASS vector map layer "
-		          "into a GRASS raster map layer.";
+    module->description = _("Converts a binary GRASS vector map layer "
+		          "into a GRASS raster map layer.");
 
     input = G_define_option();
     input->key             = "input";
@@ -24,7 +25,7 @@ int main (int argc, char *argv[])
     input->required        = YES;
     input->multiple        = NO;
     input->gisprompt       = "old,vector,vector";
-    input->description     = "vector input file";
+    input->description     = _("vector input file");
 
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
     
@@ -34,7 +35,7 @@ int main (int argc, char *argv[])
     output->required       = YES;
     output->multiple       = NO;
     output->gisprompt      = "new,cell,raster";
-    output->description    = "raster output file";
+    output->description    = _("raster output file");
 
     use_opt = G_define_option();
     use_opt->key            = "use";
@@ -43,18 +44,18 @@ int main (int argc, char *argv[])
     use_opt->multiple       = NO;
     use_opt->options        = "attr,cat,val,z";
     use_opt->answer         = "attr";
-    use_opt->description    = "Source of raster values:\n"
+    use_opt->description    = _("Source of raster values:\n"
 			"\t\tattr - read values from attribute table\n"
 			"\t\tcat  - use category values\n"
 			"\t\tval  - use value specified by value option\n"
-			"\t\tz    - use z coordinate (points or contours only)";
+			"\t\tz    - use z coordinate (points or contours only)");
 
     col = G_define_option();
     col->key            = "column";
     col->type           = TYPE_STRING;
     col->required       = NO;
     col->multiple       = NO;
-    col->description    = "Column name";
+    col->description    = _("Column name");
 
     val_opt = G_define_option();
     val_opt->key              = "value";
@@ -62,15 +63,15 @@ int main (int argc, char *argv[])
     val_opt->required         = NO;
     val_opt->multiple         = NO;
     val_opt->answer           = "1";
-    val_opt->description      = "Raster value";
+    val_opt->description      = _("Raster value");
 
     rows = G_define_option();
     rows->key              = "rows";
     rows->type             = TYPE_INTEGER;
     rows->required         = NO;
     rows->multiple         = NO;
-    rows->description      = "number of rows to hold in memory";
     rows->answer           = "4096";
+    rows->description      = _("number of rows to hold in memory");
 
     if (G_parser (argc, argv)) exit (1);
 
@@ -80,18 +81,18 @@ int main (int argc, char *argv[])
     if ( use_opt->answer[0] == 'a' ) {
 	use = USE_ATTR;
 	if ( !col->answer )
-    	    G_fatal_error ("col parameter missing (or use value parameter)" );
+    	    G_fatal_error (_("col parameter missing (or use value parameter)") );
     } else if ( use_opt->answer[0] == 'c' ) {
 	if ( col->answer )
-    	    G_fatal_error ("Column parameter cannot be combined with use of category values option" );
+    	    G_fatal_error (_("Column parameter cannot be combined with use of category values option") );
 	use = USE_CAT;
     } else if ( use_opt->answer[0] == 'v' ) {
 	if ( col->answer )
-    	    G_fatal_error ("Column parameter cannot be combined with use of value option" );
+    	    G_fatal_error (_("Column parameter cannot be combined with use of value option") );
 	use = USE_VAL;
     } else if ( use_opt->answer[0] == 'z' ) {
 	if ( col->answer )
-    	    G_fatal_error ("Column parameter cannot be combined with use of z coordinate" );
+    	    G_fatal_error (_("Column parameter cannot be combined with use of z coordinate") );
 	use = USE_Z;
     }
 
