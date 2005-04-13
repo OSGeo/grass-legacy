@@ -23,6 +23,7 @@ struct rr_state {
     long nCells, nNulls, nRand;
     struct RASTER_MAP_PTR nulls, buf, min, max;
     FILE *fsites;
+    int z_geometry;
 };
 
 
