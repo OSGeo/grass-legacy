@@ -2,8 +2,7 @@
 #include "dbmi.h"
 
 /*!
- \fn 
- \brief 
+ \brief returns sqltype description
  \return 
  \param 
 */
