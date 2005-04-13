@@ -4,8 +4,7 @@
 #include "dbmi.h"
 
 /*!
- \fn dbColumn *db_get_table_column (dbTable *table, int n)
- \brief 
+ \brief returns column structure for given table and column number
  \return 
  \param 
 */
@@ -18,8 +17,7 @@ db_get_table_column (dbTable *table, int n)
 }
 
 /*!
- \fn dbValue *db_get_column_value (dbColumn *column)
- \brief 
+ \brief returns column value for given column structure
  \return 
  \param 
 */
@@ -30,8 +28,7 @@ db_get_column_value (dbColumn *column)
 }
 
 /*!
- \fn dbValue *db_get_column_default_value (dbColumn *column)
- \brief 
+ \brief returns column default value for given column structure
  \return 
  \param 
 */
@@ -42,8 +39,8 @@ db_get_column_default_value (dbColumn *column)
 }
 
 /*!
- \fn void db_set_column_sqltype (dbColumn *column, int sqltype)
- \brief 
+ \brief define column sqltype for column (the function db_sqltype_name() 
+        returns sqltype description)
  \return 
  \param 
 */
@@ -54,7 +51,6 @@ db_set_column_sqltype (dbColumn *column, int sqltype)
 }
 
 /*!
- \fn void db_set_column_host_type (dbColumn *column, int type)
  \brief 
  \return 
  \param 
@@ -66,7 +62,6 @@ db_set_column_host_type (dbColumn *column, int type)
 }
 
 /*!
- \fn void db_get_column_host_type (dbColumn *column)
  \brief 
  \return 
  \param 
@@ -78,7 +73,6 @@ db_get_column_scale (dbColumn *column)
 }
 
 /*!
- \fn void db_set_column_scale (dbColumn *column, int scale)
  \brief 
  \return 
  \param 
@@ -90,7 +84,6 @@ db_set_column_scale (dbColumn *column, int scale)
 }
 
 /*!
- \fn int db_get_column_precision (dbColumn *column)
  \brief 
  \return 
  \param 
@@ -102,7 +95,6 @@ db_get_column_precision (dbColumn *column)
 }
 
 /*!
- \fn void db_set_column_precision (dbColumn *column, int precision)
  \brief 
  \return 
  \param 
@@ -114,8 +106,8 @@ db_set_column_precision (dbColumn *column, int precision)
 }
 
 /*!
- \fn 
- \brief 
+ \brief returns column sqltype for column (the function db_sqltype_name() 
+        returns sqltype description)
  \return 
  \param 
 */
@@ -134,7 +126,6 @@ db_get_column_host_type (column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -147,7 +138,6 @@ db_set_column_has_defined_default_value(column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -160,7 +150,6 @@ db_set_column_has_undefined_default_value(column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -173,7 +162,6 @@ db_unset_column_has_default_value(column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -186,7 +174,6 @@ db_test_column_has_default_value(column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -199,7 +186,6 @@ db_test_column_has_defined_default_value(column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -212,7 +198,6 @@ db_test_column_has_undefined_default_value(column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -225,7 +210,6 @@ db_set_column_use_default_value(column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -238,7 +222,6 @@ db_unset_column_use_default_value(column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -251,7 +234,6 @@ db_test_column_use_default_value(column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -264,7 +246,6 @@ db_set_column_null_allowed(column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -277,7 +258,6 @@ db_unset_column_null_allowed(column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -290,7 +270,6 @@ db_test_column_null_allowed(column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -303,7 +282,6 @@ db_get_column_length (column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -317,7 +295,6 @@ db_set_column_length (column, length)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -330,7 +307,6 @@ db_set_column_select_priv_granted (column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -343,7 +319,6 @@ db_set_column_select_priv_not_granted (column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -356,7 +331,6 @@ db_get_column_select_priv (column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -369,7 +343,6 @@ db_set_column_update_priv_granted (column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -382,7 +355,6 @@ db_set_column_update_priv_not_granted (column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -395,7 +367,6 @@ db_get_column_update_priv (column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -412,7 +383,6 @@ db_init_column (column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -426,8 +396,7 @@ db_set_column_name (column, name)
 }
 
 /*!
- \fn 
- \brief 
+ \brief returns column name for given column
  \return 
  \param 
 */
@@ -439,7 +408,6 @@ db_get_column_name (column)
 }
 
 /*!
- \fn 
  \brief 
  \return 
  \param 
@@ -453,8 +421,7 @@ db_set_column_description (column, description)
 }
 
 /*!
- \fn 
- \brief 
+ \brief returns column description for given column
  \return 
  \param 
 */
@@ -466,8 +433,7 @@ db_get_column_description (column)
 }
 
 /*!
- \fn 
- \brief 
+ \brief frees column structure
  \return 
  \param 
 */
