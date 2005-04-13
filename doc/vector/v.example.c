@@ -2,17 +2,20 @@
  * v.llabel -i map=m1 value=1
  * but the new map is written instead of update of the old one */
 
+#include <stdio.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "Vect.h"
+#include "glocale.h"
 
 int 
 main (int argc, char *argv[])
 {
-	struct Map_info Map1, Map2;
+	struct Map_info In, Out;
 	static struct line_pnts *Points;
 	struct line_cats *Cats;
         int    i, type, cat;
-	char   *mapset, errmsg[200];
+	char   *mapset;
 	struct Option *old, *new;
 
 	old = G_define_option();
@@ -21,7 +24,7 @@ main (int argc, char *argv[])
 	old->required = YES;
 	old->multiple = NO;
 	old->gisprompt = "input vector";
-	old->description  = "name of input vector file";
+	old->description  = _("name of input vector file");
 	
 	new = G_define_option();
 	new->key = "output";
@@ -29,7 +32,7 @@ main (int argc, char *argv[])
 	new->required = YES;
 	new->multiple = NO;
 	new->gisprompt = "output vector";
-        new->description = "name of resulting vector file";
+        new->description = _("name of resulting vector file");
 
 	G_gisinit(argv[0]);
         if (G_parser (argc, argv))
@@ -39,31 +42,26 @@ main (int argc, char *argv[])
 	Cats = Vect_new_cats_struct ();
 	
         if ((mapset = G_find_vector2 (old->answer, "")) == NULL)
-	  {
-	     sprintf (errmsg, "Could not find input %s\n", old->answer);
-	     G_fatal_error (errmsg);
-	  }
+	     G_fatal_error ( _("Could not find input %s"), old->answer);
 	     
-        Vect_set_open_level (1); 
-	if (1 > Vect_open_old (&Map1, old->answer, mapset) )
-	  {
-	     sprintf (errmsg, "Could not open input\n");
-	     G_fatal_error (errmsg);
-	  }
+        Vect_set_open_level (2); 
+	if (1 > Vect_open_old (&In, old->answer, mapset) )
+	     G_fatal_error ( _("Could not open input") );
 	
-	if (0 > Vect_open_new (&Map2, new->answer, WITHOUT_Z))
-	  {
-	     sprintf (errmsg, "Could not open output\n");
-	     Vect_close (&Map1);
-	     G_fatal_error (errmsg);
-	  }
+	if (0 > Vect_open_new (&Out, new->answer, WITHOUT_Z))
+	{
+	     Vect_close (&In);
+	     G_fatal_error ( _("Could not open output") );
+	}
 
-	Vect_copy_head_data (&(Map1.head), &(Map2.head));
+	Vect_copy_head_data (&In, &Out);
+	Vect_hist_copy (&In, &Out);
+	Vect_hist_command ( &Out );
 
 	i=1;
-	while ( (type = Vect_read_next_line (&Map1, Points, Cats)) > 0)
+	while ( (type = Vect_read_next_line (&In, Points, Cats)) > 0)
 	  {
-	    if ( type == LINE )
+	    if ( type == GV_LINE )
 	       {
                  if( Vect_cat_get (Cats, 1, &cat) == 0)
 	           {
@@ -71,11 +69,12 @@ main (int argc, char *argv[])
 	              i++;
 	           }
 	       }	   
-	    Vect_write_line ( &Map2, type, Points, Cats );  
+	    Vect_write_line ( &Out, type, Points, Cats );  
 	  }
 	  
-	Vect_close (&Map1);
-	Vect_close (&Map2);
+	Vect_build (&Out, stdout );
+	Vect_close (&In);
+	Vect_close (&Out);
 
 	exit(0) ;
 }
