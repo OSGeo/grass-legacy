@@ -27,7 +27,7 @@
 int main (int argc, char **argv)
 {
     struct GModule *module;
-    struct Option *map_opt, *field_opt, *fs_opt, *vs_opt, *nv_opt;
+    struct Option *map_opt, *field_opt, *fs_opt, *vs_opt, *nv_opt, *col_opt;
     struct Flag *c_flag, *v_flag;
     dbDriver *driver;
     dbString sql, value_string;
@@ -38,12 +38,19 @@ int main (int argc, char **argv)
     struct field_info *Fi;
     int field, ncols, col, more;
     struct Map_info Map;
+    char query[1024];
     
     module = G_define_module();
     module->description = "Print vector attributes";
 
     map_opt = G_define_standard_option(G_OPT_V_MAP);
     field_opt = G_define_standard_option(G_OPT_V_FIELD) ;
+
+    col_opt 		= G_define_option();
+    col_opt->key 	= "column";
+    col_opt->type 	= TYPE_STRING;
+    col_opt->required 	= NO;
+    col_opt->description = _("single attribute column");
 
     fs_opt 		= G_define_option();
     fs_opt->key 	= "fs";
@@ -90,7 +97,12 @@ int main (int argc, char **argv)
 
     driver = db_start_driver_open_database ( Fi->driver, Fi->database );
 
-    db_set_string ( &sql, "select * from " );
+    if ( col_opt->answer )
+      sprintf(query, "SELECT %s FROM ", col_opt->answer);
+    else
+      sprintf(query, "SELECT * FROM ");
+
+    db_set_string ( &sql, query );
     db_append_string ( &sql, Fi->table );
 
     if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK)
