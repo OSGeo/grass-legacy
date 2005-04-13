@@ -26,7 +26,7 @@ main (int argc, char *argv[])
     } parm;
     struct
     {
-	struct Flag *zero, *quiet, *info ;
+	struct Flag *zero, *quiet, *info, *z_geometry ;
     } flag;
 
     G_gisinit (argv[0]);
@@ -70,12 +70,15 @@ main (int argc, char *argv[])
 
     flag.zero = G_define_flag() ;
     flag.zero->key         = 'z' ;
-    flag.zero->description = _("Generate sites for category zero also");
+    flag.zero->description = _("Generate vector points for category zero also");
 
     flag.info = G_define_flag() ;
     flag.info->key         = 'i' ;
     flag.info->description = _("Report information about input raster and exit");
     
+    flag.z_geometry = G_define_flag() ;
+    flag.z_geometry->key         = 'd' ;
+    flag.z_geometry->description = _("Generate vector points as 3D points");
 
     if (G_parser(argc, argv) != 0)
         exit(1);
@@ -86,6 +89,7 @@ main (int argc, char *argv[])
     myState.inraster  = parm.input->answer;
     myState.outraster = parm.raster->answer;
     myState.outsites  = parm.sites->answer;
+    myState.z_geometry  = flag.z_geometry->answer;
     
     myState.mapset = G_find_cell (myState.inraster, "");
     if (myState.mapset == NULL)
