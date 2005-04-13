@@ -1,6 +1,23 @@
-/* example vector module does something like:
- * v.llabel -i map=m1 value=1
- * but the new map is written instead of update of the old one */
+/****************************************************************
+ *
+ * MODULE:     v.example
+ *
+ * AUTHOR(S):  GRASS Development Team
+ *
+ * PURPOSE:    example vector module does something like:
+ *               v.llabel -i map=m1 value=1
+ *             but the new map is written instead of update of 
+ *             the old one
+ *
+ * COPYRIGHT:  (C) 2002-2005 by the GRASS Development Team
+ *
+ *             This program is free software under the
+ *             GNU General Public License (>=v2).
+ *             Read the file COPYING that comes with GRASS
+ *             for details.
+ *
+ * TODO:       - add DB support
+ ****************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
