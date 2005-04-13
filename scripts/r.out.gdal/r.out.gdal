@@ -122,8 +122,13 @@ if [ "$METAKEY"   = "-mo " ] ; then
   unset METAKEY
 fi
 
+WKT=`g.proj -wf`
+if [ -n $WKT ] ; then
+  PROJECTION="-a_srs '${WKT}'"
+fi
+
 #do it
 CELLHD=`echo $file | sed 's+/cell/+/cellhd/+g'`
 echo "Writing format: $FORMAT"
 echo "Writing type:   $TYPE"
-gdal_translate -of $FORMAT -ot $TYPE -a_srs "`g.proj -wf`" $CREATEKEY $METAKEY $CELLHD $OUTPUT 
+gdal_translate -of $FORMAT -ot $TYPE $PROJECTION $CREATEKEY $METAKEY $CELLHD $OUTPUT 
