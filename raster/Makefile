@@ -76,6 +76,7 @@ SUBDIRS = \
 	r.sum \
 	r.sun \
 	r.sunmask \
+	r.support \
 	r.surf.area \
 	r.surf.contour \
 	r.surf.idw \
