@@ -33,13 +33,14 @@ int write_boundary(struct COOR *seed)
     int dir, line_type, n, n1;
 
     point = seed;
-    if (dir = at_end(point)) {	/* already have one end of line */
+    if ( (dir = at_end(point)) ) {	/* already have one end of line */
 	line_begin = point;
 	line_end = find_end(point, dir, &line_type, &n);
 	if (line_type == OPEN)
 	    return (-1);	/* unfinished line */
 	direction = dir;
-    } else {			/* in middle of a line */
+    }
+    else {			/* in middle of a line */
 
 	line_end = find_end(point, FORWARD, &line_type, &n);
 	if (line_type == OPEN)	/* line not finished */
@@ -53,7 +54,8 @@ int write_boundary(struct COOR *seed)
 	    }
 	    direction = at_end(line_begin);	/* found both ends now; total length */
 	    n += n1;		/*   is sum of distances to each end */
-	} else {		/* line_type = LOOP by default */
+	}
+	else {			/* line_type = LOOP by default */
 	    /* already have correct length */
 	    line_begin = line_end;	/* end and beginning are the same */
 	    direction = FORWARD;	/* direction is arbitrary */
@@ -69,8 +71,8 @@ int write_boundary(struct COOR *seed)
 
 /* write_bnd - actual writing part of write_line */
 /* writes binary and ASCII digit files and supplemental file */
-static int write_bnd( struct COOR *line_begin, struct COOR *line_end,	/* start and end point of line */
-		    int n	/* number of points to write */
+static int write_bnd(struct COOR *line_begin, struct COOR *line_end,	/* start and end point of line */
+		     int n	/* number of points to write */
     )
 {
     double x;
@@ -141,8 +143,8 @@ static int write_bnd( struct COOR *line_begin, struct COOR *line_end,	/* start a
 /* writes binary and ASCII digit files and supplemental file */
 #define SNAP_THRESH 0.00001
 
-static int write_smooth_bnd( struct COOR *line_begin, struct COOR *line_end,	/* start and end point of line */
-			   int n	/* number of points to write */
+static int write_smooth_bnd(struct COOR *line_begin, struct COOR *line_end,	/* start and end point of line */
+			    int n	/* number of points to write */
     )
 {
     double x, y;
@@ -165,11 +167,11 @@ static int write_smooth_bnd( struct COOR *line_begin, struct COOR *line_end,	/* 
     total = 1;
     for (i = 1; i < n; i++) {
 	if (i < 10)
-	    G_debug (3, " row: %d col: %d\n", p->row, p->col);
+	    G_debug(3, " row: %d col: %d\n", p->row, p->col);
 	last = p;
 	if ((p = move(p)) == NULPTR) {	/* this should NEVER happen */
-	    G_debug (3, "write_line:  line terminated unexpectedly\n");
-	    G_debug (3, "  previous (%d) point %p (%d,%d,%d) %p %p\n",
+	    G_debug(3, "write_line:  line terminated unexpectedly\n");
+	    G_debug(3, "  previous (%d) point %p (%d,%d,%d) %p %p\n",
 		    direction, last, last->row, last->col, last->node,
 		    last->fptr, last->bptr);
 	    exit(-1);
@@ -212,7 +214,7 @@ static int write_smooth_bnd( struct COOR *line_begin, struct COOR *line_end,	/* 
 
     for (i = 1; i < n; i++) {
 	if (i < 10)
-	    G_debug (3," row: %d col: %d\n", p->row, p->col);
+	    G_debug(3, " row: %d col: %d\n", p->row, p->col);
 	last = p;
 	if ((p = move(p)) == NULPTR)
 	    break;
@@ -240,7 +242,7 @@ static int write_smooth_bnd( struct COOR *line_begin, struct COOR *line_end,	/* 
 }
 
 /* write_area - make table of area equivalences and write attribute file */
-int write_area( struct area_table *a_list,	/* list of areas */
+int write_area(struct area_table *a_list,	/* list of areas */
 	       struct equiv_table *e_list,	/* list of equivalences between areas */
 	       int n_areas,	/* lengths of e_list, a_list */
 	       int n_equiv)
@@ -254,73 +256,79 @@ int write_area( struct area_table *a_list,	/* list of areas */
 
     total_areas = 0;
     if (n_equiv < n_areas) {
-        equivs = (int *) G_malloc(n_areas * sizeof(int));
-        n = n_equiv;
-    } else {
-        equivs = (int *) G_malloc(n_equiv * sizeof(int));
-        n = n_areas;
+	equivs = (int *) G_malloc(n_areas * sizeof(int));
+	n = n_equiv;
+    }
+    else {
+	equivs = (int *) G_malloc(n_equiv * sizeof(int));
+	n = n_areas;
     }
     for (i = 0; i < n; i++) {
-        if ((e_list + i)->mapped)
-            equivs[i] = (e_list + i)->where;
-        else {
-            total_areas++;
-            equivs[i] = i;
-        }
+	if ((e_list + i)->mapped)
+	    equivs[i] = (e_list + i)->where;
+	else {
+	    total_areas++;
+	    equivs[i] = i;
+	}
     }
     if (n < n_areas) {
-        for (i = n; i < n_areas; i++) {
-            total_areas++;
-            equivs[i] = i;
-        }
+	for (i = n; i < n_areas; i++) {
+	    total_areas++;
+	    equivs[i] = i;
+	}
     }
 
     catNum = 1;
 
     for (i = 0, p = a_list; i < n_areas; i++, p++) {
 	if (equivs[i] == i && p->width > 0 && !G_is_c_null_value(&(p->cat))) {
-            char buf[1000];
+	    char buf[1000];
 
-	    if(value_flag) { /* raster value */
+	    if (value_flag) {	/* raster value */
 		cat = p->cat;
-	    } else {         /* sequence */
+	    }
+	    else {		/* sequence */
 		cat = catNum;
 		catNum++;
 	    }
 
 
-	    x = cell_head.west + (p->col + (p->width / 2.0)) * cell_head.ew_res;
+	    x = cell_head.west + (p->col +
+				  (p->width / 2.0)) * cell_head.ew_res;
 	    y = cell_head.north - (p->row + 0.5) * cell_head.ns_res;
 
-	    G_debug (3, "vector x = %.3f, y = %.3f, cat = %d; raster cat = %d", x, y, cat, p->cat);
-	    
-            Vect_reset_line(Points);
-    	    Vect_append_point(Points, x, y, 0.0);
+	    G_debug(3, "vector x = %.3f, y = %.3f, cat = %d; raster cat = %d",
+		    x, y, cat, p->cat);
 
-            Vect_reset_cats(Cats);
-	    Vect_cat_set ( Cats, 1, cat);
+	    Vect_reset_line(Points);
+	    Vect_append_point(Points, x, y, 0.0);
 
-            Vect_write_line(&Map, GV_CENTROID, Points, Cats);
+	    Vect_reset_cats(Cats);
+	    Vect_cat_set(Cats, 1, cat);
 
-	    if ( driver != NULL && !value_flag ) {
-		sprintf ( buf, "insert into %s values (%d, %d", Fi->table, cat, p->cat);
-		db_set_string ( &sql, buf );
+	    Vect_write_line(&Map, GV_CENTROID, Points, Cats);
 
-		if ( has_cats ) {
+	    if (driver != NULL && !value_flag) {
+		sprintf(buf, "insert into %s values (%d, %d", Fi->table, cat,
+			p->cat);
+		db_set_string(&sql, buf);
+
+		if (has_cats) {
 		    temp_buf = G_get_cat(p->cat, &RastCats);
-		
-		    db_set_string (&label, temp_buf);
-		    db_double_quote_string ( &label );
-		    sprintf ( buf, ", '%s'", db_get_string(&label) );
-		    db_append_string ( &sql, buf );
+
+		    db_set_string(&label, temp_buf);
+		    db_double_quote_string(&label);
+		    sprintf(buf, ", '%s'", db_get_string(&label));
+		    db_append_string(&sql, buf);
 		}
-		
-		db_append_string ( &sql, ")" );
 
-		G_debug ( 3, db_get_string ( &sql ) );
+		db_append_string(&sql, ")");
 
-		if (db_execute_immediate (driver, &sql) != DB_OK )
-		    G_fatal_error ( "Cannot insert new row: %s", db_get_string ( &sql ) );
+		G_debug(3, db_get_string(&sql));
+
+		if (db_execute_immediate(driver, &sql) != DB_OK)
+		    G_fatal_error("Cannot insert new row: %s",
+				  db_get_string(&sql));
 
 	    }
 	}
@@ -328,4 +336,3 @@ int write_area( struct area_table *a_list,	/* list of areas */
 
     return 0;
 }
-
