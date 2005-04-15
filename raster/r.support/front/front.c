@@ -54,10 +54,8 @@ int main(int argc, char *argv[])
     raster->required = YES;
 
     /* Parse command-line options */
-    if (G_parser(argc, argv)) {
-        G_warning(_("Unable to parse arguments."));
-        G_usage();
-    }
+    if (G_parser(argc,argv))
+        exit(1);
 
     /* Make sure raster exists and set mapset */
     infile = raster->answer;
