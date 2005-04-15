@@ -1,5 +1,4 @@
 /***************************************************************************
- * $Id$
  *
  * MODULE: 	g.region (commandline)
  * AUTHOR(S):	Michael Shapiro, CERL
@@ -22,6 +21,7 @@
 #include "Vect.h"
 #include "local_proto.h"
 #include "projects.h"
+#include "glocale.h"
 
 static int nsew(char *,char *,char *,char *);
 static void die(struct Option *);
@@ -70,51 +70,51 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Program to manage the boundary definitions for the "
-		"geographic region.";
+		_("Program to manage the boundary definitions for the "
+		"geographic region.");
 
 	/* flags */
 
 	flag.dflt = G_define_flag();
 	flag.dflt->key         = 'd';
-	flag.dflt->description = "Set from default region";
+	flag.dflt->description = _("Set from default region");
 
 	flag.gprint = G_define_flag();
 	flag.gprint->key         = 'g';
-	flag.gprint->description = "Print the current region (shell script style)";
+	flag.gprint->description = _("Print the current region (shell script style)");
 
 	flag.print = G_define_flag();
 	flag.print->key         = 'p';
-	flag.print->description = "Print the current region";
+	flag.print->description = _("Print the current region");
 
 	flag.lprint = G_define_flag();
 	flag.lprint->key         = 'l';
-	flag.lprint->description = "Print the current region in lat/long";
+	flag.lprint->description = _("Print the current region in lat/long");
 
 	flag.eprint = G_define_flag();
 	flag.eprint->key         = 'e';
-	flag.eprint->description = "Print the current region extent";
+	flag.eprint->description = _("Print the current region extent");
 
 	flag.center = G_define_flag();
 	flag.center->key         = 'c';
-	flag.center->description = "Print the current region map center coordinates";
+	flag.center->description = _("Print the current region map center coordinates");
 
         flag.dist_res= G_define_flag();
         flag.dist_res->key         = 'm';
-        flag.dist_res->description = "Print region resolution in meters (geodesic)";
+        flag.dist_res->description = _("Print region resolution in meters (geodesic)");
 
         flag.res_set= G_define_flag();
         flag.res_set->key         = 'a';
-        flag.res_set->description = "Align region to resolution (default = align to bounds, "
-	    			    "works only for 2D resolution )";
+        flag.res_set->description = _("Align region to resolution (default = align to bounds, "
+	    			    "works only for 2D resolution )");
 
 	flag.update = G_define_flag();
 	flag.update->key         = 'u';
-	flag.update->description = "Do not update the current region";
+	flag.update->description = _("Do not update the current region");
 
 	flag.z = G_define_flag();
 	flag.z->key         = '3';
-	flag.z->description = "Print also 3D";
+	flag.z->description = _("Print also 3D settings");
 
 	/* parameters */
 
@@ -124,7 +124,7 @@ int main (int argc, char *argv[])
 	parm.region->required    = NO;
 	parm.region->multiple    = NO;
 	parm.region->type        = TYPE_STRING;
-	parm.region->description = "Set current region from named region";
+	parm.region->description = _("Set current region from named region");
 	parm.region->gisprompt   = "old,windows,region";
 
 	parm.raster = G_define_option();
@@ -133,7 +133,7 @@ int main (int argc, char *argv[])
 	parm.raster->required    = NO;
 	parm.raster->multiple    = YES;
 	parm.raster->type        = TYPE_STRING;
-	parm.raster->description = "Set region to match this raster map";
+	parm.raster->description = _("Set region to match this raster map");
 	parm.raster->gisprompt   = "old,cell,raster";
 
 	parm.raster3d = G_define_option();
@@ -142,7 +142,7 @@ int main (int argc, char *argv[])
 	parm.raster3d->required    = NO;
 	parm.raster3d->multiple    = NO;
 	parm.raster3d->type        = TYPE_STRING;
-	parm.raster3d->description = "Set region to match this 3D raster map (both 2D and 3D values)";
+	parm.raster3d->description = _("Set region to match this 3D raster map (both 2D and 3D values)");
 	parm.raster3d->gisprompt   = "old,grid3,raster 3D";
 
 	parm.vect = G_define_option();
@@ -151,7 +151,7 @@ int main (int argc, char *argv[])
 	parm.vect->required    = NO;
 	parm.vect->multiple    = NO;
 	parm.vect->type        = TYPE_STRING;
-	parm.vect->description = "Set region to match this vector map";
+	parm.vect->description = _("Set region to match this vector map");
 	parm.vect->gisprompt   = "old,vector,vector";
 
 	parm.view = G_define_option();
@@ -160,7 +160,7 @@ int main (int argc, char *argv[])
 	parm.view->required    = NO;
 	parm.view->multiple    = NO;
 	parm.view->type        = TYPE_STRING;
-	parm.view->description = "Set region to match this 3dview file";
+	parm.view->description = _("Set region to match this 3dview file");
 
 	parm.north = G_define_option();
 	parm.north->key         = "n";
@@ -200,7 +200,7 @@ int main (int argc, char *argv[])
 	parm.top->required    = NO;
 	parm.top->multiple    = NO;
 	parm.top->type        = TYPE_STRING;
-	parm.top->description = "Value for the top edge";
+	parm.top->description = _("Value for the top edge");
 
 	parm.bottom = G_define_option();
 	parm.bottom->key         = "b";
@@ -208,7 +208,7 @@ int main (int argc, char *argv[])
 	parm.bottom->required    = NO;
 	parm.bottom->multiple    = NO;
 	parm.bottom->type        = TYPE_STRING;
-	parm.bottom->description = "Value for the bottom edge";
+	parm.bottom->description = _("Value for the bottom edge");
 
 	parm.res = G_define_option();
 	parm.res->key         = "res";
@@ -216,7 +216,7 @@ int main (int argc, char *argv[])
 	parm.res->required    = NO;
 	parm.res->multiple    = NO;
 	parm.res->type        = TYPE_STRING;
-	parm.res->description = "Grid resolution 2D (both north-south and east-west)";
+	parm.res->description = _("Grid resolution 2D (both north-south and east-west)");
 
 	parm.res3 = G_define_option();
 	parm.res3->key         = "res3";
@@ -224,7 +224,7 @@ int main (int argc, char *argv[])
 	parm.res3->required    = NO;
 	parm.res3->multiple    = NO;
 	parm.res3->type        = TYPE_STRING;
-	parm.res3->description = "3D grid resolution (north-south, east-west and top-bottom)";
+	parm.res3->description = _("3D grid resolution (north-south, east-west and top-bottom)");
 
 	parm.nsres = G_define_option();
 	parm.nsres->key         = "nsres";
@@ -248,7 +248,7 @@ int main (int argc, char *argv[])
 	parm.tbres->required    = NO;
 	parm.tbres->multiple    = NO;
 	parm.tbres->type        = TYPE_STRING;
-	parm.tbres->description = "Top-bottom grid resolution";
+	parm.tbres->description = _("Top-bottom grid resolution");
 
 	parm.zoom = G_define_option();
 	parm.zoom->key         = "zoom";
@@ -256,7 +256,7 @@ int main (int argc, char *argv[])
 	parm.zoom->required    = NO;
 	parm.zoom->multiple    = NO;
 	parm.zoom->type        = TYPE_STRING;
-	parm.zoom->description = "Raster map to zoom into";
+	parm.zoom->description = _("Raster map to zoom into");
 	parm.zoom->gisprompt   = "old,cell,raster";
 
 	parm.align = G_define_option();
@@ -265,7 +265,7 @@ int main (int argc, char *argv[])
 	parm.align->required    = NO;
 	parm.align->multiple    = NO;
 	parm.align->type        = TYPE_STRING;
-	parm.align->description = "Raster map to align to";
+	parm.align->description = _("Raster map to align to");
 	parm.align->gisprompt   = "old,cell,raster";
 
 	parm.save = G_define_option();
@@ -274,7 +274,7 @@ int main (int argc, char *argv[])
 	parm.save->required    = NO;
 	parm.save->multiple    = NO;
 	parm.save->type        = TYPE_STRING;
-	parm.save->description = "Save the current region to region definition file";
+	parm.save->description = _("Save the current region to region definition file");
 	parm.save->gisprompt   = "new,windows,region";
 
 	if (G_parser(argc,argv))
@@ -322,9 +322,9 @@ int main (int argc, char *argv[])
 	{
 		mapset = G_find_file ("windows", name, "");
 		if (!mapset)
-			G_fatal_error ("region <%s> not found", name);
+			G_fatal_error (_("region <%s> not found"), name);
 		if (G__get_window (&window, "windows", name, mapset) != NULL)
-			G_fatal_error ("can't read region <%s> in <%s>", name, mapset);
+			G_fatal_error (_("can't read region <%s> in <%s>"), name, mapset);
 	}
 
 	/* 3dview= */
@@ -336,19 +336,19 @@ int main (int argc, char *argv[])
 		
 		mapset = G_find_file2 ("3d.view", name, "");
 		if (!mapset)
-			G_fatal_error ("3dview file <%s> not found", name);
+			G_fatal_error (_("3dview file <%s> not found"), name);
 
 		G_3dview_warning(0); /* suppress boundary mismatch warning */
 
 		if(NULL == (fp = G_fopen_old("3d.view",name,mapset)))
-		    G_fatal_error ("can't open 3dview file <%s> in <%s>", name, mapset);
+		    G_fatal_error (_("can't open 3dview file <%s> in <%s>"), name, mapset);
 
 		G_copy (&temp_window, &window, sizeof(window));
 
 		if(0 > (ret = G_get_3dview(name, mapset, &v)))
-		    G_fatal_error ("can't read 3dview file <%s> in <%s>", name, mapset);
+		    G_fatal_error (_("can't read 3dview file <%s> in <%s>"), name, mapset);
 		if (ret == 0)
-		    G_fatal_error ("Old 3dview file. Region not found in <%s> in <%s>", name, mapset);
+		    G_fatal_error (_("Old 3dview file. Region not found in <%s> in <%s>"), name, mapset);
 
                  
 		window.north = v.vwin.north;
@@ -376,9 +376,9 @@ int main (int argc, char *argv[])
 			strcpy (rast_name, *rast_ptr);
 			mapset = G_find_cell2 (rast_name, "");
 			if (!mapset)
-				G_fatal_error ("raster map <%s> not found", rast_name);
+				G_fatal_error (_("raster map <%s> not found"), rast_name);
 			if (G_get_cellhd (rast_name, mapset, &temp_window) < 0)
-				G_fatal_error ("can't read header for <%s> in <%s>",
+				G_fatal_error (_("can't read header for <%s> in <%s>"),
 						rast_name, mapset);
 			if (!first) {
 				G_copy (&window, &temp_window, sizeof(window));
@@ -404,10 +404,10 @@ int main (int argc, char *argv[])
 	    	G3D_Region win;
 		
 		if( (mapset = G_find_grid3(name, "")) == NULL )
-			G_fatal_error ( "3D raster map <%s> not found", name);
+			G_fatal_error (_("3D raster map <%s> not found"), name);
 		    
 		if ( G3d_readRegionMap (name, mapset, &win) < 0 ) 
-			G_fatal_error ( "can't read header for 3D raster <%s> in <%s>", name, mapset);
+			G_fatal_error (_("can't read header for 3D raster <%s> in <%s>"), name, mapset);
 
 		window.proj = win.proj;
 		window.zone = win.zone;
@@ -437,13 +437,13 @@ int main (int argc, char *argv[])
 		
 		mapset = G_find_vector2 (name, "");
 		if (!mapset)
-			G_fatal_error ("vector map <%s> not found", name);
+			G_fatal_error (_("vector map <%s> not found"), name);
 
 		G_copy (&temp_window, &window, sizeof(window));
 
 		Vect_set_open_level (2);
 		if (2 != Vect_open_old (&Map, name, mapset))
-			G_fatal_error ("can't open vector file <%s> in <%s>", name, mapset);
+			G_fatal_error (_("can't open vector file <%s> in <%s>"), name, mapset);
 
 		Vect_get_map_box (&Map, &box );
 		window.north = box.N;
@@ -693,7 +693,7 @@ int main (int argc, char *argv[])
 	{
 		mapset = G_find_cell2 (name, "");
 		if (!mapset)
-			G_fatal_error ("raster map <%s> not found", name);
+			G_fatal_error (_("raster map <%s> not found"), name);
 		zoom (&window, name, mapset);
 	}
 
@@ -702,30 +702,30 @@ int main (int argc, char *argv[])
 	{
 		mapset = G_find_cell2 (name, "");
 		if (!mapset)
-			G_fatal_error ("raster map <%s> not found", name);
+			G_fatal_error (_("raster map <%s> not found"), name);
 		if (G_get_cellhd (name, mapset, &temp_window) < 0)
-			G_fatal_error ("can't read header for <%s> in <%s>",
+			G_fatal_error (_("can't read header for <%s> in <%s>"),
 			    name, mapset);
 		if (err = G_align_window (&window, &temp_window))
-			G_fatal_error ("%s in %s: %s", name, mapset, err);
+			G_fatal_error (_("%s in %s: %s"), name, mapset, err);
 	}
 
 	/* save= */
 	if (name = parm.save->answer)
 	{
 		if (G_legal_filename (name) < 0)
-			G_fatal_error ("<%s> - illegal region name", name);
+			G_fatal_error (_("<%s> - illegal region name"), name);
 		G_copy (&temp_window, &window, sizeof(window));
 		adjust_window (&temp_window);
 		if (G__put_window (&temp_window, "windows", name) < 0)
-			G_fatal_error ("can't write region <%s>", name);
+			G_fatal_error (_("can't write region <%s>"), name);
 	}
 
 	adjust_window (&window);
 	if (set_flag)
 	{
 		if (G_put_window (&window) < 0)
-			G_fatal_error ("unable to update current region");
+			G_fatal_error (_("unable to update current region"));
 	}
 	if (print_flag)
 	{
@@ -740,7 +740,7 @@ static void die(struct Option *parm)
     /*
     G_usage();
     */
-    G_fatal_error("<%s=%s> ** invalid input **", parm->key, parm->answer);
+    G_fatal_error (_("<%s=%s> ** invalid input **"), parm->key, parm->answer);
 }
 
 static int nsew(char *value,char *a,char *b,char *c)
