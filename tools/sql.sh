@@ -1,12 +1,13 @@
 #!/bin/bash
 
 tmpdir=/tmp/sql-grass
-#builddir=/usr/src/grass
-builddir=$HOME/grass/build
 dbname=grass
 
 if [ -n "$1" ] ; then
 	builddir="$1"
+else
+	echo "Usage: sql.sh <source directory>" >&2
+	exit 1
 fi
 
 rm -rf "$tmpdir"
@@ -21,8 +22,9 @@ export LD_LIBRARY_PATH
 
 find . -type f -perm +111 \! -name '*.so.*' \
 	| while read file ; do ldd $file | sed 's!^!'$file'!' ; done 2>/dev/null \
-	| sed -e 's/^\.\///' -e 's/ => \(.*\) (0x.*)$/	\1/' -e 's/ => .*$//' \
+	| sed -e 's/^\.\///' -e 's/ (0x.*)$//' -e 's/ => \(.*\)$/	\1/' -e 's/ => .*$//' \
 	| fgrep -v 'not a dynamic executable' \
+	| awk -vOFS='\t' '{print $1,$2,$3 ? $3 : $2}' \
 	> "$tmpdir/ldd.lst"
 
 find . -type f -perm +111 \! -name '*.so' \
