@@ -40,7 +40,7 @@ int main (int argc, char *argv[])
     } else {
         strncpy(name, argv[1], sizeof(name));
         if ((mapset = G_find_cell2(name, "")) == NULL)
-            G_fatal_error(_("Unable to find file [%s].\n"), name);
+            G_fatal_error(_("Unable to find file [%s]."), name);
     }
 
     if ((stat = G_make_colors(name, mapset, &pcolr)) >= 0) {
@@ -48,7 +48,7 @@ int main (int argc, char *argv[])
             stat = G_write_colors(name, mapset, &pcolr);
 
         if (stat >= 0)
-            G_message(_("Color table for [%s] updated.\n"), name);
+            G_message(_("Color table for [%s] updated."), name);
     }
 
     /* Free resources */

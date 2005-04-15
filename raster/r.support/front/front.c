@@ -50,12 +50,12 @@ int main(int argc, char *argv[])
                           "raster map layer support files.");
 
     raster = G_define_standard_option(G_OPT_R_INPUT);
-    raster->key = _("raster");
+    raster->key = "map";
     raster->required = YES;
 
     /* Parse command-line options */
     if (G_parser(argc, argv)) {
-        G_warning(_("Unable to parse arguments.\n\n"));
+        G_warning(_("Unable to parse arguments."));
         G_usage();
     }
 
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
     infile = raster->answer;
     mapset = G_find_cell2(infile, "");
     if (mapset == NULL)
-        G_fatal_error(_("Unable to find [%s].\n"), infile);
+        G_fatal_error(_("Unable to find [%s]."), infile);
 
     cellhd_ok = (G_get_cellhd(raster->answer, mapset, &cellhd) >= 0);
     is_reclass = (G_is_reclass(raster->answer, mapset, rname, rmapset) > 0);
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
     /* Cell header */
     sprintf(buf, _("Edit header for [%s]? "), raster->answer);
     if (is_reclass) {
-        G_message(_("\nNOTE: [%s] is a reclass of [%s in %s]\n\n"),
+        G_message(_("\nNOTE: [%s] is a reclass of [%s in %s]"),
                   raster->answer, rname, rmapset);
     } else if (G_yes(buf, cellhd_ok ? 0 : 1)) {
 	G_clear_screen();
@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
             hitreturn();
             G_clear_screen();
         } else if (!cellhd_ok)
-            G_fatal_error(_("Unrecoverable errors in header file.\n"));
+            G_fatal_error(_("Canceling from edit header."));
     }
 
     /* Check the histogram and range */
@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
     G_message(_("\nThe null file for [%s] may indicate that some "
               "cells contain\n no data. If the null file for [%s] "
               "doesn't exist, zero cells in\n it are treated by "
-              "GRASS application programs as no data.\n"), 
+              "GRASS application programs as no data."), 
               raster->answer, raster->answer);
 
     sprintf(buf, _("\nDo you want to create/reset the null file "
@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
         int null_fd;
 
         if (is_reclass)
-            G_fatal_error(_("[%s] is a reclass of another map. Exiting.\n"), raster->answer);
+            G_fatal_error(_("[%s] is a reclass of another map. Exiting."), raster->answer);
 
         G_clear_screen();
         /* Create a file of no-nulls */
@@ -165,7 +165,7 @@ int main(int argc, char *argv[])
         char path[400];
 
         if (is_reclass)
-            G_fatal_error(_("[%s] is a reclass of another map. Exiting.\n"), raster->answer);
+            G_fatal_error(_("[%s] is a reclass of another map. Exiting."), raster->answer);
 
         G_clear_screen();
 
@@ -178,7 +178,7 @@ int main(int argc, char *argv[])
         unlink(path);
         close(null_fd);
 
-        G_done_msg(_("Done.\n"));
+        G_done_msg(_("Done."));
     }
 
     return EXIT_SUCCESS;
