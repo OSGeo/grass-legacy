@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
     char buf[512];
     int cellhd_ok;		/* Is cell header OK? */
     int is_reclass;		/* Is raster reclass? */
+    char *infile;
 
 
     /* Initialize GIS engine */
@@ -53,14 +54,16 @@ int main(int argc, char *argv[])
     raster->required = YES;
 
     /* Parse command-line options */
-    if (G_parser(argc, argv) < 0) {
+    if (G_parser(argc, argv)) {
         G_warning(_("Unable to parse arguments.\n\n"));
         G_usage();
     }
 
     /* Make sure raster exists and set mapset */
-    if ((mapset = G_find_cell(raster->answer, "")) == NULL)
-        G_fatal_error(_("Unable to find [%s].\n"), raster->answer);
+    infile = raster->answer;
+    mapset = G_find_cell2(infile, "");
+    if (mapset == NULL)
+        G_fatal_error(_("Unable to find [%s].\n"), infile);
 
     cellhd_ok = (G_get_cellhd(raster->answer, mapset, &cellhd) >= 0);
     is_reclass = (G_is_reclass(raster->answer, mapset, rname, rmapset) > 0);
