@@ -40,14 +40,14 @@ int main (int argc, char *argv[])
     } else {
         strncpy(name, argv[1], sizeof(name));
         if ((mapset = G_find_cell2(name, G_mapset())) == NULL)
-            G_fatal_error(_("Raster file [%s] not found. Exiting.\n"), argv[1]);
+            G_fatal_error(_("Raster file [%s] not found. Exiting."), argv[1]);
     }
 
     G_read_history(name, mapset, &hist);
     if (E_edit_history(&hist) > 0 && G_write_history(name, &hist) >= 0)
-        G_message(_("History file for [%s] updated.\n"), name);
+        G_message(_("History file for [%s] updated."), name);
     else
-        G_message(_("History file for [%s] not updated.\n"), name);
+        G_message(_("History file for [%s] not updated."), name);
 
     return EXIT_SUCCESS;
 }

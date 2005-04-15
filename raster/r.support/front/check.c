@@ -31,7 +31,7 @@ int check_stats(char *name, char *mapset)
     if (!G_yes(question, 0))
         return EXIT_FAILURE;
 
-    G_message(_("\n  Updating statistics for [%s]\n\n"), name);
+    G_message(_("\n  Updating statistics for [%s]"), name);
     if (!do_histogram(name, mapset))
         return EXIT_SUCCESS;
     if (G_read_histogram(name, mapset, &histogram) <= 0)

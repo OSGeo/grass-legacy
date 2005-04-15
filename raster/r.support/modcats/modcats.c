@@ -50,7 +50,7 @@ int main (int argc, char *argv[])
                          "updated categories?"), name);
 
         if (mapset == NULL)
-            G_fatal_error(_("%s file [%s] not found!\n"), 
+            G_fatal_error(_("%s file [%s] not found!"), 
                           vector ? "Vector" : "Raster", name);
     } else {
         strncpy(name, argv[1], sizeof(name));
@@ -58,7 +58,7 @@ int main (int argc, char *argv[])
                             G_find_cell2(name, G_mapset());
 
         if (mapset == NULL)
-            G_fatal_error(_("%s file [%s] not found!\n"), 
+            G_fatal_error(_("%s file [%s] not found!"), 
                           vector ? "Vector" : "Raster", name);
     }
 
@@ -70,13 +70,13 @@ int main (int argc, char *argv[])
 
     if (!vector && G_raster_map_is_fp(name, mapset)) {
         if (E_edit_fp_cats(name, &cats) < 0) {
-            G_message(_("Category file for [%s] not updated.\n"), name);
+            G_message(_("Category file for [%s] not updated."), name);
 
             return EXIT_SUCCESS;
         }
     } else {
         if (E_edit_cats(name, &cats, stat < 0) < 0) {
-            G_message(_("Category file for [%s] not updated.\n"), name);
+            G_message(_("Category file for [%s] not updated."), name);
 
             return EXIT_SUCCESS;
         }
@@ -87,7 +87,7 @@ int main (int argc, char *argv[])
     else
         G_write_cats(name, &cats);
 
-    G_message(_("Category file for [%s] updated.\n"), name);
+    G_message(_("Category file for [%s] updated."), name);
 
     return EXIT_SUCCESS;
 }

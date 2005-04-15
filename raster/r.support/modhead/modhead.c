@@ -70,7 +70,7 @@ int main (int argc, char *argv[])
         G_message(_("Edit header for [%s]\n"), name);
 
         if ((mapset = G_find_cell(name, "")) == NULL)
-            G_fatal_error(_("[%s] cannot be found!\n"), name);
+            G_fatal_error(_("[%s] cannot be found!"), name);
     } else {
         mapset = G_ask_cell_in_mapset(_("For what layer shall the "
                  "header file be edited? "), name);
@@ -82,24 +82,24 @@ int main (int argc, char *argv[])
     /* Make sure map is not reclassed */
     if (G_is_reclass(name, mapset, rname, rmapset) > 0) {
         if (strcmp(mapset, rmapset) == 0)
-            G_fatal_error(_("[%s] is a reclass of [%s] - cannot edit header! Run support on [%s].\n"),
+            G_fatal_error(_("[%s] is a reclass of [%s] - cannot edit header! Run support on [%s]."),
                           name, rname, rname);
 
         /* ELSE */
-        G_fatal_error(_("[%s] is a reclass of [%s in %s] - cannot edit header!\n"),
+        G_fatal_error(_("[%s] is a reclass of [%s in %s] - cannot edit header!"),
                       name, rname, rmapset);
     }
 
     /* Open cell file */
     if ((fd = G_open_cell_old(name, mapset)) < 0)
-        G_fatal_error(_("Cannot open raster file [%s]!\n"), name);
+        G_fatal_error(_("Cannot open raster file [%s]!"), name);
 
     /* Determine file size */
     filesize = lseek(fd, 0L, 2);
     if (filesize == 0)
-        G_fatal_error(_("Raster file [%s] is empty.\n"), name);
+        G_fatal_error(_("Raster file [%s] is empty."), name);
     else if (filesize < 0)
-        G_fatal_error(_("Error reading raster file [%s].\n"), name);
+        G_fatal_error(_("Error reading raster file [%s]."), name);
 
     G_suppress_warnings(quiet);
     cellhd_ok = (G_get_cellhd(name, mapset, &cellhd) >= 0);
@@ -264,9 +264,9 @@ int main (int argc, char *argv[])
 
         rows = (cellhd.compressed > 0 ? rows_new : rows_old);
 
-        G_warning(_("Header indicates %d row%s in the cell file, but\n"), 
-                   cellhd.rows, (cellhd.rows == 1) ? "" : "s");
-        G_warning(_("the actual file format indicates %d row%s\n"),
+        G_warning(_("Header indicates %d row%s in the cell file, but "
+                   "the actual file format indicates %d row%s"),
+                   cellhd.rows, (cellhd.rows == 1) ? "" : "s",
                    rows, (rows == 1) ? "" : "s");
 
         if (G_yes("Should this discrepancy be corrected? ", -1))
@@ -296,9 +296,9 @@ int main (int argc, char *argv[])
 
     /* Write new header out */
     if (G_put_cellhd(name, &cellhd) == -1)
-        G_fatal_error(_("Unable to write header for [%s].\n"), name);
+        G_fatal_error(_("Unable to write header for [%s]."), name);
     else
-        G_message(_("Header for raster file [%s] updated.\n"), name);
+        G_message(_("Header for raster file [%s] updated."), name);
 
     /* Free resources */
     close(fd);
