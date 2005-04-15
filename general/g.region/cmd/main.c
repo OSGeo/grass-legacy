@@ -34,7 +34,6 @@ int main (int argc, char *argv[])
 	int set_flag;
 	double x;
 	struct Cell_head window, temp_window;
-	char msg[200];
 	char *value;
 	char *name;
 	char *mapset;
@@ -311,7 +310,7 @@ int main (int argc, char *argv[])
 		dist_flag = 1;
 		/* Set -g default output */
 		if ( print_flag == 0)
-		print_flag = 2;
+		     print_flag = 2;
 	} else
 		dist_flag = 0;
 
@@ -377,16 +376,10 @@ int main (int argc, char *argv[])
 			strcpy (rast_name, *rast_ptr);
 			mapset = G_find_cell2 (rast_name, "");
 			if (!mapset)
-			{
-				sprintf (msg, "raster map <%s> not found", rast_name);
-				G_fatal_error (msg);
-			}
+				G_fatal_error ("raster map <%s> not found", rast_name);
 			if (G_get_cellhd (rast_name, mapset, &temp_window) < 0)
-			{
-				sprintf (msg, "can't read header for <%s> in <%s>",
+				G_fatal_error ("can't read header for <%s> in <%s>",
 						rast_name, mapset);
-				G_fatal_error (msg);
-			}
 			if (!first) {
 				G_copy (&window, &temp_window, sizeof(window));
 				first = 1;
@@ -444,10 +437,7 @@ int main (int argc, char *argv[])
 		
 		mapset = G_find_vector2 (name, "");
 		if (!mapset)
-		{
-			sprintf (msg, "vector map <%s> not found", name);
-			G_fatal_error (msg);
-		}
+			G_fatal_error ("vector map <%s> not found", name);
 
 		G_copy (&temp_window, &window, sizeof(window));
 
@@ -703,10 +693,7 @@ int main (int argc, char *argv[])
 	{
 		mapset = G_find_cell2 (name, "");
 		if (!mapset)
-		{
-			sprintf (msg, "raster map <%s> not found", name);
-			G_fatal_error (msg);
-		}
+			G_fatal_error ("raster map <%s> not found", name);
 		zoom (&window, name, mapset);
 	}
 
@@ -715,38 +702,23 @@ int main (int argc, char *argv[])
 	{
 		mapset = G_find_cell2 (name, "");
 		if (!mapset)
-		{
-			sprintf (msg, "raster map <%s> not found", name);
-			G_fatal_error (msg);
-		}
+			G_fatal_error ("raster map <%s> not found", name);
 		if (G_get_cellhd (name, mapset, &temp_window) < 0)
-		{
-			sprintf (msg, "can't read header for <%s> in <%s>",
+			G_fatal_error ("can't read header for <%s> in <%s>",
 			    name, mapset);
-			G_fatal_error (msg);
-		}
 		if (err = G_align_window (&window, &temp_window))
-		{
-			sprintf (msg, "%s in %s: %s", name, mapset, err);
-			G_fatal_error (msg);
-		}
+			G_fatal_error ("%s in %s: %s", name, mapset, err);
 	}
 
 	/* save= */
 	if (name = parm.save->answer)
 	{
 		if (G_legal_filename (name) < 0)
-		{
-			sprintf (msg, "<%s> - illegal region name", name);
-			G_fatal_error (msg);
-		}
+			G_fatal_error ("<%s> - illegal region name", name);
 		G_copy (&temp_window, &window, sizeof(window));
 		adjust_window (&temp_window);
 		if (G__put_window (&temp_window, "windows", name) < 0)
-		{
-			sprintf (msg, "can't write region <%s>", name);
-			G_fatal_error (msg);
-		}
+			G_fatal_error ("can't write region <%s>", name);
 	}
 
 	adjust_window (&window);
