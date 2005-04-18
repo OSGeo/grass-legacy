@@ -1,7 +1,7 @@
 <H2>DESCRIPTION</H2>
 
 This program<B> </B>generates flowlines using a combined raster-vector
-approach (see<a href="http://skagit.meas.ncsu.edu/~helena/gmslab/papers/hmg.rev1.ps"> Mitasova and
+approach (see <a href="http://skagit.meas.ncsu.edu/~helena/gmslab/papers/hmg.rev1.ps">Mitasova and
 Hofierka 1993 </A>and <a href="http://skagit.meas.ncsu.edu/~helena/gmslab/papers/ijgis.html">Mitasova et
 al. 1995)</A>) from an input elevation raster map <I>elevin</I><B>
 </B>(integer or floating point), and optionally an input aspect raster map
@@ -14,7 +14,7 @@ multiplied by resolution).
 
 
 <P>Aspect used for input must follow the same rules as aspect computed
-in other GRASS programs (see <A HREF="s.surf.rst.html">s.surf.rst</A>
+in other GRASS programs (see <A HREF="v.surf.rst.html">v.surf.rst</A>
 or <A HREF="r.slope.aspect.html">r.slope.aspect</A>).
 
 <P>Flowline output is given in a vector map <I>flout</I>, (flowlines generated
@@ -62,11 +62,12 @@ using the standard GRASS parser interface.
 This option incurs a severe performance penalty. If this flag is given,
 the aspect input map (if any) will be ignored.
 
+<!-- doesn't exist
 <P><B>-M</B> Use a fixed size memory and utilize page-swapping to handle
 large input files. This option incurs a severe performance penalty but
 is the only way to handle arbitrarily-large data files. If this flag is
-given, the \fB-m\fR flag will be ignored.
-
+given, the <B>-m</B> flag will be ignored.
+-->
 <P><B>-q</B> Quiet operation. Do not print diagnostic messages indicating
 progress.
 
@@ -216,7 +217,7 @@ error is larger than one of the dimensions. Resample the map and try again.
 <A HREF="r.drain.html">r.drain</A>,
 <A HREF="r.fill.dir.html">r.fill.dir</A>,
 <A HREF="r.water.outlet.html">r.water.outlet.html</A>,
-<A HREF="r.watershed.html">r.watershed</A>
+<A HREF="r.watershed.html">r.watershed</A>,
 <A HREF="v.label.html">v.label</A>
 
 
