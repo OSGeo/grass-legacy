@@ -430,7 +430,9 @@ main (int argc, char **argv)
                     arrow_nw();
                     break;
                 default:
-                    unknown_();
+		    R_standard_color(unknown_color);
+		    unknown_();
+		    R_standard_color(arrow_color);
                     break;
                }
              }
