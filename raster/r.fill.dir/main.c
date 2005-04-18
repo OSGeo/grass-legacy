@@ -118,8 +118,12 @@ main(int argc, char **argv)
    opt3->key        = "type" ;
    opt3->type       = TYPE_STRING ;
    opt3->required   = NO;
-   opt3->description= _("Output direction type AGNPS, ANSWERS or GRASS aspect\n              default: GRASS") ;
-   
+   opt3->description= _("Output aspect direction format (agnps, answers, or grass)");
+   opt3->answer     = "grass";
+/* TODO after feature freeze
+   opt3->options    = "agnps,answers,grass";
+*/
+
    flag1 = G_define_flag() ;
    flag1->key        = 'f' ;
    flag1->description= _("find unresolved areas only") ;
@@ -142,39 +146,26 @@ main(int argc, char **argv)
    strcpy(dir_name, opt4->answer);
    if(opt5->answer!=NULL)strcpy(bas_name, opt5->answer);
 
-   if(!opt3->answer)
-   	type = 3;
-   else {
-      if(strcmp(opt3->answer,"AGNPS") == 0) type = 1;
-      else if(strcmp(opt3->answer,"agnps") == 0) type = 1;
-      else if(strcmp(opt3->answer,"ANSWERS") == 0) type = 2;
-      else if(strcmp(opt3->answer,"answers") == 0) type = 2;
-      else if(strcmp(opt3->answer,"grass") == 0) type = 3;
-      else if(strcmp(opt3->answer,"GRASS") == 0) type = 3;
-   }
+   if(strcmp(opt3->answer,"agnps") == 0) type = 1;
+   else if(strcmp(opt3->answer,"AGNPS") == 0) type = 1;
+   else if(strcmp(opt3->answer,"answers") == 0) type = 2;
+   else if(strcmp(opt3->answer,"ANSWERS") == 0) type = 2;
+   else if(strcmp(opt3->answer,"grass") == 0) type = 3;
+   else if(strcmp(opt3->answer,"GRASS") == 0) type = 3;
+
+   G_debug(1,"output type (1=AGNPS, 2=ANSWERS, 3=GRASS): %d", type);
+
+   if(type == 0)
+	G_fatal_error("direction format must be either agnps, answers, or grass.");
+   if(type == 3)
+	G_warning("Direction map is D8 resolution, i.e. 45 degrees.");
 
 /*      get the name of the elevation map layer for filling */
-
    map_mapset = G_find_cell(map_name,"");
    if (!map_mapset) {
       sprintf(buf,"Could not access %s layer.", map_name);
       G_fatal_error (buf);
       exit(0);
-   }
-
-   if(type == 0)
-   {
-      for(;;)
-      {
-         fprintf (stdout,"\n\nSelect the type for the direction output map\n");
-         fprintf (stdout,"\n\n\t1. AGNPS type\n");
-         fprintf (stdout,"\t2. ANSWERS type\n");
-         fprintf (stdout,"\t3. Standard aspect map (GRASS) type\n");
-         fprintf (stdout,"\tEnter the type -->");
-         scanf("%d",&type);
-      
-         if(type >= 1 && type <=3) break;
-      }
    }
 
 /*      allocate cell buf for the map layer */
@@ -212,9 +203,9 @@ main(int argc, char **argv)
    tempfile2 = G_tempfile();
    tempfile3 = G_tempfile();
 
-   fe=open(tempfile1,O_RDWR|O_CREAT);
-   fd=open(tempfile2,O_RDWR|O_CREAT);
-   fm=open(tempfile3,O_RDWR|O_CREAT);
+   fe=open(tempfile1,O_RDWR|O_CREAT); /* elev */
+   fd=open(tempfile2,O_RDWR|O_CREAT); /* dirn */
+   fm=open(tempfile3,O_RDWR|O_CREAT); /* problems */
 
    fprintf(stderr, "Reading map...");
    for(i=0;i<nrows;i++)
@@ -287,7 +278,10 @@ main(int argc, char **argv)
       put_row(new_id,in_buf);
 
       read(fd,out_buf,bufsz);
-      if(type)for(j=0;j<ncols;j+=1)out_buf[j]=dir_type(type,out_buf[j]);
+
+      for(j=0; j<ncols; j+=1)
+    	 out_buf[j] = dir_type(type,out_buf[j]);
+
       G_put_raster_row(dir_id,out_buf, CELL_TYPE);
 
    }
@@ -307,7 +301,7 @@ main(int argc, char **argv)
 int dir_type(type,dir)
 int	type, dir;
 {
-	if (type == 1){
+	if (type == 1){  /* AGNPS aspect format */
 		if(dir == 128) return(1);
 		else if (dir == 1) return(2);
 		else if (dir == 2) return(3);
@@ -319,7 +313,7 @@ int	type, dir;
 		else return(dir);
 		}
 
-        else if (type == 2) {
+        else if (type == 2) { /* ANSWERS aspect format */
 		if(dir == 128) return(90);
 		else if (dir == 1) return(45);
 		else if (dir == 2) return(360);
@@ -331,15 +325,15 @@ int	type, dir;
 		else return(dir);
 		}
 
-	else {
-		if(dir == 128) return(7);
-		else if (dir == 1) return(4);
-		else if (dir == 2) return(2);
-		else if (dir == 4) return(22);
-		else if (dir == 8) return(19);
-		else if (dir == 16) return(16);
-		else if (dir == 32) return(13);
-		else if (dir == 64) return(10);
+	else { /* [new] GRASS aspect format */
+		if(dir == 128) return(90);
+		else if (dir == 1) return(45);
+		else if (dir == 2) return(360);
+		else if (dir == 4) return(315);
+		else if (dir == 8) return(270);
+		else if (dir == 16) return(225);
+		else if (dir == 32) return(180);
+		else if (dir == 64) return(135);
 		else return(dir);
 		}
 
