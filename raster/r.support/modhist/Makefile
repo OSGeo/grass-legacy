@@ -2,8 +2,8 @@ MODULE_TOPDIR = ../../..
 
 PGM = modhist
 
-LIBES = $(GISLIB) $(EDITLIB)
-DEPENDENCIES = $(GISDEP) $(EDITDEP)
+LIBES = $(GISLIB) $(EDITLIB) $(VASKLIB)
+DEPENDENCIES = $(GISDEP) $(EDITDEP) $(VASKDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
