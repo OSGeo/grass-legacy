@@ -1,0 +1,2232 @@
+# translation of grasslibs_zh.po to simple Chinese
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# zhangjun <nilarcs@gmail.com>, 2005
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: grasslibs_zh\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-03-05 17:02+0800\n"
+"PO-Revision-Date: 2005-04-20 16:42+0800\n"
+"Last-Translator: zhangjun <nilarcs@gmail.com>\n"
+"Language-Team: Chinese <translations@grass.itc.it>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Chinese\n"
+"X-Poedit-Country: CHINA\n"
+
+#: ../lib/gis/readsites.c:41
+#, c-format
+msgid "Reading sites list ...                  "
+msgstr "读取站点列表 ...                  "
+
+#: ../lib/gis/readsites.c:45
+msgid "failed to guess format"
+msgstr "无法确定格式"
+
+#: ../lib/gis/readsites.c:49
+#, c-format
+msgid "decimal field %i not present in sites file"
+msgstr "十进制字段%i不在站点文件中"
+
+#: ../lib/gis/readsites.c:55
+msgid "I'm finding records that do not have a floating point attributes (fields prefixed with '%')."
+msgstr "这些记录没有浮点属性(字段以'%'为前缀)."
+
+#: ../lib/gis/readsites.c:60
+#: ../lib/gis/readsites.c:69
+msgid "cannot allocate memory"
+msgstr "无法分配内存"
+
+#: ../lib/gis/datum.c:163
+#: ../lib/gis/get_projname.c:48
+#: ../lib/gis/get_ell_name.c:33
+#: ../lib/gis/get_datum_name.c:67
+#: ../lib/proj/datum.c:221
+msgid "Cannot open temp file"
+msgstr "无法打开临时文件"
+
+#: ../lib/gis/datum.c:242
+#: ../lib/gis/get_projname.c:60
+#: ../lib/gis/get_ell_name.c:46
+#: ../lib/gis/get_datum_name.c:56
+#: ../lib/proj/datum.c:298
+#, c-format
+msgid "Hit RETURN to cancel request\n"
+msgstr "敲回车取消请求\n"
+
+#: ../lib/gis/datum.c:353
+#: ../lib/gis/datum.c:433
+#: ../lib/proj/datum.c:344
+#: ../lib/proj/datum.c:418
+#, c-format
+msgid "unable to open datum table file: %s"
+msgstr "无法打开基准面表文件：%s"
+
+#: ../lib/gis/datum.c:368
+#: ../lib/gis/datum.c:458
+#: ../lib/proj/datum.c:357
+#: ../lib/proj/datum.c:432
+#, c-format
+msgid "error in datum table file, line %d"
+msgstr "在基准面表文件的第%d行有错误"
+
+#: ../lib/gis/timestamp.c:257
+#, c-format
+msgid "Can't create timestamp file for %s map %s in mapset %s"
+msgstr "无法为%s创建时间戳文件， 地图%s 地图集%s"
+
+#: ../lib/gis/timestamp.c:267
+#, c-format
+msgid "Invalid timestamp specified for %s map %s in mapset %s"
+msgstr "为%s指定了无效的时间戳，地图%s 地图集%s"
+
+#: ../lib/gis/timestamp.c:292
+#, c-format
+msgid "Can't open timestamp file for %s map %s in mapset %s"
+msgstr "无法为%s打开时间戳文件，地图%s 地图集%s"
+
+#: ../lib/gis/timestamp.c:302
+#, c-format
+msgid "Invalid timestamp file for %s map %s in mapset %s"
+msgstr "对%s是无效的时间戳文件，地图%s 地图集%s"
+
+#: ../lib/gis/put_cellhd.c:26
+#, c-format
+msgid "Unable to create header file for [%s]"
+msgstr "无法为[%s]创建头文件"
+
+#: ../lib/gis/quant_io.c:91
+#, c-format
+msgid "The floating data range for %s@%s is empty"
+msgstr "%s@%s的浮点数范围为空"
+
+#: ../lib/gis/quant_io.c:100
+#, c-format
+msgid "The integer data range for %s@%s is empty"
+msgstr "%s@%s的整数范围为空"
+
+#: ../lib/gis/quant_io.c:171
+#, c-format
+msgid "quantization file [%s] in mapset [%s] %s"
+msgstr "量化文件[%s]在地图集[%s]中 %s"
+
+#: ../lib/gis/quant_rw.c:208
+#, c-format
+msgid "Cannot write quant rules: map %s is integer"
+msgstr "无法写入量化规则：地图%s是整型的"
+
+#: ../lib/gis/quant_rw.c:218
+#, c-format
+msgid "Cannot write quant rules for map %s"
+msgstr "无法为地图%s写入量化规则"
+
+#: ../lib/gis/mask_info.c:42
+#, c-format
+msgid "<%s> in mapset <%s>"
+msgstr "<%s>在地图集<%s>中"
+
+#: ../lib/gis/mask_info.c:45
+msgid "none"
+msgstr "无"
+
+#: ../lib/gis/mask_info.c:48
+msgid "not known"
+msgstr "未知"
+
+#: ../lib/gis/range.c:182
+msgid "Too many open files"
+msgstr "打开太多文件"
+
+#: ../lib/gis/range.c:206
+#, c-format
+msgid "can't read f_range file for [%s in %s]"
+msgstr "无法为[%s在%s中]读取f_range文件"
+
+#: ../lib/gis/range.c:330
+#, c-format
+msgid "can't read range file for [%s in %s]"
+msgstr "无法为[%s在%s中]读取范围文件"
+
+#: ../lib/gis/range.c:390
+#: ../lib/gis/range.c:441
+#, c-format
+msgid "can't write range file for [%s in %s]"
+msgstr "无法为[%s在%s中]写入范围文件"
+
+#: ../lib/gis/get_projinfo.c:17
+#: ../lib/gis/get_projinfo.c:45
+#, c-format
+msgid "%s file not found for location %s\n"
+msgstr "%s文件未找到，用于区域%s\n"
+
+#: ../lib/gis/get_projinfo.c:24
+#: ../lib/gis/get_projinfo.c:52
+#, c-format
+msgid "ERROR in reading %s file for location %s\n"
+msgstr "读取%s文件错误，用于区域%s\n"
+
+#: ../lib/gis/get_ellipse.c:81
+#: ../lib/gis/get_datum.c:80
+#, c-format
+msgid "Unable to open file %s in %s"
+msgstr "无法打开文件%s在%s中"
+
+#: ../lib/gis/get_ellipse.c:89
+#: ../lib/gis/get_ellipse.c:114
+#, c-format
+msgid "invalid a: field %s in file %s in %s"
+msgstr "无效的a：字段%s 文件%s在%s中"
+
+#: ../lib/gis/get_ellipse.c:102
+#, c-format
+msgid "invalid ellipsoid %s in file %s in %s"
+msgstr "无效的椭球%s 文件%s在%s中"
+
+#: ../lib/gis/get_ellipse.c:119
+#, c-format
+msgid "invalid es: field %s in file %s in %s"
+msgstr "无效的es：字段%s 文件%s在%s中"
+
+#: ../lib/gis/get_ellipse.c:133
+#, c-format
+msgid "No ellipsoid info given in file %s in %s"
+msgstr "文件%s没有给定椭球信息在%s中"
+
+#: ../lib/gis/get_ellipse.c:406
+#: ../lib/proj/ellipse.c:228
+#, c-format
+msgid "unable to open ellipsoid table file: %s"
+msgstr "无法打开椭球表文件：%s"
+
+#: ../lib/gis/get_ellipse.c:455
+#, c-format
+msgid "Lines%s of ellipsoid table file <%s> are invalid"
+msgstr "%s行在椭球表文件<%s>中是无效的"
+
+#: ../lib/gis/get_ellipse.c:456
+#, c-format
+msgid "Line%s of ellipsoid table file <%s> is invalid"
+msgstr "行%s在椭球表文件<%s>中是无效的"
+
+#: ../lib/gis/G_dump.c:6
+#, c-format
+msgid "Size of cell in fp maps = %d\n"
+msgstr "fp地图中像元的大小 = %d\n"
+
+#: ../lib/gis/G_dump.c:7
+#, c-format
+msgid "type for writing floating maps = %d\n"
+msgstr "写入的浮点地图的类型 = %d\n"
+
+#: ../lib/gis/G_dump.c:8
+#, c-format
+msgid "current window = %p\n"
+msgstr "当前窗口 = %p\n"
+
+#: ../lib/gis/G_dump.c:9
+#, c-format
+msgid "Flag: window set? %d\n"
+msgstr "标记：设置窗口？ %d\n"
+
+#: ../lib/gis/G_dump.c:10
+#, c-format
+msgid "File descriptor for automatic mask %d\n"
+msgstr "自动掩膜的文件描述符%d\n"
+
+#: ../lib/gis/G_dump.c:11
+#, c-format
+msgid "Flag denoting automatic masking %d\n"
+msgstr "自动掩膜的标记%d\n"
+
+#: ../lib/gis/G_dump.c:12
+#, c-format
+msgid "CELL mask buffer %p\n"
+msgstr "像元掩膜的缓冲区%p\n"
+
+#: ../lib/gis/G_dump.c:13
+#, c-format
+msgid "buffer for reading null rows %p\n"
+msgstr "读取空行的缓冲区%p\n"
+
+#: ../lib/gis/G_dump.c:14
+#, c-format
+msgid "Pre/post compressed data buffer %p\n"
+msgstr "预/后压缩数据的缓冲区%p\n"
+
+#: ../lib/gis/G_dump.c:15
+#, c-format
+msgid "sizeof compressed_buf %d\n"
+msgstr "压缩缓冲区的大小%d\n"
+
+#: ../lib/gis/G_dump.c:16
+#, c-format
+msgid "work data buffer %p\n"
+msgstr "工作数据的缓冲区%p\n"
+
+#: ../lib/gis/G_dump.c:17
+#, c-format
+msgid "sizeof work_buf %d\n"
+msgstr "工作缓冲区的大小%d\n"
+
+#: ../lib/gis/G_dump.c:18
+#, c-format
+msgid "sizeof null_buf %d\n"
+msgstr "空值缓冲区的大小%d\n"
+
+#: ../lib/gis/G_dump.c:19
+#, c-format
+msgid "sizeof mask_buf %d\n"
+msgstr "掩膜缓冲区的大小%d\n"
+
+#: ../lib/gis/G_dump.c:20
+#, c-format
+msgid "Histogram request %d\n"
+msgstr "直方图需求%d\n"
+
+#: ../lib/gis/G_dump.c:22
+#, c-format
+msgid "G_dump: file #%d\n"
+msgstr "G_dump：文件#%d\n"
+
+#: ../lib/gis/G_dump.c:23
+#, c-format
+msgid "open mode = %d\n"
+msgstr "打开模式 = %d\n"
+
+#: ../lib/gis/G_dump.c:24
+#, c-format
+msgid "Cell header %p\n"
+msgstr "像元的头信息%p\n"
+
+#: ../lib/gis/G_dump.c:25
+#, c-format
+msgid "Table reclass %p\n"
+msgstr "表格重分类%p\n"
+
+#: ../lib/gis/G_dump.c:26
+#, c-format
+msgid "Cell stats %p\n"
+msgstr "像元的统计值%p\n"
+
+#: ../lib/gis/G_dump.c:27
+#, c-format
+msgid "Range structure %p\n"
+msgstr "范围构成%p\n"
+
+#: ../lib/gis/G_dump.c:28
+#, c-format
+msgid "float Range structure %p\n"
+msgstr "浮点范围的构成%p\n"
+
+#: ../lib/gis/G_dump.c:29
+#, c-format
+msgid "want histogram?  %d\n"
+msgstr "需要直方图？%d\n"
+
+#: ../lib/gis/G_dump.c:30
+#, c-format
+msgid "Automatic reclass flag %d\n"
+msgstr "自动重分类标记%d\n"
+
+#: ../lib/gis/G_dump.c:31
+#, c-format
+msgid "File row addresses %p\n"
+msgstr "文件的行的地址%p\n"
+
+#: ../lib/gis/G_dump.c:32
+#, c-format
+msgid "Data to window col mapping %p\n"
+msgstr "窗口列的映射数据%p\n"
+
+#: ../lib/gis/G_dump.c:33
+#, c-format
+msgid "Data to window row constants %f,%f\n"
+msgstr "窗口行的常量%f，%f\n"
+
+#: ../lib/gis/G_dump.c:34
+#, c-format
+msgid "Current data row in memory %d\n"
+msgstr "当前数据行在内存%d中\n"
+
+#: ../lib/gis/G_dump.c:35
+#, c-format
+msgid "Current null row in memory %d\n"
+msgstr "当前空行在内存%d中\n"
+
+#: ../lib/gis/G_dump.c:36
+#, c-format
+msgid "nbytes per cell for current row %d\n"
+msgstr "当前行每个像元所占比特数%d\n"
+
+#: ../lib/gis/G_dump.c:37
+#, c-format
+msgid "Decompressed data buffer %s\n"
+msgstr "解压数据的缓冲区%s\n"
+
+#: ../lib/gis/G_dump.c:38
+#, c-format
+msgid "bytes per cell %d\n"
+msgstr "每个像元所占的比特数%d\n"
+
+#: ../lib/gis/G_dump.c:39
+#, c-format
+msgid "type: int, float or double map %d\n"
+msgstr "地图类型：整型、浮点或双精度%d\n"
+
+#: ../lib/gis/G_dump.c:40
+#, c-format
+msgid "Temporary name for NEW files %s\n"
+msgstr "新文件的临时名称%s\n"
+
+#: ../lib/gis/G_dump.c:41
+#, c-format
+msgid "Temporary name for NEW NULL files %s\n"
+msgstr "新的空文件的临时名称%s\n"
+
+#: ../lib/gis/G_dump.c:42
+#, c-format
+msgid "for existing raster maps %d\n"
+msgstr "已有栅格图%d\n"
+
+#: ../lib/gis/G_dump.c:43
+#, c-format
+msgid "Name of open file %s\n"
+msgstr "打开文件的名称%s\n"
+
+#: ../lib/gis/G_dump.c:44
+#, c-format
+msgid "Mapset of open file %s\n"
+msgstr "打开文件的地图集%s\n"
+
+#: ../lib/gis/G_dump.c:45
+#, c-format
+msgid "io error warning given %d\n"
+msgstr "给出IO错误警告%d\n"
+
+#: ../lib/gis/G_dump.c:46
+#, c-format
+msgid "xdr stream for reading fp %p\n"
+msgstr "读取fp的xdr流%p\n"
+
+#: ../lib/gis/G_dump.c:47
+#, c-format
+msgid "NULL_ROWS array[%d] = %p\n"
+msgstr "空行数组[%d] = %p\n"
+
+#: ../lib/gis/G_dump.c:48
+#, c-format
+msgid "data buffer for reading null rows %p\n"
+msgstr "读取空行的数据缓冲区%p\n"
+
+#: ../lib/gis/G_dump.c:49
+#, c-format
+msgid "Minimum row null row number in memory %d\n"
+msgstr "内存中最小的空行行号%d\n"
+
+#: ../lib/gis/histogram.c:60
+#, c-format
+msgid "Histogram for [%s in %s] missing (run r.support)"
+msgstr "[%s在%s中]缺少直方图(请运行r.support)"
+
+#: ../lib/gis/histogram.c:67
+#, c-format
+msgid "Can't read histogram for [%s in %s]"
+msgstr "无法读取[%s在%s中]的直方图"
+
+#: ../lib/gis/histogram.c:78
+#: ../lib/gis/histogram.c:87
+#, c-format
+msgid "Invalid histogram file for [%s in %s]"
+msgstr "[%s在%s中]的直方图文件无效"
+
+#: ../lib/gis/histogram.c:341
+#, c-format
+msgid "can't create histogram for [%s in %s]"
+msgstr "无法为[%s在%s中]创建直方图"
+
+#: ../lib/gis/get_projname.c:36
+#, c-format
+msgid "%s not found"
+msgstr "未发现%s"
+
+#: ../lib/gis/get_projname.c:42
+#, c-format
+msgid "ERROR in reading %s"
+msgstr "读取%s时出现错误"
+
+#: ../lib/gis/get_projname.c:58
+#, c-format
+msgid ""
+"\n"
+"\n"
+"Please specify projection name\n"
+msgstr ""
+"\n"
+"\n"
+"请指定投影名称\n"
+
+#: ../lib/gis/get_projname.c:59
+#, c-format
+msgid "Enter 'list' for the list of available projections\n"
+msgstr "输入'list'，列出所有可用的投影\n"
+
+#: ../lib/gis/get_projname.c:78
+#, c-format
+msgid ""
+"\n"
+"invalid projection\n"
+msgstr ""
+"\n"
+"无效的投影\n"
+
+#: ../lib/gis/ask.c:376
+msgid "to cancel request"
+msgstr "取消请求"
+
+#: ../lib/gis/ask.c:432
+#, c-format
+msgid "Enter a new %s file name"
+msgstr "输入一个新的%s文件名"
+
+#: ../lib/gis/ask.c:437
+#, c-format
+msgid "Enter the name of an existing %s file"
+msgstr "输入已有%s文件的名称"
+
+#: ../lib/gis/ask.c:440
+#, c-format
+msgid "Enter %s file name"
+msgstr "输入%s文件名"
+
+#: ../lib/gis/ask.c:459
+#, c-format
+msgid "Enter 'list' for a list of existing %s files\n"
+msgstr "输入'list'，列出已有的%s文件\n"
+
+#: ../lib/gis/ask.c:462
+#, c-format
+msgid "Enter 'list -f' for "
+msgstr "输入'list -f'，得到"
+
+#: ../lib/gis/ask.c:464
+#, c-format
+msgid "a list %s"
+msgstr "一个列表%s"
+
+#: ../lib/gis/ask.c:466
+#, c-format
+msgid "an extended list"
+msgstr "一个扩展列表"
+
+#: ../lib/gis/ask.c:470
+#, c-format
+msgid "Hit RETURN %s\n"
+msgstr "敲回车%s\n"
+
+#: ../lib/gis/ask.c:492
+#: ../lib/gis/ask.c:599
+#: ../lib/gis/ask.c:621
+#, c-format
+msgid ""
+"\n"
+"** %s - not found **\n"
+msgstr ""
+"\n"
+"** %s - 未发现 **\n"
+
+#: ../lib/gis/ask.c:499
+#: ../lib/gis/ask.c:585
+#, c-format
+msgid ""
+"\n"
+"** %s exists. ok to overwrite? "
+msgstr ""
+"\n"
+"** %s 已经存在。是否要覆盖？ "
+
+#: ../lib/gis/ask.c:545
+#, c-format
+msgid ""
+"\n"
+"**<%s> illegal name **\n"
+msgstr ""
+"\n"
+"**<%s> 非法的名称 **\n"
+
+#: ../lib/gis/ask.c:560
+#, c-format
+msgid ""
+"\n"
+"** %s - illegal request **\n"
+msgstr ""
+"\n"
+"** %s - 非法的请求 **\n"
+
+#: ../lib/gis/ask.c:575
+#, c-format
+msgid ""
+"\n"
+"** %s - exists, select another name **\n"
+msgstr ""
+"\n"
+"** %s - 已存在，请选择其它的名称 **\n"
+
+#: ../lib/gis/ask.c:603
+msgid "ask: can't happen"
+msgstr "查询：无法完成"
+
+#: ../lib/gis/env.c:268
+msgid "GISRC - variable not set"
+msgstr "GISRC - 变量未设置"
+
+#: ../lib/gis/env.c:286
+#: ../lib/gis/env.c:298
+#, c-format
+msgid "%s not set"
+msgstr "%s未设置"
+
+#: ../lib/gis/color_read.c:123
+#, c-format
+msgid "color support for [%s] in mapset [%s] %s"
+msgstr "[%s]在地图集[%s]中的颜色 %s"
+
+#: ../lib/gis/put_row.c:311
+#, c-format
+msgid "map [%s] - unable to write row %d"
+msgstr "地图[%s] - 无法写入行%d"
+
+#: ../lib/gis/put_row.c:785
+#: ../lib/gis/put_row.c:791
+#, c-format
+msgid "error writing null row %d"
+msgstr "写入空行%d时出错"
+
+#: ../lib/gis/null_val.c:94
+msgid "EmbedGivenNulls: wrong data type!"
+msgstr "EmbedGivenNulls：错误的数据类型！"
+
+#: ../lib/gis/null_val.c:115
+msgid "Null values have not been initialized. "
+msgstr "空值还未被初始化。"
+
+#: ../lib/gis/null_val.c:116
+msgid "G_gisinit() must be called first. "
+msgstr "必须先调用G_gisinit()。 "
+
+#: ../lib/gis/null_val.c:117
+msgid "Please advise GRASS developers of this error.\n"
+msgstr "请向GRASS开发人员报告这一错误。\n"
+
+#: ../lib/gis/null_val.c:231
+msgid "G_set_null_value: wrong data type!"
+msgstr "G_set_null_value：错误的数据类型！"
+
+#: ../lib/gis/auto_mask.c:53
+msgid "Unable to open automatic MASK file"
+msgstr "无法打开自动掩膜文件"
+
+#: ../lib/gis/get_row.c:110
+#, c-format
+msgid "[%s in %s] - read request for row %d is outside region"
+msgstr "[%s在%s中] - 读取的行%d超出区域"
+
+#: ../lib/gis/get_row.c:426
+#, c-format
+msgid "cell_values_double: xdr_double failed for index %d."
+msgstr "cell_values_double：第%d个xdr_double值错误。"
+
+#: ../lib/gis/get_row.c:569
+#, c-format
+msgid "error reading %smap [%s] in mapset [%s], row %d"
+msgstr "读取%s错误：地图[%s] 地图集[%s] 行%d"
+
+#: ../lib/gis/get_row.c:895
+msgid "Too many open raster files"
+msgstr "打开太多的栅格文件"
+
+#: ../lib/gis/get_row.c:923
+#: ../lib/gis/get_row.c:929
+#, c-format
+msgid "error reading null row %d"
+msgstr "读取空行%d出错"
+
+#: ../lib/gis/get_row.c:1009
+msgid "Could not realloc buffer"
+msgstr "无法重新分配缓冲区"
+
+#: ../lib/gis/format.c:162
+#, c-format
+msgid "Fail of initial read of compressed file [%s in %s]"
+msgstr "压缩文件的初始化读取失败[%s在%s中]"
+
+#: ../lib/gis/set_window.c:60
+msgid "G_set_window(): projection/zone differs from that of currently open raster files"
+msgstr "G_set_window()：投影/区域与当前打开的栅格文件不同"
+
+#: ../lib/gis/reclass.c:156
+#, c-format
+msgid "Too many reclass categories for [%s in %s]"
+msgstr "[%s在%s中]有太多的重分类类别"
+
+#: ../lib/gis/reclass.c:159
+#, c-format
+msgid "Illegal reclass format in header file for [%s in %s]"
+msgstr "头文件中非法的重分类格式 [%s在%s中]"
+
+#: ../lib/gis/reclass.c:236
+msgid "Illegal reclass request"
+msgstr "非法的重分类请求"
+
+#: ../lib/gis/reclass.c:241
+msgid "Illegal reclass type"
+msgstr "非法的重分类类型"
+
+#: ../lib/gis/reclass.c:248
+#, c-format
+msgid "Unable to create header file for [%s in %s]"
+msgstr "无法为[%s在%s中]创建头文件"
+
+#: ../lib/gis/reclass.c:299
+#, c-format
+msgid "Unable to create dependency file in [%s in %s]"
+msgstr "无法为[%s在%s中]创建依赖文件"
+
+#: ../lib/gis/parser.c:312
+msgid "WHERE conditions of SQL statement without 'where' keyword. (example: income < 1000 and inhab >= 10000)"
+msgstr "SQL语句的WHERE子句不使用'where'关键字。(如：income < 1000 and inhab >= 10000)"
+
+#: ../lib/gis/parser.c:320
+#: ../lib/gis/parser.c:334
+msgid "Name of input raster"
+msgstr "输入栅格的名称"
+
+#: ../lib/gis/parser.c:327
+msgid "Name of output raster"
+msgstr "输出栅格的名称"
+
+#: ../lib/gis/parser.c:342
+#: ../lib/gis/parser.c:356
+msgid "Name of input vector"
+msgstr "输入矢量的名称"
+
+#: ../lib/gis/parser.c:349
+msgid "Name of output vector"
+msgstr "输出矢量的名称"
+
+#: ../lib/gis/parser.c:365
+msgid "Type"
+msgstr "类型"
+
+#: ../lib/gis/parser.c:372
+msgid "Layer number"
+msgstr "图层号"
+
+#: ../lib/gis/parser.c:378
+msgid "Category value"
+msgstr "类别值"
+
+#: ../lib/gis/parser.c:384
+msgid "Category values."
+msgstr "类别值"
+
+#: ../lib/gis/parser.c:385
+msgid "Example: 1,3,7-9,13"
+msgstr "例如：1,3,7-9,13"
+
+#: ../lib/gis/parser.c:626
+#, c-format
+msgid "Sorry <%s> is not a valid option\n"
+msgstr "对不起，<%s>不是有效的选项\n"
+
+#: ../lib/gis/parser.c:695
+#, c-format
+msgid ""
+"\n"
+"Description:\n"
+msgstr ""
+"\n"
+"描述：\n"
+
+#: ../lib/gis/parser.c:699
+#, c-format
+msgid ""
+"\n"
+"Usage:\n"
+" "
+msgstr ""
+"\n"
+"用法：\n"
+" "
+
+#: ../lib/gis/parser.c:760
+#, c-format
+msgid ""
+"\n"
+"Flags:\n"
+msgstr ""
+"\n"
+"标记：\n"
+
+#: ../lib/gis/parser.c:783
+#, c-format
+msgid ""
+"\n"
+"Parameters:\n"
+msgstr ""
+"\n"
+"参数：\n"
+
+#: ../lib/gis/parser.c:805
+#, c-format
+msgid "  %*s   default: %s\n"
+msgstr "  %*s   默认值： %s\n"
+
+#: ../lib/gis/parser.c:1355
+#, c-format
+msgid "  %*s   options: "
+msgstr "  %*s   选项： "
+
+#: ../lib/gis/parser.c:1402
+#: ../lib/gis/parser.c:1419
+#, c-format
+msgid "Sorry, <%c> is not a valid flag\n"
+msgstr "对不起，<%c>不是有效的标记\n"
+
+#: ../lib/gis/parser.c:1474
+#, c-format
+msgid "Sorry, <%s=> is ambiguous\n"
+msgstr "对不起，<%s=>不明确\n"
+
+#: ../lib/gis/parser.c:1481
+#, c-format
+msgid "Sorry, <%s> is not a valid parameter\n"
+msgstr "对不起，<%s>不是有效的参数\n"
+
+#: ../lib/gis/parser.c:1566
+#, c-format
+msgid ""
+"\n"
+"Error: illegal range syntax for parameter <%s>\n"
+msgstr ""
+"\n"
+"错误：参数<%s>的非法范围语法\n"
+
+#: ../lib/gis/parser.c:1568
+#, c-format
+msgid "       Presented as: %s\n"
+msgstr "       应表述为： %s\n"
+
+#: ../lib/gis/parser.c:1571
+#, c-format
+msgid ""
+"\n"
+"Error: value <%s> out of range for parameter <%s>\n"
+msgstr ""
+"\n"
+"错误：值<%s>超出了参数<%s>的范围\n"
+
+#: ../lib/gis/parser.c:1573
+#, c-format
+msgid "       Legal range: %s\n"
+msgstr "       合法范围是： %s\n"
+
+#: ../lib/gis/parser.c:1576
+#, c-format
+msgid ""
+"\n"
+"Error: Missing value for parameter <%s>\n"
+msgstr ""
+"\n"
+"错误：参数<%s>缺少值\n"
+
+#: ../lib/gis/parser.c:1736
+#, c-format
+msgid ""
+"\n"
+"ERROR: Required parameter <%s> not set:\n"
+"    (%s).\n"
+msgstr ""
+"\n"
+"错误：必须的参数<%s>未设置：\n"
+"    (%s)。\n"
+
+#: ../lib/gis/parser.c:1839
+#, c-format
+msgid ""
+"\n"
+"Error: option <%s> must be provided in multiples of %d\n"
+msgstr ""
+"\n"
+"错误：选项<%s>必须乘以%d\n"
+
+#: ../lib/gis/parser.c:1841
+#, c-format
+msgid "       You provided %d items:\n"
+msgstr "       您提供了%d个条目：\n"
+
+#: ../lib/gis/parser.c:1897
+#, c-format
+msgid "Error: option <%s>: <%s> exists.\n"
+msgstr "错误：选项<%s>：<%s>已存在。\n"
+
+#: ../lib/gis/parser.c:1944
+#, c-format
+msgid ""
+"\n"
+"FLAG: Set the following flag?\n"
+msgstr ""
+"\n"
+"标记：是否设置下面的标记？\n"
+
+#: ../lib/gis/parser.c:1957
+#, c-format
+msgid ""
+"\n"
+"OPTION:   %s\n"
+msgstr ""
+"\n"
+"选项：   %s\n"
+
+#: ../lib/gis/parser.c:1958
+#, c-format
+msgid "     key: %s\n"
+msgstr "     关键字： %s\n"
+
+#: ../lib/gis/parser.c:1960
+#, c-format
+msgid "  format: %s\n"
+msgstr "       格式： %s\n"
+
+#: ../lib/gis/parser.c:1962
+#, c-format
+msgid " default: %s\n"
+msgstr "     默认值： %s\n"
+
+#: ../lib/gis/parser.c:1963
+#, c-format
+msgid "required: %s\n"
+msgstr "     必须值： %s\n"
+
+#: ../lib/gis/parser.c:1965
+#, c-format
+msgid "multiple: %s\n"
+msgstr "       倍数： %s\n"
+
+#: ../lib/gis/parser.c:1967
+#, c-format
+msgid " options: %s\n"
+msgstr "       选项： %s\n"
+
+#: ../lib/gis/parser.c:1980
+#, c-format
+msgid "enter option > "
+msgstr "输入选项 > "
+
+#: ../lib/gis/parser.c:1994
+#: ../lib/gis/parser.c:2005
+msgid "   Try again? "
+msgstr "   重试？"
+
+#: ../lib/gis/parser.c:2003
+#, c-format
+msgid "Sorry, %s is not accepted.\n"
+msgstr "对不起，%s不能被接受。\n"
+
+#: ../lib/gis/parser.c:2014
+#, c-format
+msgid ""
+"\n"
+"You have chosen:\n"
+"  %s\n"
+msgstr ""
+"\n"
+"您可以选择：\n"
+"  %s\n"
+
+#: ../lib/gis/parser.c:2015
+msgid "Is this correct? "
+msgstr "正确吗？"
+
+#: ../lib/gis/parser.c:2073
+msgid "to accept the default"
+msgstr "接受默认值"
+
+#: ../lib/gis/spawn.c:56
+msgid "too many arguments"
+msgstr "太多的参数"
+
+#: ../lib/gis/spawn.c:78
+#: ../lib/gis/spawn.c:390
+msgid "unable to create a new process"
+msgstr "不能创建新进程"
+
+#: ../lib/gis/spawn.c:88
+#: ../lib/gis/spawn.c:413
+msgid "unable to execute command"
+msgstr "无法执行命令"
+
+#: ../lib/gis/spawn.c:164
+#: ../lib/gis/spawn.c:172
+#, c-format
+msgid "G_spawn: unable to restore signal %d"
+msgstr "G_spawn：无法恢复信号%d"
+
+#: ../lib/gis/spawn.c:205
+#, c-format
+msgid "G_spawn: unable to reset signal %d"
+msgstr "G_spawn：无法重设信号%d"
+
+#: ../lib/gis/spawn.c:215
+#, c-format
+msgid "G_spawn: unable to ignore signal %d"
+msgstr "G_spawn：无法忽略信号%d"
+
+#: ../lib/gis/spawn.c:226
+#, c-format
+msgid "G_spawn: unable to block signal %d"
+msgstr "G_spawn：无法阻断信号%d"
+
+#: ../lib/gis/spawn.c:235
+#, c-format
+msgid "G_spawn: unable to unblock signal %d"
+msgstr "G_spawn：无法对信号%d解除阻止"
+
+#: ../lib/gis/spawn.c:261
+#, c-format
+msgid "G_spawn: unable to open file %s"
+msgstr "G_spawn：无法打开文件%s"
+
+#: ../lib/gis/spawn.c:267
+#: ../lib/gis/spawn.c:277
+#, c-format
+msgid "G_spawn: unable to duplicate descriptor %d to %d"
+msgstr "G_spawn：无法将描述符%d复制到%d"
+
+#: ../lib/gis/spawn.c:405
+#, c-format
+msgid "unable to change directory to %s"
+msgstr "无法将目录改变到%s"
+
+#: ../lib/gis/error.c:162
+msgid "WARNING: "
+msgstr "警告："
+
+#: ../lib/gis/error.c:163
+msgid "ERROR: "
+msgstr "错误："
+
+#: ../lib/gis/mapset_msc.c:69
+#, c-format
+msgid "can't make mapset element %s (%s)"
+msgstr "无法生成地图集元素%s (%s)"
+
+#: ../lib/gis/ask_cell.c:58
+#: ../lib/gis/ask_cell.c:79
+#: ../lib/gis/ask_cell.c:100
+#: ../lib/gis/ask_cell.c:109
+msgid "with titles"
+msgstr "标题"
+
+#: ../lib/gis/ask_cell.c:121
+msgid "(no title)"
+msgstr "(无标题)"
+
+#: ../lib/gis/done_msg.c:29
+#, c-format
+msgid "%s complete. %s\n"
+msgstr "%s完成。%s\n"
+
+#: ../lib/gis/get_ell_name.c:44
+#, c-format
+msgid ""
+"\n"
+"Please specify ellipsoid name\n"
+msgstr ""
+"\n"
+"请指定椭球名称\n"
+
+#: ../lib/gis/get_ell_name.c:45
+#, c-format
+msgid "Enter 'list' for the list of available ellipsoids\n"
+msgstr "输入'list'，列出所有可用的投影\n"
+
+#: ../lib/gis/get_ell_name.c:62
+#, c-format
+msgid ""
+"\n"
+"invalid ellipsoid\n"
+msgstr ""
+"\n"
+"无效的椭球\n"
+
+#: ../lib/gis/history.c:120
+#, c-format
+msgid "can't get history information for [%s] in mapset [%s]"
+msgstr "无法得到[%s]在地图集[%s]中的历史记录信息"
+
+#: ../lib/gis/history.c:170
+#, c-format
+msgid "can't write history information for [%s]"
+msgstr "无法写入[%s]的历史记录信息"
+
+#: ../lib/gis/cats.c:384
+#, c-format
+msgid "category support for [%s] in mapset [%s] %s"
+msgstr "[%s]在地图集[%s]中的类别 %s"
+
+#: ../lib/gis/cats.c:423
+#, c-format
+msgid "category support for vector file [%s] in mapset [%s] %s"
+msgstr "矢量文件[%s]在地图集[%s]中的类别 %s"
+
+#: ../lib/gis/mapset.c:41
+msgid "MAPSET is not set"
+msgstr "地图集未设置"
+
+#: ../lib/gis/mapset.c:60
+#: ../lib/gis/gisinit.c:44
+#, c-format
+msgid "MAPSET %s not found"
+msgstr "未找到地图集%s"
+
+#: ../lib/gis/location.c:48
+#, c-format
+msgid "LOCATION  << %s >>  not available"
+msgstr "区域  << %s >>  无效"
+
+#: ../lib/gis/home.c:51
+msgid "unable to determine user's home directory"
+msgstr "无法确定用户的家目录"
+
+#: ../lib/gis/get_window.c:58
+#, c-format
+msgid ""
+"region for current mapset %s\n"
+"run \"g.region\""
+msgstr ""
+"要得到当前地图集%s的区域\n"
+"请运行 \"g.region\""
+
+#: ../lib/gis/get_window.c:94
+#, c-format
+msgid "default region %s"
+msgstr "默认区域 %s"
+
+#: ../lib/gis/get_window.c:115
+msgid "is not set"
+msgstr "未设置"
+
+#: ../lib/gis/get_window.c:125
+#, c-format
+msgid ""
+"is invalid\n"
+"%s"
+msgstr ""
+"是无效的\n"
+"%s"
+
+#: ../lib/gis/put_title.c:28
+#, c-format
+msgid "category information for [%s] in [%s] missing or invalid"
+msgstr "[%s]在[%s]中的类别信息丢失或无效"
+
+#: ../lib/gis/put_title.c:38
+#, c-format
+msgid "G_put_title - can't create a temp file"
+msgstr "G_put_title - 无法创建临时文件"
+
+#: ../lib/gis/put_title.c:58
+#, c-format
+msgid "category information for [%s] in [%s] invalid"
+msgstr "[%s]在[%s]中的类别信息无效"
+
+#: ../lib/gis/put_title.c:66
+#, c-format
+msgid "G_put_title - can't reopen temp file"
+msgstr "G_put_title - 无法再打开临时文件"
+
+#: ../lib/gis/put_title.c:75
+#, c-format
+msgid "can't write category information for [%s] in [%s]"
+msgstr "无法写入[%s]在[%s]中的类别信息"
+
+#: ../lib/gis/get_datum.c:107
+#, c-format
+msgid "Error reading datum shift parameters for %s from table"
+msgstr "从表中读取%s的基准面偏移参数出错"
+
+#: ../lib/gis/get_datum.c:115
+#, c-format
+msgid "Error reading ellipsoid parameters for %s from table"
+msgstr "从表中读取%s的椭球参数出错"
+
+#: ../lib/gis/get_datum.c:120
+#, c-format
+msgid "No ellipsoid field %s in file %s in %s"
+msgstr "没有椭球信息字段%s 在文件%s 在%s中"
+
+#: ../lib/gis/get_datum.c:174
+#, c-format
+msgid "invalid value: field %s in file %s in %s"
+msgstr "无效的值：字段%s 文件%s 在%s中"
+
+#: ../lib/gis/list.c:111
+#, c-format
+msgid "no %s files available in current mapset\n"
+msgstr "当前地图集中没有%s文件\n"
+
+#: ../lib/gis/list.c:113
+#, c-format
+msgid "no %s files available in mapset %s\n"
+msgstr "没有%s文件在地图集%s中\n"
+
+#: ../lib/gis/list.c:127
+#, c-format
+msgid "hit RETURN to continue -->"
+msgstr "敲回车继续 -->"
+
+#: ../lib/gis/list.c:182
+#, c-format
+msgid "%s files available in mapset %s:\n"
+msgstr "%s文件在地图集%s中：\n"
+
+#: ../lib/gis/gishelp.c:49
+#, c-format
+msgid "one moment...\n"
+msgstr "请稍等片刻...\n"
+
+#: ../lib/gis/gishelp.c:55
+#, c-format
+msgid "No help available for command [%s]\n"
+msgstr "命令[%s]没有可用的帮助\n"
+
+#: ../lib/gis/system.c:83
+#, c-format
+msgid "WARNING: can not create a new process\n"
+msgstr "警告：无法创建新进程\n"
+
+#: ../lib/gis/gisinit.c:39
+#, c-format
+msgid "MAPSET %s - permission denied"
+msgstr "地图集%s - 权限拒绝"
+
+#: ../lib/gis/gisinit.c:68
+#, c-format
+msgid "ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
+msgstr "错误：系统没有初始化。程序员忘记调用G_gisinit()\n"
+
+#: ../lib/gis/view.c:164
+#, c-format
+msgid "Unable to open %s for writing"
+msgstr "无法为写入打开%s"
+
+#: ../lib/gis/view.c:253
+#: ../lib/gis/view.c:472
+#, c-format
+msgid "Unable to open %s for reading"
+msgstr "无法为读取打开%s"
+
+#: ../lib/gis/view.c:458
+#, c-format
+msgid "GRASS window when view was saved:\n"
+msgstr "当要保存视图时，GRASS窗口：\n"
+
+#: ../lib/gis/view.c:544
+#, c-format
+msgid " Window saved in \"%s\" is completely outside of current GRASS window."
+msgstr " \"%s\"中保存的窗口完全在当前GRASS窗口之外。"
+
+#: ../lib/gis/view.c:548
+#, c-format
+msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgstr "只有%d%%的窗口(存储于\"%s\"中)与当前GRASS窗口重叠。"
+
+#: ../lib/gis/make_colr.c:43
+#, c-format
+msgid " The raster map %s@%s is empty"
+msgstr " 栅格图%s@%s是空的"
+
+#: ../lib/gis/make_colr.c:51
+#, c-format
+msgid ""
+"\n"
+"\n"
+"Color table needed for file [%s] in mapset [%s].\n"
+msgstr ""
+"\n"
+"\n"
+"文件[%s]在地图集[%s]中，需要色彩表。\n"
+
+#: ../lib/gis/make_colr.c:54
+#, c-format
+msgid ""
+"\n"
+"Please identify the type desired:\n"
+msgstr ""
+"\n"
+"请确定需要的类型：\n"
+
+#: ../lib/gis/make_colr.c:55
+#, c-format
+msgid "    1:  Random colors\n"
+msgstr "    1：  随机颜色\n"
+
+#: ../lib/gis/make_colr.c:56
+#, c-format
+msgid "    2:  Red, green, and blue color ramps\n"
+msgstr "    2：  红、绿、蓝色阶\n"
+
+#: ../lib/gis/make_colr.c:57
+#, c-format
+msgid "    3:  Color wave\n"
+msgstr "    3：  色波(Color wave)\n"
+
+#: ../lib/gis/make_colr.c:58
+#, c-format
+msgid "    4:  Gray scale\n"
+msgstr "    4：  灰度\n"
+
+#: ../lib/gis/make_colr.c:59
+#, c-format
+msgid "    5:  Aspect\n"
+msgstr "    5：  色相(Aspect)\n"
+
+#: ../lib/gis/make_colr.c:60
+#, c-format
+msgid "    6:  Rainbow colors\n"
+msgstr "    6:   色带(Rainbow colors)\n"
+
+#: ../lib/gis/make_colr.c:61
+#, c-format
+msgid "    7:  Red through yellow to green\n"
+msgstr "    7：  红到黄再到绿\n"
+
+#: ../lib/gis/make_colr.c:62
+#, c-format
+msgid "    8:  Green through yellow to red\n"
+msgstr "    8：  绿到黄再到红\n"
+
+#: ../lib/gis/make_colr.c:63
+#, c-format
+msgid "RETURN  quit\n"
+msgstr "回车  退出\n"
+
+#: ../lib/gis/make_colr.c:84
+#, c-format
+msgid ""
+"\n"
+"%s invalid; Try again > "
+msgstr ""
+"\n"
+"%s无效：重试 > "
+
+#: ../lib/gis/opencell.c:165
+#, c-format
+msgid "unable to open raster map [%s in %s]"
+msgstr "无法打开栅格图[%s在%s中]"
+
+#: ../lib/gis/opencell.c:248
+#, fuzzy, c-format
+msgid "unable to open [%s] in [%s] since it is a reclass of [%s] in [%s] which does not exist"
+msgstr "无法打开[%s]在[%s]中，因为它是[%s]的一个重分类在[%s]中"
+
+#: ../lib/gis/opencell.c:271
+#, c-format
+msgid "[%s] in mapset [%s]-format field in header file invalid"
+msgstr "[%s]在地图集[%s]中 - 头文件中的格式字段无效"
+
+#: ../lib/gis/opencell.c:280
+#, c-format
+msgid ""
+"[%s] in mapset [%s] - in different projection than current region:\n"
+" found map [%s] in: <%s>, should be <%s> "
+msgstr ""
+"[%s]在地图集[%s]中 - 与当前区域的投影不同：\n"
+" 找到的地图[%s]在<%s>投影下，当前的投影应该是<%s> "
+
+#: ../lib/gis/opencell.c:287
+#, c-format
+msgid "[%s] in mapset [%s] - in different zone [%d] than current region [%d]"
+msgstr "[%s]在地图集[%s]中 - 区域[%d]与当前的区域[%d]不同"
+
+#: ../lib/gis/opencell.c:295
+#, c-format
+msgid "[%s] in [%s] - bytes per cell (%d) too large"
+msgstr "[%s]在[%s]中 - 每像元所占比特数(%d)太大"
+
+#: ../lib/gis/opencell.c:598
+#, c-format
+msgid "opencell: %s - illegal file name"
+msgstr "opencell： %s - 非法的文件名"
+
+#: ../lib/gis/opencell.c:699
+msgid "Can't write embedded null values for map open for random access"
+msgstr "以随机存取打开的地图不能写入嵌入的空值"
+
+#: ../lib/gis/opencell.c:930
+#: ../lib/gis/opencell.c:951
+#, c-format
+msgid "unable to find [%s] in [%s]"
+msgstr "无法找到[%s]在[%s]中"
+
+#: ../lib/gis/opencell.c:982
+#, c-format
+msgid "unable to find [%s]"
+msgstr "无法找到[%s]"
+
+#: ../lib/gis/opencell.c:988
+#, c-format
+msgid "Unable to open %s"
+msgstr "无法打开%s"
+
+#: ../lib/gis/opencell.c:997
+#, c-format
+msgid "invalid type: field %s in file %s "
+msgstr "无效的类型：字段%s在文件%s中 "
+
+#: ../lib/gis/opencell.c:1042
+#, c-format
+msgid "%s - ** illegal name **"
+msgstr "%s - ** 非法的名称 **"
+
+#: ../lib/gis/get_datum_name.c:53
+#, c-format
+msgid ""
+"\n"
+"Please specify datum name\n"
+msgstr ""
+"\n"
+"请指定基准面名称\n"
+
+#: ../lib/gis/get_datum_name.c:54
+#, c-format
+msgid "Enter 'list' for the list of available datums\n"
+msgstr "输入'list'，列出可用的基准面\n"
+
+#: ../lib/gis/get_datum_name.c:91
+#, c-format
+msgid ""
+"\n"
+"invalid datum\n"
+msgstr ""
+"\n"
+"无效的基准面\n"
+
+#: ../lib/gis/readsites_xyz.c:119
+msgid "Unable to guess site format!"
+msgstr "无法猜测站点格式！"
+
+#: ../lib/gis/readsites_xyz.c:133
+msgid "No n-dims in site_list"
+msgstr "在站点列表中没有n-dims"
+
+#: ../lib/gis/readsites_xyz.c:136
+msgid "Dimension index out of range"
+msgstr "维度索引超出范围"
+
+#: ../lib/gis/readsites_xyz.c:141
+msgid "No double attributes in site_list"
+msgstr "在站点列表中没有双精度属性"
+
+#: ../lib/gis/readsites_xyz.c:144
+msgid "Double attribute index out of range"
+msgstr "双精度属性索引越界"
+
+#: ../lib/gis/readsites_xyz.c:149
+msgid "No string attributes in site_list"
+msgstr "在站点列表中没有字符串属性"
+
+#: ../lib/gis/readsites_xyz.c:152
+msgid "String attribute index out of range"
+msgstr "字符串属性索引越界"
+
+#: ../lib/gis/readsites_xyz.c:159
+msgid "Unknown attribute type in call to G_readsites_xyz()!\n"
+msgstr "在调用G_readsites_xyz()时有未知的属性类型！\n"
+
+#: ../lib/gis/readsites_xyz.c:191
+msgid "Failed to convert string attribute."
+msgstr "转换字符串属性失败。"
+
+#: ../lib/gis/legal_name.c:28
+#, c-format
+msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
+msgstr "非法的文件名。不能是'.'或'NULL'\n"
+
+#: ../lib/gis/legal_name.c:34
+#, c-format
+msgid "Illegal filename. character <%c> not allowed."
+msgstr "非法的文件名。不允许包含字符<%c>。"
+
+#: ../lib/gis/get_cellhd.c:75
+#: ../lib/gis/get_cellhd.c:104
+#, c-format
+msgid "Can't read header file for [%s in %s]\n"
+msgstr "无法读取[%s在%s中]的头文件\n"
+
+#: ../lib/gis/get_cellhd.c:77
+#, c-format
+msgid "It is a reclass of [%s in %s] "
+msgstr "它是[%s在%s中]的一个重分类 "
+
+#: ../lib/gis/get_cellhd.c:80
+#, c-format
+msgid "which is missing"
+msgstr "丢失"
+
+#: ../lib/gis/get_cellhd.c:82
+#, c-format
+msgid "whose header file can't be opened"
+msgstr "头文件无法打开"
+
+#: ../lib/gis/get_cellhd.c:92
+#, c-format
+msgid "Can't open header file for [%s in %s]"
+msgstr "无法打开[%s在%s中]的头文件"
+
+#: ../lib/gis/get_cellhd.c:108
+#, c-format
+msgid "It is a reclass of [%s in %s] whose header file is invalid\n"
+msgstr "它是[%s在%s中]的一个重分类，地图的头文件无效。\n"
+
+#: ../lib/gis/get_cellhd.c:112
+#, c-format
+msgid "Invalid format\n"
+msgstr "无效的格式\n"
+
+#: ../lib/gis/myname.c:48
+msgid "Unknown Location"
+msgstr "未知区域"
+
+#: ../lib/gis/adj_cellhd.c:69
+#: ../lib/gis/adj_cellhd.c:166
+msgid "Illegal n-s resolution value"
+msgstr "非法的南北向分辨率值"
+
+#: ../lib/gis/adj_cellhd.c:74
+#: ../lib/gis/adj_cellhd.c:173
+msgid "Illegal row value"
+msgstr "非法的行值"
+
+#: ../lib/gis/adj_cellhd.c:79
+#: ../lib/gis/adj_cellhd.c:180
+msgid "Illegal e-w resolution value"
+msgstr "非法的东西向分辨率值"
+
+#: ../lib/gis/adj_cellhd.c:84
+#: ../lib/gis/adj_cellhd.c:187
+msgid "Illegal col value"
+msgstr "非法的列值"
+
+#: ../lib/gis/adj_cellhd.c:91
+#: ../lib/gis/adj_cellhd.c:206
+msgid "Illegal latitude for North"
+msgstr "非法的北纬"
+
+#: ../lib/gis/adj_cellhd.c:93
+#: ../lib/gis/adj_cellhd.c:208
+msgid "Illegal latitude for South"
+msgstr "非法的南纬"
+
+#: ../lib/gis/adj_cellhd.c:102
+#: ../lib/gis/adj_cellhd.c:217
+msgid "North must be north of South"
+msgstr "北必须在南的北边"
+
+#: ../lib/gis/adj_cellhd.c:104
+#: ../lib/gis/adj_cellhd.c:219
+msgid "North must be larger than South"
+msgstr "北纬值必须比南纬值大"
+
+#: ../lib/gis/adj_cellhd.c:107
+#: ../lib/gis/adj_cellhd.c:222
+msgid "East must be larger than West"
+msgstr "东经值必须比西经值大"
+
+#: ../lib/gis/adj_cellhd.c:126
+#: ../lib/gis/adj_cellhd.c:259
+msgid "Invalid coordinates"
+msgstr "无效的坐标"
+
+#: ../lib/gis/adj_cellhd.c:168
+msgid "Illegal n-s3 resolution value"
+msgstr "非法的3D南北向分辨率值"
+
+#: ../lib/gis/adj_cellhd.c:175
+msgid "Illegal row3 value"
+msgstr "非法的3D的行值"
+
+#: ../lib/gis/adj_cellhd.c:182
+msgid "Illegal e-w3 resolution value"
+msgstr "非法的3D东西向分辨率值"
+
+#: ../lib/gis/adj_cellhd.c:189
+msgid "Illegal col3 value"
+msgstr "非法的3D的列值"
+
+#: ../lib/gis/adj_cellhd.c:194
+msgid "Illegal t-b3 resolution value"
+msgstr "非法的3D顶到底的分辨率值"
+
+#: ../lib/gis/adj_cellhd.c:199
+msgid "Illegal depths value"
+msgstr "非法的深度值"
+
+#: ../lib/gis/rd_cellhd.c:93
+msgid "duplicate projection field"
+msgstr "复制投影字段"
+
+#: ../lib/gis/rd_cellhd.c:104
+msgid "duplicate zone field"
+msgstr "复制区域字段"
+
+#: ../lib/gis/rd_cellhd.c:114
+msgid "projection field missing"
+msgstr "缺少投影字段"
+
+#: ../lib/gis/rd_cellhd.c:116
+msgid "zone field missing"
+msgstr "缺少区域字段"
+
+#: ../lib/gis/rd_cellhd.c:137
+msgid "duplicate north field"
+msgstr "复制“北”字段"
+
+#: ../lib/gis/rd_cellhd.c:146
+msgid "duplicate south field"
+msgstr "复制“南”字段"
+
+#: ../lib/gis/rd_cellhd.c:155
+msgid "duplicate east field"
+msgstr "复制“东”字段"
+
+#: ../lib/gis/rd_cellhd.c:164
+msgid "duplicate west field"
+msgstr "复制“西”字段"
+
+#: ../lib/gis/rd_cellhd.c:173
+msgid "duplicate top field"
+msgstr "复制“顶”字段"
+
+#: ../lib/gis/rd_cellhd.c:182
+msgid "duplicate bottom field"
+msgstr "复制“底”字段"
+
+#: ../lib/gis/rd_cellhd.c:191
+msgid "duplicate e-w resolution field"
+msgstr "复制东西向分辨率字段"
+
+#: ../lib/gis/rd_cellhd.c:202
+msgid "duplicate 3D e-w resolution field"
+msgstr "复制3D的东西向分辨率字段"
+
+#: ../lib/gis/rd_cellhd.c:213
+msgid "duplicate n-s resolution field"
+msgstr "复制南北向分辨率字段"
+
+#: ../lib/gis/rd_cellhd.c:224
+msgid "duplicate 3D n-s resolution field"
+msgstr "复制3D的南北向分辨率字段"
+
+#: ../lib/gis/rd_cellhd.c:235
+msgid "duplicate t-b resolution field"
+msgstr "复制顶到底的分辨率字段"
+
+#: ../lib/gis/rd_cellhd.c:246
+msgid "duplicate rows field"
+msgstr "复制行字段"
+
+#: ../lib/gis/rd_cellhd.c:257
+msgid "duplicate 3D rows field"
+msgstr "复制3D行字段"
+
+#: ../lib/gis/rd_cellhd.c:268
+msgid "duplicate cols field"
+msgstr "复制列字段"
+
+#: ../lib/gis/rd_cellhd.c:279
+msgid "duplicate 3D cols field"
+msgstr "复制3D列字段"
+
+#: ../lib/gis/rd_cellhd.c:290
+msgid "duplicate depths field"
+msgstr "复制深度字段"
+
+#: ../lib/gis/rd_cellhd.c:301
+msgid "duplicate format field"
+msgstr "复制格式字段"
+
+#: ../lib/gis/rd_cellhd.c:310
+msgid "duplicate compressed field"
+msgstr "复制压缩字段"
+
+#: ../lib/gis/rd_cellhd.c:321
+msgid "north field missing"
+msgstr "缺少北字段"
+
+#: ../lib/gis/rd_cellhd.c:323
+msgid "south field missing"
+msgstr "缺少南字段"
+
+#: ../lib/gis/rd_cellhd.c:325
+msgid "west field missing"
+msgstr "缺少西字段"
+
+#: ../lib/gis/rd_cellhd.c:327
+msgid "east field missing"
+msgstr "缺少东字段"
+
+#: ../lib/gis/rd_cellhd.c:329
+msgid "cols field missing"
+msgstr "缺少列字段"
+
+#: ../lib/gis/rd_cellhd.c:331
+msgid "rows field missing"
+msgstr "缺少行字段"
+
+#: ../lib/gis/rd_cellhd.c:342
+msgid "ewres3 field missing"
+msgstr "缺少3D的东西向分辨率字段"
+
+#: ../lib/gis/rd_cellhd.c:344
+msgid "nsres3 field missing"
+msgstr "缺少3D的南北向分辨率字段"
+
+#: ../lib/gis/rd_cellhd.c:346
+msgid "cols3 field missing"
+msgstr "缺少3D的列字段"
+
+#: ../lib/gis/rd_cellhd.c:348
+msgid "rows3 field missing"
+msgstr "缺少3D的行字段"
+
+#: ../lib/gis/rd_cellhd.c:404
+#, c-format
+msgid "line %d: <%s>"
+msgstr "行%d： <%s>"
+
+#: ../lib/gis/proj2.c:49
+msgid "Latitude-Longitude"
+msgstr "纬度 - 经度"
+
+#: ../lib/gis/proj2.c:51
+msgid "Other Projection"
+msgstr "其它投影"
+
+#: ../lib/gis/proj3.c:68
+msgid "Unknown projection"
+msgstr "未知的投影"
+
+#: ../lib/proj/ellipse.c:85
+#, c-format
+msgid "invalid ellipsoid %s in file"
+msgstr "文件中无效的椭球%s"
+
+#: ../lib/proj/ellipse.c:128
+msgid "No ellipsoid info given in file"
+msgstr "文件中没有给出椭球信息"
+
+#: ../lib/raster/io.c:190
+#, c-format
+msgid "Unable to allocate memory\n"
+msgstr "无法分配内存\n"
+
+#: ../lib/raster/io.c:211
+#, c-format
+msgid "ERROR %s from graphics driver.\n"
+msgstr "错误的%s来自图形驱动器。\n"
+
+#: ../lib/raster/io.c:282
+#, c-format
+msgid "No graphics monitor has been selected for output.\n"
+msgstr "没有选择用来输出的图形监视器。\n"
+
+#: ../lib/raster/io.c:283
+#, c-format
+msgid "Please run \"d.mon\" to select a graphics monitor.\n"
+msgstr "请运行\"d.mon\"来选择一个图形监视器。\n"
+
+#: ../lib/raster/io.c:293
+#, c-format
+msgid "No such graphics monitor as <%s>.\n"
+msgstr "没有名为<%s>的图形监视器。\n"
+
+#: ../lib/raster/io.c:294
+#, c-format
+msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
+msgstr "请运行\"d.mon\"来选择一个有效的图形监视器。\n"
+
+#: ../lib/raster/io.c:306
+#, c-format
+msgid "Failed to get socket name for monitor <%s>.\n"
+msgstr "获取监视器<%s>的socket名称失败。\n"
+
+#: ../lib/raster/io.c:319
+#, c-format
+msgid "No socket to connect to for monitor <%s>.\n"
+msgstr "没有socket连接到监视器<%s>。\n"
+
+#: ../lib/raster/io.c:346
+#, c-format
+msgid ""
+"Socket is already in use or not accepting connections.\n"
+"Use d.mon to select a monitor\n"
+msgstr ""
+"Socket已经在使用或是不接受连接。\n"
+"请使用d.mon来选择一个监视器\n"
+
+#: ../lib/raster/io.c:354
+#, c-format
+msgid ""
+"Trying to connect to something not a socket.\n"
+"Probably program error.\n"
+msgstr ""
+"尝试连接到别的东西而不是socket。\n"
+"或许是程序出错。\n"
+
+#: ../lib/raster/io.c:361
+#, c-format
+msgid "Connect attempt timed out. Probably an error with the server.\n"
+msgstr "尝试连接超时。可能是服务器出现错误。\n"
+
+#: ../lib/raster/io.c:368
+#, c-format
+msgid "Not connected...\n"
+msgstr "未连接...\n"
+
+#: ../lib/raster/io.c:371
+#, c-format
+msgid "Couldn't connect to monitor. Will try once more.\n"
+msgstr "不能连接到监视器。请再试一次。\n"
+
+#: ../lib/raster/io.c:377
+#, c-format
+msgid "Connection failed.\n"
+msgstr "连接失败。\n"
+
+#: ../lib/raster/io.c:392
+#, c-format
+msgid "Can't stat %s\n"
+msgstr "无法统计%s\n"
+
+#: ../lib/raster/io.c:408
+#, c-format
+msgid "Error - Monitor <%s> is in use.\n"
+msgstr "错误 - 监视器<%s>正在使用。\n"
+
+#: ../lib/raster/io.c:410
+#, c-format
+msgid "Error - Monitor <%s> is in use by %s.\n"
+msgstr "错误 - 监视器<%s>正在被%s使用。\n"
+
+#: ../lib/raster/io.c:420
+#, c-format
+msgid "Error - Could not complete locking process for monitor <%s>.\n"
+msgstr "错误 - 不能为监视器<%s>完全锁定进程。\n"
+
+#: ../lib/raster/io.c:434
+#, c-format
+msgid "Error - Can't set up pipe to graphics device.\n"
+msgstr "错误 - 无法建立到图形设备的管道。\n"
+
+#: ../lib/raster/io.c:440
+#, c-format
+msgid "Error - Graphics monitor <%s> not running!\n"
+msgstr "错误 - 图形监视器<%s>没有运行！\n"
+
+#: ../lib/raster/io.c:444
+#, c-format
+msgid "Please start graphics monitor <%s>.\n"
+msgstr "请启动图形监视器<%s>。\n"
+
+#: ../lib/raster/io.c:509
+#, c-format
+msgid "ERROR - eof from graphics monitor.\n"
+msgstr "错误 - 图形监视器的eof。\n"
+
+#: ../lib/raster/io.c:526
+#, c-format
+msgid "Warning - no response from graphics monitor <%s>.\n"
+msgstr "警告 - 图形监视器<%s>没有响应。\n"
+
+#: ../lib/raster/io.c:528
+#, c-format
+msgid "Check to see if the mouse is still active.\n"
+msgstr "请检查鼠标是否还能活动。\n"
+
+#: ../lib/raster/io.c:531
+#, c-format
+msgid "ERROR - no response from graphics monitor <%s>.\n"
+msgstr "错误 - 图形监视器<%s>没有响应。\n"
+
+#: ../lib/raster/parse_mon.c:29
+#, c-format
+msgid "ERROR: GISBASE not set\n"
+msgstr "错误：GISBASE没有设置\n"
+
+#: ../lib/vector/Vlib/legal_vname.c:23
+#, c-format
+msgid "Illegal vector map name <%s>. May not contain '.' or 'NULL'.\n"
+msgstr "非法的矢量地图名称<%s>。可能包含'.'或'NULL'。\n"
+
+#: ../lib/vector/Vlib/legal_vname.c:29
+#, c-format
+msgid "Illegal vector map name <%s>. Must start with a letter.\n"
+msgstr "非法的矢量地图名称<%s>。必须以字母开头。\n"
+
+#: ../lib/vector/Vlib/legal_vname.c:35
+#, c-format
+msgid "Illegal vector map name <%s>. Character <%c> not allowed.\n"
+msgstr "非法的矢量地图名称<%s>。不允许有字符<%c>。\n"
+
+#: ../lib/vector/Vlib/legal_vname.c:60
+#: ../lib/vector/Vlib/legal_vname.c:62
+#, c-format
+msgid "Output name '%s' is not valid vector name."
+msgstr "输出的名称'%s'不是有效的矢量名称。"
+
+#: ../lib/vector/Vlib/legal_vname.c:73
+#: ../lib/vector/Vlib/legal_vname.c:75
+#, c-format
+msgid "Cannot find input map '%s'"
+msgstr "无法找到输入地图'%s'"
+
+#: ../lib/vector/Vlib/legal_vname.c:93
+#: ../lib/vector/Vlib/legal_vname.c:95
+#, c-format
+msgid "Output map '%s' is used as input"
+msgstr "输出地图'%s'被用作输入"
+
+#: ../lib/vector/Vlib/map.c:109
+#: ../lib/vector/Vlib/map.c:215
+#: ../lib/vector/Vlib/open.c:493
+#, c-format
+msgid "The vector '%s' already exists and will be overwritten."
+msgstr "矢量'%s'已经存在，它将会被覆盖。"
+
+#: ../lib/vector/Vlib/map.c:223
+#, c-format
+msgid "Input vector '%s' not found"
+msgstr "输入矢量'%s'未找到"
+
+#: ../lib/vector/Vlib/map.c:226
+#, c-format
+msgid "Cannot copy vector '%s' to '%s'"
+msgstr "无法将矢量'%s'拷贝为'%s'"
+
+#: ../lib/vector/Vlib/field.c:73
+msgid "Field number must be 1 or greater."
+msgstr "字段数量必须大于等于1。"
+
+#: ../lib/vector/Vlib/field.c:78
+msgid "Cannot add database link, map is not opened in WRITE mode."
+msgstr "无法添加数据库链接，地图没有以写模式打开。"
+
+#: ../lib/vector/Vlib/field.c:84
+msgid "Cannot add database link."
+msgstr "无法添加数据库链接。"
+
+#: ../lib/vector/Vlib/field.c:90
+#: ../lib/vector/Vlib/field.c:133
+msgid "Cannot write database links."
+msgstr "无法写入数据库链接。"
+
+#: ../lib/vector/Vlib/field.c:188
+#, c-format
+msgid "Field number <%d> or name <%s> already exists"
+msgstr "字段数<%d>或名称<%s>已经存在"
+
+#: ../lib/vector/Vlib/field.c:248
+msgid ""
+"Default driver / database set to:\n"
+"driver: dbf\n"
+"database: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
+msgstr ""
+"默认驱动 / 数据库设置：\n"
+"驱动： dbf\n"
+"数据库： $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
+
+#: ../lib/vector/Vlib/field.c:258
+msgid "Default driver is not set"
+msgstr "默认驱动未设置"
+
+#: ../lib/vector/Vlib/field.c:260
+msgid "Default database is not set"
+msgstr "默认数据库未设置"
+
+#: ../lib/vector/Vlib/field.c:311
+#, c-format
+msgid "Requested dblink %d, maximum link number %d"
+msgstr "请求的dblink %d，最大链接数%d"
+
+#: ../lib/vector/Vlib/field.c:390
+msgid "Cannot open OGR DBMI driver."
+msgstr "无法打开OGR DBMI驱动。"
+
+#: ../lib/vector/Vlib/field.c:410
+#, c-format
+msgid "Don't know how to read links for format %d"
+msgstr "不知道如何从格式%d中读取链接"
+
+#: ../lib/vector/Vlib/field.c:438
+#, c-format
+msgid "Error in rule on row %d in %s"
+msgstr "错误在第%d行%s文件中"
+
+#: ../lib/vector/Vlib/field.c:565
+msgid "Bug: attempt to update map which is not in current mapset."
+msgstr "错误：试图更新不在当前地图集中的地图。"
+
+#: ../lib/vector/Vlib/build_nat.c:87
+msgid "Cannot add area (map closed, topo saved)"
+msgstr "无法增加区域(地图已关闭，拓扑已存储)"
+
+#: ../lib/vector/Vlib/build_nat.c:95
+msgid "Cannot add isle (map closed, topo saved)"
+msgstr "无法增加岛(地图已关闭，拓扑已存储)"
+
+#: ../lib/vector/Vlib/build_nat.c:104
+msgid "Area of size = 0.0 ignored"
+msgstr "区域大小 = 0.0 的被忽略"
+
+#: ../lib/vector/Vlib/build_nat.c:465
+msgid "Registering lines: "
+msgstr "注册线： "
+
+#: ../lib/vector/Vlib/build_nat.c:506
+#, c-format
+msgid "\r%d primitives registered      \n"
+msgstr "\r%d条原始线被注册      \n"
+
+#: ../lib/vector/Vlib/build_nat.c:533
+#, c-format
+msgid ""
+"\r%d areas built      \n"
+"%d isles built\n"
+msgstr ""
+"\r建立%d个区域      \n"
+"建立%d个岛\n"
+
+#: ../lib/vector/Vlib/build_nat.c:541
+msgid "Attaching islands: "
+msgstr "附加岛："
+
+#: ../lib/vector/Vlib/build_nat.c:556
+msgid "Attaching centroids: "
+msgstr "附加质心："
+
+#: ../lib/vector/Vlib/open.c:42
+#: ../lib/vector/Vlib/write.c:35
+msgid "Requested format is not compiled in this version"
+msgstr "在这一版本中没有编译请求的格式"
+
+#: ../lib/vector/Vlib/open.c:95
+#, c-format
+msgid "Warning, Programmer requested unknown open_level\n"
+msgstr "警告，程序员请求未知的open_level\n"
+
+#: ../lib/vector/Vlib/open.c:155
+#, c-format
+msgid "Cannot find vector %s"
+msgstr "无法找到矢量%s"
+
+#: ../lib/vector/Vlib/open.c:165
+msgid "A map which is not in the current mapset cannot be opened for update."
+msgstr "不在当前地图集中的地图不能被打开并更新。"
+
+#: ../lib/vector/Vlib/open.c:183
+#, c-format
+msgid "Cannot open old vector %s"
+msgstr "无法打开旧的矢量%s"
+
+#: ../lib/vector/Vlib/open.c:193
+#: ../lib/vector/Vlib/open.c:252
+#: ../lib/vector/Vlib/open.c:268
+#, c-format
+msgid "Cannot open old vector %s on level %d"
+msgstr "无法打开旧的矢量%s在级别%d上"
+
+#: ../lib/vector/Vlib/open.c:315
+#: ../lib/vector/Vlib/open.c:520
+#, c-format
+msgid "Cannot open history file for vector '%s'"
+msgstr "无法打开矢量'%s'的历史记录"
+
+#: ../lib/vector/Vlib/open.c:486
+#, c-format
+msgid "Map name is not SQL compliant."
+msgstr "地图名称不适应SQL"
+
+#: ../lib/vector/Vlib/open.c:497
+#, c-format
+msgid "Cannot delete existing vector %s"
+msgstr "无法删除已有矢量%s"
+
+#: ../lib/vector/Vlib/open.c:511
+#, c-format
+msgid "Cannot open new vector %s"
+msgstr "无法打开新的矢量%s"
+
+#: ../lib/vector/Vlib/open.c:563
+#, c-format
+msgid "Could not stat file '%s'"
+msgstr "无法统计文件'%s'"
+
+#: ../lib/vector/Vlib/open.c:657
+msgid "Size of 'coor' file differs from value saved in topo file."
+msgstr "'coor'文件的大小与拓扑文件中保存的值不同。"
+
+#: ../lib/vector/Vlib/open.c:668
+#, c-format
+msgid "Please rebuild topology for vector '%s@%s'"
+msgstr "请为矢量'%s@%s'重建拓扑"
+
+#: ../lib/vector/Vlib/build.c:129
+msgid "Building topology ...\n"
+msgstr "建立拓扑...\n"
+
+#: ../lib/vector/Vlib/build.c:142
+msgid "Topology was built.\n"
+msgstr "拓扑建立完成。\n"
+
+#: ../lib/vector/Vlib/build.c:154
+#, c-format
+msgid "Number of nodes     :   %d\n"
+msgstr "节点数              ：   %d\n"
+
+#: ../lib/vector/Vlib/build.c:155
+#, c-format
+msgid "Number of primitives:   %d\n"
+msgstr "原始线的数量        ：   %d\n"
+
+#: ../lib/vector/Vlib/build.c:156
+#, c-format
+msgid "Number of points    :   %d\n"
+msgstr "点的数量            ：   %d\n"
+
+#: ../lib/vector/Vlib/build.c:157
+#, c-format
+msgid "Number of lines     :   %d\n"
+msgstr "线的数量            ：   %d\n"
+
+#: ../lib/vector/Vlib/build.c:158
+#, c-format
+msgid "Number of boundaries:   %d\n"
+msgstr "边界的数量          ：   %d\n"
+
+#: ../lib/vector/Vlib/build.c:159
+#, c-format
+msgid "Number of centroids :   %d\n"
+msgstr "质心的数量          ：   %d\n"
+
+#: ../lib/vector/Vlib/build.c:162
+#, c-format
+msgid "Number of faces     :   %d\n"
+msgstr "face的数量          ：   %d\n"
+
+#: ../lib/vector/Vlib/build.c:165
+#, c-format
+msgid "Number of kernels   :   %d\n"
+msgstr "核(kernels)的数量   ：   %d\n"
+
+#: ../lib/vector/Vlib/build.c:200
+#, c-format
+msgid "Number of areas     :   %d\n"
+msgstr "区域的数量          ：   %d\n"
+
+#: ../lib/vector/Vlib/build.c:201
+#, c-format
+msgid "Number of isles     :   %d\n"
+msgstr "岛的数量            ：  %d\n"
+
+#: ../lib/vector/Vlib/build.c:204
+#, c-format
+msgid "Number of incorrect boundaries   :   %d\n"
+msgstr "错误边界的数量      ：   %d\n"
+
+#: ../lib/vector/Vlib/build.c:207
+#, c-format
+msgid "Number of centroids outside area :   %d\n"
+msgstr "在区域外的质心的数量：   %d\n"
+
+#: ../lib/vector/Vlib/build.c:210
+#, c-format
+msgid "Number of duplicate centroids    :   %d\n"
+msgstr "重复质心的数量      ：   %d\n"
+
+#: ../lib/vector/Vlib/build.c:213
+#, c-format
+msgid "Number of areas without centroid :   %d\n"
+msgstr "没有质心的区域数量  ：   %d\n"
+
+#: ../lib/vector/Vlib/build.c:216
+msgid "Number of areas     :   -\n"
+msgstr "区域的数量          ：   -\n"
+
+#: ../lib/vector/Vlib/build.c:217
+msgid "Number of isles     :   -\n"
+msgstr "岛的数量            ：   -\n"
+
+#: ../lib/vector/Vlib/build.c:246
+#, c-format
+msgid "Can't open topo file for write: %s\n"
+msgstr "无法打开拓扑文件进行写操作： %s\n"
+
+#: ../lib/vector/Vlib/build.c:254
+msgid "Error writing out topo file.\n"
+msgstr "写拓扑文件时出错。\n"
+
+#: ../lib/vector/Vlib/build.c:385
+#, c-format
+msgid "Can't open spatial index file for write: %s\n"
+msgstr "无法打开空间索引文件进行写操作： %s\n"
+
+#: ../lib/vector/Vlib/build.c:393
+msgid "Error writing out spatial index file.\n"
+msgstr "写空间索引文件时出错。\n"
+
+#: ../lib/vector/Vlib/write.c:23
+msgid "Vect_write_line() for this format/level not supported"
+msgstr "这种格式/级别不支持Vect_write_line()"
+
+#: ../lib/vector/Vlib/write.c:27
+msgid "Vect_rewrite_line() for this format/level not supported"
+msgstr "这种格式/级别不支持Vect_rewrite_line()"
+
+#: ../lib/vector/Vlib/write.c:31
+msgid "Vect_delete_line() for this format/level not supported"
+msgstr "这种格式/级别不支持Vect_delete_line()"
+
+#: ../lib/vector/Vlib/write.c:93
+msgid "Cannot write line, the map is not opened"
+msgstr "无法写入线，地图尚未打开"
+
+#: ../lib/vector/Vlib/write.c:104
+msgid "Cannot write line"
+msgstr "无法写入线"
+
+#: ../lib/vector/Vlib/write.c:136
+msgid "Cannot rewrite line, the map is not opened"
+msgstr "无法重写线，地图尚未打开"
+
+#: ../lib/vector/Vlib/write.c:147
+msgid "Cannot rewrite line"
+msgstr "无法重写线"
+
+#: ../lib/vector/Vlib/write.c:189
+#, c-format
+msgid "Cannot delete the line, map '%s' is not opened on level 2"
+msgstr "无法删除线，地图'%s'没有在级别2上打开"
+
+#: ../lib/vector/Vlib/write.c:193
+#, c-format
+msgid "Cannot delete the line, map '%s' is not in opened in 'write' mode"
+msgstr "无法删除线，地图'%s'没有以写模式打开"
+
+#: ../lib/vector/Vlib/write.c:205
+msgid "Cannot delete line"
+msgstr "无法删除想线"
+
