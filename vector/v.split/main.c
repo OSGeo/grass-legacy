@@ -60,7 +60,8 @@ main (int argc, char *argv[])
 
     /* layer = atoi ( layer_opt->answer ); */
 
-    if ( length_opt->answer && vertices_opt->answer ) 
+    if ( (length_opt->answer && vertices_opt->answer) ||
+	!(length_opt->answer || vertices_opt->answer) ) 
 	G_fatal_error ("Use either length or vertices" );
     
     if ( length_opt->answer )
