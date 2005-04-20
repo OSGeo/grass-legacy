@@ -34,6 +34,7 @@ SUBDIRS = \
 	r.univar.sh \
 	v.build.all \
 	v.convert.all \
+	v.db.reconnect.all \
 	v.in.garmin \
 	v.in.e00 \
 	v.in.sites.all
