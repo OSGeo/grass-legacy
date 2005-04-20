@@ -292,7 +292,7 @@ Vect_rename ( char *in, char *out, FILE *msgout )
 	if ( driver == NULL ) {
 	    G_warning ( "Cannot open database -> create index" );
 	} else {
-	    if ( db_create_index2(driver, Fout->table, Fout->key ) != DB_OK )
+	    if ( db_create_index2(driver, Fout->table, Fin->key ) != DB_OK )
 		G_warning ( "Cannot create index" );
 
 	    db_close_database_shutdown_driver ( driver );
