@@ -277,7 +277,7 @@ Vect_rename ( char *in, char *out, FILE *msgout )
 	/* Change the link */
 	Vect_map_del_dblink ( &Map, Fin->number );
 	
-	Vect_map_add_dblink ( &Map, Fout->number, Fout->name, Fout->table, Fout->key, 
+	Vect_map_add_dblink ( &Map, Fout->number, Fout->name, Fout->table, Fin->key, 
 		                    Fout->database, Fout->driver);
 
 	/* Delete old table */
