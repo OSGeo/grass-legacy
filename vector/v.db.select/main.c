@@ -50,34 +50,35 @@ int main (int argc, char **argv)
     col_opt->key 	= "column";
     col_opt->type 	= TYPE_STRING;
     col_opt->required 	= NO;
-    col_opt->description = _("single attribute column");
+    col_opt->multiple 	= YES;
+    col_opt->description = _("Attribute column(s)");
 
     fs_opt 		= G_define_option();
     fs_opt->key 	= "fs";
     fs_opt->type 	= TYPE_STRING;
     fs_opt->required 	= NO;
-    fs_opt->description = _("output field separator");
+    fs_opt->description = _("Output field separator");
     fs_opt->answer	= "|";
 
     vs_opt 		= G_define_option();
     vs_opt->key 	= "vs";
     vs_opt->type 	= TYPE_STRING;
     vs_opt->required 	= NO;
-    vs_opt->description = _("output vertical record separator");
+    vs_opt->description = _("Output vertical record separator");
 
     nv_opt 		= G_define_option();
     nv_opt->key 	= "nv";
     nv_opt->type 	= TYPE_STRING;
     nv_opt->required 	= NO;
-    nv_opt->description = _("null value indicator");
+    nv_opt->description = _("Null value indicator");
 
     c_flag		= G_define_flag();
     c_flag->key		= 'c';
-    c_flag->description	= _("do not include column names in output");
+    c_flag->description	= _("Do not include column names in output");
 
     v_flag		= G_define_flag();
     v_flag->key		= 'v';
-    v_flag->description	= _("vertical output (instead of horizontal)");
+    v_flag->description	= _("Vertical output (instead of horizontal)");
 
     G_gisinit (argv[0]);
 
