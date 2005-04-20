@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: grassmods_zh\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-03-05 17:02+0800\n"
-"PO-Revision-Date: 2005-04-08 16:04+0800\n"
+"PO-Revision-Date: 2005-04-20 16:44+0800\n"
 "Last-Translator: zhangjun <nilarcs@gmail.com>\n"
 "Language-Team: Chinese <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -857,7 +857,7 @@ msgstr "输出矢量点图的名称"
 #: ../raster/r.out.ppm3/main.c:76
 #: ../raster/r.out.ppm/main.c:64
 msgid "Run quietly"
-msgstr "安静地运行"
+msgstr "安静模式运行"
 
 #: ../raster/r.random/main.c:73
 msgid "Generate sites for category zero also"
@@ -1041,7 +1041,7 @@ msgstr "输出报告的名称"
 #: ../raster/r.report/parse.c:87
 #: ../raster/r.stats/main.c:113
 msgid "Number of fp subranges to collect stats from"
-msgstr ""
+msgstr "收集统计信息的fp子范围的数量"
 
 #: ../raster/r.report/parse.c:91
 msgid "Suppress page headers"
@@ -1082,28 +1082,28 @@ msgstr "过滤那些在所有地图上都没有数据的像元"
 #: ../raster/r.report/parse.c:115
 #: ../raster/r.stats/main.c:166
 msgid "Report for cats fp ranges (fp maps only)"
-msgstr ""
+msgstr "报告fp范围的类别(只用于fp地图)"
 
 #: ../raster/r.report/parse.c:119
 msgid "Read fp map as integer (use map's quant rules"
-msgstr ""
+msgstr "将fp地图作为整数读取(使用地图的量化规则)"
 
 #: ../raster/r.series/main.c:84
 msgid "Makes each output cell value a function of the values assigned to the corresponding cells in the input raster map layers."
-msgstr ""
+msgstr "对输入图层的像元进行函数计算，并将得到的结果赋予输出的像元。"
 
 #: ../raster/r.series/main.c:94
 msgid "Names of existing raster files"
-msgstr ""
+msgstr "已有栅格文件的名称"
 
 #: ../raster/r.series/main.c:101
 #: ../raster/r.neighbors/main.c:73
 msgid "Name of the new raster file"
-msgstr ""
+msgstr "新的栅格文件的名称"
 
 #: ../raster/r.series/main.c:108
 msgid "Aggregate operation"
-msgstr ""
+msgstr "聚合操作"
 
 #: ../raster/r.series/main.c:116
 #, fuzzy
@@ -1112,196 +1112,196 @@ msgstr "扩散空值"
 
 #: ../raster/r.his/main.c:64
 msgid "Generates red, green and blue raster map layers combining hue, intensity, and saturation (his) values from user-specified input raster map layers."
-msgstr ""
+msgstr "对于用户指定的输入栅格图层，合并色调、亮度和饱和度值，生成红、绿、蓝栅格图层"
 
 #: ../raster/r.his/main.c:73
 msgid "Name of layer to be used for HUE"
-msgstr ""
+msgstr "色调图层的名称"
 
 #: ../raster/r.his/main.c:80
 msgid "Name of layer to be used for INTENSITY"
-msgstr ""
+msgstr "亮度图层的名称"
 
 #: ../raster/r.his/main.c:87
 msgid "Name of layer to be used for SATURATION"
-msgstr ""
+msgstr "饱和度图层的名称"
 
 #: ../raster/r.his/main.c:94
 msgid "Name of output layer to be used for RED"
-msgstr ""
+msgstr "输出的红色图层的名称"
 
 #: ../raster/r.his/main.c:101
 msgid "Name of output layer to be used for GREEN"
-msgstr ""
+msgstr "输出的绿色图层的名称"
 
 #: ../raster/r.his/main.c:108
 msgid "Name of output layer to be used for BLUE"
-msgstr ""
+msgstr "输出的蓝色图层的名称"
 
 #: ../raster/r.his/main.c:112
 msgid "Respect NULL values while drawing"
-msgstr ""
+msgstr "绘制时考虑空值"
 
 #: ../raster/r.los/main.c:62
 msgid "Line-of-sight raster analysis program."
-msgstr ""
+msgstr "栅格视线分析程序。"
 
 #: ../raster/r.los/main.c:71
 msgid "Raster map containing elevation data"
-msgstr ""
+msgstr "包含高程数据的栅格图"
 
 #: ../raster/r.los/main.c:78
 msgid "Raster map name for storing results"
-msgstr ""
+msgstr "存储结果的栅格图的名称"
 
 #: ../raster/r.los/main.c:85
 msgid "Coordinate identifying the viewing location"
-msgstr ""
+msgstr "视点位置的坐标"
 
 #: ../raster/r.los/main.c:91
 msgid "Binary (1/0) raster map"
-msgstr ""
+msgstr "二值(1/0)栅格图"
 
 #: ../raster/r.los/main.c:99
 msgid "Height of the viewing location"
-msgstr ""
+msgstr "视点的高度"
 
 #: ../raster/r.los/main.c:107
 msgid "Max distance from the viewing point (meters)"
-msgstr ""
+msgstr "距离视点的最大距离(米)"
 
 #: ../raster/r.sum/main.c:31
 msgid "Sums up the raster cell values."
-msgstr ""
+msgstr "计算栅格像元值的总和。"
 
 #: ../raster/r.sum/main.c:38
 msgid "Name of incidence or density file."
-msgstr ""
+msgstr "出现率或密度文件的名称"
 
 #: ../raster/r.sum/main.c:46
 #: ../raster/r.bilinear/main.c:72
 #, c-format
 msgid "Couldn't find raster file %s"
-msgstr ""
+msgstr "无法找到栅格文件%s"
 
 #: ../raster/r.sum/main.c:50
 #: ../raster/r.bilinear/main.c:86
 #: ../raster/r.bilinear/main.c:97
 #, c-format
 msgid "Not able to open cellfile for [%s]"
-msgstr ""
+msgstr "无法为[%s]打开像元文件"
 
 #: ../raster/r.sun/main.c:156
 msgid "Computes direct (beam), diffuse and reflected solar irradiation raster maps for given day, latitude, surface and atmospheric conditions. Solar parameters (e.g. sunrise, sunset times, declination, extraterrestrial irradiance, daylight length) are saved in a local text file. Alternatively, a local time can be specified to compute solar incidence angle and/or irradiance raster maps. The shadowing effect of the topography is optionally incorporated."
-msgstr ""
+msgstr "对于给定日期、纬度、表面和大气状况的栅格图，计算直射、散射和反射的太阳光。太阳参数(如日出、日落时间， 偏角，宇宙辐照度，昼长)存储为一个本地文本文件。此外，也可以指定一个当地时间来计算太阳入射角和(或)辐照度。也可以结合地形的阴影效果。"
 
 #: ../raster/r.sun/main.c:184
 msgid "Name of the elevation raster file"
-msgstr ""
+msgstr "高程栅格文件的名称"
 
 #: ../raster/r.sun/main.c:191
 msgid "Name of the aspect raster file"
-msgstr ""
+msgstr "坡向栅格文件的名称"
 
 #: ../raster/r.sun/main.c:198
 msgid "Name of the slope raster file"
-msgstr ""
+msgstr "坡度栅格文件的名称"
 
 #: ../raster/r.sun/main.c:206
 msgid "Name of the Linke turbidity coefficient raster file"
-msgstr ""
+msgstr "Linke浊度系数栅格文件的名称"
 
 #: ../raster/r.sun/main.c:215
 msgid "A single value of the Linke turbidity coefficient"
-msgstr ""
+msgstr "Linke浊度系数"
 
 #: ../raster/r.sun/main.c:223
 msgid "Name of the albedo coefficient raster file"
-msgstr ""
+msgstr "反射系数栅格文件的名称"
 
 #: ../raster/r.sun/main.c:231
 msgid "A single value of the albedo coefficient"
-msgstr ""
+msgstr "反射系数"
 
 #: ../raster/r.sun/main.c:239
 msgid "Name of the latitude raster file"
-msgstr ""
+msgstr "纬度栅格文件的名称"
 
 #: ../raster/r.sun/main.c:246
 msgid "A single value of latitude"
-msgstr ""
+msgstr "纬度值"
 
 #: ../raster/r.sun/main.c:254
 msgid "The real-sky beam radiation coefficient file"
-msgstr ""
+msgstr "真实天空辐射系数文件"
 
 #: ../raster/r.sun/main.c:262
 msgid "The real-sky diffuse radiation coefficient file"
-msgstr ""
+msgstr "真是天空散射系数文件"
 
 #: ../raster/r.sun/main.c:269
 msgid "Output incidence angle file (raster)"
-msgstr ""
+msgstr "输出的入射角文件(栅格)"
 
 #: ../raster/r.sun/main.c:277
 msgid "Output direct (beam) irradiance/irradiation file (raster)"
-msgstr ""
+msgstr "输出的直射辐照度/辐射文件(栅格)"
 
 #: ../raster/r.sun/main.c:284
 msgid "Output insolation time file (raster)"
-msgstr ""
+msgstr "输出的曝晒时间文件(栅格)"
 
 #: ../raster/r.sun/main.c:292
 msgid "Output diffuse irradiance/irradiation file (raster)"
-msgstr ""
+msgstr "输出的散射辐照度/辐射文件(栅格)"
 
 #: ../raster/r.sun/main.c:300
 msgid "Output reflected irradiance/irradiation file (raster)"
-msgstr ""
+msgstr "输出的反射辐照度/辐射文件(栅格)"
 
 #: ../raster/r.sun/main.c:306
 msgid "No. of day of the year (1-365)"
-msgstr ""
+msgstr "一年中的某一天(1-365)"
 
 #: ../raster/r.sun/main.c:313
 msgid "Time step computing all-day radiation"
-msgstr ""
+msgstr "计算全天辐射的时间增量"
 
 #: ../raster/r.sun/main.c:320
 msgid "Required declination value (overriding the internal value)"
-msgstr ""
+msgstr "需要的偏差值(覆盖间隔值)"
 
 #: ../raster/r.sun/main.c:327
 msgid "Local (solar) time [decimal hours]"
-msgstr ""
+msgstr "本地(太阳)时间[十进制小时数]"
 
 #: ../raster/r.sun/main.c:334
 msgid "Sampling distance step coefficient (0.5-1.5)"
-msgstr ""
+msgstr "采样距离增量系数(0.5-1.5)"
 
 #: ../raster/r.sun/main.c:339
 msgid "Incorporate the shadowing effect of terrain"
-msgstr ""
+msgstr "结合地形的阴影效果"
 
 #: ../raster/r.topidx/main.c:43
 msgid "Creates topographic index, ln(a/tan(beta)), map from elevation map."
-msgstr ""
+msgstr "从高程地图创建地形索引ln(a/tan(beta))图。"
 
 #: ../raster/r.topidx/main.c:47
 msgid "Elevation map"
-msgstr ""
+msgstr "高程图"
 
 #: ../raster/r.topidx/main.c:54
 msgid "Topographic index ln(a/tanB) map"
-msgstr ""
+msgstr "地形索引ln(a/tanB)图"
 
 #: ../raster/r.topidx/main.c:61
 msgid "Output verbosely"
-msgstr ""
+msgstr "详细输出"
 
 #: ../raster/r.contour/main.c:71
 msgid "Produces a GRASS binary vector map of specified contours from GRASS raster map layer."
-msgstr ""
+msgstr "从GRASS栅格图层生成有特定等高线的GRASS矢量地图。"
 
 #: ../raster/r.contour/main.c:79
 #: ../raster/r.out.ascii/main.c:70
@@ -1310,176 +1310,176 @@ msgstr ""
 #: ../raster/r.out.mat/main.c:75
 #: ../raster/r.out.pov/main.c:116
 msgid "Name of an existing raster map"
-msgstr ""
+msgstr "已有栅格地图的名称"
 
 #: ../raster/r.contour/main.c:86
 msgid "Name of output vector file"
-msgstr ""
+msgstr "输出矢量文件的名称"
 
 #: ../raster/r.contour/main.c:93
 msgid "List of contour levels"
-msgstr ""
+msgstr "等高线级数的列表"
 
 #: ../raster/r.contour/main.c:99
 msgid "Minimum contour level"
-msgstr ""
+msgstr "最低等高线的级数"
 
 #: ../raster/r.contour/main.c:105
 msgid "Maximum contour level"
-msgstr ""
+msgstr "最高等高线的级数"
 
 #: ../raster/r.contour/main.c:111
 msgid "Increment between contour levels"
-msgstr ""
+msgstr "等高线级数间的增量"
 
 #: ../raster/r.contour/main.c:118
 msgid "Minimum number of points for a contour line (0 -> no limit)"
-msgstr ""
+msgstr "一条等高线应有的最少点数(0为无限制)"
 
 #: ../raster/r.contour/main.c:122
 msgid "Suppress progress report & min/max information"
-msgstr ""
+msgstr "禁止过程报告和最小值/最大值信息"
 
 #: ../raster/r.contour/main.c:126
 msgid "Suppress single crossing error messages"
-msgstr ""
+msgstr "禁止单交叉的错误消息"
 
 #: ../raster/r.water.outlet/main.c:33
 msgid "Watershed basin creation program."
-msgstr ""
+msgstr "流域创建程序。"
 
 #: ../raster/r.water.outlet/main.c:40
 #: ../raster/r.surf.idw2/main.c:49
 msgid "Name of input raster map"
-msgstr ""
+msgstr "输入栅格图的名称"
 
 #: ../raster/r.water.outlet/main.c:47
 #: ../raster/r.cost/main.c:115
 #: ../raster/r.composite/main.c:126
 msgid "Name of raster map to contain results"
-msgstr ""
+msgstr "包含结果的栅格图的名称"
 
 #: ../raster/r.water.outlet/main.c:55
 msgid "The map E  grid coordinates"
-msgstr ""
+msgstr "地图东向格网坐标"
 
 #: ../raster/r.water.outlet/main.c:63
 msgid "The map N grid coordinates"
-msgstr ""
+msgstr "地图北向格网坐标"
 
 #: ../raster/r.reclass/main.c:30
 msgid "Creates a new map layer whose category values are based upon the user's reclassification of categories in an existing raster map layer."
-msgstr ""
+msgstr "创建一个新的图层，它的类别值基于用户对一个已有栅格图层类别的重分类。"
 
 #: ../raster/r.reclass/main.c:39
 msgid "Raster map to be reclassified"
-msgstr ""
+msgstr "被重分类的栅格图"
 
 #: ../raster/r.rescale/main.c:35
 msgid "Rescales the range of category values in a raster map layer."
-msgstr ""
+msgstr "重新调整栅格图层的类别值范围。"
 
 #: ../raster/r.rescale/main.c:45
 #: ../raster/r.rescale.eq/main.c:46
 msgid "The name of the raster map to be rescaled"
-msgstr ""
+msgstr "将要调整的栅格地图的名称"
 
 #: ../raster/r.rescale/main.c:52
 #: ../raster/r.rescale.eq/main.c:53
 msgid "The input data range to be rescaled (default: full range of input map)"
-msgstr ""
+msgstr "将要调整的输入数据的范围(默认值：输入地图的全范围)"
 
 #: ../raster/r.rescale/main.c:59
 #: ../raster/r.rescale.eq/main.c:60
 msgid "The resulting raster map name"
-msgstr ""
+msgstr "结果栅格图的名称"
 
 #: ../raster/r.rescale/main.c:66
 #: ../raster/r.rescale.eq/main.c:67
 msgid "The output data range"
-msgstr ""
+msgstr "输出数据的范围"
 
 #: ../raster/r.rescale/main.c:73
 #: ../raster/r.rescale.eq/main.c:74
 msgid "Title for new raster map"
-msgstr ""
+msgstr "新的栅格图的标题"
 
 #: ../raster/r.rescale/main.c:77
 #: ../raster/r.colors/main.c:173
 msgid "Quietly"
-msgstr ""
+msgstr "安静模式"
 
 #: ../raster/r.bilinear/main.c:29
 msgid "Bilinear interpolation utility for raster map layers."
-msgstr ""
+msgstr "栅格图层的双线性内插工具。"
 
 #: ../raster/r.bilinear/main.c:36
 msgid "Name of existing raster file."
-msgstr ""
+msgstr "已有栅格文件的名称"
 
 #: ../raster/r.bilinear/main.c:43
 msgid "Name of new raster file."
-msgstr ""
+msgstr "新的栅格文件的名称"
 
 #: ../raster/r.bilinear/main.c:48
 #: ../raster/r.bilinear/main.c:54
 msgid "specific input value to be assigned to the north and/or south poles for longitude-latitude grids"
-msgstr ""
+msgstr "为经纬度格网的南北极点赋予特殊的值"
 
 #: ../raster/r.transect/main.c:34
 msgid "Outputs raster map layer values lying along user defined transect line(s)."
-msgstr ""
+msgstr "依据用户定义的横断线，输出栅格图层上的值"
 
 #: ../raster/r.transect/main.c:40
 msgid "Raster map to be queried"
-msgstr ""
+msgstr "将要查询的栅格地图"
 
 #: ../raster/r.transect/main.c:58
 msgid "Transect definition"
-msgstr ""
+msgstr "横断线的定义"
 
 #: ../raster/r.transect/main.c:67
 #: ../raster/r.what/main.c:90
 msgid "Char string to represent no data cell"
-msgstr ""
+msgstr "代表无数据像元的字符串"
 
 #: ../raster/r.surf.idw/main.c:51
 msgid "Surface interpolation utility for raster map layers."
-msgstr ""
+msgstr "栅格图层的表面插值工具。"
 
 #: ../raster/r.surf.idw/main.c:57
 #: ../raster/r.proj/main.c:144
 msgid "Input raster map"
-msgstr ""
+msgstr "输入的栅格图"
 
 #: ../raster/r.surf.idw/main.c:64
 #: ../raster/r.proj/main.c:168
 msgid "Output raster map"
-msgstr ""
+msgstr "输出的栅格图"
 
 #: ../raster/r.surf.idw/main.c:71
 #: ../raster/r.surf.idw2/main.c:64
 msgid "Number of interpolation points"
-msgstr ""
+msgstr "插值点的数量"
 
 #: ../raster/r.surf.idw/main.c:76
 msgid "Output is the interpolation error"
-msgstr ""
+msgstr "输出的是内插误差"
 
 #: ../raster/r.in.ascii/main.c:48
 msgid "Convert an ASCII raster text file into a (binary) raster map layer."
-msgstr ""
+msgstr "将ASCII栅格文本文件转化为(二元)栅格图层。"
 
 #: ../raster/r.in.ascii/main.c:54
 msgid "Ascii raster file to be imported"
-msgstr ""
+msgstr "导入的ASCII栅格文件"
 
 #: ../raster/r.in.ascii/main.c:61
 #: ../raster/r.in.gdal/main.c:87
 #: ../raster/r.in.arc/main.c:55
 #: ../raster/r.in.bin/main.c:145
 msgid "Name for resultant raster map"
-msgstr ""
+msgstr "结果栅格图的名称"
 
 #: ../raster/r.in.ascii/main.c:69
 #: ../raster/r.in.gdal/main.c:107
@@ -1487,707 +1487,712 @@ msgstr ""
 #: ../raster/r.in.arc/main.c:71
 #: ../raster/r.in.bin/main.c:153
 msgid "Title for resultant raster map"
-msgstr ""
+msgstr "结果栅格图的标题"
 
 #: ../raster/r.in.ascii/main.c:76
 #: ../raster/r.in.arc/main.c:78
 msgid "Multiplier for ascii data"
-msgstr ""
+msgstr "ASCII数据的乘数"
 
 #: ../raster/r.in.ascii/main.c:84
 msgid "String representing NULL value data cell"
-msgstr ""
+msgstr "代表空值像元的字符串"
 
 #: ../raster/r.in.ascii/main.c:89
 msgid "integer values are imported"
-msgstr ""
+msgstr "导入的整数值"
 
 #: ../raster/r.in.ascii/main.c:94
 msgid "floating point values are imported"
-msgstr ""
+msgstr "导入的浮点值"
 
 #: ../raster/r.in.ascii/main.c:99
 msgid "double floating point values are imported"
-msgstr ""
+msgstr "导入的双精度浮点值"
 
 #: ../raster/r.in.ascii/main.c:105
 msgid "SURFER (Golden Software) ascii grid file will be imported"
-msgstr ""
+msgstr "将要导入的SURFER (Golden Software) ASCII grid 文件"
 
 #: ../raster/r.surf.area/main.c:89
 msgid "Surface area estimation for rasters."
-msgstr ""
+msgstr "栅格的表面区域评价"
 
 #: ../raster/r.surf.area/main.c:97
 msgid "Raster file for surface"
-msgstr ""
+msgstr "栅格表面文件"
 
 #: ../raster/r.surf.area/main.c:104
 msgid "Vertical scale"
-msgstr ""
+msgstr "垂直比例"
 
 #: ../raster/r.surf.idw2/main.c:43
 msgid "Surface generation program."
-msgstr ""
+msgstr "表面生成程序。"
 
 #: ../raster/r.surf.idw2/main.c:56
 msgid "Name of output raster map"
-msgstr ""
+msgstr "输出栅格图的名称"
 
 #: ../raster/r.clump/main.c:33
 msgid "Recategorizes data in a raster map layer by grouping cells that form physically discrete areas into unique categories."
-msgstr ""
+msgstr "将离散区域的像元值组织到一个独立类别中，以此来重分类栅格图层中的数据。"
 
 #: ../raster/r.clump/main.c:41
 msgid "Input layer name"
-msgstr ""
+msgstr "输入图层的名称"
 
 #: ../raster/r.clump/main.c:49
 msgid "Output layer name"
-msgstr ""
+msgstr "输出图层的名称"
 
 #: ../raster/r.clump/main.c:56
 msgid "Title, in quotes"
-msgstr ""
+msgstr "标题，使用引号"
 
 #: ../raster/r.covar/main.c:36
 msgid "Outputs a covariance/correlation matrix for user-specified raster map layer(s)."
-msgstr ""
+msgstr "输出用户指定栅格图层的协方差/相关矩阵。"
 
 #: ../raster/r.covar/main.c:45
 msgid "Raster map(s) to be read"
-msgstr ""
+msgstr "需要读取的栅格图"
 
 #: ../raster/r.covar/main.c:49
 msgid "Print correlation matrix"
-msgstr ""
+msgstr "打印相关矩阵"
 
 #: ../raster/r.cross/main.c:45
 msgid "Creates a cross product of the category values from multiple raster map layers."
-msgstr ""
+msgstr "创建多个栅格图层类别值的叉乘。"
 
 #: ../raster/r.cross/main.c:55
 #, c-format
 msgid "Names of 2-%d input raster maps"
-msgstr ""
+msgstr "2-%d 输入栅格地图的名称"
 
 #: ../raster/r.cross/main.c:61
 msgid "Name of the resulting map"
-msgstr ""
+msgstr "结果地图的名称"
 
 #: ../raster/r.cross/main.c:72
 msgid "Non-zero data only"
-msgstr ""
+msgstr "只保留非零数据"
 
 #: ../raster/r.digit/main.c:25
 msgid "Interactive tool used to draw and save vector features on a graphics monitor using a pointing device (mouse)."
-msgstr ""
+msgstr "交互式工具，使用定点设备(鼠标)在图形监视器上绘制矢量要素并存储下来。"
 
 #: ../raster/r.drain/main.c:94
 msgid "Traces a flow through an elevation model on a raster map layer."
-msgstr ""
+msgstr "通过高程模型在栅格图层上追踪河流"
 
 #: ../raster/r.drain/main.c:101
 #: ../raster/r.fill.dir/main.c:94
 msgid "Name of existing raster map containing elevation surface"
-msgstr ""
+msgstr "已有的包含高程表面的栅格图的名称"
 
 #: ../raster/r.drain/main.c:108
 msgid "Output drain raster map"
-msgstr ""
+msgstr "输出的流域栅格图"
 
 #: ../raster/r.drain/main.c:116
 msgid "The map E and N grid coordinates of a starting point"
-msgstr ""
+msgstr "起点的地图格网坐标"
 
 #: ../raster/r.drain/main.c:120
 msgid "Copy input cell values on output"
-msgstr ""
+msgstr "将输入像元值拷贝到输出中"
 
 #: ../raster/r.drain/main.c:124
 msgid "Accumulate input values along the path"
-msgstr ""
+msgstr "沿着路径累计输入值"
 
 #: ../raster/r.drain/main.c:128
 msgid "Count cell numbers along the path"
-msgstr ""
+msgstr "沿着路径计算像元数"
 
 #: ../raster/r.out.gridatb/main.c:48
 msgid "Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)"
-msgstr ""
+msgstr "将GRASS栅格地图导出为GRIDATB.FOR地图文件(TOPMODEL)"
 
 #: ../raster/r.out.gridatb/main.c:52
 msgid "Input map"
-msgstr ""
+msgstr "输入地图"
 
 #: ../raster/r.out.gridatb/main.c:59
 #: ../raster/r.in.gridatb/main.c:49
 msgid "GRIDATB i/o map file"
-msgstr ""
+msgstr "GRIDATB i/o 地图文件"
 
 #: ../raster/r.out.gridatb/main.c:65
 msgid "Overwrite output map file"
-msgstr ""
+msgstr "覆盖已有的输出地图文件"
 
 #: ../raster/r.grow2/main.c:116
 msgid "Generates a raster map layerwith contiguous areas grown by one cell."
-msgstr ""
+msgstr "生成一个栅格图层包含一个像元增长所形成的连续区域。"
 
 #: ../raster/r.grow2/main.c:124
 msgid "Name of existing input raster file"
-msgstr ""
+msgstr "已有输入栅格文件大的名称"
 
 #: ../raster/r.grow2/main.c:131
 #: ../raster/r.thin/main.c:49
 msgid "Name of output raster file"
-msgstr ""
+msgstr "输出栅格文件的名称"
 
 #: ../raster/r.grow2/main.c:137
 msgid "Radius of buffer"
-msgstr ""
+msgstr "缓冲区半径"
 
 #: ../raster/r.grow2/main.c:144
 msgid "Metric"
-msgstr ""
+msgstr "量度"
 
 #: ../raster/r.grow2/main.c:152
 msgid "Value to write for input cells which are non-NULL (-1 => NULL)"
-msgstr ""
+msgstr "非空输入像元的写入值(-1 => NULL)"
 
 #: ../raster/r.grow2/main.c:158
 msgid "Value to write for \"grown\" cells"
-msgstr ""
+msgstr "增长像元的写入值"
 
 #: ../raster/r.kappa/main.c:28
 msgid "Calculate error matrix and kappa parameter for accuracy assessment of classification result."
-msgstr ""
+msgstr "为分类结果的精确评估计算错误矩阵和K曲线参数。"
 
 #: ../raster/r.kappa/main.c:36
 msgid "File name of classification result"
-msgstr ""
+msgstr "分类结果的文件名称"
 
 #: ../raster/r.kappa/main.c:42
 msgid "File name of reference classes"
-msgstr ""
+msgstr "基准分类的文件名称"
 
 #: ../raster/r.kappa/main.c:48
 msgid "Name of an output file containing of error matrix and kappa"
-msgstr ""
+msgstr "包含错误矩阵和K曲线的输出文件的名称"
 
 #: ../raster/r.kappa/main.c:54
 msgid "Title for error matrix and kappa"
-msgstr ""
+msgstr "错误矩阵和K曲线的标题"
 
 #: ../raster/r.kappa/main.c:59
 msgid "wide report, 132 columns (default: 80)"
-msgstr ""
+msgstr "宽幅报告，132列(默认值：80)"
 
 #: ../raster/r.kappa/main.c:63
 msgid "quiet"
-msgstr ""
+msgstr "安静模式"
 
 #: ../raster/r.kappa/main.c:67
 msgid "no header in the report"
-msgstr ""
+msgstr "在报告中不包含头信息"
 
 #: ../raster/r.patch/main.c:39
 msgid "Creates a composite raster map layer by using known category values from one (or more) map layer(s) to fill in areas of \"no data\" in another map layer."
-msgstr ""
+msgstr "使用一个（或多个）图层已知的类别值来填充另一个图层的无数据区域，生成一幅合成栅格图层。"
 
 #: ../raster/r.patch/main.c:51
 msgid "Name of raster maps to be patched together"
-msgstr ""
+msgstr "补丁栅格地图的名称"
 
 #: ../raster/r.patch/main.c:58
 msgid "Name of the result map"
-msgstr ""
+msgstr "结果图的名称"
 
 #: ../raster/r.patch/main.c:68
 msgid "Use zero (0) for transparency instead of NULL"
-msgstr ""
+msgstr "透明使用零值而不是空值"
 
 #: ../raster/r.quant/main.c:26
 msgid "This routine produces the quantization file for a floating-point map."
-msgstr ""
+msgstr "这一过程产生浮点地图的量化文件。"
 
 #: ../raster/r.quant/main.c:34
 msgid "Base map to take quant rules from"
-msgstr ""
+msgstr "获取量化规则的基础地图"
 
 #: ../raster/r.quant/main.c:42
 msgid "Raster map(s) to be quantized"
-msgstr ""
+msgstr "需要量化的栅格地图"
 
 #: ../raster/r.quant/main.c:47
 msgid "Floating point range: dmin,dmax"
-msgstr ""
+msgstr "浮点数范围：dmin,dmax"
 
 #: ../raster/r.quant/main.c:55
 msgid "Integer range: min,max"
-msgstr ""
+msgstr "整数范围：min,max"
 
 #: ../raster/r.quant/main.c:62
 msgid "Truncate floating point data"
-msgstr ""
+msgstr "截取浮点数"
 
 #: ../raster/r.quant/main.c:66
 msgid "Round floating point data"
-msgstr ""
+msgstr "四舍五入"
 
 #: ../raster/r.stats/main.c:71
 msgid "Generates area statistics for raster map layers."
-msgstr ""
+msgstr "为栅格图层生成区域统计值。"
 
 #: ../raster/r.stats/main.c:81
 msgid "Raster input maps(s)"
-msgstr ""
+msgstr "输入栅格图"
 
 #: ../raster/r.stats/main.c:90
 #: ../raster/r.distance/parse.c:30
 msgid "Output field separator"
-msgstr ""
+msgstr "输出字段分隔符"
 
 #: ../raster/r.stats/main.c:98
 msgid "String representing no data cell value"
-msgstr ""
+msgstr "代表无数据像元值的字符串"
 
 #: ../raster/r.stats/main.c:105
 msgid "Output file name"
-msgstr ""
+msgstr "输出文件的名称"
 
 #: ../raster/r.stats/main.c:122
 msgid "One cell (range) per line"
-msgstr ""
+msgstr "每行一个像元"
 
 #: ../raster/r.stats/main.c:126
 msgid "Print averaged values instead of intervals"
-msgstr ""
+msgstr "打印平均值而不是间隔值"
 
 #: ../raster/r.stats/main.c:130
 msgid "Print area totals"
-msgstr ""
+msgstr "打印区域总面积"
 
 #: ../raster/r.stats/main.c:134
 msgid "Print cell counts"
-msgstr ""
+msgstr "打印像元数"
 
 #: ../raster/r.stats/main.c:138
 msgid "Print APPROXIMATE percents (total percent may not be 100%)"
-msgstr ""
+msgstr "打印近似百分比(总的百分比可能不是100%)"
 
 #: ../raster/r.stats/main.c:142
 msgid "Print category labels"
-msgstr ""
+msgstr "打印类别标签"
 
 #: ../raster/r.stats/main.c:150
 msgid "Suppress reporting of any NULLs"
-msgstr ""
+msgstr "禁止输出任何空值"
 
 #: ../raster/r.stats/main.c:154
 msgid "Suppress reporting of NULLs when all values are NULL"
-msgstr ""
+msgstr "当所有值都为空时，禁止输出空值"
 
 #: ../raster/r.stats/main.c:158
 msgid "Print grid coordinates (east and north)"
-msgstr ""
+msgstr "打印格网坐标(东和北)"
 
 #: ../raster/r.stats/main.c:162
 msgid "Print x and y (column and row)"
-msgstr ""
+msgstr "打印x和y(列和行)"
 
 #: ../raster/r.stats/main.c:170
 msgid "Print raw indexes of fp ranges (fp maps only)"
-msgstr ""
+msgstr "打印fp范围的原始索引(只应用于fp地图)"
 
 #: ../raster/r.stats/main.c:174
 msgid "Read fp map as integer (use map's quant rules)"
-msgstr ""
+msgstr "将fp地图作为整数读取(使用地图的量化规则)"
 
 #: ../raster/r.resample/main.c:35
 msgid "GRASS raster map layer data resampling capability."
-msgstr ""
+msgstr "GRASS栅格图层数据的重采样能力。"
 
 #: ../raster/r.resample/main.c:44
 msgid "Name of an input layer"
-msgstr ""
+msgstr "输入图层的名称"
 
 #: ../raster/r.resample/main.c:51
 msgid "Name of an output layer"
-msgstr ""
+msgstr "输出图层的名称"
 
 #: ../raster/r.surf.gauss/main.c:38
 msgid "GRASS module to produce a raster map layer of gaussian deviates whose mean and standard deviation can be expressed by the user. It uses a gaussian random number generator."
-msgstr ""
+msgstr "产生具有高斯偏差的栅格图层，它的平均和标准偏差可以由用户输入。该模块使用高斯随机数生成器。"
 
 #: ../raster/r.surf.gauss/main.c:54
 #: ../raster/r.surf.random/main.c:49
 msgid "Name of the random surface to be produced"
-msgstr ""
+msgstr "将要产生的随机表面的名称"
 
 #: ../raster/r.surf.gauss/main.c:59
 msgid "Distribution mean"
-msgstr ""
+msgstr "分布均值"
 
 #: ../raster/r.surf.gauss/main.c:64
 msgid "Standard deviation"
-msgstr ""
+msgstr "标准偏差"
 
 #: ../raster/r.statistics/main.c:43
 msgid "Category or object oriented statistics."
-msgstr ""
+msgstr "类别或面向对象的统计。"
 
 #: ../raster/r.statistics/main.c:72
 msgid "Method of object-based statistic"
-msgstr ""
+msgstr "基于对象统计的方法"
 
 #: ../raster/r.statistics/main.c:79
 msgid "Resultant raster map (not used with 'distribution')"
-msgstr ""
+msgstr "结果栅格图(不使用'distribution')"
 
 #: ../raster/r.statistics/main.c:84
 msgid "Cover values extracted from the category labels of the cover map"
-msgstr ""
+msgstr "叠加值从叠加地图的类别标签中提取"
 
 #: ../raster/r.neighbors/main.c:56
 msgid "Makes each cell category value a function of the category values assigned to the cells around it, and stores new cell values in an output raster map layer."
-msgstr ""
+msgstr "对一个像元周围的像元值进行函数计算，将得到的值赋予该像元，并将新的像元值存储在输出栅格图层中。"
 
 #: ../raster/r.neighbors/main.c:66
 msgid "Name of existing raster file"
-msgstr ""
+msgstr "已有栅格文件的名称"
 
 #: ../raster/r.neighbors/main.c:88
 msgid "Neighborhood operation"
-msgstr ""
+msgstr "邻近操作"
 
 #: ../raster/r.neighbors/main.c:95
 msgid "Neighborhood size"
-msgstr ""
+msgstr "邻域大小"
 
 #: ../raster/r.neighbors/main.c:102
 msgid "Title of the output raster file"
-msgstr ""
+msgstr "输出栅格文件的标题"
 
 #: ../raster/r.neighbors/main.c:106
 msgid "Do not align output with the input"
-msgstr ""
+msgstr "输出栅格不对齐到输入栅格"
 
 #: ../raster/r.mfilter/main.c:33
 msgid "Raster file matrix filter."
-msgstr ""
+msgstr "栅格文件的矩阵过滤器"
 
 #: ../raster/r.mfilter/main.c:43
 #: ../raster/r.resamp.rst/main.c:171
 msgid "Name of the input raster file"
-msgstr ""
+msgstr "输入栅格文件的名称"
 
 #: ../raster/r.mfilter/main.c:51
 msgid "Name of the output raster file"
-msgstr ""
+msgstr "输出栅格文件的名称"
 
 #: ../raster/r.mfilter/main.c:58
 msgid "Name of the filter file"
-msgstr ""
+msgstr "过滤器文件的名称"
 
 #: ../raster/r.mfilter/main.c:66
 msgid "Number of times to repeat the filter"
-msgstr ""
+msgstr "重复过滤的次数"
 
 #: ../raster/r.mfilter/main.c:73
 msgid "Output raster file title"
-msgstr ""
+msgstr "输出栅格文件的标题"
 
 #: ../raster/r.mfilter/main.c:89
 msgid "Apply filter only to zero data values"
-msgstr ""
+msgstr "只将过滤器应用于零数据值"
 
 #: ../raster/r.surf.fractal/interface.c:33
 msgid "GRASS module to create a fractal surface of a given fractal dimension. Uses spectral synthesis method. Can create intermediate layers showing the build up of different spectral coefficients (see Saupe, pp.106-107 for an example of this). Use this module to generate naturally looking synthetical elevation models (DEM)."
-msgstr ""
+msgstr "创建给定维数的不规则表面。使用谱综合方法。可以创建中间图层来显示不同光谱系数的构成。使用这一模块生成合成高程模型(DEM)。"
 
 #: ../raster/r.surf.fractal/interface.c:54
 msgid "Name of fractal surface raster layer"
-msgstr ""
+msgstr "不规则表面栅格图层的名称"
 
 #: ../raster/r.surf.fractal/interface.c:59
 msgid "Fractal dimension of surface (2 < D < 3)"
-msgstr ""
+msgstr "不规则表面的维数(2 < D < 3)"
 
 #: ../raster/r.surf.fractal/interface.c:65
 msgid "Number of intermediate images to produce"
-msgstr ""
+msgstr "产生的中间影像的数量"
 
 #: ../raster/r.texture/main.c:72
 msgid "Generate images with textural features from a raster map"
-msgstr ""
+msgstr "基于栅格图生成包含地形特征要素的影像"
 
 #: ../raster/r.texture/main.c:81
 msgid "Name of the input raster map"
-msgstr ""
+msgstr "输入栅格图的名称"
 
 #: ../raster/r.texture/main.c:88
 msgid "Name of the ouput raster map"
-msgstr ""
+msgstr "输出栅格图的名称"
 
 #: ../raster/r.texture/main.c:95
 msgid "The size of the sliding window (odd and >= 3)"
-msgstr ""
+msgstr "可变窗口的大小(奇数并且>=3)"
 
 #: ../raster/r.texture/main.c:104
 msgid "The distance between two samples (>= 1)"
-msgstr ""
+msgstr "两个样点之间的距离(>= 1)"
 
 #: ../raster/r.texture/main.c:110
 msgid "Normalized"
-msgstr ""
+msgstr "归一化"
 
 #: ../raster/r.texture/main.c:118
+#, fuzzy
 msgid "Angular Second Moment"
-msgstr ""
+msgstr "角秒"
 
 #: ../raster/r.texture/main.c:122
 msgid "Contrast"
-msgstr ""
+msgstr "对比"
 
 #: ../raster/r.texture/main.c:126
 msgid "Correlation"
-msgstr ""
+msgstr "相关性"
 
 #: ../raster/r.texture/main.c:130
 msgid "Variance"
-msgstr ""
+msgstr "变化"
 
 #: ../raster/r.texture/main.c:134
+#, fuzzy
 msgid "Inverse Diff Moment"
-msgstr ""
+msgstr "逆差分"
 
 #: ../raster/r.texture/main.c:138
 msgid "Sum Average"
-msgstr ""
+msgstr "平均值的总和"
 
 #: ../raster/r.texture/main.c:142
 msgid "Sum Variance"
-msgstr ""
+msgstr "变化的总和"
 
 #: ../raster/r.texture/main.c:146
 msgid "Sum Entropy"
-msgstr ""
+msgstr "熵的总和"
 
 #: ../raster/r.texture/main.c:150
 msgid "Entropy"
-msgstr ""
+msgstr "熵"
 
 #: ../raster/r.texture/main.c:154
 msgid "Difference Variance"
-msgstr ""
+msgstr "变化的差异"
 
 #: ../raster/r.texture/main.c:158
 msgid "Difference Entropy"
-msgstr ""
+msgstr "熵的差异"
 
 #: ../raster/r.texture/main.c:162
+#, fuzzy
 msgid "Measure of Correlation-1"
-msgstr ""
+msgstr "关联1的量度"
 
 #: ../raster/r.texture/main.c:167
+#, fuzzy
 msgid "Measure of Correlation-2"
-msgstr ""
+msgstr "关联2的量度"
 
 #: ../raster/r.texture/main.c:171
 msgid "Max Correlation Coeff"
-msgstr ""
+msgstr "最大关联系数"
 
 #: ../raster/r.distance/main.c:22
 msgid "Locates the closest points between objects in two raster maps."
-msgstr ""
+msgstr "确定两幅栅格图上目标间最近的点"
 
 #: ../raster/r.distance/parse.c:21
+#, fuzzy
 msgid "Maps for computing inter-class distances"
-msgstr ""
+msgstr "用来计算类间距离的地图"
 
 #: ../raster/r.distance/parse.c:34
 msgid "Include category labels in the output"
-msgstr ""
+msgstr "在输出中包含类别标签"
 
 #: ../raster/r.surf.random/main.c:34
 msgid "Produces a raster map layer of uniform random deviates whose range can be expressed by the user."
-msgstr ""
+msgstr "产生一个有一致随机偏离的栅格图层，随机偏离的范围能够由用户输入。"
 
 #: ../raster/r.surf.random/main.c:54
 msgid "Minimum random value"
-msgstr ""
+msgstr "最小随机值"
 
 #: ../raster/r.surf.random/main.c:59
 msgid "Maximum random value"
-msgstr ""
+msgstr "最大随机值"
 
 #: ../raster/r.out.ascii/main.c:61
 msgid "Converts a raster map layer into an ASCII text file."
-msgstr ""
+msgstr "将栅格图层转化为ASCII文本文件。"
 
 #: ../raster/r.out.ascii/main.c:77
 msgid "Name of an output ASCII grid map (use out=- for stdout)"
-msgstr ""
+msgstr "输出的ASCII GRID地图的名称(out=-用于标准输出)"
 
 #: ../raster/r.out.ascii/main.c:83
 msgid "Number of significant digits (floating point only)"
-msgstr ""
+msgstr "有意义数字的位数(只用于浮点型)"
 
 #: ../raster/r.out.ascii/main.c:89
 msgid "Number of values printed before wrapping a line (only SURFER or MODFLOW format)"
-msgstr ""
+msgstr "每行输出的值的数目(只用于SURFER或MODFLOW格式)"
 
 #: ../raster/r.out.ascii/main.c:96
 msgid "String to represent null cell (GRASS grid only)"
-msgstr ""
+msgstr "表示空值的字符串(只用于GRASS GRID)"
 
 #: ../raster/r.out.ascii/main.c:100
 #: ../raster/r.out.arc/main.c:86
 msgid "Suppress printing of header information"
-msgstr ""
+msgstr "禁止打印头信息"
 
 #: ../raster/r.out.ascii/main.c:104
 msgid "Write SURFER (Golden Software) ASCII grid"
-msgstr ""
+msgstr "输出为SURFER (Golden Software) ASCII grid"
 
 #: ../raster/r.out.ascii/main.c:108
 msgid "Write MODFLOW (USGS) ASCII array"
-msgstr ""
+msgstr "输出为MODFLOW (USGS) ASCII array"
 
 #: ../raster/r.out.ascii/main.c:112
 msgid "Force output of integer values"
-msgstr ""
+msgstr "强制输出整型值"
 
 #: ../raster/r.to.vect/main.c:28
 msgid "Converts a raster map into a vector map layer."
-msgstr ""
+msgstr "将栅格图转化为矢量图层。"
 
 #: ../raster/r.to.vect/main.c:36
 msgid "raster input file"
-msgstr ""
+msgstr "栅格输入文件"
 
 #: ../raster/r.to.vect/main.c:47
 msgid "Feature type"
-msgstr ""
+msgstr "要素类型"
 
 #: ../raster/r.to.vect/main.c:51
 msgid "Smooth Corners"
-msgstr ""
+msgstr "平滑转角"
 
 #: ../raster/r.to.vect/main.c:55
 msgid "Use raster values as categories instead of unique sequence (CELL only)"
-msgstr ""
+msgstr "使用栅格值作为类别，而不使用独立值(只对栅格单元)"
 
 #: ../raster/r.sunmask/main.c:109
 msgid "Calculates cast shadow areas from sun position and DEM. Either A: exact sun position is specified, or B: date/time to calculate the sun position by r.sunmask itself."
-msgstr ""
+msgstr "通过太阳位置和DEM计算阴影区域。有两个选择，A指定准确的太阳位置；B指定日期/时间让r.sunmask自己计算太阳的位置。"
 
 #: ../raster/r.sunmask/main.c:119
 msgid "Name of elevation raster map"
-msgstr ""
+msgstr "高程栅格图的名称"
 
 #: ../raster/r.sunmask/main.c:127
 msgid "Output raster map having shadows"
-msgstr ""
+msgstr "输出的包含阴影的栅格图"
 
 #: ../raster/r.sunmask/main.c:134
 msgid "A: altitude of the sun above horizon, degrees"
-msgstr ""
+msgstr "A：太阳高度，单位：度"
 
 #: ../raster/r.sunmask/main.c:141
 msgid "A: azimuth of the sun from the north, degrees"
-msgstr ""
+msgstr "A：太阳方位角(从北计算)，单位：度"
 
 #: ../raster/r.sunmask/main.c:147
 msgid "B: year (1950..2050)"
-msgstr ""
+msgstr "B：年(1950..2050)"
 
 #: ../raster/r.sunmask/main.c:153
 msgid "B: month (0..12)"
-msgstr ""
+msgstr "B：月(0..12)"
 
 #: ../raster/r.sunmask/main.c:159
 msgid "B: day (0..31)"
-msgstr ""
+msgstr "B：日(0..31)"
 
 #: ../raster/r.sunmask/main.c:165
 msgid "B: hour (0..24)"
-msgstr ""
+msgstr "B：小时(0..24)"
 
 #: ../raster/r.sunmask/main.c:171
 msgid "B: minutes (0..60)"
-msgstr ""
+msgstr "B：分钟(0..60)"
 
 #: ../raster/r.sunmask/main.c:177
 msgid "B: seconds (0..60)"
-msgstr ""
+msgstr "B：秒(0..60)"
 
 #: ../raster/r.sunmask/main.c:183
 msgid "B: timezone (east positive, offset from GMT, also use to adjust daylight savings)"
-msgstr ""
+msgstr "B：时区(从GMT计算偏移量，东为正，用来调整时差)"
 
 #: ../raster/r.sunmask/main.c:190
 msgid "east coordinate (point of interest, default: map center)"
-msgstr ""
+msgstr "东向坐标(感兴趣的点，默认值：地图中心点map center)"
 
 #: ../raster/r.sunmask/main.c:197
 msgid "north coordinate (point of interest, default: map center)"
-msgstr ""
+msgstr "北向坐标(感兴趣的点，默认值：地图中心点)"
 
 #: ../raster/r.sunmask/main.c:201
 msgid "Zero is a real elevation"
-msgstr ""
+msgstr "零是一个实际高程值"
 
 #: ../raster/r.sunmask/main.c:205
 msgid "verbose output (also print out sun position etc.)"
-msgstr ""
+msgstr "详细模式输出(一并输出太阳位置等信息)"
 
 #: ../raster/r.sunmask/main.c:209
 msgid "calculate sun position only and exit"
-msgstr ""
+msgstr "只计算太阳位置并退出"
 
 #: ../raster/r.sunmask/main.c:213
 msgid "Print the sun position output in shell script style"
-msgstr ""
+msgstr "以shell脚本样式输出太阳位置"
 
 #: ../raster/r.sunmask/main.c:225
 msgid "Using map center coordinates\n"
-msgstr ""
+msgstr "使用地图中心点坐标\n"
 
 #: ../raster/r.sunmask/main.c:234
 msgid "Empty east coordinate specified!"
-msgstr ""
+msgstr "清空指定的东向坐标！"
 
 #: ../raster/r.sunmask/main.c:236
 msgid "Empty north coordinate specified!"
-msgstr ""
+msgstr "清空指定的北向坐标！"
 
 #: ../raster/r.sunmask/main.c:255
 msgid "Either define sun position or location/date/time parameters."
-msgstr ""
+msgstr "定义太阳位置或指定区域/日期/时间参数。"
 
 #: ../raster/r.sunmask/main.c:258
 msgid "Neither sun position nor east/north, date/time/timezone definition are complete."
-msgstr ""
+msgstr "既没有定义太阳位置，又没有定义东向/北向坐标、日期/时间/时区。"
 
 #: ../raster/r.sunmask/main.c:263
 #, c-format
 msgid "Calculating sun position... (using solpos (V. %s) from NREL)\n"
-msgstr ""
+msgstr "计算太阳位置... (using solpos (V. %s) from NREL)\n"
 
 #: ../raster/r.sunmask/main.c:268
 msgid "Using user defined sun azimuth, altitude settings (ignoring eventual other values)\n"
-msgstr ""
+msgstr "使用用户定义的太阳方位角和高度(忽略其它值)\n"
 
 #: ../raster/r.sunmask/main.c:338
 #, c-format
 msgid " %d.%02d.%02d, daynum %d, time: %02i:%02i:%02i (decimal time: %f)\n"
-msgstr ""
+msgstr " %d.%02d.%02d, 天数 %d， 时间： %02i:%02i:%02i (十进制时间： %f)\n"
 
 #: ../raster/r.sunmask/main.c:342
 #, c-format
 msgid " long: %f, lat: %f, timezone: %f\n"
-msgstr ""
+msgstr " 经度： %f， 纬度： %f， 时区： %f\n"
 
 #: ../raster/r.sunmask/main.c:343
 #, c-format
@@ -2195,792 +2200,805 @@ msgid ""
 " Solar position: sun azimuth: %f,\n"
 "   sun angle above horz.(refraction corrected): %f\n"
 msgstr ""
+" 太阳的位置： 太阳方位角： %f，\n"
+"   太阳高度角(折射纠正过的)： %f\n"
 
 #: ../raster/r.sunmask/main.c:347
 #, c-format
 msgid " Sunrise time (without refraction): %02d:%02d:%02d\n"
-msgstr ""
+msgstr " 日出时间(未经过折射)： %02d:%02d:%02d\n"
 
 #: ../raster/r.sunmask/main.c:348
 #, c-format
 msgid " Sunset time  (without refraction): %02d:%02d:%02d\n"
-msgstr ""
+msgstr " 日落时间(未经过折射)： %02d:%02d:%02d\n"
 
 #: ../raster/r.sunmask/main.c:357
 msgid "Please correct settings."
-msgstr ""
+msgstr "请改正设置。"
 
 #: ../raster/r.sunmask/main.c:374
 #, c-format
 msgid "Time (%02i:%02i:%02i) is before sunrise (%02d:%02d:%02d)!\n"
-msgstr ""
+msgstr "时间(%02i:%02i:%02i)在日出(%02d:%02d:%02d)之前！\n"
 
 #: ../raster/r.sunmask/main.c:377
 #, c-format
 msgid "Time (%02i:%02i:%02i) is before sunrise!\n"
-msgstr ""
+msgstr "时间(%02i:%02i:%02i)在日出前！\n"
 
 #: ../raster/r.sunmask/main.c:379
 #: ../raster/r.sunmask/main.c:388
 msgid "Nothing to calculate. Please verify settings."
-msgstr ""
+msgstr "无法计算。请检查设置。"
 
 #: ../raster/r.sunmask/main.c:384
 #, c-format
 msgid "Time (%02i:%02i:%02i) is after sunset (%02d:%02d:%02d)!\n"
-msgstr ""
+msgstr "时间(%02i:%02i:%02i)在日落(%02d:%02d:%02d)之后！\n"
 
 #: ../raster/r.sunmask/main.c:387
 #, c-format
 msgid "Time (%02i:%02i:%02i) is after sunset!\n"
-msgstr ""
+msgstr "时间(%02i:%02i:%02i)在日落之后！\n"
 
 #: ../raster/r.sunmask/main.c:394
 msgid "No map calculation requested. Finished.\n"
-msgstr ""
+msgstr "没有地图需要计算。完成。\n"
 
 #: ../raster/r.sunmask/main.c:401
 msgid "You already know the sun position.\n"
-msgstr ""
+msgstr "您已经知道了太阳的位置。\n"
 
 #: ../raster/r.sunmask/main.c:409
 #: ../raster/r.sunmask/main.c:411
 #, c-format
 msgid "can't open %s"
-msgstr ""
+msgstr "无法打开%s"
 
 #: ../raster/r.sunmask/main.c:421
 #, c-format
 msgid "can't open range file for %s"
-msgstr ""
+msgstr "无法打开%s的范围文件"
 
 #: ../raster/r.sunmask/main.c:438
 msgid "Calculating shadows from DEM..."
-msgstr ""
+msgstr "通过DEM计算阴影..."
 
 #: ../raster/r.sunmask/main.c:446
 msgid "can't read row in input elevation map"
-msgstr ""
+msgstr "无法读取输入的高程图"
 
 #: ../raster/r.sunmask/main.c:511
 msgid "Finished.\n"
-msgstr ""
+msgstr "完成。\n"
 
 #: ../raster/r.cats/main.c:30
 msgid "Prints category values and labels associated with user-specified raster map layers."
-msgstr ""
+msgstr "打印用户指定的栅格图层的类别值和标签"
 
 #: ../raster/r.cats/main.c:38
 msgid "Name of a raster map"
-msgstr ""
+msgstr "栅格图的名称"
 
 #: ../raster/r.cats/main.c:46
 msgid "Comma separated value list: e.g. 1.4,3.8,13"
-msgstr ""
+msgstr "以逗号分隔值的列表：如1.4,3.8,13"
 
 #: ../raster/r.cats/main.c:54
 msgid "Category list: e.g. 1,3-8,13"
-msgstr ""
+msgstr "类别列表：如 1,3-8,13"
 
 #: ../raster/r.cats/main.c:61
 msgid "Output separator character (default: tab)"
-msgstr ""
+msgstr "输出分隔符(默认：tab)"
 
 #: ../raster/r.cost/main.c:98
 msgid "Outputs a raster map layer showing the cumulative cost of moving between different geographic locations on an input raster map layer whose cell category values represent cost."
-msgstr ""
+msgstr "输出一个栅格图层来显示在输入栅格图上不同位置间移动时的累计成本，输入栅格图的像元类别值表示成本。"
 
 #: ../raster/r.cost/main.c:108
 msgid "Name of raster map containing grid cell cost information"
-msgstr ""
+msgstr "包含成本信息的栅格图的名称"
 
 #: ../raster/r.cost/main.c:122
 msgid "Starting points vector map"
-msgstr ""
+msgstr "起始点矢量图"
 
 #: ../raster/r.cost/main.c:129
 msgid "Stop points vector map"
-msgstr ""
+msgstr "终止点矢量图"
 
 #: ../raster/r.cost/main.c:136
 msgid "Starting points raster file"
-msgstr ""
+msgstr "起始点栅格文件"
 
 #: ../raster/r.cost/main.c:143
 msgid "The map E and N grid coordinates of a starting point (E,N)"
-msgstr ""
+msgstr "起始点坐标(E,N)"
 
 #: ../raster/r.cost/main.c:150
 msgid "The map E and N grid coordinates of a stopping point (E,N)"
-msgstr ""
+msgstr "终止点坐标(E,N)"
 
 #: ../raster/r.cost/main.c:159
 msgid "An optional maximum cumulative cost"
-msgstr ""
+msgstr "任意的最大累计成本值"
 
 #: ../raster/r.cost/main.c:167
 msgid "Cost assigned to null cells. By default, null cells are excluded"
-msgstr ""
+msgstr "赋予空值像元的成本。默认情况下，空值像元是被排除的。"
 
 #: ../raster/r.cost/main.c:176
 msgid "Percent of map to keep in memory"
-msgstr ""
+msgstr "载入内存的地图的百分比"
 
 #: ../raster/r.cost/main.c:180
 #: ../raster/wildfire/r.ros/main.c:297
 msgid "Run verbosely"
-msgstr ""
+msgstr "以详细模式运行"
 
 #: ../raster/r.cost/main.c:184
 msgid "Use the 'Knight's move'; slower, but more accurate"
-msgstr ""
+msgstr "使用'Knight's move'；速度慢，但更精确"
 
 #: ../raster/r.cost/main.c:188
 msgid "Keep null values in output map"
-msgstr ""
+msgstr "在输出地图上保留空值"
 
 #: ../raster/r.cost/main.c:192
 msgid "Start with values in raster map"
-msgstr ""
+msgstr "栅格图上的起始值"
 
 #: ../raster/r.info/main.c:48
 msgid "Outputs basic information about a user-specified raster map layer."
-msgstr ""
+msgstr "输出用户指定的栅格图的基本信息"
 
 #: ../raster/r.info/main.c:60
 msgid "Print range only"
-msgstr ""
+msgstr "只打印范围"
 
 #: ../raster/r.info/main.c:64
 msgid "Print resolution (NS-res, EW-res) only"
-msgstr ""
+msgstr "只打印分辨率(南北向分辨率,东西向分辨率)"
 
 #: ../raster/r.info/main.c:68
 msgid "Print raster map type only"
-msgstr ""
+msgstr "只打印栅格图的类型"
 
 #: ../raster/r.mode/main.c:27
 msgid "Finds the mode of values in a cover map within areas assigned the same category value in a user-specified base map."
-msgstr ""
+msgstr "以基础图中具有相同类别值的区域为界，在叠加图上找到值的模式。"
 
 #: ../raster/r.mode/main.c:33
 msgid "Base map to be reclassified"
-msgstr ""
+msgstr "被重新分类的基础图"
 
 #: ../raster/r.mode/main.c:40
 msgid "Coverage map"
-msgstr ""
+msgstr "叠加图"
 
 #: ../raster/r.mode/main.c:47
 #: ../raster/r.in.gridatb/main.c:55
 msgid "Output map"
-msgstr ""
+msgstr "输出图"
 
 #: ../raster/r.proj/main.c:138
 msgid "Re-project a raster map from one location to the current location."
-msgstr ""
+msgstr "将栅格图从一个区域重投影到当前区域"
 
 #: ../raster/r.proj/main.c:150
 msgid "Location of input map"
-msgstr ""
+msgstr "输入地图的区域"
 
 #: ../raster/r.proj/main.c:156
 msgid "Mapset of input map"
-msgstr ""
+msgstr "输入地图的地图集"
 
 #: ../raster/r.proj/main.c:162
 msgid "Path to GRASS database of input location"
-msgstr ""
+msgstr "输入区域的GRASS数据库路径"
 
 #: ../raster/r.proj/main.c:178
 msgid "Interpolation method to use"
-msgstr ""
+msgstr "使用的插值方法"
 
 #: ../raster/r.proj/main.c:184
 msgid "Resolution of output map"
-msgstr ""
+msgstr "输出地图的分辨率"
 
 #: ../raster/r.proj/main.c:188
 msgid "List raster files in input location and exit"
-msgstr ""
+msgstr "列出输入区域内的栅格文件并退出"
 
 #: ../raster/r.proj/main.c:192
 msgid "Do not perform region cropping optimization"
-msgstr ""
+msgstr "不执行区域的裁切优化"
 
 #: ../raster/r.thin/main.c:34
 msgid "Thins non-zero cells that denote linear features in a raster map layer."
-msgstr ""
+msgstr "抽稀栅格图层上表示线形要素的非零像元"
 
 #: ../raster/r.what/main.c:67
 msgid "Queries raster map layers on their category values and category labels."
-msgstr ""
+msgstr "在栅格图层的类别值和类别标签中查询。"
 
 #: ../raster/r.what/main.c:75
 msgid "Name of existing raster map(s) to query"
-msgstr ""
+msgstr "要查询的栅格图的名称"
 
 #: ../raster/r.what/main.c:82
 msgid "Size of point cache"
-msgstr ""
+msgstr "点的缓存的大小"
 
 #: ../raster/r.what/main.c:98
 msgid "Coordinates for query"
-msgstr ""
+msgstr "要查询的坐标"
 
 #: ../raster/r.what/main.c:102
 msgid "Show the category label in the grid cell(s)"
-msgstr ""
+msgstr "在格网单元上显示类别标签"
 
 #: ../raster/r.what/main.c:106
 msgid "Turn on cache reporting"
-msgstr ""
+msgstr "开启缓存报告"
 
 #: ../raster/r.what/main.c:110
 #: ../raster/r.out.bin/main.c:95
 msgid "Output integer category values, not cell values"
-msgstr ""
+msgstr "输出整型的类别值，而不是像元值"
 
 #: ../raster/r.param.scale/interface.c:46
 msgid "Extracts terrain parameters from a DEM. Uses a multi-scalar approach by taking fitting quadratic parameters to any size window (via least squares)"
-msgstr ""
+msgstr "从DEM提取地形参数。对于任意大小的窗口(通过最小正方形)采用多阶逼近的方法求得二次方程的变量"
 
 #: ../raster/r.param.scale/interface.c:64
 msgid "Raster surface layer to process"
-msgstr ""
+msgstr "将要处理的栅格表面"
 
 #: ../raster/r.param.scale/interface.c:70
 msgid "Output raster layer containing morphometric parameter"
-msgstr ""
+msgstr "输出包含地貌形态参数的栅格图层"
 
 #: ../raster/r.param.scale/interface.c:75
 msgid "Slope tolerance that defines a 'flat' surface (degrees)"
-msgstr ""
+msgstr "用来定义一个“平面”的坡度容限(度)"
 
 #: ../raster/r.param.scale/interface.c:81
 msgid "Curvature tolerance that defines 'planar' surface"
-msgstr ""
+msgstr "用来定义一个“平面”的曲率容限"
 
 #: ../raster/r.param.scale/interface.c:86
 #, c-format
 msgid "Size of processing window (odd number only, max: %i)"
-msgstr ""
+msgstr "需要处理的窗口的大小(只能是奇数，最大值：%i)"
 
 #: ../raster/r.param.scale/interface.c:94
 msgid "Morphometric parameter in 'size' window to calculate"
-msgstr ""
+msgstr "在规定大小的窗口内将要计算的地貌形态参数"
 
 #: ../raster/r.param.scale/interface.c:101
 msgid "Exponent for distance weighting (0.0-4.0)"
-msgstr ""
+msgstr "距离权重的指数(0.0-4.0)"
 
 #: ../raster/r.param.scale/interface.c:107
 #: ../raster/r.out.pov/main.c:140
 msgid "Vertical scaling factor"
-msgstr ""
+msgstr "垂直比例因子"
 
 #: ../raster/r.param.scale/interface.c:113
 msgid "Constrain model through central window cell"
-msgstr ""
+msgstr "通过中心窗口的像元限制模型"
 
 #: ../raster/r.fill.dir/main.c:86
 msgid "Filters and generates a depressionless elevation map and a flow direction map from a given elevation layer"
-msgstr ""
+msgstr "将一个高程图层过滤并生成一幅无洼地的高程图和一幅流向图"
 
 #: ../raster/r.fill.dir/main.c:101
 msgid "Output elevation raster map after filling"
-msgstr ""
+msgstr "填充后输出的高程栅格图"
 
 #: ../raster/r.fill.dir/main.c:108
 msgid "Output direction raster map"
-msgstr ""
+msgstr "输出的流向栅格图"
 
 #: ../raster/r.fill.dir/main.c:115
 msgid "Output raster map of problem areas"
-msgstr ""
+msgstr "输出的有问题区域的栅格图"
 
 #: ../raster/r.fill.dir/main.c:121
 msgid ""
 "Output direction type AGNPS, ANSWERS or GRASS aspect\n"
 "              default: GRASS"
 msgstr ""
+"输出的方向类型：AGNPS、ANSWERS或GRASS\n"
+"              默认类型： GRASS"
 
 #: ../raster/r.fill.dir/main.c:125
 msgid "find unresolved areas only"
-msgstr ""
+msgstr "只查找未解决区域"
 
 #: ../raster/wildfire/r.spreadpath/main.c:56
 msgid "Recursively traces the least cost path backwards to cells from which the cumulative cost was determined."
-msgstr ""
+msgstr "反向追踪最低成本的路径，得到一组像元，这些像元确定了累计成本。"
 
 #: ../raster/wildfire/r.spreadpath/main.c:64
 msgid "Name of raster map containing back-path easting information"
-msgstr ""
+msgstr "包含回路(back-path)东向信息的栅格地图的名称"
 
 #: ../raster/wildfire/r.spreadpath/main.c:71
 msgid "Name of raster map containing back-path norhting information"
-msgstr ""
+msgstr "包含回路(back-path)北向信息的栅格地图的名称"
 
 #: ../raster/wildfire/r.spreadpath/main.c:78
 msgid "The map E and N grid coordinates of starting points"
-msgstr ""
+msgstr "地图东向和北向格网坐标的起点"
 
 #: ../raster/wildfire/r.spreadpath/main.c:85
 msgid "Name of spread path raster map"
-msgstr ""
+msgstr "蔓延路径栅格图的名称"
 
 #: ../raster/wildfire/r.spreadpath/main.c:89
 msgid "Run verbosly"
-msgstr ""
+msgstr "以详细模式运行"
 
 #: ../raster/wildfire/r.spread/main.c:118
 msgid "Simulates elliptically anisotropic spread on a graphics window and generates a raster map of the cumulative time of spread, given raster maps containing the rates of spread (ROS), the ROS directions and the spread origins. It optionally produces raster maps to contain backlink UTM coordinates for tracing spread paths."
-msgstr ""
+msgstr "在图形窗口上模拟椭圆形的各向异性蔓延，生成累计蔓延时间的栅格图，输入栅格图包含蔓延速率(Rates of spread - ROS)、ROS方向和火源。它也可以生成反向链接UTM坐标的栅格图，以此来追踪蔓延路径。"
 
 #: ../raster/wildfire/r.spread/main.c:129
 msgid "Name of raster map containing MAX rate of spread (ROS) (cm/min)"
-msgstr ""
+msgstr "包含最大蔓延速率(ROS)的栅格图的名称(厘米/分钟)"
 
 #: ../raster/wildfire/r.spread/main.c:136
 msgid "Name of raster map containing DIRections of max ROS (degree)"
-msgstr ""
+msgstr "包含最大ROS方向的栅格图的名称(度)"
 
 #: ../raster/wildfire/r.spread/main.c:143
 msgid "Name of raster map containing BASE ROS (cm/min)"
-msgstr ""
+msgstr "包含基础ROS的栅格图的名称(厘米/分钟)"
 
 #: ../raster/wildfire/r.spread/main.c:150
 msgid "Name of raster map containing STARTing sources"
-msgstr ""
+msgstr "包含火源的栅格图的名称"
 
 #: ../raster/wildfire/r.spread/main.c:156
 msgid "Name of raster map containing max SPOTting DISTance (m) (required w/ -s)"
-msgstr ""
+msgstr "包含最大测定点距离(米)的栅格图的名称(需要 w/ -s)"
 
 #: ../raster/wildfire/r.spread/main.c:162
 msgid "Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)"
-msgstr ""
+msgstr "包含midflame风速(英尺/分钟)的栅格图的名称(需要 w/ -s)"
 
 #: ../raster/wildfire/r.spread/main.c:168
+#, fuzzy
 msgid "Name of raster map containing fine Fuel MOISture of the cell receiving a spotting firebrand (%) (required w/ -s)"
-msgstr ""
+msgstr "包含具有良好燃料湿度(%)像元的栅格图的名称，这些像元接受定点火源(需要 w/ -s)"
 
 #: ../raster/wildfire/r.spread/main.c:175
 msgid "Basic sampling window SIZE needed to meet certain accuracy (3)"
-msgstr ""
+msgstr "基础采样窗口的大小(3)需要满足一定的精度"
 
 #: ../raster/wildfire/r.spread/main.c:181
 msgid "Sampling DENSity for additional COMPutin (range: 0.0 - 1.0 (0.5))"
-msgstr ""
+msgstr "用于附加计算的采样密度(范围：0.0 - 1.0 (0.5))"
 
 #: ../raster/wildfire/r.spread/main.c:187
 msgid "INITial TIME for current simulation (0) (min)"
-msgstr ""
+msgstr "当前模拟的起始时间(0) (分钟)"
 
 #: ../raster/wildfire/r.spread/main.c:193
 msgid "Simulating time duration LAG (fill the region) (min)"
-msgstr ""
+msgstr "模拟时间的延迟(填充区域) (分钟)"
 
 #: ../raster/wildfire/r.spread/main.c:199
 msgid "Name of raster map as a display backdrop"
-msgstr ""
+msgstr "作为背景的栅格图的名称"
 
 #: ../raster/wildfire/r.spread/main.c:206
 msgid "Name of raster map to contain OUTPUT spread time (min)"
-msgstr ""
+msgstr "经过一定蔓延时间后生成的栅格图的名称"
 
 #: ../raster/wildfire/r.spread/main.c:212
 msgid "Name of raster map to contain X_BACK coordiates"
-msgstr ""
+msgstr "包含X_BACK坐标的栅格图的名称"
 
 #: ../raster/wildfire/r.spread/main.c:218
 msgid "Name of raster map to contain Y_BACK coordiates"
-msgstr ""
+msgstr "包含Y_BACK坐标的栅格图的名称"
 
 #: ../raster/wildfire/r.spread/main.c:222
 msgid "Run VERBOSELY"
-msgstr ""
+msgstr "以详细模式运行"
 
 #: ../raster/wildfire/r.spread/main.c:226
 msgid "DISPLAY 'live' spread process on screen"
-msgstr ""
+msgstr "在屏幕上实时显示蔓延过程"
 
 #: ../raster/wildfire/r.spread/main.c:230
 msgid "For wildfires: consider SPOTTING effect"
-msgstr ""
+msgstr "对于火势：考虑测定点的影响"
 
 #: ../raster/wildfire/r.ros/main.c:221
 msgid "Generates three, or four raster map layers showing 1) the base (perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, 3) the direction of the maximum ROS, and optionally 4) the maximum potential spotting distance."
-msgstr ""
+msgstr "生成3至4幅栅格图来显示 1) 基础(垂直的)蔓延速率(ROS)， 2)最大(推进的)ROS， 3) 最大ROS的方向，以及可选的 4)最大可能的测定点距离。"
 
 #: ../raster/wildfire/r.ros/main.c:231
 msgid "Name of raster map containing fuel MODELs"
-msgstr ""
+msgstr "包含燃料模型的栅格图的名称"
 
 #: ../raster/wildfire/r.ros/main.c:237
+#, fuzzy
 msgid "Name of raster map containing the 1-HOUR fuel MOISTURE (%)"
-msgstr ""
+msgstr "包含1小时燃料湿度(%)的栅格图的名称"
 
 #: ../raster/wildfire/r.ros/main.c:243
+#, fuzzy
 msgid "Name of raster map containing the 10-HOUR fuel MOISTURE (%)"
-msgstr ""
+msgstr "包含10小时燃料湿度(%)的栅格图的名称"
 
 #: ../raster/wildfire/r.ros/main.c:249
+#, fuzzy
 msgid "Name of raster map containing the 100-HOUR fuel MOISTURE (%)"
-msgstr ""
+msgstr "包含100小时燃料湿度(%)的栅格图的名称"
 
 #: ../raster/wildfire/r.ros/main.c:256
+#, fuzzy
 msgid "Name of raster map containing LIVE fuel MOISTURE (%)"
-msgstr ""
+msgstr "包含实时燃料湿度(%)的栅格图的名称"
 
 #: ../raster/wildfire/r.ros/main.c:262
 msgid "Name of raster map containing midflame wind VELOCITYs (ft/min)"
-msgstr ""
+msgstr "包含midflame风速(英尺/分钟)的栅格图的名称"
 
 #: ../raster/wildfire/r.ros/main.c:268
 msgid "Name of raster map containing wind DIRECTIONs (degree)"
-msgstr ""
+msgstr "包含风向(度)的栅格图的名称"
 
 #: ../raster/wildfire/r.ros/main.c:274
 msgid "Name of raster map containing SLOPE (degree)"
-msgstr ""
+msgstr "包含坡度(度)的栅格图的名称"
 
 #: ../raster/wildfire/r.ros/main.c:280
 msgid "Name of raster map containing ASPECT (degree, anti-clockwise from E)"
-msgstr ""
+msgstr "包含坡向(度，从东起逆时针计算)的栅格图的名称"
 
 #: ../raster/wildfire/r.ros/main.c:286
 msgid "Name of raster map containing ELEVATION (m) (required w/ -s)"
-msgstr ""
+msgstr "包含高程(米)的栅格图的名称 (需要 w/ -s)"
 
 #: ../raster/wildfire/r.ros/main.c:293
 msgid "Name of raster map to contain results (several new layers)"
-msgstr ""
+msgstr "包含结果的栅格图的名称(几个新的图层)"
 
 #: ../raster/wildfire/r.ros/main.c:301
 msgid "Also produce maximum SPOTTING distance"
-msgstr ""
+msgstr "同时生成最大的测定点距离"
 
 #: ../raster/r.resamp.rst/main.c:161
 msgid "Reinterpolates and computes topographic analysis from input raster file to a new raster file (possibly with different resolution) using regularized spline with tension and smoothing."
-msgstr ""
+msgstr "使用拉伸和平滑的规则样条，对输入的栅格文件进行重新插值和地形分析，生成一个新的栅格文件(可能有不同的分辨率)。"
 
 #: ../raster/r.resamp.rst/main.c:177
 msgid "Desired east-west resolution"
-msgstr ""
+msgstr "期望的东西向分辨率"
 
 #: ../raster/r.resamp.rst/main.c:183
 msgid "Desired north-south resolution"
-msgstr ""
+msgstr "期望的南北向分辨率"
 
 #: ../raster/r.resamp.rst/main.c:190
 msgid "Output z-file (elevation)"
-msgstr ""
+msgstr "输出的z-file(高程)"
 
 #: ../raster/r.resamp.rst/main.c:197
 msgid "Slope"
-msgstr ""
+msgstr "坡度"
 
 #: ../raster/r.resamp.rst/main.c:204
 msgid "Aspect"
-msgstr ""
+msgstr "坡向"
 
 #: ../raster/r.resamp.rst/main.c:211
 msgid "Profile curvature"
-msgstr ""
+msgstr "剖面曲率"
 
 #: ../raster/r.resamp.rst/main.c:218
 msgid "Tangential curvature"
-msgstr ""
+msgstr "切线曲率"
 
 #: ../raster/r.resamp.rst/main.c:225
 msgid "Mean curvature"
-msgstr ""
+msgstr "平均曲率"
 
 #: ../raster/r.resamp.rst/main.c:229
 msgid "Output partial derivatives instead"
-msgstr ""
+msgstr "输出偏导数"
 
 #: ../raster/r.resamp.rst/main.c:236
 msgid "Name of the cell file containing smoothing"
-msgstr ""
+msgstr "经过平滑的像元文件的名称"
 
 #: ../raster/r.resamp.rst/main.c:243
 msgid "Name of the raster file used as mask"
-msgstr ""
+msgstr "用作掩膜的栅格文件的名称"
 
 #: ../raster/r.resamp.rst/main.c:250
 msgid "Rows/columns overlap for segmentation"
-msgstr ""
+msgstr "行/列叠置用于分割"
 
 #: ../raster/r.resamp.rst/main.c:257
 msgid "Conversion factor for z-values"
-msgstr ""
+msgstr "z值的转换因子"
 
 #: ../raster/r.resamp.rst/main.c:264
 msgid "Tension"
-msgstr ""
+msgstr "拉伸"
 
 #: ../raster/r.resamp.rst/main.c:270
 msgid "Anisotropy angle (in degrees)"
-msgstr ""
+msgstr "各向异性角度(单位：度)"
 
 #: ../raster/r.resamp.rst/main.c:276
 msgid "Anisotropy scaling factor"
-msgstr ""
+msgstr "各向异性比例因子"
 
 #: ../raster/r.resamp.rst/main.c:280
+#, fuzzy
 msgid "Use dnorm independent tension"
-msgstr ""
+msgstr "使用dnorm独立拉伸"
 
 #: ../raster/r.in.gridatb/main.c:45
 msgid "Imports GRIDATB.FOR map file (TOPMODEL) into GRASS raster map"
-msgstr ""
+msgstr "将GRIDATB.FOR地图文件(TOPMODEL)导入到GRASS栅格图中"
 
 #: ../raster/r.compress/main.c:43
 msgid "Compresses and decompresses raster files."
-msgstr ""
+msgstr "压缩和解压缩栅格文件。"
 
 #: ../raster/r.compress/main.c:51
 msgid "Name of existing raster map(s)"
-msgstr ""
+msgstr "已有栅格地图的名称"
 
 #: ../raster/r.compress/main.c:55
 msgid "Uncompress the map"
-msgstr ""
+msgstr "不压缩地图"
 
 #: ../raster/r.basins.fill/main.c:34
 msgid "Generates a raster map layer showing watershed subbasins."
-msgstr ""
+msgstr "生成一个栅格图层，显示一个流域的子流域"
 
 #: ../raster/r.basins.fill/main.c:41
 msgid "Number of passes through the dataset"
-msgstr ""
+msgstr "跨越的数据集的数量"
 
 #: ../raster/r.basins.fill/main.c:48
 msgid "Coded stream network file name"
-msgstr ""
+msgstr "编码过的流域网络的文件名"
 
 #: ../raster/r.basins.fill/main.c:55
 msgid "Thinned ridge network file name"
-msgstr ""
+msgstr "稀疏山脊网络的文件名"
 
 #: ../raster/r.basins.fill/main.c:62
 msgid "Name for the resultant watershed partition file"
-msgstr ""
+msgstr "生成的流域划分文件的名称"
 
 #: ../raster/r.univar2/main.c:55
 msgid "Calculates univariate statistics from the non-null cells of a raster map."
-msgstr ""
+msgstr "计算栅格地图中非空像元的一元统计值"
 
 #: ../raster/r.univar2/main.c:68
 msgid "Quiet mode"
-msgstr ""
+msgstr "安静模式"
 
 #: ../raster/r.univar2/main.c:72
 msgid "Print the stats in shell script style"
-msgstr ""
+msgstr "以shell脚本的样式输出统计值"
 
 #: ../raster/r.univar2/main.c:87
 #: ../raster/r.out.mat/main.c:98
 #, c-format
 msgid "raster <%s> not found"
-msgstr ""
+msgstr "未找到栅格图<%s>"
 
 #: ../raster/r.univar2/main.c:92
 #: ../raster/r.out.mat/main.c:105
 #, c-format
 msgid "unable to open <%s>"
-msgstr ""
+msgstr "无法打开<%s>"
 
 #: ../raster/r.out.mpeg/main.c:389
 msgid "Raster File Series to MPEG Conversion Program."
-msgstr ""
+msgstr "将一组栅格文件转换为MPEG的程序。"
 
 #: ../raster/r.out.mpeg/main.c:400
 #, c-format
 msgid "Raster file(s) for View%d"
-msgstr ""
+msgstr "第%d幅视图的栅格文件"
 
 #: ../raster/r.out.mpeg/main.c:410
 msgid "Name for output file"
-msgstr ""
+msgstr "输出文件的名称"
 
 #: ../raster/r.out.mpeg/main.c:420
 msgid "Quality factor (1 = highest quality, lowest compression)"
-msgstr ""
+msgstr "品质 (1 = 最好品质，最低压缩)"
 
 #: ../raster/r.out.mpeg/main.c:424
 msgid "Quiet - suppress progress report"
-msgstr ""
+msgstr "安静的 - 不输出过程报告"
 
 #: ../raster/r.out.mpeg/main.c:428
 msgid ""
 "Convert on the fly, use less disk space\n"
 "\t(requires r.out.ppm with stdout option)"
 msgstr ""
+"动态转换，占用较少的磁盘空间\n"
+"\t(需要r.out.ppm带有stdout选项)"
 
 #: ../raster/r.out.ppm3/main.c:47
 msgid "Converts 3 GRASS raster layers (R,G,B) to a PPM image file at the pixel resolution of the CURRENTLY DEFINED REGION."
-msgstr ""
+msgstr "将3个GRASS栅格图层(R,G,B)以当前区域的像素分辨率转化为PPM影像文件。"
 
 #: ../raster/r.out.ppm3/main.c:53
 #, c-format
 msgid "Name of raster map to be used for <%s>"
-msgstr ""
+msgstr "栅格地图的名称 <%s>"
 
 #: ../raster/r.out.ppm3/main.c:72
 #: ../raster/r.out.ppm/main.c:60
 msgid "Name for new PPM file. (use out=- for stdout)"
-msgstr ""
+msgstr "新的PPM文件的名称。(out=-用于标准输出)"
 
 #: ../raster/r.out.ppm3/main.c:80
 msgid "Add comments to describe the region"
-msgstr ""
+msgstr "增加注释来描述该区域"
 
 #: ../raster/r.rescale.eq/main.c:36
 msgid "Rescales histogram equalized the range of categoryvalues in a raster map layer."
-msgstr ""
+msgstr "重新调整栅格图层的直方图，均等地划分类别值。"
 
 #: ../raster/r.slope.aspect/main.c:134
 msgid "Generates raster map layers of slope, aspect, curvatures and partial derivatives from a raster map layer of true elevation values. Aspect is calculated counterclockwise from east."
-msgstr ""
+msgstr "根据栅格图层的实际高程值，生成坡度、坡向、曲率和偏导数。坡向从东边开始逆时针计算。"
 
 #: ../raster/r.slope.aspect/main.c:143
 msgid "Raster elevation file name"
-msgstr ""
+msgstr "栅格高程文件的名称"
 
 #: ../raster/r.slope.aspect/main.c:151
 msgid "Output slope filename"
-msgstr ""
+msgstr "输出坡度的文件名"
 
 #: ../raster/r.slope.aspect/main.c:159
 msgid "Format for reporting the slope"
-msgstr ""
+msgstr "表达坡度的格式"
 
 #: ../raster/r.slope.aspect/main.c:167
 msgid "Type of output aspect and slope maps"
-msgstr ""
+msgstr "输出的坡向图和坡度图的类型"
 
 #: ../raster/r.slope.aspect/main.c:175
 msgid "Output aspect filename"
-msgstr ""
+msgstr "输出坡向的文件名"
 
 #: ../raster/r.slope.aspect/main.c:183
 msgid "Output profile curvature filename"
-msgstr ""
+msgstr "输出剖面曲率的文件名"
 
 #: ../raster/r.slope.aspect/main.c:191
 msgid "Output tangential curvature filename"
-msgstr ""
+msgstr "输出切线曲率的文件名"
 
 #: ../raster/r.slope.aspect/main.c:199
 msgid "Output first order partial derivative dx (E-W slope) filename"
-msgstr ""
+msgstr "输出一阶偏导数dx(东西向坡面)的文件名"
 
 #: ../raster/r.slope.aspect/main.c:207
 msgid "Output first order partial derivative dy (N-S slope) filename"
-msgstr ""
+msgstr "输出一阶偏导数dy(南北向坡面)的文件名"
 
 #: ../raster/r.slope.aspect/main.c:215
 msgid "Output second order partial derivative dxx filename"
-msgstr ""
+msgstr "输出二阶偏导数dxx的文件名"
 
 #: ../raster/r.slope.aspect/main.c:223
 msgid "Output second order partial derivative dyy filename"
-msgstr ""
+msgstr "输出二阶偏导数dyy的文件名"
 
 #: ../raster/r.slope.aspect/main.c:231
 msgid "Output second order partial derivative dxy filename"
-msgstr ""
+msgstr "输出二阶偏导数dxy的文件名"
 
 #: ../raster/r.slope.aspect/main.c:235
 msgid "Multiplicative factor to convert elevation units to meters"
-msgstr ""
+msgstr "将高程单位转换到米的乘法因子"
 
 #: ../raster/r.slope.aspect/main.c:242
+#, fuzzy
 msgid "Minimum slope val. (in percent) for which aspect is computed"
-msgstr ""
+msgstr "最小的坡度值。(百分数)用于计算坡向"
 
 #: ../raster/r.slope.aspect/main.c:249
 msgid "Do not align the current region to the elevation layer"
-msgstr ""
+msgstr "不将当前区域对齐到高程图层上"
 
 #: ../raster/r.random.cells/main.c:33
 msgid "Generates random cell values with spatial dependence."
-msgstr ""
+msgstr "根据空间依赖性产生随机的像元值"
 
 #: ../raster/r.watershed/front/main.c:35
 msgid "Watershed basin analysis program."
-msgstr ""
+msgstr "流域分析程序。"
 
 #: ../raster/r.watershed/front/main.c:39
 msgid "Input map: elevation on which entire analysis is based"
-msgstr ""
+msgstr "输入地图：整个分析过程的基准高程"
 
 #: ../raster/r.watershed/front/main.c:46
 msgid "Input map: locations of real depressions"
-msgstr ""
+msgstr "输入地图：洼地的位置"
 
 #: ../raster/r.watershed/front/main.c:53
 msgid "Input map: amount of overland flow per cell"
-msgstr ""
+msgstr "输入地图：每个像元的陆上径流量"
 
 #: ../raster/r.watershed/front/main.c:60
 msgid "Input map or value: percent of disturbed land, for USLE"
-msgstr ""
+msgstr "输入地图或值：干扰陆地的百分比(用于USLE)"
 
 #: ../raster/r.watershed/front/main.c:67
 msgid "Input map: terrain blocking overland surface flow, for USLE"
-msgstr ""
+msgstr "输入地图：地表径流的地形阻断(用于USLE)"
 
 #: ../raster/r.watershed/front/main.c:74
 msgid "Input value: minimum size of exterior watershed basin"
-msgstr ""
+msgstr "输入值：外流域的最小值"
 
 #: ../raster/r.watershed/front/main.c:81
 msgid "Input value: maximum length of surface flow, for USLE"
-msgstr ""
+msgstr "输入值：地表径流的最大长度(用于USLE)"
 
 #: ../raster/r.watershed/front/main.c:88
 msgid "Output map: number of cells that drain through each cell"
-msgstr ""
+msgstr "输出地图：流经的像元数"
 
 #: ../raster/r.watershed/front/main.c:95
 msgid "Output map: drainage direction"
-msgstr ""
+msgstr "输出地图：流向"
 
 #: ../raster/r.watershed/front/main.c:102
 msgid "Output map: unique label for each watershed basin"
-msgstr ""
+msgstr "输出地图：每个流域的唯一标签"
 
 #: ../raster/r.watershed/front/main.c:109
 msgid "Output map: stream segments"
-msgstr ""
+msgstr "输出地图：河流段"
 
 #: ../raster/r.watershed/front/main.c:116
 msgid "Output map: each half-basin is given a unique value"
-msgstr ""
+msgstr "输出地图：每半个流域给一个唯一值"
 
 #: ../raster/r.watershed/front/main.c:123
 msgid "Output map: useful for visual display of results"
-msgstr ""
+msgstr "输出地图：有益于结果的可视化显示"
 
 #: ../raster/r.watershed/front/main.c:130
 msgid "Output map: slope length and steepness (LS) factor for USLE"
-msgstr ""
+msgstr "输出地图：坡长和坡度(LS)因素(用于USLE)"
 
 #: ../raster/r.watershed/front/main.c:137
 msgid "Output map: slope steepness (S) factor for USLE"
-msgstr ""
+msgstr "输出地图：坡度因素(S)(用于USLE)"
 
 #: ../raster/r.watershed/front/main.c:144
 msgid "Enable extend memory option: Operation is slow"
-msgstr ""
+msgstr "开启扩展内存选项：该操作速度很慢"
 
 #: ../raster/r.watershed/front/main.c:148
 msgid "Allow only horizontal and vertical flow of water"
-msgstr ""
+msgstr "只允许垂直和水平流动"
 
 #: ../raster/r.buffer/main.c:48
 msgid "Creates a raster map layer showing buffer zones surrounding cells that contain non-NULL category values."
@@ -3177,7 +3195,7 @@ msgstr "代表无数据像元的字符"
 
 #: ../raster/r.describe/main.c:64
 msgid "number of quantization steps"
-msgstr ""
+msgstr "量化级数"
 
 #: ../raster/r.describe/main.c:70
 msgid "Print the output one value per line"
