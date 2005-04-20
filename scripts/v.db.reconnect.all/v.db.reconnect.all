@@ -1,0 +1,77 @@
+#!/bin/sh
+############################################################################
+#
+# MODULE:	v.db.reconnect.all
+# AUTHOR(S):	Radim Blazek
+# PURPOSE:	Reconnect vectors
+# COPYRIGHT:	(C) 2004 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
+
+#%Module
+#% description: Reconnect vectors to a new database
+#%End
+#%option
+#% key: old_database
+#% type: string
+#% description: Name of old database, the database must be in form printed by v.db.connect -g, i.e. with substituted variables
+#% required : yes
+#%END
+#%option
+#% key: new_database
+#% type: string
+#% description: Name of new database
+#% required : yes
+#%END
+
+if test "$GISBASE" = ""; then
+    echo "You must be in GRASS GIS to run this program." >&2
+    exit 1
+fi
+
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+   exec g.parser "$0" "$@"
+fi
+
+OLD_DATABASE=$GIS_OPT_old_database
+NEW_DATABASE=$GIS_OPT_new_database
+
+if [ -z "$OLD_DATABASE" ] ; then
+  echo "ERROR: old database not specified"
+  exit 1
+fi
+
+if [ -z "$NEW_DATABASE" ] ; then
+  echo "ERROR: new database not specified"
+  exit 1
+fi
+
+for VECT in `g.list type=vect mapset=${MAPSET} | sed 1,2d | grep -v '^-*$'`
+do
+    echo "Reconnecting vector '${VECT}@${MAPSET}'"
+    for LINK in `v.db.connect -g map=${VECT}@${MAPSET} | tr ' ' '|'`
+    do
+        eval `echo $LINK | sed 's$\([^\|]*\)|\([^\|]*\)|\([^\|]*\)|\([^\|]*\)|\([^\|]*\)$LAYER=\1 TABLE=\2 KEY=\3 DATABASE=\4 DRIVER=\5$'`
+
+        if [ "$DATABASE" = "$OLD_DATABASE" ]
+	then
+	   echo "    Reconnecting layer $LAYER"
+	   CMD="v.db.connect -o map=${VECT}@${MAPSET} layer=$LAYER driver=$DRIVER database=$NEW_DATABASE table=$TABLE key=$KEY"
+	   echo "    $CMD"
+	   $CMD
+	else 
+	   echo "    Layer $LAYER will not be reconnected, it is connected to database '$DATABASE'"
+	fi
+    done
+done
+
+exit 0
+
