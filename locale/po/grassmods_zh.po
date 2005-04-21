@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_zh\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-05 17:02+0800\n"
-"PO-Revision-Date: 2005-04-20 16:44+0800\n"
+"POT-Creation-Date: 2005-04-21 09:20+0800\n"
+"PO-Revision-Date: 2005-04-21 11:25+0800\n"
 "Last-Translator: zhangjun <nilarcs@gmail.com>\n"
 "Language-Team: Chinese <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -203,17 +203,17 @@ msgid "SQL select statement, for example: 'select * from rybniky where kapri = '
 msgstr "SQL选择语句，例如：'select * from 表A where 城市 = '上海'"
 
 #: ../db/base/select.c:209
-#: ../vector/v.db.select/main.c:52
+#: ../vector/v.db.select/main.c:59
 msgid "output field separator"
 msgstr "输出字段分隔符"
 
 #: ../db/base/select.c:216
-#: ../vector/v.db.select/main.c:59
+#: ../vector/v.db.select/main.c:66
 msgid "output vertical record separator"
 msgstr "输出纵向记录分隔符"
 
 #: ../db/base/select.c:222
-#: ../vector/v.db.select/main.c:65
+#: ../vector/v.db.select/main.c:72
 msgid "null value indicator"
 msgstr "空值指示符"
 
@@ -222,7 +222,7 @@ msgid "filename with sql statement"
 msgstr "用于SQL语句的文件名称"
 
 #: ../db/base/select.c:234
-#: ../vector/v.db.select/main.c:69
+#: ../vector/v.db.select/main.c:76
 msgid "do not include column names in output"
 msgstr "在输出中不包含列名"
 
@@ -231,7 +231,7 @@ msgid "describe query only (don't run it)"
 msgstr "仅描述查询(不运行它)"
 
 #: ../db/base/select.c:242
-#: ../vector/v.db.select/main.c:73
+#: ../vector/v.db.select/main.c:80
 msgid "vertical output (instead of horizontal)"
 msgstr "纵向输出(而不是横向)"
 
@@ -252,16 +252,16 @@ msgid "Describe a table (in detail)."
 msgstr "描述表(详细地)。"
 
 #: ../db/drivers/ogr/fetch.c:124
-#: ../db/drivers/ogr/describe.c:151
+#: ../db/drivers/ogr/describe.c:152
 msgid "Unknown type"
 msgstr "未知的类型"
 
-#: ../db/drivers/ogr/describe.c:87
+#: ../db/drivers/ogr/describe.c:88
 #, c-format
 msgid "OGR driver: column '%s', OGR type %d  is not supported"
 msgstr "OGR驱动：列'%s'，OGR类型%d不支持"
 
-#: ../db/drivers/ogr/describe.c:143
+#: ../db/drivers/ogr/describe.c:144
 #, c-format
 msgid "column '%s', type 'string': unknown width -> stored as varchar(250) some data may be lost"
 msgstr "列'%s'，类型'string'：未知的宽度->存储为varchar(250)可能会丢失一部分数据"
@@ -321,6 +321,27 @@ msgstr "无法设置用户/密码"
 #: ../db/db.login/main.c:60
 msgid "The password was stored in file."
 msgstr "密码被存储在文件中。"
+
+#: ../doc/vector/v.example.c:44
+msgid "name of input vector file"
+msgstr "输入矢量文件的名称"
+
+#: ../doc/vector/v.example.c:52
+msgid "name of resulting vector file"
+msgstr "结果矢量文件的名称"
+
+#: ../doc/vector/v.example.c:62
+#, c-format
+msgid "Could not find input %s"
+msgstr "未找到输入%s"
+
+#: ../doc/vector/v.example.c:66
+msgid "Could not open input"
+msgstr "无法打开输入"
+
+#: ../doc/vector/v.example.c:71
+msgid "Could not open output"
+msgstr "无法打开输出"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:116
 #, c-format
@@ -695,6 +716,209 @@ msgstr ""
 "\n"
 "设置FreeType的版本\n"
 
+#: ../general/g.region/cmd/main.c:73
+msgid "Program to manage the boundary definitions for the geographic region."
+msgstr "管理地理区域边界定义的程序。"
+
+#: ../general/g.region/cmd/main.c:80
+#: ../raster/r.region/main.c:75
+msgid "Set from default region"
+msgstr "从默认区域设置"
+
+#: ../general/g.region/cmd/main.c:84
+msgid "Print the current region (shell script style)"
+msgstr "打印当前区域(shell脚本样式)"
+
+#: ../general/g.region/cmd/main.c:88
+msgid "Print the current region"
+msgstr "打印当前区域"
+
+#: ../general/g.region/cmd/main.c:92
+msgid "Print the current region in lat/long"
+msgstr "以经纬度打印当前区域"
+
+#: ../general/g.region/cmd/main.c:96
+msgid "Print the current region extent"
+msgstr "答应当前区域的范围"
+
+#: ../general/g.region/cmd/main.c:100
+msgid "Print the current region map center coordinates"
+msgstr "打印当前区域的地图中心坐标"
+
+#: ../general/g.region/cmd/main.c:104
+msgid "Print region resolution in meters (geodesic)"
+msgstr "打印以米为单位的区域分辨率(测地线)"
+
+#: ../general/g.region/cmd/main.c:108
+msgid "Align region to resolution (default = align to bounds, works only for 2D resolution )"
+msgstr "将区域对齐到一定的分辨率下(默认值 = 对齐到边界，只用于2D分辨率)"
+
+#: ../general/g.region/cmd/main.c:113
+msgid "Do not update the current region"
+msgstr "不更新当前区域"
+
+#: ../general/g.region/cmd/main.c:117
+msgid "Print also 3D settings"
+msgstr "打印3D的设置"
+
+#: ../general/g.region/cmd/main.c:127
+#: ../raster/r.region/main.c:94
+msgid "Set current region from named region"
+msgstr "从指定的区域设置当前区域"
+
+#: ../general/g.region/cmd/main.c:136
+#: ../raster/r.region/main.c:102
+msgid "Set region to match this raster map"
+msgstr "设置区域以匹配这个栅格图"
+
+#: ../general/g.region/cmd/main.c:145
+msgid "Set region to match this 3D raster map (both 2D and 3D values)"
+msgstr "设置区域以匹配这个3D栅格图(2D和3D的值)"
+
+#: ../general/g.region/cmd/main.c:154
+#: ../raster/r.region/main.c:110
+msgid "Set region to match this vector map"
+msgstr "设置区域以匹配这个矢量图"
+
+#: ../general/g.region/cmd/main.c:163
+#: ../raster/r.region/main.c:118
+msgid "Set region to match this 3dview file"
+msgstr "设置区域以匹配这个3D视图文件"
+
+#: ../general/g.region/cmd/main.c:203
+msgid "Value for the top edge"
+msgstr "顶部边界的值"
+
+#: ../general/g.region/cmd/main.c:211
+msgid "Value for the bottom edge"
+msgstr "底部边界地值"
+
+#: ../general/g.region/cmd/main.c:219
+msgid "Grid resolution 2D (both north-south and east-west)"
+msgstr "2D格网分辨率(南北向和东西向)"
+
+#: ../general/g.region/cmd/main.c:227
+msgid "3D grid resolution (north-south, east-west and top-bottom)"
+msgstr "3D格网分辨率(南北向、东西向、顶部到底部)"
+
+#: ../general/g.region/cmd/main.c:251
+msgid "Top-bottom grid resolution"
+msgstr "顶部到底部的格网分辨率"
+
+#: ../general/g.region/cmd/main.c:259
+msgid "Raster map to zoom into"
+msgstr "要放大地栅格图"
+
+#: ../general/g.region/cmd/main.c:268
+#: ../raster/r.region/main.c:158
+msgid "Raster map to align to"
+msgstr "用来对齐的栅格图"
+
+#: ../general/g.region/cmd/main.c:277
+msgid "Save the current region to region definition file"
+msgstr "将当前区域存储到区域定义文件中"
+
+#: ../general/g.region/cmd/main.c:325
+#: ../raster/r.region/main.c:183
+#, c-format
+msgid "region <%s> not found"
+msgstr "未发现区域<%s>"
+
+#: ../general/g.region/cmd/main.c:327
+#: ../raster/r.region/main.c:185
+#, c-format
+msgid "can't read region <%s> in <%s>"
+msgstr "无法读取区域<%s>在<%s>中"
+
+#: ../general/g.region/cmd/main.c:339
+#: ../raster/r.region/main.c:196
+#, c-format
+msgid "3dview file <%s> not found"
+msgstr "未找到3D视图文件<%s>"
+
+#: ../general/g.region/cmd/main.c:344
+#: ../raster/r.region/main.c:202
+#, c-format
+msgid "can't open 3dview file <%s> in <%s>"
+msgstr "无法打开3D视图文件<%s>在<%s>中"
+
+#: ../general/g.region/cmd/main.c:349
+#: ../raster/r.region/main.c:206
+#, c-format
+msgid "can't read 3dview file <%s> in <%s>"
+msgstr "无法读取3D视图文件<%s>在<%s>中"
+
+#: ../general/g.region/cmd/main.c:351
+#: ../raster/r.region/main.c:208
+#, c-format
+msgid "Old 3dview file. Region not found in <%s> in <%s>"
+msgstr "旧的3D视图文件。<%s>里未发现区域在<%s>中"
+
+#: ../general/g.region/cmd/main.c:379
+#: ../general/g.region/cmd/main.c:696
+#: ../general/g.region/cmd/main.c:705
+#: ../raster/r.region/main.c:167
+#: ../raster/r.region/main.c:224
+#: ../raster/r.region/main.c:359
+#, c-format
+msgid "raster map <%s> not found"
+msgstr "未找到栅格图<%s>"
+
+#: ../general/g.region/cmd/main.c:381
+#: ../general/g.region/cmd/main.c:707
+#: ../raster/r.region/main.c:169
+#: ../raster/r.region/main.c:226
+#: ../raster/r.region/main.c:361
+#, c-format
+msgid "can't read header for <%s> in <%s>"
+msgstr "无法读取<%s>的头信息在<%s>中"
+
+#: ../general/g.region/cmd/main.c:407
+#, c-format
+msgid "3D raster map <%s> not found"
+msgstr "未找到3D栅格图<%s>"
+
+#: ../general/g.region/cmd/main.c:410
+#, c-format
+msgid "can't read header for 3D raster <%s> in <%s>"
+msgstr "无法读取3D栅格<%s>的头信息，在<%s>中"
+
+#: ../general/g.region/cmd/main.c:440
+#: ../raster/r.region/main.c:236
+#, c-format
+msgid "vector map <%s> not found"
+msgstr "未发现矢量地图<%s>"
+
+#: ../general/g.region/cmd/main.c:446
+#: ../raster/r.region/main.c:240
+#, c-format
+msgid "can't open vector file <%s> in <%s>"
+msgstr "无法打开矢量文件<%s>在<%s>中"
+
+#: ../general/g.region/cmd/main.c:710
+#, c-format
+msgid "%s in %s: %s"
+msgstr "%s在%s中： %s"
+
+#: ../general/g.region/cmd/main.c:717
+#, c-format
+msgid "<%s> - illegal region name"
+msgstr "<%s> - 非法的区域名称"
+
+#: ../general/g.region/cmd/main.c:721
+#, c-format
+msgid "can't write region <%s>"
+msgstr "无法写入区域<%s>"
+
+#: ../general/g.region/cmd/main.c:728
+msgid "unable to update current region"
+msgstr "无法更新当前区域"
+
+#: ../general/g.region/cmd/main.c:743
+#, c-format
+msgid "<%s=%s> ** invalid input **"
+msgstr "<%s=%s> ** 无效的输入 **"
+
 #: ../raster/r.topmodel/main.c:62
 msgid "Simulates TOPMODEL which is a physically based hydrologic model."
 msgstr ""
@@ -773,7 +997,7 @@ msgstr "包含等高线的栅格图名称"
 
 #: ../raster/r.surf.contour/main.c:48
 msgid "Output elevation raster map"
-msgstr "输出高程栅格图"
+msgstr "输出的高程栅格图"
 
 #: ../raster/r.surf.contour/main.c:52
 msgid "Invoke fast, but memory intensive operation"
@@ -803,7 +1027,7 @@ msgstr "输出栅格图层的像元值，基于用户定义的线。"
 
 #: ../raster/r.profile/main.c:64
 #: ../raster/r.random/main.c:44
-#: ../raster/r.info/main.c:56
+#: ../raster/r.info/main.c:57
 #: ../raster/r.thin/main.c:42
 msgid "Name of existing raster map"
 msgstr "已有栅格图的名称"
@@ -850,7 +1074,7 @@ msgid "Name of the output vector points map"
 msgstr "输出矢量点图的名称"
 
 #: ../raster/r.random/main.c:69
-#: ../raster/r.series/main.c:112
+#: ../raster/r.series/main.c:117
 #: ../raster/r.neighbors/main.c:110
 #: ../raster/r.distance/parse.c:38
 #: ../raster/r.compress/main.c:59
@@ -860,12 +1084,16 @@ msgid "Run quietly"
 msgstr "安静模式运行"
 
 #: ../raster/r.random/main.c:73
-msgid "Generate sites for category zero also"
-msgstr "也为类别零生成点位"
+msgid "Generate vector points for category zero also"
+msgstr "也为类别零生成矢量点"
 
 #: ../raster/r.random/main.c:77
 msgid "Report information about input raster and exit"
 msgstr "报告输入栅格的信息并退出"
+
+#: ../raster/r.random/main.c:81
+msgid "Generate vector points as 3D points"
+msgstr "将矢量点作为3D点生成"
 
 #: ../raster/r.recode/main.c:26
 msgid "Recode raster maps."
@@ -901,29 +1129,9 @@ msgstr "为栅格图设置边界范围。"
 msgid "Set from current region"
 msgstr "从当前区域设置"
 
-#: ../raster/r.region/main.c:75
-msgid "Set from default region"
-msgstr "从默认区域设置"
-
 #: ../raster/r.region/main.c:86
 msgid "Raster map to change"
 msgstr "将要改变的栅格图"
-
-#: ../raster/r.region/main.c:94
-msgid "Set current region from named region"
-msgstr "从指定的区域设置当前区域"
-
-#: ../raster/r.region/main.c:102
-msgid "Set region to match this raster map"
-msgstr "设置区域以匹配这个栅格图"
-
-#: ../raster/r.region/main.c:110
-msgid "Set region to match this vector map"
-msgstr "设置区域以匹配这个矢量图"
-
-#: ../raster/r.region/main.c:118
-msgid "Set region to match this 3dview file"
-msgstr "设置区域以匹配这个3D视图文件"
 
 #: ../raster/r.region/main.c:126
 msgid "Value for the northern edge"
@@ -940,64 +1148,6 @@ msgstr "东边界的值"
 #: ../raster/r.region/main.c:150
 msgid "Value for the western edge"
 msgstr "西边界的值"
-
-#: ../raster/r.region/main.c:158
-msgid "Raster map to align to"
-msgstr "用来对齐的栅格图"
-
-#: ../raster/r.region/main.c:167
-#: ../raster/r.region/main.c:224
-#: ../raster/r.region/main.c:359
-#, c-format
-msgid "raster map <%s> not found"
-msgstr "未找到栅格图<%s>"
-
-#: ../raster/r.region/main.c:169
-#: ../raster/r.region/main.c:226
-#: ../raster/r.region/main.c:361
-#, c-format
-msgid "can't read header for <%s> in <%s>"
-msgstr "无法读取<%s>的头信息在<%s>中"
-
-#: ../raster/r.region/main.c:183
-#, c-format
-msgid "region <%s> not found"
-msgstr "未发现区域<%s>"
-
-#: ../raster/r.region/main.c:185
-#, c-format
-msgid "can't read region <%s> in <%s>"
-msgstr "无法读取区域<%s>在<%s>中"
-
-#: ../raster/r.region/main.c:196
-#, c-format
-msgid "3dview file <%s> not found"
-msgstr "未找到3D视图文件<%s>"
-
-#: ../raster/r.region/main.c:202
-#, c-format
-msgid "can't open 3dview file <%s> in <%s>"
-msgstr "无法打开3D视图文件<%s>在<%s>中"
-
-#: ../raster/r.region/main.c:206
-#, c-format
-msgid "can't read 3dview file <%s> in <%s>"
-msgstr "无法读取3D视图文件<%s>在<%s>中"
-
-#: ../raster/r.region/main.c:208
-#, c-format
-msgid "Old 3dview file. Region not found in <%s> in <%s>"
-msgstr "旧的3D视图文件。<%s>里未发现区域在<%s>中"
-
-#: ../raster/r.region/main.c:236
-#, c-format
-msgid "vector map <%s> not found"
-msgstr "未发现矢量地图<%s>"
-
-#: ../raster/r.region/main.c:240
-#, c-format
-msgid "can't open vector file <%s> in <%s>"
-msgstr "无法打开矢量文件<%s>在<%s>中"
 
 #: ../raster/r.region/main.c:370
 #, c-format
@@ -1065,7 +1215,7 @@ msgstr "页面间使用换页"
 #: ../raster/r.slope.aspect/main.c:253
 #: ../raster/r.describe/main.c:78
 msgid "Quiet"
-msgstr "安静的"
+msgstr "安静模式"
 
 #: ../raster/r.report/parse.c:103
 msgid "Scientific format"
@@ -1088,24 +1238,24 @@ msgstr "报告fp范围的类别(只用于fp地图)"
 msgid "Read fp map as integer (use map's quant rules"
 msgstr "将fp地图作为整数读取(使用地图的量化规则)"
 
-#: ../raster/r.series/main.c:84
+#: ../raster/r.series/main.c:89
 msgid "Makes each output cell value a function of the values assigned to the corresponding cells in the input raster map layers."
 msgstr "对输入图层的像元进行函数计算，并将得到的结果赋予输出的像元。"
 
-#: ../raster/r.series/main.c:94
+#: ../raster/r.series/main.c:99
 msgid "Names of existing raster files"
 msgstr "已有栅格文件的名称"
 
-#: ../raster/r.series/main.c:101
+#: ../raster/r.series/main.c:106
 #: ../raster/r.neighbors/main.c:73
 msgid "Name of the new raster file"
 msgstr "新的栅格文件的名称"
 
-#: ../raster/r.series/main.c:108
+#: ../raster/r.series/main.c:113
 msgid "Aggregate operation"
 msgstr "聚合操作"
 
-#: ../raster/r.series/main.c:116
+#: ../raster/r.series/main.c:121
 #, fuzzy
 msgid "Propagate NULLs"
 msgstr "扩散空值"
@@ -1196,84 +1346,84 @@ msgid "Computes direct (beam), diffuse and reflected solar irradiation raster ma
 msgstr "对于给定日期、纬度、表面和大气状况的栅格图，计算直射、散射和反射的太阳光。太阳参数(如日出、日落时间， 偏角，宇宙辐照度，昼长)存储为一个本地文本文件。此外，也可以指定一个当地时间来计算太阳入射角和(或)辐照度。也可以结合地形的阴影效果。"
 
 #: ../raster/r.sun/main.c:184
-msgid "Name of the elevation raster file"
-msgstr "高程栅格文件的名称"
+msgid "Name of the input elevation raster map [meters]"
+msgstr "输入的高程栅格图的名称[米]"
 
 #: ../raster/r.sun/main.c:191
-msgid "Name of the aspect raster file"
-msgstr "坡向栅格文件的名称"
+msgid "Name of the input aspect map (terrain aspect or azimuth of the solar panel) [decimal degrees]"
+msgstr "输入的坡向地图的名称(地形坡向或太阳能板的方位角) [十进制度]"
 
 #: ../raster/r.sun/main.c:198
-msgid "Name of the slope raster file"
-msgstr "坡度栅格文件的名称"
+msgid "Name of the input slope raster map (terrain slope or solar panel inclination) [decimal degrees]"
+msgstr "输入的坡度栅格图的名称(地形坡度或太阳能板的倾角) [十进制度]"
 
 #: ../raster/r.sun/main.c:206
-msgid "Name of the Linke turbidity coefficient raster file"
-msgstr "Linke浊度系数栅格文件的名称"
+msgid "Name of the Linke atmospheric turbidity coefficient input raster map [-]"
+msgstr "输入Linke大气浊度系数的栅格图的名称 [-]"
 
 #: ../raster/r.sun/main.c:215
-msgid "A single value of the Linke turbidity coefficient"
-msgstr "Linke浊度系数"
+msgid "A single value of the Linke atmospheric turbidity coefficient [-]"
+msgstr "Linke大气浊度系数值 [-]"
 
 #: ../raster/r.sun/main.c:223
-msgid "Name of the albedo coefficient raster file"
-msgstr "反射系数栅格文件的名称"
+msgid "Name of the ground albedo coefficient input raster map [-]"
+msgstr "输入地面反射系数的栅格图的名称 [-]"
 
 #: ../raster/r.sun/main.c:231
-msgid "A single value of the albedo coefficient"
-msgstr "反射系数"
+msgid "A single value of the ground albedo coefficient [-]"
+msgstr "地面反射系数值 [-]"
 
 #: ../raster/r.sun/main.c:239
-msgid "Name of the latitude raster file"
-msgstr "纬度栅格文件的名称"
+msgid "Name of the latitudes input raster map [decimal degrees]"
+msgstr "输入纬度的栅格图的名称 [十进制度]"
 
 #: ../raster/r.sun/main.c:246
-msgid "A single value of latitude"
-msgstr "纬度值"
+msgid "A single value of latitude [decimal degrees]"
+msgstr "纬度值 [十进制度]"
 
 #: ../raster/r.sun/main.c:254
-msgid "The real-sky beam radiation coefficient file"
-msgstr "真实天空辐射系数文件"
+msgid "Name of real-sky beam radiation coefficient raster map [-]"
+msgstr "真实天空辐射系数栅格图的名称 [-]"
 
 #: ../raster/r.sun/main.c:262
-msgid "The real-sky diffuse radiation coefficient file"
-msgstr "真是天空散射系数文件"
+msgid "Name of real-sky diffuse radiation coefficient raster map [-]"
+msgstr "真实天空散射系数栅格图的名称 [-]"
 
 #: ../raster/r.sun/main.c:269
-msgid "Output incidence angle file (raster)"
-msgstr "输出的入射角文件(栅格)"
+msgid "Output incidence angle raster map (mode 1 only)"
+msgstr "输出入射角度的栅格图(只用于mode 1)"
 
 #: ../raster/r.sun/main.c:277
-msgid "Output direct (beam) irradiance/irradiation file (raster)"
-msgstr "输出的直射辐照度/辐射文件(栅格)"
+msgid "Output beam irradiance [W.m-2] (mode 1) or irradiation raster file [Wh.m-2.day-1] (mode 2)"
+msgstr "输出的辐照度[W.m-2] (mode 1)或辐射的栅格文件[Wh.m-2.day-1] (mode 2)"
 
 #: ../raster/r.sun/main.c:284
-msgid "Output insolation time file (raster)"
-msgstr "输出的曝晒时间文件(栅格)"
+msgid "Output insolation time raster map [h] (mode 2 only)"
+msgstr "输出的曝晒时间栅格图 [h] (只用于mode 2)"
 
 #: ../raster/r.sun/main.c:292
-msgid "Output diffuse irradiance/irradiation file (raster)"
-msgstr "输出的散射辐照度/辐射文件(栅格)"
+msgid "Output diffuse irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2.day-1] (mode 2)"
+msgstr "输出的散射辐照度[W.m-2] (mode 1)或辐射栅格图[Wh.m-2.day-1] (mode 2)"
 
 #: ../raster/r.sun/main.c:300
-msgid "Output reflected irradiance/irradiation file (raster)"
-msgstr "输出的反射辐照度/辐射文件(栅格)"
+msgid "Output ground reflected irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2.day-1] (mode 2)"
+msgstr "输出的地面反射辐照度[W.m-2] (mode 1)或辐射的栅格文件[Wh.m-2.day-1] (mode 2)"
 
 #: ../raster/r.sun/main.c:306
 msgid "No. of day of the year (1-365)"
 msgstr "一年中的某一天(1-365)"
 
 #: ../raster/r.sun/main.c:313
-msgid "Time step computing all-day radiation"
-msgstr "计算全天辐射的时间增量"
+msgid "Time step when computing all-day radiation sums [decimal hours]"
+msgstr "计算全天辐射总量时的时间增量 [十进制时间]"
 
 #: ../raster/r.sun/main.c:320
-msgid "Required declination value (overriding the internal value)"
-msgstr "需要的偏差值(覆盖间隔值)"
+msgid "Declination value (overriding the internally computed value) [radians]"
+msgstr "偏差值(覆盖内部计算的值) [弧度]"
 
 #: ../raster/r.sun/main.c:327
-msgid "Local (solar) time [decimal hours]"
-msgstr "本地(太阳)时间[十进制小时数]"
+msgid "Local (solar) time (to be set for mode 1 only) [decimal hours]"
+msgstr "本地(太阳)时间(只用于mode 1)[十进制时间]"
 
 #: ../raster/r.sun/main.c:334
 msgid "Sampling distance step coefficient (0.5-1.5)"
@@ -1307,7 +1457,7 @@ msgstr "从GRASS栅格图层生成有特定等高线的GRASS矢量地图。"
 #: ../raster/r.out.ascii/main.c:70
 #: ../raster/r.univar2/main.c:64
 #: ../raster/r.out.bin/main.c:78
-#: ../raster/r.out.mat/main.c:75
+#: ../raster/r.out.mat/main.c:70
 #: ../raster/r.out.pov/main.c:116
 msgid "Name of an existing raster map"
 msgstr "已有栅格地图的名称"
@@ -1405,7 +1555,7 @@ msgid "Title for new raster map"
 msgstr "新的栅格图的标题"
 
 #: ../raster/r.rescale/main.c:77
-#: ../raster/r.colors/main.c:173
+#: ../raster/r.colors/main.c:186
 msgid "Quietly"
 msgstr "安静模式"
 
@@ -1448,12 +1598,12 @@ msgid "Surface interpolation utility for raster map layers."
 msgstr "栅格图层的表面插值工具。"
 
 #: ../raster/r.surf.idw/main.c:57
-#: ../raster/r.proj/main.c:144
+#: ../raster/r.proj/main.c:149
 msgid "Input raster map"
 msgstr "输入的栅格图"
 
 #: ../raster/r.surf.idw/main.c:64
-#: ../raster/r.proj/main.c:168
+#: ../raster/r.proj/main.c:173
 msgid "Output raster map"
 msgstr "输出的栅格图"
 
@@ -2350,21 +2500,25 @@ msgstr "在输出地图上保留空值"
 msgid "Start with values in raster map"
 msgstr "栅格图上的起始值"
 
-#: ../raster/r.info/main.c:48
+#: ../raster/r.info/main.c:49
 msgid "Outputs basic information about a user-specified raster map layer."
 msgstr "输出用户指定的栅格图的基本信息"
 
-#: ../raster/r.info/main.c:60
+#: ../raster/r.info/main.c:61
 msgid "Print range only"
 msgstr "只打印范围"
 
-#: ../raster/r.info/main.c:64
+#: ../raster/r.info/main.c:65
 msgid "Print resolution (NS-res, EW-res) only"
 msgstr "只打印分辨率(南北向分辨率,东西向分辨率)"
 
-#: ../raster/r.info/main.c:68
+#: ../raster/r.info/main.c:69
 msgid "Print raster map type only"
 msgstr "只打印栅格图的类型"
+
+#: ../raster/r.info/main.c:73
+msgid "Print raster map region only"
+msgstr "只打印栅格图的区域"
 
 #: ../raster/r.mode/main.c:27
 msgid "Finds the mode of values in a cover map within areas assigned the same category value in a user-specified base map."
@@ -2383,35 +2537,35 @@ msgstr "叠加图"
 msgid "Output map"
 msgstr "输出图"
 
-#: ../raster/r.proj/main.c:138
+#: ../raster/r.proj/main.c:143
 msgid "Re-project a raster map from one location to the current location."
 msgstr "将栅格图从一个区域重投影到当前区域"
 
-#: ../raster/r.proj/main.c:150
+#: ../raster/r.proj/main.c:155
 msgid "Location of input map"
 msgstr "输入地图的区域"
 
-#: ../raster/r.proj/main.c:156
+#: ../raster/r.proj/main.c:161
 msgid "Mapset of input map"
 msgstr "输入地图的地图集"
 
-#: ../raster/r.proj/main.c:162
+#: ../raster/r.proj/main.c:167
 msgid "Path to GRASS database of input location"
 msgstr "输入区域的GRASS数据库路径"
 
-#: ../raster/r.proj/main.c:178
+#: ../raster/r.proj/main.c:183
 msgid "Interpolation method to use"
 msgstr "使用的插值方法"
 
-#: ../raster/r.proj/main.c:184
+#: ../raster/r.proj/main.c:189
 msgid "Resolution of output map"
 msgstr "输出地图的分辨率"
 
-#: ../raster/r.proj/main.c:188
+#: ../raster/r.proj/main.c:193
 msgid "List raster files in input location and exit"
 msgstr "列出输入区域内的栅格文件并退出"
 
-#: ../raster/r.proj/main.c:192
+#: ../raster/r.proj/main.c:197
 msgid "Do not perform region cropping optimization"
 msgstr "不执行区域的裁切优化"
 
@@ -2507,14 +2661,10 @@ msgid "Output raster map of problem areas"
 msgstr "输出的有问题区域的栅格图"
 
 #: ../raster/r.fill.dir/main.c:121
-msgid ""
-"Output direction type AGNPS, ANSWERS or GRASS aspect\n"
-"              default: GRASS"
-msgstr ""
-"输出的方向类型：AGNPS、ANSWERS或GRASS\n"
-"              默认类型： GRASS"
+msgid "Output aspect direction format (agnps, answers, or grass)"
+msgstr "输出的坡向的格式(agnps、answers或grass)"
 
-#: ../raster/r.fill.dir/main.c:125
+#: ../raster/r.fill.dir/main.c:129
 msgid "find unresolved areas only"
 msgstr "只查找未解决区域"
 
@@ -2744,7 +2894,6 @@ msgid "Anisotropy scaling factor"
 msgstr "各向异性比例因子"
 
 #: ../raster/r.resamp.rst/main.c:280
-#, fuzzy
 msgid "Use dnorm independent tension"
 msgstr "使用dnorm独立拉伸"
 
@@ -2797,13 +2946,13 @@ msgid "Print the stats in shell script style"
 msgstr "以shell脚本的样式输出统计值"
 
 #: ../raster/r.univar2/main.c:87
-#: ../raster/r.out.mat/main.c:98
+#: ../raster/r.out.mat/main.c:93
 #, c-format
 msgid "raster <%s> not found"
 msgstr "未找到栅格图<%s>"
 
 #: ../raster/r.univar2/main.c:92
-#: ../raster/r.out.mat/main.c:105
+#: ../raster/r.out.mat/main.c:100
 #, c-format
 msgid "unable to open <%s>"
 msgstr "无法打开<%s>"
@@ -2916,7 +3065,6 @@ msgid "Multiplicative factor to convert elevation units to meters"
 msgstr "将高程单位转换到米的乘法因子"
 
 #: ../raster/r.slope.aspect/main.c:242
-#, fuzzy
 msgid "Minimum slope val. (in percent) for which aspect is computed"
 msgstr "最小的坡度值。(百分数)用于计算坡向"
 
@@ -3165,19 +3313,19 @@ msgstr "栅格图名称"
 msgid "Type of color table"
 msgstr "色彩表类型"
 
-#: ../raster/r.colors/main.c:158
+#: ../raster/r.colors/main.c:171
 msgid "Raster map name from which to copy color table"
 msgstr "提供色彩表的栅格图名称"
 
-#: ../raster/r.colors/main.c:164
+#: ../raster/r.colors/main.c:177
 msgid "Name of predefined rules file"
 msgstr "规则文件的名称"
 
-#: ../raster/r.colors/main.c:169
+#: ../raster/r.colors/main.c:182
 msgid "Keep existing color table"
 msgstr "保留已有的色彩表"
 
-#: ../raster/r.colors/main.c:177
+#: ../raster/r.colors/main.c:190
 msgid "List rules"
 msgstr "列出规则"
 
@@ -3341,16 +3489,16 @@ msgstr "生成BIL world文件和头文件"
 msgid "Byte Swap output"
 msgstr "字节交换输出"
 
-#: ../raster/r.out.mat/main.c:66
+#: ../raster/r.out.mat/main.c:61
 msgid "Exports a GRASS raster to a binary MAT-File."
 msgstr "将GRASS栅格输出为二元MAT-File。"
 
-#: ../raster/r.out.mat/main.c:81
+#: ../raster/r.out.mat/main.c:76
 msgid "Name for the output binary MAT-File"
 msgstr "输出的二元MAT-File的名称"
 
-#: ../raster/r.out.mat/main.c:85
-#: ../raster/r.in.mat/main.c:115
+#: ../raster/r.out.mat/main.c:80
+#: ../raster/r.in.mat/main.c:110
 msgid "Verbose mode"
 msgstr "详细模式"
 
@@ -3399,9 +3547,8 @@ msgid "Import a binary raster file into a GRASS raster map layer."
 msgstr "将二进制栅格文件导入到GRASS栅格图层中。"
 
 #: ../raster/r.in.bin/main.c:116
-#, fuzzy
 msgid "Signed data (high bit means negative value)"
-msgstr "带标记的数据(高位代表负值)"
+msgstr "有符号的数据(高位代表负值)"
 
 #: ../raster/r.in.bin/main.c:120
 msgid "Import as Floating Point Data (default: Integer)"
@@ -3412,7 +3559,6 @@ msgid "Import as Double Precision Data (default: Integer)"
 msgstr "作为双精度类型的数据导入(默认：整型)"
 
 #: ../raster/r.in.bin/main.c:128
-#, fuzzy
 msgid "Byte Swap the Data During Import"
 msgstr "在导入过程中以字节为单位交换数据"
 
@@ -3456,15 +3602,15 @@ msgstr "列数"
 msgid "Set Value to NULL"
 msgstr "将该值置为NULL"
 
-#: ../raster/r.in.mat/main.c:95
+#: ../raster/r.in.mat/main.c:90
 msgid "Import a binary MAT-File(v4) to a GRASS raster."
 msgstr "将二进制的MAT-File(v4)导入为GRASS栅格。"
 
-#: ../raster/r.in.mat/main.c:104
+#: ../raster/r.in.mat/main.c:99
 msgid "Name of an existing MAT-File(v4)"
 msgstr "已有的MAT-File(v4)的名称"
 
-#: ../raster/r.in.mat/main.c:111
+#: ../raster/r.in.mat/main.c:106
 msgid "Name for the output raster map (override)"
 msgstr "输出栅格图的名称(覆盖已有文件)"
 
@@ -3483,7 +3629,7 @@ msgstr "无法读取字段信息"
 
 #: ../vector/v.surf.idw/read_sites.c:38
 #: ../vector/v.to.points/main.c:239
-#: ../vector/v.db.select/main.c:145
+#: ../vector/v.db.select/main.c:157
 #, c-format
 msgid "Cannot open database %s by driver %s"
 msgstr "无法打开数据库%s，通过驱动%s"
@@ -3791,7 +3937,7 @@ msgstr "无法创建索引"
 msgid "Cannot grant privileges on table %s"
 msgstr "无法为表%s授予权限"
 
-#: ../vector/v.to.points/main.c:321
+#: ../vector/v.to.points/main.c:324
 #, c-format
 msgid "%d points written to output map\n"
 msgstr "%d个点写入输出地图\n"
@@ -3800,15 +3946,19 @@ msgstr "%d个点写入输出地图\n"
 msgid "Select type: line or area"
 msgstr "选择类型：线 或 面"
 
-#: ../vector/v.db.select/main.c:89
+#: ../vector/v.db.select/main.c:53
+msgid "single attribute column"
+msgstr "单一属性列"
+
+#: ../vector/v.db.select/main.c:96
 msgid "Database connection not defined"
 msgstr "数据库连接未定义"
 
-#: ../vector/v.db.select/main.c:97
+#: ../vector/v.db.select/main.c:109
 msgid "Cannot open select cursor"
 msgstr "无法打开选择游标"
 
-#: ../vector/v.db.select/main.c:115
+#: ../vector/v.db.select/main.c:127
 msgid "Cannot fetch data"
 msgstr "无法获取数据"
 
@@ -3919,19 +4069,92 @@ msgstr "请选择yes或no"
 msgid "Number of points that have been entered: %d\n"
 msgstr "已输入点的数量：%d\n"
 
-#: ../vector/v.category/main.c:173
+#: ../vector/v.category/main.c:175
 msgid "Too many layers for this operation"
 msgstr "为此操作指定了过多的图层"
 
-#: ../vector/v.category/main.c:176
+#: ../vector/v.category/main.c:178
 msgid "2 layers must be specified"
 msgstr "必须指定两个图层"
 
-#: ../vector/v.category/main.c:180
+#: ../vector/v.category/main.c:182
 msgid "Output vector wasn't entered."
 msgstr "未指定输出矢量"
+
+#: ../vector/v.to.rast/main.c:19
+msgid "Converts a binary GRASS vector map layer into a GRASS raster map layer."
+msgstr "将GRASS矢量图层转化为GRASS栅格图层。"
+
+#: ../vector/v.to.rast/main.c:28
+msgid "vector input file"
+msgstr "矢量输入文件"
+
+#: ../vector/v.to.rast/main.c:38
+msgid "raster output file"
+msgstr "栅格输出文件"
+
+#: ../vector/v.to.rast/main.c:47
+msgid ""
+"Source of raster values:\n"
+"\t\tattr - read values from attribute table\n"
+"\t\tcat  - use category values\n"
+"\t\tval  - use value specified by value option\n"
+"\t\tz    - use z coordinate (points or contours only)"
+msgstr ""
+"栅格值的源：\n"
+"\t\tattr - 从属性表中读取的值\n"
+"\t\tcat  - 使用类别值\n"
+"\t\tval  - 通过值选项指定的值\n"
+"\t\tz    - 使用z坐标(只用于点或等高线)"
+
+#: ../vector/v.to.rast/main.c:58
+msgid "Column name"
+msgstr "列名"
+
+#: ../vector/v.to.rast/main.c:66
+msgid "Raster value"
+msgstr "栅格值"
+
+#: ../vector/v.to.rast/main.c:74
+msgid "number of rows to hold in memory"
+msgstr "内存中的行数"
+
+#: ../vector/v.to.rast/main.c:84
+msgid "col parameter missing (or use value parameter)"
+msgstr "缺少列参数(或者使用value参数)"
+
+#: ../vector/v.to.rast/main.c:87
+msgid "Column parameter cannot be combined with use of category values option"
+msgstr "列参数不能与类别值选项同时使用"
+
+#: ../vector/v.to.rast/main.c:91
+msgid "Column parameter cannot be combined with use of value option"
+msgstr "列参数不能与值选项同时使用"
+
+#: ../vector/v.to.rast/main.c:95
+msgid "Column parameter cannot be combined with use of z coordinate"
+msgstr "列参数不能与z坐标同时使用"
 
 #: ../imagery/i.group/main.c:84
 msgid "No input map(s) specified."
 msgstr "未指定输入地图"
+
+#: ../imagery/i.points/main.c:27
+msgid "Mark ground control points on image to be rectified."
+msgstr "在需要校正的影像上标记地面控制点"
+
+#~ msgid "Name of the aspect raster file"
+#~ msgstr "坡向栅格文件的名称"
+#~ msgid "Name of the slope raster file"
+#~ msgstr "坡度栅格文件的名称"
+#~ msgid "Output direct (beam) irradiance/irradiation file (raster)"
+#~ msgstr "输出的直射辐照度/辐射文件(栅格)"
+#~ msgid "Output reflected irradiance/irradiation file (raster)"
+#~ msgstr "输出的反射辐照度/辐射文件(栅格)"
+#~ msgid ""
+#~ "Output direction type AGNPS, ANSWERS or GRASS aspect\n"
+#~ "              default: GRASS"
+#~ msgstr ""
+#~ "输出的方向类型：AGNPS、ANSWERS或GRASS\n"
+#~ "              默认类型： GRASS"
 
