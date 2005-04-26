@@ -146,7 +146,7 @@ cat points.dat | v.in.ascii out=mypoints x=2 y=3 cat=1 \
 <b>Example 4</b><br>
 Generating a 3D points vector map from DBMS (idcol must be an integer column):<br>
 <pre>
-echo "select east,north,elev,idcol from mytable " | db.select -c | v.in.ascii -z out=mymap
+echo "select east,north,elev,idcol from mytable" | db.select -c | v.in.ascii -z out=mymap
 </pre>
 
 <b>The module is reading from standard input, using the default '|' (pipe) delimiter.</b>
