@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-		"Outputs the user's current GRASS variable settings.";
+		"Outputs and modifies the user's current GRASS variable settings.";
 
     get               = G_define_option() ;
     get->key          = "get" ;
