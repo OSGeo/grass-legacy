@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "gis.h"
+#include "glocale.h"
 
 int main(int argc, char *argv[])
 {
@@ -17,19 +18,19 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-		"Outputs the user's current GRASS variable settings.";
+		_("Outputs and modifies the user's current GRASS variable settings.");
 
     get               = G_define_option() ;
     get->key          = "get" ;
     get->type         = TYPE_STRING ;
-    get->description  = "GRASS variable to get" ;
+    get->description  = _("GRASS variable to get") ;
     get->key_desc     = "VARIABLE" ;
     get->required     = NO;
 
     set               = G_define_option() ;
     set->key          = "set" ;
     set->type         = TYPE_STRING ;
-    set->description  = "GRASS variable to set" ;
+    set->description  = _("GRASS variable to set") ;
     set->key_desc     = "\"VARIABLE=value\"" ;
     set->required     = NO;
 
@@ -38,7 +39,7 @@ int main(int argc, char *argv[])
     store_opt->type         = TYPE_STRING ;
     store_opt->options      = "gisrc,mapset";
     store_opt->answer       = "gisrc";
-    store_opt->description  = "Where GRASS variable is stored" ;
+    store_opt->description  = _("Where GRASS variable is stored") ;
     store_opt->required     = NO;
     
     /* Print or optionally set environment variables */
