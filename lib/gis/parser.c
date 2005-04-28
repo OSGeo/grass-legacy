@@ -95,6 +95,13 @@
  ***************************************************************************
 */
 
+/* langinfo.h is "X/Open" but it is used in gettext so it must be present if HAVE_LIBINTL_H */
+#include "config.h"
+
+#if defined(HAVE_LIBINTL_H) && defined(USE_NLS)
+#include <langinfo.h>
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -850,13 +857,25 @@ static void G_usage_xml (void)
 	char *type;
 	char *s, *top;
 	int i;
+	char *encoding;
+
+/* gettext converts strings to encoding returned by nl_langinfo(CODESET) */
+
+#if defined(HAVE_LIBINTL_H) && defined(USE_NLS)
+	encoding = nl_langinfo (CODESET);
+	if ( !encoding || strlen( encoding ) == 0 ) {
+	    encoding = "UTF-8";
+	}
+#else
+	encoding = "UTF-8";
+#endif
 	
 	if (!pgm_name)		/* v.dave && r.michael */
 	    pgm_name = G_program_name ();
 	if (!pgm_name)
 	    pgm_name = "??";
 
-	fprintf(stdout, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+	fprintf(stdout, "<?xml version=\"1.0\" encoding=\"%s\"?>\n", encoding);
 	fprintf(stdout, "<!DOCTYPE task SYSTEM \"grass-interface.dtd\">\n");
 
 	fprintf(stdout, "<task name=\"%s\">\n", pgm_name);  
