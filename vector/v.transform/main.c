@@ -173,7 +173,7 @@ int main (int argc, char *argv[])
     
     Vect_open_old(&Old, old->answer, mapset);
 
-    Vect_open_new (&New, new->answer, Vect_is_3d(&Old) );
+    Vect_open_new (&New, new->answer, Vect_is_3d(&Old) || zshift->answer );
 
     /* copy and set header */
     Vect_copy_head_data(&Old, &New);
