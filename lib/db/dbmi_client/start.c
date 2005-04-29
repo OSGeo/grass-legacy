@@ -25,6 +25,7 @@ db_start_driver(name)
     int pid;
     int stat;
     dbConnection connection;
+    char ebuf[5];
 
     /* Set some enviroment variables which are later read by driver.
      * This is necessary when application is running without GISRC file and all
@@ -34,8 +35,10 @@ db_start_driver(name)
     
     /* setenv() is not portable, putenv() is POSIX, putenv() in glibc 2.0-2.1.1 doesn't conform to SUSv2,
      * G_putenv() as well, but that is what we want, makes a copy of string */
-    if (  G_get_gisrc_mode() == G_GISRC_MODE_MEMORY ) {
-	G_putenv("GISRC_MODE_MEMORY", "1"); /* to tell driver that it must read variables */
+    if (  G_get_gisrc_mode() == G_GISRC_MODE_MEMORY ) 
+    {
+	sprintf ( ebuf, "%d", G_GISRC_MODE_MEMORY );
+	G_putenv("GRASS_DB_DRIVER_GISRC_MODE", ebuf); /* to tell driver that it must read variables */
 	
 	if ( G__getenv ( "DEBUG" ) ) {
 	    G_putenv( "DEBUG", G__getenv ( "DEBUG" ) );
@@ -46,6 +49,13 @@ db_start_driver(name)
 	G_putenv( "GISDBASE", G__getenv("GISDBASE") );
 	G_putenv( "LOCATION_NAME", G__getenv("LOCATION_NAME") );
 	G_putenv( "MAPSET", G__getenv("MAPSET") );
+    } 
+    else 
+    {
+	/* Warning: GISRC_MODE_MEMORY _must_ be set to G_GISRC_MODE_FILE, because the module can be 
+	 *          run from an application which previously set enviroment variable to G_GISRC_MODE_MEMORY */
+	sprintf ( ebuf, "%d", G_GISRC_MODE_FILE );
+	G_putenv("GRASS_DB_DRIVER_GISRC_MODE", ebuf);
     }
     
 /* read the dbmscap file */
