@@ -27,6 +27,7 @@
 #include "ogr_api.h"
 #include "global.h"
 #include "gprojects.h"
+#include "glocale.h"
 
 int geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_area, int type, int mk_centr );
 int centroid(OGRGeometryH hGeom, CENTR *Centr, SPATIAL_INDEX *Sindex, int field, int cat, double min_area, int type);
@@ -87,7 +88,7 @@ main (int argc, char *argv[])
 
     OGRRegisterAll();
     /* Module options */
-    sprintf ( buf, "Convert OGR vectors to GRASS. Available drivers:\n" );
+    sprintf ( buf, _("Convert OGR vectors to GRASS. Available drivers:\n"));
     for ( i = 0; i < OGRGetDriverCount(); i++ ) {
 	Ogr_driver = OGRGetDriver( i );
 	if ( i== 0) 
@@ -103,9 +104,9 @@ main (int argc, char *argv[])
     dsn_opt->type =  TYPE_STRING;
     dsn_opt->required = YES;
     dsn_opt->gisprompt = "file,file,file";
-    dsn_opt->description = "OGR datasource name.\n"
+    dsn_opt->description = _("OGR datasource name.\n"
 			   "\t\tESRI Shapefile: directory containing shapefiles\n"
-			   "\t\tMapInfo File: directory containing mapinfo files";
+			   "\t\tMapInfo File: directory containing mapinfo files");
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 
@@ -114,82 +115,82 @@ main (int argc, char *argv[])
     layer_opt->type = TYPE_STRING;
     layer_opt->required = NO;
     layer_opt->multiple = YES;
-    layer_opt->description = "OGR layer name. If not given, available layers are printed + exit.\n"
+    layer_opt->description = _("OGR layer name. If not given, all available layers are imported.\n"
 			   "\t\tESRI Shapefile: shapefile name\n"
-			   "\t\tMapInfo File: mapinfo file name";
+			   "\t\tMapInfo File: mapinfo file name");
 
     spat_opt = G_define_option();
     spat_opt->key = "spatial";
     spat_opt->type = TYPE_DOUBLE;
     spat_opt->multiple = YES;
     spat_opt->required = NO;
-    spat_opt->description = "Import subregion only (xmin,ymin,xmax,ymax  - usually W,S,E,N)";
+    spat_opt->description = _("Import subregion only (xmin,ymin,xmax,ymax  - usually W,S,E,N)");
 
     min_area_opt = G_define_option();
     min_area_opt->key = "min_area";
     min_area_opt->type = TYPE_DOUBLE;
     min_area_opt->required = NO;
     min_area_opt->answer = "0.0001";
-    min_area_opt->description = "Minimum size of area to be imported (square units). Smaller areas and "
-	                        "islands are ignored. Should be greater than snap^2.";
+    min_area_opt->description = _("Minimum size of area to be imported (square units). Smaller areas and "
+	                        "islands are ignored. Should be greater than snap^2");
 
     type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
     type_opt->options = "point,line,boundary,centroid";
     type_opt->answer = "";
-    type_opt->description = "Optionaly change default input type:\n"
+    type_opt->description = _("Optionaly change default input type:\n"
 	      "\t point -> import area centroids as points\n"
 	      "\t line -> import area boundaries as centroids\n"
 	      "\t boundary -> import lines as area boundaries\n"
-	      "\t centroid -> import points as centroids";
+	      "\t centroid -> import points as centroids");
     
     snap_opt = G_define_option();
     snap_opt->key = "snap";
     snap_opt->type = TYPE_DOUBLE;
     snap_opt->required = NO;
     snap_opt->answer = "-1";
-    snap_opt->description = "Snapping threshold for boundaries. -1 for no snap.";
+    snap_opt->description = _("Snapping threshold for boundaries. -1 for no snap");
 
     outloc_opt = G_define_option();
     outloc_opt->key = "location";
     outloc_opt->type = TYPE_STRING;
     outloc_opt->required = NO;
-    outloc_opt->description = "Name for new location to create";
+    outloc_opt->description = _("Name for new location to create");
 
     cnames_opt = G_define_option();
     cnames_opt->key = "cnames";
     cnames_opt->type = TYPE_STRING;
     cnames_opt->required = NO;
     cnames_opt->multiple = YES;
-    cnames_opt->description = "List of column names to be used instead of original names, "
-	                      "first is used for category column.";
+    cnames_opt->description = _("List of column names to be used instead of original names, "
+	                      "first is used for category column");
 
     list_flag = G_define_flag ();
     list_flag->key             = 'l';
-    list_flag->description     = "List available layers in data source and exit.";
+    list_flag->description = _("List available layers in data source and exit");
 
     formats_flag = G_define_flag ();
     formats_flag->key  	      = 'f';
-    formats_flag->description = "List available formats and exit.";
+    formats_flag->description = _("List available formats and exit");
 
     no_clean_flag = G_define_flag ();
     no_clean_flag->key             = 'c';
-    no_clean_flag->description     = "Do not clean polygons.";
+    no_clean_flag->description = _("Do not clean polygons");
     
     z_flag = G_define_flag ();
     z_flag->key             = 'z';
-    z_flag->description     = "Create 3D output.";
+    z_flag->description = _("Create 3D output");
     
     notab_flag = G_define_flag ();
     notab_flag->key             = 't';
-    notab_flag->description     = "Do not create attribute table.";
+    notab_flag->description = _("Do not create attribute table");
 
     over_flag = G_define_flag();
     over_flag->key = 'o';
-    over_flag->description = "Override projection (use location's projection).";
+    over_flag->description = _("Override projection (use location's projection)");
 
     extend_flag = G_define_flag();
     extend_flag->key = 'e';
-    extend_flag->description = "Extend location extents based on new dataset.";
+    extend_flag->description = _("Extend location extents based on new dataset");
 
     /* The parser checks if the map already exists in current mapset, this is wrong 
      * if location options is used, so we switch out the check and do it in the module after the parser */
@@ -203,7 +204,7 @@ main (int argc, char *argv[])
         
     if ( !outloc_opt->answer && !overwrite ) { /* Check if the map exists */
 	if ( G_find_vector2 (out_opt->answer, G_mapset()) ) {
-	    G_fatal_error ( "The vector '%s' already exists.", out_opt->answer );
+	    G_fatal_error ( _("The vector '%s' already exists."), out_opt->answer );
 	}
     }
 
@@ -554,7 +555,7 @@ main (int argc, char *argv[])
 		}
 		    
 		if ( strcmp ( OGR_Fld_GetNameRef( Ogr_field ), Ogr_fieldname) != 0 ) {
-		    G_warning ("Column name changed: '%s' -> '%s'",  
+		    G_warning (_("Column name changed: '%s' -> '%s'"),  
 				  OGR_Fld_GetNameRef( Ogr_field ), Ogr_fieldname );
 		}
 		
@@ -581,8 +582,8 @@ main (int argc, char *argv[])
 		    fwidth = OGR_Fld_GetWidth(Ogr_field); 
 		    /* TODO: read all records first and find the longest string length */
 		    if ( fwidth == 0) {
-			G_warning ("Width for column '%s' set to 255 (was not specified by OGR), "
-				   "some strings may be truncated!", Ogr_fieldname );
+			G_warning (_("Width for column '%s' set to 255 (was not specified by OGR), "
+				   "some strings may be truncated!"), Ogr_fieldname );
 			fwidth = 255;
 		    }
 		    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, fwidth );
@@ -601,21 +602,21 @@ main (int argc, char *argv[])
 
 	    driver = db_start_driver_open_database ( Fi->driver, Vect_subst_var(Fi->database,&Map) );
 	    if ( driver == NULL ) {
-	        G_fatal_error ( "Cannot open database %s by driver %s", 
+	        G_fatal_error ( _("Cannot open database %s by driver %s"), 
 			             Vect_subst_var(Fi->database,&Map), Fi->driver );
 	    }
 	    
 	    if (db_execute_immediate (driver, &sql) != DB_OK ) {
 		db_close_database(driver);
 		db_shutdown_driver(driver);
-		G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql )  );
+		G_fatal_error ( _("Cannot create table: %s"), db_get_string ( &sql )  );
 	    }
 
 	    if ( db_create_index2(driver, Fi->table, cat_col_name ) != DB_OK )
 		G_warning ( "Cannot create index" );
 
 	    if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
-		G_fatal_error ( "Cannot grant privileges on table %s", Fi->table );
+		G_fatal_error ( _("Cannot grant privileges on table %s"), Fi->table );
 
 	    db_begin_transaction ( driver );
 	}
@@ -672,7 +673,7 @@ main (int argc, char *argv[])
 		if (db_execute_immediate (driver, &sql) != DB_OK ) {
 		    db_close_database(driver);
 		    db_shutdown_driver(driver);
-		    G_fatal_error ( "Cannot insert new row: %s", db_get_string ( &sql )  );
+		    G_fatal_error ( _("Cannot insert new row: %s"), db_get_string ( &sql )  );
 		}
 	    }
 	     
@@ -686,7 +687,7 @@ main (int argc, char *argv[])
 	}
 
 	if ( nogeom > 0 )
-	    G_warning ("%d %s without geometry.", nogeom, nogeom == 1 ? "feature" : "features" );
+	    G_warning (_("%d %s without geometry"), nogeom, nogeom == 1 ? "feature" : "features" );
     }
     
     
@@ -786,7 +787,7 @@ main (int argc, char *argv[])
 	    Centr[centr].cats = Vect_new_cats_struct ();
 	    ret = Vect_get_point_in_area ( &Map, centr, &x, &y );
 	    if ( ret < 0 ) {
-		G_warning ("Cannot calculate area centroid" );
+		G_warning (_("Cannot calculate area centroid") );
 		continue;
 	    }
 	    
@@ -859,13 +860,13 @@ main (int argc, char *argv[])
 	fprintf ( stderr, separator );
 
 	if ( n_overlaps > 0 ) {
-	    G_warning ("%d areas represent more (overlapping) features, because polygons overlap "
+	    G_warning (_("%d areas represent more (overlapping) features, because polygons overlap "
 		    "in input layer(s). Such areas are linked to more than 1 row in attribute table. "
-		    "The number of features for those areas is stored as category in layer %d.",
+		    "The number of features for those areas is stored as category in layer %d"),
 		    n_overlaps, nlayers+1 );
 	}
 
-	sprintf (buf, "%d input polygons\n", n_polygons); 
+	sprintf (buf, _("%d input polygons\n"), n_polygons); 
 	fprintf (stderr, buf );
 	Vect_hist_write ( &Map, buf );
 
