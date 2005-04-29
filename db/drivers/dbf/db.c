@@ -33,6 +33,8 @@ db__driver_open_database (handle)
     struct dirent *ent;
     char **tokens;
     int no_tokens, n;
+	 
+    G_debug (2, "DBF: db__driver_open_database() name = '%s'", db_get_handle_dbname(handle) );
 
     db.name[0] = '\0';
     db.tables = NULL;
@@ -62,11 +64,13 @@ db__driver_open_database (handle)
      
      for (n = 0; n < no_tokens ; n++)
      {
+       G_debug (3, "tokens[%d] = %s", n, tokens[n] );
        if ( tokens[n][0] == '$' )
        {
          G_strchg(tokens[n],'$', ' ' );
          G_chop(tokens[n]);
          strcat(db.name, G__getenv(tokens[n]) );
+	 G_debug (3, "   -> %s", G__getenv(tokens[n]) );
        }
        else
          strcat(db.name, tokens[n]);
@@ -75,6 +79,8 @@ db__driver_open_database (handle)
      }
      G_free_tokens(tokens);
     }
+	 
+    G_debug (2, "db.name = %s", db.name );
 
     dir = opendir(db.name);
     if (dir == NULL)
