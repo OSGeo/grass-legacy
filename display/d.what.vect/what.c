@@ -216,7 +216,7 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 			nnlines = Vect_get_node_n_lines (  &(Map[i]), node[n]);
 
 			Vect_get_node_coor (  &(Map[i]), node[n], &nx, &ny, &nz ); 
-		        fprintf(stdout, _("  Node[%d]: %d  Number of lines: %d  Coordinates: %e, %e, %e\n"), n, node[n], nnlines, nx, ny, nz );
+		        fprintf(stdout, _("  Node[%d]: %d  Number of lines: %d  Coordinates: %.6f, %.6f, %.6f\n"), n, node[n], nnlines, nx, ny, nz );
 			
 			for ( nli = 0; nli < nnlines; nli++ ) {
 			    nodeline =  Vect_get_node_line ( &(Map[i]), node[n], nli );
