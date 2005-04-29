@@ -142,7 +142,7 @@ main (int argc, char *argv[])
 	fprintf (stderr, SEP );
 	
 	db_init_string (&stmt);
-	driver = db_start_driver_open_database ( Fi->driver, Fi->database );
+	driver = db_start_driver_open_database ( Fi->driver, Vect_subst_var(Fi->database, &Out) );
 	if ( driver == NULL ) {
 	    Vect_close (&Out);
 	    G_fatal_error ( "Cannot open database %s by driver %s", Fi->database, Fi->driver );
