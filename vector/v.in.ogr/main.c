@@ -114,7 +114,7 @@ main (int argc, char *argv[])
     layer_opt->type = TYPE_STRING;
     layer_opt->required = NO;
     layer_opt->multiple = YES;
-    layer_opt->description = "OGR layer name. If not given, available layers are printed + exit.\n"
+    layer_opt->description = "OGR layer name. If not given, all available layers are imported.\n"
 			   "\t\tESRI Shapefile: shapefile name\n"
 			   "\t\tMapInfo File: mapinfo file name";
 
