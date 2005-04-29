@@ -268,6 +268,9 @@ int execute(char *sql, cursor * c)
 	break;
 
     }
+    if ( st->command != SQLP_SELECT ) { /* because statement is released with cursor */
+        sqpFreeStmt(st);
+    }
 
     return DB_OK;
 }
