@@ -270,6 +270,10 @@ static FILE *open_env ( char *mode, int loc)
 	}
 	strcpy (buf, gisrc);
     } else if ( loc == G_VAR_MAPSET ) {
+	/* Warning: G_VAR_GISRC must be previously read -> */
+	/* TODO: better place ? */
+	read_env ( G_VAR_GISRC );  
+	
 	sprintf ( buf, "%s/%s/VAR", G_location_path(), G_mapset() );
     }
 		
