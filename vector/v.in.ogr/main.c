@@ -242,7 +242,7 @@ main (int argc, char *argv[])
 
     /* Open OGR DSN */
     Ogr_ds = OGROpen( dsn_opt->answer, FALSE, NULL );
-    if( Ogr_ds == NULL ) G_fatal_error ("Cannot open data source: %s", dsn_opt->answer);
+    if ( Ogr_ds == NULL ) G_fatal_error (_("Cannot open data source: %s"), dsn_opt->answer);
 
     /* Make a list of available layers */
     navailable_layers = OGR_DS_GetLayerCount(Ogr_ds);
@@ -287,7 +287,7 @@ main (int argc, char *argv[])
 		}
 	    }
 	    if ( layers[i] == -1 )
-                G_fatal_error ("Layer '%s' not available", layer_names[i]);
+                G_fatal_error ( _("Layer '%s' not available"), layer_names[i]);
 	}
     } else { /* use list of all layers */
 	nlayers = navailable_layers;
@@ -310,7 +310,7 @@ main (int argc, char *argv[])
 	   if ( i == 3 ) ymax=atof(spat_opt->answers[i]);
            arg_s_num++; i++;
         }
-        if ( arg_s_num != 4 ) G_fatal_error (" 4 parameters required for 'spatial' parameter.");
+        if ( arg_s_num != 4 ) G_fatal_error ( _(" 4 parameters required for 'spatial' parameter."));
 	G_debug( 2, "cut out with boundaries: xmin:%f ymin:%f xmax:%f ymax:%f",xmin,ymin,xmax,ymax);
 
 	/* in theory this could be an irregular polygon */
@@ -369,8 +369,8 @@ main (int argc, char *argv[])
 	 * to set up datum etc. */
         if ( GPJ_osr_to_grass( &cellhd, &proj_info, 
 			       &proj_units, Ogr_projection, 1) < 0 )
-	    G_fatal_error("Unable to convert input map projection to GRASS "
-			  "format; cannot create new location.");
+	    G_fatal_error (_("Unable to convert input map projection to GRASS "
+			  "format; cannot create new location."));
 	else		  
             G_make_location( outloc_opt->answer, &cellhd,
 			     proj_info, proj_units, NULL );
@@ -380,8 +380,8 @@ main (int argc, char *argv[])
         /* Projection only required for checking so convert non-interactively */
         if ( GPJ_osr_to_grass( &cellhd, &proj_info, 
 			       &proj_units, Ogr_projection, 0) < 0 )
-            G_warning("Unable to convert input map projection information to "
-		      "GRASS format for checking");
+            G_warning (_("Unable to convert input map projection information to "
+		      "GRASS format for checking"));
 
         /* Does the projection of the current location match the dataset? */
         /* G_get_window seems to be unreliable if the location has been changed */
@@ -456,16 +456,16 @@ main (int argc, char *argv[])
                              cellhd.proj, cellhd.zone );
             }
             sprintf( error_msg + strlen(error_msg), 
-    	             "\nYou can use the -o flag to %s to override this check.\n",
+    	             _("\nYou can use the -o flag to %s to override this check.\n"),
     	    	     G_program_name() );
             strcat( error_msg, 
-             "Consider to generate a new location with 'location' parameter"
-             " from input data set.\n" );
+             _("Consider to generate a new location with 'location' parameter"
+             " from input data set.\n") );
             G_fatal_error( error_msg );
         }
         else
-	    fprintf(stderr, "Projection of input dataset and current location "
-		            "appear to match.\nProceeding with import...\n");
+	    fprintf(stderr, _("Projection of input dataset and current location "
+		            "appear to match.\nProceeding with import...\n"));
    
     }
     OSRDestroySpatialReference(Ogr_projection);
@@ -574,7 +574,7 @@ main (int argc, char *argv[])
 		} else if( Ogr_ftype == OFTIntegerList ) {
 		    /* hack: treat as string */
 		    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, 40 );
-		    G_warning ( "Writing column <%s> with fixed length 40 chars (may be truncated)", Ogr_fieldname);
+		    G_warning (_("Writing column <%s> with fixed length 40 chars (may be truncated)"), Ogr_fieldname);
 		} else if( Ogr_ftype == OFTReal ) { 
 		    sprintf (buf, ", %s double precision", Ogr_fieldname );
 		} else if( Ogr_ftype == OFTString ) { 
@@ -590,9 +590,9 @@ main (int argc, char *argv[])
 		} else if( Ogr_ftype == OFTStringList ) {
 		    /* hack: treat as string */
 		    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, 40 );
-		    G_warning ( "Writing column <%s> with fixed length 40 chars (may be truncated)", Ogr_fieldname);
+		    G_warning (_("Writing column <%s> with fixed length 40 chars (may be truncated)"), Ogr_fieldname);
 		} else {
-		    G_warning ( "Column type not supported (%s)", Ogr_fieldname );
+		    G_warning (_("Column type not supported (%s)"), Ogr_fieldname );
 		    buf[0] = 0;
 		}
 		db_append_string ( &sql, buf);
@@ -613,7 +613,7 @@ main (int argc, char *argv[])
 	    }
 
 	    if ( db_create_index2(driver, Fi->table, cat_col_name ) != DB_OK )
-		G_warning ( "Cannot create index" );
+		G_warning (_("Cannot create index" ));
 
 	    if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
 		G_fatal_error ( _("Cannot grant privileges on table %s"), Fi->table );
@@ -655,7 +655,7 @@ main (int argc, char *argv[])
 			}
 		 
 		    } else {
-			/* G_warning ( "Column value not set" ); */
+			/* G_warning (_("Column value not set" )); */
 
 			/* TODO: change to 'NULL' once supported by dbf driver */
 			if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) { 
@@ -707,7 +707,7 @@ main (int argc, char *argv[])
 	Points = Vect_new_line_struct ();
 
         fprintf ( stderr, separator );
-	G_warning ( "Cleaning polygons, result is not guaranteed!\n");
+	G_warning (_("Cleaning polygons, result is not guaranteed!\n"));
 
         Vect_close ( &Map );
 	Vect_open_update (&Map, out_opt->answer, G_mapset());
@@ -890,8 +890,8 @@ main (int argc, char *argv[])
     Vect_close ( &Map );
 
     if (with_z && !z_flag->answer ) 
-	G_warning ( "Input data contains 3D features. Created vector is 2D only, "
-		    "use -z flag to import 3D vector.");
+	G_warning (_("Input data contains 3D features. Created vector is 2D only, "
+		    "use -z flag to import 3D vector."));
 
     exit(0) ;
 }
