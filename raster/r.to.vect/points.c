@@ -8,7 +8,7 @@
 #include "Vect.h"
 #include "global.h"
 
-int extract_points()
+int extract_points( int z_flag )
 {
     CELL	*cellbuf; 
     FCELL	*fcellbuf; 
@@ -58,6 +58,7 @@ int extract_points()
 		case  CELL_TYPE:
 		    if (G_is_c_null_value (cellbuf+col)) continue;
 		    val = cellbuf[col];
+		    dval = val;
 		    break;
 		case  FCELL_TYPE:
 		    if (G_is_f_null_value (fcellbuf+col)) continue;
@@ -76,7 +77,8 @@ int extract_points()
 	    }
 	    
 	    Vect_reset_line(Points);
-	    Vect_append_point(Points, x, y, 0.0);
+
+	    Vect_append_point(Points, x, y, dval);
 
 	    Vect_reset_cats(Cats);
 	    Vect_cat_set ( Cats, 1, cat);

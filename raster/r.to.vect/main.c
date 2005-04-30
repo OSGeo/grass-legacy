@@ -19,7 +19,7 @@ int main (int argc, char *argv[])
 {
     struct GModule *module;
     struct Option *in_opt, *out_opt, *feature_opt;
-    struct Flag *smooth_flg, *value_flg;  
+    struct Flag *smooth_flg, *value_flg, *z_flg;  
     int feature;
 
     G_gisinit (argv[0]);
@@ -53,6 +53,11 @@ int main (int argc, char *argv[])
     value_flg = G_define_flag();
     value_flg->key = 'v';
     value_flg->description = _("Use raster values as categories instead of unique sequence (CELL only)");
+    
+    z_flg = G_define_flag();
+    z_flg->key = 'z';
+    z_flg->description = _("Write raster values as z coordinate. Table is not created. "
+	                   "Currently supported only for points");
 
     if (G_parser (argc, argv)) exit (-1);
 
@@ -60,6 +65,10 @@ int main (int argc, char *argv[])
     feature = Vect_option_to_types ( feature_opt );
     smooth_flag = (smooth_flg->answer) ? SMOOTH : NO_SMOOTH;
     value_flag = value_flg->answer;
+
+    if ( z_flg->answer && feature != GV_POINT ) {
+	G_fatal_error ("z flag is supported only for points" );
+    }
 
     /* Open files */
     if ( (mapset = G_find_cell(in_opt->answer,"")) == NULL )
@@ -77,7 +86,11 @@ int main (int argc, char *argv[])
 	value_flag = 0;
     }
     
-    Vect_open_new (&Map, out_opt->answer, 0);
+    if ( z_flg->answer ) {
+        Vect_open_new (&Map, out_opt->answer, 1);
+    } else {
+        Vect_open_new (&Map, out_opt->answer, 0);
+    }
 
     Vect_hist_command ( &Map );
 
@@ -94,7 +107,9 @@ int main (int argc, char *argv[])
     db_init_string (&label);
 
     /* Create table */
-    if ( (feature & (GV_AREA | GV_POINT)) && (!value_flag || (value_flag && has_cats)) ) {
+    if ( (feature & (GV_AREA | GV_POINT)) && (!value_flag || (value_flag && has_cats)) 
+	 && !(z_flg->answer) ) 
+    {
 	char buf[1000];
 
 	Fi = Vect_default_field_info ( &Map, 1, NULL, GV_1TABLE );
@@ -165,7 +180,7 @@ int main (int argc, char *argv[])
         alloc_areas_bufs(row_length + 2);
 	extract_areas();
     } else { /* GV_POINT */
-	extract_points ();
+	extract_points ( z_flg->answer );
     }
     
     G_close_cell(input_fd);
