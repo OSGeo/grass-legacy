@@ -123,7 +123,7 @@ int write_boundary(struct COOR *seed);
 int write_area(struct area_table *, struct equiv_table *, int, int);
     
 /* points.c */
-int extract_points(void);
+int extract_points(int);
 
 /* util.c */
 struct COOR *move(struct COOR *);
