@@ -574,6 +574,7 @@ proc DmVector::query { node } {
 
 proc DmVector::WorkOnVector { node } {
     variable opt
+    variable bg
     
     set tree $Dm::tree
     set id [Dm::node_id $node]
@@ -589,10 +590,12 @@ proc DmVector::WorkOnVector { node } {
     if { !$opt($id,type_point) && !$opt($id,type_line) &&
          !$opt($id,type_boundary)  && !$opt($id,type_centroid) && 
          !$opt($id,type_area) && !$opt($id,type_face) } { return } 
-
-    set cmd "v.digit -n map=$opt($id,map)"
+    
+    set bg [exec d.save -o | cut -f1 -d# | tr {\n} {;}]
+    set bg "$bg"
     Dm::monitor
-    spawn $cmd
+    spawn v.digit -n map=$opt($id,map) bgcmd=$bg
+#    spawn $cmd
 }
 
 proc DmVector::duplicate { tree parent node id } {
