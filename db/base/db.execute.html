@@ -11,31 +11,35 @@ do not need to be spcified each time.
 <h2>EXAMPLES</h2>
 
 <em>Create a new table with columns 'cat' and 'soiltype':</em><br>
-<tt>echo 'create table soils ("cat" int, "soiltype" text)' | db.execute</tt>
-<br>or<br>
-<tt>cat file.sql | db.execute</tt>
+<tt>echo 'create table soils ("cat" integer, "soiltype" varchar(10) )' | <b>db.execute</b></tt>
 
 <p>
-
 <em>Create a new table using a file with SQL statements:</em><br>
 <b>db.execute driver</b><em>=odbc</em> <b>database=</b><em>g51test</em> 
 <b>input=</b><em>file.sql</em>
 
 <P>
 <em>Update attribute entries to new value based on SQL rule:</em><br>
-<tt>echo "UPDATE roads SET travelcost=5 WHERE cat=1" | db.execute</tt>
+<tt>echo "UPDATE roads SET travelcost=5 WHERE cat=1" | <b>db.execute</b></tt>
 <P>
 <em>Update attribute entries to new value based on SQL rule:</em><br>
-<tt>echo "UPDATE dourokukan SET testc=50 WHERE testc is NULL" | db.execute</tt>
+<tt>echo "UPDATE dourokukan SET testc=50 WHERE testc is NULL" | <b>db.execute</b></tt>
 
 <P>
 <em>Add new column to attribute table:</em><br>
-<tt>echo "ALTER TABLE roads ADD COLUMN length double" | db.execute</tt>
+<tt>echo "ALTER TABLE roads ADD COLUMN length double" | <b>db.execute</b></tt>
 
 <P>
 <em>Drop table (not supported by all drivers)</em><br>
-<tt>echo "DROP TABLE fmacopy" | db.execute</tt>
+<tt>echo "DROP TABLE fmacopy" | <b>db.execute</b></tt>
 
+<p>
+<em>Update attribute with multiple SQL instructions in file (e.g., file.sql,
+    instruction line must end with semicolon):</em><br>
+<tt>UPDATE roads SET travelcost=5 WHERE cat=1;</tt><br>
+<tt>UPDATE roads SET travelcost=2 WHERE cat=2;</tt><br>
+<br>
+<tt>cat file.sql | <b>db.execute</b></tt>
 
 <h2>SEE ALSO</h2>
 <em><a HREF="db.columns.html">db.columns</a>,
