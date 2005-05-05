@@ -100,6 +100,8 @@ if [ -n "$GIS_OPT_file" ] ; then
     E00NAME=`basename $GIS_OPT_file .e00`
     # to avoid CAPs problem:
     E00NAME=`basename $E00NAME .E00`
+    # avcimport only accepts 13 chars:
+    E00SHORTNAME="`echo $E00NAME | cut -b1-13`"
 fi
 
 #check if this is a split E00 file (.e01, .e02 ...):
@@ -148,15 +150,15 @@ if [ $MERGING -eq 1 ] ; then
   fi
 fi
 
-avcimport $GIS_OPT_file $E00NAME 2>&1 | grep 'Error parsing'
+avcimport $GIS_OPT_file $E00SHORTNAME 2>&1 | grep 'Error parsing'
 if [ $? -eq 1 ] ; then
    echo "E00 ASCII found and converted to Arc Coverage in current directory"
 else
    echo "E00 Compressed ASCII found. Will uncompress first..."
-   rm -rf $E00NAME info
+   rm -rf $E00SHORTNAME info
    e00conv $GIS_OPT_file $E00TMP.e00
    echo "...converted to Arc Coverage in current directory"
-   avcimport $E00TMP.e00 $E00NAME 2>/dev/null
+   avcimport $E00TMP.e00 $E00SHORTNAME 2>/dev/null
 fi
 
 ## let's import...
@@ -165,10 +167,10 @@ fi
 
 if [ "$GIS_OPT_type" = "point" ] ; then
         echo "Importing..."
-        v.in.ogr -o dsn=$E00NAME layer=LAB type=point output=$NAME
+        v.in.ogr -o dsn=$E00SHORTNAME layer=LAB type=point output=$NAME
 	if [ $? -eq 1 ] ; then
    	echo "An error occurred. Stop."
-   	rm -rf $E00TMP.e00 $E00NAME info 2>&1 > /dev/null
+   	rm -rf $E00TMP.e00 $E00SHORTNAME info 2>&1 > /dev/null
    	exit 1
 	fi
 fi
@@ -177,10 +179,10 @@ fi
 
 if [ "$GIS_OPT_type" = "line" ] ; then
         echo "Importing..."
-        v.in.ogr -o dsn=$E00NAME layer=ARC type=line output=$NAME
+        v.in.ogr -o dsn=$E00SHORTNAME layer=ARC type=line output=$NAME
 	if [ $? -eq 1 ] ; then
    	echo "An error occurred. Stop."
-   	rm -rf $E00TMP.e00 $E00NAME info 2>&1 > /dev/null
+   	rm -rf $E00TMP.e00 $E00SHORTNAME info 2>&1 > /dev/null
    	exit 1
 	fi
 fi
@@ -190,10 +192,10 @@ fi
 
 if [ "$GIS_OPT_type" = "area" ] ; then
         echo "Importing..."
-        v.in.ogr -o dsn=$E00NAME layer=LAB,ARC type=centroid,boundary output=$NAME
+        v.in.ogr -o dsn=$E00SHORTNAME layer=LAB,ARC type=centroid,boundary output=$NAME
 	if [ $? -eq 1 ] ; then
    	echo "An error occurred. Stop."
-   	rm -rf $E00TMP.e00 $E00NAME info 2>&1 > /dev/null
+   	rm -rf $E00TMP.e00 $E00SHORTNAME info 2>&1 > /dev/null
    	exit 1
 	fi
 fi
@@ -202,7 +204,7 @@ echo ""
 echo "Imported $GIS_OPT_type vector map <$NAME>."
 
 #### clean up the mess
-rm -rf $E00TMP.e00 $E00NAME info $E00NAME.cat.$E00TMP.e00 2>&1 > /dev/null
+rm -rf $E00TMP.e00 $E00SHORTNAME info $E00NAME.cat.$E00TMP.e00 2>&1 > /dev/null
 
 #### end
 echo 2>&1
