@@ -19,6 +19,7 @@
 #include "gis.h"
 #include "Vect.h"
 #include "dbmi.h"
+#include "glocale.h"
 
 #define printline(x) fprintf (stdout, " | %-74.74s |\n", x)
 #define divider(x) \
@@ -39,7 +40,7 @@ main (int argc, char *argv[])
 {
   struct GModule *module;
   struct Option *in_opt, *fieldopt;
-  struct Flag *histf, *columns;
+  struct Flag *histf, *columns, *gflag;
   struct Map_info Map;
   struct dig_head v_head;
   BOUND_BOX box;
@@ -52,11 +53,12 @@ main (int argc, char *argv[])
   dbString table_name;
   dbTable *table;
   int field, num_dblinks, ncols, col;
+  char tmp1[100], tmp2[100];
 
   G_gisinit (argv[0]);
 
   module = G_define_module();
-  module->description = "Outputs basic information about a user-specified vector map layer.";
+  module->description = _("Outputs basic information about a user-specified vector map layer.");
 
   /* get G_OPT_ from include/gis.h */
   in_opt = G_define_standard_option(G_OPT_V_MAP);
@@ -65,11 +67,15 @@ main (int argc, char *argv[])
 
   histf = G_define_flag ();
   histf->key             = 'h';
-  histf->description     = "Print vector history instead of info";
+  histf->description     = _("Print vector history instead of info");
 
   columns = G_define_flag();
   columns->key           = 'c';
-  columns->description   = "Print types/names of table columns for specified layer instead of info";
+  columns->description   = _("Print types/names of table columns for specified layer instead of info");
+
+  gflag = G_define_flag();
+  gflag->key            = 'g';
+  gflag->description    = _("Print vector map region only");
 
   if (G_parser(argc,argv))
     exit(1);
@@ -89,7 +95,20 @@ main (int argc, char *argv[])
       while ( Vect_hist_read ( buf, 1000, &Map ) != NULL ) {
 	 fprintf ( stdout, "%s\n", buf );
       }
-  } else {
+  } else if (gflag->answer){
+       Vect_get_map_box (&Map, &box );
+       G_format_northing (box.N, tmp1, Vect_get_proj(&Map));
+       G_format_northing (box.S, tmp2, Vect_get_proj(&Map));
+       fprintf(stdout, "north=%s\n", tmp1);
+       fprintf(stdout, "south=%s\n", tmp2);
+            
+       G_format_easting (box.E, tmp1, Vect_get_proj(&Map));
+       G_format_easting (box.W, tmp2, Vect_get_proj(&Map));
+       fprintf(stdout, "east=%s\n", tmp1);
+       fprintf(stdout, "west=%s\n", tmp2);
+       fprintf(stdout, "top=%f\n", box.T);
+       fprintf(stdout, "bottom=%f\n", box.B);
+     } else {
      if ( columns->answer ) {
       num_dblinks = Vect_get_num_dblinks(&Map);
       if (num_dblinks <= 0) {
