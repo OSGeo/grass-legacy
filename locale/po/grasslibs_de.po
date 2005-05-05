@@ -325,7 +325,7 @@ msgstr ""
 #: ../lib/gis/ask.c:462
 #, c-format
 msgid "Enter 'list -f' for "
-msgstr "Geben Sie 'list -f' für"
+msgstr "Geben Sie 'list -f' für "
 
 #: ../lib/gis/ask.c:464
 #, c-format
