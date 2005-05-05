@@ -18,6 +18,8 @@
 #
 #############################################################################
 #
+#   May 2005 - fixed wrong units parameter (Markus Neteler)
+#
 #   September 2004 - Added z exaggeration control (Michael Barton) 
 #   April 2004 - updated for GRASS 5.7 by Michael Barton 
 #
@@ -90,10 +92,9 @@
 #% option
 #%  key: units
 #%  type: string
-#%  description: Set scaling factor for lat./lon. regions  (default=not lat/lon).
+#%  description: Set scaling factor (applies to lat./long. locations only)
 #%  required : no
-#%  options: not lat/lon,meters,feet
-#%  answer: not lat/lon
+#%  options: meters,feet
 #% end
 
 if  [ -z "$GISBASE" ]
@@ -148,12 +149,14 @@ then
 	exit 1
 fi
 
-if [ "$GIS_OPT_units" = "meters (lat/lon)" ]
+#LatLong locations only:
+if [ "$GIS_OPT_units" = "meters" ]
 then
 scale=111120
 fi
 
-if [ "$GIS_OPT_units" = "feet (latlon)" ]
+#LatLong locations only:
+if [ "$GIS_OPT_units" = "feet" ]
 then
 scale=370400
 fi		
