@@ -952,7 +952,7 @@ back:
 
      *sites = i;
      cmd = G_malloc(100);
-     sprintf(cmd, "d.sites sitefile=%s color=black",sites_file_name);
+     sprintf(cmd, "d.vect %s color=black",sites_file_name);
      G_system(cmd);
      free(cmd);
 

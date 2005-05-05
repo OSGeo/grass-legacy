@@ -1,5 +1,4 @@
 /*
-*$Id$
 ************************************************************
 * MODULE: r.le.setup/setup.c                               *
 *         Version 5.0beta            Oct. 1, 2001          *
@@ -246,7 +245,7 @@ char *n1, *n2, *n3;
      G_system(cmd);
   }
   if(n3){
-     sprintf(cmd, "d.sites sitefile=%s color=black", n3);
+     sprintf(cmd, "d.vect %s color=black", n3);
      G_system(cmd);
   }
   free(cmd);

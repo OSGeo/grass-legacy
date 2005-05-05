@@ -64,6 +64,9 @@ char *argv[];
 
 				/* query for the map to be setup */
 
+  if (R_open_driver() != 0)
+      G_fatal_error ("No graphics device selected");
+      
   fprintf(stderr, "\n") ;
   fprintf(stderr, "OPTION   Raster map to use to setup sampling\n") ;
   fprintf(stderr, "     key:map\n") ;
@@ -111,11 +114,11 @@ char *argv[];
   				/* setup the current window for 
 				   display */
 
-  G_system(" d.colormode fixed");
+  /* G_system(" d.colormode fixed");*/
   G_system(" d.frame -e");
   Rw_l = (double)G_window_cols()/G_window_rows();
-  R_open_driver(); 
-  R_font("romant");
+  /*R_open_driver(); */
+  /* R_font("romant");*/
   G_get_set_window(&window);
   t0 = R_screen_top();
   b0 = R_screen_bot();
