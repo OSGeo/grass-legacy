@@ -3504,23 +3504,23 @@ msgstr ""
 
 #: ../raster/wildfire/r.ros/main.c:231
 msgid "Name of raster map containing fuel MODELs"
-msgstr "Name der Rasterkarte, die Treibstoff-MODELLE beinhalten."
+msgstr "Name der Rasterkarte, die Brennstoff-MODELLE beinhalten."
 
 #: ../raster/wildfire/r.ros/main.c:237
 msgid "Name of raster map containing the 1-HOUR fuel MOISTURE (%)"
-msgstr "Name der Rasterkarte, die die 1-Stunden Feuchtigkeit von Benzin enthält (%)."
+msgstr "Name der Rasterkarte, die die 1-Stunden Feuchtigkeit von Brennstoff enthält (%)."
 
 #: ../raster/wildfire/r.ros/main.c:243
 msgid "Name of raster map containing the 10-HOUR fuel MOISTURE (%)"
-msgstr "Name der Rasterkarte, die die 10-Stunden Feuchtigkeit von Benzin enthält (%)."
+msgstr "Name der Rasterkarte, die die 10-Stunden Feuchtigkeit von Brennstoff enthält (%)."
 
 #: ../raster/wildfire/r.ros/main.c:249
 msgid "Name of raster map containing the 100-HOUR fuel MOISTURE (%)"
-msgstr "von"
+msgstr "Name der Rasterkarte, die die 100-Stunden Feuchtigkeit von Brennstoff enthält (%)."
 
 #: ../raster/wildfire/r.ros/main.c:256
 msgid "Name of raster map containing LIVE fuel MOISTURE (%)"
-msgstr "Name der Rasterkarte, die die AKTUELLE Feuchtigkeit von Benzin enthält (%)."
+msgstr "Name der Rasterkarte, die die AKTUELLE Feuchtigkeit des lebenden Brennstoffs enthält (%)."
 
 #: ../raster/wildfire/r.ros/main.c:262
 msgid "Name of raster map containing midflame wind VELOCITYs (ft/min)"
@@ -3603,8 +3603,8 @@ msgid ""
 "Name of raster map containing fine Fuel MOISture of the cell receiving a "
 "spotting firebrand (%) (required w/ -s)"
 msgstr ""
-"Name der Rasterkarte, die die feine Benzinfeuchtigkeit für eine Zelle "
-"enthält, die durch einen Brand erreicht wird (%) (benötigt w/-s)."
+"Name der Rasterkarte, die die genaue Brennstofffeuchtigkeit einer Zelle "
+"enthält, die von einem Brand erreicht wird (%) (benötigt w/-s)."
 
 #: ../raster/wildfire/r.spread/main.c:175
 msgid "Basic sampling window SIZE needed to meet certain accuracy (3)"
