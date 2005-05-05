@@ -362,7 +362,6 @@ Vect_set_zone (struct Map_info *Map, int zone )
 }
 
 /*!
- \fn  int Vect_get_zone (struct Map_info *Map )
  \brief get projection zone from map header
  \return projection zone
  \param Map_info structure
@@ -371,6 +370,22 @@ int
 Vect_get_zone (struct Map_info *Map)
 {
     return (Map->head.plani_zone);
+}
+
+/*!
+ *  \brief get projection from map header
+ *  \param Map_info structure
+ *  \return Returns the projection type of map
+ *      PROJECTION_XY  0 - x,y (Raw imagery),
+ *      PROJECTION_UTM 1 - UTM   Universal Transverse Mercator,
+ *      PROJECTION_SP  2 - State Plane (in feet),
+ *      PROJECTION_LL  3 - Latitude-Longitude
+ *
+*/
+int
+Vect_get_proj (struct Map_info *Map)
+{
+    return (Map->proj);
 }
 
 /*!

@@ -134,6 +134,7 @@ int  Vect_set_scale (struct Map_info *, int );
 int  Vect_get_scale (struct Map_info *);
 int  Vect_set_zone (struct Map_info *, int );
 int  Vect_get_zone (struct Map_info *);
+int  Vect_get_proj (struct Map_info *);
 int  Vect_set_thresh (struct Map_info *, double );
 double Vect_get_thresh (struct Map_info *);
 int Vect_get_constraint_box ( struct Map_info *, BOUND_BOX *);
