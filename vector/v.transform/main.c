@@ -191,7 +191,7 @@ int main (int argc, char *argv[])
     sprintf (buf, "transformed from %s", old->answer);
     Vect_set_map_name ( &New, buf);
     
-    Vect_set_scale ( &New, 0 );
+    Vect_set_scale ( &New, 1 );
     Vect_set_zone ( &New, 0 );
     Vect_set_thresh ( &New, 0.0 );
     
