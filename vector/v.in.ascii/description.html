@@ -46,8 +46,8 @@ The order of coordinates is <BR><BR>
 In case that the input files does not contain any vector ID column,
 there is the possibility to auto-generate these IDs (categories). 
 For that, to automatically add an additional column 'cat', the 
-<em>catcol</em> parameter has to be set to the virtual column number 0 
-(<em>catcol=0</em>). The name for the auto-generated column is set to 'cat'.
+<em>cat</em> parameter has to be set to the virtual column number 0 
+(<em>cat=0</em>). The name for the auto-generated column is set to 'cat'.
 
 <P>
 <b>Importing from a spreadsheet</b><br>
@@ -106,8 +106,8 @@ Import into GRASS:
 <pre>
 cat coords.txt | v.in.ascii out=mymap
 </pre>
-As <em>catcol</em> is set to 0 by default, an extra column 'cat' containing the IDs will be
-auto-generated.
+As the <em>cat</em> option is set to 0 by default, an extra column 'cat'
+containing the IDs will be auto-generated.
 
 <p><BR>
 <b>Example 3</b><br>
@@ -123,7 +123,8 @@ Generate a 2D points vector file 'points.dat' as ASCII file:
 <P>
 Import into GRASS:
 <pre>
-cat points.dat | v.in.ascii out=mypoints xcol=2 ycol=3 catcol=1 columns='cat int, x double, y double, label varchar(20)'
+cat points.dat | v.in.ascii out=mypoints xcol=2 ycol=3 cat=1 \
+    columns='cat int, x double, y double, label varchar(20)'
 </pre>
 <P>
 <b>The module is reading from standard input, using the default '|' (pipe) delimiter.</b>
@@ -154,9 +155,9 @@ Generate a 3D points vector file 'points3d.dat' with attributes as ASCII file:
 <P>
 Import into GRASS:
 <pre>
-#As <em>catcol</em> is set to 0 by default, an extra column 'cat' containing
+#As <em>cat</em> is set to 0 by default, an extra column 'cat' containing
 #the IDs will be auto-generated (no need to define that):
-cat points3d.dat | v.in.ascii -z zcol=3 catcol=0 out=mypoints3D \
+cat points3d.dat | v.in.ascii -z zcol=3 cat=0 out=mypoints3D \
                    columns='x double, y double, z double, label_cz varchar(20), label_en varchar(20)'
 v.info -c mypoints3D
 v.info mypoints3D
@@ -168,10 +169,10 @@ v.info mypoints3D
 Generate points file by clicking onto the map:
 <pre>
 #For LatLong locations:
-d.where -d -l | awk '{printf "%f|%f|point\n", $1, $2}' | v.in.ascii out=points catcol=0 columns='x double, y double, label varchar(20)'
+d.where -d -l | awk '{printf "%f|%f|point\n", $1, $2}' | v.in.ascii out=points cat=0 columns='x double, y double, label varchar(20)'
 
 #For other projections:
-d.where | awk '{printf "%f|%f|point\n", $1, $2}' | v.in.ascii out=points catcol=0 columns='x double, y double, label varchar(20)'
+d.where | awk '{printf "%f|%f|point\n", $1, $2}' | v.in.ascii out=points cat=0 columns='x double, y double, label varchar(20)'
 </pre>
 The 'point' string (or some similar entry) is required to generate a database table.
 When simply piping the coordinates (and optionally height) without additional column(s) 
