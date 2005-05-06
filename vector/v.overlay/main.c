@@ -403,7 +403,7 @@ main (int argc, char *argv[])
 	Vect_map_add_dblink ( &Out, ofield[0], NULL, Fi->table, "cat", Fi->database, Fi->driver);
     }
 
-    fprintf ( stderr, "Buiding partial topology ...\n" );
+    fprintf ( stderr, "Building partial topology ...\n" );
     /* do not print output, because befor cleaning it is nonsense */
     Vect_build_partial ( &Out, GV_BUILD_BASE, NULL ); 
 
