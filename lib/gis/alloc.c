@@ -14,7 +14,7 @@
  *  \return void * 
  */
 
-void *G_malloc (int n)
+void *G_malloc (size_t n)
 {
     void *buf;
 
@@ -44,7 +44,7 @@ void *G_malloc (int n)
  *  \return void * 
  */
 
-void *G_calloc (int m,int n)
+void *G_calloc (int m, size_t n)
 {
     void *buf;
 
@@ -79,7 +79,7 @@ void *G_calloc (int m,int n)
  *  \return void * 
  */
 
-void *G_realloc (void *buf,int n)
+void *G_realloc (void *buf, size_t n)
 {
     if (n <= 0) n = 1;	/* make sure we get a valid request */
 
