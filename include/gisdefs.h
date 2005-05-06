@@ -39,9 +39,9 @@ char *G_adjust_Cell_head3(struct Cell_head *, int, int, int);
 char *G_align_window(struct Cell_head *, struct Cell_head *);
 
 /* alloc.c */
-void *G_malloc(int);
-void *G_calloc(int, int);
-void *G_realloc(void *, int);
+void *G_malloc(size_t);
+void *G_calloc(int, size_t);
+void *G_realloc(void *, size_t);
 void G_free(void *);
 
 /* alloc_cell.c */
