@@ -88,7 +88,7 @@ parse_command_line (int argc, char *argv[])
     
     flags.s = G_define_flag();
     flags.s->key = 's';
-    flags.s->description = "print only sql statements";	
+    flags.s->description = "only print sql statements";	
 
     if (G_parser(argc,argv)) exit(-1);
 
