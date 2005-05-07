@@ -1,5 +1,3 @@
-/* main.c */
-int main(int, char *[]);
 /* matrix.c */
 int product(double [MX], double, double [MX][MX], int);
 int setdiag(double [MX], int, double [MX][MX]);
