@@ -57,18 +57,18 @@ int parse_conn ( char *str, MYCONN *myconn )
 	i = 0;
 	while ( tokens[i] ) {
 	   G_debug (3, "token %d : %s", i, tokens[i] ); 
-	   if ( strncmp(tokens[i], "host", 4 ) == 0 )
+	   if ( strncmp(tokens[i], "host", (size_t)4 ) == 0 )
 	       myconn->host = G_store ( tokens[i] + 5 );
-	   else if ( strncmp(tokens[i], "port", 4 ) == 0 )
+	   else if ( strncmp(tokens[i], "port", (size_t)4 ) == 0 )
 	       myconn->port = atoi ( tokens[i] + 5 );
-	   else if ( strncmp(tokens[i], "socket", 6 ) == 0 )
+	   else if ( strncmp(tokens[i], "socket", (size_t)6 ) == 0 )
 	       myconn->socket = G_store ( tokens[i] + 7 );
-	   else if ( strncmp(tokens[i], "dbname", 6 ) == 0 )
+	   else if ( strncmp(tokens[i], "dbname", (size_t)6 ) == 0 )
 	       myconn->dbname = G_store ( tokens[i] + 7 );
-	   else if ( strncmp(tokens[i], "user", 4 ) == 0 )
+	   else if ( strncmp(tokens[i], "user", (size_t)4 ) == 0 )
 	       G_warning ( _("'user' in database definition is not supported, use db.login") );
 	      /* myconn->user = G_store ( tokens[i] + 5 ); */
-	   else if ( strncmp(tokens[i], "password", 8 ) == 0 )
+	   else if ( strncmp(tokens[i], "password", (size_t)8 ) == 0 )
 	       G_warning ( _("'password' in database definition is not supported, use db.login") );
 	      /* myconn->password = G_store ( tokens[i] + 9 ); */
 	   else 
@@ -86,7 +86,7 @@ int db__driver_open_database(handle)
      dbHandle *handle;
 {
     char *name, *user, *password;
-    char emsg[MYSQL_MSG];
+    char *emsg;
     dbConnection connection;
     MYCONN myconn;
     MYSQL *ret_conn;
@@ -127,17 +127,21 @@ int db__driver_open_database(handle)
     free ( user );
     free ( password );
 
-    if ( ret_conn == NULL ) {  
-	  snprintf(emsg, sizeof(emsg), "mysql_real_connect() error (%d): %s\n",
+    if ( ret_conn == NULL ) {
+	  G_asprintf(&emsg, "mysql_real_connect() error (%d): %s\n",
 					mysql_errno(&mysql_conn), mysql_error(&mysql_conn));
 	  report_error(emsg);
+          G_free(emsg);
+
 	  return DB_FAILED;
     }
 
     if ((res = mysql_list_tables(&mysql_conn, NULL)) == NULL) {
-	snprintf(emsg, sizeof(emsg), "Error: list tables: %s\n",
+	G_asprintf(&emsg, "Error: list tables: %s\n",
 		 mysql_error(&mysql_conn));
 	report_error(emsg);
+        G_free(emsg);
+
 	return DB_FAILED;
     }
 
