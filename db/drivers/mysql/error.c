@@ -15,13 +15,15 @@
 *****************************************************************************/
 
 #include <dbmi.h>
+#include "gis.h"
 #include "globals.h"
 
 void report_error(err)
      char *err;
 {
-    char msg[MYSQL_MSG];
+    char *msg;
 
-    snprintf(msg, sizeof(msg), "DBMI-MYSQL driver error: %s", err);
+    G_asprintf(&msg, "DBMI-MYSQL driver error: %s", err);
     db_error(msg);
+    G_free(msg);
 }

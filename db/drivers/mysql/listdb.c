@@ -26,7 +26,7 @@ int db__driver_list_databases(dbpath, npaths, dblist, dbcount)
      dbHandle **dblist;
      int *dbcount;
 {
-    char emsg[MYSQL_MSG];
+    char *emsg;
     char *name;
     dbConnection connection;
     int i;
@@ -53,17 +53,21 @@ int db__driver_list_databases(dbpath, npaths, dblist, dbcount)
     if (mysql_real_connect
 	(&mysql_conn, mysqlhost, connection.user, connection.password,
 	 db.name, 0, NULL, 0) == NULL) {
-	snprintf(emsg, sizeof(emsg), "Error: connect Mysql: %s\n",
+	G_asprintf(&emsg, "Error: connect Mysql: %s\n",
 		 mysql_error(&mysql_conn));
 	report_error(emsg);
+        G_free(emsg);
+
 	return DB_FAILED;
     }
 
 
     if ((res = mysql_list_dbs(&mysql_conn, NULL)) == NULL) {
-	snprintf(emsg, sizeof(emsg), "Error: list databases: %s\n",
+	G_asprintf(&emsg, "Error: list databases: %s\n",
 		 mysql_error(&mysql_conn));
 	report_error(emsg);
+        G_free(emsg);
+
 	return DB_FAILED;
     }
 

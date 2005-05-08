@@ -18,6 +18,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <dbmi.h>
+#include "gis.h"
 #include "globals.h"
 #include "proto.h"
 
@@ -52,7 +53,7 @@ int execute(char *sql, cursor * c)
 /* sqpPrintStmt(st); *//* debug output only */
 
 #ifdef UGLYHACK
-    if (!strncmp(st->stmt, "SELECT ", 7) || !strncmp(st->stmt, "select ", 7))
+    if (!strncmp(st->stmt, "SELECT ", (size_t)7) || !strncmp(st->stmt, "select ", (size_t)7))
 	st->command = SQLP_SELECT;
 
     memset(tb, '\0', sizeof(tb));
@@ -122,11 +123,14 @@ int execute(char *sql, cursor * c)
 
 int fire_mysql_cmd(char *stmt)
 {
-
+    char *emsg;
 
     if (mysql_query(&mysql_conn, stmt) < 0) {
-	snprintf(errMsg, sizeof(errMsg), "Error: sending MySQL command: %s\n",
+	G_asprintf(&emsg, "Error: sending MySQL command: %s\n",
 		 mysql_error(&mysql_conn));
+        strncpy(&errMsg, emsg, sizeof(errMsg));
+        G_free(emsg);
+
 	return DB_FAILED;
     }
 

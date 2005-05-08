@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <dbmi.h>
+#include "gis.h"
 #include "globals.h"
 #include "proto.h"
 
@@ -25,7 +26,7 @@ int add_table(char *table)
 {
     if (db.atables == db.ntables) {
 	db.atables += 15;
-	db.tables = (TABLE *) realloc(db.tables, db.atables * sizeof(TABLE));
+	db.tables = G_realloc(db.tables, db.atables * sizeof(TABLE));
     }
 
 
@@ -125,9 +126,13 @@ int load_table(int t, char *stmt)
     }
 
     if (mysql_query(&mysql_conn, stmt) < 0) {
+        char *emsg;
 
-	snprintf(errMsg, sizeof(errMsg), "Error:select MySQL: %s\n",
+	G_asprintf(&emsg, "Error:select MySQL: %s\n",
 		 mysql_error(&mysql_conn));
+        strncpy(&errMsg, emsg, sizeof(errMsg));
+        G_free(emsg);
+
 	return DB_FAILED;
     }
 
@@ -167,9 +172,14 @@ int load_table(int t, char *stmt)
 	    break;
 	default:
 	    if (!header_only) {
-		snprintf(errMsg, sizeof(errMsg),
+                char *emsg;
+
+		G_asprintf(&emsg,
 			 "Field %s can not be selected for query output: type %d not supported yet\n",
 			 fname, dtype);
+                strncpy(&errMsg, emsg, sizeof(errMsg));
+                G_free(emsg);
+
 		return DB_FAILED;
 	    }
 
@@ -186,13 +196,13 @@ int load_table(int t, char *stmt)
     if (!header_only) {
 
 	rows = db.tables[t].rows;
-	rows = (ROW *) malloc(nrws * sizeof(ROW));
+	rows = G_malloc(nrws * sizeof(ROW));
 	db.tables[t].arows = nrws;
 
 	i = 0;
 	while ((c_row = mysql_fetch_row(res)) != NULL) {
 	    rows[i].alive = TRUE;
-	    rows[i].values = (VALUE *) calloc(nflds, sizeof(VALUE));
+	    rows[i].values = G_calloc(nflds, sizeof(VALUE));
 
 	    for (j = 0; j < nflds; j++) {
 		val = &(rows[i].values[j]);
