@@ -1,13 +1,16 @@
 #include <dbmi.h>
+#include <stdio.h>
+#include "gis.h"
 #include "odbc.h"
 #include "globals.h"
 #include "proto.h"
-#include <stdio.h>
 
-db__driver_execute_immediate (sql)
-    dbString *sql;
+
+int
+db__driver_execute_immediate (dbString *sql)
 {
-    char *s, msg[OD_MSG], emsg[DB_MSG];
+    char *s, msg[OD_MSG];
+    char *emsg;
     cursor *c;
     SQLRETURN   ret;
     SQLINTEGER   err;     
@@ -23,8 +26,10 @@ db__driver_execute_immediate (sql)
     if ((ret != SQL_SUCCESS) && (ret != SQL_SUCCESS_WITH_INFO))
     {
 	SQLGetDiagRec(SQL_HANDLE_STMT, c->stmt, 1, NULL, &err, msg, sizeof(msg), NULL);
-	snprintf(emsg, sizeof(emsg), "SQLExecDirect():\n%s\n%s (%d)\n",s,msg,err);
+	G_asprintf(&emsg, "SQLExecDirect():\n%s\n%s (%d)\n", s, msg, err);
 	report_error(emsg);
+        G_free(emsg);
+
 	return DB_FAILED;
     }   
 

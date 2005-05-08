@@ -1,14 +1,16 @@
-#include "gis.h"
 #include <dbmi.h>
+#include <stdio.h>
+#include <string.h>
+#include "gis.h"
 #include "odbc.h"
 #include "globals.h"
 #include "proto.h" 
-#include <stdio.h>
 
-db__driver_open_database (handle)
-    dbHandle *handle;
+int
+db__driver_open_database (dbHandle *handle)
 {
-    char        *name, msg[OD_MSG], emsg[DB_MSG];
+    char        *name, msg[OD_MSG];
+    char        *emsg = NULL;
     SQLRETURN   ret; 
     SQLINTEGER  err;
     dbConnection connection;
@@ -32,8 +34,10 @@ db__driver_open_database (handle)
     if ((ret != SQL_SUCCESS) && ( ret != SQL_SUCCESS_WITH_INFO) )
     {
         SQLGetDiagRec( SQL_HANDLE_DBC, ODconn, 1, NULL, &err, msg, sizeof(msg), NULL );
-	snprintf( emsg, sizeof(emsg), "SQLConnect():\n%s (%d)\n", msg, err );
+	G_asprintf(&emsg, "SQLConnect():\n%s (%d)\n", msg, err);
 	report_error( emsg );
+        G_free(emsg);
+
 	return DB_FAILED;
     }    
 

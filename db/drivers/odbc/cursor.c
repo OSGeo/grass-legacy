@@ -1,12 +1,13 @@
 #include <dbmi.h>
+#include <stdio.h>
+#include "gis.h"
 #include "odbc.h"
 #include "globals.h"
 #include "proto.h"
-#include <stdio.h>
+
 
 int
-db__driver_close_cursor(dbc)
-   dbCursor *dbc;
+db__driver_close_cursor(dbCursor *dbc)
 {
     cursor *c;
 
@@ -25,9 +26,9 @@ db__driver_close_cursor(dbc)
 cursor * alloc_cursor()
 {
     cursor     *c;
-    SQLHSTMT   stmt;    
     SQLRETURN  ret;
-    char       msg[OD_MSG], emsg[DB_MSG];
+    char       msg[OD_MSG];
+    char       *emsg = NULL;
     SQLINTEGER err;
 
     /* allocate the cursor */
@@ -42,8 +43,10 @@ cursor * alloc_cursor()
     if ((ret != SQL_SUCCESS) && (ret != SQL_SUCCESS_WITH_INFO))
     {
         SQLGetDiagRec(SQL_HANDLE_DBC, ODconn, 1, NULL, &err, msg, sizeof(msg), NULL);
-        snprintf(emsg, sizeof(emsg), "AllocStatement()\n%s (%d)\n",msg,err);
+        G_asprintf(&emsg, "AllocStatement()\n%s (%d)\n", msg, err);
         report_error(emsg);
+        G_free(emsg);
+
         return c;
     }  
 
@@ -63,7 +66,7 @@ void free_cursor( cursor *c)
 {
     db_drop_token(c->token);
     SQLFreeHandle(SQL_HANDLE_STMT, c->stmt);  
-    free(c);  
+    G_free(c);  
 }
 
 
