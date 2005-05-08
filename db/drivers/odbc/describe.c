@@ -7,16 +7,17 @@
 
 int set_column_type ( dbColumn *column, int otype );   
 
-db__driver_describe_table (table_name, table)
+int db__driver_describe_table (table_name, table)
     dbString *table_name;
     dbTable **table;
 {
-    char        *name;
-    SQLINTEGER  indi, err;    
+    char        *name = NULL;
+    SQLINTEGER  err;    
     SQLRETURN   ret;
     cursor      *c;
-    char        s[100], priv[100];
-    char        msg[OD_MSG], emsg[DB_MSG];
+    char        s[100];
+    char        msg[OD_MSG];
+    char        *emsg;
 
     /* allocate cursor */
     c = alloc_cursor();
@@ -33,7 +34,7 @@ db__driver_describe_table (table_name, table)
     if ((ret != SQL_SUCCESS) && (ret != SQL_SUCCESS_WITH_INFO))
     {
         SQLGetDiagRec(SQL_HANDLE_STMT, c->stmt, 1, NULL, &err, msg, sizeof(msg), NULL);        
-	snprintf(emsg, sizeof(emsg), "SQLExecDirect():\n%s\n%s (%d)\n",s,msg,err);
+	G_asprintf(&emsg, "SQLExecDirect():\n%s\n%s (%d)\n",s,msg,err);
         report_error(emsg);
         return DB_FAILED;
     }

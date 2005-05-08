@@ -1,8 +1,11 @@
 #include <dbmi.h>
+#include <stdio.h>
+#include <string.h>
+#include "gis.h"
 #include "odbc.h"
 #include "globals.h"
 #include "proto.h"
-#include <stdio.h>
+
 
 /* NAME: db_driver_create_table 
  * INPUT:
@@ -93,13 +96,14 @@ dbString *cmd;
   }
 }*/
 
-db__driver_drop_table (name)
+int db__driver_drop_table (name)
 dbString *name;
 {
     char        cmd[200];
     cursor      *c;
     SQLRETURN   ret;
-    char        msg[OD_MSG], emsg[DB_MSG];    
+    char        msg[OD_MSG];
+    char        *emsg = NULL;    
     SQLINTEGER  err;  
     SQLCHAR     ttype[50], *tname;
     SQLINTEGER  nrow=0;
@@ -129,8 +133,10 @@ dbString *name;
 
     if ( nrow == 0 )
     {
-        snprintf(emsg, sizeof(emsg),"Table %s doesn't exist\n",tname);
+        G_asprintf(&emsg, "Table %s doesn't exist\n", tname);
         report_error(emsg);
+        G_free(emsg);
+
         return DB_FAILED;
     }
     
@@ -147,8 +153,10 @@ dbString *name;
     }
     else
     {
-        snprintf(emsg, sizeof(emsg),"Table %s isn't 'TABLE' or 'VIEW' but %s\n",tname, ttype);
+        G_asprintf(&emsg, "Table %s isn't 'TABLE' or 'VIEW' but %s\n",tname, ttype);
         report_error(emsg);
+        G_free(emsg);
+
         return DB_FAILED;
     }
     
@@ -158,8 +166,10 @@ dbString *name;
     if ((ret != SQL_SUCCESS) && (ret != SQL_SUCCESS_WITH_INFO))
     {
         SQLGetDiagRec(SQL_HANDLE_STMT, c->stmt,1, NULL, &err,msg,sizeof(msg),NULL);
-        snprintf(emsg, sizeof(emsg),"SQLExecDirect():\n%s\n%s (%d)\n",cmd,msg,err);
+        G_asprintf(&emsg, "SQLExecDirect():\n%s\n%s (%d)\n", cmd, msg, err);
         report_error(emsg);
+        G_free(emsg);
+
         return DB_FAILED;
     }
 			 

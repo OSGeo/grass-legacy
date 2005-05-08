@@ -8,7 +8,8 @@ db__driver_create_table (dbTable *table)
 {
     dbString sql;
     cursor *c;
-    char msg[OD_MSG], emsg[DB_MSG];
+    char msg[OD_MSG];
+    char *emsg = NULL;
     SQLRETURN   ret;
     SQLINTEGER   err;
     
@@ -27,8 +28,10 @@ db__driver_create_table (dbTable *table)
 
     if ((ret != SQL_SUCCESS) && (ret != SQL_SUCCESS_WITH_INFO)) {
 	SQLGetDiagRec(SQL_HANDLE_STMT, c->stmt, 1, NULL, &err, msg, sizeof(msg), NULL);
-	snprintf(emsg, sizeof(emsg), "SQLExecDirect():\n%s\n%s (%d)\n", db_get_string(&sql), msg, err);
+	G_asprintf(&emsg, "SQLExecDirect():\n%s\n%s (%d)\n", db_get_string(&sql), msg, err);
 	report_error(emsg);
+        G_free(emsg);
+
 	return DB_FAILED;
     }
 
