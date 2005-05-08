@@ -143,7 +143,19 @@ care of following rules:
 	Could somebody please add others (please verify that they are
 	useful and safe first)
 
-10. Don't use the C++ comment style! This confuses several compilers.
+10. Use the GRASS library function G_asprintf() instead of the 
+    standard C functions asprintf(), vsnprintf() and snprintf().  These 
+    functions are not portable or have other issues.  Example:
+
+    char *msg;
+
+    G_asprintf(&msg, "%s", parameters);
+    do_something_with_msg();
+    G_free(msg);
+
+    Note that you should free memory when G_asprintf() is used.
+
+11. Don't use the C++ comment style! This confuses several compilers.
     Use instead:
        /* C-comments */
 
@@ -159,47 +171,47 @@ care of following rules:
       make htmldocs
     ). See lib/gis/*.c for examples.
 
-11. PLEASE take the time to add comments throughout your code explaining what
+12. PLEASE take the time to add comments throughout your code explaining what
     the code is doing. It will save a HUGE amount of time and frustration for
     other programmers that may have to change your code in the future.
     
-12. Platform dependent code:
+13. Platform dependent code:
     Do not remove #ifdef __CYGWIN__ and/or #ifndef __CYGWIN__ lines and 
     their encapsulated lines from source code (one example was that someone
     removed drand48 definition.)
 
-13. Make sure a new line is at the end of each file
+14. Make sure a new line is at the end of each file
 
-14. When writing Makefiles, use the current standard
+15. When writing Makefiles, use the current standard
 
     Example: see raster/r.info/Makefile or others
 
-15. Have a look at ./INSTALL
+16. Have a look at ./INSTALL
 
-16. Have a function included in your module which writes to the history
+17. Have a function included in your module which writes to the history
     file of the map (e.g. command line, parameters etc.). See eg
     raster/r.slope.aspect/main.c
 
     (the same applies to vector modules!)
 
-17. Standard parser options: use G_define_standard_option() whenever possible
+18. Standard parser options: use G_define_standard_option() whenever possible
     to define standard module command line options. This will save you time,
     create fewer bugs, and make things easier on the translators.
 
-18. Place the documentation in HTML format into description.html
+19. Place the documentation in HTML format into description.html
     The easiest way to do this is to study an existing HTML page
     (to get the page style).
     
     The online WWW man pages will be updated every Saturday by CVS.
 
-19. Add/update, if required the related d.m menu:
+20. Add/update, if required the related d.m menu:
      display/d.m/menu.tcl
 
-20. If you write a shell script: as a general principle, shell variables
+21. If you write a shell script: as a general principle, shell variables
     should almost always be quoted.
     Use only secure temp files, see g.tempfile and scripts/* for examples.
 
-21. If you write a shell script and search for a command in $PATH, do NOT
+22. If you write a shell script and search for a command in $PATH, do NOT
     use the "which" command or the "type -p" command. Both commands are not
     supported on all platforms, thus causing problems for some people. As an
     alternative, please use code similar to the following shell script snippet
@@ -222,7 +234,7 @@ care of following rules:
 	    fi
 	done
 
-22. Use "GRASS_TCLSH" and "GRASS_WISH" environment variables instead of
+23. Use "GRASS_TCLSH" and "GRASS_WISH" environment variables instead of
     "tclsh" and "wish" at the start of Tcl/Tk scripts. This allows users to
     override the default names, so that developers don't need worry about the
     shell names.
@@ -240,14 +252,14 @@ care of following rules:
 	# the next line restarts using wish \
 	exec $GRASS_WISH "$0" "$@"
 
-23. For consistency, use README rather than README.txt for any README files.
+24. For consistency, use README rather than README.txt for any README files.
 
-24. GRASS/Environment variables:
+25. GRASS/Environment variables:
     If you add a new variable, please follow the naming convention.
     All variables are described in
     lib/init/variables.html
 
-25. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
+26. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
     You can re-check before submission with 'cvs diff':
 
     Either unified ("diff -u") or context ("diff -c") format. "Plain"
@@ -259,13 +271,13 @@ care of following rules:
     "cvs diff display/d.vect/main.c"; that way, the diff will
     include the pathname rather than just "main.c".
 
-26. Tell the other developers about the new code using the following e-mail:
+27. Tell the other developers about the new code using the following e-mail:
     grass5@grass.itc.it
  
     To subscribe to this mailing list, see
     http://grass.itc.it/devel/index.php
 
-27. In case of questions feel free to contact the developers at the above
+28. In case of questions feel free to contact the developers at the above
     mailing list.
     http://grass.itc.it/devel/index.php#submission
 
