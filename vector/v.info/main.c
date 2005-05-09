@@ -191,7 +191,7 @@ main (int argc, char *argv[])
       }
 
       printline ("");
-      sprintf (line, "  Projection: %s (zone %d)", G_database_projection_name(), G_zone());
+      sprintf (line, "  Projection: %s (zone %d)", Vect_get_proj_name(&Map), Vect_get_zone(&Map));
       printline (line);
 
       Vect_get_map_box (&Map, &box );
