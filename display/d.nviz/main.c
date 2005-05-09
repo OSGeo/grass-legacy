@@ -1,6 +1,4 @@
 /*
-* $Id$
-*
 * Copyright (C) 2000 by the GRASS Development Team
 * Author: Bob Covill <bcovill@tekmap.ns.ca>
 * 
@@ -29,6 +27,7 @@
 #include "display.h"
 #include "raster.h"
 #include "local.h"
+#include "glocale.h"
 
 int cut_val, frame = 0;
 int height_flag = 0;
@@ -43,11 +42,10 @@ FILE *fp, *fp2;
 
 int main(int argc, char *argv[])
 {
-    char *name, *outfile, *mapset, msg[256];
+    char *name, *outfile, *mapset;
     int fd, projection;
     char buf[50], buf1[1024], buf2[1024];
     int screen_x, screen_y, button;
-    char errbuf[256];
     int i, k;
     int frame_start = 0;
     double e1, e2, n1, n2;
@@ -66,7 +64,7 @@ int main(int argc, char *argv[])
 
     /* Set description */
     module = G_define_module();
-    module->description = "" "Create fly-through script to run in NVIZ";
+    module->description = _("" "Create fly-through script to run in NVIZ");
 
     parm.opt1 = G_define_option();
     parm.opt1->key = "input";
@@ -74,19 +72,19 @@ int main(int argc, char *argv[])
     parm.opt1->required = YES;
     parm.opt1->multiple = NO;
     parm.opt1->gisprompt = "old,cell,raster";
-    parm.opt1->description = "Name of existing raster map";
+    parm.opt1->description = _("Name of existing raster map");
 
     parm.output = G_define_option();
     parm.output->key = "output";
     parm.output->type = TYPE_STRING;
     parm.output->required = YES;
-    parm.output->description = "Name of output script";
+    parm.output->description = _("Name of output script");
 
     parm.name = G_define_option();
     parm.name->key = "name";
     parm.name->type = TYPE_STRING;
     parm.name->required = NO;
-    parm.name->description = "Prefix of output images (default = NVIZ)";
+    parm.name->description = _("Prefix of output images (default = NVIZ)");
 
     parm.route= G_define_option();
     parm.route->key = "route";
@@ -94,66 +92,64 @@ int main(int argc, char *argv[])
     parm.route->required = NO;
     parm.route->multiple = YES;
     parm.route->key_desc = "east,north";
-    parm.route->description = "Route coordinates (east,north)";
+    parm.route->description = _("Route coordinates (east,north)");
 
     parm.dist = G_define_option();
     parm.dist->key = "dist";
     parm.dist->type = TYPE_DOUBLE;
     parm.dist->required = YES;
-    parm.dist->description = "Camera layback distance";
+    parm.dist->description = _("Camera layback distance (in map units)");
 
     parm.ht = G_define_option();
     parm.ht->key = "ht";
     parm.ht->type = TYPE_DOUBLE;
     parm.ht->required = YES;
-    parm.ht->description = "Camera height above terrain";
+    parm.ht->description = _("Camera height above terrain");
 
     parm.frames = G_define_option();
     parm.frames->key = "frames";
     parm.frames->type = TYPE_INTEGER;
     parm.frames->required = YES;
-    parm.frames->description = "Number of frames";
+    parm.frames->description = _("Number of frames");
 
     parm.start = G_define_option();
     parm.start->key = "start";
     parm.start->type = TYPE_INTEGER;
     parm.start->required = NO;
-    parm.start->description = "Start frame number (default=0)";
+    parm.start->description = _("Start frame number (default=0)");
 
 
     parm.i = G_define_flag();
     parm.i->key = 'i';
-    parm.i->description = "Interactively select route";
+    parm.i->description = _("Interactively select route");
 
     parm.f = G_define_flag();
     parm.f->key = 'f';
-    parm.f->description = "Full render -- Save images";
+    parm.f->description = _("Full render -- Save images");
 
     parm.c = G_define_flag();
     parm.c->key = 'c';
-    parm.c->description = "Fly at constant elevation (ht)";
+    parm.c->description = _("Fly at constant elevation (ht)");
 
     parm.k = G_define_flag();
     parm.k->key = 'k';
-    parm.k->description = "Output KeyFrame file";
+    parm.k->description = _("Output KeyFrame file");
 
     parm.o = G_define_flag();
     parm.o->key = 'o';
-    parm.o->description = "Render images off-screen";
+    parm.o->description = _("Render images off-screen");
 
     parm.e = G_define_flag();
     parm.e->key = 'e';
-    parm.e->description = "Enable vector and sites drawing";
+    parm.e->description = _("Enable vector and sites drawing");
 
 
     if (G_parser(argc, argv))
 	exit(-1);
 
 /* check arguments */
-    if ((!parm.i->answer) && (!parm.route->answer)) {
-	sprintf(msg, "Either -i flag and/or route parameter must be used.");
-	G_fatal_error(msg);
-    }
+    if ((!parm.i->answer) && (!parm.route->answer))
+	G_fatal_error( _("Either -i flag and/or route parameter must be used"));
 
 /* get GRASS parameters */
     G_get_window(&window);
@@ -174,10 +170,8 @@ int main(int argc, char *argv[])
 	height_flag = 1;
     if (parm.k->answer)
 	key_frames = 1;
-    if (parm.o->answer && !parm.f->answer) {
-	sprintf(msg, "Off-screen only available with full render mode\n");
-	G_fatal_error(msg);
-    }
+    if (parm.o->answer && !parm.f->answer)
+	G_fatal_error( _("Off-screen only available with full render mode"));
     if (parm.o->answer)
 	off_screen = 1;
 
@@ -190,14 +184,10 @@ int main(int argc, char *argv[])
     name = parm.opt1->answer;
 
 /* Open Raster File*/
-    if (NULL == (mapset = G_find_cell2(name, ""))) {
-	sprintf(msg, "Cannot find mapset for %s \n", name);
-	G_fatal_error(msg);
-    }
-    if (0 > (fd = G_open_cell_old(name, mapset))) {
-	sprintf(msg, "Cannot open File %s\n", name);
-	G_fatal_error(msg);
-    }
+    if (NULL == (mapset = G_find_cell2(name, "")))
+	G_fatal_error( _("Cannot find mapset for %s"), name);
+    if (0 > (fd = G_open_cell_old(name, mapset)))
+	G_fatal_error( _("Cannot open File %s"), name);
 
 /* Set Image name */
     if (parm.name->answer)
@@ -209,11 +199,8 @@ int main(int argc, char *argv[])
 /* Open ASCII file for output */
     outfile = parm.output->answer;
 
-    if (NULL == (fp = fopen(outfile, "w"))) {
-	sprintf(errbuf, "Not able to open file for [%s]", outfile);
-	G_fatal_error(errbuf);
-    }
-
+    if (NULL == (fp = fopen(outfile, "w")))
+	G_fatal_error( _("Not able to open file for [%s]"), outfile);
 
 /* Get Raster Type */
     data_type = G_raster_map_type(name, mapset);
@@ -258,7 +245,7 @@ int main(int argc, char *argv[])
     if (parm.i->answer) {
 	int count = 0;
 	if (R_open_driver() != 0)
-		G_fatal_error ("No graphics device selected");
+		G_fatal_error ( _("No graphics device selected"));
 	D_setup(0);
 
 	G_setup_plot(D_get_d_north(),
@@ -288,8 +275,8 @@ int main(int argc, char *argv[])
 	    }
 	    else {
 		if (e2 == -9999. || n2 == -9999.) {
-		    sprintf(msg, "You must select more than one point\n");
-		    G_fatal_error(msg);
+		    G_fatal_error( _("You must select more than one point"));
+		    
 		}
 		break;
 	    }
@@ -306,8 +293,8 @@ int main(int argc, char *argv[])
 	}
 
 	if (count < 4) {
-	    sprintf(msg, "You must select at least four points\n");
-	    G_fatal_error(msg);
+	    G_fatal_error( _("You must select at least four points"));
+	    
 	}
 
 	R_close_driver();
@@ -323,8 +310,8 @@ int main(int argc, char *argv[])
 
 	if (k < 6) {
 /* Only one coordinate pair supplied */
-	    sprintf(msg, "You must provide at least four points %d\n", k);
-	    G_fatal_error(msg);
+	    G_fatal_error( _("You must provide at least four points %d"), k);
+	    
 	}
 	else {
 	    for (i = 0; i <= k - 2; i += 2) {
