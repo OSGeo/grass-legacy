@@ -19,6 +19,9 @@
 #include <string.h>
 #include "gis.h"
 #include "Vect.h"
+#include "glocale.h"
+
+static int lookup(char *, char *, char *, int);
 
 /*!
  \fn int Vect_print_header (struct Map_info *Map)
@@ -361,6 +364,7 @@ Vect_set_zone (struct Map_info *Map, int zone )
     return (0);
 }
 
+
 /*!
  \brief get projection zone from map header
  \return projection zone
@@ -387,6 +391,38 @@ Vect_get_proj (struct Map_info *Map)
 {
     return (Map->proj);
 }
+
+
+/*!
+ * \brief query cartographic projection name of vector map
+ *
+ * Returns a pointer to a string which is a printable name for
+ * projection code <b>proj</b> (as returned by <i>Vect_get_proj()</i>). Returns
+ * NULL if <b>proj</b> is not a valid projection.
+ *
+ *  \param proj
+ *  \return char * 
+ */
+
+char *Vect_get_proj_name (struct Map_info *Map)
+{
+    int n;
+    static char name[256];
+    char *G__projection_name();
+
+    switch(n=Vect_get_proj(Map))
+    {
+    case PROJECTION_XY:
+    case PROJECTION_UTM:
+    case PROJECTION_LL:
+    case PROJECTION_SP:
+	return G__projection_name(n);
+    }
+    if(!lookup (PROJECTION_FILE, "name", name, sizeof(name)))
+	strcpy (name, _("Unknown projection"));
+    return name;
+}
+
 
 /*!
  \fn int Vect_set_thresh (struct Map_info *Map, double thresh )
@@ -416,3 +452,11 @@ Vect_get_thresh (struct Map_info *Map)
 }
 
 
+/* from lib/gis/proj3.c */
+static int lookup(char *file, char *key, char *value, int len)
+{
+    char path[1024];
+
+    G__file_name (path, "", file, "PERMANENT");
+    return G_lookup_key_value_from_file(path, key, value, len) == 1;
+}
