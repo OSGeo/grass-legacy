@@ -123,7 +123,7 @@ if [ "$METAKEY"   = "-mo " ] ; then
 fi
 
 WKT=`g.proj -wf`
-if [ -n $WKT ] ; then
+if [ -n "$WKT" ] ; then
   PROJECTION="-a_srs '${WKT}'"
 fi
 
