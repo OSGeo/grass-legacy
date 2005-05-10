@@ -1929,7 +1929,7 @@ proc keyanimLoadAnim { base } {
                         set name [lindex $k 5]
                         set value3 [lindex $name 1]
 		#Set Camera position -- TO
-		Nset_focus $value1 $value2 $value3
+		Nset_viewdir $value1 $value2 $value3
                 #Set FOV
                         set name [lindex $k 6]
                         set value1 [lindex $name 1]
