@@ -206,6 +206,14 @@ int execute(char *sql, cursor * c)
 	dbrows[row].values =
 	    (VALUE *) calloc(db.tables[tab].ncols, sizeof(VALUE));
 	dbrows[row].alive = TRUE;
+        
+	/* set to null */
+	for (i = 0; i < db.tables[tab].ncols; i++) {
+      	    VALUE *dbval;
+
+            dbval = &(dbrows[row].values[i]);
+	    dbval->is_null = 1;
+	}
 
 	/* set values */
 	for (i = 0; i < st->nVal; i++) {
