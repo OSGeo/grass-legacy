@@ -256,12 +256,17 @@ if [ $CREATE_POINTS -eq 1 ] ; then
     	echo "No projection transformation performed" 1>&2
     	cp "${TMP}.base" "${TMP}.P_base"
     else
-    	echo "Attempting waypoint projection transform with cs2cs" 1>&2
-    	cs2cs -f %.7f $IN_PROJ +to $OUT_PROJ < "${TMP}.base" > "${TMP}.P_base"
-    	if [ $? -ne 0 ] ; then
-    	    echo "Projection transform failed, retaining WGS84" 1>&2
-    	    cp -f "${TMP}.base" "${TMP}.P_base"
-    	fi
+	echo "Attempting waypoint projection transform with cs2cs" 1>&2
+	cs2cs -f %.7f $IN_PROJ +to $OUT_PROJ < "${TMP}.base" > "${TMP}.P_base"
+	EXITCODE=$?
+	# check if transform REALLY worked (e.g. grid file not found)
+	if [ -n "`head -1 "${TMP}.P_base" | grep "^*"`" ] ; then
+	    EXITCODE=1
+	fi
+	if [ $EXITCODE -ne 0 ] ; then
+	    echo "Projection transform failed, retaining WGS84" 1>&2
+	    cp -f "${TMP}.base" "${TMP}.P_base"
+	fi
     fi
     cat "${TMP}.P_base" | awk '{print $1 "|" $2}' > "${TMP}.vertices"
 
@@ -348,7 +353,12 @@ else # CREATE_LINES
     else
     	echo "Attempting waypoint projection transform with cs2cs" 1>&2
     	cs2cs -tL -f %.7f $IN_PROJ +to $OUT_PROJ < "${TMP}.base" > "${TMP}.P_mid"
-    	if [ $? -ne 0 ] ; then
+	EXITCODE=$?
+	# check if transform REALLY worked (e.g. grid file not found)
+	if [ -n "`head -1 "${TMP}.P_mid" | grep "^*"`" ] ; then
+	    EXITCODE=1
+	fi
+    	if [ $EXITCODE -ne 0 ] ; then
     	    echo "Projection transform failed, retaining WGS84" 1>&2
 	    cat "${TMP}.base" | awk 'BEGIN {;} $1=="L" { print } ; \
 		$1!="L" { printf(" %.7f %.7f\n", $1, $2) } END {;}' > "${TMP}.P_base"
@@ -399,7 +409,17 @@ EOF
 	    exit 1
 	fi
 
-# check that 'db.connect -p' exists first? or maybe with 'g.findfile element=. file=VAR'?
+	# create db links if they don't exist
+	DRIVER="`db.connect -p | grep '^driver:' | cut -f2 -d:`"
+	DATABASE="`db.connect -p | grep '^database:' | cut -f2 -d:`"
+	if [ "$DRIVER" = "(null)" ] || [ "$DATABASE" = "(null)" ] ; then
+	    echo "Setting default database driver to DBF."
+	    db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
+	fi
+	DRIVER="`db.connect -p | grep '^driver:' | cut -f2 -d:`"
+	if [ "$DRIVER" = "dbf" ] && [ ! -d "$LOCATION/dbf/" ] ; then
+	    mkdir "$LOCATION/dbf/"
+	fi
 
 	echo "Creating new table.."
 	echo "CREATE TABLE $NAME ($ATTR_COLS)" | db.execute
