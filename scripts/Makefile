@@ -37,7 +37,8 @@ SUBDIRS = \
 	v.db.reconnect.all \
 	v.in.garmin \
 	v.in.e00 \
-	v.in.sites.all
+	v.in.sites.all \
+	v.report
 
 default: subdirs
 
