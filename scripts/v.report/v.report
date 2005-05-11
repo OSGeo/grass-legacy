@@ -1,0 +1,104 @@
+#!/bin/sh
+#
+############################################################################
+#
+# MODULE:	v.report
+# AUTHOR(S):	Markus Neteler
+# PURPOSE:	Generates geometry statistics for vector maps
+# COPYRIGHT:	(C) 2005 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
+
+#%Module
+#%  description: Generates geometry statistics for vectors
+#%End
+#%option
+#% key: map
+#% type: string
+#% gisprompt: old,vector,vector
+#% description: Input vector map
+#% required: yes
+#%end
+#%option
+#% key: layer
+#% type: integer
+#% answer: 1
+#% description: Layer number
+#% required: no
+#%end
+#%option
+#% key: option
+#% type: string
+#% description: Value to calculate
+#% options: area,length,coor
+#% required: yes
+#%end
+#%option
+#% key: units
+#% type: string
+#% description: mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares)
+#% options: mi,miles,f,feet,me,meters,k,kilometers,a,acres,h,hectares
+#% required: no
+#%end
+
+if  [ -z $GISBASE ] ; then
+ echo "You must be in GRASS GIS to run this program."
+ exit 1
+fi   
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec g.parser "$0" "$@"
+fi
+
+
+### setup enviro vars ###
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
+### trap <ctrl>-<c> so that we can clean up tmp and exit
+trap 'rm -f "$TMP1" "$TMP2" ; exit 1' 2 3 15
+
+### secure temporary files:
+TMP1="`g.tempfile pid=$$`"
+TMP2="`g.tempfile pid=$$`"
+
+MAP=$GIS_OPT_map
+OPTION=$GIS_OPT_option
+LAYER=$GIS_OPT_layer
+
+#fetch column names
+COLNAMES="`v.info -c $MAP |grep -v '^Displaying column type' | cut -d '|' -f2 | tr '\n' '|'`"
+
+#special treatment for opt=coor parameter:
+if [ "$GIS_OPT_option" = "coor" ] ; then
+  COLUMS="dummy1,dummy2"
+  EXTRACOLNAMES="x|y"
+else
+  COLUMS="dummy1"
+  EXTRACOLNAMES="$OPTION"
+fi   
+
+#check for optional units parameter:
+if  [ ! -z $GIS_OPT_units ] ; then
+  UNITSPARAM="units=$GIS_OPT_units"
+fi   
+
+#fetch the attributes sorted by cat:
+v.db.select -c map=$MAP layer=$LAYER | sort -n -t'|' -k 1 > "$TMP1"
+
+#fetch the areas/line lengths sorted by cat:
+v.to.db -p map=$MAP opt=$OPTION col=$COLUMS $UNITSPARAM layer=$LAYER 2> /dev/null | grep -v '^cat' | sort -n -t'|' -k 1 > "$TMP2"
+
+#make and print the table:
+echo "$COLNAMES$EXTRACOLNAMES"
+paste -d'|' "$TMP1" "$TMP2"
+
+#cleanup:
+rm -f "$TMP1"
+rm -f "$TMP2"
+
