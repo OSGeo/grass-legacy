@@ -229,4 +229,7 @@
 #endif	/* HAVE_LARGEFILES */
 #endif	/* USE_LARGEFILES */
 
+/* define if langinfo.h exists */
+#undef HAVE_LANGINFO_H
+
 #endif /* _config_h */

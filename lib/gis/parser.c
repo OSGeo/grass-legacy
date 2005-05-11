@@ -95,10 +95,9 @@
  ***************************************************************************
 */
 
-/* langinfo.h is "X/Open" but it is used in gettext so it must be present if HAVE_LIBINTL_H */
 #include "config.h"
 
-#if defined(HAVE_LIBINTL_H) && defined(USE_NLS)
+#if defined(HAVE_LANGINFO_H)
 #include <langinfo.h>
 #endif
 
@@ -861,7 +860,7 @@ static void G_usage_xml (void)
 
 /* gettext converts strings to encoding returned by nl_langinfo(CODESET) */
 
-#if defined(HAVE_LIBINTL_H) && defined(USE_NLS)
+#if defined(HAVE_LANGINFO_H)
 	encoding = nl_langinfo (CODESET);
 	if ( !encoding || strlen( encoding ) == 0 ) {
 	    encoding = "UTF-8";
