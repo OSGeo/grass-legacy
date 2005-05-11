@@ -7,8 +7,10 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <sys/types.h>
-#include <sys/wait.h>
 
+#ifndef __MINGW32__
+#include <sys/wait.h>
+#endif
 #include "config.h"
 #include "gis.h"
 #include "glocale.h"
@@ -27,6 +29,13 @@
  *
  ****************************************************************/
 
+#ifdef __MINGW32__
+int G_spawn(char *command, ...)
+{
+    G_fatal_error("G_spawn is not supported on Windows");    
+    return -1;
+}
+#else
 int G_spawn(char *command, ...)
 {
 	va_list va;
@@ -436,4 +445,4 @@ error_1:
 
 	return status;
 }
-
+#endif /*#ifdef __MINGW32__*/
