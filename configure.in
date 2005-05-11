@@ -339,6 +339,7 @@ AC_CHECK_HEADERS(curses.h limits.h termio.h termios.h unistd.h values.h g2c.h f2
 AC_CHECK_HEADERS(sys/ioctl.h sys/mtio.h sys/resource.h sys/time.h)
 AC_CHECK_HEADERS(sys/timeb.h sys/types.h sys/utsname.h)
 AC_CHECK_HEADERS(libintl.h iconv.h)
+AC_CHECK_HEADERS(langinfo.h)
 AC_HEADER_TIME
 AC_TYPE_OFF_T
 AC_TYPE_UID_T
