@@ -1,0 +1,608 @@
+#!/bin/sh
+#
+############################################################################
+#
+# MODULE:		d.vect.thematic
+# AUTHOR(S):	Michael Barton, Arizona State University
+# PURPOSE:	    Displays thematic vector map with graduated colors
+#               or graduated points
+# COPYRIGHT:	(C) 2005 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
+
+
+#%Module
+#%  description: v.thematic - Displays thematic vectormap
+#%End
+#%option
+#% key: themetype
+#% type: string
+#% options: graduated colors,graduated points
+#% answer: graduated colors
+#% description: Type of thematic display
+#% required : yes
+#%end
+#%option
+#% key: themecalc
+#% type: string
+#% options: interval,standard deviation,quartiles
+#% answer: interval
+#% description: Thematic divisions of data for display
+#% required : yes
+#%end
+#%option
+#% key: map
+#% type: string
+#% gisprompt: old,vector,vector
+#% description: Vector map to display thematically
+#% required : yes
+#%end
+#%option
+#% key: table
+#% type: string
+#% gisprompt: old,vector,vector
+#% description: Name of attribute table connected to vector map (defaults to vector map name - for native GRASS dbf tables)
+#% required : no
+#%end
+#%option
+#% key: column
+#% type: string
+#% description: Column to use for thematic display (must be numeric)
+#% required : yes
+#%end
+#%option
+#% key: layer
+#% type: integer
+#% description: Layer to use for thematic display
+#% answer: 1
+#% required : no
+#%end
+#%option
+#% key: type
+#% type: string
+#% description: Vector map type
+#% options: area,point,centroid,line,boundary
+#% answer: area
+#% required : yes
+#%end
+#%option
+#% key: icon
+#% type: string
+#% description: Vector point icon for point data
+#% options: basic/box,basic/circle,basic/cross2,basic/diamond,basic/star,basic/cross1,basic/x
+#% answer: basic/circle
+#% required : no
+#%end
+#%option
+#% key: size
+#% type: double
+#% description: Vector point icon size for point data (minimum icon size for graduated points)
+#% answer: 5
+#% required : no
+#%end
+#%option
+#% key: maxsize
+#% type: double
+#% description: Maximum icon size for graduated points
+#% answer: 20
+#% required : no
+#%end
+#%option
+#% key: nint
+#% type: integer
+#% description: Number of display intervals (integer) for interval theme
+#% answer: 4
+#% required : no
+#%end
+#%option
+#% key: colorscheme
+#% type: string
+#% description: Color scheme for graduated color mapping (single color for graduated point display)
+#% options: red-blue,red-green,blue-green,single color
+#% answer: red-blue
+#% required : yes
+#%end
+#% option
+#% key: singlecolor
+#% type: string
+#% description: Color for graduated points map (grass named color or R:G:B triplet)
+#% answer: red
+#% required : no
+#%end
+
+
+if  [ -z $GISBASE ] ; then
+ echo "You must be in GRASS GIS to run this program."
+ exit 1
+fi   
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec g.parser "$0" "$@"
+fi
+
+# setting environment, so that awk works properly in all languages
+export LC_NUMERIC=C
+
+TMP1="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMP1" ] ; then
+    echo "ERROR: unable to create temporary files" 1>&2
+    exit 1
+fi
+
+cleanup()
+{
+ \rm -f $TMP1 $TMP1.sort
+}
+
+# what to do in case of user break:
+exitprocedure()
+{
+ echo "User break!"
+ cleanup
+ exit 1
+}
+# shell check for user break (signal list: trap -l)
+trap "exitprocedure" 2 3 15
+
+if [ "$OPT_GIS_table" = "" ] ; then
+	OPT_GIS_table=$OPT_GIS_map
+fi
+
+# Calculate statistics for thematic intervals
+#v.db.connect map=fields2 -pg | awk '{print $5}'
+v.univar.sh -e table=$GIS_OPT_table column=$GIS_OPT_column > TMP1
+min="`grep 'Minimum:' TMP1 | sed s/Minimum://`"
+max="`grep 'Maximum:' TMP1 | sed s/Maximum://`"
+mean="`grep 'Mean:' TMP1 | sed s/Mean://`"
+sd="`grep 'Standard deviation:' TMP1 | sed s/'Standard deviation:'//`"
+q1="`grep '1st Quartile:' TMP1 | sed s/'1st Quartile:'//`"
+q2="`grep 'Median' TMP1 | sed s/'Median (.* N):'//`"
+q3="`grep '3rd Quartile:' TMP1 | sed s/'3rd Quartile:'//`"
+q4=$max
+ptsize=$GIS_OPT_size
+
+# set interval for each thematic map calculation type
+if [ "$GIS_OPT_themecalc" = "interval" ] ; then
+    numint=$GIS_OPT_nint
+    step=`echo $max $min $numint | awk '{print 1.01 * (($1 - $2) / $3)}'`
+    pointstep=`echo $GIS_OPT_maxsize $ptsize $numint | awk '{print (($1 - $2) / $3)}'`
+fi
+
+if [ "$GIS_OPT_themecalc" = "standard deviation" ] ; then
+    numint=6
+    # 2 standard deviation units on either side of mean,
+    # plus min to -2 sd units and +2 sd units to max
+fi
+
+if [ "$GIS_OPT_themecalc" = "quartiles" ] ; then
+    numint=4
+    # one for each quartile
+fi
+
+# legend title
+echo ""
+echo ""
+echo "Thematic map legend for column $GIS_OPT_column of map $GIS_OPT_map"
+echo ""
+echo "Value range: $min - $max"
+
+# graduated color thematic mapping
+
+if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
+
+    # set color schemes for graduated color maps
+    if [ $GIS_OPT_colorscheme = "red-blue" ] ; then
+        color1=250
+        color2=0
+        color3=0
+        clrstep1=`expr -250 / $numint`
+        clrstep2=0
+        clrstep3=`expr 250 / $numint`
+    fi
+
+    if [ $GIS_OPT_colorscheme = "red-green" ] ; then
+        color1=250
+        color2=0
+        color3=0
+        clrstep1=`expr -250 / $numint`
+        clrstep2=`expr 250 / $numint`
+        clrstep3=0
+    fi
+
+    if [ $GIS_OPT_colorscheme = "blue-green" ] ; then
+        color1=0
+        color2=0
+        color3=250
+        clrstep1=0
+        clrstep2=`expr 250 / $numint`
+        clrstep3=`expr -250 / $numint` 
+    fi
+    
+    themecolor=$color1":"$color2":"$color3
+
+    # display graduated color themes for regular intervals
+    if [ "$GIS_OPT_themecalc" = "interval" ] ; then
+        rangemin=`echo $min | awk '{print 0.99 * $1}'`
+        rangemax=`echo $min $step | awk '{print $1 + $2}'`
+        echo "Mapped by $numint intervals of $step"
+        echo ""
+        echo "Value" "Color(R:G:B)" | awk '{print $1 "\t\t\t\t" $2}'
+        echo "=====" "=============" | awk '{print $1 "\t\t\t\t" $2}'
+        test="false"
+        while [ "$test" = "false" ]     
+        do 
+            themecolor="$color1:$color2:$color3"
+            if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
+                linecolor=$themecolor
+            else
+                linecolor="black"
+            fi
+            echo $rangemin $rangemax $themecolor  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+            d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+                where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
+                color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+            test=`echo $rangemax $max | awk '{print ($1 > $2) ? "true" : "false" }'`
+            rangemin=`echo $rangemin $step | awk '{print $1 + $2}'`
+            rangemax=`echo $rangemax $step | awk '{print $1 + $2}'`
+            let color1=color1+clrstep1
+            let color2=color2+clrstep2
+            let color3=color3+clrstep3
+        done
+    fi
+
+    # display graduated color themes for standard deviation units
+    if [ "$GIS_OPT_themecalc" = "standard deviation" ] ; then
+        echo "Mapped by standard deviation units of $sd (mean=$mean)"
+        echo ""
+        echo "Value" "Color(R:G:B)" | awk '{print $1 "\t\t\t\t" $2}'
+        echo "=====" "=============" | awk '{print $1 "\t\t\t\t" $2}'
+
+        # minimum to -2 standard deviations
+        themecolor="$color1:$color2:$color3"
+        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
+            linecolor=$themecolor
+        else
+            linecolor="black"
+        fi
+        rangemin=$min
+        rangemax=`echo $mean $sd | awk '{print $1 - (2 * $2) }'`
+        xmin=`echo $rangemax $min | awk '{print ($1 < $2) ? "true" : "false" }'`
+        if [ "$xmin" = "true" ] ; then
+            rangemax=$min    
+        fi
+        echo $rangemin $rangemax $themecolor  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>=$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+    
+        # -2 to -1 standard deviations
+        let color1=color1+clrstep1
+        let color2=color2+clrstep2
+        let color3=color3+clrstep3
+        themecolor="$color1:$color2:$color3"
+        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
+            linecolor=$themecolor
+        else
+            linecolor="black"
+        fi
+        rangemin=$rangemax
+        rangemax=`echo $mean $sd | awk '{print $1 - $2 }'`
+        xmin=`echo $rangemax $min | awk '{print ($1 < $2) ? "true" : "false" }'`
+        if [ "$xmin" = "true" ] ; then
+            rangemax=$min    
+        fi
+        echo $rangemin $rangemax $themecolor  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+    
+        # -1 standard deviation to mean
+        let color1=color1+clrstep1
+        let color2=color2+clrstep2
+        let color3=color3+clrstep3
+        themecolor="$color1:$color2:$color3"
+        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
+            linecolor=$themecolor
+        else
+            linecolor="black"
+        fi
+        rangemin=$rangemax
+        rangemax=$mean
+        echo $rangemin $rangemax $themecolor  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+    
+        # mean to +1 standard deviation
+        let color1=color1+clrstep1
+        let color2=color2+clrstep2
+        let color3=color3+clrstep3
+        themecolor="$color1:$color2:$color3"
+        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
+            linecolor=$themecolor
+        else
+            linecolor="black"
+        fi
+        rangemin=$mean
+        rangemax=`echo $mean $sd | awk '{print $1 + $2 }'`
+        xmax=`echo $rangemax $max | awk '{print ($1 > $2) ? "true" : "false" }'`
+        if [ "$xmax" = "true" ] ; then
+            rangemax=$max    
+        fi
+        echo $rangemin $rangemax $themecolor  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+    
+        # +1 to +2 standard deviations
+        let color1=color1+clrstep1
+        let color2=color2+clrstep2
+        let color3=color3+clrstep3
+        themecolor="$color1:$color2:$color3"
+        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
+            linecolor=$themecolor
+        else
+            linecolor="black"
+        fi
+        rangemin=$rangemax
+        rangemax=`echo $mean $sd | awk '{print $1 + (2 * $2) }'`
+        xmax=`echo $rangemax $max | awk '{print ($1 > $2) ? "true" : "false" }'`
+        if [ "$xmax" = "true" ] ; then
+            rangemax=$max    
+        fi
+        echo $rangemin $rangemax $themecolor  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+
+        # +2 standard deviations to maximum
+        let color1=color1+clrstep1
+        let color2=color2+clrstep2
+        let color3=color3+clrstep3
+        themecolor="$color1:$color2:$color3"
+        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
+            linecolor=$themecolor
+        else
+            linecolor="black"
+        fi
+        rangemin=$rangemax
+        rangemax=$max
+        echo $rangemin $rangemax $themecolor  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+    fi
+
+    # display graduated color themes for quartiles
+    if [ "$GIS_OPT_themecalc" = "quartiles" ] ; then
+        echo "Mapped by quartiles (median=$q2)"
+        echo ""
+        echo "Value" "Color(R:G:B)" | awk '{print $1 "\t\t\t\t" $2}'
+        echo "=====" "=============" | awk '{print $1 "\t\t\t\t" $2}'
+
+        # 1st quartile
+        themecolor="$color1:$color2:$color3"
+        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
+            linecolor=$themecolor
+        else
+            linecolor="black"
+        fi
+        rangemin=$min
+        rangemax=$q1
+        echo $rangemin $rangemax $themecolor  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>=$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+    
+        # 2nd quartile
+        let color1=color1+clrstep1
+        let color2=color2+clrstep2
+        let color3=color3+clrstep3
+        themecolor="$color1:$color2:$color3"
+        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
+            linecolor=$themecolor
+        else
+            linecolor="black"
+        fi
+        rangemin=$rangemax
+        rangemax=$q2
+        echo $rangemin $rangemax $themecolor  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+    
+        # 3rd quartile
+        let color1=color1+clrstep1
+        let color2=color2+clrstep2
+        let color3=color3+clrstep3
+        themecolor="$color1:$color2:$color3"
+        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
+            linecolor=$themecolor
+        else
+            linecolor="black"
+        fi
+        rangemin=$rangemax
+        rangemax=$q3
+        echo $rangemin $rangemax $themecolor  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+    
+        # 4th quartile
+        let color1=color1+clrstep1
+        let color2=color2+clrstep2
+        let color3=color3+clrstep3
+        themecolor="$color1:$color2:$color3"
+        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
+            linecolor=$themecolor
+        else
+            linecolor="black"
+        fi
+        rangemin=$rangemax
+        rangemax=$q4
+        echo $rangemin $rangemax $themecolor  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+    fi
+fi
+
+# graduated points thematic mapping
+
+if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
+
+    #display graduated points by intervals
+    if [ "$GIS_OPT_themecalc" = "interval" ] ; then
+        rangemin=`echo $min | awk '{print 0.99 * $1}'`
+        rangemax=`echo $min $step | awk '{print $1 + $2}'`
+        echo "Mapped by $numint intervals of $step"
+        echo ""
+        echo "Value" "Point" "size" | awk '{print $1 "\t\t\t\t" $2" "$3}'
+        echo "=====" "=============" | awk '{print $1 "\t\t\t\t" $2}'
+        themecolor=$GIS_OPT_singlecolor
+        linecolor="black"
+        test="false"
+        while [ "$test" = "false" ]
+        do 
+            echo $rangemin $rangemax $ptsize  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+            d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+                where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
+                color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+            test=`echo $rangemax $max | awk '{print ($1 > $2) ? "true" : "false" }'`
+            rangemin=`echo $rangemin $step | awk '{print $1 + $2}'`
+            rangemax=`echo $rangemax $step | awk '{print $1 + $2}'`
+            ptsize=`echo $ptsize $pointstep | awk '{print $1 + 2}'`
+        done
+    fi
+    
+    # display graduated points for standard deviation units
+    if [ "$GIS_OPT_themecalc" = "standard deviation" ] ; then
+        echo "Mapped by standard deviation units of $sd (mean=$mean)"
+        echo ""
+        echo "Value" "Point" "size" | awk '{print $1 "\t\t\t\t" $2" "$3}'
+        echo "=====" "=============" | awk '{print $1 "\t\t\t\t" $2}'
+
+        # minimum to -2 standard deviations
+        themecolor=$GIS_OPT_singlecolor
+        linecolor="black"
+        rangemin=$min
+        rangemax=`echo $mean $sd | awk '{print $1 - (2 * $2) }'`
+        xmin=`echo $rangemax $min | awk '{print ($1 < $2) ? "true" : "false" }'`
+        if [ "$xmin" = "true" ] ; then
+            rangemax=$min    
+        fi
+        echo $rangemin $rangemax $ptsize  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>=$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+    
+        # -2 to -1 standard deviations
+        ptsize=`echo $ptsize $pointstep | awk '{print $1 + 2}'`
+        rangemin=$rangemax
+        rangemax=`echo $mean $sd | awk '{print $1 - $2 }'`
+        xmin=`echo $rangemax $min | awk '{print ($1 < $2) ? "true" : "false" }'`
+        if [ "$xmin" = "true" ] ; then
+            rangemax=$min    
+        fi
+        echo $rangemin $rangemax $ptsize  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+    
+        # -1 standard deviation to mean
+        ptsize=`echo $ptsize $pointstep | awk '{print $1 + 2}'`
+        rangemin=$rangemax
+        rangemax=$mean
+        echo $rangemin $rangemax $ptsize  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+    
+        # mean to +1 standard deviation
+        ptsize=`echo $ptsize $pointstep | awk '{print $1 + 2}'`
+        rangemin=$mean
+        rangemax=`echo $mean $sd | awk '{print $1 + $2 }'`
+        xmax=`echo $rangemax $max | awk '{print ($1 > $2) ? "true" : "false" }'`
+        if [ "$xmax" = "true" ] ; then
+            rangemax=$max    
+        fi
+        echo $rangemin $rangemax $ptsize  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+    
+        # +1 to +2 standard deviations
+        ptsize=`echo $ptsize $pointstep | awk '{print $1 + 2}'`
+        rangemin=$rangemax
+        rangemax=`echo $mean $sd | awk '{print $1 + (2 * $2) }'`
+        xmax=`echo $rangemax $max | awk '{print ($1 > $2) ? "true" : "false" }'`
+        if [ "$xmax" = "true" ] ; then
+            rangemax=$max    
+        fi
+        echo $rangemin $rangemax $ptsize  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+
+        # +2 standard deviations to maximum
+        ptsize=`echo $ptsize $pointstep | awk '{print $1 + 2}'`
+        rangemin=$rangemax
+        rangemax=$max
+        echo $rangemin $rangemax $ptsize  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+    fi
+
+    # display graduated point themes for quartiles
+    if [ "$GIS_OPT_themecalc" = "quartiles" ] ; then
+        echo "Mapped by quartiles (median=$q2)"
+        echo ""
+        echo "Value" "Point" "size" | awk '{print $1 "\t\t\t\t" $2" "$3}'
+        echo "=====" "=============" | awk '{print $1 "\t\t\t\t" $2}'
+        themecolor=$GIS_OPT_singlecolor
+        linecolor="black"
+
+        # 1st quartile
+        rangemin=$min
+        rangemax=$q1
+        echo $rangemin $rangemax $ptsize  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>=$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+    
+        # 2nd quartile
+        ptsize=`echo $ptsize $pointstep | awk '{print $1 + 2}'`
+        rangemin=$rangemax
+        rangemax=$q2
+        echo $rangemin $rangemax $ptsize  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+    
+        # 3rd quartile
+        ptsize=`echo $ptsize $pointstep | awk '{print $1 + 2}'`
+        rangemin=$rangemax
+        rangemax=$q3
+        echo $rangemin $rangemax $ptsize  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+    
+        # 4th quartile
+        ptsize=`echo $ptsize $pointstep | awk '{print $1 + 2}'`
+        rangemin=$rangemax
+        rangemax=$q4
+        echo $rangemin $rangemax $ptsize  | awk '{print $1"-"$2 "\t\t\t\t" $3}'
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+    fi
+fi
+
+cleanup
+
