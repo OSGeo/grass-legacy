@@ -109,6 +109,8 @@ if [ "$AWK" = "" ] ; then
     echo "$PROG: awk required, please install awk/gawk first" 1>&2
     exit 1
 fi
+# set environment so that awk works properly in all languages
+export LC_NUMERIC=C
 
 
 #### setup temporary file
