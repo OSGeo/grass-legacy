@@ -12,6 +12,7 @@ SUBDIRS = \
 	d.resize \
 	d.slide.show \
 	d.split \
+	d.vect.thematic \
 	db.test \
 	g.manual \
 	g.mlist \
@@ -38,7 +39,8 @@ SUBDIRS = \
 	v.in.garmin \
 	v.in.e00 \
 	v.in.sites.all \
-	v.report
+	v.report \
+	v.univar.sh
 
 default: subdirs
 
