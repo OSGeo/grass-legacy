@@ -83,7 +83,7 @@ int main (int argc, char **argv)
     dbkey->required   = NO  ;
     dbkey->multiple   = NO ;
     dbkey->answer    = "cat";
-    dbkey->description= _("Key name (name must refer to an integer column)");
+    dbkey->description= _("Key name (must refer to an integer column)");
 
     field_opt = G_define_standard_option(G_OPT_V_FIELD) ;
 
