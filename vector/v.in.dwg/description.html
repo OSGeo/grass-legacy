@@ -12,9 +12,19 @@ v.in.dwg requires OpenDWG toolkit. To get this toolkit you must become at
 least "Associate Member" of OpenDWG Alliance (http://www.opendwg.org), it is
 free-of-charge (you have to fill one form).
 <P>
-Then unpack library and copy to this directory:<br>
-<tt>ad2.a ad2.h odio.h adinit.dat</tt><br>
-and compile this module.
+The toolkit, for example <tt>ad27linx.tar</tt>, unpack in a directory,
+e.g. /home/usr1/opendwg27 and use the related <tt>configure</tt> options
+to tell GRASS about it:
+
+<pre>
+   ./configure \
+   ... \
+   --with-opendwg \
+   --with-opendwg-includes=/home/usr1/opendwg27 \
+   --with-opendwg-libs=/home/usr1/opendwg27
+</pre>
+
+Then you can compile this module.
 <P>
 Not all entity types are supported (warning printed).
 
