@@ -80,6 +80,7 @@ SUBDIRS = \
 	r.surf.area \
 	r.surf.contour \
 	r.surf.idw \
+	r.surf.idw2 \
 	r.texture \
 	r.thin \
 	r.timestamp \
