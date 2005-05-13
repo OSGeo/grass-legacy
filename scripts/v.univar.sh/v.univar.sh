@@ -35,13 +35,13 @@
 #% required : yes
 #%end
 #%option
-#% key: db
+#% key: database
 #% type: string
 #% description: Database/directory for table
 #% required : no
 #%end
 #%option
-#% key: drv
+#% key: driver
 #% type: string
 #% description: Database driver
 #% required : no
@@ -82,20 +82,16 @@ echo "Calculation for column $GIS_OPT_column of table $GIS_OPT_table..."
 echo "Reading column values..."
 
 if [ -n "$GIS_OPT_db" ] ; then
-    db="database=$GIS_OPT_db"
+    db="database=$GIS_OPT_database"
 else
     db=""
 fi
 
-echo "db = $db"
-
 if [ -n "$GIS_OPT_drv" ] ; then
-    drv="driver=$GIS_OPT_drv"
+    drv="driver=$GIS_OPT_driver"
 else
     drv=""
 fi
-
-echo "drv= $drv"
 
 db.select table=$GIS_OPT_table $db $drv sql="select $GIS_OPT_column from $GIS_OPT_table" -c > "$TMP"
 
