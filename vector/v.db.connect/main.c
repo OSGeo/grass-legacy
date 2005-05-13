@@ -24,9 +24,10 @@
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
-#include  "gis.h"
+#include "gis.h"
 #include "Vect.h"
-#include "dbmi.h" 
+#include "dbmi.h"
+#include "glocale.h"
 
 int main (int argc, char **argv)
 {
@@ -47,7 +48,7 @@ int main (int argc, char **argv)
 
     module = G_define_module();
     module->description =
-	"prints/sets DB connection for a vector map";
+	_("Prints/sets DB connection for a vector map");
 
     inopt = G_define_standard_option(G_OPT_V_MAP);
 
@@ -57,7 +58,7 @@ int main (int argc, char **argv)
     dbdriver->options    = db_list_drivers();
     dbdriver->required   = NO  ;
     dbdriver->multiple   = NO ;
-    dbdriver->description= "driver name:" ;
+    dbdriver->description= _("Driver name");
     if ( (drv=G__getenv2("DB_DRIVER",G_VAR_MAPSET)) )
 	dbdriver->answer = G_store ( drv );
 
@@ -66,7 +67,7 @@ int main (int argc, char **argv)
     dbdatabase->type       = TYPE_STRING ;
     dbdatabase->required   = NO  ;
     dbdatabase->multiple   = NO ;
-    dbdatabase->description= "database name:" ;
+    dbdatabase->description= _("Database name");
     if ( (db=G__getenv2("DB_DATABASE",G_VAR_MAPSET)) )
 	dbdatabase->answer = G_store ( db );
 
@@ -74,7 +75,7 @@ int main (int argc, char **argv)
     dbtable->key         = "table";
     dbtable->type        = TYPE_STRING;
     dbtable->required    = NO;         
-    dbtable->description = "table name";
+    dbtable->description = _("Table name");
 
     dbkey = G_define_option() ;
     dbkey->key        = "key" ;
@@ -82,30 +83,30 @@ int main (int argc, char **argv)
     dbkey->required   = NO  ;
     dbkey->multiple   = NO ;
     dbkey->answer    = "cat";
-    dbkey->description= "key name (integer column):" ;
+    dbkey->description= _("Key name (name must refer to an integer column)");
 
     field_opt = G_define_standard_option(G_OPT_V_FIELD) ;
 
     print = G_define_flag();
     print->key               = 'p';
-    print->description       = "print current connection parameters and exit";
+    print->description       = _("Print current connection parameters and exit");
 
     shell_print = G_define_flag();
     shell_print->key               = 'g';
-    shell_print->description       = "print current connection parameters (shell script style)\n"
-				     "layer[/layer name] table key database driver";
+    shell_print->description       = _("Print current connection parameters and exit (shell script style)\n"
+				     "\tformat:  layer[/layer name] table key database driver");
 
     columns = G_define_flag();
     columns->key               = 'c';
-    columns->description       = "print types/names of table columns for specified layer and exit";
+    columns->description       = _("Print types/names of table columns for specified layer and exit");
 
     overwrite = G_define_flag();
     overwrite->key               = 'o';
-    overwrite->description       = "overwrite connection parameter for certain layer";
+    overwrite->description       = _("Overwrite connection parameter for certain layer");
     
     delete = G_define_flag();
     delete->key               = 'd';
-    delete->description       = "Delete connection for certain layer (not the table)";
+    delete->description       = _("Delete connection for certain layer (not the table)");
 
     G_gisinit (argv[0]);
 
@@ -125,6 +126,9 @@ int main (int argc, char **argv)
       
     G_debug ( 3, "Mapset = %s", mapset);
 
+    if (print->answer && shell_print->answer)
+	G_fatal_error("Please choose only one print style");
+
     if (print->answer || shell_print->answer || columns->answer)
       Vect_open_old ( &Map, inopt->answer, mapset);
     else
@@ -137,10 +141,7 @@ int main (int argc, char **argv)
     {
       num_dblinks = Vect_get_num_dblinks(&Map);
       if (num_dblinks <= 0)
-      {
-         fprintf(stderr, "Database connection for map <%s> is not defined in DB file\n", input);
-         exit(0);
-      }
+         G_fatal_error("Database connection for map <%s> is not defined in DB file", input);
       else /* num_dblinks > 0 */
       {
         if (print->answer || shell_print->answer)
