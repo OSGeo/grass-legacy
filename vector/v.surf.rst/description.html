@@ -107,7 +107,7 @@ and segmentation can be visible. Increase tension should solve the problems.
 to <em>dnorm</em> (dnorm rescales the coordinates depending on the average
 data density so that the size of segments with <em>segmax=</em>40 points
 is around 1 - this ensures the numerical stability of the computation):
-</p><p>1. Default (used also in s.surf.rst): the given <em>tension</em>&nbsp;
+</p><p>1. Default: the given <em>tension</em>&nbsp;
 is applied to normalized data (x/<em>dnorm</em>..),&nbsp; that means that
 the distances are multiplied (rescaled) by <em>tension/dnorm</em>. If density
 of points is changed, e.g.,&nbsp; by using higher <em>dmin</em>, the <em>dnorm</em>
@@ -117,7 +117,7 @@ Because the <em>tension</em> is applied to normalized data its suitable value
 is usually within the 10-100 range and does not depend on the actual scale
 (distances) of the original data (which can be km for regional applications
 or cm for field experiments).
-<br>2. Flag<b> -t </b>(experimental for s.surf.rst)<b>: </b>The given <em>tension</em>
+<br>2. Flag<b> -t </b>(experimental for v.surf.rst)<b>: </b>The given <em>tension</em>
 is applied to un-normalized data (rescaled tension = t<em>ension*dnorm</em>/1000
 is applied to normalized data (x/<em>dnorm</em>) and therefore&nbsp; <em>dnorm</em>
 
