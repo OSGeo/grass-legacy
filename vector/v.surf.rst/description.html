@@ -54,7 +54,7 @@ is controlled by <em>npmin</em>, the value of which must be larger than <em>segm
 
 which represent the quad tree used for segmentation and overlapping neighborhoods
 from which additional points for interpolation on each segment were taken.
-<font color="#000000">Anisotropic surfaces can be interpolated setting anisotropy angle </font><font color="#000000"><em>theta</em></font><font color="#000000"> and scaling factor </font><font color="#000000"><em>scalex</em></font><font color="#000000">. </font>The program writes several important values to history file of raster map
+Anisotropic surfaces can be interpolated setting anisotropy angle <em>theta</em> and scaling factor <em>scalex</em>. The program writes several important values to history file of raster map
 <b><em>elev</em></b>.
 
 <p>
@@ -93,7 +93,7 @@ It is useful to know that the method is scale dependent and the <em>tension</em>
 works as a rescaling parameter (high <em>tension</em> "increases the distances
 between the points" and reduces the range of impact of each point, low<em>
 tension</em> "decreases the distance" and the points influence each other
-over longer range). Surface with&nbsp; <em>tension</em> set too high behaves
+over longer range). Surface with <em>tension</em> set too high behaves
 like a membrane (rubber sheet stretched over the data points) with peak
 or pit ("crater") in each given point and everywhere else the surface goes
 rapidly to trend. If digitized contours are used as input data, high tension
@@ -107,10 +107,10 @@ and segmentation can be visible. Increase tension should solve the problems.
 to <em>dnorm</em> (dnorm rescales the coordinates depending on the average
 data density so that the size of segments with <em>segmax=</em>40 points
 is around 1 - this ensures the numerical stability of the computation):
-</p><p>1. Default: the given <em>tension</em>&nbsp;
-is applied to normalized data (x/<em>dnorm</em>..),&nbsp; that means that
+</p><p>1. Default: the given <em>tension</em>
+is applied to normalized data (x/<em>dnorm</em>..), that means that
 the distances are multiplied (rescaled) by <em>tension/dnorm</em>. If density
-of points is changed, e.g.,&nbsp; by using higher <em>dmin</em>, the <em>dnorm</em>
+of points is changed, e.g., by using higher <em>dmin</em>, the <em>dnorm</em>
 
 changes and <em>tension</em> needs to be changed too to get the same result.
 Because the <em>tension</em> is applied to normalized data its suitable value
@@ -119,7 +119,7 @@ is usually within the 10-100 range and does not depend on the actual scale
 or cm for field experiments).
 <br>2. Flag<b> -t </b>(experimental for v.surf.rst)<b>: </b>The given <em>tension</em>
 is applied to un-normalized data (rescaled tension = t<em>ension*dnorm</em>/1000
-is applied to normalized data (x/<em>dnorm</em>) and therefore&nbsp; <em>dnorm</em>
+is applied to normalized data (x/<em>dnorm</em>) and therefore <em>dnorm</em>
 
 cancels out) so here <em>tension</em> truly works as a rescaling parameter.
 For regional applications with distances between points in km. the suitable
@@ -128,27 +128,27 @@ be 0.1. To help select how much the data need to be rescaled the program
 writes
 <em>dnorm</em> and rescaled tension=<em>tension*dnorm</em>/1000 at the
 beginning of the program run. This rescaled <em>tension</em> should be around
-20-30.&nbsp; If it is lower or higher, the given <em>tension</em> parameter
+20-30. If it is lower or higher, the given <em>tension</em> parameter
 should be changed accordingly.
 
 </p><p>The default is a recommended choice, however for the applications where
 the user needs to change density of data and preserve the interpolation
 character the <b>-t</b> flag can be helpful.</p>
-<p><font color="#000000">Anisotropic data (e.g. geologic phenomena)</font><font color="#000000"> can be 
-interpolated using </font><font color="#000000"><em>theta</em></font><font color="#000000"> 
-and </font><font color="#000000"><em>scalex</em></font><font color="#000000"> defining orientation</font><font color="#000000"> 
+<p>Anisotropic data (e.g. geologic phenomena) can be 
+interpolated using <em>theta</em> 
+and <em>scalex</em> defining orientation 
 and ratio of the perpendicular axes put on the longest/shortest side of the feature, respectively.
-</font><font color="#000000"><em>Theta</em> is measured in degrees from East, 
-counterclockwise</font><font color="#000000">. <em>Scalex</em> is a ratio</font><font color="#000000"> 
+<em>Theta</em> is measured in degrees from East, 
+counterclockwise. <em>Scalex</em> is a ratio 
 
-of axes</font><font color="#000000"> size</font><font color="#000000">s</font><font color="#000000">. 
+of axes sizes. 
 Setting <em>scalex</em> in the range 0-1, you will get pattern prolonged in the
 direction defined by <em>theta</em>. <em>Scalex</em> value 0.5 means that your feature is approximatelly
 2 times longer in the direction of <em>theta</em> than in the perpendicular direction.
-<em>Scalex</em> value 2</font><font color="#000000"> means that axes ratio is reverse and you will get pattern 
-perpendicular to the previous example. </font>Please note that anisotropy
+<em>Scalex</em> value 2 means that axes ratio is reverse and you will get pattern 
+perpendicular to the previous example. Please note that anisotropy
 option has not been extensively tested and may include bugs - if there are
-problems, please report to GRASS bugtracker (accessible from http://grass.itc.it/).<br>
+problems, please report to GRASS bugtracker (accessible from <a href="http://grass.itc.it/">http://grass.itc.it/</a>).<br>
 
 </p>
 <p>The program gives warning when significant overshoots appear and higher
@@ -216,16 +216,16 @@ procedure):</em>
 <br>Darrel McCauley, Purdue University, Bill Brown, US Army CERL
 </p><p><em>Update for GRASS5.7, addition of crossvalidation:</em>
 Jaroslav Hofierka, University of Presov; Radim Blazek, ITC-irst
-<br>&nbsp;
+<br>
 </p><h2>
-REFERENCES</h2><font color="#000000">
+REFERENCES</h2>
 <P>
 H. Mitasova and L. Mitas, R.S. Harmon, Simultaneous spline approximation and topographic analysis for
  lidar elevation data in open source GIS, submitted to IEEE GRSL.
 <P>
      Hofierka J., Parajka J.,  Mitasova H., Mitas L., 2002,
      Multivariate Interpolation of Precipitation Using Regularized Spline with Tension.
-     <em>Transactions in GIS</em>&nbsp; 6(2), pp. 135-150.</font><br>
+     <em>Transactions in GIS</em> 6(2), pp. 135-150.<br>
 <br>
 H. Mitasova, L. Mitas, B.M. Brown, D.P. Gerdes, I. Kosinovsky, 1995, Modeling
 spatially and temporally distributed phenomena: New methods and tools for
