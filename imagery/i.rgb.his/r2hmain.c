@@ -86,6 +86,7 @@ int main( int argc, char **argv)
 
   for (i=0; i<rows; i++) {
     /* read in a row from each cell map */
+    G_percent(i, rows, 2);
     for (band=0; band<NBANDS; band++) {
       if(G_get_map_row(fd_input[band], rowbuffer[band], i) < 0)
 	G_fatal_error("Error while reading cell map.");
