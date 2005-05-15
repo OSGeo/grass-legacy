@@ -8,9 +8,12 @@
 
 #define MAIN
 #include <stdio.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
+#include "colors.h"
+#include "glocale.h"
 #include "options.h"
 #include "local_proto.h"
 
@@ -19,35 +22,37 @@ int main (int argc, char **argv)
 	char window_name[64] ;
 	struct GModule *module;
 	struct Option *opt1, *opt2 ;
+	int R, G, B, color = 0;
+	const int customcolor = MAX_COLOR_NUM + 1;
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
 	module->description =
-		"Program for generating and displaying simple graphics to the "
-		"graphics display monitor.";
+		_("Program for generating and displaying simple graphics to the "
+		"graphics display monitor.");
 
 	opt1 = G_define_option() ;
 	opt1->key        = "input" ;
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = NO;
-	opt1->description= "Name of file containing graphics command" ;
+	opt1->description= _("Name of file containing graphics command");
 	opt1->gisprompt  = "file,file,file";
 
 	opt2 = G_define_option() ;
 	opt2->key        = "color" ;
 	opt2->type       = TYPE_STRING ;
-	opt2->answer     = DEFAULT_FG_COLOR ;
-	opt2->options    = D_color_list();
-	opt2->description= "Color selection for graphics" ;
-
-	hsize = vsize = 5. ;
+	opt2->required   = NO;
+	opt2->description= _("Color to draw with, either a standard GRASS color "
+			   "or R:G:B triplet (separated by colons)");
+	opt2->answer     = DEFAULT_FG_COLOR;
 
 	/* Check command line */
-
 	if (G_parser(argc, argv))
-		exit(-1);
+		exit(1);
+
+	hsize = vsize = 5. ;
 
 	if (opt1->answer != NULL)
 	{
@@ -65,13 +70,19 @@ int main (int argc, char **argv)
 	else
 		infile = stdin ;
 
-	if (opt2->answer != NULL)
-	{
-		color = D_translate_color(opt2->answer) ;
-		if (color == 0)
-			G_fatal_error ("Don't know the color %s", opt2->answer) ;
+	/* Parse and select color */
+	if (opt2->answer != NULL) {
+	    color = G_str_to_color(opt2->answer, &R, &G, &B);
+	    if(color == 0)
+		G_fatal_error("[%s]: No such color", opt2->answer);
+	    if(color == 1) {
+		R_reset_color(R, G, B, customcolor);
+		R_color(customcolor);
+	    }
+	    /* (color==2) is "none", noop */
 	}
 
+	/* open graphics window */
 	if (R_open_driver() != 0)
 		G_fatal_error ("No graphics device selected");
 
@@ -86,7 +97,6 @@ int main (int argc, char **argv)
 
 	/* Finish graphics setup */
 	R_set_window(t, b, l, r) ;
-	R_standard_color(color) ;
 
 	/* Do the graphics */
 	set_graph_stuff() ;

@@ -5,7 +5,6 @@
 #define EXTERN extern
 #endif
 
-EXTERN int color ;
 EXTERN float hsize ;
 EXTERN float vsize ;
 EXTERN int t, b, l, r ;
