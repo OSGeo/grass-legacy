@@ -85,7 +85,10 @@ int do_color (char *buff)
 	    R_reset_color(R, G, B, customcolor);
 	    R_color(customcolor);
 	}
-	/* (color==2) is "none", noop */
+	if(color == 2) {  /* color == 'none' */
+	    R = D_translate_color(DEFAULT_BG_COLOR);
+	    R_standard_color(R);
+	}
 
 	return(0);
 }
