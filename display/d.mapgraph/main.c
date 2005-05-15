@@ -1,41 +1,50 @@
+#include <stdlib.h>
 #include <unistd.h>
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
+#include "colors.h"
+#include "glocale.h"
+
 #define MAIN
 #include "options.h"
 #include "local_proto.h"
+
 
 struct Cell_head window ;
 
 int 
 main (int argc, char **argv)
 {
-	int color ;
 	struct GModule *module;
 	struct Option *opt1, *opt2/*, *opt3, *opt4*/ ;
+	int R, G, B, color = 0;
+	const int customcolor = MAX_COLOR_NUM + 1;
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
 	module->description =
-		"Generates and displays simple graphics on map "
-		"layers drawn in the active graphics monitor display frame.";
+		_("Generates and displays simple graphics on map "
+		"layers drawn in the active graphics monitor display frame.");
 
 	opt1 = G_define_option() ;
 	opt1->key        = "input" ;
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = NO ;
-	opt1->description= "Unix file containg graphing instructions";
+	opt1->description= _("Unix file containg graphing instructions, "
+			   "if not given reads from standard input");
 	opt1->gisprompt  = "file,file,file";
 
 	opt2 = G_define_option() ;
 	opt2->key        = "color" ;
 	opt2->type       = TYPE_STRING ;
+	opt2->required   = NO;
 	opt2->answer     = DEFAULT_FG_COLOR ;
-	opt2->options    = D_color_list();
-	opt2->description= "Starting color desired for graphics" ;
+
+	opt2->description= _("Color to draw with, either a standard GRASS color "
+			   "or R:G:B triplet (separated by colons)");
 
 /*
 	opt3 = G_define_option() ;
@@ -55,7 +64,7 @@ main (int argc, char **argv)
 
 	/* Check command line */
 	if (G_parser(argc, argv))
-		exit(-1);
+		exit(1);
 
 	if (opt1->answer != NULL)
 	{
@@ -86,7 +95,19 @@ main (int argc, char **argv)
 		if (isatty(0))
 			fprintf (stdout,"\nEnter mapgraph commands; terminate with a ^D\n\n") ;
 	}
-	color = D_translate_color(opt2->answer) ;
+
+
+	/* Parse and select color */
+	if (opt2->answer != NULL) {
+	   color = G_str_to_color(opt2->answer, &R, &G, &B);
+	   if(color == 0)
+		G_fatal_error("[%s]: No such color", opt2->answer);
+	   if(color == 1) {
+		R_reset_color(R, G, B, customcolor);
+		R_color(customcolor);
+	   }
+	   /* (color==2) is "none", noop */
+	}
 
 	/*
 	sscanf(opt3->answer,"%lf",&temp);
@@ -105,7 +126,6 @@ main (int argc, char **argv)
 
 	G_get_set_window(&window) ;
 
-	R_standard_color(color) ;
 	R_move_abs(
 	    (int)(D_get_d_west() + D_get_d_east() / 2.0),
 	    (int)(D_get_d_north() + D_get_d_south() / 2.0)) ;

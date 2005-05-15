@@ -1,7 +1,11 @@
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "options.h"
 #include "display.h"
 #include "raster.h"
+#include "colors.h"
+
 #include "local_proto.h"
 
 #define CHUNK	128
@@ -105,20 +109,30 @@ int do_icon (char *buf)
     return(0) ;
 }
 
-int do_color (char *buf)
+int do_color (char *buff)
 {
-    char color[64] ;
-    int colr ;
+    char in_color[64] ;
+    int R, G, B, color = 0;
+    const int customcolor = MAX_COLOR_NUM + 1;
 
-    sscanf(buf, "%*s %s", color) ;
-    colr = D_translate_color(color) ;
-    if (colr == 0)
-    {
-	bad_line(buf);
-        return(-1) ;
+    sscanf(buff, "%*s %s", in_color);
+
+    /* Parse and select color */
+    color = G_str_to_color(in_color, &R, &G, &B);
+    if(color == 0) {
+	G_warning("[%s]: No such color", in_color);
+	return(-1);
     }
-    R_standard_color(colr) ;
-    return(0) ;
+    if(color == 1) {
+	R_reset_color(R, G, B, customcolor);
+	R_color(customcolor);
+    }
+    if(color == 2) {    /* i.e. color=none */
+	R = D_translate_color(DEFAULT_BG_COLOR);
+	R_standard_color(R);
+    }
+
+    return(0);
 }
 
 int do_poly (char *buf, int len)

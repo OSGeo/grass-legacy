@@ -74,7 +74,7 @@ displayed in the active frame.
 
 Note: there must be a space between <EM>xpos</EM> and <EM>ypos</EM>.
 
-<DT><B>draw</B> <EM>xpos</EM> ypos</B> 
+<DT><B>draw</B> <EM>xpos ypos</EM> 
 
 <DD>A line is drawn in the current color from the current
 location to the new location <EM>xpos ypos</EM>, which then
@@ -86,7 +86,7 @@ geographic region and active frame.
 
 <P>
 
-Note: there must be a space between <EM>xpos</EM> and <EM>ypos</B>.</EM> 
+Note: there must be a space between <EM>xpos</EM> and <EM>ypos</EM>.
 
 <DT><B>color</B> <EM>color</EM> 
 
@@ -102,7 +102,9 @@ Color options are: <EM>red</EM>,
 <EM>brown</EM>, 
 <EM>gray</EM>,
 <EM>white</EM>, 
-and <EM>black</EM>.
+<EM>black</EM>,
+an R:G:B triplet (separated by colons),
+or the word "none" (draws in the default background color).
 
 <DT><B>size</B> <EM>xper yper</EM>
 
@@ -123,7 +125,7 @@ the current color and the current size.
 <DD>Draws an icon of types o, x, or + with specified size
 at location x,y.  Note: type o designates a square.
 
-<DT><B>polygon</B> 
+<DT><B>polygon</B> <BR>
 <EM> xpos ypos</EM> <BR>
 <EM> xpos ypos</EM> <BR>
 . <BR>
@@ -140,7 +142,8 @@ polygon which is to be filled with the current color.
 
 <EM>d.mapgraph</EM> is identical to the 
 <EM><A HREF="d.graph.html">d.graph</A></EM> command, except for the 
-difference in coordinate systems used. 
+difference in coordinate systems used. In the future functionality will
+be merged into <em>d.graph</em> and <em>d.mapgraph</em> will be removed.
 
 <P>
 
