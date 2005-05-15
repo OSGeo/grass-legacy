@@ -1,7 +1,9 @@
 #include <stdio.h>
+#include <string.h>
 #include "options.h"
 #include "display.h"
 #include "raster.h"
+#include "colors.h"
 #include "local_proto.h"
 
 #define CHUNK	128
@@ -67,15 +69,25 @@ int do_move (char *buff)
 
 int do_color (char *buff)
 {
-	char color[64] ;
-	int colr ;
+	char in_color[64] ;
+	int R, G, B, color = 0;
+	const int customcolor = MAX_COLOR_NUM + 1;
 
-	sscanf(buff, "%*s %s", color) ;
-	colr = D_translate_color(color) ;
-	if (colr == 0)
-		return(-1) ;
-	R_standard_color(colr) ;
-	return(0) ;
+	sscanf(buff, "%*s %s", in_color) ;
+
+	/* Parse and select color */
+	color = G_str_to_color(in_color, &R, &G, &B);
+	if(color == 0) {
+	    G_warning("[%s]: No such color", in_color);
+	    return(-1);
+	}
+	if(color == 1) {
+	    R_reset_color(R, G, B, customcolor);
+	    R_color(customcolor);
+	}
+	/* (color==2) is "none", noop */
+
+	return(0);
 }
 
 char *do_poly (char *buff, FILE *infile)
