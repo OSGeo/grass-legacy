@@ -348,7 +348,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
             # update color to database?
             sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax"
             if [ $GIS_FLAG_u -eq 1 ] ; then
-                echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE\
+                echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE\
                 $sqlwhere" | db.execute
             fi
 
@@ -431,7 +431,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>=$rangemin and $GIS_OPT_column<=$rangemax"
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi
 
@@ -474,7 +474,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax"
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi
 
@@ -513,7 +513,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi
  
@@ -556,7 +556,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi
 
@@ -599,7 +599,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi
 
@@ -638,7 +638,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi
 
@@ -705,7 +705,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi
 
@@ -743,7 +743,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi
 
@@ -782,7 +782,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi
 
@@ -821,7 +821,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi
 
@@ -877,7 +877,7 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
             # update color to database?
             sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
             if [ $GIS_FLAG_u -eq 1 ] ; then
-               echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+               echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
                | db.execute
             fi
             
@@ -962,7 +962,7 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>=$rangemin and $GIS_OPT_column<=$rangemax" 
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi
 
@@ -996,7 +996,7 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi
 
@@ -1025,7 +1025,7 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi
 
@@ -1058,7 +1058,7 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi
 
@@ -1091,7 +1091,7 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi
         d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
@@ -1119,7 +1119,7 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi
         d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
@@ -1180,7 +1180,7 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>=$rangemin and $GIS_OPT_column<=$rangemax" 
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi 
         d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
@@ -1208,7 +1208,7 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi 
         d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
@@ -1236,7 +1236,7 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi 
         d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
@@ -1264,7 +1264,7 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         # update color to database?
         sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
         if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $GIS_OPT_table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
+           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
            | db.execute
         fi 
         d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
