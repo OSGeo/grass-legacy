@@ -19,6 +19,13 @@
 #%  description: Displays thematic vectormap
 #%End
 #%option
+#% key: map
+#% type: string
+#% gisprompt: old,vector,vector
+#% description: Vector map to display thematically
+#% required : yes
+#%end
+#%option
 #% key: themetype
 #% type: string
 #% options: graduated colors,graduated points
@@ -32,13 +39,6 @@
 #% options: interval,standard deviation,quartiles
 #% answer: interval
 #% description: Thematic divisions of data for display
-#% required : yes
-#%end
-#%option
-#% key: map
-#% type: string
-#% gisprompt: old,vector,vector
-#% description: Vector map to display thematically
 #% required : yes
 #%end
 #%option
@@ -95,8 +95,8 @@
 #% key: colorscheme
 #% type: string
 #% description: Color scheme for graduated color mapping (single color for graduated point display)
-#% options: red-blue,red-green,blue-green,custom gradient,single color
-#% answer: red-blue
+#% options: blue-red,red-blue,green-red,red-green,blue-green,custom gradient,single color
+#% answer: blue-red
 #% required : yes
 #%end
 #% option
@@ -259,6 +259,15 @@ echo "Value range: $min - $max"
 if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
 
     # set color schemes for graduated color maps
+    if [ "$GIS_OPT_colorscheme" = "blue-red" ] ; then
+        color1=0
+        color2=0
+        color3=250
+        endcolor1=250
+        endcolor2=0
+        endcolor3=0
+    fi
+
     if [ "$GIS_OPT_colorscheme" = "red-blue" ] ; then
         color1=250
         color2=0
@@ -266,6 +275,15 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         endcolor1=0
         endcolor2=0
         endcolor3=250
+    fi
+
+    if [ "$GIS_OPT_colorscheme" = "green-red" ] ; then
+        color1=0
+        color2=250
+        color3=0
+        endcolor1=250
+        endcolor2=0
+        endcolor3=0
     fi
 
     if [ "$GIS_OPT_colorscheme" = "red-green" ] ; then
