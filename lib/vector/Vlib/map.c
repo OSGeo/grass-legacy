@@ -320,6 +320,7 @@ Vect_delete ( char *map )
     char   buf[5000];
     DIR    *dir;
     struct dirent *ent; 
+    char *tmp;
 
     G_debug (3, "Delete vector '%s'", map );
 
@@ -396,35 +397,31 @@ Vect_delete ( char *map )
     }
     closedir (dir);
 
-    /* NFS can create . files for those deleted -> second time */
+    /* NFS can create .nfsxxxxxxxx files for those deleted 
+     *  -> we have to move the directory to ./tmp before it is deleted */
     sprintf ( buf, "%s/%s/vector/%s", G_location_path(), G_mapset(), map );
-    G_debug (3, "opendir '%s'", buf ); 
-    dir = opendir( buf );
-    if (dir == NULL) {
-	G_warning ( "Cannot open directory '%s'", buf );
-	return -1;
-    }
-    while ( (ent = readdir (dir)) ) {
-	G_debug (3, "file = '%s'", ent->d_name );
-	if ( (strcmp (ent->d_name, ".") == 0) || (strcmp (ent->d_name, "..") == 0) ) continue;
-	sprintf ( buf, "%s/%s/vector/%s/%s", G_location_path(), G_mapset(), map, ent->d_name );
-	G_debug (3, "delete file '%s'", buf );
-	ret = unlink ( buf );
-	if ( ret == -1 ) { 
-	    G_warning ( "Cannot delete file '%s'", buf );
-	    closedir (dir);
-	    return -1;
-	}
-    }
-    closedir (dir);
 
-    sprintf ( buf, "%s/%s/vector/%s", G_location_path(), G_mapset(), map );
-    G_debug (3, "delete directory '%s'", buf );
-    ret = rmdir ( buf );
-    if ( ret == -1 ) { 
-	G_warning ( "Cannot delete directory '%s'", buf );
+    tmp = G_tempfile();
+
+    G_debug (3, "rename '%s' to '%s'", buf, tmp );
+    ret = rename ( buf, tmp );
+
+    if ( ret == -1 ) {
+	G_warning ( "Cannot rename directory '%s' to '%s'", buf, tmp );
 	return -1;
     }
+
+    G_debug (3, "unlink directory '%s'", tmp );
+    ret = unlink ( tmp );
+
+    /* It seems that unlink fails if the directory is not empty (it should not)
+       but it is not such problem if temporary file is left there (it is empty) */
+    /* 
+    if ( ret == -1 ) { 
+	G_warning ( "Cannot unlink directory '%s'", tmp );
+	return -1;
+    }
+    */
 
     return 0;
 }
