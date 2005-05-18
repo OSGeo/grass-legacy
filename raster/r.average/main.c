@@ -90,7 +90,7 @@ main (int argc, char *argv[])
     tempfile2 = G_tempfile();
     sprintf (command, "%s -anC input='%s,%s' fs=space > %s",
 	STATS, basemap->answer, covermap->answer, tempfile1);
-    if (stat = system(command))
+    if (stat = G_system(command))
     {
 	unlink(tempfile1);
 	fprintf (stderr, "%s: ERROR running %s command\n", me, STATS);
@@ -151,7 +151,7 @@ main (int argc, char *argv[])
     fclose (fd2);
     sprintf (command, "%s input='%s' output='%s' < %s",
 	RECODE, basemap->answer, outputmap->answer, tempfile2);
-    stat = system(command);
+    stat = G_system(command);
     unlink (tempfile1);
     unlink (tempfile2);
     exit(stat);
