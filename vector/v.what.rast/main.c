@@ -141,7 +141,7 @@ int main(int argc,char *argv[])
     /* Check column type */
     col_type = db_column_Ctype ( driver, Fi->table, col_opt->answer );
 
-    if ( col_type == -1 ) G_fatal_error ( "Column not found" );
+    if ( col_type == -1 ) G_fatal_error ( "Column <%s> not found", col_opt->answer );
 
     if ( col_type != DB_C_TYPE_INT && col_type != DB_C_TYPE_DOUBLE )
 	 G_fatal_error ( "Column type is not supported" ); 
