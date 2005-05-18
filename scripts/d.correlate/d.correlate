@@ -1,0 +1,106 @@
+#!/bin/sh
+# 
+# updated to GRASS 6 by Markus Neteler 5/2005
+#            neteler itc it
+#
+# prints a graph of the correlation between data layers (in pairs)
+# derived from <grass5>/src.local/d.correlate.sh
+
+#%Module
+#%  description: prints a graph of the correlation between data layers (in pairs)
+#%End
+#%option
+#% key: layer1
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map
+#% required : yes
+#%end
+#%option
+#% key: layer2
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map
+#% required : yes
+#%end
+#%option
+#% key: layer3
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map
+#% required : no
+#%end
+#%option
+#% key: layer4
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map
+#% required : no
+#%end
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec g.parser "$0" "$@"
+fi
+
+if [ $# -gt 4 ] ; then
+	echo max 4 layers allowed
+	exit 1
+fi
+
+TMP1="`g.tempfile pid=$$`"
+
+ok=yes
+for f in $GIS_OPT_layer1 $GIS_OPT_layer2 $GIS_OPT_layer3 $GIS_OPT_layer4
+do
+  eval `g.findfile element=cell file=$f`
+  if [ "$name" == "" ] ; then
+	echo $f not found
+	ok=no
+  fi
+done
+
+if [ "$ok" == "no" ] ; then
+ exit 1
+fi
+
+d.erase
+if [ $? != 0 ] ; then
+ exit 1
+fi
+
+echo "CORRELATION" | d.text color=white size=4 line=1
+colors="red black blue green gray violet"
+line=2
+iloop=0
+jloop=0
+for i in $GIS_OPT_layer1 $GIS_OPT_layer2 $GIS_OPT_layer3 $GIS_OPT_layer4
+do
+   iloop=`expr $iloop + 1`
+   for j in $GIS_OPT_layer1 $GIS_OPT_layer2 $GIS_OPT_layer3 $GIS_OPT_layer4 ; do
+    jloop=`expr $jloop + 1`
+    if [ "$i" != "$j" -a $iloop -le $jloop ] ; then
+     colorstmp1=`echo $colors | cut -d' ' -f1`
+     colorstmp2=`echo $colors | cut -d' ' -f2-`
+     colors=`echo $colorstmp2 $colorstmp1`
+
+     echo $i $j | d.text color=`echo $colors | cut -d' ' -f1` size=4 line=$line
+     line=`expr $line + 1`
+     r.stats -cnA input=$i,$j > "$TMP1"
+     m="`awk '$1>max1{max1=$1} $2>max2{max2=$2} min1==0||$1<min1{min1=$1} min2==0||$2<min2{min2=$2} END {print min1,max1,min2,max2}' $TMP1`"
+     m1=`echo $m | cut -d' ' -f1`
+     m2=`echo $m | cut -d' ' -f2`
+     m3=`echo $m | cut -d' ' -f3`
+     m4=`echo $m | cut -d' ' -f4`
+     awk '{print "move",($1-min1+1)*100.0/(max1-min1+1),($2-min2+1)*100.0/(max2-min2+1);print "draw",($1-min1+1)*100.0/(max1-min1+1),($2-min2+1)*100.0/(max2-min2+1) }' min1=$m1 max1=$m2 min2=$m3 max2=$m4 "$TMP1" | d.graph color=`echo $colors | cut -d' ' -f1`
+   
+    fi
+   done
+   jloop=0
+done
+
+rm -f "$TMP1" 
