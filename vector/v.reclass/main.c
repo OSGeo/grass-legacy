@@ -108,7 +108,7 @@ main (int argc, char *argv[])
 	ctype = db_column_Ctype ( Driver, Fi->table, col_opt->answer );
 
 	if ( ctype == -1 ) {
-	    G_fatal_error ("Cannot get column type" );
+	    G_fatal_error ("Column <%s> not found", col_opt->answer );
         } 
 	else if ( ctype == DB_C_TYPE_INT ) 
 	{
