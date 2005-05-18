@@ -5,6 +5,7 @@ include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 
 SUBDIRS = \
+	d.correlate \
 	d.monsize \
 	d.out.png \
 	d.rast.leg \
