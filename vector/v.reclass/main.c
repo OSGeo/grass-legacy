@@ -10,6 +10,16 @@ int inpt (FILE *rulefd, char *buf);
 int key_data (char *buf, char **k, char **d);
 int reclass ( struct Map_info *In, struct Map_info *Out, int type, int field, dbCatValArray *cvarr, int optiond);
 
+int cmpcat ( const void *pa, const void *pb)
+{
+    dbCatVal *p1 = (dbCatVal *) pa;
+    dbCatVal *p2 = (dbCatVal *) pb;
+
+    if( p1->cat < p2->cat ) return -1;
+    if( p1->cat > p2->cat ) return 1;
+    return 0;
+}
+
 int 
 main (int argc, char *argv[])
 {
@@ -91,13 +101,150 @@ main (int argc, char *argv[])
 	G_fatal_error("Cannot open database %s by driver %s", Fi->database, Fi->driver);
 
     if ( col_opt->answer ) {
+	int ctype;
         int nrec;
 
-	nrec = db_select_CatValArray ( Driver, Fi->table, Fi->key, col_opt->answer, NULL, &cvarr );
-	G_debug (3, "nrec = %d", nrec );
+	/* Check column type */
+	ctype = db_column_Ctype ( Driver, Fi->table, col_opt->answer );
 
-	if ( cvarr.ctype != DB_C_TYPE_INT )
-	    G_fatal_error ( "Column type must be integer." );
+	if ( ctype == -1 ) {
+	    G_fatal_error ("Cannot get column type" );
+        } 
+	else if ( ctype == DB_C_TYPE_INT ) 
+	{
+	    nrec = db_select_CatValArray ( Driver, Fi->table, Fi->key, col_opt->answer, NULL, &cvarr );
+	    G_debug (3, "nrec = %d", nrec );
+        } 
+	else if ( ctype == DB_C_TYPE_STRING ) 
+	{
+	    int  i, more, nrows, newval, len;
+	    dbString stmt, stmt2;
+	    dbString lastval;
+	    dbCursor cursor;
+	    dbColumn *column;
+	    dbValue *value;
+	    dbTable *table;
+            struct field_info *NewFi;
+	    dbDriver *Driver2;
+
+	    db_init_string ( &stmt );
+	    db_init_string ( &stmt2 );
+	    db_init_string ( &lastval );
+
+	    NewFi = Vect_default_field_info ( &Out, field, NULL, GV_1TABLE );
+	    Vect_map_add_dblink ( &Out, field, NULL, NewFi->table, "cat", NewFi->database, NewFi->driver);
+	    
+	    Driver2 = db_start_driver_open_database ( NewFi->driver, 
+		                                      Vect_subst_var(NewFi->database, &Out) );
+	    
+	    
+	    sprintf( buf, "SELECT %s, %s FROM %s ORDER BY %s", Fi->key, col_opt->answer, 
+		                                   Fi->table, col_opt->answer);
+	    db_set_string ( &stmt, buf);
+
+	    G_debug (3, "  SQL: %s", db_get_string ( &stmt ) );
+	    
+	    if (db_open_select_cursor(Driver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
+		G_fatal_error("Cannot open select cursor: %s", db_get_string ( &stmt ) );
+
+	    nrows = db_get_num_rows ( &cursor );
+	    G_debug (3, "  %d rows selected", nrows );
+	    if ( nrows < 0 ) G_fatal_error ( "Cannot select records from database");
+		
+	    db_CatValArray_alloc( &cvarr, nrows );
+
+	    table = db_get_cursor_table (&cursor);
+
+	    /* Check if key column is integer */
+	    column = db_get_table_column(table, 0); 
+	    ctype = db_sqltype_to_Ctype( db_get_column_sqltype(column) );
+	    G_debug (3, "  key type = %d", type );
+
+	    if ( ctype != DB_C_TYPE_INT ) { 
+		G_fatal_error ( "Key column type is not integer" ); /* shouldnot happen */
+	    }	
+
+	    cvarr.ctype = DB_C_TYPE_INT;
+	    
+	    /* String column length */
+	    column = db_get_table_column(table, 1); 
+	    len = db_get_column_length(column);
+
+	    /* Create table */
+	    sprintf ( buf, "create table %s (cat integer, %s varchar(%d))", NewFi->table, 
+		                       col_opt->answer, len );
+	    
+	    db_set_string ( &stmt2, buf);
+
+	    if (db_execute_immediate (Driver2, &stmt2) != DB_OK ) {
+		Vect_close (&Out);
+		db_close_database_shutdown_driver ( Driver );
+		db_close_database_shutdown_driver ( Driver2 );
+		G_fatal_error ( "Cannot create table: %s", db_get_string (&stmt2) );
+	    }
+
+            if ( db_create_index2(Driver2, NewFi->table, "cat" ) != DB_OK )
+                G_warning ( "Cannot create index" );
+
+	    if (db_grant_on_table (Driver2, NewFi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
+	    {
+		G_fatal_error ( "Cannot grant privileges on table %s", NewFi->table );
+	    }
+
+	    newval = 0;
+	    
+	    /* fetch the data */
+	    for ( i = 0; i < nrows; i++ ) {
+		if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK) {
+		    G_fatal_error ( "Cannot fetch data" );
+		}
+
+		column = db_get_table_column(table, 1);
+		value  = db_get_column_value(column);
+
+		if ( i == 0 || strcmp(db_get_value_string(value),db_get_string(&lastval))!=0 ) {
+		    newval++;
+		    db_set_string ( &lastval, db_get_value_string(value) );
+		    G_debug (3, "  newval = %d string = %s", newval, db_get_value_string(value) );
+
+		    db_set_string ( &stmt2, db_get_value_string(value) );
+		    db_double_quote_string (&stmt2) ;
+		    sprintf ( buf, "insert into %s values (%d, '%s')", NewFi->table, 
+					       newval, db_get_string(&stmt2) );
+		    
+		    db_set_string ( &stmt2, buf);
+
+		    if (db_execute_immediate (Driver2, &stmt2) != DB_OK ) {
+			Vect_close (&Out);
+			db_close_database_shutdown_driver ( Driver );
+			db_close_database_shutdown_driver ( Driver2 );
+			G_fatal_error ( "Cannot insert data: %s", db_get_string (&stmt2) );
+		    }
+		}
+
+		column = db_get_table_column(table, 0); /* first column */
+		value  = db_get_column_value(column);
+		cvarr.value[i].cat = db_get_value_int(value);
+
+		cvarr.value[i].val.i = newval;
+		    
+		G_debug (4, "  cat = %d newval = %d", cvarr.value[i].cat, newval );
+	    }
+
+	    cvarr.n_values = nrows;
+
+    	    db_close_database_shutdown_driver(Driver2);
+	    
+	    db_close_cursor(&cursor);
+	    db_free_string ( &stmt );
+	    db_free_string ( &lastval );
+
+	    qsort( (void *) cvarr.value, nrows, sizeof(dbCatVal), cmpcat);
+	} 
+        else 
+        {	    
+	    G_fatal_error ( "Column type must be integer or string." );
+	}
 
     } else {
 	int cat;
