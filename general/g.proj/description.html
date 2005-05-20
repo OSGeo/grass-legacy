@@ -99,10 +99,22 @@ Create a new location with the same co-ordinate system as the current
 location:<br>
 <b>g.proj -c location=</b><em>newloc</em> <br>
 
+<p>
+Reproject external raster map to current GRASS projection (does not always make sense!)
+using the GDAL 'gdalwarp' tool:<br>
+<b>gdalwarp -t_srs "`g.proj -wef`" aster.tif aster_tmerc.tif<br>
+
+<p>
+Reproject external vector map to current GRASS projection (does not always make sense!)
+using the OGR 'ogr2ogr' tool:<br>
+<b>ogr2ogr -t_srs "`g.proj -wef`" polbnda_italy_GB_ovest.shp polbnda_italy_LL.shp<br>
+
+
 <H2>REFERENCES</H2>
 
-<a href=http://proj.maptools.org>PROJ 4</a>: 
-Projection/datum support library.
+<a href=http://proj.maptools.org>PROJ 4</a>: Projection/datum support library<br>
+<a href=http://www.gdal.org>GDAL</a><br>
+<a href=http://www.gdal.org/ogr/>OGR</a>
 
 <H2>SEE ALSO</H2>
  
