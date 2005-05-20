@@ -36,10 +36,12 @@ chmod -R 1777 $GISBASE/locks
 echo ""
 echo "GRASS GIS source code compiled."
 echo ""
+# Note URL below should probably be changed to newer version of GRASS
+# but right now compilation_hints only exists in grass50 directory.
 if grep 'Compilation error' error.log; then
   echo ""
   echo "* In case of errors please check following web page for hints:"
-  echo "    http://grass.itc.it/grass5/source/compilation_hints.html"
+  echo "    http://grass.itc.it/grass50/source/compilation_hints.html"
   echo ""
 fi
 echo "* Install GRASS with (possibly as root)"
