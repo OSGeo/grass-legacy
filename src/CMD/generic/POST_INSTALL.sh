@@ -39,7 +39,7 @@ echo ""
 if grep 'Compilation error' error.log; then
   echo ""
   echo "* In case of errors please check following web page for hints:"
-  echo "    http://grass.itc.it/grass5/source/compilation_hints.html"
+  echo "    http://grass.itc.it/grass54/source/compilation_hints.html"
   echo ""
 fi
 echo "* Install GRASS with (possibly as root)"
