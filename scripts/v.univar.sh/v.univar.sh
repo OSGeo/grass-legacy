@@ -81,19 +81,26 @@ trap "exitprocedure" 2 3 15
 echo "Calculation for column $GIS_OPT_column of table $GIS_OPT_table..."
 echo "Reading column values..."
 
-if [ -n "$GIS_OPT_db" ] ; then
-    db="database=$GIS_OPT_database"
-else
+if [ -z "$GIS_OPT_database" ] ; then
     db=""
+else
+    db="database=$GIS_OPT_database"
 fi
 
-if [ -n "$GIS_OPT_drv" ] ; then
-    drv="driver=$GIS_OPT_driver"
-else
+if [ -z "$GIS_OPT_driver" ] ; then
     drv=""
+else
+    drv="driver=$GIS_OPT_driver"
 fi
 
 db.select table=$GIS_OPT_table $db $drv sql="select $GIS_OPT_column from $GIS_OPT_table" -c > "$TMP"
+
+echo "database = $GIS_OPT_database"
+echo "db = $db"
+echo ""
+echo "drv = $drv"
+echo "driver = $GIS_OPT_drv"
+echo ""
 
 #check if map contains only NULL's in current region
 LINES=`wc -l "$TMP" | awk '{print $1}'`
