@@ -1,3 +1,6 @@
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include "dbmi.h"
 #include "dbstubs.h"
 
