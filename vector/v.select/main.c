@@ -187,7 +187,7 @@ main (int argc, char *argv[])
     BoundList = Vect_new_list ();
 
     /* Open output */
-    Vect_open_new (&Out, out_opt->answer, 0);
+    Vect_open_new (&Out, out_opt->answer, Vect_is_3d ( &(In[0]) ) );
     Vect_set_map_name ( &Out, "Output from v.select");
     Vect_set_person ( &Out, G_whoami ());
     Vect_copy_head_data (&(In[0]), &Out);
