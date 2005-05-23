@@ -7,6 +7,8 @@
     January 1994
 */
 
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 
 #include "gstypes.h"

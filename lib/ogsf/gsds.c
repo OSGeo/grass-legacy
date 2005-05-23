@@ -2,8 +2,9 @@
 * $Id$
 */
 
+#include <stdlib.h>
 #include <stdio.h>
-#include <strings.h>
+#include <string.h>
 
 #include "gstypes.h"
 

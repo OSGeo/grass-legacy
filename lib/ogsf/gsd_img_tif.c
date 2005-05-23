@@ -7,6 +7,7 @@
  * on RGB dump 
  */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include "image.h"

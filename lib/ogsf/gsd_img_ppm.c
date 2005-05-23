@@ -8,6 +8,10 @@
  * on RGB dump 
  */
 
+#include <stdlib.h>
+#include <stdio.h>
+
+#include "local_proto.h"
 #include "image.h"
 #include "gstypes.h"
 

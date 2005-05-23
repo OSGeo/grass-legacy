@@ -3,10 +3,17 @@
  * added little/big endian test Markus Neteler 9/2000 
  * changed 10/99 Jaro*/
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/types.h>
+
 #include "image.h"
 #include "gstypes.h"
 
-static void ierrfunc(char *);
+//static void ierrfunc(char *);
+static int putrow(register IMAGE *, unsigned short  *, unsigned, unsigned);
+static void i_seterror();
+static int iclose(register IMAGE *);
 
 static unsigned short rbuf[8192];
 static unsigned short gbuf[8192];

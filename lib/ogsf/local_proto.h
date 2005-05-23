@@ -189,6 +189,7 @@ void GS_init_view(void);
 void GS_clear(int);
 double GS_get_aspect(void);
 int GS_has_transparency(void);
+/* void GS_getlight_position(int, float *, float *, float *, int);*/
 
 /* From GSX.c */
 int GS_check_cancel(void);
@@ -435,6 +436,10 @@ void gsd_draw_cplane(int);
 
 /* From gsd_fonts.c */
 GLuint gsd_set_font(const char *);
+int gsd_get_txtwidth(char *, int );
+int gsd_get_txtheight(int size);
+void do_label_display(GLuint, float *, char *);
+int get_txtxoffset();
 
 /* From gsd_img.c */
 int GS_write_rgb(char *);
@@ -524,6 +529,9 @@ void gsd_bgnlist(int, int);
 void gsd_endlist(void);
 void gsd_calllist(int);
 void gsd_deletelist(GLuint, int);
+void gsd_calllists(int);
+void gsd_getwindow(int *, int *, double *, double *);
+int gsd_writeView(unsigned long **, unsigned int, unsigned int);
 
 /* From gsd_surf.c */
 int gsd_surf(geosurf *);
@@ -715,5 +723,11 @@ void gsd_fringe_horiz_poly (float, geosurf *, int, int);
 void gsd_fringe_horiz_line (float, geosurf *, int, int);
 void gsd_fringe_vert_poly (float, geosurf *, int, int);
 void gsd_fringe_vert_line (float, geosurf *, int, int);
+
+/* from gsd_legend.c */
+GLuint gsd_put_legend(char *, GLuint *, int , int *, float *, int *);
+void gsd_bgn_legend_viewport(GLint, GLint, GLint, GLint);
+void gsd_end_legend_viewport(void);
+int gsd_make_nice_number(float *);
 
 #endif /* _OGSF_LOCAL_PROTO_H */
