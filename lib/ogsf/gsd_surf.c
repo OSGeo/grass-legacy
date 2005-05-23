@@ -7,6 +7,7 @@
     October 1993
 */
 
+#include <stdlib.h>
 #include <stdio.h>
 
 #include "gstypes.h"

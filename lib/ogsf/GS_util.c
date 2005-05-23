@@ -7,11 +7,12 @@
     January 1993
 */
 
+#include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
+#include <string.h>
 
 #include "gstypes.h"
-#include "math.h"
-#include "string.h"
 
 /************************************************************************/
 double GS_geodistance(double *from, double *to, char *units)

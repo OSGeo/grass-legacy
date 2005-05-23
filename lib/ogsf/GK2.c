@@ -2,6 +2,7 @@
 * $Id$
 */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include "gstypes.h"
 #include "keyframe.h"

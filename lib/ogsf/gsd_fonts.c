@@ -14,6 +14,7 @@
 *
 *****************************************************************************/
 
+#include <string.h>
 
 #include "gstypes.h"
 #include "rgbpack.h"
@@ -35,7 +36,7 @@ int gsd_get_txtwidth(char *s, int size)
 
 
 /*****************************************/
-int gsd_get_txtheight(size)
+int gsd_get_txtheight(int size)
 {
     unsigned long height;
 

@@ -9,6 +9,7 @@
 
 /* DEBUG */
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "gis.h"
 #include "gstypes.h"

@@ -12,6 +12,8 @@
     January 1993
 */
 
+#include <stdlib.h>
+#include <string.h>
 #include <math.h>
 
 #include "gis.h"
@@ -33,6 +35,8 @@
  * Pierre de Mouveaux - 31 oct. 1999. p_de_mouveaux@hotmail.com.
  */
 #define NVIZ_HACK 1
+
+int gsd_getViewport(GLint, GLint);
 
 static int Surf_ID[MAX_SURFS];
 static int Next_surf = 0;
@@ -733,7 +737,7 @@ void GS_draw_all_list(void)
 /* Uses glFlush() to ensure all drawing is complete
  * before returning
 */
-    gsd_calllists();
+    gsd_calllists(0); /* not sure if 0 is right  - MN*/
     glFlush();
     return;
 }
