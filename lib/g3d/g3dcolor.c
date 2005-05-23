@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <rpc/types.h>
@@ -70,11 +71,12 @@ G3d_readColors (name, mapset, colors) /* adapted from G_read_colors */
   /* now look for the regular color table */
   /*if (G__name_is_fully_qualified (name, xname, xmapset)) {
     sprintf (buf, "%s/%s", G3D_DIRECTORY, xname);
-    sprintf (buf2, "%s@%s", G3D_COLOR_ELEMENT, xmapset); /* == color@mapset */
-  /*} else {*/
-    sprintf (buf, "%s/%s", G3D_DIRECTORY, name);
-    sprintf (buf2, "%s", G3D_COLOR_ELEMENT);
-  /*}*/
+    sprintf (buf2, "%s@%s", G3D_COLOR_ELEMENT, xmapset); // == color@mapset
+  //} else {
+  //  sprintf (buf, "%s/%s", G3D_DIRECTORY, name);
+  //  sprintf (buf2, "%s", G3D_COLOR_ELEMENT);
+  //}
+  */
 
   switch (read_colors (buf, buf2, mapset, colors)) {
   case -2:
