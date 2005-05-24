@@ -68,11 +68,11 @@ global execom
  	 }}
  	}}
  {separator}
- 	{cascad "Workspace" {} "" $tmenu {			
- {command "New" {} "Create new workspace file" {} -accelerator $keyctrl-N -command { Dm::new}}
- 	 {command "Open..." {} "Open workspace file" {} -accelerator $keyctrl-O -command { Dm::OpenFileBox {}}}
- 	 {command "Save" {} "Save workspace file" {} -accelerator $keyctrl-S -command { Dm::SaveFileBox {}}}
- 	 {command "Save as..." {} "Save workspace file as name" {} -command { catch {unset ::Dm::filename} ; Dm::SaveFileBox {}}}
+ 	{cascad "Workspace/group" {} "" $tmenu {			
+ {command "New" {} "Create new workspace/group file" {} -accelerator $keyctrl-N -command { Dm::new}}
+ 	 {command "Open..." {} "Open workspace/group file" {} -accelerator $keyctrl-O -command { Dm::OpenFileBox {}}}
+ 	 {command "Save" {} "Save workspace/group file" {} -accelerator $keyctrl-S -command { Dm::SaveFileBox {}}}
+ 	 {command "Save as..." {} "Save workspace/group file as name" {} -command { catch {unset ::Dm::filename} ; Dm::SaveFileBox {}}}
  	 {command "Close" {} "Close workspace" {} -accelerator $keyctrl-W -command { Dm::FileClose {}}}
  }}
  {separator}
@@ -89,7 +89,7 @@ global execom
  	{cascad "Manage 2D and 3D maps" {} "" $tmenu {			
  	 {command "Copy maps" {} "g.copy" {} -command {execute g.copy }}
  	 {command "List maps" {} "g.list" {} -command {execute g.list}}
- 	 {command "List maps using expressions and 'wildcards'" {} "g.mlist" {} -command {execute g.mlist }}
+ 	 {command "List maps using expressions and 'wildcards'" {} "g.mlist" {} -command {$execom g.mlist }}
  	 {command "Rename maps" {} "g.rename" {} -command {execute g.rename }}
  	 {command "Remove maps" {} "g.remove" {} -command {execute g.remove }}
  	 {command "Remove maps using expressions and 'wildcards'" {} "g.mremove" {} -command {execute g.mremove }}
@@ -141,7 +141,11 @@ global execom
  	 {separator}
 			 {command "Slide show of all raster maps in current mapset" {} "d.slide.show" {} -command {execute d.slide.show }}
 	 }}
-			{command "Display vector maps" {} "d.vect" {} -command {execute d.vect }}
+    {cascad "Display vector maps" {} "" $tmenu {
+			{command "Display vector map" {} "d.vect" {} -command {execute d.vect }}
+			{command "Display thematic vector map" {} "d.vect.thematic" {} -command {execute d.vect.thematic }}
+	 		{command "Display thematic charts at vector point localities" {} "d.vect.chart" {} -command {execute d.vect.chart }}
+	}}
 			{cascad "Display text on maps" {} "" $tmenu {			
 		 	{command "Display legend for raster maps" {} "d.legend" {} -command {execute d.legend }}
 		 	{command "Display category values in raster map cells" {} "d.rast.num" {} -command {execute d.rast.num }}
@@ -160,7 +164,6 @@ global execom
 			{cascad "Display graphics on maps" {} "" $tmenu {			
 	 		{command "Overlay scale and north arrow" {} "d.barscale" {} -command {execute d.barscale }}
  {separator}
-	 		{command "Display graphs at vector point localities" {} "d.vect.chart" {} -command {execute d.vect.chart }}
 	 		{command "Display histogram" {} "d.histogram" {} -command {execute d.histogram }}
 	 		{command "Display line graph" {} "d.linegraph" {} -command {execute d.linegraph }}
  	 {separator}
