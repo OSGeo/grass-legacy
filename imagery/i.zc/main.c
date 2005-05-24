@@ -13,6 +13,7 @@ Zero Crossings for GRASS
 #include "local_proto.h"
 #include <math.h>
 #include "gis.h"
+#include "gmath.h"
 #include "globals.h"
 
 
@@ -132,8 +133,8 @@ int main( int argc, char *argv[])
         /* get the rows and columns in the current window */
         or = G_window_rows();
         oc = G_window_cols();
-        rows = max_pow2(or);
-        cols = max_pow2(oc);
+        rows = max_pow2((long)or);
+        cols = max_pow2((long)oc);
         size = (rows>cols) ? rows : cols;
         totsize = size * size;
 
@@ -201,32 +202,5 @@ int main( int argc, char *argv[])
         fprintf(stderr, "Transform successful\n");
         exit(0);
 }
-
-
-/*****************************************************************************/
-/* MAX_POW2 : finds least power of 2 greater than or equal to number         */
-/*                                                                           */
-/* Input arguments: n - unsigned integer, the number                         */
-/*                                                                           */
-/* Output is an integer power of 2                                           */
-/*                                                                           */
-/*****************************************************************************/
-
-long 
-max_pow2 (long n)
-
-{
-        long p2, n1;
-
-        n1 = n >> 1;
-        p2 = 1;
-        while (n1 > 0)
-        {
-                n1 >>= 1;
-                p2 <<= 1;
-        }
-        if (p2 < n) p2 <<=1;
-        return(p2);
-}   /* end max_pow2 */
 
 /*************************************************************************/
