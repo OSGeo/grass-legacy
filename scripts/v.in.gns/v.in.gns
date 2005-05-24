@@ -86,7 +86,9 @@ fi
 echo "Performing UTF8 -> ASCII conversion..."
 #fix also TAB to semicolon
 TAB=`awk 'BEGIN{printf "\t";}'`
-utf2ascii.sh ${FILEORIG} | sed  "s+$TAB+;+g"  > ${TMPFILE}
+# ftp://ftp.dante.de/tex-archive/support/utf2any.tar.gz
+# TODO: Not sure of utf2any step is needed
+utf2any -8 -f iso-8859-15.map ${FILEORIG} | sed  "s+$TAB+;+g"  > ${TMPFILE}
 
 #check for MSDOS encoding, fix if needed
 file ${TMPFILE} | grep CRLF > /dev/null
