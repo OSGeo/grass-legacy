@@ -39,6 +39,7 @@ SUBDIRS = \
 	v.db.reconnect.all \
 	v.in.garmin \
 	v.in.e00 \
+	v.in.gns \
 	v.in.sites.all \
 	v.report \
 	v.univar.sh
