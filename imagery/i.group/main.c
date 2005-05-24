@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-	"Creates and edits groups and subgroups of imagery files.";
+	_("Creates and edits groups and subgroups of imagery files.");
 
 /* Get Args */
     grp = G_define_option();
@@ -35,14 +35,14 @@ int main(int argc, char *argv[])
     grp->type = TYPE_STRING;
     grp->required = YES;
     grp->gisprompt = "old,group,group";
-    grp->description = "Name of imagery group";
+    grp->description = _("Name of imagery group");
 
     sgrp = G_define_option();
     sgrp->key = "subgroup";
     sgrp->type = TYPE_STRING;
     sgrp->required = NO;
     sgrp->gisprompt = "old,group,group";
-    sgrp->description = "Name of imagery sub-group";
+    sgrp->description = _("Name of imagery sub-group");
 
     rast = G_define_option();
     rast->key = "input";
@@ -50,15 +50,15 @@ int main(int argc, char *argv[])
     rast->required = NO;   /* why is it NO ?? */
     rast->multiple = YES;
     rast->gisprompt = "old,cell,raster";
-    rast->description = "Name of raster(s) to include in group";
+    rast->description = _("Name of raster(s) to include in group");
 
     r = G_define_flag();
     r->key = 'r';
-    r->description = "Remove selected files from specified group";
+    r->description = _("Remove selected files from specified group");
 
     l = G_define_flag();
     l->key = 'l';
-    l->description = "List files from specified (sub)group";
+    l->description = _("List files from specified (sub)group");
 
     if (G_parser(argc, argv))
 	exit(-1);
@@ -90,13 +90,13 @@ int main(int argc, char *argv[])
     if (r->answer) {
 	/* Remove files from Group */
 	if (I_find_group(group) == 0)
-	    G_fatal_error("Specified group does not exist ... Exiting");
+	    G_fatal_error(_("Specified group does not exist ... Exiting"));
 	if (sgrp->answer) {
-	    fprintf(stderr, "Removing files from subgroup ...\n");
+	    G_message(_("Removing files from subgroup ...\n"));
 	    remove_subgroup_files(group, subgroup, rasters, k);
 	}
 	else {
-	    fprintf(stderr, "Removing files from group ...\n");
+	    G_message(_("Removing files from group ...\n"));
 	    remove_group_files(group, rasters, k);
 	}
     }
@@ -112,15 +112,15 @@ int main(int argc, char *argv[])
 	else {
 		/* Create or update Group REF */
 		if (I_find_group(group) == 0) {
-		    fprintf(stderr, "group %s - does not yet exist...\n", group);
-		    fprintf(stderr, "Creating new group %s\n", group);
+		    G_message(_("group %s - does not yet exist...\n"), group);
+		    G_message(_("Creating new group %s\n"), group);
 		}
 		if (sgrp->answer) {
-		    fprintf(stderr, "Adding files to sub-group\n");
+		    G_message(_("Adding files to sub-group\n"));
 		    add_or_update_subgroup(group, subgroup, rasters, k);
 		}
 		else {
-		    fprintf(stderr, "Adding files to group\n");
+		    G_message(_("Adding files to group\n"));
 		    add_or_update_group(group, rasters, k);
 		}
 	}
@@ -144,15 +144,14 @@ int add_or_update_group(char group[30], char **rasters, int k)
 	skip = 0;
 	strcpy(tmp_name, rasters[m]);
 	if ((mapset = G_find_cell(tmp_name, "")) == NULL) {
-	    G_fatal_error("Unable to find raster <%s>", tmp_name);
+	    G_fatal_error(_("Unable to find raster <%s>"), tmp_name);
 	}
-	fprintf(stderr, "Adding raster map %s\n", tmp_name);
+	G_message(_("Adding raster map %s\n"), tmp_name);
 	/* Go through existing files to check for duplicates */
 	for (n = 0; n < nfiles; n++) {
 	    if (strcmp(tmp_name, ref.file[n].name) == 0) {
-		fprintf(stderr, "Raster map <%s> exists in group\n",
-			tmp_name);
-		fprintf(stderr, "Skipping <%s>...\n", tmp_name);
+		G_message(_("Raster map <%s> exists in group\n"), tmp_name);
+		G_message(_("Skipping <%s>...\n"), tmp_name);
 		skip = 1;
 		continue;
 	    }
@@ -160,7 +159,7 @@ int add_or_update_group(char group[30], char **rasters, int k)
 	if (skip == 0)
 	    I_add_file_to_group_ref(tmp_name, mapset, &ref);
     }
-    fprintf(stderr, "Done.\n");
+    G_message(_("Done.\n"));
     I_put_group_ref(group, &ref);
 
     return 0;
@@ -183,15 +182,14 @@ int add_or_update_subgroup(char group[30],
 	skip = 0;
 	strcpy(tmp_name, rasters[m]);
 	if ((mapset = G_find_cell(tmp_name, "")) == NULL) {
-	    G_fatal_error("Unable to find raster <%s>", tmp_name);
+	    G_fatal_error(_("Unable to find raster <%s>"), tmp_name);
 	}
-	fprintf(stderr, "Adding raster map %s\n", tmp_name);
+	G_message(_("Adding raster map %s\n"), tmp_name);
 	/* Go through existing files to check for duplicates */
 	for (n = 0; n < nfiles; n++) {
 	    if (strcmp(tmp_name, ref.file[n].name) == 0) {
-		fprintf(stderr, "Raster map <%s> exists in group\n",
-			tmp_name);
-		fprintf(stderr, "Skipping <%s>...\n", tmp_name);
+		G_message(_("Raster map <%s> exists in group\n"), tmp_name);
+		G_message(_("Skipping <%s>...\n"), tmp_name);
 		skip = 1;
 		continue;
 	    }
@@ -199,7 +197,7 @@ int add_or_update_subgroup(char group[30],
 	if (skip == 0)
 	    I_add_file_to_group_ref(tmp_name, mapset, &ref);
     }
-    fprintf(stderr, "Done.\n");
+    G_message(_("Done.\n"));
     I_put_subgroup_ref(group, subgroup, &ref);
 
     return 0;
@@ -233,7 +231,7 @@ int remove_group_files(char group[30], char **rasters, int k)
 	for (n = 0; n < nfiles; n++) {
 	    if ((strcmp(tmp_name, ref_tmp.file[n].name) == 0) &&
 		(strcmp(mapset, ref_tmp.file[n].mapset) == 0)) {
-		fprintf(stderr, "Found file %s@%s in Group\n", tmp_name,
+		G_message(_("Found file %s@%s in Group\n"), tmp_name,
 			mapset);
 	    }
 	    else {
@@ -243,7 +241,7 @@ int remove_group_files(char group[30], char **rasters, int k)
 	}
 
     }
-    fprintf(stderr, "Done ... Put group ref\n");
+    G_message(_("Done ... Put group ref\n"));
     I_put_group_ref(group, &ref);
 
 
@@ -280,7 +278,7 @@ int remove_subgroup_files(char group[30],
 	for (n = 0; n < nfiles; n++) {
 	    if ((strcmp(tmp_name, ref_tmp.file[n].name) == 0) &&
 		(strcmp(mapset, ref_tmp.file[n].mapset) == 0)) {
-		fprintf(stderr, "Found file %s@%s in Sub-Group\n", tmp_name,
+		G_message(_("Found file %s@%s in Sub-Group\n"), tmp_name,
 			mapset);
 	    }
 	    else {
@@ -290,7 +288,7 @@ int remove_subgroup_files(char group[30],
 	}
 
     }
-    fprintf(stderr, "Done ... Put subgroup ref\n");
+    G_message(_("Done ... Put subgroup ref\n"));
     I_put_subgroup_ref(group, subgroup, &ref);
 
     return 0;
