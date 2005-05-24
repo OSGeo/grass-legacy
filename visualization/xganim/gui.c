@@ -365,7 +365,7 @@ caddr_t cbs;
 {
 
     if(cd->speed){
-	if(cd->speed < 100000)
+	if(cd->speed < 200000)
 	    cd->speed *= 3;
     }
     else
