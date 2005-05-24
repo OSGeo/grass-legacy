@@ -176,7 +176,7 @@ main (int argc, char *argv[])
 	}
 
 	if ( format == FORMAT_POINT ) {
-	    int i, rowlen, ncols, minncols, *coltype, *collen;
+	    int i, rowlen, ncols, minncols, *coltype, *coltype2, *collen;
 	    int n_int = 0, n_double = 0, n_string = 0;
 	    char buf[1000];
 	    struct field_info *Fi;
@@ -318,6 +318,8 @@ main (int argc, char *argv[])
 			G_fatal_error ("Number of columns defined (%d) does not match number of columns (%d) "
 				"in input", nc, ncols);
 		    }
+		
+		    coltype2 = (int *) G_malloc ( ncols * sizeof(int) );
 
 		    for ( i = 0; i < ncols; i++ ) {
 			int dbcol, ctype, length;
@@ -328,6 +330,7 @@ main (int argc, char *argv[])
 			column = db_get_table_column ( table, dbcol );
 			ctype =  db_sqltype_to_Ctype ( db_get_column_sqltype(column) );
 			length = db_get_column_length ( column );
+			coltype2[i] = ctype;
 			
 			if ( catcol == i ) { /* if catcol == -1 it cannot be tru */
 			    key = G_store(db_get_column_name(column));
@@ -383,7 +386,7 @@ main (int argc, char *argv[])
 	    }
 
 	    points_to_bin ( tmpascii, rowlen, &Map, driver, table, fs, ncols,
-			    coltype, xcol, ycol, zcol, catcol, skip_lines );
+			    coltype2, xcol, ycol, zcol, catcol, skip_lines );
 
 	    if ( driver ) {
 	        db_commit_transaction ( driver );
