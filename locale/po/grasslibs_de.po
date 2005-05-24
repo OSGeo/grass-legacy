@@ -2139,13 +2139,13 @@ msgstr ""
 #: ../lib/vector/Vlib/open.c:183
 #, c-format
 msgid "Cannot open old vector %s"
-msgstr "Kann alte Vektordatei '%s' nicht öffnen."
+msgstr "Kann die existierende Vektordatei '%s' nicht öffnen."
 
 #: ../lib/vector/Vlib/open.c:193 ../lib/vector/Vlib/open.c:252
 #: ../lib/vector/Vlib/open.c:268
 #, c-format
 msgid "Cannot open old vector %s on level %d"
-msgstr "Kann die alte Vektordate '%s' nicht auf dem Level %d öffnen."
+msgstr "Kann die existierende Vektordatei '%s' nicht auf dem Level %d öffnen."
 
 #: ../lib/vector/Vlib/open.c:315 ../lib/vector/Vlib/open.c:520
 #, c-format
