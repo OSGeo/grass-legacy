@@ -4,7 +4,7 @@
 #
 # MODULE:	v.report
 # AUTHOR(S):	Markus Neteler
-# PURPOSE:	Generates geometry statistics for vector maps
+# PURPOSE:	Reports geometry statistics for vector maps
 # COPYRIGHT:	(C) 2005 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
@@ -14,7 +14,7 @@
 #############################################################################
 
 #%Module
-#%  description: Generates geometry statistics for vectors
+#%  description: Reports geometry statistics for vectors
 #%End
 #%option
 #% key: map
