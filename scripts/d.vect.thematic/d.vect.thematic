@@ -3,7 +3,8 @@
 ############################################################################
 #
 # MODULE:		d.vect.thematic
-# AUTHOR(S):	Michael Barton, Arizona State University
+# AUTHOR(S):	Michael Barton, Arizona State University with contributions
+#               by Martin Landa, Jachym Cepicky, and Daniel Calvelo Aros
 # PURPOSE:	    Displays thematic vector map with graduated colors
 #               or graduated points
 # COPYRIGHT:	(C) 2005 by the GRASS Development Team
@@ -44,7 +45,7 @@
 #%option
 #% key: column
 #% type: string
-#% description: Column to use for thematic display (must be numeric)
+#% description: Attribute column to use for thematic display (must be numeric)
 #% required : yes
 #%end
 #%option
@@ -103,7 +104,7 @@
 #% key: singlecolor
 #% type: string
 #% description: Color for graduated points map (grass named color or R:G:B triplet)
-#% answer: red
+#% answer: 250:0:0
 #% required : no
 #%end
 #% option
@@ -128,24 +129,38 @@
 #% answer: x1
 #% required : no
 #%end
+#%option
+#% key: group
+#% type: string
+#% gisprompt: file,file,file
+#% description: Name of group file where thematic map commands will be saved
+#% required : no
+#%end
 #%flag
 #% key: u
-#% description: Update color values to the table
+#% description: Update color values to GRASSRGB column in attribute table
 #%end
 #%flag 
 #%key: l
-#%description: Create legend in display monitor
+#%description: Create graphic legend in display monitor
+#%end
+#%flag 
+#%key: m
+#%description: Use math notation brackets in legend
+#%end
+#%flag 
+#%key: g
+#%description: Save thematic map commands to group file for GIS Manager
 #%end
  
 
-
 if  [ -z $GISBASE ] ; then
- echo "You must be in GRASS GIS to run this program."
+    echo "You must be in GRASS GIS to run this program."
  exit 1
 fi   
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+    exec g.parser "$0" "$@"
 fi
 
 # setting environment, so that awk works properly in all languages
@@ -154,29 +169,52 @@ export LC_NUMERIC=C
 # create temporary file to hold output from v.univar.sh
 TMP1="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP1" ] ; then
-    echo "ERROR: unable to create temporary files" 1>&2
+    echo "ERROR: unable to create temporary file for statistics" 1>&2
     exit 1
 fi
 
 # create temporary file to hold d.graph commands for legend
 TMP2="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP2" ] ; then
-    echo "ERROR: unable to create temporary files" 1>&2
+    echo "ERROR: unable to create temporary file for legend" 1>&2
     exit 1
 fi
 
+# Create temporary file to commands for GIS Manager group
+TMP3="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMP3" ] ; then
+    echo "ERROR: unable to create temporary file for group" 1>&2
+    exit 1
+fi
+
+# Set display variables for group
+atype=0
+ptype=0
+ctype=0
+ltype=0
+btype=0
+
+case "$GIS_OPT_type" in
+    "area" ) atype=1 ;; 
+    "point" )  ptype=1 ;;
+    "centroid" ) ctype=1 ;;
+    "line" ) ltype=1 ;;
+    "boundary" ) btype=1 ;;
+esac
+
 cleanup()
 {
- \rm -f $TMP1 $TMP1.sort
- \rm -f $TMP2 $TMP2.sort
+    \rm -f $TMP1 $TMP1.sort
+    \rm -f $TMP2 $TMP2.sort
+    \rm -f $TMP3 $TMP3.sort
 }
 
 # what to do in case of user break:
 exitprocedure()
 {
- echo "User break!"
- cleanup
- exit 1
+    echo "User break!"
+    cleanup
+    exit 1
 }
 # shell check for user break (signal list: trap -l)
 trap "exitprocedure" 2 3 15
@@ -208,8 +246,16 @@ if [ "$GIS_FLAG_u" -eq 1 ] ; then
         echo "Creating column 'grassrgb' in table '$table'"
         echo "ALTER TABLE $table ADD COLUMN grassrgb varchar(11)" | db.execute database=$database
     fi
-
 fi
+
+# Group name
+if [ -z "$GIS_OPT_group" ] ; then
+    group="themes"
+else
+    group=$GIS_OPT_group
+fi
+
+echo "Group $group" > "$TMP3"
 
 # Calculate statistics for thematic intervals
 v.univar.sh -e database=$database table=$table column=$GIS_OPT_column > "$TMP1"
@@ -226,19 +272,28 @@ ptsize=$GIS_OPT_size
 # set interval for each thematic map calculation type
 if [ "$GIS_OPT_themecalc" = "interval" ] ; then
     numint=$GIS_OPT_nint
-    step=`echo $max $min $numint | awk '{print ($1 - $2) / $3}'`
+    step=`echo $min $max $numint | awk '{print (($2 - $1) / $3)}'`
     pointstep=`echo $GIS_OPT_maxsize $ptsize $numint | awk '{print (($1 - $2) / $3)}'`
+    breakpoints=`echo $min $max $numint | awk '{for(i=0;i<$3;i++){printf $1+($2-$1)/$3*i " "}printf $2}'`
+    annotations=""
 fi
 
 if [ "$GIS_OPT_themecalc" = "standard deviation" ] ; then
-    numint=6
     # 2 standard deviation units on either side of mean,
-    # plus min to -2 sd units and +2 sd units to max
+    # plus min to -2 sd units and +2 sd units to max, if applicable
+    breakpoints=`echo $min $max $mean $sd | awk '{printf $1;for(i=-2;i<=2;i++){ith=$3+i*$4;if($1<ith && $2>ith){printf " " ith}}print " " $2}'`
+    annotations=`echo $min $max $mean $sd | awk '{printf "";for(i=-2;i<=2;i++){ith=$3+i*$4;if($1<ith && $2>ith){if(i!=0){printf ";"((i<0)?"":"+") i "sd"} }}print ";"}'`
+    numint=`echo $breakpoints | awk '{print NF-1}'`
+    pointstep=`echo $GIS_OPT_maxsize $ptsize $numint | awk '{print (($1 - $2) / $3)}'`
 fi
 
 if [ "$GIS_OPT_themecalc" = "quartiles" ] ; then
     numint=4
     # one for each quartile
+    breakpoints="$min $q1 $q2 $q3 $max"
+    pbreakpoints="$ptsize $q1 $q2 $q3 $GIS_OPT_maxsize"
+    annotations=" q1; q2; q3; q4"
+    pointstep=`echo $GIS_OPT_maxsize $ptsize $numint | awk '{print (($1 - $2) / $3)}'`
 fi
 
 # legend title
@@ -269,7 +324,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         endcolor2=0
         endcolor3=0
     fi
-
+    
     if [ "$GIS_OPT_colorscheme" = "red-blue" ] ; then
         color1=250
         color2=0
@@ -278,7 +333,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         endcolor2=0
         endcolor3=250
     fi
-
+    
     if [ "$GIS_OPT_colorscheme" = "green-red" ] ; then
         color1=0
         color2=250
@@ -287,7 +342,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         endcolor2=0
         endcolor3=0
     fi
-
+    
     if [ "$GIS_OPT_colorscheme" = "red-green" ] ; then
         color1=250
         color2=0
@@ -296,7 +351,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         endcolor2=250
         endcolor3=0
     fi
-
+    
     if [ "$GIS_OPT_colorscheme" = "blue-green" ] ; then
         color1=0
         color2=0
@@ -306,13 +361,13 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         endcolor3=0
     fi
     
-	if [ "$GIS_OPT_colorscheme" = "custom gradient" ] ; then
-		color1=`echo $GIS_OPT_startcolor | cut -d':' -f1`
-		color2=`echo $GIS_OPT_startcolor | cut -d':' -f2`
-		color3=`echo $GIS_OPT_startcolor | cut -d':' -f3`
-		endcolor1=`echo $GIS_OPT_endcolor | cut -d':' -f1`
-		endcolor2=`echo $GIS_OPT_endcolor | cut -d':' -f2`
-		endcolor3=`echo $GIS_OPT_endcolor | cut -d':' -f3`
+    if [ "$GIS_OPT_colorscheme" = "custom gradient" ] ; then
+	color1=`echo $GIS_OPT_startcolor | cut -d':' -f1`
+	color2=`echo $GIS_OPT_startcolor | cut -d':' -f2`
+	color3=`echo $GIS_OPT_startcolor | cut -d':' -f3`
+	endcolor1=`echo $GIS_OPT_endcolor | cut -d':' -f1`
+	endcolor2=`echo $GIS_OPT_endcolor | cut -d':' -f2`
+	endcolor3=`echo $GIS_OPT_endcolor | cut -d':' -f3`
     fi
     
     clrstep1=`expr \( $color1 - $endcolor1 \) / $numint`
@@ -321,11 +376,8 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
 
     themecolor="$color1:$color2:$color3"
 
-    # display graduated color themes for regular intervals
+    # display graduated color themes
     if [ "$GIS_OPT_themecalc" = "interval" ] ; then
-        rangemin=`echo $min | awk '{print 0.99 * $1}'`
-        rangemax=`echo $min $step | awk '{print $1 + $2}'`
-
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by $numint intervals of $step" >> "$TMP2"
         echo "move 4 83" >> "$TMP2"
@@ -336,68 +388,8 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         echo "text =====" >> "$TMP2"
         echo "move 14 80" >> "$TMP2"
         echo "text ============" >> "$TMP2"
-        line1=78
-        line2=76
-        line3=75
 
         echo "Mapped by $numint intervals of $step"
-        echo ""
-        echo "Color(R:G:B)" "Value" | awk '{print $1 "\t" $2}'
-        echo "============" "==========" | awk '{print $1 "\t" $2}'
-        test="false"
-        while [ "$test" = "false" ]     
-        do 
-            themecolor="$color1:$color2:$color3"
-            if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
-                linecolor=$themecolor
-            else
-                linecolor="black"
-            fi
-            
-            echo "color $themecolor" >> "$TMP2"
-            echo "polygon" >> "$TMP2"
-            echo "5 $line1" >> "$TMP2"
-            echo "8 $line1" >> "$TMP2"
-            echo "8 $line3" >> "$TMP2"
-            echo "5 $line3" >> "$TMP2"
-            echo "color black" >> "$TMP2"
-            echo "move 14 $line2" >> "$TMP2"
-            echo "text >$rangemin - $rangemax"  >> "$TMP2"
-
-            echo $themecolor $rangemin $rangemax | awk '{print $1 "\t\t" ">"$2" - "$3}'
-            # update color to database?
-            sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax"
-            if [ $GIS_FLAG_u -eq 1 ] ; then
-                echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE\
-                $sqlwhere" | db.execute database=$database
-            fi
-
-            d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-                where="$sqlwhere" \
-                color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-            test=`echo $rangemax $max | awk '{print ($1 >= $2) ? "true" : "false" }'`
-            rangemin=`echo $rangemin $step | awk '{print $1 + $2}'`
-            rangemax=`echo $rangemax $step | awk '{print $1 + $2}'`
-            let color1=color1-clrstep1
-            let color2=color2-clrstep2
-            let color3=color3-clrstep3
-            let line1=line1-4
-            let line2=line2-4
-            let line3=line3-4
-        done
-
-        if [ "$GIS_FLAG_l" -eq 1 ] ; then
-        	echo ""
-        	echo ""
-            if [ `eval d.mon -L | grep $GIS_OPT_monitor | awk '{print $5}'` = "not" ] ; then
-                d.mon start=$GIS_OPT_monitor
-            else 
-                d.mon select=$GIS_OPT_monitor
-            fi
-            d.erase
-            d.graph input=$TMP2
-            d.mon select=$currmon
-        fi
     fi
 
     # display graduated color themes for standard deviation units
@@ -413,270 +405,8 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         echo "text =====" >> "$TMP2"
         echo "move 14 80" >> "$TMP2"
         echo "text ============" >> "$TMP2"
-        line1=78
-        line2=76
-        line3=75
 
         echo "Mapped by standard deviation units of $sd (mean =$mean)"
-        echo ""
-        echo "Color(R:G:B)" "Value" | awk '{print $1 "\t" $2}'
-        echo "============" "==========" | awk '{print $1 "\t" $2}'
-
-        # minimum to -2 standard deviations
-        themecolor="$color1:$color2:$color3"
-        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
-            linecolor=$themecolor
-        else
-            linecolor="black"
-        fi
-        rangemin=$min
-        rangemax=`echo $mean $sd | awk '{print $1 - (2 * $2) }'`
-        xmin=`echo $rangemax $min | awk '{print ($1 < $2) ? "true" : "false" }'`
-        if [ "$xmin" = "true" ] ; then
-            rangemax=$min    
-        fi
-            
-        echo "color $themecolor" >> "$TMP2"
-        echo "polygon" >> "$TMP2"
-        echo "5 $line1" >> "$TMP2"
-        echo "8 $line1" >> "$TMP2"
-        echo "8 $line3" >> "$TMP2"
-        echo "5 $line3" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 14 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax"  >> "$TMP2"
-
-        echo $themecolor $rangemin $rangemax | awk '{print $1 "\t\t" ">"$2" - "$3}'
-
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>=$rangemin and $GIS_OPT_column<=$rangemax"
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi
-
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$sqlwhere" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-    
-        # -2 to -1 standard deviations
-        let color1=color1-clrstep1
-        let color2=color2-clrstep2
-        let color3=color3-clrstep3
-        let line1=line1-4
-        let line2=line2-4
-        let line3=line3-4
-        themecolor="$color1:$color2:$color3"
-        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
-            linecolor=$themecolor
-        else
-            linecolor="black"
-        fi
-        rangemin=$rangemax
-        rangemax=`echo $mean $sd | awk '{print $1 - $2 }'`
-        xmin=`echo $rangemax $min | awk '{print ($1 < $2) ? "true" : "false" }'`
-        if [ "$xmin" = "true" ] ; then
-            rangemax=$min    
-        fi
-            
-        echo "color $themecolor" >> "$TMP2"
-        echo "polygon" >> "$TMP2"
-        echo "5 $line1" >> "$TMP2"
-        echo "8 $line1" >> "$TMP2"
-        echo "8 $line3" >> "$TMP2"
-        echo "5 $line3" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 14 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax"  >> "$TMP2"
-
-        echo $themecolor $rangemin $rangemax | awk '{print $1 "\t\t" ">"$2" - "$3}'
-
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax"
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi
-
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$sqlwhere" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-    
-        # -1 standard deviation to mean
-        let color1=color1-clrstep1
-        let color2=color2-clrstep2
-        let color3=color3-clrstep3
-        let line1=line1-4
-        let line2=line2-4
-        let line3=line3-4
-        themecolor="$color1:$color2:$color3"
-        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
-            linecolor=$themecolor
-        else
-            linecolor="black"
-        fi
-        rangemin=$rangemax
-        rangemax=$mean
-            
-        echo "color $themecolor" >> "$TMP2"
-        echo "polygon" >> "$TMP2"
-        echo "5 $line1" >> "$TMP2"
-        echo "8 $line1" >> "$TMP2"
-        echo "8 $line3" >> "$TMP2"
-        echo "5 $line3" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 14 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax (mean)"  >> "$TMP2"
-
-        echo $themecolor $rangemin $rangemax | awk '{print $1 "\t\t" ">"$2" - "$3" (mean)"}'
-
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi
- 
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$sqlwhere" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-    
-        # mean to +1 standard deviation
-        let color1=color1-clrstep1
-        let color2=color2-clrstep2
-        let color3=color3-clrstep3
-        let line1=line1-4
-        let line2=line2-4
-        let line3=line3-4
-        themecolor="$color1:$color2:$color3"
-        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
-            linecolor=$themecolor
-        else
-            linecolor="black"
-        fi
-        rangemin=$mean
-        rangemax=`echo $mean $sd | awk '{print $1 + $2 }'`
-        xmax=`echo $rangemax $max | awk '{print ($1 > $2) ? "true" : "false" }'`
-        if [ "$xmax" = "true" ] ; then
-            rangemax=$max    
-        fi
-            
-        echo "color $themecolor" >> "$TMP2"
-        echo "polygon" >> "$TMP2"
-        echo "5 $line1" >> "$TMP2"
-        echo "8 $line1" >> "$TMP2"
-        echo "8 $line3" >> "$TMP2"
-        echo "5 $line3" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 14 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax"  >> "$TMP2"
-
-        echo $themecolor $rangemin $rangemax | awk '{print $1 "\t\t" ">"$2" - "$3}'
-
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi
-
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$sqlwhere" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-    
-        # +1 to +2 standard deviations
-        let color1=color1-clrstep1
-        let color2=color2-clrstep2
-        let color3=color3-clrstep3
-        let line1=line1-4
-        let line2=line2-4
-        let line3=line3-4
-        themecolor="$color1:$color2:$color3"
-        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
-            linecolor=$themecolor
-        else
-            linecolor="black"
-        fi
-        rangemin=$rangemax
-        rangemax=`echo $mean $sd | awk '{print $1 + (2 * $2) }'`
-        xmax=`echo $rangemax $max | awk '{print ($1 > $2) ? "true" : "false" }'`
-        if [ "$xmax" = "true" ] ; then
-            rangemax=$max    
-        fi
-            
-        echo "color $themecolor" >> "$TMP2"
-        echo "polygon" >> "$TMP2"
-        echo "5 $line1" >> "$TMP2"
-        echo "8 $line1" >> "$TMP2"
-        echo "8 $line3" >> "$TMP2"
-        echo "5 $line3" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 14 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax"  >> "$TMP2"
-
-        echo $themecolor $rangemin $rangemax | awk '{print $1 "\t\t" ">"$2" - "$3}'
-
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi
-
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$sqlwhere" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-
-        # +2 standard deviations to maximum
-        let color1=color1-clrstep1
-        let color2=color2-clrstep2
-        let color3=color3-clrstep3
-        let line1=line1-4
-        let line2=line2-4
-        let line3=line3-4
-        themecolor="$color1:$color2:$color3"
-        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
-            linecolor=$themecolor
-        else
-            linecolor="black"
-        fi
-        rangemin=$rangemax
-        rangemax=$max
-            
-        echo "color $themecolor" >> "$TMP2"
-        echo "polygon" >> "$TMP2"
-        echo "5 $line1" >> "$TMP2"
-        echo "8 $line1" >> "$TMP2"
-        echo "8 $line3" >> "$TMP2"
-        echo "5 $line3" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 14 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax"  >> "$TMP2"
-
-        echo $themecolor $rangemin $rangemax | awk '{print $1 "\t\t" ">"$2" - "$3}'
-
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi
-
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$sqlwhere" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-        if [ "$GIS_FLAG_l" -eq 1 ] ; then
-        	echo ""
-        	echo ""
-            if [ `eval d.mon -L | grep $GIS_OPT_monitor | awk '{print $5}'` = "not" ] ; then
-                d.mon start=$GIS_OPT_monitor
-            else 
-                d.mon select=$GIS_OPT_monitor
-            fi
-            d.erase
-            d.graph input=$TMP2
-            d.mon select=$currmon
-        fi
     fi
 
     # display graduated color themes for quartiles
@@ -692,196 +422,163 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         echo "text =====" >> "$TMP2"
         echo "move 14 80" >> "$TMP2"
         echo "text ============" >> "$TMP2"
-        line1=78
-        line2=76
-        line3=75
 
         echo "Mapped by quartiles (median =$q2)"
-        echo ""
-        echo "Color(R:G:B)" "Value" | awk '{print $1 "\t" $2}'
-        echo "============" "==========" | awk '{print $1 "\t" $2}'
-
-        # 1st quartile
-        themecolor="$color1:$color2:$color3"
-        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
-            linecolor=$themecolor
-        else
-            linecolor="black"
-        fi
-        rangemin=$min
-        rangemax=$q1
-            
-        echo "color $themecolor" >> "$TMP2"
-        echo "polygon" >> "$TMP2"
-        echo "5 $line1" >> "$TMP2"
-        echo "8 $line1" >> "$TMP2"
-        echo "8 $line3" >> "$TMP2"
-        echo "5 $line3" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 14 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax"  >> "$TMP2"
-
-        echo $themecolor $rangemin $rangemax | awk '{print $1 "\t\t" ">"$2" - "$3}'
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi
-
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$sqlwhere" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-    
-        # 2nd quartile
-        let color1=color1-clrstep1
-        let color2=color2-clrstep2
-        let color3=color3-clrstep3
-        let line1=line1-4
-        let line2=line2-4
-        let line3=line3-4
-        themecolor="$color1:$color2:$color3"
-        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
-            linecolor=$themecolor
-        else
-            linecolor="black"
-        fi
-        rangemin=$rangemax
-        rangemax=$q2
-            
-        echo "color $themecolor" >> "$TMP2"
-        echo "polygon" >> "$TMP2"
-        echo "5 $line1" >> "$TMP2"
-        echo "8 $line1" >> "$TMP2"
-        echo "8 $line3" >> "$TMP2"
-        echo "5 $line3" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 14 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax (median)"  >> "$TMP2"
-
-        echo $themecolor $rangemin $rangemax | awk '{print $1 "\t\t" ">"$2" - "$3" (median)"}'
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi
-
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$sqlwhere" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-    
-        # 3rd quartile
-        let color1=color1-clrstep1
-        let color2=color2-clrstep2
-        let color3=color3-clrstep3
-        let line1=line1-4
-        let line2=line2-4
-        let line3=line3-4
-        themecolor="$color1:$color2:$color3"
-        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
-            linecolor=$themecolor
-        else
-            linecolor="black"
-        fi
-        rangemin=$rangemax
-        rangemax=$q3
-            
-        echo "color $themecolor" >> "$TMP2"
-        echo "polygon" >> "$TMP2"
-        echo "5 $line1" >> "$TMP2"
-        echo "8 $line1" >> "$TMP2"
-        echo "8 $line3" >> "$TMP2"
-        echo "5 $line3" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 14 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax"  >> "$TMP2"
-
-        echo $themecolor $rangemin $rangemax | awk '{print $1 "\t\t" ">"$2" - "$3}'
-        
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi
-
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$sqlwhere" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-    
-        # 4th quartile
-        let color1=color1-clrstep1
-        let color2=color2-clrstep2
-        let color3=color3-clrstep3
-        let line1=line1-4
-        let line2=line2-4
-        let line3=line3-4
-        themecolor="$color1:$color2:$color3"
-        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
-            linecolor=$themecolor
-        else
-            linecolor="black"
-        fi
-        rangemin=$rangemax
-        rangemax=$q4
-            
-        echo "color $themecolor" >> "$TMP2"
-        echo "polygon" >> "$TMP2"
-        echo "5 $line1" >> "$TMP2"
-        echo "8 $line1" >> "$TMP2"
-        echo "8 $line3" >> "$TMP2"
-        echo "5 $line3" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 14 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax"  >> "$TMP2"
-
-        echo $themecolor $rangemin $rangemax | awk '{print $1 "\t\t" ">"$2" - "$3}'
-
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi
-
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$sqlwhere" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-        if [ "$GIS_FLAG_l" -eq 1 ] ; then
-        	echo ""
-        	echo ""
-            if [ `eval d.mon -L | grep $GIS_OPT_monitor | awk '{print $5}'` = "not" ] ; then
-                d.mon start=$GIS_OPT_monitor
-            else 
-                d.mon select=$GIS_OPT_monitor
-            fi
-            d.erase
-            d.graph input=$TMP2
-            d.mon select=$currmon
-        fi
     fi
+
+    echo ""
+    echo "Color(R:G:B)" "Value" | awk '{print $1 "\t" $2}'
+    echo "============" "==========" | awk '{print $1 "\t" $2}'
+
+    line1=78
+    line2=76
+    line3=75
+
+    i=1
+    first="true"
+    while [ $i -le $numint ]     
+        do 
+        if [ "$GIS_FLAG_m" -eq 1 ] ; then
+        # math notation
+           if [ "$first" = "true" ] ; then
+                closebracket="]"
+                openbracket="["
+                mincomparison=">="
+                first="false"
+            else
+                closebracket="]"
+                openbracket="]"
+                mincomparison=">"            
+            fi
+        else
+            closebracket=" " 
+            openbracket=" "
+            if [ "$first" = "true" ] ; then
+                mincomparison=">="
+                first="false"
+            else
+                mincomparison=">"            
+            fi
+        fi
+
+        themecolor="$color1:$color2:$color3"
+        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
+            linecolor=$themecolor
+        else
+            linecolor="black"
+        fi
+      
+        rangemin=`echo $i $breakpoints | awk '{t=$1+1;print $t}'`
+        rangemax=`echo $i $breakpoints | awk '{t=$1+2;print $t}'`
+
+        if [ -z "$annotations" ]; then
+            extranote="."
+        else
+            extranote=`echo $annotations| cut -d';' -f$i`
+        fi
+
+        echo "color $themecolor" >> "$TMP2"
+        echo "polygon" >> "$TMP2"
+        echo "5 $line1" >> "$TMP2"
+        echo "8 $line1" >> "$TMP2"
+        echo "8 $line3" >> "$TMP2"
+        echo "5 $line3" >> "$TMP2"
+        echo "color black" >> "$TMP2"
+        echo "move 14 $line2" >> "$TMP2"
+        echo "text $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP2"
+
+        echo $themecolor $rangemin $rangemax $extranote $openbracket $closebracket | awk '{print $1 "\t\t" $5$2" - "$3$6" "$4}'
+        # update color to database?
+        sqlwhere="$GIS_OPT_column $mincomparison $rangemin and $GIS_OPT_column<=$rangemax"
+        if [ $GIS_FLAG_u -eq 1 ] ; then
+            echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE\
+                $sqlwhere" | db.execute database=$database
+        fi
+               
+        # Create group for GIS Manager
+        if [ "$GIS_FLAG_g" -eq 1 ] ; then
+        
+            # change rgb colors to hex
+            xthemecolor=`eval echo $themecolor | awk -F: '{printf("#%02X%02X%02X\n",$1,$2,$3)}'`
+            
+            if [ "$linecolor" = "black" ] ; then
+                xlinecolor="#000000"
+            else
+                xlinecolor=$xthemecolor
+            fi
+
+            # create group entry
+            echo "  _check 1" >> "$TMP3"
+            echo "  Vector $GIS_OPT_column = $rangemin - $rangemax" >> "$TMP3"
+            echo "    _check 1" >> "$TMP3"
+            echo "    map $GIS_OPT_map" >> "$TMP3"
+            echo "    display_shape 1" >> "$TMP3"
+            echo "    display_cat 0" >> "$TMP3"
+            echo "    display_topo 0" >> "$TMP3"
+            echo "    display_dir 0" >> "$TMP3"
+            echo "    display_attr 0" >> "$TMP3"
+            echo "    type_point $ptype" >> "$TMP3"
+            echo "    type_line $ltype" >> "$TMP3"
+            echo "    type_boundary $btype" >> "$TMP3"
+            echo "    type_centroid $ctype" >> "$TMP3"
+            echo "    type_area $atype" >> "$TMP3"
+            echo "    type_face 0" >> "$TMP3"
+            echo "    color $xlinecolor" >> "$TMP3"
+            echo "    fcolor $xthemecolor" >> "$TMP3"
+            echo "    _use_fcolor 1" >> "$TMP3"
+            echo "    lcolor #000000" >> "$TMP3"
+            echo "    sqlcolor 0" >> "$TMP3"
+            echo "    icon $GIS_OPT_icon" >> "$TMP3"
+            echo "    size $ptsize" >> "$TMP3"
+            echo "    field $GIS_OPT_layer" >> "$TMP3"
+            echo "    lfield $GIS_OPT_layer" >> "$TMP3"
+            echo "    attribute" >> "$TMP3"
+            echo "    xref left" >> "$TMP3"
+            echo "    yref center" >> "$TMP3"
+            echo "    lsize 8" >> "$TMP3"
+            echo "    cat" >> "$TMP3"
+            echo "    where "$sqlwhere >> "$TMP3"
+            echo "    _query_text 0" >> "$TMP3"
+            echo "    _query_edit 1" >> "$TMP3"
+            echo "    _use_where 1" >> "$TMP3"
+            echo "    minreg" >> "$TMP3"
+            echo "    maxreg" >> "$TMP3"
+            echo "    _width 0.1" >> "$TMP3"
+            echo "  End" >> "$TMP3"
+        fi
+        
+        # display theme vector map
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$sqlwhere" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+            
+        # increment for next theme
+        let color1=color1-clrstep1
+        let color2=color2-clrstep2
+        let color3=color3-clrstep3
+        let line1=line1-4
+        let line2=line2-4
+        let line3=line3-4
+        let i=i+1
+    done
 fi
 
-# graduated points thematic mapping
+#graduated points thematic mapping
 
 if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
 
     #display graduated points by intervals
     if [ "$GIS_OPT_themecalc" = "interval" ] ; then
-        rangemin=`echo $min | awk '{print 0.99 * $1}'`
-        rangemax=`echo $min $step | awk '{print $1 + $2}'`
-
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by $numint intervals of $step" >> "$TMP2"
         echo "move 4 83" >> "$TMP2"
         echo "text Icon size" >> "$TMP2"
-        echo "move 20 83" >> "$TMP2"
+        echo "move 25 83" >> "$TMP2"
         echo "text Value" >> "$TMP2"
         echo "move 4 80" >> "$TMP2"
-        echo "text =========" >> "$TMP2"
-        echo "move 20 80" >> "$TMP2"
-        echo "text ============" >> "$TMP2"
+        echo "text ==============" >> "$TMP2"
+        echo "move 25 80" >> "$TMP2"
+        echo "text ==============" >> "$TMP2"
         line1=76
         line2=75
 
@@ -889,54 +586,8 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         echo ""
         echo "Icon" "size" "Value" | awk '{print $1 " " $2"\t"$3}'
         echo "==========" "=====" | awk '{print $1 "\t" $2}'
-        themecolor=$GIS_OPT_singlecolor
-        linecolor="black"
-        test="false"
-        while [ "$test" = "false" ]
-        do 
-            # update color to database?
-            sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
-            if [ $GIS_FLAG_u -eq 1 ] ; then
-               echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-               | db.execute database=$database
-            fi
-            
-            iconsize=`eval expr $ptsize / 2`
-            echo "color $themecolor" >> "$TMP2"
-            echo "icon o $iconsize 5 $line1" >> "$TMP2"
-            echo "color black" >> "$TMP2"
-            echo "move 8 $line2" >> "$TMP2"
-            echo "text $ptsize pts" >> "$TMP2"
-            echo "move 20 $line2" >> "$TMP2"
-            echo "text >$rangemin - $rangemax"  >> "$TMP2"
-
-            echo $ptsize $rangemin $rangemax | awk '{print $1 " pts \t\t" ">"$2" - "$3}'
-            d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-                where="$sqlwhere" \
-                color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-            test=`echo $rangemax $max | awk '{print ($1 >= $2) ? "true" : "false" }'`
-            rangemin=`echo $rangemin $step | awk '{print $1 + $2}'`
-            rangemax=`echo $rangemax $step | awk '{print $1 + $2}'`
-            ptsize=`echo $ptsize $pointstep | awk '{print $1 + 2}'`
-            let line1=line1-6
-            let line2=line2-6
-            
-        done
-
-        if [ "$GIS_FLAG_l" -eq 1 ] ; then
-        	echo ""
-        	echo ""
-            if [ `eval d.mon -L | grep $GIS_OPT_monitor | awk '{print $5}'` = "not" ] ; then
-                d.mon start=$GIS_OPT_monitor
-            else 
-                d.mon select=$GIS_OPT_monitor
-            fi
-            d.erase
-            d.graph input=$TMP2
-            d.mon select=$currmon
-        fi
     fi
-    
+        
     # display graduated points for standard deviation units
     if [ "$GIS_OPT_themecalc" = "standard deviation" ] ; then
 
@@ -944,12 +595,12 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         echo "text Mapped by standard deviation units of $sd (mean =$mean)" >> "$TMP2"
         echo "move 4 83" >> "$TMP2"
         echo "text Icon size" >> "$TMP2"
-        echo "move 20 83" >> "$TMP2"
+        echo "move 25 83" >> "$TMP2"
         echo "text Value" >> "$TMP2"
         echo "move 4 80" >> "$TMP2"
-        echo "text =========" >> "$TMP2"
-        echo "move 20 80" >> "$TMP2"
-        echo "text ============" >> "$TMP2"
+        echo "text ==============" >> "$TMP2"
+        echo "move 25 80" >> "$TMP2"
+        echo "text ==============" >> "$TMP2"
         line1=76
         line2=75
 
@@ -957,208 +608,8 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         echo ""
         echo "Icon" "size" "Value" | awk '{print $1 " " $2"\t"$3}'
         echo "==========" "=====" | awk '{print $1 "\t" $2}'
-
-        # minimum to -2 standard deviations
-        themecolor=$GIS_OPT_singlecolor
-        linecolor="black"
-        rangemin=$min
-        rangemax=`echo $mean $sd | awk '{print $1 - (2 * $2) }'`
-        xmin=`echo $rangemax $min | awk '{print ($1 < $2) ? "true" : "false" }'`
-        if [ "$xmin" = "true" ] ; then
-            rangemax=$min    
-        fi
-            
-        iconsize=`eval expr $ptsize / 2`
-        echo "color $themecolor" >> "$TMP2"
-        echo "icon o $iconsize 5 $line1" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 8 $line2" >> "$TMP2"
-        echo "text $ptsize pts" >> "$TMP2"
-        echo "move 20 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax"  >> "$TMP2"
-
-        echo $ptsize $rangemin $rangemax | awk '{print $1 " pts \t\t" ">"$2" - "$3}'
-        
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>=$rangemin and $GIS_OPT_column<=$rangemax" 
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi
-
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$sqlwhere" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-    
-        # -2 to -1 standard deviations
-        ptsize=`echo $ptsize $pointstep | awk '{print $1 + 2}'`
-        let line1=line1-6
-        let line2=line2-6
-        rangemin=$rangemax
-        rangemax=`echo $mean $sd | awk '{print $1 - $2 }'`
-        xmin=`echo $rangemax $min | awk '{print ($1 < $2) ? "true" : "false" }'`
-        if [ "$xmin" = "true" ] ; then
-            rangemax=$min    
-        fi
-            
-        iconsize=`eval expr $ptsize / 2`
-        echo "color $themecolor" >> "$TMP2"
-        echo "icon o $iconsize 5 $line1" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 8 $line2" >> "$TMP2"
-        echo "text $ptsize pts" >> "$TMP2"
-        echo "move 20 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax"  >> "$TMP2"
-
-        echo $ptsize $rangemin $rangemax | awk '{print $1 " pts \t\t" ">"$2" - "$3}'
-        
-        
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi
-
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$sqlwhere" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-    
-        # -1 standard deviation to mean
-        let line1=line1-6
-        let line2=line2-6
-        ptsize=`echo $ptsize $pointstep | awk '{print $1 + 2}'`
-        rangemin=$rangemax
-        rangemax=$mean
-            
-        iconsize=`eval expr $ptsize / 2`
-        echo "color $themecolor" >> "$TMP2"
-        echo "icon o $iconsize 5 $line1" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 8 $line2" >> "$TMP2"
-        echo "text $ptsize pts" >> "$TMP2"
-        echo "move 20 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax (mean)"  >> "$TMP2"
-
-        echo $ptsize $rangemin $rangemax | awk '{print $1 " pts \t\t" ">"$2" - "$3" (mean)"}'
-                
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi
-
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-    
-        # mean to +1 standard deviation
-        ptsize=`echo $ptsize $pointstep | awk '{print $1 + 2}'`
-        let line1=line1-6
-        let line2=line2-6
-        rangemin=$mean
-        rangemax=`echo $mean $sd | awk '{print $1 + $2 }'`
-        xmax=`echo $rangemax $max | awk '{print ($1 > $2) ? "true" : "false" }'`
-        if [ "$xmax" = "true" ] ; then
-            rangemax=$max    
-        fi
-            
-        iconsize=`eval expr $ptsize / 2`
-        echo "color $themecolor" >> "$TMP2"
-        echo "icon o $iconsize 5 $line1" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 8 $line2" >> "$TMP2"
-        echo "text $ptsize pts" >> "$TMP2"
-        echo "move 20 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax"  >> "$TMP2"
-
-        echo $ptsize $rangemin $rangemax | awk '{print $1 " pts \t\t" ">"$2" - "$3}'
-                
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi
-
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-    
-        # +1 to +2 standard deviations
-        ptsize=`echo $ptsize $pointstep | awk '{print $1 + 2}'`
-        let line1=line1-6
-        let line2=line2-6
-        rangemin=$rangemax
-        rangemax=`echo $mean $sd | awk '{print $1 + (2 * $2) }'`
-        xmax=`echo $rangemax $max | awk '{print ($1 > $2) ? "true" : "false" }'`
-        if [ "$xmax" = "true" ] ; then
-            rangemax=$max    
-        fi
-            
-        iconsize=`eval expr $ptsize / 2`
-        echo "color $themecolor" >> "$TMP2"
-        echo "icon o $iconsize 5 $line1" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 8 $line2" >> "$TMP2"
-        echo "text $ptsize pts" >> "$TMP2"
-        echo "move 20 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax"  >> "$TMP2"
-
-        echo $ptsize $rangemin $rangemax | awk '{print $1 " pts \t\t" ">"$2" - "$3}'
-        
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-
-        # +2 standard deviations to maximum
-        ptsize=`echo $ptsize $pointstep | awk '{print $1 + 2}'`
-        let line1=line1-6
-        let line2=line2-6
-        rangemin=$rangemax
-        rangemax=$max
-            
-        iconsize=`eval expr $ptsize / 2`
-        echo "color $themecolor" >> "$TMP2"
-        echo "icon o $iconsize 5 $line1" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 8 $line2" >> "$TMP2"
-        echo "text $ptsize pts" >> "$TMP2"
-        echo "move 20 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax"  >> "$TMP2"
-
-        echo $ptsize $rangemin $rangemax | awk '{print $1 " pts \t\t" ">"$2" - "$3}'
-        
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$sqlwhere" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-        if [ "$GIS_FLAG_l" -eq 1 ] ; then
-        	echo ""
-        	echo ""
-            if [ `eval d.mon -L | grep $GIS_OPT_monitor | awk '{print $5}'` = "not" ] ; then
-                d.mon start=$GIS_OPT_monitor
-            else 
-                d.mon select=$GIS_OPT_monitor
-            fi
-            d.erase
-            d.graph input=$TMP2
-            d.mon select=$currmon
-        fi
     fi
-
+    
     # display graduated point themes for quartiles
     if [ "$GIS_OPT_themecalc" = "quartiles" ] ; then
 
@@ -1166,12 +617,12 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         echo "text Mapped by quartiles (median =$q2)" >> "$TMP2"
         echo "move 4 83" >> "$TMP2"
         echo "text Icon size" >> "$TMP2"
-        echo "move 20 83" >> "$TMP2"
+        echo "move 25 83" >> "$TMP2"
         echo "text Value" >> "$TMP2"
         echo "move 4 80" >> "$TMP2"
-        echo "text =========" >> "$TMP2"
-        echo "move 20 80" >> "$TMP2"
-        echo "text ============" >> "$TMP2"
+        echo "text ==============" >> "$TMP2"
+        echo "move 25 80" >> "$TMP2"
+        echo "text ==============" >> "$TMP2"
         line1=76
         line2=75
 
@@ -1179,131 +630,152 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         echo ""
         echo "Icon" "size" "Value" | awk '{print $1 " " $2"\t"$3}'
         echo "==========" "=====" | awk '{print $1 "\t" $2}'
+    fi
+        
+    themecolor=$GIS_OPT_singlecolor
+    linecolor="black"
+    
+    i=1
+    first="true"
+    while [ $i -le $numint ]     
+        do 
+        if [ "$GIS_FLAG_m" -eq 1 ] ; then
+        # math notation
+           if [ "$first" = "true" ] ; then
+                closebracket="]"
+                openbracket="["
+                mincomparison=">="
+                first="false"
+            else
+                closebracket="]"
+                openbracket="]"
+                mincomparison=">"            
+            fi
+        else
+            closebracket=" " 
+            openbracket=" "
+            if [ "$first" = "true" ] ; then
+                mincomparison=">="
+                first="false"
+            else
+                mincomparison=">"            
+            fi
+        fi
+
         themecolor=$GIS_OPT_singlecolor
         linecolor="black"
+      
+        rangemin=`echo $i $breakpoints | awk '{t=$1+1;print $t}'`
+        rangemax=`echo $i $breakpoints | awk '{t=$1+2;print $t}'`
 
-        # 1st quartile
-        rangemin=$min
-        rangemax=$q1
-            
-        iconsize=`eval expr $ptsize / 2`
-        echo "color $themecolor" >> "$TMP2"
-        echo "icon o $iconsize 5 $line1" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 8 $line2" >> "$TMP2"
-        echo "text $ptsize pts" >> "$TMP2"
-        echo "move 20 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax"  >> "$TMP2"
+        if [ -z "$annotation"s ]; then
+            extranote="."
+        else
+            extranote=`echo $annotations| cut -d';' -f$i`
+        fi            
 
-        echo $ptsize $rangemin $rangemax | awk '{print $1 " pts \t\t" ">"$2" - "$3}'
-        
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>=$rangemin and $GIS_OPT_column<=$rangemax" 
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi 
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$sqlwhere" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-    
-        # 2nd quartile
-        ptsize=`echo $ptsize $pointstep | awk '{print $1 + 2}'`
-        let line1=line1-6
-        let line2=line2-6
-        rangemin=$rangemax
-        rangemax=$q2
-            
-        iconsize=`eval expr $ptsize / 2`
-        echo "color $themecolor" >> "$TMP2"
-        echo "icon o $iconsize 5 $line1" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 8 $line2" >> "$TMP2"
-        echo "text $ptsize pts" >> "$TMP2"
-        echo "move 20 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax (median)"  >> "$TMP2"
-
-        echo $ptsize $rangemin $rangemax | awk '{print $1 " pts \t\t" ">"$2" - "$3" (median)"}'
-        
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi 
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$sqlwhere" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-    
-        # 3rd quartile
-        ptsize=`echo $ptsize $pointstep | awk '{print $1 + 2}'`
-        let line1=line1-6
-        let line2=line2-6
-        rangemin=$rangemax
-        rangemax=$q3
-            
-        iconsize=`eval expr $ptsize / 2`
-        echo "color $themecolor" >> "$TMP2"
-        echo "icon o $iconsize 5 $line1" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 8 $line2" >> "$TMP2"
-        echo "text $ptsize pts" >> "$TMP2"
-        echo "move 20 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax"  >> "$TMP2"
-
-        echo $ptsize $rangemin $rangemax | awk '{print $1 " pts \t\t" ">"$2" - "$3}'
-        
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi 
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$sqlwhere" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-    
-        # 4th quartile
-        ptsize=`echo $ptsize $pointstep | awk '{print $1 + 2}'`
-        let line1=line1-6
-        let line2=line2-6
-        rangemin=$rangemax
-        rangemax=$q4
-            
-        iconsize=`eval expr $ptsize / 2`
-        echo "color $themecolor" >> "$TMP2"
-        echo "icon o $iconsize 5 $line1" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-        echo "move 8 $line2" >> "$TMP2"
-        echo "text $ptsize pts" >> "$TMP2"
-        echo "move 20 $line2" >> "$TMP2"
-        echo "text >$rangemin - $rangemax"  >> "$TMP2"
-
-        echo $ptsize $rangemin $rangemax | awk '{print $1 " pts \t\t" ">"$2" - "$3}'
-        
-        # update color to database?
-        sqlwhere="$GIS_OPT_column>$rangemin and $GIS_OPT_column<=$rangemax" 
-        if [ $GIS_FLAG_u -eq 1 ] ; then
-           echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE  $sqlwhere"\
-           | db.execute database=$database
-        fi 
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
-            where="$sqlwhere" \
-            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-        if [ "$GIS_FLAG_l" -eq 1 ] ; then
-        	echo ""
-        	echo ""
-            if [ `eval d.mon -L | grep $GIS_OPT_monitor | awk '{print $5}'` = "not" ] ; then
-                d.mon start=$GIS_OPT_monitor
-            else 
-                d.mon select=$GIS_OPT_monitor
-            fi
-            d.erase
-            d.graph input=$TMP2
-            d.mon select=$currmon
+        iconsize=`echo $ptsize | awk '{print int($1 / 2)}'`
+        lineht=`echo $ptsize | awk '{print int($1 / 4)}'`
+        if [ "$lineht" -lt "4" ] ; then
+            lineht=4
         fi
-    fi
+
+        echo "color $themecolor" >> "$TMP2"
+        echo "icon o $iconsize 5 $line1" >> "$TMP2"
+        echo "color black" >> "$TMP2"
+        echo "move 10 $line2" >> "$TMP2"
+        echo "text $ptsize pts" >> "$TMP2"
+        echo "move 25 $line2" >> "$TMP2"
+        echo "text $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP2"
+
+        echo $ptsize $rangemin $rangemax $extranote $openbracket $closebracket | awk '{print $1 "\t\t" $5$2" - "$3$6" "$4}'
+
+        # update color to database?
+        sqlwhere="$GIS_OPT_column $mincomparison $rangemin and $GIS_OPT_column<=$rangemax"
+        if [ $GIS_FLAG_u -eq 1 ] ; then
+            echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE\
+                $sqlwhere" | db.execute database=$database
+        fi
+      
+        # Create group for GIS Manager
+        if [ "$GIS_FLAG_g" -eq 1 ] ; then
+        
+            # change rgb colors to hex
+            xthemecolor=`eval echo $themecolor | awk -F: '{printf("#%02X%02X%02X\n",$1,$2,$3)}'`
+            xlinecolor="#000000"
+
+            # create group entry
+            echo "  _check 1" >> "$TMP3"
+            echo "  Vector $GIS_OPT_column = $rangemin - $rangemax" >> "$TMP3"
+            echo "    _check 1" >> "$TMP3"
+            echo "    map $GIS_OPT_map" >> "$TMP3"
+            echo "    display_shape 1" >> "$TMP3"
+            echo "    display_cat 0" >> "$TMP3"
+            echo "    display_topo 0" >> "$TMP3"
+            echo "    display_dir 0" >> "$TMP3"
+            echo "    display_attr 0" >> "$TMP3"
+            echo "    type_point $ptype" >> "$TMP3"
+            echo "    type_line $ltype" >> "$TMP3"
+            echo "    type_boundary $btype" >> "$TMP3"
+            echo "    type_centroid $ctype" >> "$TMP3"
+            echo "    type_area $atype" >> "$TMP3"
+            echo "    type_face 0" >> "$TMP3"
+            echo "    color $xlinecolor" >> "$TMP3"
+            echo "    fcolor $xthemecolor" >> "$TMP3"
+            echo "    _use_fcolor 1" >> "$TMP3"
+            echo "    lcolor #000000" >> "$TMP3"
+            echo "    sqlcolor 0" >> "$TMP3"
+            echo "    icon $GIS_OPT_icon" >> "$TMP3"
+            echo "    size $ptsize" >> "$TMP3"
+            echo "    field $GIS_OPT_layer" >> "$TMP3"
+            echo "    lfield $GIS_OPT_layer" >> "$TMP3"
+            echo "    attribute" >> "$TMP3"
+            echo "    xref left" >> "$TMP3"
+            echo "    yref center" >> "$TMP3"
+            echo "    lsize 8" >> "$TMP3"
+            echo "    cat" >> "$TMP3"
+            echo "    where "$sqlwhere >> "$TMP3"
+            echo "    _query_text 0" >> "$TMP3"
+            echo "    _query_edit 1" >> "$TMP3"
+            echo "    _use_where 1" >> "$TMP3"
+            echo "    minreg" >> "$TMP3"
+            echo "    maxreg" >> "$TMP3"
+            echo "    _width 0.1" >> "$TMP3"
+            echo "  End" >> "$TMP3"
+        fi
+
+        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$sqlwhere" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
+
+        ptsize=`echo $ptsize $pointstep | awk '{print $1 + $2}'`
+
+        let line1=line1-$lineht
+        let line2=line2-$lineht
+        let i=i+1
+    done
+
 fi
 
-cleanup
+# Create graphic legend
+if [ "$GIS_FLAG_l" -eq 1 ] ; then
+    echo ""
+    echo ""
+    if [ `eval d.mon -L | grep $GIS_OPT_monitor | awk '{print $5}'` = "not" ] ; then
+        d.mon start=$GIS_OPT_monitor
+    else 
+        d.mon select=$GIS_OPT_monitor
+    fi
+    d.erase
+    d.graph input=$TMP2
+    d.mon select=$currmon
+fi
 
+# Create group file for GIS Manager
+echo "End" >> "$TMP3"
+if [ "$GIS_FLAG_g" -eq 1 ] ; then
+    cat $TMP3 > $group".dm"
+fi
+
+
+cleanup
