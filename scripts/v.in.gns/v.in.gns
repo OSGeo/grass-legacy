@@ -1,0 +1,114 @@
+#!/bin/sh
+
+############################################################################
+#
+# MODULE:       v.in.gns
+#
+# AUTHOR(S):    Markus Neteler, neteler itc it
+#
+# PURPOSE:      Import GEOnet Names Server (GNS) country files into a GRASS vector map
+#               http://earth-info.nga.mil/gns/html/
+#                -> Download Names Files for Countries and Territories (FTP)
+#
+#               Column names: http://earth-info.nga.mil/gns/html/gis_contryfiles.html
+#
+# COPYRIGHT:    (c) 2005 GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#               License (>=v2). Read the file COPYING that comes with GRASS
+#               for details.
+#
+# TODO:         - see below in the code
+#               - add extra columns explaining some column acronyms, 
+#                 e.g. FC (Feature Classification)
+#############################################################################
+
+#%Module
+#%  description: Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector points map
+#%End
+#%option
+#% key: file
+#% type: string
+#% description: Uncompressed GNS file from NGA (with .txt extension)
+#% gisprompt: file,file,file
+#% required : yes
+#%end
+#%option
+#% key: vect
+#% type: string
+#% gisprompt: new,dig,vector
+#% description: name for new binary vector file
+#% required : no
+#%end
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec g.parser "$0" "$@"
+fi
+
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi
+
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION="$GISDBASE"/"$LOCATION_NAME"/"$MAPSET"
+
+PROG=`basename $0`
+
+if [ -n "$GIS_OPT_file" ] ; then
+    FILEORIG=$GIS_OPT_file
+    if [ -n "$GIS_OPT_vect" ] ; then
+       FILE=$GIS_OPT_vect
+    else
+       FILE=`basename $FILEORIG .txt`
+    fi
+fi
+
+#### setup temporary file
+TMPFILE="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMPFILE" ] ; then
+    echo "ERROR: unable to create temporary files" 1>&2
+    exit 1
+fi
+#### trap ctrl-c so that we can clean up tmp
+trap 'rm -f ${TMPFILE} ${TMPFILE}_ascii.csv' 2 3 15
+
+#are we in LatLong location?
+g.proj -p | grep -i name | grep -i Lon  > /dev/null
+if [ $? -eq 1 ] ; then
+  echo "ERROR: this module only operates in LatLong/WGS84 locations"
+  exit 1
+fi
+
+#let's go
+echo "Performing UTF8 -> ASCII conversion..."
+#fix also TAB to semicolon
+TAB=`awk 'BEGIN{printf "\t";}'`
+utf2ascii.sh ${FILEORIG} | sed  "s+$TAB+;+g"  > ${TMPFILE}
+
+#check for MSDOS encoding, fix if needed
+file ${TMPFILE} | grep CRLF > /dev/null
+if [ $? -eq 0 ] ; then
+    dos2unix ${TMPFILE}
+fi
+
+#header elimination:
+HEADER="RC;UFI;UNI;LAT;LONG;DMS_LAT;DMS_LONG;UTM;JOG;FC;DSG;PC;CC1;ADM1;ADM2;DIM;CC2;NT;LC;SHORT_FORM;GENERIC;SORT_NAME;FULL_NAME;FULL_NAME_ND;MODIFY_DATE"
+cat ${TMPFILE} | grep -v "^${HEADER}" > ${TMPFILE}_ascii.csv
+rm -f ${TMPFILE}
+echo "Converted `wc -l ${TMPFILE}_ascii.csv | awk '{print $1}'` place names."
+
+#TODO: fix dms_lat,dms_long DDMMSS -> DD:MM:SS
+
+#modifications (to match DBF 10 char column name limit):
+# short_form   -> shortform
+# sort_name    -> sortname
+# full_name    -> fullname
+# full_name_sd -> funamesd
+#
+# pump data into GRASS:
+cat ${TMPFILE}_ascii.csv | v.in.ascii cat=0 x=5 y=4 fs=';' out=$FILE columns='rc integer,uf1 integer,uni integer,lat double,long double,dms_lat varchar(6),dms_long varchar(7),utm varchar(4),jog varchar(7),fc varchar(1),dsg varchar(5),pc integer,cci varchar(2),adm1 varchar(2),adm2 varchar(200),dim integer,cc2 varchar(2),nt varchar(1),lc varchar(2),shortform varchar(128),generic varchar(128),sortname varchar(200),fullname varchar(200),funamesd varchar(200),mod_date date' 
+rm -f ${TMPFILE}_ascii.csv
+
