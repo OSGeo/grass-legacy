@@ -27,7 +27,7 @@
 int main (int argc, char **argv)
 {
     struct GModule *module;
-    struct Option *map_opt, *field_opt, *fs_opt, *vs_opt, *nv_opt, *col_opt;
+    struct Option *map_opt, *field_opt, *fs_opt, *vs_opt, *nv_opt, *col_opt, *where_opt;
     struct Flag *c_flag, *v_flag;
     dbDriver *driver;
     dbString sql, value_string;
@@ -39,7 +39,8 @@ int main (int argc, char **argv)
     int field, ncols, col, more;
     struct Map_info Map;
     char query[1024];
-    
+    char *buf = NULL;
+
     module = G_define_module();
     module->description = "Print vector attributes";
 
@@ -52,6 +53,8 @@ int main (int argc, char **argv)
     col_opt->required 	= NO;
     col_opt->multiple 	= YES;
     col_opt->description = _("Attribute column(s)");
+
+    where_opt = G_define_standard_option(G_OPT_WHERE);
 
     fs_opt 		= G_define_option();
     fs_opt->key 	= "fs";
@@ -105,6 +108,12 @@ int main (int argc, char **argv)
 
     db_set_string ( &sql, query );
     db_append_string ( &sql, Fi->table );
+
+    if (where_opt->answer) {
+       buf = G_realloc(buf,(strlen(where_opt->answer) + 7));
+       sprintf(buf, " WHERE %s", where_opt->answer);
+       db_append_string ( &sql, buf );
+    }
 
     if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK)
 	G_fatal_error(_("Cannot open select cursor"));
