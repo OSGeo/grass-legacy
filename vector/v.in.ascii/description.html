@@ -22,32 +22,37 @@ Use the <b>-z</b> flag to convert ASCII data into a 3D binary vector map.
 <P>
 A GRASS ASCII vector file (in <B>standard</B> mode) may contain a mix of 
 primitives including points, lines, boundaries, centroids, areas, faces, 
-and kernels.
+and kernels. On top a header can be defined (see example below).
+
 <P>
 The primitive codes are as follows:
 <UL>
-<LI>'A': area (boundary)<BR>
 <LI>'B': boundary<BR>
 <LI>'C': centroid<BR>
 <LI>'L': line<BR>
 <LI>'P': point<BR>
 <LI>'F': face<BR>
 <LI>'K': kernel<BR>
+<LI>'A': area (boundary) - better use 'B'; kept only for backward compatibility<BR>
 </UL>
 
 The coordinates are listed following the initial line containing the
-primitive code and the total number of vertices in the series. On top
-a header has to be defined (see example below).<BR>
-The order of coordinates is <BR><BR>
+primitive code, the total number of vectors in the series, and the number
+of categories (1 for a single layer, higher for multiple layers).
+Below that 1 or several lines follow to indicate the layer number and
+the category number (ID).
+<BR>
+The order of coordinates is <BR>
   X Y [Z]
 <P>
-<b>Import of files without ID column</b><br>
+<b>Import of files without category ID column</b><br>
 
-In case that the input files does not contain any vector ID column,
+If the input file does not contain any vector ID column,
 there is the possibility to auto-generate these IDs (categories). 
-For that, to automatically add an additional column 'cat', the 
-<em>cat</em> parameter has to be set to the virtual column number 0 
-(<em>cat=0</em>). The name for the auto-generated column is set to 'cat'.
+To automatically add an additional column named 'cat', the 
+<b>cat</b> parameter must be set to the virtual column number 0 
+(<tt>cat=0</tt>). This is the default action if the <b>cat</b> parameter
+is not set.
 
 <P>
 <b>Importing from a spreadsheet</b><br>
@@ -73,18 +78,20 @@ Note the blank before entering vertex coordinates:
        ZONE:         0
        MAP THRESH:   0.500000
        VERTI:
-       A  6
+       B  6 1
         5958812.48844435 3400828.84221011
         5958957.29887089 3400877.11235229
         5959021.65906046 3400930.7458436
         5959048.47580612 3400973.65263665
         5959069.92920264 3401032.64947709
         5958812.48844435 3400828.84221011
-       A  4
+	1 1
+       B  4 1
         5959010.9323622 3401338.36037757
         5959096.7459483 3401370.54047235
         5959091.38259917 3401450.99070932
         5959010.9323622 3401338.36037757
+	1 2
 </pre>
 <P>
 To create a vector line of a GPS track, in a similar way the GPS points have
@@ -133,7 +140,7 @@ cat points.dat | v.in.ascii out=mypoints x=2 y=3 cat=1 \
 <b>Example 4</b><br>
 Generating a 3D points vector map from DBMS (idcol must be an integer column):<br>
 <pre>
-echo "select east,north,elev,idcol from mytable " | db.select -c | v.in.ascii -z out=mymap
+echo "select east,north,elev,idcol from mytable" | db.select -c | v.in.ascii -z out=mymap
 </pre>
 
 <b>The module is reading from standard input, using the default '|' (pipe) delimiter.</b>
@@ -194,6 +201,7 @@ machines.
 
 <em><a HREF="db.execute.html">db.execute</a></em>,
 <em><a HREF="v.db.connect.html">v.db.connect</a></em>,
+<em><a HREF="v.info.html">v.info</a></em>,
 <em><a HREF="v.out.ascii.html">v.out.ascii</a></em>,
 <em><a HREF="v.build.html">v.build</a></em><BR>
 <em><a HREF="v.build.polylines.html">v.build.polylines</a></em><BR>
