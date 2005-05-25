@@ -220,7 +220,7 @@ main (int argc, char *argv[])
 	 doatt = 1; /* do attributes */
 	 Fi = Vect_get_field( &In, field);
 	 if ( Fi == NULL ) {
-	     G_warning ("Cannot get layer info for vector map -> using categories only for attributes");
+	     G_warning ("No attribute table found -> using only category numbers as attributes");
 	     
 	     Ogr_field = OGR_Fld_Create( "cat", OFTInteger ); 
 	     OGR_L_CreateField( Ogr_layer, Ogr_field, 0 ); 
