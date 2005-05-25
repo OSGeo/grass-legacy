@@ -71,9 +71,10 @@ a header line and written to the history file.
 
 <h2>EXAMPLES</h2>
 
-<b>Example 1</b><br>
-Sample ASCII polygon vector file for 'standard' mode. 
-Note the blank before entering vertex coordinates:
+<b>Example 1a) - standard mode</b><br>
+Sample ASCII polygon vector map for 'standard' mode. 
+Note the blank before entering vertex coordinates.
+The example can be tested in the Spearfish sample dataset:
 <p>
 <pre>
        ORGANIZATION: GRASS Development Team
@@ -99,8 +100,22 @@ Note the blank before entering vertex coordinates:
         5959091.38259917 3401450.99070932
         5959010.9323622 3401338.36037757
 </pre>
-<P>
-To create a vector line of a GPS track, in a similar way the GPS points have
+
+<P><BR>
+<b>Example 1b) - standard mode</b><br>
+Sample ASCII 3D line vector map for 'standard' mode with simplified input
+(no header). The example can be tested in the Spearfish sample dataset:
+
+<pre>
+echo "L 4
+	591336 4927369 1224
+	594317 4925341 1292
+	599356 4925162 1469
+	602396 4926653 1235
+	607524 4925431 1216 " | v.in.ascii -zn out=line3d format=standard
+</pre>
+
+This can be used to create a vector line of a GPS track: the GPS points have
 to be stored into a file with a preceding 'L' and the number of points (per line).
 
 <p><BR>
