@@ -166,6 +166,16 @@ fi
 # setting environment, so that awk works properly in all languages
 export LC_NUMERIC=C
 
+# check column type
+COLTYPE="`v.info -c $GIS_OPT_map layer=1 2> /dev/null | grep $GIS_OPT_column | cut -d'|' -f1 | tr -s '[:upper:]' '[:lower:]'`"
+
+if [ "$COLTYPE" = "integer" -o "$COLTYPE" = "double precision" ] ; then
+	echo ""
+else
+	echo "ERROR: Column <$GIS_OPT_column> is of type <$COLTYPE> which is not numeric."
+	exit 1
+fi
+
 # create temporary file to hold output from v.univar.sh
 TMP1="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP1" ] ; then
