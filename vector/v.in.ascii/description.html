@@ -24,23 +24,27 @@ Use the <b>-z</b> flag to convert ASCII data into a 3D binary vector map.
 <P>
 A GRASS ASCII vector file (in <B>standard</B> mode) may contain a mix of 
 primitives including points, lines, boundaries, centroids, areas, faces, 
-and kernels.
+and kernels. On top a header can be defined (see example below).
+
 <P>
 The primitive codes are as follows:
 <UL>
-<LI>'A': area (boundary)<BR>
 <LI>'B': boundary<BR>
 <LI>'C': centroid<BR>
 <LI>'L': line<BR>
 <LI>'P': point<BR>
 <LI>'F': face<BR>
 <LI>'K': kernel<BR>
+<LI>'A': area (boundary) - better use 'B'; kept only for backward compatibility<BR>
 </UL>
 
 The coordinates are listed following the initial line containing the
-primitive code and the total number of vertices in the series. On top
-a header has to be defined (see example below).<BR>
-The order of coordinates is <BR><BR>
+primitive code, the total number of vectors in the series, and the number
+of categories (1 for a single layer, higher for multiple layers).
+Below that 1 or several lines follow to indicate the layer number and
+the category number (ID).
+<BR>
+The order of coordinates is <BR>
   X Y [Z]
 <P>
 <b>Import of files without category ID column</b><br>
@@ -87,18 +91,20 @@ The example can be tested in the Spearfish sample dataset:
        ZONE:         0
        MAP THRESH:   0.500000
        VERTI:
-       A  6
+       B  6 1
         5958812.48844435 3400828.84221011
         5958957.29887089 3400877.11235229
         5959021.65906046 3400930.7458436
         5959048.47580612 3400973.65263665
         5959069.92920264 3401032.64947709
         5958812.48844435 3400828.84221011
-       A  4
+	1 1
+       B  4 1
         5959010.9323622 3401338.36037757
         5959096.7459483 3401370.54047235
         5959091.38259917 3401450.99070932
         5959010.9323622 3401338.36037757
+	1 2
 </pre>
 
 <P><BR>
@@ -107,12 +113,13 @@ Sample ASCII 3D line vector map for 'standard' mode with simplified input
 (no header). The example can be tested in the Spearfish sample dataset:
 
 <pre>
-echo "L 4
+echo "L 5 1
 	591336 4927369 1224
 	594317 4925341 1292
 	599356 4925162 1469
 	602396 4926653 1235
-	607524 4925431 1216 " | v.in.ascii -zn out=line3d format=standard
+	607524 4925431 1216
+	1 321 " | v.in.ascii -zn out=line3d format=standard
 </pre>
 
 This can be used to create a vector line of a GPS track: the GPS points have
