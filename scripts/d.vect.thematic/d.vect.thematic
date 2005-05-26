@@ -3,8 +3,8 @@
 ############################################################################
 #
 # MODULE:		d.vect.thematic
-# AUTHOR(S):	Michael Barton, Arizona State University with contributions
-#               by Martin Landa, Jachym Cepicky, and Daniel Calvelo Aros
+# AUTHOR(S):	Michael Barton, Arizona State University,
+#               Daniel Calvelo Aros, Martin Landa, and  Jachym Cepicky 
 # PURPOSE:	    Displays thematic vector map with graduated colors
 #               or graduated points
 # COPYRIGHT:	(C) 2005 by the GRASS Development Team
@@ -27,6 +27,20 @@
 #% required : yes
 #%end
 #%option
+#% key: type
+#% type: string
+#% description: Vector map type
+#% options: area,point,centroid,line,boundary
+#% answer: area
+#% required : yes
+#%end
+#%option
+#% key: column
+#% type: string
+#% description: Attribute column to use for thematic display (must be numeric)
+#% required : yes
+#%end
+#%option
 #% key: themetype
 #% type: string
 #% options: graduated colors,graduated points
@@ -37,16 +51,16 @@
 #%option
 #% key: themecalc
 #% type: string
-#% options: interval,standard deviation,quartiles
+#% options: interval,standard deviation,quartiles,custom breaks
 #% answer: interval
 #% description: Thematic divisions of data for display
 #% required : yes
 #%end
 #%option
-#% key: column
+#% key: breakpoints
 #% type: string
-#% description: Attribute column to use for thematic display (must be numeric)
-#% required : yes
+#% description: Break points for custom breaks option. Separate values by spaces. (0 10 20 30 ...)
+#% required : no
 #%end
 #%option
 #% key: layer
@@ -54,14 +68,6 @@
 #% description: Layer to use for thematic display
 #% answer: 1
 #% required : no
-#%end
-#%option
-#% key: type
-#% type: string
-#% description: Vector map type
-#% options: area,point,centroid,line,boundary
-#% answer: area
-#% required : yes
 #%end
 #%option
 #% key: icon
@@ -197,6 +203,11 @@ if [ $? -ne 0 ] || [ -z "$TMP3" ] ; then
     exit 1
 fi
 
+echo "breakpoints = $GIS_OPT_breakpoints"
+
+
+
+
 # Set display variables for group
 atype=0
 ptype=0
@@ -280,31 +291,47 @@ q4=$max
 ptsize=$GIS_OPT_size
 
 # set interval for each thematic map calculation type
-if [ "$GIS_OPT_themecalc" = "interval" ] ; then
+case "$GIS_OPT_themecalc" in 
+"interval" )
     numint=$GIS_OPT_nint
     step=`echo $min $max $numint | awk '{print (($2 - $1) / $3)}'`
     pointstep=`echo $GIS_OPT_maxsize $ptsize $numint | awk '{print (($1 - $2) / $3)}'`
     breakpoints=`echo $min $max $numint | awk '{for(i=0;i<$3;i++){printf $1+($2-$1)/$3*i " "}printf $2}'`
     annotations=""
-fi
+    ;;
 
-if [ "$GIS_OPT_themecalc" = "standard deviation" ] ; then
+"standard deviation" )
     # 2 standard deviation units on either side of mean,
     # plus min to -2 sd units and +2 sd units to max, if applicable
     breakpoints=`echo $min $max $mean $sd | awk '{printf $1;for(i=-2;i<=2;i++){ith=$3+i*$4;if($1<ith && $2>ith){printf " " ith}}print " " $2}'`
     annotations=`echo $min $max $mean $sd | awk '{printf "";for(i=-2;i<=2;i++){ith=$3+i*$4;if($1<ith && $2>ith){if(i!=0){printf ";"((i<0)?"":"+") i "sd"} }}print ";"}'`
     numint=`echo $breakpoints | awk '{print NF-1}'`
     pointstep=`echo $GIS_OPT_maxsize $ptsize $numint | awk '{print (($1 - $2) / $3)}'`
-fi
+    ;;
 
-if [ "$GIS_OPT_themecalc" = "quartiles" ] ; then
+"quartiles" )
     numint=4
     # one for each quartile
     breakpoints="$min $q1 $q2 $q3 $max"
-    pbreakpoints="$ptsize $q1 $q2 $q3 $GIS_OPT_maxsize"
     annotations=" q1; q2; q3; q4"
     pointstep=`echo $GIS_OPT_maxsize $ptsize $numint | awk '{print (($1 - $2) / $3)}'`
-fi
+    ;;
+
+"custom breaks" )
+	if [ -z "$GIS_OPT_breakpoints" ] ; then
+	    breakpoints=`cat | awk '{gsub("[^0-9., ]","",$0);print}'`
+	else
+		breakpoints="$GIS_OPT_breakpoints"
+	fi
+    numint=`echo $breakpoints|awk '{print NF-1}'`
+    annotations=""
+    pointstep=`echo $GIS_OPT_maxsize $ptsize $numint | awk '{print (($1 - $2) / $3)}'`
+    ;;
+
+ "*")
+    echo "Unknown themecalc type"
+    exit
+esac
 
 # legend title
 echo "color black" > "$TMP2"
@@ -390,14 +417,6 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
     if [ "$GIS_OPT_themecalc" = "interval" ] ; then
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by $numint intervals of $step" >> "$TMP2"
-        echo "move 4 83" >> "$TMP2"
-        echo "text Color" >> "$TMP2"
-        echo "move 14 83" >> "$TMP2"
-        echo "text Value" >> "$TMP2"
-        echo "move 4 80" >> "$TMP2"
-        echo "text =====" >> "$TMP2"
-        echo "move 14 80" >> "$TMP2"
-        echo "text ============" >> "$TMP2"
 
         echo "Mapped by $numint intervals of $step"
     fi
@@ -407,14 +426,6 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
 
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by standard deviation units of $sd (mean =$mean)" >> "$TMP2"
-        echo "move 4 83" >> "$TMP2"
-        echo "text Color" >> "$TMP2"
-        echo "move 14 83" >> "$TMP2"
-        echo "text Value" >> "$TMP2"
-        echo "move 4 80" >> "$TMP2"
-        echo "text =====" >> "$TMP2"
-        echo "move 14 80" >> "$TMP2"
-        echo "text ============" >> "$TMP2"
 
         echo "Mapped by standard deviation units of $sd (mean =$mean)"
     fi
@@ -424,17 +435,18 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
 
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by quartiles (median =$q2)" >> "$TMP2"
-        echo "move 4 83" >> "$TMP2"
-        echo "text Color" >> "$TMP2"
-        echo "move 14 83" >> "$TMP2"
-        echo "text Value" >> "$TMP2"
-        echo "move 4 80" >> "$TMP2"
-        echo "text =====" >> "$TMP2"
-        echo "move 14 80" >> "$TMP2"
-        echo "text ============" >> "$TMP2"
 
         echo "Mapped by quartiles (median =$q2)"
     fi
+
+    echo "move 4 83" >> "$TMP2"
+    echo "text Color" >> "$TMP2"
+    echo "move 14 83" >> "$TMP2"
+    echo "text Value" >> "$TMP2"
+    echo "move 4 80" >> "$TMP2"
+    echo "text =====" >> "$TMP2"
+    echo "move 14 80" >> "$TMP2"
+    echo "text ============" >> "$TMP2"
 
     echo ""
     echo "Color(R:G:B)" "Value" | awk '{print $1 "\t" $2}'
@@ -461,8 +473,8 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
                 mincomparison=">"            
             fi
         else
-            closebracket=" " 
-            openbracket=" "
+            closebracket="" 
+            openbracket=""
             if [ "$first" = "true" ] ; then
                 mincomparison=">="
                 first="false"
@@ -482,7 +494,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         rangemax=`echo $i $breakpoints | awk '{t=$1+2;print $t}'`
 
         if [ -z "$annotations" ]; then
-            extranote="."
+            extranote=""
         else
             extranote=`echo $annotations| cut -d';' -f$i`
         fi
@@ -497,7 +509,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         echo "move 14 $line2" >> "$TMP2"
         echo "text $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP2"
 
-        echo $themecolor $rangemin $rangemax $extranote $openbracket $closebracket | awk '{print $1 "\t\t" $5$2" - "$3$6" "$4}'
+        echo $themecolor@$rangemin@$rangemax@$extranote@$openbracket@$closebracket | awk -F@ '{print $1 "\t\t" $5$2" - "$3$6" "$4}'
         # update color to database?
         sqlwhere="$GIS_OPT_column $mincomparison $rangemin and $GIS_OPT_column<=$rangemax"
         if [ $GIS_FLAG_u -eq 1 ] ; then
@@ -509,7 +521,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         if [ "$GIS_FLAG_g" -eq 1 ] ; then
         
             # change rgb colors to hex
-            xthemecolor=`eval echo $themecolor | awk -F: '{printf("#%02X%02X%02X\n",$1,$2,$3)}'`
+            xthemecolor=`echo $themecolor | awk -F: '{printf("#%02X%02X%02X\n",$1,$2,$3)}'`
             
             if [ "$linecolor" = "black" ] ; then
                 xlinecolor="#000000"
@@ -581,21 +593,8 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
     if [ "$GIS_OPT_themecalc" = "interval" ] ; then
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by $numint intervals of $step" >> "$TMP2"
-        echo "move 4 83" >> "$TMP2"
-        echo "text Icon size" >> "$TMP2"
-        echo "move 25 83" >> "$TMP2"
-        echo "text Value" >> "$TMP2"
-        echo "move 4 80" >> "$TMP2"
-        echo "text ==============" >> "$TMP2"
-        echo "move 25 80" >> "$TMP2"
-        echo "text ==============" >> "$TMP2"
-        line1=76
-        line2=75
 
         echo "Mapped by $numint intervals of $step"
-        echo ""
-        echo "Icon" "size" "Value" | awk '{print $1 " " $2"\t"$3}'
-        echo "==========" "=====" | awk '{print $1 "\t" $2}'
     fi
         
     # display graduated points for standard deviation units
@@ -603,21 +602,8 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
 
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by standard deviation units of $sd (mean =$mean)" >> "$TMP2"
-        echo "move 4 83" >> "$TMP2"
-        echo "text Icon size" >> "$TMP2"
-        echo "move 25 83" >> "$TMP2"
-        echo "text Value" >> "$TMP2"
-        echo "move 4 80" >> "$TMP2"
-        echo "text ==============" >> "$TMP2"
-        echo "move 25 80" >> "$TMP2"
-        echo "text ==============" >> "$TMP2"
-        line1=76
-        line2=75
 
         echo "Mapped by standard deviation units of $sd (mean =$mean)"
-        echo ""
-        echo "Icon" "size" "Value" | awk '{print $1 " " $2"\t"$3}'
-        echo "==========" "=====" | awk '{print $1 "\t" $2}'
     fi
     
     # display graduated point themes for quartiles
@@ -625,23 +611,25 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
 
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by quartiles (median =$q2)" >> "$TMP2"
-        echo "move 4 83" >> "$TMP2"
-        echo "text Icon size" >> "$TMP2"
-        echo "move 25 83" >> "$TMP2"
-        echo "text Value" >> "$TMP2"
-        echo "move 4 80" >> "$TMP2"
-        echo "text ==============" >> "$TMP2"
-        echo "move 25 80" >> "$TMP2"
-        echo "text ==============" >> "$TMP2"
-        line1=76
-        line2=75
 
         echo "Mapped by quartiles (median =$q2)"
-        echo ""
-        echo "Icon" "size" "Value" | awk '{print $1 " " $2"\t"$3}'
-        echo "==========" "=====" | awk '{print $1 "\t" $2}'
     fi
         
+    line1=76
+    line2=75
+    echo "move 4 83" >> "$TMP2"
+    echo "text Icon size" >> "$TMP2"
+    echo "move 25 83" >> "$TMP2"
+    echo "text Value" >> "$TMP2"
+    echo "move 4 80" >> "$TMP2"
+    echo "text ==============" >> "$TMP2"
+    echo "move 25 80" >> "$TMP2"
+    echo "text ==============" >> "$TMP2"
+
+    echo ""
+    echo "Icon" "size" "Value" | awk '{print $1 " " $2"\t"$3}'
+    echo "==========" "=====" | awk '{print $1 "\t" $2}'
+
     themecolor=$GIS_OPT_singlecolor
     linecolor="black"
     
@@ -662,8 +650,8 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
                 mincomparison=">"            
             fi
         else
-            closebracket=" " 
-            openbracket=" "
+            closebracket="" 
+            openbracket=""
             if [ "$first" = "true" ] ; then
                 mincomparison=">="
                 first="false"
@@ -678,8 +666,8 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         rangemin=`echo $i $breakpoints | awk '{t=$1+1;print $t}'`
         rangemax=`echo $i $breakpoints | awk '{t=$1+2;print $t}'`
 
-        if [ -z "$annotation"s ]; then
-            extranote="."
+        if [ -z "$annotations" ]; then
+            extranote=""
         else
             extranote=`echo $annotations| cut -d';' -f$i`
         fi            
@@ -698,7 +686,7 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         echo "move 25 $line2" >> "$TMP2"
         echo "text $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP2"
 
-        echo $ptsize $rangemin $rangemax $extranote $openbracket $closebracket | awk '{print $1 "\t\t" $5$2" - "$3$6" "$4}'
+        echo $ptsize@$rangemin@$rangemax@$extranote@$openbracket@$closebracket | awk -F@ '{print $1 "\t\t" $5$2" - "$3$6" "$4}'
 
         # update color to database?
         sqlwhere="$GIS_OPT_column $mincomparison $rangemin and $GIS_OPT_column<=$rangemax"
@@ -711,7 +699,7 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         if [ "$GIS_FLAG_g" -eq 1 ] ; then
         
             # change rgb colors to hex
-            xthemecolor=`eval echo $themecolor | awk -F: '{printf("#%02X%02X%02X\n",$1,$2,$3)}'`
+            xthemecolor=`echo $themecolor | awk -F: '{printf("#%02X%02X%02X\n",$1,$2,$3)}'`
             xlinecolor="#000000"
 
             # create group entry
