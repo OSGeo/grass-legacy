@@ -93,14 +93,6 @@ else
     drv="driver=$GIS_OPT_driver"
 fi
 
-# check column type
-COLTYPE="`v.info -c $GIS_OPT_table layer=1 2> /dev/null | grep $GIS_OPT_column | cut -d'|' -f1 | tr -s '[:upper:]' '[:lower:]'`"
-if [ "$COLTYPE" != "integer" -a "$COLTYPE" != "double" ] ; then
-  echo "ERROR: Column <$GIS_OPT_column> is of type <$COLTYPE> which is not numeric."
-  exit 1
-fi
-
-echo "Fetching data..."
 db.select table=$GIS_OPT_table $db $drv sql="select $GIS_OPT_column from $GIS_OPT_table" -c > "$TMP"
 
 echo "database = $GIS_OPT_database"
