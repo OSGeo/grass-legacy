@@ -178,6 +178,12 @@ if [ $GIS_FLAG_k -eq 1 ] ; then
     KEEP_WGS84=1
 fi
 
+if [ "`expr $WPT + $TRK + $RTE`" -eq 0 ] ; then
+    echo "Must request either waypoints, route, or track."
+    rm -f ${TMP}*
+    exit 1
+fi
+
 
 #### check that receiver is responding on $GPSPORT
 # sadly gpstrans 0.39 returns 0 after timeout.. hopefully fixed someday.
@@ -357,7 +363,7 @@ else # CREATE_LINES
     	cs2cs -tL -f %.7f $IN_PROJ +to $OUT_PROJ < "${TMP}.base" > "${TMP}.P_mid"
 	EXITCODE=$?
 	# check if transform REALLY worked (e.g. grid file not found)
-	if [ -n "`head -1 "${TMP}.P_mid" | grep "^*"`" ] ; then
+	if [ -n "`head -2 "${TMP}.P_mid" | grep "^*"`" ] ; then
 	    EXITCODE=1
 	fi
     	if [ $EXITCODE -ne 0 ] ; then
