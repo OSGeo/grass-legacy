@@ -862,7 +862,7 @@ R_release_driver(void)
  *
  * Send all pending graphics commands to the graphics driver and cause 
  * all pending graphics to be drawn (provided the driver is written to 
- * comply).  This routine does more than <i>R_flush</i> and in many 
+ * comply).  This routine does more than <i>R_flush()</i> and in many 
  * instances is the more appropriate routine of the two to use.
  *
  *  \param void
