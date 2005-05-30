@@ -17,6 +17,7 @@
 #define MAIN
 #include "imagery.h"
 #include "gmath.h"
+#include "glocale.h"
 #include "globals.h"
 #include "local_proto.h"
 
@@ -40,7 +41,7 @@ int main (int argc, char *argv[])
         double nsamp[MC];       /* Number of samples in a given class */
         double eigval[MX];      /* Eigen value vector */
         double eigmat[MX][MX];  /* Eigen Matrix */
-        char tempbuf[100], tempname[50];
+        char tempname[50];
 
         /* used to make the color tables */
         CELL outbandmax[MX];  /* will hold the maximums found in the out maps */
@@ -62,39 +63,40 @@ int main (int argc, char *argv[])
 
 		module = G_define_module();
 		module->description =
-			"Canonical components analysis (cca) "
-			"program for image processing.";
+			_("Canonical components analysis (cca) "
+			"program for image processing.");
 
         opt1 = G_define_option() ;
         opt1->key        = "group";
         opt1->type       = TYPE_STRING;
         opt1->required   = YES;
-        opt1->description= "Imagery files group" ;
+        opt1->description= _("Imagery files group");
 
         opt2 = G_define_option() ;
         opt2->key        = "subgroup";
         opt2->type       = TYPE_STRING;
         opt2->required   = YES;
-        opt2->description= "Imagery files subgroup" ;
+        opt2->description= _("Imagery files subgroup");
 
         opt3 = G_define_option() ;
         opt3->key        = "signature";
         opt3->type       = TYPE_STRING;
         opt3->required   = YES;
-        opt3->description= "Ascii file containing spectral signatures" ;
+        opt3->description= _("Ascii file containing spectral signatures");
 
         opt4 = G_define_option() ;
         opt4->key        = "output";
         opt4->type       = TYPE_STRING;
         opt4->required   = YES;
-        opt4->description= "Output raster file prefix name" ;
+        opt4->description= _("Output raster file prefix name");
 
         if (G_parser(argc, argv) < 0)
                 exit(-1);
 
         if (G_legal_filename(opt1->answer)<0)
         {
-                G_warning( "Warning: illegal group name");
+                G_warning(_("Warning: illegal group name <%s>."),
+                         opt1->answer);
                 error++ ;
         }
         else
@@ -102,7 +104,8 @@ int main (int argc, char *argv[])
 
         if (G_legal_filename(opt2->answer)<0)
         {
-                G_warning( "Warning: illegal subgroup name");
+                G_warning(_("Warning: illegal subgroup name <%s>."),
+                         opt2->answer);
                 error++ ;
         }
         else
@@ -110,7 +113,8 @@ int main (int argc, char *argv[])
 
         if (G_legal_filename(opt3->answer)<0)
         {
-                G_warning( "Warning: illegal signature file name");
+                G_warning(_("Warning: illegal signature file name <%s>."),
+                         opt3->answer);
                 error++ ;
         }
         else
@@ -118,7 +122,8 @@ int main (int argc, char *argv[])
 
         if (G_legal_filename(opt4->answer)<0)
         {
-                G_warning( "Warning: illegal output file name");
+                G_warning(_("Warning: illegal output file name <%s>."),
+                         opt4->answer);
                 error++ ;
         }
         else
@@ -130,37 +135,36 @@ int main (int argc, char *argv[])
         /* check group, subgroup */
         I_init_group_ref(&refs);
         if (I_find_group(groupname) <=0) {
-                G_fatal_error("Unknown imagery group.");
+                G_fatal_error(_("Unknown imagery group."));
         }
         if (I_get_subgroup_ref(groupname, subgroup, &refs) <= 0) {
-                G_fatal_error("Unable to find subgroup reference information.");
+                G_fatal_error(_("Unable to find subgroup reference information."));
         }
 
         /* open and input the signatures file */
         if ((sigfp = I_fopen_signature_file_old(groupname, subgroup, signame))
             == NULL)
-                G_fatal_error("Unable to open the signature file.");
+                G_fatal_error(_("Unable to open the signature file."));
         I_init_signatures(&sigs, refs.nfiles);
         if (I_read_signatures(sigfp, &sigs)<0)
-                G_fatal_error("Error while reading the signatures file.");
+                G_fatal_error(_("Error while reading the signatures file."));
         fclose(sigfp);
         nclass = sigs.nsigs;
         if (nclass<2)
-                G_fatal_error("Need at least two signatures in signature file.");
+                G_fatal_error(_("Need at least two signatures in signature file."));
 
         /* check the number of input bands */
         bands = refs.nfiles;
         if (bands > MX-1) {
-                sprintf(tempbuf,"Subgroup too large.  Maximum number of bands is%d\n",
-                    MX-1);
-                G_fatal_error(tempbuf);
+                G_fatal_error(_("Subgroup too large.  Maximum number of "
+                      "bands is %d\n."), MX - 1);
         }
 
         /* check output file */
         if (outputfile[0] == '\0')
-                G_fatal_error("An output cell map name is required.");
+                G_fatal_error(_("An output cell map name is required."));
         if (strlen(outputfile) >=13)
-                G_fatal_error("The output cell map name can not be longer than 12 characters.");
+                G_fatal_error(_("The output cell map name can not be longer than 12 characters."));
 
         rows = G_window_rows();
         cols = G_window_cols();
@@ -188,13 +192,13 @@ int main (int argc, char *argv[])
 
         within(samptot,nclass,nsamp,cov,w,bands);
         between(samptot,nclass,nsamp,mu,p,bands);
-        jacobi(w,bands,eigval,eigmat);
-        egvorder(eigval,eigmat,bands);
+        jacobi(w,(long)bands,eigval,eigmat);
+        egvorder(eigval,eigmat,(long)bands);
         setdiag(eigval,bands,l);
         getsqrt(w,bands,l,eigmat);
         solveq(q,bands,w,p);
-        jacobi(q,bands,eigval,eigmat);
-        egvorder(eigval,eigmat,bands);
+        jacobi(q,(long)bands,eigval,eigmat);
+        egvorder(eigval,eigmat,(long)bands);
         matmul(q,eigmat,w,bands);
 
         /* open the cell maps */
@@ -203,15 +207,13 @@ int main (int argc, char *argv[])
                 outbandmin[i] = (CELL) 0;
                 if ((datafds[i]=G_open_cell_old(refs.file[i-1].name,
                     refs.file[i-1].mapset)) < 0) {
-                        sprintf(tempbuf, "Unable to open cell map <%s> for input.",
-                            refs.file[i-1].name);
-                        G_fatal_error(tempbuf);
+                        G_fatal_error(_("Unable to open cell man <%s> for "
+                            "input.\n"), refs.file[i-1].name);
                 }
                 sprintf(tempname, "%s.%d", outputfile, i);
                 if ((outfds[i]=G_open_cell_new(tempname)) < 0) {
-                        sprintf(tempbuf, "Unable to open cell map <%s> for output.",
-                            tempname);
-                        G_fatal_error(tempbuf);
+                        G_fatal_error(_("Unable to open cell map <%s> "
+                            "for output.\n"), tempname);
                 }
         }
 
@@ -227,15 +229,13 @@ int main (int argc, char *argv[])
                 G_close_cell(outfds[i]);
 
                 if (outbandmin[i] < (CELL) 0 || outbandmax[i] > (CELL) 255) {
-                        sprintf(tempbuf,
-                            "The output cell map %s.%d has values outside the 0-255 range.",
-                            outputfile, i);
-                        G_warning(tempbuf);
+                        G_warning(_("The output cell map <%s.%d> has values "
+                            "outside the 0-255 range.\n"), outputfile, i);
                 }
                 G_make_grey_scale(&color_tbl, 0, outbandmax[i]);
-                sprintf(tempbuf, "%s.%d", outputfile, i);
+                sprintf(tempname, "%s.%d", outputfile, i);
                 /* write a color table */
-                G_write_colors(tempbuf, G_mapset(), &color_tbl);
+                G_write_colors(tempname, G_mapset(), &color_tbl);
         }
 
 
