@@ -168,7 +168,7 @@ int popup (FILE *fd, int x, int y, char *msg)
  * page backward
  */
     page = 0;
-    page_offset = (long *) calloc (npages=1, sizeof(long));
+    page_offset = (long *) G_calloc (npages=1, sizeof(long));
     if (page_offset == NULL)
     {
 	G_message(_("Out of Memory!\n"));
