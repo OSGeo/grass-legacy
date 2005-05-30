@@ -5,6 +5,7 @@
 #include "display.h"
 #include "raster.h"
 #include "gis.h"
+#include "glocale.h"
 
 #define NLINES 24
 struct box
@@ -170,7 +171,7 @@ int popup (FILE *fd, int x, int y, char *msg)
     page_offset = (long *) calloc (npages=1, sizeof(long));
     if (page_offset == NULL)
     {
-	fprintf (stderr, "Out of Memory\n");
+	G_message(_("Out of Memory!\n"));
 	return 1;
     }
     *page_offset = ftell(fd);
@@ -238,9 +239,9 @@ int popup (FILE *fd, int x, int y, char *msg)
 	case -1: /* more or less */
 		break;
 	default: /* file picked */
-		fprintf (stderr, "name=%s\n", list[which].name);
-		fprintf (stderr, "mapset=%s\n", list[which].mapset);
-		fprintf (stderr, "fullname=%s\n",
+		G_message(_("name=%s\n"), list[which].name);
+		G_message(_("mapset=%s\n"), list[which].mapset);
+		G_message(_("fullname=%s\n"),
 		    G_fully_qualified_name(list[which].name, list[which].mapset));
 		/*FALLTHROUGH*/
 	case -2: /* cancel */

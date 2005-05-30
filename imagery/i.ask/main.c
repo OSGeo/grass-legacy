@@ -1,6 +1,8 @@
 #include <string.h>
 #include <stdio.h>
 #include "raster.h"
+#include "gis.h"
+#include "glocale.h"
 #include "local_proto.h"
 
 int TOP, BOTTOM, LEFT, RIGHT;
@@ -18,7 +20,7 @@ int main (int argc, char *argv[])
     if (fd == NULL)
     {
 	perror (argv[1]);
-	fprintf (stderr, "usage: %s file [prompt %%x %%y]\n", argv[0]);
+	G_message(_("usage: %s file [prompt %%x %%y]\n"), argv[0]);
 	exit(0);
     }
 
@@ -60,6 +62,6 @@ int main (int argc, char *argv[])
 int 
 usage (char *me)
 {
-    fprintf (stderr, "usage: %s file [prompt %%x %%y]\n", me);
+    G_message(_("usage: %s file [prompt %%x %%y]\n"), me);
     exit(1);
 }
