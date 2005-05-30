@@ -186,6 +186,7 @@ FTLIB               = @FTLIB@
 #PROJ.4:
 PROJINC             = @PROJINC@ $(GDALCFLAGS)
 PROJLIB             = @PROJLIB@
+NAD2BIN             = @NAD2BIN@
 
 #OPENDWG:
 OPENDWGINCPATH      = @OPENDWGINCPATH@

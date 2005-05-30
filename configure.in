@@ -522,6 +522,13 @@ LOC_CHECK_LIBS(proj,pj_get_def,External PROJ.4,$PROJLIB,PROJLIB,,,)
 AC_SUBST(PROJINC)
 AC_SUBST(PROJLIB)
 
+# nad2bin needs to be in path for installing datum gridshift files
+
+AC_PATH_PROG(NAD2BIN, nad2bin, no)
+if test "$NAD2BIN" = "no"; then
+    AC_MSG_ERROR([*** Unable to locate nad2bin.])
+fi
+
 # Done checking PROJ
 
 # Enable Readline option
