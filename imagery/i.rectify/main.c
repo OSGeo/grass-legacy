@@ -124,10 +124,11 @@ if (order < 1 || order > MAXORDER)
 	  if (strcmp(ifile->answers[m],ref.file[n].name) == 0) {
 		got_file = 1;
 		ref_list[n] = -1;
-	  } 
-	  if (got_file == 0) 
-	     err_exit(ifile->answers[m], group);
-	} 
+		break;
+	  }
+	}
+	if (got_file == 0) 
+	    err_exit(ifile->answers[m], group);
    }
 }
 
