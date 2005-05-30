@@ -44,7 +44,7 @@ transform (int datafds[MX], int outfds[MX], int rows, int cols, double eigmat[MX
       if (G_put_raster_row(outfds[j], rowbufs[j], CELL_TYPE) < 0)
         G_fatal_error(_("Error writing cell map during transform."));
   }
-  for (i=1; i<=bands; i++) free(rowbufs[i]);
+  for (i=1; i<=bands; i++) G_free(rowbufs[i]);
 
   G_message(_("Transform completed.\n"));
 
