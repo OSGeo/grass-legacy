@@ -5,14 +5,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_sl\n"
-"POT-Creation-Date: 2005-01-20 18:30+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-03-25 10:42+0100\n"
 "PO-Revision-Date: 2004-12-20 14:53+0100\n"
 "Last-Translator: Miha Staut <mihastaut@yahoo.co.uk>\n"
 "Language-Team: Sloven¹èina <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 "X-Generator: KBabel 1.9\n"
 
 #: ../lib/gis/env.c:268
@@ -32,17 +32,17 @@ msgstr "OPOZORILO: "
 msgid "ERROR: "
 msgstr "NAPAKA: "
 
-#: ../lib/gis/gisinit.c:39
+#: ../lib/gis/gisinit.c:38
 #, c-format
 msgid "MAPSET %s - permission denied"
 msgstr "MAPSET %s - dovoljenje odklonjeno"
 
-#: ../lib/gis/gisinit.c:44 ../lib/gis/mapset.c:60
+#: ../lib/gis/gisinit.c:43 ../lib/gis/mapset.c:60
 #, c-format
 msgid "MAPSET %s not found"
 msgstr "ne najdem MAPSET %s"
 
-#: ../lib/gis/gisinit.c:68
+#: ../lib/gis/gisinit.c:67
 msgid "ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
 msgstr ""
 "NAPAKA: Sistem ni inicializiran. Programer je pozabil poklicati G_gisinit()\n"
@@ -142,27 +142,27 @@ msgstr ""
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   privzet: %s\n"
 
-#: ../lib/gis/parser.c:1355
+#: ../lib/gis/parser.c:1341
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   mo¾nosti: "
 
-#: ../lib/gis/parser.c:1402 ../lib/gis/parser.c:1419
+#: ../lib/gis/parser.c:1388 ../lib/gis/parser.c:1405
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Oprosti <%c> ni veljavna izbira\n"
 
-#: ../lib/gis/parser.c:1474
+#: ../lib/gis/parser.c:1460
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Oprosti <%s=> je dvoumno\n"
 
-#: ../lib/gis/parser.c:1481
+#: ../lib/gis/parser.c:1467
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Oprosti <%s> ni veljaven parameter\n"
 
-#: ../lib/gis/parser.c:1566
+#: ../lib/gis/parser.c:1552
 #, c-format
 msgid ""
 "\n"
@@ -171,12 +171,12 @@ msgstr ""
 "\n"
 "Napaka: neveljaven razpon sintakse za parameter <%s>\n"
 
-#: ../lib/gis/parser.c:1568
+#: ../lib/gis/parser.c:1554
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Predstavljen kot: %s\n"
 
-#: ../lib/gis/parser.c:1571
+#: ../lib/gis/parser.c:1557
 #, c-format
 msgid ""
 "\n"
@@ -185,12 +185,12 @@ msgstr ""
 "\n"
 "Napaka: vrednost <%s> izven razpona za parameter <%s>\n"
 
-#: ../lib/gis/parser.c:1573
+#: ../lib/gis/parser.c:1559
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Dovoljeni razpon: %s\n"
 
-#: ../lib/gis/parser.c:1576
+#: ../lib/gis/parser.c:1562
 #, c-format
 msgid ""
 "\n"
@@ -199,7 +199,7 @@ msgstr ""
 "\n"
 "Napaka: Manjkajoèa vrednost za parameter <%s>\n"
 
-#: ../lib/gis/parser.c:1736
+#: ../lib/gis/parser.c:1722
 #, c-format
 msgid ""
 "\n"
@@ -210,7 +210,7 @@ msgstr ""
 "NAPAKA: Zahtevani parameter <%s> ni nastavljen:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:1839
+#: ../lib/gis/parser.c:1825
 #, c-format
 msgid ""
 "\n"
@@ -219,17 +219,17 @@ msgstr ""
 "\n"
 "Napaka: mo¾nost <%s> mora biti podana v veèkratnikih %d\n"
 
-#: ../lib/gis/parser.c:1841
+#: ../lib/gis/parser.c:1827
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Podal si %d stvari:\n"
 
-#: ../lib/gis/parser.c:1897
+#: ../lib/gis/parser.c:1883
 #, c-format
 msgid "Error: option <%s>: <%s> exists.\n"
 msgstr "Napaka: mo¾nost <%s>: <%s> obstaja.\n"
 
-#: ../lib/gis/parser.c:1944
+#: ../lib/gis/parser.c:1930
 msgid ""
 "\n"
 "FLAG: Set the following flag?\n"
@@ -237,7 +237,7 @@ msgstr ""
 "\n"
 "IZBIRA: Doloèi naslednjo izbiro?\n"
 
-#: ../lib/gis/parser.c:1957
+#: ../lib/gis/parser.c:1943
 #, c-format
 msgid ""
 "\n"
@@ -246,50 +246,50 @@ msgstr ""
 "\n"
 "MO®NOST:   %s\n"
 
-#: ../lib/gis/parser.c:1958
+#: ../lib/gis/parser.c:1944
 #, c-format
 msgid "     key: %s\n"
 msgstr "     kljuè: %s\n"
 
-#: ../lib/gis/parser.c:1960
+#: ../lib/gis/parser.c:1946
 #, c-format
 msgid "  format: %s\n"
 msgstr "  format: %s\n"
 
-#: ../lib/gis/parser.c:1962
+#: ../lib/gis/parser.c:1948
 #, c-format
 msgid " default: %s\n"
 msgstr " privzet: %s\n"
 
-#: ../lib/gis/parser.c:1963
+#: ../lib/gis/parser.c:1949
 #, c-format
 msgid "required: %s\n"
 msgstr "zahtevan: %s\n"
 
-#: ../lib/gis/parser.c:1965
+#: ../lib/gis/parser.c:1951
 #, c-format
 msgid "multiple: %s\n"
 msgstr "veèkraten: %s\n"
 
-#: ../lib/gis/parser.c:1967
+#: ../lib/gis/parser.c:1953
 #, c-format
 msgid " options: %s\n"
 msgstr "mo¾nosti: %s\n"
 
-#: ../lib/gis/parser.c:1980
+#: ../lib/gis/parser.c:1966
 msgid "enter option > "
 msgstr "vpi¹i mo¾nost > "
 
-#: ../lib/gis/parser.c:1994 ../lib/gis/parser.c:2005
+#: ../lib/gis/parser.c:1980 ../lib/gis/parser.c:1991
 msgid "   Try again? "
 msgstr "   Poskusi ¹e enkrat. "
 
-#: ../lib/gis/parser.c:2003
+#: ../lib/gis/parser.c:1989
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Oprosti, %s ni sprejet.\n"
 
-#: ../lib/gis/parser.c:2014
+#: ../lib/gis/parser.c:2000
 #, c-format
 msgid ""
 "\n"
@@ -300,11 +300,11 @@ msgstr ""
 "Izbral si:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2015
+#: ../lib/gis/parser.c:2001
 msgid "Is this correct? "
 msgstr "Ali je to pravilno? "
 
-#: ../lib/gis/parser.c:2073
+#: ../lib/gis/parser.c:2059
 msgid "to accept the default"
 msgstr "za izbrati privzeto"
 
@@ -587,49 +587,49 @@ msgstr "t-b3 ima neveljavno vrednost resolucije"
 msgid "Illegal depths value"
 msgstr "Neveljavna vrednost globin"
 
-#: ../lib/gis/ask.c:376
+#: ../lib/gis/ask.c:377
 msgid "to cancel request"
 msgstr "za razveljaviti zahtevo"
 
-#: ../lib/gis/ask.c:432
+#: ../lib/gis/ask.c:433
 #, c-format
 msgid "Enter a new %s file name"
 msgstr "Vnesi novo %s ime datoteke"
 
-#: ../lib/gis/ask.c:437
+#: ../lib/gis/ask.c:438
 #, c-format
 msgid "Enter the name of an existing %s file"
 msgstr "Vnesi ime obstojeèe %s datoteke"
 
-#: ../lib/gis/ask.c:440
+#: ../lib/gis/ask.c:441
 #, c-format
 msgid "Enter %s file name"
 msgstr "Vnesi %s ime datoteke"
 
-#: ../lib/gis/ask.c:459
+#: ../lib/gis/ask.c:460
 #, c-format
 msgid "Enter 'list' for a list of existing %s files\n"
 msgstr "Vpi¹i 'list' za spisek obstojeèih %s datotek\n"
 
-#: ../lib/gis/ask.c:462
+#: ../lib/gis/ask.c:463
 msgid "Enter 'list -f' for "
 msgstr "Vpi¹i 'list' -f za "
 
-#: ../lib/gis/ask.c:464
+#: ../lib/gis/ask.c:465
 #, c-format
 msgid "a list %s"
 msgstr "spisek %s"
 
-#: ../lib/gis/ask.c:466
+#: ../lib/gis/ask.c:467
 msgid "an extended list"
 msgstr "raz¹irjen spisek"
 
-#: ../lib/gis/ask.c:470
+#: ../lib/gis/ask.c:471
 #, c-format
 msgid "Hit RETURN %s\n"
 msgstr "Pritisni RETURN %s\n"
 
-#: ../lib/gis/ask.c:492 ../lib/gis/ask.c:599 ../lib/gis/ask.c:621
+#: ../lib/gis/ask.c:493 ../lib/gis/ask.c:600 ../lib/gis/ask.c:622
 #, c-format
 msgid ""
 "\n"
@@ -638,7 +638,7 @@ msgstr ""
 "\n"
 " %s - ni bil najden **\n"
 
-#: ../lib/gis/ask.c:499 ../lib/gis/ask.c:585
+#: ../lib/gis/ask.c:500 ../lib/gis/ask.c:586
 #, c-format
 msgid ""
 "\n"
@@ -647,7 +647,7 @@ msgstr ""
 "\n"
 "** %s obstaja. Ali ¾eli¹, da pi¹em èez? "
 
-#: ../lib/gis/ask.c:545
+#: ../lib/gis/ask.c:546
 #, c-format
 msgid ""
 "\n"
@@ -656,7 +656,7 @@ msgstr ""
 "\n"
 "**<%s> neveljavno ime **\n"
 
-#: ../lib/gis/ask.c:560
+#: ../lib/gis/ask.c:561
 #, c-format
 msgid ""
 "\n"
@@ -665,7 +665,7 @@ msgstr ""
 "\n"
 "** %s - neveljavna zahteva **\n"
 
-#: ../lib/gis/ask.c:575
+#: ../lib/gis/ask.c:576
 #, c-format
 msgid ""
 "\n"
@@ -674,7 +674,7 @@ msgstr ""
 "\n"
 "** %s - obstaja, izberi drugo ime **\n"
 
-#: ../lib/gis/ask.c:603
+#: ../lib/gis/ask.c:604
 msgid "ask: can't happen"
 msgstr "vpra¹aj: ne more se zgoditi"
 
@@ -724,7 +724,7 @@ msgstr "Pritisni RETURN za razveljaviti zahtevo\n"
 msgid "unable to open datum table file: %s"
 msgstr "Nezmo¾en sem odpreti datoteko s tabelo fundamentalne toèke: %s"
 
-#: ../lib/gis/datum.c:368 ../lib/gis/datum.c:458 ../lib/proj/datum.c:357
+#: ../lib/gis/datum.c:368 ../lib/gis/datum.c:457 ../lib/proj/datum.c:357
 #: ../lib/proj/datum.c:432
 #, c-format
 msgid "error in datum table file, line %d"
@@ -1282,17 +1282,17 @@ msgstr "G_put_title - ne morem ponovno odpreti datoteke temp"
 msgid "can't write category information for [%s] in [%s]"
 msgstr "ne morem zapisati informacije o kategoriji za [%s] v [%s]"
 
-#: ../lib/gis/quant_io.c:91
+#: ../lib/gis/quant_io.c:92
 #, c-format
 msgid "The floating data range for %s@%s is empty"
 msgstr "Razpon plavajoèih podatkov za %s@%s je prazen"
 
-#: ../lib/gis/quant_io.c:100
+#: ../lib/gis/quant_io.c:101
 #, c-format
 msgid "The integer data range for %s@%s is empty"
 msgstr "Razpon integer podatkov za %s@%s je prazen"
 
-#: ../lib/gis/quant_io.c:171
+#: ../lib/gis/quant_io.c:173
 #, c-format
 msgid "quantization file [%s] in mapset [%s] %s"
 msgstr "kvantizacijska datoteka [%s] v mapset [%s] %s"
@@ -1929,7 +1929,7 @@ msgstr ""
 msgid "Attaching islands: "
 msgstr "Pripajanje otokov: "
 
-#: ../lib/vector/Vlib/build_nat.c:555
+#: ../lib/vector/Vlib/build_nat.c:556
 msgid "Attaching centroids: "
 msgstr "Pripajanje centroidov: "
 

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_it\n"
-"POT-Creation-Date: 2005-03-02 09:56+0100\n"
+"POT-Creation-Date: 2005-03-25 10:42+0100\n"
 "PO-Revision-Date: 2005-03-09 12:50+0100\n"
 "Last-Translator: Maurizio Napolitano <napo@itc.it>\n"
 "Language-Team: Italiano <translations@grass.itc.it>\n"
@@ -32,17 +32,17 @@ msgstr "ATTENZIONE: "
 msgid "ERROR: "
 msgstr "ERRORE: "
 
-#: ../lib/gis/gisinit.c:39
+#: ../lib/gis/gisinit.c:38
 #, c-format
 msgid "MAPSET %s - permission denied"
 msgstr "MAPSET %s - permesso negato"
 
-#: ../lib/gis/gisinit.c:44 ../lib/gis/mapset.c:60
+#: ../lib/gis/gisinit.c:43 ../lib/gis/mapset.c:60
 #, c-format
 msgid "MAPSET %s not found"
 msgstr "MAPSET %s non trovato"
 
-#: ../lib/gis/gisinit.c:68
+#: ../lib/gis/gisinit.c:67
 msgid "ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
 msgstr ""
 "ERRORE: Sistema non inizializzato. Il programmatore si è scordato di usare "
@@ -139,27 +139,27 @@ msgstr ""
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   predefinito: %s\n"
 
-#: ../lib/gis/parser.c:1355
+#: ../lib/gis/parser.c:1341
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   opzioni: "
 
-#: ../lib/gis/parser.c:1402 ../lib/gis/parser.c:1419
+#: ../lib/gis/parser.c:1388 ../lib/gis/parser.c:1405
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Mi spiace ma, <%c> non è un flag valido\n"
 
-#: ../lib/gis/parser.c:1474
+#: ../lib/gis/parser.c:1460
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Mi spiace, <%s=> è ambiguo\n"
 
-#: ../lib/gis/parser.c:1481
+#: ../lib/gis/parser.c:1467
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Spiacente <%s> non è un parametro valido\n"
 
-#: ../lib/gis/parser.c:1566
+#: ../lib/gis/parser.c:1552
 #, c-format
 msgid ""
 "\n"
@@ -168,12 +168,12 @@ msgstr ""
 "\n"
 "Errore: intervallo di sintassi non valido per il parametro <%s>\n"
 
-#: ../lib/gis/parser.c:1568
+#: ../lib/gis/parser.c:1554
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Presentato come: %s\n"
 
-#: ../lib/gis/parser.c:1571
+#: ../lib/gis/parser.c:1557
 #, c-format
 msgid ""
 "\n"
@@ -182,12 +182,12 @@ msgstr ""
 "\n"
 "Errore: il valore <%s> è fuori dall'intervallo atteso dal parametro<%s>\n"
 
-#: ../lib/gis/parser.c:1573
+#: ../lib/gis/parser.c:1559
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Intervallo valido: %s\n"
 
-#: ../lib/gis/parser.c:1576
+#: ../lib/gis/parser.c:1562
 #, c-format
 msgid ""
 "\n"
@@ -196,7 +196,7 @@ msgstr ""
 "\n"
 "Errore: Valore assente per il parametro <%s>\n"
 
-#: ../lib/gis/parser.c:1736
+#: ../lib/gis/parser.c:1722
 #, c-format
 msgid ""
 "\n"
@@ -207,7 +207,7 @@ msgstr ""
 "ERRORE: Il parametro <%s> richiesto non è definito:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:1839
+#: ../lib/gis/parser.c:1825
 #, c-format
 msgid ""
 "\n"
@@ -216,17 +216,17 @@ msgstr ""
 "\n"
 "Errore: l'opzione <%s> deve essere fornita come multipli di %d\n"
 
-#: ../lib/gis/parser.c:1841
+#: ../lib/gis/parser.c:1827
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Hai fornito %d oggetti:\n"
 
-#: ../lib/gis/parser.c:1897
+#: ../lib/gis/parser.c:1883
 #, c-format
 msgid "Error: option <%s>: <%s> exists.\n"
 msgstr "Errore: l'opzione <%s>: <%s> esiste.\n"
 
-#: ../lib/gis/parser.c:1944
+#: ../lib/gis/parser.c:1930
 msgid ""
 "\n"
 "FLAG: Set the following flag?\n"
@@ -234,7 +234,7 @@ msgstr ""
 "\n"
 "FLAG: Assegnare il seguente flag?\n"
 
-#: ../lib/gis/parser.c:1957
+#: ../lib/gis/parser.c:1943
 #, c-format
 msgid ""
 "\n"
@@ -243,50 +243,50 @@ msgstr ""
 "\n"
 "OPZIONE:   %s\n"
 
-#: ../lib/gis/parser.c:1958
+#: ../lib/gis/parser.c:1944
 #, c-format
 msgid "     key: %s\n"
 msgstr "     chiave: %s\n"
 
-#: ../lib/gis/parser.c:1960
+#: ../lib/gis/parser.c:1946
 #, c-format
 msgid "  format: %s\n"
 msgstr "  formato: %s\n"
 
-#: ../lib/gis/parser.c:1962
+#: ../lib/gis/parser.c:1948
 #, c-format
 msgid " default: %s\n"
 msgstr " predefinito: %s\n"
 
-#: ../lib/gis/parser.c:1963
+#: ../lib/gis/parser.c:1949
 #, c-format
 msgid "required: %s\n"
 msgstr "richiesto: %s\n"
 
-#: ../lib/gis/parser.c:1965
+#: ../lib/gis/parser.c:1951
 #, c-format
 msgid "multiple: %s\n"
 msgstr "multiplo: %s\n"
 
-#: ../lib/gis/parser.c:1967
+#: ../lib/gis/parser.c:1953
 #, c-format
 msgid " options: %s\n"
 msgstr " optioni: %s\n"
 
-#: ../lib/gis/parser.c:1980
+#: ../lib/gis/parser.c:1966
 msgid "enter option > "
 msgstr "inserisci opzione > "
 
-#: ../lib/gis/parser.c:1994 ../lib/gis/parser.c:2005
+#: ../lib/gis/parser.c:1980 ../lib/gis/parser.c:1991
 msgid "   Try again? "
 msgstr "   Provo ancora? "
 
-#: ../lib/gis/parser.c:2003
+#: ../lib/gis/parser.c:1989
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Spiacente, %s non è accettabile.\n"
 
-#: ../lib/gis/parser.c:2014
+#: ../lib/gis/parser.c:2000
 #, c-format
 msgid ""
 "\n"
@@ -297,11 +297,11 @@ msgstr ""
 "Hai selezionato:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2015
+#: ../lib/gis/parser.c:2001
 msgid "Is this correct? "
 msgstr "È corretto? "
 
-#: ../lib/gis/parser.c:2073
+#: ../lib/gis/parser.c:2059
 msgid "to accept the default"
 msgstr "per accettare i valori predefiniti"
 
@@ -584,49 +584,49 @@ msgstr "valore di risoluzione t-b3 non valido"
 msgid "Illegal depths value"
 msgstr "valore di profondità non valido"
 
-#: ../lib/gis/ask.c:376
+#: ../lib/gis/ask.c:377
 msgid "to cancel request"
 msgstr "per annullare la richiesta"
 
-#: ../lib/gis/ask.c:432
+#: ../lib/gis/ask.c:433
 #, c-format
 msgid "Enter a new %s file name"
 msgstr "Digita un nuovo nome di file %s "
 
-#: ../lib/gis/ask.c:437
+#: ../lib/gis/ask.c:438
 #, c-format
 msgid "Enter the name of an existing %s file"
 msgstr "Digita il nome di un file %s esistente"
 
-#: ../lib/gis/ask.c:440
+#: ../lib/gis/ask.c:441
 #, c-format
 msgid "Enter %s file name"
 msgstr "Inserisci il nome del file %s"
 
-#: ../lib/gis/ask.c:459
+#: ../lib/gis/ask.c:460
 #, c-format
 msgid "Enter 'list' for a list of existing %s files\n"
 msgstr "Digita 'list' per una lista dei %s file esistenti\n"
 
-#: ../lib/gis/ask.c:462
+#: ../lib/gis/ask.c:463
 msgid "Enter 'list -f' for "
 msgstr "Digita 'list -f' per "
 
-#: ../lib/gis/ask.c:464
+#: ../lib/gis/ask.c:465
 #, c-format
 msgid "a list %s"
 msgstr "una lista %s"
 
-#: ../lib/gis/ask.c:466
+#: ../lib/gis/ask.c:467
 msgid "an extended list"
 msgstr "una lista estesa"
 
-#: ../lib/gis/ask.c:470
+#: ../lib/gis/ask.c:471
 #, c-format
 msgid "Hit RETURN %s\n"
 msgstr "Premi INVIO %s\n"
 
-#: ../lib/gis/ask.c:492 ../lib/gis/ask.c:599 ../lib/gis/ask.c:621
+#: ../lib/gis/ask.c:493 ../lib/gis/ask.c:600 ../lib/gis/ask.c:622
 #, c-format
 msgid ""
 "\n"
@@ -635,7 +635,7 @@ msgstr ""
 "\n"
 "** %s - non trovato **\n"
 
-#: ../lib/gis/ask.c:499 ../lib/gis/ask.c:585
+#: ../lib/gis/ask.c:500 ../lib/gis/ask.c:586
 #, c-format
 msgid ""
 "\n"
@@ -644,7 +644,7 @@ msgstr ""
 "\n"
 "** %s esiste. procedo alla sovrascrittura? "
 
-#: ../lib/gis/ask.c:545
+#: ../lib/gis/ask.c:546
 #, c-format
 msgid ""
 "\n"
@@ -653,7 +653,7 @@ msgstr ""
 "\n"
 "**<%s> nome illegale **\n"
 
-#: ../lib/gis/ask.c:560
+#: ../lib/gis/ask.c:561
 #, c-format
 msgid ""
 "\n"
@@ -662,7 +662,7 @@ msgstr ""
 "\n"
 "** %s - richiesta illegale **\n"
 
-#: ../lib/gis/ask.c:575
+#: ../lib/gis/ask.c:576
 #, c-format
 msgid ""
 "\n"
@@ -671,7 +671,7 @@ msgstr ""
 "\n"
 "** %s - esiste, selezionare un altro nome **\n"
 
-#: ../lib/gis/ask.c:603
+#: ../lib/gis/ask.c:604
 msgid "ask: can't happen"
 msgstr "chiedi: non può succedere"
 
@@ -721,7 +721,7 @@ msgstr "Premi INVIO per annullare la richiesta\n"
 msgid "unable to open datum table file: %s"
 msgstr "impossibile aprire il file tabella datum: %s"
 
-#: ../lib/gis/datum.c:368 ../lib/gis/datum.c:458 ../lib/proj/datum.c:357
+#: ../lib/gis/datum.c:368 ../lib/gis/datum.c:457 ../lib/proj/datum.c:357
 #: ../lib/proj/datum.c:432
 #, c-format
 msgid "error in datum table file, line %d"
@@ -782,7 +782,8 @@ msgstr ""
 #: ../lib/gis/get_datum.c:115
 #, c-format
 msgid "Error reading ellipsoid parameters for %s from table"
-msgstr "Errore nella lettura dei parametri dell'ellissoide per %s dalla tabella"
+msgstr ""
+"Errore nella lettura dei parametri dell'ellissoide per %s dalla tabella"
 
 #: ../lib/gis/get_datum.c:120
 #, c-format
@@ -862,7 +863,8 @@ msgstr "impossibile aprire il file con la tabella dell'ellissoide: %s"
 #: ../lib/gis/get_ellipse.c:455
 #, c-format
 msgid "Lines%s of ellipsoid table file <%s> are invalid"
-msgstr "Le linee %s della tabella degli ellissoidi nel file <%s> non sono valide"
+msgstr ""
+"Le linee %s della tabella degli ellissoidi nel file <%s> non sono valide"
 
 #: ../lib/gis/get_ellipse.c:456
 #, c-format
@@ -914,7 +916,8 @@ msgstr ""
 #: ../lib/gis/get_row.c:110
 #, c-format
 msgid "[%s in %s] - read request for row %d is outside region"
-msgstr "[%s in %s] - la lettura richiesta per la riga %d è al di fuori dalla regione"
+msgstr ""
+"[%s in %s] - la lettura richiesta per la riga %d è al di fuori dalla regione"
 
 #: ../lib/gis/get_row.c:426
 #, c-format
@@ -1162,12 +1165,15 @@ msgstr "impossibile aprire un raster [%s in %s]"
 msgid ""
 "unable to open [%s] in [%s] since it is a reclass of [%s] in [%s] which does "
 "not exist"
-msgstr "impossibile aprire [%s] in [%s] fino a che è una riclassificazione di [%s] in [%s] che non esiste"
+msgstr ""
+"impossibile aprire [%s] in [%s] fino a che è una riclassificazione di [%s] "
+"in [%s] che non esiste"
 
 #: ../lib/gis/opencell.c:271
 #, c-format
 msgid "[%s] in mapset [%s]-format field in header file invalid"
-msgstr "[%s] nel mapset [%s] - formato campo nell'intestazione del file non valido"
+msgstr ""
+"[%s] nel mapset [%s] - formato campo nell'intestazione del file non valido"
 
 #: ../lib/gis/opencell.c:280
 #, c-format
@@ -1175,7 +1181,8 @@ msgid ""
 "[%s] in mapset [%s] - in different projection than current region:\n"
 " found map [%s] in: <%s>, should be <%s> "
 msgstr ""
-"[%s] nel mapset [%s] - proiezione differenza rispetto alla regione attualmente in uso:\n"
+"[%s] nel mapset [%s] - proiezione differenza rispetto alla regione "
+"attualmente in uso:\n"
 " la mappa trovata [%s] in: <%s>, deve essere <%s> "
 
 #: ../lib/gis/opencell.c:287
@@ -1195,7 +1202,8 @@ msgstr "opencell: %s - nome file non valido"
 
 #: ../lib/gis/opencell.c:699
 msgid "Can't write embedded null values for map open for random access"
-msgstr "Non riesco a scrivere valori nulli nella mappa aperta con accesso casuale"
+msgstr ""
+"Non riesco a scrivere valori nulli nella mappa aperta con accesso casuale"
 
 #: ../lib/gis/opencell.c:930 ../lib/gis/opencell.c:951
 #, c-format
@@ -1272,17 +1280,17 @@ msgstr "G_put_title - non riesco a riaprire il file temp"
 msgid "can't write category information for [%s] in [%s]"
 msgstr "non riesco a scrivere la categoria informazioni per [%s] in [%s]"
 
-#: ../lib/gis/quant_io.c:91
+#: ../lib/gis/quant_io.c:92
 #, c-format
 msgid "The floating data range for %s@%s is empty"
 msgstr "Il valore floating per l'intervallo %s@%s è vuoto"
 
-#: ../lib/gis/quant_io.c:100
+#: ../lib/gis/quant_io.c:101
 #, c-format
 msgid "The integer data range for %s@%s is empty"
 msgstr "Il valore intero per l'intervallo %s@%s è vuoto"
 
-#: ../lib/gis/quant_io.c:171
+#: ../lib/gis/quant_io.c:173
 #, c-format
 msgid "quantization file [%s] in mapset [%s] %s"
 msgstr "quantization file [%s] nel mapset [%s] %s"
@@ -1466,7 +1474,9 @@ msgstr "campo decimale %i non presente nel file sites"
 msgid ""
 "I'm finding records that do not have a floating point attributes (fields "
 "prefixed with '%')."
-msgstr "Sto cercando record che non hanno attributi in floating point (campi con prefisso '%')"
+msgstr ""
+"Sto cercando record che non hanno attributi in floating point (campi con "
+"prefisso '%')"
 
 #: ../lib/gis/readsites.c:60 ../lib/gis/readsites.c:69
 msgid "cannot allocate memory"
@@ -1516,7 +1526,8 @@ msgstr "Troppe categorie di riclassificazione per [%s in %s]"
 #: ../lib/gis/reclass.c:159
 #, c-format
 msgid "Illegal reclass format in header file for [%s in %s]"
-msgstr "Formato illegale di riclassificazione nel file di intestazione per [%s in %s]"
+msgstr ""
+"Formato illegale di riclassificazione nel file di intestazione per [%s in %s]"
 
 #: ../lib/gis/reclass.c:236
 msgid "Illegal reclass request"
@@ -1540,7 +1551,9 @@ msgstr "Impossibile creare il file delle dipendenze in [%s in %s]"
 msgid ""
 "G_set_window(): projection/zone differs from that of currently open raster "
 "files"
-msgstr "G_set_window(): la proiezione/zona differisce da quella del raster attualmente aperto"
+msgstr ""
+"G_set_window(): la proiezione/zona differisce da quella del raster "
+"attualmente aperto"
 
 #: ../lib/gis/spawn.c:56
 msgid "too many arguments"
@@ -1601,7 +1614,8 @@ msgstr "ATTENZIONE: non riesco a creare un nuovo processo\n"
 #: ../lib/gis/timestamp.c:257
 #, c-format
 msgid "Can't create timestamp file for %s map %s in mapset %s"
-msgstr "Non riesco a creare il file %s di timestamp per la mappa %s nel mapset %s"
+msgstr ""
+"Non riesco a creare il file %s di timestamp per la mappa %s nel mapset %s"
 
 #: ../lib/gis/timestamp.c:267
 #, c-format
@@ -1611,7 +1625,8 @@ msgstr "timestamp specificato non valido per %s mappa %s nel mapset %s"
 #: ../lib/gis/timestamp.c:292
 #, c-format
 msgid "Can't open timestamp file for %s map %s in mapset %s"
-msgstr "Non riesco ad aprire il file timestamp %s per la mappa %s nel mapset %s"
+msgstr ""
+"Non riesco ad aprire il file timestamp %s per la mappa %s nel mapset %s"
 
 #: ../lib/gis/timestamp.c:302
 #, c-format
@@ -1635,12 +1650,17 @@ msgstr "La finestra GRASS dove la vista è stata salvata:\n"
 #: ../lib/gis/view.c:544
 #, c-format
 msgid " Window saved in \"%s\" is completely outside of current GRASS window."
-msgstr " La finestra salvata in \"%s\" è completamente al di fuori della finestra GRASS attualmente in uso."
+msgstr ""
+" La finestra salvata in \"%s\" è completamente al di fuori della finestra "
+"GRASS attualmente in uso."
 
 #: ../lib/gis/view.c:548
 #, c-format
-msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
-msgstr " Solo  %d%% della finestra salvata in \"%s\" si sovrappone con la finestra GRASS in uso"
+msgid ""
+" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgstr ""
+" Solo  %d%% della finestra salvata in \"%s\" si sovrappone con la finestra "
+"GRASS in uso"
 
 #: ../lib/proj/ellipse.c:85
 #, c-format
@@ -1675,7 +1695,8 @@ msgstr "Non trovo un monitor grafico per <%s>.\n"
 
 #: ../lib/raster/io.c:294
 msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
-msgstr "Per piacere avvia \"d.mon\" per selezionare un monitor grafico valido.\n"
+msgstr ""
+"Per piacere avvia \"d.mon\" per selezionare un monitor grafico valido.\n"
 
 #: ../lib/raster/io.c:306
 #, c-format
@@ -1705,7 +1726,8 @@ msgstr ""
 
 #: ../lib/raster/io.c:361
 msgid "Connect attempt timed out. Probably an error with the server.\n"
-msgstr "Tempo di connessione scaduto. Probabilmente ci sono errore con il server.\n"
+msgstr ""
+"Tempo di connessione scaduto. Probabilmente ci sono errore con il server.\n"
 
 #: ../lib/raster/io.c:368
 msgid "Not connected...\n"
@@ -1737,7 +1759,9 @@ msgstr "Errore - il Monitor <%s> è in uso da %s.\n"
 #: ../lib/raster/io.c:420
 #, c-format
 msgid "Error - Could not complete locking process for monitor <%s>.\n"
-msgstr "Errore - non riesco a completare il blocco del processo per il monitor <%s>.\n"
+msgstr ""
+"Errore - non riesco a completare il blocco del processo per il monitor <%"
+"s>.\n"
 
 #: ../lib/raster/io.c:434
 msgid "Error - Can't set up pipe to graphics device.\n"
@@ -1923,7 +1947,9 @@ msgstr "Il numero di campi deve essere 1 o maggiore."
 
 #: ../lib/vector/Vlib/field.c:78
 msgid "Cannot add database link, map is not opened in WRITE mode."
-msgstr "Non riesco ad aprire un collegamento database, la mappa non è stata aperta in modalità di SCRITTURA."
+msgstr ""
+"Non riesco ad aprire un collegamento database, la mappa non è stata aperta "
+"in modalità di SCRITTURA."
 
 #: ../lib/vector/Vlib/field.c:84
 msgid "Cannot add database link."
@@ -1977,22 +2003,29 @@ msgstr "Errore nella regola alla riga %d in %s"
 
 #: ../lib/vector/Vlib/field.c:565
 msgid "Bug: attempt to update map which is not in current mapset."
-msgstr "Bug: attesa di aggiornamento di una mappa non presente nel mapset in uso"
+msgstr ""
+"Bug: attesa di aggiornamento di una mappa non presente nel mapset in uso"
 
 #: ../lib/vector/Vlib/legal_vname.c:23
 #, c-format
 msgid "Illegal vector map name <%s>. May not contain '.' or 'NULL'.\n"
-msgstr "Nome non valido per una mappa vettoriale <%s>. Non deve contenere '.' oppure 'NULL'.\n"
+msgstr ""
+"Nome non valido per una mappa vettoriale <%s>. Non deve contenere '.' oppure "
+"'NULL'.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:29
 #, c-format
 msgid "Illegal vector map name <%s>. Must start with a letter.\n"
-msgstr "Nome non valido per una mappa vettoriale <%s>. Deve cominciare con una lettera.\n"
+msgstr ""
+"Nome non valido per una mappa vettoriale <%s>. Deve cominciare con una "
+"lettera.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:35
 #, c-format
 msgid "Illegal vector map name <%s>. Character <%c> not allowed.\n"
-msgstr "Il nome <%s> non è valido per una mappa vettoriale. Il carattere <%c> non è concesso.\n"
+msgstr ""
+"Il nome <%s> non è valido per una mappa vettoriale. Il carattere <%c> non è "
+"concesso.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:60 ../lib/vector/Vlib/legal_vname.c:62
 #, c-format
@@ -2040,7 +2073,9 @@ msgstr "Non riesco a trovare il vettoriale %s"
 
 #: ../lib/vector/Vlib/open.c:165
 msgid "A map which is not in the current mapset cannot be opened for update."
-msgstr "Una mappa non presente nel mapset in uso non può essere aperta per gli aggiornamenti"
+msgstr ""
+"Una mappa non presente nel mapset in uso non può essere aperta per gli "
+"aggiornamenti"
 
 #: ../lib/vector/Vlib/open.c:183
 #, c-format
@@ -2079,7 +2114,9 @@ msgstr ""
 
 #: ../lib/vector/Vlib/open.c:657
 msgid "Size of 'coor' file differs from value saved in topo file."
-msgstr "La dimensione del file 'coor' è diverso dal valore salvato nel file di topologia"
+msgstr ""
+"La dimensione del file 'coor' è diverso dal valore salvato nel file di "
+"topologia"
 
 #: ../lib/vector/Vlib/open.c:668
 #, c-format
@@ -2117,14 +2154,16 @@ msgstr "Non riesco a riscrivere la linea"
 #: ../lib/vector/Vlib/write.c:189
 #, c-format
 msgid "Cannot delete the line, map '%s' is not opened on level 2"
-msgstr "Non riesco a cancellare la linea, la mappa '%s' non è aperta a livello 2"
+msgstr ""
+"Non riesco a cancellare la linea, la mappa '%s' non è aperta a livello 2"
 
 #: ../lib/vector/Vlib/write.c:193
 #, c-format
 msgid "Cannot delete the line, map '%s' is not in opened in 'write' mode"
-msgstr "Non posso cancellare la linea, la mappa '%s' non è aperta in modalità di scrittura ('write')"
+msgstr ""
+"Non posso cancellare la linea, la mappa '%s' non è aperta in modalità di "
+"scrittura ('write')"
 
 #: ../lib/vector/Vlib/write.c:205
 msgid "Cannot delete line"
 msgstr "Non posso cancellare la linea"
-
