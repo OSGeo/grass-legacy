@@ -402,9 +402,10 @@ close_files()
     }
  /*   if (parm.lgout)
 	G_close_cell(lgfd);*/
-    if (parm.flout)
+    if (parm.flout){
+	Vect_build (&fl, stderr);
 	Vect_close(&fl);
-
+    }
     diag("done.\n");
 }
 
