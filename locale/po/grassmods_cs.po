@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-17 16:30+0100\n"
+"POT-Creation-Date: 2005-03-25 10:42+0100\n"
 "PO-Revision-Date: 2005-01-13 14:08+0100\n"
 "Last-Translator: Radim Blazek <blazek@itc.it>\n"
 "Language-Team: Czech <translations@grass.itc.it>\n"
@@ -42,7 +42,7 @@ msgstr "název databáze"
 
 #: ../db/base/columns.c:90
 msgid "list all columns for a given table."
-msgstr "vypí¹e v¹echny sloupce ze zadanou tabulku." 
+msgstr "vypí¹e v¹echny sloupce ze zadanou tabulku."
 
 #: ../db/base/connect.c:27
 msgid "print current connection parameters and exit"
@@ -164,7 +164,7 @@ msgstr "Nelze popsat tabulku"
 
 #: ../db/base/describe.c:81
 msgid "print column names only instead of full column descriptions"
-msgstr "vypi¹ pouze jména sloupcù místo plného popisu sloupcù"   
+msgstr "vypi¹ pouze jména sloupcù místo plného popisu sloupcù"
 
 #: ../db/base/describe.c:108
 msgid "Describe a table (in detail)."
@@ -246,14 +246,6 @@ msgstr "systémové tabulky místo u¾ivatelských"
 msgid "List all tables for a given database."
 msgstr "Vypí¹e v¹echny tabulky pro danou databázi."
 
-#: ../db/db.login/main.c:56
-msgid "Cannot set user/password"
-msgstr "Nelze nastavit u¾ivatele/heslo"
-
-#: ../db/db.login/main.c:60
-msgid "The password was stored in file."
-msgstr "Heslo bylo ulo¾eno v souboru."
-
 #: ../db/drivers/mysql/db.c:69 ../db/drivers/postgres/parse.c:53
 msgid "'user' in database definition is not supported, use db.login"
 msgstr "'u¾ivatel' v definici databáze není podporován, pou¾ijte db.login"
@@ -267,21 +259,21 @@ msgstr "'heslo' v definici databáze není podporováno, pou¾ijte db.login"
 msgid "Unknown option in database definition for mysql: '%s'"
 msgstr "Neznámá volba v definici databáze pro mysql: '%s'"
 
-#: ../db/drivers/ogr/describe.c:87
+#: ../db/drivers/ogr/describe.c:88
 #, c-format
 msgid "OGR driver: column '%s', OGR type %d  is not supported"
 msgstr "Ovladaè OGR: sloupec '%s', typu %d není podporován"
 
-#: ../db/drivers/ogr/describe.c:143
+#: ../db/drivers/ogr/describe.c:144
 #, c-format
 msgid ""
 "column '%s', type 'string': unknown width -> stored as varchar(250) some "
 "data may be lost"
 msgstr ""
-"sloupec '%s' typu 'string': neznámé ¹íøky -> ulo¾en jako varchar(250), "       
+"sloupec '%s' typu 'string': neznámé ¹íøky -> ulo¾en jako varchar(250), "
 "nìkterá data mohou být ztracena"
 
-#: ../db/drivers/ogr/describe.c:151 ../db/drivers/ogr/fetch.c:124
+#: ../db/drivers/ogr/describe.c:152 ../db/drivers/ogr/fetch.c:124
 msgid "Unknown type"
 msgstr "Neznámý typ"
 
@@ -303,7 +295,7 @@ msgstr ""
 #, c-format
 msgid "column '%s' : type text is stored as varchar(250) some data may be lost"
 msgstr ""
-"sloupec '%s' : typ text byl ulo¾en jako varchar(250), nìkterá data mohou být " 
+"sloupec '%s' : typ text byl ulo¾en jako varchar(250), nìkterá data mohou být "
 "ztracena"
 
 #: ../db/drivers/postgres/describe.c:117
@@ -332,11 +324,19 @@ msgstr "Nelze rozpoznat booleanovskou hodnotu"
 msgid "Unknown option in database definition for PostgreSQL: "
 msgstr "Neznámá volba v definici databáze pro PostgreSQL: "
 
+#: ../db/db.login/main.c:56
+msgid "Cannot set user/password"
+msgstr "Nelze nastavit u¾ivatele/heslo"
+
+#: ../db/db.login/main.c:60
+msgid "The password was stored in file."
+msgstr "Heslo bylo ulo¾eno v souboru."
+
 #: ../display/d.font.freetype/main.c:52
 msgid ""
 "Selects the font in which text will be displayed on the user's graphics "
 "monitor."
-msgstr "Vybere font, kterým bude zobrazen text na u¾ivatelském monitoru." 
+msgstr "Vybere font, kterým bude zobrazen text na u¾ivatelském monitoru."
 
 #: ../display/d.font.freetype/main.c:60
 msgid ""
@@ -359,7 +359,6 @@ msgid "No graphics device selected"
 msgstr "®ádné grafické zaøízení nebylo vybráno"
 
 #: ../display/d.font.freetype/main.c:170
-#, c-format
 msgid ""
 "\n"
 "Setting release of FreeType\n"
@@ -373,17 +372,14 @@ msgid "Error: %s\n"
 msgstr "Chyba: %s\n"
 
 #: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:295
-#, c-format
 msgid "Region size is lower than minreg, nothing displayed.\n"
 msgstr "Velikost oblasti je men¹í, ne¾ minreg, nic není zobrazeno.\n"
 
 #: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:304
-#, c-format
 msgid "Region size is greater than maxreg, nothing displayed.\n"
 msgstr "Velikost regionu je vìt¹í, ne¾ maxreg, zobrazeno není nic.\n"
 
 #: ../display/d.path/select.c:32
-#, c-format
 msgid "L: from  M: to R: quit\n"
 msgstr "L: z M: a¾ do R: konec\n"
 
@@ -393,7 +389,6 @@ msgid "Node %d: %f %f\n"
 msgstr "Uzel %d: %f %f\n"
 
 #: ../display/d.path/select.c:133
-#, c-format
 msgid "Destination unreachable\n"
 msgstr "Místo urèení nedosa¾itelné\n"
 
@@ -410,7 +405,6 @@ msgstr "  Vzdálenost k síti = %f, vzdálenost ze sítì = %f\n"
 #: ../display/d.vect/attr.c:53 ../display/d.vect/dir.c:34
 #: ../display/d.vect/label.c:32 ../display/d.vect/plot1.c:51
 #: ../display/d.vect/topo.c:38
-#, c-format
 msgid ""
 "\n"
 "ERROR: vector file - can't read\n"
@@ -418,19 +412,16 @@ msgstr ""
 "\n"
 "CHYBA: vektorový soubor - nelze èíst\n"
 
-#: ../display/d.vect/main.c:501
-#, c-format
+#: ../display/d.vect/main.c:502
 msgid "Plotting ... "
 msgstr "Tisknu ... "
 
-#: ../display/d.vect/main.c:510
-#, c-format
+#: ../display/d.vect/main.c:511
 msgid ""
 "The bounding box of the map outside current region, nothing displayed.\n"
 msgstr "Okraj mapy je mimo souèasný region, nic není vykresleno.\n"
 
-#: ../display/d.vect/main.c:567
-#, c-format
+#: ../display/d.vect/main.c:568
 msgid "Done\n"
 msgstr "Dokonáno jest\n"
 
@@ -439,7 +430,6 @@ msgid "Building spatial index ..."
 msgstr "Vytváøím prostorový index ..."
 
 #: ../display/d.what.vect/main.c:157
-#, c-format
 msgid "Done.\n"
 msgstr "Dokonáno jest.\n"
 
@@ -449,7 +439,6 @@ msgid "warning: %s - vector file not found\n"
 msgstr "varování: %d - vektorový soubor nenalezen\n"
 
 #: ../display/d.what.vect/what.c:154 ../display/d.what.vect/what.c:155
-#, c-format
 msgid "Nothing Found.\n"
 msgstr "Nic nebylo nalezeno.\n"
 
@@ -499,7 +488,6 @@ msgid "Area height: %f\n"
 msgstr "Vý¹ka plochy: %f\n"
 
 #: ../display/d.what.vect/what.c:287
-#, c-format
 msgid "Area\n"
 msgstr "Plocha\n"
 
@@ -538,7 +526,6 @@ msgstr ""
 "kategorie: %d\n"
 
 #: ../display/d.what.vect/what.c:362
-#, c-format
 msgid "Database connection not defined\n"
 msgstr "Spojení s databází nebylo definováno\n"
 
@@ -556,7 +543,6 @@ msgstr ""
 "sloupec s klíèem: %s\n"
 
 #: ../display/d.what.vect/what.c:421
-#, c-format
 msgid ""
 "\n"
 "Click mouse button on desired location\n"
@@ -567,37 +553,30 @@ msgstr ""
 "\n"
 
 #: ../display/d.what.vect/what.c:426
-#, c-format
 msgid "Buttons\n"
 msgstr "Tlaèítka\n"
 
 #: ../display/d.what.vect/what.c:427
-#, c-format
 msgid " Left:  what's here\n"
 msgstr " Levé:   copak je tu\n"
 
 #: ../display/d.what.vect/what.c:429
-#, c-format
 msgid " Middle: toggle flash color\n"
 msgstr " Prostøední: zmìnit barvu\n"
 
 #: ../display/d.what.vect/what.c:434
-#, c-format
 msgid " Right: quit\n"
 msgstr " Pravé: ukonèit\n"
 
 #: ../display/d.zoom/main.c:161
-#, c-format
 msgid "ERROR: can not get \"list\" items\n"
 msgstr "CHYBA: nelze získat polo¾ky \"list\"\n"
 
 #: ../display/d.zoom/main.c:162
-#, c-format
 msgid "-j flag forced\n"
 msgstr "volba -j byla nastavena nucenì\n"
 
 #: ../display/d.zoom/main.c:200
-#, c-format
 msgid "ERROR: No map is displayed in GRASS monitor\n"
 msgstr "CHYBA: Nebyla zobrazena ¾ádná mapa v monitoru GRASSu\n"
 
@@ -607,18 +586,15 @@ msgid "%d raster%s, %d vector%s\n"
 msgstr "%d rastr%s, %d vektor%s\n"
 
 #: ../display/d.zoom/main.c:334
-#, c-format
 msgid "this is the first d.zoom run; no previous zoom availible\n"
 msgstr ""
 "toto je první spu¹tìní d.zoom; ¾ádné pøedchozí zvìt¹ení není dostupné\n"
 
 #: ../display/d.zoom/main.c:380
-#, c-format
 msgid "Zooming finished.\n"
 msgstr "Zvìt¹ování dokonèeno.\n"
 
 #: ../display/d.zoom/pan.c:20 ../display/d.zoom/zoom.c:15
-#, c-format
 msgid ""
 "\n"
 "\n"
@@ -649,7 +625,6 @@ msgid "%s Quit menu\n"
 msgstr "%s Menu ukonèení\n"
 
 #: ../display/d.zoom/zoom.c:41
-#, c-format
 msgid ""
 "This region now saved as current region.\n"
 "\n"
@@ -658,16 +633,14 @@ msgstr ""
 "\n"
 
 #: ../display/d.zoom/zoom.c:42
-#, c-format
 msgid "Note: run 'd.erase' for the new region to affect the graphics.\n"
 msgstr ""
-"Poznámka: pro nový region spus»te 'd.erase', aby se zmìna projevila "
-"na grafice.\n"
+"Poznámka: pro nový region spus»te 'd.erase', aby se zmìna projevila na "
+"grafice.\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_box.c:40
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_line.c:39
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_pnt.c:23
-#, c-format
 msgid "Monitor: interactive command in redraw\n"
 msgstr "Monitor: interaktivní pøíkaz v pøekreslení\n"
 
@@ -677,7 +650,6 @@ msgid "found %d visuals of type TrueColor\n"
 msgstr "nalezeno %d zobrazení typu TrueColor\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:118
-#, c-format
 msgid "searching for highest bit depth\n"
 msgstr "hledám nejvìt¹í bitovou hloubku\n"
 
@@ -697,18 +669,20 @@ msgid "Monitor: waitpid: expected %d but got %d\n"
 msgstr "Monitor: waitpid: oèekával jsem %d, ale dostal jsem %d\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:338
-#, c-format
 msgid "Monitor: XGetWMName failed\n"
 msgstr "Monitor: XgetWMName selhalo\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:344
-#, c-format
 msgid "Monitor: XGetWMName: bad result\n"
 msgstr "Monitor: XGetWMName: ¹patný výsledek\n"
 
 #: ../imagery/i.group/main.c:84
 msgid "No input map(s) specified."
 msgstr "Nebyla zadána ¾ádná vstupní mapa(y)."
+
+#: ../imagery/i.points/main.c:27
+msgid "Mark ground control points on image to be rectified."
+msgstr ""
 
 #: ../raster/r.average/main.c:31
 msgid ""
@@ -771,8 +745,8 @@ msgid ""
 "specific input value to be assigned to the north and/or south poles for "
 "longitude-latitude grids"
 msgstr ""
-"specifická hodnota vstupu, která bude pøiøa¾ena severnímu a/nebo ji¾nímu pólu"
-"pro rastry v systému lat-long"
+"specifická hodnota vstupu, která bude pøiøa¾ena severnímu a/nebo ji¾nímu "
+"pólupro rastry v systému lat-long"
 
 #: ../raster/r.bilinear/main.c:72 ../raster/r.sum/main.c:46
 #, fuzzy, c-format
@@ -790,8 +764,8 @@ msgid ""
 "Creates a raster map layer showing buffer zones surrounding cells that "
 "contain non-NULL category values."
 msgstr ""
-"Vytvoøí rastrovou mapu ukazující obalové zóny kolem bunìk s nenullovou"
-"hodnotou."
+"Vytvoøí rastrovou mapu ukazující obalové zóny kolem bunìk s "
+"nenullovouhodnotou."
 
 #: ../raster/r.buffer/main.c:56
 msgid "Name of input map"
@@ -818,8 +792,8 @@ msgid ""
 "Prints category values and labels associated with user-specified raster map "
 "layers."
 msgstr ""
-"Vytiskne hodnoty kategorií a ¹ítky spojené s u¾ivatelem zadanou rastrovou"
-"mapou."
+"Vytiskne hodnoty kategorií a ¹ítky spojené s u¾ivatelem zadanou "
+"rastrovoumapou."
 
 #: ../raster/r.cats/main.c:38
 msgid "Name of a raster map"
@@ -827,7 +801,7 @@ msgstr "Název rastrové mapy"
 
 #: ../raster/r.cats/main.c:46
 msgid "Comma separated value list: e.g. 1.4,3.8,13"
-msgstr "Seznam hodnot oddìlených èárkou: napø. 1.4,3.8,13"    
+msgstr "Seznam hodnot oddìlených èárkou: napø. 1.4,3.8,13"
 
 #: ../raster/r.cats/main.c:54
 msgid "Category list: e.g. 1,3-8,13"
@@ -864,7 +838,7 @@ msgstr "Titulek v uvozovkách"
 #: ../raster/r.grow2/main.c:162 ../raster/r.mfilter/main.c:79
 #: ../raster/r.patch/main.c:64 ../raster/r.report/parse.c:99
 #: ../raster/r.resample/main.c:57 ../raster/r.rescale.eq/main.c:78
-#: ../raster/r.slope.aspect/main.c:253 ../raster/r.stats/main.c:141
+#: ../raster/r.slope.aspect/main.c:253 ../raster/r.stats/main.c:146
 #: ../raster/r.texture/main.c:114
 #, fuzzy
 msgid "Quiet"
@@ -882,28 +856,27 @@ msgstr "Název rastrové mapy"
 msgid "Type of color table"
 msgstr "Typ tabulky barev"
 
-#: ../raster/r.colors/main.c:158
+#: ../raster/r.colors/main.c:171
 msgid "Raster map name from which to copy color table"
 msgstr "Název rastrové mapy, ze které se má kopírovat tabulka barev"
 
-#: ../raster/r.colors/main.c:164
+#: ../raster/r.colors/main.c:177
 msgid "Name of predefined rules file"
 msgstr "Název pøeddefinovaného souboru  pravidel"
 
-#: ../raster/r.colors/main.c:169
+#: ../raster/r.colors/main.c:182
 msgid "Keep existing color table"
 msgstr "Zachovej existující rabulku barev"
 
-#: ../raster/r.colors/main.c:173 ../raster/r.rescale/main.c:77
+#: ../raster/r.colors/main.c:186 ../raster/r.rescale/main.c:77
 msgid "Quietly"
 msgstr "Potichu"
 
-#: ../raster/r.colors/main.c:177
+#: ../raster/r.colors/main.c:190
 msgid "List rules"
 msgstr "Vypi¹ pravidla"
 
 #: ../raster/r.colors/rules.c:45
-#, c-format
 msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
 msgstr "Zadejte pravidla, \"end\" pro ukonèení, \"help\" pro nápovìdu.\n"
 
@@ -917,85 +890,75 @@ msgstr "fp: Rozsah dat je %.25f a¾ %.25f\n"
 msgid "Data range is %ld to %ld\n"
 msgstr "Rozsah dat je %ld a¾ %ld\n"
 
-#: ../raster/r.colors/rules.c:110 ../raster/r.colors/rules.c:114
+#: ../raster/r.colors/rules.c:118
 msgid "Your color rules do not cover the whole range of data!"
 msgstr "Va¹e pravidla pro barvy nepokrývají celý rozsah dat!"
 
-#: ../raster/r.colors/rules.c:188
-#, c-format
+#: ../raster/r.colors/rules.c:191
 msgid "Enter a rule in one of these formats:\n"
 msgstr "Zadejte pravidlo v jednom z tìchto formátù:\n"
 
-#: ../raster/r.colors/rules.c:190
-#, c-format
+#: ../raster/r.colors/rules.c:193
 msgid " val color\n"
 msgstr " hodnota barvy\n"
 
-#: ../raster/r.colors/rules.c:191
+#: ../raster/r.colors/rules.c:194
 #, c-format
 msgid " n%% color\n"
 msgstr " n%% barva\n"
 
-#: ../raster/r.colors/rules.c:192
-#, c-format
+#: ../raster/r.colors/rules.c:195
 msgid " nv color\n"
 msgstr " nv barva\n"
 
-#: ../raster/r.colors/rules.c:193
-#, c-format
+#: ../raster/r.colors/rules.c:196
 msgid " default color\n"
 msgstr " výchozí barva\n"
 
-#: ../raster/r.colors/rules.c:194
-#, c-format
+#: ../raster/r.colors/rules.c:197
 msgid "color can be one of:\n"
 msgstr "barva mù¾e být jednou z:\n"
 
-#: ../raster/r.colors/rules.c:196
-#, c-format
+#: ../raster/r.colors/rules.c:199
 msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
 msgstr "nebo trojice R:G:B, napø.: 0:127:255\n"
 
-#: ../raster/r.colors/rules.c:237
+#: ../raster/r.colors/rules.c:240
 #, c-format
 msgid "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n"
 msgstr "** varování: hodnota(y) R:G:B jsou mimo rozsah [0..255]: %d:%d:%d **\n"
 
-#: ../raster/r.colors/rules.c:238 ../raster/r.colors/rules.c:254
-#: ../raster/r.colors/rules.c:267 ../raster/r.colors/rules.c:279
-#: ../raster/r.colors/rules.c:289 ../raster/r.colors/rules.c:301
-#: ../raster/r.colors/rules.c:376 ../raster/r.colors/rules.c:404
-#, c-format
+#: ../raster/r.colors/rules.c:241 ../raster/r.colors/rules.c:257
+#: ../raster/r.colors/rules.c:270 ../raster/r.colors/rules.c:282
+#: ../raster/r.colors/rules.c:292 ../raster/r.colors/rules.c:304
+#: ../raster/r.colors/rules.c:379 ../raster/r.colors/rules.c:407
 msgid "** rule is not added **\n"
 msgstr "** pravidlo nebylo pøidáno **\n"
 
-#: ../raster/r.colors/rules.c:253
+#: ../raster/r.colors/rules.c:256
 #, c-format
 msgid "** warning: R G B value(s) out of range [0..255]: %d %d %d **\n"
 msgstr "** varování: R G B hodnota(y) jsou mimo rozsah [0..255]: %d %d %d **\n"
 
-#: ../raster/r.colors/rules.c:266 ../raster/r.colors/rules.c:288
-#, c-format
+#: ../raster/r.colors/rules.c:269 ../raster/r.colors/rules.c:291
 msgid "** warning: no such value **\n"
 msgstr "** varování: taková hodnota neexistuje **\n"
 
-#: ../raster/r.colors/rules.c:402
+#: ../raster/r.colors/rules.c:405
 #, c-format
 msgid "%s:line %d:%s\n"
 msgstr "%s: linie %d:%s\n"
 
-#: ../raster/r.colors/rules.c:403
-#, c-format
+#: ../raster/r.colors/rules.c:406
 msgid "** bad color specification **\n"
 msgstr "** ¹patná specifikace barvy **\n"
 
-#: ../raster/r.colors/rules.c:424
+#: ../raster/r.colors/rules.c:427
 #, c-format
 msgid "%s - unknown color\n"
 msgstr "%s - neznámá barva\n"
 
-#: ../raster/r.colors/rules.c:425
-#, c-format
+#: ../raster/r.colors/rules.c:428
 msgid "Valid colors are:\n"
 msgstr "Platné barvy jsou:\n"
 
@@ -1003,7 +966,8 @@ msgstr "Platné barvy jsou:\n"
 msgid ""
 "Combines red, green and blue map layers into a single composite map layer."
 msgstr ""
-"Kombinuje èervenou, zelenou a modrou mapovou vrstvu do jedné mapové kompozice." 
+"Kombinuje èervenou, zelenou a modrou mapovou vrstvu do jedné mapové "
+"kompozice."
 
 #: ../raster/r.composite/main.c:89
 #, c-format
@@ -1047,7 +1011,7 @@ msgstr "Rozbal mapu"
 #: ../raster/r.compress/main.c:59 ../raster/r.distance/parse.c:38
 #: ../raster/r.neighbors/main.c:110 ../raster/r.out.ppm/main.c:64
 #: ../raster/r.out.ppm3/main.c:76 ../raster/r.random/main.c:69
-#: ../raster/r.series/main.c:112
+#: ../raster/r.series/main.c:114
 msgid "Run quietly"
 msgstr "Bì¾ potichu"
 
@@ -1056,8 +1020,8 @@ msgid ""
 "Produces a GRASS binary vector map of specified contours from GRASS raster "
 "map layer."
 msgstr ""
-"Vytvoøí GRASSovou binární vektorovou mapu zadaných izolinií z "
-"GRASSové rastrové mapy."
+"Vytvoøí GRASSovou binární vektorovou mapu zadaných izolinií z GRASSové "
+"rastrové mapy."
 
 #: ../raster/r.contour/main.c:79 ../raster/r.out.ascii/main.c:70
 #: ../raster/r.out.bin/main.c:78 ../raster/r.out.mat/main.c:75
@@ -1065,35 +1029,35 @@ msgstr ""
 msgid "Name of an existing raster map"
 msgstr "Název existující rastrové mapy"
 
-#: ../raster/r.contour/main.c:85
+#: ../raster/r.contour/main.c:86
 msgid "Name of output vector file"
 msgstr "Název výstupního vektorového souboru"
 
-#: ../raster/r.contour/main.c:92
+#: ../raster/r.contour/main.c:93
 msgid "List of contour levels"
 msgstr "Seznam vrstevnic (izolinií)"
 
-#: ../raster/r.contour/main.c:98
+#: ../raster/r.contour/main.c:99
 msgid "Minimum contour level"
 msgstr "Minimální úroveò isolinie"
 
-#: ../raster/r.contour/main.c:104
+#: ../raster/r.contour/main.c:105
 msgid "Maximum contour level"
 msgstr "Maximální úroveò isolinie"
 
-#: ../raster/r.contour/main.c:110
+#: ../raster/r.contour/main.c:111
 msgid "Increment between contour levels"
 msgstr "Interval mezi úrovnìmi isoliniemi"
 
-#: ../raster/r.contour/main.c:117
+#: ../raster/r.contour/main.c:118
 msgid "Minimum number of points for a contour line (0 -> no limit)"
 msgstr "Minimální poèet bodù pro isolinii (0 -> ¾ádný limit)"
 
-#: ../raster/r.contour/main.c:121
+#: ../raster/r.contour/main.c:122
 msgid "Suppress progress report & min/max information"
 msgstr "Potlaè zprávu o prùbìhu & min/max informaci"
 
-#: ../raster/r.contour/main.c:125
+#: ../raster/r.contour/main.c:126
 msgid "Suppress single crossing error messages"
 msgstr "Potlaè chybové zprávy o pøekrytí"
 
@@ -1103,9 +1067,8 @@ msgid ""
 "different geographic locations on an input raster map layer whose cell "
 "category values represent cost."
 msgstr ""
-"Výstupní rastrová kumulativních nákladù pohybu mezi" 
-"rùznými geografickými polohami na vstupní rastrové mapì s hodnotami "
-"nákladù."
+"Výstupní rastrová kumulativních nákladù pohybu mezirùznými geografickými "
+"polohami na vstupní rastrové mapì s hodnotami nákladù."
 
 #: ../raster/r.cost/main.c:108
 msgid "Name of raster map containing grid cell cost information"
@@ -1137,24 +1100,26 @@ msgstr "Volitelné maximální kumulativní náklady"
 
 #: ../raster/r.cost/main.c:167
 msgid "Cost assigned to null cells. By default, null cells are excluded"
-msgstr "Náklad pøiøazený buòkám s hodnotou NULL. Pøi výchozím nastavení jsou"
-"tyto vynechány"
+msgstr ""
+"Náklad pøiøazený buòkám s hodnotou NULL. Pøi výchozím nastavení jsoutyto "
+"vynechány"
 
-#: ../raster/r.cost/main.c:176
+#: ../raster/r.cost/main.c:176 ../raster/r.los/main.c:121
 msgid "Percent of map to keep in memory"
-msgstr "Èást mapy v procentech, která mají být uchována v pamìti"    
+msgstr "Èást mapy v procentech, která mají být uchována v pamìti"
 
-#: ../raster/r.cost/main.c:180 ../raster/wildfire/r.ros/main.c:297
+#: ../raster/r.cost/main.c:180 ../raster/r.los/main.c:125
+#: ../raster/wildfire/r.ros/main.c:297
 msgid "Run verbosely"
-msgstr "Utíkej nahlas" 
+msgstr "Utíkej nahlas"
 
 #: ../raster/r.cost/main.c:184
 msgid "Use the 'Knight's move'; slower, but more accurate"
-msgstr "Pou¾ij '¹achového konì'; pomalej¹í, ale pøesnìj¹í"     
+msgstr "Pou¾ij '¹achového konì'; pomalej¹í, ale pøesnìj¹í"
 
 #: ../raster/r.cost/main.c:188
 msgid "Keep null values in output map"
-msgstr "Nullové hodnoty ponechej ve výstupní mapì"    
+msgstr "Nullové hodnoty ponechej ve výstupní mapì"
 
 #: ../raster/r.cost/main.c:192
 msgid "Start with values in raster map"
@@ -1165,7 +1130,8 @@ msgid ""
 "Outputs a covariance/correlation matrix for user-specified raster map layer"
 "(s)."
 msgstr ""
-"Vytvoøí kovarianèní/korelaèní matici kovariance/korelace pro u¾ivatelem zadanou rastrovou mapu(y)." 
+"Vytvoøí kovarianèní/korelaèní matici kovariance/korelace pro u¾ivatelem "
+"zadanou rastrovou mapu(y)."
 
 #: ../raster/r.covar/main.c:45
 msgid "Raster map(s) to be read"
@@ -1179,17 +1145,16 @@ msgstr "Vytiskne korelaèní matici"
 msgid ""
 "Creates a cross product of the category values from multiple raster map "
 "layers."
-msgstr ""
-"Vytvoøí násobek pøekrytí hodnot kategorií z nìkolika rastrových map." 
+msgstr "Vytvoøí násobek pøekrytí hodnot kategorií z nìkolika rastrových map."
 
 #: ../raster/r.cross/main.c:55
 #, c-format
 msgid "Names of 2-%d input raster maps"
-msgstr "Názvy 2-%d vstupních rastrových map" 
+msgstr "Názvy 2-%d vstupních rastrových map"
 
 #: ../raster/r.cross/main.c:61
 msgid "Name of the resulting map"
-msgstr "Název výsledné mapy" 
+msgstr "Název výsledné mapy"
 
 #: ../raster/r.cross/main.c:72
 msgid "Non-zero data only"
@@ -1197,8 +1162,8 @@ msgstr "Pouze nenulová data"
 
 #: ../raster/r.describe/main.c:39
 msgid "Prints terse list of category values found in a raster map layer."
-msgstr "Vytiskne pouze struèný seznam hodnot kategorií, nalezených v rastrové"
-"mapì."
+msgstr ""
+"Vytiskne pouze struèný seznam hodnot kategorií, nalezených v rastrovémapì."
 
 #: ../raster/r.describe/main.c:47
 msgid "Name of raster map"
@@ -1222,7 +1187,7 @@ msgstr "Vytiskni pouze rozsah dat"
 
 #: ../raster/r.describe/main.c:82
 msgid "Use the current region"
-msgstr "Pou¾ij aktuální region"     
+msgstr "Pou¾ij aktuální region"
 
 #: ../raster/r.describe/main.c:86
 msgid "Read fp map as integer"
@@ -1233,36 +1198,36 @@ msgid ""
 "Interactive tool used to draw and save vector features on a graphics monitor "
 "using a pointing device (mouse)."
 msgstr ""
-"Interaktivní nástroj pro kreslení vektorových prvkù v grafickém"
-"monitoru pomocí ukazovacího zaøízení (my¹i)."       
+"Interaktivní nástroj pro kreslení vektorových prvkù v grafickémmonitoru "
+"pomocí ukazovacího zaøízení (my¹i)."
 
 #: ../raster/r.distance/main.c:22
 msgid "Locates the closest points between objects in two raster maps."
-msgstr "Nelezne nejbli¾¹í body mezi objekty ze dvou rastrových map."   
+msgstr "Nelezne nejbli¾¹í body mezi objekty ze dvou rastrových map."
 
 #: ../raster/r.distance/parse.c:21
 msgid "Maps for computing inter-class distances"
-msgstr "Mapy pro poèítání vzdáleností mezi tøídami" 
+msgstr "Mapy pro poèítání vzdáleností mezi tøídami"
 
-#: ../raster/r.distance/parse.c:30 ../raster/r.stats/main.c:89
+#: ../raster/r.distance/parse.c:30 ../raster/r.stats/main.c:90
 msgid "Output field separator"
 msgstr "Výstupní oddìlovaè sloupcù"
 
 #: ../raster/r.distance/parse.c:34
 msgid "Include category labels in the output"
-msgstr "Zahrò do výstupu ¹títky kategorií"  
+msgstr "Zahrò do výstupu ¹títky kategorií"
 
 #: ../raster/r.drain/main.c:94
 msgid "Traces a flow through an elevation model on a raster map layer."
-msgstr "Urèí smìr povrchového odtoku na rastrovém modelu reliéfu." 
+msgstr "Urèí smìr povrchového odtoku na rastrovém modelu reliéfu."
 
 #: ../raster/r.drain/main.c:101 ../raster/r.fill.dir/main.c:94
 msgid "Name of existing raster map containing elevation surface"
-msgstr "Jméno existujícího rastru obsahujícího digitální model terénu." 
+msgstr "Jméno existujícího rastru obsahujícího digitální model terénu."
 
 #: ../raster/r.drain/main.c:108
 msgid "Output drain raster map"
-msgstr "Název rastrové mapy odtoku" 
+msgstr "Název rastrové mapy odtoku"
 
 #: ../raster/r.drain/main.c:116
 msgid "The map E and N grid coordinates of a starting point"
@@ -1270,23 +1235,23 @@ msgstr "V a S souøadnice poèáteèního bodu"
 
 #: ../raster/r.drain/main.c:120
 msgid "Copy input cell values on output"
-msgstr "Kopíruj vstupní hodnoty bunìk na výstup" 
+msgstr "Kopíruj vstupní hodnoty bunìk na výstup"
 
 #: ../raster/r.drain/main.c:124
 msgid "Accumulate input values along the path"
-msgstr "Proveï akumulaci hodnot ve smìru pohybu/odtoku" 
+msgstr "Proveï akumulaci hodnot ve smìru pohybu/odtoku"
 
 #: ../raster/r.drain/main.c:128
 msgid "Count cell numbers along the path"
-msgstr "Spoèítej buòky ve smìru pohybu/odtoku" 
+msgstr "Spoèítej buòky ve smìru pohybu/odtoku"
 
 #: ../raster/r.fill.dir/main.c:86
 msgid ""
 "Filters and generates a depressionless elevation map and a flow direction "
 "map from a given elevation layer"
 msgstr ""
-"Z gridu digiálního modelu terénu odstraní umìle vytvoøené sní¾eniny a "
-" vytvoøí mapu smìru odtoku"
+"Z gridu digiálního modelu terénu odstraní umìle vytvoøené sní¾eniny a  "
+"vytvoøí mapu smìru odtoku"
 
 #: ../raster/r.fill.dir/main.c:101
 msgid "Output elevation raster map after filling"
@@ -1294,7 +1259,7 @@ msgstr "Výstupní rastrová mapa digitálního modelu terénu po vyplnìní sní¾enin"
 
 #: ../raster/r.fill.dir/main.c:108
 msgid "Output direction raster map"
-msgstr "Výstupní rastrová mapa orientace"  
+msgstr "Výstupní rastrová mapa orientace"
 
 #: ../raster/r.fill.dir/main.c:115
 msgid "Output raster map of problem areas"
@@ -1305,7 +1270,7 @@ msgid ""
 "Output direction type AGNPS, ANSWERS or GRASS aspect\n"
 "              default: GRASS"
 msgstr ""
-"Výstupní typ orientace podle AGNPS, ANSWERS nebo GRASS expozice\n"   
+"Výstupní typ orientace podle AGNPS, ANSWERS nebo GRASS expozice\n"
 "              výchozí: GRASS"
 
 #: ../raster/r.fill.dir/main.c:125
@@ -1313,20 +1278,20 @@ msgid "find unresolved areas only"
 msgstr "najdi pouze nevyøe¹ené oblasti"
 
 #: ../raster/r.grow2/main.c:116
-msgid "Generates a raster map layerwith contiguous areas grown by one cell." 
+msgid "Generates a raster map layerwith contiguous areas grown by one cell."
 msgstr "Vytváøí rastrovou spojitých oblastí zvìt¹ených o jednu buòku."
 
 #: ../raster/r.grow2/main.c:124
 msgid "Name of existing input raster file"
-msgstr "Název  existujícího vstupního rastrového souboru" 
+msgstr "Název  existujícího vstupního rastrového souboru"
 
 #: ../raster/r.grow2/main.c:131 ../raster/r.thin/main.c:49
 msgid "Name of output raster file"
-msgstr "Název  výstupního rastru" 
+msgstr "Název  výstupního rastru"
 
 #: ../raster/r.grow2/main.c:137
 msgid "Radius of buffer"
-msgstr "Polomìr obalové zóny (bufferu)" 
+msgstr "Polomìr obalové zóny (bufferu)"
 
 #: ../raster/r.grow2/main.c:144
 msgid "Metric"
@@ -1334,8 +1299,9 @@ msgstr "Metrický"
 
 #: ../raster/r.grow2/main.c:152
 msgid "Value to write for input cells which are non-NULL (-1 => NULL)"
-msgstr "Hodnota, která bude pøiøazena vstupním, nenulovým, buòkám, "
-"které jsou ne-NULLOvé (-1 => NULL)"
+msgstr ""
+"Hodnota, která bude pøiøazena vstupním, nenulovým, buòkám, které jsou ne-"
+"NULLOvé (-1 => NULL)"
 
 #: ../raster/r.grow2/main.c:158
 msgid "Value to write for \"grown\" cells"
@@ -1351,48 +1317,47 @@ msgstr ""
 
 #: ../raster/r.his/main.c:73
 msgid "Name of layer to be used for HUE"
-msgstr "Jméno mapy, která má být pou¾ita jako ODSTÍN/HUE v systému IHS" 
+msgstr "Jméno mapy, která má být pou¾ita jako ODSTÍN/HUE v systému IHS"
 
 #: ../raster/r.his/main.c:80
 msgid "Name of layer to be used for INTENSITY"
-msgstr "Název mapy, která má být pou¾ita jako INTENZITA  systému IHS" 
+msgstr "Název mapy, která má být pou¾ita jako INTENZITA  systému IHS"
 
 #: ../raster/r.his/main.c:87
 msgid "Name of layer to be used for SATURATION"
-msgstr "Název mapy, která má být pou¾ita jako NASYCENOST/SATURATION "
-"v systému IHS" 
+msgstr ""
+"Název mapy, která má být pou¾ita jako NASYCENOST/SATURATION v systému IHS"
 
 #: ../raster/r.his/main.c:94
 msgid "Name of output layer to be used for RED"
-msgstr "Název výstupní mapy, která bude pou¾ita jako ÈERVENÁ v systému RGB" 
+msgstr "Název výstupní mapy, která bude pou¾ita jako ÈERVENÁ v systému RGB"
 
 #: ../raster/r.his/main.c:101
 msgid "Name of output layer to be used for GREEN"
-msgstr "Název výstupní mapy, která bude pou¾ita jako ZELENÁ v systému RGB" 
+msgstr "Název výstupní mapy, která bude pou¾ita jako ZELENÁ v systému RGB"
 
 #: ../raster/r.his/main.c:108
 msgid "Name of output layer to be used for BLUE"
-msgstr "Název výstupní mapy, která bude pou¾ita jako MODRÁ v systému RGB" 
+msgstr "Název výstupní mapy, která bude pou¾ita jako MODRÁ v systému RGB"
 
 #: ../raster/r.his/main.c:112
 msgid "Respect NULL values while drawing"
-msgstr "Pøi vykreslování respektuj NULLové hodnoty" 
+msgstr "Pøi vykreslování respektuj NULLové hodnoty"
 
 #: ../raster/r.in.arc/main.c:41
 msgid ""
 "Convert an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map "
 "layer."
-msgstr ""
-"Pøeveï ESRI ARC/IFO ascii rastr (GRID) do (binární) rastrové mapy."  
+msgstr "Pøeveï ESRI ARC/IFO ascii rastr (GRID) do (binární) rastrové mapy."
 
 #: ../raster/r.in.arc/main.c:48
-msgid "ARC/INFO ascii raster file (GRID) to be imported"  
-msgstr "ARC/INFO ascii rastrový soubor  (GRID) mající býti naimportován"    
+msgid "ARC/INFO ascii raster file (GRID) to be imported"
+msgstr "ARC/INFO ascii rastrový soubor  (GRID) mající býti naimportován"
 
 #: ../raster/r.in.arc/main.c:55 ../raster/r.in.ascii/main.c:61
 #: ../raster/r.in.bin/main.c:145 ../raster/r.in.gdal/main.c:87
 msgid "Name for resultant raster map"
-msgstr "Název výstupní rastrové mapy" 
+msgstr "Název výstupní rastrové mapy"
 
 #: ../raster/r.in.arc/main.c:64
 msgid "Storage type for resultant raster map"
@@ -1402,7 +1367,7 @@ msgstr "Typ ulo¾ení výsledné rastrové mapy"
 #: ../raster/r.in.bin/main.c:153 ../raster/r.in.gdal/main.c:107
 #: ../raster/r.in.poly/main.c:39
 msgid "Title for resultant raster map"
-msgstr "Titulek pro výsledné rastrové mapy"  
+msgstr "Titulek pro výsledné rastrové mapy"
 
 #: ../raster/r.in.arc/main.c:78 ../raster/r.in.ascii/main.c:76
 msgid "Multiplier for ascii data"
@@ -1414,7 +1379,7 @@ msgstr "Pøevede ASCII rastrový textový soubor do (binární) rastrové mapy."
 
 #: ../raster/r.in.ascii/main.c:54
 msgid "Ascii raster file to be imported"
-msgstr "Název  ascii rastrového souboru, který má být naimportován" 
+msgstr "Název  ascii rastrového souboru, který má být naimportován"
 
 #: ../raster/r.in.ascii/main.c:84
 msgid "String representing NULL value data cell"
@@ -1434,7 +1399,7 @@ msgstr "jsou importovány hodnoty s plovoucí desetinnou èárkou (double)"
 
 #: ../raster/r.in.ascii/main.c:105
 msgid "SURFER (Golden Software) ascii grid file will be imported"
-msgstr "Bude naimportován SURFER (Golden Software) ASCII rastrový soubor" 
+msgstr "Bude naimportován SURFER (Golden Software) ASCII rastrový soubor"
 
 #: ../raster/r.in.bin/main.c:112
 msgid "Import a binary raster file into a GRASS raster map layer."
@@ -1446,13 +1411,15 @@ msgstr "Oznaèená data (vysoký bit znamená negativní hodnotu)"
 
 #: ../raster/r.in.bin/main.c:120
 msgid "Import as Floating Point Data (default: Integer)"
-msgstr "Naimportuj jako hodnoty s plovoucí desetinnou èárkou (float)" 
-"(výchozí: celé èíslo)"
+msgstr ""
+"Naimportuj jako hodnoty s plovoucí desetinnou èárkou (float)(výchozí: celé "
+"èíslo)"
 
 #: ../raster/r.in.bin/main.c:124
 msgid "Import as Double Precision Data (default: Integer)"
-msgstr "Naimportuj jako hodnoty s plovoucí desetinnou èárkou (double)"
-"(výchozí: celé èíslo)"
+msgstr ""
+"Naimportuj jako hodnoty s plovoucí desetinnou èárkou (double)(výchozí: celé "
+"èíslo)"
 
 #: ../raster/r.in.bin/main.c:128
 msgid "Byte Swap the Data During Import"
@@ -1480,7 +1447,7 @@ msgstr "Ji¾ní hranice geografického regionu (vnìj¹í hrana)"
 
 #: ../raster/r.in.bin/main.c:178
 msgid "Eastern limit of geographic region (outer edge)"
-msgstr "Východní hranice geografického regionu (vnìj¹í hrana)"    
+msgstr "Východní hranice geografického regionu (vnìj¹í hrana)"
 
 #: ../raster/r.in.bin/main.c:184
 msgid "Western limit of geographic region (outer edge)"
@@ -1500,12 +1467,11 @@ msgstr "Nastav hodnotu na NULL"
 
 #: ../raster/r.in.gdal/main.c:71
 msgid "Import GDAL supported raster file into a binary raster map layer."
-msgstr "Importuj rastry podporované knihovnou GDAL jako binární rastrovou" 
-"mapu."
+msgstr "Importuj rastry podporované knihovnou GDAL jako binární rastrovoumapu."
 
 #: ../raster/r.in.gdal/main.c:80
 msgid "Raster file to be imported"
-msgstr "Název rastrového souboru, který má být importován" 
+msgstr "Název rastrového souboru, který má být importován"
 
 #: ../raster/r.in.gdal/main.c:94
 msgid "Band to select (default is all bands)"
@@ -1513,20 +1479,20 @@ msgstr "Pásmo, která má být vybráno (výchozí: v¹echna pásma)"
 
 #: ../raster/r.in.gdal/main.c:100
 msgid "Name of location to read projection from for GCPs transformation"
-msgstr "Název  location, ze které bude naètena mapová projekce pro GCP" 
-"transformace"
+msgstr ""
+"Název  location, ze které bude naètena mapová projekce pro GCPtransformace"
 
 #: ../raster/r.in.gdal/main.c:113
 msgid "Name for new location to create"
-msgstr "Název nové location" 
+msgstr "Název nové location"
 
 #: ../raster/r.in.gdal/main.c:117
 msgid "Override projection (use location's projection)"
-msgstr "Pøepi¹ projekci (pou¾ij projekci z location)"  
+msgstr "Pøepi¹ projekci (pou¾ij projekci z location)"
 
 #: ../raster/r.in.gdal/main.c:121
 msgid "Extend location extents based on new dataset"
-msgstr "Hranice location se zvìt¹í podle nového souboru dat" 
+msgstr "Hranice location se zvìt¹í podle nového souboru dat"
 
 #: ../raster/r.in.gdal/main.c:125
 msgid "List supported formats then exit"
@@ -1534,11 +1500,12 @@ msgstr "Vypi¹ podporované formáty a ukonèi se"
 
 #: ../raster/r.in.gdal/main.c:129
 msgid "Keep band numbers instead of using band color names"
-msgstr "Ponechej èísla pásem místo pou¾ití jmen jejich barev" 
+msgstr "Ponechej èísla pásem místo pou¾ití jmen jejich barev"
 
 #: ../raster/r.in.gridatb/main.c:45
 msgid "Imports GRIDATB.FOR map file (TOPMODEL) into GRASS raster map"
-msgstr "Importuje mapový soubor GRIDATB.FOR (TOPMODEL) jako GRASS rastrovou mapu" 
+msgstr ""
+"Importuje mapový soubor GRIDATB.FOR (TOPMODEL) jako GRASS rastrovou mapu"
 
 #: ../raster/r.in.gridatb/main.c:49 ../raster/r.out.gridatb/main.c:59
 msgid "GRIDATB i/o map file"
@@ -1550,27 +1517,27 @@ msgstr "Výstupní mapa"
 
 #: ../raster/r.in.mat/main.c:95
 msgid "Import a binary MAT-File(v4) to a GRASS raster."
-msgstr "Název  binární MAT-soubor(v4) jako GRASS rastr." 
+msgstr "Název  binární MAT-soubor(v4) jako GRASS rastr."
 
 #: ../raster/r.in.mat/main.c:104
 msgid "Name of an existing MAT-File(v4)"
-msgstr "Název  existujícího MAT-souboru(v4)" 
+msgstr "Název  existujícího MAT-souboru(v4)"
 
 #: ../raster/r.in.mat/main.c:111
 msgid "Name for the output raster map (override)"
-msgstr "Název  výstupní rastrové mapy (pøepi¹)"       
+msgstr "Název  výstupní rastrové mapy (pøepi¹)"
 
 #: ../raster/r.in.mat/main.c:115 ../raster/r.out.mat/main.c:85
 msgid "Verbose mode"
-msgstr "Utíkej nahlas"    
+msgstr "Utíkej nahlas"
 
 #: ../raster/r.in.poly/main.c:16
 msgid ""
 "Create raster maps from ascii polygon/line data files in the current "
 "directory."
 msgstr ""
-"Vytváøí rastrové mapy z ascii polygonových/liniových datových souborù v"  
-"aktuálním adresáøi."
+"Vytváøí rastrové mapy z ascii polygonových/liniových datových souborù "
+"vaktuálním adresáøi."
 
 #: ../raster/r.in.poly/main.c:24
 msgid "Input file"
@@ -1582,26 +1549,26 @@ msgstr "Výstupní rastrový soubor"
 
 #: ../raster/r.in.poly/main.c:46
 msgid "Number of rows to hold in memory"
-msgstr "Poèet øádkù, které mají být ponechány v pamìti"    
+msgstr "Poèet øádkù, které mají být ponechány v pamìti"
 
-#: ../raster/r.info/main.c:48
+#: ../raster/r.info/main.c:49
 msgid "Outputs basic information about a user-specified raster map layer."
-msgstr "Vypí¹e základní informace o u¾ivatelem vybrané rastrové mapì."    
+msgstr "Vypí¹e základní informace o u¾ivatelem vybrané rastrové mapì."
 
-#: ../raster/r.info/main.c:56 ../raster/r.profile/main.c:64
+#: ../raster/r.info/main.c:57 ../raster/r.profile/main.c:64
 #: ../raster/r.random/main.c:44 ../raster/r.thin/main.c:42
 msgid "Name of existing raster map"
-msgstr "Název  existující rastrové mapy" 
+msgstr "Název  existující rastrové mapy"
 
-#: ../raster/r.info/main.c:60
+#: ../raster/r.info/main.c:61
 msgid "Print range only"
 msgstr "Vytiskni pouze rozsah"
 
-#: ../raster/r.info/main.c:64
+#: ../raster/r.info/main.c:65
 msgid "Print resolution (NS-res, EW-res) only"
-msgstr "Vytiskni pouze rozli¹ení (NS-roz, EW-roz)" 
+msgstr "Vytiskni pouze rozli¹ení (NS-roz, EW-roz)"
 
-#: ../raster/r.info/main.c:68
+#: ../raster/r.info/main.c:69
 msgid "Print raster map type only"
 msgstr "Vytiskni pouze typ rastrové mapy"
 
@@ -1622,8 +1589,7 @@ msgstr "Název souboru s referenèními tøídami"
 
 #: ../raster/r.kappa/main.c:48
 msgid "Name of an output file containing of error matrix and kappa"
-msgstr "Název výstupního souboru obsahujícího chybovou matici a "
-"parametr kappa"
+msgstr "Název výstupního souboru obsahujícího chybovou matici a parametr kappa"
 
 #: ../raster/r.kappa/main.c:54
 msgid "Title for error matrix and kappa"
@@ -1641,31 +1607,31 @@ msgstr "Bì¾ potichu"
 msgid "no header in the report"
 msgstr "zpráva bez hlavièky"
 
-#: ../raster/r.los/main.c:62
+#: ../raster/r.los/main.c:67
 msgid "Line-of-sight raster analysis program."
-msgstr "Vytváøí rastrovou mapu linií dohlednosti." 
+msgstr "Vytváøí rastrovou mapu linií dohlednosti."
 
-#: ../raster/r.los/main.c:71
+#: ../raster/r.los/main.c:76
 msgid "Raster map containing elevation data"
 msgstr "Rastrová mapa vý¹ek"
 
-#: ../raster/r.los/main.c:78
+#: ../raster/r.los/main.c:83
 msgid "Raster map name for storing results"
 msgstr "Název rastrové mapy s pro ulo¾ení výsledkù"
 
-#: ../raster/r.los/main.c:85
+#: ../raster/r.los/main.c:90
 msgid "Coordinate identifying the viewing location"
 msgstr "Souøadnice identifikující místo rozhledu"
 
-#: ../raster/r.los/main.c:91
+#: ../raster/r.los/main.c:96
 msgid "Binary (1/0) raster map"
 msgstr "Binární (1/0) rastrová mapa"
 
-#: ../raster/r.los/main.c:99
+#: ../raster/r.los/main.c:104
 msgid "Height of the viewing location"
 msgstr "Vý¹ka místa rozhledu nad terénem"
 
-#: ../raster/r.los/main.c:107
+#: ../raster/r.los/main.c:112
 msgid "Max distance from the viewing point (meters)"
 msgstr "Maximální vzdálenost od bodu rozhledu (metry)"
 
@@ -1674,8 +1640,8 @@ msgid ""
 "Finds the median of values in a cover map within areas assigned the same "
 "category value in a user-specified base map."
 msgstr ""
-"Nalezne median hodnot z pøekrývající mapy, která bude rozdìlena podle "
-"ploch se stejnými hodnotami z pokladové mapy."
+"Nalezne median hodnot z pøekrývající mapy, která bude rozdìlena podle ploch "
+"se stejnými hodnotami z pokladové mapy."
 
 #: ../raster/r.median/main.c:35 ../raster/r.statistics/main.c:50
 msgid "Base raster map"
@@ -1739,20 +1705,19 @@ msgid ""
 "Makes each cell category value a function of the category values assigned to "
 "the cells around it, and stores new cell values in an output raster map "
 "layer."
-msgstr ""
-"Hodnota buòky v novém rastru bude funkcí hodnot ze sousedních bunìk."
+msgstr "Hodnota buòky v novém rastru bude funkcí hodnot ze sousedních bunìk."
 
 #: ../raster/r.neighbors/main.c:66
 msgid "Name of existing raster file"
 msgstr "Jméno existujícího rastru"
 
-#: ../raster/r.neighbors/main.c:73 ../raster/r.series/main.c:101
+#: ../raster/r.neighbors/main.c:73 ../raster/r.series/main.c:103
 msgid "Name of the new raster file"
 msgstr "Název nového rastru"
 
 #: ../raster/r.neighbors/main.c:88
 msgid "Neighborhood operation"
-msgstr "Operace s okolím" 
+msgstr "Operace s okolím"
 
 #: ../raster/r.neighbors/main.c:95
 msgid "Neighborhood size"
@@ -1776,8 +1741,8 @@ msgstr "Název existujícího rastru"
 
 #: ../raster/r.out.arc/main.c:75
 msgid "Name of an output ARC-GID map (use out=- for stdout)"
-msgstr "Název výstupního ARC-GRID souboru "
-"(pro standardní výstup pou¾ijte out=-)"
+msgstr ""
+"Název výstupního ARC-GRID souboru (pro standardní výstup pou¾ijte out=-)"
 
 #: ../raster/r.out.arc/main.c:82
 msgid "Number of decimal places"
@@ -1797,8 +1762,7 @@ msgstr "Pøevede rastrovou mapu do ASCII souboru."
 
 #: ../raster/r.out.ascii/main.c:77
 msgid "Name of an output ASCII grid map (use out=- for stdout)"
-msgstr "Název výstupního ASCII souboru"
-"(pro standardní výstup pou¾ijte out=-)"
+msgstr "Název výstupního ASCII souboru(pro standardní výstup pou¾ijte out=-)"
 
 #: ../raster/r.out.ascii/main.c:83
 msgid "Number of significant digits (floating point only)"
@@ -1809,8 +1773,8 @@ msgid ""
 "Number of values printed before wrapping a line (only SURFER or MODFLOW "
 "format)"
 msgstr ""
-"Poèet hodnot vyti¹tìných pøed zalomením øádku (pouze pro formáty "
-"SURFER nebo MODFLOW)"
+"Poèet hodnot vyti¹tìných pøed zalomením øádku (pouze pro formáty SURFER nebo "
+"MODFLOW)"
 
 #: ../raster/r.out.ascii/main.c:96
 msgid "String to represent null cell (GRASS grid only)"
@@ -1834,7 +1798,7 @@ msgstr "Exportuje GRASSový rastr do binárního pole."
 
 #: ../raster/r.out.bin/main.c:84
 msgid "Name for output binary map (use out=- for stdout)"
-msgstr "Název výstupní binární mapy (pro standardní výstup pou¾ijte out=-)" 
+msgstr "Název výstupní binární mapy (pro standardní výstup pou¾ijte out=-)"
 
 #: ../raster/r.out.bin/main.c:91
 msgid "Value to write out for null"
@@ -1877,10 +1841,12 @@ msgid "Name for the output binary MAT-File"
 msgstr "Název výstupního binárního MAT-souboru"
 
 #: ../raster/r.out.mat/main.c:98 ../raster/r.univar2/main.c:87
+#, c-format
 msgid "raster <%s> not found"
 msgstr "rastr <%s> nebyl nalezen"
 
 #: ../raster/r.out.mat/main.c:105 ../raster/r.univar2/main.c:92
+#, c-format
 msgid "unable to open <%s>"
 msgstr "nemohu otevøít <%s>"
 
@@ -1915,7 +1881,7 @@ msgstr ""
 
 #: ../raster/r.out.pov/main.c:107
 msgid "Converts a raster map layer into a height-field file for POVRAY."
-msgstr "Pøevede rastrovou mapu do souboru pro POVRAY."  
+msgstr "Pøevede rastrovou mapu do souboru pro POVRAY."
 
 #: ../raster/r.out.pov/main.c:122
 msgid "Name of output povray file (TGA height field file)"
@@ -1939,7 +1905,7 @@ msgid ""
 "the CURRENTLY DEFINED REGION."
 msgstr ""
 "Pøevede GRASSový rastrový soubor na PPM obrázek s rozli¹ením pixelu podle "
-"aktuálnì definovaného regionu." 
+"aktuálnì definovaného regionu."
 
 #: ../raster/r.out.ppm/main.c:51
 msgid "Raster input map"
@@ -1947,19 +1913,19 @@ msgstr "Vstupní rastrový soubor"
 
 #: ../raster/r.out.ppm/main.c:60 ../raster/r.out.ppm3/main.c:72
 msgid "Name for new PPM file. (use out=- for stdout)"
-msgstr "Název  nového souboru PPM. (pro standardní výstup pou¾ijte out=-)" 
+msgstr "Název  nového souboru PPM. (pro standardní výstup pou¾ijte out=-)"
 
 #: ../raster/r.out.ppm/main.c:68
 msgid "Output greyscale instead of color"
-msgstr "Výstup v ¹edé stupnici, místo barevné" 
+msgstr "Výstup v ¹edé stupnici, místo barevné"
 
 #: ../raster/r.out.ppm3/main.c:47
 msgid ""
 "Converts 3 GRASS raster layers (R,G,B) to a PPM image file at the pixel "
 "resolution of the CURRENTLY DEFINED REGION."
 msgstr ""
-"Pøevede 3 GRASSové rastrové mapy (R,G,B) do souboru PPM s rozli¹ením "
-"pixelu podle aktuálnì definovaného regionu."
+"Pøevede 3 GRASSové rastrové mapy (R,G,B) do souboru PPM s rozli¹ením pixelu "
+"podle aktuálnì definovaného regionu."
 
 #: ../raster/r.out.ppm3/main.c:53
 #, c-format
@@ -1974,9 +1940,10 @@ msgstr "Pøidej komentáøe pro popis regionu"
 msgid ""
 "Extracts terrain parameters from a DEM. Uses a multi-scalar approach by "
 "taking fitting quadratic parameters to any size window (via least squares)"
-msgstr "Vypoète odvozené parametry DMR. Pou¾ívá multi sklalární pøístup "
-"pomocí výpoètu kvadratických koeficientù pro okno libovolné velikosti (pomocí"
-"metody nejmen¹ích ètvercù"
+msgstr ""
+"Vypoète odvozené parametry DMR. Pou¾ívá multi sklalární pøístup pomocí "
+"výpoètu kvadratických koeficientù pro okno libovolné velikosti (pomocímetody "
+"nejmen¹ích ètvercù"
 
 #: ../raster/r.param.scale/interface.c:64
 msgid "Raster surface layer to process"
@@ -1988,8 +1955,8 @@ msgstr "Výstupní rastrový sobor s morphometrickými parametry"
 
 #: ../raster/r.param.scale/interface.c:75
 msgid "Slope tolerance that defines a 'flat' surface (degrees)"
-msgstr "Nejni¾¹í sklon svahu, do kterého je povrch pova¾ován za plochý "
-"(ve stupních)"
+msgstr ""
+"Nejni¾¹í sklon svahu, do kterého je povrch pova¾ován za plochý (ve stupních)"
 
 #: ../raster/r.param.scale/interface.c:81
 msgid "Curvature tolerance that defines 'planar' surface"
@@ -2017,9 +1984,9 @@ msgid ""
 "Creates a composite raster map layer by using known category values from one "
 "(or more) map layer(s) to fill in areas of \"no data\" in another map layer."
 msgstr ""
-"Vytváøí slo¾enou rastrovou mapu tak, ¾e pou¾ije známé hodnoty kategorií "
-"z jedné nebo nìkolika map tak, ¾e vyplní oblasti \"bez ¾ádných dat\" v jiné"
-"mapové vrstvì."
+"Vytváøí slo¾enou rastrovou mapu tak, ¾e pou¾ije známé hodnoty kategorií z "
+"jedné nebo nìkolika map tak, ¾e vyplní oblasti \"bez ¾ádných dat\" v "
+"jinémapové vrstvì."
 
 #: ../raster/r.patch/main.c:51
 msgid "Name of raster maps to be patched together"
@@ -2035,8 +2002,8 @@ msgstr "Pou¾ij nulu (0) jako transparentní hodnotu, namísto NULLy"
 
 #: ../raster/r.profile/main.c:56
 msgid "Outputs the raster map layer values lying on user-defined line(s)."
-msgstr "Vytvoøí rastrovou mapu hodnot, le¾ících na u¾ivatelem definovaných "
-"liniích."
+msgstr ""
+"Vytvoøí rastrovou mapu hodnot, le¾ících na u¾ivatelem definovaných liniích."
 
 #: ../raster/r.profile/main.c:72
 msgid "Name of file for output (use output=- for stdout)"
@@ -2056,12 +2023,13 @@ msgstr "Znak pro oznaèení bunìk s hodnotou NULL"
 
 #: ../raster/r.profile/main.c:98
 msgid "Interactively select End-Points"
-msgstr "Interaktivní výbìr koncových bodù"  
+msgstr "Interaktivní výbìr koncových bodù"
 
 #: ../raster/r.profile/main.c:103 ../raster/r.transect/main.c:79
 msgid "Output easting and northing in first two columns of four column output"
-msgstr "Výstup ve formì V a S souøadnic v prvních dvou sloupeècích ze"
-"ètyøsloupeèkového výstupu"
+msgstr ""
+"Výstup ve formì V a S souøadnic v prvních dvou sloupeècích "
+"zeètyøsloupeèkového výstupu"
 
 #: ../raster/r.proj/main.c:138
 msgid "Re-project a raster map from one location to the current location."
@@ -2138,8 +2106,8 @@ msgid ""
 "Creates a raster map layer and vector point map containing randomly located "
 "sites."
 msgstr ""
-"Vytvoøí rastrovou mapu a bodovou vektorovou mapu obsahující náhodnì rozmístìné "
-"body."
+"Vytvoøí rastrovou mapu a bodovou vektorovou mapu obsahující náhodnì "
+"rozmístìné body."
 
 #: ../raster/r.random/main.c:51
 msgid "The number of points to allocate"
@@ -2330,8 +2298,7 @@ msgstr "Rastrové mapy,  pro které má být vytvoøena zpráva"
 msgid ""
 "mi(les),me(ters),k(ilometers),a(cres),h(ectares),c(ell_counts),p"
 "(ercent_cover)"
-msgstr ""
-"mí(le), me(try),k(ilometry),a(kry),h(ektary),c(ell_counts),p(rocenta)"
+msgstr "mí(le), me(try),k(ilometry),a(kry),h(ektary),c(ell_counts),p(rocenta)"
 
 #: ../raster/r.report/parse.c:60
 msgid "Character representing no data cell value"
@@ -2351,9 +2318,11 @@ msgstr "©íøka stránky (výchozí: %d písmen)"
 msgid "Name of an output file to hold the report"
 msgstr "Název výstupního souboru, pro ulo¾ení zprávy"
 
-#: ../raster/r.report/parse.c:87 ../raster/r.stats/main.c:112
+#: ../raster/r.report/parse.c:87 ../raster/r.stats/main.c:113
 msgid "Number of fp subranges to collect stats from"
-msgstr "Poèet subintervalù rastru s plovoucí desetinnou èárkou, pro které bude vytvoøena statistika"
+msgstr ""
+"Poèet subintervalù rastru s plovoucí desetinnou èárkou, pro které bude "
+"vytvoøena statistika"
 
 #: ../raster/r.report/parse.c:91
 msgid "Suppress page headers"
@@ -2375,14 +2344,16 @@ msgstr "Odfiltruj v¹echny buòky hodnotou NULL"
 msgid "Filter out cells where all maps have no data"
 msgstr "Odfiltruj v¹echny buòky s hodnotou NULL pro celou mapu"
 
-#: ../raster/r.report/parse.c:115 ../raster/r.stats/main.c:161
+#: ../raster/r.report/parse.c:115 ../raster/r.stats/main.c:166
 msgid "Report for cats fp ranges (fp maps only)"
-msgstr "Zpráva pro jednotlivé kategorie uvnitø rastrù s plovoucí desetinnou èárkou"
+msgstr ""
+"Zpráva pro jednotlivé kategorie uvnitø rastrù s plovoucí desetinnou èárkou"
 
 #: ../raster/r.report/parse.c:119
 msgid "Read fp map as integer (use map's quant rules"
-msgstr "Naèti mapu s plovoucí desetinnou èárkou jako celoèíselnou"
-"(use map's quant rules)"
+msgstr ""
+"Naèti mapu s plovoucí desetinnou èárkou jako celoèíselnou(use map's quant "
+"rules)"
 
 #: ../raster/r.resamp.rst/main.c:161
 msgid ""
@@ -2390,79 +2361,75 @@ msgid ""
 "new raster file (possibly with different resolution) using regularized "
 "spline with tension and smoothing."
 msgstr ""
-"Reinterpoluje a spoèítá topografickou analýzu ze vstupního rastrového souboru"
-"do nové rastrové mapy (volitelnì s novým rozli¹eném) za pou¾ití "
+"Reinterpoluje a spoèítá topografickou analýzu ze vstupního rastrového "
+"souborudo nové rastrové mapy (volitelnì s novým rozli¹eném) za pou¾ití "
 "regularizovaného splajnu s tenzí a vyhlezním."
 
-#: ../raster/r.resamp.rst/main.c:175
-msgid "Do zeroes in input map represent elevation?"
-msgstr "Representují nuly ve vstupní mapì vý¹ky nad moøem?"
-
-#: ../raster/r.resamp.rst/main.c:181
+#: ../raster/r.resamp.rst/main.c:177
 msgid "Desired east-west resolution"
 msgstr "Po¾adované rozli¹ení východ-západ"
 
-#: ../raster/r.resamp.rst/main.c:187
+#: ../raster/r.resamp.rst/main.c:183
 msgid "Desired north-south resolution"
 msgstr "Po¾adované rozli¹ení sever-jih"
 
-#: ../raster/r.resamp.rst/main.c:194
+#: ../raster/r.resamp.rst/main.c:190
 msgid "Output z-file (elevation)"
 msgstr "Výstupní z-soubor nadmoøských vý¹ek"
 
-#: ../raster/r.resamp.rst/main.c:201
+#: ../raster/r.resamp.rst/main.c:197
 msgid "Slope"
 msgstr "Sklon svahu"
 
-#: ../raster/r.resamp.rst/main.c:208
+#: ../raster/r.resamp.rst/main.c:204
 msgid "Aspect"
 msgstr "Expozice svahu"
 
-#: ../raster/r.resamp.rst/main.c:215
+#: ../raster/r.resamp.rst/main.c:211
 msgid "Profile curvature"
 msgstr "Profilová køivost"
 
-#: ../raster/r.resamp.rst/main.c:222
+#: ../raster/r.resamp.rst/main.c:218
 msgid "Tangential curvature"
 msgstr "Tangenciální køivost"
 
-#: ../raster/r.resamp.rst/main.c:229
+#: ../raster/r.resamp.rst/main.c:225
 msgid "Mean curvature"
 msgstr "Støední køivost"
 
-#: ../raster/r.resamp.rst/main.c:233
+#: ../raster/r.resamp.rst/main.c:229
 msgid "Output partial derivatives instead"
 msgstr "Výstup ve formì parciálních derivací"
 
-#: ../raster/r.resamp.rst/main.c:240
+#: ../raster/r.resamp.rst/main.c:236
 msgid "Name of the cell file containing smoothing"
 msgstr "Název rastrového souboru obsahujícího vyhlazení"
 
-#: ../raster/r.resamp.rst/main.c:247
+#: ../raster/r.resamp.rst/main.c:243
 msgid "Name of the raster file used as mask"
 msgstr "Název rastrového souboru pou¾itého jako maska"
 
-#: ../raster/r.resamp.rst/main.c:254
+#: ../raster/r.resamp.rst/main.c:250
 msgid "Rows/columns overlap for segmentation"
 msgstr "Pøekryv øádkù/sloupcù pro segmentaci"
 
-#: ../raster/r.resamp.rst/main.c:261
+#: ../raster/r.resamp.rst/main.c:257
 msgid "Conversion factor for z-values"
 msgstr "Pøevodní koeficient pro hodnoty z"
 
-#: ../raster/r.resamp.rst/main.c:268
+#: ../raster/r.resamp.rst/main.c:264
 msgid "Tension"
 msgstr "Tenze"
 
-#: ../raster/r.resamp.rst/main.c:274
+#: ../raster/r.resamp.rst/main.c:270
 msgid "Anisotropy angle (in degrees)"
 msgstr "Úhel anizotropie (ve stupních)"
 
-#: ../raster/r.resamp.rst/main.c:280
+#: ../raster/r.resamp.rst/main.c:276
 msgid "Anisotropy scaling factor"
 msgstr "Míra anisotropie"
 
-#: ../raster/r.resamp.rst/main.c:284
+#: ../raster/r.resamp.rst/main.c:280
 msgid "Use dnorm independent tension"
 msgstr "Pou¾ij dnorm nezávislou tenzi"
 
@@ -2488,8 +2455,9 @@ msgstr "Název rastrové mapy, její¾ mìøítko má být zmìnìno."
 
 #: ../raster/r.rescale/main.c:52 ../raster/r.rescale.eq/main.c:53
 msgid "The input data range to be rescaled (default: full range of input map)"
-msgstr "Vstupní rozsah hodnot, pro které bude provedena zmìna mìøítka"
-"(výchozí: celý rozsah hodnot)"
+msgstr ""
+"Vstupní rozsah hodnot, pro které bude provedena zmìna mìøítka(výchozí: celý "
+"rozsah hodnot)"
 
 #: ../raster/r.rescale/main.c:59 ../raster/r.rescale.eq/main.c:60
 msgid "The resulting raster map name"
@@ -2509,24 +2477,23 @@ msgid ""
 "layer."
 msgstr "(Zmìní kategorie histogramu pro rastrovou mapu)"
 
-
-#: ../raster/r.series/main.c:84
+#: ../raster/r.series/main.c:86
 msgid ""
 "Makes each output cell value a function of the values assigned to the "
 "corresponding cells in the input raster map layers."
 msgstr ""
-"Hodnota ka¾dé buòky ve výstupním rastru je funkcí hodnot nìkolika dal¹ích"
-"bunìk ve vstupním rastru."
+"Hodnota ka¾dé buòky ve výstupním rastru je funkcí hodnot nìkolika "
+"dal¹íchbunìk ve vstupním rastru."
 
-#: ../raster/r.series/main.c:94
+#: ../raster/r.series/main.c:96
 msgid "Names of existing raster files"
-msgstr "Názvy existujících rastrových souborù" 
+msgstr "Názvy existujících rastrových souborù"
 
-#: ../raster/r.series/main.c:108
+#: ../raster/r.series/main.c:110
 msgid "Aggregate operation"
-msgstr "Agregace" 
+msgstr "Agregace"
 
-#: ../raster/r.series/main.c:116
+#: ../raster/r.series/main.c:118
 msgid "Propagate NULLs"
 msgstr "Vytváøej hodnoty NULL"
 
@@ -2537,16 +2504,16 @@ msgid ""
 "calculated counterclockwise from east."
 msgstr ""
 "Vytváøí rastrovou mapu sklonu, expozice, køivosti a parciálních derivací "
-"odvozenou z digitálního modelu terénu. Expozice je "
-"poèítána proti smìru hodinových ruèièek s poèátkem na východì." 
+"odvozenou z digitálního modelu terénu. Expozice je poèítána proti smìru "
+"hodinových ruèièek s poèátkem na východì."
 
 #: ../raster/r.slope.aspect/main.c:143
 msgid "Raster elevation file name"
-msgstr "Název rastru s digitálním modelem terénu" 
+msgstr "Název rastru s digitálním modelem terénu"
 
 #: ../raster/r.slope.aspect/main.c:151
 msgid "Output slope filename"
-msgstr "Název výstupního souboru sklonù svahù" 
+msgstr "Název výstupního souboru sklonù svahù"
 
 #: ../raster/r.slope.aspect/main.c:159
 msgid "Format for reporting the slope"
@@ -2558,7 +2525,7 @@ msgstr "Typ výstupních map expozice a sklonu svahu"
 
 #: ../raster/r.slope.aspect/main.c:175
 msgid "Output aspect filename"
-msgstr "Název výstupního souboru expozic svahù" 
+msgstr "Název výstupního souboru expozic svahù"
 
 #: ../raster/r.slope.aspect/main.c:183
 msgid "Output profile curvature filename"
@@ -2570,12 +2537,15 @@ msgstr "Název výstupního souboru tangenciálních køivostí"
 
 #: ../raster/r.slope.aspect/main.c:199
 msgid "Output first order partial derivative dx (E-W slope) filename"
-msgstr "Název výstupního souboru parciálních derivací prvního øádu dx (V - Z sklon svahu)"
+msgstr ""
+"Název výstupního souboru parciálních derivací prvního øádu dx (V - Z sklon "
+"svahu)"
 
 #: ../raster/r.slope.aspect/main.c:207
 msgid "Output first order partial derivative dy (N-S slope) filename"
-msgstr "Název výstupního souboru parciálních derivací prvního øádu dy "
-"(S - J sklon svahu)"
+msgstr ""
+"Název výstupního souboru parciálních derivací prvního øádu dy (S - J sklon "
+"svahu)"
 
 #: ../raster/r.slope.aspect/main.c:215
 msgid "Output second order partial derivative dxx filename"
@@ -2595,12 +2565,13 @@ msgstr "Koeficient pro pøevod jednotek vý¹ky na metry"
 
 #: ../raster/r.slope.aspect/main.c:242
 msgid "Minimum slope val. (in percent) for which aspect is computed"
-msgstr "Minimální hodnota sklonu svahu (v procentech), pro kterou "
-"je poèítána expozice"
+msgstr ""
+"Minimální hodnota sklonu svahu (v procentech), pro kterou je poèítána "
+"expozice"
 
 #: ../raster/r.slope.aspect/main.c:249
 msgid "Do not align the current region to the elevation layer"
-msgstr "Nenastavuj aktuální region podle mapy vý¹ek " 
+msgstr "Nenastavuj aktuální region podle mapy vý¹ek "
 
 #: ../raster/r.statistics/main.c:43
 msgid "Category or object oriented statistics."
@@ -2618,69 +2589,75 @@ msgstr "Výsledná rastrová mapa (nelze pou¾ít s 'distribution')"
 msgid "Cover values extracted from the category labels of the cover map"
 msgstr "Hodnoty získané z oznaèení kategorií pøekrývající mapy (cover map)"
 
-#: ../raster/r.stats/main.c:70
+#: ../raster/r.stats/main.c:71
 msgid "Generates area statistics for raster map layers."
 msgstr "Vytváøí statistiku ploch pro rastry"
 
-#: ../raster/r.stats/main.c:80
+#: ../raster/r.stats/main.c:81
 msgid "Raster input maps(s)"
-msgstr "Vstupní rastry" 
+msgstr "Vstupní rastry"
 
-#: ../raster/r.stats/main.c:97
+#: ../raster/r.stats/main.c:98
 msgid "String representing no data cell value"
 msgstr "Textový øetìzec representující buòky s hodnotou \"no data\""
 
-#: ../raster/r.stats/main.c:104
+#: ../raster/r.stats/main.c:105
 msgid "Output file name"
 msgstr "Název výstupního souboru"
 
-#: ../raster/r.stats/main.c:121
+#: ../raster/r.stats/main.c:122
 msgid "One cell (range) per line"
 msgstr "Jedna buòka (rozsah) na øádek"
 
-#: ../raster/r.stats/main.c:125
+#: ../raster/r.stats/main.c:126
+#, fuzzy
+msgid "Print averaged values instead of intervals"
+msgstr "systémové tabulky místo u¾ivatelských"
+
+#: ../raster/r.stats/main.c:130
 msgid "Print area totals"
 msgstr "Vytiskni celkový rozsah ploch"
 
-#: ../raster/r.stats/main.c:129
+#: ../raster/r.stats/main.c:134
 msgid "Print cell counts"
 msgstr "Vytiskni poèty bunìk"
 
-#: ../raster/r.stats/main.c:133
+#: ../raster/r.stats/main.c:138
 msgid "Print APPROXIMATE percents (total percent may not be 100%)"
 msgstr "Vypi¹ PØIBLI®NÁ procenta (suma se nemusí 100%)"
 
-#: ../raster/r.stats/main.c:137
+#: ../raster/r.stats/main.c:142
 msgid "Print category labels"
-msgstr "Vytiskni oznaèení kateogorií" 
+msgstr "Vytiskni oznaèení kateogorií"
 
-#: ../raster/r.stats/main.c:145
+#: ../raster/r.stats/main.c:150
 msgid "Suppress reporting of any NULLs"
 msgstr "Potlaè výpis NULL"
 
-#: ../raster/r.stats/main.c:149
+#: ../raster/r.stats/main.c:154
 msgid "Suppress reporting of NULLs when all values are NULL"
-msgstr "Potlaè výpis NULL , pokud jsou v¹echny hodnoty NULLa" 
+msgstr "Potlaè výpis NULL , pokud jsou v¹echny hodnoty NULLa"
 
-#: ../raster/r.stats/main.c:153
+#: ../raster/r.stats/main.c:158
 msgid "Print grid coordinates (east and north)"
 msgstr "Vytiskni souøadnice rastru (východní a severní)"
 
-#: ../raster/r.stats/main.c:157
+#: ../raster/r.stats/main.c:162
 msgid "Print x and y (column and row)"
 msgstr "Vytiskni x a y (sloupec a øádek)"
 
-#: ../raster/r.stats/main.c:165
+#: ../raster/r.stats/main.c:170
 msgid "Print raw indexes of fp ranges (fp maps only)"
-msgstr "Vytiskni hrubé/syrové/... indexy rozsahu hodnot s plovoucí desetinnou èárkou"
+msgstr ""
+"Vytiskni hrubé/syrové/... indexy rozsahu hodnot s plovoucí desetinnou èárkou"
 
-#: ../raster/r.stats/main.c:169
+#: ../raster/r.stats/main.c:174
 msgid "Read fp map as integer (use map's quant rules)"
 msgstr "Naèti mapu s plovoucí desetinnou øárkou jako celoèíselnou "
 
 #: ../raster/r.sum/main.c:31
 msgid "Sums up the raster cell values."
-msgstr "Seète hodnoty bunìk rastru." 
+msgstr "Seète hodnoty bunìk rastru."
 
 #: ../raster/r.sum/main.c:38
 msgid "Name of incidence or density file."
@@ -2696,95 +2673,121 @@ msgid ""
 "irradiance raster maps. The shadowing effect of the topography is optionally "
 "incorporated."
 msgstr ""
-"Poèítá mapu pøímého (paprsek), difúzního a odra¾eného sluneèního záøení "
-"pro zadaný den, zem. ¹íøku, povrch a atmosférické podmínky. Sluneèní "
-"parametry (napø. východ a západ slunce) jsou ulo¾ny do lokálního textového "
-"souboru. Alternativnì staèí specifikovat èas pro poèítání sluneèního úhlu "
-"a/nebo mapy ozáøení. Efekt stínu terénu lze volitelnì také zahrnout."
+"Poèítá mapu pøímého (paprsek), difúzního a odra¾eného sluneèního záøení pro "
+"zadaný den, zem. ¹íøku, povrch a atmosférické podmínky. Sluneèní parametry "
+"(napø. východ a západ slunce) jsou ulo¾ny do lokálního textového souboru. "
+"Alternativnì staèí specifikovat èas pro poèítání sluneèního úhlu a/nebo mapy "
+"ozáøení. Efekt stínu terénu lze volitelnì také zahrnout."
 
 #: ../raster/r.sun/main.c:184
-msgid "Name of the elevation raster file"
-msgstr "Název souboru s  digitálním modelem terénu" 
+#, fuzzy
+msgid "Name of the input elevation raster map [meters]"
+msgstr "Název souboru s  digitálním modelem terénu"
 
 #: ../raster/r.sun/main.c:191
-msgid "Name of the aspect raster file"
-msgstr "Název souboru s expozicí"
+msgid ""
+"Name of the input aspect map (terrain aspect or azimuth of the solar panel) "
+"[decimal degrees]"
+msgstr ""
 
 #: ../raster/r.sun/main.c:198
-msgid "Name of the slope raster file"
-msgstr "Název souboru se sklony svahù"
+msgid ""
+"Name of the input slope raster map (terrain slope or solar panel "
+"inclination) [decimal degrees]"
+msgstr ""
 
 #: ../raster/r.sun/main.c:206
-msgid "Name of the Linke turbidity coefficient raster file"
+#, fuzzy
+msgid ""
+"Name of the Linke atmospheric turbidity coefficient input raster map [-]"
 msgstr "Název rastrového souboru Linkovými koeficienty turbulence"
 
 #: ../raster/r.sun/main.c:215
-msgid "A single value of the Linke turbidity coefficient"
+#, fuzzy
+msgid "A single value of the Linke atmospheric turbidity coefficient [-]"
 msgstr "Jednodná hodnota Linkových koeficientù turbulence"
 
 #: ../raster/r.sun/main.c:223
-msgid "Name of the albedo coefficient raster file"
+#, fuzzy
+msgid "Name of the ground albedo coefficient input raster map [-]"
 msgstr "Název rastrového souboru s hodnotami odrazivosti (albeda)"
 
 #: ../raster/r.sun/main.c:231
-msgid "A single value of the albedo coefficient"
+#, fuzzy
+msgid "A single value of the ground albedo coefficient [-]"
 msgstr "Jednodná hodnota koeficientu odrazivosti (albeda)"
 
 #: ../raster/r.sun/main.c:239
-msgid "Name of the latitude raster file"
-msgstr "Název rastrového souboru zem. ©íøky" 
+#, fuzzy
+msgid "Name of the latitudes input raster map [decimal degrees]"
+msgstr "Název rastrového souboru zem. ©íøky"
 
 #: ../raster/r.sun/main.c:246
-msgid "A single value of latitude"
+#, fuzzy
+msgid "A single value of latitude [decimal degrees]"
 msgstr "Jednotná hodnota zem. ¹íøky"
 
 #: ../raster/r.sun/main.c:254
-msgid "The real-sky beam radiation coefficient file"
-msgstr "Soubor s koeficientem pøímého sluneèního záøení" 
+#, fuzzy
+msgid "Name of real-sky beam radiation coefficient raster map [-]"
+msgstr "Soubor s koeficientem pøímého sluneèního záøení"
 
 #: ../raster/r.sun/main.c:262
-msgid "The real-sky diffuse radiation coefficient file"
-msgstr "Jednotná hodnota difúzního záøení" 
+#, fuzzy
+msgid "Name of real-sky diffuse radiation coefficient raster map [-]"
+msgstr "Jednotná hodnota difúzního záøení"
 
 #: ../raster/r.sun/main.c:269
-msgid "Output incidence angle file (raster)"
+#, fuzzy
+msgid "Output incidence angle raster map (mode 1 only)"
 msgstr "Výstupní soubor úhlu dopadu paprsku (rastr)"
 
 #: ../raster/r.sun/main.c:277
-msgid "Output direct (beam) irradiance/irradiation file (raster)"
-msgstr "Výstupní soubor pøímého záøení (rastr)"  
+msgid ""
+"Output beam irradiance [W.m-2] (mode 1) or irradiation raster file [Wh.m-2."
+"day-1] (mode 2)"
+msgstr ""
 
 #: ../raster/r.sun/main.c:284
-msgid "Output insolation time file (raster)"
+#, fuzzy
+msgid "Output insolation time raster map [h] (mode 2 only)"
 msgstr "(Výstupní soubor s hodnotami insolace (rastr))"
 
 #: ../raster/r.sun/main.c:292
-msgid "Output diffuse irradiance/irradiation file (raster)"
-msgstr "Výstupní soubor s hodnotami difuzního záøení (rastr)" 
+#, fuzzy
+msgid ""
+"Output diffuse irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2."
+"day-1] (mode 2)"
+msgstr "Výstupní soubor s hodnotami difuzního záøení (rastr)"
 
 #: ../raster/r.sun/main.c:300
-msgid "Output reflected irradiance/irradiation file (raster)"
-msgstr "Výstupní soubor s hodnotami odra¾eného záøení (rastr)" 
+msgid ""
+"Output ground reflected irradiance [W.m-2] (mode 1) or irradiation raster "
+"map [Wh.m-2.day-1] (mode 2)"
+msgstr ""
 
 #: ../raster/r.sun/main.c:306
 msgid "No. of day of the year (1-365)"
 msgstr "Poèet dní v roce (1-365)"
 
 #: ../raster/r.sun/main.c:313
-msgid "Time step computing all-day radiation"
-msgstr "Èasový krok pøi výpoètu celodenní radiance" 
+#, fuzzy
+msgid "Time step when computing all-day radiation sums [decimal hours]"
+msgstr "Èasový krok pøi výpoètu celodenní radiance"
 
 #: ../raster/r.sun/main.c:320
-msgid "Required declination value (overriding the internal value)"
-msgstr "Po¾adována hodnota deklinace (vnitøní hodnota bude pøepsána)" 
+#, fuzzy
+msgid "Declination value (overriding the internally computed value) [radians]"
+msgstr "Po¾adována hodnota deklinace (vnitøní hodnota bude pøepsána)"
 
 #: ../raster/r.sun/main.c:327
-msgid "Local (solar) time [decimal hours]"
-msgstr "Místní (sluneèní) èas [decimální hodiny]" 
+#, fuzzy
+msgid "Local (solar) time (to be set for mode 1 only) [decimal hours]"
+msgstr "Místní (sluneèní) èas [decimální hodiny]"
 
 #: ../raster/r.sun/main.c:334
 msgid "Sampling distance step coefficient (0.5-1.5)"
-msgstr "Vzorkování s krokem (0.5-1.5)" 
+msgstr "Vzorkování s krokem (0.5-1.5)"
 
 #: ../raster/r.sun/main.c:339
 msgid "Incorporate the shadowing effect of terrain"
@@ -2796,25 +2799,25 @@ msgid ""
 "position is specified, or B: date/time to calculate the sun position by r."
 "sunmask itself."
 msgstr ""
-"Poèítá plnì zastínìné oblasti z polohy Slunce a DMT  buï A: je-li specifikována pøesná "
-"pozice Slunce nebo B: pozice je spoèítána z hodnoty datum/èas pomocí "
-"r.sunmask samostatnì." 
+"Poèítá plnì zastínìné oblasti z polohy Slunce a DMT  buï A: je-li "
+"specifikována pøesná pozice Slunce nebo B: pozice je spoèítána z hodnoty "
+"datum/èas pomocí r.sunmask samostatnì."
 
 #: ../raster/r.sunmask/main.c:119
 msgid "Name of elevation raster map"
-msgstr "Název rastru s digitálním modelem terénu" 
+msgstr "Název rastru s digitálním modelem terénu"
 
 #: ../raster/r.sunmask/main.c:127
 msgid "Output raster map having shadows"
-msgstr "Výstupní rastrová mapa obsahující plochy ve stínu" 
+msgstr "Výstupní rastrová mapa obsahující plochy ve stínu"
 
 #: ../raster/r.sunmask/main.c:134
 msgid "A: altitude of the sun above horizon, degrees"
-msgstr "A: vý¹ka Slunce nad horizontem, stupnì" 
+msgstr "A: vý¹ka Slunce nad horizontem, stupnì"
 
 #: ../raster/r.sunmask/main.c:141
 msgid "A: azimuth of the sun from the north, degrees"
-msgstr "A: azimut Slunce od serveru, stupnì" 
+msgstr "A: azimut Slunce od serveru, stupnì"
 
 #: ../raster/r.sunmask/main.c:147
 msgid "B: year (1950..2050)"
@@ -2845,8 +2848,8 @@ msgid ""
 "B: timezone (east positive, offset from GMT, also use to adjust daylight "
 "savings)"
 msgstr ""
-"B: èasová zóna (východ kladná, vzdálenost od Greewichského støedního èasu (GMT),  " 
-"také zahrnout letní/zimní èas)"
+"B: èasová zóna (východ kladná, vzdálenost od Greewichského støedního èasu "
+"(GMT),  také zahrnout letní/zimní èas)"
 
 #: ../raster/r.sunmask/main.c:190
 msgid "east coordinate (point of interest, default: map center)"
@@ -2858,7 +2861,7 @@ msgstr "severní souøadnice (bod zájmu, výchozí: støed mapy)"
 
 #: ../raster/r.sunmask/main.c:201
 msgid "Zero is a real elevation"
-msgstr "Nula oznaèuje také vý¹ku nad moøem" 
+msgstr "Nula oznaèuje také vý¹ku nad moøem"
 
 #: ../raster/r.sunmask/main.c:205
 msgid "verbose output (also print out sun position etc.)"
@@ -2866,11 +2869,11 @@ msgstr "upovídaný výstup (vytiskne také pozici Slunce atd.)"
 
 #: ../raster/r.sunmask/main.c:209
 msgid "calculate sun position only and exit"
-msgstr "vypoèítej pouze polohu Slunce a ukonèi se" 
+msgstr "vypoèítej pouze polohu Slunce a ukonèi se"
 
 #: ../raster/r.sunmask/main.c:213
 msgid "Print the sun position output in shell script style"
-msgstr "Vytiskni polohu Slunce ve stylu pou¾itelném pro shell skript" 
+msgstr "Vytiskni polohu Slunce ve stylu pou¾itelném pro shell skript"
 
 #: ../raster/r.sunmask/main.c:225
 msgid "Using map center coordinates\n"
@@ -2899,14 +2902,14 @@ msgstr ""
 #: ../raster/r.sunmask/main.c:263
 #, c-format
 msgid "Calculating sun position... (using solpos (V. %s) from NREL)\n"
-msgstr "Poèítám pozici Slunce... (pou¾ívám solpos (V. %d) z NREL)\n" 
+msgstr "Poèítám pozici Slunce... (pou¾ívám solpos (V. %d) z NREL)\n"
 
 #: ../raster/r.sunmask/main.c:268
 msgid ""
 "Using user defined sun azimuth, altitude settings (ignoring eventual other "
 "values)\n"
 msgstr ""
-"Pou¾ívám azimut Slunce zadaný u¾ivatelem, nastavení zem. ©íøky " 
+"Pou¾ívám azimut Slunce zadaný u¾ivatelem, nastavení zem. ©íøky "
 "(ingnorujipøípadné dal¹í hodnoty)\n"
 
 #: ../raster/r.sunmask/main.c:338
@@ -2925,41 +2928,41 @@ msgid ""
 " Solar position: sun azimuth: %f,\n"
 "   sun angle above horz.(refraction corrected): %f\n"
 msgstr ""
-" Poloha Slunce: Azimut: %f,\n" 
-"   vý¹ka Slunce nad horizontem. (odraz opraven): %f\n"  
+" Poloha Slunce: Azimut: %f,\n"
+"   vý¹ka Slunce nad horizontem. (odraz opraven): %f\n"
 
 #: ../raster/r.sunmask/main.c:347
 #, c-format
 msgid " Sunrise time (without refraction): %02d:%02d:%02d\n"
-msgstr " Èas východu Slunce (bez refrakce): %02d:%02d:%02d\n" 
+msgstr " Èas východu Slunce (bez refrakce): %02d:%02d:%02d\n"
 
 #: ../raster/r.sunmask/main.c:348
 #, c-format
 msgid " Sunset time  (without refraction): %02d:%02d:%02d\n"
-msgstr " Èas západu Slunce (bez refrakce): %02d:%02d:%02d\n" 
+msgstr " Èas západu Slunce (bez refrakce): %02d:%02d:%02d\n"
 
 #: ../raster/r.sunmask/main.c:357
 msgid "Please correct settings."
-msgstr "Opravte prosím nastavení." 
+msgstr "Opravte prosím nastavení."
 
 #: ../raster/r.sunmask/main.c:374
 #, c-format
 msgid "Time (%02i:%02i:%02i) is before sunrise (%02d:%02d:%02d)!\n"
-msgstr "Èas (%02i:%02i:%02i) je pøed východem Slunce (%02d:%02d:%02d)!\n" 
+msgstr "Èas (%02i:%02i:%02i) je pøed východem Slunce (%02d:%02d:%02d)!\n"
 
 #: ../raster/r.sunmask/main.c:377
 #, c-format
 msgid "Time (%02i:%02i:%02i) is before sunrise!\n"
-msgstr "Èas (%02i:%02i:%02i) je pøed západem Slunce!\n" 
+msgstr "Èas (%02i:%02i:%02i) je pøed západem Slunce!\n"
 
 #: ../raster/r.sunmask/main.c:379 ../raster/r.sunmask/main.c:388
 msgid "Nothing to calculate. Please verify settings."
-msgstr "Není co poèítat. Ovìøte prosím nastavení." 
+msgstr "Není co poèítat. Ovìøte prosím nastavení."
 
 #: ../raster/r.sunmask/main.c:384
 #, c-format
 msgid "Time (%02i:%02i:%02i) is after sunset (%02d:%02d:%02d)!\n"
-msgstr "Èas (%02i:%02i:%02i) je po západu Slunce (%02d:%02d:%02d)!\n" 
+msgstr "Èas (%02i:%02i:%02i) je po západu Slunce (%02d:%02d:%02d)!\n"
 
 #: ../raster/r.sunmask/main.c:387
 #, c-format
@@ -2972,7 +2975,7 @@ msgstr "Není po¾adována ¾ádný výpoèet mapy. Konèím.\n"
 
 #: ../raster/r.sunmask/main.c:401
 msgid "You already know the sun position.\n"
-msgstr "Pozice Slunce je ji¾ známa.\n" 
+msgstr "Pozice Slunce je ji¾ známa.\n"
 
 #: ../raster/r.sunmask/main.c:409 ../raster/r.sunmask/main.c:411
 #, c-format
@@ -2986,12 +2989,12 @@ msgstr "nemohu otevøít soubor s rozsahem pro %s"
 
 #: ../raster/r.sunmask/main.c:438
 msgid "Calculating shadows from DEM..."
-msgstr "Poèítám stíny pro DMT..." 
+msgstr "Poèítám stíny pro DMT..."
 
 #: ../raster/r.sunmask/main.c:446
 #, fuzzy
 msgid "can't read row in input elevation map"
-msgstr "nemohu èíst øádek ze vstupní mapy reliéfu" 
+msgstr "nemohu èíst øádek ze vstupní mapy reliéfu"
 
 #: ../raster/r.sunmask/main.c:511
 msgid "Finished.\n"
@@ -2999,7 +3002,7 @@ msgstr "Dokonáno jest.\n"
 
 #: ../raster/r.surf.area/main.c:89
 msgid "Surface area estimation for rasters."
-msgstr "Odhad plochy povrchù rastrových map." 
+msgstr "Odhad plochy povrchù rastrových map."
 
 #: ../raster/r.surf.area/main.c:97
 msgid "Raster file for surface"
@@ -3011,15 +3014,15 @@ msgstr "Vertikální mìøítko"
 
 #: ../raster/r.surf.contour/main.c:34
 msgid "Surface generation program from rasterized contours."
-msgstr "Program pro vytváøení povrchù z vrstevnic ulo¾ených v rastrové podobì." 
+msgstr "Program pro vytváøení povrchù z vrstevnic ulo¾ených v rastrové podobì."
 
 #: ../raster/r.surf.contour/main.c:41
 msgid "Name of existing raster map containing contours"
-msgstr "Název  existujuící rastrové mapy obsahující vrstevnice" 
+msgstr "Název  existujuící rastrové mapy obsahující vrstevnice"
 
 #: ../raster/r.surf.contour/main.c:48
 msgid "Output elevation raster map"
-msgstr "Název  nového digitálního modelu terénu" 
+msgstr "Název  nového digitálního modelu terénu"
 
 #: ../raster/r.surf.contour/main.c:52
 msgid "Invoke fast, but memory intensive operation"
@@ -3033,15 +3036,15 @@ msgid ""
 "of this). Use this module to generate naturally looking synthetical "
 "elevation models (DEM)."
 msgstr ""
-"Modul GRASSu slou¾icí k vytváøení fraktálního povrchu dané fraktální dimenze. "
-"Pou¾ívá metodu spektrální syntézy. Umí vytvoøit mapy ukazující "
-"vytváøení rùzných spektrálních koeficientù (pro pøíklad viz Saupe, pp.106-107)"
-". Tento modu vytváøí pøirozenì vyhlí¾enící syntetický digitální model terénu "
-"(DMT)."
+"Modul GRASSu slou¾icí k vytváøení fraktálního povrchu dané fraktální "
+"dimenze. Pou¾ívá metodu spektrální syntézy. Umí vytvoøit mapy ukazující "
+"vytváøení rùzných spektrálních koeficientù (pro pøíklad viz Saupe, pp.106-"
+"107). Tento modu vytváøí pøirozenì vyhlí¾enící syntetický digitální model "
+"terénu (DMT)."
 
 #: ../raster/r.surf.fractal/interface.c:54
 msgid "Name of fractal surface raster layer"
-msgstr "Název  rastrové mapy s fraktálním povrchem" 
+msgstr "Název  rastrové mapy s fraktálním povrchem"
 
 #: ../raster/r.surf.fractal/interface.c:59
 msgid "Fractal dimension of surface (2 < D < 3)"
@@ -3049,7 +3052,7 @@ msgstr "Fraktální dimenze povrchu (2 < D < 3)"
 
 #: ../raster/r.surf.fractal/interface.c:65
 msgid "Number of intermediate images to produce"
-msgstr "Poèet snímkù k vytvoøení spektrálních koeficientù" 
+msgstr "Poèet snímkù k vytvoøení spektrálních koeficientù"
 
 #: ../raster/r.surf.gauss/main.c:38
 msgid ""
@@ -3058,12 +3061,12 @@ msgid ""
 "random number generator."
 msgstr ""
 "Modul GRASSu slou¾ící k vytváøení rastrové mapy náhodných gaussiánských "
-"hodnot jejich¾ prùmìr a smìrodatná odchylka mù¾e být zadána u¾ivatelem. " 
+"hodnot jejich¾ prùmìr a smìrodatná odchylka mù¾e být zadána u¾ivatelem. "
 "Pou¾ívá Gaussùv generátor náhodných èísel"
 
 #: ../raster/r.surf.gauss/main.c:54 ../raster/r.surf.random/main.c:49
 msgid "Name of the random surface to be produced"
-msgstr "Název  náhodného povrchu, který má být vytvoøen" 
+msgstr "Název  náhodného povrchu, který má být vytvoøen"
 
 #: ../raster/r.surf.gauss/main.c:59
 msgid "Distribution mean"
@@ -3071,7 +3074,7 @@ msgstr "Prùmìr rozdìlení"
 
 #: ../raster/r.surf.gauss/main.c:64
 msgid "Standard deviation"
-msgstr "Smìrodatná odchylka" 
+msgstr "Smìrodatná odchylka"
 
 #: ../raster/r.surf.idw/main.c:51
 msgid "Surface interpolation utility for raster map layers."
@@ -3091,7 +3094,7 @@ msgstr "Program na vytváøení povrchù."
 
 #: ../raster/r.surf.idw2/main.c:49 ../raster/r.water.outlet/main.c:40
 msgid "Name of input raster map"
-msgstr "Název  vstupního rastru" 
+msgstr "Název  vstupního rastru"
 
 #: ../raster/r.surf.idw2/main.c:56
 msgid "Name of output raster map"
@@ -3102,8 +3105,8 @@ msgid ""
 "Produces a raster map layer of uniform random deviates whose range can be "
 "expressed by the user."
 msgstr ""
-"Vytváøí rastrovou mapu uniformních náhodných odchylek, jejich¾ rozsah "
-"mù¾e být zadán u¾ivatelem."
+"Vytváøí rastrovou mapu uniformních náhodných odchylek, jejich¾ rozsah mù¾e "
+"být zadán u¾ivatelem."
 
 #: ../raster/r.surf.random/main.c:54
 msgid "Minimum random value"
@@ -3119,7 +3122,7 @@ msgstr "Vytváøí obrázky s texturálními vlastnostmi rastrové mapy"
 
 #: ../raster/r.texture/main.c:81
 msgid "Name of the input raster map"
-msgstr "Název  vstupního rastru" 
+msgstr "Název  vstupního rastru"
 
 #: ../raster/r.texture/main.c:88
 msgid "Name of the ouput raster map"
@@ -3127,7 +3130,7 @@ msgstr "Název  výstupního rastru"
 
 #: ../raster/r.texture/main.c:95
 msgid "The size of the sliding window (odd and >= 3)"
-msgstr "Velikost okna filtru (liché èíslo >=3)" 
+msgstr "Velikost okna filtru (liché èíslo >=3)"
 
 #: ../raster/r.texture/main.c:104
 msgid "The distance between two samples (>= 1)"
@@ -3139,7 +3142,7 @@ msgstr "Normalizovanì"
 
 #: ../raster/r.texture/main.c:118
 msgid "Angular Second Moment"
-msgstr "Druhý úhlový moment" 
+msgstr "Druhý úhlový moment"
 
 #: ../raster/r.texture/main.c:122
 msgid "Contrast"
@@ -3155,7 +3158,7 @@ msgstr "Variance"
 
 #: ../raster/r.texture/main.c:134
 msgid "Inverse Diff Moment"
-msgstr "Inverzní diferenèní moment" 
+msgstr "Inverzní diferenèní moment"
 
 #: ../raster/r.texture/main.c:138
 msgid "Sum Average"
@@ -3195,11 +3198,11 @@ msgstr "Maximální koeficient korelace"
 
 #: ../raster/r.thin/main.c:34
 msgid "Thins non-zero cells that denote linear features in a raster map layer."
-msgstr "Zmen¹í nenulové buòky tak, aby vznikly lineární struktury." 
+msgstr "Zmen¹í nenulové buòky tak, aby vznikly lineární struktury."
 
 #: ../raster/r.timestamp/main.c:19
 msgid "Print/add/remove a timestamp for a raster map."
-msgstr "Vytiskni/pøidej/sma¾ èasovou znaèku rastrových map." 
+msgstr "Vytiskni/pøidej/sma¾ èasovou znaèku rastrových map."
 
 #: ../raster/r.timestamp/main.c:33
 msgid "Datetime, datetime1/datetime2, or none"
@@ -3207,7 +3210,7 @@ msgstr "Datetime, ?, nebo ¾ádný"
 
 #: ../raster/r.to.vect/main.c:28
 msgid "Converts a raster map into a vector map layer."
-msgstr "Pøevede rastrovou mapu na vektorovou." 
+msgstr "Pøevede rastrovou mapu na vektorovou."
 
 #: ../raster/r.to.vect/main.c:36
 msgid "raster input file"
@@ -3219,102 +3222,104 @@ msgstr "Typ prvku"
 
 #: ../raster/r.to.vect/main.c:51
 msgid "Smooth Corners"
-msgstr "Vyhladit hrany" 
+msgstr "Vyhladit hrany"
 
 #: ../raster/r.to.vect/main.c:55
 msgid "Use raster values as categories instead of unique sequence (CELL only)"
-msgstr "Pou¾ij rastrové hodnoty jako kategorie místo jedineèné sekvence "
-"(pouze CELL)"
+msgstr ""
+"Pou¾ij rastrové hodnoty jako kategorie místo jedineèné sekvence (pouze CELL)"
 
-#: ../raster/r.topidx/main.c:46
+#: ../raster/r.topidx/main.c:43
 msgid "Creates topographic index, ln(a/tan(beta)), map from elevation map."
-msgstr "Vytvoøí mapu topografického indexu, ln(a/tan(beta)), z rastru "
-"digitálního modelu terénu." 
+msgstr ""
+"Vytvoøí mapu topografického indexu, ln(a/tan(beta)), z rastru digitálního "
+"modelu terénu."
 
-#: ../raster/r.topidx/main.c:50
+#: ../raster/r.topidx/main.c:47
 msgid "Elevation map"
 msgstr "Digitální model terénu"
 
-#: ../raster/r.topidx/main.c:57
+#: ../raster/r.topidx/main.c:54
 msgid "Topographic index ln(a/tanB) map"
 msgstr "Mapa topografického indexu ln(a/tanB)"
 
-#: ../raster/r.topidx/main.c:64
+#: ../raster/r.topidx/main.c:61
 #, fuzzy
 msgid "Output verbosely"
-msgstr "Utíkej nahlas" 
+msgstr "Utíkej nahlas"
 
-#: ../raster/r.topmodel/main.c:63
-msgid "Simulates TOPMODEL which is physically based hydrologic model."
-msgstr "Simuluje TOPMODEL, co¾ je dynamický hydrologický model." 
+#: ../raster/r.topmodel/main.c:62
+#, fuzzy
+msgid "Simulates TOPMODEL which is a physically based hydrologic model."
+msgstr "Simuluje TOPMODEL, co¾ je dynamický hydrologický model."
 
-#: ../raster/r.topmodel/main.c:69
+#: ../raster/r.topmodel/main.c:68
 msgid "(i)   Rectangular elevation map"
 msgstr "(i)   Pravohúhlá mapa vý¹ek"
 
-#: ../raster/r.topmodel/main.c:77
+#: ../raster/r.topmodel/main.c:76
 msgid "(i)   Basin map created by r.water.outlet"
 msgstr "(i)   Mapa povodí vytvoøená r.water.outlet"
 
-#: ../raster/r.topmodel/main.c:85
+#: ../raster/r.topmodel/main.c:84
 msgid "(o)   Depressionless elevation map"
-msgstr "(o)   Mapa vý¹ek zbavená depresí" 
+msgstr "(o)   Mapa vý¹ek zbavená depresí"
 
-#: ../raster/r.topmodel/main.c:93
+#: ../raster/r.topmodel/main.c:92
 msgid "(o)   Direction map with depressionless elevation map"
 msgstr "(o)   Mapa smìrù s mapou vý¹ek bez depresí"
 
-#: ../raster/r.topmodel/main.c:101
-msgid "(i/o) Basin elevation map (extracted)"
-msgstr "(i/o) Mapa vý¹ek v povodí (vyextrahovaná)" 
+#: ../raster/r.topmodel/main.c:100
+#, fuzzy
+msgid "(o) Basin elevation map (extracted)"
+msgstr "(i/o) Mapa vý¹ek v povodí (vyextrahovaná)"
 
-#: ../raster/r.topmodel/main.c:109
-msgid "(i/o) Topographic index ln(a/tanB) map (extracted)"
-msgstr "(i/o) Mapa topografický index ln(a/tanB) (vyextrahovaná)" 
+#: ../raster/r.topmodel/main.c:108
+#, fuzzy
+msgid "(o) Topographic index ln(a/tanB) map (extracted)"
+msgstr "(i/o) Mapa topografický index ln(a/tanB) (vyextrahovaná)"
 
-#: ../raster/r.topmodel/main.c:117
+#: ../raster/r.topmodel/main.c:116
 msgid "(i)   Number of topographic index classes"
 msgstr "(i)   Poèet tøíd topografického indexu"
 
-#: ../raster/r.topmodel/main.c:125
-msgid "(i/o) Topographic index statistics file"
+#: ../raster/r.topmodel/main.c:124
+#, fuzzy
+msgid "(o/i) Topographic index statistics file"
 msgstr "(i/o) Soubor se statistikou topografického indexu"
 
-#: ../raster/r.topmodel/main.c:132
+#: ../raster/r.topmodel/main.c:131
 msgid "(i)   TOPMODEL Parameters file"
 msgstr "(i)   Soubor s parametry pro TOPMODEL"
 
-#: ../raster/r.topmodel/main.c:139
+#: ../raster/r.topmodel/main.c:138
 msgid "(i)   Rainfall and potential evapotranspiration data file"
-msgstr "(i)   Soubor srá¾ek a potenciální evapotranspirací(i)"  
+msgstr "(i)   Soubor srá¾ek a potenciální evapotranspirací(i)"
 
-#: ../raster/r.topmodel/main.c:146
+#: ../raster/r.topmodel/main.c:145
 msgid "(o)   Output file"
 msgstr "(o)   Výstupní soubor"
 
-#: ../raster/r.topmodel/main.c:153
+#: ../raster/r.topmodel/main.c:152
 msgid "      Observed Q file"
 msgstr "      Soubor s pozorovaným Q"
 
-#: ../raster/r.topmodel/main.c:160
+#: ../raster/r.topmodel/main.c:159
 msgid "      output for given time step"
-msgstr "      výstup pro daný èasový krok" 
+msgstr "      výstup pro daný èasový krok"
 
-#: ../raster/r.topmodel/main.c:167
+#: ../raster/r.topmodel/main.c:166
 msgid "      output for given topographic index class"
 msgstr "      výstup pro danou tøídu topografického indexu"
 
-#: ../raster/r.topmodel/main.c:176
-msgid "Input data given for (i/o)"
+#: ../raster/r.topmodel/main.c:175
+#, fuzzy
+msgid "Input data given for (o/i)"
 msgstr "Vstupní data dána (i/o)"
 
-#: ../raster/r.topmodel/main.c:181
+#: ../raster/r.topmodel/main.c:180
 msgid "Overwrite outputs"
 msgstr "Pøepi¹ výstup"
-
-#: ../raster/r.topmodel/main.c:186
-msgid "Wide output"
-msgstr "Plný výstup" 
 
 #: ../raster/r.transect/main.c:34
 msgid ""
@@ -3325,7 +3330,7 @@ msgstr ""
 
 #: ../raster/r.transect/main.c:40
 msgid "Raster map to be queried"
-msgstr "Rastrová mapa, která bude dotazována" 
+msgstr "Rastrová mapa, která bude dotazována"
 
 #: ../raster/r.transect/main.c:58
 msgid "Transect definition"
@@ -3338,8 +3343,7 @@ msgstr "Znak pro oznaèení bunìk s hodnotou NULL"
 #: ../raster/r.univar2/main.c:55
 msgid ""
 "Calculates univariate statistics from the non-null cells of a raster map."
-msgstr ""
-"Spoèítá univariantní statistiku z ne-nullových bunìk rastrové mapy."
+msgstr "Spoèítá univariantní statistiku z ne-nullových bunìk rastrové mapy."
 
 #: ../raster/r.univar2/main.c:68
 #, fuzzy
@@ -3352,17 +3356,17 @@ msgstr "Vypi¹ statistiku ve stylu pro shell skript"
 
 #: ../raster/r.water.outlet/main.c:33
 msgid "Watershed basin creation program."
-msgstr "Program na vymezování povodí." 
+msgstr "Program na vymezování povodí."
 
 #: ../raster/r.water.outlet/main.c:55
 #, fuzzy
 msgid "The map E  grid coordinates"
-msgstr "Východní souøadnice mapy" 
+msgstr "Východní souøadnice mapy"
 
 #: ../raster/r.water.outlet/main.c:63
 #, fuzzy
 msgid "The map N grid coordinates"
-msgstr "Severní souøadnice mapy" 
+msgstr "Severní souøadnice mapy"
 
 #: ../raster/r.watershed/front/main.c:35
 msgid "Watershed basin analysis program."
@@ -3370,12 +3374,12 @@ msgstr "Program na analýzu povodí"
 
 #: ../raster/r.watershed/front/main.c:39
 msgid "Input map: elevation on which entire analysis is based"
-msgstr "Vstupní mapa: digitální model terénu, na kterém je zalo¾ena celá"
-"analýza"
+msgstr ""
+"Vstupní mapa: digitální model terénu, na kterém je zalo¾ena celáanalýza"
 
 #: ../raster/r.watershed/front/main.c:46
 msgid "Input map: locations of real depressions"
-msgstr "Vstupní mapa: umístìní skuteèných depresí" 
+msgstr "Vstupní mapa: umístìní skuteèných depresí"
 
 #: ../raster/r.watershed/front/main.c:53
 msgid "Input map: amount of overland flow per cell"
@@ -3383,15 +3387,15 @@ msgstr "Vstupní mapa: mno¾ství povrchového odtoku na buòku"
 
 #: ../raster/r.watershed/front/main.c:60
 msgid "Input map or value: percent of disturbed land, for USLE"
-msgstr "Vstupní mapa nebo hodnota: procenta poru¹eného povrchu, pro USLE" 
+msgstr "Vstupní mapa nebo hodnota: procenta poru¹eného povrchu, pro USLE"
 
 #: ../raster/r.watershed/front/main.c:67
 msgid "Input map: terrain blocking overland surface flow, for USLE"
-msgstr "Vstupní mapa: povrchu bránícího povrchovému odtoku, pro USLE" 
+msgstr "Vstupní mapa: povrchu bránícího povrchovému odtoku, pro USLE"
 
 #: ../raster/r.watershed/front/main.c:74
-msgid "Input value: minimum size of exterior watershed basin" 
-msgstr "Vstupní hodnota: minimální velikost vnìj¹ího povodí" 
+msgid "Input value: minimum size of exterior watershed basin"
+msgstr "Vstupní hodnota: minimální velikost vnìj¹ího povodí"
 
 #: ../raster/r.watershed/front/main.c:81
 msgid "Input value: maximum length of surface flow, for USLE"
@@ -3399,7 +3403,7 @@ msgstr "Vstupní hodnota: maximální délka povrchového odtoku, pro USLE"
 
 #: ../raster/r.watershed/front/main.c:88
 msgid "Output map: number of cells that drain through each cell"
-msgstr "Výstupní mapa: poèet bunìk, které  tekou skrz ka¾dou buòku" 
+msgstr "Výstupní mapa: poèet bunìk, které  tekou skrz ka¾dou buòku"
 
 #: ../raster/r.watershed/front/main.c:95
 msgid "Output map: drainage direction"
@@ -3407,15 +3411,15 @@ msgstr "Výstupní mapa: smìr odtoku"
 
 #: ../raster/r.watershed/front/main.c:102
 msgid "Output map: unique label for each watershed basin"
-msgstr "Výstupní mapa: jednoznaèný ¹títek pro ka¾dé povodí" 
+msgstr "Výstupní mapa: jednoznaèný ¹títek pro ka¾dé povodí"
 
 #: ../raster/r.watershed/front/main.c:109
 msgid "Output map: stream segments"
-msgstr "Výstupní mapa: èásti tokù" 
+msgstr "Výstupní mapa: èásti tokù"
 
 #: ../raster/r.watershed/front/main.c:116
 msgid "Output map: each half-basin is given a unique value"
-msgstr "Výstupní mapa: ka¾dému sub-povodí je dána jednoznaèná hodnota" 
+msgstr "Výstupní mapa: ka¾dému sub-povodí je dána jednoznaèná hodnota"
 
 #: ../raster/r.watershed/front/main.c:123
 msgid "Output map: useful for visual display of results"
@@ -3427,11 +3431,11 @@ msgstr "Výstupní mapa: délka svahu a sklon, faktor (LS) pro USLE"
 
 #: ../raster/r.watershed/front/main.c:137
 msgid "Output map: slope steepness (S) factor for USLE"
-msgstr "Výstupní mapa: faktor sklonu svahu (S) pro USLE" 
+msgstr "Výstupní mapa: faktor sklonu svahu (S) pro USLE"
 
 #: ../raster/r.watershed/front/main.c:144
 msgid "Enable extend memory option: Operation is slow"
-msgstr "Umo¾nìno roz¹íøené vyu¾ití pamìti: Operace je pomalá" 
+msgstr "Umo¾nìno roz¹íøené vyu¾ití pamìti: Operace je pomalá"
 
 #: ../raster/r.watershed/front/main.c:148
 msgid "Allow only horizontal and vertical flow of water"
@@ -3439,12 +3443,13 @@ msgstr "Povolit pouze horizontální  a vertikální tok vody"
 
 #: ../raster/r.what/main.c:67
 msgid "Queries raster map layers on their category values and category labels."
-msgstr "Program slou¾ící k dotazování rastrových map podle jejich kategorií "
-"a oznaèení."
+msgstr ""
+"Program slou¾ící k dotazování rastrových map podle jejich kategorií a "
+"oznaèení."
 
 #: ../raster/r.what/main.c:75
 msgid "Name of existing raster map(s) to query"
-msgstr "Název  existující(ch) rastrové(ých) map(y) pro dotazování." 
+msgstr "Název  existující(ch) rastrové(ých) map(y) pro dotazování."
 
 #: ../raster/r.what/main.c:82
 msgid "Size of point cache"
@@ -3456,7 +3461,7 @@ msgstr "Souøadnice dotazu"
 
 #: ../raster/r.what/main.c:102
 msgid "Show the category label in the grid cell(s)"
-msgstr "Uka¾ ¹títek kategorie v buòce rastru" 
+msgstr "Uka¾ ¹títek kategorie v buòce rastru"
 
 #: ../raster/r.what/main.c:106
 msgid "Turn on cache reporting"
@@ -3468,10 +3473,11 @@ msgid ""
 "(perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, 3) the "
 "direction of the maximum ROS, and optionally 4) the maximum potential "
 "spotting distance."
-msgstr "Vytvoøí 3 nebo 4 rastrové mapy, kde: 1. - základní (kolmé) tempo"
-"¹íøení (ROS), 2. - maximální tempo (vpøed) ROS, 3. - smìr maximálního ROS,"
-"a volitelnì, 4. - maximální potenciální vzdálenost, na kterou se mù¾e"
-"pøenést po¾ár jiskrami."
+msgstr ""
+"Vytvoøí 3 nebo 4 rastrové mapy, kde: 1. - základní (kolmé) tempo¹íøení "
+"(ROS), 2. - maximální tempo (vpøed) ROS, 3. - smìr maximálního ROS,a "
+"volitelnì, 4. - maximální potenciální vzdálenost, na kterou se mù¾epøenést "
+"po¾ár jiskrami."
 
 #: ../raster/wildfire/r.ros/main.c:231
 msgid "Name of raster map containing fuel MODELs"
@@ -3479,7 +3485,7 @@ msgstr "Název rastru s obsahujího potenciálnì hoølavý materiál"
 
 #: ../raster/wildfire/r.ros/main.c:237
 msgid "Name of raster map containing the 1-HOUR fuel MOISTURE (%)"
-msgstr "Název rastru obsahujího materiál, který vzdoruje ohni do 1 hodiny" 
+msgstr "Název rastru obsahujího materiál, který vzdoruje ohni do 1 hodiny"
 
 #: ../raster/wildfire/r.ros/main.c:243
 msgid "Name of raster map containing the 10-HOUR fuel MOISTURE (%)"
@@ -3507,7 +3513,9 @@ msgstr "Název rastru sklonù svahù (ve stupních)"
 
 #: ../raster/wildfire/r.ros/main.c:280
 msgid "Name of raster map containing ASPECT (degree, anti-clockwise from E)"
-msgstr "Název rastru obsahujícího expozice svahù (ve stupních, od V proti smìru hodinových ruèièek)"
+msgstr ""
+"Název rastru obsahujícího expozice svahù (ve stupních, od V proti smìru "
+"hodinových ruèièek)"
 
 #: ../raster/wildfire/r.ros/main.c:286
 msgid "Name of raster map containing ELEVATION (m) (required w/ -s)"
@@ -3519,8 +3527,9 @@ msgstr "Název rastru pro výstup (nìkolik nových vrstev)"
 
 #: ../raster/wildfire/r.ros/main.c:301
 msgid "Also produce maximum SPOTTING distance"
-msgstr "Vytvoø té¾ maximální vzdálenost, ma kterou mù¾e pøeskoèit"
-"jiskra a zpùsobit po¾ár"
+msgstr ""
+"Vytvoø té¾ maximální vzdálenost, ma kterou mù¾e pøeskoèitjiskra a zpùsobit "
+"po¾ár"
 
 #: ../raster/wildfire/r.spread/main.c:118
 msgid ""
@@ -3529,10 +3538,12 @@ msgid ""
 "the rates of spread (ROS), the ROS directions and the spread origins. It "
 "optionally produces raster maps to contain backlink UTM coordinates for "
 "tracing spread paths."
-msgstr "Simuluje (elipticky) anizotropní ¹íøení poøáru v grafickém oknì a vytváøí"
-"rastr kumulativního èasu ¹íøení, podle zadaných vstupních rastrù obsahujících"
-"tempo ¹íøení (ROS), smìr ¹íøení a zdroj po¾áru. Volitelnì vytváøí rastry se zpìtnou"
-"cestou (backlink), aby bylo mo¾né vystopovat cesty ¹íøení ohnì"
+msgstr ""
+"Simuluje (elipticky) anizotropní ¹íøení poøáru v grafickém oknì a "
+"vytváøírastr kumulativního èasu ¹íøení, podle zadaných vstupních rastrù "
+"obsahujícíchtempo ¹íøení (ROS), smìr ¹íøení a zdroj po¾áru. Volitelnì "
+"vytváøí rastry se zpìtnoucestou (backlink), aby bylo mo¾né vystopovat cesty "
+"¹íøení ohnì"
 
 #: ../raster/wildfire/r.spread/main.c:129
 msgid "Name of raster map containing MAX rate of spread (ROS) (cm/min)"
@@ -3553,8 +3564,9 @@ msgstr "Název rastru se zdrojovými místy odkud se ¹íøí po¾ár"
 #: ../raster/wildfire/r.spread/main.c:156
 msgid ""
 "Name of raster map containing max SPOTting DISTance (m) (required w/ -s)"
-msgstr "Název rastru obsahujího maximální vzdálenost, na kterou mù¾e pøeskoèit"
-"jiskra a zpùsobit po¾ár"
+msgstr ""
+"Název rastru obsahujího maximální vzdálenost, na kterou mù¾e pøeskoèitjiskra "
+"a zpùsobit po¾ár"
 
 #: ../raster/wildfire/r.spread/main.c:162
 msgid ""
@@ -3565,12 +3577,14 @@ msgstr "Název rastru obsahujího rychlost vìtru (stopy/min)"
 msgid ""
 "Name of raster map containing fine Fuel MOISture of the cell receiving a "
 "spotting firebrand (%) (required w/ -s)"
-msgstr "Název rastru obsahujího zbytkovou vlhkost v potenciálnì hoølavém materiálu"
-"pøedstavujícího oharky (hoølavý materiál) v %"
+msgstr ""
+"Název rastru obsahujího zbytkovou vlhkost v potenciálnì hoølavém "
+"materiálupøedstavujícího oharky (hoølavý materiál) v %"
 
 #: ../raster/wildfire/r.spread/main.c:175
 msgid "Basic sampling window SIZE needed to meet certain accuracy (3)"
-msgstr "Základní velikost okna pro analýzy potøebná k dosa¾ení urèité pøesnosti (3)"
+msgstr ""
+"Základní velikost okna pro analýzy potøebná k dosa¾ení urèité pøesnosti (3)"
 
 #: ../raster/wildfire/r.spread/main.c:181
 msgid "Sampling DENSity for additional COMPutin (range: 0.0 - 1.0 (0.5))"
@@ -3589,7 +3603,8 @@ msgid "Name of raster map as a display backdrop"
 msgstr "Název rastru, který bude umístìn na pozadí"
 
 #: ../raster/wildfire/r.spread/main.c:206
-msgid "Name of raster map to contain OUTPUT spread time (v min)"
+#, fuzzy
+msgid "Name of raster map to contain OUTPUT spread time (min)"
 msgstr "Název rastru, který bude obsahovat èas ¹íøení (v min)"
 
 #: ../raster/wildfire/r.spread/main.c:212
@@ -3616,7 +3631,8 @@ msgstr "Pro po¾áry: uva¾uj efekt odlétajících jisker"
 msgid ""
 "Recursively traces the least cost path backwards to cells from which the "
 "cumulative cost was determined."
-msgstr "Sleduje cestu zpìt a¾ do místa, odkud zapoèal výpoèet kumulativních nákladù"
+msgstr ""
+"Sleduje cestu zpìt a¾ do místa, odkud zapoèal výpoèet kumulativních nákladù"
 
 #: ../raster/wildfire/r.spreadpath/main.c:64
 msgid "Name of raster map containing back-path easting information"
@@ -3638,15 +3654,15 @@ msgstr "Název mapy obsahující cesty ¹íøení"
 msgid "Run verbosly"
 msgstr "Utíkej potichu"
 
-#: ../vector/v.category/main.c:173
+#: ../vector/v.category/main.c:175
 msgid "Too many layers for this operation"
 msgstr "Pro tuto operaci je pøíli¹ mnoho vrstev"
 
-#: ../vector/v.category/main.c:176
+#: ../vector/v.category/main.c:178
 msgid "2 layers must be specified"
 msgstr "Musí být zadány 2 vrstvy"
 
-#: ../vector/v.category/main.c:180
+#: ../vector/v.category/main.c:182
 msgid "Output vector wasn't entered."
 msgstr "Výstupní vektor nebyl zadán."
 
@@ -3656,8 +3672,9 @@ msgstr "Vstupní vektor nebyl nalezen."
 
 #: ../vector/v.convert/att.c:36
 msgid "No category labels (dig_cats) found, no table created.\n"
-msgstr "®ádné ¹títky kategorií (dig_cats) nebyly nalezeny, nebyla "
-"vytvoøena tabulka.\n"
+msgstr ""
+"®ádné ¹títky kategorií (dig_cats) nebyly nalezeny, nebyla vytvoøena "
+"tabulka.\n"
 
 #: ../vector/v.convert/att.c:41
 msgid "Cannot open dig_cats file."
@@ -3702,7 +3719,7 @@ msgstr "Selhalo pøidávání atributu (kategorie %d) k linii."
 #: ../vector/v.convert/old2new.c:92
 #, c-format
 msgid "WARNING: line %d label: %d matched another label: %d."
-msgstr "VAROVÁNÍ: linie %d ¹títek: %d odpovídá jinému ¹títku: %d." 
+msgstr "VAROVÁNÍ: linie %d ¹títek: %d odpovídá jinému ¹títku: %d."
 
 #: ../vector/v.convert/old2new.c:100
 msgid "Writing new file...\n"
@@ -3732,14 +3749,14 @@ msgstr "Vstupní soubor je verze 4.\n"
 
 #: ../vector/v.convert/read.c:87
 msgid "Input file is portable.\n"
-msgstr "Vstupní soubor je pøenositelný.\n" 
+msgstr "Vstupní soubor je pøenositelný.\n"
 
 #: ../vector/v.convert/read.c:89
 msgid ""
 "WARNING: Input file is not portable.We will attempt to convert anyway but "
 "conversion may fail.Please read manual for detail information."
 msgstr ""
-"VAROVÁNÍ: Vstupní soubor není pøenositelný. Pøesto se jej pokusím zmìnit, " 
+"VAROVÁNÍ: Vstupní soubor není pøenositelný. Pøesto se jej pokusím zmìnit, "
 "ale pøevod mù¾e selhat. Prosím, pøeètìte si manuál pro detailnìj¹í informace."
 
 #: ../vector/v.convert/read.c:161
@@ -3849,33 +3866,12 @@ msgstr "%-5d kategorií naèteno do pamìti.\n"
 #: ../vector/v.convert/type.c:29
 #, c-format
 msgid "SYSTEM_ERROR: OLD_T_NEW Got a bad type code %x"
-msgstr "SYSTÉMOVÁ CHYBA: OLD_T_NEW dostal jsem ¹patný typ kódu %x" 
+msgstr "SYSTÉMOVÁ CHYBA: OLD_T_NEW dostal jsem ¹patný typ kódu %x"
 
 #: ../vector/v.convert/type.c:50
 #, c-format
 msgid "SYSTEM_ERROR: NEW_T_OLD Got a bad type code %x"
 msgstr "SYSTÉMOVÁ CHYBA: NEW_T_OLD dostal jsem ¹patný kód %x"
-
-#: ../vector/v.db.select/main.c:89
-#, fuzzy
-msgid "Database connection not defined"
-msgstr "Spojení s databází nebylo definováno\n"
-
-#: ../vector/v.db.select/main.c:97
-#, fuzzy
-msgid "Cannot open select cursor"
-msgstr "Nelze otevøít kurzor pro výbìr"
-
-#: ../vector/v.db.select/main.c:115
-#, fuzzy
-msgid "Cannot fetch data"
-msgstr "Nelze stáhnout data"
-
-#: ../vector/v.db.select/main.c:145 ../vector/v.surf.idw/read_sites.c:38
-#: ../vector/v.to.points/main.c:239
-#, c-format
-msgid "Cannot open database %s by driver %s"
-msgstr "Nemohu otevøít databázi %s ovladaèem %s"
 
 #: ../vector/v.in.region/main.c:46
 msgid "Select type: line or area"
@@ -3884,6 +3880,12 @@ msgstr "Vyberte typ: linie nebo plocha"
 #: ../vector/v.surf.idw/read_sites.c:34
 msgid "Cannot read field info"
 msgstr "Nemohu èíst informace o poli"
+
+#: ../vector/v.surf.idw/read_sites.c:38 ../vector/v.to.points/main.c:239
+#: ../vector/v.db.select/main.c:145
+#, c-format
+msgid "Cannot open database %s by driver %s"
+msgstr "Nemohu otevøít databázi %s ovladaèem %s"
 
 #: ../vector/v.surf.idw/read_sites.c:45
 msgid "Column type not supported"
@@ -3927,11 +3929,11 @@ msgstr "Výstupní mapa, do které budou zapsány body"
 
 #: ../vector/v.to.points/main.c:170
 msgid "Write line vertices."
-msgstr "Zapí¹e vertexy linií." 
+msgstr "Zapí¹e vertexy linií."
 
 #: ../vector/v.to.points/main.c:174
 msgid "Interpolate points between line vertices."
-msgstr "Interpoluje body mezi vertexy linií." 
+msgstr "Interpoluje body mezi vertexy linií."
 
 #: ../vector/v.to.points/main.c:181
 msgid "Maximum distance between points in map units."
@@ -3952,14 +3954,14 @@ msgstr "Nemohu kopírovat tabulku"
 
 #: ../vector/v.to.points/main.c:250
 msgid "Cannot create index"
-msgstr "Nemohu vytvoøit index" 
+msgstr "Nemohu vytvoøit index"
 
 #: ../vector/v.to.points/main.c:253
 #, c-format
 msgid "Cannot grant privileges on table %s"
 msgstr "Nemohu poskytnou práva na tabulku %s"
 
-#: ../vector/v.to.points/main.c:321
+#: ../vector/v.to.points/main.c:324
 #, c-format
 msgid "%d points written to output map\n"
 msgstr "%d bodù zapsáno do výstupní mapy\n"
@@ -4008,7 +4010,7 @@ msgstr ""
 #: ../vector/v.transform/main.c:224
 #, c-format
 msgid "New vector map <%s> boundary coordinates:\n"
-msgstr "Nová vektorová mapa <%s> má hranièní souøadnice:\n" 
+msgstr "Nová vektorová mapa <%s> má hranièní souøadnice:\n"
 
 #: ../vector/v.transform/main.c:225
 #, fuzzy, c-format
@@ -4035,7 +4037,7 @@ msgid ""
 "                          CHECK MAP RESIDUALS\n"
 "\n"
 msgstr ""
-"                        KONTROLUJI REZIDUA\n"       
+"                        KONTROLUJI REZIDUA\n"
 "\n"
 
 #: ../vector/v.transform/print_trans.c:30
@@ -4048,7 +4050,7 @@ msgid ""
 "residuals\n"
 msgstr ""
 " BOD        souø. x    souø. y  |        souø. x   souø. y    |      "
-"reziduum\n"     
+"reziduum\n"
 
 #: ../vector/v.transform/print_trans.c:43
 #, c-format
@@ -4064,11 +4066,11 @@ msgstr ""
 #: ../vector/v.transform/print_trans.c:44
 #, c-format
 msgid "  Residual mean average   : %f\n"
-msgstr "  Støední hodnota reziduí   : %f\n" 
+msgstr "  Støední hodnota reziduí   : %f\n"
 
 #: ../vector/v.transform/setup_trans.c:88
 msgid "The points weren't spread out enough."
-msgstr "Body nebyly rozmístìny v dostateèných rozestupech." 
+msgstr "Body nebyly rozmístìny v dostateèných rozestupech."
 
 #: ../vector/v.transform/setup_trans.c:91
 #, c-format
@@ -4109,6 +4111,39 @@ msgstr "%d záznamù aktualizováno\n"
 msgid "%d update errors\n"
 msgstr "%d chyb pøi aktualizaci\n"
 
+#: ../vector/v.db.select/main.c:89
+#, fuzzy
+msgid "Database connection not defined"
+msgstr "Spojení s databází nebylo definováno\n"
+
+#: ../vector/v.db.select/main.c:97
+#, fuzzy
+msgid "Cannot open select cursor"
+msgstr "Nelze otevøít kurzor pro výbìr"
+
+#: ../vector/v.db.select/main.c:115
+#, fuzzy
+msgid "Cannot fetch data"
+msgstr "Nelze stáhnout data"
+
+#~ msgid "Do zeroes in input map represent elevation?"
+#~ msgstr "Representují nuly ve vstupní mapì vý¹ky nad moøem?"
+
+#~ msgid "Name of the aspect raster file"
+#~ msgstr "Název souboru s expozicí"
+
+#~ msgid "Name of the slope raster file"
+#~ msgstr "Název souboru se sklony svahù"
+
+#~ msgid "Output direct (beam) irradiance/irradiation file (raster)"
+#~ msgstr "Výstupní soubor pøímého záøení (rastr)"
+
+#~ msgid "Output reflected irradiance/irradiation file (raster)"
+#~ msgstr "Výstupní soubor s hodnotami odra¾eného záøení (rastr)"
+
+#~ msgid "Wide output"
+#~ msgstr "Plný výstup"
+
 #, fuzzy
 #~ msgid "Overwrite output maps"
 #~ msgstr "Pøepi¹ výstupní mapy"
@@ -4116,4 +4151,3 @@ msgstr "%d chyb pøi aktualizaci\n"
 #, fuzzy
 #~ msgid "Overwrite output map"
 #~ msgstr "Pøepi¹ výstupní mapu"
-

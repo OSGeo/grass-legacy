@@ -5,14 +5,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_sl\n"
-"POT-Creation-Date: 2005-01-20 18:31+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-03-25 10:42+0100\n"
 "PO-Revision-Date: 2004-12-20 15:01+0100\n"
 "Last-Translator: Miha Staut <mihastaut@yahoo.co.uk>\n"
 "Language-Team: Sloven¹èina <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 "X-Generator: KBabel 1.9\n"
 
 #: ../db/base/columns.c:33 ../db/base/createdb.c:24 ../db/base/describe.c:34
@@ -260,12 +260,12 @@ msgstr "'password' v definiciji baze podatkov ni podprt, uporabi db.login"
 msgid "Unknown option in database definition for mysql: '%s'"
 msgstr "Nepoznana mo¾nost v definiciji baze podatkov za mysql: '%s'"
 
-#: ../db/drivers/ogr/describe.c:87
+#: ../db/drivers/ogr/describe.c:88
 #, c-format
 msgid "OGR driver: column '%s', OGR type %d  is not supported"
 msgstr "OGR gonilnik: kolona '%s', OGR tip %d ni podprt"
 
-#: ../db/drivers/ogr/describe.c:143
+#: ../db/drivers/ogr/describe.c:144
 #, c-format
 msgid ""
 "column '%s', type 'string': unknown width -> stored as varchar(250) some "
@@ -274,7 +274,7 @@ msgstr ""
 "kolona '%s', tip 'string': nepoznana ¹irina -> shranjen kot varchar(250),\n"
 "nekateri podatki so lahko izgubljeni"
 
-#: ../db/drivers/ogr/describe.c:151 ../db/drivers/ogr/fetch.c:124
+#: ../db/drivers/ogr/describe.c:152 ../db/drivers/ogr/fetch.c:124
 msgid "Unknown type"
 msgstr "Nepoznan tip"
 
@@ -418,16 +418,16 @@ msgstr ""
 "\n"
 "NAPAKA: ne morem prebrati vektorskega sloja\n"
 
-#: ../display/d.vect/main.c:501
+#: ../display/d.vect/main.c:502
 msgid "Plotting ... "
 msgstr "Ri¹em ..."
 
-#: ../display/d.vect/main.c:510
+#: ../display/d.vect/main.c:511
 msgid ""
 "The bounding box of the map outside current region, nothing displayed.\n"
 msgstr "Obseg sloja je izven trenutne regije, nièesar ne bom prikazal.\n"
 
-#: ../display/d.vect/main.c:567
+#: ../display/d.vect/main.c:568
 msgid "Done\n"
 msgstr "Narejeno\n"
 
@@ -685,6 +685,10 @@ msgstr ""
 msgid "No input map(s) specified."
 msgstr "Doloèena ni bila nobena vhodna datoteka."
 
+#: ../imagery/i.points/main.c:27
+msgid "Mark ground control points on image to be rectified."
+msgstr ""
+
 #: ../raster/r.average/main.c:31
 msgid ""
 "Finds the average of values in a cover map within areas assigned the same "
@@ -829,7 +833,7 @@ msgstr ""
 #: ../raster/r.grow2/main.c:162 ../raster/r.mfilter/main.c:79
 #: ../raster/r.patch/main.c:64 ../raster/r.report/parse.c:99
 #: ../raster/r.resample/main.c:57 ../raster/r.rescale.eq/main.c:78
-#: ../raster/r.slope.aspect/main.c:253 ../raster/r.stats/main.c:141
+#: ../raster/r.slope.aspect/main.c:253 ../raster/r.stats/main.c:146
 #: ../raster/r.texture/main.c:114
 #, fuzzy
 msgid "Quiet"
@@ -847,23 +851,23 @@ msgstr ""
 msgid "Type of color table"
 msgstr ""
 
-#: ../raster/r.colors/main.c:158
+#: ../raster/r.colors/main.c:171
 msgid "Raster map name from which to copy color table"
 msgstr ""
 
-#: ../raster/r.colors/main.c:164
+#: ../raster/r.colors/main.c:177
 msgid "Name of predefined rules file"
 msgstr ""
 
-#: ../raster/r.colors/main.c:169
+#: ../raster/r.colors/main.c:182
 msgid "Keep existing color table"
 msgstr ""
 
-#: ../raster/r.colors/main.c:173 ../raster/r.rescale/main.c:77
+#: ../raster/r.colors/main.c:186 ../raster/r.rescale/main.c:77
 msgid "Quietly"
 msgstr ""
 
-#: ../raster/r.colors/main.c:177
+#: ../raster/r.colors/main.c:190
 msgid "List rules"
 msgstr ""
 
@@ -881,79 +885,79 @@ msgstr "fp: Razpon podatkov je %.25f do %.25f\n"
 msgid "Data range is %ld to %ld\n"
 msgstr "Razpon podatkov je %ld do %ld\n"
 
-#: ../raster/r.colors/rules.c:110 ../raster/r.colors/rules.c:114
+#: ../raster/r.colors/rules.c:118
 msgid "Your color rules do not cover the whole range of data!"
 msgstr "Tvoja barvna paleta ne zaobsega celotnega razpona podatkov!"
 
-#: ../raster/r.colors/rules.c:188
+#: ../raster/r.colors/rules.c:191
 msgid "Enter a rule in one of these formats:\n"
 msgstr "Vnesi pogoje v enem od naslednjih formatov:\n"
 
-#: ../raster/r.colors/rules.c:190
+#: ../raster/r.colors/rules.c:193
 msgid " val color\n"
 msgstr " vrednost barva\n"
 
-#: ../raster/r.colors/rules.c:191
+#: ../raster/r.colors/rules.c:194
 #, c-format
 msgid " n%% color\n"
 msgstr " n%% barva\n"
 
-#: ../raster/r.colors/rules.c:192
+#: ../raster/r.colors/rules.c:195
 msgid " nv color\n"
 msgstr " nv barva\n"
 
-#: ../raster/r.colors/rules.c:193
+#: ../raster/r.colors/rules.c:196
 msgid " default color\n"
 msgstr " privzeta barva\n"
 
-#: ../raster/r.colors/rules.c:194
+#: ../raster/r.colors/rules.c:197
 msgid "color can be one of:\n"
 msgstr "barva lahko predstavlja katero koli od naslednjih:\n"
 
-#: ../raster/r.colors/rules.c:196
+#: ../raster/r.colors/rules.c:199
 msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
 msgstr "ali R:G:B barvno definicijo, npr. 0:127:255\n"
 
-#: ../raster/r.colors/rules.c:237
+#: ../raster/r.colors/rules.c:240
 #, c-format
 msgid "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n"
 msgstr ""
 "** opozorilo: R:G:B vrednost(i) so izven dovoljenega razpona \n"
 "[0 do 255]: %d:%d:%d **\n"
 
-#: ../raster/r.colors/rules.c:238 ../raster/r.colors/rules.c:254
-#: ../raster/r.colors/rules.c:267 ../raster/r.colors/rules.c:279
-#: ../raster/r.colors/rules.c:289 ../raster/r.colors/rules.c:301
-#: ../raster/r.colors/rules.c:376 ../raster/r.colors/rules.c:404
+#: ../raster/r.colors/rules.c:241 ../raster/r.colors/rules.c:257
+#: ../raster/r.colors/rules.c:270 ../raster/r.colors/rules.c:282
+#: ../raster/r.colors/rules.c:292 ../raster/r.colors/rules.c:304
+#: ../raster/r.colors/rules.c:379 ../raster/r.colors/rules.c:407
 msgid "** rule is not added **\n"
 msgstr "** pogoj ni dodan **\n"
 
-#: ../raster/r.colors/rules.c:253
+#: ../raster/r.colors/rules.c:256
 #, c-format
 msgid "** warning: R G B value(s) out of range [0..255]: %d %d %d **\n"
 msgstr ""
 "** opozorilo: R G B vrednost(i) so izven dovoljenega razpona \n"
 "[0 do 255]: %d %d %d **\n"
 
-#: ../raster/r.colors/rules.c:266 ../raster/r.colors/rules.c:288
+#: ../raster/r.colors/rules.c:269 ../raster/r.colors/rules.c:291
 msgid "** warning: no such value **\n"
 msgstr "** opozorilo: take vrednosti ni **\n"
 
-#: ../raster/r.colors/rules.c:402
+#: ../raster/r.colors/rules.c:405
 #, c-format
 msgid "%s:line %d:%s\n"
 msgstr "%s:linija %d:%s\n"
 
-#: ../raster/r.colors/rules.c:403
+#: ../raster/r.colors/rules.c:406
 msgid "** bad color specification **\n"
 msgstr "** napaèna specifikacija barv **\n"
 
-#: ../raster/r.colors/rules.c:424
+#: ../raster/r.colors/rules.c:427
 #, c-format
 msgid "%s - unknown color\n"
 msgstr "%s - nepoznana barva\n"
 
-#: ../raster/r.colors/rules.c:425
+#: ../raster/r.colors/rules.c:428
 msgid "Valid colors are:\n"
 msgstr "Veljavne barve so:\n"
 
@@ -1004,7 +1008,7 @@ msgstr ""
 #: ../raster/r.compress/main.c:59 ../raster/r.distance/parse.c:38
 #: ../raster/r.neighbors/main.c:110 ../raster/r.out.ppm/main.c:64
 #: ../raster/r.out.ppm3/main.c:76 ../raster/r.random/main.c:69
-#: ../raster/r.series/main.c:112
+#: ../raster/r.series/main.c:114
 msgid "Run quietly"
 msgstr ""
 
@@ -1020,35 +1024,35 @@ msgstr ""
 msgid "Name of an existing raster map"
 msgstr ""
 
-#: ../raster/r.contour/main.c:85
+#: ../raster/r.contour/main.c:86
 msgid "Name of output vector file"
 msgstr ""
 
-#: ../raster/r.contour/main.c:92
+#: ../raster/r.contour/main.c:93
 msgid "List of contour levels"
 msgstr ""
 
-#: ../raster/r.contour/main.c:98
+#: ../raster/r.contour/main.c:99
 msgid "Minimum contour level"
 msgstr ""
 
-#: ../raster/r.contour/main.c:104
+#: ../raster/r.contour/main.c:105
 msgid "Maximum contour level"
 msgstr ""
 
-#: ../raster/r.contour/main.c:110
+#: ../raster/r.contour/main.c:111
 msgid "Increment between contour levels"
 msgstr ""
 
-#: ../raster/r.contour/main.c:117
+#: ../raster/r.contour/main.c:118
 msgid "Minimum number of points for a contour line (0 -> no limit)"
 msgstr ""
 
-#: ../raster/r.contour/main.c:121
+#: ../raster/r.contour/main.c:122
 msgid "Suppress progress report & min/max information"
 msgstr ""
 
-#: ../raster/r.contour/main.c:125
+#: ../raster/r.contour/main.c:126
 msgid "Suppress single crossing error messages"
 msgstr ""
 
@@ -1091,11 +1095,12 @@ msgstr ""
 msgid "Cost assigned to null cells. By default, null cells are excluded"
 msgstr ""
 
-#: ../raster/r.cost/main.c:176
+#: ../raster/r.cost/main.c:176 ../raster/r.los/main.c:121
 msgid "Percent of map to keep in memory"
 msgstr ""
 
-#: ../raster/r.cost/main.c:180 ../raster/wildfire/r.ros/main.c:297
+#: ../raster/r.cost/main.c:180 ../raster/r.los/main.c:125
+#: ../raster/wildfire/r.ros/main.c:297
 msgid "Run verbosely"
 msgstr ""
 
@@ -1190,7 +1195,7 @@ msgstr ""
 msgid "Maps for computing inter-class distances"
 msgstr ""
 
-#: ../raster/r.distance/parse.c:30 ../raster/r.stats/main.c:89
+#: ../raster/r.distance/parse.c:30 ../raster/r.stats/main.c:90
 #, fuzzy
 msgid "Output field separator"
 msgstr "izpi¹i znak razmejitve med polji"
@@ -1529,24 +1534,24 @@ msgstr ""
 msgid "Number of rows to hold in memory"
 msgstr ""
 
-#: ../raster/r.info/main.c:48
+#: ../raster/r.info/main.c:49
 msgid "Outputs basic information about a user-specified raster map layer."
 msgstr ""
 
-#: ../raster/r.info/main.c:56 ../raster/r.profile/main.c:64
+#: ../raster/r.info/main.c:57 ../raster/r.profile/main.c:64
 #: ../raster/r.random/main.c:44 ../raster/r.thin/main.c:42
 msgid "Name of existing raster map"
 msgstr ""
 
-#: ../raster/r.info/main.c:60
+#: ../raster/r.info/main.c:61
 msgid "Print range only"
 msgstr ""
 
-#: ../raster/r.info/main.c:64
+#: ../raster/r.info/main.c:65
 msgid "Print resolution (NS-res, EW-res) only"
 msgstr ""
 
-#: ../raster/r.info/main.c:68
+#: ../raster/r.info/main.c:69
 msgid "Print raster map type only"
 msgstr ""
 
@@ -1584,32 +1589,32 @@ msgstr ""
 msgid "no header in the report"
 msgstr ""
 
-#: ../raster/r.los/main.c:62
+#: ../raster/r.los/main.c:67
 msgid "Line-of-sight raster analysis program."
 msgstr ""
 
-#: ../raster/r.los/main.c:71
+#: ../raster/r.los/main.c:76
 #, fuzzy
 msgid "Raster map containing elevation data"
 msgstr "Vhodni sloj vsebuje linije."
 
-#: ../raster/r.los/main.c:78
+#: ../raster/r.los/main.c:83
 msgid "Raster map name for storing results"
 msgstr ""
 
-#: ../raster/r.los/main.c:85
+#: ../raster/r.los/main.c:90
 msgid "Coordinate identifying the viewing location"
 msgstr ""
 
-#: ../raster/r.los/main.c:91
+#: ../raster/r.los/main.c:96
 msgid "Binary (1/0) raster map"
 msgstr ""
 
-#: ../raster/r.los/main.c:99
+#: ../raster/r.los/main.c:104
 msgid "Height of the viewing location"
 msgstr ""
 
-#: ../raster/r.los/main.c:107
+#: ../raster/r.los/main.c:112
 #, fuzzy
 msgid "Max distance from the viewing point (meters)"
 msgstr "Najveèja razdalja med toèkami in enotami karte."
@@ -1687,7 +1692,7 @@ msgstr ""
 msgid "Name of existing raster file"
 msgstr ""
 
-#: ../raster/r.neighbors/main.c:73 ../raster/r.series/main.c:101
+#: ../raster/r.neighbors/main.c:73 ../raster/r.series/main.c:103
 msgid "Name of the new raster file"
 msgstr ""
 
@@ -2273,7 +2278,7 @@ msgstr ""
 msgid "Name of an output file to hold the report"
 msgstr ""
 
-#: ../raster/r.report/parse.c:87 ../raster/r.stats/main.c:112
+#: ../raster/r.report/parse.c:87 ../raster/r.stats/main.c:113
 msgid "Number of fp subranges to collect stats from"
 msgstr ""
 
@@ -2297,7 +2302,7 @@ msgstr ""
 msgid "Filter out cells where all maps have no data"
 msgstr ""
 
-#: ../raster/r.report/parse.c:115 ../raster/r.stats/main.c:161
+#: ../raster/r.report/parse.c:115 ../raster/r.stats/main.c:166
 msgid "Report for cats fp ranges (fp maps only)"
 msgstr ""
 
@@ -2312,75 +2317,71 @@ msgid ""
 "spline with tension and smoothing."
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:175
-msgid "Do zeroes in input map represent elevation?"
-msgstr ""
-
-#: ../raster/r.resamp.rst/main.c:181
+#: ../raster/r.resamp.rst/main.c:177
 msgid "Desired east-west resolution"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:187
+#: ../raster/r.resamp.rst/main.c:183
 msgid "Desired north-south resolution"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:194
+#: ../raster/r.resamp.rst/main.c:190
 msgid "Output z-file (elevation)"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:201
+#: ../raster/r.resamp.rst/main.c:197
 msgid "Slope"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:208
+#: ../raster/r.resamp.rst/main.c:204
 msgid "Aspect"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:215
+#: ../raster/r.resamp.rst/main.c:211
 msgid "Profile curvature"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:222
+#: ../raster/r.resamp.rst/main.c:218
 msgid "Tangential curvature"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:229
+#: ../raster/r.resamp.rst/main.c:225
 msgid "Mean curvature"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:233
+#: ../raster/r.resamp.rst/main.c:229
 msgid "Output partial derivatives instead"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:240
+#: ../raster/r.resamp.rst/main.c:236
 msgid "Name of the cell file containing smoothing"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:247
+#: ../raster/r.resamp.rst/main.c:243
 msgid "Name of the raster file used as mask"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:254
+#: ../raster/r.resamp.rst/main.c:250
 msgid "Rows/columns overlap for segmentation"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:261
+#: ../raster/r.resamp.rst/main.c:257
 msgid "Conversion factor for z-values"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:268
+#: ../raster/r.resamp.rst/main.c:264
 msgid "Tension"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:274
+#: ../raster/r.resamp.rst/main.c:270
 msgid "Anisotropy angle (in degrees)"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:280
+#: ../raster/r.resamp.rst/main.c:276
 msgid "Anisotropy scaling factor"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:284
+#: ../raster/r.resamp.rst/main.c:280
 msgid "Use dnorm independent tension"
 msgstr ""
 
@@ -2427,21 +2428,21 @@ msgid ""
 "layer."
 msgstr ""
 
-#: ../raster/r.series/main.c:84
+#: ../raster/r.series/main.c:86
 msgid ""
 "Makes each output cell value a function of the values assigned to the "
 "corresponding cells in the input raster map layers."
 msgstr ""
 
-#: ../raster/r.series/main.c:94
+#: ../raster/r.series/main.c:96
 msgid "Names of existing raster files"
 msgstr ""
 
-#: ../raster/r.series/main.c:108
+#: ../raster/r.series/main.c:110
 msgid "Aggregate operation"
 msgstr ""
 
-#: ../raster/r.series/main.c:116
+#: ../raster/r.series/main.c:118
 msgid "Propagate NULLs"
 msgstr ""
 
@@ -2532,64 +2533,69 @@ msgstr ""
 msgid "Cover values extracted from the category labels of the cover map"
 msgstr ""
 
-#: ../raster/r.stats/main.c:70
+#: ../raster/r.stats/main.c:71
 msgid "Generates area statistics for raster map layers."
 msgstr ""
 
-#: ../raster/r.stats/main.c:80
+#: ../raster/r.stats/main.c:81
 msgid "Raster input maps(s)"
 msgstr ""
 
-#: ../raster/r.stats/main.c:97
+#: ../raster/r.stats/main.c:98
 msgid "String representing no data cell value"
 msgstr ""
 
-#: ../raster/r.stats/main.c:104
+#: ../raster/r.stats/main.c:105
 #, fuzzy
 msgid "Output file name"
 msgstr "Ime izhodne tabele"
 
-#: ../raster/r.stats/main.c:121
+#: ../raster/r.stats/main.c:122
 msgid "One cell (range) per line"
 msgstr ""
 
-#: ../raster/r.stats/main.c:125
+#: ../raster/r.stats/main.c:126
+#, fuzzy
+msgid "Print averaged values instead of intervals"
+msgstr "sistemske tabele namesto uporabni¹kih tabel"
+
+#: ../raster/r.stats/main.c:130
 msgid "Print area totals"
 msgstr ""
 
-#: ../raster/r.stats/main.c:129
+#: ../raster/r.stats/main.c:134
 msgid "Print cell counts"
 msgstr ""
 
-#: ../raster/r.stats/main.c:133
+#: ../raster/r.stats/main.c:138
 msgid "Print APPROXIMATE percents (total percent may not be 100%)"
 msgstr ""
 
-#: ../raster/r.stats/main.c:137
+#: ../raster/r.stats/main.c:142
 msgid "Print category labels"
 msgstr ""
 
-#: ../raster/r.stats/main.c:145
+#: ../raster/r.stats/main.c:150
 msgid "Suppress reporting of any NULLs"
 msgstr ""
 
-#: ../raster/r.stats/main.c:149
+#: ../raster/r.stats/main.c:154
 msgid "Suppress reporting of NULLs when all values are NULL"
 msgstr ""
 
-#: ../raster/r.stats/main.c:153
+#: ../raster/r.stats/main.c:158
 msgid "Print grid coordinates (east and north)"
 msgstr ""
 
-#: ../raster/r.stats/main.c:157
+#: ../raster/r.stats/main.c:162
 msgid "Print x and y (column and row)"
 msgstr ""
 
-#: ../raster/r.stats/main.c:165
+#: ../raster/r.stats/main.c:170
 msgid "Print raw indexes of fp ranges (fp maps only)"
 msgstr ""
 
-#: ../raster/r.stats/main.c:169
+#: ../raster/r.stats/main.c:174
 msgid "Read fp map as integer (use map's quant rules)"
 msgstr ""
 
@@ -2613,67 +2619,81 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.sun/main.c:184
-msgid "Name of the elevation raster file"
-msgstr ""
+#, fuzzy
+msgid "Name of the input elevation raster map [meters]"
+msgstr "Nisem mogel odpreti vhodne datoteke dig_att."
 
 #: ../raster/r.sun/main.c:191
-msgid "Name of the aspect raster file"
+msgid ""
+"Name of the input aspect map (terrain aspect or azimuth of the solar panel) "
+"[decimal degrees]"
 msgstr ""
 
 #: ../raster/r.sun/main.c:198
-msgid "Name of the slope raster file"
+msgid ""
+"Name of the input slope raster map (terrain slope or solar panel "
+"inclination) [decimal degrees]"
 msgstr ""
 
 #: ../raster/r.sun/main.c:206
-msgid "Name of the Linke turbidity coefficient raster file"
+msgid ""
+"Name of the Linke atmospheric turbidity coefficient input raster map [-]"
 msgstr ""
 
 #: ../raster/r.sun/main.c:215
-msgid "A single value of the Linke turbidity coefficient"
+msgid "A single value of the Linke atmospheric turbidity coefficient [-]"
 msgstr ""
 
 #: ../raster/r.sun/main.c:223
-msgid "Name of the albedo coefficient raster file"
+msgid "Name of the ground albedo coefficient input raster map [-]"
 msgstr ""
 
 #: ../raster/r.sun/main.c:231
-msgid "A single value of the albedo coefficient"
+msgid "A single value of the ground albedo coefficient [-]"
 msgstr ""
 
 #: ../raster/r.sun/main.c:239
-msgid "Name of the latitude raster file"
-msgstr ""
+#, fuzzy
+msgid "Name of the latitudes input raster map [decimal degrees]"
+msgstr "Nisem mogel odpreti vhodne datoteke dig_att."
 
 #: ../raster/r.sun/main.c:246
-msgid "A single value of latitude"
+msgid "A single value of latitude [decimal degrees]"
 msgstr ""
 
 #: ../raster/r.sun/main.c:254
-msgid "The real-sky beam radiation coefficient file"
+msgid "Name of real-sky beam radiation coefficient raster map [-]"
 msgstr ""
 
 #: ../raster/r.sun/main.c:262
-msgid "The real-sky diffuse radiation coefficient file"
+msgid "Name of real-sky diffuse radiation coefficient raster map [-]"
 msgstr ""
 
 #: ../raster/r.sun/main.c:269
-msgid "Output incidence angle file (raster)"
-msgstr ""
+#, fuzzy
+msgid "Output incidence angle raster map (mode 1 only)"
+msgstr "Ime izhodnega gonilnika"
 
 #: ../raster/r.sun/main.c:277
-msgid "Output direct (beam) irradiance/irradiation file (raster)"
+msgid ""
+"Output beam irradiance [W.m-2] (mode 1) or irradiation raster file [Wh.m-2."
+"day-1] (mode 2)"
 msgstr ""
 
 #: ../raster/r.sun/main.c:284
-msgid "Output insolation time file (raster)"
+msgid "Output insolation time raster map [h] (mode 2 only)"
 msgstr ""
 
 #: ../raster/r.sun/main.c:292
-msgid "Output diffuse irradiance/irradiation file (raster)"
+msgid ""
+"Output diffuse irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2."
+"day-1] (mode 2)"
 msgstr ""
 
 #: ../raster/r.sun/main.c:300
-msgid "Output reflected irradiance/irradiation file (raster)"
+msgid ""
+"Output ground reflected irradiance [W.m-2] (mode 1) or irradiation raster "
+"map [Wh.m-2.day-1] (mode 2)"
 msgstr ""
 
 #: ../raster/r.sun/main.c:306
@@ -2681,15 +2701,15 @@ msgid "No. of day of the year (1-365)"
 msgstr ""
 
 #: ../raster/r.sun/main.c:313
-msgid "Time step computing all-day radiation"
+msgid "Time step when computing all-day radiation sums [decimal hours]"
 msgstr ""
 
 #: ../raster/r.sun/main.c:320
-msgid "Required declination value (overriding the internal value)"
+msgid "Declination value (overriding the internally computed value) [radians]"
 msgstr ""
 
 #: ../raster/r.sun/main.c:327
-msgid "Local (solar) time [decimal hours]"
+msgid "Local (solar) time (to be set for mode 1 only) [decimal hours]"
 msgstr ""
 
 #: ../raster/r.sun/main.c:334
@@ -3120,95 +3140,90 @@ msgstr ""
 msgid "Use raster values as categories instead of unique sequence (CELL only)"
 msgstr ""
 
-#: ../raster/r.topidx/main.c:46
+#: ../raster/r.topidx/main.c:43
 msgid "Creates topographic index, ln(a/tan(beta)), map from elevation map."
 msgstr ""
 
-#: ../raster/r.topidx/main.c:50
+#: ../raster/r.topidx/main.c:47
 msgid "Elevation map"
 msgstr ""
 
-#: ../raster/r.topidx/main.c:57
+#: ../raster/r.topidx/main.c:54
 msgid "Topographic index ln(a/tanB) map"
 msgstr ""
 
-#: ../raster/r.topidx/main.c:64
+#: ../raster/r.topidx/main.c:61
 #, fuzzy
 msgid "Output verbosely"
 msgstr "Ime izhodnega gonilnika"
 
-#: ../raster/r.topmodel/main.c:63
-msgid "Simulates TOPMODEL which is physically based hydrologic model."
+#: ../raster/r.topmodel/main.c:62
+msgid "Simulates TOPMODEL which is a physically based hydrologic model."
 msgstr ""
 
-#: ../raster/r.topmodel/main.c:69
+#: ../raster/r.topmodel/main.c:68
 msgid "(i)   Rectangular elevation map"
 msgstr ""
 
-#: ../raster/r.topmodel/main.c:77
+#: ../raster/r.topmodel/main.c:76
 msgid "(i)   Basin map created by r.water.outlet"
 msgstr ""
 
-#: ../raster/r.topmodel/main.c:85
+#: ../raster/r.topmodel/main.c:84
 msgid "(o)   Depressionless elevation map"
 msgstr ""
 
-#: ../raster/r.topmodel/main.c:93
+#: ../raster/r.topmodel/main.c:92
 msgid "(o)   Direction map with depressionless elevation map"
 msgstr ""
 
-#: ../raster/r.topmodel/main.c:101
-msgid "(i/o) Basin elevation map (extracted)"
+#: ../raster/r.topmodel/main.c:100
+msgid "(o) Basin elevation map (extracted)"
 msgstr ""
 
-#: ../raster/r.topmodel/main.c:109
-msgid "(i/o) Topographic index ln(a/tanB) map (extracted)"
+#: ../raster/r.topmodel/main.c:108
+msgid "(o) Topographic index ln(a/tanB) map (extracted)"
 msgstr ""
 
-#: ../raster/r.topmodel/main.c:117
+#: ../raster/r.topmodel/main.c:116
 msgid "(i)   Number of topographic index classes"
 msgstr ""
 
-#: ../raster/r.topmodel/main.c:125
-msgid "(i/o) Topographic index statistics file"
+#: ../raster/r.topmodel/main.c:124
+msgid "(o/i) Topographic index statistics file"
 msgstr ""
 
-#: ../raster/r.topmodel/main.c:132
+#: ../raster/r.topmodel/main.c:131
 msgid "(i)   TOPMODEL Parameters file"
 msgstr ""
 
-#: ../raster/r.topmodel/main.c:139
+#: ../raster/r.topmodel/main.c:138
 msgid "(i)   Rainfall and potential evapotranspiration data file"
 msgstr ""
 
-#: ../raster/r.topmodel/main.c:146
+#: ../raster/r.topmodel/main.c:145
 msgid "(o)   Output file"
 msgstr ""
 
-#: ../raster/r.topmodel/main.c:153
+#: ../raster/r.topmodel/main.c:152
 msgid "      Observed Q file"
 msgstr ""
 
-#: ../raster/r.topmodel/main.c:160
+#: ../raster/r.topmodel/main.c:159
 msgid "      output for given time step"
 msgstr ""
 
-#: ../raster/r.topmodel/main.c:167
+#: ../raster/r.topmodel/main.c:166
 msgid "      output for given topographic index class"
 msgstr ""
 
-#: ../raster/r.topmodel/main.c:176
-msgid "Input data given for (i/o)"
+#: ../raster/r.topmodel/main.c:175
+msgid "Input data given for (o/i)"
 msgstr ""
 
-#: ../raster/r.topmodel/main.c:181
+#: ../raster/r.topmodel/main.c:180
 msgid "Overwrite outputs"
 msgstr ""
-
-#: ../raster/r.topmodel/main.c:186
-#, fuzzy
-msgid "Wide output"
-msgstr "Izpi¹em vse"
 
 #: ../raster/r.transect/main.c:34
 msgid ""
@@ -3518,15 +3533,15 @@ msgstr ""
 msgid "Run verbosly"
 msgstr ""
 
-#: ../vector/v.category/main.c:173
+#: ../vector/v.category/main.c:175
 msgid "Too many layers for this operation"
 msgstr "Preveè slojev za to operacijo"
 
-#: ../vector/v.category/main.c:176
+#: ../vector/v.category/main.c:178
 msgid "2 layers must be specified"
 msgstr "navedena morata biti 2 sloja"
 
-#: ../vector/v.category/main.c:180
+#: ../vector/v.category/main.c:182
 msgid "Output vector wasn't entered."
 msgstr "Izhodni vektor ni bil vnesen."
 
@@ -3824,7 +3839,7 @@ msgstr "Ne morem ustvariti indeksa"
 msgid "Cannot grant privileges on table %s"
 msgstr "Ne morem ti garantirati (grant) privilegijev nad tabelo %s"
 
-#: ../vector/v.to.points/main.c:321
+#: ../vector/v.to.points/main.c:324
 #, c-format
 msgid "%d points written to output map\n"
 msgstr "%d toèk je bilo zapisanih na izhodno datoteko\n"
@@ -3986,3 +4001,7 @@ msgstr "Ne morem odpreti baze podatkov %s"
 #, fuzzy
 msgid "Cannot fetch data"
 msgstr "Ne morem izpisati baz podatkov."
+
+#, fuzzy
+#~ msgid "Wide output"
+#~ msgstr "Izpi¹em vse"
