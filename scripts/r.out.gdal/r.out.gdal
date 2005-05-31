@@ -88,6 +88,12 @@ if [ $GIS_FLAG_l -eq 1 ] ; then
   exit 0
 fi
 
+TMP="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+    echo "ERROR: unable to create temporary file" 1>&2
+    exit 1
+fi
+
 #DEBUG:
 #echo $INPUT $FORMAT $OUTPUT
 #echo $GDAL_INPUT_FORMATS
@@ -122,9 +128,12 @@ if [ "$METAKEY"   = "-mo " ] ; then
   unset METAKEY
 fi
 
+# to avoid quoting problems we use the file transfer:
+g.proj -wf > $TMP
+
 WKT=`g.proj -wf`
 if [ -n "$WKT" ] ; then
-  PROJECTION="-a_srs '${WKT}'"
+  PROJECTION="-a_srs ESRI::$TMP"
 fi
 
 #do it
@@ -132,3 +141,5 @@ CELLHD=`echo $file | sed 's+/cell/+/cellhd/+g'`
 echo "Writing format: $FORMAT"
 echo "Writing type:   $TYPE"
 gdal_translate -of $FORMAT -ot $TYPE $PROJECTION $CREATEKEY $METAKEY $CELLHD $OUTPUT 
+
+rm -f $TMP
