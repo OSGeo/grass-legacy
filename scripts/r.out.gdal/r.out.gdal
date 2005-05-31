@@ -131,7 +131,7 @@ fi
 # to avoid quoting problems we use the file transfer:
 g.proj -wf > $TMP
 
-WKT=`cat $TMP`
+WKT=`g.proj -wf`
 if [ -n "$WKT" ] ; then
   PROJECTION="-a_srs ESRI::$TMP"
 fi
