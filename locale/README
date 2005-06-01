@@ -95,14 +95,18 @@ DETAILED PROCEDURE :
 
    echo $LANG
    echo $LANGUAGE
+   echo $LC_CTYPE
 
    Maybe you have to change it (example for Japanese):
    - for bash shell:
        export LANG=ja_JP
        export LANGUAGE=ja_JP
+       export LC_CTYPE=ja_JP
+
    - for (t)csh shell:
        setenv LANG ja_JP
        setenv LANGUAGE ja_JP
+       setenv LC_CTYPE ja_JP
 
 2. CREATE POT FILES
    run
