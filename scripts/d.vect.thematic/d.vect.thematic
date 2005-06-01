@@ -3,8 +3,8 @@
 ############################################################################
 #
 # MODULE:		d.vect.thematic
-# AUTHOR(S):	Michael Barton, Arizona State University,
-#               Daniel Calvelo Aros, Martin Landa, and  Jachym Cepicky 
+# AUTHOR(S):	Michael Barton, Arizona State University with contributions
+#               by Martin Landa, Jachym Cepicky, and Daniel Calvelo Aros
 # PURPOSE:	    Displays thematic vector map with graduated colors
 #               or graduated points
 # COPYRIGHT:	(C) 2005 by the GRASS Development Team
@@ -169,11 +169,22 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
     exec g.parser "$0" "$@"
 fi
 
+echo ""
+echo ""
+echo "**************************************************"
+echo ""
+
 # setting environment, so that awk works properly in all languages
 export LC_NUMERIC=C
 
 # check column type
-COLTYPE="`v.info -c $GIS_OPT_map layer=1 2> /dev/null | grep $GIS_OPT_column | cut -d'|' -f1 | tr -s '[:upper:]' '[:lower:]'`"
+COLTYPE="`v.info -c $GIS_OPT_map layer=1 2> /dev/null | grep -w $GIS_OPT_column | cut -d'|' -f1 | tr -s '[:upper:]' '[:lower:]'`"
+
+#COLTYPE=... 
+if [ -z "$COLTYPE" ] ; then 
+   echo "ERROR: No such column [$GIS_OPT_column]" 
+   exit 1 
+fi 
 
 if [ "$COLTYPE" = "integer" -o "$COLTYPE" = "double precision" ] ; then
 	echo ""
@@ -202,11 +213,6 @@ if [ $? -ne 0 ] || [ -z "$TMP3" ] ; then
     echo "ERROR: unable to create temporary file for group" 1>&2
     exit 1
 fi
-
-echo "breakpoints = $GIS_OPT_breakpoints"
-
-
-
 
 # Set display variables for group
 atype=0
