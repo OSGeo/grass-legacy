@@ -1,20 +1,26 @@
 <H2>DESCRIPTION</H2>
 
 
-<EM><b>d.vect.thematic</b></EM>  - Creates thematic vector maps of all types
-from numeric attributes stored in data tables connected to a vector map file.
-Thematic maps are displayed by either a graduated color scheme (for all vector
-types), or as graduated icon sizes (for point and centroid types). The user can
-select the vector file to be mapped and attribute column from which to derive
-mapping intervals, 
-(optionally) the layer for attribute data, and options related to the type of
-thematic mapping desired. A simple text legend is printed. Optionally, a graphic
-legend can be drawn in the selected display monitor. Thematic colors can be uploaded
-to a GRASSRGB column for later display (areas only) and thematic map display
-commands can be saved to a group file (*.dm) that can be opened, edited, and
-displayed in the GIS Manager. <br>
-<EM>(GRASS Shell Script)</EM>
-
+<p><EM><b>d.vect.thematic</b></EM>  - Creates thematic  maps from vectors of
+  all types and numeric attributes (stored in the data table connected to a vector
+  map). Thematic maps can be displayed by either a graduated color scheme (for
+  all vector types), or as graduated icon sizes (for point and centroid types).
+  The user selects the vector file to be mapped and attribute column from which
+  to derive mapping intervals, and (optionally) the layer for attribute data. </p>
+<p>In thematic maps, the color or point size changes for each range of attribute
+  values. Value ranges for thematic mapping can be
+  set at regular intervals, standard deviation units on either
+  side of the mean, quartiles, or delimited by user-defined breakpoints. User-defined
+  breakpoints also can  be piped into d.vect.thematic from standard input or
+  other external source. </p>
+<p>There are options to define the color scheme (graduated
+    colors) and range of point sizes (graduated points) for thematic maps. A
+  simple text legend is printed. Optionally, a graphic legend can be drawn in
+  the selected display monitor. Thematic colors can be uploaded to a GRASSRGB
+  column for later display,  and thematic map display commands can
+  be saved to a group file (*.dm) that can be opened, edited, and displayed in
+the GIS Manager.</p>
+<p><EM>(GRASS Shell Script)</EM></p>
 <H2>ATTENTION</H2>
 
 The algorithm currently uses the script <EM><A HREF="v.univar.sh.html">v.univar.sh</A></EM>
@@ -26,7 +32,7 @@ maximum, mean, standard deviation, and quartiles).
 <A HREF="v.univar.sh.html">v.univar.sh</A></EM>
 
 <P> AUTHORS
-d.vect.thematic: Michael Barton, Arizona State University, Martin Landa, Jachym
-  Cepicky, and Daniel Cavelo Aros.
+d.vect.thematic: Michael Barton, Arizona State University, Daniel Cavelo Aros,
+  Martin Landa, and Jachym Cepicky.
 <p>
 <p><i>Last changed: $Date$</i>
