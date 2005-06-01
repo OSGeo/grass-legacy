@@ -1,5 +1,4 @@
-# translation of grassmods_vn.po to vietnamess
-# translation of grassmods_vn.po to Vietnamese
+# translation of grassmods_vi.po to Vietnamese
 # This file is distributed under the same license as the PACKAGE package.
 # Tran Van Anh <vananh@sci.osaka-cu.ac.jp>
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
@@ -8,12 +7,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: grassmods_vn\n"
+"Project-Id-Version: grassmods_vi\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-03-25 10:42+0100\n"
 "PO-Revision-Date: 2005-03-24 16:26+0900\n"
 "Last-Translator: van anh <tva_ninh@yahoo.com>\n"
-"Language-Team: vietnamess <C@li.org>\n"
+"Language-Team: vietnamese <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
