@@ -6,7 +6,6 @@
  * Author: Frank Warmerdam
  *
  * Added optional GCP transformation: Markus Neteler 10/2001
- * TODO: most unreferenced formats are read in with negative coordinates - desired??
  */
 
 #include <stdlib.h>
@@ -195,7 +194,7 @@ int main (int argc, char *argv[])
     else {
         l1bdriver=1; /* AVHRR found, needs north south flip */
 	G_warning("The polynomial rectification used in i.rectify does "
-	    "not work well with AVHRR data. Try using gdalwarp with "
+	    "not work well with NOAA/AVHRR data. Try using gdalwarp with "
 	    "thin plate spline rectification instead. (-tps)");
     }
 
@@ -499,17 +498,9 @@ int main (int argc, char *argv[])
 
             for( iGCP = 0; iGCP < sPoints.count; iGCP++ )
             {
-                if ( !l1bdriver)
-                {
-                  sPoints.e1[iGCP] = (-1) * pasGCPs[iGCP].dfGCPPixel; /* neg. xy */
-                  sPoints.n1[iGCP] = (-1) * pasGCPs[iGCP].dfGCPLine;
-                }
-                else /* L1B - NOAA/AVHRR */
-                {
-                  sPoints.e1[iGCP] = pasGCPs[iGCP].dfGCPPixel;    /* pos. xy */
-                  sPoints.n1[iGCP] = pasGCPs[iGCP].dfGCPLine;
-                }
-                
+		sPoints.e1[iGCP] = pasGCPs[iGCP].dfGCPPixel;
+		sPoints.n1[iGCP] = pasGCPs[iGCP].dfGCPLine;
+
                 sPoints.e2[iGCP] = pasGCPs[iGCP].dfGCPX;          /* target */
                 sPoints.n2[iGCP] = pasGCPs[iGCP].dfGCPY;
                 sPoints.status[iGCP] = 1;
