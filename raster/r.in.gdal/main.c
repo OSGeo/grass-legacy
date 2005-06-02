@@ -188,10 +188,16 @@ int main (int argc, char *argv[])
     if( hDS == NULL )
         return 1;
     hDriver = GDALGetDatasetDriver( hDS ); /* needed for AVHRR data */
+	/* L1B - NOAA/AVHRR data must be treated differently */
+	/* for hDriver names see gdal/frmts/gdalallregister.cpp */
     if ( strcmp(GDALGetDriverShortName(hDriver),"L1B") !=0 )
         l1bdriver=0;
-    else
+    else {
         l1bdriver=1; /* AVHRR found, needs north south flip */
+	G_warning("The polynomial rectification used in i.rectify does "
+	    "not work well with AVHRR data. Try using gdalwarp with "
+	    "thin plate spline rectification instead. (-tps)");
+    }
 
 /* -------------------------------------------------------------------- */
 /*      Set up the window representing the data we have.                */
@@ -205,7 +211,7 @@ int main (int argc, char *argv[])
         && adfGeoTransform[5] < 0.0 )
     {
         if (adfGeoTransform[2] != 0.0 || adfGeoTransform[4] != 0.0)
-          G_fatal_error("Input map is rotated - cannot import. You may use 'gdalwarp' to transform the map to North-up.");
+	    G_fatal_error("Input map is rotated - cannot import. You may use 'gdalwarp' to transform the map to North-up.");
 
         cellhd.north = adfGeoTransform[3];
         cellhd.ns_res = fabs(adfGeoTransform[5]);
@@ -215,52 +221,24 @@ int main (int argc, char *argv[])
         cellhd.ew_res = adfGeoTransform[1];
         cellhd.ew_res3 = adfGeoTransform[1];
         cellhd.east = cellhd.west + cellhd.cols * cellhd.ew_res;
-
 	cellhd.top = 1.;
 	cellhd.bottom = 0.;
 	cellhd.tb_res = 1.;
 	cellhd.depths = 1;
     }
-    else
-    {
-        /* use negative XY coordinates per default for unprojected data
-	   but not for all formats... (MN: I don't like it at all) */
-        /* for hDriver names see gdal/frmts/gdalallregister.cpp */
-
-        if ( l1bdriver || ( strcmp(GDALGetDriverShortName(hDriver),"GTiff") ||  strcmp(GDALGetDriverShortName(hDriver),"JPEG") ) == 0 )
-        {
-          /* e.g. L1B - NOAA/AVHRR data must be treated differently */
-          /* define positive xy coordinate system to avoid GCPs confusion */
-          cellhd.north  = cellhd.rows;
-          cellhd.south  = 0.0;
-          cellhd.ns_res = 1.0;
-          cellhd.ns_res3 = 1.0;
-          cellhd.west   = 0.0;
-          cellhd.east   = cellhd.cols;
-          cellhd.ew_res = 1.0;
-          cellhd.ew_res3 = 1.0;
-	  cellhd.top = 1.;
-	  cellhd.bottom = 0.;
-	  cellhd.tb_res = 1.;
-	  cellhd.depths = 1;
-        }
-        else
-        {
-          /* for all other unprojected data ... */
-          /* define negative xy coordinate system to avoid GCPs confusion */
-          cellhd.north  = 0.0;
-          cellhd.south  = (-1) * cellhd.rows;
-          cellhd.ns_res = 1.0;
-          cellhd.ns_res3 = 1.0;
-          cellhd.west   = (-1) * cellhd.cols;
-          cellhd.east   = 0.0;
-          cellhd.ew_res = 1.0;
-          cellhd.ew_res3 = 1.0;
-	  cellhd.top = 1.;
-	  cellhd.bottom = 0.;
-	  cellhd.tb_res = 1.;
-	  cellhd.depths = 1;
-        }
+    else {
+	cellhd.north  = cellhd.rows;
+	cellhd.south  = 0.0;
+	cellhd.ns_res = 1.0;
+	cellhd.ns_res3 = 1.0;
+	cellhd.west   = 0.0;
+	cellhd.east   = cellhd.cols;
+	cellhd.ew_res = 1.0;
+	cellhd.ew_res3 = 1.0;
+	cellhd.top = 1.;
+	cellhd.bottom = 0.;
+	cellhd.tb_res = 1.;
+	cellhd.depths = 1;
     }
 
 /* -------------------------------------------------------------------- */
