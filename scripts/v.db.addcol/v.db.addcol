@@ -1,0 +1,80 @@
+#!/bin/sh
+#
+############################################################################
+#
+# MODULE:       v.db.addcolumn
+# AUTHOR(S):   	Moritz Lennert 
+# PURPOSE:      interface to db.execute to add a column to the attribute table connected to a given vector map
+# COPYRIGHT:    (C) 2005 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#               License (>=v2). Read the file COPYING that comes with GRASS
+#               for details.
+#
+#############################################################################
+
+
+#%Module
+#%  description: adds a column to the attribute table connected to a given vector map
+#%End
+
+#%option
+#% key: map
+#% type: string
+#% gisprompt: old,vector,vector
+#% description: vector map for which to edit attribute table
+#% required : yes
+#%end
+
+#%option
+#% key: layer
+#% type: integer
+#% description: Layer where to add column
+#% answer: 1
+#% required : no
+#%end
+
+#%option
+#% key: columns
+#% type: string
+#% description: name and type of the new columns (ex: col1 type1, col2 type2)
+#% required : yes
+#%end
+
+
+
+if  [ -z $GISBASE ] ; then
+    echo "You must be in GRASS GIS to run this program."
+ exit 1
+fi
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+    exec g.parser "$0" "$@"
+fi
+
+
+
+table=`v.db.connect $GIS_OPT_map -g | grep -w $GIS_OPT_layer | awk '{print $2}'`
+database=`v.db.connect $GIS_OPT_map -g | grep -w $GIS_OPT_layer | awk '{print $4}'`
+driver=`v.db.connect $GIS_OPT_map -g | grep -w $GIS_OPT_layer | awk '{print $5}'`
+
+if [ -z $table ] ; then
+   echo -e "\nERROR: There is no table connected to this map !\nRun v.db.connect first.\n"
+   exit 1
+fi
+
+colnum=`echo $GIS_OPT_columns | awk -F, '{print NF}'`
+
+n=1
+while [ "$n" -le "$colnum" ]
+  do
+    col=`echo $GIS_OPT_columns | cut -d',' -f$n`
+    
+    if [ -z "$col" ] ; then
+      echo -e "\nERROR: There is an empty colum !\nDid you leave a trailing comma ?\n"
+      exit 1
+    fi
+    
+    echo "ALTER TABLE $table ADD COLUMN $col" | db.execute database=$database driver=$driver
+    let "n += 1"
+  done
