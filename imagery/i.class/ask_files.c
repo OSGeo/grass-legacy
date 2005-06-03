@@ -1,7 +1,12 @@
+#include <stdlib.h>
+#include "gis.h"
+#include "glocale.h"
 #include "globals.h"
 #include "local_proto.h"
 
+
 char title[80];
+
 static char *info[]=
 {
 title,
@@ -9,6 +14,7 @@ title,
 "Please select the group/subgroup to be analyzed",
 NULL
 };
+
 
 int ask_files (char *me)
 {
@@ -25,7 +31,7 @@ int ask_files (char *me)
 	if (hitreturn)
 	{
 	    char buf[100];
-	    fprintf (stderr, "Hit RETURN -->");
+	    G_message(_("Hit RETURN -->"));
 	    G_gets(buf);
 	}
 	hitreturn = 1;
@@ -42,42 +48,44 @@ int ask_files (char *me)
 	    if (G_find_cell (name, mapset) == NULL)
 	    {
 		if (!any)
-		    fprintf (stderr, "\7\n** The following cell files in subgroup [%s] do not exist\n", Subgroup);
+		    G_warning(_("\7\n** The following cell files in subgroup "
+                              "[%s] do not exist."), Subgroup);
 		any = 1;
-		fprintf (stderr, "       %s@%s\n", name, mapset);
+		G_message(_("       %s@%s"), name, mapset);
 	    }
 	}
 	if (any) continue;
 	if (Refer.nfiles > 1)
 	    break;
-	fprintf (stderr, "Subgroup [%s] ", Subgroup);
+	G_message(_("Subgroup [%s] "), Subgroup);
 	if (Refer.nfiles <= 0)
-	    fprintf (stderr, "doesn't have any files\n");
+	    G_message(_("doesn't have any files."));
 	else
-	    fprintf (stderr, "only has 1 file\n");
-	fprintf (stderr, "The subgroup must have at least 2 files to run %s\n", me);
+	    G_message(_("only has 1 file."));
+	G_warning(_("The subgroup must have at least 2 files to run %s."), me);
     }
 
     if (G_get_cellhd(Refer.file[0].name,Refer.file[0].mapset,&Band_cellhd)!=0)
-      G_fatal_error("Unable to read cell header for first band file.");
+      G_fatal_error(_("Unable to read cell header for first band file."));
 
 /* allocate space for signature routines */
     init_sig_routines(Refer.nfiles);
 
-    fprintf (stderr, "\nRESULT SIGNATURE");
-    if(!I_ask_signature_file_any ("Enter name for the resulting signature file", Group, Subgroup,  Outsigfile))
+    G_message(_("\nRESULT SIGNATURE"));
+    if(!I_ask_signature_file_any (_("Enter name for the resulting signature file"),
+            Group, Subgroup,  Outsigfile))
 	exit(0);
     Outsigfile_fd = I_fopen_signature_file_new(Group, Subgroup, Outsigfile);
     if(Outsigfile_fd == NULL)
-      G_fatal_error("Unable to open output signature file");
+      G_fatal_error(_("Unable to open output signature file."));
 
     for(;;)
     {
 	I_init_signatures (&Sigs, Refer.nfiles);
 	G_set_ask_return_msg ("to not include any other signatures");
-	fprintf (stderr, "\nSEED SIGNATURES");
+	G_message(_("\nSEED SIGNATURES"));
 	if (!I_ask_signature_file_old(
-	    "Select the signature file to include in the resulting file",
+	    _("Select the signature file to include in the resulting file"),
 	    Group, Subgroup, Insigfile))
 	{
 	    Insigfile[0] = 0;
@@ -89,11 +97,11 @@ int ask_files (char *me)
 	fclose (fd);
 	if (n < 0)
 	{
-	    fprintf (stderr, "** can't read signature file %s **\n", Insigfile);
+	    G_warning(_("** Can't read signature file [%s] **"), Insigfile);
 	    continue;
 	}
 	if (Sigs.nsigs <= 255) break;
-	fprintf (stderr, "%s has too many signatures\n", Insigfile);
+	G_warning(_("%s has too many signatures."), Insigfile);
 	I_free_signatures(&Sigs);
     }
 

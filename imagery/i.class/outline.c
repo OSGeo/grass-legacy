@@ -1,8 +1,11 @@
 #define OUTLINE
 
 #include <stdlib.h>
+#include "gis.h"
+#include "glocale.h"
 #include "globals.h"
 #include "local_proto.h"
+
 
 #define V     Region.vertex	/* converted vertex list */
 #define VN    Region.vertex_npoints
@@ -53,7 +56,7 @@ int outline (void)
       }
   if (first < 0)
     {
-      G_warning("absurd polygon");
+      G_warning(_("Absurd polygon."));
       return (0);
     }
 
@@ -96,7 +99,7 @@ int outline (void)
   P = (POINT *) G_malloc(np * sizeof(POINT));
   if (!P)
     {
-      G_warning("outlined area is too large");
+      G_warning(_("Outlined area is too large."));
       return (0);
     }
 

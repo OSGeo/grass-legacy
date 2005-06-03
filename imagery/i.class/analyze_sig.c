@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include "gis.h"
+#include "glocale.h"
 #include "globals.h"
 #include "local_proto.h"
 
@@ -8,7 +10,7 @@ int analyze_sig (void)
 
   if (!Region.area.completed)
     {
-      G_warning("Cannot analyze until region is completed.");
+      G_warning(_("Cannot analyze until region is completed."));
       return(0);
     }
 

@@ -6,13 +6,12 @@ returns: TRUE (1) point added ok, FALSE (0) could not add, list full
 
 #include "globals.h"
 #include "raster.h"
-
+#include "glocale.h"
 
 
 int 
 add_point (int x, int y)
 {
-  char msg[100];
   int last;
 
   if ((last = Region.npoints - 1) >= 0
@@ -21,8 +20,7 @@ add_point (int x, int y)
 
   if (Region.npoints >= MAX_VERTEX)
     {
-      sprintf(msg, "can't mark another point. only %d points allowed. sorry", MAX_VERTEX);
-      G_warning(msg);
+      G_warning(_("Can't mark another point.  Only %d points allowed.  Sorry."), MAX_VERTEX);
       return (0);
     }
 

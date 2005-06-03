@@ -1,8 +1,10 @@
 #include "globals.h"
 #include "raster.h"
+#include "glocale.h"
 #include "local_proto.h"
 
 static int use = 1;
+
 
 int 
 redisplay (void)
@@ -61,7 +63,7 @@ redisplay_zoom (void)
     Outline_cellhd (VIEW_MAP1, &VIEW_MAP1_ZOOM->cell.head);
   }
   else
-    G_warning("No zoom window is defined.");
+    G_warning(_("No zoom window is defined."));
 
   return(-1);
 }
@@ -71,7 +73,3 @@ cancel_redisplay (void)
 {
   return(-1);
 }
-
-
-
-

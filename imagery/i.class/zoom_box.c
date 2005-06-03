@@ -1,4 +1,5 @@
 #include "raster.h"
+#include "glocale.h"
 #include "globals.h"
 #include "local_proto.h"
 
@@ -9,6 +10,7 @@ static View *pick_view, *zoom_view, *main_view;
 static int cancel();
 static int zoom1();
 static int zoom2();
+
 
 int 
 zoom_box (void)
@@ -46,7 +48,7 @@ static int zoom1 (	/* called by Input_pointer */
  * user has marked first corner 
  * this determines which view is being zoomed
  */
-/*fprintf(stderr,"\nX, Y, B in zoom1 %d %d %d", x,y,b); */
+    G_debug(4, _("\nX, Y, B in zoom1 %d %d %d"), x, y, b);
     x1 = x;
     y1 = y;
 
@@ -75,7 +77,7 @@ static int zoom2 (int x, int y, int b)
     int row,col;
     struct Cell_head cellhd;
 
-/*fprintf(stderr,"\nX, Y, B in zoom2 %d %d %d", x,y,b);*/
+    G_debug(4, _("\nX, Y, B in zoom2 %d %d %d"), x, y, b);
 
     x2 = x;
     y2 = y;
@@ -113,7 +115,8 @@ static int zoom2 (int x, int y, int b)
 	top = y2;
 	bottom = y1;
     }
-/*fprintf(stderr,"\nleft right top bottom %d %d %d %d", left,right,top,bottom);*/
+    G_debug(4, _("\nleft right top bottom %d %d %d %d"),
+              left, right, top, bottom);
 
 /* 
  * Determine the the zoom window (ie, cellhd)
@@ -144,9 +147,9 @@ static int zoom2 (int x, int y, int b)
     cellhd.cols = right-left+1;
     cellhd.ns_res = (cellhd.north-cellhd.south)/cellhd.rows;
     cellhd.ew_res = (cellhd.east-cellhd.west)/cellhd.cols;
-/*fprintf(stderr,"\nnorth,south,east,west,nsres,ewres %f %f %f %f %f %f",
+    G_debug(4, _("\nnorth,south,east,west,nsres,ewres %f %f %f %f %f %f"),
                cellhd.north,cellhd.south,cellhd.east,cellhd.west,
-	       cellhd.ns_res, cellhd.ew_res);*/
+	       cellhd.ns_res, cellhd.ew_res);
 
 /*
  * Outline the zoom window on the main map

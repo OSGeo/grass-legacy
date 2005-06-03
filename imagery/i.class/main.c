@@ -4,8 +4,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "raster.h"
+#include "glocale.h"
 #include "globals.h"
 #include "local_proto.h"
+
 
 int main (int argc, char *argv[])
 {
@@ -19,22 +21,22 @@ int main (int argc, char *argv[])
 
   module = G_define_module();
   module->description =
-	"An imagery function that generates spectral signatures "
+	_("An imagery function that generates spectral signatures "
 	"for an image by allowing the user to outline regions of "
 	"interest. The resulting signature file can be used as "
 	"input for i.maxlik or as a seed signature file for "
-	"i.cluster.";			          
+	"i.cluster.");
 
   /* must have a graphics terminal selected */
   if (R_open_driver() != 0)
-      G_fatal_error ("No graphics device selected");
+      G_fatal_error (_("No graphics device selected."));
 
   /* check to see if a MASK is set */
   if (G_maskfd() >= 0)
     {
-      fprintf (stderr, "\nWARNING: You have a mask set.");
-      fprintf (stderr, "\nIf you continue the mask will be removed.\n");
-      if (!G_yes("Do you want to continue? ", -1)) exit(0);
+      G_warning(_("\nYou have a mask set."));
+      G_warning(_("\nIf you continue the mask will be removed."));
+      if (!G_yes(_("Do you want to continue? "), -1)) exit(0);
     }
   /* remove any old mask */
   remove_mask();
@@ -58,12 +60,12 @@ int main (int argc, char *argv[])
   display_title(VIEW_MAP1);
 
   /* ask the user for the cell map to be displayed */
-  if (G_ask_cell_old("Enter the name of the cell map to be displayed",
+  if (G_ask_cell_old(_("Enter the name of the cell map to be displayed"),
 		     name) == NULL)
     exit(0);
   strcpy(mapset, G_find_cell(name, ""));
   if(G_get_cellhd(name, mapset, &cellhd)!=0)
-    G_fatal_error("Did not find input cell map"); 
+    G_fatal_error(_("Did not find input cell map.")); 
   G_adjust_window_to_box (&cellhd, &VIEW_MAP1->cell.head, VIEW_MAP1->nrows, VIEW_MAP1->ncols);
   Configure_view (VIEW_MAP1, name, mapset, cellhd.ns_res, cellhd.ew_res);
   /* configure the MASK view right over the top of the map1 view */

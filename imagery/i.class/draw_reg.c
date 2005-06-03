@@ -1,9 +1,11 @@
 #include "raster.h"
+#include "glocale.h"
 #include "globals.h"
 #include "local_proto.h"
 
 #define NP Region.npoints
 #define PT Region.point
+
 
 int draw_region (void)
 {
@@ -79,18 +81,19 @@ line_in_map1 (int x1, int y1, int x2, int y2, int color)
   r1 = view_to_row(VIEW_MAP1_ZOOM, y1);
   c2 = view_to_col(VIEW_MAP1_ZOOM, x2);
   r2 = view_to_row(VIEW_MAP1_ZOOM, y2);
-  fprintf(stderr, "\nOrig:(x1 y1), (x2 y2) = (%d %d), (%d %d)",x1,y1,x2,y2); 
+  G_message(_("\nOrig:(x1 y1), (x2 y2) = (%d %d), (%d %d)"),
+            x1, y1, x2, y2); 
 
   x1 = col_to_view(VIEW_MAP1, c1);
   y1 = row_to_view(VIEW_MAP1, r1);
   x2 = col_to_view(VIEW_MAP1, c2);
   y2 = row_to_view(VIEW_MAP1, r2);
 
-  fprintf(stderr, "\nNew:(x1 y1), (x2 y2) = (%d %d), (%d %d)",x1,y1,x2,y2); 
+  G_message(_("\nNew:(x1 y1), (x2 y2) = (%d %d), (%d %d)"),
+            x1, y1, x2, y2); 
   R_standard_color(color);
   R_move_abs(x1,y1);
   R_cont_abs(x2,y2);
 
   return 0;
 }
-

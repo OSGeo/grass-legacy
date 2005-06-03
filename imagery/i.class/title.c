@@ -43,4 +43,3 @@ int display_title ( View *view)
 
     return 0;
 }
-
