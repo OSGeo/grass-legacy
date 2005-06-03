@@ -499,7 +499,7 @@ int main (int argc, char *argv[])
             for( iGCP = 0; iGCP < sPoints.count; iGCP++ )
             {
 		sPoints.e1[iGCP] = pasGCPs[iGCP].dfGCPPixel;
-		sPoints.n1[iGCP] = pasGCPs[iGCP].dfGCPLine;
+		sPoints.n1[iGCP] = cellhd.rows - pasGCPs[iGCP].dfGCPLine;
 
                 sPoints.e2[iGCP] = pasGCPs[iGCP].dfGCPX;          /* target */
                 sPoints.n2[iGCP] = pasGCPs[iGCP].dfGCPY;
