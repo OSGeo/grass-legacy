@@ -482,6 +482,8 @@ global execom
 			 {command "Connect to database" {} "db.connect" {} -command {execute db.connect }}
 			 {command "PERMANTLY remove table" {} "db.droptable" {} -command {execute db.droptable }}
 			 {command "Copy table" {} "db.copy" {} -command {execute db.copy }}
+			 {command "Add columns to table" {} "v.db.addcol" {} -command {execute v.db.addcol }}
+			 {command "Change values in a column" {} "v.db.update" {} -command {execute v.db.update }}
 			 {command "Test database" {} "db.test" {} -command {execute db.test }}
 			}}
 			{cascad "Database information" {} "" $tmenu {			
