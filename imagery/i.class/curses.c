@@ -1,4 +1,8 @@
+#include <curses.h>
+#include <stdlib.h>
 #include <unistd.h>
+#include "gis.h"
+#include "glocale.h"
 #include "globals.h"
 #include "local_proto.h"
 
@@ -6,6 +10,7 @@ static int inited = 0;
 
 static WINDOW *save;
 WINDOW *newwin();
+
 
 static Window *
 make_window (int top, int bottom, int left, int right)
@@ -16,7 +21,7 @@ make_window (int top, int bottom, int left, int right)
     ||	bottom-top <= 1 || right-left <= 1)
     {
 	End_curses();
-	fprintf (stderr, "make_window(%d,%d,%d,%d): illegal screen values\n",
+	G_warning(_("make_window(%d,%d,%d,%d): illegal screen values."),
 		top, bottom, left, right);
 	sleep(3);
 	exit(1);
@@ -152,7 +157,7 @@ Curses_write_window (Window *window, int line, int col, char *message)
 
 if (!inited)
 {
-	fprintf (stderr, "%s\n", message);
+	G_message(_("%s"), message);
 	return 1;
 }
     if (line <= 0 || line >= window->bottom-window->top)

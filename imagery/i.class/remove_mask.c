@@ -1,4 +1,8 @@
+#include <string.h>
+#include "gis.h"
+#include "glocale.h"
 #include "globals.h"
+
 
 int 
 remove_mask (void)
@@ -9,7 +13,7 @@ remove_mask (void)
 
   while (strcmp(elements[i], "") != 0)
     if (G_remove(elements[i++], "MASK") <0)
-      G_fatal_error("Error while removing the old MASK cell map.");
+      G_fatal_error(_("Error while removing the old MASK cell map."));
 
   return 0;
 }

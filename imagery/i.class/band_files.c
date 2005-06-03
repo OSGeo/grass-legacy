@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include "gis.h"
+#include "glocale.h"
 #include "globals.h"
 
 
@@ -19,7 +21,7 @@ open_band_files (void)
       name   = Refer.file[n].name;
       mapset = Refer.file[n].mapset;
       if ((Bandfd[n] = G_open_cell_old (name, mapset)) < 0)
-	G_fatal_error("Unable to open band files.\n");
+	G_fatal_error(_("Unable to open band files."));
     }
 
     return 0;
