@@ -40,6 +40,7 @@ SUBDIRS = \
 	v.in.garmin \
 	v.in.e00 \
 	v.in.gns \
+	v.in.mapgen \
 	v.in.sites.all \
 	v.report \
 	v.univar.sh
