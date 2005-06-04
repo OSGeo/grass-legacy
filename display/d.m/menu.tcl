@@ -29,7 +29,7 @@ global execom
  		 {separator}
  	 	{command "ESRI e00 format" {} "v.in.e00" {} -command { execute v.in.e00 }}
  	 	{command "Garmin GPS Waypoints/Routes/Tracks" {} "v.in.garmin" {} -command { execute v.in.garmin }}
- 		{command "MATLAB MapGen files" {} "v.in.mapgen.sh" {} -command { execute v.in.mapgen.sh }}
+ 		{command "Matlab and MapGen files" {} "v.in.mapgen" {} -command { execute v.in.mapgen }}
  		{separator}
  	 }}
  	 {cascad "Grid 3D" {} "" $tmenu {			
