@@ -118,7 +118,10 @@ Recursively processes each segment in a tree by
 	{
 	    if (i >= 70)
 	    {
-                fprintf(stderr,"Warning: taking too long to find points for interpolation--please change the region to area where your points are. Continuing calculations...\n");
+		fprintf(stderr, "\n");
+		G_warning("taking too long to find points for interpolation--"
+		    "please change the region to area where your points are. "
+		    "Continuing calculations...");
 		break;
 	    }
 	    i++;
