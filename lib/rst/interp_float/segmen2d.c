@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "gis.h"
+#include "glocale.h"
 
 #include "interpf.h"
 
@@ -119,9 +120,9 @@ Recursively processes each segment in a tree by
 	    if (i >= 70)
 	    {
 		fprintf(stderr, "\n");
-		G_warning("taking too long to find points for interpolation--"
+		G_warning(_("taking too long to find points for interpolation--"
 		    "please change the region to area where your points are. "
-		    "Continuing calculations...");
+		    "Continuing calculations..."));
 		break;
 	    }
 	    i++;
