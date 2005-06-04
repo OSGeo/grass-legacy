@@ -1,0 +1,162 @@
+#!/bin/sh
+#
+############################################################################
+#
+# MODULE:       v.in.mapgen
+#
+# AUTHOR(S):    Andreas Lange, andreas.lange@rhein-main.de
+#               Updated for GRASS 6 by Hamish Bowman
+#
+# PURPOSE:      Import data from Mapgen or Matlab into a GRASS vector map
+#
+# COPYRIGHT:    Original version (c) Andreas Lange
+#               Updates by Hamish Bowman (c) the GRASS Development Team
+#
+#############################################################################
+#
+# REQUIREMENTS:  awk
+#
+# DATA AVAILABILITY: e.g., NOAA's Online Coastline Extractor
+#                    http://www.ngdc.noaa.gov/mgg/shorelines/shorelines.html
+#
+
+#%Module
+#%  description: Import Mapgen or Matlab vector maps into GRASS.
+#%End
+#%flag
+#%  key: f
+#%  description: Input map is in Matlab format
+#%end
+#%option
+#% key: input
+#% type: string
+#% gisprompt: file,file,file
+#% description: name of input file in Mapgen/Matlab format
+#% required : yes
+#%end
+#%option
+#% key: output
+#% type: string
+#% gisprompt: new,dig,vector
+#% description: name for new vector file (omit for display to stdout)
+#% required : no
+#%end
+
+
+if [ -z "$GISBASE" ] ; then
+   echo "You must be in GRASS GIS to run this program." >&2
+   exit 1
+fi
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec g.parser "$0" "$@"
+fi
+
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
+PROG=`basename $0`
+OPTS=""
+
+
+#### check if we have awk
+if [ -z "`which awk`" ] ; then
+   echo "$PROG: awk required, please install awk/gawk first" 1>&2
+   exit 1
+fi
+# set environment so that awk works properly in all languages
+export LC_NUMERIC=C
+
+
+FILE="$GIS_OPT_input"
+if [ ! -e "$FILE" ] ; then
+   echo "ERROR: input file [$FILE] not found." 1>&2
+   exit 1
+fi
+
+if [ -n "$GIS_OPT_output" ] ; then
+    NAME="$GIS_OPT_output"
+else
+    unset NAME
+fi
+
+
+#### setup temporary file
+TMP="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+    echo "ERROR: unable to create temporary files" 1>&2
+    exit 1
+fi
+
+#### trap ctrl-c so that we can clean up tmp
+trap 'rm -f "$TMP"' 2 3 15
+
+
+#### create ascii vector file
+if [ $GIS_FLAG_f  -eq 1 ] ; then
+  ## HB:  OLD v.in.mapgen.sh Matlab import command follows.
+  ##    I have no idea what it's all about, so "new" matlab format will be
+  ##    a series of x y with "nan nan" breaking lines. (as NOAA provides)
+  ##  Old command:
+  #  tac $FILE | $AWK 'BEGIN { FS="," ; R=0 }
+  #    $1~/\d*/   { printf("L %d\n", R) }
+  #    $1~/   .*/ { printf(" %lf %lf\n", $2, $1) ; ++R }
+  #    $1~/END/   { }' | tac > $TMP
+
+  ## matlab format. Cleanse with NaN->nan and spaces to tabs
+  tac "$FILE" | awk '{print $1 "\t" $2}' | tr 'N' 'n' | awk '
+    BEGIN { FS="\t" ; R=0 }
+    $1~/nan.*/ { printf("L %d\n", R) ; R=0 }
+    $1~/\d*\.\d*/ { printf(" %.8f %.8f\n", $1, $2) ; ++R }
+    END {;}' | grep -v "^L 0$" | tac > "$TMP"
+
+else
+  ## mapgen format.
+  tac "$FILE" | awk '
+    BEGIN { FS="\t" ; R=0 }
+    $1~/#.*/ { printf("L %d\n", R) ; R=0 }
+    $1~/\d*\.\d*/ { printf(" %.8f %.8f\n", $1, $2) ; ++R }
+    END {;}' | tac > "$TMP"
+fi
+
+#### create digit header
+cat << EOF > "${TMP}.dig"
+ORGANIZATION: GRASSroots organization
+DIGIT DATE:   `date +%D`
+DIGIT NAME:   $PROG
+MAP NAME:     $NAME
+MAP DATE:     `date +%Y`
+MAP SCALE:    1
+OTHER INFO:   Imported by `echo $USER@$HOSTNAME`
+ZONE:         0
+MAP THRESH:   0
+VERTI:
+EOF
+
+#### process points list to ascii vector file (merge in vertices)
+cat "${TMP}" >> "${TMP}.dig"
+
+#### if no name for vector file given, cat to stdout
+if [ "$NAME" = "" ] ; then
+    echo "output to stdout" 1>&2
+    cat "${TMP}.dig" 2>/dev/null
+else
+    #### import to binary vector file
+    echo "Importing with v.in.ascii ..." 1>&2
+    v.in.ascii input="${TMP}.dig" output="$NAME" format=standard
+
+    #### check success/failure
+    if [ $? -eq 0 ] ; then
+	echo "$PROG: \"$NAME@$MAPSET\" successfully created." 1>&2
+    else
+	echo "$PROG: An error occured on creating \"$NAME\" in mapset \"$MAPSET\"," 1>&2
+	echo "please check!" 1>&2
+    fi
+fi
+
+#### clean up the mess
+rm -f "$TMP" "${TMP}.dig"
+
+#### end
+exit 0
