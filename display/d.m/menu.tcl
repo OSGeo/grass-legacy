@@ -26,7 +26,6 @@
  		 {separator}
  	 	{command "ESRI e00 format" {} "v.in.e00" {} -command { execute v.in.e00 }}
  	 	{command "Garmin GPS Waypoints/Routes/Tracks" {} "v.in.garmin" {} -command { execute v.in.garmin }}
- 		{command "MATLAB MapGen files" {} "v.in.mapgen.sh" {} -command { execute v.in.mapgen.sh }}
  		{separator}
  	 }}
  	 {cascad "Grid 3D" {} "" 1 {			
