@@ -1,9 +1,11 @@
 #include "gis.h"
+#include "glocale.h"
 #include "globals.h"
+
 
 int save_fft (int total, double *data[2], double *maximum, double *minimum)
 {
-        int i,k;
+        int i;
         double max, min, *temp;
         char buffer[100];
         FILE *fp;
@@ -13,14 +15,14 @@ int save_fft (int total, double *data[2], double *maximum, double *minimum)
 
         sprintf(buffer, "cell_misc/%s", Cellmap_real);
         if ((fp = G_fopen_new(buffer, FFTREAL)) == NULL)
-                G_fatal_error("Unable to open file in the cell_misc directory.") ;
-        fwrite((char *) data[0], sizeof(double), total, fp);
+                G_fatal_error(_("Unable to open file in the cell_misc directory."));
+        fwrite((char *) data[0], sizeof(double), (size_t)total, fp);
         fclose(fp);
 
         sprintf(buffer, "cell_misc/%s", Cellmap_imag);
         if ((fp = G_fopen_new(buffer, FFTIMAG)) == NULL)
-                G_fatal_error("Unable to open file in the cell_misc directory.") ;
-        fwrite((char *) data[1], sizeof(double), total, fp);
+                G_fatal_error(_("Unable to open file in the cell_misc directory."));
+        fwrite((char *) data[1], sizeof(double), (size_t)total, fp);
         fclose(fp);
 
         temp = data[0] ;

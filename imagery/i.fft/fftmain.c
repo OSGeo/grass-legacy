@@ -21,8 +21,10 @@ Programmer : Ali R. Vali
 #include <math.h>
 #include "gis.h"
 #include "gmath.h"
+#include "glocale.h"
 #include "globals.h"
 #include "local_proto.h"
+
 
 int main (int argc, char *argv[])
 {
@@ -32,7 +34,6 @@ int main (int argc, char *argv[])
         char *inmapset; /* the input mapset name */
         struct Cell_head window;
         CELL *cell_row, *cell_row2;
-        int result;
         double max, min, scale, temp;
 
         int i,j;         /* Loop control variables */
@@ -40,7 +41,6 @@ int main (int argc, char *argv[])
         int rows,cols;  /* Smallest powers of 2 >= number of rows & columns */
         long totsize;         /* Total number of data points */
         double *data[2]; /* Data structure containing real & complex values of FFT */
-        double *dptr ;
         int save_args(); /* function to stash the command line arguments */
 		struct GModule *module;
         struct Option *op1, *op2, *op3, *op4;
@@ -52,7 +52,7 @@ int main (int argc, char *argv[])
 
 	    module = G_define_module();
 	    module->description =
-			"Fast Fourier Transform (FFT) for image processing.";
+			_("Fast Fourier Transform (FFT) for image processing.");
 
         /* define options */
         op1=G_define_option();
@@ -61,7 +61,7 @@ int main (int argc, char *argv[])
         op1->required           =YES;
         op1->multiple           =NO;
         op1->gisprompt  = "old,cell,raster";
-        op1->description        = "input raster file being fft";
+        op1->description        = _("input raster file being fft");
 
         op2=G_define_option();
         op2->key                = "real_image";
@@ -69,7 +69,7 @@ int main (int argc, char *argv[])
         op2->required           =YES;
         op2->multiple           =NO;
         op2->gisprompt  = "new,cell,raster";
-        op2->description        = "output real part arrays stored as raster file";
+        op2->description        = _("output real part arrays stored as raster file");
 
         op3=G_define_option();
         op3->key                = "imaginary_image";
@@ -77,7 +77,7 @@ int main (int argc, char *argv[])
         op3->required           =YES;
         op3->multiple           =NO;
         op3->gisprompt  = "new,cell,raster";
-        op3->description        = "output imaginary part arrays stored as raster file";
+        op3->description        = _("output imaginary part arrays stored as raster file");
 
         op4=G_define_option();
         op4->key                = "range";
@@ -85,7 +85,7 @@ int main (int argc, char *argv[])
         op4->required           =NO;
         op4->multiple           =NO;
         op4->answer             ="255";
-        op4->description        = "Range of values in output display files";
+        op4->description        = _("Range of values in output display files");
 
         /*call parser*/
         if(G_parser(argc, argv))
@@ -98,7 +98,7 @@ int main (int argc, char *argv[])
         /* open input cell map */
         if ((inmapset = G_find_cell(Cellmap_orig, "")) == NULL)
         {
-                fprintf (stderr, "%s: %s - Unable to open the input raster map\n",
+                G_fatal_error(_("%s: %s - Unable to open the input raster map\n"),
 					me, Cellmap_orig);
                 exit(1);
         }
@@ -107,25 +107,26 @@ int main (int argc, char *argv[])
                 exit(1);
         
         if ((maskfd = G_maskfd()) >= 0)
-        	G_warning("Raster MASK found, consider to remove (see man-page). Will continue...");
+        	G_warning(_("Raster MASK found, consider to remove "
+                          "(see man-page). Will continue..."));
 
 
         /* check command line args for validity */
         if (G_legal_filename(Cellmap_real) < 0)
         {
-                fprintf (stderr, "%s: %s - illegal file name for real part\n",
+                G_fatal_error(_("%s: %s - illegal file name for real part\n"),
 					me, Cellmap_real);
                 exit(1);
         }
         if (G_legal_filename(Cellmap_imag) < 0)
         {
-                fprintf (stderr, "%s: %s - illegal file name for imaginary part\n",
+                G_fatal_error(_("%s: %s - illegal file name for imaginary part\n"),
 					me, Cellmap_imag);
                 exit(1);
         }
         sscanf(op4->answer, "%d", &Range);
         if (Range<=0)
-                G_fatal_error("Range less than or equal to zero not allowed.");
+                G_fatal_error(_("Range less than or equal to zero not allowed."));
 
         G_get_set_window(&window); /* get the current window for later */
         put_orig_window(&window);
@@ -146,10 +147,10 @@ int main (int argc, char *argv[])
         data[0] = (double *) G_malloc((rows*cols)*sizeof(double));
         data[1] = (double *) G_malloc((rows*cols)*sizeof(double));
         if (data[0] == NULL || data[1] == NULL)
-                G_fatal_error("Insufficent memory for allocation of data sturcture");
+                G_fatal_error(_("Insufficent memory for allocation of data sturcture"));
 
         /* Initialize real & complex components to zero */
-        fprintf(stderr,"Initializing data...\n");
+        G_message(_("Initializing data...\n"));
         {
                 register double *dptr1, *dptr0 ;
                 dptr0=data[0] ;
@@ -163,10 +164,10 @@ int main (int argc, char *argv[])
         cell_row = G_allocate_cell_buf();
 
         /* Read in cell map values */
-        fprintf(stderr,"Reading the raster map...\n");
+        G_message(_("Reading the raster map..."));
         for (i=0; i<or; i++) {
                 if (G_get_map_row(inputfd, cell_row, i)<0)
-                        G_fatal_error("Error while reading input raster map.");
+                        G_fatal_error(_("Error while reading input raster map."));
                 for (j=0; j<oc; j++)
                         *(data[0]+(i*cols)+j) = (double) cell_row[j];
         }
@@ -175,9 +176,9 @@ int main (int argc, char *argv[])
         free(cell_row);
 
         /* perform FFT */
-        fprintf(stderr,"Starting FFT...\n");
+        G_message(_("Starting FFT..."));
         fft(-1,data,totsize,cols,rows);
-        fprintf(stderr,"FFT completed...\n");
+        G_message(_("FFT completed..."));
 
         /* set up a window for the transform cell map */
         window.rows = rows;
@@ -195,7 +196,7 @@ int main (int argc, char *argv[])
         cell_row2 = G_allocate_cell_buf();
 
         /* rotate the data array for standard display */
-        fprintf(stderr,"Rotating data...\n");
+        G_message(_("Rotating data..."));
         for (i=0; i<rows; i++) {
                 for (j=0; j<cols/2; j++) {
                         temp = *(data[0]+i*cols+j);
@@ -217,13 +218,13 @@ int main (int argc, char *argv[])
                 }
         }
 
-        fprintf(stderr,"Writing transformed data to file...\n");
+        G_message(_("Writing transformed data to file..."));
         /* write out the double arrays to cell_misc/file/FFTREAL and FFTIMAG */
         max = 0.0;
         min = 0.0;
         save_fft(totsize, data, &max, &min);
 
-        fprintf(stderr,"Writing viewable versions of transformed data to files...\n");
+        G_message(_("Writing viewable versions of transformed data to files..."));
         /* Write out result to a new cell map */
         /*
         for (i=0; i<rows; i++) {
@@ -261,8 +262,7 @@ int main (int argc, char *argv[])
 
         /* Release memory resources */
         for (i=0 ; i<2 ; i++) free(data[i]);
-        fprintf(stderr,"Transform successful\n");
+        G_message(_("Transform successful."));
 
 exit(0);
 }
-
