@@ -27,7 +27,7 @@ do_histogram (char *name, char *mapset)
         G_update_cell_stats (cell, ncols, &statf);
     }
     G_close_cell (fd);
-    free (cell);
+    G_free (cell);
     if (row == nrows)
         G_write_histogram_cs (name, &statf);
     G_free_cell_stats (&statf);
