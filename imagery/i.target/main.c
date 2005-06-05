@@ -5,8 +5,11 @@
  
 #include <stdlib.h>
 #include <string.h>
+#include "gis.h"
+#include "glocale.h"
 #include "imagery.h"
 #include "local_proto.h"
+
 
 int 
 main (int argc, char *argv[])
@@ -20,30 +23,30 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-        	"Targets an imagery group to a GRASS location and mapset.";
+        	_("Targets an imagery group to a GRASS location and mapset.");
         	
 	grp = G_define_option();
 	grp->key             = "group";
 	grp->type            =  TYPE_STRING;
 	grp->required        =  YES;
 	grp->gisprompt        = "old,group,group";
-	grp->description     = "Name of imagery group";
+	grp->description     = _("Name of imagery group");
 
 	loc = G_define_option();
 	loc->key             = "location";
 	loc->type            =  TYPE_STRING;
 	loc->required        =  NO;
-	loc->description     = "Name of imagery target location";
+	loc->description     = _("Name of imagery target location");
 
 	map = G_define_option();
 	map->key             = "mapset";
 	map->type            =  TYPE_STRING;
 	map->required        =  NO;
-	map->description     = "Name of target mapset";
+	map->description     = _("Name of target mapset");
 
 	c = G_define_flag();
 	c->key              = 'c';
-	c->description      = "Set current location and mapset as target for of imagery group";
+	c->description      = _("Set current location and mapset as target for of imagery group");
 
 	if (G_parser (argc, argv))
 		exit (-1);
@@ -63,7 +66,8 @@ main (int argc, char *argv[])
          )
        ) 
      ) {
-	G_fatal_error("You must use either the Current Mapset and Location Flag (-c)\n OR\n manually enter the variables");
+	G_fatal_error(_("You must use either the Current Mapset and "
+             "Location Flag (-c)\n OR\n manually enter the variables"));
    }
 
 	if (c->answer) {
@@ -77,7 +81,7 @@ main (int argc, char *argv[])
 
 	I_put_target (group, location, mapset);
 
-    fprintf (stderr, "group [%s] targeted for location [%s], mapset [%s]\n",
+    G_message(_("group [%s] targeted for location [%s], mapset [%s]\n"),
 	group, location, mapset);
     exit(0);
 }
