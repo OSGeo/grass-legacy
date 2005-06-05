@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
 
 	flag1 = G_define_flag() ;
 	flag1->key            = 'm' ;
-	flag1->description    = _("Enable extend memory option: Operation is slow") ;
+	flag1->description    = _("Enable disk swap memory option: Operation is slow");
 
 	flag2 = G_define_flag() ;
 	flag2->key            = '4' ;
