@@ -24,9 +24,11 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "gis.h"
+#include "glocale.h"
 #include "local_proto.h"
 
 char command[1024];
+
 
 int 
 main (int argc, char *argv[])
@@ -38,8 +40,8 @@ main (int argc, char *argv[])
 
     if (argc < 5 || argc%2 == 0)
     {
-	fprintf (stderr, "usage: %s location mapset element file\n", argv[0]);
-	exit(1);
+	G_message(_("usage: %s location mapset element file\n"), argv[0]);
+ 	exit(1);
     }
     G_gisinit (argv[0]);
 
@@ -72,13 +74,14 @@ main (int argc, char *argv[])
 	if (ok)
 	{
 	    sprintf (command, "mv %s %s", tempfile, argv[n+1]);
-	    system(command);
+	    G_system(command);
 	}
 	unlink (tempfile);
     }
 
     return 0;
 }
+
 
 int 
 find (FILE *fd, char *element)
@@ -96,8 +99,8 @@ find (FILE *fd, char *element)
 
     len1 = len2 = 0;
     fseek (fd, 0L, 0);
-    fwrite (&len1, sizeof(len1), 1, fd);
-    fwrite (&len2, sizeof(len2), 1, fd);
+    fwrite (&len1, sizeof(len1), (size_t)1, fd);
+    fwrite (&len2, sizeof(len2), (size_t)1, fd);
     for (n=0; (mapset = G__mapset_name(n)) != NULL; n++)
     {
 	G__file_name (dir, element, "", mapset);
@@ -122,7 +125,7 @@ find (FILE *fd, char *element)
 	return 0;
     fflush (fd);
     fseek (fd, 0L, 0);
-    fwrite (&len1, sizeof(len1), 1, fd);
-    fwrite (&len2, sizeof(len2), 1, fd);
+    fwrite (&len1, sizeof(len1), (size_t)1, fd);
+    fwrite (&len2, sizeof(len2), (size_t)1, fd);
     return 1;
 }
