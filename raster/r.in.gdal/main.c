@@ -922,5 +922,7 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
            G_write_colors( (char *) output, G_mapset(), &colors);
         }
     }
+
+    G_done_msg("");
 }
 
