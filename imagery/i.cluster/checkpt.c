@@ -1,9 +1,12 @@
+#include "gis.h"
+#include "glocale.h"
 #include "global.h"
 #include "local_proto.h"
 
+
 int checkpoint (struct Cluster *X, int n)
 {
-    long time(), elapsed_time, cur_time;
+    time_t elapsed_time, cur_time;
     int c, band;
 
     switch(n)
@@ -12,7 +15,7 @@ int checkpoint (struct Cluster *X, int n)
 	print_band_means(report,X);
 	if (insigfile)
 	{
-	    fprintf (report, "using seed means (%d files)\n", ref.nfiles);
+	    fprintf (report, _("using seed means (%d files)\n"), ref.nfiles);
 	    for (c = 0 ; c < in_sig.nsigs; c++)
 		for (band = 0; band < ref.nfiles; band++)
 		    X->mean[band][c] = in_sig.sig[c].mean[band];
@@ -24,10 +27,8 @@ int checkpoint (struct Cluster *X, int n)
 	print_distribution(report,X);
 	break;
     case 3:
-	fprintf (report, "\n");
-	fprintf (report, "######## iteration %d ###########\n",
-		X->iteration);
-	fprintf (report, "%d classes, %.2f%% points stable\n",
+	fprintf (report, _("\n######## iteration %d ###########\n"), X->iteration);
+	fprintf (report, _("%d classes, %.2f%% points stable\n"),
 	    I_cluster_nclasses(X,1), (double) X->percent_stable);
     /*
 	I_cluster_sum2 (X);
@@ -37,19 +38,15 @@ int checkpoint (struct Cluster *X, int n)
 	if (verbose) {
 	     cur_time = time(NULL);
 	     elapsed_time = cur_time - start_time;
-	     fprintf (stderr, "Iteration %d: %%Convergence %.2f ",
-		X->iteration, (double) X->percent_stable);
-	     fprintf (stderr, "(");
-	     print_time (elapsed_time);
-	     fprintf (stderr, " elapsed, ");
-	     print_time (iters*elapsed_time/(X->iteration+1) - elapsed_time);
-	     fprintf (stderr, " left)\n");
-	     fflush (stderr);
+             G_message(_("Iteration %d: %% Convergence: %.2f (%s elapsed, %s left)"),
+                       X->iteration, (double) X->percent_stable, 
+                       print_time(elapsed_time),
+                       print_time(iters*elapsed_time/(X->iteration+1) - elapsed_time));
 	}
 	break;
     case 4:
     /*
-	fprintf (report, "\nmerging class %d into %d\n",
+	fprintf (report, _("\nmerging class %d into %d\n"),
 		X->merge2+1, X->merge1+1);
     */
 	break;

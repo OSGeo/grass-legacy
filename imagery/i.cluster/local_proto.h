@@ -15,4 +15,4 @@ int print_separability(FILE *, struct Cluster *);
 /* print6.c */
 int print_distribution(FILE *, struct Cluster *);
 /* timer.c */
-int print_time(long);
+char *print_time(time_t);

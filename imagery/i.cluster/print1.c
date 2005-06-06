@@ -1,17 +1,20 @@
 #include "imagery.h"
+#include "gis.h"
+#include "glocale.h"
+
 
 int print_band_means (FILE *fd, struct Cluster *C)
 {
     int band;
 
     fprintf (fd, "\n");
-    fprintf (fd, "means and standard deviations for %d band%s\n\n",
+    fprintf (fd, _("means and standard deviations for %d band%s\n\n"),
 	C->nbands, C->nbands == 1 ? "" : "s");
-    fprintf (fd, " means  ");
+    fprintf (fd, _(" means  "));
     for (band = 0; band < C->nbands; band++)
 	fprintf (fd," %6.2f",C->band_sum[band]/C->npoints);
     fprintf (fd,"\n");
-    fprintf (fd, " stddev ");
+    fprintf (fd, _(" stddev "));
     for (band = 0; band < C->nbands; band++)
 	fprintf (fd, " %6.2f",
 	    I_stddev(C->band_sum[band], C->band_sum2[band], C->npoints));

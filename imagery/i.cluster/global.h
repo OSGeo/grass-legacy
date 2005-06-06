@@ -1,3 +1,17 @@
+#include "config.h"
+
+#ifndef TIME_WITH_SYS_TIME
+#ifdef HAVE_TIME
+#include <time.h>
+#endif
+#ifdef HAVE_SYS_TIME_H
+#include <sys/time.h>
+#endif
+#else
+#include <time.h>
+#include <sys/time.h>
+#endif
+
 #include "imagery.h"
 
 #ifndef GLOBAL
@@ -25,4 +39,4 @@ GLOBAL int *cellfd;
 GLOBAL FILE *report;
 GLOBAL int sample_rows, sample_cols;
 GLOBAL int verbose;
-GLOBAL long start_time;
+GLOBAL time_t start_time;

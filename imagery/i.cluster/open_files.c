@@ -1,4 +1,8 @@
+#include <stdlib.h>
+#include "gis.h"
+#include "glocale.h"
 #include "global.h"
+
 
 int 
 open_files (void) 
@@ -10,15 +14,13 @@ open_files (void)
     I_init_group_ref (&ref);
 
     G_strip (group);
-    if (!I_find_group (group)) {
-      fprintf (stderr, "\nWARNING: group <%s> not found\n", group);
-      exit(1);
-    }
+    if (!I_find_group (group))
+      G_fatal_error(_("\n group <%s> not found"), group);
+
     G_strip (subgroup);
-    if (!I_find_subgroup (group, subgroup)) {
-      fprintf(stderr,"\nWARNING: subgroup <%s> not found\n",subgroup);
-      exit(1);
-    }
+    if (!I_find_subgroup (group, subgroup))
+      G_fatal_error(_("subgroup <%s> not found"), subgroup);
+
     I_free_group_ref (&ref);
     I_get_subgroup_ref (group, subgroup, &ref);
 
@@ -30,21 +32,21 @@ open_files (void)
 	if (G_find_cell (name, mapset) == NULL)
 	{
 	    if (!missing)
-		fprintf (stderr, "\7\n** The following raster files in subgroup [%s] do not exist\n", subgroup);
+		G_warning(_("\7\n** The following raster files in "
+                          "subgroup [%s] do not exist:"), subgroup);
 	    missing = 1;
-	    fprintf (stderr, "       %s\n", G_fully_qualified_name(name, mapset));
+	    G_message(_("       %s"), G_fully_qualified_name(name, mapset));
 	}
     }
     if (missing) exit(1);
     if (ref.nfiles <= 1)
     {
-	fprintf (stderr, "Subgroup [%s] ", subgroup);
 	if (ref.nfiles <= 0)
-	    fprintf (stderr, "doesn't have any files\n");
+	    G_warning(_("Subgroup [%s] doesn't have any files"), subgroup);
 	else
-	    fprintf (stderr, "only has 1 file\n");
-	fprintf (stderr, "The subgroup must have at least 2 files to run %s\n", G_program_name());
-	exit(1);
+	    G_warning(_("Subgroup [%s] only has 1 file"), subgroup);
+	G_fatal_error(_("The subgroup must have at least 2 files to run %s"),
+                G_program_name());
     }
 
     cell = (CELL **) G_malloc (ref.nfiles * sizeof (CELL *));
@@ -55,32 +57,23 @@ open_files (void)
 	name   = ref.file[n].name;
 	mapset = ref.file[n].mapset;
 	if ((cellfd[n] = G_open_cell_old (name, mapset)) < 0)
-	{
-	    fprintf (stderr, "Unable to proceed\n");
-	    exit(1);
-	}
+	    G_fatal_error(_("Unable to proceed"));
     }
 
     I_init_signatures (&in_sig, ref.nfiles);
     if (insigfile) {
       fd = I_fopen_signature_file_old (group, subgroup, insigfile);
       if (fd == NULL)
-      {
-	fprintf (stderr, "** Can't open seed singature file <%s> **\n", insigfile);
-	exit(1);
-      }
+	G_fatal_error(_("** Can't open seed singature file <%s> **"), insigfile);
+
       n = I_read_signatures (fd, &in_sig);
       fclose (fd);
       if (n < 0)
-      {
-	fprintf (stderr, "** Can't read signature file <%s> **\n", insigfile);
-	exit(1);
-      }
+	G_fatal_error(_("** Can't read signature file <%s> **"), insigfile);
+
       if (in_sig.nsigs > 255)
-      {
-	  fprintf (stderr, "** <%s> has too many signatures (limit is 255)\n", insigfile);
-	  exit(1);
-      }
+	  G_fatal_error(_("** <%s> has too many signatures (limit is 255)"), insigfile);
+
       maxclass = in_sig.nsigs;
     }
 
