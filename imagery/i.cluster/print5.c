@@ -1,4 +1,8 @@
 #include "imagery.h"
+#include "gis.h"
+#include "glocale.h"
+
+
 int 
 print_separability (FILE *fd, struct Cluster *C)
 {
@@ -8,7 +12,7 @@ print_separability (FILE *fd, struct Cluster *C)
     double q;
 
     I_cluster_sum2 (C);
-    fprintf (fd, "\nclass separability matrix\n\n");
+    fprintf (fd, _("\nclass separability matrix\n\n"));
     for (first = 0; first < C->nclasses; first = last)
     {
 	last = first + 10;

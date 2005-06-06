@@ -1,8 +1,13 @@
 #include <stdio.h>
+#include "gis.h"
+#include "global.h"
 
-int print_time (long t)
+
+char *
+print_time (time_t t)
 {
     int H, M, S;
+    static char outstr[20];
 
     if (t < 0) t = 0;
 
@@ -13,17 +18,16 @@ int print_time (long t)
 
     if (H)
     {
-	fprintf (stderr, "%dh%02dm%02ds", H, M, S);
+	sprintf(outstr, "%dh%02dm%02ds", H, M, S);
     }
     else if (M)
     {
-	fprintf (stderr, "%dm%02ds", M, S);
+	sprintf(outstr, "%dm%02ds", M, S);
     }
     else
     {
-	fprintf (stderr, "%ds", S);
+	sprintf(outstr, "%ds", S);
     }
-    fflush (stderr);
 
-    return 0;
+    return outstr;
 }
