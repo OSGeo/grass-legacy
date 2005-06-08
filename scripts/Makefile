@@ -26,6 +26,7 @@ SUBDIRS = \
 	pg.postgisdb \
 	r.blend \
 	r.fillnulls \
+	r.in.aster \
 	r.in.srtm \
 	r.mapcalculator \
 	r.out.gdal \
