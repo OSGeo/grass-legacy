@@ -97,7 +97,7 @@ Vect_write_line (
     offset = (*Write_line_array[Map->format][Map->level]) (Map, type, points, cats);
 
     if ( offset == -1 )
-	G_fatal_error ( _("Cannot write line (negative offset)") );
+	G_fatal_error ( _("Cannot write line (negative offset) - disk full?") );
 
     return offset;
 }
