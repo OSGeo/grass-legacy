@@ -65,17 +65,13 @@ static int (*Vect_delete_line_array[][3]) () =
 };
 
 /*!
- \fn long Vect_write_line (
-     struct Map_info *Map,
-     int type,
-     struct line_pnts *points,
-     struct line_cats *cats)
  \brief writes new line to the end of file (table)
         the function calls fatal error on error
+ \param Map_info structure
+ \param vector type
+ \param line_pnts structure
+ \param line_cats structure
  \return offset into file where the line starts
- 
- 
- \param Map_info structure, vector type, line_pnts structure, line_cats structure
 */
 long
 Vect_write_line (
@@ -101,24 +97,22 @@ Vect_write_line (
     offset = (*Write_line_array[Map->format][Map->level]) (Map, type, points, cats);
 
     if ( offset == -1 )
-	G_fatal_error ( _("Cannot write line") );
+	G_fatal_error ( _("Cannot write line (negative offset)") );
 
     return offset;
 }
 
 
 /*!
- \fn int Vect_rewrite_line (
-     struct Map_info *Map,
-     int line,
-     int type,
-     struct line_pnts *points,
-     struct line_cats *cats)
  \brief rewrites line info at the given offset. The number of points
    or cats or type may change. If necessary, the old line is deleted and
    new is written.
+ \param Map_info structure
+ \param line number
+ \param vector type
+ \param line_pnts structure
+ \param line_cats structure
  \return number of new line, -1 on error
- \param Map_info structure, line number, vector type, line_pnts structure, line_cats structure
 */
 int
 Vect_rewrite_line (
@@ -169,12 +163,10 @@ V1_delete_line (
 */
 
 /*!
- \fn int Vect_delete_line (
-     struct Map_info *Map,
-     int line)
  \brief deletes line of given number. Map must be opened on level 2.
  \return 0 on success, -1 on error
- \param Map_info structure, line number
+ \param Map_info structure
+ \param line number
 */
 int
 Vect_delete_line (
