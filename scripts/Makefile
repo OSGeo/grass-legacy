@@ -44,7 +44,9 @@ SUBDIRS = \
 	v.in.mapgen \
 	v.in.sites.all \
 	v.report \
-	v.univar.sh
+	v.univar.sh \
+	v.db.update \
+	v.db.addcol
 
 default: subdirs
 
