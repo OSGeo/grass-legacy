@@ -103,6 +103,12 @@ rm -f ${TMPFILE}
 echo "Converted `wc -l ${TMPFILE}_ascii.csv | awk '{print $1}'` place names."
 
 #TODO: fix dms_lat,dms_long DDMMSS -> DD:MM:SS
+# Solution:
+# IN=DDMMSS
+# DEG=`echo $IN | cut -b1,2`
+# MIN=`echo $IN | cut -b3,4`
+# SEC=`echo $IN | cut -b5,6`
+# DEG_STR="$DEG:$MIN:$SEC"
 
 #modifications (to match DBF 10 char column name limit):
 # short_form   -> shortform
