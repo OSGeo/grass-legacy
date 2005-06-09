@@ -88,6 +88,7 @@ int bin_to_asc(
 	                fprintf(ascii, "|%d", Cats->cat[0]);
 	            fprintf(ascii, "\n");
 		} else { 
+		    /* FORMAT_STANDARD */
 		    if ( ver == 5 && Cats->n_cats > 0 )
 			fprintf(ascii, "%c  %d %d\n", ctype, Points->n_points, Cats->n_cats);		
 		    else 
