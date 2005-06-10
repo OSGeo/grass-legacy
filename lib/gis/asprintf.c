@@ -5,6 +5,7 @@
 #include <assert.h>
 #include "gis.h"
 
+
 /*
  * Eric G. Miller egm2@jps.net 
  * Thu, 2 May 2002 17:51:54 -0700 
@@ -17,49 +18,61 @@
 /* Make sure the macro doesn't impact our function, if it is defined */
 #undef G_asprintf
 
+
 /* We cheat by printing to a tempfile via vfprintf and then reading it
- *  * back in.  Not the most efficient way, probably.
- *  */
-int
-  G_asprintf (char **out, const char *fmt, ...)
+ * back in.  Not the most efficient way, probably.
+ */
+
+/*!
+ * \brief safe replacement for asprintf()
+ *
+ * Allocate a string large enough to hold the new output,
+ * including the terminating NUL, and return a pointer to
+ * the first parameter.
+ * The pointer should be passed to G_free() to release the
+ * allocated storage when it is no longer needed.
+ * Returns number of bytes written.
+ *
+ * \param char **out
+ * \param char *fmt
+ * \return int
+ */
+
+int G_asprintf(char **out, const char *fmt, ...)
 {
-       va_list ap;
-       int ret_status = EOF;
-       char *fn = NULL;
-       char *work = NULL;
-       
-       assert (out != NULL && fmt != NULL);
-       
-       va_start (ap, fmt);
+    va_list ap;
+    int ret_status = EOF;
+    char *fn = NULL;
+    char *work = NULL;
 
-       if ((fn = G_tempfile()))
-     {
-        FILE *fp;
-        int count;
+    assert(out != NULL && fmt != NULL);
 
-                fp = fopen (fn, "w+b");
-	        count = vfprintf (fp, fmt, ap);
-	        if (count >= 0)
-	  {
-	                 work = G_calloc (count + 1, sizeof(char));
-	                 if (work != NULL)
-	       {
-		                  rewind (fp);
-		                  ret_status = fread (work, sizeof(char), count, fp);
-		                  if (ret_status != count)
-		    {
-		                           ret_status = EOF;
-		                           G_free (work);
-		                           work = NULL;
-		    }
-	       }
-	  }
-          fclose (fp);
-          unlink (fn);
-          G_free (fn);
-     }
-       va_end (ap);
-       *out = work;
+    va_start(ap, fmt);
 
-       return ret_status;
+    if ((fn = G_tempfile())) {
+	FILE *fp;
+	int count;
+
+	fp = fopen(fn, "w+b");
+	count = vfprintf(fp, fmt, ap);
+	if (count >= 0) {
+	    work = G_calloc(count + 1, sizeof(char));
+	    if (work != NULL) {
+		rewind(fp);
+		ret_status = fread(work, sizeof(char), count, fp);
+		if (ret_status != count) {
+		    ret_status = EOF;
+		    G_free(work);
+		    work = NULL;
+		}
+	    }
+	}
+	fclose(fp);
+	unlink(fn);
+	G_free(fn);
+    }
+    va_end(ap);
+    *out = work;
+
+    return ret_status;
 }
