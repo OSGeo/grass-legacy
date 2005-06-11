@@ -10,7 +10,7 @@
 #undef getpix
 #undef putpix
 
-getpix(image)
+unsigned short getpix(image)
 IMAGE 	*image;
 {
     if(--(image)->cnt>=0)
@@ -19,7 +19,7 @@ IMAGE 	*image;
 	return ifilbuf(image);
 }
 
-putpix(image, pix)
+unsigned short putpix(image, pix)
 register IMAGE *image;
 unsigned long pix;
 {

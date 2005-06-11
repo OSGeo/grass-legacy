@@ -8,14 +8,14 @@
 #include	<string.h>
 #include	"image.h"
 
-isetname(image,name)
+void isetname(image,name)
 IMAGE *image;
 char *name;
 {
     strncpy(image->name,name,80);
 }
 
-isetcolormap(image,colormap)
+void isetcolormap(image,colormap)
 IMAGE *image;
 int colormap;
 {

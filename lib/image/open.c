@@ -7,8 +7,11 @@
 #include	<stdio.h>
 #include	<stdlib.h>
 #include        <ctype.h>
+#include	<fcntl.h>
+#include	<unistd.h>
+#include	<sys/stat.h>
+#include	<sys/types.h>
 #include	"image.h"
-#include <sys/types.h>
 
 
 #undef PARM
@@ -62,7 +65,7 @@ unsigned int type, dim, xsize, ysize, zsize;
 	register rw;
 	int tablesize;
 	register int i, max;
-	FILE *f1;
+	FILE *f1 = NULL;
 
 	image = (IMAGE*)calloc(1,sizeof(IMAGE));
 	rw = mode[1] == '+';
@@ -209,7 +212,7 @@ register IMAGE *image;
     return (unsigned short *)malloc(IBUFSIZE(image->xsize));
 }
 
-reverse(lwrd) 
+unsigned long reverse(lwrd) 
 register unsigned long lwrd;
 {
     return ((lwrd>>24) 		| 
@@ -218,7 +221,7 @@ register unsigned long lwrd;
 	   (lwrd<<24) 		);
 }
 
-cvtshorts( buffer, n)
+void cvtshorts( buffer, n)
 register unsigned short buffer[];
 register long n;
 {
@@ -232,7 +235,7 @@ register long n;
     }
 }
 
-cvtlongs( buffer, n)
+void cvtlongs( buffer, n)
 register long buffer[];
 register long n;
 {
@@ -249,7 +252,7 @@ register long n;
     }
 }
 
-cvtimage( buffer )
+void cvtimage( buffer )
 register long buffer[];
 {
     cvtshorts(buffer,12);
@@ -266,7 +269,7 @@ static void (*i_errfunc)();
 	ever need be worried about, while programs that know how and
 	want to can handle the errors themselves.  Olson, 11/88
 */
-i_errhdlr(fmt, a1, a2, a3, a4)	/* most args currently used is 2 */
+void i_errhdlr(fmt, a1, a2, a3, a4)	/* most args currently used is 2 */
 char *fmt;
 {
 	if(i_errfunc) {
@@ -282,7 +285,7 @@ char *fmt;
 }
 
 /* this function sets the error handler for i_errhdlr */
-i_seterror(func)
+void i_seterror(func)
 void (*func)();
 {
 	i_errfunc = func;
