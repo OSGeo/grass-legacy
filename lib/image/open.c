@@ -103,7 +103,7 @@ IMAGE *imgopen(int f, char *file, char *mode, u_int type, u_int dim,
 
 /* byte order independent */
 
-fwrite(image,sizeof(IMAGE), (size_t) 1, f1);
+fwrite(image,sizeof(IMAGE), sizeof(char), f1);
 fseek(f1, 0L, 0);
 
   putshort(f1, image->imagic);
@@ -115,7 +115,7 @@ fseek(f1, 0L, 0);
   putlong (f1, image->min);
   putlong (f1, image->max);
   putlong (f1, 0L);
-  fwrite  ("no name", (size_t) 8, (size_t) 1,f1);
+  fwrite  ("no name", 8 * sizeof(char), sizeof(char), f1);
 
   if (ferror(f1)) { fclose(f1);  return NULL; }
 
@@ -281,7 +281,7 @@ void i_seterror(void (*func)())
 static u_short getshort(FILE *inf)
 {
   byte buf[2];
-  fread(buf, (size_t) 2, (size_t) 1,inf);
+  fread(buf, sizeof(short), sizeof(char), inf);
   return (buf[0]<<8)+(buf[1]<<0);
 }
 
@@ -289,7 +289,7 @@ static u_short getshort(FILE *inf)
 static u_long getlong(FILE *inf)
 {
   byte buf[4];
-  fread(buf, (size_t) 4, (size_t) 1,inf);
+  fread(buf, 4 * sizeof(char), sizeof(char), inf);
   return (((u_long) buf[0])<<24) + (((u_long) buf[1])<<16)
        + (((u_long) buf[2])<<8) + buf[3];
 }
@@ -300,7 +300,7 @@ static void putshort(FILE *outf, int val)
   byte buf[2];
   buf[0] = (val>>8);
   buf[1] = (val>>0);
-  fwrite(buf,(size_t) 2,(size_t) 1,outf);
+  fwrite(buf, sizeof(short), sizeof(char), outf);
 }
 
 
@@ -311,5 +311,5 @@ static void putlong(FILE *outf, u_long val)
   buf[1] = (val>>16);
   buf[2] = (val>>8);
   buf[3] = (val>>0);
-  fwrite(buf,(size_t) 4,(size_t) 1,outf);
+  fwrite(buf, 4 * sizeof(char), sizeof(char), outf);
 }
