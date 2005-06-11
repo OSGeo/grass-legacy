@@ -16,6 +16,15 @@ The input is read from a file specified by <B>input</B> option or from standard 
 Field separator may be a character, the word 'tab' (or '\t') for tab,
 or 'space' (or '&nbsp;') for blank.
 
+<P>
+The <em><a HREF="v.out.ascii.html">v.out.ascii</a></em> GRASS module 
+performs the function of <em>v.in.ascii</em> in reverse;
+i.e., it converts vector files in binary format to ASCII
+format.  These two companion programs are useful both for
+importing and exporting vector files between GRASS and
+other software, and for transferring data between
+machines.
+
 
 <h2>NOTES</h2>
 
@@ -145,8 +154,9 @@ As the <em>cat</em> option is set to 0 by default, an extra column 'cat'
 containing the IDs will be auto-generated.
 
 <p><BR>
-<b>Example 3</b><br>
 
+
+<b>Example 3</b><br>
 Generate a 2D points vector file 'points.dat' as ASCII file:
 <pre>
   1|1664619|5103481|studna
@@ -165,6 +175,8 @@ cat points.dat | v.in.ascii out=mypoints x=2 y=3 cat=1 \
 <b>The module is reading from standard input, using the default '|' (pipe) delimiter.</b>
 
 <p><BR>
+
+
 <b>Example 4</b><br>
 Generating a 3D points vector map from DBMS (idcol must be an integer column):<br>
 <pre>
@@ -176,8 +188,9 @@ echo "select east,north,elev,idcol from mytable" | db.select -c | v.in.ascii -z 
 The import works for 2D maps as well (no elev column and no '-z' flag).
 
 <p><BR>
-<b>Example 5</b><br>
 
+
+<b>Example 5</b><br>
 Generate a 3D points vector file 'points3d.dat' with attributes as ASCII file:
 <pre>
 593493.1|4914730.2|123.1|studna|well
@@ -200,6 +213,8 @@ v.info mypoints3D
 
 
 <p><BR>
+
+
 <b>Example 6</b><br>
 Generate points file by clicking onto the map:
 <pre>
@@ -216,16 +231,16 @@ The 'point' string (or some similar entry) is required to generate a database ta
 When simply piping the coordinates (and optionally height) without additional column(s) 
 into <em>v.in.ascii</em>, only the vector map geometry will be generated.
 
-<P>
-The GRASS program <em><a HREF="v.out.ascii.html">v.out.ascii</a></em>
-performs the function of <em>v.in.ascii</em> in reverse;
-i.e., it converts vector files in binary format to ASCII
-format.  These two companion programs are useful both for
-importing and exporting vector files between GRASS and
-other software, and for transferring data between
-machines.
+<p><BR>
 
-<p>
+<b>Example 7</b><br>
+Convert ground control points from i.points into vector points:
+<PRE>
+cat $MAPSET/group/$GROUP/POINTS | v.in.ascii out=$GROUP_gcp fs=space skip=3 \
+    col='x double, y double, x_target double, y_target double, ok int'
+</PRE>
+
+<p><BR>
 
 
 <h2>SEE ALSO</h2>
