@@ -19,8 +19,7 @@
 
 
 int
-iclose(image)
-register IMAGE 	*image;
+iclose(IMAGE *image)
 {
     long tablesize;
     int ret;
@@ -88,8 +87,7 @@ register IMAGE 	*image;
     return ret;
 }
 
-int iflush(image)
-register IMAGE 	*image;
+int iflush(IMAGE *image)
 {
     unsigned short *base;
 

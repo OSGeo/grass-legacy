@@ -39,27 +39,20 @@ typedef unsigned char byte;
 
 IMAGE *imgopen();
 
-IMAGE *iopen(file, mode, type, dim, xsize, ysize, zsize)
-char *file;
-register char *mode;
-unsigned int type, dim, xsize, ysize, zsize;
+IMAGE *iopen(char *file, char *mode, u_int type, u_int dim,
+             u_int xsize, u_int ysize, u_int zsize)
 {
     return(imgopen(0, file, mode, type, dim, xsize, ysize, zsize));
 }
 
-IMAGE *fiopen(f, mode, type, dim, xsize, ysize, zsize)
-int f;
-register char *mode;
-unsigned int type, dim, xsize, ysize, zsize;
+IMAGE *fiopen(int f, char *mode, u_int type, u_int dim,
+              u_int xsize, u_int ysize, u_int zsize)
 {
     return(imgopen(f, 0, mode, type, dim, xsize, ysize, zsize));
 }
 
-IMAGE *imgopen(f, file, mode, type, dim, xsize, ysize, zsize)
-char *file;
-int f;
-register char *mode;
-unsigned int type, dim, xsize, ysize, zsize;
+IMAGE *imgopen(int f, char *file, char *mode, u_int type, u_int dim, 
+               u_int xsize, u_int ysize, u_int zsize)
 {
 	register IMAGE 	*image;
 	register rw;
@@ -206,14 +199,12 @@ fseek(f1, 0L, 0);
 	return(image);
 }
 
-unsigned short *ibufalloc(image)
-register IMAGE *image;
+unsigned short *ibufalloc(IMAGE *image)
 {
     return (unsigned short *)malloc(IBUFSIZE(image->xsize));
 }
 
-unsigned long reverse(lwrd) 
-register unsigned long lwrd;
+unsigned long reverse(u_long lwrd) 
 {
     return ((lwrd>>24) 		| 
 	   (lwrd>>8 & 0xff00) 	| 
@@ -221,9 +212,7 @@ register unsigned long lwrd;
 	   (lwrd<<24) 		);
 }
 
-void cvtshorts( buffer, n)
-register unsigned short buffer[];
-register long n;
+void cvtshorts(u_short buffer[], long n)
 {
     register short i;
     register long nshorts = n>>1;
@@ -235,9 +224,7 @@ register long n;
     }
 }
 
-void cvtlongs( buffer, n)
-register long buffer[];
-register long n;
+void cvtlongs(long buffer[], long n)
 {
     register short i;
     register long nlongs = n>>2;
@@ -252,8 +239,7 @@ register long n;
     }
 }
 
-void cvtimage( buffer )
-register long buffer[];
+void cvtimage(long buffer[])
 {
     cvtshorts(buffer,12);
     cvtlongs(buffer+3,12);
@@ -285,16 +271,14 @@ char *fmt;
 }
 
 /* this function sets the error handler for i_errhdlr */
-void i_seterror(func)
-void (*func)();
+void i_seterror(void (*func)())
 {
 	i_errfunc = func;
 }
 
 /* byte order independent read/write of shorts and longs. */
 
-static u_short getshort(inf)
-     FILE *inf;
+static u_short getshort(FILE *inf)
 {
   byte buf[2];
   fread(buf, (size_t) 2, (size_t) 1,inf);
@@ -302,8 +286,7 @@ static u_short getshort(inf)
 }
 
 
-static u_long getlong(inf)
-     FILE *inf;
+static u_long getlong(FILE *inf)
 {
   byte buf[4];
   fread(buf, (size_t) 4, (size_t) 1,inf);
@@ -312,9 +295,7 @@ static u_long getlong(inf)
 }
 
 
-static void putshort(outf,val)
-     FILE *outf;
-     int val;
+static void putshort(FILE *outf, int val)
 {
   byte buf[2];
   buf[0] = (val>>8);
@@ -323,9 +304,7 @@ static void putshort(outf,val)
 }
 
 
-static void putlong(outf,val)
-     FILE *outf;
-     u_long val;
+static void putlong(FILE *outf, u_long val)
 {
   byte buf[4];
   buf[0] = (val>>24);
@@ -334,7 +313,3 @@ static void putlong(outf,val)
   buf[3] = (val>>0);
   fwrite(buf,(size_t) 4,(size_t) 1,outf);
 }
-
-
-
-

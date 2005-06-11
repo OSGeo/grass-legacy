@@ -10,8 +10,7 @@
 #undef getpix
 #undef putpix
 
-unsigned short getpix(image)
-IMAGE 	*image;
+unsigned short getpix(IMAGE *image)
 {
     if(--(image)->cnt>=0)
     	return *(image)->ptr++;
@@ -19,9 +18,7 @@ IMAGE 	*image;
 	return ifilbuf(image);
 }
 
-unsigned short putpix(image, pix)
-register IMAGE *image;
-unsigned long pix;
+unsigned short putpix(IMAGE *image, unsigned long pix)
 {
     if(--(image)->cnt>=0)
         return *(image)->ptr++ = pix;

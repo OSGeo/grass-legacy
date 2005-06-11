@@ -10,9 +10,7 @@
 #include	"image.h"
 
 
-long img_seek(image, y, z)
-IMAGE 		*image;
-unsigned int 	y, z;
+long img_seek(IMAGE *image, unsigned int y, unsigned int z)
 {
     if(img_badrow(image,y,z)) {
 	i_errhdlr("img_seek: row number out of range\n");
@@ -53,9 +51,7 @@ unsigned int 	y, z;
     return -1;
 }
 
-int img_badrow(image,y,z)
-IMAGE *image;
-int y, z;
+int img_badrow(IMAGE *image, int y, int z)
 {
     if(y>=image->ysize || z>=image->zsize)
 	return 1;
@@ -63,10 +59,7 @@ int y, z;
         return 0;
 }
 
-long img_write(image,buffer,count)
-IMAGE *image;
-char *buffer;
-long count;
+long img_write(IMAGE *image, char *buffer, long count)
 {
     long retval;
 
@@ -78,10 +71,7 @@ long count;
     return retval;
 }
 
-long img_read(image,buffer,count)
-IMAGE *image;
-char *buffer;
-long count;
+long img_read(IMAGE *image, char *buffer, long count)
 {
     long retval;
 
@@ -93,9 +83,7 @@ long count;
     return retval;
 }
 
-img_optseek(image,offset)
-IMAGE *image;
-unsigned long 	offset;
+img_optseek(IMAGE *image, unsigned long offset)
 {
     if(image->offset != offset) {
        image->offset = offset;
@@ -103,4 +91,3 @@ unsigned long 	offset;
    }
    return offset;
 }
-
