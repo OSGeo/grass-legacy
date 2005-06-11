@@ -88,7 +88,7 @@ register IMAGE 	*image;
     return ret;
 }
 
-iflush(image)
+int iflush(image)
 register IMAGE 	*image;
 {
     unsigned short *base;
@@ -100,4 +100,6 @@ register IMAGE 	*image;
 		    return(EOF);
 	    }
     }
+
+    return 0;
 }

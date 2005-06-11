@@ -5,9 +5,12 @@
  *
  */
 #include	<stdio.h>
+#include	<unistd.h>
+#include	<sys/types.h>
 #include	"image.h"
 
-img_seek(image, y, z)
+
+long img_seek(image, y, z)
 IMAGE 		*image;
 unsigned int 	y, z;
 {
@@ -46,9 +49,11 @@ unsigned int 	y, z;
 	}
     } else 
 	i_errhdlr("img_seek: weird image type\n");
+
+    return -1;
 }
 
-img_badrow(image,y,z)
+int img_badrow(image,y,z)
 IMAGE *image;
 int y, z;
 {
@@ -58,7 +63,7 @@ int y, z;
         return 0;
 }
 
-img_write(image,buffer,count)
+long img_write(image,buffer,count)
 IMAGE *image;
 char *buffer;
 long count;
@@ -73,7 +78,7 @@ long count;
     return retval;
 }
 
-img_read(image,buffer,count)
+long img_read(image,buffer,count)
 IMAGE *image;
 char *buffer;
 long count;

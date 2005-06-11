@@ -6,7 +6,7 @@
  */
 #include	"image.h"
 
-ifilbuf(image)
+short ifilbuf(image)
 register IMAGE *image;
 {
 	int size;

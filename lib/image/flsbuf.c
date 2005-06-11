@@ -6,13 +6,12 @@
  */
 #include	"image.h"
 
-iflsbuf(image, c)
+long iflsbuf(image, c)
 register  IMAGE *image;
 unsigned long c;
 {
 	register unsigned short *base;
 	register n, rn;
-	char c1;
 	int size;
 
 	if ((image->flags&_IOWRT)==0)

@@ -7,6 +7,7 @@
 #include	<stdio.h>
 #include	"image.h"
 
+
 int
 putrow(image,buffer,y,z) 
 register IMAGE	*image;
@@ -132,9 +133,11 @@ unsigned  	y, z;
 	}
     } else 
 	i_errhdlr("putrow: weird image type\n");
+
+    return -1;
 }
 
-getrow(image,buffer,y,z) 
+int getrow(image,buffer,y,z) 
 register IMAGE *image;
 unsigned short *buffer;
 register unsigned int y, z;
@@ -213,4 +216,6 @@ register unsigned int y, z;
 	}
     } else 
 	i_errhdlr("getrow: weird image type\n");
+
+    return -1;
 }

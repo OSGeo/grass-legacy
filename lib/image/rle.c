@@ -7,7 +7,7 @@
 #include	<stdio.h>
 #include	"image.h"
 
-img_getrowsize(image)
+long img_getrowsize(image)
 register IMAGE *image;
 {
     switch(image->dim) {
@@ -18,13 +18,15 @@ register IMAGE *image;
 	case 3:
 	    return image->rowsize[image->y+image->z*image->ysize];
     }
+
+    return 0;
 }
 
-img_setrowsize(image,cnt,y,z)
+void img_setrowsize(image,cnt,y,z)
 register IMAGE *image;
 long y, z, cnt;
 {
-    long *sizeptr;
+    long *sizeptr = NULL;
 
     if(img_badrow(image,y,z)) 
 	return;
@@ -76,7 +78,7 @@ long y, z, cnt;
 	}								\
 	*optr++ = 0;
 
-img_rle_compact(expbuf,ibpp,rlebuf,obpp,cnt)
+unsigned char img_rle_compact(expbuf,ibpp,rlebuf,obpp,cnt)
 unsigned short *expbuf;
 int ibpp;
 unsigned short *rlebuf;
@@ -126,6 +128,8 @@ int obpp, cnt;
 	i_errhdlr("rle_compact: bad bpp: %d %d\n",ibpp,obpp);
 	return 0;
     }
+
+    return 0;
 }
 
 #define doexpand				\
@@ -143,7 +147,7 @@ int obpp, cnt;
 	    }					\
 	}
 
-img_rle_expand(rlebuf,ibpp,expbuf,obpp)
+void img_rle_expand(rlebuf,ibpp,expbuf,obpp)
 unsigned short *rlebuf;
 int ibpp;
 unsigned short *expbuf;
