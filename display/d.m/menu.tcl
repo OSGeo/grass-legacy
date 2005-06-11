@@ -13,12 +13,12 @@ global execom
  		{command "Multiple formats using GDAL" {} "r.in.gdal" {} -command { execute r.in.gdal }}
  		{separator}
  		{command "ASCII GRID (includes GRASS ASCII)" {} "r.in.ascii" {} -command { execute r.in.ascii }}
- 		{command "GRASS ASCII vector map" {} "r.in.poly" {} -command { execute r.in.poly }}
+ 		{command "Polygons and lines from ASCII file" {} "r.in.poly" {} -command { execute r.in.poly }}
  		{separator}
  		{command "Binary file (includes GTOPO30 format)" {} "r.in.bin" {} -command { execute r.in.bin }}
  		{command "ESRI Arc/Info ASCII grid" {} "r.in.arc" {} -command { execute r.in.arc }}
  		{command "GRIDATB.FOR map file (TOPMODEL)" {} "r.in.gridatb" {} -command { execute r.in.gridatb }}
- 		{command "MAT-File (v.4) map file (Matlab or Octave)" {} "r.in.gridatb" {} -command { execute r.in.mat }}
+ 		{command "MAT-File (v.4) array (Matlab or Octave)" {} "r.in.mat" {} -command { execute r.in.mat }}
  		{command "SRTM hgt files" {} "r.in.srtm" {} -command { execute r.in.srtm }}
  	 }}
  	 {cascad "Vector map" {} "" $tmenu {			
@@ -37,12 +37,14 @@ global execom
  	 	{command "Vis5D file" {} "r3.in.v5d" {} -command { execute r3.in.v5d }}
  	 }}
  	}}
- 	{cascad "Export" {} "" $tmenu {			
- 	 {cascad "Raster map" {} "" $tmenu {			
+ 	{cascad "Export" {} "" $tmenu {
+ 	 {cascad "Raster map" {} "" $tmenu {
+		{command "Multiple formats using GDAL" {} "r.out.gdal" {} -command { execute r.out.gdal }}
+		{separator}
  		{command "ASCII grid (for GRASS, Surfer, Modflow, etc)" {} "r.out.ascii" {} -command { execute r.out.ascii }}
  		{separator}
  		{command "ESRI ARC/INFO ASCII grid" {} "r.out.arc" {} -command { execute r.out.arc }}
- 		 {command "GRIDATB.FOR map file (TOPMODEL)" {} "r.out.gridatb" {} -command { execute r.out.gridatb }}
+ 		{command "GRIDATB.FOR map file (TOPMODEL)" {} "r.out.gridatb" {} -command { execute r.out.gridatb }}
  		{command "MAT-File (v.4) map file (Matlab or Octave)" {} "r.out.mat" {} -command { execute r.out.mat }}
  		{separator}
  		{command "Binary file" {} "r.out.bin" {} -command { execute r.out.bin }}
@@ -51,8 +53,8 @@ global execom
  		{command "PNG image (not georeferenced)" {} "r.out.png" {} -command { execute r.out.png }}
  		{command "PPM image (24bit)" {} "r.out.ppm" {} -command { execute r.out.ppm }}
  		{command "PPM image from red, green, blue raster maps" {} "r.out.ppm3" {} -command { execute r.out.ppm3 }}
- 	{command "POVray height-field" {} "r.out.pov" {} -command { execute r.out.pov }}
- 		{command "TIFF image (8/24bit)" {} "r.out.pov" {} -command { execute r.out.tiff }}
+ 		{command "POVray height-field" {} "r.out.pov" {} -command { execute r.out.pov }}
+ 		{command "TIFF image (8/24bit)" {} "r.out.tiff" {} -command { execute r.out.tiff }}
  	 }}
  	 {cascad "Vector map" {} "" $tmenu {			
  		{command "Various formats using OGR (SHAPE, MapInfo etc)" {} "v.out.ogr" {} -command { execute v.out.ogr }}
