@@ -45,7 +45,7 @@ global execom
  		{separator}
  		{command "ESRI ARC/INFO ASCII grid" {} "r.out.arc" {} -command { execute r.out.arc }}
  		{command "GRIDATB.FOR map file (TOPMODEL)" {} "r.out.gridatb" {} -command { execute r.out.gridatb }}
- 		{command "MAT-File (v.4) map file (Matlab or Octave)" {} "r.out.mat" {} -command { execute r.out.mat }}
+ 		{command "MAT-File (v.4) array (Matlab or Octave)" {} "r.out.mat" {} -command { execute r.out.mat }}
  		{separator}
  		{command "Binary file" {} "r.out.bin" {} -command { execute r.out.bin }}
  		{separator}
