@@ -1,18 +1,18 @@
 # translation of grasslibs_sl.po to Sloven¹èina
 # translation of grasslibs_sl.po to slovenian
-# Miha Staut <mihastaut@yahoo.co.uk>, 2004.
+# Miha Staut <mihastaut@yahoo.co.uk>, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_sl\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-25 10:42+0100\n"
-"PO-Revision-Date: 2004-12-20 14:53+0100\n"
+"POT-Creation-Date: 2005-01-20 18:30+0100\n"
+"PO-Revision-Date: 2005-04-26 09:38+0200\n"
 "Last-Translator: Miha Staut <mihastaut@yahoo.co.uk>\n"
 "Language-Team: Sloven¹èina <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 "X-Generator: KBabel 1.9\n"
 
 #: ../lib/gis/env.c:268
@@ -32,17 +32,18 @@ msgstr "OPOZORILO: "
 msgid "ERROR: "
 msgstr "NAPAKA: "
 
-#: ../lib/gis/gisinit.c:38
+#: ../lib/gis/gisinit.c:39
 #, c-format
 msgid "MAPSET %s - permission denied"
 msgstr "MAPSET %s - dovoljenje odklonjeno"
 
-#: ../lib/gis/gisinit.c:43 ../lib/gis/mapset.c:60
+# ne morem izdelati elementa "mapset"-a %s (%s)
+#: ../lib/gis/gisinit.c:44 ../lib/gis/mapset.c:60
 #, c-format
 msgid "MAPSET %s not found"
 msgstr "ne najdem MAPSET %s"
 
-#: ../lib/gis/gisinit.c:67
+#: ../lib/gis/gisinit.c:68
 msgid "ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
 msgstr ""
 "NAPAKA: Sistem ni inicializiran. Programer je pozabil poklicati G_gisinit()\n"
@@ -50,7 +51,7 @@ msgstr ""
 #: ../lib/gis/mapset_msc.c:69
 #, c-format
 msgid "can't make mapset element %s (%s)"
-msgstr "ne morem izdelati elementa mapset-a %s (%s)"
+msgstr "ne morem izdelati elementa \"mapset\"-a %s (%s)"
 
 #: ../lib/gis/parser.c:312
 msgid ""
@@ -78,7 +79,7 @@ msgstr "Ime izhodnega vektorskega sloja"
 
 #: ../lib/gis/parser.c:365
 msgid "Type"
-msgstr ""
+msgstr "Tip"
 
 #: ../lib/gis/parser.c:372
 msgid "Layer number"
@@ -91,7 +92,7 @@ msgstr "Vrednost kategorije"
 #: ../lib/gis/parser.c:384
 #, fuzzy
 msgid "Category values."
-msgstr "Vrednost kategorije"
+msgstr "Vrednost kategorij"
 
 #: ../lib/gis/parser.c:385
 #, fuzzy
@@ -101,7 +102,7 @@ msgstr "Vrednost kategorij (primer: 1,3,7-9,13)"
 #: ../lib/gis/parser.c:626
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
-msgstr "Oprosti <%s> ni veljavna mo¾nost\n"
+msgstr "Oprostite <%s> ni veljavna mo¾nost\n"
 
 #: ../lib/gis/parser.c:695
 msgid ""
@@ -142,28 +143,28 @@ msgstr ""
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   privzet: %s\n"
 
-#: ../lib/gis/parser.c:1341
+#: ../lib/gis/parser.c:1355
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   mo¾nosti: "
 
-#: ../lib/gis/parser.c:1388 ../lib/gis/parser.c:1405
+#: ../lib/gis/parser.c:1402 ../lib/gis/parser.c:1419
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
-msgstr "Oprosti <%c> ni veljavna izbira\n"
+msgstr "Oprostite <%c> ni veljavna izbira\n"
 
-#: ../lib/gis/parser.c:1460
+#: ../lib/gis/parser.c:1474
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
-msgstr "Oprosti <%s=> je dvoumno\n"
+msgstr "Oprostite <%s=> je dvoumno\n"
 
-#: ../lib/gis/parser.c:1467
+#: ../lib/gis/parser.c:1481
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
-msgstr "Oprosti <%s> ni veljaven parameter\n"
+msgstr "Oprostite <%s> ni veljaven parameter\n"
 
-#: ../lib/gis/parser.c:1552
-#, c-format
+#: ../lib/gis/parser.c:1566
+#, c-format, fuzzy
 msgid ""
 "\n"
 "Error: illegal range syntax for parameter <%s>\n"
@@ -171,12 +172,12 @@ msgstr ""
 "\n"
 "Napaka: neveljaven razpon sintakse za parameter <%s>\n"
 
-#: ../lib/gis/parser.c:1554
+#: ../lib/gis/parser.c:1568
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Predstavljen kot: %s\n"
 
-#: ../lib/gis/parser.c:1557
+#: ../lib/gis/parser.c:1571
 #, c-format
 msgid ""
 "\n"
@@ -185,12 +186,12 @@ msgstr ""
 "\n"
 "Napaka: vrednost <%s> izven razpona za parameter <%s>\n"
 
-#: ../lib/gis/parser.c:1559
+#: ../lib/gis/parser.c:1573
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Dovoljeni razpon: %s\n"
 
-#: ../lib/gis/parser.c:1562
+#: ../lib/gis/parser.c:1576
 #, c-format
 msgid ""
 "\n"
@@ -199,7 +200,7 @@ msgstr ""
 "\n"
 "Napaka: Manjkajoèa vrednost za parameter <%s>\n"
 
-#: ../lib/gis/parser.c:1722
+#: ../lib/gis/parser.c:1736
 #, c-format
 msgid ""
 "\n"
@@ -210,7 +211,7 @@ msgstr ""
 "NAPAKA: Zahtevani parameter <%s> ni nastavljen:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:1825
+#: ../lib/gis/parser.c:1839
 #, c-format
 msgid ""
 "\n"
@@ -219,25 +220,23 @@ msgstr ""
 "\n"
 "Napaka: mo¾nost <%s> mora biti podana v veèkratnikih %d\n"
 
-#: ../lib/gis/parser.c:1827
-#, c-format
+#: ../lib/gis/parser.c:1841
+#, c-format, fuzzy
 msgid "       You provided %d items:\n"
-msgstr "       Podal si %d stvari:\n"
+msgstr "       Podali ste %d postavk:\n"
 
-#: ../lib/gis/parser.c:1883
+#: ../lib/gis/parser.c:1897
 #, c-format
 msgid "Error: option <%s>: <%s> exists.\n"
 msgstr "Napaka: mo¾nost <%s>: <%s> obstaja.\n"
 
-#: ../lib/gis/parser.c:1930
+#: ../lib/gis/parser.c:1944
 msgid ""
 "\n"
 "FLAG: Set the following flag?\n"
-msgstr ""
-"\n"
-"IZBIRA: Doloèi naslednjo izbiro?\n"
+msgstr "\nIZBIRA: Doloèite naslednjo izbiro?\n"
 
-#: ../lib/gis/parser.c:1943
+#: ../lib/gis/parser.c:1957
 #, c-format
 msgid ""
 "\n"
@@ -246,50 +245,50 @@ msgstr ""
 "\n"
 "MO®NOST:   %s\n"
 
-#: ../lib/gis/parser.c:1944
+#: ../lib/gis/parser.c:1958
 #, c-format
 msgid "     key: %s\n"
 msgstr "     kljuè: %s\n"
 
-#: ../lib/gis/parser.c:1946
+#: ../lib/gis/parser.c:1960
 #, c-format
 msgid "  format: %s\n"
 msgstr "  format: %s\n"
 
-#: ../lib/gis/parser.c:1948
+#: ../lib/gis/parser.c:1962
 #, c-format
 msgid " default: %s\n"
 msgstr " privzet: %s\n"
 
-#: ../lib/gis/parser.c:1949
+#: ../lib/gis/parser.c:1963
 #, c-format
 msgid "required: %s\n"
 msgstr "zahtevan: %s\n"
 
-#: ../lib/gis/parser.c:1951
+#: ../lib/gis/parser.c:1965
 #, c-format
 msgid "multiple: %s\n"
 msgstr "veèkraten: %s\n"
 
-#: ../lib/gis/parser.c:1953
+#: ../lib/gis/parser.c:1967
 #, c-format
 msgid " options: %s\n"
 msgstr "mo¾nosti: %s\n"
 
-#: ../lib/gis/parser.c:1966
+#: ../lib/gis/parser.c:1980
 msgid "enter option > "
-msgstr "vpi¹i mo¾nost > "
+msgstr "vpi¹ite mo¾nost > "
 
-#: ../lib/gis/parser.c:1980 ../lib/gis/parser.c:1991
+#: ../lib/gis/parser.c:1994 ../lib/gis/parser.c:2005
 msgid "   Try again? "
-msgstr "   Poskusi ¹e enkrat. "
+msgstr "   Poskusite ¹e enkrat. "
 
-#: ../lib/gis/parser.c:1989
+#: ../lib/gis/parser.c:2003
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
-msgstr "Oprosti, %s ni sprejet.\n"
+msgstr "Oprostite, %s ni sprejet.\n"
 
-#: ../lib/gis/parser.c:2000
+#: ../lib/gis/parser.c:2014
 #, c-format
 msgid ""
 "\n"
@@ -297,14 +296,14 @@ msgid ""
 "  %s\n"
 msgstr ""
 "\n"
-"Izbral si:\n"
+"Izbrali ste:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2001
+#: ../lib/gis/parser.c:2015
 msgid "Is this correct? "
 msgstr "Ali je to pravilno? "
 
-#: ../lib/gis/parser.c:2059
+#: ../lib/gis/parser.c:2073
 msgid "to accept the default"
 msgstr "za izbrati privzeto"
 
@@ -336,7 +335,7 @@ msgstr "Deskriptor datoteke za avtomatièno masko %d\n"
 #: ../lib/gis/G_dump.c:11
 #, c-format
 msgid "Flag denoting automatic masking %d\n"
-msgstr "Izbira, ki oznaèuje avtomatièno zamaskiranje %d\n"
+msgstr "Izbira, ki oznaèuje avtomatièno maskiranje %d\n"
 
 #: ../lib/gis/G_dump.c:12
 #, c-format
@@ -344,39 +343,39 @@ msgid "CELL mask buffer %p\n"
 msgstr ""
 
 #: ../lib/gis/G_dump.c:13
-#, c-format
+#, c-format, fuzzy
 msgid "buffer for reading null rows %p\n"
-msgstr ""
+msgstr "buffer za branje 'null' vrstic %p\\n"
 
 #: ../lib/gis/G_dump.c:14
-#, c-format
+#, c-format, fuzzy
 msgid "Pre/post compressed data buffer %p\n"
-msgstr ""
+msgstr "Podatkovni 'buffer' %p pred/po krèenju\\n"
 
 #: ../lib/gis/G_dump.c:15
-#, c-format
+#, c-format, fuzzy
 msgid "sizeof compressed_buf %d\n"
-msgstr ""
+msgstr "velikost skrèenega 'bufferja': commpressed_buf %d\\n"
 
 #: ../lib/gis/G_dump.c:16
-#, c-format
+#, c-format, fuzzy
 msgid "work data buffer %p\n"
-msgstr ""
+msgstr "'buffer' delovnih podatkov %p\\n"
 
 #: ../lib/gis/G_dump.c:17
-#, c-format
+#, c-format, fuzzy
 msgid "sizeof work_buf %d\n"
-msgstr ""
+msgstr "velikost delovnih podatkov work_buf %d\n"
 
 #: ../lib/gis/G_dump.c:18
 #, c-format
 msgid "sizeof null_buf %d\n"
-msgstr ""
+msgstr "velikost null_buf %d\n"
 
 #: ../lib/gis/G_dump.c:19
 #, c-format
 msgid "sizeof mask_buf %d\n"
-msgstr ""
+msgstr "velikost mask_buf %f\n"
 
 #: ../lib/gis/G_dump.c:20
 #, c-format
@@ -411,7 +410,7 @@ msgstr ""
 #: ../lib/gis/G_dump.c:27
 #, c-format
 msgid "Range structure %p\n"
-msgstr ""
+msgstr "Struktura razpona %p\n"
 
 #: ../lib/gis/G_dump.c:28
 #, c-format
@@ -421,7 +420,7 @@ msgstr ""
 #: ../lib/gis/G_dump.c:29
 #, c-format
 msgid "want histogram?  %d\n"
-msgstr "Ali ¾eli¹ histogram? %d\n"
+msgstr "Ali ¾elite histogram? %d\n"
 
 #: ../lib/gis/G_dump.c:30
 #, c-format
@@ -431,7 +430,7 @@ msgstr "Samodejna izbira reklasifikacije %d\n"
 #: ../lib/gis/G_dump.c:31
 #, c-format
 msgid "File row addresses %p\n"
-msgstr ""
+msgstr "Vrstièni naslovi datoteke %p\n"
 
 #: ../lib/gis/G_dump.c:32
 #, c-format
@@ -444,14 +443,14 @@ msgid "Data to window row constants %f,%f\n"
 msgstr ""
 
 #: ../lib/gis/G_dump.c:34
-#, c-format
+#, c-format, fuzzy
 msgid "Current data row in memory %d\n"
-msgstr ""
+msgstr "Trenutna vrstica podatkov v spominu %d\\n"
 
 #: ../lib/gis/G_dump.c:35
-#, c-format
+#, c-format, fuzzy
 msgid "Current null row in memory %d\n"
-msgstr ""
+msgstr "Trenutna vrstica null vrednosti v spominu %d\\n"
 
 #: ../lib/gis/G_dump.c:36
 #, c-format
@@ -459,9 +458,9 @@ msgid "nbytes per cell for current row %d\n"
 msgstr "nbajtov na celico v trenutni vrstici %d\n"
 
 #: ../lib/gis/G_dump.c:37
-#, c-format
+#, c-format, fuzzy
 msgid "Decompressed data buffer %s\n"
-msgstr ""
+msgstr "Razkrèen (dekomprimiran) podatkovni 'buffer' %s\\n"
 
 #: ../lib/gis/G_dump.c:38
 #, c-format
@@ -469,9 +468,9 @@ msgid "bytes per cell %d\n"
 msgstr "bajtov na celico %d\n"
 
 #: ../lib/gis/G_dump.c:39
-#, c-format
+#, c-format, fuzzy
 msgid "type: int, float or double map %d\n"
-msgstr "tip: integer, plavajoèa vejica ali dvojni %d\n"
+msgstr "tip: integer, plavajoèa vejica ali 'dvojni' %d\n"
 
 #: ../lib/gis/G_dump.c:40
 #, c-format
@@ -496,7 +495,7 @@ msgstr "Ime odprte datoteke %s\n"
 #: ../lib/gis/G_dump.c:44
 #, c-format
 msgid "Mapset of open file %s\n"
-msgstr "Mapset odprte datoteke%s\n"
+msgstr "\"Mapset\" odprte datoteke %s\n"
 
 #: ../lib/gis/G_dump.c:45
 #, c-format
@@ -511,17 +510,17 @@ msgstr "xdr tok za branje fp %p\n"
 #: ../lib/gis/G_dump.c:47
 #, c-format
 msgid "NULL_ROWS array[%d] = %p\n"
-msgstr ""
+msgstr "NULL_ROWS array[%d] = %p\n"
 
 #: ../lib/gis/G_dump.c:48
 #, c-format
 msgid "data buffer for reading null rows %p\n"
-msgstr ""
+msgstr "podatkovni 'buffer' za branje null vrstic %p\n"
 
 #: ../lib/gis/G_dump.c:49
 #, c-format
 msgid "Minimum row null row number in memory %d\n"
-msgstr ""
+msgstr "Minimalni row = null row ¹tevilo shranjeno v spominu %d\n"
 
 #: ../lib/gis/adj_cellhd.c:69 ../lib/gis/adj_cellhd.c:166
 msgid "Illegal n-s resolution value"
@@ -533,7 +532,7 @@ msgstr "row ima neveljavno vrednost"
 
 #: ../lib/gis/adj_cellhd.c:79 ../lib/gis/adj_cellhd.c:180
 msgid "Illegal e-w resolution value"
-msgstr "e-w ima neveljavno vrednost resolucije"
+msgstr "Resolucija e-w ima neveljavno vrednost"
 
 #: ../lib/gis/adj_cellhd.c:84 ../lib/gis/adj_cellhd.c:187
 msgid "Illegal col value"
@@ -573,7 +572,7 @@ msgstr "row3 ima neveljavno vrednost"
 
 #: ../lib/gis/adj_cellhd.c:182
 msgid "Illegal e-w3 resolution value"
-msgstr "e-w3 ima neveljavno vrednost resolucije"
+msgstr "Resolucija e-w3 ima neveljavno vrednost"
 
 #: ../lib/gis/adj_cellhd.c:189
 msgid "Illegal col3 value"
@@ -581,73 +580,69 @@ msgstr "col3 ima neveljavno vrednost"
 
 #: ../lib/gis/adj_cellhd.c:194
 msgid "Illegal t-b3 resolution value"
-msgstr "t-b3 ima neveljavno vrednost resolucije"
+msgstr "Resolucija t-b3 ima neveljavno vrednost"
 
 #: ../lib/gis/adj_cellhd.c:199
 msgid "Illegal depths value"
 msgstr "Neveljavna vrednost globin"
 
-#: ../lib/gis/ask.c:377
+#: ../lib/gis/ask.c:376
 msgid "to cancel request"
 msgstr "za razveljaviti zahtevo"
 
-#: ../lib/gis/ask.c:433
+#: ../lib/gis/ask.c:432
 #, c-format
 msgid "Enter a new %s file name"
-msgstr "Vnesi novo %s ime datoteke"
+msgstr "Vnesite novo %s ime datoteke"
 
-#: ../lib/gis/ask.c:438
+#: ../lib/gis/ask.c:437
 #, c-format
 msgid "Enter the name of an existing %s file"
-msgstr "Vnesi ime obstojeèe %s datoteke"
+msgstr "Vnesite ime obstojeèe %s datoteke"
 
-#: ../lib/gis/ask.c:441
+#: ../lib/gis/ask.c:440
 #, c-format
 msgid "Enter %s file name"
-msgstr "Vnesi %s ime datoteke"
+msgstr "Vnesite %s ime datoteke"
 
-#: ../lib/gis/ask.c:460
+#: ../lib/gis/ask.c:459
 #, c-format
 msgid "Enter 'list' for a list of existing %s files\n"
-msgstr "Vpi¹i 'list' za spisek obstojeèih %s datotek\n"
+msgstr "Vpi¹ite 'list' za spisek obstojeèih %s datotek\n"
 
-#: ../lib/gis/ask.c:463
+#: ../lib/gis/ask.c:462
 msgid "Enter 'list -f' for "
-msgstr "Vpi¹i 'list' -f za "
+msgstr "Vpi¹ite 'list' -f za "
 
-#: ../lib/gis/ask.c:465
+#: ../lib/gis/ask.c:464
 #, c-format
 msgid "a list %s"
 msgstr "spisek %s"
 
-#: ../lib/gis/ask.c:467
+#: ../lib/gis/ask.c:466
 msgid "an extended list"
 msgstr "raz¹irjen spisek"
 
-#: ../lib/gis/ask.c:471
+#: ../lib/gis/ask.c:470
 #, c-format
 msgid "Hit RETURN %s\n"
-msgstr "Pritisni RETURN %s\n"
+msgstr "Pritisnite RETURN %s\n"
 
-#: ../lib/gis/ask.c:493 ../lib/gis/ask.c:600 ../lib/gis/ask.c:622
+#: ../lib/gis/ask.c:492 ../lib/gis/ask.c:599 ../lib/gis/ask.c:621
 #, c-format
 msgid ""
 "\n"
 "** %s - not found **\n"
-msgstr ""
-"\n"
-" %s - ni bil najden **\n"
+msgstr "\n** %s - ni bil najden **\n"
 
-#: ../lib/gis/ask.c:500 ../lib/gis/ask.c:586
+#: ../lib/gis/ask.c:499 ../lib/gis/ask.c:585
 #, c-format
 msgid ""
 "\n"
 "** %s exists. ok to overwrite? "
-msgstr ""
-"\n"
-"** %s obstaja. Ali ¾eli¹, da pi¹em èez? "
+msgstr "\n** %s obstaja. Ali ¾elite, prepisati? "
 
-#: ../lib/gis/ask.c:546
+#: ../lib/gis/ask.c:545
 #, c-format
 msgid ""
 "\n"
@@ -656,7 +651,7 @@ msgstr ""
 "\n"
 "**<%s> neveljavno ime **\n"
 
-#: ../lib/gis/ask.c:561
+#: ../lib/gis/ask.c:560
 #, c-format
 msgid ""
 "\n"
@@ -665,16 +660,15 @@ msgstr ""
 "\n"
 "** %s - neveljavna zahteva **\n"
 
-#: ../lib/gis/ask.c:576
+#: ../lib/gis/ask.c:575
 #, c-format
 msgid ""
 "\n"
 "** %s - exists, select another name **\n"
-msgstr ""
-"\n"
-"** %s - obstaja, izberi drugo ime **\n"
+msgstr "\n** %s - obstaja, izberite drugo ime **\n"
 
-#: ../lib/gis/ask.c:604
+#: ../lib/gis/ask.c:603
+#, fuzzy
 msgid "ask: can't happen"
 msgstr "vpra¹aj: ne more se zgoditi"
 
@@ -688,23 +682,24 @@ msgid "(no title)"
 msgstr "(ni naslova)"
 
 #: ../lib/gis/auto_mask.c:53
+#, fuzzy
 msgid "Unable to open automatic MASK file"
 msgstr "Nezmo¾en odpreti avtomatièno datoteko MASK"
 
 #: ../lib/gis/cats.c:384
 #, c-format
 msgid "category support for [%s] in mapset [%s] %s"
-msgstr "podpora za kategorije za [%s] v mapset [%s] %s"
+msgstr "podpora za kategorije za [%s] v \"mapset\" [%s] %s"
 
 #: ../lib/gis/cats.c:423
 #, c-format
 msgid "category support for vector file [%s] in mapset [%s] %s"
-msgstr "podpora za kategorije za vektorski sloj [%s] v mapset [%s] %s"
+msgstr "podpora za kategorije za vektorski sloj [%s] v \"mapset\" [%s] %s"
 
 #: ../lib/gis/color_read.c:123
 #, c-format
 msgid "color support for [%s] in mapset [%s] %s"
-msgstr "barvna podpora za [%s] v mapset [%s] %s"
+msgstr "barvna podpora za [%s] v \"mapset\" [%s] %s"
 
 #: ../lib/gis/datum.c:163 ../lib/gis/get_datum_name.c:67
 #: ../lib/gis/get_ell_name.c:33 ../lib/gis/get_projname.c:48
@@ -722,9 +717,9 @@ msgstr "Pritisni RETURN za razveljaviti zahtevo\n"
 #: ../lib/proj/datum.c:418
 #, c-format
 msgid "unable to open datum table file: %s"
-msgstr "Nezmo¾en sem odpreti datoteko s tabelo fundamentalne toèke: %s"
+msgstr "Nezmo¾en odpreti datoteko s tabelo fundamentalne toèke: %s"
 
-#: ../lib/gis/datum.c:368 ../lib/gis/datum.c:457 ../lib/proj/datum.c:357
+#: ../lib/gis/datum.c:368 ../lib/gis/datum.c:458 ../lib/proj/datum.c:357
 #: ../lib/proj/datum.c:432
 #, c-format
 msgid "error in datum table file, line %d"
@@ -777,7 +772,7 @@ msgstr "Neveljaven format\n"
 #: ../lib/gis/get_datum.c:80 ../lib/gis/get_ellipse.c:81
 #, c-format
 msgid "Unable to open file %s in %s"
-msgstr "Nezmo¾en sem odpreti datoteko %s v %s"
+msgstr "Nezmo¾en odpreti datoteko %s v %s"
 
 #: ../lib/gis/get_datum.c:107
 #, c-format
@@ -804,13 +799,11 @@ msgstr "neveljavna vrednost: polje %s v datoteki %s v %s"
 msgid ""
 "\n"
 "Please specify datum name\n"
-msgstr ""
-"\n"
-"Prosim doloèi fundamentalno toèko\n"
+msgstr "\nProsim doloèite fundamentalno toèko\n"
 
 #: ../lib/gis/get_datum_name.c:54
 msgid "Enter 'list' for the list of available datums\n"
-msgstr "Vpi¹i 'list' za spisek fundamentalnih toèk, ki so na voljo\n"
+msgstr "Vpi¹ite 'list' za spisek fundamentalnih toèk, ki so na voljo\n"
 
 #: ../lib/gis/get_datum_name.c:91
 msgid ""
@@ -824,9 +817,7 @@ msgstr ""
 msgid ""
 "\n"
 "Please specify ellipsoid name\n"
-msgstr ""
-"\n"
-"Prosim doloèi ime elipsoida\n"
+msgstr "\nProsim doloèite ime elipsoida\n"
 
 #: ../lib/gis/get_ell_name.c:45
 msgid "Enter 'list' for the list of available ellipsoids\n"
@@ -863,7 +854,7 @@ msgstr "V datoteki %s v %s ni podatka o elipsoidu"
 #: ../lib/gis/get_ellipse.c:406 ../lib/proj/ellipse.c:228
 #, c-format
 msgid "unable to open ellipsoid table file: %s"
-msgstr "Nezmo¾en sem odpreti datoteko s tabelo elipsoida: %s"
+msgstr "Nezmo¾en odpreti datoteko s tabelo elipsoida: %s"
 
 #: ../lib/gis/get_ellipse.c:455
 #, c-format
@@ -886,7 +877,7 @@ msgid "ERROR in reading %s file for location %s\n"
 msgstr "Napaka pri branju datoteke %s za lokacijo %s\n"
 
 #: ../lib/gis/get_projname.c:36
-#, c-format
+#, c-format, fuzzy
 msgid "%s not found"
 msgstr "ne najdem %s"
 
@@ -930,7 +921,7 @@ msgstr ""
 #: ../lib/gis/get_row.c:569
 #, c-format
 msgid "error reading %smap [%s] in mapset [%s], row %d"
-msgstr "napaka pri branju %s sloja [%s] v mapset [%s], vrstica %d"
+msgstr "napaka pri branju %s sloja [%s] v \"mapset\" [%s], vrstica %d"
 
 #: ../lib/gis/get_row.c:895
 msgid "Too many open raster files"
@@ -951,7 +942,7 @@ msgid ""
 "region for current mapset %s\n"
 "run \"g.region\""
 msgstr ""
-"regija za trenutni mapset %s\n"
+"regija za trenutni \"mapset\" %s\n"
 "po¾eni \"g.region\""
 
 #: ../lib/gis/get_window.c:94
@@ -993,7 +984,7 @@ msgstr "ni datotek z imenom %s v trenutnem \"mapset\" %s\n"
 
 #: ../lib/gis/list.c:127
 msgid "hit RETURN to continue -->"
-msgstr "pritisni RETURN za nadaljevanje -->"
+msgstr "pritisnite RETURN za nadaljevanje -->"
 
 #: ../lib/gis/list.c:182
 #, c-format
@@ -1003,7 +994,7 @@ msgstr "%s datoteke so v \"mapset\" %s:\n"
 #: ../lib/gis/histogram.c:60
 #, c-format
 msgid "Histogram for [%s in %s] missing (run r.support)"
-msgstr "Histogram za [%s v %s] manjka (po¾eni r.support) "
+msgstr "Histogram za [%s v %s] manjka (po¾enite r.support) "
 
 #: ../lib/gis/histogram.c:67
 #, c-format
@@ -1023,12 +1014,12 @@ msgstr "ne morem ustvariti histograma za [%s v %s]"
 #: ../lib/gis/history.c:120
 #, c-format
 msgid "can't get history information for [%s] in mapset [%s]"
-msgstr "ne morem dobiti podatka o zgodovini za [%s] v mapset [%s]"
+msgstr "ne morem dobiti podatka \"history\" za [%s] v \"mapset\" [%s]"
 
 #: ../lib/gis/history.c:170
 #, c-format
 msgid "can't write history information for [%s]"
-msgstr "ne morem zapisati podatkov o zgodovini za [%s]"
+msgstr "ne morem zapisati \"history\" podatkov za [%s]"
 
 #: ../lib/gis/home.c:51
 msgid "unable to determine user's home directory"
@@ -1059,10 +1050,7 @@ msgid ""
 "\n"
 "\n"
 "Color table needed for file [%s] in mapset [%s].\n"
-msgstr ""
-"\n"
-"\n"
-"Datoteka [%s] v mapset [%s] potrebuje barvno tabelo.\n"
+msgstr "\n\nDatoteka [%s] v \"mapset\" [%s] potrebuje barvno tabelo.\n"
 
 #: ../lib/gis/make_colr.c:54
 msgid ""
@@ -1124,7 +1112,7 @@ msgstr "MAPSET ni nastavljen"
 #: ../lib/gis/mask_info.c:42
 #, c-format
 msgid "<%s> in mapset <%s>"
-msgstr "<%s> v mapset <%s>"
+msgstr "<%s> v \"mapset\" <%s>"
 
 #: ../lib/gis/mask_info.c:45
 msgid "none"
@@ -1136,11 +1124,11 @@ msgstr "ni poznan"
 
 #: ../lib/gis/myname.c:48
 msgid "Unknown Location"
-msgstr "Nepoznana lokacija"
+msgstr "Nepoznan \"location\""
 
 #: ../lib/gis/null_val.c:94
 msgid "EmbedGivenNulls: wrong data type!"
-msgstr "EmbedGivenNulls: napaèen tip podatkov"
+msgstr "EmbedGivenNulls: napaèen tip podatkov!"
 
 #: ../lib/gis/null_val.c:115
 msgid "Null values have not been initialized. "
@@ -1148,11 +1136,11 @@ msgstr "Null vrednosti niso bile inicializirane."
 
 #: ../lib/gis/null_val.c:116
 msgid "G_gisinit() must be called first. "
-msgstr "najprej mora biti poklican G_gisinit()"
+msgstr "Najprej mora biti poklican G_gisinit()."
 
 #: ../lib/gis/null_val.c:117
 msgid "Please advise GRASS developers of this error.\n"
-msgstr "Prosim sporoèite GRASS razvijalcem o tej napaki.\n"
+msgstr "Prosim sporoèite razvijalcem GRASS-a o tej napaki.\n"
 
 #: ../lib/gis/null_val.c:231
 msgid "G_set_null_value: wrong data type!"
@@ -1175,8 +1163,7 @@ msgstr ""
 #: ../lib/gis/opencell.c:271
 #, c-format
 msgid "[%s] in mapset [%s]-format field in header file invalid"
-msgstr ""
-"[%s] v \"mapset\" [%s]-format polja v \"header\" datoteki je neveljaven."
+msgstr "[%s] v \"mapset\" [%s]-format polja v datoteki vzglavja je neveljaven."
 
 #: ../lib/gis/opencell.c:280
 #, c-format
@@ -1184,7 +1171,7 @@ msgid ""
 "[%s] in mapset [%s] - in different projection than current region:\n"
 " found map [%s] in: <%s>, should be <%s> "
 msgstr ""
-"[%s] in \"mapset\" [%s] - je v drugaèni projekciji kot trenutna regija:\n"
+"[%s] v \"mapset\" [%s] - je v drugaèni projekciji kot trenutna regija:\n"
 "najden sloj [%s] v: <%s>, moral bi biti <%s> "
 
 #: ../lib/gis/opencell.c:287
@@ -1195,7 +1182,7 @@ msgstr "[%s] v \"mapset\" [%s] - v drugi coni [%d] kot trenutna regija [%d]"
 #: ../lib/gis/opencell.c:295
 #, c-format
 msgid "[%s] in [%s] - bytes per cell (%d) too large"
-msgstr "[%s] v [%s] - bajtov na celico (%d) prevelik"
+msgstr "[%s] v [%s] - bajtov na celico (%d) preveè"
 
 #: ../lib/gis/opencell.c:598
 #, c-format
@@ -1204,8 +1191,7 @@ msgstr "opencell: %s - neveljavno ime datoteke"
 
 #: ../lib/gis/opencell.c:699
 msgid "Can't write embedded null values for map open for random access"
-msgstr ""
-"Ne morem pisati \"embedded\" null vrednosti za sloj odprt nakljuènemu dostopu"
+msgstr "Ne morem pisati \"embedded null\" vrednosti za sloj odprt nakljuènemu dostopu"
 
 #: ../lib/gis/opencell.c:930 ../lib/gis/opencell.c:951
 #, c-format
@@ -1247,7 +1233,7 @@ msgstr "Neznana projekcija"
 #: ../lib/gis/put_cellhd.c:26
 #, c-format
 msgid "Unable to create header file for [%s]"
-msgstr "Nezmo¾en ustvariti datoteko z vzglavjem za [%s]"
+msgstr "Nezmo¾en ustvariti vzglavno datoteko za [%s]"
 
 #: ../lib/gis/put_row.c:311
 #, c-format
@@ -1257,7 +1243,7 @@ msgstr "sloj [%s] - nezmo¾en zapisati vrstico %d"
 #: ../lib/gis/put_row.c:785 ../lib/gis/put_row.c:791
 #, c-format
 msgid "error writing null row %d"
-msgstr "napaka pri pisanju null vrstice %d"
+msgstr "napaka pri pisanju \"null\" vrstice %d"
 
 #: ../lib/gis/put_title.c:28
 #, c-format
@@ -1282,20 +1268,20 @@ msgstr "G_put_title - ne morem ponovno odpreti datoteke temp"
 msgid "can't write category information for [%s] in [%s]"
 msgstr "ne morem zapisati informacije o kategoriji za [%s] v [%s]"
 
-#: ../lib/gis/quant_io.c:92
+#: ../lib/gis/quant_io.c:91
 #, c-format
 msgid "The floating data range for %s@%s is empty"
 msgstr "Razpon plavajoèih podatkov za %s@%s je prazen"
 
-#: ../lib/gis/quant_io.c:101
+#: ../lib/gis/quant_io.c:100
 #, c-format
 msgid "The integer data range for %s@%s is empty"
 msgstr "Razpon integer podatkov za %s@%s je prazen"
 
-#: ../lib/gis/quant_io.c:173
+#: ../lib/gis/quant_io.c:171
 #, c-format
 msgid "quantization file [%s] in mapset [%s] %s"
-msgstr "kvantizacijska datoteka [%s] v mapset [%s] %s"
+msgstr "kvantizacijska datoteka [%s] v \"mapset\" [%s] %s"
 
 #: ../lib/gis/quant_rw.c:208
 #, c-format
@@ -1319,20 +1305,20 @@ msgstr "ne morem brati f_range datoteke za [%s v %s]"
 #: ../lib/gis/range.c:330
 #, c-format
 msgid "can't read range file for [%s in %s]"
-msgstr "ne morem brati datoteke z razponom [%s v %s]"
+msgstr "ne morem brati range datoteke [%s v %s]"
 
 #: ../lib/gis/range.c:390 ../lib/gis/range.c:441
 #, c-format
 msgid "can't write range file for [%s in %s]"
-msgstr "ne morem zapisati datoteke z razponom za [%s v %s]"
+msgstr "ne morem zapisati range datoteke [%s v %s]"
 
 #: ../lib/gis/rd_cellhd.c:93
 msgid "duplicate projection field"
-msgstr "dvojno polje za projekcijo"
+msgstr "obstajata dve polji za projekcijo"
 
 #: ../lib/gis/rd_cellhd.c:104
 msgid "duplicate zone field"
-msgstr "dvojno polje za cono"
+msgstr "obstajata dve polji za cono"
 
 #: ../lib/gis/rd_cellhd.c:114
 msgid "projection field missing"
@@ -1344,75 +1330,75 @@ msgstr "manjka polje s podatki o coni"
 
 #: ../lib/gis/rd_cellhd.c:137
 msgid "duplicate north field"
-msgstr "dvojno polje za sever"
+msgstr "obstajata dve polji za sever"
 
 #: ../lib/gis/rd_cellhd.c:146
 msgid "duplicate south field"
-msgstr "dvojno polje za jug"
+msgstr "obstajata dve polji za jug"
 
 #: ../lib/gis/rd_cellhd.c:155
 msgid "duplicate east field"
-msgstr "dvojno polje za vzhod"
+msgstr "obstajata dve polji za vzhod"
 
 #: ../lib/gis/rd_cellhd.c:164
 msgid "duplicate west field"
-msgstr "dvojno polje za zahod"
+msgstr "obstajata dve polji za zahod"
 
 #: ../lib/gis/rd_cellhd.c:173
 msgid "duplicate top field"
-msgstr "dvojno polje za zgoraj"
+msgstr "obstajata dve polji za zgoraj"
 
 #: ../lib/gis/rd_cellhd.c:182
 msgid "duplicate bottom field"
-msgstr "dvojno polje za spodaj"
+msgstr "obstajata dve polji za spodaj"
 
 #: ../lib/gis/rd_cellhd.c:191
 msgid "duplicate e-w resolution field"
-msgstr "dvojno polje za e-w resolucijo"
+msgstr "obstajata dve polji za e-w resolucijo"
 
 #: ../lib/gis/rd_cellhd.c:202
 msgid "duplicate 3D e-w resolution field"
-msgstr "dvojno polje za 3D e-w resolucijo"
+msgstr "obstajata dve polji za 3D e-w resolucijo"
 
 #: ../lib/gis/rd_cellhd.c:213
 msgid "duplicate n-s resolution field"
-msgstr "dvojno polje za n-s resolucijo"
+msgstr "obstajata dve polji za n-s resolucijo"
 
 #: ../lib/gis/rd_cellhd.c:224
 msgid "duplicate 3D n-s resolution field"
-msgstr "dvojno polje za 3D n-s resolucijo"
+msgstr "obstajata dve polji za 3D n-s resolucijo"
 
 #: ../lib/gis/rd_cellhd.c:235
 msgid "duplicate t-b resolution field"
-msgstr "dvojno polje za t-b resolucijo"
+msgstr "obstajata dve polji za t-b resolucijo"
 
 #: ../lib/gis/rd_cellhd.c:246
 msgid "duplicate rows field"
-msgstr "dvojno polje za ¹tevilo vrstic"
+msgstr "obstajata dve polji za ¹tevilo vrstic"
 
 #: ../lib/gis/rd_cellhd.c:257
 msgid "duplicate 3D rows field"
-msgstr "dvojno polje za 3D ¹tevilo vrstic"
+msgstr "obstajata dve polji za 3D ¹tevilo vrstic"
 
 #: ../lib/gis/rd_cellhd.c:268
 msgid "duplicate cols field"
-msgstr "dvojno polje za ¹tevilo kolon"
+msgstr "obstajata dve polji za ¹tevilo kolon"
 
 #: ../lib/gis/rd_cellhd.c:279
 msgid "duplicate 3D cols field"
-msgstr "dvojno polje za 3D ¹tevilo kolon"
+msgstr "obstajata polji za 3D ¹tevilo kolon"
 
 #: ../lib/gis/rd_cellhd.c:290
 msgid "duplicate depths field"
-msgstr "dvojno polje za globine"
+msgstr "obstajata dve polji za globine"
 
 #: ../lib/gis/rd_cellhd.c:301
 msgid "duplicate format field"
-msgstr "dvojno polje za format"
+msgstr "obstajata dve polji za format"
 
 #: ../lib/gis/rd_cellhd.c:310
 msgid "duplicate compressed field"
-msgstr "dvojno polje o podatku o stiskanju"
+msgstr "obstajata polji o podatku o stiskanju"
 
 #: ../lib/gis/rd_cellhd.c:321
 msgid "north field missing"
@@ -1489,11 +1475,11 @@ msgstr "Nezmo¾en uganiti kak¹en je toèkovni format!"
 
 #: ../lib/gis/readsites_xyz.c:133
 msgid "No n-dims in site_list"
-msgstr ""
+msgstr "Ni n-dims v site_list"
 
 #: ../lib/gis/readsites_xyz.c:136
 msgid "Dimension index out of range"
-msgstr "Indeks dimenzij je izven dometa"
+msgstr "Indeks dimenzij je izven razpona"
 
 #: ../lib/gis/readsites_xyz.c:141
 msgid "No double attributes in site_list"
@@ -1509,7 +1495,7 @@ msgstr "V site_list ni atributov tipa \"string\" "
 
 #: ../lib/gis/readsites_xyz.c:152
 msgid "String attribute index out of range"
-msgstr "Atributni indeks tipa \"string\" je izven dometa"
+msgstr "Atributni indeks tipa \"string\" je izven razpona"
 
 #: ../lib/gis/readsites_xyz.c:159
 msgid "Unknown attribute type in call to G_readsites_xyz()!\n"
@@ -1527,8 +1513,7 @@ msgstr "Preveè reklasifikacijskih kategorij za [%s v %s]"
 #: ../lib/gis/reclass.c:159
 #, c-format
 msgid "Illegal reclass format in header file for [%s in %s]"
-msgstr ""
-"Neveljaven reklasifikacijski format v datoteki z vzglavjem za [%s v %s]"
+msgstr "Neveljaven reklasifikacijski format v vzglavni datoteki za [%s v %s]"
 
 #: ../lib/gis/reclass.c:236
 msgid "Illegal reclass request"
@@ -1541,12 +1526,12 @@ msgstr "Neveljaven reklasifikacijski tip"
 #: ../lib/gis/reclass.c:248
 #, c-format
 msgid "Unable to create header file for [%s in %s]"
-msgstr "Nezmo¾en sem ustvariti datoteko z vzglavjem za [%s v %s]"
+msgstr "Nezmo¾en ustvariti datoteko z vzglavjem za [%s v %s]"
 
 #: ../lib/gis/reclass.c:299
 #, c-format
 msgid "Unable to create dependency file in [%s in %s]"
-msgstr "Nezmo¾en sem ustvariti datoteko odvisnosti v [%s v %s]"
+msgstr "Nezmo¾en ustvariti datoteko odvisnosti v [%s v %s]"
 
 #: ../lib/gis/set_window.c:60
 msgid ""
@@ -1574,7 +1559,7 @@ msgid "G_spawn: unable to restore signal %d"
 msgstr "G_spawn: ne morem obnoviti signala %d"
 
 #: ../lib/gis/spawn.c:205
-#, c-format
+#, c-format, fuzzy
 msgid "G_spawn: unable to reset signal %d"
 msgstr "G_spawn: ne morem ponovno zagnati signala %d"
 
@@ -1615,32 +1600,32 @@ msgstr "OPOZORILO: ne morem ustvariti novega procesa\n"
 #: ../lib/gis/timestamp.c:257
 #, c-format
 msgid "Can't create timestamp file for %s map %s in mapset %s"
-msgstr "Ne morem ustvariti timestamp datoteke za %s sloj %s v mapset %s"
+msgstr "Ne morem ustvariti timestamp datoteke za %s sloj %s v \"mapset\" %s"
 
 #: ../lib/gis/timestamp.c:267
 #, c-format
 msgid "Invalid timestamp specified for %s map %s in mapset %s"
-msgstr "timestamp doloèen za %s v sloju %s v mapset %s je neveljaven "
+msgstr "timestamp doloèen za %s v sloju %s v \"mapset\" %s je neveljaven "
 
 #: ../lib/gis/timestamp.c:292
 #, c-format
 msgid "Can't open timestamp file for %s map %s in mapset %s"
-msgstr "Ne morem odpreti timestamp datoteke za %s sloj %s mapset %s"
+msgstr "Ne morem odpreti timestamp datoteke za %s sloj %s \"mapset\" %s"
 
 #: ../lib/gis/timestamp.c:302
 #, c-format
 msgid "Invalid timestamp file for %s map %s in mapset %s"
-msgstr "Neveljavna timestamp datoteka za %s sloj %s v mapset %s"
+msgstr "Neveljavna timestamp datoteka za %s sloj %s v \"mapset\" %s"
 
 #: ../lib/gis/view.c:164
 #, c-format
 msgid "Unable to open %s for writing"
-msgstr "Nezmo¾en sem odpreti %s za pisanje"
+msgstr "Nezmo¾en odpreti %s za pisanje"
 
 #: ../lib/gis/view.c:253 ../lib/gis/view.c:472
 #, c-format
 msgid "Unable to open %s for reading"
-msgstr "Nezmo¾en sem odpreti %s za branje"
+msgstr "Nezmo¾en odpreti %s za branje"
 
 #: ../lib/gis/view.c:458
 msgid "GRASS window when view was saved:\n"
@@ -1655,7 +1640,7 @@ msgstr "Okno shranjeno v \"%s\" je povsem izven trenutnega GRASS okna."
 #, c-format
 msgid ""
 " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
-msgstr " Le %d%% okna shranjen v \"%s\" se prekriva s trenutnim GRASS oknom."
+msgstr " Le %d%% okna shranjenega v \"%s\" se prekriva s trenutnim GRASS oknom."
 
 #: ../lib/proj/ellipse.c:85
 #, c-format
@@ -1668,7 +1653,7 @@ msgstr "V datoteki ni informacije o elipsoidu"
 
 #: ../lib/raster/io.c:190
 msgid "Unable to allocate memory\n"
-msgstr "Nezmo¾en sem dodeliti spomin\n"
+msgstr "Nezmo¾en dodeliti spomin\n"
 
 #: ../lib/raster/io.c:211
 #, c-format
@@ -1681,7 +1666,7 @@ msgstr "Noben grafièni monitor ni izbran za izhod.\n"
 
 #: ../lib/raster/io.c:283
 msgid "Please run \"d.mon\" to select a graphics monitor.\n"
-msgstr "Prosim po¾eni \"d.mon\" za izbiro grafiènega monitorja.\n"
+msgstr "Prosim po¾enite \"d.mon\" za izbiro grafiènega monitorja.\n"
 
 #: ../lib/raster/io.c:293
 #, c-format
@@ -1690,7 +1675,7 @@ msgstr "Grafiènega monitorja z imenom <%s> ni.\n"
 
 #: ../lib/raster/io.c:294
 msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
-msgstr "Prosim po¾eni \"d.mon\" za izbiro veljavnega grafiènega monitorja.\n"
+msgstr "Prosim po¾enite \"d.mon\" za izbiro veljavnega grafiènega monitorja.\n"
 
 #: ../lib/raster/io.c:306
 #, c-format
@@ -1700,7 +1685,7 @@ msgstr "Nisem uspel dobiti imena vtiènice za monitor <%s>.\n"
 #: ../lib/raster/io.c:319
 #, c-format
 msgid "No socket to connect to for monitor <%s>.\n"
-msgstr "Ni vtiènice, ki bi se lahko povezala z monitorjem <%s>.\n"
+msgstr "Ni vtiènice, ki bi jo lahko povezal z monitorjem <%s>.\n"
 
 #: ../lib/raster/io.c:346
 msgid ""
@@ -1715,7 +1700,7 @@ msgid ""
 "Trying to connect to something not a socket.\n"
 "Probably program error.\n"
 msgstr ""
-"Poskus povezave z neèem, ki ni vtiènica.\n"
+"Poskus povezave z neèem, kar ni vtiènica.\n"
 "Verjetno je napaka v programu.\n"
 
 #: ../lib/raster/io.c:361
@@ -1725,7 +1710,7 @@ msgstr ""
 
 #: ../lib/raster/io.c:368
 msgid "Not connected...\n"
-msgstr "Nisem povezan...\n"
+msgstr "Ni povezave...\n"
 
 #: ../lib/raster/io.c:371
 msgid "Couldn't connect to monitor. Will try once more.\n"
@@ -1767,7 +1752,7 @@ msgstr "Napaka - Grafièni monitor <%s> ni zagnan!\n"
 #: ../lib/raster/io.c:444
 #, c-format
 msgid "Please start graphics monitor <%s>.\n"
-msgstr "Prosim po¾eni grafièni monitor <%s>.\n"
+msgstr "Prosim po¾enite grafièni monitor <%s>.\n"
 
 #: ../lib/raster/io.c:509
 msgid "ERROR - eof from graphics monitor.\n"
@@ -1852,7 +1837,7 @@ msgstr "©tevilo otokov           :  %d\n"
 #: ../lib/vector/Vlib/build.c:204
 #, fuzzy, c-format
 msgid "Number of incorrect boundaries   :   %d\n"
-msgstr "©tevilo nepravilnih meja:   %d\n"
+msgstr "©tevilo nepravilnih meja :  %d\n"
 
 #: ../lib/vector/Vlib/build.c:207
 #, fuzzy, c-format
@@ -1862,12 +1847,12 @@ msgstr "©tevilo centroidov izven obmoèja:   %d\n"
 #: ../lib/vector/Vlib/build.c:210
 #, c-format
 msgid "Number of duplicate centroids    :   %d\n"
-msgstr "©tevilo dvojnih centroidov     :   %d\n"
+msgstr "©tevilo dvojnih centroidov      :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:213
 #, c-format
 msgid "Number of areas without centroid :   %d\n"
-msgstr "©tevilo obmoèij brez centroida :    %d\n"
+msgstr "©tevilo obmoèij brez centroida  :    %d\n"
 
 #: ../lib/vector/Vlib/build.c:216
 msgid "Number of areas     :   -\n"
@@ -1889,11 +1874,11 @@ msgstr "Napaka pri zapisu datotek topo. \n"
 #: ../lib/vector/Vlib/build.c:385
 #, c-format
 msgid "Can't open spatial index file for write: %s\n"
-msgstr "Ne morem odpreti datoteke 'sidx' za pisanje: %s\n"
+msgstr "Ne morem odpreti datoteke sidx za pisanje: %s\n"
 
 #: ../lib/vector/Vlib/build.c:393
 msgid "Error writing out spatial index file.\n"
-msgstr "Napaka pri pisanju datoteke 'sidx'.\n"
+msgstr "Napaka pri pisanju datoteke sidx.\n"
 
 #: ../lib/vector/Vlib/build_nat.c:87
 msgid "Cannot add area (map closed, topo saved)"
@@ -1929,7 +1914,7 @@ msgstr ""
 msgid "Attaching islands: "
 msgstr "Pripajanje otokov: "
 
-#: ../lib/vector/Vlib/build_nat.c:556
+#: ../lib/vector/Vlib/build_nat.c:555
 msgid "Attaching centroids: "
 msgstr "Pripajanje centroidov: "
 
