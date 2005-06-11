@@ -7,8 +7,8 @@
 #include	<stdio.h>
 #include	"image.h"
 
-long img_getrowsize(image)
-register IMAGE *image;
+
+long img_getrowsize(IMAGE *image)
 {
     switch(image->dim) {
 	case 1:
@@ -22,9 +22,7 @@ register IMAGE *image;
     return 0;
 }
 
-void img_setrowsize(image,cnt,y,z)
-register IMAGE *image;
-long y, z, cnt;
+void img_setrowsize(IMAGE *image, long cnt, long y, long z)
 {
     long *sizeptr = NULL;
 
@@ -78,11 +76,8 @@ long y, z, cnt;
 	}								\
 	*optr++ = 0;
 
-unsigned char img_rle_compact(expbuf,ibpp,rlebuf,obpp,cnt)
-unsigned short *expbuf;
-int ibpp;
-unsigned short *rlebuf;
-int obpp, cnt;
+unsigned char img_rle_compact(unsigned short *expbuf, int ibpp,
+               unsigned short *rlebuf, int obpp, int cnt)
 {
     if(ibpp == 1 && obpp == 1) {
 	register unsigned char *iptr = (unsigned char *)expbuf;
@@ -147,11 +142,8 @@ int obpp, cnt;
 	    }					\
 	}
 
-void img_rle_expand(rlebuf,ibpp,expbuf,obpp)
-unsigned short *rlebuf;
-int ibpp;
-unsigned short *expbuf;
-int obpp;
+void img_rle_expand(unsigned short *rlebuf, int ibpp, 
+          unsigned short *expbuf, int obpp)
 {
     if(ibpp == 1 && obpp == 1) {
 	register unsigned char *iptr = (unsigned char *)rlebuf;

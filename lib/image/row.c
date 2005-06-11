@@ -9,10 +9,7 @@
 
 
 int
-putrow(image,buffer,y,z) 
-register IMAGE	*image;
-unsigned short	*buffer;
-unsigned  	y, z;
+putrow(IMAGE *image, unsigned short *buffer, unsigned int y, unsigned int z)
 {
     register unsigned short 	*sptr;
     register unsigned char      *cptr;
@@ -137,10 +134,7 @@ unsigned  	y, z;
     return -1;
 }
 
-int getrow(image,buffer,y,z) 
-register IMAGE *image;
-unsigned short *buffer;
-register unsigned int y, z;
+int getrow(IMAGE *image, unsigned short *buffer, unsigned int y, unsigned int z)
 {
     register short i;
     register unsigned char *cptr;

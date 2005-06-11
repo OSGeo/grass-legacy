@@ -6,9 +6,7 @@
  */
 #include	"image.h"
 
-long iflsbuf(image, c)
-register  IMAGE *image;
-unsigned long c;
+long iflsbuf(IMAGE *image, unsigned long c)
 {
 	register unsigned short *base;
 	register n, rn;
@@ -41,5 +39,6 @@ unsigned long c;
 		image->flags |= _IOERR;
 		return(EOF);
 	}
+
 	return(c);
 }
