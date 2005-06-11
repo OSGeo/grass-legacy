@@ -184,8 +184,7 @@ LIB_OBJS = \
 	yes.o\
 	zero.o\
 	zero_cell.o\
-	zone.o\
-	G_dump.o
+	zone.o
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
