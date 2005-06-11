@@ -42,7 +42,7 @@
 #########################
 
 #%Module
-#% description: Import SRTM90 HGT files into GRASS
+#% description: Import SRTM HGT files into GRASS
 #%End
 #%option
 #% key: input
