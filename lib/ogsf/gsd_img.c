@@ -10,10 +10,6 @@
 #include "image.h"
 #include "gstypes.h"
 
-//static void ierrfunc(char *);
-static int putrow(register IMAGE *, unsigned short  *, unsigned, unsigned);
-static void i_seterror();
-static int iclose(register IMAGE *);
 
 static unsigned short rbuf[8192];
 static unsigned short gbuf[8192];
