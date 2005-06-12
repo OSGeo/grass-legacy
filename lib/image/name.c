@@ -8,9 +8,10 @@
 #include	<string.h>
 #include	"image.h"
 
+
 void isetname(IMAGE *image, char *name)
 {
-    strncpy(image->name,name,80);
+    strncpy(image->name, name, 80 * sizeof(char));
 }
 
 void isetcolormap(IMAGE *image, int colormap)

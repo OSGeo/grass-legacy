@@ -6,6 +6,7 @@
  */
 #include	<stdio.h>
 #include	"image.h"
+#include	"local_proto.h"
 
 
 long img_getrowsize(IMAGE *image)

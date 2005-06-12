@@ -6,7 +6,10 @@
  */
 #include	<stdio.h>
 #include	<stdlib.h>
+#include	<unistd.h>
 #include	"image.h"
+#include	"local_proto.h"
+
 
 /* reverse byte order for header ? */
 #ifdef __FreeBSD__

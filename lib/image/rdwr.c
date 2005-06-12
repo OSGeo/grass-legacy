@@ -8,6 +8,7 @@
 #include	<unistd.h>
 #include	<sys/types.h>
 #include	"image.h"
+#include	"local_proto.h"
 
 
 long img_seek(IMAGE *image, unsigned int y, unsigned int z)
@@ -63,7 +64,7 @@ long img_write(IMAGE *image, char *buffer, long count)
 {
     long retval;
 
-    retval =  write(image->file,buffer,count);
+    retval =  write(image->file, buffer, count * sizeof(char));
     if(retval == count) 
 	image->offset += count;
     else
@@ -75,7 +76,7 @@ long img_read(IMAGE *image, char *buffer, long count)
 {
     long retval;
 
-    retval =  read(image->file,buffer,count);
+    retval =  read(image->file, buffer, count * sizeof(char));
     if(retval == count) 
 	image->offset += count;
     else
@@ -83,7 +84,7 @@ long img_read(IMAGE *image, char *buffer, long count)
     return retval;
 }
 
-img_optseek(IMAGE *image, unsigned long offset)
+off_t img_optseek(IMAGE *image, off_t offset)
 {
     if(image->offset != offset) {
        image->offset = offset;
