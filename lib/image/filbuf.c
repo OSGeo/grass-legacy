@@ -5,6 +5,8 @@
  *
  */
 #include	"image.h"
+#include	"local_proto.h"
+
 
 short ifilbuf(IMAGE *image)
 {

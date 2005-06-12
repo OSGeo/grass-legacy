@@ -5,6 +5,8 @@
  *
  */
 #include	"image.h"
+#include	"local_proto.h"
+
 
 long iflsbuf(IMAGE *image, unsigned long c)
 {

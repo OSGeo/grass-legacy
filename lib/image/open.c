@@ -12,6 +12,7 @@
 #include	<sys/stat.h>
 #include	<sys/types.h>
 #include	"image.h"
+#include	"local_proto.h"
 
 
 #undef PARM
@@ -22,12 +23,6 @@
 #  define const
 #endif
 
-#if defined(BSDTYPES) || defined(VMS)
-  typedef unsigned char  u_char;
-  typedef unsigned short u_short;
-  typedef unsigned int   u_int;
-  typedef unsigned long  u_long;
-#endif
 
 static u_short  getshort      PARM((FILE *));
 static u_long   getlong       PARM((FILE *));
@@ -37,7 +32,6 @@ static void     putlong       PARM((FILE *, u_long));
 
 typedef unsigned char byte;
 
-IMAGE *imgopen();
 
 IMAGE *iopen(char *file, char *mode, u_int type, u_int dim,
              u_int xsize, u_int ysize, u_int zsize)
@@ -56,11 +50,11 @@ IMAGE *imgopen(int f, char *file, char *mode, u_int type, u_int dim,
 {
 	register IMAGE 	*image;
 	register rw;
-	int tablesize;
+	size_t tablesize;
 	register int i, max;
 	FILE *f1 = NULL;
 
-	image = (IMAGE*)calloc(1,sizeof(IMAGE));
+	image = (IMAGE *)calloc(sizeof(char), sizeof(IMAGE));
 	rw = mode[1] == '+';
 	if(rw) {
 	    i_errhdlr("iopen: read/write mode not supported\n");
@@ -101,10 +95,9 @@ IMAGE *imgopen(int f, char *file, char *mode, u_int type, u_int dim,
 		image->wastebytes = 0;
 		image->dorev = 0;
 
-/* byte order independent */
-
-fwrite(image,sizeof(IMAGE), sizeof(char), f1);
-fseek(f1, 0L, 0);
+  /* byte order independent */
+  fwrite(image, sizeof(IMAGE), sizeof(char), f1);
+  fseek(f1, 0L, 0);
 
   putshort(f1, image->imagic);
   putshort(f1, image->type);
@@ -196,6 +189,7 @@ fseek(f1, 0L, 0);
 	image->file = f;
 	image->offset = 512L;			/* set up for img_optseek */
 	lseek(image->file, 512L, 0);
+
 	return(image);
 }
 
