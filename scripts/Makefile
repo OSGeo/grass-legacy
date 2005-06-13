@@ -37,7 +37,7 @@ SUBDIRS = \
 	r.univar.sh \
 	v.build.all \
 	v.convert.all \
-	v.db.addcol
+	v.db.addcol \
 	v.db.reconnect.all \
 	v.db.update \
 	v.in.garmin \
