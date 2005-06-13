@@ -35,20 +35,6 @@ are drawn. For example to plot <B>vpoints</B> above <B>vareas</B> list the
 
 <P>
 
-The command line flags are:
-
-<DL>
-<DT><B>-r</B> 
-<DD>Rotate plot 90 degrees.
-<DT><B>-p</B> 
-<DD>Print available paper formats.<BR>
-   ( name width height left right tob bottom(margin) )
-<DT><B>-e</B> 
-<DD>Create an EPS (Encapsulated PostScript) plot instead of a PostScript file.
-</DL>
-
-<P>
-
 The command-line parameters are:
 <DL>
 
@@ -57,24 +43,29 @@ The command-line parameters are:
 (or enter <B>input=-</B> to enter from keyboard).
 These instructions are described in detail below.
 If omitted, instructions can be piped from <em>stdin</em>.
-<P>
 
+<P>
+<DT><B>output=</B><EM>name</EM> 
+<DD>Name of output the file to contain the PostScript program.
+
+<P>
 <DT><B>scale=</B><EM>mapscale</EM> 
-<DD>Scale of the output map,  e.g. 1:25000
+<DD><em>(depreciated)</em><BR>
+Scale of the output map,  e.g. 1:25000
 <BR>
 Default:  Auto-sized to fit page<BR>
 This parameter is provided as a convenience.  It is identical
 to the <EM>scale</EM> mapping instruction described below.
-<P>
 
+<P>
 <DT><B>copies=</B><EM>n</EM>
-<DD>Number of copies to print.<BR>
+<DD><em>(depreciated)</em><BR>
+Number of copies to print.<BR>
 This parameter is provided as a convenience. It is identical
 to the <EM>copies</EM> mapping instruction described below.
+<BR><BR>
 <P>
 
-<DT><B>output=</B><EM>name</EM> 
-<DD>Name of output the file to contain the PostScript program.
 
 </DL>
 
@@ -90,13 +81,13 @@ others are multiple line. Multiple line instructions consist of
 the main instruction followed by a subsection of one or more additional
 instructions.
 <P>
-One "pixel" is 1 inch / 72.
+One "pixel" is 1/72 of an inch.
 <P>
 
 Instructions that may be included in the subsection under several
 different main instructions are:
 
-<DT><B>where </B><EM>x y</EM>
+<DT><B>where</B> <EM>x y</EM>
 
 <DD>The top left corner of the bounding box of the item to be plotted
 is located <EM>x</EM> inches from the left edge of the paper and
@@ -104,15 +95,14 @@ is located <EM>x</EM> inches from the left edge of the paper and
 or equal to zero, the default horizontal location is used.  If <EM>y</EM>
 is less than or equal to zero, the default vertical location is used.
 
-<DT><B>font </B><EM>font name</EM> 
+<DT><B>font</B> <EM>font name</EM> 
 
 <DD>The name of the PostScript font.  The default is <EM>Helvetica</EM>.
 
-<DT><B>fontsize </B><EM>font size</EM> 
+<DT><B>fontsize</B> <EM>font size</EM> 
 
 <DD>The size of the PostScript font in 1/72 inch.  The default is 10.
-
-</DT>
+</DD>
 <P>
 
 <H2>colortable</H2>
@@ -853,7 +843,7 @@ The scale can be selected either as:
 
 <DD>the number of miles per inch, e.g. 1 inch equals 4 miles.
 
-</DT>
+</DD>
 
 <P>
 
@@ -1445,7 +1435,7 @@ The user can specify negative values for position of EPS-files in ps.map
 to move them outside the current region (to position a barscale or other
 legend entries).
 
-<H2>SEE ALSO</H2>
+<!-- <H2>SEE ALSO</H2> -->
 
 <H2>AUTHOR</H2>
 
