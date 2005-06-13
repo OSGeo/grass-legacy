@@ -117,7 +117,7 @@ int main(int argc,char *argv[])
     map_scale->key_desc = "mapscale";
     map_scale->type = TYPE_STRING;
     map_scale->description =
-	_("Scale of the output map, e.g. 1:25000 (default: 1 panel)");
+	_("Scale of the output map, e.g. 1:25000 (default: Auto-sized to fit page)");
 
     copies = G_define_option();
     copies->key = "copies";
