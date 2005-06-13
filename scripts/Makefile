@@ -37,16 +37,16 @@ SUBDIRS = \
 	r.univar.sh \
 	v.build.all \
 	v.convert.all \
+	v.db.addcol
 	v.db.reconnect.all \
+	v.db.update \
 	v.in.garmin \
 	v.in.e00 \
 	v.in.gns \
 	v.in.mapgen \
 	v.in.sites.all \
 	v.report \
-	v.univar.sh \
-	v.db.update \
-	v.db.addcol
+	v.univar.sh
 
 default: subdirs
 
