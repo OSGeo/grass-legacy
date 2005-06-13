@@ -9,6 +9,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include "glocale.h"
+
 #include "map_info.h"
 #include "vector.h"
 #include "labels.h"
@@ -80,45 +82,48 @@ int main(int argc,char *argv[])
     
     /* Set description */
     module              = G_define_module();
-    module->description = ""\
-    "Hardcopy PostScript map output utility.";
+    module->description = _("Hardcopy PostScript map output utility.");
 
     rflag = G_define_flag();
     rflag->key = 'r';
-    rflag->description = "rotate plot";
+    rflag->description = _("Rotate plot 90 degrees");
 
     pflag = G_define_flag();
     pflag->key = 'p';
-    pflag->description = "print paper formats ( name width height left right tob bottom(margin) )";
+    pflag->description =
+	_("Print paper formats ( name width height left right top bottom(margin) )");
 
     eflag = G_define_flag();
     eflag->key = 'e';
-    eflag->description = "create EPS (Encapsulated PostScript) instead of PostScript file";
+    eflag->description =
+	_("Create EPS (Encapsulated PostScript) instead of PostScript file");
 
     input_file = G_define_option();
     input_file->key = "input";
     input_file->type = TYPE_STRING;
-    input_file->description = "file containing mapping instructions (or use input=- to enter from keyboard)";
+    input_file->description =
+	_("File containing mapping instructions (or use input=- to enter from keyboard)");
     input_file->gisprompt = "file,file,file";
     input_file->required = NO;
+
+    output_file = G_define_option();
+    output_file->key = "output";
+    output_file->type = TYPE_STRING;
+    output_file->description = _("PostScript output file");
+    output_file->required = NO;
 
     map_scale = G_define_option();
     map_scale->key = "scale";
     map_scale->key_desc = "mapscale";
     map_scale->type = TYPE_STRING;
-    map_scale->description = "scale of the output map, e.g. 1:25000 (default: 1panel)";
+    map_scale->description =
+	_("Scale of the output map, e.g. 1:25000 (default: 1 panel)");
 
     copies = G_define_option();
     copies->key = "copies";
     copies->type = TYPE_STRING;
-    copies->description = "number of copies to print";
+    copies->description = _("Number of copies to print");
     copies->required = NO;
-
-    output_file = G_define_option();
-    output_file->key = "output";
-    output_file->type = TYPE_STRING;
-    output_file->description = "PostScript output file";
-    output_file->required = NO;
 
     if (!isatty(0)) G_disable_interactive();
     if (G_parser(argc, argv)) usage(0);
