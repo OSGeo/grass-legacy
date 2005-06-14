@@ -104,6 +104,44 @@ is less than or equal to zero, the default vertical location is used.
 </DD>
 <P>
 
+Instruction keywords:<BR>
+[ 
+<a href="#colortable">colortable</a>&nbsp;|
+<a href="#comments">comments</a>&nbsp;|
+<a href="#copies">copies</a>&nbsp;|
+<a href="#eps">eps</a>&nbsp;|
+<a href="#geogrid">geogrid</a>&nbsp;|
+<a href="#greyrast">greyrast</a>&nbsp;|
+<a href="#grid">grid</a>&nbsp;|
+<a href="#group">group</a>&nbsp;|
+<a href="#header">header</a>&nbsp;|
+<a href="#labels">labels</a>&nbsp;|
+<a href="#line">line</a>&nbsp;|
+<a href="#mapinfo">mapinfo</a>&nbsp;|
+<a href="#maploc">maploc</a>&nbsp;|
+<a href="#maskcolor">maskcolor</a>&nbsp;|
+<a href="#outline">outline</a>&nbsp;|
+<a href="#paper">paper</a>&nbsp;|
+<a href="#point">point</a>&nbsp;|
+<a href="#psfile">psfile</a>&nbsp;|
+<a href="#raster">raster</a>&nbsp;|
+<a href="#read">read</a>&nbsp;|
+<a href="#rectangle">rectangle</a>&nbsp;|
+<a href="#region">region</a>&nbsp;|
+<a href="#rgb">rgb</a>&nbsp;|
+<a href="#scale">scale</a>&nbsp;|
+<a href="#scalebar">scalebar</a>&nbsp;|
+<a href="#setcolor">setcolor</a>&nbsp;|
+<a href="#text">text</a>&nbsp;|
+<a href="#vareas">vareas</a>&nbsp;|
+<a href="#vlines">vlines</a>&nbsp;|
+<a href="#vpoints">vpoints</a>&nbsp;|
+<a href="#verbose">verbose</a>&nbsp;|
+<a href="#vlegend">vlegend</a>&nbsp;|
+<a href="#end">end</a>
+]
+
+<a name="colortable"></a>
 <H2>colortable</H2>
 
 Prints the color table for the raster map layer anywhere on the page.
@@ -160,6 +198,7 @@ EXAMPLE:
 <P>
 
 
+<a name="comments"></a>
 <H2>comments</H2>
 
 Prints comments anywhere on the page.
@@ -198,6 +237,8 @@ pertaining to the raster map layer <EM>vegetation</EM>,
 such as "This map was created by classifying a LANDSAT TM image".
 <P>
 
+
+<a name="copies"></a>
 <H2>copies</H2>
 
 Specifies the number of copies to be printed.
@@ -207,6 +248,8 @@ USAGE:	<B>copies</B> n
 Each page will be printed n times.
 <P>
 
+
+<a name="eps"></a>
 <H2>eps</H2>
 
 Places EPS (Encapsulated PostScript) pictures on the output map.
@@ -252,6 +295,8 @@ Of course, multiple EPS pictures may be drawn with multiple
 instructions.
 <P>
 
+
+<a name="geogrid"></a>
 <H2>geogrid</H2>
 
 Overlays a geographic grid onto the output map.
@@ -295,6 +340,8 @@ EXAMPLE:
 </PRE>
 <P>
 
+
+<a name="greyrast"></a>
 <H2>greyrast</H2>
 
 Selects a raster map layer for output in shades of grey.
@@ -307,6 +354,8 @@ run, only one raster map layer can be requested (using either the
 <EM>greyrast</EM> or the <EM>raster</EM> instruction).
 <P>
 
+
+<a name="grid"></a>
 <H2>grid</H2>
 
 Overlays a coordinate grid onto the output map.
@@ -345,6 +394,8 @@ EXAMPLE:
 </PRE>
 <P>
 
+
+<a name="group"></a>
 <H2>group</H2>
 
 Selects an RGB imagery group for output.
@@ -356,6 +407,8 @@ instead of a raster map layer. The group must contain three raster map
 layers, comprising the red, green and blue bands of the image.
 <P>
 
+
+<a name="header"></a>
 <H2>header</H2>
 
 Prints the map header above the map.
@@ -388,6 +441,7 @@ EXAMPLE:
 <P>
 
 
+<a name="labels"></a>
 <H2>labels</H2>
 
 Selects a labels file for output (see manual entry for
@@ -413,6 +467,7 @@ EXAMPLE:
 <P>
 
 
+<a name="line"></a>
 <H2>line</H2>
 
 Draws lines on the output map.
@@ -456,6 +511,7 @@ instructions.
 <P>
 
 
+<a name="mapinfo"></a>
 <H2>mapinfo</H2>
 
 Prints the portion of the map legend containing the scale, grid and
@@ -491,6 +547,7 @@ EXAMPLE:
 <P>
 
 
+<a name="maploc"></a>
 <H2>maploc</H2>
 
 Positions the map on the page.
@@ -512,6 +569,8 @@ EXAMPLE:
 </PRE>
 <P>
 
+
+<a name="maskcolor"></a>
 <H2>maskcolor</H2>
 
 Color to be used for mask.
@@ -519,6 +578,8 @@ Color to be used for mask.
 USAGE:	<B>maskcolor</B>  color
 </PRE>
 
+
+<a name="outline"></a>
 <H2>outline</H2>
 
 Outlines the areas of a raster map layer with a specified color.
@@ -556,6 +617,8 @@ EXAMPLE:
 </PRE>
 <P>
 
+
+<a name="paper"></a>
 <H2>paper</H2>
 
 Specifies paper size and margins.
@@ -594,6 +657,8 @@ EXAMPLE:
 </PRE>
 <P>
 
+
+<a name="point"></a>
 <H2>point</H2>
 
 Places additional points or icons on the output map.
@@ -638,6 +703,7 @@ instructions.
 <P>
 
 
+<a name="psfile"></a>
 <H2>psfile</H2>
 
 Copies a file containing PostScript commands into the output file.
@@ -659,6 +725,8 @@ EXAMPLE:
 </PRE>
 <P>
 
+
+<a name="raster"></a>
 <H2>raster</H2>
 
 Selects a raster map layer for output.
@@ -685,6 +753,8 @@ EXAMPLE:
 </PRE>
 <P>
 
+
+<a name="read"></a>
 <H2>read</H2>
 
 Provides <EM>ps.map</EM> with a previously prepared input stream.
@@ -718,6 +788,8 @@ for the <B>vector</B> instruction, but simply <B>read</B> the previously prepare
 file with the correct instructions.
 <P>
 
+
+<a name="rectangle"></a>
 <H2>rectangle</H2>
 
 Draws rectangle on the output map.
@@ -761,6 +833,8 @@ Of course, multiple rectangles may be drawn with multiple
 instructions.
 <P>
 
+
+<a name="region"></a>
 <H2>region</H2>
 
 Places the outline of a smaller geographic region
@@ -803,6 +877,7 @@ EXAMPLE:
 <P>
 
 
+<a name="rgb"></a>
 <H2>rgb</H2>
 
 Selects three raster map layers for output as an RGB color image.
@@ -821,6 +896,8 @@ grey-scale color table, or if each layer's color table uses the
 hue appropriate to the layer.
 <P>
 
+
+<a name="scale"></a>
 <H2>scale</H2>
 
 Selects a scale for the output map.
@@ -859,6 +936,8 @@ EXAMPLE:
 </PRE>
 <P>
 
+
+<a name="scalebar"></a>
 <H2>scalebar</H2>
 
 Draws a scalebar on the map.
@@ -900,6 +979,8 @@ EXAMPLE:
 	<B>end</B>
 </PRE>
 
+
+<a name="setcolor"></a>
 <H2>setcolor</H2>
 
 Overrides the color assigned to one or more categories
@@ -924,6 +1005,7 @@ all the category values separated by commas (but with no spaces).
 <P>
 
 
+<a name="text"></a>
 <H2>text</H2>
 
 Places text on the map.
@@ -950,80 +1032,54 @@ The text follows these coordinates on the same instruction line.
 More than one line of text can be specified by notating the end of a line with
 <B>\n</B>
 (e.g. USA<B>\n</B>CERL).
-
 <P>
-
 The user can then specify various text features:
-
 <P>
-
 <B>font:</B>
 cyrilc gothgbt gothgrt gothitt greekc greekcs greekp greeks italicc
 italiccs italict romanc romancs romand romans romant scriptc scripts
 (The default font is romans);
-
 <P>
-
 <B>color</B>
 (see NAMED COLORS);
-
 <P>
-
 <B>width</B>
 of the lines used to draw the text to make thicker letters
 (accepts decimal points [floating points] as well as integers);
-
 <P>
-
 <B>size</B>
 as the vertical height of the letters in meters on the
 ground (text size will grow or shrink depending on the scale at which
 the map is painted). If no <B>size</B> is given, a default text size
 will be used;
-
 <P>
-
 the highlight color (<B>hcolor</B>) and
 the width of the highlight color (<B>hwidth</B>);
-
 <P>
-
 the text-enclosing-box <B>background</B> color;
 the text box <B>border</B> color;
-
 <P>
-
 <B>ref.</B>
 This reference point specifies the text handle - what
 part of the text should be placed on the location specified by the map
 coordinates.  Reference points can refer to:
 [lower|upper|center] [left|right|center] of the text to be printed;
-
 <P>
-
 <B>yoffset</B>,
 which provides finer placement of text by shifting the
 text a vertical distance in pixels from the specified north.  The vertical 
 offset will shift the location to the south if positive, north if negative;
-
-
 <P>
-
 <B>xoffset</B>,
 which shifts the text a horizontal distance in pixels from
 the specified east The horizontal offset will shift the location east if 
 positive, west if negative;
-
-
 <P>
-
 whether or not the text should be <B>opaque</B> to vectors.  Entering <B>no</B>
 to the opaque option will allow the user to see any vectors which go
 through the text's background box.  Otherwise, they will end at the box's edge.
-
 <P>
-<P>
-
+<BR>
 The following example would place the text <EM>SPEARFISH LAND COVER</EM>
 at the coordinates E650000 N7365000. The text would be a total of
 3 pixels wide (2 pixels of red text and 1 pixel black highlight), have a white
@@ -1048,6 +1104,7 @@ EXAMPLE:
 <P>
 
 
+<a name="vareas"></a>
 <H2>vareas</H2>
 
 Selects a vector map layer for output.
@@ -1124,6 +1181,8 @@ EXAMPLE:
 </PRE>
 <P>
 
+
+<a name="vlines"></a>
 <H2>vlines</H2>
 
 Selects a vector map layer for output.
@@ -1211,6 +1270,8 @@ EXAMPLE:
 </PRE>
 <P>
 
+
+<a name="vpoints"></a>
 <H2>vpoints</H2>
 
 Selects vector point data to be placed on the output map
@@ -1249,6 +1310,8 @@ EXAMPLE:
 </PRE>
 <P>
 
+
+<a name="verbose"></a>
 <H2>verbose</H2>
 
 Changes the amount of talking <EM>ps.map</EM> will do.
@@ -1265,6 +1328,7 @@ EXAMPLE:
 <P>
 
 
+<a name="vlegend"></a>
 <H2>vlegend</H2>
 
 Prints the portion of the map legend containing the 
@@ -1309,6 +1373,7 @@ EXAMPLE:
 <P>
 
 
+<a name="end"></a>
 <H2>end</H2>
 
 Terminates input and begin painting the map.
