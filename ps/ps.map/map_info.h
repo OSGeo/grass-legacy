@@ -7,7 +7,7 @@ struct map_info {
 	double x, y;
 	char *font;
 	int fontsize;
-	int color;
+	int color, bgcolor;
 };
 
 #ifdef MAIN
