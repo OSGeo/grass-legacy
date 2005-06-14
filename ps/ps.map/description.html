@@ -117,7 +117,8 @@ USAGE:	<B>colortable</B> [y|n]
 	<B>font</B> font name
 	<B>fontsize</B> font size
 	<B>color</B> text color
-	<B>nodata</B> [y|n]	
+	<B>nodata</B> [Y|n]
+	<B>tickbar</B> [y|N]
 	<B>end</B>
 </PRE>
 The color table will display the colors for each raster map layer
@@ -131,6 +132,9 @@ no color table. For floating point legends <B>width</B> is width of color
 band only. <B>height</B> is used only for floating point legend.
 Adding the <B>nodata n</B> instruction will prevent the "no data" box 
 from being drawn (category based legends only).
+Adding the <B>tickbar y</B> instruction will change the tick mark style
+so that ticks are drawn across the color table instead of protruding out 
+to the right (floating point legends only).
 <P> 
 <B>Note</B>:  Be careful about asking for color tables for
 raster map layers which have many categories, such as elevation.

@@ -154,9 +154,10 @@ int PS_fcolortable (void)
     if ( val < dmin ) val += step;
     
     x1 = l + width + 0.1; 
-    /* changed to draw tic through bar ?? */
-    x2 = x1 - width;
-    /* x2 = x1 + 0.5 * width; */
+    if(ct.tickbar)    /* switch to draw tic all the way through bar */
+	x2 = x1 - width;
+    else
+	x2 = x1 + 0.37 * width;
 
     /* do nice label: we need so many decimal places to hold all step decimal digits */	
     if ( step > 100 ) { /* nice steps do not have > 2 digits, important separate, otherwise */
@@ -168,7 +169,7 @@ int PS_fcolortable (void)
 	k = k - (int) ( strchr( buf, '.') - (unsigned) buf );
 	ddig = k;
     }
-	
+
     fprintf(PS.fp, "%.8f W\n", lwidth);
     while ( val <= dmax ) {
 /*      y = t - (val - dmin) * height / (dmax - dmin) ;  flip*/
@@ -184,9 +185,11 @@ int PS_fcolortable (void)
 	if ( ddig > 0 ) ch++;
 	*ch = '\0';
 
-	/* changed text X-location to x1 */
-	fprintf(PS.fp, "(%s) %f %f MS\n", buf, x1 + 0.2 * fontsize , y - 0.35 * fontsize);
-	
+	if(ct.tickbar)    /* switch to draw tic all the way through bar */
+	    fprintf(PS.fp, "(%s) %f %f MS\n", buf, x1 + 0.2 * fontsize , y - 0.35 * fontsize);
+	else
+	    fprintf(PS.fp, "(%s) %f %f MS\n", buf, x2 + 0.2 * fontsize , y - 0.35 * fontsize);
+
 	val += step;
     }
 
