@@ -8,6 +8,7 @@
 #include	<stdlib.h>
 #include        <ctype.h>
 #include	<fcntl.h>
+#include	<stdarg.h>
 #include	<unistd.h>
 #include	<sys/stat.h>
 #include	<sys/types.h>
@@ -145,11 +146,12 @@ IMAGE *imgopen(int f, char *file, char *mode, u_int type, u_int dim,
 	    image->flags = _IOWRT;
 	else
 	    image->flags = _IOREAD;
-	if(ISRLE(image->type)) {
 
+	if (ISRLE(image->type)) {
 	    tablesize = image->ysize*image->zsize*sizeof(long);
 	    image->rowstart = (unsigned long *)malloc(tablesize);
 	    image->rowsize = (long *)malloc(tablesize);
+
 	    if( image->rowstart == 0 || image->rowsize == 0 ) {
 		i_errhdlr("iopen: error on table alloc\n");
 		return NULL;
@@ -249,19 +251,19 @@ static void (*i_errfunc)();
 	ever need be worried about, while programs that know how and
 	want to can handle the errors themselves.  Olson, 11/88
 */
-void i_errhdlr(fmt, a1, a2, a3, a4)	/* most args currently used is 2 */
-char *fmt;
+void i_errhdlr(char *fmt, ...)
 {
-	if(i_errfunc) {
-		char ebuf[2048];	/* be generous; if an error includes a
-			pathname, the maxlen is 1024, so we shouldn't ever 
-			overflow this! */
-		sprintf(ebuf, fmt, a1, a2, a3, a4);
-		(*i_errfunc)(ebuf);
-		return;
-	}
-	fprintf(stderr, fmt, a1, a2, a3, a4);
-	exit(1);
+	va_list ap;
+	char buffer[2048];
+
+	va_start(ap, fmt);
+	vsprintf(buffer, fmt, ap);
+	va_end(ap);
+
+	if (i_errfunc)
+	    (*i_errfunc)(buffer);
+	else
+	    G_fatal_error("%s", buffer);
 }
 
 /* this function sets the error handler for i_errhdlr */
