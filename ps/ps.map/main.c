@@ -216,6 +216,8 @@ int main(int argc,char *argv[])
     }
     if (map_scale->answer)
     {
+	G_warning(_("Using \"scale\" from the command line is depreciated. "
+	    "Please use the \"scale\" mapping instruction instead."));
 	can_reset_scale = isatty(0);
 	if (check_scale(map_scale->answer))
 	    strcpy(PS.scaletext, map_scale->answer);
