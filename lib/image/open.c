@@ -242,7 +242,7 @@ void cvtimage(long buffer[])
     cvtlongs(buffer+26,4);
 }
 
-static void (*i_errfunc)();
+static void (*i_errfunc)() = 0;
 
 /*	error handler for the image library.  If the iseterror() routine
 	has been called, sprintf's the args into a string and calls the
@@ -254,7 +254,7 @@ static void (*i_errfunc)();
 void i_errhdlr(char *fmt, ...)
 {
 	va_list ap;
-	char buffer[2048];
+	char buffer[2000];
 
 	va_start(ap, fmt);
 	vsprintf(buffer, fmt, ap);
@@ -263,7 +263,7 @@ void i_errhdlr(char *fmt, ...)
 	if (i_errfunc)
 	    (*i_errfunc)(buffer);
 	else
-	    G_fatal_error("%s", buffer);
+	    fprintf(stderr, "ERROR: %s", buffer);
 }
 
 /* this function sets the error handler for i_errhdlr */
