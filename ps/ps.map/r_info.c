@@ -17,6 +17,7 @@ static char *help[] =
     "font       fontname",
     "fontsize   fontsize",
     "color      color",
+    "background color|none",
     ""
 };
 
@@ -25,11 +26,12 @@ read_info (void)
 {	
     char buf[1024];
     char *key, *data;
-    int color, fontsize;
+    int color, bgcolor, fontsize;
     double x, y;
 
     fontsize = 0;
-    color = BLACK;
+    color   = BLACK;
+    bgcolor = WHITE;
     x = y = 0.0;
     while (input(2, buf, help))
     {
@@ -63,6 +65,17 @@ read_info (void)
 	    continue;
 	}
 
+	if (KEY("background"))
+	{
+	    bgcolor = get_color_number(data);
+	    if ((bgcolor != -999) && (bgcolor < 0)) /* -999 is "none" */
+	    {
+		bgcolor = WHITE;
+		error(key, data, "illegal color request");
+	    }
+	    continue;
+	}
+
 	if (KEY("font"))
 	{
 	    get_font(data);
@@ -74,6 +87,7 @@ read_info (void)
     m_info.x = x;
     m_info.y = y;
     m_info.color = color;
+    m_info.bgcolor = bgcolor;
     if (fontsize) m_info.fontsize = fontsize;
 
     return 0;

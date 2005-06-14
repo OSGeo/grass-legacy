@@ -42,6 +42,7 @@ int get_color_number (char *color_name)
     lowercase(color_name);
     for (i = 0; i < NUM_COLORS; i++)
 	if (strcmp(color_name, colors[i].name) == 0) return i;
+    if(strcmp(color_name, "none") == 0) return -999;
     return -1;
 }
 

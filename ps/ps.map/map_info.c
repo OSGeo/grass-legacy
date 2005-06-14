@@ -56,10 +56,12 @@ int map_info (void)
     	fprintf(PS.fp, "t1 t3 lt {/t1 t3 def} if \n");
     	fprintf(PS.fp, "/t1 t1 sx mg add add def\n");
 
-    	/* make white background for text */
-    	fprintf(PS.fp, "1 1 1 C ");
-    	fprintf(PS.fp, "%.1f %.1f t1 %.1f B fill \n", 
+    	/* make background for text */
+	if(m_info.bgcolor != -999) { /* skip if "none" */
+	    set_rgb_color(m_info.bgcolor);
+    	    fprintf(PS.fp, "%.1f %.1f t1 %.1f B fill \n", 
 		x - margin,  y - k * dy - margin, y);
+	}
     }
 
     /* set text color */
