@@ -36,14 +36,14 @@
 
 /****************      LEX BODY  ****************/
 %%
-
+%{
  /***************************************
   * LITERALS KEYWORDS TOKENS
   ***************************************/
 
   /* following case insensitives are ugly
      but I do not know better at this time */
-
+%}
 [Aa][Dd][Dd]			{ return ADD; }
 [Aa][Ll][Tt][Ee][Rr]		{ return ALTER; }
 [Cc][Oo][Ll][Uu][Mm][Nn]	{ return COLUMN; }
@@ -72,31 +72,32 @@
 [Oo][Rr][Dd][Ee][Rr]		{ return ORDER; }
 [Bb][Yy]			{ return BY; }
 [Ii][Ss]			{ return IS; }
+%{
  /* [Dd][Ii][Ss][Tt][Ii][Nn][Cc][Tt]	{ return DISTINCT; } */
  /***************************************
   * EQUAL
   ***************************************/
-  
+%}
 "="		{
 			return EQUAL;
 		}
- 
+%{ 
  /***************************************
   * ARITHMETICAL OPERATOR
   * Conflict of  * as operator with * as all columns, what to do?    
   ***************************************/
-
+%}
 "+" 	|
 "-" 	|
 "/" 		{
 			yylval.strval = (char*)strdup(yytext);
 			return ARITHMETICAL_OPERATOR;
 		}
-
+%{
  /***************************************
   * COMPARISON OPERATOR
   ***************************************/
-
+%}
 "<>" 	|
 "<"	|
 ">"	|
@@ -106,40 +107,40 @@
 			yylval.strval = (char*)strdup(yytext);
 			return COMPARISON_OPERATOR;
 		}
-
+%{
  /***************************************
   * PUNCTUATION
   ***************************************/
-
+%}
 [-+*/:(),.;]	{
 			yylval.strval = (char*)strdup(yytext);
 			return yytext[0];
 		}
-
+%{
  /***************************************
   * NAMES
   ***************************************/
-
+%}
 [A-Za-z][A-Za-z0-9_]*	{
 				yylval.strval = (char*)strdup(yytext);
 				return NAME;
 			}
 
-
+%{
  /***************************************
   * INTEGER
   ***************************************/
-
+%}
 [+-]?[0-9]+  {
 			yylval.intval = atoi(yytext);
 			/* yylval.strval = (char*)strdup(yytext); */
 			return INTNUM;
 	      }
-
+%{
  /***************************************
   * FLOATING POINT NUM
   ***************************************/
-
+%}
 "."[0-9]* |
 [+-]?[0-9]+"."[0-9]* |
 [+-]?[0-9]+[eE][+-]?[0-9]+	|
@@ -150,11 +151,11 @@
 					return FLOATNUM;
 				}
 
-
+%{
  /***************************************
   * STRINGS (single quotes)
   ***************************************/
-
+%}
 '[^']*'	{
 			char	*Buffer, *ptra, *ptrb;
 			int 	c = input();
@@ -185,29 +186,29 @@
 				yymore();
 			}				
 		}
-		
+%{		
  /***************************************
   * STRINGS (unterminated)
   ***************************************/
-
+%}
 '[^'\n]*$	{ yyerror("Unterminated string"); }
-
+%{
  /***************************************
   * NEW LINE (ignored)
   ***************************************/
-
+%}
 \n		;
-
+%{
  /***************************************
   * WHITE SPACE (ignored)
   ***************************************/
-
+%}
 [ \t\r]+	;	/* white space */
-
+%{
  /***************************************
   * COMMENTS (ignored)
   ***************************************/
-
+%}
 "--".*$		;	/* comment */
 
 %%
@@ -251,8 +252,11 @@ int my_yyinput(char *buf, int max_size)
 void yyerror( char *s )
 {
 	snprintf( sqlpStmt->errmsg, 500, "%s processing '%s'", s, yytext );
-	
+
+#ifdef YY_CURRENT_BUFFER	
 	yy_flush_buffer(YY_CURRENT_BUFFER);
+#endif
+
 }
 
 /**********************************************************************
