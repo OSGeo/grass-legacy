@@ -21,7 +21,8 @@ static char *help[] =
     "font       fontname",
     "fontsize   fontsize",
     "color      color",
-    "nodata	nodata",
+    "nodata     Y|n",
+    "tickbar    y|N"
     ""
 };
 
@@ -31,7 +32,7 @@ read_colortable (void)
     char buf[1024];
     char *key, *data;
     char name[100], mapset[50];
-    int color, fontsize, cols, nodata;
+    int color, fontsize, cols, nodata, tickbar;
     double w, h, x, y;
 
     fontsize = 0;
@@ -39,6 +40,8 @@ read_colortable (void)
     cols = 1;
     h = w = x = y = 0.0;
     ct.nodata = 1;
+    ct.tickbar = 0;
+
     while (input(2, buf, help))
     {
 	if (!key_data(buf, &key, &data)) continue;
@@ -120,6 +123,12 @@ read_colortable (void)
 	    ct.nodata = nodata;
 	    continue;
         }
+	if (KEY("tickbar"))
+	{
+	    tickbar = yesno(key, data);
+	    ct.tickbar = tickbar;
+	    continue;
+        }
 
 	error(key, data, "illegal colortabe sub-request");
     }
@@ -142,7 +151,7 @@ read_colortable (void)
     } else {
         ct.width = 2 * ct.fontsize / 72.0 ;
     }
-	
+
     if ( h > 0 ) {
         ct.height = h;
     } else {

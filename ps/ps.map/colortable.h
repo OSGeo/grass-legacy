@@ -15,6 +15,7 @@ struct colortable {
 	int color;
 	int cols;
 	int nodata;
+	int tickbar;
 };
 
 #ifdef MAIN
