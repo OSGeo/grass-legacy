@@ -107,6 +107,8 @@ IMAGE *iopen(char *file, char *mode, u_int type, u_int dim,
             u_int xsize, u_int ysize, u_int zsize);
 IMAGE *fiopen(int f, char *mode, u_int type, u_int dim,
             u_int xsize, u_int ysize, u_int zsize);
+void i_errhdlr(char *fmt, ...);
+void i_seterror(void (*errfunc)());
 
 /* row.c */
 int putrow(IMAGE *image, u_short *buffer, u_int y, u_int z);
