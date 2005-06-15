@@ -4,7 +4,7 @@
 #include "gis.h"
 #include "glocale.h"
 
-#define ABS(x)		((x) < 0 ? -(x) : (x))
+
 #define MAX(a, b)	((a) > (b) ? (a) : (b))
 
 static int size;
@@ -13,6 +13,7 @@ static int (*neighbors)[2];
 
 typedef int metric_fn(int, int);
 
+
 static int distance_euclidian_squared(int dx, int dy)
 {
 	return dx * dx + dy * dy;
@@ -20,12 +21,12 @@ static int distance_euclidian_squared(int dx, int dy)
 
 static int distance_maximum(int dx, int dy)
 {
-	return MAX(ABS(dx), ABS(dy));
+	return MAX(abs(dx), abs(dy));
 }
 
 static int distance_manhattan(int dx, int dy)
 {
-	return ABS(dx) + ABS(dy);
+	return abs(dx) + abs(dy);
 }
 
 static void setup_neighbors(double radius, int limit, metric_fn *dist)
@@ -172,7 +173,7 @@ int main(int argc, char **argv)
 
 	mapset = G_find_cell(in_name, "");
 	if (!mapset)
-		G_fatal_error("input file [%s] not found", in_name);
+		G_fatal_error(_("Input file [%s] not found."), in_name);
 
 	nrows = G_window_rows();
 	ncols = G_window_cols();
@@ -184,27 +185,27 @@ int main(int argc, char **argv)
 	else if (strcmp(opt.met->answer, "manhattan") == 0)
 		setup_neighbors_manhattan(radius);
 	else
-		G_fatal_error("unknown metric: %s", opt.met->answer);
+		G_fatal_error(_("Unknown metric: [%s]."), opt.met->answer);
 
 	in_fd = G_open_cell_old(in_name, mapset);
 	if (in_fd < 0)
-		G_fatal_error("unable to open input file <%s@%s>", in_name, mapset);
+		G_fatal_error(_("Enable to open input file <%s@%s>."), in_name, mapset);
 
 	type = G_raster_map_type(in_name, mapset);
 
 	out_fd = G_open_raster_new(out_name, type);
 	if (out_fd < 0)
-		G_fatal_error("unable to open output file <%s>", out_name);
+		G_fatal_error(_("Unable to open output file <%s>."), out_name);
 
 	if (G_read_cats(in_name, mapset, &cats) == -1)
 	{
-		G_warning("error in reading cats file for %s", in_name);
+		G_warning(_("Error in reading cats file for <%s>."), in_name);
 		G_init_cats(0, "", &cats);
 	}
 
 	if (G_read_colors(in_name, mapset, &colr) == -1)
 	{
-		G_warning("error in reading colr file for %s", in_name);
+		G_warning(_("Error in reading colr file for <%s>."), in_name);
 		colrfile = 0;
 	}
 	else
@@ -296,11 +297,11 @@ int main(int argc, char **argv)
 	G_close_cell(out_fd);
 
 	if (G_write_cats(out_name, &cats) == -1)
-		G_warning("error writing cats file for %s", out_name);
+		G_warning(_("Error writing cats file for <%s>."), out_name);
 
 	if (colrfile)
 		if (G_write_colors(out_name, G_mapset(), &colr) == -1)
-			G_warning("error writing colr file for %s", out_name);
+			G_warning(_("Error writing colr file for <%s>."), out_name);
 
 	return 0;
 }
