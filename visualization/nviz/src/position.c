@@ -757,6 +757,7 @@ int Nget_zrange_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter.
     float min, max;
     char *list[3], cmin[32], cmax[32];
 
+    min = max = 0.0;
     if (argc > 2) {
 	if (!strcmp(argv[2], "doexag"))
 	    GS_get_zrange_nz(&min, &max);
