@@ -4,19 +4,12 @@
 #include "gis.h"
 #include "glocale.h"
 
+#define ABS(x)		((x) < 0 ? -(x) : (x))
+#define MAX(a, b)	((a) > (b) ? (a) : (b))
+
 static int size;
 static int count;
 static int (*neighbors)[2];
-
-static int abs(int x)
-{
-	return (x < 0) ? -x : x;
-}
-
-static int max(int a, int b)
-{
-	return (a > b) ? a : b;
-}
 
 typedef int metric_fn(int, int);
 
@@ -27,12 +20,12 @@ static int distance_euclidian_squared(int dx, int dy)
 
 static int distance_maximum(int dx, int dy)
 {
-	return max(abs(dx), abs(dy));
+	return MAX(ABS(dx), ABS(dy));
 }
 
 static int distance_manhattan(int dx, int dy)
 {
-	return abs(dx) + abs(dy);
+	return ABS(dx) + ABS(dy);
 }
 
 static void setup_neighbors(double radius, int limit, metric_fn *dist)
