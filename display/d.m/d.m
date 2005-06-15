@@ -10,7 +10,7 @@
 #%End
 
 if [ $# -eq 0 ] ; then
-   exec "$GRASS_WISH" $GISBASE/etc/dm/d.m.tcl -name d_m_tcl
+   exec "$GRASS_WISH" $GISBASE/etc/dm/d.m.tcl -name d_m_tcl sh &
    exit 0
 fi
 
