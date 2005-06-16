@@ -19,6 +19,7 @@
 #include "gis.h"
 #include "dbmi.h"
 #include "Vect.h"
+#include "glocale.h"
 
 #include "interpf.h"
 
@@ -68,7 +69,7 @@ int IL_vector_input_data_2d (
   OUTRANGE = 0;
   npoint = 0;
 
-  G_debug ( 2, "IL_vector_input_data_2d(): field = %d, zcol = %s, scol = %s", field, zcol, scol);
+  G_debug(2, "IL_vector_input_data_2d(): field = %d, zcol = %s, scol = %s", field, zcol, scol);
   ns_res = (data->ymax - data->y_orig) / data->n_rows;
   ew_res = (data->xmax - data->x_orig) / data->n_cols;
   dmax2=*dmax * *dmax;
@@ -76,26 +77,29 @@ int IL_vector_input_data_2d (
   Points = Vect_new_line_struct ();	/* init line_pnts struct */
   Cats = Vect_new_cats_struct ();
 
-  if ( field == 0 && !Vect_is_3d(Map) )  G_fatal_error ( "Vector is not 3D");
+  if ( field == 0 && !Vect_is_3d(Map) )
+	G_fatal_error(_("Vector is not 3D"));
 
   if ( field > 0 && zcol != NULL ) { /* open db driver */
     fprintf (stdout, "Loading data from attribute table ...\n");
     
     Fi = Vect_get_field( Map, field);
-    if ( Fi == NULL ) G_fatal_error ("Cannot get layer info");   
+    if ( Fi == NULL )
+	G_fatal_error(_("Cannot get layer info"));   
     G_debug ( 3, "  driver = %s database = %s table = %s", Fi->driver, Fi->database, Fi->table);
     db_init_handle (&handle);
     db_init_string ( &stmt);
     driver = db_start_driver(Fi->driver);
     db_set_handle (&handle, Fi->database, NULL);
     if (db_open_database(driver, &handle) != DB_OK)
-	G_fatal_error("Cannot open database %s", Fi->database);
+	G_fatal_error(_("Cannot open database %s"), Fi->database);
     
     zctype = db_column_Ctype ( driver, Fi->table, zcol );
     G_debug ( 3, " zcol C type = %d", zctype );
-    if ( zctype == -1 ) G_fatal_error ( "Cannot find z column (please verify name)" );
+    if ( zctype == -1 )
+	G_fatal_error(_("Cannot find z column (please verify name)"));
     if ( zctype != DB_C_TYPE_INT && zctype != DB_C_TYPE_DOUBLE ) 
-	G_fatal_error ( "Column type of z column is not supported (must be integer or double)" );
+	G_fatal_error(_("Column type of z column is not supported (must be integer or double)"));
 
     db_CatValArray_init ( &zarray );
     db_select_CatValArray ( driver, Fi->table, Fi->key, zcol, NULL, &zarray );
@@ -103,10 +107,12 @@ int IL_vector_input_data_2d (
     if ( scol != NULL ) {
 	sctype = db_column_Ctype ( driver, Fi->table, scol );
 	G_debug ( 3, " scol C type = %d", sctype );
-	if ( sctype == -1 ) G_fatal_error ( "Cannot read column type of smooth column" );
-	if ( sctype == DB_C_TYPE_DATETIME ) G_fatal_error ( "Column type of smooth column (datetime) is not supported" );
+	if ( sctype == -1 )
+	    G_fatal_error(_("Cannot read column type of smooth column"));
+	if ( sctype == DB_C_TYPE_DATETIME )
+	    G_fatal_error(_("Column type of smooth column (datetime) is not supported"));
 	if ( sctype != DB_C_TYPE_INT && sctype != DB_C_TYPE_DOUBLE ) 
-	    G_fatal_error ( "Column type of s column is not supported (must be integer or double)" );
+	    G_fatal_error(_("Column type of s column is not supported (must be integer or double)"));
 
 	db_CatValArray_init ( &sarray );
 	db_select_CatValArray ( driver, Fi->table, Fi->key, scol, NULL, &sarray );
@@ -140,7 +146,7 @@ int IL_vector_input_data_2d (
 	    }
 
 	    if ( ret != DB_OK ) {
-		G_warning ( "Database record for cat = %d not found", cat);
+		G_warning(_("Database record for cat %d not found"), cat);
 		continue;
 	    }
 		
@@ -219,7 +225,7 @@ int IL_vector_input_data_2d (
 	    }
 
 	    if ( ret != DB_OK ) {
-		G_warning ( "Database record for cat = %d not found", cat);
+		G_warning(_("Database record for cat %d not found"), cat);
 		continue;
 	    }
 		
@@ -256,7 +262,7 @@ int IL_vector_input_data_2d (
     if (!once)
     {
       once = 1;
-      fprintf (stderr, "Warning: strip exists with insufficient data\n");
+      G_warning(_("strip exists with insufficient data"));
     }
   }
 
@@ -270,16 +276,17 @@ int IL_vector_input_data_2d (
 
   fprintf (stderr, "\n");
   if (OUTRANGE > 0)
-    fprintf (stderr, "Warning: there are points outside specified region--ignored %d points\n", OUTRANGE);
+	G_warning(_("there are points outside specified region--ignored %d points"), OUTRANGE);
   if (npoint > 0)
-    fprintf (stderr, "Warning: ignoring %d points -- too dense\n", npoint);
+	G_warning(_("ignoring %d points -- too dense"), npoint);
   npoint = k - npoint - OUTRANGE;
   if (npoint < params->kmin)
   {
     if (npoint != 0)
     {
-      fprintf (stderr, "WARNING: %d points given for interpolation (after thinning) is less than given NPMIN=%d\n", npoint, params->kmin);
-      params->kmin = npoint;
+	G_warning(_("%d points given for interpolation (after thinning) is less than given NPMIN=%d"), 
+	    npoint, params->kmin);
+	params->kmin = npoint;
     }
     else
     {
@@ -294,7 +301,9 @@ int IL_vector_input_data_2d (
     return -1;
   }
   if (npoint < params->KMAX2 && params->kmax != params->KMAX2)
-    fprintf (stderr, "Warning : there is less than %d points for interpolation, no segmentation is necessary, to run the program faster, set segmax=%d (see manual)\n", params->KMAX2, params->KMAX2);
+	G_warning(_("There are less than %d points for interpolation. No "
+	    "segmentation is necessary, to run the program faster set "
+	    "segmax=%d (see manual)"), params->KMAX2, params->KMAX2);
 
   fprintf (stdout, "\n");
   fprintf (stdout, "The number of points from vector file is %d\n", k);
@@ -344,7 +353,7 @@ int process_point (
   {
     if (!(*OUTRANGE))
     {
-      fprintf (stderr, "Warning: some points outside of region -- will ignore...\n");
+	G_warning(_("some points outside of region -- will ignore..."));
     }
     (*OUTRANGE)++;
   }
