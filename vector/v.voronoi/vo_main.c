@@ -306,6 +306,8 @@ main (int argc, char **argv)
 	  
 
   Vect_close ( &In );
+  
+  Vect_build_partial ( &Out, GV_BUILD_NONE, NULL );
   Vect_build ( &Out, stderr );
   Vect_close ( &Out );
 
