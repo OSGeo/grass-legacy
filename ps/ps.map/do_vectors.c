@@ -3,6 +3,7 @@
 ** Author: Paul W. Carlson	March 1992
 ** Modified by: Janne Soimasuo August 1994 line_cat added
 ** Modified by: Radim Blazek Jan 2000 areas added
+** Modified by: Hamish Bowman Jun 2005 points moved to do_vpoints()
 */
 
 #include <string.h>
@@ -23,8 +24,10 @@ int do_vectors (int after_masking)
 
     n = vector.count;
     while (n-- > 0) {
+	if( vector.layer[n].type == VPOINTS  ) continue;
 	if ( after_masking &&  vector.layer[n].masked) continue;
 	if (!after_masking && !vector.layer[n].masked) continue;
+
 	if (verbose > 1) {
 	    fprintf (stdout,"PS-PAINT: reading vector file <%s in %s> ...",
 		vector.layer[n].name, vector.layer[n].mapset);
@@ -96,11 +99,8 @@ int do_vectors (int after_masking)
 	    fprintf(PS.fp, "%s setdash\n", dashes);
 	    vector.layer[n].setdash = G_store(dashes);
 	    PS_vlines_plot(&Map, n, LINE_DRAW_LINE);
-	} else if ( vector.layer[n].type == VPOINTS ) {
-	    PS_vpoints_plot(&Map, n, LINE_DRAW_LINE);
 	}
-    	
-	
+
 	Vect_close(&Map);
 	fprintf(PS.fp, "[] 0 setdash\n");
 	if (verbose > 1) fprintf (stdout,"\n");
@@ -109,3 +109,41 @@ int do_vectors (int after_masking)
     return 0;
 }
 
+
+int do_vpoints (int after_masking)
+{
+    int n;
+    struct Map_info Map;
+    extern int verbose;
+
+    n = vector.count;
+    while (n-- > 0) {
+    	if( vector.layer[n].type != VPOINTS ) continue;
+	if ( after_masking &&  vector.layer[n].masked) continue;
+	if (!after_masking && !vector.layer[n].masked) continue;
+
+	if (verbose > 1) {
+	    fprintf (stdout,"PS-PAINT: reading vector points file <%s in %s> ...",
+		vector.layer[n].name, vector.layer[n].mapset);
+	    fflush(stdout);
+	}
+
+	Vect_set_open_level(2); 
+	Vect_set_fatal_error ( GV_FATAL_PRINT );
+	if (2 >  Vect_open_old(&Map, vector.layer[n].name, vector.layer[n].mapset)) {
+	    char name[100];
+
+	    sprintf(name, "%s in %s", vector.layer[n].name, vector.layer[n].mapset);
+	    error("vector file", name, "can't open");
+	    continue;
+	}
+
+	PS_vpoints_plot(&Map, n, LINE_DRAW_LINE);
+	
+	Vect_close(&Map);
+	fprintf(PS.fp, "[] 0 setdash\n");
+	if (verbose > 1) fprintf (stdout,"\n");
+    }
+
+    return 0;
+}

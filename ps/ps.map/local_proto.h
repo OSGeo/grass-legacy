@@ -36,6 +36,7 @@ int do_psfiles(void);
 int do_scalebar(void);
 /* do_vectors.c */
 int do_vectors(int);
+int do_vpoints(int);
 /* error.c */
 int error(char *, char *, char *);
 /* fit_map.c */
