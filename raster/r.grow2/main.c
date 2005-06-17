@@ -189,7 +189,7 @@ int main(int argc, char **argv)
 
 	in_fd = G_open_cell_old(in_name, mapset);
 	if (in_fd < 0)
-		G_fatal_error(_("Enable to open input file <%s@%s>."), in_name, mapset);
+		G_fatal_error(_("Unable to open input file <%s@%s>."), in_name, mapset);
 
 	type = G_raster_map_type(in_name, mapset);
 
