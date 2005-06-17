@@ -70,9 +70,12 @@ int ps_map (void)
     if (PS.do_outline) ps_outline();
 
     /* do the masked vector plots, if any */
-    if (vector.count) do_vectors(0);
+    if (vector.count) {
+	do_vectors(0);
+	do_vpoints(0);
+    }
 
-    /* do the masked ponts/lines, if any */
+    /* do the masked points/lines, if any */
     do_plt(0);
 
     /* do masking, if required */
@@ -101,6 +104,9 @@ int ps_map (void)
 
     /* restore the unclipped graphics state */
     fprintf(PS.fp, "grestore ");
+
+    /* do the unmasked vector points, if any */
+    if (vector.count) do_vpoints(1);
 
     /* do the unmasked points, lines and eps if any */
     do_plt(1);
