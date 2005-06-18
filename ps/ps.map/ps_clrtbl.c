@@ -60,7 +60,7 @@ int PS_colortable (void)
 
     /* set colortable location */
     dy = 1.5 * fontsize;
-    if (ct.y <= 0.0) t = PS.min_y;
+    if (ct.y <= 0.0) t = (72.0 * PS.page_height) - PS.min_y;
     else t = 72.0 * ( PS.page_height - ct.y);
     if (ct.x <= 0.0) ct.x = PS.left_marg;
     l = 72.0 * ct.x + 0.5;
