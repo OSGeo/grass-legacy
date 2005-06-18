@@ -63,8 +63,15 @@ int PS_fcolortable (void)
     /* set colortable location,  */
     G_debug(3, "pwidth = %f pheight = %f", PS.page_width, PS.page_height);
     G_debug(3, "ct.width = %f ct.height = %f", ct.width, ct.height);
-    
+
+    /* if height and width are not given, calculate defaults */
+    if ( ct.width <= 0 )
+	ct.width = 2 * ct.fontsize / 72.0 ;
+    if ( ct.height <= 0 )
+	ct.height = 10 * ct.fontsize / 72.0 ;
+
     dy = 1.5 * fontsize;
+
     /* reset position to get at least something in BBox */
     if (ct.y < PS.top_marg ) { /* heigher than top margin */
        	ct.y = PS.top_marg; 
