@@ -4,9 +4,12 @@
 */
 
 #include <string.h>
+#include "glocale.h"
+
 #include "ps_info.h"
 #include "colortable.h"
 #include "local_proto.h"
+
 
 #define NSTEPS 3
 #define NNSTEP 4 /* number of nice steps */
@@ -43,40 +46,54 @@ int PS_fcolortable (void)
 
     /* Get color range */
     if (G_read_fp_range(ct.name, ct.mapset, &range) == -1) {
-         G_warning( "Range information not available (run r.support).");
-	 return 1;
+	G_warning(_("Range information not available (run r.support)."));
+	return 1;
     }
+
     G_get_fp_range_min_max(&range, &dmin, &dmax);
 
-    if(dmin == dmax)  /* if step==0 all sorts of infinite loops and DIV by 0 errors follow */
-        G_fatal_error("A floating point colortable must contain a range of values.");
-    
-    if (G_read_colors(ct.name, ct.mapset, &colors) == -1)
-    {
-	    G_warning( "Unable to read colors for colorbar\n");
+    if(dmin == dmax) { /* if step==0 all sorts of infinite loops and DIV by 0 errors follow */
+	G_warning(_("A floating point colortable must contain a range of values."));
+	return 1;
     }
-    
+
+    if (G_read_colors(ct.name, ct.mapset, &colors) == -1)
+	G_warning(_("Unable to read colors for colorbar"));
+
     /* set font */
     fontsize = (double)ct.fontsize;
     fprintf(PS.fp, "(%s) FN %.1f SF\n", ct.font, fontsize);
 
     /* set colortable location,  */
+    /* if height and width are not given, calculate defaults */
+    if ( ct.width <= 0 )
+	ct.width = 2 * ct.fontsize / 72.0 ;
+    if ( ct.height <= 0 )
+	ct.height = 10 * ct.fontsize / 72.0 ;
+
+    dy = 1.5 * fontsize;
+
     G_debug(3, "pwidth = %f pheight = %f", PS.page_width, PS.page_height);
     G_debug(3, "ct.width = %f ct.height = %f", ct.width, ct.height);
-    
-    dy = 1.5 * fontsize;
+    G_debug(3, "ct.x = %f ct.y = %f", ct.x, ct.y);
+
     /* reset position to get at least something in BBox */
-    if (ct.y < PS.top_marg ) { /* heigher than top margin */
-       	ct.y = PS.top_marg; 
+    if (ct.y < PS.top_marg ) { /* higher than top margin */
+	G_warning(_("Colorbar y location beyond page margins. Adjusting."));
+       	ct.y = PS.top_marg + 0.1;
     } else if (ct.y > PS.page_height - PS.bot_marg ) {
-        /* lower than bottom margin - simply move one inch up from bottom margin */
+	/* lower than bottom margin - simply move one inch up from bottom margin */
+	G_warning(_("Colorbar y location beyond page margins. Adjusting."));
 	ct.y = PS.page_height - PS.bot_marg - 1 ; 
-    };
+    }
     t = 72.0 * ( PS.page_height - ct.y); 
 
     if ( ct.x < PS.left_marg ) {
-	ct.x = PS.left_marg;
-    } else if ( ct.x > PS.page_width - PS.right_marg ) { /* move 1 inch to the left from right marg */
+	G_warning(_("Colorbar x location beyond page margins. Adjusting."));
+	ct.x = PS.left_marg + 0.1;
+    } else if ( ct.x > PS.page_width - PS.right_marg ) {
+	/* move 1 inch to the left from right marg */
+	G_warning(_("Colorbar x location beyond page margins. Adjusting."));
 	ct.x = PS.page_width - PS.right_marg - 1;
     }
     l = 72.0 * ct.x;

@@ -3,6 +3,8 @@
 ** Author: Paul W. Carlson	April 1992
 */
 
+#include "glocale.h"
+
 #include "ps_info.h"
 #include "colortable.h"
 
@@ -12,7 +14,7 @@ extern int verbose;
 
 int PS_colortable (void)
 {
-    char buf[512], *label;
+    char *label;
     int num_cats;
     int i, j, k, jj;
     int R, G, B;
@@ -33,25 +35,22 @@ int PS_colortable (void)
 
     if (G_read_cats(ct.name, ct.mapset, &PS.cats) == -1)
     {
-        sprintf(buf, "Category file for [%s] not available", ct.name);
-        G_warning(buf);
-        return 1;
+	G_warning(_("Category file for [%s] not available"), ct.name);
+	return 1;
     }
 
     if (G_read_colors(ct.name, ct.mapset, &colors) == -1)
-    {
-	    G_warning("Unable to read colors for colorbar\n");
-    }
+	G_warning(_("Unable to read colors for colorbar"));
 
     /* How many categories to show */
     num_cats = G_number_of_raster_cats(&PS.cats);
     G_debug(3, "clrtbl: %d categories", num_cats);
     if(!num_cats) {
-        G_warning("Your cats/ file is invalid. A cats/ file with "
+	G_warning(_("Your cats/ file is invalid. A cats/ file with "
 	  "categories and labels is required for 'colortable' when using "
-          "CELL rasters. No colortable will be assigned to this output "
-	  "postscript file.");
-        return 1;
+	  "CELL rasters. No colortable will be assigned to this output "
+	  "postscript file."));
+	return 1;
     }
 
     /* set font */
@@ -60,14 +59,27 @@ int PS_colortable (void)
 
     /* set colortable location */
     dy = 1.5 * fontsize;
-    if (ct.y <= 0.0) t = PS.min_y;
-    else t = 72.0 * ( PS.page_height - ct.y);
-    if (ct.x <= 0.0) ct.x = PS.left_marg;
+
+    if (ct.y < PS.top_marg) {
+	G_warning(_("Colorbar y location beyond page margins. Adjusting."));
+	ct.y = PS.top_marg;
+    }
+    t = 72.0 * ( PS.page_height - ct.y);
+
+    if (ct.x < PS.left_marg) {
+	G_warning(_("Colorbar x location beyond page margins. Adjusting."));
+	ct.x = PS.left_marg + 0.1;
+    }
     l = 72.0 * ct.x + 0.5;
+
     if (ct.width <= 0.0 || ct.width > PS.page_width  - PS.right_marg - ct.x)
         ct.width = PS.page_width  - PS.right_marg - ct.x;
+
     r  = l + 72.0 * ct.width;
     col_width = ct.width / (double)ct.cols;
+
+    G_debug(3, "clrtbl: adjusted ct.x=[%.3f]  ct.y=[%.3f]  ct.width=[%.3f]",
+	ct.x, ct.y, ct.width);
 
     /* read cats into PostScript array "a" */
     fprintf(PS.fp, "/a [\n");
