@@ -71,10 +71,11 @@ int do_scalebar(void)
 	    /* do text */
 	    if (i == 0 || lab == sb.numbers) {
 		sprintf(num, "%s", nice_number((sb.length / sb.segment) * i));
-		text_box_path(x1, y2 + margin, CENTER, LOWER, num, sb.fontsize,
-			      0);
-		set_rgb_color(WHITE);
-		fprintf(PS.fp, "F ");
+		text_box_path(x1, y2 + margin, CENTER, LOWER, num, sb.fontsize, 0);
+		if(sb.bgcolor) { /* TODO: take bg color, not just [white|none] */
+		    set_rgb_color(WHITE);
+		    fprintf(PS.fp, "F ");
+		}
 		set_rgb_color(BLACK);
 		fprintf(PS.fp, "TIB\n");
 		lab = 0;
@@ -82,10 +83,11 @@ int do_scalebar(void)
 	    if ((lab > 0 && i == seg - 1) || (sb.numbers == 1 && i == seg - 1)) {
 		/* special case for last label */
 		sprintf(num, "%s", nice_number(sb.length));
-		text_box_path(x2, y2 + margin, CENTER, LOWER, num, sb.fontsize,
-			      0);
-		set_rgb_color(WHITE);
-		fprintf(PS.fp, "F ");
+		text_box_path(x2, y2 + margin, CENTER, LOWER, num, sb.fontsize, 0);
+		if(sb.bgcolor) { /* TODO: take bg color, not just [white|none] */
+		    set_rgb_color(WHITE);
+		    fprintf(PS.fp, "F ");
+		}
 		set_rgb_color(BLACK);
 		fprintf(PS.fp, "TIB\n");
 	    }
