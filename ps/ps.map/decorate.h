@@ -13,7 +13,7 @@ struct scalebar {
 	int numbers;
 	double width;
 	int fontsize;
-	int color;
+	int color, bgcolor;
 };
 
 #ifdef MAIN

@@ -19,6 +19,7 @@ static char *help[] =
     "segment	no_segemnts",
     "numbers	no_labels",
     "fontsize   fontsize",
+    "background [Y|n]",
     ""
 };
 
@@ -29,6 +30,7 @@ read_scalebar (void)
    char *key, *data;
    char ch;
 
+   /* struct defined in decorate.h */
    sb.segment = 4; /* four segments */
    sb.numbers = 1; /* label each segment */
    sb.fontsize = 8; 
@@ -37,6 +39,7 @@ read_scalebar (void)
    sb.height = 0.1; /* default height in inches */
    sb.x = PS.page_width/2.;
    sb.y = 2.;
+   sb.bgcolor = 1; /* default is "on" [white|none] (TODO: multi-color) */
 
 
     while (input(2, buf, help))
@@ -96,8 +99,13 @@ read_scalebar (void)
 	    }
 	    else continue;
 	}
-	
-	
+
+	if (KEY("background"))
+        {
+            sb.bgcolor = yesno(key, data);
+            continue;
+        }
+
 	if (KEY("width"))
  	{
  	sb.width = -1.;
