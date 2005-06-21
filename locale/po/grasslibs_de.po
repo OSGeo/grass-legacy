@@ -1887,7 +1887,7 @@ msgstr "Anzahl von Flächen ohne Zentroid :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:216
 msgid "Number of areas     :   -\n"
-msgstr "Anzahl von Flächen     :   -\n"
+msgstr "Anzahl von Flächen    :   -\n"
 
 #: ../lib/vector/Vlib/build.c:217
 msgid "Number of isles     :   -\n"
