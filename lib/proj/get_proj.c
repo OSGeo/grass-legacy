@@ -25,8 +25,6 @@
 #include "gprojects.h"
 #define MAIN
 
-/* GRASS relative location of datum conversion lookup tables */
-#define GRIDDIR "/etc/nad"
 /* Finder function for datum conversion lookup tables */
 #define FINDERFUNC set_proj_lib
 #define PERMANENT "PERMANENT"

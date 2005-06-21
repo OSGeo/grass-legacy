@@ -167,7 +167,9 @@ int GPJ__get_datum_params(struct Key_Value *projinfo,
 	returnval = 2;
     }
     else if (G_find_key_value("nadgrids", projinfo) != NULL) {
-	G_asprintf(params, "nadgrids=%s",
+        const char *gisbase = G_gisbase();
+       
+	G_asprintf(params, "nadgrids=%s%s/%s", gisbase, GRIDDIR,
 		   G_find_key_value("nadgrids", projinfo));
 	returnval = 2;
     }
