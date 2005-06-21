@@ -26,6 +26,8 @@
 #define ELLIPSOIDTABLE "/etc/ellipse.table"
 #define DATUMTABLE "/etc/datum.table"
 #define DATUMTRANSFORMTABLE "/etc/datumtransform.table"
+/* GRASS relative location of datum conversion lookup tables */
+#define GRIDDIR "/etc/nad"
 
 struct pj_info {
       projPJ     *pj;
