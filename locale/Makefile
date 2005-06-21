@@ -39,8 +39,8 @@ update-po:
 		 echo "Then you can translate the messages in this file (e.g with kbabel)" ; \
 		fi ;\
 	done
-	@cd ./po/ ; for po in `ls *_??.po 2>/dev/null` ; do \
-		suffix=`echo $$po | cut -d'_' -f2`; \
+	@cd ./po/ ; for po in `ls *_*.po 2>/dev/null` ; do \
+		suffix=`echo $$po | cut -d'_' -f2-`; \
 		lingua=`basename $$suffix .po`; \
 		prefix=`echo $$po | cut -d'_' -f1`; \
 		if msgmerge -o $$prefix\_$$suffix.new $$prefix\_$$suffix ../templates/$$prefix.pot; then\
@@ -53,8 +53,8 @@ update-po:
 
 #create binary messages files
 mo:
-	@(cd ./po/ ; for po in `ls *_??.po 2>/dev/null` ; do\
-		suffix=`echo $$po | cut -d'_' -f2`; \
+	@(cd ./po/ ; for po in `ls *_*.po 2>/dev/null` ; do\
+		suffix=`echo $$po | cut -d'_' -f2-`; \
 		lingua=`basename $$suffix .po`; \
 		prefix=`echo $$po | cut -d'_' -f1`; \
 		install -d $(MO_DIR)/$$lingua/LC_MESSAGES/ ; \
