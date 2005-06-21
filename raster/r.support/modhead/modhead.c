@@ -190,9 +190,9 @@ int main (int argc, char *argv[])
 
     G_message(_("cellhd compression: %d\n"), cellhd.compressed);
     G_message(_("3.0 compression %sindicated\n"), 
-                compressed_new ? _("") : _("not "));
+                compressed_new ? "" : "not ");
     G_message(_("Pre 3.0 compression %sindicated\n"), 
-                compressed_old ? _("") : _("not "));
+                compressed_old ? "" : "not ");
     hitreturn();
 
     /* If we create a new cell header, find out if file is compressed */
