@@ -10,28 +10,35 @@ parameters each time. Values are stored in user file.
 
 Typing <em>db.connect -p</em> displays current connection parameters. 
 
-<h2>EXAMPLE</h2>
 
-DBF (the dbf/ subdirectory must exist or must be created by the user):<br>
+<h2>EXAMPLES</h2>
+
+<b>DBF</b> (the dbf/ subdirectory must exist or must be created by the user):<br>
 <b>db.connect driver=</b><em>dbf</em> <b>database=</b><em>'$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'</em> <br>
 <b>db.connect -p</b>
 <P>
-ODBC (may require the use of <a href=db.login.html>db.login</a>):<br> 
+<b>ODBC</b> (may require the use of <a href=db.login.html>db.login</a>):<br> 
 <b>db.connect driver=</b><em>odbc</em> <b>database=</b><em>gtest</em> <br>
 <b>db.login user=myname pass=secret</b>
 <b>db.connect -p</b>  
 <p>
-PostgreSQL (may require the use of <a href=db.login.html>db.login</a>):<br>
+<b>PostgreSQL</b> (may require the use of <a href=db.login.html>db.login</a>):<br>
 <b>db.connect driver=</b><em>pg</em> <b>database=</b><em>"host=myserver.itc.it,dbname=mydb"</em> <br>
 <b>db.login user=myname pass=secret</b>
 <b>db.tables -p</b>
 
+<h2>NOTES</h2>
+
+To connect a vector map to a database table, use <em>v.db.connect</em>.
+
 <h2>SEE ALSO</h2>
 
-<em><a HREF="db.columns.html">db.columns</a>,
+<em>
+<a HREF="db.columns.html">db.columns</a>,
 <a HREF="db.drivers.html">db.drivers</a>,
 <a HREF="db.login.html">db.login</a>,
 <a HREF="db.tables.html">db.tables</a>,
+<a HREF="v.db.connect.html">v.db.connect</a>,
 <a HREF="sql.html">GRASS SQL interface</a></em>
 
 <h2>AUTHOR</h2>
