@@ -29,6 +29,7 @@ static char *help[]=
     "background  color|none",
     "border      color|none",
     "size        #",
+    "fontsize    fontsize",
     "hcolor      color|none",
     "hwidth      #",
     "ref         upper|lower|center left|right|center",
@@ -47,6 +48,7 @@ int read_text (char *east, char *north, char *text)
     int xoffset;
     int yoffset;
     float size;
+    int fontsize;
     double width;
     double hwidth;
     int xref, yref;
@@ -63,6 +65,7 @@ int read_text (char *east, char *north, char *text)
     border = -1;
     opaque = 1;
     size = 0.0;
+    fontsize = 0;
     xoffset = 0;
     yoffset = 0;
     width = 1.;
@@ -199,6 +202,15 @@ int read_text (char *east, char *north, char *text)
 	    continue;
 	}
 
+	if (KEY("fontsize"))
+	{
+	    if (sscanf(data, "%d", &fontsize) != 1 || fontsize <= 0 )
+	    {
+		error(key, data, "illegal fontsize request");
+	    }
+	    else continue;
+	}
+
 	if (KEY("xoffset"))
 	{
 	    *t1 = 0;
@@ -259,6 +271,7 @@ int read_text (char *east, char *north, char *text)
     fprintf(fd, "width: %f\n", width);
     fprintf(fd, "hwidth: %f\n", hwidth);
     fprintf(fd, "size: %f\n", size);
+    fprintf(fd, "fontsize: %d\n", fontsize);
     fprintf(fd, "opaque: %s\n", opaque?"yes":"no");
     fprintf(fd, "color: ");
     if (color >= 0)      fprintf(fd, "%s\n", get_color_name(color));

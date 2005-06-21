@@ -72,38 +72,6 @@ to the <EM>copies</EM> mapping instruction described below.
 
 <H2>MAPPING INSTRUCTIONS</H2>
 
-The mapping instructions allow the user to specify various spatial data
-to be plotted. These instructions are normally prepared in a regular
-text file using a system editor.
-Some instructions are single line instructions while
-others are multiple line. Multiple line instructions consist of
-the main instruction followed by a subsection of one or more additional
-instructions.
-<P>
-One "pixel" is 1/72 of an inch.
-<P>
-
-Instructions that may be included in the subsection under several
-different main instructions are:
-
-<DT><B>where</B> <EM>x y</EM>
-
-<DD>The top left corner of the bounding box of the item to be plotted
-is located <EM>x</EM> inches from the left edge of the paper and
-<EM>y</EM> inches from the top edge of the paper. If <EM>x</EM> is less than
-or equal to zero, the default horizontal location is used.  If <EM>y</EM>
-is less than or equal to zero, the default vertical location is used.
-
-<DT><B>font</B> <EM>font name</EM> 
-
-<DD>The name of the PostScript font.  The default is <EM>Helvetica</EM>.
-
-<DT><B>fontsize</B> <EM>font size</EM> 
-
-<DD>The size of the PostScript font in 1/72 inch.  The default is 10.
-</DD>
-<P>
-
 Instruction keywords:<BR>
 [ 
 <a href="#colortable">colortable</a>&nbsp;|
@@ -140,6 +108,41 @@ Instruction keywords:<BR>
 <a href="#vlegend">vlegend</a>&nbsp;|
 <a href="#end">end</a>
 ]
+
+<P>
+The mapping instructions allow the user to specify various spatial data
+to be plotted. These instructions are normally prepared in a regular
+text file using a system editor.
+Some instructions are single line instructions while
+others are multiple line. Multiple line instructions consist of
+the main instruction followed by a subsection of one or more additional
+instructions.
+<P>
+One "pixel" is 1/72 of an inch.
+<P>
+
+Instructions that may be included in the subsection under several
+different main instructions are:
+
+<DT><B>where</B> <EM>x y</EM>
+
+<DD>The top left corner of the bounding box of the item to be plotted
+is located <EM>x</EM> inches from the left edge of the paper and
+<EM>y</EM> inches from the top edge of the paper. If <EM>x</EM> is less than
+or equal to zero, the default horizontal location is used.  If <EM>y</EM>
+is less than or equal to zero, the default vertical location is used.
+
+<DT><B>font</B> <EM>font name</EM> 
+
+<DD>The name of the PostScript font.  The default is <EM>Helvetica</EM>.
+
+<DT><B>fontsize</B> <EM>font size</EM> 
+
+<DD>The size of the PostScript font in 1/72 inch.  The default is 10.
+</DD>
+<P>
+
+
 
 <a name="colortable"></a>
 <H2>colortable</H2>
@@ -1023,6 +1026,7 @@ USAGE:	<B>text</B>  east north text
 	<B>hwidth</B> #
 	<B>background</B> color|none
 	<B>border</B> color|none
+	<B>fontsize</B> font size
 	<B>size</B> #
 	<B>ref</B> reference point
 	<B>xoffset</B> #
@@ -1031,7 +1035,7 @@ USAGE:	<B>text</B>  east north text
 	<B>end</B>
 </PRE>
 The user specifies where the text will be placed by
-providing map coordinates or percentages of the geographic region map.
+providing map coordinates or percentages of the geographic region.
 The text follows these coordinates on the same instruction line.
 More than one line of text can be specified by notating the end of a line with
 <B>\n</B>
@@ -1051,11 +1055,12 @@ italiccs italict romanc romancs romand romans romant scriptc scripts
 of the lines used to draw the text to make thicker letters
 (accepts decimal points [floating points] as well as integers);
 <P>
-<B>size</B>
-as the vertical height of the letters in meters on the
+<B>size</B> and <B>fontsize.</B>&nbsp;
+<B>size</B> gives the vertical height of the letters in meters on the
 ground (text size will grow or shrink depending on the scale at which
-the map is painted). If no <B>size</B> is given, a default text size
-will be used;
+the map is painted). Alternatively <B>fontsize</B> can set the font
+size directly. If neither <B>size</B> or <B>fontsize</B> is given, a 
+default font size of 10 will be used;
 <P>
 the highlight color (<B>hcolor</B>) and
 the width of the highlight color (<B>hwidth</B>);
