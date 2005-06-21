@@ -8,6 +8,8 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include "glocale.h"
+
 #include "ps_info.h"
 #include "labels.h"
 #include "local_proto.h"
@@ -41,10 +43,8 @@ do_labels (int other)
 	
 	    if (fd == NULL)
 	    {
-		char msg[100];
-		sprintf(msg, 
-		    "Can't open label file %s in %s", labels.name[i], labels.mapset[i]);
-		G_warning (msg);
+		G_warning(_("Can't open label file <%s> in mapset <%s>"), 
+		    labels.name[i], labels.mapset[i]);
 	    }
 	    else
 	    {
@@ -67,11 +67,7 @@ do_labels (int other)
     {
 	fd = fopen(labels.other, "r");
 	if (fd == NULL)
-	{
-	    char msg[100];
-	    sprintf(msg, "can't open temp label file %s", labels.other);
-	    G_warning(msg);
-	}
+	    G_warning(_("Can't open temporary label file <%s>"), labels.other);
 	else
 	{
 	    if (verbose > 1)
@@ -97,6 +93,7 @@ do_label (FILE *fd)
     int background, border, color, hcolor;
     double width, hwidth;
     int opaque, fontsize, multi_text, x_int, y_int;
+    int itmp;
     char field[1024];
     char value[1024];
     char ch, buf[1024];
@@ -117,7 +114,8 @@ do_label (FILE *fd)
     xref = CENTER;
     yref = CENTER;
     rotate = 0., 
-    size = 0;
+    size = 0.;
+    fontsize = 0;
 
     /* read the labels file */
     while (fgets (buf, sizeof buf, fd))
@@ -126,7 +124,7 @@ do_label (FILE *fd)
         *field = 0;
         if (sscanf(buf,"%[^:]:%[^\n]", field, value) < 1) continue;
 
-        if (FIELD("text"))
+        if (FIELD("text")) /* appears last in the labels file */
         {
 	    G_strip(value);
 
@@ -142,11 +140,15 @@ do_label (FILE *fd)
             x += xoffset;
             y += yoffset;
 
-	    /* set font size */
-	    fontsize = size * PS.ns_to_y;
+	    /* set font size if given in map units and not given by fontsize */
+	    if(fontsize && size > 0)
+		G_warning(_("Text labels: 'fontsize' given so ignoring 'size'"));
+	
+	    if(!fontsize)
+		fontsize = size * PS.ns_to_y;
 
-	    /* fall back if no size defined*/
-	    if (size == 0) fontsize=10;
+	    /* fall back if no size of any kind is defined */
+	    if (fontsize == 0) fontsize=10;
 
 	    /*
  	    if (fontsize < 10) fontsize = 10;
@@ -293,6 +295,13 @@ do_label (FILE *fd)
         if (FIELD("size"))
         {
 	    if (scan_resolution(value, &dtmp)) size = dtmp;
+            continue;
+        }
+	
+        if (FIELD("fontsize"))
+        {
+	    if (sscanf(value,"%d", &itmp) == 1 && itmp > 0 )
+		fontsize = itmp;
             continue;
         }
 
