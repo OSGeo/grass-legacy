@@ -35,6 +35,7 @@ EXT OPTIONS
     int  option;
     int  print;     /* print only */
     int  sql;       /* print only sql statements */
+    int  total;     /* print totals */
     int  units;
     int  qfield;    /* query field */
 } options;
