@@ -74,13 +74,13 @@ int G_system ( char *command)
 	signal (SIGINT,  SIG_DFL);
 	signal (SIGQUIT, SIG_DFL);
     
-	execl ("/bin/sh", "sh", "-c", command, 0);
+	execl ("/bin/sh", "sh", "-c", command, NULL);
 	_exit(127);
     }
 
     if (pid < 0)
     {
-	fprintf (stderr, _("WARNING: can not create a new process\n"));
+	G_warning (_("Can not create a new process!"));
 	status = -1;
     }
     else
