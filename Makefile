@@ -38,6 +38,7 @@ SUBDIRS = \
 	display \
 	general \
 	imagery \
+	misc \
 	paint \
 	ps \
 	raster \
