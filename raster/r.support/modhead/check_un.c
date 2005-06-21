@@ -32,12 +32,12 @@ int check_uncompressed(struct Cell_head *cellhd, long filesize)
 
     /* Write valid combinations to temp file */
     fd = fopen(tempfile, "w");
-    fprintf(fd, _("The product of the rows(%d), cols(%d) and bytes per "
-                "cell(%d) = %ld\n"),
+    fprintf(fd, "The product of the rows(%d), cols(%d) and bytes per "
+                "cell(%d) = %ld\n",
                 cellhd->rows, cellhd->cols, cellhd->format, filesize_calc);
-    fprintf(fd, _("does not equal the file size (%ld)\n"), filesize);
-    fprintf(fd, _("The following combinations will produce the "
-                "correct file size:\n\n"));
+    fprintf(fd, "does not equal the file size (%ld)\n", filesize);
+    fprintf(fd, "The following combinations will produce the "
+                "correct file size:\n\n");
 
     if (cellhd->format == 0 || (filesize % cellhd->format != 0)) {
         int i;
@@ -46,12 +46,12 @@ int check_uncompressed(struct Cell_head *cellhd, long filesize)
             if (filesize % i)
                 continue;
 
-            fprintf(fd, _("%d byte%s per cell\n"), i, i == 1 ? _("") : _("s"));
+            fprintf(fd, "%d byte%s per cell\n", i, i == 1 ? "" : "s");
             factors(fd, filesize, i);
         }
     } else {
-        fprintf(fd, _("%d byte%s per cell\n"), cellhd->format,
-                      cellhd->format == 1 ? _("") : _("s"));
+        fprintf(fd, "%d byte%s per cell\n", cellhd->format,
+                      cellhd->format == 1 ? "" : "s");
         factors(fd, filesize, cellhd->format);
     }
 

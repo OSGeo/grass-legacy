@@ -37,7 +37,7 @@ int factors(FILE *fd, long n, int div)
                 totlen = 0;
             }
 
-            fprintf(fd, _("%s   "), buf);
+            fprintf(fd, "%s   ", buf);
             totlen += len;
         }
     }
