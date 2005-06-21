@@ -31,13 +31,9 @@ static char *error(char *,int);
 char *G__read_Cell_head ( FILE *fd,
     struct Cell_head *cellhd,int is_cellhd)
 {
-    char buf[1024];
-    char label[200];
-    char value[200];
-    int line;
     int flags;
-    char *G_adjust_Cell_head();
-    char *err;
+    char *err, *value;
+    struct Key_Value *cellhd_file;
 
     flags = 0;
 
@@ -55,42 +51,24 @@ char *G__read_Cell_head ( FILE *fd,
     cellhd->east    = 0.0 ;
     cellhd->west    = 0.0 ;
 
+    cellhd_file = G_fread_key_value( fd );
+   
 /* determine projection, zone first */
 
-    fseek (fd, 0L, 0);
-    for (line = 1; G_getl (buf, sizeof (buf), fd); line++)
-    {
-	if (TEST(F_PROJ) && TEST(F_ZONE))
-	    break;
+    value = G_find_key_value("proj", cellhd_file);
+    if(value)
+    {	
+        if (!scan_int (value, &cellhd->proj))
+	    ERROR(value,0);
+        SET(F_PROJ);       
+    }
 
-	switch (scan_item (buf, label, value))
-	{
-	case -1: ERROR(buf,line);
-	case 0:  continue;
-	case 1:  break;
-	}
-	if (strncmp (label, "proj", 4) == 0)
-	{
-	    if (TEST(F_PROJ))
-		ERROR (_("duplicate projection field"), line);
-
-	    if (!scan_int (value, &cellhd->proj))
-		ERROR(buf,line);
-
-	    SET(F_PROJ);
-	    continue;
-	}
-	if (strncmp (label, "zone", 4) == 0)
-	{
-	    if (TEST(F_ZONE))
-		ERROR (_("duplicate zone field"), line);
-
-	    if (!scan_int (value, &cellhd->zone))
-		ERROR(buf,line);
-
-	    SET(F_ZONE);
-	    continue;
-	}
+    value = G_find_key_value("zone", cellhd_file);
+    if(value)
+    {	
+        if (!scan_int (value, &cellhd->zone))
+	    ERROR(value,0);
+	SET(F_ZONE);
     }
     if (!TEST(F_PROJ))
 	ERROR (_("projection field missing"),0);
@@ -98,120 +76,93 @@ char *G__read_Cell_head ( FILE *fd,
 	ERROR (_("zone field missing"),0);
 
 /* read the other info */
-    fseek (fd, 0L, 0);
-    for (line = 1; G_getl (buf, sizeof (buf), fd); line++)
-    {
-	switch (scan_item (buf, label, value))
-	{
-	case -1: ERROR(buf,line);
-	case 0:  continue;
-	case 1:  break;
-	}
 
-	if (strncmp (label, "proj", 4) == 0)
-	    continue;
-	if (strncmp (label, "zone", 4) == 0)
-	    continue;
-
-	if (strncmp (label, "nort", 4) == 0)
-	{
-	    if (TEST(F_NORTH))
-		ERROR(_("duplicate north field"), line);
+    value = G_find_key_value("north", cellhd_file);
+    if(value)
+    {	
 	    if (!G_scan_northing (value, &cellhd->north, cellhd->proj))
-		ERROR(buf,line);
+		ERROR(value,0);
 	    SET(F_NORTH);
-	    continue;
-	}
-	if (strncmp (label, "sout", 4) == 0)
-	{
-	    if (TEST(F_SOUTH))
-		ERROR(_("duplicate south field"), line);
+    }
+
+    value = G_find_key_value("south", cellhd_file);
+    if(value)
+    {	
 	    if (!G_scan_northing (value, &cellhd->south, cellhd->proj))
-		ERROR(buf,line);
+		ERROR(value,0);
 	    SET(F_SOUTH);
-	    continue;
-	}
-	if (strncmp (label, "east", 4) == 0)
-	{
-	    if (TEST(F_EAST))
-		ERROR(_("duplicate east field"), line);
+    }
+
+    value = G_find_key_value("east", cellhd_file);
+    if(value)
+    {	
 	    if (!G_scan_easting (value, &cellhd->east, cellhd->proj))
-		ERROR(buf,line);
+		ERROR(value,0);
 	    SET(F_EAST);
-	    continue;
-	}
-	if (strncmp (label, "west", 4) == 0)
-	{
-	    if (TEST(F_WEST))
-		ERROR(_("duplicate west field"), line);
+    }
+
+    value = G_find_key_value("west", cellhd_file);
+    if(value)
+    {	
 	    if (!G_scan_easting (value, &cellhd->west, cellhd->proj))
-		ERROR(buf,line);
+		ERROR(value,0);
 	    SET(F_WEST);
-	    continue;
-	}
-	if (strncmp (label, "e-w ", 4) == 0)
-	{
-	    if (TEST(F_EWRES))
-		ERROR(_("duplicate e-w resolution field"), line);
+    }
+
+    value = G_find_key_value("e-w resol", cellhd_file);
+    if(value)
+    {	
 	    if (!G_scan_resolution (value, &cellhd->ew_res, cellhd->proj))
-		ERROR(buf,line);
+		ERROR(value,0);
 	    if (cellhd->ew_res <= 0.0)
-		ERROR(buf,line);
+		ERROR(value,0);
 	    SET(F_EWRES);
-	    continue;
-	}
-	if (strncmp (label, "n-s ", 4) == 0)
-	{
-	    if (TEST(F_NSRES))
-		ERROR(_("duplicate n-s resolution field"), line);
+    }
+
+    value = G_find_key_value("n-s resol", cellhd_file);
+    if(value)
+    {	
 	    if (!G_scan_resolution (value, &cellhd->ns_res, cellhd->proj))
-		ERROR(buf,line);
+		ERROR(value,0);
 	    if (cellhd->ns_res <= 0.0)
-		ERROR(buf,line);
+		ERROR(value,0);
 	    SET(F_NSRES);
-	    continue;
-	}
-	if (strncmp (label, "rows", 4) == 0)
-	{
-	    if (TEST(F_ROWS))
-		ERROR(_("duplicate rows field"), line);
+    }
+   
+    value = G_find_key_value("rows", cellhd_file);
+    if(value)
+    {	
 	    if (!scan_int (value, &cellhd->rows))
-		ERROR (buf, line);
+		ERROR(value,0);
 	    if (cellhd->rows <= 0)
-		ERROR (buf, line);
+		ERROR(value,0);
 	    SET(F_ROWS);
-	    continue;
-	}
-	if (strncmp (label, "cols", 4) == 0)
-	{
-	    if (TEST(F_COLS))
-		ERROR(_("duplicate cols field"), line);
+    }
+   
+    value = G_find_key_value("cols", cellhd_file);
+    if(value)
+    {	
 	    if (!scan_int (value, &cellhd->cols))
-		ERROR (buf, line);
+		ERROR(value,0);
 	    if (cellhd->cols <= 0)
-		ERROR (buf, line);
+		ERROR(value,0);
 	    SET(F_COLS);
-	    continue;
-	}
-	if (strncmp (label, "form", 4) == 0)
-	{
-	    if (TEST(F_FORMAT))
-		ERROR(_("duplicate format field"), line);
+    }
+   
+    value = G_find_key_value("format", cellhd_file);
+    if(value)
+    {	
 	    if (!scan_int (value, &cellhd->format))
-		ERROR(buf,line);
+		ERROR(value,0);
 	    SET(F_FORMAT);
-	    continue;
-	}
-	if (strncmp (label, "comp", 4) == 0)
-	{
-	    if (TEST(F_COMP))
-		ERROR(_("duplicate compressed field"), line);
+    }
+   
+    value = G_find_key_value("compressed", cellhd_file);
+    if(value)
+    {	
 	    if (!scan_int (value, &cellhd->compressed))
-		ERROR(buf,line);
+		ERROR(value,0);
 	    SET(F_COMP);
-	    continue;
-	}
-	ERROR(buf,line);
     }
 
 /* check some of the fields */
