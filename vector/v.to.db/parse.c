@@ -22,7 +22,7 @@ parse_command_line (int argc, char *argv[])
 	    struct Option *qcol;		
     } parms;
     struct {
-	    struct Flag *p, *s;
+	    struct Flag *p, *s, *t;
     } flags;
 
     parms.vect = G_define_standard_option(G_OPT_V_INPUT);
@@ -89,11 +89,16 @@ parse_command_line (int argc, char *argv[])
     flags.s = G_define_flag();
     flags.s->key = 's';
     flags.s->description = "only print sql statements";	
+    
+    flags.t = G_define_flag();
+    flags.t->key = 'c';
+    flags.t->description = "In print mode prints totals for options: length,area,count";	
 
     if (G_parser(argc,argv)) exit(-1);
 
     options.print = flags.p->answer;
     options.sql = flags.s->answer;
+    options.total = flags.t->answer;
 
     options.name = parms.vect->answer;
     options.mapset = G_find_vector2 (options.name, NULL);

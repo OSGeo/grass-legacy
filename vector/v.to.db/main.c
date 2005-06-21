@@ -69,7 +69,9 @@ main (int argc, char *argv[])
     /* free list */
     G_free ( Values );
 
-    print_stat();
+    if ( !(options.print && options.total) ) {
+        print_stat();
+    }
 
     exit(0);
 }

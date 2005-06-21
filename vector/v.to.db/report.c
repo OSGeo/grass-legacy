@@ -15,21 +15,45 @@ report (void)
             break;	
 
         case O_COUNT:
-    	    fprintf (stdout,"cat|count\n");
-	    for ( i = 0; i < vstat.rcat; i++ )
-	        fprintf (stdout, "%d|%d\n", Values[i].cat, Values[i].count1);
+            if ( options.total ) {
+                int sum = 0;
+		for ( i = 0; i < vstat.rcat; i++ ) {
+		    sum += Values[i].count1;
+		}
+		fprintf (stdout,"total count: %d\n", sum);
+            } else { 
+		fprintf (stdout,"cat|count\n");
+		for ( i = 0; i < vstat.rcat; i++ )
+		    fprintf (stdout, "%d|%d\n", Values[i].cat, Values[i].count1);
+	    }
             break;
 
 	case O_AREA:
-    	    fprintf (stdout,"cat|area\n");
-	    for ( i = 0; i < vstat.rcat; i++ )
-	        fprintf (stdout, "%d|%.15g\n", Values[i].cat, Values[i].d1);	
+            if ( options.total ) {
+                double sum = 0.0;
+		for ( i = 0; i < vstat.rcat; i++ ) {
+		    sum += Values[i].d1;
+		}
+		fprintf (stdout,"total area: %.15g\n", sum);
+            } else { 
+		fprintf (stdout,"cat|area\n");
+		for ( i = 0; i < vstat.rcat; i++ )
+		    fprintf (stdout, "%d|%.15g\n", Values[i].cat, Values[i].d1);	
+            }
             break;
 
         case O_LENGTH:
-    	    fprintf (stdout,"cat|length\n");
-	    for ( i = 0; i < vstat.rcat; i++ )
-	        fprintf (stdout, "%d|%.15g\n", Values[i].cat, Values[i].d1);	        
+            if ( options.total ) {
+                double sum = 0.0;
+		for ( i = 0; i < vstat.rcat; i++ ) {
+		    sum += Values[i].d1;
+		}
+		fprintf (stdout,"total length: %.15g\n", sum);
+            } else { 
+		fprintf (stdout,"cat|length\n");
+		for ( i = 0; i < vstat.rcat; i++ )
+		    fprintf (stdout, "%d|%.15g\n", Values[i].cat, Values[i].d1);	        
+	    }
             break;
 
         case O_COOR:
