@@ -29,7 +29,7 @@ the vector map (see also <a HREF="v.overlay.html">v.overlay</a>).
 <h3>Connect vector map to database (DBF driver)</h3>
 
 <b>v.db.connect map=</b><em>vectormap</em> <b>table=</b><em>table</em> 
-<b>field=</b>1 <b>key=</b><em>cat</em> <b>driver=</b><em>dbf</em> 
+<b>layer=</b>1 <b>key=</b><em>cat</em> <b>driver=</b><em>dbf</em> 
 <b>database=</b><em>/daten/grassdata/fire/PERMANENT/dbf</em>
 
 <p>
@@ -37,7 +37,7 @@ the vector map (see also <a HREF="v.overlay.html">v.overlay</a>).
 (note: single quotes must be used)<br>
 
 <b>v.db.connect map=</b><em>vectormap</em> <b>table=</b><em>table</em> 
-<b>field=</b>1 <b>key=</b><em>cat</em> <b>driver=</b><em>dbf</em> 
+<b>layer=</b>1 <b>key=</b><em>cat</em> <b>driver=</b><em>dbf</em> 
 <b>database=</b><em>'$GISDBASE/$LOCATION_NAME/PERMANENT/dbf'</em>
 
 <p>
@@ -45,14 +45,14 @@ the vector map (see also <a HREF="v.overlay.html">v.overlay</a>).
 (note: single quotes must be used)<br>
 
 <b>v.db.connect map=</b><em>vectormap</em> <b>table=</b><em>table</em> 
-<b>field=</b>1 <b>key=</b><em>cat</em> <b>driver=</b><em>dbf</em> 
+<b>layer=</b>1 <b>key=</b><em>cat</em> <b>driver=</b><em>dbf</em> 
 <b>database=</b><em>'$GISDBASE/$LOCATION_NAME/$MAPSET/dbf'</em>
 
 <h3>Connect vector map to database (PostgreSQL driver)</h3>
 
 <b>db.describe -c map=</b><em>vectormap</em><br>
 <b>v.db.connect map=</b><em>vectormap</em> <b>table=</b><em>table</em> 
-<b>field=</b>1 <b>key=</b><em>oid</em> <b>driver=</b><em>pg</em> 
+<b>layer=</b>1 <b>key=</b><em>oid</em> <b>driver=</b><em>pg</em> 
 <b>database=</b><em>"host=myserver.itc.it,dbname=mydb,user=name"</em> 
  <b>table=</b><em>mytable</em> <b>key=</b><em>id</em>
 
