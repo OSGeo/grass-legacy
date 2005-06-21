@@ -8,6 +8,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "Vect.h"
 #include "defines.h"
