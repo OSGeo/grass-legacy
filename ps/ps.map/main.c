@@ -260,7 +260,11 @@ int main(int argc,char *argv[])
 
 	if (!input(1, buf, help))
 	{
-	    if (!iflag) break;
+	    if (!iflag) {
+		if(G_getl2(buf, 12, inputfd))
+		    G_warning(_("Data exists after final 'end' instruction!"));
+		break;
+	    }
 	    iflag = 0;
 	    continue;
 	}
