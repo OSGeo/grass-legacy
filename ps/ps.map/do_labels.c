@@ -143,7 +143,7 @@ do_label (FILE *fd)
 	    /* set font size if given in map units and not given by fontsize */
 	    if(fontsize && size > 0)
 		G_warning(_("Text labels: 'fontsize' given so ignoring 'size'"));
-	
+
 	    if(!fontsize)
 		fontsize = size * PS.ns_to_y;
 
@@ -209,9 +209,12 @@ do_label (FILE *fd)
 	    if (multi_text) fprintf(PS.fp, "DMT ");
 	    else fprintf(PS.fp, "TIB ");
 
+	    /* done; clear the decks for the next round */
 	    hcolor = -1;
 	    hwidth = 0.;
 	    width = 1.;
+	    fontsize = 0;
+
             continue;
         }
 
