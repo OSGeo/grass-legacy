@@ -4,8 +4,8 @@
  * These routines know when it is approriate to call this routine.
  */
 #include "gis.h"
-#define umalloc(n) (unsigned char *) G_malloc((int)n)
-#define urealloc(s,n) (unsigned char *) G_realloc(s,(int)n)
+#define umalloc(n) (unsigned char *) G_malloc((size_t)n)
+#define urealloc(s,n) (unsigned char *) G_realloc(s,(size_t)n)
 
 #define LIMIT(x) if (x < 0) x = 0; else if (x > 255) x = 255;
 
