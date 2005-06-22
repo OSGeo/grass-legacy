@@ -1,6 +1,7 @@
 #define GLOBAL
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 #include <signal.h>
 #include "globals.h"
 #include "local_proto.h"
@@ -19,23 +20,24 @@ int main (int argc, char *argv[])
     char name[100], mapset[100];
     struct Cell_head cellhd;
     struct GModule *module;
-    struct Option *grp;
+/*    struct Option *grp; */
 
     G_gisinit (argv[0]);
     
     module = G_define_module();
-    module->description = _("Mark ground control points on image to be rectified.");
-
+    module->description =
+	_("Mark ground control points on image to be rectified.");
+/* Disable parser code for now as we must launch 
     grp = G_define_option();
     grp->key		 = "group";
     grp->type		 =  TYPE_STRING;
     grp->required	 =  YES;
     grp->gisprompt	 = "old,group,group";
-    grp->description	 = "Name of imagery group";
+    grp->description	 = _("Name of imagery group");
 
     if (G_parser(argc,argv))
 	exit(1);
-
+*/
 
     G_suppress_masking();	/* need to do this for target location */
 
@@ -49,15 +51,25 @@ int main (int argc, char *argv[])
     digit_results = G_tempfile();
 
    if (R_open_driver() != 0)
-	G_fatal_error ("No graphics device selected");
+	G_fatal_error(_("No graphics device selected"));
 
-    group.name = grp->answer;
+/*    group.name = grp->answer; */
+/* temporary parser code: */
+    if(argc == 2) {
+	strncpy(group.name, argv[1], 50);
+	if(group.name[0] == '-')
+	    G_fatal_error("The parser doesn't work here.");
+    }
+    else {
+	if (!I_ask_group_old ("Enter imagery group to be registered", group.name))
+	    exit(0);
+    }
 
     if (!I_get_group_ref (group.name, &group.ref))
-	G_fatal_error("Group [%s] contains no files", group.name);
+	G_fatal_error(_("Group [%s] contains no files"), group.name);
 
     if (group.ref.nfiles <= 0)
-	G_fatal_error("Group [%s] contains no files", group.name);
+	G_fatal_error(_("Group [%s] contains no files"), group.name);
 
 /* write group files to group list file */
     prepare_group_list();
