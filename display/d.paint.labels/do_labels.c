@@ -3,8 +3,8 @@
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
-#include "local_proto.h"
 #include "glocale.h"
+#include "local_proto.h"
 
 #define NL	012
 #define TAB	011
@@ -18,6 +18,7 @@
 #define RITE	2
 #define YES	1
 #define NO	0
+
 static double east ;
 static double north ;
 static int xoffset ;
@@ -26,6 +27,7 @@ static int xref ;
 static int yref ;
 static int color ;
 static double size ;
+static int fontsize;
 static int width ;
 static int background ;
 static int border ;
@@ -48,6 +50,7 @@ int initialize_options (void)
     yref = CENT ;
     color = D_translate_color("black") ;
     size = 1000. ;
+    fontsize = 0;
     width = 1 ;
     background = D_translate_color("white") ;
     border = D_translate_color("black") ;
@@ -81,6 +84,8 @@ do_labels (FILE *infile)
 	}
 	else if (! strncmp(text, "siz", 3))
 		sscanf(text,"%*s %lf",&size) ;
+	else if (! strncmp(text, "fontsize", 8))
+		sscanf(text,"%*s %d",&fontsize) ;
 	else if (! strncmp(text, "wid", 3))
 		sscanf(text,"%*s %d",&width) ;
 	else if (! strncmp(text, "bac", 3))
@@ -171,9 +176,16 @@ int show_it (void)
     R_font (font);
 
 /* Set text size */
-    text_size = D_u_to_d_row((double)0) - D_u_to_d_row(size) ;
-    R_text_size(text_size, text_size) ;
-    line_size = size * 1.2 ;
+    if(fontsize) {
+	text_size = fontsize;
+	line_size = (D_d_to_u_row(0.0) - D_d_to_u_row((double)fontsize)) * 1.2;
+    }
+    else {
+	text_size = D_u_to_d_row(0.0) - D_u_to_d_row(size);
+	line_size = size * 1.2 ;
+    }
+
+    R_text_size(text_size, text_size);
 
 /* Find extent of all text (assume ref point is upper left) */
     T = 999999 ;
