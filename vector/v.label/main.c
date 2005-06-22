@@ -17,11 +17,13 @@
 #include "gis.h"
 #include "Vect.h"
 #include "dbmi.h"
+#include "glocale.h"
 
 #define PI    3.1415926535897932384626433832795029L
 
 struct Option *Xoffset, *Yoffset, *Reference, *Font, *Color, *Size;
 struct Option *Width, *Hcolor, *Hwidth, *Bcolor, *Border, *Opaque;
+int fontsize;
 
 void print_label ( FILE *, double, double, double, char *);
 
@@ -42,7 +44,7 @@ main (int argc, char **argv)
     struct Map_info Map;
     struct GModule *module;
     struct Option *Vectfile, *Typopt, *Fieldopt, *Colopt;
-    struct Option *Labelfile, *Space;
+    struct Option *Labelfile, *Space, *FontSize;
     struct Flag   *Along_flag;
 
     struct field_info *fi;
@@ -54,7 +56,8 @@ main (int argc, char **argv)
 
     G_gisinit(argv[0]);
     module = G_define_module();
-    module->description = "Create paint labels for GRASS vector file and attached attributes.";
+    module->description =
+	_("Create paint labels for GRASS vector file and attached attributes.");
 
     Vectfile = G_define_standard_option(G_OPT_V_MAP);
 
@@ -68,34 +71,35 @@ main (int argc, char **argv)
     Colopt->key         = "column" ;
     Colopt->type        = TYPE_STRING ;
     Colopt->required    = YES;
-    Colopt->description = "Name of attribute column to be used for labels" ;
+    Colopt->description = _("Name of attribute column to be used for labels");
     
     Along_flag = G_define_flag ();
     Along_flag->key            = 'a';
-    Along_flag->description    = "Create labels along lines";
+    Along_flag->description    = _("Create labels along lines");
     
     Labelfile = G_define_option();
     Labelfile->key = "labels";
-    Labelfile->description = "Name of a paint-label file";
+    Labelfile->description = _("Name for new paint-label file");
     Labelfile->type = TYPE_STRING;
     Labelfile->required = YES;
 
     Xoffset = G_define_option();
     Xoffset->key = "xoffset";
-    Xoffset->description = "Offset label in x-direction";
+    Xoffset->description = _("Offset label in x-direction");
     Xoffset->type = TYPE_DOUBLE;
     Xoffset->answer = "0";
 
     Yoffset = G_define_option();
     Yoffset->key = "yoffset";
-    Yoffset->description = "Offset label in y-direction";
+    Yoffset->description = _("Offset label in y-direction");
     Yoffset->type = TYPE_DOUBLE;
     Yoffset->answer = "0";
 
     Reference = G_define_option();
     Reference->key = "reference";
-    Reference->description = "Reference position";
+    Reference->description = _("Reference position");
     Reference->type = TYPE_STRING;
+    Reference->multiple = YES;
     Reference->answer = "center";
     Reference->options = "center,left,right,upper,lower";
 
@@ -107,64 +111,74 @@ main (int argc, char **argv)
 
     Size = G_define_option();
     Size->key = "size";
-    Size->description = "Label size (in map-units)";
+    Size->description = _("Label size (in map-units)");
     Size->type = TYPE_DOUBLE;
     Size->answer = "100";
 
+    FontSize = G_define_option();
+    FontSize->key = "fontsize";
+    FontSize->description = _("Label size (in points)");
+    FontSize->type = TYPE_INTEGER;
+    FontSize->required = NO;
+    FontSize->options = "1-1000";
+
     Color = G_define_option();
     Color->key = "color";
-    Color->description = "Text color";
+    Color->description = _("Text color");
     Color->type = TYPE_STRING;
     Color->answer = "black";
     Color->options = "aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
 
     Width = G_define_option();
     Width->key = "width";
-    Width->description = "Line width of text (only for p.map output)";
+    Width->description = _("Border width (only for ps.map output)");
     Width->type = TYPE_DOUBLE;
     Width->answer = "1";
 
     Hcolor = G_define_option();
     Hcolor->key = "hcolor";
-    Hcolor->description = "Highlight color for text (only for p.map output)";
+    Hcolor->description = _("Highlight color for text (only for ps.map output)");
     Hcolor->type = TYPE_STRING;
     Hcolor->answer = "none";
     Hcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
 
     Hwidth = G_define_option();
     Hwidth->key = "hwidth";
-    Hwidth->description = "Line width of highlight color (only for p.map output)";
+    Hwidth->description = _("Line width of highlight color (only for ps.map output)");
     Hwidth->type = TYPE_DOUBLE;
     Hwidth->answer = "0";
 
     Bcolor = G_define_option();
     Bcolor->key = "background";
-    Bcolor->description = "Background color";
+    Bcolor->description = _("Background color");
     Bcolor->type = TYPE_STRING;
     Bcolor->answer = "none";
     Bcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
 
     Border = G_define_option();
     Border->key = "border";
-    Border->description = "Border color";
+    Border->description = _("Border color");
     Border->type = TYPE_STRING;
     Border->answer = "none";
     Border->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
 
     Opaque = G_define_option();
     Opaque->key = "opaque";
-    Opaque->description = "Opaque to vector (only relevant if background color is selected)";
+    Opaque->description =
+	_("Opaque to vector (only relevant if background color is selected)");
     Opaque->type = TYPE_STRING;
     Opaque->answer = "yes";
     Opaque->options = "yes,no";
 
     Space = G_define_option();
     Space->key = "space";
-    Space->description = "Space between letters (in map-units)";
+    Space->description = _("Space between letters (in map-units)");
     Space->type = TYPE_DOUBLE;
     Space->answer = "100";
+    Space->required = NO;
 
     if (G_parser (argc, argv ) ) exit (-1 );
+
 
     db_init_string (&stmt);
     db_init_string (&valstr);
@@ -176,19 +190,32 @@ main (int argc, char **argv)
 
     space = atof (Space->answer);
 
+    if(FontSize->answer)
+	fontsize = atoi(FontSize->answer);
+    else
+	fontsize = 0;
+
+    /* TODO: parse csv to multi word  (tr ',' ' ')
+      ???
+    *foo = strchr(Reference->answer, ",");
+    &foo = " ";
+    */
+
     /* open vector */	
     mapset = G_find_vector2 ( Vectfile->answer, NULL) ; 
-    if (mapset == NULL) G_fatal_error("Vector file [%s] not available", Vectfile->answer) ;
+    if (mapset == NULL)
+	G_fatal_error(_("Vector file [%s] not available"), Vectfile->answer);
 
     Vect_open_old (&Map, Vectfile->answer, mapset);
 	
     /* open database */	
     field = atoi ( Fieldopt->answer );
     fi = Vect_get_field(&Map, field);
-    if ( fi == NULL ) G_fatal_error ( "Cannot get layer info for vector map" );
+    if ( fi == NULL ) G_fatal_error (_("Cannot get layer info for vector map"));
     driver = db_start_driver_open_database ( fi->driver, fi->database );
     if ( driver == NULL ) 
-	G_fatal_error ( "Cannot open database %s by driver %s", fi->database, fi->driver );
+	G_fatal_error(_("Cannot open database %s by driver %s"), 
+	    fi->database, fi->driver);
 
     /* open labels */	
     labels = G_fopen_new ("paint/labels", Labelfile->answer);
@@ -198,7 +225,7 @@ main (int argc, char **argv)
 
     while (1) {
         ltype =  Vect_read_next_line (&Map, Points, Cats);
-        if ( ltype == -1 ) G_fatal_error ( "Cannot read vector" );
+        if ( ltype == -1 ) G_fatal_error (_("Cannot read vector"));
         if ( ltype == -2 ) break;  /* EOF */
 	if ( !( type & ltype) ) continue;
 
@@ -207,20 +234,22 @@ main (int argc, char **argv)
 	
 	/* Read label from database */
 
-	sprintf (buf, "select %s from %s where %s = %d", Colopt->answer, fi->table, fi->key, cat);
+	sprintf(buf, "select %s from %s where %s = %d", Colopt->answer, 
+	    fi->table, fi->key, cat);
 	G_debug (3, "SQL: %s", buf);
 	db_set_string ( &stmt, buf);
 	
         if (db_open_select_cursor(driver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
-            G_fatal_error ("Cannot select attribute.");
+            G_fatal_error (_("Cannot select attribute."));
 
 	nrows = db_get_num_rows ( &cursor );
 	if ( nrows < 1 ) {
-	    G_warning ( "No database record for category %d", cat);
+	    G_warning (_("No database record for category %d"), cat);
 	    continue;
 	}
 
 	if( db_fetch (&cursor, DB_NEXT, &more) != DB_OK || !more ) continue;
+
 	table = db_get_cursor_table (&cursor);
 	column = db_get_table_column(table, 0); /* first column */
 
@@ -306,7 +335,10 @@ void print_label ( FILE *labels, double x, double y, double rotate, char *label)
     fprintf (labels, "ref: %s\n", Reference->answer);
     fprintf (labels, "font: %s\n", Font->answer);
     fprintf (labels, "color: %s\n", Color->answer);
-    fprintf (labels, "size: %s\n", Size->answer);
+
+    if(fontsize) fprintf (labels, "fontsize: %d\n", fontsize);
+    else fprintf (labels, "size: %s\n", Size->answer);
+
     fprintf (labels, "width: %s\n", Width->answer);
     fprintf (labels, "hcolor: %s\n", Hcolor->answer);
     fprintf (labels, "hwidth: %s\n", Hwidth->answer);
