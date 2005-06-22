@@ -108,7 +108,7 @@ do_labels (FILE *infile)
 	}
 	else if (! strncmp(text, "ref", 3))
 	{
-		if(sscanf(text,"%*s %s", buff) < 1 
+		if(sscanf(text,"%*s %16[^\n]", buff) < 1 
 		|| scan_ref (buff) == 0)
 		{
 			xref = CENT ;
