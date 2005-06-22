@@ -214,7 +214,8 @@ int show_it (void)
 
 	*lptr = '\0' ;
 
-	Y = (int)(D_u_to_d_row(north - size - (n_lines-1) * line_size)) ;
+	Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((n_lines-1)*line_size) ));
+
 	R_move_abs(X, Y) ;
 	R_get_text_box(line, &t, &b, &l, &r) ;
 	if (t < T) T = t ;
@@ -309,7 +310,7 @@ int show_it (void)
 
 	*lptr = '\0' ;
 
-	Y = (int)(D_u_to_d_row(north - size - (n_lines-1) * line_size)) ;
+	Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((n_lines-1)*line_size) ));
 	R_set_window(scrT, scrB, scrL, scrR) ;
 	R_move_abs(X + Xoffset, Y + Yoffset) ;
 	R_text(line) ;
