@@ -24,6 +24,7 @@
 struct Option *Xoffset, *Yoffset, *Reference, *Font, *Color, *Size;
 struct Option *Width, *Hcolor, *Hwidth, *Bcolor, *Border, *Opaque;
 int fontsize;
+char ref_pt[24];
 
 void print_label ( FILE *, double, double, double, char *);
 
@@ -195,11 +196,15 @@ main (int argc, char **argv)
     else
 	fontsize = 0;
 
-    /* TODO: parse csv to multi word  (tr ',' ' ')
-      ???
-    *foo = strchr(Reference->answer, ",");
-    &foo = " ";
-    */
+    /* parse reference answers */
+    i=0;
+    strcpy(ref_pt,"");
+    while(Reference->answers[i]) {
+	if(i>1) G_fatal_error(_("Too many parameters for <reference>"));
+	if(i>0) strcat(ref_pt, " ");
+	strncat(ref_pt, Reference->answers[i], 7);
+	i++;
+    }
 
     /* open vector */	
     mapset = G_find_vector2 ( Vectfile->answer, NULL) ; 
@@ -332,7 +337,7 @@ void print_label ( FILE *labels, double x, double y, double rotate, char *label)
     fprintf (labels, "north: %f\n", y);
     fprintf (labels, "xoffset: %s\n", Xoffset->answer);
     fprintf (labels, "yoffset: %s\n", Yoffset->answer);
-    fprintf (labels, "ref: %s\n", Reference->answer);
+    fprintf (labels, "ref: %s\n", ref_pt);
     fprintf (labels, "font: %s\n", Font->answer);
     fprintf (labels, "color: %s\n", Color->answer);
 
