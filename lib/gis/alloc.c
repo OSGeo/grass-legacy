@@ -44,7 +44,7 @@ void *G_malloc (size_t n)
  *  \return void * 
  */
 
-void *G_calloc (int m, size_t n)
+void *G_calloc (size_t m, size_t n)
 {
     void *buf;
 

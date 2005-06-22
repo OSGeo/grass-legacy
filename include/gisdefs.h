@@ -40,7 +40,7 @@ char *G_align_window(struct Cell_head *, struct Cell_head *);
 
 /* alloc.c */
 void *G_malloc(size_t);
-void *G_calloc(int, size_t);
+void *G_calloc(size_t, size_t);
 void *G_realloc(void *, size_t);
 void G_free(void *);
 
