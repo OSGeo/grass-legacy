@@ -34,7 +34,10 @@
 #define FORMAT_1 " %s %1[NS] %d%c%d%c%lf %1[EW] %lf "  
 #define FORMAT_2 " %1[NS] %d%c%d%c%lf %1[EW] %lf "
 #define FORMAT_3 " %lf %lf %s "
+
+#ifndef hypot
 #define hypot(x,y) (sqrt(x*x+y*y))
+#endif
 
 struct survey_record {
       char   label[20];
