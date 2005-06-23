@@ -24,7 +24,7 @@ int read_header_file(char *);
 /* do_labels.c */
 int do_labels(int);
 #ifdef _STDIO_H
-int do_label(FILE *);
+int do_label(FILE *, int);
 #endif
 /* do_masking.c */
 int do_masking(void);

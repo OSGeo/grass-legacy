@@ -29,6 +29,7 @@ do_labels (int other)
     FILE *fd;
 
     int i;
+    int font_override = 0;
 
     if (!labels.count && labels.other == NULL) return 0;
 
@@ -54,15 +55,19 @@ do_labels (int other)
 			labels.name[i], labels.mapset[i]);
 	    	    fflush(stdout);
 		}
-		if (labels.font[i] != NULL) set_font_name(labels.font[i]);
+		if (labels.font[i] != NULL) {
+		    set_font_name(labels.font[i]);
+		    font_override = 1;
+		}
     		set_font_size(10);
-		do_label(fd);
+		do_label(fd, font_override);
 		fclose(fd);
+		font_override = 0;
 		if (verbose > 1) fprintf (stdout,"\n");
 	    }
 	}
     }
-	
+
     if ( other && labels.other)
     {
 	fd = fopen(labels.other, "r");
@@ -75,7 +80,7 @@ do_labels (int other)
 	        fprintf (stdout,"PS-PAINT: reading text file ...");
 	        fflush(stdout);
 	    }
-	    do_label(fd);
+	    do_label(fd, font_override);
 	    fclose(fd);
 	    if (verbose > 1) fprintf (stdout,"\n");
 	}
@@ -85,7 +90,7 @@ do_labels (int other)
 }
 
 int 
-do_label (FILE *fd)
+do_label (FILE *fd, int font_override)
 {
     double east, north, dtmp, x, y;
     float size, rotate, margin;
@@ -323,7 +328,8 @@ do_label (FILE *fd)
 	if (FIELD("font"))
 	{
 	    G_strip(value);
-	    set_font_name(value);
+	    if(!font_override)
+		set_font_name(value);
 	    continue;
 	}
 
