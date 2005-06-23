@@ -42,18 +42,16 @@ int G_asprintf(char **out, const char *fmt, ...)
 {
     va_list ap;
     int ret_status = EOF;
-    char *fn = NULL;
+    FILE *fp = NULL;
     char *work = NULL;
 
     assert(out != NULL && fmt != NULL);
 
     va_start(ap, fmt);
 
-    if ((fn = G_tempfile())) {
-	FILE *fp;
+    if ( fp = tmpfile() ) {
 	int count;
 
-	fp = fopen(fn, "w+b");
 	count = vfprintf(fp, fmt, ap);
 	if (count >= 0) {
 	    work = G_calloc(count + 1, sizeof(char));
@@ -68,8 +66,6 @@ int G_asprintf(char **out, const char *fmt, ...)
 	    }
 	}
 	fclose(fp);
-	unlink(fn);
-	G_free(fn);
     }
     va_end(ap);
     *out = work;
