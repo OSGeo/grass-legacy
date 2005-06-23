@@ -67,7 +67,7 @@ do_labels (FILE *infile)
 
     initialize_options() ;
 
-    while (G_getl(text, MTEXT, infile))
+    while (G_getl2(text, MTEXT, infile))
     {
 	if (! strncmp(text, "eas", 3))
 		sscanf(text,"%*s %lf",&east) ;
