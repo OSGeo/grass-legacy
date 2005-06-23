@@ -227,7 +227,7 @@ fi
 
 
 #### check which projection we are working with
-PROJ="`head -1 "$TMP".gpst | sed -e 's/Format: //' | sed -e 's/  UTC.*//'`"
+PROJ="`head -n 1 "$TMP".gpst | sed -e 's/Format: //' | sed -e 's/  UTC.*//'`"
 if [ $VERBOSE -eq 1 ] ; then
     echo Coordinate format: ${PROJ} 1>&2
 fi
@@ -239,7 +239,7 @@ if [ "$PROJ" != "DDD" ] ; then
     rm -f ${TMP}*
     exit 1
 fi
-IS_WGS84="`head -1 "$TMP".gpst | grep 'WGS 84'`"
+IS_WGS84="`head -n 1 "$TMP".gpst | grep 'WGS 84'`"
 
 
 ###################################
@@ -268,7 +268,7 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	cs2cs -f %.7f $IN_PROJ +to $OUT_PROJ < "${TMP}.base" > "${TMP}.P_base"
 	EXITCODE=$?
 	# check if transform REALLY worked (e.g. grid file not found)
-	if [ -n "`head -1 "${TMP}.P_base" | grep "^*"`" ] ; then
+	if [ -n "`head -n 1 "${TMP}.P_base" | grep "^*"`" ] ; then
 	    EXITCODE=1
 	fi
 	if [ $EXITCODE -ne 0 ] ; then
@@ -363,7 +363,7 @@ else # CREATE_LINES
     	cs2cs -tL -f %.7f $IN_PROJ +to $OUT_PROJ < "${TMP}.base" > "${TMP}.P_mid"
 	EXITCODE=$?
 	# check if transform REALLY worked (e.g. grid file not found)
-	if [ -n "`head -2 "${TMP}.P_mid" | grep "^*"`" ] ; then
+	if [ -n "`head -n 2 "${TMP}.P_mid" | grep "^*"`" ] ; then
 	    EXITCODE=1
 	fi
     	if [ $EXITCODE -ne 0 ] ; then
