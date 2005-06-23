@@ -20,7 +20,7 @@ int input (int level, char *buf, char *help[])
     {
 	if (level && isatty(fileno(inputfd)))
 	    fprintf (stdout,"%s ",level==1?">":">>>");
-	if (!G_getl(buf,1024,inputfd))
+	if (!G_getl2(buf,1024,inputfd))
 	{
 	    if (inputfd != stdin)
 	    {

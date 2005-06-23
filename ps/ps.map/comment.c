@@ -126,7 +126,7 @@ int read_comment (char *name)
     }
     else
     {
-	while (G_getl(buf, sizeof buf, in))
+	while (G_getl2(buf, sizeof buf, in))
 	{
 	    if (need_blank)
 	    {
@@ -167,7 +167,7 @@ int do_comment (void)
         error("comment file", PS.commentfile, "can't open");
         return 1;
     }
-    while (G_getl(text, sizeof text, fp)) 
+    while (G_getl2(text, sizeof text, fp)) 
     {
 	/* G_strip(text);*/
         if (*text) show_text(x, y, text);
