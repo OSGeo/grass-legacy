@@ -62,7 +62,7 @@ int read_header_file(char *date)
 {
     char buf[1024];
 
-    while (G_getl(buf, sizeof buf, hdr.fp)) output(buf, date);
+    while (G_getl2(buf, sizeof buf, hdr.fp)) output(buf, date);
     fclose (hdr.fp);
 
     return 0;
