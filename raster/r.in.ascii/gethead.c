@@ -114,7 +114,7 @@ char **nval)
 	{
 /* rsb fix */
 	  if(fgetpos(fd, &p) != 0) G_fatal_error("File position error");
-	  if (!G_getl(buf,sizeof buf, fd)) break;
+	  if (!G_getl2(buf,sizeof buf, fd)) break;
 
 	  len = strlen(buf);
 

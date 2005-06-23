@@ -5,7 +5,7 @@
 int inpt (FILE *rulefd,  char *buf)
 {
     do {  
-	if ( !G_getl( buf,1024,rulefd ) )
+	if ( !G_getl2( buf,1024,rulefd ) )
     	    return 0;
 	G_strip( buf );
     }

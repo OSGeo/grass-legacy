@@ -27,7 +27,7 @@ int gethead (FILE *fd, struct Cell_head *cellhd, int *missingval)
 
 	while (nodata == 0 || s == 0 || res == 0 || w == 0 || r == 0 || c == 0)
 	{
-		if (!G_getl(buf,sizeof buf, fd)) break;
+		if (!G_getl2(buf,sizeof buf, fd)) break;
 		*label = *value = '\0';
 		sscanf (buf, "%s %s", label, value);
 		if (*label == '\0') continue;	/* ignore blank lines */
