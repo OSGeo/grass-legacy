@@ -364,6 +364,8 @@ main (int argc, char *argv[])
 				break;
 			}
 		    }
+		} else {
+		    coltype2 = coltype;
 		}
 
 		if ( catcol < 0 ) {
