@@ -171,7 +171,7 @@ do
   for i in `ls -1 $i.*.html | grep -v "\($EXCLUDEHTML\)"`
   do
     BASENAME=`basename $i .html`
-    SHORTDESC="`cat $i | awk '/NAME/,/SYNOPSIS/' | grep '<em>' | cut -d'-' -f2- | sed 's+^ ++g' | grep -vi 'SYNOPSIS' | head -1`"
+    SHORTDESC="`cat $i | awk '/NAME/,/SYNOPSIS/' | grep '<em>' | cut -d'-' -f2- | sed 's+^ ++g' | grep -vi 'SYNOPSIS' | head -n 1`"
     echo "<tr><td valign="top"><a href=\"$i\">$BASENAME</a></td> <td>$SHORTDESC</td></tr>" >> $FULLINDEX
   done
   echo "</table>" >> $FULLINDEX
@@ -195,7 +195,7 @@ do
   for k in `ls -1 $k.*.html | grep -v "\($EXCLUDEHTML\)"`
   do
     BASENAME=`basename $k .html`
-    SHORTDESC="`cat $k | awk '/NAME/,/SYNOPSIS/' | grep '<em>' | cut -d'-' -f2- | sed 's+^ ++g' | grep -vi 'SYNOPSIS' | head -1`"
+    SHORTDESC="`cat $k | awk '/NAME/,/SYNOPSIS/' | grep '<em>' | cut -d'-' -f2- | sed 's+^ ++g' | grep -vi 'SYNOPSIS' | head -n 1`"
     echo "<tr><td valign="top"><a href=\"$k\">$BASENAME</a></td> <td>$SHORTDESC</td></tr>" >> $FILENAME
   done
   echo "</table>" >> $FILENAME
