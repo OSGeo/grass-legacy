@@ -28,13 +28,14 @@
 
 #define MAIN
 
+#include <stdlib.h>      /* for the random number generation */
+#include <time.h>
 #include "r.flow.h"
 #include "mem.h"
 #include "io.h"
 #include "aspect.h"
 #include "precomp.h"
-#include <stdlib.h>      /* for the random number generation */
-#include <time.h>
+#include "glocale.h"
 
 #define HORIZ	1		/* \		*/
 #define VERT	0		/* |		*/
@@ -391,6 +392,10 @@ void calculate()
 int main(int argc, char	*argv[])
 {
     initialize_globals(argc, argv);
+
+    if ((G_projection() == PROJECTION_LL)) /* added MN 2005 */
+           G_fatal_error (_("lat/long databases not supported by r.flow. Please use 'r.watershed' for calculating flow accumulation."));
+
 
     if (parm.flout || parm.dsout || parm.lgout)
     {
