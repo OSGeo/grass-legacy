@@ -271,8 +271,8 @@ Vect_cidx_find_next ( struct Map_info *Map, int field_index, int cat, int type_m
     G_debug (3, "catp = %p", catp);
     if ( !catp ) return -1;
 
-    /* get index from pointer */
-    cat_index = (catp - (int *)ci->cat) / (3 * sizeof(int));
+    /* get index from pointer, the difference between pointers is using sizeof(int) !!! */
+    cat_index = (catp - (int *)ci->cat) / 3;
     
     do {
         G_debug (3, "  cat_index = %d", cat_index);
