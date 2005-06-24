@@ -352,6 +352,6 @@ void print_label ( FILE *labels, double x, double y, double rotate, char *label)
     fprintf (labels, "opaque: %s\n", Opaque->answer);
     if ( rotate != 0 ) 
         fprintf (labels, "rotate: %f\n", rotate);
-    
-    fprintf (labels, "\ntext: %s\n\n", label);
+
+    fprintf (labels, "text: %s\n\n", label);
 }
