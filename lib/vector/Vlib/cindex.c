@@ -209,7 +209,7 @@ Vect_cidx_get_cat_by_index ( struct Map_info *Map, int field_index, int cat_inde
 {
     check_status ( Map ); /* This check is slow ? */
 
-    if ( field_index >= Map->plus.n_cidx ||  cat_index >= Map->plus.cidx[field_index].n_cats )
+    if ( field_index >= Map->plus.n_cidx || field_index < 0 ||  cat_index >= Map->plus.cidx[field_index].n_cats )
 	G_fatal_error("Field/cat index out of range");
 
     *cat = Map->plus.cidx[field_index].cat[cat_index][0];
@@ -271,8 +271,8 @@ Vect_cidx_find_next ( struct Map_info *Map, int field_index, int cat, int type_m
     G_debug (3, "catp = %p", catp);
     if ( !catp ) return -1;
 
-    /* get index from pointer */
-    cat_index = (catp - (int *)ci->cat) / (3 * sizeof(int));
+    /* get index from pointer, the difference between pointers is using sizeof(int) !!! */
+    cat_index = (catp - (int *)ci->cat) / 3;
     
     do {
         G_debug (3, "  cat_index = %d", cat_index);
