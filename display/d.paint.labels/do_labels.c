@@ -229,10 +229,10 @@ int show_it (void)
     }
 
     /* Expand border 1/2 of text size */
-    T = T - text_size / 2 ;
-    B = B + text_size / 2 ;
-    L = L - text_size / 2 ;
-    R = R + text_size / 2 ;
+    T = T - (text_size * 0.2) - .5;
+    B = B + (text_size * 0.2) + .5;
+    L = L - (text_size * 0.2) - .5;
+    R = R + (text_size * 0.2) + .5;
 
     Xoffset = xoffset ;
     Yoffset = -yoffset ;
