@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "Vect.h"
 #include "gis.h"
+#include "glocale.h"
 
 int 
 read_head ( FILE * dascii, struct Map_info *Map )
@@ -12,12 +13,9 @@ read_head ( FILE * dascii, struct Map_info *Map )
 
   for (;;)
     {
-      if (NULL == fgets (buff, sizeof (buff), dascii))
+      if (0 == G_getl2(buff, sizeof(buff) -1, dascii))
 	return (0);
 
-      for (ptr = buff; *ptr != '\n'; ptr++);	/* Remove new-line char */
-      *ptr = '\0';
-      
       /* Last line of header */
       if (strncmp (buff, "VERTI:", 6) == 0)	  
 	return (0);
@@ -52,7 +50,7 @@ read_head ( FILE * dascii, struct Map_info *Map )
 	  Vect_set_thresh ( Map, atof (ptr) );  
       else
         {
-	  G_warning("Unknown keyword %s in vector head\n", buff);
+	  G_warning(_("Unknown keyword [%s] in vector head."), buff);
 	}
     }
   /* NOTREACHED */

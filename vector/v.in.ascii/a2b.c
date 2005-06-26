@@ -2,6 +2,7 @@
 #include <string.h>
 #include "gis.h"
 #include "Vect.h"
+#include "glocale.h"
 
 #define BUFFSIZE 128
 
@@ -36,12 +37,16 @@ int asc_to_bin(
 	zarray = (double *) G_calloc(alloc_points, sizeof(double)) ;	
 
 
-	while ( fgets(buff,BUFFSIZE,ascii) != NULL  )
+	while( G_getl2(buff,BUFFSIZE-1,ascii) != 0 )
 	{
 	    n_cats=0;
 	    if (  sscanf(buff, "%1c%d%d", &ctype, &n_coors, &n_cats) < 2  || n_coors < 0 || n_cats < 0 ) {
-                fprintf (stderr,"Error reading ascii file:\n[%s]\n", buff) ;
-                return 0;
+		if (ctype == '#') {
+		    G_debug(1, "a2b: skipping commented line");
+		    continue;
+		}
+		fprintf (stderr,"Error reading ascii file:\n[%s]\n", buff) ;
+		return 0;
 	    }
 
 	    switch(ctype){
@@ -87,7 +92,7 @@ int asc_to_bin(
 	    /* Collect the points */
 	    for( i=0; i<n_coors; i++)
 	    {
-		    if ( fgets(buff,BUFFSIZE,ascii) == NULL) {
+		    if ( G_getl2(buff,BUFFSIZE-1,ascii) == 0 ) {
 			fprintf (stderr,"End of ascii file reached before end of coordinates\n") ;
 			return 0;
 		    } 
@@ -118,7 +123,7 @@ int asc_to_bin(
 	    /* Collect the cats */
 	    for( i=0; i<n_cats; i++)
 	    {
-		    if ( fgets(buff,BUFFSIZE,ascii) == NULL) {
+		    if ( G_getl2(buff,BUFFSIZE-1,ascii) == 0 ) {
 			fprintf (stderr,"End of ascii file reached before end of categories.\n") ;
 			return 0;
 		    } 
@@ -131,7 +136,7 @@ int asc_to_bin(
 
 	    /* Allocation is handled for line_pnts */
 	    if (0 > Vect_copy_xyz_to_pnts (Points, xarray, yarray, zarray, n_points))
-		G_fatal_error ("Out of memory");
+		G_fatal_error(_("Out of memory"));
 
 	    if ( type > 0 )
 		Vect_write_line ( Map, type, Points, Cats );
