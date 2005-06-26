@@ -221,8 +221,9 @@ do
   echo "<li><a href=\"$MODCLASS.html\">$MODCLASS commands</a></li>" >> $FILENAME
 done
 
-#extra stuff for 'nviz':
+#extra stuff for 'nviz' and 'xganim':
 echo "<li><a href=\"../nviz/index.html\">nviz</a> visualization and animation tool</li>" >> $FILENAME
+echo "<li><a href=\"xganim.html\">xganim</a> tool  for animating a raster map series</li>" >> $FILENAME
 	      
 echo "</ul>" >> $FILENAME
 echo "<p>"   >> $FILENAME
