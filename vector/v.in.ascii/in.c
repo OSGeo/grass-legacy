@@ -4,6 +4,7 @@
 #include "gis.h"
 #include "dbmi.h"
 #include "Vect.h"
+#include "glocale.h"
 #include "local_proto.h"
 
 #define	A_DIR	"dig_ascii"
@@ -26,7 +27,7 @@ main (int argc, char *argv[])
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->description = "Convert GRASS ascii file or points file to binary vector.";
+	module->description = _("Convert GRASS ascii file or points file to binary vector.");
 
         /************************** Command Parser ************************************/
 	old = G_define_option();
@@ -35,8 +36,8 @@ main (int argc, char *argv[])
 	old->required	 =  NO;
 	old->multiple	 =  NO;
 	old->gisprompt   = "file,file,file";
-	old->description = "ascii file to be converted to binary vector file, if not given reads from "
-	                   "standard input";
+	old->description =
+	    _("ASCII file to be converted to binary vector file, if not given reads from standard input");
 
 	new = G_define_standard_option(G_OPT_V_OUTPUT);
 
@@ -47,13 +48,13 @@ main (int argc, char *argv[])
 	format_opt->multiple    =  NO;
 	format_opt->options     = "point,standard";
 	format_opt->answer      = "point";
-	format_opt->description = "output format";
+	format_opt->description = _("Output format");
 
 	delim_opt = G_define_option();
 	delim_opt->key = "fs";
 	delim_opt->type = TYPE_STRING;
 	delim_opt->required = NO;
-	delim_opt->description = "field separator";
+	delim_opt->description = _("Field separator");
 	delim_opt->answer = "|";
 
 	skip_opt = G_define_option();
@@ -62,15 +63,17 @@ main (int argc, char *argv[])
 	skip_opt->required = NO;
 	skip_opt->multiple = NO;
 	skip_opt->answer = "0";
-	skip_opt->description = "Number of header lines to skip at top of input file (written to map history)";
+	skip_opt->description =
+	    _("Number of header lines to skip at top of input file (written to map history)");
 
 	columns_opt = G_define_option();
 	columns_opt->key = "columns";
 	columns_opt->type = TYPE_STRING;
 	columns_opt->required = NO;
 	columns_opt->multiple = NO;
-	columns_opt->description = "Columns definition for points mode in SQL style, for example:\n"
-	    "'x double precision, y double precision, cat int, name varchar(10)'";
+	columns_opt->description =
+	    _("Columns definition for points mode in SQL style, for example:\n"
+		"'x double precision, y double precision, cat int, name varchar(10)'");
 
 	xcol_opt = G_define_option();
 	xcol_opt->key = "x";
@@ -78,7 +81,8 @@ main (int argc, char *argv[])
 	xcol_opt->required = NO;
 	xcol_opt->multiple = NO;
 	xcol_opt->answer = "1";
-	xcol_opt->description = "Number of column used as x coordinate (first column is 1) for points mode.";
+	xcol_opt->description =
+	    _("Number of column used as x coordinate (first column is 1) for points mode");
 
 	ycol_opt = G_define_option();
 	ycol_opt->key = "y";
@@ -86,7 +90,8 @@ main (int argc, char *argv[])
 	ycol_opt->required = NO;
 	ycol_opt->multiple = NO;
 	ycol_opt->answer = "2";
-	ycol_opt->description = "Number of column used as y coordinate (first column is 1) for points mode.";
+	ycol_opt->description =
+	    _("Number of column used as y coordinate (first column is 1) for points mode");
 
 	zcol_opt = G_define_option();
 	zcol_opt->key = "z";
@@ -94,8 +99,9 @@ main (int argc, char *argv[])
 	zcol_opt->required = NO;
 	zcol_opt->multiple = NO;
 	zcol_opt->answer = "0";
-	zcol_opt->description = "Number of column used as z coordinate (first column is 1) for points mode. "
-	            "If 0, z coordinate is not used.";
+	zcol_opt->description =
+	    _("Number of column used as z coordinate (first column is 1) for points mode. "
+		"If 0, z coordinate is not used.");
 
 	catcol_opt = G_define_option();
 	catcol_opt->key = "cat";
@@ -103,24 +109,25 @@ main (int argc, char *argv[])
 	catcol_opt->required = NO;
 	catcol_opt->multiple = NO;
 	catcol_opt->answer = "0";
-	catcol_opt->description = "Number of column used as category (first column is 1) for points mode. "
-	            "If 0, unique category is assigned to each row and written to new column 'cat'.";
+	catcol_opt->description =
+	    _("Number of column used as category (first column is 1) for points mode. "
+		"If 0, unique category is assigned to each row and written to new column 'cat'.");
 
 	zcoorf = G_define_flag ();
         zcoorf->key           	= 'z';
-	zcoorf->description   	= "create 3D file";  
+	zcoorf->description   	= _("Create 3D file");  
 
 	t_flag = G_define_flag();
 	t_flag->key              = 't';
-	t_flag->description      = "Do not create table in points mode.";
+	t_flag->description      = _("Do not create table in points mode");
 
 	e_flag = G_define_flag();
 	e_flag->key              = 'e';
-	e_flag->description      = "Create a new empty map and exit. Nothing is read from input.";
+	e_flag->description      = _("Create a new empty map and exit. Nothing is read from input.");
 
         noheader_flag = G_define_flag();
         noheader_flag->key          = 'n';
-        noheader_flag->description  = "Don't expect a header when reading in standard format";
+        noheader_flag->description  = _("Don't expect a header when reading in standard format");
 
 	if (G_parser (argc, argv))
 		exit(-1);
@@ -133,26 +140,26 @@ main (int argc, char *argv[])
 
 	skip_lines = atoi(skip_opt->answer);
 	if(skip_lines < 0)
-	    G_fatal_error("Please specify reasonable number of lines to skip.");
+	    G_fatal_error(_("Please specify reasonable number of lines to skip."));
 
 	if (zcoorf->answer && format == FORMAT_POINT && zcol_opt->answer == "0")
-		G_fatal_error("Please specify z column.");
+	    G_fatal_error(_("Please specify z column."));
 
 	xcol = atoi(xcol_opt->answer) - 1;
 	ycol = atoi(ycol_opt->answer) - 1;
 	zcol = atoi(zcol_opt->answer) - 1;
 
 	if (zcoorf->answer && format == FORMAT_POINT && zcol < 0)
-	    G_fatal_error("Please specify reasonable z column.");
+	    G_fatal_error(_("Please specify reasonable z column."));
 
 	catcol = atoi(catcol_opt->answer) - 1;
 
 	if ( old->answer != NULL ) {
 	    if ( (ascii = fopen ( old->answer, "r" ) ) == NULL )
 	    {
-	        G_fatal_error ( "Could not open ascii file [%s]\n", old->answer);
+	        G_fatal_error(_("Could not open ascii file [%s]"), old->answer);
 	    }
-        } else { 
+        } else {
 	    ascii = stdin;
         }
 
@@ -188,7 +195,7 @@ main (int argc, char *argv[])
 	    /* Open temporary file */
 	    tmp = G_tempfile();
 	    if (NULL == (tmpascii = fopen(tmp, "w+"))) {
-		G_fatal_error ( "Can't open temp file %s", tmp);
+		G_fatal_error(_("Can't open temp file %s"), tmp);
 	    }
 	    unlink(tmp);
 
@@ -201,18 +208,18 @@ main (int argc, char *argv[])
 
 	    /* check column numbers */
 	    if ( xcol >= minncols )
-		G_fatal_error("x column number > minimum last column number\n(incorrect field separator?)");
+		G_fatal_error(_("x column number > minimum last column number\n(incorrect field separator?)"));
 	    if ( ycol >= minncols )
-		G_fatal_error("y column number > minimum last column number\n(incorrect field separator?)");
+		G_fatal_error(_("y column number > minimum last column number\n(incorrect field separator?)"));
 	    if ( zcol >= minncols )
-		G_fatal_error("z column number > minimum last column number\n(incorrect field separator?)");
+		G_fatal_error(_("z column number > minimum last column number\n(incorrect field separator?)"));
 	    if ( catcol >= minncols )
-		G_fatal_error("cat column number > minimum last column number\n(incorrect field separator?)");
+		G_fatal_error(_("cat column number > minimum last column number\n(incorrect field separator?)"));
 
-	    if ( coltype[xcol] == DB_C_TYPE_STRING ) G_fatal_error ( "x column is not of number type");
-	    if ( coltype[ycol] == DB_C_TYPE_STRING ) G_fatal_error ( "y column is not of number type");
-	    if ( zcol >= 0 && coltype[zcol] == DB_C_TYPE_STRING ) G_fatal_error ( "z column is not of number type");
-	    if ( catcol >= 0 && coltype[catcol] == DB_C_TYPE_STRING ) G_fatal_error ( "cat column is not of number type");
+	    if ( coltype[xcol] == DB_C_TYPE_STRING ) G_fatal_error(_("x column is not of number type"));
+	    if ( coltype[ycol] == DB_C_TYPE_STRING ) G_fatal_error(_("y column is not of number type"));
+	    if ( zcol >= 0 && coltype[zcol] == DB_C_TYPE_STRING ) G_fatal_error(_("z column is not of number type"));
+	    if ( catcol >= 0 && coltype[catcol] == DB_C_TYPE_STRING ) G_fatal_error(_("cat column is not of number type"));
 
 	    /* Create table */
 	    make_table = 0;
@@ -230,7 +237,7 @@ main (int argc, char *argv[])
 		Fi = Vect_default_field_info ( &Map, 1, NULL, GV_1TABLE );
 		driver = db_start_driver_open_database ( Fi->driver, Vect_subst_var(Fi->database,&Map) );
 		if ( driver == NULL ) {
-		    G_fatal_error ( "Cannot open database %s by driver %s",
+		    G_fatal_error(_("Cannot open database %s by driver %s"),
 			    Vect_subst_var(Fi->database,&Map), Fi->driver );
 		}
 		db_begin_transaction ( driver );
@@ -249,7 +256,7 @@ main (int argc, char *argv[])
 			db_append_string ( &sql, ", " );
 		    }
 		    if ( catcol == i && coltype[i] != DB_C_TYPE_INT ) 
-			G_fatal_error ("Category column is not of integer type");
+			G_fatal_error(_("Category column is not of integer type"));
 
 		    switch ( coltype[i] ) {
 			case DB_C_TYPE_INT:
@@ -294,12 +301,12 @@ main (int argc, char *argv[])
 		/* Create table */
 		G_debug ( 3, db_get_string ( &sql ) );
 		if (db_execute_immediate (driver, &sql) != DB_OK ) {
-		    G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql )  );
+		    G_fatal_error(_("Cannot create table: %s"), db_get_string ( &sql )  );
 		}
 
 		/* Grant */
 		if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK ) {
-		    G_fatal_error ( "Cannot grant privileges on table %s", Fi->table );
+		    G_fatal_error(_("Cannot grant privileges on table %s"), Fi->table );
 		}
 
 		/* Check column types */
@@ -310,13 +317,13 @@ main (int argc, char *argv[])
 		    
 		    db_set_string ( &sql, Fi->table );
 		    if(db_describe_table (driver, &sql, &table) != DB_OK)
-			G_fatal_error ("Cannot describe table %s", Fi->table);
+			G_fatal_error(_("Cannot describe table %s"), Fi->table);
 				
 		    nc = db_get_table_number_of_columns(table);
 
 		    if ( (catcol >= 0 && nc != ncols) || (catcol < 0 && (nc-1) != ncols) ) {
-			G_fatal_error ("Number of columns defined (%d) does not match number of columns (%d) "
-				"in input", nc, ncols);
+			G_fatal_error(_("Number of columns defined (%d) does not match number of "
+			    "columns (%d) in input."), nc, ncols);
 		    }
 		
 		    coltype2 = (int *) G_malloc ( ncols * sizeof(int) );
@@ -339,27 +346,27 @@ main (int argc, char *argv[])
 			switch ( coltype[i] ) {
 			    case DB_C_TYPE_INT:
 				if ( ctype == DB_C_TYPE_DOUBLE ) {
-				    G_warning ( "Column %d defined as double has only integer values", i+1);
+				    G_warning(_("Column %d defined as double has only integer values"), i+1);
 				} else if ( ctype == DB_C_TYPE_STRING ) {
-				    G_warning ( "Column %d defined as string has only integer values", i+1);
+				    G_warning(_("Column %d defined as string has only integer values"), i+1);
 				}
 				break;
 			    case DB_C_TYPE_DOUBLE:
 				if ( ctype == DB_C_TYPE_INT ) {
-				    G_fatal_error ( "Column %d defined as integer has double values", i+1);
+				    G_fatal_error(_("Column %d defined as integer has double values"), i+1);
 				} else if ( ctype == DB_C_TYPE_STRING ) {
-				    G_fatal_error ( "Column %d defined as string has double values", i+1);
+				    G_fatal_error(_("Column %d defined as string has double values"), i+1);
 				}
 				break;
 			    case DB_C_TYPE_STRING:
 				if ( ctype == DB_C_TYPE_INT ) {
-				    G_fatal_error ( "Column %d defined as integer has string values", i+1);
+				    G_fatal_error(_("Column %d defined as integer has string values"), i+1);
 				} else if ( ctype == DB_C_TYPE_DOUBLE ) {
-				    G_fatal_error ( "Column %d defined as double has string values", i+1);
+				    G_fatal_error(_("Column %d defined as double has string values"), i+1);
 				}
 				if ( length < collen[i] ) {
-				    G_fatal_error ( "Length of column %d (%d) is less than maximum value "
-						    "length (%d)", i+1, length, collen[i]);
+				    G_fatal_error(_("Length of column %d (%d) is less than maximum value "
+						    "length (%d)"), i+1, length, collen[i]);
 				}
 				break;
 			}
@@ -376,7 +383,7 @@ main (int argc, char *argv[])
 		}
 
 		if ( db_create_index2(driver, Fi->table, key ) != DB_OK )
-		    G_warning ( "Cannot create index" );
+		    G_warning(_("Cannot create index"));
 
 		Vect_map_del_dblink ( &Map, 1 );
 		Vect_map_add_dblink ( &Map, 1, NULL, Fi->table, key, Fi->database, Fi->driver);
@@ -411,4 +418,3 @@ main (int argc, char *argv[])
 
 	exit(0) ;
 }
-
