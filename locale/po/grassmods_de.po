@@ -206,7 +206,7 @@ msgstr "Tabellenname, selektiere alles aus dieser Tabelle."
 msgid ""
 "SQL select statement, for example: 'select * from rybniky where kapri = "
 "'hodne'"
-msgstr "SQL-Select Statement, z.B: 'SELECT * FROM rybniky WHERE kapri = 'hodne'"
+msgstr "SQL-Select Statement, z.B.: 'SELECT * FROM rybniky WHERE kapri = 'hodne'"
 
 #: ../db/base/select.c:209 ../vector/v.db.select/main.c:52
 msgid "output field separator"
@@ -277,7 +277,7 @@ msgid ""
 "data may be lost"
 msgstr ""
 "Spalte '%s' mit Typ 'string': unbekannte Breite -> als Datentyp varchar(250) "
-"abgespeichert. Einige Daten können u.U verloren sein."
+"abgespeichert. Einige Daten können u.U. verloren sein."
 
 #: ../db/drivers/ogr/describe.c:151 ../db/drivers/ogr/fetch.c:124
 msgid "Unknown type"
@@ -311,7 +311,7 @@ msgid ""
 "be lost"
 msgstr ""
 "Spalte '%s' vom Typ Character ist als Typ varchar(250) abgespeichert. Einige "
-"Daten können u.U verloren sein."
+"Daten können u.U. verloren sein."
 
 #: ../db/drivers/postgres/describe.c:123
 #, c-format
@@ -352,7 +352,7 @@ msgid ""
 "TrueType font (including file name)"
 msgstr ""
 "Schriftname oder Pfad zu den TrueType-Schriften inkiusive Dateiname. Eine "
-"interaktive Auwahl ist nicht möglich. Siehe auch Flag -l."
+"interaktive Auswahl ist nicht möglich. Siehe auch Flag -l."
 
 #: ../display/d.font.freetype/main.c:62
 msgid "Path to TrueType font (including file name)"
@@ -364,7 +364,7 @@ msgstr "Zeichenkodierung"
 
 #: ../display/d.font.freetype/main.c:102
 msgid "No graphics device selected"
-msgstr "Keine Graphik-Augabe ausgewählt."
+msgstr "Keine Graphik-Ausgabe ausgewählt."
 
 #: ../display/d.font.freetype/main.c:170
 #, c-format
@@ -1127,7 +1127,7 @@ msgstr "Vektorkarte mit Startpunkten"
 
 #: ../raster/r.cost/main.c:129
 msgid "Stop points vector map"
-msgstr "Vektorkarte mit den den Stopp-Punkten"
+msgstr "Vektorkarte mit den Stopp-Punkten"
 
 #: ../raster/r.cost/main.c:136
 msgid "Starting points raster file"
@@ -1157,7 +1157,7 @@ msgstr "Prozent der Karte, welche im Speicher bleiben soll."
 
 #: ../raster/r.cost/main.c:180 ../raster/wildfire/r.ros/main.c:297
 msgid "Run verbosely"
-msgstr "detailierte Ausgabe"
+msgstr "detaillierte Ausgabe"
 
 #: ../raster/r.cost/main.c:184
 msgid "Use the 'Knight's move'; slower, but more accurate"
@@ -2458,7 +2458,7 @@ msgstr "Reihen/Spalte Überlappung für Segmentierung."
 
 #: ../raster/r.resamp.rst/main.c:261
 msgid "Conversion factor for z-values"
-msgstr "Konvertierungsfaktor ür z-Werte."
+msgstr "Konvertierungsfaktor für z-Werte."
 
 #: ../raster/r.resamp.rst/main.c:268
 msgid "Tension"
@@ -4083,7 +4083,7 @@ msgstr "Datenbankverbindung nicht definiert."
 
 #: ../vector/v.db.select/main.c:97
 msgid "Cannot open select cursor"
-msgstr "Kann 'Select'-Cursor nicht öfnen."
+msgstr "Kann 'Select'-Cursor nicht öffnen."
 
 #: ../vector/v.db.select/main.c:115
 msgid "Cannot fetch data"
