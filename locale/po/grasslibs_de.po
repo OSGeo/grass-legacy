@@ -1123,7 +1123,7 @@ msgstr ""
 
 #: ../lib/gis/mapset.c:41
 msgid "MAPSET is not set"
-msgstr "MAPSET is nicht definiert."
+msgstr "MAPSET ist nicht definiert."
 
 #: ../lib/gis/mask_info.c:42
 #, c-format
@@ -1174,7 +1174,7 @@ msgid ""
 "not exist"
 msgstr ""
 "Kann Karte [%s] in [%s] nicht öffnen, da sie eine reklassifizierte Karte von "
-"[%s] in [%s] ist. Diese exisitert jedoch nicht."
+"[%s] in [%s] ist. Diese existiert jedoch nicht."
 
 #: ../lib/gis/opencell.c:271
 #, c-format
