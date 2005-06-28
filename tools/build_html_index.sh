@@ -131,19 +131,21 @@ echo "Generating HTML manual pages index (help system)..."
 write_html_header $FULLINDEX "GRASS GIS $GRASSVERSION Reference Manual"
 echo "<h3>Full command index:</h3>" >> $FULLINDEX
 echo "<table border=0>" >> $FULLINDEX
-echo "<tr><td>d.*  </td><td>display commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>db.* </td><td>database commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>g.*  </td><td>general commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>g3.* </td><td>general3D commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>i.*  </td><td>imagery commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>p.* </td><td>paint commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>pg.* </td><td>postGRASS commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>ps.* </td><td>postscript commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>r.*  </td><td>raster commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>r3.* </td><td>raster3D commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>v.*  </td><td>vector commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>&nbsp;&nbsp;d.*  </td><td>display commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>&nbsp;&nbsp;db.* </td><td>database commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>&nbsp;&nbsp;g.*  </td><td>general commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>&nbsp;&nbsp;g3.* </td><td>general3D commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>&nbsp;&nbsp;i.*  </td><td>imagery commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>&nbsp;&nbsp;p.* </td><td>paint commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>&nbsp;&nbsp;pg.* </td><td>postGRASS commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>&nbsp;&nbsp;ps.* </td><td>postscript commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>&nbsp;&nbsp;r.*  </td><td>raster commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>&nbsp;&nbsp;r3.* </td><td>raster3D commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>&nbsp;&nbsp;v.*  </td><td>vector commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>&nbsp;&nbsp;nviz </td><td>visualization command</td></tr>" >> $FULLINDEX
 echo "</table>" >> $FULLINDEX
- 
+ echo "<p>" >> $FULLINDEX
+
 #generate main index of all modules:
 echo "[ " >> $FULLINDEX
 k=0
@@ -171,7 +173,7 @@ do
   for i in `ls -1 $i.*.html | grep -v "\($EXCLUDEHTML\)"`
   do
     BASENAME=`basename $i .html`
-    SHORTDESC="`cat $i | awk '/NAME/,/SYNOPSIS/' | grep '<em>' | cut -d'-' -f2- | sed 's+^ ++g' | grep -vi 'SYNOPSIS' | head -1`"
+    SHORTDESC="`cat $i | awk '/NAME/,/SYNOPSIS/' | grep '<em>' | cut -d'-' -f2- | sed 's+^ ++g' | grep -vi 'SYNOPSIS' | head -n 1`"
     echo "<tr><td valign="top"><a href=\"$i\">$BASENAME</a></td> <td>$SHORTDESC</td></tr>" >> $FULLINDEX
   done
   echo "</table>" >> $FULLINDEX
@@ -195,9 +197,10 @@ do
   for k in `ls -1 $k.*.html | grep -v "\($EXCLUDEHTML\)"`
   do
     BASENAME=`basename $k .html`
-    SHORTDESC="`cat $k | awk '/NAME/,/SYNOPSIS/' | grep '<em>' | cut -d'-' -f2- | sed 's+^ ++g' | grep -vi 'SYNOPSIS' | head -1`"
+    SHORTDESC="`cat $k | awk '/NAME/,/SYNOPSIS/' | grep '<em>' | cut -d'-' -f2- | sed 's+^ ++g' | grep -vi 'SYNOPSIS' | head -n 1`"
     echo "<tr><td valign="top"><a href=\"$k\">$BASENAME</a></td> <td>$SHORTDESC</td></tr>" >> $FILENAME
   done
+  
   echo "</table>" >> $FILENAME
   echo "<p>"   >> $FILENAME
 
@@ -215,8 +218,13 @@ echo "<ul>" >> $FILENAME
 for k in $CMDLIST
 do 
   MODCLASS=`expand_module_class_name $k`
-  echo "<li><a href=\"$MODCLASS.html\">$MODCLASS commands</a>" >> $FILENAME
+  echo "<li><a href=\"$MODCLASS.html\">$MODCLASS commands</a></li>" >> $FILENAME
 done
+
+#extra stuff for 'nviz' and 'xganim':
+echo "<li><a href=\"../nviz/index.html\">nviz</a> visualization and animation tool</li>" >> $FILENAME
+echo "<li><a href=\"xganim.html\">xganim</a> tool  for animating a raster map series</li>" >> $FILENAME
+	      
 echo "</ul>" >> $FILENAME
 echo "<p>"   >> $FILENAME
 
