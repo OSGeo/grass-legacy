@@ -1,4 +1,4 @@
-/*-s.delaunay
+/*-s.voronoi
 **
 ** Author: James Darrell McCauley (mccauley@ecn.purdue.edu)
 **         USDA Fellow
@@ -87,7 +87,7 @@ main (int argc, char **argv)
   G_gisinit (argv[0]);
 
   module = G_define_module();
-  module->description = "Create a Delaunay triangulation from an input vector of points or centroids.";
+  module->description = "Create a Voronoi triangulation from an input vector of points or centroids.";
 
   in_opt = G_define_standard_option(G_OPT_V_INPUT);
   out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
