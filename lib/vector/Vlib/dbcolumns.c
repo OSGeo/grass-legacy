@@ -25,6 +25,7 @@
 #include "dbmi.h"
 
 /*!
+ \fn char *Vect_get_column_names(struct Map_info *Map, int field)
  \brief fetches list of DB column names of vector map attribute table
  \return list of column(s) names on success, NULL on error 
  \param vector map
@@ -85,6 +86,7 @@ char *Vect_get_column_names(struct Map_info *Map, int field)
 }
 
 /*!
+ \fn char *Vect_get_column_types(struct Map_info *Map, int field)
  \brief fetches list of DB column types of vector map attribute table
  \return list of column(s) types on success, NULL on error 
  \param vector map
@@ -145,6 +147,7 @@ char *Vect_get_column_types(struct Map_info *Map, int field)
 
 
 /*!
+ \fn char *Vect_get_column_names_types(struct Map_info *Map, int field)
  \brief fetches list of DB column names and types of vector map attribute table
  \return list of column(s) types on success, NULL on error 
  \param vector map

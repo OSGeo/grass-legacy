@@ -191,8 +191,8 @@ Vect_cidx_get_type_count ( struct Map_info *Map, int field, int type)
 }
 
 /*!
- \fn int Vect_cidx_get_cat ( struct Map_info *Map, int field_index, int cat_index, 
-                             int *cat, int *type, int * id )
+ \fn int Vect_cidx_get_cat_by_index ( struct Map_info *Map, int field_index, int cat_index, 
+	                     int *cat, int *type, int * id)
  \brief get nuber of categories for given field and category index 
  \return 1 OK
  \return 0 on error
