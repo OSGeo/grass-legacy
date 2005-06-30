@@ -3,6 +3,7 @@
 #include <errno.h>
 #include <unistd.h>
 #include "segment.h"
+#include "config.h"
 
 static int _segment_format (int,int,int,int,int,int,int);
 static int write_int(int,int);
@@ -60,14 +61,14 @@ static int _segment_format(
     if (nrows <= 0 || ncols <= 0 || len <= 0 || srows <= 0 || scols <= 0)
     {
 	G_warning (
-	    "segement_format(fd,%d,%d,%d,%d,%d): illegal value(s)\n",
+	    "segment_format(fd,%d,%d,%d,%d,%d): illegal value(s)",
 	    nrows, ncols, srows, scols, len);
 	return -3;
     }
 
     if (lseek (fd, 0L, 0) == (off_t)-1)
     {
-	G_warning ("Segment_format: %s\n",strerror(errno));
+	G_warning ("Segment_format: %s",strerror(errno));
 	return -1;
     }
 
@@ -107,12 +108,13 @@ static int write_int (int fd,int n)
     x = n;
 
     if((bytes_wrote = write (fd, &x, sizeof(int)) == sizeof(int) ) < 0)
-        G_warning("%s\n",strerror(errno));
+        G_warning("%s",strerror(errno));
     return bytes_wrote;
 }
 
 static int zero_fill(int fd, long nbytes)
 {
+#ifndef HAVE_LSEEK
     char buf[10240];
     register char *b;
     register int n;
@@ -127,10 +129,32 @@ static int zero_fill(int fd, long nbytes)
     {
 	n = nbytes > sizeof(buf) ? sizeof(buf) : nbytes ;
 	if(write (fd, buf, n) != n) {
-            G_warning("%s\n",strerror(errno));
+            G_warning("%s",strerror(errno));
 	    return -1;
         }
 	nbytes -= n;
     }
     return 1;
+#else
+  /* Using lseek (faster upon initialization).
+     NOTE: This version doesn't allocate disk storage for the file; storage will
+     be allocated dynamically as blocks are actually written. This could 
+     result in zero_fill() succeeding but a subsequent call to write() failing
+     with ENOSPC ("No space left on device").
+   */
+
+    char buf[10];
+
+    buf[0]=0x0;
+    G_debug(3,"Using new segmentation code...");
+    if ( lseek(fd,nbytes-1,SEEK_SET) < 0 ) { 
+            G_warning("%s",strerror(errno));
+	    return -1;
+    }
+    if(write (fd,buf, 1) != 1) {
+            G_warning("%s",strerror(errno));
+	    return -1;
+    }
+    return 1;
+#endif
 }
