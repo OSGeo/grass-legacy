@@ -134,18 +134,36 @@ Vect__read_head (struct Map_info *Map)
 
 /* set and get header informations */
 /* name, mapset, full name */
+/*!
+ \fn char *Vect_get_name (struct Map_info *Map)
+ \brief get map name
+ \return  on success
+ \param Map_info structure
+*/
 char *
 Vect_get_name (struct Map_info *Map)
 {
     return (Map->name);
 }
 
+/*!
+ \fn char *Vect_get_mapset (struct Map_info *Map)
+ \brief get mapset name
+ \return  on success
+ \param Map_info structure
+*/
 char *
 Vect_get_mapset (struct Map_info *Map)
 {
     return (Map->mapset);
 }
 
+/*!
+ \fn char *Vect_get_full_name (struct Map_info *Map)
+ \brief get full name
+ \return  on success
+ \param Map_info structure
+*/
 char *
 Vect_get_full_name (struct Map_info *Map)
 {
@@ -366,6 +384,7 @@ Vect_set_zone (struct Map_info *Map, int zone )
 
 
 /*!
+ \fn int Vect_get_zone (struct Map_info *Map)
  \brief get projection zone from map header
  \return projection zone
  \param Map_info structure
@@ -377,14 +396,14 @@ Vect_get_zone (struct Map_info *Map)
 }
 
 /*!
- *  \brief get projection from map header
- *  \param Map_info structure
- *  \return Returns the projection type of map
- *      PROJECTION_XY  0 - x,y (Raw imagery),
- *      PROJECTION_UTM 1 - UTM   Universal Transverse Mercator,
- *      PROJECTION_SP  2 - State Plane (in feet),
- *      PROJECTION_LL  3 - Latitude-Longitude
- *
+ \fn int Vect_get_proj (struct Map_info *Map)
+ \brief get projection from map header
+ \param Map_info structure
+ \return Returns the projection type of map
+       PROJECTION_XY  0 - x,y (Raw imagery),
+       PROJECTION_UTM 1 - UTM   Universal Transverse Mercator,
+       PROJECTION_SP  2 - State Plane (in feet),
+       PROJECTION_LL  3 - Latitude-Longitude
 */
 int
 Vect_get_proj (struct Map_info *Map)
@@ -394,14 +413,15 @@ Vect_get_proj (struct Map_info *Map)
 
 
 /*!
- * \brief query cartographic projection name of vector map
- *
- * Returns a pointer to a string which is a printable name for
- * projection code <b>proj</b> (as returned by <i>Vect_get_proj()</i>). Returns
- * NULL if <b>proj</b> is not a valid projection.
- *
- *  \param proj
- *  \return char * 
+ \fn char *Vect_get_proj_name (struct Map_info *Map)
+ \brief query cartographic projection name of vector map
+ 
+ Returns a pointer to a string which is a printable name for
+ projection code <b>proj</b> (as returned by <i>Vect_get_proj()</i>). Returns
+ NULL if <b>proj</b> is not a valid projection.
+ 
+ \param proj
+ \return char * 
  */
 
 char *Vect_get_proj_name (struct Map_info *Map)

@@ -18,12 +18,13 @@
 #include "dbmi.h"
 #include "Vect.h"
 
-/* 
- *  Create new VARRAY and allocate space for given number of items.
- *  Space allocated is 'size + 1' so that lines are accessed by line id.
- *  Array values are set to 0.
- *  Returns : pointer to new VARRAY
- *            NULL if failed
+/*!
+  \fn VARRAY *Vect_new_varray (int size)
+  \brief Create new VARRAY and allocate space for given number of items.
+  Space allocated is 'size + 1' so that lines are accessed by line id.
+  Array values are set to 0.
+  Returns : pointer to new VARRAY
+            NULL if failed
  */
 
 VARRAY *
@@ -46,16 +47,18 @@ Vect_new_varray (int size)
     return p;
 }
 
-/* 
- *  Set values in 'varray' to 'value' if category of object of given type is in 
- *  'cstring' (string representing category list like: '1,3,5-7').
- *  'type' may be either: GV_AREA
- *                    or: GV_POINT | GV_LINE | GV_BOUNDARY | GV_CENTROID  
- *
- *  Array is not reset to zero before, but old values (if any > 0) are overwritten.
- * 
- *  Return: number of items set
- *          -1 on error
+/*!
+  \fn int Vect_set_varray_from_cat_string ( struct Map_info *Map, int field, char *cstring,
+                                int type, int value, VARRAY *varray )
+  \brief Set values in 'varray' to 'value' if category of object of given type is in 
+  'cstring' (string representing category list like: '1,3,5-7').
+  'type' may be either: GV_AREA
+                    or: GV_POINT | GV_LINE | GV_BOUNDARY | GV_CENTROID  
+
+  Array is not reset to zero before, but old values (if any > 0) are overwritten.
+
+  Return: number of items set
+          -1 on error
  */
 int 
 Vect_set_varray_from_cat_string ( struct Map_info *Map, int field, char *cstring,
@@ -81,15 +84,18 @@ Vect_set_varray_from_cat_string ( struct Map_info *Map, int field, char *cstring
     return ret;
 }
 
-/* 
- *  Set values in 'varray' to 'value' if category of object of given type is in 'clist' (category list).
- *  'type' may be either: GV_AREA
- *                    or: GV_POINT | GV_LINE | GV_BOUNDARY | GV_CENTROID  
- *
- *  Array is not reset to zero before, but old values (if any > 0) are overwritten.
- * 
- *  Return: number of items set
- *          -1 on error
+/*!
+  \fn int Vect_set_varray_from_cat_list ( struct Map_info *Map, int field, struct cat_list *clist,
+                                int type, int value, VARRAY *varray )
+  \brief
+   Set values in 'varray' to 'value' if category of object of given type is in 'clist' (category list).
+  'type' may be either: GV_AREA
+                    or: GV_POINT | GV_LINE | GV_BOUNDARY | GV_CENTROID  
+		    
+  Array is not reset to zero before, but old values (if any > 0) are overwritten.
+
+  Return: number of items set
+          -1 on error
  */
 int 
 Vect_set_varray_from_cat_list ( struct Map_info *Map, int field, struct cat_list *clist,
@@ -181,16 +187,18 @@ in_array ( int *cats, int ncats, int cat )
     return 1;
 }
 
-/* 
- *  Set values in 'varray' to 'value' if category of object of given type is in 
- *  categories selected from DB based on where statement (given without where).
- *  'type' may be either: GV_AREA
- *                    or: GV_POINT | GV_LINE | GV_BOUNDARY | GV_CENTROID  
- *
- *  Array is not reset to zero before, but old values (if any > 0) are overwritten.
- * 
- *  Return: number of items set
- *          -1 on error
+/*!
+  \fn int Vect_set_varray_from_db ( struct Map_info *Map, int field, char *where,
+                                int type, int value, VARRAY *varray )
+  \brief Set values in 'varray' to 'value' if category of object of given type is in 
+  categories selected from DB based on where statement (given without where).
+  'type' may be either: GV_AREA
+                    or: GV_POINT | GV_LINE | GV_BOUNDARY | GV_CENTROID  
+
+  Array is not reset to zero before, but old values (if any > 0) are overwritten.
+
+  Return: number of items set
+          -1 on error
  */
 int 
 Vect_set_varray_from_db ( struct Map_info *Map, int field, char *where,
