@@ -4,16 +4,12 @@
 # Markus Neteler <neteler@itc.it>, 2004.
 # Stephan Holl <holl@gdf-hannover.de>, 2004, 2005.
 #
-#: ../raster/r.support/modhead/check_un.c:49
-#: ../raster/r.support/modhead/check_un.c:54
-#: ../raster/r.support/modhead/modhead.c:193
-#: ../raster/r.support/modhead/modhead.c:195
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-14 20:44+0200\n"
-"PO-Revision-Date: 2005-06-14 21:12+0200\n"
+"POT-Creation-Date: 2005-06-30 17:50+0200\n"
+"PO-Revision-Date: 2005-06-30 18:11+0200\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -210,18 +206,17 @@ msgstr "Tabellenname, selektiere alles aus dieser Tabelle."
 msgid ""
 "SQL select statement, for example: 'select * from rybniky where kapri = "
 "'hodne'"
-msgstr ""
-"SQL-Select Statement, z.B.: 'SELECT * FROM rybniky WHERE kapri = 'hodne'"
+msgstr "SQL-Select Statement, z.B.: 'SELECT * FROM rybniky WHERE kapri = 'hodne'"
 
-#: ../db/base/select.c:209 ../vector/v.db.select/main.c:52
+#: ../db/base/select.c:209
 msgid "output field separator"
 msgstr "Ausgabe Feld-Trennzeichen"
 
-#: ../db/base/select.c:216 ../vector/v.db.select/main.c:59
+#: ../db/base/select.c:216
 msgid "output vertical record separator"
 msgstr "Vertikales Trennzeichen für die Ausgabe."
 
-#: ../db/base/select.c:222 ../vector/v.db.select/main.c:65
+#: ../db/base/select.c:222
 msgid "null value indicator"
 msgstr "Nullwert-Indikator"
 
@@ -343,6 +338,39 @@ msgstr "Kann Benutzer/Passwort nicht setzen."
 msgid "The password was stored in file."
 msgstr "Das Passwort ist in einer Datei gespeichert."
 
+#: ../display/d.erase/main.c:34
+#, fuzzy
+msgid "Erase the contents of the active display frame with user defined color"
+msgstr "von"
+
+#: ../display/d.erase/main.c:42
+#, fuzzy
+msgid ""
+"Color to erase with, either a standard GRASS color or R:G:B triplet "
+"(separated by colons)"
+msgstr "a"
+
+#: ../display/d.erase/main.c:46
+#, fuzzy
+msgid "Remove all frames and erase the screen"
+msgstr "Frames screen"
+
+#: ../display/d.erase/main.c:52 ../display/d.font.freetype/main.c:102
+#: ../display/d.nviz/main.c:248 ../display/d.paint.labels/main.c:64
+#: ../imagery/i.points/main.c:54
+msgid "No graphics device selected"
+msgstr "Keine Graphik-Ausgabe ausgewählt."
+
+#: ../display/d.erase/main.c:56
+#, fuzzy
+msgid "No current frame"
+msgstr "Übernehme von der aktuellen Region."
+
+#: ../display/d.erase/main.c:58
+#, fuzzy
+msgid "Current frame not available"
+msgstr "nicht"
+
 #: ../display/d.font.freetype/main.c:52
 msgid ""
 "Selects the font in which text will be displayed on the user's graphics "
@@ -367,11 +395,8 @@ msgstr "Pfad zu den TrueType-Schriften (inklusive Dateiname)"
 msgid "Character encoding"
 msgstr "Zeichenkodierung"
 
-#: ../display/d.font.freetype/main.c:102
-msgid "No graphics device selected"
-msgstr "Keine Graphik-Ausgabe ausgewählt."
-
 #: ../display/d.font.freetype/main.c:170
+#, c-format
 msgid ""
 "\n"
 "Setting release of FreeType\n"
@@ -389,13 +414,17 @@ msgstr "Modul zur Erzeugung und Darstellung von einfachen Graphicken im Monitor.
 msgid ""
 "Name of file containing graphics commands, if not given reads from standard "
 "input"
-msgstr "Name der Datei, die Graph>ikkommandos enthält. Falls nicht angegeben, wird von der Standardeingabe gelesen."
+msgstr ""
+"Name der Datei, die Graph>ikkommandos enthält. Falls nicht angegeben, wird "
+"von der Standardeingabe gelesen."
 
 #: ../display/d.graph/main.c:48 ../display/d.mapgraph/main.c:46
 msgid ""
 "Color to draw with, either a standard GRASS color or R:G:B triplet "
 "(separated by colons)"
-msgstr "Farbe, die benutzt werden soll. Entweder GRASS Standardfarben oder R:G:B Tripel (durch Doppelpunkte getrennt)."
+msgstr ""
+"Farbe, die benutzt werden soll. Entweder GRASS Standardfarben oder R:G:B "
+"Tripel (durch Doppelpunkte getrennt)."
 
 #: ../display/d.mapgraph/main.c:29
 msgid ""
@@ -407,7 +436,9 @@ msgstr "Erzeugt und stellt einfache Graphiken auf Karten im aktiven Monitor dar.
 msgid ""
 "Unix file containg graphing instructions, if not given reads from standard "
 "input"
-msgstr "Unix-Datei, die Graphik-Instruktionen enthält. Falls diese nicht angegeben ist, wird von der Standardeingabe gelesen."
+msgstr ""
+"Unix-Datei, die Graphik-Instruktionen enthält. Falls diese nicht angegeben "
+"ist, wird von der Standardeingabe gelesen."
 
 #: ../display/d.nviz/main.c:67
 msgid "Create fly-through script to run in NVIZ"
@@ -507,20 +538,77 @@ msgstr "Es müssen mindestens 4 Punkte selektiert werden."
 msgid "You must provide at least four points %d"
 msgstr "Es müssen mindestens 4 Punkte %d angegeben werden."
 
-#: ../display/d.paint.labels/do_labels.c:143
+#: ../display/d.paint.labels/do_labels.c:148
 #, c-format
 msgid "Error: %s\n"
 msgstr "Fehler: %s\n"
 
-#: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:295
-#, c-format
-msgid "Region size is lower than minreg, nothing displayed.\n"
-msgstr "Region-Größe ist kleiner als die Minimal-Region; es wird nichts angezeigt.\n"
+#: ../display/d.paint.labels/main.c:28
+#, fuzzy
+msgid ""
+"Displays text labels (created with v.label) to the active frame on the "
+"graphics monitor."
+msgstr "v ein."
 
-#: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:304
+#: ../display/d.paint.labels/main.c:36
+#, fuzzy
+msgid "Name of label file"
+msgstr "von"
+
+#: ../display/d.paint.labels/main.c:43
+#, fuzzy
+msgid "Minimum region size (diagonal) when labels are displayed"
+msgstr "Größe"
+
+#: ../display/d.paint.labels/main.c:50
+#, fuzzy
+msgid "Maximum region size (diagonal) when labels are displayed"
+msgstr "Größe"
+
+#: ../display/d.paint.labels/main.c:61
 #, c-format
-msgid "Region size is greater than maxreg, nothing displayed.\n"
-msgstr "Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt.\n"
+msgid "Label file [%s] not available"
+msgstr "Label-Datei '%s' ist nicht vorhanden."
+
+#: ../display/d.paint.labels/main.c:76
+msgid "Region size is lower than minreg, nothing displayed."
+msgstr "Region-Größe ist kleiner als die Minimal-Region; es wird nichts angezeigt."
+
+#: ../display/d.paint.labels/main.c:85
+msgid "Region size is greater than maxreg, nothing displayed."
+msgstr "Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt."
+
+#: ../display/d.paint.labels/main.c:95
+#, c-format
+msgid "Can't open label file [%s]"
+msgstr "Kann Label-Datei [%s] nicht öffnen."
+
+#: ../display/d.paint.labels/main.c:98
+msgid "No current window"
+msgstr "Kein aktuelles Fenster."
+
+#: ../display/d.paint.labels/main.c:101
+msgid "Current window not available"
+msgstr "Aktuelles Fenster ist nicht vorhanden."
+
+#: ../display/d.paint.labels/main.c:104
+#, fuzzy
+msgid "Setting map window"
+msgstr "Einstellung"
+
+#: ../display/d.paint.labels/main.c:107
+#, fuzzy
+msgid "Current window not settable"
+msgstr "nicht"
+
+#: ../display/d.paint.labels/main.c:111
+#, fuzzy
+msgid "Getting screen window"
+msgstr "screen"
+
+#: ../display/d.paint.labels/main.c:113
+msgid "Error in calculating conversions"
+msgstr ""
 
 #: ../display/d.path/select.c:32
 #, c-format
@@ -557,6 +645,16 @@ msgid ""
 msgstr ""
 "\n"
 " FEHLER: Kann Vektordatei nicht lesen.\n"
+
+#: ../display/d.vect/main.c:295
+#, c-format
+msgid "Region size is lower than minreg, nothing displayed.\n"
+msgstr "Region-Größe ist kleiner als die Minimal-Region; es wird nichts angezeigt.\n"
+
+#: ../display/d.vect/main.c:304
+#, c-format
+msgid "Region size is greater than maxreg, nothing displayed.\n"
+msgstr "Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt.\n"
 
 #: ../display/d.vect/main.c:502
 #, c-format
@@ -849,24 +947,24 @@ msgstr "Monitor: XGetWMName fehlgeschlagen\n"
 msgid "Monitor: XGetWMName: bad result\n"
 msgstr "Monitor: XGetWMName: Falsches Ergebnis\n"
 
-#: ../doc/vector/v.example.c:49
+#: ../doc/vector/v.example.c:44
 msgid "name of input vector file"
 msgstr "Name der Eingabedatei."
 
-#: ../doc/vector/v.example.c:60
+#: ../doc/vector/v.example.c:52
 msgid "name of resulting vector file"
 msgstr "Name der resultierenden Vektordatei."
 
-#: ../doc/vector/v.example.c:71
+#: ../doc/vector/v.example.c:62
 #, c-format
 msgid "Could not find input %s"
 msgstr "Kann Eingabedatei %s nicht finden."
 
-#: ../doc/vector/v.example.c:75
+#: ../doc/vector/v.example.c:66
 msgid "Could not open input"
 msgstr "Kann Eingabe nicht öffnen."
 
-#: ../doc/vector/v.example.c:80
+#: ../doc/vector/v.example.c:71
 msgid "Could not open output"
 msgstr "Kann Ausgabe nicht öffnen."
 
@@ -884,7 +982,7 @@ msgstr "Name der Ausgabekarte"
 
 #: ../doc/raster/r.example/main.c:101 ../raster/r.clump/main.c:62
 #: ../raster/r.covar/main.c:53 ../raster/r.cross/main.c:68
-#: ../raster/r.describe/main.c:78 ../raster/r.grow2/main.c:162
+#: ../raster/r.describe/main.c:78 ../raster/r.grow2/main.c:156
 #: ../raster/r.mfilter/main.c:79 ../raster/r.patch/main.c:64
 #: ../raster/r.report/parse.c:99 ../raster/r.resample/main.c:57
 #: ../raster/r.rescale.eq/main.c:78 ../raster/r.slope.aspect/main.c:253
@@ -1160,7 +1258,7 @@ msgstr "Vollname=%s\n"
 #: ../imagery/i.cca/main.c:66
 #, fuzzy
 msgid "Canonical components analysis (cca) program for image processing."
-msgstr ""
+msgstr "program für Bild."
 
 #: ../imagery/i.cca/main.c:73
 msgid "Imagery files group"
@@ -1264,11 +1362,916 @@ msgstr "Fehler beim Schreiben der Cellkarte während der Transformation."
 msgid "Transform completed.\n"
 msgstr "Transformation beendet.\n"
 
+#: ../imagery/i.class/add_point.c:23
+#, c-format
+#, fuzzy
+msgid "Can't mark another point.  Only %d points allowed.  Sorry."
+msgstr "Punkt Nur."
+
+#: ../imagery/i.class/analyze_sig.c:13
+#, fuzzy
+msgid "Cannot analyze until region is completed."
+msgstr "ist fertiggestellt."
+
+#: ../imagery/i.class/ask_files.c:34
+msgid "Hit RETURN -->"
+msgstr "Drücke RETURN zum Fortfahren -->"
+
+#: ../imagery/i.class/ask_files.c:51
+#, c-format
+#, fuzzy
+msgid ""
+"\n"
+"** The following cell files in subgroup [%s] do not exist."
+msgstr "s."
+
+#: ../imagery/i.class/ask_files.c:54
+#, c-format
+#, fuzzy
+msgid "       %s@%s"
+msgstr "s s"
+
+#: ../imagery/i.class/ask_files.c:60
+#, c-format
+#, fuzzy
+msgid "Subgroup [%s] "
+msgstr "s "
+
+#: ../imagery/i.class/ask_files.c:62
+#, fuzzy
+msgid "doesn't have any files."
+msgstr "any."
+
+#: ../imagery/i.class/ask_files.c:64
+#, fuzzy
+msgid "only has 1 file."
+msgstr "hat nur 1 Datei."
+
+#: ../imagery/i.class/ask_files.c:65
+#, c-format
+#, fuzzy
+msgid "The subgroup must have at least 2 files to run %s."
+msgstr "s."
+
+#: ../imagery/i.class/ask_files.c:69
+#, fuzzy
+msgid "Unable to read cell header for first band file."
+msgstr "gelesen für."
+
+#: ../imagery/i.class/ask_files.c:74
+msgid ""
+"\n"
+"RESULT SIGNATURE"
+msgstr ""
+"\n"
+"Resultierende Signatur"
+
+#: ../imagery/i.class/ask_files.c:75
+#, fuzzy
+msgid "Enter name for the resulting signature file"
+msgstr "für"
+
+#: ../imagery/i.class/ask_files.c:80
+#, fuzzy
+msgid "Unable to open output signature file."
+msgstr "Kann Signaturdatei nicht öffnen."
+
+#: ../imagery/i.class/ask_files.c:86
+msgid ""
+"\n"
+"SEED SIGNATURES"
+msgstr ""
+"\n"
+"SEED SIGNATUR"
+
+#: ../imagery/i.class/ask_files.c:88
+#, fuzzy
+msgid "Select the signature file to include in the resulting file"
+msgstr "include"
+
+#: ../imagery/i.class/ask_files.c:100
+#, fuzzy, c-format
+msgid "** Can't read signature file [%s] **"
+msgstr "s"
+
+#: ../imagery/i.class/ask_files.c:104
+#, c-format
+#, fuzzy
+msgid "%s has too many signatures."
+msgstr "s."
+
+#: ../imagery/i.class/band_files.c:24
+#, fuzzy
+msgid "Unable to open band files."
+msgstr "Kann Datei [%s] nicht finden."
+
+#: ../imagery/i.class/complete_reg.c:12
+#, fuzzy
+msgid "Too few points for region.  Must have at least 3 points."
+msgstr "wenige für an."
+
+#: ../imagery/i.class/complete_reg.c:14
+#, fuzzy
+msgid "Area already completed."
+msgstr "Fläche fertiggestellt."
+
+#: ../imagery/i.class/curses.c:24
+#, c-format
+#, fuzzy
+msgid "make_window(%d,%d,%d,%d): illegal screen values."
+msgstr "make screen."
+
+#: ../imagery/i.class/curses.c:160 ../vector/v.transform/creat_trans.c:90
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: ../imagery/i.class/draw_reg.c:84
+#, c-format
+msgid ""
+"\n"
+"Orig:(x1 y1), (x2 y2) = (%d %d), (%d %d)"
+msgstr ""
+"\n"
+"Orig:(x1 y1), (x2 y2) = (%d %d), (%d %d)"
+
+#: ../imagery/i.class/draw_reg.c:92
+#, c-format
+msgid ""
+"\n"
+"New:(x1 y1), (x2 y2) = (%d %d), (%d %d)"
+msgstr ""
+"\n"
+"Neu:(x1 y1), (x2 y2) = (%d %d), (%d %d)"
+
+#: ../imagery/i.class/erase_reg.c:11
+#, fuzzy
+msgid "Can not erase an undefined region."
+msgstr "nicht."
+
+#: ../imagery/i.class/main.c:24
+#, fuzzy
+msgid ""
+"An imagery function that generates spectral signatures for an image by "
+"allowing the user to outline regions of interest. The resulting signature "
+"file can be used as input for i.maxlik or as a seed signature file for i."
+"cluster."
+msgstr "für Bild von für i a für i."
+
+#: ../imagery/i.class/main.c:32
+#, fuzzy
+msgid "No graphics device selected."
+msgstr "Keine Graphik-Ausgabe ausgewählt."
+
+#: ../imagery/i.class/main.c:37
+#, fuzzy
+msgid ""
+"\n"
+"You have a mask set."
+msgstr "a."
+
+#: ../imagery/i.class/main.c:38
+msgid ""
+"\n"
+"If you continue the mask will be removed."
+msgstr ""
+"\n"
+"Wenn Sie fortfahren, wird die Maske entfernt."
+
+#: ../imagery/i.class/main.c:39
+msgid "Do you want to continue? "
+msgstr "Wollen Sie fortfahren?"
+
+#: ../imagery/i.class/main.c:63
+#, fuzzy
+msgid "Enter the name of the cell map to be displayed"
+msgstr "von"
+
+#: ../imagery/i.class/main.c:68
+#, fuzzy
+msgid "Did not find input cell map."
+msgstr "nicht."
+
+#: ../imagery/i.class/outline.c:59
+msgid "Absurd polygon."
+msgstr "Absurdes Polygon."
+
+#: ../imagery/i.class/outline.c:102
+msgid "Outlined area is too large."
+msgstr "Gezeichneter Bereich ist zu groß."
+
+#: ../imagery/i.class/readbands.c:13
+#, fuzzy
+msgid "Error reading cell file in function readbands."
+msgstr "Fehler beim Lesen der Zellkarte während der Transformation."
+
+#: ../imagery/i.class/redisplay.c:66
+#, fuzzy
+msgid "No zoom window is defined."
+msgstr "ist."
+
+#: ../imagery/i.class/remove_mask.c:16
+#, fuzzy
+msgid "Error while removing the old MASK cell map."
+msgstr "alt."
+
+#: ../imagery/i.class/restore_reg.c:15
+#, fuzzy
+msgid "No region is saved, can not restore."
+msgstr "ist nicht."
+
+#: ../imagery/i.class/save_reg.c:15
+#, fuzzy
+msgid "Region is not complete, can not save."
+msgstr "ist nicht nicht."
+
+#: ../imagery/i.class/signature.c:49 ../imagery/i.class/signature.c:53
+#, fuzzy
+msgid "Unable to allocate space for signature statistics."
+msgstr "für."
+
+#: ../imagery/i.class/signature.c:82
+#, fuzzy
+msgid "prepare_signature: outline has odd number of points."
+msgstr "von."
+
+#: ../imagery/i.class/signature.c:115
+#, c-format
+#, fuzzy
+msgid "prepare_signature: scan line %d has odd number of points."
+msgstr "Linie von."
+
+#: ../imagery/i.class/signature.c:126
+#, fuzzy
+msgid "signature: perimeter points out of order."
+msgstr "von."
+
+#: ../imagery/i.class/signature.c:138
+#, fuzzy
+msgid "prepare_signature: data error."
+msgstr "Fehler."
+
+#: ../imagery/i.class/signature.c:241
+msgid "Unknown Menu selection in show_signature()."
+msgstr "Unbekannte Menüselektion in show_signature()."
+
+#: ../imagery/i.class/signature.c:281
+#, fuzzy
+msgid "Unable to open the cell map MASK."
+msgstr "Kann die Cell-Karte <%s> nicht für die Ausgabe öffnen.\n"
+
+#: ../imagery/i.class/signature.c:283
+#, fuzzy
+msgid "Unable to allocate the cell buffer in display_signature()."
+msgstr "Kann den Zellbuffer nicht belegen."
+
+#: ../imagery/i.class/signature.c:314
+#, fuzzy
+msgid "Did not find input cell map MASK."
+msgstr "nicht."
+
+#: ../imagery/i.class/zoom_box.c:51
+#, c-format
+msgid ""
+"\n"
+"X, Y, B in zoom1 %d %d %d"
+msgstr ""
+"\n"
+"X, Y, B in zoom1 %d %d %d"
+
+#: ../imagery/i.class/zoom_box.c:80
+#, c-format
+msgid ""
+"\n"
+"X, Y, B in zoom2 %d %d %d"
+msgstr ""
+"\n"
+"X, Y, B in zoom2 %d %d %d"
+
+#: ../imagery/i.class/zoom_box.c:118
+#, c-format
+#, fuzzy
+msgid ""
+"\n"
+"left right top bottom %d %d %d %d"
+msgstr "Rechts oben unten"
+
+#: ../imagery/i.class/zoom_box.c:150
+#, c-format
+#, fuzzy
+msgid ""
+"\n"
+"north,south,east,west,nsres,ewres %f %f %f %f %f %f"
+msgstr "Süden Osten West f f f f f f"
+
+#: ../imagery/i.cluster/checkpt.c:18
+#, c-format
+#, fuzzy
+msgid "using seed means (%d files)\n"
+msgstr "mit n"
+
+#: ../imagery/i.cluster/checkpt.c:30
+#, c-format
+#, fuzzy
+msgid ""
+"\n"
+"######## iteration %d ###########\n"
+msgstr "n n"
+
+#: ../imagery/i.cluster/checkpt.c:31
+#, c-format
+#, fuzzy
+msgid "%d classes, %.2f%% points stable\n"
+msgstr "n"
+
+#: ../imagery/i.cluster/checkpt.c:41
+#, c-format
+#, fuzzy
+msgid "Iteration %d: %% Convergence: %.2f (%s elapsed, %s left)"
+msgstr "s s"
+
+#: ../imagery/i.cluster/main.c:39
+#, fuzzy
+msgid ""
+"An imagery function that generates spectral signatures for land cover types "
+"in an image using a clustering algorithm. The resulting signature file is "
+"used as input for i.maxlik, to generate an unsupervised image classification."
+msgstr "für Cover Bild mit a ist für i Bild."
+
+#: ../imagery/i.cluster/main.c:49
+#, fuzzy
+msgid "Group of imagery files to be clustered"
+msgstr "von"
+
+#: ../imagery/i.cluster/main.c:55
+msgid "Subgroup name in the above group"
+msgstr "Untergruppenname in der angegebenen Gruppe."
+
+#: ../imagery/i.cluster/main.c:61
+#, fuzzy
+msgid "File contains result signatures"
+msgstr "enthält"
+
+#: ../imagery/i.cluster/main.c:68
+#, fuzzy
+msgid "Initial number of classes"
+msgstr "von"
+
+#: ../imagery/i.cluster/main.c:74
+#, fuzzy
+msgid "File contains initial signatures"
+msgstr "enthält"
+
+#: ../imagery/i.cluster/main.c:82
+#, fuzzy
+msgid "Sampling intervals (by row and col); default: ~10,000 pixels"
+msgstr "row"
+
+#: ../imagery/i.cluster/main.c:88
+#, fuzzy
+msgid "Maximum number of iterations"
+msgstr "von"
+
+#: ../imagery/i.cluster/main.c:96
+msgid "Percent convergence"
+msgstr ""
+
+#: ../imagery/i.cluster/main.c:103
+#, fuzzy
+msgid "Cluster separation"
+msgstr "Ausgabe Feld-Trennzeichen"
+
+#: ../imagery/i.cluster/main.c:110
+#, fuzzy
+msgid "Minimum number of pixels in a class"
+msgstr "von a"
+
+#: ../imagery/i.cluster/main.c:117
+#, fuzzy
+msgid "Name of an output file to contain final report"
+msgstr "von Ausgabe enthalten"
+
+#: ../imagery/i.cluster/main.c:137
+#, fuzzy, c-format
+msgid ""
+"\n"
+"<%s> -- illegal result signature file name"
+msgstr "s"
+
+#: ../imagery/i.cluster/main.c:144
+#, fuzzy, c-format
+msgid ""
+"\n"
+"<%s> -- illegal number of initial classes"
+msgstr "s"
+
+#: ../imagery/i.cluster/main.c:156
+#, c-format
+#, fuzzy
+msgid ""
+"\n"
+"<%s> -- illegal value(s) of sample intervals"
+msgstr "s s"
+
+#: ../imagery/i.cluster/main.c:173
+#, fuzzy, c-format
+msgid ""
+"\n"
+"<%s> -- illegal value of iterations"
+msgstr "s"
+
+#: ../imagery/i.cluster/main.c:180
+#, fuzzy, c-format
+msgid ""
+"\n"
+"<%s> -- illegal value of convergence"
+msgstr "s"
+
+#: ../imagery/i.cluster/main.c:187
+#, fuzzy, c-format
+msgid ""
+"\n"
+"<%s> -- illegal value of separation"
+msgstr "s"
+
+#: ../imagery/i.cluster/main.c:194
+#, fuzzy, c-format
+msgid ""
+"\n"
+"<%s> -- illegal value of min_size"
+msgstr "s"
+
+#: ../imagery/i.cluster/main.c:207
+#, fuzzy
+msgid "Can't creat reportfile: "
+msgstr "Kann Tabelle '%s' nicht erstellen."
+
+#: ../imagery/i.cluster/main.c:215
+#, c-format
+#, fuzzy
+msgid ""
+"#################### CLUSTER (%s) ####################\n"
+"\n"
+msgstr "s"
+
+#: ../imagery/i.cluster/main.c:216
+#, fuzzy, c-format
+msgid "Location: %s\n"
+msgstr "s"
+
+#: ../imagery/i.cluster/main.c:217
+#, fuzzy, c-format
+msgid "Mapset:   %s\n"
+msgstr "s"
+
+#: ../imagery/i.cluster/main.c:218
+#, fuzzy, c-format
+msgid "Group:    %s\n"
+msgstr "s"
+
+#: ../imagery/i.cluster/main.c:219
+#, fuzzy, c-format
+msgid "Subgroup: %s\n"
+msgstr "s"
+
+#: ../imagery/i.cluster/main.c:222
+#, fuzzy, c-format
+msgid " %s\n"
+msgstr "s"
+
+#: ../imagery/i.cluster/main.c:224
+#, fuzzy, c-format
+msgid "Result signature file: %s\n"
+msgstr "s"
+
+#: ../imagery/i.cluster/main.c:226
+#, c-format
+#, fuzzy
+msgid "Region\n"
+msgstr "n"
+
+#: ../imagery/i.cluster/main.c:227
+#, fuzzy, c-format
+msgid "  North: %12.2f  East: %12.2f\n"
+msgstr "Osten n"
+
+#: ../imagery/i.cluster/main.c:228
+#, fuzzy, c-format
+msgid "  South: %12.2f  West: %12.2f\n"
+msgstr "Westen n"
+
+#: ../imagery/i.cluster/main.c:229
+#, c-format
+#, fuzzy
+msgid "  Res:   %12.2f  Res:  %12.2f\n"
+msgstr "n"
+
+#: ../imagery/i.cluster/main.c:230
+#, c-format
+#, fuzzy
+msgid "  Rows:  %12d  Cols: %12d  Cells: %d\n"
+msgstr "Zellen n"
+
+#: ../imagery/i.cluster/main.c:232
+#, c-format
+#, fuzzy
+msgid "Mask: %s\n"
+msgstr "s"
+
+#: ../imagery/i.cluster/main.c:234
+#, c-format
+#, fuzzy
+msgid "Cluster parameters\n"
+msgstr "n"
+
+#: ../imagery/i.cluster/main.c:235
+#, fuzzy, c-format
+msgid " Number of initial classes:    %d"
+msgstr "von"
+
+#: ../imagery/i.cluster/main.c:237
+#, fuzzy, c-format
+msgid " [from signature file %s]"
+msgstr "s"
+
+#: ../imagery/i.cluster/main.c:239
+#, c-format
+#, fuzzy
+msgid " Minimum class size:           %d\n"
+msgstr "Größe n"
+
+#: ../imagery/i.cluster/main.c:240
+#, c-format
+#, fuzzy
+msgid " Minimum class separation:     %f\n"
+msgstr "f n"
+
+#: ../imagery/i.cluster/main.c:241
+#, c-format
+#, fuzzy
+msgid " Percent convergence:          %f\n"
+msgstr "f n"
+
+#: ../imagery/i.cluster/main.c:242
+#, fuzzy, c-format
+msgid " Maximum number of iterations: %d\n"
+msgstr "von n"
+
+#: ../imagery/i.cluster/main.c:244
+#, c-format
+#, fuzzy
+msgid " Row sampling interval:        %d\n"
+msgstr "Zeile n"
+
+#: ../imagery/i.cluster/main.c:245
+#, c-format
+#, fuzzy
+msgid " Col sampling interval:        %d\n"
+msgstr "n"
+
+#: ../imagery/i.cluster/main.c:254
+#, fuzzy
+msgid "Reading image ... "
+msgstr "Bild "
+
+#: ../imagery/i.cluster/main.c:268
+#, fuzzy
+msgid "Out of Memory. Please run again and choose a smaller sample size"
+msgstr "von a Größe"
+
+#: ../imagery/i.cluster/main.c:273
+#, c-format
+#, fuzzy
+msgid "Sample size: %d points\n"
+msgstr "Größe n"
+
+#: ../imagery/i.cluster/main.c:276
+#, fuzzy
+msgid "Not enough sample points. Please run again and choose a larger sample size"
+msgstr "Nicht a Größe"
+
+#: ../imagery/i.cluster/main.c:280
+#, fuzzy
+msgid "Not enough non-zero sample data points. Check your current region (and mask)"
+msgstr "Nicht Prüfen"
+
+#: ../imagery/i.cluster/main.c:293
+#, c-format
+#, fuzzy
+msgid ""
+"\n"
+"########## final results #############\n"
+msgstr "n n"
+
+#: ../imagery/i.cluster/main.c:294
+#, c-format
+#, fuzzy
+msgid "%d classes (convergence=%.1f%%)\n"
+msgstr "n"
+
+#: ../imagery/i.cluster/main.c:306
+#, c-format
+#, fuzzy
+msgid "Could not write signature file <%s> for group <%s>, subsgroup <%s>"
+msgstr "s s s"
+
+#: ../imagery/i.cluster/main.c:310
+#, c-format
+#, fuzzy
+msgid ""
+"\n"
+"\n"
+"#################### CLASSES ####################\n"
+msgstr "n n n"
+
+#: ../imagery/i.cluster/main.c:311
+#, c-format
+#, fuzzy
+msgid ""
+"\n"
+"%d classes, %.2f%% points stable\n"
+msgstr "n n"
+
+#: ../imagery/i.cluster/main.c:313
+#, c-format
+#, fuzzy
+msgid ""
+"\n"
+"######## CLUSTER END (%s) ########\n"
+msgstr "s"
+
+#: ../imagery/i.cluster/open_files.c:18
+#, fuzzy, c-format
+msgid ""
+"\n"
+" group <%s> not found"
+msgstr ""
+"\n"
+" s"
+
+#: ../imagery/i.cluster/open_files.c:22
+#, fuzzy, c-format
+msgid "subgroup <%s> not found"
+msgstr "s"
+
+#: ../imagery/i.cluster/open_files.c:35
+#, c-format
+#, fuzzy
+msgid ""
+"\n"
+"** The following raster files in subgroup [%s] do not exist:"
+msgstr "s:"
+
+#: ../imagery/i.cluster/open_files.c:38
+#, c-format
+#, fuzzy
+msgid "       %s"
+msgstr "s"
+
+#: ../imagery/i.cluster/open_files.c:45
+#, c-format
+#, fuzzy
+msgid "Subgroup [%s] doesn't have any files"
+msgstr "s"
+
+#: ../imagery/i.cluster/open_files.c:47
+#, c-format
+#, fuzzy
+msgid "Subgroup [%s] only has 1 file"
+msgstr "s"
+
+#: ../imagery/i.cluster/open_files.c:48
+#, c-format
+#, fuzzy
+msgid "The subgroup must have at least 2 files to run %s"
+msgstr "s"
+
+#: ../imagery/i.cluster/open_files.c:60
+#, fuzzy
+msgid "Unable to proceed"
+msgstr "Kann <%s> nicht öffnen."
+
+#: ../imagery/i.cluster/open_files.c:67
+#, fuzzy, c-format
+msgid "** Can't open seed singature file <%s> **"
+msgstr "s"
+
+#: ../imagery/i.cluster/open_files.c:72
+#, fuzzy, c-format
+msgid "** Can't read signature file <%s> **"
+msgstr "s"
+
+#: ../imagery/i.cluster/open_files.c:75
+#, c-format
+#, fuzzy
+msgid "** <%s> has too many signatures (limit is 255)"
+msgstr "s"
+
+#: ../imagery/i.cluster/print1.c:11
+#, c-format
+#, fuzzy
+msgid ""
+"means and standard deviations for %d band%s\n"
+"\n"
+msgstr "s"
+
+#: ../imagery/i.cluster/print1.c:13
+#, c-format
+msgid " means  "
+msgstr " meint  "
+
+#: ../imagery/i.cluster/print1.c:17
+#, c-format
+msgid " stddev "
+msgstr " Stdabw."
+
+#: ../imagery/i.cluster/print2.c:17
+#, c-format
+#, fuzzy
+msgid ""
+"\n"
+"class means/stddev for each band\n"
+"\n"
+msgstr "für n n"
+
+#: ../imagery/i.cluster/print2.c:22
+#, c-format
+#, fuzzy
+msgid "class %d (%d)\n"
+msgstr "n"
+
+#: ../imagery/i.cluster/print2.c:23
+#, c-format
+msgid "  means "
+msgstr "Mean"
+
+#: ../imagery/i.cluster/print2.c:28
+#, c-format
+msgid "  stddev"
+msgstr "  Standardabweichung"
+
+#: ../imagery/i.cluster/print3.c:15
+#, c-format
+#, fuzzy
+msgid ""
+"\n"
+"initial means for each band\n"
+"\n"
+msgstr "für n n"
+
+#: ../imagery/i.cluster/print3.c:19
+#, c-format
+msgid "class %-3d "
+msgstr "Klasse %-3d "
+
+#: ../imagery/i.cluster/print4.c:16
+#, c-format
+#, fuzzy
+msgid "class centroids (sum/count=mean)\n"
+msgstr "n"
+
+#: ../imagery/i.cluster/print4.c:19
+#, c-format
+msgid "band %d"
+msgstr "Band %d"
+
+#: ../imagery/i.cluster/print5.c:15
+#, c-format
+#, fuzzy
+msgid ""
+"\n"
+"class separability matrix\n"
+"\n"
+msgstr "Matrix n n"
+
+#: ../imagery/i.cluster/print6.c:10
+#, fuzzy, c-format
+msgid "class distribution"
+msgstr "Distribution"
+
+#: ../imagery/i.fft/fftmain.c:55
+#, fuzzy
+msgid "Fast Fourier Transform (FFT) for image processing."
+msgstr "Umformen für Bild."
+
+#: ../imagery/i.fft/fftmain.c:64
+#, fuzzy
+msgid "input raster file being fft"
+msgstr "Titel der Ausgaberasterkarte."
+
+#: ../imagery/i.fft/fftmain.c:72
+#, fuzzy
+msgid "output real part arrays stored as raster file"
+msgstr "Ausgabe part"
+
+#: ../imagery/i.fft/fftmain.c:80
+#, fuzzy
+msgid "output imaginary part arrays stored as raster file"
+msgstr "Ausgabe part"
+
+#: ../imagery/i.fft/fftmain.c:88
+#, fuzzy
+msgid "Range of values in output display files"
+msgstr "Bereich von Ausgabe"
+
+#: ../imagery/i.fft/fftmain.c:101
+#, fuzzy, c-format
+msgid "%s: %s - Unable to open the input raster map\n"
+msgstr "s s"
+
+#: ../imagery/i.fft/fftmain.c:110
+#, fuzzy
+msgid "Raster MASK found, consider to remove (see man-page). Will continue..."
+msgstr "see Seite."
+
+#: ../imagery/i.fft/fftmain.c:117
+#, c-format
+#, fuzzy
+msgid "%s: %s - illegal file name for real part\n"
+msgstr "s s"
+
+#: ../imagery/i.fft/fftmain.c:123
+#, c-format
+#, fuzzy
+msgid "%s: %s - illegal file name for imaginary part\n"
+msgstr "s s"
+
+#: ../imagery/i.fft/fftmain.c:129
+#, fuzzy
+msgid "Range less than or equal to zero not allowed."
+msgstr "Bereich wenige gleich sind zu nicht."
+
+#: ../imagery/i.fft/fftmain.c:150
+#, fuzzy
+msgid "Insufficent memory for allocation of data sturcture"
+msgstr "für von"
+
+#: ../imagery/i.fft/fftmain.c:153
+#, fuzzy
+msgid "Initializing data...\n"
+msgstr "n"
+
+#: ../imagery/i.fft/fftmain.c:167
+#, fuzzy
+msgid "Reading the raster map..."
+msgstr "Schlüsselt Rasterkarten um."
+
+#: ../imagery/i.fft/fftmain.c:170
+#, fuzzy
+msgid "Error while reading input raster map."
+msgstr "Ein Fehler trat während des Lesens der Signaturdatei auf."
+
+#: ../imagery/i.fft/fftmain.c:179
+#, fuzzy
+msgid "Starting FFT..."
+msgstr "Zeichne..."
+
+#: ../imagery/i.fft/fftmain.c:181
+#, fuzzy
+msgid "FFT completed..."
+msgstr "fertiggestellt."
+
+#: ../imagery/i.fft/fftmain.c:199
+#, fuzzy
+msgid "Rotating data..."
+msgstr "Zeichne..."
+
+#: ../imagery/i.fft/fftmain.c:221
+#, fuzzy
+msgid "Writing transformed data to file..."
+msgstr "Schreiben läuft."
+
+#: ../imagery/i.fft/fftmain.c:227
+#, fuzzy
+msgid "Writing viewable versions of transformed data to files..."
+msgstr "Schreiben läuft von."
+
+#: ../imagery/i.fft/fftmain.c:265
+#, fuzzy
+msgid "Transform successful."
+msgstr "Umformen."
+
+#: ../imagery/i.fft/orig_wind.c:30
+#, fuzzy
+msgid "The real and imaginary original windows did not match."
+msgstr "Original nicht übereinstimmen mit."
+
+#: ../imagery/i.fft/save_fft.c:18 ../imagery/i.fft/save_fft.c:24
+#, fuzzy
+msgid "Unable to open file in the cell_misc directory."
+msgstr "Kann Signaturdatei nicht öffnen."
+
+#: ../imagery/i.find/main.c:43
+#, c-format
+#, fuzzy
+msgid "usage: %s location mapset element file\n"
+msgstr "s"
+
 #: ../imagery/i.group/main.c:30
 msgid "Creates and edits groups and subgroups of imagery files."
 msgstr "Erzeugt und editiert Gruppen und Untergruppen."
 
-#: ../imagery/i.group/main.c:38
+#: ../imagery/i.group/main.c:38 ../imagery/i.target/main.c:33
 msgid "Name of imagery group"
 msgstr "Name der Bildgruppe"
 
@@ -1348,9 +2351,8 @@ msgid "Found file %s@%s in Group\n"
 msgstr "Habe Datei %s@%s in der Gruppe gefunden.\n"
 
 #: ../imagery/i.group/main.c:244
-#, fuzzy
 msgid "Done ... Put group ref\n"
-msgstr "Fertig! "
+msgstr "Fertig... Gruppen Referenz\n"
 
 #: ../imagery/i.group/main.c:281
 #, c-format
@@ -1358,13 +2360,163 @@ msgid "Found file %s@%s in Sub-Group\n"
 msgstr "Habe Datei %s@%s in Untergruppe gefunden.\n"
 
 #: ../imagery/i.group/main.c:291
-#, fuzzy
 msgid "Done ... Put subgroup ref\n"
-msgstr "Fertig! \n"
+msgstr "Fertig... Untergruppenreferenz \n"
 
-#: ../imagery/i.points/main.c:27
+#: ../imagery/i.points/main.c:29
 msgid "Mark ground control points on image to be rectified."
 msgstr "Markiere die Kontrollpunkte (GCP) auf dem zu entzerrenden Bild."
+
+#: ../imagery/i.points/main.c:69 ../imagery/i.points/main.c:72
+#, c-format
+#, fuzzy
+msgid "Group [%s] contains no files"
+msgstr "s"
+
+#: ../imagery/i.target/main.c:26
+#, fuzzy
+msgid "Targets an imagery group to a GRASS location and mapset."
+msgstr "a."
+
+#: ../imagery/i.target/main.c:39
+#, fuzzy
+msgid "Name of imagery target location"
+msgstr "von"
+
+#: ../imagery/i.target/main.c:45
+#, fuzzy
+msgid "Name of target mapset"
+msgstr "von"
+
+#: ../imagery/i.target/main.c:49
+#, fuzzy
+msgid "Set current location and mapset as target for of imagery group"
+msgstr "Setzen für von"
+
+#: ../imagery/i.target/main.c:69
+#, fuzzy
+msgid ""
+"You must use either the Current Mapset and Location Flag (-c)\n"
+" OR\n"
+" manually enter the variables"
+msgstr ""
+"Flagge\n"
+" ODER\n"
+
+#: ../imagery/i.target/main.c:84
+#, c-format
+#, fuzzy
+msgid "group [%s] targeted for location [%s], mapset [%s]\n"
+msgstr "s s s"
+
+#: ../ps/ps.map/do_labels.c:47
+#, fuzzy, c-format
+msgid "Can't open label file <%s> in mapset <%s>"
+msgstr "s s"
+
+#: ../ps/ps.map/do_labels.c:75
+#, fuzzy, c-format
+msgid "Can't open temporary label file <%s>"
+msgstr "s"
+
+#: ../ps/ps.map/do_labels.c:150
+#, fuzzy
+msgid "Text labels: 'fontsize' given so ignoring 'size'"
+msgstr "Größe"
+
+#: ../ps/ps.map/main.c:85
+#, fuzzy
+msgid "Hardcopy PostScript map output utility."
+msgstr "Ausgabe."
+
+#: ../ps/ps.map/main.c:89
+msgid "Rotate plot 90 degrees"
+msgstr "Rotiere Zeichnung um 90 Grad"
+
+#: ../ps/ps.map/main.c:94
+#, fuzzy
+msgid "Print paper formats ( name width height left right top bottom(margin) )"
+msgstr "Links Rechts oben unten"
+
+#: ../ps/ps.map/main.c:99
+#, fuzzy
+msgid "Create EPS (Encapsulated PostScript) instead of PostScript file"
+msgstr "von"
+
+#: ../ps/ps.map/main.c:105
+#, fuzzy
+msgid "File containing mapping instructions (or use input=- to enter from keyboard)"
+msgstr "von"
+
+#: ../ps/ps.map/main.c:112
+#, fuzzy
+msgid "PostScript output file"
+msgstr "Ausgabe"
+
+#: ../ps/ps.map/main.c:120
+#, fuzzy
+msgid "Scale of the output map, e.g. 1:25000 (default: Auto-sized to fit page)"
+msgstr "von Ausgabe e g Seite"
+
+#: ../ps/ps.map/main.c:125
+#, fuzzy
+msgid "Number of copies to print"
+msgstr "von"
+
+#: ../ps/ps.map/main.c:220
+#, fuzzy
+msgid ""
+"Using \"scale\" from the command line is depreciated. Please use the \"scale"
+"\" mapping instruction instead."
+msgstr "skalieren von command Linie ist skalieren."
+
+#: ../ps/ps.map/main.c:254
+msgid "Current region cannot be set."
+msgstr "Aktuelle Region kann nicht gesetzt werden."
+
+#: ../ps/ps.map/main.c:265
+msgid "Data exists after final 'end' instruction!"
+msgstr ""
+
+#: ../ps/ps.map/ps_clrtbl.c:38
+#, fuzzy, c-format
+msgid "Category file for [%s] not available"
+msgstr "s"
+
+#: ../ps/ps.map/ps_clrtbl.c:43 ../ps/ps.map/ps_fclrtbl.c:61
+#, fuzzy
+msgid "Unable to read colors for colorbar"
+msgstr "gelesen für"
+
+#: ../ps/ps.map/ps_clrtbl.c:49
+#, fuzzy
+msgid ""
+"Your cats/ file is invalid. A cats/ file with categories and labels is "
+"required for 'colortable' when using CELL rasters. No colortable will be "
+"assigned to this output postscript file."
+msgstr "ist ungültig ist für mit Ausgabe."
+
+#: ../ps/ps.map/ps_clrtbl.c:64 ../ps/ps.map/ps_fclrtbl.c:82
+#: ../ps/ps.map/ps_fclrtbl.c:86
+#, fuzzy
+msgid "Colorbar y location beyond page margins. Adjusting."
+msgstr "Seite."
+
+#: ../ps/ps.map/ps_clrtbl.c:70 ../ps/ps.map/ps_fclrtbl.c:92
+#: ../ps/ps.map/ps_fclrtbl.c:96
+#, fuzzy
+msgid "Colorbar x location beyond page margins. Adjusting."
+msgstr "Seite."
+
+#: ../ps/ps.map/ps_fclrtbl.c:49
+#, fuzzy
+msgid "Range information not available (run r.support)."
+msgstr "Bereich nicht."
+
+#: ../ps/ps.map/ps_fclrtbl.c:56
+#, fuzzy
+msgid "A floating point colortable must contain a range of values."
+msgstr "Punkt enthalten a von."
 
 #: ../raster/r.average/main.c:31
 msgid ""
@@ -1954,35 +3106,82 @@ msgstr "Ausgabeformat der Hangneigungrichtung (agnps, answers oder grass)."
 msgid "find unresolved areas only"
 msgstr "Finde nur unaufgelöste Flächen."
 
-#: ../raster/r.grow2/main.c:116
+#: ../raster/r.flow/calc.c:397
+#, fuzzy
+msgid ""
+"lat/long databases not supported by r.flow. Please use 'r.watershed' for "
+"calculating flow accumulation."
+msgstr "long nicht für."
+
+#: ../raster/r.grow2/main.c:110
 msgid "Generates a raster map layerwith contiguous areas grown by one cell."
 msgstr ""
 "Erzeugt eine Rasterkarte mit kontinuierlich um eine Zelle gewachsenen "
 "Flächen."
 
-#: ../raster/r.grow2/main.c:124
+#: ../raster/r.grow2/main.c:118
 msgid "Name of existing input raster file"
 msgstr "Name einer existierenden Eingaberasterkarte"
 
-#: ../raster/r.grow2/main.c:131 ../raster/r.thin/main.c:49
+#: ../raster/r.grow2/main.c:125 ../raster/r.thin/main.c:49
 msgid "Name of output raster file"
 msgstr "Name der Ausgabekarte"
 
-#: ../raster/r.grow2/main.c:137
+#: ../raster/r.grow2/main.c:131
 msgid "Radius of buffer"
 msgstr "Pufferradius"
 
-#: ../raster/r.grow2/main.c:144
+#: ../raster/r.grow2/main.c:138
 msgid "Metric"
 msgstr "Metrisch"
 
-#: ../raster/r.grow2/main.c:152
+#: ../raster/r.grow2/main.c:146
 msgid "Value to write for input cells which are non-NULL (-1 => NULL)"
 msgstr "Wert für Eingabezellen, die nicht-NULL sind. (-1 => NULL)"
 
-#: ../raster/r.grow2/main.c:158
+#: ../raster/r.grow2/main.c:152
 msgid "Value to write for \"grown\" cells"
 msgstr "Wert für die \"gewachsenen\" Zellen."
+
+#: ../raster/r.grow2/main.c:176
+#, fuzzy, c-format
+msgid "Input file [%s] not found."
+msgstr "s."
+
+#: ../raster/r.grow2/main.c:188
+#, fuzzy, c-format
+msgid "Unknown metric: [%s]."
+msgstr "s."
+
+#: ../raster/r.grow2/main.c:192
+#, fuzzy, c-format
+msgid "Unable to open input file <%s@%s>."
+msgstr "s s."
+
+#: ../raster/r.grow2/main.c:198
+#, fuzzy, c-format
+msgid "Unable to open output file <%s>."
+msgstr "s."
+
+#: ../raster/r.grow2/main.c:202
+#, fuzzy, c-format
+msgid "Error in reading cats file for <%s>."
+msgstr "s."
+
+#: ../raster/r.grow2/main.c:208
+#, fuzzy, c-format
+msgid "Error in reading colr file for <%s>."
+msgstr "s."
+
+#: ../raster/r.grow2/main.c:300
+#, fuzzy, c-format
+msgid "Error writing cats file for <%s>."
+msgstr "s."
+
+#: ../raster/r.grow2/main.c:304
+#, fuzzy, c-format
+msgid "Error writing colr file for <%s>."
+msgstr "s."
 
 #: ../raster/r.his/main.c:64
 msgid ""
@@ -2031,7 +3230,7 @@ msgid "ARC/INFO ascii raster file (GRID) to be imported"
 msgstr "ARC/INFO ascii Rasterdateien (GRID) zum importieren."
 
 #: ../raster/r.in.arc/main.c:55 ../raster/r.in.ascii/main.c:61
-#: ../raster/r.in.bin/main.c:145 ../raster/r.in.gdal/main.c:87
+#: ../raster/r.in.bin/main.c:145 ../raster/r.in.gdal/main.c:86
 msgid "Name for resultant raster map"
 msgstr "Name der Ausgabekarte"
 
@@ -2040,7 +3239,7 @@ msgid "Storage type for resultant raster map"
 msgstr "Speichertyp der Ergebniskarte"
 
 #: ../raster/r.in.arc/main.c:71 ../raster/r.in.ascii/main.c:69
-#: ../raster/r.in.bin/main.c:153 ../raster/r.in.gdal/main.c:107
+#: ../raster/r.in.bin/main.c:153 ../raster/r.in.gdal/main.c:106
 #: ../raster/r.in.poly/main.c:39
 msgid "Title for resultant raster map"
 msgstr "Titel der Ausgabekarte"
@@ -2137,43 +3336,43 @@ msgstr "Anzahl der Spalten"
 msgid "Set Value to NULL"
 msgstr "Setze Wert auf NULL"
 
-#: ../raster/r.in.gdal/main.c:71
+#: ../raster/r.in.gdal/main.c:70
 msgid "Import GDAL supported raster file into a binary raster map layer."
 msgstr ""
 "Importiert eine durch GDAL unterstützte Rasterdatei in eine binäre GRASS "
 "Rasterdatei."
 
-#: ../raster/r.in.gdal/main.c:80
+#: ../raster/r.in.gdal/main.c:79
 msgid "Raster file to be imported"
 msgstr "Rasterdatei zum importieren."
 
-#: ../raster/r.in.gdal/main.c:94
+#: ../raster/r.in.gdal/main.c:93
 msgid "Band to select (default is all bands)"
 msgstr "Ausgewählte Bänder (standardmäßig werden alle Bänder ausgewählt)"
 
-#: ../raster/r.in.gdal/main.c:100
+#: ../raster/r.in.gdal/main.c:99
 msgid "Name of location to read projection from for GCPs transformation"
 msgstr ""
 "Name der Location, von der Projektionsinformationen für eine GCP-"
 "Transformation gelesen werden soll."
 
-#: ../raster/r.in.gdal/main.c:113 ../vector/v.in.ogr/main.c:157
+#: ../raster/r.in.gdal/main.c:112 ../vector/v.in.ogr/main.c:157
 msgid "Name for new location to create"
 msgstr "Name einer neu zu erstellenden Location"
 
-#: ../raster/r.in.gdal/main.c:117 ../vector/v.in.ogr/main.c:189
+#: ../raster/r.in.gdal/main.c:116 ../vector/v.in.ogr/main.c:189
 msgid "Override projection (use location's projection)"
 msgstr "Überschreibe Datenprojekten (benutzte Projektion der Location)."
 
-#: ../raster/r.in.gdal/main.c:121 ../vector/v.in.ogr/main.c:193
+#: ../raster/r.in.gdal/main.c:120 ../vector/v.in.ogr/main.c:193
 msgid "Extend location extents based on new dataset"
 msgstr "Vergrößere Locationausmaße basierend auf dem zu importierenden Datensatz."
 
-#: ../raster/r.in.gdal/main.c:125
+#: ../raster/r.in.gdal/main.c:124
 msgid "List supported formats then exit"
 msgstr "Zeige unterstützte Dateiformate und beende das Modul."
 
-#: ../raster/r.in.gdal/main.c:129
+#: ../raster/r.in.gdal/main.c:128
 msgid "Keep band numbers instead of using band color names"
 msgstr "Behalte Bandnummern bei anstatt der Bandfarben."
 
@@ -4033,8 +5232,9 @@ msgid "Output map: slope steepness (S) factor for USLE"
 msgstr "Ausgabekarte: Hangneigungsfaktor (S) für ABAG/USLE."
 
 #: ../raster/r.watershed/front/main.c:144
-msgid "Enable extend memory option: Operation is slow"
-msgstr "Schalte erweiterte Speicheroption an: Die Berechnung ist langsam."
+#, fuzzy
+msgid "Enable disk swap memory option: Operation is slow"
+msgstr "Medium option ist"
 
 #: ../raster/r.watershed/front/main.c:148
 msgid "Allow only horizontal and vertical flow of water"
@@ -4477,41 +5677,6 @@ msgstr "** Negative Werte sind nicht erlaubt!"
 msgid "** Positive values only please!"
 msgstr "** Bitte nur positive Werte!"
 
-#: ../raster/r.support/modhead/check_un.c:35
-#, c-format
-msgid "The product of the rows(%d), cols(%d) and bytes per cell(%d) = %ld\n"
-msgstr "Das Produkt der Reihen(%d), Spalten(%d) und Bytes pro Zelle(%d) = %ld\n"
-
-#: ../raster/r.support/modhead/check_un.c:38
-#, c-format
-msgid "does not equal the file size (%ld)\n"
-msgstr "ist nicht gleich der Dateigröße (%ld).\n"
-
-#: ../raster/r.support/modhead/check_un.c:39
-#, c-format
-msgid ""
-"The following combinations will produce the correct file size:\n"
-"\n"
-msgstr ""
-"Die folgenden Kombinationen werden die korrekte Dateigröße erzeugen:\n"
-"\n"
-
-#: ../raster/r.support/modhead/check_un.c:49
-#: ../raster/r.support/modhead/check_un.c:53
-#, c-format
-msgid "%d byte%s per cell\n"
-msgstr "%d byte%s pro Zelle\n"
-
-#: ../raster/r.support/modhead/check_un.c:49
-#: ../raster/r.support/modhead/check_un.c:54
-msgid "s"
-msgstr "s"
-
-#: ../raster/r.support/modhead/factors.c:40
-#, c-format
-msgid "%s   "
-msgstr "%s   "
-
 #: ../raster/r.support/modhead/hitreturn.c:12
 msgid ""
 "\n"
@@ -4572,11 +5737,6 @@ msgstr "cellhd Kompression: %d\n"
 #, c-format
 msgid "3.0 compression %sindicated\n"
 msgstr "3.0 Komprimierung %s angezeigt.\n"
-
-#: ../raster/r.support/modhead/modhead.c:193
-#: ../raster/r.support/modhead/modhead.c:195
-msgid "not "
-msgstr "nicht "
 
 #: ../raster/r.support/modhead/modhead.c:194
 #, c-format
@@ -4692,8 +5852,8 @@ msgstr "Kann dig_cats Datei nicht öffnen."
 msgid "Cannot open database %s"
 msgstr "Kann Datenbank '%s' nicht öffnen."
 
-#: ../vector/v.convert/att.c:74 ../vector/v.in.ogr/main.c:612
-#: ../vector/v.to.points/main.c:246
+#: ../vector/v.convert/att.c:74 ../vector/v.in.ascii/in.c:304
+#: ../vector/v.in.ogr/main.c:612 ../vector/v.to.points/main.c:246
 #, c-format
 msgid "Cannot create table: %s"
 msgstr "Kann Tabelle '%s' nicht erstellen."
@@ -4935,6 +6095,240 @@ msgstr "Überschreibe die Verbindungsparameter für den angegebenen Layer."
 msgid "Delete connection for certain layer (not the table)"
 msgstr "Lösche die Verbindung zur Tabelle (nicht aber die Tabelle)."
 
+#: ../vector/v.in.ascii/a2b.c:139
+#, fuzzy
+msgid "Out of memory"
+msgstr "von"
+
+#: ../vector/v.in.ascii/head.c:53
+#, c-format
+#, fuzzy
+msgid "Unknown keyword [%s] in vector head."
+msgstr "s."
+
+#: ../vector/v.in.ascii/in.c:30
+#, fuzzy
+msgid "Convert GRASS ascii file or points file to binary vector."
+msgstr "Konvertieren."
+
+#: ../vector/v.in.ascii/in.c:40
+#, fuzzy
+msgid ""
+"ASCII file to be converted to binary vector file, if not given reads from "
+"standard input"
+msgstr "nicht von"
+
+#: ../vector/v.in.ascii/in.c:51
+#, fuzzy
+msgid "Output format"
+msgstr "Ausgabekarte"
+
+#: ../vector/v.in.ascii/in.c:57
+#, fuzzy
+msgid "Field separator"
+msgstr "Ausgabe Feld-Trennzeichen"
+
+#: ../vector/v.in.ascii/in.c:67
+#, fuzzy
+msgid "Number of header lines to skip at top of input file (written to map history)"
+msgstr "von Zeilen an oben von"
+
+#: ../vector/v.in.ascii/in.c:75
+#, fuzzy
+msgid ""
+"Columns definition for points mode in SQL style, for example:\n"
+"'x double precision, y double precision, cat int, name varchar(10)'"
+msgstr "für Modus für example n"
+
+#: ../vector/v.in.ascii/in.c:85
+#, fuzzy
+msgid "Number of column used as x coordinate (first column is 1) for points mode"
+msgstr "von ist für Modus"
+
+#: ../vector/v.in.ascii/in.c:94
+#, fuzzy
+msgid "Number of column used as y coordinate (first column is 1) for points mode"
+msgstr "von ist für Modus"
+
+#: ../vector/v.in.ascii/in.c:103
+#, fuzzy
+msgid ""
+"Number of column used as z coordinate (first column is 1) for points mode. "
+"If 0, z coordinate is not used."
+msgstr "von z ist für Modus z ist nicht."
+
+#: ../vector/v.in.ascii/in.c:113
+#, fuzzy
+msgid ""
+"Number of column used as category (first column is 1) for points mode. If 0, "
+"unique category is assigned to each row and written to new column 'cat'."
+msgstr "von ist für Modus unique ist row."
+
+#: ../vector/v.in.ascii/in.c:118
+#, fuzzy
+msgid "Create 3D file"
+msgstr "Erzeuge eine 3D-Ausgabe."
+
+#: ../vector/v.in.ascii/in.c:122
+#, fuzzy
+msgid "Do not create table in points mode"
+msgstr "nicht Tabelle Modus"
+
+#: ../vector/v.in.ascii/in.c:126
+#, fuzzy
+msgid "Create a new empty map and exit. Nothing is read from input."
+msgstr "a Leer ist gelesen von."
+
+#: ../vector/v.in.ascii/in.c:130
+#, fuzzy
+msgid "Don't expect a header when reading in standard format"
+msgstr "a"
+
+#: ../vector/v.in.ascii/in.c:143
+#, fuzzy
+msgid "Please specify reasonable number of lines to skip."
+msgstr "von Zeilen."
+
+#: ../vector/v.in.ascii/in.c:146
+#, fuzzy
+msgid "Please specify z column."
+msgstr "z."
+
+#: ../vector/v.in.ascii/in.c:153
+#, fuzzy
+msgid "Please specify reasonable z column."
+msgstr "z."
+
+#: ../vector/v.in.ascii/in.c:160
+#, fuzzy, c-format
+msgid "Could not open ascii file [%s]"
+msgstr "s"
+
+#: ../vector/v.in.ascii/in.c:198
+#, fuzzy, c-format
+msgid "Can't open temp file %s"
+msgstr "s"
+
+#: ../vector/v.in.ascii/in.c:211
+#, fuzzy
+msgid ""
+"x column number > minimum last column number\n"
+"(incorrect field separator?)"
+msgstr "n"
+
+#: ../vector/v.in.ascii/in.c:213
+#, fuzzy
+msgid ""
+"y column number > minimum last column number\n"
+"(incorrect field separator?)"
+msgstr "n"
+
+#: ../vector/v.in.ascii/in.c:215
+#, fuzzy
+msgid ""
+"z column number > minimum last column number\n"
+"(incorrect field separator?)"
+msgstr "z n"
+
+#: ../vector/v.in.ascii/in.c:217
+#, fuzzy
+msgid ""
+"cat column number > minimum last column number\n"
+"(incorrect field separator?)"
+msgstr "n"
+
+#: ../vector/v.in.ascii/in.c:219
+#, fuzzy
+msgid "x column is not of number type"
+msgstr "ist nicht von"
+
+#: ../vector/v.in.ascii/in.c:220
+#, fuzzy
+msgid "y column is not of number type"
+msgstr "ist nicht von"
+
+#: ../vector/v.in.ascii/in.c:221
+#, fuzzy
+msgid "z column is not of number type"
+msgstr "z ist nicht von"
+
+#: ../vector/v.in.ascii/in.c:222
+#, fuzzy
+msgid "cat column is not of number type"
+msgstr "ist nicht von"
+
+#: ../vector/v.in.ascii/in.c:240 ../vector/v.in.ogr/main.c:605
+#: ../vector/v.label/main.c:222 ../vector/v.surf.idw/read_sites.c:38
+#: ../vector/v.to.points/main.c:239 ../vector/v.db.select/main.c:167
+#, c-format
+msgid "Cannot open database %s by driver %s"
+msgstr "Kann Datenbank '%s' mit Treiber '%s' nicht öffnen."
+
+#: ../vector/v.in.ascii/in.c:259
+#, fuzzy
+msgid "Category column is not of integer type"
+msgstr "ist nicht von"
+
+#: ../vector/v.in.ascii/in.c:309 ../vector/v.in.ogr/main.c:619
+#: ../vector/v.to.points/main.c:253
+#, c-format
+msgid "Cannot grant privileges on table %s"
+msgstr "Kann Privilegien für die Tabelle '%s' nicht zuweisen."
+
+#: ../vector/v.in.ascii/in.c:320
+#, fuzzy, c-format
+msgid "Cannot describe table %s"
+msgstr "s"
+
+#: ../vector/v.in.ascii/in.c:325
+#, c-format
+#, fuzzy
+msgid ""
+"Number of columns defined (%d) does not match number of columns (%d) in "
+"input."
+msgstr "von nicht übereinstimmen mit von."
+
+#: ../vector/v.in.ascii/in.c:349
+#, c-format
+msgid "Column %d defined as double has only integer values"
+msgstr "Spalte %d ist als double definiert und hat nur Integer-Werte."
+
+#: ../vector/v.in.ascii/in.c:351
+#, c-format
+msgid "Column %d defined as string has only integer values"
+msgstr "Spalte %d ist als String definiert und hat nur Integer Werte."
+
+#: ../vector/v.in.ascii/in.c:356
+#, c-format
+msgid "Column %d defined as integer has double values"
+msgstr "Spalte %d ist als Integer definiert und hat Double-Werte."
+
+#: ../vector/v.in.ascii/in.c:358
+#, c-format
+msgid "Column %d defined as string has double values"
+msgstr "Spalte %d ist als String definiert und hat Double-Werte."
+
+#: ../vector/v.in.ascii/in.c:363
+#, c-format
+msgid "Column %d defined as integer has string values"
+msgstr "Spalte %d ist als Integer definiert und hat String-Werte."
+
+#: ../vector/v.in.ascii/in.c:365
+#, c-format
+msgid "Column %d defined as double has string values"
+msgstr "Spalte %d is als Double definiert und hat String-Werte."
+
+#: ../vector/v.in.ascii/in.c:368
+#, c-format
+#, fuzzy
+msgid "Length of column %d (%d) is less than maximum value length (%d)"
+msgstr "von ist wenige length"
+
+#: ../vector/v.in.ascii/in.c:386 ../vector/v.in.ogr/main.c:616
+#: ../vector/v.to.points/main.c:250
+msgid "Cannot create index"
+msgstr "Kann keinen Index erstellen."
+
 #: ../vector/v.in.ogr/main.c:91
 #, c-format
 msgid "Convert OGR vectors to GRASS. Available drivers:\n"
@@ -5110,21 +6504,6 @@ msgstr ""
 msgid "Column type not supported (%s)"
 msgstr "Spaltentyp (%s) wird nicht unterstützt."
 
-#: ../vector/v.in.ogr/main.c:605 ../vector/v.surf.idw/read_sites.c:38
-#: ../vector/v.to.points/main.c:239 ../vector/v.db.select/main.c:167
-#, c-format
-msgid "Cannot open database %s by driver %s"
-msgstr "Kann Datenbank '%s' mit Treiber '%s' nicht öffnen."
-
-#: ../vector/v.in.ogr/main.c:616 ../vector/v.to.points/main.c:250
-msgid "Cannot create index"
-msgstr "Kann keinen Index erstellen."
-
-#: ../vector/v.in.ogr/main.c:619 ../vector/v.to.points/main.c:253
-#, c-format
-msgid "Cannot grant privileges on table %s"
-msgstr "Kann Privilegien für die Tabelle '%s' nicht zuweisen."
-
 #: ../vector/v.in.ogr/main.c:676 ../vector/v.to.points/main.c:54
 #, c-format
 msgid "Cannot insert new row: %s"
@@ -5189,6 +6568,116 @@ msgstr ""
 #: ../vector/v.info/main.c:78
 msgid "Print vector map region only"
 msgstr "Gebe nur die Vektorkartenausdehnung aus."
+
+#: ../vector/v.label/main.c:61
+#, fuzzy
+msgid "Create paint labels for GRASS vector file and attached attributes."
+msgstr "für attached."
+
+#: ../vector/v.label/main.c:75
+#, fuzzy
+msgid "Name of attribute column to be used for labels"
+msgstr "von attribute für"
+
+#: ../vector/v.label/main.c:79
+#, fuzzy
+msgid "Create labels along lines"
+msgstr "Zeilen"
+
+#: ../vector/v.label/main.c:83
+#, fuzzy
+msgid "Name for new paint-label file"
+msgstr "für"
+
+#: ../vector/v.label/main.c:89
+msgid "Offset label in x-direction"
+msgstr "Label-Versatz in X-Richtung."
+
+#: ../vector/v.label/main.c:95
+msgid "Offset label in y-direction"
+msgstr "Label-Versatz in Y-Richtung."
+
+#: ../vector/v.label/main.c:101
+msgid "Reference position"
+msgstr "Referenz-Position."
+
+#: ../vector/v.label/main.c:115
+#, fuzzy
+msgid "Label size (in map-units)"
+msgstr "Größe"
+
+#: ../vector/v.label/main.c:121
+#, fuzzy
+msgid "Label size (in points)"
+msgstr "Größe"
+
+#: ../vector/v.label/main.c:128
+#, fuzzy
+msgid "Text color"
+msgstr "Standard-Farbe\n"
+
+#: ../vector/v.label/main.c:135
+#, fuzzy
+msgid "Border width (only for ps.map output)"
+msgstr "für Ausgabe"
+
+#: ../vector/v.label/main.c:141
+#, fuzzy
+msgid "Highlight color for text (only for ps.map output)"
+msgstr "für für Ausgabe"
+
+#: ../vector/v.label/main.c:148
+#, fuzzy
+msgid "Line width of highlight color (only for ps.map output)"
+msgstr "von für Ausgabe"
+
+#: ../vector/v.label/main.c:154
+msgid "Background color"
+msgstr "Hintergrundfarbe"
+
+#: ../vector/v.label/main.c:161
+msgid "Border color"
+msgstr "Randfarbe "
+
+#: ../vector/v.label/main.c:169
+#, fuzzy
+msgid "Opaque to vector (only relevant if background color is selected)"
+msgstr "Hintergrund ist"
+
+#: ../vector/v.label/main.c:176
+#, fuzzy
+msgid "Space between letters (in map-units)"
+msgstr "zwischen"
+
+#: ../vector/v.label/main.c:203
+#, fuzzy
+msgid "Too many parameters for <reference>"
+msgstr "für<reference>"
+
+#: ../vector/v.label/main.c:212
+#, fuzzy, c-format
+msgid "Vector file [%s] not available"
+msgstr "s"
+
+#: ../vector/v.label/main.c:219
+#, fuzzy
+msgid "Cannot get layer info for vector map"
+msgstr "für"
+
+#: ../vector/v.label/main.c:233
+#, fuzzy
+msgid "Cannot read vector"
+msgstr "gelesen"
+
+#: ../vector/v.label/main.c:248
+#, fuzzy
+msgid "Cannot select attribute."
+msgstr "attribute."
+
+#: ../vector/v.label/main.c:252
+#, fuzzy, c-format
+msgid "No database record for category %d"
+msgstr "database für"
 
 #: ../vector/v.surf.idw/read_sites.c:34
 msgid "Cannot read field info"
@@ -5328,11 +6817,6 @@ msgstr "ask_transform_coor():  Verlasse session.. \n"
 msgid " Number of points that have been entered: %d\n"
 msgstr "Anzahl der Punkte, die eingegeben wurden: %d\n"
 
-#: ../vector/v.transform/creat_trans.c:90
-#, c-format
-msgid "%s"
-msgstr "%s"
-
 #: ../vector/v.transform/creat_trans.c:100
 msgid "Please answer yes or no"
 msgstr "Bitte antworten Sie mit Yes oder No."
@@ -5460,801 +6944,35 @@ msgstr "%d Einträge aktualisiert.\n"
 msgid "%d update errors\n"
 msgstr "%d aktualisierte Fehler.\n"
 
-#: ../vector/v.db.select/main.c:89
+#: ../vector/v.db.select/main.c:55
+msgid "Attribute column(s)"
+msgstr "Attribut-Spalte(n)"
+
+#: ../vector/v.db.select/main.c:70
+msgid "Output vertical record separator"
+msgstr "Vertikales Trennzeichen für die Ausgabe."
+
+#: ../vector/v.db.select/main.c:76
+msgid "Null value indicator"
+msgstr "Nullwert-Indikator"
+
+#: ../vector/v.db.select/main.c:80
+msgid "Do not include column names in output"
+msgstr "In der Ausgabe kein Spaltennamen ausgeben."
+
+#: ../vector/v.db.select/main.c:84
+msgid "Vertical output (instead of horizontal)"
+msgstr "Vertikale Ausgabe (anstatt horizontal)."
+
+#: ../vector/v.db.select/main.c:100
 msgid "Database connection not defined"
 msgstr "Datenbankverbindung nicht definiert."
 
-#: ../vector/v.db.select/main.c:97
+#: ../vector/v.db.select/main.c:119
 msgid "Cannot open select cursor"
 msgstr "Kann 'Select'-Cursor nicht öffnen."
 
-#: ../vector/v.db.select/main.c:115
+#: ../vector/v.db.select/main.c:137
 msgid "Cannot fetch data"
 msgstr "Kann die Daten nicht holen."
 
-#~ msgid "Create fly-through script to run in NVIZ"
-#~ msgstr "Erzeuge ein lauffähiges NVIZ-Skript eines Gelände-Durchflugs."
-
-#~ msgid "Name of output script"
-#~ msgstr "Name des Ausgabe-Skripts."
-
-#~ msgid "Prefix of output images (default = NVIZ)"
-#~ msgstr "Präfix der Ausgabebilder (Standard = NVIZ)."
-
-#~ msgid "Route coordinates (east,north)"
-#~ msgstr "Routen-Koordinaten (Osten, Norden)."
-
-#~ msgid "Camera layback distance (in map units)"
-#~ msgstr "Camera Entferung (in Karteneinheiten)."
-
-#~ msgid "Camera height above terrain"
-#~ msgstr "Kamerahöhe über der Oberfläche."
-
-#~ msgid "Number of frames"
-#~ msgstr "Anzahl der Frames."
-
-#~ msgid "Start frame number (default=0)"
-#~ msgstr "Start-Frame Nummer (Standar: 0)."
-
-#~ msgid "Interactively select route"
-#~ msgstr "Selectiere interaktiv eine Route."
-
-#~ msgid "Full render -- Save images"
-#~ msgstr "Voll-Rendern -- Speichere Bilder."
-
-#~ msgid "Fly at constant elevation (ht)"
-#~ msgstr "Flieg in konstanter Höhe (ht)."
-
-#~ msgid "Output KeyFrame file"
-#~ msgstr "Ausgabedatei der KeyFrames."
-
-#~ msgid "Render images off-screen"
-#~ msgstr "Rendere Bilder off-screen."
-
-#~ msgid "Enable vector and sites drawing"
-#~ msgstr "Aktiviere Vektor- und Punktdarstellung."
-
-#~ msgid "Either -i flag and/or route parameter must be used"
-#~ msgstr ""
-#~ "Entweder der Parameter '-i' und/oder Routen-Parameter muss gesetzt werden."
-
-#~ msgid "Off-screen only available with full render mode"
-#~ msgstr "Off-screen nur verfügbar im Voll-Rendering-Modus."
-
-#~ msgid "Cannot find mapset for %s"
-#~ msgstr "Kann Mapset für %s nicht finden."
-
-#~ msgid "Cannot open File %s"
-#~ msgstr "Kann Datei '%s' nicht öffnen."
-
-#~ msgid "Not able to open file for [%s]"
-#~ msgstr "Kann Datei [%s] nicht öffnen."
-
-#~ msgid "You must select more than one point"
-#~ msgstr "Es müssen mehr als ein Punkt selektiert werden."
-
-#~ msgid "You must select at least four points"
-#~ msgstr "Es müssen mindestens 4 Punkte selektiert werden."
-
-#~ msgid "You must provide at least four points %d"
-#~ msgstr "Es müssen mindestens 4 Punkte %d angegeben werden."
-
-#~ msgid "  Node[%d]: %d  Number of lines: %d  Coordinates: %.6f, %.6f, %.6f\n"
-#~ msgstr "  Knoten[%d]: %d  Linien: %d  Koordinaten: %.6f, %.6f, %.6f\n"
-
-#~ msgid "name of input vector file"
-#~ msgstr "Name der Eingabedatei."
-
-#~ msgid "name of resulting vector file"
-#~ msgstr "Name der resultierenden Vektordatei."
-
-#~ msgid "Could not find input %s"
-#~ msgstr "Kann Eingabedatei %s nicht finden."
-
-#~ msgid "Could not open input"
-#~ msgstr "Kann Eingabe nicht öffnen."
-
-#~ msgid "Could not open output"
-#~ msgstr "Kann Ausgabe nicht öffnen."
-
-#~ msgid "My first raster module."
-#~ msgstr "Mein erstes Rastermodul."
-
-#~ msgid "cell file [%s] not found"
-#~ msgstr "Zell-Datei [%s] nicht gefunden."
-
-#~ msgid "[%s] is an illegal name"
-#~ msgstr "[%s] is ein ungültiger Name."
-
-#~ msgid "Cannot open cell file [%s]"
-#~ msgstr "Kann Zell-Datei [%s] nicht öffnen."
-
-#~ msgid "Cannot read file header of [%s]"
-#~ msgstr "Kann Header-Datei für [%s] nicht lesen."
-
-#~ msgid "Could not open <%s>"
-#~ msgstr "Kann <%s> nicht öffnen."
-
-#~ msgid "Could not read from <%s>"
-#~ msgstr "Kann nicht von <%s> lesen."
-
-#~ msgid "Cannot write to <%s>"
-#~ msgstr "Kann nicht in '%s' schreiben."
-
-#~ msgid "Outputs and modifies the user's current GRASS variable settings."
-#~ msgstr "Gibt die aktuellen GRASS-Variablen aus und modifiziert sie."
-
-#~ msgid "GRASS variable to get"
-#~ msgstr "GRASS-Variable, die angezeigt werden soll."
-
-#~ msgid "GRASS variable to set"
-#~ msgstr "GRASS-Variable, die gesetzt werden soll."
-
-#~ msgid "Where GRASS variable is stored"
-#~ msgstr "Wo die GRASS-Variablen gespeichert werden."
-
-#~ msgid ""
-#~ "Program to manage the boundary definitions for the geographic region."
-#~ msgstr "Modul zur Manipulation der Ausdehnung der geographischen Region."
-
-#~ msgid "Print the current region (shell script style)"
-#~ msgstr "Gib die aktuelle Region aus (Shell-Skript-Style)."
-
-#~ msgid "Print the current region"
-#~ msgstr "Gib die aktuelle Region aus."
-
-#~ msgid "Print the current region in lat/long"
-#~ msgstr "Gib die aktuelle Region in lat/long aus."
-
-#~ msgid "Print the current region extent"
-#~ msgstr "Gib die Ausdehnung der aktuellen Region aus."
-
-#~ msgid "Print the current region map center coordinates"
-#~ msgstr "Gib die Koordinaten der Kartenmitte der aktuellen Region aus."
-
-#~ msgid "Print region resolution in meters (geodesic)"
-#~ msgstr "Gib Regions-Auflösung in Metern aus (geodätisch)."
-
-#~ msgid ""
-#~ "Align region to resolution (default = align to bounds, works only for 2D "
-#~ "resolution )"
-#~ msgstr ""
-#~ "Passe Region an die Auflösung an (Standard = passe an die Grenzen an, nur "
-#~ "bei 2D-Auflösung)."
-
-#~ msgid "Do not update the current region"
-#~ msgstr "Die aktuelle Region nicht aktualisieren."
-
-#~ msgid "Print also 3D settings"
-#~ msgstr "Gebe auch 3D-Einstellungen aus."
-
-#~ msgid "Set region to match this 3D raster map (both 2D and 3D values)"
-#~ msgstr ""
-#~ "Setze Region auf die Werte dieser 3D-Rasterkarte (sowohl 2D als auch 3D-"
-#~ "Werte)."
-
-#~ msgid "Value for the top edge"
-#~ msgstr "Wert für die obere Ecke."
-
-#~ msgid "Value for the bottom edge"
-#~ msgstr "Wert für die untere Ecke."
-
-#~ msgid "Grid resolution 2D (both north-south and east-west)"
-#~ msgstr "2D Auflösung (Nord-Süd und Ost-West)."
-
-#~ msgid "3D grid resolution (north-south, east-west and top-bottom)"
-#~ msgstr "3D Auflösung (Nord-Süd, Ost-West und top-bottom)."
-
-#~ msgid "Top-bottom grid resolution"
-#~ msgstr "Top-bottom Auflösung."
-
-#~ msgid "Raster map to zoom into"
-#~ msgstr "Rasterkarte, in die hereingezoomt werden soll"
-
-#~ msgid "Save the current region to region definition file"
-#~ msgstr "Speichere die aktuelle Region in einer Region-Datei."
-
-#~ msgid "3D raster map <%s> not found"
-#~ msgstr "3D Rasterkarte <%s> nicht gefunden."
-
-#~ msgid "can't read header for 3D raster <%s> in <%s>"
-#~ msgstr "Kann den Header für die 3D-Rasterdatei <%s> in <%s> nicht lesen."
-
-#~ msgid "%s in %s: %s"
-#~ msgstr "%s in %s: %s"
-
-#~ msgid "<%s> - illegal region name"
-#~ msgstr "<%s> - ungültiger Regions-Name."
-
-#~ msgid "can't write region <%s>"
-#~ msgstr "Kann Region <%s> nicht schreiben."
-
-#~ msgid "unable to update current region"
-#~ msgstr "Kann die derzeitige Region nicht aktualisieren."
-
-#~ msgid "<%s=%s> ** invalid input **"
-#~ msgstr "<%s=%s> ** Ungültige Eingabe **"
-
-#~ msgid "Output aspect direction format (agnps, answers, or grass)"
-#~ msgstr "Ausgabeformat der Hangneigungrichtung (agnps, answers oder grass)."
-
-#~ msgid "Print raster map region only"
-#~ msgstr "Gebe nur Rasterkartenausdehnung aus."
-
-#~ msgid "Generate vector points as 3D points"
-#~ msgstr "Erzeuge Vektorpunkte als 3D-Punkte."
-
-#~ msgid ""
-#~ "Write raster values as z coordinate. Table is not created. Currently "
-#~ "supported only for points"
-#~ msgstr ""
-#~ "Schreibe Rasterwerte als Z-Koodinate. Attributtabelle wurde nicht "
-#~ "erzeugt. Derzeit werden nur Punkte unterstützt."
-
-#~ msgid "Update the statistics (histogram, range) for [%s]? "
-#~ msgstr ""
-#~ "Wollen Sie die Statistik (Histogramm, Spannweite) für die Karte [%s] "
-#~ "aktualisieren?"
-
-#~ msgid ""
-#~ "\n"
-#~ "  Updating statistics for [%s]"
-#~ msgstr ""
-#~ "\n"
-#~ "  Aktualisiere die Statistik für Karte [%s]."
-
-#~ msgid ""
-#~ "   Updating the number of categories for [%s]\n"
-#~ "\n"
-#~ msgstr ""
-#~ "   Aktualisiere die Anzahl der kategorien für Karte [%s].\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Allows creation and/or modification of raster map layer support files."
-#~ msgstr ""
-#~ "Erlaubt das Erzeugen und/oder das Modifizieren von Rasterkarte-Support-"
-#~ "Dateien."
-
-#~ msgid "Unable to find [%s]."
-#~ msgstr "Kann [%s] nicht finden."
-
-#~ msgid "Edit header for [%s]? "
-#~ msgstr "Editiere Header der Karte [%s]?"
-
-#~ msgid ""
-#~ "\n"
-#~ "NOTE: [%s] is a reclass of [%s in %s]"
-#~ msgstr ""
-#~ "\n"
-#~ "BEACHTE: [%s] ist eine reklassifizierte Karte von [%s in %s]."
-
-#~ msgid "Canceling from edit header."
-#~ msgstr "Breche das Editieren der Headerdatei ab."
-
-#~ msgid "Edit the category file for [%s]? "
-#~ msgstr "Editiere die Kategorie-Datei für Karte [%s]?"
-
-#~ msgid "Create/Update the color table for [%s]? "
-#~ msgstr "Erzeuge/Aktualisiere die Farbtabelle für die Karte [%s]?"
-
-#~ msgid "Edit the history file for [%s]? "
-#~ msgstr "Wollen Sie die History-Datei für Karte [%s] editieren?"
-
-#~ msgid ""
-#~ "\n"
-#~ "The null file for [%s] may indicate that some cells contain\n"
-#~ " no data. If the null file for [%s] doesn't exist, zero cells in\n"
-#~ " it are treated by GRASS application programs as no data."
-#~ msgstr ""
-#~ "\n"
-#~ "Die null-Datei für Karte [%s] kann anzeigen, dass einige Zellen NODATA "
-#~ "enthalten. Falls die null-Datei für Karte [%s] nicht existiert, werden "
-#~ "zero (0)-Zellen von den GRASS-Modulen als NODATA behandelt. "
-
-#~ msgid ""
-#~ "\n"
-#~ "Do you want to create/reset the null file for [%s] so that null cell "
-#~ "values are considered valid data? "
-#~ msgstr ""
-#~ "\n"
-#~ "Wollen Sie eine null-Datei für Karte [%s] erzeugen/zurücksetzen, so dass "
-#~ "Zellen mit null-Werten als valide Daten angesehen werden?"
-
-#~ msgid "[%s] is a reclass of another map. Exiting."
-#~ msgstr ""
-#~ "[%s] ist eine reklassifizierte Karte einer anderen Karte. Beende mich."
-
-#~ msgid "Writing new null file for [%s]... "
-#~ msgstr "Schreibe neue null-Datei für Karte [%s]..."
-
-#~ msgid "Error writing null row [%d]."
-#~ msgstr "Fehler beim Schreiben der null-Reihe [%d]."
-
-#~ msgid ""
-#~ "\n"
-#~ "Do you want to delete the null file for [%s]\n"
-#~ "(all zero cells will then be considered no data)? "
-#~ msgstr ""
-#~ "\n"
-#~ "Wollen Sie die Null-Datei für Karte [%s] löschen?\n"
-#~ "(alle 0 (zero)-Zellen werden dann NODATA sein.)"
-
-#~ msgid "Removing null file for [%s]...\n"
-#~ msgstr "Entferne null-Datei für [%s]...\n"
-
-#~ msgid "Done."
-#~ msgstr "Fertig."
-
-#~ msgid ""
-#~ "\n"
-#~ "Hit RETURN to continue -->"
-#~ msgstr ""
-#~ "\n"
-#~ "Drücke RETURN zum Fortfahren -->"
-
-#~ msgid "Which vector file needs updated categories?"
-#~ msgstr "Für welche Vektordatei sollen die Kategorien aktualisiert werden?"
-
-#~ msgid "Which raster file needs updated categories?"
-#~ msgstr "Für welche Rasterkarte sollen die Kategorien aktualisiert werden?"
-
-#~ msgid "%s file [%s] not found!"
-#~ msgstr "%s Datei [%s] nicht gefunden!"
-
-#~ msgid "Category file for [%s] not updated."
-#~ msgstr "Kategorie-Datei für [%s] nicht aktualisiert."
-
-#~ msgid "Category file for [%s] updated."
-#~ msgstr "Kategorie-Datei für [%s] aktualisiert."
-
-#~ msgid "Which raster file needs a color table"
-#~ msgstr "Welche Rasterkarte braucht eine Farbtabelle"
-
-#~ msgid "Unable to find file [%s]."
-#~ msgstr "Kann Datei [%s] nicht finden."
-
-#~ msgid "Color table for [%s] updated."
-#~ msgstr "Farbtabelle für [%s] aktualisiert."
-
-#~ msgid "Please enter the following information for [%s]:"
-#~ msgstr "Bitte geben Sie die folgenden Informationen für [%s]:"
-
-#~ msgid "        Number of rows"
-#~ msgstr "        Anzahl der Reihen"
-
-#~ msgid "        Number of cols"
-#~ msgstr "        Anzahl der Spalten"
-
-#~ msgid "        Number of bytes per cell"
-#~ msgstr "        Anzahl der Bytes pro Zelle"
-
-#~ msgid "        Floating point map"
-#~ msgstr "        Fließkomma-Karte"
-
-#~ msgid "rows * cols * bytes per cell must be same as file size (%ld)"
-#~ msgstr ""
-#~ "Reihen * Spalten * Bytes* pro Zelle müssen die gleiche Größe wie die "
-#~ "Dateigröße ergeben (%ld)."
-
-#~ msgid "If you need help figuring them out, just hit ESC"
-#~ msgstr "Für Hilfe beim Herausfinden bitte ESC drücken."
-
-#~ msgid "** Negative values not allowed!"
-#~ msgstr "** Negative Werte sind nicht erlaubt!"
-
-#~ msgid "** Positive values only please!"
-#~ msgstr "** Bitte nur positive Werte!"
-
-#~ msgid "The product of the rows(%d), cols(%d) and bytes per cell(%d) = %ld\n"
-#~ msgstr ""
-#~ "Das Produkt der Reihen(%d), Spalten(%d) und Bytes pro Zelle(%d) = %ld\n"
-
-#~ msgid "does not equal the file size (%ld)\n"
-#~ msgstr "ist nicht gleich der Dateigröße (%ld).\n"
-
-#~ msgid ""
-#~ "The following combinations will produce the correct file size:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Die folgenden Kombinationen werden die korrekte Dateigröße erzeugen:\n"
-#~ "\n"
-
-#~ msgid "%d byte%s per cell\n"
-#~ msgstr "%d byte%s pro Zelle\n"
-
-#~ msgid "s"
-#~ msgstr "s"
-
-#~ msgid "%s   "
-#~ msgstr "%s   "
-
-#~ msgid ""
-#~ "\n"
-#~ "hit RETURN to continue -->"
-#~ msgstr ""
-#~ "\n"
-#~ "Bitte RETURN drücken um fortzufahren -->"
-
-#~ msgid "Edit header for [%s]\n"
-#~ msgstr "Editiere Header für Karte [%s].\n"
-
-#~ msgid "[%s] cannot be found!"
-#~ msgstr "[%s] kann nicht gefunden werden!"
-
-#~ msgid "For what layer shall the header file be edited? "
-#~ msgstr "Für welchen Layer soll die Header-Datei editiert werden?"
-
-#~ msgid "[%s] is a reclass of [%s] - cannot edit header! Run support on [%s]."
-#~ msgstr ""
-#~ "[%s] ist eine reklassifizierte Karte von [%s] - kann den Header nicht "
-#~ "editieren! Benutzte support für Karte [%s]."
-
-#~ msgid "[%s] is a reclass of [%s in %s] - cannot edit header!"
-#~ msgstr ""
-#~ "[%s] ist eine reklassifizierte Karte von [%s in %s] - kann den Header "
-#~ "nicht editieren!"
-
-#~ msgid "Cannot open raster file [%s]!"
-#~ msgstr "Kann Rasterdatei [%s] nicht öffnen!"
-
-#~ msgid "Raster file [%s] is empty."
-#~ msgstr "Rasterdatei [%s] ist leer."
-
-#~ msgid "Error reading raster file [%s]."
-#~ msgstr "Kann die Rasterdatei [%s] nicht lesen."
-
-#~ msgid "cellhd compression: %d\n"
-#~ msgstr "cellhd Kompression: %d\n"
-
-#~ msgid "3.0 compression %sindicated\n"
-#~ msgstr "3.0 Komprimierung %s angezeigt.\n"
-
-#~ msgid "not "
-#~ msgstr "nicht "
-
-#~ msgid "Pre 3.0 compression %sindicated\n"
-#~ msgstr "Pre 3.0 Komprimierung %s angezeigt.\n"
-
-#~ msgid "[%s] appears to be compressed. Is it? "
-#~ msgstr "[%s] erscheint, als sei sie komprimiert. Ist sie es?"
-
-#~ msgid "Please indicate the type of compression:\n"
-#~ msgstr "Bitte geben Sie den Type der Komprimierung an:\n"
-
-#~ msgid "  1. Pre 3.0 compression\n"
-#~ msgstr "  1. Pre 3.0 Komprimierung\n"
-
-#~ msgid "  2. 3.0 compression\n"
-#~ msgstr "  2. 3.0 Komprimierung\n"
-
-#~ msgid "The header for [%s] says the file is not compressed. "
-#~ msgstr ""
-#~ "Der Header der Datei [%s] sagt, dass die Datei nicht komprimiert ist."
-
-#~ msgid "The file appears to be compressed.\n"
-#~ msgstr "Die Datei erscheint, als sei sie komprimiert.\n"
-
-#~ msgid "Most likely the header is wrong, but I want you to decide.\n"
-#~ msgstr ""
-#~ "Höhstwahrscheinlich ist die Information aus dem Header falsch, aber ich "
-#~ "möchte, dass Sie entscheiden.\n"
-
-#~ msgid "The header for [%s] says the file is compressed. "
-#~ msgstr "Der Header der Datei [%s] sagt, dass die Datei komprimiert ist."
-
-#~ msgid "The file does NOT appear to be compressed.\n"
-#~ msgstr "Die Datei scheint NICHT komprimiert zu sein.\n"
-
-#~ msgid ""
-#~ "Header indicates %d row%s in the cell file, but the actual file format "
-#~ "indicates %d row%s"
-#~ msgstr ""
-#~ "Header gibt an, dass %d Reihe%s in der Cell-Datei enthalten sind, aber "
-#~ "die aktuelle Datei hat %d Reihe%s."
-
-#~ msgid "Unable to write header for [%s]."
-#~ msgstr "Kann Header für Karte [%s] nicht schreiben."
-
-#~ msgid "Header for raster file [%s] updated."
-#~ msgstr "Header für Rasterkarte [%s] aktualisiert."
-
-#~ msgid "Which raster file needs an updated history? "
-#~ msgstr "Welche Rasterdatei benötigt eine Aktualisierung der History?"
-
-#~ msgid "Raster file [%s] not found. Exiting."
-#~ msgstr "Rasterkarte [%s] nicht gefunden. Beenden mich. "
-
-#~ msgid "History file for [%s] updated."
-#~ msgstr "Die Historiedatei für die Karte [%s] wurde aktualisiert."
-
-#~ msgid "History file for [%s] not updated."
-#~ msgstr "Die Historiedatei für die Karte [%s] wurde nicht aktualisiert."
-
-#~ msgid "Prints/sets DB connection for a vector map"
-#~ msgstr "Gibt oder setzt Datenbankverbindung für eine Vektorkarte."
-
-#~ msgid "Driver name"
-#~ msgstr "Treibername"
-
-#~ msgid "Database name"
-#~ msgstr "Datenbankname"
-
-#~ msgid "Table name"
-#~ msgstr "Tabellenname"
-
-#~ msgid "Key name (must refer to an integer column)"
-#~ msgstr "Key-Name (muss auf eine Integer-Spalte verweisen)."
-
-#~ msgid "Print current connection parameters and exit"
-#~ msgstr "Gibt derzeitige Verbindungsparameter aus und beendet sich."
-
-#~ msgid ""
-#~ "Print current connection parameters and exit (shell script style)\n"
-#~ "\tformat:  layer[/layer name] table key database driver"
-#~ msgstr ""
-#~ "Gib aktuelle Verbindungsparameter aus und beende sich (im Shell-Skript-"
-#~ "Style).\n"
-#~ " \tformat: Layer[/Layer-Name] Tabelle key-Spalte Datenbank Treiber"
-
-#~ msgid "Print types/names of table columns for specified layer and exit"
-#~ msgstr ""
-#~ "Gebe die Typen/Namen der Tabellenspalten der angegebenen Layer aus und "
-#~ "beende sich. "
-
-#~ msgid "Overwrite connection parameter for certain layer"
-#~ msgstr "Überschreibe die Verbindungsparameter für den angegebenen Layer."
-
-#~ msgid "Delete connection for certain layer (not the table)"
-#~ msgstr "Lösche die Verbindung zur Tabelle (nicht aber die Tabelle)."
-
-#~ msgid "Convert OGR vectors to GRASS. Available drivers:\n"
-#~ msgstr ""
-#~ "Konvertiere OGR Vektoren in das GRASS-Format: Vorhandene Treiber sind:\n"
-
-#~ msgid ""
-#~ "OGR datasource name.\n"
-#~ "\t\tESRI Shapefile: directory containing shapefiles\n"
-#~ "\t\tMapInfo File: directory containing mapinfo files"
-#~ msgstr ""
-#~ "OGR Datenquelle.\n"
-#~ "\t\tESRI Shapefile: Verzeichnis, welches die Shapes beinhaltet.\n"
-#~ "\t\tMapInfo File: Verzeichnis, welches die MapInfo-Files enthält."
-
-#~ msgid ""
-#~ "OGR layer name. If not given, all available layers are imported.\n"
-#~ "\t\tESRI Shapefile: shapefile name\n"
-#~ "\t\tMapInfo File: mapinfo file name"
-#~ msgstr ""
-#~ "OGR Layer-Name. Falls nicht angegeben, werden alle Layer in der "
-#~ "Datenquelle importiert.\n"
-#~ "\t\tESRI Shapefile: Shape-Name\n"
-#~ "\t\tMapInfo File: MapInfo-Name"
-
-#~ msgid "Import subregion only (xmin,ymin,xmax,ymax  - usually W,S,E,N)"
-#~ msgstr ""
-#~ "Nur Sub-Region importieren (xmin, ymin, xmax, ymax - nurmalerweise W, S, "
-#~ "E, N)."
-
-#~ msgid ""
-#~ "Minimum size of area to be imported (square units). Smaller areas and "
-#~ "islands are ignored. Should be greater than snap^2"
-#~ msgstr ""
-#~ "Minimalgröße der Flächen, die importiert werden sollen (als Quadrat-"
-#~ "Einheit). Kleinere Flächen und Inseln werden ignoriert. Die Zahl soll "
-#~ "größer als snap^2 sein."
-
-#~ msgid ""
-#~ "Optionaly change default input type:\n"
-#~ "\t point -> import area centroids as points\n"
-#~ "\t line -> import area boundaries as centroids\n"
-#~ "\t boundary -> import lines as area boundaries\n"
-#~ "\t centroid -> import points as centroids"
-#~ msgstr ""
-#~ "Verändere Standard-Input-Typen (optional):\n"
-#~ "\t point -> importiere Flächenzentroiden als Punkte\n"
-#~ "\t line -> importiere Flächengrenzen als Zentroiden\n"
-#~ "\t boundary -> importiere Linien als Flächengrenzen\n"
-#~ "\t centroid -> importiere Punkte als Zentroiden."
-
-#~ msgid "Snapping threshold for boundaries. -1 for no snap"
-#~ msgstr "Schnapp-Schwellenwert für Boundaries. -1 für kein Schnappen."
-
-#~ msgid ""
-#~ "List of column names to be used instead of original names, first is used "
-#~ "for category column"
-#~ msgstr ""
-#~ "Zeige sie Spaltennamen die anstatt der Originalnamen verwendet werden. "
-#~ "Der Erste entspricht der Kategoriespalte."
-
-#~ msgid "List available layers in data source and exit"
-#~ msgstr ""
-#~ "Zeigt die vorhandenen Datensätze in der Datenquelle und beendet sich."
-
-#~ msgid "List available formats and exit"
-#~ msgstr "Zeige die unterstützten Formate und beendet sich."
-
-#~ msgid "Do not clean polygons"
-#~ msgstr "Säubere die Polygone nicht."
-
-#~ msgid "Create 3D output"
-#~ msgstr "Erzeuge eine 3D-Ausgabe."
-
-#~ msgid "Do not create attribute table"
-#~ msgstr "Keine Attributtabelle erstellen."
-
-#~ msgid "The vector '%s' already exists."
-#~ msgstr "Die Vektorkarte '%s' existiert bereits."
-
-#~ msgid "Cannot open data source: %s"
-#~ msgstr "Kann die Datenquelle %s nicht öffnen."
-
-#~ msgid "Layer '%s' not available"
-#~ msgstr "Layer '%s' ist nicht vorhanden."
-
-#~ msgid " 4 parameters required for 'spatial' parameter."
-#~ msgstr "4 Werte sind für den Parameter 'spatial' nötig."
-
-#~ msgid ""
-#~ "Unable to convert input map projection to GRASS format; cannot create new "
-#~ "location."
-#~ msgstr ""
-#~ "Kann die Projektion der Eingabekarte nicht in das GRASS-Format "
-#~ "konvertieren; erstelle daher keine neue Location."
-
-#~ msgid ""
-#~ "Unable to convert input map projection information to GRASS format for "
-#~ "checking"
-#~ msgstr ""
-#~ "Kann die Projektionsinformationen der Eingabekarte nicht ins GRASS-Format "
-#~ "zur Überprüfung konvertieren."
-
-#~ msgid ""
-#~ "\n"
-#~ "You can use the -o flag to %s to override this check.\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Um den Check %s zu überschreiben, kann der Schalter '-o' angewendet "
-#~ "werden.\n"
-
-#~ msgid ""
-#~ "Consider to generate a new location with 'location' parameter from input "
-#~ "data set.\n"
-#~ msgstr ""
-#~ "Ziehe das Erzeugen einer neuen Location mit dem Parameter 'location=' vom "
-#~ "Eingabedatensatz in Betracht.\n"
-
-#~ msgid ""
-#~ "Projection of input dataset and current location appear to match.\n"
-#~ "Proceeding with import...\n"
-#~ msgstr ""
-#~ "Die Projektionsinformationen des Eingabedatensatztes und der aktuellen "
-#~ "Location stimmen überein.\n"
-#~ "Fahre mit dem Import fort...\n"
-
-#~ msgid "Column name changed: '%s' -> '%s'"
-#~ msgstr "Spaltenname '%s' wurde in '%s' geändert."
-
-#~ msgid "Writing column <%s> with fixed length 40 chars (may be truncated)"
-#~ msgstr ""
-#~ "Schreibe Spalte <%s> mit einer fixierten Länge von 40 Zeichen (Teile "
-#~ "können abgeschnitten worden sein). "
-
-#~ msgid ""
-#~ "Width for column '%s' set to 255 (was not specified by OGR), some strings "
-#~ "may be truncated!"
-#~ msgstr ""
-#~ "Spaltenbreite für die Spalte '%s' wird auf 255 gesetzt (nicht angegeben "
-#~ "bei OGR). Einige Texte können abgeschnitten worden sein!"
-
-#~ msgid "Column type not supported (%s)"
-#~ msgstr "Spaltentyp (%s) wird nicht unterstützt."
-
-#~ msgid "%d %s without geometry"
-#~ msgstr "%d %s ohne Geometrie."
-
-#~ msgid "Cleaning polygons, result is not guaranteed!\n"
-#~ msgstr "Säubere Polygone; für das Resultat wird nicht garantiert!\n"
-
-#~ msgid ""
-#~ "%d areas represent more (overlapping) features, because polygons overlap "
-#~ "in input layer(s). Such areas are linked to more than 1 row in attribute "
-#~ "table. The number of features for those areas is stored as category in "
-#~ "layer %d"
-#~ msgstr ""
-#~ "%d Flächen repräsentieren mehrere Objekte, da sich die Polygone in dem "
-#~ "Eingabedatensatz überlappen. Solche Flächen sind mit mehr als einer Reihe "
-#~ "in der Attributtabelle verlinkt. Die Anzahl der Objekte für diese Flächen "
-#~ "ist als Kategoriewert im Layer %d abgelegt."
-
-#~ msgid "%d input polygons\n"
-#~ msgstr "%d Eingabepolygone\n"
-
-#~ msgid ""
-#~ "Input data contains 3D features. Created vector is 2D only, use -z flag "
-#~ "to import 3D vector."
-#~ msgstr ""
-#~ "Eingabekarte enthält 3D-Objekte. Erstellte Vektorkarte ist allerdings 2D. "
-#~ "Um eine 3D-Karte zu erzeugen, bitte den Schalter '-z' beim Importieren "
-#~ "setzen."
-
-#~ msgid "Outputs basic information about a user-specified vector map layer."
-#~ msgstr "Gibt Basisinformationen über eine angegebene Vektorkarte aus."
-
-#~ msgid "Print vector history instead of info"
-#~ msgstr "Gebe Vektorhistorie anstelle einer Info aus."
-
-#~ msgid ""
-#~ "Print types/names of table columns for specified layer instead of info"
-#~ msgstr ""
-#~ "Gebe Typen/Namen der Tabellenspalten für die angegebenen Layer anstatt "
-#~ "einer Info aus."
-
-#~ msgid "Print vector map region only"
-#~ msgstr "Gebe nur die Vektorkartenausdehnung aus."
-
-#~ msgid ""
-#~ "Converts a binary GRASS vector map layer into a GRASS raster map layer."
-#~ msgstr "Konvertiert eine GRASS-Binärkarte vom Vektor- in das Rasterformat."
-
-#~ msgid "vector input file"
-#~ msgstr "Vektor-Eingabekarte"
-
-#~ msgid "raster output file"
-#~ msgstr "Raster Ausgabedatei"
-
-#~ msgid ""
-#~ "Source of raster values:\n"
-#~ "\t\tattr - read values from attribute table\n"
-#~ "\t\tcat  - use category values\n"
-#~ "\t\tval  - use value specified by value option\n"
-#~ "\t\tz    - use z coordinate (points or contours only)"
-#~ msgstr ""
-#~ "Quelle der Rasterwerte:\n"
-#~ "\t\tattr - lese Werte aus der Attributtabelle\n"
-#~ "\t\tcat  - benutze Kategoriewerte\n"
-#~ "\t\tval  - benutze Werte, die über die Wert-Option spezifiziert werden.\n"
-#~ "\t\tz    - benutze Z-Koordinate (nur bei Punkten oder Isolinien)"
-
-#~ msgid "Column name"
-#~ msgstr "Spaltenname"
-
-#~ msgid "Raster value"
-#~ msgstr "Rasterwert"
-
-#~ msgid "number of rows to hold in memory"
-#~ msgstr "Anzahl der Reihen, die im Speicher gehalten werden sollen."
-
-#~ msgid "col parameter missing (or use value parameter)"
-#~ msgstr "Spaltenparameterfehlt (oder benutze den Wert-Parameter)."
-
-#~ msgid ""
-#~ "Column parameter cannot be combined with use of category values option"
-#~ msgstr ""
-#~ "Der Parameter Spalte kann nicht mit der Benutzung des Kategoriewertes "
-#~ "kombiniert werden."
-
-#~ msgid "Column parameter cannot be combined with use of value option"
-#~ msgstr ""
-#~ "Der Parameter Spalte kann nicht mit der Benutzung der Wert Option "
-#~ "kombiniert werden."
-
-#~ msgid "Column parameter cannot be combined with use of z coordinate"
-#~ msgstr ""
-#~ "Der Parameter Spalte kann nicht mit der Benutzung von Z-Koordinaten "
-#~ "kombiniert werden."
-
-#~ msgid "Attribute column(s)"
-#~ msgstr "Attributspalte(n)"
-
-#~ msgid "Output vertical record separator"
-#~ msgstr "Vertikales Trennzeichen für die Ausgabe."
-
-#~ msgid "Null value indicator"
-#~ msgstr "Null-Wert Indikator"
-
-#~ msgid "Do not include column names in output"
-#~ msgstr "Die Spaltennamen nicht in die Ausgabe übernehmen."
-
-#~ msgid "Vertical output (instead of horizontal)"
-#~ msgstr "Vertikale Ausgabe (statt horizontaler)."
