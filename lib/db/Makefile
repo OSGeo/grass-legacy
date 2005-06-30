@@ -20,6 +20,8 @@ checkdoxygen:
 	@(type doxygen > /dev/null || (echo "ERROR: Install 'doxygen' software first (get from http://www.doxygen.org)" && exit 1))
 
 generatelocaldox:
+	(cd dbmi_base ; sh generate_dox.sh)
+	(cd dbmi_driver ; sh generate_dox.sh)
 	(cd dbmi_client ; sh generate_dox.sh)
 
 htmldocs: checkdoxygen generatelocaldox

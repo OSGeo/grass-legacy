@@ -1,15 +1,21 @@
 Directory contents:
 
 dbmi: DataBase Management Interface (db_*() functions)
+  dbmi_base:   contains functions for modules, drivers (../../db/drivers/)
+  dbmi_client: contains functions for modules
+  dbmi_driver: contains functions for drivers (../../db/drivers/)
+
 sqlp: SQL parser library
 stubs: stubs for unimplemented DB functions
 
 The DBMI drivers are stored in 
 ../../db/drivers/
 
+The DBMI user modules are stored in
+../../db/base/
 
 NOTE:
-Please read grass6/db/drivers/README
+ Please read grass6/db/drivers/README
 
 To generate dbmi_driver/dbstubs.h automatically, run './mk_dbstubs' in
 dbmi_driver/ directory.

@@ -42,9 +42,16 @@ support for various data types, also multiple tables may optionally be
 linked to one or many vector entity/ies. SQL (Structured Query Language) is
 used for all drivers.
 
-
-
 For DBMI architecture details please read Blazek et al. 2002 (see below).
+
+\section dbmifunc DBMI library functions
+
+The db_*() functions are the programmer's API for GRASS DBMI
+programming. See details here:
+
+<a class="qindex" href="modules.html">Structured db_*() functions list</a>
+<P>
+<a class="qindex" href="dirs.html">Function groups (base, driver, client)</a>
 
 
 \section contacts Contacts

@@ -4,7 +4,7 @@
 # Markus Neteler 10/2002, 6/2005
 
 SEARCHSTRING="db"
-OUTFILE=dbmi_client.dox
+OUTFILE=dbmi_driver.dox
 
 echo "Extracting all $SEARCHSTRING\*() functions into local context pages..."
 
