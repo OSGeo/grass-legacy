@@ -295,7 +295,8 @@ void calculate()
     bbox	 bbs;
     flowline	 fls;
     int		 row, col;
-    double	 x, y, length, xstep, ystep, roffset, coffset;
+/*    double	 x, y, length, xstep, ystep, roffset, coffset; */
+    double	 x, y, length, xstep, ystep; 
     FCELL	*lg = G_allocate_f_raster_buf();
     struct	 line_pnts *points = Vect_new_line_struct();
     struct       line_cats *cats = Vect_new_cats_struct ();
@@ -328,17 +329,18 @@ void calculate()
 
 	    if (!(parm.barin && BM_get(bitbar, col, row)))
 	    {
+/* disabled by helena June 2005 
 	        roffset         = parm.offset * (double) region.ew_res \
 		  * ((2. * (double) rand()/ (double) RAND_MAX) - 1.); 
-	        coffset         = parm.offset * (double) region.ns_res \
-		  * ((2. * (double) rand()/ (double) RAND_MAX) - 1.); 
+	        coffset         = 0.0; /*parm.offset * (double) region.ns_res \
+		  * ((2. * (double) rand()/ (double) RAND_MAX) - 1.); */
 
 		pts.x		= x;
 		pts.y		= y;
 		pts.z		= (double) get(el, row, col);
 		pts.theta	= (double) aspect(row, col);
-		pts.r		= (double) row + roffset;
-		pts.c		= (double) col + coffset;
+		pts.r		= (double) row; /* + roffset; */
+		pts.c		= (double) col; /*+ coffset; */
 
 		ads.row		= row;
 		ads.col 	= col;
