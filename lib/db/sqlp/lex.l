@@ -81,18 +81,6 @@
 "="		{
 			return EQUAL;
 		}
-%{ 
- /***************************************
-  * ARITHMETICAL OPERATOR
-  * Conflict of  * as operator with * as all columns, what to do?    
-  ***************************************/
-%}
-"+" 	|
-"-" 	|
-"/" 		{
-			yylval.strval = (char*)strdup(yytext);
-			return ARITHMETICAL_OPERATOR;
-		}
 %{
  /***************************************
   * COMPARISON OPERATOR

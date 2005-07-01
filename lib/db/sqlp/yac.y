@@ -41,13 +41,17 @@
 	/* operators */
 %type <node>	y_column
 %type <node>	y_value
+%type <node>	y_atom
+%type <node>	y_term
+%type <node>	y_product
 %type <node>	y_expression
 %type <node>	y_comparison
-%type <node>	y_condition
+%type <node>	y_boolean
+%type <node>	y_sub_condition2
 %type <node>	y_sub_condition
+%type <node>	y_condition
 
 	/* literal keyword tokens */
-%token <strval> ARITHMETICAL_OPERATOR
 %token <strval> COMPARISON_OPERATOR
 %token <strval> NAME
 %token <strval> STRING
@@ -194,13 +198,20 @@ y_condition:
 	;
 
 y_sub_condition:	
-		y_comparison { $$ = $1;	}	
-	|	'(' y_sub_condition ')' { $$ = $2; }
-	|	y_sub_condition AND y_sub_condition { $$ = sqpNewExpressionNode (SQLP_AND, $1, $3); }
-	|	y_sub_condition OR y_sub_condition { $$ = sqpNewExpressionNode (SQLP_OR, $1, $3); }
-	|	NOT y_sub_condition { $$ = sqpNewExpressionNode ( SQLP_NOT, NULL, $2); }
+		y_sub_condition2 { $$ = $1; }
+	|	y_sub_condition OR y_sub_condition2 { $$ = sqpNewExpressionNode (SQLP_OR, $1, $3); }
 	;
 
+y_sub_condition2:	
+		y_boolean { $$ = $1; }
+	|	y_sub_condition2 AND y_boolean { $$ = sqpNewExpressionNode (SQLP_AND, $1, $3); }
+	;
+
+y_boolean:	
+		y_comparison { $$ = $1; }
+	|	'(' y_sub_condition ')' { $$ = $2; }
+	|	NOT y_boolean { $$ = sqpNewExpressionNode ( SQLP_NOT, NULL, $2); }
+	;
 
 /* Note EQUAL should be one of COMPARISON but there is maybe some reason ... */
 y_comparison:
@@ -220,14 +231,36 @@ y_comparison:
 
 /* Mathematical expression */
 y_expression:
-		y_value				{ $$ = $1; }
-	|	y_column			{ $$ = $1; }
-	|	y_expression ARITHMETICAL_OPERATOR y_expression {
-		    $$ = sqpNewExpressionNode ( sqpOperatorCode($2), $1, $3 );
+		y_product			{ $$ = $1; }
+	|	y_expression '+' y_product {
+		    $$ = sqpNewExpressionNode ( sqpOperatorCode("+"), $1, $3 );
 		}
-	|	y_expression '*' y_expression {
+	|	y_expression '-' y_product {
+		    $$ = sqpNewExpressionNode ( sqpOperatorCode("-"), $1, $3 );
+		}
+	;
+
+y_product:
+		y_term				{ $$ = $1; }
+	|	y_product '*' y_term {
 		    $$ = sqpNewExpressionNode ( sqpOperatorCode("*"), $1, $3 );
 		}
+	|	y_product '/' y_term {
+		    $$ = sqpNewExpressionNode ( sqpOperatorCode("/"), $1, $3 );
+		}
+	;
+
+y_term:
+		y_atom				{ $$ = $1; }
+	|	'-' y_term {
+		    $$ = sqpNewExpressionNode ( sqpOperatorCode("-"), sqpNewValueNode ( NULL, 0, 0.0,  SQLP_I ), $2 );
+		}
+	;
+
+y_atom:
+		y_value				{ $$ = $1; }
+	|	y_column			{ $$ = $1; }
+	|	'(' y_expression ')'		{ $$ = $2; }
 	;
 
 /* Value used in expressions */ 
