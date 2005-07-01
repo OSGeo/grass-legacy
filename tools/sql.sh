@@ -43,42 +43,42 @@ find . -type f -perm +111 \! -name '*.so' \
 
 )
 
-find * -name 'lib?*.a' \
+find * -type f -name 'lib?*.a' \
 	| xargs nm -A \
 	| egrep ':[0-9a-f]{8} [BCDGRSTW] ' \
 	| sed 's/:/ /g' \
 	| awk -vOFS='\t' '{print gensub("^[^ ]*/","",1,$1),$2,$5}' \
 	> "$tmpdir/stlib_exp.lst"
 
-find * -name 'lib?*.so' \
+find * -type f -name 'lib?*.so' \
 	| xargs nm -AD \
 	| egrep ':[0-9a-f]{8} [BCDGRSTW] ' \
 	| sed 's/:/ /g' \
 	| awk -vOFS='\t' '{print gensub("^[^ ]*/","",1,$1),$4}' \
 	> "$tmpdir/shlib_exp.lst"
 
-find * -name '*.o' \
+find * -type f -name '*.o' \
 	| xargs nm -A \
 	| egrep ':[0-9a-f]{8} [BCDGRSTW] ' \
 	| sed 's/:/ /g' \
 	| awk -vOFS='\t' '{print $1,$4}' \
 	> "$tmpdir/obj_exp.lst"
 
-find * -name 'lib?*.a' \
+find * -type f -name 'lib?*.a' \
 	| xargs nm -A \
 	| egrep ': {8} U ' \
 	| sed 's/:/ /g' \
 	| awk -vOFS='\t' '{print gensub("^[^ ]*/","",1,$1),$2,$4}' \
 	> "$tmpdir/stlib_imp.lst"
 
-find * -name 'lib?*.so' \
+find * -type f -name 'lib?*.so' \
 	| xargs nm -AD \
 	| egrep ': {8} U ' \
 	| sed 's/:/ /g' \
 	| awk -vOFS='\t' '{print gensub("^[^ ]*/","",1,$1),$3}' \
 	> "$tmpdir/shlib_imp.lst"
 
-find * -name '*.o' \
+find * -type f -name '*.o' \
 	| xargs nm -A \
 	| egrep ': {8} U ' \
 	| sed 's/:/ /g' \
