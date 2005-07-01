@@ -63,7 +63,7 @@ typedef struct
     char   *dsout;		/* name of output density file		*/
     int     skip;		/* cells between flowlines output	*/
     int	    bound;		/* constant bound on path length	*/
-    double  offset;             /* magnitude of random grid offset      */
+/*    double  offset;              magnitude of random grid offset      */
     char    up;			/* direction to compute lines		*/
     char    l3d;		/* three-dimensional length		*/
     char    mem;		/* always recompute aspect		*/
