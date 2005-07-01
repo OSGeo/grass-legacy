@@ -329,12 +329,13 @@ void calculate()
 
 	    if (!(parm.barin && BM_get(bitbar, col, row)))
 	    {
-/* disabled by helena June 2005 
+#ifdef OFFSET
+/* disabled by helena June 2005 */
 	        roffset         = parm.offset * (double) region.ew_res \
 		  * ((2. * (double) rand()/ (double) RAND_MAX) - 1.); 
-	        coffset         = 0.0; /*parm.offset * (double) region.ns_res \
-		  * ((2. * (double) rand()/ (double) RAND_MAX) - 1.); */
-
+	        coffset         = parm.offset * (double) region.ns_res \
+		  * ((2. * (double) rand()/ (double) RAND_MAX) - 1.); 
+#endif
 		pts.x		= x;
 		pts.y		= y;
 		pts.z		= (double) get(el, row, col);
