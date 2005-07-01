@@ -42,6 +42,7 @@
 #include <string.h>
 #include "gis.h"
 #include "Vect.h"
+#include "glocale.h"
 
 #ifndef RAND_MAX 
 #define RAND_MAX (pow(2.0,31.0)-1) 
@@ -68,35 +69,53 @@ int main (int argc, char *argv[])
   struct GModule *module;
   struct
   {
-    struct Option *output, *nsites;
+    struct Option *output, *nsites, *zmin, *zmax;
   } parm;
   struct
   {
-    struct Flag *rand, *drand48;
+    struct Flag *rand, *drand48, *z;
   } flag;
 
   G_gisinit (argv[0]);
   
   module = G_define_module();
   module->description =        
-                  "Randomly generate a GRASS vector points map.";
+                  _("Randomly generate a 2D/3D GRASS vector points map.");
                   
   parm.output = G_define_option ();
   parm.output->key = "output";
   parm.output->type = TYPE_STRING;
   parm.output->required = YES;
-  parm.output->description = "vector file to be created";
   parm.output->gisprompt = "new,vector,vector";
+  parm.output->description = _("vector file to be created");
 
   parm.nsites = G_define_option ();
   parm.nsites->key = "n";
   parm.nsites->type = TYPE_INTEGER;
   parm.nsites->required = YES;
-  parm.nsites->description = "number of points to be created";
+  parm.nsites->description = _("number of points to be created");
+
+  parm.zmin = G_define_option ();
+  parm.zmin->key = "zmin";
+  parm.zmin->type = TYPE_DOUBLE;
+  parm.zmin->required = NO;
+  parm.zmin->description = _("minimum z height (needs -z flag)");
+  parm.zmin->answer = "0.0";
+
+  parm.zmax = G_define_option ();
+  parm.zmax->key = "zmax";
+  parm.zmax->type = TYPE_DOUBLE;
+  parm.zmax->required = NO;
+  parm.zmax->description = _("maximum z height (needs -z flag)");
+  parm.zmax->answer = "0.0";
+
+  flag.z = G_define_flag ();
+  flag.z->key             = 'z';
+  flag.z->description = _("Create 3D output");
 
   flag.drand48 = G_define_flag ();
   flag.drand48->key = 'd';
-  flag.drand48->description = "Use drand48() function (default=rand() )";
+  flag.drand48->description = _("Use drand48() function (default=rand() )");
 
   if (G_parser (argc, argv))
     exit (1);
@@ -106,10 +125,13 @@ int main (int argc, char *argv[])
   b = (flag.drand48->answer == '\0') ? 0 : 1;
 
   if (n <= 0) {
-    G_fatal_error ( "%s given an illegal number of sites [%d]", G_program_name (), n);
+    G_fatal_error ( _("%s given an illegal number of sites [%d]"), G_program_name (), n);
   }
 
-  Vect_open_new (&Out, output, 0);
+  if ( flag.z->answer )
+        Vect_open_new (&Out, output, 1 ); 
+  else 
+        Vect_open_new (&Out, output, 0 ); 
 
   Vect_hist_command ( &Out );
   
@@ -133,17 +155,22 @@ int main (int argc, char *argv[])
   
   for(i=0; i<n; ++i)
   {
-      double x, y;
+      double x, y, z;
 	
       Vect_reset_line ( Points );
       Vect_reset_cats ( Cats );
       
       x = rng()/max*(window.west-window.east)+window.east;
       y = rng()/max*(window.north-window.south)+window.south;
-
-      Vect_append_point ( Points, x, y, 0.0 );
-      Vect_cat_set (Cats, 1, i+1);
       
+
+      if ( flag.z->answer ) {
+         z = rng()/max*(atof(parm.zmax->answer)-atof(parm.zmin->answer))+atof(parm.zmin->answer);
+         Vect_append_point ( Points, x, y, z );
+      } else 
+         Vect_append_point ( Points, x, y, 0.0 );
+
+      Vect_cat_set (Cats, 1, i+1);
       Vect_write_line ( &Out, GV_POINT, Points, Cats );
   }
 
@@ -157,3 +184,4 @@ double myrand()
 {
   return (double) rand();
 }
+
