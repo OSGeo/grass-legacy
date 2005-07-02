@@ -257,6 +257,8 @@ int show_it (void)
     if (scrL > (int)D_get_d_east())   return 0;
     if (scrB < (int)D_get_d_north())  return 0;
     if (scrT > (int)D_get_d_south())  return 0;
+    if (scrT < 0)  return 0;
+    if (scrL < 0)  return 0;
 
     /* Clip parts of label to inside map window */
     if (scrL < (int)D_get_d_west()) scrL = (int)D_get_d_west() ;
