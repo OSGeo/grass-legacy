@@ -196,7 +196,7 @@ int main(int argc, char *argv[])
     parm.zcol->key = "zcolumn";
     parm.zcol->type = TYPE_STRING;
     parm.zcol->required = NO;
-    parm.zcol->description = "Name of the column containing values to be interpolated";
+    parm.zcol->description = "Name of the attr. column with values to be interpolated (if layer>0)";
     parm.zcol->answer = "flt1";
 
     parm.scol = G_define_option();
@@ -204,21 +204,21 @@ int main(int argc, char *argv[])
     parm.scol->type = TYPE_STRING;
     parm.scol->required = NO;
     parm.scol->description =
-	"Name of the column containing smoothing parameters";
+	"Name of the column with smoothing parameters";
 
     parm.dmax = G_define_option();
     parm.dmax->key = "dmax";
     parm.dmax->type = TYPE_DOUBLE;
     parm.dmax->required = NO;
     parm.dmax->answer = dmaxchar; 
-    parm.dmax->description = "Maximum distance between points ";
+    parm.dmax->description = "Maximum distance between points on isoline (to insert additional points)";
 
     parm.dmin = G_define_option();
     parm.dmin->key = "dmin";
     parm.dmin->type = TYPE_DOUBLE;
     parm.dmin->required = NO;
     parm.dmin->answer = dminchar;
-    parm.dmin->description = "Minimum distance between points ";
+    parm.dmin->description = "Minimum distance between points (to remove almost identical points) ";
 
 
     parm.devi = G_define_option();
@@ -226,21 +226,21 @@ int main(int argc, char *argv[])
     parm.devi->type = TYPE_STRING;
     parm.devi->required = NO;
     parm.devi->gisprompt = "new,dig,vector";
-    parm.devi->description = "Name of the output deviations vector file";
+    parm.devi->description = "Name of the output deviations vector point file";
 
     parm.cvdev = G_define_option ();
     parm.cvdev->key = "cvdev";
     parm.cvdev->type = TYPE_STRING;
     parm.cvdev->required = NO;
     parm.cvdev->gisprompt = "new,dig,vector";
-    parm.cvdev->description = ("Name of the output cross-validation vector file");
+    parm.cvdev->description = ("Name of the output cross-validation vector point file");
 
     parm.elev = G_define_option();
     parm.elev->key = "elev";
     parm.elev->type = TYPE_STRING;
     parm.elev->required = NO;
     parm.elev->gisprompt = "new,cell,raster";
-    parm.elev->description = "Output surface file (elevation)";
+    parm.elev->description = "Output surface raster file (elevation)";
 
     flag.deriv = G_define_flag();
     flag.deriv->key = 'd';
