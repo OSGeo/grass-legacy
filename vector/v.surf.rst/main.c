@@ -305,7 +305,6 @@ int main(int argc, char *argv[])
     parm.rsm = G_define_option();
     parm.rsm->key = "smooth";
     parm.rsm->type = TYPE_DOUBLE;
-    parm.rsm->answer = SMOOTH;
     parm.rsm->required = NO;
     parm.rsm->description = "Smoothing parameter";
 
@@ -382,7 +381,7 @@ int main(int argc, char *argv[])
 
     fprintf(stderr, "\n");
     fprintf(stderr, "Authors: original version -  H.Mitasova, L.Mitas, I. Kosinovsky, D.P. Gerdes\n");
-    fprintf(stderr, "See manual pages for reference and publications T3\n");
+    fprintf(stderr, "See manual pages for reference and publications \n");
     fprintf(stderr, "\n");
 
 
@@ -415,7 +414,6 @@ int main(int argc, char *argv[])
     sscanf(parm.dmax->answer, "%lf", &dmax);
     sscanf(parm.dmin->answer, "%lf", &dmin);
     sscanf(parm.fi->answer, "%lf", &fi);
-    sscanf(parm.rsm->answer, "%lf", &rsm);
     sscanf(parm.segmax->answer, "%d", &KMAX);
     sscanf(parm.npmin->answer, "%d", &npmin);
     sscanf(parm.zmult->answer, "%lf", &zmult);
@@ -431,6 +429,18 @@ int main(int argc, char *argv[])
 	    G_fatal_error
 		("Using anisotropy - both theta and scalex have to be specified");
     }
+
+    if(parm.rsm->answer){
+    	sscanf(parm.rsm->answer, "%lf", &rsm);
+    	if(rsm < 0.0) G_fatal_error("Smoothing must be a positive value");
+    	if(scol != NULL)
+	    G_warning("Both smatt and smooth options specified - using constant");
+    }
+    else {
+	sscanf (SMOOTH, "%lf", &rsm);
+    	if (scol != NULL) rsm = -1; /* used in InterpLib to indicate variable smoothing */
+    }
+
 
     if (npmin > MAXPOINTS - 50)
 	KMAX2 = npmin + 50;
