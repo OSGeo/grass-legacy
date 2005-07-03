@@ -12,7 +12,8 @@ Note: This text contains *some* rules only applicable to the
    - Create release branch
    
  o Create Changelog file
-     make changelog
+     CVSBRANCH=`cat CVS/Entries | grep AUTHORS | cut -d'/'-f6 | cut -b2-`
+     sh tools/cvs2cl.pl --follow "$CVSBRANCH" 
      mv ChangeLog ChangeLog_$VERSION
      gzip ChangeLog_$VERSION
 
