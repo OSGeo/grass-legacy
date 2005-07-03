@@ -20,8 +20,9 @@ User can define a raster file named <em>maskmap</em>, which will be used
 as a mask. The interpolation is skipped for cells which have zero or NULL
 value in mask. NULL values will be assigned to these cells in all output
 raster files. Data points are checked for identical points and points that
-are closer to each other than the given <em>dmin</em> are removed. Additional
-points are used for interpolation between each 2 points on a line if the
+are closer to each other than the given <em>dmin</em> are removed. 
+If sparsely digitized contours or isolines are used as input, additional
+points are computed between each 2 points on a line if the
 distance between them is greater than specified <em>dmax</em>. Parameter
 <em>zmult</em>
 allows user to rescale the z-values (useful e.g. for transformation of
@@ -221,7 +222,7 @@ Jaroslav Hofierka, University of Presov; Radim Blazek, ITC-irst
 REFERENCES</h2>
 <P>
 H. Mitasova and L. Mitas, R.S. Harmon, Simultaneous spline approximation and topographic analysis for
- lidar elevation data in open source GIS, submitted to IEEE GRSL.
+ lidar elevation data in open source GIS,  in press, IEEE GRSL october 2005.
 <P>
      Hofierka J., Parajka J.,  Mitasova H., Mitas L., 2002,
      Multivariate Interpolation of Precipitation Using Regularized Spline with Tension.
