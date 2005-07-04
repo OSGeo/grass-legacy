@@ -442,14 +442,23 @@ int main(int argc, char *argv[])
     }
 
 
+    if (npmin > MAXPOINTS - 50){
+        G_warning("The computation will last too long - lower npmin is suggested");
+        KMAX2 = 2 * npmin; /* was: KMAX2 = npmin + 50;*/
+    }
+    else
+        KMAX2 = 2 * npmin; /* was: KMAX2 = MAXPOINTS; fixed by JH in 12/01*/
+
+/* handling of KMAX2 in GRASS4 v.surf.rst
     if (npmin > MAXPOINTS - 50)
 	KMAX2 = npmin + 50;
     else
 	KMAX2 = MAXPOINTS;
+*/
 
     dmin = dmin * dmin;
-
     KMIN = npmin;
+
     az = G_alloc_vector(n_cols + 1);
     if (!az) {
 	G_fatal_error("Not enough memory for az");
