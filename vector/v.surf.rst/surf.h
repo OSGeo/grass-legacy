@@ -26,7 +26,7 @@
 #define TENSION "40."
 #define SMOOTH "0.1"
 #define MAXSEGM "40"
-#define MINPOINTS "200"
+#define MINPOINTS "300"
 #define MAXPOINTS  400
 #define TOPPARAM "0"
 #define PREPROCESS "0"
