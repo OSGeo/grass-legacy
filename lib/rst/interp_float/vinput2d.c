@@ -157,6 +157,7 @@ int IL_vector_input_data_2d (
 		} else { /* DB_C_TYPE_DOUBLE */
 		    ret = db_CatValArray_get_value_double ( &sarray, cat, &sm );
 		}
+		if(sm < 0.0) G_fatal_error("Negative value of smoothing detected: sm must be >= 0");
 	    }
             G_debug ( 5, "  z = %f sm = %f", z, sm );
 	}
@@ -236,6 +237,7 @@ int IL_vector_input_data_2d (
 		} else { /* DB_C_TYPE_DOUBLE */
 		    ret = db_CatValArray_get_value_double ( &sarray, cat, &sm );
 		}
+		if(sm < 0.0) G_fatal_error("Negative value of smoothing detected: sm must be >= 0");
 	    }
             G_debug ( 5, "  z = %f sm = %f", z, sm );
 	}
