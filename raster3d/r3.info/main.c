@@ -62,11 +62,7 @@ int main (argc, argv)
     name = G_store(opt1->answer);
 
     if ((mapset = G_find_grid3 (name, "")) == NULL)
-    {
-        sprintf (line, "Cannot find %s", name);	
-        G_fatal_error (line);
-        exit(1);
-    }
+        G_fatal_error ( _("Cannot find %s"), name);	
 
     head_ok = G3d_readRegionMap (name, mapset, &cellhd) >= 0;
     hist_ok = 0;
@@ -74,10 +70,10 @@ int main (argc, argv)
 
     out = stdout;
 
-    divider ('+');
-
   if (!rflag->answer)
   {
+    divider ('+');
+
     sprintf (line, "Layer:    %-29.29s  Date: %s", name, hist_ok ? hist.mapid : "??");
     printline (line);
 
