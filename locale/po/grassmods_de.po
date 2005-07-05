@@ -6358,7 +6358,7 @@ msgstr ""
 #: ../vector/v.in.ogr/main.c:127
 msgid "Import subregion only (xmin,ymin,xmax,ymax  - usually W,S,E,N)"
 msgstr ""
-"Nur Sub-Region importieren (xmin, ymin, xmax, ymax - nurmalerweise W, S, E, "
+"Nur Sub-Region importieren (xmin, ymin, xmax, ymax - normalerweise W, S, E, "
 "N)."
 
 #: ../vector/v.in.ogr/main.c:134
