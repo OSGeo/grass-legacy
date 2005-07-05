@@ -36,6 +36,7 @@
 #include "display.h"
 #include "raster.h"
 #include "colors.h"
+#include "glocale.h"
 
 /* less speedy
 #define	FLUSH_EACH_CHAR
@@ -144,20 +145,20 @@ main(int argc, char **argv)
 
 	module = G_define_module();
 	module->description =
-		"Draws text in the graphics monitor's active display frame using TrueType fonts.";
+	    _("Draws text in the graphics monitor's active display frame using TrueType fonts.");
 
 	param.text = G_define_option();
 	param.text->key         = "text";
 	param.text->type        = TYPE_STRING;
 	param.text->required    = NO;
-	param.text->description = "Text (enclose multiple words \"in quotes\")";
+	param.text->description = _("Text to display");
 
 	param.east_north = G_define_option();
 	param.east_north->key         = "east_north";
 	param.east_north->type        = TYPE_DOUBLE;
 	param.east_north->required    = NO;
 	param.east_north->key_desc    = "east,north";
-	param.east_north->description = "Map coordinates";
+	param.east_north->description = _("Map coordinates");
 
 	read_capfile(getenv("GRASS_FREETYPECAP"), &fonts, &fonts_count,
 			&cur_font, &font_names);
@@ -172,14 +173,14 @@ main(int argc, char **argv)
 		if(cur_font >= 0)
 			param.font->answer      = fonts[cur_font].font;
 		param.font->options     = font_names;
-		param.font->description = "Font name";
+		param.font->description = _("Font name");
 	}
 
 	param.path = G_define_option();
 	param.path->key         = "path";
 	param.path->type        = TYPE_STRING;
 	param.path->required    = NO;
-	param.path->description = "Path to TrueType font (including file name)";
+	param.path->description = _("Path to TrueType font (including file name)");
 	param.path->gisprompt   = "old_file,,TrueType font";
 
 	param.charset = G_define_option();
@@ -194,7 +195,7 @@ main(int argc, char **argv)
 	param.color->required    = NO;
 	param.color->answer      = DEFAULT_COLOR;
 	param.color->description =
-		"Text color, either a standard GRASS color or R:G:B triplet (separated by colons)";
+	    _("Text color, either a standard GRASS color or R:G:B triplet");
 
 	param.size = G_define_option();
 	param.size->key         = "size";
@@ -202,7 +203,7 @@ main(int argc, char **argv)
 	param.size->required    = NO;
 	param.size->answer      = DEFAULT_SIZE;
 	param.size->description =
-		"Height of letters (in percent of available frame height)";
+	    _("Height of letters (in percent of available frame height)");
 
 	param.align = G_define_option();
 	param.align->key         = "align";
@@ -210,60 +211,60 @@ main(int argc, char **argv)
 	param.align->required    = NO;
 	param.align->answer      = DEFAULT_ALIGN;
 	param.align->options     = "ll,lc,lr,cl,cc,cr,ul,uc,ur";
-	param.align->description = "Text alignment";
+	param.align->description = _("Text alignment");
 
 	param.rotation = G_define_option();
 	param.rotation->key         = "rotation";
 	param.rotation->type        = TYPE_DOUBLE;
 	param.rotation->required    = NO;
 	param.rotation->answer      = DEFAULT_ROTATION;
-	param.rotation->description = "Rotation angle in degrees (counterclockwise)";
+	param.rotation->description = _("Rotation angle in degrees (counter-clockwise)");
 
 	param.linespacing = G_define_option();
 	param.linespacing->key         = "linespacing";
 	param.linespacing->type        = TYPE_DOUBLE;
 	param.linespacing->required    = NO;
 	param.linespacing->answer      = DEFAULT_LINESPACING;
-	param.linespacing->description = "Line spacing";
+	param.linespacing->description = _("Line spacing");
 
 	flag.b = G_define_flag();
 	flag.b->key         = 'b';
-	flag.b->description = "Use bold text";
+	flag.b->description = _("Use bold text");
 
 	flag.r = G_define_flag();
 	flag.r->key         = 'r';
-	flag.r->description = "Use radians instead of degrees for rotation";
+	flag.r->description = _("Use radians instead of degrees for rotation");
 
 	flag.p = G_define_flag();
 	flag.p->key         = 'p';
-	flag.p->description = "Coordinates are in pixels ([0,0] is top left)";
+	flag.p->description = _("Coordinates are in pixels ([0,0] is top left)");
 
 	flag.n = G_define_flag();
 	flag.n->key         = 'n';
-	flag.n->description = "Coordinates are percentage of frame ([0,0] is bottom left)";
+	flag.n->description =_( "Coordinates are percentage of frame ([0,0] is bottom left)");
 
 	flag.s = G_define_flag();
 	flag.s->key         = 's';
-	flag.s->description = "Font size is height in pixels";
+	flag.s->description = _("Font size is height in pixels");
 
 	flag.c = G_define_flag();
 	flag.c->key         = 'c';
-	flag.c->description = "Command mode (Compatibility with d.text)";
+	flag.c->description = _("Command mode (Compatibility with d.text)");
 
 
 	if(G_parser(argc, argv))
 		exit(1);
 
 	if(!param.text->answer && !flag.c->answer)
-		G_fatal_error("text or -c should be given");
+		G_fatal_error(_("Either text or -c should be given"));
 
 	text = param.text->answer;
 
 	if(flag.p->answer && flag.n->answer)
-		G_fatal_error("Choose only one coordinate system for placement");
+		G_fatal_error(_("Choose only one coordinate system for placement"));
 
 	if(!flag.c->answer && !param.font->answer && !param.path->answer)
-		G_fatal_error("No font selected");
+		G_fatal_error(_("No font selected"));
 
 	path = NULL;
 	charset = NULL;
@@ -272,7 +273,7 @@ main(int argc, char **argv)
 	{
 		cur_font = find_font(fonts, fonts_count, param.font->answer);
 		if(cur_font < 0)
-			G_fatal_error("Invalid font: %s", param.font->answer);
+			G_fatal_error(_("Invalid font: %s"), param.font->answer);
 
 		path = fonts[cur_font].path;
 		charset = transform_string(fonts[cur_font].charset, toupper);
@@ -290,10 +291,9 @@ main(int argc, char **argv)
 		charset = DEFAULT_CHARSET;
 
 	bold = flag.b->answer;
-#ifdef	DEBUG
+
 	if(!flag.c->answer)
-		fprintf(stderr, "Font=<%s:%s>\n\n", path, charset);
-#endif
+	    G_debug(1, "Font=<%s:%s>", path, charset);
 
 	rotation = atof(param.rotation->answer);
 	if(!flag.r->answer)
@@ -306,15 +306,15 @@ main(int argc, char **argv)
 	linespacing = atof(param.linespacing->answer);
 
 	if(R_open_driver() != 0)
-		error("No graphics device selected");
+		error(_("No graphics device selected"));
 	driver = 1;
 
 	D_setup(0);
 
 	if(D_get_cur_wind(win_name))
-		error("No current window");
+		error(_("No current window"));
 	if(D_set_cur_wind(win_name))
-		error("Current window not available");
+		error(_("Current window not available"));
 
 	D_get_screen_window(&win.t, &win.b, &win.l, &win.r);
 	R_set_window(win.t, win.b, win.l, win.r);
@@ -323,15 +323,15 @@ main(int argc, char **argv)
 		size *= (double)(win.b-win.t)/100.0;
 
 	if(FT_Init_FreeType(&library))
-		error("Unable to initialise FreeType");
+		error(_("Unable to initialise FreeType"));
 
 	if(path)
 	{
 		if(set_font(library, &face, path))
-			error("Unable to create face");
+			error(_("Unable to create face"));
 
 		if(FT_Set_Char_Size(face, cnv(size), cnv(size), 100, 100))
-			error("Unable to set size");
+			error(_("Unable to set size"));
 	}
 
 	R_color_table_fixed();
@@ -350,9 +350,9 @@ main(int argc, char **argv)
 
 		ol = convert_text(charset, text, &out);
 		if(ol == -1)
-			error("Unable to create text conversion context");
+			error(_("Unable to create text conversion context"));
 		if(ol == -2)
-			error("Text conversion error");
+			error(_("Text conversion error"));
 
 		pen.x = x;
 		pen.y = y;
@@ -421,7 +421,7 @@ main(int argc, char **argv)
 
 		tmpfile = G_tempfile();
 		if(!(fp = fopen(tmpfile, "w")))
-			error("Unable to write the temporary file");
+			error(_("Unable to write the temporary file"));
 
 		while(fgets(buf, 512, stdin))
 		{
@@ -446,13 +446,13 @@ main(int argc, char **argv)
 						{
 							if(!fonts_count)
 							{
-								G_warning("No predefined font");
+								G_warning(_("No predefined font"));
 								break;
 							}
 							cur_font = find_font(fonts, fonts_count, p);
 							if(cur_font < 0)
 							{
-								G_warning("Invalid font: %s", p);
+								G_warning(_("Invalid font: %s"), p);
 								break;
 							}
 							path = fonts[cur_font].path;
@@ -463,16 +463,16 @@ main(int argc, char **argv)
 							path = p;
 							if(access(path, R_OK))
 							{
-								G_warning("%s: Unable to read font", p);
+								G_warning(_("%s: Unable to read font"), p);
 								break;
 							}
 						}
 						if(c)
 							charset = transform_string(c+1, toupper);
 						if(set_font(library, &face, path))
-							error("Unable to create face");
+							error(_("Unable to create face"));
 						if(FT_Set_Char_Size(face, cnv(size), cnv(size), 100, 100))
-							error("Unable to set size");
+							error(_("Unable to set size"));
 						break;
 					case 'C':
 						tcolor = transform_string(p, tolower);
@@ -487,7 +487,7 @@ main(int argc, char **argv)
 							d *= (double)(win.b-win.t)/100.0;
 						size = d + (i ? size : 0);
 						if(face && FT_Set_Char_Size(face, cnv(size), cnv(size), 100, 100))
-							error("Unable to set size");
+							error(_("Unable to set size"));
 						break;
 					case 'B':
 						bold = (atoi(p) ? 1 : 0);
@@ -585,9 +585,9 @@ main(int argc, char **argv)
 
 				ol = convert_text(charset, buf + i, &out);
 				if(ol == -1)
-					error("Unable to create text conversion context");
+					error(_("Unable to create text conversion context"));
 				if(ol == -2)
-					error("Text conversion error");
+					error(_("Text conversion error"));
 
 				if(linefeed || setl)
 				{
@@ -627,7 +627,7 @@ main(int argc, char **argv)
 				setx = sety = setl = 0;
 			}
 			else
-				G_warning("No font selected");
+				G_warning(_("No font selected"));
 		}
 
 		fclose(fp);
@@ -667,18 +667,18 @@ read_capfile(char *capfile, capinfo **fonts, int *fonts_count, int *cur_font,
 	if(capfile)
 	{
 		if(access(capfile, R_OK))
-			G_warning("%s: Unable to read FreeType definition file; use the default", capfile);
+			G_warning(_("%s: Unable to read FreeType definition file; use the default"), capfile);
 		else
 			ptr = capfile;
 	}
 	if(ptr == file && access(ptr, R_OK))
 	{
-		G_warning("%s: No FreeType definition file", ptr);
+		G_warning(_("%s: No FreeType definition file"), ptr);
 		return -1;
 	}
 	if(!(fp = fopen(ptr, "r")))
 	{
-		G_warning("%s: Unable to read FreeType definition file", ptr);
+		G_warning(_("%s: Unable to read FreeType definition file"), ptr);
 		return -1;
 	}
 
@@ -884,7 +884,7 @@ get_color(char *tcolor, int *color)
 
 	if(!*color)
 	{
-		G_warning("[%s]: No such color", tcolor);
+		G_warning(_("[%s]: No such color"), tcolor);
 		*color = D_translate_color(DEFAULT_COLOR);
 	}
 
