@@ -3,7 +3,7 @@
 #include <sys/types.h>
 
 #if defined(__CYGWIN__) || defined(__APPLE__)
-#define lrand48() rand()/32767.0
+#define lrand48() ((long)((double) rand() * (1<<31) / RAND_MAX))
 #define srand48(sv) (srand((unsigned)(sv)))
 #else
 extern long lrand48();
