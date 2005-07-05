@@ -263,8 +263,13 @@ main(int argc, char **argv)
 	if(flag.p->answer && flag.n->answer)
 		G_fatal_error(_("Choose only one coordinate system for placement"));
 
-	if(!flag.c->answer && !param.font->answer && !param.path->answer)
-		G_fatal_error(_("No font selected"));
+	if(!flag.c->answer && !param.path->answer) {
+	    if(fonts_count) {
+		if(!param.font->answer)
+		    G_fatal_error(_("No font selected"));
+	    }
+	    else G_fatal_error(_("No font selected"));
+	}
 
 	path = NULL;
 	charset = NULL;
