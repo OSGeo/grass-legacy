@@ -22,7 +22,7 @@ int read_point (double e, double n)
 	""
     };
 
-    size = 1.0;
+    size = 6.0;
     have_icon = 0;
     color = BLACK;
     fcolor = BLACK;
