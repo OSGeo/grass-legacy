@@ -23,3 +23,5 @@ y.tab.c y.tab.h: yac.y
 lex.yy.c: lex.l
 	$(LEX) lex.l
 
+$(OBJDIR)/lex.yy.o: lex.yy.c y.tab.h
+
