@@ -3,9 +3,11 @@
 
 /*!
  \fn int db_list_tables (dbDriver *driver, dbString **names, int *count, int system)
- \brief 
- \return 
- \param 
+ \brief list available tables for given connection
+ \return names of tables, success: DB_OK; DB_FAILED otherwise
+ \param names: names of tables
+ \param
+ \param
 */
 int
 db_list_tables (dbDriver *driver, dbString **names, int *count, int system)
