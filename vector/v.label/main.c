@@ -120,20 +120,20 @@ main (int argc, char **argv)
 
     Width = G_define_option();
     Width->key = "width";
-    Width->description = "Line width of text (only for p.map output)";
+    Width->description = "Border width (only for ps.map output)";
     Width->type = TYPE_DOUBLE;
     Width->answer = "1";
 
     Hcolor = G_define_option();
     Hcolor->key = "hcolor";
-    Hcolor->description = "Highlight color for text (only for p.map output)";
+    Hcolor->description = "Highlight color for text (only for ps.map output)";
     Hcolor->type = TYPE_STRING;
     Hcolor->answer = "none";
     Hcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
 
     Hwidth = G_define_option();
     Hwidth->key = "hwidth";
-    Hwidth->description = "Line width of highlight color (only for p.map output)";
+    Hwidth->description = "Line width of highlight color (only for ps.map output)";
     Hwidth->type = TYPE_DOUBLE;
     Hwidth->answer = "0";
 
