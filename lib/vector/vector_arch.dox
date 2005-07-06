@@ -52,6 +52,16 @@ the memory by using Vect_set_release_support(). But: The programmer
 cannot run Vect_set_release_support() in mid process because all
 vectors are needed in the spatial index is needed to build topology.
 
+Topology is also necessary for points in case of vector network
+because the graph is built using topology informations about lines
+and points.
+
+The topology structure does not only store the topology but also
+'line' bounding box and line offset in coor file (index).
+The existing spatial index is using line ID in 'topology' structure
+to identify lines in 'coor' file. Currently it is not possile to build
+spatial index without topology.
+
 \subsubsubsection vlibtopo_coor coor file
 
 <ol>
