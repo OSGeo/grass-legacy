@@ -165,6 +165,18 @@ char *G__read_Cell_head ( FILE *fd,
 	    SET(F_COMP);
     }
 
+    if( G_find_key_value("top", cellhd_file) ||
+	G_find_key_value("bottom", cellhd_file) ||
+	G_find_key_value("cols3", cellhd_file) ||
+	G_find_key_value("rows3", cellhd_file) ||
+	G_find_key_value("depths", cellhd_file) ||
+	G_find_key_value("e-w resol3", cellhd_file) ||
+	G_find_key_value("n-s resol3", cellhd_file) ||
+	G_find_key_value("t-b resol", cellhd_file) )
+        G_warning("GRASS >=6.x 3-D settings were found and may be lost");
+   
+    G_free_key_value( cellhd_file );
+
 /* check some of the fields */
     if (!TEST(F_NORTH))
 	ERROR (_("north field missing"),0);
