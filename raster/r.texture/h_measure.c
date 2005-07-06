@@ -61,7 +61,7 @@ float **P_matrix45;
 float **P_matrix90;
 float **P_matrix135;
 
-int tone[PGM_MAXMAXVAL];
+int tone[PGM_MAXMAXVAL+1];
 
 float 
 h_measure (int **grays, int rows, int cols, int t_m, int t_d)
@@ -80,8 +80,8 @@ h_measure (int **grays, int rows, int cols, int t_m, int t_d)
   for (row = rows - 1; row >= 0; --row)
     for (col = 0; col < cols; ++col)
     {
-      if (grays[row][col] > PGM_MAXMAXVAL)
-	G_fatal_error ("Too many categories (max: %i). Try to rescale or reclassify the map", PGM_MAXMAXVAL);
+      if (grays[row][col] < 0 || grays[row][col] > PGM_MAXMAXVAL)
+	 G_fatal_error ("Too many categories (found: %i, max: %i). Try to rescale or reclassify the map", grays[row][col], PGM_MAXMAXVAL);
       tone[grays[row][col]] = grays[row][col];
     }
   for (row = PGM_MAXMAXVAL, tones = 0; row >= 0; --row)
