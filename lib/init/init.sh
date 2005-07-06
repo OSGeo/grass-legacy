@@ -608,6 +608,14 @@ else
     esac
 fi
 
+# check for SHELL
+if [ ! -x "$SHELL" ] ; then
+    echo "ERROR: The SHELL variable is not set" 1>&2
+    rm -f "$lockfile"
+    rm -rf "$tmp"  # remove session files from tmpdir
+    exit 1
+fi
+
 # Start the chosen GUI but ignore text
 case "$GRASS_GUI" in
     
