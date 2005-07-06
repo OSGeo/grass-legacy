@@ -7,25 +7,26 @@ http://grass.itc.it
 
 \section intro Introduction
 
-This description covers the new GRASS 5.7/6.0 vector library architecture.
-This new architecture overcomes the vector limitations of GRASS 4.x-5.4.x by
-extending the vector support with attributes stored in external relational
-databases and by new 3D capabilities. Besides internal file based storage the
-geometry may alternatively be stored in PostGIS database. This enables users
-to maintain large data sets with simultaneous write access. External GIS
-formats such as SHAPE-files may be used directly without necessity of format
-conversion.
+This description covers the new GRASS 5.7/6.0 vector library
+architecture.  This new architecture overcomes the vector limitations
+of GRASS 4.x-5.4.x by extending the vector support with attributes
+stored in external relational databases and by new 3D
+capabilities. Besides internal file based storage the geometry may
+alternatively be stored in PostGIS database. This enables users to
+maintain large data sets with simultaneous write access. External GIS
+formats such as SHAPE-files may be used directly without necessity of
+format conversion.
 
 \section background Background
 
-generally, the vector data model is used to describe geographic phenomena which
-may be represented by geometric entities (primitives) like points, lines, and
-areas. The GRASS vector data model includes the description of
-topology, where besides the coordinates - describing the location of the
-points, lines, boundaries and centroids - also their spatial relations are
-stored. In general, topological GIS require a data structure where common
-boundary between two adjacent areas is stored as a single line, simplifying
-the map maintenance.
+generally, the vector data model is used to describe geographic
+phenomena which may be represented by geometric entities (primitives)
+like points, lines, and areas. The GRASS vector data model includes
+the description of topology, where besides the coordinates -
+describing the location of the points, lines, boundaries and centroids
+- also their spatial relations are stored. In general, topological GIS
+require a data structure where common boundary between two adjacent
+areas is stored as a single line, simplifying the map maintenance.
 
 \section libraries Libraries
 
@@ -45,16 +46,26 @@ Spatial index (based on R-tree) is calculated on the fly.
 
 \subsubsection vlibtopo Vector library topology management
 
-Topology is generated for all kinds of
-There is no leak in the library, the memory is not released by default
-because it takes long time. You can force the library to release the memory
-if you want using Vect_set_release_support().
+Topology is generated for all kinds of vector types.  Memory is not
+released by default. The programmer can force the library to release
+the memory by using Vect_set_release_support(). But: The programmer
+cannot run Vect_set_release_support() in mid process because all
+vectors are needed in the spatial index is needed to build topology.
 
-Note: You cannot run Vect_set_release_support() in mid process because
-to build topology the spatial index for all points is needed.
+\subsubsubsection vlibtopo_coor coor file
+
+<ol>
+<li> In the coor file the following is stored: 'line' (element) type,
+    number of attributes and layer number for each category.
+<li> Coordinates in binary file are stored as double (8 bytes).
+</ol>
+
+\subsubsection vlibtin Vector TINs
+
+TINs are created as 2D/3D vector polygons consisting of 3 vertices.
 
 
-\subsubsection vlibfunc Vector library functions
+\subsubsection vlibfunc List of vector library functions
 
 The Vect_*() functions are the programmer's API for GRASS vector
 programming. See details here:
@@ -93,7 +104,8 @@ For details please read Blazek et al. 2002 (see below).
 Text based on: R. Blazek, M. Neteler, and R. Micarelli. The new GRASS 5.1
  vector architecture. In Open source GIS - GRASS users conference 2002,
  Trento, Italy, 11-13 September 2002. University of Trento, Italy, 2002.
- http://www.ing.unitn.it/~grass/proceedings/proceedings/pdfs/Blazek_Radim.pdf
+ <a href="http://www.ing.unitn.it/~grass/conferences/GRASS2002/proceedings/proceedings/pdfs/Blazek_Radim.pdf">http://www.ing.unitn.it/~grass/conferences/GRASS2002/proceedings/proceedings/pdfs/Blazek_Radim.pdf</a>
+ 
 
 \section seealso See Also
 
