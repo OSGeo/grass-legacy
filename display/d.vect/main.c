@@ -132,8 +132,8 @@ main (int argc, char **argv)
 	SYMBOL *Symb;
 	
 	module = G_define_module();
-	module->description = "Displays GRASS vector data in the active frame on the "
-		              "graphics monitor.";
+	module->description = _("Displays GRASS vector data in the active frame on the "
+		              "graphics monitor.");
 
 	map_opt = G_define_standard_option(G_OPT_V_MAP); 
 
@@ -148,14 +148,14 @@ main (int argc, char **argv)
 	display_opt->multiple   = YES ;
 	display_opt->answer     = "shape" ;
 	display_opt->options    = "shape,cat,topo,dir,attr,zcoor";
-	display_opt->description= "Display" ;
+	display_opt->description= _("Display");
 	
 	attrcol_opt = G_define_option() ;
 	attrcol_opt->key        = "attrcol" ;
 	attrcol_opt->type       = TYPE_STRING ;
 	attrcol_opt->required   = NO ;
 	attrcol_opt->multiple   = NO ; /* or fix attr.c, around line 102 */
-	attrcol_opt->description= "Name of column to be displayed" ;
+	attrcol_opt->description= _("Name of column to be displayed");
 	
 	icon_opt = G_define_option() ;
 	icon_opt->key        = "icon" ;
@@ -163,14 +163,14 @@ main (int argc, char **argv)
 	icon_opt->required   = NO ;
 	icon_opt->multiple   = NO ;
 	icon_opt->answer     = "basic/x" ;
-	icon_opt->description= "Point and centroid symbol" ;
+	icon_opt->description= _("Point and centroid symbol");
 /*	icon_opt->options     = icon_files();*/
 
 	size_opt = G_define_option() ;
 	size_opt->key        = "size" ;
 	size_opt->type       = TYPE_INTEGER ;
 	size_opt->answer     = "8" ;
-	size_opt->description= "Icon size" ;
+	size_opt->description= _("Icon size");
 	
 	field_opt = G_define_standard_option(G_OPT_V_FIELD) ;
 	cat_opt = G_define_standard_option(G_OPT_V_CATS) ;
@@ -180,13 +180,13 @@ main (int argc, char **argv)
 	color_opt->key        = "color" ;
 	color_opt->type       = TYPE_STRING ;
 	color_opt->answer     = DEFAULT_FG_COLOR;
-	color_opt->description= "Line color" ;
+	color_opt->description= _("Line color");
 
 	fcolor_opt = G_define_option() ;
 	fcolor_opt->key        = "fcolor" ;
 	fcolor_opt->type       = TYPE_STRING ;
 	fcolor_opt->answer     = "gray" ;
-	fcolor_opt->description= "Area fill color" ;
+	fcolor_opt->description= _("Area fill color");
 
 	lfield_opt = G_define_standard_option(G_OPT_V_FIELD) ;
 	lfield_opt->key        = "llayer" ;
@@ -196,25 +196,25 @@ main (int argc, char **argv)
 	lcolor_opt->key        = "lcolor" ;
 	lcolor_opt->type       = TYPE_STRING ;
 	lcolor_opt->answer     = "red" ;
-	lcolor_opt->description= "Label color" ;
+	lcolor_opt->description= _("Label color");
 	
 	bgcolor_opt = G_define_option() ;
 	bgcolor_opt->key        = "bgcolor" ;
 	bgcolor_opt->type       = TYPE_STRING ;
 	bgcolor_opt->answer     = "none" ;
-	bgcolor_opt->description= "Label background color" ;
+	bgcolor_opt->description= _("Label background color");
 
 	bcolor_opt = G_define_option() ;
 	bcolor_opt->key        = "bcolor" ;
 	bcolor_opt->type       = TYPE_STRING ;
 	bcolor_opt->answer     = "none" ;
-	bcolor_opt->description= "Label border color" ;
+	bcolor_opt->description= _("Label border color");
 
 	lsize_opt = G_define_option() ;
 	lsize_opt->key        = "lsize" ;
 	lsize_opt->type       = TYPE_INTEGER ;
 	lsize_opt->answer     = "8" ;
-	lsize_opt->description= "Label size (pixels)" ;
+	lsize_opt->description= _("Label size (pixels)");
 
 	font_opt = G_define_option() ;
 	font_opt->key        = "font" ;
@@ -223,55 +223,57 @@ main (int argc, char **argv)
 	font_opt->options    = "cyrilc,gothgbt,gothgrt,gothitt,"
 	    "greekc,greekcs,greekp,greeks,italicc,italiccs,italict,"
 	    "romanc,romancs,romand,romans,romant,scriptc,scripts" ;
-	font_opt->description= "Font name" ;
+	font_opt->description= _("Font name");
 
 	xref_opt = G_define_option() ;
 	xref_opt->key        = "xref" ;
 	xref_opt->type       = TYPE_STRING ;
 	xref_opt->answer     = "left" ;
 	xref_opt->options    = "left,center,right";
-	xref_opt->description= "Label horizontal justification" ;
+	xref_opt->description= _("Label horizontal justification");
 
 	yref_opt = G_define_option() ;
 	yref_opt->key        = "yref" ;
 	yref_opt->type       = TYPE_STRING ;
 	yref_opt->answer     = "center" ;
 	yref_opt->options    = "top,center,bottom";
-	yref_opt->description= "Label vertical justification" ;
+	yref_opt->description= _("Label vertical justification");
 	
 	minreg_opt = G_define_option() ;
 	minreg_opt->key        = "minreg" ;
 	minreg_opt->type       = TYPE_DOUBLE ;
 	minreg_opt->required   = NO ;
-	minreg_opt->description= "Minimum region size (average from height and width) "
-	                         "when map is displayed" ;
+	minreg_opt->description= _("Minimum region size (average from height and width) "
+	                         "when map is displayed");
 	
 	maxreg_opt = G_define_option() ;
 	maxreg_opt->key        = "maxreg" ;
 	maxreg_opt->type       = TYPE_DOUBLE ;
 	maxreg_opt->required   = NO ;
-	maxreg_opt->description= "Maximum region size (average from height and width) "
-	                         "when map is displayed" ;
+	maxreg_opt->description= _("Maximum region size (average from height and width) "
+	                         "when map is displayed");
 	
 	_quiet = G_define_flag ();
 	_quiet->key		= 'v';
-	_quiet->description	= "Run verbosely";
+	_quiet->description	= _("Run verbosely");
 
 	table_acolors_flag = G_define_flag ();
 	table_acolors_flag->key		= 'a';
-	table_acolors_flag->description	= "Get area fill colors from map table column 'GRASSRGB' (RRR:GGG:BBB)";
+	table_acolors_flag->description	=
+	    _("Get area fill colors from map table column 'GRASSRGB' (RRR:GGG:BBB)");
 
 	cats_acolors_flag = G_define_flag ();
 	cats_acolors_flag->key		= 'c';
-	cats_acolors_flag->description	= "Fill areas with random colors according to category number";
+	cats_acolors_flag->description	=
+	    _("Fill areas with random colors according to category number");
 
 	id_flag = G_define_flag ();
 	id_flag->key		= 'i';
-	id_flag->description	= "Use values from 'cat' option as line id";
+	id_flag->description	= _("Use values from 'cats' option as line ID");
 
 	x_flag = G_define_flag ();
 	x_flag->key		= 'x';
-	x_flag->description	= "Don't add to list of vectors and commands in monitor";
+	x_flag->description	= _("Don't add to list of vectors and commands in monitor");
 	
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
@@ -282,7 +284,7 @@ main (int argc, char **argv)
 	
 	G_get_set_window (&window);
 
-	if (R_open_driver() != 0)  G_fatal_error ("No graphics device selected");
+	if (R_open_driver() != 0)  G_fatal_error(_("No graphics device selected"));
 
 	/* Read map options */
 
@@ -317,7 +319,7 @@ main (int argc, char **argv)
 	} else if ( ret == 2 ) { /* none */
 	    color = -1;
 	} else if ( ret == 0 ) { /* error */
-	    G_fatal_error("Unknown color: [%s]", color_opt->answer);
+	    G_fatal_error(_("Unknown color: [%s]"), color_opt->answer);
 	}
 	
 	fcolor = WHITE;
@@ -329,21 +331,21 @@ main (int argc, char **argv)
 	} else if ( ret == 2 ) { /* none */
 	    fcolor = -1;
 	} else if ( ret == 0 ) { /* error */
-	    G_fatal_error("Unknown color: [%s]", fcolor_opt->answer);
+	    G_fatal_error(_("Unknown color: [%s]"), fcolor_opt->answer);
 	}
 
 	quiet = !_quiet->answer;
 
 	size = atoi (size_opt->answer);
 	Symb = S_read ( icon_opt->answer );
-        if ( Symb == NULL ) G_warning ("Cannot read symbol, cannot display points");
+        if ( Symb == NULL ) G_warning(_("Cannot read symbol, cannot display points"));
 	else S_stroke ( Symb, size, 0.0, 0 );
 
 	/* Make sure map is available */
 	mapset = G_find_vector2 (map_name, "") ; 
 	
 	if (mapset == NULL)
-		G_fatal_error("Vector file [%s] not available", map_name) ;
+		G_fatal_error(_("Vector file [%s] not available"), map_name) ;
 
 	/* if where_opt was specified select categories from db 
 	 * otherwise parse cat_opt */
@@ -357,17 +359,17 @@ main (int argc, char **argv)
 	  {
             chcat = 1;  
             if ( (fi = Vect_get_field ( &Map, Clist->field)) == NULL)
-                G_fatal_error("Database connection not defined");
+                G_fatal_error(_("Database connection not defined"));
             if ( fi != NULL )
 	      {
                 driver = db_start_driver(fi->driver);
 		if (driver == NULL)
-		    G_fatal_error("Cannot open driver %s", fi->driver) ;
+		    G_fatal_error(_("Cannot open driver %s"), fi->driver) ;
 		
  	        db_init_handle (&handle);
 	        db_set_handle (&handle, fi->database, NULL);
 	        if (db_open_database(driver, &handle) != DB_OK)
-		    G_fatal_error("Cannot open database %s", fi->database) ;
+		    G_fatal_error(_("Cannot open database %s"), fi->database) ;
 		
 		ncat = db_select_int( driver, fi->table, fi->key, where_opt->answer, &cats);
 
@@ -384,7 +386,7 @@ main (int argc, char **argv)
 		chcat = 1;  
 	        ret = Vect_str_to_cat_list ( cat_opt->answer, Clist);
 	        if ( ret > 0 )
-	            G_warning ( "%d errors in cat option\n", ret);
+	            G_warning (_("%d errors in cat option"), ret);
               }
 	  }
 	
@@ -521,12 +523,12 @@ main (int argc, char **argv)
 		if ( level >= 2 )
 		    stat = darea ( &Map, Clist, color, fcolor, chcat, (int) id_flag->answer, table_acolors_flag->answer, cats_acolors_flag->answer, &window );
 		else
-		    G_warning ("Cannot display areas, topology not available");
+		    G_warning(_("Cannot display areas, topology not available"));
 	    }
 
 	    if ( display & DISP_SHAPE ) {
 		if ( id_flag->answer && level < 2 ) {
-		    G_warning ("Cannot display lines by id, topology not available");
+		    G_warning(_("Cannot display lines by id, topology not available"));
 		} else {
 		    stat = plot1 ( &Map, type, area, Clist, color, fcolor, chcat, Symb, size, (int) id_flag->answer );
 		}
@@ -551,7 +553,7 @@ main (int argc, char **argv)
 		if (level >= 2 )
 		    stat = topo ( &Map, type, area, &lattr);
 		else
-		    G_warning ("Cannot display topology, not available");
+		    G_warning(_("Cannot display topology, not available"));
 	    }
 	}
 	
@@ -572,5 +574,3 @@ main (int argc, char **argv)
 
 	exit(stat);
 }
-
-
