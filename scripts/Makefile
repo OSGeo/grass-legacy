@@ -22,6 +22,7 @@ SUBDIRS = \
 	i.image.mosaic \
 	i.oif \
 	i.spectral \
+	i.in.spotvrt \
 	i.tasscap \
 	pg.postgisdb \
 	r.blend \
