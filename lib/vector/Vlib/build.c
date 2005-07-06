@@ -78,7 +78,8 @@ Vect_get_built ( struct Map_info *Map )
 
 /*!
  \fn int Vect_build_partial ( struct Map_info *Map, int top, FILE *msgout ) 
- \brief build partial topology for vector map
+ \brief build partial topology for vector map. Should only be used in special cases
+ of vector processing.
 
  This functions optionaly builds only some parts of topology. Highest level is specified by build
  parameter which may be:
@@ -89,7 +90,7 @@ Vect_get_built ( struct Map_info *Map )
  GV_BUILD_CENTROIDS - assign centroids to areas
  GV_BUILD_ALL - top level, the same as GV_BUILD_CENTROIDS
 
- If fuctions is called with build lower than current value of the Map, the level is downgraded to 
+ If functions is called with build lower than current value of the Map, the level is downgraded to 
  requested value.
 
  All calls to Vect_write_line, Vect_rewrite_line, Vect_delete_line respect the last value of 
