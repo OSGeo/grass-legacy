@@ -100,8 +100,12 @@ int do_plt (int after_masking)
 
 	    if (size <= 0.0) size = 10;
 
+	/* HB 7/2005: allow all points through as only way to generate
+		    one is explicitly with the ps.map "point" instruction. */
+/*
 	    if (n1 > PS.w.north || n1 < PS.w.south) continue;
 	    if (e1 > PS.w.east  || e1 < PS.w.west ) continue;
+*/
 	    G_plot_where_xy(e1, n1, &x_int, &y_int);
 	    x = (double) x_int / 10.;
 	    y = (double) y_int / 10.;
