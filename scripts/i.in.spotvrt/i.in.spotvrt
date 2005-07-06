@@ -1,0 +1,203 @@
+#!/bin/sh
+
+############################################################################
+#
+# MODULE:       i.in.spot
+#
+# AUTHOR(S):    Markus Neteler
+#
+# PURPOSE:      Import SPOT VEGETATION data into a GRASS raster map
+#               SPOT Vegetation (1km, global) data:
+#               http://free.vgt.vito.be/
+#
+# COPYRIGHT:    (c) 2004,2005 GRASS Development Team
+#
+#############################################################################
+#
+# REQUIREMENTS:
+#      -  gdal: http://gdal.org
+#
+# Notes:
+# * According to the faq (http://www.vgt.vito.be/faq/faq.html), SPOT vegetation 
+#   coordinates refer to the center of a pixel.
+# * GDAL coordinates refer to the corner of a pixel
+#   -> correction of 0001/0001_LOG.TXT coordinates by 0.5 pixel
+#############################################################################
+
+#%Module
+#%  description: Import of SPOT VGT file into a raster map.
+#%End
+#%flag
+#%  key: v
+#%  description: verbose mode
+#%end
+#%option
+#% key: file
+#% type: string
+#% description: existing SPOT VGT HDF file
+#% gisprompt: file,file,file
+#% required : yes
+#%end
+#%option
+#% key: rast
+#% type: string
+#% gisprompt: new,cell,raster
+#% description: name for new raster file
+#% required : no
+#%end
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec g.parser "$0" "$@"
+fi
+
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION="$GISDBASE"/"$LOCATION_NAME"/"$MAPSET"
+
+PROG=`basename $0`
+
+#### check for gdalinfo (just to check if installation is complete)
+GDALIMPORT=`which gdalinfo`
+if [ "$GDALIMPORT" = "" ] ; then
+    echo "$PROG: 'gdalinfo' program not found, install GDAL first" 1>&2
+    echo "       http://www.gdal.org" 1>&2
+    exit 1
+fi
+
+#### check if we have awk
+AWK=`which awk`
+if [ "$AWK" = "" ] ; then
+    echo "$PROG: awk required, please install awk/gawk first" 1>&2
+    exit 1
+fi
+
+
+#### trap ctrl-c
+trap 2 3 15
+
+PID=$$
+TMPFILE="`g.tempfile $PID`"
+
+if [ ! -z "$GIS_OPT_file" ] ; then
+    SPOTDIR="`dirname $GIS_OPT_file`"
+    SPOTNAME=`basename $GIS_OPT_file .HDF`
+fi
+
+if [ ! -z "$GIS_OPT_rast" ] ; then
+    NAME="$GIS_OPT_rast"
+else
+    NAME=$SPOTNAME
+fi
+
+if [ ! -z `g.findfile elem=cell file="$NAME" | grep ^file | cut -f2 -d=` ] ; then
+	echo "<$NAME> already exists! Aborting."
+	exit 1
+fi
+
+### create VRT header
+
+PROJFILE=${SPOTDIR}/0001_LOG.TXT
+VRTFILE=$TMPFILE.vrt
+
+WESTCENTER=`cat $PROJFILE  | grep CARTO_UPPER_LEFT_X  | tr -s ' ' ' ' | cut -d' ' -f2`
+NORTHCENTER=`cat $PROJFILE | grep CARTO_UPPER_LEFT_Y  | tr -s ' ' ' ' | cut -d' ' -f2`
+EASTCENTER=`cat $PROJFILE  | grep CARTO_UPPER_RIGHT_X | tr -s ' ' ' ' | cut -d' ' -f2`
+SOUTHCENTER=`cat $PROJFILE | grep CARTO_LOWER_LEFT_Y  | tr -s ' ' ' ' | cut -d' ' -f2`
+MAP_PROJ_RESOLUTION=`cat $PROJFILE | grep MAP_PROJ_RESOLUTION  | tr -s ' ' ' ' | cut -d' ' -f2`
+XSIZE=`cat $PROJFILE  | grep IMAGE_UPPER_RIGHT_COL  | tr -s ' ' ' ' | cut -d' ' -f2`
+YSIZE=`cat $PROJFILE  | grep IMAGE_LOWER_RIGHT_ROW  | tr -s ' ' ' ' | cut -d' ' -f2`
+
+# DEBUG (in terminal WEST is not printed?!?!?!)
+#echo "     $NORTHCENTER"
+#echo "       |"
+#echo -n "$WESTCENTER"
+#echo " -+- $EASTCENTER"
+#echo "       |"
+#echo "     $SOUTHCENTER"
+#echo " RES: $MAP_PROJ_RESOLUTION"
+
+WESTCORNER=`echo $WESTCENTER $MAP_PROJ_RESOLUTION | awk '{printf "%.12e", $1 - $2/2.}'`
+NORTHCORNER=`echo $NORTHCENTER $MAP_PROJ_RESOLUTION | awk '{printf "%.12e", $1 + $2/2.}'`
+EASTCORNER=`echo $EASTCENTER $MAP_PROJ_RESOLUTION | awk '{printf "%.12e", $1 + $2/2.}'`
+SOUTHCORNER=`echo $SOUTHCENTER $MAP_PROJ_RESOLUTION | awk '{printf "%.12e", $1 - $2/2.}'`
+RESOLUTION=`echo $MAP_PROJ_RESOLUTION | awk '{printf "%.12e", $1}'`
+XSIZE=`echo $XSIZE | awk '{printf "%d", $1}'`
+YSIZE=`echo $YSIZE | awk '{printf "%d", $1}'`
+
+# DEBUG 
+#echo $WESTCORNER
+#echo $NORTHCORNER
+#echo $EASTCORNER
+#echo $SOUTHCORNER
+#echo $RESOLUTION
+
+rm -f $VRTFILE
+echo -n "<VRTDataset rasterXSize=" >> $VRTFILE
+echo -n "\"$XSIZE\"" >> $VRTFILE
+echo -n " rasterYSize=" >> $VRTFILE
+echo "\"$YSIZE\">" >> $VRTFILE
+
+echo " <SRS>GEOGCS[&quot;wgs84&quot;,DATUM[&quot;WGS_1984&quot;,SPHEROID[&quot;wgs84&quot;,6378137,298.257223563],TOWGS84[0.000,0.000,0.000]],PRIMEM[&quot;Greenwich&quot;,0],UNIT[&quot;degree&quot;,0.0174532925199433]]</SRS>" >> $VRTFILE
+echo "   <GeoTransform>$WESTCORNER, $RESOLUTION, 0.0000000000000000e+00, $NORTHCORNER, 0.0000000000000e+00, -$RESOLUTION</GeoTransform>" >> $VRTFILE
+echo "   <VRTRasterBand dataType=\"Byte\" band=\"1\">" >> $VRTFILE
+echo "    <NoDataValue>0.00000000000000E+00</NoDataValue>" >> $VRTFILE
+echo "    <ColorInterp>Gray</ColorInterp>" >> $VRTFILE
+echo "    <SimpleSource>" >> $VRTFILE
+echo "     <SourceFilename>$GIS_OPT_file</SourceFilename>" >> $VRTFILE
+echo "      <SourceBand>1</SourceBand>" >> $VRTFILE
+echo "      <SrcRect xOff=\"0\" yOff=\"0\" xSize=\"8177\" ySize=\"5601\"/>" >> $VRTFILE
+echo "      <DstRect xOff=\"0\" yOff=\"0\" xSize=\"8177\" ySize=\"5601\"/>" >> $VRTFILE
+echo "    </SimpleSource>" >> $VRTFILE
+echo " </VRTRasterBand>" >> $VRTFILE
+echo "</VRTDataset>" >> $VRTFILE
+
+## let's import...
+r.in.gdal $VRTFILE output=$NAME
+if [ $? -eq 1 ] ; then
+   echo "An error occurred. Stop."
+   exit 1
+fi
+
+echo ""
+echo "Imported SPOT VEGETATION map <$NAME>."
+
+
+#################
+## http://www.vgt.vito.be/faq/FAQS/faq19.html
+# What is the relation between the digital number and the real NDVI ?
+# Real NDVI =coefficient a * Digital Number + coefficient b
+#           = a * DN +b
+#
+# Coefficient a = 0.004
+# Coefficient b = -0.1
+
+#save region before zoom to SPOT image
+g.region save=spot_$PID 2>&1 >/dev/null
+g.region rast=$NAME 2>&1 >/dev/null
+
+echo "Remapping digital numbers to reflectance..."
+r.mapcalc "${NAME}_$PID=0.004 * $NAME - 0.1"
+g.remove rast=$NAME 2>&1 >/dev/null
+g.rename rast=${NAME}_$PID,${NAME}
+
+#apply color table:
+r.colors ${NAME} rules=ndvi 2>&1 >/dev/null
+
+# restore user settings:
+g.region region=spot_$PID 2>&1 >/dev/null
+g.remove region=spot_$PID 2>&1 >/dev/null
+
+#### clean up the mess
+rm -f $VRTFILE $TMPFILE
+
+#### end
+echo 1>&2
+echo "Done." 1>&2
+
+exit 0
+
