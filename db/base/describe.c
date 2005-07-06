@@ -55,7 +55,7 @@ main(int argc, char *argv[])
         for (col = 0; col < ncols; col++)
         {
           column = db_get_table_column (table, col);
-          fprintf(stdout, "Column %d: %s\n", (col+1), db_get_column_name (column));
+          fprintf(stdout, "Column %d:%s:%s\n", (col+1), db_get_column_name (column), db_sqltype_name(db_get_column_sqltype(column)));
         }
     }
     
