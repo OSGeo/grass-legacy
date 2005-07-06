@@ -150,8 +150,8 @@ echo "    <ColorInterp>Gray</ColorInterp>" >> $VRTFILE
 echo "    <SimpleSource>" >> $VRTFILE
 echo "     <SourceFilename>$GIS_OPT_file</SourceFilename>" >> $VRTFILE
 echo "      <SourceBand>1</SourceBand>" >> $VRTFILE
-echo "      <SrcRect xOff=\"0\" yOff=\"0\" xSize=\"8177\" ySize=\"5601\"/>" >> $VRTFILE
-echo "      <DstRect xOff=\"0\" yOff=\"0\" xSize=\"8177\" ySize=\"5601\"/>" >> $VRTFILE
+echo "      <SrcRect xOff=\"0\" yOff=\"0\" xSize=\"$XSIZE\" ySize=\"$YSIZE\"/>" >> $VRTFILE
+echo "      <DstRect xOff=\"0\" yOff=\"0\" xSize=\"$XSIZE\" ySize=\"$YSIZE\"/>" >> $VRTFILE
 echo "    </SimpleSource>" >> $VRTFILE
 echo " </VRTRasterBand>" >> $VRTFILE
 echo "</VRTDataset>" >> $VRTFILE
@@ -180,7 +180,7 @@ echo "Imported SPOT VEGETATION map <$NAME>."
 g.region save=spot_$PID 2>&1 >/dev/null
 g.region rast=$NAME 2>&1 >/dev/null
 
-echo "Remapping digital numbers to reflectance..."
+echo "Remapping digital numbers to NDVI..."
 r.mapcalc "${NAME}_$PID=0.004 * $NAME - 0.1"
 g.remove rast=$NAME 2>&1 >/dev/null
 g.rename rast=${NAME}_$PID,${NAME}
