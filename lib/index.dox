@@ -35,13 +35,13 @@ Main web site: <a href="http://grass.itc.it">http://grass.itc.it</a>
 <P>
 <I>Missing entries here are either not yet uploaded to CVS or simply undocumented</i>
 <ul>
-<li>D <!-- a href="d_displaylib.html" -->display library</a>
+<li>D <a href="d_displaylib.html">display library</a>
 <li>bitmap <!-- a href="bitmaplib.html" -->bitmap library for X Window Bitmaps</a>
 <li>btree <!-- a href="btreelib.html" -->binary tree library</a>
 <li>bwidget <!-- a href="bwidgetlib.html" -->Tcl/Tk extra library</a>
 <li>coorcnv <!-- a href="coorcnvlib.html" -->coordinate conversion and datum support library</a> (unused)
 <li>datetime <!-- a href="datetimelib.html" -->DateTime library</a>
-<li>dbmi <!-- a href="dbmilib.html" -->database management interface database drivers</a>
+<li>dbmi <a href="dbmi.html">database management interface database drivers</a>
 <li>dig_atts <!-- a href="dig_attslib.html" -->library to read and write from attribute files</a>
 <li>digitizer <!-- a href="digitizerlib.html" -->raw library for general digitizer support</a>
 <li>display <!-- a href="displaylib.html" -->library for CELL driver</a>
@@ -52,12 +52,14 @@ Main web site: <a href="http://grass.itc.it">http://grass.itc.it</a>
 <li>gis <a href="gislib.html">GRASS GIS library</a>, with following subsection:
 <ul>
  <li> <a href="gisrasterlib.html">Raster File Processing</a>
+ <li> <a href="gissiteslib.html">Sites File Processing</a> (legacy, merged into vector)
+ <li> <a href="gisvectorlib.html">Vector File Processing</a>
 </ul>
 <li>gmath <!-- a href="gmathlib.html" -->generic mathematical functions (matrix functions, fft2 etc., to be extended: BLAS/LAPACK library)</a>
 <li>ibtree <!-- a href="ibtreelib.html" -->integer clone of binary tree library (btree)</a>
 <li>icon <!-- a href="iconlib.html" -->icon library (required for PS/Paint icons, read, write, manipulate icons)</a>
 <li>imagery <a href="imagerylib.html">imagery library</a>
-<li>image3 <!-- a href="image3lib.html" -->extra imagery library</a>
+<li>image3 <!-- a href="image3lib.html" -->extra imagery library</a> (mainly unused)
 <li>libimage <!-- a href="libimage.html" -->image library required for SG3d/Iris, saving images in SGIs rgb-format</a>
 <li>linkm <!-- a href="linkmlib.html" -->linked list memory manager</a>
 <li>lock <!-- a href="locklib.html" -->locking mechanism for GRASS monitors and files</a>
