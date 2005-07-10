@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-06-30 17:50+0200\n"
-"PO-Revision-Date: 2005-06-30 18:11+0200\n"
+"PO-Revision-Date: 2005-07-10 09:45+0200\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -339,21 +339,18 @@ msgid "The password was stored in file."
 msgstr "Das Passwort ist in einer Datei gespeichert."
 
 #: ../display/d.erase/main.c:34
-#, fuzzy
 msgid "Erase the contents of the active display frame with user defined color"
-msgstr "von"
+msgstr "Löscht die Inhalte des aktiven Monitor-Frames mit einer benutzerdefinierten Farbe."
 
 #: ../display/d.erase/main.c:42
-#, fuzzy
 msgid ""
 "Color to erase with, either a standard GRASS color or R:G:B triplet "
 "(separated by colons)"
-msgstr "a"
+msgstr "Farbe zum Löschen, entweder als GRASS Standard-Farbe oder als R:G:B-Tripel (Semicolon als Trennzeichen)."
 
 #: ../display/d.erase/main.c:46
-#, fuzzy
 msgid "Remove all frames and erase the screen"
-msgstr "Frames screen"
+msgstr "Löscht alle Frames im Monitor."
 
 #: ../display/d.erase/main.c:52 ../display/d.font.freetype/main.c:102
 #: ../display/d.nviz/main.c:248 ../display/d.paint.labels/main.c:64
@@ -362,14 +359,12 @@ msgid "No graphics device selected"
 msgstr "Keine Graphik-Ausgabe ausgewählt."
 
 #: ../display/d.erase/main.c:56
-#, fuzzy
 msgid "No current frame"
-msgstr "Übernehme von der aktuellen Region."
+msgstr "Kein aktueller Frame."
 
 #: ../display/d.erase/main.c:58
-#, fuzzy
 msgid "Current frame not available"
-msgstr "nicht"
+msgstr "Aktueller Frame nicht verfügbar."
 
 #: ../display/d.font.freetype/main.c:52
 msgid ""
@@ -544,16 +539,14 @@ msgid "Error: %s\n"
 msgstr "Fehler: %s\n"
 
 #: ../display/d.paint.labels/main.c:28
-#, fuzzy
 msgid ""
 "Displays text labels (created with v.label) to the active frame on the "
 "graphics monitor."
-msgstr "v ein."
+msgstr "Zeigt Text-Label (mit v.label erstellt) im aktiven Frame des Monitors."
 
 #: ../display/d.paint.labels/main.c:36
-#, fuzzy
 msgid "Name of label file"
-msgstr "von"
+msgstr "Name der Label-Datei."
 
 #: ../display/d.paint.labels/main.c:43
 #, fuzzy
@@ -608,7 +601,7 @@ msgstr "screen"
 
 #: ../display/d.paint.labels/main.c:113
 msgid "Error in calculating conversions"
-msgstr ""
+msgstr "Fehler bei der Berechnung der Umwandlung."
 
 #: ../display/d.path/select.c:32
 #, c-format
@@ -1734,7 +1727,7 @@ msgstr "von"
 
 #: ../imagery/i.cluster/main.c:96
 msgid "Percent convergence"
-msgstr ""
+msgstr "Prozent Konvergenz."
 
 #: ../imagery/i.cluster/main.c:103
 #, fuzzy
@@ -2449,26 +2442,22 @@ msgid "File containing mapping instructions (or use input=- to enter from keyboa
 msgstr "von"
 
 #: ../ps/ps.map/main.c:112
-#, fuzzy
 msgid "PostScript output file"
-msgstr "Ausgabe"
+msgstr "PostScript Ausgabedatei"
 
 #: ../ps/ps.map/main.c:120
-#, fuzzy
 msgid "Scale of the output map, e.g. 1:25000 (default: Auto-sized to fit page)"
-msgstr "von Ausgabe e g Seite"
+msgstr "Maßstab der Ausgabekarte, z.B. 1:25000 (standardmäßig: Anpassung an die Seite)"
 
 #: ../ps/ps.map/main.c:125
-#, fuzzy
 msgid "Number of copies to print"
-msgstr "von"
+msgstr "Anzahl der Kopien."
 
 #: ../ps/ps.map/main.c:220
-#, fuzzy
 msgid ""
 "Using \"scale\" from the command line is depreciated. Please use the \"scale"
 "\" mapping instruction instead."
-msgstr "skalieren von command Linie ist skalieren."
+msgstr "\"Scale\" als Kommandozeilenparameter ist veraltet. Bitte benutzen Sie \"scale\"-Instruktionen."
 
 #: ../ps/ps.map/main.c:254
 msgid "Current region cannot be set."
@@ -2476,37 +2465,33 @@ msgstr "Aktuelle Region kann nicht gesetzt werden."
 
 #: ../ps/ps.map/main.c:265
 msgid "Data exists after final 'end' instruction!"
-msgstr ""
+msgstr "Weitere Daten existieren nach der beendenden 'end'-Instruktion!"
 
 #: ../ps/ps.map/ps_clrtbl.c:38
-#, fuzzy, c-format
+#, c-format
 msgid "Category file for [%s] not available"
-msgstr "s"
+msgstr "Kategorie-Dateien für [%s] sind nicht vorhanden. "
 
 #: ../ps/ps.map/ps_clrtbl.c:43 ../ps/ps.map/ps_fclrtbl.c:61
-#, fuzzy
 msgid "Unable to read colors for colorbar"
-msgstr "gelesen für"
+msgstr "Kann die Farbe für den Farbstreifen nicht lesen."
 
 #: ../ps/ps.map/ps_clrtbl.c:49
-#, fuzzy
 msgid ""
 "Your cats/ file is invalid. A cats/ file with categories and labels is "
 "required for 'colortable' when using CELL rasters. No colortable will be "
 "assigned to this output postscript file."
-msgstr "ist ungültig ist für mit Ausgabe."
+msgstr "Ihre Kategorie-Datei ist ungültig; es ist jedoch eine datei nötig, sofern sie 'colortable' bei CELL-Karten verwenden. Für die Postscript-Ausgabedatei wird nun keine Farbtabelle angewandt."
 
 #: ../ps/ps.map/ps_clrtbl.c:64 ../ps/ps.map/ps_fclrtbl.c:82
 #: ../ps/ps.map/ps_fclrtbl.c:86
-#, fuzzy
 msgid "Colorbar y location beyond page margins. Adjusting."
-msgstr "Seite."
+msgstr "Die Y-Position der Farbtabelle liegt außerhalb der Seitenränder. Korrigiere dies."
 
 #: ../ps/ps.map/ps_clrtbl.c:70 ../ps/ps.map/ps_fclrtbl.c:92
 #: ../ps/ps.map/ps_fclrtbl.c:96
-#, fuzzy
 msgid "Colorbar x location beyond page margins. Adjusting."
-msgstr "Seite."
+msgstr "Die X-Position der Farbtabelle liegt außerhalb der Seitenränder. Korrigiere dies."
 
 #: ../ps/ps.map/ps_fclrtbl.c:49
 #, fuzzy
