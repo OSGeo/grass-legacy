@@ -738,8 +738,10 @@ fprintf(stderr,"finished interpolating\n");
 	OUTGR ();
         if ((cellinp != NULL)) {
           G_close_cell(fdcout);
-	  fclose(Tmp_fd_cell);
-	  unlink(Tmp_file_cell);
+	  if ((cellout != NULL)) {
+		  fclose(Tmp_fd_cell);
+		  unlink(Tmp_file_cell);
+	  }
           G_close_cell(fdcell);
         }
         if (outz != NULL) {
