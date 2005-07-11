@@ -240,7 +240,7 @@ int main (int argc, char *argv[])
 	parm.ewres->required    = NO;
 	parm.ewres->multiple    = NO;
 	parm.ewres->type        = TYPE_STRING;
-	parm.ewres->description = llinfo("East-west grid resolution  2D ", G_llres_format_string(), window.proj);
+	parm.ewres->description = llinfo("East-west grid resolution 2D ", G_llres_format_string(), window.proj);
 
 	parm.tbres = G_define_option();
 	parm.tbres->key         = "tbres";
@@ -248,7 +248,7 @@ int main (int argc, char *argv[])
 	parm.tbres->required    = NO;
 	parm.tbres->multiple    = NO;
 	parm.tbres->type        = TYPE_STRING;
-	parm.tbres->description = _("Top-bottom grid resolution");
+	parm.tbres->description = _("Top-bottom grid resolution 3D");
 
 	parm.zoom = G_define_option();
 	parm.zoom->key         = "zoom";
