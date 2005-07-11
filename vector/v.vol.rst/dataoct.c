@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include "dataoct.h" 
 #include "externs.h" 
-
+#include "user.h"
 
 
 struct quadruple *point_new(x,y,z,w,sm)
