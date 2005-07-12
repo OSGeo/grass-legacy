@@ -19,7 +19,8 @@
 #include "dbmi.h"
 #include "glocale.h"
 
-#define PI    3.1415926535897932384626433832795029L
+/* #define PI    3.1415926535897932384626433832795029L */ /* ? needed ? */
+#define PI M_PI
 
 struct Option *Xoffset, *Yoffset, *Reference, *Font, *Color, *Size;
 struct Option *Width, *Hcolor, *Hwidth, *Bcolor, *Border, *Opaque;
