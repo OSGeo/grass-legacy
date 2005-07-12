@@ -15,7 +15,10 @@
    Date: July 1998
 */
 
+#include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#include <math.h>
 #include "gis.h"
 #include "glocale.h"
 
@@ -27,10 +30,6 @@ void processProfiles(int inputFile, FILE *outputF);
 
 #define MIN(x,y)     (((x) < (y)) ? (x) : (y))
 #define MAX(x,y)     (((x) > (y)) ? (x) : (y))
-
-#ifndef M_PI
-#define M_PI        3.14159265358979323846
-#endif
 
 #define SW     0
 #define NW     1
