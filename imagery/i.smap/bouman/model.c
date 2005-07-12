@@ -1,8 +1,9 @@
+#include "gis.h"
 #include "imagery.h"
 #include "bouman.h"
 #include "region.h"
 
-#define PI 3.141592654
+#define PI M_PI
 
 void extract_init (struct SigSet *S)
 {

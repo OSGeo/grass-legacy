@@ -4,7 +4,7 @@
 #include "imagery.h"
 #include "local_proto.h"
 
-#define PI 3.141592654
+#define PI M_PI
 #define ZERO 1e-10
 #define SMALLEST_SUBCLUST 1
 

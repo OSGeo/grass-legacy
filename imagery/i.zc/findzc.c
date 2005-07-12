@@ -15,9 +15,10 @@ Details:        This routine finds the locations and orientations of zero
 */
 #include <stdio.h>
 #include <math.h>
+#include "gis.h"
 #include "globals.h"
 
-#define PI      3.141592654
+#define PI      M_PI
 #define TINY    1.0e-3
 
 int 
