@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "gis.h"
+#include "glocale.h"
 
 #define RADIX 2.0
 #define EPSILON 0.000000001
@@ -80,8 +81,10 @@ h_measure (int **grays, int rows, int cols, int t_m, int t_d)
   for (row = rows - 1; row >= 0; --row)
     for (col = 0; col < cols; ++col)
     {
-      if (grays[row][col] < 0 || grays[row][col] > PGM_MAXMAXVAL)
-	 G_fatal_error ("Too many categories (found: %i, max: %i). Try to rescale or reclassify the map", grays[row][col], PGM_MAXMAXVAL);
+      if (grays[row][col] < 0) /* No data pixel found */
+         G_fatal_error (_("Negative or no data pixel found. This module is not yet able to process no data holes in a map, please fill with r.fillnulls or other algorithms."));
+      if (grays[row][col] > PGM_MAXMAXVAL)
+	 G_fatal_error (_("Too many categories (found: %i, max: %i). Try to rescale or reclassify the map"), grays[row][col], PGM_MAXMAXVAL);
       tone[grays[row][col]] = grays[row][col];
     }
   for (row = PGM_MAXMAXVAL, tones = 0; row >= 0; --row)
