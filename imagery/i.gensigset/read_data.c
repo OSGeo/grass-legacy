@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "imagery.h"
 #include "files.h"
 /* #include "local_proto.h" */
