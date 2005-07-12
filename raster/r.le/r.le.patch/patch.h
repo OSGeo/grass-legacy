@@ -34,7 +34,7 @@
 #define  MIN   2
 #define  EQ(a, b)    (a-b < 0.01 && a-b > -0.01 )
 #define  BIG   1000000000.0
-#define  PI    3.14159
+#define  PI    M_PI
 
 #ifdef MAIN
 jmp_buf  jmp;
