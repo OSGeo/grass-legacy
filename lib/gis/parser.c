@@ -1104,7 +1104,9 @@ static void G_usage_html (void)
 
 		while(opt != NULL)
 		{
-			switch (opt->type) {
+			if (opt->key_desc != NULL)
+			    type = opt->key_desc;
+			else switch (opt->type) {
 				case TYPE_INTEGER:
 					type = "integer";
 					break ;
@@ -1175,7 +1177,9 @@ static void G_usage_html (void)
 		while(opt != NULL)
 		{
 			/* TODO: make this a enumeration type? */
-			switch (opt->type) {
+			if (opt->key_desc != NULL)
+			    type = opt->key_desc;
+			else switch (opt->type) {
 				case TYPE_INTEGER:
 					type = "integer";
 					break ;
@@ -1190,7 +1194,11 @@ static void G_usage_html (void)
 					break;
 			}
 			fprintf(stdout,
-				"<DT><b>%s</b>=<em>%s</em>\n", opt->key, type);
+				"<DT><b>%s</b>=<em>%s", opt->key, type);
+			if (opt->multiple) {
+				fprintf(stdout,"[,<i>%s</i>,...]", type);
+			}
+			fprintf(stdout,"</em>\n");
 
 		        if ( opt->label ) {
 				fprintf(stdout, "<DD>");
@@ -1262,7 +1270,9 @@ static void generate_tcl(FILE *fp)
 
 		for (opt = &first_option; opt; opt = opt->next_opt, optn++)
 		{
-			switch (opt->type)
+			if (opt->key_desc != NULL)
+			    type = opt->key_desc;
+			else switch (opt->type)
 			{
 			case TYPE_INTEGER:
 				type = "integer";
@@ -1443,7 +1453,7 @@ static int set_option (char *string)
 	struct Option *at_opt = NULL;
 	struct Option *opt = NULL;
 	int got_one ;
-	int key_len ;
+	size_t key_len ;
 	char the_key[64] ;
 	char *ptr ;
 
