@@ -252,8 +252,8 @@ int main (int argc, char *argv[])
     flag.q->key         = 'q' ;
     flag.q->description = _("Quiet") ;
 
-    radians_to_degrees = 180.0 / 3.14159 ;
-    degrees_to_radians = 3.14159 / 180.0 ;
+    radians_to_degrees = 180.0 / M_PI ;
+    degrees_to_radians = M_PI / 180.0 ;
 
 /* INC BY ONE
     answer[0] = 0.0;

@@ -1,5 +1,6 @@
 /* functions that support interpolation in latitude-longitude projections */
 
+#include <stdlib.h>
 #include "gis.h"
 #include "main.h"
 
