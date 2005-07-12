@@ -1,5 +1,6 @@
 #include "gis.h"
 #include "dbmi.h"
+#include "local_proto.h"
 #include "glocale.h"
 
 int
