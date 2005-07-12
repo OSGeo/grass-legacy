@@ -1292,7 +1292,7 @@ static void generate_tcl(FILE *fp)
 
 			fprintf(fp, "add_option %d {\n", optn);
 			fprintf(fp, " name {%s}\n", opt->key);
-			fprintf(fp, " type %s\n", type);
+			fprintf(fp, " type {%s}\n", type);
 			fprintf(fp, " multi %d\n", opt->multiple);
 			fprintf(fp, " desc {%s}\n", desc);
 			fprintf(fp, " required %d\n", opt->required);
