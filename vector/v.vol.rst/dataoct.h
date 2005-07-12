@@ -37,6 +37,7 @@ int oct_division_check();
 struct octdata ** oct_divide_data();
 int oct_intersect();
 int oct_get_points();
+int OT_divide_oct (struct octtree *);
 
 
 

@@ -27,8 +27,9 @@
 *****************************************************************************/
 
 #include <stdio.h>
-#include <math.h>
 #include <stdlib.h>
+#include <math.h>
+#include <unistd.h>
 #include "gis.h"
 
 #include "oct.h"
