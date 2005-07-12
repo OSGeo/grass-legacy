@@ -9,7 +9,7 @@
 
 #define SEED_MAX		54772
 #define SEED_MIN		0
-#define PI       		3.141592653589793116
+#define PI       		M_PI
 
 #ifdef MAIN
 #define GLOBAL

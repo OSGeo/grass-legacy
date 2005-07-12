@@ -16,7 +16,7 @@
 #define DELTA_T  		0.001
 /* S_O_D == (2 * MAX_INTERVAL) / DELTA_T				*/
 #define SIZE_OF_DISTRIBUTION 	20000
-#define PI       		3.141592653589793116
+#define PI       		M_PI
 
 #ifdef MAIN
 #define GLOBAL

@@ -429,8 +429,8 @@ int main(int argc, char *argv[])
         G_get_fp_range_min_max(&fprange,&dmin,&dmax);
     }
 
-    azi=2*3.1415926*dazi/360;
-    alti=2*3.1415926*dalti/360;
+    azi=2 * M_PI * dazi/360;
+    alti=2 * M_PI * dalti/360;
     nstep=cos(azi)*window.ns_res;
     estep=sin(azi)*window.ew_res;
     row1=0;

@@ -23,7 +23,7 @@
 #include "gis.h"
 #include "trans.h"
 
-#define PI  3.141592653589793116
+#define PI M_PI
 
 int 
 transform_digit_file (struct Map_info *Old, struct Map_info *New,
