@@ -27,6 +27,9 @@
 #include <stdio.h>
 #endif
 
+/* needed for PI etc */
+#include <math.h>
+
 /* Grass and local include files */
 #include "config.h"
 #include "datetime.h"
