@@ -178,7 +178,7 @@ if (NR==1) {
     }
 
 if (NR==2) {
-    pi=3.14159265359
+    pi=3.14159265358979323846
     a2=(az*pi)/180
     dip2=(dip*pi)/180 
     tandip=(sin(dip2)/cos(dip2))
