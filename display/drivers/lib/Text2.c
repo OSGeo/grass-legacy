@@ -1,4 +1,5 @@
 #include <math.h>
+#include "gis.h"
 #include "driverlib.h"
 # define STOP  -1
 
@@ -163,7 +164,7 @@ int get_text_ext (int *top,int *bot,int *left,int *rite)
 	return 0;
 }
 
-# define RpD ((2 * 3.14159265358979323846) / 360.)	/* radians/degree */
+# define RpD ((2 * M_PI) / 360.)	/* radians/degree */
 # define D2R(d) (double)(d * RpD)	/* degrees->radians */
 
 int soft_text(int x,int y,
