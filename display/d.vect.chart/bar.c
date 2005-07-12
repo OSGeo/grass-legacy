@@ -6,8 +6,6 @@
 #include "symbol.h"
 #include "global.h"
 
-#define PI  3.14159265358979323846
-
 int 
 bar ( double cx, double cy, int size, double scale, double *val, int ncols, COLOR *ocolor, COLOR *colors ) 
 {

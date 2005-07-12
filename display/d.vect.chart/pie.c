@@ -6,7 +6,7 @@
 #include "symbol.h"
 #include "global.h"
 
-#define PI  3.14159265358979323846
+#define PI  M_PI
 
 int 
 pie ( double cx, double cy, int size, double *val, int ncols, COLOR *ocolor, COLOR *colors ) 
