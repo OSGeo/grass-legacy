@@ -18,7 +18,7 @@
 #include "gis.h"
 #include "symbol.h"
 
-#define PI 3.14159265
+#define PI M_PI
 
 void 
 add_coor ( SYMBCHAIN *chain, int x, int y)

@@ -40,7 +40,7 @@ static float c_stack[MAX_STACK][4][4];	/* matrix stack */
 static int stack_ptr = -1;	/* index of curr matrix depth */
 static float d[4][4];		/* tmp matrix */
 
-#define NPI  3.14159265358979323846
+#define NPI M_PI 
 
 /*
 **  Current transformation matrix
