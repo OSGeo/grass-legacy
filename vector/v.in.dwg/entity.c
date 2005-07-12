@@ -52,7 +52,7 @@
 #include "global.h"
 
 #define exampleprintf printf
-#define LOCPI 3.14159265358979323846
+#define LOCPI M_PI
 
 char buf[1000];
 char buf2[1000];

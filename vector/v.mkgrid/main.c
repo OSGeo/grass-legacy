@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "gis.h"
 #include "dbmi.h"
 #include "Vect.h"
@@ -118,7 +119,7 @@ main (int argc, char *argv[])
   grid_info.num_rows = atoi (grid->answers[0]);
   grid_info.num_cols = atoi (grid->answers[1]);
     
-  grid_info.angle = 3.1415927 / 180 * atof (angle->answer);
+  grid_info.angle = M_PI / 180 * atof (angle->answer);
 
   /* Position */
   if ( position_opt->answer[0] == 'r' ) { /* region */

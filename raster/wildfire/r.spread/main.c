@@ -58,7 +58,6 @@ char	buf[400];
 
 float 	zero = 0.0;
 float	neg = -2.0; 
-/*float	PI = 3.14159; */
 
 int	BARRIER = 0;
 int	max_fd, dir_fd, base_fd, start_fd;

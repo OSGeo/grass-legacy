@@ -38,7 +38,7 @@
 #include "local_proto.h"
 
 #ifndef PI
-#define PI 3.1415926535897932
+#define PI M_PI
 #endif
 #define DATA(map, r, c)		(map)[(r) * ncols + (c)]
 

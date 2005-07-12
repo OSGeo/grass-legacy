@@ -23,7 +23,7 @@
 #define DEBUG_BUFFER 1
 #define DEBUG_CLEAN  2
 
-#define PI 3.141592653589793116
+#define PI M_PI
 
 /* TODO: look at RET value and use, is it OK? */
 #define RET 0.000000001 /* Representation error tolerance */
