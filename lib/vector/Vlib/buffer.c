@@ -10,7 +10,7 @@
 #include "gis.h"
 
 #define LENGTH(DX, DY)  (  sqrt( (DX*DX)+(DY*DY) )  )
-#define PI 3.141592653589793116
+#define PI M_PI
 
 /* vector() calculates normalized vector form two points */
 static void vect(double x1, double y1, double x2, double y2, double *x, double *y )
