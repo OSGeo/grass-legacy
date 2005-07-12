@@ -17,7 +17,7 @@ atan(x,y) = atan(y/x) range[0,360]
   note: result is in degrees
 **********************************************************************/
 
-#define RADIANS_TO_DEGREES (180.0 / 3.14159265358979323846)
+#define RADIANS_TO_DEGREES (180.0 / M_PI)
 
 int 
 f_atan(int argc, const int *argt, void **args)
