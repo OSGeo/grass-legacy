@@ -7,10 +7,12 @@
 /*                                                              */
 /****************************************************************/
 
-#define		PI		3.141592654
-#define		PIBYFOUR 	0.785398163
-#define		PIBYTWO		1.570796327
-#define		TWOPI		6.283185308	
-#define 	THREEPIBYTWO	4.71238898
+#include "gis.h"
+
+#define		PI		M_PI
+#define		PIBYFOUR 	M_PI_4
+#define		PIBYTWO		M_PI_2
+#define		TWOPI		M_PI * 2.
+#define 	THREEPIBYTWO	M_PI * 3./2.
 
 /****************************************************************/

@@ -1,8 +1,10 @@
 /** Modified by: Janne Soimasuo August 1994 line_cat added **/
 /** Modified by: Radim Blazek Jan 2000 acolor, label added **/
 /** Modified by: Morten Hulden Mar 2004 cols added to vector **/
+#include "gis.h"
 #include "clr.h"
-#define PI 3.14159265   
+
+#define PI M_PI
 /* #define MAXVECTORS 20 */
 
 /* layer type */
