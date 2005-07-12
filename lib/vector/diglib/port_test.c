@@ -19,6 +19,8 @@
 *****************************************************************************/
 #include <stdio.h>
 #include "Vect.h"
+#include "local_proto.h"
+
 /*
    **  Written by Dave Gerdes  9/1988
    **  US Army Construction Engineering Research Lab
@@ -91,7 +93,6 @@ static char lng_cnvrt[sizeof (long)];
 static char int_cnvrt[sizeof (int)];
 static char shrt_cnvrt[sizeof (short)];
 
-static int dbl_quick, flt_quick, lng_quick, shrt_quick;
 static int nat_dbl, nat_flt, nat_lng, nat_int, nat_shrt, nat_char;
 
 static int find_offset (unsigned char *, unsigned char, int);
@@ -101,9 +102,7 @@ main (int argc, char **argv)
 {
   register int i;
   int tmp, tmp2;
-  int ret = 0;
   int err = 0;
-  int start, end, step;
   int dbl_order, flt_order, lng_order, int_order, shrt_order;
   
   /* Find native sizes */
