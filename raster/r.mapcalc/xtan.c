@@ -16,7 +16,7 @@ tan(x)
   note: x is in degrees.
 **********************************************************************/
 
-#define DEGREES_TO_RADIANS (3.14159265358979323846 / 180.0)
+#define DEGREES_TO_RADIANS (M_PI / 180.0)
 
 int 
 f_tan(int argc, const int *argt, void **args)
