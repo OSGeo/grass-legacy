@@ -44,7 +44,7 @@
 #include "user.h"
 #include "G3d.h"
 #include "points.h"
-
+#include "bitmap.h"
 
 int secpar_loop(ngstc,nszc,i)
 	int    ngstc;
