@@ -74,6 +74,11 @@ static const char *GRASS_copyright __attribute__((unused))
 #define PROJECTION_FILE "PROJ_INFO"
 #define UNIT_FILE "PROJ_UNITS"
 
+/* define PI if not present */
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 /* Location of envariment variables */
 #define G_VAR_GISRC    0
 #define G_VAR_MAPSET   1
