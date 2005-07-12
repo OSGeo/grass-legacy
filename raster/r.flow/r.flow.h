@@ -35,10 +35,6 @@
 #include "Vect.h"
 #include "bitmap.h"
 
-#ifndef M_PI
-#define M_PI     3.14159265358979323846  /* pi */
-#endif
-
 #ifndef hypot
 #define hypot(x,y) (sqrt(x*x+y*y))
 #endif
