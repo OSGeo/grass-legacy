@@ -42,11 +42,11 @@
  *      output is to stdout piped thru the more utility
  *********************************************************************/
 
-#include "gis.h"
-#include "glocale.h"
 #include <unistd.h>
 #include <signal.h>
 #include <string.h>
+#include "gis.h"
+#include "glocale.h"
 
 static int broken_pipe;
 static int hit_return = 0;
@@ -183,7 +183,7 @@ static int list_element( FILE *out, char *element,
 		    if (lister)
 		    {
 			char title[400];
-			char name[30];
+			char name[GNAME_MAX];
 
 			*name = *title = 0;
 			lister (name, mapset, title);

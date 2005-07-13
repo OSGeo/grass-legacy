@@ -39,14 +39,14 @@
  * "@<i>mapset</i>".
  * For example, to find a raster file anywhere in the database:
 \code
-  char name[50];
+  char name[GNAME_MAX];
   char *mapset;
   if ((mapset = G_find_cell(name,"")) = = NULL)
   // not found
 \endcode
  * To check that the raster file exists in the current mapset:
 \code
-  char name[50];
+  char name[GNAME_MAX];
   if (G_find_cell(name,G_mapset( )) = = NULL)
   // not found
 \endcode
