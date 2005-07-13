@@ -1,5 +1,6 @@
 #define MAIN
 
+#include <stdlib.h>
 #include <string.h>
 #include "gis.h"
 #include "globals.h"
