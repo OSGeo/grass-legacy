@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-06-30 17:50+0200\n"
-"PO-Revision-Date: 2005-07-10 09:45+0200\n"
+"PO-Revision-Date: 2005-07-10 19:31+0200\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -549,14 +549,12 @@ msgid "Name of label file"
 msgstr "Name der Label-Datei."
 
 #: ../display/d.paint.labels/main.c:43
-#, fuzzy
 msgid "Minimum region size (diagonal) when labels are displayed"
-msgstr "Größe"
+msgstr "Minimale diagonale Regions-Größe zum Zeichnen von Labels."
 
 #: ../display/d.paint.labels/main.c:50
-#, fuzzy
 msgid "Maximum region size (diagonal) when labels are displayed"
-msgstr "Größe"
+msgstr "Maximale diagonale Regions-Größe zum Zeichnen von Labels."
 
 #: ../display/d.paint.labels/main.c:61
 #, c-format
@@ -585,19 +583,16 @@ msgid "Current window not available"
 msgstr "Aktuelles Fenster ist nicht vorhanden."
 
 #: ../display/d.paint.labels/main.c:104
-#, fuzzy
 msgid "Setting map window"
-msgstr "Einstellung"
+msgstr "Einstellung des Kartenfensters."
 
 #: ../display/d.paint.labels/main.c:107
-#, fuzzy
 msgid "Current window not settable"
-msgstr "nicht"
+msgstr "Aktuelles Fenster nicht einstellbar."
 
 #: ../display/d.paint.labels/main.c:111
-#, fuzzy
 msgid "Getting screen window"
-msgstr "screen"
+msgstr "Hole Fenster."
 
 #: ../display/d.paint.labels/main.c:113
 msgid "Error in calculating conversions"
@@ -1357,14 +1352,12 @@ msgstr "Transformation beendet.\n"
 
 #: ../imagery/i.class/add_point.c:23
 #, c-format
-#, fuzzy
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
-msgstr "Punkt Nur."
+msgstr "Kann keinen anderen Punkt markieren. Nur %d Punkte sind erlaubt. Sorry."
 
 #: ../imagery/i.class/analyze_sig.c:13
-#, fuzzy
 msgid "Cannot analyze until region is completed."
-msgstr "ist fertiggestellt."
+msgstr "Kann nicht analysieren, bis die Region fertiggestellt ist."
 
 #: ../imagery/i.class/ask_files.c:34
 msgid "Hit RETURN -->"
@@ -1372,44 +1365,39 @@ msgstr "Drücke RETURN zum Fortfahren -->"
 
 #: ../imagery/i.class/ask_files.c:51
 #, c-format
-#, fuzzy
 msgid ""
 "\n"
 "** The following cell files in subgroup [%s] do not exist."
-msgstr "s."
+msgstr ""
+"\n"
+"** Die folgenden Cell-Dateien existieren nicht in der Subgruppe [%s]."
 
 #: ../imagery/i.class/ask_files.c:54
 #, c-format
-#, fuzzy
 msgid "       %s@%s"
-msgstr "s s"
+msgstr "       %s@%s"
 
 #: ../imagery/i.class/ask_files.c:60
 #, c-format
-#, fuzzy
 msgid "Subgroup [%s] "
-msgstr "s "
+msgstr "Subgruppe [%s] "
 
 #: ../imagery/i.class/ask_files.c:62
-#, fuzzy
 msgid "doesn't have any files."
-msgstr "any."
+msgstr "hat keine Dateien."
 
 #: ../imagery/i.class/ask_files.c:64
-#, fuzzy
 msgid "only has 1 file."
-msgstr "hat nur 1 Datei."
+msgstr "hat nur 1 Datei"
 
 #: ../imagery/i.class/ask_files.c:65
 #, c-format
-#, fuzzy
 msgid "The subgroup must have at least 2 files to run %s."
-msgstr "s."
+msgstr "Die Subgruppe muss mindestens 2 Dateien haben um %s zu starten."
 
 #: ../imagery/i.class/ask_files.c:69
-#, fuzzy
 msgid "Unable to read cell header for first band file."
-msgstr "gelesen für."
+msgstr "Kann die Cell-Kopf für das erste Band nicht lesen."
 
 #: ../imagery/i.class/ask_files.c:74
 msgid ""
@@ -1420,14 +1408,12 @@ msgstr ""
 "Resultierende Signatur"
 
 #: ../imagery/i.class/ask_files.c:75
-#, fuzzy
 msgid "Enter name for the resulting signature file"
-msgstr "für"
+msgstr "Bitte Namen für die Signatur-Datei eingeben."
 
 #: ../imagery/i.class/ask_files.c:80
-#, fuzzy
 msgid "Unable to open output signature file."
-msgstr "Kann Signaturdatei nicht öffnen."
+msgstr "Kann die Signaturdatei für die Ausgabe nicht öffnen."
 
 #: ../imagery/i.class/ask_files.c:86
 msgid ""
@@ -1438,41 +1424,35 @@ msgstr ""
 "SEED SIGNATUR"
 
 #: ../imagery/i.class/ask_files.c:88
-#, fuzzy
 msgid "Select the signature file to include in the resulting file"
-msgstr "include"
+msgstr "Wähle die Signatur-Datei, die in die Ergebnis-Datei eingefügt werden soll."
 
 #: ../imagery/i.class/ask_files.c:100
-#, fuzzy, c-format
+#, c-format
 msgid "** Can't read signature file [%s] **"
-msgstr "s"
+msgstr "** Kann die Signatur-Datei [%s] nicht lesen. **"
 
 #: ../imagery/i.class/ask_files.c:104
 #, c-format
-#, fuzzy
 msgid "%s has too many signatures."
-msgstr "s."
+msgstr "%s hat zu viele Signaturen."
 
 #: ../imagery/i.class/band_files.c:24
-#, fuzzy
 msgid "Unable to open band files."
-msgstr "Kann Datei [%s] nicht finden."
+msgstr "Kann die Band-Dateien nicht öffnen."
 
 #: ../imagery/i.class/complete_reg.c:12
-#, fuzzy
 msgid "Too few points for region.  Must have at least 3 points."
-msgstr "wenige für an."
+msgstr "Zu wenige Punkte für die Region. Mindestens 3 Punkte sind nötig."
 
 #: ../imagery/i.class/complete_reg.c:14
-#, fuzzy
 msgid "Area already completed."
-msgstr "Fläche fertiggestellt."
+msgstr "Fläche bereits fertiggestellt."
 
 #: ../imagery/i.class/curses.c:24
 #, c-format
-#, fuzzy
 msgid "make_window(%d,%d,%d,%d): illegal screen values."
-msgstr "make screen."
+msgstr "make_window(%d,%d,%d,%d): illegale screen Werte."
 
 #: ../imagery/i.class/curses.c:160 ../vector/v.transform/creat_trans.c:90
 #, c-format
@@ -1498,9 +1478,8 @@ msgstr ""
 "Neu:(x1 y1), (x2 y2) = (%d %d), (%d %d)"
 
 #: ../imagery/i.class/erase_reg.c:11
-#, fuzzy
 msgid "Can not erase an undefined region."
-msgstr "nicht."
+msgstr "Kann die undefinierte Region nicht löschen."
 
 #: ../imagery/i.class/main.c:24
 #, fuzzy
@@ -1512,16 +1491,16 @@ msgid ""
 msgstr "für Bild von für i a für i."
 
 #: ../imagery/i.class/main.c:32
-#, fuzzy
 msgid "No graphics device selected."
 msgstr "Keine Graphik-Ausgabe ausgewählt."
 
 #: ../imagery/i.class/main.c:37
-#, fuzzy
 msgid ""
 "\n"
 "You have a mask set."
-msgstr "a."
+msgstr ""
+"\n"
+"Eine Maske ist gesetzt."
 
 #: ../imagery/i.class/main.c:38
 msgid ""
@@ -1536,9 +1515,8 @@ msgid "Do you want to continue? "
 msgstr "Wollen Sie fortfahren?"
 
 #: ../imagery/i.class/main.c:63
-#, fuzzy
 msgid "Enter the name of the cell map to be displayed"
-msgstr "von"
+msgstr "Name der Karte, die angezeigt werden soll."
 
 #: ../imagery/i.class/main.c:68
 #, fuzzy
