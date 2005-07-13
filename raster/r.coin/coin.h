@@ -25,7 +25,7 @@ GLOBAL char	*dumpname;
 GLOBAL char     *statname;
 GLOBAL FILE	*dumpfile;
 
-GLOBAL char	map1name[30], map2name[30];
+GLOBAL char	map1name[GNAME_MAX], map2name[GNAME_MAX];
 GLOBAL char    *mapset1,     *mapset2;
 GLOBAL int      ncat1, ncat2;
 
