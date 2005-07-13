@@ -1,5 +1,4 @@
 /*
-*$Id$
 ************************************************************
 * MODULE: r.le.setup/sample.c                              *
 *         Version 5.0beta            Oct. 1, 2001          *
@@ -24,7 +23,8 @@
 #include <stdlib.h>
 #include "setup.h"
 #include "config.h"
-
+#include "raster.h"
+#include "display.h"
 
 
 int  tag = 0;
@@ -731,7 +731,7 @@ int     top, bot, left, right, u_w, u_l, method, num, h_d, v_d, *ux,
 	*uy, *sites, startx, starty, fmask, nx;
 double  ratio, intv, x, y, radius;
 {
-  char	  *sites_mapset, sites_file_name[30], *desc, *cmd;
+  char	  *sites_mapset, sites_file_name[GNAME_MAX], *desc, *cmd;
   FILE	  *sites_fp;
   struct  Cell_head region;
   double  east_coord, north_coord, D_u_to_a_col(), D_u_to_a_row();

@@ -20,10 +20,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "gis.h"
+#include "raster.h"
+#include "display.h"
 #include "config.h"
 #include "r.le.trace.h"
-
+#include "local_proto.h">
 struct CHOICE 		*choice;
 int   			finput;
 int   			total_patches=0;
@@ -39,7 +42,7 @@ int  argc;
 char *argv[];
 {
   struct Cell_head  window;
-  int               bot, right, t0, b0, l0, r0;
+  int               bot, right, t0, b0, l0, r0, clear=0;
   double 	    Rw_l, Rscr_wl;
   char 		    tmp[20];
   void 		    set_map();
@@ -75,7 +78,7 @@ char *argv[];
     bot = t0 + (r0 - l0) / Rw_l; 
   }
 
-  D_setup();
+  D_setup(clear);
   D_new_window("a", t0, bot, l0, right);
   D_set_cur_wind("a");
   D_show_window(D_translate_color("green"));

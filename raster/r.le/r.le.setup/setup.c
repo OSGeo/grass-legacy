@@ -20,6 +20,11 @@
 *				                           *
 ************************************************************/
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include "raster.h"
+#include "display.h"
 #include "setup.h"
 #include "config.h"
 
