@@ -287,7 +287,7 @@ appropriate prompt will be substituted. The name that the user enters
 is copied into the <B>name</B> buffer. The size of name should be
 large enough to hold any GRASS file name.  Most systems allow file
 names to be quite long. It is recommended that name be declared char
-name[50].
+name[GNAME_MAX].
  
 The short (one or two word) <B>label</B> describing the <B>element</B>
 is used as part of a title when listing the files <B>in element.</B>
@@ -306,7 +306,7 @@ example is described a bit later. The user is asked to enter a file
 from the "paint/labels" element:
 
 \verbatim
-char name[50];
+char name[GNAME_MAX];
 char *mapset;
 
 mapset = G_ask_old("", name, "paint/labels", "labels");
@@ -463,7 +463,7 @@ from the <B>name</B>
 For example, to find a "paint/labels" file anywhere in the database:
 
 \verbatim
-char name[50];
+char name[GNAME_MAX];
 char *mapset;
 
 if ((mapset = G_find_file("paint/labels",name,"")) == NULL)
@@ -475,7 +475,7 @@ if ((mapset = G_find_file("paint/labels",name,"")) == NULL)
 To check that the file exists in the current mapset:
 
 \verbatim
-char name[50];
+char name[GNAME_MAX];
 
 if (G_find_file("paint/labels",name,G_mapset()) == NULL)
 
