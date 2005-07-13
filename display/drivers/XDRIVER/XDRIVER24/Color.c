@@ -8,6 +8,7 @@
 #include "includes.h"
 #include "colors.h"
 #include "gis.h"
+#include "XDRIVER.h"
 
 int color(int number)
 {
