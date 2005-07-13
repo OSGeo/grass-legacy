@@ -43,7 +43,7 @@ double	H;			/* Hausdorff-Besickovitch dimension.	*/
 /* jacobi.c */
 #define MC 50
 extern char outputfile[50];
-extern char groupname[50], subgroup[50], signame[50];
+/* extern char groupname[INAME_LEN], subgroup[INAME_LEN], signame[INAME_LEN]; ?? */
 
 /* del2g.c */
  /* fft constants */
