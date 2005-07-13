@@ -1,8 +1,9 @@
 /* main.c */
 
 #define  MAIN  1
-#include "globals.h"
+#include <stdlib.h>
 #include <string.h>
+#include "globals.h"
 
 
 static char *intro[]=

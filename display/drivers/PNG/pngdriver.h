@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 
 #include "config.h"
@@ -22,3 +21,5 @@ extern unsigned int transparent;
 extern int modified;
 
 extern void write_image(void);
+void InitColorTableFixed(void);
+

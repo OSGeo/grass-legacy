@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "imagery.h"
 #include "signature.h"
 #include "parms.h"

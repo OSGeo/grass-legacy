@@ -3,6 +3,7 @@
 /* monitor specified */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "monitors.h"
 #include "open.h"

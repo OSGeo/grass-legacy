@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "bouman.h"
 #include "region.h"
 #ifdef __CYGWIN__

@@ -1,5 +1,6 @@
 /* mod_elev.c*/
 
+#include <stdlib.h>
 #include "gis.h"
 #include "vask.h"
 #include "elev.h"

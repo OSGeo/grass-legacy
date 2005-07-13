@@ -1,4 +1,6 @@
+#include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "gis.h"
 #include "local_proto.h"
 #include "glocale.h"

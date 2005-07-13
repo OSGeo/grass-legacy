@@ -1,6 +1,8 @@
 /* stop_mon - stop a running monitor */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "raster.h"
 #include "gis.h"
 #include "monitors.h"

@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "display.h"
 #include "raster.h"
 int 

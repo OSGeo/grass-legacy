@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <unistd.h>
 #include "globals.h"
 #include "local_proto.h"
