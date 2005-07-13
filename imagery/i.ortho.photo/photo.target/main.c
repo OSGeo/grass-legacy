@@ -1,4 +1,5 @@
 /* main.c */
+#include <stdlib.h>
 #include <stdio.h>
 #include "imagery.h"
 #include "orthophoto.h"

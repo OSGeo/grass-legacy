@@ -20,6 +20,7 @@
  * user to find individual cells. After editing, a new cell layer is created.
  * 
  */
+#include <stdlib.h>
 #include <string.h>
 #define GLOBAL
 #include "edit.h"

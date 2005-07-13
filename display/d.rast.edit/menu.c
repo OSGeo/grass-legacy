@@ -7,6 +7,7 @@
    -- alex 02/2004 - added input to zoom command to avoid other options 
 
  */
+#include <stdlib.h>
 #include <string.h>
 #include "edit.h"
 #include "D.h"

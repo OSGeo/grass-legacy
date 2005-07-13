@@ -1,8 +1,9 @@
 /* which_mon - show name of currently selected monitor */
 
-#include "raster.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include "gis.h"
+#include "raster.h"
 
 int 
 main (int argc, char *argv[])

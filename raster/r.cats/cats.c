@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "gis.h"
 
 static struct Cell_stats statf;

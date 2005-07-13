@@ -1,6 +1,4 @@
 /* 
- * $Id$
- * 
  * Changed for truecolor 24bit support by 
  * Roberto Flor/ITC-Irst, Trento, Italy
  * August 1999
@@ -26,9 +24,11 @@
  * prompt back.
  ****************************************************************/
 
-#include "config.h"
-#include <unistd.h>
 #include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include "config.h"
+
 #include "raster.h"
 #include "monitors.h"
 #include "local_proto.h"
