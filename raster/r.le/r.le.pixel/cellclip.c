@@ -1,5 +1,4 @@
 /*
-*$Id$
 ************************************************************
 * MODULE: r.le.pixel/cellclip.c                            *
 *         Version 5.0                Nov. 1, 2001          *
@@ -21,7 +20,7 @@
 
 #include "pixel.h"
 #include "config.h"
-
+#include "local_proto.h"
 
 
 extern struct CHOICE *choice;
@@ -202,9 +201,8 @@ char  **null_buf;
 				   IF IT IS NOT NULL, 0 IF IT IS NULL */
 
 int center_is_not_null(buf, null_buf, rows, cols)
-
-int     rows, cols;
-DCELL **buf, **null_buf;
+ DCELL **buf, **null_buf;
+ int rows, cols;
 
 {
 
