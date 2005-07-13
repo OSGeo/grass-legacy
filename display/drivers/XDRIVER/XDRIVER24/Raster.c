@@ -1,10 +1,10 @@
-
-#include "gis.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "gis.h"
 #include "includes.h"
 #include "colors.h"
 #include "driver.h"
+#include "XDRIVER.h"
 
 static XImage *grimage;
 static int alloc;
