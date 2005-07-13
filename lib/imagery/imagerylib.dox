@@ -382,8 +382,8 @@ struct Ref
 int nfiles; /* number of REF files */
 struct Ref_Files
 {
-  char name[30]; /* REF file name */
-  char mapset[30]; /* REF file mapset */
+  char name[INAME_LEN]; /* REF file name */
+  char mapset[INAME_LEN]; /* REF file mapset */
 } *file;
 
 
