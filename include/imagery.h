@@ -3,15 +3,16 @@
 
 #include "gis.h"
 
-#define INAME_LEN 30
+/* File/directory name lengths */
+#define INAME_LEN 30 /* can we make this longer please? */
 
 struct Ref
 {
     int nfiles;
     struct Ref_Files
     {
-	char name[30]; /* length is not in sync with other definitions */
-	char mapset[30];
+	char name[INAME_LEN]; /* length is not in sync with other definitions */
+	char mapset[INAME_LEN];
     } *file;
     struct Ref_Color
     {
