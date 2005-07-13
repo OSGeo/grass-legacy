@@ -50,7 +50,7 @@ int G_get_cellhd (name, mapset, cellhd)
 {
     FILE *fd;
     int is_reclass;
-    char real_name[50], real_mapset[50];
+    char real_name[GNAME_MAX], real_mapset[GMAPSET_MAX];
     char buf[1024];
     char *tail;
     char *err, *G__read_Cell_head();

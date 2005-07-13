@@ -11,8 +11,8 @@
  *              name_out and mapset are undefined (changed)
  ****************************************************************/
 
-#include "gis.h"
 #include <string.h>
+#include "gis.h"
 
 #ifndef COMMENTED_OUT
 int G__name_in_mapset (
@@ -74,7 +74,7 @@ int G__name_is_fully_qualified (
   #include "gis.h"
   int main(char *argc, char **argv)
   {
-  char name[100], *mapset, *fqn;;
+  char name[GNAME_MAX], *mapset, *fqn;
   char command[1024];
   G_gisinit(argv[0]);
   mapset = G_ask_cell_old ("", name, "");

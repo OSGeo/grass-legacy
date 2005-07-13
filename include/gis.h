@@ -105,6 +105,11 @@ static const char *GRASS_copyright __attribute__((unused))
 #define YES           1
 #define NO            0
 
+/* File/directory name lengths */
+#define GNAME_MAX 50
+#define GMAPSET_MAX 50
+
+
 typedef enum {
     G_OPT_WHERE,    /* SQL where conditions */
 
@@ -230,8 +235,8 @@ struct Colors
 
 struct Reclass
 {
-    char name[50];  	    /* name of cell file being reclassed    */
-    char mapset[50]; 	    /* mapset in which "name" is found      */
+    char name[GNAME_MAX];  	    /* name of cell file being reclassed    */
+    char mapset[GMAPSET_MAX]; 	    /* mapset in which "name" is found      */
     int type;	    	    /* type of reclass                      */
     int num;	    	    /* size of reclass table                */
     CELL min;	    	    /* table min    	    	    	    */

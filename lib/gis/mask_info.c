@@ -7,7 +7,7 @@
  ************************************************************
  * G__mask_info (name, mapset)
  *
- *      char name[50], mapset[50];
+ *      char name[GNAME_MAX], mapset[GMAPSET_MAX];
  *
  * function:
  *   determine the status off the automatic masking
@@ -33,8 +33,8 @@ char *
 G_mask_info ()
 {
     static char text[200];
-    char name[50];
-    char mapset[50];
+    char name[GNAME_MAX];
+    char mapset[GMAPSET_MAX];
 
     switch (G__mask_info (name, mapset))
     {
@@ -56,7 +56,7 @@ int G__mask_info (
     char *name,
     char *mapset)
 {
-    char rname[50], rmapset[50];
+    char rname[GNAME_MAX], rmapset[GMAPSET_MAX];
 
     strcpy (name, "MASK");
     strcpy (mapset, G_mapset());

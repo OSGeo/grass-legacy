@@ -48,7 +48,7 @@ char *G__mapset_name (int n)
 
 static int get_list_of_mapsets()
 {
-    char name[30];
+    char name[GNAME_MAX];
     FILE *fd;
 
 /*
