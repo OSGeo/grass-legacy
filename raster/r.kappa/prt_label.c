@@ -1,6 +1,7 @@
 #include "kappa.h"
 
-prt_label()
+int
+prt_label(void)
 {
   int i,j;
   long *cats;
