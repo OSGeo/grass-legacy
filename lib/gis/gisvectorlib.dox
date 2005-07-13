@@ -74,7 +74,7 @@ programmer must handle the NULL return properly:
 
 \verbatim
 char *mapset;
-char name[50];
+char name[GNAME_MAX];
 
 mapset = G_ask_vector_old("Enter vector file to be processed", name);
 
@@ -135,7 +135,7 @@ data file, etc.), then <I>G_find_vector2()</I> should be used.
 For example, to find a vector file anywhere in the database:
 
 \verbatim
-char name[50];
+char name[GNAME_MAX];
 char *mapset;
 
 if ((mapset = G_find_vector(name,"")) == NULL)
@@ -144,7 +144,7 @@ if ((mapset = G_find_vector(name,"")) == NULL)
 
 \verbatim
 
-char name[50];
+char name[GNAME_MAX];
 
 if (G_find_vector(name,G_mapset()) == NULL)
    /* not found */

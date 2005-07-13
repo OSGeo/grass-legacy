@@ -334,7 +334,7 @@ appropriate prompt will be substituted. The name that the user enters
 is copied into the <TT>name</TT> buffer.  (The size of name should be
 large enough to hold any GRASS file name. Most systems allow file
 names to be quite long. It is recommended that name be declared
-<TT>char name[50]</TT>.) These routines have a built-in
+<TT>char name[GNAME_MAX]</TT>.) These routines have a built-in
 <TT>"</TT>list<TT>"</TT> capability which allows the user to get a
 list of existing site list files.
 
@@ -365,7 +365,7 @@ programmer must handle the NULL return properly.
 
 \verbatim
  char *mapset;
- char name[50];
+ char name[GNAME_MAX];
 
  mapset = G_ask_sites_old("Enter site list file to be processed", name);
 

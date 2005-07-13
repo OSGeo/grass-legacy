@@ -69,7 +69,7 @@ programmer must handle the NULL return properly:
 
 \verbatim
 char *mapset;
-char name[50];
+char name[GNAME_MAX];
 
 mapset = G_ask_cell_old("Enter raster file to be processed", name);
 
@@ -115,7 +115,7 @@ If the user specifies a fully qualified raster file which exists, then
 For example, to find a raster file anywhere in the database:
 
 \verbatim
-char name[50];
+char name[GNAME_MAX];
 char *mapset;
 
 if ((mapset = G_find_cell(name,"")) == NULL)
@@ -127,7 +127,7 @@ if ((mapset = G_find_cell(name,"")) == NULL)
 To check that the raster file exists in the current mapset:
 
 \verbatim
-char name[50];
+char name[GNAME_MAX];
 
 if (G_find_cell(name,G_mapset()) == NULL)
   /* not found */
