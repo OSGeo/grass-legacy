@@ -1,5 +1,6 @@
-#include "watershed.h"
+#include <stdlib.h>
 #include <unistd.h>
+#include "watershed.h"
 
 int read_basins (char *haf_name, OUTPUT *output)
 {

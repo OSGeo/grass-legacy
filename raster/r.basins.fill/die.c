@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "gis.h"
 
 int die (char *name, char *mapset, char *msg)

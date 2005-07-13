@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "coin.h"
+#include "gis.h"
 
 static int cmp (const void *, const void *);
 
@@ -116,7 +117,7 @@ make_coin (int verbose)
     reversed = 0;
     if (ncat1 > ncat2)
     {
-	char name[40];
+	char name[GNAME_MAX];
 	char *mp;
 	long *list;
 	int n;
