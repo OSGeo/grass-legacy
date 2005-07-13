@@ -1,5 +1,6 @@
-#include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "raster.h"
 #include "gis.h"
 #include "glocale.h"

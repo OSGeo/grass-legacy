@@ -13,12 +13,13 @@
    numbers.    
    */
    
+#include <stdlib.h>
+#include <math.h>
 #include "gis.h"
 #include "raster.h"
 #include "display.h"
 #include "colors.h"
 #include "linegraph.h"
-#include <math.h>
 
 #define MAX(x,y) ((x) > (y) ? (x) : (y))
 #define MIN(x,y) ((x) < (y) ? (x) : (y))
