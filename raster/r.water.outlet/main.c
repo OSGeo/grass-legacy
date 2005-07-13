@@ -9,6 +9,7 @@ Help text inserted by
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #define MAIN
 #include "basin.h"
 #include "outletP.h"
