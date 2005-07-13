@@ -1,4 +1,5 @@
 #define GLOBAL
+#include <stdlib.h>
 #include "global.h"
 #include "gis.h"
 #include "glocale.h"

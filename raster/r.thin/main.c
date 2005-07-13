@@ -12,6 +12,7 @@
 /* Champaign, IL  61820 */
 /* January - February 1988 */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 #include "gis.h"

@@ -12,6 +12,7 @@
 */
 /*  algorithm B */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 #include "gis.h"
