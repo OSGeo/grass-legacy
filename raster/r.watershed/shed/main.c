@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "watershed.h"
 #include "string.h"
 

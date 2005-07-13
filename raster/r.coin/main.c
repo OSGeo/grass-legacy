@@ -1,4 +1,5 @@
 #define GLOBAL
+#include <stdlib.h>
 #include <unistd.h>
 #include "coin.h"
 

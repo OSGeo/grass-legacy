@@ -64,10 +64,10 @@ main(int argc, char **argv)
    int nrows, ncols, nbasins;
    int cell_open(), cell_open_new();
    int map_id, dir_id, bas_id;
-   char map_name[40], *map_mapset, new_map_name[40];
+   char map_name[GNAME_MAX], *map_mapset, new_map_name[GNAME_MAX];
    char buf[200], *tempfile1, *tempfile2, *tempfile3;
-   char dir_name[40];
-   char bas_name[40];
+   char dir_name[GNAME_MAX];
+   char bas_name[GNAME_MAX];
 
    struct Cell_head window;
    struct GModule *module;

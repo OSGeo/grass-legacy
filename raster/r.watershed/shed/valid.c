@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "watershed.h"
 
 int valid_basins (char *accum_name, OUTPUT *output)

@@ -3,6 +3,7 @@
 /* processes CELL files only and works on window derived from link    */
 /* label map                                                          */
 /*====================================================================*/
+#include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include "gis.h"
@@ -17,9 +18,9 @@ int main (int argc, char *argv[])
 {
     int partfd;
     char msg[100];
-    char drain_name[30], *drain_mapset;
-    char ridge_name[30], *ridge_mapset;
-    char part_name[30], *part_mapset;
+    char drain_name[GNAME_MAX], *drain_mapset;
+    char ridge_name[GNAME_MAX], *ridge_mapset;
+    char part_name[GNAME_MAX], *part_mapset;
     CELL *drain, *ridge;
     struct Cell_head window;
     int row, col, npass, tpass;

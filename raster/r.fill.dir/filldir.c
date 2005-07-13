@@ -1,8 +1,10 @@
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #include <math.h>
-#include "gis.h"
 #include <limits.h>
 #include <float.h> 
+#include "gis.h"
 #include "tinf.h"
 
 /* get the slope between two cells and return a slope direction */
