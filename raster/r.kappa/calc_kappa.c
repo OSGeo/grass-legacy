@@ -1,5 +1,8 @@
+#include <stdlib.h>
 #include "kappa.h"
+#include "local_proto.h"
 
+int
 calc_kappa()
 {
   int i,j;
