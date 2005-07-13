@@ -1,5 +1,3 @@
-
-
 /* Written by Bill Brown, USACERL (brown@zorro.cecer.army.mil)
  * May, 1994
  *
@@ -23,7 +21,7 @@
 #include <string.h>
 #include <math.h>
 #include <unistd.h>
-
+#include "gis.h"
 #include "rom_proto.h"
 
 
