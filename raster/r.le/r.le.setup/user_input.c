@@ -1,5 +1,4 @@
 /*
-*$Id$
 ************************************************************
 * MODULE: r.le.setup/user_input.c                          *
 *         Version 5.0beta            Oct. 1, 2001          *
@@ -24,6 +23,7 @@
 
 #include "setup.h"
 
+int
 user_input(argc,argv)
 int argc ;
 char **argv ;

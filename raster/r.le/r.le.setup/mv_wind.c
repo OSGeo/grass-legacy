@@ -1,5 +1,4 @@
 /*
-*$Id$
 ************************************************************
 * MODULE: r.le.setup/mv_wind.c                             *
 *         Version 5.0beta            Oct. 1, 2001          *
@@ -21,6 +20,8 @@
 *				                           *
 ************************************************************/
 
+#include "raster.h"
+#include "display.h"
 #include "setup.h"
 #include "config.h"
 
