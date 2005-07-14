@@ -372,7 +372,7 @@ int main (int argc, char *argv[])
 		rast_ptr = parm.raster->answers;
 		for (; *rast_ptr != NULL; rast_ptr++)
 		{
-			char rast_name[100];
+			char rast_name[GNAME_MAX];
 			strcpy (rast_name, *rast_ptr);
 			mapset = G_find_cell2 (rast_name, "");
 			if (!mapset)

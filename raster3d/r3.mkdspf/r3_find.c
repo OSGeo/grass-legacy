@@ -3,6 +3,7 @@
 *
 * Find the a 3dcell in the current mapset
 **************************************************************/
+#include <string.h>
 #include "gis.h"
 
 
@@ -10,7 +11,7 @@ g3_find_dsp_file (cell, file, mset)
     char *cell, *mset;
     char *file;
 {
-    char element[100], name[100], mapset[100], tofind[100];
+    char element[100], name[GNAME_MAX], mapset[GMAPSET_MAX], tofind[GNAME_MAX];
 
     if (file == NULL || *file == 0)
 	return 0;
