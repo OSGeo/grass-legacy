@@ -138,7 +138,7 @@ int main(int argc,char *argv[])
   ptr = opt1->answers;
   for (; *ptr != NULL; ptr++)
   { 
-      char name[100];
+      char name[GNAME_MAX];
 
       if (nfiles >= NFILES)
       {
