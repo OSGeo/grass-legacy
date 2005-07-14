@@ -21,6 +21,7 @@
 
 #include <float.h>
 #include <math.h>
+#include "gis.h"
 
 #define BIG_NUM (FLT_MAX/4.0)
 
@@ -176,10 +177,9 @@ RectReal RTreeRectVolume(struct Rect *R)
 /* derived from formule in "Regular Polytopes" by H.S.M Coxeter */
 static double sphere_volume(double dimension)
 {
-	static const double log_pi = log(3.1415926535);
 	double log_gamma, log_volume;
 	log_gamma = gamma(dimension/2.0 + 1);
-	log_volume = dimension/2.0 * log_pi - log_gamma;
+	log_volume = dimension/2.0 * log(M_PI) - log_gamma;
 	return exp(log_volume);
 }
 static const double UnitSphereVolume = sphere_volume(NUMDIMS);

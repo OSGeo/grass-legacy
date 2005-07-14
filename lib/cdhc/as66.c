@@ -20,7 +20,7 @@
  * The constant UTZERO should be set to the value at which the upper
  * tail area becomes 0.0 to the accuracy of the machine. This may be
  * taken as the value such that exp(-0.5 * UTZERO * UTZERO) /
- * (UTZERO * sqrt(2*PI)) is just greater than the smallest allowable
+ * (UTZERO * sqrt(2*M_PI)) is just greater than the smallest allowable
  * real numbers.
  */
 
