@@ -122,7 +122,16 @@ are provided.
 <EM>PROJ.4</EM> co-ordinate system translation library.
 </P>
 
-<h2>References:</h2>
+<h2>Notes</h2>
+
+When reprojecting whole-world maps the user should disable map-trimming with the
+<em>-n</em> flag. Trimming is not useful here because the module has the whole
+map in memory anyway. Besides that, world "edges" are hard (or impossible)
+to find in projections other than latitude-longitude so results may be odd
+with trimming.
+
+<h2>References</h2>
+
 [1]Evenden, G.I.  (1990) Cartographic projection procedures for
 the UNIX environment - a user's manual.  USGS Open-File Report 90-284
 (Also see Interim Report and 2nd Interim Report on Release 4, Evenden 1994).  
