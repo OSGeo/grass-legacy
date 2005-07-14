@@ -13,8 +13,8 @@ static char title[80];
 
 int main(int argc, char *argv[])
 {
-    char group[30];
-    char subgroup[30];
+    char group[INAME_LEN];
+    char subgroup[INAME_LEN];
     char **rasters;
     int m, k=0;
     FILE *output;
@@ -129,13 +129,13 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-int add_or_update_group(char group[30], char **rasters, int k)
+int add_or_update_group(char group[INAME_LEN], char **rasters, int k)
 {
     int m, n, skip;
     int nfiles;
     struct Ref ref;
     char *mapset;
-    char tmp_name[50];
+    char tmp_name[INAME_LEN];
 
     I_get_group_ref(group, &ref);
     nfiles = ref.nfiles;
@@ -166,14 +166,14 @@ int add_or_update_group(char group[30], char **rasters, int k)
 }
 
 
-int add_or_update_subgroup(char group[30],
-			   char subgroup[30], char **rasters, int k)
+int add_or_update_subgroup(char group[INAME_LEN],
+			   char subgroup[INAME_LEN], char **rasters, int k)
 {
     int m, n, skip;
     int nfiles;
     struct Ref ref;
     char *mapset;
-    char tmp_name[50];
+    char tmp_name[INAME_LEN];
 
     I_get_subgroup_ref(group, subgroup, &ref);
     nfiles = ref.nfiles;
@@ -203,14 +203,14 @@ int add_or_update_subgroup(char group[30],
     return 0;
 }
 
-int remove_group_files(char group[30], char **rasters, int k)
+int remove_group_files(char group[INAME_LEN], char **rasters, int k)
 {
     int m, n, skip;
     int nfiles;
     struct Ref ref;
     struct Ref ref_tmp;
     char *mapset;
-    char tmp_name[50];
+    char tmp_name[INAME_LEN];
     char xname[512], xmapset[512];
 
     I_get_group_ref(group, &ref_tmp);
@@ -249,15 +249,15 @@ int remove_group_files(char group[30], char **rasters, int k)
 }
 
 
-int remove_subgroup_files(char group[30],
-			  char subgroup[30], char **rasters, int k)
+int remove_subgroup_files(char group[INAME_LEN],
+			  char subgroup[INAME_LEN], char **rasters, int k)
 {
     int m, n, skip;
     int nfiles;
     struct Ref ref;
     struct Ref ref_tmp;
     char *mapset;
-    char tmp_name[50];
+    char tmp_name[INAME_LEN];
     char xname[512], xmapset[512];
 
     I_get_subgroup_ref(group, subgroup, &ref_tmp);
@@ -294,7 +294,7 @@ int remove_subgroup_files(char group[30],
     return 0;
 }
 
-int list_group_files(char group[30], FILE *fd)
+int list_group_files(char group[INAME_LEN], FILE *fd)
 {
     struct Ref ref;
 
@@ -304,7 +304,7 @@ int list_group_files(char group[30], FILE *fd)
     return 0;
 }
 
-int list_subgroup_files(char group[30], char subgroup[30], FILE *fd)
+int list_subgroup_files(char group[INAME_LEN], char subgroup[INAME_LEN], FILE *fd)
 {
     struct Ref ref;
 

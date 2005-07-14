@@ -4,8 +4,8 @@
 
 int get_target (char *group)
 {
-    char location[40];
-    char mapset[40];
+    char location[GMAPSET_MAX];
+    char mapset[GMAPSET_MAX];
     char buf[1024];
     int stat;
 
@@ -38,4 +38,5 @@ error:
     strcat (buf, "Please run i.target for group ");
     strcat (buf, group);
     G_fatal_error (buf);
+    return 1; /* never reached */
 }
