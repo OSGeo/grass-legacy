@@ -137,9 +137,6 @@ sub DoEscape {
   s#&copy;#©#i;
   s#&auml;#ä#i;
   s#&uuml;#ü#i;
-  s#'#\\(cq#g;
-  s#"#\\(dq#g;
-  s#\\#\\(rs#g;
 }
 
 sub DoSection {
