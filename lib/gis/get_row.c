@@ -857,7 +857,7 @@ static int open_null_read(int fd)
     struct fileinfo *fcb = &G__.fileinfo[fd];
     char *name, *mapset, *dummy;
     int null_fd;
-    char dir_name[200];
+    char dir_name[GNAME_MAX];
 
     if (fcb->null_file_exists == 0)
 	return -1;

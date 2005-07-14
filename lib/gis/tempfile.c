@@ -54,7 +54,7 @@ char *G_tempfile(void)
 char *G__tempfile (int pid)
 {
     char path[1024];
-    char name[20];
+    char name[GNAME_MAX];
     char element[100];
     static int uniq = 0;
     struct stat st;

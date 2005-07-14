@@ -31,7 +31,7 @@
 char *
 G_myname()
 {
-    static char name[128];
+    static char name[GNAME_MAX];
     char path[500];
     FILE *fd;
     int ok;

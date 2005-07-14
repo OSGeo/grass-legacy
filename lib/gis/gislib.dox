@@ -412,7 +412,7 @@ interfaces with the command-line version of <I>d.rast</I>:
 #include "gis.h"
 int main(char *argc, char **argv)
 {
- char name[100], *mapset, *fqn;
+ char name[GNAME_MAX], *mapset, *fqn;
  char command[1024];
 
  G_gisinit(argv[0]);
