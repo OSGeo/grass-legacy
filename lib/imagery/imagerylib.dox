@@ -100,7 +100,7 @@ Here is an example of how to use these routines. Note that the
 programmer must handle the 0 return properly:
 
 \verbatim
-char group[50];
+char group[INAME_LEN];
 \par
 if ( ! I_ask_group_any ("Enter group to be processed", group))
    exit(0);
