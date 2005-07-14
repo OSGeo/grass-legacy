@@ -1,7 +1,8 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
-#define PI 3.141592654
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include "gis.h"
+
 
 double *dagostino_d (x, n)
   double *x;
@@ -30,7 +31,7 @@ double *dagostino_d (x, n)
   s2 = s1 / n;
   s = sqrt (s2);
   d = t / (n * n * s);
-  /* y[0] = (d - 1. / (2*sqrt (PI))) * sqrt ((double)n) / 0.02998598; */
+  /* y[0] = (d - 1. / (2*sqrt (M_PI))) * sqrt ((double)n) / 0.02998598; */
   y[0] = d;
   y[1] = sqrt((double)n)*(y[0]-0.28209479)/0.02998598;
 
