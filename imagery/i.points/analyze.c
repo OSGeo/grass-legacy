@@ -2,10 +2,13 @@
 #include <unistd.h>
 #include <math.h>
 #include <stdlib.h>
+#include "gis.h"
 #include "raster.h"
 #include "globals.h"
 #include "local_proto.h"
+
 #define NLINES 18
+
 struct box
 {
     int top, bottom, left,right;
@@ -461,7 +464,7 @@ static int to_file (void)
 
 static int askfile (void)
 {
-    char file[100];
+    char file[GNAME_MAX];
 
     while (1)
     {
@@ -496,7 +499,7 @@ static int to_printer (void)
 
 static int do_report ( FILE *fd)
 {
-    char buf[100];
+    char buf[GNAME_MAX];
     int n;
     int width;
 

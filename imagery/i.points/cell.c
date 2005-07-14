@@ -1,6 +1,7 @@
+#include <unistd.h>
+#include "gis.h"
 #include "globals.h"
 #include "local_proto.h"
-#include <unistd.h>
 
 static int use = 1;
 static int choose_cellfile(char *,char *);
@@ -39,7 +40,7 @@ cancel (void)
 
 static int plot(int x,int y)
 {
-    char name[100], mapset[100];
+    char name[GNAME_MAX], mapset[GMAPSET_MAX];
     struct Cell_head cellhd;
 
     if (x > VIEW_MAP1->left && x < VIEW_MAP1->right)

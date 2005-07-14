@@ -1,5 +1,6 @@
-#include "imagery.h"
+#include "gis.h"
 #include <curses.h>
+#include "imagery.h"
 #include "point.h"
 
 /* this is a curses structure */
@@ -17,8 +18,8 @@ typedef struct
     {
 	int configured;
 	struct Cell_head head;
-	char name[30];
-	char mapset[30];
+	char name[GNAME_MAX];
+	char mapset[GMAPSET_MAX];
 	int top, bottom ,left, right;
 	double ew_res, ns_res;	/* original map resolution */
     } cell;

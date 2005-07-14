@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
+#include "gis.h"
 #include "globals.h"
 #include "local_proto.h"
 #include "raster.h"
@@ -17,7 +18,7 @@ int error (char *, int);
 
 int main (int argc, char *argv[])
 {
-    char name[100], mapset[100];
+    char name[GNAME_MAX], mapset[GMAPSET_MAX];
     struct Cell_head cellhd;
     struct GModule *module;
 /*    struct Option *grp; */
@@ -56,7 +57,7 @@ int main (int argc, char *argv[])
 /*    group.name = grp->answer; */
 /* temporary parser code: */
     if(argc == 2) {
-	strncpy(group.name, argv[1], 50);
+	strncpy(group.name, argv[1], GNAME_MAX);
 	if(group.name[0] == '-')
 	    G_fatal_error("The parser doesn't work here.");
     }
