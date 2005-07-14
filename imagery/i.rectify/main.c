@@ -5,6 +5,7 @@
 #include <string.h>
 #include "global.h"
 #include "crs.h"
+#include "glocale.h"
 
 #define NFILES 15
 
@@ -12,7 +13,7 @@ void err_exit(char *, char *);
 
 int main (int argc, char *argv[])
 {
-    char group[40], extension[40] ;
+    char group[INAME_LEN], extension[INAME_LEN] ;
     char result[NFILES][15];
     int order;      /* ADDED WITH CRS MODIFICATIONS */
     int n, i, m, k;
@@ -32,16 +33,16 @@ int main (int argc, char *argv[])
 /* Get Args */
   module = G_define_module();
   module->description =
-	"Rectifies an image by computing a coordinate "
+	_("Rectifies an image by computing a coordinate "
 	"transformation for each pixel in the image based on the "
-	"control points";
+	"control points");
 
   grp = G_define_option();
   grp->key             = "group";
   grp->type            =  TYPE_STRING;
   grp->required        =  YES;
   grp->gisprompt        = "old,group,group";
-  grp->description     = "Name of imagery group";
+  grp->description     = _("Name of imagery group");
 
   ifile = G_define_option();
   ifile->key             = "input";
@@ -49,28 +50,28 @@ int main (int argc, char *argv[])
   ifile->required        =  NO;
   ifile->multiple        = YES;
   ifile->gisprompt       = "old,cell,raster";
-  ifile->description     = "Name of input raster map(s)";
+  ifile->description     = _("Name of input raster map(s)");
 
   ext = G_define_option();
   ext->key             = "extension";
   ext->type            =  TYPE_STRING;
   ext->required        =  YES;
   ext->multiple         = NO;
-  ext->description     = "Output file extension (inputfile(s) + extension)";
+  ext->description     = _("Output file extension (inputfile(s) + extension)");
 
   val = G_define_option();
   val->key             = "order";
   val->type            =  TYPE_INTEGER;
   val->required        =  YES;
-  val->description     = "Rectification polynom order (1-3)";
+  val->description     = _("Rectification polynom order (1-3)");
 
   c = G_define_flag();
   c->key              = 'c';
-  c->description      = "Use curr. region settings in target location (def.=calculate smallest area)";
+  c->description      = _("Use curr. region settings in target location (def.=calculate smallest area)");
 
   a = G_define_flag();
   a->key              = 'a';
-  a->description      = "Rectify all images in group";
+  a->description      = _("Rectify all images in group");
 
 
 

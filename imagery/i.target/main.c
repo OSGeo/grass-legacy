@@ -14,7 +14,7 @@
 int 
 main (int argc, char *argv[])
 {
-    char group[40], location[40], mapset[40];
+    char group[INAME_LEN], location[GMAPSET_MAX], mapset[GMAPSET_MAX];
     struct Option *grp, *map, *loc;
     struct GModule *module;
     struct Flag *c;
