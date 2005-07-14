@@ -13,7 +13,7 @@ main (int argc, char *argv[])
     char *mapset;
     int in_fd, out_fd;
     char title[512];
-    char name[100];
+    char name[GNAME_MAX];
     char *OUTPUT;
     char *INPUT; 
 	struct GModule *module;

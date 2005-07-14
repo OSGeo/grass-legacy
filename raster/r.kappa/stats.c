@@ -1,3 +1,4 @@
+#include "gis.h"
 #include "kappa.h"
 
 static
@@ -10,7 +11,7 @@ die()
 stats()
 {
   char buf[1024], msg[100];
-  char mname[100], rname[100];
+  char mname[GNAME_MAX], rname[GMAPSET_MAX];
   char *mmapset, *rmapset;
   int i,nl,ns;
   FILE *fd;

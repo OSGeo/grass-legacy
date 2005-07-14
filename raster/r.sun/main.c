@@ -74,7 +74,6 @@ char *refl_rad = NULL;
 char *mapset = NULL;
 char *per;
 char *shade;
-char mapname[1024];
 
 struct Cell_head cellhd;
 struct pj_info iproj;

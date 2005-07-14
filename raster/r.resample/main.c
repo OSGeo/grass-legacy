@@ -13,8 +13,8 @@ int main(int argc, char *argv[])
 	struct Cell_head cellhd;
 	struct Range range;
 	int hist_ok, colr_ok, cats_ok;
-	char name[100], *mapset;
-	char result[100];
+	char name[GNAME_MAX], *mapset;
+	char result[GNAME_MAX];
 	void *rast;
 	int nrows, ncols;
 	int row;
