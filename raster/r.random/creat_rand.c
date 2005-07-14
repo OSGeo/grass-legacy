@@ -1,7 +1,8 @@
-#ifndef USE_RAND
-
 #include <stdlib.h>
 #include <sys/types.h>
+
+
+#ifndef USE_RAND
 
 #if defined(__CYGWIN__) || defined(__APPLE__)
 #define lrand48() ((long)((double) rand() * (1<<31) / RAND_MAX))
