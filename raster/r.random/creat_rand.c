@@ -1,5 +1,6 @@
 #ifndef USE_RAND
 
+#include <stdlib.h>
 #include <sys/types.h>
 
 #if defined(__CYGWIN__) || defined(__APPLE__)
