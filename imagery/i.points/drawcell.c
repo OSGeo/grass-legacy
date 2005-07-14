@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "gis.h"
 #include "globals.h"
 #include "display.h"
 #include "raster.h"
@@ -14,7 +15,7 @@ int drawcell(View *view)
     int repeat;
     struct Colors *colors;
     int read_colors;
-    char msg[100];
+    char msg[GNAME_MAX];
 
 
     if (!view->cell.configured) return 0;

@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
+#include "gis.h"
 #include "raster.h"
 #include "globals.h"
 #include "local_proto.h"
@@ -25,7 +26,7 @@ static int height, size, edge, count;
 static int page,npages;
 static struct
 {
-    char name[100], mapset[100];
+    char name[GNAME_MAX], mapset[GMAPSET_MAX];
     struct box box;
 } list[NLINES*2];
 
@@ -52,7 +53,7 @@ ask_gis_files (char *type, char *file, char *xname, char *xmapset, int position)
     char buf[100];
     int top, bottom, left, right, center;
     int topx, bottomx, leftx, rightx, widthx;
-    char name[100], mapset[100], cur_mapset[100];
+    char name[GNAME_MAX], mapset[GMAPSET_MAX], cur_mapset[GMAPSET_MAX];
     int new_mapset;
 
     Menu_msg("");
@@ -213,7 +214,7 @@ ask_gis_files (char *type, char *file, char *xname, char *xmapset, int position)
 	    if (new_mapset)
 	    {
 		struct box dummy;
-		char label[100];
+		char label[GMAPSET_MAX+7];
 
 		strcpy (cur_mapset, mapset);
 		sprintf (label, "Mapset %s", mapset);

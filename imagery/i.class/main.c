@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include "gis.h"
 #include "raster.h"
 #include "glocale.h"
 #include "globals.h"
@@ -12,7 +13,7 @@
 int main (int argc, char *argv[])
 {
   char *tempfile;
-  char name[40], mapset[40];
+  char name[GNAME_MAX], mapset[GMAPSET_MAX];
   struct Cell_head cellhd;
   struct GModule *module;
 
