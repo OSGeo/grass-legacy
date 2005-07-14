@@ -4,7 +4,7 @@
 #include "gis.h"
 
 /* File/directory name lengths */
-#define INAME_LEN 30 /* can we make this longer please? */
+#define INAME_LEN GNAME_MAX /* coupled to raster map name length */
 
 struct Ref
 {
