@@ -5,7 +5,7 @@
 **************************************************************/
 #include <string.h>
 #include "gis.h"
-
+#include "G3d.h"
 
 g3_find_dsp_file (cell, file, mset)
     char *cell, *mset;
