@@ -1,7 +1,3 @@
-/*
- * $Id$
- */
-
 /* init.c								*/
 
 #define TRACE
@@ -10,6 +6,8 @@
 #undef DEBUG
 
 #undef MAIN
+#include <stdlib.h>
+#include <unistd.h>
 #include "ransurf.h"
 
 FLAG *FlagCreate();
