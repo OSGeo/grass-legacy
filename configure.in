@@ -2,9 +2,9 @@
 #
 # MODULE:   	Grass Compilation
 # AUTHOR(S):	Original author unknown - probably CERL
-#   	    	Eric G. Miller - egm2@jps.net
-#   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
-#		Markus Neteler - Germany - neteler@itc.it
+#   	    	Eric G. Miller - egm2 jps.net
+#   	    	Justin Hickey - Thailand - jhickey hpcc.nectec.or.th
+#		Markus Neteler - Germany/Italy - neteler itc.it
 # PURPOSE:  	This configure runs all the tests to determine what components
 #   	    	are installed on the current system. It also defines certain
 #   	    	configuration variables for compilation and installation.
@@ -15,6 +15,8 @@
 #   	    	for details.
 #
 # MANUAL:       http://www.gnu.org/manual/autoconf/html_mono/autoconf.html
+# Website for   config.guess, config.sub:
+#               http://savannah.gnu.org/cgi-bin/viewcvs/config/config/
 #############################################################################
 
 define([AC_CACHE_LOAD], )
@@ -1238,6 +1240,7 @@ LOC_MSG([ C compiler:                  ${CC} ${CFLAGS}])
 LOC_MSG([ C++ compiler:                ${CXX} ${CXXFLAGS}])
 LOC_MSG([ FORTRAN compiler:            ${F77}])
 LOC_MSG([ Building shared libraries:   ${shared_ok}])
+LOC_MSG([ 64bit support:               ${do64bit}])
 LOC_MSG()
 LOC_MSG_USE(NVIZ,USE_TOGL)
 LOC_MSG()
