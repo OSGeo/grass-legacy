@@ -94,6 +94,13 @@ FFTW2 library has to be compiled with -fPIC flag:
     make
     make install
 
+To fully enable 64bit library usage for GRASS on 64bit platforms, 
+the following additional parameter is required:
+
+    ./configure \
+       --with-libs=/usr/lib64 \
+       ...
+
 
 (D) INSTALLATION (first time)
 
