@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "vizual.h"
 #include "cell_table.h"
 #include "cell_table.h"
