@@ -100,8 +100,8 @@ static const char *GRASS_copyright __attribute__((unused))
 #define NO            0
 
 /* File/directory name lengths */
-#define GNAME_MAX 50
-#define GMAPSET_MAX 50
+#define GNAME_MAX 256
+#define GMAPSET_MAX 256
 
 
 typedef enum {
