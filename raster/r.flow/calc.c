@@ -28,13 +28,14 @@
 
 #define MAIN
 
+#include <stdlib.h>      /* for the random number generation */
+#include <time.h>
 #include "r.flow.h"
 #include "mem.h"
 #include "io.h"
 #include "aspect.h"
 #include "precomp.h"
-#include <stdlib.h>      /* for the random number generation */
-#include <time.h>
+#include "glocale.h"
 
 #define HORIZ	1		/* \		*/
 #define VERT	0		/* |		*/
@@ -294,7 +295,8 @@ void calculate()
     bbox	 bbs;
     flowline	 fls;
     int		 row, col;
-    double	 x, y, length, xstep, ystep, roffset, coffset;
+/*    double	 x, y, length, xstep, ystep, roffset, coffset; */
+    double	 x, y, length, xstep, ystep; 
     FCELL	*lg = G_allocate_f_raster_buf();
     struct	 line_pnts *points = Vect_new_line_struct();
     struct       line_cats *cats = Vect_new_cats_struct ();
@@ -327,17 +329,19 @@ void calculate()
 
 	    if (!(parm.barin && BM_get(bitbar, col, row)))
 	    {
+#ifdef OFFSET
+/* disabled by helena June 2005 */
 	        roffset         = parm.offset * (double) region.ew_res \
 		  * ((2. * (double) rand()/ (double) RAND_MAX) - 1.); 
 	        coffset         = parm.offset * (double) region.ns_res \
 		  * ((2. * (double) rand()/ (double) RAND_MAX) - 1.); 
-
+#endif
 		pts.x		= x;
 		pts.y		= y;
 		pts.z		= (double) get(el, row, col);
 		pts.theta	= (double) aspect(row, col);
-		pts.r		= (double) row + roffset;
-		pts.c		= (double) col + coffset;
+		pts.r		= (double) row; /* + roffset; */
+		pts.c		= (double) col; /*+ coffset; */
 
 		ads.row		= row;
 		ads.col 	= col;
@@ -391,6 +395,10 @@ void calculate()
 int main(int argc, char	*argv[])
 {
     initialize_globals(argc, argv);
+
+    if ((G_projection() == PROJECTION_LL)) /* added MN 2005 */
+           G_fatal_error (_("lat/long databases not supported by r.flow. Please use 'r.watershed' for calculating flow accumulation."));
+
 
     if (parm.flout || parm.dsout || parm.lgout)
     {

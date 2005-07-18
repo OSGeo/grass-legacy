@@ -5,7 +5,7 @@
 **  US Army Construction Engineering Research Lab, University of Illinois 
 **
 **  Copyright  J. Caplan, H. Mitasova, L. Mitas, J. Hofierka, 
-**      M. Zlocha, M. Ruesink  1995
+**      M. Zlocha
 **
 **This program is free software; you can redistribute it and/or
 **modify it under the terms of the GNU General Public License
@@ -89,7 +89,7 @@ parse_command_line(argc, argv)
     char   *argv[];
 {
 	struct GModule *module;
-    struct Option *pelevin, *paspin, *pbarin, *pskip, *pbound, *poffset,
+    struct Option *pelevin, *paspin, *pbarin, *pskip, *pbound, 
               *pflout, *plgout, *pdsout;
 
 /* Helena: fseg commented due to problems: */
@@ -97,8 +97,8 @@ parse_command_line(argc, argv)
     struct Flag *fup, *flg, *fmem, *fquiet, *fcprght;
     int default_skip, larger, default_bound;
     double default_offset;
+    char *default_offset_ans, *offset_opt; 
     char *default_skip_ans, *default_bound_ans, *skip_opt;
-    char *default_offset_ans, *offset_opt;
     
 	module = G_define_module();
 	module->description =
@@ -124,7 +124,8 @@ parse_command_line(argc, argv)
 					  sizeof (char));
     sprintf (default_bound_ans, "0-%d", default_bound);
 
-    default_offset = 0.0; /* fixed 20. May 2001 Helena */
+/* below fix changed from 0.0 to 1.0 and its effect disabled in calc.c, Helena June 2005 */
+    default_offset = 1.0; /* fixed 20. May 2001 Helena */
     default_offset_ans = (char *) G_calloc((int) log10( default_offset) + 2,
 					   sizeof (char));
     sprintf (default_offset_ans, "%f", default_offset);
@@ -143,9 +144,11 @@ parse_command_line(argc, argv)
     pbound  = parameter("bound", TYPE_INTEGER, NO, default_bound_ans, NULL,
 			"Maximum number of segments per flowline",
 			default_bound_ans + 2);
+/* removed by helena June 2005
     poffset = parameter("offset", TYPE_DOUBLE, NO, offset_opt, NULL,
 			"Maximum magnitude of random grid point offset", 
 			default_offset_ans); 
+*/
     pflout  = parameter("flout", TYPE_STRING, NO, NULL, "any,dig,vector",
 			"Output flowline vector file", NULL);
     plgout  = parameter("lgout", TYPE_STRING, NO, NULL, "any,cell,raster",
@@ -168,7 +171,7 @@ parse_command_line(argc, argv)
     parm.barin	= pbarin->answer;
     parm.skip	= atoi(pskip->answer);
     parm.bound	= atoi(pbound->answer);
-    parm.offset = atof(poffset->answer);
+/*    parm.offset = atof(poffset->answer); removed by helena June 2005 */
     parm.flout	= pflout->answer;
     parm.lgout	= plgout->answer;
     parm.dsout	= pdsout->answer;
@@ -181,7 +184,7 @@ parse_command_line(argc, argv)
     if(!pflout->answer && !plgout->answer && !pdsout->answer)
 	G_fatal_error("You must select one or more output maps (flout, lgout, dsout)."); 
 
-/*    if (fcprght->answer) { */
+    if (fcprght->answer) { 
       fprintf(stderr, "\n");
       fprintf(stderr, "Version: GRASS5.0, update: October 1999\n");
       fprintf(stderr, "\n");
@@ -211,7 +214,7 @@ parse_command_line(argc, argv)
       fprintf(stderr, "Please cite these references in publications where the results of this\n");
       fprintf(stderr, "program are used.\n");
       fprintf(stderr, "\n");
-/*    } */
+     } 
 
     if (parm.seg)
 	parm.mem = '\0';

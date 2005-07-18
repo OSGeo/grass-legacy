@@ -80,9 +80,15 @@ precompute_epsilons()
 	}
 	if ((a = atan2(y, x)) <= 0.5 * DEG2RAD)
 	{
-	    sprintf(string, "r.flow: resolution too unbalanced (%f x %f);\
-			     please resample", region.ew_res, region.ns_res);
-	    G_fatal_error(string);
+	  diag ("\n");
+	  if ((G_projection() == PROJECTION_LL))
+	    /* probably this doesn't work at all with LatLong? -MN 2005 */
+	    G_fatal_error ("r.flow: resolution too unbalanced:\n \
+			      atan2(%f deg, %f deg) =%f < %f tolerance\n \
+			      please resample input map", region.ew_res, region.ns_res, a, 0.5 * DEG2RAD);
+	  else	  
+	    G_fatal_error( "r.flow: resolution too unbalanced (%f x %f);\
+			     please resample input map", region.ew_res, region.ns_res);
 	}
 	epsilon[HORIZ][row] = (y / tan(a - 0.5 * DEG2RAD)) - x;
 	epsilon[VERT][row] = (x * tan(a + 0.5 * DEG2RAD)) - y;
