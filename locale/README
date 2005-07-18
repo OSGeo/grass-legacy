@@ -68,21 +68,33 @@ GENERAL TRANSLATION PROCEDURE (no programming required)
   messages)       messages)          used by GRASS programs)
 
 
-Semi-automated procedure, to perform in this locale/ directory:
+Semi-automated procedure:
 
-   make pot        create grass.pot (containing original messages)
+  1. In the main GRASS source code directory, run:
+     
+        ./configured --with-nls [...further options...]
+        make pre
 
-   make update-po  merge new messages into existing *.po files
-     [Now translate the messages in the po/*.po files (using kbabel or other editor) ]
+  2. In the locale/ directory, run:
 
-   make mo         create the mo files (containing translated messages as binary file)
+        make pot        creates grass.pot (containing original messages)
 
+        make update-po  merges new messages into existing *.po files
+
+  3. Now translate the messages in the po/*.po files (using kbabel or 
+     other editor). Just open the .po file(s) in your preferred translation
+     software.
+
+  4. In the locale/ directory, run:
+      
+        make mo         creates the mo files (containing translated messages as
+                        binary file)
 
 A convenient software package to translate messages is 'kbabel'.
 It permits to enhance it's message database by loading existing
 .po files to semi-automate the translation.
 
-Note that GRASS must be configured with '--with-nls' and recompiled
+Note that GRASS must be configured with '--with-nls' and (re)compiled
 to make use of the translated messages.
 
 There is a file for all library messages and another for all
