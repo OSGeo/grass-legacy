@@ -58,10 +58,20 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs,
     char **tokens;
     int ntokens;   /* number of tokens */
     int len, rowlen = 0; /* maximum row length */
+    struct Cell_head window;
+    double northing=.0;
+    double easting=.0;
+    char *coorbuf, *tmp_token;
 
     buflen = 1000;
     buf = (char *) G_malloc ( buflen );
+    coorbuf=(char *) G_malloc(256);
+    tmp_token=(char *) G_malloc(256);
 
+    /* fetch projection for LatLong test */
+    if (G__get_window (&window, "", "WIND", G_mapset()) != NULL){
+        G_get_default_window (&window);
+    }
 
     while (1) {
 	len = 0; /* not really needed, but what the heck */
@@ -108,6 +118,25 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs,
 
 	/* Determine column types */
 	for ( i = 0; i < ntokens; i++ ) {
+	    if ((G_projection() == PROJECTION_LL)){
+
+	       sprintf(coorbuf,"%s", tokens[i]);
+	       G_debug (4, "token: %s", coorbuf);
+	       if (G_scan_northing ( coorbuf, &northing, window.proj) ){
+                   G_debug (4, "is_latlong north: %f", northing);
+		   sprintf(tmp_token, "%f", northing);
+		   /* replace current DMS token by decimal degree */
+		   tokens[i]=tmp_token;
+               }else{
+	        if (G_scan_easting ( coorbuf, &easting, window.proj) ){
+	           G_debug (4, "is_latlong east: %f", easting);
+		   sprintf(tmp_token, "%f", easting);
+		   /* replace current DMS token by decimal degree */
+		   tokens[i]=tmp_token;
+	       }else
+		   G_fatal_error("Unparsable LatLong value found: %s", tokens[i]);
+               }
+	    }
 	    G_debug (4, "row %d col %d: '%s' is_int = %d is_double = %d", 
 		         row, i, tokens[i], is_int(tokens[i]), is_double(tokens[i]) );
 	    if ( is_int(tokens[i]) ) continue; /* integer */
@@ -124,6 +153,7 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs,
 	}
 	
 	G_free_tokens(tokens);
+
 	row++;
     }
 
@@ -132,7 +162,9 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs,
     *minncolumns = minncols;
     *column_type = coltype;
     *column_length = collen;
-	
+
+    G_free(coorbuf);
+
     return 0;
 }
 
@@ -155,6 +187,12 @@ int points_to_bin( FILE *ascii, int rowlen, struct Map_info *Map, dbDriver *driv
     struct line_pnts *Points;
     struct line_cats *Cats;	
     dbString sql, val;
+    struct Cell_head window;
+
+    /* fetch projection for LatLong test */
+    if (G__get_window (&window, "", "WIND", G_mapset()) != NULL){
+        G_get_default_window (&window);
+    }
 
     rewind(ascii);
     Points = Vect_new_line_struct ();
@@ -191,8 +229,14 @@ int points_to_bin( FILE *ascii, int rowlen, struct Map_info *Map, dbDriver *driv
 	tokens = G_tokenize (buf, fs);
 	ntokens = G_number_of_tokens ( tokens );
 
-	x = atof ( tokens[xcol] );
-	y = atof ( tokens[ycol] );
+        if ((G_projection() == PROJECTION_LL)){
+            G_scan_easting ( tokens[xcol], &x, window.proj);
+            G_scan_northing ( tokens[ycol], &y, window.proj);
+	}else{
+           x = atof ( tokens[xcol] );
+           y = atof ( tokens[ycol] );
+	}
+	G_debug (4, "x: %f, y: %f", x, y);
 
 	if ( zcol >= 0 ) z = atof ( tokens[zcol] );
 	else z = 0.0;
