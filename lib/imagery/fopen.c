@@ -18,6 +18,7 @@ static int error (group,file,msga,msgb)
     char buf[100];
     sprintf (buf, "%sfile [%s] of group [%s in %s]%s",
 	msga, file, group, G_mapset(), msgb);
+    G_debug(4,"imagery lib fopen error: %s", buf);
     G_warning (buf);
 
     return 0;
