@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-07-18 07:17+0200\n"
-"PO-Revision-Date: 2005-07-18 21:01+0200\n"
+"PO-Revision-Date: 2005-07-19 08:02+0200\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -707,44 +707,38 @@ msgid "  Distance to the network = %f, distance from the network = %f\n"
 msgstr "Abstand zum Netzwerk = %f, Abstand vom Netzwerk = %f\n"
 
 #: ../display/d.text.freetype/main.c:148
-#, fuzzy
 msgid ""
 "Draws text in the graphics monitor's active display frame using TrueType "
 "fonts."
-msgstr "s."
+msgstr "Zeichnet Text im aktiven Rahmen des Graphik-Monitors mit TrueType-Schriften."
 
 #: ../display/d.text.freetype/main.c:154
 msgid "Text to display"
 msgstr "Darzustellender Text"
 
 #: ../display/d.text.freetype/main.c:161
-#, fuzzy
 msgid "Map coordinates"
-msgstr "Nord Koordinaten"
+msgstr "Karten-Koordinaten"
 
 #: ../display/d.text.freetype/main.c:176 ../display/d.vect/main.c:226
-#, fuzzy
 msgid "Font name"
-msgstr "Spaltenname"
+msgstr "Schriftname"
 
 #: ../display/d.text.freetype/main.c:198
-#, fuzzy
 msgid "Text color, either a standard GRASS color or R:G:B triplet"
-msgstr "a"
+msgstr "Textfarbe, entweder eine GRASS Standardfarbe oder ein R:G:B Tripel."
 
 #: ../display/d.text.freetype/main.c:206
-#, fuzzy
 msgid "Height of letters (in percent of available frame height)"
-msgstr "von Prozent von"
+msgstr "Höhe der Buchstaben (in Prozent von der möglichen Rahmenhöhe)."
 
 #: ../display/d.text.freetype/main.c:214
 msgid "Text alignment"
 msgstr "Text-Ausrichtung"
 
 #: ../display/d.text.freetype/main.c:221
-#, fuzzy
 msgid "Rotation angle in degrees (counter-clockwise)"
-msgstr "Winkel"
+msgstr "Rotationswinkel in Grad (gegen den Uhrzeigersinn)."
 
 #: ../display/d.text.freetype/main.c:228
 msgid "Line spacing"
@@ -760,108 +754,92 @@ msgid "Use radians instead of degrees for rotation"
 msgstr "von für"
 
 #: ../display/d.text.freetype/main.c:240
-#, fuzzy
 msgid "Coordinates are in pixels ([0,0] is top left)"
-msgstr "Koordinaten ist oben Links"
+msgstr "Koordinaten sind in Pixel ([0,0] ist oben links)."
 
 #: ../display/d.text.freetype/main.c:244
-#, fuzzy
 msgid "Coordinates are percentage of frame ([0,0] is bottom left)"
-msgstr "Koordinaten von ist unten Links"
+msgstr "Koordinaten sind in Prozent des Rahmens ([0,0] ist unten links)."
 
 #: ../display/d.text.freetype/main.c:248
-#, fuzzy
 msgid "Font size is height in pixels"
-msgstr "Größe ist"
+msgstr "Schrift-Größe ist Höhe in Pixel."
 
 #: ../display/d.text.freetype/main.c:252
-#, fuzzy
 msgid "Command mode (Compatibility with d.text)"
-msgstr "Modus"
+msgstr "Kommando-Modus (kompatibel mit d.text)."
 
 #: ../display/d.text.freetype/main.c:259
-#, fuzzy
 msgid "Either text or -c should be given"
-msgstr "Entweder muss die Option 'from_table' oder 'select' angegeben werden. "
+msgstr "Entweder muss die Option '-c' oder text angegeben werden. "
 
 #: ../display/d.text.freetype/main.c:264
-#, fuzzy
 msgid "Choose only one coordinate system for placement"
-msgstr "eins für"
+msgstr "Wählen Sie nur ein Koordinatensystem für die Plazierung aus."
 
 #: ../display/d.text.freetype/main.c:269 ../display/d.text.freetype/main.c:271
 #: ../display/d.text.freetype/main.c:635
-#, fuzzy
 msgid "No font selected"
-msgstr "Schrift"
+msgstr "Keine Schrift ausgewählt."
 
 #: ../display/d.text.freetype/main.c:281 ../display/d.text.freetype/main.c:460
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid font: %s"
-msgstr "s"
+msgstr "Ungültige Schrift: %s"
 
 #: ../display/d.text.freetype/main.c:331
-#, fuzzy
 msgid "Unable to initialise FreeType"
-msgstr "FreeType"
+msgstr "Kann FreeType nicht initialisieren."
 
 #: ../display/d.text.freetype/main.c:336 ../display/d.text.freetype/main.c:478
-#, fuzzy
 msgid "Unable to create face"
-msgstr "Kann <%s> nicht öffnen."
+msgstr "Kann kein Face erzeugen."
 
 #: ../display/d.text.freetype/main.c:339 ../display/d.text.freetype/main.c:480
 #: ../display/d.text.freetype/main.c:495
-#, fuzzy
 msgid "Unable to set size"
-msgstr "Größe"
+msgstr "Kann die Größe nicht setzen."
 
 #: ../display/d.text.freetype/main.c:358 ../display/d.text.freetype/main.c:593
 msgid "Unable to create text conversion context"
 msgstr "Kann den Textkonvertierungszusammenhang nicht erstellen."
 
 #: ../display/d.text.freetype/main.c:360 ../display/d.text.freetype/main.c:595
-#, fuzzy
 msgid "Text conversion error"
-msgstr "Fehler"
+msgstr "Fehler beim Konvertieren von Text."
 
 #: ../display/d.text.freetype/main.c:429
-#, fuzzy
 msgid "Unable to write the temporary file"
-msgstr "Kann Signaturdatei nicht öffnen."
+msgstr "Kann die temporäre Datei nicht schreiben."
 
 #: ../display/d.text.freetype/main.c:454
-#, fuzzy
 msgid "No predefined font"
-msgstr "Schrift"
+msgstr "Keine vordefinierte Schrift gefunden."
 
 #: ../display/d.text.freetype/main.c:471
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unable to read font"
-msgstr "s"
+msgstr "%s: Kann diese Schrift nicht lesen."
 
 #: ../display/d.text.freetype/main.c:675
 #, c-format
-#, fuzzy
 msgid "%s: Unable to read FreeType definition file; use the default"
-msgstr "s"
+msgstr "%s: Kann die Free Type Definitionsdatei nicht lesen; nehme den Standard."
 
 #: ../display/d.text.freetype/main.c:681
 #, c-format
-#, fuzzy
 msgid "%s: No FreeType definition file"
-msgstr "s"
+msgstr "%s: Keine FreeType Definitionsdatei gefunden."
 
 #: ../display/d.text.freetype/main.c:686
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unable to read FreeType definition file"
-msgstr "s"
+msgstr "%s: Kann die FreeType Definitionsdatei nicht lesen."
 
 #: ../display/d.text.freetype/main.c:892
 #, c-format
-#, fuzzy
 msgid "[%s]: No such color"
-msgstr "s"
+msgstr "[%s]: Diese Farbe gibt es nicht."
 
 #: ../display/d.vect/attr.c:53 ../display/d.vect/dir.c:34
 #: ../display/d.vect/label.c:32 ../display/d.vect/plot1.c:51
@@ -875,58 +853,48 @@ msgstr ""
 " FEHLER: Kann Vektordatei nicht lesen.\n"
 
 #: ../display/d.vect/main.c:135
-#, fuzzy
 msgid "Displays GRASS vector data in the active frame on the graphics monitor."
-msgstr "ein."
+msgstr "Stellt GRASS Vektorkarten im aktiven Rahmen des Monitors dar."
 
 #: ../display/d.vect/main.c:151
 msgid "Display"
 msgstr "Darstellung"
 
 #: ../display/d.vect/main.c:158
-#, fuzzy
 msgid "Name of column to be displayed"
-msgstr "von"
+msgstr "Name der Spalte, die angezeigt werden soll."
 
 #: ../display/d.vect/main.c:166
-#, fuzzy
 msgid "Point and centroid symbol"
-msgstr "symbol"
+msgstr "Punkt und Zentroid Symbol."
 
 #: ../display/d.vect/main.c:173
-#, fuzzy
 msgid "Icon size"
 msgstr "Symbolgröße"
 
 #: ../display/d.vect/main.c:183
-#, fuzzy
 msgid "Line color"
-msgstr "Standard-Farbe\n"
+msgstr "Linien-Farbe"
 
 #: ../display/d.vect/main.c:189
-#, fuzzy
 msgid "Area fill color"
-msgstr "Fläche"
+msgstr "Flächenfüllfarbe"
 
 #: ../display/d.vect/main.c:199
-#, fuzzy
 msgid "Label color"
-msgstr "Wert Farbe\n"
+msgstr "Label Farbe"
 
 #: ../display/d.vect/main.c:205
-#, fuzzy
 msgid "Label background color"
-msgstr "Hintergrund"
+msgstr "Label Hintergrundfarbe"
 
 #: ../display/d.vect/main.c:211
-#, fuzzy
 msgid "Label border color"
-msgstr "Randfarbe "
+msgstr "Label Randfarbe "
 
 #: ../display/d.vect/main.c:217
-#, fuzzy
 msgid "Label size (pixels)"
-msgstr "Größe"
+msgstr "Label Größe (in Pixel)"
 
 #: ../display/d.vect/main.c:233
 msgid "Label horizontal justification"
@@ -937,34 +905,29 @@ msgid "Label vertical justification"
 msgstr "Vertikale Labelausrichtung"
 
 #: ../display/d.vect/main.c:246
-#, fuzzy
 msgid "Minimum region size (average from height and width) when map is displayed"
-msgstr "Größe von ist"
+msgstr "Minimale Größe der Region (Durchschnitt von Höhe und Breite) beim Zeichnen der Karte."
 
 #: ../display/d.vect/main.c:253
-#, fuzzy
 msgid "Maximum region size (average from height and width) when map is displayed"
-msgstr "Größe von ist"
+msgstr "Maximale Größe der Region (Durchschnitt von Höhe und Breite) beim Zeichnen der Karte."
 
 #: ../display/d.vect/main.c:258 ../raster/r.cost/main.c:180
 #: ../raster/wildfire/r.ros/main.c:297
 msgid "Run verbosely"
-msgstr "detaillierte Ausgabe"
+msgstr "Detaillierte Ausgabe"
 
 #: ../display/d.vect/main.c:263
-#, fuzzy
 msgid "Get area fill colors from map table column 'GRASSRGB' (RRR:GGG:BBB)"
-msgstr "Annehmen Bereich von Tabelle"
+msgstr "Nimm Flächenfüllfarbe für die Karte aus der Tabellenspalte 'GRASSRGB' (RRR:GGG:BBB). "
 
 #: ../display/d.vect/main.c:268
-#, fuzzy
 msgid "Fill areas with random colors according to category number"
-msgstr "Füllung"
+msgstr "Fülle die Flächen mit zufälligen Farben entsprechend den Kategorienummern."
 
 #: ../display/d.vect/main.c:272
-#, fuzzy
 msgid "Use values from 'cats' option as line ID"
-msgstr "von option Linie"
+msgstr "Benutze Werte der 'cats' Option als Linien-ID."
 
 #: ../display/d.vect/main.c:276
 #, fuzzy
@@ -982,28 +945,27 @@ msgid "Region size is greater than maxreg, nothing displayed.\n"
 msgstr "Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt.\n"
 
 #: ../display/d.vect/main.c:322 ../display/d.vect/main.c:334
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown color: [%s]"
-msgstr "s"
+msgstr "Unbekannte Farbe: [%s]."
 
 #: ../display/d.vect/main.c:341
-#, fuzzy
 msgid "Cannot read symbol, cannot display points"
-msgstr "gelesen symbol"
+msgstr "Kann Symbol nicht lesen; stelle daher die Punkte nicht dar."
 
 #: ../display/d.vect/main.c:348 ../vector/v.label/main.c:212
-#, fuzzy, c-format
+#, c-format
 msgid "Vector file [%s] not available"
-msgstr "s"
+msgstr "Vektordatei [%s] nicht vorhanden."
 
 #: ../display/d.vect/main.c:362 ../vector/v.db.select/main.c:100
 msgid "Database connection not defined"
 msgstr "Datenbankverbindung nicht definiert."
 
 #: ../display/d.vect/main.c:367
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot open driver %s"
-msgstr "s"
+msgstr "Kann Treiber %s nicht öffnen."
 
 #: ../display/d.vect/main.c:372 ../vector/v.convert/att.c:68
 #, c-format
@@ -1012,9 +974,8 @@ msgstr "Kann Datenbank '%s' nicht öffnen."
 
 #: ../display/d.vect/main.c:389
 #, c-format
-#, fuzzy
 msgid "%d errors in cat option"
-msgstr "option"
+msgstr "%d Fehler in cat Option."
 
 #: ../display/d.vect/main.c:504
 #, c-format
@@ -1027,19 +988,16 @@ msgid "The bounding box of the map outside current region, nothing displayed.\n"
 msgstr "Die Karte liegt außerhalb der derzeitigen Region, es wird nichts angezeigt.\n"
 
 #: ../display/d.vect/main.c:526
-#, fuzzy
 msgid "Cannot display areas, topology not available"
-msgstr "nicht"
+msgstr "Kann Flächen nicht darstellen, da die Topologie nicht vorhanden ist."
 
 #: ../display/d.vect/main.c:531
-#, fuzzy
 msgid "Cannot display lines by id, topology not available"
-msgstr "Zeilen nicht"
+msgstr "Kann die Linien nicht über die ID darstellen, da die Topologie nicht vorhanden ist."
 
 #: ../display/d.vect/main.c:556
-#, fuzzy
 msgid "Cannot display topology, not available"
-msgstr "nicht"
+msgstr "Kann die Topologie nicht darstellen, da sie nicht vorhanden ist."
 
 #: ../display/d.vect/main.c:570
 #, c-format
@@ -1425,9 +1383,8 @@ msgid "3D grid resolution (north-south, east-west and top-bottom)"
 msgstr "3D Auflösung (Nord-Süd, Ost-West und top-bottom)."
 
 #: ../general/g.region/cmd/main.c:251
-#, fuzzy
 msgid "Top-bottom grid resolution 3D"
-msgstr "unten"
+msgstr "Oben-Unten 3D Rasterauflösung"
 
 #: ../general/g.region/cmd/main.c:259
 msgid "Raster map to zoom into"
@@ -1792,13 +1749,12 @@ msgid "Can not erase an undefined region."
 msgstr "Kann die undefinierte Region nicht löschen."
 
 #: ../imagery/i.class/main.c:25
-#, fuzzy
 msgid ""
 "An imagery function that generates spectral signatures for an image by "
 "allowing the user to outline regions of interest. The resulting signature "
 "file can be used as input for i.maxlik or as a seed signature file for i."
 "cluster."
-msgstr "für Bild von für i a für i."
+msgstr "Ein Bildbearbeitungsmodul, das spectrale Signaturen aus einem Bild erzeugt, indem es dem Nutzer erlaubt, interessante Flächen zu digitalisieren. Die resultierende Signaturdatei kann als Eingabe für das Modul i.maxlik oder als Seed-Signaturen für i.cluster benutzt werden."
 
 #: ../imagery/i.class/main.c:33
 msgid "No graphics device selected."
@@ -1829,9 +1785,8 @@ msgid "Enter the name of the cell map to be displayed"
 msgstr "Name der Karte, die angezeigt werden soll."
 
 #: ../imagery/i.class/main.c:69
-#, fuzzy
 msgid "Did not find input cell map."
-msgstr "nicht."
+msgstr "Kann die Eingabekarte nicht finden."
 
 #: ../imagery/i.class/outline.c:59
 msgid "Absurd polygon."
@@ -1842,73 +1797,64 @@ msgid "Outlined area is too large."
 msgstr "Gezeichneter Bereich ist zu groß."
 
 #: ../imagery/i.class/readbands.c:13
-#, fuzzy
 msgid "Error reading cell file in function readbands."
-msgstr "Fehler beim Lesen der Zellkarte während der Transformation."
+msgstr "Fehler beim Lesen der Zellkarte in der Funktion readbands."
 
 #: ../imagery/i.class/redisplay.c:66
-#, fuzzy
 msgid "No zoom window is defined."
-msgstr "ist."
+msgstr "Kein Zoomfenster definiert."
 
 #: ../imagery/i.class/remove_mask.c:16
-#, fuzzy
 msgid "Error while removing the old MASK cell map."
-msgstr "alt."
+msgstr "Fehler beim Entfernen der alten Maske MASK."
 
 #: ../imagery/i.class/restore_reg.c:15
-#, fuzzy
 msgid "No region is saved, can not restore."
-msgstr "ist nicht."
+msgstr "Es wurde keine Region abgespeichert, kann also keine wiederherstellen."
 
 #: ../imagery/i.class/save_reg.c:15
-#, fuzzy
 msgid "Region is not complete, can not save."
-msgstr "ist nicht nicht."
+msgstr "Region ist nicht komplett, kann sie daher nicht abspeichern. "
 
 #: ../imagery/i.class/signature.c:49 ../imagery/i.class/signature.c:53
-#, fuzzy
 msgid "Unable to allocate space for signature statistics."
-msgstr "für."
+msgstr "Kann keinen Speicherplatz für die Signatur-Statistik belegen."
 
 #: ../imagery/i.class/signature.c:82
 #, fuzzy
 msgid "prepare_signature: outline has odd number of points."
-msgstr "von."
+msgstr "prepare_signature: Umrandung hat eine ungerade Anzahl von Punkten."
 
 #: ../imagery/i.class/signature.c:115
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "prepare_signature: scan line %d has odd number of points."
-msgstr "Linie von."
+msgstr "prepare_signature: Linie %d hat eine ungerade Anzahl von Punkten."
 
 #: ../imagery/i.class/signature.c:126
 #, fuzzy
 msgid "signature: perimeter points out of order."
-msgstr "von."
+msgstr "Signature: Umfangspunkte von."
 
 #: ../imagery/i.class/signature.c:138
-#, fuzzy
 msgid "prepare_signature: data error."
-msgstr "Fehler."
+msgstr "prepare_signature: Datenfehler."
 
 #: ../imagery/i.class/signature.c:241
 msgid "Unknown Menu selection in show_signature()."
 msgstr "Unbekannte Menüselektion in show_signature()."
 
 #: ../imagery/i.class/signature.c:281
-#, fuzzy
 msgid "Unable to open the cell map MASK."
-msgstr "Kann die Cell-Karte <%s> nicht für die Ausgabe öffnen.\n"
+msgstr "Kann die Karte MASK nicht öffnen."
 
 #: ../imagery/i.class/signature.c:283
-#, fuzzy
 msgid "Unable to allocate the cell buffer in display_signature()."
-msgstr "Kann den Zellbuffer nicht belegen."
+msgstr "Kann den Zellbuffer in display_signature() nicht belegen."
 
 #: ../imagery/i.class/signature.c:314
-#, fuzzy
 msgid "Did not find input cell map MASK."
-msgstr "nicht."
+msgstr "Kann die Karte MASK nicht finden."
 
 #: ../imagery/i.class/zoom_box.c:51
 #, c-format
@@ -1929,40 +1875,47 @@ msgstr ""
 "X, Y, B in zoom2 %d %d %d"
 
 #: ../imagery/i.class/zoom_box.c:118
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "left right top bottom %d %d %d %d"
-msgstr "Rechts oben unten"
+msgstr ""
+"\n"
+"links rechts oben unten %d %d %d %d"
 
 #: ../imagery/i.class/zoom_box.c:150
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "north,south,east,west,nsres,ewres %f %f %f %f %f %f"
-msgstr "Süden Osten West f f f f f f"
+msgstr ""
+"\n"
+"nord, süd, ost, west, nsres, ewres %f %f %f %f %f %f"
 
 #: ../imagery/i.cluster/checkpt.c:18
-#, fuzzy, c-format
+#, c-format
 msgid "using seed means (%d files)\n"
-msgstr "mit n"
+msgstr "benutze Seed meint (%d Dateien)\n"
 
 #: ../imagery/i.cluster/checkpt.c:30
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "######## iteration %d ###########\n"
-msgstr "n n"
+msgstr ""
+"\n"
+"######## Durchlauf %d ###########\n"
 
 #: ../imagery/i.cluster/checkpt.c:31
-#, fuzzy, c-format
+#, c-format
 msgid "%d classes, %.2f%% points stable\n"
-msgstr "n"
+msgstr "%d Klassen, %.2f%% Punkte stabil.\n"
 
 #: ../imagery/i.cluster/checkpt.c:41
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "Iteration %d: %% Convergence: %.2f (%s elapsed, %s left)"
-msgstr "s s"
+msgstr "Durchlauf %d: %% Konvergenz: %.2f (%s elapsed, %s links)"
 
 #: ../imagery/i.cluster/main.c:39
 #, fuzzy
