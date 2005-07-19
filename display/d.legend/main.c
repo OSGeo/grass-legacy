@@ -5,10 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-
 #include "gis.h"
 #include "raster.h"
 #include "display.h"
+#include "glocale.h"
 
 #include "local_proto.h"
 
@@ -67,29 +67,29 @@ int main( int argc, char **argv )
 
 	module = G_define_module();
 	module->description =
-		"Displays  a  legend  for a raster map layer in the active "
-		"frame on the graphics monitor.";
+		_("Displays a legend for a raster map in the active frame "
+		"of the graphics monitor.");
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = YES ;
 	opt1->gisprompt  = "old,cell,raster" ;
-	opt1->description= "Name of raster map" ;
+	opt1->description= _("Name of raster map");
 
 	opt2 = G_define_option() ;
 	opt2->key        = "color" ;
 	opt2->type       = TYPE_STRING ;
 	opt2->answer     = DEFAULT_FG_COLOR ;
 	opt2->options    = D_color_list();
-	opt2->description= "Sets the legend's text color" ;
+	opt2->description= _("Sets the legend's text color");
 
 	opt4 = G_define_option() ;
 	opt4->key        = "lines" ;
 	opt4->type       = TYPE_INTEGER ;
 	opt4->answer     = "0" ;
 	opt4->options    = "0-1000" ;
-	opt4->description= "Number of text lines (useful for truncating long legends)" ;
+	opt4->description= _("Number of text lines (useful for truncating long legends)");
 
 	opt5 = G_define_option() ;
 	opt5->key        = "thin" ;
@@ -97,14 +97,14 @@ int main( int argc, char **argv )
 	opt5->required   = NO;
 	opt5->answer     = "1" ;
 	opt5->options    = "1-1000" ;
-	opt5->description= "Thinning factor (thin=10 gives cats 0,10,20...)";
+	opt5->description= _("Thinning factor (thin=10 gives cats 0,10,20...)");
 
 	opt6 = G_define_option() ;
 	opt6->key        = "labelnum" ;
 	opt6->type       = TYPE_INTEGER ;
 	opt6->answer     = "5" ;
 	opt6->options    = "2-100" ;
-	opt6->description= "Number of text labels for smooth gradient legend" ;
+	opt6->description= _("Number of text labels for smooth gradient legend");
 
 	opt7 = G_define_option() ;
 	opt7->key        = "at";
@@ -112,7 +112,7 @@ int main( int argc, char **argv )
 	opt7->type       = TYPE_DOUBLE;		/* needs to be TYPE_DOUBLE to get past options check */
 	opt7->required   = NO;
 	opt7->options    = "0-100" ;
-	opt7->description= "Screen coordinates to place the legend (as percentage)" ;
+	opt7->description= _("Screen coordinates to place the legend (as percentage)");
 	opt7->answer     = NULL;
 	
 	opt8 = G_define_option() ;
@@ -120,7 +120,7 @@ int main( int argc, char **argv )
 	opt8->key_desc   = "catnum";
 	opt8->type       = TYPE_DOUBLE;		/* string as it is fed through the parser? */
 	opt8->required   = NO;
-	opt8->description= "List of discrete category numbers/values for legend" ;
+	opt8->description= _("List of discrete category numbers/values for legend");
 	opt8->multiple   = YES;
 
 	opt9 = G_define_option() ;
@@ -128,32 +128,32 @@ int main( int argc, char **argv )
 	opt9->key_desc   = "min,max";
 	opt9->type       = TYPE_DOUBLE;		/* should it be type_double or _string ??*/
 	opt9->required   = NO;
-	opt9->description= "Use a subset of the map range for the legend (min,max)" ;
+	opt9->description= _("Use a subset of the map range for the legend (min,max)");
 
 
 	hidestr = G_define_flag ();
 	hidestr->key = 'v';
-	hidestr->description = "Do not show category labels";
+	hidestr->description = _("Do not show category labels");
 
 	hidenum = G_define_flag ();
 	hidenum->key = 'c';
-	hidenum->description = "Do not show category numbers";
+	hidenum->description = _("Do not show category numbers");
 
         hidenodata = G_define_flag ();
 	hidenodata->key = 'n';
-	hidenodata->description = "Skip categories with no label";
+	hidenodata->description = _("Skip categories with no label");
 
 	smooth = G_define_flag ();
 	smooth->key = 's';
-	smooth->description = "Draw smooth gradient";
+	smooth->description = _("Draw smooth gradient");
 
 	mouse = G_define_flag ();
 	mouse->key = 'm';
-	mouse->description = "Use mouse to size & place legend";
+	mouse->description = _("Use mouse to size & place legend");
 
 	flipit = G_define_flag ();
 	flipit->key = 'f';
-	flipit->description = "Flip legend";
+	flipit->description = _("Flip legend");
 
 
 	/* Check command line */
@@ -174,7 +174,7 @@ int main( int argc, char **argv )
 	{
 		new_colr = D_translate_color(opt2->answer) ;
 		if (new_colr == 0)
-			G_fatal_error ("Don't know the color %s", opt2->answer) ;
+			G_fatal_error(_("Don't know the color %s"), opt2->answer) ;
 		color = new_colr ;
 	}
 
@@ -224,16 +224,10 @@ int main( int argc, char **argv )
 	/* Make sure map is available */
 	mapset = G_find_cell (map_name, "") ;
 	if (mapset == NULL)
-	{
-		sprintf(buff,"Raster file [%s] not available", map_name);
-		G_fatal_error(buff) ;
-	}
+	    G_fatal_error(_("Raster file [%s] not available"), map_name);
 
 	if (G_read_colors(map_name, mapset, &colors) == -1)
-	{
-		sprintf(buff,"Color file for [%s] not available", map_name) ;
-		G_fatal_error(buff) ;
-	}
+	    G_fatal_error(_("Color file for [%s] not available"), map_name);
 
         fp = G_raster_map_is_fp(map_name, mapset);
 	if (fp && !use_catlist)
@@ -244,21 +238,18 @@ int main( int argc, char **argv )
 	}
 	
 	if (G_read_cats(map_name, mapset, &cats) == -1)
-	{
-		sprintf(buff,"Category file for [%s] not available", map_name) ;
-		G_warning(buff) ;
-	}
+	    G_warning(_("Category file for [%s] not available"), map_name) ;
 
 	G_set_c_null_value(&null_cell, 1);
 
 	if (R_open_driver() != 0)
-		G_fatal_error("No graphics device selected");
+	    G_fatal_error(_("No graphics device selected"));
 
 	if (D_get_cur_wind(window_name))
-		G_fatal_error("No current window") ;
+	     G_fatal_error(_("No current window")) ;
 
 	if (D_set_cur_wind(window_name))
-		G_fatal_error("Current window not available") ;
+	    G_fatal_error(_("Current window not available")) ;
 
 	D_set_colors(&colors);
 
@@ -307,11 +298,11 @@ int main( int argc, char **argv )
 	if(y0 == y1)  y1++;
 
 	if((x0 < l) || (x1 > r) || (y0 < t) || (y1 > b))	/* for mouse or at= 0- or 100+; needs to be after order check */
-		fprintf(stderr, "Warning: legend box lies outside of frame. Text may not display properly.\n");
+	    G_warning(_("Legend box lies outside of frame. Text may not display properly."));
 
 	horiz = (x1-x0 > y1-y0);
 	if(horiz)
-		fprintf(stderr, "Drawing horizontal legend as box width exceeds height.\n");
+	    fprintf(stderr, _("Drawing horizontal legend as box width exceeds height.\n"));
 	
 	if(!fp && horiz)	/* better than nothing */
 		do_smooth = TRUE;
@@ -321,10 +312,9 @@ int main( int argc, char **argv )
 
 	/* How many categories to show */
 	if(!fp) {
-		if (G_read_range(map_name, mapset, &range) == -1) {
-			sprintf(buff,"Range information for [%s] not available (run r.support)", map_name);
-			G_fatal_error(buff) ;
-		}
+		if (G_read_range(map_name, mapset, &range) == -1)
+		    G_fatal_error(_("Range information for [%s] not available (run r.support)"), map_name);
+
 		G_get_range_min_max (&range, &min_ind, &max_ind);
 
 		G_get_color_range(&min_colr, &max_colr, &colors);
@@ -336,11 +326,11 @@ int main( int argc, char **argv )
 				max_ind = (int)floor(UserRangeMax);
 			if(min_ind > UserRangeMin) {
 				min_ind = UserRangeMin < min_colr ? min_colr : (int)ceil(UserRangeMin);
-				G_warning("Color range exceeds lower limit of actual data");
+				G_warning(_("Color range exceeds lower limit of actual data"));
 			}
 			if(max_ind < UserRangeMax) {
 				max_ind = UserRangeMax > max_colr ? max_colr : (int)floor(UserRangeMax);
-				G_warning("Color range exceeds upper limit of actual data");
+				G_warning(_("Color range exceeds upper limit of actual data"));
 			}
 		}
 
@@ -394,9 +384,8 @@ int main( int argc, char **argv )
 			maxCat=0;	/* reset */
 			for(i=0, k=0; i<catlistCount; i++) {
 				if( (catlist[i] < min_ind) || (catlist[i] > max_ind) ) {
-					sprintf(buff,"use=%s out of range [%d,%d]. (extend with range= ?)",
+				    G_fatal_error(_("use=%s out of range [%d,%d]. (extend with range= ?)"),
 						opt8->answers[i], min_ind, max_ind);
-					G_fatal_error(buff);
 				}
 
 				cstr = G_get_cat(catlist[i], &cats);
@@ -435,7 +424,7 @@ int main( int argc, char **argv )
 		/* following covers both the above if(do_cats == cats_num) and k++ loop */
 		if(lines < 1) {
 			lines = 1;	/* ward off the dpl floating point exception */
-			G_fatal_error("Nothing to draw! (no categories with labels? out of range?)");
+			G_fatal_error(_("Nothing to draw! (no categories with labels? out of range?)"));
 		}
 
 		/* Figure number of lines, number of pixles per line and text size */
@@ -446,7 +435,7 @@ int main( int argc, char **argv )
 		if ((dots_per_line == 0) && (do_smooth == 0)) {
 		    if(!use_catlist) {
 			fprintf(stderr,
-			    "Forcing a smooth legend: too many categories for current window height.\n");
+			    _("Forcing a smooth legend: too many categories for current window height.\n"));
 			do_smooth = 1;
 		    }
 		}
@@ -466,10 +455,9 @@ int main( int argc, char **argv )
 		   } */
         }
 	else { /* is fp */
-		if (G_read_fp_range(map_name, mapset, &fprange) == -1) {
-			sprintf(buff,"Range information for [%s] not available", map_name);
-			G_fatal_error(buff) ;
-		}
+		if (G_read_fp_range(map_name, mapset, &fprange) == -1)
+		    G_fatal_error(_("Range information for [%s] not available"), map_name);
+
 		G_get_fp_range_min_max(&fprange, &dmin, &dmax);
 
 		G_get_d_color_range(&min_dcolr, &max_dcolr, &colors);
@@ -481,20 +469,19 @@ int main( int argc, char **argv )
 				dmax = UserRangeMax;
 			if(dmin > UserRangeMin) {
 				dmin = UserRangeMin < min_dcolr ? min_dcolr : UserRangeMin;
-				G_warning("Color range exceeds lower limit of actual data");
+				G_warning(_("Color range exceeds lower limit of actual data"));
 			}
 			if(dmax < UserRangeMax) {
 				dmax = UserRangeMax > max_dcolr ? max_dcolr : UserRangeMax;
-				G_warning("Color range exceeds upper limit of actual data");
+				G_warning(_("Color range exceeds upper limit of actual data"));
 			}
 		}
 
 		if(use_catlist) {
 			for(i=0; i<catlistCount; i++) {
 				if( (catlist[i] < dmin) || (catlist[i] > dmax) ) {
-					sprintf(buff,"use=%s out of range [%.3f, %.3f]. (extend with range= ?)",
+				    G_fatal_error(_("use=%s out of range [%.3f, %.3f]. (extend with range= ?)"),
 						opt8->answers[i], dmin, dmax);
-					G_fatal_error(buff);
 				}
 				if( strlen(opt8->answers[i]) > MaxLabelLen )
 				    MaxLabelLen=strlen(opt8->answers[i]);
@@ -828,10 +815,9 @@ int main( int argc, char **argv )
 		    R_text(buff);
 		}
 
-		if(0 == k) {
-			sprintf(buff,"Nothing to draw! (no categories with labels?)");	/* "(..., out of range?)" */
-			G_fatal_error(buff) ;
-		}
+		if(0 == k)
+		    G_fatal_error(_("Nothing to draw! (no categories with labels?)"));	/* "(..., out of range?)" */
+
 
 		if (do_cats != cats_num)
 		{
