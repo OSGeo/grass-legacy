@@ -114,10 +114,10 @@ int main(int argc, char *argv[])
 		if (I_find_group(group) == 0) {
 		    fprintf(stderr, "group %s - does not yet exist...\n", group);
 		    fprintf(stderr, "Creating new group %s\n", group);
-		    fprintf(stderr, "Adding files to group <%s>\n", group);
-		    add_or_update_group(group, rasters, k);
 		}
 		if (sgrp->answer) {
+		    fprintf(stderr, "Adding files to group <%s>\n", group);
+		    add_or_update_group(group, rasters, k);
 		    fprintf(stderr, "Adding files to sub-group <%s>\n", subgroup);
 		    add_or_update_subgroup(group, subgroup, rasters, k);
 		}
