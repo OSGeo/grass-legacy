@@ -3,10 +3,8 @@
 #include <stdlib.h>
 
 #include "gstypes.h"
+#include "gsurf.h"
 #include "G3d.h"
-
-#define MAX_VOL_SLICES         4
-#define MAX_VOL_FILES        100
 
 #define LUCKY                 33
 

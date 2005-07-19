@@ -21,13 +21,17 @@
 #define MAX_SURFS      12
 #define MAX_VECTS      50 
 #define MAX_SITES      50
-#define MAX_VOLS       12
+#define MAX_VOLS       12 /* should match MAX_VOL_FILES below ? */
 #define MAX_DSP        12
 #define MAX_ATTS        7
 #define MAX_LIGHTS      3
 #define MAX_CPLANES     6
 #define MAX_ISOSURFS   12
 #define MAX_SLICES     12
+
+/* for gvl_file.c */
+#define MAX_VOL_SLICES         4
+#define MAX_VOL_FILES        100
 
 /* surface display modes */
 #define DM_GOURAUD   0x00000100
