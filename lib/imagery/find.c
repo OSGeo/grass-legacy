@@ -35,6 +35,7 @@ int I_find_group_file(char *group, char *file)
 	return 0;
 
     sprintf (element, "group/%s", group);
+    G_debug(4,"I_find_group_file: element <%s>", element);
 
     return G_find_file (element, file, G_mapset()) != NULL ;
 }
