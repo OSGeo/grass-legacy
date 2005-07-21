@@ -707,6 +707,14 @@ To import <A HREF="http://www.ngdc.noaa.gov/seg/topo/gltiles.shtml">GLOBE DEM ti
 additionally the related <A HREF="ftp://ftp.ngdc.noaa.gov/GLOBE_DEM/data/elev/esri/hdr/">HDR file(s)</a>.
 Finally, e.g. the 'terrain' color table can be assigned to the imported map with <em>r.colors</em>.
 
+<H2>NOTES</H2>
+
+<i>"ERROR: Input map is rotated - cannot import."</i><br>
+In this case the image must be first externally rotated, applying the rotation info stored in 
+the metadata field of the raster image file. For example, the 
+<a href="http://www.gdal.org/gdal_utilities.html">gdalwarp</a>  software can be used 
+to transform the map to North-up.
+
 <H2>SEE ALSO</H2>
 <EM>
 <A HREF="r.colors.html">r.colors</A>,
@@ -722,6 +730,6 @@ GDAL Pages: <a href="http://www.gdal.org">http://www.gdal.org/</a>
 
 <H2>AUTHOR</H2>
 
-<a href="http://pobox.com/~warmerdam">Frank Warmerdam</a> (<a href="mailto:warmerdam@pobox.com">warmerdam@pobox.com</a>).
+<a href="http://pobox.com/~warmerdam">Frank Warmerdam</a> (<a href="mailto:warmerdam AT pobox dot com">email</a>).
 
 <p><i>Last changed: $Date$</i>
