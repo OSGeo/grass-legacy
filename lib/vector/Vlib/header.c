@@ -96,8 +96,11 @@ Vect__read_head (struct Map_info *Map)
    
     while ( G_getl2 (buff, 2000, head_fp) ) {
 
-	if (!(ptr = G_index (buff, ':')))
-	return (-1);
+	if (!(ptr = G_index (buff, ':'))) {
+	  G_warning ( "Corrupted row in head: %s\n", buff );
+ 	  continue;
+	}
+
 	ptr++;			/* Search for the start of text */
 	while (*ptr == ' ')
 	ptr++;
