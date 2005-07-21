@@ -2,16 +2,27 @@ How to release GRASS binaries and source code
 
 $Date$
 
-Note: This text contains some rules only applicable to the
-      development coordinator (currently Markus Neteler).
+Note: This text contains *some* rules only applicable to the
+      development coordinators (currently Markus Neteler, Radim Blazek).
 
 
 1. Local work (basically at ITC-irst)
 
+ o - Update VERSION file to release version
+   - Create release branch
+   
+ o Create Changelog file
+     CVSBRANCH=`cat CVS/Entries | grep AUTHORS | cut -d'/' -f6 | cut -b2-`
+     sh tools/cvs2cl.pl --follow "$CVSBRANCH" 
+     mv ChangeLog ChangeLog_$VERSION
+     gzip ChangeLog_$VERSION
+
+ o reset VERSION file to CVS version
+
  o Store the source tarball in:
      http://grass.itc.it/grass/grass6x/source/
      along with associated files:
-          NEWS.html ChangeLog SUBMITTING REQUIREMENTS.html INSTALL
+          NEWS.html ChangeLog_$VERSION SUBMITTING REQUIREMENTS.html INSTALL
 
  o update web site to new version (HTML in Web-CVS)
       - main.inc
@@ -30,20 +41,24 @@ Note: This text contains some rules only applicable to the
 
    Our GRASS web site: /announces/
 
+   Our mailing lists:  http://grass.itc.it/mailman/listinfo/grass-announce
+                       http://grass.itc.it/mailman/listinfo/grass5
+                       http://grass.itc.it/community/support.php#int_list                   
+
    news:comp.infosystems.gis
    http://spatialnews.geocomm.com/submitnews.html (not free any more)
    http://freshmeat.net/projects/grass/?highlight=GRASS
    http://www.linuxapps.com/?page=application&database=current&id=40
+   http://linuxtoday.com/contribute.php3
    http://www.newsforge.com/submit.pl
-   http://osx.macnn.com/ (email to news tips)
+   http://osx.macnn.com/    (email to news tips)
    http://www.gis-news.de/  (news@gismngt.de)
-   http://www.giscafe.com/   (link: submit material, needs registration)
-   http://www.geopoint.de/  (German GIS journal)
+   http://www.giscafe.com/  (link: submit material, needs registration)
    http://www.freegis.org
    http://www.directionsmag.com/pressreleases.php (click on 'Contact Us')
    http://www.gisdevelopment.net (click on 'Submit Press Release')
    http://www.gnu.org/directory/science/geography/grass.html
    http://www.kde-apps.org/content/show.php?content=19776
 
-   ... anywhere else?
+   ... anywhere else? Please add here.
 
