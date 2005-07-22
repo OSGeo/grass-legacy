@@ -107,6 +107,7 @@ m_var (double *data, int n, double *vari)
 
    *vari = 0.0;
    ep = 0;
+   s  = 0.0;
 
 
    for(i = 0; i < n; i++)              /* First pass to get the mean     */
