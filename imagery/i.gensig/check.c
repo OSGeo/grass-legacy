@@ -1,6 +1,9 @@
 #include "imagery.h"
+#include "glocale.h"
 #include "signature.h"
 #include "local_proto.h"
+
+
 int 
 check_signatures (struct Signature *S)
 {
@@ -18,14 +21,14 @@ check_signatures (struct Signature *S)
 	if (!can_invert(temp.sig[0].var, S->nbands))
 	{
 	    S->sig[i].status = -1;
-	    fprintf (stderr, "Signature %d not invertible\n", i+1);
+	    G_message(_("Signature [%d] not invertible,"), i+1);
 	    continue;
 	}
 	copy_covariances (temp.sig[0].var, S->sig[i].var, S->nbands);
 	if (!eigen(temp.sig[0].var, lambda, S->nbands))
 	{
 	    S->sig[i].status = -1;
-	    fprintf (stderr, "Signature %d can't get eigen values\n", i+1);
+	    G_message(_("Signature [%d] can't get eigen values."), i+1);
 	    continue;
 	}
 	for (j = 0; j < S->nbands; j++)
@@ -33,7 +36,7 @@ check_signatures (struct Signature *S)
 	    if (lambda[j] <= 0.0)
 	    {
 		S->sig[i].status = -1;
-		fprintf (stderr, "Signature %d not positive definite\n", i+1);
+		G_message(_("Signature [%d] not positive definite."), i+1);
 		break;
 	    }
 	}

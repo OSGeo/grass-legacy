@@ -1,8 +1,10 @@
 #include <stdlib.h>
 #include "imagery.h"
+#include "glocale.h"
 #include "signature.h"
 #include "files.h"
 #include "local_proto.h"
+
 
 int compute_means (struct files *files, struct Signature *S)
 {
@@ -19,7 +21,7 @@ int compute_means (struct files *files, struct Signature *S)
     ncols = G_window_cols();
     class    = (CELL *) G_calloc (ncols, sizeof(CELL));
 
-    fprintf (stderr, "Calculating class mean%s ...", S->nsigs==1?"":"s");
+    G_message(_("Calculating class mean%s ..."), S->nsigs==1 ? "" : "s");
 
     for (row = 0; row < nrows; row++)
     {

@@ -1,8 +1,10 @@
 #include <stdlib.h>
 #include "imagery.h"
+#include "glocale.h"
 #include "signature.h"
 #include "files.h"
 #include "local_proto.h"
+
 
 /* must be called after compute_means() */
 int compute_covariances (struct files *files, struct Signature *S)
@@ -21,7 +23,8 @@ int compute_covariances (struct files *files, struct Signature *S)
     ncols = G_window_cols();
     class    = (CELL *) G_calloc (ncols, sizeof(CELL));
 
-    fprintf (stderr, "Calculating class covariance matri%s ...", S->nsigs==1?"x":"ces");
+    G_message(_("Calculating class covariance matri%s ..."), 
+              S->nsigs==1 ? "x" : "ces");
 
     for (row = 0; row < nrows; row++)
     {

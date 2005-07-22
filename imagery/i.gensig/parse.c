@@ -1,7 +1,10 @@
 #include <stdlib.h>
 #include "gis.h"
+#include "glocale.h"
 #include "imagery.h"
 #include "parms.h"
+
+
 int 
 parse (int argc, char *argv[], struct parms *parms)
 {
@@ -9,27 +12,27 @@ parse (int argc, char *argv[], struct parms *parms)
 
     trainingmap = G_define_option();
     trainingmap->key = "trainingmap";
-    trainingmap->description = "ground truth training map";
+    trainingmap->description = _("ground truth training map");
     trainingmap->required = YES;
     trainingmap->type = TYPE_STRING;
     trainingmap->gisprompt = "old,cell,raster";
 
     group = G_define_option();
     group->key = "group";
-    group->description = "imagery group";
+    group->description = _("imagery group");
     group->required = YES;
     group->type = TYPE_STRING;
     group->gisprompt = "old,group,group";
 
     subgroup = G_define_option();
     subgroup->key = "subgroup";
-    subgroup->description = "subgroup containing image files";
+    subgroup->description = _("subgroup containing image files");
     subgroup->required = YES;
     subgroup->type = TYPE_STRING;
 
     sigfile = G_define_option();
     sigfile->key = "signaturefile";
-    sigfile->description = "resultant signature file";
+    sigfile->description = _("resultant signature file");
     sigfile->required = YES;
     sigfile->type = TYPE_STRING;
 
@@ -42,20 +45,13 @@ parse (int argc, char *argv[], struct parms *parms)
 
 /* check all the inputs */
     if(G_find_cell(parms->training_map, "") == NULL)
-    {
-	fprintf (stderr, "ERROR: training map [%s] not found\n", parms->training_map);
-	exit(1);
-    }
+        G_fatal_error(_("Training map [%s] not found."), parms->training_map);
+
     if (!I_find_group(parms->group))
-    {
-	fprintf (stderr, "ERROR: group [%s] not found\n", parms->group);
-	exit(1);
-    }
+        G_fatal_error(_("Group [%s] not found."), parms->group);
+
     if (!I_find_subgroup(parms->group, parms->subgroup))
-    {
-	fprintf (stderr, "ERROR: subgroup [%s] not found\n", parms->subgroup);
-	exit(1);
-    }
+        G_fatal_error(_("Subgroup [%s] not found."), parms->subgroup);
 
     return 0;
 }
