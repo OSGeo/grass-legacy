@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: grasslibs_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-07-18 07:17+0200\n"
-"PO-Revision-Date: 2005-07-18 07:37+0200\n"
+"PO-Revision-Date: 2005-07-22 21:29+0200\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
-"Language-Team: Deutsch <translations@grass.itc.it>\n"
+"Language-Team: Deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -232,21 +232,21 @@ msgstr "Fehler in Datums-Tabelle in Reihe %d."
 #: ../lib/gis/debug.c:52
 #, c-format
 msgid "Cannot open debug file '%s'"
-msgstr "Cannot open debug file '%s'"
+msgstr "Kann die Debug-Datei '%s' nicht öffnen."
 
 #: ../lib/gis/debug.c:85
 msgid "G_dump: memory allocated to G__"
-msgstr "G_dump: memory allocated to G__"
+msgstr "G_dump: Speicher belegt für G__"
 
 #: ../lib/gis/debug.c:86
 #, c-format
 msgid "Size of cell in fp maps = %d"
-msgstr "Size of cell in fp maps = %d"
+msgstr "Größe der Float-Karte = %d"
 
 #: ../lib/gis/debug.c:87
 #, c-format
 msgid "type for writing floating maps = %d"
-msgstr "type for writing floating maps = %d"
+msgstr "Typ zum Schreiben von Float-Karten = %d"
 
 #: ../lib/gis/debug.c:88
 #, c-format
@@ -256,17 +256,17 @@ msgstr "Derzeitige Fenstergröße = %p"
 #: ../lib/gis/debug.c:89
 #, c-format
 msgid "Flag: window set? %d"
-msgstr "Flag: window set? %d"
+msgstr "Flag: Fenster gesetzt? %d"
 
 #: ../lib/gis/debug.c:90
 #, c-format
 msgid "File descriptor for automatic mask %d"
-msgstr "File descriptor for automatic mask %d"
+msgstr "Dateizeiger für due automatische Maske %d."
 
 #: ../lib/gis/debug.c:91
 #, c-format
 msgid "Flag denoting automatic masking %d"
-msgstr "Flag denoting automatic masking %d"
+msgstr "Flag, das das automatischeMaskieren anzeigt %d"
 
 #: ../lib/gis/debug.c:92
 #, c-format
@@ -276,12 +276,12 @@ msgstr "CELL Maskenpuffer %p"
 #: ../lib/gis/debug.c:93
 #, c-format
 msgid "buffer for reading null rows %p"
-msgstr "buffer for reading null rows %p"
+msgstr "Puffer zum Lesen von Null-Reihen: %p"
 
 #: ../lib/gis/debug.c:94
 #, c-format
 msgid "Pre/post compressed data buffer %p"
-msgstr "Pre/post compressed data buffer %p"
+msgstr "Datenpuffer %p vor/nach der Kompression."
 
 #: ../lib/gis/debug.c:95
 #, c-format
@@ -321,7 +321,7 @@ msgstr "G_dump: Datei #%d"
 #: ../lib/gis/debug.c:103
 #, c-format
 msgid "open mode = %d"
-msgstr "open mode = %d"
+msgstr "Öffnen-Modus = %d"
 
 #: ../lib/gis/debug.c:104
 #, c-format
@@ -341,12 +341,12 @@ msgstr "Zellenstatistik %p"
 #: ../lib/gis/debug.c:107
 #, c-format
 msgid "Range structure %p"
-msgstr "Range structure %p"
+msgstr "Spannenstruktur %p"
 
 #: ../lib/gis/debug.c:108
 #, c-format
 msgid "float Range structure %p"
-msgstr "float Range structure %p"
+msgstr "Floating Spannenstruktur %p"
 
 #: ../lib/gis/debug.c:109
 #, c-format
@@ -356,85 +356,86 @@ msgstr "Möchten Sie ein Histogramm?  %d"
 #: ../lib/gis/debug.c:110
 #, c-format
 msgid "Automatic reclass flag %d"
-msgstr "Automatic reclass flag %d"
+msgstr "Automatisches Reklassifizierungsflag %d"
 
 #: ../lib/gis/debug.c:111
 #, c-format
 msgid "File row addresses %p"
-msgstr "File row addresses %p"
+msgstr "Dateispalten-Adressen %p"
 
 #: ../lib/gis/debug.c:112
 #, c-format
 msgid "Data to window col mapping %p"
-msgstr "Data to window col mapping %p"
+msgstr "Daten-zu-Fenster Reihenmapping %p."
 
 #: ../lib/gis/debug.c:113
 #, c-format
 msgid "Data to window row constants %f,%f"
-msgstr "Data to window row constants %f,%f"
+msgstr "Daten-zu-Fenster Reihenkonstante %f,%f"
 
 #: ../lib/gis/debug.c:114
 #, c-format
 msgid "Current data row in memory %d"
-msgstr "Current data row in memory %d"
+msgstr "Aktuelle Datenreihe im Speicher %d"
 
 #: ../lib/gis/debug.c:115
 #, c-format
 msgid "Current null row in memory %d"
-msgstr "Current null row in memory %d"
+msgstr "Aktuelle Nullreige im Speicher %d"
 
 #: ../lib/gis/debug.c:116
 #, c-format
 msgid "nbytes per cell for current row %d"
-msgstr "nbytes per cell for current row %d"
+msgstr "nbytes pro Zelle für die aktuelle Reihe %d."
 
 #: ../lib/gis/debug.c:117
 #, c-format
 msgid "Decompressed data buffer %s"
-msgstr "Decompressed data buffer %s"
+msgstr "Dekomprimierter Datenpuffer %s."
 
 #: ../lib/gis/debug.c:118
 #, c-format
 msgid "bytes per cell %d"
-msgstr "bytes per cell %d"
+msgstr "bytes pro Zelle %d"
 
 #: ../lib/gis/debug.c:119
 #, c-format
 msgid "type: int, float or double map %d"
-msgstr "type: int, float or double map %d"
+msgstr "Typ: integer, float oder double Karte %d"
 
 #: ../lib/gis/debug.c:120
 #, c-format
 msgid "Temporary name for NEW files %s"
-msgstr "Temporary name for NEW files %s"
+msgstr "Temporärer Name für die neue Datei: %s"
 
 #: ../lib/gis/debug.c:121
 #, c-format
 msgid "Temporary name for NEW NULL files %s"
-msgstr "Temporary name for NEW NULL files %s"
+msgstr "Temporärer Name für neue Null-Datei %s."
 
 #: ../lib/gis/debug.c:122
 #, c-format
 msgid "for existing raster maps %d"
-msgstr "for existing raster maps %d"
+msgstr "für eine existierende Rasterkarte %d."
 
 #: ../lib/gis/debug.c:123
 #, c-format
 msgid "Name of open file %s"
-msgstr "Name of open file %s"
+msgstr "Name der offenen Datei %s."
 
 #: ../lib/gis/debug.c:124
 #, c-format
 msgid "Mapset of open file %s"
-msgstr "Mapset of open file %s"
+msgstr "Mapset der offenen Datei %s."
 
 #: ../lib/gis/debug.c:125
 #, c-format
 msgid "io error warning given %d"
-msgstr "io error warning given %d"
+msgstr "io Fehler-Warnung ausgegeben %d."
 
 #: ../lib/gis/debug.c:126
 #, c-format
+#, fuzzy
 msgid "xdr stream for reading fp %p"
 msgstr "xdr stream for reading fp %p"
 
@@ -446,12 +447,12 @@ msgstr "NULL_ROWS array[%d] = %p"
 #: ../lib/gis/debug.c:128
 #, c-format
 msgid "data buffer for reading null rows %p"
-msgstr "data buffer for reading null rows %p"
+msgstr "Datenpuffer zum Lesen der Nullreihe %p."
 
 #: ../lib/gis/debug.c:129
 #, c-format
 msgid "Minimum row null row number in memory %d"
-msgstr "Minimum row null row number in memory %d"
+msgstr "Minimale Nullreihe im Speicher %d"
 
 #: ../lib/gis/debug.c:130
 #, c-format
@@ -460,7 +461,7 @@ msgstr "Quant ptr = %p"
 
 #: ../lib/gis/debug.c:131
 msgid "G_dump: end"
-msgstr "G_dump: end"
+msgstr "G_dump: Ende"
 
 #: ../lib/gis/done_msg.c:29
 #, c-format
@@ -1313,7 +1314,7 @@ msgstr "Karte [%s] - Kann Zeile %d nicht schreiben. "
 #: ../lib/gis/put_row.c:785 ../lib/gis/put_row.c:791
 #, c-format
 msgid "error writing null row %d"
-msgstr "error writing null row %d"
+msgstr "Fehler beim Schreiben der Null-Reihe %d."
 
 #: ../lib/gis/put_title.c:28
 #, c-format
@@ -1536,7 +1537,7 @@ msgid ""
 "I'm finding records that do not have a floating point attributes (fields "
 "prefixed with '%')."
 msgstr ""
-"Ich finde Einträge, die keine Fließkommaattribute haben (Felder mit einem "
+"Finde Einträge, die keine Fließkommaattribute haben (Felder mit einem "
 "vorangestellten '%')."
 
 #: ../lib/gis/readsites.c:60 ../lib/gis/readsites.c:69
@@ -1614,7 +1615,7 @@ msgid ""
 "G_set_window(): projection/zone differs from that of currently open raster "
 "files"
 msgstr ""
-"G_set_window(): Projektion/Zone dunterscheidet sich von den gerade "
+"G_set_window(): Projektion/Zone unterscheidet sich von den gerade "
 "geöffneten Rasterdateien."
 
 #: ../lib/gis/spawn.c:65
