@@ -15,7 +15,7 @@
 
 int Vect_legal_filename (char *s)
 {
-    char buf[256];
+    char buf[GNAME_MAX];
     
     sprintf(buf, "%s", s);
     
