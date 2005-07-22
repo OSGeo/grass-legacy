@@ -23,8 +23,10 @@ int compute_covariances (struct files *files, struct Signature *S)
     ncols = G_window_cols();
     class    = (CELL *) G_calloc (ncols, sizeof(CELL));
 
-    G_message(_("Calculating class covariance matri%s ..."), 
-              S->nsigs==1 ? "x" : "ces");
+    if (S->nsigs == 1)
+        G_message(_("Calculating class covariance matrix..."));
+    else
+        G_message(_("Calculating class covariance matrices..."));
 
     for (row = 0; row < nrows; row++)
     {
