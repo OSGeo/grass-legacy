@@ -13,6 +13,7 @@ Note: This text contains *some* rules only applicable to the
    
  o Create Changelog file
      CVSBRANCH=`cat CVS/Entries | grep AUTHORS | cut -d'/' -f6 | cut -b2-`
+     VERSION=`cat include/VERSION | head -3 | tr '\n' '.' | cut -d'.' -f1-3`
      sh tools/cvs2cl.pl --follow "$CVSBRANCH" 
      mv ChangeLog ChangeLog_$VERSION
      gzip ChangeLog_$VERSION
