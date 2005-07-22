@@ -102,7 +102,10 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
     struct stat info;
     dbDriver *driver;
 
-    G_debug (3, "Copy vector '%s' in '%s' to '%s'", in, mapset, out );
+    G_debug (2, "Copy vector '%s' in '%s' to '%s'", in, mapset, out );
+    /* check for [A-Za-z][A-Za-z0-9_]* in name */
+    if (Vect_legal_filename(out) < 0 )
+       G_fatal_error ( _("Map name is not SQL compliant.") );
 
     /* Delete old vector if it exists */
     if ( G_find_vector2(out, G_mapset()) ) {
@@ -209,6 +212,9 @@ Vect_rename ( char *in, char *out, FILE *msgout )
     dbDriver *driver;
 
     G_debug (2, "Rename vector '%s' to '%s'", in, out );
+    /* check for [A-Za-z][A-Za-z0-9_]* in name */
+    if (Vect_legal_filename(out) < 0 )
+       G_fatal_error ( _("Map name is not SQL compliant.") );
 
     /* Delete old vector if it exists */
     if ( G_find_vector2(out, G_mapset()) ) {
