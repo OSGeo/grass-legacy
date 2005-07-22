@@ -13,7 +13,8 @@ Note: This text contains *some* rules only applicable to the
    
  o Create Changelog file
      CVSBRANCH=`cat CVS/Entries | grep AUTHORS | cut -d'/' -f6 | cut -b2-`
-     sh tools/cvs2cl.pl --follow "$CVSBRANCH" 
+     VERSION=`cat include/VERSION | head -3 | tr '\n' '.' | cut -d'.' -f1-3`
+     sh tools/cvs2cl.pl --follow "$CVSBRANCH"
      mv ChangeLog ChangeLog_$VERSION
      gzip ChangeLog_$VERSION
 
@@ -59,6 +60,7 @@ Note: This text contains *some* rules only applicable to the
    http://www.gisdevelopment.net (click on 'Submit Press Release')
    http://www.gnu.org/directory/science/geography/grass.html
    http://www.kde-apps.org/content/show.php?content=19776
+   http://news.eoportal.org/cgi-bin/eoportal_header.pl?dw=psr&site=software&words=type
 
    ... anywhere else? Please add here.
 
