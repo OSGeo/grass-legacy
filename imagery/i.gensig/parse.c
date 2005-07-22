@@ -43,7 +43,7 @@ parse (int argc, char *argv[], struct parms *parms)
     parms->subgroup = subgroup->answer;
     parms->sigfile = sigfile->answer;
 
-/* check all the inputs */
+    /* check all the inputs */
     if(G_find_cell(parms->training_map, "") == NULL)
         G_fatal_error(_("Training map [%s] not found."), parms->training_map);
 

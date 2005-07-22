@@ -21,7 +21,7 @@ check_signatures (struct Signature *S)
 	if (!can_invert(temp.sig[0].var, S->nbands))
 	{
 	    S->sig[i].status = -1;
-	    G_message(_("Signature [%d] not invertible,"), i+1);
+	    G_message(_("Signature [%d] not invertible."), i+1);
 	    continue;
 	}
 	copy_covariances (temp.sig[0].var, S->sig[i].var, S->nbands);

@@ -52,10 +52,10 @@ int get_training_classes (struct files *files, struct Signature *S)
 		n++;
 	    }
 	    else
-		G_warning(_("Training class [%d] only has one cell - this class will be ignored"), cat);
+		G_warning(_("Training class [%d] only has one cell - this class will be ignored."), cat);
     }
 
-    if (n==0)
+    if (n == 0)
 	G_fatal_error(_("Training map has no classes."));
 
     list = (CELL *) G_calloc (n, sizeof(CELL));
@@ -69,7 +69,11 @@ int get_training_classes (struct files *files, struct Signature *S)
 
     files->ncats = n;
     files->training_cats = list;
-    G_message(_("%d class%s"), files->ncats, files->ncats==1 ? "" : "es");
+
+    if (files->ncats == 1)
+        G_message(_("1 class."));
+    else
+        G_message(_("%d classes."), files->ncats);
 
     return 0;
 }
