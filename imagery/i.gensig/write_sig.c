@@ -1,7 +1,9 @@
 #include <stdlib.h>
 #include "imagery.h"
+#include "glocale.h"
 #include "signature.h"
 #include "parms.h"
+
 
 int write_sigfile (struct parms *parms, struct Signature *S)
 {
@@ -9,16 +11,13 @@ int write_sigfile (struct parms *parms, struct Signature *S)
 
     fd = I_fopen_signature_file_new (parms->group, parms->subgroup, parms->sigfile);
     if (fd == NULL)
-    {
-	fprintf (stderr, "ERROR: unable to create signature file [%s] ", parms->sigfile);
-	fprintf (stderr, "for subgroup [%s] in group [%s]\n",
-		parms->subgroup, parms->group);
-	exit(1);
-    }
-    fprintf (stderr, "Writing signature file [%s] ...", parms->sigfile);
-    fflush (stderr);
+        G_fatal_error(_("Unable to create signature file [%s] for "
+	            "subgroup [%s] in group [%s]."),
+                    parms->sigfile, parms->subgroup, parms->group);
+
+    G_message(_("Writing signature file [%s] ..."), parms->sigfile);
     I_write_signatures (fd, S);
-    fprintf (stderr, "\n");
+    G_message(_("Done."));
 
     return 0;
 }

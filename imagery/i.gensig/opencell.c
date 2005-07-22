@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include "gis.h"
+#include "glocale.h"
+
 
 CELL *
 open_cell (char *name, char *mapset, int *fd)
@@ -9,6 +11,5 @@ open_cell (char *name, char *mapset, int *fd)
     if (*fd >= 0)
 	return G_allocate_cell_buf();
     
-    fprintf (stderr, "ERROR: unable to open raster map [%s]\n", name);
-    exit(1);
+    G_fatal_error(_("Unable to open raster map [%s]."), name);
 }

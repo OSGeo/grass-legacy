@@ -1,7 +1,10 @@
 #include <stdlib.h>
 #include "imagery.h"
+#include "glocale.h"
 #include "parms.h"
 #include "files.h"
+
+
 int 
 openfiles (struct parms *parms, struct files *files)
 {
@@ -11,18 +14,12 @@ openfiles (struct parms *parms, struct files *files)
 
 
     if (!I_get_subgroup_ref (parms->group, parms->subgroup, &Ref))
-    {
-	fprintf (stderr,
-	     "ERROR: unable to read REF file for subgroup [%s] in group [%s]\n",
-		parms->subgroup, parms->group);
-	exit(1);
-    }
+        G_fatal_error(_("Unable to read REF file for subgroup [%s] in group [%s]."),
+                parms->subgroup, parms->group);
+
     if (Ref.nfiles <= 0)
-    {
-	fprintf (stderr, "ERROR: subgroup [%s] in group [%s] contains no files\n",
-		parms->subgroup, parms->group);
-	exit(1);
-    }
+	G_fatal_error(_("Subgroup [%s] in group [%s] contains no files."),
+                parms->subgroup, parms->group);
 
     /* allocate file descriptors, and array of io buffers */
     files->nbands    = Ref.nfiles;
