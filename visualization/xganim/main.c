@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <limits.h>
+#include <unistd.h>
 #include "gis.h"
 #include "gui.h"
 
@@ -33,13 +34,14 @@
 #define BORDER_W    2
 
 
-static Boolean do_run();
-void change_label();
+static Boolean do_run(struct gui_data *cd);
+void change_label(Widget wid, char *str);
 short _get_Xlookup();
-char **gee_wildfiles();
-char *G__mapset_name ();
-void parse_command();
-/*char *strchr();*/
+char **gee_wildfiles(char *wildarg, char *element, int *num);
+/* char *G__mapset_name (); */
+void parse_command(int argc, char **argv,
+                  char *vfiles[MAXVIEWS][MAXIMAGES],
+                  int *numviews, int *numframes);
 
 
 
@@ -65,9 +67,8 @@ extern int scrn;
 extern Visual *use_visual;
 extern Colormap fixedcmap;
 
-int main (argc, argv)
-    int  argc;
-    char **argv;
+
+int main (int argc, char **argv)
 {
     int	     	i, j;
     int       	*sdimp, longdim;
@@ -411,13 +412,12 @@ int     rtype;
 }
 
 /* ###################################################### */
-static Boolean do_run(cd)
-struct gui_data *cd;
+static Boolean do_run(struct gui_data *cd)
 {
-int i, cnt;
-static int first=1;
-Drawable dr;
-    
+    int i, cnt;
+    static int first=1;
+    Drawable dr;
+
     if(first){
 	first=0;
 	cnt = load_files();
@@ -494,16 +494,14 @@ Drawable dr;
 }
 
 /* ###################################################### */
-char **gee_wildfiles(wildarg, element, num)
-char *wildarg, *element;
-int *num;
+char **gee_wildfiles(char *wildarg, char *element, int *num)
 {
-int n, cnt=0;
-char path[1000], *mapset, cmd[1000], buf[512];
-char *p, *tfile;
-static char *newfiles[MAXIMAGES];
-FILE *tf;
-   
+    int n, cnt=0;
+    char path[1000], *mapset, cmd[1000], buf[512];
+    char *p, *tfile;
+    static char *newfiles[MAXIMAGES];
+    FILE *tf;
+
     *num = 0;
     tfile = G_tempfile();
     /* build list of filenames */
@@ -536,8 +534,8 @@ FILE *tf;
     }
     *num = cnt;
     free (tfile);
-    return(newfiles);
 
+    return(newfiles);
 }
 
 
@@ -545,13 +543,10 @@ FILE *tf;
 /********************************************************************/
 /* to change label in label widget */
 
-void
-change_label(wid, str)
-Widget wid;
-char *str;
+void change_label(Widget wid, char *str)
 {
-Arg wargs[1];
-XmString xmstr;
+    Arg wargs[1];
+    XmString xmstr;
 
     xmstr = XmStringCreateSimple(str);
     XtSetArg (wargs[0], XmNlabelString,  xmstr);
@@ -560,11 +555,9 @@ XmString xmstr;
 }
 
 /********************************************************************/
-void parse_command(argc, argv, vfiles, numviews, numframes)
-int argc;
-char *argv[];
-char *vfiles[MAXVIEWS][MAXIMAGES];
-int *numframes, *numviews;
+void parse_command(int argc, char **argv,
+                  char *vfiles[MAXVIEWS][MAXIMAGES],
+                  int *numviews, int *numframes)
 {
     struct Option *viewopts[MAXVIEWS]; 
     char buf[BUFSIZ], **wildfiles;
@@ -605,7 +598,6 @@ int *numframes, *numviews;
 	    *numframes = *numframes? *numframes > numi? numi: *numframes: numi;
 	}
     }
-
 }
 
 /*********************************************************************/
