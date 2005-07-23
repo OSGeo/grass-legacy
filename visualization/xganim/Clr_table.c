@@ -6,7 +6,8 @@
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 
-#include "gis.h"     
+#include "gis.h"
+#include "glocale.h"
 #include "colors.h"
 
 Display *dpy;
@@ -93,7 +94,7 @@ find_color(unsigned int r, unsigned int g, unsigned int b)
     case DirectColor:
 	return find_color_rgb(r, g, b);
     default:
-	G_fatal_error("Unknown visual class %d\n", use_visual->class);
+	G_fatal_error(_("Unknown visual class [%d]."), use_visual->class);
 	return 0;
     }
 }
@@ -252,7 +253,7 @@ InitColorTableFixed(Colormap cmap)
 	if (y > 2 && y < n_colors)
 	    y = try_get_grays(cmap, y);
 	if (y < 2)
-	    G_fatal_error("Unable to get sufficient gray shades\n");
+	    G_fatal_error(_("Unable to get sufficient gray shades."));
 
 	NCOLORS = y;
 
@@ -269,7 +270,7 @@ InitColorTableFixed(Colormap cmap)
 	/* now see how many we can actually get */
 	while (!try_get_colors(cmap, r, g, b))
 	    if (!get_fewer_levels(&r, &g, &b))
-		G_fatal_error("Unable to get sufficient colors\n");
+		G_fatal_error(_("Unable to get sufficient colors."));
 
 	NCOLORS = r * g * b;
 
@@ -283,7 +284,7 @@ InitColorTableFixed(Colormap cmap)
 	break;
 
     case DirectColor:
-	G_warning("Using private colormap for DirectColor visual\n");
+	G_warning(_("Using private colormap for DirectColor visual."));
 
 	/* free any previously-allocated Colormap */
 	if (cmap != DefaultColormap(dpy, scrn))
@@ -302,7 +303,7 @@ InitColorTableFixed(Colormap cmap)
 	break;
 
     default:
-	G_fatal_error("Unknown visual class %d\n", use_visual->class);
+	G_fatal_error(_("Unknown visual class [%d]."), use_visual->class);
 	break;
     }
 
@@ -329,7 +330,7 @@ int _get_lookup_for_color(int r, int g, int b)
 	break;
 
     default:
-	G_fatal_error("Unknown visual class %d\n", use_visual->class);
+	G_fatal_error(_("Unknown visual class [%d]."), use_visual->class);
 	break;
     }
 }

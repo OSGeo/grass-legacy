@@ -32,31 +32,28 @@
 #include "gui.h"
 
 /* callback procs */
-static void rewind_callback();
-static void rplay_callback();
-static void stepb_callback();
-static void stop_callback();
-static void stepf_callback();
-static void play_callback();
-static void loop_callback();
-static void swing_callback();
-static void exit_callback();
-static void names_callback();
-static void slower_callback();
-static void faster_callback();
+static void rewind_callback(Widget w, XtPointer data, caddr_t cbs);
+static void rplay_callback(Widget w, XtPointer data, caddr_t cbs);
+static void stepb_callback(Widget w, XtPointer data, caddr_t cbs);
+static void stop_callback(Widget w, XtPointer data, caddr_t cbs);
+static void stepf_callback(Widget w, XtPointer data, caddr_t cbs);
+static void play_callback(Widget w, XtPointer data, caddr_t cbs);
+static void loop_callback(Widget w, XtPointer data, caddr_t cbs);
+static void swing_callback(Widget w, XtPointer data, caddr_t cbs);
+static void exit_callback(Widget w, XtPointer data, caddr_t cbs);
+static void names_callback(Widget w, XtPointer data, caddr_t cbs);
+static void slower_callback(Widget w, XtPointer data, caddr_t cbs);
+static void faster_callback(Widget w, XtPointer data, caddr_t cbs);
 
 static Widget rew, rplay, stepb, stop, stepf, play, loop, swing, doexit;
 static Widget shnames, slower, faster;
 static struct gui_data *cd;
 
 
-make_buttons(data, trc, scr)
-struct gui_data *data;
-Widget trc;
-Screen *scr;
+void make_buttons(struct gui_data *data, Widget trc, Screen *scr)
 {
-Arg    wargs[10];
-int    n;
+    Arg    wargs[10];
+    int    n;
 
     cd = data;
 
@@ -161,14 +158,11 @@ int    n;
 	    (XtPointer) NULL);
 }
 
-set_buttons_pixmap(display, d)
-Display *display;
-Drawable d;
+void set_buttons_pixmap(Display *display, Drawable d)
 {
-Pixel  fg, bg;
-int    n, depth;
-Pixmap button_pix;
-
+    Pixel  fg, bg;
+    int    n, depth;
+    Pixmap button_pix;
 
     XtVaGetValues(rew, XmNforeground, &fg,
 	    XmNbackground, &bg, XmNdepth, &depth, NULL);
@@ -264,10 +258,7 @@ Pixmap button_pix;
 
 }
 
-static void rewind_callback(w, data, cbs)
-Widget w;
-XtPointer data;
-caddr_t cbs;
+static void rewind_callback(Widget w, XtPointer data, caddr_t cbs)
 {
 
     cd->step = 0;
@@ -276,10 +267,7 @@ caddr_t cbs;
 
 }
 
-static void rplay_callback(w, data, cbs)
-Widget w;
-XtPointer data;
-caddr_t cbs;
+static void rplay_callback(Widget w, XtPointer data, caddr_t cbs)
 {
     cd->step = 0;
     cd->stop = 0;
@@ -288,120 +276,71 @@ caddr_t cbs;
 
 }
 
-static void stepb_callback(w, data, cbs)
-Widget w;
-XtPointer data;
-caddr_t cbs;
+static void stepb_callback(Widget w, XtPointer data, caddr_t cbs)
 {
-
     cd->step = 1;
     cd->direction = -1;
     cd->curframe = cd->prevframe + cd->direction;
-
 }
 
-static void stop_callback(w, data, cbs)
-Widget w;
-XtPointer data;
-caddr_t cbs;
+static void stop_callback(Widget w, XtPointer data, caddr_t cbs)
 {
     cd->stop = 1;
 }
 
-static void stepf_callback(w, data, cbs)
-Widget w;
-XtPointer data;
-caddr_t cbs;
+static void stepf_callback(Widget w, XtPointer data, caddr_t cbs)
 {
-
     cd->step = 1;
     cd->direction = 1;
     cd->curframe = cd->prevframe + cd->direction;
 }
 
-static void play_callback(w, data, cbs)
-Widget w;
-XtPointer data;
-caddr_t cbs;
+static void play_callback(Widget w, XtPointer data, caddr_t cbs)
 {
-
     cd->step = 0;
     cd->stop = 0;
     cd->direction = 1;
     cd->curframe = cd->prevframe + cd->direction;
-
 }
 
-static void loop_callback(w, data, cbs)
-Widget w;
-XtPointer data;
-caddr_t cbs;
+static void loop_callback(Widget w, XtPointer data, caddr_t cbs)
 {
-
     cd->loop = XmToggleButtonGetState(loop);
     cd->swing = 0;
     XmToggleButtonSetState(swing, 0, False);
     cd->stop = !cd->loop;
-
 }
 
-static void swing_callback(w, data, cbs)
-Widget w;
-XtPointer data;
-caddr_t cbs;
+static void swing_callback(Widget w, XtPointer data, caddr_t cbs)
 {
-
     cd->swing = XmToggleButtonGetState(swing);
     cd->loop = 0;
     XmToggleButtonSetState(loop, 0, False);
     cd->stop = !cd->swing;
-
 }
 
-static void slower_callback(w, data, cbs)
-Widget w;
-XtPointer data;
-caddr_t cbs;
+static void slower_callback(Widget w, XtPointer data, caddr_t cbs)
 {
-
     if(cd->speed){
 	if(cd->speed < 200000)
 	    cd->speed *= 3;
     }
     else
 	cd->speed = 1;
-
 }
 
-static void faster_callback(w, data, cbs)
-Widget w;
-XtPointer data;
-caddr_t cbs;
+static void faster_callback(Widget w, XtPointer data, caddr_t cbs)
 {
-
     if(cd->speed > 1)
 	cd->speed /= 3;
-
 }
 
-static void names_callback(w, data, cbs)
-Widget w;
-XtPointer data;
-caddr_t cbs;
+static void names_callback(Widget w, XtPointer data, caddr_t cbs)
 {
-
     cd->shownames = (1 + cd->shownames) % 3;
-
 }
 
-static void exit_callback(w, data, cbs)
-Widget w;
-XtPointer data;
-caddr_t cbs;
+static void exit_callback(Widget w, XtPointer data, caddr_t cbs)
 {
-
     exit(0);
-
 }
-
-
