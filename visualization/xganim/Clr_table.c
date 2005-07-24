@@ -333,5 +333,7 @@ int _get_lookup_for_color(int r, int g, int b)
 	G_fatal_error(_("Unknown visual class [%d]."), use_visual->class);
 	break;
     }
+
+    return -1;
 }
 

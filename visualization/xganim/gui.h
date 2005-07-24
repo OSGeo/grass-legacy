@@ -1,4 +1,3 @@
-
 #include <X11/Xlib.h>
 #include <X11/StringDefs.h>
 #include <X11/Intrinsic.h>
@@ -17,4 +16,9 @@ struct gui_data{
 	int   rewind, prevframe, curframe, nframes;
 	int   loop, swing, shownames;
 };
+
+
+/* function prototypes */
+void make_buttons(struct gui_data *data, Widget trc, Screen *scr);
+void set_buttons_pixmap(Display *display, Drawable d);
 
