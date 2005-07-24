@@ -1,5 +1,5 @@
-
 #include "gis.h"
+#include "glocale.h"
 #include "globals.h"
 
 #define FFTWINDOW "fftwindow"
@@ -26,7 +26,7 @@ get_orig_window (struct Cell_head *hd, char *rmapset, char *imapset)
       hd->west != tmphd.west ||
       hd->ew_res != tmphd.ew_res ||
       hd->ns_res != tmphd.ns_res)
-    G_fatal_error("The real and imaginary original windows did not match.");
+    G_fatal_error(_("The real and imaginary original windows did not match."));
 
   return 0;
 }
