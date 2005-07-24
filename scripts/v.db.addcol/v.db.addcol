@@ -37,7 +37,7 @@
 #%option
 #% key: columns
 #% type: string
-#% description: name and type of the new columns (ex: col1 type1, col2 type2)
+#% description: name and type of the new columns (types depend on database backend, but all support VARCHAR, INT, DOUBLE and DATE)
 #% required : yes
 #%end
 
