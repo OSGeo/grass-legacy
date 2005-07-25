@@ -8,10 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-18 07:17+0200\n"
+"POT-Creation-Date: 2005-07-22 21:32+0200\n"
 "PO-Revision-Date: 2005-07-22 21:29+0200\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
-"Language-Team: Deutsch <de@li.org>\n"
+"Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -434,8 +434,7 @@ msgid "io error warning given %d"
 msgstr "io Fehler-Warnung ausgegeben %d."
 
 #: ../lib/gis/debug.c:126
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "xdr stream for reading fp %p"
 msgstr "xdr stream for reading fp %p"
 
@@ -535,7 +534,8 @@ msgstr "Kann Datei %s in %s nicht öffnen"
 #: ../lib/gis/get_datum.c:107
 #, c-format
 msgid "Error reading datum shift parameters for %s from table"
-msgstr "Fehler beim Lesen der Datums-Transformationsparameter für %s aus der Tabelle."
+msgstr ""
+"Fehler beim Lesen der Datums-Transformationsparameter für %s aus der Tabelle."
 
 #: ../lib/gis/get_datum.c:115
 #, c-format
@@ -783,7 +783,8 @@ msgstr "Kann kein Histogramm für [%s in %s] erstellen."
 #: ../lib/gis/history.c:120
 #, c-format
 msgid "can't get history information for [%s] in mapset [%s]"
-msgstr "Kann die History-Informationen der Karte [%s] in Mapset [%s] nicht finden."
+msgstr ""
+"Kann die History-Informationen der Karte [%s] in Mapset [%s] nicht finden."
 
 #: ../lib/gis/history.c:170
 #, c-format
@@ -1002,7 +1003,8 @@ msgstr "opencell: %s - ungültiger Dateiname"
 
 #: ../lib/gis/opencell.c:699
 msgid "Can't write embedded null values for map open for random access"
-msgstr "Kann keine embedded NULL Werte für Karte mit random access Zugriff schreiben"
+msgstr ""
+"Kann keine embedded NULL Werte für Karte mit random access Zugriff schreiben"
 
 #: ../lib/gis/opencell.c:930 ../lib/gis/opencell.c:951
 #, c-format
@@ -1297,7 +1299,7 @@ msgstr "Längen- und Breitengrad"
 msgid "Other Projection"
 msgstr "Andere Projektion"
 
-#: ../lib/gis/proj3.c:68 ../lib/vector/Vlib/header.c:442
+#: ../lib/gis/proj3.c:68 ../lib/vector/Vlib/header.c:445
 msgid "Unknown projection"
 msgstr "Unbekannte Projektion"
 
@@ -1615,8 +1617,8 @@ msgid ""
 "G_set_window(): projection/zone differs from that of currently open raster "
 "files"
 msgstr ""
-"G_set_window(): Projektion/Zone unterscheidet sich von den gerade "
-"geöffneten Rasterdateien."
+"G_set_window(): Projektion/Zone unterscheidet sich von den gerade geöffneten "
+"Rasterdateien."
 
 #: ../lib/gis/spawn.c:65
 msgid "too many arguments"
@@ -1718,7 +1720,8 @@ msgstr ""
 
 #: ../lib/gis/view.c:548
 #, c-format
-msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgid ""
+" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr ""
 " Nur %d%% des in \"%s\" abgespeicherten Fensters überlappt mit dem "
 "derzeitigen GRASS-Fenster."
@@ -1807,7 +1810,8 @@ msgstr "Nicht verbunden...\n"
 #: ../lib/raster/io.c:371
 #, c-format
 msgid "Couldn't connect to monitor. Will try once more.\n"
-msgstr "Kann nicht mit einem Monitor verbinden. Versuche es noch ein weiteres Mal.\n"
+msgstr ""
+"Kann nicht mit einem Monitor verbinden. Versuche es noch ein weiteres Mal.\n"
 
 #: ../lib/raster/io.c:377
 #, c-format
@@ -1878,7 +1882,10 @@ msgstr "FEHLER: Variable GISBASE ist nicht gesetzt\n"
 msgid ""
 "taking too long to find points for interpolation--please change the region "
 "to area where your points are. Continuing calculations..."
-msgstr "Es dauert zu lange, um Punkte für die Interpolation zu finden -- bitte ändern Sie die Region auf den Bereich, wo die Punkte sind. Fahre mit der Berechnung fort..."
+msgstr ""
+"Es dauert zu lange, um Punkte für die Interpolation zu finden -- bitte "
+"ändern Sie die Region auf den Bereich, wo die Punkte sind. Fahre mit der "
+"Berechnung fort..."
 
 #: ../lib/rst/interp_float/vinput2d.c:81
 msgid "Vector is not 3D"
@@ -1899,7 +1906,9 @@ msgstr "Kann die z-Spalte nicht finden (Bitte überprüfen Sie den Namen)."
 
 #: ../lib/rst/interp_float/vinput2d.c:102
 msgid "Column type of z column is not supported (must be integer or double)"
-msgstr "Spaltentype der Spalte z wird nicht unterstützt (muss integer oder double sein)."
+msgstr ""
+"Spaltentype der Spalte z wird nicht unterstützt (muss integer oder double "
+"sein)."
 
 #: ../lib/rst/interp_float/vinput2d.c:111
 msgid "Cannot read column type of smooth column"
@@ -1911,7 +1920,9 @@ msgstr "Spaltentyp der Smooth-Spalte (datetime) wird nicht unterstützt."
 
 #: ../lib/rst/interp_float/vinput2d.c:115
 msgid "Column type of s column is not supported (must be integer or double)"
-msgstr "Spaltentyp der s-Spalte wird nicht unterstützt (muss integer oder double sein)."
+msgstr ""
+"Spaltentyp der s-Spalte wird nicht unterstützt (muss integer oder double "
+"sein)."
 
 #: ../lib/rst/interp_float/vinput2d.c:149
 #: ../lib/rst/interp_float/vinput2d.c:229
@@ -1926,7 +1937,9 @@ msgstr "Strip existiert mit unzureichenden Daten."
 #: ../lib/rst/interp_float/vinput2d.c:281
 #, c-format
 msgid "there are points outside specified region--ignored %d points"
-msgstr "Es sind einige Punkte außerhalb der angegebenen Region -- ignoriere %d Punkte..."
+msgstr ""
+"Es sind einige Punkte außerhalb der angegebenen Region -- ignoriere %d "
+"Punkte..."
 
 #: ../lib/rst/interp_float/vinput2d.c:283
 #, c-format
@@ -1938,14 +1951,19 @@ msgstr "Ignoriere %d Punkte -- sie liegen zu dicht beieinander."
 msgid ""
 "%d points given for interpolation (after thinning) is less than given NPMIN=%"
 "d"
-msgstr "%d Punkte, die nach nach der Ausdünnung zur Verfügung stehen, sind weniger als die angegebenen NPMIN=%d."
+msgstr ""
+"%d Punkte, die nach nach der Ausdünnung zur Verfügung stehen, sind weniger "
+"als die angegebenen NPMIN=%d."
 
 #: ../lib/rst/interp_float/vinput2d.c:306
 #, c-format
 msgid ""
 "There are less than %d points for interpolation. No segmentation is "
 "necessary, to run the program faster set segmax=%d (see manual)"
-msgstr "Es stehen weniger als %d Punkte zur Interpolation bereit. Keine Segmentierung notwendig. Um das Programm schneller laufen zu lassen, setzen Sie segmax = %d (vgl. Bedienungsanleitung)."
+msgstr ""
+"Es stehen weniger als %d Punkte zur Interpolation bereit. Keine "
+"Segmentierung notwendig. Um das Programm schneller laufen zu lassen, setzen "
+"Sie segmax = %d (vgl. Bedienungsanleitung)."
 
 #: ../lib/rst/interp_float/vinput2d.c:358
 msgid "some points outside of region -- will ignore..."
@@ -2178,7 +2196,8 @@ msgstr ""
 #: ../lib/vector/Vlib/legal_vname.c:35
 #, c-format
 msgid "Illegal vector map name <%s>. Character <%c> not allowed.\n"
-msgstr "Ungültiger Name der Vektorkarte <%s>. Zeichenfolge <%c> ist nicht erlaubt.\n"
+msgstr ""
+"Ungültiger Name der Vektorkarte <%s>. Zeichenfolge <%c> ist nicht erlaubt.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:60 ../lib/vector/Vlib/legal_vname.c:62
 #, c-format
@@ -2195,18 +2214,24 @@ msgstr "Kann Eingabekarte '%s' nicht finden."
 msgid "Output map '%s' is used as input"
 msgstr "Ergebniskarte '%s' ist gleichzeitig Eingabekarte."
 
-#: ../lib/vector/Vlib/map.c:109 ../lib/vector/Vlib/map.c:215
+#: ../lib/vector/Vlib/map.c:108 ../lib/vector/Vlib/map.c:217
+#: ../lib/vector/Vlib/open.c:486
+#, c-format
+msgid "Map name is not SQL compliant."
+msgstr "Kartenname ist nicht SQL-kompatibel."
+
+#: ../lib/vector/Vlib/map.c:112 ../lib/vector/Vlib/map.c:221
 #: ../lib/vector/Vlib/open.c:493
 #, c-format
 msgid "The vector '%s' already exists and will be overwritten."
 msgstr "Die Vektorkarte '%s' existiert bereits und wird überschrieben."
 
-#: ../lib/vector/Vlib/map.c:223
+#: ../lib/vector/Vlib/map.c:229
 #, c-format
 msgid "Input vector '%s' not found"
 msgstr "Eingabevektorkarte '%s' nicht gefunden."
 
-#: ../lib/vector/Vlib/map.c:226
+#: ../lib/vector/Vlib/map.c:232
 #, c-format
 msgid "Cannot copy vector '%s' to '%s'"
 msgstr "Kann Vektorkarte '%s' nicht zu '%s' kopieren."
@@ -2247,11 +2272,6 @@ msgstr "Kann die existierende Vektordatei '%s' nicht auf dem Level %d öffnen."
 msgid "Cannot open history file for vector '%s'"
 msgstr "Kann History-Datei für die Vektorkarte '%s' nicht öffnen."
 
-#: ../lib/vector/Vlib/open.c:486
-#, c-format
-msgid "Map name is not SQL compliant."
-msgstr "Kartenname ist nicht SQL-kompatibel."
-
 #: ../lib/vector/Vlib/open.c:497
 #, c-format
 msgid "Cannot delete existing vector %s"
@@ -2269,7 +2289,8 @@ msgstr "Kann Datei '%s' nicht anfordern."
 
 #: ../lib/vector/Vlib/open.c:657
 msgid "Size of 'coor' file differs from value saved in topo file."
-msgstr "Größe der 'coor' Datei unterscheidet sich vom Werte in der 'topo' Datei."
+msgstr ""
+"Größe der 'coor' Datei unterscheidet sich vom Werte in der 'topo' Datei."
 
 #: ../lib/vector/Vlib/open.c:668
 #, c-format
@@ -2307,7 +2328,8 @@ msgstr "Kann die Linie nicht nochmal schreiben."
 #: ../lib/vector/Vlib/write.c:195
 #, c-format
 msgid "Cannot delete the line, map '%s' is not opened on level 2"
-msgstr "Kann die Linie nicht löschen; die Karte '%s' ist nicht auf Level 2 geöffnet."
+msgstr ""
+"Kann die Linie nicht löschen; die Karte '%s' ist nicht auf Level 2 geöffnet."
 
 #: ../lib/vector/Vlib/write.c:199
 #, c-format
@@ -2319,4 +2341,3 @@ msgstr ""
 #: ../lib/vector/Vlib/write.c:211
 msgid "Cannot delete line"
 msgstr "Kann die Linie nicht löschen."
-
