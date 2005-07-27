@@ -203,6 +203,7 @@ global execom
 			 {command "Compress/decompress raster file" {} "r.compress" {} -command {execute r.compress }}
 			 {command "Manage boundary definitions" {} "r.region" {} -command {execute r.region }}
 			 {command "Manage null values" {} "r.null" {} -command {execute r.null }}
+			 {command "Manage raster support files" {} "r.null" {} -command {execute $env(GISBASE)/etc/dm/script/r.support.sh }}
 			 {command "Manage timestamps for files" {} "r.timestamp" {} -command {execute r.timestamp }}
 			 {command "Quantization for floating-point maps" {} "r.quant" {} -command {execute r.quant }}
 			 {command "Resample (change resolution) using nearest neighbor method" {} "r.resample" {} -command {execute r.resample }}
