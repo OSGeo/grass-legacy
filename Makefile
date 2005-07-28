@@ -313,8 +313,8 @@ packagehtmldocs: htmldocs
 	tar cvfz grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}refman_`date '+%Y_%m_%d'`.tar.gz doxygenhtml/ lib/db/html lib/vector/html lib/gis/html
 
 pdfdocs:
-	(cd lib/db/ ; $(MAKE) pdfdocs)
-	(cd lib/vector/ ; $(MAKE) pdfdocs)
+#	(cd lib/db/ ; $(MAKE) pdfdocs)
+#	(cd lib/vector/ ; $(MAKE) pdfdocs)
 	(cd lib/gis/ ; $(MAKE) pdfdocs)
 	@echo "Written PDF docs in: lib/db/latex/ ; lib/vector/latex/ ; lib/gis/latex/"
 
