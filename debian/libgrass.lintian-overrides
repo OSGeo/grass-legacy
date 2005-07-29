@@ -1,0 +1,4 @@
+# These are not useless calls. lintian just doesn't know that
+# /usr/lib/grass/lib is in ld.so.conf
+libgrass binary: postinst-has-useless-call-to-ldconfig
+libgrass binary: postrm-has-useless-call-to-ldconfig

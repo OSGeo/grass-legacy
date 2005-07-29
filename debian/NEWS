@@ -1,0 +1,41 @@
+grass (5.7.0+6.0.0beta2-1) unstable; urgency=high
+
+  How to migrate to the new GRASS version
+  
+  GRASS users may ask: how to continue to work with my existing locations
+  in the new version... here some answers:
+  
+  Raster data
+  
+    Nothing to do. The raster commands behave (almost) the same.
+
+  Sites data
+
+    All sites data (related s.* commands) are now part of the vector
+    engine and no longer stored in an own format.
+
+    Conversion of old sites files to new GRASS 2D/3D vector point maps:
+      
+      * v.in.sites (for single old sites map)
+      * v.in.sites.all (for all old sites maps in current mapset)
+  
+  Vector data
+  
+    The vector engine has been completely rewritten. All vector maps have
+    to be converted
+    
+    Conversion of old vector maps to new GRASS 2D/3D vector maps:
+      
+      * v.convert (for single old vector map)
+      * v.convert.all (for all old vector maps in current mapset)
+
+    Note that g.list oldvect list the old vector maps which g.list vect
+    lists the new vector maps.
+    
+    The module v.out.ogr and v.out.ascii can be used to export from new
+    GRASS to old GRASS versions. 
+  
+  This information is from:
+  http://grass.gdf-hannover.de/twiki/bin/view/GRASS/GrassSixTutorialGettingStarted
+
+ -- Steve Halasz <debian@adkgis.org>  Fri,  4 Feb 2005 15:13:26 -0500

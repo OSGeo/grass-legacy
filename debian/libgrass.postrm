@@ -1,0 +1,42 @@
+#!/bin/sh
+# Make sure grass library dir is removed from ld.so.conf
+# Lifted from xfree86 package's shell-lib.sh script
+
+set -e
+
+dir="/usr/lib/grass/lib"
+ldsoconf="/etc/ld.so.conf"
+
+if [ "$1" = "remove" ]; then
+  # is the line present?
+  if fgrep -qsx "$dir" "$ldsoconf"; then
+    # rewrite the file (very carefully)
+    set +e
+    fgrep -svx "$dir" "$ldsoconf" > "$ldsoconf.dpkg-tmp"
+    fgrep_status=$?
+    set -e
+    case $fgrep_status in
+      0|1) ;; # we don't actually care if any lines matched or not
+      *) die "error reading \"$ldsoconf\"; fgrep exited with status" \
+        "$fgrep_status" ;;
+    esac
+    set +e
+    cmp -s "$ldsoconf.dpkg-tmp" "$ldsoconf"
+    cmp_status=$?
+    set -e
+    case $cmp_status in
+      0) rm "$ldsoconf.dpkg-tmp" ;; # files are identical
+      1) mv "$ldsoconf.dpkg-tmp" "$ldsoconf" ;; # files differ
+      *) die "error comparing \"$ldsoconf.dpkg-tmp\" to \"$ldsoconf\"; cmp" \
+        "exited with status $cmp_status" ;;
+    esac
+  fi
+fi
+
+if [ "$1" = "remove" ]; then
+  ldconfig
+fi
+
+#DEBHELPER#
+
+exit 0
