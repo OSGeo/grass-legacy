@@ -1,0 +1,21 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## htmlgen-fakeroot.dpatch by  <debian@adkgis.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: use fakeroot to avoid weird stat/permission problem when
+## DP: building under pbuilder. This was preventing most man
+## DP: pages from being built.
+
+@DPATCH@
+diff -urNad grass-5.7.0+6.0.0beta2/include/Make/Rules.make /tmp/dpep.bOaT9i/grass-5.7.0+6.0.0beta2/include/Make/Rules.make
+--- grass-5.7.0+6.0.0beta2/include/Make/Rules.make	2004-12-17 05:57:28.000000000 -0500
++++ /tmp/dpep.bOaT9i/grass-5.7.0+6.0.0beta2/include/Make/Rules.make	2005-03-01 12:48:12.000000000 -0500
+@@ -53,7 +53,7 @@
+ 	GISBASE=$(GISBASE) \
+ 	PATH=$(GISBASE)/bin:$$PATH \
+ 	$(LD_LIBRARY_PATH_VAR)="$(GISBASE)/lib:$($(LD_LIBRARY_PATH_VAR))" \
+-	$(1) --html-description | grep -v '</body>' > $(PGM).tmp.html ; true
++	fakeroot $(1) --html-description | grep -v '</body>' > $(PGM).tmp.html ; true
+ 
+ # html rules for cmd commands
+ htmlcmd: htmlcmd1 htmlgen
