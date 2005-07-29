@@ -23,7 +23,7 @@ Note: This text contains *some* rules only applicable to the
  o Store the source tarball in:
      http://grass.itc.it/grass/grass6x/source/
      along with associated files:
-          NEWS.html ChangeLog_$VERSION SUBMITTING REQUIREMENTS.html INSTALL
+      NEWS.html ChangeLog_$VERSION SUBMITTING REQUIREMENTS.html INSTALL SUBMITTING
 
  o update web site to new version (HTML in Web-CVS)
       - main.inc
