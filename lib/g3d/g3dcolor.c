@@ -72,10 +72,10 @@ G3d_readColors (name, mapset, colors) /* adapted from G_read_colors */
   /*if (G__name_is_fully_qualified (name, xname, xmapset)) {
     sprintf (buf, "%s/%s", G3D_DIRECTORY, xname);
     sprintf (buf2, "%s@%s", G3D_COLOR_ELEMENT, xmapset); // == color@mapset
-  //} else {
-  //  sprintf (buf, "%s/%s", G3D_DIRECTORY, name);
-  //  sprintf (buf2, "%s", G3D_COLOR_ELEMENT);
-  //}
+  //} else { */
+    sprintf (buf, "%s/%s", G3D_DIRECTORY, name);
+    sprintf (buf2, "%s", G3D_COLOR_ELEMENT);
+  /*//}
   */
 
   switch (read_colors (buf, buf2, mapset, colors)) {
