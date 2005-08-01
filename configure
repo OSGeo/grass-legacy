@@ -12196,6 +12196,57 @@ else
   fi
 fi
 
+for ac_declaration in \
+   ''\
+   '#include <stdlib.h>' \
+   'extern "C" void std::exit (int) throw (); using std::exit;' \
+   'extern "C" void std::exit (int); using std::exit;' \
+   'extern "C" void exit (int) throw ();' \
+   'extern "C" void exit (int);' \
+   'void exit (int);'
+do
+  cat > conftest.$ac_ext <<EOF
+#line 12210 "configure"
+#include "confdefs.h"
+#include <stdlib.h>
+$ac_declaration
+int main() {
+exit (42);
+; return 0; }
+EOF
+if { (eval echo configure:12218: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+  :
+else
+  echo "configure: failed program was:" >&5
+  cat conftest.$ac_ext >&5
+  rm -rf conftest*
+  continue
+fi
+rm -f conftest*
+  cat > conftest.$ac_ext <<EOF
+#line 12228 "configure"
+#include "confdefs.h"
+$ac_declaration
+int main() {
+exit (42);
+; return 0; }
+EOF
+if { (eval echo configure:12235: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+  rm -rf conftest*
+  break
+else
+  echo "configure: failed program was:" >&5
+  cat conftest.$ac_ext >&5
+fi
+rm -f conftest*
+done
+if test -n "$ac_declaration"; then
+  echo '#ifdef __cplusplus' >>confdefs.h
+  echo $ac_declaration      >>confdefs.h
+  echo '#endif'             >>confdefs.h
+fi
+
+
 else
 	CXX=
 	CXXFLAGS=
@@ -12209,7 +12260,7 @@ fi
 
 
 echo $ac_n "checking whether to use openDWG""... $ac_c" 1>&6
-echo "configure:12213: checking whether to use openDWG" >&5
+echo "configure:12264: checking whether to use openDWG" >&5
 echo "$ac_t"""$with_opendwg"" 1>&6
 case "$with_opendwg" in
 	"no")	USE_OPENDWG=	;;
@@ -12229,7 +12280,7 @@ if test -n "${USE_OPENDWG}"; then
 
 
 echo $ac_n "checking for location of openDGW includes""... $ac_c" 1>&6
-echo "configure:12233: checking for location of openDGW includes" >&5
+echo "configure:12284: checking for location of openDGW includes" >&5
 case "$with_opendwg_includes" in
 y | ye | yes | n | no)
 	{ echo "configure: error: *** You must supply a directory to --with-opendwg-includes." 1>&2; exit 1; }
@@ -12255,15 +12306,15 @@ for ac_hdr in ad2.h
 do
 ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
-echo "configure:12259: checking for $ac_hdr" >&5
+echo "configure:12310: checking for $ac_hdr" >&5
 
 cat > conftest.$ac_ext <<EOF
-#line 12262 "configure"
+#line 12313 "configure"
 #include "confdefs.h"
 #include <$ac_hdr>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:12267: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:12318: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -12297,7 +12348,7 @@ CPPFLAGS=$ac_save_cppflags
 
 
 echo $ac_n "checking for location of openDWG library""... $ac_c" 1>&6
-echo "configure:12301: checking for location of openDWG library" >&5
+echo "configure:12352: checking for location of openDWG library" >&5
 case "$with_opendwg_libs" in
 y | ye | yes | n | no)
 	{ echo "configure: error: *** You must supply a directory to --with-opendwg-libs." 1>&2; exit 1; }
@@ -12344,7 +12395,7 @@ fi
    if test "$enable_largefile" = yes; then
 
      echo $ac_n "checking for special C compiler options needed for large files""... $ac_c" 1>&6
-echo "configure:12348: checking for special C compiler options needed for large files" >&5
+echo "configure:12399: checking for special C compiler options needed for large files" >&5
 
 ac_cv_sys_largefile_CC=no
         largefile_cc_opt=""
@@ -12352,7 +12403,7 @@ ac_cv_sys_largefile_CC=no
 	  # IRIX 6.2 and later do not support large files by default,
 	  # so use the C compiler's -n32 option if that helps.
 	  cat > conftest.$ac_ext <<EOF
-#line 12356 "configure"
+#line 12407 "configure"
 #include "confdefs.h"
 #include <sys/types.h>
     /* Check that off_t can represent 2**63 - 1 correctly.
@@ -12368,7 +12419,7 @@ int main() {
 
 ; return 0; }
 EOF
-if { (eval echo configure:12372: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:12423: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   :
 else
   echo "configure: failed program was:" >&5
@@ -12377,7 +12428,7 @@ else
   ac_save_CC="${CC-cc}"
 	     CC="$CC -n32"
 	     cat > conftest.$ac_ext <<EOF
-#line 12381 "configure"
+#line 12432 "configure"
 #include "confdefs.h"
 #include <sys/types.h>
     /* Check that off_t can represent 2**63 - 1 correctly.
@@ -12393,7 +12444,7 @@ int main() {
 
 ; return 0; }
 EOF
-if { (eval echo configure:12397: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:12448: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   ac_cv_sys_largefile_CC=' -n32'
 else
@@ -12413,11 +12464,11 @@ echo "$ac_t""$ac_cv_sys_largefile_CC" 1>&6
      fi
 
      echo $ac_n "checking for _FILE_OFFSET_BITS value needed for large files""... $ac_c" 1>&6
-echo "configure:12417: checking for _FILE_OFFSET_BITS value needed for large files" >&5
+echo "configure:12468: checking for _FILE_OFFSET_BITS value needed for large files" >&5
 
 ac_cv_sys_file_offset_bits=no
       cat > conftest.$ac_ext <<EOF
-#line 12421 "configure"
+#line 12472 "configure"
 #include "confdefs.h"
 #include <sys/types.h>
     /* Check that off_t can represent 2**63 - 1 correctly.
@@ -12433,14 +12484,14 @@ int main() {
 
 ; return 0; }
 EOF
-if { (eval echo configure:12437: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:12488: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   :
 else
   echo "configure: failed program was:" >&5
   cat conftest.$ac_ext >&5
   rm -rf conftest*
   cat > conftest.$ac_ext <<EOF
-#line 12444 "configure"
+#line 12495 "configure"
 #include "confdefs.h"
 #define _FILE_OFFSET_BITS 64
 #include <sys/types.h>
@@ -12458,7 +12509,7 @@ int main() {
 
 ; return 0; }
 EOF
-if { (eval echo configure:12462: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:12513: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   ac_cv_sys_file_offset_bits=64
 else
@@ -12477,11 +12528,11 @@ EOF
 
    fi
      echo $ac_n "checking for _LARGE_FILES value needed for large files""... $ac_c" 1>&6
-echo "configure:12481: checking for _LARGE_FILES value needed for large files" >&5
+echo "configure:12532: checking for _LARGE_FILES value needed for large files" >&5
 
 ac_cv_sys_large_files=no
       cat > conftest.$ac_ext <<EOF
-#line 12485 "configure"
+#line 12536 "configure"
 #include "confdefs.h"
 #include <sys/types.h>
     /* Check that off_t can represent 2**63 - 1 correctly.
@@ -12497,14 +12548,14 @@ int main() {
 
 ; return 0; }
 EOF
-if { (eval echo configure:12501: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:12552: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   :
 else
   echo "configure: failed program was:" >&5
   cat conftest.$ac_ext >&5
   rm -rf conftest*
   cat > conftest.$ac_ext <<EOF
-#line 12508 "configure"
+#line 12559 "configure"
 #include "confdefs.h"
 #define _LARGE_FILES 1
 #include <sys/types.h>
@@ -12522,7 +12573,7 @@ int main() {
 
 ; return 0; }
 EOF
-if { (eval echo configure:12526: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:12577: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   ac_cv_sys_large_files=1
 else
@@ -12541,25 +12592,25 @@ EOF
 
    fi
      echo $ac_n "checking for _LARGEFILE_SOURCE value needed for large files""... $ac_c" 1>&6
-echo "configure:12545: checking for _LARGEFILE_SOURCE value needed for large files" >&5
+echo "configure:12596: checking for _LARGEFILE_SOURCE value needed for large files" >&5
 
 ac_cv_sys_largefile_source=no
       cat > conftest.$ac_ext <<EOF
-#line 12549 "configure"
+#line 12600 "configure"
 #include "confdefs.h"
 #include <stdio.h>
 int main() {
 return !fseeko;
 ; return 0; }
 EOF
-if { (eval echo configure:12556: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:12607: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   :
 else
   echo "configure: failed program was:" >&5
   cat conftest.$ac_ext >&5
   rm -rf conftest*
   cat > conftest.$ac_ext <<EOF
-#line 12563 "configure"
+#line 12614 "configure"
 #include "confdefs.h"
 #define _LARGEFILE_SOURCE 1
 #include <stdio.h>
@@ -12568,7 +12619,7 @@ int main() {
 return !fseeko;
 ; return 0; }
 EOF
-if { (eval echo configure:12572: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:12623: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   ac_cv_sys_largefile_source=1
 else
@@ -12589,10 +12640,10 @@ EOF
    fi
   
 echo $ac_n "checking if system supports Large Files at all""... $ac_c" 1>&6
-echo "configure:12593: checking if system supports Large Files at all" >&5
+echo "configure:12644: checking if system supports Large Files at all" >&5
 
 cat > conftest.$ac_ext <<EOF
-#line 12596 "configure"
+#line 12647 "configure"
 #include "confdefs.h"
 #include <stdio.h>
 #include <sys/types.h>
@@ -12612,7 +12663,7 @@ return !fseeko;
 return !ftello;
 ; return 0; }
 EOF
-if { (eval echo configure:12616: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:12667: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   ac_cv_largefiles=yes
 else
@@ -13138,6 +13189,9 @@ echo " FORTRAN compiler:            ${F77}"
 
 
 echo " Building shared libraries:   ${shared_ok}"
+
+
+echo " 64bit support:               ${do64bit}"
 
 
 echo ""
