@@ -1288,7 +1288,10 @@ int gsd_ortho_wall(int np, int ns, geosurf ** gsurfs, Point3 ** points,
     }
 #endif
 
-    gsd_colormode(CM_DIFFUSE);
+    /* changed from CM_DIFFUSE - July 25, 2005
+     * should display proper color for cut planes
+     */
+    gsd_colormode(CM_COLOR);
 
     /* actually ought to write a GS_set_fencetransp() */
     if (nocolor) {
@@ -1624,6 +1627,7 @@ int gsd_ortho_wall(int np, int ns, geosurf ** gsurfs, Point3 ** points,
 	}
     }
 
+    gsd_colormode(CM_DIFFUSE); /* set colormode back to DIFFUSE */
     gsd_popmatrix();
     gsd_blend(0);
     gsd_zwritemask(0xffffffff);
