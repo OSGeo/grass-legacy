@@ -306,7 +306,7 @@ int Nget_cutplane_list_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
 void cp_draw(int current, Nv_data * data, int surf1, int surf2)
 {
     int i, nsurfs;
-    int surf_min, surf_max, temp;
+    int surf_min=0, surf_max=0, temp;
     int *surf_list;
 
     GS_set_draw(GSD_BACK);

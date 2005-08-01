@@ -6,7 +6,6 @@
 
 #define BG_COLOR 0xFF000000
 
-
 /*
 *  Have to look into why we can't draw to BOTH in OpenGL/tcl
 *  (or if we still need to)
@@ -22,6 +21,8 @@
 char *cancel_script = NULL;
 Tcl_Interp *cancel_interp;
 static GLuint legend_list = 0;
+
+int auto_draw(Nv_data *, Tcl_Interp *);
 
 /* this function is used as a hook to
  * call a particular script when the
@@ -46,6 +47,8 @@ int Nunset_cancel_func_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
 	free(cancel_script);
 
     cancel_script = NULL;
+
+    return TCL_OK;
 }
 
 /* Set the cancel script to invoke when the cancel function
@@ -202,28 +205,75 @@ int Ndraw_X_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
 }
 
 
-int Ndraw_Narrow_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
-		     int argc,	/* Number of arguments. */
-		     char **argv	/* Argument strings. */
+/*****************************************************
+ * Nset_Narrow 
+ * Sets the North position and return world coords
+ *****************************************************/
+int Nset_Narrow_cmd(Nv_data * data, Tcl_Interp * interp,        /* Current interpreter. */
+                     int argc,  /* Number of arguments. */
+                     char **argv        /* Argument strings. */
     )
 {
     int id;
-    int pt[2];
+    int pt[2]; 
+    float coords[3];
+    float len;
+    char x[32], y[32], z[32];
+    char *list[4];
 
-    if (argc != 4)
-	return (TCL_ERROR);
+    if (argc != 5)
+        return (TCL_ERROR);
     pt[0] = (int) atoi(argv[1]);
     pt[1] = (int) atoi(argv[2]);
     id = (int) atoi(argv[3]);
+    len = (float)atof(argv[4]);
+ 
+    GS_set_Narrow(pt, id, coords);
 
-    FontBase = load_font(TOGL_BITMAP_HELVETICA_18);
-    if (FontBase)
-	    GS_draw_Narrow(pt, id, FontBase);
-    else
-	    fprintf(stderr, "Unable to load font\n");
+    sprintf(x, "%f", coords[0]);
+    sprintf(y, "%f", coords[1]);
+    sprintf(z, "%f", coords[2]);
+
+    list[0] = x;
+    list[1] = y;
+    list[2] = z;
+    list[3] = NULL;
+
+    interp->result = Tcl_Merge(3, list);
+    interp->freeProc = (Tcl_FreeProc *) free;
 
     return (TCL_OK);
 }
+
+
+ /*****************************************************
+ * Ndraw_Narrow 
+ * Draws the North Arrow 
+ *****************************************************/
+int Ndraw_Narrow_cmd(Nv_data * data, Tcl_Interp * interp,       /* Current interpreter. */
+                     int argc,  /* Number of arguments. */
+                     char **argv        /* Argument strings. */
+    )
+{
+    float coords[3];
+    double len;
+
+    if (argc != 5)
+        return (TCL_ERROR);
+    coords[0] = (int) atof(argv[1]); /* X */
+    coords[1] = (int) atof(argv[2]); /* Y */
+    coords[2] = (int) atof(argv[3]); /* Z */
+    len = (atof(argv[4]));
+
+    FontBase = load_font(TOGL_BITMAP_HELVETICA_18);
+    if (FontBase)
+            gsd_north_arrow(coords, (float) len, FontBase);
+     else
+            fprintf(stderr, "Unable to load font\n");
+
+    return (TCL_OK);
+}
+            
 
 int Ndraw_line_on_surf_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
 			   int argc,	/* Number of arguments. */
@@ -402,36 +452,6 @@ int auto_draw(Nv_data * dc, Tcl_Interp * interp)
     return (TCL_OK);
 }
 
-int Ndraw_all_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
-		  int argc,	/* Number of arguments. */
-		  char **argv	/* Argument strings. */
-    )
-{
-    char *buf_surf, *buf_vect, *buf_site, *buf_vol;
-
-    buf_surf = Tcl_GetVar(interp, "surface", TCL_GLOBAL_ONLY);
-    buf_vect = Tcl_GetVar(interp, "vector", TCL_GLOBAL_ONLY);
-    buf_site = Tcl_GetVar(interp, "sites", TCL_GLOBAL_ONLY);
-	buf_vol = Tcl_GetVar(interp, "volume", TCL_GLOBAL_ONLY);
-
-    if (GS_check_cancel) {	/* Probably irrelevant */
-
-	if (atoi(buf_surf) == 1)
-	    Nsurf_draw_all_cmd(data, interp, argc, argv);
-	if (atoi(buf_vect) == 1)
-	    Nvect_draw_all_cmd(data, interp, argc, argv);
-	if (atoi(buf_site) == 1)
-	    Nsite_draw_all_cmd(data, interp, argc, argv);
-	if (atoi(buf_vol) == 1)
-	    Nvol_draw_all_cmd(data, interp, argc, argv);
-
-	/* draw legend if defined */
-	GS_draw_all_list();
-
-    }
-
-    return (TCL_OK);
-}
 
 int Nsurf_draw_all_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
 		       int argc,	/* Number of arguments. */
@@ -452,7 +472,7 @@ int sort_surfs_max(int *surf, int *id_sort, int *indices, int num)
 {
     int i, j;
     float maxvals[MAX_SURFS];
-    float tmp, max, tmin, tmax, tmid;
+    float tmp, max=0., tmin, tmax, tmid;
 
     for (i = 0; i < num; i++) {
 	GS_get_zextents(surf[i], &tmin, &tmax, &tmid);
@@ -596,26 +616,20 @@ int Nsite_draw_all_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpret
     GS_set_cancel(0);
 
     site_list = GP_get_site_list(&nsites);
-#ifdef DEBUG_MSG
-    fprintf(stderr, "SITES_DRAW_ALL: n = %d\n", nsites);
-#endif
+    G_debug(3, "SITES_DRAW_ALL: n = %d\n", nsites);
 
     GS_set_draw(GSD_BOTH);	/* in case transparency is set */
     GS_ready_draw();
 
     for (i = 0; i < nsites; i++) {
 	if (check_blank(interp, site_list[i]) == 0) {
-#ifdef DEBUG_MSG
-	    fprintf(stderr, "DRAWING: site: %d \n", site_list[i]);
-#endif
+	    G_debug(3, "DRAWING: site: %d \n", site_list[i]);
 	    GP_draw_site(site_list[i]);
 	}
     }
     free(site_list);
 
-#ifdef DEBUG_MSG
-    fprintf(stderr, "Done drawing\n");
-#endif
+    G_debug(3, "Done drawing\n");
 
     GS_done_draw();
 
@@ -804,3 +818,32 @@ int Ndraw_fringe_cmd(Nv_data * data, Tcl_Interp * interp, /* Current interpreter
 
         return (TCL_OK);
 }
+
+
+/****************************************************
+ * Manually set viewport to specified size
+ * needed when manually changing canvas size
+****************************************************/
+int Nset_viewport_cmd(Nv_data * data,
+                Tcl_Interp * interp,        /* Current interpreter. */
+                int argc,  /* Number of arguments. */
+                char **argv)        /* Argument strings. */
+{
+int x, y;
+
+
+if (argc != 3) {
+        Tcl_SetResult(interp, "Usage: Nset_viewport width, height", TCL_VOLATILE);
+        return (TCL_ERROR);
+}
+	    
+	x = (int) atoi(argv[1]);
+	y = (int) atoi(argv[2]);
+
+	/* manually set viewport dimension */
+	GS_set_viewport(0, x, 0, y);
+
+	return (TCL_OK);
+
+}
+

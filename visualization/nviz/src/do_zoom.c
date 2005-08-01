@@ -57,6 +57,7 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
     int cnt=1;
     double aspect;
     char pref[64], filename[1024], cmd[1024], cmd2[1024];
+    char inform_text[128];
 #if defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS)
     int os_w ;
     int os_h ;
@@ -125,7 +126,7 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
     for (row = 1; row <= var_i; row++) {
 	for (col = 1; col <= var_i; col++) {
 	    GS_set_viewport(XX, maxx, YY, maxy);
-	    Ndraw_all_cmd(data, interp, argc, argv);
+	    Ndraw_all_together_cmd(data, interp, argc, argv);
 	    sprintf(filename, "%s_%d_%d.ppm", pref, row, col);
 	    /* Re-set image width or height if required */
 	    if ((maxx + XX) < c)
@@ -133,6 +134,9 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
 	    if ((maxy + YY) < d)
 		img_height = maxy + YY;
 	    /* Save tile to file */
+	    sprintf(inform_text, "inform \"Writing Tile %d of %d\"",
+	                                cnt,(var_i*var_i) );
+	    Tcl_Eval(interp, inform_text);
 	    fprintf(stderr, "Writing Tile %d of %d\n",
 			    cnt,(var_i*var_i) ); 
 	    GS_write_zoom(filename, img_width, img_height);
@@ -150,6 +154,8 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
 
 
 /* Cat ppm tiles together */
+    sprintf(inform_text, "inform \"Assembling Tiles\"");
+    Tcl_Eval(interp, inform_text);
     fprintf(stderr, "Assembling Tiles\n");
     strcpy(cmd2, "pnmcat -tb ");
     k = var_i;
@@ -195,6 +201,8 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
     Destroy_OS_Ctx();
 #endif
 
+    sprintf(inform_text, "inform \"Finished rendering max. size image\"");
+    Tcl_Eval(interp, inform_text);
     return (TCL_OK);
 }
 
@@ -320,6 +328,9 @@ int Create_OS_Ctx(int width, int height)
 	}
 
     GS_set_swap_func(swap_os);
+
+    hide_togl_win();
+    
     GS_set_viewport(0, width, 0, height);
     GS_set_draw(GSD_BACK);
     GS_ready_draw();
@@ -351,6 +362,7 @@ int Destroy_OS_Ctx(void)
 	glXDestroyPbuffer(dpy, pbuffer);
 	pbuffer = None;
 	GS_set_swap_func(swap_togl);
+	show_togl_win();
 	return (1);
     }
 #endif
@@ -364,6 +376,7 @@ int Destroy_OS_Ctx(void)
 	XFreePixmap(dpy, pixmap);
 	pixmap = None;
 	GS_set_swap_func(swap_togl);
+	show_togl_win();
 	return (1);
     }
 

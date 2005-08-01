@@ -158,12 +158,7 @@ WARNING: 	remember to add "togl_flythrough.o"
 #define TOGL_TURN	1
 #define TOGL_SCALE_DIM	2
 
-extern Ndraw_all_cmd();
-
-int Nset_viewdir_cmd(Nv_data * data, Tcl_Interp * interp, int argc, char **argv);
-int Nget_viewdir_cmd(Nv_data * data, Tcl_Interp * interp, int argc, char **argv);
-int Ndraw_all_together_cmd(Nv_data * data, Tcl_Interp * interp, int argc, char **argv);
-
+extern void display_cb();
 
 void event_proc(ClientData clientData, XEvent *eventPtr);
 void togl_flythrough_timer_cb(struct Togl *togl);
@@ -363,11 +358,13 @@ void togl_flythrough_init_tcl(Tcl_Interp * interp, Nv_data * data)
 
 	Tcl_LinkVar(interp, "coarse_draw", (char*)&(cb_data.coarse_draw), TCL_LINK_BOOLEAN);
 
-	Tcl_CreateCommand(interp, "Nget_viewdir", Nget_viewdir_cmd, data, NULL);
-	Tcl_CreateCommand(interp, "Nset_viewdir", Nset_viewdir_cmd, data, NULL);
+	Tcl_CreateCommand(interp, "Nget_viewdir", (Tcl_CmdProc*)Nget_viewdir_cmd, data, NULL);
+	Tcl_CreateCommand(interp, "Nset_viewdir", (Tcl_CmdProc*)Nset_viewdir_cmd, data, NULL);
 
 	/* Override Ndraw_all_cmd */
+	/* declared in init_commands 
     Tcl_CreateCommand(interp, "Ndraw_all", Ndraw_all_together_cmd, data, NULL);
+    */
 /*	Tcl_CreateCommand(interp, "Ndraw_all_together", (Tcl_CmdProc*)Ndraw_all_together_cmd, data, NULL);
 */
 }
@@ -378,7 +375,7 @@ void togl_flythrough_init_tcl(Tcl_Interp * interp, Nv_data * data)
 void togl_flythrough_timer_cb(struct Togl *togl)
 {
 	/* it's here in order to avoid to modify other files to call togl_flythrough_init() */
-	static first_time=1;
+	static int first_time=1;
 	struct cbData *cb = (struct cbData *)Togl_GetClientData( togl );
 	
 	
@@ -563,7 +560,7 @@ void do_navigation (struct Togl *togl)
 /*			Tcl_SetVar(cb->interp, "autoc", "1", TCL_LEAVE_ERR_MSG);
 			Ndraw_all_cmd(cb->nv_data, cb->interp, NULL, NULL);
 */
-			Ndraw_all_together_cmd(cb->nv_data, cb->interp, NULL, NULL);
+			Ndraw_all_together_cmd(cb->nv_data, cb->interp, 1, NULL);
 		}
 		return;
 	}
@@ -656,7 +653,7 @@ void do_navigation (struct Togl *togl)
 		}
 		else {
 			/* Draws without clearng buffer at each map type */
-			Ndraw_all_together_cmd(cb->nv_data, cb->interp, NULL, NULL);
+			Ndraw_all_together_cmd(cb->nv_data, cb->interp, 1, NULL);
 			draw_all = 0;
 		}
 		/* prepare twist for next frame GS_get_twist() call */
@@ -773,19 +770,28 @@ int Ndraw_all_together_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
     )
 {
 	char *buf_surf, *buf_vect, *buf_site, *buf_vol;
-
+	char *buf_north_arrow, *arrow_x, *buf_label, *buf_legend;
+	char *buf_fringe;
 	char* buf_is_drawing = Tcl_GetVar(interp, "is_drawing", TCL_GLOBAL_ONLY);
-	if (buf_is_drawing && atoi(buf_is_drawing))	return (TCL_OK);
+	
+	if (buf_is_drawing && atoi(buf_is_drawing))
+		return (TCL_OK);
 
 	Tcl_SetVar(interp, "is_drawing", "1", TCL_GLOBAL_ONLY);
 
-	GS_set_draw(GSD_BACK);
+	GS_set_draw(GSD_FRONT);
 	GS_clear(data->BGcolor);
+	GS_ready_draw();
 
 	buf_surf = Tcl_GetVar(interp, "surface", TCL_GLOBAL_ONLY);
 	buf_vect = Tcl_GetVar(interp, "vector", TCL_GLOBAL_ONLY);
 	buf_site = Tcl_GetVar(interp, "sites", TCL_GLOBAL_ONLY);
 	buf_vol = Tcl_GetVar(interp, "volume", TCL_GLOBAL_ONLY);
+	buf_north_arrow = Tcl_GetVar(interp, "n_arrow", TCL_GLOBAL_ONLY);
+        arrow_x = Tcl_GetVar(interp, "n_arrow_x", TCL_GLOBAL_ONLY);
+        buf_label = Tcl_GetVar(interp, "labels", TCL_GLOBAL_ONLY);
+        buf_legend = Tcl_GetVar(interp, "legend", TCL_GLOBAL_ONLY);
+        buf_fringe = Tcl_GetVar(interp, "fringe", TCL_GLOBAL_ONLY);
 
 	if (atoi(buf_surf) == 1)
 		surf_draw_all_together(data, interp);
@@ -795,17 +801,59 @@ int Ndraw_all_together_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
 		site_draw_all_together(data, interp);
 	if (atoi(buf_vol) == 1)
 	    	vol_draw_all_cmd(data, interp, argc, argv);
-
-	/* draw legend if defined */
-	GS_draw_all_list();
-
+	    	
 	GS_done_draw();
+        GS_set_draw(GSD_BACK);
+        
+        /* Draw decorations */
+        
+	/* North Arrow */
+        if (atoi(buf_north_arrow) == 1 && atoi(arrow_x) != 999 ) {
+                char *arrow_y, *arrow_z, *arrow_len;
+                float coords[3], len;
 
-	Tcl_SetVar(interp, "is_drawing", "0", TCL_GLOBAL_ONLY);
-	flythrough_postdraw_cb();
+                arrow_y = Tcl_GetVar(interp, "n_arrow_y", TCL_GLOBAL_ONLY);
+                arrow_z = Tcl_GetVar(interp, "n_arrow_z", TCL_GLOBAL_ONLY);
+                arrow_len = Tcl_GetVar(interp, "n_arrow_size", TCL_GLOBAL_ONLY);
+                coords[0] = atoi(arrow_x);
+                coords[1] = atoi(arrow_y);
+                coords[2] = atoi(arrow_z);
+                len = atof(arrow_len);
 
-	return (TCL_OK);
+                FontBase = load_font(TOGL_BITMAP_HELVETICA_18);
+                gsd_north_arrow(coords, len, FontBase);
+        }
+        
+        /* fringe */
+        if (atoi(buf_fringe) == 1) {
+                char *fringe_ne, *fringe_nw, *fringe_se, *fringe_sw;
+                char *surf_id;
+                int flags[4], id;
+
+                fringe_ne = Tcl_GetVar(interp, "fringe_ne", TCL_GLOBAL_ONLY);
+                fringe_nw = Tcl_GetVar(interp, "fringe_nw", TCL_GLOBAL_ONLY);
+                fringe_se = Tcl_GetVar(interp, "fringe_se", TCL_GLOBAL_ONLY);
+                fringe_sw = Tcl_GetVar(interp, "fringe_sw", TCL_GLOBAL_ONLY);
+                flags[0] = atoi(fringe_ne);
+                flags[1] = atoi(fringe_nw);
+                flags[2] = atoi(fringe_se);
+                flags[3] = atoi(fringe_sw);
+                surf_id = Tcl_GetVar2(interp, "Nv_", "CurrSurf", TCL_GLOBAL_ONLY);
+                id = atoi(surf_id);
+
+                GS_draw_fringe(id, flags);
+        }
+        
+        /* Legend and/or labels */
+        if (atoi(buf_label) == 1 || atoi(buf_legend) == 1)
+                        GS_draw_all_list();
+
+        Tcl_SetVar(interp, "is_drawing", "0", TCL_GLOBAL_ONLY);
+        flythrough_postdraw_cb();
+
+        return (TCL_OK);
 }
+
 
 /*******************************************************************************
 	Nset/Nget_viewdir Tcl Commands

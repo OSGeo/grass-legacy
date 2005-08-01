@@ -509,11 +509,11 @@ int Nmove_key_cmd(Nv_data * data,	/* Local data */
     /* Call the function */
     num_moved = GK_move_key((float) old_pos, (float) precis, (float) new_pos);
 
-#ifdef DEBUG_MSG
-    fprintf(stderr, "Arguments to move_key %f %f %f\n", (float) old_pos,
-	    (float) precis, (float) new_pos);
-    fprintf(stderr, "Frames moved = %d\n", num_moved);
-#endif
+
+    G_debug(3, "Arguments to move_key %f %f %f\n",
+	   	(float) old_pos, (float) precis, (float) new_pos );
+    G_debug(3, "Frames moved = %d\n", num_moved);
+
     sprintf(interp->result, "%d", num_moved);
     return (TCL_OK);
 
