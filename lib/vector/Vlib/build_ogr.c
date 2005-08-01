@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include "gis.h"
 #include "Vect.h"
+#include "glocale.h"
 
 /* 
 *   Line offset is
@@ -254,7 +255,7 @@ static int add_geometry ( struct Map_info *Map, OGRGeometryH hGeom, int FID, GEO
 	    /* create virtual centroid */
 	    ret = Vect_get_point_in_poly_isl ( Points[0], Points+1, nRings-1, &x, &y );
 	    if (ret < -1) {
-		G_warning ( "Cannot calculate centroid for area %d", outer_area );
+		G_warning (_("Cannot calculate centroid for area %d"), outer_area );
 	    } else { 
                 P_AREA  *Area;
 
@@ -289,7 +290,7 @@ static int add_geometry ( struct Map_info *Map, OGRGeometryH hGeom, int FID, GEO
 	    break;
 
 	default:
-	    G_warning ("OGR feature type %d not supported\n", eType);
+	    G_warning (_("OGR feature type %d not supported)"), eType);
 	    break;
     }
 
@@ -328,8 +329,7 @@ Vect_build_ogr (struct Map_info *Map, int build, FILE * msgout)
     init_parts (&parts);
 
     /* Note: Do not use OGR_L_GetFeatureCount (it may scan all features)!!! */
-
-    prnmsg ("Feature: ", iFeature);
+    prnmsg ("Feature: ");
 
     OGR_L_ResetReading ( Map->fInfo.ogr.layer );
     count = iFeature = 0;
@@ -340,21 +340,21 @@ Vect_build_ogr (struct Map_info *Map, int build, FILE * msgout)
 	G_debug (4, "---- Feature %d ----", iFeature);
 
 	/* print progress */
-	if ( count == 100 ) {
+	if ( count == 1000 ) {
 	    prnmsg ("%7d\b\b\b\b\b\b\b", iFeature);
 	    count = 0;
 	}
 
 	hGeom = OGR_F_GetGeometryRef (hFeature);
 	if (hGeom == NULL) {
-	    G_warning ("Feature %d without geometry ignored", iFeature);
+	    G_warning (_("Feature %d without geometry ignored"), iFeature);
 	    OGR_F_Destroy( hFeature );
 	    continue;
 	}
 
 	FID = (int) OGR_F_GetFID ( hFeature );
 	if ( FID == OGRNullFID ) {
-	    G_warning ("OGR feature without ID ignored." );
+	    G_warning (_("OGR feature without ID ignored."));
 	    OGR_F_Destroy( hFeature );
 	    continue;
 	}
