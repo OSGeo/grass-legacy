@@ -39,7 +39,6 @@ int main(int argc,		/* Number of command-line arguments. */
 	 char **argv		/* Values of command-line arguments. */
     )
 {
-	char *tmp;
 	int i;
 
 	Tcl_FindExecutable(argv[0]);

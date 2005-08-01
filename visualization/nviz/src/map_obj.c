@@ -214,7 +214,7 @@ int Nlogical_from_literal_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
  */
 int set_logical_name(int id, Tcl_Interp * interp, int argc, char *argv[])
 {
-    Nv_clientData *data;
+    Nv_clientData *data=NULL;
     char err_string[80];
 
     /* Check correct syntax */
@@ -274,7 +274,7 @@ int set_logical_name(int id, Tcl_Interp * interp, int argc, char *argv[])
  */
 int get_logical_name(int id, Tcl_Interp * interp, int argc, char *argv[])
 {
-    Nv_clientData *data;
+    Nv_clientData *data=NULL;
     char err_string[80];
 
     /* Check for correct syntax */
@@ -625,7 +625,7 @@ int Nnew_map_obj_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
 
     /* Need to generate a random id */
     gettimeofday(&tp, &tzp);
-    sprintf(temp_space, "%s*%d", argv[1], tp.tv_sec);
+    sprintf(temp_space, "%s*%ld", argv[1], tp.tv_sec);
 
     new_data->logical_name =
         (char *) malloc(sizeof(char) * (strlen(temp_space) + 1));
@@ -639,9 +639,7 @@ int Nnew_map_obj_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
     strcpy(new_data->logical_name, temp_space);
     }
 
-#ifdef DEBUG_MSG
-    fprintf(stderr, "Logical name set to %s\n", new_data->logical_name);
-#endif
+    G_debug(3, "Logical name set to %s\n", new_data->logical_name);
 
     /* Set client data based on type of map object created */
     if (!strcmp(argv[1], "surf")) {
@@ -1711,11 +1709,9 @@ int set_att(int id, int type, Nv_data * data, Tcl_Interp * interp, int argc,
     }
     else {
 
-#ifdef DEBUG_MSG
-        fprintf(stderr, "Loading attribute map %s\n", argv[3]);
-#endif
-        ret = GS_load_att_map(id, argv[3], att);
+	    G_debug(3, "Loading attribute map %s\n", argv[3]);
 
+	    ret = GS_load_att_map(id, argv[3], att);
     }
 
     /* After we've loaded a constant map or a file,
@@ -1752,9 +1748,7 @@ int set_att(int id, int type, Nv_data * data, Tcl_Interp * interp, int argc,
          * create separate routines to figure the Z range as well
          * as the XYrange
          */
-#ifdef DEBUG_MSG
-        fprintf(stderr, "Calling update_ranges\n");
-#endif
+	G_debug(3,  "Calling update_ranges\n");
         update_ranges(data);
     }
     break;
@@ -2083,9 +2077,7 @@ int get_char_marker(int m, char *marker)
  */
 int get_int_marker(char *marker)
 {
-#ifdef DEBUG_MSG
-    fprintf(stderr, "marker = %s\n", marker);
-#endif
+	G_debug(3, "marker = %s\n", marker);
     if (!strcmp(marker, "x")) {
     return (ST_X);
     }

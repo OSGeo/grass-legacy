@@ -18,6 +18,8 @@ int Nget_cancel_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter.
     sprintf(buf, "%d", GS_check_cancel());
     Tcl_SetResult(interp, buf, TCL_VOLATILE);
 
+    return (TCL_OK);
+
 }
 
 int Nset_SDsurf_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */

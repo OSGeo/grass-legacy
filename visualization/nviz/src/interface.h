@@ -176,6 +176,7 @@ int Ndraw_X_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Ndraw_line_on_surf_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Ndraw_model_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nsurf_draw_one_cmd(Nv_data *, Tcl_Interp *, int, char **);
+int sort_surfs_max(int *, int *, int *, int);
 int Nvect_draw_one_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nsite_draw_one_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nvol_draw_one_cmd(Nv_data *, Tcl_Interp *, int, char **);
@@ -216,6 +217,8 @@ int Nmap_obj_cmd(Nv_data *, Tcl_Interp *, int, char *[]);
 int get_idnum(char *);
 int get_type(char *);
 int att_atoi(char *);
+int slice(int, int, Tcl_Interp *, int, char *[]);
+int isosurf(int, int, Tcl_Interp *, int, char *[]);
 /* misc.c */
 int Nlibinit_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nget_cancel_cmd(Nv_data *, Tcl_Interp *, int, char **);
@@ -259,6 +262,27 @@ int ScriptAddString_Cmd(ClientData, Tcl_Interp *, int, char **);
 int CloseScripting_Cmd(ClientData, Tcl_Interp *, int, char **);
 int SetState_Cmd(ClientData, Tcl_Interp *, int, char **);
 int SetScriptFile_Cmd(ClientData, Tcl_Interp *, int, char **);
+/* do_zoom.c */
+int Create_OS_Ctx(int, int);
+int Destroy_OS_Ctx(void);
+int init_ctx(void);
+/* query_vect.c */
+char *query_vect( char *, double, double);
+
+/* togl_flythrough.c */
+int Nset_viewdir_cmd(Nv_data * data, Tcl_Interp * interp, int argc, char **argv);
+int Nget_viewdir_cmd(Nv_data * data, Tcl_Interp * interp, int argc, char **argv);
+int Ndraw_all_together_cmd(Nv_data * data, Tcl_Interp * interp, int argc, char **argv);
+void togl_flythrough_init_tcl(Tcl_Interp *, Nv_data *);
+void flythrough_postdraw_cb_remove();
+void flythrough_postdraw_cb();
+
+/* togl_cb.c */
+GLuint load_font(char *);
+void hide_togl_win(void);
+void show_togl_win(void);
+
+
 /* tkAppInit.c */
 int Tcl_AppInit(Tcl_Interp *);
 /* tkBind.c */

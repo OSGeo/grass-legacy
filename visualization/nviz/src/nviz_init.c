@@ -230,7 +230,8 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
     /* Parse answeres from user */
     /* Run check to make sure elev == colr */
     if (elev->answers && colr->answers) {
-	int ee, cc;
+	int ee=0, cc=0;
+
 	for (i = 0; elev->answers[i]; i++) {
 	    ee = i;
 	}
@@ -344,7 +345,7 @@ int sort_surfs_mid(int *id_sort, int *indices, int num)
 {
     int i, j;
     float midvals[MAX_SURFS];
-    float tmp, max, tmin, tmax, tmid;
+    float tmp, max=0., tmin, tmax, tmid;
     int *surf_list;
 
     surf_list = GS_get_surf_list(&i);

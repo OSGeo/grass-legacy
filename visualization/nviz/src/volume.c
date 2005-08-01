@@ -5,6 +5,7 @@
 */
 
 /* Nvision includes */
+#include <stdlib.h>
 #include "interface.h"
 
 /* Extern declarations */
@@ -701,6 +702,8 @@ int slice_get_transp(int id, Tcl_Interp *interp, int argc, char *argv[])
             TCL_VOLATILE);
     return (TCL_ERROR);
     }
+
+    slice_id = atoi(argv[3]);
 
 	GVL_slice_get_transp(id, slice_id, &transp);
 

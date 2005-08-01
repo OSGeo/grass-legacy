@@ -91,15 +91,9 @@ void swap_togl(void)
 	fprintf(stderr, "set Togl_CreateFunc\n");
 	return;
     }
-#ifdef DEBUG_MSG
-    fprintf(stderr, "calling Togl_SwapBuffers...\n");
-#endif
-
+    G_debug(3, "calling Togl_SwapBuffers...\n");
     Togl_SwapBuffers(Togl_cur);
-
-#ifdef DEBUG_MSG
-    fprintf(stderr, "Togl_SwapBuffers returns.\n");
-#endif
+    G_debug(3, "Togl_SwapBuffers returns.\n");
 }
 
 GLuint load_font(char font[100])
@@ -138,4 +132,27 @@ int unload_font(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
 
     Togl_UnloadBitmapFont(Togl_cur, font_base);
     return (TCL_OK);
+}
+
+void hide_togl_win(void)
+{
+
+	Tk_UnmapWindow ( Togl_TkWin( Togl_cur ) );
+
+}
+
+void show_togl_win(void)
+{
+  int width = Togl_Width(Togl_cur);
+  int height = Togl_Height(Togl_cur);
+
+  Tk_MapWindow ( Togl_TkWin( Togl_cur ) );
+  
+  /* set the viewport just to make sure window is visible */	    
+  GS_set_viewport(0, width, 0, height);
+
+  GS_set_draw(GSD_BACK);
+  GS_ready_draw();
+  GS_alldraw_wire();
+  GS_done_draw();
 }

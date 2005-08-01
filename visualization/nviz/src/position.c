@@ -332,7 +332,7 @@ int Nset_focus_map_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpret
     }
 
     if (argc == 1) {
-		int *surf_list, num_surfs, *vol_list, num_vols;
+		int *surf_list, num_surfs, *vol_list;
 
 		if (GS_num_surfs() > 0) {
 			surf_list = GS_get_surf_list(&num_surfs);
@@ -530,9 +530,7 @@ int Nget_point_on_surf_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
     sx = atoi(argv[1]);
     sy = atoi(argv[2]);
 
-#ifdef DEBUG_MSG
-    fprintf(stderr, "x= %d  :  y= %d\n", sx, sy);
-#endif
+    G_debug(3, "x= %d  :  y= %d\n", sx, sy);
 
     if (!GS_get_selected_point_on_surface(sx, sy, &id, &x, &y, &z)) {
 	list[0] = NULL;
@@ -570,7 +568,7 @@ int Nget_point_on_surf_vect(data, interp, argc, argv)
     int sx, sy, id;
     char cx[32], cy[32], cz[32], idname[128];
     char *list[6];
-    char *name, *keytable, *col;
+    char *name;
 
     if (argc != 4)
 	return (TCL_ERROR);
@@ -579,9 +577,7 @@ int Nget_point_on_surf_vect(data, interp, argc, argv)
     sy = atoi(argv[2]);
     name = argv[3];
 
-#ifdef DEBUG_MSG
-    fprintf(stderr, "x= %d  :  y= %d\n", sx, sy);
-#endif
+    G_debug(3, "x= %d  :  y= %d\n", sx, sy);
 
     if (!GS_get_selected_point_on_surface(sx, sy, &id, &x, &y, &z)) {
 	list[0] = NULL;

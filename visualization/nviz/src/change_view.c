@@ -196,6 +196,8 @@ int update_ranges(Nv_data * dc)
 
     if ((zmax - zmin) > dc->Zrange)
 	dc->Zrange = zmax - zmin;
+
+    return (0);
 }
 
 /**********************************************************************/
