@@ -26,7 +26,7 @@ int script_mode=0;
 int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
 		  int argc, char **argv)
 {
-    struct Option *elev, *colr, *vct;
+    struct Option *elev, *colr, *vct, *pnt, *vol;
     struct Option *panel_path, *script, *state;
     struct Flag *no_args, *script_kill, *demo, *verbose;
     struct GModule *module;
@@ -74,7 +74,23 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
     vct->required = NO;
     vct->multiple = YES;
     vct->gisprompt = "old,vector,Vector";
-    vct->description = "Vector overlay file(s)";
+    vct->description = "Vector lines/areas overlay file(s)";
+
+    pnt = G_define_option();
+    pnt->key = "points";
+    pnt->type = TYPE_STRING;
+    pnt->required = NO;
+    pnt->multiple = YES;
+    pnt->gisprompt = "old,vector,Vector";
+    pnt->description = "Vector points overlay file(s)";
+
+    vol = G_define_option();
+    vol->key = "volume";
+    vol->type = TYPE_STRING;
+    vol->required = NO;
+    vol->multiple = YES;
+    vol->gisprompt = "old,grid3,3d raster";
+    vol->description = "Name of existing 3dcell map";
 
     no_args = G_define_flag();
     no_args->key = 'q';
@@ -175,7 +191,7 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
 
     /* Look for quickstart flag */
     if (no_args->answer) {
-	elev->answers = colr->answers = vct->answers = NULL;
+	elev->answers = colr->answers = vct->answers = pnt->answers = vol->answers = NULL;
     }
 
 
@@ -278,6 +294,25 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
 	    Nnew_map_obj_cmd(data, interp, 3, arglist);
 	}
     }
+
+    if (pnt->answers) {
+	    for (i = 0; pnt->answers[i]; i++) {
+		    arglist[1] = "site";
+		    arglist[2] = pnt->answers[i];
+		    Nnew_map_obj_cmd(data, interp, 3, arglist);
+	    }
+    }
+    
+    if (vol->answers) {
+	    for (i = 0; vol->answers[i]; i++) {
+		    arglist[1] = "vol";
+		    arglist[2] = vol->answers[i];
+		    Nnew_map_obj_cmd(data, interp, 3, arglist);
+	    }
+    }
+
+
+
 
     return(TCL_OK);
 }
