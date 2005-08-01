@@ -10,8 +10,6 @@
 #include "keyframe.h"
 #include "kftypes.h"
 
-void GS_getlight_position(int, float *, float *, float *, int);
-
 static float spl3(float, double, double, double, double, double, double,
 		  double);
 
