@@ -3,17 +3,19 @@
 #include <unistd.h>
 #include "gis.h"
 #include "kappa.h"
+#include "glocale.h"
 
-static
+static void
 die()
 {
   unlink (stats_file);
-  G_fatal_error ("WARNING: - problem reading r.stats output\n");
+  G_fatal_error (_("Problem reading r.stats output"));
 }
 
+int
 stats()
 {
-  char buf[1024], msg[100];
+  char buf[1024];
   char mname[GNAME_MAX], rname[GMAPSET_MAX];
   char *mmapset, *rmapset;
   int i,nl,ns;
@@ -22,18 +24,12 @@ stats()
 
   strcpy (mname, maps[0]);
   mmapset = G_find_cell2 (mname, "");
-  if (mmapset == NULL){
-    sprintf (msg, "%s: <%s> raster map not found\n", G_program_name(), maps[0]);
-    G_fatal_error (msg);
-    exit(1);
-  }
+  if (mmapset == NULL)
+    G_fatal_error ( _("%s: <%s> raster map not found"), G_program_name(), maps[0]);
   strcpy (rname, maps[1]);
   rmapset = G_find_cell2 (rname, "");
-  if (rmapset == NULL){
-    sprintf (msg, "%s: <%s> reference map not found\n", G_program_name(), maps[1]);
-    G_fatal_error (msg);
-    exit(1);
-  }
+  if (rmapset == NULL)
+    G_fatal_error ( _("%s: <%s> reference map not found"), G_program_name(), maps[1]);
 
   stats_file = G_tempfile();
   strcpy (buf, "r.stats -cin");
@@ -73,4 +69,6 @@ stats()
   }
   fclose (fd);
   unlink (stats_file);
+
+  return 0;
 }
