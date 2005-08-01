@@ -100,6 +100,8 @@ exag" 10 1 [lindex $scales 1] fly_update_scale1 2
 
 proc fly_change_mode {flag} {
     global XY Nv_ fly
+
+	inform "Interactively set view position"
 	pack forget $XY $Nv_(HEIGHT_SLIDER) $Nv_(TWIST_SLIDER)
 	Nset_fly_mode $flag
 	pack $fly(BUTTONS) -side left -before $Nv_(EXAG_SLIDER) -expand y

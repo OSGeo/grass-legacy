@@ -51,7 +51,7 @@ proc appBusy {} {
     global Nv_
 
     . configure -cursor {watch blue}
-    .top2 configure -cursor {watch blue}
+    $Nv_(APP) configure -cursor {watch blue}
     $Nv_(AREA).menu.wait_pls configure -fg red -bg black
     grab $Nv_(AREA).menu.wait_pls
     update
@@ -61,7 +61,7 @@ proc appNotBusy {} {
     global Nv_
 
     . configure -cursor ""
-    .top2 configure -cursor ""
+    $Nv_(APP) configure -cursor ""
     $Nv_(AREA).menu.wait_pls configure -fg gray90 -bg gray90
     grab release $Nv_(AREA).menu.wait_pls
     update

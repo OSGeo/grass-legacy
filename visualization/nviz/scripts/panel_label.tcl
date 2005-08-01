@@ -28,7 +28,6 @@ set Nv_(labelFontColor) #FF0000
 
 # Legend section
 set Nv_(catval) 1
-set Nv_(leg_on) 0
 set Nv_(catlabel) 0
 set Nv_(leg_invert) 0
 set Nv_(leg_userange) 0
@@ -134,10 +133,9 @@ proc mklabelPanel { BASE } {
     frame $rbase.leg
    
    button $rbase.leg.legend -text "Place Legend" -command "place_legend"
-   checkbutton $rbase.leg.c1 -text "On" \
-        -variable Nv_(leg_on) -onvalue 1 -offvalue 0 \
+   button $rbase.leg.leg_off -text "Delete Legend" \
 	-command "delete_list legend 0"
-   pack $rbase.leg.legend $rbase.leg.c1 \
+   pack $rbase.leg.legend $rbase.leg.leg_off \
 	-fill x -side left -expand no -padx 2 -pady 1
 
    frame $rbase.leg2
@@ -403,9 +401,11 @@ set y [expr $Nv_(height) - $y]
 #Routine to delete display list
 proc delete_list { list flag } {
     global Nv_
+    global labels legend
 
-if {$list == "legend" && $Nv_(leg_on) == 0} {
+if {$list == "legend"} {
 	Ndelete_list legend 0
+	set legend 0
 }
 
 if {$list == "label"} {
@@ -413,11 +413,9 @@ if {$list == "label"} {
 		Ndelete_list label 1
 	} else {
 		Ndelete_list label 0
+		set labels 0
 	}
 }
-
-
-
 
 }
 
@@ -425,16 +423,16 @@ if {$list == "label"} {
 proc place_legend { } {
     global Nv_
     global x1 y1 x2 y2
+    global legend
 
 #do bindings
 bind $Nv_(TOP).canvas <Button-1> {do_legend %W %x %y 1 }
-bind $Nv_(TOP).canvas <Button-3> {do_legend %W %x %y 2 }
+bind $Nv_(TOP).canvas <Button-3> {do_legend %W %x %y 2 ; inform ""}
 
-#set checkbutton to on
-set Nv_(leg_on) 1
+#set legend to on
+set legend 1
 
-puts "Select Legend Corners in Window ..."
-puts "Corner 1 = left button      Corner 2 = right button"
+inform "Select Legend Corners ... (Corner 1=left button) (Corner2=right button)"
 update
 
 ##Tried binding to draw rectangle outline but unsupported with togl ??
@@ -445,9 +443,10 @@ update
 # Routines to allow user to place a label
 proc place_label { } {
     global Nv_
+    global labels
     # We bind the canvas area so that the user can click to place the
     # label.  After the click is processed we unbind the canvas area
-
+set labels 1
 bind $Nv_(TOP).canvas <Button-1> {place_label_cb %x %y }
 
 }
