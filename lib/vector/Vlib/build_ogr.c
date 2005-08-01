@@ -340,7 +340,7 @@ Vect_build_ogr (struct Map_info *Map, int build, FILE * msgout)
 	G_debug (4, "---- Feature %d ----", iFeature);
 
 	/* print progress */
-	if ( count == 100 ) {
+	if ( count == 1000 ) {
 	    prnmsg ("%7d\b\b\b\b\b\b\b", iFeature);
 	    count = 0;
 	}
