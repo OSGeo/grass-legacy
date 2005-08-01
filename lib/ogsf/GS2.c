@@ -24,6 +24,7 @@
 #include "rgbpack.h"
 
 #include "GL/gl.h"
+#include "GL/glu.h"
 
 #ifdef TRACE_FUNCS
 #define TRACE_GS_FUNCS
@@ -421,110 +422,66 @@ void GS_get_modelposition(float *siz, float *pos)
  * needs go function that returns center / eye distance
  * gsd_get_los function is not working correctly ??
 */
-void GS_draw_Narrow(int *pt, int id, GLuint fontbase)
+void GS_set_Narrow(int *pt, int id, float *pos2)
 {
     geosurf *gs;
-    char *txt;
     float x, y, z;
-    float near_h;
-    float len;
-    float len2;
-    float v[4][3];
-    float base[2][3];
-    float los[2][3];
-    Point3 pos2, dir2;
-    float Ntop[] = { 0.0, 0.0, 1.0 };
+    GLdouble modelMatrix[16], projMatrix[16];
+    GLint viewport[4];
 
     if (GS_get_selected_point_on_surface(pt[X], pt[Y], &id, &x, &y, &z)) {
-	gs = gs_get_surf(id);
-	if (gs) {
-	    z = gs->zmax;
-	    pos2[X] = x - gs->ox + gs->x_trans;
-	    pos2[Y] = y - gs->oy + gs->y_trans;
-	    pos2[Z] = z + gs->z_trans;
-	    len2 = GS_distance(Gv.from_to[FROM], pos2);
-	    near_h = 0.001 * tan(4.0 * atan(1.) * Gv.fov / 3600.) * len2;
-	    len = near_h * 500.;
-	}
+        gs = gs_get_surf(id);
+        if (gs) {
+            z = gs->zmax;
+            pos2[X] = (float)x - gs->ox + gs->x_trans;
+            pos2[Y] = (float)y - gs->oy + gs->y_trans;
+            pos2[Z] = (float)z + gs->z_trans;
+
+            return;
+        }
     }
     else {
-	gs = gs_get_surf(id);
-	if (gs) {
-	    z = gs->zmax;
-	    /* returns surface-world coords */
-	    /* gsd_get_los does not seem to be working correctly, should check?? */
-	    gsd_get_los(los, (short) pt[X], (short) pt[Y]);
-	    len2 = GS_distance(los[FROM], los[TO]);
-	    GS_v3dir(los[FROM], los[TO], dir2);
-	    GS_v3mult(dir2, len2);
-	    near_h = 0.001 * tan(4.0 * atan(1.) * Gv.fov / 3600.) * len2;
-	    len = near_h * 500.;
+        gs = gs_get_surf(id);
+        
+        /* Need to get model matrix, etc 
+         * to run gluUnProject
+         */
+        gsd_pushmatrix();
+        gsd_do_scale(1);
+        glGetDoublev(GL_MODELVIEW_MATRIX, modelMatrix);
+        glGetDoublev(GL_PROJECTION_MATRIX, projMatrix);
+        glGetIntegerv(GL_VIEWPORT, viewport);
 
-	    pos2[X] = los[FROM][X] + dir2[X];
-	    pos2[Y] = los[FROM][Y] + dir2[Y];
-	    pos2[Z] = los[FROM][Z] + dir2[Z];
+        if (gs) {
+        GLdouble out_near[3], out_far[3];
+        GLdouble factor;
+        GLdouble out[3];
 
-	}
+            z = (float)gs->zmax + gs->z_trans;
 
+            gluUnProject((GLdouble)pt[X], (GLdouble)pt[Y], (GLdouble)0.,
+                            modelMatrix, projMatrix, viewport,
+                            &out_near[X], &out_near[Y], &out_near[Z]);
+            gluUnProject((GLdouble)pt[X], (GLdouble)pt[Y], (GLdouble)1.,
+                            modelMatrix, projMatrix, viewport,
+                            &out_far[X], &out_far[Y], &out_far[Z]);
+                            
+            glPopMatrix();
+
+            factor = (out_near[Z]-z) / (out_near[Z]-out_far[Z]);
+
+            out[X] = out_near[X]-((out_near[X]-out_far[X])*factor);
+            out[Y] = out_near[Y]-((out_near[Y]-out_far[Y])*factor);
+            out[Z] = z;
+
+            pos2[X] = (float)out[X];
+            pos2[Y] = (float)out[Y];
+            pos2[Z] = (float)out[Z];
+
+            return;
+
+        }
     }
-
-    base[0][Z] = base[1][Z] = v[0][Z] = v[1][Z] = v[2][Z] = v[3][Z] = pos2[Z];
-    base[0][X] = pos2[X] - len / 16.;
-    base[1][X] = pos2[X] + len / 16.;
-    base[0][Y] = base[1][Y] = pos2[Y] - len / 2.;
-    v[0][X] = v[2][X] = pos2[X];
-    v[1][X] = pos2[X] + len / 8.;
-    v[3][X] = pos2[X] - len / 8.;
-    v[0][Y] = pos2[Y] + .2 * len;
-    v[1][Y] = v[3][Y] = pos2[Y] + .1 * len;
-    v[2][Y] = pos2[Y] + .5 * len;
-
-    /* make sure we are drawing in front buffer */
-    GS_set_draw(GSD_FRONT);
-
-    gsd_pushmatrix();
-    gsd_do_scale(1);
-
-    glNormal3fv(Ntop);
-    gsd_color_func(0x000000);
-
-    gsd_bgnpolygon();
-    glVertex3fv(base[0]);
-    glVertex3fv(base[1]);
-    glVertex3fv(v[0]);
-    gsd_endpolygon();
-
-    gsd_bgnpolygon();
-    glVertex3fv(v[0]);
-    glVertex3fv(v[1]);
-    glVertex3fv(v[2]);
-    glVertex3fv(v[0]);
-    gsd_endpolygon();
-
-    gsd_bgnpolygon();
-    glVertex3fv(v[0]);
-    glVertex3fv(v[2]);
-    glVertex3fv(v[3]);
-    glVertex3fv(v[0]);
-    gsd_endpolygon();
-
-/* draw N for North */
-/* Need to pick a nice generic font */
-
-    gsd_color_func(0x000000);
-    txt = "North";
-    /* adjust position of N text */
-    base[0][X] -= gsd_get_txtwidth(txt, 18) - 20.;
-    base[0][Y] -= gsd_get_txtheight(18) - 20. ;
-
-    glRasterPos3fv(base[0]);
-    glListBase(fontbase);
-    glCallLists(strlen(txt), GL_BYTE, (GLubyte *) txt);
-    GS_done_draw();
-
-    gsd_popmatrix();
-    gsd_flush();
-
     return;
 }
 

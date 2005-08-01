@@ -545,6 +545,84 @@ void dir_to_slope_aspect(float *dir, float *slope, float *aspect, int degrees)
     return;
 }
 
+
+/**************************************************************
+ * Function to draw North Arrow takes OpenGL coords and size
+ *************************************************************/
+int gsd_north_arrow (float *pos2, float len, GLuint fontbase)
+{   
+    char *txt;
+    float v[4][3];
+    float base[2][3];
+    float Ntop[] = { 0.0, 0.0, 1.0 };
+
+    base[0][Z] = base[1][Z] = v[0][Z] = v[1][Z] = v[2][Z] = v[3][Z] = pos2[Z];
+    base[0][X] = pos2[X] - len / 16.;
+    base[1][X] = pos2[X] + len / 16.;
+    base[0][Y] = base[1][Y] = pos2[Y] - len / 2.;
+    v[0][X] = v[2][X] = pos2[X];
+    v[1][X] = pos2[X] + len / 8.;
+    v[3][X] = pos2[X] - len / 8.;
+    v[0][Y] = pos2[Y] + .2 * len;
+    v[1][Y] = v[3][Y] = pos2[Y] + .1 * len;
+    v[2][Y] = pos2[Y] + .5 * len;
+
+    /* make sure we are drawing in front buffer */
+    GS_set_draw(GSD_FRONT);
+
+    gsd_pushmatrix();
+    gsd_do_scale(1);
+
+    glNormal3fv(Ntop);
+    gsd_color_func(0x000000);
+
+    gsd_bgnpolygon();
+    glVertex3fv(base[0]);
+    glVertex3fv(base[1]);
+    glVertex3fv(v[0]);
+    gsd_endpolygon();
+
+    gsd_bgnpolygon();
+    glVertex3fv(v[0]);
+    glVertex3fv(v[1]);
+    glVertex3fv(v[2]);
+    glVertex3fv(v[0]);
+    gsd_endpolygon();
+
+    gsd_bgnpolygon();
+    glVertex3fv(v[0]);
+    glVertex3fv(v[2]);
+    glVertex3fv(v[3]);
+    glVertex3fv(v[0]);
+    gsd_endpolygon();
+
+/* draw N for North */
+/* Need to pick a nice generic font */
+/* TODO -- project text position off arrow
+ * bottom along azimuth
+ */
+
+    gsd_color_func(0x000000);
+    txt = "North";
+    /* adjust position of N text */
+    base[0][X] -= gsd_get_txtwidth(txt, 18) - 20.;
+    base[0][Y] -= gsd_get_txtheight(18) - 20. ;
+
+    glRasterPos3fv(base[0]);
+    glListBase(fontbase);
+    glCallLists(strlen(txt), GL_BYTE, (GLubyte *) txt);
+    GS_done_draw();
+
+    gsd_popmatrix();        
+    gsd_flush();
+
+    return (1);
+
+}
+
+
+
+
 /**************************************************************/
 /* siz is height, sz is global exag to correct for.
  * If onsurf in non-null, z component of dir is dropped and
