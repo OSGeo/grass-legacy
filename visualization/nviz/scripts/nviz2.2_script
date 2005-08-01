@@ -23,19 +23,27 @@ set env(NV_processname) NVIZ
 set BGColor #FFFFFF
 
 source $src_boot/etc/nviz2.2/scripts/config.tcl
+#append bwidget for tooltip stuff
+lappend auto_path $env(GISBASE)/bwidget
+package require BWidget
 
 global Nv_ ScriptState ScriptFile ScriptPlaying NvizLoadState 
 
 set ScriptPlaying 0
 
+#Config Tooltip stuff
+DynamicHelp::configure -bg "#FFFFAA"
+interp alias {} help {} DynamicHelp::register
+
 ##########################################################################
 #  Constants
 ##########################################################################
 
-set Nv_(TOP)  	".top"
-set Nv_(APP)    ".top2"
-set Nv_(P_AREA) ".top2.panelarea.panels"
-set Nv_(AREA) 	".top2.panelarea"
+set Nv_(TOP)  	".middle.draw"
+set Nv_(APP)    "."
+set Nv_(P_AREA) ".middle.panelarea.panels"
+set Nv_(PAREA)   ".middle.panelarea"
+set Nv_(AREA) 	".top"
 set Nv_(CALLED_SET_FOCUS) no
 set Nv_(CurrSurf) 0
 set Nv_(CurrVect) 0
@@ -126,6 +134,50 @@ proc Nv_force_panel { name } {
     }
 }
 
+#########################################################################
+proc set_scrollsize {} {
+global Nv_
+
+set wid [winfo width $Nv_(P_AREA)]
+set ht [winfo height $Nv_(P_AREA)]
+
+set bbox "0 0 $wid $ht"
+$Nv_(PAREA).canvas configure -scrollregion $bbox -width [expr $wid+2]
+}
+
+
+###################################
+# Procedure to hide menus
+###################################
+proc hide_menus {} {
+global Nv_ bit_map_path
+
+$Nv_(PAREA).canvas  configure -width 0
+$Nv_(PAREA).f1.b1 configure -bitmap @$bit_map_path/right \
+        -width 8 -height 12 -command "show_menus"
+
+help $Nv_(PAREA).f1.b1 balloon "Show Panels"
+
+$Nv_(AREA).menu.panel.m entryconfigure 1 -label "Show Panels" -command "show_menus"
+
+}
+
+###################################
+# Procedure to reveal menus
+###################################
+proc show_menus {} {
+global Nv_ bit_map_path
+
+$Nv_(PAREA).canvas  configure -width [winfo width $Nv_(P_AREA)]
+$Nv_(PAREA).f1.b1 configure -bitmap @$bit_map_path/left \
+        -width 8 -height 12 -command "hide_menus"
+
+help $Nv_(PAREA).f1.b1 balloon "Hide Panels"
+
+$Nv_(AREA).menu.panel.m entryconfigure 1 -label "Hide Panels" -command "hide_menus"
+}
+
+
 ###########################################################################
 # add key bindings so that menu shortcut keys can be used
 ###########################################################################
@@ -134,60 +186,101 @@ proc Nv_force_panel { name } {
 # make toplevel
 ###########################################################################
 
-proc Nv_makeGUI {{BASE .top}} {
+proc Nv_makeGUI {{BASE .}} {
     global Nv_ ScriptState src_boot env
     global DEBUG
+    global bit_map_path constrained
 
-    set width [exec $src_boot/bin/g.gisenv X3D_WIDTH]
-    if {$width == ""} {set width 585}
-    set width [expr round($width/.98)]
-    set height [exec $src_boot/bin/g.gisenv X3D_HEIGHT]
-    if {$height == ""} {set height 720}
-    set height [expr round($height /.97)]
-
-    #set position variable for placing .top2
-    set posx [expr $width + 17]
-    set posy 10
+#DEBUG
+if {$DEBUG} {puts "Build toplevel window"}
     
     set Nv_(First) 1
-    wm geometry . $width\x$height\+10+10
-    wm minsize . 300 200
-    pack [frame $BASE] -side top -fill both -expand y
-    toplevel .top2
-    wm resizable .top2 false false
-    wm title .top2 "Controls"
-    set Nv_(height) 720
+    wm geometry . +10+10
+    wm minsize . 10 10
+    wm sizefrom . user
+
+    #Use three base frames
+    frame .top -relief flat
+    frame .middle -relief sunken
+    frame .bottom -relief raised
 
 # DEBUG
 if {$DEBUG} {puts "toplevel made"}
+
 
     ###########################################################################
     # make informational text widget
     ###########################################################################
     
     set Nv_(text) "Start"
-    entry $BASE.entry -relief sunken -borderwidth 3 -state disabled \
-	-textvariable Nv_(text)
-    place $BASE.entry -relx 0 -relwidth .70 -rely 0
-##  glxwin $BASE.canvas -rgb true -db true -zbuffersize -1
-    togl $BASE.canvas -rgba true -double true -depth true 
-    place $BASE.canvas -relx .01 -rely .03 -relwidth .98 -relheight .97
-    bind $BASE.canvas <Expose> {Nv_expose %W}
-    bind $BASE.canvas <Configure> {set Nv_(height) %h}
+    set Nv_(height) 720
 
+    #panel area frame
+    frame $Nv_(PAREA) -relief raised -borderwidth 2
+    pack $Nv_(PAREA) -side left -fill y -expand 0
+
+    #togl canvas
+    frame .middle.draw -relief flat
+    pack .middle.draw -side left -fill both -expand 1
+
+    entry .bottom.entry -relief sunken -state disabled \
+        -background #FFFFFF -textvariable Nv_(text) 
+    pack .bottom.entry -side left -fill both -expand 1
+
+    set cwidth [exec $src_boot/bin/g.gisenv X3D_WIDTH]
+    set cheight [exec $src_boot/bin/g.gisenv X3D_HEIGHT]
+
+    if {$cwidth > 0 && $cheight > 0} {
+        togl .middle.draw.canvas -rgba true -double true -depth true \
+                -width $cwidth -height $cheight
+        pack .middle.draw.canvas -side top -expand 0
+    } elseif {$cwidth == "" && $cheight > 0} {
+        togl .middle.draw.canvas -rgba true -double true -depth true \
+                -height $cheight
+        pack .middle.draw.canvas -side top -fill x -expand 1
+    } elseif {$cheight == "" && $cwidth > 0} {
+        togl .middle.draw.canvas -rgba true -double true -depth true \
+                -width $cwidth
+        pack .middle.draw.canvas -side top -fill y -expand 1
+    } else {
+	#nothing set
+	set constrained 1
+        togl .middle.draw.canvas -rgba true -double true -depth true
+        pack .middle.draw.canvas -side top -fill both -expand 1
+    }
+
+    bind .middle.draw.canvas <Expose> {Nv_expose %W}
+    bind .middle.draw.canvas <Configure> {set Nv_(height) %h}
+    set tags [bindtags .middle.draw.canvas]
     update
 
 #With widget made reset ProcessName variable
 set env(NV_processname) [winfo name .]
-    
+
+#Moved the following packing here to satisfy some TCL versions
+#Prevents minimized GUI
+    #top frame for menubar
+    pack .top -side top -fill x -expand 0
+    #middle frame for menus and togl canvas
+    pack .middle  -side top -fill both -expand 1
+    #botom frame for statusbar
+    pack .bottom -side top -fill x -expand 0
+   
+ 
 # DEBUG
 if {$DEBUG} {puts "info widget made"}
     ###########################################################################
     # make  panel area
     ###########################################################################
-    frame $Nv_(AREA) -relief raised -borderwidth 3 
-    pack $Nv_(AREA) -side top -fill both -expand yes
-    frame $Nv_(P_AREA) -relief raised -borderwidth 3
+    canvas $Nv_(PAREA).canvas -yscrollcommand "$Nv_(PAREA).f1.scrolly set" \
+	-borderwidth 2 -relief sunken
+    frame $Nv_(PAREA).f1 -borderwidth 0 -relief flat
+    scrollbar $Nv_(PAREA).f1.scrolly -command "$Nv_(PAREA).canvas yview"
+    button $Nv_(PAREA).f1.b1 -bitmap @$bit_map_path/left \
+        -width 8 -height 12 -command "hide_menus"
+    help $Nv_(PAREA).f1.b1 balloon "Hide Panels"
+
+    frame $Nv_(P_AREA) -relief raised -borderwidth 3    
 
 
 # DEBUG
@@ -196,22 +289,46 @@ if {$DEBUG} {puts "panel area made"}
     ###########################################################################
     # make  menubar
     ###########################################################################
-    frame $Nv_(AREA).menu  -relief raised -borderwidth 1 
-    pack $Nv_(AREA).menu -side top -fill x -anchor nw
+    frame $Nv_(AREA).menu  -relief raised -borderwidth 1
+    pack $Nv_(AREA).menu -side top -fill x -expand 0
+
+    pack $Nv_(PAREA).canvas -side top -fill both -expand yes
+    pack $Nv_(PAREA).f1 -side left -before $Nv_(PAREA).canvas -fill y
+    pack $Nv_(PAREA).f1.scrolly -side top -fill y -expand 1
+    pack $Nv_(PAREA).f1.b1 -side bottom -fill x
+
+    pack $Nv_(P_AREA) -side top -fill y -expand yes
 
     # Make label with invisible text to hold "Please wait..." message
     label $Nv_(AREA).menu.wait_pls -text "Please Wait..." \
         -fg gray90
 
-    pack $Nv_(P_AREA) -side top -fill both -expand yes
+    #Bind menu area to canvas and scrollbars
+    $Nv_(PAREA).canvas create window 0 0 -window $Nv_(P_AREA) -anchor nw
+    bind $Nv_(P_AREA) <Configure> "set_scrollsize"
 
     pack [Nv_mkMenu $Nv_(AREA).menu.file File \
-	      {"Load State..." "Save State..." "Load 3d Settings..." \
-		  "Save 3d Settings..." "Image Dump..." "Reset" "Quit" } \
-	      {0 0 0 0 0 0 0} \
-	      { "load_state" "save_state" "load_3dview" "save_3dview" \
-		  "Cascade img menu2" "reset_Nviz" "Nv_close_scripting ; exit ; puts"}]\
-	-side left -fill both -expand yes
+              {"Load State..." "Save State..." \
+                "" \
+                "Set Canvas Size ..."
+                "" \
+                "Load 3d Settings..." "Save 3d Settings..." \
+                "" \
+                "Image Dump..." \
+                "" \
+                "Reset" "Quit" } \
+              {0 0 0 0 0 0 0 0 0 0 0 0} \
+              { "load_state" "save_state" \
+                "Separator" \
+                "set_canvas_size" \
+                "Separator" \
+                "load_3dview" "save_3dview" \
+                "Separator" \
+                "Cascade img menu2" \
+                "Separator" \
+                "reset_Nviz" "Nv_close_scripting ; exit ; puts"}]\
+        -side left -fill x -expand 0
+
 
 # DEBUG
 if {$DEBUG} {puts "file menu made"}
@@ -220,7 +337,7 @@ pack [Nv_mkMenu $Nv_(AREA).menu.help Help \
 	{"NVIZ Help" "About NVIZ" "NVIZ - Bugs / ToDo"} \
 	{0 0 0} \
 	{"nviz_browse nviz_toc.html" "nviz_browse nviz_desc.html" "nviz_browse bugs_todo.html"} ] \
-	-side right -fill both -expand yes
+	-side right -fill x -expand 0
 
 # DEBUG
 if {$DEBUG} {puts "Help menu made"}
@@ -233,7 +350,7 @@ if {$DEBUG} {puts "Help menu made"}
 if {$DEBUG} {puts "disabled made"}
 
 
-    pack [Nv_mkPanelMenu $Nv_(AREA).menu.panel] -side left -fill both -expand yes
+    pack [Nv_mkPanelMenu $Nv_(AREA).menu.panel] -side left -fill x -expand 0
 # DEBUG
 if {$DEBUG} {puts "scripting menu 0 made"}
 
@@ -279,7 +396,7 @@ if {$DEBUG} {puts "scripting menu 7 made"}
     $Nv_(AREA).menu.scripting.m add command -label "Close Script" \
 	-underline 1 -command Nv_close_scripting
     
-    pack $Nv_(AREA).menu.scripting -side left -fill both -expand yes
+    pack $Nv_(AREA).menu.scripting -side left -fill x -expand 0
     
 
 # DEBUG
@@ -302,8 +419,6 @@ if {$DEBUG} {puts "menubar made"}
 
     focus $Nv_(AREA).menu
 
-    wm geometry .top2 "+$posx\+$posy"
-
     return $BASE
 }
 
@@ -322,7 +437,9 @@ proc menu2 { menu } {
         -command {set fname [create_file_browser .file_browser 1]
 	if {$fname != -1} then {
 	appBusy
-         Nstart_zoom $fname [winfo screenwidth .] [winfo screenheight .]
+         set wid [winfo screenwidth .]
+	 set ht [winfo screenheight .]
+	 Nstart_zoom $fname $wid $ht
 	appNotBusy
 	}	
 	} -underline 0 -label "Save Max. Resolution PPM(s)"
@@ -421,11 +538,11 @@ proc Nv_mapPanel {name panel pos } {
     if [catch {set height [expr $size * .33]}] { set height 1}
     if [catch {set y [expr $pos * .33]}] { set y 0}
     pack $name -side top -fill x -expand no -anchor n
-    set x [winfo x .top2]
-    set y [winfo y .top2]
-    if {$x && $y} {
-        wm geometry .top2 "+$x+$y"
-    }
+#    set x [winfo x .top2]
+#    set y [winfo y .top2]
+#    if {$x && $y} {
+#        wm geometry .top2 "+$x+$y"
+#    }
 }
 
 proc Nv_closePanel { name } { 
@@ -458,6 +575,9 @@ proc Nv_mkPanelMenu { P { name Panel } } {
 if {$DEBUG} {puts "Nv_mkPanelMenu 1"}
 
     set j 0
+    $P.m add command -label "Hide Panels" -command hide_menus
+    $P.m add separator
+
     foreach i $Nv_(panels) {
 	Nv_force_panel $i
 	
@@ -465,6 +585,10 @@ if {$DEBUG} {puts "Nv_mkPanelMenu 1"}
 	
 	$P.m add command -label [St_get $panel name] \
 	    -command "Nv_openPanel $i"
+        #Add separators
+	if {$i == "vol" || $i == "cutplane" || $i == "kanimator"} {
+		$P.m add separator
+	}
 # DEBUG
 if {$DEBUG} {puts "Nv_mkPanelMenu 2 $j"}
 
@@ -530,6 +654,66 @@ proc load_3dview { dummy } {
 
     Nquick_draw
 }
+########################################
+# Procedure to manually set canvas size
+proc set_canvas_size { dummy } {
+global cwidth cheight constrained Nv_ 
+
+
+set cwidth [lindex [$Nv_(TOP).canvas configure -width] 4]
+set cheight [lindex [$Nv_(TOP).canvas configure -height] 4]
+
+#Build size box
+toplevel .canvas_size
+frame .canvas_size.f1 -borderwidth 2 -relief sunken
+frame .canvas_size.f2
+frame .canvas_size.f3
+pack .canvas_size.f3 .canvas_size.f1 .canvas_size.f2 -side top \
+        -fill both -expand 1
+
+label .canvas_size.f3.l1 -text "Set Size of Display Canvas"
+pack .canvas_size.f3.l1 -side top -fill both -expand 0
+
+label .canvas_size.f1.l1 -text "Width"
+entry .canvas_size.f1.e1 -textvariable cwidth -width 6
+label .canvas_size.f1.l2 -text "Height"
+entry .canvas_size.f1.e2 -textvariable cheight -width 6
+pack .canvas_size.f1.l1 .canvas_size.f1.e1 \
+        .canvas_size.f1.l2 .canvas_size.f1.e2 \
+        -side left -fill y
+
+checkbutton .canvas_size.f2.c1 -text "Unconstrained" -variable constrained \
+        -onvalue 1 -offvalue 0 -command {
+        if {$constrained} {
+                .canvas_size.f1.e1 configure -state disabled -bg grey
+                .canvas_size.f1.e2 configure -state disabled -bg grey
+        } else {
+                .canvas_size.f1.e1 configure -state normal -bg white
+                .canvas_size.f1.e2 configure -state normal -bg white
+        }
+        }
+button .canvas_size.f2.b1 -text "Close" \
+        -command {
+if {$constrained} {
+        pack $Nv_(TOP).canvas -side top -fill both -expand 1
+} else {
+        $Nv_(TOP).canvas configure -width $cwidth -height $cheight
+        pack $Nv_(TOP).canvas -side top -expand 0 -fill none
+	#Need Nset_viewport to make sure reshape is called
+	Nset_viewport $cwidth $cheight
+}
+destroy .canvas_size}
+
+if {$constrained} {
+	.canvas_size.f1.e1 configure -state disabled -bg grey
+        .canvas_size.f1.e2 configure -state disabled -bg grey
+}
+
+pack .canvas_size.f2.c1 -side left -fill both
+pack .canvas_size.f2.b1 -side right -fill both
+
+}
+
 
 # Procedure to load the state of the system, calls a special
 # load procedure for each panel in the system.

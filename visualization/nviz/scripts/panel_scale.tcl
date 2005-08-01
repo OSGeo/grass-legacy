@@ -27,6 +27,7 @@ global Nv_
 
 proc mkscalePanel { BASE } {
     global Nv_
+    global n_arrow_size n_arrow
 
     set panel [St_create {window name size priority} $BASE "Scale" 2 5]
     frame $BASE -relief groove -borderwidth 2
@@ -53,9 +54,9 @@ proc mkscalePanel { BASE } {
     pack $rbase.bottom -side bottom
     button $rbase.bottom.place2 -text "Place Arrow" \
 	-command "bind $Nv_(TOP).canvas <Button> {place_narrow %W %x %y }"
-    checkbutton $rbase.bottom.narrow -text "North Arrow" -anchor w \
-	-variable n_arrow -onvalue 1 -offvalue 0 
-    pack $rbase.bottom.place2 $rbase.bottom.narrow -expand no -side left
+    entry $rbase.bottom.narrow_size -relief sunken -background white \
+        -textvariable n_arrow_size -width 8
+    pack $rbase.bottom.place2 $rbase.bottom.narrow_size -expand no -side left
 
     ##########################################################################
     # Separator
@@ -118,6 +119,8 @@ proc mkscalePanel { BASE } {
     pack $BASE.sep1 -fill x
     pack $BASE.draw_ruler -fill x
 
+    set n_arrow_size 100
+
     return $panel
 }
 #############################################################
@@ -126,27 +129,37 @@ proc mkscalePanel { BASE } {
 proc draw_fringe {} {
 global Nv_
 global fringe_nw fringe_ne fringe_sw fringe_se
+global fringe
     
 set surf [Nget_current surf]
+set fringe 1
 Ndraw_fringe $surf $fringe_nw $fringe_ne $fringe_sw $fringe_se
     
 } 
 
 ###########################
 proc place_narrow {W x y} {
-global Nv_ n_arrow
+
+global Nv_ n_arrow n_arrow_size
+global n_arrow_x n_arrow_y n_arrow_z
 
 set y [expr $Nv_(height) - $y]
 
 #Draw North Arrow at selected point
-if {$n_arrow == 1} {
     set curr [Nget_current surf]
     if {$curr} {
-    Ndraw_Narrow $x $y $curr 
+        set location [Nset_Narrow $x $y $curr $n_arrow_size]
+        set n_arrow_x [lindex $location 0]
+        set n_arrow_y [lindex $location 1]
+        set n_arrow_z [lindex $location 2]
+
+        Ndraw_Narrow $n_arrow_x $n_arrow_y $n_arrow_z $n_arrow_size
+        #set chuckbutton
+        set n_arrow 1
     }
+
 #remove canvas binding
     bind $W <Button> {}
-}
 
 }
 

@@ -345,12 +345,14 @@ proc Nv_mkMenu { P mname bnames underlines commands} {
     foreach i $bnames {
 	set cmd [concat [lindex $commands $j] \"$i\"]
 	set underline [lindex $underlines $j]
-	if { [lindex $cmd 0] == "Cascade"} {
-	set menu_name [lindex $cmd 1]
-	set menu_build [lindex $cmd 2]
-	$P.m add cascade -label $i -underline $underline -menu \
-	$P.m.$menu_name
-	$menu_build $P.m.$menu_name
+	if { [lindex $cmd 0] == "Separator"} {
+		$P.m add separator
+	} elseif { [lindex $cmd 0] == "Cascade"} {
+		set menu_name [lindex $cmd 1]
+		set menu_build [lindex $cmd 2]
+		$P.m add cascade -label $i -underline $underline -menu \
+		$P.m.$menu_name
+		$menu_build $P.m.$menu_name
 	} else {
 	$P.m add command -label $i -underline $underline -command \
 	    "inform [concat $i]; $cmd"

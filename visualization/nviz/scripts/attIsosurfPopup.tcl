@@ -69,7 +69,8 @@ proc mkIsosurfAttPopup {w id att {mode 0}} {
     frame $w.f2 -relief raised -border 1
     frame $w.f3 -relief raised -border 1
     frame $w.f4 -relief raised -border 1
-    pack $w.f1 $w.f2 $w.f3 $w.f4 -side top -fill both -expand yes
+#Packed at end
+##  pack $w.f1 $w.f2 $w.f3 $w.f4 -side top -fill both -expand yes
 
     # label
     label $w.f1.name -text "Change Attribute: $att"
@@ -116,6 +117,9 @@ proc mkIsosurfAttPopup {w id att {mode 0}} {
     button $w.f4.cancel -text "Cancel" \
     -command "set attIsoPopup_Status \"no_change\" ; destroy $w"
     pack $w.f4.accept $w.f4.cancel -side left -fill both -expand yes
+
+    #Pack frames
+    pack $w.f1 $w.f2 $w.f3 $w.f4 -side top -fill both -expand yes
 
     bind $w <Any-Enter> [list focus $w]
     focus $w
