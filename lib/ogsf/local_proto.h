@@ -44,6 +44,7 @@ void GK_update_tension(void);
 void GK_update_frames(void);
 void GK_set_numsteps(int);
 void GK_clear_keys(void);
+void GK_print_keys(char *);
 int GK_move_key(float, float, float);
 int GK_delete_key(float, float, int);
 int GK_add_key(float, unsigned long, int, float);
@@ -51,6 +52,7 @@ void GK_do_framestep(int, int);
 void GK_show_path(int);
 void GK_show_vect(int);
 void GK_show_site(int);
+void GK_show_vol(int);
 
 /* From GP2.c */
 int GP_site_exists(int);
@@ -95,6 +97,7 @@ int GS_transp_is_set(void);
 void GS_get_modelposition1(float *);
 void GS_get_modelposition(float *, float *);
 void GS_draw_X(int, float *);
+void GS_set_Narrow(int *, int, float *);
 void GS_draw_line_onsurf(int, float, float, float, float);
 int GS_draw_nline_onsurf(int, float, float, float, float, float *, int);
 void GS_draw_flowline_at_xy(int, float, float);
@@ -189,7 +192,15 @@ void GS_init_view(void);
 void GS_clear(int);
 double GS_get_aspect(void);
 int GS_has_transparency(void);
-/* void GS_getlight_position(int, float *, float *, float *, int);*/
+void GS_zoom_setup(int *, int *, int *, int *, int *, int *);
+int GS_write_zoom(char *, unsigned int, unsigned int);
+void GS_draw_all_list(void);
+void GS_delete_list(GLuint);
+int GS_draw_legend(char *, GLuint *, int, int *, float *, int *);
+int GS_draw_fringe(int, int *);
+void GS_getlight_position(int, float *, float *, float *, int *);
+void GS_getlight_color(int, float *, float *, float *);
+void GS_getlight_ambient(int, float *, float *, float *);
 
 /* From GSX.c */
 int GS_check_cancel(void);
@@ -250,12 +261,15 @@ int GVL_get_volname(int, char *);
 void GVL_set_trans(int, float, float, float);
 int GVL_get_trans(int, float *, float *, float *);
 void GVL_draw_vol(int);
+void GVL_draw_wire(int);
 void GVL_alldraw_vol(void);
 int GVL_Set_ClientData(int, void *);
 void *GVL_Get_ClientData(int);
 void GVL_get_dims(int, int *, int *, int *);
 void GVL_set_focus_center_map(int);
 
+int GVL_isosurf_move_up(int, int);
+int GVL_isosurf_move_down(int, int);
 void GVL_isosurf_get_drawres(int, int *, int *, int *);
 int GVL_isosurf_set_drawres(int, int, int, int);
 int GVL_isosurf_get_drawmode(int, int *);
@@ -272,7 +286,11 @@ int GVL_isosurf_num_isosurfs(int);
 int GVL_isosurf_set_maskmode(int, int, int);
 int GVL_isosurf_get_maskmode(int, int, int *);
 
+int GVL_slice_move_up(int, int);
+int GVL_slice_move_down(int, int);
 void GVL_slice_get_drawres(int, int *, int *, int *);
+int GVL_slice_get_transp(int, int, int *);
+int GVL_slice_set_transp(int, int, int);
 int GVL_slice_set_drawres(int, int, int, int);
 int GVL_slice_get_drawmode(int, int *);
 int GVL_slice_set_drawmode(int, int);
@@ -468,6 +486,7 @@ void gsd_draw_asterisk(float *, unsigned long, float);
 void gsd_draw_gyro(float *, unsigned long, float);
 void gsd_3dcursor(float *);
 void dir_to_slope_aspect(float *, float *, float *, int);
+int gsd_north_arrow (float *, float, GLuint);
 int gsd_arrow(float *, unsigned long, float, float *, float, geosurf *);
 int gsd_arrow_onsurf(float *, float *, unsigned long, int, geosurf *);
 void gsd_3darrow(float *, unsigned long, float, float, float *, float);
