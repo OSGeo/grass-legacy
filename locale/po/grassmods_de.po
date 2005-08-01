@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-18 07:17+0200\n"
-"PO-Revision-Date: 2005-07-19 08:02+0200\n"
+"POT-Creation-Date: 2005-08-01 14:49+0200\n"
+"PO-Revision-Date: 2005-08-01 15:14+0200\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -435,9 +435,9 @@ msgid "Remove all frames and erase the screen"
 msgstr "Löscht alle Frames im Monitor."
 
 #: ../display/d.erase/main.c:52 ../display/d.font.freetype/main.c:102
-#: ../display/d.nviz/main.c:248 ../display/d.paint.labels/main.c:64
-#: ../display/d.text.freetype/main.c:314 ../display/d.vect/main.c:287
-#: ../imagery/i.points/main.c:55
+#: ../display/d.legend/main.c:246 ../display/d.nviz/main.c:248
+#: ../display/d.paint.labels/main.c:64 ../display/d.text.freetype/main.c:314
+#: ../display/d.vect/main.c:287 ../imagery/i.points/main.c:55
 msgid "No graphics device selected"
 msgstr "Keine Graphik-Ausgabe ausgewählt."
 
@@ -503,6 +503,160 @@ msgid ""
 msgstr ""
 "Farbe, die benutzt werden soll. Entweder GRASS Standardfarben oder R:G:B "
 "Tripel (durch Doppelpunkte getrennt)."
+
+#: ../display/d.legend/main.c:70
+#, fuzzy
+msgid ""
+"Displays a legend for a raster map in the active frame of the graphics "
+"monitor."
+msgstr "a für a von."
+
+#: ../display/d.legend/main.c:78 ../raster/r.describe/main.c:48
+msgid "Name of raster map"
+msgstr "Name der Rasterkarte"
+
+#: ../display/d.legend/main.c:85
+msgid "Sets the legend's text color"
+msgstr "Setzt die Texfarbe für die Legende."
+
+#: ../display/d.legend/main.c:92
+msgid "Number of text lines (useful for truncating long legends)"
+msgstr "Anzahl der Textlinien (nützlich zum Kürzen langer Legenden)"
+
+#: ../display/d.legend/main.c:100
+msgid "Thinning factor (thin=10 gives cats 0,10,20...)"
+msgstr "Ausdünnungsfaktor (thin= 10 gibt Kategorien 0, 10, 20,...)."
+
+#: ../display/d.legend/main.c:107
+#, fuzzy
+msgid "Number of text labels for smooth gradient legend"
+msgstr "von für"
+
+#: ../display/d.legend/main.c:115
+#, fuzzy
+msgid "Screen coordinates to place the legend (as percentage)"
+msgstr "Bildschirm"
+
+#: ../display/d.legend/main.c:123
+#, fuzzy
+msgid "List of discrete category numbers/values for legend"
+msgstr "Liste von für"
+
+#: ../display/d.legend/main.c:131
+#, fuzzy
+msgid "Use a subset of the map range for the legend (min,max)"
+msgstr "a von für"
+
+#: ../display/d.legend/main.c:136
+msgid "Do not show category labels"
+msgstr "Gebe Kategorielabel aus."
+
+#: ../display/d.legend/main.c:140
+#, fuzzy
+msgid "Do not show category numbers"
+msgstr "nicht"
+
+#: ../display/d.legend/main.c:144
+#, fuzzy
+msgid "Skip categories with no label"
+msgstr "Nein"
+
+#: ../display/d.legend/main.c:148
+#, fuzzy
+msgid "Draw smooth gradient"
+msgstr "Ziehen"
+
+#: ../display/d.legend/main.c:152
+msgid "Use mouse to size & place legend"
+msgstr "Benutze Maus zum Plazieren und zur Größeneinstellung der Legende."
+
+#: ../display/d.legend/main.c:156
+msgid "Flip legend"
+msgstr "Drehe Legende."
+
+#: ../display/d.legend/main.c:177
+#, fuzzy, c-format
+msgid "Don't know the color %s"
+msgstr "s"
+
+#: ../display/d.legend/main.c:227
+#, fuzzy, c-format
+msgid "Raster file [%s] not available"
+msgstr "s"
+
+#: ../display/d.legend/main.c:230
+#, fuzzy, c-format
+msgid "Color file for [%s] not available"
+msgstr "s"
+
+#: ../display/d.legend/main.c:241 ../ps/ps.map/ps_clrtbl.c:38
+#, c-format
+msgid "Category file for [%s] not available"
+msgstr "Kategorie-Dateien für [%s] sind nicht vorhanden. "
+
+#: ../display/d.legend/main.c:249 ../display/d.paint.labels/main.c:98
+#: ../display/d.text.freetype/main.c:320
+msgid "No current window"
+msgstr "Kein aktuelles Fenster."
+
+#: ../display/d.legend/main.c:252 ../display/d.paint.labels/main.c:101
+#: ../display/d.text.freetype/main.c:322
+msgid "Current window not available"
+msgstr "Aktuelles Fenster ist nicht vorhanden."
+
+#: ../display/d.legend/main.c:301
+msgid "Legend box lies outside of frame. Text may not display properly."
+msgstr "Legende liegt außerhalb des Rahmens. Text könnte nicht richtig dargestellt werden."
+
+#: ../display/d.legend/main.c:305
+#, c-format
+#, fuzzy
+msgid "Drawing horizontal legend as box width exceeds height.\n"
+msgstr "Quader n"
+
+#: ../display/d.legend/main.c:316
+#, fuzzy, c-format
+msgid "Range information for [%s] not available (run r.support)"
+msgstr "s"
+
+#: ../display/d.legend/main.c:329 ../display/d.legend/main.c:472
+msgid "Color range exceeds lower limit of actual data"
+msgstr "Farbspanne überschreitet untere Grenze des aktuellen Datensatzes."
+
+#: ../display/d.legend/main.c:333 ../display/d.legend/main.c:476
+msgid "Color range exceeds upper limit of actual data"
+msgstr "Farbspanne überschreitet obere Grenze des aktuellen Datensatzes."
+
+#: ../display/d.legend/main.c:387
+#, c-format
+#, fuzzy
+msgid "use=%s out of range [%d,%d]. (extend with range= ?)"
+msgstr "use=%s out of range [%d,%d]. (extend with range= ?)"
+
+#: ../display/d.legend/main.c:427
+msgid "Nothing to draw! (no categories with labels? out of range?)"
+msgstr "Nichts zu zeichnen! (Keine Kategorien mit Labeln? Außerhalb der Spanne?"
+
+#: ../display/d.legend/main.c:438
+#, c-format
+#, fuzzy
+msgid "Forcing a smooth legend: too many categories for current window height.\n"
+msgstr "a für n"
+
+#: ../display/d.legend/main.c:459
+#, fuzzy, c-format
+msgid "Range information for [%s] not available"
+msgstr "s"
+
+#: ../display/d.legend/main.c:483
+#, c-format
+#, fuzzy
+msgid "use=%s out of range [%.3f, %.3f]. (extend with range= ?)"
+msgstr "s"
+
+#: ../display/d.legend/main.c:819
+msgid "Nothing to draw! (no categories with labels?)"
+msgstr "Nichts zu zeichnen! Evtl. keine Kategorien mit Labeln?"
 
 #: ../display/d.mapgraph/main.c:29
 msgid ""
@@ -656,14 +810,6 @@ msgstr "Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt
 #, c-format
 msgid "Can't open label file [%s]"
 msgstr "Kann Label-Datei [%s] nicht öffnen."
-
-#: ../display/d.paint.labels/main.c:98 ../display/d.text.freetype/main.c:320
-msgid "No current window"
-msgstr "Kein aktuelles Fenster."
-
-#: ../display/d.paint.labels/main.c:101 ../display/d.text.freetype/main.c:322
-msgid "Current window not available"
-msgstr "Aktuelles Fenster ist nicht vorhanden."
 
 #: ../display/d.paint.labels/main.c:104
 msgid "Setting map window"
@@ -906,11 +1052,15 @@ msgstr "Vertikale Labelausrichtung"
 
 #: ../display/d.vect/main.c:246
 msgid "Minimum region size (average from height and width) when map is displayed"
-msgstr "Minimale Größe der Region (Durchschnitt von Höhe und Breite) beim Zeichnen der Karte."
+msgstr ""
+"Minimale Größe der Region (Durchschnitt von Höhe und Breite) beim Zeichnen "
+"der Karte."
 
 #: ../display/d.vect/main.c:253
 msgid "Maximum region size (average from height and width) when map is displayed"
-msgstr "Maximale Größe der Region (Durchschnitt von Höhe und Breite) beim Zeichnen der Karte."
+msgstr ""
+"Maximale Größe der Region (Durchschnitt von Höhe und Breite) beim Zeichnen "
+"der Karte."
 
 #: ../display/d.vect/main.c:258 ../raster/r.cost/main.c:180
 #: ../raster/wildfire/r.ros/main.c:297
@@ -919,7 +1069,9 @@ msgstr "Detaillierte Ausgabe"
 
 #: ../display/d.vect/main.c:263
 msgid "Get area fill colors from map table column 'GRASSRGB' (RRR:GGG:BBB)"
-msgstr "Nimm Flächenfüllfarbe für die Karte aus der Tabellenspalte 'GRASSRGB' (RRR:GGG:BBB). "
+msgstr ""
+"Nimm Flächenfüllfarbe für die Karte aus der Tabellenspalte 'GRASSRGB' (RRR:"
+"GGG:BBB). "
 
 #: ../display/d.vect/main.c:268
 msgid "Fill areas with random colors according to category number"
@@ -993,7 +1145,9 @@ msgstr "Kann Flächen nicht darstellen, da die Topologie nicht vorhanden ist."
 
 #: ../display/d.vect/main.c:531
 msgid "Cannot display lines by id, topology not available"
-msgstr "Kann die Linien nicht über die ID darstellen, da die Topologie nicht vorhanden ist."
+msgstr ""
+"Kann die Linien nicht über die ID darstellen, da die Topologie nicht "
+"vorhanden ist."
 
 #: ../display/d.vect/main.c:556
 msgid "Cannot display topology, not available"
@@ -1008,8 +1162,8 @@ msgstr "Fertig\n"
 msgid "Building spatial index ..."
 msgstr "Baue räumlichen Index..."
 
-#: ../display/d.what.vect/main.c:157 ../imagery/i.group/main.c:162
-#: ../imagery/i.group/main.c:200
+#: ../display/d.what.vect/main.c:157 ../imagery/i.group/main.c:164
+#: ../imagery/i.group/main.c:202
 #, c-format
 msgid "Done.\n"
 msgstr "Fertig\n"
@@ -1754,7 +1908,11 @@ msgid ""
 "allowing the user to outline regions of interest. The resulting signature "
 "file can be used as input for i.maxlik or as a seed signature file for i."
 "cluster."
-msgstr "Ein Bildbearbeitungsmodul, das spectrale Signaturen aus einem Bild erzeugt, indem es dem Nutzer erlaubt, interessante Flächen zu digitalisieren. Die resultierende Signaturdatei kann als Eingabe für das Modul i.maxlik oder als Seed-Signaturen für i.cluster benutzt werden."
+msgstr ""
+"Ein Bildbearbeitungsmodul, das spectrale Signaturen aus einem Bild erzeugt, "
+"indem es dem Nutzer erlaubt, interessante Flächen zu digitalisieren. Die "
+"resultierende Signaturdatei kann als Eingabe für das Modul i.maxlik oder als "
+"Seed-Signaturen für i.cluster benutzt werden."
 
 #: ../imagery/i.class/main.c:33
 msgid "No graphics device selected."
@@ -1826,8 +1984,7 @@ msgid "prepare_signature: outline has odd number of points."
 msgstr "prepare_signature: Umrandung hat eine ungerade Anzahl von Punkten."
 
 #: ../imagery/i.class/signature.c:115
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "prepare_signature: scan line %d has odd number of points."
 msgstr "prepare_signature: Linie %d hat eine ungerade Anzahl von Punkten."
 
@@ -1912,8 +2069,7 @@ msgid "%d classes, %.2f%% points stable\n"
 msgstr "%d Klassen, %.2f%% Punkte stabil.\n"
 
 #: ../imagery/i.cluster/checkpt.c:41
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Iteration %d: %% Convergence: %.2f (%s elapsed, %s left)"
 msgstr "Durchlauf %d: %% Konvergenz: %.2f (%s elapsed, %s links)"
 
@@ -2366,19 +2522,17 @@ msgid "output imaginary part arrays stored as raster file"
 msgstr "Ausgabe part"
 
 #: ../imagery/i.fft/fftmain.c:88
-#, fuzzy
 msgid "Range of values in output display files"
-msgstr "Bereich von Ausgabe"
+msgstr ""
 
 #: ../imagery/i.fft/fftmain.c:101
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %s - Unable to open the input raster map\n"
-msgstr "s s"
+msgstr "%s: %s - Kann die Raster-Eingabekarte nicht öffnen.\n"
 
 #: ../imagery/i.fft/fftmain.c:110
-#, fuzzy
 msgid "Raster MASK found, consider to remove (see man-page). Will continue..."
-msgstr "see Seite."
+msgstr "Raster MASKE gefunden, denken Sie über das Löschen nach (siehe man-Seiten). Fahre trotzdem fort..."
 
 #: ../imagery/i.fft/fftmain.c:117
 #, fuzzy, c-format
@@ -2386,79 +2540,196 @@ msgid "%s: %s - illegal file name for real part\n"
 msgstr "s s"
 
 #: ../imagery/i.fft/fftmain.c:123
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "%s: %s - illegal file name for imaginary part\n"
-msgstr "s s"
+msgstr "%s: %s - ungültiger Dateiname für imaginary part\n"
 
 #: ../imagery/i.fft/fftmain.c:129
-#, fuzzy
 msgid "Range less than or equal to zero not allowed."
-msgstr "Bereich wenige gleich sind zu nicht."
+msgstr "Bereich weniger oder gleich null ist nicht erlaubt."
 
 #: ../imagery/i.fft/fftmain.c:150
-#, fuzzy
 msgid "Insufficent memory for allocation of data sturcture"
-msgstr "für von"
+msgstr ""
 
 #: ../imagery/i.fft/fftmain.c:153
-#, fuzzy
 msgid "Initializing data...\n"
-msgstr "n"
+msgstr "Initialisiere Daten...\n"
 
 #: ../imagery/i.fft/fftmain.c:167
-#, fuzzy
 msgid "Reading the raster map..."
-msgstr "Schlüsselt Rasterkarten um."
+msgstr "Lese die Rasterkarte..."
 
 #: ../imagery/i.fft/fftmain.c:170
-#, fuzzy
 msgid "Error while reading input raster map."
-msgstr "Ein Fehler trat während des Lesens der Signaturdatei auf."
+msgstr "Ein Fehler trat während des Lesens der Eingaberasterkarte auf."
 
 #: ../imagery/i.fft/fftmain.c:179
-#, fuzzy
 msgid "Starting FFT..."
-msgstr "Zeichne..."
+msgstr "Starte FFT..."
 
 #: ../imagery/i.fft/fftmain.c:181
-#, fuzzy
 msgid "FFT completed..."
-msgstr "fertiggestellt."
+msgstr "FFT fertiggestellt..."
 
 #: ../imagery/i.fft/fftmain.c:199
-#, fuzzy
 msgid "Rotating data..."
-msgstr "Zeichne..."
+msgstr "Drehe Daten..."
 
 #: ../imagery/i.fft/fftmain.c:221
-#, fuzzy
 msgid "Writing transformed data to file..."
-msgstr "Schreiben läuft."
+msgstr "Schreibe transformierte Daten in Datei..."
 
 #: ../imagery/i.fft/fftmain.c:227
-#, fuzzy
 msgid "Writing viewable versions of transformed data to files..."
-msgstr "Schreiben läuft von."
+msgstr "Schreibe sichtbare Versionen der transformierten Daten in Dateien..."
 
-#: ../imagery/i.fft/fftmain.c:265
-#, fuzzy
+#: ../imagery/i.fft/fftmain.c:265 ../imagery/i.ifft/ifftmain.c:241
 msgid "Transform successful."
-msgstr "Umformen."
+msgstr "Umformenung erfolgreich."
 
-#: ../imagery/i.fft/orig_wind.c:30
+#: ../imagery/i.fft/orig_wind.c:30 ../imagery/i.ifft/orig_wind.c:29
 #, fuzzy
 msgid "The real and imaginary original windows did not match."
 msgstr "Original nicht übereinstimmen mit."
 
 #: ../imagery/i.fft/save_fft.c:18 ../imagery/i.fft/save_fft.c:24
-#, fuzzy
 msgid "Unable to open file in the cell_misc directory."
-msgstr "Kann Signaturdatei nicht öffnen."
+msgstr "Kann Datei im cell_misc Verzeichnis nicht öffnen."
 
 #: ../imagery/i.find/main.c:43
-#, fuzzy, c-format
+#, c-format
 msgid "usage: %s location mapset element file\n"
-msgstr "s"
+msgstr "Benutzung: %s location mapset element Datei\n"
+
+#: ../imagery/i.gensig/check.c:24
+#, fuzzy, c-format
+msgid "Signature [%d] not invertible."
+msgstr "Signatur nicht."
+
+#: ../imagery/i.gensig/check.c:31
+#, c-format
+#, fuzzy
+msgid "Signature [%d] can't get eigen values."
+msgstr "Signatur."
+
+#: ../imagery/i.gensig/check.c:39
+#, c-format
+#, fuzzy
+msgid "Signature [%d] not positive definite."
+msgstr "Signatur nicht."
+
+#: ../imagery/i.gensig/covariance.c:27
+msgid "Calculating class covariance matrix..."
+msgstr "Berechne Klassenkovatianz-Matrix..."
+
+#: ../imagery/i.gensig/covariance.c:29
+msgid "Calculating class covariance matrices..."
+msgstr "Berechne Klassenkovarianzmatrizen..."
+
+#: ../imagery/i.gensig/get_train.c:28
+msgid "Finding training classes ..."
+msgstr "Finde Trainings-Klassen..."
+
+#: ../imagery/i.gensig/get_train.c:33
+msgid "Unable to read raster row."
+msgstr "Kann die Rasterreihe nicht lesen."
+
+#: ../imagery/i.gensig/get_train.c:55
+#, c-format
+msgid "Training class [%d] only has one cell - this class will be ignored."
+msgstr "Trainingsklasse [%d] hat nur eine Zelle - diese Klasse wird ignoriert."
+
+#: ../imagery/i.gensig/get_train.c:59
+msgid "Training map has no classes."
+msgstr "Trainingskarte hat keine Klassen."
+
+#: ../imagery/i.gensig/get_train.c:74
+msgid "1 class."
+msgstr "1 Klasse"
+
+#: ../imagery/i.gensig/get_train.c:76
+#, c-format
+msgid "%d classes."
+msgstr "%d Klassen."
+
+#: ../imagery/i.gensig/main.c:21
+msgid "Generates statistics for i.maxlik from raster map layer."
+msgstr "Erstelle Statistiken für i.maxlik aus der Rasterkarte."
+
+#: ../imagery/i.gensig/means.c:25
+msgid "Calculating class mean ..."
+msgstr "Berechne Klassenmittel..."
+
+#: ../imagery/i.gensig/means.c:27
+msgid "Calculating class means ..."
+msgstr "Berechne die Klassenmittel..."
+
+#: ../imagery/i.gensig/opencell.c:14
+#, c-format
+msgid "Unable to open raster map [%s]."
+msgstr "Kann die Rasterkarte %s nicht öffnen."
+
+#: ../imagery/i.gensig/openfiles.c:17
+#, c-format
+msgid "Unable to read REF file for subgroup [%s] in group [%s]."
+msgstr "Kann die REF-Datei für Subgruppe [%s] in Gruppe [%s] nicht lesen."
+
+#: ../imagery/i.gensig/openfiles.c:21
+#, c-format
+msgid "Subgroup [%s] in group [%s] contains no files."
+msgstr "Subgruppe [%s] in Gruppe [%s] enthält keine Dateien."
+
+#: ../imagery/i.gensig/parse.c:15
+msgid "ground truth training map"
+msgstr "Ground Truth Trainingskarte."
+
+#: ../imagery/i.gensig/parse.c:22
+msgid "imagery group"
+msgstr "Name der Bildgruppe"
+
+#: ../imagery/i.gensig/parse.c:29
+msgid "subgroup containing image files"
+msgstr "Subgruppe enthält Bilddateien."
+
+#: ../imagery/i.gensig/parse.c:35
+msgid "resultant signature file"
+msgstr "Resultierende Signatur-Datei."
+
+#: ../imagery/i.gensig/parse.c:48
+#, c-format
+msgid "Training map [%s] not found."
+msgstr "Trainingskarte [%s] nicht gefunden."
+
+#: ../imagery/i.gensig/parse.c:51
+#, c-format
+msgid "Group [%s] not found."
+msgstr "Gruppe [%s] nicht gefunden."
+
+#: ../imagery/i.gensig/parse.c:54
+#, c-format
+msgid "Subgroup [%s] not found."
+msgstr "Subgruppe [%s] nicht gefunden."
+
+#: ../imagery/i.gensig/print_sig.c:14
+#, c-format
+msgid "#%s"
+msgstr "#%s"
+
+#: ../imagery/i.gensig/write_sig.c:14
+#, fuzzy, c-format
+msgid "Unable to create signature file [%s] for subgroup [%s] in group [%s]."
+msgstr "s s s."
+
+#: ../imagery/i.gensig/write_sig.c:18
+#, fuzzy, c-format
+msgid "Writing signature file [%s] ..."
+msgstr "s."
+
+#: ../imagery/i.gensig/write_sig.c:20 ../raster/r.support/front/front.c:179
+msgid "Done."
+msgstr "Fertig."
 
 #: ../imagery/i.group/main.c:30
 msgid "Creates and edits groups and subgroups of imagery files."
@@ -2511,51 +2782,148 @@ msgstr "Gruppe %s - existiert noch nicht...\n"
 msgid "Creating new group %s\n"
 msgstr "Erzeuge neue Gruppe %s.\n"
 
-#: ../imagery/i.group/main.c:119
-msgid "Adding files to sub-group\n"
-msgstr "Füge Dateien zu Untergruppe hinzu.\n"
+#: ../imagery/i.group/main.c:119 ../imagery/i.group/main.c:125
+#, fuzzy, c-format
+msgid "Adding files to group <%s>\n"
+msgstr "s"
 
-#: ../imagery/i.group/main.c:123
-msgid "Adding files to group\n"
-msgstr "Füge Dateien zur Gruppe hinzu.\n"
+#: ../imagery/i.group/main.c:121
+#, fuzzy, c-format
+msgid "Adding files to sub-group <%s>\n"
+msgstr "s"
 
-#: ../imagery/i.group/main.c:147 ../imagery/i.group/main.c:185
+#: ../imagery/i.group/main.c:149 ../imagery/i.group/main.c:187
 #, c-format
 msgid "Unable to find raster <%s>"
 msgstr "Kann die Rasterkarte <%s> nicht finden."
 
-#: ../imagery/i.group/main.c:149 ../imagery/i.group/main.c:187
+#: ../imagery/i.group/main.c:151 ../imagery/i.group/main.c:189
 #, c-format
 msgid "Adding raster map %s\n"
 msgstr "Füge Rasterkarte %s hinzu. \n"
 
-#: ../imagery/i.group/main.c:153 ../imagery/i.group/main.c:191
+#: ../imagery/i.group/main.c:155 ../imagery/i.group/main.c:193
 #, c-format
 msgid "Raster map <%s> exists in group\n"
 msgstr "Rasterkarte <%s> existiert bereits in der Gruppe.\n"
 
-#: ../imagery/i.group/main.c:154 ../imagery/i.group/main.c:192
+#: ../imagery/i.group/main.c:156 ../imagery/i.group/main.c:194
 #, c-format
 msgid "Skipping <%s>...\n"
 msgstr "Überspringe <%s>...\n"
 
-#: ../imagery/i.group/main.c:234
+#: ../imagery/i.group/main.c:236
 #, c-format
 msgid "Found file %s@%s in Group\n"
 msgstr "Habe Datei %s@%s in der Gruppe gefunden.\n"
 
-#: ../imagery/i.group/main.c:244
+#: ../imagery/i.group/main.c:246
 msgid "Done ... Put group ref\n"
 msgstr "Fertig... Gruppen Referenz\n"
 
-#: ../imagery/i.group/main.c:281
+#: ../imagery/i.group/main.c:283
 #, c-format
 msgid "Found file %s@%s in Sub-Group\n"
 msgstr "Habe Datei %s@%s in Untergruppe gefunden.\n"
 
-#: ../imagery/i.group/main.c:291
+#: ../imagery/i.group/main.c:293
 msgid "Done ... Put subgroup ref\n"
 msgstr "Fertig... Untergruppenreferenz \n"
+
+#: ../imagery/i.ifft/ifftmain.c:56
+#, fuzzy
+msgid "Inverse Fast Fourier Transform (ifft) for image processing."
+msgstr "Umformen für Bild."
+
+#: ../imagery/i.ifft/ifftmain.c:65
+#, fuzzy
+msgid "input raster file (image fft, real part)"
+msgstr "Bild part"
+
+#: ../imagery/i.ifft/ifftmain.c:73
+#, fuzzy
+msgid "input raster file (image fft, imaginary part"
+msgstr "Bild part"
+
+#: ../imagery/i.ifft/ifftmain.c:81
+#, fuzzy
+msgid "output inverse raster file after ifft"
+msgstr "Ausgabe"
+
+#: ../imagery/i.ifft/ifftmain.c:93
+#, fuzzy, c-format
+msgid "%s: %s - Unable to find the real-image map."
+msgstr "s s."
+
+#: ../imagery/i.ifft/ifftmain.c:98
+#, fuzzy
+msgid ""
+"Unable to open real-image in the cell_misc directory.\n"
+"Input map probably wasn't created by i.fft"
+msgstr "Bild i"
+
+#: ../imagery/i.ifft/ifftmain.c:101
+#, fuzzy, c-format
+msgid "%s: %s - Unable to find the imaginary-image."
+msgstr "s s."
+
+#: ../imagery/i.ifft/ifftmain.c:106
+#, fuzzy
+msgid ""
+"Unable to open imaginary-image in the cell_misc directory.\n"
+"Input map probably wasn't created by i.fft"
+msgstr "Bild i"
+
+#: ../imagery/i.ifft/ifftmain.c:110
+#, fuzzy, c-format
+msgid "%s: %s - illegal name for output raster file."
+msgstr "s s."
+
+#: ../imagery/i.ifft/ifftmain.c:128
+#, c-format
+#, fuzzy
+msgid "Power 2 values : [%d] rows [%d] columns."
+msgstr "Kraft."
+
+#: ../imagery/i.ifft/ifftmain.c:137
+#, fuzzy
+msgid "Insufficent memory for allocation of data structure."
+msgstr "für von."
+
+#: ../imagery/i.ifft/ifftmain.c:140
+#, fuzzy
+msgid "Reading the raster maps..."
+msgstr "Schlüsselt Rasterkarten um."
+
+#: ../imagery/i.ifft/ifftmain.c:147
+#, fuzzy
+msgid "Masking the raster maps..."
+msgstr "Schlüsselt Rasterkarten um."
+
+#: ../imagery/i.ifft/ifftmain.c:166
+#, fuzzy
+msgid "Rotating data arrays..."
+msgstr "Zeichne..."
+
+#: ../imagery/i.ifft/ifftmain.c:201
+#, fuzzy
+msgid "Starting Inverse FFT..."
+msgstr "Zeichne..."
+
+#: ../imagery/i.ifft/ifftmain.c:203
+#, fuzzy
+msgid "Inverse FFT completed..."
+msgstr "fertiggestellt."
+
+#: ../imagery/i.ifft/ifftmain.c:210
+#, fuzzy
+msgid "Unable to open output file."
+msgstr "Öffnen der Ausgabedatei nicht möglich"
+
+#: ../imagery/i.ifft/ifftmain.c:215
+#, fuzzy
+msgid "Writing data to file..."
+msgstr "Schreiben läuft."
 
 #: ../imagery/i.points/main.c:30
 msgid "Mark ground control points on image to be rectified."
@@ -2701,11 +3069,6 @@ msgstr "Aktuelle Region kann nicht gesetzt werden."
 #: ../ps/ps.map/main.c:265
 msgid "Data exists after final 'end' instruction!"
 msgstr "Weitere Daten existieren nach der beendenden 'end'-Instruktion!"
-
-#: ../ps/ps.map/ps_clrtbl.c:38
-#, c-format
-msgid "Category file for [%s] not available"
-msgstr "Kategorie-Dateien für [%s] sind nicht vorhanden. "
 
 #: ../ps/ps.map/ps_clrtbl.c:43 ../ps/ps.map/ps_fclrtbl.c:61
 msgid "Unable to read colors for colorbar"
@@ -3219,10 +3582,6 @@ msgstr "Nur Nicht-Null-Daten"
 #: ../raster/r.describe/main.c:40
 msgid "Prints terse list of category values found in a raster map layer."
 msgstr "Gibt eine kurze Liste der Kategoriewerte einer Rasterkarte aus."
-
-#: ../raster/r.describe/main.c:48
-msgid "Name of raster map"
-msgstr "Name der Rasterkarte"
 
 #: ../raster/r.describe/main.c:57
 msgid "string representing no data cell value"
@@ -5139,10 +5498,6 @@ msgstr ""
 msgid "Removing null file for [%s]...\n"
 msgstr "Entferne null-Datei für [%s]...\n"
 
-#: ../raster/r.support/front/front.c:179
-msgid "Done."
-msgstr "Fertig."
-
 #: ../raster/r.support/front/hitreturn.c:15
 msgid ""
 "\n"
@@ -5503,8 +5858,7 @@ msgid ""
 msgstr "Negativ Nein module ist nicht Nein a Weitere."
 
 #: ../raster/r.texture/h_measure.c:87
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Too many categories (found: %i, max: %i). Try to rescale or reclassify the "
 "map"
@@ -6446,13 +6800,18 @@ msgstr "von ist für Modus"
 msgid ""
 "Number of column used as z coordinate (first column is 1) for points mode. "
 "If 0, z coordinate is not used."
-msgstr "Nummer der Spalte, die als Z-Koordinate im Punkt-Modus genutzt werden soll (Erste Spalte ist 1) von z ist für Modus z ist nicht."
+msgstr ""
+"Nummer der Spalte, die als Z-Koordinate im Punkt-Modus genutzt werden soll "
+"(Erste Spalte ist 1) von z ist für Modus z ist nicht."
 
 #: ../vector/v.in.ascii/in.c:113
 msgid ""
 "Number of column used as category (first column is 1) for points mode. If 0, "
 "unique category is assigned to each row and written to new column 'cat'."
-msgstr "Nummer der Spalte, die als Kategoriespalte im Punkt-Modus benutzt werden soll (erste Spalte ist 1). Sofern 0 wird eine eindeutige Kategorie für jede Reihe erstellt und in die neue Spalte 'cat' geschrieben."
+msgstr ""
+"Nummer der Spalte, die als Kategoriespalte im Punkt-Modus benutzt werden "
+"soll (erste Spalte ist 1). Sofern 0 wird eine eindeutige Kategorie für jede "
+"Reihe erstellt und in die neue Spalte 'cat' geschrieben."
 
 #: ../vector/v.in.ascii/in.c:118
 msgid "Create 3D file"
@@ -6472,7 +6831,9 @@ msgstr "Erwarte keine Kopfzeilen beim Einlesen des Standardformats."
 
 #: ../vector/v.in.ascii/in.c:143
 msgid "Please specify reasonable number of lines to skip."
-msgstr "Bitte geben Sie eine angemessene Zahl von Zeilen an, die übersprungen werden sollen."
+msgstr ""
+"Bitte geben Sie eine angemessene Zahl von Zeilen an, die übersprungen werden "
+"sollen."
 
 #: ../vector/v.in.ascii/in.c:146
 msgid "Please specify z column."
@@ -6560,7 +6921,9 @@ msgstr "Kann Tabelle %s nicht beschreiben."
 msgid ""
 "Number of columns defined (%d) does not match number of columns (%d) in "
 "input."
-msgstr "Die Anzahl der definierten Spalten (%d) stimmt nicht mit der Anzahl der Spalten (%d) der Eingabe überein."
+msgstr ""
+"Die Anzahl der definierten Spalten (%d) stimmt nicht mit der Anzahl der "
+"Spalten (%d) der Eingabe überein."
 
 #: ../vector/v.in.ascii/in.c:349
 #, c-format
@@ -7225,4 +7588,26 @@ msgstr "%d Einträge aktualisiert.\n"
 #, c-format
 msgid "%d update errors\n"
 msgstr "%d aktualisierte Fehler.\n"
+
+#: ../visualization/xganim/Clr_table.c:97
+#: ../visualization/xganim/Clr_table.c:306
+#: ../visualization/xganim/Clr_table.c:333
+#, fuzzy, c-format
+msgid "Unknown visual class [%d]."
+msgstr "s."
+
+#: ../visualization/xganim/Clr_table.c:256
+#, fuzzy
+msgid "Unable to get sufficient gray shades."
+msgstr "Kann die Rasterkarte <%s> nicht finden."
+
+#: ../visualization/xganim/Clr_table.c:273
+#, fuzzy
+msgid "Unable to get sufficient colors."
+msgstr "Kann die Größe nicht setzen."
+
+#: ../visualization/xganim/Clr_table.c:287
+#, fuzzy
+msgid "Using private colormap for DirectColor visual."
+msgstr "private für."
 
