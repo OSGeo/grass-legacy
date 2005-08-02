@@ -10,6 +10,7 @@ SUBDIRS = \
 	r3.null \
 	r3.out.ascii \
 	r3.out.v5d \
+	r3.out.vtk \
 	r3.timestamp
 
 OPENGLBASED = r3.mkdspf
