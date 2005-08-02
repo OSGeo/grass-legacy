@@ -123,7 +123,7 @@ int execute(char *sql, cursor * c)
     if (st->command == SQLP_INSERT || st->command == SQLP_UPDATE) {
 	for (i = 0; i < st->nVal; i++) {
 	    col = cols[i];
-	    if ( st->Val[i].type != SQLP_NULL ) {
+	    if ( st->Val[i].type != SQLP_NULL && st->Val[i].type != SQLP_EXPR) {
 		dtype = db.tables[tab].cols[col].type;
 		stype = st->Val[i].type;
 		if ((dtype == DBF_INT && stype != SQLP_I)
@@ -313,9 +313,64 @@ void get_col_def ( SQLPSTMT *st, int col, int *type, int *width, int *decimals )
 int set_val(int tab, int row, int col, SQLPVALUE * val)
 {
     VALUE *dbval;
+    SQLPVALUE *tmp, *result;
+    double retval;
 
     dbval = &(db.tables[tab].rows[row].values[col]);
-	
+
+    
+
+    /* XXX */
+    if ( val->type == SQLP_EXPR ) {
+      result = (SQLPVALUE*)malloc(sizeof(SQLPVALUE));
+      retval = eval_node( val->expr, tab, row, result );
+      if ( retval == NODE_NULL )
+	{
+	  val->type = SQLP_NULL;
+	}
+      else if ( retval == NODE_TRUE )
+	{
+	  val->i = 1;
+	  val->d = 1.0;
+	  val->s = "TRUE";
+	}
+      else if ( retval == NODE_FALSE )
+	{
+	  val->i = 0;
+	  val->d = 0.0;
+	  val->s = NULL;
+	}
+      else if ( retval == NODE_VALUE )
+	{
+	  /* Ok, got a value, propagate it to the proper type */
+	  tmp = val;
+	  val = result;
+	  /*	  if( tmp->s && !result->s){ free(tmp->s); }
+	    free(tmp);*/
+	  if( val->type == SQLP_I ){
+	    val->d = (double)val->i;
+	    val->s = (char*)malloc(32*sizeof(char));
+	    snprintf( val->s, 32*sizeof(char), "%d", val->i );
+	  }else if( val->type == SQLP_D ){
+	    val->i = (int)val->d;
+	    val->s = (char*)malloc(32*sizeof(char));
+	    snprintf( val->s, 32*sizeof(char), "%g", val->d );
+	  }else if( val->type == SQLP_S ){
+	    val->i = atoi( val->s );
+	    val->d = atof( val->s );
+	  }else{
+	    G_fatal_error("This should not happen: wrong return type in parsing.");
+	  }
+	}
+      else if ( retval == NODE_ERROR )
+	{
+	  G_fatal_error("This should not happen: got a wrong expression structure after parsing.");
+	}
+      else
+	{
+	  G_fatal_error("Unknown return value calling eval_node from set_val");
+	}
+    }
 
     if ( val->type == SQLP_NULL ) {
         dbval->is_null = 1;

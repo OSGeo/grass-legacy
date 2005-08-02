@@ -152,7 +152,7 @@ void sqpValue( char *strval, int intval, double dblval, int type )
     return;
 }
 
-void sqpAssignment( char *col, char *strval, int intval, double dblval, int type )
+void sqpAssignment( char *col, char *strval, int intval, double dblval, SQLPNODE *expval, int type )
 {
     int i;
     
@@ -169,15 +169,19 @@ void sqpAssignment( char *col, char *strval, int intval, double dblval, int type
     sqlpStmt->Val[i].type = type;
     switch ( type  )
       {
-        case (SQLP_S):
-            sqpSaveStr ( &(sqlpStmt->Val[i]), strval );
-            break;	
-        case (SQLP_I):
-	    sqlpStmt->Val[i].i = intval;
-            break;	
-        case (SQLP_D):
-            sqlpStmt->Val[i].d = dblval;
-            break;	
+      case (SQLP_S):
+	  sqpSaveStr ( &(sqlpStmt->Val[i]), strval );
+	  break;	
+      case (SQLP_I):
+	  sqlpStmt->Val[i].i = intval;
+	  break;	
+      case (SQLP_D):
+	  sqlpStmt->Val[i].d = dblval;
+	  break;
+      case (SQLP_EXPR):
+	sqlpStmt->Val[i].expr = expval;
+	/* Don't do anything right now; come back to this when executing */
+	break;
 	/* SQLP_NULL, nothing to do */
       }
 

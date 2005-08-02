@@ -49,7 +49,7 @@ static void print_node ( SQLPNODE *nptr, int level)
 	        fprintf( stderr, "val: %d\n", nptr->value.i); 
 	        break;
 	    case SQLP_S:
-	        fprintf( stderr, "val: %s\n", nptr->value.s); 
+	        fprintf( stderr, "val: '%s'\n", nptr->value.s); 
 	        break;
 	}
     } else { /* SQLP_NODE_COLUMN */
@@ -142,6 +142,11 @@ int sqpPrintStmt(SQLPSTMT *st)
 		break;			
 	    case (SQLP_NULL):
 		fprintf( stderr, "(unknown) : null\n" );
+	      break;
+	  case (SQLP_EXPR):
+	    fprintf(stderr, "(expression) :\n" );
+	    print_node( sqlpStmt->Val[i].expr, 0 );
+	      break;
 	    default:
 		fprintf( stderr, "unknown\n" );
 		break;			

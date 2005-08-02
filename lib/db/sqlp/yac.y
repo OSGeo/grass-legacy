@@ -171,11 +171,15 @@ y_value_list:
 		NULL_VALUE			{ sqpValue( NULL,  0, 0.0, SQLP_NULL ); }
 	|	STRING				{ sqpValue( $1,    0, 0.0, SQLP_S ); }
         |	INTNUM				{ sqpValue( NULL, $1, 0.0, SQLP_I ); }
+        |      '-' INTNUM 			{ sqpValue( NULL, -$2, 0.0, SQLP_I ); }
 	|	FLOATNUM			{ sqpValue( NULL,  0,  $1, SQLP_D ); }
+	| 	'-' FLOATNUM 			{ sqpValue( NULL, 0, -$2, SQLP_D ); }
 	|	y_value_list ',' NULL_VALUE	{ sqpValue( NULL,  0, 0.0, SQLP_NULL ); }
 	|	y_value_list ',' STRING		{ sqpValue( $3,    0, 0.0, SQLP_S ); }
 	|	y_value_list ',' INTNUM		{ sqpValue( NULL, $3, 0.0, SQLP_I ); }
+	| 	y_value_list ',' '-' INTNUM 	{ sqpValue( NULL, -$4, 0.0, SQLP_I ); }
 	|	y_value_list ',' FLOATNUM	{ sqpValue( NULL,  0,  $3, SQLP_D ); }
+	| 	y_value_list ',' '-' FLOATNUM 	{ sqpValue( NULL, 0, -$4, SQLP_D ); }
 	;
 
 y_assignments:
@@ -184,10 +188,11 @@ y_assignments:
 	;
 	
 y_assignment:
-		NAME EQUAL NULL_VALUE	{ sqpAssignment( $1, NULL,  0, 0.0, SQLP_NULL ); }
-	|	NAME EQUAL STRING	{ sqpAssignment( $1,   $3,  0, 0.0, SQLP_S ); }
-        |	NAME EQUAL INTNUM	{ sqpAssignment( $1, NULL, $3, 0.0, SQLP_I ); }
-        |	NAME EQUAL FLOATNUM	{ sqpAssignment( $1, NULL,  0,  $3, SQLP_D ); }
+                NAME EQUAL NULL_VALUE	{ sqpAssignment( $1, NULL,  0, 0.0, NULL, SQLP_NULL ); }
+/*        |	NAME EQUAL STRING	{ sqpAssignment( $1,   $3,  0, 0.0, NULL, SQLP_S ); }
+        |	NAME EQUAL INTNUM	{ sqpAssignment( $1, NULL, $3, 0.0, NULL, SQLP_I ); }
+        |	NAME EQUAL FLOATNUM	{ sqpAssignment( $1, NULL,  0,  $3, NULL, SQLP_D ); }
+*/        |       NAME EQUAL y_expression { sqpAssignment( $1, NULL, 0, 0.0, $3, SQLP_EXPR ); }
 	;
 
 y_condition:	

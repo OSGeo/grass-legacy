@@ -41,6 +41,7 @@
 #define SQLP_I    3 /* integer */
 #define SQLP_D    4 /* float */
 #define SQLP_BOOL 5 /* used only for type of expression */
+#define SQLP_EXPR  6 /* expression XXX */
 
 /* SQL COLUMN TYPES */
 #define SQLP_VARCHAR 1 
@@ -58,10 +59,11 @@
 
 typedef struct
 {
-    int    type; /* SQLP_S, SQLP_I, SQLP_D, SQLP_NULL */
+    int    type; /* SQLP_S, SQLP_I, SQLP_D, SQLP_NULL, SQL_EXPR */
     char   *s; /* pointer to string or NULL */
     int    i;
     double d;
+    struct sqlpnode *expr;
 } SQLPVALUE;
 
 typedef struct sqlpnode 
@@ -117,7 +119,7 @@ void sqpTable( char *table );
 void sqpColumn( char *column );
 void sqpColumnDef( char *column, int type, int width, int decimals );
 void sqpValue( char *strval, int intval, double dblval, int type );
-void sqpAssignment( char *column, char *strval, int intval, double dblval, int type );
+void sqpAssignment( char *column, char *strval, int intval, double dblval, SQLPNODE *expr, int type );
 void sqpOrderColumn( char *col );
 int sqpOperatorCode( char *);
 char *sqpOperatorName( int );
