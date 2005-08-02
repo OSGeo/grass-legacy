@@ -1,0 +1,47 @@
+<H2>DESCRIPTION</H2>
+
+Outputs <I>G3D</I> maps in <I>VTK-ASCII</I> format.  <I>Map's</I> are
+valid G3D map's in the current mapset.  <I>output</I> is the name of
+an VTK-ASCII file which will be written in the current working directory.
+If <I>output</I> is not specified then <B>stdout</B> is used.  
+The module is sensitive to region settings (set with g.region).
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input</B>
+<DD>G3d raster map's to be converted to the VTK-ASCII-format
+
+<DT><B>output</B>
+<DD>Name for the VTK-ASCII output file (.vtk should be set by the user)
+
+<DT><B>null</B>
+<DD>Float value to represent no data cell
+<DD>Default: -99999.99
+
+<DT><B>elevscale</B>
+<DD>Scalefactor for elevation
+<DD>Default: 1.0
+
+</DL>
+
+<H2>NOTES</H2>
+This filter generates a <I>structured grid</I> with <I>celldata</I> and put
+this in a simple VTK-ASCII file. Nor XML or 
+binary output are supported. It is possible to choose more then one G3D map
+to be written in the VTK-ASCII file. Each celldata is named like the G3D map it represents.
+You can visualize this file with the 
+<EM><A HREF="http://www.vtk.org">VTK Toolkit</A></EM>, 
+<EM><A HREF="http://www.paraview.org">Paraview</A></EM> and 
+<EM><A HREF="http://mayavi.sourceforge.net">MayaVi</A></EM> which are based on VTK.
+If you have a G3D map with partly no data, use the threshold filter in paraview to 
+visualize the valid data. Just filter all data which is greater/lesser than the 
+choosen null value in the VTK-ASCII file.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r3.out.ascii.html">r3.out.ascii</A></EM><br>
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+
+<H2>AUTHORS</H2>
+Soeren Gebbert
+
+<p><i>Last changed: $Date$</i>

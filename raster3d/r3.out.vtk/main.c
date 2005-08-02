@@ -1,0 +1,249 @@
+/*
+****************************************************************************
+*
+* MODULE:       r3.out.vtk  
+*   	    	
+* AUTHOR(S):    Original author 
+*               Soeren Gebbert soerengebbert@gmx.de
+* 		08 01 2005 Berlin
+* PURPOSE:      Converts 3D raster maps (G3D) into the VTK-Ascii format  
+*
+* COPYRIGHT:    (C) 2005 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "gis.h"
+#include "G3d.h"
+#include "glocale.h"
+
+
+/*---------------------------------------------------------------------------*/
+/*- Parameters and global variables -----------------------------------------*/
+typedef struct
+{
+  struct Option *input, *output, *null_val, *elevscale;
+  /*struct Flag *xml;*/ /*maybe xml support in the future*/
+} paramType;
+
+void *map = NULL;		/*The 3D Rastermap */
+paramType param;		/*Parameters */
+
+
+/*---------------------------------------------------------------------------*/
+/*- prototypes --------------------------------------------------------------*/
+void fatalError (char *errorMsg);	/*Simple Error message */
+void setParams ();                     /*Fill the paramType structure */
+void writeVTKHeader (FILE * fp, char *vtkFile, G3D_Region region); /*write the vtk-header*/ 
+void G3dTovtk (FILE * fp, G3D_Region region, char *varname);	/*Write the outputdata */
+
+/*---------------------------------------------------------------------------*/
+void
+fatalError (char *errorMsg)
+{
+  /* Close files and exit */
+  if (map != NULL)
+      G3d_closeCell (map);
+
+  G3d_fatalError (errorMsg);
+}
+
+/*---------------------------------------------------------------------------*/
+/*- Convenient way to set up the arguments we are expecting -----------------*/
+void
+setParams ()
+{
+  param.input = G_define_option ();
+  param.input->key = "input";
+  param.input->type = TYPE_STRING;
+  param.input->required = YES;
+  param.input->gisprompt = "old,grid3,3d-raster";
+  param.input->multiple = YES; /* is this correct ?? */
+  param.input->description = _("3dcell map(s) to be converted to VTK-ASCII data format");
+
+  param.output = G_define_option ();
+  param.output->key = "output";
+  param.output->type = TYPE_STRING;
+  param.output->required = NO;
+  param.output->description = _("Name for VTK-ASCII output file");
+
+  param.null_val = G_define_option ();
+  param.null_val->key = "null";
+  param.null_val->type = TYPE_DOUBLE;
+  param.null_val->required = NO;
+  param.null_val->description = _("Float value to represent no data cell");
+  param.null_val->answer = "-99999.99";
+  
+  param.elevscale = G_define_option ();
+  param.elevscale->key = "elevscale";
+  param.elevscale->type = TYPE_DOUBLE;
+  param.elevscale->required = NO;
+  param.elevscale->description = _("Scale factor for elevation");
+  param.elevscale->answer = "1.0";
+
+
+  /* Maybe needed in the future
+     param.xml = G_define_flag ();
+     param.xml->key = 'x';
+     param.xml->description = "Write XML-VTK-format";
+   */
+}
+
+/*---------------------------------------------------------------------------*/
+/*- writes the header. ------------------------------------------------------*/
+void 
+writeVTKHeader (FILE * fp, char *vtkFile, G3D_Region region)
+{
+  G_debug (3, "writeVTKHeader: Writing VTK-Header");
+
+  /*Simple vtk ASCII header */
+
+  fprintf (fp, "# vtk DataFile Version 3.0\n");
+  fprintf (fp, "GRASS 6 Export\n");
+  fprintf (fp, "ASCII\n");
+  fprintf (fp, "DATASET STRUCTURED_POINTS\n");	/*We are using the structured point dataset. */
+  fprintf (fp, "DIMENSIONS %i %i %i\n", region.cols + 1, region.rows + 1, region.depths + 1);
+  fprintf (fp, "ASPECT_RATIO %g %g %g\n", region.ew_res, region.ns_res, (region.tb_res * atof(param.elevscale->answer)));
+  fprintf (fp, "ORIGIN %g %g %g\n", region.west, region.south, region.bottom);
+  fprintf (fp, "CELL_DATA %i\n", region.cols * region.rows * region.depths);	/*We have no pointdata */
+}
+
+/*---------------------------------------------------------------------------*/
+/*- This function does all the work. ----------------------------------------*/
+void
+G3dTovtk (FILE * fp, G3D_Region region, char *varname)
+{
+  double d1 = 0;
+  float fl = 0;
+  double *d1p;
+  float *f1p;
+  int x, y, z;
+  int rows, cols, depths, typeIntern;
+
+  rows = region.rows;
+  cols = region.cols;
+  depths = region.depths;
+
+
+  G_debug (3, "G3dTovtk: Region is rows %i cols %i depths %i", rows, cols, depths);
+
+  fprintf (fp, "SCALARS %s float 1\n", varname);
+  fprintf (fp, "LOOKUP_TABLE default\n");
+
+  typeIntern = G3d_tileTypeMap (map);
+
+  d1p = &d1;
+  f1p = &fl;
+
+  for (z = depths - 1; z >= 0; z--)	/*From the bottom to the top */
+    for (y = rows - 1; y >= 0; y--)     /*From south to the north*/
+      {				
+	for (x = 0; x < cols; x++)
+	  {
+	    G3d_getValue (map, x, y, z, d1p, typeIntern);
+	    if (typeIntern == G3D_FLOAT)
+	      {
+		if (G3d_isNullValueNum (f1p, G3D_FLOAT))
+		  fprintf (fp, "%s ", param.null_val->answer);
+		else
+		  fprintf (fp, "%g ", *f1p);
+	      }
+	    else
+	      {
+		if (G3d_isNullValueNum (&d1, G3D_DOUBLE))
+		  fprintf (fp, "%s ", param.null_val->answer);
+		else
+		  fprintf (fp, "%g ", d1);
+	      }
+	  }
+	fprintf (fp, "\n");
+      }
+}
+
+/*---------------------------------------------------------------------------*/
+/*- Main function: open the input and output files, then call G3dtovtk.  ----*/
+int
+main (int argc, char *argv[])
+{
+  char *output;
+  G3D_Region region;
+  FILE *fp = NULL;
+  struct GModule *module;
+  int i;
+
+  /* Initialize GRASS */
+  G_gisinit (argv[0]);
+
+  module = G_define_module ();
+  module->description = _("Converts 3D raster maps (G3D) into the VTK-Ascii format");
+
+  /* Get parameters from user */
+  setParams ();
+
+  /* Have GRASS get inputs */
+  if (G_parser (argc, argv))
+    exit (-1);
+
+  /*open the output */
+  if (param.output->answer)
+    {
+      fp = fopen (param.output->answer, "w");
+      if (fp == NULL)
+	{
+	  perror (param.output->answer);
+	  G_usage ();
+	  exit (-1);
+	}
+    }
+  else
+    fp = stdout;
+
+
+  /*Loop over all input maps! */
+  for (i = 0; param.input->answers[i] != NULL; i++)
+    {
+
+      G_debug (3, "main: Open 3DRaster file %s", param.input->answers[i]);
+
+      if (NULL == G_find_grid3 (param.input->answers[i], ""))
+	  G3d_fatalError ("main: g3d file not found");
+
+
+      /*Open the map */
+      map = G3d_openCellOld (param.input->answers[i], G_find_grid3 (param.input->answers[i], ""), G3D_DEFAULT_WINDOW,
+			     G3D_TILE_SAME_AS_FILE, G3D_USE_CACHE_DEFAULT);
+      if (map == NULL)
+	G3d_fatalError ("main: error opening g3d file");
+
+      /* Figure out the region from the map */
+      if (i == 0)
+        G3d_getWindow (&region);
+
+      /* Write the vtk-header */
+      if (i == 0)
+	writeVTKHeader (fp, output, region);
+
+      /* Now barf out the contents of the map in vtk form */
+      G3dTovtk (fp, region, param.input->answers[i]);
+
+      /* Close files and exit */
+      if (!G3d_closeCell (map))
+	fatalError ("main: error closing new g3d file");
+
+      map = NULL;
+    }
+
+
+  if (param.output->answer && fp != NULL)
+    if (fclose (fp))
+      fatalError ("main: error closing VTK-ASCII file");
+
+  return 0;
+}
+
+/*---------------------------------------------------------------------------*/
