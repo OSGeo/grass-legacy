@@ -1,11 +1,11 @@
-# GRASS 5.7 RPM spec file for Mandrake
+# GRASS 6.0.0 RPM spec file for Mandrake
 # $Id$
 
 %define PACKAGE_NAME grass
-%define PACKAGE_VERSION 5.7.0
+%define PACKAGE_VERSION 6.0.0
 %define PACKAGE_URL http://grass.itc.it/index.php
 %define _prefix /usr/local
-%define shortver 57
+%define shortver 60
 
 Summary:	GRASS - Geographic Resources Analysis Support System
 Name:		%PACKAGE_NAME
@@ -15,20 +15,20 @@ Copyright:	GPL
 Group:		Applications/GIS
 Vendor:         GRASS Development Team
 URL:		http://grass.itc.it
-Source:		http://grass.itc.it/grass57/source/grass-%{PACKAGE_VERSION}.tar.gz
+Source:		http://grass.itc.it/grass60/source/grass-%{PACKAGE_VERSION}.tar.gz
 Packager:       Markus Neteler <neteler itc it>
 
-Requires:	gdal >= 1.1.9
+Requires:	gdal >= 1.2
 Requires:	tcl >= 8
 Requires:	tk >= 8
-Requires:	mysql
-Requires:	postgresql >= 7.3
-Requires:	proj >= 4.4.7
+#Requires:	mysql
+#Requires:	postgresql >= 7.3
+Requires:	proj >= 4.4.5
 Requires:	lesstif
 BuildRequires:	bison
 BuildRequires:	fftw2-devel
 BuildRequires:	flex
-BuildRequires:	freetype-devel >= 2.0.0
+BuildRequires:	freetype2-devel 
 BuildRequires:	gcc-g77
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 1.2.2
@@ -36,20 +36,21 @@ BuildRequires:	man
 BuildRequires:	lesstif-devel
 BuildRequires:	ncurses-devel >= 5.2
 BuildRequires:  zlib-devel
-BuildRequires:	mysql-devel
-BuildRequires:	postgresql-devel
+#BuildRequires:	mysql-devel
+#BuildRequires:	postgresql-devel
 #BuildRequires:	unixODBC-devel
 
 BuildRoot: %{_builddir}/%{name}-root
 Prefix: %{_prefix}
 
 %description
-GRASS (Geographic Resources Analysis Support System) is a Geographic
-Information System (GIS) used for geospatial data management and
-analysis, image processing, graphics/maps production, spatial
-modeling, and visualization. GRASS is currently used in academic and
-commercial settings around the world, as well as by many governmental
-agencies and environmental consulting companies.
+GRASS (Geographic Resources Analysis Support System), commonly
+referred to as GRASS, is a Geographic Information System
+(GIS) used for geospatial data management and analysis, image
+processing, graphics/maps production, spatial modeling, and
+visualization. GRASS is currently used in academic and commercial
+settings around the world, as well as by many governmental agencies
+and environmental consulting companies.
 
 %prep
 %setup -n grass-%{version}
@@ -62,11 +63,12 @@ CFLAGS="-O2" LDFLAGS="-s" ./configure \
 	--prefix=%%{buildroot}/{_prefix} --bindir=%{buildroot}/%{_bindir} \
 	--enable-shared \
 	--with-cxx \
-	--with-gdal=/usr/local/bin/gdal-config \
+	--with-gdal=/usr/bin/gdal-config \
 	--with-postgres-includes=/usr/include/pgsql --with-postgres-libs=/usr/lib \
 	--with-mysql-includes=/usr/include/mysql --with-mysql-libs=/usr/lib/mysql \
 	--without-odbc \
 	--with-fftw \
+	--with-nls \
 	--with-freetype --with-freetype-includes=/usr/include/freetype2
 
 %build
@@ -106,14 +108,15 @@ rm -rf grass-%{version}
 %files
 %defattr(-,root,root)
 %attr(0755,root,root) %{_prefix}/bin/grass%{shortver}
-%attr(0755,root,root) %{_prefix}/grass-%{PACKAGE_VERSION}/tcltkgrass/script
-%attr(0755,root,root) %{_prefix}/grass-%{PACKAGE_VERSION}/tcltkgrass/main
 %{_prefix}/bin/grass%{shortver}
 %{_prefix}/grass-%{PACKAGE_VERSION}/
 
 %doc AUTHORS COPYING GPL.TXT README REQUIREMENTS.html
 
 %changelog
+* Fri Mar 11 2005 Markus Neteler <neteler itc it> 6.0.0-1
+- updated to GRASS 6.0.0
+
 * Tue Nov 9 2004 Markus Neteler <neteler itc it> 5.7.0-2
 - GRASS 5.3 no longer required as all code moved into this repository
 
@@ -123,4 +126,3 @@ rm -rf grass-%{version}
 
 * Tue May 24 2004 Markus Neteler <neteler itc it> 5.7.0-1beta4
 - rewritten from 5.3 specs
-
