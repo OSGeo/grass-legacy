@@ -28,9 +28,24 @@
 #% required : yes
 #%End
 
+if  [ -z $GISBASE ] ; then
+    echo "You must be in GRASS GIS to run this program."
+ exit 1
+fi   
+
 if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
+
+#### check if we have awk
+AWK=`which awk`
+if [ "$AWK" = "" ] ; then
+    echo "$PROG: awk required, please install awk/gawk first" 2>&1
+    exit 1
+fi
+
+# setting environment, so that awk works properly in all languages
+export LC_NUMERIC=C
 
 COVER="$GIS_OPT_map"
 
