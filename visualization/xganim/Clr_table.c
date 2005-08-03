@@ -10,6 +10,7 @@
 #include "glocale.h"
 #include "colors.h"
 
+
 Display *dpy;
 Window grwin;
 int scrn;
@@ -26,8 +27,9 @@ static int r_pos, g_pos, b_pos;
 static int r_size, g_size, b_size;
 static int r_scale, g_scale, b_scale;
 
+
 static void
-get_shifts(unsigned mask, int *pos, int *size, int *scale)
+get_shifts(unsigned long mask, int *pos, int *size, int *scale)
 {
     int i, j;
 
@@ -170,7 +172,7 @@ try_get_colors(Colormap cmap, int nr, int ng, int nb)
 		xcolor.blue  = (unsigned short) (b * 0xFFFF / (nb - 1));
 		if (!XAllocColor(dpy, cmap, &xcolor))
 		{
-		    XFreeColors(dpy, cmap, xpixels, n_pixels, 0);
+		    XFreeColors(dpy, cmap, xpixels, n_pixels, (unsigned long)0);
 		    return 0;
 		}
 
@@ -200,9 +202,10 @@ try_get_grays(Colormap cmap, int ny)
 	xcolor.red   = v;
 	xcolor.green = v;
 	xcolor.blue  = v;
+
 	if (!XAllocColor(dpy, cmap, &xcolor))
 	{
-	    XFreeColors(dpy, cmap, xpixels, n_pixels, 0);
+	    XFreeColors(dpy, cmap, xpixels, n_pixels, (unsigned long)0);
 	    return y;
 	}
 
@@ -222,8 +225,8 @@ ramp_colormap(void)
 
     for (i = 0; i < n_colors; i++)
     {
-	int k = i * 65535 / (n_colors - 1);
-	int l = i * 255 / (n_colors - 1);
+	unsigned int k = i * 65535 / (n_colors - 1);
+	unsigned int l = i * 255 / (n_colors - 1);
 	XColor xcolor;
 
 	xcolor.flags = DoRed | DoGreen | DoBlue;
@@ -310,7 +313,7 @@ InitColorTableFixed(Colormap cmap)
     return cmap;
 }
 
-int _get_lookup_for_color(int r, int g, int b)
+int _get_lookup_for_color(unsigned int r, unsigned int g, unsigned int b)
 {
     switch (use_visual->class)
     {

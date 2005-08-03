@@ -31,6 +31,7 @@
 
 #include "gui.h"
 
+
 /* callback procs */
 static void rewind_callback(Widget w, XtPointer data, caddr_t cbs);
 static void rplay_callback(Widget w, XtPointer data, caddr_t cbs);
@@ -45,15 +46,17 @@ static void names_callback(Widget w, XtPointer data, caddr_t cbs);
 static void slower_callback(Widget w, XtPointer data, caddr_t cbs);
 static void faster_callback(Widget w, XtPointer data, caddr_t cbs);
 
-static Widget rew, rplay, stepb, stop, stepf, play, loop, swing, doexit;
-static Widget shnames, slower, faster;
+/* global variables */
+static Widget rew, rplay, stepb, stop, stepf, play, loop, swing;
+static Widget slower, faster;
 static struct gui_data *cd;
 
 
 void make_buttons(struct gui_data *data, Widget trc, Screen *scr)
 {
-    Arg    wargs[10];
-    int    n;
+    unsigned int n;
+    Arg wargs[10];
+    Widget shnames, doexit;
 
     cd = data;
 
@@ -149,7 +152,6 @@ void make_buttons(struct gui_data *data, Widget trc, Screen *scr)
 	    (XtCallbackProc) names_callback,
 	    (XtPointer) NULL);
 
-
     n = 0;
     XtSetArg(wargs[n], XmNmarginLeft, 0); n++;
     doexit = XtCreateManagedWidget("Exit", xmPushButtonWidgetClass,
@@ -161,7 +163,7 @@ void make_buttons(struct gui_data *data, Widget trc, Screen *scr)
 void set_buttons_pixmap(Display *display, Drawable d)
 {
     Pixel  fg, bg;
-    int    n, depth;
+    unsigned int depth;
     Pixmap button_pix;
 
     XtVaGetValues(rew, XmNforeground, &fg,

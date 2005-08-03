@@ -24,6 +24,7 @@
 #include <limits.h>
 #include <unistd.h>
 #include "gis.h"
+#include "glocale.h"
 #include "gui.h"
 
 #define COLOR_OFFSET 0
@@ -34,54 +35,57 @@
 #define BORDER_W    2
 
 
+/* function prototypes */
+static int load_files();
 static Boolean do_run(struct gui_data *cd);
-void change_label(Widget wid, char *str);
-short _get_Xlookup();
-char **gee_wildfiles(char *wildarg, char *element, int *num);
-/* char *G__mapset_name (); */
-void parse_command(int argc, char **argv,
+static char **gee_wildfiles(char *wildarg, char *element, int *num);
+static void change_label(Widget wid, char *str);
+static void parse_command(int argc, char **argv,
                   char *vfiles[MAXVIEWS][MAXIMAGES],
                   int *numviews, int *numframes);
 
 
-
-Widget 	toplevel, mainwin, canvas, flabel; 
-Display *theDisplay;
-XImage *pic_array[MAXIMAGES];
+/* global variables */
+Widget 	     canvas, flabel; 
+Display      *theDisplay;
+XImage       *pic_array[MAXIMAGES];
 GC           invertGC, drawGC;
-int nrows, ncols, numviews;
-int MaxColors, Top=0, Left=0;
-char    frame[MAXIMAGES][4];
-char 	*vfiles[MAXVIEWS][MAXIMAGES];
-int	LabelPos[MAXVIEWS][2];
+unsigned int nrows, ncols;
+int          numviews;
+int          Top=0, Left=0;
+char         frame[MAXIMAGES][4];
+char         *vfiles[MAXVIEWS][MAXIMAGES];
+int          LabelPos[MAXVIEWS][2];
 
-float 	vscale, scale;  /* resampling scale factors */
-int 	irows, icols, vrows, vcols;
-int 	frames;
+float        vscale, scale;  /* resampling scale factors */
+int          irows, icols, vrows, vcols;
+int          frames;
 
-int depth;
+unsigned int depth;
 
-extern Display *dpy;
-extern Window grwin;
-extern int scrn;
-extern Visual *use_visual;
-extern Colormap fixedcmap;
+Visual       *use_visual;
 
 
 int main (int argc, char **argv)
 {
-    int	     	i, j;
-    int       	*sdimp, longdim;
+    Widget        toplevel, mainwin, trc;
+    int           scrn;
+    Display       *dpy;
+    Window        grwin;
+    Colormap      fixedcmap;
+
+    int	     	  i, j;
+    unsigned int  *sdimp;
+    int           longdim;
     unsigned long blackPix, whitePix;
 
     struct gui_data cd;
 
-    XtAppContext AppC;
-    Arg          wargs[15];
-    int          n;
-    Widget       trc;
+    XtAppContext  AppC;
+    Arg           wargs[15];
+    unsigned int  n;
 
-    
+
     toplevel = XtAppInitialize(&AppC, "xganimate", NULL, 0,
 			      &argc, argv, NULL, wargs, 0);
 
@@ -126,7 +130,7 @@ int main (int argc, char **argv)
     max = DEF_MAX;
     min = DEF_MIN;
 
-    if(p = getenv ("XGANIM_SIZE"))
+    if ((p = getenv ("XGANIM_SIZE")))
 	max = min = atoi(p);
 
     if(longdim > max)      /* scale down */
@@ -234,12 +238,12 @@ int main (int argc, char **argv)
     blackPix = _get_lookup_for_color(0, 0, 0);
     whitePix = _get_lookup_for_color(255, 255, 255);
 
-    drawGC = XCreateGC(XtDisplay(canvas), XtWindow(canvas), 0, NULL);
+    drawGC = XCreateGC(XtDisplay(canvas), XtWindow(canvas), (unsigned long)0, NULL);
     XSetFunction(theDisplay, drawGC, GXcopy);
     XSetForeground(theDisplay, drawGC, blackPix);
     XSetBackground(theDisplay, drawGC, whitePix);
 
-    invertGC = XCreateGC(XtDisplay(canvas), XtWindow(canvas), 0, NULL);
+    invertGC = XCreateGC(XtDisplay(canvas), XtWindow(canvas), (unsigned long)0, NULL);
     XSetFunction(theDisplay, invertGC, GXcopy);
     XSetForeground(theDisplay, invertGC, whitePix);
     XSetBackground(theDisplay, invertGC, blackPix);
@@ -247,7 +251,6 @@ int main (int argc, char **argv)
 
     for(j=0; j<MAXIMAGES; j++)
 	sprintf(frame[j],"%2d",j+1);
-    
    
     while(1) { /* wait for window */
 	XEvent      xev;
@@ -263,21 +266,22 @@ int main (int argc, char **argv)
     return 0;
 }
 
-int load_files()
+
+static int load_files()
 {
-CELL 	*cell;
-FCELL 	*fcell;
-DCELL 	*dcell;
-void    *voidc;
-unsigned char	*tr, *tg, *tb, *tset;
-int     tsiz, coff;
-register int rowoff, row, col, vxoff, vyoff;
-int 	cnt, ret, fd;
-int	vnum;
-XImage  *pa;
-char	*mapset, name[BUFSIZ];
-struct Colors colors;
-int     rtype;
+    CELL  *cell;
+    FCELL *fcell;
+    DCELL *dcell;
+    void  *voidc = NULL;
+    unsigned char *tr, *tg, *tb, *tset;
+    int tsiz, coff;
+    int rowoff, row, col, vxoff, vyoff;
+    int cnt, ret, fd;
+    int	vnum;
+    XImage  *pa;
+    char *mapset, name[BUFSIZ];
+    struct Colors colors;
+    int rtype;
 
     cell = G_allocate_c_raster_buf();
     fcell = G_allocate_f_raster_buf();
@@ -285,26 +289,14 @@ int     rtype;
      
     tsiz = G_window_cols();
 
-    if(NULL == (tr = malloc(tsiz * sizeof(char)))){
-	fprintf(stderr,"Unable to malloc.\n");
-	exit (0);
-    }
-    if(NULL == (tg = malloc(tsiz * sizeof(char)))){
-	fprintf(stderr,"Unable to malloc.\n");
-	exit (0);
-    }
-    if(NULL == (tb = malloc(tsiz * sizeof(char)))){
-	fprintf(stderr,"Unable to malloc.\n");
-	exit (0);
-    }
-    if(NULL == (tset = malloc(tsiz * sizeof(char)))){
-	fprintf(stderr,"Unable to malloc.\n");
-	exit (0);
-    }
+    /* allocate memory */
+    tr = G_malloc(tsiz * sizeof(char));
+    tg = G_malloc(tsiz * sizeof(char));
+    tb = G_malloc(tsiz * sizeof(char));
+    tset = G_malloc(tsiz * sizeof(char));
 
     for (cnt = 0; cnt < frames; cnt++)
     {
-	
         if (cnt > MAXIMAGES)
 	{
 	    cnt--;
@@ -313,7 +305,7 @@ int     rtype;
 
 	pa = XCreateImage(theDisplay, use_visual, depth, ZPixmap,
 			  0, NULL,  ncols, nrows, 8, 0);
-	pa->data = G_malloc(nrows * pa->bytes_per_line);
+	pa->data = G_malloc((size_t)nrows * pa->bytes_per_line);
 	pic_array[cnt] = pa;
 
 	for(vnum = 0; vnum < numviews; vnum++){
@@ -342,18 +334,16 @@ int     rtype;
 	    }
 
 	    strcpy(name,vfiles[vnum][cnt]);
-	    fprintf (stderr, "\rReading file '%s'\n", name);
+	    G_message(_("\rReading file [%s] ..."), name);
+
 	    mapset = G_find_cell2 (name, "");
-	    if (mapset == NULL){
-		char msg[100];	
-		sprintf (msg, "%s: <%s> cellfile not found\n", 
-					    G_program_name(), name);
-		G_fatal_error (msg);
-		exit(1);
-	    }
+	    if (mapset == NULL)
+                G_fatal_error(_("%s: cellfile [%s] not found."),
+                              G_program_name(), name);
+
 	    fd = G_open_cell_old (name, mapset);
 	    if (fd < 0)
-		exit(1);
+                G_fatal_error(_("Unable to open cellfile [%s]."), name);
     /*
 	    strcpy(title[cnt],G_get_cell_title(name, mapset));
     */
@@ -366,28 +356,30 @@ int     rtype;
 	    else if (rtype == DCELL_TYPE)
 		voidc = (DCELL *)dcell;
 	    else
-		exit(0);
+                /* should not reach here */
+                G_fatal_error(_("Unable to determine raster cell type."));
 
 	    ret = G_read_colors(name, mapset, &colors);
 	    if (ret < 0)
-		exit(1);
+                G_fatal_error(_("Unable to read color file."));
 
 	    for (row = 0; row < vrows; row++){
-		if (G_get_raster_row (fd, (void *)voidc,
-				      (int)(row/vscale), rtype) < 0)
-		    exit(1);
+		if (G_get_raster_row (fd, (void *)voidc, (int)(row/vscale), rtype) < 0)
+                    G_fatal_error(_("Unable to read raster row."));
 
 		rowoff = (vyoff+row)*ncols;
 		G_lookup_raster_colors((void *)voidc, tr, tg, tb, tset, tsiz,
 		    &colors, rtype);
+
 		for (col = 0; col < vcols; col++){
 		    coff= (int)(col/vscale);
+
 		    if(!tset[coff])
 			tr[coff] = tg[coff] = tb[coff] = 255;
+
 		    XPutPixel(pa, vxoff+col, vyoff+row,
 			      _get_lookup_for_color(tr[coff],
-						    tg[coff],
-						    tb[coff]));
+						    tg[coff], tb[coff]));
 		}
 	    }
 
@@ -399,17 +391,17 @@ int     rtype;
 	change_label(flabel, frame[cnt]);
 
     }
-    free(cell);
-    free(fcell);
-    free(dcell);
-    free(tr);
-    free(tg);
-    free(tb);
-    free(tset);
+    G_free(cell);
+    G_free(fcell);
+    G_free(dcell);
+    G_free(tr);
+    G_free(tg);
+    G_free(tb);
+    G_free(tset);
 
     return(cnt);
-
 }
+
 
 /* ###################################################### */
 static Boolean do_run(struct gui_data *cd)
@@ -435,6 +427,7 @@ static Boolean do_run(struct gui_data *cd)
 	cd->direction = 1;
 	cd->step = 1;
     }
+
     if(cd->swing){
 	if(cd->curframe==cd->nframes || cd->curframe<0){
 	     cd->direction = -cd->direction;
@@ -463,20 +456,21 @@ static Boolean do_run(struct gui_data *cd)
 	dr = XtWindow(canvas);
 	XPutImage(theDisplay, dr, drawGC, pic_array[cd->curframe], 0, 0, 
 		    Left, Top, ncols, nrows);
+
 	/* draw labels */
 	if(cd->shownames == 1)
 	    for(i=0; i < numviews; i++){
 		XDrawString(theDisplay, dr, drawGC,
 			LabelPos[i][0]+5, LabelPos[i][1]-5,
 			vfiles[i][cd->curframe],
-			strlen(vfiles[i][cd->curframe]));
+			(int)strlen(vfiles[i][cd->curframe]));
 	    }
 	else if(cd->shownames == 2)
 	    for(i=0; i < numviews; i++){
 		XDrawString(theDisplay, dr, invertGC,
 			LabelPos[i][0]+5, LabelPos[i][1]-5,
 			vfiles[i][cd->curframe],
-			strlen(vfiles[i][cd->curframe]));
+			(int)strlen(vfiles[i][cd->curframe]));
 	    }
 	change_label(flabel, frame[cd->curframe]);
 
@@ -493,8 +487,9 @@ static Boolean do_run(struct gui_data *cd)
     return False; /* to keep it running */
 }
 
+
 /* ###################################################### */
-char **gee_wildfiles(char *wildarg, char *element, int *num)
+static char **gee_wildfiles(char *wildarg, char *element, int *num)
 {
     int n, cnt=0;
     char path[1000], *mapset, cmd[1000], buf[512];
@@ -504,28 +499,30 @@ char **gee_wildfiles(char *wildarg, char *element, int *num)
 
     *num = 0;
     tfile = G_tempfile();
+
     /* build list of filenames */
     for(n=0; (mapset = G__mapset_name (n)); n++){
 	if (strcmp (mapset,".") == 0)
 	    mapset = G_mapset();
+
 	G__file_name (path, element, "", mapset);
 	if(access(path, 0) == 0) {
-	    sprintf(cmd, "cd %s; \\ls %s >> %s 2> /dev/null", 
-		path, wildarg, tfile);
+	    sprintf(cmd, "cd %s; \\ls %s >> %s 2> /dev/null", path, wildarg, tfile);
 	    system(cmd);
 	}
     }
-    if(NULL == (tf = fopen(tfile, "r"))){
-	fprintf(stderr, "Error reading wildcard\n");
-    }
+
+    if (NULL == (tf = fopen(tfile, "r")))
+        G_warning(_("Error reading wildcard."));
     else{
 	while(NULL != fgets(buf,512,tf)){
 	    /* replace newline with null */
-	    if( p = strchr(buf, '\n'))
+	    if ((p = strchr(buf, '\n')))
 		*p = '\0';
 	    /* replace first space with null */
-	    else if( p = strchr(buf, ' '))
+	    else if ((p = strchr(buf, ' ')))
 		*p = '\0';
+
 	    if(strlen(buf) > 1){
 		newfiles[cnt++] = G_store (buf);
 	    }
@@ -533,17 +530,16 @@ char **gee_wildfiles(char *wildarg, char *element, int *num)
 	fclose(tf);
     }
     *num = cnt;
-    free (tfile);
+    G_free(tfile);
 
     return(newfiles);
 }
 
 
-
 /********************************************************************/
 /* to change label in label widget */
 
-void change_label(Widget wid, char *str)
+static void change_label(Widget wid, char *str)
 {
     Arg wargs[1];
     XmString xmstr;
@@ -554,8 +550,9 @@ void change_label(Widget wid, char *str)
     XmStringFree (xmstr);
 }
 
+
 /********************************************************************/
-void parse_command(int argc, char **argv,
+static void parse_command(int argc, char **argv,
                   char *vfiles[MAXVIEWS][MAXIMAGES],
                   int *numviews, int *numframes)
 {
@@ -572,24 +569,26 @@ void parse_command(int argc, char **argv,
 	viewopts[i]->required 		= (i? NO: YES);
 	viewopts[i]->multiple 		= YES;
 	viewopts[i]->gisprompt 		= "old,cell,Raster";;
-	sprintf(buf,"Raster file(s) for View%d", i+1);
+	sprintf(buf, _("Raster file(s) for View%d"), i+1);
 	viewopts[i]->description 	= G_store(buf);
     }
+
     if (G_parser (argc, argv))
-	    exit (-1);
+	    exit(EXIT_FAILURE);
 
     for(i=0; i<MAXVIEWS; i++){
 	if(viewopts[i]->answers){
 	    (*numviews)++;
+
 	    for (j = 0, numi=0 ; viewopts[i]->answers[j] ; j++){
 		if((NULL != strchr(viewopts[i]->answers[j], '*')) || 
 		   (NULL != strchr(viewopts[i]->answers[j], '?')) || 
 		   (NULL != strchr(viewopts[i]->answers[j], '['))){
 		    wildfiles = gee_wildfiles(viewopts[i]->answers[j],
 				"cell", &wildnum);
-		    for(k=0; k<wildnum; k++){
+
+		    for (k = 0; k < wildnum; k++)
 			vfiles[i][numi++] = wildfiles[k];
-		    }
 		}
 		else
 		    vfiles[i][numi++] = G_store(viewopts[i]->answers[j]);
@@ -599,6 +598,3 @@ void parse_command(int argc, char **argv,
 	}
     }
 }
-
-/*********************************************************************/
-/*********************************************************************/
