@@ -9,30 +9,48 @@ Note: This text contains *some* rules only applicable to the
 1. Local work (basically at ITC-irst)
 
  o - Update VERSION file to release version
-   - Create release branch
-   
+   - Create release branch (only if not yet existing)
+
  o Create Changelog file
      CVSBRANCH=`cat CVS/Entries | grep AUTHORS | cut -d'/' -f6 | cut -b2-`
-     VERSION=`cat include/VERSION | head -3 | tr '\n' '.' | cut -d'.' -f1-3`
-     sh tools/cvs2cl.pl --follow "$CVSBRANCH" 
+     echo $CVSBRANCH
+     #version:
+     MAJOR=6
+     MINOR=0
+     RELEASE=1RC1
+     VERSION=${MAJOR}.${MINOR}.${RELEASE}
+     sh tools/cvs2cl.pl --follow "$CVSBRANCH"
      mv ChangeLog ChangeLog_$VERSION
      gzip ChangeLog_$VERSION
 
  o reset VERSION file to CVS version
 
- o Store the source tarball in:
+ o create source package (in the source directory):
+     mkdir grass-${VERSION}
+     mv * grass-${VERSION}/
+     # do not include the debian control files:
+     mv grass-${VERSION}/debian .
+     # create the package:
+     tar cvfzh grass-${VERSION}.tar.gz grass-${VERSION}/* --exclude=CVS
+     # restore src code location:
+     mv ./grass-${VERSION}/* .
+     rmdir ./grass-${VERSION}
+     # Calculating MD5 sum:
+     md5sum grass-${VERSION}.tar.gz > grass-${VERSION}.md5sum
+
+ o Store the source tarball in (use scp -rp):
      http://grass.itc.it/grass/grass6x/source/
      along with associated files:
-          NEWS.html ChangeLog_$VERSION SUBMITTING REQUIREMENTS.html INSTALL
+       AUTHORS ChangeLog_$VERSION INSTALL REQUIREMENTS.html SUBMITTING
 
  o update web site to new version (HTML in Web-CVS)
       - main.inc
       - download/software.inc
       - grass6x/index.php
       - devel/grasshist.html
-      - devel/grass_releases.html
+      - devel/grassreleases.html
       - bugtracking/bugreport.html
-      
+
      write announcement
       - store in Web as announces/announce_grass6xx.html
 
@@ -60,6 +78,7 @@ Note: This text contains *some* rules only applicable to the
    http://www.gisdevelopment.net (click on 'Submit Press Release')
    http://www.gnu.org/directory/science/geography/grass.html
    http://www.kde-apps.org/content/show.php?content=19776
+   http://news.eoportal.org/cgi-bin/eoportal_header.pl?dw=psr&site=software&words=type
 
    ... anywhere else? Please add here.
 
