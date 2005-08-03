@@ -129,4 +129,4 @@ fi
 
 #d.frame -s frame=full_screen
 echo "Clear screen with:"
-echo "                  d.frame -e"
+echo "                  d.erase -f"

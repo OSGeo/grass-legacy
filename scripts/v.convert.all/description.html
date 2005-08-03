@@ -1,16 +1,16 @@
 <h2>DESCRIPTION</h2>
 
 <em>v.convert.all</em> converts all GRASS 5.0/5.3/5.4 vectors in the current
-mapset into 5.7 vectors.
+mapset into GRASS 6.0 vectors.
 
 <h2>NOTES</h2>
 
-Vector maps from 5.0/5.3/5.4 and 5.7 do not interfere. They are stored in different 
+Vector maps from 5.0/5.3/5.4 and 6.0 do not interfere. They are stored in different 
 directories, so you can use the same names. Old vector maps can be listed with
 <em>g.list oldvect</em>.
 
 <P>
-If you need to convert back from 5.7 into the 5.0/5.3/5.4 vector format,
+If you need to convert back from 6.0 into the 5.0/5.3/5.4 vector format,
 use <em>v.out.ogr</em> (to SHAPE format) and then <em>v.in.shape</em>
 in the old GRASS program.
 Alternatively use "<em>v.out.ascii -o</em>" and <em>v.in.ascii</em>.
@@ -30,12 +30,10 @@ v.convert.all -r
 
 <h2>SEE ALSO</h2>
 
-<A HREF="g.list.html">g.list</A>,
+<em><A HREF="g.list.html">g.list</A>,
 <A HREF="v.convert.html">v.convert</A>,
 <A HREF="v.out.ascii.html">v.out.ascii</A>,
-<A HREF="v.out.ogr.html">v.out.ogr</A><BR>
-<em><a HREF="http://grass.itc.it/grass57/tutorial/ex_basic.html#convert">
-GRASS 5.7 tutorial pages</a></em>
+<A HREF="v.out.ogr.html">v.out.ogr</A></em>
 
 
 <h2>AUTHOR</h2>

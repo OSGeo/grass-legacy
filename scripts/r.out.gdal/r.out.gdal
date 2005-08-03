@@ -71,8 +71,14 @@ fi
 
 #check gdal_translate exists
 if [ -z "`which gdal_translate`" ] ; then
-   echo "ERROR: Required program gdal_translate is missing"
+   echo "ERROR: Required program gdal_translate is missing."
    echo "       Full GDAL binaries with GDAL/GRASS support are needed to use r.out.gdal."
+   exit 1
+fi
+#check that gdal's grass plugin exists
+if [ -z "`gdalinfo --formats | grep -i GRASS`" ] ; then
+   echo "ERROR: Required GRASS plugin for GDAL is missing."
+   echo "       GDAL must be built with GRASS support to use r.out.gdal."
    exit 1
 fi
 

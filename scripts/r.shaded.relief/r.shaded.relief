@@ -165,8 +165,7 @@ fi
 az=`expr $az - 90`
 
 echo ""
-echo "Running r.mapcalc, please stand by."
-echo "Your new map will be named $ELEVSHADE.  Please consider renaming."
+echo "Calculating shading, please stand by."
 echo ""
 
 # Note: no space allowed after \\:
@@ -189,4 +188,8 @@ EOF
 r.colors $ELEVSHADE color=grey
 
 echo ""
-echo "Shaded relief map created and named $ELEVSHADE. Consider renaming."
+if [ -n "$GIS_OPT_shadedmap" ] ; then
+    echo "Shaded relief map created and named [$ELEVSHADE]."
+else
+    echo "Shaded relief map created and named [$ELEVSHADE]. Consider renaming."
+fi

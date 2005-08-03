@@ -44,6 +44,15 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
+#### check if we have awk
+AWK=`which awk`
+if [ "$AWK" = "" ] ; then
+    echo "$PROG: awk required, please install awk/gawk first" 2>&1
+    exit 1
+fi
+
+# setting environment, so that awk works properly in all languages
+export LC_NUMERIC=C
 
 # Check the current status of the monitor
 monitorcheck=`d.mon -p|sed s/'No monitor currently selected for output'//`
@@ -63,8 +72,8 @@ old_GRASSH=`eval g.gisenv get=GRASS_HEIGHT`
 old_TRUECOLOR=`eval g.gisenv get=GRASS_TRUECOLOR`
 curr_mon=`d.mon -p | awk '{printf "%s", $4}'`
 
-#setting variables
-output="$GIS_OPT_output"
+#setting variables (get rid of extra png)
+output="`basename $GIS_OPT_output .png`"
 res="$GIS_OPT_res"
 
 #get GRASS version for display monitor name
@@ -109,6 +118,6 @@ export GRASS_TRUECOLOR=$old_TRUECOLOR
 export GRASS_PNGFILE=map.png
 
 
-echo "Done"
+echo "Done (writing the file may take a small amount of time)"
 exit 0
 
