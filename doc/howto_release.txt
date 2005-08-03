@@ -9,19 +9,34 @@ Note: This text contains *some* rules only applicable to the
 1. Local work (basically at ITC-irst)
 
  o - Update VERSION file to release version
-   - Create release branch
-   
+   - Create release branch (only if not yet existing)
+
  o Create Changelog file
      CVSBRANCH=`cat CVS/Entries | grep AUTHORS | cut -d'/' -f6 | cut -b2-`
      echo $CVSBRANCH
-     VERSION=6.x.y
+     #version:
+     MAJOR=6
+     MINOR=0
+     RELEASE=1RC1
+     VERSION=${MAJOR}.${MINOR}.${RELEASE}
      sh tools/cvs2cl.pl --follow "$CVSBRANCH"
      mv ChangeLog ChangeLog_$VERSION
-     # now manually merge the pre-6.x.y changes into the ChangeLog_$VERSION
-     # file (take from HEAD)
      gzip ChangeLog_$VERSION
 
  o reset VERSION file to CVS version
+
+ o create source package (in the source directory):
+     mkdir grass-${VERSION}
+     mv * grass-${VERSION}/
+     # do not include the debian control files:
+     mv grass-${VERSION}/debian .
+     # create the package:
+     tar cvfzh grass-${VERSION}.tar.gz grass-${VERSION}/* --exclude=CVS
+     # restore src code location:
+     mv ./grass-${VERSION}/* .
+     rmdir ./grass-${VERSION}
+     # Calculating MD5 sum:
+     md5sum grass-${VERSION}.tar.gz > grass-${VERSION}.md5sum
 
  o Store the source tarball in:
      http://grass.itc.it/grass/grass6x/source/
