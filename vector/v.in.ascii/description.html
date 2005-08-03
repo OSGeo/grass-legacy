@@ -2,13 +2,13 @@
 
 <em>v.in.ascii</em> converts a vector map in ASCII format to a vector map in 
 binary format. The module may import two formats:
-<UL>
-<LI><B>standard</B> contains all data types, each coordinate on one row
-<LI><B>point</B> (default) reads only points, each point defined on one row.
+<DL>
+<DT><b>standard</b><DD> contains all data types, each coordinate on one row
+<DT><b>point</b><DD> (default) reads only points, each point defined on one row.
     Values are separated by a user definable deliminator. If the 'columns' option is not defined, 
     default names are used. It is possible to specify the column order for the 
     x,y,z coordinates and category values.
-</UL>
+</DL>
 
 <P> 
 The input is read from a file specified by <B>input</B> option or from standard input.
@@ -38,13 +38,13 @@ and kernels. On top a header can be defined (see example below).
 <P>
 The primitive codes are as follows:
 <UL>
-<LI>'B': boundary<BR>
-<LI>'C': centroid<BR>
-<LI>'L': line<BR>
-<LI>'P': point<BR>
-<LI>'F': face<BR>
-<LI>'K': kernel<BR>
-<LI>'A': area (boundary) - better use 'B'; kept only for backward compatibility<BR>
+<LI>'B': boundary</LI>
+<LI>'C': centroid</LI>
+<LI>'L': line</LI>
+<LI>'P': point</LI>
+<LI>'F': face</LI>
+<LI>'K': kernel</LI>
+<LI>'A': area (boundary) - better use 'B'; kept only for backward compatibility</LI>
 </UL>
 
 The coordinates are listed following the initial line containing the
