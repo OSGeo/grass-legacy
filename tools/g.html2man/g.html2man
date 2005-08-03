@@ -217,6 +217,8 @@ sub DoFont {
   s#</B> *<B># #ig;
   s#<B>#\\fB#ig;
   s#</B>#\\fR#ig;
+  s#<SUP>#\\u#ig;
+  s#</SUP>#\\d#ig;
 
   s# *</I> *_ *<I> *#_#ig;
   s#</I> *<I># #ig;
