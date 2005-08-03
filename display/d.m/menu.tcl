@@ -102,8 +102,8 @@ global execom
  	 {command "Select default region" {} "g.region -d" {} -command {run g.region -d ; run d.redraw }}
  	 {command "Zoom to maximum extent of all displayed maps" {} "d.extend" {} -command {run d.extend }}
  	 {separator}
- 	 {command "Create WIND3 (default 3D window) from current 2D region" {} "g3.createwind" {} -command {execute g3.createwind }}
- 	 {command "Manage 3D region" {} "g3.setregion" {} -command {execute g3.setregion }}
+ 	 {command "Create WIND3 (default 3D window) from current 2D region" {} "g.region" {} -command {execute g.region }}
+ 	 {command "Manage 3D region" {} "g.region" {} -command {execute g.region }}
  	}}
  	{cascad "GRASS working environment" {} "" $tmenu {			
  	 {command "Modify access by other users to current mapset" {} "g.access" {} -command {term g.access }}
