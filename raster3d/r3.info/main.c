@@ -1,3 +1,24 @@
+/***************************************************************************
+*
+* MODULE:       r3.info
+*
+* AUTHOR(S):    Roman Waupotitsch, Michael Shapiro, Helena Mitasova, Bill Brown,
+*               Lubos Mitas, Jaro Hofierka
+*
+* PURPOSE:      Outputs basic information about a user-specified 3D raster map layer.
+*
+* COPYRIGHT:    (C) 2005 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*               License (>=v2). Read the file COPYING that comes with GRASS
+*               for details.
+*
+*****************************************************************************/
+
+/* \todo
+*    History support still not full implemented.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,17 +34,21 @@
         fprintf(out,"-");\
     fprintf (out,"%c\n",x)
 
+#define LINE_LENGTH 300
+#define TMP_LENGTH 100
+
 extern char * G_find_grid3 ();
 
 static char *name;
 
+/**************************************************************************/
 int main (argc, argv)   
     int argc;
     char *argv[];
 {
     char *mapset;
-    char line[200];
-    char tmp1[100], tmp2[100], tmp3[100];
+    char line[LINE_LENGTH];
+    char tmp1[TMP_LENGTH], tmp2[TMP_LENGTH], tmp3[TMP_LENGTH];
     int i;
     FILE *out;
     G3D_Region cellhd;
@@ -35,7 +60,7 @@ int main (argc, argv)
     int hist_ok;
     char *G_program_name();
     struct Option *opt1;
-    struct Flag *rflag;
+    struct Flag *rflag, *Rflag;
     struct GModule *module;
     double dmin, dmax;
 
@@ -51,6 +76,10 @@ int main (argc, argv)
     opt1->required   = YES ;
     opt1->gisprompt  = "old,grid3,3d raster" ;
     opt1->description= _("Name of existing 3dcell map") ;
+
+    Rflag = G_define_flag();
+    Rflag->key            = 'R';
+    Rflag->description    = _("Print all, inclusive range");
 
     rflag = G_define_flag();
     rflag->key            = 'r';
@@ -74,30 +103,30 @@ int main (argc, argv)
   {
     divider ('+');
 
-    sprintf (line, "Layer:    %-29.29s  Date: %s", name, hist_ok ? hist.mapid : "??");
+    snprintf (line, LINE_LENGTH, "Layer:    %-29.29s  Date: %s", name, hist_ok ? hist.mapid : "??");
     printline (line);
 
-    sprintf (line, "Mapset:   %-29.29s  Login of Creator: %s", mapset, hist_ok ? hist.creator : "??");
+    snprintf (line, LINE_LENGTH, "Mapset:   %-29.29s  Login of Creator: %s", mapset, hist_ok ? hist.creator : "??");
     printline (line);
 
-    sprintf (line, "Location: %s", G_location());
+    snprintf (line, LINE_LENGTH, "Location: %s", G_location());
     printline (line);
 
-    sprintf (line, "DataBase: %s", G_gisdbase());
+    snprintf (line, LINE_LENGTH, "DataBase: %s", G_gisdbase());
     printline (line);
 
-    sprintf (line, "Title:    %s ( %s )", cats_ok ? cats.title : "??", hist_ok ? hist.title : "??");
+    snprintf (line, LINE_LENGTH, "Title:    %s ( %s )", cats_ok ? cats.title : "??", hist_ok ? hist.title : "??");
     printline (line);
 
     divider ('|');
     printline ("");
 
-    sprintf (line, "  Type of Map:  %-20.20s", "3d cell");
+    snprintf (line, LINE_LENGTH, "  Type of Map:  %-20.20s", "3d cell");
     strcat (line, "Number of Categories: ");
     if (cats_ok)
     {
         char temp[20];
-        sprintf (temp, "%-9ld", (long)cats.num);
+        snprintf (temp, 20, "%-9ld", (long)cats.num);
         strcat (line, temp);
     }
     else
@@ -106,43 +135,65 @@ int main (argc, argv)
 
     if (head_ok)
     {
-        sprintf (line, "  Rows:         %d", cellhd.rows);
+        snprintf (line, LINE_LENGTH, "  Rows:         %d", cellhd.rows);
 	printline (line);
 
-        sprintf (line, "  Columns:      %d", cellhd.cols);
+        snprintf (line, LINE_LENGTH, "  Columns:      %d", cellhd.cols);
 	printline (line);
 
-        sprintf (line, "  Depths:       %d", cellhd.depths);
+        snprintf (line, LINE_LENGTH, "  Depths:       %d", cellhd.depths);
 	printline (line);
 
-        sprintf (line, "  Total Cells:  %ld", 
+        snprintf (line, LINE_LENGTH, "  Total Cells:  %ld", 
 		 (long)cellhd.rows * cellhd.cols * cellhd.depths);
 	printline (line);
 
-	sprintf (line, "       Projection: %s (zone %d)",
+	snprintf (line, LINE_LENGTH, "       Projection: %s (zone %d)",
 	    G_database_projection_name(), G_zone());
         printline (line);
 
 	G_format_northing (cellhd.north, tmp1, cellhd.proj);
 	G_format_northing (cellhd.south, tmp2, cellhd.proj);
 	G_format_resolution (cellhd.ns_res, tmp3, cellhd.proj);
-        sprintf (line, "           N: %10s    S: %10s   Res: %5s",
+        snprintf (line, LINE_LENGTH, "           N: %10s    S: %10s   Res: %5s",
 	    tmp1, tmp2, tmp3);
         printline (line);
 
 	G_format_easting (cellhd.east, tmp1, cellhd.proj);
 	G_format_easting (cellhd.west, tmp2, cellhd.proj);
 	G_format_resolution (cellhd.ew_res, tmp3, cellhd.proj);
-        sprintf (line, "           E: %10s    W: %10s   Res: %5s",
+        snprintf (line, LINE_LENGTH, "           E: %10s    W: %10s   Res: %5s",
 	    tmp1, tmp2, tmp3);
         printline (line);
 
     	format_double (cellhd.top, tmp1);
 	format_double (cellhd.bottom, tmp2);
 	format_double (cellhd.tb_res, tmp3);
-        sprintf (line, "           T: %10s    B: %10s   Res: %5s",
+        snprintf (line, LINE_LENGTH, "           T: %10s    B: %10s   Res: %5s",
 	    tmp1, tmp2, tmp3);
         printline (line);
+
+        /*If the range should be displayed like in r.info*/
+        if (Rflag->answer){
+	/*To read the range, we need to open the map and call the range calculation*/
+        g3map = G3d_openCellOld (name, mapset, G3D_DEFAULT_WINDOW,
+                                 G3D_TILE_SAME_AS_FILE, G3D_USE_CACHE_DEFAULT);
+
+        if(NULL == g3map)
+           G_fatal_error( _("Error opening grid3 file [%s]"), name);
+        if(0 == G3d_range_load(g3map))
+           G_fatal_error( _("Error reading range for [%s]"), name);
+
+        G3d_range_min_max (g3map, &dmin, &dmax);
+    	format_double (dmin, tmp1);
+	format_double (dmax, tmp2);
+
+        snprintf (line, LINE_LENGTH, "  Range of data:   min = %10s max = %10s",
+	    tmp1, tmp2);
+        printline (line);
+	}
+
+
     }
 
     printline ("");
@@ -150,14 +201,14 @@ int main (argc, argv)
     if (hist_ok)
     {
         printline ("  Data Source:");
-        sprintf (line, "   %s", hist.datsrc_1);
+        snprintf (line, LINE_LENGTH, "   %s", hist.datsrc_1);
 	printline(line);
-        sprintf (line, "   %s", hist.datsrc_2);
+        snprintf (line, LINE_LENGTH, "   %s", hist.datsrc_2);
 	printline(line);
 	printline("");
 
         printline ("  Data Description:");
-        sprintf (line, "   %s", hist.keywrd);
+        snprintf (line, LINE_LENGTH,"   %s", hist.keywrd);
 	printline(line);
 	printline("");
         if(hist.edlinecnt)
@@ -167,7 +218,7 @@ int main (argc, argv)
 	    for (i = 0; i < hist.edlinecnt; i++)
 	    /**************************************/
 	    {
-		sprintf (line, "   %s", hist.edhist[i]);
+		snprintf (line, LINE_LENGTH,"   %s", hist.edhist[i]);
 		printline(line);
 	    }
         }
@@ -200,9 +251,11 @@ int main (argc, argv)
    return 0;
 }
 
+/**************************************************************************/
 int
 format_double (double value, char *buf)
 {
+    
     sprintf (buf, "%.8lf", value);
     G_trim_decimal (buf);
     return 0;
