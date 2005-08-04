@@ -1,8 +1,26 @@
+/***************************************************************************
+* MODULE:       r3.mask
+*
+* AUTHOR(S):    Roman Waupotitsch, Michael Shapiro, Helena Mitasova,
+*		Bill Brown, Lubos Mitas, Jaro Hofierka
+*
+* PURPOSE:      Establishes the current working 3D raster mask.
+*
+* COPYRIGHT:    (C) 2005 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*               License (>=v2). Read the file COPYING that comes with GRASS
+*               for details.
+*
+*****************************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
 #include "G3d.h"
+#include "glocale.h"
+#include "mask.h"
 
 /*--------------------------------------------------------------------------*/
 
@@ -15,7 +33,6 @@ extern void * G3d_openNewParam ();
 
 static void
 setParams ()
-
 {
   params.map = G_define_option();
   params.map->key = "map";
@@ -23,7 +40,7 @@ setParams ()
   params.map->required = YES ;
   params.map->multiple = NO ;
   params.map->gisprompt = "old,grid3,3d-raster";
-  params.map->description = "3dcell map with reference values";
+  params.map->description = _("3dcell map with reference values");
 
   params.maskVals = G_define_option();
   params.maskVals->key = "maskvalues";
@@ -31,7 +48,7 @@ setParams ()
   params.maskVals->type = TYPE_STRING ;
   params.maskVals->required = NO ;
   params.maskVals->multiple = YES ;
-  params.maskVals->description = "List of cell values to be masked out";
+  params.maskVals->description = _("List of cell values to be masked out");
 }
 
 /*--------------------------------------------------------------------------*/
@@ -40,7 +57,7 @@ void
 getParams (name, maskRules)
 
      char **name;
-     void **maskRules;
+     d_Mask **maskRules;
 
 {
  *name = params.map->answer;
@@ -55,7 +72,7 @@ static void
 makeMask (name, maskRules)
 
      char *name;
-     void *maskRules;
+     d_Mask *maskRules;
 
 {
   void *map, *mask;
@@ -68,14 +85,17 @@ makeMask (name, maskRules)
 
   map = G3d_openCellOld (name, G_mapset (), G3D_DEFAULT_WINDOW,
 			 G3D_DOUBLE, cacheSize);
+
   if (map == NULL) G3d_fatalError ("makeMask: error opening map");
 
   G3d_getRegionStructMap (map, &region);
+  
   G3d_getTileDimensionsMap (map, &tileX, &tileY, &tileZ);
 
   mask = G3d_openNewParam (G3d_maskFile (), G3D_FLOAT, cacheSize,
 			   &region, G3D_FLOAT, G3D_NO_LZW, G3D_USE_RLE, 0,
 			   tileX, tileY, tileZ);
+
   if (mask == NULL) G3d_fatalError ("makeMask: error opening g3d mask file");
 
   G3d_minUnlocked (map, G3D_USE_CACHE_X);
@@ -92,13 +112,14 @@ makeMask (name, maskRules)
       G3d_unlockAll (map);
       G3d_unlockAll (mask);
     }
-    for (y = 0; y < region.cols; y++)
-      for (x = 0; x < region.rows; x++) {
+    /*for (y = region.rows-1; y >= 0; y--) */   /* go north to south */
+    for (y = 0; y < region.rows; y++) /*I dont know which one is right; soeren 04 Aug 05*/
+      for (x = 0; x < region.cols; x++) {
 	value = G3d_getDoubleRegion (map, x, y, z);
 	if (mask_d_select ((DCELL *) &value, maskRules))
-	  G3d_putFloat (mask, x, y, z, floatNull); /* mask-out value */
+	  G3d_putFloat (mask, x, y, z, (float) floatNull); /* mask-out value */
 	else
-	  G3d_putFloat (mask, x, y, z, (float) 0.); /* not mask-out value */
+	  G3d_putFloat (mask, x, y, z, (float) 0.0); /* not mask-out value */
       }
 
     if (! G3d_flushTilesInCube (mask, 
@@ -106,6 +127,7 @@ makeMask (name, maskRules)
 				region.rows - 1,
 				region.cols - 1, z))
       G3d_fatalError ("makeMask: error flushing tiles");
+
   }
 
   if (! G3d_flushAllTiles (mask))  
@@ -132,29 +154,26 @@ main (argc, argv)
 
 {
   char *name;
-  void *maskRules;
+  d_Mask *maskRules;
   struct GModule *module;
 
   G_gisinit (argv[0]);
   
   module = G_define_module();
-  module->description =
-   "Establishes or removes the current working 3D raster mask.";
+  module->description = _("Establishes the current working 3D raster mask.");
 
 
-  if (G3d_maskFileExists ()) {
-    printf ("\n\n   Cannot create mask file: 3d-mask already exists!\n");
-    printf 
-      ("   Use 'g.remove g3d=G3D_MASK' or 'rm -r $LOCATION/grid3/G3D_MASK'\n");
-    printf ("   to remove the existing mask.\n\n");
-    exit (1);
-  }
+  if (G3d_maskFileExists ())
+    G_fatal_error ( _("Cannot create mask file: 3d-mask already exists!\n Use 'g.remove rast3d=G3D_MASK' to remove the existing mask."));
 
   setParams ();
-  if (G_parser (argc, argv)) exit(1);
+  if (G_parser (argc, argv))
+      exit(1);
   getParams (&name, &maskRules);
 
   makeMask (name, maskRules);
+
+  return 0;
 }
 
 /*--------------------------------------------------------------------------*/
