@@ -1,5 +1,4 @@
-/*
-****************************************************************************
+/****************************************************************************
 *
 * MODULE:       r3.out.vtk  
 *   	    	
@@ -28,7 +27,8 @@
 typedef struct
 {
   struct Option *input, *output, *null_val, *elevscale;
-  /*struct Flag *xml;*/ /*maybe xml support in the future*/
+  struct Flag *mask;
+  /*struct Flag *xml; *//*maybe xml support in the future */
 } paramType;
 
 void *map = NULL;		/*The 3D Rastermap */
@@ -38,8 +38,8 @@ paramType param;		/*Parameters */
 /*---------------------------------------------------------------------------*/
 /*- prototypes --------------------------------------------------------------*/
 void fatalError (char *errorMsg);	/*Simple Error message */
-void setParams ();                     /*Fill the paramType structure */
-void writeVTKHeader (FILE * fp, char *vtkFile, G3D_Region region); /*write the vtk-header*/ 
+void setParams ();		/*Fill the paramType structure */
+void writeVTKHeader (FILE * fp, char *vtkFile, G3D_Region region);	/*write the vtk-header */
 void G3dTovtk (FILE * fp, G3D_Region region, char *varname);	/*Write the outputdata */
 
 /*---------------------------------------------------------------------------*/
@@ -48,7 +48,7 @@ fatalError (char *errorMsg)
 {
   /* Close files and exit */
   if (map != NULL)
-      G3d_closeCell (map);
+    G3d_closeCell (map);
 
   G3d_fatalError (errorMsg);
 }
@@ -63,7 +63,8 @@ setParams ()
   param.input->type = TYPE_STRING;
   param.input->required = YES;
   param.input->gisprompt = "old,grid3,3d-raster";
-  param.input->multiple = YES; /* is this correct ?? */
+  param.input->multiple = YES;	/* is this correct ?? ... Yes, you can put serveral maps into
+				   one vtk file */
   param.input->description = _("3dcell map(s) to be converted to VTK-ASCII data format");
 
   param.output = G_define_option ();
@@ -78,13 +79,17 @@ setParams ()
   param.null_val->required = NO;
   param.null_val->description = _("Float value to represent no data cell");
   param.null_val->answer = "-99999.99";
-  
+
   param.elevscale = G_define_option ();
   param.elevscale->key = "elevscale";
   param.elevscale->type = TYPE_DOUBLE;
   param.elevscale->required = NO;
   param.elevscale->description = _("Scale factor for elevation");
   param.elevscale->answer = "1.0";
+
+  param.mask = G_define_flag ();
+  param.mask->key = 'm';
+  param.mask->description = _("Use G3D mask (if exists) with input maps");
 
 
   /* Maybe needed in the future
@@ -96,7 +101,7 @@ setParams ()
 
 /*---------------------------------------------------------------------------*/
 /*- writes the header. ------------------------------------------------------*/
-void 
+void
 writeVTKHeader (FILE * fp, char *vtkFile, G3D_Region region)
 {
   G_debug (3, "writeVTKHeader: Writing VTK-Header");
@@ -108,7 +113,8 @@ writeVTKHeader (FILE * fp, char *vtkFile, G3D_Region region)
   fprintf (fp, "ASCII\n");
   fprintf (fp, "DATASET STRUCTURED_POINTS\n");	/*We are using the structured point dataset. */
   fprintf (fp, "DIMENSIONS %i %i %i\n", region.cols + 1, region.rows + 1, region.depths + 1);
-  fprintf (fp, "ASPECT_RATIO %g %g %g\n", region.ew_res, region.ns_res, (region.tb_res * atof(param.elevscale->answer)));
+  fprintf (fp, "ASPECT_RATIO %g %g %g\n", region.ew_res, region.ns_res,
+	   (region.tb_res * atof (param.elevscale->answer)));
   fprintf (fp, "ORIGIN %g %g %g\n", region.west, region.south, region.bottom);
   fprintf (fp, "CELL_DATA %i\n", region.cols * region.rows * region.depths);	/*We have no pointdata */
 }
@@ -119,7 +125,6 @@ void
 G3dTovtk (FILE * fp, G3D_Region region, char *varname)
 {
   double d1 = 0;
-  float fl = 0;
   double *d1p;
   float *f1p;
   int x, y, z;
@@ -130,7 +135,8 @@ G3dTovtk (FILE * fp, G3D_Region region, char *varname)
   depths = region.depths;
 
 
-  G_debug (3, "G3dTovtk: Region is rows %i cols %i depths %i", rows, cols, depths);
+  G_debug (3, "G3dTovtk: Writing Celldatafield %s with rows %i cols %i depths %i to vtk-ascii file", varname, rows,
+	   cols, depths);
 
   fprintf (fp, "SCALARS %s float 1\n", varname);
   fprintf (fp, "LOOKUP_TABLE default\n");
@@ -138,11 +144,11 @@ G3dTovtk (FILE * fp, G3D_Region region, char *varname)
   typeIntern = G3d_tileTypeMap (map);
 
   d1p = &d1;
-  f1p = &fl;
+  f1p = (float *) &d1;
 
   for (z = depths - 1; z >= 0; z--)	/*From the bottom to the top */
-    for (y = rows - 1; y >= 0; y--)     /*From south to the north*/
-      {				
+    for (y = rows - 1; y >= 0; y--)	/*From south to the north */
+      {
 	for (x = 0; x < cols; x++)
 	  {
 	    G3d_getValue (map, x, y, z, d1p, typeIntern);
@@ -174,7 +180,7 @@ main (int argc, char *argv[])
   G3D_Region region;
   FILE *fp = NULL;
   struct GModule *module;
-  int i;
+  int i, changemask = 0;
 
   /* Initialize GRASS */
   G_gisinit (argv[0]);
@@ -211,18 +217,32 @@ main (int argc, char *argv[])
       G_debug (3, "main: Open 3DRaster file %s", param.input->answers[i]);
 
       if (NULL == G_find_grid3 (param.input->answers[i], ""))
-	  G3d_fatalError ("main: g3d file not found");
+	G3d_fatalError (_("main: g3d file not found"));
 
 
       /*Open the map */
       map = G3d_openCellOld (param.input->answers[i], G_find_grid3 (param.input->answers[i], ""), G3D_DEFAULT_WINDOW,
 			     G3D_TILE_SAME_AS_FILE, G3D_USE_CACHE_DEFAULT);
       if (map == NULL)
-	G3d_fatalError ("main: error opening g3d file");
+	G3d_fatalError (_("main: error opening g3d file"));
+
+      /*if requested set the Mask on */
+      if (param.mask->answer)
+	{
+	  if (G3d_maskFileExists ())
+	    {
+	      changemask = 0;
+	      if (G3d_maskIsOff (map))
+		{
+		  G3d_maskOn (map);
+		  changemask = 1;
+		}
+	    }
+	}
 
       /* Figure out the region from the map */
       if (i == 0)
-        G3d_getWindow (&region);
+	G3d_getWindow (&region);
 
       /* Write the vtk-header */
       if (i == 0)
@@ -230,6 +250,14 @@ main (int argc, char *argv[])
 
       /* Now barf out the contents of the map in vtk form */
       G3dTovtk (fp, region, param.input->answers[i]);
+
+      /*We set the Mask off, if it was off before */
+      if (param.mask->answer)
+	{
+	  if (G3d_maskFileExists ())
+	    if (G3d_maskIsOn (map) && changemask)
+	      G3d_maskOff (map);
+	}
 
       /* Close files and exit */
       if (!G3d_closeCell (map))
