@@ -164,7 +164,7 @@ main (argc, argv)
 
 
   if (G3d_maskFileExists ())
-    G_fatal_error ( _("Cannot create mask file: 3d-mask already exists!\n Use 'g.remove rast3d=G3D_MASK' to remove the existing mask."));
+    G_fatal_error ( _("Cannot create mask file: G3D_MASK already exists!\n Use 'g.remove rast3d=G3D_MASK' to remove the existing mask."));
 
   setParams ();
   if (G_parser (argc, argv))
