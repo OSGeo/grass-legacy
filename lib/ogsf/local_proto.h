@@ -689,15 +689,10 @@ int gvl_slice_freemem(geovol_slice *);
 
 /* From trans.c */
 void P_scale (float, float, float);
-void P_translate (float, float, float);
 void P_transform (int, float (*)[4], float (*)[4]);
-void P__transform (int, float (*)[4], float (*)[4], float (*)[4]);
-void P_matrix_copy (float (*)[4], float (*)[4], int);
 int P_pushmatrix (void);
 int P_popmatrix (void);
-void P_rotate (int, char);
 void P_rot (float, char);
-void P_rad_rotate (double, char);
 
 /* From gvl_file.c */
 geovol_file *gvl_file_get_volfile(int);
