@@ -1,26 +1,41 @@
+/***************************************************************************
+* MODULE:       r3.mask
+*
+* AUTHOR(S):    Roman Waupotitsch, Michael Shapiro, Helena Mitasova,
+*		Bill Brown, Lubos Mitas, Jaro Hofierka
+*
+* PURPOSE:      Establishes the current working 3D raster mask.
+*
+* COPYRIGHT:    (C) 2005 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*               License (>=v2). Read the file COPYING that comes with GRASS
+*               for details.
+*
+*****************************************************************************/
+/*Helperfunctions*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
+#include "mask.h"
 
-typedef struct _d_interval {
-	double low, high;
-	int inf;
-	struct _d_interval *next;
-} d_Interval;
+/*local prototypes*/
+static void add_d_mask_rule (d_Mask *d_mask, double a, double b, int inf);
+static void parse_d_mask_rule (char *vallist, d_Mask *d_mask, char *where);
+static void init_d_mask_rules (d_Mask *d_mask);
 
-typedef struct _d_mask {
-	d_Interval *list;
-} d_Mask;
-
-static
+/*******************************************************************/
+static void
 init_d_mask_rules (d_mask)
     d_Mask *d_mask;
 {
     d_mask->list = NULL;
 }
 
-static
+/*******************************************************************/
+static void
 add_d_mask_rule (d_mask, a, b, inf)
     d_Mask *d_mask;
     double a, b;
@@ -36,7 +51,8 @@ add_d_mask_rule (d_mask, a, b, inf)
     d_mask->list = I;
 }
 
-mask_d_select (x, mask)
+/*******************************************************************/
+int mask_d_select (x, mask)
     DCELL *x;
     d_Mask *mask;
 {
@@ -51,7 +67,8 @@ mask_d_select (x, mask)
     return 0;
 }
 
-extern
+/*******************************************************************/
+extern DCELL
 mask_match_d_interval (x, I)
     DCELL x;
     d_Interval *I;
@@ -65,7 +82,8 @@ mask_match_d_interval (x, I)
     return x >= I->low && x <= I->high;
 }
 
-static
+/*******************************************************************/
+static void
 parse_d_mask_rule (vallist, d_mask, where)
     char *vallist;
     d_Mask *d_mask;
@@ -77,7 +95,7 @@ parse_d_mask_rule (vallist, d_mask, where)
 /* #-# */
     if (sscanf (vallist,"%lf-%lf",&a,&b) == 2)
     {
-	printf("adding rule: %lf - %lf\n", a,b);
+	fprintf(stdout, "adding rule: %lf - %lf\n", a,b);
 	add_d_mask_rule (d_mask, a, b, 0);
     }
 /* inf-# */
@@ -102,7 +120,8 @@ parse_d_mask_rule (vallist, d_mask, where)
     }
 }
 
-parse_vallist (vallist, d_mask)
+/*******************************************************************/
+void parse_vallist (vallist, d_mask)
     char **vallist;
     d_Mask **d_mask;
 {
@@ -139,3 +158,6 @@ parse_vallist (vallist, d_mask)
     }
 }
 
+/*******************************************************************/
+/*******************************************************************/
+/*******************************************************************/
