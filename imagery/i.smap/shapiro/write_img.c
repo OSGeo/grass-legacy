@@ -1,5 +1,7 @@
 #include "imagery.h"
+#include "glocale.h"
 #include "bouman.h"
+
 
 int write_img (
     unsigned char **img, int ncols, int nrows,
@@ -8,8 +10,9 @@ int write_img (
     struct files *files)         /* files: contains file to output */
 {
     int row, col;
-    int class;
-    if (!parms->quiet) fprintf (stderr, "Writing %s ... ", parms->output_map);
+
+    if (!parms->quiet)
+        G_message(_("Writing [%s] ..."), parms->output_map);
 
     for (row = 0; row < nrows; row++)
     {
@@ -20,7 +23,8 @@ int write_img (
 		   G_set_c_null_value(&files->cellbuf[col], 1);
            else
 	   {
-		class = (int)img[row][col];
+		int class = (int)img[row][col];
+		G_debug(3, "class: [%d] row/col: [%d][%d]", class, row, col);
 		files->cellbuf[col] = (CELL)S->ClassSig[class].classnum;
            }
 	}

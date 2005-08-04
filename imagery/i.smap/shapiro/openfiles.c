@@ -1,7 +1,9 @@
 #include <stdlib.h>
 #include "imagery.h"
+#include "glocale.h"
 #include "bouman.h"
 #include "local_proto.h"
+
 
 int openfiles (struct parms *parms, struct files *files)
 {
@@ -10,18 +12,12 @@ int openfiles (struct parms *parms, struct files *files)
 
 
     if (!I_get_subgroup_ref (parms->group, parms->subgroup, &Ref))
-    {
-	fprintf (stderr,
-	     "ERROR: unable to read REF file for subgroup [%s] in group [%s]\n",
-		parms->subgroup, parms->group);
-	exit(1);
-    }
+        G_fatal_error(_("Unable to read REF file for subgroup [%s] in group [%s]."),
+                parms->subgroup, parms->group);
+
     if (Ref.nfiles <= 0)
-    {
-	fprintf (stderr, "ERROR: subgroup [%s] in group [%s] contains no files\n",
-		parms->subgroup, parms->group);
-	exit(1);
-    }
+        G_fatal_error(_("Subgroup [%s] in group [%s] contains no files."),
+                parms->subgroup, parms->group);
 
     /* allocate file descriptors, and io buffer */
     files->cellbuf = G_allocate_cell_buf();
@@ -33,6 +29,7 @@ int openfiles (struct parms *parms, struct files *files)
     /* open all group maps for reading */
     for (n = 0; n < Ref.nfiles; n++)
 	files->band_fd[n] = open_cell_old(Ref.file[n].name,Ref.file[n].mapset);
+
     /* open output map */
     files->output_fd = open_cell_new (parms->output_map);
 

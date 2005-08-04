@@ -1,9 +1,11 @@
 #include "gis.h"
+#include "glocale.h"
 #include "imagery.h"
 #include "bouman.h"
 #include "region.h"
 
 #define PI M_PI
+
 
 void extract_init (struct SigSet *S)
 {
@@ -32,20 +34,17 @@ void extract_init (struct SigSet *S)
         /* Test for symetric  matrix */
         for(b1=0; b1<nbands; b1++)
         for(b2=0; b2<nbands; b2++) {
-          if(SubS->R[b1][b2]!=SubS->R[b2][b1]) {
-            fprintf(stderr,"\nWarning: nonsymetric covariance for class %d ",m+1);
-            fprintf(stderr,"Subclass %d\n",i+1);
-          }
+          if(SubS->R[b1][b2]!=SubS->R[b2][b1])
+            G_warning(_("\nNonsymetric covariance for class [%d] subclass [%d]."), m+1, i+1);
+
           SubS->Rinv[b1][b2] = SubS->R[b1][b2];
         }
 
         /* Test for positive definite matrix */
         eigen(SubS->Rinv,lambda,nbands);
         for(b1=0; b1<nbands; b1++) {
-          if(lambda[b1]<=0.0) {
-            fprintf(stderr,"Warning: nonpositive eigenvalues for class %d",m+1);
-            fprintf(stderr,"Subclass %d\n",i+1);
-          }
+          if(lambda[b1]<=0.0)
+            G_warning(_("Nonpositive eigenvalues for class [%d] subclass [%d]."), m+1, i+1);
         }
 
         /* Precomputes the cnst */

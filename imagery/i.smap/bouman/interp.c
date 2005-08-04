@@ -1,6 +1,10 @@
 #include <stdlib.h>
+#include "gis.h"
+#include "glocale.h"
 #include "bouman.h"
 #include "region.h"
+
+
 #ifdef __CYGWIN__
 #define HUGE HUGE_VAL
 #endif
@@ -17,6 +21,7 @@ static void interp (unsigned char **,struct Region *,unsigned char **,
 void MLE (unsigned char **, LIKELIHOOD ***, struct Region *, int);
 static int up_char (int,int,struct Region *,unsigned char **,unsigned char **);
 
+
 void seq_MAP (
     unsigned char ***sf_pym,    /* pyramid of segmentations */
     struct Region *region,       /* specifies image subregion */
@@ -32,7 +37,8 @@ void seq_MAP (
     for(repeat=0; repeat<2; repeat++) {
       /* Construct image log likelihood pyramid */
       make_pyramid(ll_pym,region,M,alpha_dec,vlevel);
-      if(vlevel>=2) fprintf(stderr, "pyramid constructed\n");
+      if(vlevel>=2)
+          G_message(_("pyramid constructed."));
 
       /* Perform sequential MAP segmentation using EM algorithm */
       seq_MAP_routine(sf_pym,region,ll_pym,M,alpha_dec,vlevel);
@@ -64,7 +70,9 @@ seq_MAP_routine (
     D = levels_reg(region);
 
     /* allocate memory */
-    if((N=(double ***)multialloc(sizeof(double),3,2,3,2))==NULL) exit(-1);
+    if((N=(double ***)multialloc(sizeof(double),3,2,3,2))==NULL)
+        G_fatal_error(_("Unable to allocate memory."));
+
     regionary = (struct Region *)G_malloc((D+1)*sizeof(struct Region));
     period = (int *)G_malloc(D*sizeof(int));
 
@@ -95,7 +103,8 @@ seq_MAP_routine (
 
     /* Interpolate the classification at each resolution */
     for(D--; D>=0; D-- ) {
-      if(vlevel>=2) fprintf(stderr, "\nResolution = %d; period = %d\n",D,period[D]);
+      if(vlevel>=2)
+        G_message(_("\nResolution = %d; period = %d"), D,period[D]);
 
       for(j=0; j<3; j++) alpha[j] *= (1-EM_PRECISION*10);
       if(vlevel>=4) print_alpha(alpha);
@@ -105,12 +114,12 @@ seq_MAP_routine (
         interp(sf_pym[D],&(regionary[D]),sf_pym[D+1],ll_pym[D],M,
           alpha,period[D],N,1);
         if(vlevel>=4) print_N(N);
-        if(vlevel>=4) fprintf(stderr, "log likelihood = %f\n\n",log_like(N,alpha,M));
+        if(vlevel>=4) G_message("log likelihood = %f\n", log_like(N,alpha,M));
         for(j=0; j<3; j++) tmp[j]=alpha[j];
 
         alpha_max(N,alpha,M,ML_PRECISION);
         if(vlevel>=2) print_alpha(alpha);
-        if(vlevel>=4) fprintf(stderr, "log likelihood = %f\n\n",log_like(N,alpha,M));
+        if(vlevel>=4) G_message("log likelihood = %f\n", log_like(N,alpha,M));
 
         for(diff1=j=0; j<3; j++) diff1 += fabs(tmp[j]-alpha[j]);
         diff2 = log_like(N,alpha,M)-log_like(N,tmp,M);
@@ -148,7 +157,8 @@ static double alpha_dec_max (double ***N)
    N_sum = N_marg[0]+N_marg[1];
 
    if(N_sum==0) return(0.0);
-   else return( N_marg[1]/N_sum );
+
+   return( N_marg[1]/N_sum );
 }
 
 static void print_N (
@@ -158,7 +168,7 @@ static void print_N (
 {
     int n0,n1,n2;
 
-    fprintf(stderr, "Class transition statistics\n");
+    G_message(_("Class transition statistics."));
     for(n0=0; n0<2; n0++) {
       for(n1=0; n1<3; n1++) {
         for(n2=0; n2<2; n2++) fprintf(stderr, "%f ",N[n0][n1][n2]);
@@ -174,9 +184,8 @@ static void print_alpha (
     double *alpha
 )
 {
-    fprintf(stderr, "Transition probabilities %f %f %f;"
-      ,alpha[0],alpha[1],alpha[2]);  
-    fprintf(stderr, " %f\n",1.0-alpha[0]-2*alpha[1]-alpha[2]);
+    G_message(_("Transition probabilities: %f %f %f; %f"),
+        alpha[0],alpha[1],alpha[2],1.0-alpha[0]-2*alpha[1]-alpha[2]);
 }
 
 
@@ -201,7 +210,7 @@ segmentation and texture statistics. */
   int  *n0,*n1,*n2;      /* transition counts for each possible pixel class */
   unsigned char *nbr[8]; /* pointers to neighbors at courser resolution */
   double cost,mincost;   /* cost of class selection; minimum cost */
-  int  best;             /* class of minimum cost selection */
+  int  best=0;           /* class of minimum cost selection */
   double Constant,tmp;
   double *pdf;           /* propability density function of class selections */
   double Z;              /* normalizing costant for pdf */
@@ -217,9 +226,8 @@ segmentation and texture statistics. */
   /* set constants */
   alpha0=alpha[0]; alpha1=alpha[1]; alpha2=alpha[2];
   Constant = (1-alpha0-2*alpha1-alpha2)/M;
-  if(Constant<0) { 
-    fprintf(stderr,"interp: invalid parameter values\n"); 
-    exit(-1); }
+  if(Constant<0)
+    G_fatal_error(_("interp: invalid parameter values.")); 
 
   /* precompute logs and zero static vector */
   for(nn0=0; nn0<2; nn0++) 
@@ -338,6 +346,3 @@ static int up_char (
 
     return(bflag);
 }
-
-
-

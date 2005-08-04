@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include "gis.h"
+#include "glocale.h"
+
 
 int 
 open_cell_old (char *name, char *mapset)
@@ -11,8 +13,10 @@ open_cell_old (char *name, char *mapset)
     if (fd >= 0)
 	return fd;
     
-    fprintf (stderr, "ERROR: unable to open raster map [%s]\n", name);
-    exit(1);
+    G_fatal_error(_("Unable to open raster map [%s]."), name);
+
+    /* should not get here */
+    return -1;
 }
 
 int 
@@ -24,6 +28,8 @@ open_cell_new (char *name)
     if (fd >= 0)
 	return fd;
 
-    fprintf (stderr, "ERROR: unable to create raster map [%s]\n", name);
-    exit(1);
+    G_fatal_error(_("Unable to create raster map [%s]."), name);
+
+    /* should not get here */
+    return -1;
 }

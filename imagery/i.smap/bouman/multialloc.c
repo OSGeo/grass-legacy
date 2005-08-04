@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include "gis.h"
+#include "glocale.h"
+
+
 /* modified from dynamem.c on 4/29/91 C. Bouman */
 
 /*
@@ -11,7 +14,7 @@
  */
 
 char *multialloc(
-        unsigned int s,         /* individual array element size */
+        size_t s,               /* individual array element size */
         int d,                  /* number of dimensions */
 	... )
 {
@@ -81,8 +84,10 @@ char *multialloc(
 
         va_end(ap);
         G_free((char *)d1);
+
         return tree;              /* return base pointer */
 }
+
 
 /*
  * multifree releases all memory that we have already declared analogous to
@@ -94,26 +99,27 @@ void multifree (char *r, int d)
         char *next = NULL;
         int i;
 
-        for (p = (char **)r, i = 0; i < d; p = (char **) next,i++)
-          if (p != NULL) {
-            next = *p;
-            G_free((char *)p);
+        for (p = (char **)r, i = 0; i < d; p = (char **) next,i++) {
+            if (p != NULL) {
+                next = *p;
+                G_free((char *)p);
             }
+        }
 }
 
-unsigned char **get_img (int wd, int ht, int size)
+
+unsigned char **get_img (int wd, int ht, size_t size)
 {
 	char  *pt;
 
-	if( (pt=multialloc(size,2,ht,wd))==NULL) {
-          fprintf(stderr, "get_img: out of memory\n");
-          exit(-1);
-          }
+	if( (pt=multialloc(size,2,ht,wd))==NULL)
+          G_fatal_error(_("get_img: out of memory."));
+
 	return((unsigned char **)pt);
 }
+
 
 void free_img (unsigned char **pt)
 {
 	multifree((char *)pt,2);
 }
-

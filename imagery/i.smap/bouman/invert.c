@@ -15,7 +15,7 @@ int invert (
 	y = G_alloc_matrix(n,n); 
 	col = G_alloc_vector(n);
 
-        if(status = G_ludcmp(a,n,indx,&d)) {
+        if ((status = G_ludcmp(a,n,indx,&d))) {
           for(j=0; j<n; j++) {
             for(i=0; i<n; i++) col[i]=0.0;
             col[j]=1.0;

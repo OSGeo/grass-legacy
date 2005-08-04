@@ -1,7 +1,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "imagery.h"
+#include "glocale.h"
 #include "bouman.h"
+
 
 int main (int argc, char *argv[])
 {
@@ -14,8 +16,8 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Performs contextual image classification "
-		"using sequential maximum a posteriori (SMAP) estimation.";
+		_("Performs contextual image classification "
+		"using sequential maximum a posteriori (SMAP) estimation.");
 
     parse (argc,argv, &parms);
     openfiles (&parms, &files);

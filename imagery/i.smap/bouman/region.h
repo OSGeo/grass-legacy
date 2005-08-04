@@ -13,9 +13,9 @@ struct Region
 
 /* decimate.c */
 void make_pyramid(LIKELIHOOD ****, struct Region *, int, double *, int);
-char ***get_pyramid(int, int, unsigned int);
+char ***get_pyramid(int, int, size_t);
 void free_pyramid(char *, int, int);
-char ****get_cubic_pyramid(int, int, int, unsigned int);
+char ****get_cubic_pyramid(int, int, int, size_t);
 void free_cubic_pyramid(char *, int, int, int);
 int levels(int, int);
 /* interp.c */
