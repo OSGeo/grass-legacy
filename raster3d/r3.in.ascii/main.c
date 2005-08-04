@@ -1,14 +1,48 @@
-/*
- * Authors:
- * Roman Waupotitsch, Michael Shapiro, Helena Mitasova, Bill Brown, 
- * Lubos Mitas, Jaro Hofierka 
- */
-
-#include "gis.h"
-#include "G3d.h"
+/***************************************************************************
+*
+* MODULE:       r3.in.ascii
+*
+* AUTHOR(S):    Roman Waupotitsch, Michael Shapiro, Helena Mitasova, Bill Brown, 
+* 		Lubos Mitas, Jaro Hofierka 
+*
+* PURPOSE:      Convert a 3D ASCII raster text file into a (binary) 3D raster map layer 
+*
+* COPYRIGHT:    (C) 2005 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*               License (>=v2). Read the file COPYING that comes with GRASS
+*               for details.
+*
+*****************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "gis.h"
+#include "G3d.h"
+#include "glocale.h"
+
+/*---------------------------------------------------------------------------*/
+/*- prototypes --------------------------------------------------------------*/
+
+static void fatalError (char *errorMsg);       /*Simple Error message */
+
+static void setParams ();                     /*Fill the paramType structure */
+
+/*Puts the userdefined parameters into easier handable variables*/
+static void getParams (char **input, char **output, int *convertNull, double *nullValu);
+
+/*reads a g3d ascii-file headerfile-string*/
+static void readHeaderString (FILE *fp, char *valueString, double *value);
+
+static FILE * openAscii (char *asciiFile, G3D_Region *region); /*open the g3d ascii file*/
+
+/*This function does all the work, it reads the values from the g3d ascii-file and put 
+it into an g3d-map*/
+static void asciiToG3d (FILE *fp, G3D_Region *region, int convertNull, double nullValue);
+
+
+
+
 
 /*---------------------------------------------------------------------------*/
 
@@ -24,6 +58,7 @@ fatalError (errorMsg)
 {
   if (map != NULL) {
     /* should unopen map here! */
+    G3d_closeCell (map);
   }
 
   G3d_fatalError (errorMsg);
@@ -45,15 +80,15 @@ setParams ()
   param.input->key = "input";
   param.input->type = TYPE_STRING;
   param.input->required = YES;
-  param.input->description = "Ascii raster file to be imported";
+  param.input->description = _("Ascii raster file to be imported");
 
   param.output = G_define_option();
   param.output->key = "output";
   param.output->type = TYPE_STRING;
   param.output->required = YES;
   param.output->multiple = NO ;
-  param.output->gisprompt = "any,grid3,3d raster";
-  param.output->description = "Name for G3d raster map";
+  param.output->gisprompt = _("any,grid3,3d raster");
+  param.output->description = _("Name for G3d raster map");
 
   param.nv = G_define_option();
   param.nv->key = "nv";
@@ -62,7 +97,7 @@ setParams ()
   param.nv->multiple = NO;
   param.nv->answer = "none";
   param.nv->description = 
-    "String representing NULL value data cell (use 'none' if no such value)";
+    _("String representing NULL value data cell (use 'none' if no such value)");
 }
 
 /*---------------------------------------------------------------------------*/
@@ -81,6 +116,8 @@ getParams (input, output, convertNull, nullValue)
  if (*convertNull)
    if (sscanf (param.nv->answer, "%lf", nullValue) != 1)
      fatalError ("getParams: NULL-value value invalid");
+
+ G_debug (3, "getParams: input: %s, output: %s", *input, *output);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -95,7 +132,7 @@ readHeaderString (fp, valueString, value)
 {
   static char format[100];
 
-  sprintf (format, "%s %%lf", valueString);
+  snprintf (format, 100, "%s %%lf", valueString); /*to avoid bufferoverflows we use snprintf*/
   if (fscanf (fp, format, value) != 1)
     fatalError ("readHeaderString: header value invalid");
 
@@ -113,6 +150,8 @@ openAscii (asciiFile, region)
 {
   FILE *fp;
   double tmp;
+
+ G_debug (3, "openAscii: opens the ascii file and reads the header");
 
   fp = fopen (asciiFile, "r");
   if (fp == NULL) {
@@ -151,9 +190,9 @@ asciiToG3d (fp, region, convertNull, nullValue)
 {
   int x, y, z;
   double value;
+/*
   int tileX, tileY, tileZ;
   
-/*
   G3d_getTileDimensionsMap (map, &tileX, &tileY, &tileZ);
   G3d_minUnlocked (map, G3D_USE_CACHE_X);
 
@@ -162,6 +201,7 @@ asciiToG3d (fp, region, convertNull, nullValue)
 fprintf(stderr,"rows=%d cols=%d depths=%d\n",region->rows,region->cols,region->depths);
 */
 
+ G_debug (3, "asciiToG3d: writing the g3d map, with rows %i cols %i depths %i", region->rows, region->cols, region->depths);
 
   for (z = 0; z < region->depths; z++) {
 /*
@@ -216,7 +256,7 @@ main (argc, argv)
   G_gisinit(argv[0]);
   module = G_define_module();
   module->description =
-   "Convert a 3D ASCII raster text file into a (binary) 3D raster map layer ";
+   _("Convert a 3D ASCII raster text file into a (binary) 3D raster map layer ");
 
   setParams ();
   G3d_setStandard3dInputParams ();
@@ -233,16 +273,19 @@ main (argc, argv)
 
   fp = openAscii (input, &region);
   
+  /*Open the new G3D map*/
   map = G3d_openNewParam (output, G3D_DOUBLE, G3D_USE_CACHE_XY,
 			  &region,
 			  type, doLzw, doRle, precision, tileX, tileY, tileZ);
 
   if (map == NULL) fatalError ("main: error opening g3d file");
 
+  /*Create the new G3D Map*/
   asciiToG3d (fp, &region, convertNull, nullValue);
 
   if (! G3d_closeCell (map)) 
     fatalError ("main: error closing new g3d file");
+    
   map = NULL;
   if (fclose (fp)) fatalError ("main: error closing ascii file");
 
