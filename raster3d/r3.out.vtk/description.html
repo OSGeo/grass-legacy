@@ -6,24 +6,6 @@ an VTK-ASCII file which will be written in the current working directory.
 If <I>output</I> is not specified then <B>stdout</B> is used.  
 The module is sensitive to region settings (set with g.region).
 
-<H3>Parameters:</H3>
-<DL>
-<DT><B>input</B>
-<DD>G3d raster map's to be converted to the VTK-ASCII-format
-
-<DT><B>output</B>
-<DD>Name for the VTK-ASCII output file (.vtk should be set by the user)
-
-<DT><B>null</B>
-<DD>Float value to represent no data cell
-<DD>Default: -99999.99
-
-<DT><B>elevscale</B>
-<DD>Scalefactor for elevation
-<DD>Default: 1.0
-
-</DL>
-
 <H2>NOTES</H2>
 This filter generates a <I>structured grid</I> with <I>celldata</I> and put
 this in a simple VTK-ASCII file. Nor XML or 
