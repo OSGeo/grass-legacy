@@ -1,13 +1,16 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "imagery.h"
+#include "glocale.h"
 #include "bouman.h"
 #include "region.h"
+
 
 static void init_reg (struct Region *, int,int, int);
 static int increment_reg (struct Region *, int, int, int);
 static int shift_img (CELL ***, int , struct Region *, int);
 static int shift_ll (LIKELIHOOD ****, struct Region *, int);
+
 
 int segment (
     struct SigSet *S,            /* class parameters */
@@ -50,10 +53,8 @@ int segment (
   nclasses = S->nclasses;
 
   /* Check for too many classes */
-  if(nclasses>256) {
-    G_fatal_error("number of classes must be < 256!");
-    exit(1);
-  }
+  if(nclasses>256)
+    G_fatal_error(_("Number of classes must be < 256!"));
 
   /* allocate alpha_dec parameters */
   D = levels(block_size,block_size);
@@ -73,7 +74,7 @@ int segment (
   extract_init(S);
   do {
     if(vlevel>=1) 
-      fprintf(stderr, "Processing rows %d-%d (of %d), cols=%d-%d (of %d)\n",
+      G_message(_("Processing rows %d-%d (of %d), cols=%d-%d (of %d)"),
 	region.ymin+1,region.ymax,ht,
 	region.xmin+1,region.xmax,wd);
     shift_img(img,nbands,&region,block_size);

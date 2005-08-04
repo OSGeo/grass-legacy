@@ -41,9 +41,9 @@ double log_like(double ***, double [3], int);
 void gradient(double [3], double ***, double [3], int);
 
 /* Subroutines in multialloc.c */
-char *multialloc(unsigned int,int,...);
+char *multialloc(size_t, int, ...);
 void multifree(char *, int);
-unsigned char **get_img(int, int, int);
+unsigned char **get_img(int, int, size_t);
 void free_img(unsigned char **);
 
 /* Subroutine in solve.c */

@@ -1,5 +1,7 @@
+#include "gis.h"
 #include "bouman.h"
 #include "region.h"
+
 
 static void decimate (LIKELIHOOD ***,struct Region *,int,LIKELIHOOD ***,double);
 static void up_ll (LIKELIHOOD *,int,double,LIKELIHOOD *);
@@ -24,7 +26,7 @@ void make_pyramid (
     reg_to_wdht(region,&wd,&ht);
     while((wd>2)&&(ht>2)) {
       if(vlevel>=2)
-        fprintf(stderr, "D = %d  alpha = %f; 1-alpha = %f\n",D,alpha[D],1-alpha[D]);
+        G_message("D = %d  alpha = %f; 1-alpha = %f", D,alpha[D],1-alpha[D]);
       decimate(ll_pym[D],region,M,ll_pym[D+1],alpha[D]);
       dec_reg(region);
       reg_to_wdht(region,&wd,&ht);
@@ -139,7 +141,7 @@ static void up_ll (
     }
 }
 
-char ***get_pyramid (int w0, int h0, unsigned size)
+char ***get_pyramid (int w0, int h0, size_t size)
 {
     char ***pym;
     int  D,wn,hn;
@@ -171,7 +173,7 @@ void free_pyramid (char *pym, int wd, int ht)
     G_free(pym);
 }
 
-char ****get_cubic_pyramid (int w0, int h0, int M, unsigned size)
+char ****get_cubic_pyramid (int w0, int h0, int M, size_t size)
 {
     char ****pym;
     int  D,wn,hn;

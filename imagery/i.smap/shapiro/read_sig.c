@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include "imagery.h"
+#include "glocale.h"
 #include "bouman.h"
+
 
 int read_signatures (struct parms *parms, struct SigSet *S)
 {
@@ -8,32 +10,21 @@ int read_signatures (struct parms *parms, struct SigSet *S)
     struct Ref Ref;
 
     if (!I_get_subgroup_ref (parms->group, parms->subgroup, &Ref))
-    {
-        fprintf (stderr,
-             "ERROR: unable to read REF file for subgroup [%s] in group [%s]\n",
+        G_fatal_error(_("Unable to read REF file for subgroup [%s] in group [%s]."),
                 parms->subgroup, parms->group);
-        exit(1);
-    }
+
     if (Ref.nfiles <= 0)
-    {
-        fprintf (stderr, "ERROR: subgroup [%s] in group [%s] contains no files\n",
+        G_fatal_error(_("Subgroup [%s] in group [%s] contains no files."),
                 parms->subgroup, parms->group);
-        exit(1);
-    }
 
     fd = I_fopen_sigset_file_old (parms->group, parms->subgroup, parms->sigfile);
     if (fd == NULL)
-    {
-	fprintf (stderr, "ERROR: signature file [%s] missing or not readable\n",
+	G_fatal_error(_("Signature file [%s] is missing or not readable."),
 		parms->sigfile);
-	exit(1);
-    }
+
     if(I_ReadSigSet (fd, S) < 0 || Ref.nfiles != S->nbands)
-    {
-	fprintf (stderr, "ERROR: signature file [%s] invalid\n",
-		parms->sigfile);
-	exit(1);
-    }
+	G_fatal_error(_("Signature file [%s] is invalid."), parms->sigfile);
+
     fclose (fd);
 
     return 0;
