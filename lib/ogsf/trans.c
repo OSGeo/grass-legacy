@@ -16,9 +16,7 @@
 **   P_pushmatrix ()
 **   P_popmatrix ()
 **   P_scale ()		
-**   P_translate ()
 **   P_rot ()
-**   P_rotate ()
 **   P_transform ()      transform array of vectors using current T matrix
 **      		 This routine should be available in GL!
 **
@@ -29,6 +27,7 @@
 **  There are many places where the code could be improved.
 **
 */
+
 #include <stdio.h>
 #include <math.h>
 
@@ -36,6 +35,14 @@
 
 #define MAX_STACK 20
 
+
+/* function prototypes */
+static void P__transform(int num_vert, float (*in)[4],
+                float (*out)[4], float (*c)[4]);
+static void P_matrix_copy(float (*from)[4], float (*to)[4], int size);
+
+
+/* global variables */
 static float c_stack[MAX_STACK][4][4];	/* matrix stack */
 static int stack_ptr = -1;	/* index of curr matrix depth */
 static float d[4][4];		/* tmp matrix */
@@ -90,32 +97,6 @@ void P_scale(float x, float y, float z)
     return;
 }
 
-/************************************************************************/
-void P_translate(float x, float y, float z)
-{
-    d[0][0] = 1.;
-    d[0][1] = 0.;
-    d[0][2] = 0.;
-    d[0][3] = 0.;
-    d[1][0] = 0.;
-    d[1][1] = 1.;
-    d[1][2] = 0.;
-    d[1][3] = 0.;
-    d[2][0] = 0.;
-    d[2][1] = 0.;
-    d[2][2] = 1.;
-    d[2][3] = 0.;
-    d[3][0] = x;
-    d[3][1] = y;
-    d[3][2] = z;
-    d[3][3] = 1.;
-
-    P_pushmatrix();
-    P__transform(4, d, c_stack[stack_ptr], trans_mat);
-    P_popmatrix();
-
-    return;
-}
 
 /************************************************************************/
 /*
@@ -132,7 +113,7 @@ void P_transform(int num_vert, float (*in)[4], float (*out)[4])
 }
 
 /************************************************************************/
-void P__transform(int num_vert, float (*in)[4], float (*out)[4],
+static void P__transform(int num_vert, float (*in)[4], float (*out)[4],
 		  float (*c)[4])
 {
     register int k, j, i;
@@ -151,7 +132,7 @@ void P__transform(int num_vert, float (*in)[4], float (*out)[4],
 }
 
 /************************************************************************/
-void P_matrix_copy(float (*from)[4], float (*to)[4], int size)
+static void P_matrix_copy(float (*from)[4], float (*to)[4], int size)
 {
     register int i, j;
 
@@ -200,14 +181,6 @@ int P_popmatrix(void)
     return (0);
 }
 
-/************************************************************************/
-/*  angle is expressed in tenths of degrees */
-void P_rotate(int angle, char axis)
-{
-    P_rot(angle / 10., axis);
-
-    return;
-}
 
 /************************************************************************/
 void P_rot(float angle, char axis)
@@ -253,43 +226,4 @@ void P_rot(float angle, char axis)
     P_popmatrix();
 
     return;
-}
-
-/************************************************************************/
-/*  angle is expressed in radians  */
-void P_rad_rotate(double theta, char axis)
-{
-
-    P_matrix_copy(ident, d, 4);
-
-    /* optimize to handle rotations of mutliples of 90 deg */
-    switch (axis) {
-    case 'x':
-	d[1][1] = cos(theta);
-	d[1][2] = sin(theta);
-	d[2][1] = -sin(theta);
-	d[2][2] = cos(theta);
-
-	break;
-
-    case 'y':
-	d[0][0] = cos(theta);
-	d[0][2] = -sin(theta);
-	d[2][0] = sin(theta);
-	d[2][2] = cos(theta);
-
-	break;
-
-    case 'z':
-	d[0][0] = cos(theta);
-	d[0][1] = sin(theta);
-	d[1][0] = -sin(theta);
-	d[1][1] = cos(theta);
-
-	break;
-    }
-
-    P_pushmatrix();
-    P__transform(4, d, c_stack[stack_ptr], trans_mat);
-    P_popmatrix();
 }
