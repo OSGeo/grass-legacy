@@ -10,13 +10,16 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/types.h>
+#include "gis.h"
 #include "image.h"
 #include "tiffio.h"
 #include "gstypes.h"
 
+
 u_short config = PLANARCONFIG_CONTIG;
 u_short compression = -1;
 u_short rowsperstrip = 0;
+
 
 int GS_write_tif(char *name)
 {
@@ -34,9 +37,8 @@ int GS_write_tif(char *name)
     gsd_getimage(&pixbuf, &xsize, &ysize);
 
     out = TIFFOpen(name, "w");
-    if (out == NULL) {
-	fprintf(stderr, "Cannot open file for output\n"), exit(1);
-    }
+    if (out == NULL)
+	G_fatal_error("Cannot open file for output.");
 
     /* Write out TIFF Tags */
     /* Assuming 24 bit RGB Tif */
@@ -54,10 +56,10 @@ int GS_write_tif(char *name)
     linebytes = ((xsize * ysize + 15) >> 3) & ~1;
 
     if (TIFFScanlineSize(out) > linebytes) {
-	buf = (u_char *) malloc(linebytes);
+	buf = (u_char *)G_malloc(linebytes);
     }
     else {
-	buf = (u_char *) malloc(TIFFScanlineSize(out));
+	buf = (u_char *)G_malloc(TIFFScanlineSize(out));
     }
 
     if (rowsperstrip != (u_short) - 1) {
