@@ -6,17 +6,21 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "GL/glu.h"
+#include "gis.h"
 #include "gstypes.h"
 #include "rgbpack.h"
+
 
 static float *Listcats;
 static int Listnum = 0;
 
-static int bigger(f1, f2)
-     float *f1, *f2;
+
+/**** TODO
+static int bigger(float *f1, float *f2)
 {
     return (*f1 < *f2 ? -1 : (*f1 > *f2));
 }
+*****/
 
 #define MAX_LEGEND 256
 
