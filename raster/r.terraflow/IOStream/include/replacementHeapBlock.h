@@ -158,7 +158,7 @@ public:
 //allocate array mergeHeap, where the streams are stored in runList
 template<class T,class Compare>
 ReplacementHeapBlock<T,Compare>
-::ReplacementHeapBlock<T,Compare>(queue <MEM_STREAM<T>*> *runList) {
+::ReplacementHeapBlock(queue <MEM_STREAM<T>*> *runList) {
   
   RBHEAP_DEBUG cerr << "ReplacementHeapBlock " << endl;
   
