@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 
+#include "gis.h"
 #include "image.h"
 #include "gstypes.h"
 
@@ -17,7 +18,7 @@ static unsigned short bbuf[8192];
 
 static void ierrfunc(char *ebuf)
 {
-    fprintf(stderr, "%s\n", ebuf);
+    G_message("%s", ebuf);
 
     return;
 }
@@ -40,7 +41,7 @@ int GS_write_rgb(char *name)
 
 	if (NULL ==
 	    (image = iopen(name, "w", VERBATIM(1), 3, xsize, ysize, 3))) {
-	    fprintf(stderr, "Unable to open %s for writing.\n", name);
+	    G_warning("Unable to open %s for writing.", name);
 
 	    return (-1);
 	}
