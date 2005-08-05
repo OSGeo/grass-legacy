@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <math.h>
 
+#include "gis.h"
 #include "gstypes.h"
 #include "mc33_table.h"
 
