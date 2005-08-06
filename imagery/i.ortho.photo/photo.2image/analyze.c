@@ -6,6 +6,9 @@
 #include "raster.h"
 #include "globals.h"
 
+
+/* debug */
+#undef DEBUG
  
 #define NLINES 18
 struct box
@@ -31,7 +34,9 @@ static int cancel_which (void);
 static int inbox (struct box *,int,int);
 static int dotext (char *,int,int,int,int,int,int);
 static int compute_transformation(void);
+#ifdef DEBUG
 static int debug (char *);
+#endif
 static int to_file(void);
 static int askfile(void);
 static int to_printer(void);
@@ -315,7 +320,9 @@ static int pick(int x,int y)
     n = (y - report.top)/height;
     if (n == cur) /* second click! */
     {
-/*      debug ("have second click  n = %d", n);  */
+#ifdef DEBUG
+        debug ("have second click  n = %d", n);
+#endif
 	group.photo_points.status[first_point+n] = !group.photo_points.status[first_point+n];
 	compute_transformation();
 	show_point (first_point+n, 1);
@@ -433,6 +440,7 @@ static int compute_transformation(void)
     return 0;
 }
 
+#ifdef DEBUG
 static int debug (char *msg)
 {
     R_stabilize();
@@ -441,6 +449,7 @@ static int debug (char *msg)
 
     return 0;
 }
+#endif
 
 static int to_file(void)
 {
