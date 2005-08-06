@@ -22,13 +22,12 @@ int
 main (int argc, char **argv)
 {
 	struct GModule *module;
-    struct Flag *v;
     int i, first=1;
     char buf[128];
     char *mapset;
     char **rast, **vect, **site;
     int nrasts, nvects, nsites;
-    double east, west, south, north, nsres, ewres;
+    struct Cell_head window, temp_window;
 
     G_gisinit(argv[0]) ;
 
@@ -36,11 +35,6 @@ main (int argc, char **argv)
 	module->description =
 		"Set window region so that all currently displayed raster, "
 		"vector and sites maps can be shown in a monitor.";
-
-    v = G_define_flag();
-    v->key = 'v';
-    v->description = "Verbose output";
-
 
     if(argc > 1 && G_parser(argc, argv))
 	    exit(-1);
@@ -63,12 +57,14 @@ main (int argc, char **argv)
     if (rast == NULL && vect == NULL && site == NULL)
     	G_fatal_error("No raster, vector or sites file displayed");
 
-    east = west = south = north = nsres = ewres = 0.0;
+    if(G__get_window(&window, "", "WIND", G_mapset()) != NULL)
+    {
+	    G_get_default_window(&window);
+	    G_put_window(&window);
+    }
 
     if (rast)
     {
-        struct Cell_head window;
-
 	for(i=0; i<nrasts; i++){
     		mapset = G_find_cell2 (rast[i], "");
     		if (mapset == NULL)
@@ -77,45 +73,43 @@ main (int argc, char **argv)
 			sprintf(msg,"Raster file [%s] not available", rast[i]);
 			G_fatal_error(msg) ;
 		}
-		else
+	 	if(G_get_cellhd(rast[i], mapset, &temp_window) >= 0)
 		{
-	 		if(G_get_cellhd(rast[i], mapset, &window) >= 0)
+			if(first)
 			{
-	 			if(first)
-	 			{
-					first = 0;
-					east = window.east;
-					west = window.west;
-					south = window.south;
-					north = window.north;
+				first = 0;
+				G_copy(&window, &temp_window, sizeof(window));
+			}
+			else
+			{
+				if(window.east < temp_window.east)
+					window.east = temp_window.east;
+				if(window.west > temp_window.west)
+					window.west = temp_window.west;
+				if(window.south > temp_window.south)
+					window.south = temp_window.south;
+				if(window.north < temp_window.north)
+					window.north = temp_window.north;
+				/*
+				if(window.ns_res < nsres)
 					nsres = window.ns_res;
+				if(window.ew_res < ewres)
 					ewres = window.ew_res;
-	 			}
-	 			else
-				{
-					if(window.east > east)
-						east = window.east;
-					if(window.west < west)
-						west = window.west;
-					if(window.south < south)
-						south = window.south;
-					if(window.north > north)
-						north = window.north;
-					if(window.ns_res < nsres)
-						nsres = window.ns_res;
-					if(window.ew_res < ewres)
-						ewres = window.ew_res;
-				}
+				*/
 			}
 		}
 	}
+
+	G_adjust_Cell_head3(&window, 0, 0, 0);
     }
 
     if (vect)
     {
         struct Map_info Map;
 
-        Vect_set_open_level(1);
+	G_copy(&temp_window, &window, sizeof(window));
+
+        Vect_set_open_level(2);
 	for(i=0; i<nvects; i++){
     		mapset = G_find_vector2 (vect[i], "");
     		if (mapset == NULL)
@@ -124,32 +118,43 @@ main (int argc, char **argv)
 			sprintf(msg,"Vector file [%s] not available", vect[i]);
 			G_fatal_error(msg) ;
 		}
-		else
+		if(Vect__open_old(&Map, vect[i], mapset, 0, 1) == 2)
 		{
-			if(Vect_open_old(&Map, vect[i], mapset) == 1)
+			if(first)
 			{
-	 			if(first)
-	 			{
-					first = 0;
-					east = Map.plus.box.E;
-					west = Map.plus.box.W;
-					south = Map.plus.box.S;
-					north = Map.plus.box.N;
-	 			}
-	 			else
-				{
-					if(Map.plus.box.E > east)
-						east = Map.plus.box.E;
-					if(Map.plus.box.W < west)
-						west = Map.plus.box.W;
-					if(Map.plus.box.S < south)
-						south = Map.plus.box.S;
-					if(Map.plus.box.N > north)
-						north = Map.plus.box.N;
-				}
+				first = 0;
+				window.east = Map.plus.box.E;
+				window.west = Map.plus.box.W;
+				window.south = Map.plus.box.S;
+				window.north = Map.plus.box.N;
 			}
+			else
+			{
+				if(window.east < Map.plus.box.E)
+					window.east = Map.plus.box.E;
+				if(window.west > Map.plus.box.W)
+					window.west = Map.plus.box.W;
+				if(window.south > Map.plus.box.S)
+					window.south = Map.plus.box.S;
+				if(window.north < Map.plus.box.N)
+					window.north = Map.plus.box.N;
+			}
+			Vect_close(&Map);
 		}
 	}
+
+	if(window.north == window.south)
+	{
+		window.north += 0.5 * temp_window.ns_res;
+		window.south -= 0.5 * temp_window.ns_res;
+	}
+	if(window.east == window.west)
+	{
+		window.east += 0.5 * temp_window.ew_res;
+		window.west -= 0.5 * temp_window.ew_res;
+	}
+
+	G_align_window(&window, &temp_window);
     }
 
     if (site)
@@ -157,6 +162,8 @@ main (int argc, char **argv)
 	FILE *fp;
 	Site *s;
 	int rtype, ndim, nstr, ndec;
+
+	G_copy(&temp_window, &window, sizeof(window));
 
 	for(i=0; i<nsites; i++){
     		mapset = G_find_sites2 (site[i], "");
@@ -166,93 +173,69 @@ main (int argc, char **argv)
 			sprintf(msg,"Site file [%s] not available", site[i]);
 			G_fatal_error(msg) ;
 		}
-		else
+		if(NULL != (fp = G_fopen_sites_old(site[i], mapset)))
 		{
-			if(NULL != (fp = G_fopen_sites_old(site[i], mapset)))
+			rtype = -1;
+			G_site_describe(fp, &ndim, &rtype, &nstr, &ndec);
+			s = G_site_new_struct(rtype, ndim, nstr, ndec);
+			/*
+			while(G_site_get(fp, s) == 0)
 			{
-				rtype = -1;
-				G_site_describe(fp, &ndim, &rtype, &nstr, &ndec);
-				s = G_site_new_struct(rtype, ndim, nstr, ndec);
-				/*
-				while(G_site_get(fp, s) == 0)
+			*/
+			while(!feof(fp))
+			{
+				if(G_site_get(fp, s))
+					continue;
+				if(first)
 				{
-				*/
-				while(!feof(fp))
-				{
-					if(G_site_get(fp, s))
-						continue;
-					if(first)
-					{
-						first = 0;
-						east = s->east;
-						west = s->east;
-						south = s->north;
-						north = s->north;
-					}
-					else
-					{
-						if(s->east > east)
-							east = s->east;
-						if(s->east < west)
-							west = s->east;
-						if(s->north < south)
-							south = s->north;
-						if(s->north > north)
-							north = s->north;
-					}
+					first = 0;
+					window.east = s->east;
+					window.west = s->east;
+					window.south = s->north;
+					window.north = s->north;
 				}
-
-				/* is 100 enough to contain one point from
-				 * boundary?
-				 */
-				east += 100;
-				west -= 100;
-				south -= 100;
-				north += 100;
-
-				G_free(s);
-				fclose(fp);
+				else
+				{
+					if(window.east < s->east)
+						window.east = s->east;
+					if(window.west > s->east)
+						window.west = s->east;
+					if(window.south > s->north)
+						window.south = s->north;
+					if(window.north < s->north)
+						window.north = s->north;
+				}
 			}
+
+			/* is 100 enough to contain one point from
+			 * boundary?
+			east += 100;
+			west -= 100;
+			south -= 100;
+			north += 100;
+			 */
+
+			G_free(s);
+			fclose(fp);
 		}
 	}
+
+	if(window.north == window.south)
+	{
+		window.north += 0.5 * temp_window.ns_res;
+		window.south -= 0.5 * temp_window.ns_res;
+	}
+	if(window.east == window.west)
+	{
+		window.east += 0.5 * temp_window.ew_res;
+		window.west -= 0.5 * temp_window.ew_res;
+	}
+
+	G_align_window(&window, &temp_window);
     }
 
-#ifdef BOUNDARY
-    if(!first)
-    {
-    /*
-	    if(east == west)
-	    {
-		    east += 100;
-		    west -= 100;
-	    }
-	    if(south == north)
-	    {
-		    south -= 100;
-		    north += 100;
-	    }
-    */
-
-	    east += 0.05 * (east - west);
-	    west -= 0.05 * (east - west);
-	    south -= 0.05 * (north - south);
-	    north += 0.05 * (north - south);
-    }
-#endif
-
-    if(!rast)
-    {
-	    nsres = (north - south) / 512;
-	    ewres = (east - west) / 512;
-    }
-
-    sprintf(buf, "g.region n=%lf s=%lf e=%lf w=%lf nsres=%lf ewres=%lf",
-		    north, south, east, west, nsres, ewres);
-    system(buf);
-
-    if(v->answer)
-	    fprintf(stderr, "%s\n", buf);
+    G_adjust_Cell_head3(&window, 0, 0, 0);
+    G_put_window(&window);
 
     exit(0);
 }
-
