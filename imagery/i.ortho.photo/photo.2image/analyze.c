@@ -2,6 +2,7 @@
 #include <math.h>
 #include <unistd.h>
 #include "gis.h"
+#include "imagery.h"
 #include "raster.h"
 #include "globals.h"
 
