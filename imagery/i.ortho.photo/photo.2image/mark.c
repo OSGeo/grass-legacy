@@ -3,15 +3,17 @@
 #include "globals.h"
 #include "camera_ref.h"
 
+
+#undef DEBUG
+
 /* define MOUSE_YN to answer y/n by mouse click */
 #define	MOUSE_YN
+
 
 static char buf[300];
 static int get_point2 (double *,double *);
 static int keyboard (void);
 static int _keyboard (void);
-static int screen (int,int,int);
-static int cancel (void);
 static int fromfile (void);
 static int _drawcam (void);
 static int uparrow (struct box *,int);
@@ -21,9 +23,11 @@ static int done (void);
 static int cancel_which (void);
 static int inbox (struct box *,int,int);
 static int dotext (char *,int,int,int,int,int,int);
-static int printcentered (FILE *,char *,int);
+#ifdef DEBUG
 static int show_point (int,int);
 static int debug (char *);
+#endif
+
 
 int mark (int x, int y, int button)
 {
@@ -93,15 +97,7 @@ static double N,E;
 static int get_point2 (double *east, double *north)
 {
     int stat;
-    static int use = 1;
-    static Objects objects[] =
-    {
-	INFO  ("Choose input method", &from_flag),        
-        OTHER (fromfile, &from_screen),
-	OTHER (keyboard, &from_keyboard),  
- 	OTHER (cancel, &use), 
-	{0}
-    };
+
 	if (from_screen < 0)
 	{
 	    from_flag = 1;
@@ -188,26 +184,6 @@ static int _keyboard (void)
     }
 }
 
-/* get point 2 from camera file */
-static int screen (int x, int y, int button)
-{
-    char buf[50];
-
-    if (button == 1)
-	return 1;
-
-    sprintf (buf, "X:  %10.2f\n", E);
-    Curses_write_window (INFO_WINDOW, 3, 2, buf);
-    sprintf (buf, "Y:  %10.2f\n", N);
-    Curses_write_window (INFO_WINDOW, 4, 2, buf);
-
-    return 0;
-}
-
-static int cancel (void)
-{
-    return -1;
-}
 
 static int fromfile (void)
 {
@@ -392,13 +368,17 @@ static int pick (int x, int y)
 	    Beep();
 	}
 
-	/* show_point (first_point+n, 1);*/
+#ifdef DEBUG
+	show_point (first_point+n, 1);
+#endif
         Curses_clear_window (INFO_WINDOW);
         Curses_write_window (PROMPT_WINDOW, 1, 1, "Use Mouse Now \n");
 	return 1;
     }
     which = n;
-    /* show_point (first_point+n, 0);*/
+#ifdef DEBUG
+    show_point (first_point+n, 0);
+#endif
     R_standard_color (RED);
     Outline_box (report.top + n*height, report.top +(n+1)*height,
 		         report.left, report.right-1);
@@ -421,7 +401,9 @@ static int cancel_which (void)
 	R_standard_color (BACKGROUND);
 	Outline_box (report.top + which*height, report.top +(which+1)*height,
 		         report.left, report.right-1);
-	/* show_point (first_point+which, 1); */
+#ifdef DEBUG
+	show_point (first_point+which, 1);
+#endif
     }
     which = -1;
 
@@ -449,25 +431,8 @@ static int dotext (char *text,
     return 0;
 }
 
-static int printcentered (FILE *fd, char *buf, int width)
-{
-    int len;
-    int n;
-    int i;
 
-    len = strlen (buf);
-    n = (width -len)/2;
-
-    for (i = 0; i < n; i++)
-	fprintf (fd, " ");
-    fprintf (fd, "%s", buf);
-    i += len;
-    while (i++ < width)
-	fprintf (fd, " ");
-
-    return 0;
-}
-
+#ifdef DEBUG
 static int show_point (int n, int true_color)
 {
     if (!true_color)
@@ -480,6 +445,7 @@ static int show_point (int n, int true_color)
     return 0;
 }
 
+
 static int debug (char *msg)
 {
     R_stabilize();
@@ -488,3 +454,5 @@ static int debug (char *msg)
 
     return 0;
 }
+#endif
+
