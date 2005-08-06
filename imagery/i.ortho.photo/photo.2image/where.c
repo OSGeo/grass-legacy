@@ -1,9 +1,13 @@
+#include "imagery.h"
 #include "globals.h"
+
+
 static char buf[300];
 
 static int where_12 (View *,int,int);
 static int where_21 (View *,int,int);
 static int where_am_i (View *,int,int,Window *,double *,double *,Window *);
+
 
 int where (int x, int y)
 {
