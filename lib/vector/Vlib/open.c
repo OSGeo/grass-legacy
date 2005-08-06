@@ -110,7 +110,7 @@ Vect_set_open_level (int level)
  \param update open for update
  \param head_only Read only header info from 'head', 'dbln', 'topo' and 'cidx'. 
              'cidx' is not opened.
-             The headed may be opened on level 2 only. 
+             The header may be opened on level 2 only. 
 */
 int
 Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int head_only ) 
