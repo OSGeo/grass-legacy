@@ -8,7 +8,9 @@
 
 
 static char buf[300];
+#if 0
 static int no (void);
+#endif
 static int yes (void);
 static int drawcamnew (void);
 static int uparrow (struct box *,int);
@@ -22,6 +24,9 @@ static int dotext (char *,int,int,int,int,int,int);
 
 int setup_camera_file (void)
 {
+    char *camera;
+
+#if 0
     static int use = 1;
     static Objects objects[]=
     {
@@ -30,7 +35,7 @@ int setup_camera_file (void)
 	MENU("NO", no, &use),
 	{0}
     };
-    char *camera;
+#endif
 
     camera = (char *) G_malloc (40 * sizeof (char));
     use_camera_file = 1;
@@ -48,18 +53,23 @@ int setup_camera_file (void)
       }
      yes();
      return(0);
+
+#if 0
 /*** camera required 
     Start_mouse_in_menu();
     if (Input_pointer (objects) < 0) return (1);
     else return 0;
 ****/
+#endif
 }
 
+#if 0
 static int no (void)
 {
     use_camera_file = 0;
     return -1;
 }
+#endif
 
 static int yes (void)
 {
