@@ -1,4 +1,5 @@
 #define GLOBAL
+
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -11,18 +12,13 @@
 
 int main (int argc, char *argv[])
 {
-    int i;  /* for debug */
-
-    char *name, *location, *mapset, *camera, msg[200];
+    char *name, *location, *mapset, *camera;
     int nfiles;
     struct Cell_head cellhd;
     /* struct Ortho_Image_Group    group;   -- in globals.h */
 
     if (argc != 2)
-    {
-	fprintf (stderr, "usage: %s group\n", argv[0]);
-	exit(1);
-    }
+	G_fatal_error("usage: %s group.", argv[0]);
 
     G_gisinit (argv[0]);
     G_suppress_masking();	/* need to do this for target location */
@@ -47,11 +43,7 @@ int main (int argc, char *argv[])
     name = argv[1];
     strcpy  (group.name, name);
     if (!I_find_group (group.name))
-    {
-	fprintf (stderr, "Image Group [%s] not found\n", group.name);
-	exit(1);
-    }
-
+	G_fatal_error("Image Group [%s] not found.", group.name);
 
     /* get the group ref */    
     I_get_group_ref (group.name, &group.group_ref);
@@ -63,16 +55,10 @@ int main (int argc, char *argv[])
     /** look for camera info  for this block **/
     G_suppress_warnings(1);    
     if (!I_get_group_camera (group.name,camera))
-    {   
-        sprintf (msg, "No camera reference file selected for group [%s]\n", group.name);
-	G_fatal_error(msg);
-    }
+        G_fatal_error("No camera reference file selected for group [%s].", group.name);
 
     if (!I_get_cam_info (camera, &group.camera_ref))
-    {  
-        sprintf (msg, "Bad format in camera file for group [%s]\n",group.name);
-	G_fatal_error(msg);
-    }
+        G_fatal_error("Bad format in camera file for group [%s].", group.name);
     G_suppress_warnings(0);
 
     /* read block reference points, if any */
@@ -99,7 +85,6 @@ int main (int argc, char *argv[])
     signal (SIGTSTP, SIG_IGN);
 #endif
 */
-
 
     /* ask user for cell file to be displayed */
     do
