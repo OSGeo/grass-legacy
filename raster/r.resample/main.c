@@ -20,7 +20,6 @@ int main(int argc, char *argv[])
 	int row;
 	int infd, outfd;
 	int verbose;
-	char buf[256] ;
 	RASTER_MAP_TYPE data_type, out_type ;
 	struct GModule *module;
 	struct
@@ -127,7 +126,7 @@ int main(int argc, char *argv[])
 	G_close_cell (infd);
 
 	if (verbose)
-		fprintf (stdout, "Creating support files for %s\n", result);
+		G_message(_("Creating support files for %s..."), result);
 
 	G_close_cell (outfd);
 
@@ -140,7 +139,7 @@ int main(int argc, char *argv[])
 		rast1 = rast; 
 		rast2 = G_incr_void_ptr(rast, G_raster_size(data_type));
 
-                fprintf(stdout, "creating new cats file...\n");
+                G_message(_("creating new cats file..."));
 		while (G_get_next_marked_raster_cat(&cats, 
 			     rast1, rast2, &count, data_type)) 
 		   G_set_raster_cat(rast1, rast2, 
