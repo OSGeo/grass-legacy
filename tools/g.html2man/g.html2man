@@ -263,6 +263,7 @@ while (<INP>) {
     s#&gt#>#g; 
     s#^'#\\(cq#gm;
     s#^"#\\(dq#gm;
+    s#`#\\(ga#g;
     $out .= $_;
     if ($preformat == 1) {
       $out .= ".br\n";
