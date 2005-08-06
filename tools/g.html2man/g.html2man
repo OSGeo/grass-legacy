@@ -217,6 +217,8 @@ sub DoFont {
   s#</B> *<B># #ig;
   s#<B>#\\fB#ig;
   s#</B>#\\fR#ig;
+  s#<SUP>#\\u#ig;
+  s#</SUP>#\\d#ig;
 
   s# *</I> *_ *<I> *#_#ig;
   s#</I> *<I># #ig;
@@ -261,6 +263,7 @@ while (<INP>) {
     s#&gt#>#g; 
     s#^'#\\(cq#gm;
     s#^"#\\(dq#gm;
+    s#`#\\(ga#g;
     $out .= $_;
     if ($preformat == 1) {
       $out .= ".br\n";
