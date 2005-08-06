@@ -1,13 +1,16 @@
 #include <string.h>
 #include <stdlib.h>
+#include "gis.h"
 #include "raster.h"
 #include "globals.h"
+
 
 #define NLINES 18
 struct box
 {
     int top, bottom, left,right;
 };
+
 
 static int text_size;
 static int which;

@@ -1,9 +1,11 @@
 #include <string.h>
+#include "gis.h"
 #include "raster.h"
 #include "imagery.h"
 #include "globals.h"
 #define  GLOBALCAM
 #include "camera_ref.h"
+
 
 static char buf[300];
 static int no (void);
@@ -16,6 +18,7 @@ static int done (void);
 static int cancel_which (void);
 static int inbox (struct box *,int,int);
 static int dotext (char *,int,int,int,int,int,int);
+
 
 int setup_camera_file (void)
 {

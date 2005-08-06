@@ -1,11 +1,16 @@
 #include <unistd.h>
 #include <string.h>
+#include "gis.h"
 #include "imagery.h"
 #include "globals.h"
+
+
 /* read the target for the group and cast it into the alternate GRASS env */
+
 
 static int which_env;
 static char buf[1024];
+
 
 int get_target (void)
 {

@@ -1,3 +1,4 @@
+#include "gis.h"
 #include "D.h"
 #include "display.h"
 #include "raster.h"

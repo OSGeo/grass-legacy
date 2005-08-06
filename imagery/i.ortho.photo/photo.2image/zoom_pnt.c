@@ -1,11 +1,14 @@
 #include <math.h>
+#include "gis.h"
 #include "raster.h"
 #include "globals.h"
+
 
 static View *pick_view, *zoom_view, *main_view;
 static int target_flag;
 static int zoom1 (int,int);
 static int cancel (void);
+
 
 int zoom_point (void)
 {

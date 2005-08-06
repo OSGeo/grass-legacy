@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <unistd.h>
+#include "gis.h"
 #include "globals.h"
 
 static int inited = 0;
@@ -15,7 +16,7 @@ static Window *make_window (int top, int bottom, int left, int right)
     ||	bottom-top <= 1 || right-left <= 1)
     {
 	End_curses();
-	fprintf (stderr, "make_window(%d,%d,%d,%d): illegal screen values\n",
+	G_warning("make_window(%d,%d,%d,%d): illegal screen values.",
 		top, bottom, left, right);
 	sleep(3);
 	exit(1);
