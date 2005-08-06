@@ -178,28 +178,44 @@ G_compare_projections( struct Key_Value *proj_info1,
                        struct Key_Value *proj_units2 )
 
 {
+    char *proj1, *proj2;
     
     if( proj_info1 == NULL && proj_info2 == NULL )
         return TRUE;
-    
+
 /* -------------------------------------------------------------------- */
 /*      Are they both in the same projection?                           */
 /* -------------------------------------------------------------------- */
-    if( G_find_key_value( "proj", proj_info1 ) != NULL
-        && G_find_key_value( "meters", proj_units1 ) != NULL
-        && atof(G_find_key_value( "meters", proj_units1 ))
-           != atof(G_find_key_value( "meters", proj_units2 )) )
+    /* prevent seg fault in G_find_key_value */
+    if( proj_info1 == NULL || proj_info2 == NULL)
+	return -1;
+
+    proj1 = G_find_key_value("proj", proj_info1);
+    proj2 = G_find_key_value("proj", proj_info2);
+
+    if( proj1 == NULL || proj2 == NULL || strcmp(proj1, proj2) )
         return -1;
 
 /* -------------------------------------------------------------------- */
 /*      Verify that the linear unit translation to meters is OK.        */
 /* -------------------------------------------------------------------- */
-    if( proj_units1 != NULL && proj_units2 != NULL
-        && G_find_key_value( "meters", proj_units1 ) != NULL
-        && G_find_key_value( "meters", proj_units2 ) != NULL
-        && atof(G_find_key_value( "meters", proj_units1 ))
-           != atof(G_find_key_value( "meters", proj_units2 )) )
-        return -2;
+    /* prevent seg fault in G_find_key_value */
+    if( proj_units1 == NULL && proj_units2 == NULL )
+	return TRUE;
+
+    if( proj_units1 == NULL || proj_units2 == NULL)
+	return -2;
+
+    {
+        double a1=0, a2=0;
+        if(G_find_key_value( "meters", proj_units1) != NULL)
+           a1 = atof(G_find_key_value( "meters", proj_units1 ));
+        if(G_find_key_value( "meters", proj_units2) != NULL)
+           a2 = atof(G_find_key_value( "meters", proj_units2 ));
+
+        if ( a1 && a2 && ( abs(a2-a1) > 0.000001 ) )
+            return -2;
+    }
 
 /* -------------------------------------------------------------------- */
 /*      Do they both have the same ellipsoid?                           */
@@ -220,13 +236,10 @@ G_compare_projections( struct Key_Value *proj_info1,
 /* -------------------------------------------------------------------- */
 /*      Zone check specially for UTM                                    */
 /* -------------------------------------------------------------------- */
-    {   
-        if(   G_find_key_value( "proj", proj_info1 ) == "utm"
-	   && G_find_key_value( "proj", proj_info2 ) == "utm"
-	   &&    atof(G_find_key_value( "zone", proj_info1 ))
-	      != atof(G_find_key_value( "zone", proj_info2 )) )
-	   return -5;
-    }
+    if( !strcmp(proj1, "utm") && !strcmp(proj2, "utm")
+        && atof(G_find_key_value( "zone", proj_info1 ))
+	   != atof(G_find_key_value( "zone", proj_info2 )) )
+        return -5;
 
 /* -------------------------------------------------------------------- */
 /*      Add more details in later.                                      */
