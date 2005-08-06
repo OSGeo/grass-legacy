@@ -458,7 +458,7 @@ main (int argc, char *argv[])
 	    }else{
                 if( loc_proj_units != NULL )
                 {
-                    strcat( error_msg, "LOCATION PROJ_ is:\n" );
+                    strcat( error_msg, "LOCATION PROJ_UNITS is:\n" );
                     for( i_value = 0; i_value < loc_proj_units->nitems; i_value++ )
                         sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
                                  loc_proj_units->key[i_value],
@@ -468,7 +468,7 @@ main (int argc, char *argv[])
       
                 if( proj_units != NULL )
                 {
-                    strcat( error_msg, "Dataset PROJ_INFO is:\n" );
+                    strcat( error_msg, "Dataset PROJ_UNITS is:\n" );
                     for( i_value = 0; i_value < proj_units->nitems; i_value++ )
                         sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
                                  proj_units->key[i_value],
