@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include "gis.h"
 #include "globals.h"
 
 static int use = 1;

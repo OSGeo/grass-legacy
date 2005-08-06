@@ -1,5 +1,7 @@
+#include "gis.h"
 #include "raster.h"
 #include "globals.h"
+
 
 int display_title (View *view)
 {

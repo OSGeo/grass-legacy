@@ -2,7 +2,9 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include "gis.h"
 #include "globals.h"
+
 
 /*
  * run etc/i.find command in background to find all cell, vect files

@@ -1,3 +1,4 @@
+#include "gis.h"
 #include "raster.h"
 #include "globals.h"
 
@@ -8,6 +9,7 @@ static int target_flag;
 static int cancel(void);
 static int zoom1 (int,int);
 static int zoom2 (int,int);
+
 
 int zoom_box (void)
 {

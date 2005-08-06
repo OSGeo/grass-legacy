@@ -1,8 +1,11 @@
 #include <string.h>
 #include <stdlib.h>
+#include "gis.h"
 #include "globals.h"
 
+
 static int cmp (const void *, const void *);
+
 
 int prepare_group_list (void)
 {

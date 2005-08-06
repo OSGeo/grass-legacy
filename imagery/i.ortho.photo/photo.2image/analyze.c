@@ -1,8 +1,10 @@
 #include <string.h>
 #include <math.h>
 #include <unistd.h>
+#include "gis.h"
 #include "raster.h"
 #include "globals.h"
+
  
 #define NLINES 18
 struct box

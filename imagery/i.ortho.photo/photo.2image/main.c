@@ -3,9 +3,11 @@
 #include <string.h>
 #include <unistd.h>
 #include <signal.h>
+#include "gis.h"
 #include "raster.h"
 #include "imagery.h"
 #include "globals.h"
+
 
 int main (int argc, char *argv[])
 {
