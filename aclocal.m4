@@ -922,11 +922,8 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    esac
 	    ;;
 	Rhapsody-*|Darwin-*)
-	    SHLIB_CFLAGS=""
-	    SHLIB_LD="cc -dynamiclib -single_module \${LDFLAGS}"
-#	    GRASS_SHLIB_LD_EXTRAS="-compatibility_version ${LIB_VER} -current_version \${LIB_VER} -install_name \${DYLIB_INSTALL_DIR}/\${GRASS_LIB_FILE} -prebind -seg1addr 0xa000000"
-#check if we need -U,_cuserid:
-#	    SHLIB_LD="cc -dynamiclib -Wl,-flat_namespace,-U,_cuserid -undefined suppress \${LDFLAGS}"
+	    SHLIB_CFLAGS="-fno-common"
+	    SHLIB_LD="cc -dynamiclib -flat_namespace -compatibility_version \${GRASS_VERSION_MAJOR}.\${GRASS_VERSION_MINOR} -current_version \${GRASS_VERSION_MAJOR}.\${GRASS_VERSION_MINOR} -install_name \${INST_DIR}/lib/lib\${LIB_NAME}\${SHLIB_SUFFIX}"
 	    GRASS_SHLIB_LD_EXTRAS=""
 	    SHLIB_LD_LIBS='${LIBS}'
 	    SHLIB_SUFFIX=".dylib"
