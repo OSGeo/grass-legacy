@@ -377,6 +377,8 @@ main (int argc, char *argv[])
     }
     else
     {
+	int err;
+
         /* Projection only required for checking so convert non-interactively */
         if ( GPJ_osr_to_grass( &cellhd, &proj_info, 
 			       &proj_units, Ogr_projection, 0) < 0 )
@@ -400,61 +402,79 @@ main (int argc, char *argv[])
 		            "Proceeding with import...\n");
         } 
         else if( loc_wind.proj != cellhd.proj
-                   || !G_compare_projections( loc_proj_info, loc_proj_units, 
-                                              proj_info, proj_units ) )
+              || (err = G_compare_projections( loc_proj_info, loc_proj_units, 
+                                              proj_info, proj_units )) != TRUE)
         {
             int     i_value;
-    
+
             strcpy( error_msg, 
                     "Projection of dataset does not"
                     " appear to match current location.\n\n");
 
     /* TODO: output this info sorted by key: */
-            if( loc_proj_info != NULL )
-            {
-                strcat( error_msg, "LOCATION PROJ_INFO is:\n" );
-                for( i_value = 0; 
-                     loc_proj_info != NULL && i_value < loc_proj_info->nitems; 
-                     i_value++ )
-                    sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
-                             loc_proj_info->key[i_value],
-                             loc_proj_info->value[i_value] );
-                strcat( error_msg, "\n" );
-            }
-    
-            if( proj_info != NULL )
-            {
-                strcat( error_msg, "Dataset PROJ_INFO is:\n" );
-                for( i_value = 0; 
-                     proj_info != NULL && i_value < proj_info->nitems; 
-                     i_value++ )
-                    sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
-                             proj_info->key[i_value],
-                             proj_info->value[i_value] );
-            }
-            else
-            {
-                if( cellhd.proj == PROJECTION_XY )
-                    sprintf( error_msg + strlen(error_msg), 
-                             "cellhd.proj = %d (unreferenced)\n", 
-                             cellhd.proj );
-                else if( cellhd.proj == PROJECTION_LL )
-                    sprintf( error_msg + strlen(error_msg), 
-                             "cellhd.proj = %d (lat/long)\n", 
-                             cellhd.proj );
-                else if( cellhd.proj == PROJECTION_UTM )
-                    sprintf( error_msg + strlen(error_msg), 
-                             "cellhd.proj = %d (UTM), zone = %d\n", 
-                             cellhd.proj, cellhd.zone );
-                else if( cellhd.proj == PROJECTION_SP )
-                    sprintf( error_msg + strlen(error_msg), 
-                             "cellhd.proj = %d (State Plane), zone = %d\n", 
-                             cellhd.proj, cellhd.zone );
-                else 
-                    sprintf( error_msg + strlen(error_msg), 
-                             "cellhd.proj = %d (unknown), zone = %d\n", 
-                             cellhd.proj, cellhd.zone );
-            }
+	    if(loc_wind.proj != cellhd.proj || err != -2)
+	    {
+                if( loc_proj_info != NULL )
+                {
+                    strcat( error_msg, "LOCATION PROJ_INFO is:\n" );
+                    for( i_value = 0; i_value < loc_proj_info->nitems; i_value++ )
+                        sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
+                                 loc_proj_info->key[i_value],
+                                 loc_proj_info->value[i_value] );
+                    strcat( error_msg, "\n" );
+                }
+      
+                if( proj_info != NULL )
+                {
+                    strcat( error_msg, "Dataset PROJ_INFO is:\n" );
+                    for( i_value = 0; i_value < proj_info->nitems; i_value++ )
+                        sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
+                                 proj_info->key[i_value],
+                                 proj_info->value[i_value] );
+                }
+                else
+                {
+                    if( cellhd.proj == PROJECTION_XY )
+                        sprintf( error_msg + strlen(error_msg), 
+                                 "cellhd.proj = %d (unreferenced)\n", 
+                                 cellhd.proj );
+                    else if( cellhd.proj == PROJECTION_LL )
+                        sprintf( error_msg + strlen(error_msg), 
+                                 "cellhd.proj = %d (lat/long)\n", 
+                                 cellhd.proj );
+                    else if( cellhd.proj == PROJECTION_UTM )
+                        sprintf( error_msg + strlen(error_msg), 
+                                 "cellhd.proj = %d (UTM), zone = %d\n", 
+                                 cellhd.proj, cellhd.zone );
+                    else if( cellhd.proj == PROJECTION_SP )
+                        sprintf( error_msg + strlen(error_msg), 
+                                 "cellhd.proj = %d (State Plane), zone = %d\n", 
+                                 cellhd.proj, cellhd.zone );
+                    else 
+                        sprintf( error_msg + strlen(error_msg), 
+                                 "cellhd.proj = %d (unknown), zone = %d\n", 
+                                 cellhd.proj, cellhd.zone );
+                }
+	    }else{
+                if( loc_proj_units != NULL )
+                {
+                    strcat( error_msg, "LOCATION PROJ_ is:\n" );
+                    for( i_value = 0; i_value < loc_proj_units->nitems; i_value++ )
+                        sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
+                                 loc_proj_units->key[i_value],
+                                 loc_proj_units->value[i_value] );
+                    strcat( error_msg, "\n" );
+                }
+      
+                if( proj_units != NULL )
+                {
+                    strcat( error_msg, "Dataset PROJ_INFO is:\n" );
+                    for( i_value = 0; i_value < proj_units->nitems; i_value++ )
+                        sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
+                                 proj_units->key[i_value],
+                                 proj_units->value[i_value] );
+                }
+	    }
             sprintf( error_msg + strlen(error_msg), 
     	             _("\nYou can use the -o flag to %s to override this check.\n"),
     	    	     G_program_name() );
