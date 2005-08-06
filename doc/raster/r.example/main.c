@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
 
     /* options and flags pareser */
     if (G_parser(argc, argv))
-	exit(-1);
+	exit(EXIT_FAILURE);
 
     /* stores options and flags to variables */
     name = input->answer;

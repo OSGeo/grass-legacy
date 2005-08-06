@@ -53,7 +53,7 @@ main (int argc, char *argv[])
 
 	G_gisinit(argv[0]);
         if (G_parser (argc, argv))
-	    exit(-1); 
+	    exit(EXIT_FAILURE); 
 	
         Points = Vect_new_line_struct ();
 	Cats = Vect_new_cats_struct ();
