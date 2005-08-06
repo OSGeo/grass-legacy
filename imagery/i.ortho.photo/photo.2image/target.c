@@ -45,10 +45,13 @@ int get_target (void)
     sprintf (buf, "Mapset [%s] in target location [%s] - ",
 		mapset, location);
     strcat (buf, stat == 0 ? "permission denied\n" : "not found\n");
+
 error:
     strcat (buf, "Please run i.target for group ");
     strcat (buf, group.name);
     G_fatal_error (buf);
+
+    return -1;
 }
 
 int select_current_env (void)
