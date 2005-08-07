@@ -86,6 +86,7 @@ read_file ( LOGIN *login )
     while ( fgets (buf, 2000, fd) ) {
 	G_chop ( buf );
 	
+	usr[0] = pwd[0] = '\0';
 	ret = sscanf (buf, "%[^ ] %[^ ] %[^ ] %[^ ]", dr, db, usr, pwd);
 
 	G_debug ( 3, "ret = %d : %s %s %s %s", ret, dr, db, usr, pwd);
