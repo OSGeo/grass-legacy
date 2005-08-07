@@ -106,11 +106,15 @@ care of following rules:
     
 8.  Use fprintf instead of printf.
     
-    For errors and warnings please use the G_fatal_error() function and
-    G_warning() function. General messages for the user should use
+    For errors and warnings please use the G_fatal_error() and
+    G_warning() functions. General messages for the user should use
     G_message() while debug messages should use G_debug() whenever
-    possible. For other output, please use fprintf() and specify
-    the stdout stream as follows:
+    possible.
+
+    G_message() output is not expected to be sent to pipe or file.
+
+    For data output redirected to pipe or file, please use fprintf() and 
+    specify the stdout stream as follows:
 
       fprintf(stdout, ...);
       fflush(stdout);
@@ -118,11 +122,6 @@ care of following rules:
       fflush(stdout) always required when using fprintf(stdout, ...).
 
     i18N: Add gettext macros with _("") (see ./locale/README for details)
-
-    G_message() should be used for messages - information about
-    the process for user while fprintf(stdout,...) for data output.
-    G_message() output is not expected to be sent to pipe or file.
-    fprintf(stdout,...) output is usually send to pipe or file.
 
 9.  Use the following GRASS library functions instead of the standard C
     functions. The reason for this is that the following functions ensure
