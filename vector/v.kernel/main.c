@@ -69,13 +69,13 @@ int main(int argc, char **argv)
 
   char   *mapset;
   struct Map_info In, Net, Out;
-  int    fdout, maskfd;
+  int    fdout = 0, maskfd = 0;
   int    row,col;
   struct Cell_head window;
   double gaussian;
   double N,E;
-  CELL  *mask;
-  DCELL *output_cell;
+  CELL  *mask = NULL;
+  DCELL *output_cell = NULL;
   double sigma, dmax, segmax, netmax, multip;
   
   double **coordinate;
@@ -420,7 +420,7 @@ int read_points( struct Map_info *In, double ***coordinate, double dsize)
       ltype = Vect_read_line (In, Points, NULL, line);
       if ( !(ltype & GV_POINT ) ) continue;
       
-      xySites[i] = (double *) G_calloc (2,sizeof(double));
+      xySites[i] = (double *)G_calloc((size_t)2, sizeof(double));
       
       xySites[i][0] = Points->x[0];
       xySites[i][1] = Points->y[0]; 
@@ -438,7 +438,7 @@ int read_points( struct Map_info *In, double ***coordinate, double dsize)
 double compute_all_distances(double **coordinate, double **dists, int n, double dmax)
 {
   int ii,jj,kk;
-  int nn;
+  size_t nn;
 
   nn = n*(n-1)/2;
   *dists = (double *) G_calloc(nn,sizeof(double));  
