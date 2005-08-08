@@ -26,6 +26,8 @@
 #include "gis.h"
 #include "glocale.h"
 #include "gui.h"
+#define MAIN
+#include "local_proto.h"
 
 #define COLOR_OFFSET 0
 #define MAXIMAGES 400
@@ -62,8 +64,6 @@ int          irows, icols, vrows, vcols;
 int          frames;
 
 unsigned int depth;
-
-Visual       *use_visual;
 
 
 int main (int argc, char **argv)
