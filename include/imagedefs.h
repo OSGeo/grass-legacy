@@ -3,8 +3,8 @@ double I_add_covariances(int, int, double, double, double, double, double, doubl
 /* advance.c */
 int I_tape_advance(int, int);
 /* alloc.c */
-void *I_malloc(int);
-void *I_realloc(void *, int);
+void *I_malloc(size_t);
+void *I_realloc(void *, size_t);
 int I_free(void *);
 double **I_alloc_double2(int, int);
 int *I_alloc_int(int);
