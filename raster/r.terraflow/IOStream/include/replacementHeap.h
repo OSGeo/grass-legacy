@@ -152,7 +152,7 @@ public:
 
 /*****************************************************************/
 template<class T,class Compare>
-ReplacementHeap<T,Compare>::ReplacementHeap<T,Compare>(size_t g_arity, 
+ReplacementHeap<T,Compare>::ReplacementHeap(size_t g_arity, 
 						       queue<char*>* runList) {
   char* name;
   
