@@ -13,9 +13,6 @@
  * BUGS: see BUG file
  */
 
-/* uncomment to get some debug output */
-/* #define DEBUG */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -24,6 +21,7 @@
 #include "v5d.h"
 #include "gis.h"
 #include "G3d.h"
+#include "glocale.h"
 
 #define MAX(a,b) (a > b ? a : b)
 
@@ -50,6 +48,8 @@ G3D_Region region;
 void fatalError(char *errorMsg) {
   if (map != NULL) {
     /* should unopen map here! */
+    if (!G3d_closeCell (map))
+       fatalError ("Error closing g3d file");
   }
   
   G3d_fatalError (errorMsg);
@@ -65,13 +65,13 @@ void setParams() {
   param.input->required = YES;
   param.input->gisprompt = "old,grid3,3d-raster";
   param.input->multiple = NO;
-  param.input->description = "3dcell map to be converted to Vis5d (v5d) file";
+  param.input->description = _("3dcell map to be converted to Vis5d (v5d) file");
   
   param.output = G_define_option();
   param.output->key = "output";
   param.output->type = TYPE_STRING;
   param.output->required = YES;
-  param.output->description = "Name for v5d output file";
+  param.output->description = _("Name for v5d output file");
 
 /*  param.null_val = G_define_option();
   param.null_val->key = "null";
@@ -99,7 +99,7 @@ void convert(char *fileout, int rows, int cols, int depths, int trueCoords) {
 
    int NumTimes=1;                        /* number of time steps */
    int NumVars=1;                         /* number of variables */
-   int Nr, Nc, Nl[MAXVARS];                      /* size of 3-D grids */
+   int Nl[MAXVARS];                      /* size of 3-D grids */
    char VarName[MAXVARS][10];           /* names of variables */
    int TimeStamp[MAXTIMES];             /* real times for each time step */
    int DateStamp[MAXTIMES];             /* real dates for each time step */
@@ -137,22 +137,13 @@ void convert(char *fileout, int rows, int cols, int depths, int trueCoords) {
 
    typeIntern = G3d_tileTypeMap (map);
 
-#ifdef DEBUG
-fprintf(stderr, "cols: %i rows: %i depths: %i\n", cols, rows, depths);
-#endif
+   G_debug(3, "cols: %i rows: %i depths: %i\n", cols, rows, depths);
 
   /* see v5d.h */
   if (cols > MAXCOLUMNS)
-  	{
-  	 G_fatal_error("Viz5D allows %d cols, you have %d cols", MAXCOLUMNS, cols);
-	 exit(1);
-	}
+  	 G_fatal_error(_("Viz5D allows %d cols, you have %d cols"), MAXCOLUMNS, cols);
   if (rows > MAXROWS)
-  	{
-	 G_fatal_error("Viz5D allows %d rows, you have %d rows", MAXROWS, rows);
-	 exit(1);
-
-  	}
+	 G_fatal_error(_("Viz5D allows %d rows, you have %d rows"), MAXROWS, rows);
 
    Nl[0]=depths;
 
@@ -201,10 +192,8 @@ fprintf(stderr, "cols: %i rows: %i depths: %i\n", cols, rows, depths);
 /****************/
 
    g = (float *) malloc( rows * cols * Nl[0] * sizeof(float) );
-   if (!g) {
-      printf("Error: out of memory\n");
-      exit(1);
-   }
+   if (!g)
+      G_fatal_error(_("Out of memory"));
 
    d1p = &d1; f1p = (float *) &d1;
    cnt=0;
@@ -261,36 +250,17 @@ fprintf(stderr, "cols: %i rows: %i depths: %i\n", cols, rows, depths);
    /* Create the output v5d file */
 
    /*AV*/
-   /* BEGIN OF ORIGINAL CODE */
-   /*
-     if (!v5dCreate(fileout, NumTimes, NumVars, cols, rows, Nl, VarName, 
-     TimeStamp,DateStamp,CompressMode, Projection, ProjArgs, 
-     Vertical, VertArgs )) {
-     fprintf(stderr, "Error: couldn't create %s\n", fileout);
-     exit(1);
-     }
-   */
-   /* END OF ORIGINAL CODE */
-
-   /*AV*/
-   /* BEGIN OF MY CODE */
    if (!v5dCreate(fileout, NumTimes, NumVars, rows, cols, Nl, VarName, 
 		  TimeStamp, DateStamp,CompressMode, Projection, ProjArgs, 
-		  Vertical, VertArgs )) {
-     fprintf(stderr, "Error: couldn't create %s\n", fileout);
-     exit(1);
-   }
-   /* END OF MY CODE */
+		  Vertical, VertArgs ))
+     G_fatal_error(_("Error: couldn't create %s"), fileout);
 
 
    /* Write the v5d file */
+   if (!v5dWrite(1,1, g ))
+     G_fatal_error(_("Error while writing grid. Disk full?"));
 
-   if (!v5dWrite(1,1, g )) {
-     printf("Error while writing grid.  Disk full?\n");
-     exit(1);
-   }
    /* Close the v5d file */
-
    v5dClose();
 
 }
@@ -302,12 +272,7 @@ fprintf(stderr, "cols: %i rows: %i depths: %i\n", cols, rows, depths);
 int
 main (int argc, char *argv[]) {
   char *input, *output;
-  int convertNull, decim;
-  double nullValue;
-  int useTypeDefault, type, useLzwDefault, doLzw, useRleDefault, doRle;
-  int usePrecisionDefault, precision, useDimensionDefault, tileX, tileY, tileZ;
-  FILE *fp;
-  int cacheSize;
+  int decim;
   struct Flag *coords;
   int trueCoords;
   struct GModule *module;
@@ -316,14 +281,14 @@ main (int argc, char *argv[]) {
   G_gisinit(argv[0]);
   module = G_define_module();
   module->description =
-   "Export of GRASS 3D raster file to 3-dimensional Vis5D file.";
+   _("Export of GRASS 3D raster file to 3-dimensional Vis5D file.");
 
   /* Get parameters from user */
   setParams();
 
   coords = G_define_flag ();
   coords->key = 'm';
-  coords->description = "Use map coordinates instead of xyz coordinates";
+  coords->description = _("Use map coordinates instead of xyz coordinates");
 
   /* Have GRASS get inputs */
   if (G_parser(argc, argv))
@@ -334,31 +299,27 @@ main (int argc, char *argv[]) {
 
   trueCoords=coords->answer;
 
-  if(NULL == G_find_grid3(input, "")){
-    G3d_fatalError("g3d file not found");
-    exit (1);
-  }
+  if(NULL == G_find_grid3(input, ""))
+    G3d_fatalError(_("Requested g3d file not found"));
 
   map = G3d_openCellOld(input, G_find_grid3(input, ""), G3D_DEFAULT_WINDOW,
 			G3D_TILE_SAME_AS_FILE,
 			G3D_NO_CACHE);
   if (map == NULL)
-    G3d_fatalError("main: error opening g3d file");
+     G3d_fatalError("Error opening g3d file");
 
   /* Use default region */
   /*  G3d_getRegionStructMap(map, &region); */
   /* Figure out the region from current settings:*/
     G3d_getWindow(&region);
 
-#ifdef DEBUG
-fprintf(stderr, "cols: %i rows: %i layers: %i\n", region.cols, region.rows, region.depths);
-#endif
+  G_debug(3, "cols: %i rows: %i layers: %i\n", region.cols, region.rows, region.depths);
 
   convert(output, region.rows, region.cols, region.depths, trueCoords);
 
   /* Close files and exit */
   if (!G3d_closeCell (map))
-    fatalError ("main: error closing new g3d file");
+    fatalError ("Error closing g3d file");
 
   map = NULL;
   return (0);

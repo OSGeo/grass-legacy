@@ -48,7 +48,12 @@ fatalError (char *errorMsg)
 {
   /* Close files and exit */
   if (map != NULL)
-    G3d_closeCell (map);
+    {
+      /* should unopen map here! */
+    if (!G3d_closeCell (map))
+       fatalError ("Error closing g3d file");
+
+    }
 
   G3d_fatalError (errorMsg);
 }
@@ -214,17 +219,17 @@ main (int argc, char *argv[])
   for (i = 0; param.input->answers[i] != NULL; i++)
     {
 
-      G_debug (3, "main: Open 3DRaster file %s", param.input->answers[i]);
+      G_debug (3, "Open 3DRaster file %s", param.input->answers[i]);
 
       if (NULL == G_find_grid3 (param.input->answers[i], ""))
-	G3d_fatalError (_("main: g3d file not found"));
+	G3d_fatalError (_("Requested g3d file not found"));
 
 
       /*Open the map */
       map = G3d_openCellOld (param.input->answers[i], G_find_grid3 (param.input->answers[i], ""), G3D_DEFAULT_WINDOW,
 			     G3D_TILE_SAME_AS_FILE, G3D_USE_CACHE_DEFAULT);
       if (map == NULL)
-	G3d_fatalError (_("main: error opening g3d file"));
+	G3d_fatalError (_("Error opening g3d file"));
 
       /*if requested set the Mask on */
       if (param.mask->answer)
@@ -261,7 +266,7 @@ main (int argc, char *argv[])
 
       /* Close files and exit */
       if (!G3d_closeCell (map))
-	fatalError ("main: error closing new g3d file");
+	fatalError ("Error closing g3d file");
 
       map = NULL;
     }
@@ -269,7 +274,7 @@ main (int argc, char *argv[])
 
   if (param.output->answer && fp != NULL)
     if (fclose (fp))
-      fatalError ("main: error closing VTK-ASCII file");
+      fatalError ("Error closing VTK-ASCII file");
 
   return 0;
 }
