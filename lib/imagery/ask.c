@@ -52,7 +52,7 @@ int I_ask ( char *prompt, char *answer, int nullok)
 /* collapse white space to single blank */
 /* remove non-printing chars */
 
-	for (a = b = answer; *a = *b++; )
+	for (a = b = answer; (*a = *b++);)
 	{
 	    if (*a == ' ' || *a == '\t')
 	    {
@@ -67,7 +67,7 @@ int I_ask ( char *prompt, char *answer, int nullok)
 
 /* remove leading blank */
 	if (*(a=answer) == ' ')
-	    for (b = a+1; *a++ = *b++; )
+	    for (b = a+1; (*a++ = *b++);)
 		    ;
 
 /* remove trailing blank */
