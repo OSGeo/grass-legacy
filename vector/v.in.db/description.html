@@ -48,8 +48,18 @@ this directory:
  #only needed, if not already defined:
  db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
 
- #create vector map from DBF table ('idcol' is containing unique row IDs):
- v.in.db table=pointsfile x=x y=y z=z key=idcol out=dtmpoints
+ #create dbf/ directory if not yet existing:
+ mkdir `g.gisenv get=GISDBASE`/`g.gisenv get=LOCATION_NAME`/`g.gisenv get=MAPSET`/dbf
+ 
+ #copy DBF table to this directory:
+ cp pointsfile.dbf `g.gisenv get=GISDBASE`/`g.gisenv get=LOCATION_NAME`/`g.gisenv get=MAPSET`/dbf/
+
+ #verify table columns
+ db.tables -p
+ db.describe -c pointsfile
+
+ #create vector map from DBF table ('idcol' is containing unique row IDs, z is optional):
+ v.in.db driver=dbf table=pointsfile x=x y=y z=z key=idcol out=dtmpoints
 
  #check result:
  v.info dtmpoints
