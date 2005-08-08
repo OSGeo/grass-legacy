@@ -1,8 +1,14 @@
 grass (6.1.0-1) unstable; urgency=low
 
+  * fixed broken rules file
+
+ -- Markus Neteler <neteler@itc.it>  Thu, 08 Aug 2005 09:47:00 +0100
+
+grass (6.1.0-1) unstable; urgency=low
+
   * updated debian/ files from 6.0.0-1 in 6.1-CVS
 
- -- Markus Neteler <neteler@itc.it>  Thu, 29 Jul 2005 11:00:00 -0500
+ -- Markus Neteler <neteler@itc.it>  Thu, 29 Jul 2005 11:00:00 +0100
 
 grass (6.0.0-1) unstable; urgency=low
 
