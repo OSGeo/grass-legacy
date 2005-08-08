@@ -19,11 +19,11 @@ Note: This text contains *some* rules only applicable to the
      MINOR=0
      RELEASE=1RC1
      VERSION=${MAJOR}.${MINOR}.${RELEASE}
+     echo $VERSION
+     #create ChangeLog on release branch:
      sh tools/cvs2cl.pl --follow "$CVSBRANCH"
      mv ChangeLog ChangeLog_$VERSION
      gzip ChangeLog_$VERSION
-
- o reset VERSION file to CVS version
 
  o create source package (in the source directory):
      mkdir grass-${VERSION}
@@ -38,18 +38,20 @@ Note: This text contains *some* rules only applicable to the
      # Calculating MD5 sum:
      md5sum grass-${VERSION}.tar.gz > grass-${VERSION}.md5sum
 
+ o reset VERSION file to CVS version
+
  o Store the source tarball in (use scp -rp):
      http://grass.itc.it/grass/grass6x/source/
      along with associated files:
-       AUTHORS ChangeLog_$VERSION INSTALL REQUIREMENTS.html SUBMITTING
+       AUTHORS ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING
 
  o update web site to new version (HTML in Web-CVS)
       - main.inc
       - download/software.inc
-      - grass6x/index.php
+      - grass$MAJOR$MINOR/main.inc
       - devel/grasshist.html
       - devel/grassreleases.html
-      - bugtracking/bugreport.html
+      - bugtracking/bugreport.html (not always)
 
      write announcement
       - store in Web as announces/announce_grass6xx.html
@@ -61,8 +63,13 @@ Note: This text contains *some* rules only applicable to the
    Our GRASS web site: /announces/
 
    Our mailing lists:  http://grass.itc.it/mailman/listinfo/grass-announce
+                         <grass-announce@grass.itc.it>
                        http://grass.itc.it/mailman/listinfo/grass5
-                       http://grass.itc.it/community/support.php#int_list                   
+                         <grass5@grass.itc.it>
+                       http://grass.itc.it/community/support.php#int_list
+                         <grasslist@baylor.edu>
+
+   DebianGIS:          <pkg-grass-general@lists.alioth.debian.org>
 
    news:comp.infosystems.gis
    http://spatialnews.geocomm.com/submitnews.html (not free any more)
