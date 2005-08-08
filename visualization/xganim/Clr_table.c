@@ -9,12 +9,11 @@
 #include "gis.h"
 #include "glocale.h"
 #include "colors.h"
-
+#include "local_proto.h"
 
 Display *dpy;
 Window grwin;
 int scrn;
-Visual *use_visual;
 Colormap fixedcmap;
 
 static int NCOLORS;
