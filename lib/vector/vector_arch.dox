@@ -38,6 +38,18 @@ Besides internal library functions there are two main libraries:
 For details please read Blazek et al. 2002 (see below) as well as the
 references in this document.
 
+\subsubsection vlibspidx Vector library categories and layers
+
+<P>
+<i>Note: "layer" was called "field" in earlier version.</i>
+<P>
+
+In GRASS a "category" is a feature ID used to link geometry
+with attributes stored in one or many (external) database table(s).
+Each vector feature inside a vector map has zero, one or more
+&lt;layer,category&gt; tuple(s). A user can (but not must) create attribute
+tables which are referenced by the layer, and rows which are essentially
+referenced by the &lt;layer,category&gt; pair.
 
 \subsubsection vlibspidx Vector library spatial index management
 
