@@ -3,6 +3,8 @@
  * that we define Tcl_AppInit in tkAppInit.c.
  */
 
+#include <stdlib.h>
+#include <string.h>
 #include <tk.h>
 #include "interface.h"
 
