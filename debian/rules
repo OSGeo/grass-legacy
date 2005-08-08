@@ -47,8 +47,7 @@ config.status: patch configure
                     --with-odbc \
                     --with-freetype-includes=/usr/include/freetype2 \
                     --with-tcltk-includes=/usr/include/tcl8.3 \
-                    --with-postgres-includes=/usr/include/postgresql \
-                    --without-cxx \
+                    --with-postgres-includes=/usr/include/postgresql
 
 build: build-stamp
 
