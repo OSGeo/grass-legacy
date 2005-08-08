@@ -23,7 +23,6 @@ main (int argc, char **argv)
 {
 	struct GModule *module;
     int i, first=1;
-    char buf[128];
     char *mapset;
     char **rast, **vect, **site;
     int nrasts, nvects, nsites;
@@ -118,7 +117,7 @@ main (int argc, char **argv)
 			sprintf(msg,"Vector file [%s] not available", vect[i]);
 			G_fatal_error(msg) ;
 		}
-		if(Vect__open_old(&Map, vect[i], mapset, 0, 1) == 2)
+		if(Vect_open_old_head(&Map, vect[i], mapset) == 2)
 		{
 			if(first)
 			{
