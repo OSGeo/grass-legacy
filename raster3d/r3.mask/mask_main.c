@@ -83,10 +83,13 @@ makeMask (name, maskRules)
 
   cacheSize = G3d_cacheSizeEncode (G3D_USE_CACHE_XY, 1);
 
+  if (NULL == G_find_grid3 (name, ""))
+        G3d_fatalError (_("Requested g3d file not found"));
+
   map = G3d_openCellOld (name, G_mapset (), G3D_DEFAULT_WINDOW,
 			 G3D_DOUBLE, cacheSize);
 
-  if (map == NULL) G3d_fatalError ("makeMask: error opening map");
+  if (map == NULL) G3d_fatalError (_("makeMask: error opening map."));
 
   G3d_getRegionStructMap (map, &region);
   
@@ -96,7 +99,7 @@ makeMask (name, maskRules)
 			   &region, G3D_FLOAT, G3D_NO_LZW, G3D_USE_RLE, 0,
 			   tileX, tileY, tileZ);
 
-  if (mask == NULL) G3d_fatalError ("makeMask: error opening g3d mask file");
+  if (mask == NULL) G3d_fatalError (_("makeMask: error opening g3d mask file"));
 
   G3d_minUnlocked (map, G3D_USE_CACHE_X);
   G3d_autolockOn (map);
@@ -126,12 +129,12 @@ makeMask (name, maskRules)
 				0, 0, MAX (0, z - tileZ),
 				region.rows - 1,
 				region.cols - 1, z))
-      G3d_fatalError ("makeMask: error flushing tiles");
+      G3d_fatalError (_("makeMask: error flushing tiles"));
 
   }
 
   if (! G3d_flushAllTiles (mask))  
-    G3d_fatalError ("makeMask: error flushing tiles");
+    G3d_fatalError (_("makeMask: error flushing tiles"));
 
   G3d_autolockOff (map);
   G3d_unlockAll (map);
@@ -139,9 +142,9 @@ makeMask (name, maskRules)
   G3d_unlockAll (mask);
 
   if (! G3d_closeCell (mask)) 
-    G3d_fatalError ("makeMask: error closing g3d mask file");
+    G3d_fatalError (_("makeMask: error closing g3d mask file"));
   if (! G3d_closeCell (map)) 
-    G3d_fatalError ("makeMask: error closing map");
+    G3d_fatalError (_("makeMask: error closing map"));
 }
 
 /*--------------------------------------------------------------------------*/
