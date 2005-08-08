@@ -16,10 +16,12 @@
 #include <stdlib.h>
 #include "imagery.h"
 
+
 static unsigned char *read_color(char *,char *,char *,char *,CELL *,CELL *);
 static unsigned char *get_colors(char *,char *,char *,char *,CELL *,CELL *);
 static unsigned char *build_index(CELL,CELL);
 static int write_colors(char *,char *,char *,char *,unsigned char *,CELL,CELL);
+
 
 int I_read_group_colors ( char *group, struct Ref *ref)
 {
@@ -136,7 +138,6 @@ static unsigned char *read_color (
 {
     unsigned char *table;
     struct Histogram histo;
-    unsigned char *get_colors();
 
 #ifdef DEBUG
 fprintf (stdout,"read_color(%s: %s in %s)\n", file, name, mapset);
@@ -144,8 +145,10 @@ fprintf (stdout,"read_color(%s: %s in %s)\n", file, name, mapset);
 
     if(table = get_colors (group, file, name, mapset, min, max))
 	return table;
+
     I_get_histogram (name, mapset, &histo);
     I_histo_eq (&histo, &table, min, max);
+
     return table;
 }
 
