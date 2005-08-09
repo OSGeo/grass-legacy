@@ -8,7 +8,6 @@
 #include "gis.h"
 #include "glocale.h"
 #include "imagery.h"
-#include "local_proto.h"
 
 
 int 
