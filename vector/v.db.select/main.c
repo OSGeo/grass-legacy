@@ -38,11 +38,12 @@ int main (int argc, char **argv)
     struct field_info *Fi;
     int field, ncols, col, more;
     struct Map_info Map;
+    char   *mapset;
     char query[1024];
     char *buf = NULL;
 
     module = G_define_module();
-    module->description = "Print vector attributes";
+    module->description = _("Print vector attributes");
 
     map_opt = G_define_standard_option(G_OPT_V_MAP);
     field_opt = G_define_standard_option(G_OPT_V_FIELD) ;
@@ -94,7 +95,12 @@ int main (int argc, char **argv)
     db_init_string (&sql);
     db_init_string (&value_string);
 
-    Vect_open_old_head ( &Map, map_opt->answer, "");
+    /* open input vector */
+    if ((mapset = G_find_vector2 (map_opt->answer, "")) == NULL) {
+         G_fatal_error (_("Could not find input map <%s>"), map_opt->answer);
+    }
+
+    Vect_open_old_head ( &Map, map_opt->answer, mapset);
 
     if ( (Fi = Vect_get_field ( &Map, field)) == NULL ) 
 	G_fatal_error(_("Database connection not defined"));
