@@ -2,11 +2,11 @@
 *
 * MODULE:       DBF driver 
 *   	    	
-* AUTHOR(S):    Radim Blazek
+* AUTHOR(S):    Radim Blazek, Daniel Calvelo
 *
 * PURPOSE:      Simple driver for reading and writing dbf files     
 *
-* COPYRIGHT:    (C) 2000 by the GRASS Development Team
+* COPYRIGHT:    (C) 2000,2005 by the GRASS Development Team
 *
 *               This program is free software under the GNU General Public
 *   	    	License (>=v2). Read the file COPYING that comes with GRASS
@@ -33,6 +33,7 @@
 int yyparse(void);
 void get_col_def ( SQLPSTMT *st, int col, int *type, int *width, int *decimals );
 int sel(SQLPSTMT * st, int tab, int **set);
+int eval_val(int tab, int row, int col, SQLPVALUE * inval, SQLPVALUE * result);
 int set_val(int tab, int row, int col, SQLPVALUE * val);
 double eval_node(SQLPNODE *, int, int, SQLPVALUE *);
 int eval_node_type(SQLPNODE *, int);
@@ -49,6 +50,7 @@ int execute(char *sql, cursor * c)
     int dtype, stype;
     int width, decimals;
     char *tmpsql, name[500];
+    SQLPVALUE *calctmp; /* store for calculated values in UPDATE, if any */
 
     /* parse sql statement */
     /* I don't know why, but if the statement ends by string in quotes 'xxx' and is not 
@@ -250,12 +252,22 @@ int execute(char *sql, cursor * c)
 
 	/* update rows */
 	for (i = 0; i < nrows; i++) {
+	  SQLPVALUE *temp_p;
+	  calctmp = (SQLPVALUE*)G_malloc((st->nVal) * sizeof(SQLPVALUE));
 	    row = selset[i];
+	    for (j = 0; j < st->nVal; j++) {
+		col = cols[j];
+		eval_val(tab, row, col, &(st->Val[j]), &(calctmp[j]));
+	    }
+	    temp_p = st->Val;
+	    st->Val = calctmp;
 	    for (j = 0; j < st->nVal; j++) {
 		col = cols[j];
 		set_val(tab, row, col, &(st->Val[j]));
 		db.tables[tab].updated = TRUE;
 	    }
+	    st->Val = temp_p;
+	    G_free(calctmp);
 	}
 	break;
 
@@ -310,20 +322,14 @@ void get_col_def ( SQLPSTMT *st, int col, int *type, int *width, int *decimals )
     }
 }
 
-int set_val(int tab, int row, int col, SQLPVALUE * val)
+int eval_val(int tab, int row, int col, SQLPVALUE * inval, SQLPVALUE *val)
 {
-    VALUE *dbval;
-    SQLPVALUE *tmp, *result;
-    double retval;
+  
+  double retval;
+  /* XXX */
+    if ( inval->type == SQLP_EXPR ) {
 
-    dbval = &(db.tables[tab].rows[row].values[col]);
-
-    
-
-    /* XXX */
-    if ( val->type == SQLP_EXPR ) {
-      result = (SQLPVALUE*)malloc(sizeof(SQLPVALUE));
-      retval = eval_node( val->expr, tab, row, result );
+      retval = eval_node( inval->expr, tab, row, val );
       if ( retval == NODE_NULL )
 	{
 	  val->type = SQLP_NULL;
@@ -343,10 +349,6 @@ int set_val(int tab, int row, int col, SQLPVALUE * val)
       else if ( retval == NODE_VALUE )
 	{
 	  /* Ok, got a value, propagate it to the proper type */
-	  tmp = val;
-	  val = result;
-	  /*	  if( tmp->s && !result->s){ free(tmp->s); }
-	    free(tmp);*/
 	  if( val->type == SQLP_I ){
 	    val->d = (double)val->i;
 	    val->s = (char*)malloc(32*sizeof(char));
@@ -368,8 +370,26 @@ int set_val(int tab, int row, int col, SQLPVALUE * val)
 	}
       else
 	{
-	  G_fatal_error("Unknown return value calling eval_node from set_val");
+	  G_fatal_error("Unknown return value calling eval_node from eval_val");
 	}
+    }else{
+      /* 
+       * TODO: maybe use this function to perform type "conversion",
+       * i.e. setting all of s,i,d to the same "value",as is done with
+       * the result of eval_node above.
+       */
+      val = inval;
+    }
+}
+
+int set_val(int tab, int row, int col, SQLPVALUE * val)
+{
+    VALUE *dbval;
+
+    dbval = &(db.tables[tab].rows[row].values[col]);
+
+    if ( val->type == SQLP_EXPR ){
+      eval_val( tab, row, col, val, val );
     }
 
     if ( val->type == SQLP_NULL ) {
