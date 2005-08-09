@@ -78,6 +78,7 @@ init_colors_indexed(void)
 
 	/* transparent color should be the first! */
 	transparent = n_pixels;
+	/* its RGB value doesn't matter since we need only index, which is 0 */
 	set_color(n_pixels++, 0, 0, 0);
 
 	for (r = 0; r < 6; r++)
