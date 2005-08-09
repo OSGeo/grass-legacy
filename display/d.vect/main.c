@@ -320,8 +320,8 @@ main (int argc, char **argv)
 	strcpy(map_name, map_opt->answer);
 
 	width = atoi(width_opt->answer);
-	if( width <= 0 )
-		width = 1;
+	if( width < 0 )
+		width = 0;
 	R_line_width(width);
 
 	color = WHITE;
