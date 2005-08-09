@@ -85,4 +85,3 @@ int Get_num_colors(int *);
 /* Clr_table.c */
 Colormap InitColorTableFixed(Colormap cmap);
 unsigned long find_color(unsigned int r, unsigned int g, unsigned int b);
-

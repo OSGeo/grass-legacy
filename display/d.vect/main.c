@@ -104,6 +104,7 @@ main (int argc, char **argv)
 	int ret, level;
 	int i, stat, type, area, display;
 	int chcat = 0;
+	int width;
 	int color, fcolor, r, g, b;
 	int colornum = MAX_COLOR_NUM;
 	int size;
@@ -118,6 +119,7 @@ main (int argc, char **argv)
 	struct Option *lcolor_opt, *bgcolor_opt, *bcolor_opt;
 	struct Option *lsize_opt, *font_opt, *xref_opt, *yref_opt;
 	struct Option *attrcol_opt, *maxreg_opt, *minreg_opt;
+	struct Option *width_opt;
 	struct Flag   *_quiet, *id_flag, *table_acolors_flag, *cats_acolors_flag, *x_flag;
 	struct cat_list *Clist;
 	int *cats, ncat;
@@ -175,7 +177,13 @@ main (int argc, char **argv)
 	field_opt = G_define_standard_option(G_OPT_V_FIELD) ;
 	cat_opt = G_define_standard_option(G_OPT_V_CATS) ;
 	where_opt = G_define_standard_option(G_OPT_WHERE) ;
-	
+
+	width_opt = G_define_option() ;
+	width_opt->key        = "width";
+	width_opt->type       = TYPE_INTEGER ;
+	width_opt->answer     = "1" ;
+	width_opt->description= _("Line width");
+
 	color_opt = G_define_option() ;
 	color_opt->key        = "color" ;
 	color_opt->type       = TYPE_STRING ;
@@ -310,6 +318,12 @@ main (int argc, char **argv)
 	}
 
 	strcpy(map_name, map_opt->answer);
+
+	width = atoi(width_opt->answer);
+	if( width <= 0 )
+		width = 1;
+	R_line_width(width);
+
 	color = WHITE;
 	ret =  G_str_to_color(color_opt->answer, &r, &g, &b);
 	if ( ret == 1 ) {

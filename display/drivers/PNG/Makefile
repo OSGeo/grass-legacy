@@ -20,7 +20,8 @@ OBJS =  \
 	Graph_Set.o\
 	Panel.o\
 	Polygn_abs.o\
-	write.o
+	write.o\
+	line_attr.o
 
 ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 

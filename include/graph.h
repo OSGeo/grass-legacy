@@ -92,6 +92,9 @@
 #define FONT_FREETYPE_RELEASE       77
 #define CHARSET                     78
 
+/* line attributes */
+#define LINE_WIDTH                  79
+
 /* return codes for pad routines */
 
 #define OK 0
