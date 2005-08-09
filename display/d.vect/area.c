@@ -42,11 +42,11 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
     double xl, yl;
     struct line_pnts *Points, *IPoints;
     struct line_cats *Cats;
-    int cat, centroid;
+    int cat, centroid = 0;
     int red, grn, blu;
 
     struct field_info *fi=NULL;
-    dbDriver *driver;
+    dbDriver *driver = NULL;
     dbHandle handle;
     dbString stmt, valstr;
     dbCursor cursor;

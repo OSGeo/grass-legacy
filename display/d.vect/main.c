@@ -25,12 +25,10 @@ int quiet = 1;
 /* adopted from r.colors */
 static char *icon_files(void)
 {
-        char path[4096];
-        char path_i[4096];
-	char *list = NULL;
-	int size = 0;
-	int len = 0;
+        char *list = NULL, path[4096], path_i[4096];
+	size_t len = 0, l;
 	DIR *dir, *dir_i;
+	struct dirent *d, *d_i;
 
 	sprintf(path, "%s/etc/symbol", G_gisbase());
 
@@ -38,13 +36,9 @@ static char *icon_files(void)
 	if (!dir)
 		return NULL;
 
-	for (;;) /*loop over etc/symbol*/
+	/*loop over etc/symbol*/
+	while ((d = readdir(dir)))
 	{
-		struct dirent *d = readdir(dir);
-
-		if (!d)
-			break;
-
 		if (d->d_name[0] == '.')
 			continue;
 		
@@ -52,57 +46,37 @@ static char *icon_files(void)
 		dir_i = opendir(path_i);
 		
 		if (!dir_i)
-		  return NULL;
+			continue;
 	   
-		for (;;) { /*loop over each directory in etc/symbols*/
-		
-		  struct dirent *di = readdir(dir_i);
-                  int ni = 0;
-                  char *buf = NULL;
-                  char *buf2 = NULL;
-                  char *buf3 = NULL;
+		/*loop over each directory in etc/symbols*/
+		while((d_i = readdir(dir_i)))
+		{
+			if (d_i->d_name[0] == '.')
+				continue;
 
-		  if (!di)
-			break;
-
-		  if (di->d_name[0] == '.')
-		    continue;
-      
-		  ni = strlen(di->d_name);
-		  buf = G_realloc(buf,(strlen(d->d_name) + ni + 1));
-		  buf2 = G_realloc(buf2,strlen(d->d_name));
-		  buf3 = G_realloc(buf3,ni);
-		  sprintf(buf3, "%s",di->d_name);
-		  sprintf(buf2, "%s",d->d_name);
-		  sprintf(buf, "%s/%s",buf2,buf3);
-		  ni = strlen(buf);
-
-		  if (size < len + ni + 2)
-		    {
-		      size = len + ni + 200;
-		      list = G_realloc(list, size);
-		    }
-
-		  if (len > 0)
-		    list[len++] = ',';
-
-		  memcpy(&list[len], buf, ni + 1);
-		  len += ni;
+			l = strlen(d->d_name) + strlen(d_i->d_name) + 3;
+			list = G_realloc(list, len + l);
+			sprintf(list+len, "%s/%s,", d->d_name, d_i->d_name);
+			len += l - 1;
 		}
+
+		closedir(dir_i);
 	}
-	
-	return list;
-	
-	closedir(dir_i);
+
 	closedir(dir);
+
+	if(len)
+		list[len-1] = 0;
+
+	return list;
 }
 
 int 
 main (int argc, char **argv)
 {
-	char *mapset ;
+	char *mapset, *icon_list ;
 	int ret, level;
-	int i, stat, type, area, display;
+	int i, stat = 0, type, area, display;
 	int chcat = 0;
 	int width;
 	int color, fcolor, r, g, b;
@@ -166,7 +140,7 @@ main (int argc, char **argv)
 	icon_opt->multiple   = NO ;
 	icon_opt->answer     = "basic/x" ;
 	icon_opt->description= _("Point and centroid symbol");
-/*	icon_opt->options     = icon_files();*/
+	icon_opt->options    = (icon_list = icon_files());
 
 	size_opt = G_define_option() ;
 	size_opt->key        = "size" ;
@@ -289,7 +263,8 @@ main (int argc, char **argv)
 	/* Check command line */
 	if (G_parser(argc, argv))
 		exit(-1);
-	
+	free(icon_list);
+
 	G_get_set_window (&window);
 
 	if (R_open_driver() != 0)  G_fatal_error(_("No graphics device selected"));
