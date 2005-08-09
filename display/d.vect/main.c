@@ -74,7 +74,7 @@ static char *icon_files(void)
 int 
 main (int argc, char **argv)
 {
-	char *mapset, *icon_list ;
+	char *mapset;
 	int ret, level;
 	int i, stat = 0, type, area, display;
 	int chcat = 0;
@@ -139,8 +139,8 @@ main (int argc, char **argv)
 	icon_opt->required   = NO ;
 	icon_opt->multiple   = NO ;
 	icon_opt->answer     = "basic/x" ;
+	icon_opt->options    = icon_files();
 	icon_opt->description= _("Point and centroid symbol");
-	icon_opt->options    = (icon_list = icon_files());
 
 	size_opt = G_define_option() ;
 	size_opt->key        = "size" ;
@@ -263,9 +263,6 @@ main (int argc, char **argv)
 	/* Check command line */
 	if (G_parser(argc, argv))
 		exit(-1);
-
-	if(icon_list)
-		G_free(icon_list);
 
 	G_get_set_window (&window);
 
@@ -555,6 +552,10 @@ main (int argc, char **argv)
 	    D_add_to_dig_list(G_fully_qualified_name(map_name, mapset));
 	}
 
+	/* reset line width: Do we need to get line width from display driver
+	 * (not implemented)?  It will help restore previous line width (not
+	 * just 0) determined by another module (e.g., d.linewidth). */
+	R_line_width(0);
 	R_close_driver();
 
         if (!quiet)
