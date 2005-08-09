@@ -1,6 +1,7 @@
 /* 
  * Original INTER author: M. Shapiro
  * New cmd line version by Bob Covill 10/2001
+ * Rewritten for GRASS6 by Brad Douglas 08/2005
  */
  
 #include <stdlib.h>
@@ -13,7 +14,6 @@
 int 
 main (int argc, char *argv[])
 {
-    char group[INAME_LEN], location[GMAPSET_MAX], mapset[GMAPSET_MAX];
     struct Option *grp, *map, *loc;
     struct GModule *module;
     struct Flag *c;
@@ -47,40 +47,30 @@ main (int argc, char *argv[])
 	c->key              = 'c';
 	c->description      = _("Set current location and mapset as target for of imagery group");
 
-	if (G_parser (argc, argv))
-		exit (-1);
+    if (G_parser(argc, argv))
+        exit(EXIT_FAILURE);
 
-	strcpy(group, grp->answer);
-
-  /* my goodness: !! Isn't that easier? */
-  if ( 
-       ( (!c->answer) &&
-         ( (!map->answer && loc->answer) || (map->answer && !loc->answer)  
-            || (!map->answer && !loc->answer)
-         )
-       ) ||
-       ( (c->answer) &&
-         ( (!map->answer && loc->answer) || (map->answer && !loc->answer) 
-            || (map->answer && loc->answer)
-         )
-       ) 
-     ) {
+    /* error if -c is specified with other options */
+    if ((!c->answer) && (!map->answer || !loc->answer))
 	G_fatal_error(_("You must use either the Current Mapset and "
-             "Location Flag (-c)\n OR\n manually enter the variables"));
-   }
+             "Location Flag (-c)\n OR\n manually enter the variables."));
 
-	if (c->answer) {
-	  strcpy(mapset, G_mapset() );
-	  strcpy(location, G_location() );
-	} 
-	else {
-	  strcpy(mapset, map->answer);
-	  strcpy(location, loc->answer);
-	}
+    /* error if -c is not specified and not enough other options */
+    if ((c->answer) && (map->answer || loc->answer))
+	G_fatal_error(_("You must use either the Current Mapset and "
+             "Location Flag (-c)\n OR\n manually enter the variables."));
 
-	I_put_target (group, location, mapset);
+    if (c->answer) {
+        /* point group target to current mapset and location */
+        I_put_target(grp->answer, G_location(), G_mapset());
+        G_message(_("group [%s] targeted for location [%s], mapset [%s]\n"),
+                grp->answer, G_location(), G_mapset());
+    } else {
+        /* point group target to specified mapset and location */
+        I_put_target(grp->answer, loc->answer, map->answer);
+        G_message(_("group [%s] targeted for location [%s], mapset [%s]\n"),
+                grp->answer, loc->answer, map->answer);
+    }
 
-    G_message(_("group [%s] targeted for location [%s], mapset [%s]\n"),
-	group, location, mapset);
-    exit(0);
+    return 0;
 }
