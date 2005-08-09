@@ -6,13 +6,23 @@
 #include <string.h>
 #include "gis.h"
 #include "imagery.h"
-#include "local_proto.h"
 #include "glocale.h"
 
-static char title[80];
+
+/* function prototypes */
+static int add_or_update_group(char group[INAME_LEN], char **rasters, int k);
+static int add_or_update_subgroup(char group[INAME_LEN],
+           char subgroup[INAME_LEN], char **rasters, int k);
+static int remove_group_files(char group[INAME_LEN], char **rasters, int k);
+static int remove_subgroup_files(char group[INAME_LEN],
+           char subgroup[INAME_LEN], char **rasters, int k);
+static int list_group_files(char group[INAME_LEN], FILE *fd);
+static int list_subgroup_files(char group[INAME_LEN], char subgroup[INAME_LEN], FILE *fd);
+
 
 int main(int argc, char *argv[])
 {
+    char title[80];
     char group[INAME_LEN];
     char subgroup[INAME_LEN];
     char **rasters;
@@ -131,7 +141,8 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-int add_or_update_group(char group[INAME_LEN], char **rasters, int k)
+
+static int add_or_update_group(char group[INAME_LEN], char **rasters, int k)
 {
     int m, n, skip;
     int nfiles;
@@ -168,7 +179,7 @@ int add_or_update_group(char group[INAME_LEN], char **rasters, int k)
 }
 
 
-int add_or_update_subgroup(char group[INAME_LEN],
+static int add_or_update_subgroup(char group[INAME_LEN],
 			   char subgroup[INAME_LEN], char **rasters, int k)
 {
     int m, n, skip;
@@ -205,7 +216,8 @@ int add_or_update_subgroup(char group[INAME_LEN],
     return 0;
 }
 
-int remove_group_files(char group[INAME_LEN], char **rasters, int k)
+
+static int remove_group_files(char group[INAME_LEN], char **rasters, int k)
 {
     int m, n, skip;
     int nfiles;
@@ -251,7 +263,7 @@ int remove_group_files(char group[INAME_LEN], char **rasters, int k)
 }
 
 
-int remove_subgroup_files(char group[INAME_LEN],
+static int remove_subgroup_files(char group[INAME_LEN],
 			  char subgroup[INAME_LEN], char **rasters, int k)
 {
     int m, n, skip;
@@ -296,7 +308,8 @@ int remove_subgroup_files(char group[INAME_LEN],
     return 0;
 }
 
-int list_group_files(char group[INAME_LEN], FILE *fd)
+
+static int list_group_files(char group[INAME_LEN], FILE *fd)
 {
     struct Ref ref;
 
@@ -306,7 +319,8 @@ int list_group_files(char group[INAME_LEN], FILE *fd)
     return 0;
 }
 
-int list_subgroup_files(char group[INAME_LEN], char subgroup[INAME_LEN], FILE *fd)
+
+static int list_subgroup_files(char group[INAME_LEN], char subgroup[INAME_LEN], FILE *fd)
 {
     struct Ref ref;
 
