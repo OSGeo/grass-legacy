@@ -14,12 +14,11 @@ int dir ( struct Map_info *Map, int type, struct cat_list * Clist, int chcat )
     double len, x, y, angle, msize;
     struct line_pnts *Points;
     struct line_cats *Cats;
-    int cat;
-    
+
     G_debug (1, "display direction:");
     dsize = 5;
-    msize = dsize * ( D_d_to_u_col(2) - D_d_to_u_col(1) ); /* do it better */ 
-    
+    msize = dsize * ( D_d_to_u_col(2.0) - D_d_to_u_col(1.0) );/* do it better */
+
     Points = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
     

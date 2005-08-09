@@ -12,8 +12,8 @@ int plot1 (
     struct Map_info *Map, int type, int area, 
     struct cat_list *Clist, int color, int fcolor, int chcat, SYMBOL *Symb, int size, int id_flag)
 {
-    int i, j, k, ltype, nlines, line;
-    double *x, *y, xd, yd, xd0, yd0;
+    int i, j, k, ltype, nlines = 0, line;
+    double *x, *y, xd, yd, xd0 = 0, yd0 = 0;
     struct line_pnts *Points, *PPoints;
     struct line_cats *Cats;
     double msize;
@@ -21,7 +21,7 @@ int plot1 (
     SYMBCHAIN *chain;
     int x0, y0, xp, yp;
 
-    msize = size * ( D_d_to_u_col(2) - D_d_to_u_col(1) ); /* do it better */
+    msize = size * ( D_d_to_u_col(2.0) - D_d_to_u_col(1.0) ); /* do it better */
     
     Points = Vect_new_line_struct ();
     PPoints = Vect_new_line_struct ();
@@ -104,13 +104,13 @@ int plot1 (
 				    xp  = x0 + chain->sx[k];
 				    yp  = y0 - chain->sy[k];
 				    G_plot_where_en ( xp, yp, &xd, &yd );
-				    Vect_append_point ( PPoints, xd, yd, 0);
+				    Vect_append_point ( PPoints, xd, yd, 0.0);
 				}
 				if ( j == 0 ) {
 				    xd0 = PPoints->x[0];
 				    yd0 = PPoints->y[0];
 				} else {
-				    Vect_append_point ( PPoints, xd0, yd0, 0);
+				    Vect_append_point ( PPoints, xd0, yd0, 0.0);
 				}
 			    }
 			    
