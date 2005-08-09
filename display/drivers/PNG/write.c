@@ -45,7 +45,9 @@ write_png(void)
 		PNG_COMPRESSION_TYPE_DEFAULT,
 		PNG_FILTER_TYPE_DEFAULT);
 
-	if (!true_color)
+	if (true_color)
+		png_set_invert_alpha(png_ptr);
+	else
 	{
 		png_color png_pal[256];
 		png_byte trans = (png_byte) transparent;
@@ -60,10 +62,9 @@ write_png(void)
 
 		png_set_PLTE(png_ptr, info_ptr, png_pal, 256);
 
-		png_set_tRNS(png_ptr, info_ptr, &trans, 1, NULL);
+		if (has_alpha)
+			png_set_tRNS(png_ptr, info_ptr, &trans, 1, NULL);
 	}
-
-	png_set_invert_alpha(png_ptr);
 
 	str = getenv("GRASS_PNG_COMPRESSION");
 	if (str && sscanf(str, "%d", &compress) == 1)

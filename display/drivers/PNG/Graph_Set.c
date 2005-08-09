@@ -78,23 +78,22 @@ Graph_Set(int argc, char **argv)
 	InitColorTableFixed();
 
 	p = getenv("GRASS_BACKGROUNDCOLOR");
-	if (p && *p && sscanf(p, "%x", &bgcol) == 1)
+	if (!p || !*p || sscanf(p, "%x", &bgcol) != 1)
+	{
+		/* 0xffffff = white, 0x000000 = black */
+		if(strcmp(DEFAULT_FG_COLOR, "white") == 0)
+			/* foreground: white, background: black */
+			bgcol = 0;
+		else
+			/* foreground: black, background: white */
+			bgcol = 0xffffff;
+	}
+
 	{
 		int r = (bgcol >> 16) & 0xff;
 		int g = (bgcol >>  8) & 0xff;
 		int b = (bgcol >>  0) & 0xff;
 		int color = _get_lookup_for_color(r, g, b);
-
-		clear(color);
-	}
-	else
-	{
-		/* 0xffffff = white, 0x000000 = black */
-		int color = (strcmp(DEFAULT_FG_COLOR, "white") == 0)
-			/* foreground: white, background: black */
-			? _get_lookup_for_color(0, 0, 0)
-			/* foreground: black, background: white */
-			: _get_lookup_for_color(255, 255, 255);
 
 		clear(color);
 	}
