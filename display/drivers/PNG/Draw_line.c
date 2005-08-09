@@ -11,9 +11,9 @@
 #include "pngdriver.h"
 
 static void
-store_xy(int x, int y, int pixel_size)
+store_xy(int x, int y)
 {
-	int xi, x_end, yi, y_end;
+	int xi, xi_end, yi, yi_end;
 	double theta;
 
 	if (x < 0 || x >= width || y < 0 || y >= height)
@@ -21,21 +21,20 @@ store_xy(int x, int y, int pixel_size)
 
 	grid[y * width + x] = currentColor;
 
-	if(pixel_size == 1)
+	if(linewidth <= 1)
 		return;
 
-	y_end = y + pixel_size / 2;
-	for(yi = y - pixel_size / 2; yi <= y_end; yi++)
-		store_xy(x, yi, 1);
-
-	x_end = x + pixel_size;
-	for(xi = 0; xi <= pixel_size; xi++){
-		theta = acos(((double)xi) / (((double)pixel_size) / 2.0));
-		yi = (int)(((double)xi) * tan(theta));
-		y_end = y + yi;
-		for(yi = y - yi; yi <= y_end; yi++){
-			store_xy(x - xi, yi, 1);
-			store_xy(x + xi, yi, 1);
+	xi = linewidth / 2;
+	xi_end = x + xi;
+	for(xi = x - xi; xi < xi_end; xi++){
+		theta = acos(((double)(xi - x)) / (((double)linewidth) / 2.0));
+		yi = (int)(((double)(xi - x)) * tan(theta));
+		if(!yi)
+			yi = linewidth / 2;
+		yi_end = y + yi;
+		for(yi = y - yi; yi < yi_end; yi++){
+			if(xi >= 0 && xi < width && yi >= 0 && yi < height)
+				grid[yi * width + xi] = currentColor;
 		}
 	}
 }
@@ -54,7 +53,7 @@ draw_line(int x1, int y1, int x2, int y2)
 
 	if (x == x_end && y == y_end )
 	{
-		store_xy(x, y, linewidth);
+		store_xy(x, y);
 		return 0;
 	}
 
@@ -89,7 +88,7 @@ draw_line(int x1, int y1, int x2, int y2)
 		while (x != x_end)
 		{
 		
-			store_xy(x, y, linewidth);
+			store_xy(x, y);
 
 			if(error > 0)
 			{
@@ -113,7 +112,7 @@ draw_line(int x1, int y1, int x2, int y2)
 		while (y != y_end)
 		{
 		
-			store_xy(x, y, linewidth);
+			store_xy(x, y);
 
 			if(error > 0)
 			{
@@ -127,7 +126,7 @@ draw_line(int x1, int y1, int x2, int y2)
 		}
 	}
 
-	store_xy(x, y, linewidth);
+	store_xy(x, y);
 
 	modified = 1;
 
