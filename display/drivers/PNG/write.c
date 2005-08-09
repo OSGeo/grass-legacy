@@ -50,7 +50,6 @@ write_png(void)
 	else
 	{
 		png_color png_pal[256];
-		png_byte trans = (png_byte) transparent;
 		int i;
 
 		for (i = 0; i < 256; i++)
@@ -63,7 +62,10 @@ write_png(void)
 		png_set_PLTE(png_ptr, info_ptr, png_pal, 256);
 
 		if (has_alpha)
+		{
+			png_byte trans = (png_byte) 0;
 			png_set_tRNS(png_ptr, info_ptr, &trans, 1, NULL);
+		}
 	}
 
 	str = getenv("GRASS_PNG_COMPRESSION");
