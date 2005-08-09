@@ -25,6 +25,7 @@
 #include "cpl_string.h"
 #include "config.h"
 #include "gprojects.h"
+#include "glocale.h"
 
 int    fout, fskip; /* features written/ skip */
 int    nocat, noatt, nocatskip; /* number of features without cats/atts written/skip */
@@ -80,30 +81,30 @@ main (int argc, char *argv[])
 
     /* Module options */
     module = G_define_module();
-    module->description = "Convert to OGR format.";
+    module->description = _("Convert to one of the supported OGR vector formats.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
 
     type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
     type_opt->answer = "line,boundary";
-    type_opt->description = "Feature type. Possible combinations of more types: "
-			    "point,centroid or line,boundary.";
+    type_opt->description = _("Feature type. Possible combinations of more types: "
+			    "point,centroid or line,boundary.");
     
     dsn_opt = G_define_option();
     dsn_opt->key = "dsn";
     dsn_opt->type =  TYPE_STRING;
     dsn_opt->required = YES;
-    dsn_opt->description = "OGR datasource name.\n"
+    dsn_opt->description = _("OGR datasource name.\n"
 			   "\t\tESRI Shapefile: directory containing shapefiles\n"
-			   "\t\tMapInfo File: directory containing mapinfo files";
+			   "\t\tMapInfo File: directory containing mapinfo files");
 
     layer_opt = G_define_option();
     layer_opt->key = "olayer";
     layer_opt->type = TYPE_STRING;
     layer_opt->required = YES;
-    layer_opt->description = "OGR layer name.\n"
+    layer_opt->description = _("OGR layer name.\n"
 			   "\t\tESRI Shapefile: shapefile name\n"
-			   "\t\tMapInfo File: mapinfo file name";
+			   "\t\tMapInfo File: mapinfo file name");
     
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
     field_opt->answer = "1";
@@ -115,7 +116,7 @@ main (int argc, char *argv[])
     frmt_opt->multiple = NO;
     frmt_opt->answer = "ESRI_Shapefile";
     frmt_opt->options = OGR_list_write_drivers();
-    frmt_opt->description = "OGR format.";
+    frmt_opt->description = _("OGR format.");
     
     dsco              = G_define_option();
     dsco->key         = "dsco";
@@ -123,7 +124,7 @@ main (int argc, char *argv[])
     dsco->required    = NO;
     dsco->multiple    = NO;
     dsco->answer      = "";
-    dsco->description = "OGR dataset creation option (format specific, NAME=VALUE)";
+    dsco->description = _("OGR dataset creation option (format specific, NAME=VALUE)");
     
     lco               = G_define_option();
     lco->key          = "lco";
@@ -131,16 +132,16 @@ main (int argc, char *argv[])
     lco->required     = NO;
     lco->multiple     = NO;
     lco->answer       = "";
-    lco->description  = "OGR layer creation option (format specific, NAME=VALUE)";
+    lco->description  = _("OGR layer creation option (format specific, NAME=VALUE)");
     
     cat_flag = G_define_flag ();
     cat_flag->key            = 'c';
-    cat_flag->description    = "Export features with category (labeled) only. "
-			       "Otherwise all features are exported";
+    cat_flag->description    = _("Export features with category (labeled) only. "
+			       "Otherwise all features are exported");
 
     esristyle = G_define_flag();
     esristyle->key = 'e';
-    esristyle->description = "Use ESRI-style .prj file format (applies to SHAPE output only)";
+    esristyle->description = _("Use ESRI-style .prj file format (applies to SHAPE output only)");
 		
     if (G_parser (argc, argv)) exit(1); 
     
@@ -153,7 +154,7 @@ main (int argc, char *argv[])
 	 ((GV_POINTS & otype) && (GV_AREA & otype)) || 
 	 ((GV_LINES & otype) && (GV_AREA & otype)) ) 
       {
-	 G_fatal_error ("The combination of types is not allowed.");
+	 G_fatal_error (_("The combination of types is not allowed."));
       }
 
     if ( otype & GV_POINTS ) wkbtype = wkbPoint;
@@ -167,7 +168,7 @@ main (int argc, char *argv[])
     
     /* open input vector */
     if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-	 G_fatal_error ("Could not find input map <%s>\n", in_opt->answer);
+	 G_fatal_error (_("Could not find input vector map <%s>"), in_opt->answer);
     }
     
     Vect_set_open_level (2); 
@@ -201,17 +202,17 @@ main (int argc, char *argv[])
 	    G_debug (2, " -> driver = %d" ); 
 	}
     }
-    if ( drn == -1 ) G_fatal_error ( "Driver %s not found", frmt_opt->answer ); 
+    if ( drn == -1 ) G_fatal_error ( _("Driver %s not found"), frmt_opt->answer ); 
     Ogr_driver = OGRGetDriver( drn );
     papszDSCO = CSLSetNameValue( papszDSCO, dsco->answer,"YES");
     Ogr_ds = OGR_Dr_CreateDataSource( Ogr_driver, dsn_opt->answer, papszDSCO );
     CSLDestroy( papszDSCO );
-    if ( Ogr_ds == NULL ) G_fatal_error ("Cannot open OGR data source '%s'", dsn_opt->answer);
+    if ( Ogr_ds == NULL ) G_fatal_error (_("Cannot open OGR data source '%s'"), dsn_opt->answer);
     
     papszLCO = CSLSetNameValue( papszLCO, lco->answer,"YES");
     Ogr_layer = OGR_DS_CreateLayer( Ogr_ds, layer_opt->answer, Ogr_projection, wkbtype, papszLCO );
     CSLDestroy( papszLCO );
-    if ( Ogr_layer == NULL ) G_fatal_error ("Cannot create layer");
+    if ( Ogr_layer == NULL ) G_fatal_error (_("Cannot create layer"));
     
     db_init_string(&dbstring);
 
@@ -220,7 +221,7 @@ main (int argc, char *argv[])
 	 doatt = 1; /* do attributes */
 	 Fi = Vect_get_field( &In, field);
 	 if ( Fi == NULL ) {
-	     G_warning ("No attribute table found -> using only category numbers as attributes");
+	     G_warning (_("No attribute table found -> using only category numbers as attributes"));
 	     
 	     Ogr_field = OGR_Fld_Create( "cat", OFTInteger ); 
 	     OGR_L_CreateField( Ogr_layer, Ogr_field, 0 ); 
@@ -228,16 +229,16 @@ main (int argc, char *argv[])
 	     doatt = 0;
 	 } else {  
 	     Driver = db_start_driver(Fi->driver);
-	     if (Driver == NULL) G_fatal_error("Cannot open driver %s", Fi->driver);
+	     if (Driver == NULL) G_fatal_error(_("Cannot open driver %s"), Fi->driver);
 
 	     db_init_handle (&handle);
 	     db_set_handle (&handle, Fi->database, NULL);
 	     if (db_open_database(Driver, &handle) != DB_OK)
-		 G_fatal_error("Cannot open database %s", Fi->database);
+		 G_fatal_error(_("Cannot open database %s"), Fi->database);
 
 	     db_set_string(&dbstring, Fi->table);
 	     if(db_describe_table (Driver, &dbstring, &Table) != DB_OK) 
-		 G_fatal_error("Cannot describe table %s", Fi->table);
+		 G_fatal_error(_("Cannot describe table %s"), Fi->table);
 
 	     ncol = db_get_table_number_of_columns(Table); 
 	     G_debug (2, "ncol = %d", ncol );
@@ -274,7 +275,7 @@ main (int argc, char *argv[])
 		 Ogr_field = OGR_Fld_Create( db_get_column_name(Column), ogr_ftype ); 
 		 OGR_L_CreateField( Ogr_layer, Ogr_field, 0 ); 
 	     }
-	     if ( keycol == -1 ) G_fatal_error ("Key column '%s' not found", Fi->key );
+	     if ( keycol == -1 ) G_fatal_error (_("Key column '%s' not found"), Fi->key );
 	 }
 	 
     }
@@ -286,19 +287,19 @@ main (int argc, char *argv[])
 
     /* check what users wants to export and what's present in the map */
     if ( Vect_get_num_primitives(&In, GV_POINT) > 0 && !(otype & GV_POINTS) )
-      G_warning("%d Point(s) found, but not requested to be exported. Verify 'type' parameter.",Vect_get_num_primitives(&In, GV_POINT));
+      G_warning(_("%d Point(s) found, but not requested to be exported. Verify 'type' parameter."),Vect_get_num_primitives(&In, GV_POINT));
 
     if ( Vect_get_num_primitives(&In, GV_LINE) > 0 && !(otype & GV_LINES) )
-      G_warning("%d Line(s) found, but not requested to be exported. Verify 'type' parameter.",Vect_get_num_primitives(&In, GV_LINE));
+      G_warning(_("%d Line(s) found, but not requested to be exported. Verify 'type' parameter."),Vect_get_num_primitives(&In, GV_LINE));
 
     if ( Vect_get_num_primitives(&In, GV_BOUNDARY) > 0 && !(otype & GV_BOUNDARY) && !(otype & GV_AREA) )
-      G_warning("%d Boundary(ies) found, but not requested to be exported. Verify 'type' parameter.",Vect_get_num_primitives(&In, GV_BOUNDARY));
+      G_warning(_("%d Boundary(ies) found, but not requested to be exported. Verify 'type' parameter."),Vect_get_num_primitives(&In, GV_BOUNDARY));
 
     if ( Vect_get_num_primitives(&In, GV_CENTROID) > 0 && !(otype & GV_CENTROID) && !(otype & GV_AREA) )
-      G_warning("%d Centroid(s) found, but not requested to be exported. Verify 'type' parameter.",Vect_get_num_primitives(&In, GV_CENTROID));
+      G_warning(_("%d Centroid(s) found, but not requested to be exported. Verify 'type' parameter."),Vect_get_num_primitives(&In, GV_CENTROID));
 
     if ( Vect_get_num_primitives(&In, GV_AREA) > 0  && !(otype & GV_AREA) )
-       G_warning("%d Areas found, but not requested to be exported. Verify 'type' parameter.",Vect_get_num_primitives(&In, GV_AREA));
+       G_warning(_("%d Areas found, but not requested to be exported. Verify 'type' parameter."),Vect_get_num_primitives(&In, GV_AREA));
 
     /* add? GV_FACE GV_KERNEL */
 
@@ -473,9 +474,9 @@ mk_att ( int cat, struct field_info *Fi, dbDriver *Driver, int ncol, int keycol,
 	    G_debug (2, "SQL: %s", buf);
 	    db_set_string(&dbstring, buf);
 	    if ( db_open_select_cursor(Driver, &dbstring, &cursor, DB_SEQUENTIAL) != DB_OK ) {
-		G_fatal_error ( "Cannot select attributes for cat = %d", cat);
+		G_fatal_error ( _("Cannot select attributes for cat = %d"), cat);
 	    } else {
-		if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK) G_fatal_error ("Cannot fetch data");
+		if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK) G_fatal_error (_("Cannot fetch data"));
 		if (!more) {
 		    /* G_warning ("No database record for cat = %d", cat); */
 		    /* Set at least key column to category */
