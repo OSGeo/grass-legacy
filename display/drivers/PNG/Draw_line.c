@@ -6,15 +6,38 @@
  *     Cont_abs() in ../lib/Cont_abs.c
  */
 
+#include <math.h>
+
 #include "pngdriver.h"
 
 static void
-store_xy(int x, int y)
+store_xy(int x, int y, int pixel_size)
 {
+	int xi, x_end, yi, y_end;
+	double theta;
+
 	if (x < 0 || x >= width || y < 0 || y >= height)
 		return;
 
 	grid[y * width + x] = currentColor;
+
+	if(pixel_size == 1)
+		return;
+
+	y_end = y + pixel_size / 2;
+	for(yi = y - pixel_size / 2; yi <= y_end; yi++)
+		store_xy(x, yi, 1);
+
+	x_end = x + pixel_size;
+	for(xi = 0; xi <= pixel_size; xi++){
+		theta = acos(((double)xi) / (((double)pixel_size) / 2.0));
+		yi = (int)(((double)xi) * tan(theta));
+		y_end = y + yi;
+		for(yi = y - yi; yi <= y_end; yi++){
+			store_xy(x - xi, yi, 1);
+			store_xy(x + xi, yi, 1);
+		}
+	}
 }
 
 int 
@@ -31,7 +54,7 @@ draw_line(int x1, int y1, int x2, int y2)
 
 	if (x == x_end && y == y_end )
 	{
-		store_xy(x, y);
+		store_xy(x, y, linewidth);
 		return 0;
 	}
 
@@ -66,7 +89,7 @@ draw_line(int x1, int y1, int x2, int y2)
 		while (x != x_end)
 		{
 		
-			store_xy(x, y);
+			store_xy(x, y, linewidth);
 
 			if(error > 0)
 			{
@@ -90,7 +113,7 @@ draw_line(int x1, int y1, int x2, int y2)
 		while (y != y_end)
 		{
 		
-			store_xy(x, y);
+			store_xy(x, y, linewidth);
 
 			if(error > 0)
 			{
@@ -104,7 +127,7 @@ draw_line(int x1, int y1, int x2, int y2)
 		}
 	}
 
-	store_xy(x, y);
+	store_xy(x, y, linewidth);
 
 	modified = 1;
 

@@ -20,7 +20,8 @@ OBJS =  \
 	Panel.o\
 	Polygn_abs.o\
 	Reset_clr.o \
-	Text.o
+	Text.o\
+	line_attr.o
 
 ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 

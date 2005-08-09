@@ -140,6 +140,10 @@ process_command(int c)
 	break;
     case COLOR_PRINT:
 	break;
+    case LINE_WIDTH:
+	REC(&number, sizeof number);
+	line_width(number);
+	break;
     case CONT_ABS:
 	REC(&x, sizeof x);
 	REC(&y, sizeof y);

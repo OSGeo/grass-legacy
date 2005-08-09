@@ -56,7 +56,8 @@ LIB_OBJS = \
 	pad_select.o\
 	parse_mon.o\
 	perror.o \
-	update.o
+	update.o\
+	line_attr.o
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 

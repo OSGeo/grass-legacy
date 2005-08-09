@@ -19,6 +19,7 @@ extern unsigned int *grid;
 extern unsigned char palette[256][4];
 extern unsigned int transparent;
 extern int modified;
+extern int linewidth;
 
 extern void write_image(void);
 void InitColorTableFixed(void);

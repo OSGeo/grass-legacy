@@ -4,6 +4,10 @@ int can_do_float(void);
 int color(int);
 /* Draw_line.c */
 int draw_line(int, int, int, int);
+/* Draw_point.c */
+int draw_point(int, int);
+/* line_attr.c */
+int line_width(int);
 /* Get_w_box.c */
 int Get_location_with_box(int, int, int *, int *, int *);
 /* Get_w_line.c */

@@ -54,7 +54,8 @@ OBJS =  \
 	Serve_Xevent.o\
 	Work.o\
 	alloc.o\
-	Draw_point.o
+	Draw_point.o\
+	line_attr.o
 
 ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 

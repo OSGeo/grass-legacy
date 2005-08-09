@@ -89,9 +89,12 @@ Graph_Set(int argc, char **argv)
 	}
 	else
 	{
+		/* 0xffffff = white, 0x000000 = black */
 		int color = (strcmp(DEFAULT_FG_COLOR, "white") == 0)
-			? _get_lookup_for_color(255, 255, 255)
-			: _get_lookup_for_color(0, 0, 0);
+			/* foreground: white, background: black */
+			? _get_lookup_for_color(0, 0, 0)
+			/* foreground: black, background: white */
+			: _get_lookup_for_color(255, 255, 255);
 
 		clear(color);
 	}

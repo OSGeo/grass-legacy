@@ -11,7 +11,6 @@
 
 #include "gis.h"
 #include "includes.h"
-#include "local_proto.h"
 #include "glocale.h"
 
 int Get_location_with_pointer2 (int *wx, int *wy, int *button, int cmd)
