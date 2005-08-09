@@ -34,9 +34,8 @@ float gauss (int seed)
 
 		return(v2*fac);
 	}
-	else
-	{
-		iset=0;
-		return gset;
-	}
+
+	iset=0;
+
+	return gset;
 }
