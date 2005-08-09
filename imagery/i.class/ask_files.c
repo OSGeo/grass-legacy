@@ -31,7 +31,7 @@ int ask_files (char *me)
 	if (hitreturn)
 	{
 	    char buf[100];
-	    G_message(_("Hit RETURN -->"));
+	    fprintf(stderr, _("Hit RETURN -->"));
 	    G_gets(buf);
 	}
 	hitreturn = 1;
@@ -51,17 +51,19 @@ int ask_files (char *me)
 		    G_warning(_("\7\n** The following cell files in subgroup "
                               "[%s] do not exist."), Subgroup);
 		any = 1;
-		G_message(_("       %s@%s"), name, mapset);
+		G_message("       %s@%s", name, mapset);
 	    }
 	}
+
 	if (any) continue;
 	if (Refer.nfiles > 1)
 	    break;
-	G_message(_("Subgroup [%s] "), Subgroup);
+
 	if (Refer.nfiles <= 0)
-	    G_message(_("doesn't have any files."));
+	    G_message(_("Subgroup [%s] doesn't have any files."), Subgroup);
 	else
-	    G_message(_("only has 1 file."));
+	    G_message(_("Subgroup [%s] only has 1 file."), Subgroup);
+
 	G_warning(_("The subgroup must have at least 2 files to run %s."), me);
     }
 
@@ -72,9 +74,10 @@ int ask_files (char *me)
     init_sig_routines(Refer.nfiles);
 
     G_message(_("\nRESULT SIGNATURE"));
-    if(!I_ask_signature_file_any (_("Enter name for the resulting signature file"),
+    if(!I_ask_signature_file_any ("Enter name for the resulting signature file",
             Group, Subgroup,  Outsigfile))
 	exit(0);
+
     Outsigfile_fd = I_fopen_signature_file_new(Group, Subgroup, Outsigfile);
     if(Outsigfile_fd == NULL)
       G_fatal_error(_("Unable to open output signature file."));
@@ -85,7 +88,7 @@ int ask_files (char *me)
 	G_set_ask_return_msg ("to not include any other signatures");
 	G_message(_("\nSEED SIGNATURES"));
 	if (!I_ask_signature_file_old(
-	    _("Select the signature file to include in the resulting file"),
+	    "Select the signature file to include in the resulting file",
 	    Group, Subgroup, Insigfile))
 	{
 	    Insigfile[0] = 0;

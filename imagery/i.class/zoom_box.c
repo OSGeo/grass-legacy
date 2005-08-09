@@ -48,7 +48,7 @@ static int zoom1 (	/* called by Input_pointer */
  * user has marked first corner 
  * this determines which view is being zoomed
  */
-    G_debug(4, _("\nX, Y, B in zoom1 %d %d %d"), x, y, b);
+    G_debug(4, "\nX, Y, B in zoom1 %d %d %d", x, y, b);
     x1 = x;
     y1 = y;
 
@@ -77,7 +77,7 @@ static int zoom2 (int x, int y, int b)
     int row,col;
     struct Cell_head cellhd;
 
-    G_debug(4, _("\nX, Y, B in zoom2 %d %d %d"), x, y, b);
+    G_debug(4, "\nX, Y, B in zoom2 %d %d %d", x, y, b);
 
     x2 = x;
     y2 = y;
@@ -115,7 +115,7 @@ static int zoom2 (int x, int y, int b)
 	top = y2;
 	bottom = y1;
     }
-    G_debug(4, _("\nleft right top bottom %d %d %d %d"),
+    G_debug(4, "\nleft right top bottom %d %d %d %d",
               left, right, top, bottom);
 
 /* 
@@ -147,7 +147,7 @@ static int zoom2 (int x, int y, int b)
     cellhd.cols = right-left+1;
     cellhd.ns_res = (cellhd.north-cellhd.south)/cellhd.rows;
     cellhd.ew_res = (cellhd.east-cellhd.west)/cellhd.cols;
-    G_debug(4, _("\nnorth,south,east,west,nsres,ewres %f %f %f %f %f %f"),
+    G_debug(4, "\nnorth,south,east,west,nsres,ewres %f %f %f %f %f %f",
                cellhd.north,cellhd.south,cellhd.east,cellhd.west,
 	       cellhd.ns_res, cellhd.ew_res);
 
