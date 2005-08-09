@@ -41,6 +41,9 @@ reset_color(int number, int red, int grn, int blu)
 static unsigned int
 find_color_indexed(unsigned int r, unsigned int g, unsigned int b)
 {
+	if(has_alpha && transparent == ((r << 16) | (g << 8) | b))
+		return xpixels[0];
+
 	return xpixels[Red[r] + Grn[g] + Blu[b]];
 }
 
@@ -76,10 +79,10 @@ init_colors_indexed(void)
 	xpixels = G_realloc(xpixels, NCOLORS * sizeof(unsigned int));
 	n_pixels = 0;
 
-	/* transparent color should be the first! */
-	transparent = n_pixels;
-	/* its RGB value doesn't matter since we need only index, which is 0 */
-	set_color(n_pixels++, 0, 0, 0);
+	if (has_alpha)
+		/* transparent color should be the first!
+		 * Its RGB value doesn't matter since we fake RGB-to-index. */
+		set_color(n_pixels++, 0, 0, 0);
 
 	for (r = 0; r < 6; r++)
 	{
@@ -108,7 +111,7 @@ init_colors_indexed(void)
 
 		Red[i] = k * 6 * 6;
 		Grn[i] = k * 6;
-		Blu[i] = k + 1;	/* + 1 for transparent color */
+		Blu[i] = k + has_alpha; /* + 1 for transparent color */
 	}
 }
 
@@ -197,6 +200,9 @@ get_color_rgb(int r, int g, int b)
 static int
 get_color_indexed(int r, int g, int b)
 {
+	if(has_alpha && transparent == ((r << 16) | (g << 8) | b))
+		return 0;
+
 	return Red[r] + Grn[g] + Blu[b];
 }
 

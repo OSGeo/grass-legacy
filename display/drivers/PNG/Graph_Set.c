@@ -48,7 +48,7 @@ clear(int color)
 int
 Graph_Set(int argc, char **argv)
 {
-	unsigned int bgcol;
+	unsigned int bgcol, color;
 	char *p;
 
 	G_gisinit("PNG driver") ;
@@ -75,8 +75,6 @@ Graph_Set(int argc, char **argv)
 
 	NCOLORS = true_color ? (1<<24) : 256;
 
-	InitColorTableFixed();
-
 	p = getenv("GRASS_BACKGROUNDCOLOR");
 	if (!p || !*p || sscanf(p, "%x", &bgcol) != 1)
 	{
@@ -89,25 +87,22 @@ Graph_Set(int argc, char **argv)
 			bgcol = 0xffffff;
 	}
 
-	{
-		int r = (bgcol >> 16) & 0xff;
-		int g = (bgcol >>  8) & 0xff;
-		int b = (bgcol >>  0) & 0xff;
-		int color = _get_lookup_for_color(r, g, b);
-
-		clear(color);
-	}
-
 	p = getenv("GRASS_TRANSPARENT");
 	if (p && strcmp(p, "TRUE") == 0)
 	{
-		int color = true_color
-			? 0xff000000
-			: transparent;
-
-		clear(color);
 		has_alpha = 1;
+		transparent = bgcol;
 	}
+
+	InitColorTableFixed();
+
+	color = (has_alpha && true_color ? 0xff000000 :
+			_get_lookup_for_color(
+				(bgcol >> 16) & 0xff,
+				(bgcol >>  8) & 0xff,
+				(bgcol >>  0) & 0xff));
+
+	clear(color);
 
 	fprintf(stderr, "PNG: collecting to file: %s,\n     GRASS_WIDTH=%d, GRASS_HEIGHT=%d\n",
 		file_name, width, height);
