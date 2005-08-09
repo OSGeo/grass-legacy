@@ -76,6 +76,10 @@ init_colors_indexed(void)
 	xpixels = G_realloc(xpixels, NCOLORS * sizeof(unsigned int));
 	n_pixels = 0;
 
+	/* transparent color should be the first! */
+	transparent = n_pixels;
+	set_color(n_pixels++, 0, 0, 0);
+
 	for (r = 0; r < 6; r++)
 	{
 		for (g = 0; g < 6; g++)
@@ -91,8 +95,6 @@ init_colors_indexed(void)
 		}
 	}
 
-	transparent = n_pixels++;
-
 	while (n_pixels < NCOLORS)
 		set_color(n_pixels++, 0, 0, 0);
 
@@ -105,7 +107,7 @@ init_colors_indexed(void)
 
 		Red[i] = k * 6 * 6;
 		Grn[i] = k * 6;
-		Blu[i] = k;
+		Blu[i] = k + 1;	/* + 1 for transparent color */
 	}
 }
 
