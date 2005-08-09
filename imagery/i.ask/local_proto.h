@@ -1,5 +1,6 @@
-/* main.c */
-int usage(char *);
+/* global variables */
+int TOP, BOTTOM, LEFT, RIGHT;
+
 /* popup.c */
 int popup(FILE *, int, int, char *);
 int pick(int, int);
