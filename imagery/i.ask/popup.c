@@ -6,31 +6,36 @@
 #include "raster.h"
 #include "gis.h"
 #include "glocale.h"
+#include "local_proto.h"
+
 
 #define NLINES 24
+
+/* global variables */
 struct box
 {
     int top, bottom, left,right;
 };
-
-extern int TOP, BOTTOM, LEFT, RIGHT;
 
 static int WHITE, RED, BLACK, GREY;
 static int which;
 static struct box cancel, more, less;
 static int height, size, edge, count;
 static int page,npages;
+
 static struct
 {
     char name[30], mapset[30];
     struct box box;
 } list[NLINES*2];
 
+
+/* function prototypes */
 static int dobox (struct box *,char *,int,int,int,int,int);
 static int uparrow (struct box *,int);
 static int downarrow (struct box *,int);
 static int inbox (struct box *,int,int);
-#include "local_proto.h"
+
 
 int popup (FILE *fd, int x, int y, char *msg)
 {
@@ -189,7 +194,7 @@ int popup (FILE *fd, int x, int y, char *msg)
 	    if (fgets (buf, sizeof buf, fd) == NULL
 	    || sscanf (buf, "%s %s", name, mapset) != 2)
 		break;
-	    if(new_mapset = (strcmp (cur_mapset,mapset) != 0))
+	    if ((new_mapset = (strcmp (cur_mapset,mapset) != 0)))
 	    {
 		if (line) line++;
 		if (col) line++;

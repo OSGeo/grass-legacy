@@ -9,8 +9,6 @@
 
 #define USAGE_MSG _("usage: %s file [prompt %%x %%y]\n")
 
-int TOP, BOTTOM, LEFT, RIGHT;
-
 
 int main (int argc, char *argv[])
 {
