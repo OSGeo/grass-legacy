@@ -15,7 +15,9 @@
  *
  *********************************************************************/
 
-/* 08 april 2000 - Pierre de Mouveaux. pmx@audiovu.com
+/* BUG 2005: r.cost probably hangs with negative costs.
+
+   08 april 2000 - Pierre de Mouveaux. pmx@audiovu.com
    Updated to use the Grass 5.0 floating point raster cell format.
    TODO: convert floats to double. Done ;)
 
