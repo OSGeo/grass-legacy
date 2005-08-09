@@ -29,7 +29,7 @@ store_xy(int x, int y)
 	for(xi = x - xi; xi < xi_end; xi++){
 		theta = acos(((double)(xi - x)) / (((double)linewidth) / 2.0));
 		yi = (int)(((double)(xi - x)) * tan(theta));
-		if(!yi)
+		if(xi == x)
 			yi = linewidth / 2;
 		yi_end = y + yi;
 		for(yi = y - yi; yi < yi_end; yi++){
