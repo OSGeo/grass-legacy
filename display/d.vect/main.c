@@ -263,7 +263,9 @@ main (int argc, char **argv)
 	/* Check command line */
 	if (G_parser(argc, argv))
 		exit(-1);
-	free(icon_list);
+
+	if(icon_list)
+		G_free(icon_list);
 
 	G_get_set_window (&window);
 
