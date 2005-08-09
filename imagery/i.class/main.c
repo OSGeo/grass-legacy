@@ -37,7 +37,7 @@ int main (int argc, char *argv[])
     {
       G_warning(_("\nYou have a mask set."));
       G_warning(_("\nIf you continue the mask will be removed."));
-      if (!G_yes(_("Do you want to continue? "), -1)) exit(0);
+      if (!G_yes("Do you want to continue? ", -1)) exit(0);
     }
   /* remove any old mask */
   remove_mask();
@@ -61,7 +61,7 @@ int main (int argc, char *argv[])
   display_title(VIEW_MAP1);
 
   /* ask the user for the cell map to be displayed */
-  if (G_ask_cell_old(_("Enter the name of the cell map to be displayed"),
+  if (G_ask_cell_old("Enter the name of the cell map to be displayed",
 		     name) == NULL)
     exit(0);
   strcpy(mapset, G_find_cell(name, ""));
