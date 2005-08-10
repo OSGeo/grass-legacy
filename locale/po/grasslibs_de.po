@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-09 22:07-0500\n"
+"POT-Creation-Date: 2005-07-22 21:32+0200\n"
 "PO-Revision-Date: 2005-07-22 21:29+0200\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
@@ -955,36 +955,6 @@ msgstr "Bitte weisen Sie die GRASS Entwickler auf diesen Fehler hin.\n"
 msgid "G_set_null_value: wrong data type!"
 msgstr "G_set_null_value: falscher Datentyp!"
 
-#: ../lib/gis/reclass.c:156
-#, c-format
-msgid "Too many reclass categories for [%s in %s]"
-msgstr "Zu viele reklassifizierte Kategorien für [%s in %s]."
-
-#: ../lib/gis/reclass.c:159
-#, c-format
-msgid "Illegal reclass format in header file for [%s in %s]"
-msgstr ""
-"Ungültiges Reklassifizierungs-Format in der Header-Datei für Karte [%s in %"
-"s]."
-
-#: ../lib/gis/reclass.c:236
-msgid "Illegal reclass request"
-msgstr "Ungültige Reklassifizierungsanfrage."
-
-#: ../lib/gis/reclass.c:241
-msgid "Illegal reclass type"
-msgstr "Ungültiger Reklassifizierungs-Typ."
-
-#: ../lib/gis/reclass.c:248
-#, c-format
-msgid "Unable to create header file for [%s in %s]"
-msgstr "Kann Header-Datei für [%s in %s] nicht erstellen."
-
-#: ../lib/gis/reclass.c:299
-#, c-format
-msgid "Unable to create dependency file in [%s in %s]"
-msgstr "Kann Abhängigkeitsdatei in [%s in %s] nicht erstellen."
-
 #: ../lib/gis/opencell.c:165
 #, c-format
 msgid "unable to open raster map [%s in %s]"
@@ -1612,6 +1582,36 @@ msgstr "Unbekannter Attribut-Typ im Aufruf von G_readsites_xyz()!.\n"
 msgid "Failed to convert string attribute."
 msgstr "Konnte Text-Attribut nicht konvertieren."
 
+#: ../lib/gis/reclass.c:156
+#, c-format
+msgid "Too many reclass categories for [%s in %s]"
+msgstr "Zu viele reklassifizierte Kategorien für [%s in %s]."
+
+#: ../lib/gis/reclass.c:159
+#, c-format
+msgid "Illegal reclass format in header file for [%s in %s]"
+msgstr ""
+"Ungültiges Reklassifizierungs-Format in der Header-Datei für Karte [%s in %"
+"s]."
+
+#: ../lib/gis/reclass.c:236
+msgid "Illegal reclass request"
+msgstr "Ungültige Reklassifizierungsanfrage."
+
+#: ../lib/gis/reclass.c:241
+msgid "Illegal reclass type"
+msgstr "Ungültiger Reklassifizierungs-Typ."
+
+#: ../lib/gis/reclass.c:248
+#, c-format
+msgid "Unable to create header file for [%s in %s]"
+msgstr "Kann Header-Datei für [%s in %s] nicht erstellen."
+
+#: ../lib/gis/reclass.c:299
+#, c-format
+msgid "Unable to create dependency file in [%s in %s]"
+msgstr "Kann Abhängigkeitsdatei in [%s in %s] nicht erstellen."
+
 #: ../lib/gis/set_window.c:60
 msgid ""
 "G_set_window(): projection/zone differs from that of currently open raster "
@@ -2114,25 +2114,6 @@ msgstr "Füge Inselflächen hinzu:"
 #: ../lib/vector/Vlib/build_nat.c:556
 msgid "Attaching centroids: "
 msgstr "Füge Zentroide hinzu:"
-
-#: ../lib/vector/Vlib/build_ogr.c:258
-#, c-format
-msgid "Cannot calculate centroid for area %d"
-msgstr ""
-
-#: ../lib/vector/Vlib/build_ogr.c:293
-#, c-format
-msgid "OGR feature type %d not supported)"
-msgstr ""
-
-#: ../lib/vector/Vlib/build_ogr.c:350
-#, c-format
-msgid "Feature %d without geometry ignored"
-msgstr ""
-
-#: ../lib/vector/Vlib/build_ogr.c:357
-msgid "OGR feature without ID ignored."
-msgstr ""
 
 #: ../lib/vector/Vlib/field.c:73
 msgid "Field number must be 1 or greater."
