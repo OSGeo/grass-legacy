@@ -4,6 +4,8 @@
 #include "raster.h"
 #include "gis.h"
 #include "glocale.h"
+
+#define MAIN
 #include "local_proto.h"
 
 

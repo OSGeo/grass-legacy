@@ -1,5 +1,9 @@
 /* global variables */
+#ifdef MAIN
 int TOP, BOTTOM, LEFT, RIGHT;
+#else
+extern int TOP, BOTTOM, LEFT, RIGHT;
+#endif
 
 /* popup.c */
 int popup(FILE *, int, int, char *);
