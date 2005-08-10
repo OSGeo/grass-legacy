@@ -22,7 +22,7 @@
 int main(int argc,char *argv[])
 {
 	struct Option *color;
-	struct Flag *eraseframe;
+	struct Flag *eraseframe, *dontaddtolist;
 	struct GModule *module;
 	char name[256], buf[128];
 	char *err;
@@ -45,6 +45,10 @@ int main(int argc,char *argv[])
 	eraseframe->key = 'f';
 	eraseframe->description = _("Remove all frames and erase the screen");
 
+	dontaddtolist = G_define_flag();
+	dontaddtolist->key = 'x';
+	dontaddtolist->description = _("Don't add to list of commands in monitor");
+
 	if (argc > 1 && G_parser(argc, argv))
 		exit(1);
 
@@ -65,8 +69,10 @@ int main(int argc,char *argv[])
 		if (eraseframe->answer){
 			Dscreen();
 		}
-		sprintf(buf, "d.erase color=%s", color->answer);
-		D_add_to_list(buf);
+		if (!dontaddtolist->answer) {
+			sprintf(buf, "d.erase color=%s", color->answer);
+			D_add_to_list(buf);
+		}
 	}
 
 	R_close_driver();
