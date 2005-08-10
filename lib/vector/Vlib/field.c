@@ -367,6 +367,7 @@ Vect_read_dblinks ( struct Map_info *Map )
     char file[1024], buf[2001];
     char tab[1024], col[1024], db[1024], drv[1024], fldstr[1024], *fldname;
     int  fld;
+    int FID=0, OGC_FID=0;
     char *c;
     int  row, rule;
     struct dblinks *dbl;
@@ -391,20 +392,39 @@ Vect_read_dblinks ( struct Map_info *Map )
 	    return -1;
 	}
 
-	sprintf ( buf, "select FID from %s where FID = -1", Map->fInfo.ogr.layer_name );
+	db_auto_print_errors(0);
+	G_debug (3, "Searching for FID column in OGR DB");
+	sprintf ( buf, "select FID from %s where FID > 0", Map->fInfo.ogr.layer_name );
 	db_set_string ( &sql, buf );
 
 	if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK) {
-	    /* FID not available */
-	    db_close_database_shutdown_driver ( driver );
-	    return 0;
-	}
-	
+	    /* FID not available, so we try ogc_fid */
+	    G_debug (3, "Failed. Now searching for ogc_fid column in OGR DB");
+	    sprintf ( buf, "select ogc_fid from %s where ogc_fid > 0", Map->fInfo.ogr.layer_name );
+	    db_set_string ( &sql, buf );
+	    if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK) {
+	        /* neither FID nor ogc_fid available */
+		G_debug (3, "Also failed. Neither FID nor ogc_fid available in DB table");
+	        db_close_database_shutdown_driver ( driver );
+	        return 0;
+	    } else
+	        OGC_FID=1;
+	} else
+	    FID=1;
+
 	db_close_cursor(&cursor);
 	db_close_database_shutdown_driver ( driver );
+	db_auto_print_errors(1);
 	
-	Vect_add_dblink ( dbl, 1, NULL, Map->fInfo.ogr.layer_name, "FID", Map->fInfo.ogr.dsn, "ogr" ) ; 
-	
+	if (FID) {
+	    G_message ( _("Using FID column in OGR DB"));
+	    Vect_add_dblink ( dbl, 1, NULL, Map->fInfo.ogr.layer_name, "FID", Map->fInfo.ogr.dsn, "ogr" ) ;
+	} else {
+	     if (OGC_FID) {
+	         G_message ( _("Using ogc_fid column in OGR DB"));
+	         Vect_add_dblink ( dbl, 1, NULL, Map->fInfo.ogr.layer_name, "ogc_fid", Map->fInfo.ogr.dsn, "ogr" ) ;
+	     }
+	}
 	return ( 1 );
     } else if ( Map->format != GV_FORMAT_NATIVE ) {
 	G_fatal_error (_("Don't know how to read links for format %d"), Map->format );
