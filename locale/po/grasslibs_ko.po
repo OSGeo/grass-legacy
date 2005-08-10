@@ -92,7 +92,7 @@ msgstr "새로운 %s 파일명을 입력하세요"
 #: ../lib/gis/ask.c:438
 #, c-format
 msgid "Enter the name of an existing %s file"
-msgstr "이미 존재하는 %s 파일명을 입력하세요"
+msgstr "%s 파일명을 입력하세요"
 
 #: ../lib/gis/ask.c:441
 #, c-format
@@ -102,7 +102,7 @@ msgstr "%s 파일명을 입력하세요"
 #: ../lib/gis/ask.c:460
 #, c-format
 msgid "Enter 'list' for a list of existing %s files\n"
-msgstr "이미 존재하는 %s 파일의 열람을 위해서는 'list'를 입력하세요\n"
+msgstr "%s 파일의 열람을 위해서는 'list'를 입력하세요\n"
 
 #: ../lib/gis/ask.c:463
 #, c-format
