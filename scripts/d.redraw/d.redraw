@@ -23,7 +23,9 @@
 #fi
 
 dsave=`d.save -o`
-d.erase
+# With -x flag, d.redraw behaves as if it actually stops and restarts monitor,
+# which is good for PNG non-white transparency and d.mvmon.
+d.erase -x
 eval "$dsave"
 
 exit 0
