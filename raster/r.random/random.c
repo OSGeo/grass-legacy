@@ -99,7 +99,7 @@ int execute_random (struct rr_state *theState)
         if (theState->outsites && theState->outraster)
                 fprintf (stderr, "and ");
         if (theState->outsites)
-                fprintf (stderr, "site file [%s] ", theState->outsites);
+                fprintf (stderr, "vector file [%s] ", theState->outsites);
         fprintf (stderr, "... ");
         G_percent (0, theState->nRand, 2);
     }
