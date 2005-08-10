@@ -270,10 +270,10 @@ db_get_error_msg()
 }
 
 /*!
- \fn 
- \brief 
- \return 
- \param 
+ \fn void db_auto_print_errors (flag)
+ \brief toggles printing of DBMI error messages
+ \return void
+ \param flag
 */
 void
 db_auto_print_errors (flag)
