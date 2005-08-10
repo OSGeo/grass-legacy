@@ -92,18 +92,21 @@ int V_ques(
 		V_error(msg) ;
 		return(-1) ;
 	}
-	if ((col < 0) || (col > 80))
+	if ((col < 0) || (col >= 80))
 	{
 		char msg[80];
 		sprintf (msg,"Illegal column (%d) in call to V_ques", col);
 		V_error(msg) ;
 		return(-1) ;
 	}
-	if ((length <= 0) || ((length + col) > 80))
+	if (length <= 0)
 	{
-		V_error("Length out of bounds in call to V_ques") ;
+		V_error("Negative length in call to V_ques") ;
 		return(-1) ;
 	}
+	if (length + col > 80)
+		length = 80 - col;
+
 	if ((var_type == 's') || (var_type == 'i') || (var_type == 'f')
 	||  (var_type == 'l') || (var_type == 'd'))
 	{
