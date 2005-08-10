@@ -1250,7 +1250,7 @@ static void G_usage_html (void)
 		fprintf(stdout, "</DL>\n");
 	}
 	
-    fprintf(stdout, "</body></html>\n");
+    fprintf(stdout, "</body>\n</html>\n");
 }
 
 static void generate_tcl(FILE *fp)
