@@ -85,17 +85,23 @@ static int ask (
     line += 2;
     if (both)
     {
-	V_line (line, "GROUP:                                     (list will show available groups)");
+	V_line (line, "           'list' will show available groups:");
+	line ++;
+	V_line (line, "GROUP:");
 	V_ques (group, 's', line++, 10, INAME_LEN);
     }
     else
     {
+	V_line (line, "           'list' will show available groups:");
+	line ++;
 	V_line (line, "GROUP:");
 	V_const (group, 's', line++, 10, INAME_LEN);
     }
     if (subgroup != NULL)
     {
-	V_line (line, "SUBGROUP:                                  (list will show available subgroups)");
+	V_line (line, "           'list' will show available subgroups:");
+	line ++;
+	V_line (line, "SUBGROUP:");
 	V_ques (subgroup, 's', line++, 10, INAME_LEN);
     }
 
