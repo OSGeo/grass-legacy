@@ -2,7 +2,9 @@
 
 
 <EM>r.bitpattern</EM> performs bit pattern comparisons.
-
+The module can be used to pixelwise verify a satellite image
+for low quality pixels if a Quality Control Bit Index map is
+provided (e.g. as for MODIS sensor maps).
 
 The functionality is two-fold:
 
@@ -15,6 +17,9 @@ The functionality is two-fold:
    patval= parameter
 </ol>
 
+If several bitpatterns have to be tested, the resulting maps
+can be used to exclude low quality pixel in the input satellite
+image using <em>r.mapcalc</em> (OR and NOT operators).
 
 <H2>EXAMPLE</H2>
 

@@ -35,10 +35,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
+#include "glocale.h"
 
 extern CELL f_c(CELL);
 
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
     struct Cell_head cellhd;
     char *name, *result, *mapset;
@@ -57,7 +59,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->description = "GRASS bit pattern.";
+    module->description = _("Compares bit patterns with a raster map");
 
     /* Define the different options */
 
@@ -66,32 +68,32 @@ int main(int argc, char *argv[])
     input->type = TYPE_STRING;
     input->required = YES;
     input->gisprompt = "old,cell,raster";
-    input->description = "Name of an input layer";
+    input->description = _("Name of an input layer");
 
     output = G_define_option();
     output->key = "output";
     output->type = TYPE_STRING;
     output->required = YES;
     output->gisprompt = "new,cell,raster";
-    output->description = "Name of an output layer";
+    output->description = _("Name of an output layer");
 
     pattern = G_define_option();
     pattern->key = "pattern";
     pattern->type = TYPE_INTEGER;
     pattern->required = YES;
-    pattern->description = "bit pattern";
+    pattern->description = _("Bit pattern position(s)");
 
     patval = G_define_option();
     patval->key = "patval";
     patval->type = TYPE_INTEGER;
     patval->required = YES;
-    patval->description = "pattern value";
+    patval->description = _("Bit pattern value");
 
     /* Define the different flags */
 
     flag1 = G_define_flag();
     flag1->key = 'q';
-    flag1->description = "Quiet";
+    flag1->description = _("Quiet");
 
     if (G_parser(argc, argv))
 	exit(-1);
@@ -105,19 +107,19 @@ int main(int argc, char *argv[])
     /* find map in mapset */
     mapset = G_find_cell2(name, "");
     if (mapset == NULL)
-	G_fatal_error("cell file [%s] not found", name);
+	G_fatal_error(_("cell file [%s] not found"), name);
 
     if (G_legal_filename(result) < 0)
-	G_fatal_error("[%s] is an illegal name", result);
+	G_fatal_error(_("[%s] is an illegal name"), result);
 
     /* determine the inputmap type (CELL/FCELL/DCELL) */
     data_type = G_raster_map_type(name, mapset);
     /*if Gispf() error */
     if ((infd = G_open_cell_old(name, mapset)) < 0)
-	G_fatal_error("Cannot open cell file [%s]", name);
+	G_fatal_error(_("Cannot open cell file [%s]"), name);
 
     if (G_get_cellhd(name, mapset, &cellhd) < 0)
-	G_fatal_error("Cannot read file header of [%s]", name);
+	G_fatal_error(_("Cannot read file header of [%s]"), name);
 
     /* Allocate input buffer */
     inrast = G_allocate_raster_buf(data_type);
@@ -128,7 +130,7 @@ int main(int argc, char *argv[])
     outrast = G_allocate_raster_buf(data_type);
 
     if ((outfd = G_open_raster_new(result, data_type)) < 0)
-	G_fatal_error("Could not open <%s>", result);
+	G_fatal_error(_("Could not open <%s>"), result);
 
     for (row = 0; row < nrows; row++) {
 	CELL c;
@@ -138,7 +140,7 @@ int main(int argc, char *argv[])
 
 	/* read input map */
 	if (G_get_raster_row(infd, inrast, row, data_type) < 0)
-	    G_fatal_error("Could not read from <%s>", name);
+	    G_fatal_error(_("Could not read from <%s>"), name);
 
 	/*process the data */
 	for (col = 0; col < ncols; col++) {
@@ -153,7 +155,7 @@ int main(int argc, char *argv[])
 	}
 
 	if (G_put_raster_row(outfd, outrast, data_type) < 0)
-	    G_fatal_error("Cannot write to <%s>", result);
+	    G_fatal_error(_("Cannot write to <%s>"), result);
     }
 
     G_free(inrast);
