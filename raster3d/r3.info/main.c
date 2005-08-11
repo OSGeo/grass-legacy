@@ -34,229 +34,260 @@
         fprintf(out,"-");\
     fprintf (out,"%c\n",x)
 
-#define LINE_LENGTH 300
 #define TMP_LENGTH 100
-
-extern char * G_find_grid3 ();
 
 static char *name;
 
 /**************************************************************************/
-int main (argc, argv)   
-    int argc;
-    char *argv[];
+int
+main (int argc, char *argv[])
 {
-    char *mapset;
-    char line[LINE_LENGTH];
-    char tmp1[TMP_LENGTH], tmp2[TMP_LENGTH], tmp3[TMP_LENGTH];
-    int i;
-    FILE *out;
-    G3D_Region cellhd;
-    void *g3map;
-    struct Categories cats;
-    struct History hist;
-    int head_ok;
-    int cats_ok;
-    int hist_ok;
-    char *G_program_name();
-    struct Option *opt1;
-    struct Flag *rflag, *Rflag;
-    struct GModule *module;
-    double dmin, dmax;
+  char *mapset;
+  char *line = NULL;
+  char tmp1[TMP_LENGTH], tmp2[TMP_LENGTH], tmp3[TMP_LENGTH];
+  int i;
+  FILE *out;
+  G3D_Region cellhd;
+  void *g3map;
+  struct Categories cats;
+  struct History hist;
+  int head_ok;
+  int cats_ok;
+  int hist_ok;
+  char *G_program_name ();
+  struct Option *opt1;
+  struct Flag *rflag, *Rflag;
+  struct GModule *module;
+  double dmin, dmax;
 
-    G_gisinit(argv[0]);
-   
-    module = G_define_module();
-    module->description =
-     _("Outputs basic information about a user-specified 3D raster map layer.");
+  G_gisinit (argv[0]);
 
-    opt1 = G_define_option() ;
-    opt1->key        = "map" ;
-    opt1->type       = TYPE_STRING ;
-    opt1->required   = YES ;
-    opt1->gisprompt  = "old,grid3,3d raster" ;
-    opt1->description= _("Name of existing 3dcell map") ;
+  module = G_define_module ();
+  module->description = _("Outputs basic information about a user-specified 3D raster map layer.");
 
-    Rflag = G_define_flag();
-    Rflag->key            = 'R';
-    Rflag->description    = _("Print all, inclusive range");
+  opt1 = G_define_option ();
+  opt1->key = "map";
+  opt1->type = TYPE_STRING;
+  opt1->required = YES;
+  opt1->gisprompt = "old,grid3,3d raster";
+  opt1->description = _("Name of existing 3dcell map");
 
-    rflag = G_define_flag();
-    rflag->key            = 'r';
-    rflag->description    = _("Print range only");
+  Rflag = G_define_flag ();
+  Rflag->key = 'R';
+  Rflag->description = _("Print all, inclusive range");
 
-    if (G_parser(argc, argv))
-        exit(1);
-    
-    name = G_store(opt1->answer);
+  rflag = G_define_flag ();
+  rflag->key = 'r';
+  rflag->description = _("Print range only");
 
-    if ((mapset = G_find_grid3 (name, "")) == NULL)
-        G_fatal_error ( _("Cannot find %s"), name);	
+  if (G_parser (argc, argv))
+    exit (EXIT_FAILURE);
 
-    head_ok = G3d_readRegionMap (name, mapset, &cellhd) >= 0;
-    hist_ok = 0;
-    cats_ok = G3d_readCats (name, mapset, &cats) >= 0;
+  name = G_store (opt1->answer);
 
-    out = stdout;
+  if ((mapset = G_find_grid3 (name, "")) == NULL)
+    G_fatal_error (_("Cannot find %s"), name);
+
+  head_ok = G3d_readRegionMap (name, mapset, &cellhd) >= 0;
+  hist_ok = 0;
+  cats_ok = G3d_readCats (name, mapset, &cats) >= 0;
+
+  out = stdout;
 
   if (!rflag->answer)
-  {
-    divider ('+');
-
-    snprintf (line, LINE_LENGTH, "Layer:    %-29.29s  Date: %s", name, hist_ok ? hist.mapid : "??");
-    printline (line);
-
-    snprintf (line, LINE_LENGTH, "Mapset:   %-29.29s  Login of Creator: %s", mapset, hist_ok ? hist.creator : "??");
-    printline (line);
-
-    snprintf (line, LINE_LENGTH, "Location: %s", G_location());
-    printline (line);
-
-    snprintf (line, LINE_LENGTH, "DataBase: %s", G_gisdbase());
-    printline (line);
-
-    snprintf (line, LINE_LENGTH, "Title:    %s ( %s )", cats_ok ? cats.title : "??", hist_ok ? hist.title : "??");
-    printline (line);
-
-    divider ('|');
-    printline ("");
-
-    snprintf (line, LINE_LENGTH, "  Type of Map:  %-20.20s", "3d cell");
-    strcat (line, "Number of Categories: ");
-    if (cats_ok)
     {
-        char temp[20];
-        snprintf (temp, 20, "%-9ld", (long)cats.num);
-        strcat (line, temp);
-    }
-    else
-        strcat (line, "??");
-    printline (line);
+      divider ('+');
 
-    if (head_ok)
-    {
-        snprintf (line, LINE_LENGTH, "  Rows:         %d", cellhd.rows);
+      if (G_asprintf (&line, "Layer:    %-29.29s  Date: %s", name, hist_ok ? hist.mapid : "??") > 0)
 	printline (line);
+      else
+	G_fatal_error (_("Cannot allocate memory for string"));
 
-        snprintf (line, LINE_LENGTH, "  Columns:      %d", cellhd.cols);
+
+      if (G_asprintf (&line, "Mapset:   %-29.29s  Login of Creator: %s", mapset, hist_ok ? hist.creator : "??") > 0)
 	printline (line);
+      else
+	G_fatal_error (_("Cannot allocate memory for string"));
 
-        snprintf (line, LINE_LENGTH, "  Depths:       %d", cellhd.depths);
+
+      if (G_asprintf (&line, "Location: %s", G_location ()) > 0)
 	printline (line);
+      else
+	G_fatal_error (_("Cannot allocate memory for string"));
 
-        snprintf (line, LINE_LENGTH, "  Total Cells:  %ld", 
-		 (long)cellhd.rows * cellhd.cols * cellhd.depths);
+      if (G_asprintf (&line, "DataBase: %s", G_gisdbase ()) > 0)
 	printline (line);
+      else
+	G_fatal_error (_("Cannot allocate memory for string"));
 
-	snprintf (line, LINE_LENGTH, "       Projection: %s (zone %d)",
-	    G_database_projection_name(), G_zone());
-        printline (line);
+      if (G_asprintf (&line, "Title:    %s ( %s )", cats_ok ? cats.title : "??", hist_ok ? hist.title : "??") > 0)
+	printline (line);
+      else
+	G_fatal_error (_("Cannot allocate memory for string"));
 
-	G_format_northing (cellhd.north, tmp1, cellhd.proj);
-	G_format_northing (cellhd.south, tmp2, cellhd.proj);
-	G_format_resolution (cellhd.ns_res, tmp3, cellhd.proj);
-        snprintf (line, LINE_LENGTH, "           N: %10s    S: %10s   Res: %5s",
-	    tmp1, tmp2, tmp3);
-        printline (line);
+      divider ('|');
+      printline ("");
 
-	G_format_easting (cellhd.east, tmp1, cellhd.proj);
-	G_format_easting (cellhd.west, tmp2, cellhd.proj);
-	G_format_resolution (cellhd.ew_res, tmp3, cellhd.proj);
-        snprintf (line, LINE_LENGTH, "           E: %10s    W: %10s   Res: %5s",
-	    tmp1, tmp2, tmp3);
-        printline (line);
-
-    	format_double (cellhd.top, tmp1);
-	format_double (cellhd.bottom, tmp2);
-	format_double (cellhd.tb_res, tmp3);
-        snprintf (line, LINE_LENGTH, "           T: %10s    B: %10s   Res: %5s",
-	    tmp1, tmp2, tmp3);
-        printline (line);
-
-        /*If the range should be displayed like in r.info*/
-        if (Rflag->answer){
-	/*To read the range, we need to open the map and call the range calculation*/
-        g3map = G3d_openCellOld (name, mapset, G3D_DEFAULT_WINDOW,
-                                 G3D_TILE_SAME_AS_FILE, G3D_USE_CACHE_DEFAULT);
-
-        if(NULL == g3map)
-           G_fatal_error( _("Error opening grid3 file [%s]"), name);
-        if(0 == G3d_range_load(g3map))
-           G_fatal_error( _("Error reading range for [%s]"), name);
-
-        G3d_range_min_max (g3map, &dmin, &dmax);
-    	format_double (dmin, tmp1);
-	format_double (dmax, tmp2);
-
-        snprintf (line, LINE_LENGTH, "  Range of data:   min = %10s max = %10s",
-	    tmp1, tmp2);
-        printline (line);
+      if (cats_ok)
+	{
+	  format_double ((double) cats.num, tmp1);
 	}
 
+      if (G_asprintf (&line, "  Type of Map:  %-20.20s Number of Categories: %-9s", "3d cell", cats_ok ? tmp1 : "??") >
+	  0)
+	printline (line);
+      else
+	G_fatal_error (_("Cannot allocate memory for string"));
 
-    }
-
-    printline ("");
-
-    if (hist_ok)
-    {
-        printline ("  Data Source:");
-        snprintf (line, LINE_LENGTH, "   %s", hist.datsrc_1);
-	printline(line);
-        snprintf (line, LINE_LENGTH, "   %s", hist.datsrc_2);
-	printline(line);
-	printline("");
-
-        printline ("  Data Description:");
-        snprintf (line, LINE_LENGTH,"   %s", hist.keywrd);
-	printline(line);
-	printline("");
-        if(hist.edlinecnt)
+      if (head_ok)
 	{
-	    printline ("  Comments:  ");
+	  if (G_asprintf (&line, "  Rows:         %d", cellhd.rows) > 0)
+	    printline (line);
+	  else
+	    G_fatal_error (_("Cannot allocate memory for string"));
 
-	    for (i = 0; i < hist.edlinecnt; i++)
-	    /**************************************/
+	  if (G_asprintf (&line, "  Columns:      %d", cellhd.cols) > 0)
+	    printline (line);
+	  else
+	    G_fatal_error (_("Cannot allocate memory for string"));
+
+	  if (G_asprintf (&line, "  Depths:       %d", cellhd.depths) > 0)
+	    printline (line);
+	  else
+	    G_fatal_error (_("Cannot allocate memory for string"));
+
+	  if (G_asprintf (&line, "  Total Cells:  %ld", (long) cellhd.rows * cellhd.cols * cellhd.depths) > 0)
+	    printline (line);
+	  else
+	    G_fatal_error (_("Cannot allocate memory for string"));
+
+	  if (G_asprintf (&line, "       Projection: %s (zone %d)", G_database_projection_name (), G_zone ()) > 0)
+	    printline (line);
+	  else
+	    G_fatal_error (_("Cannot allocate memory for string"));
+
+	  G_format_northing (cellhd.north, tmp1, cellhd.proj);
+	  G_format_northing (cellhd.south, tmp2, cellhd.proj);
+	  G_format_resolution (cellhd.ns_res, tmp3, cellhd.proj);
+	  if (G_asprintf (&line, "           N: %10s    S: %10s   Res: %5s", tmp1, tmp2, tmp3) > 0)
+	    printline (line);
+	  else
+	    G_fatal_error (_("Cannot allocate memory for string"));
+
+	  G_format_easting (cellhd.east, tmp1, cellhd.proj);
+	  G_format_easting (cellhd.west, tmp2, cellhd.proj);
+	  G_format_resolution (cellhd.ew_res, tmp3, cellhd.proj);
+	  if (G_asprintf (&line, "           E: %10s    W: %10s   Res: %5s", tmp1, tmp2, tmp3) > 0)
+	    printline (line);
+	  else
+	    G_fatal_error (_("Cannot allocate memory for string"));
+
+	  format_double (cellhd.top, tmp1);
+	  format_double (cellhd.bottom, tmp2);
+	  format_double (cellhd.tb_res, tmp3);
+	  if (G_asprintf (&line, "           T: %10s    B: %10s   Res: %5s", tmp1, tmp2, tmp3) > 0)
+	    printline (line);
+	  else
+	    G_fatal_error (_("Cannot allocate memory for string"));
+
+	  /*If the range should be displayed like in r.info */
+	  if (Rflag->answer)
 	    {
-		snprintf (line, LINE_LENGTH,"   %s", hist.edhist[i]);
-		printline(line);
-	    }
-        }
+	      /*To read the range, we need to open the map and call the range calculation */
+	      g3map = G3d_openCellOld (name, mapset, G3D_DEFAULT_WINDOW, G3D_TILE_SAME_AS_FILE, G3D_USE_CACHE_DEFAULT);
 
-        printline ("");
+	      if (NULL == g3map)
+		G_fatal_error (_("Error opening grid3 file [%s]"), name);
+	      if (0 == G3d_range_load (g3map))
+		G_fatal_error (_("Error reading range for [%s]"), name);
+
+	      G3d_range_min_max (g3map, &dmin, &dmax);
+	      format_double (dmin, tmp1);
+	      format_double (dmax, tmp2);
+
+	      if (G_asprintf (&line, "  Range of data:   min = %10s max = %10s", tmp1, tmp2) > 0)
+		printline (line);
+	      else
+		G_fatal_error (_("Cannot allocate memory for string"));
+
+	    }
+
+
+	}
+
+      printline ("");
+
+      if (hist_ok)
+	{
+	  printline ("  Data Source:");
+	  if (G_asprintf (&line, "   %s", hist.datsrc_1) > 0)
+	    printline (line);
+	  else
+	    G_fatal_error (_("Cannot allocate memory for string"));
+
+	  if (G_asprintf (&line, "   %s", hist.datsrc_2) > 0)
+	    printline (line);
+	  else
+	    G_fatal_error (_("Cannot allocate memory for string"));
+
+	  printline ("");
+
+	  printline ("  Data Description:");
+	  if (G_asprintf (&line, "   %s", hist.keywrd) > 0)
+	    printline (line);
+	  else
+	    G_fatal_error (_("Cannot allocate memory for string"));
+
+	  printline ("");
+	  if (hist.edlinecnt)
+	    {
+	      printline ("  Comments:  ");
+
+	      for (i = 0; i < hist.edlinecnt; i++)
+	    /**************************************/
+		{
+		  if (G_asprintf (&line, "   %s", hist.edhist[i]) > 0)
+		    printline (line);
+		  else
+		    G_fatal_error (_("Cannot allocate memory for string"));
+
+		}
+	    }
+
+	  printline ("");
+	}
+
+      divider ('+');
+
+      fprintf (out, "\n");
+    }
+  else				/* rflag */
+    {
+      if (rflag->answer)
+	{
+
+	  g3map = G3d_openCellOld (name, mapset, G3D_DEFAULT_WINDOW, G3D_TILE_SAME_AS_FILE, G3D_USE_CACHE_DEFAULT);
+
+	  if (NULL == g3map)
+	    G_fatal_error (_("Error opening grid3 file [%s]"), name);
+	  if (0 == G3d_range_load (g3map))
+	    G_fatal_error (_("Error reading range for [%s]"), name);
+
+	  G3d_range_min_max (g3map, &dmin, &dmax);
+	  fprintf (out, "min=%f\n", dmin);
+	  fprintf (out, "max=%f\n", dmax);
+	}
     }
 
-    divider ('+');
-
-    fprintf(out,"\n");
-   }
-   else /* rflag */
-   {
-     if (rflag->answer){
-
-        g3map = G3d_openCellOld (name, mapset, G3D_DEFAULT_WINDOW,
-                                 G3D_TILE_SAME_AS_FILE, G3D_USE_CACHE_DEFAULT);
-
-        if(NULL == g3map)
-           G_fatal_error( _("Error opening grid3 file [%s]"), name);
-        if(0 == G3d_range_load(g3map))
-           G_fatal_error( _("Error reading range for [%s]"), name);
-
-        G3d_range_min_max (g3map, &dmin, &dmax);
-        fprintf(out, "min=%f\n", dmin);
-        fprintf(out, "max=%f\n", dmax);
-     }
-   }
-
-   return 0;
+  return 0;
 }
 
 /**************************************************************************/
 int
 format_double (double value, char *buf)
 {
-    
-    sprintf (buf, "%.8lf", value);
-    G_trim_decimal (buf);
-    return 0;
+
+  sprintf (buf, "%.8lf", value);
+  G_trim_decimal (buf);
+  return 0;
 }
