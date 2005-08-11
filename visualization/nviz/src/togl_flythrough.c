@@ -647,7 +647,12 @@ void do_navigation (struct Togl *togl)
 		GS_clear(cb->nv_data->BGcolor);
 
 		if (cb->coarse_draw) {
-			display_cb (togl);
+			GS_set_draw(GSD_BACK);
+			GS_set_draw(GSD_BACK);
+			GS_ready_draw();
+			GS_alldraw_wire();
+			GS_done_draw();
+			/* display_cb (togl); */
 			flythrough_postdraw_cb();
 			draw_all = 1;
 		}
