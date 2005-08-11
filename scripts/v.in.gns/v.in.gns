@@ -92,18 +92,9 @@ if [ $? -eq 1 ] ; then
 fi
 
 #let's go
-echo "Performing UTF8 -> ASCII conversion..."
-#fix also TAB to semicolon
+#change TAB to semicolon
 TAB=`awk 'BEGIN{printf "\t";}'`
-# ftp://ftp.dante.de/tex-archive/support/utf2any.tar.gz
-# TODO: Not sure of utf2any step is needed
-utf2any -8 -f iso-8859-15.map ${FILEORIG} | sed  "s+$TAB+;+g"  > ${TMPFILE}
-
-#check for MSDOS encoding, fix if needed
-file ${TMPFILE} | grep CRLF > /dev/null
-if [ $? -eq 0 ] ; then
-    dos2unix ${TMPFILE}
-fi
+cat ${FILEORIG} | sed  "s+$TAB+;+g"  > ${TMPFILE}
 
 #header elimination:
 HEADER="RC;UFI;UNI;LAT;LONG;DMS_LAT;DMS_LONG;UTM;JOG;FC;DSG;PC;CC1;ADM1;ADM2;DIM;CC2;NT;LC;SHORT_FORM;GENERIC;SORT_NAME;FULL_NAME;FULL_NAME_ND;MODIFY_DATE"
@@ -128,4 +119,3 @@ echo "Converted `wc -l ${TMPFILE}_ascii.csv | awk '{print $1}'` place names."
 # pump data into GRASS:
 cat ${TMPFILE}_ascii.csv | v.in.ascii cat=0 x=5 y=4 fs=';' out=$FILE columns='rc integer,uf1 integer,uni integer,lat double,long double,dms_lat varchar(6),dms_long varchar(7),utm varchar(4),jog varchar(7),fc varchar(1),dsg varchar(5),pc integer,cci varchar(2),adm1 varchar(2),adm2 varchar(200),dim integer,cc2 varchar(2),nt varchar(1),lc varchar(2),shortform varchar(128),generic varchar(128),sortname varchar(200),fullname varchar(200),funamesd varchar(200),mod_date date' 
 rm -f ${TMPFILE}_ascii.csv
-
