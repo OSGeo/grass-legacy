@@ -12,7 +12,7 @@
  *  \return double * 
  */
 
- double *G_alloc_vector(int n)
+double *G_alloc_vector(size_t n)
 {
     return (double *) G_calloc (n, sizeof(double));
 }
@@ -52,7 +52,7 @@
  *  \return float * 
  */
 
- float *G_alloc_fvector(int n)
+float *G_alloc_fvector(size_t n)
 {
     return (float *) G_calloc (n, sizeof(float));
 }

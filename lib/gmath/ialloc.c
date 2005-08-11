@@ -1,10 +1,12 @@
 #include <stdlib.h>
 #include "gis.h"
 
-int * G_alloc_ivector(int n)
+
+int *G_alloc_ivector(size_t n)
 {
     return (int *) G_calloc (n, sizeof(int));
 }
+
 
 int **G_alloc_imatrix(int rows,int cols)
 {
@@ -15,8 +17,10 @@ int **G_alloc_imatrix(int rows,int cols)
     m[0] = (int *) G_calloc (rows*cols, sizeof(int));
     for (i = 1; i < rows; i++)
 	m[i] = m[i-1] + cols;
+
     return m;
 }
+
 
 int G_free_ivector(int *v)
 {
@@ -24,6 +28,7 @@ int G_free_ivector(int *v)
 
     return 0;
 }
+
 
 int G_free_imatrix(int **m)
 {
