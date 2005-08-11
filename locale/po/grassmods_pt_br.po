@@ -1,4 +1,6 @@
 # translation of grassmods_pt_br.po to Português Brasileiro
+# translation of grassmods_pt_br.po to
+# translation of grassmods_pt_br.po to Brazilian Portuguese
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2004 THE GRASS'S COPYRIGHT HOLDER
 # Paulo Marcondes <paulomarcondes@gmail.com>, 2005.
@@ -8,7 +10,7 @@ msgstr ""
 "Project-Id-Version: grassmods_pt_br\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-07-01 09:09+0200\n"
-"PO-Revision-Date: 2005-08-07 00:52-0300\n"
+"PO-Revision-Date: 2005-08-09 22:58-0300\n"
 "Last-Translator: Paulo Marcondes <paulomarcondes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -3678,10 +3680,11 @@ msgid "Constrain model through central window cell"
 msgstr "Restringir o modelo através da célula central da janela"
 
 #: ../raster/r.patch/main.c:39
+#, fuzzy
 msgid ""
 "Creates a composite raster map layer by using known category values from one "
 "(or more) map layer(s) to fill in areas of \"no data\" in another map layer."
-msgstr ""
+msgstr "Cria um mapa raster composto, usando valores conhecidos de categorias de uma (ou mais) camada(s) para preencher áreas de \"no data\" em outra camada."
 
 #: ../raster/r.patch/main.c:51
 #, fuzzy
@@ -3831,10 +3834,11 @@ msgid "Generates random surface(s) with spatial dependence."
 msgstr "Gera superfícies aleatórias com dependência espacial."
 
 #: ../raster/r.reclass/main.c:30
+#, fuzzy
 msgid ""
 "Creates a new map layer whose category values are based upon the user's "
 "reclassification of categories in an existing raster map layer."
-msgstr ""
+msgstr "Cria um novo mapa cujas categorias são baseadas na reclassificação do usuário sobre as categorias de um mapa raster existente."
 
 #: ../raster/r.reclass/main.c:39
 msgid "Raster map to be reclassified"
@@ -3845,73 +3849,73 @@ msgid "Name for the resulting raster map"
 msgstr "Nome para o mapa raster resultante"
 
 #: ../raster/r.reclass/main.c:52 ../raster/r.recode/main.c:46
-#, fuzzy
 msgid "Title for the resulting raster map"
-msgstr "Titulek výsledné rastrové mapy"
+msgstr "Título para o mapa raster resultante"
 
 #: ../raster/r.recode/main.c:26
 msgid "Recode raster maps."
-msgstr ""
+msgstr "Recodificar mapas raster."
 
 #: ../raster/r.recode/main.c:33
 msgid "Raster map to be recoded"
-msgstr ""
+msgstr "Mapa raster a ser recodificado"
 
 #: ../raster/r.recode/main.c:50
 msgid "Align the current region to the input map"
-msgstr ""
+msgstr "Alinhar a região atual pelo mapa de entrada"
 
 #: ../raster/r.recode/main.c:54
+#, fuzzy
 msgid "Force output to double map type (DCELL)"
-msgstr ""
+msgstr "Forçar saída para mapa tipo 'double' (DCELL)"
 
 #: ../raster/r.region/main.c:53
-#, fuzzy
 msgid "Sets the boundary definitions for a raster map."
-msgstr "Definuje hranice rastrové mapy."
+msgstr "Ajusta as definições de limite para um mapa raster"
 
 #: ../raster/r.region/main.c:71
 msgid "Set from current region"
-msgstr ""
+msgstr "Ajustar pela região atual"
 
 #: ../raster/r.region/main.c:86
 msgid "Raster map to change"
-msgstr ""
+msgstr "Mapa raster para alterar"
 
 #: ../raster/r.region/main.c:126
 msgid "Value for the northern edge"
-msgstr ""
+msgstr "Valor para a borda norte"
 
 #: ../raster/r.region/main.c:134
 msgid "Value for the southern edge"
-msgstr ""
+msgstr "Valor para a borda sul"
 
 #: ../raster/r.region/main.c:142
 msgid "Value for the eastern edge"
-msgstr ""
+msgstr "Valor para a borda leste"
 
 #: ../raster/r.region/main.c:150
 msgid "Value for the western edge"
-msgstr ""
+msgstr "Valor para a borda oeste"
 
 #: ../raster/r.region/main.c:370
 #, c-format
 msgid "invalid region: %s"
-msgstr ""
+msgstr "região inválida: %s"
 
 #: ../raster/r.region/main.c:378
 msgid "unable to update boundaries"
-msgstr ""
+msgstr "não consegui atualizar limites"
 
 #: ../raster/r.report/main.c:15
 msgid "Reports statistics for raster map layers."
-msgstr ""
+msgstr "Relatório de estatísticas para mapas raster."
 
 #: ../raster/r.report/parse.c:44
 msgid "Raster map(s) to report on"
-msgstr ""
+msgstr "Mapas raster para analisar"
 
 #: ../raster/r.report/parse.c:52
+#, fuzzy
 msgid ""
 "mi(les),me(ters),k(ilometers),a(cres),h(ectares),c(ell_counts),p"
 "(ercent_cover)"
@@ -3921,115 +3925,115 @@ msgstr ""
 
 #: ../raster/r.report/parse.c:60
 msgid "Character representing no data cell value"
-msgstr ""
+msgstr "Caractere representando células sem valores de dados"
 
 #: ../raster/r.report/parse.c:66
 #, c-format
 msgid "Page length (default: %d lines)"
-msgstr ""
+msgstr "Tamanho da página (padrão %d linhas)"
 
 #: ../raster/r.report/parse.c:73
 #, c-format
 msgid "Page width (default: %d characters)"
-msgstr ""
+msgstr "Largura da página (padrão: %d caracteres)"
 
 #: ../raster/r.report/parse.c:80
 msgid "Name of an output file to hold the report"
-msgstr ""
+msgstr "Nome de um arquivo para gravar a saída do relatório"
 
 #: ../raster/r.report/parse.c:87 ../raster/r.stats/main.c:113
-#, fuzzy
 msgid "Number of fp subranges to collect stats from"
-msgstr ""
-"Po?et subinterval? rastru s plovoucí desetinnou ?árkou, pro které bude "
-"vytvo?ena statistika"
+msgstr "Número de intervalos fp para coletar estatísticas"
 
 #: ../raster/r.report/parse.c:91
 msgid "Suppress page headers"
-msgstr ""
+msgstr "Suprimir páginas de cabeçalho"
 
 #: ../raster/r.report/parse.c:95
 msgid "Use formfeeds between pages"
-msgstr ""
+msgstr "Usar linhas em branco entre as páginas"
 
 #: ../raster/r.report/parse.c:103
+#, fuzzy
 msgid "Scientific format"
 msgstr "Notação científica"
 
 #: ../raster/r.report/parse.c:107
 msgid "Filter out all no data cells"
-msgstr ""
+msgstr "Excluir as células sem valores numéricos"
 
 #: ../raster/r.report/parse.c:111
 msgid "Filter out cells where all maps have no data"
-msgstr ""
+msgstr "Excluir células em que nenhum dos mapas possui dados"
 
 #: ../raster/r.report/parse.c:115 ../raster/r.stats/main.c:166
+#, fuzzy
 msgid "Report for cats fp ranges (fp maps only)"
-msgstr ""
+msgstr "Relatório de intervalos de categorias fp (apenas mapas fp)"
 
 #: ../raster/r.report/parse.c:119
 msgid "Read fp map as integer (use map's quant rules"
-msgstr ""
+msgstr "Ler mapas fp como inteiros (usar regras de quantização do mapa)"
 
 #: ../raster/r.resamp.rst/main.c:161
 msgid ""
 "Reinterpolates and computes topographic analysis from input raster file to a "
 "new raster file (possibly with different resolution) using regularized "
 "spline with tension and smoothing."
-msgstr ""
+msgstr "Reinterpola e computa análise topográfica de um raster de entrada para um novo arquivo raster (possivelmente com uma resolução diferente) usando uma spline regularizada com tensão e suavização."
 
 #: ../raster/r.resamp.rst/main.c:177
 msgid "Desired east-west resolution"
-msgstr ""
+msgstr "Resolução leste-oeste desejada"
 
 #: ../raster/r.resamp.rst/main.c:183
 msgid "Desired north-south resolution"
-msgstr ""
+msgstr "Resolução norte-sul desejada"
 
 #: ../raster/r.resamp.rst/main.c:190
 msgid "Output z-file (elevation)"
-msgstr ""
+msgstr "Gerar arquivo de elevação"
 
 #: ../raster/r.resamp.rst/main.c:197
 msgid "Slope"
-msgstr ""
+msgstr "Declive"
 
 #: ../raster/r.resamp.rst/main.c:204
 msgid "Aspect"
-msgstr ""
+msgstr "Aspecto"
 
 #: ../raster/r.resamp.rst/main.c:211
 msgid "Profile curvature"
-msgstr ""
+msgstr "Curvatura do perfil"
 
 #: ../raster/r.resamp.rst/main.c:218
 msgid "Tangential curvature"
-msgstr ""
+msgstr "Curvatura tangencial"
 
 #: ../raster/r.resamp.rst/main.c:225
 msgid "Mean curvature"
-msgstr ""
+msgstr "Curvatura média"
 
 #: ../raster/r.resamp.rst/main.c:229
+#, fuzzy
 msgid "Output partial derivatives instead"
-msgstr ""
+msgstr "Gera derivadas parciais em vez"
 
 #: ../raster/r.resamp.rst/main.c:236
 msgid "Name of the cell file containing smoothing"
-msgstr ""
+msgstr "Nome do arquivo de célula contendo a suavização"
 
 #: ../raster/r.resamp.rst/main.c:243
 msgid "Name of the raster file used as mask"
-msgstr ""
+msgstr "Nome do arquivo raster usado como máscara"
 
 #: ../raster/r.resamp.rst/main.c:250
 msgid "Rows/columns overlap for segmentation"
-msgstr ""
+msgstr "Sobreposição de linhas e colunas para segmentação"
 
 #: ../raster/r.resamp.rst/main.c:257
 msgid "Conversion factor for z-values"
-msgstr ""
+msgstr "Fator de conversão para os valores de z"
 
 #: ../raster/r.resamp.rst/main.c:264
 msgid "Tension"
@@ -4044,29 +4048,29 @@ msgid "Anisotropy scaling factor"
 msgstr "Fator de anisotropia"
 
 #: ../raster/r.resamp.rst/main.c:280
+#, fuzzy
 msgid "Use dnorm independent tension"
-msgstr ""
+msgstr "Usar tensão independente de dnorm"
 
 #: ../raster/r.resample/main.c:35
 msgid "GRASS raster map layer data resampling capability."
-msgstr ""
+msgstr "Módulo de reamostragem de mapas raster do GRASS."
 
 #: ../raster/r.rescale/main.c:35
 msgid "Rescales the range of category values in a raster map layer."
-msgstr ""
+msgstr "Reescalona o intervalo dos valores de categorias num mapa raster."
 
 #: ../raster/r.rescale/main.c:45 ../raster/r.rescale.eq/main.c:46
-#, fuzzy
 msgid "The name of the raster map to be rescaled"
-msgstr "Název rastrové mapy, její? m??ítko má být zm?n?no."
+msgstr "Nome do mapa raster para ser reescalonado"
 
 #: ../raster/r.rescale/main.c:52 ../raster/r.rescale.eq/main.c:53
 msgid "The input data range to be rescaled (default: full range of input map)"
-msgstr ""
+msgstr "Intervalo dos dados de entrada a ser reescalonados (padrão: intervalo completo do mapa de entrada)"
 
 #: ../raster/r.rescale/main.c:59 ../raster/r.rescale.eq/main.c:60
 msgid "The resulting raster map name"
-msgstr ""
+msgstr "Nome do mapa raster resultante"
 
 #: ../raster/r.rescale/main.c:66 ../raster/r.rescale.eq/main.c:67
 msgid "The output data range"
@@ -4074,26 +4078,23 @@ msgstr "Intervalo dos dados de saída"
 
 #: ../raster/r.rescale/main.c:73 ../raster/r.rescale.eq/main.c:74
 msgid "Title for new raster map"
-msgstr ""
+msgstr "Título para o novo mapa raster"
 
 #: ../raster/r.rescale.eq/main.c:36
 msgid ""
 "Rescales histogram equalized the range of categoryvalues in a raster map "
 "layer."
-msgstr ""
+msgstr "Reescalona e normaliza o histograma dos valores de categorias num mapa raster"
 
 #: ../raster/r.series/main.c:89
-#, fuzzy
 msgid ""
 "Makes each output cell value a function of the values assigned to the "
 "corresponding cells in the input raster map layers."
-msgstr ""
-"Hodnota ka?dé bu?ky ve výstupním rastru je funkcí hodnot n?kolika "
-"dal?íchbun?k ve vstupním rastru."
+msgstr "Define cada célula da saída como função dos valores designados para as células correspondentes nos mapas raster de entrada."
 
 #: ../raster/r.series/main.c:99
 msgid "Names of existing raster files"
-msgstr ""
+msgstr "Nomes dos mapas raster existentes"
 
 #: ../raster/r.series/main.c:113
 msgid "Aggregate operation"
@@ -4104,83 +4105,88 @@ msgid "Propagate NULLs"
 msgstr "Propagar NULL"
 
 #: ../raster/r.slope.aspect/main.c:134
+#, fuzzy
 msgid ""
 "Generates raster map layers of slope, aspect, curvatures and partial "
 "derivatives from a raster map layer of true elevation values. Aspect is "
 "calculated counterclockwise from east."
-msgstr ""
+msgstr "Gera mapas raster de declividade, aspecto, curvaturas e derivadas parciais a partir de um mapa raster com valores verdadeiros de elevação. Aspecto é calculado no sentido anti-horário a partir do leste."
 
 #: ../raster/r.slope.aspect/main.c:143
 msgid "Raster elevation file name"
 msgstr "Nome do Arquivo raster de elevação"
 
 #: ../raster/r.slope.aspect/main.c:151
+#, fuzzy
 msgid "Output slope filename"
-msgstr ""
+msgstr "Nome do arquivo de saída de declividade"
 
 #: ../raster/r.slope.aspect/main.c:159
+#, fuzzy
 msgid "Format for reporting the slope"
-msgstr ""
+msgstr "Formato para relatar a declividade"
 
 #: ../raster/r.slope.aspect/main.c:167
+#, fuzzy
 msgid "Type of output aspect and slope maps"
-msgstr ""
+msgstr "Tipo dos mapas de saída de aspecto e declividade"
 
 #: ../raster/r.slope.aspect/main.c:175
+#, fuzzy
 msgid "Output aspect filename"
-msgstr ""
+msgstr "Nome do arquivo de saída de aspecto"
 
 #: ../raster/r.slope.aspect/main.c:183
 msgid "Output profile curvature filename"
-msgstr ""
+msgstr "Nome do arquivo de curvatura do perfil"
 
 #: ../raster/r.slope.aspect/main.c:191
 msgid "Output tangential curvature filename"
-msgstr ""
+msgstr "Nome do arquivo de curvatura tangencial"
 
 #: ../raster/r.slope.aspect/main.c:199
 msgid "Output first order partial derivative dx (E-W slope) filename"
-msgstr ""
+msgstr "Nome do arquivo da primeira derivada parcial dx (declive E-W)"
 
 #: ../raster/r.slope.aspect/main.c:207
 msgid "Output first order partial derivative dy (N-S slope) filename"
-msgstr ""
+msgstr "Nome do arquivo da primeira derivada parcial dy (declive N-S)"
 
 #: ../raster/r.slope.aspect/main.c:215
 msgid "Output second order partial derivative dxx filename"
-msgstr ""
+msgstr "Nome do arquivo da segunda derivada parcial dxx"
 
 #: ../raster/r.slope.aspect/main.c:223
 msgid "Output second order partial derivative dyy filename"
-msgstr ""
+msgstr "Nome do arquivo da segunda derivada parcial dyy"
 
 #: ../raster/r.slope.aspect/main.c:231
 msgid "Output second order partial derivative dxy filename"
-msgstr ""
+msgstr "Nome do arquivo da segunda derivada parcial dxy"
 
 #: ../raster/r.slope.aspect/main.c:235
 msgid "Multiplicative factor to convert elevation units to meters"
-msgstr ""
+msgstr "Fator de multiplicação para converter unidades de elevação para metros"
 
 #: ../raster/r.slope.aspect/main.c:242
 msgid "Minimum slope val. (in percent) for which aspect is computed"
-msgstr ""
+msgstr "Mínimo valor da declividade (em porcentagem) para qual o aspecto será computado"
 
 #: ../raster/r.slope.aspect/main.c:249
 msgid "Do not align the current region to the elevation layer"
-msgstr ""
+msgstr "Não alinhar a região atual para a camada de elevação"
 
 #: ../raster/r.statistics/main.c:43
 msgid "Category or object oriented statistics."
-msgstr ""
+msgstr "Estatística orientadas a objetos ou categorias."
 
 #: ../raster/r.statistics/main.c:72
 msgid "Method of object-based statistic"
-msgstr ""
+msgstr "Método para a estatística orientada a objetos"
 
 #: ../raster/r.statistics/main.c:79
 msgid "Resultant raster map (not used with 'distribution')"
-msgstr ""
+msgstr "Mapa raster resultante (não usado com 'distribution')"
 
 #: ../raster/r.statistics/main.c:84
 msgid "Cover values extracted from the category labels of the cover map"
@@ -4188,59 +4194,59 @@ msgstr ""
 
 #: ../raster/r.stats/main.c:71
 msgid "Generates area statistics for raster map layers."
-msgstr ""
+msgstr "Gera estatísticas areais para os mapas raster."
 
 #: ../raster/r.stats/main.c:81
 msgid "Raster input maps(s)"
-msgstr ""
+msgstr "Mapas raster de entrada"
 
 #: ../raster/r.stats/main.c:98
 msgid "String representing no data cell value"
-msgstr ""
+msgstr "Texto representando células sem valores de dados"
 
 #: ../raster/r.stats/main.c:105
 msgid "Output file name"
-msgstr ""
+msgstr "Nome do arquivo de saída"
 
 #: ../raster/r.stats/main.c:122
 msgid "One cell (range) per line"
-msgstr ""
+msgstr "Uma célula (intervalo) por linha"
 
 #: ../raster/r.stats/main.c:126
 msgid "Print averaged values instead of intervals"
-msgstr ""
+msgstr "Imprime valores médios ao invés de intervalos"
 
 #: ../raster/r.stats/main.c:130
 msgid "Print area totals"
-msgstr ""
+msgstr "Mostra os totais das áreas"
 
 #: ../raster/r.stats/main.c:134
 msgid "Print cell counts"
-msgstr ""
+msgstr "Mostra contagem de células"
 
 #: ../raster/r.stats/main.c:138
 msgid "Print APPROXIMATE percents (total percent may not be 100%)"
-msgstr ""
+msgstr "Mostra porcentuais APROXIMADOS (porcentual total pode não ser 100%)"
 
 #: ../raster/r.stats/main.c:142
 msgid "Print category labels"
-msgstr ""
+msgstr "Mostra rótulos de categorias"
 
 #: ../raster/r.stats/main.c:150
 msgid "Suppress reporting of any NULLs"
-msgstr ""
+msgstr "Suprimir relato de quaisquer NULLs"
 
 #: ../raster/r.stats/main.c:154
 msgid "Suppress reporting of NULLs when all values are NULL"
-msgstr ""
+msgstr "Suprimir relato de NULLs quando todos os valores forem NULL"
 
 #: ../raster/r.stats/main.c:158
 msgid "Print grid coordinates (east and north)"
-msgstr ""
+msgstr "Mostra coordenadas da malha (leste e norte)"
 
 #: ../raster/r.stats/main.c:162
 msgid "Print x and y (column and row)"
-msgstr ""
+msgstr "Mostra x e y (coluna e linha)"
 
 #: ../raster/r.stats/main.c:170
 msgid "Print raw indexes of fp ranges (fp maps only)"
@@ -4248,12 +4254,11 @@ msgstr ""
 
 #: ../raster/r.stats/main.c:174
 msgid "Read fp map as integer (use map's quant rules)"
-msgstr ""
+msgstr "Ler mapas fp como inteiros (usar regras de quantização do mapa)"
 
 #: ../raster/r.sum/main.c:31
-#, fuzzy
 msgid "Sums up the raster cell values."
-msgstr "Se?te hodnoty bun?k rastru."
+msgstr "Soma os valores das células do raster"
 
 #: ../raster/r.sum/main.c:38
 msgid "Name of incidence or density file."
@@ -4319,9 +4324,8 @@ msgid "Name of real-sky diffuse radiation coefficient raster map [-]"
 msgstr ""
 
 #: ../raster/r.sun/main.c:269
-#, fuzzy
 msgid "Output incidence angle raster map (mode 1 only)"
-msgstr "Ausgabekarte des Einfallswinkels (nur Modus 1)."
+msgstr ""
 
 #: ../raster/r.sun/main.c:277
 msgid ""
