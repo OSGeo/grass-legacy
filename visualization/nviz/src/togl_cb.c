@@ -47,16 +47,11 @@ void reshape_cb(struct Togl *togl)
 
     GS_set_viewport(0, width, 0, height);
 
-    GS_set_draw(GSD_BACK);
 /*   GS_clear(0x0000FF); *//* causes red flash - debug only */
-
+    GS_set_draw(GSD_BACK);
     GS_ready_draw();
     GS_alldraw_wire();
     GS_done_draw();
-
-/*   
-fprintf (stdout,"resize_cb %s %d %d\n", Togl_Ident(togl), width, height );
-*/
 
 #ifdef OLD
 
@@ -78,10 +73,14 @@ void display_cb(struct Togl *togl)
 {
     GS_set_draw(GSD_BACK);
 /*   GS_clear(0x0000FF); *//* debug only */
-
+/*
+    GS_set_draw(GSD_BACK);
     GS_ready_draw();
     GS_alldraw_wire();
     GS_done_draw();
+*/
+    /* draw everything at full resolution */
+    Tcl_Eval(Togl_Interp(togl), "Ndraw_all"); /* Just use draw_all */
 }
 
 void swap_togl(void)
