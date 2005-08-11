@@ -1,3 +1,5 @@
+/* TODO: LL_TEST section commented as it doesn't always work */
+
 #include <stdio.h>
 #include <string.h>
 #include "gis.h"
@@ -118,8 +120,10 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs,
 
 	/* Determine column types */
 	for ( i = 0; i < ntokens; i++ ) {
+#ifdef LL_TEST
+/* doesn't work yet under certain conditions */
 	    if ((G_projection() == PROJECTION_LL)){
-
+	       /* check if coordinates are DMS or decimal or not latlong at all */
 	       sprintf(coorbuf,"%s", tokens[i]);
 	       G_debug (4, "token: %s", coorbuf);
 	       if (G_scan_northing ( coorbuf, &northing, window.proj) ){
@@ -133,10 +137,13 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs,
 		   sprintf(tmp_token, "%f", easting);
 		   /* replace current DMS token by decimal degree */
 		   tokens[i]=tmp_token;
-	       }else
-		   G_fatal_error("Unparsable LatLong value found: %s", tokens[i]);
+	        } else{
+	           /* maybe do nothing here */
+		   G_warning("Unparsable LatLong value found: %s", tokens[i]);
+		}
                }
 	    }
+#endif
 	    G_debug (4, "row %d col %d: '%s' is_int = %d is_double = %d", 
 		         row, i, tokens[i], is_int(tokens[i]), is_double(tokens[i]) );
 	    if ( is_int(tokens[i]) ) continue; /* integer */
@@ -151,7 +158,6 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs,
 	    len = strlen (tokens[i]);
 	    if ( len > collen[i] ) collen[i] = len;
 	}
-	
 	G_free_tokens(tokens);
 
 	row++;
