@@ -375,9 +375,9 @@ int G_remove_commas(char *);
 int G_copy(void *, void *, int);
 
 /* dalloc.c */
-double *G_alloc_vector(int);
+double *G_alloc_vector(size_t);
 double **G_alloc_matrix(int, int);
-float *G_alloc_fvector(int);
+float *G_alloc_fvector(size_t);
 float **G_alloc_fmatrix(int, int);
 int G_free_vector(double *);
 int G_free_matrix(double **);
@@ -641,7 +641,7 @@ char *G_home(void);
 char *G__home(void);
 
 /* ialloc.c */
-int *G_alloc_ivector(int);
+int *G_alloc_ivector(size_t);
 int **G_alloc_imatrix(int, int);
 int G_free_ivector(int *);
 int G_free_imatrix(int **);
