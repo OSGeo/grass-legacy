@@ -1,19 +1,40 @@
 <h2>DESCRIPTION</h2>
 
-<em>v.db.addcol</em> adds a column to the attribute table connected to a given vector map
+<em>v.db.addcol</em> adds one or more column(s) to the attribute table connected
+to a given vector map. It automatically checks the connection for the specified
+layer.
 
 <h2>NOTES</h2>
 
-v.db.addcol is just a front-end to db.execute to allow easier usage.
+v.db.addcol is a front-end to <em>db.execute</em> to allow easier usage.
 
-The supported types of columns depend on the database backend. However, all backends should support VARCHAR, INT, DOUBLE and DATE. The default dbf backend supports only these types.
+The supported types of columns depend on the database backend. However, 
+all backends should support VARCHAR, INT, DOUBLE and DATE. The default dbf backend
+supports only these types.
+
+The existing database connection(s) can be verified with <em>v.db.connect</em>.
+
+<h2>EXAMPLE</h2>
+
+Adding a single column:<br>
+<tt>
+v.db.addcol sentiero_brenta_points columns="slope double"<br>
+v.info -c sentiero_brenta_points
+</tt>
+
+<p>
+Adding two columns:<br>
+<tt>
+v.db.addcol sentiero_brenta_points columns="slope double,myname varchar(15)"<br>
+v.info -c sentiero_brenta_points
+</tt>
 
 <h2>SEE ALSO</h2>
 
-<em><a HREF="v.db.update.html">v.db.update</a></em>,
 <em><a HREF="db.execute.html">db.execute</a></em>,
+<em><a HREF="v.db.connect.html">v.db.connect</a></em>,
 <em><a HREF="v.db.select.html">v.db.select</a></em>,
-<em><a HREF="v.db.connect.html">v.db.connect</a></em>
+<em><a HREF="v.db.update.html">v.db.update</a></em>
 
 
 <h2>AUTHOR</h2>

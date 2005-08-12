@@ -37,7 +37,7 @@
 #%option
 #% key: columns
 #% type: string
-#% description: name and type of the new columns (types depend on database backend, but all support VARCHAR, INT, DOUBLE and DATE)
+#% description: name and type of the new column(s) (types depend on database backend, but all support VARCHAR, INT, DOUBLE and DATE)
 #% required : yes
 #%end
 
@@ -79,10 +79,13 @@ while [ "$n" -le "$colnum" ]
     col=`echo $GIS_OPT_columns | cut -d',' -f$n`
     
     if [ -z "$col" ] ; then
-      echo -e "\nERROR: There is an empty colum !\nDid you leave a trailing comma ?\n"
+      echo -e "\nERROR: There is an empty colum !\nDid you leave a trailing comma?\n"
       exit 1
     fi
     
     echo "ALTER TABLE $table ADD COLUMN $col" | db.execute database=$database driver=$driver
     let "n += 1"
   done
+
+exit 0
+
