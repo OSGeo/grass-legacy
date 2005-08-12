@@ -155,7 +155,7 @@ static int cmp_field ( const void *pa, const void *pb )
 int 
 dig_cidx_add_cat_sorted ( struct Plus_head *Plus, int field, int cat, int line, int type) 
 {
-    int i, si, found, *catp, position;
+    int i, si, found, position;
     struct Cat_index *ci;
     
     G_debug(3, "dig_cidx_add_cat_sorted(): field = %d cat = %d line = %d type = %d", field, cat, line, type);
