@@ -1,16 +1,14 @@
-# translation of grasslibs_pt.po to Brazilian Portuguese
-# Brazilian Portuguese translation of grasslibs.pot
+# translation of grasslibs_pt_br.po to Brazilian Portuguese
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2004 THE GRASS'S COPYRIGHT HOLDER
-
 # Paulo Marcondes <paulomarcondes@gmail.com>, 2005.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: grasslibs_pt\n"
+"Project-Id-Version: grasslibs_pt_br\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-03-25 10:42+0100\n"
-"PO-Revision-Date: 2005-08-10 19:05-0300\n"
+"PO-Revision-Date: 2005-08-11 19:19-0300\n"
 "Last-Translator: Paulo Marcondes <paulomarcondes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -400,7 +398,7 @@ msgstr "modo aberto = %d\n"
 #, c-format
 #, fuzzy
 msgid "Cell header %p\n"
-msgstr "Tí­tulo da célula %p\n"
+msgstr "Cabeçalho de célula %p\n"
 
 #: ../lib/gis/G_dump.c:25
 #, c-format
@@ -436,19 +434,19 @@ msgstr "Flag de reclassificação automática %d\n"
 #, c-format
 #, fuzzy
 msgid "File row addresses %p\n"
-msgstr "Linhas do arquivo %p\n"
+msgstr "Endereços das linhas do arquivo %p\n"
 
 #: ../lib/gis/G_dump.c:32
 #, c-format
 #, fuzzy
 msgid "Data to window col mapping %p\n"
-msgstr "Dados para mostrar o mapeamento das colunas %p\n"
+msgstr "Dados para janelar o mapeamento das colunas %p\n"
 
 #: ../lib/gis/G_dump.c:33
 #, c-format
 #, fuzzy
 msgid "Data to window row constants %f,%f\n"
-msgstr "Dados para mostrar as linhas constantes %f,%f\n"
+msgstr "Dados para janelar as linhas constantes %f,%f\n"
 
 #: ../lib/gis/G_dump.c:34
 #, c-format
@@ -1521,8 +1519,9 @@ msgid "Unable to guess site format!"
 msgstr "Não consegui determinar formato dos locais!"
 
 #: ../lib/gis/readsites_xyz.c:133
+#, fuzzy
 msgid "No n-dims in site_list"
-msgstr ""
+msgstr "Não há n-dims em site_list"
 
 #: ../lib/gis/readsites_xyz.c:136
 msgid "Dimension index out of range"
@@ -1682,7 +1681,7 @@ msgstr "Janela do GRASS quando a visão foi salva:\n"
 #: ../lib/gis/view.c:544
 #, c-format
 msgid " Window saved in \"%s\" is completely outside of current GRASS window."
-msgstr ""
+msgstr " Janela gravada em \"%s\" está completamente fora da janela atual do GRASS."
 
 #: ../lib/gis/view.c:548
 #, c-format
@@ -1704,8 +1703,9 @@ msgstr "Não consegui alocar memória\n"
 
 #: ../lib/raster/io.c:211
 #, c-format
+#, fuzzy
 msgid "ERROR %s from graphics driver.\n"
-msgstr ""
+msgstr "ERRO %s do dispositivo gráfico.\n"
 
 #: ../lib/raster/io.c:282
 msgid "No graphics monitor has been selected for output.\n"
@@ -1774,7 +1774,7 @@ msgstr "Não consegui obter informação sobre %s\n"
 #: ../lib/raster/io.c:408
 #, c-format
 msgid "Error - Monitor <%s> is in use.\n"
-msgstr ""
+msgstr "Erro - Monitor <%s> em uso.\n"
 
 #: ../lib/raster/io.c:410
 #, c-format
@@ -1787,8 +1787,9 @@ msgid "Error - Could not complete locking process for monitor <%s>.\n"
 msgstr "ERRO - Não consegui completar o processo de trancamento para o monitor ,%s>.\n"
 
 #: ../lib/raster/io.c:434
+#, fuzzy
 msgid "Error - Can't set up pipe to graphics device.\n"
-msgstr ""
+msgstr "Erro - não consegui criar o pipe para o dispositivo gráfico\n"
 
 #: ../lib/raster/io.c:440
 #, c-format
@@ -1921,7 +1922,7 @@ msgstr "Erro na escrita do arquivo topo\n"
 #: ../lib/vector/Vlib/build.c:385
 #, c-format
 msgid "Can't open spatial index file for write: %s\n"
-msgstr ""
+msgstr "Não consegui abrir o arquivo de índices espaciais para escrita: %s\n"
 
 #: ../lib/vector/Vlib/build.c:393
 msgid "Error writing out spatial index file.\n"
@@ -2026,7 +2027,7 @@ msgstr "Erro na regra da linha %d em %s"
 
 #: ../lib/vector/Vlib/field.c:565
 msgid "Bug: attempt to update map which is not in current mapset."
-msgstr ""
+msgstr "Bug; tentativa de atualizar mapa que não está no mapset atual."
 
 #: ../lib/vector/Vlib/legal_vname.c:23
 #, c-format
@@ -2071,7 +2072,7 @@ msgstr "O vetor '%s' existe e será sobrescrito."
 #: ../lib/vector/Vlib/map.c:223
 #, c-format
 msgid "Input vector '%s' not found"
-msgstr ""
+msgstr "Vetor de entrada '%s' não encontrado"
 
 #: ../lib/vector/Vlib/map.c:226
 #, c-format
@@ -2098,8 +2099,9 @@ msgstr "Um mapa que não está no mapset atual não pode ser aberto para atualizaçã
 
 #: ../lib/vector/Vlib/open.c:183
 #, c-format
+#, fuzzy
 msgid "Cannot open old vector %s"
-msgstr ""
+msgstr "Não consegui abrir vetor antigo %s"
 
 #: ../lib/vector/Vlib/open.c:193
 #: ../lib/vector/Vlib/open.c:252
@@ -2111,8 +2113,9 @@ msgstr "Não consegui abrir vetor antigo %s no nível %d"
 #: ../lib/vector/Vlib/open.c:315
 #: ../lib/vector/Vlib/open.c:520
 #, c-format
+#, fuzzy
 msgid "Cannot open history file for vector '%s'"
-msgstr ""
+msgstr "Não consegui abrir histórico para o vetor %s"
 
 #: ../lib/vector/Vlib/open.c:486
 msgid "Map name is not SQL compliant."
@@ -2120,13 +2123,15 @@ msgstr "Nome do mapa não obedece ao SQL"
 
 #: ../lib/vector/Vlib/open.c:497
 #, c-format
+#, fuzzy
 msgid "Cannot delete existing vector %s"
-msgstr ""
+msgstr "Não posso apagar o vetor existente %s"
 
 #: ../lib/vector/Vlib/open.c:511
 #, c-format
+#, fuzzy
 msgid "Cannot open new vector %s"
-msgstr ""
+msgstr "Não consegui abrir vetor novo %s"
 
 #: ../lib/vector/Vlib/open.c:563
 #, c-format
@@ -2135,7 +2140,7 @@ msgstr "Não consegui obter informações sobre o arquivo '%s'"
 
 #: ../lib/vector/Vlib/open.c:657
 msgid "Size of 'coor' file differs from value saved in topo file."
-msgstr ""
+msgstr "Tamanho do arquivo 'coor' difere do valor gravado no arquivo topo."
 
 #: ../lib/vector/Vlib/open.c:668
 #, c-format
@@ -2156,7 +2161,7 @@ msgstr "Vect_delete_line() não é suportada para este nível/formato"
 
 #: ../lib/vector/Vlib/write.c:93
 msgid "Cannot write line, the map is not opened"
-msgstr ""
+msgstr "Não consegui escrever a linha, o mapa não foi aberto"
 
 #: ../lib/vector/Vlib/write.c:104
 msgid "Cannot write line"
