@@ -28,7 +28,7 @@ IL_create_bitmask (struct interp_params *params)
 
 /** Creates a bitmap mask from given raster file **/
 {
-  int i, j, cfmask, irev, MASKfd;
+  int i, j, cfmask=0, irev, MASKfd;
   char *mapsetm;
   CELL *cellmask, *MASK;
   struct BM *bitmask;
@@ -46,7 +46,8 @@ IL_create_bitmask (struct interp_params *params)
     {
       mapsetm = G_find_cell2 (params->maskmap, "");
       if (!mapsetm)
-        G_fatal_error ("mask raster file [%s] not found\n", params->maskmap);
+        G_fatal_error ("mask raster file [%s] not found", params->maskmap);
+
       cellmask = G_allocate_cell_buf ();
       cfmask = G_open_cell_old (params->maskmap, mapsetm);
     }
@@ -73,6 +74,7 @@ IL_create_bitmask (struct interp_params *params)
   }
   else
     bitmask = NULL;
+
   return bitmask;
 }
 
@@ -89,6 +91,7 @@ int translate_quad (
     return 0;
   if (tree->data == NULL)
     return 0;
+
   if (tree->leafs != NULL)
   {
     ((struct quaddata *) (tree->data))->x_orig -= numberx;
@@ -110,7 +113,9 @@ int translate_quad (
       ((struct quaddata *) (tree->data))->points[i].y -= numbery;
       ((struct quaddata *) (tree->data))->points[i].z -= numberz;
     }
+
     return 1;
   }
+
   return total;
 }
