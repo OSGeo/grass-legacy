@@ -855,7 +855,7 @@ int dglDepthComponents(
 						void *				pvClipArg
 						)
 {
-	int i, nret;
+	int i, nret = 0;
 	dglTreeNode_s findVisited;
 	void * pvVisited;
 	dglInt32_t * pvertex , * pnode;
