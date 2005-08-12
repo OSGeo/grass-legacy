@@ -386,8 +386,9 @@ dig__fwrite_port_D ( double *buf,		/* DOUBLE */
 		     int cnt,
 		     GVFILE * fp)
 {
-  int i,j, ret;	
+  int i,j;	
   unsigned char *c1, *c2;	
+
   if ( Cur_Head->dbl_quick ) 
     {
       if ( dig_fwrite (buf, PORT_DOUBLE, cnt, fp) == cnt )
