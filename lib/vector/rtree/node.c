@@ -139,8 +139,8 @@ int RTreePickBranch(struct Rect *R, struct Node *N)
 	register struct Node *n = N;
 	register struct Rect *rr;
 	register int i, first_time=1;
-	RectReal increase, bestIncr=(RectReal)-1, area, bestArea;
-	int best;
+	RectReal increase, bestIncr=(RectReal)-1, area, bestArea=0;
+	int best=0;
 	struct Rect tmp_rect;
 	assert(r && n);
 

@@ -276,7 +276,7 @@ int RTreeDeleteRect(struct Rect *R, int Tid, struct Node**Nn)
 	register int tid = Tid;
 	register struct Node **nn = Nn;
 	register int i;
-	register struct Node *tmp_nptr;
+	struct Node *tmp_nptr = NULL;
 	struct ListNode *reInsertList = NULL;
 	register struct ListNode *e;
 
