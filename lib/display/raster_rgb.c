@@ -113,9 +113,9 @@ static int draw_cell_RGB(
     int r_size = G_raster_size(r_type);
     int g_size = G_raster_size(g_type);
     int b_size = G_raster_size(b_type);
-    int r_bytes = (D_x_end - D_x_beg) * r_size;
-    int g_bytes = (D_x_end - D_x_beg) * g_size;
-    int b_bytes = (D_x_end - D_x_beg) * b_size;
+    size_t r_bytes = (D_x_end - D_x_beg) * r_size;
+    size_t g_bytes = (D_x_end - D_x_beg) * g_size;
+    size_t b_bytes = (D_x_end - D_x_beg) * b_size;
 
 /* Allocate memory for raster */
     if(!r_raster)
