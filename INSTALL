@@ -187,7 +187,7 @@ you can also specify processor specific flags (examples):
   CFLAGS="-mcpu=athlon -O2" # AMD Athlon processor with code optimisations
   CFLAGS="-mcpu=pentium"    # Intel Pentium processor
   CFLAGS="-mcpu=pentium4"   # Intel Pentium4 processor
-  CFLAGS="-O2 -mcpu=pentium4 -march=pentium4 -mtune=pentium4 -msse -msse2 -mfpmath=sse -malign-double -minline-all-stringops"   # Intel XEON 64bit processor
+  CFLAGS="-O3 -msse -msse2 -mfpmath=sse -minline-all-stringops"   # Intel XEON 64bit processor
 
 To find out optional CFLAGS for your platform, enter:
   gcc -dumpspecs
