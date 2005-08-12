@@ -45,7 +45,7 @@ and interpolating function interp()
     double          fstar2 = params->fi * params->fi / 4.;
     static double   *A = NULL;
     double          RO,amaxa;
-    double rsin, rcos, teta, scale; /*anisotropy parameters - added by JH 2002*/
+    double rsin=0, rcos=0, teta, scale=0; /*anisotropy parameters - added by JH 2002*/
     double          xxr, yyr;
 
   if(params->theta) {
