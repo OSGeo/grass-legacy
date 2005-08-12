@@ -223,7 +223,7 @@ Vect_get_isle_boundaries (
 {
   int i, line;
   struct Plus_head *Plus;
-  P_AREA *Isle;
+  P_ISLE *Isle;
   
   G_debug ( 3, "Vect_get_isle_boundaries(): isle = %d", isle );	
 
