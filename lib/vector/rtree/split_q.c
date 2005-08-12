@@ -85,7 +85,7 @@ static void RTreeClassify(int i, int group, struct PartitionVars *p)
 -----------------------------------------------------------------------------*/
 static void RTreePickSeeds(struct PartitionVars *p)
 {
-	register int i, j, seed0, seed1;
+	int i, j, seed0=0, seed1=0;
 	RectReal worst, waste, area[MAXCARD+1];
 
 	for (i=0; i<p->total; i++)
@@ -226,7 +226,7 @@ static void RTreeMethodZero(struct PartitionVars *p, int minfill)
 {
 	register int i;
 	RectReal biggestDiff;
-	register int group, chosen, betterGroup;
+	int group, chosen=0, betterGroup=0;
 	assert(p);
 
 	RTreeInitPVars(p, BranchCount, minfill);
