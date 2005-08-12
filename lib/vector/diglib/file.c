@@ -160,7 +160,7 @@ dig_file_load ( GVFILE *file )
 {
     int ret, mode, load;
     char *cmode;
-    unsigned size;
+    size_t size;
     struct stat sbuf;
     
     G_debug (2, "dig_file_load ()" );
