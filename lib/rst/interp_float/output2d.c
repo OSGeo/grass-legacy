@@ -19,7 +19,10 @@
 #include "linkm.h"
 
 #include "interpf.h"
+
+
 #define MULT 100000
+
 
 int IL_output_2d (
     struct interp_params *params,
@@ -49,7 +52,7 @@ int IL_output_2d (
 
 {
   FCELL *cell1;
-  int cf1, cf2, cf3, cf4, cf5, cf6;
+  int cf1=0, cf2=0, cf3=0, cf4=0, cf5=0, cf6=0;
   int nrows, ncols;
   int i, ii;
   double zstep;
@@ -61,12 +64,12 @@ int IL_output_2d (
   int cond1, cond2;
   FCELL dat1, dat2;
 
-
   cond2 = ((params->pcurv != NULL) || (params->tcurv != NULL)
 	   || (params->mcurv != NULL));
   cond1 = ((params->slope != NULL) || (params->aspect != NULL) || cond2);
 
   cell1 = G_allocate_f_raster_buf ();
+
   /*
    * G_set_embedded_null_value_mode(1);
    */
@@ -79,6 +82,7 @@ int IL_output_2d (
       return -1;
     }
   }
+
   if (params->slope != NULL)
   {
     cf2 = G_open_fp_cell_new (params->slope);
@@ -88,6 +92,7 @@ int IL_output_2d (
       return -1;
     }
   }
+
   if (params->aspect != NULL)
   {
     cf3 = G_open_fp_cell_new (params->aspect);
@@ -97,6 +102,7 @@ int IL_output_2d (
       return -1;
     }
   }
+
   if (params->pcurv != NULL)
   {
     cf4 = G_open_fp_cell_new (params->pcurv);
@@ -106,6 +112,7 @@ int IL_output_2d (
       return -1;
     }
   }
+
   if (params->tcurv != NULL)
   {
     cf5 = G_open_fp_cell_new (params->tcurv);
@@ -115,6 +122,7 @@ int IL_output_2d (
       return -1;
     }
   }
+
   if (params->mcurv != NULL)
   {
     cf6 = G_open_fp_cell_new (params->mcurv);
@@ -124,6 +132,7 @@ int IL_output_2d (
       return -1;
     }
   }
+
   nrows = cellhd->rows;
   if (nrows != params->nsizr)
   {
@@ -131,6 +140,7 @@ int IL_output_2d (
 	     nrows, params->nsizr);
     return -1;
   }
+
   ncols = cellhd->cols;
   if (ncols != params->nsizc)
   {
@@ -138,6 +148,7 @@ int IL_output_2d (
 	     ncols, params->nsizc);
     return -1;
   }
+
   if (G_set_window (cellhd) < 0)
     return -1;
 
@@ -147,6 +158,7 @@ int IL_output_2d (
 	     G_window_rows ());
     return -1;
   }
+
   if (ncols != G_window_cols ())
   {
     fprintf (stderr, "OOPS: cols changed from %d to %d\n", ncols,
@@ -176,6 +188,7 @@ int IL_output_2d (
 
     }
   }
+
   if (params->slope != NULL)
   {
     fseek (params->Tmp_fd_dx, 0L, 0);	/* seek to the beginning */
@@ -193,6 +206,7 @@ int IL_output_2d (
       G_put_f_raster_row (cf2, cell1);
     }
   }
+
   if (params->aspect != NULL)
   {
     fseek (params->Tmp_fd_dy, 0L, 0);	/* seek to the beginning */
@@ -210,6 +224,7 @@ int IL_output_2d (
       G_put_f_raster_row (cf3, cell1);
     }
   }
+
   if (params->pcurv != NULL)
   {
     fseek (params->Tmp_fd_xx, 0L, 0);	/* seek to the beginning */
@@ -227,6 +242,7 @@ int IL_output_2d (
       G_put_f_raster_row (cf4, cell1);
     }
   }
+
   if (params->tcurv != NULL)
   {
     fseek (params->Tmp_fd_yy, 0L, 0);	/* seek to the beginning */
@@ -244,6 +260,7 @@ int IL_output_2d (
       G_put_f_raster_row (cf5, cell1);
     }
   }
+
   if (params->mcurv != NULL)
   {
     fseek (params->Tmp_fd_xy, 0L, 0);	/* seek to the beginning */
@@ -277,7 +294,6 @@ int IL_output_2d (
 
  
   /* colortable for elevations */
-
   G_init_colors (&colors);
   zstep = (FCELL) (zmaxac - zminac) / 5.;
   for (i = 1; i <= 5; i++)
@@ -308,6 +324,7 @@ int IL_output_2d (
       break;
     }
   }
+
   if (params->elev != NULL)
   {
     mapset = G_find_file ("cell", params->elev, "");
@@ -380,7 +397,6 @@ int IL_output_2d (
 				 &dat2, 255, 0, 200, &colors);
     }
 
-
     if (params->slope != NULL)
     {
       mapset = G_find_file ("cell", params->slope, "");
@@ -408,9 +424,7 @@ int IL_output_2d (
 
     }
 
-
     /* colortable for aspect */
-
     if (!params->deriv)
     {
       G_init_colors (&colors);
@@ -549,7 +563,6 @@ int IL_output_2d (
 	G_write_history (params->pcurv, &hist3);
         if(params->ts)
 	    G_write_raster_timestamp(params->pcurv,params->ts);
-
       }
 
       if (params->tcurv != NULL)
@@ -577,7 +590,6 @@ int IL_output_2d (
 	G_write_history (params->tcurv, &hist4);
         if(params->ts)
 	    G_write_raster_timestamp(params->tcurv,params->ts);
-
       }
 
       if (params->mcurv != NULL)
@@ -605,9 +617,7 @@ int IL_output_2d (
 	G_write_history (params->mcurv, &hist5);
         if(params->ts)
 	    G_write_raster_timestamp(params->mcurv,params->ts);
-
       }
-
     }
   }
 
@@ -638,7 +648,6 @@ int IL_output_2d (
         else
             sprintf (hist.edhist[0], "giventension=%f, smoothing=%f",
                  params->fi * 1000. / dnorm, params->rsm);
-        
         }
     else
         {
@@ -674,6 +683,7 @@ int IL_output_2d (
       sprintf (hist.datsrc_1, "vector file %s", input);
     else
       sprintf (hist.datsrc_1, "site file %s", input);
+
     hist.edlinecnt = 6;
     G_write_history (params->elev, &hist);
     if(params->ts)
