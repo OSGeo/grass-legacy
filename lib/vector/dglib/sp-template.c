@@ -83,7 +83,7 @@ static dglSPReport_s * DGL_SP_CACHE_REPORT_FUNC(
 	long 			i, istack = 0;
 	unsigned char *	pstack = NULL;
 	unsigned char *	ppop;
-	dglSPReport_s * pReport;
+	dglSPReport_s * pReport = NULL;
 
 	if ( pCache->nStartNode != nStart ) {
 		pgraph->iErrno = DGL_ERR_HeadNodeNotFound;
