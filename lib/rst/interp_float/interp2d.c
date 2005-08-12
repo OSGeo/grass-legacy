@@ -30,7 +30,9 @@
 
 #include "interpf.h"
 
+
 #define CEULER .57721566
+
 
 int IL_grid_calc_2d (
     struct interp_params *params,
@@ -81,14 +83,14 @@ int IL_grid_calc_2d (
   double r2, gd1, gd2;		/* for interpder() */
   int n1, k, l, m;
   int ngstc, nszc, ngstr, nszr;
-  double yy, zz;
+  double zz;
   int bmask = 1;
   static int first_time_z = 1;
   int offset, offset2;
   double fstar2 = params->fi * params->fi / 4.;
   double tfsta2, tfstad;
   double ns_res, ew_res;
-  double rsin, rcos, teta, scale; /*anisotropy parameters - added by JH 2002*/
+  double rsin=0, rcos=0, teta, scale=0; /*anisotropy parameters - added by JH 2002*/
   double xxr, yyr;
 
   if(params->theta) {
