@@ -81,7 +81,7 @@ dig_prune (struct line_pnts *points, double thresh)
   int o_num;
   int n_num;			/* points left */
   int at_num;
-  int ij,			/* position of farest point */
+  int ij=0,			/* position of farest point */
     ja, jd, i, j, k, n, inu, it;	/* indicateur de parcours du segment */
 
   double sqdist;		/* square of distance */
