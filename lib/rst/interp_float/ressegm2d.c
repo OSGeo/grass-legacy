@@ -62,8 +62,8 @@ int IL_resample_interp_segments_2d (
   int n_rows, n_cols, inp_r, inp_c;
   double x_or, y_or, xm, ym;
   static int first = 1, new_first = 1;
-  double **matrix, **new_matrix, *b = NULL;
-  int *indx, *new_indx;
+  double **matrix=NULL, **new_matrix=NULL, *b = NULL;
+  int *indx=NULL, *new_indx=NULL;
   static struct fcell_triple *in_points = NULL;	/* input points */
   int inp_check_rows, inp_check_cols,	/* total input rows/cols */
    out_check_rows, out_check_cols;	/* total output rows/cols */

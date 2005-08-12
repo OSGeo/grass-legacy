@@ -59,7 +59,7 @@ int IL_vector_input_data_2d (
   double xprev, yprev, zprev, x1, y1, z1, d1, xt, yt, z, sm;
   struct line_pnts *Points;
   struct line_cats *Cats;
-  int times, j1, k1, ltype, cat, zctype, sctype;
+  int times, j1, k1, ltype, cat, zctype=0, sctype=0;
   struct field_info *Fi;
   dbDriver  *driver;
   dbHandle  handle;

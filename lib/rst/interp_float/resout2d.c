@@ -51,7 +51,7 @@ IL_resample_output_2d (
  */
 {
   FCELL *cell1;			/* cell buffer */
-  int cf1, cf2, cf3, cf4, cf5, cf6;	/* cell file descriptors */
+  int cf1=0, cf2=0, cf3=0, cf4=0, cf5=0, cf6=0;	/* cell file descriptors */
   int nrows, ncols;		/* current region rows and columns */
   int i;			/* loop counter */
   char *mapset;
@@ -89,6 +89,7 @@ IL_resample_output_2d (
       return -1;
     }
   }
+
   if (params->slope != NULL)
   {
     cf2 = G_open_fp_cell_new (params->slope);
@@ -98,6 +99,7 @@ IL_resample_output_2d (
       return -1;
     }
   }
+
   if (params->aspect != NULL)
   {
     cf3 = G_open_fp_cell_new (params->aspect);
@@ -107,6 +109,7 @@ IL_resample_output_2d (
       return -1;
     }
   }
+
   if (params->pcurv != NULL)
   {
     cf4 = G_open_fp_cell_new (params->pcurv);
@@ -116,6 +119,7 @@ IL_resample_output_2d (
       return -1;
     }
   }
+
   if (params->tcurv != NULL)
   {
     cf5 = G_open_fp_cell_new (params->tcurv);
@@ -125,6 +129,7 @@ IL_resample_output_2d (
       return -1;
     }
   }
+
   if (params->mcurv != NULL)
   {
     cf6 = G_open_fp_cell_new (params->mcurv);
@@ -134,6 +139,7 @@ IL_resample_output_2d (
       return -1;
     }
   }
+
   nrows = outhd->rows;
   if (nrows != params->nsizr)
   {
@@ -141,6 +147,7 @@ IL_resample_output_2d (
 	     nrows, params->nsizr);
     return -1;
   }
+
   ncols = outhd->cols;
   if (ncols != params->nsizc)
   {
@@ -148,6 +155,7 @@ IL_resample_output_2d (
 	     ncols, params->nsizc);
     return -1;
   }
+
   if (params->elev != NULL)
   {
     fseek (params->Tmp_fd_z, 0L, 0);	/* seek to the beginning */
@@ -168,6 +176,7 @@ IL_resample_output_2d (
       }
     }
   }
+
   if (params->slope != NULL)
   {
     fseek (params->Tmp_fd_dx, 0L, 0);	/* seek to the beginning */
@@ -193,6 +202,7 @@ IL_resample_output_2d (
       }
     }
   }
+
   if (params->aspect != NULL)
   {
     fseek (params->Tmp_fd_dy, 0L, 0);	/* seek to the beginning */
@@ -213,6 +223,7 @@ IL_resample_output_2d (
       }
     }
   }
+
   if (params->pcurv != NULL)
   {
     fseek (params->Tmp_fd_xx, 0L, 0);	/* seek to the beginning */
@@ -233,6 +244,7 @@ IL_resample_output_2d (
       }
     }
   }
+
   if (params->tcurv != NULL)
   {
     fseek (params->Tmp_fd_yy, 0L, 0);	/* seek to the beginning */
@@ -253,6 +265,7 @@ IL_resample_output_2d (
       }
     }
   }
+
   if (params->mcurv != NULL)
   {
     fseek (params->Tmp_fd_xy, 0L, 0);	/* seek to the beginning */
@@ -287,11 +300,8 @@ IL_resample_output_2d (
   if (cf6)
     G_close_cell (cf6);
 
-
   /* write colormaps and history for output cell files */
-
   /* colortable for elevations */
-
   maps = G_find_file ("cell", input, "");
 
   if (params->elev != NULL)
@@ -308,7 +318,6 @@ IL_resample_output_2d (
 
     if (G_read_colors (input, maps, &colors) >= 0)
     {
-
       if (colors.modular.rules)
       {
 	rule = colors.modular.rules;
@@ -324,6 +333,7 @@ IL_resample_output_2d (
 					     rule->low.grn, rule->low.blu, &value2, rule->high.red, rule->high.grn, rule->high.blu, &colors2);
 	}
       }
+
       if (colors.fixed.rules)
       {
 	rule = colors.fixed.rules;
@@ -339,6 +349,7 @@ IL_resample_output_2d (
 				     rule->low.blu, &value2, rule->high.red, rule->high.grn, rule->high.blu, &colors2);
 	}
       }
+
       maps = NULL;
       maps = G_find_file ("cell", params->elev, "");
       if (maps == NULL)
@@ -346,6 +357,7 @@ IL_resample_output_2d (
 	fprintf (stderr, "file [%s] not found\n", params->elev);
 	return -1;
       }
+
       if (G_write_colors (params->elev, maps, &colors2) < 0)
       {
 	fprintf (stderr, "Cannot write color table\n");
@@ -354,7 +366,6 @@ IL_resample_output_2d (
       G_quantize_fp_map_range (params->elev, mapset,
 			       zminac - 0.5, zmaxac + 0.5,
 			   (CELL) (zminac - 0.5), (CELL) (zmaxac + 0.5));
-
     }
     else
       fprintf (stderr, "No color table for input file -- will not create color table\n");
@@ -363,7 +374,6 @@ IL_resample_output_2d (
   /* colortable for slopes */
   if (cond1 & (!params->deriv))
   {
-
     G_init_colors (&colors);
     G_add_color_rule (0, 255, 255, 255, 2, 255, 255, 0, &colors);
     G_add_color_rule (2, 255, 255, 0, 5, 0, 255, 0, &colors);
@@ -372,7 +382,6 @@ IL_resample_output_2d (
     G_add_color_rule (15, 0, 0, 255, 30, 255, 0, 255, &colors);
     G_add_color_rule (30, 255, 0, 255, 50, 255, 0, 0, &colors);
     G_add_color_rule (50, 255, 0, 0, 90, 0, 0, 0, &colors);
-
 
     if (params->slope != NULL)
     {
@@ -390,22 +399,21 @@ IL_resample_output_2d (
       G_short_history (params->slope, type, &hist1);
       if (params->elev != NULL)
 	sprintf (hist1.edhist[0], "The elevation map is %s", params->elev);
+
       sprintf (hist1.datsrc_1, "raster file %s", input);
       hist1.edlinecnt = 1;
 
       G_write_history (params->slope, &hist1);
-
     }
 
-
     /* colortable for aspect */
-
     G_init_colors (&colors);
     G_add_color_rule (0, 255, 255, 255, 0, 255, 255, 255, &colors);
     G_add_color_rule (1, 255, 255, 0, 90, 0, 255, 0, &colors);
     G_add_color_rule (90, 0, 255, 0, 180, 0, 255, 255, &colors);
     G_add_color_rule (180, 0, 255, 255, 270, 255, 0, 0, &colors);
     G_add_color_rule (270, 255, 0, 0, 360, 255, 255, 0, &colors);
+
     if (params->aspect != NULL)
     {
       maps = NULL;
@@ -422,19 +430,17 @@ IL_resample_output_2d (
       G_short_history (params->aspect, type, &hist2);
       if (params->elev != NULL)
 	sprintf (hist2.edhist[0], "The elevation map is %s", params->elev);
+
       sprintf (hist2.datsrc_1, "raster file %s", input);
       hist2.edlinecnt = 1;
 
       G_write_history (params->aspect, &hist2);
-
     }
-
 
     /* colortable for curvatures */
     if (cond2)
     {
       G_init_colors (&colors);
-
 
       dat1 = (FCELL) amin1 (c1min, c2min);
       dat2 = (FCELL) -0.01;
@@ -489,11 +495,11 @@ IL_resample_output_2d (
 	G_short_history (params->pcurv, type, &hist3);
 	if (params->elev != NULL)
 	  sprintf (hist3.edhist[0], "The elevation map is %s", params->elev);
+
 	sprintf (hist3.datsrc_1, "raster file %s", input);
 	hist3.edlinecnt = 1;
 
 	G_write_history (params->pcurv, &hist3);
-
       }
 
       if (params->tcurv != NULL)
@@ -513,11 +519,11 @@ IL_resample_output_2d (
 	G_short_history (params->tcurv, type, &hist4);
 	if (params->elev != NULL)
 	  sprintf (hist4.edhist[0], "The elevation map is %s", params->elev);
+
 	sprintf (hist4.datsrc_1, "raster file %s", input);
 	hist4.edlinecnt = 1;
 
 	G_write_history (params->tcurv, &hist4);
-
       }
 
       if (params->mcurv != NULL)
@@ -538,13 +544,12 @@ IL_resample_output_2d (
 	G_short_history (params->mcurv, type, &hist5);
 	if (params->elev != NULL)
 	  sprintf (hist5.edhist[0], "The elevation map is %s", params->elev);
+
 	sprintf (hist5.datsrc_1, "raster file %s", input);
 	hist5.edlinecnt = 1;
 
 	G_write_history (params->mcurv, &hist5);
-
       }
-
     }
   }
 
@@ -583,5 +588,6 @@ IL_resample_output_2d (
     fprintf (stderr, "Cannot set region to back to initial region!\n");
     return -1;
   }
+
   return 1;
 }

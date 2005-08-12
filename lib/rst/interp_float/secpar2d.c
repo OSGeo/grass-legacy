@@ -42,12 +42,12 @@ int IL_secpar_loop_2d (
  */
 {
   double dnorm1, ro,		/* rad to deg conv */
-   dx2, dy2, grad2,		/* gradient squared */
-   slp, grad,			/* gradient */
-   oor,				/* aspect  (orientation) */
-   curn,			/* profile curvature */
-   curh,			/* tangential curvature */
-   curm,			/* mean curvature */
+   dx2=0, dy2=0, grad2=0,	/* gradient squared */
+   slp=0, grad,			/* gradient */
+   oor=0,			/* aspect  (orientation) */
+   curn=0,			/* profile curvature */
+   curh=0,			/* tangential curvature */
+   curm=0,			/* mean curvature */
    temp,			/* temp  variable */
    dxy2;			/* temp variable   square of part diriv. */
 
