@@ -59,9 +59,12 @@
 #include <math.h>
 #include "gis.h"
 #include "glocale.h"
+#include "local_proto.h"
+
 
 #define DATA(map, r, c)         (map)[(r) * ncols + (c)]
 #define DEBUG
+
 
 /*measurements of the 13 fuel models, input of Rothermel equation (1972)*/	
 float WO[4][14] = {    0, 0.034, 0.092, 0.138, 0.230, 0.046, 0.069, 0.052, 			   0.069, 0.134, 0.138, 0.069, 0.184, 0.322,            
@@ -94,17 +97,9 @@ main (int argc, char *argv[])
 	/***input of Rothermel equation (1972)***/
 	float h=8000.0,	/*heat of combustion, BTU/lb.*/
 	rhop = 32,	/*ovendry fuel density, lb./ft.^3*/
-	ST = 0.0555,	/*fuel total mineral content, lb. minerals/lb. ovendry*/
-	Se = 0.01;	/*fuel effective mineral content, 
-			  lb. silica-free minerals/ lb.	ovendry*/
-	
-	float wo,
-	delta,
-	sigma[14],
-	Mf,		/*feul moisture content, lb. moisture/lb. ovendry*/
-	U,		/*midflame wind velosity, ft./min.*/
-	phi,		/*slope, degree*/
-	Mx;
+	ST = 0.0555;	/*fuel total mineral content, lb. minerals/lb. ovendry*/
+
+	float sigma[14];
 
 	/***derived parameters of Rothermel equation (1972)***/
 	float R,	/*rate of spread, ft./min.
@@ -119,11 +114,7 @@ main (int argc, char *argv[])
 	betaop,	    	/*optimum packing ratio 
 			    betaop = 3.348/(sigma^0.8189)  */
 	A,	    	/*A = 1/(4.77*sigma^0.1-7.27)  */
-	etaM,	    	/*moisture damping coefficient
-			    etaM = 1-2.59*Mf/Mx+5.11(Mf/Mx)^2-3.52*(Mf/Mx)^3  */
 	etas = 0.174/pow(0.01,0.19), /*mineral damping coefficient*/
-	wn,	    	/*net fuel loading, lb./ft.^2,wn = wo*(1-ST) = 0.9445*wo*/
-	
 	xi,	    	/*propagating flux ratio,
 			    xi = exp((0.792+0.681*sigma^0.5)(beta+0.1))/
 				 (192+0.2595*sigma)  */
@@ -156,33 +147,25 @@ main (int argc, char *argv[])
 	etaM_live,			/*live fuel misture damping coefficent*/
 	xmext,				/*live fuel moisture of extinction*/
 	phi_ws,				/*wind and slope conbined coefficient*/
-	wtfact, wmfd, fdmois,
+	wmfd, fdmois,
 	fined, finel;
 
 	/*other local variables*/	
-	int col, row, srows, scols,
+	int col, row,
 	verbose,
 	spotting,
 	model, class,
-	fuel_fd, 
-	mois_1h_fd, mois_10h_fd, mois_100h_fd, mois_live_fd, 
-	vel_fd, dir_fd, 
-	elev_fd, slope_fd, aspect_fd, 
-	base_fd, max_fd, maxdir_fd, 
-	spotdist_fd;
+	fuel_fd=0,
+	mois_1h_fd=0, mois_10h_fd=0, mois_100h_fd=0, mois_live_fd=0,
+	vel_fd=0, dir_fd=0,
+	elev_fd=0, slope_fd=0, aspect_fd=0, 
+	base_fd=0, max_fd=0, maxdir_fd=0,
+	spotdist_fd=0;
 
-	char *value,
-	*out, 		/* prefix of output maps to show 
-			1) the base ROS values, 
-                        2) max ROS values, and 
-			3) directions of the 2), and probably
-			4) maxmium spotting distance. */
-	name_base[60],
+	char name_base[60],
 	name_max[60],
 	name_maxdir[60],
-	name_spotdist[60],
-	buf[400],
-	command[2048];
+	name_spotdist[60];
 
 	CELL *fuel,	/*cell buffer for fuel model map layer*/ 
 	*mois_1h, 	/*cell buffer for 1-hour fuel moisture map layer*/
@@ -191,13 +174,13 @@ main (int argc, char *argv[])
 	*mois_live, 	/*cell buffer for live fuel moisture map layer*/
 	*vel, 		/*cell buffer for wind velocity map layer*/
 	*dir, 		/*cell buffer for wind direction map layer*/
-	*elev, 		/*cell buffer for elevation map layer (for spotting) */
+	*elev=NULL, 	/*cell buffer for elevation map layer (for spotting) */
 	*slope, 	/*cell buffer for slope map layer*/
 	*aspect,	/*cell buffer for aspect map layer*/
 	*base,		/*cell buffer for base ROS map layer*/
 	*max,		/*cell buffer for max ROS map layer*/
 	*maxdir,	/*cell buffer for max ROS direction map layer*/
-	*spotdist;	/*cell buffer for max spotting distance map layer*/
+	*spotdist=NULL;	/*cell buffer for max spotting distance map layer*/
 
 	extern struct Cell_head window;
 
@@ -302,163 +285,116 @@ main (int argc, char *argv[])
 
 	/*   Parse command line */
 	if (G_parser(argc, argv))
-		exit(-1);
-
+		exit(EXIT_FAILURE);
 
 	verbose = flag1->answer;
 	spotting = flag2->answer;
 
 	/*  Check if input layers exists in data base  */   
-	if (G_find_cell2 (parm.model->answer, "")  == NULL) {
-		sprintf(buf, "%s - not found", parm.model->answer);
-		G_fatal_error (buf);
-		exit(1);
-	} 
+	if (G_find_cell2 (parm.model->answer, "")  == NULL)
+		G_fatal_error("%s - not found", parm.model->answer);
 	
 	if (!(parm.mois_1h->answer || parm.mois_10h->answer || parm.mois_100h->answer)) {
-		fprintf(stderr, "ERROR: no dead fuel moisture is given. At least one of the 1-h, 10-h, 100-h moisture layers is required\n");
+		G_warning("no dead fuel moisture is given. At least one of the 1-h, 10-h, 100-h moisture layers is required.");
 		G_usage();
-		exit(1);
+		exit(EXIT_FAILURE);
         }
+
 	if (parm.mois_1h->answer) {
-        	if (G_find_cell2 (parm.mois_1h->answer, "")  == NULL) {
-			sprintf(buf, "%s - not found", parm.mois_1h->answer);
-			G_fatal_error (buf);
-			exit(1);
-        	}
+        	if (G_find_cell2 (parm.mois_1h->answer, "")  == NULL)
+			G_fatal_error("%s - not found", parm.mois_1h->answer);
 	}
 	if (parm.mois_10h->answer) {
-        	if (G_find_cell2 (parm.mois_10h->answer, "")  == NULL) {
-			sprintf(buf, "%s - not found", parm.mois_10h->answer);
-			G_fatal_error (buf);
-			exit(1);
-       	 	}
+        	if (G_find_cell2 (parm.mois_10h->answer, "")  == NULL)
+			G_fatal_error("%s - not found", parm.mois_10h->answer);
 	}
 	if (parm.mois_100h->answer) {
-        	if (G_find_cell2 (parm.mois_100h->answer, "")  == NULL) {
-			sprintf(buf, "%s - not found", parm.mois_100h->answer);
-			G_fatal_error (buf);
-			exit(1);
-        	}
+        	if (G_find_cell2 (parm.mois_100h->answer, "")  == NULL)
+			G_fatal_error("%s - not found", parm.mois_100h->answer);
 	}
 
-        if (G_find_cell2 (parm.mois_live->answer, "")  == NULL) {
-		sprintf(buf, "%s - not found", parm.mois_live->answer);
-		G_fatal_error (buf);
-		exit(1);
-        }
-	
+        if (G_find_cell2 (parm.mois_live->answer, "")  == NULL)
+		G_fatal_error("%s - not found", parm.mois_live->answer);
 
 	if (parm.vel->answer && !(parm.dir->answer)) {
-		fprintf(stderr, "ERROR: a wind direction layer should be given if the wind velocity layer--%s-- has been given\n", parm.vel->answer);
+		G_warning("a wind direction layer should be given if the wind velocity layer--%s-- has been given\n", parm.vel->answer);
 		G_usage();
-		exit(1);
+		exit(EXIT_FAILURE);
         }
 	if (!(parm.vel->answer) && parm.dir->answer) {
-		fprintf(stderr, "ERROR: a wind velocity layer should be given if the wind direction layer--%s-- has been given\n", parm.dir->answer);
+		G_warning("a wind velocity layer should be given if the wind direction layer--%s-- has been given\n", parm.dir->answer);
 		G_usage();
-		exit(1);
+		exit(EXIT_FAILURE);
         }
         if (parm.vel->answer) {
-		if (G_find_cell2 (parm.vel->answer, "")  == NULL) {
-			sprintf(buf, "%s - not found", parm.vel->answer);
-			G_fatal_error (buf);
-			exit(1);
-        	}
+		if (G_find_cell2 (parm.vel->answer, "")  == NULL)
+			G_fatal_error("%s - not found", parm.vel->answer);
 	}
 	if (parm.dir->answer) {	
-        	if (G_find_cell2 (parm.dir->answer, "")  == NULL) {
-			sprintf(buf, "%s - not found", parm.dir->answer);
-			G_fatal_error (buf);
-			exit(1);
-        	}
+        	if (G_find_cell2 (parm.dir->answer, "")  == NULL)
+			G_fatal_error("%s - not found", parm.dir->answer);
 	}
 
 	if (parm.slope->answer && !(parm.aspect->answer)) {
-		fprintf(stderr, "ERROR: an aspect layer should be given if the slope layer--%s-- has been given\n", parm.slope->answer);
+		G_warning("an aspect layer should be given if the slope layer--%s-- has been given\n", parm.slope->answer);
 		G_usage();
-		exit(1);
+		exit(EXIT_FAILURE);
         }
 	if (!(parm.slope->answer) && parm.aspect->answer) {
-		fprintf(stderr, "ERROR: a slope layer should be given if the aspect layer--%s-- has been given\n", parm.aspect->answer);
+		G_warning("a slope layer should be given if the aspect layer--%s-- has been given\n", parm.aspect->answer);
 		G_usage();
-		exit(1);
+		exit(EXIT_FAILURE);
         }
         if (parm.slope->answer) {
-		if (G_find_cell2 (parm.slope->answer, "")  == NULL) {
-			sprintf(buf, "%s - not found", parm.slope->answer);
-			G_fatal_error (buf);
-			exit(1);
-      	  	}	 
+		if (G_find_cell2 (parm.slope->answer, "") == NULL)
+			G_fatal_error("%s - not found", parm.slope->answer);
 	}
        if (parm.aspect->answer) {
-			if (G_find_cell2 (parm.aspect->answer, "")  == NULL) {
-			sprintf(buf, "%s - not found", parm.aspect->answer);
-			G_fatal_error (buf);
-			exit(1);
-        	}	
+		if (G_find_cell2 (parm.aspect->answer, "") == NULL)
+			G_fatal_error("%s - not found", parm.aspect->answer);
 	}
 
 	if (spotting) {
 		if (!(parm.elev->answer)) {
-			fprintf(stderr, "ERROR: an elevation layer should be given if considering spotting\n");
+			G_warning("an elevation layer should be given if considering spotting\n");
 			G_usage();
-			exit(1);
+			exit(EXIT_FAILURE);
         	} else {
-			if (G_find_cell2 (parm.elev->answer, "")  == NULL) {
-				sprintf(buf, "%s - not found", parm.elev->answer);
-				G_fatal_error (buf);
-				exit(1);
-			}
+			if (G_find_cell2 (parm.elev->answer, "") == NULL)
+				G_fatal_error("%s - not found", parm.elev->answer);
         	}	
 	}
 
-
 	/*  Check if specified output layer name IS LEGAL  */
-	if (G_legal_filename (parm.output->answer) < 0) {
-		sprintf(buf, "%s - illegal name", parm.output->answer);
-		G_fatal_error (buf);
-		exit(1);
-	}
+	if (G_legal_filename (parm.output->answer) < 0)
+		G_fatal_error("%s - illegal name", parm.output->answer);
+
 	/*assign names of the three output ROS layers*/
 	sprintf(name_base, "%s.base", parm.output->answer); 
 	sprintf(name_max, "%s.max", parm.output->answer); 
 	sprintf(name_maxdir, "%s.maxdir", parm.output->answer); 
+
         /*check if the output layer names EXIST*/
-	if (G_find_cell2 (name_base, G_mapset())) {
-                sprintf(buf, "%s - exits in Mapset <%s>, select another name",name_base, G_mapset());
-                G_fatal_error (buf);
-                exit(1);
-        }
-	if (G_find_cell2 (name_max, G_mapset())) {
-                sprintf(buf, "%s - exits in Mapset <%s>, select another name",name_max, G_mapset());
-                G_fatal_error (buf);
-                exit(1);
-        }
-	if (G_find_cell2 (name_maxdir, G_mapset())) {
-                sprintf(buf, "%s - exits in Mapset <%s>, select another name",name_maxdir, G_mapset());
-                G_fatal_error (buf);
-                exit(1);
-        }
+	if (G_find_cell2 (name_base, G_mapset()))
+                G_fatal_error("%s - exits in Mapset <%s>, select another name",name_base, G_mapset());
+
+	if (G_find_cell2 (name_max, G_mapset()))
+                G_fatal_error("%s - exits in Mapset <%s>, select another name",name_max, G_mapset());
+
+	if (G_find_cell2 (name_maxdir, G_mapset()))
+                G_fatal_error("%s - exits in Mapset <%s>, select another name",name_maxdir, G_mapset());
+
 	/*assign a name to output SPOTTING distance layer*/
 	if (spotting) {
 		sprintf(name_spotdist, "%s.spotdist", parm.output->answer); 
-		if (G_find_cell2 (name_spotdist, G_mapset())) {
-                	sprintf(buf, "%s - exits in Mapset <%s>, select another name",name_spotdist, G_mapset());
-                	G_fatal_error (buf);
-                	exit(1);
-        	}
+		if (G_find_cell2 (name_spotdist, G_mapset()))
+                	G_fatal_error("%s - exits in Mapset <%s>, select another name",name_spotdist, G_mapset());
 	}
 
-
 	/*  Get database window parameters  */
-	if(G_get_window (&window) < 0) {
-		sprintf (buf,"can't read current window parameters");
-		G_fatal_error (buf);
-		exit(1);
-	} 
+	if(G_get_window (&window) < 0)
+		G_fatal_error("can't read current window parameters");
 
-	
 	/*  find number of rows and columns in window    */
 	nrows = G_window_rows();
 	ncols = G_window_cols();
@@ -484,92 +420,61 @@ main (int argc, char *argv[])
 	/*  Open input cell layers for reading  */
 
 	fuel_fd = G_open_cell_old(parm.model->answer, G_find_cell2 (parm.model->answer,""));
-	if (fuel_fd < 0) {
-		sprintf (buf, "%s - can't open raster file", parm.model->answer);
-		G_fatal_error (buf);
-		exit(1);
-	}
+	if (fuel_fd < 0)
+		G_fatal_error("%s - can't open raster file", parm.model->answer);
 
 	if (parm.mois_1h->answer) {
         	mois_1h_fd = G_open_cell_old(parm.mois_1h->answer, G_find_cell2 (parm.mois_1h->answer,""));
-		if (mois_1h_fd < 0) {
-			sprintf (buf, "%s - can't open raster file", parm.mois_1h->answer);
-			G_fatal_error (buf);
-			exit(1);
-		}
+		if (mois_1h_fd < 0)
+			G_fatal_error("%s - can't open raster file", parm.mois_1h->answer);
 	}
 	if (parm.mois_10h->answer) {
         	mois_10h_fd = G_open_cell_old(parm.mois_10h->answer, G_find_cell2 (parm.mois_10h->answer,""));
-		if (mois_10h_fd < 0) {
-			sprintf (buf, "%s - can't open raster file", parm.mois_10h->answer);
-			G_fatal_error (buf);
-			exit(1);
-		}
+		if (mois_10h_fd < 0)
+			G_fatal_error("%s - can't open raster file", parm.mois_10h->answer);
 	}
 	if (parm.mois_100h->answer) {
         	mois_100h_fd = G_open_cell_old(parm.mois_100h->answer, G_find_cell2 (parm.mois_100h->answer,""));
-		if (mois_100h_fd < 0) {
-			sprintf (buf, "%s - can't open raster file", parm.mois_100h->answer);
-			G_fatal_error (buf);
-			exit(1);
-		}
+		if (mois_100h_fd < 0)
+			G_fatal_error("%s - can't open raster file", parm.mois_100h->answer);
 	}
 
         mois_live_fd = G_open_cell_old(parm.mois_live->answer, G_find_cell2 (parm.mois_live->answer,""));
-	if (mois_live_fd < 0) {
-		sprintf (buf, "%s - can't open raster file", parm.mois_live->answer);
-		G_fatal_error (buf);
-		exit(1);
-	}
+	if (mois_live_fd < 0)
+		G_fatal_error("%s - can't open raster file", parm.mois_live->answer);
 
         if (parm.vel->answer) {
 		vel_fd = G_open_cell_old(parm.vel->answer, G_find_cell2 (parm.vel->answer,""));
-		if (vel_fd < 0) {
-			sprintf (buf, "%s - can't open raster file", parm.vel->answer);
-			G_fatal_error (buf);
-			exit(1);
-		}
+		if (vel_fd < 0)
+			G_fatal_error("%s - can't open raster file", parm.vel->answer);
 	}
         if (parm.dir->answer) {
 		dir_fd = G_open_cell_old(parm.dir->answer, G_find_cell2 (parm.dir->answer,""));
-		if (dir_fd < 0) {
-			sprintf (buf, "%s - can't open raster file", parm.dir->answer);
-			G_fatal_error (buf);
-			exit(1);
-		}
+		if (dir_fd < 0)
+			G_fatal_error("%s - can't open raster file", parm.dir->answer);
 	}
 
         if (parm.slope->answer) {
 		slope_fd = G_open_cell_old(parm.slope->answer, G_find_cell2 (parm.slope->answer,""));
-		if (slope_fd < 0) {
-			sprintf (buf, "%s - can't open raster file", parm.slope->answer);
-			G_fatal_error (buf);
-			exit(1);
-		}
+		if (slope_fd < 0)
+			G_fatal_error("%s - can't open raster file", parm.slope->answer);
  	}
        if (parm.aspect->answer) {
 		 aspect_fd = G_open_cell_old(parm.aspect->answer, G_find_cell2 (parm.aspect->answer,""));
-		if (aspect_fd < 0) {
-			sprintf (buf, "%s - can't open raster file", parm.aspect->answer);
-			G_fatal_error (buf);
-			exit(1);
-		}
+		if (aspect_fd < 0)
+			G_fatal_error("%s - can't open raster file", parm.aspect->answer);
  	}
 
        if (spotting) {
 		 elev_fd = G_open_cell_old(parm.elev->answer, G_find_cell2 (parm.elev->answer,""));
-		if (elev_fd < 0) {
-			sprintf (buf, "%s - can't open raster file", parm.elev->answer);
-			G_fatal_error (buf);
-			exit(1);
-		}
+		if (elev_fd < 0)
+			G_fatal_error("%s - can't open raster file", parm.elev->answer);
  	}
 
 	base_fd = G_open_cell_new(name_base);
 	max_fd = G_open_cell_new(name_max);
 	maxdir_fd = G_open_cell_new(name_maxdir);
 	if (spotting) spotdist_fd = G_open_cell_new(name_spotdist);
-
 
 	/*compute weights, combined wo, and combined sigma*/
 	/*wo[model] -- simple sum of WO[class][model] by all fuel subCLASS*/
@@ -632,12 +537,11 @@ main (int argc, char *argv[])
 		Ffactor_live[model] = 1 - Ffactor_dead[model];
 	}
 
-
 	/*if considering spotting, read elevation map into an array*/
 	if (spotting) 
 		for (row=0; row<nrows; row++) {
 			if (G_get_map_row(elev_fd, elev, row)<0)
-                        	exit(1);
+                        	G_fatal_error("cannot get map row!");
 			for (col=0; col<ncols; col++)
                         	DATA(map_elev, row, col) = elev[col];
 		}
@@ -645,34 +549,35 @@ main (int argc, char *argv[])
 	/*major computation: compute ROSs one cell a time*/
 	if (verbose)
 	    fprintf (stderr, "Percent Completed ... ");
+
 	for ( row=0 ; row < nrows ; row++ ) {
 		if (verbose)
 			G_percent (row, nrows, 2);
                 if (G_get_map_row(fuel_fd, fuel, row)<0)
-                        exit(1);
+                        G_fatal_error("cannot get map row: %d!", row);
                 if (parm.mois_1h->answer) 
                         if (G_get_map_row(mois_1h_fd, mois_1h, row)<0)
-                                exit(1);
+	                        G_fatal_error("cannot get map row: %d!", row);
                	if (parm.mois_10h->answer) 
                         if (G_get_map_row(mois_10h_fd, mois_10h, row)<0)
-                                exit(1);
+	                        G_fatal_error("cannot get map row: %d!", row);
                 if (parm.mois_100h->answer) 
                         if (G_get_map_row(mois_100h_fd, mois_100h, row)<0)
-                                exit(1);
+	                        G_fatal_error("cannot get map row: %d!", row);
                 if ( G_get_map_row(mois_live_fd, mois_live, row)<0)
-                        exit(1);
+                        G_fatal_error("cannot get map row: %d!", row);
                 if (parm.vel->answer) 
                         if (G_get_map_row(vel_fd, vel, row)<0)
-                                exit(1);
+	                        G_fatal_error("cannot get map row: %d!", row);
                 if (parm.dir->answer) 
                         if (G_get_map_row(dir_fd, dir, row)<0)
-                                exit(1);
+	                        G_fatal_error("cannot get map row: %d!", row);
                 if (parm.slope->answer) 
                         if (G_get_map_row(slope_fd, slope, row)<0)
-                                exit(1);
+	                        G_fatal_error("cannot get map row: %d!", row);
                 if (parm.aspect->answer) 
                         if (G_get_map_row(aspect_fd, aspect, row)<0)
-                                exit(1);
+	                        G_fatal_error("cannot get map row: %d!", row);
 
 		/*initialize cell buffers for output map layers*/
 		for (col = 0; col < ncols; col++) {
@@ -865,6 +770,6 @@ printf("\nWeight in Dead Fuel Subclasses, Dead Weight/Live Weight:\n");for (mode
 	} 
 */
 
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
 			
