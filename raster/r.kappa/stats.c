@@ -4,28 +4,31 @@
 #include "gis.h"
 #include "kappa.h"
 #include "glocale.h"
+#include "local_proto.h"
 
-static void
-die()
+
+static void die(void)
 {
   unlink (stats_file);
   G_fatal_error (_("Problem reading r.stats output"));
 }
 
-int
-stats()
+
+int stats(void)
 {
   char buf[1024];
   char mname[GNAME_MAX], rname[GMAPSET_MAX];
   char *mmapset, *rmapset;
-  int i,nl,ns;
+  int i,nl;
+  size_t ns;
   FILE *fd;
-  char **tokens, **G_tokenize();
+  char **tokens;
 
   strcpy (mname, maps[0]);
   mmapset = G_find_cell2 (mname, "");
   if (mmapset == NULL)
     G_fatal_error ( _("%s: <%s> raster map not found"), G_program_name(), maps[0]);
+
   strcpy (rname, maps[1]);
   rmapset = G_find_cell2 (rname, "");
   if (rmapset == NULL)

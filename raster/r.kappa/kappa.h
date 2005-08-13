@@ -34,4 +34,4 @@ GLOBAL GSTATS
     long *cats;
     long count;
 } *Gstats INIT(NULL);
-GLOBAL int nstats INIT(0);
+GLOBAL size_t nstats INIT(0);

@@ -1,14 +1,13 @@
+#include <stdlib.h>
 #include "kappa.h"
+#include "local_proto.h"
 
-static int
-longcomp(const void *aa, const void *bb)
-{
-    const long *a = aa;
-    const long *b = bb;
-    return (*a - *b);
-}
 
-prn_error_mat(out_cols, hdr)
+static int longcomp(const void *aa, const void *bb);
+static int collapse(long *l, int n);
+
+
+void prn_error_mat(int out_cols, int hdr)
 {
   int i,j,k;
   int ncat1,ncat2;
@@ -17,8 +16,8 @@ prn_error_mat(out_cols, hdr)
 
   int num_panels, at_panel;
   int cndx, rndx;
-  int first_col, last_col;
-  int addflag;
+  int first_col=0, last_col=0;
+  int addflag=0;
   int thisone;
   long t_row, t_col;
   long t_rowcount, grand_count;
@@ -174,9 +173,9 @@ prn_error_mat(out_cols, hdr)
   }
 }
 
+
 /* remove repeated values */
-collapse (l,n)
-  long *l;
+static int collapse(long *l, int n)
 {
   long *c;
   int m;
@@ -191,5 +190,15 @@ collapse (l,n)
     }
     l++;
   }
+
   return m;
+}
+
+
+static int longcomp(const void *aa, const void *bb)
+{
+    const long *a = aa;
+    const long *b = bb;
+
+    return (*a - *b);
 }

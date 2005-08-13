@@ -2,12 +2,13 @@
 #include "kappa.h"
 #include "local_proto.h"
 
-int
-calc_kappa()
+
+void calc_kappa(void)
 {
   int i,j;
   int s,l;
-  int ns, nl;
+  int nl;
+  size_t ns;
   double *pi, *pj, *pii, p0, pC;
   double kp, vkp, *kpp;
   double obs, inter1, inter2;
@@ -104,15 +105,4 @@ calc_kappa()
   free(kpp);
 /* print labels for categories of maps */
   prt_label();
-}
-
-static max(a,b)
-{
-  return a>b?a:b;
-}
-
-static long longcompare(i,j)
-int *i, *j;
-{
-     return(*i - *j);
 }

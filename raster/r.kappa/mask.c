@@ -1,16 +1,19 @@
+#include <string.h>
 #include "kappa.h"
+#include "local_proto.h"
 
-static reclass_text ();
-static do_text ();
-static char *append ();
 
-char *
-maskinfo()
+/* function prototypes */
+static int reclass_text(char *text, struct Reclass *reclass, int next);
+static void do_text(char *text, long first, long last);
+static char *append(char *results, char *text);
+
+
+char *maskinfo(void)
 {
   struct Reclass reclass;
   char *results, text[100];
   int first, next;
-  char *append();
 
   results = NULL;
   if (G_find_cell ("MASK", G_mapset()) == NULL)
@@ -35,13 +38,12 @@ maskinfo()
     results = append (results, text);
   } while (next >= 0);
   G_free_reclass (&reclass);
+
   return results;
 }
 
-static
-reclass_text (text, reclass, next)
-  char *text;
-  struct Reclass *reclass;
+
+static int reclass_text(char *text, struct Reclass *reclass, int next)
 {
   int i, n, first;
 
@@ -60,13 +62,12 @@ reclass_text (text, reclass, next)
   }
   if (first >= 0)
     do_text (text, (long)(first+reclass->min), (long)(i-1+reclass->min));
+
   return -1;
 }
 
-static
-do_text (text, first, last)
-  char *text;
-  long first, last;
+
+static void do_text(char *text, long first, long last)
 {
   char work[40];
 
@@ -81,14 +82,14 @@ do_text (text, first, last)
   strcat (text, work);
 }
 
-static
-char *
-append (results, text)
-  char *results, *text;
+
+static char *append(char *results, char *text)
 {
   if (results == NULL)
     return G_store (text);
+
   results = G_realloc (results, strlen(results)+strlen(text)+1);
   strcat (results, text);
+
   return results;
 }
