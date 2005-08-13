@@ -203,7 +203,8 @@ Vect__Read_line_nat (
 		    long offset)
 {
   int i, dead = 0;   
-  int n_points, size;
+  int n_points;
+  long size;
   int n_cats, do_cats;
   int type;
   char rhead, nc;

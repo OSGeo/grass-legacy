@@ -41,12 +41,12 @@ Vect_break_lines ( struct Map_info *Map, int type, struct Map_info *Err, FILE *m
     struct line_cats *ACats, *BCats, *Cats;
     int    j, k, l, ret, atype, btype, aline, bline, found;
     int    nlines, naxlines, nbxlines, nx;
-    double *xx, *yx, *zx;
+    double *xx=NULL, *yx=NULL, *zx=NULL;
     BOUND_BOX  ABox, BBox; 
     struct ilist *List; 
     int nbreaks;
-    int touch1_n, touch1_s, touch1_e, touch1_w; /* other vertices except node1 touching box */ 
-    int touch2_n, touch2_s, touch2_e, touch2_w; /* other vertices except node2 touching box */ 
+    int touch1_n=0, touch1_s=0, touch1_e=0, touch1_w=0; /* other vertices except node1 touching box */ 
+    int touch2_n=0, touch2_s=0, touch2_e=0, touch2_w=0; /* other vertices except node2 touching box */ 
     int is3d;
     int node, anode1, anode2, bnode1, bnode2;
     double nodex, nodey;

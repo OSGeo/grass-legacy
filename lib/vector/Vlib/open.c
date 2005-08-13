@@ -38,8 +38,9 @@
 #define MAX_OPEN_LEVEL 2
 
 static int open_old_dummy () { return 0; }
-static int open_new_dummy () { return 0; }
+#ifndef HAVE_OGR
 static int format () { G_fatal_error (_("Requested format is not compiled in this version")); return 0; }
+#endif
 
 static int Open_level = 0;
 
@@ -316,7 +317,7 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
           fatal_error (ferror, errmsg);
 	  return (-1);
       }
-      fseek ( Map->hist_fp, 0, SEEK_END);
+      fseek ( Map->hist_fp, (long)0, SEEK_END);
       Vect_hist_write ( Map, "---------------------------------------------------------------------------------\n");
       
   } else {
@@ -589,7 +590,7 @@ Vect_maptype_info ( struct Map_info *Map )
 {
     char *maptype;
 
-    maptype = G_malloc ( 200 );
+    maptype = G_malloc(sizeof(char) * 200);
     switch (  Map->format ) {
         case GV_FORMAT_NATIVE :
             sprintf (maptype, "native");

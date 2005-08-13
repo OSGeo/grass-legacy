@@ -216,7 +216,7 @@ V2_read_next_line_ogr (struct Map_info *Map, struct line_pnts *line_p, struct li
  * return: 0 - OK
  *         1 - error
  */
-static int read_line ( struct Map_info *Map, OGRGeometryH hGeom, int offset, struct line_pnts *Points )
+static int read_line ( struct Map_info *Map, OGRGeometryH hGeom, long offset, struct line_pnts *Points )
 {
     int     i, nPoints;
     int     eType;
@@ -273,11 +273,12 @@ static int read_line ( struct Map_info *Map, OGRGeometryH hGeom, int offset, str
 int
 V2_read_line_ogr (struct Map_info *Map, struct line_pnts *line_p,  struct line_cats *line_c, int line)
 {
-    int      node;
-    int     offset, FID;
-    OGRGeometryH hGeom;
+    int  node;
+    int  offset;
+    long FID;
     P_LINE *Line;
-    P_NODE  *Node;
+    P_NODE *Node;
+    OGRGeometryH hGeom;
 
     G_debug (4, "V2_read_line_ogr() line = %d", line);
 
@@ -312,20 +313,20 @@ V2_read_line_ogr (struct Map_info *Map, struct line_pnts *line_p,  struct line_c
 	if (line_p != NULL) {
 	    /* Read feature to cache if necessary */
 	    if ( Map->fInfo.ogr.feature_cache_id != FID ) {
-		G_debug (4, "Read feature (FID = %d) to cache.", FID);
+		G_debug(4, "Read feature (FID = %ld) to cache.", FID);
 		if ( Map->fInfo.ogr.feature_cache ) {
 		    OGR_F_Destroy( Map->fInfo.ogr.feature_cache );
 		}
 		Map->fInfo.ogr.feature_cache = OGR_L_GetFeature ( Map->fInfo.ogr.layer, FID );
 		if ( Map->fInfo.ogr.feature_cache == NULL ) {
-		    G_fatal_error ( "Cannot read feature, FID = %d", FID );
+		    G_fatal_error("Cannot read feature, FID = %ld", FID);
 		}
 		Map->fInfo.ogr.feature_cache_id = FID;
 	    }
 		
 	    hGeom =  OGR_F_GetGeometryRef ( Map->fInfo.ogr.feature_cache );
 	    if (hGeom == NULL) {
-		G_fatal_error ( "Cannot get feature geometry, FID = %d", FID );
+		G_fatal_error("Cannot get feature geometry, FID = %ld", FID);
 	    }
 	    
 	    read_line ( Map, hGeom, Line->offset + 1, line_p );
@@ -333,7 +334,7 @@ V2_read_line_ogr (struct Map_info *Map, struct line_pnts *line_p,  struct line_c
 	    
 	/* category */
 	if (line_c != NULL) {
-	    Vect_cat_set (line_c, 1, FID);
+	    Vect_cat_set (line_c, 1, (int)FID);
 	}
 
 	return Line->type;

@@ -32,13 +32,10 @@
 int
 V1_open_old_ogr (struct Map_info *Map, int update)
 {
-    int      i, layer, nLayers, OGR_err;
-    long    *feature;		/* the index is iFeature */
+    int i, layer, nLayers;
     OGRDataSourceH Ogr_ds;
-    OGRLayerH Ogr_layer;
+    OGRLayerH Ogr_layer=NULL;
     OGRFeatureDefnH Ogr_featuredefn;
-    OGRFeatureH hFeature;
-    OGREnvelope OGR_envelope;
 
     if (update) {
 	G_warning ("OGR format cannot be updated.");
@@ -100,7 +97,7 @@ int
 V2_open_old_ogr (struct Map_info *Map )
 {
     char elem[1000];
-    unsigned char buf[5];
+    char buf[5];
     long length; 
     GVFILE fp;
     struct Port_info port;

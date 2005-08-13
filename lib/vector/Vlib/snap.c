@@ -19,6 +19,11 @@
 #include "gis.h"
 #include "Vect.h"
 
+
+/* function prototypes */
+static int sort_new(const void *pa, const void *pb);
+
+
 /* Vertex */
 typedef struct {
     double x, y;
@@ -39,7 +44,6 @@ int add_item(int id, struct ilist *list)
 	    return 1;
 }
 
-static int sort_new( const void *, const void * );
 
 /*!
  \fn void Vect_snap_lines ( struct Map_info *Map, int type, double thresh, 
@@ -326,7 +330,7 @@ Vect_snap_lines ( struct Map_info *Map, int type, double thresh, struct Map_info
 	    /* insert new vertices */
 	    if ( nnew > 0 ) {
 		/* sort by distance along the segment */
-		qsort ( New, nnew, sizeof ( NEW), sort_new);
+		qsort ( New, sizeof(char)*nnew, sizeof ( NEW), sort_new);
 		
 		for ( i = 0; i < nnew; i++ ) {
 		    anchor = New[i].anchor;
@@ -371,7 +375,7 @@ Vect_snap_lines ( struct Map_info *Map, int type, double thresh, struct Map_info
 }
 
 /* for qsort */
-static int sort_new (  const void *pa, const void *pb )
+static int sort_new(const void *pa, const void *pb)
 {
     NEW *p1 = (NEW *) pa;
     NEW *p2 = (NEW *) pb;

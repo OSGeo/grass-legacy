@@ -17,15 +17,20 @@
 *****************************************************************************/
 #include "Vect.h"
 
+
 /*  Rewind vector data file to cause reads to start at beginning */
 /* returns 0 on success, -1 on error */
-
 static int
 rew_dummy ()
 {
       return -1;
 }
+
+
+#ifndef HAVE_OGR
 static int format () { G_fatal_error ("Requested format is not compiled in this version"); return 0; } 
+#endif
+
 
 static int (*Rewind_array[][3]) () =
 {
@@ -36,6 +41,7 @@ static int (*Rewind_array[][3]) () =
    ,{ rew_dummy, format, format }
 #endif
 };
+
 
 /*!
  \fn int Vect_rewind (struct Map_info *Map)
@@ -50,6 +56,6 @@ Vect_rewind (struct Map_info *Map)
         return -1;
 
     G_debug (1, "Vect_Rewind(): name = %s", Map->name);
+
     return (*Rewind_array[Map->format][Map->level]) (Map);
 }
-

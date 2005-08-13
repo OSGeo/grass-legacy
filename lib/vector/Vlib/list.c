@@ -82,7 +82,8 @@ Vect_destroy_list (struct ilist *list)
 int
 Vect_list_append ( struct ilist *list, int val )
 {
-    int i, size;
+    int i;
+    size_t size;
     
     if ( list == NULL ) 
         return 1;

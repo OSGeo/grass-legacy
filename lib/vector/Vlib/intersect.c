@@ -20,6 +20,19 @@
 #include "gis.h"
 #include "Vect.h"
 
+
+/* function prototypes */
+static int cmp_cross(const void *pa, const void *pb);
+static void add_cross(int asegment, double adistance, int bsegment, 
+                double bdistance, double x, double y);
+static double dist2(double x1, double y1, double x2, double y2);
+#if 0
+static int ident(double x1, double y1, double x2, double y2, double thresh);
+#endif
+static int cross_seg(int id, int *arg);
+static int find_cross(int id, int *arg);
+
+
 /* Some parts of code taken from grass50 v.spag/linecros.c
 * 
 * Based on the following:
@@ -394,17 +407,19 @@ static double dist2 (double x1, double y1, double x2, double y2 ) {
     return ( dx * dx + dy * dy );
 }
 
+#if 0
 /* returns 1 if points are identical */
-/*
-int ident (double x1, double y1, double x2, double y2, double thresh ) { 
+static int ident(double x1, double y1, double x2, double y2, double thresh)
+ { 
     double dx, dy;
+
     dx = x2 - x1; dy = y2 - y1;
     if (  (dx * dx + dy * dy) <= thresh * thresh ) 
 	return 1;
     
     return 0;
 }
-*/
+#endif
 
 /* shared by Vect_line_intersection, Vect_line_check_intersection, cross_seg, find_cross */
 static struct line_pnts *APnts, *BPnts; 
@@ -661,7 +676,7 @@ Vect_line_intersection (
 	}
 
 	/* Sort points along lines */
-	qsort( (void *)cross, n_cross, sizeof(CROSS), cmp_cross ); 
+	qsort((void *)cross, sizeof(char)*n_cross, sizeof(CROSS), cmp_cross); 
 
 	/* Print all (raw) breaks */
 	for ( i = 0; i < n_cross; i++ ) {
@@ -1025,4 +1040,3 @@ Vect_line_check_intersection (
 
     return cross_found;
 }
-

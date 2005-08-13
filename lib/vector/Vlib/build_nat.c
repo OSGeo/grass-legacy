@@ -386,7 +386,8 @@ int
 Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 {
     struct Plus_head *plus ;
-    int    i, j, s, type, lineid, offset; 
+    int    i, j, s, type, lineid;
+    long offset; 
     int    side, line, area;
     struct line_pnts *Points, *APoints;
     struct line_cats *Cats;
@@ -477,7 +478,7 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 	    
 	    offset = Map->head.last_offset;
 
-	    G_debug ( 3, "Register line: offset = %d", offset );
+	    G_debug ( 3, "Register line: offset = %ld", offset );
 	    lineid = dig_add_line ( plus, type, Points, offset );
 	    dig_line_box ( Points, &box );
 	    if ( lineid == 1 ) 

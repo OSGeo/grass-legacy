@@ -22,7 +22,10 @@
 #include "gis.h"
 #include "Vect.h"
 
+
+#ifndef HAVE_OGR
 static int format () { G_fatal_error ("Requested format is not compiled in this version"); return 0; }
+#endif
 
 static int (*Build_array[]) () =
 {
@@ -35,6 +38,7 @@ static int (*Build_array[]) () =
 };
 
 FILE *Msgout = NULL;
+
 
 int prnmsg ( char *msg, ...) {
     char buffer[1000]; 

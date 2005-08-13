@@ -32,7 +32,9 @@ static int  delete_dummy () {
     return -1; 
 }
 
+#ifndef HAVE_OGR
 static int format () { G_fatal_error ( _("Requested format is not compiled in this version") ); return 0; }
+#endif
 
 static long (*Write_line_array[][3]) () =
 {

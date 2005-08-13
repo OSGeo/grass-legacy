@@ -80,7 +80,7 @@ Vect_clean_small_angles_at_nodes ( struct Map_info *Map, int otype, struct Map_i
 		    double length1, length2;
 		    int short_line; /* line with shorter end segment */
 		    int long_line;  /* line with longer end segment */
-		    int new_short_line; /* line number of short line after rewrite */
+		    int new_short_line=0; /* line number of short line after rewrite */
 		    int short_type, long_type, type;
 		    double x, y, z, nx, ny, nz;
 		    

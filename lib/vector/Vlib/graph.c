@@ -71,8 +71,10 @@ Vect_graph_init ( GRAPH *graph, int nodes_costs )
 
     G_debug (3, "Vect_graph_init()" ); 
 
-    if ( nodes_costs ) dglInitialize ( graph, 1, sizeof(dglInt32_t), 0, opaqueset ); 
-    else dglInitialize ( graph, 1, 0, 0, opaqueset ); 
+    if ( nodes_costs )
+        dglInitialize(graph, (dglByte_t)1, sizeof(dglInt32_t), (dglInt32_t)0, opaqueset);
+    else
+        dglInitialize(graph, (dglByte_t)1, (dglInt32_t)0, (dglInt32_t)0, opaqueset);
 }
 
 /*!
@@ -115,7 +117,7 @@ Vect_graph_add_edge ( GRAPH *graph, int from, int to, double costs, int id  )
 
     dglcosts = (dglInt32_t) costs * 1000;
 	    
-    ret = dglAddEdge ( graph, from, to, dglcosts, id );
+    ret = dglAddEdge ( graph, (dglInt32_t)from, (dglInt32_t)to, dglcosts, (dglInt32_t)id );
     if ( ret < 0 ) G_fatal_error ("Cannot add network arc");
 }
 
@@ -138,7 +140,7 @@ Vect_graph_set_node_costs ( GRAPH *graph, int node, double costs )
 
     dglcosts = (dglInt32_t) costs * 1000;
 	    
-    dglNodeSet_Attr(graph, dglGetNode(graph,node), &dglcosts); 
+    dglNodeSet_Attr(graph, dglGetNode(graph, (dglInt32_t)node), &dglcosts); 
 }
 
 /*!
@@ -178,9 +180,9 @@ Vect_graph_shortest_path ( GRAPH *graph, int from, int to, struct ilist *List, d
 
     pclip = NULL;
     if ( List != NULL ) {
-        nRet = dglShortestPath ( graph, &pSPReport, from, to, clipper, pclip, NULL);
+        nRet = dglShortestPath ( graph, &pSPReport, (dglInt32_t)from, (dglInt32_t)to, clipper, pclip, NULL);
     } else {
-        nRet = dglShortestDistance ( graph, &nDistance, from, to, clipper, pclip, NULL);
+        nRet = dglShortestDistance ( graph, &nDistance, (dglInt32_t)from, (dglInt32_t)to, clipper, pclip, NULL);
     }
 
     if ( nRet == 0 ) {
