@@ -25,18 +25,17 @@
 */
 
 #define MAIN
+#include <stdlib.h>
+#include <math.h>
 #include "vizual.h"
 #include "gis.h"
 #include "G3d.h"
-#include <math.h>
-
-char *check_get_any_dspname();
+#include "local_proto.h"
 
 
 int main(int argc, char *argv[])
 {
-    char	*dspout, buff[160], element[160];
-    int i; /* counter */
+    char	*dspout, element[160];
     void *g3map;
     G3D_Region g3reg;
     char *mapset;
@@ -110,24 +109,22 @@ int main(int argc, char *argv[])
     shade->description = "Use flat shading rather than gradient" ;
 
     if (G_parser(argc, argv))
-	exit (-1);
+	exit (EXIT_FAILURE);
 
     G3d_initDefaults();
 
     G3d_getWindow (&g3reg);
-fprintf(stderr,"Region from getWindow: %d %d %d\n",g3reg.rows,g3reg.cols,g3reg.depths);
+    G_message("Region from getWindow: %d %d %d",
+            g3reg.rows,g3reg.cols,g3reg.depths);
 
-    if(NULL == (dspout = check_get_any_dspname
-		(out->answer, name->answer, G_mapset())))
-	exit (-1);
+    if(NULL == (dspout = check_get_any_dspname(out->answer, name->answer, G_mapset())))
+	exit (EXIT_FAILURE);
 
     G3d_setErrorFun (G3d_printError);
 
     /* open g3 file for reading and writing */
-    if(NULL == (mapset = G_find_file2 ("grid3", name->answer, ""))){
-        sprintf(buff,"Not able to find grid3 file for [%s]", name->answer);
-        G_fatal_error(buff);
-    }
+    if(NULL == (mapset = G_find_file2 ("grid3", name->answer, "")))
+        G_fatal_error("Not able to find grid3 file for [%s]", name->answer);
 
     g3map = G3d_openCellOld (name->answer, mapset, &g3reg,
 			     G3D_TILE_SAME_AS_FILE,
@@ -138,15 +135,12 @@ fprintf(stderr,"Region from getWindow: %d %d %d\n",g3reg.rows,g3reg.cols,g3reg.d
 			     G3D_USE_CACHE_DEFAULT);
 */
 
-    if(NULL == g3map){
-        sprintf(buff,"Error opening grid3 file [%s]", name->answer);
-	G_fatal_error (buff);
-    }
+    if (NULL == g3map)
+        G_fatal_error("Error opening grid3 file [%s]", name->answer);
 
-    if(0 == G3d_range_load(g3map)){
-        sprintf(buff,"Error reading range for [%s]", name->answer);
-	G_fatal_error (buff);
-    }
+    if (0 == G3d_range_load(g3map))
+        G_fatal_error("Error reading range for [%s]", name->answer);
+
     /* TODO: look at this - should use current 3dregion rather than
     region represented by original 3dgrid file */
 /*
@@ -174,10 +168,7 @@ fprintf(stderr,"Region from getWindow: %d %d %d\n",g3reg.rows,g3reg.cols,g3reg.d
     /* open display file for writing */
     sprintf(element,"grid3/%s/dsp", name->answer);
     if((Headfax.dspfoutfp = G_fopen_new(element,dspout)) == NULL)
-    {
-        sprintf(buff,"Error opening display file [%s]", dspout);
-	G_fatal_error (buff);
-    }
+        G_fatal_error("Error opening display file [%s]", dspout);
 
 /* write display file header info */
 /* have to adjust dimensions  -dpg */
@@ -185,11 +176,12 @@ fprintf(stderr,"Region from getWindow: %d %d %d\n",g3reg.rows,g3reg.cols,g3reg.d
 	Headfax.xdim -= 1;
 	Headfax.ydim -= 1;
 	Headfax.zdim -= 1;
-fprintf(stderr,"DSPF DIMS: %d %d %d\n", Headfax.ydim+1, Headfax.xdim+1, Headfax.zdim+1);
+
+        G_message("DSPF DIMS: %d %d %d", Headfax.ydim+1, Headfax.xdim+1, Headfax.zdim+1);
 	if(dfwrite_header(&Headfax) < 0)
 	{
 	   fclose(Headfax.dspfoutfp);
-	   exit(-1);
+	   exit(EXIT_FAILURE);
 	}
 	Headfax.xdim += 1;
 	Headfax.ydim += 1;
@@ -197,7 +189,7 @@ fprintf(stderr,"DSPF DIMS: %d %d %d\n", Headfax.ydim+1, Headfax.xdim+1, Headfax.
     }
     
     if(!quiet->answer)
-	fprintf(stderr,"Writing %s from %s...", dspout, name->answer);
+	G_message("Writing %s from %s...", dspout, name->answer);
 
     viz_iso_surface(g3map, &g3reg, &Headfax.linefax, quiet->answer?1:0);
 
@@ -208,5 +200,6 @@ fprintf(stderr,"DSPF DIMS: %d %d %d\n", Headfax.ydim+1, Headfax.xdim+1, Headfax.
     G3d_closeCell(g3map);   
 
     fclose(Headfax.dspfoutfp);
-    exit(1);
+
+    exit(EXIT_SUCCESS);
 }

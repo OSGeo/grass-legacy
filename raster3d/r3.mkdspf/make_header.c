@@ -1,19 +1,17 @@
 #include "vizual.h"
 #include "G3d.h"
 
-viz_make_header(hf, dmin, dmax, g3reg)
-file_info *hf;
-double dmin, dmax;
-G3D_Region *g3reg;
-{
 
+void viz_make_header(file_info *hf, double dmin, double dmax, G3D_Region *g3reg)
+{
     hf->min = dmin;
     hf->max = dmax;
 
     hf->xdim = g3reg->cols;
     hf->ydim = g3reg->rows;
 
-fprintf(stderr,"rows=%d cols=%d depths=%d\n",g3reg->rows,g3reg->cols,g3reg->depths);
+    fprintf(stderr,"rows=%d cols=%d depths=%d\n",
+            g3reg->rows,g3reg->cols,g3reg->depths);
 
 /*
     hf->ydim = g3reg->cols;
@@ -38,8 +36,4 @@ fprintf(stderr,"rows=%d cols=%d depths=%d\n",g3reg->rows,g3reg->cols,g3reg->dept
     hf->proj
     hf->type
 */
-
-
 }
-
-

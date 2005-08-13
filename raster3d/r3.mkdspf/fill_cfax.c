@@ -1,14 +1,10 @@
 #include "vizual.h"
 /* #include "cell_table.h"  (in vizual.h)  */
 
-/* place vertex data into CUBEFAX structure */
 
-fill_cfax(Cube, flag,index, TEMP_VERT, TEMP_NORM)
-Cube_data *Cube;
-int		flag;/*indicating if flat or gradient shading has been used */
-int		index;
-float	TEMP_VERT[13][3];
-float	TEMP_NORM[13][3];
+/* place vertex data into CUBEFAX structure */
+void fill_cfax(Cube_data *Cube, int flag, int index, float 
+               TEMP_VERT[13][3], float TEMP_NORM[13][3])
 {
     int	p;/*loop variable*/
     int n;/*index into TEMP_VERT array*/
