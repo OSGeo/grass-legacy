@@ -3,19 +3,30 @@
 #include <string.h>
 #include "gis.h"
 #include "G3d.h"
+#include "local_proto.h"
 
-/*--------------------------------------------------------------------------*/
+
+#define MAX(a,b) (a > b ? a : b)
+
 
 typedef struct {
   struct Option *map, *setNull, *null;
 } paramType;
 
 static paramType params;
-extern void * G3d_openNewParam ();
 
-static void
-setParams ()
 
+/* function prototypes */
+static void setParams(void);
+static void getParams(char **name, void **maskRules, int *changeNull, 
+                double *newNullVal);
+static void modifyNull(char *name, void *maskRules, int changeNull, 
+                double newNullVal);
+
+extern void *G3d_openNewParam();
+
+
+static void setParams(void)
 {
   params.map = G_define_option();
   params.map->key = "map";
@@ -43,14 +54,8 @@ setParams ()
 
 /*--------------------------------------------------------------------------*/
 
-void
-getParams (name, maskRules, changeNull, newNullVal)
-
-     char **name;
-     void **maskRules;
-     int *changeNull;
-     double *newNullVal;
-
+static void
+getParams(char **name, void **maskRules, int *changeNull, double *newNullVal)
 {
  *name = params.map->answer;
  parse_vallist (params.setNull->answers, maskRules);
@@ -63,16 +68,8 @@ getParams (name, maskRules, changeNull, newNullVal)
 
 /*-------------------------------------------------------------------------*/
 
-#define MAX(a,b) (a > b ? a : b)
-
 static void
-modifyNull (name, maskRules, changeNull, newNullVal)
-
-     char *name;
-     void *maskRules;
-     int changeNull;
-     double newNullVal;
-
+modifyNull(char *name, void *maskRules, int changeNull, double newNullVal)
 {
   void *map, *mapOut;
   G3D_Region region;
@@ -131,7 +128,7 @@ modifyNull (name, maskRules, changeNull, newNullVal)
 				value = G3d_getDoubleRegion (map, x, y, z);
 
 				if (G3d_isNullValueNum (&value, G3D_DOUBLE)) {
-	  			if (modifyNull) {
+	  			if (changeNull) {
 	    			value = newNullVal;
 	  			}
 				} else
@@ -164,12 +161,7 @@ modifyNull (name, maskRules, changeNull, newNullVal)
 
 /*--------------------------------------------------------------------------*/
 
-int
-main (argc, argv)
-
-     int argc;
-     char *argv[];
-
+int main (int argc, char **argv)
 {
   char *name;
   void *maskRules;
@@ -190,7 +182,3 @@ main (argc, argv)
 
   return 0;
 }
-
-/*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/

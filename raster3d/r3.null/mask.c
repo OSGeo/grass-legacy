@@ -2,29 +2,22 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
+#include "local_proto.h"
 
-typedef struct _d_interval {
-	double low, high;
-	int inf;
-	struct _d_interval *next;
-} d_Interval;
 
-typedef struct _d_mask {
-	d_Interval *list;
-} d_Mask;
+/* function prototypes */
+static void init_d_mask_rules(d_Mask *d_mask);
+static void add_d_mask_rule(d_Mask *d_mask, double a, double b, int inf);
+static void parse_d_mask_rule(char *vallist, d_Mask *d_mask, char *where);
 
-static
-init_d_mask_rules (d_mask)
-    d_Mask *d_mask;
+
+static void init_d_mask_rules(d_Mask *d_mask)
 {
     d_mask->list = NULL;
 }
 
-static
-add_d_mask_rule (d_mask, a, b, inf)
-    d_Mask *d_mask;
-    double a, b;
-    int inf;
+
+static void add_d_mask_rule(d_Mask *d_mask, double a, double b, int inf)
 {
     d_Interval *I;
 
@@ -36,9 +29,8 @@ add_d_mask_rule (d_mask, a, b, inf)
     d_mask->list = I;
 }
 
-mask_d_select (x, mask)
-    DCELL *x;
-    d_Mask *mask;
+
+int mask_d_select(DCELL *x, d_Mask *mask)
 {
     d_Interval *I;
 
@@ -48,13 +40,12 @@ mask_d_select (x, mask)
 	if (mask_match_d_interval (*x, I))
 	    return 1;
     }
+
     return 0;
 }
 
-extern
-mask_match_d_interval (x, I)
-    DCELL x;
-    d_Interval *I;
+
+int mask_match_d_interval(DCELL x, d_Interval *I)
 {
     if (I->inf < 0)
 	return x <= I->low;
@@ -65,11 +56,8 @@ mask_match_d_interval (x, I)
     return x >= I->low && x <= I->high;
 }
 
-static
-parse_d_mask_rule (vallist, d_mask, where)
-    char *vallist;
-    d_Mask *d_mask;
-    char *where;
+
+static void parse_d_mask_rule(char *vallist, d_Mask *d_mask, char *where)
 {
     double a,b;
     char junk[128];
@@ -102,9 +90,8 @@ parse_d_mask_rule (vallist, d_mask, where)
     }
 }
 
-parse_vallist (vallist, d_mask)
-    char **vallist;
-    d_Mask **d_mask;
+
+void parse_vallist(char **vallist, d_Mask **d_mask)
 {
     char buf[1024];
     char x[2];
@@ -126,7 +113,7 @@ parse_vallist (vallist, d_mask)
 		G_usage();
 		exit(1);
 	    }
-	    while (fgets (buf, sizeof buf, fd))
+	    while (fgets (buf, 1024, fd))
 	    {
 		if (sscanf (buf, "%1s", x) != 1 || *x == '#')
 		    continue;
@@ -138,4 +125,3 @@ parse_vallist (vallist, d_mask)
 	    parse_d_mask_rule (*vallist, *d_mask, (char *)NULL);
     }
 }
-
