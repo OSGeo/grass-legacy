@@ -3,13 +3,16 @@
 #include <string.h>
 #include "gis.h"
 #include "glocale.h"
+#include "local_proto.h"
 #define GLOBAL
 #include "kappa.h"
 
-int
-main (argc, argv)
- int argc;
- char *argv[];
+
+/* function prototypes */
+static void layer(char *s);
+
+
+int main (int argc, char **argv)
 {
  int i;
  struct GModule *module;
@@ -108,8 +111,8 @@ main (argc, argv)
  return 0;
 }
 
-layer (s)
-char *s;
+
+static void layer(char *s)
 {
   char msg[100], name[200], *mapset;
   int n;
@@ -119,6 +122,7 @@ char *s;
     sprintf (msg, "%s: <%s> raster file not found\n", G_program_name(), s);
     G_fatal_error (msg);
   }
+
   n = nlayers++;
   layers = (LAYER *) G_realloc(layers, 2*sizeof(LAYER));
   layers[n].name = G_store (name);

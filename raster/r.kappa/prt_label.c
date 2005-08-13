@@ -1,7 +1,8 @@
 #include "kappa.h"
+#include "local_proto.h"
 
-int
-prt_label(void)
+
+void prt_label(void)
 {
   int i,j;
   long *cats;
@@ -27,7 +28,7 @@ prt_label(void)
       if (cl) G_strip (cl);
       if (cl == NULL || *cl == 0)
         cl = "(no description)";
-      fprintf (fd, "%d:  %s\n", rlst[j], cl);
+      fprintf (fd, "%ld:  %s\n", rlst[j], cl);
     }
   }
   if (output != NULL)

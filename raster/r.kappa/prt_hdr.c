@@ -1,10 +1,13 @@
+#include <string.h>
 #include "kappa.h"
+#include "local_proto.h"
 
-prn_header()
+
+void prn_header(void)
 {
   int i,len;
   char buf[1024], *titles, *label;
-  char *mask, *maskinfo();
+  char *mask;
   FILE *fd;
 
   if (output == NULL)
@@ -22,10 +25,12 @@ prn_header()
   fprintf (fd, "%s\n", buf);
   if ((mask = maskinfo()))
     sprintf (buf, "MASK: %s", mask);
+
   fprintf (fd, "%s\n", buf);
   fprintf (fd, "MAPS: ");
   label = "MAP";
   len = strlen (label);
+
   for (i=0; i<nlayers; i++) {
     titles = G_get_cats_title (&(layers[i].labels));
     if (titles) G_strip (titles);
@@ -35,6 +40,7 @@ prn_header()
 	titles, layers[i].name, layers[i].mapset);
     fprintf (fd, "%s\n", buf);
   }
+
   if (output != NULL)
     fclose(fd);
 }

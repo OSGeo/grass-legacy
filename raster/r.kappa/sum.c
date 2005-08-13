@@ -1,13 +1,17 @@
 #include "kappa.h"
+#include "local_proto.h"
+
+
+/* function prototypes */
+static int same_cats (int a, int b, int nl);
+
 
 /* within group totals:
     *ns is the first stat
 	(updated upon return to point to next stat)
      nl is the layer number (or level) */
 
-long
-count_sum (ns,nl)
-  int *ns;
+long count_sum(int *ns, int nl)
 {
   long count;
   int k,n;
@@ -25,10 +29,12 @@ count_sum (ns,nl)
   }
 
   *ns = n;
+
   return count;
 }
 
-same_cats (a,b,nl)
+
+static int same_cats (int a, int b, int nl)
 {
   long *cat_a,*cat_b;
 
@@ -37,5 +43,6 @@ same_cats (a,b,nl)
 
   while (nl-- >= 0)
     if (*cat_a++ != *cat_b++) return 0;
+
   return 1;
 }
