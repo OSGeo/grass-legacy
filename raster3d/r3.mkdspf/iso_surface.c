@@ -1,34 +1,38 @@
 #include <stdlib.h>
+#include <math.h>
 #include "vizual.h"
-#include "cell_table.h"
 #include "cell_table.h"
 #include "gis.h"
 #include "G3d.h"
+#include "local_proto.h"
+
 
 #define XDIMYDIM (Headfax.xdim*Headfax.ydim)
 
 float	TEMP_VERT[13][3];
 float	TEMP_NORM[13][3];
 
-
 static float DATA[8];
 
-viz_iso_surface(g3map, g3reg, linefax, quiet)
-void            *g3map;
-G3D_Region      *g3reg;
-cmndln_info	*linefax;
-int             quiet;
+
+/* function prototypes */
+static void percent(int z, int zloop);
+static void calc_cube_info(float *data[], int z1);
+static void xings_fnorm(int c_ndx, int t_ndx);
+static void calc_fnorm(int c_ndx);
+static void xings_grad(float *data[], int c_ndx, int x1, int y1,
+                       int z1, int t_ndx);
+static void normalize(float n[3]);
+
+
+void viz_iso_surface(void *g3map, G3D_Region *g3reg,
+                     cmndln_info *linefax, int quiet)
 {
-
-
     float *data[4]; /* will hold 4 slices of xy data */
     int zloop;
     int z; /* looping variables */
     int slice;
     float *temp;
-    int x2;
-    int y2;
-    int z2;
 
     zloop = Headfax.zdim - 1;  /*crop to permit use of gradients */
 
@@ -38,22 +42,18 @@ int             quiet;
     {
 	if(!quiet)
 	    percent(z,zloop); 
+
 	if(!z) /* first time thru need to read in four slices of data */
 	{
 	    for(slice=0;slice<4;slice++)
 	    {
-		if((data[slice] =
-			  (float*)malloc(sizeof(float)*XDIMYDIM)) == NULL)
-		{
-		    fprintf(stderr,"error in allocating memory\n");
-		    exit(1);
-		}
+		data[slice] = (float*)G_malloc(sizeof(float)*XDIMYDIM);
+
 		if (slice)
 		/*read in data*/
 		r3read_level(g3map, g3reg, &Headfax, data[slice], slice - 1);
 	    }
 	}
-
 	else
 	{
 	    temp = data[0];
@@ -68,11 +68,10 @@ int             quiet;
     calc_cube_info(data,z);
     }
 }
+
+
 /************************  percent *******************************************/
-/************************  percent *******************************************/
-/************************  percent *******************************************/
-percent(z,zloop)
-int z,zloop;
+static void percent(int z, int zloop)
 {
     int	percent;
     static int	flag = 1;
@@ -85,20 +84,11 @@ int z,zloop;
     percent = (z * 100)/zloop;
     fprintf(stderr,"  %3d %%",percent);
     fprintf(stderr,"\b\b\b\b\b\b\b");
-
 }
 
 
-
-
 /************************ calc_cube_info  ************************************/
-/************************ calc_cube_info  ************************************/
-/************************ calc_cube_info  ************************************/
-
-
-calc_cube_info(data,z1)
-float 		*data[];
-int		z1;/* will be used when the gradient is calculated*/
+static void calc_cube_info(float *data[], int z1)
 {
     int x1,y1;
     int x2,y2;
@@ -109,9 +99,7 @@ int		z1;/* will be used when the gradient is calculated*/
     int a=0; /*keeps track of how many thresholds are contained in a cell */
     cmndln_info	*linefax;
     cube_info *CUBEFAX;
-    int maskflag; /* check to see if we are at edge of data */
     int vnum; /* index to loop through vertices of cube */
-    int z; /*index into data slice */
 
     CUBEFAX = CUBE.data;	/* make old code fit new structure */
 
@@ -119,7 +107,6 @@ int		z1;/* will be used when the gradient is calculated*/
     xloop = (Headfax.xdim);
     yloop = (Headfax.ydim);
 
-  
 /* the following commands turn on appropriate bits in the c_ndx variable
 *  based on vertex value.
 */
@@ -179,8 +166,6 @@ various combinations e.g., give each null a tetrahedron of influence */
 		    G_is_f_null_value ((FCELL *)(DATA+6)) ||
 		    G_is_f_null_value ((FCELL *)(DATA+7)) ) c_ndx = 0;
     
-	
-
 		/* c_ndx numbers (1 - 254) contain polygons */
 		/*if (c_ndx > 0 && c_ndx < 254) this is the hole bug */
 		if (c_ndx > 0 && c_ndx < 255)  /* -dpg */
@@ -193,7 +178,7 @@ various combinations e.g., give each null a tetrahedron of influence */
 			case 1:
 			    xings_fnorm(c_ndx,t_ndx);
 			    break;
-			case 2: case3:
+			case 2: case 3:
 			    xings_grad(data,c_ndx,x1,y1,z1, t_ndx);
 			    break; 
 		    }
@@ -209,24 +194,19 @@ various combinations e.g., give each null a tetrahedron of influence */
 	}
     }
 }
-/***********************************  xings_fnorm****************************/ 
-/***********************************  xings_fnorm****************************/ 
+
+
 /***********************************  xings_fnorm****************************/ 
 /*  This subroutine is called once for each cell(cube) at given threshold value.
 **  This is the subroutine that is called if flat shading is to be used. 
 **  Subroutine vertices are determined for the polygons that will be 
 **  saved in a display file as well as the normal to the polygon
 */
-
-xings_fnorm(c_ndx,t_ndx)
-int 		c_ndx;
-int		t_ndx;/* threshold c_ndx */
+static void xings_fnorm(int c_ndx, int t_ndx)
 {
     cmndln_info	*linefax;
-
     register int i;/* loop count variable incremented to to examine each edge */
 		   /* listed for c_ndx of cube being examined */
-
 
     linefax = &Headfax.linefax;
     for (i=0; i<cell_table[c_ndx].nedges; i++)
@@ -306,28 +286,22 @@ int		t_ndx;/* threshold c_ndx */
 	}
     }
     calc_fnorm(c_ndx);
-    
 }
-/*************************** calc_fnorm  ************************************/
-/*************************** calc_fnorm  ************************************/
+
+
 /*************************** calc_fnorm  ************************************/
 /* this routine calculates the normal to a polygon for flat shading */
-calc_fnorm(c_ndx)
-int	c_ndx;
+static void calc_fnorm(int c_ndx)
 {
     float	x1,y1,z1,x2,y2,z2,x3,y3,z3;
-    double	a,b,c;
-    double	nval;
     int i = 0;
     int	inref;
     int poly_num = 0;/*the polygon number*/
     double       r2x,r2y,r2z,r1x,r1y,r1z;
 
-
     /* cell_table structure included in .h file */
     while(i<cell_table[c_ndx].npolys*3)
     {
-
 	/* indirect referencing into the TEMP_VERT array */
 	inref = cell_table[c_ndx].polys[i];
 	x1 = TEMP_VERT[inref][0];
@@ -347,7 +321,6 @@ int	c_ndx;
 	z3 = TEMP_VERT[inref][2];
 	i++;
 
-
 	/* Cramer's rule used to calculate the coefficients */
         r2x = x1 - x2;
         r2y = y1 - y2;
@@ -362,27 +335,19 @@ int	c_ndx;
         TEMP_NORM[poly_num][2] = (float)(r1x * r2y - r1y * r2x);
 	normalize (TEMP_NORM[poly_num]);
 	poly_num+=1;
-
     }
 }
-/*****************************   xings_grad   ********************************/
-/*****************************   xings_grad   ********************************/
-/*****************************   xings_grad   ********************************/
 
+
+/*****************************   xings_grad   ********************************/
 /*  this subroutine is called once for each cell(cube) at given threshold tvalue 
 **  vertices are determined for the polygons that will be written to a display
 **  file.  Gradients for each vertex are determined to be used as normals
 **  in lighting calculations.
 **  gradients are stored in temporary variables that are also written to display**  file. 
 */
-
-xings_grad (data,c_ndx,x1,y1,z1,t_ndx)
-float		*data[];
-int 		c_ndx;
-int 		x1,y1,z1;
-int		t_ndx; /*threshold c_ndx*/
+static void xings_grad(float *data[], int c_ndx, int x1, int y1, int z1, int t_ndx)
 {
-
     cmndln_info	*linefax;
     register int i;/* loop count variable incremented to examine each edge */
 		   /* listed for c_ndx of cube being examined */
@@ -393,9 +358,8 @@ int		t_ndx; /*threshold c_ndx*/
     int x2, y2, z2;
     int x3,y3,z3;  /* used to calculate desired location in data array */
 
-    int a,b; /* the x,y,z components of the gradient vector */
-    float l; /* length of the normal vector */
-    float delta;
+    int a=0, b=0; /* the x,y,z components of the gradient vector */
+    float delta=0;
 
 /* the following variables are used to calculate gradients in the x,y,Z
 ** direction.  gradients are going to be used to calculate relative positions of
@@ -410,7 +374,6 @@ int		t_ndx; /*threshold c_ndx*/
     float Data6xoffset,Data6yoffset,Data6zoffset;
     float Data7xoffset,Data7yoffset,Data7zoffset;
     float Data8xoffset,Data8yoffset,Data8zoffset;
-
 
 /*  HOLDS THE GRADIENT FOR EACH VERTEX OF THE CELL BEING EXAMINED */
     float Data_Grad[9][3];
@@ -428,7 +391,6 @@ int		t_ndx; /*threshold c_ndx*/
     x3 = x2 + 1;
     y3 = y2 + 1;
     z3 = z2 + 1;
-
 
     if (x0 >= 0)
     {
@@ -489,7 +451,6 @@ int		t_ndx; /*threshold c_ndx*/
 
     if (y3 < Headfax.ydim)
     {
-
         Data1yoffset = data[1][y3*Headfax.xdim + x1];
         Data2yoffset = data[1][y3*Headfax.xdim + x2];
         Data5yoffset = data[2][y3*Headfax.xdim + x1];
@@ -528,7 +489,6 @@ int		t_ndx; /*threshold c_ndx*/
 
     if (z3 < Headfax.zdim)
     {
-
         Data5zoffset = data[3][y2*Headfax.xdim + x1];
         Data6zoffset = data[3][y2*Headfax.xdim + x2];
         Data7zoffset = data[3][y1*Headfax.xdim + x2];
@@ -711,8 +671,8 @@ int		t_ndx; /*threshold c_ndx*/
     }
 }
 
-normalize(n)
-    float n[3];
+
+static void normalize(float n[3])
 {
     float l;
 

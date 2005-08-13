@@ -7,9 +7,8 @@
 #include "gis.h"
 #include "G3d.h"
 
-g3_find_dsp_file (cell, file, mset)
-    char *cell, *mset;
-    char *file;
+
+int g3_find_dsp_file(char *cell, char *file, char *mset)
 {
     char element[100], name[GNAME_MAX], mapset[GMAPSET_MAX], tofind[GNAME_MAX];
 
@@ -28,39 +27,31 @@ g3_find_dsp_file (cell, file, mset)
 
 
 /* return NULL on error: otherwise returns dspout */
-char *
-check_get_any_dspname(dspf, g3f, mset)
-char *dspf, *g3f, *mset;
+char *check_get_any_dspname(char *dspf, char *g3f, char *mset)
 {
-char element[200], question[200];
-static char dspout[200];
-int ret;
+    char element[200], question[200];
+    static char dspout[200];
 
     if(!G_legal_filename (dspf))
 	return(NULL);
 
-    if(!G_find_grid3(g3f, "")){
-	fprintf
-	(stderr, "[%s] Invalid 3dcell file\n", g3f);
-	return(NULL);
-    }
+    if (!G_find_grid3(g3f, ""))
+        G_fatal_error("[%s]: invalid 3dcell file.", g3f);
 
     if(mset){   /* otherwise must be reading only  */
-
 	if(g3_find_dsp_file (g3f, dspf, mset)){  /* already exists */
 	    sprintf(question, "\n** %s exists. ok to overwrite? ", dspf);
 	    if (!G_yes (question,0)){
 		if(NULL == G_ask_any ("", dspout, element, "display", 1))
 		    return(NULL);
+
 		return(dspout);
 	    }
 	    /* or else just print a warning & use it as is */
-
 	}
-
     }
 
     strcpy(dspout,dspf);
+
     return(dspout);
 }
-
