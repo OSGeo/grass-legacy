@@ -21,6 +21,10 @@
 #include "gis.h"
 #include "Vect.h"
 
+
+static int cmp_cat(const void *pa, const void *pb);
+
+
 static void check_status ( struct Map_info *Map ){
     if ( !Map->plus.cidx_up_to_date ) 
 	G_fatal_error("Category index is not up to date");
@@ -265,7 +269,8 @@ Vect_cidx_find_next ( struct Map_info *Map, int field_index, int cat, int type_m
     /* pointer to beginning of searched part of category index */
     ci = &(Map->plus.cidx[field_index]);
 
-    catp = bsearch ( &cat, ci->cat + start_index * 3 * sizeof(int), ci->n_cats - start_index, 
+    catp = bsearch ( &cat, ci->cat + start_index * 3 * sizeof(int), 
+                     (size_t)ci->n_cats - start_index, 
 	             3 * sizeof(int), cmp_cat);
 
     G_debug (3, "catp = %p", catp);

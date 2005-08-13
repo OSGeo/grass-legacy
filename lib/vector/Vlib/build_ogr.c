@@ -108,7 +108,7 @@ static int add_line ( struct Map_info *Map, int type, struct line_pnts *Points,
 {
     int     line;
     struct  Plus_head *plus;
-    int     offset;
+    long    offset;
     BOUND_BOX box;
 
     plus = &(Map->plus);
@@ -119,7 +119,7 @@ static int add_line ( struct Map_info *Map, int type, struct line_pnts *Points,
 	/* TODO : could be used to statore category ? */
         offset = FID; /* because centroids are read from topology, not from layer */
     }
-    G_debug (4, "Register line: FID = %d offset = %d", FID, offset );
+    G_debug (4, "Register line: FID = %d offset = %ld", FID, offset );
     line = dig_add_line (plus, type, Points, offset );
     G_debug (4, "Line registered with line = %d", line);
 
@@ -150,7 +150,7 @@ static int add_geometry ( struct Map_info *Map, OGRGeometryH hGeom, int FID, GEO
     struct  Plus_head *plus;
     int     i, ret;
     int     line;
-    int     area, isle, outer_area;
+    int     area, isle, outer_area=0;
     int     lines[1];
     static struct line_pnts **Points = NULL;
     static int alloc_points = 0;

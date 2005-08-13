@@ -100,7 +100,7 @@ V2_write_line_nat (  struct Map_info *Map,
 		     struct line_pnts *points,
 		     struct line_cats *cats)
 {
-    int    i, s, n, line, next_line, area, node, side, first, sel_area;
+    int    i, s, n, line=0, next_line, area=0, node, side, first, sel_area;
     int    new_area[2];
     long   offset;
     struct Plus_head *plus;
@@ -494,12 +494,12 @@ V1_delete_line_nat (
 int 
 V2_delete_line_nat ( struct Map_info *Map, int  line )
 {
-  int ret, i, side, type, first, next_line, area;
-  P_LINE *Line;  
+  int ret, i, side, type=0, first=0, next_line, area;
+  P_LINE *Line = NULL;
   P_AREA *Area;  
   struct Plus_head *plus;
   BOUND_BOX box, abox;
-  int adjacent[4], n_adjacent;
+  int adjacent[4], n_adjacent=0;
   static struct line_cats *Cats = NULL;
   
   G_debug ( 3, "V2_delete_line_nat(), line = %d", line );

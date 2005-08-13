@@ -18,6 +18,12 @@
 #include "dbmi.h"
 #include "Vect.h"
 
+
+/* function prototypes */
+static int cmp(const void *pa, const void *pb);
+static int in_array(int *cats, size_t ncats, int cat);
+
+
 /*!
   \fn VARRAY *Vect_new_varray (int size)
   \brief Create new VARRAY and allocate space for given number of items.
@@ -37,7 +43,7 @@ Vect_new_varray (int size)
     if ( p == NULL ) return NULL;
   
     p->size = size;
-    p->c = (int *) G_calloc ( size + 1, sizeof(int) );
+    p->c = (int *) G_calloc(sizeof(char)*size + 1, sizeof(int));
     
     if ( p->c == NULL ) {
 	G_free (p);
@@ -165,7 +171,7 @@ Vect_set_varray_from_cat_list ( struct Map_info *Map, int field, struct cat_list
 }
 
 /* compare 2 integers in array */
-int cmp ( const void *pa, const void *pb)
+static int cmp ( const void *pa, const void *pb)
 {
     int *p1 = (int *) pa;
     int *p2 = (int *) pb;
@@ -176,14 +182,14 @@ int cmp ( const void *pa, const void *pb)
 }
 
 /* check if cat is in array */
-int
-in_array ( int *cats, int ncats, int cat ) 
+static int in_array (int *cats, size_t ncats, int cat)
 {
     int *p;
     
     p = (int *) bsearch((void *) &cat, cats, ncats, sizeof(int), cmp); 
 
     if ( p == NULL ) return 0;
+
     return 1;
 }
 
@@ -204,7 +210,8 @@ int
 Vect_set_varray_from_db ( struct Map_info *Map, int field, char *where,
                                 int type, int value, VARRAY *varray )
 {
-    int i, n, c, centr, cat, *cats, ncats;
+    int i, n, c, centr, cat, *cats;
+    size_t ncats;
     int ni = 0; /* number of items set */
     int ltype; /* line type */
     struct line_cats *Cats;

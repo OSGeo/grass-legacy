@@ -17,11 +17,12 @@
 *****************************************************************************/
 #include "Vect.h"
 
+
 static int read_next_dummy () { return -1; }
-static long last_offset_dummy () { 
-    G_fatal_error("Vect_last_offset_ not available for this format.");
-}
+
+#ifndef HAVE_OGR
 static int format () { G_fatal_error ("Requested format is not compiled in this version"); return 0; }
+#endif
 
 static int (*Read_next_line_array[][3]) () =
 {

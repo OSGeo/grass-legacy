@@ -91,9 +91,9 @@ remove_dangles ( struct Map_info *Map, int type, int chtype, double maxlength, s
 {
     struct line_pnts *Points;
     struct line_cats *Cats;
-    int    i, line, ltype, next_line, nnodelines;
+    int    i, line, ltype, next_line=0, nnodelines;
     int    nnodes, node, node1, node2, next_node;
-    int    lcount, tmp_next_line;
+    int    lcount, tmp_next_line=0;
     double length;
     int    dangles_removed = 0; /* number of removed dangles */
     int    lines_removed = 0; /* number of lines removed */

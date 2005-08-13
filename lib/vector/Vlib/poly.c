@@ -27,6 +27,8 @@ struct Slink
     struct Slink *next;
   };
 
+
+/* function prototypes */
 static int comp_double (double *, double *);
 static int V__within (double, double, double);
 int Vect__intersect_line_with_poly ();
@@ -512,7 +514,7 @@ Vect_get_point_in_poly_isl (
   if (Intersects->n_points < 2)	/* test */
     return -1;
 
-  qsort (Intersects->x, Intersects->n_points, sizeof (double), (void *) comp_double);
+  qsort (Intersects->x, (size_t)Intersects->n_points, sizeof (double), (void *) comp_double);
 
   max = 0;
   maxpos = 0;

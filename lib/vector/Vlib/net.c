@@ -105,12 +105,12 @@ Vect_net_build_graph (  struct Map_info *Map,
     dglGraph_s *gr;
     dglInt32_t opaqueset[ 16 ] = { 360000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     struct    field_info *Fi;
-    dbDriver  *driver;
+    dbDriver  *driver=NULL;
     dbHandle  handle;
     dbString  stmt;
     dbColumn *Column;
     dbCatValArray fvarr, bvarr;
-    int       fctype, bctype, nrec;
+    int       fctype=0, bctype=0, nrec;
 
     /* TODO int costs -> double (waiting for dglib) */
     G_debug (1, "Vect_build_graph(): ltype = %d, afield = %d, nfield = %d", ltype, afield, nfield); 
@@ -147,8 +147,10 @@ Vect_net_build_graph (  struct Map_info *Map,
 	Map->node_costs[i] = 0; 
     }
     
-    if ( ncol != NULL ) dglInitialize ( gr, 1, sizeof(dglInt32_t), 0, opaqueset ); 
-    else dglInitialize ( gr, 1, 0, 0, opaqueset ); 
+    if ( ncol != NULL )
+        dglInitialize(gr, (dglByte_t)1, sizeof(dglInt32_t), (dglInt32_t)0, opaqueset);
+    else
+        dglInitialize(gr, (dglByte_t)1, (dglInt32_t)0, (dglInt32_t)0, opaqueset);
 
     if ( gr == NULL ) G_fatal_error ("Cannot build network graph"); 
 
@@ -255,7 +257,7 @@ Vect_net_build_graph (  struct Map_info *Map,
 	if ( dofw && dcost != -1 ) {
 	    cost = (dglInt32_t) Map->cost_multip * dcost;
             G_debug (5, "Add arc %d from %d to %d cost = %d", i, from, to, cost); 
-	    ret = dglAddEdge ( gr, from, to, cost, i );
+	    ret = dglAddEdge(gr, (dglInt32_t)from, (dglInt32_t)to, (dglInt32_t)cost, (dglInt32_t)i);
 	    Map->edge_fcosts[i] = dcost;
             if ( ret < 0 ) G_fatal_error ("Cannot add network arc");
 	}
@@ -264,7 +266,7 @@ Vect_net_build_graph (  struct Map_info *Map,
 	if ( dobw && bdcost != -1 ) {
 	    bcost = (dglInt32_t) Map->cost_multip * bdcost;
             G_debug (5, "Add arc %d from %d to %d bcost = %d", -i, to, from, bcost); 
-	    ret = dglAddEdge ( gr, to, from, bcost, -i );
+	    ret = dglAddEdge(gr, (dglInt32_t)to, (dglInt32_t)from, (dglInt32_t)bcost, (dglInt32_t)-i);
 	    Map->edge_bcosts[i] = bdcost;
             if ( ret < 0 ) G_fatal_error ("Cannot add network arc");
         }
@@ -349,7 +351,7 @@ Vect_net_build_graph (  struct Map_info *Map,
 	        cost = (dglInt32_t) Map->cost_multip * dcost;
 	    }
 	    G_debug ( 3, "Set node's cost to %d", cost);
-	    dglNodeSet_Attr(gr, dglGetNode(gr,i), (dglInt32_t *) &cost); 
+	    dglNodeSet_Attr(gr, dglGetNode(gr, (dglInt32_t)i), (dglInt32_t *)(dglInt32_t)&cost);
 	    Map->node_costs[i] = dcost;
 	}
 	db_close_database_shutdown_driver ( driver );
@@ -408,10 +410,10 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
     pclip = NULL;
     if ( List != NULL ) {
         /*nRet = dglShortestPath ( &(Map->graph), &pSPReport, from, to, clipper, pclip, &(Map->spCache));*/
-        nRet = dglShortestPath ( &(Map->graph), &pSPReport, from, to, clipper, pclip, NULL);
+        nRet = dglShortestPath(&(Map->graph), &pSPReport, (dglInt32_t)from, (dglInt32_t)to, clipper, pclip, NULL);
     } else {
         /*nRet = dglShortestDistance ( &(Map->graph), &nDistance, from, to, clipper, pclip, &(Map->spCache));*/
-        nRet = dglShortestDistance ( &(Map->graph), &nDistance, from, to, clipper, pclip, NULL);
+        nRet = dglShortestDistance(&(Map->graph), &nDistance, (dglInt32_t)from, (dglInt32_t)to, clipper, pclip, NULL);
     }
 
     if ( nRet == 0 ) {
@@ -740,7 +742,7 @@ Vect_net_shortest_path_coor ( struct Map_info *Map,
     static struct ilist *LList;
     static int first = 1;
     int reachable, shortcut;
-    int i, j, fn, tn;
+    int i, j, fn=0, tn=0;
     
     G_debug (3, "Vect_net_shortest_path_coor()");
 		    

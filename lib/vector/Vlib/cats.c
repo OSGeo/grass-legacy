@@ -20,8 +20,10 @@
 #include "gis.h"
 #include "Vect.h"
 
-static int cmp();
+
+static int cmp(const void *pa, const void *pb);
 struct line_cats *Vect__new_cats_struct (void);
+
 
 /*!
  \fn struct line_cats *Vect_new_cats_struct ()
@@ -350,7 +352,7 @@ Vect_str_to_cat_list (char *str, struct cat_list *list)
       if( e )
         {
           l = e - s;
-          strncpy (buf, s, l);
+          strncpy (buf, s, sizeof(char));
 	  buf[l] = '\0';
 	  s = e + 1;
 	}
@@ -450,7 +452,7 @@ Vect_cat_in_array (int cat, int *array, int ncats)
 {
   int *i;
   
-  i = bsearch ( (void *) &cat, (void *) array, ncats,
+  i = bsearch ( (void *) &cat, (void *) array, (size_t)ncats,
 		sizeof (int), cmp);
 
   if ( i != NULL ) return (TRUE);
@@ -459,7 +461,7 @@ Vect_cat_in_array (int cat, int *array, int ncats)
 }
 
 
-int cmp ( const void *pa, const void *pb)
+static int cmp ( const void *pa, const void *pb)
 {
     int *p1 = (int *) pa;
     int *p2 = (int *) pb;

@@ -27,7 +27,9 @@ clo_dummy () {
     return -1;
 }
 
+#ifndef HAVE_OGR
 static int format () { G_fatal_error ("Requested format is not compiled in this version"); return 0; }
+#endif
 
 static int (*Close_array[][2]) () =
 {

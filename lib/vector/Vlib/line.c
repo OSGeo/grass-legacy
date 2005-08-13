@@ -355,9 +355,9 @@ int
 Vect_point_on_line ( struct line_pnts *Points, double distance, 
 	  double *x, double *y, double *z, double *angle, double *slope )
 {
-    int j, np, seg;
+    int j, np, seg=0;
     double dist = 0, length;
-    double xp, yp, zp, dx, dy, dz, dxy, dxyz, k, rest;
+    double xp=0, yp=0, zp=0, dx=0, dy=0, dz=0, dxy=0, dxyz, k, rest;
 
     G_debug ( 3, "Vect_point_on_line(): distance = %f", distance);
     if ( (distance < 0) || (Points->n_points < 2) ) return 0;
@@ -576,7 +576,7 @@ Vect_line_distance (
   register int i;
   register double distance;
   register double new_dist;
-  double   tpx, tpy, tpz, tdist, tspdist, tlpdist;
+  double   tpx, tpy, tpz, tdist, tspdist, tlpdist=0;
   double dx, dy, dz;
   register int n_points;
   int segment;

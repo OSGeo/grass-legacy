@@ -113,7 +113,7 @@ Vect_hist_rewind ( struct Map_info *Map )
 int 
 Vect_hist_copy ( struct Map_info *In, struct Map_info *Out )
 {
-    int red, ret;
+    size_t red, ret;
     char buf[1000];
     
     G_debug (3, "Vect_hist_copy()");
@@ -121,19 +121,19 @@ Vect_hist_copy ( struct Map_info *In, struct Map_info *Out )
     if ( In->hist_fp == NULL ) return 0; /* This is correct (old hist doesn't exist) */
     if ( Out->hist_fp == NULL ) return -1; 
 
-    fseek ( Out->hist_fp, 0, SEEK_END);
+    fseek ( Out->hist_fp, (long)0, SEEK_END);
     rewind ( In->hist_fp );
 
-    while ( (red = fread (buf, 1, 1000, In->hist_fp)) ) {
-        if ( !(ret = fwrite (buf, 1, red, Out->hist_fp))) {
+    while ( (red = fread (buf, sizeof(char), sizeof(char)*1000, In->hist_fp)) ) {
+        if ( !(ret = fwrite (buf, sizeof(char), red, Out->hist_fp))) {
 	    return (-1);
         }
 	fflush ( Out->hist_fp );
     }
 
     /* In ends with \n ? */
-    fseek ( In->hist_fp, -1, SEEK_END);
-    if ( fread ( buf, 1, 1, In->hist_fp) != 1 ) {
+    fseek ( In->hist_fp, (long)-1, SEEK_END);
+    if ( fread ( buf, sizeof(char), sizeof(char), In->hist_fp) != 1 ) {
         return -1;
     }
 

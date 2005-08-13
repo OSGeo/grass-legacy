@@ -64,7 +64,7 @@ Vect_break_polygons ( struct Map_info *Map, int type, struct Map_info *Err, FILE
     int    apoints, npoints, nallpoints, nmarks;
     XPNT   *XPnts;
     struct Rect rect;
-    double dx, dy, a1, a2;
+    double dx, dy, a1=0, a2=0;
     int closed, last_point, cross;
     int printed;
 

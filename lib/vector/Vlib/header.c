@@ -21,7 +21,9 @@
 #include "Vect.h"
 #include "glocale.h"
 
-static int lookup(char *, char *, char *, int);
+
+static int lookup(char *file, char *key, char *value, size_t len);
+
 
 /*!
  \fn int Vect_print_header (struct Map_info *Map)
@@ -105,27 +107,27 @@ Vect__read_head (struct Map_info *Map)
 	while (*ptr == ' ')
 	ptr++;
 
-	if (strncmp (buff, "ORGANIZATION:", 12) == 0)
+	if (strncmp (buff, "ORGANIZATION:", sizeof(char)*12) == 0)
 	  Vect_set_organization ( Map, ptr );  
-	else if (strncmp (buff, "DIGIT DATE:", 11) == 0)
+	else if (strncmp (buff, "DIGIT DATE:", sizeof(char)*11) == 0)
 	  Vect_set_date ( Map, ptr );  
-	else if (strncmp (buff, "DIGIT NAME:", 11) == 0)
+	else if (strncmp (buff, "DIGIT NAME:", sizeof(char)*11) == 0)
 	  Vect_set_person ( Map, ptr );  
-	else if (strncmp (buff, "MAP NAME:", 9) == 0)
+	else if (strncmp (buff, "MAP NAME:", sizeof(char)*9) == 0)
 	  Vect_set_map_name ( Map, ptr );  
-	else if (strncmp (buff, "MAP DATE:", 9) == 0)
+	else if (strncmp (buff, "MAP DATE:", sizeof(char)*9) == 0)
 	  Vect_set_map_date ( Map, ptr );  
-	else if (strncmp (buff, "MAP SCALE:", 10) == 0)
+	else if (strncmp (buff, "MAP SCALE:", sizeof(char)*10) == 0)
 	  Vect_set_scale ( Map, atoi (ptr) );  
-	else if (strncmp (buff, "OTHER INFO:", 11) == 0)
+	else if (strncmp (buff, "OTHER INFO:", sizeof(char)*11) == 0)
 	  Vect_set_comment ( Map, ptr );  
-	else if (strncmp (buff, "ZONE:", 5) == 0 || strncmp (buff, "UTM ZONE:", 9) == 0)
+	else if (strncmp (buff, "ZONE:", sizeof(char)*5) == 0 || strncmp (buff, "UTM ZONE:", sizeof(char)*9) == 0)
 	  Vect_set_zone ( Map, atoi (ptr) );  
-	else if (strncmp (buff, "WEST EDGE:", 10) == 0) {}
-	else if (strncmp (buff, "EAST EDGE:", 10) == 0) {}
-	else if (strncmp (buff, "SOUTH EDGE:", 11) == 0) {}
-	else if (strncmp (buff, "NORTH EDGE:", 11) == 0) {}
-	else if (strncmp (buff, "MAP THRESH:", 11) == 0)
+	else if (strncmp (buff, "WEST EDGE:", sizeof(char)*10) == 0) {}
+	else if (strncmp (buff, "EAST EDGE:", sizeof(char)*10) == 0) {}
+	else if (strncmp (buff, "SOUTH EDGE:", sizeof(char)*11) == 0) {}
+	else if (strncmp (buff, "NORTH EDGE:", sizeof(char)*11) == 0) {}
+	else if (strncmp (buff, "MAP THRESH:", sizeof(char)*11) == 0)
 	  Vect_set_thresh ( Map, atof (ptr) );  
 	else 
 	  G_warning("Unknown keyword %s in vector head\n", buff);
@@ -476,10 +478,10 @@ Vect_get_thresh (struct Map_info *Map)
 
 
 /* from lib/gis/proj3.c */
-static int lookup(char *file, char *key, char *value, int len)
+static int lookup(char *file, char *key, char *value, size_t len)
 {
     char path[1024];
 
     G__file_name (path, "", file, "PERMANENT");
-    return G_lookup_key_value_from_file(path, key, value, len) == 1;
+    return G_lookup_key_value_from_file(path, key, value, (int)len) == 1;
 }

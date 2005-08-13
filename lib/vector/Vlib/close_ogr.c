@@ -60,7 +60,7 @@ int
 V2_close_ogr (struct Map_info *Map)
 {
     char fname[1000], elem[1000];
-    unsigned char buf[5];
+    char buf[5];
     long length = 9; 
     GVFILE fp;
     struct Port_info port;
