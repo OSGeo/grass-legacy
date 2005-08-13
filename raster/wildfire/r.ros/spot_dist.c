@@ -33,10 +33,13 @@
 
 #include "gis.h"
 #include <math.h>
+
+
 #define DATA(map, r, c) (map)[(r) * ncols + (c)]
 #define	DEG2RAD		0.017453292                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 #define	max(a, b)	(b) < (a) ? (a):(b)
 /*#define DEBUG*/
+
 
 /* Ovendry loading for all sizes (lb/ft^2) */
 float w[14] = {     0, 0.034, 0.184, 0.138, 0.736, 0.161, 0.276, 
@@ -53,15 +56,9 @@ double A[14] = {    0,   545,   709,   429,   301,   235,   242,
 double B[14] = {    0, -1.21, -1.32, -1.19, -1.05, -0.92, -0.94,
 	      	 0.83,     0, -1.51, -0.89, -0.81, -0.78, -0.79 };
 
-spot_dist (fuel, maxros, speed, angle, row0, col0)
-float	maxros;	/* calculated from Rothermel (1972) amd Albini (1976) (ft/min)*/
-int 	fuel;	/* 13 standard fuel models */
-int	speed;	/* midflame wind speed (ft/min) */
-float	angle;	/* direction of maxdir (degree from North) */
-int	row0, col0; /* the current cell */
+int spot_dist(int fuel, float maxros, int speed, float angle, int row0, int col0)
 {
 	/* variables in Chase (1984) (use h0 for z0 which for e0 + h0) */
-	double		F;		/* flat-terrain spotting distance (mi)*/
 	double		h0;		/* initial firebrand height (m) */
 	double		E;		/* thermal strength (Btu/ft) */
 	double		I;		/* mean fire intensity (Btu/ft/s) */
@@ -82,7 +79,6 @@ int	row0, col0; /* the current cell */
 	double		sin_a, cos_a;	/* of the wind angle */
 	double		sqr_ns, sqr_ew; /* square resolutions for speed */ 
 	register 	i;		/* for advance a step */
-
 
 	if (fuel == 8) 		/* no spotting from closed timber litter */
 		return (0); 
@@ -107,6 +103,7 @@ int	row0, col0; /* the current cell */
 	row = row0 - cos_a + 0.5, col = col0 + sin_a + 0.5;
 	if (row < 0 || row >= nrows || col < 0 || col >= ncols)	/* outside */
 		return (S);
+
 	i = 1;
 	while (1) {
 		if (row < 0 || row >= nrows)            /* outside the region */
@@ -137,4 +134,6 @@ row,col,DATA(map_elev,row,col), S);
 		if (row < 0 || row >= nrows || col < 0 || col >= ncols) 
 			return (S); 			/* outside the region */
 	}
+
+    return S;
 }
