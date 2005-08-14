@@ -16,16 +16,15 @@
 #define MAIN
 #include "stash.h"
 #include "glocale.h"
+#include "local_proto.h"
 
-struct Cell_head window;
+
 char *value;
-double east, north, west;
 int nrows, ncols;
 SEGMENT in_row_seg, in_col_seg, out_seg;
 
-int main(argc,argv)
-int argc;
-char *argv[];
+
+int main(int argc, char **argv)
 {
 	int n, verbose = 1,
 	backrow, backcol,
@@ -33,17 +32,17 @@ char *argv[];
 	len, flag,
 	srows, scols,
 	backrow_fd, backcol_fd, path_fd,
-	in_row_fd, in_col_fd, out_fd, 
-	stash_away();
+	in_row_fd, in_col_fd, out_fd;
 	char *current_mapset,
 	*search_mapset,
 	*path_mapset, 
 	*backrow_mapset,
 	*backcol_mapset,
-	*in_row_file, *in_col_file, *out_file,
-	buf[400];
+	*in_row_file, *in_col_file, *out_file;
 	CELL *cell;
-	POINT *PRES_PT, *make_point(), *NEW_START_PT, *PRESENT_PT, *OLD_PT;
+	POINT *PRES_PT, *PRESENT_PT, *OLD_PT;
+	struct Cell_head window;
+	double east, north;
 	struct Option *opt1, *opt2, *opt3, *opt4;
 	struct Flag *flag1;
 	struct GModule *module;
@@ -89,9 +88,8 @@ char *argv[];
      	flag1->description = _("Run verbosly");
 
 	/*   Do command line parsing	*/
-
 	if (G_parser(argc, argv))
-		exit(-1);
+		exit(EXIT_FAILURE);
 
 	current_mapset = G_mapset();
 	in_row_file = G_tempfile();
@@ -100,11 +98,7 @@ char *argv[];
 
 	/*  Get database window parameters      */
 	if(G_get_window (&window) < 0)
-	{
-		sprintf (buf,"can't read current window parameters");
-		G_fatal_error (buf);
-		exit(1);
-	}
+		G_fatal_error("can't read current window parameters");
 	
         verbose = flag1->answer;
 
@@ -120,17 +114,10 @@ char *argv[];
 	    (backcol_layer, search_mapset);
 
 	if (backrow_mapset == NULL)
-	{
-		sprintf(buf, "%s - not found", backrow_layer);
-		G_fatal_error (buf);
-		exit(1);
-	}
+		G_fatal_error("%s - not found", backrow_layer);
+
 	if (backcol_mapset == NULL)
-	{
-		sprintf(buf, "%s - not found", backcol_layer);
-		G_fatal_error (buf);
-		exit(1);
-	}
+		G_fatal_error("%s - not found", backcol_layer);
 
 	search_mapset = "";
 
@@ -145,24 +132,13 @@ char *argv[];
 	cell = G_allocate_cell_buf();
 
 	/*  Open back cell layers for reading  */
-	backrow_fd = G_open_cell_old
-	    (backrow_layer, backrow_mapset);
-
+	backrow_fd = G_open_cell_old(backrow_layer, backrow_mapset);
 	if (backrow_fd < 0)
-	{
-		sprintf (buf, "%s - can't open raster file", backrow_layer);
-		G_fatal_error (buf);
-		exit(1);
-	}
-	backcol_fd = G_open_cell_old
-	    (backcol_layer, backcol_mapset);
+		G_fatal_error("%s - can't open raster file", backrow_layer);
 
+	backcol_fd = G_open_cell_old(backcol_layer, backcol_mapset);
 	if (backcol_fd < 0)
-	{
-		sprintf (buf, "%s - can't open raster file", backcol_layer);
-		G_fatal_error (buf);
-		exit(1);
-	}
+		G_fatal_error("%s - can't open raster file", backcol_layer);
 
 	/*   Parameters for map submatrices   */
 	len = sizeof(CELL);
@@ -170,11 +146,9 @@ char *argv[];
 	srows = nrows/4 + 1;
 	scols = ncols/4 + 1;
 
-	if (verbose) 
-        {
-                fprintf (stderr, "\nReading the input map -%s- and -%s- and creating some temporary files...", backrow_layer, backcol_layer);
-                fflush (stderr);
-        }
+	if (verbose)
+                G_message("\nReading the input map -%s- and -%s- and creating some temporary files...",
+				backrow_layer, backcol_layer);
 
 	/* Create segmented files for back cell and output layers  */
 	in_row_fd = creat(in_row_file,0666);
@@ -202,14 +176,16 @@ char *argv[];
 	for( row=0 ; row<nrows ; row++ )
 	{
 		if( G_get_map_row(backrow_fd, cell, row)<0)
-			exit(1);
+			G_fatal_error("unable to get map row %d", row);
+
 		for (col=0; col<ncols; col++)
 			if (cell[col] > 0)
 				cell[col] = (window.north - cell[col])/window.ns_res/* - 0.5*/;
 			else cell[col] = -1;
 		segment_put_row(&in_row_seg, cell, row);
 		if( G_get_map_row(backcol_fd, cell, row)<0)
-			exit(1);
+			G_fatal_error("unable to get map row %d", row);
+
 		for (col=0; col<ncols; col++)
 			if (cell[col] > 0)
 				cell[col] = (cell[col] - window.west)/window.ew_res/* - 0.5*/;
@@ -264,30 +240,21 @@ char *argv[];
 	if (flag == 3)
 	{
 		if (G_legal_filename (path_layer) < 0)
-		{
-			sprintf(buf, "%s - illegal name", path_layer);
-			G_fatal_error (buf);
-			exit(1);
-		}
+			G_fatal_error("%s - illegal name", path_layer);
 	}
 
 	/* If the output layer containing the starting positions*/
 	/* create a linked list of of them  */
 	if (flag == 1) {
 		path_fd = G_open_cell_old (path_layer, path_mapset);
-
 		if (path_fd < 0)
-		{
-			sprintf (buf, "%s -can't open raster file", path_layer);
-			G_fatal_error (buf);
-			exit(1);
-		}
+			G_fatal_error("%s -can't open raster file", path_layer);
 
 		/*  Search for the marked starting pts and make list	*/
 		for(row = 0; row < nrows; row++)
 		{
 			if(G_get_map_row(path_fd,cell,row) < 0)
-				exit(1);
+				G_fatal_error("unable to get map row %d", row);
 
 			for(col = 0; col < ncols; col++)
 			{
@@ -304,7 +271,6 @@ char *argv[];
 					value = (char *)&backcol;
 					segment_get (&in_col_seg, value, row, col);
 					insert (&PRESENT_PT, row, col, backrow, backcol);
-
 				}
 			}	/* loop over cols */
 		}	/* loop over rows */
@@ -312,13 +278,10 @@ char *argv[];
 		G_close_cell(path_fd);
 	}
 
-
 	/* loop over the starting points to find the least cost paths */
 	if (verbose) 
-        {
-                fprintf (stderr, "\nFinding the least cost paths ...");
-                fflush (stderr);
-        }
+                G_message("\nFinding the least cost paths ...");
+
 	PRES_PT = head_start_pt;
 	while(PRES_PT != NULL)
 	{
@@ -329,23 +292,22 @@ char *argv[];
 		free (OLD_PT);
 	}
 
-
 	/* Write pending updates by segment_put() to outputmap */
 	segment_flush(&out_seg);
 
 	if (verbose) 
-        {
-                fprintf (stderr, "\nWriting the output map  -%s-...", path_layer);
-                fflush (stderr);
-        }
+                G_message("\nWriting the output map  -%s-...", path_layer);
+
 	path_fd = G_open_cell_new(path_layer);
 	for ( row=0 ; row<nrows; row++ )
 	{
 		segment_get_row(&out_seg,cell,row);
 		if (G_put_raster_row(path_fd,cell, CELL_TYPE) < 0)
-			exit(1);
+			G_fatal_error("unable to write map row %d", row);
 	}
-	if (verbose) printf("finished.\n");
+
+	if (verbose)
+		G_message("finished.");
 
 	segment_release(&in_row_seg);   /* release memory  */
 	segment_release(&in_col_seg);

@@ -30,8 +30,6 @@
          {"output",PATH_LAYER}
     };
 
-    static int n_variables = 4;
-
     char path_layer[64];
     char backrow_layer[64];
     char backcol_layer[64];

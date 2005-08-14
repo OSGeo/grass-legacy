@@ -10,8 +10,8 @@
  ***********************************************************************/
 #include "segment.h"
 
-drawline (x1, y1, x2, y2)
-int x1, y1, x2, y2;
+
+void drawline(int x1, int y1, int x2, int y2)
 {
 	extern char *value;
 	extern SEGMENT out_seg;
