@@ -62,7 +62,7 @@ spread (void)
 	float			min_cost;
 	int			ros_max, ros_base, dir;
 	int			row, col;
-	int			cell_count = 0, ncells;
+	int			cell_count = 0, ncells = 0;
 	struct cell_ptrHa	*to_cell, *old_to_cell;
 	struct costHa		*pres_cell;
 
@@ -163,8 +163,8 @@ cumulative (struct costHa *pres_cell, struct cell_ptrHa *to_cell,
             int ros_max, int ros_base, int dir, float *min_cost)
 {
 	float 		ros, xros, cost;
-        float		xstep_len, rrow, rcol, rstart_row, rstart_col;
-	float 		angle, cos_angle, sin_angle;
+        float		xstep_len;
+	float 		cos_angle, sin_angle;
         int		xrow, xcol, xsteps, count;
 
 	/*most of the actions below calculate the cumulative time/cost,

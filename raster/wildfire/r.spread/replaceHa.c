@@ -17,7 +17,7 @@ void
 replaceHa(float new_min_cost, float angle, int row, int col,
           struct costHa *heap, long *heap_len)
 {
-	long            i, smaller_child;
+	long i, smaller_child = 0;
 
 	if (*heap_len < 1) {
 		printf("programming ERROR: can't delete a cell from an ampty list");

@@ -6,7 +6,7 @@
  *  by the min_cost of a cell.
  *
  **************************************************/
-
+#include <stdlib.h>
 #include "costHa.h"
 #include "local_proto.h"
 
@@ -16,8 +16,8 @@ fixHa(long go_pos, struct costHa *heap, long heap_len)
 	long            vacant, smaller_child;
 
 	if (heap_len == 0) 
-                return;
-        
+                return NULL;
+
         vacant = go_pos;
 	while (2 * vacant <= heap_len) {
 		smaller_child = 2 * vacant;
@@ -36,6 +36,7 @@ fixHa(long go_pos, struct costHa *heap, long heap_len)
 	heap[vacant].angle = heap[heap_len].angle;
 	heap[vacant].row = heap[heap_len].row;
 	heap[vacant].col = heap[heap_len].col;
-        return;
+
+        return heap;
 }
 

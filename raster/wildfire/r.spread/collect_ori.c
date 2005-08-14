@@ -44,7 +44,6 @@ int y_out;
 
 void collect_ori (int start_fd)
 {
-	extern CELL	min, max;
 	extern CELL 	*cell;
 	extern CELL	*map_base, *map_x_out, *map_y_out, *map_visit;
 	extern float	*map_out; 

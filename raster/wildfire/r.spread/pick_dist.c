@@ -14,6 +14,7 @@
  * Author: Jianping Xu, Rutgers University
  * Date: 06/11/1994
  ******************************************************************************/
+#include <stdlib.h>
 #include <limits.h>
 #include <math.h>
 #include "local_proto.h"
