@@ -76,24 +76,7 @@ struct costHa 	*heap;
 int 
 main (int argc, char *argv[])
 {
-	int col, row, srows, scols;
-         
-	float ros, cost,
-        xstep_len, rrow, rcol, rstart_row, rstart_col, angle, 
-	dir_angle, cos_dir_angle, sin_dir_angle, cos_angle, sin_angle;
-
-	struct Cell_head cum_cellhd;            
-
-        struct cell_ptrHa *to_cell, *old_to_cell, 
-        *front_cell = NULL, *rear_cell = NULL;
-
-	struct Colors colors;
-
-	struct start_pt *pres_start_pt, *new_start_pt;
-
-
-	double west, north;	
-	double G_row_to_northing(), G_col_to_easting();
+	int col, row;
 
 	struct {
 		struct Option 	*max, *dir, *base, *start, 

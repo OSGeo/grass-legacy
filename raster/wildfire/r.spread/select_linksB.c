@@ -36,9 +36,6 @@ select_linksB (struct costHa *pres_cell, int least, float comp_dens)
 {
 	extern CELL	*map_max, *map_dir, *map_base; 		/*for ellipse*/
 	extern CELL	*map_visit;		/*for avoiding redundancy*/
-	extern char     buf[];
-/*	extern float    PI, zero;*/
-	extern float    zero;
 	extern int	BARRIER;
 	extern int      nrows, ncols;
 	extern struct cell_ptrHa *front_cell, *rear_cell;
@@ -47,10 +44,9 @@ select_linksB (struct costHa *pres_cell, int least, float comp_dens)
 	float		cos_dir_angle, sin_dir_angle;
 	float		polar_len;	/*polar distance of the ellipse*/
 	float		distance;
-	int             n, s, e, w;	/*parameters defining a rectangule*/
+	int             n=0, s=0, e=0, w=0;	/*parameters defining a rectangule*/
 	int		ros_max, ros_base, dir;	/*3 params defining an elps*/
 	int             row, col;
-	int             to_cell_ros;
 #ifdef DEBUG
 printf("\nin select pres(%d,%d) ", pres_cell->row, pres_cell->col);
 #endif
