@@ -1,14 +1,14 @@
 /* indep.c								*/
 
-#define TRACE
 #undef TRACE
-#define DEBUG
 #undef DEBUG
 
 #undef MAIN
+#include "gis.h"
 #include "ransurf.h"
 
-Indep( )
+
+void Indep(void)
 {
 	int	Count, DRow, DCol;
 	int	Found, R, C;
@@ -17,12 +17,14 @@ Indep( )
 	FUNCTION(indep);
 	Count = 0;
 	Found = 0;
+
 	while(CellCount > 0) {
 	    INT(CellCount);
 	    INT(Count);
 	    RETURN;
 	    DRow = DoNext[ Count].R;
 	    DCol = DoNext[ Count++].C;
+
 	    if( 0 != FlagGet( Cells, DRow, DCol)) {
 		/* FLAG_SET( Out, DRow, DCol); */
 		Out[ DRow][ DCol] = ++Found;
@@ -50,6 +52,7 @@ Indep( )
 			}
 		    }
 		}
+
 		FUNCTION(it1);
                 for( R = DRow - 1; R >=0; R--) {
                     RowDist = NS * (DRow - R);
@@ -71,6 +74,7 @@ Indep( )
                         }
                     }
                 }
+
 		FUNCTION(it2);
                 for( R = DRow; R < Rs; R++) {
                     RowDist = NS * (R - DRow);
@@ -92,6 +96,7 @@ Indep( )
                         }
                     }
                 }       
+
 		FUNCTION(it3);
                 for( R = DRow - 1; R >=0; R--) {
                     RowDist = NS * (DRow - R);
@@ -115,13 +120,13 @@ Indep( )
                 }
 	    }
 	}
+
 	FUNCTION(outputing);
 	OutFD = G_open_cell_new( Output->answer);
-        if( OutFD < 0) {
-                sprintf( Buf, "%s: unable to open new raster map [%s]",
+        if (OutFD < 0)
+                G_fatal_error("%s: unable to open new raster map [%s]",
                         G_program_name(), Output->answer);
-                G_fatal_error( Buf);
-        }
+
         for (R = 0; R < Rs; R++) {
                 for (C = 0; C < Cs; C++) {
 			CellBuffer[C] = Out[ R][ C];

@@ -1,28 +1,29 @@
 /* init.c								*/
 
-#define TRACE
 #undef TRACE
-#define DEBUG
 #undef DEBUG
 
 #undef MAIN
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include "gis.h"
 #include "ransurf.h"
+#include "local_proto.h"
 
-FLAG *FlagCreate();
 
-Init (argc, argv)
-	int	argc;
-	char    *argv[];
+/* function prototypes */
+static int comp_array(CELLSORTER *p1, CELLSORTER *p2);
+static void IsLegal(char *Name);
+
+
+void Init(int argc, char **argv)
 {
     struct Option 	*SeedStuff;
     struct Cell_head	Region;
-    int			Count, NumCov, k, i, j, NumWeight, NumDist, NumExp;
-    int			comp_array();
+    int			Count;
     int			FD, row, col;
-    char		*Name, *Number, String[80];
-    double		MinRes, SumWeight, GasDev();
+    double		MinRes;
     FUNCTION(Init);
 
     Output 		= G_define_option() ;
@@ -49,7 +50,7 @@ Init (argc, argv)
    "Input value: random seed (SEED_MIN >= value >= SEED_MAX), default [random]";
 
     if (G_parser(argc, argv))
-        exit (1);
+        exit (EXIT_FAILURE);
 
     Rs = G_window_rows();
     Cs = G_window_cols();
@@ -59,18 +60,19 @@ Init (argc, argv)
     if( EW < NS)	MinRes = EW;
     else		MinRes = NS;
     CellBuffer = G_allocate_cell_buf();
+
     /* Out = FlagCreate( Rs, Cs); */
     Out = (CELL **) G_malloc( sizeof(CELL *) * Rs);
     for( row = 0; row < Rs; row++) {
 	Out[ row] = G_allocate_cell_buf();
 	G_zero_cell_buf( Out[ row]);
     }
+
     Cells = FlagCreate( Rs, Cs);
     CellCount = 0;
     if (NULL != G_find_file( "cell", "MASK", G_mapset())) {
         if ((FD = G_open_cell_old( "MASK", G_mapset())) < 0) {
                 G_fatal_error(" unable to open MASK");
-                exit( -1);
         } else {
                 for (row = 0; row < Rs; row++)     {
                         G_get_map_row_nomask( FD, CellBuffer, row);
@@ -91,15 +93,17 @@ Init (argc, argv)
 	}
 	CellCount = Rs * Cs;
     }
+
     if( ! Output->answer) {
         G_fatal_error("There should be an output map");
     } else {
         IsLegal( Output->answer);
     }
+
     sscanf( Distance->answer, "%lf", &MaxDist);
-    if( MaxDist < 0.0) {
+    if (MaxDist < 0.0)
 	G_fatal_error( "distance must be >= 0.0");
-    }
+
     DOUBLE(MaxDist);
     MaxDistSq = MaxDist * MaxDist;
     if(! SeedStuff->answer){
@@ -107,12 +111,14 @@ Init (argc, argv)
     } else {
        	sscanf( SeedStuff->answer, "%d", &(Seed));
     }
+
     if (Seed > SEED_MAX){
        	    Seed = Seed % SEED_MAX;
    } else if (Seed < SEED_MIN){
        	    while( Seed < SEED_MIN) 
-			Seed += SEED_MAX - SEED_MIN;
+		Seed += SEED_MAX - SEED_MIN;
     }
+
     DoNext = (CELLSORTER *) G_malloc( CellCount * sizeof(CELLSORTER));
     Count = 0;
     for( row = 0; row < Rs; row++) {
@@ -131,8 +137,8 @@ Init (argc, argv)
     qsort( DoNext, CellCount, sizeof(CELLSORTER), comp_array);
 }
 
-comp_array( p1, p2)
-CELLSORTER *p1, *p2;
+
+static int comp_array(CELLSORTER *p1, CELLSORTER *p2)
 {
 	if( p1->Value < p2->Value)
 		return( -1);
@@ -141,13 +147,10 @@ CELLSORTER *p1, *p2;
 	return( 0);
 }
 
-IsLegal (Name)
-char *Name;
+
+static void IsLegal(char *Name)
 {
-        if (G_legal_filename (Name) == -1) {
-                sprintf (Buf, "%s: map name [%s] not legal for GRASS\n",
+        if (G_legal_filename (Name) == -1)
+                G_fatal_error("%s: map name [%s] not legal for GRASS",
                         G_program_name(), Name);
-                G_fatal_error (Buf);
-                exit (1);
-        }
 }

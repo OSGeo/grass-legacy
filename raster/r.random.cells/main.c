@@ -6,22 +6,19 @@
  * and Analysis, University of California, Santa Barbara.
 */
 
-#define TRACE
 #undef TRACE
-#define DEBUG
 #undef DEBUG
 
 #define MAIN
 #include "gis.h"
-#include "ransurf.h"
 #include "glocale.h"
+#include "ransurf.h"
+#include "local_proto.h"
 #undef MAIN
 
 int
 main (int argc, char *argv[])
 {
-	int	DoMap, DoFilter, MapSeed;
-	double	ran1();
 	struct GModule *module;
 	
 	FUNCTION(main);

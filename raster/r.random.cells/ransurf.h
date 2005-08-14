@@ -30,7 +30,6 @@ GLOBAL  FLAG	*Cells;
 GLOBAL  CELLSORTER *DoNext;
 GLOBAL	CELL	**Out, *CellBuffer;
 GLOBAL	int	Seed, OutFD;
-GLOBAL	char	Buf[240], *OutName, *Mapset;
 GLOBAL	struct Flag *Verbose;
 GLOBAL  struct Option *Distance;
 GLOBAL  struct Option *Output;
