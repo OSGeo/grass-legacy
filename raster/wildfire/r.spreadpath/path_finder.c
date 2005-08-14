@@ -5,14 +5,12 @@
 
 *********************************************************************/
 #include "segment.h"
+#include "local_proto.h"
 
-path_finder (row, col, backrow, backcol)
 
-int row, col, backrow, backcol;
-
+void path_finder(int row, int col, int backrow, int backcol)
 {
 	int data, new_backrow, new_backcol;
-	char buf[400];
 	extern char *value;
 	extern int nrows, ncols;
 	extern SEGMENT in_row_seg, in_col_seg, out_seg;

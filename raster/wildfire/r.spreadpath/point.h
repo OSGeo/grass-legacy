@@ -1,3 +1,6 @@
+#ifndef __POINT_H__
+#define __POINT_H__
+
 /***************************************************************/
 /*                                                             */
 /*      point.h    in   r.spreadpath                           */  
@@ -25,4 +28,5 @@ struct point{
 #define NEW_NEXT        NEW_START_PT->next
 #define NEXT_START_PT   PRESENT_PT->next
 
-/***************************************************************/
+#endif
+
