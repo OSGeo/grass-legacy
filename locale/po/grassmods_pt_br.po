@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: grassmods_pt_br\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-07-01 09:09+0200\n"
-"PO-Revision-Date: 2005-08-09 22:58-0300\n"
+"PO-Revision-Date: 2005-08-11 20:14-0300\n"
 "Last-Translator: Paulo Marcondes <paulomarcondes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -4190,7 +4190,7 @@ msgstr "Mapa raster resultante (não usado com 'distribution')"
 
 #: ../raster/r.statistics/main.c:84
 msgid "Cover values extracted from the category labels of the cover map"
-msgstr ""
+msgstr "Valores de cobertura extraídos dos rótulos de categorias no mapa de cobertura"
 
 #: ../raster/r.stats/main.c:71
 msgid "Generates area statistics for raster map layers."
@@ -4249,8 +4249,9 @@ msgid "Print x and y (column and row)"
 msgstr "Mostra x e y (coluna e linha)"
 
 #: ../raster/r.stats/main.c:170
+#, fuzzy
 msgid "Print raw indexes of fp ranges (fp maps only)"
-msgstr ""
+msgstr "Mostrar índices brutos dos intervalos fp (apenas mapas fp)"
 
 #: ../raster/r.stats/main.c:174
 msgid "Read fp map as integer (use map's quant rules)"
@@ -4262,7 +4263,7 @@ msgstr "Soma os valores das células do raster"
 
 #: ../raster/r.sum/main.c:38
 msgid "Name of incidence or density file."
-msgstr ""
+msgstr "Nome do arquivo de incidência ou densidade."
 
 #: ../raster/r.sun/main.c:156
 msgid ""
@@ -4277,71 +4278,75 @@ msgstr ""
 
 #: ../raster/r.sun/main.c:184
 msgid "Name of the input elevation raster map [meters]"
-msgstr ""
+msgstr "Nome do arquivo raster de elevação para entrada (metros)"
 
 #: ../raster/r.sun/main.c:191
 msgid ""
 "Name of the input aspect map (terrain aspect or azimuth of the solar panel) "
 "[decimal degrees]"
-msgstr ""
+msgstr "Nome do mapa de aspecto (aspecto do terreno ou azimute do painel solar) [graus decimais]"
 
 #: ../raster/r.sun/main.c:198
+#, fuzzy
 msgid ""
 "Name of the input slope raster map (terrain slope or solar panel "
 "inclination) [decimal degrees]"
-msgstr ""
+msgstr "Nome do mapa de declividade (declividade do terreno ou inclinação do painel solar) [graus decimais]"
 
 #: ../raster/r.sun/main.c:206
 msgid "Name of the Linke atmospheric turbidity coefficient input raster map [-]"
-msgstr ""
+msgstr "Nome do arquivo raster com o coeficiente de turbidez atmosférica de Linke [-]"
 
 #: ../raster/r.sun/main.c:215
 msgid "A single value of the Linke atmospheric turbidity coefficient [-]"
-msgstr ""
+msgstr "Um único valor para o coeficiente de turbidez atmosférica de Linke [-]"
 
 #: ../raster/r.sun/main.c:223
 msgid "Name of the ground albedo coefficient input raster map [-]"
-msgstr ""
+msgstr "Nome do arquivo raster com o albedo do solo [-]"
 
 #: ../raster/r.sun/main.c:231
 msgid "A single value of the ground albedo coefficient [-]"
-msgstr ""
+msgstr "Um único valor para o albedo do solo [-]"
 
 #: ../raster/r.sun/main.c:239
+#, fuzzy
 msgid "Name of the latitudes input raster map [decimal degrees]"
-msgstr ""
+msgstr "Nome do arquivo raster com as latitudes [graus decimais]"
 
 #: ../raster/r.sun/main.c:246
 msgid "A single value of latitude [decimal degrees]"
-msgstr ""
+msgstr "Um único valor de latitude [graus decimais]"
 
 #: ../raster/r.sun/main.c:254
+#, fuzzy
 msgid "Name of real-sky beam radiation coefficient raster map [-]"
-msgstr ""
+msgstr "Nome do mapa raster com o coeficiente de radiação do feixe de céu real [-]"
 
 #: ../raster/r.sun/main.c:262
+#, fuzzy
 msgid "Name of real-sky diffuse radiation coefficient raster map [-]"
-msgstr ""
+msgstr "Nome do mapa raster do coeficiente de radiação difusa de céu real [-]"
 
 #: ../raster/r.sun/main.c:269
 msgid "Output incidence angle raster map (mode 1 only)"
-msgstr ""
+msgstr "Saída de mapa de ângulo de incidência (apenas modo 1)"
 
 #: ../raster/r.sun/main.c:277
 msgid ""
 "Output beam irradiance [W.m-2] (mode 1) or irradiation raster file [Wh.m-2."
 "day-1] (mode 2)"
-msgstr ""
+msgstr "Saída de irradiação do feixe [W.m-2] (modo 1) ou arquivo raster de irradiação [Wh.m².dia-1] (modo 2)"
 
 #: ../raster/r.sun/main.c:284
 msgid "Output insolation time raster map [h] (mode 2 only)"
-msgstr ""
+msgstr "Saída de mapa raster de tempo de insolação [h] (apenas modo 2)"
 
 #: ../raster/r.sun/main.c:292
 msgid ""
 "Output diffuse irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2."
 "day-1] (mode 2)"
-msgstr ""
+msgstr "Saída de irradiação difusa [W.m-2] (modo 1) ou arquivo raster de irradiação [Wh.m².dia-1] (modo 2)"
 
 #: ../raster/r.sun/main.c:300
 msgid ""
@@ -4351,27 +4356,28 @@ msgstr ""
 
 #: ../raster/r.sun/main.c:306
 msgid "No. of day of the year (1-365)"
-msgstr ""
+msgstr "Número do dia do ano (1-365)"
 
 #: ../raster/r.sun/main.c:313
 msgid "Time step when computing all-day radiation sums [decimal hours]"
-msgstr ""
+msgstr "Intervalo de tempo para computar soma de radiação do dia todo [horas decimais]"
 
 #: ../raster/r.sun/main.c:320
 msgid "Declination value (overriding the internally computed value) [radians]"
-msgstr ""
+msgstr "Valor de declinação (sobrepõe o valor calculado internamente) [radianos]"
 
 #: ../raster/r.sun/main.c:327
 msgid "Local (solar) time (to be set for mode 1 only) [decimal hours]"
-msgstr ""
+msgstr "Hora (solar) local (ajustar apenas para modo 1) [horas decimais]"
 
 #: ../raster/r.sun/main.c:334
+#, fuzzy
 msgid "Sampling distance step coefficient (0.5-1.5)"
-msgstr ""
+msgstr "Passo de amostragem (0.5-1.5)"
 
 #: ../raster/r.sun/main.c:339
 msgid "Incorporate the shadowing effect of terrain"
-msgstr ""
+msgstr "Incorporar o efeito de sombreamento do terreno"
 
 #: ../raster/r.sunmask/main.c:109
 msgid ""
@@ -4381,20 +4387,21 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.sunmask/main.c:119
+#, fuzzy
 msgid "Name of elevation raster map"
-msgstr ""
+msgstr "Nome do mapa raster de elevação"
 
 #: ../raster/r.sunmask/main.c:127
 msgid "Output raster map having shadows"
-msgstr ""
+msgstr "Saída de raster contendo sombras"
 
 #: ../raster/r.sunmask/main.c:134
 msgid "A: altitude of the sun above horizon, degrees"
-msgstr ""
+msgstr "A: altitude do Sol sobre o horizonte, graus"
 
 #: ../raster/r.sunmask/main.c:141
 msgid "A: azimuth of the sun from the north, degrees"
-msgstr ""
+msgstr "A: azimute do Sol a partir do norte, graus"
 
 #: ../raster/r.sunmask/main.c:147
 msgid "B: year (1950..2050)"
@@ -4424,47 +4431,52 @@ msgstr "B: segundos (0..60)"
 msgid ""
 "B: timezone (east positive, offset from GMT, also use to adjust daylight "
 "savings)"
-msgstr ""
+msgstr "B: fuso horário (leste positivo, diferença de GMT, também usar para compensar horário de verão)"
 
 #: ../raster/r.sunmask/main.c:190
 msgid "east coordinate (point of interest, default: map center)"
-msgstr ""
+msgstr "coordenada leste (ponto de interesse, padrão: centro do mapa)"
 
 #: ../raster/r.sunmask/main.c:197
 msgid "north coordinate (point of interest, default: map center)"
-msgstr ""
+msgstr "coordenada norte (ponto de interesse, padrão: centro do mapa)"
 
 #: ../raster/r.sunmask/main.c:201
 msgid "Zero is a real elevation"
-msgstr ""
+msgstr "Zero é uma elevação real"
 
 #: ../raster/r.sunmask/main.c:205
+#, fuzzy
 msgid "verbose output (also print out sun position etc.)"
-msgstr ""
+msgstr "Saída verbosa (também imprime posição do sol, etc)"
 
 #: ../raster/r.sunmask/main.c:209
 msgid "calculate sun position only and exit"
-msgstr ""
+msgstr "apenas calcula a posição do Sol e encerra"
 
 #: ../raster/r.sunmask/main.c:213
+#, fuzzy
 msgid "Print the sun position output in shell script style"
-msgstr ""
+msgstr "Imprime a posição do sol no estilo shell script"
 
 #: ../raster/r.sunmask/main.c:225
 msgid "Using map center coordinates\n"
-msgstr ""
+msgstr "Usando as coordenadas do centro do mapa\n"
 
 #: ../raster/r.sunmask/main.c:234
+#, fuzzy
 msgid "Empty east coordinate specified!"
-msgstr ""
+msgstr "Coordenada leste vazia!"
 
 #: ../raster/r.sunmask/main.c:236
+#, fuzzy
 msgid "Empty north coordinate specified!"
-msgstr ""
+msgstr "Coordenada norte vazia!"
 
 #: ../raster/r.sunmask/main.c:255
+#, fuzzy
 msgid "Either define sun position or location/date/time parameters."
-msgstr ""
+msgstr "Defina a posição do sol ou parâmetros de local/data/hora."
 
 #: ../raster/r.sunmask/main.c:258
 msgid ""
