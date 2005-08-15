@@ -1089,6 +1089,9 @@ int G_format_timestamp ( struct TimeStamp *, char *);
 int G_scan_timestamp ( struct TimeStamp *, char *);
 int G_remove_raster_timestamp (char *);
 int G_remove_vector_timestamp (char *);
+int G_read_grid3_timestamp (char *,char *, struct TimeStamp *);
+int G_remove_grid3_timestamp (char *);
+int G_write_grid3_timestamp (char *, struct TimeStamp *);
 
 /* token.c */
 char **G_tokenize(char *, char *);
