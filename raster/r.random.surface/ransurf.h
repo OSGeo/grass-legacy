@@ -1,4 +1,6 @@
 /* ransurf.h								*/
+#ifndef __RANSURF_H__
+#define __RANSURF_H__
 
 #include <stdio.h>
 #include <math.h>
@@ -71,3 +73,6 @@ GLOBAL  struct Option *Distance, *Exponent, *Weight;
 #else
 #define FUNCTION(a)
 #endif
+
+#endif
+

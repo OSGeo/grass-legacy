@@ -1,12 +1,12 @@
 /* random.c								*/
 
-#define TRACE
 #undef TRACE
-#define DEBUG
 #undef DEBUG
 
 #undef MAIN
+#include "gis.h"
 #include "ransurf.h"
+
 
 #define M1 259200
 #define IA1 7141
@@ -20,8 +20,9 @@
 #define IA3 4561
 #define IC3 51349
 
+
 /* ran1() returns a double with a value between 0.0 and 1.0		*/
-double ran1()
+double ran1(void)
 {
 	static long ix1,ix2,ix3;
 	static double r[98];
@@ -37,6 +38,7 @@ double ran1()
 		ix2 = ix1 % M2;
 		ix1 = (IA1 * ix1 + IC1) % M1;
 		ix3 = ix1 % M3;
+
 		for (j=1; j <= 97; j++) {
 			ix1 = (IA1 * ix1 + IC1) % M1;
 			ix2 = (IA2 * ix2 + IC2) % M2;
@@ -44,16 +46,17 @@ double ran1()
 		}
 		Seed = 1;
 	}
+
 	ix1 = (IA1 * ix1 + IC1) % M1;
 	ix2 = (IA2 * ix2 + IC2) % M2;
 	ix3 = (IA3 * ix3 + IC3) % M3;
 	j = 1 + ((97 * ix3) / M3);
-	if (j > 97 || j < 1) {
-		sprintf( Buf, "RAN1: j==%d shouldn't happen", j);
-		G_fatal_error( Buf);
-	}
+	if (j > 97 || j < 1)
+		G_fatal_error("RAN1: j==%d shouldn't happen", j);
+
 	temp = r[j];
 	r[j] = (ix1 + ix2 * RM2) * RM1;
+
 	return temp;
 }
 

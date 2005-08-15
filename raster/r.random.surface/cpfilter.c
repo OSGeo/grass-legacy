@@ -1,15 +1,13 @@
 /* cpfilter.c								*/
 
-#define TRACE
 #undef TRACE
-#define DEBUG
 #undef DEBUG
 
 #undef MAIN
 #include "ransurf.h"
 
-CopyFilter( FPtr, Filter)
-	FILTER	*FPtr, Filter;
+
+void CopyFilter(FILTER *FPtr, FILTER Filter)
 {
 	FUNCTION(CopyFilter);
 

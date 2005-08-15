@@ -4,19 +4,16 @@
 #include "gis.h"
 #include "glocale.h"
 
-#define TRACE
 #undef TRACE
-#define DEBUG
 #undef DEBUG
 
 #define MAIN
 #include "ransurf.h"
+#include "local_proto.h"
 #undef MAIN
 
-int
-main (argc, argv)
-	int	argc;
-	char    *argv[];
+
+int main(int argc, char **argv)
 {
 	struct GModule *module;
 	int	DoMap, DoFilter, MapSeed;
@@ -35,18 +32,19 @@ main (argc, argv)
 	CalcSD();
 	for( DoMap = 0; DoMap < NumMaps; DoMap++) {
 		OutFD = G_open_cell_new ( OutNames[ DoMap]);
-        	if( OutFD < 0) {
-                	sprintf( Buf, 
-				"%s: unable to open [%s] random raster map",
+        	if (OutFD < 0)
+                	G_fatal_error("%s: unable to open [%s] random raster map",
                         	G_program_name(), OutNames[ DoMap]);
-                	G_fatal_error (Buf);
-        	}
+
 		if(! Verbose->answer)
 			printf( "\nStarting map [%s]\n", OutNames[DoMap]);
+
 		if( Seeds[DoMap] == SEED_MIN - 1)
 			Seeds[ DoMap] = (int) (ran1() * SEED_MAX);
+
 		MapSeed = Seed = Seeds[DoMap];
 		ZeroMapCells();
+
 		for( DoFilter = 0; DoFilter < NumFilters; DoFilter++) {
 		    CopyFilter( &Filter, AllFilters[DoFilter]);
 		    if(! Verbose->answer) {
@@ -59,11 +57,14 @@ main (argc, argv)
 			1.0 / Filter.Exp,
 			Digits( Filter.Mult, 6),
 			Filter.Mult);
+
 			printf( "\nPercent done:");
 		    }
+
 		    MakeBigF();
 		    CalcSurface();
 		}
+
 		if(! Verbose->answer) printf( "\n");
 		SaveMap( DoMap, MapSeed);
 	}

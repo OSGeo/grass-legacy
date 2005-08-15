@@ -1,16 +1,14 @@
 /* digits.c								*/
 
-#define TRACE
 #undef TRACE
-#define DEBUG
 #undef DEBUG
 
 #undef MAIN
+#include <math.h>
 #include "ransurf.h"
 
-Digits( Double, MaxSig)
-	double	Double;
-	int	MaxSig;
+
+int Digits(double Double, int MaxSig)
 {
 	int	I, Round;
 	double	Check, RD, Right;
@@ -26,5 +24,6 @@ Digits( Double, MaxSig)
 		if( Right == 0.0) return( I);
 		I++;
 	}
+
 	return( MaxSig);
 }
