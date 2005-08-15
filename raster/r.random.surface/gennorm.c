@@ -1,14 +1,15 @@
 /* gennorm.c							*/
 
-#define TRACE
 #undef TRACE
-#define DEBUG
 #undef DEBUG
 
 #undef MAIN
+#include <math.h>
+#include "gis.h"
 #include "ransurf.h"
 
-GenNorm()
+
+void GenNorm(void)
 {
 	double  t, b, c, sqr;
         int     i;

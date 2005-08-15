@@ -1,14 +1,13 @@
 /* zero.c								*/
 
-#define TRACE
 #undef TRACE
-#define DEBUG
 #undef DEBUG
 
 #undef MAIN
 #include "ransurf.h"
 
-ZeroMapCells()
+
+void ZeroMapCells(void)
 {
 	int Row, Col;
 	FUNCTION(ZeroMapCells);
