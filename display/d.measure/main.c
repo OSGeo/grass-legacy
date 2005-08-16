@@ -2,6 +2,7 @@
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
+#define MAIN
 #include "local_proto.h"
 
 int main (int argc, char **argv)
@@ -57,6 +58,16 @@ int main (int argc, char **argv)
 	
 	if (argc > 1 && G_parser(argc,argv))
 	    exit(1);
+
+	if(getenv("GRASS_ANOTHER_BUTTON")){
+	    leftb   = 1; lefts   = "Left:  ";
+	    middleb = 3; middles = "Right: ";
+	    rightb  = 2; rights  = "Middle:";
+	}else{
+	    leftb   = 1; lefts   = "Left:  ";
+	    middleb = 2; middles = "Middle:";
+	    rightb  = 3; rights  = "Right: ";
+	}
 
 	if (R_open_driver() != 0)
 		G_fatal_error ("No graphics device selected");
