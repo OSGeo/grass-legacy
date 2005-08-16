@@ -1,0 +1,47 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.db.addtable</em> adds a new attribute table to a given vector map. It 
+links the table to the specified layer of the vector map.
+
+<h2>NOTES</h2>
+
+v.db.addtable is a front-end to <em>db.execute</em> to allow easier usage.
+
+The supported types of columns depend on the database backend. However, 
+all backends should support VARCHAR, INT, DOUBLE and DATE. The default dbf backend
+supports only these types.
+
+The existing database connection(s) can be verified with <em>v.db.connect</em>.
+
+<h2>EXAMPLE</h2>
+
+Adding a new attribute table with a single column to default layer 1:<br>
+<tt>
+v.db.addtable sentiero_brenta_points columns="slope double"<br>
+v.db.connect -p sentiero_brenta_points<br>
+v.info -c sentiero_brenta_points
+</tt>
+
+<p>
+Adding a new attribute table with two columns to layer 2:<br>
+<tt>
+v.db.addtable sentiero_brenta_points columns="slope double,myname varchar(15)" layer=2<br>
+v.db.connect -p sentiero_brenta_points<br>
+v.info -c sentiero_brenta_points
+</tt>
+
+<h2>SEE ALSO</h2>
+
+<em><a HREF="db.execute.html">db.execute</a></em>,
+<em><a HREF="v.db.addcol.html">v.db.addcol</a></em>,
+<em><a HREF="v.db.connect.html">v.db.connect</a></em>,
+<em><a HREF="v.db.droptable.html">v.db.droptable</a></em>,
+<em><a HREF="v.db.select.html">v.db.select</a></em>,
+<em><a HREF="v.db.update.html">v.db.update</a></em>
+
+
+<h2>AUTHOR</h2>
+
+Markus Neteler
+
+<p><i>Last changed: $Date$</i>
