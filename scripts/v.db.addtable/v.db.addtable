@@ -1,0 +1,103 @@
+#!/bin/sh
+#
+############################################################################
+#
+# MODULE:       v.db.addtable
+# AUTHOR(S):   	Markus Neteler 
+# PURPOSE:      interface to db.execute to add a new table to given vector map
+# COPYRIGHT:    (C) 2005 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#               License (>=v2). Read the file COPYING that comes with GRASS
+#               for details.
+#
+#############################################################################
+
+
+#%Module
+#%  description: adds a new attribute table to a given layer of a vector map
+#%End
+
+#%option
+#% key: map
+#% type: string
+#% gisprompt: old,vector,vector
+#% description: vector map for which to add new attribute table
+#% required : yes
+#%end
+
+#%option
+#% key: table
+#% type: string
+#% description: name of new attribute table (default: vector map name)
+#% required : no
+#%end
+
+#%option
+#% key: layer
+#% type: integer
+#% description: Layer where to add new attribute table
+#% answer: 1
+#% required : no
+#%end
+
+#%option
+#% key: columns
+#% type: string
+#% description: name and type of the new column(s) (types depend on database backend, but all support VARCHAR, INT, DOUBLE and DATE)
+#% required : yes
+#%end
+
+
+if  [ -z $GISBASE ] ; then
+    echo "You must be in GRASS GIS to run this program."
+ exit 1
+fi
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+    exec g.parser "$0" "$@"
+fi
+
+#### check if we have awk
+AWK=`which awk`
+if [ "$AWK" = "" ] ; then
+    echo "$PROG: awk required, please install awk/gawk first" 2>&1
+    exit 1
+fi
+
+# setting environment, so that awk works properly in all languages
+export LC_NUMERIC=C
+
+if [ -z "$GIS_OPT_table" ] ; then
+    echo "Using vector map name extended by layer number as table name: ${GIS_OPT_map}_$GIS_OPT_layer"
+    table=${GIS_OPT_map}_$GIS_OPT_layer
+else
+    echo "Using user specified table name: $GIS_OPT_table"
+    table=$GIS_OPT_table
+fi
+
+# we use the DB settings of layer 1 (may become a parameter as well if not too confusing)
+QUERYLAYER=1
+database=`v.db.connect $GIS_OPT_map -g`
+if [ $? -ne 0 ] ; then
+   echo "An error occured. Stop."
+   exit 1
+fi
+database=`v.db.connect $GIS_OPT_map -g | grep -w $QUERYLAYER | awk '{print $4}'`
+driver=`v.db.connect $GIS_OPT_map -g | grep -w $QUERYLAYER | awk '{print $5}'`
+
+echo "CREATE TABLE $table ($GIS_OPT_columns)" | db.execute database=$database driver=$driver
+
+if [ $? -ne 0 ] ; then
+ echo "An error occured. Stop."
+ exit 1
+fi
+
+v.db.connect map=$GIS_OPT_map database=$database driver=$driver layer=$GIS_OPT_layer table=$table key=cat
+
+echo ""
+echo "Current attribute table links:"
+v.db.connect -p $GIS_OPT_map
+
+exit 0
+

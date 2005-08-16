@@ -1,0 +1,120 @@
+#!/bin/sh
+#
+############################################################################
+#
+# MODULE:       v.db.droptable
+# AUTHOR(S):   	Markus Neteler 
+# PURPOSE:      interface to db.execute to drop an existing table of given vector map
+# COPYRIGHT:    (C) 2005 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#               License (>=v2). Read the file COPYING that comes with GRASS
+#               for details.
+#
+#############################################################################
+
+
+#%Module
+#%  description: removes existing attribute table of a vector map
+#%End
+
+#%option
+#% key: map
+#% type: string
+#% gisprompt: old,vector,vector
+#% description: vector map from which to remove attribute table
+#% required : yes
+#%end
+
+#%option
+#% key: table
+#% type: string
+#% description: name of existing attribute table (default: vector map name)
+#% required : no
+#%end
+
+#%option
+#% key: layer
+#% type: integer
+#% description: Layer from which to drop linked attribute table
+#% answer: 1
+#% required : no
+#%end
+
+
+if  [ -z $GISBASE ] ; then
+    echo "You must be in GRASS GIS to run this program."
+ exit 1
+fi
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+    exec g.parser "$0" "$@"
+fi
+
+#### check if we have awk
+AWK=`which awk`
+if [ "$AWK" = "" ] ; then
+    echo "$PROG: awk required, please install awk/gawk first" 2>&1
+    exit 1
+fi
+
+# setting environment, so that awk works properly in all languages
+export LC_NUMERIC=C
+
+# do some paranoia tests as well:
+if [ -z "$GIS_OPT_table" ] ; then
+    table=`v.db.connect $GIS_OPT_map -g`
+    if [ $? -ne 0 ] ; then
+       echo "An error occured. Stop."
+       exit 1
+    fi
+    table=`v.db.connect $GIS_OPT_map -g | grep -w $GIS_OPT_layer | awk '{print $2}'`
+    if [ -z $table ] ; then
+       echo "No table assigned to layer <$GIS_OPT_layer>"
+       exit 1
+    fi
+    echo "Removing following table name connected to selected layer: ${GIS_OPT_map}"
+else
+    echo "Removing user specified table name: $GIS_OPT_table"
+    existingtable=`v.db.connect $GIS_OPT_map -g | grep -w $GIS_OPT_layer | awk '{print $2}'`
+    table=$GIS_OPT_table
+    if [ "$existingtable" != "$table" ] ; then
+       echo "User selected table <$table> but the table <$existingtable> is linked to layer <$GIS_OPT_layer>"
+       exit 1
+    fi		  
+fi
+
+# we use the DB settings selected layer 
+database=`v.db.connect $GIS_OPT_map -g`
+if [ $? -ne 0 ] ; then
+   echo "An error occured. Stop."
+   exit 1
+fi
+database=`v.db.connect $GIS_OPT_map -g | grep -w $GIS_OPT_layer | awk '{print $4}'`
+driver=`v.db.connect $GIS_OPT_map -g | grep -w $GIS_OPT_layer | awk '{print $5}'`
+
+echo "Removing table <$table> linked to layer <$GIS_OPT_layer> of vector map <$GIS_OPT_map>"
+
+# this may not work in GUI mode:
+echo "Are you sure (y/n)? [n]"
+read ans
+
+if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
+   echo "Dropping table <$table>..."
+   echo "DROP TABLE $table" | db.execute
+   if [ $? -ne 0 ] ; then
+      echo "An error occured. Stop."
+      exit 1
+   fi
+
+   v.db.connect -d map=$GIS_OPT_map layer=$GIS_OPT_layer
+
+   echo "Current attribute table link(s):"
+   v.db.connect -p $GIS_OPT_map
+
+   exit 0
+else
+   echo "Leaving map/table unchanged."
+   exit 1
+fi
+
