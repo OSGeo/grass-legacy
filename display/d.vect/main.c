@@ -20,6 +20,7 @@
 #include "local_proto.h"
 #include "glocale.h"
 
+int width;
 int quiet = 1;
 
 /* adopted from r.colors */
@@ -78,7 +79,6 @@ main (int argc, char **argv)
 	int ret, level;
 	int i, stat = 0, type, area, display;
 	int chcat = 0;
-	int width;
 	int color, fcolor, r, g, b;
 	int colornum = MAX_COLOR_NUM;
 	int size;

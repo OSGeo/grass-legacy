@@ -5,6 +5,7 @@
 #include "plot.h"
 #include "glocale.h"
 
+extern int width;
 
 int topo ( struct Map_info *Map, int type, int do_area, LATTR *lattr ) {
     int i, ltype, num, el;
@@ -106,7 +107,9 @@ int topo ( struct Map_info *Map, int type, int do_area, LATTR *lattr ) {
 	  }
 	    
 	R_move_abs(X + Xoffset, Y + Yoffset) ;
+	R_line_width(0);
 	R_text(text);
+	R_line_width(width);
     }
 
     num = Vect_get_num_nodes(Map);
@@ -168,7 +171,9 @@ int topo ( struct Map_info *Map, int type, int do_area, LATTR *lattr ) {
 	  }
 	    
 	R_move_abs(X + Xoffset, Y + Yoffset) ;
+	R_line_width(0);
 	R_text(text);
+	R_line_width(width);
     }
 
     Vect_destroy_line_struct (Points);
