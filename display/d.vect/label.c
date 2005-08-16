@@ -5,6 +5,7 @@
 #include "plot.h"
 #include "glocale.h"
 
+extern int width;
 
 int label (
     struct Map_info *Map, int type, int do_area, 
@@ -127,7 +128,9 @@ int label (
 	      }
 		
 	    R_move_abs(X + Xoffset, Y + Yoffset) ;
+	    R_line_width(0);
   	    R_text(text);
+	    R_line_width(width);
 	}
     }
 

@@ -7,6 +7,7 @@
 #include "plot.h"
 #include "glocale.h"
 
+extern int width;
 
 int attr ( struct Map_info *Map, int type, char *attrcol, 
            struct cat_list *Clist, LATTR *lattr, int chcat)
@@ -173,7 +174,9 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
 	      }
 		
 	    R_move_abs(X + Xoffset, Y + Yoffset) ;
+	    R_line_width(0);
   	    R_text(text);
+	    R_line_width(width);
 	}
     }
 
