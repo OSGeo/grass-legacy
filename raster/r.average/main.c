@@ -4,17 +4,20 @@
 #include "gis.h"
 #include "glocale.h"
 
+
 #define STATS "r.stats"
 #define RECODE "r.recode"
-int out(FILE *, DCELL, DCELL, double, double);
+
+
+static int out(FILE *, DCELL, DCELL, double, double);
+
 
 int 
 main (int argc, char *argv[])
 {
-    char *me;
     char command[1024];
     char *mapset;
-	struct GModule *module;
+    struct GModule *module;
     struct Option *basemap, *covermap, *outputmap;
     struct Flag *flag_c;
     struct Categories cats;
@@ -24,10 +27,10 @@ main (int argc, char *argv[])
     char *tempfile1, *tempfile2, in_buf[500];
     FILE *fd1, *fd2;
 
-    G_gisinit(me=argv[0]);
+    G_gisinit(argv[0]);
 
-	module = G_define_module();
-	module->description =
+    module = G_define_module();
+    module->description =
 		_("Finds the average of values in a cover map within "
 		"areas assigned the same category value in a "
 		"user-specified base map.");
@@ -58,43 +61,35 @@ main (int argc, char *argv[])
     flag_c->description = _("cover values extracted from the category labels of the cover map");
 
     if (G_parser(argc,argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
     if (!G_find_cell(basemap->answer,""))
-    {
-	fprintf (stderr, "%s: %s - raster map not found\n", me, basemap->answer);
-	exit(1);
-    }
-    if (!(mapset = G_find_cell(covermap->answer,"")))
-    {
-	fprintf (stderr, "%s: %s - raster map not found\n", me, covermap->answer);
-	exit(1);
-    }
-    if (G_legal_filename(outputmap->answer) < 0)
-    {
-	fprintf (stderr, "%s: %s - illegal name\n", me, outputmap->answer);
-	exit(1);
-    }
+	G_fatal_error(_("%s: %s - raster map not found"), 
+                     G_program_name(), basemap->answer);
 
-    if(usecats = flag_c->answer)
+    if (!(mapset = G_find_cell(covermap->answer,"")))
+	G_fatal_error(_("%s: %s - raster map not found"), 
+                     G_program_name(), covermap->answer);
+
+    if (G_legal_filename(outputmap->answer) < 0)
+	G_fatal_error(_("%s: %s - illegal name"), G_program_name(), 
+                     outputmap->answer);
+
+    if ((usecats = flag_c->answer))
     {
 	if (G_read_cats (covermap->answer, mapset, &cats) < 0)
-	{
-	    fprintf (stderr, "%s: ERROR reading category file for %s\n",
-		me, covermap->answer);
-	    exit(1);
-	}
+	    G_fatal_error(_("%s: ERROR reading category file for %s"),
+		        G_program_name(), covermap->answer);
     }
 
     tempfile1 = G_tempfile();
     tempfile2 = G_tempfile();
     sprintf (command, "%s -anC input='%s,%s' fs=space > %s",
 	STATS, basemap->answer, covermap->answer, tempfile1);
-    if (stat = G_system(command))
+    if ((stat = G_system(command)))
     {
 	unlink(tempfile1);
-	fprintf (stderr, "%s: ERROR running %s command\n", me, STATS);
-	exit(stat);
+	G_fatal_error(_("%s: ERROR running %s command"), G_program_name(), STATS);
     }
 
     fd1 = fopen (tempfile1, "r");
@@ -103,8 +98,7 @@ main (int argc, char *argv[])
     {
 	unlink(tempfile1);
 	unlink(tempfile2);
-	fprintf (stderr, "%s: ERROR can't open tempfile\n", me);
-	exit(1);
+	G_fatal_error(_("%s: ERROR can't open tempfile"), G_program_name());
     }
     out(fd2, 0L, 0L, 0.0, 1.0);	/* force at least one reclass rule */
 
@@ -154,10 +148,12 @@ main (int argc, char *argv[])
     stat = G_system(command);
     unlink (tempfile1);
     unlink (tempfile2);
+
     exit(stat);
 }
 
-int out (FILE *fd, DCELL val1, DCELL val2, double sum1, double sum2)
+
+static int out (FILE *fd, DCELL val1, DCELL val2, double sum1, double sum2)
 {
     char b1[80], b2[80];
     DCELL tmp=val1;
