@@ -10,22 +10,21 @@
 #include "local_proto.h"
 #include "glocale.h"
 
+
 #define NOMASK 1
 
-static int nrows, ncols;
 
 int main (int argc, char *argv[]) 
 {
     int partfd;
-    char msg[100];
+    int nrows, ncols;
     char drain_name[GNAME_MAX], *drain_mapset;
     char ridge_name[GNAME_MAX], *ridge_mapset;
     char part_name[GNAME_MAX], *part_mapset;
     CELL *drain, *ridge;
     struct Cell_head window;
     int row, col, npass, tpass;
-    char mg[100]; 
-	struct GModule *module;
+    struct GModule *module;
     struct Option *opt1, *opt2, *opt3, *opt4 ;
 
     G_gisinit (argv[0]);
@@ -64,58 +63,41 @@ int main (int argc, char *argv[])
 	opt4->gisprompt  = "new,cell,raster" ;
 
     if (G_parser(argc, argv) < 0)
-        exit(-1);
+        exit(EXIT_FAILURE);
 
     sscanf(opt1->answer, "%d", &tpass) ;
  
     strcpy(drain_name, opt2->answer); 
     drain_mapset = G_find_cell2(drain_name, "");
     if (drain_mapset == NULL)
-    {
-        sprintf(mg, "%s: <%s> raster file not found\n", G_program_name(),
-                opt2->answer);
-        G_fatal_error(msg);
-	exit(1);
-    }
+        G_fatal_error(_("%s: <%s> raster file not found"), 
+                    G_program_name(), opt2->answer);
 
-/* this isn't a nice thing to do. G_align_window() should be used first */
+    /* this isn't a nice thing to do. G_align_window() should be used first */
     G_get_cellhd (drain_name, drain_mapset, &window);
     G_set_window (&window);
 
     nrows = G_window_rows();
     ncols = G_window_cols();
-
    
     strcpy (ridge_name, opt3->answer);
     ridge_mapset = G_find_cell2(ridge_name, "");
     if (ridge_mapset == NULL)
-    {
-        sprintf(mg, "%s: <%s> raster file not found\n", G_program_name(),
-                opt3->answer);
-        G_fatal_error(msg);
-        exit(1);
-    }
-
+        G_fatal_error(_("%s: <%s> raster file not found"),
+                    G_program_name(), opt3->answer);
 
     strcpy (part_name, opt4->answer);
     part_mapset = G_find_cell2(part_name,"");
     if (part_mapset != NULL)
-    {
-        sprintf(mg, "%s: <%s> raster file exists already\n", G_program_name(),
-                opt4->answer);
-        G_fatal_error(msg); 
-	exit(1);
-    }
+        G_fatal_error(_("%s: <%s> raster file exists already"), 
+                    G_program_name(), opt4->answer);
 
     drain = read_map (drain_name, drain_mapset, NOMASK, nrows, ncols);
     ridge = read_map (ridge_name, ridge_mapset, NOMASK, nrows, ncols);
 
     partfd = G_open_cell_new (part_name);
     if (partfd < 0)
-    {
-	sprintf (msg, "unable to create %s", part_name);
-	G_fatal_error (msg);
-    }
+	G_fatal_error (_("unable to create %s"), part_name);
 
 /* run through file and set streams to zero at locations where ridges exist*/ 
     for (row = 0; row < nrows; row++)
@@ -139,7 +121,7 @@ int main (int argc, char *argv[])
 	    }
 	  }
 	}
-        fprintf (stdout,"forward sweep complete\n");
+        G_message(_("forward sweep complete"));
 
 	for (row = nrows-3; row > 1; --row)
 	{
@@ -154,16 +136,15 @@ int main (int argc, char *argv[])
 	    }
 	   }
 	}
-        fprintf (stdout,"reverse sweep complete\n");    
+        G_message(_("reverse sweep complete"));    
      }
 
-/* write out partitioned watershed map */
-for (row = 0; row<nrows; row++)
- G_put_raster_row (partfd, drain+(row*ncols), CELL_TYPE);
-      
-    fprintf (stdout,"creating support files for %s\n", part_name);
+    /* write out partitioned watershed map */
+    for (row = 0; row<nrows; row++)
+        G_put_raster_row (partfd, drain+(row*ncols), CELL_TYPE);
+
+    G_message(_("creating support files for %s"), part_name);
     G_close_cell (partfd);
 
-    exit(0);
-
+    exit(EXIT_SUCCESS);
 }
