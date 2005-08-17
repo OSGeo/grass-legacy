@@ -1,17 +1,22 @@
 #include <math.h>
 #include "gis.h"
 #include "driverlib.h"
+
 # define STOP  -1
 
+
+/* function prototypes */
 static int text_move(double,double);
 static int text_draw(double,double);
 static int remember(double,double);
-static short int *CharIndex[128] ;
+
+
 static int am_inside = 0 ;
 static int dont_draw = 0 ;
 static int t, b, l, r ;
 double basex, basey ;
 double curx, cury ;
+
 
 int drawchar (double text_size_x,double text_size_y,
 	register double sinrot,register double cosrot, unsigned char character)
