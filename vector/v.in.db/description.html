@@ -69,7 +69,17 @@ this directory:
 If an ID column is missing in the DBF file, such a column with unique
 IDs has to be added beforehand.
 
+<P>
+<b>4) Import of a points table (x, y, z) from DBF file to vector points map for selected points only:</b>
+<P>
+The user can import only selected vector points from a table using the <em>where</em> parameter
+(see above for general DBF handling):<P>
+<pre>
+ v.in.db driver=dbf table=pointsfile x=x y=y z=z key=idcol out=dtmpoints where="x NOT NULL and z > 100"
+</pre>
+
 <H2>AUTHOR</H2>
-<A HREF=mailto:blazek@itc.it>Radim Blazek</A>
+
+Radim Blazek
 
 <p><i>Last changed: $Date$</i>
