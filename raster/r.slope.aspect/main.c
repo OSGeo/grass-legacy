@@ -274,7 +274,7 @@ int main (int argc, char *argv[])
     }
 
     if (G_parser(argc, argv))
-        exit(-1);
+        exit(EXIT_FAILURE);
 
     verbose = (!flag.q->answer);
     align   = (!flag.a->answer);
@@ -291,18 +291,18 @@ int main (int argc, char *argv[])
     dxy_name = parm.dxy->answer;
     if (sscanf (parm.zfactor->answer, "%lf", &zfactor) != 1 || zfactor <= 0.0)
     {
-        fprintf (stderr, "ERROR: %s=%s - must be a postive number\n",
-                       parm.zfactor->key, parm.zfactor->answer);
+        G_warning("%s=%s - must be a postive number", parm.zfactor->key,
+                       parm.zfactor->answer);
         G_usage();
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     if (sscanf (parm.min_slp_allowed->answer, "%lf", &min_slp_allowed) != 1 || min_slp_allowed < 0.0)
     {
-        fprintf (stderr, "ERROR: %s=%s - must be a non_negative number\n",
-                       parm.min_slp_allowed->key, parm.min_slp_allowed->answer);
+        G_warning("%s=%s - must be a non-negative number", parm.min_slp_allowed->key,
+                       parm.min_slp_allowed->answer);
         G_usage();
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     slope_fmt = parm.slope_fmt->answer;
@@ -314,25 +314,21 @@ int main (int argc, char *argv[])
 	&& dx_name == NULL && dy_name == NULL 
 	&& dxx_name == NULL && dyy_name == NULL && dxy_name == NULL)
     {
-	fprintf(stderr, "\nYou must specify at least one of the parameters:");
-	fprintf(stderr, 
+	G_warning("\nYou must specify at least one of the parameters:"
 		"\n<%s>, <%s>, <%s>, <%s>, <%s>, <%s>, <%s>, <%s>,  or <%s>\n", 
 		parm.slope->key, parm.aspect->key, parm.pcurv->key, 
 		parm.tcurv->key, parm.dx->key, parm.dy->key, 
 		parm.dxx->key, parm.dyy->key, parm.dxy->key);
 	G_usage();
-	exit(1);
+	exit(EXIT_FAILURE);
     }
 
     /* check elevation file existence */
     mapset = G_find_cell2(elev_name, "");
     if (!mapset)
-    {
-        sprintf (buf, "elevation file [%s] not found\n", elev_name);
-        G_fatal_error (buf);
-        exit(1);
-    }
-/* set the window from the header for the elevation file */
+        G_fatal_error (_("elevation file [%s] not found"), elev_name);
+
+    /* set the window from the header for the elevation file */
     if (align)
     {
 	G_get_window (&window);
@@ -353,10 +349,8 @@ int main (int argc, char *argv[])
    else if(strcmp(str, "default")==0)
        out_type = -1;
    else
-   {
-        sprintf(buf, "wrong type: %s", str);
-        G_fatal_error(buf);
-   }
+        G_fatal_error(_("wrong type: %s"), str);
+
    data_type = out_type;
    if(data_type < 0) data_type = DCELL_TYPE;
    /* data type is the type of data being processed,
@@ -384,9 +378,7 @@ int main (int argc, char *argv[])
    /* give warning if location units are different from meters and zfactor=1*/
     factor = G_database_units_to_meters_factor();
     if (factor != 1.0)
-    {
-    fprintf (stderr, "WARNING: converting units to meters, factor=%.6f\n", factor);
-    }
+        G_warning("converting units to meters, factor=%.6f", factor);
 
     G_begin_distance_calculations();
     north = G_row_to_northing(0.5, &window);
@@ -416,7 +408,7 @@ int main (int argc, char *argv[])
 
     /* open the elevation file for reading */
     elevation_fd = G_open_cell_old (elev_name, mapset);
-    if (elevation_fd < 0) exit(1);
+    if (elevation_fd < 0) exit(EXIT_FAILURE);
     elev_cell[0] = (DCELL *) G_calloc (ncols + 1, sizeof(DCELL));
     G_set_d_null_value(elev_cell[0], ncols);
     elev_cell[1] = (DCELL *) G_calloc (ncols + 1, sizeof(DCELL));
@@ -543,7 +535,7 @@ int main (int argc, char *argv[])
 
     if (aspect_fd < 0 && slope_fd < 0 && pcurv_fd < 0 && tcurv_fd < 0
 	&& dx_fd < 0 && dy_fd < 0 && dxx_fd < 0 && dyy_fd < 0 && dxy_fd < 0)
-        exit(1);
+        exit(EXIT_FAILURE);
 
     if(Wrap)
     {
@@ -997,14 +989,13 @@ int main (int argc, char *argv[])
 
     G_close_cell (elevation_fd);
     if (verbose)
-        fprintf (stderr,"CREATING SUPPORT FILES\n");
+        G_message(_("CREATING SUPPORT FILES"));
 
-    fprintf (stdout, "ELEVATION PRODUCTS for mapset [%s] in [%s]\n",
+    G_message(_("ELEVATION PRODUCTS for mapset [%s] in [%s]"),
         G_mapset(), G_location());
 
     if (aspect_fd >= 0)
     {
-
         /* colortable for aspect  same as in s.surf.rst
      G_init_colors (&colors);
      G_add_color_rule (0, 255, 255, 255, 0, 255, 255, 255, &colors);
@@ -1027,7 +1018,7 @@ int main (int argc, char *argv[])
         G_read_raster_cats (aspect_name, G_mapset(), &cats);
         G_set_raster_cats_title ("aspect counterclockwise in degrees from east", &cats);
 
-	fprintf(stdout, "min computed aspect %.4f  max computed aspect %.4f\n", min_asp, max_asp);
+	G_message(_("min computed aspect %.4f  max computed aspect %.4f"), min_asp, max_asp);
 	/* the categries quant intervals are 1.0 long, plus
 	   we are using reverse order so that the label looked up
 	   for i-.5 is not the one defined for i-.5, i+.5 interval, but
@@ -1077,7 +1068,7 @@ int main (int argc, char *argv[])
         hist.edlinecnt = 3;
         G_write_history (aspect_name, &hist);
 
-        fprintf (stdout, "ASPECT [%s] COMPLETE\n", aspect_name);
+        G_message(_("ASPECT [%s] COMPLETE"), aspect_name);
     }
 
     if (slope_fd >= 0)
@@ -1117,7 +1108,7 @@ int main (int argc, char *argv[])
         if(deg) G_set_raster_cats_title ("slope in degrees", &cats);
         else if(perc) G_set_raster_cats_title ("percent slope", &cats);
 
-	fprintf(stdout, "min computed slope %.4f  max computed slope %.4f\n", min_slp, max_slp);
+	G_message(_("min computed slope %.4f  max computed slope %.4f"), min_slp, max_slp);
 	/* the categries quant intervals are 1.0 long, plus
 	   we are using reverse order so that the label looked up
 	   for i-.5 is not the one defined for i-.5, i+.5 interval, but
@@ -1167,7 +1158,7 @@ int main (int argc, char *argv[])
         hist.edlinecnt = 3;
         G_write_history (slope_name, &hist);
 
-        fprintf (stdout, "SLOPE [%s] COMPLETE\n", slope_name);
+        G_message(_("SLOPE [%s] COMPLETE"), slope_name);
     }
 
     /* colortable for curvatures */
@@ -1238,7 +1229,7 @@ int main (int argc, char *argv[])
         hist.edlinecnt = 3;
         G_write_history (pcurv_name, &hist);
 
-        fprintf (stdout, "PROFILE CURVE [%s] COMPLETE\n", pcurv_name);
+        G_message(_("PROFILE CURVE [%s] COMPLETE"), pcurv_name);
     }
 
     if (tcurv_fd >= 0)
@@ -1265,7 +1256,7 @@ int main (int argc, char *argv[])
         hist.edlinecnt = 3;
         G_write_history (tcurv_name, &hist);
 
-        fprintf (stdout, "TANGENTIAL CURVE [%s] COMPLETE\n", tcurv_name);
+        G_message(_("TANGENTIAL CURVE [%s] COMPLETE"), tcurv_name);
     }   
 
     if (dx_fd >= 0)
@@ -1290,7 +1281,7 @@ int main (int argc, char *argv[])
         hist.edlinecnt = 3;
         G_write_history (dx_name, &hist);
 
-        fprintf (stdout, "E-W SLOPE [%s] COMPLETE\n", dx_name);
+        G_message(_("E-W SLOPE [%s] COMPLETE"), dx_name);
     }   
 
     if (dy_fd >= 0)
@@ -1315,7 +1306,7 @@ int main (int argc, char *argv[])
         hist.edlinecnt = 3;
         G_write_history (dy_name, &hist);
 
-        fprintf (stdout, "N-S SLOPE [%s] COMPLETE\n", dy_name);
+        G_message(_("N-S SLOPE [%s] COMPLETE"), dy_name);
     }   
 
     if (dxx_fd >= 0)
@@ -1340,7 +1331,7 @@ int main (int argc, char *argv[])
         hist.edlinecnt = 3;
         G_write_history (dxx_name, &hist);
 
-        fprintf (stdout, "DXX [%s] COMPLETE\n", dxx_name);
+        G_message(_("DXX [%s] COMPLETE"), dxx_name);
     }   
 
     if (dyy_fd >= 0)
@@ -1365,7 +1356,7 @@ int main (int argc, char *argv[])
         hist.edlinecnt = 3;
         G_write_history (dyy_name, &hist);
 
-        fprintf (stdout, "DYY [%s] COMPLETE\n", dyy_name);
+        G_message(_("DYY [%s] COMPLETE"), dyy_name);
     }   
 
     if (dxy_fd >= 0)
@@ -1390,8 +1381,8 @@ int main (int argc, char *argv[])
         hist.edlinecnt = 3;
         G_write_history (dxy_name, &hist);
 
-        fprintf (stdout, "DXY [%s] COMPLETE\n", dxy_name);
+        G_message(_("DXY [%s] COMPLETE"), dxy_name);
     }   
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
