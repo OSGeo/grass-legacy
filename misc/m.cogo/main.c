@@ -50,7 +50,7 @@ struct survey_record {
 };
 
 
-void
+static void
 print_coordinates (FILE *outfile, struct survey_record *in)
 {
    if (in->haslabel == YES)
@@ -60,7 +60,7 @@ print_coordinates (FILE *outfile, struct survey_record *in)
 }
 
 
-void
+static void
 print_cogo (FILE *outfile, struct survey_record *in)
 {
    if (in->haslabel == YES)
@@ -74,18 +74,19 @@ print_cogo (FILE *outfile, struct survey_record *in)
 }
 
 
-const char *
+static const char *
 next_line (FILE *infile)
 {
    static char line[512];
    const char *cptr;
    
-   memset (line, 0, 512);
+   memset (line, 0, sizeof(line));
    cptr = fgets (line, 512, infile);
    return cptr;
 }
 
-int
+
+static int
 parse_forward (const char *in, struct survey_record *out)
 {
    char dummy1;
@@ -148,7 +149,8 @@ parse_forward (const char *in, struct survey_record *out)
    return status;
 }
 
-int
+
+static int
 parse_reverse (const char *in, struct survey_record *out)
 {
    double x,y;
@@ -219,6 +221,7 @@ parse_reverse (const char *in, struct survey_record *out)
    
    return status;
 }
+
 
 int 
 main (int argc, char **argv)
