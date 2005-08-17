@@ -1,6 +1,7 @@
 #include "gis.h"
 #include "local_proto.h"
 
+
 CELL *read_map (char *name, char *mapset, int nomask, int nrows, int ncols)
 {
     int fd;
@@ -8,16 +9,15 @@ CELL *read_map (char *name, char *mapset, int nomask, int nrows, int ncols)
     int row;
     int (*get_row)();
 
-/* allocate entire map */
+    /* allocate entire map */
     map = (CELL *)G_malloc (nrows*ncols*sizeof(CELL));
 
-/* open the map */
+    /* open the map */
     if ((fd = G_open_cell_old (name, mapset)) < 0)
-	die (name,mapset,"unable to open");
+	G_fatal_error("unable to open [%s] in [%s]", name, mapset);
 
-/* read the map */
-    fprintf (stderr,"READING [%s] in [%s] ... ",name,mapset);
-    fflush (stderr);
+    /* read the map */
+    G_message("READING [%s] in [%s] ... ", name, mapset);
 
     if (nomask)
 	get_row = G_get_map_row_nomask ;
@@ -28,10 +28,7 @@ CELL *read_map (char *name, char *mapset, int nomask, int nrows, int ncols)
     {
 	G_percent (row, nrows, 10);
 	if ((*get_row)(fd, map+row*ncols, row) < 0)
-	{
-	    fprintf (stderr,"\n");
-	    die (name,mapset,"error reading");
-	}
+	    G_fatal_error("error reading [%s] in [%s]", name, mapset);
     }
     G_percent (nrows, nrows, 10);
 
