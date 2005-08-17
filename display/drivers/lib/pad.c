@@ -67,6 +67,8 @@ remove_value(ITEM *item, char *value)
 	else
 	    p = &l->next;
     }
+
+    return 0;
 }
 
 int
