@@ -101,7 +101,7 @@
 #%option
 #% key: colorscheme
 #% type: string
-#% description: Color scheme for graduated color mapping (single color for graduated point display)
+#% description: Color scheme for graduated color mapping (select 'single color' for graduated point display)
 #% options: blue-red,red-blue,green-red,red-green,blue-green,green-blue,cyan-yellow,yellow-cyan,custom gradient,single color
 #% answer: blue-red
 #% required : yes
