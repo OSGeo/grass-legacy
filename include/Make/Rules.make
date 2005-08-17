@@ -59,8 +59,8 @@ htmlgen:
 		grep -iv '</body>\|</html>' $(PGM).tmp.html >> $(PGM).tmp.html.header ; \
 		mv -f $(PGM).tmp.html.header $(PGM).tmp.html ; \
 	fi
-	# if </html> is found, suppose a complete html is provided.
-	# otherwise, generate module class reference:
+# if </html> is found, suppose a complete html is provided.
+# otherwise, generate module class reference:
 	@if ! grep -i '</html>' $(PGM).tmp.html > /dev/null ; then \
 		echo "<HR>" >> $(PGM).tmp.html ; \
 		MODCLASS=`echo $(PGM) | cut -d'.' -f1` ; \
