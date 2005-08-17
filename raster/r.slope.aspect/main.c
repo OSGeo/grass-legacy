@@ -7,7 +7,9 @@
 
 /* 10/99 from GMSL, updated to new GRASS 5 code style , changed default "prec" to float*/
 
+
 #define abs(x) ((x)<0?-(x):(x))
+
 
 /**************************************************************************
  * input is from command line.
@@ -50,22 +52,21 @@ int main (int argc, char *argv[])
     DCELL *c1, *c2, *c3, *c4, *c5, *c6, *c7, *c8, *c9;
     DCELL tmp1, tmp2;
     FCELL dat1, dat2;
-    void * asp_raster, *asp_ptr;
-    void * slp_raster, *slp_ptr;
-    void * pcurv_raster, *pcurv_ptr;
-    void * tcurv_raster, *tcurv_ptr;
-    void * dx_raster, *dx_ptr ;
-    void * dy_raster, *dy_ptr ;
-    void * dxx_raster, *dxx_ptr ;
-    void * dyy_raster, *dyy_ptr ;
-    void * dxy_raster, *dxy_ptr ;
+    void * asp_raster, *asp_ptr = NULL;
+    void * slp_raster, *slp_ptr = NULL;
+    void * pcurv_raster, *pcurv_ptr = NULL;
+    void * tcurv_raster, *tcurv_ptr = NULL;
+    void * dx_raster, *dx_ptr = NULL;
+    void * dy_raster, *dy_ptr = NULL;
+    void * dxx_raster, *dxx_ptr = NULL;
+    void * dyy_raster, *dyy_ptr = NULL;
+    void * dxy_raster, *dxy_ptr = NULL;
     int i;
-    RASTER_MAP_TYPE out_type, data_type;
+    RASTER_MAP_TYPE out_type = 0, data_type;
     int Wrap;  /* global wraparound */
     struct Cell_head window, cellhd;
     struct History  hist;
     struct Colors colors;
-    double ceil();
 
     char *elev_name;
     char *aspect_name;
@@ -82,14 +83,10 @@ int main (int argc, char *argv[])
     int nrows, row;
     int ncols, col;
 
-    double G_distance();
-    double G_row_to_northing();
-    double G_col_to_easting();
     double north, east, south, west, ns_med;
 
     double radians_to_degrees;
     double degrees_to_radians;
-    double sqrt(), tan(), atan2(), atan();
     double H,V;
     double dx;              /* partial derivative in ew direction */
     double dy;              /* partial derivative in ns direction */
@@ -110,12 +107,12 @@ int main (int argc, char *argv[])
     double key;
     double slp_in_perc, slp_in_deg;
     double min_slp=900., max_slp=0., min_slp_allowed;
-    int low, hi, test;
+    int low, hi, test = 0;
     int deg=0;
     int perc=0;
     char *slope_fmt;
     char *str;
-	struct GModule *module;
+    struct GModule *module;
     struct
     {
 	struct Option *elevation, *slope_fmt, *slope, *aspect, *pcurv, *tcurv,
