@@ -7,10 +7,10 @@
 #include "gis.h"
 
 
-extern int I__firstrow_;
-extern int I__lastrow_;
-extern int I__firstcol_;
-extern int I__lastcol_;
+int I__firstrow_;
+int I__lastrow_;
+int I__firstcol_;
+int I__lastcol_;
 
 
 int I_set_window (int firstrow,int lastrow,int firstcol,int lastcol)
