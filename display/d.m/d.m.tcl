@@ -481,6 +481,20 @@ proc Dm::pan { } {
 
 }
 
+# pan
+proc Dm::scalebar { } {
+    
+    set cmd "d.barscale bcolor=white tcolor=black -m"
+    term $cmd 
+
+}
+# pan
+proc Dm::measure { } {
+    
+    set cmd "d.measure"
+    term $cmd 
+
+}
 # erase to white
 proc Dm::erase { } {
     
