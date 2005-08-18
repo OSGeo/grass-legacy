@@ -1,8 +1,8 @@
+#include <stdio.h>
 #include "imagery.h"
 
-int I_get_group_title (
-    char *group,
-    char *title,int n)
+
+int I_get_group_title (char *group, char *title, int n)
 {
     FILE *fd;
 
@@ -15,19 +15,21 @@ int I_get_group_title (
 	G_getl (title, n, fd);
 	fclose (fd);
     }
-    return fd != NULL;
+
+    return (fd != NULL);
 }
 
-int I_put_group_title (
-    char *group,
-    char *title)
+
+int I_put_group_title (char *group, char *title)
 {
     FILE *fd;
+
     fd = I_fopen_group_file_new (group, "TITLE");
     if (fd != NULL)
     {
 	fprintf (fd, "%s\n", title);
 	fclose (fd);
     }
-    return fd != NULL;
+
+    return (fd != NULL);
 }
