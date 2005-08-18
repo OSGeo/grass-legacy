@@ -86,37 +86,37 @@ proc DmToolBar::create { tb  } {
     $bbox3 add -image [image create photo -file "$dmpath/add.raster.gif"] \
         -command "Dm::add raster" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
-        -helptext [G_msg "Add raster"]
+        -helptext [G_msg "Add raster layer"]
 
     $bbox3 add -image [image create photo -file "$dmpath/add.vector.gif"] \
         -command "Dm::add vector" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
-        -helptext [G_msg "Add vector"]
+        -helptext [G_msg "Add vector layer"]
 
     $bbox3 add -image [image create photo -file "$dmpath/add.labels.gif"] \
         -command "Dm::add labels" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
-        -helptext [G_msg "Add paint labels (from directory paint/labels)"]
+        -helptext [G_msg "Add paint labels layer (from directory paint/labels)"]
 
     $bbox3 add -image [image create photo -file "$dmpath/add.cmd.gif"] \
         -command "Dm::add cmd" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
-        -helptext [G_msg "Create new command"]
+        -helptext [G_msg "Add command layer"]
 
-    pack $bbox3 -side left -anchor w
+#    pack $bbox3 -side left -anchor w
 
-    set sep3 [Separator $toolbar.sep3 -orient vertical]
-    pack $sep3 -side left -fill y -padx 5 -anchor w
+#    set sep3 [Separator $toolbar.sep3 -orient vertical]
+#    pack $sep3 -side left -fill y -padx 5 -anchor w
 
     # LAYER DUPLICATE/DELETE
-    set bbox4 [ButtonBox $toolbar.bbox4 -spacing 8 ]
+#    set bbox4 [ButtonBox $toolbar.bbox4 -spacing 8 ]
 
-    $bbox4 add -image [image create photo -file "$dmpath/copy.gif"] \
+    $bbox3 add -image [image create photo -file "$dmpath/copy.gif"] \
         -command "Dm::duplicate" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
         -helptext [G_msg "Duplicate Layer"]    
 
-    $bbox4 add -image [Bitmap::get cut] -command "Dm::delete" \
+    $bbox3 add -image [Bitmap::get cut] -command "Dm::delete" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
         -helptext [G_msg "Delete layer"]
        
@@ -127,7 +127,7 @@ proc DmToolBar::create { tb  } {
     #    -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
     #    -helptext "Paste selection"
 
-    pack $bbox4 -side left -anchor w
+    pack $bbox3 -side left -anchor w
 
     set sep4 [Separator $toolbar.sep4 -orient vertical]
     pack $sep4 -side left -fill y -padx 5 -anchor w
