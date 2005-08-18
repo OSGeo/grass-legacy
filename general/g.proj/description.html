@@ -100,6 +100,11 @@ location:<br>
 <b>g.proj -c location=</b><em>newloc</em> <br>
 
 <p>
+Create a new location with the co-ordinate system from a WKT definition
+stored in a text file:<br>
+<b>g.proj -c wkt=</b><em>irish_grid.prj</em> <b>location=</b><em>irish_grid</em> <br>
+
+<p>
 Reproject external raster map to current GRASS projection (does not always make sense!)
 using the GDAL 'gdalwarp' tool:<br>
 <b>gdalwarp -t_srs "`g.proj -wef`" aster.tif aster_tmerc.tif<br>
