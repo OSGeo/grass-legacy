@@ -6,10 +6,12 @@
 #include "imagery.h"
 #include "gis.h"
 
-int I__firstrow_;
-int I__lastrow_;
-int I__firstcol_;
-int I__lastcol_;
+
+extern int I__firstrow_;
+extern int I__lastrow_;
+extern int I__firstcol_;
+extern int I__lastcol_;
+
 
 int I_set_window (int firstrow,int lastrow,int firstcol,int lastcol)
 {
@@ -33,5 +35,6 @@ int I_set_window (int firstrow,int lastrow,int firstcol,int lastcol)
 
     if(G_set_window (&window) < 0)
 	return -1;
+
     return G_put_window (&window);
 }
