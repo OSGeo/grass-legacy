@@ -23,3 +23,29 @@ inc:
 	cat gstypes.h | sed -e 's/local_proto.h/ogsf_proto.h/' > $(ARCH_INCDIR)/gstypes.h
 	cat gstypes.h | sed -e 's/local_proto.h/ogsf_proto.h/' > $(ARCH_DISTDIR)/include/gstypes.h
 
+DOXNAME=ogsf
+#check for program
+checkdoxygen:
+	@(type doxygen > /dev/null || (echo "ERROR: Install 'doxygen' software first (get from http://www.doxygen.org)" && exit 1))
+
+htmldocs: checkdoxygen
+	doxygen ./Doxyfile_arch_html
+	@echo "HTML reference in directory ./html/index.html"
+
+latexdocs: checkdoxygen
+	test ! -d latex || (cd ./latex && $(MAKE) clean)
+	doxygen ./Doxyfile_arch_latex
+#this hack is needed to make Acroread's search engine happy:
+	(cd ./latex ; echo "\usepackage[T1]{fontenc}" >> doxygen.sty)
+	(cd ./latex && $(MAKE) )
+	@echo "Latex reference in directory ./latex/refman.dvi"
+
+pdfdocs: checkdoxygen
+	test ! -d latex || (cd ./latex && $(MAKE) clean)
+	doxygen ./Doxyfile_arch_latex
+	(cd ./latex ; echo "\usepackage[T1]{fontenc}" >> doxygen.sty)
+	(cd ./latex && $(MAKE) pdf && mv refman.pdf grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}${DOXNAME}_`date '+%Y_%m_%d'`_refman.pdf)
+	@echo "PDF reference in directory ./latex/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}${DOXNAME}_`date '+%Y_%m_%d'`_refman.pdf"
+
+cleandocs:
+	rm -rf ./latex ./html
