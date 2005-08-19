@@ -30,8 +30,8 @@ char  msg[120];
 #endif
 
 static int floating_exception;
-static int cur_photo;
 static void catch(int);
+
 
 /* Compute the ortho rectification parameters */
 /* XC,YC,ZC, Omega, Phi, Kappa */
@@ -44,7 +44,7 @@ int I_compute_ortho_equations (
 {
     MATRIX delta, epsilon, B, BT, C, E, N, CC, NN, UVW, XYZ, M, WT1;
     double meanx, meany;                         
-    double X1,X2,x1,x2,Z1,Y1,Y2,y1,y2, dist_grnd, dist_photo;            
+    double X1=0,X2=0,x1=0,x2=0,Z1=0,Y1=0,Y2=0,y1=0,y2=0, dist_grnd=0, dist_photo=0;
     double x,y,z,X,Y,Z,Xp,Yp,CFL;
     double lam,mu,nu,U,V,W;
     double xbar, ybar;
