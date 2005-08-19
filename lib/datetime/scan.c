@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "datetime.h"
+
   
 static int scan_absolute (DateTime *,char *);
 static int more (char **);
@@ -60,7 +61,7 @@ static int scan_absolute (DateTime *dt, char *buf)
     char word[1024];
     int n;
     int ndigits;
-    int tz;
+    int tz = 0;
     int have_tz = 0;
     int bc = 0;
     int to, fracsec = 0;
@@ -284,6 +285,7 @@ static int get_double (
 
 
 /* if pos is non-zero, *(p-1) must be legal */
+/*
 static int
 is_wordend (pos, p)
     int pos;
@@ -301,6 +303,7 @@ is_wordend (pos, p)
     return (0);
 
 }
+*/
 
 /* get a word (between white space) and convert to lowercase */
 static int get_word (char **s, char *word)
