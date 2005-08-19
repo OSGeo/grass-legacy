@@ -25,7 +25,7 @@ int I_read_ref_points (FILE *fd, struct Ortho_Photo_Points *cp)
     cp->status = NULL;
 
 /*fprintf (stderr, "Try to read one point \n");*/
-    while (G_getl (buf, sizeof buf, fd))
+    while (G_getl (buf, sizeof(buf), fd))
     {
 	G_strip(buf);
 	if (*buf == '#' || *buf == 0) continue;
@@ -42,7 +42,7 @@ int
 I_new_ref_point (struct Ortho_Photo_Points *cp, double e1, double n1, double e2, double n2, int status)
 {
     int i;
-    unsigned int size;
+    size_t size;
 
 /*fprintf (stderr, "Try to new_ref_point \n");*/
     if (status < 0) return 0;
