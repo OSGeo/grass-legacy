@@ -25,24 +25,22 @@
 #include <stdlib.h>
 #include "gis.h"
 #include "glocale.h"
-#include "local_proto.h"
 
-char command[1024];
+
+/* function prototypes */
+static int find (FILE *fd, char *element);
 
 
 int 
 main (int argc, char *argv[])
 {
+    char command[1024];
     char *tempfile;
-    FILE *fd;
     int n;
-    int ok;
 
     if (argc < 5 || argc%2 == 0)
-    {
-	G_message(_("usage: %s location mapset element file\n"), argv[0]);
- 	exit(1);
-    }
+	G_fatal_error(_("usage: %s location mapset element file."), argv[0]);
+
     G_gisinit (argv[0]);
 
 /*
@@ -56,12 +54,15 @@ main (int argc, char *argv[])
 
     for (n = 3; n < argc; n += 2)
     {
-/* get this list into a temp file first */
+        FILE *fd;
+        int ok;
+
+        /* get this list into a temp file first */
 	fd = fopen (tempfile, "w");
 	if (fd == NULL)
 	{
 	    perror (tempfile);
-	    exit(1);
+	    exit(EXIT_FAILURE);
 	}
 	unlink (argv[n+1]);
 	ok = find (fd, argv[n]);
@@ -77,41 +78,45 @@ main (int argc, char *argv[])
 	    G_system(command);
 	}
 	unlink (tempfile);
+        G_free(tempfile);
     }
 
     return 0;
 }
 
 
-int 
-find (FILE *fd, char *element)
+static int find (FILE *fd, char *element)
 {
-    int len1, len2;
+    char command[1024];
+    int len1 = 0, len2 = 0;
     char *mapset;
-    char name[100];
     char *dir;
-    int len;
     int n;
-    FILE *ls;
 
     strcpy (command, "ls ");
     dir = command + strlen (command);
 
-    len1 = len2 = 0;
     fseek (fd, 0L, 0);
     fwrite (&len1, sizeof(len1), (size_t)1, fd);
     fwrite (&len2, sizeof(len2), (size_t)1, fd);
-    for (n=0; (mapset = G__mapset_name(n)) != NULL; n++)
+
+    for (n=0; ((mapset = G__mapset_name(n)) != NULL); n++)
     {
+        int len;
+        char name[100];
+        FILE *ls;
+
 	G__file_name (dir, element, "", mapset);
 	if (access (dir,0) != 0)
 	    continue;
+
 	ls = popen (command, "r");
 	if (ls == NULL) continue;
 
 	len = strlen (mapset);
 	if (len > len2)
 	    len2 = len;
+
 	while (fscanf (ls, "%s", name) == 1)
 	{
 	    fprintf (fd, "%s %s\n", name, mapset);
@@ -119,13 +124,17 @@ find (FILE *fd, char *element)
 	    if (len > len1)
 		len1 = len;
 	}
+
 	pclose (ls);
     }
+
     if (len1 == 0 || len2 == 0)
 	return 0;
+
     fflush (fd);
     fseek (fd, 0L, 0);
     fwrite (&len1, sizeof(len1), (size_t)1, fd);
     fwrite (&len2, sizeof(len2), (size_t)1, fd);
+
     return 1;
 }
