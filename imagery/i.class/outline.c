@@ -156,7 +156,7 @@ int outline (void)
   /* sort the edge points by row and then by col */
 
   Menu_msg("Sorting...");
-  qsort (P, PN, sizeof(POINT), edge_order);
+  qsort (P, (size_t)PN, sizeof(POINT), edge_order);
 
   Menu_msg("");
   return (1);
