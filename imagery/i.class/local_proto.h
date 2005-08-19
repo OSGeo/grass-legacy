@@ -132,7 +132,7 @@ void sigalarm(int);
 /* sigint.c */
 int sigint(int);
 /* signature.c */
-int init_sig_routines(int);
+int init_sig_routines(size_t);
 int prepare_signature(int);
 int show_signature(int, double);
 int display_signature(void);

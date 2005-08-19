@@ -71,7 +71,7 @@ int ask_files (char *me)
       G_fatal_error(_("Unable to read cell header for first band file."));
 
 /* allocate space for signature routines */
-    init_sig_routines(Refer.nfiles);
+    init_sig_routines((size_t)Refer.nfiles);
 
     G_message(_("\nRESULT SIGNATURE"));
     if(!I_ask_signature_file_any ("Enter name for the resulting signature file",

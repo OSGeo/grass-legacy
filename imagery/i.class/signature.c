@@ -36,9 +36,10 @@ static int done(void);
 /************************** ###### ************************************/
 /**********************************************************************/
 int 
-init_sig_routines (int nbands)
+init_sig_routines (size_t nbands)
 {
   int i;
+
   if ((Range_min= (int *) G_calloc(nbands, sizeof(int)))==NULL ||
       (Range_max= (int *) G_calloc(nbands, sizeof(int)))==NULL ||
       (Band_min= (int *) G_calloc(nbands, sizeof(int)))==NULL ||
