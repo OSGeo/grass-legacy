@@ -1,6 +1,9 @@
 #include <stdlib.h>
+#include "gis.h"
+#include "glocale.h"
 #include "global.h"
 #include "local_proto.h"
+
 
 int 
 open_files (void)
@@ -11,27 +14,21 @@ open_files (void)
 
     I_init_group_ref (&Ref);
     if (!I_find_group(group))
-    {
-	fprintf (stderr, "group=%s - not found\n", group);
-	exit(1);
-    }
+	G_fatal_error(_("group=[%s] - not found."), group);
+
     if (!I_find_subgroup(group, subgroup))
-    {
-	fprintf (stderr, "subgroup=%s (of group %s) - not found\n", subgroup, group);
-	exit(1);
-    }
+	G_fatal_error(_("subgroup=[%s] (of group [%s]) - not found."), subgroup, group);
 
     I_get_subgroup_ref (group, subgroup, &Ref);
 
     if (Ref.nfiles <= 1)
     {
-	fprintf (stderr, "Subgroup [%s] of group [%s] ", subgroup, group);
 	if (Ref.nfiles <= 0)
-	    fprintf (stderr, "doesn't have any files\n");
+            G_fatal_error(_("Subgroup [%s] of group [%s] doesn't have any files.\n"
+                    "The subgroup must have at least 2 files."));
 	else
-	    fprintf (stderr, "only has 1 file\n");
-	fprintf (stderr, "The subgroup must have at least 2 files\n");
-	exit(1);
+            G_fatal_error(_("Subgroup [%s] of group [%s] only has 1 file.\n"
+                    "The subgroup must have at least 2 files."));
     }
 
     cell = (CELL **) G_malloc (Ref.nfiles * sizeof (CELL *));
@@ -43,30 +40,28 @@ open_files (void)
 	name = Ref.file[n].name;
 	mapset = Ref.file[n].mapset;
 	if ((cellfd[n] = G_open_cell_old (name, mapset)) < 0)
-	    exit(1);
+	    exit(EXIT_FAILURE);
     }
 
     I_init_signatures (&S, Ref.nfiles);
     fd = I_fopen_signature_file_old (group, subgroup, sigfile);
-    if (fd == NULL) exit(1);
+    if (fd == NULL)
+        exit(EXIT_FAILURE);
+
     n = I_read_signatures (fd, &S);
     fclose (fd);
     if (n < 0)
-    {
-	fprintf (stderr, "Can't read signature file %s\n", sigfile);
-	exit(1);
-    }
+        G_fatal_error(_("Can't read signature file [%s]."), sigfile);
+
     if (S.nsigs > 255)
-    {
-	fprintf (stderr, "%s has more than 255 signatures\n", sigfile);
-	exit(1);
-    }
+        G_fatal_error(_("[%s] has more than 255 signatures."), sigfile);
+
     B = (double *) G_malloc (S.nsigs * sizeof (double));
     invert_signatures();
 
     class_fd = G_open_cell_new (class_name);
     if (class_fd < 0)
-	exit(1) ;
+	exit(EXIT_FAILURE);
 
     class_cell = G_allocate_cell_buf();
 
@@ -75,7 +70,7 @@ open_files (void)
     {
 	reject_fd = G_open_cell_new (reject_name);
 	if (reject_fd < 0)
-	    fprintf (stderr, "Unable to create reject layer [%s]", reject_name);
+            G_fatal_error(_("Unable to create reject layer [%s]."), reject_name);
 	else
 	    reject_cell = G_allocate_cell_buf();
     }

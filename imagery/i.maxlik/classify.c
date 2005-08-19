@@ -1,16 +1,19 @@
+#include "gis.h"
 #include "global.h"
+
 
 static double chisq[] =
   {18.465, 14.860, 13.277, 11.668, 9.488, 7.779, 5.989, 4.878,
     3.357,  2.195,  1.649,  1.064, 0.711,  0.429, 0.297, 0.0};
 
+
 int 
 classify (CELL *class, CELL *reject, int ncols)
 {
     int i,j;
-    int nfiles;
+    int nfiles = Ref.nfiles;
     int c;
-    int cc;
+    int cc = 0;
     int band;
     int col;
     int valid_data;
@@ -18,14 +21,13 @@ classify (CELL *class, CELL *reject, int ncols)
     double rej;
     struct One_Sig *s;
 
-    nfiles = Ref.nfiles;
-
     for (col = 0; col < ncols; col++)
     {
 	valid_data = 0;
 	for (band = 0; band < nfiles; band++)
-	    if (valid_data = !G_is_c_null_value(&cell[band][col]))
+	    if ((valid_data = !G_is_c_null_value(&cell[band][col])))
 		break;
+
 	if (!valid_data)	/* all nulls are classified as nulls */
 	{
 	    G_set_c_null_value(class++ , 1);
@@ -33,6 +35,7 @@ classify (CELL *class, CELL *reject, int ncols)
 		G_set_c_null_value(reject++, 1);
 	    continue;
 	}
+
 	max = -1.0e38;
 	for (c = 0; c < S.nsigs; c++)
 	{
