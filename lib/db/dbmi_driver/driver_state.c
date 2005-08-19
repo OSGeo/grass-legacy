@@ -2,42 +2,48 @@
 #include "dbmi.h"
 #include "dbstubs.h"
 
+
 static dbDriverState state;
 
+
 void
-db__init_driver_state()
+db__init_driver_state(void)
 {
     db_zero((void *)&state, sizeof(state));
 }
 
+
 dbDriverState *
-db__get_driver_state()
+db__get_driver_state(void)
 {
     return &state;
 }
 
-db__test_database_open ()
+
+int
+db__test_database_open (void)
 {
     return state.open ? 1 : 0 ;
 }
 
+
 void
-db__mark_database_open (dbname, dbschema)
-    char *dbname;
-    char *dbschema;
+db__mark_database_open (char *dbname, char *dbschema)
 {
     state.dbname = dbname;
     state.dbschema = dbschema;
     state.open = 1;
 }
 
+
 void
-db__mark_database_closed ()
+db__mark_database_closed (void)
 {
     free(state.dbname);
     free(state.dbschema);
     state.open = 0;
 }
+
 
 void
 db__add_cursor_to_driver_state(cursor)
@@ -46,13 +52,13 @@ db__add_cursor_to_driver_state(cursor)
     dbCursor **list;
     int i;
 
-/* find an empty slot in the cursor list */
+    /* find an empty slot in the cursor list */
     list = state.cursor_list;
     for (i = 0; i < state.ncursors; i++)
 	if (list[i] == NULL)
 	    break;
 
-/* if not found, extend list */
+    /* if not found, extend list */
     if (i >= state.ncursors)
     {
 	list = (dbCursor **) db_realloc ((void *)list, (i+1) * sizeof(dbCursor *));
@@ -62,13 +68,13 @@ db__add_cursor_to_driver_state(cursor)
 	state.ncursors    = i+1;
     }
 
-/* add it in */
+    /* add it in */
     list[i] = cursor;
 }
 
+
 void
-db__drop_cursor_from_driver_state(cursor)
-    dbCursor *cursor;
+db__drop_cursor_from_driver_state(dbCursor *cursor)
 {
     int i;
 
@@ -77,8 +83,9 @@ db__drop_cursor_from_driver_state(cursor)
 	    state.cursor_list[i] = NULL;
 }
 
+
 void
-db__close_all_cursors()
+db__close_all_cursors(void)
 {
     int i;
 
