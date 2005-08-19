@@ -4,9 +4,11 @@
 #include "dbmi.h"
 #include "dbstubs.h"
 
-static char *rfind();
-static int make_parent_dir();
-static int make_dir();
+
+static char *rfind(char *string, char c);
+static int make_parent_dir(char *path, int mode);
+static int make_dir(char *path, int mode);
+
 
 /*!
  \fn 
@@ -14,38 +16,36 @@ static int make_dir();
  \return 
  \param 
 */
-db_driver_mkdir (path, mode, parentdirs)
-    char *path;
-    int mode;
-    int parentdirs;
+int
+db_driver_mkdir (char *path, int mode, int parentdirs)
 {
     if (parentdirs)
     {
 	if (make_parent_dir (path, mode) != DB_OK)
 	    return DB_FAILED;
     }
+
     return make_dir (path, mode);
 }
+
 
 /* make a directory if it doesn't exist */
 /* this routine could be made more intelligent as to why it failed */
 static int
-make_dir (path, mode)
-    char *path;
-    int mode;
+make_dir (char *path, int mode)
 {
     if (db_isdir(path) == DB_OK)
 	return DB_OK;
     if (mkdir (path, mode) == 0)
 	return DB_OK;
     db_syserror(path);
+
     return DB_FAILED;
 }
 
-static
-make_parent_dir(path, mode)
-    char *path;
-    int mode;
+
+static int
+make_parent_dir(char *path, int mode)
 {
     char *slash;
     int stat;
@@ -72,13 +72,13 @@ make_parent_dir(path, mode)
 	stat = DB_FAILED;
     }
     *slash = '/';  /* put the slash back into the path */
+
     return stat;
 }
 
-static 
-char *rfind(string, c)
-    char *string;
-    char c;
+
+static
+char *rfind(char *string, char c)
 {
     char *found;
 
@@ -89,5 +89,6 @@ char *rfind(string, c)
 	    found = string;
 	string++;
     }
+
     return found;
 }
