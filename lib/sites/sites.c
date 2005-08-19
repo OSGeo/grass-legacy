@@ -21,11 +21,13 @@
 #include "dbmi.h"
 #include "Vect.h"
 
-int site_att_cmp ( const void *pa, const void *pb) {
+
+static int site_att_cmp ( const void *pa, const void *pb) {
     const SITE_ATT *a = pa, *b = pb;
     
     return a->cat - b->cat;
 }
+
 
 /*-
  * Reads ptr and returns 0 on success,
@@ -84,6 +86,7 @@ int G_site_get ( FILE *fptr, Site *s)
     }
 }
 
+
 /* Writes a site to file open on fptr. */
 int G_site_put ( FILE *fptr, Site *s)
 {
@@ -114,6 +117,7 @@ int G_site_put ( FILE *fptr, Site *s)
 
     return 0;
 }
+
 
 /*-
  * Tries to guess the format of a sites list (the dimensionality,
@@ -147,10 +151,11 @@ int G_site_describe ( FILE *ptr,
     return 0;
 }
 
-int G_site_put_head ( FILE *ptr, Site_head *head)
+
 /*-
  * Writes site_head struct.
  */
+int G_site_put_head ( FILE *ptr, Site_head *head)
 {
     struct Map_info *Map;
     static char buf[128];
@@ -191,6 +196,7 @@ int G_site_put_head ( FILE *ptr, Site_head *head)
     }
     return 0;
 }
+
 
 /*-
  * Fills in site_head struct.
@@ -271,25 +277,30 @@ char * G_find_sites (char *name,char *mapset)
   return G_find_vector (name, mapset);
 }
 
+
 char * G_find_sites2 (char *name,char *mapset)
 {
   return G_find_vector2 (name, mapset);
 }
+
 
 char * G_ask_sites_new (char *prompt,char *name)
 {
   return G_ask_new (prompt, name, "vector", "vector");
 }
 
+
 char * G_ask_sites_old (char *prompt,char *name)
 {
   return G_ask_old (prompt, name, "vector", "vector");
 }
 
+
 char * G_ask_sites_any (char *prompt,char *name)
 {
   return G_ask_any (prompt, name, "vector", "vector", 1);
 }
+
 
 char * G_ask_sites_in_mapset (char *prompt,char *name)
 {
@@ -428,6 +439,7 @@ FILE * G_sites_open_old (char *name,char *mapset)
     return (FILE *) Map;
 }
 
+
 FILE * G_sites_open_new (char *name)
 {
     struct Map_info *Map;
@@ -440,8 +452,10 @@ FILE * G_sites_open_new (char *name)
     Vect_open_new (Map, name, 0);
 
     G_debug ( 1, "New vector map opened");
+
     return (FILE *) Map;
 }
+
 
 void G_sites_close ( FILE * ptr)
 {
@@ -468,6 +482,7 @@ void G_sites_close ( FILE * ptr)
     G_free ( Map );
 }
 
+
 /*********************************************/
 /* The following functions are obsolete.     */
 /* They are retained here only for backwards */
@@ -478,29 +493,24 @@ FILE *G_fopen_sites_old (char *name, char *mapset)
     return G_sites_open_old (name, mapset);
 }
 
+
 FILE *G_fopen_sites_new (char *name)
 {
     return G_sites_open_new (name);
 }
 
+
 int G_get_site ( FILE *fd, double *east,double *north, char **desc)
 {
-    char buf[400];
-    char temp[400];
-    char ebuf[128], nbuf[128];
-    static char *desc_ptr = NULL;
-
     /* TODO ? */
     G_fatal_error ( "G_get_site() not yet updated.");
 
     return -1;
 }
 
+
 int G_put_site ( FILE *fd, double east,double north, char *desc)
 {
-    char ebuf[128], nbuf[128];
-    int fmt;
-
     /* TODO ? */
     G_fatal_error ( "G_put_site() not yet updated.");
     
