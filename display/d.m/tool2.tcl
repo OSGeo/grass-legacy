@@ -69,31 +69,46 @@ proc DmMonitorsel::create { tb  } {
     set sep1 [Separator $toolbar.sep1 -orient vertical]
     pack $sep1 -side left -fill y -padx 4 -anchor w
 
-    # FILE
+    # Display tools
     set bbox2 [ButtonBox $toolbar.bbox2 -spacing 10 -padx 1 -pady 1]
 
-     $bbox2 add -image [Bitmap::get new] -command "Dm::new" \
+     $bbox2 add -image [image create photo -file "$dmpath/scalebar.gif"] -command "Dm::scalebar" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext [G_msg "Create new workspace file (erase current workspace settings first)"]
-    $bbox2 add -image [Bitmap::get open] -command "Dm::OpenFileBox $toolbar"\
+        -helptext [G_msg "Place scalebar and north arrow on display with mouse"]
+    $bbox2 add -image [image create photo -file "$dmpath/measure.gif"] -command "Dm::measure"\
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext [G_msg "Open existing workspace file"]
-    $bbox2 add -image [Bitmap::get save]  -command "Dm::SaveFileBox $toolbar"\
-        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext [G_msg "Save workspace file"]
+        -helptext [G_msg "Measure lengths and areas"]
 
     pack $bbox2 -side left -anchor w
 
     set sep2 [Separator $toolbar.sep2 -orient vertical]
     pack $sep2 -side left -fill y -padx 5 -anchor w
 
-    # PRINT
+    # FILE
     set bbox3 [ButtonBox $toolbar.bbox3 -spacing 10 -padx 1 -pady 1]
 
-    $bbox3 add -image [Bitmap::get print]  -command "Dm::print" \
+     $bbox3 add -image [Bitmap::get new] -command "Dm::new" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
+        -helptext [G_msg "Create new workspace file (erase current workspace settings first)"]
+    $bbox3 add -image [Bitmap::get open] -command "Dm::OpenFileBox $toolbar"\
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
+        -helptext [G_msg "Open existing workspace file"]
+    $bbox3 add -image [Bitmap::get save]  -command "Dm::SaveFileBox $toolbar"\
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
+        -helptext [G_msg "Save workspace file"]
+
+    pack $bbox3 -side left -anchor w
+
+    set sep3 [Separator $toolbar.sep3 -orient vertical]
+    pack $sep3 -side left -fill y -padx 5 -anchor w
+
+    # PRINT
+    set bbox4 [ButtonBox $toolbar.bbox4 -spacing 10 -padx 1 -pady 1]
+
+    $bbox4 add -image [Bitmap::get print]  -command "Dm::print" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
         -helptext [G_msg "Print map"]
 
-    pack $bbox3 -side left -anchor w
+    pack $bbox4 -side left -anchor w
 }
 
