@@ -28,7 +28,6 @@ int main(int argc, char *argv[])
     char  *null_row;
     */
     RASTER_MAP_TYPE out_type, map_type;
-    char *name;
     char *outfile;
     char *mapset;
     char null_str[80];
@@ -39,7 +38,7 @@ int main(int argc, char *argv[])
     int do_stdout;
     FILE *fp;
     double cellsize;
-	struct GModule *module;
+    struct GModule *module;
     struct
     {
 	struct Option *map ;
@@ -59,8 +58,7 @@ int main(int argc, char *argv[])
     module->description =
 		_("Converts a raster map layer into an ESRI ARCGRID file.");
 
-/* Define the different options */
-
+    /* Define the different options */
     parm.map = G_define_option() ;
     parm.map->key        = "input";
     parm.map->type       = TYPE_STRING;
@@ -86,7 +84,7 @@ int main(int argc, char *argv[])
     flag.noheader->key = 'h';
     flag.noheader->description = _("Suppress printing of header information");
 
-  /* Added to optionaly produce a single line output.     -- emes -- 12.10.92 */
+    /* Added to optionaly produce a single line output.     -- emes -- 12.10.92 */
     flag.singleline = G_define_flag();
     flag.singleline->key = '1';
     flag.singleline->description = _("List one entry per line instead of full row");
@@ -97,6 +95,7 @@ int main(int argc, char *argv[])
     sscanf(parm.dp->answer, "%d", &dp);
     if(dp>20 || dp < 0)
        G_fatal_error("dp has to be from 0 to 20");
+
     outfile =  parm.output->answer;
     if((strcmp("-", outfile)) == 0)
         do_stdout = 1;
@@ -105,26 +104,19 @@ int main(int argc, char *argv[])
 
     sprintf(null_str,"-9999");
 
-    name = parm.map->answer;
-    mapset = G_find_cell2 (name, "");
+    mapset = G_find_cell2 (parm.map->answer, "");
+    if (mapset == NULL)
+	G_fatal_error ("%s: <%s> cellfile not found", 
+                    G_program_name(), parm.map->answer);
 
-    map_type = G_raster_map_type(name, mapset);
+    map_type = G_raster_map_type(parm.map->answer, mapset);
     out_type = map_type;
 
-    if (mapset == NULL)
-    {
-        char msg[100];	
-		
-	sprintf (msg, "%s: <%s> cellfile not found\n", G_program_name(), name);
-		G_fatal_error (msg);
-        exit(1);
-    }
-
-    fd = G_open_cell_old (name, mapset);
+    fd = G_open_cell_old (parm.map->answer, mapset);
     if (fd < 0)
-    	exit(1);
+    	exit(EXIT_SUCCESS);
 
-/*
+   /*
     null_row = G_allocate_null_buf();
     */
     raster =  G_allocate_raster_buf(out_type);
@@ -132,7 +124,7 @@ int main(int argc, char *argv[])
     nrows = G_window_rows();
     ncols = G_window_cols();
 
-/* open arc file for writing */
+    /* open arc file for writing */
     if(do_stdout)
        fp = stdout;
     else
@@ -166,19 +158,18 @@ int main(int argc, char *argv[])
         fprintf(fp, "NODATA_value %s\n", null_str);
     }
     
-    fd = G_open_cell_old (name, mapset);
+    fd = G_open_cell_old (parm.map->answer, mapset);
     if (fd < 0)
-        exit(1);
-
+        exit(EXIT_FAILURE);
 
     for (row = 0; row < nrows; row++)
     {
 	G_percent(row, nrows, 2);
 	if (G_get_raster_row(fd, raster, row, out_type) < 0)
-             exit(1);
+             exit(EXIT_FAILURE);
 	/*
 	 if (G_get_null_value_row(fd, null_row, row) < 0)
-	     exit(1);
+	     exit(EXIT_FAILURE);
 	*/
         for (col = 0, ptr = raster; col < ncols; col++, 
 		       ptr = G_incr_void_ptr(ptr, G_raster_size(out_type))) 
@@ -221,29 +212,6 @@ int main(int argc, char *argv[])
     }
     G_close_cell(fd);
     fclose(fp);
-    exit(0);
+
+    exit(EXIT_SUCCESS);
 }
-
-int set_type( char *str, RASTER_MAP_TYPE *out_type)
-{
-   char msg[100];
-   char *ch;
-
-   ch = str;
-   if(*ch != '%')
-   {
-        sprintf(msg, "wrong format: %s", str);
-        G_fatal_error(msg);
-   }
-   while (*(++ch));
-   ch--;
-   if(*ch=='d' || *ch=='i' || *ch=='o' || *ch=='u' || *ch=='x' || *ch=='X')
-       *out_type = CELL_TYPE;
-   else if(*ch=='f' || *ch=='e' || *ch=='E' || *ch=='g' || *ch=='G')
-       *out_type = DCELL_TYPE;
-   /*
-       *out_type = FCELL_TYPE;
-   */
-
-    return 0;
-}       
