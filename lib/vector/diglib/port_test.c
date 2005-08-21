@@ -19,7 +19,6 @@
 *****************************************************************************/
 #include <stdio.h>
 #include "Vect.h"
-#include "local_proto.h"
 
 /*
    **  Written by Dave Gerdes  9/1988
@@ -95,7 +94,11 @@ static char shrt_cnvrt[sizeof (short)];
 
 static int nat_dbl, nat_flt, nat_lng, nat_int, nat_shrt, nat_char;
 
+
+/* function prototypes */
 static int find_offset (unsigned char *, unsigned char, int);
+static int dumpflags (void);
+
 
 int 
 main (int argc, char **argv)
@@ -271,8 +274,10 @@ main (int argc, char **argv)
   
   printf ("\n\n/* Translation matrices from big endian to native */\n");
   dumpflags ();
+
   return (err);
 }
+
 
 /*
    ** match search_value against each char in basis. 
@@ -286,11 +291,12 @@ find_offset (unsigned char *basis, unsigned char search_value, int size)
   for (i = 0; i < size; i++)
     if (basis[i] == search_value)
       return (i);
+
   return (-1);
 }
 
-int 
-dumpflags (void)
+
+static int dumpflags (void)
 {
   int i;
 
@@ -346,6 +352,7 @@ dumpflags (void)
 
   return 0;
 }
+
 /*
 
    The 3.0 dig, and dig_plus files are inherently non-portable.  This 
