@@ -338,7 +338,7 @@ void RTreeSplitNode(struct Node *n, struct Branch *b, struct Node **nn)
 }
 
 
-
+#if 0
 /*-----------------------------------------------------------------------------
 | Print out data for a partition from PartitionVars struct.
 -----------------------------------------------------------------------------*/
@@ -379,3 +379,5 @@ static void RTreePrintPVars(struct PartitionVars *p)
 	fprintf (stdout, "cover[1]:\n");
 	RTreePrintRect(&p->cover[1], 0);
 }
+#endif
+
