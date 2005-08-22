@@ -10,9 +10,9 @@ msgstr ""
 "Project-Id-Version: grassmods_pt_br\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-08-15 10:43+0200\n"
-"PO-Revision-Date: 2005-08-11 20:14-0300\n"
+"PO-Revision-Date: 2005-08-22 11:50-0300\n"
 "Last-Translator: Paulo Marcondes <paulomarcondes@gmail.com>\n"
-"Language-Team: Brazilian Portuguese <translations@grass.itc.it>\n"
+"Language-Team: Português Brasileiro <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -206,8 +206,7 @@ msgstr "Nome da tabela, selecionar tudo desta tabela"
 msgid ""
 "SQL select statement, for example: 'select * from rybniky where kapri = "
 "'hodne'"
-msgstr ""
-"comando SQL select, por exemplo: 'select * from cesta where fruta = 'maçã''"
+msgstr "comando SQL select, por exemplo: 'select * from cesta where fruta = 'maçã''"
 
 #: ../db/base/select.c:209 ../vector/v.extrude/main.c:53
 msgid "output field separator"
@@ -255,8 +254,7 @@ msgstr "'user' não é suportado na definição do banco de dados, use db.login"
 
 #: ../db/drivers/mysql/db.c:72 ../db/drivers/postgres/parse.c:57
 msgid "'password' in database definition is not supported, use db.login"
-msgstr ""
-"'password' não é suportado na definição do banco de dados, use db.login"
+msgstr "'password' não é suportado na definição do banco de dados, use db.login"
 
 #: ../db/drivers/mysql/db.c:75
 #, c-format
@@ -354,7 +352,7 @@ msgstr "Remove todas os quadros e limpa a tela"
 
 #: ../display/d.erase/main.c:50
 msgid "Don't add to list of commands in monitor"
-msgstr ""
+msgstr "Não adicionar à lista de comandos no monitor"
 
 #: ../display/d.erase/main.c:56 ../display/d.font.freetype/main.c:102
 #: ../display/d.legend/main.c:246 ../display/d.nviz/main.c:248
@@ -429,8 +427,7 @@ msgstr ""
 msgid ""
 "Displays a legend for a raster map in the active frame of the graphics "
 "monitor."
-msgstr ""
-"Exibir rótulos (criados com v.label) no quadro ativo no monitor gráfico"
+msgstr "Exibir rótulos (criados com v.label) no quadro ativo no monitor gráfico"
 
 #: ../display/d.legend/main.c:78 ../raster/r.describe/main.c:48
 msgid "Name of raster map"
@@ -438,31 +435,35 @@ msgstr "Nome do mapa raster"
 
 #: ../display/d.legend/main.c:85
 msgid "Sets the legend's text color"
-msgstr ""
+msgstr "Define a cor do texto da legenda"
 
 #: ../display/d.legend/main.c:92
 msgid "Number of text lines (useful for truncating long legends)"
-msgstr ""
+msgstr "Número de linhas de texto (para truncar legendas longas)"
 
 #: ../display/d.legend/main.c:100
+#, fuzzy
 msgid "Thinning factor (thin=10 gives cats 0,10,20...)"
-msgstr ""
+msgstr "Fator de afinamento (thin=10 gera cats 0,10,20...)"
 
 #: ../display/d.legend/main.c:107
+#, fuzzy
 msgid "Number of text labels for smooth gradient legend"
-msgstr ""
+msgstr "Número de rótulos para a legenda"
 
 #: ../display/d.legend/main.c:115
 msgid "Screen coordinates to place the legend (as percentage)"
-msgstr ""
+msgstr "Coordenadas de tela para posicionar a legenda (porcentagem)"
 
 #: ../display/d.legend/main.c:123
+#, fuzzy
 msgid "List of discrete category numbers/values for legend"
-msgstr ""
+msgstr "Lista de números/valores de categoria discretos para legenda"
 
 #: ../display/d.legend/main.c:131
+#, fuzzy
 msgid "Use a subset of the map range for the legend (min,max)"
-msgstr ""
+msgstr "Usar um subconjunto do intervalo do mapa para a legenda (min,máx)"
 
 #: ../display/d.legend/main.c:136
 #, fuzzy
@@ -481,20 +482,21 @@ msgstr "Mostra rótulos de categorias"
 
 #: ../display/d.legend/main.c:148
 msgid "Draw smooth gradient"
-msgstr ""
+msgstr "Desenhar gradiente suava"
 
 #: ../display/d.legend/main.c:152
 msgid "Use mouse to size & place legend"
-msgstr ""
+msgstr "Use o rato para dimensionar e posicionar a legenda"
 
 #: ../display/d.legend/main.c:156
+#, fuzzy
 msgid "Flip legend"
-msgstr ""
+msgstr "Refletir legenda"
 
 #: ../display/d.legend/main.c:177
 #, c-format
 msgid "Don't know the color %s"
-msgstr ""
+msgstr "Não conheço a cor %s"
 
 #: ../display/d.legend/main.c:227
 #, fuzzy, c-format
@@ -523,7 +525,7 @@ msgstr "Janela atual não disponível"
 
 #: ../display/d.legend/main.c:301
 msgid "Legend box lies outside of frame. Text may not display properly."
-msgstr ""
+msgstr "Parte da legenda está fora do quadro. Textos podem não ser exibidos corretamente."
 
 #: ../display/d.legend/main.c:305
 #, c-format
@@ -536,27 +538,29 @@ msgid "Range information for [%s] not available (run r.support)"
 msgstr "Informação de limites indisponível (execute r.support)."
 
 #: ../display/d.legend/main.c:329 ../display/d.legend/main.c:472
+#, fuzzy
 msgid "Color range exceeds lower limit of actual data"
-msgstr ""
+msgstr "Intervalo de cores excede o limite inferior dos dados"
 
 #: ../display/d.legend/main.c:333 ../display/d.legend/main.c:476
 msgid "Color range exceeds upper limit of actual data"
-msgstr ""
+msgstr "Intervalo de cores excede o limite superior dos dados"
 
 #: ../display/d.legend/main.c:387
 #, c-format
 msgid "use=%s out of range [%d,%d]. (extend with range= ?)"
-msgstr ""
+msgstr "use=%s fora do intervalo [%d,%d]. (extender com 'range= ?')"
 
 #: ../display/d.legend/main.c:427
+#, fuzzy
 msgid "Nothing to draw! (no categories with labels? out of range?)"
-msgstr ""
+msgstr "Nada a desenhar! (sem categorias com rótulo? fora do intervalo?)"
 
 #: ../display/d.legend/main.c:438
 #, c-format
-msgid ""
-"Forcing a smooth legend: too many categories for current window height.\n"
-msgstr ""
+#, fuzzy
+msgid "Forcing a smooth legend: too many categories for current window height.\n"
+msgstr "Forçando uma legenda suave: categorias demais para a altura da janela atual."
 
 #: ../display/d.legend/main.c:459
 #, fuzzy, c-format
@@ -566,11 +570,11 @@ msgstr "Arquivo de categorias para [%s] não disponível"
 #: ../display/d.legend/main.c:483
 #, c-format
 msgid "use=%s out of range [%.3f, %.3f]. (extend with range= ?)"
-msgstr ""
+msgstr "use=%s fora do intervalo [%.3f,%.3f]. (extender com 'range= ?')"
 
 #: ../display/d.legend/main.c:819
 msgid "Nothing to draw! (no categories with labels?)"
-msgstr ""
+msgstr "Nada a desenhar! (sem categorias com rótulo?)"
 
 #: ../display/d.mapgraph/main.c:29
 msgid ""
@@ -695,8 +699,7 @@ msgstr "ERRO: %s\n"
 msgid ""
 "Displays text labels (created with v.label) to the active frame on the "
 "graphics monitor."
-msgstr ""
-"Exibir rótulos (criados com v.label) no quadro ativo no monitor gráfico"
+msgstr "Exibir rótulos (criados com v.label) no quadro ativo no monitor gráfico"
 
 #: ../display/d.paint.labels/main.c:36
 msgid "Name of label file"
@@ -773,21 +776,19 @@ msgstr "Distância para a rede = %f, distância da rede = %f\n"
 msgid ""
 "Draws text in the graphics monitor's active display frame using TrueType "
 "fonts."
-msgstr ""
+msgstr "Desenha texto no quadro ativo do monitor gráfico usando fontes TrueType."
 
 #: ../display/d.text.freetype/main.c:154
 msgid "Text to display"
-msgstr ""
+msgstr "Texto para exibir"
 
 #: ../display/d.text.freetype/main.c:161
-#, fuzzy
 msgid "Map coordinates"
-msgstr "Usando as coordenadas do centro do mapa\n"
+msgstr "Coordenadas do mapa"
 
 #: ../display/d.text.freetype/main.c:176 ../display/d.vect/main.c:208
-#, fuzzy
 msgid "Font name"
-msgstr "Nome da coluna"
+msgstr "Nome da Fonte"
 
 #: ../display/d.text.freetype/main.c:198
 #, fuzzy
@@ -798,121 +799,119 @@ msgstr ""
 
 #: ../display/d.text.freetype/main.c:206
 msgid "Height of letters (in percent of available frame height)"
-msgstr ""
+msgstr "Altura das letras (porcentagem da altura disponível do quadro)"
 
 #: ../display/d.text.freetype/main.c:214
 msgid "Text alignment"
-msgstr ""
+msgstr "Alinhamento do texto"
 
 #: ../display/d.text.freetype/main.c:221
 msgid "Rotation angle in degrees (counter-clockwise)"
-msgstr ""
+msgstr "ângulo de rotação em graus (anti-horário)"
 
 #: ../display/d.text.freetype/main.c:228
 msgid "Line spacing"
-msgstr ""
+msgstr "Espaçamento entre linhas"
 
 #: ../display/d.text.freetype/main.c:232
 msgid "Use bold text"
-msgstr ""
+msgstr "Usar negrito"
 
 #: ../display/d.text.freetype/main.c:236
 msgid "Use radians instead of degrees for rotation"
-msgstr ""
+msgstr "Usar rotação em radianos ao invés de graus"
 
 #: ../display/d.text.freetype/main.c:240
 msgid "Coordinates are in pixels ([0,0] is top left)"
-msgstr ""
+msgstr "Coordenadas em pixels ([0,0] é o canto superior esquerdo)"
 
 #: ../display/d.text.freetype/main.c:244
 msgid "Coordinates are percentage of frame ([0,0] is bottom left)"
-msgstr ""
+msgstr "Coordenadas em porcentagem do quadro ([0,0] é o canto inferior esquerdo)"
 
 #: ../display/d.text.freetype/main.c:248
 msgid "Font size is height in pixels"
-msgstr ""
+msgstr "Tamanho da fonte é altura em pixels"
 
 #: ../display/d.text.freetype/main.c:252
 msgid "Command mode (Compatibility with d.text)"
-msgstr ""
+msgstr "Modo de comando (compatibilidade com d.text)"
 
 #: ../display/d.text.freetype/main.c:259
 #, fuzzy
 msgid "Either text or -c should be given"
-msgstr "Pelo menos 'from_table' ou 'select' devem ser fornecidos."
+msgstr "Pelo menos o texto ou '-c' devem ser fornecidos."
 
 #: ../display/d.text.freetype/main.c:264
 msgid "Choose only one coordinate system for placement"
-msgstr ""
+msgstr "Escolha apenas um sistema de coordenadas para posicionamento"
 
 #: ../display/d.text.freetype/main.c:269 ../display/d.text.freetype/main.c:271
 #: ../display/d.text.freetype/main.c:635
 msgid "No font selected"
-msgstr ""
+msgstr "Nenhuma fonte selecionada"
 
 #: ../display/d.text.freetype/main.c:281 ../display/d.text.freetype/main.c:460
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid font: %s"
-msgstr "região inválida: %s"
+msgstr "Fonte inválida: %s"
 
 #: ../display/d.text.freetype/main.c:331
 msgid "Unable to initialise FreeType"
-msgstr ""
+msgstr "Não consegui inicializar FreeType"
 
 #: ../display/d.text.freetype/main.c:336 ../display/d.text.freetype/main.c:478
 #, fuzzy
 msgid "Unable to create face"
-msgstr "Impossível prosseguir"
+msgstr "Não consegui criar face"
 
 #: ../display/d.text.freetype/main.c:339 ../display/d.text.freetype/main.c:480
 #: ../display/d.text.freetype/main.c:495
-#, fuzzy
 msgid "Unable to set size"
-msgstr "Impossível prosseguir"
+msgstr "Não consegui definir tamanho"
 
 #: ../display/d.text.freetype/main.c:358 ../display/d.text.freetype/main.c:593
+#, fuzzy
 msgid "Unable to create text conversion context"
-msgstr ""
+msgstr "Não consegui criar contexto de conversão de texto"
 
 #: ../display/d.text.freetype/main.c:360 ../display/d.text.freetype/main.c:595
 msgid "Text conversion error"
-msgstr ""
+msgstr "Erro na conversão de texto"
 
 #: ../display/d.text.freetype/main.c:429
-#, fuzzy
 msgid "Unable to write the temporary file"
-msgstr "Não consegui abrir o arquivo de assinatura."
+msgstr "Não consegui escrever o arquivo temporário."
 
 #: ../display/d.text.freetype/main.c:454
-#, fuzzy
 msgid "No predefined font"
-msgstr "Nome arquivo de regras predefinidas"
+msgstr "Nenhuma fonte predefinda"
 
 #: ../display/d.text.freetype/main.c:471
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unable to read font"
-msgstr "Impossível prosseguir"
+msgstr "%s: Não consegui ler a fonte"
 
 #: ../display/d.text.freetype/main.c:675
 #, c-format
+#, fuzzy
 msgid "%s: Unable to read FreeType definition file; use the default"
-msgstr ""
+msgstr "%s: Não consegui ler o arquivo de definição FreeType, usando padrão"
 
 #: ../display/d.text.freetype/main.c:681
 #, c-format
 msgid "%s: No FreeType definition file"
-msgstr ""
+msgstr "%s: Nenhum arquivo de definição FreeType"
 
 #: ../display/d.text.freetype/main.c:686
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unable to read FreeType definition file"
-msgstr ""
-"Não consegui ler cabeçalho de células para o primeiro arquivo de banda."
+msgstr "%s: Não consegui ler arquivo de definição FreeType"
 
 #: ../display/d.text.freetype/main.c:892
 #, c-format
 msgid "[%s]: No such color"
-msgstr ""
+msgstr "[%s]: cor não existe"
 
 #: ../display/d.vect/attr.c:53 ../display/d.vect/dir.c:33
 #: ../display/d.vect/label.c:32 ../display/d.vect/plot1.c:51
@@ -928,44 +927,42 @@ msgstr ""
 #: ../display/d.vect/main.c:111
 #, fuzzy
 msgid "Displays GRASS vector data in the active frame on the graphics monitor."
-msgstr ""
-"Exibir rótulos (criados com v.label) no quadro ativo no monitor gráfico"
+msgstr "Exibir dados vetoriais do GRASS no quadro ativo do monitor gráfico"
 
 #: ../display/d.vect/main.c:127
+#, fuzzy
 msgid "Display"
-msgstr ""
+msgstr "Exibir"
 
 #: ../display/d.vect/main.c:134
-#, fuzzy
 msgid "Name of column to be displayed"
-msgstr "Digite o nome do mapa de células para exibição"
+msgstr "Digite o nome da coluna para exibição"
 
 #: ../display/d.vect/main.c:143
+#, fuzzy
 msgid "Point and centroid symbol"
-msgstr ""
+msgstr "Símbolo de ponto e centróide"
 
 #: ../display/d.vect/main.c:149
 msgid "Icon size"
-msgstr ""
+msgstr "Tamanho do ícone"
 
 #: ../display/d.vect/main.c:159
 msgid "Line width"
-msgstr ""
+msgstr "Largura da linha"
 
 #: ../display/d.vect/main.c:165
-#, fuzzy
 msgid "Line color"
-msgstr "Cor do Texto"
+msgstr "Cor da Linha"
 
 #: ../display/d.vect/main.c:171
-#, fuzzy
 msgid "Area fill color"
-msgstr "cor val\n"
+msgstr "Cor de preenchimento"
 
 #: ../display/d.vect/main.c:181
 #, fuzzy
 msgid "Label color"
-msgstr "cor val\n"
+msgstr "Cor do rótulo"
 
 #: ../display/d.vect/main.c:187
 #, fuzzy
@@ -983,23 +980,22 @@ msgid "Label size (pixels)"
 msgstr "Tamanho do rótulo (em pontos)"
 
 #: ../display/d.vect/main.c:215
+#, fuzzy
 msgid "Label horizontal justification"
-msgstr ""
+msgstr "Alinhamento horizontal do rótulo"
 
 #: ../display/d.vect/main.c:222
+#, fuzzy
 msgid "Label vertical justification"
-msgstr ""
+msgstr "Alinhamento vertical do rótulo"
 
 #: ../display/d.vect/main.c:228
-#, fuzzy
-msgid ""
-"Minimum region size (average from height and width) when map is displayed"
-msgstr "Tamanho mínimo da região (diagonal) quando exibir rótulos"
+msgid "Minimum region size (average from height and width) when map is displayed"
+msgstr "Tamanho mínimo da região (média entre altura e largura) quando exibir mapa"
 
 #: ../display/d.vect/main.c:235
 #, fuzzy
-msgid ""
-"Maximum region size (average from height and width) when map is displayed"
+msgid "Maximum region size (average from height and width) when map is displayed"
 msgstr "Tamanho máximo da região (diagonal) quando exibir rótulos"
 
 #: ../display/d.vect/main.c:240 ../raster/r.cost/main.c:182
@@ -1075,8 +1071,7 @@ msgstr "Imprimindo ... "
 
 #: ../display/d.vect/main.c:501
 #, c-format
-msgid ""
-"The bounding box of the map outside current region, nothing displayed.\n"
+msgid "The bounding box of the map outside current region, nothing displayed.\n"
 msgstr "Os limites do mapa estão além da região atual. Nada a exibir.\n"
 
 #: ../display/d.vect/main.c:514
@@ -1272,8 +1267,7 @@ msgstr "%d raster%s, %d vetor%s\n"
 #: ../display/d.zoom/main.c:334
 #, c-format
 msgid "this is the first d.zoom run; no previous zoom availible\n"
-msgstr ""
-"esta é a primeira vez que executa d.zoom; não há zoom prévio disponível\n"
+msgstr "esta é a primeira vez que executa d.zoom; não há zoom prévio disponível\n"
 
 #: ../display/d.zoom/main.c:380
 #, c-format
@@ -1466,8 +1460,7 @@ msgstr "Onde as variáveis do GRASS são guardadas"
 
 #: ../general/g.region/cmd/main.c:73
 msgid "Program to manage the boundary definitions for the geographic region."
-msgstr ""
-"Programa para gerenciar as definições de limite para a região geográfica."
+msgstr "Programa para gerenciar as definições de limite para a região geográfica."
 
 #: ../general/g.region/cmd/main.c:80 ../raster/r.region/main.c:75
 msgid "Set from default region"
@@ -1793,8 +1786,7 @@ msgstr "Transformação completa.\n"
 #: ../imagery/i.class/add_point.c:23
 #, c-format
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
-msgstr ""
-"Não posso marcar outro ponto.  Somente %d pontos permitidos.  Desculpe."
+msgstr "Não posso marcar outro ponto.  Somente %d pontos permitidos.  Desculpe."
 
 #: ../imagery/i.class/analyze_sig.c:13
 msgid "Cannot analyze until region is completed."
@@ -1831,8 +1823,7 @@ msgstr "O subgrupo deve possuir pelo menos 2 arquivos para executar %s."
 
 #: ../imagery/i.class/ask_files.c:71
 msgid "Unable to read cell header for first band file."
-msgstr ""
-"Não consegui ler cabeçalho de células para o primeiro arquivo de banda."
+msgstr "Não consegui ler cabeçalho de células para o primeiro arquivo de banda."
 
 #: ../imagery/i.class/ask_files.c:76
 msgid ""
@@ -2066,8 +2057,7 @@ msgstr "Arquivo contém assinaturas resultantes"
 
 #: ../imagery/i.cluster/main.c:82
 msgid "Sampling intervals (by row and col); default: ~10,000 pixels"
-msgstr ""
-"Intervalos de amostragem (por linhas e colunas); padrão: ~10.000 pixels"
+msgstr "Intervalos de amostragem (por linhas e colunas); padrão: ~10.000 pixels"
 
 #: ../imagery/i.cluster/main.c:88
 msgid "Maximum number of iterations"
@@ -2276,8 +2266,7 @@ msgstr "Lendo imagem ... "
 
 #: ../imagery/i.cluster/main.c:268
 msgid "Out of Memory. Please run again and choose a smaller sample size"
-msgstr ""
-"Memória Esgotada. Por favor execute novamente escolhendo uma amostra menor"
+msgstr "Memória Esgotada. Por favor execute novamente escolhendo uma amostra menor"
 
 #: ../imagery/i.cluster/main.c:273
 #, c-format
@@ -2285,15 +2274,13 @@ msgid "Sample size: %d points\n"
 msgstr "Tamanho da amostra: %d pontos\n"
 
 #: ../imagery/i.cluster/main.c:276
-msgid ""
-"Not enough sample points. Please run again and choose a larger sample size"
+msgid "Not enough sample points. Please run again and choose a larger sample size"
 msgstr ""
 "Pontos da amostra insuficientes. Por favor execute novamente, escolhendo uma "
 "amostra maior"
 
 #: ../imagery/i.cluster/main.c:280
-msgid ""
-"Not enough non-zero sample data points. Check your current region (and mask)"
+msgid "Not enough non-zero sample data points. Check your current region (and mask)"
 msgstr ""
 "Pontos não-nulos insuficentes na amostra. Verifique sua região atual (e "
 "máscara)"
@@ -2955,8 +2942,7 @@ msgid "Rectification polynom order (1-3)"
 msgstr ""
 
 #: ../imagery/i.rectify/main.c:70
-msgid ""
-"Use curr. region settings in target location (def.=calculate smallest area)"
+msgid "Use curr. region settings in target location (def.=calculate smallest area)"
 msgstr ""
 
 #: ../imagery/i.rectify/main.c:74
@@ -3143,8 +3129,7 @@ msgid "Create EPS (Encapsulated PostScript) instead of PostScript file"
 msgstr "Cria EPS (Encapsulated PostScript) ao invés de PostScript."
 
 #: ../ps/ps.map/main.c:105
-msgid ""
-"File containing mapping instructions (or use input=- to enter from keyboard)"
+msgid "File containing mapping instructions (or use input=- to enter from keyboard)"
 msgstr ""
 "Arquivo contendo instruções de mapeamento (ou use 'input=-' para entrar do "
 "teclado)"
@@ -3155,8 +3140,7 @@ msgstr "Arquivo de saída PostScript"
 
 #: ../ps/ps.map/main.c:120
 msgid "Scale of the output map, e.g. 1:25000 (default: Auto-sized to fit page)"
-msgstr ""
-"Escala de saída do mapa, p.ex.: 1:25000 (padrão: Auto-ajuste para página)"
+msgstr "Escala de saída do mapa, p.ex.: 1:25000 (padrão: Auto-ajuste para página)"
 
 #: ../ps/ps.map/main.c:125
 msgid "Number of copies to print"
@@ -3232,8 +3216,7 @@ msgstr "Mapa raster resultante"
 
 #: ../raster/r.average/main.c:58
 msgid "cover values extracted from the category labels of the cover map"
-msgstr ""
-"valores de cobertura extraídos dos rótulos de categorias no mapa de cobertura"
+msgstr "valores de cobertura extraídos dos rótulos de categorias no mapa de cobertura"
 
 #: ../raster/r.basins.fill/main.c:35
 msgid "Generates a raster map layer showing watershed subbasins."
@@ -3393,8 +3376,7 @@ msgstr "Lista de regras"
 #: ../raster/r.colors/rules.c:45
 #, c-format
 msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
-msgstr ""
-"Carregue as regras, \"end\" quando concluir, \"help\" se precisar de ajuda.\n"
+msgstr "Carregue as regras, \"end\" quando concluir, \"help\" se precisar de ajuda.\n"
 
 #: ../raster/r.colors/rules.c:47
 #, c-format
@@ -3448,8 +3430,7 @@ msgstr "ou uma tripla R:G:B, exemplo.: 0:127:255\n"
 #: ../raster/r.colors/rules.c:240
 #, c-format
 msgid "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n"
-msgstr ""
-"** atenção: valor(es) R:G:B está(ão) fora dos limites [0..255]: %d:%d:%d **\n"
+msgstr "** atenção: valor(es) R:G:B está(ão) fora dos limites [0..255]: %d:%d:%d **\n"
 
 #: ../raster/r.colors/rules.c:241 ../raster/r.colors/rules.c:257
 #: ../raster/r.colors/rules.c:270 ../raster/r.colors/rules.c:282
@@ -3462,8 +3443,7 @@ msgstr "** a regra não foi adicionada **\n"
 #: ../raster/r.colors/rules.c:256
 #, c-format
 msgid "** warning: R G B value(s) out of range [0..255]: %d %d %d **\n"
-msgstr ""
-"** atenção: valor(es) R G B está(ão) fora dos limites [0..255]: %d %d %d **\n"
+msgstr "** atenção: valor(es) R G B está(ão) fora dos limites [0..255]: %d %d %d **\n"
 
 #: ../raster/r.colors/rules.c:269 ../raster/r.colors/rules.c:291
 #, c-format
@@ -3491,8 +3471,7 @@ msgid "Valid colors are:\n"
 msgstr "Cores válidas são:\n"
 
 #: ../raster/r.composite/main.c:71
-msgid ""
-"Combines red, green and blue map layers into a single composite map layer."
+msgid "Combines red, green and blue map layers into a single composite map layer."
 msgstr "Combina camadas vermelhas, verdes e azuis numa única camada composta."
 
 #: ../raster/r.composite/main.c:89
@@ -3621,8 +3600,7 @@ msgstr "Um custo cumulativo máximo (opcional)"
 
 #: ../raster/r.cost/main.c:169
 msgid "Cost assigned to null cells. By default, null cells are excluded"
-msgstr ""
-"Custo designado para células NULL. Por padrão, células NULL são excluídas."
+msgstr "Custo designado para células NULL. Por padrão, células NULL são excluídas."
 
 #: ../raster/r.cost/main.c:178
 msgid "Percent of map to keep in memory"
@@ -4452,8 +4430,7 @@ msgstr ""
 
 #: ../raster/r.out.pov/main.c:106
 msgid "Converts a raster map layer into a height-field file for POVRAY."
-msgstr ""
-"Converte uma camada raster num campo de altura (height field) para o POVRAY."
+msgstr "Converte uma camada raster num campo de altura (height field) para o POVRAY."
 
 #: ../raster/r.out.pov/main.c:121
 msgid "Name of output povray file (TGA height field file)"
@@ -4576,8 +4553,7 @@ msgstr "Usar zero (0) para transparência ao invés de NULL"
 
 #: ../raster/r.profile/main.c:56
 msgid "Outputs the raster map layer values lying on user-defined line(s)."
-msgstr ""
-"Imprime os valores do mapa raster ao longo das linhas definidas pelo usuário."
+msgstr "Imprime os valores do mapa raster ao longo das linhas definidas pelo usuário."
 
 #: ../raster/r.profile/main.c:72
 msgid "Name of file for output (use output=- for stdout)"
@@ -4601,8 +4577,7 @@ msgstr "Selecionar pontos finais interativamente"
 
 #: ../raster/r.profile/main.c:103 ../raster/r.transect/main.c:79
 msgid "Output easting and northing in first two columns of four column output"
-msgstr ""
-"Exporta leste e norte nas duas primeiras colunas da saída de quatro colunas"
+msgstr "Exporta leste e norte nas duas primeiras colunas da saída de quatro colunas"
 
 #: ../raster/r.proj/main.c:143
 msgid "Re-project a raster map from one location to the current location."
@@ -4646,8 +4621,7 @@ msgstr "Não executar otimização do corte da regição"
 
 #: ../raster/r.quant/main.c:27
 msgid "This routine produces the quantization file for a floating-point map."
-msgstr ""
-"Esta rotina produz um arquivo de quantização para um mapa floating point."
+msgstr "Esta rotina produz um arquivo de quantização para um mapa floating point."
 
 #: ../raster/r.quant/main.c:35
 msgid "Base map to take quant rules from"
@@ -4677,8 +4651,7 @@ msgstr "Arredondar dados em ponto flutuante"
 msgid ""
 "Creates a raster map layer and vector point map containing randomly located "
 "sites."
-msgstr ""
-"Cria um mapa raster e um mapa vetorial de pontos contendo locais aleatórios"
+msgstr "Cria um mapa raster e um mapa vetorial de pontos contendo locais aleatórios"
 
 #: ../raster/r.random/main.c:51
 msgid "The number of points to allocate"
@@ -4980,8 +4953,7 @@ msgstr "Título para o novo mapa raster"
 msgid ""
 "Rescales histogram equalized the range of categoryvalues in a raster map "
 "layer."
-msgstr ""
-"Reescalona e normaliza o histograma dos valores de categorias num mapa raster"
+msgstr "Reescalona e normaliza o histograma dos valores de categorias num mapa raster"
 
 #: ../raster/r.series/main.c:89
 msgid ""
@@ -5094,8 +5066,7 @@ msgstr "Mapa raster resultante (não usado com 'distribution')"
 
 #: ../raster/r.statistics/main.c:84
 msgid "Cover values extracted from the category labels of the cover map"
-msgstr ""
-"Valores de cobertura extraídos dos rótulos de categorias no mapa de cobertura"
+msgstr "Valores de cobertura extraídos dos rótulos de categorias no mapa de cobertura"
 
 #: ../raster/r.stats/main.c:71
 msgid "Generates area statistics for raster map layers."
@@ -5203,10 +5174,8 @@ msgstr ""
 "solar) [graus decimais]"
 
 #: ../raster/r.sun/main.c:205
-msgid ""
-"Name of the Linke atmospheric turbidity coefficient input raster map [-]"
-msgstr ""
-"Nome do arquivo raster com o coeficiente de turbidez atmosférica de Linke [-]"
+msgid "Name of the Linke atmospheric turbidity coefficient input raster map [-]"
+msgstr "Nome do arquivo raster com o coeficiente de turbidez atmosférica de Linke [-]"
 
 #: ../raster/r.sun/main.c:214
 msgid "A single value of the Linke atmospheric turbidity coefficient [-]"
@@ -5232,8 +5201,7 @@ msgstr "Um único valor de latitude [graus decimais]"
 #: ../raster/r.sun/main.c:253
 #, fuzzy
 msgid "Name of real-sky beam radiation coefficient raster map [-]"
-msgstr ""
-"Nome do mapa raster com o coeficiente de radiação do feixe de céu real [-]"
+msgstr "Nome do mapa raster com o coeficiente de radiação do feixe de céu real [-]"
 
 #: ../raster/r.sun/main.c:261
 #, fuzzy
@@ -5282,8 +5250,7 @@ msgstr ""
 
 #: ../raster/r.sun/main.c:319
 msgid "Declination value (overriding the internally computed value) [radians]"
-msgstr ""
-"Valor de declinação (sobrepõe o valor calculado internamente) [radianos]"
+msgstr "Valor de declinação (sobrepõe o valor calculado internamente) [radianos]"
 
 #: ../raster/r.sun/main.c:326
 msgid "Local (solar) time (to be set for mode 1 only) [decimal hours]"
@@ -5825,8 +5792,7 @@ msgid "Overwrite outputs"
 msgstr ""
 
 #: ../raster/r.transect/main.c:34
-msgid ""
-"Outputs raster map layer values lying along user defined transect line(s)."
+msgid "Outputs raster map layer values lying along user defined transect line(s)."
 msgstr ""
 
 #: ../raster/r.transect/main.c:40
@@ -5843,8 +5809,7 @@ msgid "Char string to represent no data cell"
 msgstr ""
 
 #: ../raster/r.univar2/main.c:55
-msgid ""
-"Calculates univariate statistics from the non-null cells of a raster map."
+msgid "Calculates univariate statistics from the non-null cells of a raster map."
 msgstr ""
 
 #: ../raster/r.univar2/main.c:68
@@ -6047,13 +6012,11 @@ msgid "Name of raster map containing STARTing sources"
 msgstr ""
 
 #: ../raster/wildfire/r.spread/main.c:138
-msgid ""
-"Name of raster map containing max SPOTting DISTance (m) (required w/ -s)"
+msgid "Name of raster map containing max SPOTting DISTance (m) (required w/ -s)"
 msgstr ""
 
 #: ../raster/wildfire/r.spread/main.c:144
-msgid ""
-"Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)"
+msgid "Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)"
 msgstr ""
 
 #: ../raster/wildfire/r.spread/main.c:150
@@ -6492,8 +6455,7 @@ msgstr "Texto para representar célula sem valor de dados"
 
 #: ../raster3d/r3.in.ascii/main.c:259
 #, fuzzy
-msgid ""
-"Convert a 3D ASCII raster text file into a (binary) 3D raster map layer "
+msgid "Convert a 3D ASCII raster text file into a (binary) 3D raster map layer "
 msgstr "Converte um arquivo raster ASCII para um mapa raster binário."
 
 #: ../raster3d/r3.info/main.c:66
@@ -6680,8 +6642,7 @@ msgstr ""
 #: ../raster3d/r3.out.vtk/main.c:194
 #, fuzzy
 msgid "Converts 3D raster maps (G3D) into the VTK-Ascii format"
-msgstr ""
-"Converte uma camada raster num campo de altura (height field) para o POVRAY."
+msgstr "Converte uma camada raster num campo de altura (height field) para o POVRAY."
 
 #: ../vector/v.category/main.c:175
 msgid "Too many layers for this operation"
@@ -6981,8 +6942,7 @@ msgid "Field separator"
 msgstr "Separador de Campos"
 
 #: ../vector/v.in.ascii/in.c:67
-msgid ""
-"Number of header lines to skip at top of input file (written to map history)"
+msgid "Number of header lines to skip at top of input file (written to map history)"
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:75
@@ -6992,13 +6952,11 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:85
-msgid ""
-"Number of column used as x coordinate (first column is 1) for points mode"
+msgid "Number of column used as x coordinate (first column is 1) for points mode"
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:94
-msgid ""
-"Number of column used as y coordinate (first column is 1) for points mode"
+msgid "Number of column used as y coordinate (first column is 1) for points mode"
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:103
@@ -7552,8 +7510,7 @@ msgstr "Cor de realce para texto (apenas para saída com ps.out)"
 
 #: ../vector/v.label/main.c:148
 msgid "Line width of highlight color (only for ps.map output)"
-msgstr ""
-"Espessura da linha de cor destacada (apenas para saída de mapa com ps.map)"
+msgstr "Espessura da linha de cor destacada (apenas para saída de mapa com ps.map)"
 
 #: ../vector/v.label/main.c:154
 msgid "Background color"
@@ -7666,14 +7623,12 @@ msgstr "região <%s> não encontrada"
 
 #: ../vector/v.out.ogr/main.c:290
 #, c-format
-msgid ""
-"%d Point(s) found, but not requested to be exported. Verify 'type' parameter."
+msgid "%d Point(s) found, but not requested to be exported. Verify 'type' parameter."
 msgstr ""
 
 #: ../vector/v.out.ogr/main.c:293
 #, c-format
-msgid ""
-"%d Line(s) found, but not requested to be exported. Verify 'type' parameter."
+msgid "%d Line(s) found, but not requested to be exported. Verify 'type' parameter."
 msgstr ""
 
 #: ../vector/v.out.ogr/main.c:296
@@ -7692,8 +7647,7 @@ msgstr ""
 
 #: ../vector/v.out.ogr/main.c:302
 #, c-format
-msgid ""
-"%d Areas found, but not requested to be exported. Verify 'type' parameter."
+msgid "%d Areas found, but not requested to be exported. Verify 'type' parameter."
 msgstr ""
 
 #: ../vector/v.out.ogr/main.c:477
@@ -7805,8 +7759,7 @@ msgstr "%d pontos escrito no mapa de saída\n"
 
 #: ../vector/v.to.rast/main.c:19
 msgid "Converts a binary GRASS vector map layer into a GRASS raster map layer."
-msgstr ""
-"Converte um mapa vetorial binário do GRASS numa camada raster do GRASS."
+msgstr "Converte um mapa vetorial binário do GRASS numa camada raster do GRASS."
 
 #: ../vector/v.to.rast/main.c:28
 msgid "vector input file"
@@ -7938,8 +7891,7 @@ msgstr "                Mapa Atual                  Novo Mapa\n"
 msgid ""
 " POINT      X coord    Y coord  |        X coord   Y coord    |      "
 "residuals\n"
-msgstr ""
-"Ponto      coord X   coordY |       coord X   coord Y    |      resíduos\n"
+msgstr "Ponto      coord X   coordY |       coord X   coord Y    |      resíduos\n"
 
 #: ../vector/v.transform/print_trans.c:43
 #, c-format
@@ -8072,57 +8024,3 @@ msgstr "Não consegui ler as cores para a escala"
 msgid "Error reading wildcard."
 msgstr "Erro na leitura do arquivo de categorias para <%s>."
 
-#~ msgid "       %s@%s"
-#~ msgstr "       %s@%s"
-
-#~ msgid "Subgroup [%s] "
-#~ msgstr "Subgrupo [%s] "
-
-#~ msgid "doesn't have any files."
-#~ msgstr "Não possui nenhum arquivo."
-
-#~ msgid "only has 1 file."
-#~ msgstr "possui somente 1 arquivo."
-
-#~ msgid "Enter name for the resulting signature file"
-#~ msgstr "Digite o nome para o arquivo de assinatura resultante"
-
-#~ msgid "Select the signature file to include in the resulting file"
-#~ msgstr "Selecione o arquivo de assinatura a incluir no arquivo resultante"
-
-#~ msgid "Do you want to continue? "
-#~ msgstr "Deseja continuar?"
-
-#~ msgid ""
-#~ "\n"
-#~ "X, Y, B in zoom1 %d %d %d"
-#~ msgstr ""
-#~ "\n"
-#~ "X, Y, B em zoom1 %d %d %d"
-
-#~ msgid ""
-#~ "\n"
-#~ "X, Y, B in zoom2 %d %d %d"
-#~ msgstr ""
-#~ "\n"
-#~ "X, Y, B em zoom2 %d %d %d"
-
-#~ msgid ""
-#~ "\n"
-#~ "left right top bottom %d %d %d %d"
-#~ msgstr ""
-#~ "\n"
-#~ "esquerda direita topo base %d %d %d %d"
-
-#~ msgid ""
-#~ "\n"
-#~ "north,south,east,west,nsres,ewres %f %f %f %f %f %f"
-#~ msgstr ""
-#~ "\n"
-#~ "norte,sul,leste,oeste,nsres,ewres %f %f %f %f %f %f"
-
-#~ msgid "Done ... Put group ref\n"
-#~ msgstr "Concluído... Incluída referência de grupo\n"
-
-#~ msgid "Done ... Put subgroup ref\n"
-#~ msgstr "Concluído... Colocando referência de subgrupo\n"
