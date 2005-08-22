@@ -72,11 +72,11 @@ Note: This text contains *some* rules only applicable to the
                          <grasslist@baylor.edu>
 
    DebianGIS:          <pkg-grass-general@lists.alioth.debian.org>
+   FreeGIS:            <freegis-list@intevation.de>
 
    news:comp.infosystems.gis
    http://spatialnews.geocomm.com/submitnews.html (not free any more)
    http://freshmeat.net/projects/grass/?highlight=GRASS
-   http://www.linuxapps.com/?page=application&database=current&id=40
    http://linuxtoday.com/contribute.php3
    http://www.newsforge.com/submit.pl
    http://osx.macnn.com/    (email to news tips)
