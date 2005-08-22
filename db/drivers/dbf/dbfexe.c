@@ -387,12 +387,28 @@ int set_val(int tab, int row, int col, SQLPVALUE * val)
     VALUE *dbval;
 
     dbval = &(db.tables[tab].rows[row].values[col]);
-
+/* For debugging purposes; see FIXME below	
+	fprintf(stderr, "In set_val : ");
+	fprintf(stderr, val->type==SQLP_EXPR?"sqlp_expr":
+			val->type==SQLP_NULL?"sqlp_null":
+			val->type==SQLP_I?"sqlp_i":
+			val->type==SQLP_D?"sqlp_d":
+			val->type==SQLP_S?"sqlp_s":
+			"other"); //DCA
+	fprintf(stderr,"%d\n",val->type);
+	fflush(stderr);
+*/
     if ( val->type == SQLP_EXPR ){
       eval_val( tab, row, col, val, val );
     }
 
-    if ( val->type == SQLP_NULL ) {
+    /* FIXME: SQLP_NULL is not always properly detected.
+     * This workaround works, since type should be some of these
+     * after passing through eval_val; otherwise it is NULL
+     */
+    if ( ! ( val->type == SQLP_I
+	||  val->type == SQLP_D
+	||  val->type == SQLP_S ) ) {
         dbval->is_null = 1;
 	dbval->c = NULL;
 	dbval->i = 0;
