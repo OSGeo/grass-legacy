@@ -40,10 +40,10 @@ Note: This text contains *some* rules only applicable to the
 
  o reset VERSION file to CVS version
 
- o Store the source tarball in (use scp -rp):
-     http://grass.itc.it/grass/grass6x/source/
+ o Store the source tarball in (use scp -p FILES grass:):
+     http://grass.itc.it/grass/grass$MAJOR$MINOR/source/
      along with associated files:
-       AUTHORS ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING
+       grass-$VERSION.* AUTHORS ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING
 
  o update web site to new version (HTML in Web-CVS)
       - main.inc
@@ -54,8 +54,10 @@ Note: This text contains *some* rules only applicable to the
       - bugtracking/bugreport.html (not always)
 
      write announcement
-      - store in Web as announces/announce_grass6xx.html
+      - store in Web as announces/announce_grass$MAJOR$MINOR$RELEASE.html
 
+ o upload user HTML manual in case of final release at
+     grass$MAJOR$MINOR/manuals/html$MAJOR$MINOR_user
 
 2. Tell others about it:
    - related announcement press release at:
