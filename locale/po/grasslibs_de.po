@@ -8,10 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-22 21:32+0200\n"
-"PO-Revision-Date: 2005-07-22 21:29+0200\n"
+"POT-Creation-Date: 2005-08-22 20:33+0200\n"
+"PO-Revision-Date: 2005-08-22 20:52+0200\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
-"Language-Team: Deutsch <translations@grass.itc.it>\n"
+"Language-Team: Deutsch <translations@grass.it.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -434,9 +434,9 @@ msgid "io error warning given %d"
 msgstr "io Fehler-Warnung ausgegeben %d."
 
 #: ../lib/gis/debug.c:126
-#, fuzzy, c-format
+#, c-format
 msgid "xdr stream for reading fp %p"
-msgstr "xdr stream for reading fp %p"
+msgstr "xdr stream zum Lesen fp %p"
 
 #: ../lib/gis/debug.c:127
 #, c-format
@@ -534,8 +534,7 @@ msgstr "Kann Datei %s in %s nicht öffnen"
 #: ../lib/gis/get_datum.c:107
 #, c-format
 msgid "Error reading datum shift parameters for %s from table"
-msgstr ""
-"Fehler beim Lesen der Datums-Transformationsparameter für %s aus der Tabelle."
+msgstr "Fehler beim Lesen der Datums-Transformationsparameter für %s aus der Tabelle."
 
 #: ../lib/gis/get_datum.c:115
 #, c-format
@@ -783,8 +782,7 @@ msgstr "Kann kein Histogramm für [%s in %s] erstellen."
 #: ../lib/gis/history.c:120
 #, c-format
 msgid "can't get history information for [%s] in mapset [%s]"
-msgstr ""
-"Kann die History-Informationen der Karte [%s] in Mapset [%s] nicht finden."
+msgstr "Kann die History-Informationen der Karte [%s] in Mapset [%s] nicht finden."
 
 #: ../lib/gis/history.c:170
 #, c-format
@@ -1003,8 +1001,7 @@ msgstr "opencell: %s - ungültiger Dateiname"
 
 #: ../lib/gis/opencell.c:699
 msgid "Can't write embedded null values for map open for random access"
-msgstr ""
-"Kann keine embedded NULL Werte für Karte mit random access Zugriff schreiben"
+msgstr "Kann keine embedded NULL Werte für Karte mit random access Zugriff schreiben"
 
 #: ../lib/gis/opencell.c:930 ../lib/gis/opencell.c:951
 #, c-format
@@ -1299,7 +1296,7 @@ msgstr "Längen- und Breitengrad"
 msgid "Other Projection"
 msgstr "Andere Projektion"
 
-#: ../lib/gis/proj3.c:68 ../lib/vector/Vlib/header.c:445
+#: ../lib/gis/proj3.c:68 ../lib/vector/Vlib/header.c:447
 msgid "Unknown projection"
 msgstr "Unbekannte Projektion"
 
@@ -1720,8 +1717,7 @@ msgstr ""
 
 #: ../lib/gis/view.c:548
 #, c-format
-msgid ""
-" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr ""
 " Nur %d%% des in \"%s\" abgespeicherten Fensters überlappt mit dem "
 "derzeitigen GRASS-Fenster."
@@ -1810,8 +1806,7 @@ msgstr "Nicht verbunden...\n"
 #: ../lib/raster/io.c:371
 #, c-format
 msgid "Couldn't connect to monitor. Will try once more.\n"
-msgstr ""
-"Kann nicht mit einem Monitor verbinden. Versuche es noch ein weiteres Mal.\n"
+msgstr "Kann nicht mit einem Monitor verbinden. Versuche es noch ein weiteres Mal.\n"
 
 #: ../lib/raster/io.c:377
 #, c-format
@@ -1969,107 +1964,107 @@ msgstr ""
 msgid "some points outside of region -- will ignore..."
 msgstr "einige Punkte sind außerhalb der Region -- ignoriere dies..."
 
-#: ../lib/vector/Vlib/build.c:130
+#: ../lib/vector/Vlib/build.c:134
 msgid "Building topology ...\n"
 msgstr "Erzeuge Topologie ...\n"
 
-#: ../lib/vector/Vlib/build.c:143
+#: ../lib/vector/Vlib/build.c:147
 msgid "Topology was built.\n"
 msgstr "Die Topologie wurde erstellt.\n"
 
-#: ../lib/vector/Vlib/build.c:155
+#: ../lib/vector/Vlib/build.c:159
 #, c-format
 msgid "Number of nodes     :   %d\n"
 msgstr "Anzahl von Knoten     :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:156
+#: ../lib/vector/Vlib/build.c:160
 #, c-format
 msgid "Number of primitives:   %d\n"
 msgstr "Anzahl von Primitives :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:157
+#: ../lib/vector/Vlib/build.c:161
 #, c-format
 msgid "Number of points    :   %d\n"
 msgstr "Anzahl von Punkten    :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:158
+#: ../lib/vector/Vlib/build.c:162
 #, c-format
 msgid "Number of lines     :   %d\n"
 msgstr "Anzahl von Linien     :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:159
+#: ../lib/vector/Vlib/build.c:163
 #, c-format
 msgid "Number of boundaries:   %d\n"
 msgstr "Anzahl von Boundaries :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:160
+#: ../lib/vector/Vlib/build.c:164
 #, c-format
 msgid "Number of centroids :   %d\n"
 msgstr "Anzahl von Zentroiden :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:163
+#: ../lib/vector/Vlib/build.c:167
 #, c-format
 msgid "Number of faces     :   %d\n"
 msgstr "Anzahl von Faces     :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:166
+#: ../lib/vector/Vlib/build.c:170
 #, c-format
 msgid "Number of kernels   :   %d\n"
 msgstr "Anzahl von Kerneln   :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:201
+#: ../lib/vector/Vlib/build.c:205
 #, c-format
 msgid "Number of areas     :   %d\n"
 msgstr "Anzahl von Flächen    :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:202
+#: ../lib/vector/Vlib/build.c:206
 #, c-format
 msgid "Number of isles     :   %d\n"
 msgstr "Anzahl von Inseln     :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:205
+#: ../lib/vector/Vlib/build.c:209
 #, c-format
 msgid "Number of incorrect boundaries   :   %d\n"
 msgstr "Anzahl inkorrekter Boundaries   :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:208
+#: ../lib/vector/Vlib/build.c:212
 #, c-format
 msgid "Number of centroids outside area :   %d\n"
 msgstr "Anzahl von Zentroiden außerhalb von Flächen :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:211
+#: ../lib/vector/Vlib/build.c:215
 #, c-format
 msgid "Number of duplicate centroids    :   %d\n"
 msgstr "Anzahl mehrfacher Zentroide    :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:214
+#: ../lib/vector/Vlib/build.c:218
 #, c-format
 msgid "Number of areas without centroid :   %d\n"
 msgstr "Anzahl von Flächen ohne Zentroid :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:217
+#: ../lib/vector/Vlib/build.c:221
 msgid "Number of areas     :   -\n"
 msgstr "Anzahl von Flächen    :   -\n"
 
-#: ../lib/vector/Vlib/build.c:218
+#: ../lib/vector/Vlib/build.c:222
 msgid "Number of isles     :   -\n"
 msgstr "Anzahl von Inseln     :   -\n"
 
-#: ../lib/vector/Vlib/build.c:247
+#: ../lib/vector/Vlib/build.c:251
 #, c-format
 msgid "Can't open topo file for write: %s\n"
 msgstr "Kann topo Datei %s nicht zum Schreiben öffnen\n"
 
-#: ../lib/vector/Vlib/build.c:255
+#: ../lib/vector/Vlib/build.c:259
 msgid "Error writing out topo file.\n"
 msgstr "Fehler beim Schreiben in topo Datei.\n"
 
-#: ../lib/vector/Vlib/build.c:386
+#: ../lib/vector/Vlib/build.c:390
 #, c-format
 msgid "Can't open spatial index file for write: %s\n"
 msgstr "Kann spatial index-Datei %s nicht zum Schreiben öffnen\n"
 
-#: ../lib/vector/Vlib/build.c:394
+#: ../lib/vector/Vlib/build.c:398
 msgid "Error writing out spatial index file.\n"
 msgstr "Fehler beim Schreiben des spatial index aufgetreten.\n"
 
@@ -2089,16 +2084,16 @@ msgstr ""
 msgid "Area of size = 0.0 ignored"
 msgstr "Flächen mit der Größe = 0.0 werden ignoriert."
 
-#: ../lib/vector/Vlib/build_nat.c:465
+#: ../lib/vector/Vlib/build_nat.c:466
 msgid "Registering lines: "
 msgstr "Registriere Linien..."
 
-#: ../lib/vector/Vlib/build_nat.c:506
+#: ../lib/vector/Vlib/build_nat.c:507
 #, c-format
 msgid "\r%d primitives registered      \n"
 msgstr "\r%d primitives registriert \n"
 
-#: ../lib/vector/Vlib/build_nat.c:533
+#: ../lib/vector/Vlib/build_nat.c:534
 #, c-format
 msgid ""
 "\r%d areas built      \n"
@@ -2107,13 +2102,32 @@ msgstr ""
 "\r%d Flächen erstellt \n"
 "%d Inselflächen erstellt\n"
 
-#: ../lib/vector/Vlib/build_nat.c:541
+#: ../lib/vector/Vlib/build_nat.c:542
 msgid "Attaching islands: "
 msgstr "Füge Inselflächen hinzu:"
 
-#: ../lib/vector/Vlib/build_nat.c:556
+#: ../lib/vector/Vlib/build_nat.c:557
 msgid "Attaching centroids: "
 msgstr "Füge Zentroide hinzu:"
+
+#: ../lib/vector/Vlib/build_ogr.c:258
+#, c-format
+msgid "Cannot calculate centroid for area %d"
+msgstr "Kann den Zentroid für die Fläche %d nicht berechnen."
+
+#: ../lib/vector/Vlib/build_ogr.c:293
+#, c-format
+msgid "OGR feature type %d not supported)"
+msgstr "OGR Feature Typ %d wird nicht unterstützt."
+
+#: ../lib/vector/Vlib/build_ogr.c:350
+#, c-format
+msgid "Feature %d without geometry ignored"
+msgstr "Feature %d ohne Geometrie ignoriert."
+
+#: ../lib/vector/Vlib/build_ogr.c:357
+msgid "OGR feature without ID ignored."
+msgstr "OGR feature ohne ID ignoriert."
 
 #: ../lib/vector/Vlib/field.c:73
 msgid "Field number must be 1 or greater."
@@ -2161,21 +2175,29 @@ msgstr "Standard-Datenbank ist nicht gesetzt."
 msgid "Requested dblink %d, maximum link number %d"
 msgstr "Angeforderte Datenbank-Verknüpfung %d, maximale Verknüpfungsnummer %d"
 
-#: ../lib/vector/Vlib/field.c:390
+#: ../lib/vector/Vlib/field.c:391
 msgid "Cannot open OGR DBMI driver."
 msgstr "Kann den OGR DBMI-Treiber nicht öffnen."
 
-#: ../lib/vector/Vlib/field.c:410
+#: ../lib/vector/Vlib/field.c:420
+msgid "Using FID column in OGR DB"
+msgstr "Benutze FID Spalte in OGR DB."
+
+#: ../lib/vector/Vlib/field.c:424
+msgid "Using ogc_fid column in OGR DB"
+msgstr "Benutze ogc_fid Spalte als OGR DB."
+
+#: ../lib/vector/Vlib/field.c:430
 #, c-format
 msgid "Don't know how to read links for format %d"
 msgstr "Ich weiß nicht, wie ich den Link vom Format %d lesen soll."
 
-#: ../lib/vector/Vlib/field.c:438
+#: ../lib/vector/Vlib/field.c:458
 #, c-format
 msgid "Error in rule on row %d in %s"
 msgstr "Fehler in Regel in Zeile %d in %s."
 
-#: ../lib/vector/Vlib/field.c:565
+#: ../lib/vector/Vlib/field.c:585
 msgid "Bug: attempt to update map which is not in current mapset."
 msgstr "BUG: Aktualisiere die Karte, welche nicht im aktuellen Mapset ist."
 
@@ -2196,8 +2218,7 @@ msgstr ""
 #: ../lib/vector/Vlib/legal_vname.c:35
 #, c-format
 msgid "Illegal vector map name <%s>. Character <%c> not allowed.\n"
-msgstr ""
-"Ungültiger Name der Vektorkarte <%s>. Zeichenfolge <%c> ist nicht erlaubt.\n"
+msgstr "Ungültiger Name der Vektorkarte <%s>. Zeichenfolge <%c> ist nicht erlaubt.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:60 ../lib/vector/Vlib/legal_vname.c:62
 #, c-format
@@ -2215,13 +2236,13 @@ msgid "Output map '%s' is used as input"
 msgstr "Ergebniskarte '%s' ist gleichzeitig Eingabekarte."
 
 #: ../lib/vector/Vlib/map.c:108 ../lib/vector/Vlib/map.c:217
-#: ../lib/vector/Vlib/open.c:486
+#: ../lib/vector/Vlib/open.c:487
 #, c-format
 msgid "Map name is not SQL compliant."
 msgstr "Kartenname ist nicht SQL-kompatibel."
 
 #: ../lib/vector/Vlib/map.c:112 ../lib/vector/Vlib/map.c:221
-#: ../lib/vector/Vlib/open.c:493
+#: ../lib/vector/Vlib/open.c:494
 #, c-format
 msgid "The vector '%s' already exists and will be overwritten."
 msgstr "Die Vektorkarte '%s' existiert bereits und wird überschrieben."
@@ -2236,63 +2257,62 @@ msgstr "Eingabevektorkarte '%s' nicht gefunden."
 msgid "Cannot copy vector '%s' to '%s'"
 msgstr "Kann Vektorkarte '%s' nicht zu '%s' kopieren."
 
-#: ../lib/vector/Vlib/open.c:42 ../lib/vector/Vlib/write.c:35
+#: ../lib/vector/Vlib/open.c:42 ../lib/vector/Vlib/write.c:36
 msgid "Requested format is not compiled in this version"
 msgstr "Das angeforderte Format ist in dieser Version nicht einkompiliert."
 
-#: ../lib/vector/Vlib/open.c:95
+#: ../lib/vector/Vlib/open.c:96
 #, c-format
 msgid "Warning, Programmer requested unknown open_level\n"
 msgstr "Warnung: Programmierer fordert unbekanntes open_level an\n"
 
-#: ../lib/vector/Vlib/open.c:155
+#: ../lib/vector/Vlib/open.c:156
 #, c-format
 msgid "Cannot find vector %s"
 msgstr "Kann Vektorkarte '%s' nicht finden."
 
-#: ../lib/vector/Vlib/open.c:165
+#: ../lib/vector/Vlib/open.c:166
 msgid "A map which is not in the current mapset cannot be opened for update."
 msgstr ""
 "Eine Karte, die sich nicht im aktuellen Mapset befindet, kann nicht für eine "
 "Aktualisierung geöffnet werden."
 
-#: ../lib/vector/Vlib/open.c:183
+#: ../lib/vector/Vlib/open.c:184
 #, c-format
 msgid "Cannot open old vector %s"
 msgstr "Kann die existierende Vektordatei '%s' nicht öffnen."
 
-#: ../lib/vector/Vlib/open.c:193 ../lib/vector/Vlib/open.c:252
-#: ../lib/vector/Vlib/open.c:268
+#: ../lib/vector/Vlib/open.c:194 ../lib/vector/Vlib/open.c:253
+#: ../lib/vector/Vlib/open.c:269
 #, c-format
 msgid "Cannot open old vector %s on level %d"
 msgstr "Kann die existierende Vektordatei '%s' nicht auf dem Level %d öffnen."
 
-#: ../lib/vector/Vlib/open.c:315 ../lib/vector/Vlib/open.c:520
+#: ../lib/vector/Vlib/open.c:316 ../lib/vector/Vlib/open.c:521
 #, c-format
 msgid "Cannot open history file for vector '%s'"
 msgstr "Kann History-Datei für die Vektorkarte '%s' nicht öffnen."
 
-#: ../lib/vector/Vlib/open.c:497
+#: ../lib/vector/Vlib/open.c:498
 #, c-format
 msgid "Cannot delete existing vector %s"
 msgstr "Kann die existierende Vektordatei '%s' nicht löschen."
 
-#: ../lib/vector/Vlib/open.c:511
+#: ../lib/vector/Vlib/open.c:512
 #, c-format
 msgid "Cannot open new vector %s"
 msgstr "Kann neue Vektordatei '%s' nicht öffnen."
 
-#: ../lib/vector/Vlib/open.c:563
+#: ../lib/vector/Vlib/open.c:564
 #, c-format
 msgid "Could not stat file '%s'"
 msgstr "Kann Datei '%s' nicht anfordern."
 
-#: ../lib/vector/Vlib/open.c:657
+#: ../lib/vector/Vlib/open.c:658
 msgid "Size of 'coor' file differs from value saved in topo file."
-msgstr ""
-"Größe der 'coor' Datei unterscheidet sich vom Werte in der 'topo' Datei."
+msgstr "Größe der 'coor' Datei unterscheidet sich vom Werte in der 'topo' Datei."
 
-#: ../lib/vector/Vlib/open.c:668
+#: ../lib/vector/Vlib/open.c:669
 #, c-format
 msgid "Please rebuild topology for vector '%s@%s'"
 msgstr "Bitte Topologie für Vektorkarte '%s@%s' neu erzeugen"
@@ -2309,35 +2329,35 @@ msgstr "Vect_rewrite_line() wird für dieses Format/Level nicht unterstützt."
 msgid "Vect_delete_line() for this format/level not supported"
 msgstr "Vect_delete_line() wird für dieses Format/Level nicht unterstützt."
 
-#: ../lib/vector/Vlib/write.c:94
+#: ../lib/vector/Vlib/write.c:96
 msgid "Cannot write line, the map is not opened"
 msgstr "Kann Linie nicht schreiben; die Karte ist nicht geöffnet."
 
-#: ../lib/vector/Vlib/write.c:105
+#: ../lib/vector/Vlib/write.c:107
 msgid "Cannot write line (negative offset)"
 msgstr "Kann die Linie nicht schreiben (negativer Offset)."
 
-#: ../lib/vector/Vlib/write.c:141
+#: ../lib/vector/Vlib/write.c:143
 msgid "Cannot rewrite line, the map is not opened"
 msgstr "Kann die Linie nicht schreiben; die Karte ist nicht geöffnet."
 
-#: ../lib/vector/Vlib/write.c:152
+#: ../lib/vector/Vlib/write.c:154
 msgid "Cannot rewrite line"
 msgstr "Kann die Linie nicht nochmal schreiben."
 
-#: ../lib/vector/Vlib/write.c:195
+#: ../lib/vector/Vlib/write.c:197
 #, c-format
 msgid "Cannot delete the line, map '%s' is not opened on level 2"
-msgstr ""
-"Kann die Linie nicht löschen; die Karte '%s' ist nicht auf Level 2 geöffnet."
+msgstr "Kann die Linie nicht löschen; die Karte '%s' ist nicht auf Level 2 geöffnet."
 
-#: ../lib/vector/Vlib/write.c:199
+#: ../lib/vector/Vlib/write.c:201
 #, c-format
 msgid "Cannot delete the line, map '%s' is not in opened in 'write' mode"
 msgstr ""
 "Kann die Linie nicht löschen; die Karte '%s' ist nicht im Schreib-Modus "
 "geöffnet."
 
-#: ../lib/vector/Vlib/write.c:211
+#: ../lib/vector/Vlib/write.c:213
 msgid "Cannot delete line"
 msgstr "Kann die Linie nicht löschen."
+
