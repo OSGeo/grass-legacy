@@ -240,9 +240,11 @@ int db_select_CatValArray ( dbDriver *driver, char *tab, char *key, char *col, c
     type = db_sqltype_to_Ctype( db_get_column_sqltype(column) );
     G_debug (3, "  col type = %d", type );
 
+    /*
     if ( type != DB_C_TYPE_INT && type != DB_C_TYPE_DOUBLE ) {
 	G_fatal_error ( "Column type not supported by db_select_to_array()" );
-    }	
+    }
+    */	
 
     cvarr->ctype = type;
 
@@ -265,12 +267,29 @@ int db_select_CatValArray ( dbDriver *driver, char *tab, char *key, char *col, c
 		else
                     cvarr->value[i].val.i = db_get_value_int(value);
 	        break;
+
 	    case ( DB_C_TYPE_DOUBLE ):
 		if ( value->isNull )
 		    cvarr->value[i].val.d = 0.0;
 		else
                     cvarr->value[i].val.d = db_get_value_double(value);
 	        break;
+
+	    case ( DB_C_TYPE_STRING ):
+		cvarr->value[i].val.s = (dbString *)malloc(sizeof(dbString));
+    		db_init_string ( cvarr->value[i].val.s );
+		
+		if ( !(value->isNull) )
+                    db_set_string ( cvarr->value[i].val.s, db_get_value_string(value) );
+	        break;
+
+	    case ( DB_C_TYPE_DATETIME ):
+		cvarr->value[i].val.t = (dbDateTime *) calloc(1, sizeof(dbDateTime));
+		
+		if ( !(value->isNull) )
+                    memcpy ( cvarr->value[i].val.t, &(value->t), sizeof(dbDateTime) );
+	        break;
+
             default:
 	    	return (-1);
 	}

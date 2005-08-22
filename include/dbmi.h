@@ -237,8 +237,12 @@ typedef struct
     union { 
         int        i;
         double     d;
-        /* dbString   s; */
-        /* dbDateTime t; */
+	/* s and t were added 22.8.2005, both are pointers,
+	 * they so should not take more than 8 bytes.
+         * It would be better to add dbString, not pointer,
+         * But it could be > 8 bytes on some systems */
+        dbString   *s;
+        dbDateTime *t;
     } val;
 }dbCatVal;
 
