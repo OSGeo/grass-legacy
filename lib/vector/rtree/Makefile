@@ -14,7 +14,7 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 RTLINC = $(ARCH_INCDIR)/rtree/
 RTLINC_OLD = $(ARCH_DISTDIR)/include/rtree/
 
-default: $(RTLINC)/card.h $(RTLINC)/index.h $(RTLINC)/split_l.h $(RTLINC)/split_q.h \
+default: $(RTLINC)/card.h $(RTLINC)/index.h $(RTLINC)/split_q.h \
 	$(ARCH_INCDIR)/rtree.h lib
 
 $(RTLINC)/card.h: card.h
@@ -26,10 +26,6 @@ $(RTLINC)/card.h: card.h
 $(RTLINC)/index.h: index.h
 	$(INSTALL) -m 644 index.h $(RTLINC)/index.h
 	$(INSTALL) -m 644 index.h $(RTLINC_OLD)/index.h
-
-$(RTLINC)/split_l.h: split_l.h
-	$(INSTALL) -m 644 split_l.h $(RTLINC)/split_l.h
-	$(INSTALL) -m 644 split_l.h $(RTLINC_OLD)/split_l.h
 
 # not used
 $(RTLINC)/split_q.h: split_q.h
