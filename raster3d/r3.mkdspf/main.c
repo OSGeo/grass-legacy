@@ -31,7 +31,7 @@
 #include "gis.h"
 #include "G3d.h"
 #include "local_proto.h"
-
+#include "glocale.h"
 
 int main(int argc, char *argv[])
 {
@@ -40,6 +40,7 @@ int main(int argc, char *argv[])
     G3D_Region g3reg;
     char *mapset;
     double dmin, dmax;
+    struct GModule *module;
 
     struct Option *levels;
     struct Option *out;
@@ -54,59 +55,62 @@ int main(int argc, char *argv[])
 
     G_gisinit (argv[0]);
 
+    module = G_define_module ();
+    module->description = _("Creates a display file from an existing grid3 file according to specified threshold levels.");
+
     name=G_define_option () ;
     name->key        = "input";
     name->type       = TYPE_STRING;
     name->required   = YES;
     name->gisprompt  = "old,grid3,3dcell";  
     /* should still find the DIRECTORY */
-    name->description= "Name of an existing 3dcell map" ;
+    name->description= _("Name of an existing 3dcell map") ;
 
     out=G_define_option () ;
     out->key        = "dspf";
     out->type       = TYPE_STRING;
     out->required   = YES;
-    out->description= "Name of output display file" ;
+    out->description= _("Name of output display file") ;
 
     levels=G_define_option () ;
     levels->key        = "levels";
     levels->type       = TYPE_DOUBLE;
     levels->required   = NO;
     levels->multiple   = YES;
-    levels->description= "List of thresholds for isosurfaces" ;
+    levels->description= _("List of thresholds for isosurfaces") ;
     
     min=G_define_option () ;
     min->key        = "min";
     min->type       = TYPE_DOUBLE;
     min->required   = NO;
-    min->description= "Minimum isosurface level" ;
+    min->description= _("Minimum isosurface level") ;
 
     max=G_define_option () ;
     max->key        = "max";
     max->type       = TYPE_DOUBLE;
     max->required   = NO;
-    max->description= "Maximum isosurface level" ;
+    max->description= _("Maximum isosurface level") ;
 
     step=G_define_option () ;
     step->key        = "step";
     step->type       = TYPE_DOUBLE;
     step->required   = NO;
-    step->description= "Positive increment between isosurface levels" ;
+    step->description= _("Positive increment between isosurface levels") ;
 
     tnum=G_define_option () ;
     tnum->key        = "tnum";
     tnum->type       = TYPE_INTEGER;
     tnum->required   = NO;
     tnum->answer     = "7";
-    tnum->description= "Number of isosurface threshold levels" ;
+    tnum->description= _("Number of isosurface threshold levels") ;
 
     quiet = G_define_flag() ;
     quiet->key        = 'q';
-    quiet->description = "Suppress progress report & min/max information" ;
+    quiet->description = _("Suppress progress report & min/max information") ;
 
     shade = G_define_flag() ;
     shade->key        = 'f';
-    shade->description = "Use flat shading rather than gradient" ;
+    shade->description = _("Use flat shading rather than gradient") ;
 
     if (G_parser(argc, argv))
 	exit (EXIT_FAILURE);
@@ -114,7 +118,7 @@ int main(int argc, char *argv[])
     G3d_initDefaults();
 
     G3d_getWindow (&g3reg);
-    G_message("Region from getWindow: %d %d %d",
+    G_message(_("Region from getWindow: %d %d %d"),
             g3reg.rows,g3reg.cols,g3reg.depths);
 
     if(NULL == (dspout = check_get_any_dspname(out->answer, name->answer, G_mapset())))
@@ -124,7 +128,7 @@ int main(int argc, char *argv[])
 
     /* open g3 file for reading and writing */
     if(NULL == (mapset = G_find_file2 ("grid3", name->answer, "")))
-        G_fatal_error("Not able to find grid3 file for [%s]", name->answer);
+        G_fatal_error(_("Not able to find grid3 file for [%s]"), name->answer);
 
     g3map = G3d_openCellOld (name->answer, mapset, &g3reg,
 			     G3D_TILE_SAME_AS_FILE,
@@ -136,10 +140,10 @@ int main(int argc, char *argv[])
 */
 
     if (NULL == g3map)
-        G_fatal_error("Error opening grid3 file [%s]", name->answer);
+        G_fatal_error(_("Error opening grid3 file [%s]"), name->answer);
 
     if (0 == G3d_range_load(g3map))
-        G_fatal_error("Error reading range for [%s]", name->answer);
+        G_fatal_error(_("Error reading range for [%s]"), name->answer);
 
     /* TODO: look at this - should use current 3dregion rather than
     region represented by original 3dgrid file */
@@ -168,7 +172,7 @@ int main(int argc, char *argv[])
     /* open display file for writing */
     sprintf(element,"grid3/%s/dsp", name->answer);
     if((Headfax.dspfoutfp = G_fopen_new(element,dspout)) == NULL)
-        G_fatal_error("Error opening display file [%s]", dspout);
+        G_fatal_error(_("Error opening display file [%s]"), dspout);
 
 /* write display file header info */
 /* have to adjust dimensions  -dpg */
@@ -189,7 +193,7 @@ int main(int argc, char *argv[])
     }
     
     if(!quiet->answer)
-	G_message("Writing %s from %s...", dspout, name->answer);
+	G_message(_("Writing %s from %s..."), dspout, name->answer);
 
     viz_iso_surface(g3map, &g3reg, &Headfax.linefax, quiet->answer?1:0);
 
