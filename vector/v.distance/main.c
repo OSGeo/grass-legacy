@@ -38,8 +38,9 @@
 #define TO_ALONG   7 /* distance to nearest point on 'to' along linear feature */
 #define DIST       8 /* minimum distance to nearest feature */
 #define TO_ANGLE   9 /* angle of linear feature in nearest point */
+#define TO_ATTR   10 /* attribute of nearest feature */
 
-#define END        10 /* end of list */
+#define END        11 /* end of list */
 
 /* Structure where are stored infos about nearest feature for each category */
 typedef struct {
@@ -69,7 +70,7 @@ int main (int argc, char *argv[])
     struct GModule *module;
     struct Option *from_opt, *to_opt, *from_type_opt, *to_type_opt, *from_field_opt, *to_field_opt;
     struct Option *out_opt, *max_opt, *table_opt;
-    struct Option *upload_opt, *column_opt;
+    struct Option *upload_opt, *column_opt, *to_column_opt;
     struct Flag *print_flag, *all_flag;
     struct Map_info From, To, Out, *Outp;
     int    from_type, to_type, from_field, to_field;
@@ -82,14 +83,15 @@ int main (int argc, char *argv[])
     int ftype, fcat, tcat, count;
     int nfrom, nto, nfcats, fline, tline, tseg, tarea, area, isle, nisles;
     double tx, ty, dist, talong, tmp_tx, tmp_ty, tmp_dist, tmp_talong;
-    struct field_info *Fi;
-    dbString stmt;
-    dbDriver *driver;
+    struct field_info *Fi, *toFi;
+    dbString stmt, dbstr;
+    dbDriver *driver, *to_driver;
     int  *catexist, ncatexist, *cex; 
     char buf1[2000], buf2[2000];
     int update_ok, update_err, update_exist, update_notexist, update_dupl, update_notfound;
     struct ilist *List;
     BOUND_BOX box;
+    dbCatValArray cvarr;
 
     G_gisinit (argv[0]);
 
@@ -143,7 +145,7 @@ int main (int argc, char *argv[])
     upload_opt->type = TYPE_STRING;
     upload_opt->required = YES;
     upload_opt->multiple = YES;
-    upload_opt->options = "cat,dist,to_x,to_y,to_along,to_angle";
+    upload_opt->options = "cat,dist,to_x,to_y,to_along,to_angle,to_attr";
     upload_opt->description = "Values describing the relation between two nearest features:\n"
 	"\tcat - category of the nearest feature\n"
 	"\tdist - minimum distance to nearest feature\n"
@@ -154,7 +156,8 @@ int main (int argc, char *argv[])
      /* "\tfrom_along - distance to the nearest point on 'from' feature along linear feature\n" */
 	"\tto_along - distance to the nearest point on 'from' feature along linear feature\n"
 	"\tto_angle - angle of linear feature in nearest point, counterclockwise from positive " 
-	              "x axis, in radians, which is between -PI and PI inclusive.";
+	              "x axis, in radians, which is between -PI and PI inclusive\n"
+	"\tto_attr - attribute of nearest feature given by to_column option"; 
     
     column_opt = G_define_option();
     column_opt->key = "column";
@@ -162,6 +165,13 @@ int main (int argc, char *argv[])
     column_opt->required = YES;
     column_opt->multiple = YES;
     column_opt->description = "Column name(s) where values specified by 'upload' option will be uploaded";
+
+    to_column_opt = G_define_option();
+    to_column_opt->key = "to_column";
+    to_column_opt->type = TYPE_STRING;
+    to_column_opt->required = NO;
+    to_column_opt->multiple = NO;
+    to_column_opt->description = "Column name of nearest feature (used with upload=to_attr)";
 
     table_opt = G_define_option();
     table_opt->key = "table";
@@ -218,6 +228,12 @@ int main (int argc, char *argv[])
 	    Upload[i].upload = DIST;
 	else if ( strcmp(upload_opt->answers[i], "to_angle") == 0 )
 	    Upload[i].upload = TO_ANGLE;
+	else if ( strcmp(upload_opt->answers[i], "to_attr") == 0 ) {
+	    if ( !(to_column_opt->answer) ) {
+		G_fatal_error ("to_column option missing");
+	    }
+	    Upload[i].upload = TO_ATTR;
+	}
 
 	i++;
     }
@@ -280,9 +296,10 @@ int main (int argc, char *argv[])
     }
 
     /* Open database driver */
+    db_init_string (&stmt);
+    db_init_string (&dbstr);
     driver = NULL;
     if ( !print_flag->answer ) { 
-        db_init_string (&stmt);
 
 	if (!all) {
 	    Fi = Vect_get_field ( &From, from_field);
@@ -295,6 +312,43 @@ int main (int argc, char *argv[])
 	    driver = db_start_driver_open_database ( NULL, NULL );
 	    if ( driver == NULL ) 
 		G_fatal_error ( "Cannot open default database");
+	}
+    } 
+
+    to_driver = NULL;
+    if ( to_column_opt->answer ) { 
+	toFi = Vect_get_field ( &To, to_field);
+	if ( toFi == NULL ) G_fatal_error ( "Cannot get layer info" );
+	
+	to_driver = db_start_driver_open_database ( toFi->driver, toFi->database );
+	if ( to_driver == NULL ) 
+	    G_fatal_error ( "Cannot open database %s by driver %s", toFi->database, toFi->driver );
+
+	/* Check column types */
+	if ( !print_flag->answer ) {
+	    char *fcname;
+	    int fctype, tctype;
+
+	    i = 0;
+	    while (column_opt->answers[i]) {
+		if ( Upload[i].upload == TO_ATTR ) {
+		    fcname = column_opt->answers[i];
+		    break;
+		}
+		i++;
+	    }
+
+	    fctype = db_column_Ctype ( driver, Fi->table, fcname );
+	    tctype = db_column_Ctype ( to_driver, toFi->table, to_column_opt->answer);
+		
+            if ( ( (tctype==DB_C_TYPE_STRING || tctype==DB_C_TYPE_DATETIME )
+		    && (fctype ==DB_C_TYPE_INT || fctype==DB_C_TYPE_DOUBLE) ) ||
+            	 ( (tctype==DB_C_TYPE_INT || tctype==DB_C_TYPE_DOUBLE )
+		    && (fctype ==DB_C_TYPE_STRING || fctype==DB_C_TYPE_DATETIME) )
+	    ) {
+	    	G_fatal_error ( "Incomatible column types" );
+	    }
+		
 	}
     } 
 
@@ -615,7 +669,23 @@ int main (int argc, char *argv[])
     if ( driver ) 
         db_begin_transaction ( driver );
 
+    /* select 'to' attributes */
+    if ( to_column_opt->answer ) { 
+	int nrec;
+	db_CatValArray_init ( &cvarr );
+	nrec = db_select_CatValArray ( to_driver, toFi->table, toFi->key, 
+					to_column_opt->answer, NULL, &cvarr );
+        G_debug (3, "selected values = %d", nrec );
+
+	if ( cvarr.ctype == DB_C_TYPE_DATETIME ) {
+	    G_warning ( "DATETIME type not yet supported, no attributes will be uploaded" ); 
+	}	
+	db_close_database_shutdown_driver ( to_driver );
+    }	
+
     for ( i = 0; i < count; i++ ) {
+	dbCatVal *catval;
+
 	/* Write line connecting nearest points */
 	if ( Outp != NULL ) {
 	    Vect_reset_line ( FPoints );
@@ -634,6 +704,10 @@ int main (int argc, char *argv[])
 
 	if ( Near[i].count > 1 ) update_dupl++;
 	if ( Near[i].count == 0 ) update_notfound++;
+    
+	if ( to_column_opt->answer ) { 
+	    db_CatValArray_get_value ( &cvarr, Near[i].to_cat, &catval );
+	}
 	
 	if ( print_flag->answer || (all && !table_opt->answer) ) { /* print only */
 	    fprintf(stdout, "%d", Near[i].from_cat );
@@ -673,6 +747,30 @@ int main (int argc, char *argv[])
 			    break;
 			case TO_ANGLE:
 			    fprintf(stdout, "|%f", Near[i].to_angle );
+			    break;
+			case TO_ATTR:
+			    if ( catval	) {
+				switch (cvarr.ctype) {
+				    case DB_C_TYPE_INT:
+			            	fprintf(stdout, "|%d", catval->val.i );
+				    	break;
+
+				    case DB_C_TYPE_DOUBLE:
+			            	fprintf(stdout, "|%.15e", catval->val.d );
+				    	break;
+
+				    case DB_C_TYPE_STRING:
+			            	fprintf(stdout, "|%s", db_get_string(catval->val.s) );
+				    	break;
+
+				    case DB_C_TYPE_DATETIME:
+					/* TODO: formating datetime */
+			            	fprintf(stdout, "|" );
+				    	break;
+				}
+			    } else {        
+				fprintf(stdout, "|null" );
+			    }
 			    break;
 		    }
 		}
@@ -714,6 +812,32 @@ int main (int argc, char *argv[])
 			break;
 		    case TO_ANGLE:
 			sprintf (buf2, " %f", Near[i].to_angle );
+			break;
+		    case TO_ATTR:
+			if ( catval	) {
+			    switch (cvarr.ctype) {
+				case DB_C_TYPE_INT:
+				    sprintf ( buf2, " %d", catval->val.i );
+				    break;
+
+				case DB_C_TYPE_DOUBLE:
+				    sprintf( buf2, " %.15e", catval->val.d );
+				    break;
+
+				case DB_C_TYPE_STRING:
+				    db_set_string ( &dbstr, db_get_string(catval->val.s) );
+				    db_double_quote_string( &dbstr );
+				    sprintf ( buf2, " '%s'", db_get_string( &dbstr ) );
+				    break;
+
+				case DB_C_TYPE_DATETIME:
+				    /* TODO: formating datetime */
+				    fprintf(stdout, " null" );
+				    break;
+			    }
+			} else {        
+			    fprintf(stdout, " null" );
+			}
 			break;
 		}
 		db_append_string (&stmt, buf2);
@@ -779,6 +903,32 @@ int main (int argc, char *argv[])
 			    break;
 			case TO_ANGLE:
 			    sprintf (buf2, " %f", Near[i].to_angle );
+			    break;
+			case TO_ATTR:
+			    if ( catval	) {
+				switch (cvarr.ctype) {
+				    case DB_C_TYPE_INT:
+					sprintf ( buf2, " %d", catval->val.i );
+					break;
+
+				    case DB_C_TYPE_DOUBLE:
+					sprintf( buf2, " %.15e", catval->val.d );
+					break;
+
+				    case DB_C_TYPE_STRING:
+					db_set_string ( &dbstr, db_get_string(catval->val.s) );
+					db_double_quote_string( &dbstr );
+					sprintf ( buf2, " '%s'", db_get_string( &dbstr ) );
+					break;
+
+				    case DB_C_TYPE_DATETIME:
+					/* TODO: formating datetime */
+					fprintf(stdout, " null" );
+					break;
+				}
+			    } else {        
+				fprintf(stdout, " null" );
+			    }
 			    break;
 		    }
 		    db_append_string (&stmt, buf2);
