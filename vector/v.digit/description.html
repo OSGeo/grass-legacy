@@ -11,6 +11,12 @@ If several display commands are to be used to render the background
 they should be separated with the semi-colon ';' character.
 When run from the command line, these display commands will generally
 need to be "quoted" as they will contain spaces (see examples).
+<P>
+<b>Dead (deleted) lines</b>: If a user deletes a line in <em>v.digit</em>,
+it is internally only marked in the geometry file as 'dead' but it remains
+there and occupies space. Any vector module used afterwards on this map
+which really reads and writes vector geometry (so not <em>g.copy</em>) will
+writes only lines which are 'alive'.
 
 <h2>EXAMPLES</h2>
 
@@ -69,6 +75,7 @@ used to remove comments and trade newlines for semi-colons, respectively.
 
 <h2>SEE ALSO</h2>
 <a href="r.digit.html">r.digit</a><BR>
+<a href="v.clean.html">v.clean</a><BR>
 
 
 <h2>AUTHOR</h2>
