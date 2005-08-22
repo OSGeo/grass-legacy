@@ -55,6 +55,68 @@ referenced by the &lt;layer,category&gt; pair.
 
 Spatial index (based on R-tree) is calculated on the fly.
 
+Spatial index occupies a lot of memory but it is necessary for 
+topology building. Also, it takes long time to release the memory
+occupied by spatial index (dig_spidx_free()). 
+
+The function building topology (Vect_build()) is usually called 
+at the end of module (before Vect_close()) so it is faster to call
+exit() and operating system releases all the memory much faster.
+By default the memory is not released.
+
+It is possible to call Vect_set_release_support() before Vect_close()
+to enforce memory release, but it takes long time on large files.
+
+Currently most of the modules do not release the memory occupied for
+spatial index and work like this (pseudocode):
+
+\verbatim
+int 
+main
+{
+     Vect_open_new()
+     //writing new vector
+
+     Vect_build()
+     Vect_close()  // memory is not released
+}
+\endverbatim
+
+In general it is possible to free the memory with Vect_set_release_support()
+such as:
+
+\verbatim
+int 
+main
+{
+     Vect_open_new()
+     // writing new vector
+
+     Vect_build()
+     Vect_set_release_support()
+     Vect_close()  // memory is released
+}
+\endverbatim
+
+but it only takes longer time. 
+<P>
+It make sense to release spatial index if it is used only at the beginning
+of a module or in permanently running programs like QGIS.
+For example:
+
+\verbatim
+int 
+main
+{
+     Vect_open_old()
+     // select features using spatial index, e.g.  Vect_select_lines_by_box()
+     Vect_set_release_support()
+     Vect_close()  // memory is released
+
+     // do some processing which needs memory
+}
+\endverbatim
+
 
 \subsubsection vlibtopo Vector library topology management
 
