@@ -73,7 +73,7 @@ main (int argc, char *argv[])
     gflag->description    = _("Print raster map region only");
 
     if (G_parser(argc, argv))
-        exit(1);
+        exit(EXIT_FAILURE);
     
     name = G_store(opt1->answer);
     if ((mapset = G_find_cell2 (name, "")) == NULL)
