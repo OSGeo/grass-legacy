@@ -1,6 +1,7 @@
+#include <string.h>
 #include "global.h"
 #include "Vect.h"
-#include <string.h>
+#include "glocale.h"
 
 int parse_units();
 int parse_option();
@@ -31,14 +32,14 @@ parse_command_line (int argc, char *argv[])
     parms.type = G_define_standard_option(G_OPT_V_TYPE) ;
     parms.type->options      = "point,line,boundary,centroid";
     parms.type->answer       = "point,line,boundary,centroid";
-    parms.type->description  = "Type of elements (for coor valid point/centroid, "
-			       "for length valid line/boundary)";	
+    parms.type->description  = _("Type of elements (for coor valid point/centroid, "
+			       "for length valid line/boundary)");	
     
     parms.field = G_define_standard_option(G_OPT_V_FIELD);
 
     parms.qfield = G_define_standard_option(G_OPT_V_FIELD);
     parms.qfield->key = "qlayer";
-    parms.qfield->description = "Query layer. Used by 'query' option.";
+    parms.qfield->description = _("Query layer. Used by 'query' option.");
 
     parms.option = G_define_option();
     parms.option->key          = "option";
@@ -46,7 +47,7 @@ parse_command_line (int argc, char *argv[])
     parms.option->required     = YES;
     parms.option->multiple     = NO;
     parms.option->options      = "cat,area,length,count,coor,sides,query";
-    parms.option->description  = "Value to upload";
+    parms.option->description  = _("Value to upload");
     parms.option->descriptions  = 
 		 "cat;insert new row for each category if doesn't exist yet;"
 		 "area;area size;"
@@ -64,7 +65,7 @@ parse_command_line (int argc, char *argv[])
     parms.units->required = NO ;
     parms.units->multiple = NO ;
     parms.units->options      = "mi,miles,f,feet,me,meters,k,kilometers,a,acres,h,hectares";
-    parms.units->description = "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares)";
+    parms.units->description = _("mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares)");
 
     parms.col = G_define_option();
     parms.col->key    = "column";
@@ -72,7 +73,7 @@ parse_command_line (int argc, char *argv[])
     parms.col->required = NO ;
     parms.col->multiple = YES ;
     parms.col->gisprompt  = "column(s)" ;
-    parms.col->description = "column(s)";
+    parms.col->description = _("column(s)");
 
     parms.qcol = G_define_option();
     parms.qcol->key    = "qcolumn";
@@ -80,19 +81,19 @@ parse_command_line (int argc, char *argv[])
     parms.qcol->required = NO ;
     parms.qcol->multiple = NO ;
     parms.qcol->gisprompt  = "query column";
-    parms.qcol->description = "Query column used for 'query' option. E.g. 'cat', 'count(*)', 'sum(val)'";
+    parms.qcol->description = _("Query column used for 'query' option. E.g. 'cat', 'count(*)', 'sum(val)'");
 
     flags.p = G_define_flag();
     flags.p->key = 'p';
-    flags.p->description = "print only";
+    flags.p->description = _("print only");
     
     flags.s = G_define_flag();
     flags.s->key = 's';
-    flags.s->description = "only print sql statements";	
+    flags.s->description = _("only print sql statements");	
     
     flags.t = G_define_flag();
     flags.t->key = 'c';
-    flags.t->description = "In print mode prints totals for options: length,area,count";	
+    flags.t->description = _("In print mode prints totals for options: length,area,count");	
 
     if (G_parser(argc,argv)) exit(-1);
 
@@ -104,7 +105,7 @@ parse_command_line (int argc, char *argv[])
     options.mapset = G_find_vector2 (options.name, NULL);
 
     if (options.mapset == NULL) 
-	G_fatal_error ( "%s: <%s> vector map not found\n", G_program_name(), options.name);
+	G_fatal_error ( _("%s: <%s> vector map not found"), G_program_name(), options.name);
 
     options.type = Vect_option_to_types ( parms.type ); 
     options.field = atoi( parms.field->answer );
@@ -127,22 +128,22 @@ parse_command_line (int argc, char *argv[])
 	 || options.option == O_QUERY ) /* one column required */
     {
 	if ( ncols != 1 ) {
-	    G_fatal_error ( "This option requires one column" );
+	    G_fatal_error ( _("This option requires one column") );
 	}
     }  else if ( options.option == O_SIDES ) {
 	if ( ncols != 2 ) {
-	    G_fatal_error ( "This option requires 2 columns" );
+	    G_fatal_error ( _("This option requires 2 columns") );
 	}
     }  else if ( options.option == O_COOR ) {
 	if ( ncols < 2 ) {
-	    G_fatal_error ( "This option requires at least 2 columns" );
+	    G_fatal_error ( _("This option requires at least 2 columns") );
 	}
     }
 
     options.qcol = parms.qcol->answer;
 
     if ( options.option == O_SIDES && !(options.type | GV_BOUNDARY) )
-	G_fatal_error ( "The 'sides' option makes sense only for boundaries.");
+	G_fatal_error ( _("The 'sides' option makes sense only for boundaries"));
 
     return 0;
 }
@@ -179,7 +180,7 @@ int parse_option (char *s)
 int 
 match (char *s, char *key, int min)
 {
-    int len;
+    size_t len;
 
     if (!s) return 0;
     len = strlen (s);
