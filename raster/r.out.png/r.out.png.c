@@ -52,8 +52,8 @@ int main(int argc, char *argv[])
 {
     struct GModule *module;
     struct Option *rast, *png_file;
-    struct Flag *bequiet, *gscale;
-    char *cellmap, *map, *p, errbuf[100], ofile[1000];
+    struct Flag *bequiet;
+    char *cellmap, *map, *p, ofile[1000];
     char rastermap[1024];
     unsigned char *set, *ored, *ogrn, *oblu;
     CELL *cell_buf;
@@ -85,32 +85,24 @@ int main(int argc, char *argv[])
      * ** implied warranty.
      */
 
-
-
     png_struct *png_ptr;
     png_info *info_ptr;
 
-
     png_byte *line;
     png_byte *pp;
-
 
     /* these variables are declared static because gcc wasn't kidding
      * about "variable XXX might be clobbered by `longjmp' or `vfork'"
      * (stack corruption observed on Solaris 2.6 with gcc 2.8.1, even
      * in the absence of any other error condition) */
-    static int pnm_type;
     static xelval maxmaxval;
 
     static int depth;
-    static int compression;
     static int filter;
 
     /* these guys are initialized to quiet compiler warnings: */
     maxmaxval = 255;
     depth = 0;
-
-
 
     G_gisinit(argv[0]);
 
@@ -145,13 +137,13 @@ int main(int argc, char *argv[])
 	"Export GRASS raster as non-georeferenced PNG image format.";
 
     if (G_parser(argc, argv))
-	exit(-1);
+	exit(EXIT_FAILURE);
 
-    strncpy(rastermap, rast->answer, 1024);
+    strncpy(rastermap, rast->answer, 1024 * sizeof(char));
 
     if (strcmp(png_file->answer, "<rasterfilename>.png")) {
 	if (strcmp(png_file->answer, "-"))
-	    strncpy(ofile, png_file->answer, 1000);
+	    strncpy(ofile, png_file->answer, 1000 * sizeof(char));
 	else
 	    do_stdout = 1;
     }
@@ -162,28 +154,24 @@ int main(int argc, char *argv[])
 	    if (p != map)
 		*p = '\0';
 	}
-	strncpy(ofile, map, 995);
+	strncpy(ofile, map, 995 * sizeof(char));
 	strcat(ofile, ".png");
     }
 
-/*G_get_set_window (&w); *//* 10/99 MN: check for current region */
+    /*G_get_set_window (&w); *//* 10/99 MN: check for current region */
     G_get_window(&w);
 
     if (!bequiet->answer)
-	fprintf(stderr, "rows = %d, cols = %d\n", w.rows, w.cols);
+	G_message("rows = %d, cols = %d", w.rows, w.cols);
 
     /* open cell file for reading */
     {
 	cellmap = G_find_file2("cell", rastermap, "");
-	if (!cellmap) {
-	    sprintf(errbuf, "Couldn't find raster file %s", rastermap);
-	    G_fatal_error(errbuf);
-	}
+	if (!cellmap)
+	    G_fatal_error("Couldn't find raster file %s", rastermap);
 
-	if ((cellfile = G_open_cell_old(rast->answer, cellmap)) == -1) {
-	    sprintf(errbuf, "Not able to open cellfile for [%s]", rastermap);
-	    G_fatal_error(errbuf);
-	}
+	if ((cellfile = G_open_cell_old(rast->answer, cellmap)) == -1)
+	    G_fatal_error("Not able to open cellfile for [%s]", rastermap);
     }
 
     cell_buf = G_allocate_c_raster_buf();
@@ -199,10 +187,8 @@ int main(int argc, char *argv[])
     {
 	if (do_stdout)
 	    fp = stdout;
-	else if (NULL == (fp = fopen(ofile, "w"))) {
-	    sprintf(errbuf, "Not able to open file for [%s]", ofile);
-	    G_fatal_error(errbuf);
-	}
+	else if (NULL == (fp = fopen(ofile, "w")))
+	    G_fatal_error("Not able to open file for [%s]", ofile);
     }
 
     png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,
@@ -210,23 +196,20 @@ int main(int argc, char *argv[])
 				      pnmtopng_error_handler, NULL);
     if (png_ptr == NULL) {
 	fclose(fp);
-	fprintf(stderr, "cannot allocate LIBPNG structure\n");
-	exit(-1);
+	G_fatal_error("cannot allocate LIBPNG structure");
     }
 
     info_ptr = png_create_info_struct(png_ptr);
     if (info_ptr == NULL) {
 	png_destroy_write_struct(&png_ptr, (png_infopp) NULL);
 	fclose(fp);
-	fprintf(stderr, "cannot allocate LIBPNG structure\n");
-	exit(-1);
+	G_fatal_error("cannot allocate LIBPNG structure");
     }
 
     if (setjmp(pnmtopng_jmpbuf_struct.jmpbuf)) {
 	png_destroy_write_struct(&png_ptr, &info_ptr);
 	fclose(fp);
-	fprintf(stderr, "setjmp returns error condition (1)\n");
-	exit(-1);
+	G_fatal_error("setjmp returns error condition (1)");
     }
 
     depth = 8;			/*really??? */
@@ -267,7 +250,7 @@ int main(int argc, char *argv[])
 	else if (rtype == DCELL_TYPE)
 	    voidc = (DCELL *) dcell_buf;
 	else
-	    exit(1);
+	    exit(EXIT_FAILURE);
 
 	/*if(!gscale->answer){ */       /* 24BIT COLOR IMAGE */
 
@@ -282,7 +265,7 @@ int main(int argc, char *argv[])
 	    png_set_packing(png_ptr);
 
 	    /* max: 3 color channels, one alpha channel, 16-bit */
-	    if ((line = (png_byte *) malloc(w.cols * 8)) == NULL) {
+	    if ((line = (png_byte *)G_malloc(w.cols * 8 * sizeof(char))) == NULL) {
 		png_destroy_write_struct(&png_ptr, &info_ptr);
 		fclose(fp);
 		G_free_colors(&colors);
@@ -294,8 +277,7 @@ int main(int argc, char *argv[])
 		G_free(oblu);
 		G_free(set);
 		G_close_cell(cellfile);
-		fprintf(stderr, "out of memory allocating PNG row buffer\n");
-		exit(-1);
+		G_fatal_error("out of memory allocating PNG row buffer");
 	    }
 
 	    for (row = 0; row < w.rows; row++) {
@@ -303,7 +285,7 @@ int main(int argc, char *argv[])
 		if (!bequiet->answer)
 		    G_percent(row, w.rows, 5);
 		if (G_get_raster_row(cellfile, (void *)voidc, row, rtype) < 0)
-		    exit(1);
+		    exit(EXIT_FAILURE);
 		G_lookup_raster_colors((void *)voidc, ored, ogrn, oblu, set,
 				       w.cols, &colors, rtype);
 
@@ -369,7 +351,7 @@ int main(int argc, char *argv[])
     fclose(fp);
 
     if (!bequiet->answer)
-	fprintf(stderr, "\nDone.\n");
+	G_message("\nDone.");
 
     return (0);
 }
@@ -393,15 +375,11 @@ static void pnmtopng_error_handler(png_ptr, msg)
      * regardless of whether _BSD_SOURCE or anything else has (or has not)
      * been defined. */
 
-    fprintf(stderr, "pnmtopng:  fatal libpng error: %s\n", msg);
-    fflush(stderr);
+    G_warning("pnmtopng:  fatal libpng error: %s", msg);
 
     jmpbuf_ptr = png_get_error_ptr(png_ptr);
     if (jmpbuf_ptr == NULL) {	/* we are completely hosed now */
-	fprintf(stderr,
-		"pnmtopng:  EXTREMELY fatal error: jmpbuf unrecoverable; terminating.\n");
-	fflush(stderr);
-	exit(99);
+	G_fatal_error("pnmtopng:  EXTREMELY fatal error: jmpbuf unrecoverable; terminating.");
     }
 
     longjmp(jmpbuf_ptr->jmpbuf, 1);
