@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 
     G_gisinit(argv[0]);
 
-	module = G_define_module();
+    module = G_define_module();
     module->description =
 		_("Converts a raster map layer into an ESRI ARCGRID file.");
 
@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
     parm.dp->key        = "dp";
     parm.dp->type       = TYPE_INTEGER;
     parm.dp->required   = NO;
-    parm.dp->answer     = "6";
+    parm.dp->answer     = "8";
     parm.dp->description= _("Number of decimal places");
 
     flag.noheader = G_define_flag();
