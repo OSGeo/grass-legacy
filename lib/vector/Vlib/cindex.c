@@ -252,7 +252,7 @@ int
 Vect_cidx_find_next ( struct Map_info *Map, int field_index, int cat, int type_mask,
                                   int start_index, int *type, int *id )
 {
-    int    *catp, cat_index;
+    int    *catp, cat_index, tmp_cat_index;
     struct Cat_index *ci;
 
     G_debug (3, "Vect_cidx_find_next() cat = %d, type_mask = %d, start_index = %d", cat, type_mask, start_index);
@@ -269,7 +269,8 @@ Vect_cidx_find_next ( struct Map_info *Map, int field_index, int cat, int type_m
     /* pointer to beginning of searched part of category index */
     ci = &(Map->plus.cidx[field_index]);
 
-    catp = bsearch ( &cat, ci->cat + start_index * 3 * sizeof(int), 
+    /* calc with pointers is using sizeof(int) !!! */
+    catp = bsearch ( &cat, (int *)ci->cat + start_index * 3, 
                      (size_t)ci->n_cats - start_index, 
 	             3 * sizeof(int), cmp_cat);
 
@@ -278,6 +279,17 @@ Vect_cidx_find_next ( struct Map_info *Map, int field_index, int cat, int type_m
 
     /* get index from pointer, the difference between pointers is using sizeof(int) !!! */
     cat_index = (catp - (int *)ci->cat) / 3;
+    
+    G_debug (4, "cat_index = %d", cat_index);
+
+    /* Go down to the first if multiple */
+    while ( cat_index > start_index ) {
+	if ( ci->cat[cat_index-1][0] != cat ) {
+	    break;
+	}
+	cat_index--;
+    }
+    G_debug (4, "cat_index = %d", cat_index);
     
     do {
         G_debug (3, "  cat_index = %d", cat_index);
