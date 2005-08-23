@@ -76,8 +76,7 @@ GRASS programs.
 
 <P> int G_debug(level, char *message, ...) print debug message
 
-<P>
-int G_warning(char *message, ...) print warning message and continue
+<P> int G_warning(char *message, ...) print warning message and continue
 
 These routines report errors to the user. The normal mode is to write
 the <B>message</B> to the screen (on the standard error output) and
@@ -139,7 +138,8 @@ warning messages.
 <P>
 <B>Note.</B> This routine has no effect on <I>G_fatal_error().</I>
 
-\subsection envir Environment and Database Information<
+
+\subsection envir Environment and Database Information
 
 <P> The following routines return information about the current
 database selected by the user. Some of this information is retrieved
@@ -150,28 +150,28 @@ the GRASS environment.
 <P>
 The following four routines can be used freely by the programmer:
 
-<P> char *G_location() current location name
+<P> char * G_location() current location name
 
 Returns the name of the current database location. This routine should
 be used by modules that need to display the current location to the
 user. See Locations for an explanation of locations.
 
 <P>
-char *G_mapset() current mapset name 
+char * G_mapset() current mapset name 
 
 Returns the name of the current mapset in the current location. This
 routine is often used when accessing files in the current mapset. See
 Mapsets for an explanation of mapsets.
 
 <P>
-char *G_myname() location title
+char * G_myname() location title
 
 Returns a one line title for the database location. This title is read
 from the file MYNAME in the PERMANENT mapset. See also
 Permanent_Mapset for a discussion of the PERMANENT mapset.
 
 <P>
-char *G_gisbase() top level module directory 
+char * G_gisbase() top level module directory 
 
 Returns the full path name of the top level directory for GRASS
 programs.  This directory will have subdirectories which will contain
@@ -181,8 +181,7 @@ these directories are:
 \verbatim
 bin  commands run by the user
 etc  modules and data files used by GRASS commands
-txt  help files
-menu files used by the grass3 menu interface (outdated?)
+html help files
 \endverbatim
 
 
@@ -206,13 +205,13 @@ files. <B>The programmer should not use the next two routines to
 bypass the normal database access routines.</B>
 
 <P>
-char *G_gisdbase() top level database directory
+char * G_gisdbase() top level database directory
 
 Returns the full UNIX path name of the directory which holds the database
 locations. See GISDBASE for a full explanation of this directory.
 
 <P>
-char *G_location_path() current location directory
+char * G_location_path() current location directory
 
 Returns the full UNIX path name of the current database location. For
 example, if the user is working in location <I>spearfish</I> in the
@@ -242,7 +241,7 @@ environment and return its value (which is a character string). If
 exit(). G__setenv() just returns the NULL pointer.
 
 <P>
-int G_setenv (char *name, char *value)set GRASS environment
+int G_setenv (char *name, char *value) set GRASS environment
   variable
 
 <P>
@@ -257,7 +256,7 @@ new value to the user's GRASS environment file.
 
 
 \subsection dbaseaccess Fundamental Database Access Routines
-</H1>
+
 
 <P>
 The routines described in this section provide the low-level interface
@@ -267,8 +266,8 @@ programmer should never bypass this level of database interface. These
 routines must be used to access the GRASS database unless there <B>are
 other higher level library routines which perform the same
 function.</B> For example, routines to process raster files
-(Raster_File_Processing), vector files (Vector_File_Processing), or
-site files (Site_List_Processing), etc., should be used instead.
+(Raster_File_Processing), vector files (Vector_File_Processing),
+etc., should be used instead.
 
 <P>
 In the descriptions below, the term database <I>element</I> is used.
@@ -313,7 +312,7 @@ char *mapset;
 
 mapset = G_ask_old("", name, "paint/labels", "labels");
 if (mapset = = NULL)
-    exit(0); /* user canceled the request */
+    exit(EXIT_SUCCESS); /* user canceled the request */
 \endverbatim
 
 <P>
@@ -328,7 +327,7 @@ Hit RETURN to cancel request
 The last line of the prompt can be modified using G_set_ask_return_msg().
 
 <P>
-char *G_ask_old(char *prompt, char *name, char *element, char *label)
+char * G_ask_old(char *prompt, char *name, char *element, char *label)
 prompt for existing database file
   
 The user is asked to enter the name of an existing database file.
@@ -340,7 +339,7 @@ from the user's mapset search path. See Mapset_Search_Path for some
 more details about the search path.
 
 <P>
-char *G_ask_new(char *prompt, char *name, char *element, char
+char * G_ask_new(char *prompt, char *name, char *element, char
   *label) prompt for new database file
 The user is asked to enter the name of a new file which does not exist 
 in the current mapset.
@@ -352,7 +351,7 @@ assumption is that <B>name</B> will be used to create a new file. New
 files are always created in the current mapset.
 
 <P>
-char *G_ask_in_mapset(char *prompt, char *name, char *element, char
+char * G_ask_in_mapset(char *prompt, char *name, char *element, char
   *label) prompt for existing database file
   
 The user is asked to enter the name of an file which exists in the
@@ -365,7 +364,7 @@ assumption is that <B>name</B> will be used to modify a file. GRASS
 only permits users to modify files in the current mapset.
 
 <P>
-char *G_ask_any(char *prompt, char *name, char *element, char
+char * G_ask_any(char *prompt, char *name, char *element, char
   *label, int warn) prompt for any valid file name
   
 The user is asked to enter any legal file name. If <B>warn</B> is 1
@@ -381,9 +380,9 @@ The "Hit RETURN to cancel request" part of the prompt in the prompting
 routines described above, is modified to "Hit RETURN <B>msg.</B>"
 
 <P>
-char *G_get_ask_return_msg() get Hit RETURN msg 
+char * G_get_ask_return_msg() get Hit RETURN msg 
 
-The current <I>msg</I> (as set by <I>G_set_ask_return_msg</I>) is
+The current <I>msg</I> (as set by <I>G_set_ask_return_msg()</I>) is
 returned.
 
 
@@ -398,7 +397,7 @@ programs). This form of the name is known as the <I>fully qualified
 file name</I> and is built by the following routine:
 
 <P>
-char *G_fully_qualified_name(char *name, char *mapset) fully
+char * G_fully_qualified_name(char *name, char *mapset) fully
   qualified file name
   
 Returns a fully qualified name for the file <B>name</B> in
@@ -420,7 +419,7 @@ int main(char *argc, char **argv)
  G_gisinit(argv[0]);
  mapset = G_ask_cell_old("", name, "");
 
- if (mapset == NULL) exit(0);
+ if (mapset == NULL) exit(EXIT_SUCCESS);
 
  fqn = G_fully_qualified_name(name, mapset);
  sprintf(command, "d.rast map='%s'", fqn);
@@ -441,7 +440,7 @@ where the file resides.
 The following routines search the database for files:
 
 <P>
-char *G_find_file(char *element, char *name, char *mapset) find a
+char * G_find_file(char *element, char *name, char *mapset) find a
   database file 
   
 Look for the file <B>name</B> under the specified <B>element</B> in
@@ -505,8 +504,7 @@ Returns 1 if <B>name</B> is ok, -1 otherwise.
 
 <P>
 
-\subsection Opening_an_Existing_Database_File_for_Reading Opening an
-Existing Database File for Reading
+\subsection Opening_an_Existing_Database_File_for_Reading Opening an Existing Database File for Reading
 
 <P>
 The following routines open the file <B>name</B> in <B>mapset</B> from
@@ -528,7 +526,7 @@ The UNIX open() routine is used to open the file. If the file does not exist,
 -1 is returned. Otherwise the file descriptor from the open() is returned.
 
 <P>
-FILE *G_fopen_old(char *element, char *name, char *mapset) open a
+FILE * G_fopen_old(char *element, char *name, char *mapset) open a
   database file for reading
 
 The database file <B>name</B> under the
@@ -576,8 +574,7 @@ returned. Otherwise the file is positioned at the end of the file and
 the file descriptor from the fopen() is returned.
 
 
-\subsection Creating_and_Opening_a_New_Database_File Creating and
-      Opening a New Database File
+\subsection Creating_and_Opening_a_New_Database_File Creating and Opening a New Database File
 
 <P>
 The following routines create the new file <B>name</B> in the current
@@ -610,7 +607,7 @@ exist, -1 is returned. Otherwise the file is positioned at the end of
 the file and the file descriptor from the open() is returned.
 
 <P>
-FILE *G_fopen_new(char *element, char *name) open a new database file
+FILE * G_fopen_new(char *element, char *name) open a new database file
   
 The database file <B>name</B> under the <B>element</B> in the current
 mapset is created and opened for writing (but not reading).
@@ -686,14 +683,14 @@ int G_free(void *buf) free the memory allocated
 Free the memory allocated by the GRASS malloc routines.
 
 <P>
-void *G_malloc (int size) memory allocation
+void * G_malloc (int size) memory allocation
 
 Allocates a block of memory at least <B>size</B> bytes which is
 aligned properly for all data types. A pointer to the aligned block is
 returned.
 
 <P>
-void *G_realloc(void *ptr, int size) memory allocation
+void * G_realloc(void *ptr, int size) memory allocation
 
 Changes the <B>size</B> of a previously allocated block of memory at
 <B>ptr</B> and returns a pointer to the new block of memory. The
@@ -707,7 +704,7 @@ a block of <B>size</B> bytes. This routine works around broken
 realloc() routines, which do not handle a NULL <B>ptr.</B>
 
 <P>
-void *G_calloc(int n, int size) memory allocation
+void * G_calloc(int n, int size) memory allocation
 
 Allocates a properly aligned block of memory <B>n</B>*<B>size</B>
 bytes in length, initializes the allocated memory to zero, and returns
@@ -718,23 +715,23 @@ a pointer to the allocated block of memory.
 discussed in Allocating_Raster_I_O_Buffers.
 
 <P>
-double *G_alloc_vector(int n) memory allocation
+double * G_alloc_vector(int n) memory allocation
 
 Allocate a vector (array) of <B>n</B> doubles initialized to zero.
 
 <P>
-float *G_alloc_fvector(int n) memory allocation 
+float * G_alloc_fvector(int n) memory allocation 
 
 Allocate a vector (array) of <B>n</B> floats initialized to zero.
 
 <P>
-double **G_alloc_matrix(int rows, int cols) memory allocation
+double ** G_alloc_matrix(int rows, int cols) memory allocation
 
 Allocate a matrix of <B>rows</B> by <B>cols</B> doubles initialized to
 zero.
 
 <P>
-float **G_alloc_fmatrix(int rows, int cols) memory allocation
+float ** G_alloc_fmatrix(int rows, int cols) memory allocation
 
 Allocate a matrix of <B>rows</B> by <B>cols</B> floats initialized to
 zero.
@@ -770,7 +767,7 @@ vector map export does not take care for the active region settings.
 The routines described below use a GRASS data structure
 <I>Cell_head</I> to hold region information. This structure is defined
 in the "gis.h" header file.  It is discussed in detail under
-GIS_Library_Data_Structures.
+GIS_Library_Data_Structures .
 
 
 
@@ -923,7 +920,7 @@ programmer should consider whether or not the full region information
 is really needed before using this routine.
 
 <P>
-char *G_align_window(struct Cell_head *region, struct Cell_head *ref)
+char * G_align_window(struct Cell_head *region, struct Cell_head *ref)
 align two regions
 
 Modifies the input <B>region</B> to align to the <B>ref</B>
@@ -1009,7 +1006,7 @@ region. The current values are:
 99 Other (more than 121 projections are supported)
 
 <P>
-char *G_database_projection_name(int proj) query cartographic
+char * G_database_projection_name(int proj) query cartographic
 projection
 
 Returns a pointer to a string which is a printable name for projection
@@ -1017,7 +1014,7 @@ code <B>proj</B> (as returned by <I>G_projection()</I>). Returns NULL if
 <B>proj</B> is not a valid projection.
 
 <P>
-char *G_database_unit_name(int plural) database units
+char * G_database_unit_name(int plural) database units
 
 Returns a string describing the database grid units. It returns a
 plural form (eg. feet) if <B>plural</B> is true. Otherwise it returns
@@ -1401,7 +1398,7 @@ PROJECTION_LL, then <B>east1,east2</B> are not changed.
 \subsection Miscellaneous Miscellaneous
 
 
-char *G_ellipsoid_name(int n) return ellipsoid name
+char * G_ellipsoid_name(int n) return ellipsoid name
 
 This routine returns a pointer to a string containing the name for the
 <B>n</B><I>th</I> ellipsoid in the GRASS ellipsoid table; NULL when
@@ -1483,17 +1480,20 @@ pole; 0 if it contains neither pole.
 
 \section Raster_File_Processing GRASS Raster File Processing
 
- Please refer to <a href="gisrasterlib.dox">GRASS Raster File Processing</a>.
+ Please refer to <a href="gisrasterlib.dox">GRASS Raster File Processing</a>
+ in Chapter gisrastintro .
 
 
 \section Vector_File_Processing GRASS Vector File Processing
 
- Please refer to <a href="gisvectorlib.dox">GRASS Vector File Processing</a>.
+ Please refer to <a href="gisvectorlib.dox">GRASS Vector File Processing</a>
+ in Chapter gisvectintro .
 
 
 \section Sites_File_Processing GRASS Sites File Processing
 
- Please refer to <a href="gissiteslib.dox">GRASS Sites File Processing</a>.
+ Please refer to <a href="gissiteslib.dox">GRASS Sites File Processing</a>
+ in Chapter gissitesintro .
 
 
 \section General_Plotting_Routines General Plotting Routines
@@ -1627,7 +1627,7 @@ The following routine generates temporary file names which are unique
 within the module and across all GRASS programs.
 
 <P>
-char *G_tempfile() returns a temporary file name
+char * G_tempfile() returns a temporary file name
 
 This routine returns a pointer to a string containing a unique file
 name that can be used as a temporary file within the
@@ -1770,13 +1770,13 @@ included in the GRASS Makefile process. The Makefile process is
 documented in Compiling_and_Installing_GRASS_Modules.
 
 <P>
-struct Option *G_define_option() returns Option structure
+struct Option * G_define_option() returns Option structure
 
 Allocates memory for the Option structure and returns a pointer to
 this memory (of <I>type struct Option *).</I>
 
 <P>
-struct Flag *G_define_flag() return Flag structure
+struct Flag * G_define_flag() return Flag structure
 
 Allocates memory for the Flag structure and returns a pointer to this
 memory (of <I>type struct Flag *).</I>
@@ -2097,6 +2097,150 @@ main(int argc , char *argv[] )
 \endverbatim
 
 
+\section Compiling_and_Installing_GRASS_Modules Compiling and Installing GRASS Modules
+
+GRASS modules are compiled and installed using the UNIX <i>make</i> command:
+<i>make</i> reads a file named <i>Makefile</i> (see
+Multiple_Architecture_Conventions for more information,) and then runs
+the compiler. The GRASS compilation process allows for multiple-architecture
+compilation from a single copy of the source code (for instance, if the source
+code is NFS mounted to various machines with differing architectures.) This
+chapter assumes that the programmer is familiar with <i>make</i> and its
+accompanying <i>Makefile</i>.
+
+<b>TODO: Explain ''auto-conf''....</b>
+
+<b>TODO: Include contents of SUBMITTING and INSTALL files from source code</b>
+
+To compile enter following:
+
+\verbatim
+./configure
+make
+make install
+\endverbatim
+
+Then the code will be compiled into "/usr/local/grass-6.x.y" directory. The start
+script "grass6x" will be placed into "/usr/local/bin/".\\
+
+Optionally other target directories can be specified while "configuring":
+
+\verbatim
+./configure --prefix=/opt/grass-6.x.y --with-bindir=/usr/bin
+make
+make install
+\endverbatim
+
+This will store the GRASS binaries into the directory "/opt/grass-6.x.y" and
+the  script mentioned above into "/usr/bin".
+
+The script "make" is required to compile single modules. The
+compilation process and requirements are discussed in more detail now.
+
+\subsection Makefile_Variables Makefile Variables
+
+<b>GRASS Libraries</b>. The following variables name the various GRASS 
+libraries:
+
+<i>GISLIB</i> This names the <i>GIS Library</i>, which is the principal GRASS 
+library. See GIS_Library  for details about this library, and
+Loading_the_GIS_Library for a sample Makefile which 
+loads this library.
+
+<i>VASKLIB</i> This names the <i>Vask Library</i>, which does full screen user 
+input.
+
+<i>VASK</i> This specifies the <i>Vask Library</i> plus the UNIX [n]curses and 
+termcap libraries needed to use the <i>Vask Library</i> routines. See 
+Vask_Library for details about this library, and Loading_the_Vask_Library
+for a sample Makefile which loads this library.
+
+<i>SEGMENTLIB</i> This names the <i>Segment Library</i>, which manages large 
+matrix data. See Segment_Library for details about this library, 
+and Loading_the_Vask_Library for a sample <i>Makefile</i> which loads
+this library.
+
+<i>RASTERLIB</i> This names the <i>Raster Graphics Library</i>, which 
+communicates with GRASS graphics drivers. See Raster_Graphics_Library
+ for details about this library, and Loading_the_Raster_Graphics_Library
+for a sample <i>Makefile</i> which loads this library.
+
+<i>DISPLAYLIB</i> This names the <i>Display Graphics Library</i>, which provides a
+higher level graphics interface to <i>RASTERLIB</i>. See
+Display_Graphics_Library for details about this library, and
+Loading_the_Display_Graphics_Library for a sample <i>Makefile</i>
+which loads this library.\\
+
+
+
+<b>UNIX Libraries:</b> The following variables name some useful UNIX 
+system libraries:
+
+<i>MATHLIB</i> This names the math library. It should be used instead of the -lm 
+loader option.
+
+<i>CURSES</i> This names both the curses and termcap libraries. It should be used 
+instead of the \newline
+-lcurses/-lncurses and -ltermcap loader options. Do not use <tt>$CURSES</tt> if 
+you use <tt>$VASK</tt>.
+
+<i>TERMLIB</i> This names the termcap library. It should be used instead of the 
+-ltermcap or -ltermlib loader options. Do not use <tt>$TERMLIB</tt> if you use 
+<tt>$VASK</tt> or <tt>$CURSES</tt>.\\
+
+
+<b>Compiler and loader variables.</b> The following variables are related 
+to compiling and loading C programs:
+
+<i>EXTRA\_CFLAGS</i> This variable can be used to add additional options 
+to <tt>$CFLAGS</tt>. It has no predefined values. It is usually used to specify 
+additional -I include directories, or -D preprocessor defines.
+
+
+\subsection Constructing_a_Makefile Constructing a Makefile
+
+The complete syntax for a <i>Makefile</i> is discussed in the UNIX
+documentation for <i>make</i> and will not be repeated here. The essential
+idea is that a target (e.g. a GRASS module) is to be built from a list of
+dependencies (e.g. object files, libraries, etc.). The relationship between
+the target, its dependencies, and the rules for constructing the target is
+expressed according to the following syntax:
+
+\verbatim
+target: dependencies
+
+actions
+
+more actions
+\endverbatim
+
+If the target does not exist, or if any of the dependencies have a newer 
+date than the target (i.e., have changed), the actions will be executed to 
+build the target. The actions must be indented using a TAB. <i>make</i> is 
+picky about this. It does not like spaces in place of the TAB.
+
+
+\section Multiple_Architecture_Conventions Multiple-Architecture Conventions
+
+The following conventions allow for multiple architecture compilation on a 
+machine that uses a common or networked GRASS source code directory tree.
+
+<P>
+Object files and library archives are compiled into subdirectories that 
+represent the architecture that they were compiled on. These subdirectories 
+are created in the $(SRC) directory as OBJ.<I>arch</I> and 
+LIB.<I>arch</I>, where <I>arch</I> represents the architecture of the 
+compiling machine. Thus, for example, $(SRC)/OBJ.sun4 would contain the 
+object files for Sun/4 and SPARC architectures, and $(SRC)/LIB.686-pc-linux-gnu would 
+contain library archives for Linux architectures. Likewise, 
+$(SRC)/OBJ.686-pc-linux-gnu would contain the object files for Linux architectures, 
+and $(SRC)/LIB.686-pc-linux-gnu would contain library archives for Linux 
+architectures.
+
+<P>
+Note that 'arch' is defined for a specific architecture during setup and 
+compilation of GRASS, it is not limited to sun4 or any specific string.
+
 
 \section Full_Structure_Members_Description Full Structure Members Description
 
@@ -2114,7 +2258,6 @@ Description_of_Complex_Structure_Members.
 \section Complete_Structure_Members_Table Complete Structure Members Table
 
 <B>struct Flag</B>
-
 <table border=1>
 <tr>
  <td>structure member</td>
@@ -2148,21 +2291,22 @@ Description_of_Complex_Structure_Members.
 
 <P>
 <B>struct Option</B>
-
 <table border=1>
 <tr>
  <td>structure member</td>
  <td>C type </td>
  <td>required </td>
  <td>default </td>
- <td>description and example</tr>
+ <td>description and example</td>
+</tr>
 <tr>
  <td>key </td>
  <td>char * </td>
  <td>YES </td>
  <td>none </td>
  <td>Key word used on command line.<br>
- opt->key = "map" ;<td></tr>
+ opt->key = "map" ;</td>
+</tr>
 <tr>
  <td>type </td>
  <td>int </td>
@@ -2172,20 +2316,24 @@ Description_of_Complex_Structure_Members.
  TYPE_STRING <br>
  TYPE_INTEGER <br>
  TYPE_DOUBLE <br>
- opt->type = TYPE_STRING ;<td></tr><tr>
+ opt->type = TYPE_STRING ;</td>
+</tr>
+<tr>
  <td>Description </td>
  <td>char * </td>
  <td>YES </td>
  <td>none </td>
  <td>String describing option along with gettext macro for internationalization
- opt->description = _("Map name") ;<td></tr>
+ opt->description = _("Map name") ;</td>
+</tr>
 <tr>
  <td>answer </td>
  <td>char * </td>
  <td>NO </td>
  <td>NULL </td>
  <td>Default and parser-returned answer to an option.<br>
- opt->answer = "defaultmap" ;<td></tr>
+ opt->answer = "defaultmap" ;</td>
+</tr>
 <tr>
  <td>key_desc </td>
  <td>char * </td>
@@ -2195,13 +2343,16 @@ Description_of_Complex_Structure_Members.
  to the parser that several comma-separated arguments are expected 
  from the user as one answer. For example, if a pair of coordinates 
  is desired, this element might be defined as follows.<br>
-  opt->key_desc = "x,y" ; </tr>
+  opt->key_desc = "x,y" ; </td>
+</tr>
 <tr>
  <td>structure member</td>
  <td>C type </td>
  <td>required </td>
  <td>default </td>
- <td>description and example</tr><tr>
+ <td>description and example</td>
+</tr>
+<tr>
  <td>multiple </td>
  <td>int </td>
  <td>NO </td>
@@ -2209,20 +2360,24 @@ Description_of_Complex_Structure_Members.
  <td>Indicates whether the user can provide multiple answers or not. 
  YES and NO are defined in "gis.h" and should be used (NO is 
  the default.) Multiple is used in conjunction with the answers 
- structure member below. opt->multiple = NO ;<td></tr>
+ structure member below. opt->multiple = NO ;</td>
+</tr>
 <tr>
  <td>answers </td>
  <td>  </td>
  <td>NO </td>
  <td>NULL </td>
- <td>Multiple parser-returned answers to an option. N/A</tr><tr>
+ <td>Multiple parser-returned answers to an option. N/A</td>
+</tr>
+<tr>
  <td>required </td>
  <td>int </td>
  <td>NO </td>
  <td>NO </td>
  <td>Indicates whether user MUST provide the option on the command 
  line. YES and NO are defined in "gis.h" and should be used (NO 
- is the default.) opt->required = YES ;<td></tr>
+ is the default.) opt->required = YES ;</td>
+</tr>
 <tr>
  <td>options </td>
  <td>char * </td>
@@ -2231,7 +2386,8 @@ Description_of_Complex_Structure_Members.
  <td>Approved values or range of values. <br>
   opt->options = "red,blue,white" ;<br>
   For integers and doubles, the following format is available: <br>
- opt->options = "0-1000" ;<td></tr>
+ opt->options = "0-1000" ;</td>
+</tr>
 <tr>
  <td>gisprompt</td>
  <td>char *</td>
@@ -2240,26 +2396,26 @@ Description_of_Complex_Structure_Members.
  <td>Interactive prompt guidance. There are three comma separated 
  parts to this argument which guide the use of the standard GRASS 
  file name prompting routines.<br>
- opt->gisprompt = "old,cell,raster" ;<td></tr>
+ opt->gisprompt = "old,cell,raster" ;</td>
+</tr>
 <tr>
  <td>checker</td>
  <td>char *()</td>
  <td>NO</td>
  <td>NULL</td>
  <td>Routine to check the answer to an option<br>
-   m opt->checker = my_routine() ;<td></tr>
+   m opt->checker = my_routine() ;</td>
+</tr>
 </table>
 
-\section Description_of_Complex_Structure_Members Description of
-        Complex Structure Members 
+\section Description_of_Complex_Structure_Members Description of Complex Structure Members 
 
 What follows are explanations of possibly confusing structure
 members. It is intended to clarify and supplement the structures table
 above.
 
 
-\subsection Answer_member_of_the_Flag_and_Option_structures Answer
-        member of the Flag and Option structures
+\subsection Answer_member_of_the_Flag_and_Option_structures Answer member of the Flag and Option structures
 
 The answer structure member serves two functions for GRASS commands
 that use the parser.
@@ -2595,13 +2751,13 @@ Strings have the usual C meaning: a NULL terminated array of characters.
 These next 3 routines copy characters from one string to another.
 
 <P>
-char *G_strcpy(char *dst, char *src)copy strings
+char * G_strcpy(char *dst, char *src)copy strings
 
 Copies the <B>src</B> string to <B>dst</B> up to and including the
 NULL which terminates the <B>src</B> string. Returns <B>dst.</B>
 
 <P>
-char *G_strncpy(char *dst, char *src, int n) copy strings
+char * G_strncpy(char *dst, char *src, int n) copy strings
 
 Copies at most <B>n</B> characters from the <B>src</B> string to
 <B>dst.</B> If <B>src</B> contains less than <B>n</B> characters, then
@@ -2612,7 +2768,7 @@ UNIX strncpy() in that G_strncpy() ensures that <B>dst</B> is NULL
 terminated, while strncpy() does not.
 
 <P>
-char *G_strcat(char *dst, char *src) concatenate strings 
+char * G_strcat(char *dst, char *src) concatenate strings 
 
 Appends the <B>src</B> string to the end of the <B>dst</B> string,
 which is then NULL terminated. Returns <B>dst.</B>
@@ -2621,7 +2777,7 @@ which is then NULL terminated. Returns <B>dst.</B>
 These next 3 routines remove unwanted white space from a single string.
 
 <P>
-char *G_squeeze(char *s) remove unnecessary white space 
+char * G_squeeze(char *s) remove unnecessary white space 
 
 Leading and trailing white space is removed from the string <B>s</B>
 and internal white space which is more than one character is reduced
@@ -2635,14 +2791,14 @@ Leading and trailing white space is removed from the string <B>s.</B>
 White space here means only spaces and tabs. There is no return value.
 
 <P>
-char *G_chop(char *s) Chop leading and trailing white spaces:
-  space, \f, \n, \r, \t, \v - returns pointer to string
+char * G_chop(char *s) Chop leading and trailing white spaces:
+  space, &#92;f, &#92;n, &#92;r, &#92;t, &#92;v - returns pointer to string
 
 <P>
 The next routines replaces character(s) from string.
 
 <P>
-char *G_strchg(char *bug, char character, char new) replace
+char * G_strchg(char *bug, char character, char new) replace
 character(s)
 
 Replace all occurencies of character in string bug with new.  Returns
@@ -2652,7 +2808,7 @@ changed string
 This next routine copies a string to allocated memory.
 
 <P>
-char *G_store(char *s) copy string to allocated memory
+char * G_store(char *s) copy string to allocated memory
 
 This routine allocates enough memory to hold the string <B>s</B>,
 copies <B>s</B> to the allocated memory, and returns a pointer to the
@@ -2662,13 +2818,13 @@ allocated memory.
 The next 2 routines convert between upper and lower case.
 
 <P>
-char *G_tolcase(char *s) convert string to lower case
+char * G_tolcase(char *s) convert string to lower case
 
 Upper case letters in the string <B>s</B> are converted to their lower
 case equivalent.  Returns <B>s.</B>
 
 <P>
-char *G_toucase(char *s) convert string to upper case
+char * G_toucase(char *s) convert string to upper case
 
 Lower case letters in the string <B>s</B> are converted to their upper
 case equivalent.  Returns <B>s.</B>
@@ -2677,7 +2833,7 @@ case equivalent.  Returns <B>s.</B>
 And finally a routine which gives a printable version of control characters.
 
 <P>
-char *G_unctrl(unsigned char c) printable version of control
+char * G_unctrl(unsigned char c) printable version of control
   character
 
 This routine returns a pointer to a string which contains an
@@ -2694,7 +2850,7 @@ the user's interrupt character:
 
 \verbatim
 char G_intr_char();
-char *G_unctrl();
+char * G_unctrl();
 
 fprintf(stdout, "Your interrupt character is %s\n",
   G_unctrl(G_intr_char()));
@@ -2714,12 +2870,12 @@ This routine remove trailing zeros from decimal number for example:
 23.45000 would come back as 23.45
 
 <P>
-char *G_index(str, delim) delimiter
+char * G_index(str, delim) delimiter
 
 Position of delimiter
 
 <P>
-char *G_rindex (str, delim) ??????
+char * G_rindex (str, delim) ??????
 
 <P>
 int G_strcasecmp(char *a, char *b) string compare ignoring case (upper or lower)
@@ -2730,12 +2886,12 @@ int G_strcasecmp(char *a, char *b) string compare ignoring case (upper or lower)
 1 if a&gt;b
 
 <P>
-char *G_strstr(char *mainString, char *subString)Return a pointer
+char * G_strstr(char *mainString, char *subString)Return a pointer
   to the first occurrence of subString in mainString, or NULL if no occurrences
   are found
 
 <P>
-char *G_strdup(char *string) Return a pointer to a string that is a
+char * G_strdup(char *string) Return a pointer to a string that is a
 duplicate of the string given to G_strdup.  The duplicate is created
 using malloc.  If unable to allocate the required space, NULL is
 returned.
@@ -2807,8 +2963,7 @@ the child.
 
 <P>
 
-\subsection Partially_Interruptible_System_Call Partially
-Interruptible System Call
+\subsection Partially_Interruptible_System_Call Partially Interruptible System Call
 
 
 The UNIX system() call allows one program, the parent, to execute
@@ -2886,7 +3041,7 @@ immediately (see W. Richard Stevens. 1997. UNIX network programming:
 Volume 1, 2nd edition. Prentice Hall).
 
 <P>
-char *G_sock_get_fname(char *name) makes full socket path
+char * G_sock_get_fname(char *name) makes full socket path
 
 Takes a simple <B>name</B> for a communication channel and builds the
 full path for a sockets file with that <B>name</B>.  The path as of
@@ -3059,13 +3214,13 @@ int main (int argc, char *argv[])
 A number of general purpose routines have been provided.
 
 <P>
-char *G_date() current date and time
+char * G_date() current date and time
 
 Returns a pointer to a string which is the current date and time. The
 format is the same as that produced by the UNIX <I>date</I> command.
 
 <P>
-char *G_gets(char *buf) get a line of input (detect ctrl-z)
+char * G_gets(char *buf) get a line of input (detect ctrl-z)
 
 This routine does a <I>gets()</I> from stdin into <B>buf.</B> It exits
 if end-of-file is detected. If stdin is a tty (i.e., not a pipe or
@@ -3088,7 +3243,7 @@ do{
 
 
 <P>
-char *G_home() user's home directory
+char * G_home() user's home directory
 
 Returns a pointer to a string which is the full path name of the
 user's home directory.
@@ -3132,13 +3287,13 @@ etc., up to 100%. Each message does not appear on a new line, but rather erases
 the previous message. After 100%, a new line is printed.
 
 <P>
-char *G_program_name() return module name
+char * G_program_name() return module name
 
 Routine returns the name of the module as set by the call to
 <I>G_gisinit().</I>
 
 <P>
-char *G_whoami() user's name
+char * G_whoami() user's name
 
 Returns a pointer to a string which is the user's login name.
 
