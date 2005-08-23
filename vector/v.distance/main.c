@@ -973,8 +973,10 @@ int main (int argc, char *argv[])
 	    fprintf (stderr,"%d records updated\n", update_ok);
 	    fprintf (stderr,"%d update errors\n", update_err);
 	}
+
+	Vect_set_db_updated ( &From );
     }
-    
+
     Vect_close (&From);
     if ( Outp != NULL ) {
        fprintf (stderr,"\nBuilding topology for %s ...\n", Vect_get_name (Outp) );
