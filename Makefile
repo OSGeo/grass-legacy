@@ -311,7 +311,7 @@ htmldocs:
 	doxygen ./Doxyfile
 
 packagehtmldocs: htmldocs
-	tar cvfz grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}refman_`date '+%Y_%m_%d'`.tar.gz doxygenhtml/ lib/db/html lib/vector/html lib/gis/html
+	tar cvfz grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}refman_`date '+%Y_%m_%d'`_html.tar.gz doxygenhtml/ lib/db/html lib/gis/html lib/ogsf/html lib/vector/html
 
 pdfdocs:
 	(cd lib/db/ ; $(MAKE) pdfdocs)
