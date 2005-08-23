@@ -77,10 +77,7 @@ main (int argc, char *argv[])
     
     name = G_store(opt1->answer);
     if ((mapset = G_find_cell2 (name, "")) == NULL)
-    {
-        sprintf (line, "Cannot find %s", name);	
-        G_fatal_error (line);
-    }
+        G_fatal_error ( _("Cannot find %s"), name);	
 
     head_ok = G_get_cellhd (name, mapset, &cellhd) >= 0;
     cats_ok = G_read_cats (name, mapset, &cats) >= 0;
@@ -89,7 +86,7 @@ main (int argc, char *argv[])
     data_type = G_raster_map_type(name, mapset);
 
     if (G_read_fp_range (name, mapset, &range) < 0)
-        G_fatal_error ("could not read range file");
+        G_fatal_error (_("could not read range file"));
     G_get_fp_range_min_max(&range,&zmin,&zmax);
 
     out = stdout;
