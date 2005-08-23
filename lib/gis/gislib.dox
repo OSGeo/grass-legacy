@@ -74,6 +74,8 @@ GRASS programs.
 
 <P> int G_fatal_error(char *message, ...) print error message and exit
 
+<P> int G_debug(level, char *message, ...) print debug message
+
 <P>
 int G_warning(char *message, ...) print warning message and continue
 
@@ -1764,7 +1766,7 @@ flag->description Flag description that is shown to the user
 
 <P>
 Associated with the parser are five routines that are automatically
-included in the GRASS Gmakefile process. The Gmakefile process is
+included in the GRASS Makefile process. The Makefile process is
 documented in Compiling_and_Installing_GRASS_Modules.
 
 <P>
@@ -1832,7 +1834,8 @@ char *def[] = {"One", "Two", "Last", NULL};
 
 opt->multiple = YES;
 opt->answers  = def;
-G_parser();
+if (G_parser(argc, argv))
+    exit(EXIT_FAILURE);
 \endverbatim
 
 <P>
@@ -1879,13 +1882,13 @@ The programmer should define the characteristics of each option and
 flag desired as outlined by the following example:
 
 \verbatim
-opt->key = "option"; /* The name of this option is "option". */
-opt->description = "Option test"; /* The option description is "Option test" */
-opt->type = TYPE_STRING; /* The data type of the answer to the option */
-opt->required = YES; /* This option *is* required from the user */
+opt->key = "option";                 /* The name of this option is "option". */
+opt->description = _("Option test"); /* The option description is "Option test" */
+opt->type = TYPE_STRING;             /* The data type of the answer to the option */
+opt->required = YES;                 /* This option *is* required from the user */
 
-flag->key = "t"; /* Single letter name for flag */
-flag->description = "Flag test"; /* The flag description is "Flag test" */
+flag->key = "t";                     /* Single letter name for flag */
+flag->description = _("Flag test");  /* The flag description is "Flag test" */
 \endverbatim
 
 
@@ -1896,9 +1899,11 @@ Complete_Structure_Members_Table.
 (3) Call the parser:
 
 \verbatim
-int main(argc,argv) char *argv[]; /* command line args passed into main() */
+int
+main(int argc, char *argv[]); /* command line args passed into main() */
 
-G_parser(argc,argv); /* Returns 0 if successful, non-zero otherwise */
+if (G_parser(argc, argv))   /* Returns 0 if successful, non-zero otherwise */
+      exit(EXIT_FAILURE);
 \endverbatim
 
 
@@ -1906,7 +1911,6 @@ G_parser(argc,argv); /* Returns 0 if successful, non-zero otherwise */
 
 \verbatim
 fprintf(stdout, "For the option "%s" you chose: <%s>\n", opt->description, opt->answer );
-
 fprintf(stdout, "The flag "-%s" is %s set.\n", flag->key, flag->answer ? "" : "not" );
 \endverbatim
 
@@ -2014,13 +2018,20 @@ The flag is not set
 
 <P>
 The following code demonstrates some of the basic capabilities of the
-parser. To compile this code, create this Gmakefile and run the
-<I>gmake5</I> command (see Compiling_and_Installing_GRASS_Modules.
+parser. To compile this code, create this Makefile and run the
+<I>make</I> command (see Compiling_and_Installing_GRASS_Modules.
 
 \verbatim
-sample: sample.o
+MODULE_TOPDIR = ../..
 
-$(CC) $(LDFLAGS) -o $@ sample.o $(GISLIB) $(XDRLIB)
+PGM = r.mysample
+
+LIBES = $(GISLIB)
+DEPENDENCIES = $(GISDEP)
+
+include $(MODULE_TOPDIR)/include/Make/Module.make
+
+default: cmd
 \endverbatim
 
 
@@ -2033,9 +2044,13 @@ familiarize yourself with the parser.
 described in Complete_Structure_Members_Table.
 
 \verbatim
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
+#include "glocale.h"
 
-int main(int argc , char *argv )
+int
+main(int argc , char *argv[] )
 {
 
  struct Option *opt ;
@@ -2046,37 +2061,37 @@ int main(int argc , char *argv )
 
  opt = G_define_option() ;
  opt->key = "debug" ;
- opt->description = "Debug level" ;
  opt->type = TYPE_STRING ;
  opt->required = NO ;
  opt->answer = "0" ;
+ opt->description = _("Debug level") ;
 
  coor = G_define_option() ;
  coor->key = "coordinate" ;
  coor->key_desc = "x,y" ;
- coor->description = "One or more coordinates" ;
  coor->type = TYPE_STRING ;
  coor->required = YES ;
  coor->multiple = YES ;
+ coor->description = _("One or more coordinates") ;
 
  /* Note that coor->answer is not given a default value. */
  flag = G_define_flag() ;
  flag->key = 'v' ;
- flag->description = "Verbose execution" ;
+ flag->description = _("Verbose execution") ;
 
  /* Note that flag->answer is not given a default value. */
 
  if (G_parser( argc , argv ))
-    exit( -1 );
+    exit (EXIT_FAILURE);
 
- fprintf(stdout, "For the option "%s" you chose: <%s>\n", opt->description, opt->answer );
- fprintf(stdout, "The flag "%s" is: %s set \n", flag->key, flag->answer ? "" : "not");
- fprintf(stdout, "You specified the following coordinates:\n");
+  G_message("For the option <%s> you chose: <%s>\n", opt->description, opt->answer );
+  G_message("The flag <%s> is: %s set \n", flag->key, flag->answer ? "" : "not");
+  G_message("You specified the following coordinates:\n");
 
  for ( n=0 ; coor->answers[n] != NULL ; n+=2 ) {
    G_scan_easting ( coor->answers[n ] , &X , G_projection() );
    G_scan_northing ( coor->answers[n+1] , &Y , G_projection() );
-   fprintf(stdout, "%.31f,%.21f\n", X , Y );
+    G_message( "%.31f,%.21f\n", X , Y );
  }
 }
 \endverbatim
@@ -2120,7 +2135,7 @@ Description_of_Complex_Structure_Members.
  <td> YES</td>
  <td> none</td>
  <td> String describing flag meaning<br>
-      flag->description = "run in fast mode" ;</td>
+      flag->description = _("run in fast mode") ;</td>
 </tr><tr>
  <td>answer</td>
  <td> char</td>
@@ -2162,7 +2177,8 @@ Description_of_Complex_Structure_Members.
  <td>char * </td>
  <td>YES </td>
  <td>none </td>
- <td>String describing option opt->description = "Map name" ;<td></tr>
+ <td>String describing option along with gettext macro for internationalization
+ opt->description = _("Map name") ;<td></tr>
 <tr>
  <td>answer </td>
  <td>char * </td>
@@ -2313,7 +2329,7 @@ answers structure members:
 
 \verbatim
 opt->key ="option" ;
-opt->description = "option example" ;
+opt->description = _("option example") ;
 opt->type = TYPE_INTEGER ;
 opt->required = NO ;
 opt->multiple = YES ;
@@ -2344,7 +2360,7 @@ a coordinate, for example, the programmer might define an Option as follows:
 
 \verbatim
 opt->key ="coordinate" ;
-opt->description = "Specified Coordinate" ;
+opt->description = _("Specified Coordinate") ;
 opt->type = TYPE_INTEGER ;
 opt->required = NO ;
 opt->key_desc = "x,y"
@@ -3311,23 +3327,27 @@ to access this structure.
 
 
 <P>
-The library is loaded by specifying $(GISLIB) in the Gmakefile. The following
-example is a complete Gmakefile which compiles code that uses this library:
+The library is loaded by specifying $(GISLIB) in the Makefile. The following
+example is a complete Makefile which compiles code that uses this library:
 <br>
-<B>Gmakefile for $(GISLIB)}</B>
+<B>Makefile for $(GISLIB)}</B>
 
 \verbatim
-OBJ = main.o sub1.o sub2.o
+MODULE_TOPDIR = ../..
 
-PGM: $(OBJ) $(GISLIB)
-        $(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB)
+PGM = r.info
 
-$(GISLIB): # in case the library changes
+LIBES = $(GISLIB)
+DEPENDENCIES = $(GISDEP)
+
+include $(MODULE_TOPDIR)/include/Make/Module.make
+
+default: cmd
 \endverbatim
 
 <P>
 See Compiling_and_Installing_GRASS_Modules for a complete discussion
-of Gmakefiles.
+of Makefiles.
 
 <P>
 
@@ -3541,49 +3561,43 @@ routines.
 
 
 <P>
-Contents of  directory src/libes/:
+Contents of  directory lib/:
 
 <P>
 <PRE>
-D          : display library
 bitmap     : bitmap library for X Window Bitmaps
 btree      : binary tree library
 bwidget    : tcl/tk extra library
-coorcnv    : coordinate conversion and datum support library
+cdhc       : ?
+D          : display library
 datetime   : DateTime library
-dbmi       : database management interface database drivers
-dig_atts   : library to read and write from attribute files
-digitizer  : raw library for general digitizer support
+db         : database management interface database drivers + SQL parser
 display    : library for CELL driver
-dlg        : library to manage DLG files
 dspf       : G3D display files library
+edit       : edit library
+external   : external libraries from other projects (shapelib)
+fonts      : Hershey fonts
+form       : forms library
+front.end  : interface for interactive modules
 g3d        : G3D raster volume library
-geom       : geometrical calculations, long-integer arithmetics, delaunay 
-             triangulation, planesweep algorithm, simulation of simplicity 
-             and others
 gis        : main GRASS library
 gmath      : generic mathematical functions (matrix, fft etc.) added by 
              D D Gray (later to be extended, BLAS/LAPACK library)
-ibtree     : integer clone of binary tree library (btree)
-icon       : icon library (required for PS/Paint icons, read, write, 
-             manipulate icons)
-image3     : extra imagery library
+gtcltk     : Tcl/Tk stuff	     
+image      : extra imagery library (image3)
 imagery    : imagery library
-libimage   : image library required for SG3d/Iris, saving images in SGIs 
-             rgb-format
+init       : GRASS initialization code + scripts
 linkm      : linked list memory manager
-lock       : locking mechanism for GRASS monitors and files
 ogsf       : ported gsurf library (required for NVIZ)
 proj       : PROJ4.4.x projection library
-raster     : GRASS raster library
+raster     : GRASS raster display library (raster map functions are in gis/)
 rowio      : row in/out library
-rst_gmsl   : library for interpolation with regularized splines with tension 
+rst        : library for interpolation with regularized splines with tension 
 segment    : segment library
-unused     : maybe treasures here?
+sites      : old Sites library, now interfaced to vect library
+symbol     : drawing symbols for point vector data
 vask       : Curses management library
-vect32     : GRASS vector library
-vect32_64  : new approach for a 32/64bit GRASS vector library (to be
-             integrated in vect32)
+vect       : GRASS vector and Direct Graph library
 </PRE>
 
 
