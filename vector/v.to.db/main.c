@@ -13,7 +13,9 @@
 /********************************************************************/
 
 #define MAIN
+#include "gis.h"
 #include "global.h"
+#include "glocale.h"
 #include "Vect.h"
 
 int 
@@ -22,13 +24,14 @@ main (int argc, char *argv[])
     int n;
     struct Map_info Map;
     struct GModule *module;
+    struct field_info *Fi;
 
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->description = "Load values from vector to database. In uploaded/printed category values "
+    module->description = _("Load values from vector to database. In uploaded/printed category values "
 			"'-1' is used for 'no category' and 'null'/'-' if category cannot be found or "
-                        "multiple categories were found.";
+                        "multiple categories were found.");
 
     parse_command_line (argc, argv);
 
@@ -38,6 +41,9 @@ main (int argc, char *argv[])
     /* open map */
     Vect_set_open_level (2);
     Vect_open_old(&Map,options.name,options.mapset);
+
+    if ( (Fi = Vect_get_field ( &Map, options.field)) == NULL)
+         G_fatal_error(_("Database connection not defined for layer <%d>. Use v.db.connect first."), options.field);
 
     /* allocate array for values */
     /* (+ 1 is for cat -1 (no category) reported at the end ) */
