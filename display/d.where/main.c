@@ -4,6 +4,7 @@
 #include "display.h"
 #include "raster.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 struct pj_info iproj, oproj;
 
@@ -18,25 +19,25 @@ int main (int argc, char **argv)
 
     module = G_define_module();
     module->description =
-		"Identifies the geographic coordinates associated with "
-		"point locations in the active frame on the graphics monitor.";
+		_("Identifies the geographic coordinates associated with "
+		"point locations in the active frame on the graphics monitor.");
 
     once = G_define_flag() ;
     once->key        = '1' ;
-    once->description= "one mouse click only";
+    once->description= _("One mouse click only");
 
     decimal = G_define_flag() ;
     decimal->key        = 'd' ;
-    decimal->description= "Output lat/long in decimal degree";
+    decimal->description= _("Output lat/long in decimal degree");
    
     latlong = G_define_flag() ;
     latlong->key        = 'l' ;
-    latlong->description= "Output lat/long referenced to current ellipsoid";
+    latlong->description= _("Output lat/long referenced to current ellipsoid");
 
     wgs84 = G_define_flag() ;
     wgs84->key        = 'w' ;
-    wgs84->description= "Output lat/long referenced to WGS84 ellipsoid using datum\n"
-                        "transformation parameters defined in current location if available";
+    wgs84->description= _("Output lat/long referenced to WGS84 ellipsoid using datum\n"
+                        "transformation parameters defined in current location if available");
      
      
     /* if (G_parser(argc,argv)) */
@@ -44,10 +45,10 @@ int main (int argc, char **argv)
         exit(1);
 
     if(latlong->answer && wgs84->answer)
-	G_fatal_error("Ambiguous request for lat/long ellipsoids");
+	G_fatal_error(_("Ambiguous request for lat/long ellipsoids"));
 
     if(decimal->answer && !(latlong->answer || wgs84->answer))
-	G_fatal_error("Please specify a lat/long ellipsoid with -l or -w");
+	G_fatal_error(_("Please specify a lat/long ellipsoid with -l or -w"));
 
     if ( ((G_projection() == PROJECTION_LL) && wgs84->answer) || 
 	 ((G_projection() != PROJECTION_LL) && (latlong->answer || wgs84->answer)) )
@@ -60,13 +61,13 @@ int main (int argc, char **argv)
        
        /* read current projection info */
        if ((in_proj_info = G_get_projinfo()) == NULL)
-          G_fatal_error("Can't get projection info of current location");
+          G_fatal_error(_("Can't get projection info of current location"));
 
        if ((in_unit_info = G_get_projunits()) == NULL)
-          G_fatal_error("Can't get projection units of current location");
+          G_fatal_error(_("Can't get projection units of current location"));
 
        if (pj_get_kv(&iproj, in_proj_info, in_unit_info) < 0)
-          G_fatal_error("Can't get projection key values of current location");
+          G_fatal_error(_("Can't get projection key values of current location"));
 	
 
        if(!wgs84->answer)
@@ -77,7 +78,7 @@ int main (int argc, char **argv)
 	  oproj.meters = 1.;
 	  sprintf(oproj.proj, "ll");
 	  if ((oproj.pj = pj_latlong_from_proj(iproj.pj)) == NULL)
-	     G_fatal_error("Unable to set up lat/long projection parameters");            
+	     G_fatal_error(_("Unable to set up lat/long projection parameters"));            
 
        }
        else
@@ -94,8 +95,8 @@ int main (int argc, char **argv)
 	   * the WGS84 values would be meaningless), and if they are set the 
 	   * output datum to WGS84 */
 	  if( G_get_datumparams_from_projinfo(in_proj_info, buff, dum) < 0 )
-	      G_fatal_error("WGS84 output not possible as this location does not contain\n"
-			    "datum transformation parameters. Try running g.setproj.");
+	      G_fatal_error(_("WGS84 output not possible as this location does not contain\n"
+			    "datum transformation parameters. Try running g.setproj."));
 	  else
 	      G_set_key_value("datum", "wgs84", out_proj_info);
 	  
@@ -104,7 +105,7 @@ int main (int argc, char **argv)
           G_set_key_value("meters", "1.0", out_unit_info);
        
           if (pj_get_kv(&oproj, out_proj_info, out_unit_info) < 0)
-             G_fatal_error("Unable to set up lat/long projection parameters");
+             G_fatal_error(_("Unable to set up lat/long projection parameters"));
 	  
           G_free_key_value( out_proj_info );
           G_free_key_value( out_unit_info );
@@ -116,7 +117,7 @@ int main (int argc, char **argv)
     }
 
     if (R_open_driver() != 0)
-	G_fatal_error ("No graphics device selected");
+	G_fatal_error (_("No graphics device selected"));
     D_setup(0);
     where_am_i(once->answer, have_spheroid, decimal->answer, wgs84->answer) ;
     R_close_driver();
