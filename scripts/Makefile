@@ -49,6 +49,7 @@ SUBDIRS = \
 	v.in.gns \
 	v.in.mapgen \
 	v.in.sites.all \
+	v.rast.stats \
 	v.report \
 	v.univar.sh
 
