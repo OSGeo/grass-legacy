@@ -48,10 +48,10 @@ modules which use this prefix.
 Before any other graphics calls can be made, a successful connection to a 
 running and selected graphics driver must be made.
 
-<pre>
+\verbatim
 R_open_driver()
 R_close_driver()
-</pre>
+\endverbatim
 
 \section col Colors
 
@@ -69,10 +69,10 @@ interactively manipulate the hardware color tables (using modules such as
 may be used than color registers available on the user's chosen driver, 
 there are no other programming repercussions.
 
-<pre>
+\verbatim
 R_color_table_fixed()
 R_color_table_float()
-</pre>
+\endverbatim
 
 Colors are set using integer values in the range of 0-255 to set the
 <b>red, green</b>, and <b>blue</b> intensities. In float mode, these values
@@ -81,17 +81,17 @@ instantaneously modify the appearance of colors on the monitor. In fixed mode,
 these values modify secondary look-up tables in the devices driver module so
 that the colors involved point to the closest available color on the device.
 
-<pre>
+\verbatim
 R_reset_color()
 R_reset_colors()
 R_color()
 R_standard_color()
 R_RGB_color()
-</pre>
+\endverbatim
 
 \section basic Basic Graphics
 
-<pre>
+\verbatim
 R_screen_bot()
 R_screen_top()
 R_screen_left()
@@ -105,7 +105,7 @@ R_box_rel()
 R_erase()
 R_flush()
 R_stabilize()
-</pre>
+\endverbatim
 
 \section poly Poly Calls
 
@@ -113,49 +113,49 @@ In many cases strings of points are used to describe a complex line, a series of
 dots, or a solid polygon. Absolute and relative calls are provided for each of
 these operations.
 
-<pre>
+\verbatim
 R_polydots_abs()
 R_polydots_rel()
 R_polygon_abs()
 R_polygon_rel()
 R_polyline_abs()
 R_polyline_rel()
-</pre>
+\endverbatim
 
 \section raster Raster Calls
 
 GRASS requires efficient drawing of raster information to the display device.
 These calls provide that capability.
 
-<pre>
+\verbatim
 R_raster()
 R_raster_char()
 R_set_RGB_color()
 R_RGB_raster()
-</pre>
+\endverbatim
 
 \section text Text
 
 These calls provide access to built-in vector fonts which may be sized and
 clipped to the programmer's specifications.
 
-<pre>
+\verbatim
 R_set_window()
 R_font()
 R_text_size()
 R_text()
 R_get_text_box()
-</pre>
+\endverbatim
 
 \section font GRASS font support
 
-The current mechanism of GRASS 5.0 font support is this (all files are in the
-directory src/display/devices/lib unless stated otherwise):
+The current mechanism of GRASS font support is this (all files are in the
+directory display/drivers/lib unless stated otherwise):
 
 <ul>
 <li> A client calls R_font(), which sends the filename
   ($GISBASE/fonts/font_name) to the display driver using the FONT command. See
-  src/libes/raster/Font.c.
+  lib/raster/Font.c.
   
 <li> The display driver receives the FONT command and the filename. See
   command.c.
@@ -163,7 +163,7 @@ directory src/display/devices/lib unless stated otherwise):
 <li> It passes the filename to Font_get() (Font_get.c), which passes it to
   init_font() (font.c), which reads the file into memory.
   
-<li> A client draws text by calling R_text (src/libes/raster/Text.c), which
+<li> A client draws text by calling R_text (lib/raster/Text.c), which
   sends the string to the display driver using the TEXT command.
   
 <li> The display driver receives the TEXT command and the string. See command.c
@@ -188,38 +188,22 @@ user. This can be accomplished with a pointer, a rubber-band line or a
 rubber-band box. Upon pressing one of three mouse buttons, the current mouse
 location and the button pressed are returned.
 
-<pre>
+\verbatim
 R_get_location_with_pointer()
 R_get_location_with_line()
 R_get_location_with_box()
-</pre>
+\endverbatim
 
 \section load Loading the Raster Graphics Library
 
-The library is loaded by specifying $(RASTERLIB) in the Gmakefile. The
-following example is a complete Gmakefile which compiles code that uses this
-library:
-Gmakefile for $(RASTERLIB)
-
-\code
-OBJ = main.o sub1.o sub2.o
-
-\noindent
-pgm: $(OBJ) $(RASTERLIB) $(GISLIB)
-
-$(CC) $(LDFLAGS) -o $@ $(OBJ) $(RASTERLIB) $(GISLIB)
-
-$(RASTERLIB): \# in case the library changes
-
-$(GISLIB): \# in case the library changes
-\endcode
+The library is loaded by specifying $ (RASTERLIB) in the Makefile.
 
 <b>Note.</b> This library must be loaded with $(GISLIB) since it uses 
-routines from that library. See GIS_Library for details on that 
+routines from that library. See \ref GIS_Library for details on that 
 library. This library is usually loaded with the $(DISPLAYLIB). See 
-Display_Graphics_Library for details on that library.
+\ref Display_Graphics_Library for details on that library.
 
-See Compiling_and_Installing_GRASS_Modules for a complete 
-discussion of Gmakefiles.
+See \ref Compiling_and_Installing_GRASS_Modules for a complete 
+discussion of Makefiles.
 
 */

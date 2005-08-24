@@ -1,5 +1,5 @@
 /*! 
-\mainpage ogsflib GRASS openGL gsurf OGSF Library
+\page ogsflib GRASS openGL gsurf OGSF Library
 <!-- doxygenized from "GRASS 5 Programmer's Manual" 
      by M. Neteler 2/2004
   -->
@@ -878,26 +878,26 @@ int GVL_vol_exists(int id)
 
 \subsection gsurf_h Public include file gsurf.h
 
-See src/libes/ogsf/gsurf.h
+See lib/ogsf/gsurf.h
 
 
 \subsection keyframe_h Public include file keyframe.h
 
-See src/libes/ogsf/keyframe.h
+See lib/ogsf/keyframe.h
 
 
 \subsection rgbpack_h Public color packing utility macros rgbpack.h
 
-See src/libes/ogsf/rgbpack.h
+See lib/ogsf/rgbpack.h
 
 
 \subsection gstypes_h Private types and defines gstypes.h
 
-See src/libes/ogsf/gstypes.h
+See lib/ogsf/gstypes.h
 
 
 \subsection gsget_h Private utilities gsget.h
 
-See src/libes/ogsf/gsget.h
+See lib/ogsf/gsget.h
 
 */

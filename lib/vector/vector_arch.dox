@@ -1,5 +1,5 @@
 /*!
-\mainpage GRASS 6.0 Vector Architecture
+\page GRASS_Vector_Architecture GRASS 6.0 Vector Architecture
 
 by GRASS Development Team
 
@@ -193,7 +193,7 @@ Text based on: R. Blazek, M. Neteler, and R. Micarelli. The new GRASS 5.1
 
 \section seealso See Also
 
-<a href="../../db/html/index.html">DBMI - Database Management Interface</a>
+DBMI - Database Management Interface: \ref DataBase_Management_Interface
 
 Last change: $Date$
 */
