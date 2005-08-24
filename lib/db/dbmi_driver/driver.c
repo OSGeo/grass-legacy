@@ -11,13 +11,14 @@
 extern char *getenv();
 
 /*!
- \fn int db_driver
+ \fn int db_driver (int argc,
+    char *argv[])
  \brief 
  \return 
  \param 
 */
 int
-db_driver(int argc, 
+db_driver (int argc, 
     char *argv[])
 {
     int stat;

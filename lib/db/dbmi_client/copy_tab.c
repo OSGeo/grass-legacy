@@ -241,7 +241,8 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
 }
 
 /*!
- \fn int db_copy_table ()
+ \fn int db_copy_table (char *from_drvname, char *from_dbname, char *from_tblname,
+                char *to_drvname, char *to_dbname, char *to_tblname )
  \brief Copy a table
  \return 
  \param
@@ -257,7 +258,8 @@ db_copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
 }
 
 /*!
- \fn int db_copy_table_where ()
+ \fn int db_copy_table_where (char *from_drvname, char *from_dbname, char *from_tblname,
+                char *to_drvname, char *to_dbname, char *to_tblname, char *where )
  \brief Copy a table
  \return 
  \param where WHERE SQL condition (without where key word) or NULL
@@ -273,7 +275,8 @@ db_copy_table_where ( char *from_drvname, char *from_dbname, char *from_tblname,
 }
 
 /*!
- \fn int db_copy_table_select ()
+ \fn int db_copy_table_select ( char *from_drvname, char *from_dbname, char *from_tblname,
+                char *to_drvname, char *to_dbname, char *to_tblname, char *select )
  \brief Copy a table
  \return 
  \param select is full select statement or NULL
@@ -289,7 +292,9 @@ db_copy_table_select ( char *from_drvname, char *from_dbname, char *from_tblname
 }
 
 /*!
- \fn int db_copy_table_by_ints ()
+ \fn int db_copy_table_by_ints ( char *from_drvname, char *from_dbname, char *from_tblname,
+                char *to_drvname, char *to_dbname, char *to_tblname,
+                char *selcol, int *ivals, int nvals )
  \brief Copy a table, but only records where value of column 'selcol'
         is in 'ivals' 
  \return 

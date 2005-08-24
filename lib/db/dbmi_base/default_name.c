@@ -3,7 +3,7 @@
 #include "dbmi.h"
 
 /*!
- \fn char * db_get_default_driver ( void )
+ \fn char * db_get_default_driver_name ( void )
  \brief returns pointer to default driver name
  \return returns pointer to default driver name or NULL if not set
 */
@@ -19,7 +19,7 @@ db_get_default_driver_name ( void )
 }
 
 /*!
- \fn char * db_get_default_database ( void )
+ \fn char * db_get_default_database_name ( void )
  \brief returns pointer to default database name
  \return returns pointer to default database name or NULL if not set
 */
