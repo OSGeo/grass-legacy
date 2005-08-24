@@ -83,13 +83,15 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 	format = value_type;
     } else if ( use == USE_Z ) {
 	format = USE_DCELL;
+    } else if ( use == USE_D ) {
+        format = USE_DCELL;
     }
 
     Points = Vect_new_line_struct();
     inform(NULL);
     stop_clock(NULL);
 
-    if ( use != USE_Z ) { 
+    if ( use != USE_Z && use != USE_D ) { 
 	start_clock(NULL);
 	inform ("Sorting areas by size ...");
 	if((nareas = sort_areas (&Map, Points, field)) < 0) {
@@ -119,7 +121,7 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 	if (npasses > 1) fprintf (stdout,"Pass #%d (of %d)\n", pass, npasses);
 	stat = 0;
 
-	if ( (use != USE_Z) && nareas ) {
+	if ( (use != USE_Z && use != USE_D) && nareas ) {
 	    start_clock(NULL);
 	    if (npasses > 1) inform ("  ");
 	    inform ("Processing areas ...");
@@ -177,7 +179,10 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
     inform ("Creating support files for raster map ...");
     G_close_cell(fd);
     update_hist(raster_map, vector_map, vector_mapset, Map.head.orig_scale);
-    update_colors (raster_map);
+    if (use == USE_D)
+        update_fcolors(raster_map);
+    else
+        update_colors (raster_map);
     update_cats(raster_map, vector_map, vector_mapset);
     inform(NULL);
     stop_clock(NULL);

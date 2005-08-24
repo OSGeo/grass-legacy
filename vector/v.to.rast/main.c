@@ -42,13 +42,14 @@ int main (int argc, char *argv[])
     use_opt->type           = TYPE_STRING;
     use_opt->required       = NO;
     use_opt->multiple       = NO;
-    use_opt->options        = "attr,cat,val,z";
+    use_opt->options        = "attr,cat,val,z,d";
     use_opt->answer         = "attr";
     use_opt->description    = _("Source of raster values:\n"
 			"\t\tattr - read values from attribute table\n"
 			"\t\tcat  - use category values\n"
 			"\t\tval  - use value specified by value option\n"
-			"\t\tz    - use z coordinate (points or contours only)");
+			"\t\tz    - use z coordinate (points or contours only)\n"
+                        "\t\td    - output as flow direction (lines only)");
 
     col = G_define_option();
     col->key            = "column";
@@ -94,6 +95,8 @@ int main (int argc, char *argv[])
 	if ( col->answer )
     	    G_fatal_error (_("Column parameter cannot be combined with use of z coordinate") );
 	use = USE_Z;
+    } else if ( use_opt->answer[0] == 'd' ) {
+        use = USE_D;
     }
 
     value = atof ( val_opt->answer );

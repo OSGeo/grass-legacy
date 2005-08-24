@@ -85,7 +85,7 @@ int sort_areas ( struct Map_info *Map, struct line_pnts *Points, int field)
     if (nareas == 0) return 0; 
 
     /* allocate list to hold valid area info */
-    list = (struct list *) G_calloc (nareas, sizeof (struct list));
+    list = (struct list *) G_calloc (nareas * sizeof(char), sizeof(struct list));
 
     /* store area size,cat,index in list */
     for (i = 0; i < nareas; i++) {
@@ -109,7 +109,7 @@ int sort_areas ( struct Map_info *Map, struct line_pnts *Points, int field)
     }
 
     /* sort the list by size */
-    qsort (list, nareas, sizeof(struct list), compare);
+    qsort (list, nareas * sizeof(char), sizeof(struct list), compare);
 
     return nareas;
 }
