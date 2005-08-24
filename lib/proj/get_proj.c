@@ -95,38 +95,38 @@ int pj_get_kv(struct pj_info *info, struct Key_Value *in_proj_keys,
     nopt1 = 0;
     for (i = 0; i < in_proj_keys->nitems; i++) {
 	/* the name parameter is just for grasses use */
-	if (strncmp(in_proj_keys->key[i], "name", 4) == 0) {
+	if (strcmp(in_proj_keys->key[i], "name") == 0) {
 	    continue;
 
 	    /* zone handled separately at end of loop */
 	}
-	else if (strncmp(in_proj_keys->key[i], "zone", 4) == 0) {
+	else if (strcmp(in_proj_keys->key[i], "zone") == 0) {
 	    continue;
 
 	    /* Datum and ellipsoid-related parameters will be handled 
 	     * separately after end of this loop PK */
 
 	}
-	else if (strncmp(in_proj_keys->key[i], "datum", 5) == 0
-		 || strncmp(in_proj_keys->key[i], "dx", 2) == 0
-		 || strncmp(in_proj_keys->key[i], "dy", 2) == 0
-		 || strncmp(in_proj_keys->key[i], "dz", 2) == 0
-		 || strncmp(in_proj_keys->key[i], "datumparams", 11) == 0
-		 || strncmp(in_proj_keys->key[i], "nadgrids", 8) == 0
-		 || strncmp(in_proj_keys->key[i], "towgs84", 7) == 0
-		 || strncmp(in_proj_keys->key[i], "ellps", 5) == 0
-		 || strncmp(in_proj_keys->key[i], "a", 1) == 0
-		 || strncmp(in_proj_keys->key[i], "b", 1) == 0
-		 || strncmp(in_proj_keys->key[i], "es", 2) == 0
-		 || strncmp(in_proj_keys->key[i], "f", 1) == 0
-		 || strncmp(in_proj_keys->key[i], "rf", 2) == 0) {
+	else if (strcmp(in_proj_keys->key[i], "datum") == 0
+		 || strcmp(in_proj_keys->key[i], "dx") == 0
+		 || strcmp(in_proj_keys->key[i], "dy") == 0
+		 || strcmp(in_proj_keys->key[i], "dz") == 0
+		 || strcmp(in_proj_keys->key[i], "datumparams") == 0
+		 || strcmp(in_proj_keys->key[i], "nadgrids") == 0
+		 || strcmp(in_proj_keys->key[i], "towgs84") == 0
+		 || strcmp(in_proj_keys->key[i], "ellps") == 0
+		 || strcmp(in_proj_keys->key[i], "a") == 0
+		 || strcmp(in_proj_keys->key[i], "b") == 0
+		 || strcmp(in_proj_keys->key[i], "es") == 0
+		 || strcmp(in_proj_keys->key[i], "f") == 0
+		 || strcmp(in_proj_keys->key[i], "rf") == 0) {
 	    continue;
 
 	    /* PROJ.4 uses latlong instead of ll as 'projection name' */
 
 	}
-	else if (strncmp(in_proj_keys->key[i], "proj", 4) == 0) {
-	    if (strncmp(in_proj_keys->value[i], "ll", 2) == 0)
+	else if (strcmp(in_proj_keys->key[i], "proj") == 0) {
+	    if (strcmp(in_proj_keys->value[i], "ll") == 0)
 		sprintf(buffa, "proj=latlong");
 	    else
 		sprintf(buffa, "proj=%s", in_proj_keys->value[i]);
@@ -135,7 +135,7 @@ int pj_get_kv(struct pj_info *info, struct Key_Value *in_proj_keys,
 	     * the key-value pair set to 'defined' and only the
 	     * key needs to be passed on. */
 	}
-	else if (strncmp(in_proj_keys->value[i], "defined", 7) == 0)
+	else if (strcmp(in_proj_keys->value[i], "defined") == 0)
 	    sprintf(buffa, in_proj_keys->key[i]);
 
 	else
@@ -283,12 +283,12 @@ int pj_get_string(struct pj_info *info, char *str)
 	 * function rather than reading a PROJ_INFO file       PK */
 	s = str;
 	while (s = strtok(s, " \t\n")) {
-	    if (strncmp(s, "+unfact=", 8) == 0) {
+	    if (strcmp(s, "+unfact=") == 0) {
 		s = s + 8;
 		info->meters = atof(s);
 	    }
 	    else {
-		if (strncmp(s, "+", 1) == 0)
+		if (strcmp(s, "+") == 0)
 		    ++s;
 		if (nsize = strlen(s)) {
 		    if (nopt >= MAX_PARGS) {
@@ -296,14 +296,14 @@ int pj_get_string(struct pj_info *info, char *str)
 			G_fatal_error("Option input overflowed option table");
 		    }
 
-		    if (strncmp("zone=", s, 5) == 0) {
+		    if (strcmp("zone=", s) == 0) {
 			sprintf(zonebuff, "%s", s + 5);
 			sscanf(zonebuff, "%d", &(info->zone));
 		    }
 
-		    if (strncmp("proj=", s, 5) == 0) {
+		    if (strcmp("proj=", s) == 0) {
 			sprintf(info->proj, "%s", s + 5);
-			if (strncmp(info->proj, "ll", 2) == 0)
+			if (strcmp(info->proj, "ll") == 0)
 			    sprintf(buffa, "proj=latlong");
 			else
 			    sprintf(buffa, s);
