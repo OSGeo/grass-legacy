@@ -2228,13 +2228,13 @@ machine that uses a common or networked GRASS source code directory tree.
 <P>
 Object files and library archives are compiled into subdirectories that 
 represent the architecture that they were compiled on. These subdirectories 
-are created in the $(SRC) directory as OBJ.<I>arch</I> and 
+are created in the $SRC directory as OBJ.<I>arch</I> and 
 LIB.<I>arch</I>, where <I>arch</I> represents the architecture of the 
-compiling machine. Thus, for example, $(SRC)/OBJ.sun4 would contain the 
-object files for Sun/4 and SPARC architectures, and $(SRC)/LIB.686-pc-linux-gnu would 
+compiling machine. Thus, for example, $SRC/OBJ.sun4 would contain the 
+object files for Sun/4 and SPARC architectures, and $SRC/LIB.686-pc-linux-gnu would 
 contain library archives for Linux architectures. Likewise, 
-$(SRC)/OBJ.686-pc-linux-gnu would contain the object files for Linux architectures, 
-and $(SRC)/LIB.686-pc-linux-gnu would contain library archives for Linux 
+$SRC/OBJ.686-pc-linux-gnu would contain the object files for Linux architectures, 
+and $SRC/LIB.686-pc-linux-gnu would contain library archives for Linux 
 architectures.
 
 <P>
