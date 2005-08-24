@@ -3,9 +3,9 @@
 <!-- doxygenized from "GRASS 5 Programmer's Manual" 
      by M. Neteler 2/2004
   -->
-<title>Vector File Processing</title>
+<title>GRASS Vector File Processing</title>
 
-\section gisvectintro Vector File Processing
+\section gisvectintro GRASS Vector File Processing
 Authors:
 <BR>
 (Written by CERL,  with contributions from David D. Gray)
