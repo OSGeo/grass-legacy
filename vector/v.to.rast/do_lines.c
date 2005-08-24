@@ -3,15 +3,18 @@
 #include "Vect.h"
 #include "local.h"
 
-static int plot_line(double *,double *,int);
+
+static int plot_line(double *, double *, int, int);
 static int plot_points (double *,double *,int);
+
 
 int do_lines ( struct Map_info *Map, struct line_pnts *Points, dbCatValArray *Cvarr, int ctype, int field,
 	       int use, double value, int value_type)
 {
+    double min, max, u;
     int nlines, type, ret, cat, no_contour = 0;
     int index;
-    int count;
+    int count, j;
     struct line_cats *Cats;
     CELL cval;
     DCELL dval;
@@ -51,8 +54,6 @@ int do_lines ( struct Map_info *Map, struct line_pnts *Points, dbCatValArray *Cv
 	    else
 		set_dcat ( value );
 	} else if ( use == USE_Z ) {
-	    int j;
-	    double min, max;
 
 	    if ( type & GV_POINTS ) { 
 	        min = Points->z[0];	
@@ -69,10 +70,23 @@ int do_lines ( struct Map_info *Map, struct line_pnts *Points, dbCatValArray *Cv
 	    }
 		
 	    set_dcat ( min );
-	}
+	} else if (use == USE_D) {
+            min = 360.;
+            max = 0.;
+
+            for (j = 1; j < Points->n_points; j++) {
+                u = deg_angle(Points->x[j], Points->y[j],
+                              Points->x[j-1], Points->y[j-1]);
+
+                if (u < min)
+                    min = u;
+                if (u > max)
+                    max = u;
+            }
+        }
 
 	if ( (type & GV_LINES ) ) {
-	    plot_line (Points->x, Points->y, Points->n_points);
+	    plot_line (Points->x, Points->y, Points->n_points, use);
 	} else if ( type & GV_POINTS ) {
 	    plot_points (Points->x, Points->y, Points->n_points);
 	} else {
@@ -85,13 +99,18 @@ int do_lines ( struct Map_info *Map, struct line_pnts *Points, dbCatValArray *Cv
 	G_warning ("%d lines with varying height were not written to raster", no_contour );
 
     Vect_destroy_cats_struct ( Cats ); 
+
     return nlines;
 }
 
-static int plot_line(double *x,double *y,int n)
+
+static int plot_line(double *x,double *y,int n, int use)
 {
-    while (--n > 0)
+    while (--n > 1)
     {
+        if (use == USE_D)
+            set_dcat((DCELL)deg_angle(x[1], y[1], x[0], y[0]));
+
 	G_plot_line2 (x[0],y[0],x[1],y[1]);
 	x++;
 	y++;
@@ -99,6 +118,51 @@ static int plot_line(double *x,double *y,int n)
 
   return 0;
 }
+
+
+static double Pi;
+
+/* cos of the angle between two vectors is (a . b)/|a||b| */
+double
+v2angle(double v1[2], double v2[2], double mag1, double mag2)
+{
+    double costheta = (v1[0] * v2[0] + v1[1] * v2[1])/(mag1 * mag2);
+
+    return (acos(costheta));
+}
+
+
+double
+deg_angle(double x0, double y0, double x1, double y1)
+{
+    double v1[2], v2[2];
+    double mag1, mag2;
+    double v_ang, deg_a;
+    static int first = 1;
+
+    if (first) {
+        first = 0;
+        Pi = 4.0 * atan(1.0);
+    }
+
+    v1[0] = 1;
+    v1[1] = 0;
+    v2[0] = x0 - x1;
+    v2[1] = y0 - y1;
+
+    mag1 = 1.0;
+    mag2 = sqrt(((v2[0] * v2[0]) + (v2[1] * v2[1])));
+    v_ang = v2angle(v1, v2, mag1, mag2);
+
+    if (y0 < y1)
+        v_ang = (2.0 * Pi) - v_ang;
+
+    deg_a = v_ang * 360.0 / (2.0 * Pi);
+    /* fprintf(stderr, "\n %f", deg_a); */
+
+    return deg_a;
+}
+
 
 static int plot_points (double *x,double *y,int n)
 {

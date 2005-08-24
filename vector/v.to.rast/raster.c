@@ -56,24 +56,24 @@ begin_rasterization (int nrows, int f)
     switch (format)
     {
     case USE_CELL:
-	raster.cell = (CELL **) G_calloc (max_rows, sizeof (CELL *));
-	raster.cell[0] = (CELL *) G_calloc (size, sizeof(CELL));
+	raster.cell = (CELL **)G_calloc(max_rows * sizeof(char), sizeof(CELL *));
+	raster.cell[0] = (CELL *)G_calloc(size * sizeof(char), sizeof(CELL));
 	for (i = 1; i < max_rows; i++)
 	    raster.cell[i] = raster.cell[i-1] + region.cols;
 	dot = cell_dot;
 	break;
 
     case USE_DCELL:
-	raster.dcell = (DCELL **) G_calloc (max_rows, sizeof (DCELL *));
-	raster.dcell[0] = (DCELL *) G_calloc (size, sizeof(DCELL));
+	raster.dcell = (DCELL **)G_calloc(max_rows * sizeof(char), sizeof(DCELL *));
+	raster.dcell[0] = (DCELL *)G_calloc(size * sizeof(char), sizeof(DCELL));
 	for (i = 1; i < max_rows; i++)
 	    raster.dcell[i] = raster.dcell[i-1] + region.cols;
 	dot = dcell_dot;
 	break;
     }
 
-    null_flags = (char **) G_calloc (max_rows, sizeof (char *));
-    null_flags[0] = (char *) G_calloc (size, sizeof(char));
+    null_flags = (char **)G_calloc(max_rows * sizeof(char), sizeof(char *));
+    null_flags[0] = (char *)G_calloc(size * sizeof(char), sizeof(char));
     for (i = 1; i < max_rows; i++)
 	null_flags[i] = null_flags[i-1] + region.cols;
 

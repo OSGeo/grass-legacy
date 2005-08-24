@@ -14,6 +14,7 @@
 #define USE_CAT   2
 #define USE_VAL   3
 #define USE_Z     4
+#define USE_D     5
 
 
 /* clock.c */
@@ -27,6 +28,7 @@ int do_areas(struct Map_info *, struct line_pnts *, dbCatValArray *, int, int, i
 int sort_areas(struct Map_info *, struct line_pnts *, int );
 /* do_lines.c */
 int do_lines(struct Map_info *, struct line_pnts *, dbCatValArray *, int, int, int, double, int);
+double deg_angle(double, double, double, double);
 
 /* mapgraph.c */
 int begin_mapgraph(void);
@@ -46,5 +48,6 @@ int raster_dot(int, int);
 int update_hist(char *, char *, char *, long);
 int update_colors(char *);
 int update_cats(char *, char *, char *);
+int update_fcolors(char *raster_name);
 /* vect2rast.c */
 int vect_to_rast(char *, char *, int, char *, int, int, double, int);

@@ -54,6 +54,21 @@ update_colors (char *raster_name)
     return 0;
 }
 
+
+int
+update_fcolors (char *raster_name)
+{
+    struct Colors colors;
+
+    /* G_read_fp_range(raster_name, G_mapset(), &range); */
+    /* G_get_fp_range_min_max(&range, &min, &max);       */
+    G_make_rainbow_colors(&colors, 0, 360);
+    G_write_colors(raster_name, G_mapset(), &colors);
+
+    return 0;
+}
+
+
 int 
 update_cats (char *raster_name, char *vector_name, char *vector_mapset)
 {
