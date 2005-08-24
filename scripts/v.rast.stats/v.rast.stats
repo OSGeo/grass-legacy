@@ -1,0 +1,194 @@
+#!/bin/sh
+
+############################################################################
+#
+# MODULE:	v.rast.stats
+# AUTHOR(S):	Markus Neteler
+# PURPOSE:	Calculates univariate statistics from a GRASS raster map
+#		only for areas covered by vector objects on a per-category base
+# COPYRIGHT:	(C) 2005 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
+
+#%Module
+#% description: Calculates univariate statistics from a GRASS raster map based on vector objects
+#%End
+#%flag
+#%  key: c
+#%  description: continue if upload column(s) already exist
+#%END
+#%option
+#% key: vector
+#% type: string
+#% gisprompt: old,vector,vector
+#% description: Name of vector polygon map
+#% required : yes
+#%End
+#%option
+#% key: raster
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: Name of raster map to calculate statistics from
+#% required : no
+#%END
+#%option
+#% key: colprefix
+#% type: string
+#% description: column prefix for new attribute columns
+#% required : yes
+#%end
+
+if  [ -z $GISBASE ] ; then
+    echo "You must be in GRASS GIS to run this program."
+ exit 1
+fi   
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec g.parser "$0" "$@"
+fi
+
+#### check if we have awk
+AWK=`which awk`
+if [ "$AWK" = "" ] ; then
+    echo "$PROG: awk required, please install awk/gawk first" 1>&2
+    exit 1
+fi
+
+# setting environment, so that awk works properly in all languages
+export LC_NUMERIC=C
+
+TMPNAME=v_rast_stats.$$
+
+TMP="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+    echo "ERROR: unable to create temporary files" 1>&2
+    exit 1
+fi
+
+cleanup()
+{
+ #restore settings:
+ g.region region=${TMPNAME}
+ g.remove region=${TMPNAME} > /dev/null
+ g.remove rast=${VECTOR}_${TMPNAME} > /dev/null
+ g.remove MASK > /dev/null 2> /dev/null
+ if [ $MASKFOUND -eq 1 ] ; then
+   echo "Restoring previous MASK..."
+   g.rename ${TMPNAME}_origmask,MASK > /dev/null
+ fi
+}
+
+# what to do in case of user break:
+exitprocedure()
+{
+ echo "User break!"
+ cleanup
+ exit 1
+}
+# shell check for user break (signal list: trap -l)
+trap "exitprocedure" 2 3 15
+
+
+VECTOR="$GIS_OPT_vector"
+RASTER="$GIS_OPT_raster"
+COLPREFIX="$GIS_OPT_colprefix"
+
+#check the input vector map
+eval `g.findfile element=vector file=$VECTOR`
+if [ ! "$file" ] ; then
+  echo "Input vector map $VECTOR not found"
+  exit 1
+fi
+#check the input raster map
+eval `g.findfile element=cell file=$RASTER`
+if [ ! "$file" ] ; then
+  echo "Input raster map $RASTER not found"
+  exit 1
+fi
+
+#check presence of raster MASK, put it aside
+MASKFOUND=0
+eval `g.findfile element=cell file=MASK`
+if [ "$file" ] ; then
+  echo "Raster MASK found, temporarily disabled"
+  g.rename MASK,${TMPNAME}_origmask > /dev/null
+  MASKFOUND=1
+fi
+
+#get RASTER resolution of map which we want to query:
+RASTRES=`r.info -s $RASTER | cut -d'=' -f2 | tr '\n' ' '  | awk '{printf "%f\n", ($1+$2) / 2.}'`
+if [ $? -ne 0 ] ; then
+ echo "An error occurred."
+ exit 1
+fi
+
+#save current settings:
+g.region save=${TMPNAME} > /dev/null
+
+#Temporarily setting raster resolution to $RASTER resolution
+g.region res=$RASTRES -ap > /dev/null
+
+#prepare raster MASK
+v.to.rast in=$VECTOR out=${VECTOR}_${TMPNAME} use=cat > /dev/null 2> /dev/null
+if [ $? -ne 0 ] ; then
+ echo "An error occurred."
+ exit 1
+fi
+
+CATSLIST="`r.cats ${VECTOR}_${TMPNAME} fs=';' 2> /dev/null | cut -d';' -f1 | tr '\n' ' '`"
+echo "List of categories found: $CATSLIST"
+
+for i in n min max range mean stddev variance cf_var sum ; do
+  #check if column already present
+  CURRCOLUMN=${COLPREFIX}_${i}
+  v.info -c $VECTOR 2> /dev/null | sed 's+^+|+g' |sed 's+$+|+g' | grep "|$CURRCOLUMN|" > /dev/null
+  if [ $? -eq 0 ] ; then
+    echo "$column $CURRCOLUMN already present, updating statistic values in table"
+    if [ $GIS_FLAG_c -ne 1 ] ; then
+       echo "ERROR: Cannot continue (or use -c flag)."
+       exit 1
+    fi
+  else
+    v.db.addcol map=$VECTOR columns="$CURRCOLUMN double"
+  fi
+done
+
+#loop over cats and calculate statistics:
+NUMBER=`echo $CATSLIST | tr ' ' '\n' | wc -l | awk '{print $1}'`
+CURRNUM=1
+for i in $CATSLIST ; do
+ echo "Processing category $i ($CURRNUM/$NUMBER)"
+ g.remove MASK > /dev/null 2> /dev/null
+ r.mapcalc "MASK=if(${VECTOR}_${TMPNAME} == $i, 1, null())" 2> /dev/null
+ #n, min, max, range, mean, stddev, variance, coeff_var, sum
+ n=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f1`
+ min=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f2`
+ max=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f3`
+ range=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f4`
+ mean=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f5`
+ stddev=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f6`
+ variance=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f7`
+ cf_var=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f8`
+ sum=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f9`
+ 
+ v.db.update map=$VECTOR col=${COLPREFIX}_n         value=$n         where="cat=$i"
+ v.db.update map=$VECTOR col=${COLPREFIX}_min       value=$min       where="cat=$i"
+ v.db.update map=$VECTOR col=${COLPREFIX}_max       value=$max       where="cat=$i"
+ v.db.update map=$VECTOR col=${COLPREFIX}_range     value=$range     where="cat=$i"
+ v.db.update map=$VECTOR col=${COLPREFIX}_mean      value=$mean      where="cat=$i"
+ v.db.update map=$VECTOR col=${COLPREFIX}_stddev    value=$stddev    where="cat=$i"
+ v.db.update map=$VECTOR col=${COLPREFIX}_variance  value=$variance  where="cat=$i"
+ v.db.update map=$VECTOR col=${COLPREFIX}_cf_var    value=$cf_var    where="cat=$i"
+ v.db.update map=$VECTOR col=${COLPREFIX}_sum       value=$sum       where="cat=$i"
+ CURRNUM=`expr $CURRNUM + 1`
+done
+
+g.remove MASK > /dev/null 2> /dev/null
+
+echo "Done. Statistics calculated from raster map <$RASTER> and uploaded to attribute table of vector map <$VECTOR>."
+
+cleanup
