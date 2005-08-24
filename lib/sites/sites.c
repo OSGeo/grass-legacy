@@ -211,7 +211,8 @@ int G_site_get_head (FILE *ptr, Site_head *head)
     head->desc = Vect_get_comment(Map);
     head->form = NULL;
     head->labels = NULL;
-    head->stime = Vect_get_date(Map);
+    /* head->stime = Vect_get_date(Map); */ /* crashes, G_scan_timestamp() needed? */
+    head->stime = NULL;
     head->time=NULL;
 
     if ( head->stime && strlen(head->stime) > 0 ) {
