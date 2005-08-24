@@ -302,6 +302,8 @@ srclibsdist: FORCE distclean
 	-rm -r ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
 	@ echo "Distribution source package: grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}.tar.gz ready."
 
+#alternatively, the docs can be generated as single document:
+#  (cd lib/ ; make htmldocs)
 htmldocs:
 	(cd lib/db/ ; $(MAKE) htmldocs)
 	(cd lib/gis/ ; $(MAKE) htmldocs)
