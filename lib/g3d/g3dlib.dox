@@ -1,7 +1,7 @@
 /*!
-\mainpage g3dlib GRASS Grid3D raster volume Library
+\page g3dlib GRASS Grid3D raster volume Library
 <!-- doxygenized from "GRASS 5 Programmer's Manual" 
-     by M. Neteler 5/2004
+     by M. Neteler 5/2004, 8/2005
   -->
 <title>GRASS Grid3D raster volume Library</title>
 
@@ -25,7 +25,7 @@ The file format consists of a mapset element <EM>grid3</EM> which contains a
 directory for every map. The elements for each map are
 
 <P>
-<PRE> 
+\verbatim 
         3d region file
         color file (color)
         categories file (cats)
@@ -34,7 +34,7 @@ directory for every map. The elements for each map are
         cell file (cell)
         header file (cellhd)
         a directory containing display files (dsp)
-</PRE> 
+\endverbatim 
 
 <P>
 There is also a <EM>colr2</EM> mechanism provided. <EM>colr2</EM> color tables
@@ -71,13 +71,13 @@ functions have to be used for this purpose.
 The data file has the following format:
 
 <P>
-<PRE> 
+\verbatim 
         xdr_int nofBytesLong;
         xdr_int nofBytesUsed;
         encoded_long indexOffset;
         compressed_tile[] tiles;
         compressed_encoded_long[] index;
-</PRE> 
+\endverbatim 
 
 <P>
 
@@ -106,10 +106,10 @@ There are three methods of compression provided. The compression
 methods can either be those defined by default, set by environment
 variables or explicitly set at run-time.
 
-<PRE> 
+\verbatim 
         Precision
         RLE
-</PRE> 
+\endverbatim 
 
 <P>
 Precision indicates how many of the mantissa bits should be stored on
@@ -209,7 +209,7 @@ consistently.
 The header file has the following format:
 
 <P>
-<PRE> 
+\verbatim 
 Proj: 1
 Zone: 1
 North: 2.0000000000000
@@ -235,7 +235,7 @@ nofHeaderBytes: 12
 useXdr: 1
 hasIndex: 1
 Units: none
-</PRE>
+\endverbatim
 
 <P>
 Except for the first 14 fields the entries of the header file should
@@ -254,7 +254,7 @@ Make a new map directory in the <EM>grid3</EM> element of the mapset (say <EM>my
 In the following example the relevant values of <EM>mymap/cellhd</EM> are shown:
 
 <P>
-<PRE> 
+\verbatim 
 TileDimensionX: A
 TileDimensionY: B
 TileDimensionZ: C
@@ -264,18 +264,18 @@ Precision: -1
 nofHeaderBytes: X
 useXdr: 0
 hasIndex: 0
-</PRE>
+\endverbatim
 
 <P>
 The values of <EM>A</EM>, <EM>B</EM>, and <EM>C</EM> have to be chosen
 according to one of the following patterns:
 
 <P>
-<PRE> 
+\verbatim 
 A &gt;= 1, B == 1, C == 1, or
 A &gt;= nofRows, B &gt;= 1, C == 1, or
 A &gt;= nofRows, B &gt;= nofCols, C &gt;= 1.
-</PRE>
+\endverbatim
 
 <P>
 A larger tile size reduces the number of tile-reads. If in the third pattern
@@ -295,7 +295,7 @@ For performance reasons it is a good idea to use function
 \section Region_Structure Region Structure
 
 <P>
-<PRE> 
+\verbatim 
 typedef struct{
 
     double north, south;
@@ -310,7 +310,7 @@ typedef struct{
     int zone;  /* Projection zone (see gis.h) */
 
 } G3D\_Region;
-</PRE>
+\endverbatim
 
 <P>
 
@@ -333,7 +333,7 @@ user to overwrite this default.
 The window file has the following format:
 
 <P>
-<PRE> 
+\verbatim 
 Proj: 1
 Zone: 1
 North: 2.0
@@ -348,7 +348,7 @@ nofDepths: 14
 e-w resol: 0.05000000000000000
 n-s resol: 0.05000000000000000
 t-b resol: 0.07142857142857142
-</PRE>
+\endverbatim
 
 <P>
 Note: after reading the window file the fields <EM>e-w</EM>, <EM>n-s</EM>, and <EM>t-b</EM>
@@ -1717,11 +1717,11 @@ Writes the cell-values of <EM>map</EM> in ascii format to file
 
 
 <P>
-See Appendix_L_Index_to_Grid3D_Library_Subroutines for a G3D Function Index.
+See \ref Appendix_L_Index_to_Grid3D_Library_Subroutines for a G3D Function Index.
 
 
 <P>
-See Compiling_and_Installing_GRASS_Modules for a complete 
+See \ref Compiling_and_Installing_GRASS_Modules for a complete 
 discussion of Gmakefiles.
 
 */

@@ -1,5 +1,5 @@
 /*!
-\mainpage gislib GRASS GIS Library
+\page gislib GRASS GIS Library
 <!-- doxygenized from "GRASS 5 Programmer's Manual" 
      by M. Neteler 2/2004
   -->
@@ -144,7 +144,7 @@ warning messages.
 <P> The following routines return information about the current
 database selected by the user. Some of this information is retrieved
 from the user's GRASS environment file. Some of it comes from files in
-the database itself.  See Environment_Variables for a discussion of
+the database itself.  See \ref Environment_Variables for a discussion of
 the GRASS environment.
 
 <P>
@@ -154,7 +154,7 @@ The following four routines can be used freely by the programmer:
 
 Returns the name of the current database location. This routine should
 be used by modules that need to display the current location to the
-user. See Locations for an explanation of locations.
+user. See \ref Locations for an explanation of locations.
 
 <P>
 char * G_mapset() current mapset name 
@@ -168,7 +168,7 @@ char * G_myname() location title
 
 Returns a one line title for the database location. This title is read
 from the file MYNAME in the PERMANENT mapset. See also
-Permanent_Mapset for a discussion of the PERMANENT mapset.
+\ref Permanent_Mapset for a discussion of the PERMANENT mapset.
 
 <P>
 char * G_gisbase() top level module directory 
@@ -208,7 +208,7 @@ bypass the normal database access routines.</B>
 char * G_gisdbase() top level database directory
 
 Returns the full UNIX path name of the directory which holds the database
-locations. See GISDBASE for a full explanation of this directory.
+locations. See \ref GISDBASE for a full explanation of this directory.
 
 <P>
 char * G_location_path() current location directory
@@ -273,14 +273,14 @@ etc., should be used instead.
 In the descriptions below, the term database <I>element</I> is used.
 Elements are subdirectories within a mapset and are associated with a
 specific GRASS data type. For example, raster files live in the "cell"
-and "fcell" element. See Elements for more details.
+and "fcell" element. See \ref Elements for more details.
 
 
 \subsection prompt Prompting for Database Files
 
 <P>
 The following routines interactively prompt the user for a file name
-from a specific database <B>element.</B> (See Elements for an
+from a specific database <B>element.</B> (See \ref Elements for an
 explanation of elements.) In each, the <B>prompt</B> string will be
 printed as the first line of the full prompt which asks the user to
 enter a file name. If <B>prompt</B> is the empty string "" then an
@@ -335,7 +335,7 @@ The user is asked to enter the name of an existing database file.
 <P>
 <B>Note.</B> This routine looks for the file in the current mapset as
 well as other mapsets. The mapsets that are searched are determined
-from the user's mapset search path. See Mapset_Search_Path for some
+from the user's mapset search path. See \ref Mapset_Search_Path for some
 more details about the search path.
 
 <P>
@@ -456,7 +456,7 @@ the NULL pointer is returned.
 
 <P>
 If the user specifies a fully qualified file name, (i.e, a name that also
-contains the mapset; see Fully_Qualified_File_Names) then
+contains the mapset; see \ref Fully_Qualified_File_Names) then
 <I>G_find_file()</I> modifies <B>name</B> by eliminating the mapset
 from the <B>name</B>
 
@@ -579,7 +579,7 @@ the file descriptor from the fopen() is returned.
 <P>
 The following routines create the new file <B>name</B> in the current
 mapset (GRASS does not allow files to be created outside the current
-mapset; see Database_Access_Rules) under the specified database
+mapset; see \ref Database_Access_Rules) under the specified database
 <B>element</B> and open it for writing. The database <B>element</B> is
 created, if it does not already exist.
 
@@ -626,7 +626,7 @@ the file descriptor from the fopen() is returned.
 The following routines allow the renaming and removal of database
 files in the current mapset (These functions only apply to the current
 mapset since GRASS does permit users to modify things in mapsets other
-than the current mapset; see Database_Access_Rules).
+than the current mapset; see \ref Database_Access_Rules).
 
 int G_rename(char *element, char *old, char *new) rename a database
 file
@@ -985,7 +985,7 @@ give the row number.
 
 <P>
 The following routines return information about the cartographic
-projection and zone. See Region for more information about these
+projection and zone. See \ref Region for more information about these
 values.
 
 <P>
@@ -1480,21 +1480,18 @@ pole; 0 if it contains neither pole.
 
 \section Raster_File_Processing GRASS Raster File Processing
 
- Please refer to <a href="gisrasterlib.dox">GRASS Raster File Processing</a>
- in Chapter gisrastintro .
+ Please refer to GRASS Raster File Processing in Chapter \ref gisrastintro .
 
 
 \section Vector_File_Processing GRASS Vector File Processing
 
- Please refer to <a href="gisvectorlib.dox">GRASS Vector File Processing</a>
- in Chapter gisvectintro .
+ Please refer to GRASS Vector File Processing in Chapter \ref gisvectintro .
 
 
 \section Sites_File_Processing GRASS Sites File Processing
 
- Please refer to <a href="gissiteslib.dox">GRASS Sites File Processing</a>
- in Chapter gissitesintro .
-
+ Please refer to GRASS Sites File Processing in Chapter \ref gissitesintro .
+ Note, that sites are stored as vector points in GRASS 6.
 
 \section General_Plotting_Routines General Plotting Routines
 
@@ -1827,7 +1824,7 @@ prompting.
 
 <P>
 <B>Note:</B> Displaying multiple answers default values (new in GRASS
-5, see d.pan for example).
+5, see d.zoom for example).
 
 \verbatim
 char *def[] = {"One", "Two", "Last", NULL};
@@ -2019,7 +2016,7 @@ The flag is not set
 <P>
 The following code demonstrates some of the basic capabilities of the
 parser. To compile this code, create this Makefile and run the
-<I>make</I> command (see Compiling_and_Installing_GRASS_Modules.
+<I>make</I> command (see \ref Compiling_and_Installing_GRASS_Modules.
 
 \verbatim
 MODULE_TOPDIR = ../..
@@ -2143,8 +2140,8 @@ compilation process and requirements are discussed in more detail now.
 libraries:
 
 <i>GISLIB</i> This names the <i>GIS Library</i>, which is the principal GRASS 
-library. See GIS_Library  for details about this library, and
-Loading_the_GIS_Library for a sample Makefile which 
+library. See \ref GIS_Library  for details about this library, and
+\ref Loading_the_GIS_Library for a sample Makefile which 
 loads this library.
 
 <i>VASKLIB</i> This names the <i>Vask Library</i>, which does full screen user 
@@ -2152,17 +2149,17 @@ input.
 
 <i>VASK</i> This specifies the <i>Vask Library</i> plus the UNIX [n]curses and 
 termcap libraries needed to use the <i>Vask Library</i> routines. See 
-Vask_Library for details about this library, and Loading_the_Vask_Library
+\ref Vask_Library for details about this library, and \ref Loading_the_Vask_Library
 for a sample Makefile which loads this library.
 
 <i>SEGMENTLIB</i> This names the <i>Segment Library</i>, which manages large 
-matrix data. See Segment_Library for details about this library, 
-and Loading_the_Vask_Library for a sample <i>Makefile</i> which loads
+matrix data. See \ref Segment_Library for details about this library, 
+and \ref Loading_the_Vask_Library for a sample <i>Makefile</i> which loads
 this library.
 
 <i>RASTERLIB</i> This names the <i>Raster Graphics Library</i>, which 
-communicates with GRASS graphics drivers. See Raster_Graphics_Library
- for details about this library, and Loading_the_Raster_Graphics_Library
+communicates with GRASS graphics drivers. See \ref Raster_Graphics_Library
+ for details about this library, and \ref Loading_the_Raster_Graphics_Library
 for a sample <i>Makefile</i> which loads this library.
 
 <i>DISPLAYLIB</i> This names the <i>Display Graphics Library</i>, which provides a
@@ -2684,7 +2681,7 @@ In such a situation, the parser's default interaction will never be seen by
 the user. A programmer using the parser is able to avoid the front-end's 
 default search for a fully interactive version of the command by placing a 
 call to <I>G_disable_interactive()</I> before calling <I>G_parser()</I>  
-(see Parser_Routines for details.)
+(see \ref Parser_Routines for details.)
 
 <P>
 "Can the user mix options and flags?"
@@ -3366,11 +3363,11 @@ described by <I>ew_res</I> and <I>ns_res.</I> The cartographic
 projection is described by <I>proj</I> and the related zone for the
 projection by <I>zone.</I> The <I>rows</I> and <I>cols</I> indicate
 the number of rows and columns in the raster file, or in the
-region. See Raster_Header_Format for more information about raster
-headers, and Region for more information about regions.
+region. See \ref Raster_Header_Format for more information about raster
+headers, and \ref Region for more information about regions.
 
 <P>
-The routines described in Raster_Header_File use this structure.
+The routines described in \ref Raster_Header_File use this structure.
 
 <P>
 
@@ -3501,7 +3498,7 @@ default: cmd
 \endverbatim
 
 <P>
-See Compiling_and_Installing_GRASS_Modules for a complete discussion
+See \ref Compiling_and_Installing_GRASS_Modules for a complete discussion
 of Makefiles.
 
 <P>
@@ -3707,7 +3704,7 @@ Returns:
 
 
 <P>
-See DateTime_Library for a complete discussion of GRASS datetime
+See \ref DateTime_Library for a complete discussion of GRASS datetime
 routines.
 
 <P>
@@ -3723,7 +3720,7 @@ Contents of  directory lib/:
 bitmap     : bitmap library for X Window Bitmaps
 btree      : binary tree library
 bwidget    : tcl/tk extra library
-cdhc       : ?
+cdhc       : library for testing normality and exponentiality
 D          : display library
 datetime   : DateTime library
 db         : database management interface database drivers + SQL parser
@@ -3736,8 +3733,8 @@ form       : forms library
 front.end  : interface for interactive modules
 g3d        : G3D raster volume library
 gis        : main GRASS library
-gmath      : generic mathematical functions (matrix, fft etc.) added by 
-             D D Gray (later to be extended, BLAS/LAPACK library)
+gmath      : generic mathematical functions (matrix, fft etc.)
+             (later to be extended, BLAS/LAPACK library)
 gtcltk     : Tcl/Tk stuff	     
 image      : extra imagery library (image3)
 imagery    : imagery library

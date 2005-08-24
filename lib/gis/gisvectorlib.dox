@@ -5,6 +5,8 @@
   -->
 <title>GRASS Vector File Processing</title>
 
+See also \ref GRASS_Vector_Architecture for details.
+ 
 \section gisvectintro GRASS Vector File Processing
 Authors:
 <BR>
@@ -176,7 +178,7 @@ message is printed).
 
 <P>
 The file descriptor can then be used with routines in the <I>Dig
-Library</I> to read the vector file (See Vector_Library).
+Library</I> to read the vector file (See \ref Vector_Library).
 
 <P>
 <B>Note.</B> This routine does not call any routines in the <I>Dig
@@ -191,7 +193,7 @@ routine, directly or indirectly.
 
 The following routine creates the new vector file <B>name</B> in the
 current mapset (GRASS does not allow files to be created outside the
-current mapset. See Database_Access_Rules) and opens it for
+current mapset. See \ref Database_Access_Rules) and opens it for
 writing. The vector file <B>name</B> should be obtained interactively
 using <I>G_ask_vector_new().</I> If obtained noninteractively (e.g.,
 from the command line), <I>G_legal_filename()</I> should be called
@@ -215,7 +217,7 @@ NULL pointer is returned (no diagnostic message is printed).
 
 <P>
 The file descriptor can then be used with routines in the <I>Dig 
-Library</I> to write the <I>vector file</I> (See Vector_Library.)
+Library</I> to write the <I>vector file</I> (See \ref Vector_Library.)
 
 <P>
 <B>Note.</B> This routine does not call any routines in the <I>Dig
@@ -229,7 +231,7 @@ support files are created, removed, or modified in any way.
 
 
 Reading and writing vector files is handled by routines in the <I>Dig
-Library.</I> See Vector_Library for details.
+Library.</I> See \ref Vector_Library for details.
 
 
 \section Vector_Category_File Vector Category File

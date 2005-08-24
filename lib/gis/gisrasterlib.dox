@@ -196,7 +196,7 @@ would be associated with the parent process, not the child. GRASS management
 automatically removes temporary files associated with processes that are no 
 longer running. If fork() must be used, the safest course of action is to 
 create the child first, then open the raster file. (See the discussion under 
-<I>G_tempfile</I> for more details.) 
+<I>G_tempfile()</I> for more details.) 
 
 <P>
 FILE * G_open_cell_new(char *name) open a new raster file
@@ -397,7 +397,7 @@ int G_close_cell (int fd) close a raster file The raster file
 <B>Note.</B> If a module wants to explicitly write support files (e.g., a
   specific color table) for a raster file it creates, it must do so after the
   raster file is closed. Otherwise the close will overwrite the support files.
-  See Raster_Map_Layer_Support_Routines for routines which write
+  See \ref Raster_Map_Layer_Support_Routines for routines which write
   raster support files.
 
 <P>
@@ -453,7 +453,7 @@ printed and -1 is returned. Otherwise, 0 is returned.
 
 <P>
 <B>Note.</B> If the raster file is a reclass file, the raster header for 
-the referenced raster file is read instead. See Reclass_Format for 
+the referenced raster file is read instead. See \ref Reclass_Format for 
 information about reclass files, and  <I>G_is_reclass</I> for 
 distinguishing reclass files from regular raster files.
 
@@ -769,7 +769,7 @@ this routine fits into the 5.x raster color logic.
 
 <P>
 <B>Note.</B> The <B>colors</B> structure must have been initialized by
-<I>G_init_colors.</I> See Predefined_Color_Tables for routines to
+<I>G_init_colors.</I> See \ref Predefined_Color_Tables for routines to
 build some predefined color tables.
 
 <P>

@@ -136,7 +136,7 @@ G_set_timestamp() or G_set_timestamp_range(). Similar routines exist
 for reading (see: DateTime_Library).
 
 <P>
-The GRASS DateTime utility library (see DateTime_Library) may be used
+The GRASS DateTime utility library (see \ref DateTime_Library) may be used
 to easily and accurately perform DateTime arithmetic. <EM>A possible
 future upgrade would be to specify a particular format identifier tag
 to indicate a DateTime.  Currently, to store a DateTime for each site

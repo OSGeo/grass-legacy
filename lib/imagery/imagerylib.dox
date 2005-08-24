@@ -1,5 +1,5 @@
 /*!
-\mainpage imagerylib GRASS Imagery Library
+\page imagerylib GRASS Imagery Library
 <!-- doxygenized from "GRASS 5 Programmer's Manual" 
      by M. Neteler 2/2004
   -->
@@ -127,7 +127,7 @@ Returns 1 if the specified <B>group</B> exists in the current mapset;
 These routines provide access to the information contained in the REF
 file for groups and subgroups, as well as routines to update this
 information.  They use the <I>Ref</I> structure, which is defined in
-the "imagery.h" header file; see Imagery_Library_Data_Structures.
+the "imagery.h" header file; see \ref Imagery_Library_Data_Structures.
 
 <P>
 The contents of the REF file are read or updated by the following
@@ -342,10 +342,10 @@ written to the POINTS file.
 
 <P>
 The library is loaded by specifying $(IMAGERYLIB) in the
-Gmakefile. The following example is a complete Gmakefile which
+Makefile. The following example is a complete Makefile which
 compiles code that uses this library:
 <P>
-<B>Gmakefile for $(IMAGERYLIB)</B>
+<B>Makefile for $(IMAGERYLIB)</B>
 
 \verbatim
 #UPDATE THIS EXAMPLE!!
@@ -361,9 +361,9 @@ $(GISLIB): # in case the library changes
 \endverbatim
 
 <B>Note.</B> This library must be loaded with $(GISLIB) since it uses
-routines from that library. See GIS_Library or details on that
-library. See Compiling_and_Installing_GRASS_Modules for a complete
-discussion of Gmakefiles.
+routines from that library. See \ref GIS_Library or details on that
+library. See \ref Compiling_and_Installing_GRASS_Modules for a complete
+discussion of Makefiles.
 
 \section Imagery_Library_Data_Structures Imagery Library Data Structures
 
