@@ -1,0 +1,34 @@
+<H2>DESCRIPTION</H2>
+
+<EM><b>v.rast.stats</b></EM>  - Calculates basic univariate statistics from
+a raster map only for the parts covered by the specified vector map.
+The vector map will be rasterized according to the raster map resolution.
+Then univariate statistics are calculated per vector category (cat) from
+the raster map and the results uploaded to the vector map attribute table.
+New columns are generated in the attribute table if not already present.
+<p>
+Six columns are generated (n, min, max, range, mean, stddev, variance, 
+coeff_var, sum) according to the output of <em>r.univar</em>.
+
+<H2>NOTES</H2>
+
+Unless not specified, the script stops if a (prefixed) upload column is already
+present in the vector map attribute table.
+<p>
+If a MASK is present, it will be restored after the script finished.
+The scripts changes temporarily to the resolution of the given raster map.
+
+<p>
+
+<H2>SEE ALSO</H2>
+
+<EM>
+<A HREF="r.univar.html">r.univar</A>, 
+<A HREF="v.univar.html">v.univar,</A>
+</EM>
+
+<H2>AUTHOR</H2>
+
+Markus Neteler
+
+<p><i>Last changed: $Date$</i>
