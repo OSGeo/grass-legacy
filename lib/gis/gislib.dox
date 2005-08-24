@@ -1,9 +1,15 @@
-/*!
-\page gislib GRASS GIS Library
+/*! \page gislib GRASS GIS Library
 <!-- doxygenized from "GRASS 5 Programmer's Manual" 
      by M. Neteler 2/2004
   -->
 <title>GRASS GIS Library</title>
+
+
+This chapter is divided in the following sections:
+- \subpage \ref gislibintro 
+- \subpage \ref gisrasterlib
+- \subpage \ref gissiteslib
+- \subpage \ref gisvectorlib
 
 \section gislibintro Introduction
 

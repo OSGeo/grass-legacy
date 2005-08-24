@@ -5,7 +5,8 @@
   -->
 <title>GRASS Vector File Processing</title>
 
-See also \ref GRASS_Vector_Architecture for details.
+See also \ref GRASS_Vector_Architecture for details (if not linked here,
+get it as extra file). 
  
 \section gisvectintro GRASS Vector File Processing
 Authors:
