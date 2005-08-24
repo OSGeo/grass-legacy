@@ -6,10 +6,10 @@
  *   copy a table
  ****************************************************************/
 
+#include <stdlib.h>
 #include "gis.h"
 #include "dbmi.h"
 #include "codes.h"
-#include <stdlib.h>
 #include "glocale.h"
 
 int
@@ -31,7 +31,7 @@ main(int argc, char *argv[])
     from_driver->key 	     = "from_driver";
     from_driver->type 	     = TYPE_STRING;
     from_driver->options     = db_list_drivers();
-    from_driver->required    = YES;
+    from_driver->required    = NO;
     from_driver->description = _("Input driver name");
     if ( (drv=db_get_default_driver_name()) )
          from_driver->answer = drv;
@@ -39,7 +39,7 @@ main(int argc, char *argv[])
     from_database 	       = G_define_option();
     from_database->key 	       = "from_database";
     from_database->type        = TYPE_STRING;
-    from_database->required    = YES;
+    from_database->required    = NO;
     from_database->description = _("Input database name");
     if ( (db=db_get_default_database_name()) )
 	from_database->answer = db;
@@ -48,13 +48,13 @@ main(int argc, char *argv[])
     from_table->key 	    = "from_table";
     from_table->type 	    = TYPE_STRING;
     from_table->required    = NO;
-    from_table->description = _("Input table name (only if select is not specified)");
+    from_table->description = _("Input table name (only, if 'select' is not used)");
 
     to_driver		   = G_define_option();
     to_driver->key 	   = "to_driver";
     to_driver->type 	   = TYPE_STRING;
     to_driver->options     = db_list_drivers();
-    to_driver->required    = YES;
+    to_driver->required    = NO;
     to_driver->description = _("Output driver name");
     if ( (drv=db_get_default_driver_name()) )
          to_driver->answer = drv;
@@ -62,7 +62,7 @@ main(int argc, char *argv[])
     to_database 	     = G_define_option();
     to_database->key 	     = "to_database";
     to_database->type        = TYPE_STRING;
-    to_database->required    = YES;
+    to_database->required    = NO;
     to_database->description = _("Output database name");
     if ( (db=db_get_default_database_name()) )
 	to_database->answer = db;
@@ -84,7 +84,7 @@ main(int argc, char *argv[])
     select->key 	= "select";
     select->type 	= TYPE_STRING;
     select->required	= NO;
-    select->description	= _("Full select statement (only if from_table and where is not used), e.g.:\n"
+    select->description	= _("Full select statement (only, if 'from_table' and 'where' is not used), e.g.:\n"
 			  "\t\tSELECT dedek FROM starobince WHERE obec = 'Frimburg'");
 
     if(G_parser(argc, argv)) exit(ERROR);
