@@ -57,6 +57,7 @@ clean: cleansubdirs
 
 DOXNAME=grasslibs
 #check for program
+# also needs 'dot' tool from Graphviz (http://www.research.att.com/sw/tools/graphviz/)
 checkdoxygen:
 	@(type doxygen > /dev/null || (echo "ERROR: Install 'doxygen' software first (get from http://www.doxygen.org)" && exit 1))
 
