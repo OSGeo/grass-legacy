@@ -37,43 +37,44 @@ Main web site: <a href="http://grass.itc.it">http://grass.itc.it</a>
 from GRASS 5 Programmer's manual or are simply undocumented</I>
 
 <ul>
-<li>bitmap <!-- a href="bitmaplib.html" -->bitmap library for X Window Bitmaps</a>
-<li>btree  <!-- a href="btreelib.html" -->binary tree library</a>
-<li>bwidget <!-- a href="bwidgetlib.html" -->Tcl/Tk extra library</a>
-<li>cdhc   <!-- a href="cdhc.html" --> library for testing normality and exponentiality</a>
-<li>D <a href="d_displaylib.html">display library</a>
-<li>datetime <!-- a href="datetimelib.html" -->DateTime library</a>
-<li>db       <a href="dbmi.html">database management interface database drivers (DBMI)</a>
-<li>display <!-- a href="displaylib.html" -->library for CELL driver</a>
-<li>dspf <!-- a href="dspflib.html" -->G3D display files library</a>
-<li>edit    <!-- a href="edit.html" -->edit library</a>
-<li>external  <!-- a href="external.html" --> external libraries from other projects (such as shapelib)</a>
-<li>fonts  <!-- a href="fonts.html" --> Hershey library</a>
-<li>forms  <!-- a href="forms.html" --> forms library</a>
-<li>front.end  <!-- a href="frontend.html" --> interface for interactive modules library</a>
-<li>g3d <a href="g3dlib.html">G3D raster volume library</a>
-<li>gis <a href="gislib.html">GRASS GIS library</a>, with following subsection:
+<li>bitmap:	bitmap library for X Window Bitmaps - \ref bitmaplib
+<li>btree:	binary tree library - \ref btreelib
+<li>bwidget:	Tcl/Tk extra library - \ref bwidgetlib
+<li>cdhc:	library for testing normality and exponentiality - \ref cdhc
+<li>D:		display library - \ref d_displaylib
+<li>datetime:	DateTime library - \ref datetimelib
+<li>db:		database management interface database drivers (DBMI) - \ref DataBase_Management_Interface
+<li>display:	library for CELL driver - \ref displaylib
+<li>dspf:	G3D display files library - \ref dspflib
+<li>edit:	edit library - \ref edit
+<li>external:	external libraries from other projects (such as shapelib) - \ref external
+<li>fonts:	Hershey library - \ref fonts
+<li>forms:	forms library - \ref forms
+<li>front.end:	interface for interactive modules library - \ref frontend
+<li>g3d:	G3D raster volume library - \ref g3dlib
+<li>gis:	GRASS GIS library, with following subsection - \ref gislib
 <ul>
- <li> <a href="gisrasterlib.html">Raster File Processing</a>
- <li> <a href="gissiteslib.html">Sites File Processing</a> (legacy, merged into vector)
- <li> <a href="gisvectorlib.html">Vector File Processing</a>
+ <li>  Raster File Processing - \ref gisrasterlib
+ <li>  Sites File Processing (legacy, merged into vector) - \ref gissiteslib
+ <li>  Vector File Processing - \ref gisvectorlib
 </ul>
-<li>gmath <!-- a href="gmathlib.html" -->generic mathematical functions (matrix functions, fft2 etc., to be extended: BLAS/LAPACK library)</a>
-<li>gtcltk  <!-- a href="gtcltk.html" --> Tcl/Tk stuff</a>
-<li>imagery <a href="imagerylib.html">imagery library</a>
-<li>image <!-- a href="image3lib.html" -->extra imagery library</a> (mainly unused)
-<li>init <!-- a href="init.html" --> GRASS initialization code + scripts</a>
-<li>linkm <!-- a href="linkmlib.html" -->linked list memory manager</a>
-<li>ogsf <a href="ogsflib.html">openGL (R) ported gsurf library (required for NVIZ)</a>
-<li>proj <!-- a href="projlib.html" -->wrapper to PROJ4 projection library</a>
-<li>raster <a href="rastergraphicslib.html">Raster Graphics Library (raster map functions are in \ref gislib)</a>
-<li>rowio <!-- a href="rowiolib.html" -->row in/out library</a>
-<li>rst <!-- a href="rst_gmsllib.html" -->library for interpolation with regularized splines with tension </a>
-<li>segment <!-- a href="segmentlib.html" -->segment library for segmented raster reading</a>
-<li>sites  <!-- a href="sites.html" --> old Sites library, now interfaced to vect library</a>
-<li>symbol  <!-- a href="symbol.html" --> drawing symbols for point vector data library</a>
-<li>vask <!-- a href="vasklib.html" -->Cursor management library</a>
-<li>vect <a href="vector_arch.html">GRASS vector and Direct Graph library</a>
+<li>gmath: 	 generic mathematical functions and BLAS/LAPACK library wrapper - \ref gmathlib
+<li>gtcltk:	Tcl/Tk stuff - \ref gtcltk
+<li>imagery:	imagery library - \ref imagerylib
+<li>image:	extra imagery library (mainly unused) - \ref image3lib
+<li>init:	GRASS initialization code + scripts - \ref init
+<li>linkm:	linked list memory manager - \ref linkmlib
+<li>ogsf:	openGL (R) ported gsurf library (required for NVIZ) - \ref ogsflib
+<li>proj:	wrapper to PROJ4 projection library - \ref projlib
+<li>raster:	Raster Graphics Library (raster map functions are in \refgislib) - \ref rastergraphicslib
+<li>rowio:	row in/out library - \ref rowiolib
+<li>rst:	library for interpolation with regularized splines with tension - \ref rstlib
+<li>segment:	segment library for segmented raster reading - \ref segmentlib
+<li>sites:	old Sites library, now interfaced to vect library - \ref sites
+<li>symbol:	drawing symbols for point vector data library - \ref symbol
+<li>vask:	Cursor management library - \ref vasklib
+<li>vect:	GRASS vector and Direct Graph library - \ref Vector_Library
+
 </ul>
 
 */
