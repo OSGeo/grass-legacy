@@ -2,7 +2,7 @@
 #include "macros.h"
 
 /*!
- \fn int db_start_driver_open_database ()
+ \fn dbDriver * db_start_driver_open_database ( char *drvname, char *dbname )
  \brief 
  \return 
  \param 
@@ -33,7 +33,7 @@ db_start_driver_open_database ( char *drvname, char *dbname )
 }
 
 /*!
- \fn int db_close_database_shutdown_driver ()
+ \fn int db_close_database_shutdown_driver (dbDriver *driver )
  \brief 
  \return 
  \param 

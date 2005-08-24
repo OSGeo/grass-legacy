@@ -2,7 +2,7 @@
 #include "macros.h"
 
 /*!
- \fn int db_delete_table ()
+ \fn int db_delete_table ( char *drvname, char *dbname, char *tblname )
  \brief 
  \return 
  \param 

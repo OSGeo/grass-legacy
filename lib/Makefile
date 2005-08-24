@@ -61,13 +61,14 @@ checkdoxygen:
 	@(type doxygen > /dev/null || (echo "ERROR: Install 'doxygen' software first (get from http://www.doxygen.org)" && exit 1))
 
 preprocessdoxygen: checkdoxygen
-	./vector/Vlib/generate_dox.sh
-	./db/dbmi_driver/generate_dox.sh
-	./db/dbmi_base/generate_dox.sh
-	./db/dbmi_client/generate_dox.sh
+	(cd ./vector/Vlib/ ; ./generate_dox.sh)
+	(cd ./db/dbmi_driver/ ; ./generate_dox.sh)
+	(cd ./db/dbmi_base/ ; ./generate_dox.sh)
+	(cd ./db/dbmi_client/ ; ./generate_dox.sh)
 
 htmldocs: checkdoxygen preprocessdoxygen
 	doxygen ./gis/Doxyfile_arch_html
+	@rm -f ./html/*.md5
 	@echo "HTML reference in directory ./html/index.html"
 
 latexdocs: checkdoxygen preprocessdoxygen
@@ -76,6 +77,7 @@ latexdocs: checkdoxygen preprocessdoxygen
 #this hack is needed to make Acroread's search engine happy:
 	(cd ./latex ; echo "\usepackage[T1]{fontenc}" >> doxygen.sty)
 	(cd ./latex && $(MAKE) )
+	@rm -f ./latex/*.md5
 	@echo "Latex reference in directory ./latex/refman.dvi"
 
 pdfdocs: checkdoxygen preprocessdoxygen
@@ -83,6 +85,7 @@ pdfdocs: checkdoxygen preprocessdoxygen
 	doxygen ./gis/Doxyfile_arch_latex
 	(cd ./latex ; echo "\usepackage[T1]{fontenc}" >> doxygen.sty)
 	(cd ./latex && $(MAKE) refman.pdf && mv refman.pdf grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}${DOXNAME}_`date '+%Y_%m_%d'`_refman.pdf)
+	@rm -f ./latex/*.md5
 	@echo "PDF reference in directory ./latex/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}${DOXNAME}_`date '+%Y_%m_%d'`_refman.pdf"
 
 cleandocs:

@@ -136,7 +136,7 @@ The existing spatial index is using line ID in 'topology' structure
 to identify lines in 'coor' file. Currently it is not possile to build
 spatial index without topology.
 
-\subsubsubsection vlibtopo_coor coor file
+\subsubsection vlibtopo_coor coor file
 
 <ol>
 <li> In the coor file the following is stored: 'line' (element) type,

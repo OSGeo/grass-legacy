@@ -10,7 +10,7 @@
  * types. A pointer to the aligned block is returned.
  * Dies with error message on memory allocation fail.
  *
- *  \param size
+ *  \param n
  *  \return void * 
  */
 

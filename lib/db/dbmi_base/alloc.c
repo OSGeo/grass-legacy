@@ -3,13 +3,13 @@
 #include "dbmi.h"
 
 /*!
- \fn char *db_store(char *s)
+ \fn char *db_store (char *s)
  \brief 
  \return 
  \param 
 */
 char *
-db_store(char *s)
+db_store (char *s)
 {
     char *a;
 
@@ -20,13 +20,13 @@ db_store(char *s)
 }
 
 /*!
- \fn void *db_malloc(int n)
+ \fn void *db_malloc (int n)
  \brief 
  \return 
  \param 
 */
 void *
-db_malloc(int n)
+db_malloc (int n)
 {
     void *s;
 
@@ -39,13 +39,13 @@ db_malloc(int n)
 }
 
 /*!
- \fn void *db_calloc(int n, int m)
+ \fn void *db_calloc (int n, int m)
  \brief 
  \return 
  \param 
 */
 void *
-db_calloc(int n, int m)
+db_calloc (int n, int m)
 {
     void *s;
 
@@ -60,13 +60,13 @@ db_calloc(int n, int m)
 }
 
 /*!
- \fn void *db_realloc(void *s, int n)
+ \fn void *db_realloc (void *s, int n)
  \brief 
  \return 
  \param 
 */
 void *
-db_realloc(void *s, int n)
+db_realloc (void *s, int n)
 {
     if (n <= 0)
 	n = 1;

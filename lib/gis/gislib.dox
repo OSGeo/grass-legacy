@@ -1764,7 +1764,7 @@ flag->description Flag description that is shown to the user
 <P>
 Associated with the parser are five routines that are automatically
 included in the GRASS Makefile process. The Makefile process is
-documented in Compiling_and_Installing_GRASS_Modules.
+documented in \ref Compiling_and_Installing_GRASS_Modules.
 
 <P>
 struct Option * G_define_option() returns Option structure
@@ -2666,8 +2666,8 @@ Here are two examples:
 
 <P>
 GRASS 4.0 introduced a new method for driving GRASS interactive and 
-non-interactive modules as described in <I>11 Compiling and Installing GRASS 
-Programs</I>. Here is a short overview.
+non-interactive modules as described in \ref Compiling_and_Installing_GRASS_Programs.
+Here is a short overview.
 
 <P>
 For most modules a user runs a front-end module out of the GRASS bin
