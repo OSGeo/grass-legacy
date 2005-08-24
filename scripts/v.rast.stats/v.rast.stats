@@ -142,9 +142,20 @@ fi
 CATSLIST="`r.cats ${VECTOR}_${TMPNAME} fs=';' 2> /dev/null | cut -d';' -f1 | tr '\n' ' '`"
 echo "List of categories found: $CATSLIST"
 
+#check if DBF driver used, in this case cut to 10 chars col names:
+DBFDRIVER=0
+v.db.connect -g myroads | cut -d' ' -f5 | grep -i dbf > /dev/null
+if [ $? -eq 0 ] ; then
+  DBFDRIVER=1
+fi
+
 for i in n min max range mean stddev variance cf_var sum ; do
   #check if column already present
-  CURRCOLUMN=${COLPREFIX}_${i}
+  if [ $DBFDRIVER -eq 1 ] ; then
+     CURRCOLUMN="`echo ${COLPREFIX}_${i} | cut -b1-10`"
+  else
+     CURRCOLUMN="${COLPREFIX}_${i}"
+  fi
   v.info -c $VECTOR 2> /dev/null | sed 's+^+|+g' |sed 's+$+|+g' | grep "|$CURRCOLUMN|" > /dev/null
   if [ $? -eq 0 ] ; then
     echo "$column $CURRCOLUMN already present, updating statistic values in table"
@@ -174,16 +185,29 @@ for i in $CATSLIST ; do
  variance=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f7`
  cf_var=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f8`
  sum=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f9`
- 
- v.db.update map=$VECTOR col=${COLPREFIX}_n         value=$n         where="cat=$i"
- v.db.update map=$VECTOR col=${COLPREFIX}_min       value=$min       where="cat=$i"
- v.db.update map=$VECTOR col=${COLPREFIX}_max       value=$max       where="cat=$i"
- v.db.update map=$VECTOR col=${COLPREFIX}_range     value=$range     where="cat=$i"
- v.db.update map=$VECTOR col=${COLPREFIX}_mean      value=$mean      where="cat=$i"
- v.db.update map=$VECTOR col=${COLPREFIX}_stddev    value=$stddev    where="cat=$i"
- v.db.update map=$VECTOR col=${COLPREFIX}_variance  value=$variance  where="cat=$i"
- v.db.update map=$VECTOR col=${COLPREFIX}_cf_var    value=$cf_var    where="cat=$i"
- v.db.update map=$VECTOR col=${COLPREFIX}_sum       value=$sum       where="cat=$i"
+
+ if [ $DBFDRIVER -eq 1 ] ; then
+  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_n| cut -b1-10`"        value=$n        where="cat=$i"
+  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_min| cut -b1-10`"      value=$min      where="cat=$i"
+  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_max| cut -b1-10`"      value=$max      where="cat=$i"
+  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_range| cut -b1-10`"    value=$range    where="cat=$i"
+  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_mean| cut -b1-10`"     value=$mean     where="cat=$i"
+  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_stddev| cut -b1-10`"   value=$stddev   where="cat=$i"
+  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_variance| cut -b1-10`" value=$variance where="cat=$i"
+  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_cf_var| cut -b1-10`"   value=$cf_var   where="cat=$i"
+  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_sum| cut -b1-10`"      value=$sum      where="cat=$i"
+ else
+  v.db.update map=$VECTOR col=${COLPREFIX}_n         value=$n         where="cat=$i"
+  v.db.update map=$VECTOR col=${COLPREFIX}_min       value=$min       where="cat=$i"
+  v.db.update map=$VECTOR col=${COLPREFIX}_max       value=$max       where="cat=$i"
+  v.db.update map=$VECTOR col=${COLPREFIX}_range     value=$range     where="cat=$i"
+  v.db.update map=$VECTOR col=${COLPREFIX}_mean      value=$mean      where="cat=$i"
+  v.db.update map=$VECTOR col=${COLPREFIX}_stddev    value=$stddev    where="cat=$i"
+  v.db.update map=$VECTOR col=${COLPREFIX}_variance  value=$variance  where="cat=$i"
+  v.db.update map=$VECTOR col=${COLPREFIX}_cf_var    value=$cf_var    where="cat=$i"
+  v.db.update map=$VECTOR col=${COLPREFIX}_sum       value=$sum       where="cat=$i"
+ fi
+
  CURRNUM=`expr $CURRNUM + 1`
 done
 
