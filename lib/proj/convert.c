@@ -174,7 +174,7 @@ OGRSpatialReferenceH *GPJ_grass_to_osr(struct Key_Value * proj_info,
 	end = "";
     }
     else {
-	if ((strncmp(sysname, "unnamed", 7) == 0) &&
+	if ((strcmp(sysname, "unnamed") == 0) &&
 	    (G_find_key_value("name", proj_info) != NULL))
 	    G_asprintf(&start, "PROJCS[\"%s\",",
 		       G_find_key_value("name", proj_info));
@@ -461,11 +461,15 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
             double	es, flat;
             char	es_str[100];
 
-            flat = 1 / atof(pszInvFlat);
+	    flat = atof(pszInvFlat);
+	    /* Allow for incorrect WKT describing a sphere where InvFlat 
+	     * is given as 0 rather than inf */
+	    if( flat > 0 )
+                flat = 1 / flat;
             
             es = flat * (2.0 - flat);
 
-            sprintf( es_str, "%.10f", es );
+            sprintf( es_str, "%.16g", es );
             G_set_key_value( "es", es_str, *projinfo );
         }
     }
