@@ -93,7 +93,7 @@ GIS_LOCK=$$
 export GIS_LOCK
 
 # Set the global grassrc file
-GISRCRC="$HOME/.grassrc6.`uname -n`"
+GISRCRC="$HOME/.grassrc6"
 export GISRCRC
 # Set the session grassrc file
 USER="`whoami`"
