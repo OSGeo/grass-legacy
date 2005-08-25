@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
     parm.col->key        = "column" ;
     parm.col->type       = TYPE_STRING ;
     parm.col->required   = YES ;
-    parm.col->description= _("Attribute table column");
+    parm.col->description= _("Attribute table column with values to interpolate");
    
     noindex = G_define_flag();
     noindex->key = 'n';
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->description =        
-                    _("Surface interpolation from sites data by Inverse "
+                    _("Surface interpolation from vector point data by Inverse "
                     "Distance Squared Weighting.");
                     
     if (G_parser(argc, argv))
