@@ -391,7 +391,7 @@ msgstr "název výsledného vektorového souboru"
 #: ../doc/vector/v.example/main.c:62 ../doc/vector/v.example.c:62
 #, c-format
 msgid "Could not find input %s"
-msgstr "Nemohl jsem nalézt vstup %s\n"
+msgstr "Nemohl jsem nalézt vstup %s"
 
 #: ../doc/vector/v.example/main.c:66 ../doc/vector/v.example.c:66
 msgid "Could not open input"
@@ -760,11 +760,11 @@ msgstr "Soubor s popisky [%s] není dostupný"
 
 #: ../display/d.paint.labels/main.c:76
 msgid "Region size is lower than minreg, nothing displayed."
-msgstr "Velikost oblasti je men¹í, ne¾ minreg, nic není zobrazeno.\n"
+msgstr "Velikost oblasti je men¹í, ne¾ minreg, nic není zobrazeno."
 
 #: ../display/d.paint.labels/main.c:85
 msgid "Region size is greater than maxreg, nothing displayed."
-msgstr "Velikost regionu je vìt¹í, ne¾ maxreg, zobrazeno není nic.\n"
+msgstr "Velikost regionu je vìt¹í, ne¾ maxreg, zobrazeno není nic."
 
 #: ../display/d.paint.labels/main.c:95
 #, c-format
@@ -1066,7 +1066,7 @@ msgstr "Vektorový soubor [%s] není dostupný"
 
 #: ../display/d.vect/main.c:362 ../vector/v.db.select/main.c:100
 msgid "Database connection not defined"
-msgstr "Spojení s databází nebylo definováno\n"
+msgstr "Spojení s databází nebylo definováno"
 
 #: ../display/d.vect/main.c:367
 #, c-format
@@ -1695,7 +1695,7 @@ msgstr "Nemohu jako vstup otevøít rastrovou (cell) mapu <%s>\n"
 #: ../imagery/i.cca/main.c:215
 #, c-format
 msgid "Unable to open cell map <%s> for output.\n"
-msgstr "Nemohu jako výstup otevøít rastrovou (cell) mapu <%s>."
+msgstr "Nemohu jako výstup otevøít rastrovou (cell) mapu <%s>.\n"
 
 #: ../imagery/i.cca/main.c:232
 #, c-format
@@ -1826,14 +1826,18 @@ msgstr "%s"
 msgid ""
 "\n"
 "Orig:(x1 y1), (x2 y2) = (%d %d), (%d %d)"
-msgstr "Orig.: (x1 y1), (x2 y2) = (%d %d), (%d %d)"
+msgstr ""
+"\n"
+"Orig.: (x1 y1), (x2 y2) = (%d %d), (%d %d)"
 
 #: ../imagery/i.class/draw_reg.c:92
 #, c-format
 msgid ""
 "\n"
 "New:(x1 y1), (x2 y2) = (%d %d), (%d %d)"
-msgstr "Nový:(x1 y1), (x2 y2) = (%d %d), (%d %d)"
+msgstr ""
+"\n"
+"Nový:(x1 y1), (x2 y2) = (%d %d), (%d %d)"
 
 #: ../imagery/i.class/erase_reg.c:11
 msgid "Can not erase an undefined region."
@@ -1855,13 +1859,17 @@ msgstr "®ádné grafické zaøízení nebylo vybráno"
 msgid ""
 "\n"
 "You have a mask set."
-msgstr "Máte nastavenu masku."
+msgstr ""
+"\n"
+"Máte nastavenu masku."
 
 #: ../imagery/i.class/main.c:39
 msgid ""
 "\n"
 "If you continue the mask will be removed."
-msgstr "\nPokud budete pokraèovat, maska bude odstranìna."
+msgstr ""
+"\n"
+"Pokud budete pokraèovat, maska bude odstranìna."
 
 #: ../imagery/i.class/main.c:40
 msgid "Do you want to continue? "
@@ -1959,14 +1967,18 @@ msgstr "\nX, Y, B v zoom1 %d %d %d"
 msgid ""
 "\n"
 "left right top bottom %d %d %d %d"
-msgstr "vlevo vpravo nahoøe dole %d %d %d %d"
+msgstr ""
+"\n"
+"vlevo vpravo nahoøe dole %d %d %d %d"
 
 #: ../imagery/i.class/zoom_box.c:150
 #, c-format
 msgid ""
 "\n"
 "north,south,east,west,nsres,ewres %f %f %f %f %f %f"
-msgstr "sever,jih,východ,západ,nsres,ewres  %f %f %f %f %f %f"
+msgstr ""
+"\n"
+"sever,jih,východ,západ,nsres,ewres  %f %f %f %f %f %f"
 
 #: ../imagery/i.cluster/checkpt.c:18
 #, c-format
@@ -1978,7 +1990,9 @@ msgstr ""
 msgid ""
 "\n"
 "######## iteration %d ###########\n"
-msgstr "\n######## iteraterace %d ###########"
+msgstr ""
+"\n"
+"######## iteraterace %d ###########\n"
 
 #: ../imagery/i.cluster/checkpt.c:31
 #, c-format
@@ -1995,7 +2009,10 @@ msgid ""
 "An imagery function that generates spectral signatures for land cover types "
 "in an image using a clustering algorithm. The resulting signature file is "
 "used as input for i.maxlik, to generate an unsupervised image classification."
-msgstr "Obrazová funkce, která vytvoøí na základì obrazových dat spekrální signatury pro typy vyu¾ití pùdy s vyu¾itím clusterového algoritmu. Výsledný soubor se signaturami je pou¾it jako vstup pro i.maxlik, kdy jde o neøízenou klasifikaci."
+msgstr ""
+"Obrazová funkce, která vytvoøí na základì obrazových dat spekrální signatury "
+"pro typy vyu¾ití pùdy s vyu¾itím clusterového algoritmu. Výsledný soubor se signaturami je "
+"pou¾it jako vstup pro i.maxlik, kdy jde o neøízenou klasifikaci."
 
 #: ../imagery/i.cluster/main.c:49
 msgid "Group of imagery files to be clustered"
@@ -2285,7 +2302,9 @@ msgstr "podskupina <%s> nebyla nalezena"
 msgid ""
 "\n"
 "** The following raster files in subgroup [%s] do not exist:"
-msgstr "\n** Následující rastrové soubory v podskupinì [%s] neexistují:"
+msgstr ""
+"^G\n"
+"** Následující rastrové soubory v podskupinì [%s] neexistují:"
 
 #: ../imagery/i.cluster/open_files.c:38
 #, c-format
@@ -2349,7 +2368,10 @@ msgid ""
 "\n"
 "class means/stddev for each band\n"
 "\n"
-msgstr "prùmìry/smìr. odchylky tøíd pro ka¾dý kanál\n"
+msgstr ""
+"\n"
+"prùmìry/smìr. odchylky tøíd pro ka¾dý kanál\n"
+"\n"
 
 #: ../imagery/i.cluster/print2.c:22
 #, c-format
@@ -2372,7 +2394,10 @@ msgid ""
 "\n"
 "initial means for each band\n"
 "\n"
-msgstr "poèáteèní prùmìry pro ka¾dý kanál\n"
+msgstr ""
+"\n"
+"poèáteèní prùmìry pro ka¾dý kanál\n"
+"\n"
 
 #: ../imagery/i.cluster/print3.c:19
 #, c-format
@@ -4996,6 +5021,7 @@ msgid ""
 " no data. If the null file for [%s] doesn't exist, zero cells in\n"
 " it are treated by GRASS application programs as no data."
 msgstr ""
+"\n"
 "Soubor \"null\" pro [%s] mù¾e naznaèovat, ¾e nìkteré buòky obsahují\n"
 " \"¾ádná data\". Pokud tento soubor pro [%s] neexistuje, pak jsou nulové buòky\n"
 "interpretovány moduly GRASSu jako \"¾ádná data\"."
@@ -5006,7 +5032,10 @@ msgid ""
 "\n"
 "Do you want to create/reset the null file for [%s] so that null cell values "
 "are considered valid data? "
-msgstr "Pøejete si vytvoøit/obnovit soubor \"null\" pro [%s], tak¾e hodnoty buòek NULL budou pova¾ovány za platná data?"
+msgstr ""
+"\n"
+"Pøejete si vytvoøit/obnovit soubor \"null\" pro [%s], tak¾e hodnoty buòek NULL "
+"budou pova¾ovány za platná data?"
 
 #: ../raster/r.support/front/front.c:131 ../raster/r.support/front/front.c:166
 #, c-format
@@ -5030,6 +5059,7 @@ msgid ""
 "Do you want to delete the null file for [%s]\n"
 "(all zero cells will then be considered no data)? "
 msgstr ""
+"\n"
 "Pøejete si odstranit soubor \"null\" pro [%s]\n"
 "(v¹echny nulové buòky budou poté pova¾ovány za \"no data\")?"
 
@@ -5040,13 +5070,15 @@ msgstr "Odstraòuji soubor \"null\" pro [%s]...\n"
 
 #: ../raster/r.support/front/front.c:179
 msgid "Done."
-msgstr "Dokonáno jest.\n"
+msgstr "Dokonáno jest."
 
 #: ../raster/r.support/front/hitreturn.c:15
 msgid ""
 "\n"
 "Hit RETURN to continue -->"
-msgstr "Stiknìte RETURN pro pokraèování -->"
+msgstr ""
+"\n"
+"Stiknìte RETURN pro pokraèování -->"
 
 #: ../raster/r.support/modcats/modcats.c:46
 msgid "Which vector file needs updated categories?"
