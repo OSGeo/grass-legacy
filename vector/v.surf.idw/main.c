@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "gis.h"
+#include "glocale.h"
 
 int search_points = 12;
 
@@ -64,7 +65,7 @@ int main(int argc, char *argv[])
     parm.output->key        = "output" ;
     parm.output->type       = TYPE_STRING ;
     parm.output->required   = YES;
-    parm.output->description= "Name of output raster map" ;
+    parm.output->description= _("Name of output raster map") ;
     parm.output->gisprompt  = "any,cell,raster" ;
 
     parm.npoints = G_define_option() ;
@@ -72,49 +73,41 @@ int main(int argc, char *argv[])
     parm.npoints->key_desc   = "count" ;
     parm.npoints->type       = TYPE_INTEGER ;
     parm.npoints->required   = NO ;
-    parm.npoints->description="Number of interpolation points";
+    parm.npoints->description= _("Number of interpolation points");
     parm.npoints->answer = "12";
 
     parm.dfield = G_define_standard_option(G_OPT_V_FIELD);
 
     parm.col = G_define_option() ;
-    parm.col->key        = "col" ;
+    parm.col->key        = "column" ;
     parm.col->type       = TYPE_STRING ;
     parm.col->required   = YES ;
-    parm.col->description="Attribute table column";
+    parm.col->description= _("Attribute table column");
    
     noindex = G_define_flag();
     noindex->key = 'n';
-    noindex->description = "Don't index points by raster cell (slower but uses"
+    noindex->description = _("Don't index points by raster cell (slower but uses"
                            " less memory and includes points from outside region"
-                           " in the interpolation)";
+                           " in the interpolation)");
 
     G_gisinit(argv[0]);
 
     module = G_define_module();
     module->description =        
-                    "Surface interpolation from sites data by Inverse "
-                    "Distance Squared Weighting.";
+                    _("Surface interpolation from sites data by Inverse "
+                    "Distance Squared Weighting.");
                     
     if (G_parser(argc, argv))
-        exit(1);
+        exit(EXIT_FAILURE);
 
     fprintf(stderr, "%s:\n", G_program_name());
    
     if (G_legal_filename(parm.output->answer) < 0)
-    {
-        fprintf (stderr, "%s=%s - illegal name\n", parm.output->key, parm.output->answer);
-        exit(1);
-    }
-
+        G_fatal_error( _("%s=%s - illegal name"), parm.output->key, parm.output->answer);
 
     if(sscanf(parm.npoints->answer,"%d", &search_points) != 1 || search_points<1)
-    {
-        fprintf (stderr, "%s=%s - illegal number of interpolation points\n", 
+        G_fatal_error( _( "%s=%s - illegal number of interpolation points"),
                 parm.npoints->key, parm.npoints->answer);
-        G_usage();
-        exit(1);
-    }
 
     sscanf(parm.dfield->answer,"%d", &field);
 
@@ -147,10 +140,7 @@ int main(int argc, char *argv[])
     read_sites (parm.input->answer, field, parm.col->answer);
 
     if (npoints == 0)
-    {
-        fprintf (stderr, "%s: no data points found\n", G_program_name());
-        exit(1);
-    }
+        G_fatal_error( _("%s: no data points found"), G_program_name());
     nsearch = npoints < search_points ? npoints : search_points;
 
   if(!noindex->answer)
@@ -223,13 +213,9 @@ int main(int argc, char *argv[])
 
     fd=G_open_raster_new(parm.output->answer, DCELL_TYPE);
     if (fd < 0)
-    {
-        fprintf (stderr, "%s: can't create %s\n", G_program_name(), parm.output->answer);
-        exit(1);
-    }
-
+        G_fatal_error( _("%s: can't create %s"), G_program_name(), parm.output->answer);
                                   
-    fprintf (stderr, "Interpolating raster map <%s> ... %d rows ... ",
+    G_message ( _("Interpolating raster map <%s> ... %d rows ... "),
         parm.output->answer, window.rows);
 
     north = window.north + window.ns_res/2.0;
@@ -366,8 +352,8 @@ int main(int argc, char *argv[])
         G_put_d_raster_row(fd,dcell);
     }
     G_close_cell(fd);
-    fprintf (stderr, "done          \n");
-    exit(0);
+    G_message ( _("Done          "));
+    exit(EXIT_SUCCESS);
 }
 
 void newpoint ( double z,double east,double north)
@@ -502,3 +488,4 @@ void calculate_distances_noindex(double north, double east)
 	    }
 
 }
+
