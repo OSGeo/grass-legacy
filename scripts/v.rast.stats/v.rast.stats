@@ -120,17 +120,20 @@ if [ "$file" ] ; then
 fi
 
 #get RASTER resolution of map which we want to query:
-RASTRES=`r.info -s $RASTER | cut -d'=' -f2 | tr '\n' ' '  | awk '{printf "%f\n", ($1+$2) / 2.}'`
+#fetch separated to permit for non-square cells (latlong etc)
+NSRES=`r.info -s $RASTER | grep nsres | cut -d'=' -f2`
 if [ $? -ne 0 ] ; then
  echo "An error occurred."
  exit 1
 fi
+EWRES=`r.info -s $RASTER | grep ewres | cut -d'=' -f2`
 
 #save current settings:
 g.region save=${TMPNAME} > /dev/null
 
 #Temporarily setting raster resolution to $RASTER resolution
-g.region res=$RASTRES -ap > /dev/null
+#keep boundary settings
+g.region nsres=$NSRES ewres=$EWRES -ap > /dev/null
 
 #prepare raster MASK
 v.to.rast in=$VECTOR out=${VECTOR}_${TMPNAME} use=cat > /dev/null 2> /dev/null
