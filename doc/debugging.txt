@@ -1,5 +1,7 @@
 GRASS Debugging:
 
+At user level:
+
  Print debugging message if variable DEBUG
  is set to level equal or greater
 
@@ -36,6 +38,15 @@ References:
 "Is white space significant in Tcl"  http://wiki.tcl.tk/981
 "Tcl quoting hell"  http://wiki.tcl.tk/1726
 "1 minute intro to tcl"  http://www.pconline.com/~erc/tcl.htm
+
+----------------------------------------------------
+
+Debuggers: gdb and ddd
+
+  ddd: http://www.gnu.org/software/ddd/
+       (GNU DDD is a graphical front-end for command-line debuggers such as
+        GDB, DBX, WDB, Ladebug, JDB, XDB, the Perl debugger, the bash debugger, or the
+        Python debugger. )
 
 ----------------------------------------------------
 
