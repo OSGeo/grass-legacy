@@ -1,4 +1,4 @@
-/*! \page Vector_Library GRASS 6.0 Vector Architecture
+/*! \page Vector_Library GRASS 6 Vector Architecture
 
 by GRASS Development Team
 
@@ -6,7 +6,7 @@ http://grass.itc.it
 
 \section intro Introduction
 
-This description covers the new GRASS 5.7/6.0 vector library
+This description covers the new GRASS 6 vector library
 architecture.  This new architecture overcomes the vector limitations
 of GRASS 4.x-5.4.x by extending the vector support with attributes
 stored in external relational databases and by new 3D
