@@ -61,18 +61,12 @@ DOXNAME=grasslibs
 checkdoxygen:
 	@(type doxygen > /dev/null || (echo "ERROR: Install 'doxygen' software first (get from http://www.doxygen.org)" && exit 1))
 
-preprocessdoxygen: checkdoxygen
-	(cd ./vector/Vlib/ ; ./generate_dox.sh)
-	(cd ./db/dbmi_driver/ ; ./generate_dox.sh)
-	(cd ./db/dbmi_base/ ; ./generate_dox.sh)
-	(cd ./db/dbmi_client/ ; ./generate_dox.sh)
-
-htmldocs: checkdoxygen preprocessdoxygen
+htmldocs: checkdoxygen
 	doxygen ./gis/Doxyfile_arch_html
 	@rm -f ./html/*.md5
 	@echo "HTML reference in directory ./html/index.html"
 
-latexdocs: checkdoxygen preprocessdoxygen
+latexdocs: checkdoxygen
 	test ! -d latex || (cd ./latex && $(MAKE) clean)
 	doxygen ./gis/Doxyfile_arch_latex
 #this hack is needed to make Acroread's search engine happy:
@@ -81,7 +75,8 @@ latexdocs: checkdoxygen preprocessdoxygen
 	@rm -f ./latex/*.md5
 	@echo "Latex reference in directory ./latex/refman.dvi"
 
-pdfdocs: checkdoxygen preprocessdoxygen
+#may leet to TeX capacity exceeded - see doxygen FAQ at www.doxygen.org
+pdfdocs: checkdoxygen
 	test ! -d latex || (cd ./latex && $(MAKE) clean)
 	doxygen ./gis/Doxyfile_arch_latex
 	(cd ./latex ; echo "\usepackage[T1]{fontenc}" >> doxygen.sty)
