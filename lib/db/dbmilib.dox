@@ -70,6 +70,8 @@ See details here:<br>
 
 \section dbmi_functions DBMI functions list (incomplete)
 
+ [ FIXME: why doesn't doxygen link to the functions?? ]
+
 \subsection DB_alloc_routines DB alloc routines
 
 char *db_store (char *s)
