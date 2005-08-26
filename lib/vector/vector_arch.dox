@@ -1,4 +1,4 @@
-/*! \page Vector_Library GRASS 6 Vector Architecture
+/*! \mainpage Vector_Library GRASS 6 Vector Architecture
 
 by GRASS Development Team
 
@@ -147,16 +147,6 @@ spatial index without topology.
 
 TINs are created as 2D/3D vector polygons consisting of 3 vertices.
 
-
-\subsubsection vlibfunc List of vector library functions
-
-The Vect_*() functions are the programmer's API for GRASS vector
-programming. See details here:
-
-
-<a class="qindex" href="modules.html">Structured Vect_*() functions list</a>
-
-
 \subsection dglib DGLib (Directed Graph Library)
 
 The Directed Graph Library or DGLib (Micarelli 2002,
@@ -175,6 +165,618 @@ more.
 For details please read Blazek et al. 2002 (see below).
 
 
+\section vlibfunc List of vector library functions
+
+The Vect_*() functions are the programmer's API for GRASS vector
+programming.
+
+
+\section area area
+
+Vect_get_area_area();
+
+Vect_get_area_boundaries();
+
+Vect_get_area_centroid();
+
+Vect_get_area_isle();
+
+Vect_get_area_num_isles();
+
+Vect_get_area_points();
+
+Vect_get_isle_area();
+
+Vect_get_isle_boundaries();
+
+Vect_get_isle_points();
+
+Vect_point_in_area();
+
+
+\section array array
+
+Vect_new_varray();
+
+Vect_set_varray_from_cat_list();
+
+Vect_set_varray_from_cat_string();
+
+Vect_set_varray_from_db();
+
+
+\section box box
+
+Vect_box_copy();
+
+Vect_box_extend();
+
+Vect_box_overlap();
+
+Vect_get_area_box();
+
+Vect_get_isle_box();
+
+Vect_get_line_box();
+
+Vect_get_map_box();
+
+Vect_point_in_box();
+
+Vect_region_box();
+
+
+\section break_lines break_lines
+
+Vect_break_lines();
+
+
+\section break_polygons break_polygons
+
+Vect_break_polygons();
+
+
+\section bridges bridges
+
+Vect_remove_bridges();
+
+
+\section buffer buffer
+
+Vect_line_buffer();
+
+Vect_line_parallel();
+
+
+\section build build
+
+Vect_build();
+
+Vect_build_partial();
+
+Vect_get_built();
+
+Vect_save_spatial_index();
+
+Vect_save_topo();
+
+Vect_spatial_index_dump();
+
+Vect_topo_dump();
+
+
+\section build_nat build_nat
+
+Vect_attach_centroids();
+
+Vect_attach_isle();
+
+Vect_attach_isles();
+
+Vect_build_line_area();
+
+Vect_build_nat();
+
+Vect_isle_find_area();
+
+
+\section build_ogr build_ogr
+
+Vect_build_ogr();
+
+
+\section cats cats
+
+Vect_array_to_cat_list();
+
+Vect_cat_del();
+
+Vect_cat_get();
+
+Vect_cat_in_array();
+
+Vect_cat_in_cat_list();
+
+Vect_cat_set();
+
+Vect_destroy_cat_list();
+
+Vect_destroy_cats_struct();
+
+Vect_field_cat_del();
+
+Vect_new_cat_list();
+
+Vect_new_cats_struct();
+
+Vect_reset_cats();
+
+Vect_str_to_cat_list();
+
+
+\section cindex cindex
+
+Vect_cidx_dump();
+
+Vect_cidx_find_next();
+
+Vect_cidx_get_cat_by_index();
+
+Vect_cidx_get_field_index();
+
+Vect_cidx_get_field_number();
+
+Vect_cidx_get_num_cats_by_index();
+
+Vect_cidx_get_num_fields();
+
+Vect_cidx_get_num_types_by_index();
+
+Vect_cidx_get_num_unique_cats_by_index();
+
+Vect_cidx_get_type_count();
+
+Vect_cidx_get_type_count_by_index();
+
+Vect_cidx_open();
+
+Vect_cidx_save();
+
+
+\section clean_nodes clean_nodes
+
+Vect_clean_small_angles_at_nodes();
+
+
+\section close close
+
+Vect_close();
+
+
+\section constraint constraint
+
+Vect_get_constraint_box();
+
+Vect_remove_constraints();
+
+Vect_set_constraint_region();
+
+Vect_set_constraint_type();
+
+
+\section dangles dangles
+
+Vect_chtype_dangles();
+
+Vect_remove_dangles();
+
+
+\section dbcolumns dbcolumns
+
+Vect_get_column_names();
+
+Vect_get_column_names_types();
+
+Vect_get_column_types();
+
+
+\section error error
+
+Vect_get_fatal_error();
+
+Vect_set_fatal_error();
+
+
+\section field field
+
+Vect_add_dblink();
+
+Vect_check_dblink();
+
+Vect_default_field_info();
+
+Vect_get_dblink();
+
+Vect_get_field();
+
+Vect_map_add_dblink();
+
+Vect_map_check_dblink();
+
+Vect_map_del_dblink();
+
+Vect_new_dblinks_struct();
+
+Vect_read_dblinks();
+
+Vect_reset_dblinks();
+
+Vect_subst_var();
+
+Vect_write_dblinks();
+
+
+\section find find
+
+Vect_find_area();
+
+Vect_find_island();
+
+Vect_find_line();
+
+Vect_find_node();
+
+
+\section graph graph
+
+Vect_graph_add_edge();
+
+Vect_graph_init();
+
+Vect_graph_set_node_costs();
+
+Vect_graph_shortest_path();
+
+
+\section header header
+
+Vect_get_comment();
+
+Vect_get_date();
+
+Vect_get_full_name();
+
+Vect_get_map_date();
+
+Vect_get_map_name();
+
+Vect_get_mapset();
+
+Vect_get_name();
+
+Vect_get_organization();
+
+Vect_get_person();
+
+Vect_get_proj();
+
+Vect_get_proj_name();
+
+Vect_get_scale();
+
+Vect_get_zone();
+
+Vect_is_3d();
+
+Vect_print_header();
+
+Vect_set_comment();
+
+Vect_set_date();
+
+Vect_set_map_date();
+
+Vect_set_map_name();
+
+Vect_set_organization();
+
+Vect_set_person();
+
+Vect_set_scale();
+
+Vect_set_thresh();
+
+Vect_set_zone();
+
+
+\section hist hist
+
+Vect_hist_command();
+
+Vect_hist_copy();
+
+Vect_hist_read();
+
+Vect_hist_rewind();
+
+Vect_hist_write();
+
+
+\section init_head init_head
+
+Vect_copy_head_data();
+
+
+\section intersect intersect
+
+Vect_line_check_intersection();
+
+Vect_segment_intersection();
+
+
+\section legal_vname legal_vname
+
+Vect_check_input_output_name();
+
+
+\section level level
+
+Vect_level();
+
+
+\section level_two level_two
+
+Vect_get_centroid_area();
+
+Vect_get_line_areas();
+
+Vect_get_line_nodes();
+
+Vect_get_node_coor();
+
+Vect_get_node_line();
+
+Vect_get_node_line_angle();
+
+Vect_get_node_n_lines();
+
+Vect_get_num_areas();
+
+Vect_get_num_dblinks();
+
+Vect_get_num_islands();
+
+Vect_get_num_lines();
+
+Vect_get_num_nodes();
+
+Vect_get_num_primitives();
+
+Vect_get_num_updated_lines();
+
+Vect_get_num_updated_nodes();
+
+Vect_get_updated_line();
+
+Vect_get_updated_node();
+
+
+\section line line
+
+Vect_append_point();
+
+Vect_append_points();
+
+Vect_copy_pnts_to_xyz();
+
+Vect_copy_xyz_to_pnts();
+
+Vect_destroy_line_struct();
+
+Vect_line_box();
+
+Vect_line_delete_point();
+
+Vect_line_distance();
+
+Vect_line_geodesic_length();
+
+Vect_line_insert_point();
+
+Vect_line_length();
+
+Vect_line_prune();
+
+Vect_line_prune_thresh();
+
+Vect_line_reverse();
+
+Vect_line_segment();
+
+Vect_new_line_struct();
+
+Vect_point_on_line();
+
+Vect_points_distance();
+
+Vect_reset_line();
+
+
+\section list list
+
+Vect_destroy_list();
+
+Vect_list_append();
+
+Vect_list_append_list();
+
+Vect_list_delete();
+
+Vect_list_delete_list();
+
+Vect_reset_list();
+
+Vect_val_in_list();
+
+
+\section map map
+
+Vect_copy();
+
+Vect_copy_map_lines();
+
+Vect_copy_table();
+
+Vect_copy_table_by_cats();
+
+Vect_copy_tables();
+
+Vect_delete();
+
+Vect_rename();
+
+
+\section net net
+
+Vect_net_build_graph();
+
+Vect_net_nearest_nodes();
+
+Vect_net_shortest_path();
+
+Vect_net_shortest_path_coor();
+
+
+\section open open
+
+Vect_coor_info();
+
+Vect_maptype_info();
+
+Vect_open_new();
+
+Vect__open_old();
+
+Vect_open_old();
+
+Vect_open_old_head();
+
+Vect_open_spatial_index();
+
+Vect_open_topo();
+
+Vect_open_update();
+
+Vect_open_update_head();
+
+Vect_set_open_level();
+
+
+
+\section overlay overlay
+
+Vect_overlay();
+
+Vect_overlay_and();
+
+Vect_overlay_str_to_operator();
+
+
+\section poly poly
+
+Vect_find_poly_centroid();
+
+Vect_get_point_in_area();
+
+Vect_get_point_in_poly();
+
+Vect_get_point_in_poly_isl();
+
+
+\section read read
+
+Vect_area_alive();
+
+Vect_isle_alive();
+
+Vect_line_alive();
+
+Vect_node_alive();
+
+Vect_read_line();
+
+Vect_read_next_line();
+
+
+\section remove_areas remove_areas
+
+Vect_remove_small_areas();
+
+
+\section remove_duplicates remove_duplicates
+
+Vect_remove_duplicates();
+
+
+\section rewind rewind
+
+Vect_rewind();
+
+
+\section rewind_nat rewind_nat
+
+
+\section rewind_ogr rewind_ogr
+
+
+\section select select
+
+Vect_select_areas_by_box();
+
+Vect_select_areas_by_polygon();
+
+Vect_select_isles_by_box();
+
+Vect_select_lines_by_box();
+
+Vect_select_lines_by_polygon();
+
+Vect_select_nodes_by_box();
+
+
+\section sindex sindex
+
+Vect_spatial_index_add_item();
+
+Vect_spatial_index_del_item();
+
+Vect_spatial_index_destroy();
+
+Vect_spatial_index_init();
+
+Vect_spatial_index_select();
+
+
+\section snap snap
+
+Vect_snap_lines();
+
+
+\section tin tin
+
+Vect_tin_get_z();
+
+
+\section type type
+
+Vect_option_to_types();
+
+
+\section write write
+
+Vect_rewrite_line();
+
+Vect_write_line();
 
 \section contacts Contacts
 
