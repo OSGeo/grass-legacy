@@ -1,6 +1,7 @@
 #define AS_CELLHD 1
 #define AS_WINDOW 0
 #define AS_DEF_WINDOW -1
+
 /* modified 26nov to use word region instead of window
  * as far as the USER is concerned.
  */
@@ -31,11 +32,14 @@
 #include "gis.h"
 #include "edit.h"
 
-#if 0
-/* never used...? */
-static int max(int,int);
-#endif
+
+static void format_value(int (*func)(double, char *, int), 
+                         double x, char *buf, int projection);
+static void format_northing(double north, char *buf, int projection);
+static void format_easting(double east, char *buf, int projection);
+static void format_resolution(double res, char *buf, int projection);
 static int hitreturn(void);
+
 
 static char *cellhd_screen[] = {
 "                           IDENTIFY CELL HEADER",
@@ -102,6 +106,7 @@ static char *def_window_screen[] = {
 "                               North-South:",
 NULL};
 
+
 static void format_value(int (*func)(double, char *, int), 
                          double x, char *buf, int projection)
 {
@@ -111,24 +116,29 @@ static void format_value(int (*func)(double, char *, int),
 	int i = (int) (x * k + (x < 0 ? -0.5 : 0.5));
 	x = (double) i / k;
     }
+
     func (x, buf, projection);
     buf[10] = '\0';
 }
+
 
 static void format_northing(double north, char *buf, int projection)
 {
 	format_value(G_format_northing, north, buf, projection);
 }
 
+
 static void format_easting(double east, char *buf, int projection)
 {
 	format_value(G_format_easting, east, buf, projection);
 }
 
+
 static void format_resolution(double res, char *buf, int projection)
 {
 	format_value(G_format_resolution, res, buf, projection);
 }
+
 
 int E_edit_cellhd (struct Cell_head *cellhd , int type)
 {
@@ -158,15 +168,14 @@ int E_edit_cellhd (struct Cell_head *cellhd , int type)
 
     if (type == AS_CELLHD && (cellhd->rows <= 0 || cellhd->cols <= 0))
     {
-	fprintf (stderr, "E_edit_cellhd() - programmer error\n");
-	fprintf (stderr, "  ** rows and cols must be positive **\n");
+	G_message("E_edit_cellhd() - programmer error");
+	G_message("  ** rows and cols must be positive **");
 	return -1;
     }
     if (type != AS_DEF_WINDOW)
     {
 	if (G_get_default_window(&def_wind) != 1)
 	    return -1 ;
-
 
 	if(cellhd->proj < 0)
 	{
@@ -189,6 +198,7 @@ int E_edit_cellhd (struct Cell_head *cellhd , int type)
 	    cellhd->south       = def_wind.south     ;
 	    cellhd->west        = def_wind.west      ; 
 	    cellhd->east        = def_wind.east      ;
+
 	    if (type != AS_CELLHD)
 	    {
 	    cellhd->ew_res      = def_wind.ew_res    ;
@@ -200,19 +210,32 @@ int E_edit_cellhd (struct Cell_head *cellhd , int type)
 
 	if (cellhd->proj != def_wind.proj)
 	{
-	    fprintf (stderr, "%s projection %d differs from default projection %d\n",
-		type == AS_CELLHD?"header":"region", cellhd->proj, def_wind.proj);
+            if (type == AS_CELLHD)
+	        G_message("header projection %d differs from default projection %d",
+		            cellhd->proj, def_wind.proj);
+            else
+	        G_message("region projection %d differs from default projection %d",
+		            cellhd->proj, def_wind.proj);
+
 	    if (!G_yes("do you want to make them match? ", 1))
 		return -1;
+
 	    cellhd->proj = def_wind.proj;
 	    cellhd->zone = def_wind.zone;
 	}
+
 	if (cellhd->zone != def_wind.zone)
 	{
-	    fprintf (stderr, "%s zone %d differs from default zone %d\n",
-		type == AS_CELLHD?"header":"region", cellhd->zone, def_wind.zone);
+            if (type == AS_CELLHD)
+	        G_message("header zone %d differs from default zone %d",
+		            cellhd->zone, def_wind.zone);
+            else
+	        G_message("region zone %d differs from default zone %d",
+		            cellhd->zone, def_wind.zone);
+
 	    if (!G_yes("do you want to make them match? ", 1))
 		    return -1;
+
 	    cellhd->zone = def_wind.zone;
 	}
 
@@ -243,12 +266,11 @@ int E_edit_cellhd (struct Cell_head *cellhd , int type)
     format_resolution (cellhd->ew_res, ll_ewres, cellhd->proj);
     format_resolution (cellhd->ns_res, ll_nsres, cellhd->proj);
 
-
 while(1)
 {
     ok = 1;
 
-/* List window options on the screen for the user to answer */
+    /* List window options on the screen for the user to answer */
     switch(type)
     {
     case AS_CELLHD: screen = cellhd_screen; break;
@@ -261,11 +283,12 @@ while(1)
     while (*screen)
 	V_line (line++, *screen++);
 
-/* V_ques ( variable, type, row, col, length) ; */
+    /* V_ques ( variable, type, row, col, length) ; */
     V_ques (ll_north, 's',  6, 36, 10);
     V_ques (ll_south, 's', 10, 36, 10) ;
     V_ques (ll_west,  's',  9, 12, 10) ;
     V_ques (ll_east,  's',  9, 52, 10) ;
+
     if (type != AS_CELLHD)
     {
 	V_ques (ll_ewres, 's', 18, 48, 10) ;
@@ -278,6 +301,7 @@ while(1)
 	V_const (ll_def_south, 's', 13, 36, 10) ;
 	V_const (ll_def_west,  's',  9,  1, 10) ;
 	V_const (ll_def_east,  's',  9, 65, 10) ;
+
 	if (type != AS_CELLHD)
 	{
 	    V_const (ll_def_ewres, 's', 18, 21, 10) ;
@@ -285,9 +309,8 @@ while(1)
 	}
     }
 
-    V_const (projection,   's', 15, 23, strlen(projection));
+    V_const (projection,   's', 15, 23, (int)strlen(projection));
     V_const (&cellhd->zone,'i', 15,60,3);
-
 
     V_intrpt_ok();
     if(!V_call())
@@ -297,6 +320,7 @@ while(1)
     G_squeeze (ll_south);
     G_squeeze (ll_east);
     G_squeeze (ll_west);
+
     if (type != AS_CELLHD)
     {
 	G_squeeze (ll_ewres);
@@ -305,45 +329,50 @@ while(1)
 
     if (!G_scan_northing (ll_north, &cellhd->north, cellhd->proj))
     {
-        fprintf (stderr, "Illegal value for north: %s\n",ll_north);
+        G_warning("Illegal value for north: %s", ll_north);
 	ok = 0;
     }
+
     if (!G_scan_northing (ll_south, &cellhd->south, cellhd->proj))
     {
-        fprintf (stderr, "Illegal value for south: %s\n", ll_south);
+        G_warning("Illegal value for south: %s", ll_south);
 	ok = 0;
     }
+
     if (!G_scan_easting (ll_east, &cellhd->east, cellhd->proj))
     {
-        fprintf (stderr, "Illegal value for east: %s\n", ll_east);
+        G_warning("Illegal value for east: %s", ll_east);
 	ok = 0;
     }
+
     if (!G_scan_easting (ll_west, &cellhd->west, cellhd->proj))
     {
-        fprintf (stderr, "Illegal value for west: %s\n", ll_west);
+        G_warning("Illegal value for west: %s", ll_west);
 	ok = 0;
     }
+
     if (type != AS_CELLHD)
     {
 	if (!G_scan_resolution (ll_ewres, &cellhd->ew_res, cellhd->proj))
 	{
-	    fprintf (stderr, "Illegal east-west resolution: %s\n", ll_ewres);
+	    G_warning("Illegal east-west resolution: %s", ll_ewres);
 	    ok = 0;
 	}
+
 	if (!G_scan_resolution (ll_nsres, &cellhd->ns_res, cellhd->proj))
 	{
-	    fprintf (stderr, "Illegal north-south resolution: %s\n", ll_nsres);
+	    G_warning("Illegal north-south resolution: %s", ll_nsres);
 	    ok = 0;
 	}
     }
+
     if (!ok)
     {
 	hitreturn();
 	continue;
     }
 
-/* Adjust and complete the cell header */
-
+    /* Adjust and complete the cell header */
     north = cellhd->north;
     south = cellhd->south;
     east  = cellhd->east ;
@@ -353,10 +382,11 @@ while(1)
 
     if ((err = G_adjust_Cell_head(cellhd,type==AS_CELLHD,type==AS_CELLHD)))
     {
-	fprintf (stderr, "%s\n", err);
+	G_message("%s", err);
 	hitreturn();
 	continue;
     }
+
     if (type==AS_CELLHD)
     {
 	nsres = cellhd->ns_res;
@@ -365,12 +395,13 @@ while(1)
 
 SHOW:
     fprintf (stderr, "\n\n") ;
-    fprintf (stderr, "  projection:   %s\n", projection);
-    fprintf (stderr, "  zone:         %d\n", cellhd->zone);
+    G_message("  projection:   %s", projection);
+    G_message("  zone:         %d", cellhd->zone);
 
     G_format_northing (cellhd->north, buf,  cellhd->proj);
     G_format_northing (north,         buf2, cellhd->proj);
     fprintf (stderr, "  north:       %s", buf);
+
     if (strcmp (buf, buf2) != 0)
     {
 	ok = 0;
@@ -406,9 +437,8 @@ SHOW:
 	ok = 0;
         fprintf (stderr, "  (Changed to match resolution)");
     }
-    fprintf (stderr, "\n");
+    fprintf (stderr, "\n\n");
 
-    fprintf (stderr, "\n");
     G_format_resolution (cellhd->ew_res, buf,  cellhd->proj);
     G_format_resolution (ewres,          buf2, cellhd->proj);
     fprintf (stderr, "  e-w res:     %s", buf);
@@ -427,49 +457,59 @@ SHOW:
 	ok = 0;
         fprintf (stderr, "  (Changed to conform to grid)");
     }
-    fprintf (stderr, "\n");
+    fprintf (stderr, "\n\n");
 
-    fprintf (stderr, "\n");
-    fprintf (stderr, "  total rows:  %15d\n",    cellhd->rows);
-    fprintf (stderr, "  total cols:  %15d\n",    cellhd->cols);
+    G_message("  total rows:  %15d",    cellhd->rows);
+    G_message("  total cols:  %15d",    cellhd->cols);
+
     sprintf(buf,"%lf",    (double) cellhd->rows * cellhd->cols);
     *(p = strchr(buf, '.')) = 0;
     G_insert_commas(buf);
-    fprintf (stderr, "  total cells: %15s\n",    buf);
+    G_message("  total cells: %15s",    buf);
     fprintf (stderr, "\n");
 
     if (type != AS_DEF_WINDOW)
     {
 	if (cellhd->north > def_wind.north)
 	{
-	    fprintf (stderr, "warning - north falls outside the default region\n");
+	    G_warning("north falls outside the default region");
 	    ok = 0;
 	}
+
 	if (cellhd->south < def_wind.south)
 	{
-	    fprintf (stderr, "warning - south falls outside the default region\n");
+	    G_warning("south falls outside the default region");
 	    ok = 0;
 	}
+
 	if (cellhd->proj != PROJECTION_LL)
 	{
 	    if (cellhd->east > def_wind.east)
 	    {
-		fprintf (stderr, "warning - east falls outside the default region\n");
+		G_warning("east falls outside the default region");
 		ok = 0;
 	    }
+
 	    if (cellhd->west < def_wind.west)
 	    {
-		fprintf (stderr, "warning - west falls outside the default region\n");
+		G_warning("west falls outside the default region");
 		ok = 0;
 	    }
 	}
     }
+
 ASK:
     fflush(stdin);
-    fprintf (stderr, "\nDo you accept this %s? (y/n) [%s] > ",
-	type==AS_CELLHD?"header":"region", ok?"y":"n") ;
+    if (type == AS_CELLHD)
+        fprintf(stderr, "\nDo you accept this header? (y/n) [%s] > ",
+	            ok ? "y" : "n");
+    else
+        fprintf(stderr, "\nDo you accept this region? (y/n) [%s] > ",
+	            ok ? "y" : "n");
+
     if(!G_gets(buf))
 	goto SHOW;
+
     G_strip (buf);
     switch (*buf)
     {
@@ -486,28 +526,24 @@ ASK:
     default:
 	    goto ASK;
     }
+
     if (ok)
 	return 0;
 }
 }
 
-static int hitreturn()
+
+static int hitreturn(void)
 {
     char buf[100];
 
     fprintf (stderr, "hit RETURN -->");
-    if (!fgets(buf,100,stdin)) exit(0);
+    if (!fgets(buf, 100, stdin))
+        exit(EXIT_SUCCESS);
+
     G_strip (buf);
-    if (strcmp (buf, "exit") == 0) exit(0);
+    if (!strncmp(buf, "exit", sizeof(buf)))
+        exit(EXIT_SUCCESS);
 
     return 0;
 }
-
-#if 0
-/* not used ? */
-static int max(a,b)
-{
-    return a>b?a:b;
-}
-#endif
-
