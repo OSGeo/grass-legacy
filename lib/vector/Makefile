@@ -22,6 +22,9 @@ generatelocaldox:
 	(cd Vlib ; sh generate_dox.sh)
 
 htmldocs: checkdoxygen generatelocaldox
+# hack needed to get main page at beginning:
+	@mv $(DOXNAME)lib.dox $(DOXNAME)lib.dox.org
+	@cat $(DOXNAME)lib.dox.org | sed 's+/\*! \\page +/\*! \\mainpage +g' > $(DOXNAME)lib.dox
 	doxygen ./Doxyfile_arch_html
 	@echo "HTML reference in directory ./html/index.html"
 
@@ -29,6 +32,9 @@ htmldocs: checkdoxygen generatelocaldox
 # currently only Vect_*() functions in document:
 latexdocs: checkdoxygen generatelocaldox
 	test ! -d latex || (cd ./latex && $(MAKE) clean)
+# hack needed to get main page at beginning:
+	@mv $(DOXNAME)lib.dox $(DOXNAME)lib.dox.org
+	@cat $(DOXNAME)lib.dox.org | sed 's+/\*! \\page +/\*! \\mainpage +g' > $(DOXNAME)lib.dox
 	doxygen ./Doxyfile_arch_latex
 #this hack is needed to make Acroread's search engine happy:
 	(cd ./latex ; echo "\usepackage[T1]{fontenc}" >> doxygen.sty)
@@ -37,6 +43,9 @@ latexdocs: checkdoxygen generatelocaldox
 
 pdfdocs: checkdoxygen generatelocaldox
 	test ! -d latex || (cd ./latex && $(MAKE) clean)
+# hack needed to get main page at beginning:
+	@mv $(DOXNAME)lib.dox $(DOXNAME)lib.dox.org
+	@cat $(DOXNAME)lib.dox.org | sed 's+/\*! \\page +/\*! \\mainpage +g' > $(DOXNAME)lib.dox
 	doxygen ./Doxyfile_arch_latex
 	(cd ./latex ; echo "\usepackage[T1]{fontenc}" >> doxygen.sty)
 	(cd ./latex && $(MAKE) pdf && mv refman.pdf grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}${DOXNAME}_`date '+%Y_%m_%d'`_refman.pdf)

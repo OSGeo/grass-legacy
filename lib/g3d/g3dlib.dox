@@ -1,5 +1,4 @@
-/*!
-\page g3dlib GRASS Grid3D raster volume Library
+/*! \mainpage g3dlib GRASS Grid3D raster volume Library
 <!-- doxygenized from "GRASS 5 Programmer's Manual" 
      by M. Neteler 5/2004, 8/2005
   -->
