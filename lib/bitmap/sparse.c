@@ -312,16 +312,16 @@ BM_file_write_sparse (FILE *fp, struct BM *map)
     int cnt;
 
     c = BM_MAGIC;
-    fwrite (&c, 1, 1, fp);
+    fwrite (&c, sizeof(char), sizeof(char), fp);
 
-    fwrite (BM_TEXT, BM_TEXT_LEN, 1, fp);
+    fwrite (BM_TEXT, BM_TEXT_LEN, sizeof(char), fp);
 
     c = BM_SPARSE;
-    fwrite (&c, 1, 1, fp);
+    fwrite (&c, sizeof(char), sizeof(char), fp);
 
-    fwrite (&(map->rows), sizeof (map->rows), 1, fp);
+    fwrite (&(map->rows), sizeof (map->rows), sizeof(char), fp);
 
-    fwrite (&(map->cols), sizeof (map->cols), 1, fp);
+    fwrite (&(map->cols), sizeof (map->cols), sizeof(char), fp);
 
     for (y = 0 ; y < map->rows ; y++)
     {
@@ -335,7 +335,7 @@ BM_file_write_sparse (FILE *fp, struct BM *map)
 	}
 
 	i = cnt;
-	fwrite (&i, sizeof (i), 1, fp);
+	fwrite (&i, sizeof (i), sizeof(char), fp);
 
 
 	/* then write them out */
@@ -343,10 +343,10 @@ BM_file_write_sparse (FILE *fp, struct BM *map)
 	while (p != NULL)
 	{
 	    i = p->count;
-	    fwrite (&i, sizeof (i), 1, fp);
+	    fwrite (&i, sizeof (i), sizeof(char), fp);
 
 	    i = p->val;
-	    fwrite (&i, sizeof (i), 1, fp);
+	    fwrite (&i, sizeof (i), sizeof(char), fp);
 
 	    p = p->next;
 	}

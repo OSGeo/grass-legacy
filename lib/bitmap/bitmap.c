@@ -63,7 +63,7 @@ struct BM *BM_create (int x, int y)
 
     map->bytes = (x+7)/8;
 
-    if (NULL == (map->data = (unsigned char *) calloc ( map->bytes * y, 1 )))
+    if (NULL == (map->data = (unsigned char *)calloc (map->bytes * y, sizeof(char))))
 	return (NULL);
 
     map->rows = y;
@@ -211,19 +211,19 @@ int BM_file_write (FILE *fp, struct BM *map)
 	return BM_file_write_sparse (fp, map);
 
     c = BM_MAGIC;
-    fwrite (&c, 1, 1, fp);
+    fwrite (&c, sizeof(char), sizeof(char), fp);
 
-    fwrite (BM_TEXT, BM_TEXT_LEN, 1, fp);
+    fwrite (BM_TEXT, BM_TEXT_LEN, sizeof(char), fp);
 
     c = BM_FLAT;
-    fwrite (&c, 1, 1, fp);
+    fwrite (&c, sizeof(char), sizeof(char), fp);
 
-    fwrite (&(map->rows), sizeof (map->rows), 1, fp);
+    fwrite (&(map->rows), sizeof (map->rows), sizeof(char), fp);
 
-    fwrite (&(map->cols), sizeof (map->cols), 1, fp);
+    fwrite (&(map->cols), sizeof (map->cols), sizeof(char), fp);
 
     for (i = 0 ; i < map->rows ; i++)
-	if(map->bytes != fwrite (&(map->data[i*map->bytes]), 1, map->bytes, fp))
+	if(map->bytes != fwrite (&(map->data[i*map->bytes]), sizeof(char), map->bytes, fp))
 	    return -1;
     fflush (fp);
 
@@ -248,19 +248,19 @@ struct BM *BM_file_read (FILE *fp)
     if (NULL == (map =  (struct BM *) malloc (sizeof (struct BM))))
 	return (NULL);
 
-    fread (&c, 1, 1, fp);
+    fread (&c, sizeof(char), sizeof(char), fp);
     if (c != BM_MAGIC)
 	return NULL;
 
-    fread (buf, BM_TEXT_LEN, 1, fp);
+    fread (buf, BM_TEXT_LEN, sizeof(char), fp);
 
-    fread (&c, 1, 1, fp);
+    fread (&c, sizeof(char), sizeof(char), fp);
     map->sparse = c;
 
 
-    fread (&(map->rows), sizeof (map->rows), 1, fp);
+    fread (&(map->rows), sizeof (map->rows), sizeof(char), fp);
 
-    fread (&(map->cols), sizeof (map->cols), 1, fp);
+    fread (&(map->cols), sizeof (map->cols), sizeof(char), fp);
 
     map->bytes = (map->cols+7)/8;
 
@@ -272,7 +272,7 @@ struct BM *BM_file_read (FILE *fp)
 
 
     for (i = 0 ; i < map->rows ; i++)
-	if(map->bytes != fread (&(map->data[i*map->bytes]), 1, map->bytes, fp))
+	if(map->bytes != fread (&(map->data[i*map->bytes]), sizeof(char), map->bytes, fp))
 	    return NULL;
 
 
@@ -291,7 +291,7 @@ readsparse:
     for (y = 0 ; y < map->rows ; y++)
     {
 	/* first get number of links */
-	fread (&i, sizeof (i), 1, fp);
+	fread (&i, sizeof (i), sizeof(char), fp);
 	cnt = i;
 
 
@@ -311,10 +311,10 @@ readsparse:
 		p = p2;
 	    }
 
-	    fread (&n, sizeof (n), 1, fp);
+	    fread (&n, sizeof (n), sizeof(char), fp);
 	    p->count = n;
 
-	    fread (&n, sizeof (n), 1, fp);
+	    fread (&n, sizeof (n), sizeof(char), fp);
 	    p->val = n;
 	    p->next = NULL;
 	}
