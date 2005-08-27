@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include "bitmap.h"
 
+
+static int dump_map (struct BM *map);
+
+
 int 
 main (int argc, char *argv[])
 {
@@ -78,9 +82,12 @@ main (int argc, char *argv[])
 nowrite:
 
     BM_destroy (map);
+
+    return 0;
 }
 
-int 
+
+static int 
 dump_map (struct BM *map)
 {
     int x, y;
