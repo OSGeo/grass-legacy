@@ -45,7 +45,6 @@ from GRASS 5 Programmer's manual or are simply undocumented</I>
 <li>datetime:	DateTime library - \ref datetimelib
 <li>db:		database management interface database drivers (DBMI) - \ref DataBase_Management_Interface
 <li>display:	library for CELL driver - \ref displaylib
-<li>dspf:	G3D display files library - \ref dspflib
 <li>edit:	edit library - \ref edit
 <li>external:	external libraries from other projects (such as shapelib) - \ref external
 <li>fonts:	Hershey library - \ref fonts
@@ -62,7 +61,7 @@ from GRASS 5 Programmer's manual or are simply undocumented</I>
 <li>gtcltk:	Tcl/Tk stuff - \ref gtcltk
 <li>imagery:	imagery library - \ref imagerylib
 <li>image:	extra imagery library (mainly unused) - \ref image3lib
-<li>init:	GRASS initialization code + scripts - \ref init
+<li>init:	GRASS initialization code + scripts - \ref grassinit
 <li>linkm:	linked list memory manager - \ref linkmlib
 <li>ogsf:	openGL (R) ported gsurf library (required for NVIZ) - \ref ogsflib
 <li>proj:	wrapper to PROJ4 projection library - \ref projlib
