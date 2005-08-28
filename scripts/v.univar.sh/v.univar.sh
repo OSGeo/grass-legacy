@@ -126,23 +126,27 @@ fi
 echo "Calculating statistics..."
 cat $TMP | awk 'BEGIN {sum = 0.0 ; sum2 = 0.0} 
 NR == 1{min = $1 ; max = $1}
-       {sum += $1 ; sum2 += $1 * $1 ; N++}
-       {
+(NF>0) {
+	sum += $1 ; sum2 += $1 * $1 ; N++;
         if ($1 > max) {max = $1}
         if ($1 < min) {min = $1}
        }
 END{
-print ""
-print "Number of values:",N
-print "Minimum:",min
-print "Maximum:",max
-print "Range:",max-min
-print "-----"
-print "Mean:",sum/N
-print "Variance:",(sum2 - sum*sum/N)/N
-print "Standard deviation:",sqrt((sum2 - sum*sum/N)/N)
-print "Coefficient of variation:",(sqrt((sum2 - sum*sum/N)/N))/(sqrt(sum*sum)/N)
-print "-----"
+    if(N>0){
+	print ""
+	print "Number of values:",N
+	print "Minimum:",min
+	print "Maximum:",max
+	print "Range:",max-min
+	print "-----"
+	print "Mean:",sum/N
+	print "Variance:",(sum2 - sum*sum/N)/N
+	print "Standard deviation:",sqrt((sum2 - sum*sum/N)/N)
+	print "Coefficient of variation:",(sqrt((sum2 - sum*sum/N)/N))/(sqrt(sum*sum)/N)
+	print "-----"
+    }else{
+	print "ERROR: No non-null values found"
+    }
 }'
 
 if [ $GIS_FLAG_e -eq 1 ] ; then
