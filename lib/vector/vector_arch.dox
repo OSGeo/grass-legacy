@@ -1,56 +1,358 @@
-/*! \page Vector_Library GRASS 6 Vector Architecture
+/*! \mainpage Vector_Library GRASS 6 Vector Architecture
 
 by GRASS Development Team
 
 http://grass.itc.it
 
-\section intro Introduction
-
-This description covers the new GRASS 6 vector library
-architecture.  This new architecture overcomes the vector limitations
-of GRASS 4.x-5.4.x by extending the vector support with attributes
-stored in external relational databases and by new 3D
-capabilities. Besides internal file based storage the geometry may
-alternatively be stored in PostGIS database. This enables users to
-maintain large data sets with simultaneous write access. External GIS
-formats such as SHAPE-files may be used directly without necessity of
-format conversion.
-
 \section background Background
 
-generally, the vector data model is used to describe geographic
+Generally, the vector data model is used to describe geographic
 phenomena which may be represented by geometric entities (primitives)
 like points, lines, and areas. The GRASS vector data model includes
-the description of topology, where besides the coordinates -
+the description of topology, where besides the coordinates which are
 describing the location of the points, lines, boundaries and centroids
-- also their spatial relations are stored. In general, topological GIS
+also their spatial relations are stored. In general, topological GIS
 require a data structure where common boundary between two adjacent
 areas is stored as a single line, simplifying the map maintenance.
+
+
+\section intro Introduction
+
+The GRASS 6 vector format is very similar to old GRASS 4.x (5.0/5.3)
+vector format.
+
+This description covers the new GRASS 6 vector library architecture.
+This new architecture overcomes the vector limitations of GRASS
+4.x-5.4.x by extending the vector support with attributes stored in
+external relational databases and by new 3D capabilities. Besides
+internal file based storage the geometry may alternatively be stored
+in PostGIS database. This enables users to maintain large data sets
+with simultaneous write access. External GIS formats such as
+SHAPE-files may be used directly without necessity of format
+conversion.
+
+Current implemented are:   
+
+<ul>
+<li> multi-layer: features in one vector may represent more layers and 
+    may be linked to more external tables (\ref vlib_categories_layers);
+<li> 2D and 3D vector geometry with topology (see \ref  vlib_topology_management);
+<li> multi-format: external data formats supported (SHAPE- file, OGR sources etc.);
+<li> portability: platform independent internal format, readable on 32bit,
+      64bit etc. computer architectures;
+<li> integrated Directed Graph Library (\ref dglib): support for vector network analysis;
+<li> spatial index: based on R-tree method for fast vector geometry access (see \ref vlib_spidx).
+<li> multi-attribute: attributes saved in external Relational Database Management 
+      System (RDBMS) connected through DBMI library and drivers (\ref vlib_attributes);
+</ul>
+
+GRASS vector maps are stored in an arc-node representation, consisting
+of curves called arcs. An arc is stored as a series of x,y,z
+coordinate pairs. The two endpoints of an arc are called nodes. Two
+consecutive x,y,z pairs define an arc segment. The user specifies the
+type on input to GRASS, GRASS doesn't decide. GRASS allows for the
+line definition which allows for the multiple type to co-exist in the
+same map. Centroid are assigned to area it is within/inside
+(geometrically). An area is identified by an x,y,z centroid point
+geometrically inside with a category number. This identifies the
+area. Such centroids are stored in the same binary 'coor' file with
+other primitives. Each element may have none, one or more categories
+(cats). More cats are distinguished by field number (field). Single
+and multi-category support on modules level is
+implemented. Z-coordinate is optional and both 2d and 3d files may be
+written.
 
 \section libraries Libraries
 
 Besides internal library functions there are two main libraries:
 
+<ul>
+<li> Vlib (Vector library), see \ref vlib
+<li> DGLib (Directed Graph Library), see \ref dglib
+</ul>
 
-\subsection vlib Vlib (Vector library)
+For historical reasons, there are internally two libraries for vector:
 
-For details please read Blazek et al. 2002 (see below) as well as the
-references in this document.
+<ul>
+<li> diglib, dig_*(), DIGLIB, libdig.a, digit library, grass3.x, 4.x<BR>
+and
+<li> Vlib, Vect_*(), VECTLIB_REAL, libvect.a, vector library, grass4.x
+</ul>
 
-\subsubsection vlibspidx Vector library categories and layers
+The Vlib Vector library was introduced in grass4.0 to hide vector
+files' formats and structures.  In GRASS 6 everything is accessed via
+Vect_*() functions, for example:
+
+Old 4.x code:
+\verbatim
+    xx = Map.Att[Map.Area[area_num].att].x;
+\endverbatim
+New 6.x functions:
+\verbatim
+    Vect_get_area_centroid()
+    Vect_get_centroid_coor()
+\endverbatim
+
+
+\subsection vlib Introduction to Vlib (Vector library)
+
+<i>Note: For details please read Blazek et al. 2002 (see below) as well as the
+references in this document.</i>
+
+\subsubsection Directory_structure Directory structure
+
+Directory structure and file names are changed with respect to
+previous GRASS versions.  All vector files for one vector map are
+stored in one directory:<BR>
+
+ <B>$MAPSET/vector/vector_name/</B>
+<p>
+ 
+This directory contains these files:
+<ul>
+<li><b>coor</b> - binary file, coordinates [former dig/ file]
+<li><b>topo</b> - binary file, topology [former dig_plus/ file]
+<li><b>sidx</b> - binary file, spatial index 
+<li><b>head</b> - text file, header information [former part of dig/ file]
+<li><b>dbln</b> - text file, link(s) to attribute table(s)
+<li><b>hist</b> - text file, vector map change history
+</ul>
+
+\subsubsection coor_file_format_specification coor file format specification
+
+<ol>
+<li> In the coor file the following is stored: 'line' (element) type,
+    number of attributes and layer number for each category.
+<li> Coordinates in binary file are stored as double (8 bytes).
+</ol>
+
+<b>Head</b>
+
+<TABLE border=2>
+<TR><TD>Name</TD><TD>Type</TD><TD>Number</TD><TD>Description</TD></TR>
+
+<TR><TD>Version_Major </TD><TD>C</TD><TD>1</TD><TD>&nbsp;</TD></TR>
+<TR><TD>Version_Minor </TD><TD>C</TD><TD>1</TD><TD>&nbsp;</TD></TR>
+<TR><TD>Earliest_Major</TD><TD>C</TD><TD>1</TD><TD>&nbsp;</TD></TR>
+<TR><TD>Earliest_Minor</TD><TD>C</TD><TD>1</TD><TD>&nbsp;</TD></TR>
+
+<TR><TD>byte_order</TD><TD>C</TD><TD>1</TD><TD>little or big endian flag;
+                  files are written in machine native order but files
+		  in both little and big endian order may be read</TD></TR>
+<TR><TD>with_z</TD><TD>C</TD><TD>1</TD><TD>2D or 3D flag</TD></TR>
+<TR><TD>size</TD><TD>L</TD><TD>1</TD><TD>coor file size</TD></TR>
+<TR><TD>reserved</TD><TD>C</TD><TD>10</TD><TD>not used</TD></TR>
+
+</TABLE>
 
 <P>
-<i>Note: "layer" was called "field" in earlier version.</i>
+<b>Body</b>
+
+The body consists of line records:
+<BR>
+
+<TABLE border=2>
+<TR><TD>Name</TD><TD>Type</TD><TD>Number</TD><TD>Description</TD></TR>
+<TR><TD>record header</TD><TD>I</TD><TD>1</TD><TD>
+<UL>
+  <LI><B>0. bit</B> : 1 - alive, 0 - dead line
+  <LI><B>1. bit</B> : 1 - categories, 0 - no categories
+  <LI><B>2.-3. bit</B> : type - one of: GV_POINT, GV_LINE, 
+                              GV_BOUNDARY, GV_CENTROID
+  <LI><B>4.-7. bit</B> : reserved, not used 
+<UL>
+</TD></TR>
+<TR><TD>ncats</TD><TD>C</TD><TD>1</TD><TD>number of categories 
+    (written only if categories exist) </TD></TR>
+<TR><TD>field</TD><TD>S</TD><TD>ncats</TD><TD>Category identifier, 
+    distinguishes between more categories append to one line 
+    (written only if categories exist)</TD></TR>
+<TR><TD>cat</TD><TD>I</TD><TD>ncats</TD><TD>category value 
+    (written only if categories exist)</TD></TR>
+<TR><TD>ncoor</TD><TD>I</TD><TD>1</TD><TD>written for GV_LINES and GV_BOUNDARIES 
+    only</TD></TR>
+<TR><TD>x</TD><TD>D</TD><TD>ncoor</TD><TD>&nbsp;</TD></TR>
+<TR><TD>y</TD><TD>D</TD><TD>ncoor</TD><TD>&nbsp;</TD></TR>
+<TR><TD>z</TD><TD>D</TD><TD>ncoor</TD><TD>present if with_z in head 
+    is set to 1</TD></TR>
+</TABLE>
+
+
 <P>
+<B>Types used in coor file</B>
+<TABLE border=2>
+<TR><TD>Type</TD><TD>Name</TD><TD>Size in Bytes</TD></TR>
+<TR><TD>D</TD><TD>Double</TD><TD>8</TD></TR>
+<TR><TD>L</TD><TD>Long  </TD><TD>4</TD></TR>
+<TR><TD>I</TD><TD>Int   </TD><TD>4</TD></TR>
+<TR><TD>S</TD><TD>Short </TD><TD>4</TD></TR>
+<TR><TD>C</TD><TD>Char  </TD><TD>1</TD></TR>
+</TABLE>
 
-In GRASS a "category" is a feature ID used to link geometry
-with attributes stored in one or many (external) database table(s).
-Each vector feature inside a vector map has zero, one or more
-&lt;layer,category&gt; tuple(s). A user can (but not must) create attribute
-tables which are referenced by the layer, and rows which are essentially
-referenced by the &lt;layer,category&gt; pair.
 
-\subsubsection vlibspidx Vector library spatial index management
+\subsubsection head_file_format head file format
+
+The file is unordered list of key/value entries. The <I>key</I>
+is a string separated from <I>value</I> by a colon and optional
+whitespace. Key words are:<BR>
+
+\verbatim
+ORGANIZATION
+DIGIT DATE
+DIGIT NAME
+MAP NAME
+MAP DATE
+MAP SCALE
+OTHER INFO
+ZONE
+MAP THRESH
+\endverbatim
+
+\subsection vlib_topology_management Vector library Topology management
+
+Topology general characteristics:
+<ol>
+<li> geometry and attributes are stored separately
+   (don't read both if it is not necessary (usually it is not))</li>
+<li> the format is topological (areas build from boundaries)
+</li>
+</ol>
+
+<P>
+Topology is written for native format while pseudo-topology is written
+for OGR sources, SHAPE-link.
+
+
+\subsubsection topo_file_format topo file format
+
+[detailed docs missing]
+
+\verbatim
+/* Vector types used in memory on run time - may change */
+#define GV_POINT      0x01
+#define GV_LINE       0x02
+#define GV_BOUNDARY   0x04
+#define GV_CENTROID   0x08
+#define GV_FACE       0x10
+#define GV_KERNEL     0x20
+#define GV_AREA       0x40
+#define GV_VOLUME     0x80
+\endverbatim
+
+\verbatim
+#define GV_POINTS (GV_POINT | GV_CENTROID )
+#define GV_LINES (GV_LINE | GV_BOUNDARY )
+\endverbatim
+
+Face and kernel are 3D equivalents of boundary and centroid, but there 
+is no support (yet) for 3D topology (volumes). The only current use of 
+face is possibility to display vertical planes in NVIZ.
+
+\verbatim
+/* Topology level details */
+#define GV_BUILD_NONE  0
+#define GV_BUILD_BASE  1
+#define GV_BUILD_AREAS  2
+#define GV_BUILD_ATTACH_ISLES 3  /* Attach islands to areas */
+#define GV_BUILD_CENTROIDS 4 /* Assign centroids to areas */
+#define GV_BUILD_ALL GV_BUILD_CENTROIDS
+\endverbatim
+
+GV_BOUNDARY contains geometry and it is used to build areas.
+GV_LINE cannot form an area.
+
+\verbatim
+struct line_cats
+{
+      int *field;	/* pointer to array of fields */
+      int *cat;		/* pointer to array of categories */
+      int n_cats;	/* number of vector categories attached to element */
+      int alloc_cats;	/* allocated space */
+};
+\endverbatim
+
+
+\subsubsection Topology_Example_1 Topology Example 1:
+
+A polygon may be formed by many boundaries (more primitives but connected).
+One boundary is shared by adjacent areas.
+
+\verbatim
++--1--+--5--+
+|     |     |
+2  A  4  B  6
+|     |     |
++--3--+--7--+
+
+1,2,3,4,5,6,7 = 7 boundaries (primitives)
+A,B = 2 areas
+\endverbatim
+
+
+\subsubsection Topology_Example_2 Topology Example 2:
+
+This is handled correctly in GRASS: A can be filled, B filled differently.
+
+\verbatim
++---------+
+|    A    |
++-----+   |
+|  B  |   |
++-----+   |
+|         |
++---------+
+\endverbatim
+
+In GRASS, whenever 'inner' ring touches the boundary of outside area, even in
+one point, it is no more 'inner' ring, it is simply another area.
+A, B above can never be exported from GRASS as polygon A with inner ring B
+because there are only 2 areas A and B and no island.
+
+
+\subsubsection Topology_Example_3 Topology Example 3:
+
+v.in.ogr/v.clean can identify dangles and change the type from boundary
+to line (in TIGER data for example). 
+Distinction between line and boundary isn't important only for dangles. Example:
+
+\verbatim
++-----+-----+
+|     .     |
+|     .     |
++.....+.....+
+|     .     |
+|  x  .     |
++-----+-----+
+
+----  road + boundary of one parcel => type boundary
+....  road => type line
+x     parcel centroid (identifies whole area)
+\endverbatim
+
+Because lines are not used to build areas, we have only one area/centroid,
+instead of 4 which would be necessary in TIGER.
+
+
+\subsubsection vlib_topo_memory Topology memory management
+
+Topology is generated for all kinds of vector types.  Memory is not
+released by default. The programmer can force the library to release
+the memory by using Vect_set_release_support(). But: The programmer
+cannot run Vect_set_release_support() in mid process because all
+vectors are needed in the spatial index is needed to build topology.
+
+Topology is also necessary for points in case of vector network
+because the graph is built using topology informations about lines
+and points.
+
+The topology structure does not only store the topology but also
+'line' bounding box and line offset in coor file (index).
+The existing spatial index is using line ID in 'topology' structure
+to identify lines in 'coor' file. Currently it is not possible to build
+spatial index without topology.
+
+
+\subsubsection vlib_spidx Vector library spatial index management
 
 Spatial index (based on R-tree) is calculated on the fly.
 
@@ -117,37 +419,122 @@ main
 \endverbatim
 
 
-\subsubsection vlibtopo Vector library topology management
 
-Topology is generated for all kinds of vector types.  Memory is not
-released by default. The programmer can force the library to release
-the memory by using Vect_set_release_support(). But: The programmer
-cannot run Vect_set_release_support() in mid process because all
-vectors are needed in the spatial index is needed to build topology.
+\subsubsection vlib_categories_layers Vector library categories and layers
 
-Topology is also necessary for points in case of vector network
-because the graph is built using topology informations about lines
-and points.
+<P>
+<i>Note: "layer" was called "field" in earlier version.</i>
+<P>
 
-The topology structure does not only store the topology but also
-'line' bounding box and line offset in coor file (index).
-The existing spatial index is using line ID in 'topology' structure
-to identify lines in 'coor' file. Currently it is not possile to build
-spatial index without topology.
+In GRASS a "category" is a feature ID used to link geometry
+with attributes stored in one or many (external) database table(s).
+Each vector feature inside a vector map has zero, one or more
+&lt;layer,category&gt; tuple(s). A user can (but not must) create attribute
+tables which are referenced by the layer, and rows which are essentially
+referenced by the &lt;layer,category&gt; pair.
 
-\subsubsection vlibtopo_coor coor file
 
-<ol>
-<li> In the coor file the following is stored: 'line' (element) type,
-    number of attributes and layer number for each category.
-<li> Coordinates in binary file are stored as double (8 bytes).
-</ol>
-
-\subsubsection vlibtin Vector TINs
+\subsection vlibtin Vector TINs
 
 TINs are created as 2D/3D vector polygons consisting of 3 vertices.
 
-\subsection dglib DGLib (Directed Graph Library)
+
+
+\section vlib_attributes Vector library and Attributes
+
+The old GRASS 4.x 'dig_cats' files are not used any more and
+vectors' attributes are stored in external database.
+Connection with database is done through drivers based on DBMI library
+(odbc, dbf, PostgreSQL and MySQL drivers are available at this time). Records in table
+are linked to vector entities by field and category number. 
+The field identifies table and the category identifies record.
+I.e., for unique combination map+mapset+field+category exists one
+unique combination driver+database+table+row.
+<P>
+For each pair <B>map + field</B> must be defined <B>table, key column,
+database, driver</B>. This definition must be written to $MAPSET/DB text file.
+Each row in DB file contains names separated by spaces in following order
+([] - optional): <BR><BR>
+
+\verbatim
+map[@mapset] field table [key [database [driver]]]
+\endverbatim
+
+If key, database or driver are omited (on second and higher row only)
+last definition is used. Definition from DB file in other mapset
+may be overwritten by definition in current mapset if mapset is specified 
+with map name.
+<P>
+Wild cards <B>*</B> and <B>?</B> may be used in map and mapset names.
+<P>
+Variables <B>$GISDBASE, $LOCATION, $MAPSET, $MAP, $FIELD</B>
+may be used in table, key, database and driver names. Note that
+$MAPSET is not current mapset but mapset of the map the rule is defined for.
+
+<P>Note that features in GRASS vector may have attributes
+in different tables or may be without attributes. Boundaries
+forms areas but it may happen that some boundaries are not closed
+(such boundaries would not appear in polygon layer).
+Boundaries may have attributes. All types may be mixed in one vector.
+<P>
+Link to the table is permanent and it is stored in 'dbln' file in vector
+directory. Tables are considered to be a part of the vector and g.remove,
+for example, deletes linked tables of the vector.
+Attributes must be joined with geometry.
+
+<P>
+<B>Examples:</B>
+Examples are written mostly for dbf driver where database is full path to
+directory with dbf files and table name is name of dbf file without
+.dbf extension.
+
+<P>
+\verbatim
+* 1 tbl id $GISDBASE/$LOCATION/$MAPSET/vector/$MAP dbf
+\endverbatim
+This definition says that entities with category of field 1 are linked
+to dbf tables with names tbl.dbf saved in vector directories of each map.<BR><BR>
+
+\verbatim
+* 1 $MAP id $GISDBASE/$LOCATION/$MAPSET/dbf dbf
+\endverbatim 
+Similar as above but all dbf files are in one directory dbf/ in mapset
+and names of dbf files are $MAP.dbf<BR><BR>
+
+\verbatim
+water* 1 rivers id /home/grass/dbf dbf
+water* 2 lakes lakeid /home/guser/mydb
+trans* 1 roads key basedb odbc
+trans* 5 rails
+\endverbatim
+These definitions defines more fields for one map i.e. in one map may be more
+features linked to more tables. Definition on first 2 rows are applied for example
+on maps water1, water2, ... so that more maps may share one table.<BR><BR>
+
+\verbatim
+water@PERMANENT 1 myrivers id /home/guser/mydbf dbf
+\endverbatim
+This definion overwrites definition saved in PERMANENT/DB and 
+links map from PERMANENT mapset to user's table.
+
+<P>
+Modules should be written so that connections to database for each
+vector field are independent. It should be possible to read attributes
+of input map from one database and write to some other and even with
+some other driver (should not be such problem). 
+
+<P>
+There are open questions however. For example how to distinguish when
+new table should be written and when not. For example definitions:<BR>
+\verbatim
+river 1 river id water odbc
+river.backup* 1 NONE
+\endverbatim
+could be used to say that tables should not be copied for backups of
+map river because table is stored in reliable RDBMS. 
+
+
+\section dglib DGLib (Directed Graph Library)
 
 The Directed Graph Library or DGLib (Micarelli 2002,
 http://grass.itc.it/dglib/) provides functionality for vector network
@@ -163,6 +550,7 @@ the accumulated costs. Applications are transport analysis, connectivity and
 more. 
 
 For details please read Blazek et al. 2002 (see below).
+
 
 
 \section vlibfunc List of vector library functions
