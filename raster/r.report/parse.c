@@ -165,7 +165,7 @@ int parse_command_line (int argc, char *argv[])
 	sscanf(parms.nsteps->answer, "%d", &nsteps);
 	if(nsteps <= 0)
 	{
-	     G_warning("%s: nsteps has to be > 0; using nsteps=255");
+	     G_warning("nsteps has to be > 0; using nsteps=255");
 	     nsteps = 255;
         }
 
@@ -278,14 +278,16 @@ int parse_layer (char *s)
 
 	layers[n].name = G_store (name);
 	layers[n].mapset = mapset;
-	G_read_cats (name, mapset, &layers[n].labels);
+	if (G_read_cats (name, mapset, &layers[n].labels) < 0)
+	   G_fatal_error ( "%s: %s in %s - can't read category file",
+                     G_program_name(), name, mapset);
 
     return 0;
 }
 
 int match (char *s, char *key, int min)
 {
-	int len;
+	size_t len;
 
 	len = strlen (s);
 	if (len < min) return 0;
