@@ -1,11 +1,13 @@
 <h2>DESCRIPTION</h2>
 
 <em>v.db.addtable</em> adds a new attribute table to a given vector map. It 
-links the table to the specified layer of the vector map.
+links the table to the specified layer of the vector map. If the vector map
+is not yet linked to any table, new a database link is established based
+on the MAPSET database settings (see <em>db.connect</em>).
 
 <h2>NOTES</h2>
 
-v.db.addtable is a front-end to <em>db.execute</em> to allow easier usage.
+<em>v.db.addtable</em> is a front-end to <em>db.execute</em> to allow easier usage.
 
 The supported types of columns depend on the database backend. However, 
 all backends should support VARCHAR, INT, DOUBLE and DATE. The default dbf backend
@@ -32,6 +34,7 @@ v.info -c sentiero_brenta_points
 
 <h2>SEE ALSO</h2>
 
+<em><a HREF="db.connect.html">db.connect</a></em>,
 <em><a HREF="db.execute.html">db.execute</a></em>,
 <em><a HREF="v.db.addcol.html">v.db.addcol</a></em>,
 <em><a HREF="v.db.connect.html">v.db.connect</a></em>,

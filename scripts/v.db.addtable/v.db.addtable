@@ -80,11 +80,17 @@ fi
 QUERYLAYER=1
 database=`v.db.connect $GIS_OPT_map -g`
 if [ $? -ne 0 ] ; then
-   echo "An error occured. Stop."
-   exit 1
+   echo "Creating new DB connection based on default mapset settings..."
+   database=`db.connect -p | grep database | cut -d':' -f2`
+   if [ $? -ne 0 ] ; then
+       echo "An error occured. Stop."
+       exit 1
+   fi
+   driver=`db.connect -p | grep driver | cut -d':' -f2`
+else
+ database=`v.db.connect $GIS_OPT_map -g | grep -w $QUERYLAYER | awk '{print $4}'`
+ driver=`v.db.connect $GIS_OPT_map -g | grep -w $QUERYLAYER | awk '{print $5}'`
 fi
-database=`v.db.connect $GIS_OPT_map -g | grep -w $QUERYLAYER | awk '{print $4}'`
-driver=`v.db.connect $GIS_OPT_map -g | grep -w $QUERYLAYER | awk '{print $5}'`
 
 echo "CREATE TABLE $table ($GIS_OPT_columns)" | db.execute database=$database driver=$driver
 
