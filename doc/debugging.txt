@@ -41,25 +41,15 @@ References:
 
 ----------------------------------------------------
 
-Debuggers: gdb and ddd
-
-  ddd: http://www.gnu.org/software/ddd/
-       (GNU DDD is a graphical front-end for command-line debuggers such as
-        GDB, DBX, WDB, Ladebug, JDB, XDB, the Perl debugger, the bash debugger, or the
-        Python debugger. )
-
-----------------------------------------------------
-
 To make gcc less tolerant in accepting errors and code flaws, compile
-with:
+with (see also ../INSTALL):
 
 export CFLAGS='-g -ansi -Wall -D_BSD_SOURCE=1 -D_SVID_SOURCE=1 -D_POSIX_SOURCE=1 -D_POSIX_C_SOURCE=199506L'
 
 Also nice to emulate gcc/MacOSX compiler:
 CFLAGS='-fno-common'
 
-----------------------------------------------------
-A good idea is maybe to use '-Wall -Werror' for the gcc options. This means
+It is a good idea to use '-Wall -Werror' as gcc options. This means
 it treats the warnings as errors, i.e. it stops on them. So you have time
 to read them then.
 
@@ -69,18 +59,30 @@ make it an error rather than a warning).
  
 The linker switch --warn-common (e.g. LDFLAGS='-Wl,--warn-common') might
 be useful for catching multiply-defined symbols.
+
+Be sure to compile using debug flags (gcc -g) and don't "strip" the
+binaries after compiling.
 ----------------------------------------------------
-C Code debugging:
+C Code debugging Software:
 
-1) Graphical debugger
-      ddd `which r.plane`
-      RUN -> here enter Parameters/Flags
 
-2) Text/CMD line debugger
+1) Debugger (command-line)
       gdb `which r.plane`
       r <flags> <parameters>
       bt
-      
+ 
+2a) Graphical front-end for command-line debugger: ddd
+      ddd `which r.plane`
+      RUN -> here enter Parameters/Flags
+    
+   http://www.gnu.org/software/ddd/
+       (GNU DDD is a graphical front-end for command-line debuggers such as
+        GDB, DBX, WDB, Ladebug, JDB, XDB, the Perl debugger, the bash debugger, or the
+        Python debugger. )
+
+2b) Graphical front-end for command-line debugger: kdbg
+      Use the menus
+
 ----------------------------------------------------
 Debugging on Mac OS X
 
