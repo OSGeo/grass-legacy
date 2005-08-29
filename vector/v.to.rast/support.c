@@ -72,16 +72,14 @@ update_fcolors (char *raster_name)
 int 
 update_cats (char *raster_name, char *vector_name, char *vector_mapset)
 {
-    /*
+    /* TODO: maybe attribute transfer from vector map? 
+       Use G_set_raster_cat() somewhere*/
+    
     struct Categories cats;
-    int stat;
 
-    G_suppress_warnings (1);
-    stat = G_read_vector_cats (vector_name, vector_mapset, &cats);
-    G_suppress_warnings (0);
-    if (stat >= 0)
-	G_write_cats (raster_name, &cats);
-    */
+    G_strip(raster_name);
+    G_init_cats ((CELL) 0, raster_name, &cats);
+    G_write_cats (raster_name, &cats);
 
     return 0;
 }
