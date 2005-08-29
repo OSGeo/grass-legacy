@@ -61,6 +61,7 @@ DOXNAME=grasslibs
 checkdoxygen:
 	@(type doxygen > /dev/null || (echo "ERROR: Install 'doxygen' software first (get from http://www.doxygen.org)" && exit 1))
 
+#generates FULL html documentation
 htmldocs: checkdoxygen
 	doxygen ./gis/Doxyfile_arch_html
 	@rm -f ./html/*.md5
