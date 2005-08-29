@@ -13,7 +13,6 @@ main (int argc, char *argv[])
 {
     char *name;
     char *mapset;
-    char msg[100];
     long x, y;
     double dx;
     RASTER_MAP_TYPE map_type;
@@ -82,17 +81,10 @@ main (int argc, char *argv[])
  
     mapset = G_find_cell2 (name,"");
     if (mapset == NULL)
-    {    
-        sprintf(msg, "%s: <%s> raster file not found",G_program_name(),name);
-        G_fatal_error (msg); 
-        exit(1);
-    }
+        G_fatal_error ( _("%s: <%s> raster file not found"), G_program_name(),name);
     if (G_read_cats (name, mapset, &cats) < 0)
-    {
-        fprintf (stderr, "%s: %s in %s - can't read category file\n", 
-	             G_program_name(), name, mapset);
-        exit(1);
-    }
+        G_fatal_error ( _("%s: %s in %s - can't read category file"),
+                       G_program_name(), name, mapset);
 
     map_type = G_raster_map_type(name, mapset);
 /* if no cats requested, use r.describe to get the cats */
@@ -103,20 +95,20 @@ main (int argc, char *argv[])
            get_cats (name, mapset);
            while (next_cat (&x))
            print_label (x);
-           exit(0);
+           exit(EXIT_SUCCESS);
 	}
     }
     else
     {
 	if(map_type!=CELL_TYPE)
-	   G_warning("The map is floating point! Ignoring cats list, using vals list");
+	   G_warning( _("The map is floating point! Ignoring cats list, using vals list"));
 	else /* integer map */
 	{
            for (i = 0; parm.cats->answers[i]; i++)
                if (!scan_cats (parm.cats->answers[i], &x, &y))
 	       {
                    G_usage();
-		   exit(1);
+		   exit(EXIT_FAILURE);
 	       }
            for (i = 0; parm.cats->answers[i]; i++)
            {
@@ -124,23 +116,23 @@ main (int argc, char *argv[])
                while (x <= y)
                    print_label (x++);
            }
-	   exit(0);
+	   exit(EXIT_SUCCESS);
         }
     }
     if(parm.vals->answer == NULL)
-        G_fatal_error("vals argument is required for floating point map!");
+        G_fatal_error( _("vals argument is required for floating point map!"));
     for (i = 0; parm.vals->answers[i]; i++)
        if (!scan_vals (parm.vals->answers[i], &dx))
        {
             G_usage();
-            exit(1);
+            exit(EXIT_FAILURE);
        }
     for (i = 0; parm.vals->answers[i]; i++)
     {
        scan_vals (parm.vals->answers[i], &dx);
        print_d_label (dx);
     }
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 int 
