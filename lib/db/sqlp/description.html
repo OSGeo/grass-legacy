@@ -41,6 +41,10 @@ Supported is a limited set of SQL functions and operators.
   "~"  : Substring matching
 </PRE>
 
+<p> Arithmetic expressions using constants and field values are allowed in condition clauses and in the LHS of assignments.
+</p>
+<p> NULLs can be tested by IS NULL in conditions. </p>
+
 <H2>NOTES</H2>
 
 <ul>
@@ -48,12 +52,6 @@ Supported is a limited set of SQL functions and operators.
 <li> Supported table name characters are only:<br>
     [A-Za-z][A-Za-z0-9_]*
 <li> A table name must start with a character, not a number.
-<li> Brackets are needed, e.g. for<br>
-     <pre>
-      select * from some_table where (3*(some_field - another_field) > 5)
-     </pre>
-     The parser does not know about precedence yet, so the sub-clause has to
-     be in brackets to avoid ambiguity.
 <li> Text-string matching requires the text part to be 'single quoted' and
      multiple queries should be contained in "double quotes". e.g.<br>
 	<pre>
