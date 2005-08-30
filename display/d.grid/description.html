@@ -2,8 +2,9 @@
 
 <EM>d.grid</EM> overlays a grid of user-defined size and
 color in the active display frame on the graphics monitor.
-The grid will overlay, not overwrite, the contents of the
-active display frame.
+The grid can be created as a standard rectangular grid and/or
+a geographic grid. The grid will overlay, not overwrite,
+the contents of the active display frame.
 
 <P>
 
@@ -31,9 +32,33 @@ erase previously drawn grids from the display frame.)
 
 <P>
 
-Currently, the grid size can only be drawn in the units of
-the map coordinate system used by the current GRASS
-location.
+If the user provides a <EM>size</EM> argument the standard
+rectangular grid will be drawn. If the user provides a 
+<EM>gsize</EM> argument a geographic (projected) grid 
+will be drawn. The <EM>gsize</EM> argument accepts both
+decimal degrees and colon seperated coordinates
+(eg. 00:30:00). 
+
+<p>
+
+A geographic grid cannot be drawn for a <EM>latitude/longitude</EM> 
+or <EM>XY</EM> projection.
+
+<H2>EXAMPLES</H2>
+To draw a red geographic grid with 30 minute grid spacing run the following:
+<PRE>
+d.grid gsize=00:30:00 gcolor=red
+</PRE>
+or
+<PRE>
+d.grid gsize=0.5 gcolor=255:0:0
+</PRE>
+To draw a blue regular grid at 500 (meter) spacing and a red geographic
+grid at 10 second spacing run the following:
+<PRE>
+d.grid size=500 color=blue gsize=00:00:10 gcolor=red
+</PRE>
+
 
 <H2>SEE ALSO</H2>
 
@@ -46,5 +71,6 @@ location.
 
 <H2>AUTHOR</H2>
 
-James Westervelt, U.S. Army Construction Engineering Research Laboratory
+James Westervelt, U.S. Army Construction Engineering Research Laboratory<BR>
+Geogrid support: Bob Covill
 <p><i>Last changed: $Date$</i>
