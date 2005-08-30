@@ -97,7 +97,7 @@ int IL_vector_input_data_2d (
     zctype = db_column_Ctype ( driver, Fi->table, zcol );
     G_debug ( 3, " zcol C type = %d", zctype );
     if ( zctype == -1 )
-	G_fatal_error(_("Cannot find z column (please verify name)"));
+	G_fatal_error(_("Cannot find z column <%s> (please verify name, e.g. with v.info)"), zcol);
     if ( zctype != DB_C_TYPE_INT && zctype != DB_C_TYPE_DOUBLE ) 
 	G_fatal_error(_("Column type of z column is not supported (must be integer or double)"));
 
