@@ -1,9 +1,21 @@
-/*   $Id$
- *   d.grid
+/****************************************************************
  *
- *   Draw the coordinate grid
- *   the user wants displayed on top of the current image.
- */
+ * MODULE:       d.grid
+ * 
+ * AUTHOR(S):    James Westervelt, U.S. Army CERL
+ *               Geogrid support: Bob Covill, www.tekmap.ns.ca
+ *               
+ * PURPOSE:      Draw the coordinate grid the user wants displayed on
+ *               top of the current image
+ *               
+ * COPYRIGHT:    (C) 1999, 2005 by the GRASS Development Team
+ *
+ *               This program is free software under the 
+ *               GNU General Public License (>=v2). 
+ *               Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ **************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,39 +24,51 @@
 #include "display.h"
 #include "raster.h"
 #include "colors.h"
+#include "gprojects.h"
+#include "glocale.h"
 
-int plot_grid(double, double, double);
-int plot_border(double, double, double);
+#include "local_proto.h"
+
 
 int 
 main (int argc, char **argv)
 {
 	int colorg = 0;
+	int colorgeo = 0;
 	int colorb = 0;
 	const int customGcolor = MAXCOLORS + 1;
 	const int customBcolor = MAXCOLORS + 2;
 	int R, G, B;
-	double size ;
-	double east, north ;
+	double size=0., gsize=0.; /* initialize to zero */
+	double east, north;
 	struct GModule *module;
-	struct Option *opt1, *opt2, *opt3, *opt4 ;
-	struct Flag *nogrid, *noborder;
+	struct Option *opt1, *opt2, *opt3, *opt4, *opt5, *opt6;
+	struct Flag *noborder;
+	struct pj_info info_in;  /* Proj structures */
+	struct pj_info info_out; /* Proj structures */
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
 	module->description =
-		"Overlays a user-specified grid "
-		"in the active display frame on the graphics monitor.";
+		_("Overlays a user-specified grid "
+		"in the active display frame on the graphics monitor.");
 
 	opt2 = G_define_option() ;
 	opt2->key        = "size" ;
 	opt2->key_desc   = "value" ;
 	opt2->type       = TYPE_STRING ;
-	opt2->required   = YES;
-	opt2->description= "Size of grid to be drawn" ;
-
+	opt2->required   = NO;
+	opt2->description= _("Size of grid to be drawn") ;
+	
+	opt5 = G_define_option() ;
+	opt5->key        = "gsize" ;
+	opt5->key_desc   = "value" ;
+	opt5->type       = TYPE_STRING ;
+	opt5->required   = NO;
+	opt5->description= _("Size of geographic grid to be drawn") ;
+	
 	opt1 = G_define_option() ;
 	opt1->key        = "color" ;
 	opt1->type       = TYPE_STRING ;
@@ -52,15 +76,23 @@ main (int argc, char **argv)
 	opt1->answer     = "gray" ;
 /*	opt1->options    = D_color_list(); */
 	opt1->description=
-	    "Sets the current grid color, either a standard GRASS color or R:G:B triplet (separated by colons)";
-
+	    _("Sets the current grid color, either a standard GRASS color or R:G:B triplet (separated by colons)");
+	    
+	opt6 = G_define_option() ;
+	opt6->key        = "gcolor" ;
+	opt6->type       = TYPE_STRING ;
+	opt6->required   = NO;
+	opt6->answer     = "black" ;
+	opt6->description=
+	    _("Sets the geographic grid color, either a standard GRASS color or R:G:B triplet (separated by colons)");
+	    
 	opt3 = G_define_option() ;
 	opt3->key        = "origin" ;
 	opt3->type       = TYPE_STRING ;
 	opt3->key_desc   = "easting,northing" ;
 	opt3->answer     = "0,0" ;
 	opt3->multiple   = NO;
-	opt3->description= "Lines of the grid pass through this coordinate" ;
+	opt3->description= _("Lines of the grid pass through this coordinate") ;
 
 	opt4 = G_define_option() ;
 	opt4->key        = "bordercolor" ;
@@ -69,20 +101,25 @@ main (int argc, char **argv)
 	opt4->answer     = "brown" ;
 /*	opt4->options    = D_color_list(); */
 	opt4->description=
-	    "Sets the border color, either a standard GRASS color or R:G:B triplet";
-
-	nogrid = G_define_flag();
-	nogrid->key = 'g';
-	nogrid->description = "Disable grid drawing";
+	    _("Sets the border color, either a standard GRASS color or R:G:B triplet");
 
 	noborder = G_define_flag();
 	noborder->key = 'b';
-	noborder->description = "Disable border drawing";
-
+	noborder->description = _("Disable border drawing");
 
 	/* Check command line */
 	if (G_parser(argc, argv))
-		exit(1);
+		exit(EXIT_FAILURE);
+
+
+	/* do some checking */
+	if (opt5->answer && G_projection() == PROJECTION_LL)
+		G_fatal_error(_("Geo-Grid option is not available for LL projection"));
+	if (opt5->answer && G_projection() == PROJECTION_XY)
+		G_fatal_error(_("Geo-Grid option is not available for XY projection"));
+	
+	if( !opt2->answer && !opt5->answer)
+		G_fatal_error(_("Either 'size' or 'gsize' must be selected"));
 
 	/* Parse and select grid color */
 	if(sscanf(opt1->answer, "%d:%d:%d", &R, &G, &B) == 3) {
@@ -93,11 +130,28 @@ main (int argc, char **argv)
 	}
 	else
 	    colorg = D_translate_color(opt1->answer);
-
+	
+	
 	if(!colorg)
-	    G_fatal_error("[%s]: No such color", opt1->answer);
+	    G_fatal_error(_("[%s]: No such color"), opt1->answer);
+	
+        /* Parse out geographic grid color */	
+	if (opt5->answer)
+	{
+		if(sscanf(opt6->answer, "%d:%d:%d", &R, &G, &B) == 3) {
+			if (R>=0 && R<256 && G>=0 && G<256 && B>=0 && B<256) {
+				R_reset_color(R, G, B, customGcolor);
+				colorgeo = customGcolor;
+			}
+		}
+		else
+			colorgeo = D_translate_color(opt6->answer);
 
-
+		if(!colorgeo)
+			G_fatal_error(_("[%s]: No such color"), opt6->answer);
+	}
+	
+	
 	/* Parse and select border color */
 	if(sscanf(opt4->answer, "%d:%d:%d", &R, &G, &B) == 3) {
 	    if (R>=0 && R<256 && G>=0 && G<256 && B>=0 && B<256) {
@@ -109,32 +163,64 @@ main (int argc, char **argv)
 	    colorb = D_translate_color(opt4->answer);
 
 	if(!colorb)
-	    G_fatal_error("[%s]: No such color", opt4->answer);
+	    G_fatal_error(_("[%s]: No such color"), opt4->answer);
 
 
-	if(!G_scan_resolution (opt2->answer, &size, G_projection()) || size <= 0.0)
-		G_fatal_error ("Invalid grid size <%s>", opt2->answer);
+	/* get grid size */
+	if(opt2->answer)
+	{
+		if(!G_scan_resolution (opt2->answer, &size, G_projection()) || size <= 0.0)
+			G_fatal_error (_("Invalid grid size <%s>"), opt2->answer);
+	}
 
+	/* get geographic grid size */
+	if(opt5->answer)
+	{
+		if(!G_scan_resolution (opt5->answer, &gsize, PROJECTION_LL) || gsize <= 0.0)
+			G_fatal_error (_("Invalid geo-grid size <%s>"), opt5->answer);
+	}
+		
+
+	/* get grid easting start */
 	if(!G_scan_easting(opt3->answers[0], &east, G_projection()))
 	{
 		G_usage();
-		G_fatal_error ("Illegal east coordinate <%s>",
+		G_fatal_error (_("Illegal east coordinate <%s>"),
 		    opt3->answers[0]);
 	}
+
+	/* get grid northing start */
 	if(!G_scan_northing(opt3->answers[1], &north, G_projection()))
 	{
 		G_usage();
-		G_fatal_error ("Illegal north coordinate <%s>",
+		G_fatal_error (_("Illegal north coordinate <%s>"),
 		    opt3->answers[1]);
 	}
 
 	/* Setup driver and check important information */
 	if (R_open_driver() != 0)
-		G_fatal_error ("No graphics device selected");
+		G_fatal_error (_("No graphics device selected"));
 
 	D_setup(0);
 
-	if(!nogrid->answer)
+	/* Draw geographic grid */	
+	if (opt5->answer)
+	{
+	    /* initialzie proj stuff */
+	    init_proj(&info_in, &info_out);
+
+            /* Set grid color */
+	    if (colorgeo > MAXCOLORS)  /* ie custom RGB color */
+		R_color(colorgeo);
+	    else
+		R_standard_color(colorgeo) ;
+		
+		/* plot geogrid */
+		plot_geogrid(gsize, info_in, info_out);
+	}
+
+	/* draw grid */
+	if(opt2->answer)
 	{
 	    /* Set grid color */
 	    if (colorg > MAXCOLORS)  /* ie custom RGB color */
@@ -146,10 +232,11 @@ main (int argc, char **argv)
 	    plot_grid(size, east, north) ;
 	}
 
+	/* Draw border */
 	if(!noborder->answer)
 	{
 	    if (G_projection() == PROJECTION_LL)
-	  	G_warning("border not yet implemented for LatLong locations: border not drawn.");
+	  	G_warning(_("Border not yet implemented for LatLong locations: border not drawn."));
 	    else
 	    {
 		/* Set border color */
@@ -167,5 +254,5 @@ main (int argc, char **argv)
 
 	R_close_driver();
 
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
