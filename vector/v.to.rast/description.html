@@ -36,11 +36,13 @@ original vector line. This tends to be more aggressive than area-only conversion
 <LI>
 Points and orphaned centroids will be converted into single cells on the
 resultant raster map.
+<P>
+<P>
+<b>Flow directions</b> are given in degree from East, counterclockwise.
 
+<h2>EXAMPLES</h2>
 
-<h2>EXAMPLE</h2>
-
-<em>Convert a vector map and use column SPEED from attribute table</em><br>
+<em>1. Convert a vector map and use column SPEED from attribute table</em><br>
 <b>db.describe -c table=</b><em>vect_map</em>
 <pre>
 ncols:3
@@ -49,15 +51,21 @@ Column 2: SPEED
 Column 3: WIDTH 
 </pre>
 
-<b>v.to.rast in=</b><em>vect_map</em> <b>out=</b><em>raster_map</em>
-<b>col=</b><em>SPEED</em>
+<b>v.to.rast in=</b><em>vect_map</em> <b>out=</b><em>raster_map</em> <b>col=</b><em>SPEED</em>
+
+<P>
+<P>
+<em>2. Calculate stream directions from a river vector map (Spearfish)</em><br>
+
+<b>v.to.rast in=</b><em>streams</em> <b>out=</b><em>streamsdir</em> <b>use=</b><em>d</em>
+
 
 <h2>AUTHORS</h2>
 
-Michael Shapiro,  
-U.S. Army Construction Engineering 
-Research Laboratory
+Original code: Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
 <br>
-Radim Blazek, ITC-Irst, Trento, Italy
+GRAS 6 updates: Radim Blazek, ITC-Irst, Trento, Italy
+<br>
+Stream directions: Jaro Hofierka and Helena Mitasova
 
 <p><i>Last changed: $Date$</i>

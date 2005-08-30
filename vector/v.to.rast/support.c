@@ -48,7 +48,7 @@ update_colors (char *raster_name)
 
     G_read_range (raster_name, G_mapset(), &range);
     G_get_range_min_max (&range, &min, &max);
-    G_make_random_colors (&colors, min, max);
+    G_make_rainbow_colors (&colors, min, max);
     G_write_colors (raster_name, G_mapset(), &colors);
 
     return 0;
@@ -58,11 +58,13 @@ update_colors (char *raster_name)
 int
 update_fcolors (char *raster_name)
 {
+    struct FPRange range;
     struct Colors colors;
+    DCELL min,max;
 
-    /* G_read_fp_range(raster_name, G_mapset(), &range); */
-    /* G_get_fp_range_min_max(&range, &min, &max);       */
-    G_make_rainbow_colors(&colors, 0, 360);
+    G_read_fp_range(raster_name, G_mapset(), &range);
+    G_get_fp_range_min_max(&range, &min, &max);
+    G_make_rainbow_colors(&colors, (CELL)min, (CELL)max);
     G_write_colors(raster_name, G_mapset(), &colors);
 
     return 0;
