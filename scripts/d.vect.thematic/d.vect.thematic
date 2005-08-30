@@ -545,6 +545,11 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         echo "8 $line3" >> "$TMP2"
         echo "5 $line3" >> "$TMP2"
         echo "color black" >> "$TMP2"
+	echo "move 5 $line1" >> "$TMP2"
+	echo "draw 8 $line1" >> "$TMP2"
+	echo "draw 8 $line3" >> "$TMP2"
+	echo "draw 5 $line3" >> "$TMP2"
+	echo "draw 5 $line1" >> "$TMP2"
         echo "move 14 $line2" >> "$TMP2"
         echo "text $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP2"
 
