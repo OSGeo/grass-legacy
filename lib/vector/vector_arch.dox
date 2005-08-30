@@ -160,7 +160,7 @@ The body consists of line records:
   <LI><B>2.-3. bit</B> : type - one of: GV_POINT, GV_LINE, 
                               GV_BOUNDARY, GV_CENTROID
   <LI><B>4.-7. bit</B> : reserved, not used 
-<UL>
+</UL>
 </TD></TR>
 <TR><TD>ncats</TD><TD>C</TD><TD>1</TD><TD>number of categories 
     (written only if categories exist) </TD></TR>
