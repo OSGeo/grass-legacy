@@ -124,8 +124,7 @@ fi
 
 # calculate statistics
 echo "Calculating statistics..."
-cat $TMP | awk 'BEGIN {sum = 0.0 ; sum2 = 0.0} 
-NR == 1{min = $1 ; max = $1}
+cat $TMP | awk 'BEGIN {sum = 0.0 ; sum2 = 0.0; min = 10e10 ; max = -min}
 (NF>0) {
 	sum += $1 ; sum2 += $1 * $1 ; N++;
         if ($1 > max) {max = $1}
