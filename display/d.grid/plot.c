@@ -2,6 +2,7 @@
 #include "gis.h"
 #include "display.h"
 #include "gprojects.h"
+#include "glocale.h"
 
 #include "local_proto.h"
 
@@ -80,10 +81,7 @@ struct Cell_head window ;
      /* probably need something like boardwalk ?? */
      get_ll_bounds(&west, &east, &south, &north, window, info_in, info_out);
 
-     /*
-     fprintf(stderr, "REGION BOUNDS N=%f S=%f E=%f W=%f\n", 
-		     north, south, east, west);
-     */
+     G_debug(3, "REGION BOUNDS N=%f S=%f E=%f W=%f", north, south, east, west);
 
      G_setup_plot (D_get_d_north(), D_get_d_south(),
 		     D_get_d_west(), D_get_d_east(),
@@ -101,12 +99,12 @@ struct Cell_head window ;
                 e1 = west + (ll *((east - west)/SEGS));
                 e2 = e1 + ((east - west)/SEGS);
                         if (pj_do_proj(&e1, &n1, &info_in, &info_out) <0)
-                                G_fatal_error("Error in pj_do_proj");
+                                G_fatal_error( _("Error in pj_do_proj"));
 			check_coords(e1, n1, &lon, &lat, 1, window, info_in, info_out);
                         e1 = lon;
                         n1 = lat;
                         if (pj_do_proj(&e2, &n2, &info_in, &info_out) <0)
-                                G_fatal_error("Error in pj_do_proj");
+                                G_fatal_error( _("Error in pj_do_proj"));
 			check_coords(e2, n2, &lon, &lat, 1, window, info_in, info_out);
                         e2 = lon;
                         n2 = lat;
@@ -125,12 +123,12 @@ struct Cell_head window ;
                 n1 = south + (ll *((north - south)/SEGS));
                 n2 = n1 + ((north - south)/SEGS);
                         if (pj_do_proj(&e1, &n1, &info_in, &info_out) <0)
-                        G_fatal_error("Error in pj_do_proj");
+                        G_fatal_error( _("Error in pj_do_proj"));
                         check_coords(e1, n1, &lon, &lat, 2, window, info_in, info_out);
                         e1 = lon;
                         n1 = lat;
                         if (pj_do_proj(&e2, &n2, &info_in, &info_out) <0)
-                        G_fatal_error("Error in pj_do_proj");
+                        G_fatal_error( _("Error in pj_do_proj"));
                         check_coords(e2, n2, &lon, &lat, 2, window, info_in, info_out);
                         e2 = lon;
                         n2 = lat;
@@ -159,7 +157,7 @@ char buff[100];
 out_proj_keys = G_get_projinfo();
 out_unit_keys = G_get_projunits();
 if (pj_get_kv(*&info_out,out_proj_keys,out_unit_keys) < 0)
-        G_fatal_error("Can't get projection key values of current location");
+        G_fatal_error( _("Can't get projection key values of current location"));
 
 /* In Info */
 in_proj_keys = G_create_key_value();
@@ -177,7 +175,7 @@ G_set_key_value("units", "degrees", in_unit_keys);
 G_set_key_value("meters", "1.0", in_unit_keys);
 
 if (pj_get_kv(*&info_in, in_proj_keys, in_unit_keys) < 0)
-    G_fatal_error("Unable to set up lat/long projection parameters");
+    G_fatal_error( _("Unable to set up lat/long projection parameters"));
 
 G_free_key_value( in_proj_keys);
 G_free_key_value( in_unit_keys);
@@ -228,7 +226,7 @@ for (ew = window.west; ew <= window.east; ew+=ew_res) {
         e1 = ew;
         n1 = window.north;
                 if (pj_do_proj(&e1, &n1, &info_out, &info_in) <0)
-                        G_fatal_error("Error in pj_do_proj");
+                        G_fatal_error( _("Error in pj_do_proj"));
                 if (!first) {
                         north = n1;
                         first = 1;
@@ -242,7 +240,7 @@ for (ew = window.west; ew <= window.east; ew+=ew_res) {
         e1 = ew;
         s1 = window.south;
                 if (pj_do_proj(&e1, &s1, &info_out, &info_in) <0)
-                        G_fatal_error("Error in pj_do_proj");
+                        G_fatal_error( _("Error in pj_do_proj"));
                 if (!first) {
                         south = s1;
                         first = 1;
@@ -257,7 +255,7 @@ for (ns = window.south; ns <= window.north; ns+=ns_res) {
         e1 = window.east;
         n1 = ns;
                 if (pj_do_proj(&e1, &n1, &info_out, &info_in) <0)
-                        G_fatal_error("Error in pj_do_proj");
+                        G_fatal_error( _("Error in pj_do_proj"));
                 if (!first) {
                         east = e1;
                         first = 1;
@@ -272,7 +270,7 @@ for (ns = window.south; ns <= window.north; ns+=ns_res) {
         w1 = window.west;
         n1 = ns;
                 if (pj_do_proj(&w1, &n1, &info_out, &info_in) <0)
-                        G_fatal_error("Error in pj_do_proj");
+                        G_fatal_error( _("Error in pj_do_proj"));
                 if (!first) {
                         west = w1;
                         first = 1;
@@ -330,17 +328,17 @@ check_coords(
      if (proj) {
         /* convert original coords to ll */
         if (pj_do_proj(&e, &n, &info_out, &info_in) <0)
-                G_fatal_error("Error in pj_do_proj1");
+                G_fatal_error( _("Error in pj_do_proj1"));
 
                 if (par == 1) {
                 /* lines of latitude -- const. northing */
                 /* convert correct UTM to ll */
                 if (pj_do_proj(&x, &y, &info_out, &info_in) <0)
-                        G_fatal_error("Error in pj_do_proj2");
+                        G_fatal_error( _("Error in pj_do_proj2"));
 
                 /* convert new ll back to coords */
                 if (pj_do_proj(&x, &n, &info_in, &info_out) <0)
-                        G_fatal_error("Error in pj_do_proj3");
+                        G_fatal_error( _("Error in pj_do_proj3"));
                 *lat = n;
                 *lon = x;
                 }
@@ -348,11 +346,11 @@ check_coords(
                 /* lines of longitude -- const. easting */
                 /* convert correct UTM to ll */
                 if (pj_do_proj(&x, &y, &info_out, &info_in) <0)
-                        G_fatal_error("Error in pj_do_proj5");
+                        G_fatal_error( _("Error in pj_do_proj5"));
 
                 /* convert new ll back to coords */
                 if (pj_do_proj(&e, &y, &info_in, &info_out) <0)
-                        G_fatal_error("Error in pj_do_proj6");
+                        G_fatal_error( _("Error in pj_do_proj6"));
                 *lat = y;
                 *lon = e;
                 }
