@@ -82,14 +82,20 @@ print A, B, R, tot, F, mediaX, sdX, mediaY, sdY}' "$TMP" > "$TMP"b
 #send output to screen or text file
 if [ -z "$GIS_OPT_output" ] 
 then
-	RESULTADO = `cat "$TMP"b`
-        echo "y = a + b*x"
-        echo "           a, b: coefficients"
-        echo "a  b"
-	echo $RESULTADO[1]  $RESULTADO[2]
+	RESULTADO=`cat "$TMP"b`
+	echo "y = a + b*x"
+        echo "   a: offset"
+        echo "   b: gain"
+        echo "   R: sumXY - sumX*sumY/tot"
+        echo "   N: number of elements"
+        echo "   medX, medY: Medians"
+        echo "   sdX, sdY: Standard deviations"
+        echo "a  b  R  N  F medX  sdX  medY  sdY"
+        echo ${RESULTADO}
 else
         echo "y = a + b*x"
-        echo "   a, b: coefficients"
+        echo "   a: offset"
+        echo "   b: gain"
         echo "   R: sumXY - sumX*sumY/tot"
         echo "   N: number of elements"
         echo "   medX, medY: Medians"
