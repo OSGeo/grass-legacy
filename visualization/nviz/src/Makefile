@@ -56,3 +56,7 @@ $(BIN)/$(PGM): $(ARCH_OBJS) $(VECTDEP) $(BITMAPDEP) $(LINKMDEP) $(FORMDEP) $(DBM
 	$(BITMAPLIB) $(LINKMLIB) $(VECTLIB) $(SITESLIB) $(FORMLIB) $(DBMILIB) \
 	$(GISLIB) $(MATHLIB) $(XDRLIB) \
 	$(DATETIMELIB) $(XTRA_LDFLAGS) $(TIFFLIBPATH) $(TIFFLIB) $(XLIB) $(G3DLIB)
+	-$(MKDIR) $(GISBASE)/docs/html
+	-cp -f description.html $(GISBASE)/docs/html/$(PGM).html
+	-$(INSTALL) *.png *.jpg $(GISBASE)/docs/html 2> /dev/null ; true
+
