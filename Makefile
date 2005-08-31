@@ -302,7 +302,7 @@ srclibsdist: FORCE distclean
 	-rm -r ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
 	@ echo "Distribution source package: grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}.tar.gz ready."
 
-#alternatively, the docs can be generated as single document:
+#alternatively, the docs can be generated as single HTML document set:
 #  (cd lib/ ; make htmldocs)
 htmldocs:
 	(cd lib/db/ ; $(MAKE) htmldocs)
@@ -311,12 +311,12 @@ htmldocs:
 	(cd lib/ogsf/ ; $(MAKE) htmldocs)
 	(cd lib/segment/; $(MAKE) htmldocs)
 	(cd lib/vector/ ; $(MAKE) htmldocs)
-	#next runs only on grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}refman.dox (as defined in ./Doxyfile)
-	doxygen ./Doxyfile
 
 packagehtmldocs: htmldocs
 	tar cvfz grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}refman_`date '+%Y_%m_%d'`_html.tar.gz doxygenhtml/ lib/db/html lib/g3d/html lib/gis/html lib/ogsf/html lib/segment/html lib/vector/html
 
+#alternatively, the docs can be generated as single PDF document (see doxygen FAQ for 'TeX capacity exceeded'):
+#  (cd lib/ ; make pdfdocs)
 pdfdocs:
 	(cd lib/db/ ; $(MAKE) pdfdocs)
 	(cd lib/g3d/ ; $(MAKE) pdfdocs)
