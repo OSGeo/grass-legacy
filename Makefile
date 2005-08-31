@@ -309,20 +309,22 @@ htmldocs:
 	(cd lib/g3d/ ; $(MAKE) pdfdocs)
 	(cd lib/gis/ ; $(MAKE) htmldocs)
 	(cd lib/ogsf/ ; $(MAKE) htmldocs)
+	(cd lib/segment/; $(MAKE) htmldocs)
 	(cd lib/vector/ ; $(MAKE) htmldocs)
 	#next runs only on grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}refman.dox (as defined in ./Doxyfile)
 	doxygen ./Doxyfile
 
 packagehtmldocs: htmldocs
-	tar cvfz grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}refman_`date '+%Y_%m_%d'`_html.tar.gz doxygenhtml/ lib/db/html lib/g3d/html lib/gis/html lib/ogsf/html lib/vector/html
+	tar cvfz grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}refman_`date '+%Y_%m_%d'`_html.tar.gz doxygenhtml/ lib/db/html lib/g3d/html lib/gis/html lib/ogsf/html lib/segment/html lib/vector/html
 
 pdfdocs:
 	(cd lib/db/ ; $(MAKE) pdfdocs)
 	(cd lib/g3d/ ; $(MAKE) pdfdocs)
 	(cd lib/gis/ ; $(MAKE) pdfdocs)
 	(cd lib/ogsf/ ; $(MAKE) pdfdocs)
+	(cd lib/segment/; $(MAKE) pdfdocs)
 	(cd lib/vector/ ; $(MAKE) pdfdocs)
-	@echo "Written PDF docs in: lib/db/latex/, lib/g3d/latex/, lib/gis/latex/, lib/ogsf/latex/, lib/vector/latex/"
+	@echo "Written PDF docs in: lib/db/latex/, lib/g3d/latex/, lib/gis/latex/, lib/ogsf/latex/, lib/segment/latex, lib/vector/latex/"
 
 changelog:
 	@ echo "creating ChangeLog file..."
