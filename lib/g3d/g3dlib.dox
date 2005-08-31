@@ -1716,11 +1716,7 @@ Writes the cell-values of <EM>map</EM> in ascii format to file
 
 
 <P>
-See \ref Appendix_L_Index_to_Grid3D_Library_Subroutines for a G3D Function Index.
-
-
-<P>
 See \ref Compiling_and_Installing_GRASS_Modules for a complete 
-discussion of Gmakefiles.
+discussion of Makefiles.
 
 */
