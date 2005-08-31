@@ -22,12 +22,11 @@
 #include "glocale.h"
 
 
-/*---------------------------------------------------------------------------*/
-/*- Parameters and global variables -----------------------------------------*/
+/** Parameters and global variables ******************************************/
 typedef struct
 {
   struct Option *input, *output, *null_val, *elevscale;
-  struct Flag *mask;
+  struct Flag *mask, *point;
   /*struct Flag *xml; *//*maybe xml support in the future */
 } paramType;
 
@@ -35,14 +34,16 @@ void *map = NULL;		/*The 3D Rastermap */
 paramType param;		/*Parameters */
 
 
-/*---------------------------------------------------------------------------*/
-/*- prototypes --------------------------------------------------------------*/
+/** prototypes ***************************************************************/
 void fatalError (char *errorMsg);	/*Simple Error message */
 void setParams ();		/*Fill the paramType structure */
 void writeVTKHeader (FILE * fp, char *vtkFile, G3D_Region region);	/*write the vtk-header */
 void G3dTovtk (FILE * fp, G3D_Region region, char *varname);	/*Write the outputdata */
 
-/*---------------------------------------------------------------------------*/
+
+/* ************************************************************************* */
+/* Error handling ********************************************************** */
+/* ************************************************************************* */
 void
 fatalError (char *errorMsg)
 {
@@ -51,15 +52,17 @@ fatalError (char *errorMsg)
     {
       /* should unopen map here! */
     if (!G3d_closeCell (map))
-       fatalError ("Error closing g3d file");
+       fatalError (_("Error closing g3d file"));
 
     }
 
   G3d_fatalError (errorMsg);
 }
 
-/*---------------------------------------------------------------------------*/
-/*- Convenient way to set up the arguments we are expecting -----------------*/
+
+/* ************************************************************************* */
+/* Setg up the arguments we are expexting ********************************** */
+/* ************************************************************************* */
 void
 setParams ()
 {
@@ -96,6 +99,10 @@ setParams ()
   param.mask->key = 'm';
   param.mask->description = _("Use G3D mask (if exists) with input maps");
 
+  param.point = G_define_flag ();
+  param.point->key = 'p';
+  param.point->description = _("Create VTK pointdata instead of VTK celldata (celldata is default)");
+
 
   /* Maybe needed in the future
      param.xml = G_define_flag ();
@@ -104,12 +111,13 @@ setParams ()
    */
 }
 
-/*---------------------------------------------------------------------------*/
-/*- writes the header. ------------------------------------------------------*/
+/* ************************************************************************* */
+/* Writes the Header ******************************************************* */
+/* ************************************************************************* */
 void
 writeVTKHeader (FILE * fp, char *vtkFile, G3D_Region region)
 {
-  G_debug (3, "writeVTKHeader: Writing VTK-Header");
+  G_debug (3, _("writeVTKHeader: Writing VTK-Header"));
 
   /*Simple vtk ASCII header */
 
@@ -117,22 +125,37 @@ writeVTKHeader (FILE * fp, char *vtkFile, G3D_Region region)
   fprintf (fp, "GRASS 6 Export\n");
   fprintf (fp, "ASCII\n");
   fprintf (fp, "DATASET STRUCTURED_POINTS\n");	/*We are using the structured point dataset. */
+  
+  if(param.point->answer)
+  fprintf (fp, "DIMENSIONS %i %i %i\n", region.cols, region.rows, region.depths);
+  else
   fprintf (fp, "DIMENSIONS %i %i %i\n", region.cols + 1, region.rows + 1, region.depths + 1);
-  fprintf (fp, "ASPECT_RATIO %g %g %g\n", region.ew_res, region.ns_res,
+  
+  fprintf (fp, "SPACING %g %g %g\n", region.ew_res, region.ns_res,
 	   (region.tb_res * atof (param.elevscale->answer)));
+	   
+  if(param.point->answer) {
+  fprintf (fp, "ORIGIN %g %g %g\n", region.west + region.ew_res/2, region.south + region.ns_res/2, 
+                                    region.bottom + (region.tb_res * atof (param.elevscale->answer))/2);
+  } else
   fprintf (fp, "ORIGIN %g %g %g\n", region.west, region.south, region.bottom);
-  fprintf (fp, "CELL_DATA %i\n", region.cols * region.rows * region.depths);	/*We have no pointdata */
+  
+  if(param.point->answer)
+  fprintf (fp, "POINT_DATA %i\n", region.cols * region.rows * region.depths);	/*We have pointdata */
+  else
+  fprintf (fp, "CELL_DATA %i\n", region.cols * region.rows * region.depths);	/*We have celldata */
 }
 
-/*---------------------------------------------------------------------------*/
-/*- This function does all the work. ----------------------------------------*/
+/* ************************************************************************* */
+/* This function does all the work. **************************************** */
+/* ************************************************************************* */
 void
 G3dTovtk (FILE * fp, G3D_Region region, char *varname)
 {
   double d1 = 0;
   double *d1p;
   float *f1p;
-  int x, y, z;
+  int x, y, z, status;
   int rows, cols, depths, typeIntern;
 
   rows = region.rows;
@@ -140,7 +163,7 @@ G3dTovtk (FILE * fp, G3D_Region region, char *varname)
   depths = region.depths;
 
 
-  G_debug (3, "G3dTovtk: Writing Celldatafield %s with rows %i cols %i depths %i to vtk-ascii file", varname, rows,
+  G_debug (3, _("G3dTovtk: Writing Celldatafield %s with rows %i cols %i depths %i to vtk-ascii file"), varname, rows,
 	   cols, depths);
 
   fprintf (fp, "SCALARS %s float 1\n", varname);
@@ -151,9 +174,15 @@ G3dTovtk (FILE * fp, G3D_Region region, char *varname)
   d1p = &d1;
   f1p = (float *) &d1;
 
-  for (z = depths - 1; z >= 0; z--)	/*From the bottom to the top */
+  status = 0;
+
+  for (z = depths - 1; z >= 0; z--) /*From the bottom to the top */
+   {
     for (y = rows - 1; y >= 0; y--)	/*From south to the north */
       {
+        G_percent (status, rows*depths, 2);
+	status++;
+	  
 	for (x = 0; x < cols; x++)
 	  {
 	    G3d_getValue (map, x, y, z, d1p, typeIntern);
@@ -174,14 +203,16 @@ G3dTovtk (FILE * fp, G3D_Region region, char *varname)
 	  }
 	fprintf (fp, "\n");
       }
+   }
 }
 
-/*---------------------------------------------------------------------------*/
-/*- Main function: open the input and output files, then call G3dtovtk.  ----*/
+/* ************************************************************************* */
+/* Main function, opens the input and output files, then call G3dtovtk. **** */
+/* ************************************************************************* */
 int
 main (int argc, char *argv[])
 {
-  char *output;
+  char *output = NULL;
   G3D_Region region;
   FILE *fp = NULL;
   struct GModule *module;
@@ -198,7 +229,7 @@ main (int argc, char *argv[])
 
   /* Have GRASS get inputs */
   if (G_parser (argc, argv))
-    exit (-1);
+    exit (EXIT_FAILURE);
 
   /*open the output */
   if (param.output->answer)
@@ -208,7 +239,7 @@ main (int argc, char *argv[])
 	{
 	  perror (param.output->answer);
 	  G_usage ();
-	  exit (-1);
+	  exit (EXIT_FAILURE);
 	}
     }
   else
@@ -219,7 +250,7 @@ main (int argc, char *argv[])
   for (i = 0; param.input->answers[i] != NULL; i++)
     {
 
-      G_debug (3, "Open 3DRaster file %s", param.input->answers[i]);
+      G_debug (3, _("Open 3DRaster file %s"), param.input->answers[i]);
 
       if (NULL == G_find_grid3 (param.input->answers[i], ""))
 	G3d_fatalError (_("Requested g3d file not found"));
@@ -266,7 +297,7 @@ main (int argc, char *argv[])
 
       /* Close files and exit */
       if (!G3d_closeCell (map))
-	fatalError ("Error closing g3d file");
+	fatalError (_("Error closing g3d file"));
 
       map = NULL;
     }
@@ -274,9 +305,7 @@ main (int argc, char *argv[])
 
   if (param.output->answer && fp != NULL)
     if (fclose (fp))
-      fatalError ("Error closing VTK-ASCII file");
+      fatalError (_("Error closing VTK-ASCII file"));
 
   return 0;
 }
-
-/*---------------------------------------------------------------------------*/
