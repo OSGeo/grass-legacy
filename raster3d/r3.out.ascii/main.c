@@ -80,8 +80,9 @@ setParams ()
   param.output = G_define_option ();
   param.output->key = "output";
   param.output->type = TYPE_STRING;
+  param.output->gisprompt = "file,file,file";
   param.output->required = NO;
-  param.output->description = _("Name for ascii output file");
+  param.output->description = _("Name for ASCII output file");
 
   param.decimals = G_define_option ();
   param.decimals->key = "dp";
