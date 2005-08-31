@@ -24,10 +24,10 @@ Supported is a limited set of SQL functions and operators.
   SELECT columns FROM table WHERE condition
   DELETE FROM table
   DELETE FROM table WHERE condition
-  INSERT INTO table values
-  INSERT INTO table ( columns ) values
-  UPDATE table SET assignments
-  UPDATE table SET assignments WHERE condition
+  INSERT INTO table VALUES (value1[,value2,...])
+  INSERT INTO table ( column1[,column2,...] ) VALUES (value1[,value2,...])
+  UPDATE table SET assignment1[,assignment2,...]
+  UPDATE table SET assignment1[,assignment2,...] WHERE condition
 </PRE>
 
 <H2>OPERATORS</H2>
@@ -41,8 +41,10 @@ Supported is a limited set of SQL functions and operators.
   "~"  : Substring matching
 </PRE>
 
-<p> Arithmetic expressions using constants and field values are allowed in condition clauses and in the LHS of assignments.
-</p>
+<p> Arithmetic expressions using constants and field values are allowed in condition clauses and in the LHS of assignments. Usual precedence rules and bracketing (using '(' and ')') are supported. Type conversion is performed if necessary (experimental). </p>
+<p> Aggregate functions (sum, count, min, max,...) are NOT currently supported in SELECT clauses. </p>
+<p> Mathematic functions (sin, cos, exp, log,...) are NOT currently supported in expressions. </p>
+<p> Conditions allow boolean expressions using the AND, OR and NOT operators, with the usual precedence rules. </p>
 <p> NULLs can be tested by IS NULL in conditions. </p>
 
 <H2>NOTES</H2>
@@ -64,7 +66,7 @@ Supported is a limited set of SQL functions and operators.
 
 <h2>EXAMPLES</h2>
 
-Display all vector points except for LAMAR valley and <i>extensive trapping</i>:
+Display all vector points except for LAMAR valley and <i>extensive trapping</i> (brackets are superfluous in this example):
 <pre>
  d.vect trapping_sites_points fcol=black icon=basic/diamond col=white size=13 \
     where="valley <> 'LAMAR' OR (valley = 'LAMAR' AND description = 'extensive trapping')"
@@ -74,7 +76,7 @@ Select all attributes from table where str1 column values are not 'No Name':
 <pre>
  echo "SELECT * FROM archsites WHERE str1 <> 'No Name'" | db.select
 </pre>
-
+<p>
 
 <h2>SEE ALSO</h2>
 <em>
