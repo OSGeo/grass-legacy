@@ -158,6 +158,8 @@
 #%key: g
 #%description: Save thematic map commands to group file for GIS Manager
 #%end
+
+GIS_OPT_pslegend="leg.psmap"
  
 
 if  [ -z $GISBASE ] ; then
@@ -182,6 +184,7 @@ if [ "$AWK" = "" ] ; then
 fi
 
 # setting environment, so that awk works properly in all languages
+unset LC_ALL
 export LC_NUMERIC=C
 
 # check column type
@@ -218,6 +221,13 @@ fi
 TMP3="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP3" ] ; then
     echo "ERROR: unable to create temporary file for group" 1>&2
+    exit 1
+fi
+
+# Create temporary file to commands for ps.map legend file
+TMP4="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMP4" ] ; then
+    echo "ERROR: unable to create temporary file for ps.map legend" 1>&2
     exit 1
 fi
 
@@ -355,6 +365,13 @@ echo "size 1.5 1.8" >> "$TMP2"
 echo "move 4 90" >> "$TMP2"
 echo "text Value range: $min - $max" >> "$TMP2"
 
+echo "text 1% 95% Thematic map legend for column $GIS_OPT_column of map $GIS_OPT_map" >> "$TMP4"
+echo "  ref bottom left" >> $TMP4
+echo "end" >> $TMP4
+echo "text 4% 90% Value range: $min - $max" >> "$TMP4"
+echo "  ref bottom left" >> $TMP4
+echo "end" >> $TMP4
+
 echo ""
 echo ""
 echo "Thematic map legend for column $GIS_OPT_column of map $GIS_OPT_map"
@@ -457,6 +474,10 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by $numint intervals of $step" >> "$TMP2"
 
+        echo "text 4% 87% Mapped by $numint intervals of $step" >> "$TMP4"
+        echo "  ref bottom left" >> $TMP4
+        echo "end" >> $TMP4
+
         echo "Mapped by $numint intervals of $step"
     fi
 
@@ -466,6 +487,10 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by standard deviation units of $sd (mean =$mean)" >> "$TMP2"
 
+        echo "text 4% 87% Mapped by standard deviation units of $sd (mean =$mean)" >> "$TMP4"
+        echo "  ref bottom left" >> $TMP4
+        echo "end" >> $TMP4
+
         echo "Mapped by standard deviation units of $sd (mean =$mean)"
     fi
 
@@ -474,6 +499,12 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
 
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by quartiles (median =$q2)" >> "$TMP2"
+
+        echo "text 4% 87% Mapped by quartiles (median =$q2)" >> "$TMP4"
+        echo "  ref bottom left" >> $TMP4
+        echo "end" >> $TMP4
+
+	
 
         echo "Mapped by quartiles (median =$q2)"
     fi
@@ -486,6 +517,21 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
     echo "text =====" >> "$TMP2"
     echo "move 14 80" >> "$TMP2"
     echo "text ============" >> "$TMP2"
+
+
+    echo "text 4% 83 Color" >> "$TMP4"
+    echo "  ref bottom left" >> $TMP4
+    echo "end" >> $TMP4
+    echo "text 14% 83 Value" >> "$TMP4"
+    echo "  ref bottom left" >> $TMP4
+    echo "end" >> $TMP4
+    echo "text 4% 80 =====" >> "$TMP4"
+    echo "  ref bottom left" >> $TMP4
+    echo "end" >> $TMP4
+    echo "text 14% 80 ============" >> "$TMP4"
+    echo "  ref bottom left" >> $TMP4
+    echo "end" >> $TMP4
+
 
     echo ""
     echo "Color(R:G:B)" "Value" | awk '{print $1 "\t" $2}'
@@ -552,6 +598,15 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
 	echo "draw 5 $line1" >> "$TMP2"
         echo "move 14 $line2" >> "$TMP2"
         echo "text $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP2"
+
+        echo "rectangle 5% $line1% 8% $line3%" >> "$TMP4"
+	echo "  color black" >> "$TMP4"
+	echo "  fcolor $themecolor" >> "$TMP4"
+	echo "end" >> "$TMP4"
+        echo "text 14% $line3% $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP4"
+        echo "  ref bottom left" >> $TMP4
+        echo "end" >> $TMP4
+
 
         echo $themecolor@$rangemin@$rangemax@$extranote@$openbracket@$closebracket | awk -F@ '{print $1 "\t\t" $5$2" - "$3$6" "$4}'
         # update color to database?
@@ -819,5 +874,10 @@ if [ "$GIS_FLAG_g" -eq 1 ] ; then
     cat $TMP3 > $group".dm"
 fi
 
+# Create ps.map legend file
+echo "end" >> "$TMP4"
+if [ "$GIS_OPT_pslegend" ] ; then
+    cat $TMP4 > $GIS_OPT_pslegend
+fi
 
 cleanup
