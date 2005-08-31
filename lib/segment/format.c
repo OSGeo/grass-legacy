@@ -25,7 +25,7 @@ static int zero_fill(int, long);
  * segment file, is <b>nrows</b> by <b>ncols.</b> The segment file is to be
  * formed of segments which are <b>srows</b> by <b>scols.</b> The data items
  * have length <b>len</b> bytes. For example, if the <i>data type is int</i>,
- * \textbf{<i>len</i> }<i>is sizeof(int).</i>
+ * <i>len is sizeof(int).</i>
  * Return codes are: 1 ok; else -1 could not seek or write <i>fd</i>, or -3
  * illegal configuration parameter(s).
  *
