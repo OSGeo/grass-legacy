@@ -28,25 +28,22 @@ the vector map (see also <a HREF="v.overlay.html">v.overlay</a>).
 
 <h3>Connect vector map to database (DBF driver)</h3>
 
-<b>v.db.connect map=</b><em>vectormap</em> <b>table=</b><em>table</em> 
-<b>layer=</b>1 <b>key=</b><em>cat</em> <b>driver=</b><em>dbf</em> 
-<b>database=</b><em>/daten/grassdata/fire/PERMANENT/dbf</em>
-
-<p>
 <em>Connect vector map to database with variables</em><br>
 (note: single quotes must be used)<br>
 
-<b>v.db.connect map=</b><em>vectormap</em> <b>table=</b><em>table</em> 
-<b>layer=</b>1 <b>key=</b><em>cat</em> <b>driver=</b><em>dbf</em> 
-<b>database=</b><em>'$GISDBASE/$LOCATION_NAME/PERMANENT/dbf'</em>
+<b>v.db.connect map=</b><em>vectormap</em> <b>table=</b><em>table</em>
 
 <p>
-<em>Connect vector map to database with variables</em><br>
+<b>v.db.connect map=</b><em>vectormap</em> <b>table=</b><em>table</em>  
+<b>database=</b><em>/home/user/grassdata/spearfish60/PERMANENT/dbf</em>
+
+<p>
+<em>Connect vector map layer 2 and key ID to database with variables</em><br>
 (note: single quotes must be used)<br>
 
 <b>v.db.connect map=</b><em>vectormap</em> <b>table=</b><em>table</em> 
-<b>layer=</b>1 <b>key=</b><em>cat</em> <b>driver=</b><em>dbf</em> 
-<b>database=</b><em>'$GISDBASE/$LOCATION_NAME/$MAPSET/dbf'</em>
+<b>layer=</b>2 <b>key=</b><em>ID</em>
+
 
 <h3>Connect vector map to database (PostgreSQL driver)</h3>
 
