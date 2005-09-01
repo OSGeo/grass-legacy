@@ -81,6 +81,16 @@ in the header, as defined by the <b>skip</b> parameter, it will be treated as
 a header line and written to the history file.
 
 <P>
+<b>Importing only selected columns</b><br>
+Although v.in.ascii doesn't have an option to specify which columns should be imported, 
+you can use a shell filter to achieve the same effect, e.g.:
+<pre>
+  # Print out the column number for each field, supposing the file has a header
+  head -1 input_file | tr '<the_field_separator_character>' '\n' | cat -n
+  # From the listing, select the columns you want and feed them to v.in.ascii
+  # do not use the input= option
+  cut -d<the_field_separator_character> -f<comma-separated_list_of_columns> input_file | v.in.ascii <your_options>
+</pre>
 
 <h2>EXAMPLES</h2>
 
