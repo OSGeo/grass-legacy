@@ -152,6 +152,7 @@ Prints the color table for the raster map layer anywhere on the page.
 USAGE:	<B>colortable</B> [y|n]
 	<B>where</B> x y
 	<B>raster</B> raster file
+	<B>range</B> minimum maximum
 	<B>width</B> table width
 	<B>height</B> table height (FP legend only)
 	<B>cols</B> table columns
@@ -165,6 +166,9 @@ USAGE:	<B>colortable</B> [y|n]
 The color table will display the colors for each raster map layer
 category value and the category label.
 If <B>raster</B> is omitted, the colortable defaults to a previously registered raster layer.
+The legend's <B>range</B> can be adjusted for floating point rasters, but if 
+set beyond the extent of the map's range be sure that you have set up color 
+rules with <em>r.colors</em> which cover this range.
 The default location for the colortable is immediately below any other
 map legend information, starting at the left margin.
 The default text color is black.
