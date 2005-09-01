@@ -52,6 +52,12 @@ int PS_fcolortable (void)
 
     G_get_fp_range_min_max(&range, &dmin, &dmax);
 
+    /* override if range command is set */
+    if(ct.range_override) {
+	dmin = ct.min;
+	dmax = ct.max;
+    }
+
     if(dmin == dmax) { /* if step==0 all sorts of infinite loops and DIV by 0 errors follow */
 	G_warning(_("A floating point colortable must contain a range of values."));
 	return 1;

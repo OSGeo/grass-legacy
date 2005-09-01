@@ -7,6 +7,7 @@
 
 struct colortable {
 	double x, y, width;
+	double min, max;
 	double height; /* fp legend height */
 	char *font;
 	char *name;
@@ -16,6 +17,7 @@ struct colortable {
 	int cols;
 	int nodata;
 	int tickbar;
+	int range_override;
 };
 
 #ifdef MAIN
