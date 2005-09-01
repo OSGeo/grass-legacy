@@ -17,6 +17,7 @@ static char *help[] =
     "width      table_width",
     "height     fptable_height",
     "raster	raster_name",
+    "range	min max",
     "cols       columns",
     "font       fontname",
     "fontsize   fontsize",
@@ -34,6 +35,9 @@ read_colortable (void)
     char name[100], mapset[50];
     int color, fontsize, cols, nodata, tickbar;
     double w, h, x, y;
+    int range_override;
+    double min,max,tmpD;
+
 
     fontsize = 0;
     color = BLACK;
@@ -41,6 +45,7 @@ read_colortable (void)
     h = w = x = y = 0.0;
     ct.nodata = 1;
     ct.tickbar = 0;
+    range_override = FALSE;
 
     while (input(2, buf, help))
     {
@@ -81,6 +86,25 @@ read_colortable (void)
 			ct.mapset = G_store(mapset);
 			continue;
 		}
+	}
+
+	if (KEY("range"))
+	{
+	    if (sscanf(data, "%lf %lf", &min, &max) != 2)
+	    {
+		range_override = FALSE;
+		error(key, data, "illegal range request");
+	    }
+	    else
+	    {
+		range_override = TRUE;
+		if(min > max) { /* flip if needed */
+		    tmpD = min;
+		    min = max;
+		    max = tmpD;
+		}
+		continue;
+	    }
 	}
 
         if (KEY("cols"))
@@ -146,6 +170,9 @@ read_colortable (void)
 	    }
     }
 
+    ct.min = min;
+    ct.max = max;
+    ct.range_override = range_override;
     ct.width = w;
     ct.height = h;
     ct.color = color;
