@@ -298,14 +298,11 @@ G_matrix_product(mat_struct *mt1, mat_struct *mt2) {
 
 
 
-/************************************************************
- *                                                          *
- * G_matrix_transpose()                                     *
- *                                                          *
- * Transpose a matrix by creating a new one and populating  *
- * with transposed elements                                 *
- *                                                          *
- ************************************************************/
+/*!
+ \fn mat_struct *G_matrix_transpose(mat_struct *mt)
+ \brief Transpose a matrix by creating a new one and populating
+         with transposed elements
+*/
 
 mat_struct *
 G_matrix_transpose(mat_struct *mt) {
