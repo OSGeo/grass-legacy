@@ -55,7 +55,7 @@ proc DmRaster::set_option { node key value } {
     set opt($id,$key) $value
 }
 
-proc DmRaster::select_map { id } {
+proc DmRaster::select_map1 { id } {
     variable tree
     variable node
     set m [GSelect cell]
@@ -65,6 +65,15 @@ proc DmRaster::select_map { id } {
     }
 }
 
+proc DmRaster::select_map2 { id } {
+    variable tree
+    variable node
+    set m [GSelect cell]
+    if { $m != "" } { 
+        set DmRaster::opt($id,drapemap) $m
+        Dm::autoname $m
+    }
+}
 # display raster options
 proc DmRaster::options { id frm } {
     variable opt
@@ -72,16 +81,18 @@ proc DmRaster::options { id frm } {
     # raster name
     set row [ frame $frm.name ]
     Button $row.a -text [G_msg "Raster name:"] \
-           -command "DmRaster::select_map $id"
+           -command "DmRaster::select_map1 $id"
     Entry $row.b -width 49 -text " $opt($id,map)" \
-          -textvariable DmRaster::opt($id,map)
+          -textvariable DmRaster::opt($id,map) \
+          -background white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # raster query
     set row [ frame $frm.rquery ]
     Label $row.a -text "Raster values to display"
-    LabelEntry $row.b -textvariable DmRaster::opt($id,rastquery) -width 42
+    LabelEntry $row.b -textvariable DmRaster::opt($id,rastquery) -width 42 \
+            -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
@@ -89,17 +100,19 @@ proc DmRaster::options { id frm } {
     set row [ frame $frm.leg ]
     checkbutton $row.a -text [G_msg "show legend in selected display monitor"] -variable DmRaster::opt($id,legend) 
     ComboBox $row.b -padx 2 -width 4 -textvariable DmRaster::opt($id,legmon) \
-                    -values {"x0" "x1" "x2" "x3" "x4" "x5" "x6"}
-    LabelEntry $row.c -label [G_msg " thin legend by "] -textvariable DmRaster::opt($id,legthin) -width 6
+                    -values {"x0" "x1" "x2" "x3" "x4" "x5" "x6"} -entrybg white
+    LabelEntry $row.c -label [G_msg " thin legend by "] -textvariable DmRaster::opt($id,legthin) \
+                    -width 6 -entrybg white
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
     
     # drape name
     set row [ frame $frm.drape ]
     Button $row.a -text [G_msg "Raster to drape over 1st map:"] \
-           -command "DmRaster::select_map $id"
+           -command "DmRaster::select_map2 $id"
     Entry $row.b -width 35 -text " $opt($id,drapemap)" \
-          -textvariable DmRaster::opt($id,drapemap)
+          -textvariable DmRaster::opt($id,drapemap) \
+          -background white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
     set row [ frame $frm.drapeinfo ]
@@ -112,8 +125,9 @@ proc DmRaster::options { id frm } {
     checkbutton $row.a -text [G_msg "show legend for drape map in monitor"] -variable \
             DmRaster::opt($id,legend2) 
     ComboBox $row.b -padx 2 -width 4 -textvariable DmRaster::opt($id,legmon2) \
-            -values {"x0" "x1" "x2" "x3" "x4" "x5" "x6"}
-    LabelEntry $row.c -label [G_msg " thin legend by "] -textvariable DmRaster::opt($id,legthin2) -width 6
+            -values {"x0" "x1" "x2" "x3" "x4" "x5" "x6"} -entrybg white
+    LabelEntry $row.c -label [G_msg " thin legend by "] -textvariable DmRaster::opt($id,legthin2) \
+            -width 6 -entrybg white
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
     
@@ -129,7 +143,8 @@ proc DmRaster::options { id frm } {
     Label $row.a -text " Set background color (colored null value cells)"
     ComboBox $row.b -padx 2 -width 10 -textvariable DmRaster::opt($id,bkcolor) \
                     -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
-                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"}
+                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} \
+                    -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 }
@@ -139,8 +154,8 @@ proc DmRaster::save { tree depth node } {
     
     set id [Dm::node_id $node]
 
-
-    foreach key { _check map overlay legend } {
+    foreach key { _check map drapemap querytype rastquery rasttype bkcolor overlay \
+            legend legmon legthin legend2 legmon2 legthin2 } {
         Dm::rc_write $depth "$key $opt($id,$key)"
     } 
 }
@@ -292,8 +307,18 @@ proc DmRaster::duplicate { tree parent node id } {
     set opt($count,_check) $opt($id,_check)
 
     set opt($count,map) "$opt($id,map)" 
+    set opt($count,drapemap) "$opt($id,drapemap)" 
+    set opt($count,querytype) "$opt($id,querytype)" 
+    set opt($count,rastquery) "$opt($id,rastquery)" 
+    set opt($count,rasttype) "$opt($id,rasttype)" 
+    set opt($count,bkcolor) "$opt($id,bkcolor)" 
     set opt($count,overlay) $opt($id,overlay)
     set opt($count,legend)  $opt($id,legend)
+    set opt($count,legmon) "$opt($id,legmon)" 
+    set opt($count,legthin) "$opt($id,legthin)" 
+    set opt($count,legend2)  $opt($id,legend)
+    set opt($count,legmon2) "$opt($id,legmon)" 
+    set opt($count,legthin2) "$opt($id,legthin)" 
 
     incr count
     return $node
