@@ -1,3 +1,4 @@
+# translation of grasslibs_it.po to
 # translation of grasslibs_it.po to Italian
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
@@ -293,7 +294,7 @@ msgstr "Non posso creare l'elemento mapset %s (%s)"
 msgid ""
 "WHERE conditions of SQL statement without 'where' keyword. (example: income "
 "< 1000 and inhab >= 10000)"
-msgstr ""
+msgstr "La clausola WHERE del comando SQL manca della parola chiave 'where'. (esempio: income < 1000 and inhab >=10000)"
 
 #: ../lib/gis/parser.c:326 ../lib/gis/parser.c:340
 msgid "Name of input raster"
@@ -553,7 +554,7 @@ msgstr "Posizione sconosciuta"
 
 #: ../lib/gis/adj_cellhd.c:69 ../lib/gis/adj_cellhd.c:166
 msgid "Illegal n-s resolution value"
-msgstr ""
+msgstr "Il valore di risoluzione n-s non è corretto"
 
 #: ../lib/gis/adj_cellhd.c:74 ../lib/gis/adj_cellhd.c:173
 msgid "Illegal row value"
@@ -561,7 +562,7 @@ msgstr "Valore di riga non valido"
 
 #: ../lib/gis/adj_cellhd.c:79 ../lib/gis/adj_cellhd.c:180
 msgid "Illegal e-w resolution value"
-msgstr ""
+msgstr "Il valore di risoluzione e-w non è corretto"
 
 #: ../lib/gis/adj_cellhd.c:84 ../lib/gis/adj_cellhd.c:187
 msgid "Illegal col value"
@@ -789,7 +790,7 @@ msgstr "che non è presente"
 #: ../lib/gis/get_cellhd.c:82
 #, c-format
 msgid "whose header file can't be opened"
-msgstr ""
+msgstr "il cui header file non può essere aperto"
 
 #: ../lib/gis/get_cellhd.c:92
 #, c-format
@@ -799,7 +800,7 @@ msgstr "Non riesco ad aprire il file di intestazione per [%s in %s]"
 #: ../lib/gis/get_cellhd.c:108
 #, c-format
 msgid "It is a reclass of [%s in %s] whose header file is invalid\n"
-msgstr ""
+msgstr "È un reclass di [%s in %s] il cui header file non è valido\n"
 
 #: ../lib/gis/get_cellhd.c:112
 #, c-format
@@ -814,7 +815,7 @@ msgstr "Impossibile aprire il file %s in %s"
 #: ../lib/gis/get_datum.c:107
 #, c-format
 msgid "Error reading datum shift parameters for %s from table"
-msgstr ""
+msgstr "Errore in lettura dei parametri per il datum shift per %s dalla table"
 
 #: ../lib/gis/get_datum.c:115
 #, c-format
@@ -1419,55 +1420,56 @@ msgstr "duplicato campo alto"
 
 #: ../lib/gis/rd_cellhd.c:182
 msgid "duplicate bottom field"
-msgstr ""
+msgstr "campo bottom duplicato"
 
 #: ../lib/gis/rd_cellhd.c:191
 msgid "duplicate e-w resolution field"
-msgstr ""
+msgstr "il campo della risoluzione e-w è duplicato"
 
 #: ../lib/gis/rd_cellhd.c:202
 msgid "duplicate 3D e-w resolution field"
-msgstr ""
+msgstr "il campo della risoluzione 3D e-w è duplicato"
 
 #: ../lib/gis/rd_cellhd.c:213
 msgid "duplicate n-s resolution field"
-msgstr ""
+msgstr "il campo della risoluzione n-s è duplicato"
 
 #: ../lib/gis/rd_cellhd.c:224
 msgid "duplicate 3D n-s resolution field"
-msgstr ""
+msgstr "il campo della risoluzione 3d n-s è duplicato"
 
 #: ../lib/gis/rd_cellhd.c:235
 msgid "duplicate t-b resolution field"
-msgstr ""
+msgstr "campo risoluzione t-b duplicato"
 
 #: ../lib/gis/rd_cellhd.c:246
 msgid "duplicate rows field"
-msgstr ""
+msgstr "campo righe duplicato"
 
 #: ../lib/gis/rd_cellhd.c:257
 msgid "duplicate 3D rows field"
-msgstr ""
+msgstr "campo righe 3D duplicato"
 
 #: ../lib/gis/rd_cellhd.c:268
 msgid "duplicate cols field"
-msgstr ""
+msgstr "campo colonne duplicato"
 
 #: ../lib/gis/rd_cellhd.c:279
 msgid "duplicate 3D cols field"
-msgstr ""
+msgstr "campo colonne 3D duplicato"
 
 #: ../lib/gis/rd_cellhd.c:290
 msgid "duplicate depths field"
-msgstr ""
+msgstr "campo profondità duplicato"
 
 #: ../lib/gis/rd_cellhd.c:301
 msgid "duplicate format field"
-msgstr ""
+msgstr "campo formato duplicato"
 
 #: ../lib/gis/rd_cellhd.c:310
+#, fuzzy
 msgid "duplicate compressed field"
-msgstr ""
+msgstr "campo compressed duplicato"
 
 #: ../lib/gis/rd_cellhd.c:321
 msgid "north field missing"
@@ -1813,8 +1815,9 @@ msgstr "Connessione fallita.\n"
 
 #: ../lib/raster/io.c:392
 #, c-format
+#, fuzzy
 msgid "Can't stat %s\n"
-msgstr ""
+msgstr "Non è possibile trovare %s\n"
 
 #: ../lib/raster/io.c:408
 #, c-format
@@ -2156,7 +2159,7 @@ msgstr "Il valore predefinito del database non è impostato"
 #: ../lib/vector/Vlib/field.c:311
 #, c-format
 msgid "Requested dblink %d, maximum link number %d"
-msgstr ""
+msgstr "Richiesto dblink %d, massimo numero di link %d"
 
 #: ../lib/vector/Vlib/field.c:391
 msgid "Cannot open OGR DBMI driver."
@@ -2291,8 +2294,9 @@ msgstr "Non posso aprire il nuovo vettoriale %s"
 
 #: ../lib/vector/Vlib/open.c:564
 #, c-format
+#, fuzzy
 msgid "Could not stat file '%s'"
-msgstr ""
+msgstr "Non è possibile trovare il file %s\n"
 
 #: ../lib/vector/Vlib/open.c:658
 msgid "Size of 'coor' file differs from value saved in topo file."
