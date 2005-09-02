@@ -283,12 +283,12 @@ int pj_get_string(struct pj_info *info, char *str)
 	 * function rather than reading a PROJ_INFO file       PK */
 	s = str;
 	while (s = strtok(s, " \t\n")) {
-	    if (strcmp(s, "+unfact=") == 0) {
+	    if (strncmp(s, "+unfact=", 8) == 0) {
 		s = s + 8;
 		info->meters = atof(s);
 	    }
 	    else {
-		if (strcmp(s, "+") == 0)
+		if (strncmp(s, "+", 1) == 0)
 		    ++s;
 		if (nsize = strlen(s)) {
 		    if (nopt >= MAX_PARGS) {
@@ -296,12 +296,12 @@ int pj_get_string(struct pj_info *info, char *str)
 			G_fatal_error("Option input overflowed option table");
 		    }
 
-		    if (strcmp("zone=", s) == 0) {
+		    if (strncmp("zone=", s, 5) == 0) {
 			sprintf(zonebuff, "%s", s + 5);
 			sscanf(zonebuff, "%d", &(info->zone));
 		    }
 
-		    if (strcmp("proj=", s) == 0) {
+		    if (strncmp("proj=", s, 5) == 0) {
 			sprintf(info->proj, "%s", s + 5);
 			if (strcmp(info->proj, "ll") == 0)
 			    sprintf(buffa, "proj=latlong");
