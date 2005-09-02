@@ -373,7 +373,7 @@ void normalDefBilin(double **N, double *TN, double *Q, double **obsVect,
 /*----------------------------------------------------------------------------*/
 /* Normal system correction - Introduzione della correzione dovuta alle 
  * pseudosservazioni (Tykonov) - GRADIENTE - */
-
+/*
 void nCorrectGrad(double **N, double lambda, int xNum, int yNum, double deltaX,
 		  double deltaY)
 {
@@ -403,6 +403,37 @@ void nCorrectGrad(double **N, double lambda, int xNum, int yNum, double deltaX,
 	    N[i][2 * yNum] += alpha[1];
     }
 }
+*/
+
+/*1-Delta discretization*/
+void nCorrectGrad (double **N,double lambda,int xNum,int yNum,double deltaX,double deltaY) {
+
+	int i;
+	int parNum;
+
+	double alpha[3];
+	double lambdaX,lambdaY;
+
+	lambdaX = lambda * (deltaY/deltaX);
+	lambdaY = lambda * (deltaX/deltaY);
+
+	parNum = xNum * yNum;
+
+	alpha[0] =   2 * lambdaX  + 2 * lambdaY;
+	alpha[1] = - lambdaX;
+    alpha[2] = - lambdaY;
+
+	for (i = 0; i < parNum; i++) {
+		N[i][0] += alpha[0];
+
+		if ((i + 1) < parNum)
+			N[i][1] += alpha[2];
+
+		if ((i + 1 * yNum) < parNum)
+			N[i][1 * yNum] += alpha[1];
+	}
+}
+
 
 
 

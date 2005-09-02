@@ -6,6 +6,11 @@
  * 
  * Politecnico di Milano - Facolta' di Como
  * U. Longoni - M. Cannata
+ *
+ * Modified - 02/09/05 
+ * Politecnico di Milano - Facolta' di Como
+ * R. Antolin - M. Reguzzoni
+ *
  */
 
 #include <stdio.h>
