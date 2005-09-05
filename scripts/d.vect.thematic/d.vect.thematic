@@ -2,7 +2,7 @@
 #
 ############################################################################
 #
-# MODULE:       d.vect.thematic
+# MODULE:		d.vect.thematic
 # AUTHOR(S):	Michael Barton, Arizona State University with contributions
 #               by Martin Landa, Jachym Cepicky, and Daniel Calvelo Aros
 # PURPOSE:	    Displays thematic vector map with graduated colors
@@ -101,8 +101,8 @@
 #%option
 #% key: colorscheme
 #% type: string
-#% description: Color scheme for graduated color mapping (select 'single color' for graduated point display)
-#% options: blue-red,red-blue,green-red,red-green,blue-green,green-blue,cyan-yellow,yellow-cyan,custom gradient,single color
+#% description: Color scheme for graduated color mapping (single color for graduated point display)
+#% options: blue-red,red-blue,green-red,red-green,blue-green,custom gradient,single color
 #% answer: blue-red
 #% required : yes
 #%end
@@ -110,21 +110,21 @@
 #% key: singlecolor
 #% type: string
 #% description: Color for graduated points map (grass named color or R:G:B triplet)
-#% answer: 255:0:0
+#% answer: 250:0:0
 #% required : no
 #%end
 #% option
 #% key: startcolor
 #% type: string
 #% description: Beginning color for custom color gradient. Must be expressed as R:G:B triplet.
-#% answer: 255:0:0
+#% answer: 250:0:0
 #% required : no
 #%end
 #% option
 #% key: endcolor
 #% type: string
 #% description: Ending color for custom color gradient. Must be expressed as R:G:B triplet
-#% answer: 0:0:255
+#% answer: 0:0:250
 #% required : no
 #%end
 #% option
@@ -158,8 +158,6 @@
 #%key: g
 #%description: Save thematic map commands to group file for GIS Manager
 #%end
-
-GIS_OPT_pslegend="leg.psmap"
  
 
 if  [ -z $GISBASE ] ; then
@@ -184,7 +182,6 @@ if [ "$AWK" = "" ] ; then
 fi
 
 # setting environment, so that awk works properly in all languages
-unset LC_ALL
 export LC_NUMERIC=C
 
 # check column type
@@ -221,13 +218,6 @@ fi
 TMP3="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP3" ] ; then
     echo "ERROR: unable to create temporary file for group" 1>&2
-    exit 1
-fi
-
-# Create temporary file to commands for ps.map legend file
-TMP4="`g.tempfile pid=$$`"
-if [ $? -ne 0 ] || [ -z "$TMP4" ] ; then
-    echo "ERROR: unable to create temporary file for ps.map legend" 1>&2
     exit 1
 fi
 
@@ -318,7 +308,6 @@ case "$GIS_OPT_themecalc" in
 "interval" )
     numint=$GIS_OPT_nint
     step=`echo $min $max $numint | awk '{print (($2 - $1) / $3)}'`
-    pointstep=`echo $GIS_OPT_maxsize $ptsize $numint | awk '{print (($1 - $2) / $3)}'`
     breakpoints=`echo $min $max $numint | awk '{for(i=0;i<$3;i++){printf $1+($2-$1)/$3*i " "}printf $2}'`
     annotations=""
     ;;
@@ -329,7 +318,6 @@ case "$GIS_OPT_themecalc" in
     breakpoints=`echo $min $max $mean $sd | awk '{printf $1;for(i=-2;i<=2;i++){ith=$3+i*$4;if($1<ith && $2>ith){printf " " ith}}print " " $2}'`
     annotations=`echo $min $max $mean $sd | awk '{printf "";for(i=-2;i<=2;i++){ith=$3+i*$4;if($1<ith && $2>ith){if(i!=0){printf ";"((i<0)?"":"+") i "sd"} }}print ";"}'`
     numint=`echo $breakpoints | awk '{print NF-1}'`
-    pointstep=`echo $GIS_OPT_maxsize $ptsize $numint | awk '{print (($1 - $2) / $3)}'`
     ;;
 
 "quartiles" )
@@ -337,7 +325,6 @@ case "$GIS_OPT_themecalc" in
     # one for each quartile
     breakpoints="$min $q1 $q2 $q3 $max"
     annotations=" q1; q2; q3; q4"
-    pointstep=`echo $GIS_OPT_maxsize $ptsize $numint | awk '{print (($1 - $2) / $3)}'`
     ;;
 
 "custom breaks" )
@@ -348,13 +335,15 @@ case "$GIS_OPT_themecalc" in
 	fi
     numint=`echo $breakpoints|awk '{print NF-1}'`
     annotations=""
-    pointstep=`echo $GIS_OPT_maxsize $ptsize $numint | awk '{print (($1 - $2) / $3)}'`
     ;;
 
  "*")
     echo "Unknown themecalc type"
+    cleanup
     exit
 esac
+
+pointstep=`echo $GIS_OPT_maxsize $ptsize $numint | awk '{print (($1 - $2) / ($3-1))}'`
 
 # legend title
 echo "color black" > "$TMP2"
@@ -365,13 +354,6 @@ echo "size 1.5 1.8" >> "$TMP2"
 echo "move 4 90" >> "$TMP2"
 echo "text Value range: $min - $max" >> "$TMP2"
 
-echo "text 1% 95% Thematic map legend for column $GIS_OPT_column of map $GIS_OPT_map" >> "$TMP4"
-echo "  ref bottom left" >> $TMP4
-echo "end" >> $TMP4
-echo "text 4% 90% Value range: $min - $max" >> "$TMP4"
-echo "  ref bottom left" >> $TMP4
-echo "end" >> $TMP4
-
 echo ""
 echo ""
 echo "Thematic map legend for column $GIS_OPT_column of map $GIS_OPT_map"
@@ -381,102 +363,55 @@ echo "Value range: $min - $max"
 # graduated color thematic mapping
 
 if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
-
+    
     # set color schemes for graduated color maps
-    if [ "$GIS_OPT_colorscheme" = "blue-red" ] ; then
-        color1=0
-        color2=0
-        color3=255
-        endcolor1=255
-        endcolor2=0
-        endcolor3=0
-    fi
-    
-    if [ "$GIS_OPT_colorscheme" = "red-blue" ] ; then
-        color1=255
-        color2=0
-        color3=0
-        endcolor1=0
-        endcolor2=0
-        endcolor3=255
-    fi
-    
-    if [ "$GIS_OPT_colorscheme" = "green-red" ] ; then
-        color1=0
-        color2=255
-        color3=0
-        endcolor1=255
-        endcolor2=0
-        endcolor3=0
-    fi
-    
-    if [ "$GIS_OPT_colorscheme" = "red-green" ] ; then
-        color1=255
-        color2=0
-        color3=0
-        endcolor1=0
-        endcolor2=255
-        endcolor3=0
-    fi
-    
-    if [ "$GIS_OPT_colorscheme" = "blue-green" ] ; then
-        color1=0
-        color2=0
-        color3=255
-        endcolor1=0
-        endcolor2=255
-        endcolor3=0
-    fi
-    
-    if [ "$GIS_OPT_colorscheme" = "green-blue" ] ; then
-        color1=0
-        color2=255
-        color3=0
-        endcolor1=0
-        endcolor2=0
-        endcolor3=255
-    fi
-    
-    if [ "$GIS_OPT_colorscheme" = "cyan-yellow" ] ; then
-        color1=0
-        color2=255
-        color3=255
-        endcolor1=255
-        endcolor2=255
-        endcolor3=0
-    fi
-    
-    if [ "$GIS_OPT_colorscheme" = "yellow-cyan" ] ; then
-        color1=255
-        color2=255
-        color3=0
-        endcolor1=255
-        endcolor2=255
-        endcolor3=0
-    fi
-    if [ "$GIS_OPT_colorscheme" = "custom gradient" ] ; then
-	color1=`echo $GIS_OPT_startcolor | cut -d':' -f1`
-	color2=`echo $GIS_OPT_startcolor | cut -d':' -f2`
-	color3=`echo $GIS_OPT_startcolor | cut -d':' -f3`
-	endcolor1=`echo $GIS_OPT_endcolor | cut -d':' -f1`
-	endcolor2=`echo $GIS_OPT_endcolor | cut -d':' -f2`
-	endcolor3=`echo $GIS_OPT_endcolor | cut -d':' -f3`
-    fi
-    
+    case "$GIS_OPT_colorscheme" in
+	"blue-red" )
+	    startc="0:0:250"
+	    endc="250:0:0"
+	    ;;    
+        "red-blue" )
+	    startc="250:0:0"
+	    endc="0:0:250"
+	    ;;
+        "green-red" )
+	    startc="0:250:0"
+	    endc="250:0:0"
+	    ;;
+        "red-green" )
+	    startc="250:0:0"
+	    endc="0:250:0"
+	    ;;
+        "blue-green" )
+	    startc="0:0:250"
+	    endc="0:250:0"
+	    ;;
+        "custom gradient" )
+	    startc="$GIS_OPT_startcolor"
+	    endc="$GIS_OPT_endcolor"
+	    ;;
+        "*")
+	    echo "This should not happen: gparser error. Unknown color scheme $GIS_OPT_colorscheme"
+	    cleanup
+	    exit
+	    ;;
+    esac
+
+    for i in 1 2 3; do
+	eval color$i=`echo $startc | cut -d':' -f$i`
+	eval endcolor$i=`echo $endc | cut -d':' -f$i`
+    done
+
     clrstep1=`expr \( $color1 - $endcolor1 \) / $numint`
     clrstep2=`expr \( $color2 - $endcolor2 \) / $numint`
     clrstep3=`expr \( $color3 - $endcolor3 \) / $numint`
 
-    themecolor="$color1:$color2:$color3"
+    themecolor="$startc"
 
     # display graduated color themes
     if [ "$GIS_OPT_themecalc" = "interval" ] ; then
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by $numint intervals of $step" >> "$TMP2"
-
-        echo "text 4% 87% Mapped by $numint intervals of $step" >> "$TMP4"
-        echo "  ref bottom left" >> $TMP4
-        echo "end" >> $TMP4
 
         echo "Mapped by $numint intervals of $step"
     fi
@@ -487,10 +422,6 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by standard deviation units of $sd (mean =$mean)" >> "$TMP2"
 
-        echo "text 4% 87% Mapped by standard deviation units of $sd (mean =$mean)" >> "$TMP4"
-        echo "  ref bottom left" >> $TMP4
-        echo "end" >> $TMP4
-
         echo "Mapped by standard deviation units of $sd (mean =$mean)"
     fi
 
@@ -499,12 +430,6 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
 
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by quartiles (median =$q2)" >> "$TMP2"
-
-        echo "text 4% 87% Mapped by quartiles (median =$q2)" >> "$TMP4"
-        echo "  ref bottom left" >> $TMP4
-        echo "end" >> $TMP4
-
-	
 
         echo "Mapped by quartiles (median =$q2)"
     fi
@@ -517,21 +442,6 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
     echo "text =====" >> "$TMP2"
     echo "move 14 80" >> "$TMP2"
     echo "text ============" >> "$TMP2"
-
-
-    echo "text 4% 83 Color" >> "$TMP4"
-    echo "  ref bottom left" >> $TMP4
-    echo "end" >> $TMP4
-    echo "text 14% 83 Value" >> "$TMP4"
-    echo "  ref bottom left" >> $TMP4
-    echo "end" >> $TMP4
-    echo "text 4% 80 =====" >> "$TMP4"
-    echo "  ref bottom left" >> $TMP4
-    echo "end" >> $TMP4
-    echo "text 14% 80 ============" >> "$TMP4"
-    echo "  ref bottom left" >> $TMP4
-    echo "end" >> $TMP4
-
 
     echo ""
     echo "Color(R:G:B)" "Value" | awk '{print $1 "\t" $2}'
@@ -591,22 +501,8 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         echo "8 $line3" >> "$TMP2"
         echo "5 $line3" >> "$TMP2"
         echo "color black" >> "$TMP2"
-	echo "move 5 $line1" >> "$TMP2"
-	echo "draw 8 $line1" >> "$TMP2"
-	echo "draw 8 $line3" >> "$TMP2"
-	echo "draw 5 $line3" >> "$TMP2"
-	echo "draw 5 $line1" >> "$TMP2"
         echo "move 14 $line2" >> "$TMP2"
         echo "text $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP2"
-
-        echo "rectangle 5% $line1% 8% $line3%" >> "$TMP4"
-	echo "  color black" >> "$TMP4"
-	echo "  fcolor $themecolor" >> "$TMP4"
-	echo "end" >> "$TMP4"
-        echo "text 14% $line3% $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP4"
-        echo "  ref bottom left" >> $TMP4
-        echo "end" >> $TMP4
-
 
         echo $themecolor@$rangemin@$rangemax@$extranote@$openbracket@$closebracket | awk -F@ '{print $1 "\t\t" $5$2" - "$3$6" "$4}'
         # update color to database?
@@ -732,17 +628,16 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
     themecolor=$GIS_OPT_singlecolor
     linecolor="black"
     
-    i=1
-    first="true"
-    while [ $i -le $numint ]     
+    i=$numint
+    ptsize=$GIS_OPT_maxsize
+    while [ $i -ge 1 ]     
         do 
         if [ "$GIS_FLAG_m" -eq 1 ] ; then
         # math notation
-           if [ "$first" = "true" ] ; then
+           if [ "$i" = "1" ] ; then
                 closebracket="]"
                 openbracket="["
                 mincomparison=">="
-                first="false"
             else
                 closebracket="]"
                 openbracket="]"
@@ -751,9 +646,8 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         else
             closebracket="" 
             openbracket=""
-            if [ "$first" = "true" ] ; then
+            if [ "$i" = "1" ] ; then
                 mincomparison=">="
-                first="false"
             else
                 mincomparison=">"            
             fi
@@ -845,11 +739,11 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
             where="$sqlwhere" \
             color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
 
-        ptsize=`echo $ptsize $pointstep | awk '{print $1 + $2}'`
+        ptsize=`echo $ptsize $pointstep | awk '{print $1 - $2}'`
 
         let line1=line1-$lineht
         let line2=line2-$lineht
-        let i=i+1
+        let i=i-1
     done
 
 fi
@@ -874,10 +768,5 @@ if [ "$GIS_FLAG_g" -eq 1 ] ; then
     cat $TMP3 > $group".dm"
 fi
 
-# Create ps.map legend file
-echo "end" >> "$TMP4"
-if [ "$GIS_OPT_pslegend" ] ; then
-    cat $TMP4 > $GIS_OPT_pslegend
-fi
 
 cleanup
