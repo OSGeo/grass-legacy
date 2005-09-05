@@ -45,7 +45,7 @@ Supported is a limited set of SQL functions and operators.
 <p> Aggregate functions (sum, count, min, max,...) are NOT currently supported in SELECT clauses. </p>
 <p> Mathematic functions (sin, cos, exp, log,...) are NOT currently supported in expressions. </p>
 <p> Conditions allow boolean expressions using the AND, OR and NOT operators, with the usual precedence rules. </p>
-<p> NULLs can be tested by IS NULL in conditions. </p>
+<p> NULLs can be tested by 'colname IS NULL' in conditions. The negation is 'colname NOT NULL'.</p>
 
 <H2>NOTES</H2>
 
@@ -77,6 +77,33 @@ Select all attributes from table where str1 column values are not 'No Name':
  echo "SELECT * FROM archsites WHERE str1 <> 'No Name'" | db.select
 </pre>
 <p>
+
+<p>example of null handling:
+<pre>v.db.addcol map=roads col='nulltest int'</pre>
+<pre>v.db.update map=roads col=nulltest value=1 where='cat >2'</pre>
+<pre>d.vect roads where='nulltest is null'</pre>
+<pre>v.db.update map=roads col=nulltest value=2 where='cat <=2'</pre>
+</p>
+
+<p>examples of complex expressions in updates (using v.db.* modules):
+<pre>v.db.addcol map=roads col='exprtest double'</pre>
+<pre>v.db.update map=roads col=exprtest value=cat/nulltest</pre>
+<pre>v.db.update map=roads col=exprtest value=cat/nulltest+cat where=cat=1</pre>
+</p>
+
+<p>examples of complex expressions in updates (using db.* modules):
+<pre>echo "UPDATE roads SET exprtest=null"</pre>
+<pre>echo "UPDATE roads SET exprtest=cat/2" | db.execute</pre>
+<pre>echo "UPDATE roads SET exprtest=cat/2+cat/3" | db.execute</pre>
+<pre>echo "UPDATE roads SET exprtest=NULL WHERE cat>2" | db.execute</pre>
+<pre>echo "UPDATE roads SET exprtest=cat/3*(cat+1) WHERE exprtest IS NULL" | db.execute"</pre>
+</p>
+
+
+<p>You actually don't always have to create/update columns with expressions, but you can use them directly in other commands:
+<pre>d.vect roads where='(cat/3*(cat+1))>8'</pre>
+<pre>d.vect roads where='cat>exprtest'</pre>
+</p>
 
 <h2>SEE ALSO</h2>
 <em>
