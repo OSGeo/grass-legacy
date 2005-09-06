@@ -56,7 +56,7 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 	if ( Symb == NULL ) { 
 	    G_warning ("Cannot read symbol, using default icon");
 	}
-	symbol_save ( Symb, s, &(vector.layer[vec].color),
+	symbol_save ( Symb, &(vector.layer[vec].color),
 	                 &(vector.layer[vec].fcolor), sname );
 	vector.layer[vec].symbol_ps = G_store ( sname );
     }

@@ -63,8 +63,7 @@ symbol_draw ( char *name, double x, double y, double size, double rotate, double
 
 /* store symbol in PS file, scaled to final size and drawn with final colors */
 int 
-symbol_save ( SYMBOL *Symb, double size, PSCOLOR *color, PSCOLOR *fcolor,
-              char *name  ) 
+symbol_save ( SYMBOL *Symb, PSCOLOR *color, PSCOLOR *fcolor, char *name )
 {
     SYMBPART *part; 
     SYMBCHAIN *chain;
