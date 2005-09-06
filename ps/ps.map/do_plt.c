@@ -119,7 +119,7 @@ int do_plt (int after_masking)
 	    sprintf( sname, "POINTSYMBOL%d", snum);
             Symb = S_read ( symb );
             if ( Symb == NULL ) G_warning ("Cannot read symbol, using default icon");
-	    symbol_save ( Symb, size, &pcolor, &pfcolor, sname );
+	    symbol_save ( Symb, &pcolor, &pfcolor, sname );
             symbol_draw ( sname, x, y, size, 0, width);
 						
             snum++;    

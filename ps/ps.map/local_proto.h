@@ -205,7 +205,7 @@ int show_scale(void);
 int symbol_draw ( char *, double, double, double, double, double );
 #ifdef GRASS_SYMB_H
 #ifdef PS_COLOR_H
-int symbol_save ( SYMBOL *, double, PSCOLOR *, PSCOLOR *, char *);
+int symbol_save ( SYMBOL *, PSCOLOR *, PSCOLOR *, char *);
 #endif
 #endif
 /* textbox.c */
