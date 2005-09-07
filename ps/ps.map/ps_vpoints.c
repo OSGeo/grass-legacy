@@ -6,25 +6,37 @@
 */
 
 #include "Vect.h"
+#include "dbmi.h"
 #include "symbol.h"
+#include "glocale.h"
+
 #include "ps_info.h"
 #include "clr.h"
 #include "local_proto.h"
 #include "vector.h"
 
 int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
-{   
+{
     struct line_pnts *Points, *nPoints, *pPoints;
     int k, line, cat, nlines, ret;
     struct line_cats *Cats; 
 
     char eps[50], epsfile[1024], sname[100];
     double nn, ee;
-    double s, x, y, xt, yt;
+    double size, x, y, xt, yt;
     double llx, lly, urx, ury;
     int x_int, y_int, eps_exist;
     SYMBOL *Symb;
     VARRAY *Varray = NULL;
+
+    /* Attributes if sizecol is used */
+    int i, nrec, ctype;
+    struct field_info *Fi;
+    dbDriver *Driver;
+    dbCatValArray cvarr;
+    int size_val_int;
+    double size_val;
+
 
     /* Create vector array if required */
     if ( vector.layer[vec].cats != NULL || vector.layer[vec].where != NULL ) {
@@ -38,7 +50,7 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 	}
 	G_debug ( 3, "%d items selected for vector %d", ret, vec );
     }
-    
+
     /* allocate memory for coordinates */
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct ();
@@ -47,20 +59,18 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
     Vect_set_constraint_region(P_map, PS.w.north, PS.w.south, PS.w.east, PS.w.west,
 	                       PORT_DOUBLE_MAX, -PORT_DOUBLE_MAX);
 
-    s = vector.layer[vec].size;
-
     /* Read symbol */
     if ( vector.layer[vec].symbol != NULL ) { 
         sprintf( sname, "SITESYMBOL%d", vec);
         Symb = S_read ( vector.layer[vec].symbol );
 	if ( Symb == NULL ) { 
-	    G_warning ("Cannot read symbol, using default icon");
+	    G_warning (_("Cannot read symbol, using default icon"));
 	}
 	symbol_save ( Symb, &(vector.layer[vec].color),
-	                 &(vector.layer[vec].fcolor), sname );
+			 &(vector.layer[vec].fcolor), sname );
 	vector.layer[vec].symbol_ps = G_store ( sname );
     }
-    
+
 
     /* if eps file is specified as common for all points then
        read bbox and save eps to PS file */
@@ -74,20 +84,59 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 	}
     }
 
+
+    /* Load attributes if sizecol used */
+    if(vector.layer[vec].sizecol != NULL) {
+	db_CatValArray_init ( &cvarr );
+
+	Fi = Vect_get_field( P_map, vector.layer[vec].field );
+	if ( Fi == NULL ) {
+	    G_fatal_error(_("Cannot get layer info for vector map"));
+	}
+
+	Driver = db_start_driver_open_database(Fi->driver, Fi->database);
+	if (Driver == NULL)
+	    G_fatal_error(_("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
+
+	/* Note do not check if the column exists in the table because it may be expression */
+
+   /* TODO: only select values we need instead of all in column */
+	nrec = db_select_CatValArray(Driver, Fi->table, Fi->key, 
+			vector.layer[vec].sizecol, NULL, &cvarr );
+	G_debug (3, "nrec = %d", nrec );
+
+	ctype = cvarr.ctype;
+	if ( ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE )
+	    G_fatal_error (_("Column type not supported"));
+
+	if ( nrec < 0 ) G_fatal_error (_("Cannot select data from table"));
+	G_debug(2, "\n%d records selected from table", nrec);
+
+	db_close_database_shutdown_driver(Driver);
+
+	for ( i = 0; i < cvarr.n_values; i++ ) {
+	    if ( ctype == DB_C_TYPE_INT ) {
+		G_debug (4, "cat = %d val = %d", cvarr.value[i].cat, cvarr.value[i].val.i );
+	    } else if ( ctype == DB_C_TYPE_DOUBLE ) {
+		G_debug (4, "cat = %d val = %f", cvarr.value[i].cat, cvarr.value[i].val.d );
+	    }
+	}
+    }
+
     /* read and plot vectors */
     k = 0;
     nlines = Vect_get_num_lines ( P_map );
     for ( line = 1; line <= nlines; line++ ) {
 	int ret;
 	if (0 > (ret = Vect_read_line(P_map, Points, Cats, line))) {
-	    if (ret == -1) G_warning("Read error in vector file\n");
+	    if (ret == -1) G_warning(_("Read error in vector file"));
 	    break;
 	}
 	if ( !(ret & GV_POINTS) ) continue;
 	if ( !(ret & vector.layer[vec].ltype) ) continue;
-        
+
 	if ( Varray != NULL && Varray->c[line] == 0 ) continue; /* is not in array */
-	
+
 	pPoints = Points; nPoints=0;
 	Vect_cat_get( Cats, 1, &cat);
 
@@ -101,20 +150,50 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 	x = (double) x_int / 10.;
 	y = (double) y_int / 10.;
 
+	if( vector.layer[vec].sizecol == NULL)
+	    size = vector.layer[vec].size;
+	else {  /* get value from sizecol column */
+
+	    if( ctype == DB_C_TYPE_INT ) {
+		ret = db_CatValArray_get_value_int(&cvarr, cat, &size_val_int);
+		if ( ret != DB_OK ) {
+		    G_warning(_("No record for cat = %d"), cat );
+		    continue;
+		}
+		size_val = (double)size_val_int;
+	    }
+
+	    if( ctype == DB_C_TYPE_DOUBLE ) {
+		ret = db_CatValArray_get_value_double(&cvarr, cat, &size_val);
+		if ( ret != DB_OK ) {
+		    G_warning(_("No record for cat = %d"), cat );
+		    continue;
+		}
+	    }
+
+	    if (size_val < 0.0) {    /* allow size=0? (Y) */
+		G_warning(_("Invalid column size (%.3f) for category %d."), size_val, cat);
+		continue;
+	    }
+
+	    size = size_val * vector.layer[vec].scale;
+	    G_debug(3, "    dynamic symbol size = %.2f", size);
+	}
+
 	if (vector.layer[vec].epstype == 1)  /* draw common eps */ 
 	{
 	    /* calculate translation */
-	    eps_trans (llx, lly, urx, ury, x, y, s, vector.layer[vec].rotate, &xt, &yt);
-	    eps_draw_saved ( PS.fp, eps, xt, yt, s, vector.layer[vec].rotate);
+	    eps_trans (llx, lly, urx, ury, x, y, size, vector.layer[vec].rotate, &xt, &yt);
+	    eps_draw_saved ( PS.fp, eps, xt, yt, size, vector.layer[vec].rotate);
 	}
 	else if ( vector.layer[vec].epstype == 2)  /* draw epses */ 
 	{
 	    sprintf (epsfile, "%s%d%s", vector.layer[vec].epspre, cat, vector.layer[vec].epssuf);
 	    if ( (eps_exist = eps_bbox( epsfile, &llx, &lly, &urx, &ury)) )
 	    {
-		eps_trans (llx, lly, urx, ury, x, y, s, vector.layer[vec].rotate, &xt, &yt);
+		eps_trans (llx, lly, urx, ury, x, y, size, vector.layer[vec].rotate, &xt, &yt);
 
-		eps_draw ( PS.fp, epsfile, xt, yt, s, vector.layer[vec].rotate); 
+		eps_draw ( PS.fp, epsfile, xt, yt, size, vector.layer[vec].rotate); 
 	    }
 	}
 
@@ -123,12 +202,11 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 		    && !eps_exist ) )   
 	{
 	    if ( Symb != NULL ) { 
-		symbol_draw ( sname, x, y, vector.layer[vec].size, vector.layer[vec].rotate, 
-				vector.layer[vec].width);
+		symbol_draw ( sname, x, y, size, vector.layer[vec].rotate, 
+		    vector.layer[vec].width);
 	    }
-	}	
+	}
     }
     fprintf(PS.fp, "\n");
     return 0;
 }
-

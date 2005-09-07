@@ -5,6 +5,7 @@
 ** Modified by: Paul W. Carlson		March 1992
 ** Modified by: Janne Soimasuo August 1994 line_cat added
 ** Modified by: Radim Blazek Jan 2000 acolor, label added
+** Modified by: Hamish Bowman Sept 2005, sizecol, scale added
 */
 #include <stdlib.h>
 #include <string.h>
@@ -23,6 +24,9 @@ static char *help[]=
     "icon  iconfile",
     "eps   epsfile",    
     "size  #",
+    "sizecol column",
+    "layer #",
+    "scale   factor",
     "rotate #",    
     "font  fontname",
     "label    label",
@@ -36,7 +40,7 @@ read_vpoints (char *name, char *mapset)
     char fullname[100];
     char buf[1024];
     char *key, *data;
-    double  width, size, rotate;
+    double  width, size, scale, rotate;
     int itmp, vec;
     int r, g, b;
     int ret;
@@ -56,11 +60,11 @@ read_vpoints (char *name, char *mapset)
     Vect_close(&Map);
 
     vec = vector.count;
-    
+
     vector.layer[vec].type = VPOINTS;
     vector.layer[vec].name   = G_store(name);
     vector.layer[vec].mapset = G_store(mapset);
-    vector.layer[vec].ltype = GV_POINT;        
+    vector.layer[vec].ltype = GV_POINT;
     vector.layer[vec].masked = 0 ;
 
     vector.layer[vec].field = 1;
@@ -70,14 +74,17 @@ read_vpoints (char *name, char *mapset)
     vector.layer[vec].width  = 1. ;
     set_color ( &(vector.layer[vec].color), 0, 0, 0 );
     set_color ( &(vector.layer[vec].fcolor), 255, 0, 0 );
-    vector.layer[vec].label = NULL ;    
+    vector.layer[vec].label = NULL;
     vector.layer[vec].lpos = -1 ;
     vector.layer[vec].symbol = G_store("basic/diamond");
 
     vector.layer[vec].size = 6.0;
-    vector.layer[vec].rotate = 0.0;    
-    vector.layer[vec].epstype = 0;        
-    
+    vector.layer[vec].sizecol = NULL;
+    vector.layer[vec].scale = 1.0;
+
+    vector.layer[vec].rotate = 0.0;
+    vector.layer[vec].epstype = 0;
+
 
     while (input(2, buf, help))
     {
@@ -224,7 +231,25 @@ read_vpoints (char *name, char *mapset)
 	    vector.layer[vec].size = size;
 	    continue;
 	}
-	
+
+	if (KEY("sizecol")) 
+	{
+	    G_strip(data);
+	    vector.layer[vec].sizecol = G_store(data);
+	    continue;
+	}
+
+	if (KEY("scale"))
+	{
+	    if (sscanf(data, "%lf", &scale) != 1 || scale <= 0.0)
+	    {
+		scale = 1.0;
+		error(key, data, "illegal scale request");
+	    }
+	    vector.layer[vec].scale = scale;
+	    continue;
+	}
+
 	if (KEY("rotate"))
 	{
 	    if (sscanf(data, "%lf", &rotate) != 1)

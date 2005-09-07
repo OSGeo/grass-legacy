@@ -1283,7 +1283,7 @@ Selects vector point data to be placed on the output map
 <PRE>
 USAGE:	<B>vpoints</B> vector
 	<B>type</B> point or/and centroid
-	<B>layer</B> # (layer number used with cats/where option)
+	<B>layer</B> # (layer number used with cats/where/sizecol options)
 	<B>cats</B> list of categories (e.g. 1,3,5-7)
 	<B>where</B> SQL where statement like: vlastnik = 'Cimrman'
 	<B>masked</B> [y|n]
@@ -1293,17 +1293,24 @@ USAGE:	<B>vpoints</B> vector
 	<B>eps</B> epsfile	
 	<B>symbol</B> symbol group/name	
 	<B>size</B> #
-	<B>label</B> legend label		
-	<B>lpos</B> position in legend		
+	<B>sizecol</B> attribute column used for symbol sizing
+	<B>scale</B> scaling factor for sizecol values
+	<B>label</B> legend label
+	<B>lpos</B> position in legend
 	<B>end</B>
 </PRE>
 The user may specify the
 the <B>color</B> of the sites (see section on NAMED COLORS below);
-the <B>eps</B> Encapsulated Postscript file to be used to represent the presence of a site;
-If <B>$</B> is used in EPS file path it is replaced by category number. 
-the <B>size</B> of the icon (number of times larger than the size it is in
-the icon file);
-the <B>rotate</B> in degrees for clockwise rotation for EPS files; 
+the <B>eps</B> Encapsulated Postscript file to be used to represent the presence of a site
+(if '<B>$</B>' is used in the EPS file path it will be replaced by category number); 
+and <B>rotate</B> in degrees for clockwise rotation (EPS files only).
+<BR>
+The size of the icon (number of times larger than the size it is in
+the icon file) is typically given by the <B>size</B> option. Alternatively
+the size of the symbol or EPS graphic can be taken from an attribute column 
+by using the <B>sizecol</B> command. The value given by <B>sizecol</B> may be
+scaled by using the <B>scale</B> factor setting (default scaling is 1.0).
+
 <PRE>
 EXAMPLE:
 	<B>vpoints</B> windmills
