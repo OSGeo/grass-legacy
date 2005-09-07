@@ -142,6 +142,12 @@
 #% description: Name of group file where thematic map commands will be saved
 #% required : no
 #%end
+#%option
+#% key: where
+#% type: string
+#% description: WHERE conditions of SQL statement without 'where' keyword
+#% required : no
+#%end
 #%flag
 #% key: u
 #% description: Update color values to GRASSRGB column in attribute table
@@ -158,9 +164,6 @@
 #%key: g
 #%description: Save thematic map commands to group file for GIS Manager
 #%end
-
-GIS_OPT_pslegend="leg.psmap"
- 
 
 if  [ -z $GISBASE ] ; then
     echo "You must be in GRASS GIS to run this program."
@@ -302,7 +305,12 @@ fi
 echo "Group $group" > "$TMP3"
 
 # Calculate statistics for thematic intervals
-v.univar.sh -e database=$database table=$table column=$GIS_OPT_column > "$TMP1"
+if [ -z "$GIS_OPT_where" ] ; then
+  v.univar.sh -e database=$database table=$table column=$GIS_OPT_column > "$TMP1"
+else
+  v.univar.sh -e database=$database table=$table column=$GIS_OPT_column where="$GIS_OPT_where" > "$TMP1"
+fi
+  
 min="`grep 'Minimum:' $TMP1 | sed s/Minimum://`"
 max="`grep 'Maximum:' $TMP1 | sed s/Maximum://`"
 mean="`grep 'Mean:' $TMP1 | sed s/Mean://`"
@@ -564,8 +572,13 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
 
 
         echo $themecolor@$rangemin@$rangemax@$extranote@$openbracket@$closebracket | awk -F@ '{print $1 "\t\t" $5$2" - "$3$6" "$4}'
+	if [ -z "$GIS_OPT_where" ] ; then
+            sqlwhere="$GIS_OPT_column $mincomparison $rangemin and $GIS_OPT_column<=$rangemax"
+	else
+            sqlwhere="$GIS_OPT_column $mincomparison $rangemin and $GIS_OPT_column<=$rangemax AND $GIS_OPT_where"
+	fi
+
         # update color to database?
-        sqlwhere="$GIS_OPT_column $mincomparison $rangemin and $GIS_OPT_column<=$rangemax"
         if [ $GIS_FLAG_u -eq 1 ] ; then
             echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE\
                 $sqlwhere" | db.execute database=$database
@@ -740,8 +753,13 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
 
         echo $ptsize@$rangemin@$rangemax@$extranote@$openbracket@$closebracket | awk -F@ '{print $1 "\t\t" $5$2" - "$3$6" "$4}'
 
+	if [ -z "$GIS_OPT_where" ] ; then
+           sqlwhere="$GIS_OPT_column $mincomparison $rangemin and $GIS_OPT_column<=$rangemax"
+	else
+           sqlwhere="$GIS_OPT_column $mincomparison $rangemin and $GIS_OPT_column<=$rangemax AND $GIS_OPT_where"
+	fi
+
         # update color to database?
-        sqlwhere="$GIS_OPT_column $mincomparison $rangemin and $GIS_OPT_column<=$rangemax"
         if [ $GIS_FLAG_u -eq 1 ] ; then
             echo "UPDATE $table SET GRASSRGB = '$themecolor' WHERE\
                 $sqlwhere" | db.execute database=$database
