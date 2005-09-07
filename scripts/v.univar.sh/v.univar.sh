@@ -46,6 +46,12 @@
 #% description: Database driver
 #% required : no
 #%end
+#%option
+#% key: where
+#% type: string
+#% description: WHERE conditions of SQL statement without 'where' keyword
+#% required : no
+#%end
 
 if  [ -z $GISBASE ] ; then
     echo "You must be in GRASS GIS to run this program."
@@ -105,7 +111,12 @@ else
     drv="driver=$GIS_OPT_driver"
 fi
 
-db.select table=$GIS_OPT_table $db $drv sql="select $GIS_OPT_column from $GIS_OPT_table" -c > "$TMP"
+if [ -z "$GIS_OPT_where" ] ; then
+   db.select table=$GIS_OPT_table $db $drv sql="select $GIS_OPT_column from $GIS_OPT_table" -c > "$TMP"
+else
+   db.select table=$GIS_OPT_table $db $drv sql="select $GIS_OPT_column from $GIS_OPT_table WHERE $GIS_OPT_where" -c > "$TMP"
+fi
+
 
 echo "database = $GIS_OPT_database"
 echo "db = $db"
