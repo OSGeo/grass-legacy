@@ -1,6 +1,9 @@
-/** Modified by: Janne Soimasuo August 1994 line_cat added **/
-/** Modified by: Radim Blazek Jan 2000 acolor, label added **/
-/** Modified by: Morten Hulden Mar 2004 cols added to vector **/
+/* Modified by: Janne Soimasuo August 1994; line_cat added
+ * Modified by: Radim Blazek Jan 2000; acolor, label added
+ * Modified by: Morten Hulden Mar 2004; cols added to vector
+ * Modified by: Hamish Bowman Sept 2005; sizecol added to LAYER
+ */
+
 #include "gis.h"
 #include "clr.h"
 
@@ -61,6 +64,9 @@ typedef struct {
 
     /* Points */
     double size;  /* icon size */
+    char *sizecol;  /* Column used for symbol size */
+/* already defined in Areas section above, so don't need it twice */
+/*    double scale; */  /* Scale factor for dynamic sizing */
     double rotate;   /* rotation, supported only for eps */
     char *symbol;   /* symbol name */
     char *symbol_ps;   /* symbol name in PS */
