@@ -75,14 +75,14 @@ int put_a_row( int row, CELL *buf)
 
 static int read_row (int file, char *buf, int row, int buf_len)
 {
-	lseek(file,(off_t) row * buf_len,0);
-	return(read(file,buf,buf_len) == buf_len);
+	lseek(file, ((off_t) row) * buf_len, 0);
+	return (read(file, buf, buf_len) == buf_len);
 }
 
 static int write_row (int file, char *buf, int row, int buf_len)
 {
-	lseek(file,(off_t) row * buf_len,0);
-	return(write(file,buf,buf_len) == buf_len);
+	lseek(file, ((off_t) row) * buf_len, 0);
+	return (write(file, buf, buf_len) == buf_len);
 }
 
 int open_file (char *name)
