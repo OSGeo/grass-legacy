@@ -171,10 +171,12 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 		}
 	    }
 
-	    if (size_val < 0.0) {    /* allow size=0? (Y) */
-		G_warning(_("Invalid column size (%.3f) for category %d."), size_val, cat);
+	    if (size_val < 0.0) {
+		G_warning(_("Attribute is of invalid size (%.3f) for category %d."), size_val, cat);
 		continue;
 	    }
+
+	    if (size_val == 0.0) continue;
 
 	    size = size_val * vector.layer[vec].scale;
 	    G_debug(3, "    dynamic symbol size = %.2f", size);
