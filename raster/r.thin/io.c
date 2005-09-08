@@ -48,6 +48,12 @@ static int work_file;
 static char *work_file_name;
 static ROWIO row_io;
 
+
+/* function prototypes */
+static int write_row(int file, char *buf, int row, int buf_len);
+static int read_row(int file, char *buf, int row, int buf_len);
+
+
 CELL *
 get_a_row (int row)
 {
@@ -66,15 +72,16 @@ int put_a_row( int row, CELL *buf)
 	return 0;
 }
 
-int read_row (int file, char *buf, int row, int buf_len)
+
+static int read_row (int file, char *buf, int row, int buf_len)
 {
-	lseek(file,(long) row * buf_len,0);
+	lseek(file,(off_t) row * buf_len,0);
 	return(read(file,buf,buf_len) == buf_len);
 }
 
-int write_row (int file, char *buf, int row, int buf_len)
+static int write_row (int file, char *buf, int row, int buf_len)
 {
-	lseek(file,(long) row * buf_len,0);
+	lseek(file,(off_t) row * buf_len,0);
 	return(write(file,buf,buf_len) == buf_len);
 }
 
