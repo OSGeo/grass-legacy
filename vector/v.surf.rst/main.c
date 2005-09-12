@@ -197,7 +197,6 @@ int main(int argc, char *argv[])
     parm.zcol->type = TYPE_STRING;
     parm.zcol->required = NO;
     parm.zcol->description = "Name of the attr. column with values to be interpolated (if layer>0)";
-    parm.zcol->answer = "flt1";
 
     parm.scol = G_define_option();
     parm.scol->key = "scolumn";
