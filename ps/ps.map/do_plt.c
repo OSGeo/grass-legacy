@@ -18,6 +18,8 @@ int do_plt (int after_masking)
     char name[1024], prev_name[50];
     double e1, n1, e2, n2, llx, lly, urx, ury;
     int color, fcolor, fill;
+    int color_R, color_G, color_B;
+    int fcolor_R, fcolor_G, fcolor_B;
     int masked;
     double size, scale, rotate;
     int i;
@@ -91,9 +93,10 @@ int do_plt (int after_masking)
 	break;	
 
     case 'P':
-	i = sscanf (buf,"P %d %lf %lf %d %d %lf %s",
-	    &masked, &e1, &n1, &color, &fcolor, &size, symb);
-	if ( i == 7)
+	i = sscanf (buf,"P %d %lf %lf %d %d %d %d %d %d %lf %s",
+	    &masked, &e1, &n1, &color_R, &color_G, &color_B,
+	    &fcolor_R, &fcolor_G, &fcolor_B, &size, symb);
+	if ( i == 11 )
 	{
 	    if ( masked &&  after_masking) continue;
 	    if (!masked && !after_masking) continue;
@@ -110,22 +113,31 @@ int do_plt (int after_masking)
 	    x = (double) x_int / 10.;
 	    y = (double) y_int / 10.;
 
-	    set_color_from_color ( &pcolor, color);
-	    set_color_from_color ( &pfcolor, fcolor);
+
+	    if(color_R == -1 )
+		unset_color(&pcolor);
+	    else
+		set_color(&pcolor, color_R, color_G, color_B);
+
+	    if(fcolor_R == -1 )
+	    	unset_color(&pfcolor);
+	    else
+		set_color(&pfcolor, fcolor_R, fcolor_G, fcolor_B);
+
 
 	    width = 0.05 * size; /* TODO: Something better */ 
-	    
+
 	    /* Read symbol */
 	    sprintf( sname, "POINTSYMBOL%d", snum);
             Symb = S_read ( symb );
             if ( Symb == NULL ) G_warning ("Cannot read symbol, using default icon");
 	    symbol_save ( Symb, &pcolor, &pfcolor, sname );
-            symbol_draw ( sname, x, y, size, 0, width);
+            symbol_draw ( sname, x, y, size, 0.0, width);
 						
             snum++;    
 	}
 	break;
-	
+
 	case 'E':  /* EPS file */
 	if (sscanf (buf,"E %d %lf %lf %lf %lf %s",
 	    &masked, &e1, &n1, &scale, &rotate, name) == 6 );
