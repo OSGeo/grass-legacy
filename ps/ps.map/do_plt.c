@@ -17,7 +17,6 @@ int do_plt (int after_masking)
     char buf[1024], symb[1024], sname[100];
     char name[1024], prev_name[50];
     double e1, n1, e2, n2, llx, lly, urx, ury;
-    int color, fcolor, fill;
     int color_R, color_G, color_B;
     int fcolor_R, fcolor_G, fcolor_B;
     int masked;
@@ -49,12 +48,16 @@ int do_plt (int after_masking)
     switch (*buf)
     {
     case 'L':
-	if(sscanf(buf, "L %d %lf %lf %lf %lf %d %lf",
-	    &masked, &e1, &n1, &e2, &n2, &color, &width) == 7)
+	if(sscanf(buf, "L %d %lf %lf %lf %lf %d %d %d %lf", &masked, &e1, 
+		&n1, &e2, &n2, &color_R, &color_G, &color_B, &width) == 9 )
 	{
 	    if ( masked &&  after_masking) continue;
 	    if (!masked && !after_masking) continue;
-	    set_rgb_color(color);
+
+	    if(color_R == -1 ) continue;  /* ie color was set to "none" */
+
+	    set_color(&pcolor, color_R, color_G, color_B);
+	    set_ps_color(&pcolor);
 	    set_line_width(width);
 	    start_line(e1, n1);
 	    sec_draw = 0;
@@ -64,8 +67,9 @@ int do_plt (int after_masking)
 	break;
 	
     case 'R':
-	if(sscanf(buf, "R %d %lf %lf %lf %lf %d %d %d %lf",
-	    &masked, &e1, &n1, &e2, &n2, &color, &fcolor, &fill, &width) == 9)
+	if(sscanf(buf, "R %d %lf %lf %lf %lf %d %d %d %d %d %d %lf",
+	    &masked, &e1, &n1, &e2, &n2, &color_R, &color_G, &color_B,
+	    &fcolor_R, &fcolor_G, &fcolor_B, &width) == 12)
 	{
 	    if ( masked &&  after_masking) continue;
 	    if (!masked && !after_masking) continue;
@@ -81,16 +85,21 @@ int do_plt (int after_masking)
 	    fprintf(PS.fp, " %.1f %.1f M %.1f %.1f LN\n", llx, lly, urx, lly);
 	    fprintf(PS.fp, " %.1f %.1f LN %.1f %.1f LN\n", urx, ury, llx, ury);
 	    fprintf(PS.fp, " CP\n");
-	    if (fill)
-	    {
-		set_rgb_color(fcolor);
-		fprintf(PS.fp, " F\n");		
+
+	    if(fcolor_R != -1 ) {  /* ie color is not set to "none" */
+		set_color(&pfcolor, fcolor_R, fcolor_G, fcolor_B);
+		set_ps_color(&pfcolor);
+		fprintf(PS.fp, " F\n");
 	    }
-	    set_rgb_color(color);
-	    set_line_width(width);
-	    fprintf(PS.fp, " D\n");
+	    
+	    if(color_R != -1 ) {  /* ie color is not set to "none" */
+		set_color(&pcolor, color_R, color_G, color_B);
+		set_ps_color(&pcolor);
+		set_line_width(width);
+		fprintf(PS.fp, " D\n");
+	    }
 	}
-	break;	
+	break;
 
     case 'P':
 	i = sscanf (buf,"P %d %lf %lf %d %d %d %d %d %d %lf %s",

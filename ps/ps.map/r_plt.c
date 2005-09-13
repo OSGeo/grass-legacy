@@ -184,7 +184,9 @@ int read_eps (double e, double n)
 int read_line (double e1, double n1, double e2, double n2)
 {
     char buf[300];
-    int color;
+    int r,g,b;
+    int color_R, color_G, color_B;
+    int ret;
     double width;
     int masked;
     char ch, *key, *data;
@@ -198,7 +200,7 @@ int read_line (double e1, double n1, double e2, double n2)
     };
 
     width = 1.;
-    color = BLACK;
+    color_R = color_G = color_B = 0;
     masked = 0;
 
     while(input(2, buf, help))
@@ -211,14 +213,20 @@ int read_line (double e1, double n1, double e2, double n2)
 	    if (masked) PS.mask_needed = 1;
 	    continue;
 	}
+
 	if (KEY("color"))
 	{
-	    color = get_color_number(data);
-	    if (color < 0)
-	    {
-		color = BLACK;
-		error(key, data, "illegal color request");
+	    ret = G_str_to_color( data, &r, &g, &b);
+	    if ( ret == 1 ) {
+	        color_R = r;
+		color_G = g;
+		color_B = b;
 	    }
+	    else if ( ret == 2 )  /* i.e. "none" */
+		color_R = color_G = color_B = -1;
+	    else
+		error (key,data,"illegal color request");
+
 	    continue;
 	}
 
@@ -237,8 +245,8 @@ int read_line (double e1, double n1, double e2, double n2)
 	error(key, data, "illegal line request");
     }
 
-    sprintf(buf, "L %d %f %f %f %f %d %.8f",
-	masked, e1, n1, e2, n2, color, width);
+    sprintf(buf, "L %d %f %f %f %f %d %d %d %.8f",
+	masked, e1, n1, e2, n2, color_R, color_G, color_B, width);
 
     add_to_plfile(buf);
 
@@ -248,7 +256,10 @@ int read_line (double e1, double n1, double e2, double n2)
 int read_rectangle (double e1, double n1, double e2, double n2)
 {
     char buf[300];
-    int color, fcolor, fill;
+    int r, g, b;
+    int color_R, color_G, color_B;
+    int fcolor_R, fcolor_G, fcolor_B;
+    int ret;
     double width;
     int masked;
     char ch, *key, *data;
@@ -263,10 +274,9 @@ int read_rectangle (double e1, double n1, double e2, double n2)
     };
 
     width = 1.;
-    color = BLACK;
-    fcolor = WHITE;
-    fill=0;    
     masked = 0;
+    color_R = color_G = color_B = 0;
+    fcolor_R = fcolor_G = fcolor_B = -1;  /* not filled by default */
 
     while(input(2, buf, help))
     {
@@ -281,24 +291,33 @@ int read_rectangle (double e1, double n1, double e2, double n2)
 
 	if (KEY("color"))
 	{
-	    color = get_color_number(data);
-	    if (color < 0)
-	    {
-		color = BLACK;
-		error(key, data, "illegal color request");
+	    ret = G_str_to_color( data, &r, &g, &b);
+	    if ( ret == 1 ) {
+	        color_R = r;
+		color_G = g;
+		color_B = b;
 	    }
+	    else if ( ret == 2 )  /* i.e. "none" */
+		color_R = color_G = color_B = -1;
+	    else
+		error (key,data,"illegal color request");
+
 	    continue;
 	}
 
 	if (KEY("fcolor"))
 	{
-	    fcolor = get_color_number(data);
-	    if (fcolor < 0)
-	    {
-		fcolor = WHITE;
-		error(key, data, "illegal fill color request");
+	    ret = G_str_to_color( data, &r, &g, &b);
+	    if ( ret == 1 ) {
+	        fcolor_R = r;
+		fcolor_G = g;
+		fcolor_B = b;
 	    }
-	    fill=1;
+	    else if ( ret == 2 )  /* i.e. "none" */
+		fcolor_R = fcolor_G = fcolor_B = -1;
+	    else
+		error (key,data,"illegal color request");
+
 	    continue;
 	}	
 
@@ -317,8 +336,9 @@ int read_rectangle (double e1, double n1, double e2, double n2)
 	error(key, data, "illegal rectangle request");
     }
 
-    sprintf(buf, "R %d %f %f %f %f %d %d %d %.8f",
-	masked, e1, n1, e2, n2, color, fcolor, fill, width);
+    sprintf(buf, "R %d %f %f %f %f %d %d %d %d %d %d %.8f",
+	masked, e1, n1, e2, n2, color_R, color_G, color_B, 
+		fcolor_R, fcolor_G, fcolor_B, width);
 
     add_to_plfile(buf);
 
