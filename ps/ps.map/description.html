@@ -847,28 +847,21 @@ USAGE:	<B>region</B> regionfile|<EM>list</EM>
 	<B>width</B> #
 	<B>end</B>
 </PRE>
-Geographic region settings are created and saved using <EM>
-<A HREF="g.region.html">g.region</A>
-</EM>.
+Geographic region settings are created and saved using <EM> the 
+<A HREF="g.region.html">g.region</A></EM> module.
 The <EM>ps.map</EM> <EM>region</EM> option can be used to show an outline of
 a smaller region which was printed on a separate run of <EM>ps.map</EM>
 on other user-created maps.
-
 <P>
-
 The user can specify the <B>color</B>
 and the <B>width</B> in pixel units (accepts decimal points
 [floating points] as well as integers) of the outline.
 The default is a black border of one pixel width.
-
 <P>
-
 This example would place a white outline, 2 pixels wide, of the
-geographic region
-called <EM>fire.zones</EM> onto the output map.  This geographic region
-would have been created and saved using <EM>
-<A HREF="g.region.html">g.region</A>
-</EM>.
+geographic region called <EM>fire.zones</EM> onto the output map.
+This geographic region would have been created and saved using 
+<EM><A HREF="g.region.html">g.region</A></EM>.
 <PRE>
 EXAMPLE:
 	<B>region</B> fire.zones
@@ -1423,7 +1416,8 @@ yellow
 </PRE>
 
 <P>
-For vectors (vpoints, vlines, vareas) may be also used 'none' or 'r g b' (e.g '255 0 0').
+For vectors and some plotting commands (vpoints, vlines, vareas, point, line, 
+rectangle, and region) you can also specify 'none' or 'r g b' (e.g '255 0 0').
 <P>
 
 <H2>EXAMPLE ps.map INPUT FILE</H2>
