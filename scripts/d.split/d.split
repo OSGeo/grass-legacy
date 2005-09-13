@@ -18,13 +18,13 @@
 
 
 #%Module
-#%  description: Divides active display into 2 frames & displays maps/executes commands in each frame.
+#%  description: Divides active display into two frames & displays maps/executes commands in each frame.
 #%End
 #%option
 #% key: map1
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: Enter map to display in 1st frame
+#% description: Enter raster map to display in 1st frame
 #% required : no
 #%end
 #%option
@@ -38,7 +38,7 @@
 #% key: map2
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: Enter map to display in 2nd frame
+#% description: Enter raster map to display in 2nd frame
 #% required : no
 #%end
 #%option
@@ -73,16 +73,16 @@ if [ "$GIS_OPT_view" = "vert" ]
 then
 #  split it: left (win1) and right (win2)
 	d.frame -e
-	d.frame -c frame=win1  at=0,100,0,49
-	d.frame -c frame=win2  at=0,100,50,100
+	d.frame -c frame=win1  at=0,100,0,49.5
+	d.frame -c frame=win2  at=0,100,50.5,100
 fi
 
 if [ "$GIS_OPT_view" = "horiz" ]
 then
 #  split it: top (win1) and bottom (win2)
 	d.frame -e
-	d.frame -c frame=win1  at=50,100,0,100
-	d.frame -c frame=win2  at=0,49,0,100
+	d.frame -c frame=win1  at=50.5,100,0,100
+	d.frame -c frame=win2  at=0,49.5,0,100
 fi
 
 
@@ -92,11 +92,11 @@ echo ""
 if [ "$GIS_OPT_map1" != "" ]
 then
 	d.frame -s frame=win1
-	echo WINDOW 1: $GIS_OPT_cmd1 $GIS_OPT_map1
+	echo "WINDOW 1: $GIS_OPT_cmd1 $GIS_OPT_map1"
 	d.rast $GIS_OPT_map1
 else
 	d.frame -s frame=win1
-	echo WINDOW 1: $GIS_OPT_cmd1 $GIS_OPT_map1
+	echo "WINDOW 1: $GIS_OPT_cmd1 $GIS_OPT_map1"
 	$GIS_OPT_cmd1
 fi
 
@@ -104,14 +104,13 @@ fi
 if [ "$GIS_OPT_map2" != "" ]
 then
 	d.frame -s frame=win2
-	echo WINDOW 2: $GIS_OPT_cmd2 $GIS_OPT_map2
+	echo "WINDOW 2: $GIS_OPT_cmd2 $GIS_OPT_map2"
 	d.rast $GIS_OPT_map2
 else
 	d.frame -s frame=win2
-	echo WINDOW 2: $GIS_OPT_cmd2 $GIS_OPT_map2
+	echo "WINDOW 2: $GIS_OPT_cmd2 $GIS_OPT_map2"
 	$GIS_OPT_cmd2
 fi
 
 echo DONE
-
-
+echo "Use 'd.erase -f' to clear frames from display monitor."
