@@ -1,3 +1,4 @@
+/* parse the "region" instruction */
 #include "ps_info.h"
 #include <string.h>
 #include "local_proto.h"
@@ -18,7 +19,9 @@ read_wind (char *name, char *mapset)
     char buf[1024];
     char *key, *data;
     double width;
-    int color;
+    int r,g,b;
+    int color_R, color_G, color_B;
+    int ret;
     int i;
     double east, west, incr;
     struct Cell_head window;
@@ -33,7 +36,7 @@ read_wind (char *name, char *mapset)
     }
 
     width  = 1. ;
-    color  = BLACK;
+    color_R = color_G = color_B = 0;
 
     while (input(2,buf,help))
     {
@@ -56,12 +59,17 @@ read_wind (char *name, char *mapset)
 
 	if (KEY("color"))
 	{
-	    color = get_color_number(data);
-	    if (color < 0)
-	    {
-		color = BLACK;
-		error(key, data, "illegal color request");
+	    ret = G_str_to_color( data, &r, &g, &b);
+	    if ( ret == 1 ) {
+	        color_R = r;
+		color_G = g;
+		color_B = b;
 	    }
+	    else if ( ret == 2 )  /* i.e. "none" */
+		color_R = color_G = color_B = -1;
+	    else
+		error (key,data,"illegal color request");
+
 	    continue;
 	}
 	error (key,"","illegal request");
@@ -75,27 +83,27 @@ read_wind (char *name, char *mapset)
     for (i = 0; i < 3; i++)
     {
 	east = west+incr;
-	sprintf (buf, "L 0 %f %f %f %f %d %.8f",
+	sprintf (buf, "L 0 %f %f %f %f %d %d %d %.8f",
 	    west, window.north, east, window.north,
-	    color, width);
+	    color_R, color_G, color_B, width);
 	add_to_plfile (buf);
 
-	sprintf (buf, "L 0 %f %f %f %f %d %.8f",
+	sprintf (buf, "L 0 %f %f %f %f %d %d %d %.8f",
 	    west, window.south, east, window.south,
-	    color, width);
+	    color_R, color_G, color_B, width);
 	add_to_plfile (buf);
 
 	west = east;
     }
 
-    sprintf (buf, "L 0 %f %f %f %f %d %.8f",
+    sprintf (buf, "L 0 %f %f %f %f %d %d %d %.8f",
 	window.east, window.north, window.east, window.south,
-	color, width);
+	color_R, color_G, color_B, width);
     add_to_plfile (buf);
 
-    sprintf (buf, "L 0 %f %f %f %f %d %.8f",
+    sprintf (buf, "L 0 %f %f %f %f %d %d %d %.8f",
 	window.west, window.north, window.west, window.south,
-	color, width);
+	color_R, color_G, color_B, width);
     add_to_plfile (buf);
 
     return 1;
