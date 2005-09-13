@@ -52,6 +52,7 @@ SUBDIRS = \
 	v.to.db \
 	v.to.points \
 	v.to.rast \
+	v.to.rast3 \
 	v.type \
 	v.univar \
 	v.voronoi \
