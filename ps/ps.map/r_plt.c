@@ -7,7 +7,10 @@
 int read_point (double e, double n)
 {
     char buf[1024], symb[1024];
-    int color, fcolor;
+    int r, g, b;
+    int color_R, color_G, color_B;
+    int fcolor_R, fcolor_G, fcolor_B;
+    int ret;
     double size;
     int have_icon;
     char *key, *data;
@@ -16,6 +19,7 @@ int read_point (double e, double n)
     static char *help[]=
     {
 	"color  color",
+	"fcolor fill color",
 	"symbol group/symbol",
 	"size   #",
 	"masked [y|n]",
@@ -24,9 +28,9 @@ int read_point (double e, double n)
 
     size = 6.0;
     have_icon = 0;
-    color = BLACK;
-    fcolor = BLACK;
     masked = 0;
+    color_R = color_G = color_B = 0;
+    fcolor_R = fcolor_G = fcolor_B = 128;
 
     while(input(2, buf, help))
     {
@@ -40,20 +44,32 @@ int read_point (double e, double n)
 	}
 	if (KEY("color"))
 	{
-	    color = get_color_number(data);
-	    if (color < 0)
-	    {
-		error(key, data, "illegal color request");
+	    ret = G_str_to_color( data, &r, &g, &b);
+	    if ( ret == 1 ) {
+	        color_R = r;
+		color_G = g;
+		color_B = b;
 	    }
+	    else if ( ret == 2 )  /* i.e. "none" */
+		color_R = color_G = color_B = -1;
+	    else
+		error (key,data,"illegal color request");
+
 	    continue;
 	}
 	if (KEY("fcolor"))
 	{
-	    fcolor = get_color_number(data);
-	    if (fcolor < 0)
-	    {
-		error(key, data, "illegal color request");
+	    ret = G_str_to_color( data, &r, &g, &b);
+	    if ( ret == 1 ) {
+	        fcolor_R = r;
+		fcolor_G = g;
+		fcolor_B = b;
 	    }
+	    else if ( ret == 2 )  /* i.e. "none" */
+		fcolor_R = fcolor_G = fcolor_B = -1;
+	    else
+		error (key,data,"illegal color request");
+
 	    continue;
 	}
 	if (KEY("symbol"))
@@ -76,7 +92,8 @@ int read_point (double e, double n)
 	error(key, data, "illegal point request");
     }
 
-    sprintf(buf, "P %d %f %f %d %d %f %s", masked, e, n, color, fcolor, size, symb);
+    sprintf(buf, "P %d %f %f %d %d %d %d %d %d %f %s", masked, e, n, 
+	color_R, color_G, color_B, fcolor_R, fcolor_G, fcolor_B, size, symb);
 
     add_to_plfile(buf);
 
