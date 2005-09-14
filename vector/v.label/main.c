@@ -73,11 +73,11 @@ main (int argc, char **argv)
     Colopt->type        = TYPE_STRING ;
     Colopt->required    = YES;
     Colopt->description = _("Name of attribute column to be used for labels");
-    
+
     Along_flag = G_define_flag ();
     Along_flag->key            = 'a';
-    Along_flag->description    = _("Create labels along lines");
-    
+    Along_flag->description    = _("Rotate labels to align with lines");
+
     Labelfile = G_define_option();
     Labelfile->key = "labels";
     Labelfile->description = _("Name for new paint-label file");
