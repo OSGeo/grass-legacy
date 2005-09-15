@@ -36,7 +36,7 @@ main (int argc, char **argv)
     int    i, cnt, nrows, txtlength, field, more;
     int    type, ltype;
     int    cat, direction;
-    double x, y, linlength, lablength, space, ldist;
+    double x, y, linlength, lablength, size, space, ldist;
     double rotate, rot;
     char   *mapset;
     char   *txt, buf[2000];
@@ -122,6 +122,13 @@ main (int argc, char **argv)
     Size->type = TYPE_DOUBLE;
     Size->answer = "100";
 
+    Space = G_define_option();
+    Space->key = "space";
+    Space->description = _("Space between letters for curled labels (in map-units)");
+    Space->type = TYPE_DOUBLE;
+    Space->answer = "100";
+    Space->required = NO;
+
     FontSize = G_define_option();
     FontSize->key = "fontsize";
     FontSize->description = _("Label size (in points)");
@@ -177,13 +184,6 @@ main (int argc, char **argv)
     Opaque->answer = "yes";
     Opaque->options = "yes,no";
 
-    Space = G_define_option();
-    Space->key = "space";
-    Space->description = _("Space between letters (in map-units)");
-    Space->type = TYPE_DOUBLE;
-    Space->answer = "100";
-    Space->required = NO;
-
     if (G_parser (argc, argv ) ) exit (-1 );
 
     if(Curl_flag->answer) Along_flag->answer = 1;
@@ -196,14 +196,18 @@ main (int argc, char **argv)
     
     type = Vect_option_to_types ( Typopt );
 
+    size = atof (Size->answer);
     space = atof (Space->answer);
+
+    if(Along_flag->answer && ( size/space >= 2  ||  size/space <= 0.5 ))
+	G_warning(_("size and space options vary significantly which may lead to crummy output"));
 
     if(FontSize->answer) {
 	fontsize = atoi(FontSize->answer);
 	if(Along_flag->answer) {
 	/* figure out space param dynamically from current dispay */
 	    if (R_open_driver() != 0)  /* connect to the driver */
-		G_fatal_error ("No graphics device selected");
+		G_fatal_error(_("No graphics device selected"));
 
 	    /* Read in the map region associated with graphics window */
 	    D_setup(0);
