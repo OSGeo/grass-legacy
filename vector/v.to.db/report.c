@@ -75,9 +75,10 @@ report (void)
 		} else if ( Values[i].count1 > 1 ) {
 		    sprintf ( left, "-" );
 		} else { /* Values[i].count1 == 0 */
-		    G_warning ( "Bug in this module, nothing found on the left side of line with "
-			        "category %d", Values[i].cat );
-		    sprintf ( left, "e" );
+                    /* It can be OK if the category is assigned to an element
+                        type which is not GV_BOUNDARY */
+                    /* -> TODO: print only if there is boundary with that cat */
+		    sprintf ( left, "-" );
 		}
 
 		if ( Values[i].count2 == 1 ) {
@@ -88,9 +89,7 @@ report (void)
 		} else if ( Values[i].count2 > 1 ) {
 		    sprintf ( right, "-" );
 		} else { /* Values[i].count1 == 0 */
-		    G_warning ( "Bug in this module, nothing found on the left side of line with "
-			        "category %d", Values[i].cat );
-		    sprintf ( right, "e" );
+		    sprintf ( right, "-" );
 		}
 
 	        fprintf ( stdout, "%d|%s|%s\n", Values[i].cat, left, right );
