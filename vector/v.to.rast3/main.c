@@ -125,12 +125,9 @@ int main(int argc, char *argv[])
 	    continue;
         }
 
-        row = (int) floor ( (Points->y[0] - region.south 
-                             - region.ns_res/2.) / region.ns_res);
-        col = (int) floor ( (Points->x[0] - region.west
-                             - region.ew_res/2.) / region.ew_res);
-	depth = (int) floor ( (Points->z[0] - region.bottom
-                              - region.tb_res/2.) / region.tb_res ) ;
+        row = (int) floor ( (Points->y[0] - region.south ) / region.ns_res);
+        col = (int) floor ( (Points->x[0] - region.west ) / region.ew_res);
+	depth = (int) floor ( (Points->z[0] - region.bottom ) / region.tb_res ) ;
 
 	if ( ctype == DB_C_TYPE_INT ) {
             int ivalue;
@@ -145,7 +142,7 @@ int main(int argc, char *argv[])
 	    continue ;
 	}
 
-        G_debug ( 3, "col,row,depth,val: %d %d %d %f", col, row, depth, value);
+        G_debug ( 0, "col,row,depth,val: %d %d %d %f", col, row, depth, value);
 
 	G3d_putFloat (map, col, row, depth, (float)value);
     }
