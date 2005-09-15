@@ -42,8 +42,11 @@ main (int argc, char *argv[])
     Vect_set_open_level (2);
     Vect_open_old(&Map,options.name,options.mapset);
 
-    if ( (Fi = Vect_get_field ( &Map, options.field)) == NULL)
+    Fi = Vect_get_field ( &Map, options.field);
+
+    if ( !options.print && Fi == NULL ) {
          G_fatal_error(_("Database connection not defined for layer <%d>. Use v.db.connect first."), options.field);
+    }
 
     /* allocate array for values */
     /* (+ 1 is for cat -1 (no category) reported at the end ) */
