@@ -15,6 +15,8 @@
 #include <string.h>
 #include <math.h>
 #include "gis.h"
+#include "display.h"
+#include "raster.h"
 #include "Vect.h"
 #include "dbmi.h"
 #include "glocale.h"
@@ -46,7 +48,7 @@ main (int argc, char **argv)
     struct GModule *module;
     struct Option *Vectfile, *Typopt, *Fieldopt, *Colopt;
     struct Option *Labelfile, *Space, *FontSize;
-    struct Flag   *Along_flag;
+    struct Flag   *Along_flag, *Curl_flag;
 
     struct field_info *fi;
     dbDriver *driver;
@@ -74,9 +76,13 @@ main (int argc, char **argv)
     Colopt->required    = YES;
     Colopt->description = _("Name of attribute column to be used for labels");
 
-    Along_flag = G_define_flag ();
+    Along_flag = G_define_flag();
     Along_flag->key            = 'a';
     Along_flag->description    = _("Rotate labels to align with lines");
+
+    Curl_flag = G_define_flag();
+    Curl_flag->key             = 'c';
+    Curl_flag->description     = _("Curl labels along lines");
 
     Labelfile = G_define_option();
     Labelfile->key = "labels";
@@ -180,6 +186,7 @@ main (int argc, char **argv)
 
     if (G_parser (argc, argv ) ) exit (-1 );
 
+    if(Curl_flag->answer) Along_flag->answer = 1;
 
     db_init_string (&stmt);
     db_init_string (&valstr);
@@ -191,8 +198,20 @@ main (int argc, char **argv)
 
     space = atof (Space->answer);
 
-    if(FontSize->answer)
+    if(FontSize->answer) {
 	fontsize = atoi(FontSize->answer);
+	if(Along_flag->answer) {
+	/* figure out space param dynamically from current dispay */
+	    if (R_open_driver() != 0)  /* connect to the driver */
+		G_fatal_error ("No graphics device selected");
+
+	    /* Read in the map region associated with graphics window */
+	    D_setup(0);
+	    space = fontsize / D_get_u_to_d_xconv();  /* in earth units */
+
+	    R_close_driver();
+	}
+    }
     else
 	fontsize = 0;
 
@@ -277,7 +296,7 @@ main (int argc, char **argv)
             Vect_point_on_line ( Points, linlength/2, &x, &y, NULL, NULL, NULL);
 	    print_label (labels, x, y, 0.0, txt);
 	} else { /* Along line */
-	
+
 	    /* find best orientation (most letters by bottom to down side */
 	    rotate = 0;
 	    for (i=0; i < txtlength; i++)
@@ -285,7 +304,7 @@ main (int argc, char **argv)
 		/* distance of the letter from the beginning of line */
 		lablength = txtlength * space;
 		ldist = i * space + ( linlength - lablength ) / 2; 
-	
+
 		if ( ldist < 0 ) ldist = 0;
 		if ( ldist > linlength ) ldist = linlength;
 
@@ -295,27 +314,38 @@ main (int argc, char **argv)
 	    }
 	    if ( rotate >= 0 ) { direction = 0; } else { direction = 1; }
 
-	    for (i=0; i < txtlength; i++)
-	    {
-		/* distance of the letter from the beginning of line */
-		lablength = txtlength * space;
+	    if(Curl_flag->answer) {
+		for (i=0; i < txtlength; i++) {
+		    /* distance of the letter from the beginning of line */
+		    lablength = txtlength * space;
 	    
-		ldist = i * space + ( linlength - lablength ) / 2;
+		    ldist = i * space + ( linlength - lablength ) / 2;
 
+		    if ( ldist < 0 ) ldist = 0;
+		    if ( ldist > linlength ) ldist = linlength;
+
+		    Vect_point_on_line ( Points, ldist, &x, &y, NULL, &rotate, NULL);
+		    rotate = rotate * 180 / PI;
+		
+		    if ( direction == 0 ) {
+			sprintf (buf, "%c", txt[i]);
+		    } else {
+			sprintf (buf, "%c", txt[txtlength - i - 1]);
+			rotate += 180;
+		    }
+		    print_label (labels, x, y, rotate, buf);
+		}
+	    }
+	    else { /* same as above but take center value for placement & rotation */
+		i = (int)(txtlength/2.0 + 0.5);
+		lablength = txtlength * space;
+		ldist = i * space + ( linlength - lablength ) / 2;
 		if ( ldist < 0 ) ldist = 0;
 		if ( ldist > linlength ) ldist = linlength;
-
 		Vect_point_on_line ( Points, ldist, &x, &y, NULL, &rotate, NULL);
 		rotate = rotate * 180 / PI;
-		
-		if ( direction == 0 ) {
-		    sprintf (buf, "%c", txt[i]);
-		} else {
-		    sprintf (buf, "%c", txt[txtlength - i - 1]);
-		    rotate += 180;
-		}
-	    
-		print_label (labels, x, y, rotate, buf);
+		if ( direction != 0 ) rotate += 180;
+		print_label (labels, x, y, rotate, txt);
 	    }
 	}
 	cnt++;
