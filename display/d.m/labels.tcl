@@ -56,21 +56,30 @@ proc DmLabels::select_map { id } {
 # display labels options
 proc DmLabels::options { id frm } {
     variable opt
+    global dmpath
 
     # labels name
     set row [ frame $frm.name ]
     Button $row.a -text [G_msg "Labels name:"] \
            -command "DmLabels::select_map $id"
     Entry $row.b -width 40 -text "$opt($id,map)" \
-          -textvariable DmLabels::opt($id,map)
-    pack $row.a $row.b -side left
+          -textvariable DmLabels::opt($id,map) \
+          -background white
+    Button $row.c -text [G_msg "Help"] \
+            -image [image create photo -file "$dmpath/grass.gif"] \
+            -command "run g.manual d.paint.labels" \
+            -background lightgreen \
+            -helptext [G_msg "Help"]
+    pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
     # display only in limited region size range
     set row [ frame $frm.region ]
     Label $row.a -text [G_msg "Display constraints:"]
-    LabelEntry $row.b -label "Min" -textvariable DmLabels::opt($id,minreg) -width 8
-    LabelEntry $row.c -label "Max" -textvariable DmLabels::opt($id,maxreg) -width 8
+    LabelEntry $row.b -label "Min" -textvariable DmLabels::opt($id,minreg) \
+            -width 8 -entrybg white
+    LabelEntry $row.c -label "Max" -textvariable DmLabels::opt($id,maxreg) \
+            -width 8 -entrybg white
     Label $row.d -text [G_msg "region size"]
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
@@ -108,6 +117,7 @@ proc DmLabels::display { node } {
     }
 
     run $cmd
+    puts $cmd
 }
 
 proc DmLabels::print { file node } {

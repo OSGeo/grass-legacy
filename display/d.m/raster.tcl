@@ -77,6 +77,7 @@ proc DmRaster::select_map2 { id } {
 # display raster options
 proc DmRaster::options { id frm } {
     variable opt
+    global dmpath
 
     # raster name
     set row [ frame $frm.name ]
@@ -85,7 +86,12 @@ proc DmRaster::options { id frm } {
     Entry $row.b -width 49 -text " $opt($id,map)" \
           -textvariable DmRaster::opt($id,map) \
           -background white
-    pack $row.a $row.b -side left
+    Button $row.c -text [G_msg "Help"] \
+            -image [image create photo -file "$dmpath/grass.gif"] \
+            -command "run g.manual d.rast" \
+            -background lightgreen \
+            -helptext [G_msg "Help"]
+    pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
     # raster query
@@ -133,8 +139,8 @@ proc DmRaster::options { id frm } {
     
     # overlay
     set row [ frame $frm.over ]
-    checkbutton $row.a -text [G_msg "overlay maps from other layers (transparent null value cells)"] -variable \
-        DmRaster::opt($id,overlay) 
+    checkbutton $row.a -text [G_msg "overlay maps from other layers (transparent null value cells)"] \
+        -variable DmRaster::opt($id,overlay) 
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
@@ -155,7 +161,7 @@ proc DmRaster::save { tree depth node } {
     set id [Dm::node_id $node]
 
     foreach key { _check map drapemap querytype rastquery rasttype bkcolor overlay \
-            legend legmon legthin legend2 legmon2 legthin2 } {
+             } {
         Dm::rc_write $depth "$key $opt($id,$key)"
     } 
 }
@@ -208,8 +214,10 @@ proc DmRaster::display { node } {
     
     if { $opt($id,drapemap) == "" } { 
         run $cmd 
+        puts $cmd
     } else {
         run $cmd2
+        puts $cmd
     }
 
     #display legend for raster map
@@ -222,7 +230,7 @@ proc DmRaster::display { node } {
             }
         }
 
-        DmMonitorsel::displmon $opt($id,legmon)
+        Dm::displmon $opt($id,legmon)
         run "d.erase white"
         run "d.legend map=$opt($id,map) thin=$opt($id,legthin)"
         run "d.mon select=$currmon"
@@ -238,7 +246,7 @@ proc DmRaster::display { node } {
             }
         }
 
-        DmMonitorsel::displmon $opt($id,legmon2)
+        Dm::displmon $opt($id,legmon2)
         run "d.erase white"
         run "d.legend map=$opt($id,drapemap) thin=$opt($id,legthin2)"
         run "d.mon select=$currmon"

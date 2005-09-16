@@ -95,11 +95,11 @@ proc DmVector::create { tree parent } {
     set opt($count,lcolor) \#000000
     set opt($count,_use_color) 1
     set opt($count,_use_fcolor) 1
+    set opt($count,lwidth) 1 
 
     set opt($count,symdir) "basic"
     set opt($count,icon) "basic/x"
     set opt($count,size) 5 
-    set opt($count,lwidth) 1 
 
     set opt($count,field) 1 
     set opt($count,lfield) 1 
@@ -161,14 +161,21 @@ proc DmVector::select_symbol { id } {
 # display vector options
 proc DmVector::options { id frm } {
     variable opt
+    global dmpath
 
     # vector name
     set row [ frame $frm.name ]
     Button $row.a -text [G_msg "Vector name:"] \
            -command "DmVector::select_map $id"
     Entry $row.b -width 40 -text "$opt($id,map)" \
-          -textvariable DmVector::opt($id,map)
-    pack $row.a $row.b -side left
+          -textvariable DmVector::opt($id,map) \
+          -background white
+    Button $row.c -text [G_msg "Help"] \
+            -image [image create photo -file "$dmpath/grass.gif"] \
+            -command "run g.manual d.vect" \
+            -background lightgreen \
+            -helptext [G_msg "Help"]
+    pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
     # display
@@ -204,25 +211,17 @@ proc DmVector::options { id frm } {
     pack $row -side top -fill both -expand yes
 
     # points
-    set row [ frame $frm.icon ]
- #  ComboBox $row.a -label [G_msg "Symbol:"] \
- #        -width 20  -textvariable DmVector::opt($id,icon) \
- #        -values {"basic/cross" "basic/circle" "basic/box" "basic/diamond"} \
- #        -modifycmd "DmVector::legend $id"                                 
-    
- #   ComboBox $row.e -label [G_msg "Symbol collection:"] \
- #       -width 10 -textvariable DmVector::opt($id,symdir)  \
- #	 -values {"basic" "demo"} \
- #	 -modifycmd "DmVector::legend $id"
-  
+    set row [ frame $frm.icon ]  
     Label $row.a -text "Point symbols:" 
     Button $row.b -text [G_msg "icon"] \
-	-command "DmVector::select_symbol $id"
+            -command "DmVector::select_symbol $id"
     Entry $row.c -width 15 -text "$opt($id,icon)" \
-	-textvariable DmVector::opt($id,icon)
+        	-textvariable DmVector::opt($id,icon) \
+        	-background white 
     Label $row.d -text "  size" 
     SpinBox $row.e -range {1 50 1} -textvariable DmVector::opt($id,size) \
-                   -width 2 -helptext "Icon size" -modifycmd "DmVector::legend $id"
+                   -width 2 -helptext "Icon size" -modifycmd "DmVector::legend $id" \
+                   -entrybg white 
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
@@ -236,7 +235,8 @@ proc DmVector::options { id frm } {
                -command "DmVector::legend $id"
     Label $row.e -text " width" 
     SpinBox $row.f -range {1 50 1} -textvariable DmVector::opt($id,lwidth) \
-                   -width 2 -helptext "Line width" -modifycmd "DmVector::legend $id"
+                   -entrybg white -width 2 -helptext "Line width" \
+                   -modifycmd "DmVector::legend $id"
     Label $row.g -text "(pixels) " 
     pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
     pack $row -side top -fill both -expand yes
@@ -267,12 +267,15 @@ proc DmVector::options { id frm } {
                 -command "DmVector::legend $id"
     Label $row.e -text [G_msg " size"] 
     SpinBox $row.f -range {1 50 1} -textvariable DmVector::opt($id,lsize) \
-                   -width 2 -helptext [G_msg "text size"] -modifycmd "DmVector::legend $id"
+                   -width 2 -helptext [G_msg "text size"] \
+                   -modifycmd "DmVector::legend $id" -entrybg white 
     ComboBox $row.g -label [G_msg " align with pt"] \
                     -width 6  -textvariable DmVector::opt($id,xref) \
+                    -entrybg white \
                     -values {"left" "center" "right"} \
                     -modifycmd "DmVector::legend $id"
     ComboBox $row.h -width 6  -textvariable DmVector::opt($id,yref) \
+                    -entrybg white \
                     -values {"top" "center" "bottom"} \
                     -modifycmd "DmVector::legend $id"
     pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g $row.h -side left
@@ -280,17 +283,24 @@ proc DmVector::options { id frm } {
 
     # labels layer and attribute column
     set row [ frame $frm.attribute ]
-    LabelEntry $row.a -label [G_msg "     layer for labels"] -textvariable DmVector::opt($id,lfield) -width 3
-    LabelEntry $row.b -label [G_msg " attribute col for labels"] -textvariable DmVector::opt($id,attribute) -width 26
+    LabelEntry $row.a -label [G_msg "     layer for labels"] \
+                -textvariable DmVector::opt($id,lfield) -width 3 \
+                -entrybg white
+    LabelEntry $row.b -label [G_msg " attribute col for labels"] \
+                -textvariable DmVector::opt($id,attribute) -width 26 \
+                -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # category
     set row [ frame $frm.cat ]
     Label $row.a -text [G_msg "Query vectors: "] 
-    LabelEntry $row.b -label [G_msg "layer for query"] -textvariable DmVector::opt($id,field) -width 3
-    LabelEntry $row.c -label [G_msg " query cat values"] -textvariable DmVector::opt($id,cat) \
-               -width 5
+    LabelEntry $row.b -label [G_msg "layer for query"] \
+                -textvariable DmVector::opt($id,field) -width 3 \
+                -entrybg white
+    LabelEntry $row.c -label [G_msg " query cat values"] \
+                -textvariable DmVector::opt($id,cat) \
+               -width 5 -entrybg white
     checkbutton $row.d -text [G_msg "SQL query"] -variable DmVector::opt($id,_use_where) \
                 -command "DmVector::legend $id"
     pack $row.a $row.b $row.c $row.d -side left
@@ -298,8 +308,9 @@ proc DmVector::options { id frm } {
 
     # sql where
     set row [ frame $frm.where ]
-    LabelEntry $row.a -label [G_msg "     SQL where statement"] -textvariable DmVector::opt($id,where) \
-               -width 44
+    LabelEntry $row.a -label [G_msg "     SQL where statement"] \
+                -textvariable DmVector::opt($id,where) \
+               -width 44 -entrybg white
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
@@ -316,8 +327,10 @@ proc DmVector::options { id frm } {
     # display only in limited region size range
     set row [ frame $frm.region ]
     Label $row.a -text [G_msg "Display when avg. region dimension is"]
-    LabelEntry $row.b -label ">" -textvariable DmVector::opt($id,minreg) -width 8
-    LabelEntry $row.c -label " or <" -textvariable DmVector::opt($id,maxreg) -width 8
+    LabelEntry $row.b -label ">" -textvariable DmVector::opt($id,minreg) \
+                -width 8 -entrybg white
+    LabelEntry $row.c -label " or <" -textvariable DmVector::opt($id,maxreg) \
+                -width 8 -entrybg white
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
@@ -325,7 +338,8 @@ proc DmVector::options { id frm } {
     set row [ frame $frm.print ]
     Label $row.a -text [G_msg "Line width for ps.map print output:"] 
     SpinBox $row.b -range {1 100 1} -textvariable DmVector::opt($id,_width) \
-                   -width 2 -helptext [G_msg "Line width used for printing"] 
+                   -width 2 -helptext [G_msg "Line width used for printing"] \
+                   -entrybg white 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 }
@@ -344,16 +358,6 @@ proc DmVector::save { tree depth node } {
     } 
 }
 
-proc DmVector::color { color } {
-    
-    regexp -- {#(..)(..)(..)} $color x r g b
-
-    set r [expr 0x$r ]
-    set g [expr 0x$g ]
-    set b [expr 0x$b ]
-
-    return "$r:$g:$b"
-}
 
 proc DmVector::display { node } {
     variable opt
@@ -378,9 +382,9 @@ proc DmVector::display { node } {
     # color
     if { $opt($id,rdmcolor) } { append cmd " -c" }
     if { $opt($id,sqlcolor) } { append cmd " -a" }
-    set color [DmVector::color $opt($id,color)]
-    set fcolor [DmVector::color $opt($id,fcolor)]
-    set lcolor [DmVector::color $opt($id,lcolor)]
+    set color [Dm::color $opt($id,color)]
+    set fcolor [Dm::color $opt($id,fcolor)]
+    set lcolor [Dm::color $opt($id,lcolor)]
 
     if { $opt($id,_use_color) } { append cmd " color=$color" } { append cmd " color=none" }
     append cmd " lcolor=$lcolor" 
@@ -405,7 +409,12 @@ proc DmVector::display { node } {
     set type [join $tlist , ]
     append cmd " type=$type"
 
-    append cmd " icon=$opt($id,icon) size=$opt($id,size) width=$opt($id,lwidth)" 
+    append cmd " icon=$opt($id,icon) size=$opt($id,size)" 
+
+    if { $opt($id,lwidth) != 1 } { 
+        append cmd " width=$opt($id,lwidth)" 
+    } 
+
 
     if { $opt($id,field) != "" } { 
         append cmd " layer=$opt($id,field)" 
@@ -434,6 +443,7 @@ proc DmVector::display { node } {
     } 
 
     run $cmd
+    puts $cmd
 }
 
 proc DmVector::print { file node } {
@@ -451,8 +461,8 @@ proc DmVector::print { file node } {
 
     if { ! $opt($id,display_shape) } { return } 
 
-    set color [DmVector::color $opt($id,color)]
-    set fcolor [DmVector::color $opt($id,fcolor)]
+    set color [Dm::color $opt($id,color)]
+    set fcolor [Dm::color $opt($id,fcolor)]
 
     # Points
     if { $opt($id,type_point) || $opt($id,type_centroid) } {

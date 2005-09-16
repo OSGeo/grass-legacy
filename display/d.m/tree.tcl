@@ -20,22 +20,22 @@ proc DmTree::create { parent } {
     variable legend_width
     variable tree
     set sw    [ScrolledWindow $parent.sw \
-                  -relief sunken -borderwidth 2]
+                  -relief sunken -borderwidth 2 ]
 
     set lw [expr $legend_width + 27]
-    set lh [expr $legend_height + 2]
+    set lh [expr $legend_height + 3]
     set tree  [Tree $sw.tree \
-                   -relief flat -borderwidth 0 -width 15 -highlightthickness 0\
-		   -redraw 1 -dropenabled 1 -dragenabled 1 \
-                   -dragevent 1 -dropcmd "DmTree::drop" \
-                   -opencmd   "DmTree::open $sw.tree" \
-                   -closecmd  "DmTree::close $sw.tree" \
-                   -deltay $lh -padx $lw \
-                   -width 40 ]
+            -relief flat -borderwidth 0 -width 15 -highlightthickness 0 \
+            -redraw 1 -dropenabled 1 -dragenabled 1 \
+            -dragevent 1 -dropcmd "DmTree::drop" \
+            -opencmd   "DmTree::open $sw.tree" \
+            -closecmd  "DmTree::close $sw.tree" \
+            -deltay $lh -padx $lw \
+            -width 50 ]
 
     $sw setwidget $tree
 
-    pack $sw    -side top -expand yes -fill both
+    pack $sw  -side top -expand yes -fill both
     pack $tree  -side top -expand yes -fill both
 
     $tree bindText  <ButtonPress-1> "DmTree::select $tree"

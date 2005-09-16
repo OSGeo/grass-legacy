@@ -65,10 +65,20 @@ source $dmpath/cmd.tcl
 source $dmpath/tree.tcl
 source $dmpath/tool1.tcl
 source $dmpath/tool2.tcl
+#source $dmpath/tool3.tcl
 source $dmpath/group.tcl
 source $dmpath/vector.tcl
 source $dmpath/raster.tcl
 source $dmpath/labels.tcl
+source $dmpath/gridline.tcl
+source $dmpath/rgbhis.tcl
+source $dmpath/legend.tcl
+source $dmpath/frames.tcl
+source $dmpath/barscale.tcl
+source $dmpath/chart.tcl
+source $dmpath/thematic.tcl
+source $dmpath/fttext.tcl
+source $dmpath/dtext.tcl
 source $dmpath/print.tcl
 
 namespace eval Dm {
@@ -164,6 +174,35 @@ proc monitor_menu {op} {
 
 read_moncap
 
+proc Dm::color { color } {
+    
+    regexp -- {#(..)(..)(..)} $color x r g b
+
+    set r [expr 0x$r ]
+    set g [expr 0x$g ]
+    set b [expr 0x$b ]
+
+    return "$r:$g:$b"
+}
+
+
+proc Dm::displmon { mon } {
+    global dmpath
+    if ![catch {open "|d.mon -L" r} input] {
+        while {[gets $input line] >= 0} {
+            if {[regexp -nocase "$mon.*not running" $line]} {
+                run "d.mon start=$mon"
+                return
+            } elseif {[regexp -nocase "$mon.* running" $line]} {
+                run "d.mon select=$mon"
+                return       
+            }              
+        }
+    }
+}
+
+
+
 proc Dm::create { } {
     global dmpath
     global mainwindow
@@ -173,7 +212,7 @@ proc Dm::create { } {
     variable prgtext
     variable prgindic
 
-    set prgtext [G_msg "Loading Dm"]
+    set prgtext [G_msg "Loading GIS Manager"]
     set prgindic -1
     _create_intro
     update
@@ -185,34 +224,77 @@ proc Dm::create { } {
 
     set prgtext   "Creating MainFrame..."
     set mainframe [MainFrame .mainframe \
-                       -menu $descmenu \
+                       -menu $descmenu -background lightgreen \
                        -textvariable Dm::status \
                        -progressvar  Dm::prgindic ]
 
     set mainwindow [$mainframe getframe]
 
-    # toolbar 1 creation
+    # toolbar 1 & 2 creation
     set tb1  [$mainframe addtoolbar]
-    DmToolBar::create $tb1
-    set pw [PanedWindow $mainwindow.pw -side right ]   
-    pack $pw -side top -expand yes -fill both -anchor n 
+    DmToolBar1::create $tb1
+    set tb2  [$mainframe addtoolbar]
+    DmToolBar2::create $tb2
+    set pw2 [PanedWindow $mainwindow.pw2 -side top -pad 0 -width 6 -background lightgreen]
+    pack $pw2 -side top -expand yes -fill both -anchor n 
+    set pw [PanedWindow $mainwindow.pw -side left -background lightgreen ]   
+    pack $pw -side bottom -expand yes -fill both -anchor n 
 
-    # toolbar 2 creation
-    set tb1  [$mainframe addtoolbar]
-    DmMonitorsel::create $tb1
-    set pw2 [PanedWindow $mainwindow.pw2 -side right ]   
-    pack $pw2 -side bottom -expand yes -fill both -anchor n 
+    # MANAGE DISPLAY MONITORS
+    set monitor_pane  [$pw2 add -minsize 1 -weight 0 ]
 
+    set bbox1 [ButtonBox $monitor_pane.bbox1 -spacing 0 -background lightgreen -orient vertical ]
+    
+    # monitor x0
+    $bbox1 add  -text [G_msg "x0"] -command "Dm::displmon x0" \
+        -highlightthickness 0 -takefocus 1 -relief raised -borderwidth 1  \
+        -helptext [G_msg "Start/select display monitor x0"]
+        
+    #monitor x1
+    $bbox1 add  -text [G_msg "x1"] -command "Dm::displmon x1" \
+        -highlightthickness 0 -takefocus 1 -relief raised -borderwidth 1  \
+        -helptext [G_msg "Start/select display monitor x1"]
+
+    #monitor x2
+    $bbox1 add  -text [G_msg "x2"] -command "Dm::displmon x2" \
+        -highlightthickness 0 -takefocus 1 -relief raised -borderwidth 1  \
+        -helptext [G_msg "Start/select display monitor x2"]
+
+    #monitor x3
+    $bbox1 add  -text [G_msg "x3"] -command "Dm::displmon x3" \
+        -highlightthickness 0 -takefocus 1 -relief raised -borderwidth 1  \
+        -helptext [G_msg "Start/select display monitor x3"]
+
+    #monitor x4
+    $bbox1 add  -text [G_msg "x4"] -command "Dm::displmon x4" \
+        -highlightthickness 0 -takefocus 1 -relief raised -borderwidth 1  \
+        -helptext [G_msg "Start/select display monitor x4"]
+
+    #monitor x5
+    $bbox1 add  -text [G_msg "x5"] -command "Dm::displmon x5" \
+        -highlightthickness 0 -takefocus 1 -relief raised -borderwidth 1  \
+        -helptext [G_msg "Start/select display monitor x5"]
+
+    #monitor x6
+    $bbox1 add  -text [G_msg "x6"] -command "Dm::displmon x6" \
+        -highlightthickness 0 -takefocus 1 -relief raised -borderwidth 1  \
+        -helptext [G_msg "Start/select display monitor x6"]
+
+    pack $bbox1 -side left -anchor nw
+    pack $monitor_pane -side left -expand no -fill both
+    
+   
     # tree 
-    set tree_pane  [$pw add -minsize 50 -weight 1]
-    set tree [ DmTree::create $tree_pane]
-    pack $tree_pane -side top -expand yes -fill both
+    set tree_pane  [$pw2 add  -minsize 50 -weight 1]
+    set tree [ DmTree::create $tree_pane ]
+    pack $tree_pane -side right -expand yes -fill both
+
 
     # options
     set options_pane  [$pw add -minsize 50 -weight 1]
     set options_sw [ScrolledWindow $options_pane.sw -relief sunken -borderwidth 2]
     set options_sf [ ScrollableFrame $options_sw.sf]
-    $options_sf configure -height 150
+    $options_sf configure -height 180 -width 500
     $options_sw setwidget $options_sf
     set options [$options_sf getframe]
     pack $options_pane -expand yes -fill both 
@@ -225,7 +307,7 @@ proc Dm::create { } {
 
     pack $mainframe -fill both -expand yes
  
-    set fon [font create -family Times -size 16]
+    set fon [font create -family Times -size 16 ]
     DynamicHelp::configure -font $fon -background yellow
 
     update idletasks
@@ -322,6 +404,33 @@ proc Dm::add { type } {
         cmd {
             DmCmd::create $tree $parent_node
         }
+        gridline {
+            DmGridline::create $tree $parent_node
+        }
+        rgbhis {
+            DmRgbhis::create $tree $parent_node
+        }
+        legend {
+            DmLegend::create $tree $parent_node
+        }
+        dframe {
+            DmDframe::create $tree $parent_node
+        }
+        barscale {
+            DmBarscale::create $tree $parent_node
+        }
+        chart {
+            DmChart::create $tree $parent_node
+        }
+        thematic {
+            DmThematic::create $tree $parent_node
+        }
+        fttext {
+            DmFTtext::create $tree $parent_node
+        }
+        dtext {
+            DmDtext::create $tree $parent_node
+        }
     }
 }
 
@@ -359,6 +468,33 @@ proc Dm::select { node } {
         }
         cmd {
             DmCmd::options $id $opt
+        }
+        gridline {
+            DmGridline::options $id $opt
+        }
+        rgbhis {
+            DmRgbhis::options $id $opt
+        }
+        legend {
+            DmLegend::options $id $opt
+        }
+        dframe {
+            DmDframe::options $id $opt
+        }
+        barscale {
+            DmBarscale::options $id $opt
+        }
+        chart {
+            DmChart::options $id $opt
+        }
+        thematic {
+            DmThematic::options $id $opt
+        }
+        fttext {
+            DmFTtext::options $id $opt
+        }
+        dtext {
+            DmDtext::options $id $opt
         }
     }
 }
@@ -423,6 +559,33 @@ proc Dm::edit { } {
         cmd {
             return
         }
+        gridline {
+            return
+        }
+        rgbhis {
+            return
+        }
+        legend {
+            return
+        }
+        dframe {
+            return
+        }
+        barscale {
+            return
+        }
+        chart {
+            return
+        }
+        thematic {
+            return
+        }
+        fttext {
+            return
+        }
+        dtext {
+            return
+        }
     }
 
 }
@@ -481,26 +644,60 @@ proc Dm::pan { } {
 
 }
 
-# pan
-proc Dm::scalebar { } {
-    
-    set cmd "d.barscale bcolor=white tcolor=black -m"
-    term $cmd 
 
-}
-# pan
+# measure
 proc Dm::measure { } {
     
     set cmd "d.measure"
     term $cmd 
 
 }
+
+# position
+proc Dm::position { } {
+    
+    set cmd "d.where"
+    term $cmd 
+
+}
+
+# nviz
+proc Dm::nviz { } {
+    
+    set cmd "nviz"
+    spawn $cmd
+
+}
+
+# fly
+proc Dm::fly { } {
+    
+    set cmd "d.nviz"
+    spawn $cmd
+
+}
+# xganim
+proc Dm::xganim { } {
+    
+    set cmd "xganim"
+    spawn $cmd 
+
+}
+
 # erase to white
 proc Dm::erase { } {
     
 #    set cmd "d.erase white"
     set cmd "d.frame -e"
     run $cmd 
+
+}
+
+# help
+proc Dm::help { } {
+    
+    set cmd "g.manual"
+    term $cmd 
 
 }
 
@@ -525,6 +722,33 @@ proc Dm::display_node { node } {
 	}
 	cmd {
 	    DmCmd::display $node
+	}
+	gridline {
+	    DmGridline::display $node
+	}
+	rgbhis {
+	    DmRgbhis::display $node
+	}
+	legend {
+	    DmLegend::display $node
+	}
+	dframe {
+	    DmDframe::display $node
+	}
+	barscale {
+	    DmBarscale::display $node
+	}
+	chart {
+	    DmChart::display $node
+	}
+	thematic {
+	    DmThematic::display $node
+	}
+	fttext {
+	    DmFTtext::display $node
+	}
+	dtext {
+	    DmDtext::display $node
 	}
     } 
 }
@@ -555,6 +779,33 @@ proc Dm::print_node { file node } {
 	cmd {
             puts "Command may not be printed to postscript file"
 	}
+	gridline {
+            puts "not be printed to postscript file"
+	}
+	rgbhis {
+            puts "not be printed to postscript file"
+	}
+	legend {
+            puts "not be printed to postscript file"
+	}
+	dframe {
+            puts "not be printed to postscript file"
+	}
+	barscale {
+            puts "not be printed to postscript file"
+	}
+	chart {
+            puts "not be printed to postscript file"
+	}
+	thematic {
+            puts "not be printed to postscript file"
+	}
+	fttext {
+            puts "not be printed to postscript file"
+	}
+	dtext {
+            puts "not be printed to postscript file"
+	}
     } 
 }
 
@@ -580,6 +831,33 @@ proc Dm::query { } {
         }
         cmd {
             DmCmd::query $sel
+        }
+        gridline {
+            return
+        }
+        rgbhis {
+            return
+        }
+        legend {
+            return
+        }
+        dframe {
+            return
+        }
+        barscale {
+            return
+        }
+        chart {
+            return
+        }
+        thematic {
+            return
+        }
+        fttext {
+            return
+        }
+        dtext {
+            return
         }
     }
 }
@@ -623,6 +901,33 @@ proc Dm::duplicate { } {
         }
         cmd {
             DmCmd::duplicate $tree $parent_node $sel $id
+        }
+        gridline {
+            DmGridline::duplicate $tree $parent_node $sel $id
+        }
+        rgbhis {
+            DmRgbhis::duplicate $tree $parent_node $sel $id
+        }
+        legend {
+            DmLegend::duplicate $tree $parent_node $sel $id
+        }
+        dframe {
+            DmDframe::duplicate $tree $parent_node $sel $id
+        }
+        barscale {
+            DmBarscale::duplicate $tree $parent_node $sel $id
+        }
+        chart {
+            DmChart::duplicate $tree $parent_node $sel $id
+        }
+        thematic {
+            DmThematic::duplicate $tree $parent_node $sel $id
+        }
+        fttext {
+            DmFTtext::duplicate $tree $parent_node $sel $id
+        }
+        dtext {
+            DmDtext::duplicate $tree $parent_node $sel $id
         }
         group {
             DmGroup::duplicate $tree $parent_node $sel $id
@@ -683,6 +988,51 @@ proc Dm::save_node { depth node } {
             Dm::rc_write $depth Cmd $name
             incr depth
 	    DmCmd::save $tree $depth $node
+	}
+	gridline {
+            Dm::rc_write $depth gridline $name
+            incr depth
+	    DmGridline::save $tree $depth $node
+	}
+	rgbhis {
+            Dm::rc_write $depth rgbhis $name
+            incr depth
+	    DmRgbhis::save $tree $depth $node
+	}
+	legend {
+            Dm::rc_write $depth legend $name
+            incr depth
+	    DmLegend::save $tree $depth $node
+	}
+	dframe {
+            Dm::rc_write $depth dframe $name
+            incr depth
+	    DmDframe::save $tree $depth $node
+	}
+	barscale {
+            Dm::rc_write $depth barscale $name
+            incr depth
+	    DmBarscale::save $tree $depth $node
+	}
+	chart {
+            Dm::rc_write $depth chart $name
+            incr depth
+	    DmChart::save $tree $depth $node
+	}
+	thematic {
+            Dm::rc_write $depth thematic $name
+            incr depth
+	    DmThematic::save $tree $depth $node
+	}
+	fttext {
+            Dm::rc_write $depth fttext $name
+            incr depth
+	    DmFTtext::save $tree $depth $node
+	}
+	dtext {
+            Dm::rc_write $depth dtext $name
+            incr depth
+	    DmDtext::save $tree $depth $node
 	}
     } 
     set depth [expr $depth - 1]
@@ -764,6 +1114,42 @@ proc Dm::load { lpth } {
 			set current_node [DmCmd::create $tree $parent]
 			$tree itemconfigure $current_node -text $val 
 		    }
+		    gridline {
+			set current_node [DmGridline::create $tree $parent]
+			$tree itemconfigure $current_node -text $val 
+		    }
+		    rgbhis {
+			set current_node [DmRgbhis::create $tree $parent]
+			$tree itemconfigure $current_node -text $val 
+		    }
+		    legend {
+			set current_node [DmLegend::create $tree $parent]
+			$tree itemconfigure $current_node -text $val 
+		    }
+		    dframe {
+			set current_node [DmDframe::create $tree $parent]
+			$tree itemconfigure $current_node -text $val 
+		    }
+		    barscale {
+			set current_node [DmBarscale::create $tree $parent]
+			$tree itemconfigure $current_node -text $val 
+		    }
+		    chart {
+			set current_node [DmChart::create $tree $parent]
+			$tree itemconfigure $current_node -text $val 
+		    }
+		    thematic {
+			set current_node [DmThematic::create $tree $parent]
+			$tree itemconfigure $current_node -text $val 
+		    }
+		    fttext {
+			set current_node [DmFTtext::create $tree $parent]
+			$tree itemconfigure $current_node -text $val 
+		    }
+		    dtext {
+			set current_node [DmDtext::create $tree $parent]
+			$tree itemconfigure $current_node -text $val 
+		    }
 		    End {
 			set type [Dm::node_type $current_node]
 			if { $type == "group"  } {
@@ -793,6 +1179,33 @@ proc Dm::load { lpth } {
 			    }
 			    cmd { 
 				DmCmd::set_option $current_node $key $val
+			    }
+			    gridline { 
+				DmGridline::set_option $current_node $key $val
+			    }
+			    rgbhis { 
+				DmRgbhis::set_option $current_node $key $val
+			    }
+			    legend { 
+				DmLegend::set_option $current_node $key $val
+			    }
+			    dframe { 
+				DmDframe::set_option $current_node $key $val
+			    }
+			    barscale { 
+				DmBarscale::set_option $current_node $key $val
+			    }
+			    chart { 
+				DmChart::set_option $current_node $key $val
+			    }
+			    thematic { 
+				DmThematic::set_option $current_node $key $val
+			    }
+			    fttext { 
+				DmFTtext::set_option $current_node $key $val
+			    }
+			    dtext { 
+				DmDtext::set_option $current_node $key $val
 			    }
 			}
 		      }
@@ -847,6 +1260,33 @@ proc Dm::node_type { node } {
     }  
     if { [string match cmd* $node] } {
        return "cmd"
+    }  
+    if { [string match gridline* $node] } {
+       return "gridline"
+    }  
+    if { [string match rgbhis* $node] } {
+       return "rgbhis"
+    }  
+    if { [string match legend* $node] } {
+       return "legend"
+    }  
+    if { [string match dframe* $node] } {
+       return "dframe"
+    }  
+    if { [string match barscale* $node] } {
+       return "barscale"
+    }  
+    if { [string match chart* $node] } {
+       return "chart"
+    }  
+    if { [string match thematic* $node] } {
+       return "thematic"
+    }  
+    if { [string match fttext* $node] } {
+       return "fttext"
+    }  
+    if { [string match dtext* $node] } {
+       return "dtext"
     }  
     
     return ""
