@@ -17,5 +17,5 @@ The DBMI user modules are stored in
 NOTE:
  Please read grass6/db/drivers/README
 
-To generate dbmi_driver/dbstubs.h automatically, run './mk_dbstubs' in
+To generate dbmi_driver/dbstubs.h automatically, run './mk_dbstubs_h.sh' in
 dbmi_driver/ directory.
