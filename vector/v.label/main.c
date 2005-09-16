@@ -126,7 +126,6 @@ main (int argc, char **argv)
     Space->key = "space";
     Space->description = _("Space between letters for curled labels (in map-units)");
     Space->type = TYPE_DOUBLE;
-    Space->answer = "100";
     Space->required = NO;
 
     FontSize = G_define_option();
@@ -197,15 +196,13 @@ main (int argc, char **argv)
     type = Vect_option_to_types ( Typopt );
 
     size = atof (Size->answer);
-    space = atof (Space->answer);
-
-    if(Along_flag->answer && ( size/space >= 2  ||  size/space <= 0.5 ))
-	G_warning(_("size and space options vary significantly which may lead to crummy output"));
+    space = size;  /* default: set spacing according to letter size (map units) */
 
     if(FontSize->answer) {
 	fontsize = atoi(FontSize->answer);
-	if(Along_flag->answer) {
+
 	/* figure out space param dynamically from current dispay */
+	if(Along_flag->answer) {
 	    if (R_open_driver() != 0)  /* connect to the driver */
 		G_fatal_error(_("No graphics device selected"));
 
@@ -218,6 +215,14 @@ main (int argc, char **argv)
     }
     else
 	fontsize = 0;
+
+    /* or if user explicitly gave a number for letter spacing, use that */
+    if(Space->answer)
+	space = atof (Space->answer);
+
+    if(Along_flag->answer && !fontsize && ( size/space >= 2  ||  size/space <= 0.5 ))
+	G_warning(_("size and space options vary significantly which may lead to crummy output"));
+
 
     /* parse reference answers */
     i=0;
