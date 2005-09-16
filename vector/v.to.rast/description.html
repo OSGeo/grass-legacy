@@ -11,10 +11,22 @@ Before running <em>v.to.rast</em>, the user should
 therefore ensure that the current geographic region is
 correctly set and that the region resolution is at the
 desired level.
-
-<p>
+<P>
 Either the <em><b>col</b></em> parameter or the <em><b>value</b></em>
-parameter must be specified.
+parameter must be specified.  The <em><b>use<b></em> option may be 
+specified alone when using option <em>d</em>.
+<P>
+<em><b>use</b></em> options are:
+<LI>
+<em>attr</em> - read values from attribute table (default)
+<LI>
+<em>cat</em>  - read values from category
+<LI>
+<em>val</em>  - use value specified by <em><b>value</b></em> option
+<LI>
+<em>z</em>    - use z coordinate (points or contours only)
+<LI>
+<em>d</em>    - output as flow direction in degrees (lines only)
 <P>
 The <em><b>col</b></em> parameter uses an existing column from the vector map
 database table as the category value in the output raster map. Existing table 
