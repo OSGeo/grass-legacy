@@ -71,6 +71,7 @@
 #define DB_SQL_TYPE_TIME            10
 #define DB_SQL_TYPE_TIMESTAMP       11
 #define DB_SQL_TYPE_INTERVAL        12
+#define DB_SQL_TYPE_TEXT            13  /* length not defined */
 
 #define DB_SQL_TYPE_SERIAL          21
 

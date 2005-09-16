@@ -382,6 +382,10 @@ db_table_to_sql ( dbTable *table, dbString *sql)
 		sprintf (buf, "varchar(%d)", db_get_column_length (column) );
 		db_append_string ( sql, buf);
                 break;
+	    case DB_SQL_TYPE_TEXT:
+		G_warning ( "Type TEXT converted to 'VARCHAR(250)'" );
+		db_append_string ( sql, "varchar(250)");
+                break;
 	    case DB_SQL_TYPE_SMALLINT:
 	    case DB_SQL_TYPE_INTEGER:
 		db_append_string ( sql, "integer");
