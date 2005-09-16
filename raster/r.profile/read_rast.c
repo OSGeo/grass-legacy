@@ -10,12 +10,7 @@
  *
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include "gis.h"
-#include "display.h"
+#include "local_proto.h"
 
 int read_rast(double east, double north, double dist, int fd, int coords, 
 		RASTER_MAP_TYPE data_type, FILE * fp, char *null_string)
@@ -24,6 +19,8 @@ int read_rast(double east, double north, double dist, int fd, int coords,
     struct Cell_head window;
     CELL *cell;
     char buf[1024] = "";
+    char cbuf[80];
+    int red, green, blue;
     FCELL *fcell;
     DCELL *dcell;
 
@@ -47,6 +44,12 @@ int read_rast(double east, double north, double dist, int fd, int coords,
 	else
 	    sprintf(buf, "%d", cell[col]);
 
+	if (clr) {
+		G_get_c_raster_color(&cell[col], &red, &green, &blue, &colors);
+		sprintf(cbuf, " %d %d %d", red, green, blue);
+		strcat(buf, cbuf);
+	}
+
 	if (coords == 1)
 	    fprintf(fp, "%f %f %f %s\n", east, north, dist, buf);
 	else
@@ -63,6 +66,12 @@ int read_rast(double east, double north, double dist, int fd, int coords,
 	else
 	    sprintf(buf, "%f", fcell[col]);
 
+	if (clr) {
+		G_get_f_raster_color(&fcell[col], &red, &green, &blue, &colors);
+		sprintf(cbuf, " %d %d %d", red, green, blue);
+		strcat(buf, cbuf);
+	}
+
 	if (coords == 1)
 	    fprintf(fp, "%f %f %f %s\n", east, north, dist, buf);
 	else
@@ -77,6 +86,12 @@ int read_rast(double east, double north, double dist, int fd, int coords,
 	    sprintf(buf, null_string);
 	else
 	    sprintf(buf, "%f", dcell[col]);
+
+	if (clr) {
+		G_get_d_raster_color(&dcell[col], &red, &green, &blue, &colors);
+		sprintf(cbuf, " %d %d %d", red, green, blue);
+		strcat(buf, cbuf);
+	}
 
 	if (coords == 1)
 	    fprintf(fp, "%f %f %f %s\n", east, north, dist, buf);

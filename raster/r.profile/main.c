@@ -8,25 +8,14 @@
  *
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include "gis.h"
-#include "display.h"
-#include "raster.h"
-#include "glocale.h"
+#include "local_proto.h"
 
-static int move(int, int);
-static int cont(int, int);
-int do_profile(double, double, double, double, char *, int, double, int, int, FILE *, char *);
-/* read_rast.c */
-int read_rast(double, double, double, int, int, RASTER_MAP_TYPE, FILE *, char *);
-
+static double dist, e, n;
 static int min_range[5], max_range[5];
 static int which_range;
 static int change_range;
-static double dist, e = 0, n = 0;
+static int move(int, int);
+static int cont(int, int);
 
 int main(int argc, char *argv[])
 {
@@ -36,6 +25,9 @@ int main(int argc, char *argv[])
     int screen_x, screen_y, button;
     double res;
     char errbuf[256], *null_string;
+    char ebuf[256], nbuf[256], label[512];
+    char b1[100], b2[100];
+    int n, first = 0;
     int coords = 0, i, k = -1;
     double e1, e2, n1, n2;
     RASTER_MAP_TYPE data_type;
@@ -43,7 +35,7 @@ int main(int argc, char *argv[])
     struct
     {
 	struct Option *opt1, *profile, *res, *output, *null_str;
-	struct Flag *i, *g;
+	struct Flag *i, *g, *c;
     }
     parm;
     struct GModule *module;
@@ -102,14 +94,23 @@ int main(int argc, char *argv[])
     parm.g->description =
 	_("Output easting and northing in first two columns of four column output");
 
+    parm.c = G_define_flag();
+    parm.c->key = 'c';
+    parm.c->description =
+	    _("Output R G B color values for each depth");
+
 
     if (G_parser(argc, argv))
 	exit(1);
 
     if ((!parm.i->answer) && (!parm.profile->answer)) {
 	sprintf(msg, "Either -i flag and/or profile parameter must be used.");
-	G_fatal_error(msg);
+	/* G_fatal_error(msg); */
     }
+
+    clr = 0;
+    if (parm.c->answer)
+	    clr = 1; /* color output */
 
     null_string = parm.null_str->answer;
 
@@ -150,6 +151,10 @@ int main(int argc, char *argv[])
 	G_fatal_error(msg);
     }
 
+    /* initilaize color structure */
+    if (clr)
+	    G_read_colors(name, mapset, &colors);
+
     /* Open ASCII file for output or stdout */
     outfile = parm.output->answer;
 
@@ -186,7 +191,22 @@ int main(int argc, char *argv[])
     }
 
     /* Get Profile Start Coords */
-    if (parm.i->answer) {
+    if (!parm.profile->answer && !parm.i->answer ) {
+    /* Assume input from stdin */
+        for (n=1; input(b1, ebuf, b2, nbuf, label) ; n++)
+    	{
+	    if (!G_scan_easting (ebuf, &e2, G_projection()) ||
+			    !G_scan_northing (nbuf, &n2, G_projection()))
+		    G_fatal_error(_("Invalid coordinates %s %s"), ebuf, nbuf);
+
+	    if (first)
+		    do_profile(e1, e2, n1, n2, name, coords, res, fd, data_type, fp, null_string);
+	    e1 = e2;
+	    n1 = n2;
+	    first = 1;
+       }
+    } 
+    else if (parm.i->answer) {
 	/* Select points interactively */
 
 	dist = 0;
@@ -226,7 +246,7 @@ int main(int argc, char *argv[])
 
 	R_close_driver();
     }
-    else {
+     else {
 	/* Coords from Command Line */
 	for (i = 0; parm.profile->answers[i]; i += 2) {
 	    /* Test for number coordinate pairs */
@@ -258,6 +278,9 @@ int main(int argc, char *argv[])
 
     G_close_cell(fd);
     fclose(fp);
+
+    if (clr)
+	    G_free_colors(&colors);
 
     return 0;
 }				/* Done with main */
