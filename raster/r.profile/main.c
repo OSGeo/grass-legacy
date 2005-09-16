@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
     parm.c = G_define_flag();
     parm.c->key = 'c';
     parm.c->description =
-	    _("Output R G B color values for each depth");
+	    _("Output RRR:GGG:BBB color values for each profile point");
 
 
     if (G_parser(argc, argv))

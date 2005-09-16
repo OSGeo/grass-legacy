@@ -46,7 +46,7 @@ int read_rast(double east, double north, double dist, int fd, int coords,
 
 	if (clr) {
 		G_get_c_raster_color(&cell[col], &red, &green, &blue, &colors);
-		sprintf(cbuf, " %d %d %d", red, green, blue);
+		sprintf(cbuf, " %03d:%03d:%03d", red, green, blue);
 		strcat(buf, cbuf);
 	}
 
@@ -68,7 +68,7 @@ int read_rast(double east, double north, double dist, int fd, int coords,
 
 	if (clr) {
 		G_get_f_raster_color(&fcell[col], &red, &green, &blue, &colors);
-		sprintf(cbuf, " %d %d %d", red, green, blue);
+		sprintf(cbuf, " %03d:%03d:%03d", red, green, blue);
 		strcat(buf, cbuf);
 	}
 
@@ -89,7 +89,7 @@ int read_rast(double east, double north, double dist, int fd, int coords,
 
 	if (clr) {
 		G_get_d_raster_color(&dcell[col], &red, &green, &blue, &colors);
-		sprintf(cbuf, " %d %d %d", red, green, blue);
+		sprintf(cbuf, " %03d:%03d:%03d", red, green, blue);
 		strcat(buf, cbuf);
 	}
 
