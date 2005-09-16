@@ -1,0 +1,22 @@
+<H2>DESCRIPTION</H2>
+
+
+<EM><b>d.out.file</b></EM>  - Uses d.save, the GRASS PNG driver, and gdal_translate to export the currently selected display monitor to a graphics file of several formats. Screen resolution can be set prior to export.
+
+PNG and PPM formats are supported directly by the GRASS PNG driver, along with two compression levels for PNG files
+
+TIFF, JPEG, and BMP formats are supported by using gdal_translate on PPM format files produced by the GRASS PNG driver. Different levels of compression/quality are supported for JPEG files (integer values from 10-100 are accepted.
+
+Graphic files are exported to the user's home directory by default, but different paths may be specified in the output field. <br>
+<EM>(GRASS Shell Script)</EM>
+
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.redraw.html">d.redraw</A></EM>,
+<EM><A HREF="pngdriver.html">PNG driver</A></EM>,
+
+<H2>AUTHOR</H2>
+
+Michael Barton, Arizona State University
+<p><i>Last changed: $Date$</i>
