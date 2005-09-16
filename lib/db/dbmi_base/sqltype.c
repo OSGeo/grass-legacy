@@ -25,6 +25,7 @@ db_sqltype_name(sqltype)
     case DB_SQL_TYPE_DATE:             return "DATE";
     case DB_SQL_TYPE_TIME:             return "TIME";
     case DB_SQL_TYPE_SERIAL:           return "SERIAL";
+    case DB_SQL_TYPE_TEXT:             return "TEXT";
     }
     switch (sqltype & ~DB_DATETIME_MASK)
     {
