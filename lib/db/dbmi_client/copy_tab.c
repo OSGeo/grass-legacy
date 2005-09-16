@@ -76,33 +76,65 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
     }
     
     /* Open output driver and database */
-    to_driver = db_start_driver(to_drvname);
-    if ( to_driver == NULL) {
-	G_warning ( "Cannot open driver '%s'", to_drvname);
-	db_close_database_shutdown_driver(from_driver);
-	return DB_FAILED;
+    if ( strcmp(from_drvname,to_drvname)==0 
+	&& strcmp(from_dbname,to_dbname)==0 )
+    {
+  	G_debug ( 3, "Use the same driver" ); 
+        to_driver = from_driver;
     }
-    db_set_handle (&to_handle, to_dbname, NULL);
-    if (db_open_database(to_driver, &to_handle) != DB_OK) {
-	G_warning ( "Cannot open database '%s'", to_dbname);
-	db_close_database_shutdown_driver(to_driver);
-	db_close_database_shutdown_driver(from_driver);
-	return DB_FAILED;
+    else
+    {
+	to_driver = db_start_driver(to_drvname);
+	if ( to_driver == NULL) {
+	    G_warning ( "Cannot open driver '%s'", to_drvname);
+	    db_close_database_shutdown_driver(from_driver);
+	    return DB_FAILED;
+	}
+	db_set_handle (&to_handle, to_dbname, NULL);
+	if (db_open_database(to_driver, &to_handle) != DB_OK) {
+	    G_warning ( "Cannot open database '%s'", to_dbname);
+	    db_close_database_shutdown_driver(to_driver);
+	    db_close_database_shutdown_driver(from_driver);
+	    return DB_FAILED;
+	}
     }
 
     db_begin_transaction ( to_driver );
 
+    /* Because in SQLite3 an opened cursor is no more valid
+       if 'schema' is modified (create table), we have to open
+       cursor twice */
+
     /* Create new table */
     /* TODO test if the tables exist */
+
+    /* Open cursor for data structure */
     if ( select ) {
+	char *tmp;
         db_set_string ( &sql, select );
+        
+
+	/* TODO!: cannot use this because it will not work if a query 
+         *         ends with 'group by' for example */
+	/*
+	tmp = strdup ( select );
+        G_tolcase ( tmp );
+
+        if ( !strstr( tmp,"where") )
+	{
+	    db_append_string ( &sql, " where 0 = 1");
+        }
+	else
+	{
+	    db_append_string ( &sql, " and 0 = 1");
+ 	}
+
+        free (tmp);
+	*/
     } else { 
 	db_set_string ( &sql, "select * from ");
 	db_append_string ( &sql, from_tblname);
-	if ( where ) {
-	    db_append_string ( &sql, " where ");
-	    db_append_string ( &sql, where);
-	}
+	db_append_string ( &sql, " where 0 = 1"); /* to get no data */
     }
     
     G_debug ( 3, db_get_string(&sql) );
@@ -147,17 +179,43 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
 	db_set_column_precision ( out_column,  db_get_column_precision ( column ) );
 	db_set_column_scale ( out_column,  db_get_column_scale ( column ) );
     }
+	    
+    db_close_cursor(&cursor);
  
     if ( selcol && !selcol_found) 
 	G_fatal_error ("Column '%s' not found", selcol);
 
     if ( db_create_table ( to_driver, out_table ) != DB_OK ) {
 	G_warning ( "Cannot create new table" );
-	db_close_cursor(&cursor);
 	db_close_database_shutdown_driver(to_driver);
 	db_close_database_shutdown_driver(from_driver);
 	return DB_FAILED;
     }	
+
+    /* Open cursor with data */
+    if ( select ) {
+        db_set_string ( &sql, select );
+    } else { 
+	db_set_string ( &sql, "select * from ");
+	db_append_string ( &sql, from_tblname);
+	if ( where ) {
+	    db_append_string ( &sql, " where ");
+	    db_append_string ( &sql, where);
+	}
+    }
+    
+    G_debug ( 3, db_get_string(&sql) );
+    if (db_open_select_cursor(from_driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK) {
+	G_warning ( "Cannot open select cursor: '%s'", db_get_string(&sql) );
+	db_close_database_shutdown_driver(to_driver);
+	db_close_database_shutdown_driver(from_driver);
+	return DB_FAILED;
+    }
+    G_debug ( 3, "Select cursor opened" );
+   
+    table = db_get_cursor_table (&cursor);
+    ncols = db_get_table_number_of_columns(table);
+    G_debug ( 3, "ncols = %d", ncols );
 
     /* Copy all rows */
     while ( 1 ) {
@@ -235,7 +293,10 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
     db_close_cursor(&cursor);
     db_commit_transaction ( to_driver );
     db_close_database_shutdown_driver(to_driver);
-    db_close_database_shutdown_driver(from_driver);
+    if ( from_driver != to_driver ) 
+    {
+        db_close_database_shutdown_driver(from_driver);
+    }
 
     return DB_OK;
 }
