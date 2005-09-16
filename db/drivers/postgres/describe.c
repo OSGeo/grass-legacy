@@ -107,12 +107,6 @@ int describe_table( PGresult *res, dbTable **table, cursor *c)
 	    G_warning ( _("column '%s' : type int8 (bigint) is stored as integer (4 bytes) "
 		          "some data may be damaged"), fname);
 	
-	if ( gpgtype == PG_TYPE_TEXT ) {
-	    G_warning ( _("column '%s' : type text is stored as varchar(250) "
-		          "some data may be lost"), fname);
-	    fsize = 250;
-	}
-	
 	if ( gpgtype == PG_TYPE_VARCHAR && fsize < 0 ) {
 	    G_warning ( _("column '%s' : type character varying is stored as varchar(250) "
 		          "some data may be lost"), fname);
@@ -186,8 +180,7 @@ int get_column_info ( PGresult *res, int col, int *pgtype, int *gpgtype, int *sq
 	    break;
 	    
 	case PG_TYPE_TEXT: 
-	    *sqltype = DB_SQL_TYPE_CHARACTER;
-	    *size = 250; /* This is not optimal of course, some data may be lost */
+	    *sqltype = DB_SQL_TYPE_TEXT;
 	    break;
 
 	case PG_TYPE_FLOAT4:
