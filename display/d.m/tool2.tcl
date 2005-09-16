@@ -1,114 +1,158 @@
 
-namespace eval DmMonitorsel {
+namespace eval DmToolBar2 {
     variable toolbar
-    variable mon
 }
 
-
-proc DmMonitorsel::displmon { mon } {
-    global dmpath
-    if ![catch {open "|d.mon -L" r} input] {
-        while {[gets $input line] >= 0} {
-            if {[regexp -nocase "$mon.*not running" $line]} {
-                run "d.mon start=$mon"
-                return
-            } elseif {[regexp -nocase "$mon.* running" $line]} {
-                run "d.mon select=$mon"
-                return       
-            }              
-        }
-    }
-}
-
-proc DmMonitorsel::create { tb  } {
+proc DmToolBar2::create { tb  } {
     global dmpath
     variable toolbar
 
     set toolbar $tb
 
-    # Monitor selection
-    set bbox1 [ButtonBox $toolbar.bbox1 -spacing 0]
+
+
+    # Raster Layers
+    set bbox1 [ButtonBox $toolbar.bbox1 -spacing 3 -background lightgreen ]
     
-    # monitor x0
-    $bbox1 add  -text [G_msg "x0"] -command "DmMonitorsel::displmon x0" \
-        -highlightthickness 0 -takefocus 1 -relief link -borderwidth 1  \
-        -helptext [G_msg "Start/select display monitor x0"]
+    # add raster
+    $bbox1 add -image [image create photo -file "$dmpath/raster.gif"] \
+        -command "Dm::add raster" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -helptext [G_msg "Add raster layer"]
 
-    #monitor x1
-    $bbox1 add  -text [G_msg "x1"] -command "DmMonitorsel::displmon x1" \
-        -highlightthickness 0 -takefocus 1 -relief link -borderwidth 1  \
-        -helptext [G_msg "Start/select display monitor x1"]
+    # add RGB or HIS layer
+    $bbox1 add -image [image create photo -file "$dmpath/rgbhis.gif"] \
+        -command "Dm::add rgbhis" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -helptext [G_msg "Add RGB or HIS layer"]
 
-    #monitor x2
-    $bbox1 add  -text [G_msg "x2"] -command "DmMonitorsel::displmon x2" \
-        -highlightthickness 0 -takefocus 1 -relief link -borderwidth 1  \
-        -helptext [G_msg "Start/select display monitor x2"]
-
-    #monitor x3
-    $bbox1 add  -text [G_msg "x3"] -command "DmMonitorsel::displmon x3" \
-        -highlightthickness 0 -takefocus 1 -relief link -borderwidth 1  \
-        -helptext [G_msg "Start/select display monitor x3"]
-
-    #monitor x4
-    $bbox1 add  -text [G_msg "x4"] -command "DmMonitorsel::displmon x4" \
-        -highlightthickness 0 -takefocus 1 -relief link -borderwidth 1  \
-        -helptext [G_msg "Start/select display monitor x4"]
-
-    #monitor x5
-    $bbox1 add  -text [G_msg "x5"] -command "DmMonitorsel::displmon x5" \
-        -highlightthickness 0 -takefocus 1 -relief link -borderwidth 1  \
-        -helptext [G_msg "Start/select display monitor x5"]
-
-    #monitor x6
-    $bbox1 add  -text [G_msg "x6"] -command "DmMonitorsel::displmon x6" \
-        -highlightthickness 0 -takefocus 1 -relief link -borderwidth 1  \
-        -helptext [G_msg "Start/select display monitor x6"]
+    # add legend
+    $bbox1 add -image [image create photo -file "$dmpath/legend.gif"] -command "Dm::add legend"\
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
+        -helptext [G_msg "Add legend"]
 
     pack $bbox1 -side left -anchor w
 
-    set sep1 [Separator $toolbar.sep1 -orient vertical]
-    pack $sep1 -side left -fill y -padx 4 -anchor w
+    set sep1 [Separator $toolbar.sep1 -orient vertical -background aquamarine2 ]
+    pack $sep1 -side left -fill y -padx 5 -anchor w
 
-    # Display tools
-    set bbox2 [ButtonBox $toolbar.bbox2 -spacing 10 -padx 1 -pady 1]
 
-     $bbox2 add -image [image create photo -file "$dmpath/scalebar.gif"] -command "Dm::scalebar" \
-        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext [G_msg "Place scalebar and north arrow on display with mouse"]
-    $bbox2 add -image [image create photo -file "$dmpath/measure.gif"] -command "Dm::measure"\
-        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext [G_msg "Measure lengths and areas"]
+    # VECTOR LAYERS
+    set bbox2 [ButtonBox $toolbar.bbox2 -spacing 3 -background lightgreen ]
+
+    # add vector
+    $bbox2 add -image [image create photo -file "$dmpath/vector.gif"] \
+        -command "Dm::add vector" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -helptext [G_msg "Add vector layer"]
+
+    # add chart
+    $bbox2 add -image [image create photo -file "$dmpath/chart.gif"] \
+        -command "Dm::add chart" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -helptext [G_msg "Add thematic charts layer"]
 
     pack $bbox2 -side left -anchor w
 
-    set sep2 [Separator $toolbar.sep2 -orient vertical]
+    # add thematic
+    $bbox2 add -image [image create photo -file "$dmpath/thematic.gif"] \
+        -command "Dm::add thematic" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -helptext [G_msg "Add thematic map layer"]
+
+    pack $bbox2 -side left -anchor w
+
+    set sep2 [Separator $toolbar.sep2 -orient vertical -background aquamarine2 ]
     pack $sep2 -side left -fill y -padx 5 -anchor w
 
-    # FILE
-    set bbox3 [ButtonBox $toolbar.bbox3 -spacing 10 -padx 1 -pady 1]
+    # Text Layers
+    set bbox3 [ButtonBox $toolbar.bbox3 -spacing 3 -background lightgreen ]
 
-     $bbox3 add -image [Bitmap::get new] -command "Dm::new" \
-        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext [G_msg "Create new workspace file (erase current workspace settings first)"]
-    $bbox3 add -image [Bitmap::get open] -command "Dm::OpenFileBox $toolbar"\
-        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext [G_msg "Open existing workspace file"]
-    $bbox3 add -image [Bitmap::get save]  -command "Dm::SaveFileBox $toolbar"\
-        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext [G_msg "Save workspace file"]
+    # add paint labels
+    $bbox3 add -image [image create photo -file "$dmpath/labels.gif"] \
+        -command "Dm::add labels" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -helptext [G_msg "Add paint labels layer (from directory paint/labels)"]
 
+    # add freetype text
+    $bbox3 add -image [image create photo -file "$dmpath/fttext.gif"] \
+        -command "Dm::add fttext" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -helptext [G_msg "Add freetype text layer"]
+
+    # add text
+    $bbox3 add -image [image create photo -file "$dmpath/dtext.gif"] \
+        -command "Dm::add dtext" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -helptext [G_msg "Add text layer"]
     pack $bbox3 -side left -anchor w
 
-    set sep3 [Separator $toolbar.sep3 -orient vertical]
+    set sep3 [Separator $toolbar.sep3 -orient vertical -background aquamarine2 ]
     pack $sep3 -side left -fill y -padx 5 -anchor w
 
-    # PRINT
-    set bbox4 [ButtonBox $toolbar.bbox4 -spacing 10 -padx 1 -pady 1]
+    # OTHER LAYERS
+    set bbox4 [ButtonBox $toolbar.bbox4 -spacing 3 -background lightgreen ]
 
-    $bbox4 add -image [Bitmap::get print]  -command "Dm::print" \
+    # add scale and north arrow
+    $bbox4 add -image [image create photo -file "$dmpath/barscale.gif"] -command "Dm::add barscale" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext [G_msg "Print map"]
+        -helptext [G_msg "Scalebar and north arrow"]
+
+    # add grid and lines
+    $bbox4 add -image [image create photo -file "$dmpath/grid.gif"] -command "Dm::add gridline"\
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
+        -helptext [G_msg "Overlay grids and lines"]
+
+    # add frame
+    $bbox4 add -image [image create photo -file "$dmpath/frames.gif"] -command "Dm::add dframe"\
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
+        -helptext [G_msg "Create or select display frame"]
+
+    # add command
+    $bbox4 add -image [image create photo -file "$dmpath/cmd.gif"] \
+        -command "Dm::add cmd" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -helptext [G_msg "Add command layer"]
 
     pack $bbox4 -side left -anchor w
+
+    set sep4 [Separator $toolbar.sep4 -orient vertical -background aquamarine2 ]
+    pack $sep4 -side left -fill y -padx 5 -anchor w
+
+    # LAYER MANAGEMENT
+    set bbox5 [ButtonBox $toolbar.bbox5 -spacing 3 -background lightgreen ]
+
+    # add group
+    $bbox5 add -image [image create photo -file "$dmpath/group.gif"] \
+        -command "Dm::add group" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 \
+        -helptext [G_msg "Add group"]
+
+    $bbox5 add -image [image create photo -file "$dmpath/copy.gif"] \
+        -command "Dm::duplicate" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -helptext [G_msg "Duplicate Layer"]    
+
+    $bbox5 add -image [Bitmap::get cut] -command "Dm::delete" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -helptext [G_msg "Delete layer"]
+       
+    pack $bbox5 -side left -anchor w
+
+    set sep5 [Separator $toolbar.sep5 -orient vertical -background aquamarine2 ]
+    pack $sep5 -side left -fill y -padx 5 -anchor w
+
+    # DIGITIZE
+    set bbox6 [ButtonBox $toolbar.bbox6 -spacing 20 -background lightgreen ]
+    
+    #digitize
+    $bbox6 add -image [image create photo -file "$dmpath/dig.gif"] \
+        -command "Dm::edit" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -helptext [G_msg "Digitize map (select or create new map first)"]
+
+    pack $bbox6 -side left -anchor w
+
+
 }
 

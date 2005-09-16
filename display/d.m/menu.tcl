@@ -10,335 +10,278 @@ global execom
  "&File" all file $tmenu {
 	 {cascad "Import" {} "" $tmenu {			
  		{cascad "Raster map" {} "" $tmenu {			
- 		{command "Multiple formats using GDAL" {} "r.in.gdal" {} -command { execute r.in.gdal }}
- 		{separator}
- 		{command "ASCII GRID (includes GRASS ASCII)" {} "r.in.ascii" {} -command { execute r.in.ascii }}
- 		{command "Polygons and lines from ASCII file" {} "r.in.poly" {} -command { execute r.in.poly }}
- 		{separator}
- 		{command "Binary file (includes GTOPO30 format)" {} "r.in.bin" {} -command { execute r.in.bin }}
- 		{command "ESRI Arc/Info ASCII grid" {} "r.in.arc" {} -command { execute r.in.arc }}
- 		{command "GRIDATB.FOR map file (TOPMODEL)" {} "r.in.gridatb" {} -command { execute r.in.gridatb }}
- 		{command "MAT-File (v.4) array (Matlab or Octave)" {} "r.in.mat" {} -command { execute r.in.mat }}
- 		{command "SRTM hgt files" {} "r.in.srtm" {} -command { execute r.in.srtm }}
- 	 }}
- 	 {cascad "Vector map" {} "" $tmenu {			
- 		{command "Various formats using OGR" {} "v.in.ogr" {} -command { execute v.in.ogr }}
- 		{separator}
- 		{command "ASCII points file or GRASS ASCII vector file" {} "v.in.ascii" {} -command { execute v.in.ascii }}
- 		{command "Import old GRASS vector format" {} "v.convert" {} -command { execute v.convert }}
- 		 {separator}
- 	 	{command "ESRI e00 format" {} "v.in.e00" {} -command { execute v.in.e00 }}
- 	 	{command "Garmin GPS Waypoints/Routes/Tracks" {} "v.in.garmin" {} -command { execute v.in.garmin }}
- 		{command "Matlab and MapGen files" {} "v.in.mapgen" {} -command { execute v.in.mapgen }}
- 		{separator}
- 	 }}
- 	 {cascad "Grid 3D" {} "" $tmenu {			
- 		{command "ASCII 3D file" {} "r3.in.ascii" {} -command { execute r3.in.ascii }}
- 	 	{command "Vis5D file" {} "r3.in.v5d" {} -command { execute r3.in.v5d }}
- 	 }}
+            {command "Multiple formats using GDAL" {} "r.in.gdal" {} -command { execute r.in.gdal }}
+            {separator}
+            {command "ASCII GRID (includes GRASS ASCII)" {} "r.in.ascii" {} -command { execute r.in.ascii }}
+            {command "Polygons and lines from ASCII file" {} "r.in.poly" {} -command { execute r.in.poly }}
+            {separator}
+            {command "Binary file (includes GTOPO30 format)" {} "r.in.bin" {} -command { execute r.in.bin }}
+            {command "ESRI Arc/Info ASCII grid" {} "r.in.arc" {} -command { execute r.in.arc }}
+            {command "GRIDATB.FOR map file (TOPMODEL)" {} "r.in.gridatb" {} -command { execute r.in.gridatb }}
+            {command "MAT-File (v.4) array (Matlab or Octave)" {} "r.in.mat" {} -command { execute r.in.mat }}
+            {command "SRTM hgt files" {} "r.in.srtm" {} -command { execute r.in.srtm }}
+        }}
+        {cascad "Vector map" {} "" $tmenu {			
+            {command "Various formats using OGR" {} "v.in.ogr" {} -command { execute v.in.ogr }}
+            {separator}
+            {command "ASCII points file or GRASS ASCII vector file" {} "v.in.ascii" {} -command { execute v.in.ascii }}
+            {command "Import old GRASS vector format" {} "v.convert" {} -command { execute v.convert }}
+            {separator}
+            {command "ESRI e00 format" {} "v.in.e00" {} -command { execute v.in.e00 }}
+            {command "Garmin GPS Waypoints/Routes/Tracks" {} "v.in.garmin" {} -command { execute v.in.garmin }}
+            {command "GEOnet Name server country files (US-NGA GNS)" {} "v.in.gns" {} -command { execute v.in.gns }}
+            {command "Matlab and MapGen files" {} "v.in.mapgen" {} -command { execute v.in.mapgen }}
+        }}
+        {cascad "Grid 3D" {} "" $tmenu {			
+            {command "ASCII 3D file" {} "r3.in.ascii" {} -command { execute r3.in.ascii }}
+            {command "Vis5D file" {} "r3.in.v5d" {} -command { execute r3.in.v5d }}
+        }}
  	}}
- 	{cascad "Export" {} "" $tmenu {
- 	 {cascad "Raster map" {} "" $tmenu {
-		{command "Multiple formats using GDAL" {} "r.out.gdal" {} -command { execute r.out.gdal }}
-		{separator}
- 		{command "ASCII grid (for GRASS, Surfer, Modflow, etc)" {} "r.out.ascii" {} -command { execute r.out.ascii }}
- 		{separator}
- 		{command "ESRI ARC/INFO ASCII grid" {} "r.out.arc" {} -command { execute r.out.arc }}
- 		{command "GRIDATB.FOR map file (TOPMODEL)" {} "r.out.gridatb" {} -command { execute r.out.gridatb }}
- 		{command "MAT-File (v.4) array (Matlab or Octave)" {} "r.out.mat" {} -command { execute r.out.mat }}
- 		{separator}
- 		{command "Binary file" {} "r.out.bin" {} -command { execute r.out.bin }}
- 		{separator}
- 		{command "MPEG-1 animations" {} "r.out.mpeg" {} -command { execute r.out.mpeg }}
- 		{command "PNG image (not georeferenced)" {} "r.out.png" {} -command { execute r.out.png }}
- 		{command "PPM image (24bit)" {} "r.out.ppm" {} -command { execute r.out.ppm }}
- 		{command "PPM image from red, green, blue raster maps" {} "r.out.ppm3" {} -command { execute r.out.ppm3 }}
- 		{command "POVray height-field" {} "r.out.pov" {} -command { execute r.out.pov }}
- 		{command "TIFF image (8/24bit)" {} "r.out.tiff" {} -command { execute r.out.tiff }}
- 	 }}
- 	 {cascad "Vector map" {} "" $tmenu {			
- 		{command "Various formats using OGR (SHAPE, MapInfo etc)" {} "v.out.ogr" {} -command { execute v.out.ogr }}
- 		{separator}
- 		{command "DXF file (ASCII)" {} "v.out.dxf" {} -command { execute v.out.dxf }}
- 		{command "ASCII vector or point file/old GRASS ASCII vector file" {} "v.out.ascii" {} -command { execute v.out.ascii }}
- 		{command "POV-Ray format" {} "v.out.pov" {} -command { execute v.out.pov }}
- 		{separator}
- 	 }}
- 	 {cascad "Grid 3D" {} "" $tmenu {			
- 		{command "ASCII 3D file" {} "r3.out.ascii" {} -command { execute r3.out.ascii }}
- 		{command "Vis5D file" {} "r3.out.v5d" {} -command { execute r3.out.v5d }}
- 	 }}
+    {cascad "Export" {} "" $tmenu {
+        {cascad "Raster map" {} "" $tmenu {
+            {command "Multiple formats using GDAL" {} "r.out.gdal" {} -command { execute r.out.gdal }}
+            {separator}
+            {command "ASCII grid (for GRASS, Surfer, Modflow, etc)" {} "r.out.ascii" {} -command { execute r.out.ascii }}
+            {separator}
+            {command "ESRI ARC/INFO ASCII grid" {} "r.out.arc" {} -command { execute r.out.arc }}
+            {command "GRIDATB.FOR map file (TOPMODEL)" {} "r.out.gridatb" {} -command { execute r.out.gridatb }}
+            {command "MAT-File (v.4) array (Matlab or Octave)" {} "r.out.mat" {} -command { execute r.out.mat }}
+            {separator}
+            {command "Binary file" {} "r.out.bin" {} -command { execute r.out.bin }}
+            {separator}
+            {command "MPEG-1 animations" {} "r.out.mpeg" {} -command { execute r.out.mpeg }}
+            {command "PNG image (not georeferenced)" {} "r.out.png" {} -command { execute r.out.png }}
+            {command "PPM image (24bit)" {} "r.out.ppm" {} -command { execute r.out.ppm }}
+            {command "PPM image from red, green, blue raster maps" {} "r.out.ppm3" {} -command { execute r.out.ppm3 }}
+            {command "POVray height-field" {} "r.out.pov" {} -command { execute r.out.pov }}
+            {command "TIFF image (8/24bit)" {} "r.out.tiff" {} -command { execute r.out.tiff }}
+        }}
+        {cascad "Vector map" {} "" $tmenu {			
+            {command "Various formats using OGR (SHAPE, MapInfo etc)" {} "v.out.ogr" {} -command { execute v.out.ogr }}
+            {separator}
+            {command "DXF file (ASCII)" {} "v.out.dxf" {} -command { execute v.out.dxf }}
+            {command "ASCII vector or point file/old GRASS ASCII vector file" {} "v.out.ascii" {} -command { execute v.out.ascii }}
+            {command "POV-Ray format" {} "v.out.pov" {} -command { execute v.out.pov }}
+        }}
+        {cascad "Grid 3D" {} "" $tmenu {			
+            {command "ASCII 3D file" {} "r3.out.ascii" {} -command { execute r3.out.ascii }}
+            {command "Vis5D file" {} "r3.out.v5d" {} -command { execute r3.out.v5d }}
+            {command "VTK ASCII file" {} "r3.out.vtk" {} -command { execute r3.out.vtk }}
+        }}
  	}}
- {separator}
- 	{cascad "Workspace/group" {} "" $tmenu {			
- {command "New" {} "Create new workspace/group file" {} -accelerator $keyctrl-N -command { Dm::new}}
- 	 {command "Open..." {} "Open workspace/group file" {} -accelerator $keyctrl-O -command { Dm::OpenFileBox {}}}
- 	 {command "Save" {} "Save workspace/group file" {} -accelerator $keyctrl-S -command { Dm::SaveFileBox {}}}
- 	 {command "Save as..." {} "Save workspace/group file as name" {} -command { catch {unset ::Dm::filename} ; Dm::SaveFileBox {}}}
- 	 {command "Close" {} "Close workspace" {} -accelerator $keyctrl-W -command { Dm::FileClose {}}}
- }}
- {separator}
- 	{cascad "Save display to image file" {} "" $tmenu {			
- {command "XWD (Save display, selected with mouse, to map.xwd in home directory )" {} "" {} -command { spawn xwd -out map.xwd }}
- {command "PNG (save currently selected display to 24 bit PNG file)" {} "d.out.png" {} -command { execute d.out.png }}
- }}
- 	{command "Save map to Postscript file" {} "ps.map" {} -command { execute ps.map }}
- 	{command "Print (requires ghostscript)" {} "print" {} -accelerator $keyctrl-P -command {Dm::print} }
- 	{separator}
- {command "E&xit" {} "Exit Display Manager" {} -accelerator $keyctrl-Q -command { DmPrint::clean; exit } }
- }
- "&GIS" all options $tmenu {
- 	{cascad "Manage 2D and 3D maps" {} "" $tmenu {			
- 	 {command "Copy maps" {} "g.copy" {} -command {execute g.copy }}
- 	 {command "List maps" {} "g.list" {} -command {execute g.list}}
- 	 {command "List maps using expressions and 'wildcards'" {} "g.mlist" {} -command {$execom g.mlist }}
- 	 {command "Rename maps" {} "g.rename" {} -command {execute g.rename }}
- 	 {command "Remove maps" {} "g.remove" {} -command {execute g.remove }}
- 	 {command "Remove maps using expressions and 'wildcards'" {} "g.mremove" {} -command {execute g.mremove }}
- }}
- 	{cascad "Region" {} "" $tmenu {			
- 	{command "Display region settings" {} "g.region -p" {} -command {run g.region -p }}
- 	 {command "Manage region" {} " g.region" {} -command {execute g.region }}
- 	 {command "Select default region" {} "g.region -d" {} -command {run g.region -d ; run d.redraw }}
- 	 {command "Zoom to maximum extent of all displayed maps" {} "d.extend" {} -command {run d.extend }}
- 	 {separator}
- 	 {command "Create WIND3 (default 3D window) from current 2D region" {} "g.region" {} -command {execute g.region }}
- 	 {command "Manage 3D region" {} "g.region" {} -command {execute g.region }}
- 	}}
- 	{cascad "GRASS working environment" {} "" $tmenu {			
- 	 {command "Modify access by other users to current mapset" {} "g.access" {} -command {term g.access }}
- 	 {command "Modify mapset search path" {} "g.mapsets.tcl" {} -command {spawn $env(GISBASE)/etc/g.mapsets.tcl}}
- 	 {command "Change current working session to new mapset, location, or GISDBASE" {} "g.mapset" {} -command {execute g.mapset }}
- {command "Show current GRASS environment settings" {} "g.gisenv" {} -command {execute g.gisenv }}
- {command "Show current GRASS version" {} "g.version -c" {} -command {run g.version -c }}
- 	}}
+    {separator}
+ 	{cascad "Manage maps and volumes" {} "" $tmenu {			
+        {command "Copy maps" {} "g.copy" {} -command {execute g.copy }}
+        {command "List maps" {} "g.list" {} -command {execute g.list}}
+        {command "List maps using expressions and 'wildcards'" {} "g.mlist" {} -command {$execom g.mlist }}
+        {command "Rename maps" {} "g.rename" {} -command {execute g.rename }}
+        {command "Remove maps" {} "g.remove" {} -command {execute g.remove }}
+        {command "Remove maps using expressions and 'wildcards'" {} "g.mremove" {} -command {execute g.mremove }}
+    }}
  	{cascad "Map type conversions" {} "" $tmenu {			
- 	 {command "Raster to vector map" {} "r.to.vect" {} -command {execute r.to.vect }}
- 	 {command "Vector to raster" {} "v.to.rast" {} -command {execute v.to.rast }}
- 	 {command "Vector to points" {} "v.to.points" {} -command {execute v.to.points }}
- 	 {command "Sites to vector" {} "v.in.sites" {} -command {execute v.in.sites }}
+        {command "Raster to vector map" {} "r.to.vect" {} -command {execute r.to.vect }}
+        {command "Raster map series to volume" {} "r.to.rast3" {} -command {execute r.to.rast3 }}
+        {command "Vector to raster" {} "v.to.rast" {} -command {execute v.to.rast }}
+        {command "Vector to points" {} "v.to.points" {} -command {execute v.to.points }}
+        {command "Sites to vector" {} "v.in.sites" {} -command {execute v.in.sites }}
+        {command "Volumes to raster map series" {} "r3.to.rast" {} -command {execute r3.to.rast }}
+ 	}}
+    {separator}
+    {cascad "Groups" {} "" $tmenu {			
+        {command "New" {} "Create new group file" {} -accelerator $keyctrl-N -command { Dm::new}}
+        {command "Open..." {} "Open group file" {} -accelerator $keyctrl-O -command { Dm::OpenFileBox {}}}
+        {command "Save" {} "Save group file" {} -accelerator $keyctrl-S -command { Dm::SaveFileBox {}}}
+        {command "Save as..." {} "Save group file as name" {} -command { catch {unset ::Dm::filename} ; Dm::SaveFileBox {}}}
+        {command "Close" {} "Close group" {} -accelerator $keyctrl-W -command { Dm::FileClose {}}}
+    }}
+    {separator}
+ 	{cascad "Save display to image file" {} "" $tmenu {			
+        {command "XWD (Save display, selected with mouse, to map.xwd in home directory )" {} "" {} -command { spawn xwd -out map.xwd }}
+        {command "Save displays to multiple graphic file formats" {} "d.out.file" {} -command { execute d.out.file }}
+    }}
+    {command "Save map to Postscript file" {} "ps.map" {} -command { execute ps.map }}
+    {command "Print to default printer" {} "print" {} -accelerator $keyctrl-P -command {spawn print.sh} }
+    {separator}
+    {command "E&xit" {} "Exit Display Manager" {} -accelerator $keyctrl-Q -command { DmPrint::clean; exit } }
+ }
+ "&Config" all options $tmenu {
+ 	{cascad "Region" {} "" $tmenu {			
+        {command "Display region settings" {} "g.region -p" {} -command {run g.region -p }}
+        {command "Manage region" {} " g.region" {} -command {execute g.region }}
+        {command "Select default region" {} "g.region -d" {} -command {run g.region -d ; run d.redraw }}
+        {command "Zoom to maximum extent of all displayed maps" {} "d.extend" {} -command {run d.extend }}
+        {separator}
+        {command "Create WIND3 (default 3D window) from current 2D region" {} "g3.createwind" {} -command {execute g3.createwind }}
+        {command "Manage 3D region" {} "g3.setregion" {} -command {execute g3.setregion }}
+    }}
+ 	{cascad "GRASS working environment" {} "" $tmenu {			
+        {command "Modify access by other users to current mapset" {} "g.access" {} -command {term g.access }}
+        {command "Modify mapset search path" {} "g.mapsets.tcl" {} -command {spawn $env(GISBASE)/etc/g.mapsets.tcl}}
+        {command "Change current working session to new mapset, location, or GISDBASE" {} "g.mapset" {} -command {execute g.mapset }}
+        {command "Show current GRASS environment settings" {} "g.gisenv" {} -command {execute g.gisenv }}
+        {command "Show current GRASS version" {} "g.version -c" {} -command {run g.version -c }}
  	}}
  	{cascad "Manage projections" {} "" $tmenu {			
- 	 {command "Create/edit projection information for current location" {} "g.setproj" {} -command {term g.setproj }}
- 	 {command "Show projection information and create projection files" {} "g.proj" {} -command {execute g.proj }}
+        {command "Create/edit projection information for current location" {} "g.setproj" {} -command {term g.setproj }}
+        {command "Show projection information and create projection files" {} "g.proj" {} -command {execute g.proj }}
  	}}
+    {cascad "Text" {} "" $tmenu {			
+        {command "Select default text font" {} "d.font" {} -command {$execom d.font }}
+        {command "Select default freetype text font" {} "" {} -command {$execom d.font.freetype }}
+        {command "Show standard GRASS fonts" {} "show.fonts.sh" {} -command {$execom show.fonts.sh }}
+	 }}
+ 	{cascad "Displays" {} "" $tmenu {
+        {command "Configure displays" {} "d.mon" {} -command {execute d.mon }}
+        {command "Configure frames" {} "d.frame" {} -command {execute d.frame }}
+        {command "Start/restart display at specified window size" {} "d.monsize" {} -command {execute d.monsize }}
+        {command "Set active display to specified size" {} "d.resize" {} -command {execute d.resize }}
+        {command "Display information about active display monitor" {} "d.info" {} -command {execute d.info }}
+    }}
  } 
- "&Display" all options $tmenu {
-			{command "Start NVIZ (n-dimensional visualization module)" {} "nviz" {} -command {$execom nviz }}
-			{command "Create fly-through animation path for NVIZ" {} "d.nviz" {} -command {execute d.nviz }}
- 	{separator}
- 	{cascad "Start displays" {} "d.mon start" $tmenu [monitor_menu start]}
-			{cascad "Select displays" {} "d.mon select" $tmenu [monitor_menu select]}
-			{cascad "Stop displays" {} "d.mon stop" $tmenu [monitor_menu stop]}
-			{command "Start/restart display at specified window size" {} "d.monsize" {} -command {execute d.monsize }}
-			{command "Set active display to specified size" {} "d.resize" {} -command {execute d.resize }}
- 	{separator}
-	 {cascad "Display raster maps" {} "" $tmenu {
-			 {command "Display raster map" {} "d.rast" {} -command {execute d.rast }}
-			 {command "Display raster map, legend, and title in active display" {} "d.rast.leg" {} -command {execute d.rast.leg }}
- 	 {separator}
-			 {command "Display HIS overlays" {} "d.his" {} -command {execute d.his }}
-			 {command "Display RGB overlays" {} "d.rgb" {} -command {execute d.rgb }}
-			 {command "Drape raster map over shaded relief or aspect map" {} "d.shadedmap" {} -command {execute $env(GISBASE)/etc/dm/script/d.shadedmap }}
- 	 {separator}
-			 {command "Slide show of all raster maps in current mapset" {} "d.slide.show" {} -command {execute d.slide.show }}
-	 }}
-    {cascad "Display vector maps" {} "" $tmenu {
-			{command "Display vector map" {} "d.vect" {} -command {execute d.vect }}
-			{command "Display thematic vector map" {} "d.vect.thematic" {} -command {execute d.vect.thematic }}
-	 		{command "Display thematic charts at vector point localities" {} "d.vect.chart" {} -command {execute d.vect.chart }}
-	}}
-			{cascad "Display text on maps" {} "" $tmenu {			
-		 	{command "Display legend for raster maps" {} "d.legend" {} -command {execute d.legend }}
-		 	{command "Display category values in raster map cells" {} "d.rast.num" {} -command {execute d.rast.num }}
- 	 {separator}
-		 	{command "Display title for raster map" {} "d.title.sh" {} -command {execute $env(GISBASE)/etc/dm/script/d.title.sh }}
-		 	{command "Display text labels for paint output" {} "d.paint.labels" {} -command {execute d.paint.labels }}
- 	 {separator}
-		 	{command "Select text font" {} "d.font" {} -command {$execom d.font }}
-            {command "Select freetype text font" {} "" {} -command {$execom d.font.freetype }}
- 	 {separator}
- 	 		{command "Draw text" {} "d.text.sh" {} -command {execute $env(GISBASE)/etc/dm/script/d.text.sh}}
-		 	{command "Draw text using TrueType fonts" {} "d.text.freetype" {} -command {$execom d.text.freetype }}
- 	 {separator}
-		 	{command "Display standard GRASS fonts" {} "show.fonts.sh" {} -command {$execom show.fonts.sh }}
-	 }}
-			{cascad "Display graphics on maps" {} "" $tmenu {			
-	 		{command "Overlay scale and north arrow" {} "d.barscale" {} -command {execute d.barscale }}
- {separator}
-	 		{command "Display histogram" {} "d.histogram" {} -command {execute d.histogram }}
-	 		{command "Display line graph" {} "d.linegraph" {} -command {execute d.linegraph }}
- 	 {separator}
-	 		{command "Overlay grid" {} "d.grid" {} -command {execute d.grid }}
-	 		{command "Display geodesic line" {} "d.geodesic" {} -command {execute d.geodesic }}
-	 		{command "Display rhumbline" {} "d.rhumbline" {} -command {execute d.rhumbline }}
- 	 {separator}
-	 		{command "Display color table" {} "d.colortable" {} -command {execute d.colortable }}
- 	 {separator}
-	 		{command "Overlay slope arrows on aspect raster map" {} "d.rast.arrow" {} -command {execute d.rast.arrow }}
- 	 {separator}
-	 		{command "Draw simple graphics using display coordinates" {} "d.graph" {} -command {execute d.graph }}
-	 		{command "Draw simple graphics using map coordinates" {} "d.mapgraph" {} -command {execute d.mapgraph }}
- 	}}
-			{command "Split active display and show maps in each half" {} "d.split" {} -command {execute d.split }}
- 	{separator}
-			{command "Manage displays" {} "d.mon" {} -command {execute d.mon }}
-			{command "Manage display frames" {} "d.frame" {} -command {execute d.frame }}
-			{command "Display information about active display monitor" {} "d.info" {} -command {execute d.info }}
- 	{separator}
-			{command "Redraw active display" {} "d.redraw" {} -command {execute d.redraw }}
-			{command "Save file of display commands" {} "d.save" {} -command {execute d.save }}
- 	{separator}
-			{command "Measure lengths and areas" {} "d.measure" {} -command {term d.measure -s}}
-			{command "Show geographical position" {} "d.where" {} -command {execute d.where }}
- 	{separator}
-			{command "Zoom/Unzoom/Pan with options" {} "d.zoom" {} -command {execute d.zoom }}	
- 	{separator}
-			{command "Erase active display/frame to selected color" {} "d.erase" {} -command {execute d.erase }}
- }
  "&Raster" all options $tmenu {
-			{cascad "Develop map" {} "" $tmenu {			
-			 {command "Digitize raster" {} "r.digit" {} -command {term r.digit }}
-			 {separator}
-			 {command "Compress/decompress raster file" {} "r.compress" {} -command {execute r.compress }}
-			 {command "Manage boundary definitions" {} "r.region" {} -command {execute r.region }}
-			 {command "Manage null values" {} "r.null" {} -command {execute r.null }}
-			 {command "Manage raster support files" {} "r.null" {} -command {execute $env(GISBASE)/etc/dm/script/r.support.sh }}
-			 {command "Manage timestamps for files" {} "r.timestamp" {} -command {execute r.timestamp }}
-			 {command "Quantization for floating-point maps" {} "r.quant" {} -command {execute r.quant }}
-			 {command "Resample (change resolution) using nearest neighbor method" {} "r.resample" {} -command {execute r.resample }}
-			 {command "Resample (change resolution) using regularized spline tension" {} "r.resamp.rst" {} -command {execute r.resamp.rst }}
-			 {separator}
-			 {command "Reproject raster from other location" {} "r.proj" {} -command {execute r.proj }}
-			}}
-			{cascad "Manage map colors" {} "" $tmenu {			
-			 {command "Modify color table" {} "d.colors.sh" {} -command {execute d.colors.sh }}
-			 {command "Set colors to predefined color tables" {} "r.colors" {} -command {execute r.colors }}
-			 {command "Set colors using color rules" {} "r.colors.rules" {} -command {execute $env(GISBASE)/etc/dm/script/r.colors.rules }}
-			 {separator}
-			 {command "Blend 2 color maps to produce 3 RGB files" {} "r.blend" {} -command {execute r.blend }}
-			 {command "Create color image from RGB files" {} "r.composite" {} -command {execute r.composite }}
-			 {command "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) maps" {} "r.his" {} -command {execute r.his }}
-			}}
-			{separator}
-			{command "Query by coordinate(s)" {} "r.what" {} -command { execute r.what }}
-			{command "Query with mouse" {} "d.what.rast" {} -command { execute d.what.rast }}
-			{separator}
-			{command "Create raster buffers" {} "r.buffer" {} -command { execute r.buffer }}
-			{command "Locate closest points between areas in 2 raster maps" {} "r.distance" {} -command { execute r.distance }}
-			{command "Map calculator" {} "r.mapcalculator" {} -command { execute r.mapcalculator }}
-			{cascad "Neighborhood analysis" {} "" $tmenu {			
- 			 {command "Moving window analysis of raster cells" {} "r.neighbors" {} -command { execute r.neighbors }}
- 			 {command "Analyze vector points in neighborhood of raster cells" {} "v.neighbors" {} -command { execute v.neighbors }}
-			}}
-			{cascad "Overlay maps" {} "" $tmenu {			
-			 {command "Cross product" {} "r.cross" {} -command {execute r.cross }}
-			 {command "Function of map series (time series)" {} "r.series" {} -command {execute r.series }}
-			 {command "Patch maps" {} "r.patch" {} -command {execute r.patch }}
-			 {separator}
-			 {command "Statistical calculations for cover map over base map" {} "r.statistics" {} -command {execute r.statistics }}
-			}}
-			{cascad "Solar radiance and shadows" {} "" $tmenu {			
-			 {command "Solar irradiance and daily irradiation" {} "r.sun" {} -command {execute r.sun }}
-			 {command "Shadows map for sun position or date/time" {} "r.sunmask" {} -command {execute r.sunmask }}
-			}}
-			{cascad "Terrain analysis" {} "" $tmenu {			
-			 {command "Cost surface" {} "r.cost" {} -command {execute r.cost }}
-			 {command "Least cost route or flow" {} "r.drain" {} -command {execute r.drain }}
-			 {command "Profile analysis" {} "d.profile" {} -command {execute d.profile }}
-			 {command "Shaded relief map" {} "r.shaded.relief" {} -command {execute r.shaded.relief }}
-			 {command "Slope and aspect" {} "r.slope.aspect" {} -command {execute r.slope.aspect }}
-			 {command "Terrain parameters" {} "r.param.scale" {} -command {execute r.param.scale }}
-			 {command "Textural features" {} "r.texture" {} -command {execute r.texture }}
-			 {command "Visibility/line of sight" {} "r.los" {} -command {execute r.los }}
-			}}
-			{cascad "Transform features" {} "" $tmenu {			
-			 {command "Clump small areas" {} "r.clump" {} -command {execute r.clump }}
-			 {command "Grow areas" {} "r.grow" {} -command {execute r.grow }}
-			 {command "Thin linear features" {} "r.thin" {} -command {execute r.thin }}
-			}}
-			{separator}
-			{cascad "Hydrologic modeling" {} "" $tmenu {			
-			 {command "Depressionless elevation map and flowline map" {} "r.fill.dir" {} -command {execute r.fill.dir }}
-			 {command "Flow accumulation for massive grids" {} "r.terraflow" {} -command {spawn r.terraflow }}
-			 {command "Generate flow lines for raster map" {} "r.flow" {} -command {spawn r.flow }}
-			 {command "Topographic index map" {} "r.topidx" {} -command {execute r.topidx }}
-			 {command "TOPMODEL simulation" {} "r.topmodel" {} -command {execute r.topmodel }}
-			 {command "Watershed subbasins" {} "r.basins.fill" {} -command {execute r.basins.fill }}
-			 {command "Watershed analysis" {} "r.watershed" {} -command {execute r.watershed }}
-			 {command "Watershed basin creation" {} "r.water.outlet" {} -command {execute r.water.outlet }}
-			}}
-			{cascad "Landscape structure modeling" {} "" $tmenu {			
-			 {command "Set up sampling and analysis framework" {} "r.le.setup" {} -command {term r.le.setup }}
-			 {separator}
-			 {command "Analyze landscape characteristics" {} "r.le.pixel" {} -command {execute r.le.pixel }}
-			 {command "Analyze landscape patch characteristics" {} " r.le.patch" {} -command {execute r.le.patch }}
-			 {command "Output landscape patch information" {} "r.le.trace" {} -command {execute r.le.trace }}
-			}}
-			{cascad "Wildfire modeling" {} "" $tmenu {			
-			 {command "Generate rate of spread (ROS) maps" {} "r.ros" {} -command {execute r.ros }}
-			 {command "Generate least-cost spread paths" {} "r.spreadpath" {} -command {execute r.spreadpath }}
-			 {command "Simulate anisotropic spread phenomena" {} "r.spread" {} -command {execute r.spread }}
-			}}
-			{separator}
-			{cascad "Change category values and labels" {} "" $tmenu {			
-			 {command "Edit category values of individual cells for displayed raster map" {} "d.rast.edit" {} -command {term d.rast.edit }}
-			 {separator}
-			 {command "Reclassify categories for areas of specified sizes" {} "r.reclass.area" {} -command {execute r.reclass.area }}
-			 {command "Reclassify categories using rules" {} "r.reclass.rules" {} -command {execute $env(GISBASE)/etc/dm/script/r.reclass.rules }}
-			 {command "Reclassify categories using rules file" {} "r.reclass.file" {} -command {execute $env(GISBASE)/etc/dm/script/r.reclass.file }}
-			 {separator}
-			 {command "Recode categories using rules (create new map)" {} "r.recode.rules" {} -command {execute $env(GISBASE)/etc/dm/script/r.recode.rules }}
-			 {command "Recode categories using rules file (create new map)" {} "r.recode.file " {} -command {execute $env(GISBASE)/etc/dm/script/r.recode.file }}
-			 {separator}
-			 {command "Rescale categories (create new map)" {} "r.rescale" {} -command {execute r.rescale }}
-			 {command "Rescale categories with equalized histogram (create new map)" {} "r.rescale.eq" {} -command {execute r.rescale.eq }}
-			}}
-			{separator}
-			{command "Generate concentric circles around points" {} "r.circle" {} -command { execute r.circle }}
-			{cascad "Generate random raster cells" {} "" $tmenu {			
-			 {command "Generate random cells" {} "r.random.cells" {} -command {execute r.random.cells }}
-			 {command "Generate random cells and vector points from raster map" {} "r.random" {} -command {execute r.random }}
-			}}
-			{cascad "Generate surfaces" {} "" $tmenu {			
-			 {command "Generate density surface using moving Gausian kernal" {} "v.kernel" {} -command {execute v.kernel }}
-			 {command "Generate fractal surface" {} "r.surf.fractal" {} -command {execute r.surf.fractal }}
-			 {command "Generate gaussian deviates surface" {} "r.surf.gauss" {} -command {execute r.surf.gauss }}
-			 {command "Generate plane" {} "r.plane" {} -command {execute r.plane }}
-			 {command "Generate random deviates surface" {} "r.surf.random" {} -command {execute r.surf.random }}
-			 {command "Generate random surface with spatial dependence" {} "r.random.surface" {} -command {execute r.random.surface }}
-			}}
-			{command "Generate vector contour lines" {} "r.contour" {} -command { execute r.contour }}
-			{cascad "Interpolate surfaces" {} "" $tmenu {			
-						{command "Bilinear interpolation from raster points" {} "r.bilinear" {} -command { execute r.bilinear }}
-						{command "Inverse distance weighted interpolation from raster points" {} "r.surf.idw" {} -command { execute r.surf.idw }}
-						{command "Interpolation from raster contours" {} "r.surf.contour" {} -command { execute r.surf.contour }}
-			 {separator}
-						{command "Inverse distance weighted interpolation from vector points" {} "v.surf.idw" {} -command { execute v.surf.idw }}
-						{command "Regularized spline tension interpolation from vector points or contours" {} "v.surf.rst" {} -command { execute v.surf.rst }}
-			 {separator}
-			 {command "Fill NULL cells by interpolation using regularized spline tension" {} " r.fillnulls" {} -command {execute r.fillnulls }}
-			}}
-			{separator}
-			{cascad "Reports and statistics" {} "" $tmenu {			
-			 {command "Report basic file information" {} "r.info" {} -command {execute r.info }}
-			 {command "Report category labels and values" {} "r.cats" {} -command {execute r.cats }}
-			 {separator}
-			 {command "General statistics" {} "r.stats" {} -command {execute r.stats }}
-			 {command "Range of all category values" {} "r.describe" {} -command {execute r.describe }}
-			 {command "Sum all cell category values" {} "r.sum" {} -command {execute r.sum }}
-			 {command "Sum area by map and category" {} "r.report" {} -command {execute r.report }}
-			 {command "Total surface area corrected for topography" {} "r.surf.area" {} -command {execute r.surf.area }}
-			 {command "Univariate statistics" {} "r.univar" {} -command {execute r.univar }}
-			 {command "Univariate statistics (script version)" {} " r.univar.sh" {} -command {execute r.univar.sh }}
-			 {separator}
-			 {command "Sample values along transects" {} "r.profile" {} -command {execute r.profile }}
-			 {command "Sample values along transects (use azimuth, distance)" {} " r.transect" {} -command {execute r.transect }}
-			 {separator}
-			 {command "Covariance/correlation" {} "r.covar" {} -command {execute r.covar }}
-			 {command "Linear regression between 2 maps" {} "r.regression.line" {} -command {execute r.regression.line }}
-			 {command "Mutual category occurences (coincidence)" {} "r.coin" {} -command {execute r.coin }}
-			}}
+    {cascad "Develop map" {} "" $tmenu {			
+        {command "Digitize raster" {} "r.digit" {} -command {term r.digit }}
+        {separator}
+        {command "Compress/decompress raster file" {} "r.compress" {} -command {execute r.compress }}
+        {command "Manage boundary definitions" {} "r.region" {} -command {execute r.region }}
+        {command "Manage null values" {} "r.null" {} -command {execute r.null }}
+        {command "Manage timestamps for files" {} "r.timestamp" {} -command {execute r.timestamp }}
+        {command "Quantization for floating-point maps" {} "r.quant" {} -command {execute r.quant }}
+        {command "Resample (change resolution) using nearest neighbor method" {} "r.resample" {} -command {execute r.resample }}
+        {command "Resample (change resolution) using regularized spline tension" {} "r.resamp.rst" {} -command {execute r.resamp.rst }}
+        {separator}
+        {command "Reproject raster from other location" {} "r.proj" {} -command {execute r.proj }}
+    }}
+    {cascad "Manage map colors" {} "" $tmenu {			
+        {command "Modify color table" {} "d.colors.sh" {} -command {execute d.colors.sh }}
+        {command "Set colors to predefined color tables" {} "r.colors" {} -command {execute r.colors }}
+        {command "Set colors using color rules" {} "r.colors.rules" {} -command {execute $env(GISBASE)/etc/dm/script/r.colors.rules }}
+        {separator}
+        {command "Blend 2 color maps to produce 3 RGB files" {} "r.blend" {} -command {execute r.blend }}
+        {command "Create color image from RGB files" {} "r.composite" {} -command {execute r.composite }}
+        {command "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) maps" {} "r.his" {} -command {execute r.his }}
+    }}
+    {separator}
+    {command "Query by coordinate(s)" {} "r.what" {} -command { execute r.what }}
+    {command "Query with mouse" {} "d.what.rast" {} -command { execute d.what.rast }}
+    {separator}
+    {command "Create raster buffers" {} "r.buffer" {} -command { execute r.buffer }}
+    {command "Locate closest points between areas in 2 raster maps" {} "r.distance" {} -command { execute r.distance }}
+    {command "Map calculator" {} "r.mapcalculator" {} -command { execute r.mapcalculator }}
+    {cascad "Neighborhood analysis" {} "" $tmenu {			
+        {command "Moving window analysis of raster cells" {} "r.neighbors" {} -command { execute r.neighbors }}
+        {command "Analyze vector points in neighborhood of raster cells" {} "v.neighbors" {} -command { execute v.neighbors }}
+    }}
+    {cascad "Overlay maps" {} "" $tmenu {			
+        {command "Cross product" {} "r.cross" {} -command {execute r.cross }}
+        {command "Function of map series (time series)" {} "r.series" {} -command {execute r.series }}
+        {command "Patch maps" {} "r.patch" {} -command {execute r.patch }}
+        {separator}
+        {command "Statistical calculations for cover map over base map" {} "r.statistics" {} -command {execute r.statistics }}
+    }}
+    {cascad "Solar radiance and shadows" {} "" $tmenu {			
+        {command "Solar irradiance and daily irradiation" {} "r.sun" {} -command {execute r.sun }}
+        {command "Shadows map for sun position or date/time" {} "r.sunmask" {} -command {execute r.sunmask }}
+    }}
+    {cascad "Terrain analysis" {} "" $tmenu {			
+        {command "Cost surface" {} "r.cost" {} -command {execute r.cost }}
+        {command "Least cost route or flow" {} "r.drain" {} -command {execute r.drain }}
+        {command "Profile analysis" {} "d.profile" {} -command {execute d.profile }}
+        {command "Shaded relief map" {} "r.shaded.relief" {} -command {execute r.shaded.relief }}
+        {command "Slope and aspect" {} "r.slope.aspect" {} -command {execute r.slope.aspect }}
+        {command "Overlay slope arrows on aspect raster map" {} "d.rast.arrow" {} -command {execute d.rast.arrow }}
+        {command "Terrain parameters" {} "r.param.scale" {} -command {execute r.param.scale }}
+        {command "Textural features" {} "r.texture" {} -command {execute r.texture }}
+        {command "Visibility/line of sight" {} "r.los" {} -command {execute r.los }}
+    }}
+    {cascad "Transform features" {} "" $tmenu {			
+        {command "Clump small areas" {} "r.clump" {} -command {execute r.clump }}
+        {command "Grow areas" {} "r.grow" {} -command {execute r.grow }}
+        {command "Thin linear features" {} "r.thin" {} -command {execute r.thin }}
+    }}
+    {separator}
+    {cascad "Hydrologic modeling" {} "" $tmenu {			
+        {command "Depressionless elevation map and flowline map" {} "r.fill.dir" {} -command {execute r.fill.dir }}
+        {command "Flow accumulation for massive grids" {} "r.terraflow" {} -command {spawn r.terraflow }}
+        {command "Generate flow lines for raster map" {} "r.flow" {} -command {spawn r.flow }}
+        {command "Topographic index map" {} "r.topidx" {} -command {execute r.topidx }}
+        {command "TOPMODEL simulation" {} "r.topmodel" {} -command {execute r.topmodel }}
+        {command "Watershed subbasins" {} "r.basins.fill" {} -command {execute r.basins.fill }}
+        {command "Watershed analysis" {} "r.watershed" {} -command {execute r.watershed }}
+        {command "Watershed basin creation" {} "r.water.outlet" {} -command {execute r.water.outlet }}
+    }}
+    {cascad "Landscape structure modeling" {} "" $tmenu {			
+        {command "Set up sampling and analysis framework" {} "r.le.setup" {} -command {term r.le.setup }}
+        {separator}
+        {command "Analyze landscape characteristics" {} "r.le.pixel" {} -command {execute r.le.pixel }}
+        {command "Analyze landscape patch characteristics" {} " r.le.patch" {} -command {execute r.le.patch }}
+        {command "Output landscape patch information" {} "r.le.trace" {} -command {execute r.le.trace }}
+    }}
+    {cascad "Wildfire modeling" {} "" $tmenu {			
+        {command "Generate rate of spread (ROS) maps" {} "r.ros" {} -command {execute r.ros }}
+        {command "Generate least-cost spread paths" {} "r.spreadpath" {} -command {execute r.spreadpath }}
+        {command "Simulate anisotropic spread phenomena" {} "r.spread" {} -command {execute r.spread }}
+    }}
+    {separator}
+    {cascad "Change category values and labels" {} "" $tmenu {			
+        {command "Edit category values of individual cells for displayed raster map" {} "d.rast.edit" {} -command {term d.rast.edit }}
+        {separator}
+        {command "Reclassify categories for areas of specified sizes" {} "r.reclass.area" {} -command {execute r.reclass.area }}
+        {command "Reclassify categories using rules" {} "r.reclass.rules" {} -command {execute $env(GISBASE)/etc/dm/script/r.reclass.rules }}
+        {command "Reclassify categories using rules file" {} "r.reclass.file" {} -command {execute $env(GISBASE)/etc/dm/script/r.reclass.file }}
+        {separator}
+        {command "Recode categories using rules (create new map)" {} "r.recode.rules" {} -command {execute $env(GISBASE)/etc/dm/script/r.recode.rules }}
+        {command "Recode categories using rules file (create new map)" {} "r.recode.file " {} -command {execute $env(GISBASE)/etc/dm/script/r.recode.file }}
+        {separator}
+        {command "Rescale categories (create new map)" {} "r.rescale" {} -command {execute r.rescale }}
+        {command "Rescale categories with equalized histogram (create new map)" {} "r.rescale.eq" {} -command {execute r.rescale.eq }}
+    }}
+    {separator}
+    {command "Generate concentric circles around points" {} "r.circle" {} -command { execute r.circle }}
+    {cascad "Generate random raster cells" {} "" $tmenu {			
+        {command "Generate random cells" {} "r.random.cells" {} -command {execute r.random.cells }}
+        {command "Generate random cells and vector points from raster map" {} "r.random" {} -command {execute r.random }}
+    }}
+    {cascad "Generate surfaces" {} "" $tmenu {			
+        {command "Generate density surface using moving Gausian kernal" {} "v.kernel" {} -command {execute v.kernel }}
+        {command "Generate fractal surface" {} "r.surf.fractal" {} -command {execute r.surf.fractal }}
+        {command "Generate gaussian deviates surface" {} "r.surf.gauss" {} -command {execute r.surf.gauss }}
+        {command "Generate plane" {} "r.plane" {} -command {execute r.plane }}
+        {command "Generate random deviates surface" {} "r.surf.random" {} -command {execute r.surf.random }}
+        {command "Generate random surface with spatial dependence" {} "r.random.surface" {} -command {execute r.random.surface }}
+    }}
+    {command "Generate vector contour lines" {} "r.contour" {} -command { execute r.contour }}
+    {cascad "Interpolate surfaces" {} "" $tmenu {			
+        {command "Bilinear interpolation from raster points" {} "r.bilinear" {} -command { execute r.bilinear }}
+        {command "Inverse distance weighted interpolation from raster points" {} "r.surf.idw" {} -command { execute r.surf.idw }}
+        {command "Interpolation from raster contours" {} "r.surf.contour" {} -command { execute r.surf.contour }}
+        {separator}
+        {command "Inverse distance weighted interpolation from vector points" {} "v.surf.idw" {} -command { execute v.surf.idw }}
+        {command "Regularized spline tension interpolation from vector points or contours" {} "v.surf.rst" {} -command { execute v.surf.rst }}
+        {separator}
+        {command "Fill NULL cells by interpolation using regularized spline tension" {} " r.fillnulls" {} -command {execute r.fillnulls }}
+    }}
+    {separator}
+    {cascad "Reports and statistics" {} "" $tmenu {			
+        {command "Report basic file information" {} "r.info" {} -command {execute r.info }}
+        {command "Report category labels and values" {} "r.cats" {} -command {execute r.cats }}
+        {command "Display category values in raster map cells" {} "d.rast.num" {} -command {execute d.rast.num }}
+        {separator}
+        {command "General statistics" {} "r.stats" {} -command {execute r.stats }}
+        {command "Range of all category values" {} "r.describe" {} -command {execute r.describe }}
+        {command "Sum all cell category values" {} "r.sum" {} -command {execute r.sum }}
+        {command "Sum area by map and category" {} "r.report" {} -command {execute r.report }}
+        {command "Total surface area corrected for topography" {} "r.surf.area" {} -command {execute r.surf.area }}
+        {command "Univariate statistics" {} "r.univar" {} -command {execute r.univar }}
+        {command "Univariate statistics (script version)" {} " r.univar.sh" {} -command {execute r.univar.sh }}
+        {separator}
+        {command "Sample values along transects" {} "r.profile" {} -command {execute r.profile }}
+        {command "Sample values along transects (use azimuth, distance)" {} " r.transect" {} -command {execute r.transect }}
+        {separator}
+        {command "Covariance/correlation" {} "r.covar" {} -command {execute r.covar }}
+        {command "Linear regression between 2 maps" {} "r.regression.line" {} -command {execute r.regression.line }}
+        {command "Mutual category occurences (coincidence)" {} "r.coin" {} -command {execute r.coin }}
+    }}
  } 
  "&Vector" all options $tmenu {
 			{cascad "Develop map" {} "" $tmenu {			
@@ -463,6 +406,8 @@ global execom
 			 {command "Report basic file information" {} "r.info" {} -command {execute r.info }}
 			 {command "Range of image values" {} "r.describe" {} -command {execute r.describe }}
 			 {separator}
+	 		{command "Display histogram" {} "d.histogram" {} -command {execute d.histogram }}
+			 {separator}
 			 {command "Kappa classification accuracy assessment" {} "r.kappa" {} -command {execute r.kappa }}
 			 {command "Optimum index factor for LandSat TM" {} "i.oif" {} -command {execute i.oif }}
 			}}
@@ -502,10 +447,10 @@ global execom
 			}}
  } 
  "&Help" all options $tmenu {
- {command "GRASS help" {} "g.manual" {} -command { exec g.manual -i > /dev/null & } }
- {command "d.m &help" {} "d.m help" {} -command { exec g.manual d.m > /dev/null & } }
- {command "About &GRASS" {} "About GRASS" {} -command { source $env(GISBASE)/etc/dm/grassabout.tcl} }
- {command "About &System" {} "About System" {} -command { exec $env(GRASS_WISH) $env(GISBASE)/etc/dm/tksys.tcl --tcltk & } }
+    {command "GRASS help" {} "g.manual" {} -command { exec g.manual -i > /dev/null & } }
+    {command "d.m &help" {} "d.m help" {} -command { exec g.manual d.m > /dev/null & } }
+    {command "About &GRASS" {} "About GRASS" {} -command { source $env(GISBASE)/etc/dm/grassabout.tcl} }
+    {command "About &System" {} "About System" {} -command { exec $env(GRASS_WISH) $env(GISBASE)/etc/dm/tksys.tcl --tcltk &          }}
  }
 
  }]
