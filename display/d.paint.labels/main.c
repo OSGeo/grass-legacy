@@ -16,7 +16,8 @@ int main (int argc, char **argv)
     FILE *infile ;
     int t, b, l, r ;
     struct Option *opt1;
-    struct Option *maxreg_opt, *minreg_opt; 
+    struct Option *maxreg_opt, *minreg_opt;
+    struct Flag *horiz_flag;
     struct GModule *module;
 
     /* Initialize the GIS calls */
@@ -27,6 +28,10 @@ int main (int argc, char **argv)
     module->description = 
 	_("Displays text labels (created with v.label) "
 	  "to the active frame on the graphics monitor.");
+
+    horiz_flag = G_define_flag();
+    horiz_flag->key = 'i';
+    horiz_flag->description = _("Ignore rotation setting and draw horizontally");
 
     opt1 = G_define_option() ;
     opt1->key        = "labels" ;
@@ -113,10 +118,11 @@ int main (int argc, char **argv)
 	G_fatal_error(_("Error in calculating conversions"));
 
     /* Go draw the cell file */
-    do_labels(infile) ;
+    do_labels(infile, !horiz_flag->answer) ;
 
     D_add_to_list(G_recreate_command()) ;
 
+    R_text_rotation(0.0); /* reset */
     R_close_driver();
 
     exit(0);

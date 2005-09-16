@@ -32,6 +32,7 @@ static int width ;
 static int background ;
 static int border ;
 static int opaque ;
+static double rotation;
 static char text[MTEXT] ;
 static char font[256];
 
@@ -55,13 +56,14 @@ int initialize_options (void)
     background = D_translate_color("white") ;
     border = D_translate_color("black") ;
     opaque = YES ;
+    rotation = 0.0;
     strcpy (font, STANDARD_FONT);
 
     return 0;
 }
 
 int 
-do_labels (FILE *infile)
+do_labels (FILE *infile, int do_rotation)
 {
     char buff[128];
 
@@ -121,6 +123,11 @@ do_labels (FILE *infile)
 		||  !strcmp (font, "standard"))
 			strcpy (font, STANDARD_FONT);
 	}
+	else if (! strncmp (text, "rot", 3))
+	{
+	    if(do_rotation)
+		sscanf(text,"%*s %lf", &rotation);
+	}
 	else if (! strncmp (text, "hco", 3))
 	{
 	    /* not used by this module but correct field */
@@ -169,7 +176,7 @@ int show_it (void)
     int Xoffset ;
     int Yoffset ;
 
-    G_debug ( 3, "Doing: %s\n", text) ;
+    G_debug ( 3, "Doing '%s'", text) ;
     X = (int)(D_u_to_d_col(east)) ;
 
 /* Set font */
@@ -186,6 +193,10 @@ int show_it (void)
     }
 
     R_text_size(text_size, text_size);
+
+/* Set font rotation */
+    R_text_rotation((float)rotation);
+    G_debug(3, "  rotation = %.2f", rotation);
 
 /* Find extent of all text (assume ref point is upper left) */
     T = 999999 ;
