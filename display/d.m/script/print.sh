@@ -20,7 +20,7 @@ if  [ -z "$GISBASE" ] ; then
    exit 1
 fi   
 
-d.out.file -q output=print res=1 format=png >@stdout 2>@stdout
+d.out.file output=print res=1 format=png >@stdout 2>@stdout
 sleep 5
 lpr -r print.png
 
