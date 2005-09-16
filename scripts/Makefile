@@ -9,6 +9,7 @@ SUBDIRS = \
 	d.monsize \
 	d.mvmon \
 	d.out.png \
+	d.out.file \
 	d.rast.leg \
 	d.redraw \
 	d.resize \
