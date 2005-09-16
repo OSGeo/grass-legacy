@@ -27,7 +27,7 @@
 
 #%flag
 #%  key: f
-#%  description: Force removal (use only if you know what you are doing)
+#%  description: force removal (use only if you know what you are doing)
 #%end
 
 #%option
