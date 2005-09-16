@@ -21,7 +21,6 @@ int db__driver_open_select_cursor(sel, dbc, mode)
      dbCursor *dbc;
      int mode;
 {
-    //PGresult *res;
     cursor   *c;
     dbTable  *table;
     char     *str, *rest;

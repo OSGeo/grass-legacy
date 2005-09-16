@@ -2,7 +2,6 @@
 
 /* cursors */
 typedef struct _cursor {
-    //PGresult *res;
     sqlite3_stmt *statement;
     int nrows;   /* number of rows in query result, -1 if unknown */
     int row;               /* current row */
@@ -13,9 +12,7 @@ typedef struct _cursor {
 
 } cursor;  
 
-
 #ifdef MAIN
-    //PGconn *pg_conn; /* Database connection */
     sqlite3 *sqlite;
     dbString *errMsg = NULL; /* error message */
 #else
