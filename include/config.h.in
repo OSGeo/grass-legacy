@@ -119,6 +119,9 @@
 /* define if postgres is to be used */
 #undef HAVE_POSTGRES
 
+/* define if SQLite is to be used */
+#undef HAVE_SQLITE
+
 /* define if OGR is to be used */
 #undef HAVE_OGR
 

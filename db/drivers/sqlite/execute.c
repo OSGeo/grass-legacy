@@ -1,0 +1,70 @@
+/***********************************************************
+*
+* MODULE:       SQLite driver 
+*   	    	
+* AUTHOR(S):    Radim Blazek
+*
+* COPYRIGHT:    (C) 2005 by the GRASS Development Team
+*
+* This program is free software under the GNU General Public
+* License (>=v2). Read the file COPYING that comes with GRASS
+* for details.
+*
+**************************************************************/
+#include <stdlib.h>
+#include "dbmi.h"
+#include "globals.h"
+#include "proto.h"
+
+int
+db__driver_execute_immediate (sql)
+    dbString *sql;
+{
+    char *s;
+    int  ret;
+    sqlite3_stmt *stmt;
+    char *rest = NULL;
+
+    s = db_get_string (sql);
+
+    G_debug ( 3, "execute: %s", s );
+    
+    ret = sqlite3_prepare ( sqlite, s, -1, &stmt, &rest );
+    
+    if ( ret != SQLITE_OK )
+    {
+        append_error("Error in sqlite3_prepare():\n");
+	append_error ( sqlite3_errmsg(sqlite) );
+        report_error( );
+        return DB_FAILED;
+    }
+
+    ret = sqlite3_step ( stmt );
+
+    if ( ret != SQLITE_DONE )
+    {
+        append_error("Error in sqlite3_step():\n");
+	append_error ( sqlite3_errmsg(sqlite) );
+        report_error( );
+        return DB_FAILED;
+    }
+
+    ret = sqlite3_finalize ( stmt );
+
+    if ( ret != SQLITE_OK )
+    {
+        append_error("Error in sqlite3_finalize():\n");
+	append_error ( sqlite3_errmsg(sqlite) );
+        report_error( );
+        return DB_FAILED;
+    }
+
+    /*
+    if ( rest )
+	free ( rest );
+    */
+    
+    return DB_OK;
+}
+
+

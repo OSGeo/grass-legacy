@@ -152,6 +152,7 @@ LOC_ARG_WITH(png, PNG)
 LOC_ARG_WITH(tcltk, Tcl/Tk)
 LOC_ARG_WITH(postgres, PostgreSQL)
 LOC_ARG_WITH(mysql, MySQL, no)
+LOC_ARG_WITH(sqlite, SQLite, no)
 LOC_ARG_WITH(opengl, OpenGL)
 LOC_ARG_WITH(odbc, ODBC, no)
 LOC_ARG_WITH(fftw, FFTW)
@@ -199,6 +200,9 @@ LOC_ARG_WITH_LIB(postgres, PostgreSQL)
 
 LOC_ARG_WITH_INC(mysql, MySQL)
 LOC_ARG_WITH_LIB(mysql, MySQL)
+
+LOC_ARG_WITH_INC(sqlite, SQLite)
+LOC_ARG_WITH_LIB(sqlite, SQLite)
 
 LOC_ARG_WITH_INC(opengl, OpenGL)
 LOC_ARG_WITH_LIB(opengl, OpenGL)
@@ -860,6 +864,44 @@ AC_SUBST(MYSQLLIB)
 
 # Done checking MySQL
 
+# Enable SQLite option
+
+LOC_CHECK_USE(sqlite,SQLite,USE_SQLITE)
+
+SQLITEINCPATH=
+SQLITELIBPATH=
+SQLITELIB=
+
+if test -n "$USE_SQLITE"; then
+
+# With SQLite includes directory
+
+LOC_CHECK_INC_PATH(sqlite,SQLite,SQLITEINCPATH)
+
+LOC_CHECK_INCLUDES(sqlite3.h,SQLite,$SQLITEINCPATH)
+
+AC_DEFINE(HAVE_SQLITE)
+
+fi # $USE_SQLITE
+
+if test -n "$USE_SQLITE"; then
+
+# With SQLite library directory
+
+LOC_CHECK_LIB_PATH(sqlite,SQLite,SQLITELIBPATH)
+
+LOC_CHECK_LIBS(sqlite3,sqlite3_open,SQLite,$SQLITELIBPATH,SQLITELIB,,,,$MATHLIB)
+
+fi # $USE_SQLITE
+
+AC_SUBST(USE_SQLITE)
+
+AC_SUBST(SQLITEINCPATH)
+AC_SUBST(SQLITELIBPATH)
+AC_SUBST(SQLITELIB)
+
+# Done checking SQLite
+
 # Enable OpenGL option
 
 LOC_CHECK_USE(opengl,OpenGL,USE_OPENGL)
@@ -1251,6 +1293,7 @@ LOC_MSG_USE(PNG support,USE_PNG)
 LOC_MSG_USE(Tcl/Tk support,USE_TCLTK)
 LOC_MSG_USE(PostgreSQL support,USE_POSTGRES)
 LOC_MSG_USE(MySQL support,USE_MYSQL)
+LOC_MSG_USE(SQLite support,USE_SQLITE)
 LOC_MSG_USE(OpenGL(R) support,USE_OPENGL)
 LOC_MSG_USE(ODBC support,USE_ODBC)
 LOC_MSG_USE(FFTW support,USE_FFTW)

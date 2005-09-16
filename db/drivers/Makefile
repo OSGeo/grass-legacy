@@ -21,6 +21,11 @@ ifneq ($(strip $(MYSQLLIB)),)
     SUBDIRS4 = mysql
 endif
 
+# add SQLite:
+ifneq ($(strip $(SQLITELIB)),)
+    SUBDIRS4 = sqlite
+endif
+
 # add ogr:
 ifneq ($(strip $(USE_OGR)),)
     SUBDIRS5 = ogr
