@@ -72,6 +72,7 @@ if [ "$AWK" = "" ] ; then
 fi
 
 # setting environment, so that awk works properly in all languages
+unset LC_ALL
 export LC_NUMERIC=C
 
 table=`v.db.connect $GIS_OPT_map -g | grep -w $GIS_OPT_layer | awk '{print $2}'`
