@@ -21,5 +21,5 @@ ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 default: $(DRIVER)
 
 $(DRIVER): $(ARCH_OBJS)
-	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(LIBES) \
+	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(SQLITELIBPATH) $(LIBES) \
 		$(MATHLIB) $(XDRLIB)
