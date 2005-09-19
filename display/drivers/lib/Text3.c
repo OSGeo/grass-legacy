@@ -16,8 +16,12 @@
 #include FT_FREETYPE_H
 #endif
 
+#include "gis.h"
 #include "driver.h"
 #include "driverlib.h"
+
+# define RpD ((2 * M_PI) / 360.)	/* radians/degree */
+# define D2R(d) (double)(d * RpD)	/* degrees->radians */
 
 /*#define DEBUG_LOG(S) {FILE *fp = fopen("debug.TXT","a");fputs(S,fp);fclose(fp);}*/
 /*#define DEBUG_LOG_INT(D) {FILE *fp = fopen("debug.TXT","a");fprintf(fp,"%d",D);fclose(fp);}*/
@@ -98,7 +102,7 @@ static int drawMain(int x,int y,double text_size_x,double text_size_y,double tex
 	outlen = convert_str(charset,string,&out);
 
 	/* set matrix */
-	setMatrix(&matrix,text_rotation);
+	setMatrix(&matrix, D2R(text_rotation));
 	/* draw */
 	draw_text(face,&pen,&matrix,out,outlen,0);
 
@@ -116,6 +120,7 @@ static int drawMain(int x,int y,double text_size_x,double text_size_y,double tex
 #ifdef HAVE_FT2BUILD_H
 static int setMatrix(FT_Matrix* matrix,double rotation)
 {
+	/* rotation is in radians */
 	matrix->xx = (FT_Fixed)( cos(rotation)*0x10000);
 	matrix->xy = (FT_Fixed)(-sin(rotation)*0x10000);
 	matrix->yx = (FT_Fixed)( sin(rotation)*0x10000);
