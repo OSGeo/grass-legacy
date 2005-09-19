@@ -53,6 +53,7 @@ proc DmThematic::create { tree parent } {
     set opt($count,legend) 1 
     set opt($count,update_rgb) 0 
     set opt($count,math) 0 
+    set opt($count,psmap) "" 
     
     incr count
     return $node
@@ -227,6 +228,14 @@ proc DmThematic::options { id frm } {
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
+    # psmap
+    set row [ frame $frm.psmap ]
+    Label $row.a -text "Name for ps.map instruction files"
+    LabelEntry $row.b -textvariable DmThematic::opt($id,psmap) -width 34 \
+            -entrybg white
+    pack $row.a $row.b -side left
+    pack $row -side top -fill both -expand yes
+
 }
 
 proc DmThematic::save { tree depth node } {
@@ -236,7 +245,7 @@ proc DmThematic::save { tree depth node } {
 
     foreach key { _check map type column themetype themecalc breakpoints where \
              layer icon iconsize maxsize nint colorscheme singlecolor \
-             startcolor endcolor legmon legend update_rgb math } {
+             startcolor endcolor legmon legend update_rgb math psmap} {
         Dm::rc_write $depth "$key $opt($id,$key)"
     } 
 }
@@ -278,6 +287,11 @@ proc DmThematic::display { node } {
     # where query
     if { $opt($id,where) != "" } { 
         append cmd " {where=$opt($id,where)}"
+    }
+
+    # psmap file 
+    if { $opt($id,psmap) != "" } { 
+        append cmd " psmap=$opt($id,psmap)"
     }
 
     # update_rgb
@@ -366,6 +380,7 @@ proc DmThematic::duplicate { tree parent node id } {
     set opt($count,legend) "$opt($id,legend)"
     set opt($count,update_rgb) "$opt($id,update_rgb)" 
     set opt($count,math) "$opt($id,math)" 
+    set opt($count,psmap) "$opt($id,psmap)" 
 
     incr count
     return $node
