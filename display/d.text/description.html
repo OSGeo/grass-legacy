@@ -6,19 +6,17 @@ standard input or redirected from a file (using the UNIX
 redirection mechanism).
 
 In addition to the options provided on the command line,
-colors, text size, font type, and boldness, can be adjusted
+colors, text size, font type, and boldness can be adjusted
 with commands in the standard input (i.e., if the user
 invokes <EM>d.text</EM> without options on the command
 line, and then assigns values to these options on lines
-within the standard input).  In this case, the user also
-sees the standard GRASS 
-<A HREF="parser.html">parser</A> interface.
+within the standard input).
 
 <H3>Commands:</H3> 
 
 <DL>
 
-<DT>.C <EM>color</EM> 
+<DT><B>.C</B> <EM>color</EM> 
 <DD>
 (where <EM>color</EM> is one of the available colors) causes text appearing on 
 subsequent lines to be drawn in that color. 
@@ -40,9 +38,9 @@ the font type. Available fonts are listed in the GRASS manual entry for
 <EM><A HREF="d.font.html">d.font</A></EM>. 
 The default font type used (if unspecified by the user) 
 is <EM>romans</EM>.
-Run the GRASS macro 
+<!-- Run the GRASS macro 
 <EM><A  HREF="show.fonts.sh.html">show.fonts.sh</A></EM> 
-to see what these fonts look like. 
+to see what these fonts look like. -->
 
 <DT><B>.B 1</B>
 <DD>stipulates that following text be printed in <B>bold</B>.
@@ -62,16 +60,19 @@ color yellow, in bold, and using 4/100'ths (4%) of the
 active frame's vertical space per line:
 <P>
 
-<DL>
-<DT><B>d.text</B>
-<dd>.C yellow 
-<dd>.S 4 
-<dd>.B 1
-<dd>This is a test of d.text
-</DL>
+
+<pre>
+    <B>d.text</B> << EOF
+    .C yellow 
+    .S 4 
+    .B 1
+    This is a test of d.text
+    EOF
+</pre>
+
 
 The user presses <EM>control-d</EM> 
-(the "ctrl" and "d" keys) to end input to <EM>d.text</EM> (equal to EOF).
+(the "Ctrl" and "d" keys) to end input to <EM>d.text</EM> (equal to EOF).
 
 <H2>NOTES</H2>
 
