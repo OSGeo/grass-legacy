@@ -86,6 +86,7 @@ if [ "$AWK" = "" ] ; then
 fi
 
 # setting environment, so that awk works properly in all languages
+unset LC_ALL
 export LC_NUMERIC=C
 
 eval `g.gisenv`
@@ -119,8 +120,6 @@ if [ "$AWK" = "" ] ; then
     echo "$PROG: awk required, please install awk/gawk first" 1>&2
     exit 1
 fi
-# set environment so that awk works properly in all languages
-export LC_NUMERIC=C
 
 
 #### setup temporary file
