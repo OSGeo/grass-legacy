@@ -94,7 +94,7 @@
 #%option
 #% key: nint
 #% type: integer
-#% description: Number of display intervals (integer) for interval theme
+#% description: Number of classes for interval theme (integer)
 #% answer: 4
 #% required : no
 #%end
@@ -441,9 +441,12 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
 	eval endcolor$i=`echo $endc | cut -d':' -f$i`
     done
 
-    clrstep1=`expr \( $color1 - $endcolor1 \) / $numint`
-    clrstep2=`expr \( $color2 - $endcolor2 \) / $numint`
-    clrstep3=`expr \( $color3 - $endcolor3 \) / $numint`
+    #The number of color steps is one less then the number of classes
+    nclrstep=`expr $numint - 1`
+    
+    clrstep1=`expr \( $color1 - $endcolor1 \) / $nclrstep`
+    clrstep2=`expr \( $color2 - $endcolor2 \) / $nclrstep`
+    clrstep3=`expr \( $color3 - $endcolor3 \) / $nclrstep`
 
     themecolor="$startc"
 
@@ -703,13 +706,19 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
 
 
         # increment for next theme
-        let color1=color1-clrstep1
-        let color2=color2-clrstep2
-        let color3=color3-clrstep3
+        let i=i+1
+	if [ $i = $numint ] ; then
+	  let color1=$endcolor1
+	  let color2=$endcolor2
+	  let color3=$endcolor3
+	else
+          let color1=color1-clrstep1
+          let color2=color2-clrstep2
+          let color3=color3-clrstep3
+	fi
         let line1=line1-4
         let line2=line2-4
         let line3=line3-4
-        let i=i+1
     done
 fi
 
