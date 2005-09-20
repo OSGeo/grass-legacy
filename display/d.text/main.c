@@ -229,6 +229,12 @@ main (int argc, char **argv)
                                 if (! sscanf(cmd_ptr, "%d", &bold))
                                         bold = 0 ;
                                 break ;
+			case 'R':   /* rotation */
+                                if (sscanf(cmd_ptr, "%lf", &rotation))
+                                {
+                                        R_text_rotation((float)rotation);
+                                }
+                                break ;
                         default:
                                 break ;
                         }
