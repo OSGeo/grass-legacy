@@ -268,3 +268,20 @@ proc DmRgbhis::duplicate { tree parent node id } {
     incr count
     return $node
 }
+
+proc DmRgbhis::query { node } {
+    variable opt
+    
+    set tree $Dm::tree
+    set id [Dm::node_id $node]
+
+    if { ! ( $opt($id,_check) ) } { return } 
+
+    if { $opt($id,map1) == "" } { return }
+    if { $opt($id,map2) == "" } { return }
+    if { $opt($id,map3) == "" } { return }
+
+    set cmd "d.what.rast map=$opt($id,map1),$opt($id,map2),$opt($id,map3)"
+    
+    term $cmd
+}
