@@ -836,7 +836,8 @@ proc Dm::query { } {
             return
         }
         rgbhis {
-            return
+            DmRgbhis::query $sel
+            #return
         }
         legend {
             return
