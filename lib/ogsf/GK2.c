@@ -463,3 +463,25 @@ void GK_show_vol(int flag)
 
     return;
 }
+
+
+void GK_show_list( int flag)
+{
+
+        if (flag) {
+
+                Fmode |= FM_LABEL;
+
+                if (Views) {
+
+                GS_draw_all_list();
+
+                }
+        }
+        else {
+                Fmode &= ~FM_LABEL;
+        }
+
+        return;
+}
+

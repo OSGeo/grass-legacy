@@ -134,6 +134,7 @@ int Ndo_framestep_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nshow_site_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nshow_vect_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nshow_vol_cmd(Nv_data *, Tcl_Interp *, int, char **);
+int Nshow_lab_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nshow_path_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nwrite_rgb_cmd(Nv_data *, Tcl_Interp *, int, char **);
 /* change_view.c */

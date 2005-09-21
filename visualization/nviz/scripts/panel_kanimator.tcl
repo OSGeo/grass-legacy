@@ -13,7 +13,7 @@ global keyanimStartX keyanimEndX
 global keyanimKeyList keyanimUniqueTag keyanimInterpType keyanimPathState
 global keyanimChannelList keyanimFrameRate keyanimCurrentKeyTime
 global keyanimPlayState keyanimPrecis keyanimSaveRenderStyle
-global keyanimVectState keyanimSiteState keyanimVolState
+global keyanimVectState keyanimSiteState keyanimVolState keyanimLabState
 
 set keyanimPrecis 1e-5
 set keyanimFrameRate 30
@@ -28,6 +28,7 @@ set keyanimPathState off
 set keyanimSiteState off
 set keyanimVectState off
 set keyanimVolState off
+set keyanimLabState off
 set keyanimChannelList [list]
 set keyanimPlayState stop
 set keyanimSaveRenderStyle 0
@@ -150,6 +151,9 @@ proc mkkanimatorPanel { BASE } {
         -command {Nshow_site $keyanimSiteState} -onvalue on -offvalue off
     $rname.menu1.m1 add checkbutton -label "Volume" -variable keyanimVolState \
         -command {Nshow_vol $keyanimVolState} -onvalue on -offvalue off
+    $rname.menu1.m1 add checkbutton -label "Labels/Legend" \
+	-variable keyanimLabState \
+	-command {Nshow_lab $keyanimLabState} -onvalue on -offvalue off
 
     menubutton $rname.menu2 -menu $rname.menu2.m1 \
         -indicatoron 1 -text "Interp." -relief raised
@@ -1717,6 +1721,7 @@ proc keyanimRunAndSave { BASE } {
     if {$keyanimOff == 1} {
 	Noff_screen 1
     }
+
     set keyanimBaseName [.ras_fname.enter get]
     set keyanimStartFrame [.ras_fname.enter2 get]
     destroy .ras_fname

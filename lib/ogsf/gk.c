@@ -202,6 +202,10 @@ void gk_follow_frames(Viewnode * view, int numsteps, Keylist * keys, int step,
 
 	GS_done_draw();
 
+	if (mode & FM_LABEL) {
+		GS_draw_all_list(); /* draw labels and legend */
+	}
+
 	if (onestep) {
 	    return;
 	}

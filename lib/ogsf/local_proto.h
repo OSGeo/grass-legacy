@@ -53,6 +53,7 @@ void GK_show_path(int);
 void GK_show_vect(int);
 void GK_show_site(int);
 void GK_show_vol(int);
+void GK_show_list(int);
 
 /* From GP2.c */
 int GP_site_exists(int);

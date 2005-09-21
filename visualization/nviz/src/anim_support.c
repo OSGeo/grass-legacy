@@ -672,6 +672,32 @@ int Nshow_vol_cmd(Nv_data * data,	/* Local data */
 
 }
 
+int Nshow_lab_cmd(Nv_data * data,	/* Local data */
+		   Tcl_Interp * interp,	/* Current interpreter */
+		   int argc,	/* Number of arguments */
+		   char **argv	/* Argument strings */
+    )
+{
+    int arg1;
+
+    /* Parse arguments */
+    if (argc != 2) {
+	interp->result = "Error: should be Nshow_lab [ TRUE | FALSE] ";
+	return (TCL_ERROR);
+    }
+
+    /* Parse out the boolean value */
+    if (Tcl_GetBoolean(interp, argv[1], &arg1) != TCL_OK)
+	return (TCL_ERROR);
+
+    /* Call the function */
+    GK_show_list(arg1);
+
+    return (TCL_OK);
+
+}
+
+
 int Nshow_path_cmd(Nv_data * data,	/* Local data */
 		   Tcl_Interp * interp,	/* Current interpreter */
 		   int argc,	/* Number of arguments */

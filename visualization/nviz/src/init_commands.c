@@ -97,6 +97,7 @@ Nshow_path_cmd(),
 Nshow_site_cmd(),
 Nshow_vect_cmd(),
 Nshow_vol_cmd(),
+Nshow_lab_cmd(),
 Ndelete_key_cmd(),
 Nmove_key_cmd(),
 Nprint_keys_cmd(),
@@ -316,7 +317,8 @@ int init_commands(Tcl_Interp * interp, Nv_data * data)
     Tcl_CreateCommand(interp, "Nshow_path", (Tcl_CmdProc *)Nshow_path_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nshow_site", (Tcl_CmdProc *)Nshow_site_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nshow_vect", (Tcl_CmdProc *)Nshow_vect_cmd, data, NULL);
-	Tcl_CreateCommand(interp, "Nshow_vol", (Tcl_CmdProc *)Nshow_vol_cmd, data, NULL);
+    Tcl_CreateCommand(interp, "Nshow_vol", (Tcl_CmdProc *)Nshow_vol_cmd, data, NULL);
+    Tcl_CreateCommand(interp, "Nshow_lab", (Tcl_CmdProc *)Nshow_lab_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Ndelete_key", (Tcl_CmdProc *)Ndelete_key_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nmove_key", (Tcl_CmdProc *)Nmove_key_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nprint_keys", (Tcl_CmdProc *)Nprint_keys_cmd, data, NULL);
