@@ -22,6 +22,7 @@
 #define FM_SITE 0x00000002
 #define FM_PATH 0x00000004
 #define FM_VOL  0x00000008
+#define FM_LABEL 0x00000010
 
 typedef struct view_node{
     float fields[KF_NUMFIELDS];
