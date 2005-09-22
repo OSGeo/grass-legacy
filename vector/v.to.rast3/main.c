@@ -142,7 +142,7 @@ int main(int argc, char *argv[])
 	    continue ;
 	}
 
-        G_debug ( 0, "col,row,depth,val: %d %d %d %f", col, row, depth, value);
+        G_debug ( 3, "col,row,depth,val: %d %d %d %f", col, row, depth, value);
 
 	G3d_putFloat (map, col, row, depth, (float)value);
     }
