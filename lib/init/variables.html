@@ -84,6 +84,10 @@ If the user just specifies a variable name, it defaults to "get" mode. Example:
 <br>[PNGdriver]
 <br>&nbsp; defines the background color of the image created by the PNG driver
 
+<p>GRASS_ERROR_MAIL
+<br>&nbsp; set to any value to send user mail on an error or warning that 
+ happens while stderr is being redirected.
+
 <p>GRASS_GNUPLOT
 <br>[m.svfit, s.probplt, s.sv]
 <br>&nbsp; program to use for plotting "gnuplot" data
@@ -119,8 +123,10 @@ If the user just specifies a variable name, it defaults to "get" mode. Example:
 <br>[PNGdriver]
 <br>&nbsp; name of PNG output file
 
+<!-- HB Sept 2005: I don't think this exists anymore:
 <p>GRASS_STDERR
 <br>&nbsp; set to any value to prevent user mail on error
+-->
 
 <p>GRASS_TCLSH
 <br>[nviz]
@@ -194,7 +200,7 @@ If the user just specifies a variable name, it defaults to "get" mode. Example:
 <br>&nbsp; &nbsp; With 1 maps with identical names will be overwritten.
 <br>&nbsp; You can force a protected overwrite by adding "--o" to the command.
 <br>e.g.:
-<br><tt>g.gisenv set="OVERWRITE=0"</tt>
+<br>&nbsp;<tt>g.gisenv set="OVERWRITE=0"</tt>
 
 
 <h2>GRASS-related Files</h2>
@@ -203,9 +209,16 @@ If the user just specifies a variable name, it defaults to "get" mode. Example:
 <br>&nbsp; stores the GRASS variables (but not environment variables)
 
 <p>$HOME/GIS_ERROR_LOG
-<br>&nbsp; If this file exists, all GRASS error messages are stored here
-instead of sending a mail to the GIS user. To generate the file, use:
-<br>&nbsp;&nbsp; touch $HOME/GIS_ERROR_LOG
+<br>&nbsp; If this file exists then all GRASS error and warning messages are 
+ logged here. Applies to current user. To generate the file, use:
+<br>&nbsp;&nbsp; <tt>touch $HOME/GIS_ERROR_LOG</tt>
+
+<p>$GISBASE/GIS_ERROR_LOG
+<br>&nbsp; If this file exists then all GRASS error and warning messages are 
+ logged here. Applies to all users. (proper write permissions must be in place)
+<P>
+<i>Note:</i>
+Error and warning messages encountered while using the GUI menus are not logged.
 
 
 <h3>SEE ALSO</h3>
@@ -215,5 +228,5 @@ instead of sending a mail to the GIS user. To generate the file, use:
 
 <p><i>Last changed: $Date$</i>
 <HR>
-<P><a href=index.html>Help Index</a>
+<P><a href=index.html>Help Index</a></p>
 </body></html>
