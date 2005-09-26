@@ -298,8 +298,7 @@ printf("\n ");
 
 /* call output for iteration output */
 
-		if (tserie != NULL) {
-
+		if (ts == 1) {
 		  if (erdep != NULL)
 		  erod(gama); /* divergence of gama field */
 
