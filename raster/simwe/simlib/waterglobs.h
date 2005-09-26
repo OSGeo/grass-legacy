@@ -110,4 +110,4 @@ int maxwab, nstack;
 int iterout, mx2o, my2o;
 int miter,nwalka,lwwfin;
 double timec;
-int timesec;
+int ts, timesec;
