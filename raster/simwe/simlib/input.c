@@ -151,18 +151,27 @@ fclose(fdsfile);
 	gama[l]  = (double*)malloc(sizeof(double)*(mx));
         }
 
+   printf("Running MAY 10 version\n");
 
   if((mapset=G_find_cell(elevin,""))==NULL)
   printf("cell file not found\n");
 
+  fd1 = G_open_cell_old(elevin,mapset);
+
   if((mapset=G_find_cell(dxin,""))==NULL)
   printf("cell file not found\n");
+
+  fd2 = G_open_cell_old(dxin,mapset);
 
   if((mapset=G_find_cell(dyin,""))==NULL)
   printf("cell file not found\n");
 
+  fd3 = G_open_cell_old(dyin,mapset);
+
   if((mapset=G_find_cell(manin,""))==NULL)
   printf("cell file not found\n");
+
+  fd5 = G_open_cell_old(manin,mapset);
 
   if(rain != NULL){
 	  if((mapset=G_find_cell(rain,""))==NULL)
@@ -205,11 +214,6 @@ fclose(fdsfile);
           printf("cell file not found\n");
           fd12 = G_open_cell_old(wdepth,mapset);
   }
-
-  fd1 = G_open_cell_old(elevin,mapset);
-  fd2 = G_open_cell_old(dxin,mapset);
-  fd3 = G_open_cell_old(dyin,mapset);
-  fd5 = G_open_cell_old(manin,mapset);
 
 
   for (row=0; row<my; row++)
@@ -459,24 +463,23 @@ int grad_check ()
     chmean = chsum / cc;
         if (inf != NULL) infmean = infsum / cc;
 	if (wdepth != NULL) deltaw = 0.8/(sigmax * vmax);
-    deltap = 0.25 * sqrt(stepx * stepy)/vmean;
+        deltap = 0.25 * sqrt(stepx * stepy)/vmean;
         if(deltaw > deltap)
                 timec = 4.;
         else
                 timec = 1.25;
 
-printf("\n");
-printf("\n zmin,zmax %f %f",zmin,zmax);
-printf("\n simean,vmean,chmean,deltap,deltaw %f %f %f %f %f",si0,vmean,chmean,deltap,deltaw);
-if (wdepth != NULL) printf("\n sigmax,vmax,deltaw %f %f %f",sigmax,vmax,deltaw);
-printf("\n MITER, timec %d %f",miter,timec);
+       printf("\n");
+       printf("\n zmin,zmax %f %f",zmin,zmax);
+       printf("\n simean,vmean,chmean,deltap,deltaw %f %f %f %f %f",si0,vmean,chmean,deltap,deltaw);
+       printf("\n MITER, timec %d %f",miter,timec);
 
+      deltap = amin1(deltap,deltaw);
 
-/*    deltap = amin1(deltap,deltaw);*/
+       if (wdepth != NULL) printf("\n sigmax,vmax,deltapused %f %f %f",sigmax,vmax,deltaw);
+
 /*    if (wdepth != NULL) deltap = 0.1;  deltap for sediment is ar. average deltap and deltaw */
-
-    if (wdepth != NULL) deltap = (deltaw+deltap)/2.;  /*deltap for sediment is ar. average deltap and deltaw */
-
+/*    if (wdepth != NULL) deltap = (deltaw+deltap)/2.;  deltap for sediment is ar. average deltap and deltaw */
 
     miter = (int)(timesec / (deltap * timec)); /* number of iterations */
     iterout = (int)(iterout / (deltap * timec)); /* iterations for time series */
