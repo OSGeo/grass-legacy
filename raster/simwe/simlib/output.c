@@ -46,7 +46,7 @@ int output_data(int tt, double ft)
 
   if (outwalk != NULL)
   {
-      if (tserie != NULL) {
+      if (ts == 1) {
         sprintf(buf,"%s.%.*d",outwalk,ndigit,tt);
 	outwalk0 = G_store(buf);
 	fdoutwalk = G_fopen_sites_new (outwalk0);
@@ -64,7 +64,7 @@ int output_data(int tt, double ft)
     if(NULL == (sd = G_site_new_struct(-1,2,0,1)))
         G_fatal_error("memory allocation failed for site");
 
-      if (tserie != NULL)
+      if (ts == 1)
       walkershead.name = outwalk0;
 	else
       walkershead.name = outwalk;
@@ -89,11 +89,10 @@ int output_data(int tt, double ft)
 
     }
   }
-
    if (depth != NULL)
       {
       cell6 = G_allocate_f_raster_buf();
-      if (tserie != NULL) {
+      if (ts == 1) {
         sprintf(buf,"%s.%.*d",depth,ndigit,tt);
         depth0 = G_store(buf);
         fd6 = G_open_fp_cell_new (depth0);
@@ -111,7 +110,7 @@ int output_data(int tt, double ft)
    if (disch != NULL)
       {
       cell7 = G_allocate_f_raster_buf();
-      if (tserie != NULL) {
+      if (ts == 1) {
         sprintf(buf,"%s.%.*d",disch,ndigit,tt);
         disch0 = G_store(buf);
       fd7 = G_open_fp_cell_new (disch0);
@@ -129,7 +128,7 @@ int output_data(int tt, double ft)
    if (err != NULL)
       {
       cell8 = G_allocate_f_raster_buf();
-      if (tserie != NULL) {
+      if (ts == 1) {
         sprintf(buf,"%s.%.*d",err,ndigit,tt);
         err0 = G_store(buf);
       fd8 = G_open_fp_cell_new (err0);
@@ -149,7 +148,7 @@ int output_data(int tt, double ft)
    if (conc != NULL)
       {
       cell14 = G_allocate_f_raster_buf();
-      if (tserie != NULL) {
+      if (ts == 1) {
         sprintf(buf,"%s.%.*d",conc,ndigit,tt);
         conc0 = G_store(buf);
       fd14 = G_open_fp_cell_new (conc0);
@@ -168,7 +167,7 @@ int output_data(int tt, double ft)
    if (flux != NULL)
       {
       cell15 = G_allocate_f_raster_buf();
-      if (tserie != NULL) {
+      if (ts == 1) {
         sprintf(buf,"%s.%.*d",flux,ndigit,tt);
         flux0 = G_store(buf);
       fd15 = G_open_fp_cell_new (flux0);
@@ -187,7 +186,7 @@ int output_data(int tt, double ft)
    if (erdep != NULL)
       {
       cell16 = G_allocate_f_raster_buf();
-      if (tserie != NULL) {
+      if (ts == 1) {
         sprintf(buf,"%s.%.*d",erdep,ndigit,tt);
         erdep0 = G_store(buf);
       fd16 = G_open_fp_cell_new (erdep0);
@@ -348,7 +347,7 @@ int output_data(int tt, double ft)
     G_add_f_raster_color_rule(&dat1,0,0,255,&dat2,0,0,0,&colors);
 
 
-    if (tserie != NULL) {
+    if (ts == 1) {
 	    if ((mapst = G_find_file("fcell", depth0, "")) == NULL)
 	    {
 	        sprintf(msg, "cannot find file %s", depth0);
@@ -391,7 +390,7 @@ int output_data(int tt, double ft)
     dat2 = (FCELL) dismax;
     G_add_f_raster_color_rule(&dat1,0,0,255,&dat2,0,0,0,&colors);
 
-    if (tserie != NULL) {
+    if (ts == 1) {
 	    if ((mapst = G_find_file("cell", disch0, "")) == NULL)
 	    {
 	        sprintf(msg, "cannot find file %s", disch0);
@@ -431,7 +430,7 @@ int output_data(int tt, double ft)
     dat2 = (FCELL) dismax;
     G_add_f_raster_color_rule(&dat1,191,127,63,&dat2,0,0,0,&colors);
 
-    if (tserie != NULL) {
+    if (ts == 1) {
             if ((mapst = G_find_file("cell", flux0, "")) == NULL)
             {
                 sprintf(msg, "cannot find file %s", flux0);
@@ -484,7 +483,7 @@ int output_data(int tt, double ft)
     dat2 = (FCELL) ermin;
     G_add_f_raster_color_rule(&dat1,255,0,0,&dat2,255,0,255,&colors);
 
-    if (tserie != NULL) {
+    if (ts == 1) {
             if ((mapst = G_find_file("cell", erdep0, "")) == NULL)
             {
                 sprintf(msg, "cannot find file %s", erdep0);
@@ -523,14 +522,14 @@ int output_data(int tt, double ft)
 
    if (depth != NULL)
       {
-	if (tserie == NULL) {
+        type = "raster";
+	if (ts == 0) {
     mapst = G_find_file ("cell", depth, "");
     if (mapst == NULL)
     {
       fprintf (stderr, "file [%s] not found\n", depth);
       return -1;
     }
-    type = "raster";
     G_short_history (depth, type, &hist);
 	} else
     G_short_history (depth0, type, &hist);
@@ -549,21 +548,21 @@ int output_data(int tt, double ft)
       sprintf (hist.datsrc_1, "input files: %s %s %s", elevin,dxin,dyin);
       sprintf (hist.datsrc_2, "input files: %s %s %s", rain,infil,manin);
     hist.edlinecnt = 4;
-    if (tserie!=NULL) G_write_history (depth0, &hist);
+    if (ts == 1) G_write_history (depth0, &hist);
 	else
     G_write_history (depth, &hist);
   }
 
-   if (disch != NULL)
+   if (disch == 1)
       {
-	if (tserie == NULL) {
+        type = "raster";
+	if (ts == 0) {
     mapst = G_find_file ("cell", disch, "");
     if (mapst == NULL)
     {
       fprintf (stderr, "file [%s] not found\n", disch);
       return -1;
     }
-    type = "raster";
     G_short_history (disch, type, &hist);
 	} else
     G_short_history (disch0, type, &hist);
@@ -582,21 +581,21 @@ int output_data(int tt, double ft)
       sprintf (hist.datsrc_1, "input files: %s %s %s", elevin,dxin,dyin);
       sprintf (hist.datsrc_2, "input files: %s %s %s", rain,infil,manin);
     hist.edlinecnt = 4;
-    if (tserie!=NULL) G_write_history (disch0, &hist);
+    if (ts == 1) G_write_history (disch0, &hist);
 	else
     G_write_history (disch, &hist);
   }
 
    if (flux != NULL)
       {
-        if (tserie == NULL) {
+        type = "raster";
+        if (ts == 0) {
     mapst = G_find_file ("cell", flux, "");
     if (mapst == NULL)
     {
       fprintf (stderr, "file [%s] not found\n", flux);
       return -1;
     }
-    type = "raster";
     G_short_history (flux, type, &hist);
 	} else
     G_short_history (flux0, type, &hist);
@@ -616,7 +615,7 @@ int output_data(int tt, double ft)
       sprintf (hist.datsrc_2, "input files: %s %s %s %s", manin,detin,tranin,tauin);
 
     hist.edlinecnt = 4;
-    if (tserie!=NULL) G_write_history (flux0, &hist);
+    if (ts == 1) G_write_history (flux0, &hist);
 	else
     G_write_history (flux, &hist);
   }
@@ -649,7 +648,7 @@ int output_et()
    if (et != NULL)
       {
       cell17 = G_allocate_f_raster_buf();
-/*      if (tserie != NULL) {
+/*      if (ts == 1) {
         sprintf(buf,"%s.%.*d",et,ndigit,tt);
         et0 = G_store(buf);
       fd17 = G_open_fp_cell_new (et0);
@@ -668,7 +667,7 @@ int output_et()
    if (tc != NULL)
       {
       cell13 = G_allocate_f_raster_buf();
-   /*   if (tserie != NULL) {
+   /*   if (ts == 1) {
         sprintf(buf,"%s.%.*d",tc,ndigit,tt);
         tc0 = G_store(buf);
       fd13 = G_open_fp_cell_new (tc0);
@@ -771,7 +770,7 @@ int output_et()
     dat2 = (FCELL) etmin;
     G_add_f_raster_color_rule(&dat1,255,0,0,&dat2,255,0,255,&colors);
 
-/*    if (tserie != NULL) {
+/*    if (ts == 1) {
             if ((mapst = G_find_file("cell", et0, "")) == NULL)
             {
                 sprintf(msg, "cannot find file %s", et0);
