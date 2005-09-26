@@ -1,0 +1,18 @@
+MODULE_TOPDIR = ../../..
+
+EXTRA_LIBS=$(GISLIB) $(BITMAPLIB) $(DBMILIB) $(GMATHLIB) $(LINKMLIB) $(XDRLIB) $(SITESLIB)
+
+SIM_LIBNAME      = grass_sim
+
+LIB_NAME = $(SIM_LIBNAME)
+
+LIB_OBJS = input.o random.o hydro.o output.o erod.o
+
+DEPENDENCIES = $(GISDEP) $(DBMIDEP) $(GMATLIBDEP) $(LINKMDEP) $(XDRDEP) $(SITESDEP)
+
+include $(MODULE_TOPDIR)/include/Make/Lib.make
+
+default: $(ARCH_INCDIR)/waterglobs.h lib
+
+$(ARCH_INCDIR)/waterglobs.h: waterglobs.h
+	cp waterglobs.h $(ARCH_INCDIR)/waterglobs.h
