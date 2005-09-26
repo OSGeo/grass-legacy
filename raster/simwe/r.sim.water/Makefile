@@ -1,0 +1,23 @@
+MODULE_TOPDIR = ../../..
+
+PGM=r.sim.water
+
+EXTRA_CLEAN_DIRS=doxygenhtml
+
+SIM_LIBNAME      = grass_sim
+
+SIMLIB = -l$(SIM_LIBNAME)
+
+LIBES     = $(SIMLIB) $(BITMAPLIB) $(LINKMLIB) \
+            $(VECTLIB) $(VECTLIB_REAL) $(DBMILIB) $(SITESLIB) $(GISLIB) $(DATETIMELIB) $(GMATHLIB)
+DEPENDENCIES = $(SIMDEP) $(BITMAPDEP) $(LINKMDEP) \
+            $(VECTDEP) $(DBMIDEP) $(GISDEP) $(DATETIMEDEP) $(GMATHDEP)
+EXTRA_INC = $(VECT_INC)
+EXTRA_CFLAGS = $(VECT_CFLAGS)
+ 
+include $(MODULE_TOPDIR)/include/Make/Module.make
+
+default: cmd	
+
+man:
+	doxygen $(MODULE_TOPDIR)/Doxyfile
