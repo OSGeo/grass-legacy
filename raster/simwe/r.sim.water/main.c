@@ -287,7 +287,7 @@ int main ( int argc, char *argv[])
     exit (1);
 
   mscale=flag.mscale->answer;
-  tserie=flag.tserie->answer;
+  ts=flag.tserie->answer;
 
   elevin = parm.elevin->answer;
   dxin = parm.dxin->answer;
@@ -385,7 +385,7 @@ int main ( int argc, char *argv[])
 
   main_loop();
 
-  if (tserie == NULL) {
+  if (ts == 0) {
   ii=output_data (0,1.);
   if (ii != 1)
     G_fatal_error ("Cannot write cell files");
