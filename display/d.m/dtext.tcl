@@ -65,7 +65,8 @@ proc DmDtext::select_file { id } {
 proc DmDtext::options { id frm } {
     variable opt
     global dmpath
-    
+    global bgcolor
+
     # text
     set row [ frame $frm.text ]
     Label $row.a -text "Text to display:"
@@ -74,7 +75,7 @@ proc DmDtext::options { id frm } {
     Button $row.c -text [G_msg "Help"] \
             -image [image create photo -file "$dmpath/grass.gif"] \
             -command "run g.manual d.text" \
-            -background lightgreen \
+            -background $bgcolor \
             -helptext [G_msg "Help"]
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes

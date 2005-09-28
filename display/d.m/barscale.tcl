@@ -58,7 +58,8 @@ proc DmBarscale::set_option { node key value } {
 proc DmBarscale::options { id frm } {
     variable opt
     global dmpath
-    
+    global bgcolor
+
     # color
     set row [ frame $frm.color ]
     Label $row.a -text [G_msg "Text color: "] 
@@ -71,7 +72,7 @@ proc DmBarscale::options { id frm } {
     Button $row.g -text [G_msg "Help"] \
             -image [image create photo -file "$dmpath/grass.gif"] \
             -command "run g.manual d.barscale" \
-            -background lightgreen \
+            -background $bgcolor \
             -helptext [G_msg "Help"]
     pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
     pack $row -side top -fill both -expand yes

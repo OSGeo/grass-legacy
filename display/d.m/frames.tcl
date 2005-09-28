@@ -53,7 +53,8 @@ proc DmDframe::set_option { node key value } {
 proc DmDframe::options { id frm } {
     variable opt
     global dmpath
-    
+    global bgcolor
+
     # create, select, or erase frames
     set row [ frame $frm.cats ]
     checkbutton $row.a -text [G_msg "create and select frame"] -variable \
@@ -65,7 +66,7 @@ proc DmDframe::options { id frm } {
     Button $row.d -text [G_msg "Help"] \
             -image [image create photo -file "$dmpath/grass.gif"] \
             -command "run g.manual d.frame" \
-            -background lightgreen \
+            -background $bgcolor \
             -helptext [G_msg "Help"]
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes

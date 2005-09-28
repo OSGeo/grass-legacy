@@ -74,7 +74,8 @@ proc DmLegend::select_map { id } {
 proc DmLegend::options { id frm } {
     variable opt
     global dmpath
-    
+    global bgcolor
+
     # raster name
     set row [ frame $frm.map ]
     Button $row.a -text [G_msg "Raster map for legend:"] \
@@ -85,7 +86,7 @@ proc DmLegend::options { id frm } {
     Button $row.c -text [G_msg "Help"] \
             -image [image create photo -file "$dmpath/grass.gif"] \
             -command "run g.manual d.legend" \
-            -background lightgreen \
+            -background $bgcolor \
             -helptext [G_msg "Help"]
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes

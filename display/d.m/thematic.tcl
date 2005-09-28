@@ -89,7 +89,8 @@ proc DmThematic::select_symbol { id } {
 proc DmThematic::options { id frm } {
     variable opt
     global dmpath
-    
+    global bgcolor
+
     # vector name
     set row [ frame $frm.map ]
     Button $row.a -text [G_msg "Vector map:"] \
@@ -100,7 +101,7 @@ proc DmThematic::options { id frm } {
     Button $row.c -text [G_msg "Help"] \
             -image [image create photo -file "$dmpath/grass.gif"] \
             -command "run g.manual d.vect.thematic" \
-            -background lightgreen \
+            -background $bgcolor \
             -helptext [G_msg "Help"]
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes

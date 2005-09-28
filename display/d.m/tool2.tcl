@@ -3,8 +3,9 @@ namespace eval DmToolBar2 {
     variable toolbar
 }
 
-proc DmToolBar2::create { tb  } {
+proc DmToolBar2::create { tb } {
     global dmpath
+    global bgcolor
     variable toolbar
 
     set toolbar $tb
@@ -12,7 +13,7 @@ proc DmToolBar2::create { tb  } {
 
 
     # Raster Layers
-    set bbox1 [ButtonBox $toolbar.bbox1 -spacing 3 -background lightgreen ]
+    set bbox1 [ButtonBox $toolbar.bbox1 -spacing 3 -background $bgcolor ]
     
     # add raster
     $bbox1 add -image [image create photo -file "$dmpath/raster.gif"] \
@@ -38,7 +39,7 @@ proc DmToolBar2::create { tb  } {
 
 
     # VECTOR LAYERS
-    set bbox2 [ButtonBox $toolbar.bbox2 -spacing 3 -background lightgreen ]
+    set bbox2 [ButtonBox $toolbar.bbox2 -spacing 3 -background $bgcolor ]
 
     # add vector
     $bbox2 add -image [image create photo -file "$dmpath/vector.gif"] \
@@ -66,7 +67,7 @@ proc DmToolBar2::create { tb  } {
     pack $sep2 -side left -fill y -padx 5 -anchor w
 
     # Text Layers
-    set bbox3 [ButtonBox $toolbar.bbox3 -spacing 3 -background lightgreen ]
+    set bbox3 [ButtonBox $toolbar.bbox3 -spacing 3 -background $bgcolor ]
 
     # add paint labels
     $bbox3 add -image [image create photo -file "$dmpath/labels.gif"] \
@@ -91,7 +92,7 @@ proc DmToolBar2::create { tb  } {
     pack $sep3 -side left -fill y -padx 5 -anchor w
 
     # OTHER LAYERS
-    set bbox4 [ButtonBox $toolbar.bbox4 -spacing 3 -background lightgreen ]
+    set bbox4 [ButtonBox $toolbar.bbox4 -spacing 3 -background $bgcolor ]
 
     # add scale and north arrow
     $bbox4 add -image [image create photo -file "$dmpath/barscale.gif"] -command "Dm::add barscale" \
@@ -120,7 +121,7 @@ proc DmToolBar2::create { tb  } {
     pack $sep4 -side left -fill y -padx 5 -anchor w
 
     # LAYER MANAGEMENT
-    set bbox5 [ButtonBox $toolbar.bbox5 -spacing 3 -background lightgreen ]
+    set bbox5 [ButtonBox $toolbar.bbox5 -spacing 3 -background $bgcolor ]
 
     # add group
     $bbox5 add -image [image create photo -file "$dmpath/group.gif"] \
@@ -143,7 +144,7 @@ proc DmToolBar2::create { tb  } {
     pack $sep5 -side left -fill y -padx 5 -anchor w
 
     # DIGITIZE
-    set bbox6 [ButtonBox $toolbar.bbox6 -spacing 20 -background lightgreen ]
+    set bbox6 [ButtonBox $toolbar.bbox6 -spacing 20 -background $bgcolor ]
     
     #digitize
     $bbox6 add -image [image create photo -file "$dmpath/dig.gif"] \

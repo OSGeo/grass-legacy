@@ -57,6 +57,7 @@ proc DmLabels::select_map { id } {
 proc DmLabels::options { id frm } {
     variable opt
     global dmpath
+    global bgcolor
 
     # labels name
     set row [ frame $frm.name ]
@@ -68,7 +69,7 @@ proc DmLabels::options { id frm } {
     Button $row.c -text [G_msg "Help"] \
             -image [image create photo -file "$dmpath/grass.gif"] \
             -command "run g.manual d.paint.labels" \
-            -background lightgreen \
+            -background $bgcolor \
             -helptext [G_msg "Help"]
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
