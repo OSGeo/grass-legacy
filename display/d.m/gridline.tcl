@@ -67,6 +67,7 @@ proc DmGridline::set_option { node key value } {
 proc DmGridline::options { id frm } {
     variable opt
     global dmpath
+    global bgcolor
 
     # grid options 1
     set row [ frame $frm.grid1 ]
@@ -75,7 +76,7 @@ proc DmGridline::options { id frm } {
     Button $row.c -text [G_msg "Help"] \
             -image [image create photo -file "$dmpath/grass.gif"] \
             -command "run g.manual d.grid" \
-            -background lightgreen \
+            -background $bgcolor \
             -helptext [G_msg "Help for grids"]
     Label $row.d -text [G_msg " grid color"] 
     SelectColor $row.e -type menubutton -variable DmGridline::opt($id,gridcolor)    
@@ -114,7 +115,7 @@ proc DmGridline::options { id frm } {
     Button $row.c -text [G_msg "Help"] \
             -image [image create photo -file "$dmpath/grass.gif"] \
             -command "run g.manual d.geodesic" \
-            -background lightgreen \
+            -background $bgcolor \
             -helptext [G_msg "Help for geodesic lines"]
     Label $row.d -text " line color"
     ComboBox $row.e -padx 2 -width 10 -textvariable DmGridline::opt($id,geodcolor) \
@@ -144,7 +145,7 @@ proc DmGridline::options { id frm } {
     Button $row.c -text [G_msg "Help"] \
             -image [image create photo -file "$dmpath/grass.gif"] \
             -command "run g.manual d.rhumbline" \
-            -background lightgreen \
+            -background $bgcolor \
             -helptext [G_msg "Help for rhumblines"]
     Label $row.d -text " line color"
     ComboBox $row.e -padx 2 -width 10 -textvariable DmGridline::opt($id,rhumbcolor) \

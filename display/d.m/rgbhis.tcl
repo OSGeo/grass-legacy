@@ -82,6 +82,7 @@ proc DmRgbhis::select_map3 { id } {
 proc DmRgbhis::options { id frm } {
     variable opt
     global dmpath
+    global bgcolor
 
     # Panel heading
     set row [ frame $frm.rquery ]
@@ -129,14 +130,14 @@ proc DmRgbhis::options { id frm } {
     Button $row.b -text [G_msg "Help"] \
             -image [image create photo -file "$dmpath/grass.gif"] \
             -command "run g.manual d.rgb" \
-            -background lightgreen \
+            -background $bgcolor \
             -helptext [G_msg "Help for RGB"]
     checkbutton $row.c -text [G_msg "display maps as HIS"] -variable \
         DmRgbhis::opt($id,his) 
     Button $row.d -text [G_msg "Help"] \
             -image [image create photo -file "$dmpath/grass.gif"] \
             -command "run g.manual d.his" \
-            -background lightgreen \
+            -background $bgcolor \
             -helptext [G_msg "Help for HIS"]
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes

@@ -5,14 +5,15 @@ namespace eval DmToolBar1 {
 }
 
 
-proc DmToolBar1::create { tb  } {
+proc DmToolBar1::create { tb } {
     global dmpath
+    global bgcolor
     variable toolbar
 
     set toolbar $tb
 
     # DISPLAY AND MONITOR SELECTION
-    set bbox1 [ButtonBox $toolbar.bbox1 -spacing 0 -background lightgreen ]
+    set bbox1 [ButtonBox $toolbar.bbox1 -spacing 0 -background $bgcolor ]
     
     # display
     $bbox1 add -image [image create photo -file "$dmpath/display.gif"] \
@@ -44,7 +45,7 @@ proc DmToolBar1::create { tb  } {
     pack $sep1 -side left -fill y -padx 5 -anchor w
     
     # 3D AND ANIMATION
-    set bbox2 [ButtonBox $toolbar.bbox2 -spacing 3 -background lightgreen ]
+    set bbox2 [ButtonBox $toolbar.bbox2 -spacing 3 -background $bgcolor ]
 
     # zoom
     $bbox2 add -image [image create photo -file "$dmpath/nviz.gif"] \
@@ -71,7 +72,7 @@ proc DmToolBar1::create { tb  } {
     pack $sep2 -side left -fill y -padx 5 -anchor w
 
     # DISPLAY TOOLS
-    set bbox3 [ButtonBox $toolbar.bbox3 -spacing 3 -background lightgreen ]
+    set bbox3 [ButtonBox $toolbar.bbox3 -spacing 3 -background $bgcolor ]
 
     # zoom
     $bbox3 add -image [image create photo -file "$dmpath/zoom.gif"] \
@@ -113,7 +114,7 @@ proc DmToolBar1::create { tb  } {
     pack $sep3 -side left -fill y -padx 5 -anchor w
 
     # FILE & PRINT
-    set bbox4 [ButtonBox $toolbar.bbox4 -spacing 5 -padx 1 -pady 1 -background lightgreen ]
+    set bbox4 [ButtonBox $toolbar.bbox4 -spacing 5 -padx 1 -pady 1 -background $bgcolor ]
 
      $bbox4 add -image [Bitmap::get new] -command "Dm::new" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \

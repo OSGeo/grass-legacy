@@ -37,6 +37,8 @@ set tmenu "1"
 set keyctrl "Ctrl"
 set execom "execute"
 
+set bgcolor HoneyDew2
+
 # add for OSX aqua
 if {[info exists env(osxaqua)]} {
     set osxaqua $env(osxaqua)
@@ -206,6 +208,7 @@ proc Dm::displmon { mon } {
 proc Dm::create { } {
     global dmpath
     global mainwindow
+    global bgcolor
     variable mainframe
     variable options
     variable tree
@@ -224,7 +227,7 @@ proc Dm::create { } {
 
     set prgtext   "Creating MainFrame..."
     set mainframe [MainFrame .mainframe \
-                       -menu $descmenu -background lightgreen \
+                       -menu $descmenu -background $bgcolor \
                        -textvariable Dm::status \
                        -progressvar  Dm::prgindic ]
 
@@ -235,15 +238,15 @@ proc Dm::create { } {
     DmToolBar1::create $tb1
     set tb2  [$mainframe addtoolbar]
     DmToolBar2::create $tb2
-    set pw2 [PanedWindow $mainwindow.pw2 -side top -pad 0 -width 6 -background lightgreen]
+    set pw2 [PanedWindow $mainwindow.pw2 -side top -pad 0 -width 6 -background $bgcolor]
     pack $pw2 -side top -expand yes -fill both -anchor n 
-    set pw [PanedWindow $mainwindow.pw -side left -background lightgreen ]   
+    set pw [PanedWindow $mainwindow.pw -side left -background $bgcolor ]   
     pack $pw -side bottom -expand yes -fill both -anchor n 
 
     # MANAGE DISPLAY MONITORS
     set monitor_pane  [$pw2 add -minsize 1 -weight 0 ]
 
-    set bbox1 [ButtonBox $monitor_pane.bbox1 -spacing 0 -background lightgreen -orient vertical ]
+    set bbox1 [ButtonBox $monitor_pane.bbox1 -spacing 0 -background $bgcolor -orient vertical ]
     
     # monitor x0
     $bbox1 add  -text [G_msg "x0"] -command "Dm::displmon x0" \

@@ -78,6 +78,7 @@ proc DmRaster::select_map2 { id } {
 proc DmRaster::options { id frm } {
     variable opt
     global dmpath
+    global bgcolor
 
     # raster name
     set row [ frame $frm.name ]
@@ -89,7 +90,7 @@ proc DmRaster::options { id frm } {
     Button $row.c -text [G_msg "Help"] \
             -image [image create photo -file "$dmpath/grass.gif"] \
             -command "run g.manual d.rast" \
-            -background lightgreen \
+            -background $bgcolor \
             -helptext [G_msg "Help"]
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
