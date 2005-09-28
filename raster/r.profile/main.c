@@ -184,11 +184,13 @@ int main(int argc, char *argv[])
     fprintf(stderr, "Output Format:\n");
     if (coords == 1) {
 	fprintf(stderr,
-		"[Easting] [Northing] [Along Track Dist.(m)] [Elevation]\n\n");
+		"[Easting] [Northing] [Along Track Dist.(m)] [Elevation]");
     }
     else {
-	fprintf(stderr, "[Along Track Dist.(m)] [Elevation]\n\n");
+	fprintf(stderr, "[Along Track Dist.(m)] [Elevation]");
     }
+    if(clr) fprintf(stderr, " [RGB Color]");
+    fprintf(stderr, "\n\n");
 
     /* Get Profile Start Coords */
     if (!parm.profile->answer && !parm.i->answer ) {
