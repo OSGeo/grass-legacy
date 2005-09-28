@@ -259,6 +259,8 @@ int ScriptAddString_Cmd(ClientData, Tcl_Interp *, int, char **);
 int CloseScripting_Cmd(ClientData, Tcl_Interp *, int, char **);
 int SetState_Cmd(ClientData, Tcl_Interp *, int, char **);
 int SetScriptFile_Cmd(ClientData, Tcl_Interp *, int, char **);
+/* query_vect.c */
+char *query_vect( char *, double, double);
 /* tkAppInit.c */
 int Tcl_AppInit(Tcl_Interp *);
 /* tkBind.c */
