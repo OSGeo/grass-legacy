@@ -29,11 +29,11 @@ input (char *blank1, char *word1, char *blank2, char *word2, char *rest)
 	*blank1++ = *b++;
     *blank1 = 0;
 
-    while (*b != '\n' && *b != ' ' && *b != '\t')
+    while (*b != '\n' && *b != ' ' && *b != '\t' && *b != ',')
 	*word1++ = *b++;
     *word1 = 0;
 
-    while(*b == ' ' || *b == '\t')
+    while(*b == ' ' || *b == '\t' || *b == ',')
 	*blank2++ = *b++;
     *blank2 = 0;
 
