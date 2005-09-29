@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-17 00:06+0200\n"
-"PO-Revision-Date: 2005-09-17 14:54+0200\n"
+"POT-Creation-Date: 2005-09-29 18:10+0200\n"
+"PO-Revision-Date: 2005-09-29 18:22+0200\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -125,7 +125,8 @@ msgid ""
 "g.:\n"
 "\t\tSELECT dedek FROM starobince WHERE obec = 'Frimburg'"
 msgstr ""
-"Komplettes SELECT-Statement (nur wenn 'from_table' und 'where' nicht benutzt werden, z.B.:\n"
+"Komplettes SELECT-Statement (nur wenn 'from_table' und 'where' nicht benutzt "
+"werden, z.B.:\n"
 "\t\tSELECT offices FROM locations WHERE owner = 'GDF Hannover' "
 
 #: ../db/base/copy.c:95
@@ -442,9 +443,9 @@ msgstr "Nicht zu der Kommandoliste im Monitor hinzufügen."
 #: ../display/d.erase/main.c:56 ../display/d.font.freetype/main.c:102
 #: ../display/d.grid/main.c:202 ../display/d.legend/main.c:246
 #: ../display/d.nviz/main.c:248 ../display/d.paint.labels/main.c:69
-#: ../display/d.text.freetype/main.c:314 ../display/d.vect/main.c:269
-#: ../display/d.where/main.c:120 ../imagery/i.points/main.c:55
-#: ../vector/v.label/main.c:207
+#: ../display/d.text/main.c:151 ../display/d.text.freetype/main.c:314
+#: ../display/d.vect/main.c:269 ../display/d.where/main.c:120
+#: ../imagery/i.points/main.c:55 ../vector/v.label/main.c:207
 msgid "No graphics device selected"
 msgstr "Keine Graphik-Ausgabe ausgewählt."
 
@@ -529,13 +530,17 @@ msgstr "Größe des geographischen Gitters."
 msgid ""
 "Sets the current grid color, either a standard GRASS color or R:G:B triplet "
 "(separated by colons)"
-msgstr "Aktuelle Gitter-Farbe (entweder eine GRASS-Standardfarbe oder ein R:G:B Tripel)."
+msgstr ""
+"Aktuelle Gitter-Farbe (entweder eine GRASS-Standardfarbe oder ein R:G:B "
+"Tripel)."
 
 #: ../display/d.grid/main.c:87
 msgid ""
 "Sets the geographic grid color, either a standard GRASS color or R:G:B "
 "triplet (separated by colons)"
-msgstr "Farbe des geographischen Gitters (entweder eine GRASS-Standardfarbe oder ein R:G:B Tripel)."
+msgstr ""
+"Farbe des geographischen Gitters (entweder eine GRASS-Standardfarbe oder ein "
+"R:G:B Tripel)."
 
 #: ../display/d.grid/main.c:95
 msgid "Lines of the grid pass through this coordinate"
@@ -562,7 +567,8 @@ msgid "Either 'size' or 'gsize' must be selected"
 msgstr "Entweder 'size' oder 'gsize' muss ausgewählt werden."
 
 #: ../display/d.grid/main.c:136 ../display/d.grid/main.c:151
-#: ../display/d.grid/main.c:166 ../display/d.text.freetype/main.c:892
+#: ../display/d.grid/main.c:166 ../display/d.text/main.c:145
+#: ../display/d.text.freetype/main.c:892
 #, c-format
 msgid "[%s]: No such color"
 msgstr "[%s]: Diese Farbe gibt es nicht."
@@ -589,7 +595,9 @@ msgstr "Ungültige Nord-Koordinate <%s>."
 
 #: ../display/d.grid/main.c:239
 msgid "Border not yet implemented for LatLong locations: border not drawn."
-msgstr "Kartenrand ist für eine LL-Location noch nicht implementiert; er wird somit nicht gezeichnet."
+msgstr ""
+"Kartenrand ist für eine LL-Location noch nicht implementiert; er wird somit "
+"nicht gezeichnet."
 
 #: ../display/d.grid/plot.c:102 ../display/d.grid/plot.c:107
 #: ../display/d.grid/plot.c:126 ../display/d.grid/plot.c:131
@@ -680,8 +688,9 @@ msgid "Skip categories with no label"
 msgstr "Überspringe Kategorien ohne Label."
 
 #: ../display/d.legend/main.c:148
+#, fuzzy
 msgid "Draw smooth gradient"
-msgstr ""
+msgstr "Ziehen"
 
 #: ../display/d.legend/main.c:152
 msgid "Use mouse to size & place legend"
@@ -712,12 +721,12 @@ msgid "Category file for [%s] not available"
 msgstr "Kategorie-Dateien für [%s] sind nicht vorhanden. "
 
 #: ../display/d.legend/main.c:249 ../display/d.paint.labels/main.c:103
-#: ../display/d.text.freetype/main.c:320
+#: ../display/d.text/main.c:154 ../display/d.text.freetype/main.c:320
 msgid "No current window"
 msgstr "Kein aktuelles Fenster."
 
 #: ../display/d.legend/main.c:252 ../display/d.paint.labels/main.c:106
-#: ../display/d.text.freetype/main.c:322
+#: ../display/d.text/main.c:157 ../display/d.text.freetype/main.c:322
 msgid "Current window not available"
 msgstr "Aktuelles Fenster ist nicht vorhanden."
 
@@ -757,7 +766,9 @@ msgstr "Nichts zu zeichnen! (Keine Kategorien mit Labeln? Außerhalb der Spanne?"
 #: ../display/d.legend/main.c:438
 #, c-format
 msgid "Forcing a smooth legend: too many categories for current window height.\n"
-msgstr "Benutze eine geglättete Legende: Zu viele Kategorien für die aktuelle Fenstergröße\n"
+msgstr ""
+"Benutze eine geglättete Legende: Zu viele Kategorien für die aktuelle "
+"Fenstergröße\n"
 
 #: ../display/d.legend/main.c:459
 #, c-format
@@ -971,6 +982,55 @@ msgstr "Kosten auf Basis des Netzwerkes = %f\n"
 msgid "  Distance to the network = %f, distance from the network = %f\n"
 msgstr "Abstand zum Netzwerk = %f, Abstand vom Netzwerk = %f\n"
 
+#: ../display/d.text/main.c:71
+#, fuzzy
+msgid ""
+"Draws text in the active display frame on the graphics monitor using the "
+"current font."
+msgstr "Zeichnungen ein mit Schrift."
+
+#: ../display/d.text/main.c:79
+#, fuzzy
+msgid "Height of letters in percentage of available frame height"
+msgstr "von von"
+
+#: ../display/d.text/main.c:87 ../display/d.text.freetype/main.c:198
+msgid "Text color, either a standard GRASS color or R:G:B triplet"
+msgstr "Textfarbe, entweder eine GRASS Standardfarbe oder ein R:G:B Tripel."
+
+#: ../display/d.text/main.c:95
+#, fuzzy
+msgid "The screen line number on which text will begin to be drawn"
+msgstr "screen Linie ein"
+
+#: ../display/d.text/main.c:104
+#, fuzzy
+msgid ""
+"Screen postion at which text will begin to be drawn (percentage, [0,0] is "
+"lower left)"
+msgstr "Bildschirm an ist Links"
+
+#: ../display/d.text/main.c:111 ../display/d.text.freetype/main.c:221
+msgid "Rotation angle in degrees (counter-clockwise)"
+msgstr "Rotationswinkel in Grad (gegen den Uhrzeigersinn)."
+
+#: ../display/d.text/main.c:115 ../display/d.text.freetype/main.c:232
+msgid "Use bold text"
+msgstr "Benutzer Fettschrift"
+
+#: ../display/d.text/main.c:123
+msgid "Please choose only one placement method"
+msgstr "Bitte nur eine Methode zum Platzieren angeben."
+
+#: ../display/d.text/main.c:178
+#, c-format
+msgid "value [%.0f,%.0f] out of range [0-100]"
+msgstr "Wert [%.0f,%.0f] außerhalb der Spanne [0-100]"
+
+#: ../display/d.text/main.c:194
+msgid "Unable to open the temporary file."
+msgstr "Kann die temporäre Datei nicht öffnen."
+
 #: ../display/d.text.freetype/main.c:148
 msgid ""
 "Draws text in the graphics monitor's active display frame using TrueType "
@@ -989,10 +1049,6 @@ msgstr "Karten-Koordinaten"
 msgid "Font name"
 msgstr "Schriftname"
 
-#: ../display/d.text.freetype/main.c:198
-msgid "Text color, either a standard GRASS color or R:G:B triplet"
-msgstr "Textfarbe, entweder eine GRASS Standardfarbe oder ein R:G:B Tripel."
-
 #: ../display/d.text.freetype/main.c:206
 msgid "Height of letters (in percent of available frame height)"
 msgstr "Höhe der Buchstaben (in Prozent von der möglichen Rahmenhöhe)."
@@ -1001,17 +1057,9 @@ msgstr "Höhe der Buchstaben (in Prozent von der möglichen Rahmenhöhe)."
 msgid "Text alignment"
 msgstr "Text-Ausrichtung"
 
-#: ../display/d.text.freetype/main.c:221
-msgid "Rotation angle in degrees (counter-clockwise)"
-msgstr "Rotationswinkel in Grad (gegen den Uhrzeigersinn)."
-
 #: ../display/d.text.freetype/main.c:228
 msgid "Line spacing"
 msgstr "Linienabstand"
-
-#: ../display/d.text.freetype/main.c:232
-msgid "Use bold text"
-msgstr "Benutzer Fettschrift"
 
 #: ../display/d.text.freetype/main.c:236
 #, fuzzy
@@ -1200,8 +1248,9 @@ msgid "Use values from 'cats' option as line ID"
 msgstr "Benutze Werte der 'cats' Option als Linien-ID."
 
 #: ../display/d.vect/main.c:258
+#, fuzzy
 msgid "Don't add to list of vectors and commands in monitor"
-msgstr ""
+msgstr "hinzufügen list von"
 
 #: ../display/d.vect/main.c:279
 #, c-format
@@ -1452,7 +1501,9 @@ msgstr "Ausgabe auf den aktuellen Ellipsoid referenziert."
 msgid ""
 "Output lat/long referenced to WGS84 ellipsoid using datum\n"
 "transformation parameters defined in current location if available"
-msgstr "Ausgabe auf WGS84 Ellipsoid mit den in der Location gegebenen Datums-Transformationsparametern (sofern vorhanden)."
+msgstr ""
+"Ausgabe auf WGS84 Ellipsoid mit den in der Location gegebenen Datums-"
+"Transformationsparametern (sofern vorhanden)."
 
 #: ../display/d.where/main.c:48
 msgid "Ambiguous request for lat/long ellipsoids"
@@ -1474,7 +1525,10 @@ msgstr "Kann die Projektionseinheit der aktuellen Location nicht ermitteln."
 msgid ""
 "WGS84 output not possible as this location does not contain\n"
 "datum transformation parameters. Try running g.setproj."
-msgstr "Ausgabe in WGS84A ist unmöglich, da diese Location keine Datums-Transformationsparameter enthält. Versuchen Sie vorher 'g.setproj' zu benutzen."
+msgstr ""
+"Ausgabe in WGS84A ist unmöglich, da diese Location keine Datums-"
+"Transformationsparameter enthält. Versuchen Sie vorher 'g.setproj' zu "
+"benutzen."
 
 #: ../display/d.zoom/main.c:161
 #, c-format
@@ -2180,7 +2234,10 @@ msgid ""
 "An imagery function that generates spectral signatures for land cover types "
 "in an image using a clustering algorithm. The resulting signature file is "
 "used as input for i.maxlik, to generate an unsupervised image classification."
-msgstr "Ein Clusteralgorithmus, der spektrale Signaturen für Landbedeckungsklassen aus einem Bild ermittelt. Die resultierende Signaturdatei kann als Eingabe für i.maxlik für eine unüberwachte Klassifikation verwendet werden."
+msgstr ""
+"Ein Clusteralgorithmus, der spektrale Signaturen für Landbedeckungsklassen "
+"aus einem Bild ermittelt. Die resultierende Signaturdatei kann als Eingabe "
+"für i.maxlik für eine unüberwachte Klassifikation verwendet werden."
 
 #: ../imagery/i.cluster/main.c:49
 msgid "Group of imagery files to be clustered"
@@ -2743,9 +2800,9 @@ msgid "Signature [%d] can't get eigen values."
 msgstr "Signatur [%d] kann die Eigen-Werte nicht holen."
 
 #: ../imagery/i.gensig/check.c:39
-#, fuzzy, c-format
+#, c-format
 msgid "Signature [%d] not positive definite."
-msgstr "Signatur nicht."
+msgstr "Signatur [%d] nicht."
 
 #: ../imagery/i.gensig/covariance.c:27
 msgid "Calculating class covariance matrix..."
@@ -3237,8 +3294,8 @@ msgid ""
 "Performs contextual image classification using sequential maximum a "
 "posteriori (SMAP) estimation."
 msgstr ""
-"Führt eine nachbarschaftsbasierte Bildklassifikation unter Anwendung des 'sequential maximum a "
-"posteriori (SMAP)' Ansatzes durch."
+"Führt eine nachbarschaftsbasierte Bildklassifikation unter Anwendung des "
+"'sequential maximum a posteriori (SMAP)' Ansatzes durch."
 
 #: ../imagery/i.smap/shapiro/opencell.c:31
 #, c-format
@@ -3650,9 +3707,8 @@ msgid "%s: %s in %s - can't read category file"
 msgstr "%s: %s in %s - kann Kategoriedatei nicht lesen."
 
 #: ../raster/r.cats/main.c:104
-#, fuzzy
 msgid "The map is floating point! Ignoring cats list, using vals list"
-msgstr "Die Karte ist eine Fließkommazahl-Karte list mit list"
+msgstr "Die Karte ist eine Fließkommazahl-Karte. Ignoriere Kategorieliste, nehme stattdessen Vals-Liste."
 
 #: ../raster/r.cats/main.c:123
 #, fuzzy
@@ -4935,10 +4991,15 @@ msgstr "Gebe Nord- und Ost-Koordinaten zuerst in 2 von 4 Spalten aus."
 msgid "Output RRR:GGG:BBB color values for each profile point"
 msgstr "Ausgabe für RRR:GGG:BBB Farbwerte für jeden Profilpunkt."
 
-#: ../raster/r.profile/main.c:200
+#: ../raster/r.profile/main.c:203
 #, c-format
 msgid "Invalid coordinates %s %s"
 msgstr "Ungültige Koordinaten %s %s."
+
+#: ../raster/r.profile/input.c:31 ../raster/r.profile/input.c:48
+#: ../raster/r.profile/input.c:61
+msgid "One coordinate pair per line, please."
+msgstr "Bitte nur ein Koordinatenpaar pro Linie."
 
 #: ../raster/r.proj/main.c:143
 msgid "Re-project a raster map from one location to the current location."
@@ -6391,7 +6452,10 @@ msgstr "Größter Zufallswert."
 msgid ""
 "Negative or no data pixel found. This module is not yet able to process no "
 "data holes in a map, please fill with r.fillnulls or other algorithms."
-msgstr "Negative oder NODATA-Pixel gefunden. Dieses Modul kann NODATA-Löcher noch nicht verarbeiten. Bitte füllen Sie die Löcher z.B. mit dem Modul t.fillnulls oder anderen Füllalgorithmen."
+msgstr ""
+"Negative oder NODATA-Pixel gefunden. Dieses Modul kann NODATA-Löcher noch "
+"nicht verarbeiten. Bitte füllen Sie die Löcher z.B. mit dem Modul t."
+"fillnulls oder anderen Füllalgorithmen."
 
 #: ../raster/r.texture/h_measure.c:87
 #, c-format
@@ -6399,8 +6463,8 @@ msgid ""
 "Too many categories (found: %i, max: %i). Try to rescale or reclassify the "
 "map"
 msgstr ""
-"Zu viele Kategorien (gefunden %i, Max: %i). "
-"Versuchen Sie die Karte zu reklassifizieren oder zu reskalieren."
+"Zu viele Kategorien (gefunden %i, Max: %i). Versuchen Sie die Karte zu "
+"reklassifizieren oder zu reskalieren."
 
 #: ../raster/r.texture/main.c:72
 msgid "Generate images with textural features from a raster map"
@@ -6980,14 +7044,12 @@ msgid "Writing VTK ImageData\n"
 msgstr "Schreibe VTK-Bilddaten...\n"
 
 #: ../raster/r.out.vtk/main.c:225
-#, fuzzy
 msgid "Wrong RGB maps. Maps should be the same type! RGB output not added!"
-msgstr "Falsche RGB Karten. Ausgabe nicht!"
+msgstr "Falsche RGB Karten. Karten sollten vom gleichen Typ sein. RGB-Ausgabe wurde nicht hinzugefügt."
 
 #: ../raster/r.out.vtk/main.c:235
-#, fuzzy
 msgid "Wrong RGB maps. RGB output not added!"
-msgstr "Ausgabe nicht!"
+msgstr "Falsche RGB-Karten. RGB-Ausgabe wurde nicht hinzugefügt!"
 
 #: ../raster/r.out.vtk/main.c:242 ../raster3d/r3.out.vtk/main.c:309
 msgid "Error closing VTK-ASCII file"
@@ -6999,13 +7061,17 @@ msgstr "Rasterkarte(n), die in das VTK-ASCII-Format konvertiert werden sollen."
 
 #: ../raster/r.out.vtk/parameters.c:44
 msgid "Raster map that represents the elevation, used for the 3D information"
-msgstr "Rasterkartem die die Höheninformationen beinhaltet. Wird für die 3D-Informationen benötigt."
+msgstr ""
+"Rasterkartem die die Höheninformationen beinhaltet. Wird für die 3D-"
+"Informationen benötigt."
 
 #: ../raster/r.out.vtk/parameters.c:52
 msgid ""
 "3 raster maps (r,g,b) which are used to create rgb values [redmap,greenmap,"
 "bluemap]"
-msgstr "3 Rasterkarten (r,g,b) die zum Erstellen von RGB-Werten genutzt werden [redmap,greenmap,bluemap]."
+msgstr ""
+"3 Rasterkarten (r,g,b) die zum Erstellen von RGB-Werten genutzt werden "
+"[redmap,greenmap,bluemap]."
 
 #: ../raster/r.out.vtk/parameters.c:60 ../raster3d/r3.out.vtk/main.c:83
 msgid "Name for VTK-ASCII output file"
@@ -7089,9 +7155,8 @@ msgid "Name for G3d raster map"
 msgstr "Name der G3d Rasterkarte"
 
 #: ../raster3d/r3.in.ascii/main.c:100
-#, fuzzy
 msgid "String representing NULL value data cell (use 'none' if no such value)"
-msgstr "nichts Nein"
+msgstr "Der Wert, der NULL-Werte repräsentiert. Bitte 'none' eingeben, wenn keine NULL-Werte vorhanden sind."
 
 #: ../raster3d/r3.in.ascii/main.c:259
 msgid "Convert a 3D ASCII raster text file into a (binary) 3D raster map layer "
@@ -7109,9 +7174,8 @@ msgid "Name of an existing 3dcell map"
 msgstr "Name einer existierenden 3dcell Rasterkarte."
 
 #: ../raster3d/r3.mkdspf/main.c:73
-#, fuzzy
 msgid "Name of output display file"
-msgstr "von Ausgabe"
+msgstr "Name des Ausgabedisplays."
 
 #: ../raster3d/r3.mkdspf/main.c:80
 msgid "List of thresholds for isosurfaces"
@@ -7157,64 +7221,58 @@ msgstr "Fehler beim Öffnen der Grid3 Datei [%s]."
 
 #: ../raster3d/r3.mkdspf/main.c:146 ../raster3d/base/r3.info.main.c:224
 #: ../raster3d/base/r3.info.main.c:296
-#, fuzzy, c-format
+#, c-format
 msgid "Error reading range for [%s]"
-msgstr "s"
+msgstr "Fehler beim Lesen der Spanne für [%s]."
 
 #: ../raster3d/r3.mkdspf/main.c:175
-#, fuzzy, c-format
+#, c-format
 msgid "Error opening display file [%s]"
-msgstr "s"
+msgstr "Fehler beim Öffnen der Displaydatei [%s]."
 
 #: ../raster3d/r3.mkdspf/main.c:196
-#, fuzzy, c-format
+#, c-format
 msgid "Writing %s from %s..."
-msgstr "s s."
+msgstr "Schreibe %s aus %s..."
 
 #: ../raster3d/r3.out.ascii/main.c:78
 msgid "3dcell map to be converted to ASCII"
 msgstr "Konvertiert 3dcell Karten in das ASCII-Format."
 
 #: ../raster3d/r3.out.ascii/main.c:85
-#, fuzzy
 msgid "Name for ASCII output file"
-msgstr "für Ausgabe"
+msgstr "Name für eine ASCII Ausgabedatei."
 
 #: ../raster3d/r3.out.ascii/main.c:94
-#, fuzzy
 msgid "Number of decimal places for floats"
-msgstr "von für"
+msgstr "Anzahl der Dezimalstellen für Fließkommazahlen."
 
 #: ../raster3d/r3.out.ascii/main.c:109 ../raster3d/r3.to.rast/main.c:86
 msgid "Use G3D mask (if exists) with input map"
 msgstr "Benutzt G3D Maske (falls existent) mit der Eingabekarte."
 
 #: ../raster3d/r3.out.ascii/main.c:259
-#, fuzzy
 msgid "Converts a 3D raster map layer into an ASCII text file"
-msgstr "a"
+msgstr "Konvertiert eine 3D Rasterkarte in eine ASCII-Datei."
 
 #: ../raster3d/r3.out.ascii/main.c:272 ../raster3d/r3.out.v5d/main.c:304
 #: ../raster3d/r3.out.vtk/main.c:257 ../raster3d/base/r3.mask.main.c:87
 #: ../raster3d/r3.to.rast/main.c:203
-#, fuzzy
 msgid "Requested g3d file not found"
-msgstr "nicht"
+msgstr "Angeforderte g3d-Datei nicht gefunden."
 
 #: ../raster3d/r3.out.ascii/main.c:281 ../raster3d/r3.out.vtk/main.c:264
 #: ../raster3d/r3.to.rast/main.c:212
-#, fuzzy
 msgid "Error opening g3d file"
-msgstr "s"
+msgstr "Fehler beim Öffnen der g3d-Datei."
 
 #: ../raster3d/r3.out.v5d/main.c:68
 msgid "3dcell map to be converted to Vis5d (v5d) file"
 msgstr "Konvertiert 3dcell Karte in eine Vis5d (v5d) Datei."
 
 #: ../raster3d/r3.out.v5d/main.c:75
-#, fuzzy
 msgid "Name for v5d output file"
-msgstr "für Ausgabe"
+msgstr "Name der v5d Ausgabedatei."
 
 #: ../raster3d/r3.out.v5d/main.c:145
 #, c-format
@@ -7227,35 +7285,30 @@ msgid "Viz5D allows %d rows, you have %d rows"
 msgstr "Vis5D erlaubt %d Reihen, sie haben %d Reihen."
 
 #: ../raster3d/r3.out.v5d/main.c:197 ../vector/v.in.ascii/a2b.c:139
-#, fuzzy
 msgid "Out of memory"
-msgstr "von"
+msgstr "Speicher ist zu Ende (Out-of-memory)."
 
 #: ../raster3d/r3.out.v5d/main.c:257
-#, fuzzy, c-format
+#, c-format
 msgid "Error: couldn't create %s"
-msgstr "s"
+msgstr "Fehler: Kann %s nicht erstellen."
 
 #: ../raster3d/r3.out.v5d/main.c:262
-#, fuzzy
 msgid "Error while writing grid. Disk full?"
-msgstr "Ein Fehler trat während des Lesens der Signaturdatei auf."
+msgstr "Ein Fehler trat während des Lesens der Karte auf. Festplatte voll?"
 
 #: ../raster3d/r3.out.v5d/main.c:285
-#, fuzzy
 msgid "Export of GRASS 3D raster file to 3-dimensional Vis5D file."
-msgstr "von."
+msgstr "Exportiert eine GRASS 3D Rasterdatei in eine dreidimensionnale Vis5D-Datei."
 
 #: ../raster3d/r3.out.v5d/main.c:292
-#, fuzzy
 msgid "Use map coordinates instead of xyz coordinates"
-msgstr "von"
+msgstr "Benutze Kartenkoordinaten anstatt xyz-Koordniaten."
 
 #: ../raster3d/r3.out.vtk/main.c:55 ../raster3d/r3.out.vtk/main.c:301
 #: ../raster3d/r3.to.rast/main.c:302
-#, fuzzy
 msgid "Error closing g3d file"
-msgstr "s"
+msgstr "Fehler beim Schließen der g3d-Datei."
 
 #: ../raster3d/r3.out.vtk/main.c:76
 #, fuzzy
@@ -7263,9 +7316,8 @@ msgid "3dcell map(s) to be converted to VTK-ASCII data format"
 msgstr "s"
 
 #: ../raster3d/r3.out.vtk/main.c:89
-#, fuzzy
 msgid "Float value to represent no data cell"
-msgstr "Float Nein"
+msgstr "Fließkommawert, der NODATA-Zellen repräsentiert."
 
 #: ../raster3d/r3.out.vtk/main.c:101
 msgid "Use G3D mask (if exists) with input maps"
@@ -7277,27 +7329,24 @@ msgid "Create VTK pointdata instead of VTK celldata (celldata is default)"
 msgstr "von ist"
 
 #: ../raster3d/r3.out.vtk/main.c:121
-#, fuzzy
 msgid "writeVTKHeader: Writing VTK-Header"
-msgstr "Schreiben läuft"
+msgstr "writeVTKHeader: Schreibe VTK-Header"
 
 #: ../raster3d/r3.out.vtk/main.c:167
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "G3dTovtk: Writing Celldatafield %s with rows %i cols %i depths %i to vtk-"
 "ascii file"
 msgstr "s"
 
 #: ../raster3d/r3.out.vtk/main.c:226
-#, fuzzy
 msgid "Converts 3D raster maps (G3D) into the VTK-Ascii format"
-msgstr "Kovertiert eine Rasterkarte in eine Vektorkarte."
+msgstr "Kovertiert eine 3D Rasterkarte (G3D) in das VTK-ASCII-Format."
 
 #: ../raster3d/r3.out.vtk/main.c:254 ../raster3d/r3.to.rast/main.c:200
-#, fuzzy, c-format
+#, c-format
 msgid "Open 3DRaster file %s"
-msgstr "s"
+msgstr "Öffne 3D Rasterdatei %s."
 
 #: ../raster3d/base/r3.info.main.c:71
 #, fuzzy
@@ -7465,8 +7514,7 @@ msgid "Basename for resultant raster slice maps"
 msgstr "für"
 
 #: ../raster3d/r3.to.rast/main.c:110
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "G3dToRaster: Writing %i raster maps with rows %i cols."
 msgstr "Schreiben läuft i i."
 
@@ -8305,15 +8353,15 @@ msgstr "Kann neu Reihe '%s' nicht einfügen."
 msgid "%d %s without geometry"
 msgstr "%d %s ohne Geometrie."
 
-#: ../vector/v.in.ogr/main.c:730
+#: ../vector/v.in.ogr/main.c:732
 msgid "Cleaning polygons, result is not guaranteed!\n"
 msgstr "Säubere Polygone; für das Resultat wird nicht garantiert!\n"
 
-#: ../vector/v.in.ogr/main.c:810 ../vector/v.voronoi/dt_main.c:119
+#: ../vector/v.in.ogr/main.c:813 ../vector/v.voronoi/dt_main.c:119
 msgid "Cannot calculate area centroid"
 msgstr "Kann den Flächenzentroiden nicht berechnen."
 
-#: ../vector/v.in.ogr/main.c:883
+#: ../vector/v.in.ogr/main.c:886
 #, c-format
 msgid ""
 "%d areas represent more (overlapping) features, because polygons overlap in "
@@ -8325,12 +8373,12 @@ msgstr ""
 "der Attributtabelle verlinkt. Die Anzahl der Objekte für diese Flächen ist "
 "als Kategoriewert im Layer %d abgelegt."
 
-#: ../vector/v.in.ogr/main.c:889
+#: ../vector/v.in.ogr/main.c:892
 #, c-format
 msgid "%d input polygons\n"
 msgstr "%d Eingabepolygone\n"
 
-#: ../vector/v.in.ogr/main.c:913
+#: ../vector/v.in.ogr/main.c:916
 msgid ""
 "Input data contains 3D features. Created vector is 2D only, use -z flag to "
 "import 3D vector."
