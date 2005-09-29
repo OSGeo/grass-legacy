@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../../..
 
-PGM=r.sim.sediment2
+PGM=r.sim.sediment
 
 EXTRA_CLEAN_DIRS=doxygenhtml
 
