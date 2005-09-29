@@ -197,6 +197,7 @@ int main(int argc, char *argv[])
     /* Assume input from stdin */
         for (n=1; input(b1, ebuf, b2, nbuf, label) ; n++)
     	{
+	    G_debug(4,"stdin line %d: ebuf=[%s]  nbuf=[%s]", n, ebuf, nbuf);
 	    if (!G_scan_easting (ebuf, &e2, G_projection()) ||
 			    !G_scan_northing (nbuf, &n2, G_projection()))
 		    G_fatal_error(_("Invalid coordinates %s %s"), ebuf, nbuf);
@@ -207,7 +208,7 @@ int main(int argc, char *argv[])
 	    n1 = n2;
 	    first = 1;
        }
-    } 
+    }
     else if (parm.i->answer) {
 	/* Select points interactively */
 
