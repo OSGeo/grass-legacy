@@ -93,6 +93,7 @@ SUBDIRS = \
 	r.water.outlet \
 	r.watershed \
 	r.what \
+        simwe \
 	wildfire
 
 GDALBASED = r.in.gdal
