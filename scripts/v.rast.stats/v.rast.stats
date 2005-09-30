@@ -64,12 +64,6 @@ export LC_NUMERIC=C
 
 TMPNAME=v_rast_stats.$$
 
-TMP="`g.tempfile pid=$$`"
-if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
-    echo "ERROR: unable to create temporary files" 1>&2
-    exit 1
-fi
-
 cleanup()
 {
  #restore settings:
