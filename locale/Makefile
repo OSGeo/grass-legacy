@@ -50,6 +50,7 @@ update-po:
 		    echo "Merging failed"; \
 		fi \
 		done
+	@echo "Be careful with CVS commits as .po file updates must be syncronized with the individual translators."
 
 #create binary messages files
 mo:
