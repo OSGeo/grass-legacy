@@ -427,7 +427,7 @@ int main(int argc,char *argv[])
 	{
 	    double e, n;
 	    char east[50], north[50];
-	    char text[200];
+	    char text[1024];
 
 	    if (sscanf(data, "%s %s %[^\n]", east, north, text) == 3
 	        && (scan_easting(east, &e) && scan_northing(north, &n)))
