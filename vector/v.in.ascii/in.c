@@ -200,7 +200,7 @@ main (int argc, char *argv[])
 	    unlink(tmp);
 
 	    points_analyse ( ascii, tmpascii, fs, &rowlen,
-		&ncols, &minncols, &coltype, &collen, skip_lines );
+		&ncols, &minncols, &coltype, &collen, skip_lines, xcol, ycol );
 
 	    fprintf ( stderr, "Maximum input row length: %d\n", rowlen);
 	    fprintf ( stderr, "Maximum number of columns: %d\n", ncols);
@@ -355,7 +355,7 @@ main (int argc, char *argv[])
 				if ( ctype == DB_C_TYPE_INT ) {
 				    G_fatal_error(_("Column %d defined as integer has double values"), i+1);
 				} else if ( ctype == DB_C_TYPE_STRING ) {
-				    G_fatal_error(_("Column %d defined as string has double values"), i+1);
+				    G_warning(_("Column %d defined as string has double values"), i+1);
 				}
 				break;
 			    case DB_C_TYPE_STRING:

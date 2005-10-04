@@ -1,5 +1,3 @@
-/* TODO: LL_TEST section commented as it doesn't always work */
-
 #include <stdio.h>
 #include <string.h>
 #include "gis.h"
@@ -47,7 +45,8 @@ int is_double ( char *str )
 
 int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs,
 	             int *rowlength, int *ncolumns, int *minncolumns, 
-		     int **column_type, int **column_length, int skip_lines )
+		     int **column_type, int **column_length, int skip_lines,
+		     int xcol, int ycol )
 {
     int i;
     int buflen; /* buffer length */
@@ -120,30 +119,29 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs,
 
 	/* Determine column types */
 	for ( i = 0; i < ntokens; i++ ) {
-#ifdef LL_TEST
-/* doesn't work yet under certain conditions */
 	    if ((G_projection() == PROJECTION_LL)){
-	       /* check if coordinates are DMS or decimal or not latlong at all */
-	       sprintf(coorbuf,"%s", tokens[i]);
-	       G_debug (4, "token: %s", coorbuf);
-	       if (G_scan_northing ( coorbuf, &northing, window.proj) ){
-                   G_debug (4, "is_latlong north: %f", northing);
-		   sprintf(tmp_token, "%f", northing);
-		   /* replace current DMS token by decimal degree */
-		   tokens[i]=tmp_token;
-               }else{
-	        if (G_scan_easting ( coorbuf, &easting, window.proj) ){
-	           G_debug (4, "is_latlong east: %f", easting);
-		   sprintf(tmp_token, "%f", easting);
-		   /* replace current DMS token by decimal degree */
-		   tokens[i]=tmp_token;
-	        } else{
-	           /* maybe do nothing here */
-		   G_warning("Unparsable LatLong value found: %s", tokens[i]);
-		}
-               }
-	    }
-#endif
+	     if (i==xcol || i==ycol ){
+	        /* check if coordinates are DMS or decimal or not latlong at all */
+	        sprintf(coorbuf,"%s", tokens[i]);
+	        G_debug (4, "token: %s", coorbuf);
+	        if (G_scan_northing ( coorbuf, &northing, window.proj) ){
+                    G_debug (4, "is_latlong north: %f", northing);
+		    sprintf(tmp_token, "%f", northing);
+		    /* replace current DMS token by decimal degree */
+		    tokens[i]=tmp_token;
+                }else{
+	         if (G_scan_easting ( coorbuf, &easting, window.proj) ){
+	            G_debug (4, "is_latlong east: %f", easting);
+		    sprintf(tmp_token, "%f", easting);
+		    /* replace current DMS token by decimal degree */
+		    tokens[i]=tmp_token;
+	         } else{
+	            /* maybe do nothing here */
+		    G_warning("Unparsable LatLong value found: %s", tokens[i]);
+		 }
+               } /* G_scan_northing else */
+	     }
+	    } /* PROJECTION_LL */
 	    G_debug (4, "row %d col %d: '%s' is_int = %d is_double = %d", 
 		         row, i, tokens[i], is_int(tokens[i]), is_double(tokens[i]) );
 	    if ( is_int(tokens[i]) ) continue; /* integer */
