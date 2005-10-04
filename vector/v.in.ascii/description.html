@@ -81,6 +81,16 @@ in the header, as defined by the <b>skip</b> parameter, it will be treated as
 a header line and written to the history file.
 
 <P>
+<b>Import of sexagesimal degree (degree, minutes, seconds, DMS)</b><br>
+The import of DMS formatted degrees is supported (in this case no
+sign but N/S, E/W characters are used to indicate the hemispheres).
+While the positions are internally translated into decimal degrees
+during the import, the original DMS values are maintained in the
+attribute table. This requires both the latitude and
+the longitude columns to be defined as varchars(), not as numbers.
+A warning will be issued which can be ignored.
+
+<P>
 <b>Importing only selected columns</b><br>
 Although v.in.ascii doesn't have an option to specify which columns should be imported, 
 you can use a shell filter to achieve the same effect, e.g.:
