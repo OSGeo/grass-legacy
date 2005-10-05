@@ -88,7 +88,7 @@ proc mkkanimatorPanel { BASE } {
     button $rname.slow_back -height 20 -width 20 -bitmap @$bit_map_path/slow_left \
 	-command "keyanimOneBackward $BASE"
     button $rname.stop -height 20 -width 20 -bitmap @$bit_map_path/stop \
-	-command "keyanimStop $BASE"
+	-command "keyanimStop $BASE ; move_position"
     button $rname.slow_forward -height 20 -width 20 -bitmap @$bit_map_path/slow_right \
 	-command "keyanimOneForward $BASE"
     button $rname.forward -height 20 -width 20 -bitmap @$bit_map_path/right \
@@ -359,6 +359,7 @@ proc keyanimPosSlider {BASE time} {
 	keyanimSetChannels $BASE $curr_time
 
 	Ndo_framestep [expr int($curr_step + 1)] $style
+
     }
 }
 
