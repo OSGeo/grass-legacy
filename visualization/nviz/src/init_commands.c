@@ -45,7 +45,7 @@ Nget_real_position_cmd(),
 Nget_focus_cmd(),
 Nhas_focus_cmd(),
 Nset_focus_map_cmd(),
-Nset_no_focus_cmd(),
+Nset_focus_state_cmd(),
 Nmove_to_cmd(),
 Nmove_to_real_cmd(),
 Nset_fov_cmd(),
@@ -237,7 +237,7 @@ int init_commands(Tcl_Interp * interp, Nv_data * data)
 		    NULL);
     Tcl_CreateCommand(interp, "Nset_focus_map", (Tcl_CmdProc *)Nset_focus_map_cmd, data,
 		      NULL);
-    Tcl_CreateCommand(interp, "Nset_no_focus", (Tcl_CmdProc *)Nset_no_focus_cmd, data, NULL);
+    Tcl_CreateCommand(interp, "Nset_focus_state", (Tcl_CmdProc *)Nset_focus_state_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nmove_to", (Tcl_CmdProc *)Nmove_to_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nmove_to_real", (Tcl_CmdProc *)Nmove_to_real_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nset_fov", (Tcl_CmdProc *)Nset_fov_cmd, data, NULL);

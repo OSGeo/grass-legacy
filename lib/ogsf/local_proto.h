@@ -172,6 +172,7 @@ int GS_get_fov(void);
 int GS_get_twist(void);
 void GS_set_twist(int);
 void GS_set_nofocus(void);
+void GS_set_infocus(void);
 void GS_set_viewport(int, int, int, int);
 int GS_look_here(int, int);
 int GS_get_selected_point_on_surface(int, int, int *, float *, float *,

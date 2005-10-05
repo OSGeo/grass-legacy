@@ -60,6 +60,7 @@ proc mkFlyButtons {BASE frame draw_lab draw_var1 draw_var2} {
                  -variable draw_option -value 3 -text "fly"\
 				 -command "fly_change_mode 0" ]
 
+
     set fly(FLY_MENUBUTTON) $BASE.$frame.flymenu
 	set m $fly(FLY_MENUBUTTON).m
 
@@ -105,7 +106,7 @@ proc fly_change_mode {flag} {
 	pack forget $XY $Nv_(HEIGHT_SLIDER) $Nv_(TWIST_SLIDER)
 	Nset_fly_mode $flag
 	pack $fly(BUTTONS) -side left -before $Nv_(EXAG_SLIDER) -expand y
-	Nset_no_focus
+	Nset_focus_state 0
 	update
 }
 
@@ -274,7 +275,7 @@ proc pack_XY {} {
 
 	pack forget $fly(BUTTONS)
 	fly_destroy_help_panel
-    pack $XY $Nv_(HEIGHT_SLIDER) -side left -before $Nv_(EXAG_SLIDER)
+        pack $XY $Nv_(HEIGHT_SLIDER) -side left -before $Nv_(EXAG_SLIDER)
 	pack $Nv_(TWIST_SLIDER) -side bottom
-	Nset_focus_map
+	#Nset_focus_map
 }
