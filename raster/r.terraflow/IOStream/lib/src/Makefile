@@ -11,7 +11,7 @@ RANLIB = ranlib
 ARFLAGS = rv
 
 # This is library code.
-override CPPFLAGS += -I$(TPIEINC) -g
+override CPPFLAGS += -I$(TPIEINC) -g -D_FILE_OFFSET_BITS=64
 
 SRC = mm.cc mm_utils.cc ami_stream.cc rtimer.cc
 
