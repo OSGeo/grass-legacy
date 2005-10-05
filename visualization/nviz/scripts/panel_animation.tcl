@@ -89,7 +89,7 @@ proc mkanimationPanel { BASE } {
     button $rname.slow_back    -bitmap @$bit_map_path/slow_left \
 	-command "animStepBackward $BASE"
     button $rname.stop         -bitmap @$bit_map_path/stop \
-	-command {set animRunState stop}
+	-command {set animRunState stop; move_position}
     button $rname.slow_forward -bitmap @$bit_map_path/slow_right \
 	-command "animStepForward $BASE"
     button $rname.forward      -bitmap @$bit_map_path/right \
@@ -252,6 +252,7 @@ proc kfMoveSlider { x BASE } {
     set frame [animPosToFrame $pos]
     $oBASE.buttons.cur_frame configure -text "$frame"
     Ndo_framestep [expr $frame + 1] 0
+
 }
 
 ############################################################################
