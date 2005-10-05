@@ -397,3 +397,4 @@ ReplacementHeapBlock<T,Compare>::extract_min() {
 
 
 #endif
+

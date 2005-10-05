@@ -154,7 +154,7 @@ public:
 template<class T,class Compare>
 ReplacementHeap<T,Compare>::ReplacementHeap(size_t g_arity, 
 						       queue<char*>* runList) {
-  char* name;
+  char* name=NULL;
   
   assert(runList && g_arity > 0);
 
@@ -421,3 +421,4 @@ ReplacementHeap<T,Compare>::extract_min() {
 
 
 #endif
+
