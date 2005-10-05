@@ -2172,7 +2172,6 @@ void GS_set_focus(float *realto)
 	Gs_status("GS_set_focus");
     }
 #endif
-
     Gv.infocus = 1;
     GS_v3eq(Gv.real_to, realto);
 
@@ -2489,6 +2488,25 @@ void GS_set_nofocus(void)
     return;
 }
 
+/*******************************************************************
+ * Make sure that the center of view is set
+******************************************************************/
+
+void GS_set_infocus(void)
+{
+
+#ifdef TRACE_GS_FUNCS
+    {
+        Gs_status("GS_set_infocus");
+    }
+#endif
+
+    Gv.infocus = 1;
+
+    return;
+}
+
+
 
 /***********************************************************************/
 void GS_set_viewport(int left, int right, int bottom, int top)
@@ -2800,7 +2818,7 @@ void GS_init_view(void)
 	glDepthRange(0.0, 1.0);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
-    }
+    /* } */
 
     /* replace these with something meaningful */
     Gv.fov = 450;
@@ -2828,6 +2846,7 @@ void GS_init_view(void)
     Gd.aspect = (float) GS_get_aspect();
 
     GS_set_focus(Gv.real_to);
+ }
 
     return;
 }

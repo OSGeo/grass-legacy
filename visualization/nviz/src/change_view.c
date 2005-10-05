@@ -132,8 +132,9 @@ int Nchange_height_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpret
 	return (TCL_ERROR);
 
     GS_get_from_real(from);
+    temp = (float) atof(argv[1]);
 
-    if ((temp = (float) atof(argv[1])) != from[Z]) {
+    if (temp != from[Z]) {
 	from[Z] = temp;
 
 	GS_moveto_real(from);

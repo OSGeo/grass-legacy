@@ -238,7 +238,7 @@ int Nget_from_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nlook_here_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nhas_focus_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nset_focus_cmd(Nv_data *, Tcl_Interp *, int, char **);
-int Nset_no_focus_cmd(Nv_data *, Tcl_Interp *, int, char **);
+int Nset_focus_state_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nset_focus_map_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nmove_to_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nset_fov_cmd(Nv_data *, Tcl_Interp *, int, char **);

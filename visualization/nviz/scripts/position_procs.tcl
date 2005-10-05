@@ -18,5 +18,5 @@ proc look_center {{M 0}} {
 }
 
 proc no_focus {} {
-    Nset_no_focus
+    Nset_focus_state 0
 }

@@ -264,12 +264,27 @@ int Nset_focus_real_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpre
 
 }
 
-int Nset_no_focus_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
+int Nset_focus_state_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
 		      int argc,	/* Number of arguments. */
 		      char **argv	/* Argument strings. */
     )
 {
-    GS_set_nofocus();
+int state_flag=1;
+
+	if (argc != 2)
+		return (TCL_ERROR);
+
+	state_flag = atoi(argv[1]);
+
+	if (state_flag == 1)
+		GS_set_infocus(); /* return center of view */
+	else if (state_flag == 0)
+		GS_set_nofocus(); /* no center of view -- use viewdir */
+	else {
+		interp->result = "Error: Flag must be either 0|1";
+	        return (TCL_ERROR);
+	}
+
     return (TCL_OK);
 }
 

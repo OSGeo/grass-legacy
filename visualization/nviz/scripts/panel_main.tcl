@@ -305,7 +305,7 @@ proc Nviz_main_load { file_hook } {
 	Nset_focus [lindex $data 0] [lindex $data 1] [lindex $data 2]
     } else {
 	# insert code to set view_to here
-	Nset_no_focus
+	Nset_focus_state 0
     }
     update
 
@@ -401,6 +401,7 @@ proc update_exag {exag} {
 proc update_eye_position {x y} {
     global Nv_
 
+    Nset_focus_state 1
     Nchange_position $x $y
 
     if {$Nv_(FollowView)} {
@@ -414,6 +415,7 @@ proc update_eye_position {x y} {
 proc update_center_position {x y} {
     global Nv_
 
+     Nset_focus_state 1
      Nset_focus_gui $x $y
 
     if {$Nv_(FollowView)} {
@@ -433,6 +435,7 @@ global XY Nv_
        catch "destroy $XY"
 
 # *** ACS_MODIFY 1.0 - one line
+
 if {$Nv_(FlyThrough)} {Nset_fly_mode -1}
 
 if {$flag == 1} {
@@ -440,20 +443,7 @@ if {$flag == 1} {
 inform "Set eye position"
 set XY [Nv_mkXYScale $NAME puck XY_POS 125 125 105 105 update_eye_position]
 
-set E [lindex [Nget_position] 0]
-if {$E < 0.} {set $E 0.}
-if {$E > 1.} {set $E 1.}
-
-set N [lindex [Nget_position] 1]
-set N [expr 1. - $N]
-if {$N < 0.} {set $N 0.}
-if {$N > 1.} {set $N 1.}
-
-set E [expr $E * 125.]
-set N [expr $N * 125.]
-
-Nv_itemDrag $Nv_(main_BASE).midf.pos $Nv_(XY_POS) $E $N
-update
+move_position
 
 } else {
 #draw center position
@@ -467,21 +457,7 @@ set XY [Nv_mkXYScale $NAME cross XY_POS 125 125 109 109 update_center_position]
 	}
 #*** ACS_MODIFY 1.0 END ******************************************************
 
-set E [lindex [Nget_focus_gui] 0]
-if {$E > 1.} { set E 1.}
-if {$E < 0.} {set E 0.}
-
-set N [lindex [Nget_focus_gui] 1]
-if {$N > 1.} {set N 1.}
-if {$N < 0.} {set N 0.}
-
-set E [expr ($E * 125.)]
-#reverse northing for canvas
-set N [expr 125 - ($N * 125.)]
-
-Nv_itemDrag $Nv_(main_BASE).midf.pos $Nv_(XY_POS) $E $N
-update
-
+move_position
 }
 
 #*** ACS_MODIFY 1.0 BEGIN ******************************************************
@@ -497,6 +473,7 @@ update
 proc update_height {h} {
     global Nv_
 
+    Nset_focus_state 1
     Nchange_height $h
 
 # I don't think this is correct -
@@ -512,4 +489,49 @@ proc update_height {h} {
     }
 }
 
+
+proc move_position {} {
+global Nv_ draw_option
+
+#Make sure in correct view mode
+Nset_focus_state 1
+
+if {$draw_option == 0} {
+#Move position puck
+	set E [lindex [Nget_position] 0]
+	if {$E < 0.} {set $E 0.}
+	if {$E > 1.} {set $E 1.}
+
+	set N [lindex [Nget_position] 1]
+	set N [expr 1. - $N]
+	if {$N < 0.} {set $N 0.}
+	if {$N > 1.} {set $N 1.}
+
+	set E [expr $E * 125.]
+	set N [expr $N * 125.]
+
+	Nv_itemDrag $Nv_(main_BASE).midf.pos $Nv_(XY_POS) $E $N
+	update
+}
+
+if {$draw_option == 1} {
+#Move center of view cross hair
+
+	set E [lindex [Nget_focus_gui] 0]
+	if {$E > 1.} { set E 1.}
+	if {$E < 0.} {set E 0.}
+
+	set N [lindex [Nget_focus_gui] 1]
+	if {$N > 1.} {set N 1.}
+	if {$N < 0.} {set N 0.}
+
+	set E [expr ($E * 125.)]
+	#reverse northing for canvas
+	set N [expr 125 - ($N * 125.)]
+
+	Nv_itemDrag $Nv_(main_BASE).midf.pos $Nv_(XY_POS) $E $N
+	update
+}
+
+}
 
