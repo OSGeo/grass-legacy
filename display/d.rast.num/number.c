@@ -36,12 +36,13 @@
  *   
  */
 
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "raster.h"
 #include "display.h"
 #include "colors.h"
+#include "glocale.h"
 
 #define MAIN
 int draw_number(double, RASTER_MAP_TYPE);
@@ -86,8 +87,8 @@ main (int argc, char **argv)
 
 	module = G_define_module();
 	module->description =
-		"Overlays cell category values on a raster map layer "
-		"displayed to the graphics monitor.";
+		_("Overlays cell category values on a raster map layer "
+		"displayed to the graphics monitor.");
 
 	opt1              = G_define_option() ;
 	opt1->key         = "map" ;
@@ -95,7 +96,7 @@ main (int argc, char **argv)
 	opt1->required    = NO ;
 	opt1->multiple    = NO ;
 	opt1->gisprompt   = "old,cell,raster" ;
-	opt1->description = "Name of existing raster map to be displayed" ;
+	opt1->description = _("Name of existing raster map to be displayed");
 
         opt2              = G_define_option() ;
         opt2->key         = "grid_color" ;
@@ -103,7 +104,7 @@ main (int argc, char **argv)
         opt2->required    = NO ;
         opt2->answer      = "gray" ;
         opt2->options     = D_COLOR_LIST;
-        opt2->description = "Color for drawing grid" ;
+        opt2->description = _("Color for drawing grid");
 
         opt3              = G_define_option();
         opt3->key         = "text_color";
@@ -111,44 +112,38 @@ main (int argc, char **argv)
         opt3->required    = NO;
         opt3->answer      = DEFAULT_FG_COLOR;
         opt3->options     = D_COLOR_LIST;
-        opt3->description = "Color for drawing text";
+        opt3->description = _("Color for drawing text");
     
     	text_color              = G_define_flag();
     	text_color->key         = 'f';
-    	text_color->description = "Get text color from cell color value";
+    	text_color->description = _("Get text color from cell color value");
     	
 	/* Check command line */
 	if (G_parser(argc, argv))
 		exit(-1);
 
 	if (R_open_driver() != 0)
-		G_fatal_error ("No graphics device selected");
+	    G_fatal_error (_("No graphics device selected"));
 
 	if (opt1->answer)
-		strcpy(full_name, opt1->answer);
-	else
-		if(D_get_cell_name (full_name))
-		{
-			fprintf (stdout,"warning: no data layer drawn in current window\n");
-			exit(0);
-		}
-		
-	if ( text_color->answer ) {
-		fixed_color = 0;
-	} else {
-		fixed_color = 1;
+	    strcpy(full_name, opt1->answer);
+	else {
+	    if(D_get_cell_name (full_name))
+		G_fatal_error(_("No raster map exists in current window"));
 	}
 
+	if(text_color->answer)
+	    fixed_color = 0;
+	else
+	    fixed_color = 1;
+
 	mapset = G_find_cell (full_name, "");
-	if(mapset == NULL) {
-		fprintf (stdout,"warning: %s - cell file not found\n", full_name);
-		exit(0);
-	}
+	if(mapset == NULL)
+	    G_fatal_error(_("Raster map [%s] not found"), full_name);
+
 	layer_fd = G_open_cell_old (full_name, mapset);
-	if (layer_fd < 0) {
-		fprintf (stderr,"warning: unable to open [%s]\n", full_name);
-		exit(0);
-	}
+	if (layer_fd < 0)
+	    G_fatal_error(_("Unable to open [%s]"), full_name);
 
 	/* determine the inputmap type (CELL/FCELL/DCELL) */
 	inmap_type = G_raster_map_type(full_name, mapset);
@@ -157,27 +152,27 @@ main (int argc, char **argv)
 	/* Setup driver and check important information */
 
 	if (D_get_cur_wind(window_name))
-		G_fatal_error("No current window") ;
+	    G_fatal_error(_("No current window"));
 
 	if (D_set_cur_wind(window_name))
-		G_fatal_error("Current window not available") ;
+	    G_fatal_error(_("Current window not available"));
 
 	/* Read in the map window associated with window */
 
 	G_get_window(&window) ;
 
 	if (D_check_map_window(&window))
-		G_fatal_error("Setting map window") ;
+	    G_fatal_error(_("Setting map window"));
 
 	if (G_set_window(&window) == -1)
-		G_fatal_error("Current window not settable") ;
+	    G_fatal_error(_("Current window not settable"));
 
 	/* Determine conversion factors */
 
 	if (D_get_screen_window(&t, &b, &l, &r))
-		G_fatal_error("Getting screen window") ;
+	    G_fatal_error(_("Getting screen window"));
 	if (D_do_conversions(&window, t, b, l, r))
-		G_fatal_error("Error in calculating conversions") ;
+	    G_fatal_error(_("Error in calculating conversions"));
 
 	/* where are we, both geographically and on the screen? */
 
@@ -200,16 +195,16 @@ main (int argc, char **argv)
 	ncols = window.cols;
 
 	if ((nrows > 75) || (ncols > 75)){
-		fprintf (stdout,"\n");
-		fprintf (stdout,"Current window size:\n");
-		fprintf (stdout,"rows:    %d\n", nrows);
-		fprintf (stdout,"columns: %d\n", ncols);
-		fprintf (stdout,"\n");
-		fprintf (stdout,"Your current window setting may be too large.\n");
-		fprintf (stdout,"Cells displayed on your graphics window may be too\n");
-		fprintf (stdout,"small for cell category number to be visible.\n\n");
-		if (!G_yes("Do you wish to continue", 0))
-			exit(0);
+	    fprintf (stderr,"\n");
+	    fprintf (stderr,"Current window size:\n");
+	    fprintf (stderr,"rows:    %d\n", nrows);
+	    fprintf (stderr,"columns: %d\n", ncols);
+	    fprintf (stderr,"\n");
+	    fprintf (stderr,"Your current window setting may be too large.\n");
+	    fprintf (stderr,"Cells displayed on your graphics window may be too\n");
+	    fprintf (stderr,"small for cell category number to be visible.\n\n");
+	    if(!G_yes(_("Do you wish to continue"), 0))
+		exit(0);
 	}
 
 	/* resolutions */
@@ -297,37 +292,37 @@ main (int argc, char **argv)
 
 		for(col = 0; col < ncols; col++)
 		{
+		    /* determine screen x coordinate of west side of current cell */
 
-			/* determine screen x coordinate of west side of current cell */
+		    D_x = (int)(col * D_ew + D_west);
 
-			D_x = (int)(col * D_ew + D_west);
+		    /* if(cell[col] > 0) { */
+		    if( fixed_color == 0 ) {
+			G_get_raster_color(&cell[col], &R, &G, &B, &colors, inmap_type);
 
-			/* if(cell[col] > 0) { */
-			   if ( fixed_color == 0 ) {
-					G_get_raster_color(&cell[col],&R,&G,&B,&colors, inmap_type);
+		    	    /*
+		    	    if(B>200 && R < 205 && G < 150)
+		    		    R_standard_color(D_translate_color("white"));
+		    	    else if(B>200 && G < 150 && R < 100)
+		    		    R_standard_color(D_translate_color("white"));
+		    	    else if(B<160 && G < 160 && R < 160)
+		    		    R_standard_color(D_translate_color("white"));
+		    	    else 
+		    		    R_standard_color(D_translate_color("black"));
+		    	    */
 
-				/*
-				if(B>200 && R < 205 && G < 150)
-					R_standard_color(D_translate_color("white"));
-				else if(B>200 && G < 150 && R < 100)
-					R_standard_color(D_translate_color("white"));
-				else if(B<160 && G < 160 && R < 160)
-					R_standard_color(D_translate_color("white"));
-				else 
-					R_standard_color(D_translate_color("black"));
-				*/
+			new_color = ((B + R + G) > 300) ? MY_BLACK : MY_WHITE ;
+			if (new_color != cur_color)
+			    R_standard_color(cur_color = new_color);
+		    }
 
-					new_color = ((B + R + G) > 300) ? MY_BLACK : MY_WHITE ;
-					if (new_color != cur_color)
-						R_standard_color(cur_color = new_color);
-				}		
-			draw_number(cell[col], inmap_type);
-
-			/*}*/
+		    draw_number(cell[col], inmap_type);
+		    /*}*/
 		}
 	}
 
 	G_close_cell (layer_fd);
+	D_add_to_list( G_recreate_command() );
 	R_close_driver();
 
 	exit(0);
