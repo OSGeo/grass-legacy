@@ -41,6 +41,7 @@
 #include "raster.h"
 #include "display.h"
 #include "colors.h"
+#include "glocale.h"
 
 #define MAIN
 static void arrow_se(void);
@@ -92,8 +93,8 @@ main (int argc, char **argv)
 
 	module = G_define_module();
 	module->description =
-		"Draws arrows representing cell aspect direction "
-		"for a raster map containing aspect data.";
+		_("Draws arrows representing cell aspect direction "
+		"for a raster map containing aspect data.");
 
     opt1 = G_define_option() ;
     opt1->key        = "map" ;
@@ -101,7 +102,7 @@ main (int argc, char **argv)
     opt1->required   = NO ;
     opt1->multiple   = NO ;
     opt1->gisprompt  = "old,cell,raster" ;
-    opt1->description= "Name of raster aspect map to be displayed" ;
+    opt1->description= _("Name of raster aspect map to be displayed");
 
     opt2 = G_define_option() ;
     opt2->key        = "type" ;
@@ -109,7 +110,7 @@ main (int argc, char **argv)
     opt2->required   = NO ;
     opt2->answer     = "grass" ;
     opt2->options    = "grass,agnps,answers" ;
-    opt2->description= "Type of existing raster map to be displayed" ;
+    opt2->description= _("Type of existing raster map to be displayed");
 
     opt3 = G_define_option() ;
     opt3->key        = "arrow_color" ;
@@ -117,7 +118,7 @@ main (int argc, char **argv)
     opt3->required   = NO ;
     opt3->answer     = "green" ;
     opt3->options    = D_COLOR_LIST;
-    opt3->description= "Color for drawing arrows" ;
+    opt3->description= _("Color for drawing arrows");
 
     opt4 = G_define_option() ;
     opt4->key        = "grid_color" ;
@@ -125,7 +126,7 @@ main (int argc, char **argv)
     opt4->required   = NO ;
     opt4->answer     = "gray" ;
     opt4->options    = D_COLOR_LIST;
-    opt4->description= "Color for outlining grids" ;
+    opt4->description= _("Color for outlining grids");
 
     opt5 = G_define_option() ;
     opt5->key        = "x_color" ;
@@ -133,7 +134,7 @@ main (int argc, char **argv)
     opt5->required   = NO ;
     opt5->answer     = DEFAULT_FG_COLOR ;
     opt5->options    = D_COLOR_LIST;
-    opt5->description= "Color for drawing x's (Null values)" ;
+    opt5->description= _("Color for drawing X's (Null values)");
 
     opt6 = G_define_option() ;
     opt6->key        = "unknown_color" ;
@@ -141,7 +142,7 @@ main (int argc, char **argv)
     opt6->required   = NO ;
     opt6->answer     = "red" ;
     opt6->options    = D_COLOR_LIST; 
-    opt6->description= "Color for showing unknown information" ;
+    opt6->description= _("Color for showing unknown information");
 
     /* Check command line */
     if (G_parser(argc, argv))
@@ -151,10 +152,8 @@ main (int argc, char **argv)
 	{
 		strcpy(layer_name, opt1->answer);
 		if((mapset = G_find_cell2 (layer_name, "")) == NULL)
-		{
-			fprintf (stderr,"warning: [%s] not found\n", layer_name);
-			return(1);
-		}
+		    G_fatal_error(_("Raster map [%s] not found"), layer_name);
+
 		layer_set = 1 ;
 	}
 	else
@@ -181,30 +180,30 @@ main (int argc, char **argv)
 /* Setup driver and check important information */
 
     if (R_open_driver() != 0)
-	G_fatal_error ("No graphics device selected");
+	G_fatal_error (_("No graphics device selected"));
 
     if (D_get_cur_wind(window_name))
-        G_fatal_error("No current window") ;
+	G_fatal_error(_("No current window"));
 
     if (D_set_cur_wind(window_name))
-        G_fatal_error("Current window not available") ;
+	G_fatal_error(_("Current window not available"));
 
 /* Read in the map window associated with window */
 
     G_get_window(&window) ;
 
     if (D_check_map_window(&window))
-        G_fatal_error("Setting map window") ;
+	G_fatal_error(_("Setting map window"));
 
     if (G_set_window(&window) == -1) 
-        G_fatal_error("Current window not settable") ;
+	G_fatal_error(_("Current window not settable"));
 
 /* Determine conversion factors */
 
     if (D_get_screen_window(&t, &b, &l, &r))
-        G_fatal_error("Getting screen window") ;
+	G_fatal_error(_("Getting screen window"));
     if (D_do_conversions(&window, t, b, l, r))
-    	G_fatal_error("Error in calculating conversions") ;
+	G_fatal_error(_("Error in calculating conversions"));
 
 /* where are we, both geographically and on the screen? */
 
@@ -299,15 +298,13 @@ main (int argc, char **argv)
    get name of layer that is on the screen */
 
     if (!layer_set) {
-        if(D_get_cell_name (full_name)) {
-            fprintf (stdout,"warning: no data layer drawn in current window\n");
-            exit(0);
-        }
+        if(D_get_cell_name (full_name))
+	    G_fatal_error(_("No raster map exists in the current window"));
+
         mapset = G_find_cell (full_name, "");
-        if(mapset == NULL) {
-            fprintf (stdout,"warning: [%s] not found\n", full_name);
-            exit(0);
-        }
+        if(mapset == NULL)
+	    G_fatal_error(_("[%s] not found"), full_name);
+
         sscanf (full_name, "%s", layer_name);
     }
 
@@ -315,10 +312,8 @@ main (int argc, char **argv)
     raster_type = G_raster_map_type(layer_name, mapset);
 
     layer_fd = G_open_cell_old (layer_name, mapset);
-    if (layer_fd < 0) {
-        fprintf (stderr,"warning: unable to open [%s] in [%s]\n", layer_name, mapset);
-        exit(0);
-    }
+    if (layer_fd < 0)
+	G_fatal_error(_("Unable to open [%s] in [%s]"), layer_name, mapset);
 
 /* allocate the cell array */
 
@@ -502,6 +497,7 @@ main (int argc, char **argv)
 	}
     }
     G_close_cell (layer_fd);
+    D_add_to_list(G_recreate_command());
     R_close_driver();
 
     exit(0);
