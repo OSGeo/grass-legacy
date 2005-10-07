@@ -8,9 +8,9 @@
  * PURPOSE:      Draw arrows on slope/aspect maps. 
  * COPYRIGHT:    (C) 2000 by the GRASS Development Team
  *
- *               This program is free software under the GNU General Public
- *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
- *   	    	 for details.
+ *		This program is free software under the GNU General Public
+ *		License (>=v2). Read the file COPYING that comes with GRASS
+ *		for details.
  *
  *****************************************************************************/
 
@@ -37,13 +37,18 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "gis.h"
 #include "raster.h"
 #include "display.h"
 #include "colors.h"
 #include "glocale.h"
 
+# define RpD ((2 * M_PI) / 360.)	/* radians/degree */
+# define D2R(d) (double)(d * RpD)	/* degrees->radians */
+
 #define MAIN
+static void arrow_360(double);
 static void arrow_se(void);
 static void arrow_ne(void);
 static void arrow_nw(void);
@@ -109,8 +114,8 @@ main (int argc, char **argv)
     opt2->type       = TYPE_STRING ;
     opt2->required   = NO ;
     opt2->answer     = "grass" ;
-    opt2->options    = "grass,agnps,answers" ;
-    opt2->description= _("Type of existing raster map to be displayed");
+    opt2->options    = "grass,compass,agnps,answers";
+    opt2->description= _("Type of existing raster aspect map");
 
     opt3 = G_define_option() ;
     opt3->key        = "arrow_color" ;
@@ -126,7 +131,7 @@ main (int argc, char **argv)
     opt4->required   = NO ;
     opt4->answer     = "gray" ;
     opt4->options    = D_COLOR_LIST;
-    opt4->description= _("Color for outlining grids");
+    opt4->description= _("Color for drawing grid");
 
     opt5 = G_define_option() ;
     opt5->key        = "x_color" ;
@@ -146,36 +151,32 @@ main (int argc, char **argv)
 
     /* Check command line */
     if (G_parser(argc, argv))
-        exit(-1);
+	exit(-1);
 
-	if (opt1->answer)
-	{
-		strcpy(layer_name, opt1->answer);
-		if((mapset = G_find_cell2 (layer_name, "")) == NULL)
-		    G_fatal_error(_("Raster map [%s] not found"), layer_name);
 
-		layer_set = 1 ;
-	}
-	else
-		layer_set = 0 ;
+    if (opt1->answer) {
+	strcpy(layer_name, opt1->answer);
+	if((mapset = G_find_cell2 (layer_name, "")) == NULL)
+	    G_fatal_error(_("Raster map [%s] not found"), layer_name);
+	layer_set = 1;
+    }
+    else
+	layer_set = 0;
+
 
     arrow_color   = D_translate_color(opt3->answer) ;
     grid_color    = D_translate_color(opt4->answer) ;
     x_color       = D_translate_color(opt5->answer) ;
     unknown_color = D_translate_color(opt6->answer) ;
 
-	if (strcmp("grass", opt2->answer) == 0) 
-	{
-		map_type = 1;
-	}
-	else if (strcmp("agnps", opt2->answer) == 0) 
-	{
-		map_type = 2;
-	}
-	else if (strcmp("answers", opt2->answer) == 0) 
-	{
-		map_type = 3;
-	}
+    if (strcmp("grass", opt2->answer) == 0) 
+    	map_type = 1;
+    else if (strcmp("agnps", opt2->answer) == 0) 
+    	map_type = 2;
+    else if (strcmp("answers", opt2->answer) == 0) 
+    	map_type = 3;
+    else if (strcmp("compass", opt2->answer) == 0) 
+    	map_type = 4;
 
 /* Setup driver and check important information */
 
@@ -227,16 +228,16 @@ main (int argc, char **argv)
 
 /*
     if ((nrows > 75) || (ncols > 75)){ 
-        fprintf (stdout,"\n"); 
-        fprintf (stdout,"Current window size:\n"); 
-        fprintf (stdout,"rows:    %d\n", nrows);
-        fprintf (stdout,"columns: %d\n", ncols);
-        fprintf (stdout,"\n"); 
-        fprintf (stdout,"Your current window setting may be too large.\n"); 
-        fprintf (stdout,"Cells displayed on your graphics window may be too\n"); 
-        fprintf (stdout,"small for arrows to be visible.\n\n"); 
-        if (!G_yes("Do you wish to continue", 0))
-            exit(0);
+	fprintf (stdout,"\n"); 
+	fprintf (stdout,"Current window size:\n"); 
+	fprintf (stdout,"rows:    %d\n", nrows);
+	fprintf (stdout,"columns: %d\n", ncols);
+	fprintf (stdout,"\n"); 
+	fprintf (stdout,"Your current window setting may be too large.\n"); 
+	fprintf (stdout,"Cells displayed on your graphics window may be too\n"); 
+	fprintf (stdout,"small for arrows to be visible.\n\n"); 
+	if (!G_yes("Do you wish to continue", 0))
+	    exit(0);
     }
 */
 
@@ -280,32 +281,32 @@ main (int argc, char **argv)
     U_start = U_east;
     for (U_x=U_start; U_x>=U_west; U_x -= ew_res)
     {
-        D_x = (int)( ( U_x - U_west ) * U_to_D_xconv + D_west );
-        R_move_abs(D_x, (int)D_south) ;
-        R_cont_abs(D_x, (int)D_north) ;
+	D_x = (int)( ( U_x - U_west ) * U_to_D_xconv + D_west );
+	R_move_abs(D_x, (int)D_south) ;
+	R_cont_abs(D_x, (int)D_north) ;
     }
 
 /* Draw horizontal grids */
     U_start = U_north;
     for (U_y=U_start; U_y>=U_south; U_y -= ns_res)
     {
-        D_y = (int)( ( U_south - U_y ) * U_to_D_yconv + D_south );
-        R_move_abs((int)D_west, D_y) ;
-        R_cont_abs((int)D_east, D_y) ;
+	D_y = (int)( ( U_south - U_y ) * U_to_D_yconv + D_south );
+	R_move_abs((int)D_west, D_y) ;
+	R_cont_abs((int)D_east, D_y) ;
     }
 
 /* if we didn't get a layer name from the arg options, then
    get name of layer that is on the screen */
 
     if (!layer_set) {
-        if(D_get_cell_name (full_name))
+	if(D_get_cell_name (full_name))
 	    G_fatal_error(_("No raster map exists in the current window"));
 
-        mapset = G_find_cell (full_name, "");
-        if(mapset == NULL)
+	mapset = G_find_cell (full_name, "");
+	if(mapset == NULL)
 	    G_fatal_error(_("[%s] not found"), full_name);
 
-        sscanf (full_name, "%s", layer_name);
+	sscanf (full_name, "%s", layer_name);
     }
 
 /* open the cell file */
@@ -329,14 +330,14 @@ main (int argc, char **argv)
 
 /* determine screen y coordinate of top of current cell */
 
-        D_y = (int)(row * D_ns + D_north) ;
+	D_y = (int)(row * D_ns + D_north) ;
 
-        for(col = 0; col < ncols; col++)
-        {
+	for(col = 0; col < ncols; col++)
+	{
 
 /* determine screen x coordinate of west side of current cell */
 
-            D_x = (int)(col * D_ew + D_west);
+	    D_x = (int)(col * D_ew + D_west);
 
 /* find aspect direction based on cell value, draw arrow */
 
@@ -356,7 +357,8 @@ main (int argc, char **argv)
 		    aspect_c = (int)(aspect_f + 0.5);
 	    }
 
-	/* case switch for standard aspect map */
+	/* case switch for standard GRASS aspect map 
+	    measured in degrees counter-clockwise from east */
 	    if(map_type == 1) {
 		R_standard_color(arrow_color);
 
@@ -365,29 +367,14 @@ main (int argc, char **argv)
 		    draw_x();
 		    R_standard_color(arrow_color);
 		}
-	/* GRASS aspect maps are measured in degrees counterclockwise of east */
-		else if(aspect_f >= 67.5 && aspect_f < 112.5)
-		    arrow_n();
-		else if(aspect_f >= 22.5 && aspect_f < 67.5)
-		    arrow_ne();
-		else if( (aspect_f >= 337.5 && aspect_f <= 360.0) || (aspect_f >= 0.0 && aspect_f < 22.5) )
-		    arrow_e();
-		else if(aspect_f >= 292.5 && aspect_f < 337.5)
-		    arrow_se();
-		else if(aspect_f >= 247.5 && aspect_f < 292.5)
-		    arrow_s();
-		else if(aspect_f >= 202.5 && aspect_f < 247.5)
-		    arrow_sw();
-		else if(aspect_f >= 157.5 && aspect_f < 202.5)
-		    arrow_w();
-		else if(aspect_f >= 112.5 && aspect_f < 157.5)
-		    arrow_nw();
+		else if(aspect_f >= 0.0 && aspect_f <= 360.0)
+		    arrow_360(aspect_f);
 		else {
 		    R_standard_color(unknown_color);
 		    unknown_();
 		    R_standard_color(arrow_color);
 		}
-            }
+	    }
 
 
 	/* case switch for AGNPS type aspect map */
@@ -395,103 +382,79 @@ main (int argc, char **argv)
 	      R_standard_color(arrow_color);
 	      switch(aspect_c)
 	      {
-               case 0:
-                    R_standard_color(x_color);
-                    draw_x();
-                    R_standard_color(arrow_color);
-                    break;
-                case 1:
-                    arrow_n();
-                    break;
-                case 2:
-                    arrow_ne();
-                    break;
-                case 3:
-                    arrow_e();
-                    break;
-                case 4:
-                    arrow_se();
-                    break;
-                case 5:
-                    arrow_s();
-                    break;
-                case 6:
-                    arrow_sw();
-                    break;
-                case 7:
-                    arrow_w();
-                    break;
-                case 8:
-                    arrow_nw();
-                    break;
-                default:
+	       case 0:
+		    R_standard_color(x_color);
+		    draw_x();
+		    R_standard_color(arrow_color);
+		    break;
+		case 1:
+		    arrow_n();
+		    break;
+		case 2:
+		    arrow_ne();
+		    break;
+		case 3:
+		    arrow_e();
+		    break;
+		case 4:
+		    arrow_se();
+		    break;
+		case 5:
+		    arrow_s();
+		    break;
+		case 6:
+		    arrow_sw();
+		    break;
+		case 7:
+		    arrow_w();
+		    break;
+		case 8:
+		    arrow_nw();
+		    break;
+		default:
 		    R_standard_color(unknown_color);
 		    unknown_();
 		    R_standard_color(arrow_color);
-                    break;
-               }
-             }
+		    break;
+	       }
+	     }
 
 
 	/* case switch for ANSWERS type aspect map */
-            else if(map_type == 3) {
+	    else if(map_type == 3) {
 	      R_standard_color(arrow_color);
-	      switch(aspect_c)
-	      {
-                case 15:
-                    arrow_e();
-                    break;
-                case 30:
-                case 45:
-                case 60:
-                    arrow_ne();
-                    break;
-                case 75:
-                case 90:
-                case 105:
-                    arrow_n();
-                    break;
-                case 120:
-                case 135:
-                case 150:
-                    arrow_nw();
-                    break;
-                case 165:
-                case 180:
-                case 195:
-                    arrow_w();
-                    break;
-                case 210:
-                case 225:
-                case 240:
-                    arrow_sw();
-                    break;
-                case 255:
-                case 270:
-                case 285:
-                    arrow_s();
-                    break;
-                case 300:
-                case 315:
-                case 330:
-                    arrow_se();
-                    break;
-                case 345:
-                case 360:
-                    arrow_e();
-                    break;
-                case 400:
-                    R_standard_color(unknown_color);
-                    unknown_();
-                    R_standard_color(arrow_color);
-                    break;
-                default:
-                    R_standard_color(x_color);
-                    draw_x();
-                    R_standard_color(arrow_color);
-                    break;
-              }
-            }
+	      if(aspect_c >= 15 && aspect_c <= 360) /* start at zero? */
+		arrow_360((double)aspect_c);
+	      else if(aspect_c == 400) {
+		R_standard_color(unknown_color);
+		unknown_();
+		R_standard_color(arrow_color);
+	      }
+	      else {
+		R_standard_color(x_color);
+		draw_x();
+		R_standard_color(arrow_color);
+	      }
+	    }
+
+	/* case switch for compass type aspect map
+	     measured in degrees clockwise from north */
+	    else if(map_type == 4) {
+		R_standard_color(arrow_color);
+
+		if(G_is_null_value(ptr, raster_type)) {
+		    R_standard_color(x_color);
+		    draw_x();
+		    R_standard_color(arrow_color);
+		}
+		else if(aspect_f >= 0.0 && aspect_f <= 360.0)
+		    arrow_360(90 - aspect_f);
+		else {
+		    R_standard_color(unknown_color);
+		    unknown_();
+		    R_standard_color(arrow_color);
+		}
+	    }
 
 	    ptr = G_incr_void_ptr(ptr, G_raster_size(raster_type));
 	}
@@ -506,6 +469,48 @@ main (int argc, char **argv)
 /* --- end of main --- */
 
 /*---------------------------------------------------------------*/
+
+static void arrow_360(double theta)
+{ /* angle is measured in degrees counter-clockwise from east */
+/*  TODO: ? query second raster map for magnitude -> arrow length */
+/*	  & scale max range value as 10x cell width by default? */
+    extern double D_ew, D_ns;
+    extern int D_x, D_y;
+    int x,y, dx, dy, mid_x, mid_y;
+    double max_radius, theta_offset;
+
+    theta *= -1; /* display coords use inverse y */
+    max_radius = ((D_ew < D_ns) ? D_ew : D_ns) * 0.8/2;
+
+    /* find the display coordinates of the middle of the cell */
+    mid_x = D_x + (int) (D_ew * 0.5);
+    mid_y = D_y + (int) (D_ns * 0.5);
+
+    /* head */
+    x = mid_x + (int) (max_radius * cos(D2R(theta)));
+    y = mid_y + (int) (max_radius * sin(D2R(theta)));
+    R_move_abs(x,y);
+
+    /* tail */
+    dx = -2* (int) (max_radius * cos(D2R(theta)));
+    dy = -2* (int) (max_radius * sin(D2R(theta)));
+    R_cont_rel(dx,dy);
+
+    /* fin 1 */
+    R_move_abs(x,y);
+    theta_offset = theta+90;
+    dx = mid_x + (int) (0.5 * max_radius * cos(D2R(theta_offset)));
+    dy = mid_y + (int) (0.5 * max_radius * sin(D2R(theta_offset)));
+    R_cont_abs(dx,dy);
+
+    /* fin 2 */
+    R_move_abs(x,y);
+    theta_offset = theta-90;
+    dx = mid_x + (int) (0.5 * max_radius * cos(D2R(theta_offset)));
+    dy = mid_y + (int) (0.5 * max_radius * sin(D2R(theta_offset)));
+    R_cont_abs(dx,dy);
+
+}
 
 static void arrow_se (void)
 {
