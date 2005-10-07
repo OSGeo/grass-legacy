@@ -67,9 +67,6 @@ main (int argc, char **argv)
 	double ew_res, ns_res;
 	extern double D_ew, D_ns;
 	extern int D_x, D_y ;
-	int MY_BLACK, MY_WHITE ;
-	int cur_color ;
-	int new_color ;
 	int fixed_color;
 	int R, G, B;
 	int layer_fd;
@@ -239,8 +236,7 @@ main (int argc, char **argv)
     fprintf (stdout,"U_to_D_yconv:	%f\n", U_to_D_yconv);
 --------------------------------------------------------*/
 
-	/* Set color */
-
+	/* Set grid color */
 	R_standard_color(D_translate_color(opt2->answer));
 
 	/* Draw vertical grids */
@@ -262,26 +258,19 @@ main (int argc, char **argv)
 	}
 
 	/* allocate the cell array */
-
 	cell  = G_allocate_raster_buf (map_type);
 
 	R_font("romans");
 
-	/* initiate and read the color table in the color structures of the displayed map */
-	G_init_colors(&colors);
-	G_read_colors(full_name,mapset,&colors);
+	/* read the color table in the color structures of the displayed map */
+	if (G_read_colors(full_name, mapset, &colors) == -1)
+	    G_fatal_error(_("Color file for [%s] not available"), full_name);
 
 	/* fixed text color */
-        if ( fixed_color == 1 ) { 
-        	R_standard_color(D_translate_color(opt3->answer));
-	} else { 	
-		MY_WHITE = D_translate_color("white") ;
-		MY_BLACK = D_translate_color("black") ;
-		R_standard_color(cur_color = MY_BLACK) ;
-	} 
+	if ( fixed_color == 1 )
+	    R_standard_color(D_translate_color(opt3->answer));
 
 	/* loop through cells, find value, and draw text for value */
-
 	for(row = 0; row < nrows; row++)
 	{
 		G_get_raster_row (layer_fd, cell, row, map_type);
@@ -293,31 +282,15 @@ main (int argc, char **argv)
 		for(col = 0; col < ncols; col++)
 		{
 		    /* determine screen x coordinate of west side of current cell */
-
 		    D_x = (int)(col * D_ew + D_west);
 
-		    /* if(cell[col] > 0) { */
 		    if( fixed_color == 0 ) {
-			G_get_raster_color(&cell[col], &R, &G, &B, &colors, inmap_type);
-
-		    	    /*
-		    	    if(B>200 && R < 205 && G < 150)
-		    		    R_standard_color(D_translate_color("white"));
-		    	    else if(B>200 && G < 150 && R < 100)
-		    		    R_standard_color(D_translate_color("white"));
-		    	    else if(B<160 && G < 160 && R < 160)
-		    		    R_standard_color(D_translate_color("white"));
-		    	    else 
-		    		    R_standard_color(D_translate_color("black"));
-		    	    */
-
-			new_color = ((B + R + G) > 300) ? MY_BLACK : MY_WHITE ;
-			if (new_color != cur_color)
-			    R_standard_color(cur_color = new_color);
+			G_get_color((CELL)cell[col], &R, &G, &B, &colors);
+/* buggy fn:		G_get_raster_color(cell[col], &R, &G, &B, &colors, inmap_type); */
+			R_RGB_color(R, G, B);
 		    }
 
 		    draw_number(cell[col], inmap_type);
-		    /*}*/
 		}
 	}
 
