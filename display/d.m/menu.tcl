@@ -80,11 +80,11 @@ global execom
     }}
  	{cascad "Map type conversions" {} "" $tmenu {			
         {command "Raster to vector map" {} "r.to.vect" {} -command {execute r.to.vect }}
-        {command "Raster map series to volume" {} "r.to.rast3" {} -command {execute r.to.rast3 }}
+        {command "Raster map series to volume" {} "r3.in.rast" {} -command {execute r.to.rast3 }}
         {command "Vector to raster" {} "v.to.rast" {} -command {execute v.to.rast }}
         {command "Vector to points" {} "v.to.points" {} -command {execute v.to.points }}
         {command "Sites to vector" {} "v.in.sites" {} -command {execute v.in.sites }}
-        {command "Volumes to raster map series" {} "r3.to.rast" {} -command {execute r3.to.rast }}
+        {command "Volumes to raster map series" {} "r3.out.rast" {} -command {execute r3.to.rast }}
  	}}
     {separator}
     {cascad "Groups" {} "" $tmenu {			
