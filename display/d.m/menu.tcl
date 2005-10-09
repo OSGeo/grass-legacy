@@ -84,7 +84,7 @@ global execom
         {command "Vector to raster" {} "v.to.rast" {} -command {execute v.to.rast }}
         {command "Vector to points" {} "v.to.points" {} -command {execute v.to.points }}
         {command "Sites to vector" {} "v.in.sites" {} -command {execute v.in.sites }}
-        {command "Volumes to raster map series" {} "r3.out.rast" {} -command {execute r3.to.rast }}
+        {command "Volumes to raster map series" {} "r3.to.rast" {} -command {execute r3.to.rast }}
  	}}
     {separator}
     {cascad "Groups" {} "" $tmenu {			
