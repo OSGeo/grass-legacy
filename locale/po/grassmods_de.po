@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-29 18:10+0200\n"
-"PO-Revision-Date: 2005-09-29 18:22+0200\n"
+"POT-Creation-Date: 2005-10-09 15:11+0200\n"
+"PO-Revision-Date: 2005-10-09 15:28+0200\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -443,6 +443,7 @@ msgstr "Nicht zu der Kommandoliste im Monitor hinzufügen."
 #: ../display/d.erase/main.c:56 ../display/d.font.freetype/main.c:102
 #: ../display/d.grid/main.c:202 ../display/d.legend/main.c:246
 #: ../display/d.nviz/main.c:248 ../display/d.paint.labels/main.c:69
+#: ../display/d.rast.arrow/arrow.c:184 ../display/d.rast.num/number.c:123
 #: ../display/d.text/main.c:151 ../display/d.text.freetype/main.c:314
 #: ../display/d.vect/main.c:269 ../display/d.where/main.c:120
 #: ../imagery/i.points/main.c:55 ../vector/v.label/main.c:207
@@ -710,7 +711,7 @@ msgstr "Kenne die Farbe %s nicht."
 msgid "Raster file [%s] not available"
 msgstr "Rasterkarte [%s] nicht vorhanden."
 
-#: ../display/d.legend/main.c:230
+#: ../display/d.legend/main.c:230 ../display/d.rast.num/number.c:267
 #, c-format
 msgid "Color file for [%s] not available"
 msgstr "Farbtabelle für Karte [%s] nicht vorhanden."
@@ -721,11 +722,13 @@ msgid "Category file for [%s] not available"
 msgstr "Kategorie-Dateien für [%s] sind nicht vorhanden. "
 
 #: ../display/d.legend/main.c:249 ../display/d.paint.labels/main.c:103
+#: ../display/d.rast.arrow/arrow.c:187 ../display/d.rast.num/number.c:152
 #: ../display/d.text/main.c:154 ../display/d.text.freetype/main.c:320
 msgid "No current window"
 msgstr "Kein aktuelles Fenster."
 
 #: ../display/d.legend/main.c:252 ../display/d.paint.labels/main.c:106
+#: ../display/d.rast.arrow/arrow.c:190 ../display/d.rast.num/number.c:155
 #: ../display/d.text/main.c:157 ../display/d.text.freetype/main.c:322
 msgid "Current window not available"
 msgstr "Aktuelles Fenster ist nicht vorhanden."
@@ -941,19 +944,23 @@ msgstr "Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt
 msgid "Can't open label file [%s]"
 msgstr "Kann Label-Datei [%s] nicht öffnen."
 
-#: ../display/d.paint.labels/main.c:109
+#: ../display/d.paint.labels/main.c:109 ../display/d.rast.arrow/arrow.c:197
+#: ../display/d.rast.num/number.c:162
 msgid "Setting map window"
 msgstr "Einstellung des Kartenfensters."
 
-#: ../display/d.paint.labels/main.c:112
+#: ../display/d.paint.labels/main.c:112 ../display/d.rast.arrow/arrow.c:200
+#: ../display/d.rast.num/number.c:165
 msgid "Current window not settable"
 msgstr "Aktuelles Fenster nicht einstellbar."
 
-#: ../display/d.paint.labels/main.c:116
+#: ../display/d.paint.labels/main.c:116 ../display/d.rast.arrow/arrow.c:205
+#: ../display/d.rast.num/number.c:170
 msgid "Getting screen window"
 msgstr "Hole Fenster."
 
-#: ../display/d.paint.labels/main.c:118
+#: ../display/d.paint.labels/main.c:118 ../display/d.rast.arrow/arrow.c:207
+#: ../display/d.rast.num/number.c:172
 msgid "Error in calculating conversions"
 msgstr "Fehler bei der Berechnung der Umwandlung."
 
@@ -982,6 +989,88 @@ msgstr "Kosten auf Basis des Netzwerkes = %f\n"
 msgid "  Distance to the network = %f, distance from the network = %f\n"
 msgstr "Abstand zum Netzwerk = %f, Abstand vom Netzwerk = %f\n"
 
+#: ../display/d.rast.arrow/arrow.c:101
+#, fuzzy
+msgid ""
+"Draws arrows representing cell aspect direction for a raster map containing "
+"aspect data."
+msgstr "Zeichnungen für a."
+
+#: ../display/d.rast.arrow/arrow.c:110
+msgid "Name of raster aspect map to be displayed"
+msgstr "Name der Hangexpositionskarte, die angezeigt werden soll."
+
+#: ../display/d.rast.arrow/arrow.c:118
+msgid "Type of existing raster aspect map"
+msgstr "Typ der existierenden Hangexpositionskarte."
+
+#: ../display/d.rast.arrow/arrow.c:126
+msgid "Color for drawing arrows"
+msgstr "Farbe der Pfeile."
+
+#: ../display/d.rast.arrow/arrow.c:134 ../display/d.rast.num/number.c:104
+msgid "Color for drawing grid"
+msgstr "Farbe des Gitters."
+
+#: ../display/d.rast.arrow/arrow.c:142
+msgid "Color for drawing X's (Null values)"
+msgstr "Farbe für Null-Werte (X'x)."
+
+#: ../display/d.rast.arrow/arrow.c:150
+msgid "Color for showing unknown information"
+msgstr "Farbe für unbekannte Information."
+
+#: ../display/d.rast.arrow/arrow.c:160 ../display/d.rast.num/number.c:139
+#, c-format
+msgid "Raster map [%s] not found"
+msgstr "Rasterkarte [%s] nicht gefunden."
+
+#: ../display/d.rast.arrow/arrow.c:303
+msgid "No raster map exists in the current window"
+msgstr ""
+
+#: ../display/d.rast.arrow/arrow.c:307
+#, c-format
+msgid "[%s] not found"
+msgstr "[%s] nicht gefunden."
+
+#: ../display/d.rast.arrow/arrow.c:317
+#, c-format
+msgid "Unable to open [%s] in [%s]"
+msgstr "Kann [%s] in [%s] nicht öffnen."
+
+#: ../display/d.rast.num/number.c:87
+#, fuzzy
+msgid ""
+"Overlays cell category values on a raster map layer displayed to the "
+"graphics monitor."
+msgstr "ein a."
+
+#: ../display/d.rast.num/number.c:96
+msgid "Name of existing raster map to be displayed"
+msgstr "Name einer vorhandenen Rasterkarte, die angezeigt werden soll."
+
+#: ../display/d.rast.num/number.c:112
+msgid "Color for drawing text"
+msgstr "Farbe für den Text."
+
+#: ../display/d.rast.num/number.c:116
+msgid "Get text color from cell color value"
+msgstr "Hole Textfarbe von der Farbtabelle der Zelle."
+
+#: ../display/d.rast.num/number.c:129
+msgid "No raster map exists in current window"
+msgstr "Keine Rasterkarte existiert im aktuellen Fenster."
+
+#: ../display/d.rast.num/number.c:143
+#, c-format
+msgid "Unable to open [%s]"
+msgstr "Kann [%s] nicht öffnen."
+
+#: ../display/d.rast.num/number.c:203
+msgid "Do you wish to continue"
+msgstr ""
+
 #: ../display/d.text/main.c:71
 #, fuzzy
 msgid ""
@@ -990,9 +1079,8 @@ msgid ""
 msgstr "Zeichnungen ein mit Schrift."
 
 #: ../display/d.text/main.c:79
-#, fuzzy
 msgid "Height of letters in percentage of available frame height"
-msgstr "von von"
+msgstr "Höhe der Buchstaben in Prozent von der vorhandenen Rahmenhöhe."
 
 #: ../display/d.text/main.c:87 ../display/d.text.freetype/main.c:198
 msgid "Text color, either a standard GRASS color or R:G:B triplet"
@@ -1004,11 +1092,10 @@ msgid "The screen line number on which text will begin to be drawn"
 msgstr "screen Linie ein"
 
 #: ../display/d.text/main.c:104
-#, fuzzy
 msgid ""
 "Screen postion at which text will begin to be drawn (percentage, [0,0] is "
 "lower left)"
-msgstr "Bildschirm an ist Links"
+msgstr "Position auf dem Bildschirm an der der Text ausgerichtet wird. (in Prozent, [0,0] ist unten links)."
 
 #: ../display/d.text/main.c:111 ../display/d.text.freetype/main.c:221
 msgid "Rotation angle in degrees (counter-clockwise)"
@@ -2320,11 +2407,13 @@ msgstr ""
 "<%s> -- Ungültiger Wert für Wiederholungen."
 
 #: ../imagery/i.cluster/main.c:180
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "<%s> -- illegal value of convergence"
-msgstr "s"
+msgstr ""
+"\n"
+"<%s> -- ungültiger Wert für Konvergenz."
 
 #: ../imagery/i.cluster/main.c:187
 #, c-format
@@ -2443,9 +2532,9 @@ msgid " Minimum class separation:     %f\n"
 msgstr " Minimale Klassen-Separierung:     %f\n"
 
 #: ../imagery/i.cluster/main.c:241
-#, fuzzy, c-format
+#, c-format
 msgid " Percent convergence:          %f\n"
-msgstr "f n"
+msgstr "Prozent Konvergenz:        %f\n"
 
 #: ../imagery/i.cluster/main.c:242
 #, c-format
@@ -3708,7 +3797,9 @@ msgstr "%s: %s in %s - kann Kategoriedatei nicht lesen."
 
 #: ../raster/r.cats/main.c:104
 msgid "The map is floating point! Ignoring cats list, using vals list"
-msgstr "Die Karte ist eine Fließkommazahl-Karte. Ignoriere Kategorieliste, nehme stattdessen Vals-Liste."
+msgstr ""
+"Die Karte ist eine Fließkommazahl-Karte. Ignoriere Kategorieliste, nehme "
+"stattdessen Vals-Liste."
 
 #: ../raster/r.cats/main.c:123
 #, fuzzy
@@ -7034,7 +7125,7 @@ msgid "Cell file [%s] not found\n"
 msgstr "Cell-Datei [%s] nicht gefunden.\n"
 
 #: ../raster/r.out.vtk/main.c:110 ../raster/r.out.vtk/main.c:171
-#: ../raster/r.out.vtk/main.c:210
+#: ../raster/r.out.vtk/main.c:210 ../raster3d/r3.in.rast/main.c:333
 #, c-format
 msgid "Could not open map %s\n"
 msgstr "Kann die Karte %s nicht öffnen.\n"
@@ -7045,7 +7136,9 @@ msgstr "Schreibe VTK-Bilddaten...\n"
 
 #: ../raster/r.out.vtk/main.c:225
 msgid "Wrong RGB maps. Maps should be the same type! RGB output not added!"
-msgstr "Falsche RGB Karten. Karten sollten vom gleichen Typ sein. RGB-Ausgabe wurde nicht hinzugefügt."
+msgstr ""
+"Falsche RGB Karten. Karten sollten vom gleichen Typ sein. RGB-Ausgabe wurde "
+"nicht hinzugefügt."
 
 #: ../raster/r.out.vtk/main.c:235
 msgid "Wrong RGB maps. RGB output not added!"
@@ -7156,7 +7249,9 @@ msgstr "Name der G3d Rasterkarte"
 
 #: ../raster3d/r3.in.ascii/main.c:100
 msgid "String representing NULL value data cell (use 'none' if no such value)"
-msgstr "Der Wert, der NULL-Werte repräsentiert. Bitte 'none' eingeben, wenn keine NULL-Werte vorhanden sind."
+msgstr ""
+"Der Wert, der NULL-Werte repräsentiert. Bitte 'none' eingeben, wenn keine "
+"NULL-Werte vorhanden sind."
 
 #: ../raster3d/r3.in.ascii/main.c:259
 msgid "Convert a 3D ASCII raster text file into a (binary) 3D raster map layer "
@@ -7306,7 +7401,7 @@ msgid "Use map coordinates instead of xyz coordinates"
 msgstr "Benutze Kartenkoordinaten anstatt xyz-Koordniaten."
 
 #: ../raster3d/r3.out.vtk/main.c:55 ../raster3d/r3.out.vtk/main.c:301
-#: ../raster3d/r3.to.rast/main.c:302
+#: ../raster3d/r3.to.rast/main.c:302 ../raster3d/r3.in.rast/main.c:308
 msgid "Error closing g3d file"
 msgstr "Fehler beim Schließen der g3d-Datei."
 
@@ -7498,7 +7593,7 @@ msgstr "nichts"
 msgid "grid3 <%s> not found %s\n"
 msgstr "s s"
 
-#: ../raster3d/r3.to.rast/main.c:55
+#: ../raster3d/r3.to.rast/main.c:55 ../raster3d/r3.in.rast/main.c:57
 #, fuzzy
 msgid "Could not close the map"
 msgstr "nicht"
@@ -7523,7 +7618,7 @@ msgstr "Schreiben läuft i i."
 msgid "Writing raster map %i\n"
 msgstr "Schreiben läuft i n"
 
-#: ../raster3d/r3.to.rast/main.c:158
+#: ../raster3d/r3.to.rast/main.c:158 ../raster3d/r3.in.rast/main.c:159
 #, fuzzy
 msgid ""
 "\n"
@@ -7545,12 +7640,12 @@ msgstr "Ausgabe"
 msgid "Resolution of raster and raster3d maps should be equal!"
 msgstr "von gleich sind zu!"
 
-#: ../raster3d/r3.to.rast/main.c:238
+#: ../raster3d/r3.to.rast/main.c:238 ../raster3d/r3.in.rast/main.c:222
 #, fuzzy
 msgid "out of memory!"
 msgstr "von!"
 
-#: ../raster3d/r3.to.rast/main.c:241
+#: ../raster3d/r3.to.rast/main.c:241 ../raster3d/r3.in.rast/main.c:225
 #, fuzzy
 msgid "Illegal output file name"
 msgstr "Ausgabe"
@@ -7578,6 +7673,80 @@ msgstr "s"
 #: ../raster3d/r3.to.rast/main.c:333
 #, fuzzy
 msgid "unable to close output map"
+msgstr "Ausgabe"
+
+#: ../raster3d/r3.in.rast/main.c:80
+msgid "2d raster maps which represent the slices"
+msgstr ""
+
+#: ../raster3d/r3.in.rast/main.c:89
+#, fuzzy
+msgid "output 3dcell map which will be filled with the 2D raster slices"
+msgstr "Ausgabe"
+
+#: ../raster3d/r3.in.rast/main.c:113
+#, fuzzy, c-format
+msgid "RasterToG3D: Writing %i raster maps with rows %i cols."
+msgstr "Schreiben läuft i i."
+
+#: ../raster3d/r3.in.rast/main.c:118
+#, fuzzy, c-format
+msgid "Writing g3d slice %i\n"
+msgstr "Schreiben läuft i n"
+
+#: ../raster3d/r3.in.rast/main.c:124
+#, fuzzy
+msgid "Cold not get raster row \n"
+msgstr "nicht row n"
+
+#: ../raster3d/r3.in.rast/main.c:190
+#, fuzzy
+msgid "Converts 2D raster map slices to one 3D raster map"
+msgstr "eins"
+
+#: ../raster3d/r3.in.rast/main.c:202
+#, fuzzy
+msgid "No output map"
+msgstr "Ausgabe"
+
+#: ../raster3d/r3.in.rast/main.c:214
+#, fuzzy
+msgid "The resolution of raster and raster3d maps should be equal!"
+msgstr "von gleich sind zu!"
+
+#: ../raster3d/r3.in.rast/main.c:249
+#, fuzzy
+msgid "Cell file not found\n"
+msgstr "nicht n"
+
+#: ../raster3d/r3.in.rast/main.c:256
+#, fuzzy, c-format
+msgid "Open raster map %s\n"
+msgstr "s"
+
+#: ../raster3d/r3.in.rast/main.c:268
+#, fuzzy
+msgid "Input maps have to be from the same type. CELL, FCELL or DCELL!"
+msgstr "von!"
+
+#: ../raster3d/r3.in.rast/main.c:272
+#, fuzzy
+msgid "Creating 3D raster map\n"
+msgstr "n"
+
+#: ../raster3d/r3.in.rast/main.c:294
+#, fuzzy
+msgid "error opening g3d file"
+msgstr "Fehler"
+
+#: ../raster3d/r3.in.rast/main.c:325
+#, fuzzy, c-format
+msgid "Open Raster file %s in Mapset %s\n"
+msgstr "s s"
+
+#: ../raster3d/r3.in.rast/main.c:348
+#, fuzzy
+msgid "unable to close input map"
 msgstr "Ausgabe"
 
 #: ../vector/v.category/main.c:175
