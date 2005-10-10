@@ -285,8 +285,7 @@ main (int argc, char **argv)
 		    D_x = (int)(col * D_ew + D_west);
 
 		    if( fixed_color == 0 ) {
-			G_get_color((CELL)cell[col], &R, &G, &B, &colors);
-/* buggy fn:		G_get_raster_color(cell[col], &R, &G, &B, &colors, inmap_type); */
+			G_get_raster_color(&cell[col], &R, &G, &B, &colors, map_type);
 			R_RGB_color(R, G, B);
 		    }
 
