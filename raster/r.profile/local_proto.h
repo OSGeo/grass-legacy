@@ -15,5 +15,10 @@ int read_rast(double, double, double, int, int, RASTER_MAP_TYPE, FILE *, char *)
 /* input.c */
 int input(char *, char *, char *, char *, char *);
 
+#ifdef MAIN
 int clr;
 struct Colors colors;
+#else
+extern int clr;
+extern struct Colors colors;
+#endif
