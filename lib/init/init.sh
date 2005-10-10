@@ -711,9 +711,9 @@ bash)
     echo "test -z $PROFILEREAD && . /etc/profile" > "$bashrc"
     echo "test -r ~/.alias && . ~/.alias" >> "$bashrc"
     echo "umask 022" >> "$bashrc"
-    echo "PROMPT_COMMAND='if test -d /ssi0/ssi/neteler/grassdata/spearfish60/user1/grid3/G3D_MASK && test -f /ssi0/ssi/neteler/grassdata/spearfish60/user1/cell/MASK ; then echo [Raster and Volume MASKs present] ; elif test -f /ssi0/ssi/neteler/grassdata/spearfish60/user1/cell/MASK ; then echo [Raster MASK present] ; elif test -d /ssi0/ssi/neteler/grassdata/spearfish60/user1/grid3/G3D_MASK ; then echo [Volume MASK present] ; fi'" >> "$bashrc"
     echo "PS1='GRASS GRASS_VERSION_NUMBER ($LOCATION_NAME):\w > '" >> "$bashrc"
-
+    echo "PROMPT_COMMAND='if test -d `g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/grid3/G3D_MASK && test -f`g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/cell/MASK ; then echo [Raster and Volume MASKs present] ; elif test -f `g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/cell/MASK ; then echo [Raster MASK present] ; elif test -d `g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/grid3/G3D_MASK ; then echo [Volume MASK present] ; fi'" >> "$bashrc"
+    
     if [ -r "$USERHOME/.grass.bashrc" ]
     then
         cat "$USERHOME/.grass.bashrc" >> "$bashrc"
