@@ -8,6 +8,7 @@
  *
  */
 
+#define MAIN
 #include "local_proto.h"
 
 static double dist, e, n;
