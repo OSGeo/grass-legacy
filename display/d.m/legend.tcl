@@ -27,7 +27,7 @@ proc DmLegend::create { tree parent } {
     pack $check $ico -side left
     
     $tree insert end $parent $node \
-	-text  "Legend $count"\
+	-text  "legend $count"\
 	-window    $frm \
 	-drawcross auto  
         
@@ -66,7 +66,7 @@ proc DmLegend::select_map { id } {
     set m [GSelect cell]
     if { $m != "" } { 
         set DmLegend::opt($id,map) $m
-        Dm::autoname "Legend for $m"
+        Dm::autoname "legend for $m"
     }
 }
 
@@ -113,7 +113,7 @@ proc DmLegend::options { id frm } {
 
     # display lines
     set row [ frame $frm.lines ]
-    Label $row.a -text " Number of lines to display (0=display all):" 
+    Label $row.a -text "Number of lines to display (0=display all):" 
     SpinBox $row.b -range {0 1000 1} -textvariable DmLegend::opt($id,lines) \
                    -entrybg white -width 5 -helptext "Lines to display" 
     pack $row.a $row.b -side left
@@ -182,7 +182,7 @@ proc DmLegend::options { id frm } {
     # mouse
     set row [ frame $frm.mouse ]
     checkbutton $row.a -text \
-        [G_msg "place with mouse (cannot save placement with workspace)"] \
+        [G_msg "place with mouse (cannot save placement with group)"] \
         -variable DmLegend::opt($id,mouse) 
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
@@ -310,12 +310,12 @@ proc DmLegend::duplicate { tree parent node id } {
 
 	if { $opt($id,map) == ""} {
     	$tree insert end $parent $node \
-		-text      "Legend $count" \
+		-text      "legend $count" \
 		-window    $frm \
 		-drawcross auto
 	} else {
 	    $tree insert end $parent $node \
-		-text      "Legend for $opt($id,map)" \
+		-text      "legend for $opt($id,map)" \
 		-window    $frm \
 		-drawcross auto
 	}

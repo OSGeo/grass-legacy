@@ -33,6 +33,7 @@ proc DmLabels::create { tree parent } {
     set opt($count,map) "" 
     set opt($count,minreg) "" 
     set opt($count,maxreg) "" 
+    set opt($count,ignore_rot) 0 
 
     incr count
     return $node
@@ -77,12 +78,19 @@ proc DmLabels::options { id frm } {
     # display only in limited region size range
     set row [ frame $frm.region ]
     Label $row.a -text [G_msg "Display constraints:"]
-    LabelEntry $row.b -label "Min" -textvariable DmLabels::opt($id,minreg) \
+    LabelEntry $row.b -label "min" -textvariable DmLabels::opt($id,minreg) \
             -width 8 -entrybg white
-    LabelEntry $row.c -label "Max" -textvariable DmLabels::opt($id,maxreg) \
+    LabelEntry $row.c -label "max" -textvariable DmLabels::opt($id,maxreg) \
             -width 8 -entrybg white
     Label $row.d -text [G_msg "region size"]
     pack $row.a $row.b $row.c $row.d -side left
+    pack $row -side top -fill both -expand yes
+
+    # ignore rotation
+    set row [ frame $frm.ignore_rot ]
+    checkbutton $row.a -text [G_msg " ignore rotation setting and draw horizontally"] -variable \
+        DmLabels::opt($id,ignore_rot) 
+    pack $row.a -side left
     pack $row -side top -fill both -expand yes
 }
 

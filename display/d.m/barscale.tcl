@@ -27,7 +27,7 @@ proc DmBarscale::create { tree parent } {
     pack $check $ico -side left
     
     $tree insert end $parent $node \
-	-text  "Scale $count"\
+	-text  "scale $count"\
 	-window    $frm \
 	-drawcross auto  
         
@@ -74,7 +74,7 @@ proc DmBarscale::options { id frm } {
             -command "run g.manual d.barscale" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
-    pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
+    pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
     pack $row -side top -fill both -expand yes
     
     # at
@@ -104,7 +104,7 @@ proc DmBarscale::options { id frm } {
     # mouse
     set row [ frame $frm.mouse ]
     checkbutton $row.a -text \
-        [G_msg "place with mouse (must be last layer & cannot save placement with workspace)"] \
+        [G_msg "cannot save placement with group)"] \
         -variable DmBarscale::opt($id,mouse) 
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
@@ -162,18 +162,18 @@ proc DmBarscale::display { node } {
         append cmd " -f"
     }
 
-    # position
+    # place with coordinates
     if { $opt($id,at) != "" && $opt($id,mouse) == 0 } { 
         append cmd " at=$opt($id,at)"
+        run $cmd
     }
 
-
-    # mouse
+    # place with mouse
     if { $opt($id,mouse) != 0 } { 
         append cmd " -m"
+        term $cmd
     }
     
-        run $cmd
         puts $cmd
     
 }
@@ -209,7 +209,7 @@ proc DmBarscale::duplicate { tree parent node id } {
     pack $check $ico -side left
 
     $tree insert end $parent $node \
-		-text      "Scale $count" \
+		-text      "scale $count" \
 		-window    $frm \
 		-drawcross auto
 

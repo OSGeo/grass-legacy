@@ -27,7 +27,7 @@ proc DmFTtext::create { tree parent } {
     pack $check $ico -side left
     
     $tree insert end $parent $node \
-	-text  "Freetype text $count"\
+	-text  "freetype text $count"\
 	-window    $frm \
 	-drawcross auto  
         
@@ -290,7 +290,7 @@ proc DmFTtext::duplicate { tree parent node id } {
 
 	if { $opt($id,text) == ""} {
     	$tree insert end $parent $node \
-		-text      "Freetype text $count" \
+		-text      "freetype text $count" \
 		-window    $frm \
 		-drawcross auto
 	}
