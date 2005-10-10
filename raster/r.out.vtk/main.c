@@ -20,8 +20,10 @@
 #include "gis.h"
 #include "glocale.h"
 #include "globaldefs.h"
-#include "parameters.h"
 #include "writeascii.h"
+
+#define MAIN
+#include "parameters.h"
 
 
 

@@ -27,7 +27,11 @@ typedef struct
 } paramType;
 
 /*global structs*/
+#ifdef MAIN
 paramType param;		/*Parameters */
+#else
+extern paramType param;                /*Parameters */
+#endif
 
 /*prototype*/
 void SetParameters ();
