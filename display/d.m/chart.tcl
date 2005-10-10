@@ -27,7 +27,7 @@ proc DmChart::create { tree parent } {
     pack $check $ico -side left
     
     $tree insert end $parent $node \
-	-text  "Chart $count"\
+	-text  "chart $count"\
 	-window    $frm \
 	-drawcross auto  
         
@@ -65,7 +65,7 @@ proc DmChart::select_map { id } {
     set m [GSelect vector]
     if { $m != "" } { 
         set DmChart::opt($id,map) $m
-        Dm::autoname "Chart for $m"
+        Dm::autoname "chart for $m"
     }
 }
 
@@ -273,12 +273,12 @@ proc DmChart::duplicate { tree parent node id } {
 
 	if { $opt($id,map) == ""} {
     	$tree insert end $parent $node \
-		-text      "Chart $count" \
+		-text      "chart $count" \
 		-window    $frm \
 		-drawcross auto
 	} else {
 	    $tree insert end $parent $node \
-		-text      "Chart for $opt($id,map)" \
+		-text      "chart for $opt($id,map)" \
 		-window    $frm \
 		-drawcross auto
 	}

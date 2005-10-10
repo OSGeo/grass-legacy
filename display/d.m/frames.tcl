@@ -26,7 +26,7 @@ proc DmDframe::create { tree parent } {
     pack $check $ico -side left
     
     $tree insert end $parent $node \
-	-text  "Frame $count"\
+	-text  "frame $count"\
 	-window    $frm \
 	-drawcross auto  
         
@@ -95,7 +95,7 @@ proc DmDframe::options { id frm } {
     
     # place frame3
     set row [ frame $frm.at3 ]
-    Label $row.a -text "     If blank, frame created interactively with mouse (but not saved with workspace)"
+    Label $row.a -text "     If blank, frame created interactively with mouse (but not saved with group)"
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
         
@@ -192,12 +192,12 @@ proc DmDframe::duplicate { tree parent node id } {
 
 	if { $opt($id,frame) == ""} {
     	$tree insert end $parent $node \
-		-text      "Frame $count" \
+		-text      "frame $count" \
 		-window    $frm \
 		-drawcross auto
 	} else {
 	    $tree insert end $parent $node \
-		-text      "Frame $opt($id,frame)" \
+		-text      "frame $opt($id,frame)" \
 		-window    $frm \
 		-drawcross auto
 	}

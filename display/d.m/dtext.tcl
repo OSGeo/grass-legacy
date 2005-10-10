@@ -27,7 +27,7 @@ proc DmDtext::create { tree parent } {
     pack $check $ico -side left
     
     $tree insert end $parent $node \
-	-text  "Text $count"\
+	-text  "text $count"\
 	-window    $frm \
 	-drawcross auto  
         
@@ -197,7 +197,7 @@ proc DmDtext::duplicate { tree parent node id } {
 
 	if { $opt($id,text) == ""} {
     	$tree insert end $parent $node \
-		-text      "Text $count" \
+		-text      "text $count" \
 		-window    $frm \
 		-drawcross auto
 	}

@@ -218,7 +218,7 @@ proc DmRaster::display { node } {
         puts $cmd
     } else {
         run $cmd2
-        puts $cmd
+        puts $cmd2
     }
 
     #display legend for raster map
