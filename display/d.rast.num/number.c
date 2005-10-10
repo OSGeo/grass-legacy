@@ -50,8 +50,7 @@ int draw_number(double, RASTER_MAP_TYPE);
 int D_x, D_y ;
 double D_ew, D_ns;
 
-int 
-main (int argc, char **argv)
+int main (int argc, char **argv)
 {
 	DCELL *cell;
 	char *mapset;
@@ -67,7 +66,7 @@ main (int argc, char **argv)
 	double ew_res, ns_res;
 	extern double D_ew, D_ns;
 	extern int D_x, D_y ;
-	int fixed_color;
+	int fixed_color, grid_color;
 	int R, G, B;
 	int layer_fd;
 	int nrows, ncols, row, col;
@@ -100,8 +99,8 @@ main (int argc, char **argv)
         opt2->type        = TYPE_STRING ;
         opt2->required    = NO ;
         opt2->answer      = "gray" ;
-        opt2->options     = D_COLOR_LIST;
-        opt2->description = _("Color for drawing grid");
+        opt2->options     = D_COLOR_LIST ",none";
+        opt2->description = _("Color for drawing grid, or \"none\"");
 
         opt3              = G_define_option();
         opt3->key         = "text_color";
@@ -128,6 +127,11 @@ main (int argc, char **argv)
 	    if(D_get_cell_name (full_name))
 		G_fatal_error(_("No raster map exists in current window"));
 	}
+
+	if (strcmp("none", opt2->answer) == 0)
+	    grid_color = -1;
+	else
+	    grid_color = D_translate_color(opt2->answer);
 
 	if(text_color->answer)
 	    fixed_color = 0;
@@ -236,25 +240,27 @@ main (int argc, char **argv)
     fprintf (stdout,"U_to_D_yconv:	%f\n", U_to_D_yconv);
 --------------------------------------------------------*/
 
-	/* Set grid color */
-	R_standard_color(D_translate_color(opt2->answer));
+	if(grid_color > 0) { /* ie not "none" */
+	    /* Set grid color */
+	    R_standard_color(grid_color);
 
-	/* Draw vertical grids */
-	U_start = U_east;
-	for (U_x=U_start; U_x>=U_west; U_x -= ew_res)
-	{
+	    /* Draw vertical grids */
+	    U_start = U_east;
+	    for (U_x=U_start; U_x>=U_west; U_x -= ew_res)
+	    {
 		D_x = (int)( ( U_x - U_west ) * U_to_D_xconv + D_west );
 		R_move_abs(D_x, (int)D_south) ;
 		R_cont_abs(D_x, (int)D_north) ;
-	}
+	    }
 
-	/* Draw horizontal grids */
-	U_start = U_north;
-	for (U_y=U_start; U_y>=U_south; U_y -= ns_res)
-	{
+	    /* Draw horizontal grids */
+	    U_start = U_north;
+	    for (U_y=U_start; U_y>=U_south; U_y -= ns_res)
+	    {
 		D_y = (int)( ( U_south - U_y ) * U_to_D_yconv + D_south );
 		R_move_abs((int)D_west, D_y) ;
 		R_cont_abs((int)D_east, D_y) ;
+	    }
 	}
 
 	/* allocate the cell array */

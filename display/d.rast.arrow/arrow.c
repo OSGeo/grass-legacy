@@ -60,16 +60,15 @@ static void arrow_n(void);
 static void draw_x(void);
 static void unknown_(void);
 
-    int D_x, D_y ;
-    double D_ew, D_ns;
-    char *mapset;
-    char layer_name[128];
-    int layer_set;
-    int map_type, arrow_color, grid_color, x_color, unknown_color;
+int D_x, D_y ;
+double D_ew, D_ns;
+char *mapset;
+char layer_name[128];
+int layer_set;
+int map_type, arrow_color, grid_color, x_color, unknown_color;
 
-int 
-main (int argc, char **argv)
 
+int main (int argc, char **argv)
 {
     extern double D_ew, D_ns;
     extern int D_x, D_y ; 
@@ -130,8 +129,8 @@ main (int argc, char **argv)
     opt4->type       = TYPE_STRING ;
     opt4->required   = NO ;
     opt4->answer     = "gray" ;
-    opt4->options    = D_COLOR_LIST;
-    opt4->description= _("Color for drawing grid");
+    opt4->options    = D_COLOR_LIST ",none";
+    opt4->description= _("Color for drawing grid, or \"none\"");
 
     opt5 = G_define_option() ;
     opt5->key        = "x_color" ;
@@ -165,9 +164,13 @@ main (int argc, char **argv)
 
 
     arrow_color   = D_translate_color(opt3->answer) ;
-    grid_color    = D_translate_color(opt4->answer) ;
     x_color       = D_translate_color(opt5->answer) ;
     unknown_color = D_translate_color(opt6->answer) ;
+
+    if (strcmp("none", opt4->answer) == 0)
+	grid_color = -1;
+    else
+	grid_color = D_translate_color(opt4->answer);
 
     if (strcmp("grass", opt2->answer) == 0) 
     	map_type = 1;
@@ -273,26 +276,27 @@ main (int argc, char **argv)
     fprintf (stdout,"U_to_D_yconv:	%f\n", U_to_D_yconv);
 --------------------------------------------------------*/
 
-/* Set color */
+    if(grid_color > 0) { /* ie not "none" */
+	/* Set color */
+	R_standard_color(grid_color);
 
-    R_standard_color(grid_color);
+	/* Draw vertical grids */
+	U_start = U_east;
+	for (U_x=U_start; U_x>=U_west; U_x -= ew_res)
+	{
+	    D_x = (int)( ( U_x - U_west ) * U_to_D_xconv + D_west );
+	    R_move_abs(D_x, (int)D_south) ;
+	    R_cont_abs(D_x, (int)D_north) ;
+	}
 
-/* Draw vertical grids */
-    U_start = U_east;
-    for (U_x=U_start; U_x>=U_west; U_x -= ew_res)
-    {
-	D_x = (int)( ( U_x - U_west ) * U_to_D_xconv + D_west );
-	R_move_abs(D_x, (int)D_south) ;
-	R_cont_abs(D_x, (int)D_north) ;
-    }
-
-/* Draw horizontal grids */
-    U_start = U_north;
-    for (U_y=U_start; U_y>=U_south; U_y -= ns_res)
-    {
-	D_y = (int)( ( U_south - U_y ) * U_to_D_yconv + D_south );
-	R_move_abs((int)D_west, D_y) ;
-	R_cont_abs((int)D_east, D_y) ;
+	/* Draw horizontal grids */
+	U_start = U_north;
+	for (U_y=U_start; U_y>=U_south; U_y -= ns_res)
+	{
+	    D_y = (int)( ( U_south - U_y ) * U_to_D_yconv + D_south );
+	    R_move_abs((int)D_west, D_y) ;
+	    R_cont_abs((int)D_east, D_y) ;
+	}
     }
 
 /* if we didn't get a layer name from the arg options, then
