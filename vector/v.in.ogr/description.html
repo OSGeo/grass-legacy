@@ -90,6 +90,11 @@ The command imports various vector formats:
   <b>v.in.ogr dsn=</b><em>"PG:host=localhost dbname=postgis user=postgres"</em>
     <b>layer=</b><em>polymap</em> <b>output=</b><em>polygons</em>
     <b>type=</b><em>boundary,centroid</em>
+
+<li><B>Oracle Spatial maps </B><BR>
+  Note that you have to set the environment-variables <em>ORACLE_BASE, ORACLE_SID, ORACLE_HOME</em> accordingly.<br>
+  <b>v.in.ogr dsn=</b><em>OCI:username/password</em> <b>output=</b><em>grasslayer</em> 
+     <b>layer=</b><em>roads_oci</em>
   <P>
   <B>Support of database schema:</B>
   <P>
