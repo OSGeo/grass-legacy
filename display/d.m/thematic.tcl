@@ -27,7 +27,7 @@ proc DmThematic::create { tree parent } {
     pack $check $ico -side left
     
     $tree insert end $parent $node \
-	-text  "Thematic $count"\
+	-text  "thematic $count"\
 	-window    $frm \
 	-drawcross auto  
         
@@ -72,7 +72,7 @@ proc DmThematic::select_map { id } {
     set m [GSelect vector]
     if { $m != "" } { 
         set DmThematic::opt($id,map) $m
-        Dm::autoname "Thematic for $m"
+        Dm::autoname "thematic map for $m"
     }
 }
 
@@ -349,12 +349,12 @@ proc DmThematic::duplicate { tree parent node id } {
 
 	if { $opt($id,map) == ""} {
     	$tree insert end $parent $node \
-		-text      "Thematic $count" \
+		-text      "thematic $count" \
 		-window    $frm \
 		-drawcross auto
 	} else {
 	    $tree insert end $parent $node \
-		-text      "Thematic for $opt($id,map)" \
+		-text      "thematic map for $opt($id,map)" \
 		-window    $frm \
 		-drawcross auto
 	}
