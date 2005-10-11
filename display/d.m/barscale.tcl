@@ -104,7 +104,7 @@ proc DmBarscale::options { id frm } {
     # mouse
     set row [ frame $frm.mouse ]
     checkbutton $row.a -text \
-        [G_msg "cannot save placement with group)"] \
+        [G_msg "place with mouse (cannot save placement with group)"] \
         -variable DmBarscale::opt($id,mouse) 
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
