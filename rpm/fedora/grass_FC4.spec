@@ -31,10 +31,6 @@ Autoreq: 0
     %define ENT 1
 %endif
 
-#??
-#%define REL 4
-
-
 
 Summary:	GRASS - Geographic Resources Analysis Support System
 Name:		%PACKAGE_NAME
@@ -45,10 +41,9 @@ Epoch: 0
 Source:	        ftp://grass.itc.it/pub/grass/grass%{shortver}/source/grass-%{version}.tar.gz
 License:	GPL, Copyright by the GRASS Development Team
 Group:		Sciences/Geosciences
-Packager:       MN <x@y> 
+Packager:       Markus Neteler <neteler@itc.it>
 URL:            %PACKAGE_URL
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)/%{name}-%{version}
-#BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Prefix:         %{_prefix}
 
 Requires:       gdal >= 1.3
@@ -211,7 +206,7 @@ ldconfig
 rm -f /usr/lib/libgrass_*
 
 %Changelog
-* Thu Oct 12 2005 MN 
+* Thu Oct 12 2005 Markus Neteler <neteler@itc.it>
   - First build of RPM for Fedora Core 4.
 
 * Thu Mar 30 2005 Craig Aumann <caumann@ualberta.ca> 
