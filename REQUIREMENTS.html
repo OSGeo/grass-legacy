@@ -53,20 +53,25 @@ to install some of them.)
 <br><a href="ftp://ftp.gnu.org/pub/gnu/ncurses/">ftp://ftp.gnu.org/pub/gnu/ncurses</a>
 <br><br>
 
-<li><B>X11</B> window system for graphical output, development libraries (X development
+<li><B>X Window</B>  system for graphical output, development libraries (X development
 libraries, in some linux distributions they are separate packages, e.g. xlibs-dev)</li>
 <br><a href="http://www.xfree.org">http://www.xfree.org</a>
+<br><a href="http://www.xfree.org">http://www.x.org</a><br>
 <br><br>
 
-<li>winGRASS: As alternative a generic MS-Windows driver is under
-construction which does not require X11</li>
+<li>winGRASS note: As alternative a generic MS-Windows driver is under
+construction which does not require X11
 <br><br>
 
 <li><B>PROJ4</B> - Projection Library<br>
-<a href="http://www.remotesensing.org/proj/">http://www.remotesensing.org/proj</a>
+<a href="http://proj.maptools.org">http://proj.maptools.org</a>
+<br><br>
+
+<li><B>GDAL and OGR</B> for import and export of most external raster and vector
+map formats<br>
+<a href="http://www.gdal.org">http://www.gdal.org</a>
 <br></li>
 </ul>
-
 
 <h3>
 Optional requirements:</h3>
@@ -79,11 +84,6 @@ Tcl/Tk 8.3 development packages in order to get NVIZ working correctly.<br>
 see <a href="http://tcl.sourceforge.net">http://tcl.sourceforge.net</a>
 <br></li>
 
-<li><B>GDAL and OGR</B> for import and export of most external raster and vector
-map formats<br>
-<a href="http://www.gdal.org">http://www.gdal.org</a>
-<br></li>
-
 <li>If hardware openGL support is missing in the X Server, <B>Mesa-3.x</B>
 (openGL clone) may be required for NVIZ<br>
 <a href="http://mesa3d.sourceforge.net">http://mesa3d.sourceforge.net</a>
@@ -93,7 +93,7 @@ map formats<br>
 gcc: <a href="http://www.gnu.org/software/gcc/gcc.html">http://www.gnu.org/software/gcc/gcc.html</a>
 <br></li>
 
-<li><B>FFTW 2.x</B> (library for computing the Discrete Fourier Transform), required
+<li><B>FFTW 2.x</B> (but not 3.x, library for computing the Discrete Fourier Transform), required
 for i.fft and i.ifft modules<br>
 <a href="http://www.fftw.org">http://www.fftw.org</a>
 <br></li>
@@ -126,6 +126,10 @@ Note: the support is intended for future module implementations
 
 <li><B>mySQL libraries</B> (for the mySQL database interface)<br>
 <a href="http://www.mysql.org">http://www.mysql.org</a>
+<br></li>
+
+<li><B>sqlite libraries</B> (for the sqlite database interface)<br>
+<a href="http://www.sqlite.org">http://www.sqlite.org</a>
 <br></li>
 
 <li><B>unixODBC</B> (for the ODBC database interface)<br>
