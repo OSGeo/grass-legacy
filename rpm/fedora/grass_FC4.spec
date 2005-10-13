@@ -5,7 +5,7 @@
 %define PACKAGE_NAME grass
 %define PACKAGE_VERSION 6.1.cvs
 %define PACKAGE_URL http://grass.itc.it/index.php
-%define _prefix /usr/local
+%define _prefix /usr
 %define _bindir /usr/bin
 %define shortver 61
 
@@ -31,6 +31,10 @@ Autoreq: 0
     %define ENT 1
 %endif
 
+#??
+#%define REL 4
+
+
 
 Summary:	GRASS - Geographic Resources Analysis Support System
 Name:		%PACKAGE_NAME
@@ -41,7 +45,7 @@ Epoch: 0
 Source:	        ftp://grass.itc.it/pub/grass/grass%{shortver}/source/grass-%{version}.tar.gz
 License:	GPL, Copyright by the GRASS Development Team
 Group:		Sciences/Geosciences
-Packager:       Markus Neteler <neteler@itc.it>
+Packager:       Markus Neteler <neteler@itc.it> 
 URL:            %PACKAGE_URL
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)/%{name}-%{version}
 Prefix:         %{_prefix}
@@ -127,8 +131,8 @@ LDFLAGS="-s"
    --with-proj \
    --with-proj-includes=/usr/include \
    --with-proj-libs=/usr/lib \
-   --with-glw
-#   --with-cxx \
+   --with-glw \
+   --with-cxx
 #   --with-mysql \
 #   --with-mysql-includes=/usr/include/mysql \
 #   --with-mysql-libs=/usr/lib/mysql \
@@ -189,12 +193,32 @@ ldconfig
 #echo "done."
 
 echo -n "linking libgrass ..."
-cd /usr/lib/
-ln -s /usr/local/grass-%{version}/lib/libgrass_I.so .
-ln -s /usr/local/grass-%{version}/lib/libgrass_vask.so .
-ln -s /usr/local/grass-%{version}/lib/libgrass_gmath.so .
-ln -s /usr/local/grass-%{version}/lib/libgrass_gis.so .
-ln -s /usr/local/grass-%{version}/lib/libgrass_datetime.so .
+cd %{_prefix}/lib/
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_I.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_vask.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_gmath.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_gis.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_datetime.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_vect.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_dig2.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_dbmiclient.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_dbmibase.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_shape.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_dgl.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_rtree.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_linkm.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_form.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_gproj.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_vect.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_dig2.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_dbmiclient.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_dbmibase.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_shape.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_dgl.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_rtree.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_linkm.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_form.so .
+ln -s %{_prefix}/grass-%{version}/lib/libgrass_gproj.so .
 echo "done."
 
 %postun
@@ -208,16 +232,12 @@ rm -f /usr/lib/libgrass_*
 %Changelog
 * Thu Oct 12 2005 Markus Neteler <neteler@itc.it>
   - First build of RPM for Fedora Core 4.
-
 * Thu Mar 30 2005 Craig Aumann <caumann@ualberta.ca> 
   - First build of RPM for Fedora Core 3.
-
 * Wed Sep 01 2004 Bernhard Reiter <bernhard@intevation.de>
   - made ready to be checked into GRASS CVS: added header, disabled Patch1
-
 * Tue Aug 10 2004 Silke Reimer <silke.reimer@intevation.net>
   - small changes to fit to Fedora naming conventions
-
 * Thu Jul 01 2004 Silke Reimer <silke.reimer@intevation.net>
   - Initial build
 
