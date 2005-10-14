@@ -94,6 +94,15 @@ else
  driver=`v.db.connect $GIS_OPT_map -g | grep -w $QUERYLAYER | awk '{print $5}'`
 fi
 
+#maybe there is already a table linked to the selected layer?
+if [ $GIS_OPT_layer -eq 1 ] ; then
+  v.db.connect $GIS_OPT_map -g | grep -w $GIS_OPT_layer 2>&1 > /dev/null
+  if [ $? -eq 0 ] ; then
+     echo "ERROR: there is already a table linked to layer <$GIS_OPT_layer>"
+     exit 1
+  fi
+fi
+
 echo "CREATE TABLE $table (cat integer, $GIS_OPT_columns)" | db.execute database=$database driver=$driver
 if [ $? -ne 0 ] ; then
  # take care if no DB was ever defined (e.g., in a new mapset)
