@@ -2409,7 +2409,7 @@ msgstr "Propager les valeurs NULL"
 
 #: ../raster/r.slope.aspect/main.c:134
 msgid "Generates raster map layers of slope, aspect, curvatures and partial derivatives from a raster map layer of true elevation values. Aspect is calculated counterclockwise from east."
-msgstr "Produit des cartes raster de gradient, aspect, courbatures et dérivées partielles à partir d'une carte raster de valeurs réelles d'altitude. L'aspect est calculé dans le sens contraire des aiguilles d'une montre à partir de l'est."
+msgstr "Produit des cartes raster de pente, aspect, courbatures et dérivées partielles à partir d'une carte raster de valeurs réelles d'altitude. L'aspect est calculé dans le sens contraire des aiguilles d'une montre à partir de l'est."
 
 #: ../raster/r.slope.aspect/main.c:143
 msgid "Raster elevation file name"
@@ -2417,15 +2417,15 @@ msgstr "Fichier raster d'altitude"
 
 #: ../raster/r.slope.aspect/main.c:151
 msgid "Output slope filename"
-msgstr "Fichier sortie pour le gradient"
+msgstr "Fichier sortie pour la pente"
 
 #: ../raster/r.slope.aspect/main.c:159
 msgid "Format for reporting the slope"
-msgstr "Format de sortie du gradient"
+msgstr "Format de sortie pour la pente"
 
 #: ../raster/r.slope.aspect/main.c:167
 msgid "Type of output aspect and slope maps"
-msgstr "Type de sortie pour les cartes d'aspect et de gradient"
+msgstr "Type de sortie pour les cartes d'aspect et de pente"
 
 #: ../raster/r.slope.aspect/main.c:175
 msgid "Output aspect filename"
@@ -2465,7 +2465,7 @@ msgstr "Facteur multiplicatif pour convertir les unités d'altitude en mètres"
 
 #: ../raster/r.slope.aspect/main.c:242
 msgid "Minimum slope val. (in percent) for which aspect is computed"
-msgstr "Valeur du gradient minimal (en pourcentage) pour laquelle l'aspect doit être calculé"
+msgstr "Valeur de pente minimale (en pourcentage) pour laquelle l'aspect doit être calculé"
 
 #: ../raster/r.slope.aspect/main.c:249
 msgid "Do not align the current region to the elevation layer"
