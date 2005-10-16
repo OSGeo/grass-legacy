@@ -9,22 +9,33 @@ The second method involves setting the <EM>map</EM> parameter
 to the name of the desired aspect map.
 This allows the arrows to be drawn over any other maps already displayed
 on the graphics monitor.
-
-
 <P>
 
 <EM>d.rast.arrow</EM> will draw an arrow over each displayed cell
-to indicate in which direction the cell slopes.
-An arrow can point in one of eight directions.  If the aspect
+to indicate in which direction the cell slopes. If the aspect
 layer has a category value denoting locations of "unknown" aspect,
 <EM>d.rast.arrow</EM> draws a question mark over the displayed cells
 of that category.
-Cells of containing null data will be marked with an "X".
-
+Cells containing null data will be marked with an "X".
+<p>
+If you specify the <em>magnitude_map</em> option, the arrow lengths, 
+denoting magnitude will be extracted from the cell values of the specified 
+map. You may adjust the overall scale using the <em>scale</em> option.
+Currently, <em>d.rast.arrow</em> will ignore negative magnitudes, and will
+warn you if the debug level is at 5 or higher. Be aware. If your application
+uses negative values for magnitude, you can use <em>r.mapcalc</em> to prepare
+the magnitude map to suit your needs (absolute value, inverted direction and 
+so on).
 <P>
+For floating-point rasters, the cell values will determine arrows pointing 
+to the corresponding direction, not only the eight multiples of 45 degrees.
+<p>
 <H2>NOTES</H2>
-Arrows are drawn at the size of a cell and cannot be seen if the raster map is
-relatively close in scale.  From a command line mode, the user cannot run
+By default, arrows are drawn at the size of a cell and cannot be seen if 
+the raster map is relatively close in scale. You can use the <em>skip</em> 
+option to draw arrows every n-th cell in both directions if you are working 
+with relatively high resolutions.
+<p> From a command line mode, the user cannot run
 <EM>d.rast.arrow</EM> and then run <EM><A HREF="d.zoom.html">d.zoom</A></EM>
 and still see the arrows.  The zooming action erases the arrows and the user
 must run <EM>d.rast.arrow</EM> again. <!-- is this a bug or a feature? -->
