@@ -1,6 +1,6 @@
 interface_build {
     {s.out.e00} 0
     {Export GRASS sites file to ESRI Arc/Info point coverage in e00 format.}
-    {entry input {Input GRASS sites file:} 0 site}
+    {entry input {Input GRASS sites file:} 0 sites}
     {entry output {Output e00 file:} 0 file}
 }

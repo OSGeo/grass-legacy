@@ -45,7 +45,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#define PQHEAP_MEM_DEBUG if(0)
+#define PQHEAP_MEM_DEBUG 0
 
 
 //HEAPSTATUS can be defined at compile time
@@ -214,9 +214,10 @@ pqheap_t1<T>::pqheap_t1(unsigned int size) {
   elements = new T [size];
   cout << "pqheap_t1: register memory\n"; 
   cout.flush();
-  PQHEAP_MEM_DEBUG cout << "pqheap_t1::pq_heap_t1: allocate\n";
-  PQHEAP_MEM_DEBUG MMmanager.print();
-
+#if PQHEAP_MEM_DEBUG
+  cout << "pqheap_t1::pq_heap_t1: allocate\n";
+  MMmanager.print();
+#endif
   
   if (!elements) {
     cout << "could not allocate priority queue: insufficient memory..\n";

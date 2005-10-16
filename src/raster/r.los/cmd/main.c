@@ -380,7 +380,8 @@ main (int argc, char *argv[])
 	}
 	segment_release(&seg_in);	/* release memory	*/
 	segment_release(&seg_out);
-	segment_release(&seg_patt);
+	if(patt_flag == 1)
+		segment_release(&seg_patt);
 	close(in_fd);			/* close all files	*/
 	close(out_fd);
 	unlink (in_name);               /* remove temp files as well */

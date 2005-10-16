@@ -43,7 +43,7 @@
 
 
 #include <stdio.h>
-#include <ostream.h>
+#include <ostream>
 using namespace std;
 
 #include <ami.h>

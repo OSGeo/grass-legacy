@@ -13,8 +13,9 @@
  * Last updated: 09/2000
  */
 
-#include<math.h>
-#include<stdlib.h>
+#include <math.h>
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "krig.h"
 
@@ -40,11 +41,9 @@ main (int argc, char *argv[])
   struct GModule *module;
   int row, col;
   double north, east;
-  double maxdist, dist;
-  double sum1, sum2;
   double semi_range, semi_sill, semi_nugget, max_lag;
   double semi_power;
-  int i, n, max, model_num;
+  int model_num;
   char var_model[40];
   struct
   {

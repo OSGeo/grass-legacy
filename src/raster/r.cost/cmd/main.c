@@ -235,13 +235,8 @@ int main (int argc, char *argv[])
 		have_stop_points  = process_answers(opt4->answers, &head_end_pt, &pres_stop_pt) ;
 
 	if (sscanf(opt5->answer, "%d", &maxcost) != 1 || maxcost < 0)
-	{
-		sprintf(buf, "Inappropriate maximum cost: %d", maxcost);
-		G_fatal_error (buf) ;
-		exit(1) ;
-	}
-	
- 
+		G_fatal_error("Inappropriate maximum cost: %d", maxcost);
+
 	if ((opt6->answer == NULL) ||(sscanf(opt6->answer, "%lf", &null_cost) != 1))
 	{
 		if (verbose)
@@ -251,6 +246,11 @@ int main (int argc, char *argv[])
 	else if (verbose && keep_nulls)
 			fprintf(stderr,"Input null cell will be retained into output map\n");
 
+	if(opt7->answer) {
+	    search_mapset = G_find_file ("site_lists", opt7->answer, "");
+	    if (search_mapset == NULL)
+	        G_fatal_error("sites file [%s] not found", opt7->answer);
+	}
 
 	if(!G_is_d_null_value(&null_cost)) {
 		if (null_cost <0.0) {

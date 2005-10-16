@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+
+#include "gis.h"
 #include "krig.h"
 
 /*
@@ -21,7 +23,7 @@
 void 
 dist_to_n_smpls (double new_east, double new_north)
 {
-  int indx, i, cnt;		/* Index into original array */
+  int indx, cnt;		/* Index into original array */
   extern int npoints, nsearch;
   extern mat_struct *smpl_dist, *smpl_z, *smpl_north, *smpl_east;
   extern Point *points;

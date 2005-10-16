@@ -1,5 +1,5 @@
 interface_build {
-    {r.surf.area} 0
+    {r.surf.fractal} 0
     {Generate a raster surface map(s) for specified fractal dimension, using spectral synthesis method.}
     {entry out {Output fractal raster surface map:} 0 raster}
     {entry d {Fractal dimension of surface (2<value<3) [default=2.05]:} 0 ""}
