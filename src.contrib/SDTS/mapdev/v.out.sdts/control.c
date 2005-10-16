@@ -8,6 +8,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "Vect.h"
 #include "defines.h"
@@ -244,8 +245,6 @@ read_metadata_from_user_metafile (fpin)
 }
 
 #include <time.h>
-
-char *malloc();
 
 char *
 get_IDEN_DCDT ()
