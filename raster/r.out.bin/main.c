@@ -105,7 +105,9 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(1);
 
-    sscanf(parm.null->answer, "%d", &null_str);
+    if( sscanf(parm.null->answer, "%d", &null_str) != 1 )
+	G_fatal_error(_("Invalid value for null (integers only)"));
+
     name = parm.input->answer;
     outfile = parm.output->answer;
 
