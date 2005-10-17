@@ -25,14 +25,14 @@ int main(int argc, char *argv[])
     char *name;
     char *outfile;
     char *mapset;
-    char errbuf[100];
     int null_str = 0;
-    char cell_buf[300], buf[128];
+    char buf[128];
     int fd;
     int row, col;
-    int nrows, ncols, i;
+    int nrows, ncols;
     short number_i;
     int do_stdout = 0;
+    int swapFlag;
     FILE *fp;
     struct GRD_HEADER header;
     struct FPRange range;
@@ -55,12 +55,6 @@ int main(int argc, char *argv[])
     {
 	struct Flag *int_out, *gmt_hd, *BIL_hd, *swap;
     } flag;
-    union
-    {
-	int testWord;
-	char testByte[sizeof(int)];
-    } endianTest;
-    int swapFlag;
 
 
     G_gisinit(argv[0]);
@@ -82,7 +76,7 @@ int main(int argc, char *argv[])
     parm.output->type = TYPE_STRING;
     parm.output->required = YES;
     parm.output->description =
-	_("Name for output binary map (use out=- for stdout)");
+	_("Name for output binary map (use output=- for stdout)");
 
     parm.null = G_define_option();
     parm.null->key = "null";
@@ -115,13 +109,12 @@ int main(int argc, char *argv[])
     name = parm.input->answer;
     outfile = parm.output->answer;
 
-    /* Does not seem to like this name?
-     * 
-     * if ((strcmp("", outfile)) == 0) {
-     * outfile = name;
-     * strcat (outfile,".bin");
-     * } else {
-     */
+/* Does not seem to like this name?
+    if ((strcmp("", outfile)) == 0) {
+	outfile = name;
+	strcat (outfile,".bin");
+    } else {
+*/
     if ((strcmp("-", outfile)) == 0)
 	do_stdout = 1;
 
@@ -135,30 +128,21 @@ int main(int argc, char *argv[])
     else
 	out_type = CELL_TYPE;
 
-    if (mapset == NULL) {
-	char msg[100];
-
-	sprintf(msg, "%s: <%s> cellfile not found\n", G_program_name(), name);
-	G_fatal_error(msg);
-	exit(1);
-    }
+    if (mapset == NULL)
+	G_fatal_error(_("Raster map [%s] not found"), name);
 
     fd = G_open_cell_old(name, mapset);
     if (fd < 0)
-	exit(1);
+	G_fatal_error(_("Cannot open cell file [%s]"), name);
 
     /* open bin file for writing */
     if (do_stdout)
 	fp = stdout;
-    else if (NULL == (fp = fopen(outfile, "w"))) {
-	sprintf(errbuf, "Not able to open file for [%s]", outfile);
-	G_fatal_error(errbuf);
-    }
-
+    else if (NULL == (fp = fopen(outfile, "w")))
+	G_fatal_error(_("Unable to create file [%s]"), outfile);
 
     /* Check Endian State of Host Computer */
-    endianTest.testWord = 1;
-    if (endianTest.testByte[0] == 1) {
+    if(G_is_little_endian()) {
 	swapFlag = 1;		/*true: little endian */
 	if (flag.swap->answer)
 	    swapFlag = 0;	/* Swapping enabled */
@@ -229,9 +213,7 @@ int main(int argc, char *argv[])
 	strcat(header.remark, " used for NULL");
     }
 
-    /* Write out BIL support files compatible with 
-     * Arc-View 
-     */
+    /* Write out BIL support files compatible with Arc-View */
     if (flag.BIL_hd->answer) {
 	char out_tmp1[100], out_tmp2[100];
 	FILE *fp_1, *fp_2;
@@ -242,16 +224,13 @@ int main(int argc, char *argv[])
 	strcat(out_tmp2, ".wld");
 
 	/* Open Header File */
-	if (NULL == (fp_1 = fopen(out_tmp1, "w"))) {
-	    sprintf(errbuf, "Not able to open file for [%s]", out_tmp1);
-	    G_fatal_error(errbuf);
-	}
+	if (NULL == (fp_1 = fopen(out_tmp1, "w")))
+	    G_fatal_error(_("Unable to create file [%s]"), out_tmp1);
 
 	/* Open World File */
-	if (NULL == (fp_2 = fopen(out_tmp2, "w"))) {
-	    sprintf(errbuf, "Not able to open file for [%s]", out_tmp2);
-	    G_fatal_error(errbuf);
-	}
+	if (NULL == (fp_2 = fopen(out_tmp2, "w")))
+	    G_fatal_error(_("Unable to create file [%s]"), out_tmp2);
+
 
 	fprintf(stderr, "Creating BIL support files ...\n");
 	fprintf(stderr, "Header File = %s\n", out_tmp1);
@@ -260,6 +239,7 @@ int main(int argc, char *argv[])
 	fprintf(fp_1, "nrows %d\n", region.rows);
 	fprintf(fp_1, "ncols %d\n", region.cols);
 	fprintf(fp_1, "nbands 1\n");
+
 	if (out_type == CELL_TYPE)
 	    fprintf(fp_1, "nbits 16\n");
 	if (out_type == FCELL_TYPE)
@@ -270,7 +250,9 @@ int main(int argc, char *argv[])
 	    fprintf(fp_1, "byteorder I\n");	/* Intel - little endian */
 	if (swapFlag == 0)
 	    fprintf(fp_1, "byteorder M\n");	/* Motorola - big endian */
+
 	fprintf(fp_1, "layout bil\n");
+
 	if (flag.gmt_hd->answer) {
 	    if (swapFlag == 1)
 		fprintf(fp_1, "skipbytes 892\n");	/* Real size of struct - little endian */
@@ -279,7 +261,8 @@ int main(int argc, char *argv[])
 	}
 	else
 	    fprintf(fp_1, "skipbytes 0\n");
-	fprintf(fp_1, "nodata %f\n", null_str);
+
+	fprintf(fp_1, "nodata %d\n", null_str);
 
 	fclose(fp_1);
 
@@ -350,16 +333,14 @@ int main(int argc, char *argv[])
     fprintf(stderr, "r=%d\n", region.rows);
     fprintf(stderr, "c=%d\n\n", region.cols);
 
-    fprintf(stderr, "Percent complete: ");
+    fprintf(stderr, _("Percent complete: "));
 
-    fd = G_open_cell_old(name, mapset);
-    if (fd < 0)
-	exit(1);
 
     for (row = 0; row < nrows; row++) {
 	if (G_get_raster_row(fd, raster, row, out_type) < 0)
-	    exit(1);
+	    G_fatal_error(_("Reading map"));
 	G_percent(row, nrows, 2);
+
 	for (col = 0, ptr = raster; col < ncols; col++,
 	     ptr = G_incr_void_ptr(ptr, G_raster_size(out_type))) {
 	    if (!G_is_null_value(ptr, out_type)) {
@@ -405,22 +386,24 @@ int main(int argc, char *argv[])
 	    }
 	}
     }
+    G_percent(row, nrows, 2); /* finish it off */
+
     G_close_cell(fd);
     fclose(fp);
-    fprintf(stderr, "\nDone !\n");
+
+    G_done_msg("\n");
     exit(0);
 }
 
+#ifdef UNUSED
 int set_type(char *str, RASTER_MAP_TYPE * out_type)
 {
-    char msg[100];
     char *ch;
 
     ch = str;
-    if (*ch != '%') {
-	sprintf(msg, "wrong format: %s", str);
-	G_fatal_error(msg);
-    }
+    if (*ch != '%')
+	G_fatal_error("wrong format: %s", str);
+
     while (*(++ch)) ;
     ch--;
     if (*ch == 'd' || *ch == 'i' || *ch == 'o' || *ch == 'u' || *ch == 'x' ||
@@ -428,9 +411,8 @@ int set_type(char *str, RASTER_MAP_TYPE * out_type)
 	*out_type = CELL_TYPE;
     else if (*ch == 'f' || *ch == 'e' || *ch == 'E' || *ch == 'g' || *ch == 'G')
 	*out_type = DCELL_TYPE;
-    /*
-     *out_type = FCELL_TYPE;
-     */
+/*	*out_type = FCELL_TYPE; */
 
     return 0;
 }
+#endif
