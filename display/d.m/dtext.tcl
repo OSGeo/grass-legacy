@@ -1,4 +1,4 @@
-# 1 Sept 2005
+          # 1 Sept 2005
 # panel for d.text
 # Michael Barton, Arizona State University
 
@@ -141,7 +141,7 @@ proc DmDtext::display { node } {
 
     if { $opt($id,text) == "" } { return } 
     
-    set cmd "d.text color=$color size=$opt($id,size) "
+    set cmd "echo $opt($id,text) | d.text color=$color size=$opt($id,size) "
 
     # at
     if { $opt($id,at) != "" } { 
@@ -159,7 +159,9 @@ proc DmDtext::display { node } {
         append cmd " -b"
     }
     
-    eval "exec echo $opt($id,text) | $cmd"
+#    eval "exec echo $opt($id,text) | $cmd"
+
+	run_panel $cmd
     
 }
 

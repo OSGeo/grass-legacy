@@ -37,6 +37,7 @@ set tmenu "1"
 set keyctrl "Ctrl"
 set execom "execute"
 
+
 set bgcolor HoneyDew2
 
 # add for OSX aqua
@@ -67,7 +68,6 @@ source $dmpath/cmd.tcl
 source $dmpath/tree.tcl
 source $dmpath/tool1.tcl
 source $dmpath/tool2.tcl
-#source $dmpath/tool3.tcl
 source $dmpath/group.tcl
 source $dmpath/vector.tcl
 source $dmpath/raster.tcl
@@ -95,7 +95,10 @@ namespace eval Dm {
 }
 
 
-###############################################################################
+
+
+################################################################################
+
 proc execute {cmd} {
     global dlg path
 
@@ -119,9 +122,38 @@ proc spawn {cmd args} {
 
 
 ###############################################################################
-proc run {cmd args} {
-    eval exec -- $cmd $args >@ stdout 2>@ stderr
+proc run_panel {cmd} {
+	global outtext
+    eval exec -- $cmd >@ stdout 2>@ stderr
+    set str $cmd
+	$outtext insert end "$cmd\n"
+	$outtext yview end
+
+	update idletasks
 }
+
+###############################################################################
+proc term_panel {cmd} {
+    global env
+    eval exec -- xterm -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd &
+    set str $cmd
+	$outtext insert end "$cmd\n"
+	$outtext yview end
+
+	update idletasks
+}
+
+###############################################################################
+proc run {cmd args} {
+	#set cmd $cmd $args
+	#run_cmd $cmd
+    eval exec -- $cmd $args >@ stdout 2>@ stderr
+#    set outtext "this is output"
+    set output_sw.text "this is output"
+	update idletasks
+
+}
+
 
 
 ###############################################################################
@@ -129,7 +161,6 @@ proc term {cmd args} {
     global env
     eval exec -- xterm -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd $args &
 }
-
 
 ###############################################################################
 
@@ -187,6 +218,7 @@ proc Dm::color { color } {
     return "$r:$g:$b"
 }
 
+###############################################################################
 
 proc Dm::displmon { mon } {
     global dmpath
@@ -203,23 +235,27 @@ proc Dm::displmon { mon } {
     }
 }
 
+###############################################################################
 
 
 proc Dm::create { } {
     global dmpath
     global mainwindow
     global bgcolor
+    global cmd
+    global outtext
     variable mainframe
     variable options
     variable tree
     variable prgtext
     variable prgindic
-
+	
     set prgtext [G_msg "Loading GIS Manager"]
     set prgindic -1
     _create_intro
     update
     
+        
     # eval "exec sleep 20"
 
     global env
@@ -238,13 +274,13 @@ proc Dm::create { } {
     DmToolBar1::create $tb1
     set tb2  [$mainframe addtoolbar]
     DmToolBar2::create $tb2
-    set pw2 [PanedWindow $mainwindow.pw2 -side top -pad 0 -width 6 -background $bgcolor]
-    pack $pw2 -side top -expand yes -fill both -anchor n 
-    set pw [PanedWindow $mainwindow.pw -side left -background $bgcolor ]   
-    pack $pw -side bottom -expand yes -fill both -anchor n 
+    set pw1 [PanedWindow $mainwindow.pw1 -side top -pad 0 -width 6 -background $bgcolor]
+    pack $pw1 -side top -expand no -fill x -anchor n 
+    set pw2 [PanedWindow $mainwindow.pw2 -side left -pad 0 -width 10 -background $bgcolor ]   
+    pack $pw2 -side left -expand yes -fill both -anchor n 
 
     # MANAGE DISPLAY MONITORS
-    set monitor_pane  [$pw2 add -minsize 1 -weight 0 ]
+    set monitor_pane  [$pw1 add -minsize 1 -weight 0 ]
 
     set bbox1 [ButtonBox $monitor_pane.bbox1 -spacing 0 -background $bgcolor -orient vertical ]
     
@@ -288,33 +324,47 @@ proc Dm::create { } {
     
    
     # tree 
-    set tree_pane  [$pw2 add  -minsize 50 -weight 1]
+    set tree_pane  [$pw1 add  -minsize 50 -weight 1]
     set tree [ DmTree::create $tree_pane ]
     pack $tree_pane -side right -expand yes -fill both
 
 
     # options
-    set options_pane  [$pw add -minsize 50 -weight 1]
-    set options_sw [ScrolledWindow $options_pane.sw -relief sunken -borderwidth 2]
-    set options_sf [ ScrollableFrame $options_sw.sf]
+    set options_pane  [$pw2 add -minsize 50 -weight 1]
+    set options_sw [ScrolledWindow $options_pane.sw -relief raised -borderwidth 1]
+    set options_sf [ScrollableFrame $options_sw.sf]
     $options_sf configure -height 180 -width 500
     $options_sw setwidget $options_sf
     set options [$options_sf getframe]
     pack $options_pane -expand yes -fill both 
     pack $options_sw $options_sf -fill both -expand yes
  
+    # output
+    set output_pane  [$pw2 add -minsize 50 -weight 2 ]
+    pack $output_pane -expand yes -fill both 
+    pack $pw2 -fill both -expand yes
+
+    set output_sw [ScrolledWindow $output_pane.win -relief sunken -borderwidth 1]
+	set outtext [text $output_sw.text -height 5 -width 30] 
+	$output_sw setwidget $outtext
+    pack $output_sw $outtext -fill both -expand yes
+  
+
     set prgtext   [G_msg "Done"]
 
-    set Dm::status [G_msg "Welcome to GRASS GIS manager"]
+    set Dm::status [G_msg "Welcome to the GRASS GIS manager"]
     $mainframe showstatusbar status 
 
     pack $mainframe -fill both -expand yes
  
-    set fon [font create -family Times -size 16 ]
+    set fon [font create -family Times -size 14 ]
     DynamicHelp::configure -font $fon -background yellow
+
 
     update idletasks
 }
+
+###############################################################################
 
 proc Dm::_create_intro { } {
     global dmpath
@@ -342,6 +392,8 @@ proc Dm::_create_intro { } {
     wm deiconify $top
 }
 
+###############################################################################
+
 # create new empty
 proc Dm::new { } {
     variable tree
@@ -359,6 +411,8 @@ proc Dm::new { } {
     set ::Dm::filename Untitled.dmrc 
 }
 
+###############################################################################
+
 #Ctrl-W to close file
 proc Dm::FileClose { stay_alive} {
     variable tree
@@ -371,6 +425,8 @@ proc Dm::FileClose { stay_alive} {
     	catch {unset ::Dm::filename}
     }
 }
+
+###############################################################################
 
 # add new group/layer to tree
 proc Dm::add { type } {
@@ -437,6 +493,8 @@ proc Dm::add { type } {
     }
 }
 
+###############################################################################
+
 # autoname layer when a map is selected
 proc Dm::autoname { name } {
     variable tree
@@ -502,6 +560,8 @@ proc Dm::select { node } {
     }
 }
 
+###############################################################################
+
 # deselect ( hide options )
 proc Dm::deselect { node } {
     variable tree
@@ -509,6 +569,8 @@ proc Dm::deselect { node } {
 
     destroy $options.fr
 }
+
+###############################################################################
 
 # delete selected node
 proc Dm::delete { } {
@@ -522,6 +584,8 @@ proc Dm::delete { } {
     destroy $options.fr
 }
 
+###############################################################################
+
 # open monitor if no one is runnning
 proc Dm::monitor { } {
     if ![catch {open "|d.mon -L" r} input] {
@@ -533,6 +597,8 @@ proc Dm::monitor { } {
     }
     run "d.mon start=x0"
 }
+
+###############################################################################
 
 #digitize
 proc Dm::edit { } {
@@ -593,14 +659,20 @@ proc Dm::edit { } {
 
 }
 
+###############################################################################
+
 # display
 proc Dm::display { } {
+	global outtext
+	$outtext delete 1.0 end
 
     Dm::monitor
     run "d.frame -e"
-#    execute "d.erase"
     DmGroup::display "root"
+
 }
+
+###############################################################################
 
 # display all
 proc Dm::displayall { } {
@@ -610,6 +682,8 @@ proc Dm::displayall { } {
 
     Dm::display
 }
+
+###############################################################################
 
 # display region
 proc Dm::display_region { } {
@@ -623,6 +697,8 @@ proc Dm::display_region { } {
     }
 }
 
+###############################################################################
+
 # zoom
 proc Dm::zoom { } {
     
@@ -631,6 +707,8 @@ proc Dm::zoom { } {
 
 }
 
+###############################################################################
+
 # zoom back
 proc Dm::zoom_back { } {
     
@@ -638,6 +716,8 @@ proc Dm::zoom_back { } {
     term $cmd
 
 }
+
+###############################################################################
 
 # pan
 proc Dm::pan { } {
@@ -648,6 +728,8 @@ proc Dm::pan { } {
 }
 
 
+###############################################################################
+
 # measure
 proc Dm::measure { } {
     
@@ -655,6 +737,8 @@ proc Dm::measure { } {
     term $cmd 
 
 }
+
+###############################################################################
 
 # position
 proc Dm::position { } {
@@ -664,6 +748,8 @@ proc Dm::position { } {
 
 }
 
+###############################################################################
+
 # nviz
 proc Dm::nviz { } {
     
@@ -672,6 +758,8 @@ proc Dm::nviz { } {
 
 }
 
+###############################################################################
+
 # fly
 proc Dm::fly { } {
     
@@ -679,6 +767,9 @@ proc Dm::fly { } {
     spawn $cmd
 
 }
+
+###############################################################################
+
 # xganim
 proc Dm::xganim { } {
     
@@ -686,6 +777,8 @@ proc Dm::xganim { } {
     spawn $cmd 
 
 }
+
+###############################################################################
 
 # erase to white
 proc Dm::erase { } {
@@ -696,6 +789,8 @@ proc Dm::erase { } {
 
 }
 
+###############################################################################
+
 # help
 proc Dm::help { } {
     
@@ -703,6 +798,8 @@ proc Dm::help { } {
     term $cmd 
 
 }
+
+###############################################################################
 
 # display node
 proc Dm::display_node { node } {
@@ -755,6 +852,8 @@ proc Dm::display_node { node } {
 	}
     } 
 }
+
+###############################################################################
 
 # display node
 proc Dm::print_node { file node } {
@@ -812,6 +911,8 @@ proc Dm::print_node { file node } {
     } 
 }
 
+###############################################################################
+
 # query selected map
 proc Dm::query { } {
     variable tree
@@ -865,6 +966,8 @@ proc Dm::query { } {
         }
     }
 }
+
+###############################################################################
 
 # duplicate selected layer
 proc Dm::duplicate { } {
@@ -939,6 +1042,9 @@ proc Dm::duplicate { } {
     }
 }
 
+
+###############################################################################
+
 # save tree/options to file
 proc Dm::save { spth } {
     global gisdbase location_name mapset
@@ -954,6 +1060,8 @@ proc Dm::save { spth } {
 
     close $rcfile
 }
+
+###############################################################################
 
 # save node to file
 proc Dm::save_node { depth node } {
@@ -1043,6 +1151,8 @@ proc Dm::save_node { depth node } {
     Dm::rc_write $depth End
     
 }
+
+###############################################################################
 
 # load tree/options from file
 proc Dm::load { lpth } {
@@ -1227,6 +1337,8 @@ proc Dm::load { lpth } {
     set prgtext "Layers loaded"
 }
 
+###############################################################################
+
 # write one row
 proc Dm::rc_write { depth args } {
     variable rcfile
@@ -1242,6 +1354,8 @@ proc Dm::rc_write { depth args } {
     }
     puts $rcfile $row
 }
+
+###############################################################################
 
 # returns node type
 proc Dm::node_type { node } {
@@ -1296,6 +1410,8 @@ proc Dm::node_type { node } {
     return ""
 }
 
+###############################################################################
+
 # returns node id
 proc Dm::node_id { node } {
     variable tree
@@ -1306,6 +1422,8 @@ proc Dm::node_id { node } {
         return $id
     }
 }
+
+###############################################################################
 
 # execute command
 proc Dm::execute { cmd } {
@@ -1322,10 +1440,14 @@ proc Dm::execute { cmd } {
     eval "exec $cmd >@stdout 2>@stdout"
 }
 
+###############################################################################
+
 # open print window
 proc Dm::print { } {
     DmPrint::window
 }
+
+###############################################################################
 
 #open dialog box
 proc Dm::OpenFileBox {w} {
@@ -1356,6 +1478,8 @@ proc Dm::OpenFileBox {w} {
 		
 };
 
+###############################################################################
+
 #save dialog box
 proc Dm::SaveFileBox {w} {
     global mainwindow
@@ -1381,6 +1505,8 @@ proc Dm::SaveFileBox {w} {
 	Dm::load $::Dm::filename
     }
 };
+
+###############################################################################
 
 proc main {argc argv} {
     global auto_path

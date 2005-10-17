@@ -154,8 +154,7 @@ proc DmDframe::display { node } {
         append cmd " at=$opt($id,at)"
     }
 
-    run $cmd
-    puts $cmd
+    run_panel $cmd
 }
 
 proc DmDframe::print { file node } {

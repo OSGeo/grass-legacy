@@ -165,16 +165,15 @@ proc DmBarscale::display { node } {
     # place with coordinates
     if { $opt($id,at) != "" && $opt($id,mouse) == 0 } { 
         append cmd " at=$opt($id,at)"
-        run $cmd
+        run_panel $cmd
     }
 
     # place with mouse
     if { $opt($id,mouse) != 0 } { 
         append cmd " -m"
-        term $cmd
+        term_panel $cmd
     }
     
-        puts $cmd
     
 }
 

@@ -204,12 +204,11 @@ proc DmRgbhis::display { node } {
 
     # display maps    
     if { $cmd1 != "" } { 
-        run $cmd1 
-        puts $cmd1
-    } 
+		run_panel $cmd1
+    }
+    
     if { $cmd2 != "" } { 
-        run $cmd2 
-        puts $cmd2
+        run_panel $cmd2 
     } 
 }
 

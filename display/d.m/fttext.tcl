@@ -208,13 +208,18 @@ proc DmFTtext::display { node } {
     if { ! ( $opt($id,_check) ) } { return } 
 
     if { $opt($id,text) == "" } { return } 
-    set cmd "d.text.freetype text=$opt($id,text) charset=$opt($id,charset) \
+    
+    
+    set cmd "d.text.freetype charset=$opt($id,charset) \
             color=$color size=$opt($id,size) align=$opt($id,align) \
-            rotation=$opt($id,rotation) linespacing=$opt($id,linespacing)"
+            rotation=$opt($id,rotation) linespacing=$opt($id,linespacing)\
+            {text=$opt($id,text)}"
 
     # coordinates
     if { $opt($id,east_north) != "" } { 
-        append cmd " {east_north=$opt($id,east_north)}"
+#    	set $opt($id,east_north) \"$opt($id,east_north)\"
+        append cmd " east_north=$opt($id,east_north)"
+#        append cmd " {east_north=$opt($id,east_north)}"
     }
 
     # font
@@ -252,8 +257,7 @@ proc DmFTtext::display { node } {
         append cmd " r"
     }
 
-    run $cmd
-    puts $cmd
+    run_panel $cmd
 }
 
 proc DmFTtext::print { file node } {
