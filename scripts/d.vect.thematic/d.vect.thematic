@@ -425,6 +425,14 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
 	    startc="0:0:255"
 	    endc="0:255:0"
 	    ;;
+	"cyan-yellow" )
+	    startc="0:255:255"
+	    endc="255:255:0"
+	    ;;
+	"yellow-cyan" )
+	    startc="255:255:0"
+	    endc="0:255:255"
+	    ;;
         "custom gradient" )
 	    startc="$GIS_OPT_startcolor"
 	    endc="$GIS_OPT_endcolor"
