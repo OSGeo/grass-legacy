@@ -322,10 +322,10 @@ main (int argc, char *argv[])
 		    nc = db_get_table_number_of_columns(table);
 
 		    if ( (catcol >= 0 && nc != ncols) || (catcol < 0 && (nc-1) != ncols) ) {
-			G_fatal_error(_("Number of columns defined (%d) does not match number of "
-			    "columns (%d) in input."), nc, ncols);
+			G_fatal_error(_("Number of columns defined (%d) does not match number "
+			    "of columns (%d) in input."), catcol < 0 ? nc-1 : nc, ncols);
 		    }
-		
+
 		    coltype2 = (int *) G_malloc ( ncols * sizeof(int) );
 
 		    for ( i = 0; i < ncols; i++ ) {
