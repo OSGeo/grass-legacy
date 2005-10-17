@@ -76,6 +76,15 @@ proc DmThematic::select_map { id } {
     }
 }
 
+proc DmThematic::show_columns { id } {
+	variable opt
+	global bgcolor
+	set mapname $opt($id,map)
+	exec xterm -bg $bgcolor -title "$mapname columns" \
+		-geometry 40x25-10+30 -sb -hold -e v.info -c $mapname &		
+}
+
+
 # select symbols from directories
 proc DmThematic::select_symbol { id } {
     variable opt
@@ -124,6 +133,18 @@ proc DmThematic::options { id frm } {
             -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
+    
+	#show columns
+	set row [ frame $frm.columns ]
+    Label $row.a -text [G_msg "    show attribute columns"] 
+    Button $row.b -text [G_msg "columns"] \
+            -image [image create photo -file "$dmpath/columns.gif"] \
+            -command "DmThematic::show_columns $id" \
+            -background $bgcolor \
+            -helptext [G_msg "Show columns"]
+    pack $row.a $row.b -side left
+    pack $row -side top -fill both -expand yes
+    
 
     # Thematic type
     set row [ frame $frm.ttype ]
@@ -310,8 +331,7 @@ proc DmThematic::display { node } {
         append cmd " -m"
     }
 
-        run $cmd
-        puts $cmd
+        run_panel $cmd
 
 }
 
