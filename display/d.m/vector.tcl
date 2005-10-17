@@ -149,6 +149,14 @@ proc DmVector::select_map { id } {
     }
 }
 
+proc DmVector::show_columns { id } {
+	variable opt
+	global bgcolor
+	set mapname $opt($id,map)
+	exec xterm -bg $bgcolor -title "$mapname columns" \
+		-geometry 40x25-10+30 -sb -hold -e v.info -c $mapname &		
+}
+
 # select symbols from directories
 proc DmVector::select_symbol { id } {
     variable opt
@@ -163,6 +171,8 @@ proc DmVector::options { id frm } {
     variable opt
     global dmpath
     global bgcolor
+    global mapname
+    set mapname ""
 
     # vector name
     set row [ frame $frm.name ]
@@ -314,6 +324,18 @@ proc DmVector::options { id frm } {
                -width 44 -entrybg white
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
+    
+    #show columns
+	set row [ frame $frm.columns ]
+    Label $row.a -text [G_msg "     show attribute columns"] 
+    Button $row.b -text [G_msg "columns"] \
+            -image [image create photo -file "$dmpath/columns.gif"] \
+            -command "DmVector::show_columns $id" \
+            -background $bgcolor \
+            -helptext [G_msg "Show columns"]
+    pack $row.a $row.b -side left
+    pack $row -side top -fill both -expand yes
+
 
     # mouse query setup
     set row [ frame $frm.query ]
@@ -443,8 +465,7 @@ proc DmVector::display { node } {
         append cmd " maxreg=$opt($id,maxreg)" 
     } 
 
-    run $cmd
-    puts $cmd
+    run_panel $cmd
 }
 
 proc DmVector::print { file node } {

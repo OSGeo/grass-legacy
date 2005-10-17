@@ -19,19 +19,19 @@ proc DmToolBar1::create { tb } {
     $bbox1 add -image [image create photo -file "$dmpath/display.gif"] \
         -command "Dm::display" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
-        -helptext [G_msg "Display selected layers (current region)"]
+        -helptext [G_msg "Display active layers in current region"]
 
     # display all
     $bbox1 add -image [image create photo -file "$dmpath/display.all.gif"] \
         -command "Dm::displayall" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
-        -helptext [G_msg "Display selected layers (default region)"]
+        -helptext [G_msg "Display active layers in default region"]
 
     # display region
     $bbox1 add -image [image create photo -file "$dmpath/display.region.gif"] \
         -command "Dm::display_region" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
-        -helptext [G_msg "Display from saved region settings"]
+        -helptext [G_msg "Display active layers in saved region setting"]
 
     # erase
     $bbox1 add -image [image create photo -file "$dmpath/erase.gif"] \
