@@ -132,7 +132,7 @@ main (int argc, char *argv[])
     }
     
     /* Open select cursor */
-    buf = G_malloc(strlen(keycol_opt->answer) + strlen(xcol_opt->answer) + strlen(ycol_opt->answer) + 11);
+    buf = G_malloc(strlen(keycol_opt->answer) + strlen(xcol_opt->answer) + strlen(ycol_opt->answer) + 12);
     sprintf ( buf, "select %s, %s, %s", keycol_opt->answer, xcol_opt->answer, ycol_opt->answer );
     db_set_string ( &sql, buf);
   
@@ -145,7 +145,7 @@ main (int argc, char *argv[])
     db_append_string ( &sql, buf);
     
     if (where_opt->answer) {
-       buf = G_realloc(buf,(strlen(where_opt->answer) + 7));
+       buf = G_realloc(buf,(strlen(where_opt->answer) + 8));
        sprintf(buf, " WHERE %s", where_opt->answer);
        db_append_string ( &sql, buf );
     }
