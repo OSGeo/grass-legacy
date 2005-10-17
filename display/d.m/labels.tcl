@@ -125,8 +125,7 @@ proc DmLabels::display { node } {
         append cmd " maxreg=$opt($id,maxreg)"
     }
 
-    run $cmd
-    puts $cmd
+    run_panel $cmd
 }
 
 proc DmLabels::print { file node } {

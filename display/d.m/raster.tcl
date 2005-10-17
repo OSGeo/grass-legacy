@@ -214,10 +214,9 @@ proc DmRaster::display { node } {
     set cmd2 "d.his h_map=$opt($id,drapemap) i_map=$opt($id,map)"
     
     if { $opt($id,drapemap) == "" } { 
-        run $cmd 
-        puts $cmd
+        run_panel $cmd 
     } else {
-        run $cmd2
+        run_panel $cmd2
         puts $cmd2
     }
 
@@ -232,9 +231,9 @@ proc DmRaster::display { node } {
         }
 
         Dm::displmon $opt($id,legmon)
-        run "d.erase white"
-        run "d.legend map=$opt($id,map) thin=$opt($id,legthin)"
-        run "d.mon select=$currmon"
+        run_panel "d.erase white"
+        run_panel "d.legend map=$opt($id,map) thin=$opt($id,legthin)"
+        run_panel "d.mon select=$currmon"
     }
 
     #display legend for drape map
@@ -248,9 +247,9 @@ proc DmRaster::display { node } {
         }
 
         Dm::displmon $opt($id,legmon2)
-        run "d.erase white"
-        run "d.legend map=$opt($id,drapemap) thin=$opt($id,legthin2)"
-        run "d.mon select=$currmon"
+        run_panel "d.erase white"
+        run_panel "d.legend map=$opt($id,drapemap) thin=$opt($id,legthin2)"
+        run_panel "d.mon select=$currmon"
     }
 }
 

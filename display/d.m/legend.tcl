@@ -270,8 +270,7 @@ proc DmLegend::display { node } {
 
         Dm::displmon $opt($id,legmon)
         if { $opt($id,erase) == 1 } {run "d.erase white"}
-        run $cmd
-        puts $cmd
+        run_panel $cmd
         run "d.mon select=$currmon"
     }
 }
