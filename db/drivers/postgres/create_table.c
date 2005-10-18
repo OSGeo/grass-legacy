@@ -75,7 +75,7 @@ db__driver_create_table (dbTable *table)
                 db_append_string ( &sql, "time");
                 break;
             case DB_SQL_TYPE_TIMESTAMP:
-                db_append_string ( &sql, "datetime");
+                db_append_string ( &sql, "timestamp");
                 break;
 
  	    default:
