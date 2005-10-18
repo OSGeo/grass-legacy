@@ -15,7 +15,7 @@
 
 
 #%Module
-#%  description: adds a column to the attribute table connected to a given vector map
+#%  description: adds one or more column to the attribute table connected to a given vector map
 #%End
 
 #%option
