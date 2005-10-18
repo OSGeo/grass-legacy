@@ -5,19 +5,19 @@
  * Copyright 1993, H. Mitasova (University of Illinois),
  * I. Kosinovsky, (USA-CERL), and D.Gerdes (USA-CERL)
  *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
+ *   This program is free software; you can redistribute it and/or
+ *   modify it under the terms of the GNU General Public License
+ *   as published by the Free Software Foundation; either version 2
+ *   of the License, or (at your option) any later version.
  *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
  *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  *
  * modified by McCauley in August 1995
  * modified by Mitasova in August 1995
@@ -31,11 +31,11 @@
 #include <unistd.h>
 #include <math.h>
 
+#include "gis.h"
 #include "Vect.h"
 #include "dbmi.h"
-
-#include "gis.h"
 #include "site.h"
+#include "glocale.h"
 #include "linkm.h"
 #include "bitmap.h"
 #include "interpf.h"
@@ -156,9 +156,9 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-	"Interpolation and topographic analysis from given "
+	_("Interpolation and topographic analysis from given "
 	"point or contour data in vector format to GRASS floating point "
-	"raster format using regularized spline with tension.";
+	"raster format using regularized spline with tension.");
 
     if (G_get_set_window(&cellhd) == -1)
 	exit(0);
@@ -185,134 +185,136 @@ int main(int argc, char *argv[])
     parm.input->type = TYPE_STRING;
     parm.input->required = YES;
     parm.input->gisprompt = "old,vector,vector";
-    parm.input->description = "Name of the vector file with input data";
+    parm.input->description = _("Name of the vector file with input data");
 
     parm.field = G_define_standard_option(G_OPT_V_FIELD);
     parm.field->description =
-	"Field value. If set to 0, z coordinates are used (3D vector only).";
+	_("Field value. If set to 0, z coordinates are used. (3D vector only)");
     parm.field->answer = "1";
 
     parm.zcol = G_define_option();
     parm.zcol->key = "zcolumn";
     parm.zcol->type = TYPE_STRING;
     parm.zcol->required = NO;
-    parm.zcol->description = "Name of the attr. column with values to be interpolated (if layer>0)";
+    parm.zcol->description =
+	_("Name of the attr. column with values to be interpolated (if layer>0)");
 
     parm.scol = G_define_option();
     parm.scol->key = "scolumn";
     parm.scol->type = TYPE_STRING;
     parm.scol->required = NO;
     parm.scol->description =
-	"Name of the column with smoothing parameters";
+	_("Name of the column with smoothing parameters");
 
     parm.dmax = G_define_option();
     parm.dmax->key = "dmax";
     parm.dmax->type = TYPE_DOUBLE;
     parm.dmax->required = NO;
     parm.dmax->answer = dmaxchar; 
-    parm.dmax->description = "Maximum distance between points on isoline (to insert additional points)";
+    parm.dmax->description =
+	_("Maximum distance between points on isoline (to insert additional points)");
 
     parm.dmin = G_define_option();
     parm.dmin->key = "dmin";
     parm.dmin->type = TYPE_DOUBLE;
     parm.dmin->required = NO;
     parm.dmin->answer = dminchar;
-    parm.dmin->description = "Minimum distance between points (to remove almost identical points) ";
-
+    parm.dmin->description =
+	_("Minimum distance between points (to remove almost identical points)");
 
     parm.devi = G_define_option();
     parm.devi->key = "devi";
     parm.devi->type = TYPE_STRING;
     parm.devi->required = NO;
     parm.devi->gisprompt = "new,dig,vector";
-    parm.devi->description = "Name of the output deviations vector point file";
+    parm.devi->description = _("Name of the output deviations vector point file");
 
     parm.cvdev = G_define_option ();
     parm.cvdev->key = "cvdev";
     parm.cvdev->type = TYPE_STRING;
     parm.cvdev->required = NO;
     parm.cvdev->gisprompt = "new,dig,vector";
-    parm.cvdev->description = ("Name of the output cross-validation vector point file");
+    parm.cvdev->description = _("Name of the output cross-validation vector point file");
 
     parm.elev = G_define_option();
     parm.elev->key = "elev";
     parm.elev->type = TYPE_STRING;
     parm.elev->required = NO;
     parm.elev->gisprompt = "new,cell,raster";
-    parm.elev->description = "Output surface raster file (elevation)";
+    parm.elev->description = _("Output surface raster file (elevation)");
 
     flag.deriv = G_define_flag();
     flag.deriv->key = 'd';
-    flag.deriv->description = "Output partial derivatives instead";
+    flag.deriv->description = _("Output partial derivatives instead");
 
     parm.slope = G_define_option();
     parm.slope->key = "slope";
     parm.slope->type = TYPE_STRING;
     parm.slope->required = NO;
     parm.slope->gisprompt = "new,cell,raster";
-    parm.slope->description = "Slope";
+    parm.slope->description = _("Output slope raster file");
 
     parm.aspect = G_define_option();
     parm.aspect->key = "aspect";
     parm.aspect->type = TYPE_STRING;
     parm.aspect->required = NO;
     parm.aspect->gisprompt = "new,cell,raster";
-    parm.aspect->description = "Aspect";
+    parm.aspect->description = _("Output aspect raster file");
 
     parm.pcurv = G_define_option();
     parm.pcurv->key = "pcurv";
     parm.pcurv->type = TYPE_STRING;
     parm.pcurv->required = NO;
     parm.pcurv->gisprompt = "new,cell,raster";
-    parm.pcurv->description = "Profile curvature";
+    parm.pcurv->description = _("Output profile curvature raster file");
 
     parm.tcurv = G_define_option();
     parm.tcurv->key = "tcurv";
     parm.tcurv->type = TYPE_STRING;
     parm.tcurv->required = NO;
     parm.tcurv->gisprompt = "new,cell,raster";
-    parm.tcurv->description = "Tangential curvature";
+    parm.tcurv->description = _("Output tangential curvature raster file");
 
     parm.mcurv = G_define_option();
     parm.mcurv->key = "mcurv";
     parm.mcurv->type = TYPE_STRING;
     parm.mcurv->required = NO;
     parm.mcurv->gisprompt = "new,cell,raster";
-    parm.mcurv->description = "Mean curvature";
+    parm.mcurv->description = _("Output mean curvature raster file");
 
     parm.maskmap = G_define_option();
     parm.maskmap->key = "maskmap";
     parm.maskmap->type = TYPE_STRING;
     parm.maskmap->required = NO;
     parm.maskmap->gisprompt = "old,cell,raster";
-    parm.maskmap->description = "Name of the raster file used as mask";
+    parm.maskmap->description = _("Name of the raster file used as mask");
 
     parm.zmult = G_define_option();
     parm.zmult->key = "zmult";
     parm.zmult->type = TYPE_DOUBLE;
     parm.zmult->answer = ZMULT;
     parm.zmult->required = NO;
-    parm.zmult->description = "Conversion factor for interpolated values";
+    parm.zmult->description = _("Conversion factor for interpolated values");
 
     parm.fi = G_define_option();
     parm.fi->key = "tension";
     parm.fi->type = TYPE_DOUBLE;
     parm.fi->answer = TENSION;
     parm.fi->required = NO;
-    parm.fi->description = "Tension";
+    parm.fi->description = _("Tension parameter");
 
     parm.rsm = G_define_option();
     parm.rsm->key = "smooth";
     parm.rsm->type = TYPE_DOUBLE;
     parm.rsm->required = NO;
-    parm.rsm->description = "Smoothing parameter";
+    parm.rsm->description = _("Smoothing parameter");
 
     parm.segmax = G_define_option();
     parm.segmax->key = "segmax";
     parm.segmax->type = TYPE_INTEGER;
     parm.segmax->answer = MAXSEGM;
     parm.segmax->required = NO;
-    parm.segmax->description = "Max number of points in segment";
+    parm.segmax->description = _("Maximum number of points in a segment");
 
     parm.npmin = G_define_option();
     parm.npmin->key = "npmin";
@@ -320,27 +322,27 @@ int main(int argc, char *argv[])
     parm.npmin->answer = MINPOINTS;
     parm.npmin->required = NO;
     parm.npmin->description =
-	"Min number of points for interpolation(>segmax)";
+	_("Minimum number of points for interpolation (>segmax)");
 
     parm.theta = G_define_option();
     parm.theta->key = "theta";
     parm.theta->type = TYPE_DOUBLE;
     parm.theta->required = NO;
     parm.theta->description =
-	"Anisotropy angle (in degrees counterclockwise from East)";
+	_("Anisotropy angle (in degrees counterclockwise from East)");
 
     parm.scalex = G_define_option();
     parm.scalex->key = "scalex";
     parm.scalex->type = TYPE_DOUBLE;
     parm.scalex->required = NO;
-    parm.scalex->description = "Anisotropy scaling factor";
+    parm.scalex->description = _("Anisotropy scaling factor");
 
     parm.treefile = G_define_option();
     parm.treefile->key = "treefile";
     parm.treefile->type = TYPE_STRING;
     parm.treefile->required = NO;
     parm.treefile->gisprompt = "new,dig,vector";
-    parm.treefile->description = "Output vector file showing segmentation";
+    parm.treefile->description = _("Output vector file showing segmentation");
 
     parm.overfile = G_define_option();
     parm.overfile->key = "overfile";
@@ -348,18 +350,20 @@ int main(int argc, char *argv[])
     parm.overfile->required = NO;
     parm.overfile->gisprompt = "new,dig,vector";
     parm.overfile->description =
-	"Output vector file showing overlapping segments";
+	_("Output vector file showing overlapping segments");
 
     flag.cprght = G_define_flag();
     flag.cprght->key = 't';
-    flag.cprght->description = "Use dnorm independent tension";
+    flag.cprght->description = _("Use dnorm independent tension");
 
     flag.cv = G_define_flag ();
     flag.cv->key = 'v';
-    flag.cv->description = ("Perform a cross-validation procedure");
+    flag.cv->description = _("Perform cross-validation procedure");
+
 
     if (G_parser(argc, argv))
 	exit(1);
+
 
     per = 1;
     input = parm.input->answer;
@@ -391,11 +395,11 @@ int main(int argc, char *argv[])
 	Vect_check_input_output_name(input, overfile, GV_FATAL_EXIT);
 */
     if ((elev == NULL) && (pcurv == NULL) && (tcurv == NULL)
-	&& (mcurv == NULL)
-	&& (slope == NULL) && (aspect == NULL) && (devi == NULL)
-	&& (cvdev == NULL))
-	fprintf(stderr,
-		"Warning -- you are not outputing any raster or vector files\n");
+	  && (mcurv == NULL)
+	  && (slope == NULL) && (aspect == NULL) && (devi == NULL)
+	  && (cvdev == NULL) )
+	G_warning(_("You are not outputing any raster or vector files"));
+
 
     cond2 = ((pcurv != NULL) || (tcurv != NULL) || (mcurv != NULL));
     cond1 = ((slope != NULL) || (aspect != NULL) || cond2);
@@ -404,10 +408,10 @@ int main(int argc, char *argv[])
     cv = flag.cv->answer;
 
     if ((cv && cvdev == NULL) || (!(cv) && cvdev != NULL))
-	    G_fatal_error(("Both crossvalidation options (-v flag and cvdev vector output) must be specified"));
+	G_fatal_error(_("Both cross-validation options (-v flag and cvdev vector output) must be specified"));
 
     if((elev != NULL || cond1 || cond2 || devi != NULL) && cv )
-	    G_fatal_error("The crossvalidation cannot be computed simultanuously with output grids or devi file");
+	G_fatal_error(_("The cross-validation cannot be computed simultanuously with output grids or devi file"));
 
     ertre = 0.1;
     sscanf(parm.dmax->answer, "%lf", &dmax);
@@ -425,15 +429,14 @@ int main(int argc, char *argv[])
     if (parm.scalex->answer) {
 	sscanf(parm.scalex->answer, "%lf", &scalex);
 	if (!parm.theta->answer)
-	    G_fatal_error
-		("Using anisotropy - both theta and scalex have to be specified");
+	    G_fatal_error(_("Using anisotropy - both theta and scalex have to be specified"));
     }
 
     if(parm.rsm->answer){
     	sscanf(parm.rsm->answer, "%lf", &rsm);
     	if(rsm < 0.0) G_fatal_error("Smoothing must be a positive value");
     	if(scol != NULL)
-	    G_warning("Both smatt and smooth options specified - using constant");
+	    G_warning(_("Both smatt and smooth options specified - using constant"));
     }
     else {
 	sscanf (SMOOTH, "%lf", &rsm);
@@ -442,7 +445,7 @@ int main(int argc, char *argv[])
 
 
     if (npmin > MAXPOINTS - 50){
-        G_warning("The computation will last too long - lower npmin is suggested");
+        G_warning(_("The computation will last too long - lower npmin is suggested"));
         KMAX2 = 2 * npmin; /* was: KMAX2 = npmin + 50;*/
     }
     else
@@ -460,59 +463,58 @@ int main(int argc, char *argv[])
 
     az = G_alloc_vector(n_cols + 1);
     if (!az) {
-	G_fatal_error("Not enough memory for az");
+	G_fatal_error(_("Not enough memory for az"));
     }
     if (cond1) {
 	adx = G_alloc_vector(n_cols + 1);
 	if (!adx) {
-	    G_fatal_error("Not enough memory for adx");
+	    G_fatal_error(_("Not enough memory for adx"));
 	}
 	ady = G_alloc_vector(n_cols + 1);
 	if (!ady) {
-	    G_fatal_error("Not enough memory for ady");
+	    G_fatal_error(_("Not enough memory for ady"));
 	}
 	if (cond2) {
 	    adxx = G_alloc_vector(n_cols + 1);
 	    if (!adxx) {
-		G_fatal_error("Not enough memory for adxx");
+		G_fatal_error(_("Not enough memory for adxx"));
 	    }
 	    adyy = G_alloc_vector(n_cols + 1);
 	    if (!adyy) {
-		G_fatal_error("Not enough memory for adyy");
+		G_fatal_error(_("Not enough memory for adyy"));
 	    }
 	    adxy = G_alloc_vector(n_cols + 1);
 	    if (!adxy) {
-		G_fatal_error("Not enough memory for adxy");
+		G_fatal_error(_("Not enough memory for adxy"));
 	    }
 	}
     }
     if ((data =
 	 quad_data_new(x_orig, y_orig, xm, ym, n_rows, n_cols, 0,
 		       KMAX)) == NULL)
-	G_fatal_error("cannot create quaddata");
+	G_fatal_error(_("Cannot create quaddata"));
     if ((functions =
 	 MT_functions_new(quad_compare, quad_divide_data, quad_add_data,
 			  quad_intersect, quad_division_check,
 			  quad_get_points)) == NULL)
 
-	G_fatal_error("cannot create quadfunc");
+	G_fatal_error(_("Cannot create quadfunc"));
 
     if ((tree = MT_tree_new(data, NULL, NULL, 0)) == NULL)
-	G_fatal_error("cannot create tree");
+	G_fatal_error(_("Cannot create tree"));
     root = tree;
 
     if ((info = MT_tree_info_new(root, functions, dmin, KMAX)) == NULL)
-	G_fatal_error("cannot create tree info");
+	G_fatal_error(_("Cannot create tree info"));
 
     if ((mapset = G_find_vector2(input, "")) == NULL)
-	G_fatal_error("Could not find vector file %s", input);
+	G_fatal_error(_("Could not find vector file %s"), input);
 
     open_check = Vect_open_old(&Map, input, mapset);
     if (open_check < 1)
-	G_fatal_error("Could not open vector file <%s>", input);
+	G_fatal_error(_("Could not open vector file <%s>"), input);
     if (open_check < 2)
-	G_fatal_error("You first need to run v.build on vector file <%s>",
-		      input);
+	G_fatal_error(_("You first need to run v.build on vector file <%s>"), input);
 
     /* we can't read the input file's timestamp as they don't exist in   */
     /*   the new vector format. Even so, a TimeStamp structure is needed */
@@ -546,12 +548,12 @@ int main(int argc, char *argv[])
           G_debug ( 1, db_get_string ( &sql2 ) );
           driver2 = db_start_driver_open_database ( ff->driver, ff->database );
           if ( driver2 == NULL )
-             G_fatal_error ( "Cannot open database %s by driver %s", ff->database,ff->driver );
+             G_fatal_error (_("Cannot open database %s by driver %s"), ff->database,ff->driver );
 
           if (db_execute_immediate (driver2, &sql2) != DB_OK ) {
                   db_close_database(driver2);
                   db_shutdown_driver(driver2);
-                  G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql2 )  );
+                  G_fatal_error (_("Cannot create table: %s"), db_get_string ( &sql2 )  );
           }
           count = 1;
 
@@ -559,7 +561,7 @@ int main(int argc, char *argv[])
 
     ertot = 0.;
     if (per)
-	fprintf(stderr, "Percent complete: ");
+	fprintf(stderr, _("Percent complete: "));
     if (elev != NULL)
 	Tmp_file_z = G_tempfile();
     if (slope != NULL)
@@ -575,7 +577,7 @@ int main(int argc, char *argv[])
 
     zero_array_cell = (FCELL *) malloc(sizeof(FCELL) * n_cols);
     if (!zero_array_cell)
-	G_fatal_error("Not enough memory for zero_array_cell");
+	G_fatal_error(_("Not enough memory for zero_array_cell"));
 
     for (i = 0; i < n_cols; i++) {
 	zero_array_cell[i] = (FCELL) 0;
@@ -583,51 +585,51 @@ int main(int argc, char *argv[])
 
     if (Tmp_file_z != NULL) {
 	if (NULL == (Tmp_fd_z = fopen(Tmp_file_z, "w+")))
-	    G_fatal_error("Can't open temp file [%s] ", Tmp_file_z);
+	    G_fatal_error(_("Can't open temp file [%s]"), Tmp_file_z);
 	for (i = 0; i < n_rows; i++) {
 	    if (!(fwrite(zero_array_cell, sizeof(FCELL), n_cols, Tmp_fd_z)))
-		G_fatal_error("Not enough disk space -- cannot write files");
+		G_fatal_error(_("Not enough disk space -- cannot write files"));
 	}
     }
     if (Tmp_file_dx != NULL) {
 	if (NULL == (Tmp_fd_dx = fopen(Tmp_file_dx, "w+")))
-	    G_fatal_error("Can't open temp file [%s] ", Tmp_file_dx);
+	    G_fatal_error(_("Can't open temp file [%s]"), Tmp_file_dx);
 	for (i = 0; i < n_rows; i++) {
 	    if (!(fwrite(zero_array_cell, sizeof(FCELL), n_cols, Tmp_fd_dx)))
-		G_fatal_error("Not enough disk space -- cannot write files");
+		G_fatal_error(_("Not enough disk space -- cannot write files"));
 	}
     }
     if (Tmp_file_dy != NULL) {
 	if (NULL == (Tmp_fd_dy = fopen(Tmp_file_dy, "w+")))
-	    G_fatal_error("Can't open temp file [%s] ", Tmp_file_dy);
+	    G_fatal_error(_("Can't open temp file [%s]"), Tmp_file_dy);
 	for (i = 0; i < n_rows; i++) {
 	    if (!(fwrite(zero_array_cell, sizeof(FCELL), n_cols, Tmp_fd_dy)))
-		G_fatal_error("Not enough disk space -- cannot write files");
+		G_fatal_error(_("Not enough disk space -- cannot write files"));
 	}
     }
 
     if (Tmp_file_xx != NULL) {
 	if (NULL == (Tmp_fd_xx = fopen(Tmp_file_xx, "w+")))
-	    G_fatal_error("Can't open temp file [%s] ", Tmp_file_xx);
+	    G_fatal_error(_("Can't open temp file [%s]"), Tmp_file_xx);
 	for (i = 0; i < n_rows; i++) {
 	    if (!(fwrite(zero_array_cell, sizeof(FCELL), n_cols, Tmp_fd_xx)))
-		G_fatal_error("Not enough disk space -- cannot write files");
+		G_fatal_error(_("Not enough disk space -- cannot write files"));
 	}
     }
     if (Tmp_file_yy != NULL) {
 	if (NULL == (Tmp_fd_yy = fopen(Tmp_file_yy, "w+")))
-	    G_fatal_error("Can't open temp file [%s] ", Tmp_file_yy);
+	    G_fatal_error(_("Can't open temp file [%s]"), Tmp_file_yy);
 	for (i = 0; i < n_rows; i++) {
 	    if (!(fwrite(zero_array_cell, sizeof(FCELL), n_cols, Tmp_fd_yy)))
-		G_fatal_error("Not enough disk space -- cannot write files");
+		G_fatal_error(_("Not enough disk space -- cannot write files"));
 	}
     }
     if (Tmp_file_xy != NULL) {
 	if (NULL == (Tmp_fd_xy = fopen(Tmp_file_xy, "w+")))
-	    G_fatal_error("Can't open temp file [%s] ", Tmp_file_xy);
+	    G_fatal_error(_("Can't open temp file [%s]"), Tmp_file_xy);
 	for (i = 0; i < n_rows; i++) {
 	    if (!(fwrite(zero_array_cell, sizeof(FCELL), n_cols, Tmp_fd_xy)))
-		G_fatal_error("Not enough disk space -- cannot write files");
+		G_fatal_error(_("Not enough disk space -- cannot write files"));
 	}
     }
 
@@ -647,14 +649,14 @@ int main(int argc, char *argv[])
 				info, &xmin, &xmax,
 				&ymin, &ymax, &zmin, &zmax, &NPOINT, &dmax);
     if (totsegm <= 0)
-	clean_fatal_error("Input failed");
+	clean_fatal_error(_("Input failed"));
 
     /*Vect_set_release_support(&Map);*/
     Vect_close(&Map);
 
     if (treefile != NULL) {
 	if (0 > Vect_open_new(&TreeMap, treefile, 0)) {
-	    sprintf(msg, "Not able to open vector file <%s>\n", treefile);
+	    sprintf(msg, _("Could not open vector file <%s>"), treefile);
 	    clean_fatal_error(msg);
 	}
 	Vect_hist_command(&TreeMap);
@@ -702,17 +704,17 @@ int main(int argc, char *argv[])
 
     bitmask = IL_create_bitmask(&params);
     if (totsegm <= 0)
-	clean_fatal_error("Input failed");
+	clean_fatal_error(_("Input failed"));
 
     ertot = 0.;
     if (per)
-	fprintf(stderr, "Percent complete: ");
+	fprintf(stderr, _("Percent complete: "));
     if (IL_interp_segments_2d(&params, info, info->root, bitmask,
 			      zmin, zmax, &zminac, &zmaxac, &gmin, &gmax,
 			      &c1min, &c1max, &c2min, &c2max, &ertot, totsegm,
 			      n_cols, dnorm) < 0)
 
-	clean_fatal_error("Interp_segmets failed");
+	clean_fatal_error(_("Interp_segmets failed"));
 
     G_free_vector(az);
     if (cond1) {
@@ -729,7 +731,7 @@ int main(int argc, char *argv[])
 		      dtens, 1, NPOINT);
     if (ii < 0)
 	clean_fatal_error
-	    ("Cannot write cell files -- try to increase resolution");
+	    (_("Cannot write cell files -- try to increase resolution"));
     free(zero_array_cell);
     if (elev != NULL)
 	fclose(Tmp_fd_z);
@@ -746,7 +748,7 @@ int main(int argc, char *argv[])
 
     if (overfile != NULL) {
 	if (0 > Vect_open_new(&OverMap, overfile, 0)) {
-	    sprintf(msg, "Not able to open vector file <%s>\n", overfile);
+	    sprintf(msg, _("Could not open vector file <%s>"), overfile);
 	    clean_fatal_error(msg);
 	}
 	Vect_hist_command(&OverMap);
@@ -782,6 +784,7 @@ int main(int argc, char *argv[])
 	    Vect_close (&Map2);
     }
 
+    G_done_msg("\n");
     exit(0);
 }
 
@@ -819,7 +822,7 @@ int print_tree(struct multtree *tree,
 	yarray[4] = yarray[0];
 	xarray[4] = xarray[0];
 	if (0 > Vect_copy_xyz_to_pnts(Points, xarray, yarray, zarray, 5))
-	    clean_fatal_error("Out of memory");
+	    clean_fatal_error(_("Out of memory"));
 	Vect_write_line(Map, (unsigned int) type, Points, Cats);
 
 	free(Points);
