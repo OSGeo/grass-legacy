@@ -8,6 +8,7 @@
 #include "raster.h"
 #include "options.h"
 #include "colors.h"
+#include "glocale.h"
 
 int color1;
 int color2;
@@ -35,30 +36,31 @@ int main (int argc, char **argv)
 
 	module = G_define_module();
 	module->description =
-		"Displays a barscale on GRASS monitor.";
+		_("Displays a barscale on GRASS monitor.");
 
 	mouse = G_define_flag() ;
 	mouse->key       = 'm';
-	mouse->description= "Use mouse to interactively place scale" ;
+	mouse->description= _("Use mouse to interactively place scale");
 
 	feet = G_define_flag() ;
 	feet->key        = 'f';
-	feet->description= "Use feet/miles instead of meters" ;
+	feet->description= _("Use feet/miles instead of meters");
 
 	linescale = G_define_flag() ;
 	linescale->key   = 'l';
-	linescale->description= "Draw a line scale instead of a bar scale" ;
+	linescale->description= _("Draw a line scale instead of a bar scale");
 
 	top = G_define_flag() ;
 	top->key         = 't';
-	top->description= "Write text on top of the scale, not to the right" ;
+	top->description= _("Write text on top of the scale, not to the right");
 
 	opt1 = G_define_option() ;
 	opt1->key        = "bcolor" ;
 	opt1->type       = TYPE_STRING ;
 	opt1->answer     = DEFAULT_BG_COLOR ;
 	opt1->required   = NO ;
-	opt1->description= "Background color, either a standard GRASS color, R:G:B triplet, or \"none\"" ;
+	opt1->description=
+	    _("Background color, either a standard GRASS color, R:G:B triplet, or \"none\"");
 
 	opt2 = G_define_option() ;
 	opt2->key        = "tcolor" ;
@@ -66,7 +68,7 @@ int main (int argc, char **argv)
 	opt2->answer     = DEFAULT_FG_COLOR ;
 	opt2->required   = NO ;
 /*	opt2->options    = D_color_list(); */
-	opt2->description= "Text color, either a standard GRASS color or R:G:B triplet (separated by colons)" ;
+	opt2->description= _("Text color, either a standard GRASS color or R:G:B triplet");
 
 	opt3 = G_define_option() ;
 	opt3->key        = "at";
@@ -75,15 +77,15 @@ int main (int argc, char **argv)
 	opt3->answer     = "0.0,0.0";
 	opt3->options    = "0-100" ;
 	opt3->required   = NO;
-	opt3->description= "The screen coordinates for top-left corner of label ([0,0] is top-left of frame)" ;
+	opt3->description=
+	    _("The screen coordinates for top-left corner of label ([0,0] is top-left of frame)");
 
 	if (G_parser(argc, argv) < 0)
 		exit(-1);
 
 	G_get_window(&W) ;
 	if (W.proj == PROJECTION_LL)
-		G_fatal_error("%s does not work with a latitude-longitude location",
-			      argv[0]) ;
+	    G_fatal_error(_("%s does not work with a latitude-longitude location"), argv[0]);
 
 	if(linescale->answer)
 		do_bar = 0;
@@ -106,7 +108,7 @@ int main (int argc, char **argv)
 	    color1 = D_translate_color(opt1->answer);
 
 	if(!color1)
-	    G_fatal_error("[%s]: No such color", opt1->answer);
+	    G_fatal_error(_("[%s]: No such color"), opt1->answer);
 
 
         /* Parse and select foreground color */
@@ -120,35 +122,35 @@ int main (int argc, char **argv)
 	    color2 = D_translate_color(opt2->answer);
 
 	if(!color2)
-	    G_fatal_error("[%s]: No such color", opt2->answer);
+	    G_fatal_error(_("[%s]: No such color"), opt2->answer);
 
 
 	sscanf(opt3->answers[0], "%lf", &east) ;
 	sscanf(opt3->answers[1], "%lf", &north) ;
 
 	if (R_open_driver() != 0)
-		G_fatal_error ("No graphics device selected");
+	    G_fatal_error (_("No graphics device selected"));
 
 	if (D_get_cur_wind(window_name))
-		G_fatal_error("No current window") ;
+	    G_fatal_error(_("No current window")) ;
 
 	if (D_set_cur_wind(window_name))
-		G_fatal_error("Current window not available");
+	    G_fatal_error(_("Current window not available"));
 
 	/* Read in the map window associated with window */
 	G_get_window(&window);
 
 	if (D_check_map_window(&window))
-		G_fatal_error("Setting map window");
+	    G_fatal_error(_("Setting map window"));
 
 	if (G_set_window(&window) == -1)
-		G_fatal_error("Current window not settable");
+	    G_fatal_error(_("Current window not settable"));
 
 	/* Determine conversion factors */
 	if (D_get_screen_window(&t, &b, &l, &r))
-		G_fatal_error("Getting screen window") ;
+	    G_fatal_error(_("Getting screen window")) ;
 	if (D_do_conversions(&window, t, b, l, r))
-		G_fatal_error("Error in calculating conversions") ;
+	    G_fatal_error(_("Error in calculating conversions")) ;
 
 	if (!mouse->answer)
 	{
@@ -179,6 +181,8 @@ int main (int argc, char **argv)
 			strcat(cmdbuf, " -t");
 		if(feet->answer)
 			strcat(cmdbuf, " -f");
+		if(linescale->answer)
+			strcat(cmdbuf, " -l");
 
 		/* Add this command to list */
 		D_add_to_list(cmdbuf) ;
