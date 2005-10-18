@@ -18,40 +18,58 @@ layer has a category value denoting locations of "unknown" aspect,
 of that category.
 Cells containing null data will be marked with an "X".
 <p>
-If you specify the <em>magnitude_map</em> option, the arrow lengths, 
+If you specify the <em>magnitude_map</em> option, arrow lengths 
 denoting magnitude will be extracted from the cell values of the specified 
-map. You may adjust the overall scale using the <em>scale</em> option.
-Currently, <em>d.rast.arrow</em> will ignore negative magnitudes, and will
-warn you if the debug level is at 5 or higher. Be aware. If your application
+map. In this case the tail of the arrow will be centered on the source cell.
+You may adjust the overall scale using the <em>scale</em> option.
+<em>d.rast.arrow</em> will ignore NULL and negative magnitudes, and will
+warn you if the debug level is set at 5 or higher. Be aware. If your application
 uses negative values for magnitude, you can use <em>r.mapcalc</em> to prepare
 the magnitude map to suit your needs (absolute value, inverted direction and 
-so on).
-<P>
-For floating-point rasters, the cell values will determine arrows pointing 
-to the corresponding direction, not only the eight multiples of 45 degrees.
+so on). 
+
 <p>
 <H2>NOTES</H2>
 By default, arrows are drawn at the size of a cell and cannot be seen if 
 the raster map is relatively close in scale. You can use the <em>skip</em> 
 option to draw arrows every n-th cell in both directions if you are working 
-with relatively high resolutions.
-<p> From a command line mode, the user cannot run
-<EM>d.rast.arrow</EM> and then run <EM><A HREF="d.zoom.html">d.zoom</A></EM>
-and still see the arrows.  The zooming action erases the arrows and the user
-must run <EM>d.rast.arrow</EM> again. <!-- is this a bug or a feature? -->
-
+with relatively high resolutions. It may be useful to disable the grid in
+this case, which is accomplished by setting its color to "<tt>none</tt>".
 <P>
-GRASS aspect maps are measured in degrees counterclockwise from east. i.e.:
+For GRASS and Compass type aspect maps, the cell values of the aspect map
+will determine the corresponding direction in 360 degrees. ANSWERS type
+aspect maps will be plotted in multiples of 15 degrees, and AGNPS type
+aspect maps will be displayed in D8 representation, i.e. the eight multiples 
+of 45 degrees.
+<P>
+GRASS aspect maps are measured using Cartesian conventions, i.e. in degrees 
+counterclockwise from east. e.g.:
 <UL>
 <pre>
 90  North
 180 West
 270 South
-360 East</pre>
+0,360 East</pre>
 </UL>
 <P>
 They can be created from a raster elevation map with <em>r.slope.aspect</em>.
 <P>
+Compass type aspect maps are measured in degrees clockwise from north.
+<P>
+This module uses oceanographic conventions, i.e. arrows point downslope or 
+direction "to", as opposed to atmospheric conventions (direction "from").
+
+
+<H2>EXAMPLE</H2>
+
+Convert U,V velocity component maps into magnitide,direction maps for use 
+with <em>d.rast.arrow</em>:
+<pre>
+  r.mapcalc 'magnitude = sqrt(U_map^2 + V_map^2)'
+  r.mapcalc 'direction = atan(U_map, V_map)'
+  d.rast.arrow map=direction type=grass magnitude_map=magnitude skip=3 grid=none
+</pre>
+<BR>
 
 <H2>SEE ALSO</H2>
 
@@ -59,15 +77,19 @@ They can be created from a raster elevation map with <em>r.slope.aspect</em>.
 <EM><A HREF="d.rast.html">d.rast</A></EM><BR>
 <EM><A HREF="d.rast.edit.html">d.rast.edit</A></EM><BR>
 <EM><A HREF="d.rast.num.html">d.rast.num</A></EM><BR>
-<EM><A HREF="d.zoom.html">d.zoom</A></EM><BR>
 <EM><A HREF="g.region.html">g.region</A></EM><BR>
-<EM><A HREF="r.mask.html">r.mask</A></EM><BR>
 <EM><A HREF="r.slope.aspect.html">r.slope.aspect</A></EM><BR>
-<EM><A HREF="parser.html">parser</A></EM>
+<BR>
 
-<H2>AUTHOR</H2>
+<H2>AUTHORS</H2>
 
-Chris Rewerts, 
-Agricultural Engineering, 
-Purdue University
+<u>Original author</u><BR>
+Chris Rewerts<BR>
+<em>Agricultural Engineering,<BR>
+Purdue University</em><BR><BR>
+<u>Magnitude and 360 arrow code</u><BR>
+Hamish Bowman<BR>
+<em>Department of Marine Science, <BR>
+University of Otago, New Zealand</em>
+
 <p><i>Last changed: $Date$</i>
