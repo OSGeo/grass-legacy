@@ -1,3 +1,5 @@
+/* TODO: implement time zone handling */
+
 #include <stdlib.h>
 #include <string.h>
 #include "dbmi.h"
@@ -141,13 +143,18 @@ db__driver_fetch(cn, position, more)
 		break;
 
 	    case PG_TYPE_TIMESTAMP:
-		/* Example: '1999-01-25 04:05:06.25+01', '1999-01-25 04:05:06+01' */
+		/* Example: '1999-01-25 04:05:06.25+01', '1999-01-25 04:05:06' */
 		ns = sscanf( PQgetvalue(c->res, c->row, col), "%4d-%2d-%2d %2d:%2d:%lf%3d",
 			     &(value->t.year), &(value->t.month), &(value->t.day), 
 			     &(value->t.hour), &(value->t.minute), &(value->t.seconds), &tz );
 
-		if ( ns != 7 ) {
-		    append_error ( "Cannot scan timestamp:");
+		if ( ns == 7 ) {
+		    append_error ( "Cannot scan timestamp (no idea how to process time zone):");
+		    append_error ( PQgetvalue(c->res, c->row, col) );
+		    report_error();
+		    return DB_FAILED;
+		} else if ( ns < 6 ) {
+		    append_error ( "Cannot scan timestamp (not enough arguments):");
 		    append_error ( PQgetvalue(c->res, c->row, col) );
 		    report_error();
 		    return DB_FAILED;
