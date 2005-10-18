@@ -453,9 +453,10 @@ proc gisSetWindow {} {
                 cd $database
                 cd $location
                 file mkdir $mymapset
-                #copy over the DB definition:
+                #copy over the DB definition, create dbf subdirectory:
                 file copy $mymapset/../PERMANENT/VAR $mymapset
                 file attributes $mymapset/VAR -permissions u+rw,go+r
+                file mkdir $mymapset/dbf
                 #copy over the WIND definition:
                 file copy $mymapset/../PERMANENT/WIND $mymapset
                 file attributes $mymapset/WIND -permissions u+rw,go+r
