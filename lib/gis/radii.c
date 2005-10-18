@@ -1,3 +1,23 @@
+/* TODO: 
+
+Suggestion: all "lon"s in the file "radii.c" should read as "lat"
+
+Comments:
+on page http://www.mentorsoftwareinc.com/cc/gistips/TIPS0899.HTM
+down where it says "Meridional Radius of Curvature" is the exact formula
+out of "radii.c".
+Quote: "essentially, the radius of curvature, at a specific latitude ...".
+
+See also http://williams.best.vwh.net/ellipsoid/node1.html which has a nice
+picture showning the parametric latitude and phi, the geodetic latitude.
+On the next page,
+http://williams.best.vwh.net/ellipsoid/node2.html, in equation 3, the
+Meridional Radius of Curvature shows up.
+
+So, it looks like you are calculating the Meridional Radius of Curvature
+as a function of GEODETIC LATITUDE.
+*/
+
 #include "gis.h"
 #include "pi.h"
 
