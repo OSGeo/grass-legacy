@@ -15,9 +15,9 @@ the command line the program will run non-interactively; if
 no grid <EM>color</EM> is given the default will be used.
 Alternately, the user may simply type <B>d.grid</B> on the
 command line; in this case, the program will prompt the
-user for parameter values using the standard GRASS user
-interface described in the manual entry for 
-<EM><A HREF="parser.html">parser</A>.</EM>
+user for parameter values using the standard GRASS graphical 
+user interface.
+
 
 <H2>NOTES</H2>
 
@@ -31,46 +31,58 @@ entire contents of the active display frame, must be run to
 erase previously drawn grids from the display frame.)
 
 <P>
-
 If the user provides a <EM>size</EM> argument the standard
 rectangular grid will be drawn. If the user provides a 
 <EM>gsize</EM> argument a geographic (projected) grid 
 will be drawn. The <EM>gsize</EM> argument accepts both
-decimal degrees and colon seperated coordinates
-(eg. 00:30:00). 
+decimal degrees and colon seperated ddd:mm:ss coordinates
+(eg. <tt>00:30:00</tt> for half of a degree).
 
 <p>
-
 A geographic grid cannot be drawn for a <EM>latitude/longitude</EM> 
 or <EM>XY</EM> projection.
+<p>
+Colors may be standard named GRASS colors (red, green, aqua, etc.) or
+a numerical R:G:B triplet, where component values range from 0-255.<BR>
+<p>
+The border drawing may be turned off by using the <em>-b</em> flag.<BR>
+The coordinate text may be turned off by using the <em>-t</em> flag.<BR>
+
 
 <H2>EXAMPLES</H2>
-To draw a red geographic grid with 30 minute grid spacing run the following:
+To draw a red geographic grid with 30 minute grid spacing run 
+either of the following:
 <PRE>
-d.grid gsize=00:30:00 gcolor=red
+  d.grid gsize=00:30:00 gcolor=red
 </PRE>
 or
 <PRE>
-d.grid gsize=0.5 gcolor=255:0:0
+  d.grid gsize=0.5 gcolor=255:0:0
 </PRE>
 To draw a blue regular grid at 500 (meter) spacing and a red geographic
 grid at 10 second spacing run the following:
 <PRE>
-d.grid size=500 color=blue gsize=00:00:10 gcolor=red
+  d.grid size=500 color=blue gsize=00:00:10 gcolor=red
 </PRE>
-
+<BR>
 
 <H2>SEE ALSO</H2>
 
+<EM><A HREF="d.barscale.html">d.barscale</A></EM><br>
+<EM><A HREF="d.legend.html">d.legend</A></EM><br>
+<EM><A HREF="d.geodesic.html">d.geodesic</A></EM><br>
+<EM><A HREF="d.rhumbline.html">d.rhumbline</A></EM><br>
 <EM><A HREF="d.erase.html">d.erase</A></EM><br>
 <EM><A HREF="d.frame.html">d.frame</A></EM><br>
-<EM><A HREF="d.legend.html">d.legend</A></EM><br>
 <EM><A HREF="d.rast.html">d.rast</A></EM><br>
-<EM><A HREF="d.scale.html">d.scale</A></EM><br>
-<EM><A HREF="parser.html">parser</A></EM>
 
-<H2>AUTHOR</H2>
+
+
+<H2>AUTHORS</H2>
 
 James Westervelt, U.S. Army Construction Engineering Research Laboratory<BR>
-Geogrid support: Bob Covill
+Geogrid support: Bob Covill<BR>
+Border support: Markus Neteler<BR>
+Text and RGB support: Hamish Bowman<BR>
+
 <p><i>Last changed: $Date$</i>
