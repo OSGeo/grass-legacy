@@ -13,24 +13,36 @@ Typing <em>db.connect -p</em> displays current connection parameters.
 
 <h2>EXAMPLES</h2>
 
-<b>DBF</b> (the dbf/ subdirectory must exist or must be created by the user):<br>
+<h3>DBF</h3>
+
+(the dbf/ subdirectory in the mapset must exist or must be created by the user):<br>
 <b>db.connect driver=</b><em>dbf</em> <b>database=</b><em>'$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'</em> <br>
-<b>db.connect -p</b>
-<P>
-<b>ODBC</b> (may require the use of <a href=db.login.html>db.login</a>):<br> 
+<b>db.tables -p</b>
+
+<h3>ODBC</h3>
+
+(may require the use of <a href=db.login.html>db.login</a>):<br> 
 <b>db.connect driver=</b><em>odbc</em> <b>database=</b><em>gtest</em> <br>
 <b>db.login user=myname pass=secret</b> <br>
-<b>db.connect -p</b>  
-<p>
-<b>PostgreSQL</b> (may require the use of <a href=db.login.html>db.login</a>):<br>
+<b>db.connect -p</b> <br>
+<b>db.tables -p</b>  
+
+<h3>PostgreSQL</h3>
+
+(may require the use of <a href=db.login.html>db.login</a>):<br>
 <b>db.connect driver=</b><em>pg</em> <b>database=</b><em>"host=myserver.itc.it,dbname=mydb"</em> <br>
 <b>db.login user=myname pass=secret</b> <br>
+<b>db.connect -p</b> <br>
 <b>db.tables -p</b>
-<p>
-<b>PostgreSQL</b> (may require the use of <a href=db.login.html>db.login</a>):<br>
-<b>db.connect driver=</b><em>pg</em> <b>database=</b><em>"host=myserver.itc.it,dbname=mydb,port=5432"</em> <br>
+
+<h3>PostgreSQL with different port</h3>
+
+(may require the use of <a href=db.login.html>db.login</a>):<br>
+<b>db.connect driver=</b><em>pg</em> <b>database=</b><em>"host=myserver.itc.it,dbname=mydb,port=6666"</em> <br>
 <b>db.login user=myname pass=secret</b> <br>
+<b>db.connect -p</b> <br>
 <b>db.tables -p</b>
+
 
 <h2>NOTES</h2>
 
