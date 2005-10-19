@@ -1,30 +1,37 @@
+#include <stdio.h>
 #include <math.h>
+#include <string.h>
+
 #include "gis.h"
 #include "display.h"
+#include "raster.h"
 #include "gprojects.h"
 #include "glocale.h"
 
 #include "local_proto.h"
 
 
-int plot_grid (double grid_size, double east, double north)
+int plot_grid (double grid_size, double east, double north, int do_text)
 {
 	double x,y;
 	double e1,e2;
 	struct Cell_head window ;
 	double row_dist, colm_dist;
+	char text[128];
+	int fontsize = 9;
 
 	G_get_set_window (&window);
 
 	/* pull right and bottom edges back one pixel; display lib bug? */
-	row_dist = D_d_to_u_row(0) - D_d_to_u_row(1);
-	colm_dist = D_d_to_u_col(1) - D_d_to_u_col(0);
+	row_dist = D_d_to_u_row(0.) - D_d_to_u_row(1.);
+	colm_dist = D_d_to_u_col(1.) - D_d_to_u_col(0.);
 	window.south = window.south + row_dist;
 	window.east  = window.east  - colm_dist;
 
 	G_setup_plot (
 	    D_get_d_north(), D_get_d_south(), D_get_d_west(), D_get_d_east(),
 	    D_move_abs, D_cont_abs);
+
 
 	/* Draw vertical grids */
 	if (window.west > east)
@@ -35,8 +42,26 @@ int plot_grid (double grid_size, double east, double north)
 	while (x <= window.east)
 	{
 		G_plot_line (x, window.north, x, window.south);
+
+		if(do_text) {
+		    G_format_easting(x, text, G_projection());
+		    R_text_rotation(270.0);
+		    R_text_size(fontsize, fontsize);
+
+		/* Positioning -
+			x: 4 pixels to the right of the grid line, + 0.5 rounding factor.
+		 	y: End of text is 7 pixels up from bottom of screen, +.5 rounding.
+			    fontsize*.81 = actual text width FOR DEFAULT FONT (NOT FreeType)
+		*/
+		    R_move_abs((int)(D_u_to_d_col(x)+4 +.5), 
+		      (int)(D_get_d_south() - (strlen(text)*fontsize*0.81) - 7 + 0.5));
+
+		    R_text(text);
+		}
 		x += grid_size;
 	}
+	R_text_rotation(0.0);  /* reset */
+
 
 	/* Draw horizontal grids
  *
@@ -57,6 +82,21 @@ int plot_grid (double grid_size, double east, double north)
 		G_plot_line (window.east, y, e1, y);
 		G_plot_line (e1, y, e2, y);
 		G_plot_line (e2, y, window.west, y);
+
+		if(do_text) {
+		    G_format_northing(y, text, G_projection());
+		    R_text_size(fontsize, fontsize);
+
+		/* Positioning -
+			x: End of text is 7 pixels left from right edge of screen, +.5 rounding.
+			    fontsize*.81 = actual text width FOR DEFAULT FONT (NOT FreeType)
+			y: 4 pixels above each grid line, +.5 rounding.
+		*/
+		    R_move_abs( (int)(D_get_d_east() - (strlen(text)*fontsize*0.81) - 7 + 0.5),
+		      (int)(D_u_to_d_row(y)-4 +.5) );
+
+		    R_text(text);
+		}
 		y += grid_size;
 	}
 
@@ -64,7 +104,7 @@ int plot_grid (double grid_size, double east, double north)
 }
 
 
-int plot_geogrid(double size, struct pj_info info_in, struct pj_info info_out)
+int plot_geogrid(double size, struct pj_info info_in, struct pj_info info_out, int do_text)
 {
 double g;
 double e1, e2, n1, n2;
