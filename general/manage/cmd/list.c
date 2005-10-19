@@ -66,6 +66,7 @@ main (int argc, char *argv[])
 	{
 		char lister[300];
 		sprintf (lister, "%s/etc/lister/%s", G_gisbase(), list[n].element[0]);
+		G_debug(3,"lister CMD: %s",lister);
 		if (access (lister, 1) == 0) /* execute permission? */
 			execl (lister, argv[0], MAPSET, 0);
 	}
