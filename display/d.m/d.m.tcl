@@ -145,12 +145,7 @@ proc term_panel {cmd} {
 
 ###############################################################################
 proc run {cmd args} {
-	#set cmd $cmd $args
-	#run_cmd $cmd
     eval exec -- $cmd $args >@ stdout 2>@ stderr
-#    set outtext "this is output"
-    set output_sw.text "this is output"
-	update idletasks
 
 }
 
@@ -764,7 +759,7 @@ proc Dm::nviz { } {
 proc Dm::fly { } {
     
     set cmd "d.nviz"
-    spawn $cmd
+    eval exec $cmd &
 
 }
 
@@ -774,7 +769,7 @@ proc Dm::fly { } {
 proc Dm::xganim { } {
     
     set cmd "xganim"
-    spawn $cmd 
+    eval exec $cmd &
 
 }
 
