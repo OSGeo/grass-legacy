@@ -1,4 +1,4 @@
-# Updated 18-March-2005 by Michael Barton, Arizona State University
+# Updated 18-October-2005 by Michael Barton, Arizona State University
 # menu.tcl
 # produces menu bar for d.m
 
@@ -149,6 +149,7 @@ global execom
         {command "Quantization for floating-point maps" {} "r.quant" {} -command {execute r.quant }}
         {command "Resample (change resolution) using nearest neighbor method" {} "r.resample" {} -command {execute r.resample }}
         {command "Resample (change resolution) using regularized spline tension" {} "r.resamp.rst" {} -command {execute r.resamp.rst }}
+        {command "Support file creation and maintenance" {} "r.support" {} -command {execute r.support.sh }}
         {separator}
         {command "Reproject raster from other location" {} "r.proj" {} -command {execute r.proj }}
     }}
@@ -293,6 +294,7 @@ global execom
 			 {command "Break lines at intersections" {} "v.topo.check" {} -command {execute v.topo.check }}
 			 {command "Build polylines from adjacent segments" {} "v.build.polylines" {} -command {execute v.build.polylines }}
 			 {command "Split polylines into segments" {} "v.segment" {} -command {execute v.segment }}
+			 {command "Create lines parallel to existing lines" {} "v.parallel" {} -command {execute v.parallel }}
 			 {separator}
 			 {command "Convert vector feature types" {} "v.type" {} -command {execute v.type }}
 			 {separator}
