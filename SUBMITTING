@@ -261,13 +261,13 @@ care of following rules:
 26. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
     You can re-check before submission with 'cvs diff':
 
-    Either unified ("diff -u") or context ("diff -c") format. "Plain"
+    Be sure to create unified ("diff -u") format. "Plain"
     diffs (the default format) are risky, because they will apply without
     warning to code which has been substantially changed; they are also
-    harder to read than unified or context diffs.
+    harder to read than unified.
 
     Such diffs should be made from the top-level directory, e.g.
-    "cvs diff display/d.vect/main.c"; that way, the diff will
+    "cvs diff -u display/d.vect/main.c"; that way, the diff will
     include the pathname rather than just "main.c".
 
 27. Tell the other developers about the new code using the following e-mail:
