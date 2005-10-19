@@ -4,7 +4,7 @@ namespace eval DmTree {
     variable tree
     variable selected ""
     variable dblclick
-    variable legend_height 15
+    variable legend_height 20
     variable legend_width 30
 }
 
@@ -23,7 +23,7 @@ proc DmTree::create { parent } {
                   -relief sunken -borderwidth 2 ]
 
     set lw [expr $legend_width + 27]
-    set lh [expr $legend_height + 3]
+    set lh [expr $legend_height + 6]
     set tree  [Tree $sw.tree \
             -relief flat -borderwidth 0 -width 15 -highlightthickness 0 \
             -redraw 1 -dropenabled 1 -dragenabled 1 \
