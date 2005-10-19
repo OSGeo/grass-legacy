@@ -41,9 +41,10 @@ main (int argc, char **argv)
 	int R, G, B;
 	double size=0., gsize=0.; /* initialize to zero */
 	double east, north;
+	int do_text;
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4, *opt5, *opt6;
-	struct Flag *noborder;
+	struct Flag *noborder, *notext;
 	struct pj_info info_in;  /* Proj structures */
 	struct pj_info info_out; /* Proj structures */
 
@@ -107,6 +108,11 @@ main (int argc, char **argv)
 	noborder->key = 'b';
 	noborder->description = _("Disable border drawing");
 
+	notext = G_define_flag();
+	notext->key = 't';
+	notext->description = _("Disable text drawing");
+
+
 	/* Check command line */
 	if (G_parser(argc, argv))
 		exit(EXIT_FAILURE);
@@ -120,6 +126,9 @@ main (int argc, char **argv)
 	
 	if( !opt2->answer && !opt5->answer)
 		G_fatal_error(_("Either 'size' or 'gsize' must be selected"));
+
+	if(notext->answer) do_text = FALSE;
+	else do_text = TRUE;
 
 	/* Parse and select grid color */
 	if(sscanf(opt1->answer, "%d:%d:%d", &R, &G, &B) == 3) {
@@ -216,7 +225,7 @@ main (int argc, char **argv)
 		R_standard_color(colorgeo) ;
 		
 		/* plot geogrid */
-		plot_geogrid(gsize, info_in, info_out);
+		plot_geogrid(gsize, info_in, info_out, do_text);
 	}
 
 	/* draw grid */
@@ -229,7 +238,7 @@ main (int argc, char **argv)
 		R_standard_color(colorg) ;
 
 	    /* Do the grid plotting */
-	    plot_grid(size, east, north) ;
+	    plot_grid(size, east, north, do_text);
 	}
 
 	/* Draw border */

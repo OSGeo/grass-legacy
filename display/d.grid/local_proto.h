@@ -1,7 +1,7 @@
 
 
-int plot_grid(double, double, double);
-int plot_geogrid(double, struct pj_info, struct pj_info);
+int plot_grid(double, double, double, int);
+int plot_geogrid(double, struct pj_info, struct pj_info, int);
 int plot_border(double, double, double);
 void init_proj(struct pj_info *, struct pj_info *);
 void get_ll_bounds(double *, double *, double *, double *, struct Cell_head, struct pj_info, struct pj_info);
