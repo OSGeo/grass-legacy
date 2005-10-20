@@ -29,17 +29,23 @@ the vector map (see also <a HREF="v.overlay.html">v.overlay</a>).
 <h3>Connect vector map to database (DBF driver)</h3>
 
 <em>Connect vector map to database with variables</em><br>
-(note: single quotes must be used)<br>
 
+Using default DB connection:<br>
 <b>v.db.connect map=</b><em>vectormap</em> <b>table=</b><em>table</em>
 
 <p>
+Using hardcoded path to DBF directory:<br>
 <b>v.db.connect map=</b><em>vectormap</em> <b>table=</b><em>table</em>  
 <b>database=</b><em>/home/user/grassdata/spearfish60/PERMANENT/dbf</em>
 
 <p>
+Using variable as DBF directory definition, single quotes must be used:<br>
+<b>v.db.connect map=</b><em>vectormap</em> <b>table=</b><em>table</em>
+<b>database=</b><em>'$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'</em>
+
+<p>
 <em>Connect vector map layer 2 and key ID to database with variables</em><br>
-(note: single quotes must be used)<br>
+(note: if needed, single quotes must be used for the <em>database</em> parameter)<br>
 
 <b>v.db.connect map=</b><em>vectormap</em> <b>table=</b><em>table</em> 
 <b>layer=</b>2 <b>key=</b><em>ID</em>
@@ -54,9 +60,12 @@ the vector map (see also <a HREF="v.overlay.html">v.overlay</a>).
 
 <h2>SEE ALSO</h2>
 
-<em><a HREF="db.connect.html">db.connect</a></em><br>
-<em><a HREF="db.copy.html">db.copy</a></em><br>
-<em><a HREF="v.overlay.html">v.overlay</a></em>
+<em>
+<a HREF="db.connect.html">db.connect</a>,
+<a HREF="db.copy.html">db.copy</a>,
+<a HREF="v.db.addtable.html">v.db.addtable</a>,
+<a HREF="v.overlay.html">v.overlay</a>,
+</em>
 
 <h2>AUTHOR</h2>
 
