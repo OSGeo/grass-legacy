@@ -10,13 +10,14 @@ Publisher: McGraw Hill Text; 2nd edition (January 1983)
 The main program is i.ortho.photo which is just a menu driver for the 
 following programs:
 
- photo.target
- photo.init
- photo.camera
- photo.elev
- photo.2image
- photo.2target
- photo.rectify
+1 i.group
+2 photo.target
+3 photo.init
+4 photo.camera
+5 photo.elev
+6 photo.2image
+7 photo.2target
+8 photo.rectify
 
 
 
