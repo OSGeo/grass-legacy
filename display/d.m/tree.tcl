@@ -32,9 +32,10 @@ proc DmTree::create { parent } {
             -closecmd  "DmTree::close $sw.tree" \
             -deltay $lh -padx $lw \
             -width 50 ]
-
+            
+	$tree configure -height 6
     $sw setwidget $tree
-
+	
     pack $sw  -side top -expand yes -fill both
     pack $tree  -side top -expand yes -fill both
 
