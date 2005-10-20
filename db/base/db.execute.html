@@ -19,6 +19,11 @@ do not need to be spcified each time.
 <b>input=</b><em>file.sql</em>
 
 <P>
+<em>Insert new row into attribute table:</em><br>
+<tt>echo "INSERT INTO nobugs (id,name,east_gb,north_gb) values (30,'Ala',1657340,5072301)" | <b>db.execute</b></tt>
+<P>
+
+<P>
 <em>Update attribute entries to new value based on SQL rule:</em><br>
 <tt>echo "UPDATE roads SET travelcost=5 WHERE cat=1" | <b>db.execute</b></tt>
 <P>
