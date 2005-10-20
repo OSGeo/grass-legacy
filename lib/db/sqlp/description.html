@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>SQL support for GRASS</title>
+<title>SQL support for GRASS GIS</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 
@@ -11,7 +11,7 @@
 
 <H2>DESCRIPTION</H2>
 
-SQL support for GRASS.
+SQL support for GRASS GIS.
 <P>
 Supported is a limited set of SQL functions and operators.
 <P>
@@ -78,20 +78,20 @@ Select all attributes from table where str1 column values are not 'No Name':
 </pre>
 <p>
 
-<p>example of null handling:
-<pre>v.db.addcol map=roads col='nulltest int'</pre>
-<pre>v.db.update map=roads col=nulltest value=1 where='cat >2'</pre>
-<pre>d.vect roads where='nulltest is null'</pre>
-<pre>v.db.update map=roads col=nulltest value=2 where='cat <=2'</pre>
+<p>Example of null handling:
+<pre>v.db.addcol map=roads col="nulltest int"</pre>
+<pre>v.db.update map=roads col=nulltest value=1 where="cat >2"</pre>
+<pre>d.vect roads where="nulltest is null"</pre>
+<pre>v.db.update map=roads col=nulltest value=2 where="cat <=2"</pre>
 </p>
 
-<p>examples of complex expressions in updates (using v.db.* modules):
-<pre>v.db.addcol map=roads col='exprtest double'</pre>
+<p>Examples of complex expressions in updates (using v.db.* modules):
+<pre>v.db.addcol map=roads col="exprtest double"</pre>
 <pre>v.db.update map=roads col=exprtest value=cat/nulltest</pre>
 <pre>v.db.update map=roads col=exprtest value=cat/nulltest+cat where=cat=1</pre>
 </p>
 
-<p>examples of complex expressions in updates (using db.* modules):
+<p>Examples of complex expressions in updates (using db.* modules):
 <pre>echo "UPDATE roads SET exprtest=null"</pre>
 <pre>echo "UPDATE roads SET exprtest=cat/2" | db.execute</pre>
 <pre>echo "UPDATE roads SET exprtest=cat/2+cat/3" | db.execute</pre>
@@ -101,8 +101,8 @@ Select all attributes from table where str1 column values are not 'No Name':
 
 
 <p>You actually don't always have to create/update columns with expressions, but you can use them directly in other commands:
-<pre>d.vect roads where='(cat/3*(cat+1))>8'</pre>
-<pre>d.vect roads where='cat>exprtest'</pre>
+<pre>d.vect roads where="(cat/3*(cat+1))>8"</pre>
+<pre>d.vect roads where="cat>exprtest"</pre>
 </p>
 
 <h2>SEE ALSO</h2>
@@ -110,7 +110,10 @@ Select all attributes from table where str1 column values are not 'No Name':
 <a HREF="db.execute.html">db.execute</a>,
 <a HREF="db.select.html">db.select</a>,
 <a HREF="db.tables.html">db.tables</a>,
-<a HREF="d.vect.html">d.vect</a><BR>
+<a HREF="d.vect.html">d.vect</a>,
+<a HREF="v.db.addcol.html">v.db.addcol</a>,
+<a HREF="v.db.update.html">v.db.update</a>
+<BR>
 <a HREF="http://grass.itc.it/grass57/tutorial/links.html">SQL reference links</a>
 </em>
 
@@ -118,4 +121,5 @@ Select all attributes from table where str1 column values are not 'No Name':
 <p><i>Last changed: $Date$</i>
 <HR>
 <BR><a href=index.html>Help Index</a>
-</body></html>
+</body>
+</html>
