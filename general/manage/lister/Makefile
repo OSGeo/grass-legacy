@@ -10,12 +10,10 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 PGM1=cell
 PGM2=vector
 
-default: $(MK) $(ETC)/lister/cell $(ETC)/lister/vector
-
-MK:
-	$(MKDIR) $(ETC)/lister
+default: $(ETC)/lister/cell $(ETC)/lister/vector
 
 $(ETC)/lister/cell: $(OBJDIR)/cell.o $(LIST)
+	$(MKDIR) $(ETC)/lister
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/cell.o $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(ETC)/lister/vector: $(OBJDIR)/vector.o $(LIST)
