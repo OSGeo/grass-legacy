@@ -1,0 +1,42 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.drape</em> converts 2D vector point or line data into 3D vector format via sampling of an elevation surface. Three sampling algorithms adapted from v.sample were incorporated into this module: nearest neighbor, bilinear, and cubic convultion.
+
+<h2>NOTES</h2>
+Please run v.region vect=2D_vector, and make sure that the extent of the elevation raster is at least as big as the vector to convert.
+
+<P>
+Additional vertices can be added to the input 2D vector with <em>v.split</em>.
+<P>
+Can be used in conjunction with <em>v.out.pov</em> and <em>r.out.pov</em> to export a complete set of vector and raster data for display in POVRAY.
+
+<h2>EXAMPLE</h2>
+<b>v.drape</b> [<b>-bc</b>] <b>input=</b><em>2D_vector</em> [<b>type=</b><em>line[,point,...]]</em> <b>rast=</b><em>elevation_surface</em> <b>output=</b><em>3d_vector</em>
+
+<h2>POVRAY EXAMPLE</h2>
+<pre>
+#setup the region
+g.region rast=elevation
+#export the vector data
+v.drape in=2d_roads out=3droads raster=elevation
+v.out.pov 3droads out=3droads.pov
+#export the raster data
+r.out.pov elevation elevation.tga
+r.out.png landsat landsat.png
+</pre>
+
+<h2>SEE ALSO</h2>
+
+<A HREF="v.split.html">v.split</A>
+<br>
+<A HREF="v.out.pov.html">v.out.pov</A>
+<br>
+<A HREF="r.out.pov.html">r.out.pov</A>
+
+<h2>AUTHOR</h2>
+
+Dylan Beaudette, University of California at Davis.
+<br>
+Raster sampling routines borrowed from v.sample.
+
+<p><i>Last changed: $Date$</i>
