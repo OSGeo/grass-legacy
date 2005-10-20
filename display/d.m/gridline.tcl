@@ -41,6 +41,7 @@ proc DmGridline::create { tree parent } {
     set opt($count,gridorigin) "0,0" 
     set opt($count,griddraw) 1 
     set opt($count,borderdraw) 1 
+    set opt($count,textdraw) 1 
     
     set opt($count,rhumbdraw) 0 
     set opt($count,rhumbcoor) "" 
@@ -67,6 +68,7 @@ proc DmGridline::set_option { node key value } {
 proc DmGridline::options { id frm } {
     variable opt
     global dmpath
+    global bgcolor
 
     # grid options 1
     set row [ frame $frm.grid1 ]
@@ -75,7 +77,7 @@ proc DmGridline::options { id frm } {
     Button $row.c -text [G_msg "Help"] \
             -image [image create photo -file "$dmpath/grass.gif"] \
             -command "run g.manual d.grid" \
-            -background lightgreen \
+            -background $bgcolor \
             -helptext [G_msg "Help for grids"]
     Label $row.d -text [G_msg " grid color"] 
     SelectColor $row.e -type menubutton -variable DmGridline::opt($id,gridcolor)    
@@ -86,9 +88,10 @@ proc DmGridline::options { id frm } {
     set row [ frame $frm.grid2 ]
     Label $row.a -text [G_msg "     "]
     checkbutton $row.b -text [G_msg "draw grid border"] -variable DmGridline::opt($id,borderdraw) 
-    Label $row.c -text [G_msg " border color"] 
-    SelectColor $row.d -type menubutton -variable DmGridline::opt($id,gridborder)
-    pack $row.a $row.b $row.c $row.d -side left
+    checkbutton $row.c -text [G_msg "draw border text"] -variable DmGridline::opt($id,textdraw) 
+    Label $row.d -text [G_msg " border & text color"] 
+    SelectColor $row.e -type menubutton -variable DmGridline::opt($id,gridborder)
+    pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
     # grid options 3
@@ -114,7 +117,7 @@ proc DmGridline::options { id frm } {
     Button $row.c -text [G_msg "Help"] \
             -image [image create photo -file "$dmpath/grass.gif"] \
             -command "run g.manual d.geodesic" \
-            -background lightgreen \
+            -background $bgcolor \
             -helptext [G_msg "Help for geodesic lines"]
     Label $row.d -text " line color"
     ComboBox $row.e -padx 2 -width 10 -textvariable DmGridline::opt($id,geodcolor) \
@@ -144,7 +147,7 @@ proc DmGridline::options { id frm } {
     Button $row.c -text [G_msg "Help"] \
             -image [image create photo -file "$dmpath/grass.gif"] \
             -command "run g.manual d.rhumbline" \
-            -background lightgreen \
+            -background $bgcolor \
             -helptext [G_msg "Help for rhumblines"]
     Label $row.d -text " line color"
     ComboBox $row.e -padx 2 -width 10 -textvariable DmGridline::opt($id,rhumbcolor) \
@@ -170,7 +173,7 @@ proc DmGridline::save { tree depth node } {
 
 
     foreach key { _check gridcolor gridborder gridsize gridorigin griddraw borderdraw \
-                 rhumbdraw rhumbcoor geoddraw geodcoor geodcolor geodtxtcolor} {
+                 textdraw rhumbdraw rhumbcoor geoddraw geodcoor geodcolor geodtxtcolor} {
         Dm::rc_write $depth "$key $opt($id,$key)"     
 
     }                     
@@ -201,6 +204,7 @@ proc DmGridline::display { node } {
         
     if { !$opt($id,griddraw) && $cmd != "" } {append cmd " -g"} 
     if { !$opt($id,borderdraw) && $cmd != "" } {append cmd " -b"}
+    if { !$opt($id,textdraw) && $cmd != "" } {append cmd " -t"}
 
         
     # d.geodesic command
