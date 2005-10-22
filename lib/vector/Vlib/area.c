@@ -326,6 +326,21 @@ Vect_get_isle_area ( struct Map_info *Map, int isle)
   return ( Isle->area );
 }
 
+
+/*!
+ *  \fn double Vect_area_perimeter ( struct line_pnts *Points )
+ *  \brief calculate area perimeter
+ *  \return area perimeter
+ *  \param line_pnts * structure
+ *  
+*/
+double 
+Vect_area_perimeter ( struct line_pnts *Points )
+{
+  return Vect_line_length ( Points );
+}
+
+
 /*!
  \fn int Vect_point_in_area (
 		       struct Map_info *Map,
