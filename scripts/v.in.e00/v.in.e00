@@ -66,6 +66,7 @@ if [ "$AWK" = "" ] ; then
 fi
 
 # setting environment, so that awk works properly in all languages
+unset LC_ALL
 export LC_NUMERIC=C
 
 eval `g.gisenv`
@@ -135,6 +136,21 @@ fi
 
 ### do import
 
+#make a temporary directory
+TMPDIR="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMPDIR" ] ; then
+    echo "ERROR: unable to create temporary files" 1>&2
+    exit 1
+fi
+
+rm -f "$TMPDIR"
+mkdir "$TMPDIR"
+
+install -m 644 $E00NAME.e* $E00NAME.E* "$TMPDIR" 2>/dev/null
+
+#change to temporary directory to later avoid removal problems (rm -r ...)
+cd "$TMPDIR"
+
 #check for binay E00 file (we can just check if import fails):
 #avcimport doesn't set exist status :-(
 
@@ -164,6 +180,8 @@ fi
 ## let's import...
 ## point
 
+#SQL name fix:
+NAME=`echo $NAME | sed 's+-+_+g'`
 
 if [ "$GIS_OPT_type" = "point" ] ; then
         echo "Importing points..."
@@ -205,7 +223,10 @@ echo ""
 echo "Imported $GIS_OPT_type vector map <$NAME>."
 
 #### clean up the mess
+rm -f "$TMPDIR"/$E00NAME.e* "$TMPDIR"/$E00NAME.E*
 rm -rf $E00TMP.e00 $E00SHORTNAME info $E00NAME.cat.$E00TMP.e00 2>&1 > /dev/null
+cd ..
+rmdir "$TMPDIR"
 
 #### end
 echo 2>&1
