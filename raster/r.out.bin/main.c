@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     void *raster, *ptr;
     RASTER_MAP_TYPE out_type, map_type;
     char *name;
-    char *outfile;
+    char outfile[128];
     char *mapset;
     int null_str = 0;
     char buf[128];
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
     parm.output = G_define_option();
     parm.output->key = "output";
     parm.output->type = TYPE_STRING;
-    parm.output->required = YES;
+    parm.output->required = NO;
     parm.output->description =
 	_("Name for output binary map (use output=- for stdout)");
 
@@ -109,14 +109,14 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Invalid value for null (integers only)"));
 
     name = parm.input->answer;
-    outfile = parm.output->answer;
 
-/* Does not seem to like this name?
-    if ((strcmp("", outfile)) == 0) {
-	outfile = name;
-	strcat (outfile,".bin");
-    } else {
-*/
+    if(parm.output->answer)
+	G_strncpy(outfile, parm.output->answer, sizeof(outfile)-1);
+    else {
+	G_strncpy(outfile, name, sizeof(outfile)-1-4);
+	strcat(outfile, ".bin");
+    }
+
     if ((strcmp("-", outfile)) == 0)
 	do_stdout = 1;
 
