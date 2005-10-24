@@ -235,7 +235,7 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag, int z_f
 	   if ((G_projection() == PROJECTION_LL))
 	   	fprintf (stdout, "Values in decimal degree:\n");
 	   fprintf (stdout, "%-11s %f\n","region north-south extent:", window->north - window->south);
-	   fprintf (stdout, "%-11s %f\n","region east-west  extent:", window->east - window->west);
+	   fprintf (stdout, "%-11s %f\n","region east-west extent:", window->east - window->west);
 	 }
 	else
 	{
