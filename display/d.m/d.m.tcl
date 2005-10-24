@@ -30,12 +30,15 @@ set gisdbase [exec g.gisenv get=GISDBASE]
 set location_name [exec g.gisenv get=LOCATION_NAME]
 set mapset [exec g.gisenv get=MAPSET]
 
+
 set dmpath $env(GISBASE)/etc/dm/
 
 set keycontrol "Control"
 set tmenu "1"
 set keyctrl "Ctrl"
 set execom "execute"
+set msg 0
+set mon ""
 
 
 set bgcolor HoneyDew2
@@ -120,17 +123,49 @@ proc spawn {cmd args} {
     eval exec -- $cmd $args &
 }
 
+###############################################################################
+	proc cmd_output {fh} {
+		global outtext
+		while {![eof $fh]} {
+			set str [gets $fh]
+			append str "\n"
+			if { [fblocked $fh] } { set str [read $fh] }
+			while {[set idx [string first "\b" $str]] != -1} {
+				set last [expr $idx - 1]
+				set str1 [string range $str 1 $last]
+				set first [expr $idx + 1]
+				set str [string range $str $first end]
+				set pos [$outtext index "end - 1 chars"]
+				$outtext delete $pos
+				$outtext insert end $str1
+			}
+			$outtext insert end $str
+			$outtext yview end
+			update idletasks
+		}
+		catch {close $fh}
+		return
+	}
 
 ###############################################################################
-proc run_panel {cmd} {
-	global outtext
-    eval exec -- $cmd >@ stdout 2>@ stderr
-    set str $cmd
-	$outtext insert end "$cmd\n"
-	$outtext yview end
 
-	update idletasks
-}
+	proc run_panel {cmd} {
+		global outtext
+		set message_env [exec g.gisenv get=GRASS_MESSAGE_FORMAT]
+		exec g.gisenv set=GRASS_MESSAGE_FORMAT=gui
+
+		set cmd_name $cmd
+		set cmd [concat | $cmd 2>@ stdout]
+		if { [catch {open $cmd r} fh] } {
+			error $fh
+		}
+		$outtext insert end "$cmd_name\n"
+		$outtext yview end
+		cmd_output $fh
+
+		exec g.gisenv set=GRASS_MESSAGE_FORMAT=$message_env
+	}
+
 
 ###############################################################################
 proc term_panel {cmd} {
@@ -216,14 +251,29 @@ proc Dm::color { color } {
 ###############################################################################
 
 proc Dm::displmon { mon } {
-    global dmpath
+    global dmpath outtext
     if ![catch {open "|d.mon -L" r} input] {
         while {[gets $input line] >= 0} {
             if {[regexp -nocase "$mon.*not running" $line]} {
-                run "d.mon start=$mon"
-                return
+				set cmd "d.mon start=$mon"
+				set cmd_name "d.mon start=$mon"
+				set cmd [concat | $cmd 2>@ stdout]
+				if { [catch {open $cmd r} fh] } {
+					error $fh
+				}
+				$outtext insert end "$cmd_name\n"
+				$outtext yview end
+				return
             } elseif {[regexp -nocase "$mon.* running" $line]} {
-                run "d.mon select=$mon"
+				set cmd "d.mon select=$mon"
+				set cmd_name "d.mon select=$mon"
+				set cmd [concat | $cmd 2>@ stdout]
+				if { [catch {open $cmd r} fh] } {
+					error $fh
+				}
+				$outtext insert end "$cmd_name\n"
+				$outtext yview end
+				cmd_output $fh
                 return       
             }              
         }
@@ -239,6 +289,7 @@ proc Dm::create { } {
     global bgcolor
     global cmd
     global outtext
+    global mon
     variable mainframe
     variable options
     variable tree
@@ -264,6 +315,16 @@ proc Dm::create { } {
 
     set mainwindow [$mainframe getframe]
 
+	# check for currently active monitor    
+	if ![catch {open "|d.mon -L" r} input] {
+		while {[gets $input line] >= 0} {
+			if {[regexp -nocase {.*(selected).*} $line]} {
+				regexp -nocase {..} $line mon
+			}              
+		}
+	}
+
+
     # toolbar 1 & 2 creation
     set tb1  [$mainframe addtoolbar]
     DmToolBar1::create $tb1
@@ -277,44 +338,25 @@ proc Dm::create { } {
     # MANAGE DISPLAY MONITORS
     set monitor_pane  [$pw1 add -minsize 1 -weight 0 ]
 
-    set bbox1 [ButtonBox $monitor_pane.bbox1 -spacing 0 -background $bgcolor -orient vertical ]
-    
-    # monitor x0
-    $bbox1 add  -text [G_msg "x0"] -command "Dm::displmon x0" \
-        -highlightthickness 0 -takefocus 1 -relief raised -borderwidth 1  \
-        -helptext [G_msg "Start/select display monitor x0"]
-        
-    #monitor x1
-    $bbox1 add  -text [G_msg "x1"] -command "Dm::displmon x1" \
-        -highlightthickness 0 -takefocus 1 -relief raised -borderwidth 1  \
-        -helptext [G_msg "Start/select display monitor x1"]
+	label $monitor_pane.lbl1 -bg $bgcolor -fg darkgreen -text "Display"
+	radiobutton $monitor_pane.rb0 -text "x0" -variable mon -value "x0" \
+		-bg $bgcolor -command "Dm::displmon x0"
+	radiobutton $monitor_pane.rb1 -text "x1" -variable mon -value "x1" \
+		-bg $bgcolor -command "Dm::displmon x1"
+	radiobutton $monitor_pane.rb2 -text "x2" -variable mon -value "x2" \
+		-bg $bgcolor -command "Dm::displmon x2"
+	radiobutton $monitor_pane.rb3 -text "x3" -variable mon -value "x3" \
+		-bg $bgcolor -command "Dm::displmon x3"
+	radiobutton $monitor_pane.rb4 -text "x4" -variable mon -value "x4" \
+		-bg $bgcolor -command "Dm::displmon x4"
+	radiobutton $monitor_pane.rb5 -text "x5" -variable mon -value "x5" \
+		-bg $bgcolor -command "Dm::displmon x5"
+	radiobutton $monitor_pane.rb6 -text "x6" -variable mon -value "x6" \
+		-bg $bgcolor -command "Dm::displmon x6"
 
-    #monitor x2
-    $bbox1 add  -text [G_msg "x2"] -command "Dm::displmon x2" \
-        -highlightthickness 0 -takefocus 1 -relief raised -borderwidth 1  \
-        -helptext [G_msg "Start/select display monitor x2"]
-
-    #monitor x3
-    $bbox1 add  -text [G_msg "x3"] -command "Dm::displmon x3" \
-        -highlightthickness 0 -takefocus 1 -relief raised -borderwidth 1  \
-        -helptext [G_msg "Start/select display monitor x3"]
-
-    #monitor x4
-    $bbox1 add  -text [G_msg "x4"] -command "Dm::displmon x4" \
-        -highlightthickness 0 -takefocus 1 -relief raised -borderwidth 1  \
-        -helptext [G_msg "Start/select display monitor x4"]
-
-    #monitor x5
-    $bbox1 add  -text [G_msg "x5"] -command "Dm::displmon x5" \
-        -highlightthickness 0 -takefocus 1 -relief raised -borderwidth 1  \
-        -helptext [G_msg "Start/select display monitor x5"]
-
-    #monitor x6
-    $bbox1 add  -text [G_msg "x6"] -command "Dm::displmon x6" \
-        -highlightthickness 0 -takefocus 1 -relief raised -borderwidth 1  \
-        -helptext [G_msg "Start/select display monitor x6"]
-
-    pack $bbox1 -side left -anchor nw
+    pack $monitor_pane.lbl1 $monitor_pane.rb0 $monitor_pane.rb1 $monitor_pane.rb2 \
+    	$monitor_pane.rb3 $monitor_pane.rb4 $monitor_pane.rb5 \
+    	$monitor_pane.rb6 -side top -expand yes -anchor nw -fill both 
     pack $monitor_pane -side left -expand no -fill both
     
    
@@ -498,6 +540,7 @@ proc Dm::autoname { name } {
     DmTree::autoname $tree $node $name
 }
 
+###############################################################################
 # selected node ( show options )
 proc Dm::select { node } {
     variable tree
@@ -655,15 +698,28 @@ proc Dm::edit { } {
 }
 
 ###############################################################################
+proc message_dialog { msgtxt } {
+	set msg [MessageDlg .msgdlg  \
+		-title "The Message Dialog" \
+		-message $msgtxt \
+		-type yesno ]
+if { $msg == 1 } {puts "no way" }
+if { $msg == 0 } {puts "way to go"}
+
+}
+
+
+###############################################################################
 
 # display
 proc Dm::display { } {
 	global outtext
+
 	$outtext delete 1.0 end
 
     Dm::monitor
     run "d.frame -e"
-    DmGroup::display "root"
+    DmGroup::display "root" 
 
 }
 
