@@ -109,7 +109,9 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
        	exit (1);
 
-    sscanf(parm.null->answer, "%d", &null_str);    
+    if( sscanf(parm.null->answer, "%d", &null_str) != 1 )
+	G_fatal_error(_("Invalid value for null (integers only)"));
+
     name = parm.input->answer;
     outfile =  parm.output->answer;
 
@@ -271,7 +273,7 @@ else
 fprintf(fp_1, "skipbytes 896\n"); /* Pad size of struct - big endian*/
 } else
 fprintf(fp_1, "skipbytes 0\n");
-fprintf(fp_1, "nodata %f\n", null_str);
+fprintf(fp_1, "nodata %d\n", null_str);
 
 fclose (fp_1);
 
