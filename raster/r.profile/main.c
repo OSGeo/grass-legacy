@@ -259,8 +259,8 @@ int main(int argc, char *argv[])
 
 	if (k == 0) {
 	    /* Only one coordinate pair supplied */
-	    sscanf(parm.profile->answers[0], "%lf", &e1);
-	    sscanf(parm.profile->answers[1], "%lf", &n1);
+	    G_scan_easting(parm.profile->answers[0], &e1, G_projection());
+	    G_scan_northing(parm.profile->answers[1], &n1, G_projection());
 	    e2 = e1;
 	    n2 = n1;
 	    /* Get profile info */
@@ -268,10 +268,10 @@ int main(int argc, char *argv[])
 	}
 	else {
 	    for (i = 0; i <= k - 2; i += 2) {
-		sscanf(parm.profile->answers[i], "%lf", &e1);
-		sscanf(parm.profile->answers[i + 1], "%lf", &n1);
-		sscanf(parm.profile->answers[i + 2], "%lf", &e2);
-		sscanf(parm.profile->answers[i + 3], "%lf", &n2);
+		G_scan_easting(parm.profile->answers[i], &e1, G_projection());
+		G_scan_northing(parm.profile->answers[i + 1], &n1, G_projection());
+		G_scan_easting(parm.profile->answers[i + 2], &e2, G_projection());
+		G_scan_northing(parm.profile->answers[i + 3], &n2, G_projection());
 		/* Get profile info */
 		do_profile(e1, e2, n1, n2, name, coords, res, fd, data_type,
 			   fp, null_string);
