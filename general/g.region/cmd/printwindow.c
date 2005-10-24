@@ -1,8 +1,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
-#include "local_proto.h"
 #include "gprojects.h"
+#include "glocale.h"
+
+#include "local_proto.h"
 
 int print_window(struct Cell_head *window,int print_flag, int dist_flag, int z_flag)
 {
@@ -108,13 +110,13 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag, int z_f
 	    
 	   /* read current projection info */
 	    if ((in_proj_info = G_get_projinfo()) == NULL)
-	       G_fatal_error("Can't get projection info of current location");
+	       G_fatal_error(_("Can't get projection info of current location"));
 
 	    if ((in_unit_info = G_get_projunits()) == NULL)
-	       G_fatal_error("Can't get projection units of current location");
+	       G_fatal_error(_("Can't get projection units of current location"));
 
 	    if (pj_get_kv(&iproj, in_proj_info, in_unit_info) < 0)
-	       G_fatal_error("Can't get projection key values of current location");
+	       G_fatal_error(_("Can't get projection key values of current location"));
 	
             G_free_key_value( in_proj_info );
             G_free_key_value( in_unit_info );
@@ -124,7 +126,7 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag, int z_f
 	    oproj.meters = 1.;
 	    sprintf(oproj.proj, "ll");
 	    if ((oproj.pj = pj_latlong_from_proj(iproj.pj)) == NULL)
-	       G_fatal_error("Unable to set up lat/long projection parameters");            
+	       G_fatal_error(_("Unable to set up lat/long projection parameters"));            
 	    
 	   /* do the transform
 	    * syntax: pj_do_proj(outx, outy, in_info, out_info) 
@@ -138,7 +140,7 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag, int z_f
 	    latitude=window->north;
 	    longitude=window->west;
 	    if(pj_do_proj(&longitude, &latitude, &iproj, &oproj) < 0)
-	       G_fatal_error ("Error in pj_do_proj (projection of input coordinate pair)");
+	       G_fatal_error(_("Error in pj_do_proj (projection of input coordinate pair)"));
 
 	    lo1=longitude;
 	    la1=latitude;
@@ -147,7 +149,7 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag, int z_f
 	    latitude=window->north;
 	    longitude=window->east;
 	    if(pj_do_proj(&longitude, &latitude, &iproj, &oproj) < 0)
-	       G_fatal_error ("Error in pj_do_proj (projection of input coordinate pair)");
+	       G_fatal_error(_("Error in pj_do_proj (projection of input coordinate pair)"));
 
 	    lo2=longitude;
 	    la2=latitude;
@@ -156,7 +158,7 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag, int z_f
 	    latitude=window->south;
 	    longitude=window->east;
 	    if(pj_do_proj(&longitude, &latitude, &iproj, &oproj) < 0)
-	       G_fatal_error ("Error in pj_do_proj (projection of input coordinate pair)");
+	       G_fatal_error(_("Error in pj_do_proj (projection of input coordinate pair)"));
 
 	    lo3=longitude;
 	    la3=latitude;
@@ -165,7 +167,7 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag, int z_f
 	    latitude=window->south;
 	    longitude=window->west;
 	    if(pj_do_proj(&longitude, &latitude, &iproj, &oproj) < 0)
-	       G_fatal_error ("Error in pj_do_proj (projection of input coordinate pair)");
+	       G_fatal_error(_("Error in pj_do_proj (projection of input coordinate pair)"));
 
 	    lo4=longitude;
 	    la4=latitude;
@@ -232,7 +234,7 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag, int z_f
 	 {
 	   if ((G_projection() == PROJECTION_LL))
 	   	fprintf (stdout, "Values in decimal degree:\n");
-	   fprintf (stdout, "%-11s %f\n","region nort-south extent:", window->north - window->south);
+	   fprintf (stdout, "%-11s %f\n","region north-south extent:", window->north - window->south);
 	   fprintf (stdout, "%-11s %f\n","region east-west  extent:", window->east - window->west);
 	 }
 	else
