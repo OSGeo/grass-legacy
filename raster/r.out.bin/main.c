@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     void *raster, *ptr;
     RASTER_MAP_TYPE out_type, map_type;
     char *name;
-    char outfile[128];
+    char outfile[GNAME_MAX];
     char *mapset;
     int null_str = 0;
     char buf[128];
