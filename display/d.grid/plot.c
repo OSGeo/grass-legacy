@@ -108,9 +108,13 @@ int plot_geogrid(double size, struct pj_info info_in, struct pj_info info_out, i
 double g;
 double e1, e2, n1, n2;
 double east, west, north, south;
+double start_coord;
 double lat, lon;
 int j, ll;
-int SEGS=10;
+int SEGS=100;
+char text[128];
+int fontsize = 9;
+float font_angle;
 struct Cell_head window ;
 
 	/* geo current region */
@@ -132,6 +136,7 @@ struct Cell_head window ;
     e1 = east;
     for (j = 0; g >= south; j++, g -= size)
     {
+	start_coord = -9999.;
         if (g == north || g == south) continue;
         for (ll = 0; ll < SEGS; ll++) {
                 n1 = n2 = g;
@@ -147,20 +152,38 @@ struct Cell_head window ;
 			check_coords(e2, n2, &lon, &lat, 1, window, info_in, info_out);
                         e2 = lon;
                         n2 = lat;
+			if (start_coord == -9999.)
+			{
+				start_coord = n1;
+				font_angle = get_heading( (e1-e2), (n1-n2) );
+			}
 			G_plot_line(e1, n1, e2, n2);
 	}
+	if(do_text) {
+		    G_format_northing(g, text, PROJECTION_LL);
+		    R_text_rotation(font_angle);
+		    R_text_size(fontsize, fontsize);
+		    R_move_abs( (int)(D_get_d_west() + 1.0), 
+				    (int)(D_u_to_d_row(start_coord) - 0.5) );
+		    R_text(text);
+		}
     }
-    
+
     /* Lines of Longitude */
     g = floor (east / size) * size ;
     n1 = north;
     for (j = 0; g > west; j++, g -= size)
     {
+	start_coord = -9999.;
         if (g == east || g == west) continue;
         for (ll = 0; ll < SEGS; ll++) {
                 e1 = e2 = g;
+		n1 = north - (ll *((north - south)/SEGS));
+		n2 = n1 - ((north - south)/SEGS);
+		/*
                 n1 = south + (ll *((north - south)/SEGS));
                 n2 = n1 + ((north - south)/SEGS);
+		*/
                         if (pj_do_proj(&e1, &n1, &info_in, &info_out) <0)
                         G_fatal_error( _("Error in pj_do_proj"));
                         check_coords(e1, n1, &lon, &lat, 2, window, info_in, info_out);
@@ -171,9 +194,25 @@ struct Cell_head window ;
                         check_coords(e2, n2, &lon, &lat, 2, window, info_in, info_out);
                         e2 = lon;
                         n2 = lat;
+			if (start_coord == -9999.)
+			{
+				font_angle = get_heading( (e1-e2), (n1-n2) );
+				start_coord = e1;
+			}
                         G_plot_line(e1, n1, e2, n2);
+
 	}
+	if(do_text) {
+		    G_format_easting(g, text, PROJECTION_LL);
+		    R_text_rotation(font_angle);
+		    R_text_size(fontsize, fontsize);
+		    R_move_abs((int)(D_u_to_d_col(start_coord) + 1.0), 
+		      (int)(D_get_d_north() + 1.0));
+		    R_text(text);
+		}
     }
+
+    R_text_rotation(0.0); /* reset */
 
     return 0;
     
@@ -396,4 +435,42 @@ check_coords(
      }
 
 return;
+}
+
+/*******************************************
+ * function to calculate azimuth in degrees
+ * from rows and columns
+*******************************************/
+float
+get_heading(double rows, double cols)
+{
+float azi;
+
+/* NE Quad or due south */
+if (rows < 0 && cols <= 0) {
+        azi = RAD_TO_DEG*atan((cols/rows));
+        if (azi < 0.) azi *= -1.;
+}
+/* SE Quad or due east */
+if (rows >= 0 && cols < 0) {
+        azi = RAD_TO_DEG*atan((rows/cols));
+        if (azi < 0.) azi *= -1.;
+        azi = 90. + azi;
+}
+
+/* SW Quad or due south */
+if (rows > 0 && cols >= 0) {
+        azi = RAD_TO_DEG*atan((rows/cols));
+        if (azi < 0.) azi *= -1.;
+        azi = 270. - azi;
+}
+
+/* NW Quad or due south */
+if (rows <= 0 && cols > 0) {
+        azi = RAD_TO_DEG*atan((rows/cols));
+        if (azi < 0.) azi *= -1.;
+        azi = 270. + azi;
+}
+
+return (azi);
 }
