@@ -34,7 +34,6 @@ int
 main (int argc, char **argv)
 {
 	int colorg = 0;
-	int colorgeo = 0;
 	int colorb = 0;
 	const int customGcolor = MAXCOLORS + 1;
 	const int customBcolor = MAXCOLORS + 2;
@@ -43,8 +42,8 @@ main (int argc, char **argv)
 	double east, north;
 	int do_text;
 	struct GModule *module;
-	struct Option *opt1, *opt2, *opt3, *opt4, *opt5, *opt6;
-	struct Flag *noborder, *notext;
+	struct Option *opt1, *opt2, *opt3, *opt4;
+	struct Flag *noborder, *notext, *geogrid, *nogrid;
 	struct pj_info info_in;  /* Proj structures */
 	struct pj_info info_out; /* Proj structures */
 
@@ -60,15 +59,8 @@ main (int argc, char **argv)
 	opt2->key        = "size" ;
 	opt2->key_desc   = "value" ;
 	opt2->type       = TYPE_STRING ;
-	opt2->required   = NO;
+	opt2->required   = YES;
 	opt2->description= _("Size of grid to be drawn") ;
-	
-	opt5 = G_define_option() ;
-	opt5->key        = "gsize" ;
-	opt5->key_desc   = "value" ;
-	opt5->type       = TYPE_STRING ;
-	opt5->required   = NO;
-	opt5->description= _("Size of geographic grid to be drawn") ;
 	
 	opt1 = G_define_option() ;
 	opt1->key        = "color" ;
@@ -77,15 +69,7 @@ main (int argc, char **argv)
 	opt1->answer     = "gray" ;
 /*	opt1->options    = D_color_list(); */
 	opt1->description=
-	    _("Sets the current grid color, either a standard GRASS color or R:G:B triplet (separated by colons)");
-	    
-	opt6 = G_define_option() ;
-	opt6->key        = "gcolor" ;
-	opt6->type       = TYPE_STRING ;
-	opt6->required   = NO;
-	opt6->answer     = "black" ;
-	opt6->description=
-	    _("Sets the geographic grid color, either a standard GRASS color or R:G:B triplet (separated by colons)");
+	    _("Sets the grid color, either a standard GRASS color or R:G:B triplet (separated by colons)");
 	    
 	opt3 = G_define_option() ;
 	opt3->key        = "origin" ;
@@ -104,6 +88,14 @@ main (int argc, char **argv)
 	opt4->description=
 	    _("Sets the border color, either a standard GRASS color or R:G:B triplet");
 
+	geogrid = G_define_flag();
+	geogrid->key = 'g';
+	geogrid->description = _("Draw geographic grid");
+
+	nogrid = G_define_flag();
+	nogrid->key = 'n';
+	nogrid->description = _("Disable grid drawing");
+
 	noborder = G_define_flag();
 	noborder->key = 'b';
 	noborder->description = _("Disable border drawing");
@@ -119,14 +111,13 @@ main (int argc, char **argv)
 
 
 	/* do some checking */
-	if (opt5->answer && G_projection() == PROJECTION_LL)
+	if (nogrid->answer && noborder->answer)
+		G_fatal_error(_("Both grid and border drawing are disabled"));
+	if (geogrid->answer && G_projection() == PROJECTION_LL)
 		G_fatal_error(_("Geo-Grid option is not available for LL projection"));
-	if (opt5->answer && G_projection() == PROJECTION_XY)
+	if (geogrid->answer && G_projection() == PROJECTION_XY)
 		G_fatal_error(_("Geo-Grid option is not available for XY projection"));
 	
-	if( !opt2->answer && !opt5->answer)
-		G_fatal_error(_("Either 'size' or 'gsize' must be selected"));
-
 	if(notext->answer) do_text = FALSE;
 	else do_text = TRUE;
 
@@ -144,22 +135,6 @@ main (int argc, char **argv)
 	if(!colorg)
 	    G_fatal_error(_("[%s]: No such color"), opt1->answer);
 	
-        /* Parse out geographic grid color */	
-	if (opt5->answer)
-	{
-		if(sscanf(opt6->answer, "%d:%d:%d", &R, &G, &B) == 3) {
-			if (R>=0 && R<256 && G>=0 && G<256 && B>=0 && B<256) {
-				R_reset_color(R, G, B, customGcolor);
-				colorgeo = customGcolor;
-			}
-		}
-		else
-			colorgeo = D_translate_color(opt6->answer);
-
-		if(!colorgeo)
-			G_fatal_error(_("[%s]: No such color"), opt6->answer);
-	}
-	
 	
 	/* Parse and select border color */
 	if(sscanf(opt4->answer, "%d:%d:%d", &R, &G, &B) == 3) {
@@ -176,19 +151,14 @@ main (int argc, char **argv)
 
 
 	/* get grid size */
-	if(opt2->answer)
+	if (geogrid->answer)
 	{
+		if(!G_scan_resolution (opt2->answer, &gsize, PROJECTION_LL) || gsize <= 0.0)
+			G_fatal_error (_("Invalid geo-grid size <%s>"), opt2->answer);
+	} else {
 		if(!G_scan_resolution (opt2->answer, &size, G_projection()) || size <= 0.0)
 			G_fatal_error (_("Invalid grid size <%s>"), opt2->answer);
 	}
-
-	/* get geographic grid size */
-	if(opt5->answer)
-	{
-		if(!G_scan_resolution (opt5->answer, &gsize, PROJECTION_LL) || gsize <= 0.0)
-			G_fatal_error (_("Invalid geo-grid size <%s>"), opt5->answer);
-	}
-		
 
 	/* get grid easting start */
 	if(!G_scan_easting(opt3->answers[0], &east, G_projection()))
@@ -212,33 +182,24 @@ main (int argc, char **argv)
 
 	D_setup(0);
 
-	/* Draw geographic grid */	
-	if (opt5->answer)
-	{
-	    /* initialzie proj stuff */
-	    init_proj(&info_in, &info_out);
-
-            /* Set grid color */
-	    if (colorgeo > MAXCOLORS)  /* ie custom RGB color */
-		R_color(colorgeo);
-	    else
-		R_standard_color(colorgeo) ;
-		
-		/* plot geogrid */
-		plot_geogrid(gsize, info_in, info_out, do_text);
-	}
-
 	/* draw grid */
-	if(opt2->answer)
+	if(!nogrid->answer)
 	{
-	    /* Set grid color */
-	    if (colorg > MAXCOLORS)  /* ie custom RGB color */
-		R_color(colorg);
-	    else
-		R_standard_color(colorg) ;
+		/* Set grid color */
+		if (colorg > MAXCOLORS)  /* ie custom RGB color */
+			R_color(colorg);
+		else
+			R_standard_color(colorg) ;
 
-	    /* Do the grid plotting */
-	    plot_grid(size, east, north, do_text);
+		if (geogrid->answer)
+		{
+			/* initialzie proj stuff */
+			init_proj(&info_in, &info_out);
+			plot_geogrid(gsize, info_in, info_out, do_text);
+		} else {
+			/* Do the grid plotting */
+			plot_grid(size, east, north, do_text);
+		}
 	}
 
 	/* Draw border */
