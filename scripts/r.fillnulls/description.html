@@ -2,12 +2,19 @@
 
 
 <EM><b>r.fillnulls</b></EM>  - Fills NULL (no data areas) in input map and
- stores filled map to a new output map. The fill data are interpolated 
- from the no data area boundaries using v.surf.rst spline interpolation.<br>
+stores filled map to a new output map. The fill data are interpolated 
+from the no data area boundaries buffer using <EM>v.surf.rst</EM>
+spline interpolation.<br>
+
 <EM>(GRASS Shell Script)</EM>
 
 <H2>NOTES</H2>
 
+Each area boundary buffer is set to three times the map resolution to get nominally
+three points around the edge. This way the algorithm interpolates into the hole with
+a trained slope and curvature at the edges, in order to avoid that such a flat plane
+is generated in a hole.
+<P>
 During the interpolation following warning may occur:<p>
 
 <tt>
@@ -35,7 +42,8 @@ the input map and saved into a new raster map.
 Depending on the shape of the NULL data area(s) problems may occur due to an
 insufficient number of input cell values for the interpolation process. Most
 problems will occur if a NULL data area reaches a large amount of the map
-boundary. The user will have to carefully check the result using <EM><a href="r.mapcalc.html">r.mapcalc</A></EM> (generating a difference map to the
+boundary. The user will have to carefully check the result using
+<EM><a href="r.mapcalc.html">r.mapcalc</A></EM> (generating a difference map to the
 input map) and/or <EM><A HREF="d.what.rast.html">d.what.rast</A></EM> to
 query individual cell values.<p>
 
@@ -66,6 +74,7 @@ II. Application to Terrain Modeling and Surface Geometry Analysis,
 
 <H2>AUTHORS</H2>
 r.fillnulls: Markus Neteler, University of Hannover<p>
-and authors of v.surf.rst
+and authors of v.surf.rst<br>
+Improvement by Hamish Bowman, NZ
 
 <p><i>Last changed: $Date$</i>
