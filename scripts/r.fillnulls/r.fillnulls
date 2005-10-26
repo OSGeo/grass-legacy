@@ -126,9 +126,14 @@ echo "Locating and isolating NULL areas..."
 r.mapcalc $TMP1="if(isnull($GIS_OPT_input),1,null())"
 
 #generate a ring:
-nsres_int="`g.region -gm | grep 'nsres=' | sed s/nsres=//`"
-ewres_int="`g.region -gm | grep 'ewres=' | sed s/ewres=//`"
-RES="`echo $nsres_int $ewres_int | awk '{printf "%f\n", ($1+$2) / 2.}'`"
+# the buffer is set to three times the map resolution so you get nominally
+# three points around the edge. This way you interpolate into the hole with 
+# a trained slope & curvature at the edges, otherwise you just get a flat plane.
+# With just a single row of cells around the hole you often get gaps
+# around the edges when distance > mean (.5 of the time? diagonals? worse 
+# when ewres!=nsres).
+eval `g.region -gm | grep res`
+RES="`echo $nsres $ewres | awk '{printf "%f", ($1+$2) * 3. / 2.}'`"  # avg*3
 
 r.buffer input=$TMP1 dist=$RES out=$TMP1.buf
 if [ $? -ne 0 ] ; then
