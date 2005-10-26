@@ -45,6 +45,7 @@ if [ "$AWK" = "" ] ; then
 fi
 
 # setting environment, so that awk works properly in all languages
+unset LC_ALL
 export LC_NUMERIC=C
 
 COVER="$GIS_OPT_map"
