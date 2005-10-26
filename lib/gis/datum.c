@@ -246,10 +246,15 @@ int G_ask_datum_params(char *datumname, char *params)
             if(strlen(answer)==0)
                 return -1;
 	    sprintf(params, answer);
-            sprintf(buff, "Parameters to be used are:\n\"%s\"\nIs this correct?", params);
-            if (G_yes(buff, 1))
-                break;
-
+	    if(strstr(params, "=") == NULL)
+	        fprintf(stderr, "\nBad format: parameter string must contain an = sign; see examples.\n");
+	    else
+	    {		
+                sprintf(buff, "Parameters to be used are:\n\"%s\"\nIs this correct?", params);
+                if (G_yes(buff, 1))
+                    break;
+	    }
+	   
         }
 
     }
