@@ -114,11 +114,20 @@ int j, ll;
 int SEGS=100;
 char text[128];
 int fontsize = 9;
+float border_off = 2.5;
+float grid_off = 2.0;
+double row_dist, colm_dist;
 float font_angle;
 struct Cell_head window ;
 
 	/* geo current region */
 	G_get_set_window (&window);
+
+	/* Adjust south and east back by one pixel for display bug? */
+	row_dist = D_d_to_u_row(0.) - D_d_to_u_row(1.);
+	colm_dist = D_d_to_u_col(1.) - D_d_to_u_col(0.);
+	window.south +=  row_dist;
+        window.east  -= colm_dist;
 
      /* get lat long min max */
      /* probably need something like boardwalk ?? */
@@ -163,8 +172,8 @@ struct Cell_head window ;
 		    G_format_northing(g, text, PROJECTION_LL);
 		    R_text_rotation(font_angle);
 		    R_text_size(fontsize, fontsize);
-		    R_move_abs( (int)(D_get_d_west() + 1.0), 
-				    (int)(D_u_to_d_row(start_coord) - 0.5) );
+		    R_move_abs( (int)(D_get_d_west() + border_off), 
+				    (int)(D_u_to_d_row(start_coord) - grid_off) );
 		    R_text(text);
 		}
     }
@@ -206,8 +215,8 @@ struct Cell_head window ;
 		    G_format_easting(g, text, PROJECTION_LL);
 		    R_text_rotation(font_angle);
 		    R_text_size(fontsize, fontsize);
-		    R_move_abs((int)(D_u_to_d_col(start_coord) + 1.0), 
-		      (int)(D_get_d_north() + 1.0));
+		    R_move_abs((int)(D_u_to_d_col(start_coord) + grid_off), 
+		      (int)(D_get_d_north() + border_off));
 		    R_text(text);
 		}
     }
