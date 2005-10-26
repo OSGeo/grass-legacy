@@ -355,6 +355,7 @@ global execom
 			{separator}
 			{cascad "Reports and statistics" {} "" $tmenu {			
 			 {command "Basic information" {} "v.info" {} -command {execute v.info }}
+			 {command "Geometry (length, area, or coordinates) by category" {} "v.report" {} -command {execute v.report }}
 			 {command "Load vector attributes to database or create reports" {} "v.to.db" {} -command {execute v.to.db }}
 			 {command "Univariate statistics" {} "v.univar" {} -command {execute v.univar }}
  			{separator}
