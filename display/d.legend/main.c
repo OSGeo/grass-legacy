@@ -263,6 +263,10 @@ int main( int argc, char **argv )
 	if(use_mouse) {
 	    if(!get_legend_box(&x0, &x1, &y0, &y1))
 		exit(0);
+	    G_debug(1, "mouse placement as percentage of display window "
+	      "[bottom,top,left,right]:\n  \"at=%.1f,%.1f,%.1f,%.1f\"",
+		100.*(b-y1)/(b-t), 100.*(b-y0)/(b-t), 100.*x0 /(r-l),
+		100.*x1/(r-l) );
 	}
 	else {
 		if (opt7->answer != NULL) {	/* should this be answerS ? */
