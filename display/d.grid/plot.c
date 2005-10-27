@@ -114,8 +114,8 @@ int j, ll;
 int SEGS=100;
 char text[128];
 int fontsize = 9;
-float border_off = 2.5;
-float grid_off = 2.0;
+float border_off = 4.5;
+float grid_off = 3.;
 double row_dist, colm_dist;
 float font_angle;
 struct Cell_head window ;
@@ -215,7 +215,7 @@ struct Cell_head window ;
 		    G_format_easting(g, text, PROJECTION_LL);
 		    R_text_rotation(font_angle);
 		    R_text_size(fontsize, fontsize);
-		    R_move_abs((int)(D_u_to_d_col(start_coord) + grid_off), 
+		    R_move_abs((int)(D_u_to_d_col(start_coord) + grid_off + 1.5), 
 		      (int)(D_get_d_north() + border_off));
 		    R_text(text);
 		}
