@@ -16,7 +16,7 @@ the user specifies other values on the command line.
 
 Alternately, the user can simply type <B>d.legend</B> on the command line; 
 in this case, the program will prompt the user for parameter values 
-using the standard GRASS <A HREF="parser.html">parser</A> interface.
+using the standard GRASS GUI interface.
 
 <H2>NOTES</H2>
 
@@ -79,6 +79,11 @@ The text produced from floating-point raster maps will automatically create
 output with a meaningful number of significant digits. For very small values,
 numbers will be expressed in scientific notation, e.g.&nbsp;"1.7e-9".
 <p>
+Legends placed with the mouse are not saved to the display window's history
+for automatic redraw. By setting the Debug level to 1 (see 
+<EM><A HREF="g.gisenv.html">g.gisenv</A></EM>) the corresponding <b>at</b>
+setting can be determined.
+<p>
 Note that old scripts which relied on setting <B>lines</B> greater than the
 number of categories to scale the legend may no longer produce the desired
 output, although the auto-scaling should still produce something that looks 
@@ -87,18 +92,23 @@ good in this case.
 
 <H2>SEE ALSO</H2>
 
+<EM><A HREF="d.barscale.html">d.barscale</A></EM><BR>
 <EM><A HREF="d.colors.html">d.colors</A></EM><BR>
 <EM><A HREF="d.colortable.html">d.colortable</A></EM><BR>
 <EM><A HREF="d.erase.html">d.erase</A></EM><BR>
+<EM><A HREF="d.font.html">d.font</A></EM><BR>
+<EM><A HREF="d.font.freetype.html">d.font.freetype</A></EM><BR>
 <EM><A HREF="d.grid.html">d.grid</A></EM><BR>
 <EM><A HREF="d.rast.html">d.rast</A></EM><BR>
-<EM><A HREF="d.rast.labels.html">d.rast.labels</A></EM><BR>
-<EM><A HREF="d.rast.leg.sh.html">d.rast.leg</A></EM><BR>
-<EM><A HREF="d.vect.html">d.vect</A></EM><BR>
+<!-- <EM><A HREF="d.rast.labels.html">d.rast.labels</A></EM><BR> -->
+<EM><A HREF="d.rast.leg.html">d.rast.leg</A></EM><BR>
+<EM><A HREF="d.text.html">d.text</A></EM><BR>
+<EM><A HREF="d.text.freetype.html">d.text.freetype</A></EM><BR>
+<EM><A HREF="d.vect.thematic.html">d.vect.thematic</A></EM><BR>
 <EM><A HREF="d.what.rast.html">d.what.rast</A></EM><BR>
-<EM><A HREF="r.reclass.html">r.reclass</A></EM>
-<BR>
-<EM><A HREF="parser.html">parser</A></EM>
+<EM><A HREF="g.gisenv.html">g.gisenv</A></EM><BR>
+<EM><A HREF="r.reclass.html">r.reclass</A></EM><BR>
+
 
 <H2>AUTHORS</H2>
 Bill Brown, U.S. Army Construction Engineering Research Laboratories
