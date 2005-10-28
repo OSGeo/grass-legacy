@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-10-09 15:11+0200\n"
-"PO-Revision-Date: 2005-10-17 15:33+0200\n"
+"PO-Revision-Date: 2005-10-25 16:08+0200\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -1025,7 +1025,7 @@ msgstr "Rasterkarte [%s] nicht gefunden."
 
 #: ../display/d.rast.arrow/arrow.c:303
 msgid "No raster map exists in the current window"
-msgstr ""
+msgstr "Es existiert keine Rasterkarte im aktuellen Fenster. "
 
 #: ../display/d.rast.arrow/arrow.c:307
 #, c-format
@@ -1038,11 +1038,10 @@ msgid "Unable to open [%s] in [%s]"
 msgstr "Kann [%s] in [%s] nicht öffnen."
 
 #: ../display/d.rast.num/number.c:87
-#, fuzzy
 msgid ""
 "Overlays cell category values on a raster map layer displayed to the "
 "graphics monitor."
-msgstr "ein a."
+msgstr "Überlagert Zell-Kategoriewerte über eine Rasterkarte im aktiven Graphik-Monitor."
 
 #: ../display/d.rast.num/number.c:96
 msgid "Name of existing raster map to be displayed"
@@ -1067,7 +1066,7 @@ msgstr "Kann [%s] nicht öffnen."
 
 #: ../display/d.rast.num/number.c:203
 msgid "Do you wish to continue"
-msgstr ""
+msgstr "Wollen Sie fortfahren?"
 
 #: ../display/d.text/main.c:71
 msgid ""
@@ -7553,9 +7552,8 @@ msgid "input grid3 filename"
 msgstr "Eingabe-grid3d-Datei"
 
 #: ../raster3d/base/r3.timestamp.main.c:45
-#, fuzzy
 msgid "datetime, datetime1/datetime2, or none"
-msgstr "nichts"
+msgstr "datetime, datetime1/datetime2, oder none"
 
 #: ../raster3d/base/r3.timestamp.main.c:61
 #, c-format
@@ -8521,7 +8519,7 @@ msgid ""
 "Generates a raster density map from vector points data using a moving 2D "
 "isotropic Gaussian kernel or optionally generates a vector density map on "
 "vector network with a 1D kernel"
-msgstr "Erzeugt eine Rasterkarte mit a Dichte von mit a a Dichte ein a"
+msgstr "Erzeugt eine Dichte-Rasterkarte aus einer Vektorkarte mit a Dichte von mit a a Dichte ein a"
 
 #: ../vector/v.kernel/main.c:98
 msgid "Input vector with training points"
@@ -8614,11 +8612,11 @@ msgid "%d distances read from the map."
 msgstr "%d Distanzen aus der Eingabekarte gelesen."
 
 #: ../vector/v.kernel/main.c:267
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "distances between all points are beyond %e (4 * standard deviation) cannot "
 "calculate optimal value."
-msgstr "zwischen e."
+msgstr "Entfernungen zwischenallen Punkten liegt über %e (4* Standardabweichung). Daher kann kein optimaler Wert berechnet werden."
 
 #: ../vector/v.kernel/main.c:277
 #, c-format
@@ -8891,9 +8889,8 @@ msgid "%s given an illegal number of sites [%d]"
 msgstr "s"
 
 #: ../vector/v.surf.idw/main.c:85
-#, fuzzy
 msgid "Attribute table column with values to interpolate"
-msgstr "Tabelle"
+msgstr "Attribut-Tabellenspalte mit den Werten zum Interpolieren."
 
 #: ../vector/v.surf.idw/main.c:89
 #, fuzzy
@@ -8903,41 +8900,39 @@ msgid ""
 msgstr "index wenige von"
 
 #: ../vector/v.surf.idw/main.c:97
-#, fuzzy
 msgid ""
 "Surface interpolation from vector point data by Inverse Distance Squared "
 "Weighting."
-msgstr "Oberfläche von Punkt."
+msgstr "Oberflächeninterpolation aus Vektor-Punktdaten durch Inverse Distance Squared Weighting."
 
 #: ../vector/v.surf.idw/main.c:106
-#, fuzzy, c-format
+#, c-format
 msgid "%s=%s - illegal name"
-msgstr "s s"
+msgstr "%s=%s - Ungültiger Name"
 
 #: ../vector/v.surf.idw/main.c:109
-#, fuzzy, c-format
+#, c-format
 msgid "%s=%s - illegal number of interpolation points"
-msgstr "s s"
+msgstr "%s=%s - Ungültige Anzahl von Interpolationspunkten."
 
 #: ../vector/v.surf.idw/main.c:143
-#, fuzzy, c-format
+#, c-format
 msgid "%s: no data points found"
-msgstr "s"
+msgstr "%s: Keine Datenpunkte gefunden."
 
 #: ../vector/v.surf.idw/main.c:216
-#, fuzzy, c-format
+#, c-format
 msgid "%s: can't create %s"
-msgstr "s s"
+msgstr "%s: Kann %s nicht erstellen."
 
 #: ../vector/v.surf.idw/main.c:218
-#, fuzzy, c-format
+#, c-format
 msgid "Interpolating raster map <%s> ... %d rows ... "
-msgstr "s "
+msgstr "Interpoliere Rasterkarte <%s> ... %d Reihen... "
 
 #: ../vector/v.surf.idw/main.c:355
-#, fuzzy
 msgid "Done          "
-msgstr "       %s"
+msgstr "Fertig!       "
 
 #: ../vector/v.surf.idw/read_sites.c:34
 msgid "Cannot read field info"
@@ -8959,89 +8954,76 @@ msgid "%d points loaded\n"
 msgstr "%d Punkte geladen.\n"
 
 #: ../vector/v.to.db/main.c:32
-#, fuzzy
 msgid ""
 "Load values from vector to database. In uploaded/printed category values '-"
 "1' is used for 'no category' and 'null'/'-' if category cannot be found or "
 "multiple categories were found."
-msgstr "von database ist für Nein."
+msgstr "Lade Werte von den Vektoren in die Datenbank. Im Upload/Print-Modus werden Kategoriewerte mit '-1' für 'keine Kategorie' gesetzt und 'null'/'-' wenn keine Kategorien gefunden werden konnte oder mehrere Kategorien enthalten sind."
 
 #: ../vector/v.to.db/main.c:48
-#, fuzzy, c-format
+#, c-format
 msgid "Database connection not defined for layer <%d>. Use v.db.connect first."
-msgstr "nicht für v."
+msgstr "Datenbankverbindung für Layer <%d> nicht definiert. Bitte benutzen Sie zuerst v.db.connect."
 
 #: ../vector/v.to.db/parse.c:35
-#, fuzzy
 msgid ""
 "Type of elements (for coor valid point/centroid, for length valid line/"
 "boundary)"
-msgstr "Typ von für Punkt für length Linie"
+msgstr "Elementtypen (für coor sind point/centroid erlaubt, für length sind line/boundary erlaubt)."
 
 #: ../vector/v.to.db/parse.c:42
-#, fuzzy
 msgid "Query layer. Used by 'query' option."
-msgstr "Abfragen Benutzt option."
+msgstr "Abfrage-Layer. Wird nur von der 'Query'-Option benutzt."
 
 #: ../vector/v.to.db/parse.c:50
-#, fuzzy
 msgid "Value to upload"
-msgstr "Kann <%s> nicht öffnen."
+msgstr "Wert zum Laden in die Attributtabelle."
 
 #: ../vector/v.to.db/parse.c:68
-#, fuzzy
 msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares)"
-msgstr "f a"
+msgstr "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares)"
 
 #: ../vector/v.to.db/parse.c:76
-#, fuzzy
 msgid "column(s)"
-msgstr "s"
+msgstr "Spalte(n)."
 
 #: ../vector/v.to.db/parse.c:84
-#, fuzzy
 msgid "Query column used for 'query' option. E.g. 'cat', 'count(*)', 'sum(val)'"
-msgstr "Abfragen für option g"
+msgstr "Abfragespalte, die von der 'Query'-Option benutzt wird. (Zum Beispiel: 'cat', 'count(*)', 'sum(val)')."
 
 #: ../vector/v.to.db/parse.c:88
-#, fuzzy
 msgid "print only"
-msgstr "Gebe nur Wertespanne aus."
+msgstr "Gebe nur Ergebnisse aus."
 
 #: ../vector/v.to.db/parse.c:92
-#, fuzzy
 msgid "only print sql statements"
-msgstr "Dateiname mit SQL-Statement."
+msgstr "Gebe nur das SQL-Statement aus."
 
 #: ../vector/v.to.db/parse.c:96
 #, fuzzy
 msgid "In print mode prints totals for options: length,area,count"
-msgstr "Modus für length Bereich"
+msgstr "Gebe Im Print-Modus für length Bereich"
 
 #: ../vector/v.to.db/parse.c:108
-#, fuzzy, c-format
+#, c-format
 msgid "%s: <%s> vector map not found"
-msgstr "s s"
+msgstr "%s: Vektorkarte <%s> nicht gefunden."
 
 #: ../vector/v.to.db/parse.c:131
-#, fuzzy
 msgid "This option requires one column"
-msgstr "option eins"
+msgstr "Diese Option benötigt eine Spalte."
 
 #: ../vector/v.to.db/parse.c:135
-#, fuzzy
 msgid "This option requires 2 columns"
-msgstr "option"
+msgstr "Diese Option benötigt eine 2 Spalten."
 
 #: ../vector/v.to.db/parse.c:139
-#, fuzzy
 msgid "This option requires at least 2 columns"
-msgstr "option an"
+msgstr "Diese Option benötigt mindestens 2 Spalten."
 
 #: ../vector/v.to.db/parse.c:146
-#, fuzzy
 msgid "The 'sides' option makes sense only for boundaries"
-msgstr "option für"
+msgstr "Die 'sides'-Option macht nur Sinn beim Elementtyp Boundary."
 
 #: ../vector/v.to.points/main.c:152
 msgid "Create points along input lines."
@@ -9094,7 +9076,6 @@ msgid "raster output file"
 msgstr "Raster Ausgabedatei"
 
 #: ../vector/v.to.rast/main.c:47
-#, fuzzy
 msgid ""
 "Source of raster values:\n"
 "\t\tattr - read values from attribute table\n"
@@ -9102,7 +9083,13 @@ msgid ""
 "\t\tval  - use value specified by value option\n"
 "\t\tz    - use z coordinate (points or contours only)\n"
 "\t\td    - output as flow direction (lines only)"
-msgstr "von n gelesen von attribute Tabelle n n option n z n Ausgabe Zeilen"
+msgstr ""
+"Quelle der Rasterwerte:\n"
+"\t\tattr - lese Werte aus der Attributtabelle\n"
+"\t\tcat - benutze Kategoriewerte\n"
+"\t\tval - benutze Werte, die durch die Option value angegeben sind.\n"
+"\t\tz - benutze z-Koordinate (nur bei Punkten oder Konturlinien).\n"
+"\t\td - Ausgabe als Fließrichtung (nur bei Linien)."
 
 #: ../vector/v.to.rast/main.c:59 ../vector/v.to.rast3/main.c:47
 msgid "Column name"
@@ -9275,66 +9262,58 @@ msgid "%d update errors\n"
 msgstr "%d aktualisierte Fehler.\n"
 
 #: ../vector/v.to.rast3/main.c:36
-#, fuzzy
 msgid ""
 "Converts a binary GRASS vector map (only points) layer into a 3D GRASS "
 "raster map layer."
-msgstr "a a."
+msgstr "Konvertiert eine binäre GRASS Vektorkarte (nur Punkte) in eine 3D GRASS Rasterkarte. "
 
 #: ../vector/v.to.rast3/main.c:53
-#, fuzzy
 msgid "Name of output G3D grid file"
-msgstr "von Ausgabe"
+msgstr "Name der Ausgabe G3D-Datei."
 
 #: ../visualization/xganim/Clr_table.c:98
 #: ../visualization/xganim/Clr_table.c:308
 #: ../visualization/xganim/Clr_table.c:335
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown visual class [%d]."
-msgstr "s."
+msgstr "Unbekannte sichtbare Klase [%d]."
 
 #: ../visualization/xganim/Clr_table.c:258
-#, fuzzy
 msgid "Unable to get sufficient gray shades."
-msgstr "Kann die Rasterkarte <%s> nicht finden."
+msgstr "Kann keine zufriedenstellenden Grauschattierungen finden."
 
 #: ../visualization/xganim/Clr_table.c:275
-#, fuzzy
 msgid "Unable to get sufficient colors."
-msgstr "Kann die Größe nicht setzen."
+msgstr "Kann keine zufriedenstellenden Farben finden."
 
 #: ../visualization/xganim/Clr_table.c:289
-#, fuzzy
 msgid "Using private colormap for DirectColor visual."
-msgstr "private für."
+msgstr "Benutze private Farbtabelle für DirectColor Visualisierung."
 
 #: ../visualization/xganim/main.c:337
-#, fuzzy, c-format
+#, c-format
 msgid "\rReading file [%s] ..."
-msgstr "s."
+msgstr "\rLese Datei [%s] ..."
 
 #: ../visualization/xganim/main.c:341
-#, fuzzy, c-format
+#, c-format
 msgid "%s: cellfile [%s] not found."
-msgstr "s s."
+msgstr "%s: Zelldatei [%s] nicht gefunden."
 
 #: ../visualization/xganim/main.c:346
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open cellfile [%s]."
-msgstr "s."
+msgstr "Kann Zelldatei [%s] nicht öffnen."
 
 #: ../visualization/xganim/main.c:360
-#, fuzzy
 msgid "Unable to determine raster cell type."
-msgstr "Kann die Rasterreihe nicht lesen."
+msgstr "Kann den Rasterzelltyp nicht herausfinden."
 
 #: ../visualization/xganim/main.c:364
-#, fuzzy
 msgid "Unable to read color file."
-msgstr "gelesen."
+msgstr "Kann die Farbtabelle nicht lesen."
 
 #: ../visualization/xganim/main.c:516
-#, fuzzy
 msgid "Error reading wildcard."
-msgstr "Kann die Rasterdatei [%s] nicht lesen."
+msgstr "Fehler beim Lesen der Wildcard."
 
