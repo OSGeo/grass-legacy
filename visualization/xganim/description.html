@@ -6,7 +6,7 @@
 files. At startup, a graphics window is opened containing VCR-like
 button controls for: rewind, reverse play, step back, stop, step
 forward, forward play, loop, swing, slower, faster, show filenames,
-current frame no., and Exit. The image is displayed above or to the
+current frame number, and Exit. The image is displayed above or to the
 left of the controls. Each raster file is read into memory, then the
 animation is played once beginning to end. The user may then replay
 the series or play continuous animation by using the buttons.
@@ -30,23 +30,33 @@ on the animation size.
 UNIX - style wild cards may be used with the command line version in
 place of a raster file name, but it must be quoted.
 <P>
-Example:
-<P>
-<DD><EM>xganim view1="rain[1-9]","rain1[0-2]" view2="temp*"</EM>
-<P>
 If the number of files differs for each view, the view with the fewest
 files will determine the number of frames in the animation.
+
+<H2>EXAMPLE</H2>
+<P>
+<PRE>
+  export XGANIM_SIZE=800
+  xganim view1="rain[1-9]","rain1[0-2]" view2="temp*"
+</PRE>
+<BR>
 
 <H2>BUGS</H2>
 On some displays that need to use private colormaps, the interface
 buttons may become difficult to see.
 
+<H2>SEE ALSO</H2>
+
+<em><a href="d.slide.show.html">d.slide.show</a></em>
+
 <H2>AUTHOR</H2>
 <A HREF=mailto:brown@gis.uiuc.edu>Bill Brown</A>, U.S. Army Construction Engineering Research Laboratories
 
+<!-- left in for historical purposes :)
 <H2>NOTICE</H2>
 This program is part of the contrib section of the GRASS distribution. 
 As such, it is externally contributed code that has not been examined
 or tested by the Office of GRASS Integration.
+-->
 
 <p><i>Last changed: $Date$</i>
