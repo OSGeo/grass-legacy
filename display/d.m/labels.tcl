@@ -69,7 +69,7 @@ proc DmLabels::options { id frm } {
           -background white
     Button $row.c -text [G_msg "Help"] \
             -image [image create photo -file "$dmpath/grass.gif"] \
-            -command "run g.manual d.paint.labels" \
+            -command "run g.manual d.labels" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
     pack $row.a $row.b $row.c -side left
@@ -116,7 +116,7 @@ proc DmLabels::display { node } {
 
     if { $opt($id,map) == "" } { return } 
 
-    set cmd "d.paint.labels labels=$opt($id,map)"
+    set cmd "d.labels labels=$opt($id,map)"
 
     if { $opt($id,minreg) != "" } { 
         append cmd " minreg=$opt($id,minreg)"
