@@ -2,7 +2,7 @@
 # Radim Blazek <blazek@itc.it>, 2004.
 #
 # translation of grasslibs_cs.po to czech
-# Martin Landa <landa@gama.fsv.cvut.cz>, 2005.
+# Martin Landa <landa.martin@gmail.com>, 2005.
 # Jachym Cepicky <jachym.cepicky@centrum.cz>, 2005.
 # correction Michal Bil <michal.bil@seznam.cz>, 2005.
 #
@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-31 13:36+0200\n"
-"PO-Revision-Date: 2005-08-11 17:22+0200\n"
+"POT-Creation-Date: 2005-09-27 23:37+0000\n"
+"PO-Revision-Date: 2005-09-27 23:47+0000\n"
 "Last-Translator: Radim Blazek <blazek@itc.it>\n"
 "Language-Team: Czech <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -142,7 +142,9 @@ msgstr ""
 msgid ""
 "\n"
 "** %s exists. ok to overwrite? "
-msgstr "\n** %s existuje. Pøepsat? "
+msgstr ""
+"\n"
+"** %s existuje. Pøepsat? "
 
 #: ../lib/gis/ask.c:546
 #, c-format
@@ -531,7 +533,9 @@ msgstr "Nelze otevøít soubor %s v %s"
 #: ../lib/gis/get_datum.c:107
 #, c-format
 msgid "Error reading datum shift parameters for %s from table"
-msgstr "Chyba pøi ètení parametrù pro posun vý¹kového systému (datumu) pro %s z tabulky"
+msgstr ""
+"Chyba pøi ètení parametrù pro posun vý¹kového systému (datumu) pro %s z "
+"tabulky"
 
 #: ../lib/gis/get_datum.c:115
 #, c-format
@@ -752,7 +756,8 @@ msgstr "MAPSET %s nebyl nalezen"
 #: ../lib/gis/gisinit.c:67
 #, c-format
 msgid "ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
-msgstr "CHYBA: Systém není inicializován. Programátor zapomnìl zavolat G_gisinit()\n"
+msgstr ""
+"CHYBA: Systém není inicializován. Programátor zapomnìl zavolat G_gisinit()\n"
 
 #: ../lib/gis/histogram.c:60
 #, c-format
@@ -993,7 +998,8 @@ msgstr "opencell: %s - neplatné jméno souboru"
 
 #: ../lib/gis/opencell.c:699
 msgid "Can't write embedded null values for map open for random access"
-msgstr "Nelze zapsat vlo¾ené nulové hodnoty pro mapu otevøenou z náhodného výbìru"
+msgstr ""
+"Nelze zapsat vlo¾ené nulové hodnoty pro mapu otevøenou z náhodného výbìru"
 
 #: ../lib/gis/opencell.c:930 ../lib/gis/opencell.c:951
 #, c-format
@@ -1137,7 +1143,9 @@ msgstr "Promiòte, ale <%s> není platný parametr\n"
 msgid ""
 "\n"
 "Error: illegal range syntax for parameter <%s>\n"
-msgstr "\nChyba: neplatná syntaxe rozsahu pro parametr <%s>\n"
+msgstr ""
+"\n"
+"Chyba: neplatná syntaxe rozsahu pro parametr <%s>\n"
 
 #: ../lib/gis/parser.c:1582
 #, c-format
@@ -1286,7 +1294,7 @@ msgstr "Zemìpisná ¹íøka a délka"
 msgid "Other Projection"
 msgstr "Ostatní mapové projekce"
 
-#: ../lib/gis/proj3.c:68 ../lib/vector/Vlib/header.c:445
+#: ../lib/gis/proj3.c:68 ../lib/vector/Vlib/header.c:447
 msgid "Unknown projection"
 msgstr "Neznámá mapová projekce"
 
@@ -1777,7 +1785,9 @@ msgstr ""
 #: ../lib/raster/io.c:361
 #, c-format
 msgid "Connect attempt timed out. Probably an error with the server.\n"
-msgstr "Vypr¹el èasový limit pro pokus o pøipojení. Pravdìpodobnì je chyba na stranì serveru.\n"
+msgstr ""
+"Vypr¹el èasový limit pro pokus o pøipojení. Pravdìpodobnì je chyba na stranì "
+"serveru.\n"
 
 #: ../lib/raster/io.c:368
 #, c-format
@@ -1876,8 +1886,9 @@ msgid "Cannot open database %s"
 msgstr "Nelze navázat spojení s databází %s"
 
 #: ../lib/rst/interp_float/vinput2d.c:100
-msgid "Cannot find z column (please verify name)"
-msgstr "Nelze nalézt sloupec z (prosím, ovìøte název)"
+#, c-format
+msgid "Cannot find z column <%s> (please verify name, e.g. with v.info)"
+msgstr "Nelze nalézt sloupec 'z' <%s> (prosím, ovìøte jeho název, napø. pomocí v.info)"
 
 #: ../lib/rst/interp_float/vinput2d.c:102
 msgid "Column type of z column is not supported (must be integer or double)"
@@ -1927,113 +1938,115 @@ msgstr "%d bodù urèeno pro interpolaci (po zøedìní) je ménì ne¾ daný NPMIN=%d"
 msgid ""
 "There are less than %d points for interpolation. No segmentation is "
 "necessary, to run the program faster set segmax=%d (see manual)"
-msgstr "Ménì ne¾ %d bodù pro interpolaci. Není potøeba ¾ádná segmentace, pro rychlej¹í výpoèet spus»te program s segmax=%d (viz manuál)"
+msgstr ""
+"Ménì ne¾ %d bodù pro interpolaci. Není potøeba ¾ádná segmentace, pro "
+"rychlej¹í výpoèet spus»te program s segmax=%d (viz manuál)"
 
 #: ../lib/rst/interp_float/vinput2d.c:358
 msgid "some points outside of region -- will ignore..."
 msgstr "nìkteré body mimo region -- budou ignorovány..."
 
-#: ../lib/vector/Vlib/build.c:130
+#: ../lib/vector/Vlib/build.c:134
 msgid "Building topology ...\n"
 msgstr "Vytváøím topologii ...\n"
 
-#: ../lib/vector/Vlib/build.c:143
+#: ../lib/vector/Vlib/build.c:147
 msgid "Topology was built.\n"
 msgstr "Topologie byla vytvoøena.\n"
 
-#: ../lib/vector/Vlib/build.c:155
+#: ../lib/vector/Vlib/build.c:159
 #, c-format
 msgid "Number of nodes     :   %d\n"
 msgstr "Poèet uzlù          :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:156
+#: ../lib/vector/Vlib/build.c:160
 #, c-format
 msgid "Number of primitives:   %d\n"
 msgstr "Poèet primitiv      :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:157
+#: ../lib/vector/Vlib/build.c:161
 #, c-format
 msgid "Number of points    :   %d\n"
 msgstr "Poèet bodù          :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:158
+#: ../lib/vector/Vlib/build.c:162
 #, c-format
 msgid "Number of lines     :   %d\n"
 msgstr "Poèet linií         :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:159
+#: ../lib/vector/Vlib/build.c:163
 #, c-format
 msgid "Number of boundaries:   %d\n"
 msgstr "Poèet hranic        :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:160
+#: ../lib/vector/Vlib/build.c:164
 #, c-format
 msgid "Number of centroids :   %d\n"
 msgstr "Poèet centroidù     :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:163
+#: ../lib/vector/Vlib/build.c:167
 #, c-format
 msgid "Number of faces     :   %d\n"
 msgstr "Poèet stìn          :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:166
+#: ../lib/vector/Vlib/build.c:170
 #, c-format
 msgid "Number of kernels   :   %d\n"
 msgstr "Poèet jader:        :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:201
+#: ../lib/vector/Vlib/build.c:205
 #, c-format
 msgid "Number of areas     :   %d\n"
 msgstr "Poèet ploch         :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:202
+#: ../lib/vector/Vlib/build.c:206
 #, c-format
 msgid "Number of isles     :   %d\n"
 msgstr "Poèet ostrovù       :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:205
+#: ../lib/vector/Vlib/build.c:209
 #, c-format
 msgid "Number of incorrect boundaries   :   %d\n"
 msgstr "Poèet chybných hranic            :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:208
+#: ../lib/vector/Vlib/build.c:212
 #, c-format
 msgid "Number of centroids outside area :   %d\n"
 msgstr "Poèet centroidù mimo plochu      :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:211
+#: ../lib/vector/Vlib/build.c:215
 #, c-format
 msgid "Number of duplicate centroids    :   %d\n"
 msgstr "Poèet duplikátních centroidù     :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:214
+#: ../lib/vector/Vlib/build.c:218
 #, c-format
 msgid "Number of areas without centroid :   %d\n"
 msgstr "Poèet ploch bez centroidu        :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:217
+#: ../lib/vector/Vlib/build.c:221
 msgid "Number of areas     :   -\n"
 msgstr "Poèet ploch         :   -\n"
 
-#: ../lib/vector/Vlib/build.c:218
+#: ../lib/vector/Vlib/build.c:222
 msgid "Number of isles     :   -\n"
 msgstr "Poèet ostrovù       :   -\n"
 
-#: ../lib/vector/Vlib/build.c:247
+#: ../lib/vector/Vlib/build.c:251
 #, c-format
 msgid "Can't open topo file for write: %s\n"
 msgstr "Nelze otevøít soubor s topologií pro zápis: %s\n"
 
-#: ../lib/vector/Vlib/build.c:255
+#: ../lib/vector/Vlib/build.c:259
 msgid "Error writing out topo file.\n"
 msgstr "Chyba pøi sestavení souboru s topologií.\n"
 
-#: ../lib/vector/Vlib/build.c:386
+#: ../lib/vector/Vlib/build.c:390
 #, c-format
 msgid "Can't open spatial index file for write: %s\n"
 msgstr "Nelze otevøít soubor s prostorovým indexem pro zápis: %s\n"
 
-#: ../lib/vector/Vlib/build.c:394
+#: ../lib/vector/Vlib/build.c:398
 msgid "Error writing out spatial index file.\n"
 msgstr "Chyba pøi sestavení souboru s prostorovým indexem.\n"
 
@@ -2049,16 +2062,16 @@ msgstr "Nelze pøidat ostrov (mapa uzavøena, topologie ulo¾ena)"
 msgid "Area of size = 0.0 ignored"
 msgstr "Plocha o velikosti = 0.0 ignorována"
 
-#: ../lib/vector/Vlib/build_nat.c:465
+#: ../lib/vector/Vlib/build_nat.c:466
 msgid "Registering lines: "
 msgstr "Registrace linií: "
 
-#: ../lib/vector/Vlib/build_nat.c:506
+#: ../lib/vector/Vlib/build_nat.c:507
 #, c-format
 msgid "\r%d primitives registered      \n"
 msgstr "\r%d primitiv zaregistrováno       \n"
 
-#: ../lib/vector/Vlib/build_nat.c:533
+#: ../lib/vector/Vlib/build_nat.c:534
 #, c-format
 msgid ""
 "\r%d areas built      \n"
@@ -2067,13 +2080,32 @@ msgstr ""
 "\r%d ploch vytvoøeno      \n"
 "%d ostrovù vytvoøeno      \n"
 
-#: ../lib/vector/Vlib/build_nat.c:541
+#: ../lib/vector/Vlib/build_nat.c:542
 msgid "Attaching islands: "
 msgstr "Pøidávání ostrovù: "
 
-#: ../lib/vector/Vlib/build_nat.c:556
+#: ../lib/vector/Vlib/build_nat.c:557
 msgid "Attaching centroids: "
 msgstr "Pøipojování centroidù: "
+
+#: ../lib/vector/Vlib/build_ogr.c:258
+#, c-format
+msgid "Cannot calculate centroid for area %d"
+msgstr "Nemohu urèit centroid pro plochu %d"
+
+#: ../lib/vector/Vlib/build_ogr.c:293
+#, c-format
+msgid "OGR feature type %d not supported)"
+msgstr "Typ prvku OGR %d není podporován)"
+
+#: ../lib/vector/Vlib/build_ogr.c:350
+#, c-format
+msgid "Feature %d without geometry ignored"
+msgstr "Prvek %d bez geometrie je ignorován"
+
+#: ../lib/vector/Vlib/build_ogr.c:357
+msgid "OGR feature without ID ignored."
+msgstr "Prvek OGR bez ID je ignorován."
 
 #: ../lib/vector/Vlib/field.c:73
 msgid "Field number must be 1 or greater."
@@ -2119,21 +2151,29 @@ msgstr "Výchozí databáze není nastavena"
 msgid "Requested dblink %d, maximum link number %d"
 msgstr "Po¾adovaný dblink %d, maximální poèet spojení %d"
 
-#: ../lib/vector/Vlib/field.c:390
+#: ../lib/vector/Vlib/field.c:391
 msgid "Cannot open OGR DBMI driver."
 msgstr "Nelze otevøít ovladaè pro OGR DBMI"
 
-#: ../lib/vector/Vlib/field.c:410
+#: ../lib/vector/Vlib/field.c:420
+msgid "Using FID column in OGR DB"
+msgstr "Pou¾ívám sloupce FID v OGR DB"
+
+#: ../lib/vector/Vlib/field.c:424
+msgid "Using ogc_fid column in OGR DB"
+msgstr "Pou¾ívám sloupec ogc_fid v OGR DB"
+
+#: ../lib/vector/Vlib/field.c:430
 #, c-format
 msgid "Don't know how to read links for format %d"
 msgstr "Neznámo jak pøeèíst linky pro formát %d"
 
-#: ../lib/vector/Vlib/field.c:438
+#: ../lib/vector/Vlib/field.c:458
 #, c-format
 msgid "Error in rule on row %d in %s"
 msgstr "Chyba v pravidlu na øádku %d v %s"
 
-#: ../lib/vector/Vlib/field.c:565
+#: ../lib/vector/Vlib/field.c:585
 msgid "Bug: attempt to update map which is not in current mapset."
 msgstr "Bug: pokus o aktualizaci mapy, která není v aktuálním mapsetu."
 
@@ -2167,81 +2207,83 @@ msgstr "Vstupní mapa '%s' nebyla nalezena"
 msgid "Output map '%s' is used as input"
 msgstr "Výstupní mapa '%s' je pou¾ita jako vstup."
 
-#: ../lib/vector/Vlib/map.c:109 ../lib/vector/Vlib/map.c:215
-#: ../lib/vector/Vlib/open.c:493
-#, c-format
-msgid "The vector '%s' already exists and will be overwritten."
-msgstr "Vektorová mapa '%s' ji¾ existuje a bude pøepsána."
-
-#: ../lib/vector/Vlib/map.c:223
-#, c-format
-msgid "Input vector '%s' not found"
-msgstr "Vstupní vektorová mapa '%s' nenalezena"
-
-#: ../lib/vector/Vlib/map.c:226
-#, c-format
-msgid "Cannot copy vector '%s' to '%s'"
-msgstr "Nelze zkopírovat vektorovou mapu '%s' do '%s'"
-
-#: ../lib/vector/Vlib/open.c:42 ../lib/vector/Vlib/write.c:35
-msgid "Requested format is not compiled in this version"
-msgstr "Po¾adovaný formát není zkompilován v této verzi"
-
-#: ../lib/vector/Vlib/open.c:95
-#, c-format
-msgid "Warning, Programmer requested unknown open_level\n"
-msgstr "Varování, neznámý po¾adavek programátora open_level\n"
-
-#: ../lib/vector/Vlib/open.c:155
-#, c-format
-msgid "Cannot find vector %s"
-msgstr "Vektorová mapa %s nebyla nalezena"
-
-#: ../lib/vector/Vlib/open.c:165
-msgid "A map which is not in the current mapset cannot be opened for update."
-msgstr "Mapa, která není obsa¾ena v aktuálním mapsetu, nemù¾e být aktualizována."
-
-#: ../lib/vector/Vlib/open.c:183
-#, c-format
-msgid "Cannot open old vector %s"
-msgstr "Nelze otevøít starou vektorovou mapu %s"
-
-#: ../lib/vector/Vlib/open.c:193 ../lib/vector/Vlib/open.c:252
-#: ../lib/vector/Vlib/open.c:268
-#, c-format
-msgid "Cannot open old vector %s on level %d"
-msgstr "Starou vektorovou mapu %s nelze otevøít na úrovni %d"
-
-#: ../lib/vector/Vlib/open.c:315 ../lib/vector/Vlib/open.c:520
-#, c-format
-msgid "Cannot open history file for vector '%s'"
-msgstr "Nelze otevøít soubor s historií pro vektorovou mapu '%s'"
-
-#: ../lib/vector/Vlib/open.c:486
+#: ../lib/vector/Vlib/map.c:108 ../lib/vector/Vlib/map.c:217
+#: ../lib/vector/Vlib/open.c:487
 #, c-format
 msgid "Map name is not SQL compliant."
 msgstr "Název mapy nevyhovuje podmínkám SQL."
 
-#: ../lib/vector/Vlib/open.c:497
+#: ../lib/vector/Vlib/map.c:112 ../lib/vector/Vlib/map.c:221
+#: ../lib/vector/Vlib/open.c:494
+#, c-format
+msgid "The vector '%s' already exists and will be overwritten."
+msgstr "Vektorová mapa '%s' ji¾ existuje a bude pøepsána."
+
+#: ../lib/vector/Vlib/map.c:229
+#, c-format
+msgid "Input vector '%s' not found"
+msgstr "Vstupní vektorová mapa '%s' nenalezena"
+
+#: ../lib/vector/Vlib/map.c:232
+#, c-format
+msgid "Cannot copy vector '%s' to '%s'"
+msgstr "Nelze zkopírovat vektorovou mapu '%s' do '%s'"
+
+#: ../lib/vector/Vlib/open.c:42 ../lib/vector/Vlib/write.c:36
+msgid "Requested format is not compiled in this version"
+msgstr "Po¾adovaný formát není zkompilován v této verzi"
+
+#: ../lib/vector/Vlib/open.c:96
+#, c-format
+msgid "Warning, Programmer requested unknown open_level\n"
+msgstr "Varování, neznámý po¾adavek programátora open_level\n"
+
+#: ../lib/vector/Vlib/open.c:156
+#, c-format
+msgid "Cannot find vector %s"
+msgstr "Vektorová mapa %s nebyla nalezena"
+
+#: ../lib/vector/Vlib/open.c:166
+msgid "A map which is not in the current mapset cannot be opened for update."
+msgstr ""
+"Mapa, která není obsa¾ena v aktuálním mapsetu, nemù¾e být aktualizována."
+
+#: ../lib/vector/Vlib/open.c:184
+#, c-format
+msgid "Cannot open old vector %s"
+msgstr "Nelze otevøít starou vektorovou mapu %s"
+
+#: ../lib/vector/Vlib/open.c:194 ../lib/vector/Vlib/open.c:253
+#: ../lib/vector/Vlib/open.c:269
+#, c-format
+msgid "Cannot open old vector %s on level %d"
+msgstr "Starou vektorovou mapu %s nelze otevøít na úrovni %d"
+
+#: ../lib/vector/Vlib/open.c:316 ../lib/vector/Vlib/open.c:521
+#, c-format
+msgid "Cannot open history file for vector '%s'"
+msgstr "Nelze otevøít soubor s historií pro vektorovou mapu '%s'"
+
+#: ../lib/vector/Vlib/open.c:498
 #, c-format
 msgid "Cannot delete existing vector %s"
 msgstr "Nelze smazat existující vektorovou mapu %s."
 
-#: ../lib/vector/Vlib/open.c:511
+#: ../lib/vector/Vlib/open.c:512
 #, c-format
 msgid "Cannot open new vector %s"
 msgstr "Nelze otevøít novou vektorovou mapu %s"
 
-#: ../lib/vector/Vlib/open.c:563
+#: ../lib/vector/Vlib/open.c:564
 #, c-format
 msgid "Could not stat file '%s'"
 msgstr "Nelze provést statistiku pro soubor '%s'"
 
-#: ../lib/vector/Vlib/open.c:657
+#: ../lib/vector/Vlib/open.c:658
 msgid "Size of 'coor' file differs from value saved in topo file."
 msgstr "Velikost souboru 'coor' se li¹í od hodnot ulo¾ených v 'topo' souboru."
 
-#: ../lib/vector/Vlib/open.c:668
+#: ../lib/vector/Vlib/open.c:669
 #, c-format
 msgid "Please rebuild topology for vector '%s@%s'"
 msgstr "Vytvoøte prosí znovu topologii pro vektorovou mapu '%s@%s'"
@@ -2258,33 +2300,33 @@ msgstr "Vect_rewrite_line() pro tento formát/úroveò není podporován"
 msgid "Vect_delete_line() for this format/level not supported"
 msgstr "Vect_delete_line() pro tento formát/úroveò není podporován"
 
-#: ../lib/vector/Vlib/write.c:94
+#: ../lib/vector/Vlib/write.c:96
 msgid "Cannot write line, the map is not opened"
 msgstr "Nelze zapsat linii, mapa není otevøena"
 
-#: ../lib/vector/Vlib/write.c:105
+#: ../lib/vector/Vlib/write.c:107
 msgid "Cannot write line (negative offset)"
 msgstr "Nelze zapsat linii (záporný offset)"
 
-#: ../lib/vector/Vlib/write.c:141
+#: ../lib/vector/Vlib/write.c:143
 msgid "Cannot rewrite line, the map is not opened"
 msgstr "Nelze pøepsat linii, mapa není otevøena"
 
-#: ../lib/vector/Vlib/write.c:152
+#: ../lib/vector/Vlib/write.c:154
 msgid "Cannot rewrite line"
 msgstr "Nelze pøepsat linii"
 
-#: ../lib/vector/Vlib/write.c:195
+#: ../lib/vector/Vlib/write.c:197
 #, c-format
 msgid "Cannot delete the line, map '%s' is not opened on level 2"
 msgstr "Nelze odstranit linii, mapa '%s' není otevøena na úrovni 2"
 
-#: ../lib/vector/Vlib/write.c:199
+#: ../lib/vector/Vlib/write.c:201
 #, c-format
 msgid "Cannot delete the line, map '%s' is not in opened in 'write' mode"
 msgstr "Nelze odstranit linii, mapa '%s' není otevøena v módu pro 'zápis'"
 
-#: ../lib/vector/Vlib/write.c:211
+#: ../lib/vector/Vlib/write.c:213
 msgid "Cannot delete line"
 msgstr "Nelze odstranit linii"
 
