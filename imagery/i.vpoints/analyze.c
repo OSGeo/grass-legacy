@@ -404,7 +404,7 @@ static int to_file (void)
 
 static int askfile (void)
 {
-    char file[100];
+    char file[GNAME_MAX];
 
     while (1)
     {
