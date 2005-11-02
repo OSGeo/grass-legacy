@@ -49,15 +49,13 @@
 #include "gis.h"
 #include "Vect.h"
 
-//borrowed from v.sample module
+/* borrowed from v.sample module */
 #include "methods.h"
 
 int main(int argc, char *argv[])
 {
     struct GModule *module;
-    struct Option *in_opt, *out_opt, *type_opt, *rast_opt;	//added rast_opt for raster sampling
-    struct Flag *flag_B, *flag_C;	//added some flags for raster sampling    
-    /* struct Option *layer_opt; */
+    struct Option *in_opt, *out_opt, *type_opt, *rast_opt, *method_opt;	
     struct Map_info In, Out;
     struct line_pnts *Points;
     struct line_cats *Cats;
@@ -83,119 +81,101 @@ int main(int argc, char *argv[])
 
     type_opt = G_define_standard_option(G_OPT_V_TYPE);
     type_opt->options = "point,centroid,line,boundary,face,kernel";
-    type_opt->answer = "point,line,face";
+    type_opt->answer = "point,centroid,line,boundary,face,kernel";
 
-    //added for raster sampling:
+    /* raster sampling */
     rast_opt = G_define_option();
     rast_opt->key = "rast";
     rast_opt->type = TYPE_STRING;
     rast_opt->required = NO;
     rast_opt->description = "Elevation raster";
 
-    flag_B = G_define_flag();
-    flag_B->key = 'b';
-    flag_B->description =
-	"Bilinear interpolation [default is nearest neighbor]";
-
-    flag_C = G_define_flag();
-    flag_C->key = 'c';
-    flag_C->description =
-	"Cubic convolution interpolation [default is nearest neighbor]";
-    //end raster sampling stuff
+    method_opt = G_define_option();
+    method_opt->key = "method";
+    method_opt->type = TYPE_STRING;
+    method_opt->required = NO;
+    method_opt->multiple = NO;
+    method_opt->options = "nearest,bilinear,cubic";
+    method_opt->answer = "nearest";
+    method_opt->descriptions = "nearest;nearest neighbor;"
+			"bilinear;bilinear interpolation;"
+			"cubic;cubic convolution interpolation;";
+    method_opt->description = "Sampling method.";
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
-    /* layer_opt = G_define_standard_option(G_OPT_V_FIELD); */
-
 
     if (G_parser(argc, argv))
 	exit(-1);
 
+    /* which interpolation method should we use */
+    method = NEAREST;
+    if ( method_opt->answer[0] == 'b' )
+	method = BILINEAR;
+    else if ( method_opt->answer[0] == 'c' )
+	method = CUBIC;
 
+    /* setup the raster for sampling */
 
-    ///which interpolation method should we use: default is nearest neighbor
-    ///borrowed from v.sample
-    b = (flag_B->answer == (char)NULL) ? 0 : 1;
-    c = (flag_C->answer == (char)NULL) ? 0 : 1;
-    if (b || c) {
-	if (c)
-	    method = CUBIC;
-	if (b)
-	    method = BILINEAR;
-	if (b && c)
-	    G_warning
-		("Flags -B & -C mutually exclusive. Bilinear method used.");
-    }
-    else
-	method = NEAREST;
-
-
-    ///setup the raster for sampling:
-
-    ///setup the region
+    /* setup the region */
     G_get_window(&window);
 
-    //check for the elev raster, and check for error condition
+    /* check for the elev raster, and check for error condition */
     if ((mapset = G_find_cell2(rast_opt->answer, "")) == NULL) {
 	G_fatal_error("cell file [%s] not found", rast_opt->answer);
     }
 
-    //open the elev raster, and check for error condition
+    /* open the elev raster, and check for error condition */
     if ((fdrast = G_open_cell_old(rast_opt->answer, mapset)) < 0) {
 	G_fatal_error("can't open cell file [%s]", rast_opt->answer);
     }
 
-    ///used to scale sampled raster values: will need to add an option to modify this later
+    /* used to scale sampled raster values: will need to add an option to modify this later */
     scale = 1;
 
 
-    ///Check output type 
+    /* Check output type */
     otype = Vect_option_to_types(type_opt);
 
     Vect_set_open_level(2);
     Vect_open_old(&In, in_opt->answer, "");
 
-    //setup the new vector file
-    ///remember to open the new vector file as 3D:  Vect_open_new(,,1)
+    /* setup the new vector file */
+    /* remember to open the new vector file as 3D:  Vect_open_new(,,1) */
     Vect_open_new(&Out, out_opt->answer, 1);
     Vect_copy_head_data(&In, &Out);
     Vect_hist_copy(&In, &Out);
     Vect_hist_command(&Out);
-    ///copy the input vector's attribute table to the new vector:
+    /* copy the input vector's attribute table to the new vector */
     /* This works for both level 1 and 2 */
     Vect_copy_tables(&In, &Out, 0);
-
 
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
 
-
-    //line types
+    /* line types */
     if ((otype &
 	 (GV_POINTS | GV_LINES | GV_BOUNDARY | GV_CENTROID | GV_FACE |
 	  GV_KERNEL))) {
 
-	///loop through each line in the dataset
+	/* loop through each line in the dataset */
 	nlines = Vect_get_num_lines(&In);
 
 	for (line = 1; line <= nlines; line++) {
 
-	    ///progress feedback
+	    /* progress feedback */
 	    G_percent(line, nlines, 1);
 
-	    ///get the line type
+	    /* get the line type */
 	    ltype = Vect_read_line(&In, Points, Cats, line);
 
-	    //adjust flow based on specific type of line
+	    /* adjust flow based on specific type of line */
 	    switch (ltype) {
-		//points (at least 1 vertex)
+		/* points (at least 1 vertex) */
 	    case GV_POINT:
 	    case GV_CENTROID:
 	    case GV_KERNEL:
 
-		//debug:
-		//                                      fprintf (stderr, "x: %f y: %f z: %f\n",  Points->x[0], Points->y[0],  Points->z[0] );
-
-		///sample raster at this point, and update the z-coordinate (note that input vector should not be 3D!)
+		/* sample raster at this point, and update the z-coordinate (note that input vector should not be 3D!) */
 		switch (method) {
 		case BILINEAR:
 		    estimated_elevation =
@@ -216,12 +196,8 @@ int main(int argc, char *argv[])
 		    G_fatal_error("unknown method");	/* cannot happen */
 		    break;
 		}		//end switch
-		///update the elevation value for each data point;
+		/* update the elevation value for each data point */
 		Points->z[0] = estimated_elevation;
-
-		//debug:
-		//                                      fprintf (stderr, "x: %f y: %f z: %f\n\n",  Points->x[0], Points->y[0],  Points->z[0] );
-
 		break;
 
 		//standard lines (at least 2 vertexes)
@@ -230,10 +206,10 @@ int main(int argc, char *argv[])
 		if (Points->n_points < 2)
 		    break;	/* At least 2 points */
 
-		///loop through each point in a line
+		/* loop through each point in a line */
 		for (j = 0; j < Points->n_points; j++) {
 
-		    ///sample raster at this point, and update the z-coordinate (note that input vector should not be 3D!)
+		    /* sample raster at this point, and update the z-coordinate (note that input vector should not be 3D!) */
 		    switch (method) {
 		    case BILINEAR:
 			estimated_elevation =
@@ -255,21 +231,21 @@ int main(int argc, char *argv[])
 			break;
 		    }		//end switch
 
-		    ///update the elevation value for each data point;
+		    /* update the elevation value for each data point */
 		    Points->z[j] = estimated_elevation;
 
-		}		//end looping through point in a line
+		}		/* end looping through point in a line */
 		break;
 
-		//lines with at least 3 vertexes
+		/* lines with at least 3 vertexes */
 	    case GV_FACE:
 		if (Points->n_points < 3)
 		    break;	/* At least 3 points */
 
-		///loop through each point in a line
+		/* loop through each point in a line */
 		for (j = 0; j < Points->n_points; j++) {
 
-		    ///sample raster at this point, and update the z-coordinate (note that input vector should not be 3D!)
+		    /* sample raster at this point, and update the z-coordinate (note that input vector should not be 3D!) */
 		    switch (method) {
 		    case BILINEAR:
 			estimated_elevation =
@@ -289,68 +265,29 @@ int main(int argc, char *argv[])
 		    default:
 			G_fatal_error("unknown method");	/* cannot happen */
 			break;
-		    }		//end switch
+		    }		/* end switch */
 
-		    ///update the elevation value for each data point;
+		    /* update the elevation value for each data point; */
 		    Points->z[j] = estimated_elevation;
 		}
 
 		break;
-	    }			//end line type switch
+	    }			/* end line type switch */
 
 	    ///write the new line file, with the updated Points struct
 	    Vect_write_line(&Out, ltype, Points, Cats);
-	}			//end looping thru lines
+	}			/* end looping thru lines */
 
-    }				//end working on type=lines
+    }				/* end working on type=lines */
 
-    //borrowed from v.out.pov:
-    /* Areas (run always to count features of different type) */
-    //     if ( otype & GV_AREA ) {
-    //      for ( i = 1; i <= Vect_get_num_areas(&In) ; i++ ) {
-    //          /* TODO : Use this later for attributes from database: */
-    //          centroid = Vect_get_area_centroid ( &In, i );
-    //          cat = -1;
-    //          if ( centroid > 0 ) {
-    //              Vect_read_line (&In, NULL, Cats, centroid );
-    //              Vect_cat_get (Cats, field, &cat);
-    //          }
-    //          G_debug (2, "area = %d centroid = %d", i, centroid );
-    // 
-    //          /* Geometry */
-    //          /* Area */
-    //          Vect_get_area_points ( &In, i, Points );
-    //          if ( Points->n_points > 2 )  { 
-    //              for ( j = 0; j < Points->n_points; j++ ) {
-    //                  fprintf ( fd, "polygon { %d, \n", Points->n_points );
-    //                  for ( j = 0; j < Points->n_points; j++ ) {
-    //                      fprintf ( fd, " <%f, %f %s, %f>\n", 
-    //                                Points->x[j], Points->z[j], zmod_opt->answer, Points->y[j]);
-    //                  }
-    //                  fprintf ( fd, " %s\n}\n", objmod_opt->answer );
-    //              }
-    // 
-    //              /* TODO: Isles */
-    //              /*
-    //              for ( k = 0; k < Vect_get_area_num_isles (&In, i); k++ ) {
-    //                  Vect_get_isle_points ( &In, Vect_get_area_isle (&In, i, k), Points );
-    //                  for ( j = 0; j < Points->n_points; j++ ) {
-    //                  }
-    //              }
-    //              */
-    //              count++;
-    //          }
-    //      }
-    //     }
-
-    ///close elevation raster:
+    /* close elevation raster: */
     G_close_cell(fdrast);
 
-    ///close input vector   
+    /* close input vector */
     Vect_close(&In);
-    ///build topology for output vector
+    /* build topology for output vector */
     Vect_build(&Out, stderr);
-    ///close output vector
+    /* close output vector */
     Vect_close(&Out);
 
     exit(0);
