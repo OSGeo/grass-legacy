@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include "gis.h"
 #include "Vect.h"
-#include "Vectpoints.h" 
+#include "vectpoints.h" 
 
 #define OVERLAP .75
 
