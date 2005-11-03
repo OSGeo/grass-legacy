@@ -39,6 +39,14 @@
 #%end
 
 #%option
+#% key: rast3d
+#% type: string
+#% description: 3d raster to remove
+#% gisprompt: old,grid3,3d-raster
+#% required : no
+#%end
+
+#%option
 #% key: vect
 #% type: string
 #% description: vector to remove
@@ -111,6 +119,7 @@ if [ $force -eq 1 ] ; then
 fi
 
 r=$GIS_OPT_rast
+r3=$GIS_OPT_rast3d
 v=$GIS_OPT_vect
 i=$GIS_OPT_icon
 l=$GIS_OPT_label
@@ -120,6 +129,10 @@ d=$GIS_OPT_dview
 
 if [ -n "$r" ] ; then
     rast=`g.mlist $regex type=rast sep=, mapset=$MAPSET pattern="$r"`
+fi
+
+if [ -n "$r3" ] ; then
+    rast3d=`g.mlist $regex type=rast3d sep=, mapset=$MAPSET pattern="$r3"`
 fi
 
 if [ -n "$v" ] ; then
@@ -150,6 +163,11 @@ found=
 if [ "$rast" ] ; then
 	found=1
 	rast="rast=$rast"
+fi
+
+if [ "$rast3d" ] ; then
+	found=1
+	rast3d="rast3d=$rast3d"
 fi
 
 if [ "$vect" ] ; then
@@ -187,7 +205,7 @@ if [ ! "$found" ] ; then
 	exit 1
 fi
 
-echo g.remove $rast $vect $icon $labels $region $group $dview
+echo g.remove $rast $rast3d $vect $icon $labels $region $group $dview
 
 yn=y
 if [ $force -eq 0 ]
@@ -199,5 +217,5 @@ fi
 
 if [ "$yn" = "y" -o "$yn" = "Y" ]
 then
-	g.remove $rast $vect $icon $labels $region $group $dview
+	g.remove $rast $rast3d $vect $icon $labels $region $group $dview
 fi
