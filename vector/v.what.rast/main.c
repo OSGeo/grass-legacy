@@ -78,14 +78,14 @@ int main(int argc,char *argv[])
 
     vect_opt = G_define_standard_option(G_OPT_V_INPUT);
     vect_opt->key        = "vector" ;
-    vect_opt->description= _("Name of input vector points map");
+    vect_opt->description= _("Name of input vector points map for which to edit attribute table");
 
     rast_opt = G_define_option() ;
     rast_opt->key        = "raster" ;
     rast_opt->type       = TYPE_STRING ;
     rast_opt->required   = YES ;
     rast_opt->gisprompt  = "old,cell,raster" ;
-    rast_opt->description= _("Name of existing raster map") ;
+    rast_opt->description= _("Name of existing raster map to be queried") ;
 
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
 
@@ -334,7 +334,7 @@ int main(int argc,char *argv[])
     G_message ( _("%d records updated"), update_cnt );
     G_message ( _("%d update errors"), upderr_cnt );
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 /* for qsort, order list by row */
