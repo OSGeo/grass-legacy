@@ -18,9 +18,9 @@
 #ifndef __R_OUT_VTK_WRITEASCII_H__
 #define __R_OUT_VTK_WRITEASCII_H__
 
-struct Cell_head; /*Definiton needed here*/
+struct Cell_head; /*Definition needed here*/
 
-void writeVTKNormalHeader (FILE * fp, struct Cell_head region);
+void writeVTKNormalHeader (FILE * fp, struct Cell_head region, double elevation, int type);
 void writeVTKStructuredElevationHeader (FILE * fp, struct Cell_head region);
 void writeVTKPolygonalElevationHeader (FILE * fp, struct Cell_head region);
 void writeVTKCellDataHeader (FILE * fp, struct Cell_head region);

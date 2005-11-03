@@ -21,9 +21,9 @@ struct Flag;
 
 typedef struct
 {
-  struct Option *input, *output, *elevationmap, *null_val, *elevscale,
+  struct Option *input, *output, *elevationmap, *null_val, *elevscale, *elev,
     *rgbmaps;
-  struct Flag *usestruct, *usetriangle, *usevertices;	/*struct Flag *mask;          struct Flag *xml; *//*maybe xml support in the future */
+  struct Flag *usestruct, *usetriangle, *usevertices, *origin, *point;	/*struct Flag *mask;          struct Flag *xml; *//*maybe xml support in the future */
 } paramType;
 
 /*global structs*/

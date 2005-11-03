@@ -73,6 +73,13 @@ SetParameters ()
   param.elevscale->description = _("Scale factor for elevation");
   param.elevscale->answer = "1.0";
 
+  param.elev = G_define_option ();
+  param.elev->key = "elevation2d";
+  param.elev->type = TYPE_DOUBLE;
+  param.elev->required = NO;
+  param.elev->description = _("Elevation (if no elevation map is given)");
+  param.elev->answer = "0.0";
+
   param.usestruct = G_define_flag ();
   param.usestruct->key = 's';
   param.usestruct->description = _("Use structured grid for elevation (not recommended)");
@@ -84,6 +91,15 @@ SetParameters ()
   param.usevertices = G_define_flag ();
   param.usevertices->key = 'v';
   param.usevertices->description = _ ("Use polydata-vertices for elevation grid creation (to use with vtkDelauny2D)");
+
+  param.origin = G_define_flag ();
+  param.origin->key = 'o';
+  param.origin->description = _("Scale factor effects the origin (if no elevation map is given)");
+
+  param.point = G_define_flag ();
+  param.point->key = 'p';
+  param.point->description = _("Create VTK point data instead of VTK cell data (if no elevation map is given)");
+
 
   /* 
      param.mask = G_define_flag ();

@@ -1,3 +1,4 @@
+
 /****************************************************************************
 *
 * MODULE:       r.out.vtk  
@@ -30,221 +31,225 @@
 /* ************************************************************************* */
 /* MAIN ******************************************************************** */
 /* ************************************************************************* */
-int
-main (int argc, char *argv[])
+int main(int argc, char *argv[])
 {
-  struct Cell_head region;
-  FILE *fp = NULL;
-  struct GModule *module;
-  int i = 0, polytype = 0;
-  char *null_value, *mapset;
-  int out_type;
-  int fd;			/*Normale maps ;) */
-  int rgbfd[3];
-  int celltype[3] = { 0, 0, 0 };
+    struct Cell_head region;
+    FILE *fp = NULL;
+    struct GModule *module;
+    int i = 0, polytype = 0;
+    char *null_value, *mapset;
+    int out_type;
+    int fd;			/*Normale maps ;) */
+    int rgbfd[3];
+    int celltype[3] = { 0, 0, 0 };
+    int headertype;
 
-  /* Initialize GRASS */
-  G_gisinit (argv[0]);
+    /* Initialize GRASS */
+    G_gisinit(argv[0]);
 
-  module = G_define_module ();
-  module->description = _("Converts raster maps into the VTK-Ascii format");
+    module = G_define_module();
+    module->description = _("Converts raster maps into the VTK-Ascii format");
 
-  /* Get parameters from user */
-  SetParameters ();
+    /* Get parameters from user */
+    SetParameters();
 
-  /* Have GRASS get inputs */
-  if (G_parser (argc, argv))
-    exit (EXIT_FAILURE);
+    /* Have GRASS get inputs */
+    if (G_parser(argc, argv))
+	exit(EXIT_FAILURE);
 
-  /*open the output */
-  if (param.output->answer)
-    {
-      fp = fopen (param.output->answer, "w");
-      if (fp == NULL)
-	{
-	  perror (param.output->answer);
-	  G_usage ();
-	  exit (EXIT_FAILURE);
+    /*open the output */
+    if (param.output->answer) {
+	fp = fopen(param.output->answer, "w");
+	if (fp == NULL) {
+	    perror(param.output->answer);
+	    G_usage();
+	    exit(EXIT_FAILURE);
 	}
     }
-  else
-    fp = stdout;
+    else
+	fp = stdout;
 
-  /* Figure out the region from the map */
-  if (G__get_window (&region, "", "WIND", G_mapset ()) != NULL)
-    {
-      G_get_default_window (&region);
-      G_put_window (&region);
+    /* Figure out the region from the map */
+    if (G__get_window(&region, "", "WIND", G_mapset()) != NULL) {
+	G_get_default_window(&region);
+	G_put_window(&region);
     }
 
-  /*Set the null Value, maybe i have to check this? */
-  null_value = param.null_val->answer;
+    /*Set the null Value, maybe i have to check this? */
+    null_value = param.null_val->answer;
 
   /********************* WRITE ELEVATION *************************************/
-  if (param.elevationmap->answer)
-    {
-      /*If the elevation is set, write the correct Header */
-      if (param.usestruct->answer)
-	{
-	  writeVTKStructuredElevationHeader (fp, region);
+    if (param.elevationmap->answer) {
+	/*If the elevation is set, write the correct Header */
+	if (param.usestruct->answer) {
+	    writeVTKStructuredElevationHeader(fp, region);
 	}
-      else
-	{
-	  writeVTKPolygonalElevationHeader (fp, region);
+	else {
+	    writeVTKPolygonalElevationHeader(fp, region);
 	}
 
-      G_debug (3, _("Open Raster file %s"), param.elevationmap->answer);
+	G_debug(3, _("Open Raster file %s"), param.elevationmap->answer);
 
-      mapset = G_find_cell2 (param.elevationmap->answer, "");
-      out_type = G_raster_map_type (param.elevationmap->answer, mapset);
+	mapset = G_find_cell2(param.elevationmap->answer, "");
+	out_type = G_raster_map_type(param.elevationmap->answer, mapset);
 
-      if (mapset == NULL)
-	{
-	  G_fatal_error (_("Cell file [%s] not found\n"),
-			 param.elevationmap->answer);
-	  exit (EXIT_FAILURE);
+	if (mapset == NULL) {
+	    G_fatal_error(_("Cell file [%s] not found\n"),
+			  param.elevationmap->answer);
+	    exit(EXIT_FAILURE);
 	}
 
-      /* open raster file */
-      fd = G_open_cell_old (param.elevationmap->answer, mapset);
-      if (fd < 0)
-	{
-	  G_fatal_error (_("Could not open map %s\n"),
-			 param.elevationmap->answer);
-	  exit (EXIT_FAILURE);
+	/* open raster file */
+	fd = G_open_cell_old(param.elevationmap->answer, mapset);
+	if (fd < 0) {
+	    G_fatal_error(_("Could not open map %s\n"),
+			  param.elevationmap->answer);
+	    exit(EXIT_FAILURE);
 	}
 
 
 
-      /*The write the Coordinates */
-      if (param.usestruct->answer)
-	{
-	  writeVTKStructuredCoordinates (fd, fp, param.elevationmap->answer, region, out_type, null_value, atof (param.elevscale->answer));
+	/*The write the Coordinates */
+	if (param.usestruct->answer) {
+	    writeVTKStructuredCoordinates(fd, fp, param.elevationmap->answer,
+					  region, out_type, null_value,
+					  atof(param.elevscale->answer));
 	}
-      else
-	{
-	  polytype = QUADS;	/*The default */
+	else {
+	    polytype = QUADS;	/*The default */
 
-	  if (param.usetriangle->answer)
-	    polytype = TRIANGLE_STRIPS;
+	    if (param.usetriangle->answer)
+		polytype = TRIANGLE_STRIPS;
 
-	  if (param.usevertices->answer)
-	    polytype = VERTICES;
+	    if (param.usevertices->answer)
+		polytype = VERTICES;
 
-	  writeVTKPolygonalCoordinates (fd, fp, param.elevationmap->answer, region, out_type, null_value, atof (param.elevscale->answer), polytype);
+	    writeVTKPolygonalCoordinates(fd, fp, param.elevationmap->answer,
+					 region, out_type, null_value,
+					 atof(param.elevscale->answer),
+					 polytype);
 	}
-      /*We have Pointdata */
-      writeVTKPointDataHeader (fp, region);
-      G_close_cell (fd);
+	/*We have Pointdata */
+	writeVTKPointDataHeader(fp, region);
+	G_close_cell(fd);
     }
-  else
-    {
-      /*If no elevation is given, write the normal Header */
-      writeVTKNormalHeader (fp, region);
-      /*Now we have CellData */
-      writeVTKCellDataHeader (fp, region);
+    else {
+	/*Should pointdata or celldata be written */
+	if (param.point->answer)
+	    headertype = 1;
+	else
+	    headertype = 0;
+
+	/*If no elevation is given, write the normal Header */
+	if (param.origin->answer)
+	    writeVTKNormalHeader(fp, region,
+				 atof(param.elevscale->answer) *
+				 (atof(param.elev->answer)), headertype);
+	else
+	    writeVTKNormalHeader(fp, region, atof(param.elev->answer),
+				 headertype);
+
+	if (param.point->answer)
+	    writeVTKPointDataHeader(fp, region);
+	else
+	    writeVTKCellDataHeader(fp, region);
     }
 
 
   /********************** WRITE NORMAL DATA; CELL OR POINT *******************/
-  /*Loop over all input maps! */
-  for (i = 0; param.input->answers[i] != NULL; i++)
-    {
+    /*Loop over all input maps! */
+    for (i = 0; param.input->answers[i] != NULL; i++) {
 
-      G_debug (3, _("Open Raster file %s"), param.input->answers[i]);
+	G_debug(3, _("Open Raster file %s"), param.input->answers[i]);
 
-      mapset = NULL;
+	mapset = NULL;
 
-      mapset = G_find_cell2 (param.input->answers[i], "");
+	mapset = G_find_cell2(param.input->answers[i], "");
 
-      if (mapset == NULL)
-	{
-	  G_fatal_error (_("Cell file [%s] not found\n"),
-			 param.input->answers[i]);
-	  exit (EXIT_FAILURE);
+	if (mapset == NULL) {
+	    G_fatal_error(_("Cell file [%s] not found\n"),
+			  param.input->answers[i]);
+	    exit(EXIT_FAILURE);
 	}
 
-      out_type = G_raster_map_type (param.input->answers[i], mapset);
+	out_type = G_raster_map_type(param.input->answers[i], mapset);
 
-      /* open raster file */
-      fd = G_open_cell_old (param.input->answers[i], mapset);
-      if (fd < 0)
-	{
-	  G_fatal_error (_("Could not open map %s\n"), param.input->answers[i]);
-	  exit (EXIT_FAILURE);
+	/* open raster file */
+	fd = G_open_cell_old(param.input->answers[i], mapset);
+	if (fd < 0) {
+	    G_fatal_error(_("Could not open map %s\n"),
+			  param.input->answers[i]);
+	    exit(EXIT_FAILURE);
 	}
 
-      /*Now write the data */
-      writeVTKData (fd, fp, param.input->answers[i], region, out_type,
-		    null_value);
-      G_close_cell (fd);
+	/*Now write the data */
+	writeVTKData(fd, fp, param.input->answers[i], region, out_type,
+		     null_value);
+	G_close_cell(fd);
     }
 
   /********************** WRITE RGB IMAGE DATA; CELL OR POINT ****************/
-  if (param.rgbmaps->answers != NULL)
-    {
+    if (param.rgbmaps->answers != NULL) {
 
-      if (param.rgbmaps->answers[0] != NULL && param.rgbmaps->answers[1] != NULL && param.rgbmaps->answers[2] != NULL)
-	{
+	if (param.rgbmaps->answers[0] != NULL &&
+	    param.rgbmaps->answers[1] != NULL &&
+	    param.rgbmaps->answers[2] != NULL) {
 
-	  /*Loop over all input maps! */
-	  for (i = 0; i < 3; i++)
-	    {
-	      G_debug (3, _("Open Raster file %s"), param.rgbmaps->answers[i]);
+	    /*Loop over all input maps! */
+	    for (i = 0; i < 3; i++) {
+		G_debug(3, _("Open Raster file %s"), param.rgbmaps->answers[i]);
 
-	      mapset = NULL;
+		mapset = NULL;
 
-	      mapset = G_find_cell2 (param.rgbmaps->answers[i], "");
-	      celltype[i] =
-		G_raster_map_type (param.rgbmaps->answers[i], mapset);
+		mapset = G_find_cell2(param.rgbmaps->answers[i], "");
+		celltype[i] =
+		    G_raster_map_type(param.rgbmaps->answers[i], mapset);
 
-	      if (mapset == NULL)
-		{
-		  G_fatal_error (_("Cell file [%s] not found\n"), param.input->answers[i]);
-	  	  exit (EXIT_FAILURE);
+		if (mapset == NULL) {
+		    G_fatal_error(_("Cell file [%s] not found\n"),
+				  param.input->answers[i]);
+		    exit(EXIT_FAILURE);
 		}
 
 
-	      /* open raster file */
-	      rgbfd[i] = G_open_cell_old (param.rgbmaps->answers[i], mapset);
-	      if (rgbfd[i] < 0)
-		{
-		  G_fatal_error (_("Could not open map %s\n"), param.rgbmaps->answers[i]);
-		  exit (EXIT_FAILURE);
+		/* open raster file */
+		rgbfd[i] = G_open_cell_old(param.rgbmaps->answers[i], mapset);
+		if (rgbfd[i] < 0) {
+		    G_fatal_error(_("Could not open map %s\n"),
+				  param.rgbmaps->answers[i]);
+		    exit(EXIT_FAILURE);
 		}
 	    }
 
-	  if (celltype[0] == celltype[1] && celltype[0] == celltype[2])
-	    {
-	      G_debug (3, _("Writing VTK ImageData\n"));
+	    if (celltype[0] == celltype[1] && celltype[0] == celltype[2]) {
+		G_debug(3, _("Writing VTK ImageData\n"));
 
-	      out_type = celltype[0];
-	      /*Now write the data */
-	      writeVTKRGBImageData (rgbfd[0], rgbfd[1], rgbfd[2], fp, "RGB_Image", region, out_type);
+		out_type = celltype[0];
+		/*Now write the data */
+		writeVTKRGBImageData(rgbfd[0], rgbfd[1], rgbfd[2], fp,
+				     "RGB_Image", region, out_type);
 	    }
-	  else
-	    {
-	      G_warning (_("Wrong RGB maps. Maps should be the same type! RGB output not added!"));
-	      /*do nothing */
+	    else {
+		G_warning(_
+			  ("Wrong RGB maps. Maps should be the same type! RGB output not added!"));
+		/*do nothing */
 	    }
 
-	  for (i = 0; i < 3; i++)
-	    G_close_cell (rgbfd[i]);
+	    for (i = 0; i < 3; i++)
+		G_close_cell(rgbfd[i]);
 
 	}
-      else
-	{
-	  G_warning (_("Wrong RGB maps. RGB output not added!"));
-	  /*do nothing */
+	else {
+	    G_warning(_("Wrong RGB maps. RGB output not added!"));
+	    /*do nothing */
 	}
     }
 
-  if (param.output->answer && fp != NULL)
-    if (fclose (fp)) {
-      G_fatal_error (_("Error closing VTK-ASCII file"));
-      exit (EXIT_FAILURE);
-    }
-    
-  return 0;
+    if (param.output->answer && fp != NULL)
+	if (fclose(fp)) {
+	    G_fatal_error(_("Error closing VTK-ASCII file"));
+	    exit(EXIT_FAILURE);
+	}
+
+    return 0;
 }
-
