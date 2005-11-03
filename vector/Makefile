@@ -12,6 +12,7 @@ SUBDIRS = \
 	v.db.select \
 	v.digit \
 	v.distance \
+	v.drape \
 	v.extract \
 	v.hull \
 	v.info \
