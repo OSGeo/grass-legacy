@@ -23,11 +23,12 @@
 #include "globaldefs.h"
 
 
+
 /* ************************************************************************* */
-/* Write the normal VTK Header, no! Elevation is supportet ****************** */
+/* Write the normal VTK Header, no! Elevation map is supportet ****************** */
 /* ************************************************************************* */
 void
-writeVTKNormalHeader (FILE * fp, struct Cell_head region)
+writeVTKNormalHeader (FILE * fp, struct Cell_head region, double elevation, int type)
 {
   G_debug (3, _("writeVTKNormalHeader: Writing VTK-Header"));
 
@@ -36,9 +37,19 @@ writeVTKNormalHeader (FILE * fp, struct Cell_head region)
   fprintf (fp, "GRASS 6 Export\n");
   fprintf (fp, "ASCII\n");
   fprintf (fp, "DATASET STRUCTURED_POINTS\n");	/*We are using the structured point dataset. */
-  fprintf (fp, "DIMENSIONS %i %i %i\n", region.cols + 1, region.rows + 1, 1);
-  fprintf (fp, "SPACING %g %g %g\n", region.ew_res, region.ns_res, 0.0);
-  fprintf (fp, "ORIGIN %g %g %g\n", region.west, region.south, region.bottom);
+
+  if (type)
+    fprintf (fp, "DIMENSIONS %i %i %i\n", region.cols, region.rows, 1);
+  else
+    fprintf (fp, "DIMENSIONS %i %i %i\n", region.cols + 1, region.rows + 1, 1);
+
+  fprintf (fp, "SPACING %lf %lf %lf\n", region.ew_res, region.ns_res, 0.0);
+
+  if (type)
+    fprintf (fp, "ORIGIN %lf %lf %lf\n", region.west + region.ew_res / 2, region.south + region.ns_res / 2, elevation);
+  else
+    fprintf (fp, "ORIGIN %lf %lf %lf\n", region.west, region.south, elevation);
+
 }
 
 
@@ -81,9 +92,7 @@ writeVTKPolygonalElevationHeader (FILE * fp, struct Cell_head region)
 void
 writeVTKCellDataHeader (FILE * fp, struct Cell_head region)
 {
-  G_debug (3, _("writeVTKCellHeader: Writing VTK-Header"));
-
-  /*Simple vtk ASCII header */
+  G_debug (3, _("writeVTKCellDataHeader: Writing VTK-DataHeader"));
   fprintf (fp, "CELL_DATA %i\n", region.cols * region.rows);
 }
 
@@ -93,9 +102,7 @@ writeVTKCellDataHeader (FILE * fp, struct Cell_head region)
 void
 writeVTKPointDataHeader (FILE * fp, struct Cell_head region)
 {
-  G_debug (3, _("writeVTKPointHeader: Writing VTK-Header"));
-
-  /*Simple vtk ASCII header */
+  G_debug (3, _("writeVTKPointHeader: Writing VTK-DataHeader"));
   fprintf (fp, "POINT_DATA %i\n", region.cols * region.rows);
 }
 
@@ -112,7 +119,6 @@ writeVTKStructuredCoordinates (int fd, FILE * fp, char *varname, struct Cell_hea
   int rowcount = 0, colcount = 0;
   double nspos = 0.0, ewpos = 0.0;
   void *ptr, *raster;
-  //char cell_buf[300];
 
   G_debug (3, _("writeVTKStructuredCoordinates: Writing Coordinates"));
 
@@ -141,21 +147,21 @@ writeVTKStructuredCoordinates (int fd, FILE * fp, char *varname, struct Cell_hea
 	  if (!G_is_null_value (ptr, out_type))
 	    {
 	      if (out_type == CELL_TYPE)
-		fprintf (fp, "%g %g %g\n", ewpos, nspos,
+		fprintf (fp, "%lf %lf %lf\n", ewpos, nspos,
 			 *((CELL *) ptr) * scale);
 	      else if (out_type == FCELL_TYPE)
 		{
-		  fprintf (fp, "%g %g %g\n", ewpos, nspos,
+		  fprintf (fp, "%lf %lf %lf\n", ewpos, nspos,
 			   *((FCELL *) ptr) * scale);
 		}
 	      else if (out_type == DCELL_TYPE)
 		{
-		  fprintf (fp, "%g %g %g\n", ewpos, nspos,
+		  fprintf (fp, "%lf %lf %lf\n", ewpos, nspos,
 			   *((DCELL *) ptr) * scale);
 		}
 	    }
 	  else
-	    fprintf (fp, "%g %g %s\n", ewpos, nspos, null_value);
+	    fprintf (fp, "%lf %lf %s\n", ewpos, nspos, null_value);
 
 	  colcount++;
 	}
@@ -177,7 +183,6 @@ writeVTKPolygonalCoordinates (int fd, FILE * fp, char *varname, struct Cell_head
   double nspos = 0.0, ewpos = 0.0;
   void *ptr, *raster;
   int i, j, count;
-  //char cell_buf[300];
 
   G_debug (3, _("writeVTKPolygonalCoordinates: Writing VTK Polygonal data"));
 
@@ -189,7 +194,7 @@ writeVTKPolygonalCoordinates (int fd, FILE * fp, char *varname, struct Cell_head
   for (row = nrows - 1; row >= 0; row--)
     {
       colcount = 0;
-      G_percent ((row - nrows) * (-1), nrows, 2);
+      G_percent ((row - nrows) * (-1), nrows, 10);
 
       if (G_get_raster_row (fd, raster, row, out_type) < 0)
 	{
@@ -249,7 +254,7 @@ writeVTKPolygonalCoordinates (int fd, FILE * fp, char *varname, struct Cell_head
   if (polytype == TRIANGLE_STRIPS)
     {
       /*TriangleStrips, take a look ate www.vtk.org for the definition of triangle_strips in vtk */
-      /*If we use triangelestrips, the number of points per strip are equal to the double number of cols we have */
+      /*If we use triangelestrips, the number of points per strip is equal to the double number of cols we have */
       fprintf (fp, "TRIANGLE_STRIPS %i %i\n", region.rows - 1, (region.rows - 1) + (region.rows - 1) * (2 * region.cols));
 
       /*For every Row-1 make a strip */
@@ -302,9 +307,8 @@ writeVTKData (int fd, FILE * fp, char *varname, struct Cell_head region,
   int nrows = region.rows;
   int row, col;
   void *ptr, *raster;
-  //char cell_buf[300];
 
-  G_debug (3, _("writeVTKData: Writing VTK-Header"));
+  G_debug (3, _("writeVTKData: Writing VTK-Data"));
 
   fprintf (fp, "SCALARS %s float 1\n", varname);
   fprintf (fp, "LOOKUP_TABLE default\n");
@@ -314,7 +318,7 @@ writeVTKData (int fd, FILE * fp, char *varname, struct Cell_head region,
 
   for (row = nrows - 1; row >= 0; row--)
     {
-      G_percent ((row - nrows) * (-1), nrows, 2);
+      G_percent ((row - nrows) * (-1), nrows, 10);
 
       if (G_get_raster_row (fd, raster, row, out_type) < 0)
 	{
@@ -331,11 +335,11 @@ writeVTKData (int fd, FILE * fp, char *varname, struct Cell_head region,
 		fprintf (fp, "%d ", *((CELL *) ptr));
 	      else if (out_type == FCELL_TYPE)
 		{
-		  fprintf (fp, "%g ", *((FCELL *) ptr));
+		  fprintf (fp, "%lf ", *((FCELL *) ptr));
 		}
 	      else if (out_type == DCELL_TYPE)
 		{
-		  fprintf (fp, "%g ", *((DCELL *) ptr));
+		  fprintf (fp, "%lf ", *((DCELL *) ptr));
 		}
 	    }
 	  else
@@ -365,9 +369,8 @@ writeVTKRGBImageData (int redfd, int greenfd, int bluefd, FILE * fp,
   void *greenptr, *greenraster;
   void *blueptr, *blueraster;
   double r = 0.0, g = 0.0, b = 0.0;
-  //char cell_buf[300];
 
-  G_debug (3, _("writeVTKRGBImageData: Writing VTK-Header"));
+  G_debug (3, _("writeVTKRGBImageData: Writing VTK-ImageData"));
 
   fprintf (fp, "COLOR_SCALARS %s 3\n", varname);
 
@@ -378,7 +381,7 @@ writeVTKRGBImageData (int redfd, int greenfd, int bluefd, FILE * fp,
 
   for (row = nrows - 1; row >= 0; row--)
     {
-      G_percent ((row - nrows) * (-1), nrows, 2);
+      G_percent ((row - nrows) * (-1), nrows, 10);
 
       if (G_get_raster_row (redfd, redraster, row, out_type) < 0)
 	{
@@ -431,12 +434,12 @@ writeVTKRGBImageData (int redfd, int greenfd, int bluefd, FILE * fp,
 	      /*Test of valuerange, the data should be 1 byte gray values*/
 	      if (r > 255 || g > 255 || b > 255 || r < 0 || g < 0 || b < 0)
 		{
-		  G_warning (_("Wrong map values, values should be between 0 and 255!\n"));
+		  G_warning (_("Wrong map values! Values should in between 0 and 255!\n"));
 		  fprintf (fp, "0 0 0 \n");
 		}
 	      else
 		{
-		  fprintf (fp, "%g %g %g \n", r / 255, g / 255, b / 255);
+		  fprintf (fp, "%lf %lf %lf \n", r / 255, g / 255, b / 255);
 		}
 
 	    }
