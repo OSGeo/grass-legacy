@@ -1,36 +1,30 @@
 <H2>DESCRIPTION</H2>
 
-
 <EM>r.watershed</EM> generates a set of maps indicating: 1) the
 location of watershed basins, and
 2) the LS and S 
 factors of the Revised Universal Soil Loss Equation (RUSLE).
-
 
 <P>
 
 <EM>r.watershed</EM> can be run either interactively or non-interactively.
 If the user types
 
-
 <P>
-
-<DL>
-<DD>
-<B>r.watershed</B>
-</DL>
-
+<PRE>
+r.watershed
+</PRE>
 
 <P>
 
 on the command line without program arguments, the program will prompt the user
 with a verbose description of the input maps.  The interactive version of
-<EM></EM> can prepare inputs to lumped-parameter hydrologic models.
-After a verbose interactive session, <EM></EM> will query the user for a number of
+<EM>r.watershed</EM> can prepare inputs to lumped-parameter hydrologic models.
+After a verbose interactive session, <EM>r.watershed</EM> will query the user for a number of
 map layers.  Each map layer's values will be tabulated by watershed basin and sent
 to an output file.  This output file is organized to ease data entry into a
 lumped-parameter hydrologic model program.  The non-interactive version of
-<EM></EM> cannot create this file.
+<EM>r.watershed</EM> cannot create this file.
 
 
 <P>
@@ -39,15 +33,17 @@ The user can run the program non-interactively, by
 specifying input map names on the command line.
 Parameter names may be specified by their
 full names, or by any initial string that distinguish them from other parameter names.
-In <EM></EM>'s case, the first two letters of each name sufficiently
+In <EM>r.watershed</EM>'s case, the first two letters of each name sufficiently
 distinguishes parameter names.
-For example, the two expressions below are equivalent inputs to <EM></EM>:
+For example, the two expressions below are equivalent inputs to <EM>r.watershed</EM>:
 <P>
-<DL>
-<DD><B> el=</B>elev.map <B>th=</B>100 <B>st=</B>stream.map <B>ba=</B>basin.map </B>
-<P>
-<DD><B> elevation=</B>elev.map <B>threshold=</B>100 <B>stream=</B>stream.map <B>basin=</B>basin.map 
-</DL>
+
+<PRE>
+ el=elev.map th=100 st=stream.map ba=basin.map
+
+ elevation=elev.map threshold=100 stream=stream.map basin=basin.map 
+</PRE>
+
 <H2>OPTIONS</H2>
 
 <dl>
@@ -88,7 +84,7 @@ value of one (1) is assumed. The algorithm is D8 flowaccumulation.
 
 <DD>Raster map input layer or value containing the percent of disturbed
 land (i.e., croplands, and construction sites) where the raster or input
-value of 17 equals 17%.  If no map or value is given, <EM></EM>
+value of 17 equals 17%.  If no map or value is given, <EM>r.watershed</EM>
 assumes no disturbed land.  This input is used for the RUSLE calculations.
 
 <DT><EM>blocking</EM> 
@@ -205,7 +201,7 @@ additional disk space needs to be freed up for the program to run.
 
 <P>
 
-<EM>seg</EM> uses the A\uT\d least-cost search algorithm to determine the
+<EM>seg</EM> uses the A<sup>T</sup> least-cost search algorithm to determine the
 flow of water over the landscape (see SEE ALSO section).  The algorithm
 produces results similar to those obtained when running <EM><A HREF="r.cost.html">r.cost</A></EM>
 and <EM><A HREF="r.drain.html">r.drain</A></EM> on every cell on the map.
@@ -214,7 +210,7 @@ and <EM><A HREF="r.drain.html">r.drain</A></EM> on every cell on the map.
 <P>
 
 In many situations, the elevation data will be too finely detailed for
-the amount of time or memory available.  Running <EM></EM> will
+the amount of time or memory available.  Running <EM>r.watershed</EM> will
 require use of a coarser resolution.  To make the results more closely
 resemble the finer terrain data, create a map layer containing the
 lowest elevation values at the coarser resolution.  This is done by:
@@ -222,10 +218,10 @@ lowest elevation values at the coarser resolution.  This is done by:
 layer, and 2) Using the <EM>neighborhood</EM> command to find the lowest
 value for an area equal in size to the desired resolution.  For
 example, if the resolution of the elevation data is 30 meters and the
-resolution of the geographic region for <EM></EM> will be 90
+resolution of the geographic region for <EM>r.watershed</EM> will be 90
 meters:  use the minimum function for a 3 by 3 neighborhood.  After
-going to the resolution at which <EM></EM> will be run,
-<EM></EM> will be taking values from the <EM>neighborhood</EM>
+going to the resolution at which <EM>r.watershed</EM> will be run,
+<EM>r.watershed</EM> will be taking values from the <EM>neighborhood</EM>
 output map layer that represents the minimum elevation within the
 region of the coarser cell.
 
@@ -241,7 +237,7 @@ size.
 
 <P>
 
-The <EM></EM> program does not require the user to have the
+The <EM>r.watershed</EM> program does not require the user to have the
 current geographic region filled with elevation values.  Areas without
 elevation data MUST be masked out using the <EM><A HREF="r.mask.html">r.mask</A></EM> command.  Areas
 masked out will be treated as if they are off the edge of the region.
@@ -265,8 +261,8 @@ those areas.
 
 <H2>SEE ALSO</H2>
 
-The A\uT\d least-cost search algorithm used by <EM></EM> is described in
-<EM>Using the A\uT\d Search Algorithm to Develop Hydrologic Models from
+The A<sup>T</sup> least-cost search algorithm used by <EM>r.watershed</EM> is described in
+<EM>Using the A<sup>T</sup> Search Algorithm to Develop Hydrologic Models from
 Digital Elevation Data</EM>, in <B>Proceedings of International Geographic
 Information Systems (IGIS) Symposium '89</B>, pp 275-281 (Baltimore, MD,
 18-19 March 1989), by Charles Ehlschlaeger, U.S. Army Construction
