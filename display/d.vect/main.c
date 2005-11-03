@@ -255,7 +255,7 @@ main (int argc, char **argv)
 
 	x_flag = G_define_flag ();
 	x_flag->key		= 'x';
-	x_flag->description	= _("Don't add to list of vectors and commands in monitor");
+	x_flag->description	= _("Don't add to list of vectors and commands in monitor (it won't be drawn if the monitor is refreshed)");
 	
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
