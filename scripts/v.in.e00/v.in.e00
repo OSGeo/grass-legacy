@@ -59,8 +59,7 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 #### check if we have awk
-AWK=`which awk`
-if [ "$AWK" = "" ] ; then
+if [ ! -x "`which awk`" ] ; then
     echo "$PROG: awk required, please install awk/gawk first" 2>&1
     exit 1
 fi
@@ -77,16 +76,14 @@ PROG=`basename $0`
 E00TMP=$$
 
 #### check for avcimport 
-AVCIMPORT=`which avcimport`
-if [ "$AVCIMPORT" = "" ] ; then
+if [ ! -x "`which avcimport`" ] ; then
     echo "$PROG: 'avcimport' program not found, install it first" 2>&1
     echo "       http://avce00.maptools.org" 2>&1
     exit 1
 fi
 
 #### check for e00conv
-E00CONV=`which e00conv`
-if [ "$E00CONV" = "" ] ; then
+if [ ! -x "`which e00conv`" ] ; then
     echo "$PROG: 'e00conv' program not found, install it first" 2>&1
     echo "       http://avce00.maptools.org" 2>&1
     exit 1
