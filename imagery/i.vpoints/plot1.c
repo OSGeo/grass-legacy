@@ -4,7 +4,7 @@
 #include "gis.h"
 #include "Vect.h"
 #include "display.h"
-#include "Vectpoints.h" 
+#include "vectpoints.h" 
 #include "globals.h" 
 
 int plot1 (char *name, char *mapset, struct line_pnts *Points)
