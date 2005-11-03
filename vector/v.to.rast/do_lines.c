@@ -106,7 +106,7 @@ int do_lines ( struct Map_info *Map, struct line_pnts *Points, dbCatValArray *Cv
 
 static int plot_line(double *x,double *y,int n, int use)
 {
-    while (--n > 1)
+    while (--n > 0)
     {
         if (use == USE_D)
             set_dcat((DCELL)deg_angle(x[1], y[1], x[0], y[0]));
