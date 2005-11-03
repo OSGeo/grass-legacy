@@ -41,6 +41,13 @@ Upload x and y coordinates from vector geometry to attribute table:<br>
 Upload x, y and z coordinates from vector geometry to attribute table:<br>
 <tt>v.to.db map=pointsmap option=coor col=x,y,z</tt>
 
+<p>
+Transfer of attributes from character column (with numeric contents) to new
+integer column:<br>
+<tt>v.db.addcol usa_income_employment2002 col="FIPS_NUM integer"</tt><br>
+<tt>v.to.db usa_income_employment2002 option=query col=FIPS_NUM qcol=STATE_FIPS</tt>
+
+
 <h3>Printing reports</h3>
 
 Report all area sizes of a map:<br>
