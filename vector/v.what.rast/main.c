@@ -74,18 +74,18 @@ int main(int argc,char *argv[])
     G_gisinit (argv[0]);
 
     module              = G_define_module();
-    module->description = "Upload raster values at positions of vector points to the table.";
+    module->description = _("Uploads raster values at positions of vector points to the table");
 
     vect_opt = G_define_standard_option(G_OPT_V_INPUT);
     vect_opt->key        = "vector" ;
-    vect_opt->description= "Name of input vector points map";
+    vect_opt->description= _("Name of input vector points map");
 
     rast_opt = G_define_option() ;
     rast_opt->key        = "raster" ;
     rast_opt->type       = TYPE_STRING ;
     rast_opt->required   = YES ;
     rast_opt->gisprompt  = "old,cell,raster" ;
-    rast_opt->description= "Name of existing raster map" ;
+    rast_opt->description= _("Name of existing raster map") ;
 
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
 
@@ -93,10 +93,10 @@ int main(int argc,char *argv[])
     col_opt->key        = "column" ;
     col_opt->type       = TYPE_STRING ;
     col_opt->required   = YES ;
-    col_opt->description= "Column name (will be updated by raster values)" ;
+    col_opt->description= _("Column name (will be updated by raster values)") ;
 
     if (G_parser(argc, argv))
-      exit(-1);
+      exit(EXIT_FAILURE);
 
     field = atoi( field_opt->answer );
 
@@ -109,26 +109,26 @@ int main(int argc,char *argv[])
 
     /* Open vector */
     if ( (mapset = G_find_vector2 (vect_opt->answer, "")) == NULL) 
-	G_fatal_error ( "Cannot find vector map");
+	G_fatal_error ( _("Cannot find vector map"));
 
     Vect_set_open_level (2); 
     Vect_open_old (&Map, vect_opt->answer, mapset);
 
     Fi = Vect_get_field ( &Map, field);
-    if ( Fi == NULL ) G_fatal_error ( "Cannot get layer info for vector map");
+    if ( Fi == NULL ) G_fatal_error ( _("Cannot get layer info for vector map"));
     
     /* Open driver */
     driver = db_start_driver_open_database ( Fi->driver, Fi->database );
     if ( driver == NULL ) {
-        G_fatal_error ( "Cannot open database %s by driver %s", Fi->database, Fi->driver );
+        G_fatal_error ( _("Cannot open database <%s> by driver <%s>"), Fi->database, Fi->driver );
     }
     
     /* Open raster */
     if ( (mapset = G_find_cell2 ( rast_opt->answer, "") ) == NULL )
-	G_fatal_error ( "Cannot find raster map");
+	G_fatal_error ( _("Cannot find raster map"));
     
     if( (fd = G_open_cell_old (rast_opt->answer, mapset)) < 0 )
-	G_fatal_error ( "Cannot open raster map");
+	G_fatal_error ( _("Cannot open raster map"));
 
     out_type = G_raster_map_type(rast_opt->answer, mapset);
 
@@ -141,16 +141,16 @@ int main(int argc,char *argv[])
     /* Check column type */
     col_type = db_column_Ctype ( driver, Fi->table, col_opt->answer );
 
-    if ( col_type == -1 ) G_fatal_error ( "Column <%s> not found", col_opt->answer );
+    if ( col_type == -1 ) G_fatal_error ( _("Column <%s> not found"), col_opt->answer );
 
     if ( col_type != DB_C_TYPE_INT && col_type != DB_C_TYPE_DOUBLE )
-	 G_fatal_error ( "Column type is not supported" ); 
+	 G_fatal_error ( _("Column type is not supported") ); 
 
     if ( out_type == CELL_TYPE && col_type == DB_C_TYPE_DOUBLE ) 
-	G_warning ( "Raster type is integer and column type is float" );
+	G_warning ( _("Raster type is integer and column type is float") );
     
     if ( out_type != CELL_TYPE && col_type == DB_C_TYPE_INT ) 
-	G_warning ( "Raster type is float and column type is integer, some data lost!!!!" );
+	G_warning ( _("Raster type is float and column type is integer, some data lost!!") );
 	     
     /* Read vector points to cache */
     Cache_size = Vect_get_num_primitives ( &Map, GV_POINT ); 
@@ -227,10 +227,10 @@ int main(int argc,char *argv[])
 
     /* Report number of points not used */
     if ( outside_cnt )
-	G_warning ( "%d points outside current region skip", outside_cnt );
+	G_warning ( _("%d points outside current region skip"), outside_cnt );
 
     if ( nocat_cnt )
-	G_warning ( "%d points without category skip", nocat_cnt );
+	G_warning ( _("%d points without category skip"), nocat_cnt );
     
     /* Sort cache by current region row */
     qsort (cache, point_cnt, sizeof (struct order), by_row);
@@ -251,10 +251,10 @@ int main(int argc,char *argv[])
         if (cur_row != cache[point].row) {
 	    if ( out_type == CELL_TYPE ) {
 		if ( G_get_c_raster_row ( fd, cell, cache[point].row) < 0 )
-		    G_fatal_error ( "Can't read raster" );
+		    G_fatal_error ( _("Can't read raster") );
 	    } else {
 		if (G_get_d_raster_row (fd, dcell, cache[point].row) < 0)
-		    G_fatal_error ( "Can't read raster" );
+		    G_fatal_error ( _("Can't read raster") );
 	    }
 	}
 	cur_row = cache[point].row;
@@ -276,7 +276,7 @@ int main(int argc,char *argv[])
     norec_cnt = update_cnt = upderr_cnt = dupl_cnt = 0;
     for (point = 0 ; point < point_cnt ; point++) {
 	if ( cache[point].count > 1 ) {
-	    G_warning ( "More points (%d) of category %d, value set to 'NULL'.", 
+	    G_warning ( _("More points (%d) of category %d, value set to 'NULL'"), 
 		           cache[point].count, cache[point].cat );
 	    dupl_cnt++;
 	}
@@ -285,7 +285,7 @@ int main(int argc,char *argv[])
 	cex = (int *) bsearch((void *) &(cache[point].cat), catexst, select, sizeof(int), srch_cat);
 	if ( cex == NULL ) { /* cat does not exist in DB */ 
 	    norec_cnt++;
-	    G_warning ( "No record for category '%d' in the table", cache[point].cat );
+	    G_warning ( _("No record for category '%d' in the table"), cache[point].cat );
 	    continue;
 	}
 
@@ -327,12 +327,12 @@ int main(int argc,char *argv[])
     db_free_string (&stmt);
 
     /* Report */
-    G_message ( _("%d categories loaded from table\n"), select );
-    G_message ( _("%d categories loaded from vector\n"), point_cnt );
-    G_message ( _("%d categories from vector missing in table\n"), norec_cnt );
-    G_message ( _("%d duplicate categories in vector\n"), dupl_cnt );
-    G_message ( _("%d records updated\n"), update_cnt );
-    G_message ( _("%d update errors\n"), upderr_cnt );
+    G_message ( _("%d categories loaded from table"), select );
+    G_message ( _("%d categories loaded from vector"), point_cnt );
+    G_message ( _("%d categories from vector missing in table"), norec_cnt );
+    G_message ( _("%d duplicate categories in vector"), dupl_cnt );
+    G_message ( _("%d records updated"), update_cnt );
+    G_message ( _("%d update errors"), upderr_cnt );
 
     exit(0);
 }
