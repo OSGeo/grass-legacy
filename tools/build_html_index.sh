@@ -128,6 +128,7 @@ cp -f grassdocs.css $HTMLDIR/
 cp -f grassdocs.css $HTMLDIR/../nviz/
 #copy over GRASS logo:
 cp -f grass.smlogo.gif $HTMLDIR/
+cp -f grass.smlogo.gif $HTMLDIR/../nviz/
 
 #process all HTML pages:
 cd $HTMLDIR
