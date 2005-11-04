@@ -1,3 +1,5 @@
+#NOTE: parts of the header are generated in ../../lib/gis/parser.c
+
 # generic html rules for all commands
 htmlgen:
 	@if ! grep -i '<html>' $(PGM).tmp.html > /dev/null 2>&1 ; then \
@@ -18,6 +20,7 @@ htmlgen:
 		echo '<link rel="stylesheet" href="grassdocs.css" type="text/css">' ; \
 		echo '</head>' ; \
 		echo '<body bgcolor="white">' ; \
+		echo '<img src="grass.smlogo.gif"><hr align=center size=6 noshade>' ; \
 		echo '<h2>NAME</h2>' ; \
 		echo '<em><b>$(PGM)</b></em>' ; \
 		} > $(PGM).tmp.html.header ; \

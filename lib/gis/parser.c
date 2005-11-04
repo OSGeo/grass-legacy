@@ -1067,9 +1067,9 @@ static void G_usage_html (void)
 	fprintf(stdout, "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n"),
 	fprintf(stdout, "<link rel=\"stylesheet\" href=\"grassdocs.css\" type=\"text/css\">\n"),
 	fprintf(stdout, "</head>\n"),
-	fprintf(stdout, "<body bgcolor=\"white\">\n");
-
-	fprintf(stdout, "<h2>NAME</h2>\n");
+	fprintf(stdout, "<body bgcolor=\"white\">\n\n"),
+	fprintf(stdout, "<img src=\"grass.smlogo.gif\"><hr align=center size=6 noshade>\n\n"),
+	fprintf(stdout, "<h2>NAME</h2>\n"),
 	fprintf(stdout, "<em><b>%s</b></em> ", pgm_name);
 
 	if (module_info.description) {
