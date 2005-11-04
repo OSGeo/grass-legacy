@@ -42,6 +42,18 @@ report (void)
             }
             break;
 
+        case O_COMPACT:
+	    fprintf (stdout,"cat|compact\n");
+	    for ( i = 0; i < vstat.rcat; i++ )
+		fprintf (stdout, "%d|%.15g\n", Values[i].cat, Values[i].d1);
+	    break;
+
+        case O_PERIMETER:
+	    fprintf (stdout,"cat|perimeter\n");
+	    for ( i = 0; i < vstat.rcat; i++ )
+		fprintf (stdout, "%d|%.15g\n", Values[i].cat, Values[i].d1);
+	    break;
+
         case O_LENGTH:
             if ( options.total ) {
                 double sum = 0.0;

@@ -58,7 +58,7 @@ main (int argc, char *argv[])
     /* Read values from map */
     if ( options.option == O_QUERY ){
 	query(&Map);
-    } else if ( options.option == O_AREA ){
+    } else if ( ( options.option == O_AREA ) || ( options.option == O_COMPACT ) || ( options.option == O_PERIMETER ) ){
 	read_areas(&Map);
     } else { 
         read_lines(&Map); 

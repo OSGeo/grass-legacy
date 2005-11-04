@@ -40,6 +40,7 @@ conv_units ()
 
     switch (options.option) {
 	case O_LENGTH:
+	case O_PERIMETER:
 	    for ( i = 0; i < vstat.rcat; i++ ) 
 		Values[i].d1 *= f; 
 	    break;
