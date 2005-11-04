@@ -37,11 +37,13 @@
 #include "linkm.h"
 #include "bitmap.h"
 
+
 #define BM_col_to_byte(x)  ((x)/8)
 #define BM_col_to_bit(x)   ((x)%8)
 
 static int Mode = BM_FLAT;
 static int Size = 1;
+
 
 /*!
  * \brief Create bitmap of dimension x/y and return structure token. 
@@ -51,6 +53,7 @@ static int Size = 1;
  *  \param int y
  *  \return struct BM or NULL on error
  */
+
 struct BM *BM_create (int x, int y)
 {
     struct BM *map;
@@ -88,8 +91,10 @@ BM_destroy (struct BM *map)
 
     free (map->data);
     free (map);
+
     return 0;
 }
+
 
 /*
 **  Caller can specify type of data structure to use for bitmap, as
@@ -113,10 +118,36 @@ BM_destroy (struct BM *map)
 **   If error it will print a warning message to stderr and continue
 **   continue by running but will not change the option in error.
 */
+
+/*!
+ * \brief
+ *
+ * Specify the type of data structure to use for bitmap.
+ * 'mode' can be either BM_FLAT or BM_SPARSE:
+ *
+ * BM_FLAT is a basic packed bitmap - eight values stored per byte
+ * thus creating a 1:8 compression over using char arrays and a
+ * 1:32 compression over using CELL arrays.
+ *
+ * BM_SPARSE is a linked array of values. This is much more efficient
+ * for large, very sparse arrays.  It is slower to access, especially 
+ * for writing, but can save several orders of magnitude of memory on
+ * large bitmaps.
+ *
+ * NOTE: At this time 'size' must be passed a value of 1
+ *
+ * returns 0 on success or -1 on error
+ *
+ *  \param int mode
+ *  \param int size
+ *  \return int
+ */
+
 int 
 BM_set_mode (int mode, int size)
 {
     int ret = 0;
+
     switch (mode) {
 	case BM_FLAT:
 	case BM_SPARSE:
@@ -138,11 +169,20 @@ BM_set_mode (int mode, int size)
 }
 
 
-/*
-** Set array value 
-**
-** returns 0;
-*/
+/*!
+ * \brief
+ *
+ * Sets bitmap value to 'val' at location 'x' 'y'
+ *
+ * Returns 0 on success
+ *
+ *  \param map
+ *  \param x
+ *  \param y
+ *  \param val
+ *  \return int
+ */
+
 int 
 BM_set (struct BM *map, int x, int y, int val)
 {
@@ -163,11 +203,20 @@ BM_set (struct BM *map, int x, int y, int val)
     return 0;
 }
 
-/*
-** return array value 
-**
-**  returns 0 or 1  or -1 on error
-*/
+
+/*!
+ * \brief
+ *
+ * Gets 'val' from the bitmap
+ *
+ * Returns 0 or 1 on success or -1 on error
+ *
+ *  \param map
+ *  \param x
+ *  \param y
+ *  \return int
+ */
+
 int 
 BM_get (struct BM *map, int x, int y)
 {
@@ -184,24 +233,41 @@ BM_get (struct BM *map, int x, int y)
     return byte >> BM_col_to_bit(x) & 0x01;
 }
 
-/*
-**  returns size in bytes that bitmap is taking up.
-*/
+
+/*!
+ * \brief
+ *
+ * Returns size in bytes that bitmap is taking up.
+ *
+ *  \param map
+ *  \return int
+ */
+
 int 
 BM_get_map_size (struct BM *map)
 {
     if (map->sparse)
 	return BM_get_map_size_sparse(map);
+
     return map->bytes * map->rows;
 }
 
-/*
-** Write bitmap out to file.
-**  Expects open file pointer fp and existing map structure 
-**  caller is responsible to open and close fp
-**
-**  returns 0 or -1 on error
-*/
+
+/*!
+ * \brief
+ *
+ * Write bitmap out to file
+ *
+ * Expects open file pointer 'fp' and existing map structure.
+ * Caller is responsible to open and close 'fp'.
+ *
+ * Returns 0 or -1 on error
+ *
+ *  \param fp
+ *  \param map
+ *  \return int
+ */
+
 int BM_file_write (FILE *fp, struct BM *map)
 {
     char c;
@@ -230,12 +296,20 @@ int BM_file_write (FILE *fp, struct BM *map)
     return 0;
 }
 
-/*
-**  Create map structure and load it from file
-**  File should previously been created by BM_file_write()
-**
-**  returns struct BM *  or NULL on error.
-*/
+
+/*!
+ * \brief
+ *
+ * Create map structure and load it from file
+ *
+ * 'fp' should previously been created by <b>BM_file_write()</b>
+ *
+ * Returns struct BM * or NULL on error
+ *
+ *  \param fp
+ *  \return struct BM
+ */
+
 struct BM *BM_file_read (FILE *fp)
 {
     struct BM *map;

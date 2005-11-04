@@ -22,15 +22,25 @@
 #include "linkm.h"
 #include "bitmap.h"
 
+
 #define BM_col_to_byte(x)  ((x)/8)
 #define BM_col_to_bit(x)   ((x)%8)
 
-
 static int depth;
 
-/*
-** Create bitmap of dimension x/y and return structure token
-*/
+
+/*!
+ * \brief
+ *
+ * Create a sparse bitmap of dimension 'x'/'y'
+ *
+ * Returns bitmap structure or NULL on error
+ *
+ *  \param x
+ *  \param y
+ *  \return struct BM 
+ */
+
 struct BM *
 BM_create_sparse (int x, int y)
 {
@@ -66,9 +76,18 @@ BM_create_sparse (int x, int y)
     return map;
 }
 
-/* 
-** Destroy bitmap and free all associated memory
-*/
+
+/*!
+ * \brief
+ *
+ * Destroy sparse bitmap and free all associated memory
+ *
+ * Returns 0
+ *
+ *  \param map
+ *  \return int
+ */
+
 int BM_destroy_sparse (struct BM *map)
 {
     int i;
@@ -95,7 +114,20 @@ int BM_destroy_sparse (struct BM *map)
 }
 
 
-/* Set array value */
+/*!
+ * \brief
+ *
+ * Set sparse bitmap value to 'val' at location 'x'/'y'
+ *
+ * Returns 0
+ *
+ *  \param map
+ *  \param x
+ *  \param y
+ *  \param val
+ *  \return int
+ */
+
 int 
 BM_set_sparse (struct BM *map, int x, int y, int val)
 {
@@ -216,7 +248,19 @@ BM_set_sparse (struct BM *map, int x, int y, int val)
 }
 
 
-/* return array value */
+/*!
+ * \brief
+ *
+ * Returns sparse bitmap value at location 'x'/'y'
+ *
+ * Returns value or -1 on error
+ *
+ *  \param map
+ *  \param x
+ *  \param y
+ *  \return int
+ */
+
 int 
 BM_get_sparse (struct BM *map, int x, int y)
 {
@@ -235,6 +279,16 @@ BM_get_sparse (struct BM *map, int x, int y)
     return -1;
 }
 
+
+/*!
+ * \brief
+ *
+ * Returns size of sparse bitmap in bytes
+ *
+ *  \param map
+ *  \return int
+ */
+
 int 
 BM_get_map_size_sparse (struct BM *map)
 {
@@ -252,10 +306,22 @@ BM_get_map_size_sparse (struct BM *map)
 	    p = p->next;
 	}
     }
+
     return size;
 }
 
-/* debugging code to dump out structure of links */
+
+/*!
+ * \brief
+ *
+ * Debugging code to dump out structure of links
+ *
+ * Returns 0
+ *
+ *  \param map
+ *  \return int
+ */
+
 int 
 BM_dump_map_sparse (struct BM *map)
 {
@@ -276,7 +342,19 @@ BM_dump_map_sparse (struct BM *map)
     return 0;
 }
 
-/* debugging code to dump out structure of links for single row */
+
+/*!
+ * \brief
+ *
+ * Debugging code to dump out structure of links for single row
+ *
+ * Returns 0
+ *
+ *  \param map
+ *  \param y
+ *  \return int
+ */
+
 int 
 BM_dump_map_row_sparse (struct BM *map, int y)
 {
@@ -298,11 +376,19 @@ BM_dump_map_row_sparse (struct BM *map, int y)
 }
 
 
-/*
-** Write matrix out to disk file
-**
-**  returns 0 or -1 on error 
-*/
+/*!
+ * \brief
+ *
+ * Write sparse bitmap matrix out to disk file 'fp'.
+ * NOTE: 'fp' must already be opened and later closed by user
+ *
+ * Returns 0 on success or -1 on error
+ *
+ *  \param fp
+ *  \param map
+ *  \return int
+ */
+
 int 
 BM_file_write_sparse (FILE *fp, struct BM *map)
 {
