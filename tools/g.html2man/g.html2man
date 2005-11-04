@@ -7,6 +7,8 @@ eval 'exec $GRASS_PERL -S $0 ${1+"$@"}'
 #       perl g.html2man <html file> <man file> <section>
 #
 
+our $preformat;
+
 sub CvtTable {
 #
 # converts <table> structures to tbl commands.
@@ -95,14 +97,14 @@ sub DoStrip {
 
 sub DoLine {
 
-  if (m#^ *</PRE>#i) {
-    s#^ *</PRE>#.DE\n\\fR#i;
+  if (m#</PRE>#i) {
+    s#</PRE>#\n.DE\n\\fR#i;
     $preformat = 0;
     return 1;
   }
 ###  if ($preformat) {return 1};
-  if (m#^ *<PRE>#i) {
-    s#^ *<PRE>#\\fC\n.DS#i;
+  if (m#<PRE>#i) {
+    s#^.*<PRE>#\\fC\n.DS#i;
     $preformat = 1;
     return 1;
   }
