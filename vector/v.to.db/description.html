@@ -11,7 +11,6 @@ When using <em>option=coor</em> on a vector area map,
 only coordinates of centroids with unique category will be reported.
 
 
-
 <H2>EXAMPLES</H2>
 
 <h3>Updating attribute tables</h3>
@@ -22,45 +21,68 @@ column-wise. The column must be present in the table
 
 <P>
 Upload category numbers to attribute table (used for new map):<br>
-<tt>v.to.db map=soils type=area option=cat</tt> 
+<div class="code"><pre>
+v.to.db map=soils type=area option=cat
+</pre></div>
 
 <p>
 Upload area sizes of each polygon to attribute table:<br>
-<tt>v.to.db map=soils type=area option=area col=area_size unit=h</tt>
+<div class="code"><pre>
+v.to.db map=soils type=area option=area col=area_size unit=h
+</pre></div>
 
 <p>
 Upload line lengths (in meters) of each vector line to attribute table
 (use <em>v.category</em> in case of missing categories):<br>
-<tt>v.to.db map=roads option=length type=line col=linelength units=me</tt>
+<div class="code"><pre>
+v.to.db map=roads option=length type=line col=linelength units=me
+</pre></div>
 
 <p>
 Upload x and y coordinates from vector geometry to attribute table:<br>
-<tt>v.to.db map=pointsmap option=coor col=x,y</tt>
+<div class="code"><pre>
+v.to.db map=pointsmap option=coor col=x,y
+</pre></div>
 
 <p>
 Upload x, y and z coordinates from vector geometry to attribute table:<br>
-<tt>v.to.db map=pointsmap option=coor col=x,y,z</tt>
+<div class="code"><pre>
+v.to.db map=pointsmap option=coor col=x,y,z
+</pre></div>
 
 <p>
 Transfer of attributes from character column (with numeric contents) to new
 integer column:<br>
-<tt>v.db.addcol usa_income_employment2002 col="FIPS_NUM integer"</tt><br>
-<tt>v.to.db usa_income_employment2002 option=query col=FIPS_NUM qcol=STATE_FIPS</tt>
+<div class="code"><pre>
+v.db.addcol usa_income_employment2002 col="FIPS_NUM integer"
+v.to.db usa_income_employment2002 option=query col=FIPS_NUM qcol=STATE_FIPS
+</pre></div>
 
 
 <h3>Printing reports</h3>
 
 Report all area sizes of a map:<br>
-<tt>v.to.db -p soils option=area type=boundary units=h</tt>
+<div class="code"><pre>
+v.to.db -p soils option=area type=boundary units=h
+</pre></div>
+
 <p>
 Report all area sizes of a map, sorted by category number:<br>
-<tt>v.to.db -p soils option=area type=boundary units=h | sort -n</tt>
+<div class="code"><pre>
+v.to.db -p soils option=area type=boundary units=h | sort -n
+</pre></div>
+
 <p>
 Report all line lengths of a map:<br>
-<tt>v.to.db -p roads option=length type=line units=k</tt>
+<div class="code"><pre>
+v.to.db -p roads option=length type=line units=k
+</pre></div>
+
 <p>
 Report number of features for each category in map:<br>
-<tt>v.to.db -p roads option=count type=line</tt>
+<div class="code"><pre>
+v.to.db -p roads option=count type=line
+</pre></div>
 
 <h2>NOTES</h2>
 
