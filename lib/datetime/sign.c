@@ -24,6 +24,17 @@ datetime_is_positive (DateTime *dt)
     return dt->positive != 0;
 }
 
+/*!
+ * \brief 
+ *
+ * Returns:  
+ * 1 if the DateTime is negative
+ * 0 otherwise
+ *
+ *  \param dt
+ *  \return int
+ */
+
 int 
 datetime_is_negative (DateTime *dt)
 {

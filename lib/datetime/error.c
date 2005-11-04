@@ -5,6 +5,8 @@
  * Read the file GPL.TXT coming with GRASS for details.
  */
 #include <string.h>
+
+
 static int err_code = 0;
 static char err_msg[1024];
 
@@ -35,10 +37,26 @@ int datetime_error (int code, char *msg)
     return code;
 }
 
+/*!
+ * \brief 
+ *
+ * returns an error code
+ *
+ *  \return int
+ */
+
 int datetime_error_code (void)
 {
     return err_code;
 }
+
+/*!
+ * \brief 
+ *
+ * returns an error message
+ *
+ *  \return char *
+ */
 
 char *datetime_error_msg (void)
 {
