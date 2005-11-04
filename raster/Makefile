@@ -124,6 +124,8 @@ ifneq ($(strip $(CXX)),)
     SUBDIRS += $(CXXBASED)
 endif
 
-default: subdirs
+default: subdirs htmldir
 
 clean: cleansubdirs
+
+PGM = rasterintro
