@@ -30,6 +30,8 @@ datetime_is_leap_year (int year, int ad)
 /*!
  * \brief 
  *
+ * returns the number of days in 'year'
+ *
  *  \param year
  *  \param ad
  *  \return int
@@ -51,8 +53,11 @@ datetime_days_in_year (int year, int ad)
 /*!
  * \brief 
  *
+ * returns number of days in 'month' of a particular 'year'
+ *
  *  \param month
  *  \param year
+ *  \param ad
  *  \return int
  */
 
@@ -66,6 +71,7 @@ datetime_days_in_month (int year, int month, int ad)
 
     if(month == 2 && datetime_is_leap_year(year,ad))
 	    return(29);
+
     return(days[month - 1]);
 }
 

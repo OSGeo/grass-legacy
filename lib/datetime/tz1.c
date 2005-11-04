@@ -6,6 +6,7 @@
  */
 #include "datetime.h"
 
+
 static int have(int x, DateTime *dt)
 {
     return datetime_is_between(x, dt->from, dt->to);
@@ -14,6 +15,8 @@ static int have(int x, DateTime *dt)
 
 /*!
  * \brief 
+ *
+ * returns 0 on success
  *
  *  \param dt
  *  \param minutes
@@ -30,12 +33,15 @@ int datetime_check_timezone (
 	return datetime_error(-2, "datetime has no minute");
     if (!datetime_is_valid_timezone(minutes))
 	return datetime_error(-3, "invalid datetime timezone");
+
     return 0;
 }
 
 
 /*!
  * \brief 
+ *
+ * returns 0 on success
  *
  *  \param dt
  *  \param minutes
@@ -46,15 +52,19 @@ int
 datetime_get_timezone (DateTime *dt, int *minutes)
 {
     int stat;
+
     stat = datetime_check_timezone(dt, dt->tz);
     if (stat == 0)
 	*minutes = dt->tz;
+
     return stat;
 }
 
 
 /*!
  * \brief 
+ *
+ * returns 0 on success
  *
  *  \param dt
  *  \param minutes
@@ -65,11 +75,23 @@ int
 datetime_set_timezone (DateTime *dt, int minutes)
 {
     int stat;
+
     stat = datetime_check_timezone(dt, minutes);
     if (stat == 0)
 	dt->tz = minutes;
+
     return stat;
 }
+
+/*!
+ * \brief 
+ *
+ * unsets timezone in 'dt'
+ * returns 0
+ *
+ *  \param dt
+ *  \return int
+ */
 
 int 
 datetime_unset_timezone (DateTime *dt)

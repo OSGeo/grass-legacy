@@ -8,8 +8,21 @@
 #include <string.h>
 #include "datetime.h"
 
+
 static char *months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
 			 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+
+/*!
+ * \brief
+ *
+ * formats DateTime structure as a human-readable string
+ * returns 0 when successful and 'buf' is filled with the string
+ * returns a negative number on error
+ *
+ * \param dt
+ * \param buf
+ * \return int
+ */
 
 int datetime_format ( DateTime *dt, char *buf)
 {

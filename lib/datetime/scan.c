@@ -36,7 +36,7 @@ static int get_double ( char **, double *, int *, int *);
  * Returns 0 if 'string' is legal, -1 if not. 
  *
  *  \param dt
- *  \param string
+ *  \param buf
  *  \return int
  */
 

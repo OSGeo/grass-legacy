@@ -6,6 +6,7 @@
  */
 #include "datetime.h"
 
+
 static 
 int isequal (char *src, char *dst, int n)
 {
@@ -20,12 +21,11 @@ int isequal (char *src, char *dst, int n)
  * \brief 
  *
  * Returns:
- * 1 if dt1 is exactly the same as dt2  
+ * 1 if 'src' is exactly the same as 'dst'
  * 0 if they differ   
-
  *
- *  \param dt1
- *  \param dt2
+ *  \param src
+ *  \param dst
  *  \return int
  */
 
