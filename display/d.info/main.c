@@ -17,41 +17,50 @@
 #include <stdio.h>
 #include "gis.h"
 #include "raster.h"
+#include "display.h"
+#include "glocale.h"
 
 int main(int argc,char *argv[])
 {
 	struct GModule *module;
-	struct Flag *rflag, *dflag, *cflag;
+	struct Flag *rflag, *dflag, *cflag, *fflag;
 	int l, r, t, b;
+	char window_name[128];
+	struct Cell_head window;
 
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
 	module->description = 
-		"Display information about the active display monitor";
+		_("Display information about the active display monitor");
 
 	rflag = G_define_flag();
 	rflag->key = 'r';
-	rflag->description = "Display screen rectangle";
+	rflag->description = _("Display screen rectangle");
 
 	dflag = G_define_flag();
 	dflag->key = 'd';
-	dflag->description = "Display screen dimensions";
+	dflag->description = _("Display screen dimensions");
+
+	fflag = G_define_flag();
+	fflag->key = 'f';
+	fflag->description = _("Display active frame dimensions");
 
 	cflag = G_define_flag();
 	cflag->key = 'c';
-	cflag->description = "Display number of colors";
+	cflag->description = _("Display number of colors");
 
 	if (argc > 1 && G_parser(argc, argv))
 		return 1;
 
-	if(!rflag->answer && !dflag->answer && !cflag->answer) {
+	if(!rflag->answer && !dflag->answer && !cflag->answer && !fflag->answer)
+	{
 		G_usage();
 		return 1;
 	}
 
 	if (R_open_driver() != 0)
-		G_fatal_error ("No graphics device selected");
+		G_fatal_error(_("No graphics device selected"));
 
 	if (rflag->answer || dflag->answer)
 	{
@@ -62,19 +71,44 @@ int main(int argc,char *argv[])
 	}
 
 	if (rflag->answer)
-		printf("rectangle: %d %d %d %d\n", l, r, t, b);
+		fprintf(stdout, "rectangle: %d %d %d %d\n", l, r, t, b);
 
 	if (dflag->answer)
-		printf("dimensions: %d %d\n", r - l, b - t);
+		fprintf(stdout, "dimensions: %d %d\n", r - l, b - t);
 
 	if (cflag->answer)
 	{
 		int colors;
 		R_get_num_colors(&colors);
-		printf("colors: %d\n", colors);
+		fprintf(stdout, "colors: %d\n", colors);
 	}
 
-	R_close_driver();
+	if(fflag->answer)
+	{
+	    if (D_get_cur_wind(window_name))
+		G_fatal_error(_("No current window"));
+	    if (D_set_cur_wind(window_name))
+		G_fatal_error(_("Current window not available"));
+
+	    /* Read in the map window associated with window */
+	    G_get_window(&window) ;
+
+	    if (D_check_map_window(&window))
+		G_fatal_error(_("Setting map window"));
+	    if (D_get_screen_window(&t, &b, &l, &r))
+		G_fatal_error(_("Getting screen window"));
+	    if (D_do_conversions(&window, t, b, l, r))
+		G_fatal_error(_("Error in calculating conversions"));
+
+	    l = D_get_d_west();
+	    r = D_get_d_east();
+	    t = D_get_d_north();
+	    b = D_get_d_south();
+
+	    fprintf(stdout, "frame: %d %d %d %d\n", l, r, t, b);
+	}
+	
+	R_close_driver();	
 
 	return 0;
 }
