@@ -51,6 +51,8 @@ GPL'ed), image processing and geographic information system (GIS).
 <ul>
 <li><a href="grass6.html">GRASS manual page</a></li>
 <li><a href="helptext.html">How to start with GRASS</a></li>
+<li><a href="rasterintro.html">Introduction to GRASS raster map processing</a></li>
+<li><a href="vectorintro.html">Introduction to GRASS vector map processing</a></li>
 </ul>
 <P>
 
