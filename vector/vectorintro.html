@@ -23,9 +23,46 @@ GRASS vector map processing is always performed on the full map.
 If this is not desired, the input map has to be clipped to the
 current region beforehand (<a href="v.in.region.html">v.in.region</a>,
 <a href="v.overlay.html">v.overlay</a>,<a href="v.select.html">v.select</a>).
-<p>
+
+<h3>Vector model</h3>
+
 GRASS is a topological GIS which helps to produce and maintain vector
-maps with clean geometry.
+maps with clean geometry. The following vector objects are available:
+
+<ul>
+<li> point: a point
+<li> line: a sequence of vertices connected by line(s) with two endpoints called nodes
+<li> boundary: the border line of an area
+<li> centroid: the label point of an area
+<li> area: the topological composition of centroid and boundary
+<li> face: a 3D area
+<li> kernel: a 3D centroid in a volume (not yet implemented)
+<li> volume: a 3D corpus (not yet implemented)
+</ul>
+
+The <a href="v.type.html">v.type</a> module can be used to convert between
+vector types if possible. The <a href="v.build.html">v.build</a> module is
+used to identify topological errors which can be corrected either manually
+in <a href="v.digit.html">v.digit</a> or, to some extend, automatically
+in <a href="v.clean.html">v.clean</a>.
+
+<h3>Attribute management</h3>
+
+GRASS can be linked to one or many database management systems (DBMS).
+The <em>db.*</em> set of commands provides basic SQL support for
+attribute management, while the <em>v.db.*</em> set of commands operates
+on the vector map.
+
+<ul>
+<li><b>Category:</b> The category number is the vector ID. It is used to
+     link attribute(s) to each vector object.
+<li><b>Layers:</b> It is possible to link a vector object to several tables.
+     The first table corresponds to the first layer. Further tables
+     are linked to subsequent layers.
+<li><b>SQL support:</b> The DBF driver provides only very limited SQL support (as 
+     DBF is not an SQL DB) while the other DBMS backends (such as PostgreSQL, MySQL etc)
+     provide full SQL support since the SQL commands are sent directly to the DBMI.
+</ul>
 
 <HR>
 <P><a href="index.html">Main index</a> - <a href="full_index.html">Full index</a>
