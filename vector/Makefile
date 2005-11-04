@@ -77,6 +77,8 @@ ifneq ($(USE_OPENDWG),)
     SUBDIRS += $(OPENDWGBASED)
 endif
 
-default: subdirs
+default: subdirs htmldir
 
 clean: cleansubdirs
+
+PGM = vectorintro
