@@ -46,6 +46,20 @@ Current implemented are:
       System (RDBMS) connected through DBMI library and drivers (\ref vlib_attributes);
 </ul>
 
+
+The following vector objects are available:
+
+<ul>
+<li> point: a point
+<li> line: a sequence of vertices connected by line(s) with two endpoints called nodes
+<li> boundary: the border line of an area
+<li> centroid: the label point of an area
+<li> area: the topological composition of centroid and boundary
+<li> face: a 3D area 
+<li> kernel: a 3D centroid in a volume (not yet implemented)
+<li> volume: a 3D corpus (not yet implemented)
+</ul>
+
 GRASS vector maps are stored in an arc-node representation, consisting
 of curves called arcs. An arc is stored as a series of x,y,z
 coordinate pairs. The two endpoints of an arc are called nodes. Two
@@ -54,7 +68,7 @@ type on input to GRASS, GRASS doesn't decide. GRASS allows for the
 line definition which allows for the multiple type to co-exist in the
 same map. Centroid are assigned to area it is within/inside
 (geometrically). An area is identified by an x,y,z centroid point
-geometrically inside with a category number. This identifies the
+geometrically inside with a category number (ID). This identifies the
 area. Such centroids are stored in the same binary 'coor' file with
 other primitives. Each element may have none, one or more categories
 (cats). More cats are distinguished by field number (field). Single
