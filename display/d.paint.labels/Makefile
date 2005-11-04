@@ -10,7 +10,7 @@ DEPENDENCIES = $(DISPLAYDEP) $(RASTERDEP) $(GISDEP)
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: cmd
-	ln -s $(PGM) $(BIN)/d.paint.labels
+	ln -sf $(PGM) $(BIN)/d.paint.labels
 
 
 
