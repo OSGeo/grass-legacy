@@ -26,6 +26,7 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">
  <title>$2</title>
  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">
  <meta name=\"Author\" content=\"GRASS Development Team\">
+ <link rel=\"stylesheet\" href=\"grassdocs.css\" type=\"text/css\">
 </head>
 <body bgcolor=\"#FFFFFF\">
 
@@ -122,6 +123,10 @@ VARIABLES="variables"
 
 ################
 
+#copy over CSS:
+cp -f grassdocs.css $HTMLDIR/
+
+#process all HTML pages:
 cd $HTMLDIR
 
 #get list of available GRASS modules:
