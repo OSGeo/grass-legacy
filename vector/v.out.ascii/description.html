@@ -25,12 +25,14 @@ the order of coordinates for old version of ASCII file is <BR><BR>
 Y X
 
 <p>
-
 If old version is requested, the <B>output</B> files from <em>v.out.ascii</em> will be placed 
-in the <em>$LOCATION/$MAPSET/dig_ascii/</em> and <em>$LOCATION/$MAPSET/dig_att</em> directory.
+in the <tt>$LOCATION/$MAPSET/dig_ascii/</tt> and <tt>$LOCATION/$MAPSET/dig_att</tt> directory.
 
 <p>
+Only features with a category number will be exported. Use <em>v.category</em>
+to add them if needed.
 
+<p>
 <em>v.out.ascii</em> does not copy the <em>dig_cats</em>
 file associated with the binary vector <em>input</em> map
 to the new <em>output</em> file name.  The user must copy
@@ -48,6 +50,7 @@ feature by first converting the vector feature to a points map with
 <h2>SEE ALSO</h2>
 
 <em>
+<a HREF="v.category.html">v.category</a><BR>
 <a HREF="v.in.ascii.html">v.in.ascii</a><BR>
 <a HREF="v.to.points.html">v.to.points</a></em><BR>
 <a HREF="http://freegis.org/cgi-bin/viewcvs.cgi/~checkout~/grass6/doc/vector/vector.html#ascii">Vector ASCII Format Specification</a>
