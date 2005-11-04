@@ -1,26 +1,3 @@
-<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en"><html><head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="GENERATOR" content="Mozilla/4.79 [en] (Win98; U) [Netscape]"><title>r.sim.sediment</title>
-
-<meta name="author" content="J. Hofierka"></head>
-
-<body bgcolor="#ffffff" link="#0000df" vlink="#006000">
-<img src="grass.smlogo.gif">
-<hr width="100%" align="center" size="6" no="" shade="">            
-<h2> NAME</h2>
-<i><b>r.sim.sediment</b></i> - spatially distributed, 2D water 
-erosion, sediment transport and deposition simulation model based on 
-the continuity equations solved by Green's function Monte Carlo method.                 
-<BR><I>GRASS raster program</I>
-<h2> SYNOPSIS</h2>
-<b>r.sim.sediment</b><br>
-<b>r.sim.sediment help</b><br>
-<b>r.sim.sediment</b> [-tm] <b>elevin</b> =name <b>wdepth=</b>name <b>dxin</b>=name 
-   <b>dyin</b>=name <b>detin</b>=name <b>tranin</b>=name <b>tauin</b>=name
-   <b>manin</b>=name [<b>tc</b>=name] [<b>et</b>=name] [<b>conc</b>=name] [<b>flux</b>=name] 
-   [<b>erdep</b>=name] [<b>nwalk</b>=value] [<b>niter</b>=value] [<b>outiter</b> =value] 
-   [<b>density</b>=value]  [<b>diffc</b>=value]<br>
-             
 <h2>DESCRIPTION</h2>
 <i>r.sim.sediment</i> is a landscape scale, simulation 
 model of soil erosion, sediment transport and deposition caused by flowing 
@@ -116,17 +93,16 @@ for parameter values using the standard GRASS parser interface.
 <!--my old man page has diffc=0.05 - was this changed?)-->
         <dd>Set the diffusion constant to val (default: 0.8)</dd>
 <dt><br></dt></dl>
-<h2>
-NOTES</h2>
+
+<h2>NOTES</h2>
 <!--provide a table of suggested parameters for bare soil, grass, forest, pavement
 wetland or pond, provide links to movies that explain the impact of the  parameters-->
-<p></p>
-<p>
-<h2>
-SEE ALSO</h2>
-<a href="s.surf.rst.html">    s.surf.rst</a>
-, <a href="r.slope.aspect.html">r.slope.aspect</a>
-, <a href="r.sim.water.html">r.sim.water</a>
+
+
+<h2>SEE ALSO</h2>
+<a href="s.surf.rst.html">s.surf.rst</a>,
+<a href="r.slope.aspect.html">r.slope.aspect</a>,
+<a href="r.sim.water.html">r.sim.water</a>
                                                           
 <h2>
 AUTHORS</h2>
@@ -156,6 +132,4 @@ Neteler, M. and Mitasova, H., 2002, Open Source GIS: A GRASS GIS Approach,
 Kluwer Academic Publishers.</p>
 <p><br>
 Last changed: $Date$</p>
-<i><i>                                                      
-</i></i>                                         
-</</body></html>
+
