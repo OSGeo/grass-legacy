@@ -172,9 +172,10 @@ main (int argc, char *argv[])
     formats_flag->key  	      = 'f';
     formats_flag->description = _("List available formats and exit");
 
+    /* if using -c, you lose topological information ! */
     no_clean_flag = G_define_flag ();
     no_clean_flag->key             = 'c';
-    no_clean_flag->description = _("Do not clean polygons");
+    no_clean_flag->description = _("Do not clean polygons (not recommended)");
     
     z_flag = G_define_flag ();
     z_flag->key             = 'z';
