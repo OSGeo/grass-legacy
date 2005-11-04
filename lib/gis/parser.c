@@ -1065,6 +1065,7 @@ static void G_usage_html (void)
 	fprintf(stdout, "<html>\n<head>\n"),
 	fprintf(stdout, "<title>%s</title>\n", pgm_name);
 	fprintf(stdout, "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n"),
+	fprintf(stdout, "<link rel=\"stylesheet\" href=\"grassdocs.css\" type=\"text/css\">\n"),
 	fprintf(stdout, "</head>\n"),
 	fprintf(stdout, "<body bgcolor=\"white\">\n");
 
