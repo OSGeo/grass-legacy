@@ -46,11 +46,14 @@ parse_command_line (int argc, char *argv[])
     parms.option->type         = TYPE_STRING;
     parms.option->required     = YES;
     parms.option->multiple     = NO;
-    parms.option->options      = "cat,area,length,count,coor,sides,query";
+    parms.option->options      = "cat,area,compact,perimeter,length,count,coor,sides,query";
     parms.option->description  = _("Value to upload");
     parms.option->descriptions  = 
 		 "cat;insert new row for each category if doesn't exist yet;"
 		 "area;area size;"
+    		 "compact;compactness of an area, calculated as \n"
+		 "              compactness = perimeter / 2 * sqrt(PI * area);"
+		 "perimeter;perimeter length of an area;"
 		 "length;line length;"
 		 "count;number of features for each category;"
 		 "coor;point coordinates, X,Y or X,Y,Z;"
@@ -125,7 +128,7 @@ parse_command_line (int argc, char *argv[])
     }
     
     if ( options.option == O_AREA || options.option == O_LENGTH || options.option == O_COUNT 
-	 || options.option == O_QUERY ) /* one column required */
+	 || options.option == O_QUERY || options.option == O_COMPACT || options.option == O_PERIMETER) /* one column required */
     {
 	if ( ncols != 1 ) {
 	    G_fatal_error ( _("This option requires one column") );
@@ -173,6 +176,8 @@ int parse_option (char *s)
     else if (strcmp (s, "coor") == 0) x = O_COOR;
     else if (strcmp (s, "sides") == 0) x = O_SIDES;
     else if (strcmp (s, "query") == 0) x = O_QUERY;
+    else if (strcmp (s, "compact") == 0) x = O_COMPACT;
+    else if (strcmp (s, "perimeter") == 0) x = O_PERIMETER;
 
     return x;
 }

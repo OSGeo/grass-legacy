@@ -60,6 +60,8 @@ EXT VSTAT
 #define O_COOR		5  /* Point coordinates */
 #define O_QUERY		6  /* Query database records linked by another field (qfield) */
 #define O_SIDES         7  /* Left and right area of boundary */
+#define O_COMPACT	8  /* Compactness of an area. Circle = 1.0 */
+#define O_PERIMETER	9  /* Compactness of an area. Circle = 1.0 */
 
 #define U_ACRES		1
 #define U_HECTARES	2
