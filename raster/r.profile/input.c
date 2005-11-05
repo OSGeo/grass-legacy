@@ -63,7 +63,7 @@ input (char *blank1, char *word1, char *blank2, char *word2, char *rest)
     /* bug? really = and not ==? */
     /* not a bug: we are filling "rest" with the remaining fgets buffer. 
         This goes unused though so could be ripped out if a worry */
-    while (*rest++ = *b++)
+    while ((*rest++ = *b++))
 	;
 
     if (isatty(0) && strcmp ("end", w1) == 0 && *w2 == 0)
