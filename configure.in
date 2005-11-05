@@ -513,7 +513,7 @@ LOC_CHECK_INCLUDES(proj_api.h,External PROJ.4,$PROJINC)
 
 # PROJ version check
 
-LOC_CHECK_VERSION(proj_api.h,PJ_VERSION,External PROJ.4,proj_ver,$PROJINC,UNKNOWN)
+LOC_CHECK_VERSION_INT(proj_api.h,PJ_VERSION,External PROJ.4,proj_ver,$PROJINC,0)
 
 if test `expr "$proj_ver" \< 446` = 1 ; then
     AC_MSG_ERROR([*** PROJ.4.4.6 or later is required.])
@@ -731,9 +731,9 @@ LOC_CHECK_INCLUDES(tk.h,Tk,$TCLINCDIR $X_CFLAGS)
 
 # Tcl/Tk version checks
 
-LOC_CHECK_VERSION(tcl.h,TCL_VERSION,Tcl,tcl_ver,$TCLINCDIR,UNKNOWN)
+LOC_CHECK_VERSION_STRING(tcl.h,TCL_VERSION,Tcl,tcl_ver,$TCLINCDIR,UNKNOWN)
 
-LOC_CHECK_VERSION(tk.h,TK_VERSION,Tk,tk_ver,$TCLINCDIR $X_CFLAGS,UNKNOWN)
+LOC_CHECK_VERSION_STRING(tk.h,TK_VERSION,Tk,tk_ver,$TCLINCDIR $X_CFLAGS,UNKNOWN)
 
 if test "$tcl_ver" = "$tk_ver" ; then
     tcltk_ver=$tcl_ver
