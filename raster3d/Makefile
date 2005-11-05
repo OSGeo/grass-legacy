@@ -18,6 +18,8 @@ ifneq ($(strip $(OPENGLULIB)),)
     SUBDIRS += $(OPENGLBASED)
 endif
 
-default: subdirs
+default: subdirs htmldir
 
 clean: cleansubdirs
+
+PGM = raster3dintro
