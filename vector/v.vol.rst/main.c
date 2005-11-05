@@ -169,7 +169,6 @@ int main (int argc, char *argv[])
     double          amin1 ();
     int             max1 ();
     int             min1 ();
-    int             scan_int;
     int             per,npmin;
     int             ii,i, n_rows, n_cols, n_levs;
     double          x_orig, y_orig, z_orig;
@@ -177,7 +176,6 @@ int main (int argc, char *argv[])
     struct octdata *data;
     struct octfunc *functions;
     struct octtree *tree;
-    RASTER_MAP_TYPE map_type;
 /*DEBUG  int testout = 1; */
     struct Map_info In;
 

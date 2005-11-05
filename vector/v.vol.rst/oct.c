@@ -96,7 +96,8 @@ OT_insert_oct (point, tree)
     struct octtree *tree;
 
 {
-    int     j=0, i, n,k,comp;
+    int     j=0, i, k, comp;
+
     if (tree == NULL)  {
         fprintf(stderr,"insert: tree is NULL\n");
 	return -5;
@@ -188,7 +189,8 @@ OT_region_data (tree, xmin, xmax, ymin, ymax, zmin, zmax, points, MAX)
  /* note: this KMAX2 can be larger then KMAX */
 
 {
-    int             n = 0, i,j;
+    int             n = 0, j;
+
     if (tree == NULL) {
         fprintf(stderr,"OT_region_data: tree is NULL\n");
 	return n;
@@ -216,10 +218,3 @@ OT_region_data (tree, xmin, xmax, ymin, ymax, zmin, zmax, points, MAX)
     }
     return 0;
 }
-
-
-
-
-
-
-

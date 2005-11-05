@@ -33,12 +33,7 @@
 #include "user.h"
 
 
-struct quadruple *point_new(x,y,z,w,sm)
- double x;
- double y;
- double z;
- double w;
- double sm;
+struct quadruple *point_new(double x, double y, double z, double w, double sm)
 {
 struct quadruple *point;
 
@@ -99,9 +94,7 @@ return data;
 
 
 
-int oct_compare(point,data)
- struct quadruple   *point;
- struct octdata *data;
+int oct_compare(struct quadruple *point, struct octdata *data)
 /* returns the quadrant the point should be inserted in */
 /* called by divide() */
 {int cond1,cond2,cond3,cond4,cond5,cond6,rows,cols,levs;
@@ -148,9 +141,7 @@ int oct_compare(point,data)
 } 
 
 
-int oct_add_data(point,data)
- struct octdata *data;
- struct quadruple  *point;
+int oct_add_data(struct quadruple *point, struct octdata *data)
 { int n,i,cond;
   double xx,yy,zz,r;
  
@@ -177,8 +168,7 @@ int oct_add_data(point,data)
 }
  
 
-int oct_division_check(data)
- struct octdata *data;
+int oct_division_check(struct octdata *data)
 {
    if (data->points == NULL) return -1;
    if (data->n_points < KMAX) return 0;
@@ -186,13 +176,13 @@ int oct_division_check(data)
 }
 
 
-struct octdata ** oct_divide_data(data)
- struct octdata *data;
+struct octdata ** oct_divide_data(struct octdata *data)
 {
     struct octdata **datas;
     int             cols1, cols2, rows1, rows2, levs1, levs2;
-    int             comp, i, j1, j2, jmin = 0;
-    double          dx, dy, dz, x2, y2, z2, dist, mindist,x_or,y_or,z_or;
+    int             comp, i;
+    double          dx, dy, dz, x_or, y_or, z_or;
+
     if ((data->n_cols <= 1) || (data->n_rows <= 1))
     {
       clean_fatal_error("Points are too concentrated -- please increase DMIN");
@@ -261,14 +251,8 @@ struct octdata ** oct_divide_data(data)
 
 
 
-int oct_intersect(xmin,xmax,ymin,ymax,zmin,zmax,data)
- double xmin;
- double xmax;
- double ymin;
- double ymax;
- double zmin;
- double zmax;
- struct octdata *data;
+int oct_intersect(double xmin, double xmax, double ymin, double ymax, 
+                  double zmin, double zmax, struct octdata *data)
 {
  int ix, ix0, iy, iy0, iz, iz0, izor, iyzoror; 
  
@@ -296,17 +280,9 @@ int oct_intersect(xmin,xmax,ymin,ymax,zmin,zmax,data)
 
 
 
-int oct_get_points(points,data,xmin,xmax,ymin,ymax,zmin,zmax,MAX)
- struct quadruple  *points;
- struct octdata *data;
- double xmin;
- double xmax;
- double ymin;
- double ymax;
- double zmin;
- double zmax;
- int    MAX;
- 
+int oct_get_points(struct quadruple *points, struct octdata *data,
+                   double xmin, double xmax, double ymin, double ymax, 
+                   double zmin, double zmax, int MAX)
 {
  int i;
  int n=0;

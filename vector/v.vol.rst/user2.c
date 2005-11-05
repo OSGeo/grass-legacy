@@ -59,7 +59,7 @@ translate_oct (tree, numberx, numbery, numberz, numberw)
     double          numberw;
 {
     int total=0,i;
-    struct quadruple *point;
+
     if (tree == NULL)
 	return 0;
     if (tree->data == NULL)
@@ -109,7 +109,7 @@ interp_call (root, tree)
     double xx, yy, zz, ww;
 
     if (tree == NULL)
-	return;
+	return -1;
     if (tree->data == NULL)
 	return -1;
     if (((struct octdata *) (tree->data))->points == NULL)
@@ -309,6 +309,8 @@ if (!COGRR1 (xmn, ymn, zmn, ((struct octdata *) (tree->data))->n_rows,
 
 	return 1;
     }
+
+    return 1;
 }
 
 

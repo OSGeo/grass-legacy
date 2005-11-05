@@ -59,7 +59,7 @@
      (mca 2/12/96)    
  */
 
-INPUT ( struct Map_info *In, char *column, char *scol)
+int INPUT ( struct Map_info *In, char *column, char *scol)
 {
   struct quadruple   *point;
   double          x, y, z, w, nz = 0., sm;

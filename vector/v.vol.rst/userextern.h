@@ -1,3 +1,5 @@
+#ifndef __USEREXTERNS_H__
+#define __USEREXTERNS_H__
 
 extern int             KMAX2, KMIN, KMAX;
 extern struct octtree *root;
@@ -49,10 +51,7 @@ extern char *Tmp_file_dz;
 extern FILE *Tmp_fd_cell;
 extern char *Tmp_file_cell;
 
-
-
 extern struct Cell_head cellhd;
 
-
-
+#endif
 
