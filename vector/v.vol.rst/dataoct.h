@@ -1,3 +1,6 @@
+#ifndef __DATAOCT_H__
+#define __DATAOCT_H__
+
 #define NWT  1 
 #define NET  2 
 #define SWT  3
@@ -9,7 +12,7 @@
 
 #define NUMLEAFS 8
 
-struct quadruple   {
+struct quadruple {
   double x;
   double y;
   double z;
@@ -26,7 +29,7 @@ struct octdata {
   int    n_levs;
   int    n_points;
   struct quadruple  *points;
- }; 
+}; 
 
 
 struct quadruple *point_new();
@@ -39,5 +42,4 @@ int oct_intersect();
 int oct_get_points();
 int OT_divide_oct (struct octtree *);
 
-
-
+#endif

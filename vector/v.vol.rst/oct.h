@@ -1,3 +1,6 @@
+#ifndef __OCT_H__
+#define __OCT_H__
+
 #define VOID_T char
 
 
@@ -23,7 +26,5 @@ struct octtree * OT_tree_new ();
 int OT_insert_oct ();
 int OT_region_data ();
 
-
-
-
+#endif
 

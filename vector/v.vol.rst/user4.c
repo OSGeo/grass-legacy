@@ -44,8 +44,7 @@
 
 */
 
-void clean_fatal_error(str)
-  char *str;
+void clean_fatal_error(char *str)
 {
         if (Tmp_fd_z) {
           fclose(Tmp_fd_z);
@@ -81,9 +80,7 @@ void clean_fatal_error(str)
 
 
 int 
-min1 (arg1, arg2)
-    int             arg1;
-    int             arg2;
+min1 (int arg1, int arg2)
 {
     int             res;
     if (arg1 <= arg2)
@@ -99,9 +96,7 @@ min1 (arg1, arg2)
 
 
 int 
-max1 (arg1, arg2)
-    int             arg1;
-    int             arg2;
+max1 (int arg1, int arg2)
 {
     int             res;
     if (arg1 >= arg2)
@@ -117,9 +112,7 @@ max1 (arg1, arg2)
 
 
 double 
-amax1 (arg1, arg2)
-    double          arg1;
-    double          arg2;
+amax1 (double arg1, double arg2)
 {
     double          res;
     if (arg1 >= arg2)
@@ -136,9 +129,7 @@ amax1 (arg1, arg2)
 
 
 double 
-amin1 (arg1, arg2)
-    double          arg1;
-    double          arg2;
+amin1 (double arg1, double arg2)
 {
     double          res;
     if (arg1 <= arg2)
@@ -155,20 +146,14 @@ amin1 (arg1, arg2)
 #define XA  0.8
 
 double 
-erfr (rf2)
-
-    double          rf2;
+erfr (double rf2)
 /*
     approximation of erf for x>XA 
 */
 {
-
     static double   a[5] = { 0.254829592, -0.284496736, 1.421413741,
 			     -1.453152027, 1.061405429 };
     double          p = 0.3275911;
-
-    double          res, xx;
-
     double          erf, t;
 
 
@@ -186,9 +171,7 @@ erfr (rf2)
 
 
 double 
-crs (x)
-
-    double          x;
+crs (double x)
 /*
     generating function - completely regularized spline with tension (d=3)
 */
@@ -224,9 +207,7 @@ crs (x)
 
 
 double 
-crsd (x,fi)
-
-    double          x,fi;
+crsd (double x, double fi)
 /*
     function for first derivatives 
 */
@@ -262,9 +243,7 @@ crsd (x,fi)
 }
 
 double
-crsdr2 (x,fi)
-
-    double          x,fi;
+crsdr2 (double x, double fi)
 /*
     function for first derivatives
 */
@@ -300,9 +279,7 @@ crsdr2 (x,fi)
 }  
 
 double 
-crsdd (x,fi)
-
-    double          x,fi;
+crsdd (double x, double fi)
 /*
     function for second derivatives 
 */
@@ -345,13 +322,7 @@ crsdd (x,fi)
 /*********solution of system of lin. equations*********/
 
 int 
-LINEQS (DIM1, N1, N2, NERROR, DETERM)
-
-    int             DIM1;
-    int             N1;
-    int             N2;
-    int            *NERROR;
-    double         *DETERM;
+LINEQS (int DIM1, int N1, int N2, int *NERROR, double *DETERM)
 /*
      solution of linear equations
      dim1 ... # of lines in matrix
@@ -361,7 +332,7 @@ LINEQS (DIM1, N1, N2, NERROR, DETERM)
 */
 
 {
-    int             npa1, N0, IROW, LPIV, MAIN1, N, NMIN, NMIN1, I, I1, I2,
+    int             N0, IROW, LPIV, MAIN1, N, NMIN1, I, I1, I2,
                     I3, I4, I5;
     int             DIM, PIVCOL, PIVCO1, TOPX, ENDX, TOPCOL, ENDCOL, EMAT;
     double          DETER, PIVOT, SWAP;

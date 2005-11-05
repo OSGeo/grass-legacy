@@ -1,3 +1,6 @@
+#ifndef __USERGLOBS_H__
+#define __USERGLOBS_H__
+
 #include "G3d.h"
 #include "Vect.h"
 #include "dbmi.h"
@@ -77,3 +80,6 @@ extern FILE *dev,*cvdevf;
 extern FCELL   *zero_array_cell;
 extern G3D_Region current_region;
 #endif
+
+#endif
+
