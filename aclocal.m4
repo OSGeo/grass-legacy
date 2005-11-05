@@ -105,7 +105,7 @@ ifelse($8,[],[
 LDFLAGS=${ac_save_ldflags}
 ])
 
-AC_DEFUN(LOC_CHECK_VERSION,[
+AC_DEFUN(LOC_CHECK_VERSION_STRING,[
 AC_MSG_CHECKING($3 version)
 ac_save_cppflags="$CPPFLAGS"
 CPPFLAGS="$5 $CPPFLAGS"
@@ -120,7 +120,17 @@ int main(void) {
 ],
 [   $4=`cat conftestdata`
     AC_MSG_RESULT($$4)],
-[   AC_TRY_RUN([
+[   AC_MSG_ERROR([*** Could not determine $3 version.]) ],
+[   $4=$6
+    AC_MSG_RESULT([unknown (cross-compiling)]) ])
+CPPFLAGS=$ac_save_cppflags
+])
+
+AC_DEFUN(LOC_CHECK_VERSION_INT,[
+AC_MSG_CHECKING($3 version)
+ac_save_cppflags="$CPPFLAGS"
+CPPFLAGS="$5 $CPPFLAGS"
+AC_TRY_RUN([
 #include <stdio.h>
 #include <$1>
 int main(void) {
@@ -134,9 +144,6 @@ int main(void) {
     [   AC_MSG_ERROR([*** Could not determine $3 version.]) ],
     [   $4=$6
         AC_MSG_RESULT([unknown (cross-compiling)]) ])
-],
-[   $4=$6
-    AC_MSG_RESULT([unknown (cross-compiling)]) ])
 CPPFLAGS=$ac_save_cppflags
 ])
 
