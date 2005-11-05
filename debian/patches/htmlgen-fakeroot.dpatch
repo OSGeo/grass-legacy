@@ -7,9 +7,9 @@
 ## DP: pages from being built.
 
 @DPATCH@
-diff -urNad grass-5.7.0+6.0.0beta2/include/Make/Rules.make /tmp/dpep.bOaT9i/grass-5.7.0+6.0.0beta2/include/Make/Rules.make
---- grass-5.7.0+6.0.0beta2/include/Make/Rules.make	2004-12-17 05:57:28.000000000 -0500
-+++ /tmp/dpep.bOaT9i/grass-5.7.0+6.0.0beta2/include/Make/Rules.make	2005-03-01 12:48:12.000000000 -0500
+diff -urNad grass-5.7.0+6.0.0beta2/include/Make/Html.make /tmp/dpep.bOaT9i/grass-5.7.0+6.0.0beta2/include/Make/Html.make
+--- grass-5.7.0+6.0.0beta2/include/Make/Html.make	2004-12-17 05:57:28.000000000 -0500
++++ /tmp/dpep.bOaT9i/grass-5.7.0+6.0.0beta2/include/Make/HTML.make	2005-03-01 12:48:12.000000000 -0500
 @@ -92,7 +92,7 @@
  	GISBASE=$(GISBASE) \
  	PATH=$(GISBASE)/bin:$$PATH \
