@@ -98,20 +98,21 @@ The command imports various vector formats:
   <P>
   <B>Support of database schema:</B>
   <P>
-  First  <em>v.database</em>  has to be used to set a default
-  schema for the new vector table(s). In db.* modules the schema name 
-  must be always specified if used.
+  For schema support, first <em>db.connect</em> has to be used to set a default
+  schema. In db.* modules the schema name must be always specified if used.
 
   Example:
   <pre>
-    v.database driver=pg database=test schema=user1
+    db.connect driver=pg database=test schema=user1 group=group1
+    db.login driver=pg database=test user=user1 password=pwd1
     v.in.ogr dsn=./ layer=river output=river     # -> table user1.river
     db.select table=user1.river
   </pre>
 
   The user can ignore schemas, if desired:
   <pre>
-     v.database driver=pg database=test
+     db.connect driver=pg database=test
+     db.login driver=pg database=test user=user1 password=pwd1
      v.in.ogr dsn=./ layer=river output=river     # -> table public.river
      db.select table=river
   </pre>
@@ -140,7 +141,6 @@ documentation
 <h2>SEE ALSO</h2>
 
 <em><a HREF="v.clean.html">v.clean</a></em>,
-<em><a HREF="v.database.html">v.database</a></em>,
 <em><a HREF="v.db.connect.html">v.db.connect</a></em>,
 <em><A HREF="v.external.html">v.external</A></em>,
 <em><a HREF="v.out.ogr.html">v.out.ogr</a></em>
