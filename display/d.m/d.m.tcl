@@ -128,20 +128,24 @@ proc spawn {cmd args} {
 		global outtext
 		while {![eof $fh]} {
 			set str [gets $fh]
-			append str "\n"
-			if { [fblocked $fh] } { set str [read $fh] }
-			while {[set idx [string first "\b" $str]] != -1} {
-				set last [expr $idx - 1]
-				set str1 [string range $str 1 $last]
-				set first [expr $idx + 1]
-				set str [string range $str $first end]
-				set pos [$outtext index "end - 1 chars"]
-				$outtext delete $pos
-				$outtext insert end $str1
+			if {[regexp -- {^GRASS_INFO_PERCENT: (.+)$} $str match val rest]} {
+				#do nothing
+			} else {
+				append str "\n"
+				if { [fblocked $fh] } { set str [read $fh] }
+				while {[set idx [string first "\b" $str]] != -1} {
+					set last [expr $idx - 1]
+					set str1 [string range $str 1 $last]
+					set first [expr $idx + 1]
+					set str [string range $str $first end]
+					set pos [$outtext index "end - 1 chars"]
+					$outtext delete $pos
+					$outtext insert end $str1
+				}
+				$outtext insert end $str
+				$outtext yview end
+				update idletasks
 			}
-			$outtext insert end $str
-			$outtext yview end
-			update idletasks
 		}
 		catch {close $fh}
 		return
@@ -151,19 +155,20 @@ proc spawn {cmd args} {
 
 	proc run_panel {cmd} {
 		global outtext
+		global env
 		set message_env [exec g.gisenv get=GRASS_MESSAGE_FORMAT]
-		exec g.gisenv set=GRASS_MESSAGE_FORMAT=gui
+		set env(GRASS_MESSAGE_FORMAT) gui
 
 		set cmd_name $cmd
-		set cmd [concat | $cmd 2>@ stdout]
+		set cmd [concat | $cmd 2>@ stdout ]
 		if { [catch {open $cmd r} fh] } {
-			error $fh
+			error $xfh
 		}
 		$outtext insert end "$cmd_name\n"
-		$outtext yview end
-		cmd_output $fh
-
-		exec g.gisenv set=GRASS_MESSAGE_FORMAT=$message_env
+		$outtext yview end 
+		catch {cmd_output $fh}
+		
+		set env(GRASS_MESSAGE_FORMAT) $message_env
 	}
 
 
@@ -180,7 +185,7 @@ proc term_panel {cmd} {
 
 ###############################################################################
 proc run {cmd args} {
-    eval exec -- $cmd $args >@ stdout 2>@ stderr
+    eval exec -- $cmd $args >@ stdout 2>@ stderr &
 
 }
 
