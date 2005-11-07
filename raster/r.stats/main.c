@@ -239,9 +239,12 @@ int main (int argc, char *argv[])
     }
 
 /* open all cell files */
-    for (i = 0; name = option.cell->answers[i]; i++)
+    for (i = 0; (name = option.cell->answers[i]); i++)
     {
 	char msg[100];
+
+	if (name == NULL)
+	    break;
 
 	mapset = G_find_cell (name, "");
 	if (!mapset)
