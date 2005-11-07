@@ -12,30 +12,38 @@ If raster values is NULL, attribute value is set to NULL.
 A) Reading values from raster map at position of vector points, writing these values
    into column of vector map:
 <br>
-<tt>v.what.rast vect=pnt rast=demf col=valf</tt> 
+<div class="code"><pre>
+v.what.rast vect=pnt rast=demf col=valf
+</pre></div>
 
 <P>
 B) In case of a vector map without attached attribute table, first one row for
 each category has to be generated. Then the new table can be populated with values
 from the raster map query:
 <br>
-<pre>
-      v.db.connect -p vectpoints
-      # .. no table yet.
+<div class="code"><pre>
+v.db.connect -p vectpoints
+# .. no table yet.
 
-      echo 'create table vectpoints (cat integer, value integer)' | db.execute
-      #link new table to vector map:
-      v.db.connect table=vectpoints map=vectpoints
-      
-      #generate rows for each category:
-      v.to.db map=vectpoints option=cat
+echo 'create table vectpoints (cat integer, value integer)' | db.execute
+#link new table to vector map:
+v.db.connect table=vectpoints map=vectpoints
 
-      #query raster map and write values into vector table:
-      v.what.rast vect=vectpoints rast=rastmap col=value
+#generate rows for each category:
+v.to.db map=vectpoints option=cat
 
-      #verify uploaded values:
-      v.univar map=vectpoints col=value
-</pre>
+#query raster map and write values into vector table:
+v.what.rast vect=vectpoints rast=rastmap col=value
+
+#verify uploaded values:
+v.univar map=vectpoints col=value
+</pre></div>
+
+<H2>SEE ALSO</H2>
+
+<EM>
+<a href="v.what.vect.html">v.what.vect</a>
+</EM>
 
 <H2>AUTHOR</H2>
 <A HREF=mailto:blazek@itc.it>Radim Blazek</A>
