@@ -14,7 +14,9 @@ A new vector map may be created where lines connecting nearest points on feature
 <B>pnt</B> within the given threshold and write related line categories to
 column <B>linecat</B> in attribute table attached to vector map <B>pnt</B>:
 <br>
-<tt>v.distance from=pnt to=ln upload=cat column=linecat</tt>
+<div class="code"><pre>
+v.distance from=pnt to=ln upload=cat column=linecat
+</pre></div>
 
 <p>
 2) For each point from vector map <B>pnt</B> find <B>nearest area</B> from map
@@ -22,7 +24,9 @@ column <B>linecat</B> in attribute table attached to vector map <B>pnt</B>:
 to column <B>areacat</B> in attribute table attached to vector map
 <B>pnt</B>. In case a point falls into a polygon area, the distance is zero:
 <br>
-<tt>v.distance from=pnt to=ar upload=cat column=areacat</tt>
+<div class="code"><pre>
+v.distance from=pnt to=ar upload=cat column=areacat
+</pre></div>
 
 <p>
 3) Create a new vector map which contains <B>lines connecting nearest
@@ -30,7 +34,9 @@ features</B> of maps <B>pnt</B> and map <B>ln</B>. The resulting vector map
 can be used for example to connect points to a network as needed for
 network analysis:
 <br>
-<tt>v.distance -p from=pnt to=ln out=connections upload=dist column=dist</tt>
+<div class="code"><pre>
+v.distance -p from=pnt to=ln out=connections upload=dist column=dist
+</pre></div>
 
 <p>
 4) Query information from selected point(s). v.distance takes points from 
@@ -38,17 +44,23 @@ network analysis:
    has to be created, then the map can be analysed:
 <br>   
 Create query map (if not present):<br>
-<tt>echo "123456|654321|1" | v.in.ascii output=pnt</tt>
+<div class="code"><pre>
+echo "123456|654321|1" | v.in.ascii output=pnt
+</pre></div>
 <br>
 Find nearest features:<br>
-<tt>v.distance from=pnt to=map_to_query upload=cat col=somecol -p</tt>
+<div class="code"><pre>
+v.distance from=pnt to=map_to_query upload=cat col=somecol -p
+</pre></div>
 <p>
 5) Point-in-polygon: Find <B>area</B> from vector map <B>ar</B> for each point 
 from vector map <B>pnt</B> in which the individual point falls into and write
 the related area categories to column <B>areacat</B> into attribute table 
 attached to vector map <B>pnt</B>:
 <br>
-<tt>v.distance from=pnt to=ar dmax=0 upload=cat column=areacat</tt>
+<div class="code"><pre>
+v.distance from=pnt to=ar dmax=0 upload=cat column=areacat
+</pre></div>
 
 
 <H2>NOTES</H2>
