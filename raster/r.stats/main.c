@@ -10,6 +10,8 @@ int main (int argc, char *argv[])
     char *to_screen = " output to screen ";
     int *fd;
     int i;
+    char **names;
+    char **ptr;
     char *name;
     char *mapset;
 /* flags */
@@ -32,7 +34,6 @@ int main (int argc, char *argv[])
 	struct GModule *module;
     struct
     {
-	struct Flag *A ;   /* print averaged values instead of intervals */
 	struct Flag *a ;   /* area */
 	struct Flag *c ;   /* cell counts */
 	struct Flag *p ;   /* percents */
@@ -121,10 +122,6 @@ int main (int argc, char *argv[])
     flag.one->key         = '1' ;
     flag.one->description = _("One cell (range) per line" );
 
-    flag.A = G_define_flag() ;
-    flag.A->key         = 'A' ;
-    flag.A->description = _("Print averaged values instead of intervals") ;
-
     flag.a = G_define_flag() ;
     flag.a->key         = 'a' ;
     flag.a->description = _("Print area totals") ;
@@ -193,7 +190,6 @@ int main (int argc, char *argv[])
     }
     cat_ranges = flag.C->answer;
 
-    averaged = flag.A->answer;
     raw = flag.r->answer;
     as_int = flag.i->answer;
     nrows = G_window_rows();
@@ -239,14 +235,14 @@ int main (int argc, char *argv[])
     }
 
 /* open all cell files */
-    for (i = 0; (name = option.cell->answers[i]); i++)
+    names = option.cell->answers;
+    ptr = option.cell->answers;
+    for (; *ptr != NULL; ptr++)
     {
 	char msg[100];
 
-	if (name == NULL)
-	    break;
-
-	mapset = G_find_cell (name, "");
+	name = *ptr;
+	mapset = G_find_cell2 (name, "");
 	if (!mapset)
 	{
 	    sprintf (msg,"%s: [%s] not found", G_program_name(), name);
