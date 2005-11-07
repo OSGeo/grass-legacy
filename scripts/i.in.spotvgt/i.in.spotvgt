@@ -25,16 +25,16 @@
 #############################################################################
 
 #%Module
-#%  description: Import of SPOT VGT file into a raster map.
+#%  description: Import of SPOT VGT NDVI file into a raster map
 #%End
 #%flag
-#%  key: v
-#%  description: verbose mode
+#% key: a
+#% description: also import quality map (SM status map layer) and filter NDVI map
 #%end
 #%option
 #% key: file
 #% type: string
-#% description: existing SPOT VGT HDF file
+#% description: existing SPOT VGT NDVI HDF file (0001_NDV.HDF)
 #% gisprompt: file,file,file
 #% required : yes
 #%end
@@ -87,9 +87,65 @@ if [ "$AWK" = "" ] ; then
     exit 1
 fi
 
-
 #### trap ctrl-c
 trap 2 3 15
+
+#### a function for writing VRT files
+
+create_VRT_file(){
+ WESTCENTER=`cat $PROJFILE  | grep CARTO_UPPER_LEFT_X  | tr -s ' ' ' ' | cut -d' ' -f2`
+ NORTHCENTER=`cat $PROJFILE | grep CARTO_UPPER_LEFT_Y  | tr -s ' ' ' ' | cut -d' ' -f2`
+ EASTCENTER=`cat $PROJFILE  | grep CARTO_UPPER_RIGHT_X | tr -s ' ' ' ' | cut -d' ' -f2`
+ SOUTHCENTER=`cat $PROJFILE | grep CARTO_LOWER_LEFT_Y  | tr -s ' ' ' ' | cut -d' ' -f2`
+ MAP_PROJ_RESOLUTION=`cat $PROJFILE | grep MAP_PROJ_RESOLUTION  | tr -s ' ' ' ' | cut -d' ' -f2`
+ XSIZE=`cat $PROJFILE  | grep IMAGE_UPPER_RIGHT_COL  | tr -s ' ' ' ' | cut -d' ' -f2`
+ YSIZE=`cat $PROJFILE  | grep IMAGE_LOWER_RIGHT_ROW  | tr -s ' ' ' ' | cut -d' ' -f2`
+
+ # DEBUG (in terminal WEST is not printed?!?!?!)
+ #echo "     $NORTHCENTER"
+ #echo "       |"
+ #echo -n "$WESTCENTER"
+ #echo " -+- $EASTCENTER"
+ #echo "       |"
+ #echo "     $SOUTHCENTER"
+ #echo " RES: $MAP_PROJ_RESOLUTION"
+
+ WESTCORNER=`echo $WESTCENTER $MAP_PROJ_RESOLUTION | awk '{printf "%.12e", $1 - $2/2.}'`
+ NORTHCORNER=`echo $NORTHCENTER $MAP_PROJ_RESOLUTION | awk '{printf "%.12e", $1 + $2/2.}'`
+ EASTCORNER=`echo $EASTCENTER $MAP_PROJ_RESOLUTION | awk '{printf "%.12e", $1 + $2/2.}'`
+ SOUTHCORNER=`echo $SOUTHCENTER $MAP_PROJ_RESOLUTION | awk '{printf "%.12e", $1 - $2/2.}'`
+ RESOLUTION=`echo $MAP_PROJ_RESOLUTION | awk '{printf "%.12e", $1}'`
+ XSIZE=`echo $XSIZE | awk '{printf "%d", $1}'`
+ YSIZE=`echo $YSIZE | awk '{printf "%d", $1}'`
+
+ # DEBUG 
+ #echo $WESTCORNER
+ #echo $NORTHCORNER
+ #echo $EASTCORNER
+ #echo $SOUTHCORNER
+ #echo $RESOLUTION
+
+ echo -n "<VRTDataset rasterXSize=" >> $1
+ echo -n "\"$XSIZE\"" >> $1
+ echo -n " rasterYSize=" >> $1
+ echo "\"$YSIZE\">" >> $1
+
+ echo " <SRS>GEOGCS[&quot;wgs84&quot;,DATUM[&quot;WGS_1984&quot;,SPHEROID[&quot;wgs84&quot;,6378137,298.257223563],TOWGS84[0.000,0.000,0.000]],PRIMEM[&quot;Greenwich&quot;,0],UNIT[&quot;degree&quot;,0.0174532925199433]]</SRS>" >> $1
+ echo "   <GeoTransform>$WESTCORNER, $RESOLUTION, 0.0000000000000000e+00, $NORTHCORNER, 0.0000000000000e+00, -$RESOLUTION</GeoTransform>" >> $1
+ echo "   <VRTRasterBand dataType=\"Byte\" band=\"1\">" >> $1
+ echo "    <NoDataValue>0.00000000000000E+00</NoDataValue>" >> $1
+ echo "    <ColorInterp>Gray</ColorInterp>" >> $1
+ echo "    <SimpleSource>" >> $1
+ echo "     <SourceFilename>$2</SourceFilename>" >> $1
+ echo "      <SourceBand>1</SourceBand>" >> $1
+ echo "      <SrcRect xOff=\"0\" yOff=\"0\" xSize=\"$XSIZE\" ySize=\"$YSIZE\"/>" >> $1
+ echo "      <DstRect xOff=\"0\" yOff=\"0\" xSize=\"$XSIZE\" ySize=\"$YSIZE\"/>" >> $1
+ echo "    </SimpleSource>" >> $1
+ echo " </VRTRasterBand>" >> $1
+ echo "</VRTDataset>" >> $1
+}
+
+################### let's go
 
 PID=$$
 TMPFILE="`g.tempfile $PID`"
@@ -110,64 +166,17 @@ if [ ! -z `g.findfile elem=cell file="$NAME" | grep ^file | cut -f2 -d=` ] ; the
 	exit 1
 fi
 
-### create VRT header
+### create VRT header for NDVI
 
 PROJFILE=${SPOTDIR}/0001_LOG.TXT
 VRTFILE=$TMPFILE.vrt
 
-WESTCENTER=`cat $PROJFILE  | grep CARTO_UPPER_LEFT_X  | tr -s ' ' ' ' | cut -d' ' -f2`
-NORTHCENTER=`cat $PROJFILE | grep CARTO_UPPER_LEFT_Y  | tr -s ' ' ' ' | cut -d' ' -f2`
-EASTCENTER=`cat $PROJFILE  | grep CARTO_UPPER_RIGHT_X | tr -s ' ' ' ' | cut -d' ' -f2`
-SOUTHCENTER=`cat $PROJFILE | grep CARTO_LOWER_LEFT_Y  | tr -s ' ' ' ' | cut -d' ' -f2`
-MAP_PROJ_RESOLUTION=`cat $PROJFILE | grep MAP_PROJ_RESOLUTION  | tr -s ' ' ' ' | cut -d' ' -f2`
-XSIZE=`cat $PROJFILE  | grep IMAGE_UPPER_RIGHT_COL  | tr -s ' ' ' ' | cut -d' ' -f2`
-YSIZE=`cat $PROJFILE  | grep IMAGE_LOWER_RIGHT_ROW  | tr -s ' ' ' ' | cut -d' ' -f2`
-
-# DEBUG (in terminal WEST is not printed?!?!?!)
-#echo "     $NORTHCENTER"
-#echo "       |"
-#echo -n "$WESTCENTER"
-#echo " -+- $EASTCENTER"
-#echo "       |"
-#echo "     $SOUTHCENTER"
-#echo " RES: $MAP_PROJ_RESOLUTION"
-
-WESTCORNER=`echo $WESTCENTER $MAP_PROJ_RESOLUTION | awk '{printf "%.12e", $1 - $2/2.}'`
-NORTHCORNER=`echo $NORTHCENTER $MAP_PROJ_RESOLUTION | awk '{printf "%.12e", $1 + $2/2.}'`
-EASTCORNER=`echo $EASTCENTER $MAP_PROJ_RESOLUTION | awk '{printf "%.12e", $1 + $2/2.}'`
-SOUTHCORNER=`echo $SOUTHCENTER $MAP_PROJ_RESOLUTION | awk '{printf "%.12e", $1 - $2/2.}'`
-RESOLUTION=`echo $MAP_PROJ_RESOLUTION | awk '{printf "%.12e", $1}'`
-XSIZE=`echo $XSIZE | awk '{printf "%d", $1}'`
-YSIZE=`echo $YSIZE | awk '{printf "%d", $1}'`
-
-# DEBUG 
-#echo $WESTCORNER
-#echo $NORTHCORNER
-#echo $EASTCORNER
-#echo $SOUTHCORNER
-#echo $RESOLUTION
-
+# first process the NDVI:
 rm -f $VRTFILE
-echo -n "<VRTDataset rasterXSize=" >> $VRTFILE
-echo -n "\"$XSIZE\"" >> $VRTFILE
-echo -n " rasterYSize=" >> $VRTFILE
-echo "\"$YSIZE\">" >> $VRTFILE
+create_VRT_file $VRTFILE $GIS_OPT_file
 
-echo " <SRS>GEOGCS[&quot;wgs84&quot;,DATUM[&quot;WGS_1984&quot;,SPHEROID[&quot;wgs84&quot;,6378137,298.257223563],TOWGS84[0.000,0.000,0.000]],PRIMEM[&quot;Greenwich&quot;,0],UNIT[&quot;degree&quot;,0.0174532925199433]]</SRS>" >> $VRTFILE
-echo "   <GeoTransform>$WESTCORNER, $RESOLUTION, 0.0000000000000000e+00, $NORTHCORNER, 0.0000000000000e+00, -$RESOLUTION</GeoTransform>" >> $VRTFILE
-echo "   <VRTRasterBand dataType=\"Byte\" band=\"1\">" >> $VRTFILE
-echo "    <NoDataValue>0.00000000000000E+00</NoDataValue>" >> $VRTFILE
-echo "    <ColorInterp>Gray</ColorInterp>" >> $VRTFILE
-echo "    <SimpleSource>" >> $VRTFILE
-echo "     <SourceFilename>$GIS_OPT_file</SourceFilename>" >> $VRTFILE
-echo "      <SourceBand>1</SourceBand>" >> $VRTFILE
-echo "      <SrcRect xOff=\"0\" yOff=\"0\" xSize=\"$XSIZE\" ySize=\"$YSIZE\"/>" >> $VRTFILE
-echo "      <DstRect xOff=\"0\" yOff=\"0\" xSize=\"$XSIZE\" ySize=\"$YSIZE\"/>" >> $VRTFILE
-echo "    </SimpleSource>" >> $VRTFILE
-echo " </VRTRasterBand>" >> $VRTFILE
-echo "</VRTDataset>" >> $VRTFILE
-
-## let's import...
+## let's import the NDVI map...
+echo "Import SPOT VGT NDVI map..."
 r.in.gdal $VRTFILE output=$NAME
 if [ $? -eq 1 ] ; then
    echo "An error occurred. Stop."
@@ -175,7 +184,7 @@ if [ $? -eq 1 ] ; then
 fi
 
 echo ""
-echo "Imported SPOT VEGETATION map <$NAME>."
+echo "Imported SPOT VEGETATION NDVI map <$NAME>."
 
 
 #################
@@ -194,10 +203,76 @@ g.region rast=$NAME 2>&1 >/dev/null
 echo "Remapping digital numbers to NDVI..."
 r.mapcalc "${NAME}_$PID=0.004 * $NAME - 0.1"
 g.remove rast=$NAME 2>&1 >/dev/null
-g.rename rast=${NAME}_$PID,${NAME}
+g.rename rast=${NAME}_$PID,${NAME} >/dev/null
 
 #apply color table:
 r.colors ${NAME} rules=ndvi 2>&1 >/dev/null
+
+##########################
+# second, optionally process the SM quality map:
+
+#SM Status Map
+# http://www.vgt.vito.be/faq/FAQS/faq15.html
+#Data about
+# Bit NR 7: Radiometric quality for B0 coded as 0 if bad and 1 if good
+# Bit NR 6: Radiometric quality for B2 coded as 0 if bad and 1 if good
+# Bit NR 5: Radiometric quality for B3 coded as 0 if bad and 1 if good
+# Bit NR 4: Radiometric quality for MIR coded as 0 if bad and 1 if good
+# Bit NR 3: land code 1 or water code 0
+# Bit NR 2: ice/snow code 1 , code 0 if there is no ice/snow
+# Bit NR 1:	0	0	1		1
+# Bit NR 0:	0	1	0		1
+# 		clear	shadow	uncertain	cloud
+#
+#Note:
+# pos 7     6    5    4    3    2   1   0 (bit position)
+#   128    64   32   16    8    4   2   1 (values for 8 bit)
+#
+#
+# Bit 4-7 should be 1: their sum is 240
+# Bit 3   land code, should be 1, sum up to 248 along with higher bits
+# Bit 2   ice/snow code
+# Bit 0-1 should be 0
+#
+# A good map threshold: >= 248
+
+if [ $GIS_FLAG_a -eq 1 ] ; then
+  echo "Import SPOT VGT NDVI quality map..."
+  rm -f $VRTFILE
+  create_VRT_file $VRTFILE `echo ${GIS_OPT_file} | sed 's+NDV+SM+g'`
+
+  ## let's import the SM quality map...
+  r.in.gdal $VRTFILE output=$NAME.sm
+  if [ $? -eq 1 ] ; then
+     echo "An error occurred. Stop."
+     exit 1
+  fi
+
+# some of the possible values:
+r.colors $NAME.sm col=rules << EOF
+8 50 50 50
+11 70 70 70
+12 90 90 90
+60 grey
+155 blue
+232 violet
+235 red
+236 brown
+248 orange
+251 yellow
+252 green
+EOF
+
+  echo ""
+  echo "Imported SPOT VEGETATION SM quality map <$NAME.sm>."
+  echo ""
+  echo "Note: A snow map can be extracted by category 252 (d.rast $NAME.sm cat=252)"
+
+  echo "Filtering NDVI map by Status Map quality layer..."
+  r.mapcalc "${NAME}_filt=if($NAME.sm >= 248, $NAME, null() )"
+  r.colors ${NAME}_filt rules=ndvi 2>&1 >/dev/null
+  echo "Filtered SPOT VEGETATION NDVI map <${NAME}_filt>."
+fi
 
 # restore user settings:
 g.region region=spot_$PID 2>&1 >/dev/null
