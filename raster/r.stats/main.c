@@ -10,6 +10,8 @@ int main (int argc, char *argv[])
     char *to_screen = " output to screen ";
     int *fd;
     int i;
+    char **names;
+    char **ptr;
     char *name;
     char *mapset;
 /* flags */
@@ -239,14 +241,14 @@ int main (int argc, char *argv[])
     }
 
 /* open all cell files */
-    for (i = 0; (name = option.cell->answers[i]); i++)
+    names = option.cell->answers;
+    ptr = option.cell->answers;
+    for (; *ptr != NULL; ptr++)
     {
 	char msg[100];
 
-	if (name == NULL)
-	    break;
-
-	mapset = G_find_cell (name, "");
+	name = *ptr;
+	mapset = G_find_cell2 (name, "");
 	if (!mapset)
 	{
 	    sprintf (msg,"%s: [%s] not found", G_program_name(), name);
