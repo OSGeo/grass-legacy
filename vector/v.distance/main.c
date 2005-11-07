@@ -684,7 +684,7 @@ int main (int argc, char *argv[])
     }	
 
     for ( i = 0; i < count; i++ ) {
-	dbCatVal *catval;
+	dbCatVal *catval = 0;
 
 	/* Write line connecting nearest points */
 	if ( Outp != NULL ) {
@@ -705,7 +705,7 @@ int main (int argc, char *argv[])
 	if ( Near[i].count > 1 ) update_dupl++;
 	if ( Near[i].count == 0 ) update_notfound++;
     
-	if ( to_column_opt->answer ) { 
+	if ( to_column_opt->answer && Near[i].count > 0 ) { 
 	    db_CatValArray_get_value ( &cvarr, Near[i].to_cat, &catval );
 	}
 	
