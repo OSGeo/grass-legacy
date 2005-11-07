@@ -204,7 +204,7 @@ global execom
     {cascad "Hydrologic modeling" {} "" $tmenu {			
         {command "Depressionless elevation map and flowline map" {} "r.fill.dir" {} -command {execute r.fill.dir }}
         {command "Flow accumulation for massive grids" {} "r.terraflow" {} -command {spawn r.terraflow }}
-        {command "Generate flow lines for raster map" {} "r.flow" {} -command {spawn r.flow }}
+        {command "Generate flow lines for raster map" {} "r.flow" {} -command {run r.flow }}
         {command "Topographic index map" {} "r.topidx" {} -command {execute r.topidx }}
         {command "TOPMODEL simulation" {} "r.topmodel" {} -command {execute r.topmodel }}
         {command "Watershed subbasins" {} "r.basins.fill" {} -command {execute r.basins.fill }}
@@ -355,7 +355,6 @@ global execom
 			{separator}
 			{cascad "Reports and statistics" {} "" $tmenu {			
 			 {command "Basic information" {} "v.info" {} -command {execute v.info }}
-			 {command "Geometry (length, area, or coordinates) by category" {} "v.report" {} -command {execute v.report }}
 			 {command "Load vector attributes to database or create reports" {} "v.to.db" {} -command {execute v.to.db }}
 			 {command "Univariate statistics" {} "v.univar" {} -command {execute v.univar }}
  			{separator}
