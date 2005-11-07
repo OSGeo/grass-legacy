@@ -25,7 +25,7 @@ int
 main (int argc, char *argv[])
 {
     struct GModule *module;
-    struct Option  *map_opt, *type_opt, *field_opt, *col_opt;
+    struct Option  *map_opt, *type_opt, *field_opt, *col_opt, *where_opt;
     struct Flag *shell_flag;
     char   *mapset;
     struct Map_info  Map;
@@ -66,6 +66,8 @@ main (int argc, char *argv[])
     col_opt->required       = YES;
     col_opt->multiple       = NO;
     col_opt->description    = "Column name";
+
+    where_opt = G_define_standard_option(G_OPT_WHERE);
 
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
     field_opt->answer = "1";
@@ -113,7 +115,7 @@ main (int argc, char *argv[])
     
     /* Note do not check if the column exists in the table because it may be an expression */
 
-    nrec = db_select_CatValArray ( Driver, Fi->table, Fi->key, col_opt->answer, NULL, &Cvarr );
+    nrec = db_select_CatValArray ( Driver, Fi->table, Fi->key, col_opt->answer, where_opt->answer, &Cvarr );
     G_debug (2, "nrec = %d", nrec );
 
     ctype = Cvarr.ctype;
