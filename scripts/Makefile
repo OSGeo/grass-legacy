@@ -52,7 +52,8 @@ SUBDIRS = \
 	v.in.sites.all \
 	v.rast.stats \
 	v.report \
-	v.univar.sh
+	v.univar.sh \
+	v.what.vect
 
 default: subdirs
 
