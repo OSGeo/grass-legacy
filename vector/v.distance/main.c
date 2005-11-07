@@ -832,11 +832,11 @@ int main (int argc, char *argv[])
 
 				case DB_C_TYPE_DATETIME:
 				    /* TODO: formating datetime */
-				    fprintf(stdout, " null" );
+			    	    sprintf ( buf2, " null" );
 				    break;
 			    }
 			} else {        
-			    fprintf(stdout, " null" );
+			    sprintf ( buf2, " null" );
 			}
 			break;
 		}
@@ -923,11 +923,11 @@ int main (int argc, char *argv[])
 
 				    case DB_C_TYPE_DATETIME:
 					/* TODO: formating datetime */
-					fprintf(stdout, " null" );
+			    		sprintf ( buf2, " null" );
 					break;
 				}
 			    } else {        
-				fprintf(stdout, " null" );
+			    	sprintf ( buf2, " null" );
 			    }
 			    break;
 		    }
