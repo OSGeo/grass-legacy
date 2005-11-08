@@ -58,6 +58,18 @@ v.db.addcol usa_income_employment2002 col="FIPS_NUM integer"
 v.to.db usa_income_employment2002 option=query col=FIPS_NUM qcol=STATE_FIPS
 </pre></div>
 
+<P>
+Upload category numbers of left/right polygons neighboring boundaries to attribute table:<br>
+<div class="code"><pre>
+# add boundary categories into geometry at layer 2:
+v.category soils out=mysoils layer=2 type=boundary option=add
+# add table with left/right column to layer 2:
+v.db.addtable mysoils layer=2 col="left integer,right integer"
+# upload categories of left/right polygons:
+v.to.db mysoils option=sides col=left,right layer=2
+# display the result:
+v.db.select mysoils layer=2
+</pre></div>
 
 <h3>Printing reports</h3>
 
