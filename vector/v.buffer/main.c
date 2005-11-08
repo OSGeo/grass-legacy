@@ -18,6 +18,7 @@
 #include <string.h> 
 #include "gis.h"
 #include "Vect.h"
+#include "glocale.h"
 
 #define DEBUG_NONE   0
 #define DEBUG_BUFFER 1
@@ -230,7 +231,8 @@ main (int argc, char *argv[])
     int    field;
 
     module = G_define_module();
-    module->description = "Create a buffer around features of given type (areas must contain centroid).";
+    module->description =
+	_("Create a buffer around features of given type (areas must contain centroid).");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
@@ -245,22 +247,23 @@ main (int argc, char *argv[])
     buffer_opt->key = "buffer";
     buffer_opt->type = TYPE_DOUBLE;
     buffer_opt->required = YES;
-    buffer_opt->description = "Buffer distance in map units";
+    buffer_opt->description = _("Buffer distance in map units");
 	
     tolerance_opt = G_define_option();
     tolerance_opt->key = "tolerance";
     tolerance_opt->type = TYPE_DOUBLE;
     tolerance_opt->required = NO;
     tolerance_opt->answer = "0.01";
-    tolerance_opt->description = "Maximum distance between theoretical arc and polygon segments"
-	                         "as multiple of buffer.";
+    tolerance_opt->description =
+	_("Maximum distance between theoretical arc and polygon segments "
+		"as multiple of buffer");
 
     debug_opt = G_define_option();
     debug_opt->key = "debug";
     debug_opt->type = TYPE_STRING;
     debug_opt->required = NO;
     debug_opt->options = "buffer,clean";
-    debug_opt->description = "Stop the process in certain stage.";
+    debug_opt->description = _("Stop the process at a certain stage");
 
     G_gisinit(argv[0]);
     if (G_parser (argc, argv))
@@ -273,14 +276,14 @@ main (int argc, char *argv[])
     tolerance = atof( tolerance_opt->answer );
     tolerance *= buffer;
 
-    G_message ("The tolerance in map units: %g", tolerance );
+    G_message (_("The tolerance in map units: %g"), tolerance );
 
     /* At least 8 points for circle. */
     dtmp = 0.999 * buffer * ( 1 - cos ( 2 * PI / 8 / 2 ) );
     G_debug ( 3, "Minimum tolerance = %f", dtmp );
     if ( tolerance > dtmp ) {
 	tolerance = dtmp;
-        G_warning ("The tolerance was reset to %g (map units)", tolerance );
+        G_warning(_("The tolerance was reset to %g (map units)"), tolerance );
     }
 
     debug = DEBUG_NONE;
@@ -296,12 +299,12 @@ main (int argc, char *argv[])
     Points = Vect_new_line_struct ();
     BPoints = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
-    
+
     /* open input vector */
     if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-	 G_fatal_error ( "Could not find input map <%s>\n", in_opt->answer);
+	 G_fatal_error (_("Could not find input map <%s>"), in_opt->answer);
     }
-    
+
     Vect_set_open_level (2); 
     Vect_open_old (&In, in_opt->answer, mapset); 
 
@@ -442,7 +445,7 @@ main (int argc, char *argv[])
             double x, y;
 	    ret = Vect_get_point_in_area ( &Out, area, &x, &y );
 	    if ( ret < 0 ) {
-		G_warning ("Cannot calculate area centroid" );
+		G_warning (_("Cannot calculate area centroid."));
 		continue;
 	    }
 	    Vect_reset_cats ( Cats );
@@ -516,7 +519,7 @@ main (int argc, char *argv[])
 	if ( ret ) {
 	    ret = Vect_get_point_in_area ( &Out, area, &x, &y );
 	    if ( ret < 0 ) {
-		G_warning ("Cannot calculate area centroid." );
+		G_warning (_("Cannot calculate area centroid."));
 		continue;
 	    }
 
