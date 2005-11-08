@@ -27,7 +27,7 @@ If this is not desired, the input map has to be clipped to the
 current region beforehand (<a href="v.in.region.html">v.in.region</a>,
 <a href="v.overlay.html">v.overlay</a>,<a href="v.select.html">v.select</a>).
 
-<h3>Vector model</h3>
+<h3>Vector model and topology</h3>
 
 GRASS is a topological GIS which helps to produce and maintain vector
 maps with clean geometry. The following vector objects are available:
@@ -45,9 +45,13 @@ maps with clean geometry. The following vector objects are available:
 
 The <a href="v.type.html">v.type</a> module can be used to convert between
 vector types if possible. The <a href="v.build.html">v.build</a> module is
-used to identify topological errors which can be corrected either manually
-in <a href="v.digit.html">v.digit</a> or, to some extend, automatically
-in <a href="v.clean.html">v.clean</a>.
+used to identify topological errors. It allows to optionally extract the
+erroneous vector objects into a separate map. Topological errors can be
+corrected either manually within <a href="v.digit.html">v.digit</a> or,
+to some extent, automatically in <a href="v.clean.html">v.clean</a>.
+
+Adjacent polygons can be found by <a href="v.to.db.html">v.to.db</a>
+(see 'sides' option).
 
 <h3>Attribute management</h3>
 
@@ -58,14 +62,32 @@ on the vector map.
 
 <ul>
 <li><b>Category:</b> The category number is the vector ID. It is used to
-     link attribute(s) to each vector object.
-<li><b>Layers:</b> It is possible to link a vector object to several tables.
-     The first table corresponds to the first layer. Further tables
-     are linked to subsequent layers.
+     link attribute(s) to each vector object. The category number is stored
+     within the geometry file for each vector object. Using
+     <a href="v.category.html">v.category</a> the category numbers can be printed
+     or maintained.
+<li><b>Layers:</b> It is possible to link a vector object to one or several tables.
+     By default the first layer is active, i.e. the first table corresponds to the
+     first layer. Further tables are linked to subsequent layers. Using 
+     <a href="v.db.connect.html">v.db.connect</a> layers can be listed or maintained.
 <li><b>SQL support:</b> The DBF driver provides only very limited SQL support (as 
      DBF is not an SQL DB) while the other DBMS backends (such as PostgreSQL, MySQL etc)
      provide full SQL support since the SQL commands are sent directly to the DBMI.
+     SQL commands can be directly executed with <a href="db.execute.html">db.execute</a>,
+     <a href="db.select.html">db.select</a> and the other db.* modules.
 </ul>
+
+When creating vector maps from scratch, in general an attribute table must be created and
+the table must be populated with one row per category (using <a href="v.to.db.html">v.to.db</a>).
+However, this can be performed in a single step using <a href="v.db.addtable.html">v.db.addtable</a>
+along with the definition of table column types.
+
+<h3>Editing vector attributes</h3>
+
+To manually edit attributes of a table, the map has to be
+queried in 'edit mode' using <a href="d.what.vect.html">d.what.vect</a>.
+To bulk process attributes, it is recommended to use SQL.
+
 
 <HR>
 <P><a href="index.html">Main index</a> - <a href="vector.html">vector index</a> - <a href="full_index.html">full index</a>
