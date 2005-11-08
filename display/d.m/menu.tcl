@@ -8,8 +8,10 @@ global execom
 
  set descmenu [subst  {
  "&File" all file $tmenu {
-	 {cascad "Import" {} "" $tmenu {			
- 		{cascad "Raster map" {} "" $tmenu {			
+	{command "Open workspace file" {} "open workspace file" {} -accelerator $keyctrl-O -command "Dm::OpenFileBox {}" }
+	{command "Save workspace file" {} "save workspace file" {} -accelerator $keyctrl-S -command "Dm::SaveFileBox {}" }
+	{cascad "Import" {} "" $tmenu {
+ 		{cascad "Raster map" {} "" $tmenu {
             {command "Multiple formats using GDAL" {} "r.in.gdal" {} -command { execute r.in.gdal }}
             {separator}
             {command "ASCII GRID (includes GRASS ASCII)" {} "r.in.ascii" {} -command { execute r.in.ascii }}
