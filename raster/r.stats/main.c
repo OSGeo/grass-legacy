@@ -277,8 +277,8 @@ int main (int argc, char *argv[])
 	{
 	    labels = (struct Categories *)
 		   G_realloc (labels, (nfiles+1) * sizeof(struct Categories));
-	    if (G_read_cats (name, mapset, &labels[i]) < 0)
-		G_init_cats((CELL) 0, "", &labels[i]);
+	    if (G_read_cats (name, mapset, &labels[nfiles]) < 0)
+		G_init_cats((CELL) 0, "", &labels[nfiles]);
 	}
 	if(is_fp[nfiles])
 	/* floating point map */
@@ -286,7 +286,7 @@ int main (int argc, char *argv[])
 	   G_quant_init(&q);
 	   if(cat_ranges)
 	   {
-	      if(! G_quant_nof_rules (&labels[i].q))
+	      if(! G_quant_nof_rules (&labels[nfiles].q))
 	      {
 	         sprintf(msg, "%s: cats for %s are either missing or have no explicit labels. Using nsteps=%d", G_program_name(),name, nsteps);
 	         G_warning(msg);
@@ -315,8 +315,9 @@ int main (int argc, char *argv[])
 	   else /* cats ranges */
 	   {
 	      /* set the quant rules for reading the map */
-	      G_set_quant_rules(fd[nfiles], &labels[i].q); 
-	      G_quant_get_limits (&labels[i].q, &dmin, &dmax, &min, &max);
+	      G_set_quant_rules(fd[nfiles], &labels[nfiles].q); 
+	      G_quant_get_limits (&labels[nfiles].q, &dmin, &dmax, &min, 
+&max);
            }
         }
 	else
