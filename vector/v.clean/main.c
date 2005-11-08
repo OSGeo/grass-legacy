@@ -20,6 +20,7 @@
 #include "gis.h"
 #include "Vect.h"
 #include "proto.h"
+#include "glocale.h"
 
 int rmdac ( struct Map_info *Out );
 void remove_bridges ( struct Map_info *Map, struct Map_info *Err );
@@ -43,15 +44,15 @@ main (int argc, char *argv[])
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->description = "Toolset to clean vector topology.";
+	module->description = _("Toolset to clean vector topology");
 
 	in_opt = G_define_standard_option(G_OPT_V_INPUT);
 	out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 	type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
 	
 	err_opt = G_define_standard_option(G_OPT_V_OUTPUT);
-	err_opt->key = "err";
-	err_opt->description = "Name of output map where errors are written.";
+	err_opt->key = "error";
+	err_opt->description = _("Name of output map where errors are written");
         err_opt->required = NO;
 	
 	tool_opt = G_define_option();
@@ -88,11 +89,11 @@ main (int argc, char *argv[])
 	thresh_opt ->required = NO;
 	thresh_opt ->multiple = YES;
         thresh_opt ->label       = "Threshold";
-        thresh_opt ->description = "Threshold in map units, one value for each tool (default: 0.0[,0.0,...])";
+        thresh_opt ->description = _("Threshold in map units, one value for each tool (default: 0.0[,0.0,...])");
 
         no_build_flag = G_define_flag ();
         no_build_flag->key             = 'b';
-        no_build_flag->description     = "Do not rebuild and store the topology at the end.";
+        no_build_flag->description     = _("Do not rebuild and store the topology at the end");
 
         if (G_parser (argc, argv))
 	    exit(-1); 
@@ -110,7 +111,7 @@ main (int argc, char *argv[])
 	/* Read tools */
 	ntools = 0; i = 0; 
 	if ( strlen(tool_opt->answer) < 1 )
-		G_fatal_error ("You must select at least one tool.");
+		G_fatal_error (_("You must select at least one tool"));
 	while (tool_opt->answers[i]) {
             if ( i + 1 >= atools ) {
 	        atools += 20;
@@ -143,7 +144,7 @@ main (int argc, char *argv[])
 	    else if ( strcmp ( tool_opt->answers[i], "rmsa" ) == 0 )
 		tools[ntools] = TOOL_RMSA;
 	    else 
-		G_fatal_error ( "Tool doesn't exist" );
+		G_fatal_error ( _("Tool doesn't exist") );
 
 	    ntools++; i++;
 	}
@@ -160,7 +161,7 @@ main (int argc, char *argv[])
 	    
 	    if (  tools[i] != TOOL_SNAP && tools[i] != TOOL_RMDANGLE && tools[i] != TOOL_CHDANGLE
 	          && tools[i] != TOOL_PRUNE && tools[i] != TOOL_RMAREA ) {
-		G_warning ("Threshold for tool %d may not be > 0, set to 0", i + 1);
+		G_warning (_("Threshold for tool %d may not be > 0, set to 0"), i + 1);
 		threshs[i] = 0.0;
 	    }
 	    i++;
@@ -215,7 +216,7 @@ main (int argc, char *argv[])
 		    
 	/* open input vector */
         if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-	     G_fatal_error ("Could not find input map <%s>\n", in_opt->answer);
+	     G_fatal_error (_("Could not find input map <%s>"), in_opt->answer);
 	}
 
         /* Input vector may be both on level 1 and 2. Level 2 is necessary for 
