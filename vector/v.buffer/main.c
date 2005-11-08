@@ -18,6 +18,7 @@
 #include <string.h> 
 #include "gis.h"
 #include "Vect.h"
+#include "dbmi.h"
 #include "glocale.h"
 
 #define DEBUG_NONE   0
@@ -223,12 +224,22 @@ main (int argc, char *argv[])
     struct line_cats *Cats;
     char   *mapset;
     struct GModule *module;
-    struct Option *in_opt, *out_opt, *type_opt, *buffer_opt, *tolerance_opt, *debug_opt, *field_opt;
+    struct Option *in_opt, *out_opt, *type_opt, *buffer_opt, *tolerance_opt, 
+		*bufcol_opt, *scale_opt, *debug_opt, *field_opt;
     double buffer, tolerance, dtmp;
     int    type, debug;
     int    ret, nareas, area, nlines, line;
     char   *Areas, *Lines;
     int    field;
+
+ /* Attributes if sizecol is used */
+    int i, nrec, ctype;
+    struct field_info *Fi;
+    dbDriver *Driver;
+    dbCatValArray cvarr;
+    int size_val_int;
+    double size_val, scale, orig_tolerance;
+
 
     module = G_define_module();
     module->description =
@@ -246,9 +257,22 @@ main (int argc, char *argv[])
     buffer_opt = G_define_option();
     buffer_opt->key = "buffer";
     buffer_opt->type = TYPE_DOUBLE;
-    buffer_opt->required = YES;
+    buffer_opt->required = NO;
     buffer_opt->description = _("Buffer distance in map units");
-	
+
+    bufcol_opt = G_define_option();
+    bufcol_opt->key = "bufcol";
+    bufcol_opt->type = TYPE_STRING;
+    bufcol_opt->required = NO;
+    bufcol_opt->description = _("Attribute column to use for buffer distances");
+
+    scale_opt = G_define_option();
+    scale_opt->key = "scale";
+    scale_opt->type = TYPE_DOUBLE;
+    scale_opt->required = NO;
+    scale_opt->answer = "1.0";
+    scale_opt->description = _("Scaling factor for attribute column values");
+
     tolerance_opt = G_define_option();
     tolerance_opt->key = "tolerance";
     tolerance_opt->type = TYPE_DOUBLE;
@@ -271,19 +295,31 @@ main (int argc, char *argv[])
     
     type = Vect_option_to_types ( type_opt );
     field = atoi( field_opt->answer );
-    
-    buffer = fabs ( atof( buffer_opt->answer ) );
-    tolerance = atof( tolerance_opt->answer );
-    tolerance *= buffer;
 
-    G_message (_("The tolerance in map units: %g"), tolerance );
+    if ( (buffer_opt->answer && bufcol_opt->answer) ||
+	  (! (buffer_opt->answer || bufcol_opt->answer)) )
+	G_fatal_error("Select a buffer distance or column, but not both.");
 
-    /* At least 8 points for circle. */
-    dtmp = 0.999 * buffer * ( 1 - cos ( 2 * PI / 8 / 2 ) );
-    G_debug ( 3, "Minimum tolerance = %f", dtmp );
-    if ( tolerance > dtmp ) {
-	tolerance = dtmp;
-        G_warning(_("The tolerance was reset to %g (map units)"), tolerance );
+    orig_tolerance = atof( tolerance_opt->answer );
+    tolerance = orig_tolerance;
+
+    scale = atof( scale_opt->answer );
+    if ( scale <= 0.0 )
+	G_fatal_error("Illegal scale value.");
+
+    if(buffer_opt->answer) {
+	buffer = fabs ( atof( buffer_opt->answer ) );
+
+	tolerance *= buffer;
+	G_message(_("The tolerance in map units: %g"), tolerance );
+
+	/* At least 8 points for circle. */
+	dtmp = 0.999 * buffer * ( 1 - cos ( 2 * PI / 8 / 2 ) );
+	G_debug ( 3, "Minimum tolerance = %f", dtmp );
+	if ( tolerance > dtmp ) {
+	    tolerance = dtmp;
+	    G_warning(_("The tolerance was reset to %g (map units)"), tolerance );
+	}
     }
 
     debug = DEBUG_NONE;
@@ -314,13 +350,51 @@ main (int argc, char *argv[])
 	 exit (1);
     }
 
+    /* check and load attribute column data */
+    if(bufcol_opt->answer) {
+	db_CatValArray_init ( &cvarr );
+
+	Fi = Vect_get_field( &In, field );
+	if ( Fi == NULL )
+	    G_fatal_error(_("Cannot get layer info for vector map"));
+
+	Driver = db_start_driver_open_database(Fi->driver, Fi->database);
+	if (Driver == NULL)
+	    G_fatal_error(_("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
+
+	/* Note do not check if the column exists in the table because it may be expression */
+
+/* TODO: only select values we need instead of all in column */
+	nrec = db_select_CatValArray(Driver, Fi->table, Fi->key,
+		bufcol_opt->answer, NULL, &cvarr );
+
+	if ( nrec < 0 ) G_fatal_error (_("Cannot select data from table"));
+	G_debug(2, "%d records selected from table", nrec);
+
+	ctype = cvarr.ctype;
+	if ( ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE )
+	    G_fatal_error (_("Column type not supported"));
+
+	db_close_database_shutdown_driver(Driver);
+
+	for ( i = 0; i < cvarr.n_values; i++ ) {
+	    if ( ctype == DB_C_TYPE_INT ) {
+		G_debug (4, "cat = %d val = %d", cvarr.value[i].cat, cvarr.value[i].val.i );
+	    } else if ( ctype == DB_C_TYPE_DOUBLE ) {
+		G_debug (4, "cat = %d val = %f", cvarr.value[i].cat, cvarr.value[i].val.d );
+	    }
+	}
+
+    }
+
+
     Vect_copy_head_data (&In, &Out);
     Vect_hist_copy (&In, &Out);
     Vect_hist_command ( &Out );
 
     /* Create buffers' boundaries */
 
-    /* Lines */
+    /* Lines (and Points) */
     if ( (type & GV_POINTS) || (type & GV_LINES) ) {
 	int nlines, line, ltype;
 
@@ -328,7 +402,7 @@ main (int argc, char *argv[])
 	
         fprintf ( stderr, "Lines buffers ... ");
 	for ( line = 1; line <= nlines; line++ ) {
-	    int c;
+	    int cat;
 	    
 	    G_debug ( 3, "line = %d", line );
 	    G_percent ( line, nlines, 2 );
@@ -336,7 +410,52 @@ main (int argc, char *argv[])
 	    ltype = Vect_read_line (&In, Points, Cats, line);
 	    if ( !(ltype & type ) ) continue;
 
-	    if ( !Vect_cat_get( Cats, field, &c ) ) continue;
+	    if ( !Vect_cat_get( Cats, field, &cat ) ) continue;
+
+	    if(bufcol_opt->answer) {
+		/* get value from sizecol column */
+/* should probably be put in a function */
+		if( ctype == DB_C_TYPE_INT ) {
+		    ret = db_CatValArray_get_value_int(&cvarr, cat, &size_val_int);
+		    if ( ret != DB_OK ) {
+			G_warning(_("No record for cat = %d"), cat );
+			continue;
+		    }
+		    size_val = (double)size_val_int;
+		}
+
+		if( ctype == DB_C_TYPE_DOUBLE ) {
+		    ret = db_CatValArray_get_value_double(&cvarr, cat, &size_val);
+		    if ( ret != DB_OK ) {
+			G_warning(_("No record for cat = %d"), cat );
+			continue;
+		    }
+		}
+
+		if (size_val < 0.0) {
+		    G_warning(_("Attribute is of invalid size (%.3f) for category %d."), 
+					size_val, cat);
+		    continue;
+		}
+
+		if (size_val == 0.0) continue;
+
+		buffer = size_val * scale;
+		G_debug(2, "    dynamic buffer size = %.2f", buffer);
+
+		tolerance = orig_tolerance * buffer;
+		G_debug(2, _("The tolerance in map units: %g"), tolerance );
+
+		/* At least 8 points for circle. */
+		dtmp = 0.999 * buffer * ( 1 - cos ( 2 * PI / 8 / 2 ) );
+		G_debug(2, "Minimum tolerance = %f", dtmp );
+		if ( tolerance > dtmp ) {
+		    tolerance = dtmp;
+		    G_warning(_("The tolerance was reset to %g (map units). [category %d]"),
+				tolerance, cat);
+		}
+	    }
+
 
 	    Vect_line_buffer ( Points, buffer, tolerance, BPoints );	
 	    Vect_write_line ( &Out, GV_BOUNDARY, BPoints, Cats );  
@@ -352,7 +471,7 @@ main (int argc, char *argv[])
 
         fprintf ( stderr, "Areas buffers ... ");
 	for ( area = 1; area <= nareas; area++ ) {
-	    int c;
+	    int cat;
 
 	    G_percent ( area, nareas, 2 );
 	    
@@ -360,8 +479,53 @@ main (int argc, char *argv[])
 	    if ( centroid == 0 ) continue;
 	    
 	    Vect_read_line (&In, NULL, Cats, centroid);
-	    if ( !Vect_cat_get( Cats, field, &c ) ) continue;
-	    
+	    if ( !Vect_cat_get( Cats, field, &cat ) ) continue;
+
+	    if(bufcol_opt->answer) {
+		/* get value from sizecol column */
+
+		if( ctype == DB_C_TYPE_INT ) {
+		    ret = db_CatValArray_get_value_int(&cvarr, cat, &size_val_int);
+		    if ( ret != DB_OK ) {
+			G_warning(_("No record for cat = %d"), cat );
+			continue;
+		    }
+		    size_val = (double)size_val_int;
+		}
+
+		if( ctype == DB_C_TYPE_DOUBLE ) {
+		    ret = db_CatValArray_get_value_double(&cvarr, cat, &size_val);
+		    if ( ret != DB_OK ) {
+			G_warning(_("No record for cat = %d"), cat );
+			continue;
+		    }
+		}
+
+		if (size_val < 0.0) {
+		    G_warning(_("Attribute is of invalid size (%.3f) for category %d."), 
+					size_val, cat);
+		    continue;
+		}
+
+		if (size_val == 0.0) continue;
+
+		buffer = size_val * scale;
+		G_debug(2, "    dynamic buffer size = %.2f", buffer);
+
+		tolerance = orig_tolerance * buffer;
+		G_debug(2, _("The tolerance in map units: %g"), tolerance );
+
+		/* At least 8 points for circle. */
+		dtmp = 0.999 * buffer * ( 1 - cos ( 2 * PI / 8 / 2 ) );
+		G_debug(2, "Minimum tolerance = %f", dtmp );
+		if ( tolerance > dtmp ) {
+		    tolerance = dtmp;
+		    G_warning(_("The tolerance was reset to %g (map units). [category %d]"),
+				tolerance, cat);
+		}
+	    }
+
+
 	    /* outer ring */
 	    Vect_get_area_points ( &In, area, Points );
 	    Vect_line_buffer ( Points, buffer, tolerance, BPoints );	
@@ -535,5 +699,4 @@ main (int argc, char *argv[])
     stop ( &In, &Out );
     exit(0) ;
 }
-
 
