@@ -646,6 +646,7 @@ main (int argc, char *argv[])
 	cat = 1;
 	nogeom = 0;
 	OGR_L_ResetReading ( Ogr_layer ); 
+	G_message(_("Importing map %d features..."), OGR_L_GetFeatureCount ( Ogr_layer, 1 ));
 	while( (Ogr_feature = OGR_L_GetNextFeature(Ogr_layer)) != NULL ) {
 	    /* Geometry */
 	    Ogr_geometry = OGR_F_GetGeometryRef(Ogr_feature);
