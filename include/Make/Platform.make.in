@@ -204,3 +204,5 @@ HAVE_NLS            = @HAVE_NLS@
 
 #Large File Support (LFS)
 USE_LARGEFILES     = @USE_LARGEFILES@
+
+MINGW		= @MINGW@

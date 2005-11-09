@@ -164,6 +164,7 @@ LOC_ARG_WITH(glw, GLw, no)
 LOC_ARG_WITH(nls, NLS, no)
 LOC_ARG_WITH(readline, Readline, no)
 LOC_ARG_WITH(opendwg, openDWG, no)
+LOC_ARG_WITH(curses, Curses, yes)
 
 # With includes and libs options
 
@@ -341,7 +342,8 @@ AC_CHECK_PROGS(ENV, env)
 #AC_CHECK_PROGS(F77, g77 f77)
 AC_PATH_PROG(PERL, perl, no)  
 AC_HEADER_STDC
-AC_CHECK_HEADERS(curses.h limits.h termio.h termios.h unistd.h values.h g2c.h f2c.h)
+#AC_CHECK_HEADERS(curses.h limits.h termio.h termios.h unistd.h values.h g2c.h f2c.h)
+AC_CHECK_HEADERS(limits.h termio.h termios.h unistd.h values.h g2c.h f2c.h)
 AC_CHECK_HEADERS(sys/ioctl.h sys/mtio.h sys/resource.h sys/time.h)
 AC_CHECK_HEADERS(sys/timeb.h sys/types.h sys/utsname.h)
 AC_CHECK_HEADERS(libintl.h iconv.h)
@@ -358,6 +360,28 @@ AC_CHECK_FUNCS(putenv setenv)
 if test "$cross_compiling" != "yes" ; then
 AC_FUNC_SETPGRP
 fi
+
+case $target in
+    *mingw* | *MINGW*)
+	MINGW=yes
+	;;
+esac
+
+# Hack for cross compilation with MINGW on Linux (how to do that better?)
+if test "$MINGW" = "yes"; then
+    SHLIB_CFLAGS=""
+    SHLIB_LD_LIBS='${LIBS}'
+    SHLIB_SUFFIX=".dll"
+
+    SHLIB_LD="${CC} -shared"
+    LDFLAGS="-Wl,--export-dynamic"
+    CC_SEARCH_FLAGS=""
+    LD_SEARCH_FLAGS=""
+    LD_LIBRARY_PATH_VAR="PATH"
+    
+    GRASS_LIBRARY_TYPE='shlib'
+fi
+AC_SUBST(MINGW)
 
 AC_MSG_CHECKING(for W11)
 case "$enable_w11" in
@@ -393,6 +417,12 @@ fi
 AC_SUBST(XLIB)
 AC_SUBST(XTLIB)
 
+# Enable Curses option
+
+LOC_CHECK_USE(curses,Curses,USE_CURSES)
+
+if test -n "$USE_CURSES"; then
+
 LOC_CHECK_INCLUDES(curses.h,curses,)
 
 AC_MSG_CHECKING(curses.h WINDOW structure component)
@@ -420,6 +450,8 @@ AC_CHECK_LIB(ncurses, keypad, [AC_DEFINE(HAVE_KEYPAD)], [
 AC_CHECK_LIB(curses, keypad, [AC_DEFINE(HAVE_KEYPAD)], [
 ])])
 
+fi # $USE_CURSES
+
 AC_CHECK_LIB(compat, gtty, COMPATLIB=-lcompat, [
 AC_CHECK_LIB(bsd-compat, gtty, COMPATLIB=-lbsd-compat, [
 AC_CHECK_LIB(bsd, gtty, COMPATLIB=-lbsd, [
@@ -436,11 +468,14 @@ DBMIEXTRALIB=$LIBS
 LIBS=$ac_save_libs
 AC_SUBST(DBMIEXTRALIB)
 
+# Note: -lxdr -liberty -lws2_32 is for MinGW
+
 AC_CHECK_FUNC(xdrmem_create, XDRLIB=, [
 AC_CHECK_LIB(sun, xdrmem_create, XDRLIB=-lsun, [
 AC_CHECK_LIB(nsl, xdrmem_create, XDRLIB=-lnsl, [
 AC_CHECK_LIB(rpclib, xdrmem_create, XDRLIB=-lrpclib, [
-    AC_MSG_ERROR([*** Unable to locate XDR functions.])
+AC_CHECK_LIB(xdr, xdrmem_create, XDRLIB="-lxdr -liberty -lws2_32" , 
+   [ AC_MSG_ERROR([*** Unable to locate XDR functions.]) ], -liberty -lws2_32 )
 ])])])])
 AC_SUBST(XDRLIB)
 
@@ -516,7 +551,11 @@ LOC_CHECK_INCLUDES(proj_api.h,External PROJ.4,$PROJINC)
 LOC_CHECK_VERSION_INT(proj_api.h,PJ_VERSION,External PROJ.4,proj_ver,$PROJINC,0)
 
 if test `expr "$proj_ver" \< 446` = 1 ; then
-    AC_MSG_ERROR([*** PROJ.4.4.6 or later is required.])
+    if test "$cross_compiling" = yes; then
+        AC_MSG_WARN([*** Cannot check PROJ.4 version (cross-compiling).])
+    else
+        AC_MSG_ERROR([*** PROJ.4.4.6 or later is required.])
+    fi
 fi
 
 # With PROJ library directory
