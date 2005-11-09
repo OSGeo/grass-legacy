@@ -65,7 +65,7 @@ int G__check_gisinit()
 {
     if (initialized) return 1;
     fprintf (stderr, _("\7ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"));
-    sleep(3);
+    G_sleep(3);
     exit(-1);
 }
 

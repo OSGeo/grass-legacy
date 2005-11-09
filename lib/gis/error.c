@@ -192,7 +192,7 @@ static int print_error(char *msg,int type)
 		fprintf(stderr,"\7");
 		fflush (stderr);
 		if (!no_sleep)
-		    sleep (5);
+		    G_sleep (5);
 	    } else if ( (type == WARN || type == ERR) && getenv("GRASS_ERROR_MAIL")) { /* Mail */
 		mail_msg (msg, fatal);
 	    }

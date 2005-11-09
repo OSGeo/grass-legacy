@@ -1020,6 +1020,7 @@ int G_shortest_way(double *, double *);
 /* sleep.c */
 long sleep_ltp( double);
 int time_ltp( double *);
+unsigned int G_sleep (unsigned int);
 
 /* sites.c */
 int cleanse_string(char *);

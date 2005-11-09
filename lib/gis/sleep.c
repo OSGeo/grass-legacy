@@ -41,7 +41,7 @@ long sleep_ltp( double tm)
 
 	time_ltp(&check); 
 	for(finish = check + tm;  check <= finish; time_ltp(&check))
-		sleep(0);
+		G_sleep(0);
 
 	return(0);
 }
@@ -96,3 +96,15 @@ int time_ltp(double *time)
 #endif /* HAVE_TIME */
 #endif /* HAVE_FTIME */
 #endif /* HAVE_GETTIMEOFDAY */
+
+/* Sleep */
+unsigned int G_sleep (unsigned int seconds)
+{
+#ifdef __MINGW32__
+    /* TODO: no sleep for now */
+    return 0;    
+#else /* __MINGW32__ */
+    return sleep(seconds);
+#endif /* __MINGW32__ */
+}
+
