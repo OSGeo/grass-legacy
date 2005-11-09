@@ -15,46 +15,66 @@ Typing <em>db.connect -p</em> displays current connection parameters.
 
 <h3>DBF</h3>
 
-(the dbf/ subdirectory in the mapset must exist or must be created by the user):<br>
-<b>db.connect driver=</b><em>dbf</em> <b>database=</b><em>'$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'</em> <br>
-<b>db.tables -p</b>
-
-<h3>ODBC</h3>
-
-(may require the use of <a href=db.login.html>db.login</a>):<br> 
-<b>db.connect driver=</b><em>odbc</em> <b>database=</b><em>gtest</em> <br>
-<b>db.login user=myname pass=secret</b> <br>
-<b>db.connect -p</b> <br>
-<b>db.tables -p</b>  
-
-<h3>PostgreSQL</h3>
-
-(may require the use of <a href=db.login.html>db.login</a>):<br>
-<b>db.connect driver=</b><em>pg</em> <b>database=</b><em>"host=myserver.itc.it,dbname=mydb"</em> <br>
-<b>db.login user=myname pass=secret</b> <br>
-<b>db.connect -p</b> <br>
-<b>db.tables -p</b>
-
-<h3>PostgreSQL with different port</h3>
-
-(may require the use of <a href=db.login.html>db.login</a>):<br>
-<b>db.connect driver=</b><em>pg</em> <b>database=</b><em>"host=myserver.itc.it,dbname=mydb,port=6666"</em> <br>
-<b>db.login user=myname pass=secret</b> <br>
-<b>db.connect -p</b> <br>
-<b>db.tables -p</b>
+Local storage (the dbf/ subdirectory in the mapset must exist or must be created by the user):<br>
+<div class="code"><pre>
+db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
+db.tables -p
+</pre></div>
 
 <h3>SQLite</h3>
 
-<b>db.connect driver=</b><em>sqlite</em> <b>database=</b><em>'$GISDBASE/$LOCATION_NAME/$MAPSET/sqlite.db'</em><br>
-<b>db.connect -p</b> <br>
-<b>db.tables -p</b>
+Local storage:<br>
+<div class="code"><pre>
+db.connect driver=sqlite database='$GISDBASE/$LOCATION_NAME/$MAPSET/sqlite.db'
+db.connect -p
+db.tables -p
+</pre></div>
 <P>
 The SQLite database is created automatically when used the first time.
 
+<h3>ODBC</h3>
+
+Network storage: (may require the use of <a href=db.login.html>db.login</a>):<br> 
+<div class="code"><pre>
+db.connect driver=odbc database=gtest
+db.login user=myname pass=secret
+db.connect -p
+db.tables -p
+</pre></div>
+
+<h3>PostgreSQL</h3>
+
+Network storage: (may require the use of <a href=db.login.html>db.login</a>):<br>
+<div class="code"><pre>
+db.connect driver=pg database="host=myserver.itc.it,dbname=mydb"
+db.login user=myname pass=secret
+db.connect -p
+db.tables -p
+</pre></div>
+
+<h3>PostgreSQL with different port</h3>
+
+Network storage: (may require the use of <a href=db.login.html>db.login</a>):<br>
+<div class="code"><pre>
+db.connect driver=pg database="host=myserver.itc.it,dbname=mydb,port=6666"
+db.login user=myname pass=secret
+db.connect -p
+db.tables -p
+</pre></div>
+
+<h3>MySQL</h3>
+
+Network storage: (may require the use of <a href=db.login.html>db.login</a>):<br> 
+<div class="code"><pre>
+db.connect driver=mysql database=gtest
+db.login user=myname pass=secret
+db.connect -p
+db.tables -p
+</pre></div>
 
 <h2>NOTES</h2>
 
-To connect a vector map to a database table, use <em>v.db.connect</em> or <em>v.db.addtable/em>.
+To connect a vector map to a database table, use <em>v.db.connect</em> or <em>v.db.addtable</em>.
 
 <h2>SEE ALSO</h2>
 
