@@ -185,7 +185,7 @@ proc term_panel {cmd} {
 
 ###############################################################################
 proc run {cmd args} {
-    eval exec -- $cmd $args >@ stdout 2>@ stderr &
+    eval exec -- $cmd $args >@ stdout 2>@ stderr
 
 }
 
@@ -260,29 +260,13 @@ proc Dm::displmon { mon } {
     if ![catch {open "|d.mon -L" r} input] {
         while {[gets $input line] >= 0} {
             if {[regexp -nocase "$mon.*not running" $line]} {
-				set cmd "d.mon start=$mon"
-				set cmd_name "d.mon start=$mon"
-				set cmd [concat | $cmd 2>@ stdout]
-				if { [catch {open $cmd r} fh] } {
-					error $fh
-				}
-				$outtext insert end "$cmd_name\n"
-				$outtext yview end
-				return
+				run "d.mon start=$mon"
             } elseif {[regexp -nocase "$mon.* running" $line]} {
-				set cmd "d.mon select=$mon"
-				set cmd_name "d.mon select=$mon"
-				set cmd [concat | $cmd 2>@ stdout]
-				if { [catch {open $cmd r} fh] } {
-					error $fh
-				}
-				$outtext insert end "$cmd_name\n"
-				$outtext yview end
-				cmd_output $fh
-                return       
+				run cmd "d.mon select=$mon"
             }              
         }
     }
+    return
 }
 
 ###############################################################################
@@ -639,6 +623,7 @@ proc Dm::monitor { } {
         }
     }
     run "d.mon start=x0"
+    return
 }
 
 ###############################################################################
@@ -841,7 +826,7 @@ proc Dm::erase { } {
     
 #    set cmd "d.erase white"
     set cmd "d.frame -e"
-    run $cmd 
+    run_panel $cmd 
 
 }
 
