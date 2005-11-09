@@ -162,8 +162,8 @@ proc DmRaster::save { tree depth node } {
     set id [Dm::node_id $node]
 
     foreach key { _check map drapemap querytype rastquery rasttype bkcolor overlay \
-             } {
-        Dm::rc_write $depth "$key $opt($id,$key)"
+             legend legmon legthin legend2 legmon2 legthin2} {
+         Dm::rc_write $depth "$key $opt($id,$key)"
     } 
 }
 
@@ -219,37 +219,37 @@ proc DmRaster::display { node } {
         run_panel $cmd2
     }
 
+
+
+	#set current monitor for raster display
+	if ![catch {open "|d.mon -L" r} input] {
+		while {[gets $input line] >= 0} {
+			if {[regexp -nocase {.*(selected).*} $line]} {
+				regexp -nocase {..} $line currmon
+			}              
+		}
+	}
+
+
     #display legend for raster map
     if { $opt($id,legend) } { 
-        if ![catch {open "|d.mon -L" r} input] {
-            while {[gets $input line] >= 0} {
-                 if {[regexp -nocase {.*(selected).*} $line]} {
-                    regexp -nocase {..} $line currmon
-                }              
-            }
-        }
 
         Dm::displmon $opt($id,legmon)
+        
         run_panel "d.erase white"
         run_panel "d.legend map=$opt($id,map) thin=$opt($id,legthin)"
-        run_panel "d.mon select=$currmon"
     }
 
     #display legend for drape map
     if { $opt($id,legend2) } { 
-        if ![catch {open "|d.mon -L" r} input] {
-            while {[gets $input line] >= 0} {
-                 if {[regexp -nocase {.*(selected).*} $line]} {
-                    regexp -nocase {..} $line currmon
-                }              
-            }
-        }
-
+ 
         Dm::displmon $opt($id,legmon2)
         run_panel "d.erase white"
         run_panel "d.legend map=$opt($id,drapemap) thin=$opt($id,legthin2)"
-        run_panel "d.mon select=$currmon"
     }
+
+	run_panel "d.mon select=$currmon"
+
 }
 
 proc DmRaster::print { file node } {
