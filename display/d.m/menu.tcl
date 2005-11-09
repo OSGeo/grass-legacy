@@ -108,7 +108,7 @@ global execom
  }
  "&Config" all options $tmenu {
  	{cascad "Region" {} "" $tmenu {			
-        {command "Display region settings" {} "g.region -p" {} -command {run g.region -p }}
+        {command "Display region settings" {} "g.region -p" {} -command {run_panel "g.region -p" }}
         {command "Manage region" {} " g.region" {} -command {execute g.region }}
         {command "Select default region" {} "g.region -d" {} -command {run g.region -d ; run d.redraw }}
         {command "Zoom to maximum extent of all displayed maps" {} "d.extend" {} -command {run d.extend }}
@@ -121,7 +121,7 @@ global execom
         {command "Modify mapset search path" {} "g.mapsets.tcl" {} -command {spawn $env(GISBASE)/etc/g.mapsets.tcl}}
         {command "Change current working session to new mapset, location, or GISDBASE" {} "g.mapset" {} -command {execute g.mapset }}
         {command "Show current GRASS environment settings" {} "g.gisenv" {} -command {execute g.gisenv }}
-        {command "Show current GRASS version" {} "g.version -c" {} -command {run g.version -c }}
+        {command "Show current GRASS version" {} "g.version -c" {} -command {run_panel "g.version -c" }}
  	}}
  	{cascad "Manage projections" {} "" $tmenu {			
         {command "Create/edit projection information for current location" {} "g.setproj" {} -command {term g.setproj }}
@@ -206,7 +206,7 @@ global execom
     {cascad "Hydrologic modeling" {} "" $tmenu {			
         {command "Depressionless elevation map and flowline map" {} "r.fill.dir" {} -command {execute r.fill.dir }}
         {command "Flow accumulation for massive grids" {} "r.terraflow" {} -command {spawn r.terraflow }}
-        {command "Generate flow lines for raster map" {} "r.flow" {} -command {run r.flow }}
+        {command "Generate flow lines for raster map" {} "r.flow" {} -command {exec r.flow > /dev/null & }}
         {command "Topographic index map" {} "r.topidx" {} -command {execute r.topidx }}
         {command "TOPMODEL simulation" {} "r.topmodel" {} -command {execute r.topmodel }}
         {command "Watershed subbasins" {} "r.basins.fill" {} -command {execute r.basins.fill }}
