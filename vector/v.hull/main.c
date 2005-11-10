@@ -56,7 +56,7 @@ int cmpPoints(const void* v1, const void* v2) {
 }
 
 
-int convexHull(struct Point* P, int numPoints, int **hull) {
+int convexHull(struct Point* P, const int numPoints, int **hull) {
     int pointIdx, upPoints, loPoints;
     int *upHull, *loHull;
 
@@ -106,6 +106,8 @@ int convexHull(struct Point* P, int numPoints, int **hull) {
         }
     }
 
+    G_debug(3, "numPoints:%d loPoints:%d upPoints:%d",
+                numPoints, loPoints, upPoints);
     /*
     printf("loPoints: %d\n", loPoints);
     for(pointIdx = 0; pointIdx <= loPoints; pointIdx ++)
@@ -114,7 +116,7 @@ int convexHull(struct Point* P, int numPoints, int **hull) {
     */
 
     /* reclaim uneeded memory */
-    *hull = (int*) G_realloc((char*)(*hull), (loPoints + upPoints) * sizeof(int));
+    *hull = (int *) G_realloc(*hull, (loPoints + upPoints) * sizeof(int));
     return loPoints + upPoints;
 }
 
@@ -122,7 +124,7 @@ int convexHull(struct Point* P, int numPoints, int **hull) {
 
 #define ALLOC_CHUNK 256
 int loadSiteCoordinates(FILE* fdsite, struct Point **points , int all, struct Cell_head *window) {
-    int pointIdx;
+    int pointIdx = 0;
     Site *site;
     int n, s, d;
     RASTER_MAP_TYPE c;
@@ -130,14 +132,13 @@ int loadSiteCoordinates(FILE* fdsite, struct Point **points , int all, struct Ce
     if(G_site_describe(fdsite, &n, &c, &s, &d) != 0) return -1;
     site = G_site_new_struct (c, n, s, d);
 
-    pointIdx = 0;
     *points = NULL;
     while( G_site_get(fdsite, site) == 0 )
     {
         if(all || G_site_in_region(site, window) )
         {
-            if(pointIdx % ALLOC_CHUNK == 0);
-               *points = (struct Point*) G_realloc((char*)(*points), (pointIdx + ALLOC_CHUNK) * sizeof(struct Point));
+            if ((pointIdx % ALLOC_CHUNK) == 0);
+               *points = (struct Point *) G_realloc(*points, (pointIdx + ALLOC_CHUNK) * sizeof(struct Point));
 
             (*points)[pointIdx].x = site->east;
             (*points)[pointIdx].y = site->north;
@@ -146,7 +147,7 @@ int loadSiteCoordinates(FILE* fdsite, struct Point **points , int all, struct Ce
     }
 
     if(pointIdx > 0)
-        *points = (struct Point*) G_realloc((char*)(*points), pointIdx * sizeof(struct Point));
+        *points = (struct Point *) G_realloc(*points, (pointIdx + 1) * sizeof(struct Point));
     return pointIdx;
 }
 
