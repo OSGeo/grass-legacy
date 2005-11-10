@@ -333,7 +333,7 @@ int main (int argc, char *argv[])
                 {
                     if( cellhd.proj == PROJECTION_XY )
                         sprintf( error_msg + strlen(error_msg), 
-                                 "cellhd.proj = %d (unreferenced)\n", 
+                                 "cellhd.proj = %d (unreferenced/unknown)\n", 
                                  cellhd.proj );
                     else if( cellhd.proj == PROJECTION_LL )
                         sprintf( error_msg + strlen(error_msg), 
