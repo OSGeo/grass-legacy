@@ -36,8 +36,15 @@ make_dir (char *path, int mode)
 {
     if (db_isdir(path) == DB_OK)
 	return DB_OK;
+
+#ifdef __MINGW32__
+    if (mkdir (path) == 0)
+	return DB_OK;
+#else
     if (mkdir (path, mode) == 0)
 	return DB_OK;
+#endif
+
     db_syserror(path);
 
     return DB_FAILED;

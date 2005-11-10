@@ -1,6 +1,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+#ifdef __MINGW32__
+#include <process.h>
+#include <fcntl.h>
+#endif
+
 #include "dbmi.h"
 
 #define READ  0
@@ -26,6 +32,7 @@ db_start_driver(name)
     int stat;
     dbConnection connection;
     char ebuf[5];
+    int stdin_orig, stdout_orig;
 
     /* Set some enviroment variables which are later read by driver.
      * This is necessary when application is running without GISRC file and all
@@ -37,6 +44,7 @@ db_start_driver(name)
      * G_putenv() as well, but that is what we want, makes a copy of string */
     if (  G_get_gisrc_mode() == G_GISRC_MODE_MEMORY ) 
     {
+        printf ( "G_GISRC_MODE_MEMORY\n" );
 	sprintf ( ebuf, "%d", G_GISRC_MODE_MEMORY );
 	G_putenv("GRASS_DB_DRIVER_GISRC_MODE", ebuf); /* to tell driver that it must read variables */
 	
@@ -101,6 +109,78 @@ db_start_driver(name)
 
 /* run the driver as a child process and create pipes to its stdin, stdout */
 
+#ifdef __MINGW32__
+    /* create pipes (0 in array for reading, 1 for writing) */
+    /* p1 : module -> driver, p2 driver -> module */
+    if( _pipe(p1, 512, _O_BINARY) == -1 ||
+        _pipe(p2, 512, _O_BINARY) == -1 ) 
+    {
+        db_syserror ("can't open any pipes");
+	return (dbDriver *) NULL;
+    }
+
+    /* Set pipes for stdin/stdout driver */
+    if ( (stdin_orig  = _dup(_fileno(stdin ))) == -1  ||
+         (stdout_orig = _dup(_fileno(stdout))) == -1 ) 
+    {
+        db_syserror ("can't duplicate stdin/stdout");
+	return (dbDriver *) NULL;
+    }
+
+    fflush (stdout);
+    fflush (stderr);
+    if ( _dup2(p1[0], _fileno(stdin)) != 0 ||
+         _dup2(p2[1], _fileno(stdout)) != 0 ) 
+    {
+        db_syserror ("can't duplicate pipes");
+	return (dbDriver *) NULL;
+    }
+
+    /* Warning: the driver on Windows must have extension .exe
+     *          otherwise _spawnl fails. The name used as _spawnl 
+     *          parameter can be without .exe 
+     */ 
+    pid = _spawnl ( _P_NOWAIT, startup, "", NULL );
+
+    /* Reset stdin/stdout for module */
+    if ( _dup2(stdin_orig, _fileno(stdin)) != 0 ||
+         _dup2(stdout_orig, _fileno(stdout)) != 0 ) 
+    {
+        db_syserror ("can't reset stdin/stdout");
+	return (dbDriver *) NULL;
+    }
+
+    /* close duplicates */
+    close ( stdin_orig );
+    close ( stdout_orig );
+
+    if ( pid == -1 ) {
+        db_syserror ("can't _spawnl");
+	return (dbDriver *) NULL;
+    }
+
+    /* record driver process id in driver struct */
+    driver->pid = pid;
+
+    /* convert pipes to FILE* */
+    driver->send = fdopen (p1[WRITE], "w");
+    driver->recv = fdopen (p2[READ],  "r");
+
+    /* most systems will have to use unbuffered io to get the 
+     *  send/recv to work */
+#ifndef USE_BUFFERED_IO
+	setbuf (driver->send, NULL);
+	setbuf (driver->recv, NULL);
+#endif
+
+    db__set_protocol_fds (driver->send, driver->recv);
+    if(db__recv_return_code(&stat) !=DB_OK || stat != DB_OK)
+        driver =  NULL;
+
+    return driver;
+
+#else /* __MINGW32__ */
+
 /* open the pipes */
     if ((pipe(p1) < 0 ) || (pipe(p2) < 0 ))
     {
@@ -163,4 +243,6 @@ db_start_driver(name)
         db_syserror ("execl");
 	return NULL; /* to keep lint, et. al. happy */
     }
+
+#endif /* __MINGW32__ */
 }

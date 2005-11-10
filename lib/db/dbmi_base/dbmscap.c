@@ -155,11 +155,18 @@ db_read_dbmscap()
 /* START OF NEW CODE FOR SEARCH IN $(GISBASE)/driver/db/ */
     
     /* opend db drivers directory */
+#ifdef __MINGW32__
+    dirpath = G_malloc ( strlen("\\driver\\db\\") + strlen(G_gisbase()) + 1 );
+    sprintf ( dirpath, "%s\\driver\\db\\", G_gisbase());
+#else
     G_asprintf (&dirpath, "%s/driver/db/", G_gisbase());
+#endif
+
+    G_debug ( 2, "opendir %s\n", dirpath );
     dir = opendir(dirpath);
     if (dir == NULL)
     {
-	db_syserror (dirpath);
+	db_syserror ("Cannot open drivers directory");
 	return (dbDbmscap *) NULL;
     }
     G_free (dirpath);
@@ -175,7 +182,13 @@ db_read_dbmscap()
 	/* Remove '.exe' from name (windows extension) */
 	name = G_str_replace ( ent->d_name, ".exe", "" );
 	
+#ifdef __MINGW32__
+        dirpath = G_malloc ( strlen("\\driver\\db\\") 
+                  + strlen(G_gisbase()) + strlen(ent->d_name) + 1 );
+        sprintf ( dirpath, "%s\\driver\\db\\%s", G_gisbase(), ent->d_name);
+#else
         G_asprintf (&dirpath, "%s/driver/db/%s", G_gisbase(),ent->d_name);
+#endif
 	add_entry (&list, name, dirpath, "");
 	G_free (name);
 	G_free (dirpath);

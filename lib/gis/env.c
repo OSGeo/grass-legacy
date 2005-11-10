@@ -273,8 +273,12 @@ static FILE *open_env ( char *mode, int loc)
 	/* Warning: G_VAR_GISRC must be previously read -> */
 	/* TODO: better place ? */
 	read_env ( G_VAR_GISRC );  
-	
+
+#ifdef __MINGW32__	
+	sprintf ( buf, "%s\\%s\\VAR", G_location_path(), G_mapset() );
+#else
 	sprintf ( buf, "%s/%s/VAR", G_location_path(), G_mapset() );
+#endif
     }
 		
     return fopen (buf, mode);
