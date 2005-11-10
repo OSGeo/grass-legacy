@@ -18,13 +18,29 @@ present in the vector map attribute table.
 If a MASK is present, it will be restored after the script finished.
 The scripts changes temporarily to the resolution of the given raster map.
 
-<p>
+
+<H2>EXAMPLES</H2>
+
+Example to upload DEM statistics to vector field patches:
+
+<div class="code"><pre>
+# work on copy of original map:
+g.copy vect=fields,myfields
+# if needed, zoom to raster map:
+g.region rast=elevation.dem -p
+# calculate DEM statistics, upload to vector map table:
+v.rast.stats myfields raster=elevation.dem colprefix=dem
+# verify results:
+v.info -c myfields
+v.db.select myfields
+</pre></div>
+
 
 <H2>SEE ALSO</H2>
 
 <EM>
 <A HREF="r.univar.html">r.univar</A>, 
-<A HREF="v.univar.html">v.univar,</A>
+<A HREF="v.univar.html">v.univar</A>
 </EM>
 
 <H2>AUTHOR</H2>
