@@ -48,8 +48,10 @@ main( int argc, char *argv[] )
 	fd = stdin;
 
     driver = db_start_driver(parms.driver);
-    if (driver == NULL)
-	G_fatal_error(_("No db connection for driver <%s> defined. Run db.connect"), parms.driver);
+    if (driver == NULL) {
+	G_fatal_error(_("Cannot start driver <%s>"), parms.driver);
+	exit(ERROR);
+    }
 
     db_init_handle (&handle);
     db_set_handle (&handle, parms.database, NULL);
