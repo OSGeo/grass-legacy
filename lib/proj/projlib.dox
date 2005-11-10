@@ -2,7 +2,7 @@
 <!-- doxygenized from "GRASS 5 Programmer's Manual" 
      by M. Neteler 11/2005
   -->
-<title>GRASS Grid3D raster volume Library</title>
+<title>GRASS and the PROJ.4 Projection Library</title>
 
 \section projintro GRASS and the PROJ4 projection library
 
@@ -18,11 +18,19 @@ corrections to account for different datums.
 
 This is transparent for the user as input and output parameters are either
 read from PROJ_INFO and PROJ_UNITS files (g.proj, v.proj, r.proj) or read from
-user prompts (g.proj).
+user prompts (g.proj and g.setproj).
 
 In GRASS the wrapper functions in lib/proj/get_proj.c makes the
 preparations to set up the parameter strings and init the info-structures,
 while do_proj.c contains the actual projection calls.
+
+ellipse.c and datum.c contain functions for querying GRASS locations
+and users for ellipsoid and datum information (some of these functions
+were included in the GIS library in earlier versions of GRASS).
+
+convert.c contains functions for converting GRASS co-ordinate system
+descriptions to and from the formats used by other GIS. Heavy use is
+made of the OGR library, part of GDAL.
 
 */
 
