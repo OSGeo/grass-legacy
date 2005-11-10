@@ -1,5 +1,10 @@
 #include <stdlib.h>
+
+#ifdef __MINGW32__
+#include <process.h>
+#else
 #include <sys/wait.h>
+#endif
 #include "dbmi.h"
 
 /*!
@@ -31,8 +36,15 @@ db_shutdown_driver (driver)
 
 /* wait for the driver to finish */
     status = -1;
+
+#ifdef __MINGW32__
+    /* TODO: convert status to something like from wait? */
+    _cwait( &status, driver->pid, WAIT_CHILD ); 
+#else
+    /* TODO: Should not be here waitpid() ? */
     while ((pid = wait(&status)) > 0 && pid != driver->pid)
 	 {}
+#endif
 
     driver->pid = 0;
 

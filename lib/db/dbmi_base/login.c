@@ -124,7 +124,9 @@ write_file ( LOGIN *login )
     if (fd == NULL)
 	return -1;
 
-    fchmod ( fileno(fd), S_IRUSR | S_IWUSR );
+    /* fchmod is not available on Windows */
+    /* fchmod ( fileno(fd), S_IRUSR | S_IWUSR ); */
+    chmod ( file, S_IRUSR | S_IWUSR );
     
     for ( i = 0; i < login->n; i++ ) { 
 	fprintf ( fd, "%s %s", login->data[i].driver, login->data[i].database );
