@@ -33,7 +33,7 @@
 #% type: string
 #% gisprompt: old,cell,raster
 #% description: Name of raster map to calculate statistics from
-#% required : no
+#% required : yes
 #%END
 #%option
 #% key: colprefix
@@ -52,9 +52,8 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 #### check if we have awk
-AWK=`which awk`
-if [ "$AWK" = "" ] ; then
-    echo "$PROG: awk required, please install awk/gawk first" 1>&2
+if [ ! -x "`which awk`" ] ; then
+    echo "$PROG: awk required, please install awk/gawk first" 2>&1
     exit 1
 fi
 
@@ -118,7 +117,7 @@ fi
 #fetch separated to permit for non-square cells (latlong etc)
 NSRES=`r.info -s $RASTER | grep nsres | cut -d'=' -f2`
 if [ $? -ne 0 ] ; then
- echo "An error occurred."
+ echo "An error occurred reading the input raster map resolution."
  exit 1
 fi
 EWRES=`r.info -s $RASTER | grep ewres | cut -d'=' -f2`
@@ -146,8 +145,8 @@ v.db.connect -g $VECTOR | cut -d' ' -f5 | grep -i dbf > /dev/null
 if [ $? -eq 0 ] ; then
   DBFDRIVER=1
 else
-  echo "ERROR: Cannot continue (use v.db.addtable first)."
-  exit 1
+  # in case a table is missing, we'll trap a crash later...
+  DBFDRIVER=0
 fi
 
 for i in n min max range mean stddev variance cf_var sum ; do
@@ -166,6 +165,10 @@ for i in n min max range mean stddev variance cf_var sum ; do
     fi
   else
     v.db.addcol map=$VECTOR columns="$CURRCOLUMN double"
+    if [ $? -eq 0 ] ; then
+      echo "ERROR: Cannot continue."
+      exit 1
+    fi
   fi
 done
 
