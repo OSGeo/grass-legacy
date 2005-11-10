@@ -38,10 +38,10 @@ and kernels. On top a header can be defined (see example below).
 <P>
 The primitive codes are as follows:
 <UL>
+<LI>'P': point</LI>
+<LI>'L': line</LI>
 <LI>'B': boundary</LI>
 <LI>'C': centroid</LI>
-<LI>'L': line</LI>
-<LI>'P': point</LI>
 <LI>'F': face</LI>
 <LI>'K': kernel</LI>
 <LI>'A': area (boundary) - better use 'B'; kept only for backward compatibility</LI>
@@ -55,8 +55,9 @@ the category number (ID).
 <BR>
 The order of coordinates is <BR>
   X Y [Z]
-<P>
-<b>Import of files without category ID column</b><br>
+
+
+<h3>Import of files without category ID column</h3>
 
 If the input file does not contain any vector ID column,
 there is the possibility to auto-generate these IDs (categories). 
@@ -65,8 +66,9 @@ To automatically add an additional column named 'cat', the
 (<tt>cat=0</tt>). This is the default action if the <b>cat</b> parameter
 is not set.
 
-<P>
-<b>Importing from a spreadsheet</b><br>
+
+<h3>Importing from a spreadsheet</h3>
+
 Data may be imported from many spreadsheet programs by saving the 
 spreadsheet as a comma separated variable (.csv) text file, and then 
 using the <b>fs=','</b> option with <em>v.in.ascii</em> in <b>points</b> mode.
@@ -80,8 +82,9 @@ a comment and skipped completely if located in the main data file. If located
 in the header, as defined by the <b>skip</b> parameter, it will be treated as
 a header line and written to the history file.
 
-<P>
-<b>Import of sexagesimal degree (degree, minutes, seconds, DMS)</b><br>
+
+<h3>Import of sexagesimal degree (degree, minutes, seconds, DMS)</h3>
+
 The import of DMS formatted degrees is supported (in this case no
 sign but N/S, E/W characters are used to indicate the hemispheres).
 While the positions are internally translated into decimal degrees
@@ -90,154 +93,147 @@ attribute table. This requires both the latitude and
 the longitude columns to be defined as varchars(), not as numbers.
 A warning will be issued which can be ignored.
 
-<P>
-<b>Importing only selected columns</b><br>
+<h3>Importing only selected columns</h3>
 Although v.in.ascii doesn't have an option to specify which columns should be imported, 
 you can use a shell filter to achieve the same effect, e.g.:
-<pre>
-  # Print out the column number for each field, supposing the file has a header
-  head -1 input_file | tr '<the_field_separator_character>' '\n' | cat -n
-  # From the listing, select the columns you want and feed them to v.in.ascii
-  # do not use the input= option
-  cut -d<the_field_separator_character> -f<comma-separated_list_of_columns> input_file | v.in.ascii <your_options>
-</pre>
+
+<div class="code"><pre>
+# Print out the column number for each field, supposing the file has a header
+head -1 input_file | tr '<the_field_separator_character>' '\n' | cat -n
+# From the listing, select the columns you want and feed them to v.in.ascii
+# do not use the input= option
+cut -d<the_field_separator_character> -f<comma-separated_list_of_columns> input_file | v.in.ascii <your_options>
+</pre></div>
+
 
 <h2>EXAMPLES</h2>
 
-<b>Example 1a) - standard mode</b><br>
+<h3>Example 1a) - standard mode</h3>
 Sample ASCII polygon vector map for 'standard' mode. 
 Note the blank before entering vertex coordinates.
 The example can be tested in the Spearfish sample dataset:
 <p>
-<pre>
-       ORGANIZATION: GRASS Development Team
-       DIGIT DATE:   1/9/2005
-       DIGIT NAME:   -
-       MAP NAME:     test
-       MAP DATE:     2005
-       MAP SCALE:    10000
-       OTHER INFO:   Test polygons
-       ZONE:         0
-       MAP THRESH:   0.500000
-       VERTI:
-       B  6 1
-        5958812.48844435 3400828.84221011
-        5958957.29887089 3400877.11235229
-        5959021.65906046 3400930.7458436
-        5959048.47580612 3400973.65263665
-        5959069.92920264 3401032.64947709
-        5958812.48844435 3400828.84221011
-	1 1
-       B  4 1
-        5959010.9323622 3401338.36037757
-        5959096.7459483 3401370.54047235
-        5959091.38259917 3401450.99070932
-        5959010.9323622 3401338.36037757
-	1 2
-</pre>
+<div class="code"><pre>
+ORGANIZATION: GRASS Development Team
+DIGIT DATE:   1/9/2005
+DIGIT NAME:   -
+MAP NAME:     test
+MAP DATE:     2005
+MAP SCALE:    10000
+OTHER INFO:   Test polygons
+ZONE:  0
+MAP THRESH:   0.500000
+VERTI:
+B  6 1
+ 5958812.48844435 3400828.84221011
+ 5958957.29887089 3400877.11235229
+ 5959021.65906046 3400930.7458436
+ 5959048.47580612 3400973.65263665
+ 5959069.92920264 3401032.64947709
+ 5958812.48844435 3400828.84221011
+ 1 1
+B  4 1
+ 5959010.9323622 3401338.36037757
+ 5959096.7459483 3401370.54047235
+ 5959091.38259917 3401450.99070932
+ 5959010.9323622 3401338.36037757
+ 1 2
+</pre></div>
 
-<P><BR>
-<b>Example 1b) - standard mode</b><br>
+<h3>Example 1b) - standard mode</h3>
 Sample ASCII 3D line vector map for 'standard' mode with simplified input
 (no header). The example can be tested in the Spearfish sample dataset:
 
-<pre>
+<div class="code"><pre>
 echo "L 5 1
-	591336 4927369 1224
-	594317 4925341 1292
-	599356 4925162 1469
-	602396 4926653 1235
-	607524 4925431 1216
-	1 321 " | v.in.ascii -zn out=line3d format=standard
-</pre>
+591336 4927369 1224
+594317 4925341 1292
+599356 4925162 1469
+602396 4926653 1235
+607524 4925431 1216
+1 321 " | v.in.ascii -zn out=line3d format=standard
+</pre></div>
 
 This can be used to create a vector line of a GPS track: the GPS points have
 to be stored into a file with a preceding 'L' and the number of points (per line).
 
-<p><BR>
-<b>Example 2</b><br>
+<h3>Example 2</h3>
 
 Generate a 2D points vector file 'coords.txt' as ASCII file:
-<pre>
-  1664619|5103481
-  1664473|5095782
-  1664273|5101919
-  1663427|5105234
-  1663709|5102614
-</pre>
+<div class="code"><pre>
+1664619|5103481
+1664473|5095782
+1664273|5101919
+1663427|5105234
+1663709|5102614
+</pre></div>
 <P>
 Import into GRASS:
-<pre>
+<div class="code"><pre>
 v.in.ascii input=coords.txt output=mymap
-</pre>
+</pre></div>
 As the <em>cat</em> option is set to 0 by default, an extra column 'cat'
 containing the IDs will be auto-generated.
 
-<p><BR>
+<h3>Example 3</h3>
 
-
-<b>Example 3</b><br>
 Generate a 2D points vector file 'points.dat' as ASCII file:
-<pre>
-  1|1664619|5103481|studna
-  2|1664473|5095782|kadibudka
-  3|1664273|5101919|hruska
-  4|1663427|5105234|mysi dira
-  5|1663709|5102614|mineralni pramen
-</pre>
+<div class="code"><pre>
+1|1664619|5103481|studna
+2|1664473|5095782|kadibudka
+3|1664273|5101919|hruska
+4|1663427|5105234|mysi dira
+5|1663709|5102614|mineralni pramen
+</pre></div>
 <P>
 Import into GRASS:
-<pre>
+<div class="code"><pre>
 cat points.dat | v.in.ascii out=mypoints x=2 y=3 cat=1 \
     columns='cat int, x double, y double, label varchar(20)'
-</pre>
+</pre></div>
 <P>
-<b>The module is reading from standard input, using the default '|' (pipe) delimiter.</b>
-
-<p><BR>
+The module is reading from standard input, using the default '|' (pipe) delimiter.
 
 
-<b>Example 4</b><br>
+<h3>Example 4</h3>
+
 Generating a 3D points vector map from DBMS (idcol must be an integer column):<br>
-<pre>
+<div class="code"><pre>
 echo "select east,north,elev,idcol from mytable" | db.select -c | v.in.ascii -z out=mymap
-</pre>
+</pre></div>
 
-<b>The module is reading from standard input, using the default '|' (pipe) delimiter.</b>
+The module is reading from standard input, using the default '|' (pipe) delimiter.
 <br>
 The import works for 2D maps as well (no elev column and no '-z' flag).
 
-<p><BR>
 
+<h3>Example 5</h3>
 
-<b>Example 5</b><br>
 Generate a 3D points vector file 'points3d.dat' with attributes as ASCII file:
-<pre>
+<div class="code"><pre>
 593493.1|4914730.2|123.1|studna|well
 591950.2|4923000.5|222.3|kadibudka|closet
 589860.5|4922000.0|232.3|hruska|pear
 590400.5|4922820.8|143.2|mysi dira|mouse hole
 593549.3|4925500.7|442.6|mineralni pramen|mineral spring
 600375.7|4925235.6|342.2|kozi stezka|goat path
-</pre>
+</pre></div>
 <P>
 Import into GRASS:
-<pre>
+<div class="code"><pre>
 #As the <em>cat</em> option is set to 0 by default, an extra column 'cat'
 #containing the IDs will be auto-generated (no need to define that):
 cat points3d.dat | v.in.ascii -z z=3 cat=0 out=mypoints3D \
     columns='x double, y double, z double, label_cz varchar(20), label_en varchar(20)'
 v.info -c mypoints3D
 v.info mypoints3D
-</pre>
+</pre></div>
 
 
-<p><BR>
+<h3>Example 6</h3>
 
-
-<b>Example 6</b><br>
 Generate points file by clicking onto the map:
-<pre>
+<div class="code"><pre>
 #For LatLong locations:
 d.where -d -l | awk '{printf "%f|%f|point\n", $1, $2}' | v.in.ascii out=points \
     columns='x double, y double, label varchar(20)'
@@ -245,22 +241,19 @@ d.where -d -l | awk '{printf "%f|%f|point\n", $1, $2}' | v.in.ascii out=points \
 #For other projections:
 d.where | awk '{printf "%f|%f|point\n", $1, $2}' | v.in.ascii out=points \
     columns='x double, y double, label varchar(20)'
-</pre>
+</pre></div>
 
 The 'point' string (or some similar entry) is required to generate a database table.
 When simply piping the coordinates (and optionally height) without additional column(s) 
 into <em>v.in.ascii</em>, only the vector map geometry will be generated.
 
-<p><BR>
+<h3>Example 7</h3>
 
-<b>Example 7</b><br>
 Convert ground control points from i.points into vector points:
-<PRE>
+<div class="code"><pre>
 cat $MAPSET/group/$GROUP/POINTS | v.in.ascii out=$GROUP_gcp fs=space skip=3 \
     col='x double, y double, x_target double, y_target double, ok int'
-</PRE>
-
-<p><BR>
+</pre></div>
 
 
 <h2>SEE ALSO</h2>
@@ -271,9 +264,10 @@ cat $MAPSET/group/$GROUP/POINTS | v.in.ascii out=$GROUP_gcp fs=space skip=3 \
 <em><a HREF="v.info.html">v.info</a></em><BR>
 <em><a HREF="v.build.html">v.build</a></em><BR>
 <em><a HREF="v.build.polylines.html">v.build.polylines</a></em><BR>
+<em><a HREF="v.clean.html">v.clean</a></em><BR>
 <a HREF="sql.html">SQL command notes</a> for creating databases<BR>
 <a HREF="http://freegis.org/cgi-bin/viewcvs.cgi/~checkout~/grass6/doc/vector/vector.html#ascii">Vector ASCII Format Specification</a>
-<BR>
+
 
 <h2>AUTHORS</h2>
 
