@@ -41,8 +41,19 @@ DEPENDENCIES =  $(GRASS_INCDIR)/vect/dig_defines.h \
                 $(GRASS_INCDIR)/vect/dig_macros.h $(GRASS_INCDIR)/vect/dig_structs.h \
                 $(GRASS_INCDIR)/vect/dig_externs.h $(GRASS_INCDIR)/vect/dig_globs.h $(GISDEP)
 
-default: $(ARCH_INCDIR)/portable.h lib $(OBJDIR)/test
+ifdef MINGW
+TEST =
+else
+TEST = $(OBJDIR)/test
+endif
 
+default: $(ARCH_INCDIR)/portable.h lib $(TEST)
+
+ifdef MINGW
+$(ARCH_INCDIR)/portable.h: portable/i386-pc-mingw32msvc.h
+	$(INSTALL) -m 644 portable/i386-pc-mingw32msvc.h $(ARCH_INCDIR)/portable.h
+	$(INSTALL) -m 644 portable/i386-pc-mingw32msvc.h $(ARCH_DISTDIR)/include/portable.h
+else
 #  Test the machine size and orientation for the Portable Library
 $(ARCH_INCDIR)/portable.h: $(DEPENDENCIES)
 	@test -d $(OBJDIR) || $(MKDIR) $(OBJDIR)
@@ -51,12 +62,12 @@ $(ARCH_INCDIR)/portable.h: $(DEPENDENCIES)
 	$(OBJDIR)/port_test >> $(ARCH_INCDIR)/portable.h
 	echo "/* Architecture: $(ARCH) */" > $(ARCH_DISTDIR)/include/portable.h
 	$(OBJDIR)/port_test >> $(ARCH_DISTDIR)/include/portable.h
-	
+endif	
 
 #  Test portable read/write functions
 $(OBJDIR)/test: test.c $(DEPENDENCIES) $(ARCH_LIB_OBJS)
+	echo "**************TEST*************"
 	$(CC) $(LDFLAGS) $(COMPILE_FLAGS) $(VECT_CFLAGS) $(INC) $(VECT_INC) -o $@ test.c $(DIG2LIB) $(RTREELIB) \
 				$(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB) 
 	cd $(OBJDIR); $(LD_LIBRARY_PATH_VAR)="$($(LD_LIBRARY_PATH_VAR)):$(GISBASE)/lib" ./test; diff ./test.tmp ../test.ok
-
 

@@ -107,7 +107,7 @@ dig_falloc (int nelem, int elsize)
   if ((ret = dig__falloc (nelem, elsize)) == NULL)
     {
       fprintf (stderr, "Out of Memory.\n");
-      sleep (2);
+      G_sleep (2);
       exit (-1);
     }
   return (ret);
@@ -124,7 +124,7 @@ dig_frealloc (
   if ((ret = dig__frealloc (oldptr, nelem, elsize, oldnelem)) == NULL)
     {
       fprintf (stderr, "\nOut of Memory on realloc.\n");
-      sleep (2);
+      G_sleep (2);
       exit (-1);
     }
   return (ret);
