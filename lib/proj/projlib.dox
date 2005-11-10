@@ -1,4 +1,4 @@
-/*! \page projlib GRASS and the PROJ4 projection library
+/*! \mainpage projlib GRASS and the PROJ4 projection library
 <!-- doxygenized from "GRASS 5 Programmer's Manual" 
      by M. Neteler 11/2005
   -->
@@ -30,7 +30,27 @@ were included in the GIS library in earlier versions of GRASS).
 
 convert.c contains functions for converting GRASS co-ordinate system
 descriptions to and from the formats used by other GIS. Heavy use is
-made of the OGR library, part of GDAL.
+made of the OGR library, part of GDAL (http://www.gdal.org/ogr/).
+
+\section Makefile_Example Makefile Example
+
+<P>
+The following code demonstrates the Makefile
+(see also \ref Compiling_and_Installing_GRASS_Modules).
+
+\verbatim
+MODULE_TOPDIR = ../..
+
+PGM = r.myproj
+
+EXTRA_INC = $(PROJINC)
+LIBES     = $(GPROJLIB) $(GISLIB)
+DEPENDENCIES= $(GPROJDEP) $(GISDEP)
+
+include $(MODULE_TOPDIR)/include/Make/Module.make
+
+default: cmd
+\endverbatim
 
 */
 
