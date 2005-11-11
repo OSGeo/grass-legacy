@@ -66,53 +66,79 @@ codes etc.</P>
 <H2>EXAMPLES</H2>
 
 Print the projection information for the current location:<br>
-<b>g.proj -p</b> 
+
+<div class="code"><pre>
+g.proj -p
+</pre></div>
 
 <p>
 Create a '.prj' file in ESRI format corresponding to the current location:<br>
-<b>g.proj -wef ></b> <em>irish_grid.prj</em>
+
+<div class="code"><pre>
+g.proj -wef > irish_grid.prj
+</pre></div>
 
 <p>
 Read the projection information from a geotiff file and print it in PROJ.4
 format:<br>
-<b>g.proj -jf georef=</b><em>ASTER_DEM20020508161837.tif</em>
+
+<div class="code"><pre>
+g.proj -jf georef=ASTER_DEM20020508161837.tif
+</pre></div>
 
 <p>
 Convert the PROJ.4 projection description contained in a text file to WKT
 format:<br>
-<b>cat</b> <em>proj4.description</em> <b>| g.proj -w proj4=</b><em>-</em>
+
+<div class="code"><pre>
+cat proj4.description | g.proj -w proj4=-
+</pre></div>
 
 <p>
 Create a new location with the co-ordinate system referred to by EPSG code
 4326 (Latitude-Longitude/WGS84):<br>
-<b>g.proj -c proj4=</b><em>'+init=epsg:4326'</em>
- <b>location=</b><em>latlong</em>
+
+<div class="code"><pre>
+g.proj -c proj4='+init=epsg:4326' location=latlong
+</pre></div>
 
 <p>
 Create a new location with the co-ordinate system referred to by EPSG code
 29900 (Irish Grid):<br>
-<b>g.proj -c proj4=</b><em>'+init=epsg:29900'</em>
- <b>location=</b><em>irish_grid</em>
+
+<div class="code"><pre>
+g.proj -c proj4='+init=epsg:29900' location=irish_grid
+</pre></div>
 
 <p>
 Create a new location with the same co-ordinate system as the current
 location:<br>
-<b>g.proj -c location=</b><em>newloc</em> <br>
+
+<div class="code"><pre>
+g.proj -c location=newloc
+</pre></div>
 
 <p>
 Create a new location with the co-ordinate system from a WKT definition
 stored in a text file:<br>
-<b>g.proj -c wkt=</b><em>irish_grid.prj</em> <b>location=</b><em>irish_grid</em> <br>
+
+<div class="code"><pre>
+g.proj -c wkt=irish_grid.prj location=irish_grid
+</pre></div>
 
 <p>
 Reproject external raster map to current GRASS projection (does not always make sense!)
 using the GDAL 'gdalwarp' tool:<br>
-<b>gdalwarp -t_srs "`g.proj -wef`" aster.tif aster_tmerc.tif<br>
+<div class="code"><pre>
+gdalwarp -t_srs "`g.proj -wef`" aster.tif aster_tmerc.tif
+</pre></div>
 
 <p>
 Reproject external vector map to current GRASS projection (does not always make sense!)
 using the OGR 'ogr2ogr' tool:<br>
-<b>ogr2ogr -t_srs "`g.proj -wef`" polbnda_italy_GB_ovest.shp polbnda_italy_LL.shp<br>
+<div class="code"><pre>
+ogr2ogr -t_srs "`g.proj -wef`" polbnda_italy_GB_ovest.shp polbnda_italy_LL.shp
+</pre></div>
 
 
 <H2>REFERENCES</H2>
