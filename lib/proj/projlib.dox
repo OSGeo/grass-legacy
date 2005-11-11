@@ -32,6 +32,19 @@ convert.c contains functions for converting GRASS co-ordinate system
 descriptions to and from the formats used by other GIS. Heavy use is
 made of the OGR library, part of GDAL (http://www.gdal.org/ogr/).
 
+\section datum_transformation Datum transformation
+
+GRASS generally supports datum transformation (3 parameters, 7 parameters
+and grid).
+<P>
+
+If a warning appears that a certain datum is not recognised by GRASS and
+no parameters found, the datum transformation parameters have to be
+added to $GISBASE/etc/datum.table (and also $GISBASE/etc/datumtransform.table
+if you have 7-parameter transformation parameters). No need to re-compile
+though. When adding to CVS, currently these files are still in lib/gis/. 
+
+
 \section Makefile_Example Makefile Example
 
 <P>
