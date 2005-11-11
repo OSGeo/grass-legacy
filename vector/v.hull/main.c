@@ -63,7 +63,7 @@ int convexHull(struct Point* P, const int numPoints, int **hull) {
     /* sort points in ascending x order*/
     qsort(P, numPoints, sizeof(struct Point), cmpPoints);
 
-    *hull = (int*) G_malloc(numPoints * sizeof(int));
+    *hull = (int*) G_malloc(numPoints * 2 * sizeof(int));
 
     /* compute upper hull */
     upHull = *hull;
