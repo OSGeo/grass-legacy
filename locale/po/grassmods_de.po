@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-28 12:49+0200\n"
-"PO-Revision-Date: 2005-10-28 18:50+0200\n"
+"POT-Creation-Date: 2005-11-11 19:03+0100\n"
+"PO-Revision-Date: 2005-11-11 19:07+0100\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -18,29 +18,27 @@ msgstr ""
 "X-Generator: KBabel 1.9.1\n"
 
 #: ../db/base/columns.c:33 ../db/base/createdb.c:24 ../db/base/describe.c:34
-#: ../db/base/dropdb.c:24 ../db/base/droptable.c:25 ../db/base/execute.c:52
-#: ../db/base/select.c:63 ../db/base/tables.c:34
-#, c-format
-msgid "No db connection for driver <%s> defined. Run db.connect"
-msgstr ""
-"Keine Datenbankverbindung für Treiber <%s> definiert. Benutzen Sie db."
-"connect."
+#: ../db/base/droptable.c:25 ../db/base/execute.c:52 ../db/base/select.c:63
+#: ../db/base/tables.c:34
+#, fuzzy, c-format
+msgid "Cannot start driver <%s>"
+msgstr "Kann Treiber '%s' nicht starten."
 
-#: ../db/base/columns.c:69 ../db/base/describe.c:87
+#: ../db/base/columns.c:71 ../db/base/describe.c:89
 msgid "table name"
 msgstr "Tabellenname"
 
-#: ../db/base/columns.c:76 ../db/base/databases.c:62 ../db/base/describe.c:94
-#: ../db/base/select.c:195 ../db/base/tables.c:69
+#: ../db/base/columns.c:78 ../db/base/databases.c:62 ../db/base/describe.c:96
+#: ../db/base/select.c:197 ../db/base/tables.c:71
 msgid "driver name"
 msgstr "Treibername"
 
-#: ../db/base/columns.c:84 ../db/base/describe.c:102 ../db/base/select.c:186
-#: ../db/base/tables.c:77
+#: ../db/base/columns.c:86 ../db/base/describe.c:104 ../db/base/select.c:188
+#: ../db/base/tables.c:79
 msgid "database name"
 msgstr "Datenbankname"
 
-#: ../db/base/columns.c:90
+#: ../db/base/columns.c:92
 msgid "list all columns for a given table."
 msgstr "Listet alle Spalten einer angegebenen Tabelle auf."
 
@@ -162,15 +160,15 @@ msgstr "Datenbanklocation"
 msgid "List all databases for a given driver and location."
 msgstr "Listet alle Datenbanken für den angegebenen Treiber und Location auf."
 
-#: ../db/base/describe.c:45
+#: ../db/base/describe.c:47
 msgid "Cannot describe table"
 msgstr "Kann die Tabelle nicht beschreiben."
 
-#: ../db/base/describe.c:81
+#: ../db/base/describe.c:83
 msgid "print column names only instead of full column descriptions"
 msgstr "Gib nur kurze Spaltennamen anstatt der vollen Spaltenbeschreibung aus."
 
-#: ../db/base/describe.c:108
+#: ../db/base/describe.c:110
 msgid "Describe a table (in detail)."
 msgstr "Beschreibe eine Tabelle (im Detail)."
 
@@ -182,7 +180,7 @@ msgstr "Fehler beim Lesen der Datei dbmscap\n"
 msgid "Full output"
 msgstr "Komplette Ausgabe."
 
-#: ../db/base/drivers.c:51 ../db/base/tables.c:83
+#: ../db/base/drivers.c:51 ../db/base/tables.c:85
 msgid "print tables and exit"
 msgstr "Gebe Tabelle aus und beende das Modul."
 
@@ -190,62 +188,67 @@ msgstr "Gebe Tabelle aus und beende das Modul."
 msgid "List all database drivers."
 msgstr "Listet alle verfügbaren Datenbanktreiber auf."
 
-#: ../db/base/execute.c:66 ../db/base/execute.c:70
+#: ../db/base/dropdb.c:24
+#, fuzzy, c-format
+msgid "Cannot start driver <%s>."
+msgstr "s."
+
+#: ../db/base/execute.c:68 ../db/base/execute.c:72
 #, c-format
 msgid "Error while executing: \"%s\"\n"
 msgstr "Fehler beim Ausführen von: \"%s\"\n"
 
-#: ../db/base/execute.c:119
+#: ../db/base/execute.c:121
 msgid "ignore SQL errors and continue"
 msgstr "Ignoriere SQL-Fehler und fahre fort."
 
-#: ../db/base/select.c:180
+#: ../db/base/select.c:182
 msgid "Table name, select all from this table"
 msgstr "Tabellenname, selektiere alles aus dieser Tabelle."
 
-#: ../db/base/select.c:203
+#: ../db/base/select.c:205
 msgid ""
 "SQL select statement, for example: 'select * from rybniky where kapri = "
 "'hodne'"
 msgstr "SQL-Select Statement, z.B.: 'SELECT * FROM rybniky WHERE kapri = 'hodne'"
 
-#: ../db/base/select.c:209
+#: ../db/base/select.c:211
 msgid "output field separator"
 msgstr "Ausgabe Feld-Trennzeichen"
 
-#: ../db/base/select.c:216
+#: ../db/base/select.c:218
 msgid "output vertical record separator"
 msgstr "Vertikales Trennzeichen für die Ausgabe."
 
-#: ../db/base/select.c:222
+#: ../db/base/select.c:224
 msgid "null value indicator"
 msgstr "Nullwert-Indikator"
 
-#: ../db/base/select.c:229
+#: ../db/base/select.c:231
 msgid "filename with sql statement"
 msgstr "Dateiname mit SQL-Statement."
 
-#: ../db/base/select.c:234
+#: ../db/base/select.c:236
 msgid "do not include column names in output"
 msgstr "In der Ausgabe kein Spaltennamen ausgeben."
 
-#: ../db/base/select.c:238
+#: ../db/base/select.c:240
 msgid "describe query only (don't run it)"
 msgstr "Beschreibt die Abfrage nur (führt sie nicht aus!)."
 
-#: ../db/base/select.c:242
+#: ../db/base/select.c:244
 msgid "vertical output (instead of horizontal)"
 msgstr "Vertikale Ausgabe (anstatt horizontal)."
 
-#: ../db/base/select.c:246
+#: ../db/base/select.c:248
 msgid "Select data from database."
 msgstr "Selektiere Daten aus der Datenbank."
 
-#: ../db/base/tables.c:87
+#: ../db/base/tables.c:89
 msgid "system tables instead of user tables"
 msgstr "Systemtabellen anstatt Benutzertabellen."
 
-#: ../db/base/tables.c:91
+#: ../db/base/tables.c:93
 msgid "List all tables for a given database."
 msgstr "Listet alle Tabellen für eine angegebene Datenbank auf."
 
@@ -359,7 +362,7 @@ msgstr "Name der Ausgabekarte"
 #: ../raster/r.mfilter/main.c:80 ../raster/r.patch/main.c:64
 #: ../raster/r.report/parse.c:100 ../raster/r.resample/main.c:57
 #: ../raster/r.rescale.eq/main.c:78 ../raster/r.slope.aspect/main.c:247
-#: ../raster/r.stats/main.c:146 ../raster/r.texture/main.c:114
+#: ../raster/r.stats/main.c:147 ../raster/r.texture/main.c:114
 msgid "Quiet"
 msgstr "schweigsam"
 
@@ -442,7 +445,9 @@ msgstr "Schreibe den Text oberhalb des Maßstabs, nicht rechts davon."
 
 #: ../display/d.barscale/main.c:63
 msgid "Background color, either a standard GRASS color, R:G:B triplet, or \"none\""
-msgstr "Hintergrundfarbe, entweder eine GRASS Standardfarbe, ein R:G:B Tripel oder \"none\" für nichts."
+msgstr ""
+"Hintergrundfarbe, entweder eine GRASS Standardfarbe, ein R:G:B Tripel oder "
+"\"none\" für nichts."
 
 #: ../display/d.barscale/main.c:71 ../display/d.text/main.c:87
 #: ../display/d.text.freetype/main.c:198
@@ -453,7 +458,9 @@ msgstr "Textfarbe, entweder eine GRASS Standardfarbe oder ein R:G:B Tripel."
 msgid ""
 "The screen coordinates for top-left corner of label ([0,0] is top-left of "
 "frame)"
-msgstr "Die Bildschirmkoordinaten für die linke obere Ecke des Labels ([0,0] ist oben links)."
+msgstr ""
+"Die Bildschirmkoordinaten für die linke obere Ecke des Labels ([0,0] ist "
+"oben links)."
 
 #: ../display/d.barscale/main.c:88
 #, c-format
@@ -469,31 +476,32 @@ msgstr "[%s]: Diese Farbe gibt es nicht."
 
 #: ../display/d.barscale/main.c:132 ../display/d.erase/main.c:56
 #: ../display/d.font.freetype/main.c:102 ../display/d.grid/main.c:181
-#: ../display/d.legend/main.c:246 ../display/d.nviz/main.c:248
-#: ../display/d.paint.labels/main.c:69 ../display/d.rast.arrow/arrow.c:245
-#: ../display/d.rast.num/number.c:122 ../display/d.text/main.c:151
-#: ../display/d.text.freetype/main.c:314 ../display/d.vect/main.c:269
-#: ../display/d.where/main.c:120 ../imagery/i.points/main.c:55
-#: ../vector/v.label/main.c:207
+#: ../display/d.info/main.c:63 ../display/d.legend/main.c:246
+#: ../display/d.nviz/main.c:248 ../display/d.paint.labels/main.c:69
+#: ../display/d.rast.arrow/arrow.c:245 ../display/d.rast.num/number.c:122
+#: ../display/d.text/main.c:151 ../display/d.text.freetype/main.c:314
+#: ../display/d.vect/main.c:269 ../display/d.where/main.c:120
+#: ../imagery/i.points/main.c:55 ../vector/v.label/main.c:207
 msgid "No graphics device selected"
 msgstr "Keine Graphik-Ausgabe ausgewählt."
 
-#: ../display/d.barscale/main.c:135 ../display/d.legend/main.c:249
-#: ../display/d.paint.labels/main.c:103 ../display/d.rast.arrow/arrow.c:248
-#: ../display/d.rast.num/number.c:156 ../display/d.text/main.c:154
-#: ../display/d.text.freetype/main.c:320
+#: ../display/d.barscale/main.c:135 ../display/d.info/main.c:89
+#: ../display/d.legend/main.c:249 ../display/d.paint.labels/main.c:103
+#: ../display/d.rast.arrow/arrow.c:248 ../display/d.rast.num/number.c:156
+#: ../display/d.text/main.c:154 ../display/d.text.freetype/main.c:320
 msgid "No current window"
 msgstr "Kein aktuelles Fenster."
 
-#: ../display/d.barscale/main.c:138 ../display/d.legend/main.c:252
-#: ../display/d.paint.labels/main.c:106 ../display/d.rast.arrow/arrow.c:251
-#: ../display/d.rast.num/number.c:159 ../display/d.text/main.c:157
-#: ../display/d.text.freetype/main.c:322
+#: ../display/d.barscale/main.c:138 ../display/d.info/main.c:91
+#: ../display/d.legend/main.c:252 ../display/d.paint.labels/main.c:106
+#: ../display/d.rast.arrow/arrow.c:251 ../display/d.rast.num/number.c:159
+#: ../display/d.text/main.c:157 ../display/d.text.freetype/main.c:322
 msgid "Current window not available"
 msgstr "Aktuelles Fenster ist nicht vorhanden."
 
-#: ../display/d.barscale/main.c:144 ../display/d.paint.labels/main.c:109
-#: ../display/d.rast.arrow/arrow.c:257 ../display/d.rast.num/number.c:166
+#: ../display/d.barscale/main.c:144 ../display/d.info/main.c:97
+#: ../display/d.paint.labels/main.c:109 ../display/d.rast.arrow/arrow.c:257
+#: ../display/d.rast.num/number.c:166
 msgid "Setting map window"
 msgstr "Einstellung des Kartenfensters."
 
@@ -502,13 +510,15 @@ msgstr "Einstellung des Kartenfensters."
 msgid "Current window not settable"
 msgstr "Aktuelles Fenster nicht einstellbar."
 
-#: ../display/d.barscale/main.c:151 ../display/d.paint.labels/main.c:116
-#: ../display/d.rast.arrow/arrow.c:264 ../display/d.rast.num/number.c:174
+#: ../display/d.barscale/main.c:151 ../display/d.info/main.c:99
+#: ../display/d.paint.labels/main.c:116 ../display/d.rast.arrow/arrow.c:264
+#: ../display/d.rast.num/number.c:174
 msgid "Getting screen window"
 msgstr "Hole Fenster."
 
-#: ../display/d.barscale/main.c:153 ../display/d.paint.labels/main.c:118
-#: ../display/d.rast.arrow/arrow.c:266 ../display/d.rast.num/number.c:176
+#: ../display/d.barscale/main.c:153 ../display/d.info/main.c:101
+#: ../display/d.paint.labels/main.c:118 ../display/d.rast.arrow/arrow.c:266
+#: ../display/d.rast.num/number.c:176
 msgid "Error in calculating conversions"
 msgstr "Fehler bei der Berechnung der Umwandlung."
 
@@ -611,7 +621,9 @@ msgstr "Größe des Gitters."
 msgid ""
 "Sets the grid color, either a standard GRASS color or R:G:B triplet "
 "(separated by colons)"
-msgstr "Setze die Gitterfarbe, entweder als GRASS-Farbe oder als R:G:B-Tripel (durch Semikolon getrennt)."
+msgstr ""
+"Setze die Gitterfarbe, entweder als GRASS-Farbe oder als R:G:B-Tripel (durch "
+"Semikolon getrennt)."
 
 #: ../display/d.grid/main.c:80
 msgid "Lines of the grid pass through this coordinate"
@@ -711,6 +723,31 @@ msgstr "Fehler in pj_do_proj5"
 #: ../display/d.grid/plot.c:440
 msgid "Error in pj_do_proj6"
 msgstr "Fehler in pj_do_proj6"
+
+#: ../display/d.info/main.c:35
+#, fuzzy
+msgid "Display information about the active display monitor"
+msgstr "Darstellung"
+
+#: ../display/d.info/main.c:39
+#, fuzzy
+msgid "Display screen rectangle"
+msgstr "Darstellung screen"
+
+#: ../display/d.info/main.c:43
+#, fuzzy
+msgid "Display screen dimensions"
+msgstr "Darstellung screen"
+
+#: ../display/d.info/main.c:47
+#, fuzzy
+msgid "Display active frame dimensions"
+msgstr "Darstellung"
+
+#: ../display/d.info/main.c:51
+#, fuzzy
+msgid "Display number of colors"
+msgstr "Darstellung von"
 
 #: ../display/d.legend/main.c:70
 msgid ""
@@ -1409,8 +1446,11 @@ msgid "Use values from 'cats' option as line ID"
 msgstr "Benutze Werte der 'cats' Option als Linien-ID."
 
 #: ../display/d.vect/main.c:258
-msgid "Don't add to list of vectors and commands in monitor"
-msgstr "Nicht zur Liste der Vektoren und Kommandos im Monitor hinzufügen."
+#, fuzzy
+msgid ""
+"Don't add to list of vectors and commands in monitor (it won't be drawn if "
+"the monitor is refreshed)"
+msgstr "hinzufügen list von ist"
 
 #: ../display/d.vect/main.c:279
 #, c-format
@@ -3733,24 +3773,27 @@ msgstr "Eine Fließkommafarbtabelle muss eine Wertespanne enthalten."
 msgid "Cannot read symbol, using default icon"
 msgstr "Kann das Symbol nicht lesen, benutze das Standard-Symbol."
 
-#: ../ps/ps.map/ps_vpoints.c:94 ../vector/v.label/main.c:247
+#: ../ps/ps.map/ps_vpoints.c:94 ../vector/v.buffer/main.c:359
+#: ../vector/v.label/main.c:247 ../vector/v.what.rast/main.c:118
 msgid "Cannot get layer info for vector map"
 msgstr "Kann die Layer-Informationen der Vektorkarte nicht auswählen."
 
-#: ../ps/ps.map/ps_vpoints.c:99 ../vector/v.db.select/main.c:173
-#: ../vector/v.in.ascii/in.c:240 ../vector/v.in.db/main.c:131
-#: ../vector/v.in.ogr/main.c:625 ../vector/v.label/main.c:250
-#: ../vector/v.surf.idw/read_sites.c:38 ../vector/v.surf.rst/main.c:551
-#: ../vector/v.to.points/main.c:239
+#: ../ps/ps.map/ps_vpoints.c:99 ../vector/v.buffer/main.c:363
+#: ../vector/v.db.select/main.c:173 ../vector/v.in.ascii/in.c:240
+#: ../vector/v.in.db/main.c:131 ../vector/v.in.ogr/main.c:626
+#: ../vector/v.label/main.c:250 ../vector/v.surf.idw/read_sites.c:38
+#: ../vector/v.surf.rst/main.c:551 ../vector/v.to.points/main.c:239
 #, c-format
 msgid "Cannot open database %s by driver %s"
 msgstr "Kann Datenbank '%s' mit Treiber '%s' nicht öffnen."
 
-#: ../ps/ps.map/ps_vpoints.c:110 ../vector/v.surf.idw/read_sites.c:45
+#: ../ps/ps.map/ps_vpoints.c:110 ../vector/v.buffer/main.c:376
+#: ../vector/v.surf.idw/read_sites.c:45
 msgid "Column type not supported"
 msgstr "Spaltentyp nicht unterstützt."
 
-#: ../ps/ps.map/ps_vpoints.c:112 ../vector/v.surf.idw/read_sites.c:48
+#: ../ps/ps.map/ps_vpoints.c:112 ../vector/v.buffer/main.c:371
+#: ../vector/v.surf.idw/read_sites.c:48
 msgid "Cannot select data from table"
 msgstr "Kann Daten nicht aus der Tabelle selektieren."
 
@@ -3759,11 +3802,14 @@ msgid "Read error in vector file"
 msgstr "Lesefehler in Vektordatei."
 
 #: ../ps/ps.map/ps_vpoints.c:160 ../ps/ps.map/ps_vpoints.c:169
+#: ../vector/v.buffer/main.c:421 ../vector/v.buffer/main.c:430
+#: ../vector/v.buffer/main.c:490 ../vector/v.buffer/main.c:499
 #, c-format
 msgid "No record for cat = %d"
 msgstr "Kein Eintrag für Kategorie %d."
 
-#: ../ps/ps.map/ps_vpoints.c:175
+#: ../ps/ps.map/ps_vpoints.c:175 ../vector/v.buffer/main.c:436
+#: ../vector/v.buffer/main.c:505
 #, c-format
 msgid "Attribute is of invalid size (%.3f) for category %d."
 msgstr "Attribut hat ungültige Größe (%.3f) für Kategorie %d."
@@ -4357,7 +4403,7 @@ msgstr "Findet die dichtesten Punkte zweier Objekte in zwei Rasterkarten."
 msgid "Maps for computing inter-class distances"
 msgstr "Karten für die Berechnung von Inter-class-Entfernungen"
 
-#: ../raster/r.distance/parse.c:30 ../raster/r.stats/main.c:90
+#: ../raster/r.distance/parse.c:30 ../raster/r.stats/main.c:91
 #: ../vector/v.db.select/main.c:64
 msgid "Output field separator"
 msgstr "Ausgabe Feld-Trennzeichen"
@@ -4677,11 +4723,11 @@ msgstr ""
 msgid "Name for new location to create"
 msgstr "Name einer neu zu erstellenden Location"
 
-#: ../raster/r.in.gdal/main.c:116 ../vector/v.in.ogr/main.c:189
+#: ../raster/r.in.gdal/main.c:116 ../vector/v.in.ogr/main.c:190
 msgid "Override projection (use location's projection)"
 msgstr "Überschreibe Datenprojekten (benutzte Projektion der Location)."
 
-#: ../raster/r.in.gdal/main.c:120 ../vector/v.in.ogr/main.c:193
+#: ../raster/r.in.gdal/main.c:120 ../vector/v.in.ogr/main.c:194
 msgid "Extend location extents based on new dataset"
 msgstr "Vergrößere Locationausmaße basierend auf dem zu importierenden Datensatz."
 
@@ -4872,7 +4918,7 @@ msgstr "Resultierende Rasterkarte."
 msgid "Raster file matrix filter."
 msgstr "Rasterdatei mit Matrix-Filter"
 
-#: ../raster/r.mfilter/main.c:44 ../raster/r.resamp.rst/main.c:171
+#: ../raster/r.mfilter/main.c:44 ../raster/r.resamp.rst/main.c:169
 msgid "Name of the input raster file"
 msgstr "Name der Eingaberasterkarte"
 
@@ -5497,7 +5543,7 @@ msgstr "Seitenbreite (Standard: %d Zeichen)."
 msgid "Name of an output file to hold the report"
 msgstr "Name der Ausgabedatei zum Speichern des Reports."
 
-#: ../raster/r.report/parse.c:88 ../raster/r.stats/main.c:113
+#: ../raster/r.report/parse.c:88 ../raster/r.stats/main.c:114
 msgid "Number of fp subranges to collect stats from"
 msgstr "Anzahl der Kategoriewerte, für die Statistiken eingeholt werden sollen."
 
@@ -5521,7 +5567,7 @@ msgstr "Alle NODATA-Werte herausfiltern."
 msgid "Filter out cells where all maps have no data"
 msgstr "Filtere alle Zellen heraus, wo alle Karten NODATA-Werte haben."
 
-#: ../raster/r.report/parse.c:116 ../raster/r.stats/main.c:166
+#: ../raster/r.report/parse.c:116 ../raster/r.stats/main.c:167
 msgid "Report for cats fp ranges (fp maps only)"
 msgstr "Gebe Fließkomma-Spannen der Cats aus. (nur bei Fließkomma-Karten)"
 
@@ -5529,7 +5575,7 @@ msgstr "Gebe Fließkomma-Spannen der Cats aus. (nur bei Fließkomma-Karten)"
 msgid "Read fp map as integer (use map's quant rules"
 msgstr "Lese Fließkommakarten als Integer (benutze die Quantisier-Regeln der Karte)"
 
-#: ../raster/r.resamp.rst/main.c:161
+#: ../raster/r.resamp.rst/main.c:159
 msgid ""
 "Reinterpolates and computes topographic analysis from input raster file to a "
 "new raster file (possibly with different resolution) using regularized "
@@ -5539,71 +5585,71 @@ msgstr ""
 "Eingabekarte in eine neue Rasterkarte unter Benutzung von regularized "
 "splines with tension und Glättung (RST)."
 
-#: ../raster/r.resamp.rst/main.c:177
+#: ../raster/r.resamp.rst/main.c:175
 msgid "Desired east-west resolution"
 msgstr "Gewünschte Ost-West Auflösung."
 
-#: ../raster/r.resamp.rst/main.c:183
+#: ../raster/r.resamp.rst/main.c:181
 msgid "Desired north-south resolution"
 msgstr "Gewünschte Nord-Süd Auflösung."
 
-#: ../raster/r.resamp.rst/main.c:190
+#: ../raster/r.resamp.rst/main.c:188
 msgid "Output z-file (elevation)"
 msgstr "Ausgabekarte derz-Werte (Höheninformationen)."
 
-#: ../raster/r.resamp.rst/main.c:197
+#: ../raster/r.resamp.rst/main.c:195
 msgid "Slope"
 msgstr "Hangneigung"
 
-#: ../raster/r.resamp.rst/main.c:204
+#: ../raster/r.resamp.rst/main.c:202
 msgid "Aspect"
 msgstr "Hangexposition"
 
-#: ../raster/r.resamp.rst/main.c:211
+#: ../raster/r.resamp.rst/main.c:209
 msgid "Profile curvature"
 msgstr "Vertikal-Wölbung"
 
-#: ../raster/r.resamp.rst/main.c:218
+#: ../raster/r.resamp.rst/main.c:216
 msgid "Tangential curvature"
 msgstr "Horizontal-Wölbung"
 
-#: ../raster/r.resamp.rst/main.c:225
+#: ../raster/r.resamp.rst/main.c:223
 msgid "Mean curvature"
 msgstr "Mittlere Wölbung"
 
-#: ../raster/r.resamp.rst/main.c:229 ../vector/v.surf.rst/main.c:248
+#: ../raster/r.resamp.rst/main.c:227 ../vector/v.surf.rst/main.c:248
 msgid "Output partial derivatives instead"
 msgstr "Gebe stattdessen partielle Ableitung aus."
 
-#: ../raster/r.resamp.rst/main.c:236
+#: ../raster/r.resamp.rst/main.c:234
 msgid "Name of the cell file containing smoothing"
 msgstr "Name der Datei, die die Glättung enthält."
 
-#: ../raster/r.resamp.rst/main.c:243 ../vector/v.surf.rst/main.c:290
+#: ../raster/r.resamp.rst/main.c:241 ../vector/v.surf.rst/main.c:290
 msgid "Name of the raster file used as mask"
 msgstr "Name der Rasterkarte, die als Maske benutzt werden soll."
 
-#: ../raster/r.resamp.rst/main.c:250
+#: ../raster/r.resamp.rst/main.c:248
 msgid "Rows/columns overlap for segmentation"
 msgstr "Reihen/Spalte Überlappung für Segmentierung."
 
-#: ../raster/r.resamp.rst/main.c:257
+#: ../raster/r.resamp.rst/main.c:255
 msgid "Conversion factor for z-values"
 msgstr "Konvertierungsfaktor für z-Werte."
 
-#: ../raster/r.resamp.rst/main.c:264
+#: ../raster/r.resamp.rst/main.c:262
 msgid "Tension"
 msgstr "Spannung (Tension)"
 
-#: ../raster/r.resamp.rst/main.c:270
+#: ../raster/r.resamp.rst/main.c:268
 msgid "Anisotropy angle (in degrees)"
 msgstr "Anisotropie-Winkel (in Grad)"
 
-#: ../raster/r.resamp.rst/main.c:276 ../vector/v.surf.rst/main.c:338
+#: ../raster/r.resamp.rst/main.c:274 ../vector/v.surf.rst/main.c:338
 msgid "Anisotropy scaling factor"
 msgstr "Anisotropie Skalierfaktor"
 
-#: ../raster/r.resamp.rst/main.c:280 ../vector/v.surf.rst/main.c:357
+#: ../raster/r.resamp.rst/main.c:278 ../vector/v.surf.rst/main.c:357
 msgid "Use dnorm independent tension"
 msgstr "Benutze dnorm unabhängige Spannung."
 
@@ -5766,71 +5812,111 @@ msgstr ""
 msgid "Cover values extracted from the category labels of the cover map"
 msgstr "Benutze die Kategorie-Werte, die von der Coverkarte bedeckt sind."
 
-#: ../raster/r.stats/main.c:71
+#: ../raster/r.stats/main.c:72
 msgid "Generates area statistics for raster map layers."
 msgstr "Erzeugt Flächenstatistiken für Rasterkarten."
 
-#: ../raster/r.stats/main.c:81
+#: ../raster/r.stats/main.c:82
 msgid "Raster input maps(s)"
 msgstr "Rastereingabekarte(n)"
 
-#: ../raster/r.stats/main.c:98
+#: ../raster/r.stats/main.c:99
 msgid "String representing no data cell value"
 msgstr "Zeichenkette, die NODATA-Werte repräsentiert."
 
-#: ../raster/r.stats/main.c:105
+#: ../raster/r.stats/main.c:106
 msgid "Output file name"
 msgstr "Ausgabedateiname"
 
-#: ../raster/r.stats/main.c:122
+#: ../raster/r.stats/main.c:123
 msgid "One cell (range) per line"
 msgstr "Eine Zelle(nspanne) pro Linie."
 
-#: ../raster/r.stats/main.c:126
+#: ../raster/r.stats/main.c:127
 msgid "Print averaged values instead of intervals"
 msgstr "Gib gemittelte Werte anstatt Intervalle aus."
 
-#: ../raster/r.stats/main.c:130
+#: ../raster/r.stats/main.c:131
 msgid "Print area totals"
 msgstr "Gebe Flächensummen aus."
 
-#: ../raster/r.stats/main.c:134
+#: ../raster/r.stats/main.c:135
 msgid "Print cell counts"
 msgstr "Gebe Zellenanzahlen aus."
 
-#: ../raster/r.stats/main.c:138
+#: ../raster/r.stats/main.c:139
 msgid "Print APPROXIMATE percents (total percent may not be 100%)"
 msgstr "Gebe ungefähre Prozente aus (Gesamtprozente müssen nicht 100% ergeben)."
 
-#: ../raster/r.stats/main.c:142
+#: ../raster/r.stats/main.c:143
 msgid "Print category labels"
 msgstr "Gebe Kategorielabel aus."
 
-#: ../raster/r.stats/main.c:150
+#: ../raster/r.stats/main.c:151
 msgid "Suppress reporting of any NULLs"
 msgstr "Unterdrücke die Ausgabe von NULL-Werten."
 
-#: ../raster/r.stats/main.c:154
+#: ../raster/r.stats/main.c:155
 msgid "Suppress reporting of NULLs when all values are NULL"
 msgstr "Unterdrücke die Ausgabe von NULL-Werten, wenn alle Werte NULL sind."
 
-#: ../raster/r.stats/main.c:158
+#: ../raster/r.stats/main.c:159
 msgid "Print grid coordinates (east and north)"
 msgstr "Gebe Rasterkoordinaten aus (Ost und Nord)."
 
-#: ../raster/r.stats/main.c:162
+#: ../raster/r.stats/main.c:163
 msgid "Print x and y (column and row)"
 msgstr "Gebe x und y aus (Spalten und Reihen)."
 
-#: ../raster/r.stats/main.c:170
+#: ../raster/r.stats/main.c:171
 msgid "Print raw indexes of fp ranges (fp maps only)"
 msgstr "Gebe rohe Indizes der Fließkomma-Spannen aus (nur Fließkommakarten)."
 
-#: ../raster/r.stats/main.c:174
+#: ../raster/r.stats/main.c:175
 msgid "Read fp map as integer (use map's quant rules)"
 msgstr ""
 "Lese Fließkommakarte als Integerkarte (benutze Quantisierungsregeln der "
 "Karte)."
+
+#: ../raster/r.stats/main.c:192
+#, fuzzy
+msgid "nsteps must be greater than zero; using nsteps=255"
+msgstr "größer als mit"
+
+#: ../raster/r.stats/main.c:250
+#, fuzzy, c-format
+msgid "%s: [%s] not found"
+msgstr "s s"
+
+#: ../raster/r.stats/main.c:265
+#, c-format
+#, fuzzy
+msgid "%s: -i means read %s as integer! -C flag and/or nsteps option will be ignored"
+msgstr "s s"
+
+#: ../raster/r.stats/main.c:282
+#, c-format
+#, fuzzy
+msgid ""
+"%s: cats for %s are either missing or have no explicit labels. Using nsteps=%"
+"d"
+msgstr "s s"
+
+#: ../raster/r.stats/main.c:286
+#, c-format
+#, fuzzy
+msgid "%s: -C flag was given, using cats fp ranges of %s, ignoring nsteps option"
+msgstr "s s"
+
+#: ../raster/r.stats/main.c:291
+#, fuzzy, c-format
+msgid "%s: can't read fp range for [%s]"
+msgstr "s s"
+
+#: ../raster/r.stats/main.c:310
+#, fuzzy, c-format
+msgid "%s: can't read range for [%s]"
+msgstr "s s"
 
 #: ../raster/r.sum/main.c:31
 msgid "Sums up the raster cell values."
@@ -7222,43 +7308,43 @@ msgstr "Name der Ausgabekarte, die den Ausbreitungspfad enthalten soll."
 msgid "Run verbosly"
 msgstr "Ausführliche Ausgabe."
 
-#: ../raster/r.out.vtk/main.c:50
+#: ../raster/r.out.vtk/main.c:51
 msgid "Converts raster maps into the VTK-Ascii format"
 msgstr "Kovertiert eine Rasterkarte in das VTK-ASCII-Format."
 
-#: ../raster/r.out.vtk/main.c:96 ../raster/r.out.vtk/main.c:154
-#: ../raster/r.out.vtk/main.c:193
+#: ../raster/r.out.vtk/main.c:91 ../raster/r.out.vtk/main.c:163
+#: ../raster/r.out.vtk/main.c:200
 #, c-format
 msgid "Open Raster file %s"
 msgstr "Öffne Rasterkarte %s."
 
-#: ../raster/r.out.vtk/main.c:103 ../raster/r.out.vtk/main.c:162
-#: ../raster/r.out.vtk/main.c:203
+#: ../raster/r.out.vtk/main.c:97 ../raster/r.out.vtk/main.c:170
+#: ../raster/r.out.vtk/main.c:209
 #, c-format
 msgid "Cell file [%s] not found\n"
 msgstr "Cell-Datei [%s] nicht gefunden.\n"
 
-#: ../raster/r.out.vtk/main.c:112 ../raster/r.out.vtk/main.c:173
-#: ../raster/r.out.vtk/main.c:212 ../raster3d/r3.in.rast/main.c:333
+#: ../raster/r.out.vtk/main.c:105 ../raster/r.out.vtk/main.c:180
+#: ../raster/r.out.vtk/main.c:218 ../raster3d/r3.in.rast/main.c:329
 #, c-format
 msgid "Could not open map %s\n"
 msgstr "Kann die Karte %s nicht öffnen.\n"
 
-#: ../raster/r.out.vtk/main.c:219
+#: ../raster/r.out.vtk/main.c:225
 msgid "Writing VTK ImageData\n"
 msgstr "Schreibe VTK-Bilddaten...\n"
 
-#: ../raster/r.out.vtk/main.c:227
+#: ../raster/r.out.vtk/main.c:234
 msgid "Wrong RGB maps. Maps should be the same type! RGB output not added!"
 msgstr ""
 "Falsche RGB Karten. Karten sollten vom gleichen Typ sein. RGB-Ausgabe wurde "
 "nicht hinzugefügt."
 
-#: ../raster/r.out.vtk/main.c:237
+#: ../raster/r.out.vtk/main.c:243
 msgid "Wrong RGB maps. RGB output not added!"
 msgstr "Falsche RGB-Karten. RGB-Ausgabe wurde nicht hinzugefügt!"
 
-#: ../raster/r.out.vtk/main.c:244 ../raster3d/r3.out.vtk/main.c:309
+#: ../raster/r.out.vtk/main.c:250 ../raster3d/r3.out.vtk/main.c:323
 msgid "Error closing VTK-ASCII file"
 msgstr "Fehler beim Schließen der VTK-ASCII-Datei."
 
@@ -7280,7 +7366,7 @@ msgstr ""
 "3 Rasterkarten (r,g,b) die zum Erstellen von RGB-Werten genutzt werden "
 "[redmap,greenmap,bluemap]."
 
-#: ../raster/r.out.vtk/parameters.c:60 ../raster3d/r3.out.vtk/main.c:83
+#: ../raster/r.out.vtk/parameters.c:60 ../raster3d/r3.out.vtk/main.c:82
 msgid "Name for VTK-ASCII output file"
 msgstr "Name für die VTK-ASCII-Ausgabedatei."
 
@@ -7288,69 +7374,91 @@ msgstr "Name für die VTK-ASCII-Ausgabedatei."
 msgid "Value to represent no data cell"
 msgstr "Wert für NODATA."
 
-#: ../raster/r.out.vtk/parameters.c:73 ../raster3d/r3.out.vtk/main.c:96
+#: ../raster/r.out.vtk/parameters.c:73 ../raster3d/r3.out.vtk/main.c:95
 msgid "Scale factor for elevation"
 msgstr "Skalierungsfaktor für die Höhe."
 
-#: ../raster/r.out.vtk/parameters.c:78
+#: ../raster/r.out.vtk/parameters.c:80
+#, fuzzy
+msgid "Elevation (if no elevation map is given)"
+msgstr "Nein ist"
+
+#: ../raster/r.out.vtk/parameters.c:85
 msgid "Use structured grid for elevation (not recommended)"
 msgstr "Benutze strukturiertes Grid für die Höhe (nicht empfehlenswert)."
 
-#: ../raster/r.out.vtk/parameters.c:82
+#: ../raster/r.out.vtk/parameters.c:89
 #, fuzzy
 msgid "Use polydata-trianglestrips for elevation grid creation"
 msgstr "für"
 
-#: ../raster/r.out.vtk/parameters.c:86
+#: ../raster/r.out.vtk/parameters.c:93
 msgid "Use polydata-vertices for elevation grid creation (to use with vtkDelauny2D)"
-msgstr "Benutze Polydata-Stützpunkte für die Höhenmodellerstellung (für vtkDelauny2D)."
+msgstr ""
+"Benutze Polydata-Stützpunkte für die Höhenmodellerstellung (für "
+"vtkDelauny2D)."
 
-#: ../raster/r.out.vtk/writeascii.c:32
+#: ../raster/r.out.vtk/parameters.c:97
+#, fuzzy
+msgid "Scale factor effects the origin (if no elevation map is given)"
+msgstr "alt Nein ist"
+
+#: ../raster/r.out.vtk/parameters.c:101
+#, fuzzy
+msgid "Create VTK point data instead of VTK cell data (if no elevation map is given)"
+msgstr "Punkt von Nein ist"
+
+#: ../raster/r.out.vtk/writeascii.c:33
 msgid "writeVTKNormalHeader: Writing VTK-Header"
 msgstr "Schreibe VTKNormalHeader: Schreibe VTK-Kopf."
 
-#: ../raster/r.out.vtk/writeascii.c:51
+#: ../raster/r.out.vtk/writeascii.c:62
 msgid "writeVTKStructuredElevationHeader: Writing VTK-Header"
 msgstr "writeVTKStructuredElevationHeader: Schreibe VTK-Kopf"
 
-#: ../raster/r.out.vtk/writeascii.c:68
+#: ../raster/r.out.vtk/writeascii.c:79
 msgid "writeVTKPolygonalElevationHeader: Writing VTK-Header"
 msgstr "writeVTKPolygonalElevationHeader: Schreibe VTK-Kopf"
 
-#: ../raster/r.out.vtk/writeascii.c:84
-msgid "writeVTKCellHeader: Writing VTK-Header"
-msgstr "writeVTKCellHeader: Schreibe VTK-Kopf"
+#: ../raster/r.out.vtk/writeascii.c:95
+#, fuzzy
+msgid "writeVTKCellDataHeader: Writing VTK-DataHeader"
+msgstr "Schreiben läuft"
 
-#: ../raster/r.out.vtk/writeascii.c:96
-msgid "writeVTKPointHeader: Writing VTK-Header"
-msgstr "writeVTKPointHeader: Schreibe VTK-Kopf"
+#: ../raster/r.out.vtk/writeascii.c:105
+#, fuzzy
+msgid "writeVTKPointHeader: Writing VTK-DataHeader"
+msgstr "Schreiben läuft"
 
-#: ../raster/r.out.vtk/writeascii.c:117
+#: ../raster/r.out.vtk/writeascii.c:123
 msgid "writeVTKStructuredCoordinates: Writing Coordinates"
 msgstr "writeVTKStructuredCoordinates: Schreibe Koordinaten."
 
-#: ../raster/r.out.vtk/writeascii.c:130 ../raster/r.out.vtk/writeascii.c:196
-#: ../raster/r.out.vtk/writeascii.c:321 ../raster/r.out.vtk/writeascii.c:385
-#: ../raster/r.out.vtk/writeascii.c:390 ../raster/r.out.vtk/writeascii.c:395
+#: ../raster/r.out.vtk/writeascii.c:136 ../raster/r.out.vtk/writeascii.c:201
+#: ../raster/r.out.vtk/writeascii.c:325 ../raster/r.out.vtk/writeascii.c:388
+#: ../raster/r.out.vtk/writeascii.c:393 ../raster/r.out.vtk/writeascii.c:398
 #, c-format
 msgid "Unable to read row %i\n"
 msgstr "Kann Reihe %i nicht lesen.\n"
 
-#: ../raster/r.out.vtk/writeascii.c:182
+#: ../raster/r.out.vtk/writeascii.c:187
 msgid "writeVTKPolygonalCoordinates: Writing VTK Polygonal data"
 msgstr "writeVTKPolygonalCoordinates: SchreibeVTK Polygondaten"
 
-#: ../raster/r.out.vtk/writeascii.c:307
-msgid "writeVTKData: Writing VTK-Header"
-msgstr "writeVTKData: Schreibe VTK-Kopf"
+#: ../raster/r.out.vtk/writeascii.c:311
+#, fuzzy
+msgid "writeVTKData: Writing VTK-Data"
+msgstr "Schreiben läuft"
 
-#: ../raster/r.out.vtk/writeascii.c:370
-msgid "writeVTKRGBImageData: Writing VTK-Header"
-msgstr "writeVTKRGBImageData: Schreibe VTK-Kopf"
+#: ../raster/r.out.vtk/writeascii.c:373
+#, fuzzy
+msgid "writeVTKRGBImageData: Writing VTK-ImageData"
+msgstr "Schreiben läuft"
 
-#: ../raster/r.out.vtk/writeascii.c:434
-msgid "Wrong map values, values should be between 0 and 255!\n"
-msgstr "Falsche Kartenwerte, Werte sollten zwischen 0 und 255 liegen!\n"
+#: ../raster/r.out.vtk/writeascii.c:437
+#, fuzzy
+msgid "Wrong map values! Values should in between 0 and 255!\n"
+msgstr "Werte zwischen n"
 
 #: ../raster3d/r3.in.ascii/main.c:90
 msgid "any,grid3,3d raster"
@@ -7454,7 +7562,7 @@ msgstr "Name für eine ASCII Ausgabedatei."
 msgid "Number of decimal places for floats"
 msgstr "Anzahl der Dezimalstellen für Fließkommazahlen."
 
-#: ../raster3d/r3.out.ascii/main.c:109 ../raster3d/r3.to.rast/main.c:86
+#: ../raster3d/r3.out.ascii/main.c:109 ../raster3d/r3.to.rast/main.c:91
 msgid "Use G3D mask (if exists) with input map"
 msgstr "Benutzt G3D Maske (falls existent) mit der Eingabekarte."
 
@@ -7463,12 +7571,12 @@ msgid "Converts a 3D raster map layer into an ASCII text file"
 msgstr "Konvertiert eine 3D Rasterkarte in eine ASCII-Datei."
 
 #: ../raster3d/r3.out.ascii/main.c:272 ../raster3d/r3.out.v5d/main.c:304
-#: ../raster3d/r3.out.vtk/main.c:257 ../raster3d/base/r3.mask.main.c:87
+#: ../raster3d/r3.out.vtk/main.c:272 ../raster3d/base/r3.mask.main.c:87
 #: ../raster3d/r3.to.rast/main.c:203
 msgid "Requested g3d file not found"
 msgstr "Angeforderte g3d-Datei nicht gefunden."
 
-#: ../raster3d/r3.out.ascii/main.c:281 ../raster3d/r3.out.vtk/main.c:264
+#: ../raster3d/r3.out.ascii/main.c:281 ../raster3d/r3.out.vtk/main.c:282
 #: ../raster3d/r3.to.rast/main.c:212
 msgid "Error opening g3d file"
 msgstr "Fehler beim Öffnen der g3d-Datei."
@@ -7513,20 +7621,20 @@ msgstr "Exportiert eine GRASS 3D Rasterdatei in eine dreidimensionnale Vis5D-Dat
 msgid "Use map coordinates instead of xyz coordinates"
 msgstr "Benutze Kartenkoordinaten anstatt xyz-Koordniaten."
 
-#: ../raster3d/r3.out.vtk/main.c:55 ../raster3d/r3.out.vtk/main.c:301
-#: ../raster3d/r3.to.rast/main.c:302 ../raster3d/r3.in.rast/main.c:308
+#: ../raster3d/r3.out.vtk/main.c:54 ../raster3d/r3.out.vtk/main.c:315
+#: ../raster3d/r3.to.rast/main.c:303 ../raster3d/r3.in.rast/main.c:306
 msgid "Error closing g3d file"
 msgstr "Fehler beim Schließen der g3d-Datei."
 
-#: ../raster3d/r3.out.vtk/main.c:76
+#: ../raster3d/r3.out.vtk/main.c:75
 msgid "3dcell map(s) to be converted to VTK-ASCII data format"
 msgstr "Konvertiert 3dcell-Karte(n) in das VTK-ASCII-Format."
 
-#: ../raster3d/r3.out.vtk/main.c:89
+#: ../raster3d/r3.out.vtk/main.c:88
 msgid "Float value to represent no data cell"
 msgstr "Fließkommawert, der NODATA-Zellen repräsentiert."
 
-#: ../raster3d/r3.out.vtk/main.c:101
+#: ../raster3d/r3.out.vtk/main.c:100
 msgid "Use G3D mask (if exists) with input maps"
 msgstr "Benutze G3D Maske (falls existent) mit der Eingabekarte."
 
@@ -7534,24 +7642,27 @@ msgstr "Benutze G3D Maske (falls existent) mit der Eingabekarte."
 msgid "Create VTK pointdata instead of VTK celldata (celldata is default)"
 msgstr "Erzeugt VTK Punktedaten anstelle von VTK Zelldaten (Standaed ist Zelldaten)."
 
-#: ../raster3d/r3.out.vtk/main.c:121
+#: ../raster3d/r3.out.vtk/main.c:109
+#, fuzzy
+msgid "Scalefactor effects the origin"
+msgstr "alt"
+
+#: ../raster3d/r3.out.vtk/main.c:128
 msgid "writeVTKHeader: Writing VTK-Header"
 msgstr "writeVTKHeader: Schreibe VTK-Header"
 
-#: ../raster3d/r3.out.vtk/main.c:167
-#, c-format
+#: ../raster3d/r3.out.vtk/main.c:190
+#, fuzzy, c-format
 msgid ""
-"G3dTovtk: Writing Celldatafield %s with rows %i cols %i depths %i to vtk-"
-"ascii file"
-msgstr ""
-"G3dTovtk: Schreibe Celldatafield %s mit Zeilen %i Spalten %i Tiefen %i als "
-"VTK-ASCII Datei."
+"G3dTovtk: Writing Celldata %s with rows %i cols %i depths %i to vtk-ascii "
+"file"
+msgstr "s"
 
-#: ../raster3d/r3.out.vtk/main.c:226
+#: ../raster3d/r3.out.vtk/main.c:244
 msgid "Converts 3D raster maps (G3D) into the VTK-Ascii format"
 msgstr "Kovertiert eine 3D Rasterkarte (G3D) in das VTK-ASCII-Format."
 
-#: ../raster3d/r3.out.vtk/main.c:254 ../raster3d/r3.to.rast/main.c:200
+#: ../raster3d/r3.out.vtk/main.c:269 ../raster3d/r3.to.rast/main.c:200
 #, c-format
 msgid "Open 3DRaster file %s"
 msgstr "Öffne 3D Rasterdatei %s."
@@ -7688,25 +7799,30 @@ msgstr "grid3 <%s> wurde nicht gefunden %s\n"
 msgid "Could not close the map"
 msgstr "Konnte die Karte nicht schließen."
 
-#: ../raster3d/r3.to.rast/main.c:75
+#: ../raster3d/r3.to.rast/main.c:80
 msgid "3dcell map(s) to be converted to 2D raster slices"
 msgstr "3dcell-Karte(n) in 2D Rasterscheiben konvertieren."
 
-#: ../raster3d/r3.to.rast/main.c:81
+#: ../raster3d/r3.to.rast/main.c:86
 msgid "Basename for resultant raster slice maps"
 msgstr "Basisname für die resultierenden Rasterscheiben."
 
-#: ../raster3d/r3.to.rast/main.c:110
+#: ../raster3d/r3.to.rast/main.c:112
 #, c-format
 msgid "G3dToRaster: Writing %i raster maps with rows %i cols."
 msgstr "G3dToRaster: Schreibe %i Rasterkarten mit Reihen %i Spalten."
 
-#: ../raster3d/r3.to.rast/main.c:129
+#: ../raster3d/r3.to.rast/main.c:125
 #, c-format
 msgid "Writing raster map %i\n"
 msgstr "Schreibe Rasterkarte %i\n"
 
-#: ../raster3d/r3.to.rast/main.c:158 ../raster3d/r3.in.rast/main.c:159
+#: ../raster3d/r3.to.rast/main.c:149 ../raster3d/r3.to.rast/main.c:156
+#, fuzzy
+msgid "Could not write raster row"
+msgstr "nicht row"
+
+#: ../raster3d/r3.to.rast/main.c:159 ../raster3d/r3.in.rast/main.c:157
 msgid ""
 "\n"
 "Done\n"
@@ -7726,11 +7842,11 @@ msgstr "Keine Ausgabekarten."
 msgid "Resolution of raster and raster3d maps should be equal!"
 msgstr "Auflösung der Raster- und Raster3d-Karte sollte gleich sein!"
 
-#: ../raster3d/r3.to.rast/main.c:238 ../raster3d/r3.in.rast/main.c:222
+#: ../raster3d/r3.to.rast/main.c:238 ../raster3d/r3.in.rast/main.c:220
 msgid "out of memory!"
 msgstr "Speicher voll!!"
 
-#: ../raster3d/r3.to.rast/main.c:241 ../raster3d/r3.in.rast/main.c:225
+#: ../raster3d/r3.to.rast/main.c:241 ../raster3d/r3.in.rast/main.c:223
 msgid "Illegal output file name"
 msgstr "Ungültiger Ausgabedateiname."
 
@@ -7739,12 +7855,18 @@ msgstr "Ungültiger Ausgabedateiname."
 msgid "Creating %i raster maps\n"
 msgstr "Erzeuge %i Rasterkarten.\n"
 
-#: ../raster3d/r3.to.rast/main.c:250
+#: ../raster3d/r3.to.rast/main.c:249
 #, c-format
 msgid "Raster map %i Filename: %s\n"
 msgstr "Rasterkarte %i Dateiname: %s\n"
 
-#: ../raster3d/r3.to.rast/main.c:297
+#: ../raster3d/r3.to.rast/main.c:253
+#, c-format
+#, fuzzy
+msgid "Raster map %i Filename: %s already exists. Will be overwritten!\n"
+msgstr "s"
+
+#: ../raster3d/r3.to.rast/main.c:298
 msgid "Wrong G3D Datatype! Cannot create raster maps."
 msgstr "Falscher G3D-Datentyp! Kann die Rasterkarten nicht erzeugen."
 
@@ -7753,11 +7875,11 @@ msgstr "Falscher G3D-Datentyp! Kann die Rasterkarten nicht erzeugen."
 msgid "cannot create output map [%s]"
 msgstr "Kann die Ausgabekarte [%s] nicht erzeugen."
 
-#: ../raster3d/r3.to.rast/main.c:333
+#: ../raster3d/r3.to.rast/main.c:332
 msgid "unable to close output map"
 msgstr "Kann die Ausgabe-Karte nicht schließen."
 
-#: ../raster3d/r3.in.rast/main.c:80
+#: ../raster3d/r3.in.rast/main.c:79
 msgid "2d raster maps which represent the slices"
 msgstr "2D-Rasterkarte, die die Scheiben repräsentiert."
 
@@ -7765,61 +7887,121 @@ msgstr "2D-Rasterkarte, die die Scheiben repräsentiert."
 msgid "output 3dcell map which will be filled with the 2D raster slices"
 msgstr "Ausgabe-3dcell-Karte, die mit 2D-Rasterscheiben gefüllt wird."
 
-#: ../raster3d/r3.in.rast/main.c:113
+#: ../raster3d/r3.in.rast/main.c:112
 #, c-format
 msgid "RasterToG3D: Writing %i raster maps with rows %i cols."
 msgstr "RasterToG3D: Schreibe %i Rasterkarten mit Zeilen %i Spalten."
 
-#: ../raster3d/r3.in.rast/main.c:118
+#: ../raster3d/r3.in.rast/main.c:117
 #, c-format
 msgid "Writing g3d slice %i\n"
 msgstr "Schreibe g3d-Scheibe %i\n"
 
-#: ../raster3d/r3.in.rast/main.c:124
+#: ../raster3d/r3.in.rast/main.c:122
 msgid "Cold not get raster row \n"
 msgstr "Kann die Rasterzeile nicht holen\n"
 
-#: ../raster3d/r3.in.rast/main.c:190
+#: ../raster3d/r3.in.rast/main.c:187
 msgid "Converts 2D raster map slices to one 3D raster map"
 msgstr "Konvertiert 2D Rasterkartenscheiben in eine 3D Rasterkarte."
 
-#: ../raster3d/r3.in.rast/main.c:202
+#: ../raster3d/r3.in.rast/main.c:199
 msgid "No output map"
 msgstr "Keine Ausgabekarte angegeben."
 
-#: ../raster3d/r3.in.rast/main.c:214
+#: ../raster3d/r3.in.rast/main.c:212
 msgid "The resolution of raster and raster3d maps should be equal!"
 msgstr "Die Auflösung der Raster- und Raster3d-Karten sollten gleich sein!"
 
-#: ../raster3d/r3.in.rast/main.c:249
+#: ../raster3d/r3.in.rast/main.c:244
 msgid "Cell file not found\n"
 msgstr "Cell-Datei nicht gefunden.\n"
 
-#: ../raster3d/r3.in.rast/main.c:256
+#: ../raster3d/r3.in.rast/main.c:252
 #, c-format
 msgid "Open raster map %s\n"
 msgstr "Öffne Rasterkarte %s.\n"
 
-#: ../raster3d/r3.in.rast/main.c:268
+#: ../raster3d/r3.in.rast/main.c:265
 msgid "Input maps have to be from the same type. CELL, FCELL or DCELL!"
 msgstr "Eingabekarten müssen vom gleichen Datentyp sein. CELL FCELL oder DCELL!"
 
-#: ../raster3d/r3.in.rast/main.c:272
+#: ../raster3d/r3.in.rast/main.c:269
 msgid "Creating 3D raster map\n"
 msgstr "Erzeuge 3D Rasterkarte.\n"
 
-#: ../raster3d/r3.in.rast/main.c:294
+#: ../raster3d/r3.in.rast/main.c:292
 msgid "error opening g3d file"
 msgstr "Fehler beim Öffnen der g3d-Datei."
 
-#: ../raster3d/r3.in.rast/main.c:325
+#: ../raster3d/r3.in.rast/main.c:322
 #, c-format
 msgid "Open Raster file %s in Mapset %s\n"
 msgstr "Öffne Rasterdatei %s in Mapset %s.\n"
 
-#: ../raster3d/r3.in.rast/main.c:348
+#: ../raster3d/r3.in.rast/main.c:343
 msgid "unable to close input map"
 msgstr "Kann die Eingabekarte nicht schließen."
+
+#: ../vector/v.buffer/main.c:246
+#, fuzzy
+msgid "Create a buffer around features of given type (areas must contain centroid)."
+msgstr "a von enthalten."
+
+#: ../vector/v.buffer/main.c:261
+#, fuzzy
+msgid "Buffer distance in map units"
+msgstr "Camera Entferung (in Karteneinheiten)."
+
+#: ../vector/v.buffer/main.c:267
+#, fuzzy
+msgid "Attribute column to use for buffer distances"
+msgstr "für"
+
+#: ../vector/v.buffer/main.c:274
+#, fuzzy
+msgid "Scaling factor for attribute column values"
+msgstr "für attribute"
+
+#: ../vector/v.buffer/main.c:282
+#, fuzzy
+msgid ""
+"Maximum distance between theoretical arc and polygon segments as multiple of "
+"buffer"
+msgstr "zwischen Kreisbogen von"
+
+#: ../vector/v.buffer/main.c:290
+#, fuzzy
+msgid "Stop the process at a certain stage"
+msgstr "an a"
+
+#: ../vector/v.buffer/main.c:314 ../vector/v.buffer/main.c:447
+#: ../vector/v.buffer/main.c:516
+#, fuzzy, c-format
+msgid "The tolerance in map units: %g"
+msgstr "g"
+
+#: ../vector/v.buffer/main.c:321
+#, c-format
+#, fuzzy
+msgid "The tolerance was reset to %g (map units)"
+msgstr "g"
+
+#: ../vector/v.buffer/main.c:341 ../vector/v.clean/main.c:219
+#, fuzzy, c-format
+msgid "Could not find input map <%s>"
+msgstr "s"
+
+#: ../vector/v.buffer/main.c:454 ../vector/v.buffer/main.c:523
+#, c-format
+#, fuzzy
+msgid "The tolerance was reset to %g (map units). [category %d]"
+msgstr "g"
+
+#: ../vector/v.buffer/main.c:612 ../vector/v.buffer/main.c:686
+#, fuzzy
+msgid "Cannot calculate area centroid."
+msgstr "Bereich."
 
 #: ../vector/v.category/main.c:175
 msgid "Too many layers for this operation"
@@ -7832,6 +8014,41 @@ msgstr "Mindestens 2 Layer müssen angegeben werden."
 #: ../vector/v.category/main.c:182
 msgid "Output vector wasn't entered."
 msgstr "Ausgabekarte wurde nicht verändert."
+
+#: ../vector/v.clean/main.c:47
+msgid "Toolset to clean vector topology"
+msgstr "Werkzeugkasten zum Säubern der Vektortopologie"
+
+#: ../vector/v.clean/main.c:55
+#, fuzzy
+msgid "Name of output map where errors are written"
+msgstr "von Ausgabe"
+
+#: ../vector/v.clean/main.c:92
+#, fuzzy
+msgid "Threshold in map units, one value for each tool (default: 0.0[,0.0,...])"
+msgstr "Schwellwert eins für"
+
+#: ../vector/v.clean/main.c:96
+#, fuzzy
+msgid "Do not rebuild and store the topology at the end"
+msgstr "nicht an"
+
+#: ../vector/v.clean/main.c:114
+#, fuzzy
+msgid "You must select at least one tool"
+msgstr "an eins"
+
+#: ../vector/v.clean/main.c:147
+#, fuzzy
+msgid "Tool doesn't exist"
+msgstr "Dienstprogramm"
+
+#: ../vector/v.clean/main.c:164
+#, c-format
+#, fuzzy
+msgid "Threshold for tool %d may not be > 0, set to 0"
+msgstr "Schwellwert für nicht"
 
 #: ../vector/v.convert/att.c:30 ../vector/v.convert/old2new.c:27
 msgid "Input vector was not found."
@@ -7846,7 +8063,7 @@ msgid "Cannot open dig_cats file."
 msgstr "Kann dig_cats Datei nicht öffnen."
 
 #: ../vector/v.convert/att.c:74 ../vector/v.in.ascii/in.c:304
-#: ../vector/v.in.ogr/main.c:632 ../vector/v.surf.rst/main.c:556
+#: ../vector/v.in.ogr/main.c:633 ../vector/v.surf.rst/main.c:556
 #: ../vector/v.to.points/main.c:246
 #, c-format
 msgid "Cannot create table: %s"
@@ -8288,7 +8505,7 @@ msgstr "Cat-Spalte ist kein Nummern-Type"
 msgid "Category column is not of integer type"
 msgstr "Kategorie-Spalte ist kein Integer-Typ."
 
-#: ../vector/v.in.ascii/in.c:309 ../vector/v.in.ogr/main.c:639
+#: ../vector/v.in.ascii/in.c:309 ../vector/v.in.ogr/main.c:640
 #: ../vector/v.to.points/main.c:253
 #, c-format
 msgid "Cannot grant privileges on table %s"
@@ -8343,7 +8560,7 @@ msgstr "Spalte %d is als Double definiert und hat String-Werte."
 msgid "Length of column %d (%d) is less than maximum value length (%d)"
 msgstr "Länge der Spalte %d (%d) ist geringer als die maximale Wertlänge (%d)."
 
-#: ../vector/v.in.ascii/in.c:386 ../vector/v.in.ogr/main.c:636
+#: ../vector/v.in.ascii/in.c:386 ../vector/v.in.ogr/main.c:637
 #: ../vector/v.to.points/main.c:250
 msgid "Cannot create index"
 msgstr "Kann keinen Index erstellen."
@@ -8480,38 +8697,39 @@ msgstr "Zeigt die vorhandenen Datensätze in der Datenquelle und beendet sich."
 msgid "List available formats and exit"
 msgstr "Zeige die unterstützten Formate und beendet sich."
 
-#: ../vector/v.in.ogr/main.c:177
-msgid "Do not clean polygons"
-msgstr "Säubere die Polygone nicht."
+#: ../vector/v.in.ogr/main.c:178
+#, fuzzy
+msgid "Do not clean polygons (not recommended)"
+msgstr "nicht nicht"
 
-#: ../vector/v.in.ogr/main.c:181 ../vector/v.random/main.c:114
+#: ../vector/v.in.ogr/main.c:182 ../vector/v.random/main.c:114
 msgid "Create 3D output"
 msgstr "Erzeuge eine 3D-Ausgabe."
 
-#: ../vector/v.in.ogr/main.c:185
+#: ../vector/v.in.ogr/main.c:186
 msgid "Do not create attribute table"
 msgstr "Keine Attributtabelle erstellen."
 
-#: ../vector/v.in.ogr/main.c:207
+#: ../vector/v.in.ogr/main.c:208
 #, c-format
 msgid "The vector '%s' already exists."
 msgstr "Die Vektorkarte '%s' existiert bereits."
 
-#: ../vector/v.in.ogr/main.c:245
+#: ../vector/v.in.ogr/main.c:246
 #, c-format
 msgid "Cannot open data source: %s"
 msgstr "Kann die Datenquelle %s nicht öffnen."
 
-#: ../vector/v.in.ogr/main.c:290
+#: ../vector/v.in.ogr/main.c:291
 #, c-format
 msgid "Layer '%s' not available"
 msgstr "Layer '%s' ist nicht vorhanden."
 
-#: ../vector/v.in.ogr/main.c:313
+#: ../vector/v.in.ogr/main.c:314
 msgid " 4 parameters required for 'spatial' parameter."
 msgstr "4 Werte sind für den Parameter 'spatial' nötig."
 
-#: ../vector/v.in.ogr/main.c:372
+#: ../vector/v.in.ogr/main.c:373
 msgid ""
 "Unable to convert input map projection to GRASS format; cannot create new "
 "location."
@@ -8519,7 +8737,7 @@ msgstr ""
 "Kann die Projektion der Eingabekarte nicht in das GRASS-Format konvertieren; "
 "erstelle daher keine neue Location."
 
-#: ../vector/v.in.ogr/main.c:385
+#: ../vector/v.in.ogr/main.c:386
 msgid ""
 "Unable to convert input map projection information to GRASS format for "
 "checking"
@@ -8527,7 +8745,7 @@ msgstr ""
 "Kann die Projektionsinformationen der Eingabekarte nicht ins GRASS-Format "
 "zur Überprüfung konvertieren."
 
-#: ../vector/v.in.ogr/main.c:479
+#: ../vector/v.in.ogr/main.c:480
 #, c-format
 msgid ""
 "\n"
@@ -8536,7 +8754,7 @@ msgstr ""
 "\n"
 "Um den Check %s zu überschreiben, kann der Schalter '-o' angewendet werden.\n"
 
-#: ../vector/v.in.ogr/main.c:482
+#: ../vector/v.in.ogr/main.c:483
 msgid ""
 "Consider to generate a new location with 'location' parameter from input "
 "data set.\n"
@@ -8544,7 +8762,7 @@ msgstr ""
 "Ziehe das Erzeugen einer neuen Location mit dem Parameter 'location=' vom "
 "Eingabedatensatz in Betracht.\n"
 
-#: ../vector/v.in.ogr/main.c:487
+#: ../vector/v.in.ogr/main.c:488
 #, c-format
 msgid ""
 "Projection of input dataset and current location appear to match.\n"
@@ -8554,19 +8772,19 @@ msgstr ""
 "Location stimmen überein.\n"
 "Fahre mit dem Import fort...\n"
 
-#: ../vector/v.in.ogr/main.c:578
+#: ../vector/v.in.ogr/main.c:579
 #, c-format
 msgid "Column name changed: '%s' -> '%s'"
 msgstr "Spaltenname '%s' wurde in '%s' geändert."
 
-#: ../vector/v.in.ogr/main.c:597 ../vector/v.in.ogr/main.c:613
+#: ../vector/v.in.ogr/main.c:598 ../vector/v.in.ogr/main.c:614
 #, c-format
 msgid "Writing column <%s> with fixed length 40 chars (may be truncated)"
 msgstr ""
 "Schreibe Spalte <%s> mit einer fixierten Länge von 40 Zeichen (Teile können "
 "abgeschnitten worden sein). "
 
-#: ../vector/v.in.ogr/main.c:605
+#: ../vector/v.in.ogr/main.c:606
 #, c-format
 msgid ""
 "Width for column '%s' set to 255 (was not specified by OGR), some strings "
@@ -8575,30 +8793,35 @@ msgstr ""
 "Spaltenbreite für die Spalte '%s' wird auf 255 gesetzt (nicht angegeben bei "
 "OGR). Einige Texte können abgeschnitten worden sein!"
 
-#: ../vector/v.in.ogr/main.c:615
+#: ../vector/v.in.ogr/main.c:616
 #, c-format
 msgid "Column type not supported (%s)"
 msgstr "Spaltentyp (%s) wird nicht unterstützt."
 
-#: ../vector/v.in.ogr/main.c:696 ../vector/v.to.points/main.c:54
+#: ../vector/v.in.ogr/main.c:649
+#, c-format
+msgid "Importing map %d features..."
+msgstr "Importiere %d Objekte der Karte..."
+
+#: ../vector/v.in.ogr/main.c:698 ../vector/v.to.points/main.c:54
 #, c-format
 msgid "Cannot insert new row: %s"
 msgstr "Kann neu Reihe '%s' nicht einfügen."
 
-#: ../vector/v.in.ogr/main.c:710
+#: ../vector/v.in.ogr/main.c:712
 #, c-format
 msgid "%d %s without geometry"
 msgstr "%d %s ohne Geometrie."
 
-#: ../vector/v.in.ogr/main.c:732
+#: ../vector/v.in.ogr/main.c:734
 msgid "Cleaning polygons, result is not guaranteed!\n"
 msgstr "Säubere Polygone; für das Resultat wird nicht garantiert!\n"
 
-#: ../vector/v.in.ogr/main.c:813 ../vector/v.voronoi/dt_main.c:119
+#: ../vector/v.in.ogr/main.c:815 ../vector/v.voronoi/dt_main.c:119
 msgid "Cannot calculate area centroid"
 msgstr "Kann den Flächenzentroiden nicht berechnen."
 
-#: ../vector/v.in.ogr/main.c:886
+#: ../vector/v.in.ogr/main.c:888
 #, c-format
 msgid ""
 "%d areas represent more (overlapping) features, because polygons overlap in "
@@ -8610,12 +8833,12 @@ msgstr ""
 "der Attributtabelle verlinkt. Die Anzahl der Objekte für diese Flächen ist "
 "als Kategoriewert im Layer %d abgelegt."
 
-#: ../vector/v.in.ogr/main.c:892
+#: ../vector/v.in.ogr/main.c:894
 #, c-format
 msgid "%d input polygons\n"
 msgstr "%d Eingabepolygone\n"
 
-#: ../vector/v.in.ogr/main.c:916
+#: ../vector/v.in.ogr/main.c:918
 msgid ""
 "Input data contains 3D features. Created vector is 2D only, use -z flag to "
 "import 3D vector."
@@ -8647,15 +8870,20 @@ msgstr "Gebe nur die Vektorkartenausdehnung aus."
 
 #: ../vector/v.kernel/main.c:58
 #, c-format
+#, fuzzy
 msgid "\tScore Value=%f\tsmoothing parameter (standard deviation)=%f"
-msgstr ""
+msgstr "f parameter f"
 
 #: ../vector/v.kernel/main.c:94
 msgid ""
 "Generates a raster density map from vector points data using a moving 2D "
 "isotropic Gaussian kernel or optionally generates a vector density map on "
 "vector network with a 1D kernel"
-msgstr "Erzeugt eine Dichterasterkarte aus Vektorpunkten unter Zuhilfenahme einer bewegenden 2D isotrophen Gausschen Kernverteilung. Optional kann eine Vektordichtekarte basierend auf einem Vektornetzwerk mit einem 1D-Kern erstellt werden."
+msgstr ""
+"Erzeugt eine Dichterasterkarte aus Vektorpunkten unter Zuhilfenahme einer "
+"bewegenden 2D isotrophen Gausschen Kernverteilung. Optional kann eine "
+"Vektordichtekarte basierend auf einem Vektornetzwerk mit einem 1D-Kern "
+"erstellt werden."
 
 #: ../vector/v.kernel/main.c:98
 msgid "Input vector with training points"
@@ -8733,7 +8961,9 @@ msgstr "Fehler beim Öffnen der Rasterkarte [%s]."
 msgid ""
 "Automatic choose of smoothing parameter (standard deviation), maximum "
 "possible value of standard deviation is was set to %f"
-msgstr "Automatisches Auswählen der Glättungsparameter (Standardabweichung). Der Maximalwert der möglichen Werte der Standardabweichung ist auf %f gesetzt."
+msgstr ""
+"Automatisches Auswählen der Glättungsparameter (Standardabweichung). Der "
+"Maximalwert der möglichen Werte der Standardabweichung ist auf %f gesetzt."
 
 #: ../vector/v.kernel/main.c:251
 #, c-format
@@ -8870,11 +9100,15 @@ msgstr "Randfarbe "
 
 #: ../vector/v.label/main.c:181
 msgid "Opaque to vector (only relevant if background color is selected)"
-msgstr "Undurchsichtig für Vektoren (nur relevant, wenn eine Hintergrundfarbe ausgewählt wurde)."
+msgstr ""
+"Undurchsichtig für Vektoren (nur relevant, wenn eine Hintergrundfarbe "
+"ausgewählt wurde)."
 
 #: ../vector/v.label/main.c:224
 msgid "size and space options vary significantly which may lead to crummy output"
-msgstr "Größen- und Abstandsoptionen differieren signifikant, was zu einer komischen Ausgabe führen kann."
+msgstr ""
+"Größen- und Abstandsoptionen differieren signifikant, was zu einer komischen "
+"Ausgabe führen kann."
 
 #: ../vector/v.label/main.c:231
 msgid "Too many parameters for <reference>"
@@ -9037,8 +9271,7 @@ msgid "Use drand48() function (default=rand() )"
 msgstr "Benutze drand48() Funktion (standard: rand() )."
 
 #: ../vector/v.random/main.c:128
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s given an illegal number of sites [%d]"
 msgstr "E%s"
 
@@ -9050,7 +9283,10 @@ msgstr "Attribut-Tabellenspalte mit den Werten zum Interpolieren."
 msgid ""
 "Don't index points by raster cell (slower but uses less memory and includes "
 "points from outside region in the interpolation)"
-msgstr "Punkte nicht zu jeder Rasterzelle indizieren (langsamer, aber braucht weniger Speicher und integriert auch Punkte außerhalb der Region in die Interpolation)."
+msgstr ""
+"Punkte nicht zu jeder Rasterzelle indizieren (langsamer, aber braucht "
+"weniger Speicher und integriert auch Punkte außerhalb der Region in die "
+"Interpolation)."
 
 #: ../vector/v.surf.idw/main.c:97
 msgid ""
@@ -9113,7 +9349,10 @@ msgid ""
 "Interpolation and topographic analysis from given point or contour data in "
 "vector format to GRASS floating point raster format using regularized spline "
 "with tension."
-msgstr "Interpolation und topographische Analysen basierend auf gegebenen Punkt- oder Konturdaten im Vektorformat zu GRASS-Rasterkarten (Fließkommabereich) unter Zuhilfenahme der Regularized-spline-with tension-Methode (RST)."
+msgstr ""
+"Interpolation und topographische Analysen basierend auf gegebenen Punkt- "
+"oder Konturdaten im Vektorformat zu GRASS-Rasterkarten (Fließkommabereich) "
+"unter Zuhilfenahme der Regularized-spline-with tension-Methode (RST)."
 
 #: ../vector/v.surf.rst/main.c:188
 msgid "Name of the vector file with input data"
@@ -9133,7 +9372,9 @@ msgstr "Name der Attributspalte mit den Glättungs-Parametern."
 
 #: ../vector/v.surf.rst/main.c:215
 msgid "Maximum distance between points on isoline (to insert additional points)"
-msgstr "Maximale Distanz zwischen den Punkten auf einer Isolinie (zum Einfügen weiterer Punkte)."
+msgstr ""
+"Maximale Distanz zwischen den Punkten auf einer Isolinie (zum Einfügen "
+"weiterer Punkte)."
 
 #: ../vector/v.surf.rst/main.c:223
 msgid "Minimum distance between points (to remove almost identical points)"
@@ -9229,7 +9470,9 @@ msgstr "Ausgabe"
 
 #: ../vector/v.surf.rst/main.c:432
 msgid "Using anisotropy - both theta and scalex have to be specified"
-msgstr "Benutze Anisotropie - beide Parameter theta und scalex müssen angegeben werden."
+msgstr ""
+"Benutze Anisotropie - beide Parameter theta und scalex müssen angegeben "
+"werden."
 
 #: ../vector/v.surf.rst/main.c:439
 msgid "Both smatt and smooth options specified - using constant"
@@ -9310,7 +9553,9 @@ msgstr "Kann die temporäre Datei [%s] nicht öffnen."
 #: ../vector/v.surf.rst/main.c:607 ../vector/v.surf.rst/main.c:616
 #: ../vector/v.surf.rst/main.c:624 ../vector/v.surf.rst/main.c:632
 msgid "Not enough disk space -- cannot write files"
-msgstr "Nicht genügend Speicher auf der Festplatte frei - kann die Dateien nicht schreiben."
+msgstr ""
+"Nicht genügend Speicher auf der Festplatte frei - kann die Dateien nicht "
+"schreiben."
 
 #: ../vector/v.surf.rst/main.c:652 ../vector/v.surf.rst/main.c:707
 msgid "Input failed"
@@ -9358,51 +9603,51 @@ msgstr "Abfrage-Layer. Wird nur von der 'Query'-Option benutzt."
 msgid "Value to upload"
 msgstr "Wert zum Laden in die Attributtabelle."
 
-#: ../vector/v.to.db/parse.c:68
+#: ../vector/v.to.db/parse.c:71
 msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares)"
 msgstr "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares)"
 
-#: ../vector/v.to.db/parse.c:76
+#: ../vector/v.to.db/parse.c:79
 msgid "column(s)"
 msgstr "Spalte(n)."
 
-#: ../vector/v.to.db/parse.c:84
+#: ../vector/v.to.db/parse.c:87
 msgid "Query column used for 'query' option. E.g. 'cat', 'count(*)', 'sum(val)'"
 msgstr ""
 "Abfragespalte, die von der 'Query'-Option benutzt wird. (Zum Beispiel: "
 "'cat', 'count(*)', 'sum(val)')."
 
-#: ../vector/v.to.db/parse.c:88
+#: ../vector/v.to.db/parse.c:91
 msgid "print only"
 msgstr "Gebe nur Ergebnisse aus."
 
-#: ../vector/v.to.db/parse.c:92
+#: ../vector/v.to.db/parse.c:95
 msgid "only print sql statements"
 msgstr "Gebe nur das SQL-Statement aus."
 
-#: ../vector/v.to.db/parse.c:96
+#: ../vector/v.to.db/parse.c:99
 #, fuzzy
 msgid "In print mode prints totals for options: length,area,count"
 msgstr "Gebe Im Print-Modus für length Bereich"
 
-#: ../vector/v.to.db/parse.c:108
+#: ../vector/v.to.db/parse.c:111
 #, c-format
 msgid "%s: <%s> vector map not found"
 msgstr "%s: Vektorkarte <%s> nicht gefunden."
 
-#: ../vector/v.to.db/parse.c:131
+#: ../vector/v.to.db/parse.c:134
 msgid "This option requires one column"
 msgstr "Diese Option benötigt eine Spalte."
 
-#: ../vector/v.to.db/parse.c:135
+#: ../vector/v.to.db/parse.c:138
 msgid "This option requires 2 columns"
 msgstr "Diese Option benötigt eine 2 Spalten."
 
-#: ../vector/v.to.db/parse.c:139
+#: ../vector/v.to.db/parse.c:142
 msgid "This option requires at least 2 columns"
 msgstr "Diese Option benötigt mindestens 2 Spalten."
 
-#: ../vector/v.to.db/parse.c:146
+#: ../vector/v.to.db/parse.c:149
 msgid "The 'sides' option makes sense only for boundaries"
 msgstr "Die 'sides'-Option macht nur Sinn beim Elementtyp Boundary."
 
@@ -9612,34 +9857,119 @@ msgstr "Die Punkte sind nicht weit genug auseinander gelegen."
 msgid "You need to enter at least %d points."
 msgstr "Sie müssen mindestens %d Punkte eingeben."
 
-#: ../vector/v.what.rast/main.c:330
+#: ../vector/v.what.rast/main.c:77
+#, fuzzy
+msgid "Uploads raster values at positions of vector points to the table"
+msgstr "Uploads an von Tabelle"
+
+#: ../vector/v.what.rast/main.c:81
+#, fuzzy
+msgid "Name of input vector points map for which to edit attribute table"
+msgstr "von für Edit attribute Tabelle"
+
+#: ../vector/v.what.rast/main.c:88
+#, fuzzy
+msgid "Name of existing raster map to be queried"
+msgstr "von"
+
+#: ../vector/v.what.rast/main.c:96
+msgid "Column name (will be updated by raster values)"
+msgstr "Spaltenname (die mit den Rasterwerten aktualisiert wird)."
+
+#: ../vector/v.what.rast/main.c:112
+#, fuzzy
+msgid "Cannot find vector map"
+msgstr "Kann Vektor nicht lesen."
+
+#: ../vector/v.what.rast/main.c:123
+#, fuzzy, c-format
+msgid "Cannot open database <%s> by driver <%s>"
+msgstr "s s"
+
+#: ../vector/v.what.rast/main.c:128
+#, fuzzy
+msgid "Cannot find raster map"
+msgstr "Kann Mapset für %s nicht finden."
+
+#: ../vector/v.what.rast/main.c:131
+#, fuzzy
+msgid "Cannot open raster map"
+msgstr "Kann Rasterdatei [%s] nicht öffnen!"
+
+#: ../vector/v.what.rast/main.c:144
+#, fuzzy, c-format
+msgid "Column <%s> not found"
+msgstr "s"
+
+#: ../vector/v.what.rast/main.c:147
+#, fuzzy
+msgid "Column type is not supported"
+msgstr "ist nicht"
+
+#: ../vector/v.what.rast/main.c:150
+#, fuzzy
+msgid "Raster type is integer and column type is float"
+msgstr "ist ist"
+
+#: ../vector/v.what.rast/main.c:153
+#, fuzzy
+msgid "Raster type is float and column type is integer, some data lost!!"
+msgstr "ist ist einige!"
+
+#: ../vector/v.what.rast/main.c:230
+#, fuzzy, c-format
+msgid "%d points outside current region skip"
+msgstr "Gib die aktuelle Region aus."
+
+#: ../vector/v.what.rast/main.c:233
+#, fuzzy, c-format
+msgid "%d points without category skip"
+msgstr "%d Punkte in die Ausgabedatei geschrieben."
+
+#: ../vector/v.what.rast/main.c:254 ../vector/v.what.rast/main.c:257
+#, fuzzy
+msgid "Can't read raster"
+msgstr "gelesen"
+
+#: ../vector/v.what.rast/main.c:279
 #, c-format
-msgid "%d categories loaded from table\n"
-msgstr "%d Kategorien aus der Tabelle geladen.\n"
+#, fuzzy
+msgid "More points (%d) of category %d, value set to 'NULL'"
+msgstr "von"
+
+#: ../vector/v.what.rast/main.c:288
+#, fuzzy, c-format
+msgid "No record for category '%d' in the table"
+msgstr "für Tabelle"
+
+#: ../vector/v.what.rast/main.c:330
+#, fuzzy, c-format
+msgid "%d categories loaded from table"
+msgstr "geladen von Tabelle"
 
 #: ../vector/v.what.rast/main.c:331
-#, c-format
-msgid "%d categories loaded from vector\n"
-msgstr "%d Kategorien wurden von der Vektorkarte geladen.\n"
+#, fuzzy, c-format
+msgid "%d categories loaded from vector"
+msgstr "geladen von"
 
 #: ../vector/v.what.rast/main.c:332
-#, c-format
-msgid "%d categories from vector missing in table\n"
-msgstr "%d Kategorien der Vektorkarte fehlen in der Tabelle.\n"
+#, fuzzy, c-format
+msgid "%d categories from vector missing in table"
+msgstr "von Tabelle"
 
 #: ../vector/v.what.rast/main.c:333
-#, c-format
-msgid "%d duplicate categories in vector\n"
-msgstr "%d doppelte Kategorien in der Vektordatei.\n"
+#, fuzzy, c-format
+msgid "%d duplicate categories in vector"
+msgstr "Duplikat"
 
 #: ../vector/v.what.rast/main.c:334
-#, c-format
-msgid "%d records updated\n"
+#, fuzzy, c-format
+msgid "%d records updated"
 msgstr "%d Einträge aktualisiert.\n"
 
 #: ../vector/v.what.rast/main.c:335
-#, c-format
-msgid "%d update errors\n"
+#, fuzzy, c-format
+msgid "%d update errors"
 msgstr "%d aktualisierte Fehler.\n"
 
 #: ../vector/v.to.rast3/main.c:36
