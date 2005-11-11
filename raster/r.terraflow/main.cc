@@ -559,8 +559,12 @@ main(int argc, char *argv[]) {
 
   /* write streams to GRASS cell files */
   stream2_CELL(dirstr, nrows, ncols, opt->dir_grid);
-  delete dirstr; 
+  delete dirstr;
+#ifdef ELEV_SHORT
   stream2_CELL(filledstr, nrows, ncols, opt->filled_grid);
+#else
+  stream2_CELL(filledstr, nrows, ncols, opt->filled_grid,true);
+#endif
   delete filledstr; 
   stream2_CELL(labeledWater, nrows, ncols, labelElevTypePrintLabel(), 
 			   opt->watershed_grid);
