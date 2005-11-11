@@ -176,9 +176,10 @@ cell2stream(char* cellname, elevation_type T_max_value, long* nodata_count) {
 template<class T>
 void 
 stream2_CELL(AMI_STREAM<T>* str, dimension_type nrows, dimension_type ncols, 
-	    char* cellname) {
+	    char* cellname, bool usefcell=false) {
   Rtimer rt;
   AMI_err ae; 
+  RASTER_MAP_TYPE mtype= (usefcell ? FCELL_TYPE : CELL_TYPE);
   
   rt_start(rt); 
   assert(str);
@@ -193,13 +194,13 @@ stream2_CELL(AMI_STREAM<T>* str, dimension_type nrows, dimension_type ncols,
 
   /* open output cell file */
   int outfd;
-  if ( (outfd = G_open_raster_new (cellname, CELL_TYPE)) < 0) {
+  if ( (outfd = G_open_raster_new (cellname, mtype)) < 0) {
     G_fatal_error ("Could not open <%s>", cellname);
   }
   
   /* Allocate output buffer */
   unsigned char *outrast;
-  outrast = (unsigned char *)G_allocate_raster_buf(CELL_TYPE);
+  outrast = (unsigned char *)G_allocate_raster_buf(mtype);
   assert(outrast);
  
   T* elt;
@@ -215,20 +216,28 @@ stream2_CELL(AMI_STREAM<T>* str, dimension_type nrows, dimension_type ncols,
 	  }
 
 	  /* WRITE VALUE */
-	  if (is_nodata(*elt)) {
-	    G_set_c_null_value( &( ((CELL *) outrast)[j]), 1);
-	  } else { 
-	    ((CELL *) outrast)[j] = (CELL)(*elt);
-	  }
-	  
-	} /* for j*/
-	if (G_put_raster_row (outfd, outrast, CELL_TYPE) < 0)
-	  G_fatal_error ("Cannot write to <%s>",cellname);
-	
-	G_percent(i, nrows, 2);
+    if(usefcell){
+      if (is_nodata(*elt)) {
+        G_set_f_null_value( &( ((FCELL *) outrast)[j]), 1);
+      } else { 
+        ((FCELL *) outrast)[j] = (FCELL)(*elt);
+      }
+    }else{
+      if (is_nodata(*elt)) {
+        G_set_c_null_value( &( ((CELL *) outrast)[j]), 1);
+      } else { 
+        ((CELL *) outrast)[j] = (CELL)(*elt);
+      }
+    }
+
+  } /* for j*/
+  if (G_put_raster_row (outfd, outrast, mtype) < 0)
+    G_fatal_error ("Cannot write to <%s>",cellname);
+
+  G_percent(i, nrows, 2);
   }/* for i */
   fprintf(stderr, "\n");
-  
+
   G_free(outrast);
   G_close_cell (outfd);
 
