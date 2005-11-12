@@ -38,7 +38,6 @@
 #define MAIN
 
 #include "dbmi.h"
-
 #include "gis.h"
 #include "linkm.h"
 #include "bitmap.h"
@@ -46,6 +45,7 @@
 #include "interpf.h"
 #include "glocale.h"
 
+#include "local_proto.h"
 
 
 double /* pargr */ ns_res, ew_res, inp_ew_res, inp_ns_res;
@@ -128,9 +128,6 @@ struct Cell_head winhd;
 struct Cell_head inphd;
 struct Cell_head outhd;
 struct Cell_head smhd;
-
-void create_temp_files(void);
-void clean_fatal_error(char *);
 
 int main(int argc, char *argv[])
 {
@@ -447,7 +444,7 @@ int main(int argc, char *argv[])
 	sdisk += disk;
 
     fprintf(stderr, "Processing all selected output files will require\n");
-    fprintf(stderr, "%d bytes of disk space for temp files\n", sdisk);
+    fprintf(stderr, "%d bytes of disk space for temp files.\n", sdisk);
     fprintf(stderr, "\n");
 
 
@@ -551,6 +548,7 @@ int main(int argc, char *argv[])
 	}
     }
     fprintf(stderr, "dnorm in mainc after grid before out2= %f \n", dnorm);
+    fprintf(stderr, "\n");
 
     if (IL_resample_output_2d(&params, zmin, zmax, zminac, zmaxac, c1min,
 			      c1max, c2min, c2max, gmin, gmax, ertot, input,
