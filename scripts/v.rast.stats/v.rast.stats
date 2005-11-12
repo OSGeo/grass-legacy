@@ -127,7 +127,7 @@ g.region save=${TMPNAME} > /dev/null
 
 #Temporarily setting raster resolution to $RASTER resolution
 #keep boundary settings
-g.region nsres=$NSRES ewres=$EWRES -ap > /dev/null
+g.region nsres=$NSRES ewres=$EWRES -a
 
 #prepare raster MASK
 v.to.rast in=$VECTOR out=${VECTOR}_${TMPNAME} use=cat > /dev/null 2> /dev/null
@@ -179,16 +179,9 @@ for i in $CATSLIST ; do
  echo "Processing category $i ($CURRNUM/$NUMBER)"
  g.remove MASK > /dev/null 2> /dev/null
  r.mapcalc "MASK=if(${VECTOR}_${TMPNAME} == $i, 1, null())" 2> /dev/null
+
  #n, min, max, range, mean, stddev, variance, coeff_var, sum
- n=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f1`
- min=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f2`
- max=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f3`
- range=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f4`
- mean=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f5`
- stddev=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f6`
- variance=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f7`
- cf_var=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f8`
- sum=`r.univar -g $RASTER | cut -d'=' -f2 | tr '\n' ' ' | cut -d' ' -f9`
+ eval `r.univar -g $RASTER`
 
  if [ $DBFDRIVER -eq 1 ] ; then
   v.db.update map=$VECTOR col="`echo ${COLPREFIX}_n| cut -b1-10`"        value=$n        where="cat=$i"
@@ -198,7 +191,7 @@ for i in $CATSLIST ; do
   v.db.update map=$VECTOR col="`echo ${COLPREFIX}_mean| cut -b1-10`"     value=$mean     where="cat=$i"
   v.db.update map=$VECTOR col="`echo ${COLPREFIX}_stddev| cut -b1-10`"   value=$stddev   where="cat=$i"
   v.db.update map=$VECTOR col="`echo ${COLPREFIX}_variance| cut -b1-10`" value=$variance where="cat=$i"
-  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_cf_var| cut -b1-10`"   value=$cf_var   where="cat=$i"
+  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_cf_var| cut -b1-10`"   value=$coeff_var where="cat=$i"
   v.db.update map=$VECTOR col="`echo ${COLPREFIX}_sum| cut -b1-10`"      value=$sum      where="cat=$i"
  else
   v.db.update map=$VECTOR col=${COLPREFIX}_n         value=$n         where="cat=$i"
@@ -208,7 +201,7 @@ for i in $CATSLIST ; do
   v.db.update map=$VECTOR col=${COLPREFIX}_mean      value=$mean      where="cat=$i"
   v.db.update map=$VECTOR col=${COLPREFIX}_stddev    value=$stddev    where="cat=$i"
   v.db.update map=$VECTOR col=${COLPREFIX}_variance  value=$variance  where="cat=$i"
-  v.db.update map=$VECTOR col=${COLPREFIX}_cf_var    value=$cf_var    where="cat=$i"
+  v.db.update map=$VECTOR col=${COLPREFIX}_cf_var    value=$coeff_var where="cat=$i"
   v.db.update map=$VECTOR col=${COLPREFIX}_sum       value=$sum       where="cat=$i"
  fi
 
@@ -217,6 +210,8 @@ done
 
 g.remove MASK > /dev/null 2> /dev/null
 
-echo "Done. Statistics calculated from raster map <$RASTER> and uploaded to attribute table of vector map <$VECTOR>."
-
 cleanup
+
+echo "Statistics calculated from raster map <$RASTER> and"
+echo "uploaded to attribute table of vector map <$VECTOR>."
+echo "Done."
