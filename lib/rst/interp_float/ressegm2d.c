@@ -490,15 +490,16 @@ int IL_resample_interp_segments_2d (
       /*
        * cursegm++;
        */
-      /* show after to catch 100% */
-      if (totsegm != 0)
-      {
-	G_percent (cursegm, totsegm, 1);
-      }
     }
+
     inp_check_rows += inp_r;
     out_check_rows += n_rows;
   }
+
+  /* run one last time after the loop is done to catch 100% */
+  if (totsegm != 0)
+    G_percent (1, 1, 1); /* cursegm doesn't get to totsegm so we force 100% */
+
   /*
    * if (b) G_free_vector(b); if (indx) G_free_ivector(indx); if (matrix)
    * G_free_matrix(matrix);
