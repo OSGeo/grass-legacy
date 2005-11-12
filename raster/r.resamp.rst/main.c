@@ -133,7 +133,6 @@ void clean_fatal_error(char *);
 
 int main(int argc, char *argv[])
 {
-    int per;
     int m1, ret_val;
     struct FPRange range;
     DCELL cellmin, cellmax;
@@ -282,7 +281,7 @@ int main(int argc, char *argv[])
 	exit(1);
 
     if (G_get_set_window(&winhd) == -1)
-	G_fatal_error("G_get_set_window failed");
+	G_fatal_error(_("Retrieving and setting region."));
 
     inp_ew_res = winhd.ew_res;
     inp_ns_res = winhd.ns_res;
@@ -297,7 +296,6 @@ int main(int argc, char *argv[])
     fprintf(stderr, "See manual pages for reference and publications\n");
     fprintf(stderr, "\n");
 
-    per = 1;			/* flag.per->answer; */
     input = parm.input->answer;
     smooth = parm.smooth->answer;
     maskmap = parm.maskmap->answer;
@@ -317,9 +315,9 @@ int main(int argc, char *argv[])
     ertre = 0.1;
 
     if (!G_scan_resolution(parm.res_ew->answer, &ew_res, winhd.proj))
-	G_fatal_error("Cannot read ew_res value");
+	G_fatal_error(_("Cannot read ew_res value"));
     if (!G_scan_resolution(parm.res_ns->answer, &ns_res, winhd.proj))
-	G_fatal_error("Cannot read ns_res value");
+	G_fatal_error(_("Cannot read ns_res value"));
     sscanf(parm.fi->answer, "%lf", &fi);
     sscanf(parm.zmult->answer, "%lf", &zmult);
     sscanf(parm.overlap->answer, "%d", &overlap);
@@ -330,8 +328,7 @@ int main(int argc, char *argv[])
     if (parm.scalex->answer) {
 	sscanf(parm.scalex->answer, "%lf", &scalex);
 	if (!parm.theta->answer)
-	    G_fatal_error
-		("Using anisotropy - both theta and scalex have to be specified");
+	    G_fatal_error(_("When using anisotropy both theta and scalex must be specified."));
     }
 
     /*
@@ -354,78 +351,76 @@ int main(int argc, char *argv[])
 
     az = G_alloc_vector(nsizc + 1);
     if (!az) {
-	G_fatal_error("Not enough memory for az");
+	G_fatal_error(_("Not enough memory for az"));
     }
     if (cond1) {
 	adx = G_alloc_vector(nsizc + 1);
-	if (!adx) {
-	    G_fatal_error("Not enough memory for adx");
-	}
+	if (!adx)
+	    G_fatal_error(_("Not enough memory for adx"));
+
 	ady = G_alloc_vector(nsizc + 1);
-	if (!ady) {
-	    G_fatal_error("Not enough memory for ady");
-	}
+	if (!ady)
+	    G_fatal_error(_("Not enough memory for ady"));
+
 	if (cond2) {
 	    adxx = G_alloc_vector(nsizc + 1);
-	    if (!adxx) {
-		G_fatal_error("Not enough memory for adxx");
-	    }
+	    if (!adxx)
+		G_fatal_error(_("Not enough memory for adxx"));
+
 	    adyy = G_alloc_vector(nsizc + 1);
-	    if (!adyy) {
-		G_fatal_error("Not enough memory for adyy");
-	    }
+	    if (!adyy)
+		G_fatal_error(_("Not enough memory for adyy"));
+
 	    adxy = G_alloc_vector(nsizc + 1);
-	    if (!adxy) {
-		G_fatal_error("Not enough memory for adxy");
-	    }
+	    if (!adxy)
+		G_fatal_error(_("Not enough memory for adxy"));
 	}
     }
     mapset = NULL;
     if (smooth != NULL) {
+
 	mapset = G_find_file("cell", smooth, "");
-	fprintf(stderr, "mapset for smooth [%s], \n", mapset);
-	if (mapset == NULL) {
-	    sprintf(msg, "file [%s] not found", smooth);
-	    G_fatal_error(msg);
-	}
-	if ((fdsmooth = G_open_cell_old(smooth, mapset)) < 0) {
-	    sprintf(msg, "Cannot open %s", smooth);
-	    G_fatal_error(msg);
-	}
-	if (G_get_cellhd(smooth, mapset, &smhd) < 0) {
-	    sprintf(msg, "[%s]: Cannot read header", smooth);
-	    G_fatal_error(msg);
-	}
-	if ((winhd.ew_res != smhd.ew_res) || (winhd.ns_res != smhd.ns_res)) {
-	    sprintf(msg, "[%s]: Wrong resolution", smooth);
-	    G_fatal_error(msg);
-	}
+
+	if (mapset == NULL)
+	    G_fatal_error(_("Raster map [%s] not found"), smooth);
+
+	G_debug(1, "mapset for smooth map is [%s]", mapset);
+
+	if ((fdsmooth = G_open_cell_old(smooth, mapset)) < 0)
+	    G_fatal_error(_("Cannot open %s"), smooth);
+
+	if (G_get_cellhd(smooth, mapset, &smhd) < 0)
+	    G_fatal_error(_("[%s]: Cannot read map header"), smooth);
+
+	if ((winhd.ew_res != smhd.ew_res) || (winhd.ns_res != smhd.ns_res))
+	    G_fatal_error(_("[%s]: Map is the wrong resolution"), smooth);
+
 	if (G_read_fp_range(smooth, mapset, &range) >= 0)
 	    G_get_fp_range_min_max(&range, &cellmin, &cellmax);
+
 	fcellmin = (float)cellmin;
-	if (G_is_f_null_value(&fcellmin) || fcellmin < 0.0) {
-	    sprintf(msg, "Incorrect value of smoothing - negative or is NULL");
-	    G_fatal_error(msg);
-	}
+
+	if (G_is_f_null_value(&fcellmin) || fcellmin < 0.0)
+	    G_fatal_error(_("Smoothing values can not be negative or NULL."));
     }
+
     mapset = NULL;
     mapset = G_find_file("cell", input, "");
-    fprintf(stderr, "mapset for input %s\n", mapset);
-    if (mapset == NULL) {
-	sprintf(msg, "file [%s] not found", input);
-	G_fatal_error(msg);
-    }
-    if (G_get_cellhd(input, mapset, &inphd) < 0) {
-	sprintf(msg, "[%s]: Cannot read header", input);
-	G_fatal_error(msg);
-    }
+
+    if (mapset == NULL)
+	G_fatal_error(_("Raster map [%s] not found"), input);
+
+    G_debug(1, "mapset for input map is [%s]", mapset);
+
+    if (G_get_cellhd(input, mapset, &inphd) < 0)
+	G_fatal_error(_("[%s]: Cannot read map header"), input);
+
     if ((winhd.ew_res != inphd.ew_res) || (winhd.ns_res != inphd.ns_res))
-	fprintf(stderr,
-		"Warning: input map resolution differs from current region resolution!\n");
-    if ((fdinp = G_open_cell_old(input, mapset)) < 0) {
-	sprintf(msg, "Cannot open %s", input);
-	G_fatal_error(msg);
-    }
+	G_warning(_("Input map resolution differs from current region resolution!"));
+
+    if ((fdinp = G_open_cell_old(input, mapset)) < 0)
+	G_fatal_error(_("Cannot open raster map [%s]"), input);
+
 
     sdisk = 0;
     if (elev != NULL)
@@ -463,25 +458,21 @@ int main(int argc, char *argv[])
     if (G_read_fp_range(input, mapset, &range) >= 0) {
 	G_get_fp_range_min_max(&range, &cellmin, &cellmax);
     }
-
     else {
 	cellrow = G_allocate_f_raster_buf();
 	for (m1 = 0; m1 < inp_rows; m1++) {
 	    ret_val = G_get_f_raster_row(fdinp, cellrow, m1);
-	    if (ret_val < 0) {
-		sprintf(msg, "Cannot get row %d (return value = %d)", m1,
-			ret_val);
-		G_fatal_error(msg);
-	    }
+	    if (ret_val < 0)
+		G_fatal_error(_("Cannot get row %d (error = %d)"), m1, ret_val);
+
 	    G_row_update_fp_range(cellrow, m1, &range, FCELL_TYPE);
 	}
 	G_get_fp_range_min_max(&range, &cellmin, &cellmax);
     }
+
     fcellmin = (float)cellmin;
-    if (G_is_f_null_value(&fcellmin)) {
-	sprintf(msg, "Max value of a cell file is NULL");
-	G_fatal_error(msg);
-    }
+    if (G_is_f_null_value(&fcellmin))
+	G_fatal_error(_("Maximum value of a cell file is NULL."));
 
     zmin = (double)cellmin *zmult;
     zmax = (double)cellmax *zmult;
@@ -498,6 +489,7 @@ int main(int argc, char *argv[])
 		      aspect, pcurv, tcurv, mcurv, dmin, inp_x_orig, inp_y_orig,
 		      deriv, theta, scalex, Tmp_fd_z, Tmp_fd_dx, Tmp_fd_dy,
 		      Tmp_fd_xx, Tmp_fd_yy, Tmp_fd_xy, NULL, NULL, NULL);
+
     /*  In the above line, the penultimate argument is supposed to be a 
      * deviations file pointer.  None is obvious, so I used NULL. */
     /*  The 3rd and 4th argument are int-s, elatt and smatt (from the function
@@ -507,21 +499,20 @@ int main(int argc, char *argv[])
 		    IL_check_at_points_2d,
 		    IL_secpar_loop_2d, IL_crst, IL_crstg, IL_write_temp_2d);
 
-    fprintf(stderr,
-	    "Temporarily changing the region to desired resolution...\n");
+    G_message(_("Temporarily changing the region to desired resolution ..."));
     if (G_set_window(&outhd) < 0)
 	G_fatal_error("Cannot set region to output region!");
 
     bitmask = IL_create_bitmask(&params);
     /* change region to initial region */
-    fprintf(stderr, "Changing the region back to initial...\n");
+    G_message(_("Changing back to the original region ..."));
     if (G_set_window(&winhd) < 0)
-	G_fatal_error("Cannot set region to back to initial region!");
+	G_fatal_error(_("Cannot set region to back to the initial region !!!"));
 
     ertot = 0.;
-    if (per)
-	fprintf(stderr, "Percent complete: ");
     cursegm = 0;
+    fprintf(stderr, "Percent complete: ");
+
 
     NPOINT =
 	IL_resample_interp_segments_2d(&params, bitmask, zmin, zmax, &zminac,
@@ -530,6 +521,8 @@ int main(int argc, char *argv[])
 				       overlap, inp_rows, inp_cols, fdsmooth,
 				       fdinp, ns_res, ew_res, inp_ns_res,
 				       inp_ew_res, dtens);
+
+
     fprintf(stderr, "dnorm in mainc after grid before out1= %f \n", dnorm);
 
     if (NPOINT < 0)
@@ -593,7 +586,7 @@ void create_temp_files(void)
 
     zero_array_cell = (FCELL *) malloc(sizeof(FCELL) * nsizc);
     if (!zero_array_cell)
-	G_fatal_error("Not enough memory for zero_array_cell");
+	G_fatal_error(_("Not enough memory for zero_array_cell"));
 
     for (i = 0; i < nsizc; i++) {
 	zero_array_cell[i] = (FCELL) 0;
@@ -601,75 +594,74 @@ void create_temp_files(void)
 
     if (elev != NULL) {
 	Tmp_file_z = G_tempfile();
-	if (NULL == (Tmp_fd_z = fopen(Tmp_file_z, "w+"))) {
-	    sprintf(msg, "Can't open temp file [%s] ", Tmp_file_z);
-	    G_fatal_error(msg);
-	}
+	if (NULL == (Tmp_fd_z = fopen(Tmp_file_z, "w+")))
+	    G_fatal_error(_("Can't open temp file [%s]"), Tmp_file_z);
+
 	for (i = 0; i < nsizr; i++) {
 	    if (!(fwrite(zero_array_cell, sizeof(FCELL), nsizc, Tmp_fd_z)))
 		clean_fatal_error
-		    ("Not enough disk space -- cannot write files");
+		    (_("Not enough disk space -- cannot write files"));
 	}
     }
     if (slope != NULL) {
 	Tmp_file_dx = G_tempfile();
 	if (NULL == (Tmp_fd_dx = fopen(Tmp_file_dx, "w+"))) {
-	    sprintf(msg, "Can't open temp file [%s] ", Tmp_file_dx);
+	    sprintf(msg, _("Can't open temp file [%s]"), Tmp_file_dx);
 	    clean_fatal_error(msg);
 	}
 	for (i = 0; i < nsizr; i++) {
 	    if (!(fwrite(zero_array_cell, sizeof(FCELL), nsizc, Tmp_fd_dx)))
 		clean_fatal_error
-		    ("Not enough disk space -- cannot write files");
+		    (_("Not enough disk space -- cannot write files"));
 	}
     }
     if (aspect != NULL) {
 	Tmp_file_dy = G_tempfile();
 	if (NULL == (Tmp_fd_dy = fopen(Tmp_file_dy, "w+"))) {
-	    sprintf(msg, "Can't open temp file [%s] ", Tmp_file_dy);
+	    sprintf(msg, _("Can't open temp file [%s]"), Tmp_file_dy);
 	    clean_fatal_error(msg);
 	}
 	for (i = 0; i < nsizr; i++) {
 	    if (!(fwrite(zero_array_cell, sizeof(FCELL), nsizc, Tmp_fd_dy)))
 		clean_fatal_error
-		    ("Not enough disk space -- cannot write files");
+		    (_("Not enough disk space -- cannot write files"));
 	}
     }
 
     if (pcurv != NULL) {
 	Tmp_file_xx = G_tempfile();
 	if (NULL == (Tmp_fd_xx = fopen(Tmp_file_xx, "w+"))) {
-	    sprintf(msg, "Can't open temp file [%s] ", Tmp_file_xx);
+	    sprintf(msg, _("Can't open temp file [%s]"), Tmp_file_xx);
 	    clean_fatal_error(msg);
 	}
 	for (i = 0; i < nsizr; i++) {
 	    if (!(fwrite(zero_array_cell, sizeof(FCELL), nsizc, Tmp_fd_xx)))
 		clean_fatal_error
-		    ("Not enough disk space -- cannot write files");
+		    (_("Not enough disk space -- cannot write files"));
 	}
     }
     if (tcurv != NULL) {
 	Tmp_file_yy = G_tempfile();
 	if (NULL == (Tmp_fd_yy = fopen(Tmp_file_yy, "w+"))) {
-	    sprintf(msg, "Can't open temp file [%s] ", Tmp_file_yy);
+	    sprintf(msg, _("Can't open temp file [%s]"), Tmp_file_yy);
 	    clean_fatal_error(msg);
 	}
 	for (i = 0; i < nsizr; i++) {
 	    if (!(fwrite(zero_array_cell, sizeof(FCELL), nsizc, Tmp_fd_yy)))
 		clean_fatal_error
-		    ("Not enough disk space -- cannot write files");
+		    (_("Not enough disk space -- cannot write files"));
 	}
     }
     if (mcurv != NULL) {
 	Tmp_file_xy = G_tempfile();
 	if (NULL == (Tmp_fd_xy = fopen(Tmp_file_xy, "w+"))) {
-	    sprintf(msg, "Can't open temp file [%s] ", Tmp_file_xy);
+	    sprintf(msg, _("Can't open temp file [%s]"), Tmp_file_xy);
 	    clean_fatal_error(msg);
 	}
 	for (i = 0; i < nsizr; i++) {
 	    if (!(fwrite(zero_array_cell, sizeof(FCELL), nsizc, Tmp_fd_xy)))
 		clean_fatal_error
-		    ("Not enough disk space -- cannot write files");
+		    (_("Not enough disk space -- cannot write files"));
 	}
     }
 
