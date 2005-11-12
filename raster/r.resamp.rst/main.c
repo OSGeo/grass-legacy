@@ -80,7 +80,8 @@ double theta, scalex;
 FCELL *zero_array_cell;
 struct interp_params params;
 
-FILE *fdredinp, *fdzout, *fddxout, *fddyout, *fdxxout, *fdyyout, *fd4, *fxyout;
+FILE *fdredinp, *fdzout, *fddxout, *fddyout, *fdxxout, *fdyyout, *fxyout;
+FILE *fd4; /* unused? */
 int fdinp, fdsmooth = -1;
 
 /*
@@ -184,60 +185,56 @@ int main(int argc, char *argv[])
     parm.elev->type = TYPE_STRING;
     parm.elev->required = NO;
     parm.elev->gisprompt = "new,cell,raster";
-    parm.elev->description = _("Output z-file (elevation)");
+    parm.elev->description = _("Output z-file (elevation) map");
 
     parm.slope = G_define_option();
     parm.slope->key = "slope";
     parm.slope->type = TYPE_STRING;
     parm.slope->required = NO;
     parm.slope->gisprompt = "new,cell,raster";
-    parm.slope->description = _("Slope");
+    parm.slope->description = _("Output slope map (or fx)");
 
     parm.aspect = G_define_option();
     parm.aspect->key = "aspect";
     parm.aspect->type = TYPE_STRING;
     parm.aspect->required = NO;
     parm.aspect->gisprompt = "new,cell,raster";
-    parm.aspect->description = _("Aspect");
+    parm.aspect->description = _("Output aspect map (or fy)");
 
     parm.pcurv = G_define_option();
     parm.pcurv->key = "pcurv";
     parm.pcurv->type = TYPE_STRING;
     parm.pcurv->required = NO;
     parm.pcurv->gisprompt = "new,cell,raster";
-    parm.pcurv->description = _("Profile curvature");
+    parm.pcurv->description = _("Output profile curvature map (or fxx)");
 
     parm.tcurv = G_define_option();
     parm.tcurv->key = "tcurv";
     parm.tcurv->type = TYPE_STRING;
     parm.tcurv->required = NO;
     parm.tcurv->gisprompt = "new,cell,raster";
-    parm.tcurv->description = _("Tangential curvature");
+    parm.tcurv->description = _("Output tangential curvature map (or fyy)");
 
     parm.mcurv = G_define_option();
     parm.mcurv->key = "mcurv";
     parm.mcurv->type = TYPE_STRING;
     parm.mcurv->required = NO;
     parm.mcurv->gisprompt = "new,cell,raster";
-    parm.mcurv->description = _("Mean curvature");
-
-    flag.deriv = G_define_flag();
-    flag.deriv->key = 'd';
-    flag.deriv->description = _("Output partial derivatives instead");
+    parm.mcurv->description = _("Output mean curvature map (or fxy)");
 
     parm.smooth = G_define_option();
     parm.smooth->key = "smooth";
     parm.smooth->type = TYPE_STRING;
     parm.smooth->required = NO;
     parm.smooth->gisprompt = "old,cell,raster";
-    parm.smooth->description = _("Name of the cell file containing smoothing");
+    parm.smooth->description = _("Name of raster map containing smoothing");
 
     parm.maskmap = G_define_option();
     parm.maskmap->key = "maskmap";
     parm.maskmap->type = TYPE_STRING;
     parm.maskmap->required = NO;
     parm.maskmap->gisprompt = "old,cell,raster";
-    parm.maskmap->description = _("Name of the raster file used as mask");
+    parm.maskmap->description = _("Name of raster map to be used as mask");
 
     parm.overlap = G_define_option();
     parm.overlap->key = "overlap";
@@ -251,14 +248,14 @@ int main(int argc, char *argv[])
     parm.zmult->type = TYPE_DOUBLE;
     parm.zmult->answer = ZMULT;
     parm.zmult->required = NO;
-    parm.zmult->description = _("Conversion factor for z-values");
+    parm.zmult->description = _("Multiplier for z-values");
 
     parm.fi = G_define_option();
     parm.fi->key = "tension";
     parm.fi->type = TYPE_DOUBLE;
     parm.fi->answer = TENSION;
     parm.fi->required = NO;
-    parm.fi->description = _("Tension");
+    parm.fi->description = _("Spline tension value");
 
     parm.theta = G_define_option();
     parm.theta->key = "theta";
@@ -271,6 +268,10 @@ int main(int argc, char *argv[])
     parm.scalex->type = TYPE_DOUBLE;
     parm.scalex->required = NO;
     parm.scalex->description = _("Anisotropy scaling factor");
+
+    flag.deriv = G_define_flag();
+    flag.deriv->key = 'd';
+    flag.deriv->description = _("Output partial derivatives instead");
 
     flag.cprght = G_define_flag();
     flag.cprght->key = 't';
@@ -316,17 +317,26 @@ int main(int argc, char *argv[])
 
     if (!G_scan_resolution(parm.res_ew->answer, &ew_res, winhd.proj))
 	G_fatal_error(_("Cannot read ew_res value"));
+
     if (!G_scan_resolution(parm.res_ns->answer, &ns_res, winhd.proj))
 	G_fatal_error(_("Cannot read ns_res value"));
-    sscanf(parm.fi->answer, "%lf", &fi);
-    sscanf(parm.zmult->answer, "%lf", &zmult);
-    sscanf(parm.overlap->answer, "%d", &overlap);
 
-    if (parm.theta->answer)
-	sscanf(parm.theta->answer, "%lf", &theta);
+    if( sscanf(parm.fi->answer, "%lf", &fi) != 1)
+	G_fatal_error(_("Invalid value for tension"));
 
+    if( sscanf(parm.zmult->answer, "%lf", &zmult) != 1)
+	G_fatal_error(_("Invalid value for zmult"));
+
+    if( sscanf(parm.overlap->answer, "%d", &overlap) != 1)
+	G_fatal_error(_("Invalid value for overlap"));
+
+    if (parm.theta->answer) {
+	if( sscanf(parm.theta->answer, "%lf", &theta) != 1)
+	    G_fatal_error(_("Invalid value for theta"));
+    }
     if (parm.scalex->answer) {
-	sscanf(parm.scalex->answer, "%lf", &scalex);
+	if( sscanf(parm.scalex->answer, "%lf", &scalex) != 1)
+	    G_fatal_error(_("Invalid value for scalex"));
 	if (!parm.theta->answer)
 	    G_fatal_error(_("When using anisotropy both theta and scalex must be specified."));
     }
@@ -350,9 +360,9 @@ int main(int argc, char *argv[])
     disk = nsizc * nsizr * sizeof(int);
 
     az = G_alloc_vector(nsizc + 1);
-    if (!az) {
+    if (!az)
 	G_fatal_error(_("Not enough memory for az"));
-    }
+
     if (cond1) {
 	adx = G_alloc_vector(nsizc + 1);
 	if (!adx)
@@ -435,7 +445,7 @@ int main(int argc, char *argv[])
 	sdisk += disk;
     if (mcurv != NULL)
 	sdisk += disk;
-    fprintf(stderr, "\n");
+
     fprintf(stderr, "Processing all selected output files will require\n");
     fprintf(stderr, "%d bytes of disk space for temp files\n", sdisk);
     fprintf(stderr, "\n");
@@ -477,7 +487,7 @@ int main(int argc, char *argv[])
     zmin = (double)cellmin *zmult;
     zmax = (double)cellmax *zmult;
 
-    fprintf(stderr, "zmin=%f,zmax=%f\n", zmin, zmax);
+    G_debug(1, "zmin=%f, zmax=%f", zmin, zmax);
 
     if (fd4 != NULL)
 	fprintf(fd4, "deltx,delty %f %f \n", deltx, delty);
@@ -511,7 +521,7 @@ int main(int argc, char *argv[])
 
     ertot = 0.;
     cursegm = 0;
-    fprintf(stderr, "Percent complete: ");
+    fprintf(stderr, "\nPercent complete: ");
 
 
     NPOINT =
@@ -541,10 +551,12 @@ int main(int argc, char *argv[])
 	}
     }
     fprintf(stderr, "dnorm in mainc after grid before out2= %f \n", dnorm);
+
     if (IL_resample_output_2d(&params, zmin, zmax, zminac, zmaxac, c1min,
 			      c1max, c2min, c2max, gmin, gmax, ertot, input,
 			      &dnorm, &outhd, &winhd, smooth, NPOINT) < 0)
-	clean_fatal_error("Cannot write cell files--try increasing cell size");
+	clean_fatal_error("Can not write cell files--try increasing cell size");
+
     free(zero_array_cell);
     if (elev != NULL)
 	fclose(Tmp_fd_z);
