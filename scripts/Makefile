@@ -8,6 +8,7 @@ SUBDIRS = \
 	d.correlate \
 	d.monsize \
 	d.mvmon \
+	d.out.gpsdrive \
 	d.out.png \
 	d.out.file \
 	d.rast.leg \
