@@ -587,6 +587,7 @@ int main(int argc, char *argv[])
     if (smooth != NULL)
 	G_close_cell(fdsmooth);
 
+    G_done_msg("");
     return 0;
 }
 
