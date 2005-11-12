@@ -727,10 +727,9 @@ int main (int argc, char *argv[])
 		if (G_put_window (&window) < 0)
 			G_fatal_error (_("unable to update current region"));
 	}
+
 	if (print_flag)
-	{
-		print_window (&window, print_flag, dist_flag, flag.z->answer);
-	}
+	    print_window (&window, print_flag, dist_flag, flag.z->answer, flag.gprint->answer);
 
 	exit(0);
 }
