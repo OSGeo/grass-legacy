@@ -6,7 +6,7 @@
 
 #include "local_proto.h"
 
-int print_window(struct Cell_head *window,int print_flag, int dist_flag, int z_flag)
+int print_window(struct Cell_head *window,int print_flag, int dist_flag, int z_flag, int g_flag)
 {
 	char *prj, *datum, *ellps;
 	int x;
@@ -231,12 +231,20 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag, int z_f
            fprintf (stdout, "%-11s %f\n","region center easting: ", ((window->west - window->east)/2. + window->east));
 	 }
 	else if (print_flag == 5) /* flag.eprint: print region extent  MN 2003*/
-	 {
-	   if ((G_projection() == PROJECTION_LL))
-	   	fprintf (stdout, "Values in decimal degree:\n");
-	   fprintf (stdout, "%-11s %f\n","region north-south extent:", window->north - window->south);
-	   fprintf (stdout, "%-11s %f\n","region east-west extent:", window->east - window->west);
-	 }
+	{
+	    if(g_flag) {
+		if ((G_projection() == PROJECTION_LL))
+		    fprintf (stderr, "Values in decimal degree:\n");
+		fprintf (stdout, "ns_extent=%f\n", window->north - window->south);
+		fprintf (stdout, "ew_extent=%f\n", window->east - window->west);
+	    }
+	    else {
+		if ((G_projection() == PROJECTION_LL))
+		    fprintf (stdout, "Values in decimal degree:\n");
+		fprintf (stdout, "%-11s %f\n","region north-south extent:", window->north - window->south);
+		fprintf (stdout, "%-11s %f\n","region east-west extent:", window->east - window->west);
+	    }
+	}
 	else
 	{
 		fprintf (stdout, "n=%s\n",    north);
