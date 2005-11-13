@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-11 19:03+0100\n"
-"PO-Revision-Date: 2005-11-11 19:07+0100\n"
+"POT-Creation-Date: 2005-11-13 11:30+0100\n"
+"PO-Revision-Date: 2005-11-13 11:50+0100\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -725,29 +725,24 @@ msgid "Error in pj_do_proj6"
 msgstr "Fehler in pj_do_proj6"
 
 #: ../display/d.info/main.c:35
-#, fuzzy
 msgid "Display information about the active display monitor"
-msgstr "Darstellung"
+msgstr "Zeige Informationen über den aktiven Grafik-Monitor."
 
 #: ../display/d.info/main.c:39
-#, fuzzy
 msgid "Display screen rectangle"
-msgstr "Darstellung screen"
+msgstr "Stelle das Screen-Rechteck dar."
 
 #: ../display/d.info/main.c:43
-#, fuzzy
 msgid "Display screen dimensions"
-msgstr "Darstellung screen"
+msgstr "Stelle die Screen-Dimensionen dar."
 
 #: ../display/d.info/main.c:47
-#, fuzzy
 msgid "Display active frame dimensions"
-msgstr "Darstellung"
+msgstr "Stelle die aktuellen Rahmen-Dimensionen da."
 
 #: ../display/d.info/main.c:51
-#, fuzzy
 msgid "Display number of colors"
-msgstr "Darstellung von"
+msgstr "Stelle die Anzahl der Farben dar."
 
 #: ../display/d.legend/main.c:70
 msgid ""
@@ -1115,6 +1110,7 @@ msgstr "Skalierfaktor für die Pfeile (Magnitude-Karte)."
 
 #: ../display/d.rast.arrow/arrow.c:195 ../display/d.rast.arrow/arrow.c:237
 #: ../display/d.rast.num/number.c:143 ../raster/r.out.bin/main.c:134
+#: ../raster/r.resamp.rst/main.c:392 ../raster/r.resamp.rst/main.c:418
 #, c-format
 msgid "Raster map [%s] not found"
 msgstr "Rasterkarte [%s] nicht gefunden."
@@ -2052,7 +2048,7 @@ msgstr "Kann Region <%s> nicht schreiben."
 msgid "unable to update current region"
 msgstr "Kann die derzeitige Region nicht aktualisieren."
 
-#: ../general/g.region/cmd/main.c:743
+#: ../general/g.region/cmd/main.c:742
 #, c-format
 msgid "<%s=%s> ** invalid input **"
 msgstr "<%s=%s> ** Ungültige Eingabe **"
@@ -4918,7 +4914,7 @@ msgstr "Resultierende Rasterkarte."
 msgid "Raster file matrix filter."
 msgstr "Rasterdatei mit Matrix-Filter"
 
-#: ../raster/r.mfilter/main.c:44 ../raster/r.resamp.rst/main.c:169
+#: ../raster/r.mfilter/main.c:44 ../raster/r.resamp.rst/main.c:166
 msgid "Name of the input raster file"
 msgstr "Name der Eingaberasterkarte"
 
@@ -5575,7 +5571,7 @@ msgstr "Gebe Fließkomma-Spannen der Cats aus. (nur bei Fließkomma-Karten)"
 msgid "Read fp map as integer (use map's quant rules"
 msgstr "Lese Fließkommakarten als Integer (benutze die Quantisier-Regeln der Karte)"
 
-#: ../raster/r.resamp.rst/main.c:159
+#: ../raster/r.resamp.rst/main.c:156
 msgid ""
 "Reinterpolates and computes topographic analysis from input raster file to a "
 "new raster file (possibly with different resolution) using regularized "
@@ -5585,73 +5581,207 @@ msgstr ""
 "Eingabekarte in eine neue Rasterkarte unter Benutzung von regularized "
 "splines with tension und Glättung (RST)."
 
-#: ../raster/r.resamp.rst/main.c:175
+#: ../raster/r.resamp.rst/main.c:172
 msgid "Desired east-west resolution"
 msgstr "Gewünschte Ost-West Auflösung."
 
-#: ../raster/r.resamp.rst/main.c:181
+#: ../raster/r.resamp.rst/main.c:178
 msgid "Desired north-south resolution"
 msgstr "Gewünschte Nord-Süd Auflösung."
 
-#: ../raster/r.resamp.rst/main.c:188
-msgid "Output z-file (elevation)"
-msgstr "Ausgabekarte derz-Werte (Höheninformationen)."
+#: ../raster/r.resamp.rst/main.c:185
+msgid "Output z-file (elevation) map"
+msgstr "Name der Ausgabe Höhenkarte (Z-Werte)."
 
-#: ../raster/r.resamp.rst/main.c:195
-msgid "Slope"
-msgstr "Hangneigung"
+#: ../raster/r.resamp.rst/main.c:192
+msgid "Output slope map (or fx)"
+msgstr "Name der Ausgabekarte für die Hangneigung (fx)."
 
-#: ../raster/r.resamp.rst/main.c:202
-msgid "Aspect"
-msgstr "Hangexposition"
+#: ../raster/r.resamp.rst/main.c:199
+msgid "Output aspect map (or fy)"
+msgstr "Name der Ausgabekarte mit Hangexposition (fy)."
 
-#: ../raster/r.resamp.rst/main.c:209
-msgid "Profile curvature"
-msgstr "Vertikal-Wölbung"
+#: ../raster/r.resamp.rst/main.c:206
+msgid "Output profile curvature map (or fxx)"
+msgstr "Name der Ausgabekarte mit der Vertikal-Wölbung (fxx)."
 
-#: ../raster/r.resamp.rst/main.c:216
-msgid "Tangential curvature"
-msgstr "Horizontal-Wölbung"
+#: ../raster/r.resamp.rst/main.c:213
+msgid "Output tangential curvature map (or fyy)"
+msgstr "Name der Ausgabekarte mit der Horizontal-Wölbung (fyy)."
 
-#: ../raster/r.resamp.rst/main.c:223
-msgid "Mean curvature"
-msgstr "Mittlere Wölbung"
+#: ../raster/r.resamp.rst/main.c:220
+msgid "Output mean curvature map (or fxy)"
+msgstr "Ausgabekarte mit der mittleren Wölbung (fxy)."
 
-#: ../raster/r.resamp.rst/main.c:227 ../vector/v.surf.rst/main.c:248
-msgid "Output partial derivatives instead"
-msgstr "Gebe stattdessen partielle Ableitung aus."
+#: ../raster/r.resamp.rst/main.c:227
+msgid "Name of raster map containing smoothing"
+msgstr "Name der Rasterkarte, die Glättungsinformationen beinhaltet."
 
 #: ../raster/r.resamp.rst/main.c:234
-msgid "Name of the cell file containing smoothing"
-msgstr "Name der Datei, die die Glättung enthält."
+msgid "Name of raster map to be used as mask"
+msgstr "Name der Rasterkarte, die als Maske (MASK) benutzt werden soll."
 
-#: ../raster/r.resamp.rst/main.c:241 ../vector/v.surf.rst/main.c:290
-msgid "Name of the raster file used as mask"
-msgstr "Name der Rasterkarte, die als Maske benutzt werden soll."
-
-#: ../raster/r.resamp.rst/main.c:248
+#: ../raster/r.resamp.rst/main.c:241
 msgid "Rows/columns overlap for segmentation"
 msgstr "Reihen/Spalte Überlappung für Segmentierung."
 
+#: ../raster/r.resamp.rst/main.c:248
+msgid "Multiplier for z-values"
+msgstr "Multiplikator für Z-Werte."
+
 #: ../raster/r.resamp.rst/main.c:255
-msgid "Conversion factor for z-values"
-msgstr "Konvertierungsfaktor für z-Werte."
+msgid "Spline tension value"
+msgstr "Spline tension Wert."
 
-#: ../raster/r.resamp.rst/main.c:262
-msgid "Tension"
-msgstr "Spannung (Tension)"
-
-#: ../raster/r.resamp.rst/main.c:268
+#: ../raster/r.resamp.rst/main.c:261
 msgid "Anisotropy angle (in degrees)"
 msgstr "Anisotropie-Winkel (in Grad)"
 
-#: ../raster/r.resamp.rst/main.c:274 ../vector/v.surf.rst/main.c:338
+#: ../raster/r.resamp.rst/main.c:267 ../vector/v.surf.rst/main.c:338
 msgid "Anisotropy scaling factor"
 msgstr "Anisotropie Skalierfaktor"
 
-#: ../raster/r.resamp.rst/main.c:278 ../vector/v.surf.rst/main.c:357
+#: ../raster/r.resamp.rst/main.c:271 ../vector/v.surf.rst/main.c:248
+msgid "Output partial derivatives instead"
+msgstr "Gebe stattdessen partielle Ableitung aus."
+
+#: ../raster/r.resamp.rst/main.c:275 ../vector/v.surf.rst/main.c:357
 msgid "Use dnorm independent tension"
 msgstr "Benutze dnorm unabhängige Spannung."
+
+#: ../raster/r.resamp.rst/main.c:282
+msgid "Retrieving and setting region."
+msgstr "Hole und setze die Regions-Einstellung."
+
+#: ../raster/r.resamp.rst/main.c:316
+msgid "Cannot read ew_res value"
+msgstr "Kann die EW-Auflösung (ew_res) nicht lesen."
+
+#: ../raster/r.resamp.rst/main.c:319
+msgid "Cannot read ns_res value"
+msgstr "Kann die NS-Auflösung (ns_res) nicht lesen."
+
+#: ../raster/r.resamp.rst/main.c:322
+msgid "Invalid value for tension"
+msgstr "Ungültiger Wert für tension."
+
+#: ../raster/r.resamp.rst/main.c:325
+msgid "Invalid value for zmult"
+msgstr "Ungültiger Wert für zmult."
+
+#: ../raster/r.resamp.rst/main.c:328
+msgid "Invalid value for overlap"
+msgstr "Ungültiger Wert für overlap."
+
+#: ../raster/r.resamp.rst/main.c:332
+msgid "Invalid value for theta"
+msgstr "Ungültiger Wert für theta."
+
+#: ../raster/r.resamp.rst/main.c:336
+msgid "Invalid value for scalex"
+msgstr "Ungültiger Wert für scalex."
+
+#: ../raster/r.resamp.rst/main.c:338
+msgid "When using anisotropy both theta and scalex must be specified."
+msgstr "Wenn Anisotropie benutzt wird, müssen theta und scalex angegeben werden."
+
+#: ../raster/r.resamp.rst/main.c:361 ../vector/v.surf.rst/main.c:466
+msgid "Not enough memory for az"
+msgstr "Nicht genug Speicher für az."
+
+#: ../raster/r.resamp.rst/main.c:366 ../vector/v.surf.rst/main.c:471
+msgid "Not enough memory for adx"
+msgstr "Nicht genügend Speicher für adx."
+
+#: ../raster/r.resamp.rst/main.c:370 ../vector/v.surf.rst/main.c:475
+msgid "Not enough memory for ady"
+msgstr "Nicht genügend Speicher für ady."
+
+#: ../raster/r.resamp.rst/main.c:375 ../vector/v.surf.rst/main.c:480
+msgid "Not enough memory for adxx"
+msgstr "Nicht genügend Speicher für adxx."
+
+#: ../raster/r.resamp.rst/main.c:379 ../vector/v.surf.rst/main.c:484
+msgid "Not enough memory for adyy"
+msgstr "Nicht genügend Speicher für adyy."
+
+#: ../raster/r.resamp.rst/main.c:383 ../vector/v.surf.rst/main.c:488
+msgid "Not enough memory for adxy"
+msgstr "Nicht genügend Speicher für adxy."
+
+#: ../raster/r.resamp.rst/main.c:397
+#, c-format
+msgid "Cannot open %s"
+msgstr "Kann %s nicht öffnen."
+
+#: ../raster/r.resamp.rst/main.c:400 ../raster/r.resamp.rst/main.c:423
+#, c-format
+msgid "[%s]: Cannot read map header"
+msgstr "[%s]: Kann den Kartenheader nicht lesen."
+
+#: ../raster/r.resamp.rst/main.c:403
+#, c-format
+msgid "[%s]: Map is the wrong resolution"
+msgstr "Karte [%s] hate die falsche Auflösung."
+
+#: ../raster/r.resamp.rst/main.c:411
+msgid "Smoothing values can not be negative or NULL."
+msgstr "Glättungswerte (smoothing) dürfen nicht negativ oder NULL sein."
+
+#: ../raster/r.resamp.rst/main.c:426
+msgid "Input map resolution differs from current region resolution!"
+msgstr "Auflösung der Eingabekarte unterscheidet sich von der aktuellen Regions-Auflösung!"
+
+#: ../raster/r.resamp.rst/main.c:429
+#, c-format
+msgid "Cannot open raster map [%s]"
+msgstr "Kann die Rasterkarte [%s] nicht öffnen."
+
+#: ../raster/r.resamp.rst/main.c:473
+#, c-format
+msgid "Cannot get row %d (error = %d)"
+msgstr "Kann die Reihe %d (error = %d) nicht holen."
+
+#: ../raster/r.resamp.rst/main.c:482
+msgid "Maximum value of a cell file is NULL."
+msgstr "Maximalwert der Cell-Datei ist NULL."
+
+#: ../raster/r.resamp.rst/main.c:509
+msgid "Temporarily changing the region to desired resolution ..."
+msgstr "Verändere die Region temporär auf die gewünschte Auflösung..."
+
+#: ../raster/r.resamp.rst/main.c:515
+msgid "Changing back to the original region ..."
+msgstr "Wechsele wieder in die Original-Region..."
+
+#: ../raster/r.resamp.rst/main.c:517
+msgid "Cannot set region to back to the initial region !!!"
+msgstr "Kann die Region nicht mehr zur Ursprungsregion zurücksetzen!!!"
+
+#: ../raster/r.resamp.rst/main.c:600 ../vector/v.surf.rst/main.c:580
+msgid "Not enough memory for zero_array_cell"
+msgstr "Nicht genügend Speicher für zero_array_cell."
+
+#: ../raster/r.resamp.rst/main.c:609 ../raster/r.resamp.rst/main.c:620
+#: ../raster/r.resamp.rst/main.c:632 ../raster/r.resamp.rst/main.c:645
+#: ../raster/r.resamp.rst/main.c:657 ../raster/r.resamp.rst/main.c:669
+#: ../vector/v.surf.rst/main.c:588 ../vector/v.surf.rst/main.c:596
+#: ../vector/v.surf.rst/main.c:604 ../vector/v.surf.rst/main.c:613
+#: ../vector/v.surf.rst/main.c:621 ../vector/v.surf.rst/main.c:629
+#, c-format
+msgid "Can't open temp file [%s]"
+msgstr "Kann die temporäre Datei [%s] nicht öffnen."
+
+#: ../raster/r.resamp.rst/main.c:614 ../raster/r.resamp.rst/main.c:626
+#: ../raster/r.resamp.rst/main.c:638 ../raster/r.resamp.rst/main.c:651
+#: ../raster/r.resamp.rst/main.c:663 ../raster/r.resamp.rst/main.c:675
+#: ../vector/v.surf.rst/main.c:591 ../vector/v.surf.rst/main.c:599
+#: ../vector/v.surf.rst/main.c:607 ../vector/v.surf.rst/main.c:616
+#: ../vector/v.surf.rst/main.c:624 ../vector/v.surf.rst/main.c:632
+msgid "Not enough disk space -- cannot write files"
+msgstr ""
+"Nicht genügend Speicher auf der Festplatte frei - kann die Dateien nicht "
+"schreiben."
 
 #: ../raster/r.resample/main.c:35
 msgid "GRASS raster map layer data resampling capability."
@@ -5879,44 +6009,40 @@ msgstr ""
 "Karte)."
 
 #: ../raster/r.stats/main.c:192
-#, fuzzy
 msgid "nsteps must be greater than zero; using nsteps=255"
-msgstr "größer als mit"
+msgstr "nsteps muss größer als 0 sein, benutze daher nsteps=255."
 
 #: ../raster/r.stats/main.c:250
-#, fuzzy, c-format
+#, c-format
 msgid "%s: [%s] not found"
-msgstr "s s"
+msgstr "%s: [%s] nicht gefunden."
 
 #: ../raster/r.stats/main.c:265
 #, c-format
-#, fuzzy
 msgid "%s: -i means read %s as integer! -C flag and/or nsteps option will be ignored"
-msgstr "s s"
+msgstr "%s: -i zeigt, dass %s als Integerkarte gelesen werden soll! Das -C flag und/oder die nsteps Option werden ignoriert."
 
 #: ../raster/r.stats/main.c:282
 #, c-format
-#, fuzzy
 msgid ""
 "%s: cats for %s are either missing or have no explicit labels. Using nsteps=%"
 "d"
-msgstr "s s"
+msgstr "%s: Kategorien für %s fehlen oder haben keine expliziten Label. Benutze nsteps=%d."
 
 #: ../raster/r.stats/main.c:286
 #, c-format
-#, fuzzy
 msgid "%s: -C flag was given, using cats fp ranges of %s, ignoring nsteps option"
-msgstr "s s"
+msgstr "%s: Das -C flag wurde angegeben. Benutze daher die fp-Kategoriespannen von %s und ignoriere die Option nsteps."
 
 #: ../raster/r.stats/main.c:291
-#, fuzzy, c-format
+#, c-format
 msgid "%s: can't read fp range for [%s]"
-msgstr "s s"
+msgstr "%s: Kann die fp-Spanne der Karte [%s] nicht lesen."
 
 #: ../raster/r.stats/main.c:310
-#, fuzzy, c-format
+#, c-format
 msgid "%s: can't read range for [%s]"
-msgstr "s s"
+msgstr "%s: Kann die Spanne für [%s] nicht lesen."
 
 #: ../raster/r.sum/main.c:31
 msgid "Sums up the raster cell values."
@@ -7379,9 +7505,8 @@ msgid "Scale factor for elevation"
 msgstr "Skalierungsfaktor für die Höhe."
 
 #: ../raster/r.out.vtk/parameters.c:80
-#, fuzzy
 msgid "Elevation (if no elevation map is given)"
-msgstr "Nein ist"
+msgstr "Höhe (wenn keine Höhenkarte angegeben wurde)."
 
 #: ../raster/r.out.vtk/parameters.c:85
 msgid "Use structured grid for elevation (not recommended)"
@@ -7861,8 +7986,7 @@ msgid "Raster map %i Filename: %s\n"
 msgstr "Rasterkarte %i Dateiname: %s\n"
 
 #: ../raster3d/r3.to.rast/main.c:253
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Raster map %i Filename: %s already exists. Will be overwritten!\n"
 msgstr "s"
 
@@ -7982,8 +8106,7 @@ msgid "The tolerance in map units: %g"
 msgstr "g"
 
 #: ../vector/v.buffer/main.c:321
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "The tolerance was reset to %g (map units)"
 msgstr "g"
 
@@ -7993,8 +8116,7 @@ msgid "Could not find input map <%s>"
 msgstr "s"
 
 #: ../vector/v.buffer/main.c:454 ../vector/v.buffer/main.c:523
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "The tolerance was reset to %g (map units). [category %d]"
 msgstr "g"
 
@@ -8045,8 +8167,7 @@ msgid "Tool doesn't exist"
 msgstr "Dienstprogramm"
 
 #: ../vector/v.clean/main.c:164
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Threshold for tool %d may not be > 0, set to 0"
 msgstr "Schwellwert für nicht"
 
@@ -8869,8 +8990,7 @@ msgid "Print vector map region only"
 msgstr "Gebe nur die Vektorkartenausdehnung aus."
 
 #: ../vector/v.kernel/main.c:58
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "\tScore Value=%f\tsmoothing parameter (standard deviation)=%f"
 msgstr "f parameter f"
 
@@ -9414,6 +9534,10 @@ msgstr "Ausgabekarte mit Horizontal-Wölbung."
 msgid "Output mean curvature raster file"
 msgstr "Ausgabekarte mit der mittleren Wölbung."
 
+#: ../vector/v.surf.rst/main.c:290
+msgid "Name of the raster file used as mask"
+msgstr "Name der Rasterkarte, die als Maske benutzt werden soll."
+
 #: ../vector/v.surf.rst/main.c:297
 msgid "Conversion factor for interpolated values"
 msgstr "Konvertierungsfaktor für die interpolierten Werte."
@@ -9482,30 +9606,6 @@ msgstr "Beide Parameter smatt und smooth angegeben - verwende Konstanten."
 msgid "The computation will last too long - lower npmin is suggested"
 msgstr "Die Berechnung dauert zu lange - es wird vorgeschlagen, npmin zu reduzieren."
 
-#: ../vector/v.surf.rst/main.c:466
-msgid "Not enough memory for az"
-msgstr "Nicht genug Speicher für az."
-
-#: ../vector/v.surf.rst/main.c:471
-msgid "Not enough memory for adx"
-msgstr "Nicht genügend Speicher für adx."
-
-#: ../vector/v.surf.rst/main.c:475
-msgid "Not enough memory for ady"
-msgstr "Nicht genügend Speicher für ady."
-
-#: ../vector/v.surf.rst/main.c:480
-msgid "Not enough memory for adxx"
-msgstr "Nicht genügend Speicher für adxx."
-
-#: ../vector/v.surf.rst/main.c:484
-msgid "Not enough memory for adyy"
-msgstr "Nicht genügend Speicher für adyy."
-
-#: ../vector/v.surf.rst/main.c:488
-msgid "Not enough memory for adxy"
-msgstr "Nicht genügend Speicher für adxy."
-
 #: ../vector/v.surf.rst/main.c:495
 msgid "Cannot create quaddata"
 msgstr "Kann quaddata nicht erzeugen."
@@ -9537,25 +9637,6 @@ msgstr "Kann die Vektordatei <%s> nicht öffnen."
 #, c-format
 msgid "You first need to run v.build on vector file <%s>"
 msgstr "Bitte benutzen Sie zuerst v.build für die Vektordatei <%s>."
-
-#: ../vector/v.surf.rst/main.c:580
-msgid "Not enough memory for zero_array_cell"
-msgstr "Nicht genügend Speicher für zero_array_cell."
-
-#: ../vector/v.surf.rst/main.c:588 ../vector/v.surf.rst/main.c:596
-#: ../vector/v.surf.rst/main.c:604 ../vector/v.surf.rst/main.c:613
-#: ../vector/v.surf.rst/main.c:621 ../vector/v.surf.rst/main.c:629
-#, c-format
-msgid "Can't open temp file [%s]"
-msgstr "Kann die temporäre Datei [%s] nicht öffnen."
-
-#: ../vector/v.surf.rst/main.c:591 ../vector/v.surf.rst/main.c:599
-#: ../vector/v.surf.rst/main.c:607 ../vector/v.surf.rst/main.c:616
-#: ../vector/v.surf.rst/main.c:624 ../vector/v.surf.rst/main.c:632
-msgid "Not enough disk space -- cannot write files"
-msgstr ""
-"Nicht genügend Speicher auf der Festplatte frei - kann die Dateien nicht "
-"schreiben."
 
 #: ../vector/v.surf.rst/main.c:652 ../vector/v.surf.rst/main.c:707
 msgid "Input failed"
@@ -9932,8 +10013,7 @@ msgid "Can't read raster"
 msgstr "gelesen"
 
 #: ../vector/v.what.rast/main.c:279
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "More points (%d) of category %d, value set to 'NULL'"
 msgstr "von"
 
