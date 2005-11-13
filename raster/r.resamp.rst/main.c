@@ -423,7 +423,7 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("[%s]: Cannot read map header"), input);
 
     if ((winhd.ew_res != inphd.ew_res) || (winhd.ns_res != inphd.ns_res))
-	G_warning(_("Input map resolution differs from current region resolution!"));
+	G_fatal_error(_("Input map resolution differs from current region resolution!"));
 
     if ((fdinp = G_open_cell_old(input, mapset)) < 0)
 	G_fatal_error(_("Cannot open raster map [%s]"), input);
