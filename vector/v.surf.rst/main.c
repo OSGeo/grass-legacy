@@ -156,8 +156,8 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-	_("Interpolation and topographic analysis from given "
-	"point or contour data in vector format to GRASS floating point "
+	_("Spatial approximation and topographic analysis from given "
+	"point or isoline data in vector format to floating point "
 	"raster format using regularized spline with tension.");
 
     if (G_get_set_window(&cellhd) == -1)
@@ -197,7 +197,7 @@ int main(int argc, char *argv[])
     parm.zcol->type = TYPE_STRING;
     parm.zcol->required = NO;
     parm.zcol->description =
-	_("Name of the attr. column with values to be interpolated (if layer>0)");
+	_("Name of the attr. column with values to be used for approximation (if layer>0)");
 
     parm.scol = G_define_option();
     parm.scol->key = "scolumn";
@@ -234,7 +234,7 @@ int main(int argc, char *argv[])
     parm.cvdev->type = TYPE_STRING;
     parm.cvdev->required = NO;
     parm.cvdev->gisprompt = "new,dig,vector";
-    parm.cvdev->description = _("Name of the output cross-validation vector point file");
+    parm.cvdev->description = _("Name of the output cross-validation errors vector point file");
 
     parm.elev = G_define_option();
     parm.elev->key = "elev";
@@ -245,7 +245,7 @@ int main(int argc, char *argv[])
 
     flag.deriv = G_define_flag();
     flag.deriv->key = 'd';
-    flag.deriv->description = _("Output partial derivatives instead");
+    flag.deriv->description = _("Output partial derivatives instead of topographic parameters");
 
     parm.slope = G_define_option();
     parm.slope->key = "slope";
@@ -294,7 +294,7 @@ int main(int argc, char *argv[])
     parm.zmult->type = TYPE_DOUBLE;
     parm.zmult->answer = ZMULT;
     parm.zmult->required = NO;
-    parm.zmult->description = _("Conversion factor for interpolated values");
+    parm.zmult->description = _("Conversion factor for values used for approximation");
 
     parm.fi = G_define_option();
     parm.fi->key = "tension";
@@ -322,7 +322,7 @@ int main(int argc, char *argv[])
     parm.npmin->answer = MINPOINTS;
     parm.npmin->required = NO;
     parm.npmin->description =
-	_("Minimum number of points for interpolation (>segmax)");
+	_("Minimum number of points for approximation in a segment (>segmax)");
 
     parm.theta = G_define_option();
     parm.theta->key = "theta";
@@ -342,7 +342,7 @@ int main(int argc, char *argv[])
     parm.treefile->type = TYPE_STRING;
     parm.treefile->required = NO;
     parm.treefile->gisprompt = "new,dig,vector";
-    parm.treefile->description = _("Output vector file showing segmentation");
+    parm.treefile->description = _("Output vector file showing quadtree segmentation");
 
     parm.overfile = G_define_option();
     parm.overfile->key = "overfile";
@@ -350,15 +350,15 @@ int main(int argc, char *argv[])
     parm.overfile->required = NO;
     parm.overfile->gisprompt = "new,dig,vector";
     parm.overfile->description =
-	_("Output vector file showing overlapping segments");
+	_("Output vector file showing overlapping windows");
 
     flag.cprght = G_define_flag();
     flag.cprght->key = 't';
-    flag.cprght->description = _("Use dnorm independent tension");
+    flag.cprght->description = _("Use scale dependent tension");
 
     flag.cv = G_define_flag ();
     flag.cv->key = 'v';
-    flag.cv->description = _("Perform cross-validation procedure");
+    flag.cv->description = _("Perform cross-validation procedure without raster approximation");
 
 
     if (G_parser(argc, argv))
@@ -384,7 +384,7 @@ int main(int argc, char *argv[])
 
     fprintf(stderr, "\n");
     fprintf(stderr, "Authors: original version -  H.Mitasova, L.Mitas, I. Kosinovsky, D.P. Gerdes\n");
-    fprintf(stderr, "See manual pages for reference and publications \n");
+    fprintf(stderr, "See manual pages for references and publications \n");
     fprintf(stderr, "\n");
 
 
@@ -411,7 +411,7 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Both cross-validation options (-v flag and cvdev vector output) must be specified"));
 
     if((elev != NULL || cond1 || cond2 || devi != NULL) && cv )
-	G_fatal_error(_("The cross-validation cannot be computed simultanuously with output grids or devi file"));
+	G_fatal_error(_("The cross-validation cannot be computed simultanuously with output raster or devi file"));
 
     ertre = 0.1;
     sscanf(parm.dmax->answer, "%lf", &dmax);
