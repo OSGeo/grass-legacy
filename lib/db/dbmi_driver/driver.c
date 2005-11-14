@@ -92,6 +92,12 @@ db_driver (int argc,
     /* get the procedure number */
     while (db__recv_procnum (&procnum) == DB_OK)
     {
+#ifdef __MINGW32__
+	if ( procnum == DB_PROC_SHUTDOWN_DRIVER ) {
+	    db__send_procedure_ok(procnum);
+	    break;
+        }
+#endif
 	db_clear_error();
 
     /* find this procedure */
