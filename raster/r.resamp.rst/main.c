@@ -279,7 +279,7 @@ int main(int argc, char *argv[])
 	exit(1);
 
     if (G_get_set_window(&winhd) == -1)
-	G_fatal_error(_("Retrieving and setting region."));
+	G_fatal_error(_("Retrieving and setting region failed"));
 
     inp_ew_res = winhd.ew_res;
     inp_ns_res = winhd.ns_res;
@@ -290,8 +290,8 @@ int main(int argc, char *argv[])
 
     fprintf(stderr, "\n");
     fprintf(stderr,
-	    "Authors: original version -  H.Mitasova, L.Mitas, I. Kosinovsky, D.P. Gerdes\n");
-    fprintf(stderr, "See manual pages for reference and publications\n");
+	    "Authors: original version -  H. Mitasova, L. Mitas, I. Kosinovsky, D.P. Gerdes\n");
+    fprintf(stderr, "See manual pages for references and publications\n");
     fprintf(stderr, "\n");
 
     input = parm.input->answer;
@@ -335,7 +335,7 @@ int main(int argc, char *argv[])
 	if( sscanf(parm.scalex->answer, "%lf", &scalex) != 1)
 	    G_fatal_error(_("Invalid value for scalex"));
 	if (!parm.theta->answer)
-	    G_fatal_error(_("When using anisotropy both theta and scalex must be specified."));
+	    G_fatal_error(_("When using anisotropy both theta and scalex must be specified"));
     }
 
     /*
@@ -408,7 +408,7 @@ int main(int argc, char *argv[])
 	fcellmin = (float)cellmin;
 
 	if (G_is_f_null_value(&fcellmin) || fcellmin < 0.0)
-	    G_fatal_error(_("Smoothing values can not be negative or NULL."));
+	    G_fatal_error(_("Smoothing values can not be negative or NULL"));
     }
 
     mapset = NULL;
