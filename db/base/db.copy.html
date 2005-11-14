@@ -11,21 +11,23 @@ settings are saved in <em>$LOCATION/vector_map/dbln</em>.
 
 <h2>EXAMPLES</h2>
 
-<b>DBF ->PG</a><P>
-<em>storing table 'markveggy.dbf' (in current directory) into PostgreSQL 
-through ODBC:</em><br>
-<b>db.copy from_driver=</b><em>dbf</em> <b>from_database=</b><em>./</em> 
-<b>from_table=</b><em>markveggy</em> <b>to_driver=</b><em>pg</em> 
-<b>to_database=</b><em>"host=pgserver,dbname=grass51test"</em>  
-<b>to_table=</b><em>markveggy</em>
+<h3>DBF ->PG</h3>
 
-<P>
-<P>
-<b>PG -> DBF</a><P>
+<em>Storing table 'markveggy.dbf' (in current directory) into PostgreSQL through ODBC:</em><br>
 
-<tt>db.copy from_driver=pg  from_database="host=pgserver.itc.it,dbname=testdb" 
-   from_table=origtable to_driver=dbf to_database=./ to_table=origtable</tt>
-   
+<div class="code"><pre>
+db.copy from_driver=dbf from_database=$HOME/grassdata/spearfish60/user1/dbf \
+   from_table=markveggy to_driver=pg to_database="host=pgserver,dbname=grass6test" to_table=markveggy 
+</pre></div>
+
+
+<h3>PG -> DBF</h3>
+
+<div class="code"><pre>
+db.copy from_driver=pg  from_database="host=pgserver.itc.it,dbname=testdb" 
+  from_table=origtable to_driver=dbf to_database=$HOME/grassdata/spearfish60/user1/dbf to_table=origtable</tt>
+</pre></div>
+
 <h2>SEE ALSO</h2>
 
 <em><a HREF="v.db.connect.html">v.db.connect</a>,
@@ -36,6 +38,6 @@ through ODBC:</em><br>
 
 <h2>AUTHOR</h2>
 
-Radim Blazek, ITC-Irst, Trento, Italy
+Radim Blazek, ITC-irst, Trento, Italy
 
 <p><i>Last changed: $Date$</i>
