@@ -86,3 +86,5 @@ nzgd49  "nadgrids=nzgd2kgrid0005.gsb"  "New Zealand"   "LINZ NZGD49 NTv2 Distort
 nzgd49  "towgs84=59.47,-5.04,187.44,0.47,-0.1,1.024,-4.5993" "New Zealand" "Accuracy approx. 4m"
 tokyo   "towgs84=-147.54,507.26,680.47" "Japan" " "
 tokyo   "towgs84=-147,506,687" "South Korea" " "
+# Campo Inchauspe, personal communication CONAE (http://www.conae.gov.ar), Argentina:
+cai     "towgs84=-149.1,138.1,90.9,-0.142,0.344,0.301,0.388" "Argentina" "provided by CONAE, Argentina"
