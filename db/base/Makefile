@@ -7,50 +7,50 @@ DEPENDENCIES = $(GISDEP) $(DBMIDEP)
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: \
-	$(BIN)/db.columns \
-	$(BIN)/db.copy \
-	$(BIN)/db.describe \
-	$(BIN)/db.drivers \
-	$(BIN)/db.execute \
-	$(BIN)/db.select \
-	$(BIN)/db.tables \
-	$(BIN)/db.connect \
+	$(BIN)/db.columns$(EXE_SUFFIX) \
+	$(BIN)/db.copy$(EXE_SUFFIX) \
+	$(BIN)/db.describe$(EXE_SUFFIX) \
+	$(BIN)/db.drivers$(EXE_SUFFIX) \
+	$(BIN)/db.execute$(EXE_SUFFIX) \
+	$(BIN)/db.select$(EXE_SUFFIX) \
+	$(BIN)/db.tables$(EXE_SUFFIX) \
+	$(BIN)/db.connect$(EXE_SUFFIX) \
 	htmlmulti
 
-$(BIN)/db.columns: $(OBJDIR)/columns.o
+$(BIN)/db.columns$(EXE_SUFFIX): $(OBJDIR)/columns.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/columns.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
-$(BIN)/db.copy: $(OBJDIR)/copy.o
+$(BIN)/db.copy$(EXE_SUFFIX): $(OBJDIR)/copy.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/copy.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
-$(BIN)/db.createdb: $(OBJDIR)/createdb.o
+$(BIN)/db.createdb$(EXE_SUFFIX): $(OBJDIR)/createdb.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/createdb.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
-$(BIN)/db.dropdb: $(OBJDIR)/dropdb.o
+$(BIN)/db.dropdb$(EXE_SUFFIX): $(OBJDIR)/dropdb.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/dropdb.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
-$(BIN)/db.droptable: $(OBJDIR)/droptable.o
+$(BIN)/db.droptable$(EXE_SUFFIX): $(OBJDIR)/droptable.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/droptable.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
-$(BIN)/db.databases: $(OBJDIR)/databases.o
+$(BIN)/db.databases$(EXE_SUFFIX): $(OBJDIR)/databases.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/databases.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
-$(BIN)/db.describe: $(OBJDIR)/describe.o $(OBJDIR)/printtab.o
+$(BIN)/db.describe$(EXE_SUFFIX): $(OBJDIR)/describe.o $(OBJDIR)/printtab.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/describe.o $(OBJDIR)/printtab.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
-$(BIN)/db.drivers: $(OBJDIR)/drivers.o
+$(BIN)/db.drivers$(EXE_SUFFIX): $(OBJDIR)/drivers.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/drivers.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
-$(BIN)/db.execute: $(OBJDIR)/execute.o
+$(BIN)/db.execute$(EXE_SUFFIX): $(OBJDIR)/execute.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/execute.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
-$(BIN)/db.select: $(OBJDIR)/select.o
+$(BIN)/db.select$(EXE_SUFFIX): $(OBJDIR)/select.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/select.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
-$(BIN)/db.tables: $(OBJDIR)/tables.o
+$(BIN)/db.tables$(EXE_SUFFIX): $(OBJDIR)/tables.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/tables.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
-$(BIN)/db.connect: $(OBJDIR)/connect.o
+$(BIN)/db.connect$(EXE_SUFFIX): $(OBJDIR)/connect.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/connect.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 #not used: db.createdb db.dropdb db.databases

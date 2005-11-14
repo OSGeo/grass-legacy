@@ -5,7 +5,7 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-DRIVER=$(DBDRIVERDIR)/dbf
+DRIVER=$(DBDRIVERDIR)/dbf$(EXE_SUFFIX)
 DEPENDENCIES = $(GISDEP)
 EXTRA_INC = -I$(GRASS_LIBDIR)/db/dbmi_driver
 

@@ -368,20 +368,23 @@ case $target in
 esac
 
 # Hack for cross compilation with MINGW on Linux (how to do that better?)
+EXE_SUFFIX=""
 if test "$MINGW" = "yes"; then
     SHLIB_CFLAGS=""
     SHLIB_LD_LIBS='${LIBS}'
     SHLIB_SUFFIX=".dll"
+    EXE_SUFFIX=".exe"
 
     SHLIB_LD="${CC} -shared"
     LDFLAGS="-Wl,--export-dynamic"
     CC_SEARCH_FLAGS=""
     LD_SEARCH_FLAGS=""
     LD_LIBRARY_PATH_VAR="PATH"
-    
+
     GRASS_LIBRARY_TYPE='shlib'
 fi
 AC_SUBST(MINGW)
+AC_SUBST(EXE_SUFFIX)
 
 AC_MSG_CHECKING(for W11)
 case "$enable_w11" in

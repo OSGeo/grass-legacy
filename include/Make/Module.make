@@ -21,11 +21,13 @@ PACKAGE ="grassmods"
 DEFS=-DPACKAGE=\"$(PACKAGE)\"
 NLS_CFLAGS=$(GETHOSTNAME) $(ZLIBINCPATH) $(PICFLAGS) $(DEFS)
 
-cmd: $(BIN)/$(PGM) htmlcmd
+PROG=$(BIN)/$(PGM)$(EXE_SUFFIX)
 
-inter: $(BIN)/$(PGM) htmlinter
+cmd: $(PROG) htmlcmd
 
-$(BIN)/$(PGM): $(ARCH_CMD_OBJS) $(DEPENDENCIES) 
+inter: $(PROG) htmlinter
+
+$(PROG): $(ARCH_CMD_OBJS) $(DEPENDENCIES) 
 	$(CC) $(LDFLAGS) $(XTRA_LDFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) -o $@ $(ARCH_CMD_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 etc: $(ETC)/$(PGM) htmletc

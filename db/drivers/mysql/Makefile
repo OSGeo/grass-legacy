@@ -5,7 +5,7 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-DRIVER=$(DBDRIVERDIR)/mysql
+DRIVER=$(DBDRIVERDIR)/mysql$(EXE_SUFFIX)
 
 LIBES = $(DBMIDRIVERLIB) $(DBMIBASELIB) $(SQLPLIB) $(DBSTUBSLIB) \
 	 $(GISLIB) $(DATETIMELIB) 

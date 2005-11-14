@@ -6,7 +6,7 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-DRIVER=$(DBDRIVERDIR)/pg
+DRIVER=$(DBDRIVERDIR)/pg$(EXE_SUFFIX)
 
 LIBES = $(DBMIDRIVERLIB) $(DBMIBASELIB) $(DBMIEXTRALIB) $(SQLPLIB) $(DBSTUBSLIB) \
 	$(GISLIB) $(DATETIMELIB) $(PQLIB)
