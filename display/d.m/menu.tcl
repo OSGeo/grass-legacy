@@ -8,10 +8,8 @@ global execom
 
  set descmenu [subst  {
  "&File" all file $tmenu {
-	{command "Open workspace file" {} "open workspace file" {} -accelerator $keyctrl-O -command "Dm::OpenFileBox {}" }
-	{command "Save workspace file" {} "save workspace file" {} -accelerator $keyctrl-S -command "Dm::SaveFileBox {}" }
-	{cascad "Import" {} "" $tmenu {
- 		{cascad "Raster map" {} "" $tmenu {
+	 {cascad "Import" {} "" $tmenu {			
+ 		{cascad "Raster map" {} "" $tmenu {			
             {command "Multiple formats using GDAL" {} "r.in.gdal" {} -command { execute r.in.gdal }}
             {separator}
             {command "ASCII GRID (includes GRASS ASCII)" {} "r.in.ascii" {} -command { execute r.in.ascii }}
@@ -22,6 +20,7 @@ global execom
             {command "GRIDATB.FOR map file (TOPMODEL)" {} "r.in.gridatb" {} -command { execute r.in.gridatb }}
             {command "MAT-File (v.4) array (Matlab or Octave)" {} "r.in.mat" {} -command { execute r.in.mat }}
             {command "SRTM hgt files" {} "r.in.srtm" {} -command { execute r.in.srtm }}
+            {command "Terra ASTER hdf files" {} "r.in.aster" {} -command { execute r.in.aster }}
         }}
         {cascad "Vector map" {} "" $tmenu {			
             {command "Various formats using OGR" {} "v.in.ogr" {} -command { execute v.in.ogr }}
@@ -299,6 +298,7 @@ global execom
 			 {command "Create lines parallel to existing lines" {} "v.parallel" {} -command {execute v.parallel }}
 			 {separator}
 			 {command "Convert vector feature types" {} "v.type" {} -command {execute v.type }}
+			 {command "Convert 2D vector to 3D vector draping raster" {} "v.drape" {} -command {execute v.drape }}
 			 {separator}
 			 {command "Create text label file for vector features" {} "v.label" {} -command {execute v.label }}
 			 {separator}
