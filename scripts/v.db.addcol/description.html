@@ -14,20 +14,20 @@ supports only these types.
 
 The existing database connection(s) can be verified with <em>v.db.connect</em>.
 
-<h2>EXAMPLE</h2>
+<h2>EXAMPLES</h2>
 
 Adding a single column:<br>
-<tt>
-v.db.addcol sentiero_brenta_points columns="slope double"<br>
+<div class="code"><pre>
+v.db.addcol sentiero_brenta_points columns="slope double precision"
 v.info -c sentiero_brenta_points
-</tt>
+</pre></div>
 
 <p>
 Adding two columns:<br>
-<tt>
-v.db.addcol sentiero_brenta_points columns="slope double,myname varchar(15)"<br>
+<div class="code"><pre>
+v.db.addcol sentiero_brenta_points columns="slope double precision,myname varchar(15)"
 v.info -c sentiero_brenta_points
-</tt>
+</pre></div>
 
 <h2>SEE ALSO</h2>
 
