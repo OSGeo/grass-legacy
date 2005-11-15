@@ -9,7 +9,7 @@
 # with contributions by Glynn Clements, Markus Neteler, Lorenzo Moretti, 
 # Florian Goessmann, and others
 #
-# 18 March 2005
+# 12 November 2005
 #
 # COPYRIGHT:	(C) 1999 - 2005 by the GRASS Development Team
 #
@@ -158,11 +158,10 @@ proc spawn {cmd args} {
 		global env
 		set message_env [exec g.gisenv get=GRASS_MESSAGE_FORMAT]
 		set env(GRASS_MESSAGE_FORMAT) gui
-
 		set cmd_name $cmd
-		set cmd [concat | $cmd 2>@ stdout ]
-		if { [catch {open $cmd r} fh] } {
-			error $xfh
+		set cmd [concat | $cmd 2>/dev/null ]
+		if { [catch {open $cmd r } fh] } {
+			error $fh
 		}
 		$outtext insert end "$cmd_name\n"
 		$outtext yview end 
@@ -174,6 +173,7 @@ proc spawn {cmd args} {
 
 ###############################################################################
 proc term_panel {cmd} {
+	global outtext
     global env
     eval exec -- xterm -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd &
     set str $cmd
@@ -262,7 +262,7 @@ proc Dm::displmon { mon } {
             if {[regexp -nocase "$mon.*not running" $line]} {
 				run "d.mon start=$mon"
             } elseif {[regexp -nocase "$mon.* running" $line]} {
-				run cmd "d.mon select=$mon"
+				run "d.mon select=$mon"
             }              
         }
     }
