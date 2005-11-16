@@ -348,6 +348,103 @@ void gsd_diamond_lines(void)
     return;
 }
 
+void gsd_cube(float *center, int colr, float siz)
+{  /* added by Hamish Bowman Nov 2005 */
+    int preshade;
+
+    float CubeNormals[3][3] = {
+	{0, -ONORM, 0},
+	{0, 0, ONORM},
+	{ONORM, 0, 0}
+    };
+
+/* ???? not sure if any of these are needed for correct lighting.
+    float CubeNormals[6][3] = {
+	{ONORM, 0, 0},
+	{-ONORM, 0, 0},
+	{0, ONORM, 0},
+	{0, -ONORM, 0},
+	{0, 0, ONORM},
+	{0, 0, -ONORM}
+    };
+*/
+
+    float CubeVertices[8][3] = {
+	{-1.0,-1.0,-1.0},
+	{1.0,-1.0,-1.0},
+	{1.0,1.0,-1.0},
+	{-1.0,1.0,-1.0},
+	{-1.0,-1.0,1.0},
+	{1.0,-1.0,1.0},
+	{1.0,1.0,1.0},
+	{-1.0,1.0,1.0}
+    };
+
+    /* see gsd_diamond() "seems right, but isn't" */
+    siz *= .5;
+
+    gsd_pushmatrix();
+    gsd_translate(center[X], center[Y], center[Z]);
+    gsd_scale(siz, siz, siz);
+    preshade = gsd_getshademodel();
+    gsd_shademodel(0);		/* want flat shading */
+
+
+    /* N wall: */
+    gsd_bgnpolygon();
+    gsd_litvert_func(CubeNormals[0], colr, CubeVertices[2]);
+    gsd_litvert_func(CubeNormals[0], colr, CubeVertices[3]);
+    gsd_litvert_func(CubeNormals[0], colr, CubeVertices[7]);
+    gsd_litvert_func(CubeNormals[0], colr, CubeVertices[6]);
+    gsd_endpolygon();
+
+    /* S wall: */
+    gsd_bgnpolygon();
+    gsd_litvert_func(CubeNormals[0], colr, CubeVertices[1]);
+    gsd_litvert_func(CubeNormals[0], colr, CubeVertices[5]);
+    gsd_litvert_func(CubeNormals[0], colr, CubeVertices[4]);
+    gsd_litvert_func(CubeNormals[0], colr, CubeVertices[0]);
+    gsd_endpolygon();
+
+    /* E wall: */
+    gsd_bgnpolygon();
+    gsd_litvert_func(CubeNormals[1], colr, CubeVertices[2]);
+    gsd_litvert_func(CubeNormals[1], colr, CubeVertices[6]);
+    gsd_litvert_func(CubeNormals[1], colr, CubeVertices[5]);
+    gsd_litvert_func(CubeNormals[1], colr, CubeVertices[1]);
+    gsd_endpolygon();
+
+    /* W wall: */
+    gsd_bgnpolygon();
+    gsd_litvert_func(CubeNormals[1], colr, CubeVertices[0]);
+    gsd_litvert_func(CubeNormals[1], colr, CubeVertices[4]);
+    gsd_litvert_func(CubeNormals[1], colr, CubeVertices[7]);
+    gsd_litvert_func(CubeNormals[1], colr, CubeVertices[3]);
+    gsd_endpolygon();
+
+    /* lower wall: */
+    gsd_bgnpolygon();
+    gsd_litvert_func(CubeNormals[2], colr, CubeVertices[0]);
+    gsd_litvert_func(CubeNormals[2], colr, CubeVertices[1]);
+    gsd_litvert_func(CubeNormals[2], colr, CubeVertices[2]);
+    gsd_litvert_func(CubeNormals[2], colr, CubeVertices[3]);
+    gsd_endpolygon();
+
+    /* top wall: */
+    gsd_bgnpolygon();
+    gsd_litvert_func(CubeNormals[2], colr, CubeVertices[4]);
+    gsd_litvert_func(CubeNormals[2], colr, CubeVertices[5]);
+    gsd_litvert_func(CubeNormals[2], colr, CubeVertices[6]);
+    gsd_litvert_func(CubeNormals[2], colr, CubeVertices[7]);
+    gsd_endpolygon();
+
+    gsd_popmatrix();
+    gsd_shademodel(preshade);
+
+    return;
+}
+
+
 void gsd_drawsphere(float *center, unsigned long colr, float siz)
 {
     siz *= .5;			/* siz is diameter, gsd_sphere uses radius */
