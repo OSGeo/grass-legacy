@@ -53,9 +53,9 @@ If an ID column is missing in the DBF file, it has to be added beforehand, e.g. 
 <h3>4) Import of a points table (x, y, z) from SQLite file to vector points map:</h3>
 
 <div class="code"><pre>
-#create vector map from table in SQLite.db file (here, 'idcol' contains unique row IDs, 'z' is optional):
-#the 'database' parameter is the directory where the SQLite.db file is stored:
-v.in.db driver=sqlite database=/home/user/tables/ table=pointsfile x=x y=y z=z \
+#create vector map from table in SQLITE database file (here, 'idcol' contains unique row IDs, 'z' is optional):
+#the 'database' parameter is the the SQLite database file with path:
+v.in.db driver=sqlite database=/home/user/tables/mysqlite.db table=pointsfile x=x y=y z=z \
         key=idcol out=dtmpoints
 
 #check result:
@@ -63,7 +63,7 @@ v.info dtmpoints
 v.info -c dtmpoints
 </pre></div>
 <P>
-If an ID column is missing in the sqlite.db file, it has to be added beforehand with 'sqlite3' or
+If an ID column is missing in the table, it has to be added beforehand with 'sqlite3' or
 <em>db.execute</em>.
 
 
