@@ -46,6 +46,34 @@ float OctoN[8][3] = {
     {-ONORM, -ONORM, -ONORM},
 };
 
+/* ???? not sure if any of these are needed for correct lighting.
+float CubeNormals[6][3] = {
+    {ONORM, 0, 0},
+    {-ONORM, 0, 0},
+    {0, ONORM, 0},
+    {0, -ONORM, 0},
+    {0, 0, ONORM},
+    {0, 0, -ONORM}
+};
+*/
+
+float CubeNormals[3][3] = {
+    {0, -ONORM, 0},
+    {0, 0, ONORM},
+    {ONORM, 0, 0}
+};
+
+float CubeVertices[8][3] = {
+    {-1.0,-1.0,-1.0},
+    {1.0,-1.0,-1.0},
+    {1.0,1.0,-1.0},
+    {-1.0,1.0,-1.0},
+    {-1.0,-1.0,1.0},
+    {1.0,-1.0,1.0},
+    {1.0,1.0,1.0},
+    {-1.0,1.0,1.0}
+};
+
 float origin[3] = { 0.0, 0.0, 0.0 };
 
 #define UP_NORM Octo[2]
@@ -235,7 +263,7 @@ void gsd_x(geosurf * gs, float *center, int colr, float siz)
     return;
 }
 
-void gsd_diamond(float *center, int colr, float siz)
+void gsd_diamond(float *center, unsigned long colr, float siz)
 {
     int preshade;
 
@@ -328,57 +356,9 @@ void gsd_diamond(float *center, int colr, float siz)
     return;
 }
 
-void gsd_diamond_lines(void)
-{
-    gsd_bgnline();
-    gsd_vert_func(Octo[0]);
-    gsd_vert_func(Octo[3]);
-    gsd_endline();
-
-    gsd_bgnline();
-    gsd_vert_func(Octo[1]);
-    gsd_vert_func(Octo[4]);
-    gsd_endline();
-
-    gsd_bgnline();
-    gsd_vert_func(Octo[2]);
-    gsd_vert_func(Octo[5]);
-    gsd_endline();
-
-    return;
-}
-
-void gsd_cube(float *center, int colr, float siz)
+void gsd_cube(float *center, unsigned long colr, float siz)
 {  /* added by Hamish Bowman Nov 2005 */
     int preshade;
-
-    float CubeNormals[3][3] = {
-	{0, -ONORM, 0},
-	{0, 0, ONORM},
-	{ONORM, 0, 0}
-    };
-
-/* ???? not sure if any of these are needed for correct lighting.
-    float CubeNormals[6][3] = {
-	{ONORM, 0, 0},
-	{-ONORM, 0, 0},
-	{0, ONORM, 0},
-	{0, -ONORM, 0},
-	{0, 0, ONORM},
-	{0, 0, -ONORM}
-    };
-*/
-
-    float CubeVertices[8][3] = {
-	{-1.0,-1.0,-1.0},
-	{1.0,-1.0,-1.0},
-	{1.0,1.0,-1.0},
-	{-1.0,1.0,-1.0},
-	{-1.0,-1.0,1.0},
-	{1.0,-1.0,1.0},
-	{1.0,1.0,1.0},
-	{-1.0,1.0,1.0}
-    };
 
     /* see gsd_diamond() "seems right, but isn't" */
     siz *= .5;
@@ -444,12 +424,82 @@ void gsd_cube(float *center, int colr, float siz)
     return;
 }
 
+void gsd_draw_box(float *center, unsigned long colr, float siz)
+{  /* added by Hamish Bowman Nov 2005 */
 
+    /* see gsd_diamond() "seems right, but isn't" */
+    siz *= .5;
+
+    gsd_pushmatrix();
+    gsd_translate(center[X], center[Y], center[Z]);
+    gsd_scale(siz, siz, siz);
+    gsd_color_func(colr);
+
+    gsd_bgnline(); /* N wall */
+    gsd_vert_func(CubeVertices[2]);
+    gsd_vert_func(CubeVertices[3]);
+    gsd_vert_func(CubeVertices[7]);
+    gsd_vert_func(CubeVertices[6]);
+    gsd_vert_func(CubeVertices[2]);
+    gsd_endline();
+
+    gsd_bgnline(); /* S wall */
+    gsd_vert_func(CubeVertices[1]);
+    gsd_vert_func(CubeVertices[5]);
+    gsd_vert_func(CubeVertices[4]);
+    gsd_vert_func(CubeVertices[0]);
+    gsd_vert_func(CubeVertices[1]);
+    gsd_endline();
+
+    gsd_bgnline();
+    gsd_vert_func(CubeVertices[1]);
+    gsd_vert_func(CubeVertices[2]);
+    gsd_endline();
+
+    gsd_bgnline();
+    gsd_vert_func(CubeVertices[3]);
+    gsd_vert_func(CubeVertices[0]);
+    gsd_endline();
+
+    gsd_bgnline();
+    gsd_vert_func(CubeVertices[5]);
+    gsd_vert_func(CubeVertices[6]);
+    gsd_endline();
+
+    gsd_bgnline();
+    gsd_vert_func(CubeVertices[4]);
+    gsd_vert_func(CubeVertices[7]);
+    gsd_endline();
+
+    gsd_popmatrix();
+
+    return;
+}
 void gsd_drawsphere(float *center, unsigned long colr, float siz)
 {
     siz *= .5;			/* siz is diameter, gsd_sphere uses radius */
     gsd_color_func(colr);
     gsd_sphere(center, siz);
+
+    return;
+}
+
+void gsd_diamond_lines(void)
+{
+    gsd_bgnline();
+    gsd_vert_func(Octo[0]);
+    gsd_vert_func(Octo[3]);
+    gsd_endline();
+
+    gsd_bgnline();
+    gsd_vert_func(Octo[1]);
+    gsd_vert_func(Octo[4]);
+    gsd_endline();
+
+    gsd_bgnline();
+    gsd_vert_func(Octo[2]);
+    gsd_vert_func(Octo[5]);
+    gsd_endline();
 
     return;
 }
