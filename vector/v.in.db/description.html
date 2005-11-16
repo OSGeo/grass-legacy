@@ -37,37 +37,19 @@ the 'object ID' of PostgreSQL can be used. In this case set:<br>
 <P>
 
 <b>3) Import of a points table (x, y, z) from DBF file to vector points map:</b>
-<P>
-The DBF file has to be copied into $MAPSET/dbf/ (to be created
-if not existing yet). Then the DBMI needs to be connected to
-this directory:
 
 <pre>
- #check current DB settings:
- db.connect -p
- #only needed, if not already defined:
- db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
+#create vector map from DBF table (here, 'idcol' contains unique row IDs, 'z' is optional):
+#the 'database' parameter is the directory where the DBF file is stored:
+v.in.db driver=dbf database=/home/user/tables/ table=pointsfile x=x y=y z=z \
+        key=idcol out=dtmpoints
 
- #create dbf/ directory if not yet existing:
- mkdir `g.gisenv get=GISDBASE`/`g.gisenv get=LOCATION_NAME`/`g.gisenv get=MAPSET`/dbf
- 
- #copy DBF table to this directory:
- cp pointsfile.dbf `g.gisenv get=GISDBASE`/`g.gisenv get=LOCATION_NAME`/`g.gisenv get=MAPSET`/dbf/
-
- #verify table columns
- db.tables -p
- db.describe -c pointsfile
-
- #create vector map from DBF table ('idcol' is containing unique row IDs, z is optional):
- v.in.db driver=dbf table=pointsfile x=x y=y z=z key=idcol out=dtmpoints
-
- #check result:
- v.info dtmpoints
- v.info -c dtmpoints
+#check result:
+v.info dtmpoints
+v.info -c dtmpoints
 </pre>
 <P>
-If an ID column is missing in the DBF file, such a column with unique
-IDs has to be added beforehand.
+If an ID column is missing in the DBF file, it has to be added beforehand, e.g. with OpenOffice.
 
 <H2>AUTHOR</H2>
 <A HREF=mailto:blazek@itc.it>Radim Blazek</A>
