@@ -483,6 +483,7 @@ int gsd_nline_onsurf(geosurf *, float *, float *, float *, int);
 void gsd_x(geosurf *, float *, int, float);
 void gsd_diamond(float *, int, float);
 void gsd_diamond_lines(void);
+void gsd_cube(float *, int, float);
 void gsd_drawsphere(float *, unsigned long, float);
 void gsd_draw_asterisk(float *, unsigned long, float);
 void gsd_draw_gyro(float *, unsigned long, float);
