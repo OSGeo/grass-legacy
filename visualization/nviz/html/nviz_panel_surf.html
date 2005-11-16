@@ -18,9 +18,18 @@
 
 <h2>Surface Panel</h2>
 
-<p>The <strong>Surface</strong> panel controls how loaded surfaces are drawn. The top half of the panel has drawing style options. The bottom half has options to add, delete, select, and change attributes of the current surface.</p> 
+<p>The <strong>Surface</strong> panel controls how loaded surfaces are 
+drawn. The top half of the panel has drawing style options. The bottom 
+half has options to add, delete, select, and change attributes of the 
+current surface.</p> 
 
+<BR><BR>
+<DL><DD>
 <img src="nvimg/panel/surf.gif" alt="Surface Panel" width="292" height="238">
+</DD></DL>
+<BR><BR>
+
+
 
 <h3>OPTIONS</h3>
 
@@ -34,28 +43,34 @@
 	<dl>
 	<dt> <strong>Wire</strong></dt>
 	<dd>Draws the surface as a wire mesh.  
-	This differs from the mesh drawn in <strong><em>fast display mode</em></strong>
+	This differs from the mesh drawn in <strong><em>fast display 
+	mode</em></strong>
 	(see <strong>Grid Style</strong>) because hidden lines are not drawn.
 	<br><br></dd>
 	<dt> <strong>Polygon</strong></dt>
 	<dd>Draws the surface using filled polygons (most realistic).
 	<br><br></dd> 
 	<dt> <strong>Wire/Poly</strong></dt>
-	<dd>Draws the surface using filled polygons, but with wire mesh draped over it.
+	<dd>Draws the surface using filled polygons, but with wire mesh 
+	draped 
+	over it.
 	<br><br></dd> 
 	</dl>
 </dd>
 
 <dt> <strong>Grid Style</strong></dt>
-<dd>Sets the style for drawing the <strong><em>fast display mode</em></strong> surface.
+<dd>Sets the style for drawing the <strong><em>fast display mode</em></strong> 
+surface.
 <br><br></dd>
 <dd> 
 	<dl>
 	<dt> <strong>Wire</strong></dt>
-	<dd>Draws the grid (<strong><em>fast display mode</em></strong>) as a wire mesh.  
+	<dd>Draws the grid (<strong><em>fast display mode</em></strong>) 
+	as a wire mesh.  
 	<br><br></dd>
 	<dt> <strong>Coarse Surface</strong></dt>
-	<dd>Draws the grid (<strong><em>fast display mode</em></strong>) using coarse resolution filled polygons. 
+	<dd>Draws the grid (<strong><em>fast display mode</em></strong>) 
+	using coarse resolution filled polygons. 
 	This is a low resolution version of the <em>Polygon</em>
 	surface style. The decimation factor is set from the 
 	<em>Grid Resolution</em> (see above).
@@ -72,14 +87,16 @@
 	<dd>Draws the surfaces with a smooth shading to blend 
 	individual cell colors together.<br><br></dd>
 	<dt><strong>Flat</strong></dt>
-	<dd>Draws the surfaces with flat shading with one color for every two cells. The surface appears faceted.<br><br></dd>
+	<dd>Draws the surfaces with flat shading with one color for every 
+	two cells. The surface appears faceted.<br><br></dd>
 	</dl>
 </dd> 
 
 
 <dt> <strong>Grid Resolution</strong></dt>
 <dd>Sets the resolution of the coarse surface (default) or wire mesh. 
-To switch between coarse surface and wire mesh select <strong>Grid Style</strong> (see below).
+To switch between coarse surface and wire mesh select <strong>Grid 
+Style</strong> (see below).
 <br><br></dd>
 
 <dt> <strong>Polygon Resolution</strong></dt>
@@ -97,7 +114,8 @@ For example, a resolution of 1 draws every raster cell in the current region.
 
 
 <dt> <strong>Current</strong></dt>
-<dd>Shows the name(s) of all the loaded surfaces. You can use this menu to select a new current surface.<br><br></dd>
+<dd>Shows the name(s) of all the loaded surfaces. You can use this menu to 
+select a new current surface.<br><br></dd>
 
 <dt> <strong>New</strong></dt>
 <dd>Loads a new surface or surface constant. 
@@ -116,29 +134,36 @@ For example, a resolution of 1 draws every raster cell in the current region.
 <dd>
 	<dl>
 	<dt> <strong>topography</strong></dt>
-	<dd>Loads a new raster or constant value to use as elevation (z values) for the current surface.
+	<dd>Loads a new raster or constant value to use as elevation 
+	(z values) for the current surface.
 	<br><br></dd>
 
 	<dt> <strong>color</strong></dt>
-	<dd>Loads a raster or constant color to drape over the current surface.
-	This option is useful for draping imagery such as aerial photography over a DEM.
+	<dd>Loads a raster or constant color to drape over the current 
+	surface.
+	This option is useful for draping imagery such as aerial photography 
+	over a DEM.
 	<br><br></dd>
 
 	<dt> <strong>mask</strong></dt>
-	<dd>Loads a raster or constant that controls the areas displayed from the current surface.
+	<dd>Loads a raster or constant that controls the areas displayed 
+	from the current surface.
 	<br><br></dd>
 
 	<dt> <strong>transparency</strong></dt>
-	<dd>Loads a raster or constant that controls the transparency of the current surface.
+	<dd>Loads a raster or constant that controls the transparency of 
+	the current surface.
 	The default is completely opaque.
 	<br><br></dd>
 
 	<dt> <strong>shininess</strong></dt>
-	<dd>Loads a raster or constant that controls the shininess (reflectivity) of the current surface.
+	<dd>Loads a raster or constant that controls the shininess 
+	(reflectivity) of the current surface.
 	<br><br></dd>
 
 	<dt> <strong>emission</strong></dt>
-	<dd>Loads a raster or constant that controls the light emitted from the current surface.
+	<dd>Loads a raster or constant that controls the light emitted 
+	from the current surface.
 	<br><br></dd>
 	</dl>
 </dd>
@@ -154,13 +179,15 @@ The color can be a constant or set from the current surface color.
 
 
 <dt> <strong>Mask Zeros by</strong></dt>
-<dd>Masks the current surface where elevation or color values are equal to zero.
+<dd>Masks the current surface where elevation or color values are equal to 
+zero.
 <br><br></dd>
 
 <dd>
 	<dl>
 	<dt> <strong>Elevation</strong></dt>
-	<dd>Masks elevation values equal to zero. The second <strong>No Zeros</strong> masks color values equal to zero.
+	<dd>Masks elevation values equal to zero. The second <strong>No 
+	Zeros</strong> masks color values equal to zero.
 	<br><br></dd>
 	<dt> <strong>Color</strong></dt>
 	<dd>Masks color values equal to zero.
