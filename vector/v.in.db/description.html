@@ -5,78 +5,84 @@ creates new vector (points) map from database table containing coordinates.
 
 <H2>EXAMPLE</H2>
 
-<b>1) Creating a map from PostgreSQL table:</b>
+<h3>1) Creating a map from PostgreSQL table:</h3>
 
-<pre>
+<div class="code"><pre>
  v.in.db driver=pg database="host=myserver.itc.it,dbname=mydb,user=name" \
          table=pat_stazioni x=east y=north z=quota key=id output=pat_stazioni
-</pre>
+</pre></div>
 <P>
 If an ID column is not not present in the PostgreSQL table,
 the 'object ID' of PostgreSQL can be used. In this case set:<br>
-<pre>
+<div class="code"><pre>
   cat=OID
-</pre>
+</pre></div>
 <P>
 <p>
 
-<b>2) Creating a map from PostGIS:</b>
+<h3>2) Creating a map from PostGIS:</h3>
 
 To extract coordinate values from PostGIS, functions have to be used:
-<pre>
+<div class="code"><pre>
  v.in.db driver=pg database="host=myserver.itc.it,dbname=mydb,user=name" \
          table=station x="x(geom)" y="y(geom)" z="z(geom)" key=id out=meteostations
-</pre>
+</pre></div>
 <P>
 If an ID column is not not present in the PostgreSQL table,
 the 'object ID' of PostgreSQL can be used. In this case set:<br>
-<pre>
+<div class="code"><pre>
   cat=OID
-</pre>
+</pre></div>
+
+
+<h3>3) Import of a points table (x, y, z) from DBF file to vector points map:</h3>
+
+<div class="code"><pre>
+#create vector map from DBF table (here, 'idcol' contains unique row IDs, 'z' is optional):
+#the 'database' parameter is the directory where the DBF file is stored:
+v.in.db driver=dbf database=/home/user/tables/ table=pointsfile x=x y=y z=z \
+        key=idcol out=dtmpoints
+
+#check result:
+v.info dtmpoints
+v.info -c dtmpoints
+</pre></div>
 <P>
+If an ID column is missing in the DBF file, it has to be added beforehand, e.g. with OpenOffice.
+
+<h3>4) Import of a points table (x, y, z) from SQLite file to vector points map:</h3>
+
+<div class="code"><pre>
+#create vector map from table in SQLite.db file (here, 'idcol' contains unique row IDs, 'z' is optional):
+#the 'database' parameter is the directory where the SQLite.db file is stored:
+v.in.db driver=sqlite database=/home/user/tables/ table=pointsfile x=x y=y z=z \
+        key=idcol out=dtmpoints
+
+#check result:
+v.info dtmpoints
+v.info -c dtmpoints
+</pre></div>
 <P>
+If an ID column is missing in the sqlite.db file, it has to be added beforehand with 'sqlite3' or
+<em>db.execute</em>.
 
-<b>3) Import of a points table (x, y, z) from DBF file to vector points map:</b>
-<P>
-The DBF file has to be copied into $MAPSET/dbf/ (to be created
-if not existing yet). Then the DBMI needs to be connected to
-this directory:
 
-<pre>
- #check current DB settings:
- db.connect -p
- #only needed, if not already defined:
- db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
-
- #create dbf/ directory if not yet existing:
- mkdir `g.gisenv get=GISDBASE`/`g.gisenv get=LOCATION_NAME`/`g.gisenv get=MAPSET`/dbf
- 
- #copy DBF table to this directory:
- cp pointsfile.dbf `g.gisenv get=GISDBASE`/`g.gisenv get=LOCATION_NAME`/`g.gisenv get=MAPSET`/dbf/
-
- #verify table columns
- db.tables -p
- db.describe -c pointsfile
-
- #create vector map from DBF table ('idcol' is containing unique row IDs, z is optional):
- v.in.db driver=dbf table=pointsfile x=x y=y z=z key=idcol out=dtmpoints
-
- #check result:
- v.info dtmpoints
- v.info -c dtmpoints
-</pre>
-<P>
-If an ID column is missing in the DBF file, such a column with unique
-IDs has to be added beforehand.
-
-<P>
-<b>4) Import of a points table (x, y, z) from DBF file to vector points map for selected points only:</b>
+<h3>5) Import of a points table (x, y, z) from DBF file to vector points map for selected points only:</h3>
 <P>
 The user can import only selected vector points from a table using the <em>where</em> parameter
 (see above for general DBF handling):<P>
-<pre>
- v.in.db driver=dbf table=pointsfile x=x y=y z=z key=idcol out=dtmpoints where="x NOT NULL and z > 100"
-</pre>
+<div class="code"><pre>
+v.in.db driver=dbf  database=/home/user/tables/ table=pointsfile x=x y=y z=z \
+        key=idcol out=dtmpoints where="x NOT NULL and z > 100"
+</pre></div>
+
+<h2>SEE ALSO</h2>
+
+<em>
+<a href="db.execute.html">db.execute</a>,
+<a href="v.info.html">v.info</a>
+</em>
+
 
 <H2>AUTHOR</H2>
 
