@@ -72,7 +72,16 @@ void gpd_obj(geosurf * gs, int color, float size, int marker, Point3 pt)
 
 	break;
     case ST_BOX:
-	/* TODO: wire-frame cube */
+	gsd_colormode(CM_COLOR);
+	gsd_pushmatrix();
+
+	if (sz) {
+	    lpt[Z] *= sz;
+	    gsd_scale(1.0, 1.0, 1. / sz);
+	}
+
+	gsd_draw_box(lpt, color, size);
+	gsd_popmatrix();
 
 	break;
     case ST_SPHERE:

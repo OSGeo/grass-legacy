@@ -106,6 +106,9 @@ proc mksitePanel { BASE } {
     radiobutton $tmp.siteshape.cube -relief flat -text "use cube" \
 	-value cube -anchor nw -variable Nv_(siteshape) \
 	-command change_marker
+    radiobutton $tmp.siteshape.box -relief flat -text "use wire-frame box" \
+	-value box -anchor nw -variable Nv_(siteshape) \
+	-command change_marker
     radiobutton $tmp.siteshape.gyro -relief flat -text "use gyroscope" \
 	-value gyro -anchor nw -variable Nv_(siteshape) \
 	-command change_marker
@@ -114,7 +117,8 @@ proc mksitePanel { BASE } {
 	-command change_marker
 
     pack $tmp.siteshape.x $tmp.siteshape.sphere $tmp.siteshape.diamond  \
-	$tmp.siteshape.cube $tmp.siteshape.gyro $tmp.siteshape.aster \
+	$tmp.siteshape.cube $tmp.siteshape.box $tmp.siteshape.gyro \
+	$tmp.siteshape.aster \
 	-fill x -expand 1
     pack $tmp.sitesize $tmp.linewidth $tmp.siteshape \
 	-side top -expand 1 -fill x
