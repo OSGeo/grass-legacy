@@ -79,6 +79,7 @@ Note: This text contains *some* rules only applicable to the
    http://freshmeat.net/projects/grass/?highlight=GRASS
    http://linuxtoday.com/contribute.php3
    http://www.newsforge.com/submit.pl
+   http://programming.newsforge.com/submit.pl
    http://osx.macnn.com/    (email to news tips)
    http://www.gis-news.de/  (news@gismngt.de)
    http://www.giscafe.com/  (link: submit material, needs registration)
