@@ -572,7 +572,7 @@ int G_parser (int argc, char **argv)
 		}
 
 		/* If first arg is "--html-description" then print out
-		 * a xml description of the task */
+		 * a html description of the task */
 		if (strcmp(argv[1],"--html-description") == 0)
 		{
 			G_usage_html();
