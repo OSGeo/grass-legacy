@@ -13,6 +13,8 @@ If <B>out</B> is not specified it is set to be the same as input map name.
 
 <BR>
 If <B>dbase</B> is not specified it is assumed to be the current database.
+The user only has to specify <B>dbase</B> if the source location is stored
+in another separate GRASS database.
 
 <BR>
 If <B>set</B> is not specified, its name is assumed to be the same as the current
@@ -22,6 +24,13 @@ If <B>set</B> is not specified, its name is assumed to be the same as the curren
 <EM>v.proj</EM> supports general datum transformations, making use of the
 <EM>PROJ.4</EM> co-ordinate system translation library.
 </P>
+
+<H2>EXAMPLES</H2>
+
+<div class="code"><pre>
+v.proj in=mymap location=latlong mapset=user1
+</pre></div>
+
 
 <H2>BUGS</H2>
 
