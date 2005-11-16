@@ -17,10 +17,20 @@
 
 <h2>Image Dump</h2>
 
-<p>Image Dump saves the contents of the current <strong>NVIZ</strong> viewer to an image file. Make sure the <strong>NVIZ</strong> viewer is on top of all other windows in the current workspace. If any windows cover the <strong>NVIZ</strong> viewer, they appear as part of the saved image. With the exception of the <strong>Max. Resolution PPM</strong>, the image has the same dimensions as the <strong>NVIZ</strong> viewer.
+<p>Image Dump saves the contents of the current <strong>NVIZ</strong> 
+viewer to an image file. Make sure the <strong>NVIZ</strong> viewer 
+is on top of all other windows in the current workspace. If any 
+windows cover the <strong>NVIZ</strong> viewer, they appear as part 
+of the saved image. With the exception of the <strong>Max. Resolution 
+PPM</strong>, the image has the same dimensions as the <strong>NVIZ</strong> 
+viewer.
 </p> 
 
+<BR><BR>
+<DL><DD>
 <img src="nvimg/panel/image_dump.gif" alt="Image Dump" width="302" height="323">
+</DD></DL>
+<BR><BR>
 
 <dl>
 <dt><strong>IRIS RGB Image</strong></dt>
@@ -29,14 +39,25 @@
 
 <dt><strong>PPM Image</strong></dt>
 <dd>Saves the scene to a PPM image file.
-<br><br></dd>
+You can convert a PPM image to a PNG image with the widely installed 
+NetPBM tools.<BR>
+e.g.:
+<DL><dd><tt>pnmtopng image.ppm > image.png</tt></dd></DL>
+<BR>
+</dd>
 
 <dt><strong>TIFF Image</strong></dt>
 <dd>Saves the scene to a TIFF image file.
 <br><br></dd>
 
 <dt><strong>Save Max. Resolution PPM(s)</strong></dt>
-<dd>Saves the scene to the highest resolution (size) supported by the users graphics setup. The oversized image renders as a series of tiles that are automatically assembled by the program <em><strong>pnmcat</strong></em>. If <em><strong>pnmcat</strong></em> is not available, you need to manually assemble the tiles with another graphics program. The aspect ratio of the oversized image matches the aspect ratio of the original <strong>NVIZ</strong> viewer.
+<dd>Saves the scene to the highest resolution (size) supported by the 
+users graphics setup. The oversized image renders as a series of tiles 
+that are automatically assembled by the program <em><strong>pnmcat</strong>
+</em>. If <em><strong>pnmcat</strong></em> is not available, you need to 
+manually assemble the tiles with another graphics program. The aspect 
+ratio of the oversized image matches the aspect ratio of the original 
+<strong>NVIZ</strong> viewer.
 <br><br></dd>
 </dl>
 
