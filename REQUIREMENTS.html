@@ -23,52 +23,49 @@ To disable features please read the <a href="INSTALL">INSTALL</a> file.
 to install some of them.)
 
 <ul>
-<li><B>C-compiler</B> (cc, gcc, egcs, ...)</li>
+<li><B>C-compiler</B> (cc, gcc, egcs, ...)
 <br>gcc: <a href="http://www.gnu.org/software/gcc/gcc.html">http://www.gnu.org/software/gcc/gcc.html</a>
-<br><br>
+<br>
 
-<li><B>GNU make</B> is recommended</li>
+<li><B>GNU make</B> is recommended
 <br><a href="http://www.gnu.org/software/make/make.html">http://www.gnu.org/software/make/make.html</a>
-<br><br>
+<br>
 
-<li><B>zlib</B> compression library (already installed on most modern systems)</li>
+<li><B>zlib</B> compression library (already installed on most modern systems)
 <br>It is used to internally compress GRASS raster files:
 <br>libz: <a href="http://www.gzip.org/zlib/">http://www.gzip.org/zlib</a>
 <!-- freesoftware.com is broken! <br><a href="ftp://ftp.freesoftware.com/pub/infozip/zlib/">ftp://ftp.freesoftware.com/pub/infozip/zlib</a> -->
-<br><br>
+<br>
 
-<li><B>flex</B> lexical analyzer generator (flex),</li>
-<br>(lex is no longer supported, please use flex instead)
+<li><B>flex</B> lexical analyzer generator (flex) - note: lex is no longer supported, please use flex instead:
 <br>flex: <a href="http://www.gnu.org/software/flex/flex.html">http://www.gnu.org/software/flex/flex.html</a>
-<br><br>
+<br>
 
-<li><B>parser generator</B> (yacc, bison)</li>
+<li><B>parser generator</B> (yacc, bison)
 <br>bison: <a href="http://www.gnu.org/software/bison/bison.html">http://www.gnu.org/software/bison/bison.html</a>
-<br><br>
+<br>
 
-<li><B>libncurses4.x/5.x</B> (already installed on modern systems)</li>
+<li><B>libncurses4.x/5.x</B> (already installed on modern systems)
 <br><a href="http://www.gnu.org/software/ncurses/ncurses.html">http://www.gnu.org/software/ncurses/ncurses.html</a>
 <br><a href="ftp://ftp.gnu.org/pub/gnu/ncurses/">ftp://ftp.gnu.org/pub/gnu/ncurses</a>
-<br><br>
+<br>
 
 <li><B>X Window</B>  system for graphical output, development libraries (X development
-libraries, in some linux distributions they are separate packages, e.g. xlibs-dev)</li>
+libraries, in some linux distributions they are separate packages, e.g. xlibs-dev)
 <br><a href="http://www.xfree.org">http://www.xfree.org</a>
-<br><a href="http://www.xfree.org">http://www.x.org</a><br>
-<br><br>
-
-<li>winGRASS note: As alternative a generic MS-Windows driver is under
+<br><a href="http://www.xfree.org">http://www.x.org</a>
+<br>winGRASS note: As alternative a generic MS-Windows driver is under
 construction which does not require X11
-<br><br>
+<br>
 
 <li><B>PROJ4</B> - Projection Library<br>
 <a href="http://proj.maptools.org">http://proj.maptools.org</a>
-<br><br>
+<br>
 
 <li><B>GDAL and OGR</B> for import and export of most external raster and vector
 map formats<br>
 <a href="http://www.gdal.org">http://www.gdal.org</a>
-<br></li>
+
 </ul>
 
 <h3>
@@ -80,72 +77,69 @@ menu system and the NVIZ visualization suite<br>
 On some platforms (e.g. Debain/Sarge) GRASS needs to be compiled against the
 Tcl/Tk 8.3 development packages in order to get NVIZ working correctly.<br>
 see <a href="http://tcl.sourceforge.net">http://tcl.sourceforge.net</a>
-<br></li>
+
 
 <li>If hardware openGL support is missing in the X Server, <B>Mesa-3.x</B>
 (openGL clone) may be required for NVIZ<br>
 <a href="http://mesa3d.sourceforge.net">http://mesa3d.sourceforge.net</a>
-<br></li>
+
 
 <li><B>C++ Compiler</B> (required for the r.terraflow module)<br>
 gcc: <a href="http://www.gnu.org/software/gcc/gcc.html">http://www.gnu.org/software/gcc/gcc.html</a>
-<br></li>
+
 
 <li><B>FFTW 2.x</B> (but not 3.x, library for computing the Discrete Fourier Transform), required
 for i.fft and i.ifft modules<br>
 <a href="http://www.fftw.org">http://www.fftw.org</a>
-<br></li>
 
-<!-- uncomment when implemented
-<li>LAPACK / BLAS (libraries for numerical computing) required for
-GMATH library (GRASS numerical lib)<br>
-[<a href="http://www.netlib.org/lapack/">http://www.netlib.org/lapack</a>] (usually on Linux distros)
+
+<li><B>LAPACK / BLAS</B> (libraries for numerical computing) for GMATH library (GRASS numerical lib)<br>
+[<a href="http://www.netlib.org/lapack/">http://www.netlib.org/lapack</a>] (usually available on Linux distros)
 <br>
-Note: the support is intended for future module implementations
-<br></li>
--->
+Note: the support is intended for future module implementations, no need to use it at time!
+
 
 <li><B>libpng</B> (for r.out.png and the PNG driver), usually already installed.<br>
 <a href="http://www.libpng.org/pub/png/libpng.html">http://www.libpng.org/pub/png/libpng.html</a>
-<br></li>
+
 
 <li><B>libjpeg</B> (for r.out.tiff), usually already installed.<br>
 <a href="http://www.ijg.org">http://www.ijg.org</a><br>
 <a href="ftp://ftp.uu.net/graphics/jpeg/">ftp://ftp.uu.net/graphics/jpeg</a>
-<br></li>
+
 
 <li><B>libtiff</B> (for r.out.tiff), usually already installed.<br>
 <a href="http://www.libtiff.org">http://www.libtiff.org</a>
-<br></li>
+
 
 <li><B>PostgreSQL libraries</B> (for the PostgreSQL database interface)<br>
 <a href="http://www.postgresql.org">http://www.postgresql.org</a>
-<br></li>
+
 
 <li><B>mySQL libraries</B> (for the mySQL database interface)<br>
 <a href="http://www.mysql.org">http://www.mysql.org</a>
-<br></li>
+
 
 <li><B>sqlite libraries</B> (for the sqlite database interface)<br>
 <a href="http://www.sqlite.org">http://www.sqlite.org</a>
-<br></li>
+
 
 <li><B>unixODBC</B> (for the ODBC database interface)<br>
 <a href="http://www.unixodbc.org">http://www.unixodbc.org</a>
-<br></li>
+
 
 <li><B>Motif or Lesstif libraries</B> (for the "xanim" <!-- and ogl3d -->
 module)<br>
 <a href="http://www.lesstif.org">http://www.lesstif.org</a>
-<br></li>
+
 
 <li><B>R language</B> (for the R statistical language interface)<br>
 <a href="http://cran.r-project.org">http://cran.r-project.org</a>
-<br></li>
+
 
 <li><B>FreeType2</B> (for TrueType font support and d.text.freetype)<br>
 <a href="http://www.freetype.org">http://www.freetype.org</a>
-<br></li>
+
 
 </ul>
 
