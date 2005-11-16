@@ -87,7 +87,7 @@ proc mksitePanel { BASE } {
     pack $BASE.f.close -side right
     pack $BASE.f.color $BASE.f.draw_current -side left -expand 1
     pack $BASE.f -side bottom -fill x -expand 1
-    
+
     set tmp [frame $BASE.left]    
     Nv_mkFloatScale $tmp.sitesize h "Symbol Size" $longdim \
 	0 $size change_site_size 2
@@ -103,13 +103,23 @@ proc mksitePanel { BASE } {
     radiobutton $tmp.siteshape.diamond -relief flat -text "use diamond" \
 	-value diamond -anchor nw -variable Nv_(siteshape) \
 	-command change_marker
-    
+    radiobutton $tmp.siteshape.cube -relief flat -text "use cube" \
+	-value cube -anchor nw -variable Nv_(siteshape) \
+	-command change_marker
+    radiobutton $tmp.siteshape.gyro -relief flat -text "use gyroscope" \
+	-value gyro -anchor nw -variable Nv_(siteshape) \
+	-command change_marker
+    radiobutton $tmp.siteshape.aster -relief flat -text "use 3D asterisk" \
+	-value aster -anchor nw -variable Nv_(siteshape) \
+	-command change_marker
+
     pack $tmp.siteshape.x $tmp.siteshape.sphere $tmp.siteshape.diamond  \
+	$tmp.siteshape.cube $tmp.siteshape.gyro $tmp.siteshape.aster \
 	-fill x -expand 1
     pack $tmp.sitesize $tmp.linewidth $tmp.siteshape \
 	-side top -expand 1 -fill x
     pack $tmp -side left  -fill y -expand 1
-    
+
     set tmp [frame $BASE.right]
     
     frame $tmp.sitedisp
