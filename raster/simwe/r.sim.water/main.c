@@ -42,7 +42,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
+#if !(defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__))
 /* <malloc.h> has been replaced by <stdlib.h> in *BSD. */
 #include <malloc.h>
 #endif
