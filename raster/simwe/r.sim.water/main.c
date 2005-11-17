@@ -42,7 +42,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#ifndef __FreeBSD__
+/* <malloc.h> has been replaced by <stdlib.h> in FreeBSD. */
 #include <malloc.h>
+#endif
 
 #include "config.h"
 #ifdef HAVE_UNISTD_H
