@@ -134,7 +134,7 @@ void
 db_set_column_has_defined_default_value(column)
     dbColumn *column;
 {
-    column->hasDefaultValue = DB_DEFINED;
+    column->hasDefaultValue = 1;
 }
 
 /*!
@@ -146,7 +146,7 @@ void
 db_set_column_has_undefined_default_value(column)
     dbColumn *column;
 {
-    column->hasDefaultValue = DB_UNDEFINED;
+    column->hasDefaultValue = 0;
 }
 
 /*!
@@ -182,7 +182,7 @@ int
 db_test_column_has_defined_default_value(column)
     dbColumn *column;
 {
-    return (column->hasDefaultValue == DB_DEFINED);
+    return (column->hasDefaultValue);
 }
 
 /*!
@@ -194,7 +194,7 @@ int
 db_test_column_has_undefined_default_value(column)
     dbColumn *column;
 {
-    return (column->hasDefaultValue == DB_UNDEFINED);
+    return (!column->hasDefaultValue);
 }
 
 /*!
