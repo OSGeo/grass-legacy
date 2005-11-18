@@ -44,7 +44,7 @@ db_start_driver(name)
      * G_putenv() as well, but that is what we want, makes a copy of string */
     if (  G_get_gisrc_mode() == G_GISRC_MODE_MEMORY ) 
     {
-        printf ( "G_GISRC_MODE_MEMORY\n" );
+        G_debug (3, "G_GISRC_MODE_MEMORY\n" );
 	sprintf ( ebuf, "%d", G_GISRC_MODE_MEMORY );
 	G_putenv("GRASS_DB_DRIVER_GISRC_MODE", ebuf); /* to tell driver that it must read variables */
 	
