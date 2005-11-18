@@ -5,6 +5,7 @@
 #ifdef __MINGW32__
 #include <process.h>
 #include <fcntl.h>
+unsigned int _CRT_fmode = _O_BINARY;
 #endif
 
 #include "dbmi.h"
@@ -163,8 +164,8 @@ db_start_driver(name)
     driver->pid = pid;
 
     /* convert pipes to FILE* */
-    driver->send = fdopen (p1[WRITE], "w");
-    driver->recv = fdopen (p2[READ],  "r");
+    driver->send = fdopen (p1[WRITE], "wb");
+    driver->recv = fdopen (p2[READ],  "rb");
 
     /* most systems will have to use unbuffered io to get the 
      *  send/recv to work */
@@ -204,8 +205,8 @@ db_start_driver(name)
         driver->pid = pid;
 
 /* convert pipes to FILE* */
-	driver->send = fdopen (p1[WRITE], "w");
-	driver->recv = fdopen (p2[READ],  "r");
+	driver->send = fdopen (p1[WRITE], "wb");
+	driver->recv = fdopen (p2[READ],  "rb");
 
 /* most systems will have to use unbuffered io to get the send/recv to work */
 #ifndef USE_BUFFERED_IO
