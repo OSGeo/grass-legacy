@@ -47,6 +47,7 @@ global execom
             {command "ESRI ARC/INFO ASCII grid" {} "r.out.arc" {} -command { execute r.out.arc }}
             {command "GRIDATB.FOR map file (TOPMODEL)" {} "r.out.gridatb" {} -command { execute r.out.gridatb }}
             {command "MAT-File (v.4) array (Matlab or Octave)" {} "r.out.mat" {} -command { execute r.out.mat }}
+            {command "VTK ASCII file" {} "r.out.vtk" {} -command { execute r.out.vtk }}
             {separator}
             {command "Binary file" {} "r.out.bin" {} -command { execute r.out.bin }}
             {separator}
@@ -81,7 +82,7 @@ global execom
     }}
  	{cascad "Map type conversions" {} "" $tmenu {			
         {command "Raster to vector map" {} "r.to.vect" {} -command {execute r.to.vect }}
-        {command "Raster map series to volume" {} "r3.in.rast" {} -command {execute r.to.rast3 }}
+        {command "Raster map series to volume" {} "r3.in.rast" {} -command {execute r3.in.rast }}
         {command "Vector to raster" {} "v.to.rast" {} -command {execute v.to.rast }}
         {command "Vector to points" {} "v.to.points" {} -command {execute v.to.points }}
         {command "Sites to vector" {} "v.in.sites" {} -command {execute v.in.sites }}
