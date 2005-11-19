@@ -130,14 +130,14 @@ void G3dToRaster(void *map, G3D_Region region, int *fd)
 		if (typeIntern == G3D_FLOAT) {
 		    G3d_getValue(map, x, y, z, &f1, typeIntern);
 		    if (G3d_isNullValueNum(&f1, G3D_FLOAT))
-			G_set_f_null_value(fcell, x);
+		        G_set_null_value(&fcell[x], 1, FCELL_TYPE);
 		    else
 			fcell[x] = (FCELL) f1;
 		}
 		else {
 		    G3d_getValue(map, x, y, z, &d1, typeIntern);
 		    if (G3d_isNullValueNum(&d1, G3D_DOUBLE))
-			G_set_d_null_value(dcell, x);
+		        G_set_null_value(&dcell[x], 1, DCELL_TYPE);
 		    else
 			dcell[x] = (DCELL) d1;
 		}
@@ -163,6 +163,8 @@ void G3dToRaster(void *map, G3D_Region region, int *fd)
 
     if (dcell)
 	G_free(dcell);
+    if (fcell)
+	G_free(fcell);
 
 }
 
