@@ -46,7 +46,10 @@ GRASS source code is currently distributed in 2 forms:
 
 (B) COMPILATION
 
-IMPORTANT: All unix distributions are different. The command,
+IMPORTANT: All unix distributions are different.
+           For Solaris, see hint below.
+
+The command,
 
    ./configure --help 
 
@@ -83,12 +86,26 @@ Next step is the compilation itself:
     make       
 
 
+Note for Solaris users:
+
+To configure GRASS correctly on a system which doesn't have a suitable
+install program (AC_PROG_INSTALL ignores versions which are known to
+have problems), you need to ensure that $srcdir is an absolute path,
+by using e.g.:
+
+	`pwd`/configure ...
+or:
+	./configure --srcdir=`pwd` ...
+
+Then proceed as described above.
+
+
 (C) COMPILATION NOTES for 64bit platforms
 
 To successfully compile GRASS on 64bit platforms, the required
 FFTW2 library has to be compiled with -fPIC flag:
 
-    #applies to FFTW2, not GRASS:
+    #this applies to FFTW2, not GRASS:
     cd fftw-2.1.5/
     CFLAGS="-fPIC" ./configure
     make
