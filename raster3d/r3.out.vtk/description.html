@@ -19,12 +19,29 @@ If you have a G3D map with partly no data, use the threshold filter in paraview 
 visualize the valid data. Just filter all data which is greater/lesser than the 
 choosen null value in the VTK-ASCII file.
 
+<H3>Difference between point- and celldata</H3>
+
+<em>r3.out.vtk</em> can export G3D cells with different representations.
+<ul>
+   <li>
+      <I>pointdata</I> -- the cells/values are represented by the center of the cell. 
+      Instead of cells, points are created. Each point can hold different values, 
+      but the user can only visualize one value at a time. 
+   </li>
+   <li>
+       <I>celldata</I>  
+       The cells are created with the same hight, width and depth as in GRASS. Each cell 
+       can hold different values, but the user can only visualize one value at a time. 
+   </li>
+</ul>
+
 <H2>SEE ALSO</H2>
+
 <EM><A HREF="r.out.vtk.html">r.out.vtk</A></EM><br>
 <EM><A HREF="r3.out.ascii.html">r3.out.ascii</A></EM><br>
 <EM><A HREF="g.region.html">g.region</A></EM><br>
 
-<H2>AUTHORS</H2>
+<H2>AUTHOR</H2>
 Soeren Gebbert
 
 <p><i>Last changed: $Date$</i>
