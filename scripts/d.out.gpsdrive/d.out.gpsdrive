@@ -58,7 +58,7 @@
 #% type: string
 #% gisprompt: file,file,file
 #% description: name for new map image (lives in ~/.gpsdrive)
-#% required : no
+#% required : yes
 #%end
 #%flag
 #%  key: j
