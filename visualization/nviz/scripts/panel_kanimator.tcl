@@ -1364,12 +1364,16 @@ proc keyanimOneBackward { BASE } {
 #
 ############################################################################
 proc keyanimStop { BASE } {
-    global keyanimPlayState ScriptPlaying keyanimOff
+    global keyanimPlayState ScriptPlaying keyanimOff IMG
 
 	if {$keyanimPlayState == "run_and_save"} {
 		if {$keyanimOff == 1} {
 			Noff_screen 0
 		}
+		if {$IMG == 4} {
+			Nclose_mpeg
+		}
+		
 	}
     set keyanimPlayState stop
     if $ScriptPlaying then {
@@ -1687,6 +1691,7 @@ proc keyanimRunAndSave { BASE } {
     radiobutton .ras_fname.img1 -text "Iris RGB" -variable IMG -value 1
     radiobutton .ras_fname.img2 -text "PPM" -variable IMG -value 2
     radiobutton .ras_fname.img3 -text "TIFF" -variable IMG -value 3
+    radiobutton .ras_fname.img4 -text "MPEG-1" -variable IMG -value 4
 
     label .ras_fname.label2 -text "Start Frame:"
     entry .ras_fname.enter2 -relief sunken -width 6
@@ -1706,7 +1711,8 @@ proc keyanimRunAndSave { BASE } {
     -in .ras_fname.frame2 -fill both
     pack .ras_fname.check1 -side right \
     -in .ras_fname.frame2 -fill both
-    pack .ras_fname.label1 .ras_fname.img1 .ras_fname.img2 .ras_fname.img3 \
+    pack .ras_fname.label1 .ras_fname.img1 .ras_fname.img2 \
+	.ras_fname.img3 .ras_fname.img4 \
     -in .ras_fname.frame3 -side left -fill both
     pack .ras_fname.label .ras_fname.norm .ras_fname.fancy -side left \
     -in .ras_fname.frame4 -fill both
@@ -1726,6 +1732,10 @@ proc keyanimRunAndSave { BASE } {
     set keyanimBaseName [.ras_fname.enter get]
     set keyanimStartFrame [.ras_fname.enter2 get]
     destroy .ras_fname
+
+    if {$IMG == 4} {
+	Ninit_mpeg $keyanimBaseName
+    }
 
     # Automatically start from the beginning
     set first_time [lindex [lindex $keyanimKeyList 0] 0]
@@ -1777,6 +1787,9 @@ if {$IMG == 3} {
         append fname $num ".tif"
         Nwrite_tif $fname
         }
+if {$IMG == 4} {
+	Nwrite_mpeg_frame
+	}
 }
 
 ############################################################################

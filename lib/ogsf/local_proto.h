@@ -466,6 +466,9 @@ int GS_write_rgb(char *);
 
 /* From gsd_img_ppm.c */
 int GS_write_ppm(char *);
+int gsd_init_mpeg(char *);
+int gsd_write_mpegframe(void);
+int gsd_close_mpeg(void);
 
 /* From gsd_img_tif.c */
 int GS_write_tif(char *);
