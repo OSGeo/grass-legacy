@@ -19,6 +19,7 @@ from 3D point clouds as transformed from 3D point vector data
 (<a href="v.to.rast3.html">v.to.rast3</a>).
 Always the full map is imported.
 
+
 <h3>Voxel operations</h3>
 
 GRASS 3D raster map processing is always performed in the current 3D region
@@ -28,6 +29,34 @@ If the 3D resolution differs from that of the input raster map(s),
 on-the-fly resampling is performed (nearest neighbor resampling).
 If this is not desired, the input map(s) has/have to be reinterpolated
 beforehand with one of the dedicated modules.
+Masks can be set (<a href="r3.mask.html">r3.mask</a>).
+Powerful 3D map algrebra is implemented in <a href="r3.mapcalc.html">r3.mapcalc</a>.
+
+<h3>Voxel conversion</h3>
+
+3D vector point data can be converted to a GRASS 3D raster map
+(<a href="v.to.rast3.html">v.to.rast3</a>).
+Layers from a 3D raster map can be converted to a 2D raster map
+(<a href="r3.to.rast.html">r3.to.rast</a>).
+
+
+<h3>Voxel interpolation</h3>
+
+From 3D vector point GRASS 3D raster maps can be interpolated
+(<a href="v.vol.rst.html">v.vol.rst</a>).
+
+
+<h3>Voxel export</h3>
+
+GRASS 3D raster maps can be exported to VTK. Such files can be visualized with the 
+<em><a href="http://www.vtk.org">VTK Toolkit</a></em>, 
+<em><a href="http://www.paraview.org">Paraview</a></em> and 
+<em><a href="http://mayavi.sourceforge.net">MayaVi</a></em> which are based on VTK.
+
+Alternatively, GRASS 3D raster maps can be imported and exported from/to Vis5D
+(<a href="r3.in.v5d.html">r3.in.v5d</a>, <a href="r3.out.v5d.html">r3.out.v5d</a>).
+
+Finally, export to 3D ASCII is possible (<a href="r3.out.ascii.html">r3.out.ascii</a>).
 
 <HR>
 <P><a href="index.html">Main index</a> - <a href="raster3d.html">raster3d index</a> - <a href="full_index.html">full index</a>
