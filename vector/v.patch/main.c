@@ -19,9 +19,11 @@
 #include "Vect.h"
 #include "dbmi.h"
 
-int patch(struct Map_info *, struct Map_info *);
+int patch(struct Map_info *, struct Map_info *, int, int *);
 int copy_records ( dbDriver *driver_in, dbString *table_name_in,
-                   dbDriver *driver_out, dbString *table_name_out );
+                   dbDriver *driver_out, dbString *table_name_out,
+                   int, int );
+int max_cat ( struct Map_info *Map, int layer );
 
 int 
 main (int argc, char *argv[])
@@ -39,6 +41,8 @@ main (int argc, char *argv[])
     dbDriver *driver_in, *driver_out;
     dbTable *table_in, *table_out;
     char *key = NULL;
+    int keycol = -1;
+    int maxcat = 0;
 
     G_gisinit (argv[0]);
 
@@ -209,19 +213,31 @@ main (int argc, char *argv[])
 		    {
 			G_fatal_error ( "Length of string columns differ." );
 		    }
+		    if ( G_strcasecmp( key,
+			 db_get_column_name(column_out) ) == 0 )
+		    {
+                        keycol = col;
+                    }
 	       }
 	    }
 
 	    Vect_close ( &InMap );
 	    i++;
 	}
+
+        if ( keycol == -1 )
+        {
+            G_fatal_error ( "Key column not found" );
+        }
     }
 
     if ( append->answer ) {
 	Vect_open_update ( &OutMap, out_name,  G_mapset() );
+        maxcat = max_cat ( &OutMap, 1 );
     } else {
 	Vect_open_new (&OutMap, out_name, 0);
     }
+
     Vect_hist_command ( &OutMap );
 
     driver_out = NULL;
@@ -260,7 +276,9 @@ main (int argc, char *argv[])
     }
 
     i = 0;
-    while (old->answers[i]) {
+    while (old->answers[i]) 
+    {
+        int add_cat;
 	in_name = old->answers[i++];
 	fprintf (stdout, "    Patching file %s\n", in_name);
 	Vect_set_open_level (1);
@@ -270,7 +288,17 @@ main (int argc, char *argv[])
 	if (i == 1) 
 	   Vect_copy_head_data ( &InMap, &OutMap);
 
-	ret = patch (&InMap, &OutMap);
+        if ( do_table )
+        {
+            add_cat = maxcat+1;
+        }
+        else
+        {
+            add_cat = 0;
+        }
+        G_debug ( 2, "maxcat = %d add_cat = %d", maxcat, add_cat);
+            
+	ret = patch (&InMap, &OutMap, add_cat, &maxcat);
 	if (ret < 0)
 	    G_warning ( "Error reading file '%s'." 
 		      "Some data may not be correct\n", in_name);
@@ -290,7 +318,8 @@ main (int argc, char *argv[])
 
 		db_set_string(&table_name_in,fi_in->table);
                 copy_records ( driver_in, &table_name_in,
-                               driver_out, &table_name_out ); 
+                               driver_out, &table_name_out,
+                               keycol, add_cat ); 
 
 		db_close_database_shutdown_driver ( driver_in );
 	    }
@@ -323,7 +352,8 @@ main (int argc, char *argv[])
 
 
 int copy_records ( dbDriver *driver_in, dbString *table_name_in,
-                   dbDriver *driver_out, dbString *table_name_out )
+                   dbDriver *driver_out, dbString *table_name_out,
+                   int keycol, int add_cat )
 {
     int ncols, col;
     dbCursor cursor;
@@ -370,6 +400,11 @@ int copy_records ( dbDriver *driver_in, dbString *table_name_in,
             value  = db_get_column_value(column);
 
             if ( col > 0 ) db_append_string ( &sql, ", " );
+
+            if ( col == keycol )
+            {
+                db_set_value_int(value,db_get_value_int(value) + add_cat );
+            }
             db_convert_value_to_string( value, sqltype, &value_str);
 
             switch ( ctype ) 
@@ -412,12 +447,13 @@ int copy_records ( dbDriver *driver_in, dbString *table_name_in,
     return 1;
 } 
 
-
-int patch ( struct Map_info *InMap, struct Map_info *OutMap)
+int patch ( struct Map_info *InMap, struct Map_info *OutMap, int add_cat, int *max_cat)
 {
     int type;
     struct line_pnts *Points;
     struct line_cats *Cats;
+
+    *max_cat = add_cat;
 
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
@@ -428,8 +464,20 @@ int patch ( struct Map_info *InMap, struct Map_info *OutMap)
     OutMap->head.map_thresh = GREATER (OutMap->head.map_thresh, InMap->head.map_thresh);
     */
 
-    while ( (type = Vect_read_next_line (InMap, Points, Cats)) > 0) {
-	    Vect_write_line (OutMap, type, Points, Cats);
+    while ( (type = Vect_read_next_line (InMap, Points, Cats)) > 0) 
+    {
+        int i;
+        for ( i = 0; i< Cats->n_cats; i++ ) 
+        {
+            if ( Cats->field[i] == 1 )
+            {
+                Cats->cat[i] += add_cat;
+                if ( Cats->cat[i] > *max_cat )
+                    *max_cat = Cats->cat[i];
+            }
+        }
+
+	Vect_write_line (OutMap, type, Points, Cats);
     }
 
     Vect_destroy_line_struct (Points);
@@ -440,3 +488,23 @@ int patch ( struct Map_info *InMap, struct Map_info *OutMap)
     return (0);
 }
 
+int max_cat ( struct Map_info *Map, int layer )
+{
+    struct line_cats *Cats;
+    int max = 0;
+    
+    Cats = Vect_new_cats_struct();
+
+    while ( Vect_read_next_line (Map, NULL, Cats) > 0) 
+    {
+        int i;
+        for ( i = 0; i< Cats->n_cats; i++ ) 
+        {
+            if ( Cats->field[i] == layer && Cats->cat[i] > max )
+            {
+                max = Cats->cat[i];
+            }
+        }
+    }
+    return max;
+}
