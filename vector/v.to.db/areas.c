@@ -15,8 +15,9 @@ read_areas(struct Map_info *Map)
 {
 	int i, idx, found;
     int area_num, nareas;
-	struct line_cats *Cats;
+    struct line_cats *Cats;
     struct line_pnts *Ppoints;
+    double area, perimeter;
 
 	Cats = Vect_new_cats_struct ();
 	nareas = Vect_get_num_areas( Map );
@@ -24,7 +25,8 @@ read_areas(struct Map_info *Map)
 	for (area_num = 1 ; area_num <= nareas; area_num++)
 	{
 	Ppoints = Vect_new_line_struct();
-	double area=0, perimeter=0;
+	area=0;
+       	perimeter=0;
 
 	if( (options.option == O_COMPACT) || (options.option == O_AREA) ) {
 	    area = Vect_get_area_area ( Map, area_num );
