@@ -77,6 +77,7 @@ default: builddemolocation
 	@echo "Started compilation: `date`"  >> $(GRASS_HOME)/error.log
 	@echo "--"                           >> $(GRASS_HOME)/error.log
 	@echo "Errors in:"                   >> $(GRASS_HOME)/error.log
+	chmod 744 install-sh
 	@list='$(SUBDIRS)'; \
 	for subdir in $$list; do \
 		$(MAKE) -C $$subdir; \
