@@ -10,7 +10,7 @@
 # Globals for animation
 ##################################
 global animNumFrames animStartX animEndX animFirstKeyX animLastKeyX
-global animKeyList animUniqueTag animInterpType animPathState
+global animKeyList animUniqueTag animInterpType animPathState IMG
 
 set animNumFrames 25
 Nset_numsteps 25
@@ -27,6 +27,7 @@ set animSiteState 0
 set animVolState 0
 set animRunState stop
 set animSaveRenderStyle 0
+set IMG 2
 # Update all the frames before we exit (should be easy since there aren't any)
 Nupdate_frames
 
@@ -756,7 +757,7 @@ proc animClearAllKeys { BASE } {
 #
 ############################################################################
 proc animStepForward { BASE } {
-    global animNumFrames animKeyList animRunState animSaveRenderStyle
+    global animNumFrames animKeyList animRunState animSaveRenderStyle IMG
 
     if {"$animRunState" == "run_and_save"} then {
 	set style $animSaveRenderStyle
@@ -781,6 +782,9 @@ proc animStepForward { BASE } {
     } else {
 	$BASE.buttons.cur_frame configure -text "[expr $animNumFrames - 1]"
 	Ndo_framestep $animNumFrames $style
+	if {$IMG == "4" && $animRunState == "run_and_save"} {
+		Nclose_mpeg
+	}
 	set animRunState stop
     }
 
@@ -863,12 +867,13 @@ proc animRunAndSave { BASE } {
     radiobutton .ras_fname.img1 -text "Iris RGB" -variable IMG -value 1
     radiobutton .ras_fname.img2 -text "PPM" -variable IMG -value 2
     radiobutton .ras_fname.img3 -text "TIFF" -variable IMG -value 3
+    radiobutton .ras_fname.img4 -text "MPEG-1" -variable IMG -value 4
 #Pack Menu
     pack .ras_fname.frame1 -side top -fill both -expand 1
     pack .ras_fname.frame2 -side bottom -fill both -expand 1
     pack .ras_fname.title .ras_fname.enter -side top \
     -in .ras_fname.frame1 -fill both
-    pack .ras_fname.img1 .ras_fname.img2 .ras_fname.img3 \
+    pack .ras_fname.img1 .ras_fname.img2 .ras_fname.img3 .ras_fname.img4 \
     -in .ras_fname.frame1 -side left -fill both
     pack .ras_fname.label .ras_fname.norm .ras_fname.fancy -side top \
 	-in .ras_fname.frame2 -fill both
@@ -876,6 +881,10 @@ proc animRunAndSave { BASE } {
     tkwait variable animWaitPress
     set animBaseName [.ras_fname.enter get]
     destroy .ras_fname
+
+    if {$IMG == 4} {
+	Ninit_mpeg $animBaseName
+    }
 
     # If we are already at the end then restart from the beginning
     set cur_frame [lindex [$BASE.buttons.cur_frame configure -text] 4]
@@ -916,6 +925,9 @@ if {$IMG == 2} {
 if {$IMG == 3} {
 	append fname $num ".tif"
 	Nwrite_tif $fname
+	}
+if {$IMG == 4} {
+	Nwrite_mpeg_frame
 	}
 
 }

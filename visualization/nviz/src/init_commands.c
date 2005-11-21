@@ -104,6 +104,9 @@ Nprint_keys_cmd(),
 Nwrite_rgb_cmd(),
 Nwrite_ppm_cmd(),
 Nwrite_tif_cmd(),
+Ninit_mpeg_cmd(),
+Nwrite_mpeg_frame_cmd(),
+Nclose_mpeg_cmd(),
 Nstart_zoom_cmd(),
 Noff_screen_cmd(),
 Ncutplane_obj_cmd(),
@@ -325,6 +328,9 @@ int init_commands(Tcl_Interp * interp, Nv_data * data)
     Tcl_CreateCommand(interp, "Nwrite_rgb", (Tcl_CmdProc *)Nwrite_rgb_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nwrite_ppm", (Tcl_CmdProc *)Nwrite_ppm_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nwrite_tif", (Tcl_CmdProc *)Nwrite_tif_cmd, data, NULL);
+    Tcl_CreateCommand(interp, "Ninit_mpeg", (Tcl_CmdProc *)Ninit_mpeg_cmd, data, NULL);
+    Tcl_CreateCommand(interp, "Nwrite_mpeg_frame", (Tcl_CmdProc *)Nwrite_mpeg_frame_cmd, data, NULL);
+    Tcl_CreateCommand(interp, "Nclose_mpeg", (Tcl_CmdProc *)Nclose_mpeg_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nstart_zoom", (Tcl_CmdProc *)Nstart_zoom_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Noff_screen", (Tcl_CmdProc *)Noff_screen_cmd, data, NULL);
 

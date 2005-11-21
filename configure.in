@@ -153,6 +153,7 @@ LOC_ARG_WITH(tcltk, Tcl/Tk)
 LOC_ARG_WITH(postgres, PostgreSQL)
 LOC_ARG_WITH(mysql, MySQL, no)
 LOC_ARG_WITH(sqlite, SQLite, no)
+LOC_ARG_WITH(ffmpeg, FFMPEG, no)
 LOC_ARG_WITH(opengl, OpenGL)
 LOC_ARG_WITH(odbc, ODBC, no)
 LOC_ARG_WITH(fftw, FFTW)
@@ -204,6 +205,9 @@ LOC_ARG_WITH_LIB(mysql, MySQL)
 
 LOC_ARG_WITH_INC(sqlite, SQLite)
 LOC_ARG_WITH_LIB(sqlite, SQLite)
+
+LOC_ARG_WITH_INC(ffmpeg, FFMPEG)
+LOC_ARG_WITH_LIB(ffmpeg, FFMPEG)
 
 LOC_ARG_WITH_INC(opengl, OpenGL)
 LOC_ARG_WITH_LIB(opengl, OpenGL)
@@ -944,6 +948,46 @@ AC_SUBST(SQLITELIB)
 
 # Done checking SQLite
 
+
+# Enable FFMPEG option
+
+LOC_CHECK_USE(ffmpeg, FFMPEG, USE_FFMPEG)
+
+FFMPEGINCPATH=
+FFMPEGLIBPATH=
+FFMPEGLIB=
+
+if test -n "$USE_FFMPEG"; then
+
+# With FFMPEG includes directory
+
+LOC_CHECK_INC_PATH(ffmpeg, FFMPEG, FFMPEGINCPATH)
+
+LOC_CHECK_INCLUDES(avcodec.h,FFMPEG,$FFMPEGINCPATH)
+
+AC_DEFINE(HAVE_FFMPEG)
+
+fi # $USE_FFMPEG
+
+if test -n "$USE_FFMPEG"; then
+
+# With FFMPEG library directory
+
+LOC_CHECK_LIB_PATH(ffmpeg, FFMPEG, FFMPEGLIBPATH)
+
+LOC_CHECK_LIBS(avcodec, avcodec_init, FFMPEG, $FFMPEGLIBPATH, FFMPEGLIB,,,,-lavutil $MATHLIB)
+
+fi # $USE_FFMPEG
+
+AC_SUBST(USE_FFMPEG)
+
+AC_SUBST(FFMPEGINCPATH)
+AC_SUBST(FFMPEGLIBPATH)
+AC_SUBST(FFMPEGLIB)
+
+# Done checking FFMPEG
+
+
 # Enable OpenGL option
 
 LOC_CHECK_USE(opengl,OpenGL,USE_OPENGL)
@@ -1336,6 +1380,7 @@ LOC_MSG_USE(Tcl/Tk support,USE_TCLTK)
 LOC_MSG_USE(PostgreSQL support,USE_POSTGRES)
 LOC_MSG_USE(MySQL support,USE_MYSQL)
 LOC_MSG_USE(SQLite support,USE_SQLITE)
+LOC_MSG_USE(FFMPEG support,USE_FFMPEG)
 LOC_MSG_USE(OpenGL(R) support,USE_OPENGL)
 LOC_MSG_USE(ODBC support,USE_ODBC)
 LOC_MSG_USE(FFTW support,USE_FFTW)

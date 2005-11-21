@@ -860,3 +860,73 @@ int Noff_screen_cmd(Nv_data * data,	/* Local data */
     return (TCL_OK);
 
 }
+
+
+/*******************************************************
+ *  
+*******************************************************/
+int Ninit_mpeg_cmd(Nv_data * data,      /* Local data */
+                   Tcl_Interp * interp, /* Current interpreter */
+                   int argc,    /* Number of arguments */
+                   char **argv  /* Argument strings */
+    )
+{
+    /* Parse arguments */
+    if (argc != 2) {
+        interp->result = "Error: should be Ninit_mpeg file_name";
+        return (TCL_ERROR);
+    }
+
+    /* Call the function */
+    if (gsd_init_mpeg(argv[1]) ) {
+	    interp->result = "Error: gsd_init_mpeg failed to initialize MPEG stream";
+	    return (TCL_ERROR);
+    }
+
+    return (TCL_OK);
+
+}
+
+/*******************************************************
+ *
+*******************************************************/
+int Nwrite_mpeg_frame_cmd(Nv_data * data,       /* Local data */
+                   Tcl_Interp * interp, /* Current interpreter */
+                   int argc,    /* Number of arguments */
+                   char **argv  /* Argument strings */
+    )
+{
+    /* Parse arguments */
+    if (argc != 1) {
+        interp->result = "Error: should be Nwrite_mpeg_frame";
+        return (TCL_ERROR);
+    }
+
+    /* Call the function */
+    gsd_write_mpegframe();
+
+    return (TCL_OK);
+
+}
+
+/*******************************************************
+ *
+*******************************************************/
+int Nclose_mpeg_cmd(Nv_data * data,     /* Local data */
+                   Tcl_Interp * interp, /* Current interpreter */
+                   int argc,    /* Number of arguments */
+                   char **argv  /* Argument strings */
+    )
+{
+    /* Parse arguments */
+    if (argc != 1) {
+        interp->result = "Error: should be Nclose_mpeg";
+        return (TCL_ERROR);
+    }
+
+    /* Call the function */
+    gsd_close_mpeg();
+
+    return (TCL_OK);
+
+}
