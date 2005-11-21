@@ -6774,7 +6774,7 @@ else
 fi
 
 if test "$NAD2BIN" = "no"; then
-    { echo "configure: error: *** Unable to locate nad2bin." 1>&2; exit 1; }
+    { echo "configure: error: *** Unable to locate nad2bin (needs to be in PATH)." 1>&2; exit 1; }
 fi
 
 # Done checking PROJ
