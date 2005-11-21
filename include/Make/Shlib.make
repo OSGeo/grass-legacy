@@ -15,7 +15,7 @@ CFLAGS += $(SHLIB_CFLAGS) $(NLS_CFLAGS)
 LDFLAGS += $(SHLIB_LDFLAGS)
 
 $(SHLIB): $(SHLIB_OBJS)
-	$(SHLIB_LD) -o $@ $(LDFLAGS) $^ $(EXTRA_LIBS) && if [ -z ${MINGW} ] ; then ln -f -s $(notdir $@) $(patsubst %.$(GRASS_VERSION_NUMBER)$(SHLIB_SUFFIX),%$(SHLIB_SUFFIX),$@); fi
+	$(SHLIB_LD) -o $@ $(LDFLAGS) $^ $(EXTRA_LIBS) && if [ -z "${MINGW}" ] ; then ln -f -s $(notdir $@) $(patsubst %.$(GRASS_VERSION_NUMBER)$(SHLIB_SUFFIX),%$(SHLIB_SUFFIX),$@); fi
 
 shlib: $(SHLIB)
 
