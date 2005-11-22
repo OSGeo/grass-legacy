@@ -69,6 +69,8 @@ report (void)
             break;
 
         case O_COOR:
+        case O_START:
+        case O_END:
     	    fprintf (stdout,"cat|x|y|z\n");
 	    for ( i = 0; i < vstat.rcat; i++ ) {
 		if ( Values[i].count1 == 1 )

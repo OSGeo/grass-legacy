@@ -51,6 +51,8 @@ update (struct Map_info *Map)
 	    sprintf (buf1, "update %s set %s =", Fi->table, options.col[0]);
             break;
         case O_COOR:
+        case O_START:
+        case O_END:
         case O_SIDES:
 	    sprintf (buf1, "update %s set ", Fi->table);	
             break;
@@ -80,8 +82,10 @@ update (struct Map_info *Map)
         	break;
 
     	    case O_COOR:
+    	    case O_START:
+    	    case O_END:
 		if ( Values[i].count1 > 1 ){
-		    G_warning ( "More points of category %d, nothing loaded to DB", Values[i].cat);
+		    G_warning ( "More elements of category %d, nothing loaded to DB", Values[i].cat);
 		    vstat.dupl++;
 		    continue;
 		}		

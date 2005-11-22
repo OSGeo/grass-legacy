@@ -121,6 +121,18 @@ read_lines(struct Map_info *Map )
 		    Values[idx].d2 = Points->y[0];
 		    Values[idx].d3 = Points->z[0];
 		    Values[idx].count1++;
+		} else if ( options.option == O_START && (type & GV_LINES) ) {
+		    /* overwrite by last one, count is used in update */ 
+		    Values[idx].d1 = Points->x[0];
+		    Values[idx].d2 = Points->y[0];
+		    Values[idx].d3 = Points->z[0];
+		    Values[idx].count1++;
+		} else if ( options.option == O_END && (type & GV_LINES) ) {
+		    /* overwrite by last one, count is used in update */ 
+		    Values[idx].d1 = Points->x[Points->n_points-1];
+		    Values[idx].d2 = Points->y[Points->n_points-1];
+		    Values[idx].d3 = Points->z[Points->n_points-1];
+		    Values[idx].count1++;
 		} else if ( options.option == O_SIDES && type == GV_BOUNDARY ) {
 		    
                     read_side_cats ( LCats, &(Values[idx].i1), &(Values[idx].count1) );
@@ -141,6 +153,16 @@ read_lines(struct Map_info *Map )
 		Values[idx].d1 = Points->x[0];
 		Values[idx].d2 = Points->y[0];
 		Values[idx].d3 = Points->z[0];
+		Values[idx].count1++;
+	    } else if ( options.option == O_START && (type & GV_LINES) ) {
+		Values[idx].d1 = Points->x[0];
+		Values[idx].d2 = Points->y[0];
+		Values[idx].d3 = Points->z[0];
+		Values[idx].count1++;
+	    } else if ( options.option == O_END && (type & GV_LINES) ) {
+		Values[idx].d1 = Points->x[Points->n_points-1];
+		Values[idx].d2 = Points->y[Points->n_points-1];
+		Values[idx].d3 = Points->z[Points->n_points-1];
 		Values[idx].count1++;
 	    } else if ( options.option == O_SIDES && type == GV_BOUNDARY ) {
 		read_side_cats ( LCats, &(Values[idx].i1), &(Values[idx].count1) );
