@@ -23,15 +23,15 @@ endif
 
 # add SQLite:
 ifneq ($(strip $(SQLITELIB)),)
-    SUBDIRS4 = sqlite
+    SUBDIRS5 = sqlite
 endif
 
 # add ogr:
 ifneq ($(strip $(USE_OGR)),)
-    SUBDIRS5 = ogr
+    SUBDIRS6 = ogr
 endif
 
-SUBDIRS =  $(SUBDIRS1) $(SUBDIRS2) $(SUBDIRS3) $(SUBDIRS4) $(SUBDIRS5)
+SUBDIRS =  $(SUBDIRS1) $(SUBDIRS2) $(SUBDIRS3) $(SUBDIRS4) $(SUBDIRS5) $(SUBDIRS6)
 
 default: subdirs
 
