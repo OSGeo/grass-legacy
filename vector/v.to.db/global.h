@@ -63,6 +63,9 @@ EXT VSTAT
 #define O_COMPACT	8  /* Compactness of an area. Circle = 1.0 */
 #define O_PERIMETER	9  /* Compactness of an area. Circle = 1.0 */
 
+#define O_START        10  /* line/boundary starting point */
+#define O_END          11  /* line/boundary end point */
+
 #define U_ACRES		1
 #define U_HECTARES	2
 #define U_KILOMETERS	3

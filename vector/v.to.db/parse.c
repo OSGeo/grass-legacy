@@ -46,7 +46,7 @@ parse_command_line (int argc, char *argv[])
     parms.option->type         = TYPE_STRING;
     parms.option->required     = YES;
     parms.option->multiple     = NO;
-    parms.option->options      = "cat,area,compact,perimeter,length,count,coor,sides,query";
+    parms.option->options      = "cat,area,compact,perimeter,length,count,coor,start,end,sides,query";
     parms.option->description  = _("Value to upload");
     parms.option->descriptions  = 
 		 "cat;insert new row for each category if doesn't exist yet;"
@@ -57,6 +57,8 @@ parse_command_line (int argc, char *argv[])
 		 "length;line length;"
 		 "count;number of features for each category;"
 		 "coor;point coordinates, X,Y or X,Y,Z;"
+		 "start;line/boundary starting point coordinates, X,Y or X,Y,Z;"
+		 "end;line/boundary end point coordinates, X,Y or X,Y,Z;"
 		 "sides;categories of areas on the left and right side of the boundary, "
 		       "'qlayer' is used for area category;"
 		 "query;result of a database query for all records of the geometry"
@@ -174,6 +176,8 @@ int parse_option (char *s)
     else if (strcmp (s, "length") == 0) x = O_LENGTH;
     else if (strcmp (s, "count") == 0) x = O_COUNT;
     else if (strcmp (s, "coor") == 0) x = O_COOR;
+    else if (strcmp (s, "start") == 0) x = O_START;
+    else if (strcmp (s, "end") == 0) x = O_END;
     else if (strcmp (s, "sides") == 0) x = O_SIDES;
     else if (strcmp (s, "query") == 0) x = O_QUERY;
     else if (strcmp (s, "compact") == 0) x = O_COMPACT;
