@@ -1,0 +1,36 @@
+/*! \mainpage GRASS_SWIG GRASS SWIG interface
+
+<h2>GRASS SWIG interface</h2>
+
+GRASS GIS (Geographic Resources Analysis Support System) is an open source,
+Free Software Geographical Information System (GIS) with raster, topological
+vector, image processing, and graphics production functionality that
+operates on various platforms through a graphical user interface and shell
+in X-Window. It is released under GNU General Public License (GPL).
+
+<P>
+<i>Cited from <a href="http://www.swig.org/">SWIG Web site</a>:</i><br>
+SWIG is a software development tool that connects programs written in
+C and C++ with a variety of high-level programming
+languages.  SWIG is used with different types of languages including common scripting languages such as
+Perl, PHP, Python, Tcl, Ruby and PHP. The list of 
+<a href="http://www.swig.org/compat.html#SupportedLanguages">supported languages</a> also includes 
+on-scripting languages such as C#, Common Lisp (CLISP, Allegro CL, UFFI), Java, Modula-3 and OCAML. Also several
+interpreted and compiled Scheme implementations (Guile, MzScheme, Chicken)
+are supported. SWIG is most
+commonly used to create high-level interpreted or compiled programming
+environments, user interfaces, and as a tool for testing and prototyping C/C++
+software.  SWIG can also export its parse tree in the form of XML and
+Lisp s-expressions.  SWIG may be freely used, distributed, and modified for commercial
+and non-commercial use.
+<P>
+
+<h2>Status of GRASS SWIG implementation</h2>
+
+At the moment a prototype is implemented. It permits to use 
+the GRASS raster command <em>r.slope.aspect</em> directly
+from the PERL programming language.
+
+*/
+
+See <a href"http://www.google.com/search?num=20&hl=en&lr=&q=swig+%5BGRASS5%5D+site%3Agrass.itc.it&btnG=Search">here</a> for discussions in the developers mailing list.
