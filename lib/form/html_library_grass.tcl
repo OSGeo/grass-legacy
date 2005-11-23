@@ -1311,10 +1311,10 @@ proc HMsubmit_button {win form_id param stuff} {
 	set query ""
 	foreach pair $stuff {
 		set value [subst [lindex $pair 1]]
-		if {$value != ""} {
+		#if {$value != ""} {
 			set item [lindex $pair 0]
 			lappend query $item $value
-		}
+		#}
 	}
 	# this is the user callback.
 	HMsubmit_form $win $param $query

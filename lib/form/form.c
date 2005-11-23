@@ -169,6 +169,7 @@ submit ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 
     first = 1;
     for ( i = 0; i < nCols; i++ ) {
+        G_debug ( 0, "Name = %s", Cols[i].name );
 	if ( G_strcasecmp( Cols[i].name, Key ) == 0  )  continue;
 		
 	if (G_strcasecmp(Cols[i].name, F_ENCODING) == 0) {
@@ -185,37 +186,34 @@ submit ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 			fprintf(stderr, 
 				"Could not set Tcl system encoding to %s\n", Cols[i].value);
 		}
-		db_close_database(driver);
-		db_shutdown_driver(driver);
-		sprintf(buf,
-			"set submit_msg \"View data encoding now is %s\"",
-			Cols[i].value);
-		Tcl_Eval(interp, buf);
-		Tcl_Eval(interp, "set submit_result 0");
-		return TCL_OK;
 	    }
+            continue;
 	}
 
 	if ( !first ) { db_append_string (&sql, ", "); }
-	if ( Cols[i].ctype == DB_C_TYPE_INT || Cols[i].ctype == DB_C_TYPE_DOUBLE ) {
-            sprintf (buf, "%s = %s", Cols[i].name, Cols[i].value );
-	} else {
-	    memset(buf, '\0', strlen(buf));
-	    ret = Tcl_UtfToExternal(interp,
-	    		      Tcl_GetEncoding(interp, G__getenv("GRASS_DB_ENCODING")),
-	                      Cols[i].value, strlen(Cols[i].value), 0, NULL,
-	                      buf, 2000, NULL, NULL, NULL);
-	    
-	    if ( ret != TCL_OK ) {
-		G_warning ("Could not convert UTF to external.");
-		db_set_string ( &strval, Cols[i].value );
+        if ( strlen ( Cols[i].value ) == 0 ) {
+            sprintf (buf, "%s = null", Cols[i].name );
+        } else {
+	    if ( Cols[i].ctype == DB_C_TYPE_INT || Cols[i].ctype == DB_C_TYPE_DOUBLE ) {
+		sprintf (buf, "%s = %s", Cols[i].name, Cols[i].value );
 	    } else {
-	        db_set_string ( &strval, buf );
-	    }
+		memset(buf, '\0', strlen(buf));
+		ret = Tcl_UtfToExternal(interp,
+				  Tcl_GetEncoding(interp, G__getenv("GRASS_DB_ENCODING")),
+				  Cols[i].value, strlen(Cols[i].value), 0, NULL,
+				  buf, 2000, NULL, NULL, NULL);
+		
+		if ( ret != TCL_OK ) {
+		    G_warning ("Could not convert UTF to external.");
+		    db_set_string ( &strval, Cols[i].value );
+		} else {
+		    db_set_string ( &strval, buf );
+		}
 
-	    db_double_quote_string (&strval);
-            sprintf (buf, "%s = '%s'", Cols[i].name, db_get_string(&strval) );
-	}
+		db_double_quote_string (&strval);
+		sprintf (buf, "%s = '%s'", Cols[i].name, db_get_string(&strval) );
+	    }
+        }
         db_append_string (&sql, buf);
 	first = 0;
     }
