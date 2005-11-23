@@ -73,8 +73,11 @@ from GRASS 5 Programmer's manual or are simply undocumented</I>
 <li>symbol:	drawing symbols for point vector data library - \ref symbol
 <li>vask:	Cursor management library - \ref vasklib
 <li>vect:	GRASS vector and Direct Graph library - \ref Vector_Library
-
 </ul>
 
+<h3>Interfaces</h3>
+<ul>
+<li> GRASS-SWIG interface: \ref GRASS_SWIG_interface
+</ul>
 */
 
