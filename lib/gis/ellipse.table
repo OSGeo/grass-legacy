@@ -32,6 +32,8 @@ bess_nam	"Bessel 1841, Namibia"		a=6377483.865	f=1/299.1528128
 clark66		"Clarke 1866"			a=6378206.400	f=1/294.9786982
 # Clarke 1880
 clark80		"Clarke 1880"			a=6378249.145	f=1/293.465
+# Clarke 1880 IGN France
+clark80IGN		"Clarke 1880 IGN France"			a=6378249.200	f=1/293.466021294
 # Everest 1830, India
 # everest					a=6377276.345	e=.0066378466
 everest		"Everest 1830, India"		a=6377276.345	f=1/300.8017
