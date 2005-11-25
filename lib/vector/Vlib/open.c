@@ -14,6 +14,7 @@
 *   	    	for details.
 *
 *****************************************************************************/
+
 #include "stdlib.h"
 #include "stdio.h"
 #include "string.h"
@@ -568,6 +569,15 @@ Vect_coor_info ( struct Map_info *Map, struct Coor_info *Info )
 		Info->size = (long) stat_buf.st_size;      /* file size */
 		Info->mtime = (long) stat_buf.st_mtime;    /* last modified time */
 	    }
+            /* stat does not give correct size on MINGW 
+             * if the file is opened */
+#ifdef __MINGW32__
+            if ( Map->open == VECT_OPEN_CODE ) {
+               dig_fseek ( &(Map->dig_fp), 0L, SEEK_END);
+               G_debug ( 2, "ftell = %d", dig_ftell ( &(Map->dig_fp) ) );
+               Info->size = dig_ftell ( &(Map->dig_fp) );
+            }
+#endif
 	    break;
         case GV_FORMAT_OGR :
  	    Info->size = 0L;
