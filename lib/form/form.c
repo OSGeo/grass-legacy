@@ -9,6 +9,11 @@
 #include "dbmi.h"
 #include "form.h"
 
+#ifdef __MINGW32__
+#define        F_SETFL         4       /* Set file status flags.  */
+#define        O_NONBLOCK      0x0004  /* Non-blocking I/O.  */
+#endif
+
 /* Structure to store column names and values */
 typedef struct {
     char *name;
