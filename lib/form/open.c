@@ -10,7 +10,11 @@
 
 #ifdef USE_G_SOCKS
 #include <sys/types.h>
+#ifdef __MINGW32__
+#include <winsock.h>
+#else /*__MINGW32__*/
 #include <sys/socket.h> 
+#endif /*__MINGW32__*/
 #endif /*USE_G_SOCKS*/
 
 int first = 1;
