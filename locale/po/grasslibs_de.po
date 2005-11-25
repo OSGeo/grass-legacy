@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-22 20:33+0200\n"
+"POT-Creation-Date: 2005-11-19 18:18+0100\n"
 "PO-Revision-Date: 2005-08-22 20:52+0200\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
@@ -16,218 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
-
-#: ../lib/gis/adj_cellhd.c:69 ../lib/gis/adj_cellhd.c:166
-msgid "Illegal n-s resolution value"
-msgstr "Ungültige N-S Auflösung"
-
-#: ../lib/gis/adj_cellhd.c:74 ../lib/gis/adj_cellhd.c:173
-msgid "Illegal row value"
-msgstr "Ungültiger Zeilenwert"
-
-#: ../lib/gis/adj_cellhd.c:79 ../lib/gis/adj_cellhd.c:180
-msgid "Illegal e-w resolution value"
-msgstr "Ungültige E-W Ausdehnung"
-
-#: ../lib/gis/adj_cellhd.c:84 ../lib/gis/adj_cellhd.c:187
-msgid "Illegal col value"
-msgstr "Ungültiger Spaltenwert"
-
-#: ../lib/gis/adj_cellhd.c:91 ../lib/gis/adj_cellhd.c:206
-msgid "Illegal latitude for North"
-msgstr "Ungültige geographische Länge für Norden"
-
-#: ../lib/gis/adj_cellhd.c:93 ../lib/gis/adj_cellhd.c:208
-msgid "Illegal latitude for South"
-msgstr "Ungültige geographische Länge für Süden"
-
-#: ../lib/gis/adj_cellhd.c:102 ../lib/gis/adj_cellhd.c:217
-msgid "North must be north of South"
-msgstr "Nordwert muss nördlich des Südwertes liegen"
-
-#: ../lib/gis/adj_cellhd.c:104 ../lib/gis/adj_cellhd.c:219
-msgid "North must be larger than South"
-msgstr "Nordwert muss größer als der Südwert sein"
-
-#: ../lib/gis/adj_cellhd.c:107 ../lib/gis/adj_cellhd.c:222
-msgid "East must be larger than West"
-msgstr "Ostwert muss größer als der Westwert sein"
-
-#: ../lib/gis/adj_cellhd.c:126 ../lib/gis/adj_cellhd.c:259
-msgid "Invalid coordinates"
-msgstr "Ungültige Koordinaten"
-
-#: ../lib/gis/adj_cellhd.c:168
-msgid "Illegal n-s3 resolution value"
-msgstr "Ungültige N-S3 Auflösung"
-
-#: ../lib/gis/adj_cellhd.c:175
-msgid "Illegal row3 value"
-msgstr "Ungültiger Zeilenwert3"
-
-#: ../lib/gis/adj_cellhd.c:182
-msgid "Illegal e-w3 resolution value"
-msgstr "Ungültige E-W3 Ausdehnung"
-
-#: ../lib/gis/adj_cellhd.c:189
-msgid "Illegal col3 value"
-msgstr "Ungültiger Spaltenwert3"
-
-#: ../lib/gis/adj_cellhd.c:194
-msgid "Illegal t-b3 resolution value"
-msgstr "Ungültige t-b3 Ausdehnung"
-
-#: ../lib/gis/adj_cellhd.c:199
-msgid "Illegal depths value"
-msgstr "Ungültiger Tiefenwert"
-
-#: ../lib/gis/ask.c:377
-msgid "to cancel request"
-msgstr "Aktion abbrechen"
-
-#: ../lib/gis/ask.c:433
-#, c-format
-msgid "Enter a new %s file name"
-msgstr "Bitte geben Sie einen neuen %s Dateinamen ein."
-
-#: ../lib/gis/ask.c:438
-#, c-format
-msgid "Enter the name of an existing %s file"
-msgstr "Bitte geben Sie den Namen einer existierenden %s Datei ein."
-
-#: ../lib/gis/ask.c:441
-#, c-format
-msgid "Enter %s file name"
-msgstr "Bitte geben Sie %s Dateinamen ein."
-
-#: ../lib/gis/ask.c:460
-#, c-format
-msgid "Enter 'list' for a list of existing %s files\n"
-msgstr ""
-"Bitte geben Sie 'list' für eine Liste der bereits existierenden %s Dateien "
-"ein.\n"
-
-#: ../lib/gis/ask.c:463
-#, c-format
-msgid "Enter 'list -f' for "
-msgstr "Geben Sie 'list -f' für "
-
-#: ../lib/gis/ask.c:465
-#, c-format
-msgid "a list %s"
-msgstr "eine Liste %s ein."
-
-#: ../lib/gis/ask.c:467
-#, c-format
-msgid "an extended list"
-msgstr "eine erweiterte Liste ein."
-
-#: ../lib/gis/ask.c:471
-#, c-format
-msgid "Hit RETURN %s\n"
-msgstr "Drücken Sie RETURN %s\n"
-
-#: ../lib/gis/ask.c:493 ../lib/gis/ask.c:600 ../lib/gis/ask.c:622
-#, c-format
-msgid ""
-"\n"
-"** %s - not found **\n"
-msgstr ""
-"\n"
-"** %s - leider nicht gefunden **\n"
-
-#: ../lib/gis/ask.c:500 ../lib/gis/ask.c:586
-#, c-format
-msgid ""
-"\n"
-"** %s exists. ok to overwrite? "
-msgstr ""
-"\n"
-"** %s existiert. Soll sie überschrieben werden? "
-
-#: ../lib/gis/ask.c:546
-#, c-format
-msgid ""
-"\n"
-"**<%s> illegal name **\n"
-msgstr ""
-"\n"
-"**<%s> unerlaubter Name **\n"
-
-#: ../lib/gis/ask.c:561
-#, c-format
-msgid ""
-"\n"
-"** %s - illegal request **\n"
-msgstr ""
-"\n"
-"** %s - unerlaubte Anfrage **\n"
-
-#: ../lib/gis/ask.c:576
-#, c-format
-msgid ""
-"\n"
-"** %s - exists, select another name **\n"
-msgstr ""
-"\n"
-"** %s - existiert bereits, bitte wählen Sie einen anderen Namen **\n"
-
-#: ../lib/gis/ask.c:604
-msgid "ask: can't happen"
-msgstr "Frage: Das kann nicht passieren"
-
-#: ../lib/gis/ask_cell.c:58 ../lib/gis/ask_cell.c:79 ../lib/gis/ask_cell.c:100
-#: ../lib/gis/ask_cell.c:109
-msgid "with titles"
-msgstr "mit Titeln"
-
-#: ../lib/gis/ask_cell.c:121
-msgid "(no title)"
-msgstr "(kein Titel)"
-
-#: ../lib/gis/auto_mask.c:53
-msgid "Unable to open automatic MASK file"
-msgstr "Kann automatische MASK-Datei nicht öffnen."
-
-#: ../lib/gis/cats.c:384
-#, c-format
-msgid "category support for [%s] in mapset [%s] %s"
-msgstr "Kategorie Unterstützung für [%s] im Mapset [%s] %s"
-
-#: ../lib/gis/cats.c:423
-#, c-format
-msgid "category support for vector file [%s] in mapset [%s] %s"
-msgstr "Kategorie Unterstützung für die Vektordatei [%s] in Mapset [%s] %s"
-
-#: ../lib/gis/color_read.c:123
-#, c-format
-msgid "color support for [%s] in mapset [%s] %s"
-msgstr "Farbunterstützung für die Datei [%s] im Mapset [%s] %s"
-
-#: ../lib/gis/datum.c:163 ../lib/gis/get_datum_name.c:67
-#: ../lib/gis/get_ell_name.c:33 ../lib/gis/get_projname.c:48
-#: ../lib/proj/datum.c:223
-msgid "Cannot open temp file"
-msgstr "Kann temporäre Datei nicht öffnen."
-
-#: ../lib/gis/datum.c:242 ../lib/gis/get_datum_name.c:56
-#: ../lib/gis/get_ell_name.c:46 ../lib/gis/get_projname.c:60
-#: ../lib/proj/datum.c:300
-#, c-format
-msgid "Hit RETURN to cancel request\n"
-msgstr "Drücken Sie RETURN, um abzubrechen.\n"
-
-#: ../lib/gis/datum.c:353 ../lib/gis/datum.c:433 ../lib/proj/datum.c:346
-#: ../lib/proj/datum.c:420
-#, c-format
-msgid "unable to open datum table file: %s"
-msgstr "Kann Datums-Tabelle %s nicht öffnen."
-
-#: ../lib/gis/datum.c:368 ../lib/gis/datum.c:457 ../lib/proj/datum.c:359
-#: ../lib/proj/datum.c:434
-#, c-format
-msgid "error in datum table file, line %d"
-msgstr "Fehler in Datums-Tabelle in Reihe %d."
 
 #: ../lib/gis/debug.c:52
 #, c-format
@@ -462,16 +250,11 @@ msgstr "Quant ptr = %p"
 msgid "G_dump: end"
 msgstr "G_dump: Ende"
 
-#: ../lib/gis/done_msg.c:29
-#, c-format
-msgid "%s complete. %s\n"
-msgstr "%s komplett. %s\n"
-
 #: ../lib/gis/env.c:268
 msgid "GISRC - variable not set"
 msgstr "GISRC-Variable nicht gesetzt"
 
-#: ../lib/gis/env.c:290 ../lib/gis/env.c:302
+#: ../lib/gis/env.c:294 ../lib/gis/env.c:306
 #, c-format
 msgid "%s not set"
 msgstr "%s nicht gesetzt"
@@ -483,6 +266,509 @@ msgstr "WARNUNG:"
 #: ../lib/gis/error.c:163
 msgid "ERROR: "
 msgstr "FEHLER: "
+
+#: ../lib/gis/gisinit.c:38
+#, c-format
+msgid "MAPSET %s - permission denied"
+msgstr "MAPSET %s - Zugriff verweigert"
+
+#: ../lib/gis/gisinit.c:43 ../lib/gis/mapset.c:60
+#, c-format
+msgid "MAPSET %s not found"
+msgstr "MAPSET %s wurde nicht gefunden"
+
+#: ../lib/gis/gisinit.c:67
+#, c-format
+msgid "ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
+msgstr ""
+"Fehler. System ist nicht initialisiert. Der Programmierer hat vergessen, "
+"G_gisinit() aufzurufen.\n"
+
+#: ../lib/gis/mapset_msc.c:69
+#, c-format
+msgid "can't make mapset element %s (%s)"
+msgstr "Kann kein Mapset Element erzeugen %s (%s)."
+
+#: ../lib/gis/parser.c:318
+msgid ""
+"WHERE conditions of SQL statement without 'where' keyword. (example: income "
+"< 1000 and inhab >= 10000)"
+msgstr ""
+"WHERE-Ausdruck der SQL-Abfrage ohne das 'WHERE' Schlüsselwort. (Bsp.: income "
+"< 1000 AND inhab > 1000) "
+
+#: ../lib/gis/parser.c:326 ../lib/gis/parser.c:340
+msgid "Name of input raster"
+msgstr "Name der Eingabe Rasterkarte"
+
+#: ../lib/gis/parser.c:333
+msgid "Name of output raster"
+msgstr "Name der Ausgabe Rasterkarte"
+
+#: ../lib/gis/parser.c:348 ../lib/gis/parser.c:362
+msgid "Name of input vector"
+msgstr "Name der Eingabe Vektorkarte"
+
+#: ../lib/gis/parser.c:355
+msgid "Name of output vector"
+msgstr "Name der Ausgabe Vektorkarte"
+
+#: ../lib/gis/parser.c:371
+msgid "Type"
+msgstr "Typ"
+
+#: ../lib/gis/parser.c:378
+msgid "Layer number"
+msgstr "Layer-Nummer"
+
+#: ../lib/gis/parser.c:384
+msgid "Category value"
+msgstr "Kategoriewert"
+
+#: ../lib/gis/parser.c:390
+msgid "Category values."
+msgstr "Kategoriewerte"
+
+#: ../lib/gis/parser.c:391
+msgid "Example: 1,3,7-9,13"
+msgstr "Beispiel: 1,3,7-9,13"
+
+#: ../lib/gis/parser.c:632
+#, c-format
+msgid "Sorry <%s> is not a valid option\n"
+msgstr "Tut mir leid, <%s> ist keine erlaubte Option\n"
+
+#: ../lib/gis/parser.c:701
+#, c-format
+msgid ""
+"\n"
+"Description:\n"
+msgstr ""
+"\n"
+"Beschreibung:\n"
+
+#: ../lib/gis/parser.c:705
+#, c-format
+msgid ""
+"\n"
+"Usage:\n"
+" "
+msgstr ""
+"\n"
+"Benutzung:\n"
+" "
+
+#: ../lib/gis/parser.c:766
+#, c-format
+msgid ""
+"\n"
+"Flags:\n"
+msgstr ""
+"\n"
+"Flags:\n"
+
+#: ../lib/gis/parser.c:789
+#, c-format
+msgid ""
+"\n"
+"Parameters:\n"
+msgstr ""
+"\n"
+"Parameter:\n"
+
+#: ../lib/gis/parser.c:811
+#, c-format
+msgid "  %*s   default: %s\n"
+msgstr "  %*s    Standard: %s\n"
+
+#: ../lib/gis/parser.c:1370
+#, c-format
+msgid "  %*s   options: "
+msgstr "  %*s   Optionen: "
+
+#: ../lib/gis/parser.c:1417 ../lib/gis/parser.c:1434
+#, c-format
+msgid "Sorry, <%c> is not a valid flag\n"
+msgstr "Tut mir leid, <%c> ist keine gültiges Flag\n"
+
+#: ../lib/gis/parser.c:1489
+#, c-format
+msgid "Sorry, <%s=> is ambiguous\n"
+msgstr "Tut mir leid, <%s=> ist nicht eindeutig\n"
+
+#: ../lib/gis/parser.c:1496
+#, c-format
+msgid "Sorry, <%s> is not a valid parameter\n"
+msgstr "Tut mir leid, <%s> ist kein gültiger Parameter\n"
+
+#: ../lib/gis/parser.c:1581
+#, c-format
+msgid ""
+"\n"
+"Error: illegal range syntax for parameter <%s>\n"
+msgstr ""
+"\n"
+"Fehler: Ungültige Spannensyntax für den Parameter <%s>\n"
+
+#: ../lib/gis/parser.c:1583
+#, c-format
+msgid "       Presented as: %s\n"
+msgstr "       Präsentiert als: %s\n"
+
+#: ../lib/gis/parser.c:1586
+#, c-format
+msgid ""
+"\n"
+"Error: value <%s> out of range for parameter <%s>\n"
+msgstr ""
+"\n"
+"Fehler: Wert <%s> ist außerhalb der Spanne von Parameter <%s>\n"
+
+#: ../lib/gis/parser.c:1588
+#, c-format
+msgid "       Legal range: %s\n"
+msgstr "       Erlaubte Spanne: %s\n"
+
+#: ../lib/gis/parser.c:1591
+#, c-format
+msgid ""
+"\n"
+"Error: Missing value for parameter <%s>\n"
+msgstr ""
+"\n"
+"Fehler: Fehlender Wert für Parameter <%s>\n"
+
+#: ../lib/gis/parser.c:1751
+#, c-format
+msgid ""
+"\n"
+"ERROR: Required parameter <%s> not set:\n"
+"    (%s).\n"
+msgstr ""
+"\n"
+"Fehler: Benötigter Parameter <%s> ist nicht gesetzt:\n"
+"    (%s).\n"
+
+#: ../lib/gis/parser.c:1854
+#, c-format
+msgid ""
+"\n"
+"Error: option <%s> must be provided in multiples of %d\n"
+msgstr ""
+"\n"
+"Fehler: Option <%s> muss als Vielfaches von %d angegeben werden\n"
+
+#: ../lib/gis/parser.c:1856
+#, c-format
+msgid "       You provided %d items:\n"
+msgstr "       Sie haben %d Punkte angegeben:\n"
+
+#: ../lib/gis/parser.c:1912
+#, c-format
+msgid "Error: option <%s>: <%s> exists.\n"
+msgstr "Fehler: Option <%s>: <%s> existiert bereits.\n"
+
+#: ../lib/gis/parser.c:1959
+#, c-format
+msgid ""
+"\n"
+"FLAG: Set the following flag?\n"
+msgstr ""
+"\n"
+"FLAG: Soll das Folgende Flag gesetzt werden?\n"
+
+#: ../lib/gis/parser.c:1972
+#, c-format
+msgid ""
+"\n"
+"OPTION:   %s\n"
+msgstr ""
+"\n"
+"OPTION:   %s\n"
+
+#: ../lib/gis/parser.c:1973
+#, c-format
+msgid "     key: %s\n"
+msgstr "     Key: %s\n"
+
+#: ../lib/gis/parser.c:1975
+#, c-format
+msgid "  format: %s\n"
+msgstr "  Format: %s\n"
+
+#: ../lib/gis/parser.c:1977
+#, c-format
+msgid " default: %s\n"
+msgstr " Standard: %s\n"
+
+#: ../lib/gis/parser.c:1978
+#, c-format
+msgid "required: %s\n"
+msgstr "benötigt werden: %s\n"
+
+#: ../lib/gis/parser.c:1980
+#, c-format
+msgid "multiple: %s\n"
+msgstr "vielfach: %s\n"
+
+#: ../lib/gis/parser.c:1982
+#, c-format
+msgid " options: %s\n"
+msgstr " Optionen: %s\n"
+
+#: ../lib/gis/parser.c:1995
+#, c-format
+msgid "enter option > "
+msgstr "Geben Sie eine Option ein > "
+
+#: ../lib/gis/parser.c:2009 ../lib/gis/parser.c:2020
+msgid "   Try again? "
+msgstr "   Nochmal versuchen? "
+
+#: ../lib/gis/parser.c:2018
+#, c-format
+msgid "Sorry, %s is not accepted.\n"
+msgstr "Tut mir leid, %s wird nicht akzeptiert.\n"
+
+#: ../lib/gis/parser.c:2029
+#, c-format
+msgid ""
+"\n"
+"You have chosen:\n"
+"  %s\n"
+msgstr ""
+"\n"
+"Sie haben ausgewählt:\n"
+"  %s\n"
+
+#: ../lib/gis/parser.c:2030
+msgid "Is this correct? "
+msgstr "Ist das richtig?"
+
+#: ../lib/gis/parser.c:2088
+msgid "to accept the default"
+msgstr "Zum Akzeptieren der Standardeinstellung"
+
+#: ../lib/gis/myname.c:48
+msgid "Unknown Location"
+msgstr "Unbekannte Location"
+
+#: ../lib/gis/adj_cellhd.c:69 ../lib/gis/adj_cellhd.c:166
+msgid "Illegal n-s resolution value"
+msgstr "Ungültige N-S Auflösung"
+
+#: ../lib/gis/adj_cellhd.c:74 ../lib/gis/adj_cellhd.c:173
+msgid "Illegal row value"
+msgstr "Ungültiger Zeilenwert"
+
+#: ../lib/gis/adj_cellhd.c:79 ../lib/gis/adj_cellhd.c:180
+msgid "Illegal e-w resolution value"
+msgstr "Ungültige E-W Ausdehnung"
+
+#: ../lib/gis/adj_cellhd.c:84 ../lib/gis/adj_cellhd.c:187
+msgid "Illegal col value"
+msgstr "Ungültiger Spaltenwert"
+
+#: ../lib/gis/adj_cellhd.c:91 ../lib/gis/adj_cellhd.c:206
+msgid "Illegal latitude for North"
+msgstr "Ungültige geographische Länge für Norden"
+
+#: ../lib/gis/adj_cellhd.c:93 ../lib/gis/adj_cellhd.c:208
+msgid "Illegal latitude for South"
+msgstr "Ungültige geographische Länge für Süden"
+
+#: ../lib/gis/adj_cellhd.c:102 ../lib/gis/adj_cellhd.c:217
+msgid "North must be north of South"
+msgstr "Nordwert muss nördlich des Südwertes liegen"
+
+#: ../lib/gis/adj_cellhd.c:104 ../lib/gis/adj_cellhd.c:219
+msgid "North must be larger than South"
+msgstr "Nordwert muss größer als der Südwert sein"
+
+#: ../lib/gis/adj_cellhd.c:107 ../lib/gis/adj_cellhd.c:222
+msgid "East must be larger than West"
+msgstr "Ostwert muss größer als der Westwert sein"
+
+#: ../lib/gis/adj_cellhd.c:126 ../lib/gis/adj_cellhd.c:259
+msgid "Invalid coordinates"
+msgstr "Ungültige Koordinaten"
+
+#: ../lib/gis/adj_cellhd.c:168
+msgid "Illegal n-s3 resolution value"
+msgstr "Ungültige N-S3 Auflösung"
+
+#: ../lib/gis/adj_cellhd.c:175
+msgid "Illegal row3 value"
+msgstr "Ungültiger Zeilenwert3"
+
+#: ../lib/gis/adj_cellhd.c:182
+msgid "Illegal e-w3 resolution value"
+msgstr "Ungültige E-W3 Ausdehnung"
+
+#: ../lib/gis/adj_cellhd.c:189
+msgid "Illegal col3 value"
+msgstr "Ungültiger Spaltenwert3"
+
+#: ../lib/gis/adj_cellhd.c:194
+msgid "Illegal t-b3 resolution value"
+msgstr "Ungültige t-b3 Ausdehnung"
+
+#: ../lib/gis/adj_cellhd.c:199
+msgid "Illegal depths value"
+msgstr "Ungültiger Tiefenwert"
+
+#: ../lib/gis/ask.c:377
+msgid "to cancel request"
+msgstr "Aktion abbrechen"
+
+#: ../lib/gis/ask.c:433
+#, c-format
+msgid "Enter a new %s file name"
+msgstr "Bitte geben Sie einen neuen %s Dateinamen ein."
+
+#: ../lib/gis/ask.c:438
+#, c-format
+msgid "Enter the name of an existing %s file"
+msgstr "Bitte geben Sie den Namen einer existierenden %s Datei ein."
+
+#: ../lib/gis/ask.c:441
+#, c-format
+msgid "Enter %s file name"
+msgstr "Bitte geben Sie %s Dateinamen ein."
+
+#: ../lib/gis/ask.c:460
+#, c-format
+msgid "Enter 'list' for a list of existing %s files\n"
+msgstr ""
+"Bitte geben Sie 'list' für eine Liste der bereits existierenden %s Dateien "
+"ein.\n"
+
+#: ../lib/gis/ask.c:463
+#, c-format
+msgid "Enter 'list -f' for "
+msgstr "Geben Sie 'list -f' für "
+
+#: ../lib/gis/ask.c:465
+#, c-format
+msgid "a list %s"
+msgstr "eine Liste %s ein."
+
+#: ../lib/gis/ask.c:467
+#, c-format
+msgid "an extended list"
+msgstr "eine erweiterte Liste ein."
+
+#: ../lib/gis/ask.c:471
+#, c-format
+msgid "Hit RETURN %s\n"
+msgstr "Drücken Sie RETURN %s\n"
+
+#: ../lib/gis/ask.c:493 ../lib/gis/ask.c:600 ../lib/gis/ask.c:622
+#, c-format
+msgid ""
+"\n"
+"** %s - not found **\n"
+msgstr ""
+"\n"
+"** %s - leider nicht gefunden **\n"
+
+#: ../lib/gis/ask.c:500 ../lib/gis/ask.c:586
+#, c-format
+msgid ""
+"\n"
+"** %s exists. ok to overwrite? "
+msgstr ""
+"\n"
+"** %s existiert. Soll sie überschrieben werden? "
+
+#: ../lib/gis/ask.c:546
+#, c-format
+msgid ""
+"\n"
+"**<%s> illegal name **\n"
+msgstr ""
+"\n"
+"**<%s> unerlaubter Name **\n"
+
+#: ../lib/gis/ask.c:561
+#, c-format
+msgid ""
+"\n"
+"** %s - illegal request **\n"
+msgstr ""
+"\n"
+"** %s - unerlaubte Anfrage **\n"
+
+#: ../lib/gis/ask.c:576
+#, c-format
+msgid ""
+"\n"
+"** %s - exists, select another name **\n"
+msgstr ""
+"\n"
+"** %s - existiert bereits, bitte wählen Sie einen anderen Namen **\n"
+
+#: ../lib/gis/ask.c:604
+msgid "ask: can't happen"
+msgstr "Frage: Das kann nicht passieren"
+
+#: ../lib/gis/ask_cell.c:58 ../lib/gis/ask_cell.c:79 ../lib/gis/ask_cell.c:100
+#: ../lib/gis/ask_cell.c:109
+msgid "with titles"
+msgstr "mit Titeln"
+
+#: ../lib/gis/ask_cell.c:121
+msgid "(no title)"
+msgstr "(kein Titel)"
+
+#: ../lib/gis/auto_mask.c:53
+msgid "Unable to open automatic MASK file"
+msgstr "Kann automatische MASK-Datei nicht öffnen."
+
+#: ../lib/gis/cats.c:384
+#, c-format
+msgid "category support for [%s] in mapset [%s] %s"
+msgstr "Kategorie Unterstützung für [%s] im Mapset [%s] %s"
+
+#: ../lib/gis/cats.c:423
+#, c-format
+msgid "category support for vector file [%s] in mapset [%s] %s"
+msgstr "Kategorie Unterstützung für die Vektordatei [%s] in Mapset [%s] %s"
+
+#: ../lib/gis/color_read.c:123
+#, c-format
+msgid "color support for [%s] in mapset [%s] %s"
+msgstr "Farbunterstützung für die Datei [%s] im Mapset [%s] %s"
+
+#: ../lib/gis/datum.c:163 ../lib/gis/get_datum_name.c:67
+#: ../lib/gis/get_ell_name.c:33 ../lib/gis/get_projname.c:48
+#: ../lib/proj/datum.c:223
+msgid "Cannot open temp file"
+msgstr "Kann temporäre Datei nicht öffnen."
+
+#: ../lib/gis/datum.c:242 ../lib/gis/get_datum_name.c:56
+#: ../lib/gis/get_ell_name.c:46 ../lib/gis/get_projname.c:60
+#: ../lib/proj/datum.c:300
+#, c-format
+msgid "Hit RETURN to cancel request\n"
+msgstr "Drücken Sie RETURN, um abzubrechen.\n"
+
+#: ../lib/gis/datum.c:358 ../lib/gis/datum.c:438 ../lib/proj/datum.c:346
+#: ../lib/proj/datum.c:420
+#, c-format
+msgid "unable to open datum table file: %s"
+msgstr "Kann Datums-Tabelle %s nicht öffnen."
+
+#: ../lib/gis/datum.c:373 ../lib/gis/datum.c:462 ../lib/proj/datum.c:359
+#: ../lib/proj/datum.c:434
+#, c-format
+msgid "error in datum table file, line %d"
+msgstr "Fehler in Datums-Tabelle in Reihe %d."
+
+#: ../lib/gis/done_msg.c:29
+#, c-format
+msgid "%s complete. %s\n"
+msgstr "%s komplett. %s\n"
 
 #: ../lib/gis/format.c:162
 #, c-format
@@ -534,7 +820,8 @@ msgstr "Kann Datei %s in %s nicht öffnen"
 #: ../lib/gis/get_datum.c:107
 #, c-format
 msgid "Error reading datum shift parameters for %s from table"
-msgstr "Fehler beim Lesen der Datums-Transformationsparameter für %s aus der Tabelle."
+msgstr ""
+"Fehler beim Lesen der Datums-Transformationsparameter für %s aus der Tabelle."
 
 #: ../lib/gis/get_datum.c:115
 #, c-format
@@ -742,22 +1029,25 @@ msgstr "einen Moment bitte...\n"
 msgid "No help available for command [%s]\n"
 msgstr "Leider keine Hilfe für das Kommando [%s] verfügbar.\n"
 
-#: ../lib/gis/gisinit.c:38
+#: ../lib/gis/list.c:111
 #, c-format
-msgid "MAPSET %s - permission denied"
-msgstr "MAPSET %s - Zugriff verweigert"
+msgid "no %s files available in current mapset\n"
+msgstr "Keine %s Dateien im aktuellen Mapset vorhanden\n"
 
-#: ../lib/gis/gisinit.c:43 ../lib/gis/mapset.c:60
+#: ../lib/gis/list.c:113
 #, c-format
-msgid "MAPSET %s not found"
-msgstr "MAPSET %s wurde nicht gefunden"
+msgid "no %s files available in mapset %s\n"
+msgstr "Keine %s Dateien in Mapset %s vorhanden\n"
 
-#: ../lib/gis/gisinit.c:67
+#: ../lib/gis/list.c:127
 #, c-format
-msgid "ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
-msgstr ""
-"Fehler. System ist nicht initialisiert. Der Programmierer hat vergessen, "
-"G_gisinit() aufzurufen.\n"
+msgid "hit RETURN to continue -->"
+msgstr "Bitte RETURN zum Weitermachen drücken -->"
+
+#: ../lib/gis/list.c:182
+#, c-format
+msgid "%s files available in mapset %s:\n"
+msgstr "Vorhandene %s Dateien im Mapset %s:\n"
 
 #: ../lib/gis/histogram.c:60
 #, c-format
@@ -782,7 +1072,8 @@ msgstr "Kann kein Histogramm für [%s in %s] erstellen."
 #: ../lib/gis/history.c:120
 #, c-format
 msgid "can't get history information for [%s] in mapset [%s]"
-msgstr "Kann die History-Informationen der Karte [%s] in Mapset [%s] nicht finden."
+msgstr ""
+"Kann die History-Informationen der Karte [%s] in Mapset [%s] nicht finden."
 
 #: ../lib/gis/history.c:170
 #, c-format
@@ -802,26 +1093,6 @@ msgstr "Ungültiger Dateiname.  Er darf nicht '.' oder 'NULL' sein.\n"
 #, c-format
 msgid "Illegal filename. character <%c> not allowed."
 msgstr "Ungültiger Dateiname. Das Zeichen <%c> ist nicht erlaubt."
-
-#: ../lib/gis/list.c:111
-#, c-format
-msgid "no %s files available in current mapset\n"
-msgstr "Keine %s Dateien im aktuellen Mapset vorhanden\n"
-
-#: ../lib/gis/list.c:113
-#, c-format
-msgid "no %s files available in mapset %s\n"
-msgstr "Keine %s Dateien in Mapset %s vorhanden\n"
-
-#: ../lib/gis/list.c:127
-#, c-format
-msgid "hit RETURN to continue -->"
-msgstr "Bitte RETURN zum Weitermachen drücken -->"
-
-#: ../lib/gis/list.c:182
-#, c-format
-msgid "%s files available in mapset %s:\n"
-msgstr "Vorhandene %s Dateien im Mapset %s:\n"
 
 #: ../lib/gis/location.c:48
 #, c-format
@@ -911,11 +1182,6 @@ msgstr ""
 msgid "MAPSET is not set"
 msgstr "MAPSET ist nicht definiert."
 
-#: ../lib/gis/mapset_msc.c:69
-#, c-format
-msgid "can't make mapset element %s (%s)"
-msgstr "Kann kein Mapset Element erzeugen %s (%s)."
-
 #: ../lib/gis/mask_info.c:42
 #, c-format
 msgid "<%s> in mapset <%s>"
@@ -928,10 +1194,6 @@ msgstr "nichts"
 #: ../lib/gis/mask_info.c:48
 msgid "not known"
 msgstr "nicht bekannt"
-
-#: ../lib/gis/myname.c:48
-msgid "Unknown Location"
-msgstr "Unbekannte Location"
 
 #: ../lib/gis/null_val.c:94
 msgid "EmbedGivenNulls: wrong data type!"
@@ -1001,7 +1263,8 @@ msgstr "opencell: %s - ungültiger Dateiname"
 
 #: ../lib/gis/opencell.c:699
 msgid "Can't write embedded null values for map open for random access"
-msgstr "Kann keine embedded NULL Werte für Karte mit random access Zugriff schreiben"
+msgstr ""
+"Kann keine embedded NULL Werte für Karte mit random access Zugriff schreiben"
 
 #: ../lib/gis/opencell.c:930 ../lib/gis/opencell.c:951
 #, c-format
@@ -1027,266 +1290,6 @@ msgstr "ungültiger Typ: Feld %s in Datei %s. "
 #, c-format
 msgid "%s - ** illegal name **"
 msgstr "%s - ** Ungültiger Name **"
-
-#: ../lib/gis/parser.c:318
-msgid ""
-"WHERE conditions of SQL statement without 'where' keyword. (example: income "
-"< 1000 and inhab >= 10000)"
-msgstr ""
-"WHERE-Ausdruck der SQL-Abfrage ohne das 'WHERE' Schlüsselwort. (Bsp.: income "
-"< 1000 AND inhab > 1000) "
-
-#: ../lib/gis/parser.c:326 ../lib/gis/parser.c:340
-msgid "Name of input raster"
-msgstr "Name der Eingabe Rasterkarte"
-
-#: ../lib/gis/parser.c:333
-msgid "Name of output raster"
-msgstr "Name der Ausgabe Rasterkarte"
-
-#: ../lib/gis/parser.c:348 ../lib/gis/parser.c:362
-msgid "Name of input vector"
-msgstr "Name der Eingabe Vektorkarte"
-
-#: ../lib/gis/parser.c:355
-msgid "Name of output vector"
-msgstr "Name der Ausgabe Vektorkarte"
-
-#: ../lib/gis/parser.c:371
-msgid "Type"
-msgstr "Typ"
-
-#: ../lib/gis/parser.c:378
-msgid "Layer number"
-msgstr "Layer-Nummer"
-
-#: ../lib/gis/parser.c:384
-msgid "Category value"
-msgstr "Kategoriewert"
-
-#: ../lib/gis/parser.c:390
-msgid "Category values."
-msgstr "Kategoriewerte"
-
-#: ../lib/gis/parser.c:391
-msgid "Example: 1,3,7-9,13"
-msgstr "Beispiel: 1,3,7-9,13"
-
-#: ../lib/gis/parser.c:632
-#, c-format
-msgid "Sorry <%s> is not a valid option\n"
-msgstr "Tut mir leid, <%s> ist keine erlaubte Option\n"
-
-#: ../lib/gis/parser.c:701
-#, c-format
-msgid ""
-"\n"
-"Description:\n"
-msgstr ""
-"\n"
-"Beschreibung:\n"
-
-#: ../lib/gis/parser.c:705
-#, c-format
-msgid ""
-"\n"
-"Usage:\n"
-" "
-msgstr ""
-"\n"
-"Benutzung:\n"
-" "
-
-#: ../lib/gis/parser.c:766
-#, c-format
-msgid ""
-"\n"
-"Flags:\n"
-msgstr ""
-"\n"
-"Flags:\n"
-
-#: ../lib/gis/parser.c:789
-#, c-format
-msgid ""
-"\n"
-"Parameters:\n"
-msgstr ""
-"\n"
-"Parameter:\n"
-
-#: ../lib/gis/parser.c:811
-#, c-format
-msgid "  %*s   default: %s\n"
-msgstr "  %*s    Standard: %s\n"
-
-#: ../lib/gis/parser.c:1369
-#, c-format
-msgid "  %*s   options: "
-msgstr "  %*s   Optionen: "
-
-#: ../lib/gis/parser.c:1416 ../lib/gis/parser.c:1433
-#, c-format
-msgid "Sorry, <%c> is not a valid flag\n"
-msgstr "Tut mir leid, <%c> ist keine gültiges Flag\n"
-
-#: ../lib/gis/parser.c:1488
-#, c-format
-msgid "Sorry, <%s=> is ambiguous\n"
-msgstr "Tut mir leid, <%s=> ist nicht eindeutig\n"
-
-#: ../lib/gis/parser.c:1495
-#, c-format
-msgid "Sorry, <%s> is not a valid parameter\n"
-msgstr "Tut mir leid, <%s> ist kein gültiger Parameter\n"
-
-#: ../lib/gis/parser.c:1580
-#, c-format
-msgid ""
-"\n"
-"Error: illegal range syntax for parameter <%s>\n"
-msgstr ""
-"\n"
-"Fehler: Ungültige Spannensyntax für den Parameter <%s>\n"
-
-#: ../lib/gis/parser.c:1582
-#, c-format
-msgid "       Presented as: %s\n"
-msgstr "       Präsentiert als: %s\n"
-
-#: ../lib/gis/parser.c:1585
-#, c-format
-msgid ""
-"\n"
-"Error: value <%s> out of range for parameter <%s>\n"
-msgstr ""
-"\n"
-"Fehler: Wert <%s> ist außerhalb der Spanne von Parameter <%s>\n"
-
-#: ../lib/gis/parser.c:1587
-#, c-format
-msgid "       Legal range: %s\n"
-msgstr "       Erlaubte Spanne: %s\n"
-
-#: ../lib/gis/parser.c:1590
-#, c-format
-msgid ""
-"\n"
-"Error: Missing value for parameter <%s>\n"
-msgstr ""
-"\n"
-"Fehler: Fehlender Wert für Parameter <%s>\n"
-
-#: ../lib/gis/parser.c:1750
-#, c-format
-msgid ""
-"\n"
-"ERROR: Required parameter <%s> not set:\n"
-"    (%s).\n"
-msgstr ""
-"\n"
-"Fehler: Benötigter Parameter <%s> ist nicht gesetzt:\n"
-"    (%s).\n"
-
-#: ../lib/gis/parser.c:1853
-#, c-format
-msgid ""
-"\n"
-"Error: option <%s> must be provided in multiples of %d\n"
-msgstr ""
-"\n"
-"Fehler: Option <%s> muss als Vielfaches von %d angegeben werden\n"
-
-#: ../lib/gis/parser.c:1855
-#, c-format
-msgid "       You provided %d items:\n"
-msgstr "       Sie haben %d Punkte angegeben:\n"
-
-#: ../lib/gis/parser.c:1911
-#, c-format
-msgid "Error: option <%s>: <%s> exists.\n"
-msgstr "Fehler: Option <%s>: <%s> existiert bereits.\n"
-
-#: ../lib/gis/parser.c:1958
-#, c-format
-msgid ""
-"\n"
-"FLAG: Set the following flag?\n"
-msgstr ""
-"\n"
-"FLAG: Soll das Folgende Flag gesetzt werden?\n"
-
-#: ../lib/gis/parser.c:1971
-#, c-format
-msgid ""
-"\n"
-"OPTION:   %s\n"
-msgstr ""
-"\n"
-"OPTION:   %s\n"
-
-#: ../lib/gis/parser.c:1972
-#, c-format
-msgid "     key: %s\n"
-msgstr "     Key: %s\n"
-
-#: ../lib/gis/parser.c:1974
-#, c-format
-msgid "  format: %s\n"
-msgstr "  Format: %s\n"
-
-#: ../lib/gis/parser.c:1976
-#, c-format
-msgid " default: %s\n"
-msgstr " Standard: %s\n"
-
-#: ../lib/gis/parser.c:1977
-#, c-format
-msgid "required: %s\n"
-msgstr "benötigt werden: %s\n"
-
-#: ../lib/gis/parser.c:1979
-#, c-format
-msgid "multiple: %s\n"
-msgstr "vielfach: %s\n"
-
-#: ../lib/gis/parser.c:1981
-#, c-format
-msgid " options: %s\n"
-msgstr " Optionen: %s\n"
-
-#: ../lib/gis/parser.c:1994
-#, c-format
-msgid "enter option > "
-msgstr "Geben Sie eine Option ein > "
-
-#: ../lib/gis/parser.c:2008 ../lib/gis/parser.c:2019
-msgid "   Try again? "
-msgstr "   Nochmal versuchen? "
-
-#: ../lib/gis/parser.c:2017
-#, c-format
-msgid "Sorry, %s is not accepted.\n"
-msgstr "Tut mir leid, %s wird nicht akzeptiert.\n"
-
-#: ../lib/gis/parser.c:2028
-#, c-format
-msgid ""
-"\n"
-"You have chosen:\n"
-"  %s\n"
-msgstr ""
-"\n"
-"Sie haben ausgewählt:\n"
-"  %s\n"
-
-#: ../lib/gis/parser.c:2029
-msgid "Is this correct? "
-msgstr "Ist das richtig?"
-
-#: ../lib/gis/parser.c:2087
-msgid "to accept the default"
-msgstr "Zum Akzeptieren der Standardeinstellung"
 
 #: ../lib/gis/proj2.c:49
 msgid "Latitude-Longitude"
@@ -1717,7 +1720,8 @@ msgstr ""
 
 #: ../lib/gis/view.c:548
 #, c-format
-msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgid ""
+" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr ""
 " Nur %d%% des in \"%s\" abgespeicherten Fensters überlappt mit dem "
 "derzeitigen GRASS-Fenster."
@@ -1806,7 +1810,8 @@ msgstr "Nicht verbunden...\n"
 #: ../lib/raster/io.c:371
 #, c-format
 msgid "Couldn't connect to monitor. Will try once more.\n"
-msgstr "Kann nicht mit einem Monitor verbinden. Versuche es noch ein weiteres Mal.\n"
+msgstr ""
+"Kann nicht mit einem Monitor verbinden. Versuche es noch ein weiteres Mal.\n"
 
 #: ../lib/raster/io.c:377
 #, c-format
@@ -1873,15 +1878,6 @@ msgstr "Fehler - keine Antwort vom Graphikmonitor <%s>.\n"
 msgid "ERROR: GISBASE not set\n"
 msgstr "FEHLER: Variable GISBASE ist nicht gesetzt\n"
 
-#: ../lib/rst/interp_float/segmen2d.c:123
-msgid ""
-"taking too long to find points for interpolation--please change the region "
-"to area where your points are. Continuing calculations..."
-msgstr ""
-"Es dauert zu lange, um Punkte für die Interpolation zu finden -- bitte "
-"ändern Sie die Region auf den Bereich, wo die Punkte sind. Fahre mit der "
-"Berechnung fort..."
-
 #: ../lib/rst/interp_float/vinput2d.c:81
 msgid "Vector is not 3D"
 msgstr "Vektorkarte is nicht 3D."
@@ -1896,7 +1892,8 @@ msgid "Cannot open database %s"
 msgstr "Kann Datenbank '%s' nicht öffnen."
 
 #: ../lib/rst/interp_float/vinput2d.c:100
-msgid "Cannot find z column (please verify name)"
+#, fuzzy, c-format
+msgid "Cannot find z column <%s> (please verify name, e.g. with v.info)"
 msgstr "Kann die z-Spalte nicht finden (Bitte überprüfen Sie den Namen)."
 
 #: ../lib/rst/interp_float/vinput2d.c:102
@@ -1964,6 +1961,57 @@ msgstr ""
 msgid "some points outside of region -- will ignore..."
 msgstr "einige Punkte sind außerhalb der Region -- ignoriere dies..."
 
+#: ../lib/rst/interp_float/segmen2d.c:123
+msgid ""
+"taking too long to find points for interpolation--please change the region "
+"to area where your points are. Continuing calculations..."
+msgstr ""
+"Es dauert zu lange, um Punkte für die Interpolation zu finden -- bitte "
+"ändern Sie die Region auf den Bereich, wo die Punkte sind. Fahre mit der "
+"Berechnung fort..."
+
+#: ../lib/vector/Vlib/build_nat.c:87
+msgid "Cannot add area (map closed, topo saved)"
+msgstr ""
+"Kann Fläche nicht hinzufügen. (Karte ist geschlossen, Topologie "
+"abgespeichert)."
+
+#: ../lib/vector/Vlib/build_nat.c:95
+msgid "Cannot add isle (map closed, topo saved)"
+msgstr ""
+"Kann Inselfläche nicht hinzufügen. (Karte ist geschlossen, Topologie "
+"gespeichert)."
+
+#: ../lib/vector/Vlib/build_nat.c:104
+msgid "Area of size = 0.0 ignored"
+msgstr "Flächen mit der Größe = 0.0 werden ignoriert."
+
+#: ../lib/vector/Vlib/build_nat.c:466
+msgid "Registering lines: "
+msgstr "Registriere Linien..."
+
+#: ../lib/vector/Vlib/build_nat.c:507
+#, c-format
+msgid "\r%d primitives registered      \n"
+msgstr "\r%d primitives registriert \n"
+
+#: ../lib/vector/Vlib/build_nat.c:534
+#, c-format
+msgid ""
+"\r%d areas built      \n"
+"%d isles built\n"
+msgstr ""
+"\r%d Flächen erstellt \n"
+"%d Inselflächen erstellt\n"
+
+#: ../lib/vector/Vlib/build_nat.c:542
+msgid "Attaching islands: "
+msgstr "Füge Inselflächen hinzu:"
+
+#: ../lib/vector/Vlib/build_nat.c:557
+msgid "Attaching centroids: "
+msgstr "Füge Zentroide hinzu:"
+
 #: ../lib/vector/Vlib/build.c:134
 msgid "Building topology ...\n"
 msgstr "Erzeuge Topologie ...\n"
@@ -2005,7 +2053,7 @@ msgstr "Anzahl von Zentroiden :   %d\n"
 #: ../lib/vector/Vlib/build.c:167
 #, c-format
 msgid "Number of faces     :   %d\n"
-msgstr "Anzahl von Faces     :   %d\n"
+msgstr "Anzahl von Faces      :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:170
 #, c-format
@@ -2067,48 +2115,6 @@ msgstr "Kann spatial index-Datei %s nicht zum Schreiben öffnen\n"
 #: ../lib/vector/Vlib/build.c:398
 msgid "Error writing out spatial index file.\n"
 msgstr "Fehler beim Schreiben des spatial index aufgetreten.\n"
-
-#: ../lib/vector/Vlib/build_nat.c:87
-msgid "Cannot add area (map closed, topo saved)"
-msgstr ""
-"Kann Fläche nicht hinzufügen. (Karte ist geschlossen, Topologie "
-"abgespeichert)."
-
-#: ../lib/vector/Vlib/build_nat.c:95
-msgid "Cannot add isle (map closed, topo saved)"
-msgstr ""
-"Kann Inselfläche nicht hinzufügen. (Karte ist geschlossen, Topologie "
-"gespeichert)."
-
-#: ../lib/vector/Vlib/build_nat.c:104
-msgid "Area of size = 0.0 ignored"
-msgstr "Flächen mit der Größe = 0.0 werden ignoriert."
-
-#: ../lib/vector/Vlib/build_nat.c:466
-msgid "Registering lines: "
-msgstr "Registriere Linien..."
-
-#: ../lib/vector/Vlib/build_nat.c:507
-#, c-format
-msgid "\r%d primitives registered      \n"
-msgstr "\r%d primitives registriert \n"
-
-#: ../lib/vector/Vlib/build_nat.c:534
-#, c-format
-msgid ""
-"\r%d areas built      \n"
-"%d isles built\n"
-msgstr ""
-"\r%d Flächen erstellt \n"
-"%d Inselflächen erstellt\n"
-
-#: ../lib/vector/Vlib/build_nat.c:542
-msgid "Attaching islands: "
-msgstr "Füge Inselflächen hinzu:"
-
-#: ../lib/vector/Vlib/build_nat.c:557
-msgid "Attaching centroids: "
-msgstr "Füge Zentroide hinzu:"
 
 #: ../lib/vector/Vlib/build_ogr.c:258
 #, c-format
@@ -2179,25 +2185,30 @@ msgstr "Angeforderte Datenbank-Verknüpfung %d, maximale Verknüpfungsnummer %d"
 msgid "Cannot open OGR DBMI driver."
 msgstr "Kann den OGR DBMI-Treiber nicht öffnen."
 
-#: ../lib/vector/Vlib/field.c:420
+#: ../lib/vector/Vlib/field.c:429
 msgid "Using FID column in OGR DB"
 msgstr "Benutze FID Spalte in OGR DB."
 
-#: ../lib/vector/Vlib/field.c:424
+#: ../lib/vector/Vlib/field.c:433
 msgid "Using ogc_fid column in OGR DB"
 msgstr "Benutze ogc_fid Spalte als OGR DB."
 
-#: ../lib/vector/Vlib/field.c:430
+#: ../lib/vector/Vlib/field.c:437
+#, fuzzy
+msgid "Using ogr_fid column in OGR DB"
+msgstr "Benutze ogc_fid Spalte als OGR DB."
+
+#: ../lib/vector/Vlib/field.c:444
 #, c-format
 msgid "Don't know how to read links for format %d"
 msgstr "Ich weiß nicht, wie ich den Link vom Format %d lesen soll."
 
-#: ../lib/vector/Vlib/field.c:458
+#: ../lib/vector/Vlib/field.c:472
 #, c-format
 msgid "Error in rule on row %d in %s"
 msgstr "Fehler in Regel in Zeile %d in %s."
 
-#: ../lib/vector/Vlib/field.c:585
+#: ../lib/vector/Vlib/field.c:599
 msgid "Bug: attempt to update map which is not in current mapset."
 msgstr "BUG: Aktualisiere die Karte, welche nicht im aktuellen Mapset ist."
 
@@ -2218,7 +2229,8 @@ msgstr ""
 #: ../lib/vector/Vlib/legal_vname.c:35
 #, c-format
 msgid "Illegal vector map name <%s>. Character <%c> not allowed.\n"
-msgstr "Ungültiger Name der Vektorkarte <%s>. Zeichenfolge <%c> ist nicht erlaubt.\n"
+msgstr ""
+"Ungültiger Name der Vektorkarte <%s>. Zeichenfolge <%c> ist nicht erlaubt.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:60 ../lib/vector/Vlib/legal_vname.c:62
 #, c-format
@@ -2310,7 +2322,8 @@ msgstr "Kann Datei '%s' nicht anfordern."
 
 #: ../lib/vector/Vlib/open.c:658
 msgid "Size of 'coor' file differs from value saved in topo file."
-msgstr "Größe der 'coor' Datei unterscheidet sich vom Werte in der 'topo' Datei."
+msgstr ""
+"Größe der 'coor' Datei unterscheidet sich vom Werte in der 'topo' Datei."
 
 #: ../lib/vector/Vlib/open.c:669
 #, c-format
@@ -2348,7 +2361,8 @@ msgstr "Kann die Linie nicht nochmal schreiben."
 #: ../lib/vector/Vlib/write.c:197
 #, c-format
 msgid "Cannot delete the line, map '%s' is not opened on level 2"
-msgstr "Kann die Linie nicht löschen; die Karte '%s' ist nicht auf Level 2 geöffnet."
+msgstr ""
+"Kann die Linie nicht löschen; die Karte '%s' ist nicht auf Level 2 geöffnet."
 
 #: ../lib/vector/Vlib/write.c:201
 #, c-format
@@ -2360,4 +2374,3 @@ msgstr ""
 #: ../lib/vector/Vlib/write.c:213
 msgid "Cannot delete line"
 msgstr "Kann die Linie nicht löschen."
-
