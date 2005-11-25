@@ -97,7 +97,7 @@ main (int argc, char *argv[])
 	}
 	if (ppid <= 0)
 	    break;
-	sleep(SLEEP);
+	G_sleep(SLEEP);
     }
     exit(0);
 }
