@@ -34,13 +34,17 @@ int main (int argc, char *argv[])
 
     if (argc != 3 || sscanf (argv[2],"%d",&lockpid) != 1)
         G_fatal_error("usage: %s file pid", argv[0]);
-
 #define file argv[1]
 
+#ifdef __MINGW32__
+    G_warning ( "Attention!" );
+    G_warning ( "Locking is not supported on Windows!" );
+    exit(0);
+#else
     locked = 0;
     if ((lock = open (file, 0)) >= 0) /* file exists */
     {
-	sleep(1); /* allow time for file creator to write its pid */
+	G_sleep(1); /* allow time for file creator to write its pid */
 	if (read (lock, &pid, sizeof pid) == sizeof pid)
 		locked = find_process (pid);
 	close (lock);
@@ -57,6 +61,7 @@ int main (int argc, char *argv[])
         G_fatal_error("%s: can't write lockfile %s (disk full? Permissions?)", argv[0], file);
     close (lock);
     exit(0);
+#endif
 }
 
 int 
@@ -67,7 +72,11 @@ find_process (int pid)
    kill failed because no such process, or because user is
    not owner of process
 */
+#ifdef __MINGW32__
+    return 0;
+#else
     if (kill (pid, 0) == 0)
 	return 1;
     return errno != ESRCH;
+#endif
 }
