@@ -45,6 +45,7 @@ handle_fpe(int n)
 static void
 pre_exec(void)
 {
+#ifndef __MINGW32__
 #ifdef SIGFPE
 	struct sigaction act;
 
@@ -54,6 +55,7 @@ pre_exec(void)
 
 	sigaction(SIGFPE, &act, NULL);
 #endif
+#endif 
 
 	floating_point_exception_occurred = 0;
 	overflow_occurred = 0;
@@ -62,6 +64,7 @@ pre_exec(void)
 static void
 post_exec(void)
 {
+#ifndef __MINGW32__
 #ifdef SIGFPE
 	struct sigaction act;
 
@@ -70,6 +73,7 @@ post_exec(void)
 	sigemptyset(&act.sa_mask);
 
 	sigaction(SIGFPE, &act, NULL);
+#endif
 #endif
 }
 
