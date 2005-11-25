@@ -97,6 +97,7 @@ XEXTRALIBS          = @X_EXTRA_LIBS@
 
 COMPATLIB           = @COMPATLIB@
 CURSES              = @CURSESLIB@ $(COMPATLIB)
+USE_CURSES          = @USE_CURSES@
 MATHLIB             = @MATHLIB@ 
 XDRLIB              = @XDRLIB@ @ZLIBINCPATH@ @ZLIBLIBPATH@ @ZLIB@
 ICONVLIB            = @ICONVLIB@

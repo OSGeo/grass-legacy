@@ -27,9 +27,15 @@ EXTRA_CFLAGS = -DD_LOCATION_NAME=\"$(DEFAULT_LOCATION)\" -DD_GISDBASE=\"$(DEFAUL
 SET_DATA = $(OBJDIR)/set_data.o $(OBJDIR)/mke_mapset.o \
 	   $(OBJDIR)/mke_loc.o $(OBJDIR)/chk_dbase.o $(OBJDIR)/other.o
 
+ifdef USE_CURSES
+SET_DATA_PROG = $(ETC)/set_data
+else
+SET_DATA_PROG =
+endif
+
 default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/Init.sh \
-	$(ETC)/set_data \
+	$(SET_DATA_PROG) \
 	$(ETC)/clean_temp \
 	$(ETC)/lock \
 	$(ETC)/run \

@@ -455,6 +455,7 @@ AC_CHECK_LIB(curses, initscr, CURSESLIB=-lcurses, [
     CURSESLIB=
 ])])
 AC_SUBST(CURSESLIB)
+AC_SUBST(USE_CURSES)
 
 AC_CHECK_LIB(ncurses, keypad, [AC_DEFINE(HAVE_KEYPAD)], [
 AC_CHECK_LIB(curses, keypad, [AC_DEFINE(HAVE_KEYPAD)], [
