@@ -38,6 +38,11 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
+#ifdef __MINGW32__
+typedef unsigned char u_char;
+typedef unsigned long u_long;
+#endif
+
 /* Local header pulled from tiff.h and tiffio.h */
 #include "./swab.h"
 

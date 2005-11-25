@@ -36,6 +36,11 @@
 #include "rasterfile.h"
 #include "tiffio.h"
 
+#ifdef __MINGW32__
+typedef unsigned char u_char;
+typedef unsigned long u_long;
+#endif
+
 #define MAX_TILE_LENGTH 512
 
 #define	howmany(x, y)	(((x)+((y)-1))/(y))
