@@ -1,6 +1,33 @@
 #NOTE: parts of the header are generated in ../../lib/gis/parser.c
 
 # generic html rules for all commands
+
+ifdef CROSS_COMPILING
+
+htmlgen:
+
+htmlcmd:
+
+htmlcmd1:
+
+htmlscript:
+
+htmlscript1:
+
+htmlinter:
+
+htmletc:
+
+htmletc1:
+
+htmldir:
+
+htmldir1:
+
+htmlmulti:
+
+else
+
 htmlgen:
 	@if ! grep -i '<html>' $(PGM).tmp.html > /dev/null 2>&1 ; then \
 		echo > $(PGM).tmp.html ; \
@@ -94,3 +121,5 @@ htmldir1:
 # html rules for multiple commands
 htmlmulti:
 	for prog in $(PROGRAMS) ; do $(MAKE) htmlcmd PGM=$$prog ; done
+
+endif
