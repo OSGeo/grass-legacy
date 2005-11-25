@@ -27,11 +27,15 @@
 
 /* added by J. Hofierka for Linux users*/
 
+#ifndef __MINGW32__
+
 #define _IOWRT                  0002
 #define _IOERR                  0040
 #define _IOREAD                 0001
 #define _IOEOF                  0020
 #define _IORW                   0200
+
+#endif
 
 #define TYPEMASK		0xff00
 #define BPPMASK			0x00ff
@@ -52,7 +56,7 @@
 				    ? ((int)(*(p)->ptr++=(unsigned)(x))) \
 				    : iflsbuf(p,(unsigned)(x)))
 
-#if defined(BSDTYPES) || defined(VMS)
+#if defined(BSDTYPES) || defined(VMS) || defined(__MINGW32__)
 typedef unsigned char	u_char;
 typedef unsigned short	u_short;
 typedef unsigned int	u_int;
