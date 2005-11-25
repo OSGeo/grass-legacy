@@ -28,7 +28,7 @@ SET_DATA = $(OBJDIR)/set_data.o $(OBJDIR)/mke_mapset.o \
 	   $(OBJDIR)/mke_loc.o $(OBJDIR)/chk_dbase.o $(OBJDIR)/other.o
 
 ifdef USE_CURSES
-SET_DATA_PROG = $(ETC)/set_data
+SET_DATA_PROG = $(ETC)/set_data$(EXE_SUFFIX)
 else
 SET_DATA_PROG =
 endif
@@ -36,10 +36,10 @@ endif
 default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/Init.sh \
 	$(SET_DATA_PROG) \
-	$(ETC)/clean_temp \
-	$(ETC)/lock \
-	$(ETC)/run \
-	$(ETC)/echo \
+	$(ETC)/clean_temp$(EXE_SUFFIX) \
+	$(ETC)/lock$(EXE_SUFFIX) \
+	$(ETC)/run$(EXE_SUFFIX) \
+	$(ETC)/echo$(EXE_SUFFIX) \
 	$(ETC)/grass_intro \
 	$(ETC)/license \
 	$(ETC)/welcome \
@@ -77,19 +77,19 @@ $(ETC)/Init.sh: init.sh
 	init.sh > $@"
 	chmod +x $@
 
-$(ETC)/set_data: $(SET_DATA)
+$(ETC)/set_data$(EXE_SUFFIX): $(SET_DATA)
 	$(CC) $(LDFLAGS) -o $@ $(SET_DATA) $(EDITLIB) $(GISLIB) $(DATETIMELIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(ETC)/echo: $(OBJDIR)/echo.o
+$(ETC)/echo$(EXE_SUFFIX): $(OBJDIR)/echo.o
 	$(CC) $(LDFLAGS) $(OBJDIR)/echo.o -o $@
 
-$(ETC)/clean_temp: $(OBJDIR)/clean_temp.o  
+$(ETC)/clean_temp$(EXE_SUFFIX): $(OBJDIR)/clean_temp.o  
 	$(CC) $(LDFLAGS) $(OBJDIR)/clean_temp.o $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB) -o $@
 
-$(ETC)/run: $(OBJDIR)/run.o
+$(ETC)/run$(EXE_SUFFIX): $(OBJDIR)/run.o
 	$(CC) $(LDFLAGS) $(OBJDIR)/run.o -o $@
 
-$(ETC)/lock: $(OBJDIR)/lock.o
+$(ETC)/lock$(EXE_SUFFIX): $(OBJDIR)/lock.o
 	$(CC) $(LDFLAGS) $(OBJDIR)/lock.o $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB) -o $@
 
 $(BIN)/exit:
