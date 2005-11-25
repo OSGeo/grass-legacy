@@ -22,7 +22,9 @@ the user's shell to re-activate interrupts in shell-ese.
 int main (int argc, char *argv[])
 {
     signal (SIGINT, SIG_DFL);
+#ifndef __MINGW32__
     signal (SIGQUIT, SIG_DFL);
+#endif
 
     argc--;
     argv++;
