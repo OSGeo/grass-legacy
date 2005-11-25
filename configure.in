@@ -363,6 +363,9 @@ AC_CHECK_FUNCS(drand48)
 AC_CHECK_FUNCS(putenv setenv)
 if test "$cross_compiling" != "yes" ; then
 AC_FUNC_SETPGRP
+else
+CROSS_COMPILING=1
+AC_SUBST(CROSS_COMPILING)
 fi
 
 case $target in
