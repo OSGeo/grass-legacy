@@ -12,6 +12,7 @@
  *
  *****************************************************************/
 #include <unistd.h>
+#include <stdlib.h>
 
 #ifndef __MINGW32__
 #include <pwd.h>
@@ -33,7 +34,10 @@
 char *G_whoami(void)
 {
 #ifdef __MINGW32__
-    static char *name = "mingw_user_name";
+    char *name =  getenv("USERNAME");
+    if (name == NULL){
+        name = "user_name";
+    }
 #else
     static char *name= 0;
 #ifdef COMMENTED_OUT
