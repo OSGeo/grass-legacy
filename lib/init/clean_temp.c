@@ -50,7 +50,13 @@ main (int argc, char *argv[])
 
 /* get user id and current time in seconds */
 
+#ifdef __MINGW32__
+    /* TODO */
+    uid = -1;
+#else
     uid = getuid () ;
+#endif
+
     now = time(NULL) ;
 
 /* set maximum age in seconds (4 days) */
@@ -99,6 +105,11 @@ main (int argc, char *argv[])
 int 
 find_process (int pid)
 {
+#ifdef __MINGW32__
+    /* TODO */
+    return -1;
+#else
     return (kill (pid, 0) == 0 || errno != ESRCH) ;
+#endif
 }
 
