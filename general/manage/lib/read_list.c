@@ -100,6 +100,6 @@ static int format_error (char *element_list,int line, char *buf)
     fprintf (stderr, "%s ** FORMAT ERROR **\n", element_list);
     fprintf (stderr, "** line %d **\n", line);
     fprintf (stderr, "%s\n", buf);
-    sleep(3);
+    G_sleep(3);
     exit(1);
 }
