@@ -19,6 +19,10 @@
 *                DBF_CHAR   DBF_INT   DBF_DOUBLE  
 *                  1          2          3
 *****************************************************************************/
+#ifdef __MINGW32__
+#  include <windows.h>
+#endif
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -304,12 +308,27 @@ save_table ( int t)
     DBFClose ( dbf );
 
     /* Copy */
+    /*
     sprintf (cmd, "mv %s %s", name, db.tables[t].file );
     if ( system (cmd) != 0 ) {
 	return DB_FAILED;
     }
-
     unlink ( name );
+    */
+#ifdef __MINGW32__
+    if ( CopyFile ( name, db.tables[t].file, FALSE ) == 0 ) {
+#else
+    if ( link ( name, db.tables[t].file ) < 0 ) {
+#endif
+        sprintf ( cmd, "mv %s %s", name, db.tables[t].file );
+        if ( system(cmd) ) {
+	    append_error( "Cannot move %s\nto %s\n", 
+                          name, db.tables[t].file );
+            return DB_FAILED;
+        }
+    } else {
+	remove ( name );
+    }
     
     return DB_OK;
 }
