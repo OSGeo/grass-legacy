@@ -3,6 +3,7 @@ MODULE_TOPDIR = ../..
 
 LIBES = $(DBMILIB) $(GISLIB) $(DATETIMELIB)
 DEPENDENCIES = $(GISDEP) $(DBMIDEP)
+EXTRA_LIBS = $(XDRLIB)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
