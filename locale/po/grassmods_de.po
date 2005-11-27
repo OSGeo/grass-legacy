@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-13 11:30+0100\n"
-"PO-Revision-Date: 2005-11-13 11:50+0100\n"
+"POT-Creation-Date: 2005-11-22 14:45+0100\n"
+"PO-Revision-Date: 2005-11-22 15:16+0100\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -5641,17 +5641,17 @@ msgstr "Anisotropie-Winkel (in Grad)"
 msgid "Anisotropy scaling factor"
 msgstr "Anisotropie Skalierfaktor"
 
-#: ../raster/r.resamp.rst/main.c:271 ../vector/v.surf.rst/main.c:248
+#: ../raster/r.resamp.rst/main.c:271
 msgid "Output partial derivatives instead"
 msgstr "Gebe stattdessen partielle Ableitung aus."
 
-#: ../raster/r.resamp.rst/main.c:275 ../vector/v.surf.rst/main.c:357
+#: ../raster/r.resamp.rst/main.c:275
 msgid "Use dnorm independent tension"
 msgstr "Benutze dnorm unabhängige Spannung."
 
 #: ../raster/r.resamp.rst/main.c:282
-msgid "Retrieving and setting region."
-msgstr "Hole und setze die Regions-Einstellung."
+msgid "Retrieving and setting region failed"
+msgstr "Holen und setzen der Regionseinstellung fehlgeschlagen."
 
 #: ../raster/r.resamp.rst/main.c:316
 msgid "Cannot read ew_res value"
@@ -5682,8 +5682,8 @@ msgid "Invalid value for scalex"
 msgstr "Ungültiger Wert für scalex."
 
 #: ../raster/r.resamp.rst/main.c:338
-msgid "When using anisotropy both theta and scalex must be specified."
-msgstr "Wenn Anisotropie benutzt wird, müssen theta und scalex angegeben werden."
+msgid "When using anisotropy both theta and scalex must be specified"
+msgstr "When Anisotropie benutzt wird, müssen theta und scalex angegeben "
 
 #: ../raster/r.resamp.rst/main.c:361 ../vector/v.surf.rst/main.c:466
 msgid "Not enough memory for az"
@@ -5722,15 +5722,17 @@ msgstr "[%s]: Kann den Kartenheader nicht lesen."
 #: ../raster/r.resamp.rst/main.c:403
 #, c-format
 msgid "[%s]: Map is the wrong resolution"
-msgstr "Karte [%s] hate die falsche Auflösung."
+msgstr "Karte [%s] hat die falsche Auflösung."
 
 #: ../raster/r.resamp.rst/main.c:411
-msgid "Smoothing values can not be negative or NULL."
-msgstr "Glättungswerte (smoothing) dürfen nicht negativ oder NULL sein."
+msgid "Smoothing values can not be negative or NULL"
+msgstr "Glättungswerte (Smoothing) können nicht negativ oder NULL sein."
 
 #: ../raster/r.resamp.rst/main.c:426
 msgid "Input map resolution differs from current region resolution!"
-msgstr "Auflösung der Eingabekarte unterscheidet sich von der aktuellen Regions-Auflösung!"
+msgstr ""
+"Auflösung der Eingabekarte unterscheidet sich von der aktuellen Regions-"
+"Auflösung!"
 
 #: ../raster/r.resamp.rst/main.c:429
 #, c-format
@@ -6020,19 +6022,25 @@ msgstr "%s: [%s] nicht gefunden."
 #: ../raster/r.stats/main.c:265
 #, c-format
 msgid "%s: -i means read %s as integer! -C flag and/or nsteps option will be ignored"
-msgstr "%s: -i zeigt, dass %s als Integerkarte gelesen werden soll! Das -C flag und/oder die nsteps Option werden ignoriert."
+msgstr ""
+"%s: -i zeigt, dass %s als Integerkarte gelesen werden soll! Das -C flag und/"
+"oder die nsteps Option werden ignoriert."
 
 #: ../raster/r.stats/main.c:282
 #, c-format
 msgid ""
 "%s: cats for %s are either missing or have no explicit labels. Using nsteps=%"
 "d"
-msgstr "%s: Kategorien für %s fehlen oder haben keine expliziten Label. Benutze nsteps=%d."
+msgstr ""
+"%s: Kategorien für %s fehlen oder haben keine expliziten Label. Benutze "
+"nsteps=%d."
 
 #: ../raster/r.stats/main.c:286
 #, c-format
 msgid "%s: -C flag was given, using cats fp ranges of %s, ignoring nsteps option"
-msgstr "%s: Das -C flag wurde angegeben. Benutze daher die fp-Kategoriespannen von %s und ignoriere die Option nsteps."
+msgstr ""
+"%s: Das -C flag wurde angegeben. Benutze daher die fp-Kategoriespannen von %"
+"s und ignoriere die Option nsteps."
 
 #: ../raster/r.stats/main.c:291
 #, c-format
@@ -7529,9 +7537,8 @@ msgid "Scale factor effects the origin (if no elevation map is given)"
 msgstr "alt Nein ist"
 
 #: ../raster/r.out.vtk/parameters.c:101
-#, fuzzy
 msgid "Create VTK point data instead of VTK cell data (if no elevation map is given)"
-msgstr "Punkt von Nein ist"
+msgstr "Erzeuge VTK Punktdaten anstelle von VTK Cell-Daten (wenn keine Höhenkarte angegeben wurde)."
 
 #: ../raster/r.out.vtk/writeascii.c:33
 msgid "writeVTKNormalHeader: Writing VTK-Header"
@@ -7546,14 +7553,12 @@ msgid "writeVTKPolygonalElevationHeader: Writing VTK-Header"
 msgstr "writeVTKPolygonalElevationHeader: Schreibe VTK-Kopf"
 
 #: ../raster/r.out.vtk/writeascii.c:95
-#, fuzzy
 msgid "writeVTKCellDataHeader: Writing VTK-DataHeader"
-msgstr "Schreiben läuft"
+msgstr "writeVTKCellDataHeader: Schreibe VTK-DataHeader."
 
 #: ../raster/r.out.vtk/writeascii.c:105
-#, fuzzy
 msgid "writeVTKPointHeader: Writing VTK-DataHeader"
-msgstr "Schreiben läuft"
+msgstr "writeVTKPointHeader: Schreibe VTK-DataHeader"
 
 #: ../raster/r.out.vtk/writeascii.c:123
 msgid "writeVTKStructuredCoordinates: Writing Coordinates"
@@ -7571,19 +7576,16 @@ msgid "writeVTKPolygonalCoordinates: Writing VTK Polygonal data"
 msgstr "writeVTKPolygonalCoordinates: SchreibeVTK Polygondaten"
 
 #: ../raster/r.out.vtk/writeascii.c:311
-#, fuzzy
 msgid "writeVTKData: Writing VTK-Data"
-msgstr "Schreiben läuft"
+msgstr "writeVTKData: Schreibe VTK-Data"
 
 #: ../raster/r.out.vtk/writeascii.c:373
-#, fuzzy
 msgid "writeVTKRGBImageData: Writing VTK-ImageData"
-msgstr "Schreiben läuft"
+msgstr "writeVTKRGBImageData: Schreibe VTK-ImageData"
 
 #: ../raster/r.out.vtk/writeascii.c:437
-#, fuzzy
 msgid "Wrong map values! Values should in between 0 and 255!\n"
-msgstr "Werte zwischen n"
+msgstr "Falsche Kartenwerte! Die Werte sollten zwischen 0 und 255 sein!\n"
 
 #: ../raster3d/r3.in.ascii/main.c:90
 msgid "any,grid3,3d raster"
@@ -7777,11 +7779,11 @@ msgid "writeVTKHeader: Writing VTK-Header"
 msgstr "writeVTKHeader: Schreibe VTK-Header"
 
 #: ../raster3d/r3.out.vtk/main.c:190
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "G3dTovtk: Writing Celldata %s with rows %i cols %i depths %i to vtk-ascii "
 "file"
-msgstr "s"
+msgstr "G3dTovtk: Schreibe Celldata %s mit %i Reihen und %i Spalten und  %i Tiefe in eine vtk-ascii Datei."
 
 #: ../raster3d/r3.out.vtk/main.c:244
 msgid "Converts 3D raster maps (G3D) into the VTK-Ascii format"
@@ -7943,9 +7945,8 @@ msgid "Writing raster map %i\n"
 msgstr "Schreibe Rasterkarte %i\n"
 
 #: ../raster3d/r3.to.rast/main.c:149 ../raster3d/r3.to.rast/main.c:156
-#, fuzzy
 msgid "Could not write raster row"
-msgstr "nicht row"
+msgstr "Kann die Rasterreihe nicht schreiben."
 
 #: ../raster3d/r3.to.rast/main.c:159 ../raster3d/r3.in.rast/main.c:157
 msgid ""
@@ -7986,9 +7987,9 @@ msgid "Raster map %i Filename: %s\n"
 msgstr "Rasterkarte %i Dateiname: %s\n"
 
 #: ../raster3d/r3.to.rast/main.c:253
-#, fuzzy, c-format
+#, c-format
 msgid "Raster map %i Filename: %s already exists. Will be overwritten!\n"
-msgstr "s"
+msgstr "Rasterkarte %i mit dem Namen %s existiert bereits. Sie wird überschrieben!\n"
 
 #: ../raster3d/r3.to.rast/main.c:298
 msgid "Wrong G3D Datatype! Cannot create raster maps."
@@ -8068,62 +8069,55 @@ msgid "unable to close input map"
 msgstr "Kann die Eingabekarte nicht schließen."
 
 #: ../vector/v.buffer/main.c:246
-#, fuzzy
 msgid "Create a buffer around features of given type (areas must contain centroid)."
-msgstr "a von enthalten."
+msgstr "Erzeugt einen Puffer um die angegebenen Geometrietypen (Flächen müssen Zentroiden enthalten)."
 
 #: ../vector/v.buffer/main.c:261
-#, fuzzy
 msgid "Buffer distance in map units"
-msgstr "Camera Entferung (in Karteneinheiten)."
+msgstr "Pufferdistanz in Karteneinheiten."
 
 #: ../vector/v.buffer/main.c:267
-#, fuzzy
 msgid "Attribute column to use for buffer distances"
-msgstr "für"
+msgstr "Attribut-Spalte, die für die Pufferdistanz benutzt werden soll."
 
 #: ../vector/v.buffer/main.c:274
-#, fuzzy
 msgid "Scaling factor for attribute column values"
-msgstr "für attribute"
+msgstr "Skalierfaktor für die Werte der Attributspalte."
 
 #: ../vector/v.buffer/main.c:282
-#, fuzzy
 msgid ""
 "Maximum distance between theoretical arc and polygon segments as multiple of "
 "buffer"
-msgstr "zwischen Kreisbogen von"
+msgstr "Maximale Distanz zwischen theoretischen Linien und Polygonsegmenten als multiple Puffer."
 
 #: ../vector/v.buffer/main.c:290
-#, fuzzy
 msgid "Stop the process at a certain stage"
-msgstr "an a"
+msgstr "Stoppt Prozess bei einer bestimmten Stufe."
 
 #: ../vector/v.buffer/main.c:314 ../vector/v.buffer/main.c:447
 #: ../vector/v.buffer/main.c:516
-#, fuzzy, c-format
+#, c-format
 msgid "The tolerance in map units: %g"
-msgstr "g"
+msgstr "Toleranz in Karteneinheiten: %g"
 
 #: ../vector/v.buffer/main.c:321
-#, fuzzy, c-format
+#, c-format
 msgid "The tolerance was reset to %g (map units)"
-msgstr "g"
+msgstr "Die Toleranz wurde auf %g (Karteneinheiten) zurückgesetzt."
 
 #: ../vector/v.buffer/main.c:341 ../vector/v.clean/main.c:219
-#, fuzzy, c-format
+#, c-format
 msgid "Could not find input map <%s>"
-msgstr "s"
+msgstr "Kann die Eingabekarte <%s> nicht finden."
 
 #: ../vector/v.buffer/main.c:454 ../vector/v.buffer/main.c:523
-#, fuzzy, c-format
+#, c-format
 msgid "The tolerance was reset to %g (map units). [category %d]"
-msgstr "g"
+msgstr "Die Toleranz wurde auf %g (Karteneinheiten) zurückgesetzt [Kategorie %d]."
 
 #: ../vector/v.buffer/main.c:612 ../vector/v.buffer/main.c:686
-#, fuzzy
 msgid "Cannot calculate area centroid."
-msgstr "Bereich."
+msgstr "Kann den Flächenzentroiden nicht berechnen."
 
 #: ../vector/v.category/main.c:175
 msgid "Too many layers for this operation"
@@ -8142,34 +8136,29 @@ msgid "Toolset to clean vector topology"
 msgstr "Werkzeugkasten zum Säubern der Vektortopologie"
 
 #: ../vector/v.clean/main.c:55
-#, fuzzy
 msgid "Name of output map where errors are written"
-msgstr "von Ausgabe"
+msgstr "Name der Ausgabekarte, in die die Fehler geschrieben werden sollen."
 
 #: ../vector/v.clean/main.c:92
-#, fuzzy
 msgid "Threshold in map units, one value for each tool (default: 0.0[,0.0,...])"
-msgstr "Schwellwert eins für"
+msgstr "Schwellenwert in Karteneinheiten, einen Wert für jedesWerkzeug (Standard: 0.0[,0.0,...])."
 
 #: ../vector/v.clean/main.c:96
-#, fuzzy
 msgid "Do not rebuild and store the topology at the end"
-msgstr "nicht an"
+msgstr "Erzeuge und speichere keine Topologie am Ende."
 
 #: ../vector/v.clean/main.c:114
-#, fuzzy
 msgid "You must select at least one tool"
-msgstr "an eins"
+msgstr "Es muss mindestens ein Werkzeug ausgewählt werden."
 
 #: ../vector/v.clean/main.c:147
-#, fuzzy
 msgid "Tool doesn't exist"
-msgstr "Dienstprogramm"
+msgstr "Werkzeug existiert nicht."
 
 #: ../vector/v.clean/main.c:164
-#, fuzzy, c-format
+#, c-format
 msgid "Threshold for tool %d may not be > 0, set to 0"
-msgstr "Schwellwert für nicht"
+msgstr "Der Schwellwert für %d sollte nicht > 0 sein, setze auf 0."
 
 #: ../vector/v.convert/att.c:30 ../vector/v.convert/old2new.c:27
 msgid "Input vector was not found."
@@ -8819,9 +8808,8 @@ msgid "List available formats and exit"
 msgstr "Zeige die unterstützten Formate und beendet sich."
 
 #: ../vector/v.in.ogr/main.c:178
-#, fuzzy
 msgid "Do not clean polygons (not recommended)"
-msgstr "nicht nicht"
+msgstr "Polygone nicht säubern (clean) (nicht empfehlenswert)."
 
 #: ../vector/v.in.ogr/main.c:182 ../vector/v.random/main.c:114
 msgid "Create 3D output"
@@ -8990,9 +8978,9 @@ msgid "Print vector map region only"
 msgstr "Gebe nur die Vektorkartenausdehnung aus."
 
 #: ../vector/v.kernel/main.c:58
-#, fuzzy, c-format
+#, c-format
 msgid "\tScore Value=%f\tsmoothing parameter (standard deviation)=%f"
-msgstr "f parameter f"
+msgstr ""
 
 #: ../vector/v.kernel/main.c:94
 msgid ""
@@ -9391,9 +9379,9 @@ msgid "Use drand48() function (default=rand() )"
 msgstr "Benutze drand48() Funktion (standard: rand() )."
 
 #: ../vector/v.random/main.c:128
-#, fuzzy, c-format
+#, c-format
 msgid "%s given an illegal number of sites [%d]"
-msgstr "E%s"
+msgstr "%s ist eine ungültige Anzahl von Punkten [%d]."
 
 #: ../vector/v.surf.idw/main.c:85
 msgid "Attribute table column with values to interpolate"
@@ -9465,14 +9453,12 @@ msgid "%d points loaded\n"
 msgstr "%d Punkte geladen.\n"
 
 #: ../vector/v.surf.rst/main.c:159
+#, fuzzy
 msgid ""
-"Interpolation and topographic analysis from given point or contour data in "
-"vector format to GRASS floating point raster format using regularized spline "
-"with tension."
-msgstr ""
-"Interpolation und topographische Analysen basierend auf gegebenen Punkt- "
-"oder Konturdaten im Vektorformat zu GRASS-Rasterkarten (Fließkommabereich) "
-"unter Zuhilfenahme der Regularized-spline-with tension-Methode (RST)."
+"Spatial approximation and topographic analysis from given point or isoline "
+"data in vector format to floating point raster format using regularized "
+"spline with tension."
+msgstr "von Punkt Punkt mit."
 
 #: ../vector/v.surf.rst/main.c:188
 msgid "Name of the vector file with input data"
@@ -9483,8 +9469,10 @@ msgid "Field value. If set to 0, z coordinates are used. (3D vector only)"
 msgstr "Feldwert. Wenn 0, dann wird die Z-Koordinate genutzt (nur bei 3D-Vektoren)."
 
 #: ../vector/v.surf.rst/main.c:200
-msgid "Name of the attr. column with values to be interpolated (if layer>0)"
-msgstr "Name der Attributspalte mit den zu interpolierenden Werten (wenn Layer > 0)."
+msgid ""
+"Name of the attr. column with values to be used for approximation (if "
+"layer>0)"
+msgstr "Name der Attributspalte mit den Werten, die für die Annährung genutzt werden soll (wenn layer>0)."
 
 #: ../vector/v.surf.rst/main.c:207
 msgid "Name of the column with smoothing parameters"
@@ -9507,12 +9495,17 @@ msgstr "von Ausgabe Punkt"
 
 #: ../vector/v.surf.rst/main.c:237
 #, fuzzy
-msgid "Name of the output cross-validation vector point file"
+msgid "Name of the output cross-validation errors vector point file"
 msgstr "von Ausgabe Punkt"
 
 #: ../vector/v.surf.rst/main.c:244
 msgid "Output surface raster file (elevation)"
 msgstr "Ausgabekarte mit den Oberflächeninformationen (Höheninformationen)."
+
+#: ../vector/v.surf.rst/main.c:248
+#, fuzzy
+msgid "Output partial derivatives instead of topographic parameters"
+msgstr "von"
 
 #: ../vector/v.surf.rst/main.c:255
 msgid "Output slope raster file"
@@ -9539,8 +9532,8 @@ msgid "Name of the raster file used as mask"
 msgstr "Name der Rasterkarte, die als Maske benutzt werden soll."
 
 #: ../vector/v.surf.rst/main.c:297
-msgid "Conversion factor for interpolated values"
-msgstr "Konvertierungsfaktor für die interpolierten Werte."
+msgid "Conversion factor for values used for approximation"
+msgstr "Konvertierungsfaktor für die Werte, die für die Annährung genutzt werden sollen."
 
 #: ../vector/v.surf.rst/main.c:304
 msgid "Tension parameter"
@@ -9555,23 +9548,29 @@ msgid "Maximum number of points in a segment"
 msgstr "Maximale Anzahl der Punkte auf einem Segment."
 
 #: ../vector/v.surf.rst/main.c:325
-msgid "Minimum number of points for interpolation (>segmax)"
-msgstr "Minimale Anzahl der Punkte für die Interpolation (>segmax)."
+msgid "Minimum number of points for approximation in a segment (>segmax)"
+msgstr "Minimalanzahl der Punkte in einem Segment (>segmax)."
 
 #: ../vector/v.surf.rst/main.c:332
 msgid "Anisotropy angle (in degrees counterclockwise from East)"
 msgstr "Anisotropie-Winkel (in Grad gegen den Uhrzeigersinn von Osten)."
 
 #: ../vector/v.surf.rst/main.c:345
-msgid "Output vector file showing segmentation"
+#, fuzzy
+msgid "Output vector file showing quadtree segmentation"
 msgstr "Ausgabevektordatei die die Segmentierung zeigt."
 
 #: ../vector/v.surf.rst/main.c:353
-msgid "Output vector file showing overlapping segments"
+#, fuzzy
+msgid "Output vector file showing overlapping windows"
 msgstr "Ausgabe-Vektordatei, die die überlappenden Segmente beinhaltet."
 
+#: ../vector/v.surf.rst/main.c:357
+msgid "Use scale dependent tension"
+msgstr "Benutze mapstabsabhängige Dehnung (tension)."
+
 #: ../vector/v.surf.rst/main.c:361
-msgid "Perform cross-validation procedure"
+msgid "Perform cross-validation procedure without raster approximation"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:401
@@ -9586,11 +9585,10 @@ msgid ""
 msgstr "beides v Ausgabe"
 
 #: ../vector/v.surf.rst/main.c:414
-#, fuzzy
 msgid ""
-"The cross-validation cannot be computed simultanuously with output grids or "
+"The cross-validation cannot be computed simultanuously with output raster or "
 "devi file"
-msgstr "Ausgabe"
+msgstr "Die Cross-Validierung kann nicht simultan berechnet werden, wenn als Ausgabe eine Rasterkarte oder eine devi-Ausgabe angegeben wird."
 
 #: ../vector/v.surf.rst/main.c:432
 msgid "Using anisotropy - both theta and scalex have to be specified"
@@ -9707,9 +9705,8 @@ msgid "only print sql statements"
 msgstr "Gebe nur das SQL-Statement aus."
 
 #: ../vector/v.to.db/parse.c:99
-#, fuzzy
 msgid "In print mode prints totals for options: length,area,count"
-msgstr "Gebe Im Print-Modus für length Bereich"
+msgstr "Im Print-Modus werden die Optionen Länge, Fläche und Anzahl ausgegeben."
 
 #: ../vector/v.to.db/parse.c:111
 #, c-format
@@ -9939,33 +9936,29 @@ msgid "You need to enter at least %d points."
 msgstr "Sie müssen mindestens %d Punkte eingeben."
 
 #: ../vector/v.what.rast/main.c:77
-#, fuzzy
 msgid "Uploads raster values at positions of vector points to the table"
-msgstr "Uploads an von Tabelle"
+msgstr "Überninmmt die Rasterwerte an einem angegebenen Vektor-Punkt in die Attributtabelle."
 
 #: ../vector/v.what.rast/main.c:81
-#, fuzzy
 msgid "Name of input vector points map for which to edit attribute table"
-msgstr "von für Edit attribute Tabelle"
+msgstr "Name der Vektorpunktekarte, dessen Attributtabelle editiert werden soll. "
 
 #: ../vector/v.what.rast/main.c:88
-#, fuzzy
 msgid "Name of existing raster map to be queried"
-msgstr "von"
+msgstr "Name der vorhandenen Rasterkarte, die abgefragt werden soll."
 
 #: ../vector/v.what.rast/main.c:96
 msgid "Column name (will be updated by raster values)"
 msgstr "Spaltenname (die mit den Rasterwerten aktualisiert wird)."
 
 #: ../vector/v.what.rast/main.c:112
-#, fuzzy
 msgid "Cannot find vector map"
-msgstr "Kann Vektor nicht lesen."
+msgstr "Kann die Vektordatei nicht finden."
 
 #: ../vector/v.what.rast/main.c:123
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot open database <%s> by driver <%s>"
-msgstr "s s"
+msgstr "Kann die Datenbank <%s> mit dem Treiber <%s> nicht öffnen."
 
 #: ../vector/v.what.rast/main.c:128
 #, fuzzy
