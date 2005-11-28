@@ -141,13 +141,14 @@ proc spawn {cmd args} {
 					set pos [$outtext index "end - 1 chars"]
 					$outtext delete $pos
 					$outtext insert end $str1
+					update idletasks
 				}
 				$outtext insert end $str
 				$outtext yview end
 				update idletasks
 			}
 		}
-		catch {close $fh}
+		catch {close $fh }
 		return
 	}
 
@@ -170,6 +171,17 @@ proc spawn {cmd args} {
 		set env(GRASS_MESSAGE_FORMAT) $message_env
 	}
 
+
+###############################################################################
+
+	proc runcmd {cmd} {
+		global outtext
+		global env
+		set cmd_name $cmd
+	    eval exec -- $cmd >@ stdout 2>@ stderr
+		$outtext insert end "$cmd_name\n"
+		$outtext yview end 		
+	}
 
 ###############################################################################
 proc term_panel {cmd} {
