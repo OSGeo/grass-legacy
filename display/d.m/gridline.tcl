@@ -40,9 +40,9 @@ proc DmGridline::create { tree parent } {
     set opt($count,gridsize) 100 
     set opt($count,gridorigin) "0,0" 
     set opt($count,griddraw) 1 
+    set opt($count,gridgeod) 0
     set opt($count,borderdraw) 1 
     set opt($count,textdraw) 1 
-    set opt($count,geodraw) 0 
     
     set opt($count,rhumbdraw) 0 
     set opt($count,rhumbcoor) "" 
@@ -74,16 +74,17 @@ proc DmGridline::options { id frm } {
     # grid options 1
     set row [ frame $frm.grid1 ]
     Label $row.a -text "Grid options: "
-    checkbutton $row.b -text [G_msg "draw rectangular grid "] -variable DmGridline::opt($id,griddraw) 
-    checkbutton $row.c -text [G_msg "draw geodetic grid "] -variable DmGridline::opt($id,geogrid) 
+    checkbutton $row.b -text [G_msg "draw grid"] -variable DmGridline::opt($id,griddraw) 
+    checkbutton $row.c -text [G_msg "geodetic grid"] -variable DmGridline::opt($id,gridgeod) 
     SelectColor $row.d -type menubutton -variable DmGridline::opt($id,gridcolor)    
-    Label $row.e -text [G_msg " grid color  "] 
+    Label $row.e -text [G_msg " grid color "] 
     Button $row.f -text [G_msg "Help"] \
             -image [image create photo -file "$dmpath/grass.gif"] \
             -command "run g.manual d.grid" \
             -background $bgcolor \
             -helptext [G_msg "Help for grids"]
-    pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
+    Label $row. -text [G_msg " grid color"] 
+    pack $row.a $row.b $row.c $row.d $row.e $row.f  -side left
     pack $row -side top -fill both -expand yes
 
     # grid options 2
@@ -174,9 +175,9 @@ proc DmGridline::save { tree depth node } {
     set id [Dm::node_id $node]
 
 
-    foreach key { _check gridcolor gridborder gridsize gridorigin griddraw \
-    			borderdraw textdraw geogrid rhumbdraw rhumbcoor geoddraw \
-    			geodcoor geodcolor geodtxtcolor} {
+    foreach key { _check gridcolor gridborder gridsize gridorigin griddraw gridgeod \
+    			borderdraw textdraw rhumbdraw rhumbcoor geoddraw geodcoor geodcolor \
+    			geodtxtcolor} {
         Dm::rc_write $depth "$key $opt($id,$key)"     
 
     }                     
@@ -205,10 +206,10 @@ proc DmGridline::display { node } {
                 color=$gridcolor bordercolor=$gridborder" \
         } 
         
+    if { $opt($id,gridgeod) && $cmd != "" } {append cmd " -g"} 
     if { !$opt($id,griddraw) && $cmd != "" } {append cmd " -n"} 
     if { !$opt($id,borderdraw) && $cmd != "" } {append cmd " -b"}
     if { !$opt($id,textdraw) && $cmd != "" } {append cmd " -t"}
-    if { !$opt($id,geodraw) && $cmd != "" } {append cmd " -g"}
 
         
     # d.geodesic command
@@ -279,6 +280,7 @@ proc DmGridline::duplicate { tree parent node id } {
     set opt($count,gridborder) $opt($id,gridborder)
     set opt($count,gridorigin)  $opt($id,gridorigin)
     set opt($count,griddraw)  $opt($id,griddraw)
+    set opt($count,gridgeod)  $opt($id,gridgeod)
     set opt($count,gridsize)  $opt($id,gridsize) 
     set opt($count,borderdraw)  $opt($id,borderdraw)
     set opt($count,rhumbdraw)  $opt($id,rhumbdraw)
