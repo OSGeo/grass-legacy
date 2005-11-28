@@ -36,7 +36,7 @@ proc DmThematic::create { tree parent } {
     set opt($count,map) "" 
     set opt($count,type) "area"
     set opt($count,column) "" 
-    set opt($count,themetype) "graduated colors" 
+    set opt($count,themetype) "graduated_colors" 
     set opt($count,themecalc) "interval" 
     set opt($count,breakpoints) "" 
     set opt($count,where) "" 
@@ -46,14 +46,16 @@ proc DmThematic::create { tree parent } {
     set opt($count,maxsize) 20 
     set opt($count,nint) 4 
     set opt($count,colorscheme) "blue-red" 
-    set opt($count,singlecolor) \#FF0000 
+    set opt($count,pointcolor) \#FF0000 
+    set opt($count,linecolor) \#000000 
     set opt($count,startcolor) \#FF0000 
     set opt($count,endcolor) \#0000FF 
     set opt($count,legmon) "x1" 
-    set opt($count,legend) 1 
+    set opt($count,thmlegend) 1 
     set opt($count,update_rgb) 0 
     set opt($count,math) 0 
     set opt($count,psmap) "" 
+    set opt($count,border) 1 
     
     incr count
     return $node
@@ -152,7 +154,7 @@ proc DmThematic::options { id frm } {
     set row [ frame $frm.ttype ]
     Label $row.a -text [G_msg "Thematic map: type"] 
     ComboBox $row.b -padx 2 -width 16 -textvariable DmThematic::opt($id,themetype) \
-                    -values {"graduated colors" "graduated points"} -entrybg white
+                    -values {"graduated_colors" "graduated_points" "graduated_lines"} -entrybg white
     Label $row.c -text [G_msg " map by"] 
     ComboBox $row.d -padx 2 -width 15 -textvariable DmThematic::opt($id,themecalc) \
                     -values {"interval" "standard deviation" "quartiles" \
@@ -186,15 +188,17 @@ proc DmThematic::options { id frm } {
 
     # point options1
     set row [ frame $frm.pts1 ]  
-    Label $row.a -text "Graduate points: " 
+    Label $row.a -text "Graduate points & lines: " 
     Button $row.b -text [G_msg "icon"] \
 	    -command "DmThematic::select_symbol $id"
     Entry $row.c -width 10 -text "$opt($id,icon)" \
 	    -textvariable DmThematic::opt($id,icon) \
 	    -background white 
-    Label $row.d -text [G_msg "color"] 
-    SelectColor $row.e -type menubutton -variable DmThematic::opt($id,singlecolor)
-    pack $row.a $row.b $row.c $row.d $row.e -side left
+    Label $row.d -text [G_msg "point color"] 
+    SelectColor $row.e -type menubutton -variable DmThematic::opt($id,pointcolor)
+    Label $row.f -text [G_msg "line color"] 
+    SelectColor $row.g -type menubutton -variable DmThematic::opt($id,linecolor)
+    pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
     pack $row -side top -fill both -expand yes
 
     # point options2
@@ -223,13 +227,14 @@ proc DmThematic::options { id frm } {
     SelectColor $row.b -type menubutton -variable DmThematic::opt($id,startcolor)
     Label $row.c -text " end color"
     SelectColor $row.d -type menubutton -variable DmThematic::opt($id,endcolor)
-    pack $row.a $row.b $row.c $row.d -side left
+    checkbutton $row.e -text [G_msg "draw border"] -variable DmThematic::opt($id,border)     
+    pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
     
     # color options3
     set row [ frame $frm.color3 ]
     Label $row.a -text "   "
-    checkbutton $row.b -text [G_msg " save thematic colors to GRASSRGB column of vector file"] -variable \
+    checkbutton $row.b -text [G_msg "save thematic colors to GRASSRGB column of vector file"] -variable \
         DmThematic::opt($id,update_rgb) 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -237,9 +242,9 @@ proc DmThematic::options { id frm } {
     # legend1
     set row [ frame $frm.legend1 ]
     Label $row.a -text "Legend: "
-    checkbutton $row.b -text [G_msg " create graphic legend"] -variable \
-        DmThematic::opt($id,legend) 
-    checkbutton $row.c -text [G_msg " use math notation in legend"] -variable \
+    checkbutton $row.b -text [G_msg "create graphic legend"] -variable \
+        DmThematic::opt($id,thmlegend) 
+    checkbutton $row.c -text [G_msg "use math notation in legend"] -variable \
         DmThematic::opt($id,math) 
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
@@ -268,8 +273,8 @@ proc DmThematic::save { tree depth node } {
     set id [Dm::node_id $node]
 
     foreach key { _check map type column themetype themecalc breakpoints where \
-             layer icon iconsize maxsize nint colorscheme singlecolor \
-             startcolor endcolor legmon legend update_rgb math psmap} {
+             layer icon iconsize maxsize nint colorscheme pointcolor linecolor\
+             startcolor endcolor border legmon thmlegend update_rgb math psmap} {
         Dm::rc_write $depth "$key $opt($id,$key)"
     } 
 }
@@ -292,16 +297,18 @@ proc DmThematic::display { node } {
     if { $opt($id,column) == "" } { return }
 
     # set hex colors to rgb         
-    set singlecolor [Dm::color $opt($id,singlecolor)]
+    set pointcolor [Dm::color $opt($id,pointcolor)]
+    set linecolor [Dm::color $opt($id,linecolor)]
     set startcolor [Dm::color $opt($id,startcolor)]
     set endcolor [Dm::color $opt($id,endcolor)]
 
     #create d.vect.thematic command
     set cmd "d.vect.thematic map=$opt($id,map) type=$opt($id,type) column=$opt($id,column) \
-             layer=$opt($id,layer) icon=$opt($id,icon) size=$opt($id,iconsize) \
-            maxsize=$opt($id,maxsize) nint=$opt($id,nint) singlecolor=$singlecolor \
-             startcolor=$startcolor endcolor=$endcolor monitor=$opt($id,legmon) \
-             {themetype=$opt($id,themetype)} {themecalc=$opt($id,themecalc)} {colorscheme=$opt($id,colorscheme)}"
+			layer=$opt($id,layer) icon=$opt($id,icon) size=$opt($id,iconsize) \
+            maxsize=$opt($id,maxsize) nint=$opt($id,nint) pointcolor=$pointcolor \
+			linecolor=$linecolor startcolor=$startcolor endcolor=$endcolor \
+			monitor=$opt($id,legmon) themetype=$opt($id,themetype) \
+			themecalc=$opt($id,themecalc) {colorscheme=$opt($id,colorscheme)}"
              
     # breakpoints
     if { $opt($id,breakpoints) != "" } { 
@@ -318,13 +325,18 @@ proc DmThematic::display { node } {
         append cmd " psmap=$opt($id,psmap)"
     }
 
+    # hide border
+    if { $opt($id,border) == 0 } { 
+        append cmd "  -f"
+    }
+
     # update_rgb
     if { $opt($id,update_rgb) == 1 } { 
         append cmd " -u"
     }
 
     # legend
-    if { $opt($id,legend) == 1 } { 
+    if { $opt($id,thmlegend) == 1 } { 
         append cmd " -l"
     }
 
@@ -396,11 +408,13 @@ proc DmThematic::duplicate { tree parent node id } {
     set opt($count,maxsize) "$opt($id,maxsize)"
     set opt($count,nint) "$opt($id,nint)"
     set opt($count,colorscheme) "$opt($id,colorscheme)"
-    set opt($count,singlecolor) "$opt($id,singlecolor)"
+    set opt($count,pointcolor) "$opt($id,pointcolor)"
+    set opt($count,linecolor) "$opt($id,linecolor)"
     set opt($count,startcolor) "$opt($id,startcolor)"
     set opt($count,endcolor) "$opt($id,endcolor)"
+    set opt($count,border) "$opt($id,border)"
     set opt($count,legmon) "$opt($id,legmon)"
-    set opt($count,legend) "$opt($id,legend)"
+    set opt($count,thmlegend) "$opt($id,thmlegend)"
     set opt($count,update_rgb) "$opt($id,update_rgb)" 
     set opt($count,math) "$opt($id,math)" 
     set opt($count,psmap) "$opt($id,psmap)" 
