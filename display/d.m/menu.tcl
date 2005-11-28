@@ -20,7 +20,7 @@ global execom
             {command "GRIDATB.FOR map file (TOPMODEL)" {} "r.in.gridatb" {} -command { execute r.in.gridatb }}
             {command "MAT-File (v.4) array (Matlab or Octave)" {} "r.in.mat" {} -command { execute r.in.mat }}
             {command "SRTM hgt files" {} "r.in.srtm" {} -command { execute r.in.srtm }}
-            {command "Terra ASTER hdf files" {} "r.in.aster" {} -command { execute r.in.aster }}
+            {command "Terra ASTER HDF files" {} "r.in.aster" {} -command { execute r.in.aster }}
         }}
         {cascad "Vector map" {} "" $tmenu {			
             {command "Various formats using OGR" {} "v.in.ogr" {} -command { execute v.in.ogr }}
@@ -47,7 +47,6 @@ global execom
             {command "ESRI ARC/INFO ASCII grid" {} "r.out.arc" {} -command { execute r.out.arc }}
             {command "GRIDATB.FOR map file (TOPMODEL)" {} "r.out.gridatb" {} -command { execute r.out.gridatb }}
             {command "MAT-File (v.4) array (Matlab or Octave)" {} "r.out.mat" {} -command { execute r.out.mat }}
-            {command "VTK ASCII file" {} "r.out.vtk" {} -command { execute r.out.vtk }}
             {separator}
             {command "Binary file" {} "r.out.bin" {} -command { execute r.out.bin }}
             {separator}
@@ -82,7 +81,7 @@ global execom
     }}
  	{cascad "Map type conversions" {} "" $tmenu {			
         {command "Raster to vector map" {} "r.to.vect" {} -command {execute r.to.vect }}
-        {command "Raster map series to volume" {} "r3.in.rast" {} -command {execute r3.in.rast }}
+        {command "Raster map series to volume" {} "r3.in.rast" {} -command {execute r.to.rast3 }}
         {command "Vector to raster" {} "v.to.rast" {} -command {execute v.to.rast }}
         {command "Vector to points" {} "v.to.points" {} -command {execute v.to.points }}
         {command "Sites to vector" {} "v.in.sites" {} -command {execute v.in.sites }}
@@ -169,6 +168,7 @@ global execom
     {command "Query with mouse" {} "d.what.rast" {} -command { execute d.what.rast }}
     {separator}
     {command "Create raster buffers" {} "r.buffer" {} -command { execute r.buffer }}
+    {command "Create raster MASK" {} "r.mask" {} -command { execute r.mask }}
     {command "Locate closest points between areas in 2 raster maps" {} "r.distance" {} -command { execute r.distance }}
     {command "Map calculator" {} "r.mapcalculator" {} -command { execute r.mapcalculator }}
     {cascad "Neighborhood analysis" {} "" $tmenu {			
@@ -299,7 +299,7 @@ global execom
 			 {command "Create lines parallel to existing lines" {} "v.parallel" {} -command {execute v.parallel }}
 			 {separator}
 			 {command "Convert vector feature types" {} "v.type" {} -command {execute v.type }}
-			 {command "Convert 2D vector to 3D vector draping raster" {} "v.drape" {} -command {execute v.drape }}
+			 {command "Convert 2D vector to 3D by sampling raster" {} "v.drape" {} -command {execute v.drape }}
 			 {separator}
 			 {command "Create text label file for vector features" {} "v.label" {} -command {execute v.label }}
 			 {separator}
@@ -362,6 +362,7 @@ global execom
 			 {command "Univariate statistics" {} "v.univar" {} -command {execute v.univar }}
  			{separator}
 			 {command "Test normality of point distribution" {} "v.normal" {} -command {execute v.normal }}
+			 {command "Calculate stats for raster map underlying vector objects" {} "v.rast.stats" {} -command {execute v.rast.stats }}
 			 {command "Indices of point counts in quadrats" {} "v.qcount" {} -command {execute v.qcount }}
 			}}
  } 
@@ -413,6 +414,7 @@ global execom
 			 {separator}
 	 		{command "Display histogram" {} "d.histogram" {} -command {execute d.histogram }}
 			 {separator}
+			 {command "Bit pattern comparison for ID of low quality pixels" {} "r.bitpattern" {} -command {execute r.bitpattern }}
 			 {command "Kappa classification accuracy assessment" {} "r.kappa" {} -command {execute r.kappa }}
 			 {command "Optimum index factor for LandSat TM" {} "i.oif" {} -command {execute i.oif }}
 			}}
