@@ -1,0 +1,65 @@
+#!/bin/sh
+#
+############################################################################
+#
+# MODULE:       r.mask
+# AUTHOR(S):	Michael Barton, Arizona State University
+# PURPOSE:	    Facilitates creation of raster MASK using r.reclass
+# COPYRIGHT:	(C) 2005 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
+
+
+#%Module
+#%  description: Create a MASK for limiting raster operation
+#%End
+#%option
+#% key: input
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: Raster map to use as MASK
+#% required : yes
+#%END
+#%option
+#% key: maskcats
+#% type: string
+#% description: Cat values to use for MASK (format: 1 2 3 thru 7 *)
+#% answer: *
+#%END
+#%flag
+#% key: o
+#% description: Overwrite existing MASK
+#%END
+
+
+if  [ -z $GISBASE ] ; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec g.parser "$0" "$@"
+fi
+
+
+echo
+echo "Generating raster MASK"
+echo " "
+echo "All subsequent raster operations will be limited to MASK area"
+echo " "
+echo "************************************************************"
+echo "To remove MASK and restore raster operations to normal, "
+echo "use g.remove to remove or g.rename to rename" 
+echo "raster file named MASK"
+echo "************************************************************"
+
+if [ "$GIS_FLAG_o" -eq 1 ]; then
+	echo "$GIS_OPT_maskcats = 1" | r.reclass input=$GIS_OPT_input output=MASK --o
+else 
+	echo "$GIS_OPT_maskcats = 1" | r.reclass input=$GIS_OPT_input output=MASK
+fi
+
