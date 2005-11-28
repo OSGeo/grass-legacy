@@ -6,7 +6,7 @@
 # AUTHOR(S):	Michael Barton, Arizona State University with contributions
 #               by Martin Landa, Jachym Cepicky, Daniel Calvelo Aros and Moritz Lennert
 # PURPOSE:	    Displays thematic vector map with graduated colors
-#               or graduated points
+#               or graduated points and line thickneses
 # COPYRIGHT:	(C) 2005 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
@@ -43,15 +43,15 @@
 #%option
 #% key: themetype
 #% type: string
-#% options: graduated colors,graduated points
-#% answer: graduated colors
+#% options: graduated_colors,graduated_points,graduated_lines
+#% answer: colors
 #% description: Type of thematic display
 #% required : yes
 #%end
 #%option
 #% key: themecalc
 #% type: string
-#% options: interval,standard deviation,quartiles,custom breaks
+#% options: interval,std_deviation,quartiles,custom_breaks
 #% answer: interval
 #% description: Thematic divisions of data for display
 #% required : yes
@@ -80,14 +80,14 @@
 #%option
 #% key: size
 #% type: double
-#% description: Vector point icon size for point data (minimum icon size for graduated points)
+#% description: Icon size for point data (minimum icon size/line width for graduated points/lines)
 #% answer: 5
 #% required : no
 #%end
 #%option
 #% key: maxsize
 #% type: double
-#% description: Maximum icon size for graduated points
+#% description: Maximum icon size/line width for graduated points and lines
 #% answer: 20
 #% required : no
 #%end
@@ -101,16 +101,23 @@
 #%option
 #% key: colorscheme
 #% type: string
-#% description: Color scheme for graduated color mapping (select 'single color' for graduated point display)
-#% options: blue-red,red-blue,green-red,red-green,blue-green,green-blue,cyan-yellow,yellow-cyan,custom gradient,single color
+#% description: Color scheme for graduated color mapping (select 'single_color' for graduated point/line display)
+#% options: blue-red,red-blue,green-red,red-green,blue-green,green-blue,cyan-yellow,yellow-cyan,custom_gradient,single_color
 #% answer: blue-red
 #% required : yes
 #%end
 #% option
-#% key: singlecolor
+#% key: pointcolor
 #% type: string
-#% description: Color for graduated points map (grass named color or R:G:B triplet)
+#% description: Color for graduated points map (grass named color or R:G:B triplet). Set color scheme to single color.
 #% answer: 255:0:0
+#% required : no
+#%end
+#% option
+#% key: linecolor
+#% type: string
+#% description: Color for graduated lines or point/area outlines (grass named color or R:G:B triplet). Set color scheme to single color.
+#% answer: 0:0:0
 #% required : no
 #%end
 #% option
@@ -153,6 +160,10 @@
 #% type: string
 #% description: Root for the name of psmap instruction files to be in current directory (if not set, no psmap instruction files will be created)
 #% required : no
+#%end
+#%flag
+#% key: f
+#% description: Only draw fills (no outlines) for areas and points
 #%end
 #%flag
 #% key: u
@@ -349,7 +360,7 @@ case "$GIS_OPT_themecalc" in
     annotations=""
     ;;
 
-"standard deviation" )
+"std_deviation" )
     # 2 standard deviation units on either side of mean,
     # plus min to -2 sd units and +2 sd units to max, if applicable
     breakpoints=`echo $min $max $mean $sd | awk '{printf $1;for(i=-2;i<=2;i++){ith=$3+i*$4;if($1<ith && $2>ith){printf " " ith}}print " " $2}'`
@@ -364,7 +375,7 @@ case "$GIS_OPT_themecalc" in
     annotations=" q1; q2; q3; q4"
     ;;
 
-"custom breaks" )
+"custom_breaks" )
 	if [ -z "$GIS_OPT_breakpoints" ] ; then
 	    breakpoints=`cat | awk '{gsub("[^0-9., ]","",$0);print}'`
 	else
@@ -406,7 +417,7 @@ echo "Value range: $min - $max"
 
 # graduated color thematic mapping
 
-if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
+if [ "$GIS_OPT_themetype" = "graduated_colors" ] ; then
     # set color schemes for graduated color maps
     case "$GIS_OPT_colorscheme" in
 	"blue-red" )
@@ -429,11 +440,11 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
 	    startc="0:0:255"
 	    endc="0:255:0"
 	    ;;
-	"cyan-yellow" )
+		"cyan-yellow" )
 	    startc="0:255:255"
 	    endc="255:255:0"
 	    ;;
-	"yellow-cyan" )
+		"yellow-cyan" )
 	    startc="255:255:0"
 	    endc="0:255:255"
 	    ;;
@@ -475,7 +486,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
     fi
 
     # display graduated color themes for standard deviation units
-    if [ "$GIS_OPT_themecalc" = "standard deviation" ] ; then
+    if [ "$GIS_OPT_themecalc" = "std_deviation" ] ; then
 
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by standard deviation units of $sd (mean =$mean)" >> "$TMP2"
@@ -562,10 +573,14 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         fi
 
         themecolor="$color1:$color2:$color3"
-        if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
-            linecolor=$themecolor
+        if [ "$GIS_FLAG_f" -eq 1 ] ; then
+        	linecolor="none"
         else
-            linecolor="black"
+        	if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
+         	   linecolor=$themecolor
+        	else
+        	    linecolor="$GIS_OPT_linecolor"
+        	fi
         fi
       
         rangemin=`echo $i $breakpoints | awk '{t=$1+1;print $t}'`
@@ -583,13 +598,14 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         echo "8 $line1" >> "$TMP2"
         echo "8 $line3" >> "$TMP2"
         echo "5 $line3" >> "$TMP2"
-        echo "color black" >> "$TMP2"
-	echo "move 5 $line1" >> "$TMP2"
-	echo "draw 8 $line1" >> "$TMP2"
-	echo "draw 8 $line3" >> "$TMP2"
-	echo "draw 5 $line3" >> "$TMP2"
-	echo "draw 5 $line1" >> "$TMP2"
+        echo "color $linecolor" >> "$TMP2"
+		echo "move 5 $line1" >> "$TMP2"
+		echo "draw 8 $line1" >> "$TMP2"
+		echo "draw 8 $line3" >> "$TMP2"
+		echo "draw 5 $line3" >> "$TMP2"
+		echo "draw 5 $line1" >> "$TMP2"
         echo "move 14 $line2" >> "$TMP2"
+        echo "color black" >> "$TMP2"
         echo "text $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP2"
 
         if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
@@ -639,6 +655,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         
             # change rgb colors to hex
             xthemecolor=`echo $themecolor | awk -F: '{printf("#%02X%02X%02X\n",$1,$2,$3)}'`
+#            xlinecolor=`echo $linecolor | awk -F: '{printf("#%02X%02X%02X\n",$1,$2,$3)}'`
             
             if [ "$linecolor" = "black" ] ; then
                 xlinecolor="#000000"
@@ -664,6 +681,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
             echo "    type_face 0" >> "$TMP3"
             echo "    color $xlinecolor" >> "$TMP3"
             echo "    fcolor $xthemecolor" >> "$TMP3"
+            echo "    width $ptsize" >> "$TMP3"
             echo "    _use_fcolor 1" >> "$TMP3"
             echo "    lcolor #000000" >> "$TMP3"
             echo "    sqlcolor 0" >> "$TMP3"
@@ -687,6 +705,7 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
         fi
         
         # display theme vector map
+
         d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
             where="$sqlwhere" \
             color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
@@ -734,11 +753,11 @@ if [ "$GIS_OPT_themetype" = "graduated colors" ] ; then
     done
 fi
 
-#graduated points thematic mapping
+#graduated points and line widths thematic mapping
 
-if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
+if [ "$GIS_OPT_themetype" = "graduated_points" -o "$GIS_OPT_themetype" = "graduated_lines" ] ; then
 
-    #display graduated points by intervals
+    #display graduated points/lines by intervals
     if [ "$GIS_OPT_themecalc" = "interval" ] ; then
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by $numint intervals of $step" >> "$TMP2"
@@ -750,8 +769,8 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         echo "Mapped by $numint intervals of $step"
     fi
         
-    # display graduated points for standard deviation units
-    if [ "$GIS_OPT_themecalc" = "standard deviation" ] ; then
+    # display graduated points/lines for standard deviation units
+    if [ "$GIS_OPT_themecalc" = "std_deviation" ] ; then
 
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by standard deviation units of $sd (mean =$mean)" >> "$TMP2"
@@ -765,7 +784,7 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
         echo "Mapped by standard deviation units of $sd (mean =$mean)"
     fi
     
-    # display graduated point themes for quartiles
+    # display graduated points/lines for quartiles
     if [ "$GIS_OPT_themecalc" = "quartiles" ] ; then
 
         echo "move 4 87" >> "$TMP2"
@@ -781,7 +800,7 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
     line1=76
     line2=75
     echo "move 4 83" >> "$TMP2"
-    echo "text Icon size" >> "$TMP2"
+    echo "text Size/width" >> "$TMP2"
     echo "move 25 83" >> "$TMP2"
     echo "text Value" >> "$TMP2"
     echo "move 4 80" >> "$TMP2"
@@ -806,12 +825,17 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
     
 
     echo ""
-    echo "Icon" "size" "Value" | awk '{print $1 " " $2"\t"$3}'
+    echo "Size/width" "Value" | awk '{print $1 " " $2"\t"$3}'
     echo "==========" "=====" | awk '{print $1 "\t" $2}'
 
-    themecolor=$GIS_OPT_singlecolor
-    linecolor="black"
+    themecolor=$GIS_OPT_pointcolor
     
+	if [ "$GIS_FLAG_f" -eq 1 ] ; then
+		linecolor="none"
+	else
+		linecolor="$GIS_OPT_linecolor"
+	fi
+
     i=$numint
     ptsize=$GIS_OPT_maxsize
     while [ $i -ge 1 ]     
@@ -837,8 +861,13 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
             fi
         fi
 
-        themecolor=$GIS_OPT_singlecolor
-        linecolor="black"
+        themecolor=$GIS_OPT_pointcolor
+
+		if [ "$GIS_FLAG_f" -eq 1 ] ; then
+			linecolor="none"
+		else
+			linecolor="$GIS_OPT_linecolor"
+		fi
       
         rangemin=`echo $i $breakpoints | awk '{t=$1+1;print $t}'`
         rangemax=`echo $i $breakpoints | awk '{t=$1+2;print $t}'`
@@ -855,8 +884,13 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
             lineht=4
         fi
 
-        echo "color $themecolor" >> "$TMP2"
-        echo "icon o $iconsize 5 $line1" >> "$TMP2"
+		if [ "$GIS_OPT_themetype" = "graduated_lines" ]; then
+	        echo "color $linecolor" >> "$TMP2"
+	    else
+			echo "color $themecolor" >> "$TMP2"
+		fi
+
+        echo "icon + $iconsize 5 $line1" >> "$TMP2"
         echo "color black" >> "$TMP2"
         echo "move 10 $line2" >> "$TMP2"
         echo "text $ptsize pts" >> "$TMP2"
@@ -911,6 +945,7 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
             echo "    type_area $atype" >> "$TMP3"
             echo "    type_face 0" >> "$TMP3"
             echo "    color $xlinecolor" >> "$TMP3"
+            echo "    width $ptsize" >> "$TMP3"
             echo "    fcolor $xthemecolor" >> "$TMP3"
             echo "    _use_fcolor 1" >> "$TMP3"
             echo "    lcolor #000000" >> "$TMP3"
@@ -933,11 +968,19 @@ if [ "$GIS_OPT_themetype" = "graduated points" ] ; then
             echo "    _width 0.1" >> "$TMP3"
             echo "  End" >> "$TMP3"
         fi
+        
+        #graduates line widths or point sizes
 
-        d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+        if [ "$GIS_OPT_themetype" = "graduated_lines" ] ; then
+        	d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
+            where="$sqlwhere" \
+            color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize \
+            width=$ptsize
+		else 
+			d.vect map=$GIS_OPT_map type=$GIS_OPT_type layer=$GIS_OPT_layer \
             where="$sqlwhere" \
             color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
-
+		fi
 
 	  echo "vpoints $GIS_OPT_map" >> $TMP4
 	  echo "  type $GIS_OPT_type" >> $TMP4
@@ -964,9 +1007,9 @@ if [ "$GIS_FLAG_l" -eq 1 ] ; then
     echo ""
     echo ""
     if [ `eval d.mon -L | grep $GIS_OPT_monitor | awk '{print $5}'` = "not" ] ; then
-        d.mon start=$GIS_OPT_monitor
+        d.mon start=$GIS_OPT_monitor >stdout
     else 
-        d.mon select=$GIS_OPT_monitor>/dev/null
+        d.mon select=$GIS_OPT_monitor >stdout
 	    d.erase
     fi
     d.graph input=$TMP2
