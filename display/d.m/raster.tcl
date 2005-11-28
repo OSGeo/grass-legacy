@@ -37,9 +37,9 @@ proc DmRaster::create { tree parent } {
     set opt($count,rasttype) "" 
     set opt($count,bkcolor) "" 
     set opt($count,overlay) 1 
-    set opt($count,legend) 0 
-    set opt($count,legmon) "x1" 
-    set opt($count,legthin) "1"
+    set opt($count,legend1) 0 
+    set opt($count,legmon1) "x1" 
+    set opt($count,legthin1) "1"
     set opt($count,legend2) 0 
     set opt($count,legmon2) "x2" 
     set opt($count,legthin2) "1"
@@ -103,12 +103,12 @@ proc DmRaster::options { id frm } {
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
-    #raster legend
+    #raster legend1
     set row [ frame $frm.leg ]
-    checkbutton $row.a -text [G_msg "show legend in selected display monitor"] -variable DmRaster::opt($id,legend) 
-    ComboBox $row.b -padx 2 -width 4 -textvariable DmRaster::opt($id,legmon) \
+    checkbutton $row.a -text [G_msg "show legend in selected display monitor"] -variable DmRaster::opt($id,legend1) 
+    ComboBox $row.b -padx 2 -width 4 -textvariable DmRaster::opt($id,legmon1) \
                     -values {"x0" "x1" "x2" "x3" "x4" "x5" "x6"} -entrybg white
-    LabelEntry $row.c -label [G_msg " thin legend by "] -textvariable DmRaster::opt($id,legthin) \
+    LabelEntry $row.c -label [G_msg " thin legend by "] -textvariable DmRaster::opt($id,legthin1) \
                     -width 6 -entrybg white
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
@@ -127,7 +127,7 @@ proc DmRaster::options { id frm } {
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
     
-    #drape legend
+    #drape legend2
     set row [ frame $frm.dleg ]
     checkbutton $row.a -text [G_msg "show legend for drape map in monitor"] -variable \
             DmRaster::opt($id,legend2) 
@@ -162,7 +162,7 @@ proc DmRaster::save { tree depth node } {
     set id [Dm::node_id $node]
 
     foreach key { _check map drapemap querytype rastquery rasttype bkcolor overlay \
-             legend legmon legthin legend2 legmon2 legthin2} {
+             legend1 legmon1 legthin1 legend2 legmon2 legthin2} {
          Dm::rc_write $depth "$key $opt($id,$key)"
     } 
 }
@@ -231,24 +231,25 @@ proc DmRaster::display { node } {
 	}
 
 
-    #display legend for raster map
-    if { $opt($id,legend) } { 
+    #display legend1 for raster map
+    if { $opt($id,legend1) } { 
 
-        Dm::displmon $opt($id,legmon)
+        Dm::displmon $opt($id,legmon1)
         
         run_panel "d.erase white"
-        run_panel "d.legend map=$opt($id,map) thin=$opt($id,legthin)"
+        run_panel "d.legend map=$opt($id,map) thin=$opt($id,legthin1)"
+		run_panel "d.mon select=$currmon"
     }
 
-    #display legend for drape map
+    #display legend2 for drape map
     if { $opt($id,legend2) } { 
  
         Dm::displmon $opt($id,legmon2)
         run_panel "d.erase white"
         run_panel "d.legend map=$opt($id,drapemap) thin=$opt($id,legthin2)"
+		run_panel "d.mon select=$currmon"
     }
 
-	run_panel "d.mon select=$currmon"
 
 }
 
@@ -319,13 +320,13 @@ proc DmRaster::duplicate { tree parent node id } {
     set opt($count,rastquery) "$opt($id,rastquery)" 
     set opt($count,rasttype) "$opt($id,rasttype)" 
     set opt($count,bkcolor) "$opt($id,bkcolor)" 
-    set opt($count,overlay) $opt($id,overlay)
-    set opt($count,legend)  $opt($id,legend)
-    set opt($count,legmon) "$opt($id,legmon)" 
-    set opt($count,legthin) "$opt($id,legthin)" 
-    set opt($count,legend2)  $opt($id,legend)
-    set opt($count,legmon2) "$opt($id,legmon)" 
-    set opt($count,legthin2) "$opt($id,legthin)" 
+    set opt($count,overlay) "$opt($id,overlay)"
+    set opt($count,legend1)  "$opt($id,legend1)"
+    set opt($count,legmon1) "$opt($id,legmon1)" 
+    set opt($count,legthin1) "$opt($id,legthin1)" 
+    set opt($count,legend2)  "$opt($id,legend2)"
+    set opt($count,legmon2) "$opt($id,legmon2)" 
+    set opt($count,legthin2) "$opt($id,legthin2)" 
 
     incr count
     return $node
