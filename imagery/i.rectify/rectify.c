@@ -14,7 +14,7 @@ int rectify (char *name, char *mapset, char *result, int order)
     int row, col;
     int infd;
     void *rast;
-	char buf[64]="";
+    char buf[2048]="";
 
     select_current_env();
     if (G_get_cellhd (name, mapset, &cellhd) < 0)
