@@ -18,7 +18,7 @@ main (int argc, char *argv[])
 	struct Option *old, *new, *delim_opt, *columns_opt, *xcol_opt, 
 		*ycol_opt, *zcol_opt, *catcol_opt, *format_opt, *skip_opt;
 	int    xcol, ycol, zcol, catcol, format, skip_lines;
-	struct Flag *zcoorf, *t_flag, *e_flag, *noheader_flag;
+	struct Flag *zcoorf, *t_flag, *e_flag, *noheader_flag, *notopol_flag;
 	char   *table;
 	char   *fs;
 	int    zcoor=WITHOUT_Z, make_table; 
@@ -130,8 +130,13 @@ main (int argc, char *argv[])
         noheader_flag->key          = 'n';
         noheader_flag->description  = _("Don't expect a header when reading in standard format");
 
+        notopol_flag = G_define_flag();
+        notopol_flag->key          = 'b';
+        notopol_flag->description  = _("Do not build topology in points mode");
+
+
 	if (G_parser (argc, argv))
-		exit(-1);
+		exit(EXIT_FAILURE);
 
 
 	if ( format_opt->answer[0] == 'p' )
@@ -180,7 +185,7 @@ main (int argc, char *argv[])
 	if ( e_flag->answer ) { 
 	    Vect_build ( &Map, stdout );
 	    Vect_close ( &Map );
-	    exit(0) ;
+	    exit(EXIT_SUCCESS) ;
 	}
 
 	if ( format == FORMAT_POINT ) {
@@ -414,8 +419,13 @@ main (int argc, char *argv[])
 	    fclose(ascii) ;
 	}
         
-	Vect_build ( &Map, stdout );
-	Vect_close ( &Map );
+        if ( notopol_flag->answer ) {
+            Vect_close ( &Map );
+        }
+        else {
+	    Vect_build ( &Map, stdout );
+	    Vect_close ( &Map );
+        }
 
-	exit(0) ;
+	exit(EXIT_SUCCESS) ;
 }
