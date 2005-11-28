@@ -1,18 +1,28 @@
-<H2>DESCRIPTION</H2>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+</head>
+<body>
+<h2>DESCRIPTION</h2>
 
 
-<p><EM><b>d.vect.thematic</b></EM>  - Creates thematic  maps from vectors of
+
+<p><em><b>d.vect.thematic</b></em>  - Creates thematic  maps from vectors of
   all types and numeric attributes (stored in the data table connected to a vector
   map). Thematic maps can be displayed by either a graduated color scheme (for
-  all vector types), or as graduated icon sizes (for point and centroid types).
+  all vector types), as graduated icon sizes (for point and centroid types), or
+graduated line widths (for lines and boundaries with associated
+attributes).
   The user selects the vector file to be mapped and attribute column from which
   to derive mapping intervals, and (optionally) the layer for attribute data. </p>
+
 <p>In thematic maps, the color or point size changes for each range of attribute
   values. Value ranges for thematic mapping can be
   set at regular intervals, standard deviation units on either
   side of the mean, quartiles, or delimited by user-defined breakpoints. User-defined
-  breakpoints also can  be piped into d.vect.thematic from standard input or
+  breakpoints also can  be entered, or piped into d.vect.thematic from standard input or
   other external source. </p>
+
 <p>There are options to define the color scheme (graduated
     colors) and range of point sizes (graduated points) for thematic maps. A
   simple text legend is printed. Optionally, a graphic legend can be drawn in
@@ -20,20 +30,33 @@
   column for later display,  and thematic map display commands can
   be saved to a group file (*.dm) that can be opened, edited, and displayed in
 the GIS Manager.</p>
-<p>When the psmap option is set to 'name', two psmap instruction files are created in the current directory, one for the map ('name.psmap') and one for the legend ('name_legend.psmap'). The user can also enter a full path to have the files created elsewhere than the current directory.</p>
-<p><EM>(GRASS Shell Script)</EM></p>
-<H2>ATTENTION</H2>
 
-The algorithm currently uses the script <EM><A HREF="v.univar.sh.html">v.univar.sh</A></EM>
+<p>When the psmap option is set to 'name', two psmap instruction files
+are created in the current directory, one for the map ('name.psmap')
+and one for the legend ('name_legend.psmap'). The user can also enter a
+full path to have the files created elsewhere than the current
+directory.</p>
+
+<p><em>(GRASS Shell Script)</em></p>
+
+<h2>ATTENTION</h2>
+
+
+The algorithm currently uses the script <em><a href="v.univar.sh.html">v.univar.sh</a></em>
 to calculate basic descriptive statistics needed for thematic mapping (minimum,
 maximum, mean, standard deviation, and quartiles).
-<H2>SEE ALSO</H2>
+<h2>SEE ALSO</h2>
 
-<EM><A HREF="d.vect.html">d.vect</A>, 
-<A HREF="v.univar.sh.html">v.univar.sh</A></EM>
 
-<P> AUTHORS
+<em><a href="d.vect.html">d.vect</a>, 
+<a href="v.univar.sh.html">v.univar.sh</a></em>
+
+<p> AUTHORS
 d.vect.thematic: Michael Barton, Arizona State University, Daniel Cavelo Aros,
   Martin Landa, and Jachym Cepicky.
+</p>
 <p>
-<p><i>Last changed: $Date$</i>
+</p>
+<p><i>Last changed: $Date$</i></p>
+</body>
+</html>
