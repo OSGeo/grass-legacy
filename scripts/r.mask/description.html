@@ -1,33 +1,28 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-  <title>r.mask</title>
-</head>
-<body>
 <h2>DESCRIPTION</h2>
 
-
-
-<em><b>r.mask</b></em> - Facilitates creation of a MASK to control
-raster operations. r.mask uses r.reclass to create a reclassification
-of an existing raster file and name it MASK. The user can select cat
-values to use in the MASK.<br>
+<em><b>r.mask</b></em> - Facilitates creation of a raster "MASK" map to
+control raster operations. <em>r.mask</em> uses <em>r.reclass</em> to create
+a reclassification of an existing raster file and name it MASK. The
+user can select cat values to use in the MASK.<br>
 <br>
 As long as the file named MASK exists in the current mapset, most
 raster operations will only take place in the grid cells specified by
 the MASK. To restore raster operations to normal (i.e., all cells of
-the current region), remove the MASK file (using <a href="g.remove.html">g.remove</a>) or rename it to any other name (using <a href="g.rename">g.rename</a>)<br>
+the current region), remove the MASK file (using <a href="g.remove.html">g.remove</a>)
+or rename it to any other name (using <a href="g.rename.html">g.rename</a>).
+<p>
 
 <em>(GRASS Shell Script)</em>
+
 <h2>SEE ALSO</h2>
 
+<em>
+<a href="r.reclass.html">r.reclass</a>
+</em>
 
-<em><a href="r.reclass.html">r.reclass</a><a href="v.univar.sh.html"></a></em>
 
-<p> AUTHOR: Michael Barton, Arizona State University
-</p>
-<p>
-</p>
+<h2>AUTHOR</h2>
+
+Michael Barton, Arizona State University
+
 <p><i>Last changed: $Date$</i></p>
-</body>
-</html>
