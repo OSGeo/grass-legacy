@@ -188,7 +188,7 @@ proc DmThematic::options { id frm } {
 
     # point options1
     set row [ frame $frm.pts1 ]  
-    Label $row.a -text "Graduate points & lines: " 
+    Label $row.a -text "Graduated points & lines: " 
     Button $row.b -text [G_msg "icon"] \
 	    -command "DmThematic::select_symbol $id"
     Entry $row.c -width 10 -text "$opt($id,icon)" \
@@ -203,12 +203,12 @@ proc DmThematic::options { id frm } {
 
     # point options2
     set row [ frame $frm.pts2 ]  
-    Label $row.a -text "    size/min size (graduated pts)" 
+    Label $row.a -text "    size/min size (graduated pts/lines)" 
     SpinBox $row.b -range {1 50 1} -textvariable DmThematic::opt($id,iconsize) \
-        -width 2 -helptext "icon size/min size (graduated pts)" -entrybg white 
+        -width 2 -helptext "icon size/min size (graduated pts/lines)" -entrybg white 
     Label $row.c -text "max size (graduated pts)" 
     SpinBox $row.d -range {1 50 1} -textvariable DmThematic::opt($id,maxsize) \
-        -width 2 -helptext " max icon size (graduated pts)" -entrybg white 
+        -width 2 -helptext " max size (graduated pts/lines)" -entrybg white 
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
