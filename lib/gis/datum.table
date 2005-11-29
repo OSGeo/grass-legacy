@@ -1,10 +1,11 @@
 # this file contains datum shift parameters,
-# it supplies a datum database table for GRASS 5.0
+# it supplies a datum database table for GRASS
 # format:
-# shortname "description" ellipsoid dx= dy= dz=
+# shortname "Full EPSG-style name" ellipsoid dx= dy= dz=
 #
 # where short name is a single word datum specifier,
-# description is a long name (enclosed in double qoutes), 
+# Full EPSG-style name is the exact name used in the European 
+# Petroleum Survey Group (EPSG) database (enclosed in double quotes),
 # ellipsoid is the acronym of the ellipsoid used with this map datum, 
 # dx, dy and dz are the datum shift parameters.
 # no spaces allowed before or after the =.
