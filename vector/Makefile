@@ -14,6 +14,7 @@ SUBDIRS = \
 	v.distance \
 	v.drape \
 	v.extract \
+	v.extrude \
 	v.hull \
 	v.info \
 	v.in.ascii \
