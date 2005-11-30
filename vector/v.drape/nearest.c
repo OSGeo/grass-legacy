@@ -30,7 +30,7 @@ double nearest ( int fd, struct Cell_head *window, struct Categories *cats,
     fprintf(stderr,"DIAG: \tRegion is: n=%g s=%g e=%g w=%g\n",
            window->north,window->south,window->east,window->west);
     fprintf(stderr,"      \tData point is north=%g east=%g\n",north,east);
-    G_fatal_error ("\tProblem reading raster");
+    G_fatal_error ("\tProblem reading from raster outside of region (e.g., use v.overlay to cut vector map)");
   }
   if (G_is_d_null_value(&(maprow[col]))) {
     predicted = 0.0;
@@ -44,5 +44,6 @@ double nearest ( int fd, struct Cell_head *window, struct Categories *cats,
     predicted = maprow[col];
   }
 
+  G_free(maprow);
   return predicted;
 }
