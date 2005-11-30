@@ -1,0 +1,48 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.extrude</em> makes 3D blocks or just walls from 2D polygons or lines.
+
+<h3>Selected Flags and Parameters</h3>
+<dl>
+    <dt><strong>-t</strong></dt>
+    <dd>If defined, roof and walls will follow ("trace") the elevation
+	by using individual elevation values for the vertices and
+	nodes at bottom. This should be useful for models
+	of large objects (forest stands).</dd>
+
+    <dt><strong>zshift</strong></dt>
+    <dd>Vertical shift of vector data on top of values extracted from elevation
+	model/defined fixed height.</dd>
+
+    <dt><strong>elevation</strong><dt>
+    <dd>Raster elevation map to put on the vector 3D objects.</dd>
+
+    <dt><strong>height</strong><dt>
+    <dd>Global height of vector 3D objects. If not specified, the module
+	expects the <strong>hcolumn</strong> parameter.</dd>
+
+    <dt><strong>hcolumn</strong><dt>
+    <dd>Column from attribute table, in which the attribute of object
+	height is stored (must be of int, double, or varchar type).</dd>
+</dl>
+
+<h2>EXAMPLES</h2>
+
+<h3>3D houses with fixed height</h3>
+
+<div class="code"><pre>
+v.extrude input=houses output=houses3D height=5
+</pre></div>
+
+<h3>3D houses with individual height</h3>
+
+<div class="code"><pre>
+v.extrude -t input=houses output=houses3D elevation=dem hcolumn=height
+</pre></div>
+
+<h2>AUTHOR</h2>
+
+Jachym Cepicky, jachym.cepicky _at_ centrum _dot_ cz, http://les-ejk.cz<br>
+<em>Department of Geoinformation Technologies, http://mapserver.mendelu.cz</em>
+
+<p><i>Last changed: $Date$</i>
