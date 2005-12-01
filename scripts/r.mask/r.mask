@@ -34,6 +34,10 @@
 #% key: o
 #% description: Overwrite existing MASK
 #%END
+#%flag
+#% key: r
+#% description: Remove existing MASK (overrides other options)
+#%END
 
 
 if  [ -z "$GISBASE" ] ; then
@@ -45,21 +49,32 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
+if [ "$GIS_FLAG_r" -eq 1 ]; then
+	if test -f `g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/cell/MASK ; then
+ 		g.remove rast=MASK
+ 		echo " "
+		echo "*************************************************"
+ 		echo "Raster MASK removed"
+		echo "*************************************************"
+ 	else
+ 		echo " "
+		echo "*************************************************"
+ 		echo "No existing MASK to remove"
+		echo "*************************************************"
+	fi
+else
 
-echo
-echo "Generating raster MASK"
-echo " "
-echo "All subsequent raster operations will be limited to MASK area"
-echo " "
-echo "************************************************************"
-echo "To remove MASK and restore raster operations to normal, "
-echo "use g.remove to remove or g.rename to rename" 
-echo "raster file named MASK"
-echo "************************************************************"
+ 	echo " "
+	echo "*************************************************"
+	echo "MASK created. All subsequent raster operations" 
+	echo "will be limited to MASK area"
+	echo "Removing or renaming raster file named MASK will"
+	echo "restore raster operations to normal"
+	echo "*************************************************"
 
-if [ "$GIS_FLAG_o" -eq 1 ]; then
-	echo "$GIS_OPT_maskcats = 1" | r.reclass input=$GIS_OPT_input output=MASK --o
-else 
-	echo "$GIS_OPT_maskcats = 1" | r.reclass input=$GIS_OPT_input output=MASK
+	if [ "$GIS_FLAG_o" -eq 1 ]; then
+		echo "$GIS_OPT_maskcats = 1" | r.reclass input=$GIS_OPT_input output=MASK --o
+	else 
+		echo "$GIS_OPT_maskcats = 1" | r.reclass input=$GIS_OPT_input output=MASK
+	fi
 fi
-
