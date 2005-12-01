@@ -321,6 +321,11 @@ int Create_OS_Ctx(int width, int height)
     }
 #endif
 
+    /* hide togl canvas before init_ctx 
+     * This prevents bindings from re-initializing
+     * togl */
+    hide_togl_win();
+
     /* Initalize off screen context */
 	if ( init_ctx() != 1) {
 		fprintf(stderr, "Error: Failed to Initiailze drawing area\n");
@@ -329,7 +334,6 @@ int Create_OS_Ctx(int width, int height)
 
     GS_set_swap_func(swap_os);
 
-    hide_togl_win();
     
     GS_set_viewport(0, width, 0, height);
     GS_set_draw(GSD_BACK);
