@@ -51,7 +51,7 @@ void initialize_globals(
     if (G_get_set_window(&region) == -1)
 	G_fatal_error("r.flow: error getting current region");
 
-    diag("r.flow Version 13 August 1995, update/fix October 1999\n\n");
+ /*   diag("r.flow Version 13 August 1995, update/fix October 1999\n\n");*/
 
     parse_command_line(argc, argv);
 
