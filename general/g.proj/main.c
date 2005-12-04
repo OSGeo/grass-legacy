@@ -94,6 +94,7 @@ int main(int argc, char *argv[])
     ingeo = G_define_option();
     ingeo->key = "georef";
     ingeo->type = TYPE_STRING;
+    ingeo->key_desc = "file";
     ingeo->required = NO;
     ingeo->description = "Georeferenced data file to read projection "
 	"information from";
@@ -101,6 +102,7 @@ int main(int argc, char *argv[])
     inwkt = G_define_option();
     inwkt->key = "wkt";
     inwkt->type = TYPE_STRING;
+    inwkt->key_desc = "file";
     inwkt->required = NO;
     inwkt->description = "ASCII file containing a single line WKT "
 	"projection description (- for stdin)";
@@ -108,6 +110,7 @@ int main(int argc, char *argv[])
     inproj4 = G_define_option();
     inproj4->key = "proj4";
     inproj4->type = TYPE_STRING;
+    inproj4->key_desc = "params";
     inproj4->required = NO;
     inproj4->description = "PROJ.4 projection description (- for stdin)";
 #endif
@@ -120,6 +123,7 @@ int main(int argc, char *argv[])
     location = G_define_option();
     location->key = "location";
     location->type = TYPE_STRING;
+    location->key_desc = "name";
     location->required = NO;
     location->description = "Name of new location to create";
 
