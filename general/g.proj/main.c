@@ -198,7 +198,7 @@ int main(int argc, char *argv[])
         SetCSVFilenameHook( GPJ_set_csv_loc );
        
 	hSRS = OSRNewSpatialReference(NULL);
-	if (OSRImportFromProj4(hSRS, proj4string) < 0)
+	if (OSRImportFromProj4(hSRS, proj4string) != OGRERR_NONE)
 	    G_fatal_error("Can't parse PROJ.4-style parameter string");
 
 	G_free(proj4string);
@@ -390,6 +390,12 @@ int main(int argc, char *argv[])
 		 * projection files for current location */
 
 	        if(old_projinfo && old_projunits) {
+		    char *mapset = G_mapset();
+		   
+		    if (strcmp(mapset, "PERMANENT") != 0)
+                        G_fatal_error("You must select the PERMANENT mapset before updating the "
+				      "current location's projection. (Current mapset is %s)", mapset);
+		   
 		    /* Warn as in g.setproj before overwriting current location */
 		    fprintf(stderr, "\n\nWARNING!  A projection file already exists for this location\n");
 		    fprintf(stderr, "\nThis file contains all the parameters for the\nlocation's projection: %s\n", G_find_key_value("proj", old_projinfo));
@@ -402,10 +408,6 @@ int main(int argc, char *argv[])
 		       
 		        int out_stat;
 		        char path[4096];
-		       
-                        /* Create the default, and current window files */
-                        G__put_window( &cellhd, "", "DEFAULT_WIND" );
-                        G__put_window( &cellhd, "", "WIND" );
 
                         /* Write out the PROJ_INFO, and PROJ_UNITS if available. */
                         if( projinfo != NULL ) {
@@ -421,7 +423,16 @@ int main(int argc, char *argv[])
                             if( out_stat != 0 )
                                 G_fatal_error("Error writing PROJ_UNITS");
 			}
-		        fprintf(stderr, "Projection information updated!\n");
+		       
+		        if ( (old_cellhd.zone != cellhd.zone) || (old_cellhd.proj != cellhd.proj) ) {			   
+                            /* Create the default, and current window files */
+                            G__put_window( &cellhd, "", "DEFAULT_WIND" );
+                            G__put_window( &cellhd, "", "WIND" );
+		            fprintf(stderr, "\nN.B. The default region was updated to the new projection, but if you have\n"
+				            "multiple mapsets g.region -d should be run in each to update the region from\n"
+					    "the default.\n");
+			}
+		        fprintf(stderr, "\nProjection information updated!\n\n");		       
 		    }
 		    else
 		        fprintf(stderr, "The projection information will not be updated.\n");
