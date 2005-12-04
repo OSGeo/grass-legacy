@@ -522,7 +522,7 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
 
     }
 
-    return 1;
+    return 2;
 
 /* -------------------------------------------------------------------- */
 /*      Fallback to returning an ungeoreferenced definition.            */
