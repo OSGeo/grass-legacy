@@ -730,7 +730,7 @@ int G_usage (void)
 			if (opt->key_desc != NULL)
 				key_desc = opt->key_desc;
 			else if (opt->type == TYPE_STRING)
-				key_desc = "name";
+				key_desc = "string";
 			else
 				key_desc = "value";
 
