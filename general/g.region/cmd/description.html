@@ -241,6 +241,7 @@ by specifying all needed parameters on the command line.
 The user enters the command  <b>g.region</b> <em>parms</em>, where
 <em>parms</em> are the following parameters and/or flags:
 
+<!--
 <h3>Flags:</h3>
 
 <dl>
@@ -365,24 +366,27 @@ map's edges.  To perform the latter function, use the
 <dd>Save current region settings in the named region file
 </dl>
 
+-->
+
 <h2>EXAMPLES</h2>
 
 <dl>
-<dt><b>g.region n=</b><em>7360100</em> <b>e=</b>699000</em>
+<dt>
+<div class="code"><pre><b>g.region n=</b><em>7360100</em> <b>e=</b>699000</em></pre></div>
 <dd> will reset the northing and easting for the current
 region, but leave the south edge, west edge, and the region
 cell resolutions unchanged.
 
 <p>
 
-<dt><b>g.region n=</b><em>51:36:05N</em> <b>e=</b>10:10:05E</em> <b>s=</b>51:29:55N</em> <b>w=</b>9:59:55E</em> <b>res=</b>0:00:01</em>
+<dt><div class="code"><pre><b>g.region n=</b><em>51:36:05N</em> <b>e=</b>10:10:05E</em> <b>s=</b>51:29:55N</em> <b>w=</b>9:59:55E</em> <b>res=</b>0:00:01</em></pre></div>
 
 <dd> will reset the northing, easting, southing, westing and resolution for the current
 region, here in DMS latitude-longitude style (but also decimal degrees can be used).
 
 <p>
 
-<dt><b>g.region  -dp s=</b><em>698000</em>
+<dt><div class="code"><pre><b>g.region  -dp s=</b><em>698000</em></pre></div>
 
 <dd> will set the current region from the default region
 for the GRASS data base location, reset the south edge to
@@ -390,7 +394,7 @@ for the GRASS data base location, reset the south edge to
 
 <p>
 
-<dt><b>g.region n=</b><em>n+1000</em> <b>w=</b><em>w-500</em>
+<dt><div class="code"><pre><b>g.region n=</b><em>n+1000</em> <b>w=</b><em>w-500</em></pre></div>
 
 <dd> The n=<em>value</em> may also be specified as a
 function of its current value:  n=n+<em>value</em>
@@ -404,7 +408,7 @@ decreased by 500 units.
 
 <p>
 
-<dt><b>g.region n=</b><em>s+1000</em> <b>e=</b><em>w+1000</em>
+<dt><div class="code"><pre><b>g.region n=</b><em>s+1000</em> <b>e=</b><em>w+1000</em></pre></div>
 
 <dd> This form allows the user to set the region boundary
 values relative to one another.  Here, the northern
@@ -421,7 +425,7 @@ w=e-<em>value</em> may be used to set the values of the
 region's southern and western boundaries, relative to the
 northern and eastern boundary values.
 
-<dt><b>g.region raster=</b><em>soils</em>
+<dt><div class="code"><pre><b>g.region raster=</b><em>soils</em></pre></div>
 
 <dd> This form will make the current region settings
 exactly the same as those given in the cell header file for
@@ -429,7 +433,7 @@ the raster map layer <em>soils</em>.
 
 <p>
 
-<dt><b>g.region raster=</b><em>soils</em> <b>zoom=</b><em>soils</em>
+<dt><div class="code"><pre><b>g.region raster=</b><em>soils</em> <b>zoom=</b><em>soils</em></pre></div>
 
 <dd> This form will first look up the cell header file for
 the raster map layer <em>soils</em>, use this as the
@@ -443,7 +447,7 @@ setting.
 
 <p>
 
-<dt><b>g.region -up raster=</b><em>soils</em>
+<dt><div class="code"><pre><b>g.region -up raster=</b><em>soils</em></pre></div>
 
 <dd> The <b>-u</b> option suppresses the re-setting of the
 current region definition.  This can be useful when it is
@@ -453,7 +457,7 @@ without changing the current region settings.
 
 <p>
 
-<dt><b>g.region -u raster=</b><em>soils</em> <b>zoom=</b><em>soils</em> <b>save=</b><em>soils</em>
+<dt><div class="code"><pre><b>g.region -u raster=</b><em>soils</em> <b>zoom=</b><em>soils</em> <b>save=</b><em>soils</em></pre></div>
 
 <dd> This will zoom into the smallest region which
 encompasses all non-zero soils data values, and save the
@@ -464,11 +468,11 @@ changed.
 
 <p>
 
-<dt><b>g.region  -p</b>
+<dt><div class="code"><pre><b>g.region  -p</b></pre></div>
 
 <dd> This will print the current region in the format:
 
-<pre>
+<div class="code"><pre>
 
 projection:	1 (UTM)
 zone:	15
@@ -481,15 +485,15 @@ nsres:	100.00
 ewres:	100.00
 rows:	441
 cols:	251
-</pre>
+</pre></div>
 
 <p>
 
-<dt><b>g.region  -pm</b>
+<dt><div class="code"><pre><b>g.region  -pm</b></pre></div>
 
 <dd> This will print the current region in the format:
 
-<pre>
+<div class="code"><pre>
 projection: 3 (Latitude-Longitude)
 zone:       0
 ellipsoid:  wgs84
@@ -501,31 +505,31 @@ nsres:      928.73944902
 ewres:      352.74269109
 rows:       6000
 cols:       4800
-</pre>
+</pre></div>
 Note that the resolution is reported in meters not decimal degrees.
 <p>
 
-<dt><b>g.region  -g</b>
+<dt><div class="code"><pre><b>g.region  -g</b></pre></div>
 
 <dd> The <b>-g</b> option prints the region in the
 following format:
 
 
-<pre>
+<div class="code"><pre>
 n=4294050.00
 s=4249950.00
 e=526050.00
 w=500950.00
 nsres=100.00
 ewres=100.00
-</pre>
+</pre></div>
 
-<dt><b>g.region  -l</b>
+<dt><div class="code"><pre><b>g.region  -l</b></pre></div>
 
 <dd> The <b>-l</b> option prints the region in the
 following format:
 
-<pre>
+<div class="code"><pre>
 long: -103.86815 lat: 44.49980 (north/west corner)
 long: -103.62896 lat: 44.49718 (north/east corner)
 long: -103.63197 lat: 44.36839 (south/east corner)
@@ -534,7 +538,7 @@ rows:       477
 cols:       634
 Center Longitude: 103:44:59.741001W [-103.74993]
 Center latitude:  44:26:02.724974N [44.43409]
-</pre>
+</pre></div>
 
 This format does not have the rows and columns, but can be
 fed back into <em>g.region</em> on its command line.
@@ -575,7 +579,7 @@ divided by the number of columns.
 
 <em><a HREF="d.zoom.html">d.zoom</a></em><br>
 <em><a HREF="g.access.html">g.access</a></em><br>
-<em><a HREF="g.mapsets.html">g.mapsets</a></em>
+<em><a HREF="g.mapsets.html">g.mapsets</a></em><br>
 <em><a HREF="g.projinfo.html">g.projinfo</a></em>
 
 <h2>AUTHOR</h2>

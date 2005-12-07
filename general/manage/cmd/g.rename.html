@@ -21,17 +21,18 @@ arguments on the command line, to receive a menu of
 existing data base element types and files from which to
 choose for possible renaming:
 
+<div class="code">
 <pre>
      rast   rast file(s) to be renamed
   oldvect   oldvect file(s) to be renamed (GRASS 5.0)
-     vect   vect file(s) to be renamed	  (GRASS 5.1)
+     vect   vect file(s) to be renamed	  (GRASS >5.1)
      icon   icon file(s) to be renamed
    labels   labels file(s) to be renamed
     sites   sites file(s) to be renamed
    region   region file(s) to be renamed
     group   group file(s) to be renamed
    3dview   3dview file(s) to be renamed
-</pre>
+</pre></div>
 
 
 <h2>NOTES</h2>
@@ -54,10 +55,10 @@ that of an already existing file.
 
 <h2>EXAMPLE</h2>
 
-<b>g.rename rast=</b><em>oldrast,newrast</em>
-<b>vect=</b><em>oldvect51,newvect51</em>
-<b>oldvect=</b><em>oldvect50,newvect50</em>
-
+<div class="code">
+<pre>
+<b>g.rename rast=</b><em>oldrast,newrast</em> <b>vect=</b><em>oldvect51,newvect51</em> <b>oldvect=</b><em>oldvect50,newvect50</em>
+</pre></div>
 <h2>SEE ALSO</h2>
 
 <em><a HREF="g.copy.html">g.copy</a></em><br>

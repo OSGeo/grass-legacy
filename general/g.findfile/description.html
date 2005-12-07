@@ -5,6 +5,7 @@ for raster map layer files, vector files, site list files, geographic region
 definition (windows) files, and <A HREF="i.group.html">imagery</A> group
 files in the GRASS data base.
 
+<!-- unused
 <H2>OPTIONS</H2>
 
 <H3>Parameters:</H3>
@@ -30,20 +31,19 @@ single dot (.) only the current mapset is searched.
 <EM>element</EM> type) for which to search.
 
 </DL>
+-->
 
 <H2>OUTPUT</H2>
 
 <EM>g.findfile</EM> writes four lines to standard output:
 
-<DL>
-<DD>
-<KBD>
-name='<EM>file_name</EM>'<BR>
-mapset='<EM>mapset_name</EM>'<BR>
-file='<EM>unix_filename</EM>'<BR>
+<div class="code"><pre>
+name='<EM>file_name</EM>'
+mapset='<EM>mapset_name</EM>'
+file='<EM>unix_filename</EM>'
 fullname='<EM>grass_fullname</EM>'
-</KBD>
-</DL>
+</pre></div>
+
 
 The output is <EM>/bin/sh</EM> commands to set the variable
 <EM>name</EM> to the GRASS data base file name,
@@ -52,34 +52,31 @@ and <EM>file</EM> to the full UNIX path name for the named
 file.  These variables may be set in the <EM>/bin/sh</EM>
 as follows:
 
-<DL>
-<DD>
-<B>eval `g.findfile element=</B><EM>name 
-</EM><B>mapset=</B><EM>name </EM><B>file=</B><EM>name</EM><B>`</B>
-</DL>
+<div class="code"><pre>
+<B>eval `g.findfile element=</B><EM>name </EM><B>mapset=</B><EM>name </EM><B>file=</B><EM>name</EM><B>`</B>
+</pre></div>
 
 <H2>NOTES</H2>
 
 If the specified file does not exist, the variables will be set as follows:
 
-<DL>
-<DD>
-<KBD>
-name=<BR>
-mapset=<BR>
-fullname=<BR>
+<div class="code"><pre>
+name=
+mapset=
+fullname=
 file=
-</KBD>
-</DL>
+</pre></div>
+
 
 The following is a way to test for this case:
-
+<div class="code">
 <PRE>
-          if [ ! "$file" ]
-          then
-               exit
-          fi
+if [ ! "$file" ]
+then
+	exit
+fi
 </PRE>
+</DIV>
 
 <H2>SEE ALSO</H2>
 

@@ -9,6 +9,7 @@ a file name of the specified <EM>type</EM> and
 the program will write four lines to the UNIX output file
 specified by <EM>unixfile</EM>.
 
+<!-- unused
 <H2>OPTIONS</H2>
 
 <H3>Parameters:</H3>
@@ -75,6 +76,7 @@ See next section for what is written to this file and how
 it can be used by shell scripts.
 
 </DL>
+-->
 
 <H2>OUTPUT</H2>
 
@@ -85,15 +87,13 @@ the user's current working directory, unless otherwise
 specified, and contains the following lines:
 
 
-<DL>
-<DD>
-<KBD>
-name='<EM>some_name</EM>'<BR>
-mapset='<EM>some_mapset</EM>'<BR>
-fullname='<EM>some_fullname</EM>'<BR>
+<div class="code">
+<PRE>
+name='<EM>some_name</EM>'
+mapset='<EM>some_mapset</EM>'
+fullname='<EM>some_fullname</EM>'
 file='<EM>some_fullpath</EM>'
-</KBD>
-</DL>
+</pre></div>
 
 <P>
 
@@ -125,27 +125,26 @@ followed by a space.
 The user may choose to simply hit the return key and not enter a file name.
 If this happens the variables will be set as follows:
 
-<DL>
-<DD>
-<KBD>
-name=<BR>
-mapset=<BR>
-fullname=<BR>
-file=
-</KBD>
-</DL>
 
+<div class="code">
+<PRE>
+name=
+mapset=
+fullname=
+file=
+</pre></div>
 
 <P>
 
 The following is a way to test for this case:
 
+<div class="code">
 <PRE>
-          if [ ! "$file" ]
-          then
-               exit
-          fi
-</PRE>
+if [ ! "$file" ]
+then
+	exit
+fi
+</PRE></div>
 
 <H2>SEE ALSO</H2>
 

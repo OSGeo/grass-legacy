@@ -15,15 +15,12 @@ No prompts are given to the user when running
 variable settings.  Results are sent to standard output,
 and may look like this:
 
-<dl>
-<kbd>
-<dd>
-GISDBASE=/usr/grass5/data<br>
 
-LOCATION_NAME=spearfish<br>
+<div class="code"><pre>
+GISDBASE=/usr/grass5/data
+LOCATION_NAME=spearfish
 MAPSET=PERMANENT
-</kbd>
-</dl>
+</pre></div>
 
 In this example, the full path name of the user's current
 location (i.e., <kbd>$LOCATION_NAME</kbd>) is
@@ -155,13 +152,15 @@ used in place of a blank for multiple-word names.
 The output from
 
 <em>g.gisenv</em>
+
 when invoked without arguments is directly usable by /bin/sh.
 The following command will cast each variable into the UNIX environment:
 <p>
-<dl>
-<dd>
+
+<div class="code"><pre>
 <b>eval `g.gisenv`</b>
-</dl>
+</pre></div>
+
 <p>
 This works only for <em>/bin/sh</em>. The format of the
 output is not compatible with other UNIX shells.
@@ -171,7 +170,9 @@ output is not compatible with other UNIX shells.
 To print debugging messages, the variable DEBUG must be set to level equal or 
 greater than 0:
 <P>
+<div class="code"><pre>
 <TT>g.gisenv set="DEBUG=3"</TT>
+</pre></div>
 <P>
 
 Levels: (recommended levels)
@@ -184,7 +185,9 @@ Levels: (recommended levels)
 
 To disable debugging messages, DEBUG must be set back to 0:
 <P>
+<div class="code"><pre>
 <TT>g.gisenv set="DEBUG=0"</TT>
+</pre></div>
 <P>
 
 
@@ -195,7 +198,7 @@ To disable debugging messages, DEBUG must be set back to 0:
 <em><a HREF="g.filename.html">g.filename</a></em><br>
 <em><a HREF="g.findfile.html">g.findfile</a></em><br>
 <em><a HREF="g.mapsets.html">g.mapsets</a></em><br>
-<em><a href=variables.html>variables list</a></em>
+<em><a href="variables.html">variables list</a></em>
 
 <h2>AUTHOR</h2>
 
