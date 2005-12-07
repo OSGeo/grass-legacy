@@ -21,15 +21,15 @@ It is recommended that $$ be specified as the process-id for
 <H2>EXAMPLE</H2>
 
 For /bin/sh scripts the following syntax should be used: 
-<PRE>
-          temp1=`g.tempfile pid=$$`
-          temp2=`g.tempfile pid=$$`
-</PRE>
+<div class="code"><PRE>
+temp1=`g.tempfile pid=$$`
+temp2=`g.tempfile pid=$$`
+</PRE></div>
 For /bin/csh scripts, the following can be used: 
-<PRE>
-          set temp1=`g.tempfile pid=$$`
-          set temp2=`g.tempfile pid=$$`
-</PRE>
+<div class="code"><PRE>
+set temp1=`g.tempfile pid=$$`
+set temp2=`g.tempfile pid=$$`
+</PRE></div>
 
 <H2>NOTES</H2>
 

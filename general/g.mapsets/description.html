@@ -55,11 +55,11 @@ of the given name.  (Users can also specify a file by
 its mapset, to make explicit the mapset from which the file is to be
 drawn;  e.g., the command:
 
-<dl>
-<dd><b><a HREF="g.copy.html">g.copy</a> 
-rast=</b><em>'soils.file@PERMANENT',my.soils</em>
 
-</dl>
+<div class="code"><pre>
+<b><a HREF="g.copy.html">g.copy</a> rast=</b><em>'soils.file@PERMANENT',my.soils</em>
+</pre></div>
+
 
 ensures that a new file named <em>my.soils</em> is to be a copy of
 the file <em>soils.file</em> from the mapset PERMANENT.)
@@ -86,6 +86,7 @@ subsequent GRASS sessions, the previously saved mapset
 search path will be used (and will continue to be used
 until it is modified by the user with <em>g.mapsets</em>).
 
+<!-- unused
 <h2>OPTIONS</h2>
 
 <h3>Flags:</h3>
@@ -106,6 +107,9 @@ until it is modified by the user with <em>g.mapsets</em>).
 <dt><b>addmapset=</b><em>name</em>[,<em>name</em>,...]
 <dd>Name(s) of existing mapset(s) to add to search list
 </dl>
+-->
+
+<h2>NOTES</h2>
 
 <em>g.mapsets</em> sets the current <em>mapset search
 path</em> to the <em>mapsets</em> named on the command
@@ -115,12 +119,13 @@ names are specified by the user on the command line, the
 program will print the user's current mapset search path,
 list available mapsets, and prompt the user for a new
 mapset search path listing.
+
 <p>
 
 The <em>addmapset</em> parameter allows for extending an existing
 <em>mapset search path</em>.
 
-<h2>NOTES</h2>
+<p>
 
 Users can restrict others' access to their mapset files
 through use of the GRASS program
