@@ -90,6 +90,7 @@ SUBDIRS = \
 	r.topmodel \
 	r.transect \
 	r.univar2 \
+	r.walk \
 	r.water.outlet \
 	r.watershed \
 	r.what \
