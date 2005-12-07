@@ -104,7 +104,8 @@ neighbors marked with an X are always considered for cumulative cost
 updates. With the <B>-k</B> option, the neighbors marked with a K are
 also considered. 
 </P>
-<PRE> . . . . . . . . . . . . . . .
+<div class="code"><pre>
+ . . . . . . . . . . . . . . .
  .   .   . K .   . K .   .   .
  . . . . . . . . . . . . . . .
  .   . K . X . X . X . K .   .
@@ -115,7 +116,7 @@ also considered.
  . . . . . . . . . . . . . . .
  .   .   . K .   . K .   .   .
  . . . . . . . . . . . . . . .
-</PRE><P>
+</pre></div><P>
 <B>-n</B></P>
 <P>When input map null cells are given a cost with the <B>null_value</B>
 option, the corresponding cells in the output map are no longer null
@@ -166,7 +167,7 @@ input map. This is a positive floating point value.</P>
 
 <P>Consider the following example: 
 </P>
-<PRE>
+<div class="code"><pre>
        Input:
          COST SURFACE
        . . . . . . . . . . . . . . .
@@ -198,7 +199,7 @@ Output (using -k):                Output (not using -k):
  . . . . . . . . . . |___| . .     . . . . . . . . . . . . . . .
  . 14.  9.  8.  9.  6.  3.  8.     . 14.  9.  8. 9 .  6.  3.  8.
  . . . . . . . . . . . . . . .     . . . . . . . . . . . . . . .
-</PRE><P>
+</pre></div><P>
 The user-provided ending location in the above example is the boxed <B>3</B>
 in the left-hand map. The costs in the output map represent the total
 cost of moving from each box (&quot;cell&quot;) to one or more (here,
@@ -248,7 +249,7 @@ of each pixel from raster lines, such as determining the shortest distances
 of households to the nearby road. For this cost surfaces with cost value 1 are
 used. The calculation is done with <em>r.cost</em> as follows (example for Spearfish region):
 
-<pre>
+<div class="code"><pre>
   g.region rast=roads -p
   r.mapcalc "area.one=1"
   r.cost -k input=area.one output=distance start_rast=roads
@@ -257,7 +258,7 @@ used. The calculation is done with <em>r.cost</em> as follows (example for Spear
   #transform to metric distances using the raster resolution:
   r.mapcalc "dist_meters=distance * (ewres()+nsres())/2."
   d.rast dist_meters
-</pre>
+</pre></div>
 
 <H2>Algorithm notes</H2>
 
@@ -290,14 +291,11 @@ optimally designed for 2-D raster maps.
 
 <H2>SEE ALSO</H2>
 
-<EM><A HREF="g.copy.html">g.copy</A></EM><BR>
-<EM><A HREF="g.region.html">g.region</A></EM><BR>
-<EM><A HREF="g.rename.html">g.rename</A></EM><BR>
-<EM><A HREF="r.drain.html">r.drain</A></EM><BR>
-<EM><A HREF="r.in.ascii.html">r.in.ascii</A></EM><BR>
-<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM><BR>
-<EM><A HREF="r.out.ascii.html">r.out.ascii</A></EM><BR>
-<EM><A HREF="parser.html">parser</A></EM>
+<EM><A HREF="r.drain.html">r.drain</A></EM>,
+<EM><A HREF="r.walk.html">r.walk</A></EM>,
+<EM><A HREF="r.in.ascii.html">r.in.ascii</A></EM>,
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>,
+<EM><A HREF="r.out.ascii.html">r.out.ascii</A></EM>
 
 <H2>AUTHOR</H2>
 
