@@ -264,6 +264,15 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag, int z_f
 		    fprintf (stdout, "ewres3=%s\n",ewres3);
 		    fprintf (stdout, "tbres=%s\n",tbres);
 		}
+		fprintf (stdout, "rows=%d\n", window->rows);
+		if ( z_flag ) {
+		    fprintf (stdout, "rows3=%d\n", window->rows3);
+		}
+		fprintf (stdout, "cols=%d\n", window->cols);
+		if ( z_flag ) {
+		   fprintf (stdout, "cols3=%d\n", window->cols3);
+		   fprintf (stdout, "depths=%d\n", window->depths);
+		}
 	}
 
 	return 0;
