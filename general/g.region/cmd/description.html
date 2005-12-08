@@ -372,21 +372,27 @@ map's edges.  To perform the latter function, use the
 
 <dl>
 <dt>
-<div class="code"><pre><b>g.region n=</b><em>7360100</em> <b>e=</b>699000</em></pre></div>
+<div class="code"><pre>
+g.region n=7360100 e=699000
+</pre></div>
 <dd> will reset the northing and easting for the current
 region, but leave the south edge, west edge, and the region
 cell resolutions unchanged.
 
 <p>
 
-<dt><div class="code"><pre><b>g.region n=</b><em>51:36:05N</em> <b>e=</b>10:10:05E</em> <b>s=</b>51:29:55N</em> <b>w=</b>9:59:55E</em> <b>res=</b>0:00:01</em></pre></div>
+<dt><div class="code"><pre>
+g.region n=51:36:05N e=10:10:05E s=51:29:55N w=9:59:55E res=0:00:01
+</pre></div>
 
 <dd> will reset the northing, easting, southing, westing and resolution for the current
 region, here in DMS latitude-longitude style (but also decimal degrees can be used).
 
 <p>
 
-<dt><div class="code"><pre><b>g.region  -dp s=</b><em>698000</em></pre></div>
+<dt><div class="code"><pre>
+g.region  -dp s=698000
+</pre></div>
 
 <dd> will set the current region from the default region
 for the GRASS data base location, reset the south edge to
@@ -394,7 +400,9 @@ for the GRASS data base location, reset the south edge to
 
 <p>
 
-<dt><div class="code"><pre><b>g.region n=</b><em>n+1000</em> <b>w=</b><em>w-500</em></pre></div>
+<dt><div class="code"><pre>
+g.region n=n+1000 w=w-500
+</pre></div>
 
 <dd> The n=<em>value</em> may also be specified as a
 function of its current value:  n=n+<em>value</em>
@@ -408,7 +416,9 @@ decreased by 500 units.
 
 <p>
 
-<dt><div class="code"><pre><b>g.region n=</b><em>s+1000</em> <b>e=</b><em>w+1000</em></pre></div>
+<dt><div class="code"><pre>
+g.region n=s+1000 e=w+1000
+</pre></div>
 
 <dd> This form allows the user to set the region boundary
 values relative to one another.  Here, the northern
@@ -425,7 +435,9 @@ w=e-<em>value</em> may be used to set the values of the
 region's southern and western boundaries, relative to the
 northern and eastern boundary values.
 
-<dt><div class="code"><pre><b>g.region raster=</b><em>soils</em></pre></div>
+<dt><div class="code"><pre>
+g.region raster=soils
+</pre></div>
 
 <dd> This form will make the current region settings
 exactly the same as those given in the cell header file for
@@ -433,7 +445,9 @@ the raster map layer <em>soils</em>.
 
 <p>
 
-<dt><div class="code"><pre><b>g.region raster=</b><em>soils</em> <b>zoom=</b><em>soils</em></pre></div>
+<dt><div class="code"><pre>
+g.region raster=soils
+</pre></div>
 
 <dd> This form will first look up the cell header file for
 the raster map layer <em>soils</em>, use this as the
@@ -447,7 +461,9 @@ setting.
 
 <p>
 
-<dt><div class="code"><pre><b>g.region -up raster=</b><em>soils</em></pre></div>
+<dt><div class="code"><pre>
+g.region -up raster=soils
+</pre></div>
 
 <dd> The <b>-u</b> option suppresses the re-setting of the
 current region definition.  This can be useful when it is
@@ -457,7 +473,9 @@ without changing the current region settings.
 
 <p>
 
-<dt><div class="code"><pre><b>g.region -u raster=</b><em>soils</em> <b>zoom=</b><em>soils</em> <b>save=</b><em>soils</em></pre></div>
+<dt><div class="code"><pre>
+g.region -up raster=soils
+</pre></div>
 
 <dd> This will zoom into the smallest region which
 encompasses all non-zero soils data values, and save the
@@ -468,7 +486,9 @@ changed.
 
 <p>
 
-<dt><div class="code"><pre><b>g.region  -p</b></pre></div>
+<dt><div class="code"><pre>
+g.region -p
+</pre></div>
 
 <dd> This will print the current region in the format:
 
@@ -489,7 +509,9 @@ cols:	251
 
 <p>
 
-<dt><div class="code"><pre><b>g.region  -pm</b></pre></div>
+<dt><div class="code"><pre>
+g.region -pm
+</pre></div>
 
 <dd> This will print the current region in the format:
 
@@ -509,7 +531,9 @@ cols:       4800
 Note that the resolution is reported in meters not decimal degrees.
 <p>
 
-<dt><div class="code"><pre><b>g.region  -g</b></pre></div>
+<dt><div class="code"><pre>
+g.region -g
+</pre></div>
 
 <dd> The <b>-g</b> option prints the region in the
 following format:
@@ -524,7 +548,9 @@ nsres=100.00
 ewres=100.00
 </pre></div>
 
-<dt><div class="code"><pre><b>g.region  -l</b></pre></div>
+<dt><div class="code"><pre>
+g.region -l
+</pre></div>
 
 <dd> The <b>-l</b> option prints the region in the
 following format:
