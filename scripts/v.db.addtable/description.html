@@ -18,19 +18,19 @@ The existing database connection(s) can be verified with <em>v.db.connect</em>.
 <h2>EXAMPLE</h2>
 
 Adding a new attribute table with a single column to default layer 1:<br>
-<tt>
-v.db.addtable sentiero_brenta_points columns="slope double"<br>
-v.db.connect -p sentiero_brenta_points<br>
+<div class="code"><pre>
+v.db.addtable sentiero_brenta_points columns="slope double"
+v.db.connect -p sentiero_brenta_points
 v.info -c sentiero_brenta_points
-</tt>
+</pre></div>
 
 <p>
 Adding a new attribute table with two columns to layer 2:<br>
-<tt>
-v.db.addtable sentiero_brenta_points columns="slope double,myname varchar(15)" layer=2<br>
-v.db.connect -p sentiero_brenta_points<br>
+<div class="code"><pre>
+v.db.addtable sentiero_brenta_points columns="slope double,myname varchar(15)" layer=2
+v.db.connect -p sentiero_brenta_points
 v.info -c sentiero_brenta_points
-</tt>
+</pre></div>
 
 <h2>SEE ALSO</h2>
 
