@@ -11,16 +11,18 @@ do not need to be spcified each time.
  
 <h2>EXAMPLE</h2>
 
-<b>db.describe -c table=</b><em>test</em> <b>driver=</b><em>dbf</em>
-<pre>
+<div class="code"><pre>
+db.describe -c table=test driver=dbf
+
 ncols:2
 Column 1: CAT
 Column 2: BACK
 Column 3: TIME
-</pre>
+</pre></div>
 
-<b>db.describe table</b><em>=test</em>
-<pre>
+<div class="code"><pre>
+db.describe table=test
+
 column:CAT
 description:
 type:INTEGER
@@ -33,7 +35,7 @@ select:yes
 update:yes
 
 [...]
-</pre>
+</pre></div>
 
 <h2>SEE ALSO</h2>
 
