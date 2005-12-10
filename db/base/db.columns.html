@@ -12,19 +12,23 @@ do not need to be spcified each time.
 <h2>EXAMPLE</h2>
 
 <em>List columns from PostgreSQL attribute table</em><br>
-<b>db.columns table=</b><em>markveggy</em> <b>driver=</b><em>odbc</em>
-<b>database=</b><em>grass51test</em>
+<div class="code"><pre>
+db.columns table=markveggy driver=pg database=grass60test
+</pre></div>
 
 <p>
 
 <em>If database parameters are already set</em><br>
-<b>db.columns table=</b><em>markveggy</em>
+<div class="code"><pre>
+db.columns table=markveggy
+</pre></div>
 
 <p>
 
 <em>List columns from Shape file with DBF attribute table</em><br>
-<b>db.columns table=</b><em>network</em> <b>driver=</b><em>dbf</em> 
-<b>database=</b><em>/daten/grassdata/fire/PERMANENT/dbf/</em>
+<div class="code"><pre>
+db.columns table=network driver=dbf database=/daten/grassdata/fire/PERMANENT/dbf/
+</pre></div>
 
 <h2>SEE ALSO</h2>
 <em><a HREF="db.connect.html">db.connect</a>,
