@@ -10078,8 +10078,8 @@ msgstr "Benutze private Farbtabelle für DirectColor Visualisierung."
 
 #: ../visualization/xganim/main.c:337
 #, c-format
-msgid "\rReading file [%s] ..."
-msgstr "\rLese Datei [%s] ..."
+msgid "Reading file [%s] ..."
+msgstr "Lese Datei [%s] ..."
 
 #: ../visualization/xganim/main.c:341
 #, c-format
