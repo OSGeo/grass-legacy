@@ -314,6 +314,7 @@ G_define_standard_option (int opt)
 	case G_OPT_WHERE:
 	    Opt->key          = "where";
 	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "sql_query";
 	    Opt->required     = NO;
 	    Opt->description  = _("WHERE conditions of SQL statement without 'where' keyword. (example: income < 1000 and inhab >= 10000)");
 	    break;
@@ -386,8 +387,9 @@ G_define_standard_option (int opt)
 	case G_OPT_V_CATS:
 	    Opt->key          = "cats";
 	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "range";
 	    Opt->required     = NO;
-	    Opt->label        = _("Category values.");
+	    Opt->label        = _("Category values");
 	    Opt->description  = _("Example: 1,3,7-9,13");
 	    break;
     }
