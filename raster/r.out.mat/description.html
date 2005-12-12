@@ -48,20 +48,27 @@ therefore it might have problems with <i>huge</i> maps.
 GRASS defines its map bounds at the outer-edge of the bounding cells, not at
 the coordinates of their centroids. Thus, the following Matlab commands may 
 be used to determine the map's resolution information:
-<pre>    [rows cols] = size(map_data)
+<div class="code"><pre>
+    [rows cols] = size(map_data)
     x_range = map_eastern_edge - map_western_edge
     y_range = map_northern_edge - map_southern_edge
     ns_res = y_range/rows
     ew_res = x_range/cols
-</pre>
+</pre></div>
 <BR>
 
 <H2>EXAMPLE</H2>
 
 In Matlab, plot with either:
-<pre>    imagesc(map_data), axis equal, axis tight, colorbar</pre>
+<div class="code"><pre>
+imagesc(map_data), axis equal, axis tight, colorbar
+</pre></div>
+
 or
-<pre>    contourf(map_data, 24), axis ij, axis equal, axis tight, colorbar</pre>
+<div class="code"><pre>
+contourf(map_data, 24), axis ij, axis equal, axis tight, colorbar
+</pre></div>
+
 <BR>
 
 <H2>TODO</H2>
