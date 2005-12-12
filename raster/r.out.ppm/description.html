@@ -4,7 +4,10 @@
 at the pixel resolution of the CURRENTLY DEFINED REGION. 
 To get the resolution and region settings of the raster map, run:<p>
 
-<DD><tt>g.region -p rast=[mapname]</tt></DD>
+<div class="code"><pre>
+g.region -p rast=[mapname]
+</pre></div>
+
 <p>
 
 before running <em>r.out.ppm</em>.<p>
@@ -14,7 +17,9 @@ You can use the <B>-G</B> flag to force <em>r.out.ppm</em> to
 output an 8-bit greyscale instead.
 The greyscale conversion uses the NTSC conversion:<p>
 
-<DD><tt>Y = .30*Red + .59*Green + .11*Blue</tt></DD>
+<div class="code"><pre>
+Y = .30*Red + .59*Green + .11*Blue
+</pre></div>
 
 <p>
 One pixel is written for each cell value, so if <tt>ew_res</tt> and 
@@ -36,8 +41,9 @@ background by using the <a href="pngdriver.html">PNG driver</A> with
 Alternatively, you can use the <em>pnmtopng</em> program from 
 <a href="http://netpbm.sourceforge.net">netpbm</a> to do this:
 
-<pre>r.out.ppm raster
-pnmtopng -transparent white raster.ppm > raster.png</pre>
+<div class="code"><pre>
+r.out.ppm raster pnmtopng -transparent white raster.ppm > raster.png
+</pre></div>
 
 <H2>SEE ALSO</H2>
 <EM><A HREF="d.out.png.html">d.out.png</A></EM><BR>

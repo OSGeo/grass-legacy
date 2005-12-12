@@ -24,10 +24,9 @@ file is from lower left to upper right (reverse to GRASS).
 The output from <EM>r.out.arc</EM> may also be placed into a file
 by using the UNIX redirection mechanism;  e.g.:
 
-<DL>
-<DD>
-<B>r.out.arc input=</B>soils <B>output=-</B> &gt; out.grd
-</DL>
+<div class="code"><pre>
+r.out.arc input=soils output=- &gt; out.grd
+</pre></div>
 
 The output file <EM>out.grd</EM> can then be copied
 onto a CDROM or floppy disk for export purposes.
