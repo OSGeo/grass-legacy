@@ -11,14 +11,14 @@ the location and size of the data, followed by the data itself.
 <P>
 The header has 6 lines: 
 
-<BR><tt>
-north:   xxxxxx.xx<BR>
-south:   xxxxxx.xx <BR>
-east:    xxxxxx.xx <BR>
-west:    xxxxxx.xx <BR>
-rows:    r <BR>
-cols:    c <BR>
-</tt><BR>
+<div class="code"><pre>
+north:   xxxxxx.xx
+south:   xxxxxx.xx
+east:    xxxxxx.xx
+west:    xxxxxx.xx
+rows:    r 
+cols:    c 
+</pre></div>
 
 The north, south, east, and west field values entered 
 are the coordinates of the edges of the geographic region. 
@@ -27,10 +27,13 @@ of the matrix of data to follow.
 The data which follows is <EM>r</EM> rows of <EM>c</EM> integers. 
 <p>
 Optionally the following parameters can be defined in the header section:
-<p><tt>
-null: nn<BR>
-type: float<BR>
-multiplier: 2.<BR></tt>
+
+<div class="code"><pre>
+null: nn
+type: float
+multiplier: 2.
+</pre></div>
+
 <p>
 "null" defines a string or number to be converted to NULL value (no
 data).<br>
@@ -41,25 +44,26 @@ data).<br>
 
 The following is a sample <b>input</b> file to <EM>r.in.ascii</EM>: 
 
-<BR><BR><tt>
-north:                   4299000.00<BR>
-south:                   4247000.00<BR>
-east:                     528000.00<BR>
-west:                     500000.00<BR>
-rows:                         10   <BR>
-cols:                         15   <BR>
-null:                      -9999   <BR>
-<BR>
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR></tt>
+<div class="code"><pre>
+north:                   4299000.00
+south:                   4247000.00
+east:                     528000.00
+west:                     500000.00
+rows:                         10   
+cols:                         15   
+null:                      -9999   
+
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+</pre></div>
 
 <H2>NOTES</H2>
 
