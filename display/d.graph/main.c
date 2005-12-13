@@ -102,6 +102,9 @@ int main (int argc, char **argv)
 	set_text_size() ;
 	graphics (infile) ;
 
+	if(opt1->answer)
+	    D_add_to_list(G_recreate_command());
+
 	R_close_driver();
 
 	exit(0);
