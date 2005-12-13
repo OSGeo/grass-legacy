@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <string.h>
+#include "gis.h"
 #include "options.h"
 #include "display.h"
 #include "raster.h"
-#include "colors.h"
+#include "glocale.h"
+
 #include "local_proto.h"
 
 #define CHUNK	128
@@ -71,19 +73,17 @@ int do_color (char *buff)
 {
 	char in_color[64] ;
 	int R, G, B, color = 0;
-	const int customcolor = MAX_COLOR_NUM + 1;
 
 	sscanf(buff, "%*s %s", in_color) ;
 
 	/* Parse and select color */
 	color = G_str_to_color(in_color, &R, &G, &B);
 	if(color == 0) {
-	    G_warning("[%s]: No such color", in_color);
+	    G_warning(_("[%s]: No such color"), in_color);
 	    return(-1);
 	}
 	if(color == 1) {
-	    R_reset_color(R, G, B, customcolor);
-	    R_color(customcolor);
+	    R_RGB_color(R, G, B);
 	}
 	if(color == 2) {  /* color == 'none' */
 	    R = D_translate_color(DEFAULT_BG_COLOR);
@@ -93,13 +93,13 @@ int do_color (char *buff)
 	return(0);
 }
 
-char *do_poly (char *buff, FILE *infile)
+int do_poly (char *buff, FILE *infile)
 {
 	int num ;
 	char origcmd[64] ;
 	float xper, yper ;
 	char *fgets() ;
-	char *to_return ;
+	int to_return ;
 
 	sscanf(buff, "%s", origcmd) ;
 
@@ -107,7 +107,7 @@ char *do_poly (char *buff, FILE *infile)
 
 	for(;;)
 	{
-		if ( (to_return = fgets(buff, 128, infile)) == NULL)
+		if ( (to_return = G_getl2(buff, 128, infile)) != 1)
 			break ;
 
 		if (! sscanf(buff, "%f %f", &xper, &yper) )
