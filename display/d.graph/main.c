@@ -12,7 +12,6 @@
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
-#include "colors.h"
 #include "glocale.h"
 #include "options.h"
 #include "local_proto.h"
@@ -23,15 +22,14 @@ int main (int argc, char **argv)
 	struct GModule *module;
 	struct Option *opt1, *opt2 ;
 	int R, G, B, color = 0;
-	const int customcolor = MAX_COLOR_NUM + 1;
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
 	module->description =
-		_("Program for generating and displaying simple graphics to the "
-		"graphics display monitor.");
+		_("Program for generating and displaying simple graphics on the "
+		"display monitor.");
 
 	opt1 = G_define_option() ;
 	opt1->key        = "input" ;
@@ -46,7 +44,7 @@ int main (int argc, char **argv)
 	opt2->type       = TYPE_STRING ;
 	opt2->required   = NO;
 	opt2->description= _("Color to draw with, either a standard GRASS color "
-			   "or R:G:B triplet (separated by colons)");
+			   "or R:G:B triplet");
 	opt2->answer     = DEFAULT_FG_COLOR;
 
 	/* Check command line */
@@ -63,38 +61,38 @@ int main (int argc, char **argv)
 		if (infile == NULL)
 	*/
 	    if ((infile = fopen(opt1->answer,"r")) == NULL)
-		{
-			G_usage();
-			G_fatal_error ("Graph file <%s> not found",opt1->answer);
-		}
+		G_fatal_error(_("Graph file <%s> not found"), opt1->answer);
 	}
 	else
-		infile = stdin ;
+	    infile = stdin;
+
 
 	/* Parse and select color */
 	if (opt2->answer != NULL) {
 	    color = G_str_to_color(opt2->answer, &R, &G, &B);
+
 	    if(color == 0)
-		G_fatal_error("[%s]: No such color", opt2->answer);
-	    if(color == 1) {
-		R_reset_color(R, G, B, customcolor);
-		R_color(customcolor);
-	    }
+		G_fatal_error(_("[%s]: No such color"), opt2->answer);
+
+	    if(color == 1)
+		R_RGB_color(R, G, B);
+
 	    /* (color==2) is "none", noop */
 	}
 
+
 	/* open graphics window */
 	if (R_open_driver() != 0)
-		G_fatal_error ("No graphics device selected");
+	    G_fatal_error(_("No graphics device selected"));
 
 	if (D_get_cur_wind(window_name))
-		G_fatal_error("No current window") ;
+	    G_fatal_error(_("No current window"));
 
 	if (D_set_cur_wind(window_name))
-		G_fatal_error("Current window not available") ;
+	    G_fatal_error(_("Current window not available"));
 
 	if (D_get_screen_window(&t, &b, &l, &r))
-		G_fatal_error("Getting screen window") ;
+	    G_fatal_error(_("Getting screen window"));
 
 	/* Finish graphics setup */
 	R_set_window(t, b, l, r) ;
