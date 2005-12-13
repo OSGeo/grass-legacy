@@ -11,7 +11,7 @@ struct pj_info iproj, oproj;
 int main (int argc, char **argv)
 {
     struct GModule *module;
-    struct Flag *once, *decimal, *latlong, *wgs84;
+    struct Flag *once, *decimal, *latlong, *wgs84, *dcoord;
     int have_spheroid = 0;
 
 /* Initialize the GIS calls */
@@ -36,10 +36,14 @@ int main (int argc, char **argv)
 
     wgs84 = G_define_flag() ;
     wgs84->key        = 'w' ;
-    wgs84->description= _("Output lat/long referenced to WGS84 ellipsoid using datum\n"
-                        "transformation parameters defined in current location if available");
+    wgs84->description= _("Output lat/long referenced to WGS84 ellipsoid using datum "
+                        "transformation parameters defined in current location (if available)");
      
-     
+    dcoord = G_define_flag() ;
+    dcoord ->key	 = 'f';
+    dcoord ->description= _("Output frame coordinates of current display monitor (percentage)");
+
+
     /* if (G_parser(argc,argv)) */
     if (argc > 1 && G_parser(argc,argv))
         exit(1);
@@ -119,7 +123,7 @@ int main (int argc, char **argv)
     if (R_open_driver() != 0)
 	G_fatal_error (_("No graphics device selected"));
     D_setup(0);
-    where_am_i(once->answer, have_spheroid, decimal->answer, wgs84->answer) ;
+    where_am_i(once->answer, have_spheroid, decimal->answer, wgs84->answer, dcoord->answer);
     R_close_driver();
 
     exit(0);
