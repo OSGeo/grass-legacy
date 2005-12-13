@@ -10,7 +10,7 @@ static int nlines = 4 ;
 static int header (int,int,int);
 static int show (char *,int,int,int);
 
-int where_am_i (int once, int have_spheroid, int decimal, int wgs84)
+int where_am_i (int once, int have_spheroid, int decimal, int wgs84, int dcoord)
 {
 	char buffer[200] ;
 	char buf1[50], buf2[50];
@@ -33,15 +33,29 @@ int where_am_i (int once, int have_spheroid, int decimal, int wgs84)
 	screen_y = ((int)D_get_d_north() + (int)D_get_d_south()) / 2 ;
 	draw_on = 0 ;
 
-	header(once, have_spheroid, wgs84);
+	if(!dcoord)
+	    header(once, have_spheroid, wgs84);
 
 	for(;;)
 	{
 		R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
 		if ( button == 3 && !once )
 			return(0) ;
+
 		east = D_d_to_u_col((double)screen_x) ;
 		north = D_d_to_u_row((double)screen_y) ;
+
+		if(dcoord) {
+		    fprintf(stdout, "%.1f,%.1f\n",
+			100 * (east - D_get_u_west()) / (D_get_u_east() - D_get_u_west()),
+			100 * (north - D_get_u_south()) / (D_get_u_north() - D_get_u_south()) );
+
+		    if(once)
+			break;
+		    else
+			continue;
+		}
+
 		if (decimal)
 		{
 		G_format_easting  (east,  buf1, 0);
