@@ -58,6 +58,7 @@ int main (int argc, char **argv)
 	if (G_parser(argc, argv))
 		exit(1);
 
+	/* default font scaling: 5% of active frame */
 	hsize = vsize = 5. ;
 
 	if (opt1->answer != NULL)
