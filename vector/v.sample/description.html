@@ -34,6 +34,32 @@ used), values are assumed to be located at the centroid of
 grid cells.  Therefore, current resolution settings are
 important.
 
+<H2>EXAMPLE</H2>
+
+Comparison of "elevation.dem" and "elevation.10m" Spearfish maps
+at random places:
+
+<div class="code"><pre>
+#generate random points:
+ v.random output=random n=100
+#add table with one column:
+ v.db.addtable random col="el10 double"
+#transfer elevations at random points into table:
+ v.what.rast rast=elevation.10m vect=random col=el10
+#verify:
+ v.db.select random
+
+#generate sampling from other elevation map:
+ v.sample in=random col=el10 rast=elevation.dem out=elev_sample
+
+#verify:
+ v.db.select elev_sample
+
+#univariate statistics of differences between elevation maps:
+ v.univar elev_sample col=diff
+</pre></div>
+
+
 <H2>SEE ALSO</H2>
 
 <EM>
@@ -44,7 +70,7 @@ important.
 
 <EM>Image Sampling Methods</EM> - GRASS Tutorial on <EM>s.sample</EM>
 (available as 
-<A HREF="../../sites/">s.sample-tutorial.ps.gz</A>) 
+<A HREF="http://grass.itc.it/gdp/sites/">s.sample-tutorial.ps.gz</A>) 
 
 
 <H2>AUTHOR</H2>

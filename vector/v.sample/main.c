@@ -35,7 +35,7 @@
  *
  */
 
-#pragma ident "s.sample v 0.8B <15 Jun 1995>; Copyright (c) 1994-1995. James Darrell McCauley"
+/* s.sample v 0.8B <15 Jun 1995>; Copyright (c) 1994-1995. James Darrell McCauley" */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -91,27 +91,27 @@ int main (argc, argv)
   parm.input->key = "input";
   parm.input->type = TYPE_STRING;
   parm.input->required = YES;
-  parm.input->description = "vector defining sample points";
+  parm.input->description = "Vector map defining sample points";
   parm.input->gisprompt = "old,vector,vector";
 
   parm.column = G_define_option();
   parm.column->key = "column";
   parm.column->type = TYPE_STRING;
   parm.column->required = YES;
-  parm.column->description = "Attribute column";
+  parm.column->description = "Vector map attribute column to use for comparison";
 
   parm.output = G_define_option ();
   parm.output->key = "output";
   parm.output->type = TYPE_STRING;
   parm.output->required = YES;
-  parm.output->description = "vector to store differences";
+  parm.output->description = "Vector map to store differences";
   parm.output->gisprompt = "new,vector,vector";
 
   parm.rast = G_define_option ();
   parm.rast->key = "rast";
   parm.rast->type = TYPE_STRING;
   parm.rast->required = YES;
-  parm.rast->description = "raster file to be sampled";
+  parm.rast->description = "Raster map to be sampled";
   parm.rast->gisprompt = "old,cell,raster";
 
   parm.z = G_define_option ();
@@ -135,7 +135,7 @@ int main (argc, argv)
   flag.q->description = "Quiet";
 
   if (G_parser (argc, argv))
-    exit (1);
+    exit (EXIT_FAILURE);
 
   sscanf (parm.z->answer, "%lf", &scale);
 
@@ -222,7 +222,7 @@ int main (argc, argv)
        G_fatal_error ( "Cannot grant privileges on table %s", Fi->table );
 
   if (verbose)
-    fprintf (stderr, "Checking sites ...                 \n ");
+    G_message ("Checking vector points ...                 ");
 
   Points = Vect_new_line_struct();
   Cats = Vect_new_cats_struct();
@@ -303,5 +303,5 @@ int main (argc, argv)
   Vect_build ( &Out, stderr );
   Vect_close ( &Out );
 
-  exit (0);
+  exit (EXIT_SUCCESS);
 }
