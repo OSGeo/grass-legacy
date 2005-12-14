@@ -9,6 +9,7 @@ int do_move(char *);
 int do_color(char *);
 int do_poly(char *, FILE *);
 int do_size(char *);
+int do_text_rotate(char *);
 int do_text(char *);
 int check_alloc(int);
 int do_icon(char *);
