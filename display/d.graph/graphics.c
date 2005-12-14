@@ -55,7 +55,7 @@ int graphics (FILE *infile)
 			G_strip(buff);
 			break;
 		default:
-			fprintf (stderr, _("Don't understand: %s"), buff) ;
+			fprintf (stderr, _("Don't understand: [%s]\n"), buff);
 			got_new = G_getl2(buff, 128, infile);
 			G_strip(buff);
 			break;
