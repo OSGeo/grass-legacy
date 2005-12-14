@@ -25,21 +25,39 @@ Delta S is the distance covered in meters,<br>
 Delta H is the altitude difference.
 <p> 
 
-The a, b, c, d parameters take in account movement speed in the different conditions and are linked to: 
+The a, b, c, d parameters take in account movement speed in the different conditions and are linked
+to:
 <ul>
-  <li>a: underfoot condition</li>
+  <li>a: underfoot condition (a=1/walking_speed)</li>
   <li>b: underfoot condition and cost associated to movement uphill</li>
   <li>c: underfoot condition and cost associated to movement moderate downhill</li>
   <li>d: underfoot condition and cost associated to movement steep downhill</li>
 </ul>
 
 It has been proved that moving downhill is favourable up to a specific
-threshold slope value, after that it became unfavourable. This value
-is defined in the source code and has been calibrated on man behaviour
-(&gt;5 and &lt;12 degrees: moderate downhill; &gt;12 degrees: steep
-downhill). The default values for a, b, c, d are those proposed by
-Langmuir (0.72, 6, 1.9998, -1.9998), based on man walking effort in
-standard conditions.<p>
+slope value threshold, after that it becomes unfavourable. The default
+slope value threshold (slope factor) of -0.2125, corresponding to
+tan(-12), has been calibrated on human behaviour (&gt;5 and &lt;12
+degrees: moderate downhill; &gt;12 degrees: steep downhill). The
+default values for a, b, c, d are those proposed by Langmuir (0.72, 6,
+1.9998, -1.9998), based on man walking effort in standard
+conditions.<p>
+
+All factors influencing speed movement should be considered in a, b,
+c, d parameters definition, using friction map to model the other
+aspects, such as "environmental preferences". For example, a wild bear
+could prefere to move inside a forest rather than in an open grassland
+because it is more protected, even if the movement can be quicker in
+the latter case; or a man could prefer to walk a little bit more along
+a river to reach a bridge insted of crossing the water, not because it
+is time consuming but just because it is more confortable.<p>
+
+The lambda parameter of the linear equation combining movement and
+friction costs:<br>
+
+total cost = movement cost + (lambda) * friction costs<br>
+must be set in the option section of <em>r.walk</em>.
+<p>
 
 For a more accurate result, the "knight's move" option can be used
 (although it is more time consuming).In the diagram below, the center
