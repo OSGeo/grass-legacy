@@ -118,6 +118,12 @@ int do_poly (char *buff, FILE *infile)
 			break ;
 
 		if (2 != sscanf(buff, "%f %f", &xper, &yper) ) {
+
+		    if( '#' == buff[0] ) {
+			G_debug(4," skipping comment line [%s]", buff);
+			continue;
+		    }
+
 		    G_debug(3,"coordinate pair not found. ending polygon. [%s]", buff);
 		    break;
 		}
