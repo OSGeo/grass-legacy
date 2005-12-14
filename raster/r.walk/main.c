@@ -25,14 +25,20 @@
  *
  *  The default	a,b,c,d parameters used below have been measured using oxygen consumption in biomechanical 
  *  experiments.
- * TODO: add references
- * TODO: generalize formula to other species
+ *  Refs:
+ *       * Aitken, R. 1977. Wilderness areas in Scotland. Unpublished Ph.D. thesis. University of Aberdeen.
+ *       * Steno Fontanari, University of Trento, Italy, Ingegneria per l'Ambiente e
+ *         il Territorio, 2000-2001. Svilluppo di metodologie GIS per la determinazione dell'accessibilita'
+ *         territoriale come supporto alle decisioni nella gestione ambientale.
+ *       * Langmuir, E. 1984. Mountaincraft and leadership. The Scottish Sports Council/MLTB. Cordee,
+ *         Leicester.
  *
  *   The total cost is computed as a linear combination of walking energy and a given friction cost map:
  *
  *	 TOTAL COST = [(WALKING ENERGY ) + (LAMBDA*FRICTION)]
  *
-*/
+ * TODO: generalize formula to other species
+ *************/
 /*  
 
    20 july 2004 - Pierre de Mouveaux. pmx@audiovu.com
@@ -108,6 +114,7 @@ int main (int argc, char *argv[])
 	struct Option *opt1, *opt2, *opt3, *opt4, *opt5, *opt6, *opt7, *opt8;
 	struct Option *opt9, *opt10, *opt11, *opt12, *opt13, *opt14;
 	struct cost *pres_cell, *new_cell;
+	struct History  hist;
 	struct start_pt *pres_start_pt = NULL ;
 	struct start_pt *pres_stop_pt = NULL;
 
@@ -125,42 +132,42 @@ int main (int argc, char *argv[])
 	module = G_define_module();
 	module->description =
 		_("Outputs a raster map layer showing the "
-		"cumulative cost of moving between different "
-		"geographic locations on an input dtm raster map "
-		"layer whose cell category values represent elevation"
+		"anisotropic cumulative cost of moving between different "
+		"geographic locations on an input elevation raster map "
+		"layer whose cell category values represent elevation "
 		"combined with an input raster map layer whose cell "
 		"values represent friction cost.");
 							
 	opt2 = G_define_option() ;
-	opt2->key        = "inputdtm" ;
+	opt2->key        = "elevation" ;
 	opt2->type       = TYPE_STRING ;
 	opt2->required   = YES ;
 	opt2->gisprompt  = "old,cell,raster" ;
-	opt2->description= _("Name of raster map containing dtm information") ;
+	opt2->description= _("Name of elevation input raster map") ;
 	
 	opt12 = G_define_option() ;
-	opt12->key        = "inputcost" ;
+	opt12->key        = "friction" ;
 	opt12->type       = TYPE_STRING ;
 	opt12->required   = YES ;
 	opt12->gisprompt  = "old,cell,raster" ;
-	opt12->description= _("Name of raster map containing friction cost information") ;
+	opt12->description= _("Name of input raster map containing friction costs") ;
 
 	opt1 = G_define_option() ;
 	opt1->key        = "output" ;
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = YES ;
-	opt1->gisprompt  = "any,cell,raster" ;
+	opt1->gisprompt  = "new,cell,raster" ;
 	opt1->description= _("Name of raster map to contain results") ;
 
 	opt7 = G_define_option() ;
-	opt7->key        = "start_vectorpoints" ;
+	opt7->key        = "start_points" ;
 	opt7->type       = TYPE_STRING;
 	opt7->gisprompt  = "old,vector,vector";
 	opt7->required   = NO;
 	opt7->description= _("Starting points vector map");
 
 	opt8 = G_define_option() ;
-	opt8->key        = "stop_vectorpoints" ;
+	opt8->key        = "stop_points" ;
 	opt8->type       = TYPE_STRING;
 	opt8->gisprompt  = "old,vector,vector";
 	opt8->required   = NO;
@@ -171,14 +178,14 @@ int main (int argc, char *argv[])
 	opt3->type       = TYPE_STRING ;
 	opt3->key_desc   = "x,y" ;
 	opt3->multiple   = YES;
-	opt3->description= _("The map E and N grid coordinates of a starting point,coor=E,N");
+	opt3->description= _("The map E and N grid coordinates of a starting point (E,N)") ;
 
 	opt4 = G_define_option() ;
 	opt4->key        = "stop_coordinate" ;
 	opt4->type       = TYPE_STRING ;
 	opt4->key_desc   = "x,y" ;
 	opt4->multiple   = YES;
-	opt4->description= _("The map E and N grid coordinates of a stopping point,coor=E,N") ;
+	opt4->description= _("The map E and N grid coordinates of a stopping point (E,N)") ;
 
 	opt5 = G_define_option() ;
 	opt5->key        = "max_cost" ;
@@ -195,7 +202,7 @@ int main (int argc, char *argv[])
 	opt6->key_desc   = "null cost" ;
 	opt6->required   = NO;
 	opt6->multiple   = NO;
-	opt6->description= _("Cost assigned to null cells. By defaults, null cells are excluded");
+	opt6->description= _("Cost assigned to null cells. By default, null cells are excluded");
 
 	opt9 = G_define_option() ;
 	opt9->key        = "percent_memory" ;
@@ -788,7 +795,7 @@ int main (int argc, char *argv[])
 		cum_cost_mapset = G_find_cell2 (cum_cost_layer, search_mapset);
 	
 		if (cum_cost_mapset == NULL)
-			G_fatal_error(_( "Raster map %s - not found"), cum_cost_layer);
+			G_fatal_error(_( "Raster output map %s - not found (no start_points given)"), cum_cost_layer);
 
 		cum_fd = G_open_cell_old (cum_cost_layer, cum_cost_mapset);
 		if (cum_fd < 0)
@@ -1277,7 +1284,7 @@ OUT:
 	/*  Open cumulative cost layer for writing   */
 
 	cum_fd = G_open_raster_new(cum_cost_layer,cum_data_type);
-    cum_cell = G_allocate_raster_buf(cum_data_type);
+	cum_cell = G_allocate_raster_buf(cum_data_type);
 	/*  Write pending updates by segment_put() to output map   */
 
 	segment_flush(&out_seg);
@@ -1419,6 +1426,18 @@ OUT:
 	  G_make_color_wave(&colors,min, max);
 	  G_write_colors (cum_cost_layer,current_mapset,&colors);
 	*/
+
+#ifdef NOTYET
+	/* writing history file */
+	G_short_history(cum_cost_layer, "raster", &hist);
+	sprintf(hist.edhist[0], "%s", *argv);
+	sprintf(hist.datsrc_1,"elevation map %s, cost map %s", dtm_layer, cost_layer);
+	/* bug: long lines are truncated */
+	sprintf(hist.datsrc_2,"%s", G_recreate_command());
+	hist.edlinecnt = 3;
+	G_write_history (cum_cost_layer, &hist);
+#endif
+
 	exit(EXIT_SUCCESS);
 }
 
