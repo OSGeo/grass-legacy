@@ -228,7 +228,7 @@ int main (int argc, char *argv[])
 	opt10->key_desc   = "a,b,c,d" ;
 	opt10->required   = NO;
 	opt10->multiple   = NO;
-	opt10->answer     = "0.72,6,1.9998,-1.9998";
+	opt10->answer     = "0.72,6.0,1.9998,-1.9998";
 	opt10->description= _("Coefficients for walking energy formula parameters a,b,c,d");
 	
 	opt11 = G_define_option() ;
