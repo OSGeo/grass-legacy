@@ -41,8 +41,10 @@ int do_draw (char *buff)
 {
 	float xper, yper ;
 
-	if ( 2 != sscanf(buff, "%*s %f %f", &xper, &yper) )
-		return(-1) ;
+	if ( 2 != sscanf(buff, "%*s %f %f", &xper, &yper) ) {
+	    G_warning(_("Problem parsing coordinates [%s]"), buff);
+	    return(-1);
+	}
 	if (  xper<0.
 	   || yper<0.
 	   || xper>100.
@@ -57,8 +59,10 @@ int do_move (char *buff)
 {
 	float xper, yper ;
 
-	if ( 2 != sscanf(buff, "%*s %f %f", &xper, &yper) )
-		return(-1) ;
+	if ( 2 != sscanf(buff, "%*s %f %f", &xper, &yper) ) {
+	    G_warning(_("Problem parsing coordinates [%s]"), buff);
+	    return(-1);
+	}
 	if (  xper<0.
 	   || yper<0.
 	   || xper>100.
@@ -74,7 +78,10 @@ int do_color (char *buff)
 	char in_color[64] ;
 	int R, G, B, color = 0;
 
-	sscanf(buff, "%*s %s", in_color) ;
+	if ( 1 != sscanf(buff, "%*s %s", in_color) ) {
+	    G_warning(_("Unable to read color"));
+	    return(-1);
+	}
 
 	/* Parse and select color */
 	color = G_str_to_color(in_color, &R, &G, &B);
@@ -110,8 +117,10 @@ int do_poly (char *buff, FILE *infile)
 		if ( (to_return = G_getl2(buff, 128, infile)) != 1)
 			break ;
 
-		if (! sscanf(buff, "%f %f", &xper, &yper) )
-			break ;
+		if (2 != sscanf(buff, "%f %f", &xper, &yper) ) {
+		    G_debug(3,"coordinate pair not found. ending polygon. [%s]", buff);
+		    break;
+		}
 
 		if (  xper<0.
 		   || yper<0.
@@ -140,8 +149,10 @@ int do_size (char *buff)
 {
 	float xper, yper ;
 
-	if ( 2 != sscanf(buff, "%*s %f %f", &xper, &yper) )
-		return(-1) ;
+	if ( 2 != sscanf(buff, "%*s %f %f", &xper, &yper) ) {
+	    G_warning(_("Problem parsing coordinates [%s]"), buff);
+	    return(-1);
+	}
 	if (  xper<0.
 	   || yper<0.
 	   || xper>100.
@@ -210,8 +221,10 @@ int do_icon (char *buff)
 	int size ;
 	int ix, iy ;
 
-	if ( 4 != sscanf(buff, "%*s %c %d %lf %lf", &type, &size, &xper, &yper) )
-		return(-1) ;
+	if ( 4 != sscanf(buff, "%*s %c %d %lf %lf", &type, &size, &xper, &yper) ) {
+	    G_warning(_("Problem parsing command [%s]"), buff);
+	    return(-1);
+	}
 
 	if (  xper<0.
 	   || yper<0.
