@@ -33,7 +33,11 @@ int set_text_size (void)
 	   && vsize>=0.
 	   && hsize<=100.
 	   && vsize<=100.)
-	R_text_size((int)(hsize * xincr), (int)(vsize * yincr)) ;
+	{
+	    R_text_size((int)(hsize * xincr), (int)(vsize * yincr)) ;
+	    G_debug(3,"text size initialized to %d,%d pixels",
+		(int)(hsize * xincr), (int)(vsize * yincr));
+	}
 	return(0) ;
 }
 
@@ -173,6 +177,9 @@ int do_size (char *buff)
 		return(-1) ;
 
 	R_text_size((int)(xper * xincr), (int)(yper * yincr)) ;
+	G_debug(3,"text size set to %d,%d pixels",
+	    (int)(xper * xincr), (int)(yper * yincr));
+
 	return(0) ;
 }
 
@@ -186,6 +193,8 @@ int do_text_rotate (char *buff)
 	}
 
 	R_text_rotation(rotation);
+	G_debug(3,"text rotation set to %.1f degrees", rotation);	
+
 	return(0);
 }
 
