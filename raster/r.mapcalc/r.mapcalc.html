@@ -66,7 +66,7 @@ should be enclosed within single quotes.  See NOTES, below.
 The following operators are supported:
 
 
-<PRE>
+<div class="code"><PRE>
      Operator   Meaning                    Type        Precedence
      --------------------------------------------------------------
      ^          exponentiation             Arithmetic  5
@@ -84,7 +84,7 @@ The following operators are supported:
      &amp;&amp;         and                        Logical     1
      ||         or                         Logical     1
      #          color separator operator   Arithmetic   
-</PRE>
+</PRE></div>
 
 (modulus is the remainder upon division)
 <P>
@@ -101,11 +101,12 @@ Anything in the expression which is not a number, operator, or function name
 is taken to be a raster map layer name.
 Examples:
 <P>
-<DL>
-<DD> elevation   
-<DD> x3 
-<DD> 3d.his
-</DL>
+
+<div class="code"><PRE>
+elevation   
+x3 
+3d.his
+</PRE></div>
 
 
 <P>
@@ -114,63 +115,50 @@ Most GRASS raster map layers meet this naming convention.
 However, if a raster map layer has a name which conflicts with the
 above rule, it should be quoted.  For example, the expression
 
-
 <P>
 
-<DL>
-<DD>
+<div class="code"><PRE>
 x = a-b
-</DL>
+</PRE></div>
 
 
 <P>
 
 would be interpreted as:  x equals a minus b, whereas
 
-
 <P>
 
-<DL>
-<DD>
+<div class="code"><PRE>
 x = "a-b"
-</DL>
-
+</PRE></div>
 
 <P>
 
 would be interpreted as:  x equals the raster map layer named <EM>a-b</EM>
 
-
 <P>
 
 Also
 
-
 <P>
 
-<DL>
-<DD>
+<div class="code"><PRE>
 x = 3107
-</DL>
-
+</PRE></div>
 
 <P>
 
 would create <EM>x</EM> filled with the number 3107, while
 
-
 <P>
 
-<DL>
-<DD>
+<div class="code"><PRE>
 x = "3107"
-</DL>
-
+</PRE></div>
 
 <P>
 
 would copy the raster map layer <EM>3107</EM> to the raster map layer <EM>x</EM>.
-
 
 <P>
 
@@ -178,7 +166,6 @@ Quotes are not required unless the raster map layer names
 look like numbers or contain operators, OR unless the program
 is run non-interactively.  Examples given here assume the
 program is run interactively.  See NOTES, below.
-
 
 <P>
 
@@ -188,27 +175,21 @@ It is possible to override the search path and specify the mapset
 from which to select the raster map layer.
 This is done by specifying the raster map layer name in the form:
 
-
 <P>
 
-<DL>
-<DD>
+<div class="code"><PRE>
 name@mapset
-</DL>
-
+</PRE></div>
 
 <P>
 
 For example, the following is a legal expression:
 
-
 <P>
 
-<DL>
-<DD>
+<div class="code"><PRE>
 result = x@PERMANENT / y@SOILS
-</DL>
-
+</PRE></div>
 
 <P>
 
@@ -248,10 +229,8 @@ For example, suppose that the raster map layer <EM>soil.ph</EM>
 
 <P>
 
-<DL>
-<DD>
 
-<PRE>
+<div class="code"><PRE>
 cat	label
 ------------------
 0	no data
@@ -264,18 +243,15 @@ cat	label
 6	8.8
 7	9.4
 
-</PRE>
-</DL>
-
+</PRE></div>
 
 <P>
 Then the expression:
 <P>
 
-<DL>
-<DD>
+<div class="code"><PRE>
 result = @soils.ph
-</DL>
+</PRE></div>
 
 <P>
 would produce a result with category values
@@ -298,21 +274,17 @@ This is particularly useful when the spectral properties of cells have meaning
 quantities (as when category values reflect true elevation values).
 Map color manipulation can also aid visual recognition, and map printing.
 
-
 <P>
 
 The # operator can be used to either convert map category values to their
 grey scale equivalents or to extract the red, green, or blue components
 of a raster map layer into separate raster map layers.
 
-
 <P>
 
-<DL>
-<DD>
+<div class="code"><PRE>
 result = #map
-</DL>
-
+</PRE></div>
 
 <P>
 
@@ -321,14 +293,11 @@ represents the grey scale level implied by the color for the category.
 If the map has a grey scale color table, then the grey level is what
 #map evaluates to.  Otherwise, it is computed as:
 
-
 <P>
 
-<DL>
-<DD>
+<div class="code"><PRE>
  0.10 * red + 0.81 * green + 0.01 * blue
-</DL>
-
+</PRE></div>
 
 <P>
 
@@ -336,10 +305,9 @@ Alternatively, you can use:
 
 <P>
 
-<DL>
-<DD>
+<div class="code"><PRE>
 result = y#map
-</DL>
+</PRE></div>
 
 <P>
 
@@ -347,10 +315,9 @@ to use the NTSC weightings:
 
 <P>
 
-<DL>
-<DD>
+<div class="code"><PRE>
  0.30 * red + 0.59 * green + 0.11 * blue
-</DL>
+</PRE></div>
 
 <P>
 
@@ -358,10 +325,9 @@ Or, you can use:
 
 <P>
 
-<DL>
-<DD>
+<div class="code"><PRE>
 result = i#map
-</DL>
+</PRE></div>
 
 <P>
 
@@ -369,13 +335,11 @@ to use equal weightings:
 
 <P>
 
-<DL>
-<DD>
+<div class="code"><PRE>
  0.33 * red + 0.33 * green + 0.33 * blue
-</DL>
+</PRE></div>
 
 <P>
-
 
 The # operator has three other forms:  r#map, g#map, b#map.
 These extract the red, green, or blue components in the named raster map,
@@ -390,31 +354,22 @@ the user could type:
 
 <P>
 
-<DL>
-<DD>
+<div class="code"><PRE>
 red = r#map
-</DL>
+</PRE></div>
 
 
 <P>
 
 To assign this map grey colors type:
 
-
 <P>
 
-<DL>
-<DD>
+<div class="code"><PRE>
 <A HREF="r.colors.html">r.colors</A> map=red color=rules
-
-<BR>
-
 black
-
-<BR>
-
 white
-</DL>
+</PRE></div>
 
 
 <P>
@@ -424,23 +379,11 @@ To assign this map red colors type:
 
 <P>
 
-<DL>
-<DD>
+<div class="code"><PRE>
 <A HREF="r.colors.html">r.colors</A> map=red color=rules
-
-<BR>
-
 black
-
-<BR>
-
 red
-</DL>
-
-
-<P>
-
-
+</PRE></div>
 
 <P>
 
@@ -461,7 +404,7 @@ are floating point values and integer if all arguments are integer.
 <P>
 
 
-<PRE>
+<div class="code"><PRE>
 function		description					type
 ---------------------------------------------------------------------------
 abs(x)			return absolute value of x			*
@@ -494,9 +437,9 @@ sin(x)			sine of x (x is in degrees)			F
 sqrt(x)			square root of x				F
 tan(x)			tangent of x (x is in degrees)			F
 
-</PRE>
+</PRE></div>
 
-<PRE>
+<div class="code"><PRE>
 Internal variables:
 
  row()                  current row of moving window
@@ -506,7 +449,7 @@ Internal variables:
  ewres()                current east-west resolution
  nsres()                current north-south resolution
  null()                 NULL value
-</PRE>
+</PRE></div>
 
 Note, that the row() and col() indexing starts with 1.
 
@@ -514,9 +457,9 @@ Note, that the row() and col() indexing starts with 1.
 
 Floating point numbers are allowed in the expression. A floating point
 number is a number which contains a decimal point:
-<PRE>
+<div class="code"><PRE>
     2.3   12.0   12.   .81
-</PRE>
+</PRE></div>
 Floating point values in the expression are handled in a special way.
 With arithmetic and logical operators, if either operand is float,
 the other is converted to float and the result of the operation is float.
@@ -532,9 +475,9 @@ to integer number(s).
 If you want floating point division, at least one of the arguments has
 to be a floating point value. Multiplying one of them by 1.0 will
 produce a floating-point result, as will using float():
-<pre>
+<div class="code"><PRE>
       r.mapcalc "ndvi=float(lsat.4 - lsat.3) / (lsat.4 + lsat.3)"
-</pre>
+</PRE></div>
 
 
 <H2>NULL support</H2>
@@ -547,27 +490,27 @@ produce a floating-point result, as will using float():
          if(), eval() and isnull() are treated specially, as described below).
 <li>	 The eval() function always returns its last argument
 <li>	 The situation for if() is:
-<pre>
-     if(x) 
-         NULL if x is NULL; 0 if x is zero; 1 otherwise 
-     if(x,a) 
-         NULL if x is NULL; a if x is non-zero; 0 otherwise 
-     if(x,a,b) 
-         NULL if x is NULL; a if x is non-zero; b otherwise 
-     if(x,n,z,p) 
-         NULL if x is NULL; n if x is negative; 
-	 z if x is zero; p if x is positive 
-</pre>
+<div class="code"><PRE>
+if(x) 
+	NULL if x is NULL; 0 if x is zero; 1 otherwise 
+if(x,a) 
+	NULL if x is NULL; a if x is non-zero; 0 otherwise 
+if(x,a,b) 
+	NULL if x is NULL; a if x is non-zero; b otherwise 
+if(x,n,z,p) 
+	NULL if x is NULL; n if x is negative; 
+z if x is zero; p if x is positive 
+</PRE></div>
 <li>     The (new) function isnull(x) returns: 1 if x is NULL; 
          0 otherwise. The (new) function null() 
          (which has no arguments) returns an integer NULL. 
 <li>Non-NULL, but invalid, arguments to functions should result in NULL. 
-<pre>
-     Examples: 
-     log(-2) 
-     sqrt(-2) 
-     pow(a,b) where a is negative and b is not an integer 
-</pre>
+<div class="code"><PRE>
+Examples: 
+log(-2) 
+sqrt(-2) 
+pow(a,b) where a is negative and b is not an integer 
+</PRE></div>
 </menu>
 
 <P>
@@ -579,40 +522,41 @@ on-the-fly, use the isnull() test function in a if-statement.
 Example: The users wants the NULL-valued cells to be treated like zeros. To
 add maps A and B (where B contains NULLs) to get a map C the user can use a
 construction like:<p>
-
-<tt>C=A + if(isnull(B),0,B)</tt>
+<div class="code"><PRE>
+C=A + if(isnull(B),0,B)
+</PRE></div>
 
 <p>
 <b>NULL and conditions:</b>
 <p>
 For the one argument form:
-<pre>
-	if(x) = NULL		if x is NULL
-	if(x) = 0		if x = 0
-	if(x) = 1		otherwise (i.e. x is neither NULL nor 0).
-</pre>
+<div class="code"><PRE>
+if(x) = NULL		if x is NULL
+if(x) = 0		if x = 0
+if(x) = 1		otherwise (i.e. x is neither NULL nor 0).
+</PRE></div>
 <p>
 For the two argument form:
-<pre>
-	if(x,a) = NULL		if x is NULL
-	if(x,a) = 0		if x = 0
-	if(x,a) = a		otherwise (i.e. x is neither NULL nor 0).
-</pre>
+<div class="code"><PRE>
+if(x,a) = NULL		if x is NULL
+if(x,a) = 0		if x = 0
+if(x,a) = a		otherwise (i.e. x is neither NULL nor 0).
+</PRE></div>
 <p>
 For the three argument form:
-<pre>
-	if(x,a,b) = NULL	if x is NULL
-	if(x,a,b) = b		if x = 0
-	if(x,a,b) = a		otherwise (i.e. x is neither NULL nor 0).
-</pre>
+<div class="code"><PRE>
+if(x,a,b) = NULL	if x is NULL
+if(x,a,b) = b		if x = 0
+if(x,a,b) = a		otherwise (i.e. x is neither NULL nor 0).
+</PRE></div>
 <p>
 For the four argument form:
-<pre>
-	if(x,a,b,c) = NULL	if x is NULL
-	if(x,a,b,c) = a		if x > 0
-	if(x,a,b,c) = b		if x = 0
-	if(x,a,b,c) = c		if x < 0
-</pre>
+<div class="code"><PRE>
+if(x,a,b,c) = NULL	if x is NULL
+if(x,a,b,c) = a		if x > 0
+if(x,a,b,c) = b		if x = 0
+if(x,a,b,c) = c		if x < 0
+</PRE></div>
 
 More generally, all operators and most functions return NULL if *any*
 of their arguments are NULL.
@@ -627,10 +571,10 @@ All forms of if() return NULL if the first argument is NULL. The 2, 3
 and 4 argument forms of if() return NULL if the "selected" argument is
 NULL, e.g.:
 
-<pre>
-	if(0,a,b) = b	regardless of whether a is NULL
-	if(1,a,b) = a	regardless of whether b is NULL
-</pre>
+<div class="code"><PRE>
+if(0,a,b) = b	regardless of whether a is NULL
+if(1,a,b) = a	regardless of whether b is NULL
+</pre></div>
 
 eval() always returns its last argument, so it only returns NULL if
 the last argument is NULL.
@@ -651,30 +595,30 @@ values, the user doesn't know whether or not they both have the same value.
 
 To compute the average of two raster map layers
 <EM>a</EM> and <EM>b</EM>:
-<PRE>
-	ave = (a + b)/2
-</PRE>
+<div class="code"><PRE>
+ave = (a + b)/2
+</pre></div>
 To form a weighted average:
-<PRE>
-	ave = (5*a + 3*b)/8.0
-</PRE>
+<div class="code"><PRE>
+ave = (5*a + 3*b)/8.0
+</pre></div>
 To produce a binary representation of the raster map layer
 <EM>a</EM> so that category 0 remains 0 and all other categories become 1:
-<PRE>
-	mask = a/a
-</PRE>
+<div class="code"><PRE>
+mask = a/a
+</pre></div>
 This could also be accomplished by:
-<PRE>
-	mask = if(a)
-</PRE>
+<div class="code"><PRE>
+mask = if(a)
+</pre></div>
 To mask raster map layer <EM>b</EM> by raster map layer <EM>a</EM>:
-<PRE>
-	result = if(a,b)
-</PRE>
+<div class="code"><PRE>
+result = if(a,b)
+</pre></div>
 To change all map values below 5 to NULL:
-<PRE>
-        newmap = if(map&lt;5, null(), 5)
-</PRE>
+<div class="code"><PRE>
+newmap = if(map&lt;5, null(), 5)
+</pre></div>
 The graph function allows users to specify a x-y conversion using 
 pairs of x,y coordinates.
 In some situations a transformation from one value to another is not
@@ -688,18 +632,18 @@ pairs.  Any x value lower the lowest x value (i.e. first) will have
 the associated y value returned.  Any x value higher than the last
 will similarly have the associated y value returned.  Consider the
 request:
-<PRE>
-        newmap = graph(map, 1,10, 2,25, 3,50)
-</PRE>
+<div class="code"><PRE>
+newmap = graph(map, 1,10, 2,25, 3,50)
+</pre></div>
 X (map) values supplied and y (newmap) values returned:
-<PRE>
-        0, 10
-        1, 10,
-        1.5, 16.5
-        2.9, 47.5
-        4, 50
-        100, 50
-</PRE>
+<div class="code"><PRE>
+0, 10
+1, 10,
+1.5, 16.5
+2.9, 47.5
+4, 50
+100, 50
+</pre></div>
 
 <H2>REGION/MASK</H2>
 
@@ -713,9 +657,9 @@ for the raster map layer.
 For example, suppose it is determined that the <EM>elevation</EM>
 raster map layer must have each category value increased by 10 meters.
 The following expression is legal and will do the job:
-<PRE>
-	new_elevation = elevation + 10
-</PRE>
+<div class="code"><PRE>
+new_elevation = elevation + 10
+</pre></div>
 Since a category value of 0 is used in GRASS for locations
 which do not exist in the raster map layer, the new raster map layer
 will contain the category value 10 in the locations that
@@ -737,9 +681,9 @@ These include, among others:
 <P>
 
 It is advisable to put single quotes around the expression;  e.g.:
-<PRE>
-	result = 'elevation * 2'
-</PRE>
+<div class="code"><PRE>
+result = 'elevation * 2'
+</pre></div>
 
 Without the quotes, the *, which has special meaning to the UNIX shell,
 would be altered and <EM>r.mapcalc</EM> would see something other than the *.
@@ -798,11 +742,11 @@ This is important for the eval() function.
 Error messages produced by <EM>r.mapcalc</EM> are almost useless.
 In future, <EM>r.mapcalc</EM> should make some attempt
 to point the user to the offending section of the equation, e.g.:
-<PRE>
-	x = a * b ++ c
+<div class="code"><PRE>
+x = a * b ++ c
 
-	ERROR: somewhere in line 1: ...  b ++ c ...
-</PRE>
+ERROR: somewhere in line 1: ...  b ++ c ...
+</pre></div>
 
 
 
