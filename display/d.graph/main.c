@@ -21,6 +21,7 @@ int main (int argc, char **argv)
 	char window_name[64] ;
 	struct GModule *module;
 	struct Option *opt1, *opt2 ;
+/*	struct Flag *mapcoords; */
 	int R, G, B, color = 0;
 
 	/* Initialize the GIS calls */
@@ -46,6 +47,12 @@ int main (int argc, char **argv)
 	opt2->description= _("Color to draw with, either a standard GRASS color "
 			   "or R:G:B triplet");
 	opt2->answer     = DEFAULT_FG_COLOR;
+
+/* TODO: merge d.mapgraph into this module
+	mapcoords = G_define_flag();
+	mapcoords->key = 'm';
+	mapcoords->description = _("Coordinates are given in map units");
+*/
 
 	/* Check command line */
 	if (G_parser(argc, argv))
@@ -101,6 +108,8 @@ int main (int argc, char **argv)
 	set_graph_stuff() ;
 	set_text_size() ;
 	graphics (infile) ;
+
+	R_text_rotation(0.0); /* reset */
 
 	if(opt1->answer)
 	    D_add_to_list(G_recreate_command());

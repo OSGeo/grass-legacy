@@ -120,7 +120,7 @@ int do_poly (char *buff, FILE *infile)
 		if (2 != sscanf(buff, "%f %f", &xper, &yper) ) {
 
 		    if( '#' == buff[0] ) {
-			G_debug(4," skipping comment line [%s]", buff);
+			G_debug(3," skipping comment line [%s]", buff);
 			continue;
 		    }
 
@@ -154,11 +154,18 @@ int do_poly (char *buff, FILE *infile)
 int do_size (char *buff)
 {
 	float xper, yper ;
+	int ret;
 
-	if ( 2 != sscanf(buff, "%*s %f %f", &xper, &yper) ) {
-	    G_warning(_("Problem parsing coordinates [%s]"), buff);
+	ret = sscanf(buff, "%*s %f %f", &xper, &yper);
+
+	if( ret != 2 && ret != 1 ) {
+	    G_warning(_("Problem parsing command [%s]"), buff);
 	    return(-1);
 	}
+
+	/* if only one size is given assume same value in both axes */
+	if( ret == 1 ) yper = xper;
+
 	if (  xper<0.
 	   || yper<0.
 	   || xper>100.
@@ -167,6 +174,19 @@ int do_size (char *buff)
 
 	R_text_size((int)(xper * xincr), (int)(yper * yincr)) ;
 	return(0) ;
+}
+
+int do_text_rotate (char *buff)
+{
+	float rotation; /* degrees counter-clockwise from east */
+
+	if ( 1 != sscanf(buff, "%*s %f", &rotation) ) {
+	    G_warning(_("Problem parsing command [%s]"), buff);
+	    return(-1);
+	}
+
+	R_text_rotation(rotation);
+	return(0);
 }
 
 int do_text (char *buff)

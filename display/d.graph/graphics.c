@@ -26,6 +26,11 @@ int graphics (FILE *infile)
 			got_new = G_getl2(buff, 128, infile);
 			G_strip(buff);
 			break;
+		case 'r':
+			do_text_rotate(buff);
+			got_new = G_getl2(buff, 128, infile);
+			G_strip(buff);
+			break;
 		case 'p':
 			got_new = do_poly(buff, infile);
 			G_strip(buff);
