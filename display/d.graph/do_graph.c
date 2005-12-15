@@ -279,14 +279,19 @@ int do_icon (char *buff)
 	    return(-1);
 	}
 
-	if (  xper<0.
-	   || yper<0.
-	   || xper>100.
-	   || yper>100.)
+	if(mapunits) {
+	    ix = (int)(D_u_to_d_col(xper)+0.5);
+	    iy = (int)(D_u_to_d_row(yper)+0.5);
+	    /* size in map units too? currently in percentage.
+		use "size * D_get_u_to_d_yconv()" to convert? */
+	}
+	else {
+	    if( xper<0. || yper<0. || xper>100. || yper>100.)
 		return(-1) ;
 
-	ix = l + (int)(xper * xincr) ;
-	iy = b - (int)(yper * yincr) ;
+	    ix = l + (int)(xper * xincr) ;
+	    iy = b - (int)(yper * yincr) ;
+	}
 
 	switch (type & 0177)
 	{
