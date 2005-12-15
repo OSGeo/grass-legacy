@@ -302,6 +302,7 @@ global execom
 			 {separator}
 			 {command "Convert vector feature types" {} "v.type" {} -command {execute v.type }}
 			 {command "Convert 2D vector to 3D by sampling raster" {} "v.drape" {} -command {execute v.drape }}
+			 {command "Extrude 2D vector into 3D vector" {} "v.extrude" {} -command {execute v.extrude }}
 			 {separator}
 			 {command "Create text label file for vector features" {} "v.label" {} -command {execute v.label }}
 			 {separator}
