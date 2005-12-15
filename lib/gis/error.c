@@ -188,7 +188,7 @@ static int print_error(char *msg,int type)
 	    while (print_word(stderr,&w,&len,lead))
 		    ;
 
-	    if (isatty(fileno(stderr))) { /* Bell */
+	    if ( (type != MSG) && isatty(fileno(stderr))) { /* Bell */
 		fprintf(stderr,"\7");
 		fflush (stderr);
 		if (!no_sleep)
