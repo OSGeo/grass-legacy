@@ -36,7 +36,7 @@ int set_text_size (void)
 	   && vsize<=100.)
 	{
 	    R_text_size((int)(hsize * xincr), (int)(vsize * yincr)) ;
-	    G_debug(3,"text size initialized to %d,%d pixels",
+	    G_debug(3,"text size initialized to [%d,%d] pixels",
 		(int)(hsize * xincr), (int)(vsize * yincr));
 	}
 	return(0) ;
@@ -116,6 +116,22 @@ int do_color (char *buff)
 
 	return(0);
 }
+
+int do_linewidth(char *buff)
+{
+	int width; /* in pixels */
+
+	if ( 1 != sscanf(buff, "%*s %d", &width) ) {
+	    G_warning(_("Problem parsing command [%s]"), buff);
+	    return(-1);
+	}
+
+	R_line_width(width);
+	G_debug(3,"line width set to %d pixels", width);	
+
+	return(0);
+}
+
 
 int do_poly (char *buff, FILE *infile)
 {
@@ -198,7 +214,7 @@ int do_size (char *buff)
 		return(-1) ;
 
 	R_text_size((int)(xper * xincr), (int)(yper * yincr)) ;
-	G_debug(3,"text size set to %d,%d pixels",
+	G_debug(3,"text size set to [%d,%d] pixels",
 	    (int)(xper * xincr), (int)(yper * yincr));
 
 	return(0) ;
