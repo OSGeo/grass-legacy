@@ -6,6 +6,7 @@ int set_graph_stuff(void);
 int set_text_size(void);
 int do_draw(char *);
 int do_move(char *);
+int do_linewidth(char *);
 int do_color(char *);
 int do_poly(char *, FILE *);
 int do_size(char *);

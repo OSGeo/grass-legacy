@@ -112,6 +112,7 @@ int main (int argc, char **argv)
 	graphics (infile) ;
 
 	R_text_rotation(0.0); /* reset */
+	R_line_width(0); /* reset */
 
 	if(opt1->answer)
 	    D_add_to_list(G_recreate_command());
