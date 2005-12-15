@@ -15,7 +15,7 @@ int db__driver_describe_table(table_name, table)
 
     db_set_string( &sql, "select * from ");
     db_append_string ( &sql, db_get_string(table_name) );
-    db_append_string( &sql, " where oid < 0");
+    db_append_string( &sql, " where 1 = 0");
 
     res = PQexec(pg_conn, db_get_string(&sql));
 
