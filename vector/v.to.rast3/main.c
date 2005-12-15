@@ -37,21 +37,24 @@ int main(int argc, char *argv[])
 	"(only points) layer into a 3D GRASS raster map layer.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
-    field_opt = G_define_standard_option(G_OPT_V_FIELD);
-
-    col_opt = G_define_option();
-    col_opt->key            = "column";
-    col_opt->type           = TYPE_STRING;
-    col_opt->required       = YES;
-    col_opt->multiple       = NO;
-    col_opt->description    = _("Column name");
 
     out_opt = G_define_option() ;
     out_opt->key        = "output" ;
     out_opt->type       = TYPE_STRING ;
+    out_opt->key_desc   = "name";
     out_opt->required   = YES;
     out_opt->description= _("Name of output G3D grid file") ;
     out_opt->gisprompt  = "new,grid3,3d raster" ;
+
+    col_opt = G_define_option();
+    col_opt->key            = "column";
+    col_opt->type           = TYPE_STRING;
+    col_opt->key_desc       = "name";
+    col_opt->required       = YES;
+    col_opt->multiple       = NO;
+    col_opt->description    = _("Column name (type must be numeric)");
+
+    field_opt = G_define_standard_option(G_OPT_V_FIELD);
 
     G_gisinit(argv[0]);
 
@@ -59,9 +62,7 @@ int main(int argc, char *argv[])
         exit(1);
 
     if (G_legal_filename(out_opt->answer) < 0)
-    {
-	G_fatal_error ( "Illegal output name: '%s'", out_opt->answer);
-    }
+	G_fatal_error(_("Illegal output name: '%s'"), out_opt->answer);
 
     G3d_getWindow (&region);
     G3d_readWindow(&region,NULL);
@@ -73,13 +74,12 @@ int main(int argc, char *argv[])
 
     db_CatValArray_init ( &cvarr );
     Fi = Vect_get_field( &Map, field);
-    if ( Fi == NULL ) {
-	G_fatal_error ("Cannot get layer info for vector map");
-    }
+    if ( Fi == NULL )
+	G_fatal_error(_("Cannot get layer information for vector map"));
 
     Driver = db_start_driver_open_database ( Fi->driver, Fi->database );
     if (Driver == NULL)
-	G_fatal_error("Cannot open database %s by driver %s", Fi->database, Fi->driver);
+	G_fatal_error(_("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
 
     /* Note: do not check if the column exists in the table because it may be expression */
 
@@ -87,11 +87,11 @@ int main(int argc, char *argv[])
 				col_opt->answer, NULL, &cvarr );
 
     G_debug (2, "nrec = %d", nrec );
-    if ( nrec < 0 ) G_fatal_error ("Cannot select data from table");
+    if ( nrec < 0 ) G_fatal_error(_("Cannot select data from table"));
 
     ctype = cvarr.ctype;
     if ( ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE )
-        G_fatal_error ( "Column type not supported" );
+        G_fatal_error(_("Column type not supported"));
 
     db_close_database_shutdown_driver(Driver);
 
@@ -99,9 +99,7 @@ int main(int argc, char *argv[])
 		G3D_USE_CACHE_DEFAULT, &region);
 
     if (map == NULL)
-    {
-	G_fatal_error ("Can't create output map");
-    }
+ 	G_fatal_error(_("Can't create output map"));
 
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct ();
@@ -138,7 +136,7 @@ int main(int argc, char *argv[])
 	}
 
 	if ( ret != DB_OK ) {
-	    G_warning ("No record for line (cat = %d)", cat );
+	    G_warning(_("No record for line (cat = %d)"), cat);
 	    continue ;
 	}
 
@@ -150,9 +148,8 @@ int main(int argc, char *argv[])
     Vect_close ( &Map );
 
     if (! G3d_closeCell (map) )
-    {
-        G_fatal_error ( "Could not close new g3d map" );
-    }
+        G_fatal_error(_("Could not close new g3d map"));
+
 
     exit(0);
 }
