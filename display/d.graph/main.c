@@ -21,7 +21,7 @@ int main (int argc, char **argv)
 	char window_name[64] ;
 	struct GModule *module;
 	struct Option *opt1, *opt2 ;
-/*	struct Flag *mapcoords; */
+	struct Flag *mapcoords;
 	int R, G, B, color = 0;
 
 	/* Initialize the GIS calls */
@@ -48,11 +48,9 @@ int main (int argc, char **argv)
 			   "or R:G:B triplet");
 	opt2->answer     = DEFAULT_FG_COLOR;
 
-/* TODO: merge d.mapgraph into this module
 	mapcoords = G_define_flag();
 	mapcoords->key = 'm';
 	mapcoords->description = _("Coordinates are given in map units");
-*/
 
 	/* Check command line */
 	if (G_parser(argc, argv))
@@ -88,6 +86,8 @@ int main (int argc, char **argv)
 	    /* (color==2) is "none", noop */
 	}
 
+	if(mapcoords->answer) mapunits = TRUE;
+	else mapunits = FALSE;
 
 	/* open graphics window */
 	if (R_open_driver() != 0)
@@ -104,6 +104,7 @@ int main (int argc, char **argv)
 
 	/* Finish graphics setup */
 	R_set_window(t, b, l, r) ;
+	D_setup(0);
 
 	/* Do the graphics */
 	set_graph_stuff() ;
