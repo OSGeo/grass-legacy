@@ -7,10 +7,9 @@ cell category values represent elevation, combined with a second input
 raster map layer whose cell values represent friction costs.
 
 This function is similar to <em>r.cost</em>, but in addiction to a
-friction map, it considers an anisotropic directional cost due to the
-different costs associated with downhill and uphill movements.
+friction map, it considers an anisotropic travel time due to the
+different walking speed associated with downhill and uphill movements.
 <p>
-
 
 The formula from Aitken 1977/Langmuir 1984 (based on Naismith's rule
 for walking times) has been used to estimate the cost parameters of
@@ -44,19 +43,10 @@ default values for a, b, c, d are those proposed by Langmuir (0.72, 6,
 1.9998, -1.9998), based on man walking effort in standard
 conditions.<p>
 
-All factors influencing speed movement should be considered in a, b,
-c, d parameters definition, using friction map to model the other
-aspects, such as "environmental preferences". For example, a wild bear
-could prefere to move inside a forest rather than in an open grassland
-because it is more protected, even if the movement can be quicker in
-the latter case; or a man could prefer to walk a little bit more along
-a river to reach a bridge insted of crossing the water, not because it
-is more time consuming but just because it is more comfortable.<p>
-
 The lambda parameter of the linear equation combining movement and
 friction costs:<br>
 
-total cost = movement cost + (lambda) * friction costs<br>
+total cost = movement time cost + (lambda) * friction costs<br>
 must be set in the option section of <em>r.walk</em>.
 <p>
 
