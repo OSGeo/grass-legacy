@@ -323,8 +323,8 @@ FILE * G_sites_open_old (char *name,char *mapset)
     dbColumn *column;
     dbValue  *value;
     
-    G_warning ( "Vector used instead of sites.");
-    
+    G_warning ( "Adapted sites library used for vector points (module should be updated to GRASS 6 vector library).");
+ 
     Map = (struct Map_info *) G_malloc ( sizeof(struct Map_info) );
 
     Vect_set_open_level (1);
@@ -445,7 +445,7 @@ FILE * G_sites_open_new (char *name)
 {
     struct Map_info *Map;
     
-    G_warning ( "Vector used instead of sites.");
+    G_warning ( "Adapted sites library used for vector points (module should be updated to GRASS 6 vector library).");
     G_warning ( "Site/vector attributes ignored.");
     
     Map = (struct Map_info *) G_malloc ( sizeof(struct Map_info) );
