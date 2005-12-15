@@ -145,7 +145,7 @@ main (int argc, char *argv[])
     /* Open map */
     mapset = G_find_vector2 (map_opt->answer, G_mapset()); 
     if ( mapset == NULL ) {
-       fprintf (stderr, "Map does not exist.\n");	
+        G_message ( "Map does not exist. Add flag -n to create a new map.");
        if ( new_f->answer ) {
            fprintf (stderr, "New empty map created.\n");	
 	   Vect_open_new (&Map, map_opt->answer, 0 ); 
