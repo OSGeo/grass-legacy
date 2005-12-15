@@ -82,7 +82,7 @@ msgstr "잘못된 depth 값"
 
 #: ../lib/gis/ask.c:377
 msgid "to cancel request"
-msgstr "취소하기 위해서는"
+msgstr "취소를 원하시면"
 
 #: ../lib/gis/ask.c:433
 #, c-format
@@ -139,6 +139,8 @@ msgid ""
 "\n"
 "** %s exists. ok to overwrite? "
 msgstr ""
+"\n"
+"** %s을(를) 덮어쓸까요? "
 
 #: ../lib/gis/ask.c:546
 #, c-format
@@ -146,6 +148,8 @@ msgid ""
 "\n"
 "**<%s> illegal name **\n"
 msgstr ""
+"\n"
+"**<%s> 잘못된 이름 **\n"
 
 #: ../lib/gis/ask.c:561
 #, c-format
@@ -153,6 +157,8 @@ msgid ""
 "\n"
 "** %s - illegal request **\n"
 msgstr ""
+"\n"
+"** %s - 잘못된 요청 **\n"
 
 #: ../lib/gis/ask.c:576
 #, c-format
@@ -160,57 +166,59 @@ msgid ""
 "\n"
 "** %s - exists, select another name **\n"
 msgstr ""
+"\n"
+"** %s - 이미 있습니다. 다른 이름을 선택하세요 **\n"
 
 #: ../lib/gis/ask.c:604
 msgid "ask: can't happen"
-msgstr ""
+msgstr "ask: 내부오류"
 
 #: ../lib/gis/ask_cell.c:58 ../lib/gis/ask_cell.c:79 ../lib/gis/ask_cell.c:100
 #: ../lib/gis/ask_cell.c:109
 msgid "with titles"
-msgstr ""
+msgstr "제목과 함께"
 
 #: ../lib/gis/ask_cell.c:121
 msgid "(no title)"
-msgstr ""
+msgstr "(제목없음)"
 
 #: ../lib/gis/auto_mask.c:53
 msgid "Unable to open automatic MASK file"
-msgstr ""
+msgstr "자동 MASK파일을 열수 없습니다"
 
 #: ../lib/gis/cats.c:384
 #, c-format
 msgid "category support for [%s] in mapset [%s] %s"
-msgstr ""
+msgstr "맵 [%s], 맵셑 [%s]을(를) 위한 분류지원: %s"
 
 #: ../lib/gis/cats.c:423
 #, c-format
 msgid "category support for vector file [%s] in mapset [%s] %s"
-msgstr ""
+msgstr "벡터맵 [%s], 맵셑 [%s]을(를) 위한 분류지원: %s"
 
 #: ../lib/gis/color_read.c:123
 #, c-format
 msgid "color support for [%s] in mapset [%s] %s"
-msgstr ""
+msgstr "맵 [%s], 맵셑 [%s]을(를) 위한 색상지원: %s"
 
 #: ../lib/gis/datum.c:163 ../lib/gis/get_datum_name.c:67
 #: ../lib/gis/get_ell_name.c:33 ../lib/gis/get_projname.c:48
 #: ../lib/proj/datum.c:223
 msgid "Cannot open temp file"
-msgstr ""
+msgstr "임시파일을 열수 없습니다"
 
 #: ../lib/gis/datum.c:242 ../lib/gis/get_datum_name.c:56
 #: ../lib/gis/get_ell_name.c:46 ../lib/gis/get_projname.c:60
 #: ../lib/proj/datum.c:300
 #, c-format
 msgid "Hit RETURN to cancel request\n"
-msgstr ""
+msgstr "취소를 원하시면 RETURN을 누르세요"
 
 #: ../lib/gis/datum.c:353 ../lib/gis/datum.c:433 ../lib/proj/datum.c:346
 #: ../lib/proj/datum.c:420
 #, c-format
 msgid "unable to open datum table file: %s"
-msgstr ""
+msgstr "Datum 테이블파일을 열수 없습니다"
 
 #: ../lib/gis/datum.c:368 ../lib/gis/datum.c:457 ../lib/proj/datum.c:359
 #: ../lib/proj/datum.c:434
