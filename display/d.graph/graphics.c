@@ -52,10 +52,11 @@ int graphics (FILE *infile)
 			got_new = G_getl2(buff, 128, infile);
 			break;
 		case '#':
+		case 0:   /* skip blank lines */
 			got_new = G_getl2(buff, 128, infile);
 			break;
 		default:
-			fprintf (stderr, _("Don't understand: [%s]\n"), buff);
+			G_warning(_("Problem parsing command [%s]"), buff);
 			got_new = G_getl2(buff, 128, infile);
 			break;
 		}
