@@ -202,11 +202,8 @@ int do_text (char *buff)
 {
 	char *ptr ;
 
-/* remove new line */
-	for( ptr=buff; *ptr != 012; ptr++) ;
-	*ptr = '\0' ;
-
 	ptr = buff ;
+	/* skip to beginning of actual text */
 	for(; *ptr != ' '; ptr++) ;
 	for(; *ptr == ' '; ptr++) ;
 	R_text(ptr) ;
