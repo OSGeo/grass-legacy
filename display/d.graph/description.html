@@ -5,7 +5,8 @@ draws graphics that are described either from standard input (default),
 or within a file (if an <b>input</b> file name is identified on the 
 command line). If graphics commands are entered from standard input, 
 a <EM>CTRL-d</EM> is used to signal the end of input to <EM>d.graph</EM>.
-
+Coordinates are given either as a percentage of frame height and width
+(default) or in geographic coordinates (with the <B>-m</B> flag).
 <P>
 
 The program can be run interactively or non-interactively. 
@@ -29,11 +30,13 @@ using this form)-->. In this case, the user is presented with the standard
 GRASS GUI interface.
 
 <P>
-The coordinate system used is 0-100 percent of the active frame 
+The default coordinate system used is 0-100 percent of the active frame 
 in x and similarly 0-100 in y,
 regardless of the graphics monitor display frame size and aspect. 
 The (0,0) location is the lower left corner of the active graphics 
 monitor display frame. All values may be floating point.
+If the <B>-m</B> flag is given geographic coordinates will be used.
+
 
 <H2>COMMANDS</H2>
 
@@ -47,7 +50,9 @@ The graphics language is simple, and uses the following commands:
 
 <DT><B>move</B> <EM>xpos ypos</EM> 
 <DD>The current location is updated to <EM>xpos ypos</EM>. 
-Values are stated as a percent of the active display frame's 
+
+Unless the <B>-m</B> flag is used,
+values are stated as a percent of the active display frame's 
 horizontal (<EM>xpos</EM>) and vertical (<EM>ypos</EM>) size, 
 and may be floating point values. Values are between 0-100. 
 <B>Note.</B> A space must separate <EM>xpos</EM> and <EM>ypos</EM>.
@@ -55,7 +60,8 @@ and may be floating point values. Values are between 0-100.
 <DT><B>draw</B> <EM>xpos ypos</EM> 
 <DD>A line is drawn in the current color from the current location to the new 
 location <EM>xpos ypos</EM>, which then becomes the current location. 
-Values are stated as a percent of the active display frame's 
+Unless the <B>-m</B> flag is used,
+values are stated as a percent of the active display frame's 
 horizontal (<EM>xpos</EM>) and vertical (<EM>ypos</EM>) size, 
 and may be floating point values. Values are between 0-100. 
 <B>Note.</B> A space must separate <EM>xpos</EM> and <EM>ypos</EM>. 
@@ -99,7 +105,7 @@ and the new current location is then positioned at the end of the text string.
 <DT><B>icon</B> <EM>type size x y</EM> 
 <DD>Draws an icon of types <EM>o</EM>, <EM>x</EM>, or <EM>+</EM> 
 with specified <EM>size</EM> at location <EM>x,y</EM>. 
-Note: type <EM>o</EM> designates a square. 
+Note: type <EM>o</EM> designates a square.
 <BR>
 
 <DT><B>polygon</B> 
@@ -161,9 +167,6 @@ the user moved, even after the user erases the display frame.
 If the user runs <EM>d.graph</EM> repeatedly, and wishes to start anew with 
 the default (xpos ypos) screen location, the user should <EM>clear</EM> the 
 display frame between runs of <EM>d.graph</EM>.
-<P>
-In future d.mapgraph will be merged into this module as the <b>-m</b> flag.
-
 
 <H2>LIMITATIONS</H2>
 
@@ -178,7 +181,7 @@ graphics editor into GRASS <EM>d.graph</EM> format.
 <EM><A HREF="d.font.freetype.html">d.font.freetype</A></EM><br>
 <EM><A HREF="d.frame.html">d.frame</A></EM><br>
 <EM><A HREF="d.labels.html">d.labels</A></EM><br>
-<EM><A HREF="d.mapgraph.html">d.mapgraph</A></EM><br>
+<!-- <EM><A HREF="d.mapgraph.html">d.mapgraph</A></EM><br> superseded by -m -->
 <EM><A HREF="d.text.html">d.text</A></EM><br>
 <EM><A HREF="d.text.freetype.html">d.text.freetype</A></EM><br>
 <EM><A HREF="d.where.html">d.where</A></EM><br>
