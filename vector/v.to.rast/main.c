@@ -56,7 +56,7 @@ int main (int argc, char *argv[])
     col->type           = TYPE_STRING;
     col->required       = NO;
     col->multiple       = NO;
-    col->description    = _("Column name");
+    col->description    = _("Column name (type must be numeric)");
 
     val_opt = G_define_option();
     val_opt->key              = "value";
