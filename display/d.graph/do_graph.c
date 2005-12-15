@@ -17,6 +17,7 @@ static int *yarray ;
 static float xincr ;
 static float yincr ;
 
+
 int set_graph_stuff (void)
 {
 	xincr = (float)(r - l)/100. ;
@@ -49,13 +50,23 @@ int do_draw (char *buff)
 	    G_warning(_("Problem parsing coordinates [%s]"), buff);
 	    return(-1);
 	}
-	if (  xper<0.
-	   || yper<0.
-	   || xper>100.
-	   || yper>100.)
-		return(-1) ;
 
-	R_cont_abs(l + (int)(xper * xincr), b - (int)(yper * yincr)) ;
+	if(mapunits) {
+/* skip check: clips segments if map coordinate is out of region.
+	    if( xper < D_get_u_west() ||
+		yper < D_get_u_south() ||
+		xper > D_get_u_east() ||
+		yper > D_get_u_north() )
+		  return(-1);
+*/
+	    R_cont_abs((int)(D_u_to_d_col(xper)+0.5), (int)(D_u_to_d_row(yper)+0.5));
+	}
+	else {
+	    if( xper<0. || yper<0. || xper>100. || yper>100. )
+		return(-1);
+	    R_cont_abs(l + (int)(xper * xincr), b - (int)(yper * yincr)) ;
+	}
+
 	return(0) ;
 }
 
@@ -67,13 +78,15 @@ int do_move (char *buff)
 	    G_warning(_("Problem parsing coordinates [%s]"), buff);
 	    return(-1);
 	}
-	if (  xper<0.
-	   || yper<0.
-	   || xper>100.
-	   || yper>100.)
-		return(-1) ;
 
-	R_move_abs(l + (int)(xper * xincr), b - (int)(yper * yincr)) ;
+	if(mapunits)
+	    R_move_abs((int)(D_u_to_d_col(xper)+0.5), (int)(D_u_to_d_row(yper)+0.5));
+	else {
+	    if( xper<0. || yper<0. || xper>100. || yper>100. )
+		return(-1);
+	    R_move_abs(l + (int)(xper * xincr), b - (int)(yper * yincr));
+	}
+
 	return(0) ;
 }
 
@@ -132,24 +145,32 @@ int do_poly (char *buff, FILE *infile)
 		    break;
 		}
 
-		if (  xper<0.
-		   || yper<0.
-		   || xper>100.
-		   || yper>100.)
-			break ;
-
+		if(!mapunits) {
+		    if( xper<0. || yper<0. || xper>100. || yper>100.)
+			break;
+		}
 		check_alloc(num+1) ;
-		xarray[num] = l + (int)(xper * xincr) ;
-		yarray[num] = b - (int)(yper * yincr) ;
+
+		if(mapunits) {
+		    xarray[num] = (int)(D_u_to_d_col(xper)+0.5);
+		    yarray[num] = (int)(D_u_to_d_row(yper)+0.5);
+		}
+		else {
+		    xarray[num] = l + (int)(xper * xincr);
+		    yarray[num] = b - (int)(yper * yincr);
+		}
+
 		num++ ;
 	}
 
 	if (num)
 	{
-		if(! strcmp(origcmd, "polygon"))
-			R_polygon_abs(xarray, yarray, num) ;
-		else
-			R_polyline_abs(xarray, yarray, num) ;
+	    /* this check is here so you can use the "polyline" command 
+		 to make an unfilled polygon */
+	    if(! strcmp(origcmd, "polygon"))
+		R_polygon_abs(xarray, yarray, num) ;
+	    else
+		R_polyline_abs(xarray, yarray, num) ;
 	}
 
 	return(to_return) ;
