@@ -19,23 +19,8 @@ int main (int argc, char *argv[])
     module->description = _("Converts a binary GRASS vector map layer "
 		          "into a GRASS raster map layer.");
 
-    input = G_define_option();
-    input->key             = "input";
-    input->type            = TYPE_STRING;
-    input->required        = YES;
-    input->multiple        = NO;
-    input->gisprompt       = "old,vector,vector";
-    input->description     = _("vector input file");
-
-    field_opt = G_define_standard_option(G_OPT_V_FIELD);
-    
-    output = G_define_option();
-    output->key            = "output";
-    output->type           = TYPE_STRING;
-    output->required       = YES;
-    output->multiple       = NO;
-    output->gisprompt      = "new,cell,raster";
-    output->description    = _("raster output file");
+    input  = G_define_standard_option(G_OPT_V_INPUT);
+    output = G_define_standard_option(G_OPT_R_OUTPUT);
 
     use_opt = G_define_option();
     use_opt->key            = "use";
@@ -54,9 +39,12 @@ int main (int argc, char *argv[])
     col = G_define_option();
     col->key            = "column";
     col->type           = TYPE_STRING;
+    col->key_desc       = "name";
     col->required       = NO;
     col->multiple       = NO;
     col->description    = _("Column name (type must be numeric)");
+
+    field_opt = G_define_standard_option(G_OPT_V_FIELD);
 
     val_opt = G_define_option();
     val_opt->key              = "value";
@@ -74,7 +62,8 @@ int main (int argc, char *argv[])
     rows->answer           = "4096";
     rows->description      = _("number of rows to hold in memory");
 
-    if (G_parser (argc, argv)) exit (1);
+    if (G_parser (argc, argv))
+	exit (1);
 
     field = atoi (field_opt->answer);
     nrows = atoi (rows->answer);
@@ -82,7 +71,7 @@ int main (int argc, char *argv[])
     if ( use_opt->answer[0] == 'a' ) {
 	use = USE_ATTR;
 	if ( !col->answer )
-    	    G_fatal_error (_("col parameter missing (or use value parameter)") );
+    	    G_fatal_error (_("Column parameter missing (or use value parameter)") );
     } else if ( use_opt->answer[0] == 'c' ) {
 	if ( col->answer )
     	    G_fatal_error (_("Column parameter cannot be combined with use of category values option") );
