@@ -54,7 +54,7 @@ int main (int argc, char **argv)
 
 	/* Check command line */
 	if (G_parser(argc, argv))
-		exit(1);
+	    exit(EXIT_FAILURE);
 
 	/* default font scaling: 5% of active frame */
 	hsize = vsize = 5. ;
@@ -119,5 +119,5 @@ int main (int argc, char **argv)
 
 	R_close_driver();
 
-	exit(0);
+	exit(EXIT_SUCCESS);
 }

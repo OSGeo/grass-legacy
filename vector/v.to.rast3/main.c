@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     if (G_parser(argc, argv))
-        exit(1);
+        exit(EXIT_FAILURE);
 
     if (G_legal_filename(out_opt->answer) < 0)
 	G_fatal_error(_("Illegal output name: '%s'"), out_opt->answer);
@@ -151,6 +151,6 @@ int main(int argc, char *argv[])
         G_fatal_error(_("Could not close new g3d map"));
 
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
