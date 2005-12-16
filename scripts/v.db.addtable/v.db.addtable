@@ -50,7 +50,7 @@
 #%end
 
 
-if  [ -z $GISBASE ] ; then
+if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program."
  exit 1
 fi
@@ -60,9 +60,8 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 #### check if we have awk
-AWK=`which awk`
-if [ "$AWK" = "" ] ; then
-    echo "$PROG: awk required, please install awk/gawk first" 2>&1
+if [ ! -x "`which awk`" ] ; then
+    echo "$PROG: awk required, please install awk/gawk first" 1>&2
     exit 1
 fi
 
@@ -71,8 +70,14 @@ unset LC_ALL
 export LC_NUMERIC=C
 
 if [ -z "$GIS_OPT_table" ] ; then
-    echo "Using vector map name extended by layer number as table name: ${GIS_OPT_map}_$GIS_OPT_layer"
-    table=${GIS_OPT_map}_$GIS_OPT_layer
+    if [ $GIS_OPT_layer -eq 1 ] ; then
+       echo "Using vector map name as table name: ${GIS_OPT_map}"
+       table=${GIS_OPT_map}
+    else
+       # two avoid tables with identical names on higher layers
+       echo "Using vector map name extended by layer number as table name: ${GIS_OPT_map}_$GIS_OPT_layer"
+       table=${GIS_OPT_map}_$GIS_OPT_layer
+    fi
 else
     echo "Using user specified table name: $GIS_OPT_table"
     table=$GIS_OPT_table
@@ -80,8 +85,10 @@ fi
 
 # we use the DB settings of layer 1 to find out default connection
 QUERYLAYER=1
-database=`v.db.connect $GIS_OPT_map -g`
+#check if anything is connected:
+v.db.connect $GIS_OPT_map -g layer=1 | grep '^1 ' > /dev/null
 if [ $? -ne 0 ] ; then
+   # nothing defined for layer 1
    echo "Creating new DB connection based on default mapset settings..."
    database=`db.connect -p | grep database | cut -d':' -f2`
    if [ $? -ne 0 ] ; then
@@ -90,8 +97,15 @@ if [ $? -ne 0 ] ; then
    fi
    driver=`db.connect -p | grep driver | cut -d':' -f2`
 else
+ # there is a definition for layer 1, so we check for the user defined layer
  database=`v.db.connect $GIS_OPT_map -g | grep -w $QUERYLAYER | awk '{print $4}'`
- driver=`v.db.connect $GIS_OPT_map -g | grep -w $QUERYLAYER | awk '{print $5}'`
+ if [ -z "database" ] ; then
+     #nothing on user defined layer, so we use the default mapset settings in this case:
+     database=`db.connect -p | grep database | cut -d':' -f2`
+     driver=`db.connect -p | grep driver | cut -d':' -f2`
+ else
+     driver=`v.db.connect $GIS_OPT_map -g | grep -w $QUERYLAYER | awk '{print $5}'`
+ fi
 fi
 
 #maybe there is already a table linked to the selected layer?
@@ -103,24 +117,29 @@ if [ $GIS_OPT_layer -eq 1 ] ; then
   fi
 fi
 
-echo "CREATE TABLE $table (cat integer, $GIS_OPT_columns)" | db.execute database=$database driver=$driver
+#maybe there is already a table with that name?
+db.tables database=$database driver=$driver | grep $table
 if [ $? -ne 0 ] ; then
- # take care if no DB was ever defined (e.g., in a new mapset)
- # probably the DBF directory is missing (heck, the DBF driver should take care!)
- echo "CREATE TABLE $table (cat integer, $GIS_OPT_columns)" | db.execute database=$database driver=$driver | grep 'Cannot open dbf database'
- if [ $? -ne 0 ] ; then
-   GISDBASE=`g.gisenv GISDBASE`
-   LOCATION_NAME=`g.gisenv LOCATION_NAME`
-   MAPSET=`g.gisenv MAPSET`
-   echo "Creating missing DBF directory in MAPSET <${MAPSET}>"
-   mkdir -p ${GISDBASE}/${LOCATION_NAME}/${MAPSET}/dbf
-   db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
-   echo "CREATE TABLE $table (cat integer, $GIS_OPT_columns)" | db.execute
+   #if not existing, create it:
+   echo "CREATE TABLE $table (cat integer, $GIS_OPT_columns)" | db.execute database=$database driver=$driver
    if [ $? -ne 0 ] ; then
-     echo "An error occured. Stop."
-     exit 1
+       # take care if no DB was ever defined (e.g., in a new mapset)
+       # probably the DBF directory is missing (heck, the DBF driver should take care!)
+     echo "CREATE TABLE $table (cat integer, $GIS_OPT_columns)" | db.execute database=$database driver=$driver | grep 'Cannot open dbf database'
+     if [ $? -ne 0 ] ; then
+        GISDBASE=`g.gisenv GISDBASE`
+        LOCATION_NAME=`g.gisenv LOCATION_NAME`
+        MAPSET=`g.gisenv MAPSET`
+        echo "Creating missing DBF directory in MAPSET <${MAPSET}>"
+        mkdir -p ${GISDBASE}/${LOCATION_NAME}/${MAPSET}/dbf
+        db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
+        echo "CREATE TABLE $table (cat integer, $GIS_OPT_columns)" | db.execute
+        if [ $? -ne 0 ] ; then
+          echo "An error occured. Stop."
+          exit 1
+        fi
+      fi
    fi
- fi
 fi
 
 # connect the map to the DB:
