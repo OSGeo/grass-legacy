@@ -57,8 +57,7 @@ int main(int argc, char *argv[])
     opt1->required = YES;
     opt1->gisprompt = "old,cell,raster";
     opt1->description =
-	_
-	("Existing raster map representing data that will be summed within clumps");
+	_("Existing raster map representing data that will be summed within clumps");
 
     opt2 = G_define_option();
     opt2->key = "clump";
@@ -77,11 +76,11 @@ int main(int argc, char *argv[])
 
     flag1 = G_define_flag();
     flag1->key = 'f';
-    flag1->description = "Generate unformatted report";
+    flag1->description = _("Generate unformatted report");
 
     flag2 = G_define_flag();
     flag2->key = 'q';
-    flag2->description = "Run quietly";
+    flag2->description = _("Run quietly");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
