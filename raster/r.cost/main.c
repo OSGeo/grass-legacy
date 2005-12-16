@@ -3,7 +3,7 @@
  *
  *     This is the main program for the minimum path cost analysis.
  *     It generates a cumulative cost map (output) from an elevation
- *     or cost map (input) with repsect to starting locations (coor).
+ *     or cost map (input) with respect to starting locations (coor).
  *
  *     It takes as input the following:
  *     1) Cost of traversing each grid cell as given by a cost map
@@ -178,7 +178,7 @@ int main(int argc, char *argv[])
     opt10->key_desc = "percent memory";
     opt10->required = NO;
     opt10->multiple = NO;
-    opt10->answer = "25";
+    opt10->answer = "100";
     opt10->description = _("Percent of map to keep in memory");
 
     flag1 = G_define_flag();
@@ -202,7 +202,7 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-    /* initalize access to database and create temporary files */
+    /* Initalize access to database and create temporary files */
 
     in_file = G_tempfile();
     out_file = G_tempfile();
@@ -214,11 +214,6 @@ int main(int argc, char *argv[])
 
     /*  Find north-south, east_west and diagonal factors */
 
-    /*
-     * NS_fac = window.ns_res*dist_fac;
-     * EW_fac = window.ew_res*dist_fac;
-     * DIAG_fac = (double)sqrt((double)(NS_fac*NS_fac + EW_fac*EW_fac));
-     */
     EW_fac = 1.0;
     NS_fac = window.ns_res / window.ew_res;
     DIAG_fac = (double)sqrt((double)(NS_fac * NS_fac + EW_fac * EW_fac));
@@ -269,11 +264,11 @@ int main(int argc, char *argv[])
     if ((opt6->answer == NULL) ||
 	(sscanf(opt6->answer, "%lf", &null_cost) != 1)) {
 	if (verbose)
-	    fprintf(stderr, "Null cells excluded from cost evaluation.\n");
+	    G_message (_("Null cells excluded from cost evaluation."));
 	G_set_d_null_value(&null_cost, 1);
     }
     else if (verbose && keep_nulls)
-	fprintf(stderr, "Input null cell will be retained into output map\n");
+	G_message (_("Input null cell will be retained into output map"));
 
     if (opt7->answer) {
 	search_mapset = G_find_vector(opt7->answer, "");
@@ -283,8 +278,7 @@ int main(int argc, char *argv[])
 
     if (!G_is_d_null_value(&null_cost)) {
 	if (null_cost < 0.0) {
-	    printf
-		("Warning: assigning negative cost to null cell. Null cells excluded.\n");
+	    G_warning (_("Warning: assigning negative cost to null cell. Null cells excluded."));
 	    G_set_d_null_value(&null_cost, 1);
 	}
     }
@@ -307,7 +301,7 @@ int main(int argc, char *argv[])
     if (G_legal_filename(cum_cost_layer) < 0)
 	G_fatal_error(_("%s - illegal name"), cum_cost_layer);
 
-    /*  find number of rows and columns in window    */
+    /*  Find number of rows and columns in window    */
 
     nrows = G_window_rows();
     ncols = G_window_cols();
@@ -328,17 +322,16 @@ int main(int argc, char *argv[])
     if (verbose) {
 	switch (data_type) {
 	case (CELL_TYPE):
-	    fprintf(stderr, "Source map is: Integer cell type,");
+	    G_message(_("Source map is: Integer cell type"));
 	    break;
 	case (FCELL_TYPE):
-	    fprintf(stderr, "Source map is: Floating point (float) cell type,");
+	    G_message(_("Source map is: Floating point (float) cell type"));
 	    break;
 	case (DCELL_TYPE):
-	    fprintf(stderr,
-		    "Source map is: Floating point (double) cell type,");
+	    G_message(_("Source map is: Floating point (double) cell type"));
 	    break;
 	}
-	fprintf(stderr, " %d rows, %d cols.\n", nrows, ncols);
+	G_message(_(" %d rows, %d cols."), nrows, ncols);
     }
 
     srows = scols = SEGCOLSIZE;
@@ -350,10 +343,8 @@ int main(int argc, char *argv[])
 
     /*   Create segmented format files for cost layer and output layer  */
 
-    if (verbose) {
-	fprintf(stderr, "Creating some temporary files ...");
-	fflush(stderr);
-    }
+    if (verbose)
+	G_message(_("Creating some temporary files ..."));
 
     in_fd = creat(in_file, 0666);
     segment_format(in_fd, nrows, ncols, srows, scols, sizeof(double));
@@ -374,10 +365,8 @@ int main(int argc, char *argv[])
 
     /*   Write the cost layer in the segmented file  */
 
-    if (verbose) {
-	fprintf(stderr, "\n");
-	fprintf(stderr, "Reading %s ...", cost_layer);
-    }
+    if (verbose)
+	G_message(_("Reading %s ..."), cost_layer);
 
     {
 	int i;
@@ -390,7 +379,8 @@ int main(int argc, char *argv[])
 	    if (verbose)
 		G_percent(row, nrows, 2);
 	    if (G_get_raster_row(cost_fd, cell, row, data_type) < 0)
-		exit(1);
+		G_fatal_error(_("Can't get row %d from raster map %s"), row,
+		              cost_layer);
 
 	    /* INPUT NULL VALUES: ??? */
 	    ptr2 = cell;
@@ -443,16 +433,16 @@ int main(int argc, char *argv[])
 
     /*   Initialize segmented output file  */
     if (verbose)
-	fprintf(stderr, "Initializing output \n");
+	G_message(_("Initializing output "));
+    
     {
 	double *fbuff;
 	int i;
 
 	fbuff = (double *)G_malloc(ncols * sizeof(double));
 
-	if (fbuff == NULL) {
-	    printf("fbuff == NULL\n");
-	}
+	if (fbuff == NULL)
+	    G_fatal_error(_("Can't allocate memory for segment fbuff == NULL"));
 
 	G_set_d_null_value(fbuff, ncols);
 
@@ -659,7 +649,7 @@ int main(int argc, char *argv[])
 
     if (verbose) {
 	system("date");
-	fprintf(stderr, "Finding cost path\n");
+	G_message(_("Finding cost path"));
     }
     n_processed = 0;
     total_cells = nrows * ncols;
@@ -675,15 +665,10 @@ int main(int argc, char *argv[])
 	if (maxcost && ((double)maxcost < pres_cell->min_cost))
 	    break;
 
-	/*  fprintf(stderr,"P: %d,%d:%f\n",pres_cell->row,pres_cell->col,pres_cell->min_cost) ; */
-
 	/* If I've already been updated, delete me */
 	segment_get(&out_seg, &old_min_cost, pres_cell->row, pres_cell->col);
-	/*fprintf(stderr,"old=%f cell=%f\n", old_min_cost, pres_cell->min_cost) ; */
 	if (!G_is_d_null_value(&old_min_cost)) {
-	    /*fprintf(stderr,"not null\n") ; */
 	    if (pres_cell->min_cost > old_min_cost) {
-		/*fprintf(stderr,"deleting\n") ; */
 		delete(pres_cell);
 		pres_cell = get_lowest();
 		continue;
@@ -696,7 +681,7 @@ int main(int argc, char *argv[])
 	    G_percent(++n_processed, total_cells, 1);
 
 	/*          9    10       Order in which neighbors 
-	 *       13 5  3  6 14    are visited.
+	 *       13 5  3  6 14    are visited (Knight move).
 	 *          1     2
 	 *       16 8  4  7 15
 	 *         12    11
@@ -870,30 +855,12 @@ int main(int argc, char *argv[])
 	    segment_get(&out_seg, &old_min_cost, row, col);
 
 	    if (G_is_d_null_value(&old_min_cost)) {
-		/*                              printf("*"); */
-		/*                              printf(".%.3lf %d,%d\n",min_cost,row,col);   */
 		segment_put(&out_seg, &min_cost, row, col);
 		new_cell = insert(min_cost, row, col);
-		/*
-		 * check_all("Insert: ") ;
-		 * fprintf(stderr,"I: %d,%d:%f\n", row,col,min_cost) ;
-		 * show_all() ;
-		 */
 	    }
 	    else {
-		struct cost *ct;
 		if (old_min_cost > min_cost) {
 		    segment_put(&out_seg, &min_cost, row, col);
-		    /*
-		     * ct = find(old_min_cost, row, col) ;
-		     * if (ct)
-		     * delete(ct);
-		     * else {
-		     * printf ("Null...\n");
-		     * goto OUT;
-		     * }
-		     */
-
 		    new_cell = insert(min_cost, row, col);
 		}
 		else {
@@ -904,25 +871,17 @@ int main(int argc, char *argv[])
 	if (have_stop_points && time_to_stop(pres_cell->row, pres_cell->col))
 	    break;
 
-	/*
-	 * fprintf(stderr,"D: %d,%d:%f\n", pres_cell->row,pres_cell->col,pres_cell->min_cost) ;
-	 * show_all() ;
-	 */
 	ct = pres_cell;
 	delete(pres_cell);
-	/*
-	 * check_all("Delete: ") ;
-	 * show_all() ;
-	 */
 
 	pres_cell = get_lowest();
 	if (pres_cell == NULL) {
 	    if (verbose)
-		fprintf(stderr, "End of map!\n");
+		G_message(_("End of map!"));
 	    goto OUT;
 	}
 	if (ct == pres_cell)
-	    printf("Error, ct == pres_cell\n");
+	    G_warning(_("Error, ct == pres_cell"));
     }
   OUT:
     /*  Open cumulative cost layer for writing   */
@@ -936,32 +895,27 @@ int main(int argc, char *argv[])
     /*  Copy segmented map to output map  */
     if (verbose) {
 	system("date");
-	fprintf(stderr, "Writing %s ... ", cum_cost_layer);
+	G_message(_("Writing %s ... "), cum_cost_layer);
     }
 
     if (keep_nulls) {
 	if (verbose)
-	    fprintf(stderr,
-		    "Will copy input map null values into output map\n");
+	    G_message(_
+		    ("Will copy input map null values into output map"));
 	cell2 = G_allocate_raster_buf(data_type);
     }
 
-    if (data_type == CELL_TYPE) {
+     if (data_type == CELL_TYPE) {
 	int *p;
 	int *p2;
-	if (verbose) {
-	    fprintf(stderr, "Integer cell type.\n");
-	    fprintf(stderr, "Writing...");
-	}
+	if (verbose)
+	    G_message(_("Integer cell type.\nWriting..."));
 	for (row = 0; row < nrows; row++) {
 	    if (verbose)
 		G_percent(row, nrows, 2);
-
 	    if (keep_nulls) {
-		if (G_get_raster_row(cost_fd, cell2, row, data_type) < 0) {
-		    fprintf(stderr, "Error getting input null cells\n");
-		    exit(1);
-		}
+		if (G_get_raster_row(cost_fd, cell2, row, data_type) < 0)
+		    G_fatal_error(_("Error getting input null cells"));
 	    }
 	    p = cell;
 	    p2 = cell2;
@@ -988,18 +942,14 @@ int main(int argc, char *argv[])
     else if (data_type == FCELL_TYPE) {
 	float *p;
 	float *p2;
-	if (verbose) {
-	    fprintf(stderr, "Float cell type.\n");
-	    fprintf(stderr, "Writing...");
-	}
+	if (verbose)
+	    G_message(_("Float cell type.\nWriting..."));
 	for (row = 0; row < nrows; row++) {
 	    if (verbose)
 		G_percent(row, nrows, 2);
 	    if (keep_nulls) {
-		if (G_get_raster_row(cost_fd, cell2, row, data_type) < 0) {
-		    fprintf(stderr, "Error getting input null cells\n");
-		    exit(1);
-		}
+		if (G_get_raster_row(cost_fd, cell2, row, data_type) < 0)
+		    G_fatal_error(_("Error getting input null cells"));
 	    }
 	    p = cell;
 	    p2 = cell2;
@@ -1026,18 +976,14 @@ int main(int argc, char *argv[])
     else if (data_type == DCELL_TYPE) {
 	double *p;
 	double *p2;
-	if (verbose) {
-	    fprintf(stderr, "Double cell type.\n");
-	    fprintf(stderr, "Writing...");
-	}
+	if (verbose)
+	    G_message(_("Double cell type.\nWriting..."));
 	for (row = 0; row < nrows; row++) {
 	    if (verbose)
 		G_percent(row, nrows, 2);
 	    if (keep_nulls) {
-		if (G_get_raster_row(cost_fd, cell2, row, data_type) < 0) {
-		    fprintf(stderr, "Error getting input null cells\n");
-		    exit(1);
-		}
+		if (G_get_raster_row(cost_fd, cell2, row, data_type) < 0)
+		    G_fatal_error(_("Error getting input null cells"));
 	    }
 	    p = cell;
 	    p2 = cell2;
@@ -1065,7 +1011,8 @@ int main(int argc, char *argv[])
     if (verbose)
 	G_percent(row, nrows, 2);
 
-    printf("Peak cost value: %f\n", peak);
+    if (verbose)
+	G_message(_("Peak cost value: %f"), peak);
 
     segment_release(&in_seg);	/* release memory  */
     segment_release(&out_seg);
@@ -1103,22 +1050,14 @@ process_answers(char **answers, struct start_pt **points,
 	return (0);
 
     for (n = 0; *answers != NULL; answers += 2) {
-	if (!G_scan_easting(*answers, &east, G_projection())) {
-	    fprintf(stderr, "Illegal x coordinate <%s>\n", *answers);
-	    G_usage();
-	    exit(1);
-	}
-	if (!G_scan_northing(*(answers + 1), &north, G_projection())) {
-	    fprintf(stderr, "Illegal y coordinate <%s>\n", *(answers + 1));
-	    G_usage();
-	    exit(1);
-	}
+	if (!G_scan_easting(*answers, &east, G_projection()))
+	    G_fatal_error(_("Illegal x coordinate <%s>"), *answers);
+	if (!G_scan_northing(*(answers + 1), &north, G_projection())) 
+	    G_fatal_error(_("Illegal y coordinate <%s>"), *(answers + 1));
 
-	if (east < window.west ||
-	    east > window.east ||
+	if (east < window.west || east > window.east ||
 	    north < window.south || north > window.north) {
-	    fprintf(stderr, "Warning, ignoring point outside window: \n");
-	    fprintf(stderr, "   %.4f,%.4f\n", east, north);
+	    G_warning(_("Warning, ignoring point outside window: %.4f,%.4f"), east, north);
 	    continue;
 	}
 	else
