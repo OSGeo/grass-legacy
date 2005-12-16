@@ -111,7 +111,10 @@ int main (int argc, char **argv)
     G_gisinit (argv[0]);
 
     if (G_parser (argc, argv))
-        exit (-1);
+        exit (EXIT_FAILURE);
+
+    if ( db_legal_tablename(dbtable->answer) == DB_FAILED )
+            G_fatal_error ( _("Table name '%s' is not valid."), dbtable->answer );
 
     /* set input vector file name and mapset */
     input = inopt->answer;
@@ -266,5 +269,5 @@ int main (int argc, char **argv)
 
     Vect_close ( &Map);
     
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
