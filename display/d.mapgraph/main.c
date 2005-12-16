@@ -66,7 +66,7 @@ main (int argc, char **argv)
 	if (G_parser(argc, argv))
 		exit(1);
 
-	G_warning("This module is superseded. Please use 'd.graph -m' instead.);
+	G_warning("This module is superseded. Please use 'd.graph -m' instead.");
 
 	if (opt1->answer != NULL)
 	{
