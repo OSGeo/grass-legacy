@@ -25,18 +25,21 @@ incompatible. If both are specified, the <B>-a</B> flag will superceed the
 the final point.
 
 <P>
-The path is calculated by choosing the stepper "slope" beetwen adjacent
+The path is calculated by choosing the stepper "slope" between adjacent
 cells. The slope calculation accurately acounts for the variable scale in
 lat-lon projections.
 
-The <B>coordinate</B> parameter consists of  map E and N grid coordinates of
-a starting point.
-
-Each x,y pair is the easting and northing (respectively) of 
+<P>
+The <B>coordinate</B> parameter consists of map E and N grid coordinates of
+a starting point. Each x,y pair is the easting and northing (respectively) of 
 a starting point from which a least-cost corridor will be developed. 
-As many points as desired can be input. 
+As many points as desired can be input.
 (But, see BUGS below.) 
 
+<P>
+The <B>vector_points</B> parameter are two vector maps containing starting
+point(s) and stop point(s). To calculate the least-cost path from two points 
+stored in a single map, this map name has to be specified twice.
 
 <H2>EXAMPLES</H2>
 
@@ -169,6 +172,10 @@ other programs.  The map resolution can be found using <EM><a href="g.region.htm
 
 <H2>AUTHOR</H2>
 
-Completely rewritten by Roger S. Miller
+Completely rewritten by Roger S. Miller, 2001
+<P>
+July 2004 at WebValley 2004, error checking and vector points added by
+Matteo Franchi (Liceo Leonardo Da Vinci, Trento) and
+Roberto Flor (ITC-irst, Trento, Italy)
 
 <p><i>Last changed: $Date$</i>
