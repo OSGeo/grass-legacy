@@ -8,6 +8,7 @@
 #include "bitmap.h"
 #include "linkm.h"
 
+#define MAIN
 #include "waterglobs.h"
 
 /* **************************************************** */
