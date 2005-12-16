@@ -1,17 +1,16 @@
 #include "gis.h"
 #include "Vect.h"
 #include "glocale.h"
-/**********************************************************************
- *
- *   char *
- *   Vect_legal_filename (name)
- *      char *name           filename to be checked
- *
- *   returns:    1  if name is OK
- *              -1  if name does not start with letter A..Za..z
- *                  or if name does not continue with A..Za..z0..9_@
- *                  Rule:  [A-Za-z][A-Za-z0-9_@]*
- **********************************************************************/
+
+/*!
+ \fn int Vect_legal_filename (char *s)
+ \brief  Check if output is legal vector name
+ \return 1 OK
+ \return -1 if name does not start with letter A..Za..z
+            or if name does not continue with A..Za..z0..9_@
+            Rule:  [A-Za-z][A-Za-z0-9_@]*
+ \param  name filename to be checked
+*/
 
 int Vect_legal_filename (char *s)
 {
