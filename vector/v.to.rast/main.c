@@ -63,7 +63,7 @@ int main (int argc, char *argv[])
     rows->description      = _("number of rows to hold in memory");
 
     if (G_parser (argc, argv))
-	exit (1);
+	exit(EXIT_FAILURE);
 
     field = atoi (field_opt->answer);
     nrows = atoi (rows->answer);
