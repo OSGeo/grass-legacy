@@ -42,10 +42,10 @@
 #% required : yes
 #%end
 
-if  [ -z $GISBASE ] ; then
+if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program."
  exit 1
-fi   
+fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
@@ -74,6 +74,7 @@ cleanup()
    echo "Restoring previous MASK..."
    g.rename ${TMPNAME}_origmask,MASK > /dev/null
  fi
+ rm -f $TMPNAME.cats
 }
 
 # what to do in case of user break:
@@ -136,8 +137,15 @@ if [ $? -ne 0 ] ; then
  exit 1
 fi
 
-CATSLIST="`r.cats ${VECTOR}_${TMPNAME} fs=';' 2> /dev/null | cut -d';' -f1 | tr '\n' ' '`"
-echo "List of categories found: $CATSLIST"
+
+#dump cats to file to avoid "too many argument" problem:
+r.cats ${VECTOR}_${TMPNAME} fs=';' 2> /dev/null | cut -d';' -f1 > $TMPNAME.cats
+#echo "List of categories found: $CATSLIST"
+NUMBER=`cat $TMPNAME.cats | wc -l | awk '{print $1}'`
+if [ $NUMBER -lt 1 ] ; then
+   echo "ERROR: No categories found in raster map"
+   exit 1
+fi
 
 #check if DBF driver used, in this case cut to 10 chars col names:
 DBFDRIVER=0
@@ -158,24 +166,23 @@ for i in n min max range mean stddev variance cf_var sum ; do
   fi
   v.info -c $VECTOR 2> /dev/null | sed 's+^+|+g' |sed 's+$+|+g' | grep "|$CURRCOLUMN|" > /dev/null
   if [ $? -eq 0 ] ; then
-    echo "$column $CURRCOLUMN already present, updating statistic values in table"
     if [ $GIS_FLAG_c -ne 1 ] ; then
-       echo "ERROR: Cannot continue (or use -c flag)."
+       echo "ERROR: Cannot create column <$CURRCOLUMN> (already present). Use -c flag to update values in this column."
        exit 1
     fi
   else
+    echo "Adding column <$CURRCOLUMN>"
     v.db.addcol map=$VECTOR columns="$CURRCOLUMN double"
-    if [ $? -eq 0 ] ; then
-      echo "ERROR: Cannot continue."
+    if [ $? -eq 1 ] ; then
+      echo "ERROR: Cannot continue (problem to add column)."
       exit 1
     fi
   fi
 done
 
 #loop over cats and calculate statistics:
-NUMBER=`echo $CATSLIST | tr ' ' '\n' | wc -l | awk '{print $1}'`
 CURRNUM=1
-for i in $CATSLIST ; do
+for i in `cat $TMPNAME.cats` ; do
  echo "Processing category $i ($CURRNUM/$NUMBER)"
  g.remove MASK > /dev/null 2> /dev/null
  r.mapcalc "MASK=if(${VECTOR}_${TMPNAME} == $i, 1, null())" 2> /dev/null
