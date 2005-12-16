@@ -85,6 +85,10 @@ while [ "$n" -le "$colnum" ]
     fi
     
     echo "ALTER TABLE $table ADD COLUMN $col" | db.execute database=$database driver=$driver
+    if [ $? -eq 1 ] ; then
+      echo "ERROR: Cannot continue (problem to add column)."
+      exit 1
+    fi
     let "n += 1"
   done
 
