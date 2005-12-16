@@ -57,7 +57,6 @@
 #include "bitmap.h"
 #include "site.h"
 
-#define MAIN
 #include "waterglobs.h"
 
 char fncdsm[32];
