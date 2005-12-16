@@ -23,13 +23,16 @@
 /************************************************************************
 *      Rewritten by Roger Miller 7/2001 based on subroutines from       *
 *      r.fill.dir and on the original r.drain.                          *
+*                                                                       *
+*      24 July 2004: WebValley 2004, error checking and vector points added by *
+*               Matteo Franchi          Liceo Leonardo Da Vinci Trento  *
+*               Roberto Flor            ITC-irst                        *
 *************************************************************************/
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-/* #include <limits.h> */
 #include <float.h>
 
 /* for using the "open" statement */
@@ -41,6 +44,7 @@
 #include <unistd.h>
 
 #include "gis.h"
+#include "site.h"
 #include "glocale.h"
 
 #define DEBUG
@@ -60,17 +64,18 @@ int
 main(int argc, char **argv)
 {
 
-   int fe,fd;
-   int i;
+   int fe, fd;
+   int i, have_points=0;
    int new_id;
-   int nrows, ncols;
+   int nrows, ncols, points_row[100],points_col[100],npoints;
    int cell_open(), cell_open_new();
    int map_id;
    char map_name[GNAME_MAX], *map_mapset, new_map_name[GNAME_MAX];
-   char buf[200], *tempfile1, *tempfile2;
+   char *tempfile1, *tempfile2;
+   char *search_mapset ;
 
    struct Cell_head window;
-   struct Option *opt1, *opt2, *opt3;
+   struct Option *opt1, *opt2, *coordopt, *vpointopt;
    struct Flag *flag1, *flag2, *flag3;
    struct GModule *module;
    int in_type;
@@ -107,14 +112,22 @@ main(int argc, char **argv)
    opt2->gisprompt  = "new,cell,raster" ;
    opt2->description= _("Output drain raster map") ;
 
-   opt3 = G_define_option() ;
-   opt3->key        = "coordinate" ;
-   opt3->type       = TYPE_STRING ;
-   opt3->required   = YES ;
-   opt3->multiple   = YES;
-   opt3->key_desc   = "x,y" ;
-   opt3->description= _("The map E and N grid coordinates of a starting point");
+   coordopt = G_define_option() ;
+   coordopt->key        = "coordinate" ;
+   coordopt->type       = TYPE_STRING ;
+   coordopt->required   = NO ;
+   coordopt->multiple   = YES;
+   coordopt->key_desc   = "x,y" ;
+   coordopt->description= _("The map E and N grid coordinates of a starting point");
 
+   vpointopt = G_define_option() ;
+   vpointopt->key        = "vector_points" ;
+   vpointopt->type       = TYPE_STRING ;
+   vpointopt->required   = NO ;
+   vpointopt->multiple   = YES;
+   vpointopt->key_desc   = "start,stop" ;
+   vpointopt->description= _("Vector maps containing starting point(s) and stop point(s)");
+   
    flag1 = G_define_flag();
    flag1->key = 'c';
    flag1->description = _("Copy input cell values on output");
@@ -128,18 +141,15 @@ main(int argc, char **argv)
    flag3->description = _("Count cell numbers along the path");
 
    if(G_parser(argc, argv))
-      exit(-1);
+      exit(EXIT_FAILURE);
 
    strcpy(map_name, opt1->answer);
    strcpy(new_map_name, opt2->answer);
 
 /* get the name of the elevation map layer for filling */
    map_mapset = G_find_cell(map_name,"");
-   if (!map_mapset) {
-      sprintf(buf,"Could not access %s layer.", map_name);
-      G_fatal_error (buf);
-      exit(0);
-   }
+   if (!map_mapset)
+      G_fatal_error (_("Could not access %s layer"), map_name);
 
 /*      allocate cell buf for the map layer */
    in_type = G_raster_map_type (map_name, map_mapset);
@@ -151,10 +161,7 @@ main(int argc, char **argv)
    if(flag2->answer)mode+=1;
    if(flag3->answer)mode+=1;
    if(mode>1)
-   {
-      sprintf(buf, "Specify just one of the -c, -a and -n flags");
-      G_fatal_error (buf) ;
-   }
+      G_fatal_error (_( "Specify just one of the -c, -a and -n flags"));
 
    mode=0;
    if(flag1->answer)mode=1;
@@ -167,11 +174,71 @@ main(int argc, char **argv)
    ncols = G_window_cols();
 
 /* calculate true cell resolution */
-   m = (struct metrics*) malloc(nrows*sizeof(struct metrics));
+   m = (struct metrics*) G_malloc(nrows*sizeof(struct metrics));
    
    if (m==NULL)
-      G_fatal_error("Metrics allocation");
-   
+      G_fatal_error(_("Metrics allocation"));
+     npoints=0;
+    if ( coordopt->answer ) {
+     for(i=0; coordopt->answers[i] != NULL; i+=2) 
+     {
+      G_scan_easting  (coordopt->answers[i  ], &east, G_projection()) ;
+      G_scan_northing (coordopt->answers[i+1], &north, G_projection()) ;
+      start_col = (int)G_easting_to_col(east, &window);
+      start_row = (int)G_northing_to_row(north, &window );
+
+      if(start_row < 0 || start_row > nrows ||
+          start_col < 0 || start_col > ncols)
+      {
+         G_warning (_("Starting point %d is outside the current region"),i+1);
+         continue;
+      }
+	  points_row[npoints]=start_row;
+	  points_col[npoints]=start_col;
+	  npoints++;
+	  have_points=1;
+	 }
+    }
+	if (vpointopt->answer && (have_points == 0) )
+	 for(i=0; vpointopt->answers[i] != NULL; i++) {
+		FILE *fp;
+/*		struct start_pt  *new_start_pt;*/
+		Site *site = NULL;               /* pointer to Site */
+		search_mapset = "";
+ 
+		search_mapset = G_find_sites ( vpointopt->answers[i], "");
+		if (search_mapset == NULL)
+			G_fatal_error (_("Vector map %s - not found"), vpointopt->answers[i]);
+		fp = G_fopen_sites_old ( vpointopt->answers[i], search_mapset);
+		site = G_site_new_struct (-1, 2, 0, 0);		
+		for (; (G_site_get(fp,site) != EOF);) {
+			if (!G_site_in_region (site, &window))
+				continue;
+			start_col = (int)G_easting_to_col(site->east, &window);
+    		start_row = (int)G_northing_to_row(site->north, &window );
+
+      		if(start_row < 0 || start_row > nrows ||
+          	  start_col < 0 || start_col > ncols)
+      		{
+         		G_warning (_("Starting vector map %s is outside the current region"),vpointopt->answers[i]);
+         		continue;
+      		}
+			points_row[npoints]=start_row;
+		    points_col[npoints]=start_col;
+	  		npoints++;
+		    have_points=1;
+		}
+   }
+   if ( have_points == 0 )
+   		G_fatal_error(_("No starting/stopping point specified"));
+  
+/* determine the drainage paths */
+
+/* allocate storage for the first point */
+   thispoint=(struct point*) G_malloc(sizeof(struct point));
+   list=thispoint;
+   thispoint->next=NULL;
+
    G_begin_distance_calculations();
    {
       double e1,n1,e2,n2;
@@ -191,16 +258,16 @@ main(int argc, char **argv)
 /* buffers for internal use */
    bndC.ns=ncols;
    bndC.sz=sizeof(CELL)*ncols;
-   bndC.b[0]=calloc(ncols,sizeof(CELL));
-   bndC.b[1]=calloc(ncols,sizeof(CELL));
-   bndC.b[2]=calloc(ncols,sizeof(CELL));
+   bndC.b[0]=G_calloc(ncols,sizeof(CELL));
+   bndC.b[1]=G_calloc(ncols,sizeof(CELL));
+   bndC.b[2]=G_calloc(ncols,sizeof(CELL));
 
 /* buffers for external use */
    bnd.ns=ncols;
    bnd.sz=ncols*bpe();
-   bnd.b[0]=calloc(ncols,bpe());
-   bnd.b[1]=calloc(ncols,bpe());
-   bnd.b[2]=calloc(ncols,bpe());
+   bnd.b[0]=G_calloc(ncols,bpe());
+   bnd.b[1]=G_calloc(ncols,bpe());
+   bnd.b[2]=G_calloc(ncols,bpe());
 
 /* an input buffer */
    in_buf = get_buf();
@@ -240,34 +307,14 @@ main(int argc, char **argv)
 
 /* determine the drainage paths */
 
-/* allocate storage for the first point */
-   thispoint=(struct point*)malloc(sizeof(struct point));
-   list=thispoint;
-   thispoint->next=NULL;
-
 /* repeat for each starting point */
-   for(i=0; opt3->answers[i] != NULL; i+=2) 
-   {
-      G_scan_easting  (opt3->answers[i  ], &east, G_projection()) ;
-      G_scan_northing (opt3->answers[i+1], &north, G_projection()) ;
-      start_col = (int)G_easting_to_col(east, &window);
-      start_row = (int)G_northing_to_row(north, &window );
-
-      if(start_row < 0 || start_row > nrows ||
-          start_col < 0 || start_col > ncols)
-      {
-         sprintf(buf,"Starting point %d is outside the current region.",i+1);
-         G_warning (buf);
-         continue;
-      }
-
+   for(i=0;i<npoints;i++) {
 /* use the flow directions to determine the drainage path
    results are compiled as a linked list of points in downstream order */
-      thispoint->row=start_row;
-      thispoint->col=start_col;
+      thispoint->row=points_row[i];
+      thispoint->col=points_col[i];
       thispoint->next=NULL;
       thispoint=drain(fd,thispoint,nrows,ncols);
-
    }
 
 /* do the output */
@@ -390,7 +437,7 @@ main(int argc, char **argv)
    G_free (in_buf);
    G_free (out_buf);
 
-   exit (0);
+   exit (EXIT_SUCCESS);
 }
 
 struct point* drain(int fd, struct point *list, int nrow, int ncol)
@@ -427,7 +474,7 @@ struct point* drain(int fd, struct point *list, int nrow, int ncol)
             && next_row>=0 && next_row<nrow) 
          {
 /* allocate and fill the next point structure */
-            list->next=(struct point*)malloc(sizeof(struct point));
+            list->next=(struct point*)G_malloc(sizeof(struct point));
             list=list->next;
             list->row=next_row;
             list->col=next_col;
@@ -437,12 +484,12 @@ struct point* drain(int fd, struct point *list, int nrow, int ncol)
    } /* end while */
 
 /* allocate and fill the end-of-path flag */
-   list->next=(struct point *)malloc(sizeof(struct point));
+   list->next=(struct point *)G_malloc(sizeof(struct point));
    list=list->next;
    list->row=INT_MAX;
 
 /* return a pointer to an empty structure */
-   list->next=(struct point *)malloc(sizeof(struct point));
+   list->next=(struct point *)G_malloc(sizeof(struct point));
    list=list->next;
    list->next=NULL;
 
