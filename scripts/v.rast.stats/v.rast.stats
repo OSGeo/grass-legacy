@@ -61,7 +61,13 @@ fi
 unset LC_ALL
 export LC_NUMERIC=C
 
-TMPNAME=v_rast_stats.$$
+#### setup temporary file
+TMP="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+    echo "ERROR: unable to create temporary files" 1>&2
+    exit 1
+fi
+TMPNAME=`basename $TMP`
 
 cleanup()
 {
@@ -74,7 +80,7 @@ cleanup()
    echo "Restoring previous MASK..."
    g.rename ${TMPNAME}_origmask,MASK > /dev/null
  fi
- rm -f $TMPNAME.cats
+ rm -f $TMPNAME $TMP.cats
 }
 
 # what to do in case of user break:
@@ -139,9 +145,9 @@ fi
 
 
 #dump cats to file to avoid "too many argument" problem:
-r.cats ${VECTOR}_${TMPNAME} fs=';' 2> /dev/null | cut -d';' -f1 > $TMPNAME.cats
+r.cats ${VECTOR}_${TMPNAME} fs=';' 2> /dev/null | cut -d';' -f1 > $TMP.cats
 #echo "List of categories found: $CATSLIST"
-NUMBER=`cat $TMPNAME.cats | wc -l | awk '{print $1}'`
+NUMBER=`cat $TMP.cats | wc -l | awk '{print $1}'`
 if [ $NUMBER -lt 1 ] ; then
    echo "ERROR: No categories found in raster map"
    exit 1
@@ -182,7 +188,7 @@ done
 
 #loop over cats and calculate statistics:
 CURRNUM=1
-for i in `cat $TMPNAME.cats` ; do
+for i in `cat $TMP.cats` ; do
  echo "Processing category $i ($CURRNUM/$NUMBER)"
  g.remove MASK > /dev/null 2> /dev/null
  r.mapcalc "MASK=if(${VECTOR}_${TMPNAME} == $i, 1, null())" 2> /dev/null
