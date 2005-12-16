@@ -45,7 +45,7 @@ stored in a single map, this map name has to be specified twice.
 
 Consider the following example: 
 
-<PRE>
+<div class="code"><pre>
 Input:                          Output:
   ELEVATION SURFACE               LEAST COST PATH
 . . ----- . . . . . . . . . .    . . . . . . . . . . . . . . .
@@ -61,7 +61,7 @@ Input:                          Output:
 . . . . . . . . . . . . . . .    . . . . . . . . . . . . . . .
 . 17. 9 . 8 . 7 . 8 . 6 .12 .    .   .   .   .   .   .   .   .
 . . . . . . . . . . . . . . .    . . . . . . . . . . . . . . .
-</PRE>
+</pre></div>
 
 <P>
 
@@ -73,7 +73,8 @@ would take in this landscape.
 <P>
 
 With the <B>-c</B> <EM>(copy)</EM> flag, you get the following result:
-<PRE>
+
+<div class="code"><pre>
 Input:                          Output:
   ELEVATION SURFACE               LEAST COST PATH
 . . ----- . . . . . . . . . .    . . . . . . . . . . . . . . .
@@ -91,12 +92,13 @@ Input:                          Output:
 . . . . . . . . . . . . . . .    . . . . . . . . . . . . . . .
 <P>
 Note that the last <EM>0</EM> will not be put in the null values map.
-</PRE>
+</pre></div>
 
 <P>
 
 With the <B>-a</B> <EM>(accumulate)</EM> flag, you get the following result:
-<PRE>
+
+<div class="code"><pre>
 Input:                          Output:
   ELEVATION SURFACE               LEAST COST PATH
 . . ----- . . . . . . . . . .    . . . . . . . . . . . . . . .
@@ -112,12 +114,13 @@ Input:                          Output:
 . . . . . . . . . . . . . . .    . . . . . . . . . . . . . . .
 . 17. 9 . 8 . 7 . 8 . 6 .12 .    .   .   .   .   .   .   .   .
 . . . . . . . . . . . . . . .    . . . . . . . . . . . . . . .
-</PRE>
+</pre></div>
 
 <P>
 
 With the <B>-n</B> <EM>(number)</EM> flag, you get the following result:
-<PRE>
+
+<div class="code"><pre>
 Input:                          Output:
   ELEVATION SURFACE               LEAST COST PATH
 . . ----- . . . . . . . . . .    . . . . . . . . . . . . . . .
@@ -133,7 +136,7 @@ Input:                          Output:
 . . . . . . . . . . . . . . .    . . . . . . . . . . . . . . .
 . 17. 9 . 8 . 7 . 8 . 6 .12 .    .   .   .   .   .   .   .   .
 . . . . . . . . . . . . . . .    . . . . . . . . . . . . . . .
-</PRE>
+</pre></div>
 
 <P>
 
@@ -168,7 +171,8 @@ other programs.  The map resolution can be found using <EM><a href="g.region.htm
 
 <EM><A HREF="g.region.html">g.region</A></EM>,
 <EM><A HREF="r.cost.html">r.cost</A></EM>,
-<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>,
+<EM><A HREF="r.walk.html">r.walk</A></EM>
 
 <H2>AUTHOR</H2>
 
