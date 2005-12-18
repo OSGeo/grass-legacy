@@ -18,6 +18,7 @@
 #include <dirent.h>
 #include "gis.h"
 #include "symbol.h"
+#include "glocale.h"
 
 static char key[100], data[500];
 
@@ -199,7 +200,7 @@ read_coor ( FILE *fp, SYMBEL *e )
 	}
 
 	if ( sscanf( buf, "%lf %lf", &x, &y) != 2) {
-	    G_warning ( "Cannot read symbol line coordinates: %s", buf);
+	    G_warning(_("Cannot read symbol line coordinates: %s"), buf);
 	    return;
 	}
 	G_debug ( 5, "      x = %f y = %f", x, y);
@@ -220,7 +221,8 @@ err ( FILE *fp, SYMBOL *s, char *msg ) {
 *  Read symbol specified by name.
 *  Name: group/name | group/name@mapset 
 *        (later add syntax to prefer symbol from GISBASE)
-*  S_read() searches first in mapsets (standard GRASS search) and than in GISDBASE/etc/symb/ 
+*  S_read() searches first in mapsets (standard GRASS search) and
+*   then in GISBASE/etc/symbol/ 
 */
 SYMBOL *
 S_read ( char *sname )
@@ -247,7 +249,7 @@ S_read ( char *sname )
     strcpy ( group, sname );
     c = strchr ( group, '/' );
     if ( c == NULL ) {
-        G_warning ( "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)", sname);
+	G_warning(_("Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"), sname);
         return NULL;
     }
     c[0] = '\0';
@@ -263,13 +265,13 @@ S_read ( char *sname )
 
     if ( ms != NULL ) { /* Found in mapsets */
         fp = G_fopen_old( buf, name, ms);
-    } else {  /* Search in GISDBASE */
+    } else {  /* Search in GISBASE */
         sprintf (buf, "%s/etc/symbol/%s", G_gisbase(), sname );
 	fp = fopen ( buf, "r" );
     }
 
     if ( fp == NULL ) {
-        G_warning ( "Cannot find/open symbol: '%s'", sname);
+        G_warning(_("Cannot find/open symbol: '%s'"), sname);
         return NULL;
     }
 
@@ -358,7 +360,7 @@ S_read ( char *sname )
 		part->color.fr = fr; part->color.fg = fg; part->color.fb = fb;
 		G_debug ( 4, "  color %d %d %d = %.2f %.2f %.2f", r, g, b, fr, fg, fb );
 	    } else {
-	        G_warning( "Incorrect symbol color: '%s', using default.", buf); 
+	        G_warning(_("Incorrect symbol color: '%s', using default."), buf); 
 	    }
 	} else if ( strcmp ( key, "FCOLOR" ) == 0 ) {
 	    if ( G_strcasecmp (data, "NONE" ) == 0 ) {
@@ -370,7 +372,7 @@ S_read ( char *sname )
 		part->fcolor.fr = fr; part->fcolor.fg = fg; part->fcolor.fb = fb;
 		G_debug ( 4, "  color %d %d %d = %.2f %.2f %.2f", r, g, b, fr, fg, fb );
 	    } else {
-	        G_warning( "Incorrect symbol color: '%s', using default.", buf); 
+	        G_warning(_("Incorrect symbol color: '%s', using default."), buf); 
 	    }
 	} else {
 	    sprintf ( buf, "Unknown keyword in symbol: '%s'", buf); 
