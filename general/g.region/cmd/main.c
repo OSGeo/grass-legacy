@@ -55,7 +55,8 @@ int main (int argc, char *argv[])
 		*res_set,
 		*dist_res,
 		*dflt,
-		*z;
+		*z,
+		*bbox;
 	} flag;
 	struct
 	    {
@@ -115,6 +116,11 @@ int main (int argc, char *argv[])
 	flag.z = G_define_flag();
 	flag.z->key         = '3';
 	flag.z->description = _("Print also 3D settings");
+
+	flag.bbox = G_define_flag();
+	flag.bbox->key         = 'b';
+	flag.bbox->description = _("Print the maximum bounding box in lat/long (-g mode only)");
+
 
 	/* parameters */
 
@@ -318,7 +324,7 @@ int main (int argc, char *argv[])
 		G_get_default_window (&window);
 
 	/* region= */
-	if (name = parm.region->answer)
+	if ((name = parm.region->answer))
 	{
 		mapset = G_find_file ("windows", name, "");
 		if (!mapset)
@@ -328,7 +334,7 @@ int main (int argc, char *argv[])
 	}
 
 	/* 3dview= */
-	if (name = parm.view->answer)
+	if ((name = parm.view->answer))
 	{
 		struct G_3dview v;
 		FILE *fp;
@@ -399,7 +405,7 @@ int main (int argc, char *argv[])
 				
 
 	/* raster3d= */
-	if (name = parm.raster3d->answer)
+	if ((name = parm.raster3d->answer))
 	{
 	    	G3D_Region win;
 		
@@ -430,7 +436,7 @@ int main (int argc, char *argv[])
 	}
 
 	/* vect= */
-	if (name = parm.vect->answer)
+	if ((name = parm.vect->answer))
 	{
 		struct Map_info Map;
 		BOUND_BOX box;
@@ -468,9 +474,9 @@ int main (int argc, char *argv[])
 	}
 
 	/* n= */
-	if (value = parm.north->answer)
+	if ((value = parm.north->answer))
 	{
-		if(i = nsew(value, "n+", "n-", "s+"))
+		if((i = nsew(value, "n+", "n-", "s+")))
 		{
 			if (!G_scan_resolution (value+2, &x, window.proj))
 				die(parm.north);
@@ -494,9 +500,9 @@ int main (int argc, char *argv[])
 	}
 
 	/* s= */
-	if (value = parm.south->answer)
+	if ((value = parm.south->answer))
 	{
-		if(i = nsew(value, "s+", "s-", "n-"))
+		if((i = nsew(value, "s+", "s-", "n-")))
 		{
 			if (!G_scan_resolution (value+2, &x, window.proj))
 				die(parm.south);
@@ -520,9 +526,9 @@ int main (int argc, char *argv[])
 	}
 
 	/* e= */
-	if (value = parm.east->answer)
+	if ((value = parm.east->answer))
 	{
-		if(i = nsew(value, "e+", "e-", "w+"))
+		if((i = nsew(value, "e+", "e-", "w+")))
 		{
 			if (!G_scan_resolution (value+2, &x, window.proj))
 				die(parm.east);
@@ -546,9 +552,9 @@ int main (int argc, char *argv[])
 	}
 
 	/* w= */
-	if (value = parm.west->answer)
+	if ((value = parm.west->answer))
 	{
-		if(i = nsew(value, "w+", "w-", "e-"))
+		if((i = nsew(value, "w+", "w-", "e-")))
 		{
 			if (!G_scan_resolution (value+2, &x, window.proj))
 				die(parm.west);
@@ -572,9 +578,9 @@ int main (int argc, char *argv[])
 	}
 
 	/* t= */
-	if (value = parm.top->answer)
+	if ((value = parm.top->answer))
 	{
-		if(i = nsew(value, "t+", "t-", "b+"))
+		if((i = nsew(value, "t+", "t-", "b+")))
 		{
 			if ( sscanf (value+2, "%lf", &x) != 1 )
 				die(parm.top);
@@ -598,9 +604,9 @@ int main (int argc, char *argv[])
 	}
 
 	/* b= */
-	if (value = parm.bottom->answer)
+	if ((value = parm.bottom->answer))
 	{
-		if(i = nsew(value, "b+", "b-", "t-"))
+		if((i = nsew(value, "b+", "b-", "t-")))
 		{
 			if (  sscanf (value+2, "%lf", &x) != 1 )
 				die(parm.bottom);
@@ -624,7 +630,7 @@ int main (int argc, char *argv[])
 	}
 
 	/* res= */
-	if (value = parm.res->answer)
+	if ((value = parm.res->answer))
 	{
 		if (!G_scan_resolution (value, &x, window.proj))
 			die(parm.res);
@@ -640,7 +646,7 @@ int main (int argc, char *argv[])
 	}
 
 	/* res3= */
-	if (value = parm.res3->answer)
+	if ((value = parm.res3->answer))
 	{
 		if (!G_scan_resolution (value, &x, window.proj))
 			die(parm.res);
@@ -650,7 +656,7 @@ int main (int argc, char *argv[])
 	}
 
 	/* nsres= */
-	if (value = parm.nsres->answer)
+	if ((value = parm.nsres->answer))
 	{
 		if (!G_scan_resolution (value, &x, window.proj))
 			die(parm.nsres);
@@ -663,7 +669,7 @@ int main (int argc, char *argv[])
 	}
 
 	/* ewres= */
-	if (value = parm.ewres->answer)
+	if ((value = parm.ewres->answer))
 	{
 		if (!G_scan_resolution (value, &x, window.proj))
 			die(parm.ewres);
@@ -676,7 +682,7 @@ int main (int argc, char *argv[])
 	}
 
 	/* tbres= */
-	if (value = parm.tbres->answer)
+	if ((value = parm.tbres->answer))
 	{
 		if ( sscanf (value, "%lf", &x) != 1 )
 			die(parm.tbres);
@@ -689,7 +695,7 @@ int main (int argc, char *argv[])
 	}
 
 	/* zoom= */
-	if (name = parm.zoom->answer)
+	if ((name = parm.zoom->answer))
 	{
 		mapset = G_find_cell2 (name, "");
 		if (!mapset)
@@ -698,7 +704,7 @@ int main (int argc, char *argv[])
 	}
 
 	/* align= */
-	if (name = parm.align->answer)
+	if ((name = parm.align->answer))
 	{
 		mapset = G_find_cell2 (name, "");
 		if (!mapset)
@@ -706,12 +712,12 @@ int main (int argc, char *argv[])
 		if (G_get_cellhd (name, mapset, &temp_window) < 0)
 			G_fatal_error (_("can't read header for <%s> in <%s>"),
 			    name, mapset);
-		if (err = G_align_window (&window, &temp_window))
+		if ((err = G_align_window (&window, &temp_window)))
 			G_fatal_error (_("%s in %s: %s"), name, mapset, err);
 	}
 
 	/* save= */
-	if (name = parm.save->answer)
+	if ((name = parm.save->answer))
 	{
 		if (G_legal_filename (name) < 0)
 			G_fatal_error (_("<%s> - illegal region name"), name);
@@ -729,7 +735,7 @@ int main (int argc, char *argv[])
 	}
 
 	if (print_flag)
-	    print_window (&window, print_flag, dist_flag, flag.z->answer, flag.gprint->answer);
+	    print_window (&window, print_flag, dist_flag, flag.z->answer, flag.gprint->answer, flag.bbox->answer);
 
 	exit(0);
 }
