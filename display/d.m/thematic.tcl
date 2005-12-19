@@ -88,6 +88,13 @@ proc DmThematic::show_columns { id } {
 		layer=$layernum &		
 }
 
+proc DmThematic::show_data { id } {
+	variable opt
+	global bgcolor
+	set mapname $opt($id,map)
+	exec xterm -bg $bgcolor -title "$mapname data" \
+		-geometry 60x40-10+30 -sb -hold -e db.select table=$mapname &
+}
 
 # select symbols from directories
 proc DmThematic::select_symbol { id } {
@@ -138,7 +145,7 @@ proc DmThematic::options { id frm } {
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
     
-	#show columns
+	#show columns and data
 	set row [ frame $frm.columns ]
     Label $row.a -text [G_msg "    show attribute columns"] 
     Button $row.b -text [G_msg "columns"] \
@@ -146,7 +153,13 @@ proc DmThematic::options { id frm } {
             -command "DmThematic::show_columns $id" \
             -background $bgcolor \
             -helptext [G_msg "Show columns"]
-    pack $row.a $row.b -side left
+    Label $row.c -text [G_msg "     show data"] 
+    Button $row.d -text [G_msg "data"] \
+            -image [image create photo -file "$dmpath/columns.gif"] \
+            -command "DmThematic::show_data $id" \
+            -background $bgcolor \
+            -helptext [G_msg "Show data"]
+    pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
     
 
@@ -157,8 +170,8 @@ proc DmThematic::options { id frm } {
                     -values {"graduated_colors" "graduated_points" "graduated_lines"} -entrybg white
     Label $row.c -text [G_msg " map by"] 
     ComboBox $row.d -padx 2 -width 15 -textvariable DmThematic::opt($id,themecalc) \
-                    -values {"interval" "standard deviation" "quartiles" \
-                    "custom breaks"} -entrybg white
+                    -values {"interval" "std_deviation" "quartiles" \
+                    "custom_breaks"} -entrybg white
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
