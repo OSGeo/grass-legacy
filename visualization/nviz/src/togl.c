@@ -71,7 +71,9 @@
 #  include "tkInt8.3.3.h"
 #elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==3 && TK_RELEASE_SERIAL!=3
 #  include "tkInt8.3.h"
-#elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==4
+#elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==4 && TK_RELEASE_SERIAL==9
+#  include "tkInt8.4.9.h"
+#elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==4 && TK_RELEASE_SERIAL!=9
 #  include "tkInt8.4.h"
 #else /* X11 TK_VERSION */
    error Sorry, you will have to edit togl.c to include the right tkInt.h file
