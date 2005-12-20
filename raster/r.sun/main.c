@@ -161,7 +161,8 @@ int main(int argc, char *argv[])
 	"the topography is optionally incorporated.");
 
     if (G_get_set_window(&cellhd) == -1)
-	exit(0);
+	G_fatal_error("G_get_set_window()");
+
     stepx = cellhd.ew_res;
     stepy = cellhd.ns_res;
     invstepx = 1. / stepx;
@@ -338,7 +339,7 @@ int main(int argc, char *argv[])
 	_("Incorporate the shadowing effect of terrain");
 
     if (G_parser(argc, argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
     shd = flag.shade->answer;
 
@@ -364,15 +365,15 @@ int main(int argc, char *argv[])
 
     tt = parm.ltime->answer;
     if (parm.ltime->answer != NULL) {
-	if(insol_time != NULL) G_fatal_error("time and insol_time are incompatible options");
-	fprintf(stdout, "Mode 1: instantaneous solar incidence angle & irradiance using a set local time\n");
-	fflush(stdout);
+	if(insol_time != NULL)
+	    G_fatal_error(_("time and insol_time are incompatible options"));
+	G_message(_("Mode 1: instantaneous solar incidence angle & irradiance given a set local time"));
 	sscanf(parm.ltime->answer, "%lf", &timo);
     }
     else {
-	if(incidout != NULL) G_fatal_error("incidout requires time parameter to be set");
-	fprintf(stdout, "Mode 2: integrated daily irradiation\n");
-	fflush(stdout);
+	if(incidout != NULL)
+	    G_fatal_error(_("incidout requires time parameter to be set"));
+	G_message(_("Mode 2: integrated daily irradiation for a given day of the year"));
     }
 
     if (parm.linkein->answer == NULL)
@@ -447,10 +448,15 @@ int main(int argc, char *argv[])
 /**********end of parser - ******************************/
 
     INPUT();
+    fprintf(stderr, "\n");
+
     calculate();
+    fprintf(stderr, "\n");
+
     OUTGR();
 
-    return 1;
+    G_done_msg("");
+    exit(EXIT_SUCCESS);
 }
 
 
@@ -1321,10 +1327,8 @@ int searching(void)
 void calculate(void)
 {
     int i, j, l;
-    /*                      double energy; */
+    /* double energy; */
     double lum, q1;
-
-    fprintf(stderr, "\n\n");
 
     if (incidout != NULL) {
 	lumcl = (float **)malloc(sizeof(float) * (m));
@@ -1500,8 +1504,6 @@ void calculate(void)
 	}
 
     }
-    fprintf(stderr, "\n");
-
 
     G_short_history("r.sun solar model output", "raster", &hist);
 
