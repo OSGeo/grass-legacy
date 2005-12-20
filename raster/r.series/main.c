@@ -77,6 +77,7 @@ int main (int argc, char *argv[])
 	struct input *inputs;
 	char *out_name;
 	int out_fd;
+	struct History history;
 	DCELL *out_buf;
 	DCELL *values;
 	int nrows, ncols;
@@ -121,7 +122,7 @@ int main (int argc, char *argv[])
 	flag.nulls->description = _("Propagate NULLs");
 
 	if (G_parser(argc,argv))
-		exit(1);
+	    exit(EXIT_FAILURE);
 
 	verbose = !flag.quiet->answer;
 
@@ -134,7 +135,7 @@ int main (int argc, char *argv[])
 			break;
 		}
 	if (method < 0)
-		G_fatal_error("unknown method <%s>", parm.method->answer);
+		G_fatal_error(_("Unknown method <%s>"), parm.method->answer);
 
 	method_fn = menu[method].method;
 
@@ -150,10 +151,10 @@ int main (int argc, char *argv[])
 		p->name = parm.input->answers[i];
 		p->mapset = G_find_cell2(p->name,"");
 		if (!p->mapset)
-			G_fatal_error("raster file <%s> not found", p->name);
+			G_fatal_error(_("Raster file <%s> not found"), p->name);
 		p->fd = G_open_cell_old(p->name, p->mapset);
 		if (p->fd < 0)
-			G_fatal_error("unable to open input map <%s> in mapset <%s>",
+			G_fatal_error(_("Unable to open input map <%s> in mapset <%s>"),
 				      p->name, p->mapset);
 		p->buf = G_allocate_d_raster_buf();
 	}
@@ -163,7 +164,7 @@ int main (int argc, char *argv[])
 
 	out_fd = G_open_raster_new(out_name, DCELL_TYPE);
 	if (out_fd < 0)
-		G_fatal_error("unable to create output map <%s>", out_name);
+		G_fatal_error(_("Unable to create output map <%s>"), out_name);
 
 	out_buf = G_allocate_d_raster_buf();
 
@@ -175,7 +176,7 @@ int main (int argc, char *argv[])
 
 	/* process the data */
 	if (verbose)
-		fprintf (stderr, "Percent complete ... ");
+		fprintf (stderr, _("Percent complete ... "));
 
 	for (row = 0; row < nrows; row++)
 	{
@@ -214,9 +215,13 @@ int main (int argc, char *argv[])
 	/* close maps */
 	G_close_cell(out_fd);
 
+	G_short_history(out_name, "raster", &history);
+	G_command_history(&history);
+	G_write_history(out_name, &history);
+
 	for (i = 0; i < num_inputs; i++)
 		G_close_cell(inputs[i].fd);
 
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
 
