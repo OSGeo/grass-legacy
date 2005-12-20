@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
     struct Option *opt1, *opt2, *opt3, *opt4, *opt5, *opt6, *opt7, *opt8;
     struct Option *opt9, *opt10, *opt11, *opt12, *opt13, *opt14;
     struct cost *pres_cell, *new_cell;
-    struct History hist;
+    struct History history;
     struct start_pt *pres_start_pt = NULL;
     struct start_pt *pres_stop_pt = NULL;
 
@@ -1495,17 +1495,10 @@ int main(int argc, char *argv[])
      * G_write_colors (cum_cost_layer,current_mapset,&colors);
      */
 
-#ifdef NOTYET
     /* writing history file */
-    G_short_history(cum_cost_layer, "raster", &hist);
-    sprintf(hist.edhist[0], "%s", *argv);
-    sprintf(hist.datsrc_1, "elevation map %s, cost map %s", dtm_layer,
-	    cost_layer);
-    /* bug: long lines are truncated */
-    sprintf(hist.datsrc_2, "%s", G_recreate_command());
-    hist.edlinecnt = 3;
-    G_write_history(cum_cost_layer, &hist);
-#endif
+    G_short_history(cum_cost_layer, "raster", &history);
+    G_command_history(&history);
+    G_write_history(cum_cost_layer, &history);
 
     exit(EXIT_SUCCESS);
 }
