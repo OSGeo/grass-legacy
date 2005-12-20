@@ -135,6 +135,7 @@ care of following rules:
     	G_malloc() instead of malloc()
 	G_calloc() instead of calloc()
 	G_realloc() instead of realloc()
+	G_free() instead of free()
 	G_getenv() instead of getenv()
 	G_setenv() instead of setenv()
 	G_unsetenv() instead of unsetenv()
