@@ -421,9 +421,6 @@ int G_edit_fp_cats(char *, struct Categories *);
 /* edit_cellhd.c */
 int G_edit_cellhd(struct Cell_head *, int);
 
-/* edit_hist.c */
-int G_edit_history(struct History *);
-
 /* eigen_tools.c */
 int G_tqli(double [], double [], int, double **);
 void G_tred2(double **, int, double [], double []);
@@ -635,6 +632,7 @@ int G_zero_histogram(struct Histogram *);
 int G_read_history(char *, char *, struct History *);
 int G_write_history(char *, struct History *);
 int G_short_history(char *, char *, struct History *);
+int G_command_history(struct History *);
 
 /* home.c */
 char *G_home(void);

@@ -35,6 +35,20 @@
  *  and current mapset name into the hist structure
  *
  *  NOTE: use G_write_history() to write the structure.
+ **********************************************************************
+ *
+ *  G_command_history (hist)
+ *     struct History *hist   History structure to be filled in
+ *
+ *  Appends (parsed) command line to history structure's comments
+ *
+ * Returns:
+ *     0 success
+ *     1 failure (history file full, no change)
+ *     2 failure (history file full, added as much as we could)
+ *
+ *  NOTE: initialize structure with G_short_history() first.
+ *  NOTE: use G_write_history() to write the structure.
  **********************************************************************/
 
 #include <string.h>
@@ -206,4 +220,81 @@ int G_short_history (
     hist->edlinecnt = 0;
 
     return 1;
+}
+
+/*!
+ * \brief Save command line to raster history structure
+ *
+ * This routine takes an existing (run <i>G_short_history first</i>) history
+ *  structure and adds the command line to the end of the comments array, as
+ *  cleaned & expanded by the parser.
+ *
+ * History file is limited to [80]x[50], as defined in include/gis.h
+ *
+ * * First version had for loops of [i][j] character assignments and ending
+ *   nulls, but using the string libraries is cleaner and less bug prone.
+ * * Second version had white space detection, intelligent wrapping, and
+ *   indentation of continued lines, but this proved a pain in the neck for 
+ *   things like r.patch which can have long strings without any
+ *   parser-acceptable breaks.
+ * * This is MK-III, simplified, but that's good: it's cut & paste-able.
+ *
+ *  NOTE: use G_write_history() to write the structure.
+ *
+ * Sample Usage:
+ *
+ *   struct History history;
+ *   G_short_history(rasterfile, "raster", &history);
+ *   G_command_history(&history);
+ *   G_write_history(rasterfile, &history);
+ *
+ * Returns:
+ *     0 success
+ *     1 failure (history file full, no change)
+ *     2 failure (history file full, added as much as we could)
+ *
+ * \param history
+ * \return int
+ *
+ */
+
+int G_command_history(struct History *hist) {
+    int j, cmdlen;
+    char *cmdlin;
+
+    cmdlin = G_recreate_command();
+    cmdlen = strlen(cmdlin);
+
+    if(hist->edlinecnt > 48) {
+        G_warning(_("Not enough room in history file to record command line."));
+        return 1;
+    }
+
+    if(hist->edlinecnt > 0) {    /* add a blank line if preceding history exists */
+        strcpy(hist->edhist[hist->edlinecnt], "");
+        hist->edlinecnt++;
+    }
+
+    if(cmdlen < 70) {    /* ie if it will fit on a single line */
+        sprintf(hist->edhist[hist->edlinecnt], G_recreate_command());
+        hist->edlinecnt++;
+    }
+    else {    /* multi-line required */
+        j = 0;    /* j is the current position in the command line string */
+        while((cmdlen - j) > 70) {
+            strncpy(hist->edhist[hist->edlinecnt], &cmdlin[j], 68);
+            strcat(hist->edhist[hist->edlinecnt], "\\");
+            j+=68;
+            hist->edlinecnt++;
+            if(hist->edlinecnt > 48) {
+                G_warning(_("Not enough room in history file for command line (truncated)."));
+                return 2;
+            }
+        }
+        if((cmdlen - j) > 0) {    /* ie anything left */
+            strcpy(hist->edhist[hist->edlinecnt], &cmdlin[j]);
+            hist->edlinecnt++;
+        }
+    }
+    return 0;
 }

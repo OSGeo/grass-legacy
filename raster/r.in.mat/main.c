@@ -74,6 +74,7 @@ int main(int argc, char *argv[]) {
     struct Cell_head region;
     void *raster, *rastline_ptr, *array_data, *array_ptr;
     RASTER_MAP_TYPE map_type;
+    struct History history;
 
     struct Option *inputfile, *outputfile;
     struct Flag *verbose;
@@ -475,6 +476,9 @@ int main(int argc, char *argv[]) {
 
     G_put_cell_title (map_name, map_title);
 
+    G_short_history(map_name, "raster", &history);
+    G_command_history(&history);
+    G_write_history(map_name, &history);
 
     if(verbose->answer)
 	G_done_msg("\n");
