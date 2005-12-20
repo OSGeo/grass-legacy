@@ -106,8 +106,9 @@ stored in a text file:<br>
 
 <p>
 Reproject external raster map to current GRASS projection (does not always make sense!)
-using the GDAL 'gdalwarp' tool:<br>
-<b>gdalwarp -t_srs "`g.proj -wef`" aster.tif aster_tmerc.tif<br>
+using the GDAL 'gdalwarp' tool. We recommend to use the ERDAS/Img format and not
+to use the ESRI style of WKT:<br>
+<b>gdalwarp -of HFA -t_srs "`g.proj -wf`" aster.img aster_tmerc.img<br>
 
 <p>
 Reproject external vector map to current GRASS projection (does not always make sense!)
