@@ -128,14 +128,15 @@ g.proj -c wkt=irish_grid.prj location=irish_grid
 
 <p>
 Reproject external raster map to current GRASS projection (does not always make sense!)
-using the GDAL 'gdalwarp' tool:<br>
+using the GDAL 'gdalwarp' tool. We recommend to use the ERDAS/Img format and not
+to use the ESRI style of WKT:<br>
 <div class="code"><pre>
-gdalwarp -t_srs "`g.proj -wef`" aster.tif aster_tmerc.tif
+gdalwarp -of HFA -t_srs "`g.proj -wf`" aster.img aster_tmerc.img
 </pre></div>
 
 <p>
 Reproject external vector map to current GRASS projection (does not always make sense!)
-using the OGR 'ogr2ogr' tool:<br>
+using the OGR 'ogr2ogr' tool (using ESRI style of .prj file):<br>
 <div class="code"><pre>
 ogr2ogr -t_srs "`g.proj -wef`" polbnda_italy_GB_ovest.shp polbnda_italy_LL.shp
 </pre></div>
