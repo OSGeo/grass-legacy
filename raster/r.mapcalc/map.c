@@ -666,7 +666,7 @@ void create_history(const char *dst, expression *e)
 	int len = strlen(expr);
 	int i;
 
-	G_short_history((char *) dst, "cell", &hist);
+	G_short_history((char *) dst, "raster", &hist);
 
 	for (i = 0; i < MAXEDLINES; i++)
 	{
