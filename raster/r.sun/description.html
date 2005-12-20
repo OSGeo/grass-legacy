@@ -179,14 +179,10 @@ has to be used.
 Nice looking maps can be created with the model's output as follows:
 <div class="code"><pre>
 
-r.colors elev_map rule=srtm
-
-r.colors beam_map col=rules << EOF
-0 70
-100% white
-EOF
-
-d.his i_map=beam_map h_map=elev_map
+g.region rast=elevation.dem
+r.sun -s elev=elevation.dem slop=slope asp=aspect beam=beam_map day=180
+r.colors beam_map col=grey
+d.his i_map=beam_map h_map=elevation.dem
 
 </pre></div>
 
