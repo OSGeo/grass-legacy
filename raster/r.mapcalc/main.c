@@ -110,7 +110,8 @@ main(int argc, char **argv)
 
 	G_gisinit(argv[0]);
 
-	if (argc > 1 && strcmp(argv[1], "help") == 0)
+	if (argc > 1 && ( strcmp(argv[1], "help") == 0 ||
+			  strcmp(argv[1], "--help") == 0) )
 	{
 		fputs(help_text, stderr);
 		return 0;
