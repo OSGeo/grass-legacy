@@ -15,6 +15,7 @@ int main (int argc, char *argv[])
     int colr_ok;
     int outfd;
     RASTER_MAP_TYPE out_type, map_type;
+    struct History history;
     void *presult, *patch;
     int nfiles;
     char *rname; 
@@ -27,7 +28,8 @@ int main (int argc, char *argv[])
     char *new_name;
     char **names;
     char **ptr; 
-	struct GModule *module;
+
+    struct GModule *module;
     struct Flag *flag1 ;
     struct Flag *zeroflag;
     struct Option *opt1, *opt2 ;
@@ -55,7 +57,7 @@ int main (int argc, char *argv[])
     opt2->type       = TYPE_STRING;
     opt2->required   = YES;
     opt2->gisprompt  = "new,cell,raster" ;
-    opt2->description= _("Name of the result map");
+    opt2->description= _("Name of the resultant map");
 
 /* Define the different flags */
 
@@ -72,7 +74,7 @@ int main (int argc, char *argv[])
     nfiles = 0;
 
     if (G_parser(argc, argv))
-        exit(-1);
+        exit(EXIT_FAILURE);
 
     verbose = (!flag1->answer);
     ZEROFLAG= (zeroflag->answer);
@@ -84,7 +86,7 @@ int main (int argc, char *argv[])
     for (; *ptr != NULL; ptr++)
     {
         if (nfiles >= MAXFILES)
-            G_fatal_error ("%s - too many patch files. only %d allowed",
+            G_fatal_error (_("%s - too many patch files. only %d allowed"),
                             G_program_name(), MAXFILES);
 
         name = *ptr;
@@ -116,15 +118,15 @@ int main (int argc, char *argv[])
     }
 
     if (!ok)
-        exit(1);
+        exit(EXIT_FAILURE);
 
     if (nfiles <= 1)
-        G_fatal_error("The min specified input map is two");
+        G_fatal_error(_("The minimum number of specified input maps is two."));
 
     rname = opt2->answer;
     outfd = G_open_raster_new (new_name = rname, out_type);
     if (outfd < 0)
-	G_fatal_error("Cannot open output map.");
+	G_fatal_error(_("Cannot open output map."));
     
     presult = G_allocate_raster_buf(out_type);
     patch  = G_allocate_raster_buf(out_type);
@@ -132,7 +134,7 @@ int main (int argc, char *argv[])
     nrows = G_window_rows();
     ncols = G_window_cols();
 
-    if (verbose) fprintf (stderr, "%s: percent complete: ", G_program_name());
+    if (verbose) fprintf (stderr, _("%s: percent complete: "), G_program_name());
     for (row = 0; row < nrows; row++)
     {
 	if (verbose) G_percent (row, nrows, 2);
@@ -170,5 +172,10 @@ int main (int argc, char *argv[])
 	G_write_cats (new_name, &cats);
     if (colr_ok)
 	G_write_colors (new_name, G_mapset(), &colr);
-    exit(0);
+
+    G_short_history(new_name, "raster", &history);
+    G_command_history(&history);
+    G_write_history(new_name, &history);
+
+    exit(EXIT_SUCCESS);
 }

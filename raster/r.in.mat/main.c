@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
 
 
     if (G_parser(argc,argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
 
 
@@ -130,7 +130,7 @@ int main(int argc, char *argv[]) {
     /* open bin file for reading */
     fp1 = fopen(infile, "rb");
     if(NULL == fp1)
-       G_fatal_error("unable to open input file <%s>", infile);
+       G_fatal_error(_("Unable to open input file <%s>."), infile);
 
     have_name = have_data = have_title = 0;
     have_n = have_s = have_e = have_w = 0;
@@ -148,7 +148,7 @@ int main(int argc, char *argv[]) {
     G_debug(1, "File is %s endian.\n", file_endianness ? "big" : "little");
 
     if(format_block > 51)
-	G_warning("only little endian MAT-File(v4) binaries have been tested so far! Probably won't work.");
+	G_warning("Only little endian MAT-File(v4) binaries have been tested so far! Probably won't work.");
 
 
 
@@ -179,18 +179,18 @@ int main(int argc, char *argv[]) {
 	fread(&mrows, sizeof(long), 1, fp1);
 	fread(&ncols, sizeof(long), 1, fp1);
 	if(mrows < 1 || ncols < 1)
-	    G_fatal_error("array contains no data");
+	    G_fatal_error(_("Array contains no data"));
 
 	/* 4 byte real/imag flag   0=real vals only */
 	fread(&realflag, sizeof(long), 1, fp1);
 	if(realflag != 0)
-	    G_fatal_error("array contains imaginary data");
+	    G_fatal_error(_("Array contains imaginary data"));
 
 
 	/* length of array_name+1 */
 	fread(&name_len, sizeof(long), 1, fp1);
 	if(name_len < 1)
-	    G_fatal_error("invalid array name");
+	    G_fatal_error(_("Invalid array name"));
 
 	/* array name */
 	for(i=0; i<64; i++) {
@@ -209,7 +209,7 @@ int main(int argc, char *argv[]) {
 	if(strcmp(array_name, "map_name") == 0) {
 	    have_name = 1;
 	    if(mrows != 1 || ncols > 64 || data_type != 1)
-		G_fatal_error("invalid 'map_name' array");
+		G_fatal_error(_("Invalid 'map_name' array"));
 
 	    if(data_format == 5 )
 		fread(&map_name, sizeof(char), ncols, fp1);
@@ -218,7 +218,7 @@ int main(int argc, char *argv[]) {
 		for(i=0; i<ncols; i++)
 		    map_name[i] = (char) map_name_d[i];
 	    }
-	    else G_fatal_error("error reading 'map_name' array");
+	    else G_fatal_error(_("Error reading 'map_name' array"));
 
 	    map_name[ncols] = '\0';
 	    G_strip(map_name);  /* remove leading and trailing whitespace*/
@@ -228,7 +228,7 @@ int main(int argc, char *argv[]) {
 	else if (strcmp(array_name, "map_northern_edge") == 0) {
 	    have_n = 1;
 	    if(mrows != 1 || ncols != 1 || data_format != 0 || data_type != 0)
-		G_fatal_error("invalid 'map_northern_edge' array");
+		G_fatal_error(_("Invalid 'map_northern_edge' array"));
 	    fread(&region.north, sizeof(double), 1, fp1);
 	    G_debug(1, "northern edge=%f", region.north);
 	}
@@ -236,7 +236,7 @@ int main(int argc, char *argv[]) {
 	else if (strcmp(array_name, "map_southern_edge") == 0) {
 	    have_s = 1;
 	    if(mrows != 1 || ncols != 1 || data_format != 0 || data_type != 0)
-		G_fatal_error("invalid 'map_southern_edge' array");
+		G_fatal_error(_("Invalid 'map_southern_edge' array"));
 	    fread(&region.south, sizeof(double), 1, fp1);
 	    G_debug(1, "southern edge=%f", region.south);
 	}
@@ -244,7 +244,7 @@ int main(int argc, char *argv[]) {
 	else if (strcmp(array_name, "map_eastern_edge") == 0) {
 	    have_e = 1;
 	    if(mrows != 1 || ncols != 1 || data_format != 0 || data_type != 0)
-		G_fatal_error("invalid 'map_eastern_edge' array");
+		G_fatal_error(_("Invalid 'map_eastern_edge' array"));
 	    fread(&region.east, sizeof(double), 1, fp1);
 	    G_debug(1, "eastern edge=%f", region.east);
 	}
@@ -252,7 +252,7 @@ int main(int argc, char *argv[]) {
 	else if (strcmp(array_name, "map_western_edge") == 0) {
 	    have_w = 1;
 	    if(mrows != 1 || ncols != 1 || data_format != 0 || data_type != 0)
-		G_fatal_error("invalid 'map_western_edge' array");
+		G_fatal_error(_("Invalid 'map_western_edge' array"));
 	    fread(&region.west, sizeof(double), 1, fp1);
 	    G_debug(1, "western edge=%f", region.west);
 	}
@@ -260,7 +260,7 @@ int main(int argc, char *argv[]) {
 	else if (strcmp(array_name, "map_title") == 0) {
 	    have_title = 1;
 	    if(mrows != 1 || ncols > 1023 || data_type != 1)
-		G_fatal_error("invalid 'map_title' array");
+		G_fatal_error(_("Invalid 'map_title' array"));
 
 	    if(data_format == 5 )
 		fread(&map_title, sizeof(char), ncols, fp1);
@@ -269,7 +269,7 @@ int main(int argc, char *argv[]) {
 		for(i=0; i<ncols; i++)
 		    map_title[i] = (char) map_name_d[i];
 	    }
-    	    else G_fatal_error("error reading 'map_title' array");
+    	    else G_fatal_error(_("Error reading 'map_title' array"));
 
 	    map_title[ncols] = '\0';
 	    G_strip(map_title);  /* remove leading and trailing whitespace*/
@@ -282,7 +282,7 @@ int main(int argc, char *argv[]) {
 	    region.cols=(int)ncols;
 
 	    if(mrows < 1 || ncols < 1 || data_format > 2 || data_type != 0)
-		G_fatal_error("invalid 'map_data' array");
+		G_fatal_error(_("Invalid 'map_data' array"));
 
 	    switch (data_format) {
 	    /*   0=double	1=float   2=32bit signed int   5=8bit unsigned int(text)   */
@@ -304,7 +304,7 @@ int main(int argc, char *argv[]) {
 		array_data = G_calloc(mrows*(ncols+1), G_raster_size(map_type));
 		fread(array_data, sizeof(int), mrows*ncols, fp1);
 		break;
-	      default: G_fatal_error("contact GRASS development team");
+	      default: G_fatal_error(_("Please contact the GRASS development team"));
 	    }
 	} /* endif map_data */
 
@@ -336,7 +336,7 @@ int main(int argc, char *argv[]) {
 
   /******  WRITE MAP  ****************************************************/
     if(0 == have_data)
-	G_fatal_error("no 'map_data' array found in <%s>", infile);
+	G_fatal_error(_("No 'map_data' array found in <%s>"), infile);
 
 
     /* set map name */
@@ -361,17 +361,17 @@ int main(int argc, char *argv[]) {
 
     G_strip(map_name);  /* remove leading and trailing whitespace */
     if(G_legal_filename(map_name) != 1)
-	G_fatal_error("<%s> is not a valid GRASS map name", map_name);
+	G_fatal_error(_("<%s> is not a valid GRASS map name"), map_name);
 
 
     /* set region info */
     if( G_projection() != PROJECTION_XY ) {
 	if( (0 == have_n) || (0 == have_s) || (0 == have_e) || (0 == have_w) )
-	    G_fatal_error("missing bound");
+	    G_fatal_error(_("Missing bound"));
     }
     else {
 	if( (0 == have_n) || (0 == have_s) || (0 == have_e) || (0 == have_w) ) {
-	    G_warning("using default bounds");
+	    G_warning(_("Using default bounds"));
 	    region.north = (double)region.rows;
 	    region.south = 0.;
 	    region.east = (double)region.cols;
@@ -403,7 +403,7 @@ int main(int argc, char *argv[]) {
 
     cf = G_open_raster_new(map_name, map_type);
     if (cf < 0)
-	G_fatal_error ("unable to create raster map <%s>", outfile);
+	G_fatal_error (_("Unable to create raster map <%s>"), outfile);
 
     /* write new raster map*/
     fprintf(stderr, "Writing new raster map ..");
@@ -436,7 +436,7 @@ int main(int argc, char *argv[]) {
 			break;
 		    default:
 			G_close_cell(cf);
-			G_fatal_error("Please contact the GRASS development team");
+			G_fatal_error(_("Please contact the GRASS development team"));
 		}
 	    }
 	    rastline_ptr = G_incr_void_ptr(rastline_ptr, G_raster_size(map_type));
@@ -457,7 +457,7 @@ int main(int argc, char *argv[]) {
 
 	if( 1 != G_put_raster_row(cf, raster, map_type) ) {
 	    G_close_cell(cf);
-	    G_fatal_error("writing map, row %d", row);
+	    G_fatal_error(_("Writing map, row %d"), row);
 	}
 
  	G_percent(row, mrows, 5);
@@ -516,7 +516,7 @@ int is_nan(void *p, RASTER_MAP_TYPE dtype) {
 		return 1;
 	    break;
 	default:
-	    G_fatal_error("please contact the GRASS development team");
+	    G_fatal_error(_("Please contact the GRASS development team"));
     }
 
     /* otherwise */
