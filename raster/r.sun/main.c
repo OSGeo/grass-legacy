@@ -426,11 +426,11 @@ int main(int argc, char *argv[])
 		("Can't get projection info of current location: please set latitude via 'lat' or 'latin' option!");
 
 	if ((in_unit_info = G_get_projunits()) == NULL)
-	    G_fatal_error("Can't get projection units of current location");
+	    G_fatal_error(_("Can't get projection units of current location"));
 
 	if (pj_get_kv(&iproj, in_proj_info, in_unit_info) < 0)
 	    G_fatal_error
-		("Can't get projection key values of current location");
+		(_("Can't get projection key values of current location"));
 
 	G_free_key_value(in_proj_info);
 	G_free_key_value(in_unit_info);
@@ -440,7 +440,7 @@ int main(int argc, char *argv[])
 	oproj.meters = 1.;
 	sprintf(oproj.proj, "ll");
 	if ((oproj.pj = pj_latlong_from_proj(iproj.pj)) == NULL)
-	    G_fatal_error("Unable to set up lat/long projection parameters");
+	    G_fatal_error(_("Unable to set up lat/long projection parameters"));
        
     }
 
@@ -681,73 +681,52 @@ int OUTGR(void)
     FCELL *cell7, *cell8, *cell9, *cell10, *cell11;
     int fd7, fd8, fd9, fd10, fd11;
     int i, iarc, j;
-    char msg[100];
-
 
     if (incidout != NULL) {
 	cell7 = G_allocate_f_raster_buf();
 	fd7 = G_open_fp_cell_new(incidout);
-	if (fd7 < 0) {
-	    sprintf(msg, "unable to create raster map %s", incidout);
-	    G_fatal_error(msg);
-	    exit(1);
-	}
+	if (fd7 < 0)
+	    G_fatal_error(_("Unable to create raster map %s"), incidout);
     }
 
     if (beam_rad != NULL) {
 	cell8 = G_allocate_f_raster_buf();
 	fd8 = G_open_fp_cell_new(beam_rad);
-	if (fd8 < 0) {
-	    sprintf(msg, "unable to create raster map %s", beam_rad);
-	    G_fatal_error(msg);
-	    exit(1);
-	}
+	if (fd8 < 0)
+	    G_fatal_error(_("Unable to create raster map %s"), beam_rad);
     }
 
     if (insol_time != NULL) {
 	cell11 = G_allocate_f_raster_buf();
 	fd11 = G_open_fp_cell_new(insol_time);
-	if (fd11 < 0) {
-	    sprintf(msg, "unable to create raster map %s", insol_time);
-	    G_fatal_error(msg);
-	    exit(1);
-	}
+	if (fd11 < 0)
+	    G_fatal_error(_("Unable to create raster map %s"), insol_time);
     }
 
     if (diff_rad != NULL) {
 	cell9 = G_allocate_f_raster_buf();
 	fd9 = G_open_fp_cell_new(diff_rad);
-	if (fd9 < 0) {
-	    sprintf(msg, "unable to create raster map %s", diff_rad);
-	    G_fatal_error(msg);
-	    exit(1);
-	}
+	if (fd9 < 0)
+	    G_fatal_error(_("Unable to create raster map %s"), diff_rad);
     }
 
     if (refl_rad != NULL) {
 	cell10 = G_allocate_f_raster_buf();
 	fd10 = G_open_fp_cell_new(refl_rad);
-	if (fd10 < 0) {
-	    sprintf(msg, "unable to create raster map %s", refl_rad);
-	    G_fatal_error(msg);
-	    exit(1);
-	}
+	if (fd10 < 0)
+	    G_fatal_error(_("Unable to create raster map %s"),refl_rad );
     }
 
 
     if (G_set_window(&cellhd) < 0)
 	exit(3);
 
-    if (m != G_window_rows()) {
-	fprintf(stderr, "OOPS: rows changed from %d to %d\n", m,
-		G_window_rows());
-	exit(1);
-    }
-    if (n != G_window_cols()) {
-	fprintf(stderr, "OOPS: cols changed from %d to %d\n", n,
-		G_window_cols());
-	exit(1);
-    }
+    if (m != G_window_rows())
+	G_fatal_error("rows changed from %d to %d", m, G_window_rows());
+
+    if (n != G_window_cols())
+	G_fatal_error("cols changed from %d to %d", n, G_window_cols());
+
 
     for (iarc = 0; iarc < m; iarc++) {
 	i = m - iarc - 1;
@@ -829,35 +808,6 @@ int OUTGR(void)
     return 1;
 }
 
-/*  min(), max() are unused
-int min(arg1, arg2)
-    int arg1;
-    int arg2;
-{
-    int res;
-    if (arg1 <= arg2) {
-	res = arg1;
-    }
-    else {
-	res = arg2;
-    }
-    return res;
-}
-
-int max(arg1, arg2)
-    int arg1;
-    int arg2;
-{
-    int res;
-    if (arg1 >= arg2) {
-	res = arg1;
-    }
-    else {
-	res = arg2;
-    }
-    return res;
-}
-*/
 
 void com_par_const(void)
 {
@@ -1552,24 +1502,8 @@ void calculate(void)
     }
     fprintf(stderr, "\n");
 
-    /* re-use &hist, but try all to initiate it for any case */
-    /*   note this will result in incorrect map titles       */
-    if (incidout != NULL) {
-        G_short_history(incidout, "raster", &hist);
-    }
-    else if (beam_rad != NULL) {
-        G_short_history(beam_rad, "raster", &hist);
-    }
-    else if (diff_rad != NULL) {
-        G_short_history(diff_rad, "raster", &hist);
-    }
-    else if (refl_rad != NULL) {
-        G_short_history(refl_rad, "raster", &hist);
-    }
-    else if (insol_time != NULL) {
-        G_short_history(insol_time, "raster", &hist);
-    }
-    else G_fatal_error("Failed to init map history: no output maps requested!");
+
+    G_short_history("r.sun solar model output", "raster", &hist);
 
     sprintf (hist.edhist[0], " ----------------------------------------------------------------");
     sprintf (hist.edhist[1], " Day [1-365]:                              %d", day);
@@ -1624,6 +1558,7 @@ void calculate(void)
     sprintf (hist.edhist[hist.edlinecnt], " -----------------------------------------------------------------");
     hist.edlinecnt++;
 
+    G_command_history(&hist);
     /* don't call G_write_history() until after G_close_cell() or it just gets overwritten */
 }
 

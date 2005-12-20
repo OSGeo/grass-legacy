@@ -174,6 +174,23 @@ A map of shadows can be extracted from the solar incidence angle map
 (incidout). Areas with zero values are shadowed. The <em>-s</em> flag
 has to be used.
 
+<H2>EXAMPLE</H2>
+
+Nice looking maps can be created with the model's output as follows:
+<div class="code"><pre>
+
+r.colors elev_map rule=srtm
+
+r.colors beam_map col=rules << EOF
+0 70
+100% white
+EOF
+
+d.his i_map=beam_map h_map=elev_map
+
+</pre></div>
+
+
 <h2>SEE ALSO</h2>
 <a href="r.slope.aspect.html">r.slope.aspect</a>,
 <a href="r.sunmask.html">r.sunmask</a>,
