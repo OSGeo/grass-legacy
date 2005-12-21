@@ -265,36 +265,37 @@ int G_command_history(struct History *hist) {
     cmdlin = G_recreate_command();
     cmdlen = strlen(cmdlin);
 
-    if(hist->edlinecnt > 48) {
-        G_warning(_("Not enough room in history file to record command line."));
-        return 1;
+    if(hist->edlinecnt > MAXEDLINES -2) {
+	G_warning(_("Not enough room in history file to record command line."));
+	return 1;
     }
 
     if(hist->edlinecnt > 0) {    /* add a blank line if preceding history exists */
-        strcpy(hist->edhist[hist->edlinecnt], "");
-        hist->edlinecnt++;
+	strcpy(hist->edhist[hist->edlinecnt], "");
+	hist->edlinecnt++;
     }
 
     if(cmdlen < 70) {    /* ie if it will fit on a single line */
-        sprintf(hist->edhist[hist->edlinecnt], G_recreate_command());
-        hist->edlinecnt++;
+	sprintf(hist->edhist[hist->edlinecnt], G_recreate_command());
+	hist->edlinecnt++;
     }
     else {    /* multi-line required */
-        j = 0;    /* j is the current position in the command line string */
-        while((cmdlen - j) > 70) {
-            strncpy(hist->edhist[hist->edlinecnt], &cmdlin[j], 68);
-            strcat(hist->edhist[hist->edlinecnt], "\\");
-            j+=68;
-            hist->edlinecnt++;
-            if(hist->edlinecnt > 48) {
-                G_warning(_("Not enough room in history file for command line (truncated)."));
-                return 2;
-            }
-        }
-        if((cmdlen - j) > 0) {    /* ie anything left */
-            strcpy(hist->edhist[hist->edlinecnt], &cmdlin[j]);
-            hist->edlinecnt++;
-        }
+	j = 0;    /* j is the current position in the command line string */
+	while((cmdlen - j) > 70) {
+	    strncpy(hist->edhist[hist->edlinecnt], &cmdlin[j], 68);
+	    hist->edhist[hist->edlinecnt][68] = '\0';
+	    strcat(hist->edhist[hist->edlinecnt], "\\");
+	    j+=68;
+	    hist->edlinecnt++;
+	    if(hist->edlinecnt > MAXEDLINES -2) {
+		G_warning(_("Not enough room in history file for command line (truncated)."));
+		return 2;
+	    }
+	}
+	if((cmdlen - j) > 0) {    /* ie anything left */
+	    strcpy(hist->edhist[hist->edlinecnt], &cmdlin[j]);
+	    hist->edlinecnt++;
+	}
     }
     return 0;
 }
