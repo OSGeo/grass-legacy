@@ -131,8 +131,7 @@ int main(int argc, char *argv[])
     if (G_get_cellhd(name, mapset, &cellhd) < 0)
 	G_fatal_error(_("Cannot read file header of [%s]"), name);
 
-    printf("%d\n", cellhd.rows);
-    return 0;
+    G_debug(3, "number of rows %d", cellhd.rows);
 
     /* Allocate input buffer */
     inrast = G_allocate_raster_buf(data_type);
