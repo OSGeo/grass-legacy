@@ -185,8 +185,9 @@ DETAILED PROCEDURE :
     kbabel ./po/grasslibs_de.po
     kbabel ./po/grassmods_de.po
 
-   KBABEL: You may load .po files from other projects [see footnote 1]
+   KBABEL: You may load .po files from other projects [see footnote 1].
            Then use TOOLS -> ROUGH TRANSLATION to auto-translate messages.
+           For Asian, Indian and other keymaps, see [footnote 3].
 
    NOTES:
    * Pay attention to keep '%s', '\n' and other stuff also 
@@ -250,3 +251,25 @@ NOTES
     cd qgis/i18n
     ts2msg utf8 qgis_de.ts
     -> qgis_de.po
+
+[3] To change/add the keymap under KDE, you have to:
+    1. Open "(KDE) Control Center = kcontrol"
+    2. Go to Regional & Accessibility -> Keyboard Layout
+    3. Check "Enable Keyboard Layout".
+    4. Select Layout (e.g. Hindi) from the Additional Layouts list
+    5. Press "Add >>"
+    6. Press "Apply".
+
+    Note!: You can change between the new and the original layouts by
+    pressing Alt+Ctrl+k or by clicking the keyboad icon in the system
+    tray.
+
+    Command line alternative:
+      # hindi layout (Devanagari)
+      setxkbmap -model  -layout dev -variant basic
+      # back to US layout:
+      setxkbmap -model  -layout us -variant basic
+
+    How to use the keyboard
+
+    http://indlinux.org/keymap/keymaps.php
