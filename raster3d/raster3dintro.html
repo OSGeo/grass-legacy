@@ -20,7 +20,7 @@ from 3D point clouds as transformed from 3D point vector data
 Always the full map is imported.
 
 
-<h3>Voxel operations</h3>
+<h3>Voxel region settings and 3D MASK</h3>
 
 GRASS 3D raster map processing is always performed in the current 3D region
 settings (see <a href="g.region.html">g.region</a>), i.e. the current
@@ -30,7 +30,10 @@ on-the-fly resampling is performed (nearest neighbor resampling).
 If this is not desired, the input map(s) has/have to be reinterpolated
 beforehand with one of the dedicated modules.
 Masks can be set (<a href="r3.mask.html">r3.mask</a>).
-Powerful 3D map algrebra is implemented in <a href="r3.mapcalc.html">r3.mapcalc</a>.
+
+<h3>Voxel operations</h3>
+
+Powerful 3D map algebra is implemented in <a href="r3.mapcalc.html">r3.mapcalc</a>.
 
 <h3>Voxel conversion</h3>
 
@@ -42,8 +45,9 @@ Layers from a 3D raster map can be converted to a 2D raster map
 
 <h3>Voxel interpolation</h3>
 
-From 3D vector point GRASS 3D raster maps can be interpolated
-(<a href="v.vol.rst.html">v.vol.rst</a>).
+From 3D vector points, GRASS 3D raster maps can be interpolated
+(<a href="v.vol.rst.html">v.vol.rst</a>). Results are volumes,
+or 2D raster maps can be also extracted.
 
 
 <h3>Voxel export</h3>
