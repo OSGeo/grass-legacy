@@ -13,50 +13,13 @@ specified mapset;  i.e., GRASS programs that respect the
 geographic region settings will use the current geographic
 region settings.
 
-<h2>INTERACTIVE PROGRAM USE: MAIN MENU</h2>
-
-The main menu consists of an information section listing
-the current GRASS data base <kbd>LOCATION</kbd>, <kbd>MAPSET</kbd>, 
-and CURRENT REGION, followed by user options:
-
-
-<pre>
-------------------------------------------------------------
-|                    REGION FACILITY                       |
-| LOCATION: sample                         MAPSET: grass   |
-|                                                          |
-| CURRENT REGION: N=5167600  S=5156755  RES=50  ROWS=216   |
-|                 E=729314   W=705924   RES=50  COLS=467   |
-| PROJECTION: 1 (UTM)                                      |
-| ZONE: 13                                                 |
-| DATUM: WGS84                                             |
-|                                                          |
-| Please select one of the following options               |
-|                                                          |
-|     Current Region              Region Database          |
-|                                                          |
-| 1 Modify current region     6 Save current region in     |
-|   directly                    the database               |
-|                                                          |
-| 2 Set from default region   7 Create a new region        |
-|                                                          |
-| 3 Set from a database       8 Modify an existing region  |
-|   region                                                 |
-|                                                          |
-| 4 Set from a raster map                                  |
-|                                                          |
-| 5 Set from a vector map                                  |
-|                                                          |
-| RETURN to quit                                           |
-------------------------------------------------------------
-</pre>
 
 <h2>DEFINITIONS</h2>
 
 <dl>
 <dt><b>Region:</b>
 
-<dd>Here, a <em>region</em> refers to a geographic area
+<dd>In GRASS, a <em>region</em> refers to a geographic area
 with some defined boundaries, based on a specific map
 coordinate system and map projection.  Each region also has
 associated with it the specific east-west and north-south
@@ -208,7 +171,7 @@ the user's current mapset.  This option is useful when the
 current geographic region is set directly using option 2,
 or even by another GRASS program
 
-(e.g., <em><a HREF="d.display.html">d.display</a></em>).
+(e.g., <em><a HREF="d.m.html">d.m</a></em>).
 
 This option installs an otherwise temporary geographic
 region setting into the geographic region definition data
@@ -287,7 +250,7 @@ temporarily use a different region setting, without saving this setting.
 <dd>Make current region settings same as the named region
 file settings
 
-<dt><b>raster=</b><em>name</em> 
+<dt><b>rast=</b><em>name</em> 
 <dd>Make current region settings same as those in the named
 raster map's cell header.  But see
 <a HREF="#parm-zoom"><b>zoom=</b><em>name</em> option</a>, below.
@@ -344,7 +307,7 @@ layer that fall inside the user's current region.
 
 <p>
 
-If the user also includes the <b>raster=</b><em>name</em>
+If the user also includes the <b>rast=</b><em>name</em>
 option on the command line, <b>zoom=</b><em>name</em> will
 set the current region settings to the smallest region
 encompassing all non-zero data in the named <b>zoom</b> map
@@ -360,7 +323,7 @@ column edge in the named map.  Alignment only moves the
 existing region edges outward to the edges of the next
 nearest cell in the named raster map -- not to the named
 map's edges.  To perform the latter function, use the
-<b>raster=</b><em>name</em> option.
+<b>rast=</b><em>name</em> option.
 
 <dt><b>save=</b><em>name</em> 
 <dd>Save current region settings in the named region file
@@ -436,7 +399,7 @@ region's southern and western boundaries, relative to the
 northern and eastern boundary values.
 
 <dt><div class="code"><pre>
-g.region raster=soils
+g.region rast=soils
 </pre></div>
 
 <dd> This form will make the current region settings
@@ -445,8 +408,9 @@ the raster map layer <em>soils</em>.
 
 <p>
 
+<!-- how does this work?
 <dt><div class="code"><pre>
-g.region raster=soils
+g.region rast=soils  ???
 </pre></div>
 
 <dd> This form will first look up the cell header file for
@@ -454,15 +418,17 @@ the raster map layer <em>soils</em>, use this as the
 current region setting, and then shrink the region down to
 the smallest region which still encompasses all non-zero
 data in the map layer <em>soils</em>.  Note that if the
-parameter <em>raster=soils</em> were not specified, the
+parameter <em>rast=soils</em> were not specified, the
 zoom would move to encompass all non-zero data values in
 the soils map that were located within the current region
 setting.
 
 <p>
 
+-->
+
 <dt><div class="code"><pre>
-g.region -up raster=soils
+g.region -up rast=soils
 </pre></div>
 
 <dd> The <b>-u</b> option suppresses the re-setting of the
@@ -474,7 +440,7 @@ without changing the current region settings.
 <p>
 
 <dt><div class="code"><pre>
-g.region -up raster=soils
+g.region -p rast=soils
 </pre></div>
 
 <dd> This will zoom into the smallest region which
@@ -493,18 +459,115 @@ g.region -p
 <dd> This will print the current region in the format:
 
 <div class="code"><pre>
+projection: 1 (UTM)
+zone:       13
+datum:      nad27
+ellipsoid:  clark66
+north:      4928000
+south:      4914000
+west:       590000
+east:       609000
+nsres:      20
+ewres:      20
+rows:       700
+cols:       950
+</pre></div>
 
-projection:	1 (UTM)
-zone:	15
-datum:  WGS84
-north:	4294050.00
-south:	4249950.00
-east:	526050.00
-west:	500950.00
-nsres:	100.00
-ewres:	100.00
-rows:	441
-cols:	251
+<p>
+
+<dt><div class="code"><pre>
+g.region -p3
+</pre></div>
+
+<dd> This will print the current region and the 3D region (used for voxels)
+in the format:
+
+<div class="code"><pre>
+projection: 1 (UTM)
+zone:       13
+datum:      nad27
+ellipsoid:  clark66
+north:      4928000
+south:      4914000
+west:       590000
+east:       609000
+top:        1.00000000
+bottom:     0.00000000
+nsres:      20
+nsres3:     20
+ewres:      20
+ewres3:     20
+tbres:      1
+rows:       700
+rows3:      700
+cols:       950
+cols3:      950
+depths:     1
+</pre></div>
+
+<p>
+
+<dt><div class="code"><pre>
+g.region -g
+</pre></div>
+
+<dd> The <b>-g</b> option prints the region in the
+following script style (key=value) format:
+
+<div class="code"><pre>
+n=4928000
+s=4914000
+w=590000
+e=609000
+nsres=20
+ewres=20
+rows=700
+cols=950
+</pre></div>
+
+<p>
+
+<dt><div class="code"><pre>
+g.region -bg
+</pre></div>
+
+<dd> The <b>-bg</b> option prints the region in the
+following script style (key=value) format plus the
+boundary box in latitude-longitude/WGS84:
+
+<div class="code"><pre>
+n=4928000
+s=4914000
+w=590000
+e=609000
+nsres=20
+ewres=20
+rows=700
+cols=950
+LL_W=-103.87080682
+LL_E=-103.62942884
+LL_N=44.50164277
+LL_S=44.37302019
+</pre></div>
+
+<p>
+
+<dt><div class="code"><pre>
+g.region -l
+</pre></div>
+
+<dd> The <b>-l</b> option prints the region in the
+following format:
+
+<div class="code"><pre>
+long: -103.86789484 lat: 44.50165890 (north/west corner)
+long: -103.62895703 lat: 44.49904013 (north/east corner)
+long: -103.63190061 lat: 44.37303558 (south/east corner)
+long: -103.87032572 lat: 44.37564292 (south/west corner)
+rows:       700
+cols:       950
+Center longitude: 103:44:59.170374W [-103.74977]
+Center latitude:  44:26:14.439781N [44.43734]
 </pre></div>
 
 <p>
@@ -513,7 +576,7 @@ cols:	251
 g.region -pm
 </pre></div>
 
-<dd> This will print the current region in the format:
+<dd> This will print the current region in the format (latitude-longitude location):
 
 <div class="code"><pre>
 projection: 3 (Latitude-Longitude)
@@ -528,46 +591,7 @@ ewres:      352.74269109
 rows:       6000
 cols:       4800
 </pre></div>
-Note that the resolution is reported in meters not decimal degrees.
-<p>
-
-<dt><div class="code"><pre>
-g.region -g
-</pre></div>
-
-<dd> The <b>-g</b> option prints the region in the
-following format:
-
-
-<div class="code"><pre>
-n=4294050.00
-s=4249950.00
-e=526050.00
-w=500950.00
-nsres=100.00
-ewres=100.00
-</pre></div>
-
-<dt><div class="code"><pre>
-g.region -l
-</pre></div>
-
-<dd> The <b>-l</b> option prints the region in the
-following format:
-
-<div class="code"><pre>
-long: -103.86815 lat: 44.49980 (north/west corner)
-long: -103.62896 lat: 44.49718 (north/east corner)
-long: -103.63197 lat: 44.36839 (south/east corner)
-long: -103.87063 lat: 44.37100 (south/west corner)
-rows:       477
-cols:       634
-Center Longitude: 103:44:59.741001W [-103.74993]
-Center latitude:  44:26:02.724974N [44.43409]
-</pre></div>
-
-This format does not have the rows and columns, but can be
-fed back into <em>g.region</em> on its command line.
+Note that the resolution is here reported in meters, not decimal degrees.
 
 </dl>
 
