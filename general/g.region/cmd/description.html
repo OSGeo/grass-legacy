@@ -449,6 +449,17 @@ new region settings in a file to be called <em>soils</em>
 and stored under the <kbd>windows</kbd> directory in the
 user's current mapset.  The current region settings are not
 changed.
+<p>
+
+<dt><div class="code"><pre>
+g.region b=0 t=3000 tbres=200 res3=100
+g.region -p3
+</pre></div>
+
+<dd> This will define the 3D region for voxel computations.
+In this example a volume with bottom (0m) to top (3000m)
+at horizontal resolution (100m) and vertical resolution (200m)
+is defined.
 
 <p>
 
