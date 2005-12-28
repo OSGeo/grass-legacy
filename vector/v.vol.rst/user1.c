@@ -1,7 +1,7 @@
 /*
 ****************************************************************************
 *
-* MODULE:       s.vol.rst: program for 3D(volume) interpolation and geometry
+* MODULE:       s/v.vol.rst: program for 3D(volume) interpolation and geometry
 *               analysis from scattered point data using regularized spline
 *               with tension
 *
@@ -11,7 +11,7 @@
 *               GRASS 4.2, GRASS 5.0 version and modifications:
 *               H. Mitasova,  I. Kosinovsky, D. Gerdes, J. Hofierka
 *
-* PURPOSE:      s.vol.rst interpolates the values to 3-dimensional grid from
+* PURPOSE:      s/v.vol.rst interpolates the values to 3-dimensional grid from
 *               point data (climatic stations, drill holes etc.) given in a
 *               sites file named input. Output grid3 file is elev. 
 *               Regularized spline with tension is used for the
@@ -181,7 +181,7 @@ int INPUT ( struct Map_info *In, char *column, char *scol)
     
     if (!((c1 >= 0)&&(c2 >= 0)&&(c3 >= 0)&&(c4 >= 0)&&(c5 >=0)&&(c6 >=0))) {
       if (!OUTRANGE) {
-	fprintf (stderr, "Warning: some points outside of region -- will ignore...\n");
+	G_warning ("some points outside of region -- will ignore...");
       }
       OUTRANGE++;
     } else {
@@ -240,7 +240,7 @@ int INPUT ( struct Map_info *In, char *column, char *scol)
 
     if (!once) {
       once = 1;
-      fprintf (stderr, "Warning: strip exists with insufficient data\n");
+      G_warning ("strip exists with insufficient data");
     }
   }
   
@@ -262,9 +262,7 @@ int INPUT ( struct Map_info *In, char *column, char *scol)
   if (gcurv != NULL) ddisk+=disk;
   if (mcurv != NULL) ddisk+=disk;
 
-  fprintf (stderr, "\n");
-  fprintf(stderr,"Processing all selected output files \n");
-  fprintf(stderr,"will require %d bytes of disk space for temp files \n",ddisk);
+  G_message("Processing all selected output files will require %d bytes of disk space for temp files",ddisk);
   
 /*
 fprintf(stderr,"xmin=%lf,xmax=%lf,ymin=%lf,ymax=%lf,zmin=%lf,zmax=%lf,wmin=%lf,wmax=%lf\n",xmin,xmax,ymin,ymax,zmin,zmax,wmin,wmax);
@@ -272,13 +270,13 @@ fprintf(stderr,"xmin=%lf,xmax=%lf,ymin=%lf,ymax=%lf,zmin=%lf,zmax=%lf,wmin=%lf,w
 
   fprintf (stderr, "\n");
   if (OUTRANGE > 0)
-    fprintf (stderr, "Warning: there are points outside specified region--ignored %d points (total points: %d)\n", OUTRANGE, k);
+    G_warning ("There are points outside specified 2D/3D region--ignored %d points (total points: %d)", OUTRANGE, k);
   if (NPOINT > 0)
-    fprintf (stderr, "Warning: points are more dense than specified 'DMIN'--ignored %d points\n", NPOINT);
+    G_warning ("Points are more dense than specified 'DMIN'--ignored %d points", NPOINT);
   NPOINT = k - NPOINT - NPT - OUTRANGE;
   if(NPOINT<KMIN) {
     if (NPOINT!=0) {
-      fprintf(stderr,"WARNING: %d points given for interpolation (after thinning) is less than given NPMIN=%d\n",NPOINT,KMIN);
+      G_warning ("%d points given for interpolation (after thinning) is less than given NPMIN=%d",NPOINT,KMIN);
       KMIN=NPOINT;
     } else {
       fprintf (stderr, "ERROR: zero points in the given region!\n");
@@ -292,7 +290,7 @@ fprintf(stderr,"xmin=%lf,xmax=%lf,ymin=%lf,ymax=%lf,zmin=%lf,zmax=%lf,wmin=%lf,w
   }
   
   if (NPOINT < MAXPOINTS && KMAX != MAXPOINTS)
-    fprintf (stderr, "Warning : there is less than %d points for interpolation, no segmentation is necessary, to run the program faster, set segmax=%d (see manual)\n",MAXPOINTS,MAXPOINTS);
+    G_warning ("There is less than %d points for interpolation, no segmentation is necessary, to run the program faster, set segmax=%d (see manual)",MAXPOINTS,MAXPOINTS);
   
   deltx = xmax - xmin;
   delty = ymax - ymin;
@@ -333,7 +331,7 @@ fprintf(stderr,"xmin=%lf,xmax=%lf,ymin=%lf,ymax=%lf,zmin=%lf,zmax=%lf,wmin=%lf,w
 	  BM_set (bitmask, j, irev, 1);
       }
     }
-    fprintf(stderr,"bitmap mask created\n");
+    G_message("bitmap mask created");
   }
 
   return 1;
