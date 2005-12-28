@@ -1,7 +1,10 @@
 /* @(#)ply_t_bmif.c	2.1   6/26/87 */
-#define A(x)	fprintf(stderr,"%d\n", x)
-#include "ply_to_cll.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "ply_to_cll.h"
+
+#define A(x)	fprintf(stderr,"%d\n", x)
 
 #define MAXLINE	 90
 #define FGET	    fgets(buff,MAXLINE,stdin)
