@@ -1,5 +1,5 @@
 
-/***************************************************************
+/**********************************************************
  *
  * MODULE:       v.drape
  * 
@@ -14,7 +14,7 @@
  *               Read the file COPYING that comes with GRASS
  *               for details.
  * 
- **************************************************************/
+ **********************************************************/
 
 
  /** Doxygen Style Comments
@@ -48,6 +48,7 @@
 #include <math.h>
 #include "gis.h"
 #include "Vect.h"
+#include "glocale.h"
 
 /* borrowed from v.sample module */
 #include "methods.h"
@@ -75,7 +76,7 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-	"Convert 2D vector to 3D vector by sampling of elevation raster. Default sampling by nearest neighbor.\n Note: please run v.region vect=2D_vector, and make sure that the elevation raster completely overlaps.";
+      _("Convert 2D vector to 3D vector by sampling of elevation raster. Default sampling by nearest neighbor");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
 
@@ -88,7 +89,7 @@ int main(int argc, char *argv[])
     rast_opt->key = "rast";
     rast_opt->type = TYPE_STRING;
     rast_opt->required = NO;
-    rast_opt->description = "Elevation raster";
+    rast_opt->description = _("Elevation raster for height extraction");
 
     method_opt = G_define_option();
     method_opt->key = "method";
@@ -100,12 +101,12 @@ int main(int argc, char *argv[])
     method_opt->descriptions = "nearest;nearest neighbor;"
 			"bilinear;bilinear interpolation;"
 			"cubic;cubic convolution interpolation;";
-    method_opt->description = "Sampling method.";
+    method_opt->description = _("Sampling method");
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 
     if (G_parser(argc, argv))
-	exit(-1);
+	exit(EXIT_FAILURE);
 
     /* which interpolation method should we use */
     method = NEAREST;
@@ -121,12 +122,12 @@ int main(int argc, char *argv[])
 
     /* check for the elev raster, and check for error condition */
     if ((mapset = G_find_cell2(rast_opt->answer, "")) == NULL) {
-	G_fatal_error("cell file [%s] not found", rast_opt->answer);
+	G_fatal_error(_("cell file [%s] not found"), rast_opt->answer);
     }
 
     /* open the elev raster, and check for error condition */
     if ((fdrast = G_open_cell_old(rast_opt->answer, mapset)) < 0) {
-	G_fatal_error("can't open cell file [%s]", rast_opt->answer);
+	G_fatal_error(_("can't open cell file [%s]"), rast_opt->answer);
     }
 
     /* used to scale sampled raster values: will need to add an option to modify this later */
@@ -193,14 +194,14 @@ int main(int argc, char *argv[])
 					Points->x[0], 0);
 		    break;
 		default:
-		    G_fatal_error("unknown method");	/* cannot happen */
+		    G_fatal_error(_("unknown interpolation method"));	/* cannot happen */
 		    break;
-		}		//end switch
+		}
 		/* update the elevation value for each data point */
 		Points->z[0] = estimated_elevation;
 		break;
 
-		//standard lines (at least 2 vertexes)
+		/* standard lines (at least 2 vertexes) */
 	    case GV_LINE:
 	    case GV_BOUNDARY:
 		if (Points->n_points < 2)
@@ -227,9 +228,9 @@ int main(int argc, char *argv[])
 					    Points->x[j], 0);
 			break;
 		    default:
-			G_fatal_error("unknown method");	/* cannot happen */
+			G_fatal_error(_("unknown interpolation method"));	/* cannot happen */
 			break;
-		    }		//end switch
+		    }		
 
 		    /* update the elevation value for each data point */
 		    Points->z[j] = estimated_elevation;
@@ -263,7 +264,7 @@ int main(int argc, char *argv[])
 					    Points->x[j], 0);
 			break;
 		    default:
-			G_fatal_error("unknown method");	/* cannot happen */
+			G_fatal_error(_("unknown interpolation method"));	/* cannot happen */
 			break;
 		    }		/* end switch */
 
@@ -274,7 +275,7 @@ int main(int argc, char *argv[])
 		break;
 	    }			/* end line type switch */
 
-	    ///write the new line file, with the updated Points struct
+	    /* write the new line file, with the updated Points struct*/
 	    Vect_write_line(&Out, ltype, Points, Cats);
 	}			/* end looping thru lines */
 
@@ -290,5 +291,5 @@ int main(int argc, char *argv[])
     /* close output vector */
     Vect_close(&Out);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
