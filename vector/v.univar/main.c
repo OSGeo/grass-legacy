@@ -20,6 +20,7 @@
 #include "gis.h"
 #include "Vect.h"
 #include "dbmi.h"
+#include "glocale.h"
 
 int 
 main (int argc, char *argv[])
@@ -51,8 +52,8 @@ main (int argc, char *argv[])
     double total_size = 0.0;     /* total size: length/area */
     
     module = G_define_module();
-    module->description = "Calculates univariate statistics for attribute. Variance and standard "
-	                  "deviation is calculated only for points.";
+    module->description = _("Calculates univariate statistics for attribute. Variance and standard "
+	                  "deviation is calculated only for points if specified");
 
     map_opt = G_define_standard_option(G_OPT_V_INPUT);
     map_opt->key = "map";
@@ -65,7 +66,7 @@ main (int argc, char *argv[])
     col_opt->type           = TYPE_STRING;
     col_opt->required       = YES;
     col_opt->multiple       = NO;
-    col_opt->description    = "Column name";
+    col_opt->description    = _("Column name");
 
     where_opt = G_define_standard_option(G_OPT_WHERE);
 
@@ -74,11 +75,11 @@ main (int argc, char *argv[])
 
     shell_flag = G_define_flag();
     shell_flag->key = 'g';
-    shell_flag->description = "Print the stats in shell script style";
+    shell_flag->description = _("Print the stats in shell script style");
 
     G_gisinit(argv[0]);
     if (G_parser (argc, argv))
-	exit(-1); 
+	exit(EXIT_FAILURE); 
     
     otype = Vect_option_to_types ( type_opt );
     ofield = atoi ( field_opt->answer ); 
@@ -88,7 +89,7 @@ main (int argc, char *argv[])
     
     /* open input vector */
     if ((mapset = G_find_vector2 (map_opt->answer, "")) == NULL) 
-	G_fatal_error ( "Vector '%s' not found\n", map_opt->answer);
+	G_fatal_error ( _("Vector map '%s' not found"), map_opt->answer);
     
     Vect_set_open_level (2); 
     Vect_open_old (&Map, map_opt->answer, mapset); 
@@ -98,15 +99,15 @@ main (int argc, char *argv[])
     if ( (otype & GV_LINES) && ( otype & GV_AREA ) ) compatible = 0;
     
     if ( !compatible ) {
-	G_warning ("Incompatible vector type(s), only number of features, minimum, maximum and range "
-		   "can be calculated");
+	G_warning (_("Incompatible vector type(s) specified, only number of features, minimum, maximum and range "
+		   "can be calculated"));
     }
 
     /* Read attributes */
     db_CatValArray_init ( &Cvarr );
     Fi = Vect_get_field( &Map, ofield);
     if ( Fi == NULL ) {
-	G_fatal_error ("Cannot get layer info for vector map");
+	G_fatal_error (_("Cannot get layer info for vector map"));
     }
 
     Driver = db_start_driver_open_database ( Fi->driver, Fi->database );
@@ -120,9 +121,9 @@ main (int argc, char *argv[])
 
     ctype = Cvarr.ctype;
     if ( ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE )
-	G_fatal_error ( "Column type not supported" );
+	G_fatal_error ( _("Column type not supported") );
 
-    if ( nrec < 0 ) G_fatal_error ("Cannot select data from table");
+    if ( nrec < 0 ) G_fatal_error (_("Cannot select data from table"));
 
     db_close_database_shutdown_driver(Driver);
 
@@ -272,7 +273,9 @@ main (int argc, char *argv[])
 	    sample_stdev = sqrt(sample_variance);
 	}
     }
-		    
+
+    G_debug(0, "otype %d:", otype);
+    
     if ( shell_flag->answer ) {
     	fprintf(stdout, "n=%d\n", count);
     	fprintf(stdout, "nmissing=%d\n", nmissing);
@@ -309,7 +312,7 @@ main (int argc, char *argv[])
 
     Vect_close ( &Map );
 
-    exit(0) ;
+    exit(EXIT_SUCCESS) ;
 }
 
 
