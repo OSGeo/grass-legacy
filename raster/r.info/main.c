@@ -41,6 +41,7 @@ main (int argc, char *argv[])
     struct Flag *sflag;
     struct Flag *tflag;
     struct Flag *gflag;
+    struct Flag *hflag;
 
     G_gisinit(argv[0]);
 
@@ -72,6 +73,10 @@ main (int argc, char *argv[])
     gflag->key            = 'g';
     gflag->description    = _("Print raster map region only");
 
+    hflag = G_define_flag ();
+    hflag->key             = 'h';
+    hflag->description     = _("Print raster history instead of info");
+
     if (G_parser(argc, argv))
         exit(EXIT_FAILURE);
     
@@ -91,7 +96,7 @@ main (int argc, char *argv[])
 
     out = stdout;
 
-  if (!rflag->answer && !sflag->answer && !tflag->answer && !gflag->answer)
+  if (!rflag->answer && !sflag->answer && !tflag->answer && !gflag->answer && !hflag->answer)
   {
     divider ('+');
 
@@ -245,7 +250,7 @@ main (int argc, char *argv[])
 
     fprintf(out,"\n");
    }
-   else /* rflag or sflag or tflag */
+   else /* rflag or sflag or tflag or gflag or hflag */
    {
 
      if (rflag->answer){
@@ -277,14 +282,28 @@ main (int argc, char *argv[])
 
 	G_format_resolution (cellhd.ew_res, tmp3, cellhd.proj);
         fprintf (out, "ewres=%s\n", tmp3);
-      } 
+     }
      else if (tflag->answer){
          fprintf (out, "datatype=%s\n",
 			(data_type ==  CELL_TYPE ?  "CELL" :
 			(data_type == DCELL_TYPE ? "DCELL" :
 			(data_type == FCELL_TYPE ? "FCELL" : "??"))));
-      }
-   } /* else rflag or sflag or tflag */
+     }
+     else if (hflag->answer){
+	     if (hist_ok) {
+		fprintf (out, "Data Source:\n");
+		fprintf (out, "   %s\n", hist.datsrc_1);
+		fprintf (out, "   %s\n", hist.datsrc_2);
+		fprintf (out, "Data Description:\n");
+		fprintf (out, "   %s\n", hist.keywrd);
+		if(hist.edlinecnt) {
+			fprintf (out, "Comments:\n");
+			for (i = 0; i < hist.edlinecnt; i++)
+				fprintf (out, "   %s\n", hist.edhist[i]);
+		}
+	     }
+     }
+   } /* else rflag or sflag or tflag or gflag or hflag */
    
-   return 0;
+   return EXIT_SUCCESS;
 }
