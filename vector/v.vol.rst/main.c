@@ -48,6 +48,7 @@
 #include "user.h"
 #include "bitmap.h"
 #include "dbmi.h"
+#include "glocale.h"
 
 /* pargr */
 double ns_res, ew_res, tb_res;
@@ -391,7 +392,7 @@ int main (int argc, char *argv[])
     flag.cv->description = ("Perform a cross-validation procedure");
 
     if (G_parser (argc, argv))
-      exit(-1);
+      exit(EXIT_FAILURE);
 
     per = 1;  /*flag.per->answer; */
     iw2 = 1;
@@ -424,15 +425,15 @@ int main (int argc, char *argv[])
     sscanf (parm.zmult->answer, "%lf", &zmult);
     
       if(rsm < 0.0)
-            G_fatal_error(("Smoothing must be a positive value"));
+            G_fatal_error(_("Smoothing must be a positive value"));
 
         if(parm.scol->answer)
         rsm = -1; /* used in InterpLib to indicate variable smoothing */
 
       if ((cv != NULL && cvdev == NULL) || (cv == NULL && cvdev != NULL))
-              G_fatal_error(("Both crossvalidation options (cv, cvdev) must be specified"));
+              G_fatal_error(_("Both crossvalidation options (-c, cvdev) must be specified"));
       if(cv != NULL && devi != NULL)
-              G_fatal_error(("Both crossvalidation and deviations file specified"));
+              G_fatal_error(_("Both crossvalidation and deviations file specified"));
       if(cellinp==NULL && outz==NULL && cellout==NULL && gradient==NULL && aspect1==NULL && aspect2==NULL && ncurv==NULL && gcurv==NULL && mcurv==NULL) {
               sig1 = 1;
       }
