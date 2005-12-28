@@ -65,22 +65,33 @@ must
 be larger than <i>segmax</i> and less than 700. This limit of 700 was
 selected to ensure the numerical stability and efficiency of the
 algorithm. </p>
-<p>
-Sometimes it can be difficult to figure out the proper
-values of interpolation
-parameters. In this case, the user can use a crossvalidation procedure
-using <i>-c</i> flag (a.k.a. "jack-knife" method) to find optimal
-parameters for given data. In this method, every point in the input
-point file is temporarily excluded from the
+
+<h3>Cross validation procedure</h3>
+
+Sometimes it can be difficult to figure out the proper values of
+interpolation parameters. In this case, the user can use a
+crossvalidation procedure using <i>-c</i> flag (a.k.a. "jack-knife"
+method) to find optimal parameters for given data. In this method,
+every point in the input point file is temporarily excluded from the
 computation and interpolation error for this point location is
-computed.
-During this procedure no output grid files can be simultanuously
-computed.
-The procedure for larger datasets may take a very long time, so it
-might be worth
-to use just a sample data representing the whole dataset.
-</p>
-<p><i>v.vol.rst</i> uses regularized spline with tension for
+computed.  During this procedure no output grid files can be
+simultanuously computed.  The procedure for larger datasets may take a
+very long time, so it might be worth to use just a sample data
+representing the whole dataset.
+
+<P>
+<i>Example:</i>
+<P>
+<div class="code"><pre>
+v.vol.rst -c input=random wcolumn=height cvdev=cvdevmap tension=10
+v.db.select cvdevmap
+v.univar cvdevmap col=flt1
+</pre></div>
+
+From the result tension and smoothing parameters can be optimized.
+
+<h3>Further notes</h3>
+<p><em>v.vol.rst</em> uses regularized spline with tension for
 interpolation from point data (as described in Mitasova and Mitas,
 1993). The implementation has an improved segmentation procedure based
 on Oct-trees which enhances
@@ -117,66 +128,6 @@ zoom into a smaller representative area and test whether the parameters
 chosen (e.g. defaults) are appropriate. </p>
 <p>The user must run <i>g.region</i> before the program to set the
 3D region for interpolation. </p>
-<h3>Flags:</h3>
-<p><b>-c</b> Perform a cross-validation procedure.
-<br>
-</p>
-<h3>Parameters:</h3>
-<dl>
-  <dt><b>input</b></dt>
-  <dd>Name of the vector file (format see NOTES below)</dd>
-  <dt><strong>colnum</strong></dt>
-  <dd>decimal attribute to use for value w (1=first) options (1-100),
-default is 1.</dd>
-  <dt><b>cellinp</b></dt>
-  <dd>Name of the surface cell file to use for crossection</dd>
-  <dt><b>tension</b></dt>
-  <dd>Tension</dd>
-  <dd>Default: 40</dd>
-  <dt><b>smatt</b></dt>
-  <dd>Which fp point attribute to use for smoothing (or use smooth= for
-constant)</dd>
-  <dt><b>smooth</b></dt>
-  <dd>Smoothing parameter</dd>
-  <dd>Default: 0.1</dd>
-  <dt><b>devi</b></dt>
-  <dd>Output deviations to a vector file (not yet working, see bugs) </dd>
-  <dt><b>cvdev</b></dt>
-  <dd>Name of the output cross-validation vector file</dd>
-  <dt><b>maskmap</b></dt>
-  <dd>Name of the raster file used as mask</dd>
-  <dt><b>segmax</b></dt>
-  <dd>Max number of points in segment (=700)</dd>
-  <dd>Default: 50</dd>
-  <dt><b>dmin</b></dt>
-  <dd>Min distance between points (extra points ignored)</dd>
-  <dd>Default: Default value is set to 0.5 cell size. </dd>
-  <dt><b>npmin</b></dt>
-  <dd>Min number of points for interpolation</dd>
-  <dd>Default: 200</dd>
-  <dt><b>wmult</b></dt>
-  <dd>Conversion factor for w-values</dd>
-  <dd>Default: 1.0</dd>
-  <dt><b>zmult</b></dt>
-  <dd>Conversion factor for z-values</dd>
-  <dd>Default: 1.0</dd>
-  <dt><b>cellout</b></dt>
-  <dd>Name of the crossection cell file</dd>
-  <dt><b>elev</b></dt>
-  <dd>Elevation g3d-file</dd>
-  <dt><b>gradient</b></dt>
-  <dd>Gradient g3d-file</dd>
-  <dt><b>aspect1</b></dt>
-  <dd>Aspect1 g3d-file</dd>
-  <dt><b>aspect2</b></dt>
-  <dd>Aspect2 g3d-file</dd>
-  <dt><b>ncurv</b></dt>
-  <dd>Change of gradient g3d-file</dd>
-  <dt><b>gcurv</b></dt>
-  <dd>Gauss-Kronecker curvature g3d-file</dd>
-  <dt><b>mcurv</b></dt>
-  <dd>Mean curvature g3d-file</dd>
-</dl>
 
 <h2>NOTES</h2>
 The vector points map must be a 3D vector map (x, y, z as geometry).
@@ -192,7 +143,7 @@ a 3D vector map from a table containing x,y,z columns.
 <a href="v.in.ascii.html">v.in.ascii</a>,
 <a href="v.vol.idw.html">v.vol.idw</a>,
 <a href="r3.mask.html">r3.mask</a>,
-<a href="v.in.db.html">v.in.db</a>
+<a href="v.in.db.html">v.in.db</a>,
 <a href="v.surf.rst.html">v.surf.rst</a>
 
 <h2>AUTHOR</h2>
