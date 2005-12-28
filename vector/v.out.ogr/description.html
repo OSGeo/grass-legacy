@@ -23,34 +23,35 @@ For further available drivers go
 <a href="http://www.gdal.org/ogr/ogr_formats.html">here</a>
 
 
-<h2>EXAMPLE</h2>
+<h2>EXAMPLES</h2>
 
-Export <b>lines</b> from GRASS vector map to SHAPE format (generates /tmp/testogr.shp and related files):
-<br>
-<b>v.out.ogr input=</b><em>multi</em> <b>type=</b><em>line</em> 
-<b>dsn=</b><em>/tmp</em> <b>olayer=</b><em>testogr</em>
+<h3>Export to SHAPE</h3>
 
-<p>
+Export lines from GRASS vector map to SHAPE format (generates /tmp/testogr.shp and related files): <br>
+<div class="code"><pre>
+v.out.ogr input=multi type=line dsn=/tmp olayer=testogr 
+</pre></div>
 
-Export <b>areas</b> from GRASS vector map to SHAPE format (generates /tmp/testogr.shp and related files):
-<br>
-<b>v.out.ogr input=</b><em>multi</em> <b>type=</b><em>area</em> 
-<b>dsn=</b><em>/tmp</em> <b>olayer=</b><em>testogr</em>
+Export areas from GRASS vector map to SHAPE format (generates /tmp/testogr.shp and related files): <br>
+<div class="code"><pre>
+v.out.ogr input=multi type=area dsn=/tmp olayer=testogr 
+</pre></div>
 
-<p>
+<h3>Export to GML</h3>
 
-Export <b>lines</b> from GRASS vector map to GML format (generates /tmp/testogr.gml file with layer 'testogr'):
-<br>
-<b>v.out.ogr input=</b><em>multi</em> <b>type=</b><em>line</em> 
-<b>dsn=</b><em>/tmp/testogr.gml</em> <b>olayer=</b><em>testogr</em> 
-<b>format=</b><em>GML</em>
-<p>
+Export lines from GRASS vector map to GML format (generates /tmp/testogr.gml file with layer 'testogr'): <br>
+<div class="code"><pre>
+v.out.ogr input=multi type=line dsn=/tmp/testogr.gml olayer=testogr format=GML 
+</pre></div>
 
-Export <b>areas</b> from GRASS vector map directly to PostGIS:
-<br>
-<b>v.out.ogr input=</b><em>polygons</em> <b>type=</b><em>area</em>
-<b>dsn=</b><em>"PG:host=localhost dbname=postgis user=postgres"</em> <b>olayer=</b><em>polymap</em>
-<b>format=</b><em>PostgreSQL</em>
+<h3>Export to PostgreSQL/PostGIS</h3>
+
+Export areas from GRASS vector map directly to PostGIS: <br>
+<div class="code"><pre>
+v.out.ogr input=polygons type=area \
+          dsn="PG:host=localhost dbname=postgis user=postgres" \
+          olayer=polymap format=PostgreSQL
+</pre></div>
 
 <H2>REFERENCES</H2>
 
