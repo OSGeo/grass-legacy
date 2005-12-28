@@ -9,54 +9,52 @@ areas have the same output category, the boundary is removed.
 
 <h2>EXAMPLES</h2>
 
-<DL>
-<dd><b>v.extract -d list=</b>1,2,3,4 
-<b>input=</b>soils <b>output=</b>soil_groupa <b>type=</b>area <b>new=</b>1
+<div class="code"><pre>
+v.extract -d list=1,2,3,4 input=soils output=soil_groupa type=area new=1
+</pre></div>
 
 <p>
-Produces a new vector area file <em>soil_groupa</em> containing 'area'
+produces a new vector area file <em>soil_groupa</em> containing 'area'
 boundaries from <em>soils</em> with area category numbers of 1 thru 4;  any
 common boundaries are dissolved, and all areas of the new map will be
 assigned category number 1.
 
+<P>
+<div class="code"><pre>
+v.extract -d list=Abc,Def1,12A,WWd input=soils output=soil_groupa type=area new=0
+</pre></div>
 <p>
-<dt> 
-<dd><b>v.extract -d list=</b>Abc,Def1,12A,WWd 
-<b>input=</b>soils <b>output=</b>soil_groupa <b>type=</b>area <b>new=</b>0  </b>
-<p>
-Produces a new vector area file <em>soil_groupa</em> containing 'area'
+produces a new vector area file <em>soil_groupa</em> containing 'area'
 boundaries from <em>soils</em> with area category labels of Abc,Def1, 12A,WWd;
 these labels correspond to numbers 1 thru 4 of <em>soils</em>.  Any common
 boundaries are dissolved, all areas of the new map will be retain their
 original category numbers 1 thru 4, in this case, since new was set to
 0.
 
-<p>
-<dt> 
-<dd><b>v.extract input=</b>soils <b>output=</b>soil_groupa 
-<b>type=</b>area <b>new=</b>1 <b>file=</b>sample  
+<P>
+<div class="code"><pre>
+v.extract input=soils output=soil_groupa type=area new=1 file=sample
+</pre></div>
 <p>
 
-Produces a new vector area file <em>soil_groupa</em> containing 'area'
+produces a new vector area file <em>soil_groupa</em> containing 'area'
 boundaries from <em>soils</em>.  No common boundaries are dissolved, all areas
 of the new map will be assigned category number 1.
-<!-- The -n flag doesn't exist.
-  The "labels" (-n option) can be found in the file sample of the current directory.
--->
 
 <p>
-<dt> 
-<dd><b>v.extract input=</b>markveggy.shp <b>output</b>=markveggy.1 
-<b>new=</b>1 <b>where=</b>"(VEGTYPE = 'Wi') or (VEGTYPE = 'PS') or (PRIME_TYPE='Wi')"
-
+<div class="code"><pre>
+v.extract input=markveggy.shp output=markveggy.1 new=1 \
+          where="(VEGTYPE = 'Wi') or (VEGTYPE = 'PS') or (PRIME_TYPE='Wi')"
+</pre></div>
 <p>
 
-Produces a new vector map with category label 1 if the SQL statement is
+produces a new vector map with category label 1 if the SQL statement is
 fulfilled.
 </DL>
 
 <h2>SEE ALSO</h2>
 
+<em><a HREF="v.reclass.html">v.reclass</a></em>,
 <em><a HREF="sql.html">GRASS SQL interface</a></em>
 
 <h2>AUTHOR</h2>
