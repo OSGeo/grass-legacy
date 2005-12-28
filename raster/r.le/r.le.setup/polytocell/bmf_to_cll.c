@@ -1,7 +1,7 @@
-
+#include <stdio.h>
+#include <stdlib.h>
 #include "ply_to_cll.h"
 #include "gis.h"
-#include <stdio.h>
 #define ROW_SHIFT	-1
 
 char *gets() ;
@@ -13,6 +13,8 @@ char *gets() ;
 					&cur_row, &col_b, &col_e, &cat) 
 #define CONVERT	col_b = col_b / 100; col_e =  num_cols - (col_e / 100)
 
+int quit();
+
 /*
 *  sort cannot handle multiply numeric fields, negative numbers or decimals.
 *  get around these limitations by multipling by 100, sorting and then dividing
@@ -20,6 +22,7 @@ char *gets() ;
 *  columns we want to sort in descending order.
 */
 
+int
 main(argc, argv)
 	int argc;
 	char *argv[] ;
@@ -129,7 +132,8 @@ finish:
 }
 
 
-quit()
+int 
+quit(void)
 {
 	fprintf(stderr,"    You drew a region outside the mask; restart REGIONS setup\n") ;
 	exit(-1) ;

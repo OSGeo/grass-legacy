@@ -16,3 +16,18 @@ struct element
 	int row ;
 	float col ;
 } ;
+
+/* quick and dirty declaration - module will be discontinued if nobody supports it*/
+void do_dots();
+void write_record();
+line();
+line_initialize();
+line_flush();
+save_line();
+yadjust();
+set_limits();
+find_area();
+save_area();
+do_line();
+write_end_record();
+

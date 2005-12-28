@@ -6,7 +6,8 @@
  * THEN   add .0001 to all integer y values 
  *        This takes care of all sorts of evils and time later on  
  */
- yadjust(yarray, num_verticies)
+void
+yadjust(yarray, num_verticies)
 	double yarray[] ;
 	int num_verticies ;
 {
