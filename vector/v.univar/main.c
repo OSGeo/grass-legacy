@@ -274,7 +274,7 @@ main (int argc, char *argv[])
 	}
     }
 
-    G_debug(0, "otype %d:", otype);
+    G_debug(3, "otype %d:", otype);
     
     if ( shell_flag->answer ) {
     	fprintf(stdout, "n=%d\n", count);
