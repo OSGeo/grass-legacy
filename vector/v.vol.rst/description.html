@@ -90,6 +90,22 @@ v.univar cvdevmap col=flt1 type=point
 
 From the result tension and smoothing parameters can be optimized.
 
+The best approach is to start with <em>tension</em>, <em>smooth</em>
+and <em>zmult</em> with rough steps, or to set <em>zmult</em> to a
+constant somewhere between 30-60. This helps to find minimal RMSE
+values where then finer steps can be used in all parameters. The
+reasonable range is <em>tension</em>=10...100,
+<em>smooth</em>=0.1...1.0, <em>zmult</em>=10...100.
+<br>
+
+In <em>v.vol.rst</em> the tension parameter is much more sensitive to
+changes than in <em>v.surf.rst</em>. Usually <em>tension</em>=10...20
+provide best results.  But the user should always check the
+result by visual inspection, sometimes CV does not provide the best
+results, especially when the density of data are insufficient. Then
+the optimal result found by CV is an oversmoothed surface.
+
+
 <h3>Further notes</h3>
 <p><em>v.vol.rst</em> uses regularized spline with tension for
 interpolation from point data (as described in Mitasova and Mitas,
