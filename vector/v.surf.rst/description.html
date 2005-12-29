@@ -1,10 +1,12 @@
 <h2>DESCRIPTION</h2>
 
 <em>v.surf.rst</em>
-<br>This program performs spatial approximation based on z-values or attributes 
+<br>This program performs spatial interpolation based on z-values or attributes 
 of point or isoline data given in a vector file named <em>input</em> to grid cells in the
-output raster file <em>elev</em> representing a surface. As an option, simultaneously
-with approximation, topographic parameters slope, aspect, profile curvature
+output raster file <em>elev</em> representing a surface. 
+If smoothing is used, it becomes an approximation as the surface does not pass
+exactly the input points. As an option, simultaneously with
+interpolation/approximation, topographic parameters slope, aspect, profile curvature
 (measured in the direction of the steepest slope), tangential curvature (measured
 in the direction of a tangent to contour line) or mean curvature are computed
 and saved as raster files specified by the options <em>slope, aspect, pcurv,
@@ -17,15 +19,15 @@ output files.
 
 <p>
 User can define a raster file named <em>maskmap</em>, which will be used
-as a mask. The approximation is skipped for cells which have zero or NULL
+as a mask. The interpolation is skipped for cells which have zero or NULL
 value in mask. NULL values will be assigned to these cells in all output
 raster files. Data points are checked for identical points and points that
 are closer to each other than the given <em>dmin</em> are removed. 
 If sparsely digitized contours or isolines are used as input, additional
 points are computed between each 2 points on a line if the
 distance between them is greater than specified <em>dmax</em>. Parameter
-<em>zmult</em> allows user to rescale the values used for approximation
- (useful e.g. for transformation of
+<em>zmult</em> allows user to rescale the values used for interpolation
+(useful e.g. for transformation of
 elevations given in feet to meters, so that the proper values of slopes
 and curvatures can be computed).
 
@@ -47,42 +49,42 @@ of the resulting surface from the given data.
 <p>
 
 If the number of given points is greater than <em>segmax</em>, segmented
-processing is used . The region is split into quadtree-based rectangular segments, each
-having less than <em>segmax</em> points and approximation is performed on
+processing is used. The region is split into quadtree-based rectangular segments, each
+having less than <em>segmax</em> points and interpolation is performed on
 each segment of the region. To ensure smooth connection of segments
-the approximation function for each segment is computed using the points
+the interpolation function for each segment is computed using the points
 in the given segment and the points in its neighborhood which are in the rectangular
-window surrounding the given segment. The number of points taken for approximation
+window surrounding the given segment. The number of points taken for interpolation
 is controlled by <em>npmin</em>, the value of which must be larger than <em>segmax</em>. 
 User can choose to output vector files <em>treefile</em> and <em>overfile</em>
 which represent the quad tree used for segmentation and overlapping neighborhoods
-from which additional points for approximation on each segment were taken.
+from which additional points for interpolation on each segment were taken.
 
 <P>
 
-Predictive error of surface approximation for given parameters can be computed using the 
+Predictive error of surface interpolation/approximation for given parameters can be computed using the 
 <b>-c</b> flag. A crossvalidation procedure is then performed using the data given in the vector file 
 <em>input</em> and the estimated predictive errors are stored in the vector point file  
 <em>cvdev</em>. When using this flag, no raster output files are computed.
 
 Anisotropic surfaces can be interpolated by setting anisotropy angle <em>theta</em> 
 and scaling factor <em>scalex</em>. 
-The program writes values of selected input and internally computed parameters to the history file of raster map
-<b><em>elev</em></b>.
+The program writes values of selected input and internally computed parameters to the
+history file of raster map <b><em>elev</em></b>.
 
 <p>
 
 <h2>NOTES</h2>
 
-<em>v.surf.rst </em>uses regularized spline with tension for approximation
-from vector data. Additional points are used for approximation between
+<em>v.surf.rst </em>uses regularized spline with tension for interpolation/approximation
+from vector data. Additional points are used for interpolation between
 each 2 points on a line if the distance between them is greater than specified
 <em>dmax</em>. If <em>dmax</em> is small (less than cell size) the number of
-added data points can be vary large and slow down approximation significantly.
+added data points can be vary large and slow down interpolation significantly.
 The implementation has a segmentation procedure based on quadtrees which
 enhances the efficiency for large data sets.Special color tables are created
 by the program for output raster files.
-<p>Topographic parameters are computed directly from the approximation
+<p>Topographic parameters are computed directly from the interpolation
 function so that the important relationships between these parameters are
 preserved. The equations for computation of these parameters and their
 interpretation is described in
@@ -149,7 +151,7 @@ beginning of the program run. This rescaled <em>tension</em> should be around
 should be changed accordingly.
 
 </p><p>The default is a recommended choice, however for the applications where
-the user needs to change density of data and preserve the approximation
+the user needs to change density of data and preserve the interpolation
 character the <b>-t</b> flag can be helpful.</p>
 <p>Anisotropic data (e.g. geologic phenomena) can be interpolated using <em>theta</em> 
 and <em>scalex</em> defining orientation 
@@ -193,18 +195,18 @@ the output deviations option.
 
 <h3>Cross validation procedure</h3>
 
-The "optimal" approximation parameters for given data can be found using 
+The "optimal" interpolation/approximation parameters for given data can be found using 
 a cross-validation (CV) procedure (<b>-c </b>flag). 
 The CV procedure is based on removing one input data point at a time, 
-performing the approximation for the location of the removed point using 
+performing the interpolation for the location of the removed point using 
 the remaining data points and calculating the difference between the actual and approximated
 value for the removed data point. The procedure is repeated until every data point has been, 
 in turn, removed. This form of CV is also known as the "leave-one-out" or "jack-knife" method 
 (Hofierka et al., 2002; Hofierka, 2005). The differences (residuals) are then stored in 
 the <em>cvdev</em> output vector file. Please note that during the CV procedure no other output 
-files can be set, the approximation is performed only for locations defined by input data. 
+files can be set, the interpolation is performed only for locations defined by input data. 
 To find "optimal parameters", the CV procedure must be iteratively performed for all reasonable 
-combinations of the approximation parameters with small incremental steps (e.g. tension, smoothing) 
+combinations of the interpolation parameters with small incremental steps (e.g. tension, smoothing) 
 in order to find a combination with minimal statistical error (also called predictive error)
 defined by root mean squared error (RMSE), mean absolute error (MAE) or other error characteristics. 
 A script with loops for tested RST parameters can do the job, necessary statistics can be calculated 
@@ -234,8 +236,8 @@ of data points or <em>segmax=700</em>.
 rectangle given by minimum and maximum coordinates in the vector file,
 zoom into the area where the given data are is suggested in this case.
 </p><p>When a mask is used, the program takes all points in the given region
-for approximation, including those in the area which is masked out, to
-ensure proper approximation along the border of the mask. It therefore
+for interpolation, including those in the area which is masked out, to
+ensure proper interpolation along the border of the mask. It therefore
 does not mask out the data points, if this is desirable, it must be done
 outside <em>v.surf.rst</em>.
 </p>
@@ -244,11 +246,11 @@ outside <em>v.surf.rst</em>.
 <a href="http://skagit.meas.ncsu.edu/~helena/gmslab/">GRASS4 implementation</a> and
 <a href="http://skagit.meas.ncsu.edu/~helena/">GRASS5 and GRASS6 implementation</a>
 </p><p>The user must run <a href="g.region.html">g.region</a> before the program
-to set the region and resolution for approximation.
+to set the region and resolution for the interpolation.
 </p>
 
-<h2>
-SEE ALSO</h2>
+<h2>SEE ALSO</h2>
+
 <a href="v.vol.rst.html">v.vol.rst</a>
 
 <h2>
