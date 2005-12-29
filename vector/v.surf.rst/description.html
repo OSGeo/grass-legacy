@@ -61,7 +61,7 @@ from which additional points for approximation on each segment were taken.
 <P>
 
 Predictive error of surface approximation for given parameters can be computed using the 
-<b>-v</b> flag. A crossvalidation procedure is then performed using the data given in the vector file 
+<b>-c</b> flag. A crossvalidation procedure is then performed using the data given in the vector file 
 <em>input</em> and the estimated predictive errors are stored in the vector point file  
 <em>cvdev</em>. When using this flag, no raster output files are computed.
 
@@ -191,9 +191,10 @@ data. More detailed analysis of smoothing effects can be performed using
 the output deviations option.
 </p>
 
-<P>
+<h3>Cross validation procedure</h3>
+
 The "optimal" approximation parameters for given data can be found using 
-a cross-validation (CV) procedure (<b>-v </b>flag). 
+a cross-validation (CV) procedure (<b>-c </b>flag). 
 The CV procedure is based on removing one input data point at a time, 
 performing the approximation for the location of the removed point using 
 the remaining data points and calculating the difference between the actual and approximated
@@ -227,7 +228,7 @@ with higher <em>npmin</em> to get more points from the neighborhood of given
 segment and/or with higher tension.
 
 </p><p>When the number of points in a site file is not too large (less than
-800), the user can skip segmentation by setting <em>segmax </em>to the number
+800), the user can skip segmentation by setting <em>segmax</em> to the number
 of data points or <em>segmax=700</em>.
 </p><p>The program gives warning when user wants to interpolate outside the
 rectangle given by minimum and maximum coordinates in the vector file,
@@ -236,8 +237,10 @@ zoom into the area where the given data are is suggested in this case.
 for approximation, including those in the area which is masked out, to
 ensure proper approximation along the border of the mask. It therefore
 does not mask out the data points, if this is desirable, it must be done
-outside <em>v.surf.rst.</em>
-</p><p>For examples of applications see
+outside <em>v.surf.rst</em>.
+</p>
+
+<p>For examples of applications see
 <a href="http://skagit.meas.ncsu.edu/~helena/gmslab/">GRASS4 implementation</a> and
 <a href="http://skagit.meas.ncsu.edu/~helena/">GRASS5 and GRASS6 implementation</a>
 </p><p>The user must run <a href="g.region.html">g.region</a> before the program
@@ -296,7 +299,7 @@ problem, Computers and Mathematics with Applications, v.16, p. 983
 </p>
 
 <p>
-<a href="http://mpa.itc.it/grassbook2/">
+<a href="http://mpa.itc.it/grasstutor/">
 Neteler, M. and Mitasova, H., 2004, Open Source GIS: A GRASS GIS Approach, Second Edition, </a> 
 Kluwer International Series in Engineering and Computer Science, 773, Kluwer Academic Press / Springer, 
 Boston, Dordrecht, 424 pages.

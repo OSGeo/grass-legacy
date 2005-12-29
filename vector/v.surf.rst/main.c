@@ -161,7 +161,7 @@ int main(int argc, char *argv[])
 	"raster format using regularized spline with tension.");
 
     if (G_get_set_window(&cellhd) == -1)
-	exit(0);
+	G_fatal_error("G_get_set_window() failed");
     ew_res = cellhd.ew_res;
     ns_res = cellhd.ns_res;
     n_cols = cellhd.cols;
@@ -197,14 +197,14 @@ int main(int argc, char *argv[])
     parm.zcol->type = TYPE_STRING;
     parm.zcol->required = NO;
     parm.zcol->description =
-	_("Name of the attr. column with values to be used for approximation (if layer>0)");
+	_("Name of the attribute column with values to be used for approximation (if layer>0)");
 
     parm.scol = G_define_option();
     parm.scol->key = "scolumn";
     parm.scol->type = TYPE_STRING;
     parm.scol->required = NO;
     parm.scol->description =
-	_("Name of the column with smoothing parameters");
+	_("Name of the attribute column with smoothing parameters");
 
     parm.dmax = G_define_option();
     parm.dmax->key = "dmax";
@@ -227,14 +227,14 @@ int main(int argc, char *argv[])
     parm.devi->type = TYPE_STRING;
     parm.devi->required = NO;
     parm.devi->gisprompt = "new,dig,vector";
-    parm.devi->description = _("Name of the output deviations vector point file");
+    parm.devi->description = _("Output deviations vector point file");
 
     parm.cvdev = G_define_option ();
     parm.cvdev->key = "cvdev";
     parm.cvdev->type = TYPE_STRING;
     parm.cvdev->required = NO;
     parm.cvdev->gisprompt = "new,dig,vector";
-    parm.cvdev->description = _("Name of the output cross-validation errors vector point file");
+    parm.cvdev->description = _("Output cross-validation errors vector point file");
 
     parm.elev = G_define_option();
     parm.elev->key = "elev";
@@ -357,12 +357,12 @@ int main(int argc, char *argv[])
     flag.cprght->description = _("Use scale dependent tension");
 
     flag.cv = G_define_flag ();
-    flag.cv->key = 'v';
+    flag.cv->key = 'c';
     flag.cv->description = _("Perform cross-validation procedure without raster approximation");
 
 
     if (G_parser(argc, argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
 
     per = 1;
@@ -408,10 +408,10 @@ int main(int argc, char *argv[])
     cv = flag.cv->answer;
 
     if ((cv && cvdev == NULL) || (!(cv) && cvdev != NULL))
-	G_fatal_error(_("Both cross-validation options (-v flag and cvdev vector output) must be specified"));
+	G_fatal_error(_("Both cross-validation options (-c flag and cvdev vector output) must be specified"));
 
     if((elev != NULL || cond1 || cond2 || devi != NULL) && cv )
-	G_fatal_error(_("The cross-validation cannot be computed simultanuously with output raster or devi file"));
+	G_fatal_error(_("The cross-validation cannot be computed simultaneously with output raster or devi file"));
 
     ertre = 0.1;
     sscanf(parm.dmax->answer, "%lf", &dmax);
@@ -785,7 +785,7 @@ int main(int argc, char *argv[])
     }
 
     G_done_msg("\n");
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 
