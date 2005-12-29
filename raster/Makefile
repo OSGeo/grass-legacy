@@ -8,6 +8,7 @@ SUBDIRS = \
 	r.bilinear \
 	r.bitpattern \
 	r.buffer \
+	r.carve \
 	r.cats \
 	r.circle \
 	r.clump \
