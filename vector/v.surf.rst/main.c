@@ -156,9 +156,9 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-	_("Spatial interpolation and topographic analysis from given "
+	_("Spatial approximation and topographic analysis from given "
 	"point or isoline data in vector format to floating point "
-	"raster format using regularized spline with tension");
+	"raster format using regularized spline with tension.");
 
     if (G_get_set_window(&cellhd) == -1)
 	G_fatal_error("G_get_set_window() failed");
@@ -197,7 +197,7 @@ int main(int argc, char *argv[])
     parm.zcol->type = TYPE_STRING;
     parm.zcol->required = NO;
     parm.zcol->description =
-	_("Name of the attribute column with values to be used for interpolation (if layer>0)");
+	_("Name of the attribute column with values to be used for approximation (if layer>0)");
 
     parm.scol = G_define_option();
     parm.scol->key = "scolumn";
@@ -294,7 +294,7 @@ int main(int argc, char *argv[])
     parm.zmult->type = TYPE_DOUBLE;
     parm.zmult->answer = ZMULT;
     parm.zmult->required = NO;
-    parm.zmult->description = _("Conversion factor for values used for interpolation");
+    parm.zmult->description = _("Conversion factor for values used for approximation");
 
     parm.fi = G_define_option();
     parm.fi->key = "tension";
@@ -322,7 +322,7 @@ int main(int argc, char *argv[])
     parm.npmin->answer = MINPOINTS;
     parm.npmin->required = NO;
     parm.npmin->description =
-	_("Minimum number of points for interpolation in a segment (>segmax)");
+	_("Minimum number of points for approximation in a segment (>segmax)");
 
     parm.theta = G_define_option();
     parm.theta->key = "theta";
@@ -358,11 +358,12 @@ int main(int argc, char *argv[])
 
     flag.cv = G_define_flag ();
     flag.cv->key = 'c';
-    flag.cv->description = _("Perform cross-validation procedure without raster interpolation");
+    flag.cv->description = _("Perform cross-validation procedure without raster approximation");
 
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
+
 
     per = 1;
     input = parm.input->answer;
