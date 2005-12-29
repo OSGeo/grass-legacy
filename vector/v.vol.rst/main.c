@@ -231,20 +231,20 @@ int main (int argc, char *argv[])
     parm.input->type = TYPE_STRING;
     parm.input->required = YES; 
     parm.input->gisprompt = "old,vector,vector";
-    parm.input->description = "Name of the vector file with input x,y,z,w";
+    parm.input->description = _("Name of the vector file with input x,y,z,w");
 
     parm.cellinp = G_define_option ();
     parm.cellinp->key = "cellinp";
     parm.cellinp->type = TYPE_STRING;
     parm.cellinp->required = NO;
     parm.cellinp->gisprompt = "old,cell,raster";
-    parm.cellinp->description = "Name of the surface cell file";
+    parm.cellinp->description = _("Name of the surface cell file for cross-section");
 
     parm.colnum = G_define_option();
     parm.colnum ->key        = "wcolumn" ;
     parm.colnum ->type       = TYPE_STRING ;
     parm.colnum ->required   = NO ;
-    parm.colnum ->description="Name of the column containing w attribute to interpolate";
+    parm.colnum ->description= _("Name of the column containing w attribute to interpolate");
     parm.colnum->answer = "flt1";
 
     parm.scol = G_define_option();
@@ -252,84 +252,86 @@ int main (int argc, char *argv[])
     parm.scol->type = TYPE_STRING;
     parm.scol->required = NO;
     parm.scol->description =
-        "Name of the column containing smoothing parameters";
+        _("Name of the column with smoothing parameters");
                         
     parm.fi = G_define_option ();
     parm.fi->key = "tension";
     parm.fi->type = TYPE_DOUBLE;
     parm.fi->answer = TENSION;
     parm.fi->required = NO;
-    parm.fi->description = "Tension";
+    parm.fi->description = _("Tension parameter");
 
     parm.rsm = G_define_option ();
     parm.rsm->key = "smooth";
     parm.rsm->type = TYPE_DOUBLE;
     parm.rsm->answer = SMOOTH;
     parm.rsm->required = NO;
-    parm.rsm->description = "Smoothing parameter";
+    parm.rsm->description = _("Smoothing parameter");
 
     parm.devi = G_define_option ();
     parm.devi->key = "devi";
     parm.devi->type = TYPE_STRING;
     parm.devi->required = NO;
     parm.devi->gisprompt = "new,vector,vector";
-    parm.devi->description = "Name of the output deviations vector file";
+    parm.devi->description = _("Output deviations vector point file");
 
     parm.cvdev = G_define_option ();
     parm.cvdev->key = "cvdev";
     parm.cvdev->type = TYPE_STRING;
     parm.cvdev->required = NO;
     parm.cvdev->gisprompt = "new,vector,vector";
-    parm.cvdev->description = ("Name of the output cross-validation vector file");
+    parm.cvdev->description = _("Output cross-validation vector file");
 
     parm.maskmap = G_define_option ();
     parm.maskmap->key = "maskmap";
     parm.maskmap->type = TYPE_STRING;
     parm.maskmap->required = NO;
     parm.maskmap->gisprompt = "old,cell,raster";
-    parm.maskmap->description = "Name of the raster file used as mask";
+    parm.maskmap->description = _("Name of the raster file used as mask");
 
     parm.segmax = G_define_option ();
     parm.segmax->key = "segmax";
     parm.segmax->type = TYPE_INTEGER;
     parm.segmax->answer = MAXSEGM;
     parm.segmax->required = NO;
-    parm.segmax->description = "Max number of points in segment (<=700)";
+    parm.segmax->description = _("Maximum number of points in a segment");
 
     parm.dmin1 = G_define_option ();
     parm.dmin1->key = "dmin";
     parm.dmin1->type = TYPE_DOUBLE;
     parm.dmin1->answer = dminchar;
     parm.dmin1->required = NO;
-    parm.dmin1->description = "Min distance between points (extra points ignored)";
+    parm.dmin1->description = 
+        _("Minimum distance between points (to remove almost identical points)");
 
     parm.npmin = G_define_option ();
     parm.npmin->key = "npmin";
     parm.npmin->type = TYPE_INTEGER;
     parm.npmin->answer = MINPOINTS;
     parm.npmin->required = NO;
-    parm.npmin->description = "Min number of points for interpolation";
+    parm.npmin->description = 
+        _("Minimum number of points for approximation in a segment (>segmax)");
 
     parm.wmult = G_define_option ();
     parm.wmult->key = "wmult";
     parm.wmult->type = TYPE_DOUBLE;
     parm.wmult->answer = ZMULT;
     parm.wmult->required = NO;
-    parm.wmult->description = "Conversion factor for w-values";
+    parm.wmult->description = _("Conversion factor for w-values used for interpolation");
 
     parm.zmult = G_define_option ();
     parm.zmult->key = "zmult";
     parm.zmult->type = TYPE_DOUBLE;
     parm.zmult->answer = ZMULT;
     parm.zmult->required = NO;
-    parm.zmult->description = "Conversion factor for z-values";
+    parm.zmult->description = _("Conversion factor for z-values");
 
     parm.cellout = G_define_option ();
     parm.cellout->key = "cellout";
     parm.cellout->type = TYPE_STRING;
     parm.cellout->required = NO;
     parm.cellout->gisprompt = "new,cell,raster";
-    parm.cellout->description = "Name of the crossection cell file";
+    parm.cellout->description = _("Output cross-section cell file");
 
     parm.outz = G_define_option ();
     parm.outz->key = "elev";
@@ -337,7 +339,7 @@ int main (int argc, char *argv[])
     parm.outz->required = NO;
     parm.outz->multiple = NO;
     parm.outz->gisprompt = "new,grid3,3d raster";
-    parm.outz->description = "Elevation g3d-file ";
+    parm.outz->description = _("Output elevation g3d-file");
 
     parm.gradient = G_define_option ();
     parm.gradient->key = "gradient";
@@ -345,7 +347,7 @@ int main (int argc, char *argv[])
     parm.gradient->required = NO;
     parm.gradient->multiple = NO;
     parm.gradient->gisprompt = "new,grid3,3d raster";
-    parm.gradient->description = "Gradient magnitude g3d-file";
+    parm.gradient->description = _("Output gradient magnitude g3d-file");
 
     parm.aspect1 = G_define_option ();
     parm.aspect1->key = "aspect1";
@@ -353,7 +355,7 @@ int main (int argc, char *argv[])
     parm.aspect1->required = NO;
     parm.aspect1->multiple = NO;
     parm.aspect1->gisprompt = "new,grid3,3d raster";
-    parm.aspect1->description = "G. horizontal angle g3d-file";
+    parm.aspect1->description = _("Output gradient horizontal angle g3d-file");
 
     parm.aspect2 = G_define_option ();
     parm.aspect2->key = "aspect2";
@@ -361,7 +363,7 @@ int main (int argc, char *argv[])
     parm.aspect2->required = NO;
     parm.aspect2->multiple = NO;
     parm.aspect2->gisprompt = "new,grid3,3d raster";
-    parm.aspect2->description = "G. vertical angle g3d-file";
+    parm.aspect2->description = _("Output gradient vertical angle g3d-file");
 
     parm.ncurv = G_define_option ();
     parm.ncurv->key = "ncurv";
@@ -369,7 +371,7 @@ int main (int argc, char *argv[])
     parm.ncurv->required = NO;
     parm.ncurv->multiple = NO;
     parm.ncurv->gisprompt = "new,grid3,3d raster";
-    parm.ncurv->description = "Change of gradient g3d-file";
+    parm.ncurv->description = _("Output change of gradient g3d-file");
 
     parm.gcurv = G_define_option ();
     parm.gcurv->key = "gcurv";
@@ -377,7 +379,7 @@ int main (int argc, char *argv[])
     parm.gcurv->required = NO;
     parm.gcurv->multiple = NO;
     parm.gcurv->gisprompt = "new,grid3,3d raster";
-    parm.gcurv->description = "Gaussian curvature g3d-file";
+    parm.gcurv->description = _("Output gaussian curvature g3d-file");
 
     parm.mcurv = G_define_option ();
     parm.mcurv->key = "mcurv";
@@ -385,11 +387,11 @@ int main (int argc, char *argv[])
     parm.mcurv->required = NO;
     parm.mcurv->multiple = NO;
     parm.mcurv->gisprompt = "new,grid3,3d raster";
-    parm.mcurv->description = "Mean curvature g3d-file";
+    parm.mcurv->description = _("Output mean curvature g3d-file");
 
     flag.cv = G_define_flag ();
     flag.cv->key = 'c';
-    flag.cv->description = ("Perform a cross-validation procedure");
+    flag.cv->description = _("Perform a cross-validation procedure without volume interpolation");
 
     if (G_parser (argc, argv))
       exit(EXIT_FAILURE);
@@ -550,22 +552,13 @@ int main (int argc, char *argv[])
         mapset = NULL;
         mapset = G_find_cell2 (cellinp, "");
         if (mapset == NULL)
-        {
-          sprintf(msg,"<%s> cellfile not found\n",cellinp);
-          G_fatal_error (msg);
-        }
+          G_fatal_error (_("<%s> cellfile not found"),cellinp);
         fdcell = G_open_cell_old(cellinp, mapset);
         if(fdcell < 0)
-        {
-          sprintf (msg, "Cannot open %s", cellinp);
-          G_fatal_error (msg);
-        }
+          G_fatal_error (_("Cannot open %s"), cellinp);
         fdcout = G_open_fp_cell_new(cellout);
         if(fdcout < 0)
-        {
-          sprintf (msg, "Cannot open %s", cellout);
-          G_fatal_error (msg);
-        }
+          G_fatal_error (_("Cannot open %s"), cellout);
 	zero_array_cell = (FCELL *) malloc (sizeof (FCELL) * n_cols);
 	if (! zero_array_cell) 
           clean_fatal_error("Not enough memory for zero_array_cell\n");
