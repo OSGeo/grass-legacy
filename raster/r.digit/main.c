@@ -4,6 +4,7 @@
 
 #define MAIN
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include "gis.h"
 #include "raster.h"
@@ -20,6 +21,15 @@ int main (int argc, char **argv)
 
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
+
+        if (argc > 1 && ( strcmp(argv[1], "help") == 0 ||
+                          strcmp(argv[1], "--help") == 0) )
+        {
+                G_message(_("Interactive tool used to draw and save "
+                "vector features on a graphics monitor using a pointing "
+                "device (mouse)."));
+                exit(EXIT_SUCCESS);
+        }
 
 	module = G_define_module();
 	module->description =
@@ -46,11 +56,12 @@ int main (int argc, char **argv)
     if (fd == NULL)
     {
 	perror (polyfile);
-	exit(1);
+	exit(EXIT_FAILURE);
     }
 
 /* open the graphics and get it setup */
-    R_open_driver();
+    if (R_open_driver() != 0)
+        G_fatal_error ("No graphics device selected!!!");
     setup_graphics();
 
 /* Do the digitizing and record the output into the polyfile */
@@ -63,7 +74,7 @@ int main (int argc, char **argv)
 
 #ifdef DEBUG
     fprintf (stdout,"Output is in %s\n", polyfile);
-    exit(0);
+    exit(EXIT_FAILURE);
 #endif
 
 /* ask for a map name */
@@ -72,5 +83,5 @@ int main (int argc, char **argv)
     else
 	fprintf (stdout,"No map created\n");
     unlink (polyfile);
-    return(0) ;
+    return(EXIT_SUCCESS) ;
 }
