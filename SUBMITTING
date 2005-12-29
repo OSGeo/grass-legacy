@@ -4,8 +4,11 @@ NOTE: Please improve this list!
 
 Dear (new) GRASS Developer,
 
-When submitting to GRASS CVS repositiory, please take
+When submitting C code to GRASS CVS repositiory, please take
 care of following rules:
+
+[ see SUBMITTING_SCRIPTS for script hints ]
+
 
 1.  Get and read the GRASS 6 Programmer's Manual here:
     http://grass.itc.it/devel/index.php#prog
@@ -220,59 +223,14 @@ care of following rules:
 21. Add/update, if required the related d.m menu:
      display/d.m/menu.tcl
 
-22. If you write a shell script: as a general principle, shell variables
-    should almost always be quoted.
-    Use only secure temp files, see g.tempfile and scripts/* for examples.
+22. For consistency, use README rather than README.txt for any README files.
 
-23. If you write a shell script and search for a command in $PATH, do NOT
-    use the "which" command or the "type -p" command. Both commands are not
-    supported on all platforms, thus causing problems for some people. As an
-    alternative, please use code similar to the following shell script snippet
-    which will perform the same function. In this case, the path of the grass60
-    command is saved if grass60 is found in $PATH. This won't recognize aliased
-    command name.
-    
-	# Search for grass5 command in user's path
-	for i in `echo $PATH | sed 's/^:/.:/
-    	    	    		    s/::/:.:/g
-				    s/:$/:./
-				    s/:/ /g'`
-	do
-	    if [ -f $i/grass5 ] ; then
-    		
-		# Save the path of the grass60 command
-		GRASS_PATH=$i/grass60
-		# Use the first one in user's path
-		break
-	    fi
-	done
-
-24. Use "GRASS_TCLSH" and "GRASS_WISH" environment variables instead of
-    "tclsh" and "wish" at the start of Tcl/Tk scripts. This allows users to
-    override the default names, so that developers don't need worry about the
-    shell names.
-
-    Tcl script:
-
-    	#!/bin/sh
-	# the next line restarts using tclsh \
-	exec $GRASS_TCLSH "$0" "$@"
-
-
-    Tk script:
-
-    	#!/bin/sh
-	# the next line restarts using wish \
-	exec $GRASS_WISH "$0" "$@"
-
-25. For consistency, use README rather than README.txt for any README files.
-
-26. GRASS/Environment variables:
+23. GRASS/Environment variables:
     If you add a new variable, please follow the naming convention.
     All variables are described in
     lib/init/variables.html
 
-27. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
+24. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
     You can re-check before submission with 'cvs diff':
 
     Be sure to create unified ("diff -u") format. "Plain"
@@ -284,13 +242,13 @@ care of following rules:
     "cvs diff -u display/d.vect/main.c"; that way, the diff will
     include the pathname rather than just "main.c".
 
-28. Tell the other developers about the new code using the following e-mail:
+25. Tell the other developers about the new code using the following e-mail:
     grass5@grass.itc.it
  
     To subscribe to this mailing list, see
     http://grass.itc.it/devel/index.php
 
-29. In case of questions feel free to contact the developers at the above
+26. In case of questions feel free to contact the developers at the above
     mailing list.
     http://grass.itc.it/devel/index.php#submission
 
