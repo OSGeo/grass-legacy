@@ -80,23 +80,27 @@ very long time, so it might be worth to use just a sample data
 representing the whole dataset.
 
 <P>
-<i>Example:</i>
+<i>Example 
+ (<based on <a href="http://mpa.itc.it/grasstutor/data_menu2nd.phtml">Slovakia3d dataset</a>):</i>
 <P>
 <div class="code"><pre>
-v.vol.rst -c input=random wcolumn=height cvdev=cvdevmap tension=10
+v.info -c precip3d
+v.vol.rst -c input=precip3d wcolumn=precip segmax=700 cvdev=cvdevmap tension=10
 v.db.select cvdevmap
 v.univar cvdevmap col=flt1 type=point
 </pre></div>
 
-From the result tension and smoothing parameters can be optimized.
-
+From the results, parameters have to be optimized. It is
+recommended to plot the CV error as curve while modifying
+the parameters.
+<P>
 The best approach is to start with <em>tension</em>, <em>smooth</em>
 and <em>zmult</em> with rough steps, or to set <em>zmult</em> to a
 constant somewhere between 30-60. This helps to find minimal RMSE
-values where then finer steps can be used in all parameters. The
+values while then finer steps can be used in all parameters. The
 reasonable range is <em>tension</em>=10...100,
 <em>smooth</em>=0.1...1.0, <em>zmult</em>=10...100.
-<br>
+<p>
 
 In <em>v.vol.rst</em> the tension parameter is much more sensitive to
 changes than in <em>v.surf.rst</em>. Usually <em>tension</em>=10...20
@@ -155,12 +159,11 @@ a 3D vector map from a table containing x,y,z columns.
 
 <h2>SEE ALSO</h2>
 <a href="g.region.html">g.region</a>,
-<a href="s.in.ascii.html">s.in.ascii</a>,
 <a href="v.in.ascii.html">v.in.ascii</a>,
-<a href="v.vol.idw.html">v.vol.idw</a>,
 <a href="r3.mask.html">r3.mask</a>,
 <a href="v.in.db.html">v.in.db</a>,
-<a href="v.surf.rst.html">v.surf.rst</a>
+<a href="v.surf.rst.html">v.surf.rst</a>,
+<a href="v.univar.html">v.univar</a>
 
 <h2>AUTHOR</h2>
 <p>Original version of program (in FORTRAN) and GRASS enhancements: <br>
