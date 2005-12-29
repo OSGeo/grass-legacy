@@ -56,7 +56,13 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <sys/types.h>
 #include "gis.h"
+
+#ifndef NULL
+#define NULL		0
+#endif
 
 static char *G_strend (char *S)
 {
@@ -147,16 +153,6 @@ int G_strcasecmp(const char *x, const char *y)
     if (*y) return -1;
     return 0;
 }
-
-
-
-#include <sys/types.h>
-#include <string.h>
-#include <stdlib.h>
-
-#ifndef NULL
-#define NULL		0
-#endif
 
 
 char *G_strstr(char *mainString, const char *subString)
@@ -289,4 +285,85 @@ char *G_str_replace(char* buffer, const char* old_str, const char* new_str)
 	*R='\0';
 
 	return replace;
+}
+/*******************************************************************
+ *  G_strip(buf)
+ *     char *buf         buffer to be worked on
+ *
+ *  'buf' is rewritten in place with leading and trailing white
+ *  space removed.
+ ******************************************************************/
+
+int G_strip ( register char *buf)
+{
+    register char *a, *b;
+
+/* remove leading white space */
+    for (a = b = buf; *a == ' ' || *a == '\t'; a++)
+	    ;
+    if (a != b)
+	while ((*b++ = *a++))
+	    ;
+/* remove trailing white space */
+    for (a = buf; *a; a++)
+	    ;
+    if (a != buf)
+    {
+	for (a--; *a == ' ' || *a == '\t'; a--)
+		;
+	a++;
+	*a = 0;
+    }
+
+    return 0;
+}
+/*
+ * G_chop - chop leading and trailing white spaces: 
+ *          space, \f, \n, \r, \t, \v
+ *        - returns pointer to string
+ *    
+ * char *G_chop (char *s)
+ *
+ * modified copy of G_squeeze();    RB March 2000
+ *                          <Radim.Blazek@dhv.cz>
+ *
+ */
+
+
+
+/*!
+ * \brief 
+ *
+ * Chop leading and trailing white spaces:
+ * space, \f, \n, \r, \t, \v - returns pointer to string
+ *
+ *  \param s
+ *  \return char * 
+ */
+
+char *G_chop (char *line)
+{
+    register char *f = line, *t = line;
+
+    while (isspace (*f))  	/* go to first non white-space char */
+        f++;
+
+    if (! *f)			/* no more chars in string */
+    {
+        *t = '\0';
+	return (line);
+    }
+
+    for (t = line; *t; t++)  	/* go to end */
+        ;
+    while ( isspace (*--t) )	
+	;
+    *++t = '\0';  		/* remove trailing white-spaces */
+
+    t = line;
+    while (*f)			/* copy */   
+            *t++ = *f++;
+    *t = '\0';
+
+    return (line);
 }

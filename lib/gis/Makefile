@@ -24,7 +24,6 @@ LIB_OBJS = \
 	cell_stats.o\
 	cellstats_eq.o\
 	cell_title.o\
-	chop.o\
 	clear_scrn.o\
 	clicker.o\
 	closecell.o\
@@ -162,7 +161,6 @@ LIB_OBJS = \
 	squeeze.o\
 	store.o\
 	strings.o\
-	strip.o\
 	system.o\
 	tempfile.o\
 	timestamp.o\
