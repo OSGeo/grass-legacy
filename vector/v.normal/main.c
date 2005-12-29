@@ -31,8 +31,6 @@
  *
  */
 
-#pragma ident "s.normal v 0.4B <21 Jun 1995>; Copyright (C) 1994-1995. James Darrell McCauley"
-
 #include <stdlib.h>
 #include <math.h>
 #include "gis.h"
@@ -112,12 +110,12 @@ int main (int argc, char **argv)
   flag.l->description = "lognormal";
 
   if (G_parser (argc, argv))
-    exit (1);
+    exit (EXIT_FAILURE);
 
   if (parm.tests->answer == NULL)
   {
     G_usage ();
-    exit (2);
+    exit (EXIT_FAILURE);
   }
 
   all = flag.region->answer ? 0 : 1;
@@ -232,7 +230,7 @@ int main (int argc, char **argv)
     if (!scan_cats (parm.tests->answers[i], &x, &y))
     {
       G_usage ();
-      exit (1);
+      exit (EXIT_FAILURE);
     }
   for (i = 0; parm.tests->answers[i]; i++)
   {
@@ -349,5 +347,5 @@ int main (int argc, char **argv)
 	break;
       }
   }
-  exit (0);
+  exit (EXIT_SUCCESS);
 }

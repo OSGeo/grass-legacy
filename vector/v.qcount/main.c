@@ -19,8 +19,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
- *  $Id$ 
- *
  * Modification History:
  * <03 Mar 1993> - began coding (jdm)
  * <11 Jan 1994> - announced version 0.3B on pasture.ecn.purdue.edu (jdm)
@@ -32,7 +30,6 @@
  *
  */
 
-/* #pragma ident "s.qcount v 0.7B <25 Jun 1995>; Copyright (c) 1993-1995. James Darrell McCauley" */
 
 #include <stdio.h>
 #include <string.h>
@@ -100,7 +97,7 @@ int main ( int argc, char **argv)
   flag.q->description = "Quiet";
 
   if (G_parser (argc, argv))
-    exit (1);
+    exit (EXIT_FAILURE);
 
   verbose = (flag.q->answer) ? 0 : 1;
 
@@ -179,5 +176,5 @@ int main ( int argc, char **argv)
   fprintf(stdout,"Morisita's (1959) I (variability b/n patches)    %g\n",morisita);
   fprintf(stdout,"-----------------------------------------------------------\n");
 
-  exit (0);
+  exit (EXIT_SUCCESS);
 }
