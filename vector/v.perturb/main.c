@@ -26,8 +26,6 @@
  * <13 Sept 2000>      released under GPL
  */
 
-/* #pragma ident "s.perturb v 0.3B <25 Feb 1995>; Copyright (c) 1994-1995. James Darrell McCauley" */
-
 #include <stdlib.h>
 #include <math.h>
 #include "gis.h"
@@ -105,7 +103,7 @@ main (int argc, char **argv)
   flag.q->description = "Quiet";
 
   if (G_parser (argc, argv))
-    exit (1);
+    exit (EXIT_FAILURE);
 
   verbose = (!flag.q->answer);
 
@@ -208,6 +206,6 @@ main (int argc, char **argv)
   Vect_build ( &Out, stderr );
   Vect_close ( &Out );
 
-  return (0);
+  return (EXIT_SUCCESS);
 }
 
