@@ -8,7 +8,22 @@ Note: This text contains *some* rules only applicable to the
 
 1. Local work (basically at ITC-irst)
 
- o - Update VERSION file to release version
+ o - cleanup rubbish:
+       find . -name '*~'
+       find . -name '*~' | xargs rm
+       find . -name '*.bak'
+
+   - Update VERSION file to release version:
+      vim include/VERSION
+
+#example:
+6
+0
+2RC1
+2005
+
+      rm -f include/VERSION~
+   - submit include/VERSION to CVS
    - Create release branch (only if not yet existing)
 
  o Create Changelog file
@@ -17,7 +32,7 @@ Note: This text contains *some* rules only applicable to the
      #version:
      MAJOR=6
      MINOR=0
-     RELEASE=1RC1
+     RELEASE=2RC1
      VERSION=${MAJOR}.${MINOR}.${RELEASE}
      echo $VERSION
      #create ChangeLog on release branch:
@@ -38,12 +53,18 @@ Note: This text contains *some* rules only applicable to the
      # Calculating MD5 sum:
      md5sum grass-${VERSION}.tar.gz > grass-${VERSION}.md5sum
 
- o reset VERSION file to CVS version
+ o reset include/VERSION file to CVS version
+
+#example
+6
+0
+2cvs
+2005
 
  o Store the source tarball in (use scp -p FILES grass:):
      http://grass.itc.it/grass/grass$MAJOR$MINOR/source/
      along with associated files:
-       grass-$VERSION.* AUTHORS ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING
+     scp grass-$VERSION.* AUTHORS ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING neteler@grass.itc.it:www/grass$MAJOR$MINOR/source/
 
  o update web site to new version (HTML in Web-CVS)
       - main.inc
