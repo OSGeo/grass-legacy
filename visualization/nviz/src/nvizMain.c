@@ -3,17 +3,10 @@
  * that we define Tcl_AppInit in tkAppInit.c.
  */
 
+#include <stdlib.h>
+#include <string.h>
 #include <tk.h>
 #include "interface.h"
-
-/*
- * The following variable is a special hack that is needed in order for
- * Sun shared libraries to be used for Tcl.
- */
-
-extern int matherr();
-/*int *tclDummyMathPtr = (int *) matherr;*/
-
 
 extern int NVIZ_AppInit(Tcl_Interp *);
 
@@ -39,7 +32,6 @@ int main(int argc,		/* Number of command-line arguments. */
 	 char **argv		/* Values of command-line arguments. */
     )
 {
-	char *tmp;
 	int i;
 
 	Tcl_FindExecutable(argv[0]);
