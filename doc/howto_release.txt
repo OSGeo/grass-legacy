@@ -8,7 +8,22 @@ Note: This text contains *some* rules only applicable to the
 
 1. Local work (basically at ITC-irst)
 
- o - Update VERSION file to release version
+ o - cleanup rubbish:
+       find . -name '*~'
+       find . -name '*~' | xargs rm
+       find . -name '*.bak'
+
+   - Update VERSION file to release version:
+      vim include/VERSION
+
+#example:
+6
+0
+2RC1
+2005
+
+      rm -f include/VERSION~
+   - submit include/VERSION to CVS
    - Create release branch (only if not yet existing)
 
  o Create Changelog file
@@ -17,7 +32,7 @@ Note: This text contains *some* rules only applicable to the
      #version:
      MAJOR=6
      MINOR=0
-     RELEASE=1RC1
+     RELEASE=2RC1
      VERSION=${MAJOR}.${MINOR}.${RELEASE}
      echo $VERSION
      #create ChangeLog on release branch:
@@ -38,12 +53,18 @@ Note: This text contains *some* rules only applicable to the
      # Calculating MD5 sum:
      md5sum grass-${VERSION}.tar.gz > grass-${VERSION}.md5sum
 
- o reset VERSION file to CVS version
+ o reset include/VERSION file to CVS version
 
- o Store the source tarball in (use scp -rp):
-     http://grass.itc.it/grass/grass6x/source/
+#example
+6
+0
+2cvs
+2005
+
+ o Store the source tarball in (use scp -p FILES grass:):
+     http://grass.itc.it/grass/grass$MAJOR$MINOR/source/
      along with associated files:
-       AUTHORS ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING
+     scp grass-$VERSION.* AUTHORS ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING neteler@grass.itc.it:www/grass$MAJOR$MINOR/source/
 
  o update web site to new version (HTML in Web-CVS)
       - main.inc
@@ -54,8 +75,10 @@ Note: This text contains *some* rules only applicable to the
       - bugtracking/bugreport.html (not always)
 
      write announcement
-      - store in Web as announces/announce_grass6xx.html
+      - store in Web as announces/announce_grass$MAJOR$MINOR$RELEASE.html
 
+ o upload user HTML manual in case of final release at
+     grass$MAJOR$MINOR/manuals/html$MAJOR$MINOR_user
 
 2. Tell others about it:
    - related announcement press release at:
@@ -70,13 +93,14 @@ Note: This text contains *some* rules only applicable to the
                          <grasslist@baylor.edu>
 
    DebianGIS:          <pkg-grass-general@lists.alioth.debian.org>
+   FreeGIS:            <freegis-list@intevation.de>
 
    news:comp.infosystems.gis
    http://spatialnews.geocomm.com/submitnews.html (not free any more)
    http://freshmeat.net/projects/grass/?highlight=GRASS
-   http://www.linuxapps.com/?page=application&database=current&id=40
    http://linuxtoday.com/contribute.php3
    http://www.newsforge.com/submit.pl
+   http://programming.newsforge.com/submit.pl
    http://osx.macnn.com/    (email to news tips)
    http://www.gis-news.de/  (news@gismngt.de)
    http://www.giscafe.com/  (link: submit material, needs registration)
@@ -86,6 +110,7 @@ Note: This text contains *some* rules only applicable to the
    http://www.gnu.org/directory/science/geography/grass.html
    http://www.kde-apps.org/content/show.php?content=19776
    http://news.eoportal.org/cgi-bin/eoportal_header.pl?dw=psr&site=software&words=type
+   http://www.osdir.com/Downloads+index-req-viewsdownload-sid-206.phtml
 
    ... anywhere else? Please add here.
 
