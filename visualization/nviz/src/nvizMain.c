@@ -8,15 +8,6 @@
 #include <tk.h>
 #include "interface.h"
 
-/*
- * The following variable is a special hack that is needed in order for
- * Sun shared libraries to be used for Tcl.
- */
-
-extern int matherr();
-/*int *tclDummyMathPtr = (int *) matherr;*/
-
-
 extern int NVIZ_AppInit(Tcl_Interp *);
 
 
