@@ -423,7 +423,8 @@ AC_DEFUN(SC_CONFIG_CFLAGS, [
 	    # results, and the version is kept in special file).
 	
 	    if test -r /etc/.relid -a "X`uname -n`" = "X`uname -s`" ; then
-		system=MP-RAS-`awk '{print $3}' /etc/.relid'`
+		#system=MP-RAS-`awk '{print $3}' /etc/.relid'`
+		echo "Commented MP-RAS test due to bug - MN 2005"
 	    fi
 	    if test "`uname -s`" = "AIX" ; then
 		system=AIX-`uname -v`.`uname -r`
