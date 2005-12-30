@@ -18,15 +18,6 @@ extern void display_cb();
 
 static void RunScripts(ClientData);
 
-  /* added 3-12-99 to conform with 8.0.4 */
-/*
- * The following variable is a special hack that is needed in order for
- * Sun shared libraries to be used for Tcl.
-*/
-
-extern int matherr();
-int *tclDummyMathPtr = (int *) matherr;
-
 /*
  *----------------------------------------------------------------------
  *
