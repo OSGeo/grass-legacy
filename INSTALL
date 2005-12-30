@@ -28,7 +28,7 @@ Table of contents
 
 GRASS source code is currently distributed in 2 forms:
 
-1) Officially released source code (e.g. grass-6.0.0.tar.gz)
+1) Officially released source code (e.g. grass-6.0.0.tar.gz or later)
 
   The Full source code version contains all the GRASS source code
   required for compilation. It is distributed as one file (*.tar.gz
@@ -98,6 +98,14 @@ or:
 	./configure --srcdir=`pwd` ...
 
 Then proceed as described above.
+
+
+Note for using a different compiler:
+
+By setting environment variables, the compiler
+names can be defined (C and C++):
+
+	CC=cc CPP=cpp ./configure ...
 
 
 (C) COMPILATION NOTES for 64bit platforms
@@ -199,12 +207,14 @@ or,
 
 whichever works on your shell. Use -O2 instead of -O if your compiler
 supports this (note: O is the letter, not zero). Using the "gcc" compiler,
-you can also specify processor specific flags (examples):
+you can also specify processor specific flags (examples, please suggest
+better settings to us):
 
   CFLAGS="-mcpu=athlon -O2" # AMD Athlon processor with code optimisations
   CFLAGS="-mcpu=pentium"    # Intel Pentium processor
   CFLAGS="-mcpu=pentium4"   # Intel Pentium4 processor
-  CFLAGS="-O3 -msse -msse2 -mfpmath=sse -minline-all-stringops"   # Intel XEON 64bit processor
+  CFLAGS="-O3 -msse -msse2 -mfpmath=sse -minline-all-stringops" # Intel XEON 64bit processor
+  CFLAGS="-mtune=nocona -m64 -minline-all-stringops"            # Intel Pentium 64bit processor
 
 To find out optional CFLAGS for your platform, enter:
   gcc -dumpspecs
