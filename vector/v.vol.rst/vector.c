@@ -46,9 +46,10 @@
 #include "points.h"
 
 int
-point_save (xmm, ymm, zmm, err)
+point_save  (double xmm, double ymm, double zmm, double err)
 
-    double xmm, ymm, zmm, err;
+
+
     
 /*
 c  saves point deviations

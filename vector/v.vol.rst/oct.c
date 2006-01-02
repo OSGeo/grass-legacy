@@ -37,15 +37,16 @@
 
 
 
-struct octfunc * OT_functions_new(compare,divide_data,add_data,
-                          intersect,division_check,get_points)  
-    int (*compare) ();
-    VOID_T **(*divide_data) ();
-    int (*add_data) ();
-    int (*intersect) ();
-    int (*division_check) ();
-    int (*get_points) ();
+struct octfunc * OT_functions_new (int (*compare)(), VOID_T **(*divide_data)(), int (*add_data)(), int (*intersect)(), int (*division_check)(), int (*get_points)())
+  
+
+
+
+
+
+
 /* Initializes FUNCTIONS structure with given arguments*/
+
 {
     struct octfunc *functions;
     if (!(functions = (struct octfunc *) malloc (sizeof (struct octfunc))))
@@ -64,13 +65,15 @@ struct octfunc * OT_functions_new(compare,divide_data,add_data,
 
 
 
-struct octtree * OT_tree_new (data, leafs, parent,functions,octant)
-    VOID_T *data;
-    struct octtree **leafs;
-    struct octtree *parent;
-    struct octfunc *functions; 
-    int             octant;
+struct octtree * OT_tree_new  (VOID_T *data, struct octtree **leafs, struct octtree *parent, struct octfunc *functions, int octant)
+
+
+
+
+ 
+
 /*Initializes TREE using given arguments*/
+
 {
     struct octtree *tree;
     if (!(tree = (struct octtree *) malloc (sizeof (struct octtree))))
@@ -91,9 +94,7 @@ struct octtree * OT_tree_new (data, leafs, parent,functions,octant)
 
 
 int 
-OT_insert_oct (point, tree)
-    struct quadruple  *point;
-    struct octtree *tree;
+OT_insert_oct  (struct quadruple *point, struct octtree *tree)
 
 {
     int     j=0, i, k, comp;
@@ -147,8 +148,8 @@ OT_insert_oct (point, tree)
 
 
 int 
-OT_divide_oct (tree)
-    struct octtree *tree;
+OT_divide_oct  (struct octtree *tree)
+
 {
    int i;
    VOID_T **datas;
@@ -176,16 +177,17 @@ OT_divide_oct (tree)
 
 
 int 
-OT_region_data (tree, xmin, xmax, ymin, ymax, zmin, zmax, points, MAX)
-    struct octtree *tree;
-    double          xmin;
-    double          xmax;
-    double          ymin;
-    double          ymax;
-    double          zmin;
-    double          zmax;
-    struct quadruple *points;
-    int             MAX;	/* max number of points we can add (KMAX2) */
+OT_region_data  (struct octtree *tree, double xmin, double xmax, double ymin, double ymax, double zmin, double zmax, struct quadruple *points, int MAX)
+
+
+
+
+
+
+
+
+
+	/* max number of points we can add (KMAX2) */
  /* note: this KMAX2 can be larger then KMAX */
 
 {

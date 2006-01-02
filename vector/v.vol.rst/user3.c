@@ -46,10 +46,8 @@
 #include "points.h"
 #include "bitmap.h"
 
-int secpar_loop(ngstc,nszc,i)
-	int    ngstc;
-	int    nszc;
-	int    i;
+int secpar_loop (int ngstc, int nszc, int i)
+
 {
 double  dnorm1, ro, dx2, dy2, dz2, grad1, grad2, slp, grad, oor1, oor2,
 		curn, curm, curg, dxy2, dxz2, dyz2;
@@ -219,20 +217,13 @@ return 1;
 
 
 int
-COGRR1 (x_or, y_or, z_or, n_rows, n_cols, n_levs, n_points, points,skip_point)
-	double          x_or;
-	double          y_or;
-	double          z_or;
-	int             n_rows;
-	int             n_cols;
-	int             n_levs;
-	int             n_points;
-	struct quadruple *points;
-	struct point_3d skip_point;
+COGRR1  (double x_or, double y_or, double z_or, int n_rows, int n_cols, int n_levs, int n_points, struct quadruple *points, struct point_3d skip_point)
+
 /*C
 C       INTERPOLATION BY FUNCTIONAL METHOD : TPS + complete regul.
 c
 */
+
 {
 	int             secpar_loop();
 	static double   *w2 = NULL;
@@ -619,12 +610,7 @@ C
 
 
 int 
-POINT (n_points, points, skip_point)
-
-    int             n_points;
-    struct quadruple *points;
-    struct point_3d skip_point;
-
+POINT  (int n_points, struct quadruple *points, struct point_3d skip_point)
 
 /*
 c  interpolation check of z-values in given points

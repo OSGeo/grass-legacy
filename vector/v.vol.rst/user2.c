@@ -51,12 +51,8 @@
 
 
 int 
-translate_oct (tree, numberx, numbery, numberz, numberw)
-    struct octtree *tree;
-    double          numberx;
-    double          numbery;
-    double          numberz;
-    double          numberw;
+translate_oct  (struct octtree *tree, double numberx, double numbery, double numberz, double numberw)
+
 {
     int total=0,i;
 
@@ -95,9 +91,8 @@ translate_oct (tree, numberx, numbery, numberz, numberw)
 
 
 int 
-interp_call (root, tree)
-    struct octtree *root;
-    struct octtree *tree;
+interp_call  (struct octtree *root, struct octtree *tree)
+
 {
 /*    double          xmn,xmx,ymn,ymx,zmn,zmx; */
     double distx,disty,distz,distxp,distyp,distzp,temp1,temp2,temp3;

@@ -573,11 +573,13 @@ int Nget_point_on_surf_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
 
 }
 
-int Nget_point_on_surf_vect(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;	/* Current interpreter. */
-     int argc;			/* Number of arguments. */
-     char **argv;		/* Argument strings. */
+int Nget_point_on_surf_vect (Nv_data *data, Tcl_Interp *interp, int argc, char **argv)
+
+
+	/* Current interpreter. */
+			/* Number of arguments. */
+		/* Argument strings. */
+
 {
     float x, y, z;
     int sx, sy, id;

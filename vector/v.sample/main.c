@@ -46,9 +46,8 @@
 #include "Vect.h"
 #include "methods.h"
 
-int main (argc, argv)
-  char **argv;
-  int argc;
+int main  (int argc, char **argv)
+
 {
   int b, c;
   char   *mapset;
