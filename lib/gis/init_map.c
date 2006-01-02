@@ -12,10 +12,7 @@
 /*--------------------------------------------------------------------------*/
 
 int
-G__random_d_initialize_0 (fd, nofRows, nofCols)
-     
-     int fd;
-     int nofRows, nofCols;
+G__random_d_initialize_0  (int fd, int nofRows, int nofCols)
 
 {
   int row, col;
@@ -54,10 +51,7 @@ G__random_d_initialize_0 (fd, nofRows, nofCols)
 
 
 int
-G__random_f_initialize_0 (fd, nofRows, nofCols)
-     
-     int fd;
-     int nofRows, nofCols;
+G__random_f_initialize_0  (int fd, int nofRows, int nofCols)
 
 {
   int row, col;

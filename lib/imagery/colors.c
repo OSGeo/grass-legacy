@@ -112,8 +112,8 @@ int I_read_group_blu_colors (
     return 0;
 }
 
-int I_free_group_colors (ref)
-    struct Ref *ref;
+int I_free_group_colors  (struct Ref *ref)
+
 {
     if (ref->red.table != NULL)
 	free (ref->red.table);

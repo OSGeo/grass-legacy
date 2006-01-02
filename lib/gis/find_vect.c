@@ -24,9 +24,8 @@
 #include "vect/dig_defines.h"
 
 char *
-G_find_vector (name, mapset)
-	char *name;
-	char *mapset;
+G_find_vector  (char *name, char *mapset)
+
 {
 	char buf[200], buf2[200], xname[512], xmapset[512];
 
@@ -42,9 +41,8 @@ G_find_vector (name, mapset)
 }
 
 char *
-G_find_vector2 (name, mapset)
-	char *name;
-	char *mapset;
+G_find_vector2  (char *name, char *mapset)
+
 {
 	char buf[200], buf2[200], xname[512], xmapset[512];
 

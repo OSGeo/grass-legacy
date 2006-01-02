@@ -22,8 +22,8 @@ int G_fwrite_key_value (
 }
 
 struct Key_Value *
-G_fread_key_value (fd)
-    FILE *fd;
+G_fread_key_value  (FILE *fd)
+
 {
     struct Key_Value *kv;
     char *key, *value;

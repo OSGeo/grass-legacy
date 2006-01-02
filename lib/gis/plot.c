@@ -149,9 +149,8 @@ int G_setup_plot (
  *  \return int
  */
 
-int G_plot_where_xy (east, north, x, y)
-    double east, north;
-    int *x, *y;
+int G_plot_where_xy  (double east, double north, int *x, int *y)
+
 {
     *x = ifloor(X(G_adjust_easting(east,&window))+0.5);
     *y = ifloor(Y(north)+0.5);
@@ -173,8 +172,8 @@ int G_plot_where_xy (east, north, x, y)
  *  \return int
  */
 
-int G_plot_where_en (x, y, east, north)
-    double *east, *north;
+int G_plot_where_en  (int x, int  y, double *east, double *north)
+
 {
     *east = G_adjust_easting(EAST(x),&window);
     *north = NORTH(y);
@@ -182,8 +181,8 @@ int G_plot_where_en (x, y, east, north)
     return 0;
 }
 
-int G_plot_point (east, north)
-    double east, north;
+int G_plot_point  (double east, double north)
+
 {
     int x,y;
 
@@ -215,8 +214,8 @@ int G_plot_point (east, north)
  *  \return int
  */
 
-int G_plot_line (east1, north1, east2, north2)
-    double east1, north1, east2, north2;
+int G_plot_line  (double east1, double north1, double east2, double north2)
+
 {
     int fastline();
     plot_line (east1, north1, east2, north2, fastline);
@@ -224,8 +223,8 @@ int G_plot_line (east1, north1, east2, north2)
     return 0;
 }
 
-int G_plot_line2 (east1, north1, east2, north2)
-    double east1, north1, east2, north2;
+int G_plot_line2  (double east1, double north1, double east2, double north2)
+
 {
     int slowline();
     plot_line (east1, north1, east2, north2, slowline);

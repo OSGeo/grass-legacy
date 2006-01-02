@@ -43,10 +43,8 @@
  *  \return int
  */
 
-int G_get_cellhd (name, mapset, cellhd)
-    char *name ;
-    char *mapset ;
-    struct Cell_head *cellhd ;
+int G_get_cellhd  (char *name, char *mapset, struct Cell_head *cellhd)
+
 {
     FILE *fd;
     int is_reclass;

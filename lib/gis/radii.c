@@ -71,8 +71,8 @@ extern double sin(), sqrt();
  */
 
 double
-G_meridional_radius_of_curvature (lon, a, e2)
-    double lon, a, e2;
+G_meridional_radius_of_curvature  (double lon, double a, double e2)
+
 {
     double x;
     double s;
@@ -102,8 +102,8 @@ G_meridional_radius_of_curvature (lon, a, e2)
  */
 
 double
-G_transverse_radius_of_curvature (lon, a, e2)
-    double lon, a, e2;
+G_transverse_radius_of_curvature  (double lon, double a, double e2)
+
 {
     double x;
     double s;
@@ -132,8 +132,8 @@ G_transverse_radius_of_curvature (lon, a, e2)
  */
 
 double
-G_radius_of_conformal_tangent_sphere (lon, a, e2)
-    double lon, a, e2;
+G_radius_of_conformal_tangent_sphere  (double lon, double a, double e2)
+
 {
     double x;
     double s;
