@@ -1,4 +1,6 @@
-MODULE_TOPDIR = ../../..
+# fix this relative to include/
+# or use absolute path to the GRASS source code
+MODULE_TOPDIR = ../..
 
 PGM = v.example
 
