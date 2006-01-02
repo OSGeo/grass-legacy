@@ -54,15 +54,14 @@ then
 	exit 1
 fi
 
-if   [ "$1" != "@ARGS_PARSED@" ]
+if [ "$1" != "@ARGS_PARSED@" ]
 then
-	exec g.parser "$0" "$@"
+  exec g.parser "$0" "$@"
 fi
 
 #### check if we have awk
-AWK=`which awk`
-if [ "$AWK" = "" ] ; then
-    echo "$PROG: awk required, please install awk/gawk first" 2>&1
+if [ ! -x "`which awk`" ] ; then
+    echo "$PROG: awk required, please install awk or gawk first" 2>&1
     exit 1
 fi
 

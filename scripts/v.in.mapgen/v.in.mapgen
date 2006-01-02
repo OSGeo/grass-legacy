@@ -52,9 +52,8 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 #### check if we have awk
-AWK=`which awk`
-if [ "$AWK" = "" ] ; then
-    echo "$PROG: awk required, please install awk/gawk first" 1>&2
+if [ ! -x "`which awk`" ] ; then
+    echo "$PROG: awk required, please install awk or gawk first" 1>&2
     exit 1
 fi
 
@@ -65,12 +64,6 @@ LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 PROG=`basename $0`
 OPTS=""
 
-
-#### check if we have awk
-if [ -z "`which awk`" ] ; then
-   echo "$PROG: awk required, please install awk/gawk first" 1>&2
-   exit 1
-fi
 # set environment so that awk works properly in all languages
 unset LC_ALL
 export LC_NUMERIC=C
