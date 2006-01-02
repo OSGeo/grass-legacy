@@ -53,7 +53,7 @@
 #% required : no
 #%end
 
-if  [ -z $GISBASE ] ; then
+if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program."
  exit 1
 fi   
@@ -63,8 +63,7 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 #### check if we have awk
-AWK=`which awk`
-if [ "$AWK" = "" ] ; then
+if [ ! -x "`which awk`" ] ; then
     echo "$PROG: awk required, please install awk/gawk first" 1>&2
     exit 1
 fi

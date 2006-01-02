@@ -53,7 +53,7 @@ fi
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk/gawk first" 2>&1
+    echo "$PROG: awk required, please install awk or gawk first" 2>&1
     exit 1
 fi
 

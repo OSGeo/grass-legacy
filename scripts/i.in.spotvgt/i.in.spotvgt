@@ -56,9 +56,8 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 #### check if we have awk
-AWK=`which awk`
-if [ "$AWK" = "" ] ; then
-    echo "$PROG: awk required, please install awk/gawk first" 2>&1
+if [ ! -x "`which awk`" ] ; then
+    echo "$PROG: awk required, please install awk or gawk first" 2>&1
     exit 1
 fi
 
@@ -73,17 +72,9 @@ LOCATION="$GISDBASE"/"$LOCATION_NAME"/"$MAPSET"
 PROG=`basename $0`
 
 #### check for gdalinfo (just to check if installation is complete)
-GDALIMPORT=`which gdalinfo`
-if [ "$GDALIMPORT" = "" ] ; then
+if [ ! -x "`which gdalinfo`" ] ; then
     echo "$PROG: 'gdalinfo' program not found, install GDAL first" 1>&2
     echo "       http://www.gdal.org" 1>&2
-    exit 1
-fi
-
-#### check if we have awk
-AWK=`which awk`
-if [ "$AWK" = "" ] ; then
-    echo "$PROG: awk required, please install awk/gawk first" 1>&2
     exit 1
 fi
 

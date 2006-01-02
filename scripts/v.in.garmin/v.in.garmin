@@ -23,7 +23,7 @@
 #           older versions might be found at:
 #             http://www.metalab.unc.edu/pub/Linux/science/cartography/
 #             ftp://www.mayko.com/pub/gpstrans
-#      -  unix tools: grep, cat, tac, cut, paste, awk/nawk/gawk, sed
+#      -  unix tools: grep, cat, tac, cut, paste, awk/nawk or gawk, sed
 #      -  cs2cs from PROJ.4    http://www.remotesensing.org/proj
 #
 
@@ -108,7 +108,7 @@ fi
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk/gawk first" 1>&2
+    echo "$PROG: awk required, please install awk or gawk first" 1>&2
     exit 1
 fi
 

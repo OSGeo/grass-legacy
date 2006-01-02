@@ -42,7 +42,7 @@
 #%end
 
 
-if  [ -z $GISBASE ] ; then
+if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program."
  exit 1
 fi
@@ -52,9 +52,8 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 #### check if we have awk
-AWK=`which awk`
-if [ "$AWK" = "" ] ; then
-    echo "$PROG: awk required, please install awk/gawk first" 2>&1
+if [ ! -x "`which awk`" ] ; then
+    echo "$PROG: awk required, please install awk or gawk first" 2>&1
     exit 1
 fi
 
@@ -67,7 +66,7 @@ table=`v.db.connect $GIS_OPT_map -g | grep -w $GIS_OPT_layer | awk '{print $2}'`
 database=`v.db.connect $GIS_OPT_map -g | grep -w $GIS_OPT_layer | awk '{print $4}'`
 driver=`v.db.connect $GIS_OPT_map -g | grep -w $GIS_OPT_layer | awk '{print $5}'`
 
-if [ -z $table ] ; then
+if [ -z "$table" ] ; then
    echo -e "\nERROR: There is no table connected to this map !\nRun v.db.connect first.\n"
    exit 1
 fi
