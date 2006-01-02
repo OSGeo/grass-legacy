@@ -25,6 +25,10 @@ extern expr_list *parse_stream(FILE *);
 
 extern void syntax_error(const char *fmt, ...);
 
+/* column_shift.c */
+
+extern void column_shift(void *buf, int res_type, int col);
+
 /* expression.c */
 
 extern int is_var(const char *);
