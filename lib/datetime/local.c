@@ -84,8 +84,8 @@ datetime_get_local_timezone (int *minutes)
  */
 
 void
-datetime_get_local_time(dt)
-    DateTime *dt;
+datetime_get_local_time (DateTime *dt)
+
 {
     long clock;
     struct tm *local;
