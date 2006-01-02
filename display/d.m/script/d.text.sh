@@ -2,7 +2,7 @@
 #
 ############################################################################
 #
-# MODULE:		d.text.sh for GRASS 6
+# MODULE:	d.text.sh for GRASS 6
 # AUTHOR(S):	Michael Barton 
 # PURPOSE:	    Make module d.text useable from the GUI
 # COPYRIGHT:	(C) 2005 by the GRASS Development Team

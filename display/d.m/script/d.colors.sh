@@ -2,7 +2,7 @@
 #
 ############################################################################
 #
-# MODULE:		d.colors.sh for GRASS 6
+# MODULE:	d.colors.sh for GRASS 6
 # AUTHOR(S):	Michael Barton 
 # PURPOSE:	    Make xterm module d.colors useable from the GUI
 # COPYRIGHT:	(C) 2005 by the GRASS Development Team
@@ -26,7 +26,7 @@
 #%end
 
 
-if  [ -z $GISBASE ] ; then
+if  [ -z "$GISBASE" ] ; then
  echo "You must be in GRASS GIS to run this program."
  exit 1
 fi   
