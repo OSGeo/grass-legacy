@@ -4,8 +4,8 @@
 #include "glocale.h"
 
 int
-print_table_definition(table)
-    dbTable *table;
+print_table_definition (dbTable *table)
+
 {
     int ncols, col;
     dbColumn *column;
@@ -28,8 +28,8 @@ print_table_definition(table)
 }
 
 int
-print_column_definition(column)
-    dbColumn *column;
+print_column_definition (dbColumn *column)
+
 {
     dbString value_string;
 
@@ -55,8 +55,8 @@ print_column_definition(column)
 }
 
 int
-print_priv (label, priv)
-    char *label;
+print_priv  (char *label, int  priv)
+
 {
     fprintf(stdout, "%s:", label);
     switch (priv)

@@ -81,7 +81,8 @@ main( int argc, char *argv[] )
 }
 
 void
-parse_command_line(argc, argv) char *argv[];
+parse_command_line (int argc, char *argv[])
+
 {
     struct Option *driver, *database, *input;
     struct Flag *i;
@@ -136,9 +137,8 @@ parse_command_line(argc, argv) char *argv[];
 }
 
 int
-get_stmt(fd, stmt)
-    FILE *fd;
-    dbString *stmt;
+get_stmt (FILE *fd, dbString *stmt)
+
 {
     char buf[4000], buf2[4000];
     int len, row = 0;
@@ -167,8 +167,8 @@ get_stmt(fd, stmt)
 }
 
 int
-stmt_is_empty(stmt)
-    dbString *stmt;
+stmt_is_empty (dbString *stmt)
+
 {
     char dummy[2];
 
