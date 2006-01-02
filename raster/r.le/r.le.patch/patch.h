@@ -1,5 +1,4 @@
 /*
-*$Id$
 ************************************************************
 * MODULE: r.le.patch/patch.h                               *
 *         Version 5.0                Nov. 1, 2001          *
@@ -112,7 +111,7 @@ int   need_gp();
 
 void  whole_reg_driver();
 void  unit_driver();
-void  run_clip();
+void  run_clip(int, int, int, int, int, int, CELL **, int, float);
 
 void  meter();
 FILE  *fopen0();
@@ -121,8 +120,8 @@ FILE  *fopen2();
 
 
 /** trace.c **/
-void   cell_clip_drv();
-void   cell_clip();
+void   cell_clip_drv(int, int, int, int, double **, int, float);
+void   cell_clip(DCELL **, DCELL **, int, int, int, int, int, float, int *, int *);
 int    is_not_empty_buffer();
 int    center_is_not_null();
 void   trace();

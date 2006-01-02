@@ -265,8 +265,8 @@ int main(int argc, char *argv[])
 
 
 
-void writeHeader(outputF)
-FILE *outputF;
+void writeHeader (FILE *outputF)
+
 {
    int i;
 
@@ -292,9 +292,8 @@ FILE *outputF;
  * read profiles
  */
 
-void processProfiles(inputFile,outputF)
-int             inputFile;
-FILE           *outputF;
+void processProfiles (int inputFile, FILE *outputF)
+
 {
    CELL *cell;
    int             c, r, mod ;

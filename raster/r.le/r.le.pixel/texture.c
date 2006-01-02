@@ -52,10 +52,8 @@ int total, nullflag;
 
 					/* MOVING WINDOW ANALYSIS DRIVER */
 
-void   mv_texture(nrows, ncols, buf, null_buf, value, index, rich, cnt, cntwhole)
-int      nrows, ncols, index, cnt, cntwhole;
-double **buf, **value, *rich;
-char   **null_buf;
+void mv_texture (int nrows, int ncols, double **buf, double **null_buf, double **value, int index, double *rich, int cnt, int cntwhole)
+
 {
   int           lc;
   register int  i, j;
@@ -245,10 +243,8 @@ char   **null_buf;
 					/* WHOLE MAP, UNITS, OR REGIONS 
 					   DRIVER */
 
-void   df_texture(nrows, ncols, buf, null_buf, rich, cnt, cntwhole)
-int    nrows, ncols, cnt, cntwhole;
-double **buf, *rich;
-char   **null_buf;
+void df_texture (int nrows, int ncols, double **buf, double **null_buf, double *rich, int cnt, int cntwhole)
+
 {
   FILE   	*fp0, *fp1, *fp2, *fp3, *fp4, *fp5;											
   int           lc, fd, *edge1, *edge2, fc, **edgenull;
@@ -596,10 +592,8 @@ char   **null_buf;
 
 					/* ATTRIBUTE CALC. */
 
-void   cal_att(buf, null_buf, i0, j0, nr, nc, attr)
-int    i0, j0, nr, nc;
-double *attr, **buf; 
-char   **null_buf;
+void cal_att (double **buf, double **null_buf, int i0, int j0, int nr, int nc, double *attr)
+
 {
           
   static int    count;
@@ -658,10 +652,8 @@ char   **null_buf;
 
 					/* DIVERSITY CALC. */
 
-void   cal_divers(buf, null_buf, i0, j0, nr, nc, lc, cnt, diver)
-int    nr, nc, i0, j0, lc, cnt;
-double *diver, **buf;
-char   **null_buf;
+void cal_divers (double **buf, double **null_buf, int i0, int j0, int nr, int nc, int lc, int cnt, double *diver)
+
 {
   int           tot; 
   static int    *density;
@@ -737,10 +729,8 @@ char   **null_buf;
 
 					/* TEXTURE CALC. */
 
-void   cal_tex(buf, null_buf, i0, j0, nr, nc, lc, rich, cnt, tex)
-int     i0, j0, nr, nc, lc, cnt;
-double  *tex, **buf, *rich;
-char    **null_buf;
+void cal_tex (double **buf, double **null_buf, int i0, int j0, int nr, int nc, int lc, double *rich, int cnt, double *tex)
+
 {
 
   int           r, ln;
@@ -904,11 +894,8 @@ char    **null_buf;
 
 					/* EDGE, JUXTAPOSITION CALC. */
 
-void   cal_edge(buf, null_buf, i0, j0, nr, nc, lc, edge, cntwhole,
-		atts, weight, edgeatts, edgemat, edge1, edge2)
-int     i0, j0, nr, nc, lc, cntwhole, *edge1, *edge2;
-double  *atts, *edgeatts, *edge, **weight, **edgemat, **buf;
-char    **null_buf;
+void cal_edge (double **buf, double **null_buf, int i0, int j0, int nr, int nc, int lc, double *edge, int cntwhole, double *atts, double **weight, double *edgeatts, double **edgemat, int *edge1, int *edge2)
+
 {
 
   int		 ln, lr, cnt, fr, to;
@@ -1196,10 +1183,8 @@ char    **null_buf;
 
 					/* READ THE WEIGHT FILE */
 
-void  read_weight(richcount, atts, weight, attcnt)
-double  **weight;
-int      *attcnt, richcount;
-double    atts[];
+void read_weight (int richcount, double atts[], double **weight, int *attcnt)
+
 {
   FILE         *fp;
   register int i, j;
@@ -1253,9 +1238,8 @@ double    atts[];
 
 					/* READ THE EDGE FILE */
 
-void  read_edge(richcount, atts, edge)
-double   **edge, atts[];
-int        richcount;
+void read_edge (int richcount, double atts[], double **edge)
+
 {
   FILE         *fp;
   register int i, j;
@@ -1313,9 +1297,8 @@ int        richcount;
 					   ARRAY WHICH IS READ FROM THE
 					   WEIGHT FILE */
 
-int  find_loc(richcount, atts, test)
-int     richcount;
-double  atts[], test;
+int find_loc (int richcount, double atts[], double test)
+
 {
   register int i;
   
@@ -1335,9 +1318,8 @@ double  atts[], test;
 					   ARRAY WHICH IS READ FROM THE
 					   EDGE FILE */
 
-int  find_edge(richcount, atts, test)
-int    richcount;
-double atts[], test;
+int find_edge (int richcount, double atts[], double test)
+
 {
   register int i;
   
@@ -1358,8 +1340,8 @@ double atts[], test;
 					/* FIND THE SEQUENCE NO. OF AN
 					   ATTRIBUTE IN THE RICHNESS ARRAY */
 
-int  check_order(att, rich)
-double  att, *rich;
+int check_order (double att, double *rich)
+
 {
   int i = 0;
 

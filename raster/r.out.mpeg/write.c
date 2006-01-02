@@ -179,9 +179,8 @@ FILE *ofp;
 #endif
 
 /*******************************************************/
-void write_ppm(tr, tg, tb, nrows, ncols, y_rows, y_cols, filename)
-char *tr, *tg, *tb, *filename;
-int nrows, ncols, *y_rows, *y_cols;
+void write_ppm (char *tr, char *tg, char *tb, int nrows, int ncols, int *y_rows, int *y_cols, char *filename)
+
 {
 register int x, y;
 static int rows, cols;
@@ -237,11 +236,8 @@ FILE *ofp;
 
 
 /*******************************************************/
-void write_params(mpfilename, yfiles, outfile, 
-		  frames, quality, y_rows, y_cols, fly)
-char *mpfilename, *outfile;
-char *yfiles[];
-int frames, quality, y_cols, y_rows, fly;
+void write_params (char *mpfilename, char *yfiles[], char *outfile, int frames, int quality, int y_rows, int y_cols, int fly)
+
 {
 FILE *fp;
 char buf[1000], dir[1000], *enddir;
@@ -359,9 +355,8 @@ int i, dirlen=0;
 
 
 /*******************************************************/
-void clean_files(file, files, num)
-char *file, *files[];
-int num;
+void clean_files (char *file, char *files[], int num)
+
 {
 char cmd[1000];
 int i;

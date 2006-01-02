@@ -68,9 +68,8 @@ void v3mag(double v1[3], double *mag);
 void add_null_area(DCELL *, struct Cell_head *, double *);
 
 int
-main(argc, argv)
-    int argc;
-    char *argv[];
+main (int argc, char *argv[])
+
 {
 
     struct GModule *module;
@@ -183,11 +182,8 @@ main(argc, argv)
 /************************************************************************/
 
 void
-add_row_area(top, bottom, sz, w, low, high)
-DCELL *top, *bottom;
-double sz;
-struct Cell_head	*w;
-double *low, *high;
+add_row_area (DCELL *top, DCELL *bottom, double sz, struct Cell_head *w, double *low, double *high)
+
 {
 double guess1, guess2, mag, tedge1[3], tedge2[3], crossp[3];
 int col;
@@ -287,8 +283,8 @@ add_null_area(DCELL *rast, struct Cell_head *region, double *area)
 /************************************************************************/
 /* return the cross product v3 = v1 cross v2 */
 void
-v3cross(v1, v2, v3)
-double v1[3], v2[3], v3[3];
+v3cross (double v1[3], double v2[3], double v3[3])
+
 {
         v3[X] = (v1[Y]*v2[Z]) - (v1[Z]*v2[Y]);
         v3[Y] = (v1[Z]*v2[X]) - (v1[X]*v2[Z]);
@@ -298,8 +294,8 @@ double v1[3], v2[3], v3[3];
 /************************************************************************/
 /* magnitude of vector */
 void
-v3mag(v1, mag)
-double v1[3], *mag;
+v3mag (double v1[3], double *mag)
+
 {
     *mag = sqrt(v1[X] * v1[X] + v1[Y] * v1[Y] +v1[Z] * v1[Z]);
 }

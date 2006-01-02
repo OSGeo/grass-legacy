@@ -37,8 +37,8 @@ int i;
                      /*  RUN THE DEFAULT PATCH MEASURES  */
                      /************************************/
 
-void  df_patch (patch_list)
-PATCH  *patch_list;
+void df_patch  (PATCH *patch_list)
+
 {
   PATCH   *tmp = patch_list;
   int     *type_dens, type_coh;
@@ -305,9 +305,8 @@ PATCH  *patch_list;
                      /*  COMPUTE THE ATTRIBUTE MEASURES  */
                      /************************************/
 
-void   df_att(tmp, type_coh, type_dens)
-PATCH *tmp;
-int   type_coh, *type_dens;
+void df_att (PATCH *tmp, int type_coh, int *type_dens)
+
 {
   static   double sumx=0.0, sumx2=0.0, w_att=0.0, w_att2=0.0, total=0.0;
   static   double *area, total2=0.0;
@@ -353,9 +352,8 @@ int   type_coh, *type_dens;
                      /*    SAVE THE ATTRIBUTE MEASURES   */
                      /************************************/
 
-void  save_att(w_att, w_att2, t_size, t_size2, sum, sum2, density, area)
-double   w_att, w_att2, t_size, t_size2, sum, sum2, *area;
-int *density;
+void save_att (double w_att, double w_att2, double t_size, double t_size2, double sum, double sum2, int *density, double *area)
+
 {
   register int	i;
   double        wm, wstdv, m, stdv;
@@ -435,9 +433,8 @@ int *density;
                      /*    COMPUTE THE CORE MEASURES     */
                      /************************************/
 
-void   df_core(tmp, type_coh, type_dens)
-PATCH *tmp;
-int   type_coh, *type_dens;
+void df_core (PATCH *tmp, int type_coh, int *type_dens)
+
 {
   static   int  **density1c=NULL, **density1e=NULL,
 		*densityc=NULL, *densitye=NULL, first=1;
@@ -551,10 +548,8 @@ int   type_coh, *type_dens;
                      /*     SAVE THE CORE MEASURES       */
                      /************************************/
 
-void  save_core(sumc2, sume2, mcore, medge, mcore1, medge1, sum22c, sum22e,
-		  densityc, densitye, type_dens, density1c, density1e)
-int     *densityc, *densitye, *type_dens, **density1c, **density1e;
-double   mcore, medge, *mcore1, *medge1, sumc2, sume2, *sum22c, *sum22e;
+void save_core (double sumc2, double sume2, double mcore, double medge, double *mcore1, double *medge1, double *sum22c, double *sum22e, int *densityc, int *densitye, int *type_dens, int **density1c, int **density1e)
+
 {
   register int	i, j;
   double    tmpc, tmpe, stdvc, stdve;
@@ -694,9 +689,8 @@ double   mcore, medge, *mcore1, *medge1, sumc2, sume2, *sum22c, *sum22e;
                      /*    COMPUTE THE SIZE MEASURES     */
                      /************************************/
 
-void   df_size(tmp, type_coh, type_dens)
-PATCH *tmp;
-int   type_coh, *type_dens;
+void df_size (PATCH *tmp, int type_coh, int *type_dens)
+
 {
   static   int  **density1=NULL, *density=NULL, first=1;
   static double msize=0.0, *msize1=NULL, sum2=0.0, *sum22;
@@ -776,9 +770,8 @@ int   type_coh, *type_dens;
                      /*       SAVE THE SIZE MEASURES     */
                      /************************************/
 
-void  save_size(sum2, msize, msize1, sum22, density, type_dens, density1)
-int     *density, *type_dens, **density1;
-double  msize, *msize1, sum2, *sum22;
+void save_size (double sum2, double msize, double *msize1, double *sum22, int *density, int *type_dens, int **density1)
+
 {
   register int	i, j;
   double    tmp, stdv;
@@ -881,9 +874,8 @@ double  msize, *msize1, sum2, *sum22;
                      /*     COMPUTE THE SHAPE MEASURES   */
                      /************************************/
 
-void   df_shape(tmp, type_coh, type_dens)
-PATCH *tmp;
-int   type_coh, *type_dens;
+void df_shape (PATCH *tmp, int type_coh, int *type_dens)
+
 {
   static int  *den1, *den2, *den3, **density1=NULL, **density2=NULL,
               **density3, new=1;
@@ -1050,14 +1042,7 @@ int   type_coh, *type_dens;
                      /*      SAVE THE SHAPE MEASURES     */
                      /************************************/
 
-void  save_shape(sq1, sq2, sq3, sqr11, sqr21, sqr31,
-                 mshape, mshape_p, mshape_r, mshape1,
-                 mshape1_p, mshape1_r, type_dens, den1,
-                 den2, den3, density1, density2, density3)
-int     *type_dens, *den1, *den2, *den3, **density1, **density2,
-        **density3;
-double  sq1, sq2, sq3, *sqr11, *sqr21, *sqr31, mshape, *mshape1,
-        mshape_p, mshape_r, *mshape1_p, *mshape1_r;
+void save_shape (double sq1, double sq2, double sq3, double *sqr11, double *sqr21, double *sqr31, double mshape, double mshape_p, double mshape_r, double *mshape1, double *mshape1_p, double *mshape1_r, int *type_dens, int *den1, int *den2, int *den3, int **density1, int **density2, int **density3)
 {
   register int	i, j;
   double    tmp, stdv;
@@ -1306,8 +1291,8 @@ double  sq1, sq2, sq3, *sqr11, *sqr21, *sqr31, mshape, *mshape1,
                      /*  COMPUTE AND SAVE BOUNDARY COMPLEXITY MEASURES   */
                      /****************************************************/
 
-void  df_boundary(tmp)
-PATCH *tmp;
+void df_boundary (PATCH *tmp)
+
 {
 
   static double  sumomega=0.0, sumomega2=0.0;
@@ -1369,9 +1354,8 @@ PATCH *tmp;
                      /* COMPUTE & SAVE PERIMETER MEASURES */
                      /*************************************/
 
-void   df_perim(tmp, type_coh, type_dens)
-PATCH *tmp;
-int   type_coh, *type_dens;
+void df_perim (PATCH *tmp, int type_coh, int *type_dens)
+
 {
   static double  perim=0.0, *perim1, sum2=0.0, *sum21, first=1.0;
   register int  i;
@@ -1477,10 +1461,8 @@ int   type_coh, *type_dens;
                      /*    MEASURES                      */
                      /************************************/
 
-void mv_patch (patch_list, value, index)
-PATCH 	*patch_list;
-double 	**value;
-int	index;
+void mv_patch  (PATCH *patch_list, double **value, int index)
+
 {
   PATCH     	 *tmp = patch_list;
 
@@ -1527,8 +1509,8 @@ int	index;
                      /* ATT BELONGS TO                   */
                      /************************************/
 
-int  recl_coh(att)
-double    att;
+int recl_coh (double att)
+
 {
   register int i;
   extern int   ntype;
@@ -1552,10 +1534,8 @@ double    att;
                      /* TABLE                            */
                      /************************************/
 
-int  in_group(att, group, r)
-double   att;
-float   *group;
-int      r;
+int in_group (double att, float *group, int r)
+
 {
   register int i;
 
@@ -1612,9 +1592,8 @@ int      r;
                      /*  BELONGS TO                      */
                      /************************************/
 
-int  index_coh(att, group)
-double   att;
-float   *group;
+int index_coh (double att, float *group)
+
 {
   register int i;
 
@@ -1640,10 +1619,7 @@ float   *group;
                      /* MOVING WINDOW ATTRIBUTE MEASURES */
                      /************************************/
 
-void 	m_att(tmp, value, index)
-PATCH    *tmp;
-double   **value;
-int      index;
+void m_att (PATCH *tmp, double **value, int index)
 
 {
   static double  sum1=0.0, sum12=0.0, sum2=0.0, sum22=0.0, sum32=0.0,
@@ -1781,10 +1757,7 @@ int      index;
                      /*    MOVING WINDOW SIZE MEASURES   */
                      /************************************/
 
-void    m_size(tmp, value, index)
-PATCH   *tmp;
-double  **value;
-int     index;
+void m_size (PATCH *tmp, double **value, int index)
 
 {
   static double sum1=0.0, sum12=0.0, sum2=0.0, sum22=0.0;
@@ -1914,10 +1887,7 @@ int     index;
                      /*   MOVING WINDOW CORE MEASURES    */
                      /************************************/
 
-void    m_core(tmp, value, index)
-PATCH   *tmp;
-double  **value;
-int     index;
+void m_core (PATCH *tmp, double **value, int index)
 
 {
   static double  sum1c=0.0, sum1e=0.0, sum2c=0.0, sum2e=0.0,
@@ -2103,10 +2073,8 @@ int     index;
                      /*  MOVING WINDOW SHAPE MEASURES    */
                      /************************************/
 
-void	m_shape(tmp, way, value, index)
-PATCH   *tmp;
-int     way, index;
-double  **value;
+void m_shape (PATCH *tmp, int way, double **value, int index)
+
 {
   static double  sum1=0, sum12=0, sum2=0, sum22=0;
   static int     density1=0, density2=0, density3=0;
@@ -2240,10 +2208,8 @@ double  **value;
                      /*  MEASURES FOR MOVING WINDOW ANALYSIS   */
                      /******************************************/
 
-void  m_boundary(tmp, value, index)
-PATCH *tmp;
-double  **value;
-int     index;
+void m_boundary (PATCH *tmp, double **value, int index)
+
 {
 
   static double  sumomega=0.0, sumomega2=0.0;
@@ -2327,10 +2293,8 @@ int     index;
                      /* MOVING WINDOW PERIMETER MEASURES */
                      /************************************/
 
-void   	m_perim(tmp, value, index)
-PATCH   *tmp;
-double  **value;
-int     index;
+void m_perim (PATCH *tmp, double **value, int index)
+
 {
   static double sum1=0.0, sum12=0.0, sum2=0.0, sum22=0.0;
   static int    density=0;
@@ -2423,8 +2387,7 @@ int     index;
 
 
 
-double  eu_d(x1, y1, x2, y2)
-double  x1, y1, x2, y2;
+double eu_d (double x1, double y1, double x2, double y2)
 
 {
   return( sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2)) );

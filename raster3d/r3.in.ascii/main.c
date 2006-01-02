@@ -51,9 +51,7 @@ extern void * G3d_openNewParam ();
 
 /*---------------------------------------------------------------------------*/
 static void
-fatalError (errorMsg)
-
-     char *errorMsg;
+fatalError  (char *errorMsg)
 
 {
   if (map != NULL) {
@@ -103,11 +101,7 @@ setParams ()
 /*---------------------------------------------------------------------------*/
 
 static void
-getParams (input, output, convertNull, nullValue)
-
-     char **input, **output;
-     int *convertNull;
-     double *nullValue;
+getParams  (char **input, char **output, int *convertNull, double *nullValue)
 
 {
  *input = param.input->answer;
@@ -123,11 +117,7 @@ getParams (input, output, convertNull, nullValue)
 /*---------------------------------------------------------------------------*/
 
 static void
-readHeaderString (fp, valueString, value)
-
-     FILE *fp;
-     char *valueString;
-     double *value;
+readHeaderString  (FILE *fp, char *valueString, double *value)
 
 {
   static char format[100];
@@ -142,10 +132,7 @@ readHeaderString (fp, valueString, value)
 /*---------------------------------------------------------------------------*/
 
 static FILE *
-openAscii (asciiFile, region)
-
-     char *asciiFile;
-     G3D_Region *region;
+openAscii  (char *asciiFile, G3D_Region *region)
 
 {
   FILE *fp;
@@ -180,12 +167,7 @@ openAscii (asciiFile, region)
 #define MAX(a,b) (a > b ? a : b)
 
 static void
-asciiToG3d (fp, region, convertNull, nullValue)
-
-     FILE *fp;
-     G3D_Region *region;
-     int convertNull;
-     double nullValue;
+asciiToG3d  (FILE *fp, G3D_Region *region, int convertNull, double nullValue)
 
 {
   int x, y, z;
@@ -236,10 +218,7 @@ fprintf(stderr,"rows=%d cols=%d depths=%d\n",region->rows,region->cols,region->d
 /*---------------------------------------------------------------------------*/
 
 int
-main (argc, argv) 
-     
-     int argc;
-     char *argv[];
+main  (int argc, char *argv[])
 
 {
   char *input, *output;

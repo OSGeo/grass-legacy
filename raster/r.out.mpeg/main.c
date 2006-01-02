@@ -322,9 +322,8 @@ char	*mpfilename, cmd[1000];
 }
 
 /* ###################################################### */
-char **gee_wildfiles(wildarg, element, num)
-char *wildarg, *element;
-int *num;
+char **gee_wildfiles (char *wildarg, char *element, int *num)
+
 {
 int n, cnt=0;
 char path[1000], *mapset, cmd[1000], buf[512];
@@ -372,11 +371,8 @@ FILE *tf;
 
 
 /********************************************************************/
-void parse_command(argc, argv, vfiles, numviews, numframes, quality, convert)
-int argc;
-char *argv[];
-char *vfiles[MAXVIEWS][MAXIMAGES];
-int *numframes, *numviews, *quality, *convert;
+void parse_command (int argc, char *argv[], char *vfiles[MAXVIEWS][MAXIMAGES], int *numviews, int *numframes, int *quality, int *convert)
+
 {
 	struct GModule *module;
     struct Option *viewopts[MAXVIEWS], *out, *qual; 

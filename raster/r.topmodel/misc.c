@@ -2,8 +2,8 @@
 
 
 int
-run(cmd)
-	char	*cmd;
+run (char *cmd)
+
 {
 	int	retval;
 

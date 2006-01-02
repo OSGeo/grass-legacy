@@ -70,7 +70,7 @@ void  set_colors();
 void  read_mwind();
 void  meter2();
 void  unit_driver();
-void  run_clip();
+void  run_clip(int, int, int, int, int, int, CELL **, int, int, float);
 void  whole_reg_driver();
 FILE  *fopen0();
 FILE  *fopen1();
@@ -80,8 +80,8 @@ void  get_rich_whole();
 
 
 /** cellclip.c **/
-void  cell_clip_drv();
-void  cell_clip();
+void  cell_clip_drv(int, int, int, int, double **, int, int, float);
+void  cell_clip(DCELL **, DCELL **, int, int, int, int, int, float);
 void  get_rich();
 int   is_not_empty_buffer();
 int   center_is_not_zero();

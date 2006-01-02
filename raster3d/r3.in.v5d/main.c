@@ -42,9 +42,7 @@ void *map = NULL;
 
 /*---------------------------------------------------------------------------*/
 static void
-fatalError (errorMsg)
-
-     char *errorMsg;
+fatalError  (char *errorMsg)
 
 {
   if (map != NULL) {
@@ -93,11 +91,7 @@ setParams ()
 /*---------------------------------------------------------------------------*/
 
 static void
-getParams (input, output, convertNull, nullValue)
-
-     char **input, **output;
-     int *convertNull;
-     double *nullValue;
+getParams  (char **input, char **output, int *convertNull, double *nullValue)
 
 {
  *input = param.input->answer;
@@ -110,12 +104,7 @@ getParams (input, output, convertNull, nullValue)
 
 /*---------------------------------------------------------------------------*/
 
-void convert (openFile, region, convertNull, nullValue)
-
-     char *openFile;
-     G3D_Region *region;
-     int convertNull;
-     double nullValue;
+void convert  (char *openFile, G3D_Region *region, int convertNull, double nullValue)
 
 {
   double tmp;
@@ -193,10 +182,7 @@ void convert (openFile, region, convertNull, nullValue)
 /*---------------------------------------------------------------------------*/
 
 int
-main (argc, argv) 
-     
-     int argc;
-     char *argv[];
+main  (int argc, char *argv[])
 
 {
   char *input, *output;

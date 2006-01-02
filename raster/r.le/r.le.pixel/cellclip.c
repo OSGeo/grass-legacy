@@ -29,10 +29,8 @@ extern int	     finput;
 
 					/* CELL CLIP DRIVER */
 
-void  cell_clip_drv(col0, row0, ncols, nrows, value, index, cntwhole, radius)
-int   row0, col0, nrows, ncols, index, cntwhole;
-double  **value;
-float radius;
+void cell_clip_drv (int col0, int row0, int ncols, int nrows, double **value, int index, int cntwhole, float radius)
+
 {
 
   register int i,j;
@@ -168,11 +166,7 @@ float radius;
 					/* CHECK BUFFER; RETURN 1 IF BUFFER
 					   IS NOT EMPTY, 0 IF EMPTY */
 
-int is_not_empty_buffer(buf, null_buf, rows, cols)
-
-int     rows, cols ;
-DCELL **buf;
-char  **null_buf; 
+int is_not_empty_buffer (DCELL **buf, DCELL **null_buf, int rows, int cols)
 
 {
  
@@ -200,9 +194,7 @@ char  **null_buf;
 				   IN THE BUFFER IS NULL.  RETURN 1
 				   IF IT IS NOT NULL, 0 IF IT IS NULL */
 
-int center_is_not_null(buf, null_buf, rows, cols)
- DCELL **buf, **null_buf;
- int rows, cols;
+int center_is_not_null (DCELL **buf, DCELL **null_buf, int rows, int cols)
 
 {
 
@@ -229,11 +221,8 @@ int center_is_not_null(buf, null_buf, rows, cols)
 				/* OPEN THE RASTER FILE TO BE CLIPPED,
 				   AND DO THE CLIPPING */
 
-void cell_clip(buf, null_buf, row0, col0, nrows, ncols, index, radius)
-DCELL   **buf;
-char    **null_buf; 
-int       row0, col0, nrows, ncols, index;
-float     radius;
+void cell_clip (DCELL **buf, DCELL **null_buf, int row0, int col0, int nrows, int ncols, int index, float radius)
+
 {
   CELL          *tmp, *tmp1;
   FCELL         *ftmp;
@@ -450,9 +439,8 @@ float     radius;
 					   THE RICHNESS ARRAY IN UNSORTED
 					   ORDER */
 
-void  get_rich(att, rich, cnt)
-int    *cnt;
-double att, rich[];
+void get_rich (double att, double rich[], int *cnt)
+
 {
   register int i;
 
@@ -484,8 +472,8 @@ double att, rich[];
 
 					/* COMPARE */
 
-int compar(i, j)
-int  *i, *j;
+int compar (int *i, int *j)
+
 { 
   return(*i - *j);
 }

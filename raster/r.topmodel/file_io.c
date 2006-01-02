@@ -2,9 +2,8 @@
 
 
 void
-get_line(fp, buffer)
-	FILE	*fp;
-	char	*buffer;
+get_line (FILE *fp, char *buffer)
+
 {
 	char	*str;
 

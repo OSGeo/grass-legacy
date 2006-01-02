@@ -36,9 +36,8 @@
 				/* MAIN PROGRAM */
 
 int
-main(argc, argv)
-int  argc;
-char *argv[];
+main (int argc, char *argv[])
+
 {
 
 				/* setup a structure to store the window

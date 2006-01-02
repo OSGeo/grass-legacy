@@ -26,18 +26,16 @@ static void init_d_mask_rules (d_Mask *d_mask);
 
 /*******************************************************************/
 static void
-init_d_mask_rules (d_mask)
-    d_Mask *d_mask;
+init_d_mask_rules  (d_Mask *d_mask)
+
 {
     d_mask->list = NULL;
 }
 
 /*******************************************************************/
 static void
-add_d_mask_rule (d_mask, a, b, inf)
-    d_Mask *d_mask;
-    double a, b;
-    int inf;
+add_d_mask_rule  (d_Mask *d_mask, double a, double b, int inf)
+
 {
     d_Interval *I;
 
@@ -50,9 +48,8 @@ add_d_mask_rule (d_mask, a, b, inf)
 }
 
 /*******************************************************************/
-int mask_d_select (x, mask)
-    DCELL *x;
-    d_Mask *mask;
+int mask_d_select  (DCELL *x, d_Mask *mask)
+
 {
     d_Interval *I;
 
@@ -67,9 +64,8 @@ int mask_d_select (x, mask)
 
 /*******************************************************************/
 extern DCELL
-mask_match_d_interval (x, I)
-    DCELL x;
-    d_Interval *I;
+mask_match_d_interval  (DCELL x, d_Interval *I)
+
 {
     if (I->inf < 0)
 	return x <= I->low;
@@ -82,10 +78,8 @@ mask_match_d_interval (x, I)
 
 /*******************************************************************/
 static void
-parse_d_mask_rule (vallist, d_mask, where)
-    char *vallist;
-    d_Mask *d_mask;
-    char *where;
+parse_d_mask_rule  (char *vallist, d_Mask *d_mask, char *where)
+
 {
     double a,b;
     char junk[128];
@@ -119,9 +113,8 @@ parse_d_mask_rule (vallist, d_mask, where)
 }
 
 /*******************************************************************/
-void parse_vallist (vallist, d_mask)
-    char **vallist;
-    d_Mask **d_mask;
+void parse_vallist  (char **vallist, d_Mask **d_mask)
+
 {
     char buf[1024];
     char x[2];

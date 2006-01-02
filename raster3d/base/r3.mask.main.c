@@ -54,10 +54,7 @@ setParams ()
 /*--------------------------------------------------------------------------*/
 
 void
-getParams (name, maskRules)
-
-     char **name;
-     d_Mask **maskRules;
+getParams  (char **name, d_Mask **maskRules)
 
 {
  *name = params.map->answer;
@@ -69,10 +66,7 @@ getParams (name, maskRules)
 #define MAX(a,b) (a > b ? a : b)
 
 static void
-makeMask (name, maskRules)
-
-     char *name;
-     d_Mask *maskRules;
+makeMask  (char *name, d_Mask *maskRules)
 
 {
   void *map, *mask;
@@ -150,10 +144,7 @@ makeMask (name, maskRules)
 /*--------------------------------------------------------------------------*/
 
 int
-main (argc, argv) 
-
-     int argc;
-     char *argv[];
+main  (int argc, char *argv[])
 
 {
   char *name;
