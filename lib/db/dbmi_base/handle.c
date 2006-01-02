@@ -8,8 +8,8 @@
  \param 
 */
 void
-db_init_handle (handle)
-    dbHandle *handle;
+db_init_handle  (dbHandle *handle)
+
 {
     db_init_string (&handle->dbName);
     db_init_string (&handle->dbSchema);
@@ -21,10 +21,8 @@ db_init_handle (handle)
  \return 
  \param 
 */
-db_set_handle (handle, dbName, dbSchema)
-    dbHandle *handle;
-    char *dbName;
-    char *dbSchema;
+db_set_handle  (dbHandle *handle, char *dbName, char *dbSchema)
+
 {
     int stat;
 
@@ -42,8 +40,8 @@ db_set_handle (handle, dbName, dbSchema)
  \param 
 */
 char *
-db_get_handle_dbname(handle)
-    dbHandle *handle;
+db_get_handle_dbname (dbHandle *handle)
+
 {
     return db_get_string (&handle->dbName);
 }
@@ -55,8 +53,8 @@ db_get_handle_dbname(handle)
  \param 
 */
 char *
-db_get_handle_dbschema(handle)
-    dbHandle *handle;
+db_get_handle_dbschema (dbHandle *handle)
+
 {
     return db_get_string (&handle->dbSchema);
 }
@@ -68,8 +66,8 @@ db_get_handle_dbschema(handle)
  \param 
 */
 void
-db_free_handle(handle)
-    dbHandle *handle;
+db_free_handle (dbHandle *handle)
+
 {
     db_free_string (&handle->dbName);
     db_free_string (&handle->dbSchema);
@@ -82,9 +80,8 @@ db_free_handle(handle)
  \param 
 */
 void
-db_free_handle_array (handle, count)
-    dbHandle *handle;
-    int count;
+db_free_handle_array  (dbHandle *handle, int count)
+
 {
     int i;
 
@@ -103,8 +100,8 @@ db_free_handle_array (handle, count)
  \param 
 */
 dbHandle *
-db_alloc_handle_array (count)
-    int count;
+db_alloc_handle_array  (int count)
+
 {
     int i;
     dbHandle *handle;

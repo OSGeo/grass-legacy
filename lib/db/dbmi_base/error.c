@@ -20,8 +20,8 @@ static char *who = NULL;
  \param 
 */
 void
-db_on_error(f)
-    void (*f)();
+db_on_error (void (*f)())
+
 {
     user_print_function = f;
 }
@@ -33,8 +33,8 @@ db_on_error(f)
  \param 
 */
 void
-db_set_error_who(me)
-    char *me;
+db_set_error_who (char *me)
+
 {
     if (who) free(who);
     who = db_store(me);
@@ -59,8 +59,8 @@ db_get_error_who()
  \param 
 */
 void
-db_error(s)
-    char *s;
+db_error (char *s)
+
 {
     if (s == NULL)
 	s = "<NULL error message>";
@@ -98,8 +98,8 @@ db_protocol_error()
  \param 
 */
 void
-db_syserror(s)
-    char *s;
+db_syserror (char *s)
+
 {
     char lead[1024];
     char msg[1024];
@@ -150,8 +150,8 @@ db_memory_error()
  \param 
 */
 void
-db_procedure_not_implemented(name)
-    char *name;
+db_procedure_not_implemented (char *name)
+
 {
     char msg[128];
 
@@ -250,8 +250,8 @@ db_debug_off()
  \param 
 */
 void
-db_debug(s)
-    char *s;
+db_debug (char *s)
+
 {
     if (debug_on)
 	fprintf (stderr, "debug(%s): %s\n", who?who:"", s?s:"<NULL>");

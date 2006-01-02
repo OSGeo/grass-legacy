@@ -7,12 +7,8 @@
  \return 
  \param 
 */
-db_open_update_cursor (driver, table_name, select, cursor, mode)
-    dbDriver *driver;
-    dbString *table_name;
-    dbString *select;
-    dbCursor *cursor;
-    int mode;
+db_open_update_cursor  (dbDriver *driver, dbString *table_name, dbString *select, dbCursor *cursor, int mode)
+
 {
     int ret_code;
 

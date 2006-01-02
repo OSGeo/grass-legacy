@@ -9,8 +9,8 @@
  \param 
 */
 dbTable *
-db_alloc_table (ncols)
-    int ncols;
+db_alloc_table  (int ncols)
+
 {
     dbTable *table;
     int i;
@@ -41,8 +41,8 @@ db_alloc_table (ncols)
  \param 
 */
 void
-db_init_table (table)
-    dbTable *table;
+db_init_table  (dbTable *table)
+
 {
     db_zero ((void *)table, sizeof(dbTable));
     db_init_string (&table->tableName);
@@ -56,8 +56,8 @@ db_init_table (table)
  \param 
 */
 void
-db_free_table (table)
-    dbTable *table;
+db_free_table  (dbTable *table)
+
 {
     int i;
 
@@ -76,9 +76,8 @@ db_free_table (table)
  \param 
 */
 int
-db_set_table_name (table, name)
-    dbTable *table;
-    char *name;
+db_set_table_name  (dbTable *table, char *name)
+
 {
     return db_set_string (&table->tableName, name);
 }
@@ -90,8 +89,8 @@ db_set_table_name (table, name)
  \param 
 */
 char *
-db_get_table_name (table)
-    dbTable *table;
+db_get_table_name  (dbTable *table)
+
 {
     return db_get_string (&table->tableName);
 }
@@ -103,9 +102,8 @@ db_get_table_name (table)
  \param 
 */
 int
-db_set_table_description (table, description)
-    dbTable *table;
-    char *description;
+db_set_table_description  (dbTable *table, char *description)
+
 {
     return db_set_string (&table->description, description);
 }
@@ -117,8 +115,8 @@ db_set_table_description (table, description)
  \param 
 */
 char *
-db_get_table_description (table)
-    dbTable *table;
+db_get_table_description  (dbTable *table)
+
 {
     return db_get_string (&table->description);
 }
@@ -130,8 +128,8 @@ db_get_table_description (table)
  \param 
 */
 int
-db_get_table_number_of_columns(table)
-    dbTable *table;
+db_get_table_number_of_columns (dbTable *table)
+
 {
     return table->numColumns;
 }
@@ -143,9 +141,8 @@ db_get_table_number_of_columns(table)
  \param 
 */
 static void
-set_all_column_privs (table, set_column_priv)
-    dbTable *table;
-    void (*set_column_priv)();
+set_all_column_privs  (dbTable *table, void (*set_column_priv)())
+
 {
     int col, ncols;
     dbColumn *column;
@@ -165,9 +162,8 @@ set_all_column_privs (table, set_column_priv)
  \param 
 */
 static int
-get_all_column_privs (table, get_column_priv)
-    dbTable *table;
-    int (*get_column_priv)();
+get_all_column_privs  (dbTable *table, int (*get_column_priv)())
+
 {
     int priv, col, ncols;
     dbColumn *column;
@@ -190,8 +186,8 @@ get_all_column_privs (table, get_column_priv)
  \param 
 */
 void
-db_set_table_select_priv_granted (table)
-    dbTable *table;
+db_set_table_select_priv_granted  (dbTable *table)
+
 {
     set_all_column_privs (table, db_set_column_select_priv_granted);
 }
@@ -203,8 +199,8 @@ db_set_table_select_priv_granted (table)
  \param 
 */
 void
-db_set_table_select_priv_not_granted (table)
-    dbTable *table;
+db_set_table_select_priv_not_granted  (dbTable *table)
+
 {
     set_all_column_privs (table, db_set_column_select_priv_not_granted);
 }
@@ -216,8 +212,8 @@ db_set_table_select_priv_not_granted (table)
  \param 
 */
 int
-db_get_table_select_priv (table)
-    dbTable *table;
+db_get_table_select_priv  (dbTable *table)
+
 {
     return get_all_column_privs (table, db_get_column_select_priv);
 }
@@ -229,8 +225,8 @@ db_get_table_select_priv (table)
  \param 
 */
 void
-db_set_table_update_priv_granted (table)
-    dbTable *table;
+db_set_table_update_priv_granted  (dbTable *table)
+
 {
     set_all_column_privs (table, db_set_column_update_priv_granted);
 }
@@ -242,8 +238,8 @@ db_set_table_update_priv_granted (table)
  \param 
 */
 void
-db_set_table_update_priv_not_granted (table)
-    dbTable *table;
+db_set_table_update_priv_not_granted  (dbTable *table)
+
 {
     set_all_column_privs (table, db_set_column_update_priv_not_granted);
 }
@@ -255,8 +251,8 @@ db_set_table_update_priv_not_granted (table)
  \param 
 */
 int
-db_get_table_update_priv (table)
-    dbTable *table;
+db_get_table_update_priv  (dbTable *table)
+
 {
     return get_all_column_privs (table, db_get_column_update_priv);
 }
@@ -268,8 +264,8 @@ db_get_table_update_priv (table)
  \param 
 */
 void
-db_set_table_insert_priv_granted (table)
-    dbTable *table;
+db_set_table_insert_priv_granted  (dbTable *table)
+
 {
     table->priv_insert = DB_GRANTED;
 }
@@ -281,8 +277,8 @@ db_set_table_insert_priv_granted (table)
  \param 
 */
 void
-db_set_table_insert_priv_not_granted (table)
-    dbTable *table;
+db_set_table_insert_priv_not_granted  (dbTable *table)
+
 {
     table->priv_insert = DB_NOT_GRANTED;
 }
@@ -294,8 +290,8 @@ db_set_table_insert_priv_not_granted (table)
  \param 
 */
 int
-db_get_table_insert_priv (table)
-    dbTable *table;
+db_get_table_insert_priv  (dbTable *table)
+
 {
     return table->priv_insert;
 }
@@ -307,8 +303,8 @@ db_get_table_insert_priv (table)
  \param 
 */
 void
-db_set_table_delete_priv_granted (table)
-    dbTable *table;
+db_set_table_delete_priv_granted  (dbTable *table)
+
 {
     table->priv_delete = DB_GRANTED;
 }
@@ -320,8 +316,8 @@ db_set_table_delete_priv_granted (table)
  \param 
 */
 void
-db_set_table_delete_priv_not_granted (table)
-    dbTable *table;
+db_set_table_delete_priv_not_granted  (dbTable *table)
+
 {
     table->priv_delete = DB_NOT_GRANTED;
 }
@@ -333,8 +329,8 @@ db_set_table_delete_priv_not_granted (table)
  \param 
 */
 int
-db_get_table_delete_priv (table)
-    dbTable *table;
+db_get_table_delete_priv  (dbTable *table)
+
 {
     return table->priv_delete;
 }

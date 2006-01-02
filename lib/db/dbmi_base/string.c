@@ -9,8 +9,8 @@
  \param 
 */
 void
-db_init_string (x)
-    dbString *x;
+db_init_string  (dbString *x)
+
 {
     x->string = "";
     x->nalloc = 0;
@@ -33,9 +33,8 @@ db_init_string (x)
 static int set_string();
 
 int
-db_set_string (x, s)
-    dbString *x;
-    char *s;
+db_set_string  (dbString *x, char *s)
+
 {
     return set_string (x, s, 1);
 }
@@ -47,9 +46,8 @@ db_set_string (x, s)
  \param 
 */
 int 
-db_set_string_no_copy (x, s)
-    dbString *x;
-    char *s;
+db_set_string_no_copy  (dbString *x, char *s)
+
 {
     return set_string (x, s, 0);
 }
@@ -61,8 +59,8 @@ db_set_string_no_copy (x, s)
  \param 
 */
 unsigned int
-db_sizeof_string (x)
-    dbString *x;
+db_sizeof_string  (dbString *x)
+
 {
     if (x->nalloc < 0) return 0;
     return (unsigned int) x->nalloc;
@@ -75,8 +73,8 @@ db_sizeof_string (x)
  \param 
 */
 void
-db_zero_string (x)
-    dbString *x;
+db_zero_string  (dbString *x)
+
 {
     db_zero ((void *)db_get_string(x), db_sizeof_string(x));
 }
@@ -88,9 +86,8 @@ db_zero_string (x)
  \param 
 */
 static int
-set_string (x, s, copy)
-    dbString *x;
-    char *s;
+set_string  (dbString *x, char *s, int  copy)
+
 {
     int len;
     int stat;
@@ -126,9 +123,8 @@ set_string (x, s, copy)
  \param 
 */
 int
-db_enlarge_string (x, len)
-    dbString *x;
-    int len;
+db_enlarge_string  (dbString *x, int len)
+
 {
     if (x->nalloc < len)
     {
@@ -143,8 +139,8 @@ db_enlarge_string (x, len)
 }
 
 char *
-db_get_string(x)
-    dbString *x;
+db_get_string (dbString *x)
+
 {
     return x->string;
 }
@@ -156,8 +152,8 @@ db_get_string(x)
  \param 
 */
 void
-db_free_string(x)
-    dbString *x;
+db_free_string (dbString *x)
+
 {	
     if (x->nalloc > 0)
 	free(x->string);
@@ -171,8 +167,8 @@ db_free_string(x)
  \param 
 */
 void
-db_free_string_array (a, n)
-    dbString *a;
+db_free_string_array  (dbString *a, int  n)
+
 {
     int i;
 
@@ -191,8 +187,8 @@ db_free_string_array (a, n)
  \param 
 */
 dbString *
-db_alloc_string_array (count)
-    int count;
+db_alloc_string_array  (int count)
+
 {
     int i;
     dbString *a;
@@ -214,9 +210,8 @@ db_alloc_string_array (count)
  \param 
 */
 int
-db_append_string (x, s)
-    dbString *x;
-    char *s;
+db_append_string  (dbString *x, char *s)
+
 {
     int len;
     int stat;
@@ -236,8 +231,8 @@ db_append_string (x, s)
  \param 
 */
 int
-db_copy_string (dst, src)
-    dbString *dst, *src;
+db_copy_string  (dbString *dst, dbString *src)
+
 {
     return db_set_string (dst, db_get_string(src));
 }
@@ -249,8 +244,8 @@ db_copy_string (dst, src)
  \param 
 */
 void
-db_double_quote_string (src)
-    dbString *src;
+db_double_quote_string  (dbString *src)
+
 {
     char *ptra, *ptrb, buf[2];
     dbString tmp;

@@ -13,8 +13,8 @@ static dbToken count = 0;
  \param 
 */
 dbAddress 
-db_find_token (token)
-    dbToken token;
+db_find_token  (dbToken token)
+
 {
     if (token >= 0 && token < count)
 	return list[token];
@@ -28,8 +28,8 @@ db_find_token (token)
  \param 
 */
 void
-db_drop_token (token)
-    dbToken token;
+db_drop_token  (dbToken token)
+
 {
     if (token >= 0 && token < count)
 	list[token] = NONE;
@@ -42,8 +42,8 @@ db_drop_token (token)
  \param 
 */
 dbToken
-db_new_token (address)
-    dbAddress address;
+db_new_token  (dbAddress address)
+
 {
     dbToken token;
     dbAddress *p;

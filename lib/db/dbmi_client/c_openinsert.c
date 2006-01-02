@@ -7,9 +7,8 @@
  \return 
  \param 
 */
-db_open_insert_cursor (driver, cursor)
-    dbDriver *driver;
-    dbCursor *cursor;
+db_open_insert_cursor  (dbDriver *driver, dbCursor *cursor)
+
 {
     int ret_code;
 

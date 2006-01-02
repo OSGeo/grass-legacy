@@ -7,11 +7,8 @@
  \return 
  \param 
 */
-db_open_select_cursor (driver, select, cursor, mode)
-    dbDriver *driver;
-    dbString *select;
-    dbCursor *cursor;
-    int mode;
+db_open_select_cursor  (dbDriver *driver, dbString *select, dbCursor *cursor, int mode)
+
 {
     int ret_code;
 

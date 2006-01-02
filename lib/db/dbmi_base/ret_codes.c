@@ -18,8 +18,8 @@ db__send_failure()
 }
 
 int
-db__recv_return_code (ret_code)
-    int *ret_code;
+db__recv_return_code  (int *ret_code)
+
 {
     dbString err_msg;
 

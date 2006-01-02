@@ -7,8 +7,8 @@
  \param 
 */
 char *
-db_sqltype_name(sqltype)
-    int sqltype;
+db_sqltype_name (int sqltype)
+
 {
     static char buf[256];
     int from, to;

@@ -46,8 +46,8 @@ db__mark_database_closed (void)
 
 
 void
-db__add_cursor_to_driver_state(cursor)
-    dbCursor *cursor;
+db__add_cursor_to_driver_state (dbCursor *cursor)
+
 {
     dbCursor **list;
     int i;

@@ -7,10 +7,8 @@
  \return 
  \param 
 */
-db_version(driver, client_version, driver_version)
-    dbDriver *driver;
-    dbString *client_version;
-    dbString *driver_version;
+db_version (dbDriver *driver, dbString *client_version, dbString *driver_version)
+
 {
     int ret_code;
 

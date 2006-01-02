@@ -22,8 +22,8 @@ extern char *getenv();
  \param 
 */
 dbDriver *
-db_start_driver(name)
-    char *name;
+db_start_driver (char *name)
+
 {
     dbDriver *driver;
     dbDbmscap *list, *cur;

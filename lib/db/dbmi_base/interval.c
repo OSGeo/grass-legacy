@@ -7,10 +7,8 @@
  \param 
 */
 void
-db_interval_range (sqltype, from, to)
-    int sqltype;
-    int *from;
-    int *to;
+db_interval_range  (int sqltype, int *from, int *to)
+
 {
     switch (sqltype)
     {

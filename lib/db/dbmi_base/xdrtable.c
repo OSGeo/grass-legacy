@@ -1,8 +1,8 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db__send_table_definition(table)
-    dbTable *table;
+db__send_table_definition (dbTable *table)
+
 {
     int i;
 
@@ -21,8 +21,8 @@ db__send_table_definition(table)
     return DB_OK;
 }
 
-db__recv_table_definition(table)
-    dbTable **table;
+db__recv_table_definition (dbTable **table)
+
 {
     int i,ncols;
     dbTable *t;
@@ -46,8 +46,8 @@ db__recv_table_definition(table)
     return DB_OK;
 }
 
-db__send_table_data(table)
-    dbTable *table;
+db__send_table_data (dbTable *table)
+
 {
     int i,ncols;
 
@@ -61,8 +61,8 @@ db__send_table_data(table)
     return DB_OK;
 }
 
-db__recv_table_data(table)
-    dbTable *table;
+db__recv_table_data (dbTable *table)
+
 {
     int i,ncols;
 

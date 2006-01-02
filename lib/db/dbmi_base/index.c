@@ -9,8 +9,8 @@
  \param 
 */
 void
-db_init_index (index)
-    dbIndex *index;
+db_init_index  (dbIndex *index)
+
 {
     db_init_string (&index->indexName);
     db_init_string (&index->tableName);
@@ -26,8 +26,8 @@ db_init_index (index)
  \param 
 */
 void
-db_free_index (index)
-    dbIndex *index;
+db_free_index  (dbIndex *index)
+
 {
     db_free_string (&index->indexName);
     db_free_string (&index->tableName);
@@ -43,9 +43,8 @@ db_free_index (index)
  \param 
 */
 int
-db_alloc_index_columns (index, ncols)
-    dbIndex *index;
-    int ncols;
+db_alloc_index_columns  (dbIndex *index, int ncols)
+
 {
     index->columnNames = db_alloc_string_array (ncols);
     if (index->columnNames == NULL)
@@ -62,8 +61,8 @@ db_alloc_index_columns (index, ncols)
  \param 
 */
 dbIndex *
-db_alloc_index_array (count)
-    int count;
+db_alloc_index_array  (int count)
+
 {
     dbIndex *list;
     int i;
@@ -84,9 +83,8 @@ db_alloc_index_array (count)
  \param 
 */
 void
-db_free_index_array (list, count)
-    dbIndex *list;
-    int count;
+db_free_index_array  (dbIndex *list, int count)
+
 {
     int i;
 
@@ -105,9 +103,8 @@ db_free_index_array (list, count)
  \param 
 */
 int
-db_set_index_name (index, name)
-    dbIndex *index;
-    char *name;
+db_set_index_name  (dbIndex *index, char *name)
+
 {
     return db_set_string (&index->indexName, name);
 }
@@ -119,8 +116,8 @@ db_set_index_name (index, name)
  \param 
 */
 char *
-db_get_index_name (index)
-    dbIndex *index;
+db_get_index_name  (dbIndex *index)
+
 {
     return db_get_string (&index->indexName);
 }
@@ -132,9 +129,8 @@ db_get_index_name (index)
  \param 
 */
 int
-db_set_index_table_name (index, name)
-    dbIndex *index;
-    char *name;
+db_set_index_table_name  (dbIndex *index, char *name)
+
 {
     return db_set_string (&index->tableName, name);
 }
@@ -146,8 +142,8 @@ db_set_index_table_name (index, name)
  \param 
 */
 char *
-db_get_index_table_name (index)
-    dbIndex *index;
+db_get_index_table_name  (dbIndex *index)
+
 {
     return db_get_string (&index->tableName);
 }
@@ -159,8 +155,8 @@ db_get_index_table_name (index)
  \param 
 */
 int
-db_get_index_number_of_columns (index)
-    dbIndex *index;
+db_get_index_number_of_columns  (dbIndex *index)
+
 {
     return index->numColumns;
 }
@@ -172,10 +168,8 @@ db_get_index_number_of_columns (index)
  \param 
 */
 int
-db_set_index_column_name (index, column_num, name)
-    dbIndex *index;
-    int column_num;
-    char *name;
+db_set_index_column_name  (dbIndex *index, int column_num, char *name)
+
 {
     if (column_num < 0 || column_num >= index->numColumns)
     {
@@ -192,9 +186,8 @@ db_set_index_column_name (index, column_num, name)
  \param 
 */
 char *
-db_get_index_column_name (index, column_num)
-    dbIndex *index;
-    int column_num;
+db_get_index_column_name  (dbIndex *index, int column_num)
+
 {
     if (column_num < 0 || column_num >= index->numColumns)
     {
@@ -210,8 +203,8 @@ db_get_index_column_name (index, column_num)
  \return 
  \param 
 */
-db_set_index_type_unique (index)
-    dbIndex *index;
+db_set_index_type_unique  (dbIndex *index)
+
 {
     index->unique = 1;
 }
@@ -222,8 +215,8 @@ db_set_index_type_unique (index)
  \return 
  \param 
 */
-db_set_index_type_non_unique (index)
-    dbIndex *index;
+db_set_index_type_non_unique  (dbIndex *index)
+
 {
     index->unique = 0;
 }
@@ -234,8 +227,8 @@ db_set_index_type_non_unique (index)
  \return 
  \param 
 */
-db_test_index_type_unique (index)
-    dbIndex *index;
+db_test_index_type_unique  (dbIndex *index)
+
 {
     return index->unique != 0;
 }
@@ -246,9 +239,8 @@ db_test_index_type_unique (index)
  \return 
  \param 
 */
-db_print_index(fd, index)
-    FILE *fd;
-    dbIndex *index;
+db_print_index (FILE *fd, dbIndex *index)
+
 {
     int i, nCols;
 
