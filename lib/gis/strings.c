@@ -1,3 +1,8 @@
+/* TODO: merge interesting functions from 
+   ../datetime/scan.c
+   here
+*/
+
 /*
  * string/chring movement functions
  *
