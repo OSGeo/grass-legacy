@@ -9,11 +9,8 @@
 * fopen old group files anywhere
 *******************************************************/
 
-static int error (group,file,msga,msgb)
-    char *group;
-    char *file;
-    char *msga;
-    char *msgb;
+static int error  (char *group, char *file, char *msga, char *msgb)
+
 {
     char buf[100];
     sprintf (buf, "%sfile [%s] of group [%s in %s]%s",
@@ -24,12 +21,8 @@ static int error (group,file,msga,msgb)
     return 0;
 }
 
-static int error2 (group,subgroup,file,msga,msgb)
-    char *group;
-    char *subgroup;
-    char *file;
-    char *msga;
-    char *msgb;
+static int error2  (char *group, char *subgroup, char *file, char *msga, char *msgb)
+
 {
     char buf[200];
     sprintf (buf, "%sfile [%s] for subgroup [%s] of group [%s in %s]%s",

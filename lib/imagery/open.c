@@ -7,11 +7,8 @@
 * open new and old imagery group files in the current mapset
 *******************************************************/
 
-static error (group, file, msga, msgb)
-    char *group;
-    char *file;
-    char *msga;
-    char *msgb;
+static error  (char *group, char *file, char *msga, char *msgb)
+
 {
     char buf[100];
     sprintf (buf, "%sfile [%s] of group [%s in %s]%s",

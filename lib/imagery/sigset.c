@@ -128,9 +128,8 @@ int I_ReadSigSet(FILE *fd, struct SigSet *S)
     return 1; /* for now assume success */
 }
 
-static int gettag(fd, tag)
-    FILE *fd;
-    char *tag;
+static int gettag (FILE *fd, char *tag)
+
 {
     if(fscanf(fd, "%s", tag) != 1) return 0;
     G_strip (tag);

@@ -13,7 +13,8 @@
  *  \return char * 
  */
 
-char *G_store (s) char *s;
+char *G_store  (char *s)
+
 {
     char *buf;
 

@@ -19,8 +19,8 @@ static int tolower(char);
  */
 
 char *
-G_tolcase (string)
-    char *string;
+G_tolcase  (char *string)
+
 {
     register char *p;
 
@@ -54,8 +54,8 @@ static int tolower(char c)
  */
 
 char *
-G_toucase (string)
-    char *string;
+G_toucase  (char *string)
+
 {
     register char *p;
 

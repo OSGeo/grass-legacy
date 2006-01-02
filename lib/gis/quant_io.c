@@ -112,11 +112,7 @@ quant_load_range (
 /*--------------------------------------------------------------------------*/
 
 int
-G__quant_import (name, mapset, quant)
-
-    char *name;
-    char *mapset;
-    struct Quant *quant;
+G__quant_import  (char *name, char *mapset, struct Quant *quant)
 
 {
   char buf[1024];
@@ -249,10 +245,7 @@ static int quant_parse_file (FILE *fd, struct Quant *quant)
 /*--------------------------------------------------------------------------*/
 
 static void
-quant_write (fd, quant)
-
-     FILE *fd;
-     struct Quant *quant;
+quant_write  (FILE *fd, struct Quant *quant)
 
 {
   DCELL dLow, dHigh;
@@ -286,9 +279,8 @@ quant_write (fd, quant)
 /*--------------------------------------------------------------------------*/
 
 int
-G__quant_export (name, mapset, quant)
-     char *name, *mapset;
-     struct Quant *quant;
+G__quant_export  (char *name, char *mapset, struct Quant *quant)
+
 {
   char element[512];
   char xname[512], xmapset[512];

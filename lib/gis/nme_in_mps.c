@@ -91,9 +91,8 @@ int G__name_is_fully_qualified (
  */
 
 char *
-G_fully_qualified_name (name, mapset)
-    char *name;
-    char *mapset;
+G_fully_qualified_name  (char *name, char *mapset)
+
 {
     char fullname[1024];
     char *G_store();

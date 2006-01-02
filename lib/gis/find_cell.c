@@ -57,17 +57,15 @@
  */
 
 char *
-G_find_cell (name, mapset)
-	char *name;
-	char *mapset;
+G_find_cell  (char *name, char *mapset)
+
 {
 	return G_find_file ("cell", name, mapset);
 }
 
 char *
-G_find_cell2 (name, mapset)
-	char *name;
-	char *mapset;
+G_find_cell2  (char *name, char *mapset)
+
 {
 	return G_find_file2 ("cell", name, mapset);
 }
