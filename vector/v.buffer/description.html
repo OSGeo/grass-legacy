@@ -5,31 +5,33 @@
 <h2>EXAMPLES</h2>
 
 <h3>Buffer around input lines</h3>
-<b>v.buffer input=</b><em>map</em> <b>output=</b><em>buffer</em> <b>type=</b><em>line</em>
-    <b>buffer=</b><em>100</em>
-
+<div class="code"><pre>
+v.buffer input=map output=buffer type=line buffer=100
+</pre></div>
 
 <h3>Circles around input points</h3>
-<b>v.buffer input=</b><em>pointsmap</em> <b>output=</b><em>circles</em> <b>type=</b><em>point</em>
-    <b>buffer=</b><em>1000</em>
-<br>
+<div class="code"><pre>
+v.buffer input=pointsmap output=circles type=point buffer=1000 
+</pre></div>
+
 Note that attributes are not transferred (due to potential buffer overlap which cannot be 
 resolved automatically).
 <P>
 
 <h3>Non-overlapping circles around input points with attribute transfer</h3>
-
-<b>v.buffer input=</b><em>archsites</em> <b>output=</b><em>circles</em> <b>type=</b><em>point</em> <b>buffer=</b><em>200</em>
-<br># change original points to centroids:
-<br><b>v.type in=</b><em>archsites</em> <b>out=</b><em>archcentroids</em> <b>type=</b><em>point,centroid</em>
-<br># patch circles and centroids:
-<br><b>v.patch in=</b><em>archcentroids,circles</em> <b>out=</b><em>circles_db</em>
-<br># attach attributes, either use
-<br># <b>db.copy ...</b>
-<br># or link to the original table:
-<br><b>v.db.connect map=</b><em>circles_db</em> <b>table=</b><em>archsites</em> <b>field=</b><em>1</em> 
-    <b>key=</b><em>cat</em> <b>driver=</b><em>dbf</em> <b>database=</b><em>'$GISDBASE/$LOCATION_NAME/$MAPSET/dbf'</em>
-
+<div class="code"><pre>
+v.buffer input=archsites output=circles type=point buffer=200 
+# change original points to centroids: 
+v.type in=archsites out=archcentroids type=point,centroid 
+# patch circles and centroids: 
+v.patch in=archcentroids,circles out=circles_db 
+# attach attributes, either use 
+# db.copy ... 
+# or link to the original table: 
+v.db.connect map=circles_db table=archsites field=1 key=cat driver=dbf \
+database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf'
+</pre></div>
+	
 <h2>BUGS</h2>
 For some data v.buffer can produce strange results, especially if the buffer size is 
 bigger than input features. Usually you can solve the problem if you run v.buffer 

@@ -1,6 +1,7 @@
 <h2>DESCRIPTION</h2>
 
 <em>v.overlay</em> allows the user to overlay to vector area maps.
+<!-- This is outdated 
 There are 3 links attached to features in output map, 
 <ul>
 <li><b>field 1</b>: link to the new table, new table has 3 columns
@@ -12,28 +13,37 @@ There are 3 links attached to features in output map,
 <li><b>field 2</b>: category of <i>afield</i> from <i>ainput</i>
 <li><b>field 3</b>: category of <i>bfield</i> from <i>binput</i>
 </ul>
+-->
+The resulting output map has a merged attribute-table. The origin column-names
+have a prefix (<em>a_</em> and <em>b_</em>) which results from the ainput- and binput-map.
 
 <h2>NOTES</h2>
-Currently only areas are supported! See also <a href="v.select.html">v.select</a>.
+Currently only areas are supported for the operators <em>or</em> and <em>xor</em>! See also <a href="v.select.html">v.select</a>.
 
+The operator defines what kind of operation will be done. Features are written to output,
+if the result of an operation 'ainput operator binput' is true.
 <p>
 Attributes of the tables from ainput and binput are joined into a new table
-linked to the output map. 
+linked to the output maps new cat-column. 
 
+<!-- This is outdated
 <p>
-<b>v.db.connect map=</b><em>outputmap</em> <b>table=</b><em>ainput.dbf</em>
-<b>field=</b>2<br>
-<b>v.db.connect map=</b><em>outputmap</em> <b>table=</b><em>binput.dbf</em>
-<b>field=</b>3<br> 
+<div class="code"><pre>
+v.db.connect map=outputmap table=ainput.dbf field=2
+v.db.connect map=outputmap table=binput.dbf field=3
+
+</pre></div>
 
 <p>
 <b>Attention:</b> Removing the output map will also delete all tables linked to
 it! Therefore it is advisable to copy tables from ainput and binput first and
-connect the copied tables to the output map.
+connect the copied tables to the output map.-->
 
 <h2>EXAMPLE</h2>
+<div class="code"><pre>
+v.overlay ainput=lake binput=province output=lakeXprovince
+</pre></div>
 
-<b>v.overlay ainput=</b><em>lake</em> <b>binput=</b><em>province</em>  <b>output=</b><em>lakeXprovince</em>
 
 <h2>SEE ALSO</h2>
 

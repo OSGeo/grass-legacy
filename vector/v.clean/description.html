@@ -11,7 +11,7 @@ polygon. This is topologically incorrect (but OGC Simple Features allow it). <em
 can be used to optionally change the line type to fulfill the topology rules or to
 remove the bridge from the map:
 
-<pre>
+<div class="code"><pre>
     +-------------+             +-------------+   +-------------+
     |            P|  P: polygon |            P|   |            P|
     |    +---+    |  I: island  |    +---+    |   |    +---+    |
@@ -22,13 +22,15 @@ remove the bridge from the map:
     |      | B    |             |             |   |      . L    |
     |      |      |             |             |   |      .      |
     +------+------+             +-------------+   +-------------+
-</pre>
+</pre></div>
 
 <h2>EXAMPLES</h2>
 
 <h3>Snap lines to vertex in threshold</h3>
+<div class="code"><pre>
+v.clean input=testmap output=cleanmap tool=snap thresh=1
+</pre></div>
 
-<b>v.clean input=</b><em>testmap</em> <b>output=</b><em>cleanmap</em> <b>tool=</b><em>snap</em> <b>thresh=</b><em>1</em>
 <p>
 
 
@@ -38,13 +40,15 @@ The import of areas with <a HREF="v.in.ogr.html">v.in.ogr</a> requires a subsequ
 <a HREF="v.clean.html">v.clean</a> to update the map to a topologically
 valid structure (removal of duplicate collinear lines etc). The tools
 used for that are 'rmdupl' and 'bpol':
-<p>
-<b>v.clean input=</b><em>areamap</em> <b>output=</b><em>areamap_clean</em> <b>tool=</b><em>rmdupl,bpol</em> <br>
+<div class="code"><pre>
+v.clean input=areamap output=areamap_clean tool=rmdupl,bpol 
+</pre></div>
 
 
 <h3>Extracting intersection points of vector lines</h3>
-
-<b>v.clean input=</b><em>lines1</em> <b>output=</b><em>lines2</em> <b>err=</b><em>points</em> <b>tool=</b><em>break</em> <br>
+<div class="code"><pre>
+v.clean input=lines1 output=lines2 err=points tool=break 
+</pre></div>
 
 Intersection points are written to 'points' map.
 

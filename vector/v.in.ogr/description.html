@@ -57,73 +57,82 @@ The command imports various vector formats:
 
 <ul>
 <li><B>SHAPE files</B><BR>
- <b>v.in.ogr dsn=</b><em>/home/user/shape_data</em>
- <b>layer=</b><em>test_shape</em> <b>output=</b><em>grass_map</em> <br>
+<div class="code"><pre>
+v.in.ogr dsn=/home/user/shape_data layer=test_shape output=grass_map 
+</pre></div>
  
 <li><B>MapInfo files</B><BR>
- <b>v.in.ogr dsn=</b><em>./</em> <b>layer=</b><em>mapinfo_test</em> 
- <b>output=</b><em>grass_map</em> 
-
+<div class="code"><pre>
+v.in.ogr dsn=./ layer=mapinfo_test output=grass_map
+</pre></div>
+ 
 <li><B>Arc Coverage</B><BR>
  We import the Arcs and Label points, the module takes care to
  build areas:<br>
- <b>v.in.ogr dsn=</b><em>gemeinden</em> <b>layer=</b><em>LAB,ARC</em> <b>type=</b><em>centroid,boundary</em>
- <b>output=</b><em>mymap</em> 
-
+<div class="code"><pre>
+v.in.ogr dsn=gemeinden layer=LAB,ARC type=centroid,boundary output=mymap
+</pre></div>
+ 
 <li><B>E00 file</B><BR>
  First we have to convert the E00 file to an Arc Coverage with 'avcimport' 
  (<a href="http://avce00.maptools.org/avce00/index.html">AVCE00 tools</a>,
  use <em>e00conv</em> first in case that <em>avcimport</em> fails):<br>
- <b>avcimport</b> <em>e00file</em> <em>coverage</em><br>
- <b>v.in.ogr dsn=</b><em>coverage</em> <b>layer=</b><em>LAB,ARC</em> <b>type=</b><em>centroid,boundary</em>
- <b>output=</b><em>mymap</em> 
+<div class="code"><pre>
+avcimport e00file coverage
+v.in.ogr dsn=coverage layer=LAB,ARC type=centroid,boundary output=mymap
+</pre></div>
 
 <li><B>SDTS files</B> (you have to select the CATD file)<BR>
- <b>v.in.ogr dsn=</b><em>CITXCATD.DDF</em> <b>output=</b><em>cities</em> 
+<div class="code"><pre>
+v.in.ogr dsn=CITXCATD.DDF output=cities
+</pre></div>
 
 <li><B>TIGER files</B><BR>
-  <b>v.in.ogr dsn=</b><em>input/2000/56015/</em>
-    <b>layer=</b><em>CompleteChain,PIP</em> <b>output=</b><em>t56015_all</em>
-    <b>type=</b><em>boundary,centroid</em> <b>snap=</b><em>-1</em>
+<div class="code"><pre>
+v.in.ogr dsn=input/2000/56015/ layer=CompleteChain,PIP output=t56015_all \
+type=boundary,centroid snap=-1
+</pre></div>
 
 <li><B>PostGIS maps (area example)</B><BR>
-  <b>v.in.ogr dsn=</b><em>"PG:host=localhost dbname=postgis user=postgres"</em>
-    <b>layer=</b><em>polymap</em> <b>output=</b><em>polygons</em>
-    <b>type=</b><em>boundary,centroid</em>
+<div class="code"><pre>
+v.in.ogr dsn="PG:host=localhost dbname=postgis user=postgres" layer=polymap \
+output=polygons type=boundary,centroid
+</pre></div>
 
 <li><B>Oracle Spatial maps </B><BR>
-  Note that you have to set the environment-variables <em>ORACLE_BASE, ORACLE_SID, ORACLE_HOME</em> accordingly.<br>
-  <b>v.in.ogr dsn=</b><em>OCI:username/password</em> <b>output=</b><em>grasslayer</em> 
-     <b>layer=</b><em>roads_oci</em>
+Note that you have to set the environment-variables <em>ORACLE_BASE, ORACLE_SID, ORACLE_HOME and TNS_ADMIN</em> accordingly.
+<div class="code"><pre>
+v.in.ogr dsn=OCI:username/password@database_instance output=grasslayer layer=roads_oci
+</pre></div>
   <P>
-  <B>Support of database schema:</B>
+<h3>Support of database schema:</h3>
   <P>
   For schema support, first <em>db.connect</em> has to be used to set a default
   schema. In db.* modules the schema name must be always specified if used.
 
   Example:
-  <pre>
-    db.connect driver=pg database=test schema=user1 group=group1
-    db.login driver=pg database=test user=user1 password=pwd1
-    v.in.ogr dsn=./ layer=river output=river     # -> table user1.river
-    db.select table=user1.river
-  </pre>
+  <div class="code"><pre>
+  db.connect driver=pg database=test schema=user1 group=group1
+  db.login driver=pg database=test user=user1 password=pwd1
+  v.in.ogr dsn=./ layer=river output=river     # -> table user1.river
+  db.select table=user1.river
+  </pre></div>
 
   The user can ignore schemas, if desired:
-  <pre>
-     db.connect driver=pg database=test
-     db.login driver=pg database=test user=user1 password=pwd1
-     v.in.ogr dsn=./ layer=river output=river     # -> table public.river
-     db.select table=river
-  </pre>
+  <div class="code"><pre>
+  db.connect driver=pg database=test
+  db.login driver=pg database=test user=user1 password=pwd1
+  v.in.ogr dsn=./ layer=river output=river     # -> table public.river
+  db.select table=river
+  </pre></div>
 </ul>
 
 <h2>NOTES</h2>
 
 The characters used for table column names are limited. Supported are:<br>
-<pre>
+<div class="code"><pre>
 [A-Za-z][A-Za-z0-9_]*
-</pre>
+</pre></div>
 
 That means that SQL neither supports '.' (dots) nor '-' (minus) nor '#' in table
 column names. Also a table name must start with a character, not a number.<br>
