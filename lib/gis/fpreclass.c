@@ -260,9 +260,7 @@
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpreclass_clear (r)
-
-     struct FPReclass *r;
+G_fpreclass_clear  (struct FPReclass *r)
 
 {
   r->nofRules = 0;
@@ -274,9 +272,7 @@ G_fpreclass_clear (r)
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpreclass_reset (r)
-
-     struct FPReclass *r;
+G_fpreclass_reset  (struct FPReclass *r)
 
 {
   G_fpreclass_clear (r);
@@ -288,9 +284,7 @@ G_fpreclass_reset (r)
 
 /*--------------------------------------------------------------------------*/
 
-int G_fpreclass_init (r)
-
-     struct FPReclass *r;
+int G_fpreclass_init  (struct FPReclass *r)
 
 {
   r->maxNofRules = 0;
@@ -302,10 +296,7 @@ int G_fpreclass_init (r)
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpreclass_set_domain (r, dLow, dHigh)
-
-     struct FPReclass *r;
-     DCELL dLow, dHigh;
+G_fpreclass_set_domain  (struct FPReclass *r, DCELL dLow, DCELL dHigh)
 
 {
   r->defaultDMin = dLow;
@@ -316,10 +307,7 @@ G_fpreclass_set_domain (r, dLow, dHigh)
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpreclass_set_range (r, low, high)
-
-     struct FPReclass *r;
-     DCELL low, high;
+G_fpreclass_set_range  (struct FPReclass *r, DCELL low, DCELL high)
 
 {
   r->defaultRMin = low;
@@ -330,11 +318,7 @@ G_fpreclass_set_range (r, low, high)
 /*--------------------------------------------------------------------------*/
 
 static void
-fpreclass_set_limits (r, dLow, dHigh, rLow, rHigh)
-
-     struct FPReclass *r;
-     DCELL dLow, dHigh;
-     DCELL rLow, rHigh;
+fpreclass_set_limits  (struct FPReclass *r, DCELL dLow, DCELL dHigh, DCELL rLow, DCELL rHigh)
 
 {
   r->dMin = dLow;
@@ -346,11 +330,7 @@ fpreclass_set_limits (r, dLow, dHigh, rLow, rHigh)
 /*--------------------------------------------------------------------------*/
 
 static void
-fpreclass_update_limits (r, dLow, dHigh, rLow, rHigh)
-
-     struct FPReclass *r;
-     DCELL dLow, dHigh;
-     DCELL rLow, rHigh;
+fpreclass_update_limits  (struct FPReclass *r, DCELL dLow, DCELL dHigh, DCELL rLow, DCELL rHigh)
 
 {
   if (NO_EXPLICIT_RULE) {
@@ -367,11 +347,7 @@ fpreclass_update_limits (r, dLow, dHigh, rLow, rHigh)
 /*--------------------------------------------------------------------------*/
 
 int
-G_fpreclass_get_limits (r, dMin, dMax, rMin, rMax)
-
-     struct FPReclass *r;
-     DCELL *dMin, *dMax;
-     DCELL *rMin, *rMax;
+G_fpreclass_get_limits  (struct FPReclass *r, DCELL *dMin, DCELL *dMax, DCELL *rMin, DCELL *rMax)
 
 {
   if (NO_EXPLICIT_RULE) {
@@ -397,9 +373,7 @@ G_fpreclass_get_limits (r, dMin, dMax, rMin, rMax)
 /*--------------------------------------------------------------------------*/
 
 int
-G_fpreclass_nof_rules (r)
-
-     struct FPReclass *r;
+G_fpreclass_nof_rules  (struct FPReclass *r)
 
 {
   return r->nofRules;
@@ -408,12 +382,7 @@ G_fpreclass_nof_rules (r)
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpreclass_get_ith_rule (r, i, dLow, dHigh, rLow, rHigh)
-
-     struct FPReclass *r;
-     int i;
-     DCELL *dLow, *dHigh;
-     DCELL *rLow, *rHigh;
+G_fpreclass_get_ith_rule  (struct FPReclass *r, int i, DCELL *dLow, DCELL *dHigh, DCELL *rLow, DCELL *rHigh)
 
 {
   *dLow = r->table[i].dLow;
@@ -425,9 +394,7 @@ G_fpreclass_get_ith_rule (r, i, dLow, dHigh, rLow, rHigh)
 /*--------------------------------------------------------------------------*/
 
 static void
-fpreclass_table_increase (r)
-
-     struct FPReclass *r;
+fpreclass_table_increase  (struct FPReclass *r)
 
 {
   if (r->nofRules < r->maxNofRules) return;
@@ -446,11 +413,7 @@ fpreclass_table_increase (r)
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpreclass_set_neg_infinite_rule (r, dLeft, c)
-
-     struct FPReclass *r;
-     DCELL dLeft;
-     DCELL c;
+G_fpreclass_set_neg_infinite_rule  (struct FPReclass *r, DCELL dLeft, DCELL c)
 
 {
   r->infiniteDLeft = dLeft;
@@ -462,11 +425,7 @@ G_fpreclass_set_neg_infinite_rule (r, dLeft, c)
 /*--------------------------------------------------------------------------*/
 
 int
-G_fpreclass_get_neg_infinite_rule (r, dLeft, c)
-
-     struct FPReclass *r;
-     DCELL *dLeft;
-     DCELL *c;
+G_fpreclass_get_neg_infinite_rule  (struct FPReclass *r, DCELL *dLeft, DCELL *c)
 
 {
   if (r->infiniteLeftSet == 0) return 0;
@@ -480,11 +439,7 @@ G_fpreclass_get_neg_infinite_rule (r, dLeft, c)
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpreclass_set_pos_infinite_rule (r, dRight, c)
-
-     struct FPReclass *r;
-     DCELL dRight;
-     DCELL c;
+G_fpreclass_set_pos_infinite_rule  (struct FPReclass *r, DCELL dRight, DCELL c)
 
 {
   r->infiniteDRight = dRight;
@@ -496,11 +451,7 @@ G_fpreclass_set_pos_infinite_rule (r, dRight, c)
 /*--------------------------------------------------------------------------*/
 
 int
-G_fpreclass_get_pos_infinite_rule (r, dRight, c)
-
-     struct FPReclass *r;
-     DCELL *dRight;
-     DCELL *c;
+G_fpreclass_get_pos_infinite_rule  (struct FPReclass *r, DCELL *dRight, DCELL *c)
 
 {
   if (r->infiniteRightSet == 0) return 0;
@@ -514,11 +465,7 @@ G_fpreclass_get_pos_infinite_rule (r, dRight, c)
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpreclass_add_rule (r, dLow, dHigh, rLow, rHigh)
-
-     struct FPReclass *r;
-     DCELL dLow, dHigh;
-     DCELL rLow, rHigh;
+G_fpreclass_add_rule  (struct FPReclass *r, DCELL dLow, DCELL dHigh, DCELL rLow, DCELL rHigh)
 
 {
   int i;
@@ -543,9 +490,7 @@ G_fpreclass_add_rule (r, dLow, dHigh, rLow, rHigh)
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpreclass_reverse_rule_order (r)
-
-     struct FPReclass *r;
+G_fpreclass_reverse_rule_order  (struct FPReclass *r)
 
 {
   struct FPReclass_table tmp;
@@ -571,11 +516,7 @@ G_fpreclass_reverse_rule_order (r)
 /*--------------------------------------------------------------------------*/
 
 static DCELL
-fpreclass_interpolate (dLow, dHigh, rLow, rHigh, dValue)
-
-     DCELL dLow, dHigh;
-     DCELL rLow, rHigh;
-     DCELL dValue;
+fpreclass_interpolate  (DCELL dLow, DCELL dHigh, DCELL rLow, DCELL rHigh, DCELL dValue)
 
 {
   if (rLow == rHigh) return rLow;
@@ -587,10 +528,7 @@ fpreclass_interpolate (dLow, dHigh, rLow, rHigh, dValue)
 /*--------------------------------------------------------------------------*/
 
 static DCELL
-fpreclass_get_default_cell_value (r, cellVal)
-
-     struct FPReclass *r;
-     DCELL cellVal;
+fpreclass_get_default_cell_value  (struct FPReclass *r, DCELL cellVal)
 
 {
   DCELL tmp;
@@ -610,10 +548,7 @@ fpreclass_get_default_cell_value (r, cellVal)
 /*--------------------------------------------------------------------------*/
 
 DCELL
-G_fpreclass_get_cell_value (r, cellVal)
-
-     struct FPReclass *r;
-     DCELL cellVal;
+G_fpreclass_get_cell_value  (struct FPReclass *r, DCELL cellVal)
 
 {
   DCELL tmp;
@@ -644,12 +579,7 @@ G_fpreclass_get_cell_value (r, cellVal)
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpreclass_perform_di (r, dcell, cell, n)
-
-     struct FPReclass *r;
-     DCELL *dcell;
-     CELL *cell;
-     int n;
+G_fpreclass_perform_di  (struct FPReclass *r, DCELL *dcell, CELL *cell, int n)
 
 {
   int i;
@@ -664,12 +594,7 @@ G_fpreclass_perform_di (r, dcell, cell, n)
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpreclass_perform_df (r, dcell, cell, n)
-
-     struct FPReclass *r;
-     DCELL *dcell;
-     FCELL *cell;
-     int n;
+G_fpreclass_perform_df  (struct FPReclass *r, DCELL *dcell, FCELL *cell, int n)
 
 {
   int i;
@@ -684,12 +609,7 @@ G_fpreclass_perform_df (r, dcell, cell, n)
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpreclass_perform_dd (r, dcell, cell, n)
-
-     struct FPReclass *r;
-     DCELL *dcell;
-     DCELL *cell;
-     int n;
+G_fpreclass_perform_dd  (struct FPReclass *r, DCELL *dcell, DCELL *cell, int n)
 
 {
   int i;
@@ -704,12 +624,7 @@ G_fpreclass_perform_dd (r, dcell, cell, n)
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpreclass_perform_fi (r, fcell, cell, n)
-
-     struct FPReclass *r;
-     FCELL *fcell;
-     CELL *cell;
-     int n;
+G_fpreclass_perform_fi  (struct FPReclass *r, FCELL *fcell, CELL *cell, int n)
 
 {
   int i;
@@ -724,12 +639,7 @@ G_fpreclass_perform_fi (r, fcell, cell, n)
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpreclass_perform_ff (r, fcell, cell, n)
-
-     struct FPReclass *r;
-     FCELL *fcell;
-     FCELL *cell;
-     int n;
+G_fpreclass_perform_ff  (struct FPReclass *r, FCELL *fcell, FCELL *cell, int n)
 
 {
   int i;
@@ -744,12 +654,7 @@ G_fpreclass_perform_ff (r, fcell, cell, n)
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpreclass_perform_fd (r, fcell, cell, n)
-
-     struct FPReclass *r;
-     FCELL *fcell;
-     DCELL *cell;
-     int n;
+G_fpreclass_perform_fd  (struct FPReclass *r, FCELL *fcell, DCELL *cell, int n)
 
 {
   int i;
@@ -764,12 +669,7 @@ G_fpreclass_perform_fd (r, fcell, cell, n)
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpreclass_perform_ii (r, icell, cell, n)
-
-     struct FPReclass *r;
-     CELL *icell;
-     CELL *cell;
-     int n;
+G_fpreclass_perform_ii  (struct FPReclass *r, CELL *icell, CELL *cell, int n)
 
 {
   int i;
@@ -784,12 +684,7 @@ G_fpreclass_perform_ii (r, icell, cell, n)
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpreclass_perform_if (r, icell, cell, n)
-
-     struct FPReclass *r;
-     CELL *icell;
-     FCELL *cell;
-     int n;
+G_fpreclass_perform_if  (struct FPReclass *r, CELL *icell, FCELL *cell, int n)
 
 {
   int i;
@@ -804,12 +699,7 @@ G_fpreclass_perform_if (r, icell, cell, n)
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpreclass_perform_id (r, icell, cell, n)
-
-     struct FPReclass *r;
-     CELL *icell;
-     DCELL *cell;
-     int n;
+G_fpreclass_perform_id  (struct FPReclass *r, CELL *icell, DCELL *cell, int n)
 
 {
   int i;

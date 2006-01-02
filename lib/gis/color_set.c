@@ -36,9 +36,8 @@ int G_set_color (
     return G_add_color_rule (cat, r,g,b, cat, r,g,b, colors);
 }
 
-int G_set_d_color (val, r, g, b, colors)
-    DCELL val;
-    struct Colors *colors;
+int G_set_d_color  (DCELL val, int  r, int  g, int  b, struct Colors *colors)
+
 {
     DCELL tmp=val;
     if(G_is_d_null_value(&tmp))
@@ -60,9 +59,7 @@ int G_set_d_color (val, r, g, b, colors)
  *  \return int
  */
 
-int G_set_null_value_color(red, grn, blu, colors)
-   int red, blu, grn;
-   struct Colors *colors;
+int G_set_null_value_color (int red, int grn, int blu, struct Colors *colors)
 
 {
         colors->null_red = red;
@@ -86,9 +83,7 @@ int G_set_null_value_color(red, grn, blu, colors)
  *  \return int
  */
 
-int G_set_default_color(red, grn, blu, colors)
-   int red, blu, grn;
-   struct Colors *colors;
+int G_set_default_color (int red, int grn, int blu, struct Colors *colors)
 
 {
         colors->undef_red = red;

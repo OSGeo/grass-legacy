@@ -129,8 +129,8 @@
 #define G_ZLIB_COMPRESSED_YES (unsigned char)'1'
 
 static void
-_init_zstruct (z)
-    z_stream *z;
+_init_zstruct  (z_stream *z)
+
 {
     /* The types are defined in zlib.h, we set to NULL so zlib uses
      * its default functions.
@@ -141,9 +141,8 @@ _init_zstruct (z)
 }
 
 int
-G_zlib_read (fd, rbytes, dst, nbytes)
-    int fd, rbytes, nbytes;
-    unsigned char *dst;
+G_zlib_read  (int fd, int rbytes, unsigned char *dst, int nbytes)
+
 {
     int bsize, nread, err;
     unsigned char *b;
@@ -206,9 +205,8 @@ G_zlib_read (fd, rbytes, dst, nbytes)
 
 
 int
-G_zlib_write (fd, src, nbytes)
-    int fd, nbytes;
-    unsigned char *src;
+G_zlib_write  (int fd, unsigned char *src, int nbytes)
+
 {
     int dst_sz, nwritten, err;
     unsigned char *dst, compressed;
@@ -281,9 +279,8 @@ G_zlib_write (fd, src, nbytes)
 
 
 int
-G_zlib_write_noCompress (fd, src, nbytes)
-    int fd, nbytes;
-    unsigned char *src;
+G_zlib_write_noCompress  (int fd, unsigned char *src, int nbytes)
+
 {
     int err, nwritten;
     unsigned char compressed;
@@ -318,9 +315,8 @@ G_zlib_write_noCompress (fd, src, nbytes)
 
 
 int
-G_zlib_compress (src, src_sz, dst, dst_sz)
-    int src_sz, dst_sz;
-    unsigned char *src, *dst;
+G_zlib_compress  (unsigned char *src, int src_sz, unsigned char *dst, int dst_sz)
+
 {
     int err, nbytes, buf_sz;
     unsigned char *buf;
@@ -398,9 +394,8 @@ G_zlib_compress (src, src_sz, dst, dst_sz)
 } /* G_zlib_compress() */
 
 int
-G_zlib_expand (src, src_sz, dst, dst_sz)
-    int src_sz, dst_sz;
-    unsigned char *src, *dst;
+G_zlib_expand  (unsigned char *src, int src_sz, unsigned char *dst, int dst_sz)
+
 {
     int err, nbytes;
     z_stream c_stream;

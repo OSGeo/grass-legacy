@@ -352,8 +352,8 @@ static FILE *fopen_histogram_new ( char *name)
  * \return 0
  */
 
-int G_remove_histogram(name)
-    char *name;
+int G_remove_histogram (char *name)
+
 {
     char buf[100];
     sprintf (buf,"cell_misc/%s", name);

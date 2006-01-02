@@ -157,11 +157,8 @@ int G_lookup_raster_colors (
  *  \return int
  */
 
-int G_lookup_f_raster_colors (fcell, red, grn, blu, set, n, colors)
-    FCELL *fcell;
-    unsigned char *red, *grn, *blu, *set;
-    int n;
-    struct Colors *colors;
+int G_lookup_f_raster_colors  (FCELL *fcell, unsigned char *red, unsigned char *grn, unsigned char *blu, unsigned char *set, int n, struct Colors *colors)
+
 {
     G__organize_colors (colors); /* make sure the lookup tables are in place */
     /* in case of float color rules, fp_lookup table is created */
@@ -195,11 +192,8 @@ int G_lookup_f_raster_colors (fcell, red, grn, blu, set, n, colors)
  *  \return int
  */
 
-int G_lookup_d_raster_colors (dcell, red, grn, blu, set, n, colors)
-    DCELL *dcell;
-    unsigned char *red, *grn, *blu, *set;
-    int n;
-    struct Colors *colors;
+int G_lookup_d_raster_colors  (DCELL *dcell, unsigned char *red, unsigned char *grn, unsigned char *blu, unsigned char *set, int n, struct Colors *colors)
+
 {
     G__organize_colors (colors); /* make sure the lookup tables are in place */
     /* in case of float color rules, fp_lookup table is created */
@@ -216,27 +210,23 @@ int G_lookup_d_raster_colors (dcell, red, grn, blu, set, n, colors)
 }
 
 
-static int less_or_equal(x, y)
-   double x, y;
+static int less_or_equal (double x, double y)
+
 {
    if(x<=y) return 1;
    else return 0;
 }
 		
-static int less(x, y)
-   double x, y;
+static int less (double x, double y)
+
 {
    if(x<y) return 1;
    else return 0;
 }
 		
 
-int G__lookup_colors (raster, red, grn, blu, set, n, colors, mod, rules_only, data_type)
-    void *raster;
-    unsigned char *red, *grn, *blu, *set;
-    int n;
-    RASTER_MAP_TYPE data_type;
-    struct Colors *colors;
+int G__lookup_colors  (void *raster, unsigned char *red, unsigned char *grn, unsigned char *blu, unsigned char *set, int n, struct Colors *colors, int  mod, int  rules_only, RASTER_MAP_TYPE data_type)
+
 {
     struct _Color_Info_ *cp;
     struct _Color_Rule_ *rule;
@@ -464,10 +454,8 @@ int G__lookup_colors (raster, red, grn, blu, set, n, colors, mod, rules_only, da
     return 0;
 }
 
-int G__interpolate_color_rule (val, red, grn, blu, rule)
-    DCELL val;
-    unsigned char *red, *grn, *blu;
-    struct _Color_Rule_ *rule;
+int G__interpolate_color_rule  (DCELL val, unsigned char *red, unsigned char *grn, unsigned char *blu, struct _Color_Rule_ *rule)
+
 {
     DCELL delta;
 
