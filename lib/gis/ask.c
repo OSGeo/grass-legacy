@@ -127,22 +127,14 @@ static char *ask( char *,char *,char *,char *,char *, int (*)(),int );
  *  \return char * 
  */
 
-char *G_ask_new (prompt, name, element, desc)
-    char *prompt;
-    char *name;
-    char *element;
-    char *desc;
+char *G_ask_new  (char *prompt, char *name, char *element, char *desc)
+
 {
     return ask (prompt, name, element, desc, (char *) NULL, no_lister, NEW);
 }
 
-char *G_ask_new_ext (prompt, name, element, desc, option, lister)
-    char *prompt;
-    char *name;
-    char *element;
-    char *desc;
-    char *option;
-    int (*lister)();
+char *G_ask_new_ext  (char *prompt, char *name, char *element, char *desc, char *option, int (*lister)())
+
 {
     return ask (prompt, name, element, desc, option, lister, NEW);
 }
@@ -165,22 +157,14 @@ char *G_ask_new_ext (prompt, name, element, desc, option, lister)
  *  \return char * 
  */
 
-char *G_ask_old (prompt, name, element, desc)
-    char *prompt;
-    char *name;
-    char *element;
-    char *desc;
+char *G_ask_old  (char *prompt, char *name, char *element, char *desc)
+
 {
     return ask (prompt, name, element, desc, (char *) NULL, no_lister, OLD);
 }
 
-char *G_ask_old_ext (prompt, name, element, desc, option, lister)
-    char *prompt;
-    char *name;
-    char *element;
-    char *desc;
-    char *option;
-    int (*lister)();
+char *G_ask_old_ext  (char *prompt, char *name, char *element, char *desc, char *option, int (*lister)())
+
 {
     return ask (prompt, name, element, desc, option, lister, OLD);
 }
@@ -203,22 +187,14 @@ char *G_ask_old_ext (prompt, name, element, desc, option, lister)
  *  \return char * 
  */
 
-char *G_ask_any (prompt, name, element, desc, warn)
-    char *prompt;
-    char *name;
-    char *element;
-    char *desc;
+char *G_ask_any  (char *prompt, char *name, char *element, char *desc, int  warn)
+
 {
     return ask (prompt, name, element, desc, (char *) NULL, no_lister, warn?ANY:ANY_NW);
 }
 
-char *G_ask_any_ext (prompt, name, element, desc, warn, option, lister)
-    char *prompt;
-    char *name;
-    char *element;
-    char *desc;
-    char *option;
-    int (*lister)();
+char *G_ask_any_ext  (char *prompt, char *name, char *element, char *desc, int  warn, char *option, int (*lister)())
+
 {
     return ask (prompt, name, element, desc, option, lister, warn?ANY:ANY_NW);
 }
@@ -242,23 +218,15 @@ char *G_ask_any_ext (prompt, name, element, desc, warn, option, lister)
  */
 
 char *
-G_ask_in_mapset (prompt, name, element, desc)
-    char *prompt;
-    char *name;
-    char *element;
-    char *desc;
+G_ask_in_mapset  (char *prompt, char *name, char *element, char *desc)
+
 {
     return ask (prompt, name, element, desc, (char *) NULL, no_lister, PRJ);
 }
 
 char *
-G_ask_in_mapset_ext (prompt, name, element, desc, option, lister)
-    char *prompt;
-    char *name;
-    char *element;
-    char *desc;
-    char *option;
-    int (*lister)();
+G_ask_in_mapset_ext  (char *prompt, char *name, char *element, char *desc, char *option, int (*lister)())
+
 {
     return ask (prompt, name, element, desc, option, lister, PRJ);
 }
@@ -277,11 +245,8 @@ G_ask_in_mapset_ext (prompt, name, element, desc, option, lister)
  */
 
 char *
-G_ask_new_file (prompt, name, element, desc)
-    char *prompt;
-    char *name;
-    char *element;
-    char *desc;
+G_ask_new_file  (char *prompt, char *name, char *element, char *desc)
+
 {
     /* element is a dummy parameter for this function */
     return ask (prompt, name, element, desc, (char *) NULL, no_lister, NEW_FILE);
@@ -315,11 +280,8 @@ G_ask_new_file_ext (prompt, name, element, desc, option, lister)
  */
 
 char *
-G_ask_old_file (prompt, name, element, desc)
-    char *prompt;
-    char *name;
-    char *element;
-    char *desc;
+G_ask_old_file  (char *prompt, char *name, char *element, char *desc)
+
 {
     /* element is a dummy parameter for this function */
     return ask (prompt, name, element, desc, (char *) NULL, no_lister, OLD_FILE);

@@ -22,8 +22,8 @@
  */
 
 char *
-G_align_window (window, ref)
-    struct Cell_head *window, *ref;
+G_align_window  (struct Cell_head *window, struct Cell_head *ref)
+
 {
     int preserve;
     double floor(), ceil();
