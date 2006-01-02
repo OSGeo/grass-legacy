@@ -81,11 +81,8 @@ flowline;
  * params  w: p, b
  */
 void
-height_angle_bounding_box(sub, cut, horiz, p, b)
-    int		 sub, horiz;
-    double	 cut;
-    point	*p;
-    bbox	 b;
+height_angle_bounding_box (int sub, double cut, int horiz, point *p, bbox b)
+
 {
     int      c, f = (int) cut;
     double   r = cut - (double) f;

@@ -420,8 +420,8 @@ void  open_files()
 
                          /* OPEN R.LE OUTPUT FILE, WITH ERROR TRAP */
 
-FILE  *fopen0(name, flag)
-char *name, *flag;
+FILE *fopen0 (char *name, char *flag)
+
 {
   FILE *fp;
 
@@ -440,8 +440,8 @@ char *name, *flag;
 
                          /* OPEN INPUT FILE, WITH ERROR TRAP */
 
-FILE  *fopen1(name, flag)
-char *name, *flag;
+FILE *fopen1 (char *name, char *flag)
+
 {
   FILE *fp;
 
@@ -463,8 +463,8 @@ char *name, *flag;
 
                          /* OPEN INPUT FILE, WITH ERROR TRAP */
 
-FILE  *fopen2(name, flag)
-char *name, *flag;
+FILE *fopen2 (char *name, char *flag)
+
 {
   FILE *fp;
 
@@ -2188,8 +2188,8 @@ void  mv_driver()
                          /* SET COLOR TABLE FOR MOVING WINDOW 
 					OUTPUT MAPS TO G-Y-R */
 
-void  set_colors(name)
-char *name;
+void set_colors (char *name)
+
 {
   struct Colors colors;
   struct FPRange  fprange;
@@ -2207,9 +2207,8 @@ char *name;
 
                          /* READ IN THE MOVING WINDOW PARAMETERS */
 
-void  read_mwind(uw, ul, nc, nr, x0, y0, radius)
-int *uw, *ul, *nc, *nr, *x0, *y0;
-float *radius;
+void read_mwind (int *uw, int *ul, int *nc, int *nr, int *x0, int *y0, float *radius)
+
 {
   FILE  *fp;
   int   ww, wl;
@@ -2244,8 +2243,8 @@ float *radius;
                             AS A COUNT AND ESTIMATED COMPLETION
                             TIME WHILE THE PROGRAM RUNS */
 
-void   meter(n, i, div)
-int  n, i, div;
+void meter (int n, int i, int div)
+
 { 
   long  current_time, time_left, elapsed, complete;
   static long start;
@@ -2415,11 +2414,8 @@ void  free_para()
                             LINE OF THE RECL_TB FILE, WHICH DEFINES
                             ATTRIBUTE GROUPS */
 
-void  read_para(name, line, value, count)
-char   *name;
-int    line;
-float  *value;
-int    *count;
+void read_para (char *name, int line, float *value, int *count)
+
 {
   FILE  *fp;
   int   i = 0, cnt = 1;
@@ -2495,10 +2491,8 @@ int    *count;
 
                          /* READ IN ONE CLASS LINE */
 
-void  read_line(name, line, n, value, fvalue, number_classes)
-char   *name;
-int    line, n, *value, *number_classes;
-float  *fvalue;
+void read_line (char *name, int line, int n, int *value, int *fvalue, int *number_classes)
+
 {
   FILE  *fp;
   int   i;
@@ -2675,10 +2669,8 @@ void  unit_driver()
                          /* CHECK FOR OUT-OF MAP UNIT, THEN
                             CALL CELL CLIP DRIVER */
 
-void  run_clip(ncols, nrows, u_w, u_l, left, top, units, id, radius)
-int  ncols, nrows, u_w, u_l, left, top, id;
-float radius;
-CELL  **units;
+void run_clip (int ncols, int nrows, int u_w, int u_l, int left, int top, CELL **units, int id, float radius)
+
 {
 int i,j;
 double center_row, center_col;

@@ -25,9 +25,7 @@
 
 extern struct CHOICE *choice;
 
-void user_input(argc,argv)  
-int argc;
-char **argv;
+void user_input (int argc, char **argv)
 
 {
    int i;

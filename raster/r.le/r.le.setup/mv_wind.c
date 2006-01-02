@@ -30,10 +30,8 @@
 				/* SETUP THE PARAMETERS FOR THE 
 				   MOVING WINDOW */
 
-void  mov_wind(t, b, l, r, n1, n2, n3, mx)
-double  *mx;
-int     t, b, l, r;
-char    *n1, *n2, *n3;
+void mov_wind (int t, int b, int l, int r, char *n1, char *n2, char *n3, double *mx)
+
 {
 
   int    xp=0, yp=0, x1, y1, btn=0, s, l0, t0, xpl, ypt,

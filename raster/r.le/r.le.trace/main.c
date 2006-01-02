@@ -37,9 +37,8 @@ FILE  			*fp;
 
 				/* MAIN PROGRAM */
 
-int main(argc, argv)
-int  argc;
-char *argv[];
+int main (int argc, char *argv[])
+
 {
   struct Cell_head  window;
   int               bot, right, t0, b0, l0, r0, clear=0;
@@ -104,10 +103,8 @@ char *argv[];
 				/* DISPLAY A MESSAGE AND THE MAP, THEN
 				   TRACE THE PATCHES AND DISPLAY THEM */
 
-void set_map( name, window, top, bot, left, right, fn)
-char   *name, *fn;
-struct Cell_head    window;
-int                 top, bot, left, right;
+void set_map (char *name, struct Cell_head window, int top, int bot, int left, int right, char *fn)
+
 {
   char    cmd[30];
   int     i, k=0, j,  btn, d, class;
@@ -148,9 +145,8 @@ int                 top, bot, left, right;
 
 				/* DISPLAY THE PATCH INFORMATION */
 
-void  show_patch(fn, msc, cmd)
-char    *fn, *cmd;
-double  *msc;
+void show_patch (char *fn, double *msc, char *cmd)
+
 {
   PATCH   *tmp, *tmp0;
   register int  i;
@@ -272,10 +268,8 @@ double  *msc;
 
 				/* DISPLAY PATCH ATTRIBUTES ON THE SCREEN */
 
-void  patch_attr(fp, p, show)
-PATCH *p;
-FILE *fp;
-int   show;
+void patch_attr (PATCH *fp, PATCH *p, int show)
+
 {
   double  shp1, shp2, shp3;
 
@@ -321,9 +315,8 @@ skip:
 
 				/* PLACE PATCH NUMBERS ON THE SCREEN */
 
-void   draw_patch(p, m)
-PATCH  *p;
-double *m;
+void draw_patch (PATCH *p, double *m)
+
 {
   register int  i;
   int           r0, c0, r1, c1;
@@ -351,10 +344,8 @@ double *m;
 				/* SETUP THE CONVERSION BETWEEN SCREEN AND
 				   ARRAY SYSTEMS */
 
-void  scr_cell(wind, top, bot, left, right, m)
-struct Cell_head  *wind;
-int    top, bot, left, right;
-double  *m;
+void scr_cell (struct Cell_head *wind, int top, int bot, int left, int right, double *m)
+
 { 
   m[0] = (right - left) / (double)wind->cols;
   m[1] = (bot - top) / (double)wind->rows;
@@ -368,9 +359,8 @@ double  *m;
 				/* DRIVER FOR CELL CLIPPING, TRACING,
 				   AND CALCULATIONS */
 
-void  cell_clip_drv(col0, row0, ncols, nrows, value, index)
-int     row0, col0, nrows, ncols, index;
-double  **value;
+void cell_clip_drv (int col0, int row0, int ncols, int nrows, double **value, int index)
+
 {
   CELL         	**pat, *pat_buf;
   DCELL         **buf;
@@ -495,11 +485,7 @@ double  **value;
 				/* OPEN THE RASTER FILE TO BE CLIPPED,
 				   AND DO THE CLIPPING */
 
-void  cell_clip(buf, null_buf, row0, col0, nrows, ncols, index,
-                centernull)
-DCELL  **buf;
-DCELL  **null_buf;
-int      row0, col0, nrows, ncols, index, *centernull;
+void cell_clip (DCELL **buf, DCELL **null_buf, int row0, int col0, int nrows, int ncols, int index, int *centernull)
 
 {
   CELL            *tmp, *tmp1;
@@ -728,11 +714,8 @@ int      row0, col0, nrows, ncols, index, *centernull;
 				   THE TRACING ROUTINE, AND ADD NEW PATCHES
 				   TO THE PATCH LIST */
 
-void  trace(nrows, ncols, buf, null_buf, pat)
-int     nrows, ncols;
-DCELL **buf;
-DCELL **null_buf;
-CELL  **pat;
+void trace (int nrows, int ncols, DCELL **buf, DCELL **null_buf, CELL **pat)
+
 {
   double        class=0.0;
   register int  i, j, x;
@@ -850,13 +833,8 @@ CELL  **pat;
 				   SAVE THE PATCH CHARACTERISTICS IN
 				   THE PATCH STRUCTURE */
 
-PATCH *get_bd(row0, col0, nrows, ncols, class, buf, null_buf, p_list, pat)
-int       row0, col0, nrows, ncols;
-double    class;
-DCELL   **buf;
-DCELL   **null_buf;
-CELL    **pat;
-PATCH    *p_list;
+PATCH *get_bd (int row0, int col0, int nrows, int ncols, double class, DCELL **buf, DCELL **null_buf, PATCH *p_list, CELL **pat)
+
 {
   int       i = row0, j = col0, pts=0, di=0, dj=-1,
             not_done, k, m, tmp, lng=0, roww=0, rowe=0,
@@ -1516,10 +1494,7 @@ patch->omega,patch->area);
 				   THE FIRST PIXEL FOUND; OTHERWISE RETURN
 				   A ZERO */
 
-int  yes_nb(di, dj, buf, class, i, j, nrows, ncols)
-int      *di, *dj, i, j, nrows, ncols;
-double    class;
-DCELL   **buf;
+int yes_nb (int *di, int *dj, DCELL **buf, double class, int i, int j, int nrows, int ncols)
 
 {
 
@@ -1652,8 +1627,7 @@ ncols=%d\n",i,*di,j,*dj,nrows,ncols);*/
 
 				/* CIRCLE CLOCKWISE AROUND THE CURRENT PT */
 
-void  clockwise(i, j)
-int    *i, *j;
+void clockwise (int *i, int *j)
 
 {
   if (*i != 0 && *j != -*i)

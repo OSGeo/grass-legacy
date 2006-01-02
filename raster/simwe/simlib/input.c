@@ -558,9 +558,8 @@ return (1);
 }
 
 
-double amax1(arg1,arg2)
- double arg1;
- double arg2;
+double amax1 (double arg1, double arg2)
+
 {
  double res;
  if (arg1>=arg2) {
@@ -573,9 +572,8 @@ double amax1(arg1,arg2)
 }
 
 
-double amin1(arg1,arg2)
- double arg1;
- double arg2;
+double amin1 (double arg1, double arg2)
+
 {
  double res;
  if (arg1<=arg2) {
@@ -588,9 +586,8 @@ double amin1(arg1,arg2)
 }
 
 
-int min(arg1,arg2)
- int arg1;
- int arg2;
+int min (int arg1, int arg2)
+
 {
  int res;
  if (arg1 <= arg2)
@@ -604,9 +601,8 @@ int min(arg1,arg2)
  return res;
 }
 
-int max(arg1,arg2)
- int arg1;
- int arg2;
+int max (int arg1, int arg2)
+
 {
  int res;
  if (arg1>=arg2) {

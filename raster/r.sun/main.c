@@ -1163,16 +1163,14 @@ void where_is_point(void)
     }
 }
 
-void vertex(jmin, imin)
-    int jmin, imin;
+void vertex(int jmin, int imin)
 {
     zp = z[jmin][imin];
     if ((zp == UNDEFZ))
 	func = NULL;
 }
 
-void line_x(jmin, imin)
-    int jmin, imin;
+void line_x(int jmin, int imin)
 {
     double c1, c2;
     double d1, d2, e1, e2;
@@ -1200,8 +1198,7 @@ void line_x(jmin, imin)
 }
 
 
-void line_y(jmin, imin)
-    int jmin, imin;
+void line_y(int jmin, int imin)
 {
     double c1, c2;
     double d1, d2, e1, e2;
@@ -1230,8 +1227,7 @@ void line_y(jmin, imin)
 
 }
 
-void cube(jmin, imin)
-    int jmin, imin;
+void cube(int jmin, int imin)
 {
     int i, ig = 0;
     double x1, x2, y1, y2;

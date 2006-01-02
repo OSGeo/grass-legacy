@@ -33,8 +33,7 @@
 				/* PROMPT THE USER TO SELECT THE GROUP/CLASS
 				   LIMITS */
 
-int   ask_group(sel)
-char     **sel;
+int ask_group (char **sel)
 
 {
 
@@ -85,8 +84,8 @@ char     **sel;
 				   CLASS FILES, SETUP NEW FILES, AND PRINT
 				   A MESSAGE ABOUT THESE FILES */
 
-int  get_group_drv(sel)
-char **sel;
+int get_group_drv (char **sel)
+
 {
 
 
@@ -156,8 +155,8 @@ char **sel;
 				/* GET THE LOWER LIMITS OF THE MEASURE INDEX
 				   CLASSES FROM THE SCREEN, AND PUT THEM IN A FILE */
 
-void ask_limits(name, str)
-char *name, *str;
+void ask_limits (char *name, char *str)
+
 {
   FILE *fp;
   char s[30];
@@ -180,8 +179,8 @@ char *name, *str;
 				/* READ IN THE LOWER LIMITS OF THE MEASURE
 				   INDEX CLASSES FROM THE SCREEN */
 
-void   get_index(fp)
-FILE  *fp;
+void get_index (FILE *fp)
+
 {
    double low, tmp=-999;
 
@@ -265,9 +264,8 @@ back:
 				/* READ IN 1 LINE OF THE ATTRIBUTE GP
 				   RULE FROM THE SCREEN */
 
-void  get_1recl(buf, singles)
-char  *buf;
-int   singles;
+void get_1recl (char *buf, int singles)
+
 {
   register int i=0;
   int    number=0;
@@ -366,8 +364,8 @@ void  ask_fromto()
 				   AN ERROR MESSAGE IF THE FILE IS NOT
 				   FOUND */
 
-FILE  *fopen0(name, flag)
-char *name, *flag;
+FILE *fopen0 (char *name, char *flag)
+
 {
   FILE *fp;
 

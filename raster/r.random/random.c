@@ -245,9 +245,8 @@ void set_to_null (struct RASTER_MAP_PTR *buf, int col)
 }
 
 int
-is_null_value(buf, col)
-    struct  RASTER_MAP_PTR buf;
-    int     col;
+is_null_value (struct RASTER_MAP_PTR buf, int col)
+
 {
     switch(buf.type)
     {

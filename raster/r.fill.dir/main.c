@@ -298,8 +298,8 @@ main(int argc, char **argv)
    exit (0);
 }
 
-int dir_type(type,dir)
-int	type, dir;
+int dir_type (int type, int dir)
+
 {
 	if (type == 1){  /* AGNPS aspect format */
 		if(dir == 128) return(1);

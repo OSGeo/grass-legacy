@@ -24,9 +24,8 @@
 #include "setup.h"
 
 int
-user_input(argc,argv)
-int argc ;
-char **argv ;
+user_input (int argc, char **argv)
+
 {
 
    if (argc > 1) {

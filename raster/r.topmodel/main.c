@@ -24,9 +24,8 @@
 
 
 int
-main(argc, argv)
-	int	argc;
-	char	**argv;
+main (int argc, char **argv)
+
 {
 
 	struct GModule *module;

@@ -36,8 +36,8 @@
 /****************************** Annoyances ******************************/
 
 char *
-tmp_name(fullname)
-    char *fullname;
+tmp_name (char *fullname)
+
 {
     char *mapset = G_mapset();
     char *location = G_location_path();
@@ -54,9 +54,8 @@ tmp_name(fullname)
 /********************************* I/O **********************************/
 
 struct Option *
-parameter(key, type, required, options, gisprompt, description, answer)
-    char *key, *options, *gisprompt, *description, *answer;
-    int   type, required;
+parameter (char *key, int type, int required, char *options, char *gisprompt, char *description, char *answer)
+
 {
     struct Option *opt = G_define_option();
 
@@ -72,8 +71,8 @@ parameter(key, type, required, options, gisprompt, description, answer)
 }
 
 struct Flag *
-flag(key, description)
-    char key, *description;
+flag (char key, char *description)
+
 {
     struct Flag *theFlag = G_define_flag();
 
@@ -84,9 +83,8 @@ flag(key, description)
 }
 
 void
-parse_command_line(argc, argv)
-    int     argc;
-    char   *argv[];
+parse_command_line (int argc, char *argv[])
+
 {
 	struct GModule *module;
     struct Option *pelevin, *paspin, *pbarin, *pskip, *pbound, 
@@ -223,8 +221,8 @@ parse_command_line(argc, argv)
 }
 
 void
-diag(msg)
-    char *msg;
+diag (char *msg)
+
 {
     if (!parm.quiet)
     {
@@ -234,9 +232,8 @@ diag(msg)
 }
 
 int
-open_existing_cell_file(fname, chd)
-    char   *fname;
-    struct Cell_head *chd;
+open_existing_cell_file (char *fname, struct Cell_head *chd)
+
 {
     char   *mapset = G_find_cell(fname, "");
 
@@ -320,10 +317,8 @@ read_input_files()
 }
 
 int
-open_segment_file(name, l, new)
-    char *name;
-    layer l;
-    int new;
+open_segment_file (char *name, layer l, int new)
+
 {
     int fd;
     char *mapset;

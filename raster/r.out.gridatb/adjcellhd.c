@@ -2,8 +2,8 @@
 
 
 int
-adjcellhd(cellhd)
-	struct	Cell_head	*cellhd;
+adjcellhd (struct Cell_head *cellhd)
+
 {
 	int	retval;
 

@@ -34,10 +34,8 @@ PATCH 			*patch_list = NULL;
 				/* DRIVER FOR CELL CLIPPING, TRACING,
 				   AND CALCULATIONS */
 
-void  cell_clip_drv(col0, row0, ncols, nrows, value, index, radius)
-int     row0, col0, nrows, ncols, index;
-double  **value;
-float   radius;
+void cell_clip_drv (int col0, int row0, int ncols, int nrows, double **value, int index, float radius)
+
 {
   CELL         	**pat, *pat_buf, *cor_cell_buf;
   FCELL		*cor_fcell_buf;
@@ -439,12 +437,8 @@ i),*(list_head->col + i));
 				/* OPEN THE RASTER FILE TO BE CLIPPED,
 				   AND DO THE CLIPPING */
 
-void  cell_clip(buf, null_buf, row0, col0, nrows, ncols, index, radius,
-                centernull, empty)
-DCELL  **buf;
-DCELL  **null_buf;
-int      row0, col0, nrows, ncols, index, *centernull, *empty;
-float    radius;
+void cell_clip (DCELL **buf, DCELL **null_buf, int row0, int col0, int nrows, int ncols, int index, float radius, int *centernull, int *empty)
+
 {
   CELL            *tmp, *tmp1;
   FCELL           *ftmp;
@@ -766,11 +760,8 @@ float    radius;
 				   THE TRACING ROUTINE, AND ADD NEW PATCHES
 				   TO THE PATCH LIST */
 
-void  trace(nrows, ncols, buf, null_buf, pat, cor)
-int     nrows, ncols;
-DCELL **buf, **cor;
-DCELL **null_buf;
-CELL  **pat;
+void trace (int nrows, int ncols, DCELL **buf, DCELL **null_buf, CELL **pat, DCELL **cor)
+
 {
   double        class=0.0;
   register int  i, j, x;
@@ -889,13 +880,8 @@ CELL  **pat;
 				   SAVE THE PATCH CHARACTERISTICS IN
 				   THE PATCH STRUCTURE */
 
-PATCH *get_bd(row0, col0, nrows, ncols, class, buf, null_buf, p_list, pat, cor)
-int       row0, col0, nrows, ncols;
-double    class;
-DCELL   **buf, **cor;
-DCELL   **null_buf;
-CELL    **pat;
-PATCH    *p_list;
+PATCH *get_bd (int row0, int col0, int nrows, int ncols, double class, DCELL **buf, DCELL **null_buf, PATCH *p_list, CELL **pat, DCELL **cor)
+
 {
   int       i = row0, j = col0, pts=0, di=0, dj=-1,
             not_done, k, m, tmp, lng=0, roww=0, rowe=0,
@@ -1652,10 +1638,7 @@ patch->omega,patch->area); */
 				   THE FIRST PIXEL FOUND; OTHERWISE RETURN
 				   A ZERO */
 
-int  yes_nb(di, dj, buf, class, i, j, nrows, ncols)
-int      *di, *dj, i, j, nrows, ncols;
-double    class;
-DCELL   **buf;
+int yes_nb (int *di, int *dj, DCELL **buf, double class, int i, int j, int nrows, int ncols)
 
 {
 
@@ -1788,8 +1771,7 @@ ncols=%d\n",i,*di,j,*dj,nrows,ncols);*/
 
 				/* CIRCLE CLOCKWISE AROUND THE CURRENT PT */
 
-void  clockwise(i, j)    
-int    *i, *j;
+void clockwise (int *i, int *j)
 
 {
   if (*i != 0 && *j != -*i)

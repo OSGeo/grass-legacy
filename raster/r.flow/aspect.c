@@ -29,9 +29,8 @@
 #include "r.flow.h"
 
 DCELL
-aspect_fly(n, c, s, d)
-    DCELL *n, *c, *s;
-    double d;
+aspect_fly (DCELL *n, DCELL *c, DCELL *s, double d)
+
 {
     double xslope 	= ((n[-1] + c[-1] + c[-1] + s[-1]) -
 			   (n[1] + c[1] + c[1] + s[1])) / (8 * d);
