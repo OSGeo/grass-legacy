@@ -24,9 +24,8 @@
  */
 
 char *
-G_get_cell_title (name, mapset)
-    char *name;
-    char *mapset;
+G_get_cell_title  (char *name, char *mapset)
+
 {
     FILE *fd;
     int stat;

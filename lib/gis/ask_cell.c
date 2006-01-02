@@ -49,10 +49,8 @@ static int lister(char *,char *,char *);
  */
 
 char *
-G_ask_cell_new (prompt,name)
+G_ask_cell_new  (char *prompt, char *name)
 
-	char *prompt;
-	char *name;
 {
 
 	return G_ask_new_ext (prompt, name, "cell", "raster", _("with titles"), lister);
@@ -71,10 +69,8 @@ G_ask_cell_new (prompt,name)
  */
 
 char *
-G_ask_cell_old (prompt,name)
+G_ask_cell_old  (char *prompt, char *name)
 
-	char *prompt;
-	char *name;
 {
 	return G_ask_old_ext (prompt, name, "cell", "raster", _("with titles"), lister);
 }
@@ -92,19 +88,15 @@ G_ask_cell_old (prompt,name)
  */
 
 char *
-G_ask_cell_in_mapset (prompt,name)
+G_ask_cell_in_mapset  (char *prompt, char *name)
 
-	char *prompt;
-	char *name;
 {
 	return G_ask_in_mapset_ext (prompt, name, "cell", "raster", _("with titles"), lister);
 }
 
 char *
-G_ask_cell_any (prompt,name)
+G_ask_cell_any  (char *prompt, char *name)
 
-	char *prompt;
-	char *name;
 {
 	return G_ask_any_ext (prompt, name, "cell", "raster", 1, _("with titles"), lister);
 }
