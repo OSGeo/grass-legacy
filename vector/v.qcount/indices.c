@@ -10,14 +10,16 @@
 #include "Vect.h"
 #include "quaddefs.h"
 
-void qindices (cnt, n, fisher, david, douglas, lloyd, lloydip, morisita)
-  int *cnt, n;
-  double *fisher, *david, *douglas, *lloyd, *lloydip, *morisita;
+void qindices  (int *cnt, int n, double *fisher, double *david, double *douglas, double *lloyd, double *lloydip, double *morisita)
+
+
+
 
 /*
  * Calculates quadrat count indices for measuring departure from complete
  * spatial randomness. See Cressie (1991).
  */
+
 {
   int i;
   double m = 0, s = 0;

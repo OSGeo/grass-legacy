@@ -10,8 +10,8 @@
 #include "gis.h"
 
 
-double scancatlabel(str)
- char *str;
+double scancatlabel (char *str)
+
 {
   double val;
 

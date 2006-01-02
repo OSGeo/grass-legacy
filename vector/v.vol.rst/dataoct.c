@@ -53,16 +53,7 @@ return point;
 
 
 
-struct octdata *data_new(x_orig,y_orig,z_orig,n_rows,n_cols,n_levs,n_points)
-
-  double x_orig;
-  double y_orig;
-  double z_orig;
-  int    n_rows;
-  int    n_cols;
-  int    n_levs;
-  int    n_points;
-
+struct octdata *data_new (double x_orig, double y_orig, double z_orig, int n_rows, int n_cols, int n_levs, int n_points)
 
 {
 struct octdata *data; 
