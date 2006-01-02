@@ -3,7 +3,7 @@
 ############################################################################
 #
 # MODULE:	r.univar
-# AUTHOR(S):	Markus Neteler. neteler@itc.it
+# AUTHOR(S):	Markus Neteler. neteler itc.it
 # PURPOSE:	Calculates univariate statistics from a GRASS raster map
 # COPYRIGHT:	(C) 1998,2002,2003 by the GRASS Development Team
 #
@@ -28,7 +28,7 @@
 #% required : yes
 #%End
 
-if  [ -z $GISBASE ] ; then
+if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program."
  exit 1
 fi   
@@ -38,8 +38,7 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 #### check if we have awk
-AWK=`which awk`
-if [ "$AWK" = "" ] ; then
+if [ ! -x "`which awk`" ] ; then
     echo "$PROG: awk required, please install awk/gawk first" 2>&1
     exit 1
 fi

@@ -91,8 +91,7 @@ PROG=`basename $0`
 
 
 #### check for gpstrans 
-GPSTRANS=`which gpstrans`
-if [ "$GPSTRANS" = "" ] ; then
+if [ ! -x "`which gpstrans`" ] ; then
     echo "$PROG: gpstrans program not found, install it first" 1>&2
     echo "       http://gpstrans.sourceforge.net" 1>&2
     exit 1
@@ -100,8 +99,7 @@ fi
 
 
 #### check for cs2cs
-CS2CS=`which cs2cs`
-if [ "$CS2CS" = "" ] ; then
+if [ ! -x "`which cs2cs`" ] ; then
     echo "$PROG: cs2cs program not found, install it first" 1>&2
     echo "       http://proj.maptools.org" 1>&2
     exit 1
@@ -109,8 +107,7 @@ fi
 
 
 #### check if we have awk
-AWK=`which awk`
-if [ "$AWK" = "" ] ; then
+if [ ! -x "`which awk`" ] ; then
     echo "$PROG: awk required, please install awk/gawk first" 1>&2
     exit 1
 fi

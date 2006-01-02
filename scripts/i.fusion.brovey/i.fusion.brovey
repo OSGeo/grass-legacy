@@ -97,8 +97,7 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 #### check if we have awk
-AWK=`which awk`
-if [ "$AWK" = "" ] ; then
+if [ ! -x "`which awk`" ] ; then
     echo "$PROG: awk required, please install awk/gawk first" 2>&1
     exit 1
 fi
