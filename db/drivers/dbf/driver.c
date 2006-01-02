@@ -18,7 +18,8 @@
 #include "globals.h"
 
 int
-db__driver_init (argc, argv) char *argv[];
+db__driver_init  (int argc, char *argv[])
+
 {
     return DB_OK;
 }

@@ -14,8 +14,11 @@
  * the button pressed in returned in *button.
  */
 
-Get_location_with_pointer2(wx, wy, button)
-	int *wx, *wy ;    /* new x,y coordinate       */
-	int *button ;     /* button pressed to return */
+void
+Get_location_with_pointer2 (int *wx, int *wy, int *button)
+    /* new x,y coordinate       */
+    /* button pressed to return */
+
 {
+ /* nothing ?? */ 
 }
