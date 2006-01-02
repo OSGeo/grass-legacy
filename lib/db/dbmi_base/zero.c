@@ -7,8 +7,8 @@
  \param 
 */
 void
-db_zero(s, n)
-    void *s;
+db_zero (void *s, int  n)
+
 {
     char *c = (char *) s;
     while (n-- > 0)

@@ -10,9 +10,8 @@ static void print_priv();
  \param 
 */
 void
-db_print_table_definition(fd,table)
-    FILE *fd;
-    dbTable *table;
+db_print_table_definition (FILE *fd, dbTable *table)
+
 {
     int ncols, col;
     dbColumn *column;
@@ -33,9 +32,8 @@ db_print_table_definition(fd,table)
 }
 
 void
-db_print_column_definition(fd, column)
-    FILE *fd;
-    dbColumn *column;
+db_print_column_definition (FILE *fd, dbColumn *column)
+
 {
     dbString value_string;
 
@@ -59,10 +57,8 @@ db_print_column_definition(fd, column)
 }
 
 static void
-print_priv (fd, label, priv)
-    FILE *fd;
-    char *label;
-    int priv;
+print_priv  (FILE *fd, char *label, int priv)
+
 {
     fprintf (fd, "%s:", label);
     switch (priv)

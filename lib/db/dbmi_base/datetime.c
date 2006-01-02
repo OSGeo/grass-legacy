@@ -11,10 +11,8 @@ static char ts = ':';
  \return 
  \param 
 */
-db_convert_value_datetime_into_string (value, sqltype, string)
-    dbValue *value;
-    int sqltype;
-    dbString *string;
+db_convert_value_datetime_into_string  (dbValue *value, int sqltype, dbString *string)
+
 {
     int to,from;
     int year, month, day, hour, minute;
@@ -187,10 +185,8 @@ db_convert_value_datetime_into_string (value, sqltype, string)
  *  otherwise the to and from markings in sqltype are used.
  *  where "*" represents any non-whitespace character
  */
-db_convert_Cstring_to_value_datetime (buf, sqltype, value)
-    char *buf;
-    int sqltype;
-    dbValue *value;
+db_convert_Cstring_to_value_datetime  (char *buf, int sqltype, dbValue *value)
+
 {
     int from, to;
     int year, month, day, hour, minute;

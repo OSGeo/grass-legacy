@@ -7,9 +7,8 @@
  \param 
 */
 int
-db_convert_Cstring_to_column_value (Cstring, column)
-    char *Cstring;
-    dbColumn *column;
+db_convert_Cstring_to_column_value  (char *Cstring, dbColumn *column)
+
 {
     dbValue *value;
     int sqltype;
@@ -26,9 +25,8 @@ db_convert_Cstring_to_column_value (Cstring, column)
  \param 
 */
 int
-db_convert_Cstring_to_column_default_value (Cstring, column)
-    char *Cstring;
-    dbColumn *column;
+db_convert_Cstring_to_column_default_value  (char *Cstring, dbColumn *column)
+
 {
     dbValue *value;
     int sqltype;
@@ -45,9 +43,8 @@ db_convert_Cstring_to_column_default_value (Cstring, column)
  \param 
 */
 int
-db_convert_column_value_to_string (column, string)
-    dbColumn *column;
-    dbString *string;
+db_convert_column_value_to_string  (dbColumn *column, dbString *string)
+
 {
     int sqltype;
     dbValue *value;
@@ -64,9 +61,8 @@ db_convert_column_value_to_string (column, string)
  \param 
 */
 int
-db_convert_column_default_value_to_string (column, string)
-    dbColumn *column;
-    dbString *string;
+db_convert_column_default_value_to_string  (dbColumn *column, dbString *string)
+
 {
     int sqltype;
     dbValue *value;

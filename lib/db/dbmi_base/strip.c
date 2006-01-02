@@ -13,8 +13,8 @@
 
 
 void
-db_strip (buf)
-    char *buf;
+db_strip  (char *buf)
+
 {
     char *a, *b;
 

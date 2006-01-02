@@ -69,8 +69,8 @@ db_has_dbms()
  \param 
 */
 void
-db_copy_dbmscap_entry(dst, src)
-    dbDbmscap *dst, *src;
+db_copy_dbmscap_entry (dbDbmscap *dst, dbDbmscap *src)
+
 {
     strcpy (dst->driverName, src->driverName);
     strcpy (dst->comment, src->comment);
@@ -200,11 +200,8 @@ db_read_dbmscap()
 }
 
 static void
-add_entry (list, name, startup, comment)
-    dbDbmscap **list;
-    char *name;
-    char *startup;
-    char *comment;
+add_entry  (dbDbmscap **list, char *name, char *startup, char *comment)
+
 {
     dbDbmscap *head, *cur, *tail;
 
@@ -240,8 +237,8 @@ add_entry (list, name, startup, comment)
  \param 
 */
 void
-db_free_dbmscap (list)
-    dbDbmscap *list;
+db_free_dbmscap  (dbDbmscap *list)
+
 {
     dbDbmscap *next, *cur;
 

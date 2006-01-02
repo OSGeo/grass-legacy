@@ -7,8 +7,8 @@
  \return 
  \param 
 */
-db_update (cursor)
-    dbCursor *cursor;
+db_update  (dbCursor *cursor)
+
 {
     int ret_code;
 

@@ -2,9 +2,8 @@
 #include "macros.h"
 
 int
-db__send_value (value, Ctype)
-    dbValue *value;
-    int Ctype;
+db__send_value  (dbValue *value, int Ctype)
+
 {
     DB_SEND_CHAR (value->isNull);
     if (value->isNull) return DB_OK;
@@ -23,9 +22,8 @@ db__send_value (value, Ctype)
 }
 
 int
-db__recv_value (value, Ctype)
-    dbValue *value;
-    int Ctype;
+db__recv_value  (dbValue *value, int Ctype)
+
 {
     DB_RECV_CHAR (&value->isNull);
     if (value->isNull) return DB_OK;

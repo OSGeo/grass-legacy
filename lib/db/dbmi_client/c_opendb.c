@@ -7,9 +7,8 @@
  \return 
  \param 
 */
-db_open_database (driver, handle)
-    dbDriver *driver;
-    dbHandle *handle;
+db_open_database  (dbDriver *driver, dbHandle *handle)
+
 {
     int ret_code;
 

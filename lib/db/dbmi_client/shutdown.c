@@ -22,8 +22,8 @@
  * an argument, instead of returning the pointer to allocated
  * then there would be no hidden free required
  */
-db_shutdown_driver (driver)
-    dbDriver *driver;
+db_shutdown_driver  (dbDriver *driver)
+
 {
     int pid;
     int status;

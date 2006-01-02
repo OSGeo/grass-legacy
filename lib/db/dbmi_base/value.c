@@ -8,8 +8,8 @@
  \param 
 */
 int
-db_test_value_isnull(value)
-    dbValue *value;
+db_test_value_isnull (dbValue *value)
+
 {
     return (value->isNull != 0);
 }
@@ -21,8 +21,8 @@ db_test_value_isnull(value)
  \param 
 */
 int
-db_get_value_int(value)
-    dbValue *value;
+db_get_value_int (dbValue *value)
+
 {
     return (value->i);
 }
@@ -34,8 +34,8 @@ db_get_value_int(value)
  \param 
 */
 double
-db_get_value_double(value)
-    dbValue *value;
+db_get_value_double (dbValue *value)
+
 {
     return (value->d);
 }
@@ -48,9 +48,8 @@ db_get_value_double(value)
 */
 /* for given value and C type of value returns double representation */
 double
-db_get_value_as_double(value, ctype)
-    dbValue *value;
-    int ctype;
+db_get_value_as_double (dbValue *value, int ctype)
+
 {
     double val;
     
@@ -78,8 +77,8 @@ db_get_value_as_double(value, ctype)
  \param 
 */
 char *
-db_get_value_string(value)
-    dbValue *value;
+db_get_value_string (dbValue *value)
+
 {
     return (db_get_string(&value->s));
 }
@@ -91,8 +90,8 @@ db_get_value_string(value)
  \param 
 */
 int
-db_get_value_year(value)
-    dbValue *value;
+db_get_value_year (dbValue *value)
+
 {
     return (value->t.year);
 }
@@ -104,8 +103,8 @@ db_get_value_year(value)
  \param 
 */
 int
-db_get_value_month(value)
-    dbValue *value;
+db_get_value_month (dbValue *value)
+
 {
     return (value->t.month);
 }
@@ -117,8 +116,8 @@ db_get_value_month(value)
  \param 
 */
 int
-db_get_value_day(value)
-    dbValue *value;
+db_get_value_day (dbValue *value)
+
 {
     return (value->t.day);
 }
@@ -130,8 +129,8 @@ db_get_value_day(value)
  \param 
 */
 int
-db_get_value_hour(value)
-    dbValue *value;
+db_get_value_hour (dbValue *value)
+
 {
     return (value->t.hour);
 }
@@ -143,8 +142,8 @@ db_get_value_hour(value)
  \param 
 */
 int
-db_get_value_minute(value)
-    dbValue *value;
+db_get_value_minute (dbValue *value)
+
 {
     return (value->t.minute);
 }
@@ -156,8 +155,8 @@ db_get_value_minute(value)
  \param 
 */
 double
-db_get_value_seconds(value)
-    dbValue *value;
+db_get_value_seconds (dbValue *value)
+
 {
     return (value->t.seconds);
 }
@@ -169,8 +168,8 @@ db_get_value_seconds(value)
  \param 
 */
 void
-db_set_value_null(value)
-    dbValue *value;
+db_set_value_null (dbValue *value)
+
 {
     value->isNull = 1;
 }
@@ -182,8 +181,8 @@ db_set_value_null(value)
  \param 
 */
 void
-db_set_value_not_null(value)
-    dbValue *value;
+db_set_value_not_null (dbValue *value)
+
 {
     value->isNull = 0;
 }
@@ -195,9 +194,8 @@ db_set_value_not_null(value)
  \param 
 */
 void
-db_set_value_int(value, i)
-    dbValue *value;
-    int i;
+db_set_value_int (dbValue *value, int i)
+
 {
     value->i = i;
     db_set_value_not_null(value);
@@ -210,9 +208,8 @@ db_set_value_int(value, i)
  \param 
 */
 void
-db_set_value_double(value, d)
-    dbValue *value;
-    double d;
+db_set_value_double (dbValue *value, double d)
+
 {
     value->d = d;
     db_set_value_not_null(value);
@@ -225,9 +222,8 @@ db_set_value_double(value, d)
  \param 
 */
 int
-db_set_value_string(value, s)
-    dbValue *value;
-    char *s;
+db_set_value_string (dbValue *value, char *s)
+
 {
     db_set_value_not_null(value);
     return db_set_string(&value->s, s);
@@ -240,9 +236,8 @@ db_set_value_string(value, s)
  \param 
 */
 void
-db_set_value_year(value, year)
-    dbValue *value;
-    int year;
+db_set_value_year (dbValue *value, int year)
+
 {
     value->t.year = year;
     db_set_value_datetime_not_current(value);
@@ -255,9 +250,8 @@ db_set_value_year(value, year)
  \param 
 */
 void
-db_set_value_month(value, month)
-    dbValue *value;
-    int month;
+db_set_value_month (dbValue *value, int month)
+
 {
     value->t.month = month;
     db_set_value_datetime_not_current(value);
@@ -270,9 +264,8 @@ db_set_value_month(value, month)
  \param 
 */
 void
-db_set_value_day(value, day)
-    dbValue *value;
-    int day;
+db_set_value_day (dbValue *value, int day)
+
 {
     value->t.day = day;
     db_set_value_datetime_not_current(value);
@@ -285,9 +278,8 @@ db_set_value_day(value, day)
  \param 
 */
 void
-db_set_value_hour(value, hour)
-    dbValue *value;
-    int hour;
+db_set_value_hour (dbValue *value, int hour)
+
 {
     value->t.hour = hour;
     db_set_value_datetime_not_current(value);
@@ -300,9 +292,8 @@ db_set_value_hour(value, hour)
  \param 
 */
 void
-db_set_value_minute(value, minute)
-    dbValue *value;
-    int minute;
+db_set_value_minute (dbValue *value, int minute)
+
 {
     value->t.minute = minute;
     db_set_value_datetime_not_current(value);
@@ -315,9 +306,8 @@ db_set_value_minute(value, minute)
  \param 
 */
 void
-db_set_value_seconds(value, seconds)
-    dbValue *value;
-    double seconds;
+db_set_value_seconds (dbValue *value, double seconds)
+
 {
     value->t.seconds = seconds;
     db_set_value_datetime_not_current (value);
@@ -330,8 +320,8 @@ db_set_value_seconds(value, seconds)
  \param 
 */
 int
-db_test_value_datetime_current (value)
-    dbValue *value;
+db_test_value_datetime_current  (dbValue *value)
+
 {
     return (value->t.current != 0);
 }
@@ -343,8 +333,8 @@ db_test_value_datetime_current (value)
  \param 
 */
 void
-db_set_value_datetime_current (value)
-    dbValue *value;
+db_set_value_datetime_current  (dbValue *value)
+
 {
     value->t.current = 1;
     db_set_value_not_null(value);
@@ -357,8 +347,8 @@ db_set_value_datetime_current (value)
  \param 
 */
 void
-db_set_value_datetime_not_current (value)
-    dbValue *value;
+db_set_value_datetime_not_current  (dbValue *value)
+
 {
     value->t.current = 0;
     db_set_value_not_null(value);
@@ -372,9 +362,8 @@ db_set_value_datetime_not_current (value)
 */
 /* copy value from src to destination */
 void
-db_copy_value ( dst, src )
-    dbValue *dst;
-    dbValue *src;
+db_copy_value  (dbValue *dst, dbValue *src)
+
 {
     dst->isNull = src->isNull;
     dst->i = src->i;

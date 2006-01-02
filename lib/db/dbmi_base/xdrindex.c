@@ -1,8 +1,8 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db__send_index(index)
-    dbIndex *index;
+db__send_index (dbIndex *index)
+
 {
     int i;
 
@@ -20,9 +20,8 @@ db__send_index(index)
     return DB_OK;
 }
 
-db__send_index_array (list, count)
-    dbIndex *list;
-    int count;
+db__send_index_array  (dbIndex *list, int count)
+
 {
     int i;
 
@@ -34,8 +33,8 @@ db__send_index_array (list, count)
     return DB_OK;
 }
 
-db__recv_index(index)
-    dbIndex *index;
+db__recv_index (dbIndex *index)
+
 {
     int i,ncols;
 
@@ -57,9 +56,8 @@ db__recv_index(index)
     return DB_OK;
 }
 
-db__recv_index_array (list, count)
-    dbIndex **list;
-    int *count;
+db__recv_index_array  (dbIndex **list, int *count)
+
 {
     int i;
 

@@ -112,15 +112,15 @@ db_set_column_precision (dbColumn *column, int precision)
  \param 
 */
 int
-db_get_column_sqltype (column)
-    dbColumn *column;
+db_get_column_sqltype  (dbColumn *column)
+
 {
     return column->sqlDataType;
 }
 
 int
-db_get_column_host_type (column)
-    dbColumn *column;
+db_get_column_host_type  (dbColumn *column)
+
 {
     return column->hostDataType;
 }
@@ -131,8 +131,8 @@ db_get_column_host_type (column)
  \param 
 */
 void
-db_set_column_has_defined_default_value(column)
-    dbColumn *column;
+db_set_column_has_defined_default_value (dbColumn *column)
+
 {
     column->hasDefaultValue = 1;
 }
@@ -143,8 +143,8 @@ db_set_column_has_defined_default_value(column)
  \param 
 */
 void
-db_set_column_has_undefined_default_value(column)
-    dbColumn *column;
+db_set_column_has_undefined_default_value (dbColumn *column)
+
 {
     column->hasDefaultValue = 0;
 }
@@ -155,8 +155,8 @@ db_set_column_has_undefined_default_value(column)
  \param 
 */
 void
-db_unset_column_has_default_value(column)
-    dbColumn *column;
+db_unset_column_has_default_value (dbColumn *column)
+
 {
     column->hasDefaultValue = 0;
 }
@@ -167,8 +167,8 @@ db_unset_column_has_default_value(column)
  \param 
 */
 int
-db_test_column_has_default_value(column)
-    dbColumn *column;
+db_test_column_has_default_value (dbColumn *column)
+
 {
     return (column->hasDefaultValue != 0);
 }
@@ -179,8 +179,8 @@ db_test_column_has_default_value(column)
  \param 
 */
 int
-db_test_column_has_defined_default_value(column)
-    dbColumn *column;
+db_test_column_has_defined_default_value (dbColumn *column)
+
 {
     return (column->hasDefaultValue);
 }
@@ -191,8 +191,8 @@ db_test_column_has_defined_default_value(column)
  \param 
 */
 int
-db_test_column_has_undefined_default_value(column)
-    dbColumn *column;
+db_test_column_has_undefined_default_value (dbColumn *column)
+
 {
     return (!column->hasDefaultValue);
 }
@@ -203,8 +203,8 @@ db_test_column_has_undefined_default_value(column)
  \param 
 */
 void
-db_set_column_use_default_value(column)
-    dbColumn *column;
+db_set_column_use_default_value (dbColumn *column)
+
 {
     column->useDefaultValue = 1;
 }
@@ -215,8 +215,8 @@ db_set_column_use_default_value(column)
  \param 
 */
 void
-db_unset_column_use_default_value(column)
-    dbColumn *column;
+db_unset_column_use_default_value (dbColumn *column)
+
 {
     column->useDefaultValue = 0;
 }
@@ -227,8 +227,8 @@ db_unset_column_use_default_value(column)
  \param 
 */
 int
-db_test_column_use_default_value(column)
-    dbColumn *column;
+db_test_column_use_default_value (dbColumn *column)
+
 {
     return (column->useDefaultValue != 0);
 }
@@ -239,8 +239,8 @@ db_test_column_use_default_value(column)
  \param 
 */
 void
-db_set_column_null_allowed(column)
-    dbColumn *column;
+db_set_column_null_allowed (dbColumn *column)
+
 {
     column->nullAllowed = 1;
 }
@@ -251,8 +251,8 @@ db_set_column_null_allowed(column)
  \param 
 */
 void
-db_unset_column_null_allowed(column)
-    dbColumn *column;
+db_unset_column_null_allowed (dbColumn *column)
+
 {
     column->nullAllowed = 0;
 }
@@ -263,8 +263,8 @@ db_unset_column_null_allowed(column)
  \param 
 */
 int
-db_test_column_null_allowed(column)
-    dbColumn *column;
+db_test_column_null_allowed (dbColumn *column)
+
 {
     return (column->nullAllowed != 0);
 }
@@ -275,8 +275,8 @@ db_test_column_null_allowed(column)
  \param 
 */
 int
-db_get_column_length (column)
-    dbColumn *column;
+db_get_column_length  (dbColumn *column)
+
 {
     return column->dataLen;
 }
@@ -287,9 +287,8 @@ db_get_column_length (column)
  \param 
 */
 void
-db_set_column_length (column, length)
-    dbColumn *column;
-    int length;
+db_set_column_length  (dbColumn *column, int length)
+
 {
     column->dataLen = length;
 }
@@ -300,8 +299,8 @@ db_set_column_length (column, length)
  \param 
 */
 void
-db_set_column_select_priv_granted (column)
-    dbColumn *column;
+db_set_column_select_priv_granted  (dbColumn *column)
+
 {
     column->select = DB_GRANTED;
 }
@@ -312,8 +311,8 @@ db_set_column_select_priv_granted (column)
  \param 
 */
 void
-db_set_column_select_priv_not_granted (column)
-    dbColumn *column;
+db_set_column_select_priv_not_granted  (dbColumn *column)
+
 {
     column->select = DB_NOT_GRANTED;
 }
@@ -324,8 +323,8 @@ db_set_column_select_priv_not_granted (column)
  \param 
 */
 int
-db_get_column_select_priv (column)
-    dbColumn *column;
+db_get_column_select_priv  (dbColumn *column)
+
 {
     return column->select;
 }
@@ -336,8 +335,8 @@ db_get_column_select_priv (column)
  \param 
 */
 void
-db_set_column_update_priv_granted (column)
-    dbColumn *column;
+db_set_column_update_priv_granted  (dbColumn *column)
+
 {
     column->update = DB_GRANTED;
 }
@@ -348,8 +347,8 @@ db_set_column_update_priv_granted (column)
  \param 
 */
 void
-db_set_column_update_priv_not_granted (column)
-    dbColumn *column;
+db_set_column_update_priv_not_granted  (dbColumn *column)
+
 {
     column->update = DB_NOT_GRANTED;
 }
@@ -360,8 +359,8 @@ db_set_column_update_priv_not_granted (column)
  \param 
 */
 int
-db_get_column_update_priv (column)
-    dbColumn *column;
+db_get_column_update_priv  (dbColumn *column)
+
 {
     return column->update;
 }
@@ -372,8 +371,8 @@ db_get_column_update_priv (column)
  \param 
 */
 void
-db_init_column (column)
-    dbColumn *column;
+db_init_column  (dbColumn *column)
+
 {
     db_zero ((void *)column, sizeof(dbColumn));
     db_init_string (&column->columnName);
@@ -388,9 +387,8 @@ db_init_column (column)
  \param 
 */
 int
-db_set_column_name (column, name)
-    dbColumn *column;
-    char *name;
+db_set_column_name  (dbColumn *column, char *name)
+
 {
     return db_set_string (&column->columnName, name);
 }
@@ -401,8 +399,8 @@ db_set_column_name (column, name)
  \param 
 */
 char *
-db_get_column_name (column)
-    dbColumn *column;
+db_get_column_name  (dbColumn *column)
+
 {
     return db_get_string (&column->columnName);
 }
@@ -413,9 +411,8 @@ db_get_column_name (column)
  \param 
 */
 int
-db_set_column_description (column, description)
-    dbColumn *column;
-    char *description;
+db_set_column_description  (dbColumn *column, char *description)
+
 {
     return db_set_string (&column->description, description);
 }
@@ -426,8 +423,8 @@ db_set_column_description (column, description)
  \param 
 */
 char *
-db_get_column_description (column)
-    dbColumn *column;
+db_get_column_description  (dbColumn *column)
+
 {
     return db_get_string (&column->description);
 }
@@ -438,8 +435,8 @@ db_get_column_description (column)
  \param 
 */
 void
-db_free_column (column)
-    dbColumn *column;
+db_free_column  (dbColumn *column)
+
 {
     db_free_string (&column->columnName);
     db_free_string (&column->value.s);

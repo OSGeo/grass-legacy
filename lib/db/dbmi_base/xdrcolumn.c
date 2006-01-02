@@ -1,8 +1,8 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db__send_column_definition (column)
-    dbColumn *column;
+db__send_column_definition  (dbColumn *column)
+
 {
     DB_SEND_STRING (&column->columnName);
     DB_SEND_STRING (&column->description);
@@ -24,8 +24,8 @@ db__send_column_definition (column)
     return DB_OK;
 }
 
-db__recv_column_definition (column)
-    dbColumn *column;
+db__recv_column_definition  (dbColumn *column)
+
 {
     DB_RECV_STRING (&column->columnName);
     DB_RECV_STRING (&column->description);
@@ -47,29 +47,29 @@ db__recv_column_definition (column)
     return DB_OK;
 }
 
-db__send_column_value (column)
-    dbColumn *column;
+db__send_column_value  (dbColumn *column)
+
 {
     return db__send_value (db_get_column_value(column),
 			db_sqltype_to_Ctype (db_get_column_sqltype(column)));
 }
 
-db__recv_column_value (column)
-    dbColumn *column;
+db__recv_column_value  (dbColumn *column)
+
 {
     return db__recv_value (db_get_column_value(column),
 			db_sqltype_to_Ctype (db_get_column_sqltype(column)));
 }
 
-db__send_column_default_value (column)
-    dbColumn *column;
+db__send_column_default_value  (dbColumn *column)
+
 {
     return db__send_value (db_get_column_default_value(column),
 			db_sqltype_to_Ctype (db_get_column_sqltype(column)));
 }
 
-db__recv_column_default_value (column)
-    dbColumn *column;
+db__recv_column_default_value  (dbColumn *column)
+
 {
     return db__recv_value (db_get_column_default_value(column),
 			db_sqltype_to_Ctype (db_get_column_sqltype(column)));

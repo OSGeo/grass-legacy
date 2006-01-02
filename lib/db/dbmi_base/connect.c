@@ -8,8 +8,8 @@
  \param dbConnection
 */
 int
-db_set_connection( connection )
-    dbConnection   *connection;
+db_set_connection (dbConnection *connection)
+
 {
     if ( connection->driverName )
 	G_setenv2("DB_DRIVER", connection->driverName, G_VAR_MAPSET);
@@ -47,8 +47,8 @@ db_set_connection( connection )
  \param dbConnection
 */
 int
-db_get_connection( connection )
-    dbConnection   *connection;
+db_get_connection (dbConnection *connection)
+
 {
     connection->driverName = G__getenv2("DB_DRIVER", G_VAR_MAPSET);
     connection->databaseName = G__getenv2("DB_DATABASE", G_VAR_MAPSET);    

@@ -32,9 +32,8 @@ static void sort_dirent();
 /* read directory and build an array of dbDirent's */
 /* append one entry with name = NULL to mark end of array */
 dbDirent *
-db_dirent (dirname, n)
-    char *dirname;
-    int *n;
+db_dirent  (char *dirname, int *n)
+
 {
     DIR  *dp;
     dir_entry *entry;
@@ -105,8 +104,8 @@ db_dirent (dirname, n)
  \param 
 */
 void
-db_free_dirent_array (dirent, count)
-    dbDirent *dirent;
+db_free_dirent_array  (dbDirent *dirent, int  count)
+
 {
     int i;
 
@@ -119,8 +118,8 @@ db_free_dirent_array (dirent, count)
 }
 
 static int
-get_perm (path)
-    char *path;
+get_perm  (char *path)
+
 {
     int perm;
 
@@ -137,16 +136,15 @@ get_perm (path)
 }
 
 static int
-cmp_dirent (a, b)
-    dbDirent *a, *b;
+cmp_dirent  (dbDirent *a, dbDirent *b)
+
 {
     return strcmp (db_get_string(&a->name), db_get_string(&b->name));
 }
 
 static void
-sort_dirent (a, n)
-    dbDirent *a;
-    int n;
+sort_dirent  (dbDirent *a, int n)
+
 {
     qsort (a, n, sizeof(dbDirent), cmp_dirent);
 }
@@ -158,8 +156,8 @@ sort_dirent (a, n)
  \param 
 */
 dbDirent *
-db_alloc_dirent_array (count)
-    int count;
+db_alloc_dirent_array  (int count)
+
 {
     int i;
     dbDirent *dirent;

@@ -1,8 +1,8 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db__send_datetime (t)
-    dbDateTime *t;
+db__send_datetime  (dbDateTime *t)
+
 {
     DB_SEND_CHAR(t->current);
     if (!t->current)
@@ -18,8 +18,8 @@ db__send_datetime (t)
     return DB_OK;
 }
 
-db__recv_datetime (t)
-    dbDateTime *t;
+db__recv_datetime  (dbDateTime *t)
+
 {
     DB_RECV_CHAR(&t->current);
     if (!t->current)

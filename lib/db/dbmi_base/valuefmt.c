@@ -9,10 +9,8 @@
  \param 
 */
 int
-db_convert_Cstring_to_value (Cstring, sqltype, value)
-    char *Cstring;
-    int sqltype;
-    dbValue *value;
+db_convert_Cstring_to_value  (char *Cstring, int sqltype, dbValue *value)
+
 {
     int i;
     double d;
@@ -47,10 +45,8 @@ db_convert_Cstring_to_value (Cstring, sqltype, value)
  \param 
 */
 int
-db_convert_value_to_string(value, sqltype, string)
-    dbValue *value;
-    int sqltype;
-    dbString *string;
+db_convert_value_to_string (dbValue *value, int sqltype, dbString *string)
+
 {
     char buf[64];
     char *bp;

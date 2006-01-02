@@ -9,8 +9,8 @@
  \param 
 */
 int
-db_isdir (path)
-    char *path;
+db_isdir  (char *path)
+
 {
     struct stat x;
 
