@@ -22,10 +22,7 @@ G3D_Region g3d_window;
  */
 
 void
-G3d_setWindowMap (map, window)
-
-     G3D_Map *map;
-     G3D_Region *window;
+G3d_setWindowMap  (G3D_Map *map, G3D_Region *window)
 
 {
   G3d_regionCopy (&(map->window), window);
@@ -46,9 +43,7 @@ G3d_setWindowMap (map, window)
  */
 
 void
-G3d_setWindow (window)
-
-     G3D_Region *window;
+G3d_setWindow  (G3D_Region *window)
 
 {
   G3d_regionCopy (&g3d_window, window);
@@ -68,9 +63,7 @@ G3d_setWindow (window)
  */
 
 void
-G3d_getWindow (window)
-
-     G3D_Region *window;
+G3d_getWindow  (G3D_Region *window)
 
 {
   G3d_regionCopy (window, &g3d_window);
@@ -105,12 +98,7 @@ G3d_windowPtr ()
  */
 
 void
-G3d_getValue (map, x, y, z, value, type)
-
-     G3D_Map *map;
-     int x, y, z;
-     void *value;
-     int type;
+G3d_getValue  (G3D_Map *map, int x, int y, int z, void *value, int type)
 
 {
   double north, east, top;
@@ -200,10 +188,7 @@ G3d_getValue (map, x, y, z, value, type)
  */
 
 float
-G3d_getFloat (map, x, y, z)
-
-     G3D_Map *map;
-     int x, y, z;
+G3d_getFloat  (G3D_Map *map, int x, int y, int z)
 
 {
   float value;
@@ -229,10 +214,7 @@ G3d_getFloat (map, x, y, z)
  */
 
 double
-G3d_getDouble (map, x, y, z)
-
-     G3D_Map *map;
-     int x, y, z;
+G3d_getDouble  (G3D_Map *map, int x, int y, int z)
 
 {
   double value;

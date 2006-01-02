@@ -82,9 +82,7 @@ extern char * G3d_getWindowParams(void);
  */
 
 void
-G3d_setCompressionMode (doCompress, doLzw, doRle, precision)
-
-     int doCompress, doLzw, doRle, precision;
+G3d_setCompressionMode  (int doCompress, int doLzw, int doRle, int precision)
 
 {
   if ((doCompress != G3D_NO_COMPRESSION) &&
@@ -125,9 +123,7 @@ G3d_setCompressionMode (doCompress, doLzw, doRle, precision)
  */
 
 void
-G3d_getCompressionMode (doCompress, doLzw, doRle, precision)
-
-     int *doCompress, *doLzw, *doRle, *precision;
+G3d_getCompressionMode  (int *doCompress, int *doLzw, int *doRle, int *precision)
 
 {
   if (doCompress != NULL) *doCompress = g3d_do_compression;
@@ -149,9 +145,7 @@ G3d_getCompressionMode (doCompress, doLzw, doRle, precision)
  */
 
 void
-G3d_setCacheSize (nTiles)
-
-     int nTiles;
+G3d_setCacheSize  (int nTiles)
 
 {
   if (nTiles < 0) G3d_fatalError ("G3d_setCacheSize: size out of range.");
@@ -190,9 +184,7 @@ G3d_getCacheSize ()
  */
 
 void
-G3d_setCacheLimit (nBytes)
-
-     int nBytes;
+G3d_setCacheLimit  (int nBytes)
 
 {
   if (nBytes <= 0) G3d_fatalError ("G3d_setCacheLimit: size out of range.");
@@ -232,9 +224,7 @@ G3d_getCacheLimit ()
  */
 
 void
-G3d_setFileType (type)
-
-     int type;
+G3d_setFileType  (int type)
 
 {
     if ((type != G3D_FLOAT) && (type != G3D_DOUBLE))
@@ -277,9 +267,7 @@ G3d_getFileType ()
  */
 
 void
-G3d_setTileDimension (tileX, tileY, tileZ)
-
-     int tileX, tileY, tileZ;
+G3d_setTileDimension  (int tileX, int tileY, int tileZ)
 
 {
   if ((g3d_tile_dimension[0] = tileX) <= 0)
@@ -307,9 +295,7 @@ G3d_setTileDimension (tileX, tileY, tileZ)
  */
 
 void
-G3d_getTileDimension (tileX, tileY, tileZ)
-
-     int *tileX, *tileY, *tileZ;
+G3d_getTileDimension  (int *tileX, int *tileY, int *tileZ)
 
 {
   *tileX = g3d_tile_dimension[0];    
@@ -330,9 +316,7 @@ G3d_getTileDimension (tileX, tileY, tileZ)
  */
 
 void
-G3d_setErrorFun (fun)
-
-     void (*fun)();
+G3d_setErrorFun  (void (*fun)())
 
 {
   g3d_error_fun = fun;
@@ -351,9 +335,7 @@ G3d_setErrorFun (fun)
  */
 
 void
-G3d_setUnit (unit)
-
-     char *unit;
+G3d_setUnit  (char *unit)
 
 {
   G3d_free (g3d_unit_default);

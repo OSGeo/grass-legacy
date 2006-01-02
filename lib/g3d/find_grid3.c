@@ -19,9 +19,8 @@
  */
 
 char *
-G_find_grid3 (cell, mset)
-        char *cell;
-        char *mset;
+G_find_grid3  (char *cell, char *mset)
+
 {
     char name[256], mapset[256], element[512];
 

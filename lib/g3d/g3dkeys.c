@@ -6,11 +6,7 @@
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_keyGetInt (keys, key, i)
-
-     struct Key_Value *keys;
-     char *key;
-     int *i;
+G3d_keyGetInt  (struct Key_Value *keys, char *key, int *i)
 
 {
   char msg[1024];
@@ -35,11 +31,7 @@ G3d_keyGetInt (keys, key, i)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_keyGetDouble (keys, key, d)
-
-     struct Key_Value *keys;
-     char *key;
-     double *d;
+G3d_keyGetDouble  (struct Key_Value *keys, char *key, double *d)
 
 {
   char msg[1024];
@@ -64,10 +56,7 @@ G3d_keyGetDouble (keys, key, d)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_keyGetString (keys, key, returnStr)
-
-     struct Key_Value *keys;
-     char *key, **returnStr;
+G3d_keyGetString  (struct Key_Value *keys, char *key, char **returnStr)
 
 {
   char msg[1024];
@@ -88,12 +77,7 @@ G3d_keyGetString (keys, key, returnStr)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_keyGetValue (keys, key, val1, val2, result1, result2, resultVar)
-
-     struct Key_Value *keys;
-     char *key, *val1, *val2;
-     int result1, result2;
-     int *resultVar;
+G3d_keyGetValue  (struct Key_Value *keys, char *key, char *val1, char *val2, int result1, int result2, int *resultVar)
 
 {
   char msg[1024];
@@ -125,11 +109,7 @@ G3d_keyGetValue (keys, key, val1, val2, result1, result2, resultVar)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_keySetInt (keys, key, i)
-
-     struct Key_Value *keys;
-     char *key;
-     int *i;
+G3d_keySetInt  (struct Key_Value *keys, char *key, int *i)
 
 {
   char keyValStr[200];
@@ -141,11 +121,7 @@ G3d_keySetInt (keys, key, i)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_keySetDouble (keys, key, d)
-
-     struct Key_Value *keys;
-     char *key;
-     double *d;
+G3d_keySetDouble  (struct Key_Value *keys, char *key, double *d)
 
 {
   char keyValStr[200];
@@ -157,10 +133,7 @@ G3d_keySetDouble (keys, key, d)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_keySetString (keys, key, keyValStr)
-
-     struct Key_Value *keys;
-     char *key, **keyValStr;
+G3d_keySetString  (struct Key_Value *keys, char *key, char **keyValStr)
 
 {
   return (G_set_key_value (key, *keyValStr, keys) != 0);
@@ -169,12 +142,7 @@ G3d_keySetString (keys, key, keyValStr)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_keySetValue (keys, key, val1, val2, keyval1, keyval2, keyvalVar)
-
-     struct Key_Value *keys;
-     char *key, *val1, *val2;
-     int keyval1, keyval2;
-     int *keyvalVar;
+G3d_keySetValue  (struct Key_Value *keys, char *key, char *val1, char *val2, int keyval1, int keyval2, int *keyvalVar)
 
 {
   if (*keyvalVar == keyval1) 

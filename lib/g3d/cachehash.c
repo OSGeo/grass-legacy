@@ -21,9 +21,7 @@ typedef struct {
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_cache_hash_reset (h)
-
-     G3d_cache_hash *h;
+G3d_cache_hash_reset  (G3d_cache_hash *h)
 
 {
   int i;
@@ -36,9 +34,7 @@ G3d_cache_hash_reset (h)
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_cache_hash_dispose (h)
-
-     G3d_cache_hash *h;
+G3d_cache_hash_dispose  (G3d_cache_hash *h)
 
 {
   if (h == NULL) return;
@@ -51,9 +47,7 @@ G3d_cache_hash_dispose (h)
 /*---------------------------------------------------------------------------*/
 
 void *
-G3d_cache_hash_new (nofNames)
-
-     int nofNames;
+G3d_cache_hash_new  (int nofNames)
 
 {
   G3d_cache_hash *tmp;
@@ -81,10 +75,7 @@ G3d_cache_hash_new (nofNames)
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_cache_hash_remove_name (h, name)
-
-     G3d_cache_hash *h;
-     int name;
+G3d_cache_hash_remove_name  (G3d_cache_hash *h, int name)
 
 {
   if (name >= h->nofNames)
@@ -100,10 +91,7 @@ G3d_cache_hash_remove_name (h, name)
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_cache_hash_load_name (h, name, index)
-
-     G3d_cache_hash *h;
-     int name, index;
+G3d_cache_hash_load_name  (G3d_cache_hash *h, int name, int index)
 
 {
   if (name >= h->nofNames)
@@ -119,10 +107,7 @@ G3d_cache_hash_load_name (h, name, index)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_cache_hash_name2index (h, name)
-
-     G3d_cache_hash *h;
-     int name;
+G3d_cache_hash_name2index  (G3d_cache_hash *h, int name)
 
 {
   int index;

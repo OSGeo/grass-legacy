@@ -7,13 +7,10 @@
 /*---------------------------------------------------------------------------*/
 
 static int
-G3d_closeNew (map)
-
-     G3D_Map *map;
+G3d_closeNew  (G3D_Map *map)
 
 {
-  char path[4096], element[100], command[4096], buf[4096];
-  int cell_fd;
+  char path[4096], command[4096], buf[4096];
   struct Categories cats;
 
   G3d_removeColor (map->fileName);
@@ -47,9 +44,7 @@ G3d_closeNew (map)
 /*---------------------------------------------------------------------------*/
 
 static int
-G3d_closeCellNew (map)
-
-     G3D_Map *map;
+G3d_closeCellNew  (G3D_Map *map)
 
 {
   long ltmp;
@@ -98,9 +93,7 @@ G3d_closeCellNew (map)
 /*---------------------------------------------------------------------------*/
 
 static int
-G3d_closeOld (map)
-
-     G3D_Map *map;
+G3d_closeOld  (G3D_Map *map)
 
 {
   if (close (map->data_fd) != 0) {
@@ -114,9 +107,7 @@ G3d_closeOld (map)
 /*---------------------------------------------------------------------------*/
 
 static int
-G3d_closeCellOld (map)
-
-     G3D_Map *map;
+G3d_closeCellOld  (G3D_Map *map)
 
 {
   if (! G3d_closeOld (map) != 0) {
@@ -143,9 +134,7 @@ G3d_closeCellOld (map)
  */
 
 int
-G3d_closeCell (map)
-
-     G3D_Map *map;
+G3d_closeCell  (G3D_Map *map)
 
 {
   if (map->operation == G3D_WRITE_DATA) {

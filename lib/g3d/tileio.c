@@ -67,11 +67,8 @@
  */
 
 char *
-G3d_getTilePtr (map, tileIndex)
+G3d_getTilePtr  (G3D_Map *map, int tileIndex)
 
-     G3D_Map *map;
-     int tileIndex;
-     
 {
   char *ptr;
 
@@ -115,11 +112,8 @@ G3d_getTilePtr (map, tileIndex)
  */
 
 int
-G3d_tileLoad (map, tileIndex)
+G3d_tileLoad  (G3D_Map *map, int tileIndex)
 
-     G3D_Map *map;
-     int tileIndex;
-     
 {
   if (G3d_getTilePtr (map, tileIndex) == NULL) {
     G3d_error ("G3d_tileLoad: error in G3d_getTilePtr");
@@ -132,10 +126,7 @@ G3d_tileLoad (map, tileIndex)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d__removeTile (map, tileIndex)
-
- G3D_Map *map; 
-     int tileIndex;
+G3d__removeTile  (G3D_Map *map, int tileIndex)
 
 {
   if (! map->useCache) return 1;
@@ -182,10 +173,7 @@ G3d_getDoubleRegion();
  */
 
 float
-G3d_getFloatRegion (map, x, y, z)
-
-     G3D_Map *map;
-     int x, y, z;
+G3d_getFloatRegion  (G3D_Map *map, int x, int y, int z)
 
 {
   int tileIndex, offs;
@@ -220,10 +208,7 @@ G3d_getFloatRegion (map, x, y, z)
  */
 
 double
-G3d_getDoubleRegion (map, x, y, z)
-
-     G3D_Map *map;
-     int x, y, z;
+G3d_getDoubleRegion  (G3D_Map *map, int x, int y, int z)
 
 {
   int tileIndex, offs;
@@ -263,12 +248,7 @@ G3d_getDoubleRegion (map, x, y, z)
  */
 
 void
-G3d_getValueRegion (map, x, y, z, value, type)
-
-     G3D_Map *map;
-     int x, y, z;
-     void *value;
-     int type;
+G3d_getValueRegion  (G3D_Map *map, int x, int y, int z, void *value, int type)
 
 {
   if (type == G3D_FLOAT) {

@@ -16,10 +16,7 @@
  */
 
 void
-G3d_writeAscii (map, fname)
-
-     void *map; 
-     char *fname;
+G3d_writeAscii  (void *map, char *fname)
 
 {
   FILE *fp;

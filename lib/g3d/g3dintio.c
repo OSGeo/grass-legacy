@@ -9,12 +9,7 @@
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_writeInts (fd, useXdr, i, nofNum)
-
-     int fd;
-     int useXdr;
-     int *i;
-     int nofNum;
+G3d_writeInts  (int fd, int useXdr, int *i, int nofNum)
 
 {
   int firstTime = 1;
@@ -75,12 +70,7 @@ G3d_writeInts (fd, useXdr, i, nofNum)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_readInts (fd, useXdr, i, nofNum)
-
-     int fd;
-     int useXdr;
-     int *i;
-     int nofNum;
+G3d_readInts  (int fd, int useXdr, int *i, int nofNum)
 
 {
    int firstTime = 1;

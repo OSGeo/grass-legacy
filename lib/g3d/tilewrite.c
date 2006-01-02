@@ -10,13 +10,7 @@
 /*---------------------------------------------------------------------------*/
 
 static int
-G3d_tile2xdrTile (map, tile, rows, cols, depths,
-		  xRedundant, yRedundant, zRedundant, nofNum, type)
-
-     G3D_Map *map; 
-     char *tile;
-     int rows, cols, depths, xRedundant, yRedundant, zRedundant, nofNum;
-     int type;
+G3d_tile2xdrTile  (G3D_Map *map, char *tile, int rows, int cols, int depths, int xRedundant, int yRedundant, int zRedundant, int nofNum, int type)
 
 {
   int y, z;
@@ -71,10 +65,8 @@ G3d_tile2xdrTile (map, tile, rows, cols, depths,
 /*---------------------------------------------------------------------------*/
 
 static int
-G3d_writeTileUncompressed (map, nofNum)
+G3d_writeTileUncompressed  (G3D_Map *map, int nofNum)
 
-     G3D_Map *map; 
-     int nofNum;
 {
   if (write (map->data_fd, xdr, map->numLengthExtern * nofNum) != 
       map->numLengthExtern * nofNum) {
@@ -88,10 +80,7 @@ G3d_writeTileUncompressed (map, nofNum)
 /*---------------------------------------------------------------------------*/
 
 static int
-G3d_writeTileCompressed (map, nofNum)
-
-     G3D_Map *map; 
-     int nofNum;
+G3d_writeTileCompressed  (G3D_Map *map, int nofNum)
 
 {
   if (! G_fpcompress_writeXdrNums (map->data_fd, xdr, nofNum, map->precision, 
@@ -135,12 +124,7 @@ G3d_writeTileCompressed (map, nofNum)
  */
 
 int
-G3d_writeTile (map, tileIndex, tile, type)
-
-     G3D_Map *map; 
-     int tileIndex;
-     char *tile;
-     int type;
+G3d_writeTile  (G3D_Map *map, int tileIndex, char *tile, int type)
 
 {
   int rows, cols, depths, xRedundant, yRedundant, zRedundant, nofNum;
@@ -206,11 +190,7 @@ G3d_writeTile (map, tileIndex, tile, type)
  */
 
 int
-G3d_writeTileFloat (map, tileIndex, tile)
-
-     G3D_Map *map; 
-     int tileIndex;
-     char *tile;
+G3d_writeTileFloat  (G3D_Map *map, int tileIndex, char *tile)
 
 {
   int status;
@@ -236,11 +216,7 @@ G3d_writeTileFloat (map, tileIndex, tile)
  */
 
 int
-G3d_writeTileDouble (map, tileIndex, tile)
-
-     G3D_Map *map; 
-     int tileIndex;
-     char *tile;
+G3d_writeTileDouble  (G3D_Map *map, int tileIndex, char *tile)
 
 {
   int status;
@@ -276,10 +252,7 @@ G3d_writeTileDouble (map, tileIndex, tile)
  */
 
 int
-G3d_flushTile (map, tileIndex)
-
-     G3D_Map *map; 
-     int tileIndex;
+G3d_flushTile  (G3D_Map *map, int tileIndex)
 
 {
   char *tile;
@@ -332,10 +305,7 @@ G3d_flushTile (map, tileIndex)
  */
 
 int
-G3d_flushTileCube (map, xMin, yMin, zMin, xMax, yMax, zMax)
-
-     G3D_Map *map;
-     int xMin, yMin, zMin, xMax, yMax, zMax;
+G3d_flushTileCube  (G3D_Map *map, int xMin, int yMin, int zMin, int xMax, int yMax, int zMax)
 
 {
   int x, y, z;
@@ -380,10 +350,7 @@ G3d_flushTileCube (map, xMin, yMin, zMin, xMax, yMax, zMax)
  */
 
 int
-G3d_flushTilesInCube (map, xMin, yMin, zMin, xMax, yMax, zMax)
-
-     G3D_Map *map;
-     int xMin, yMin, zMin, xMax, yMax, zMax;
+G3d_flushTilesInCube  (G3D_Map *map, int xMin, int yMin, int zMin, int xMax, int yMax, int zMax)
 
 {
   int xTileMin, yTileMin, zTileMin, xTileMax, yTileMax, zTileMax;
@@ -528,11 +495,7 @@ G3d_putFloat (G3D_Map *map, int x, int y, int z, float value)
  */
 
 int
-G3d_putDouble (map, x, y, z, value)
-
-     G3D_Map *map;
-     int x, y, z;
-     double value;
+G3d_putDouble  (G3D_Map *map, int x, int y, int z, double value)
 
 {
   int tileIndex, offs;
@@ -577,12 +540,7 @@ G3d_putDouble (map, x, y, z, value)
  */
 
 int
-G3d_putValue (map, x, y, z, value, type)
-
-     G3D_Map *map;
-     int x, y, z;
-     char *value;
-     int type;
+G3d_putValue  (G3D_Map *map, int x, int y, int z, char *value, int type)
 
 {
   if (type == G3D_FLOAT) {

@@ -7,12 +7,7 @@
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_getBlockNocache (map, x0, y0, z0, nx, ny, nz, block, type)
-
-     G3D_Map *map;
-     int x0, y0, z0, nx, ny, nz;
-     void *block;
-     int type;
+G3d_getBlockNocache  (G3D_Map *map, int x0, int y0, int z0, int nx, int ny, int nz, void *block, int type)
 
 {
   char *tile;
@@ -100,12 +95,7 @@ G3d_getBlockNocache (map, x0, y0, z0, nx, ny, nz, block, type)
  */
 
 void
-G3d_getBlock (map, x0, y0, z0, nx, ny, nz, block, type)
-
-     G3D_Map *map;
-     int x0, y0, z0, nx, ny, nz;
-     char *block;
-     int type;
+G3d_getBlock  (G3D_Map *map, int x0, int y0, int z0, int nx, int ny, int nz, char *block, int type)
 
 {
   int x, y, z, nNull, x1, y1, z1, length;

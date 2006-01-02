@@ -33,28 +33,9 @@ int xdrLength;
 /*---------------------------------------------------------------------------*/
 
 static int
-G3d_readWriteHeader (headerKeys, doRead,
-		     proj, zone,
-		     north, south, east, west, top, bottom,
-		     rows, cols, depths,
-		     ew_res, ns_res, tb_res,
-		     tileX, tileY, tileZ,
-		     type, 
-		     compression, useRle, useLzw, precision,
-		     dataOffset, useXdr, hasIndex, unit)
-
-     struct Key_Value *headerKeys;
-     int doRead;
-     int *proj, *zone;
-     double *north, *south, *east, *west, *top, *bottom;
-     int *rows, *cols, *depths;
-     double *ew_res, *ns_res, *tb_res;
-     int *tileX, *tileY, *tileZ, *type, *compression;
-     int *useRle, *useLzw, *precision, *dataOffset, *useXdr, *hasIndex;
-     char **unit;
+G3d_readWriteHeader  (struct Key_Value *headerKeys, int doRead, int *proj, int *zone, double *north, double *south, double *east, double *west, double *top, double *bottom, int *rows, int *cols, int *depths, double *ew_res, double *ns_res, double *tb_res, int *tileX, int *tileY, int *tileZ, int *type, int *compression, int *useRle, int *useLzw, int *precision, int *dataOffset, int *useXdr, int *hasIndex, char **unit)
 
 {
-  char msg[1024];
   int returnVal;
   int (*headerInt) (), (*headerDouble) (), (*headerValue) ();
   int (*headerString) ();
@@ -121,29 +102,12 @@ G3d_readWriteHeader (headerKeys, doRead,
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_readHeader (map,
-		proj, zone,
-		north, south, east, west, top, bottom,
-		rows, cols, depths,
-		ew_res, ns_res, tb_res,
-		tileX, tileY, tileZ,
-		type, 
-		compression, useRle, useLzw, precision,
-		dataOffset, useXdr, hasIndex, unit)
-
-     G3D_Map *map;
-     int *proj, *zone;
-     double *north, *south, *east, *west, *top, *bottom;
-     int *rows, *cols, *depths;
-     double *ew_res, *ns_res, *tb_res;
-     int *tileX, *tileY, *tileZ, *type, *compression;
-     int *useRle, *useLzw, *precision, *dataOffset, *useXdr, *hasIndex;
-     char **unit;
+G3d_readHeader  (G3D_Map *map, int *proj, int *zone, double *north, double *south, double *east, double *west, double *top, double *bottom, int *rows, int *cols, int *depths, double *ew_res, double *ns_res, double *tb_res, int *tileX, int *tileY, int *tileZ, int *type, int *compression, int *useRle, int *useLzw, int *precision, int *dataOffset, int *useXdr, int *hasIndex, char **unit)
 
 {
   struct Key_Value *headerKeys;
   char path[1024], msg[1024];
-  int status, returnVal;
+  int status;
 
   G3d_filename (path, G3D_HEADER_ELEMENT, map->fileName, map->mapset);
   if (access(path, R_OK) != 0) {
@@ -180,24 +144,7 @@ G3d_readHeader (map,
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_writeHeader (map,
-		 proj, zone,
-		 north, south, east, west, top, bottom,
-		 rows, cols, depths,
-		 ew_res, ns_res, tb_res,
-		 tileX, tileY, tileZ,
-		 type, 
-		 compression, useRle, useLzw, precision,
-		 dataOffset, useXdr, hasIndex, unit)
-
-     G3D_Map *map;
-     int proj, zone;
-     double north, south, east, west, top, bottom;
-     int rows, cols, depths;
-     double ew_res, ns_res, tb_res;
-     int tileX, tileY, tileZ, type, compression;
-     int useRle, useLzw, precision, dataOffset, useXdr, hasIndex;
-     char *unit;
+G3d_writeHeader  (G3D_Map *map, int proj, int zone, double north, double south, double east, double west, double top, double bottom, int rows, int cols, int depths, double ew_res, double ns_res, double tb_res, int tileX, int tileY, int tileZ, int type, int compression, int useRle, int useLzw, int precision, int dataOffset, int useXdr, int hasIndex, char *unit)
 
 {
   struct Key_Value *headerKeys;
@@ -263,9 +210,7 @@ G3d_writeHeader (map,
  */
 
 int
-G3d_cacheSizeEncode (cacheCode, n)
-
-     int cacheCode, n;
+G3d_cacheSizeEncode  (int cacheCode, int n)
 
 {
   if (cacheCode >= G3D_NO_CACHE) return cacheCode * n;
@@ -280,10 +225,7 @@ G3d_cacheSizeEncode (cacheCode, n)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d__computeCacheSize (map, cacheCode)
-
-     G3D_Map *map;
-     int cacheCode;
+G3d__computeCacheSize  (G3D_Map *map, int cacheCode)
 
 {
   int n, size;
@@ -315,23 +257,7 @@ G3d__computeCacheSize (map, cacheCode)
 /* and initializes the index and cache. This function should be taken apart. */
 
 int
-G3d_fillHeader (map, operation, compression, useRle, useLzw, type, precision, 
-		cache, hasIndex, useXdr, 
-		typeIntern, nofHeaderBytes, 
-		tileX, tileY, tileZ, 
-		proj, zone,
-		north, south, east, west, top, bottom, rows, cols, depths,
-		ew_res, ns_res, tb_res,
-		unit)
-
-     G3D_Map *map;
-     int compression, useRle, useLzw, operation, precision, cache, hasIndex;
-     int useXdr, type, nofHeaderBytes, tileX, tileY, tileZ;
-     int proj, zone;
-     double north, south, east, west, top, bottom;
-     int rows, cols, depths, typeIntern;
-     double ew_res, ns_res, tb_res;
-     char *unit;
+G3d_fillHeader  (G3D_Map *map, int operation, int compression, int useRle, int useLzw, int type, int precision, int cache, int hasIndex, int useXdr, int typeIntern, int nofHeaderBytes, int tileX, int tileY, int tileZ, int proj, int zone, double north, double south, double east, double west, double top, double bottom, int rows, int cols, int depths, double ew_res, double ns_res, double tb_res, char *unit)
 
 {
   if (! G3D_VALID_OPERATION (operation)) 

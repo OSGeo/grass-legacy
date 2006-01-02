@@ -19,9 +19,7 @@
  */
 
 void
-G3d_skipError (msg)
-
-     char *msg;
+G3d_skipError  (char *msg)
 
 {
 }
@@ -38,9 +36,7 @@ G3d_skipError (msg)
  */
 
 void
-G3d_printError (msg)
-
-     char *msg;
+G3d_printError  (char *msg)
 
 {  
   fprintf (stderr, "ERROR: ");
@@ -61,9 +57,7 @@ G3d_printError (msg)
  */
 
 void
-G3d_fatalError (msg)
-
-     char *msg;
+G3d_fatalError  (char *msg)
 
 {
   void (*x) () = NULL;
@@ -80,9 +74,7 @@ G3d_fatalError (msg)
 }
 
 void
-G3d_error (msg)
-
-     char *msg;
+G3d_error  (char *msg)
 
 {
   g3d_error_fun (msg);

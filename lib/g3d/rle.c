@@ -10,9 +10,7 @@
 /*---------------------------------------------------------------------------*/
 
 static int
-G_rle_codeLength (length)
-
-     int length;
+G_rle_codeLength  (int length)
 
 {
   register int lPrime;
@@ -32,10 +30,7 @@ G_rle_codeLength (length)
 /*---------------------------------------------------------------------------*/
 
 static char *
-rle_length2code (length, dst)
-
-     int length;
-     char *dst;
+rle_length2code  (int length, char *dst)
 
 {
   register int lPrime;
@@ -84,10 +79,7 @@ rle_length2code (length, dst)
 /*---------------------------------------------------------------------------*/
 
 static char *
-rle_code2length (src, length)
-
-     char *src;
-     int *length;
+rle_code2length  (char *src, int *length)
 
 {
   int code;
@@ -127,10 +119,7 @@ rle_code2length (src, length)
 /*---------------------------------------------------------------------------*/
 
 int
-G_rle_count_only (src, nofElts, eltLength)
-
-     char *src;
-     int nofElts, eltLength;
+G_rle_count_only  (char *src, int nofElts, int eltLength)
 
 {
   int length, nofEqual;
@@ -174,10 +163,7 @@ G_rle_count_only (src, nofElts, eltLength)
 /*---------------------------------------------------------------------------*/
 
 void
-G_rle_encode (src, dst, nofElts, eltLength)
-
-     char *src, *dst;
-     int nofElts, eltLength;
+G_rle_encode  (char *src, char *dst, int nofElts, int eltLength)
 
 {
   int length, nofEqual;
@@ -232,11 +218,7 @@ G_rle_encode (src, dst, nofElts, eltLength)
 /*---------------------------------------------------------------------------*/
 
 void
-G_rle_decode (src, dst, nofElts, eltLength, lengthEncode, lengthDecode)
-
-     char *src, *dst;
-     int nofElts, eltLength;
-     int *lengthEncode, *lengthDecode;
+G_rle_decode  (char *src, char *dst, int nofElts, int eltLength, int *lengthEncode, int *lengthDecode)
 
 {
   int nofEqual;

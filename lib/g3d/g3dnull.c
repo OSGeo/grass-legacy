@@ -7,10 +7,7 @@
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_isNullValueNum (n, type)
-
-     void *n;
-     int type;
+G3d_isNullValueNum  (void *n, int type)
 
 {
   if (type == G3D_FLOAT) 
@@ -35,10 +32,7 @@ G3d_isNullValueNum (n, type)
  */
 
 void
-G3d_setNullValue (c, nofElts, type)
-
-     void *c;
-     int nofElts, type;
+G3d_setNullValue  (void *c, int nofElts, int type)
 
 {
   if (type == G3D_FLOAT) {
