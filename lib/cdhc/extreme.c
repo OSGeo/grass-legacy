@@ -1,9 +1,8 @@
 #include<stdio.h>
 #include<math.h>
 
-double *extreme (x, n)
-  double *x;
-  int n;
+double *extreme  (double *x, int n)
+
 {
   int i;
   static double y[2];

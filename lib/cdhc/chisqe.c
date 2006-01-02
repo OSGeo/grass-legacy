@@ -2,9 +2,8 @@
 #include<stdlib.h>
 #include<math.h>
 
-double *chi_square_exp (x, n)
-  double *x;
-  int n;
+double *chi_square_exp  (double *x, int n)
+
 {
   static double y[2];
   double mean = 0.0, sum3 = 0.0, *v;

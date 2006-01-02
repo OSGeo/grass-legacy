@@ -1,8 +1,8 @@
 #include<stdio.h>
 #include<math.h>
 
-double xinormal (pee)
-  double pee;
+double xinormal  (double pee)
+
 {
   double f0, pind, pw, px;
   static double p[5] = {-0.322232431088, -1., -0.342242088547,

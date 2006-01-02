@@ -4,9 +4,8 @@
 #include "gis.h"
 
 
-double *dagostino_d (x, n)
-  double *x;
-  int n;
+double *dagostino_d  (double *x, int n)
+
 {
   int i, dcmp();
   static double y[2];

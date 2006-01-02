@@ -2,9 +2,8 @@
 #include<stdlib.h>
 #include<math.h>
 
-double *anderson_darling_exp (x, n)
-  double *x;
-  int n;
+double *anderson_darling_exp  (double *x, int n)
+
 {
   static double y[2];
   double sqrt2, mean = 0.0, *xcopy, fx, sum3 = 0.0;

@@ -1,9 +1,8 @@
 #include<stdio.h>
 #include<math.h>
 
-double *kuipers_v_exp (x, n)
-  double *x;
-  int n;
+double *kuipers_v_exp  (double *x, int n)
+
 {
   static double y[2];
   double *d,r, *dmax_exp();

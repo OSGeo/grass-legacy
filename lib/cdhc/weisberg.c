@@ -2,9 +2,8 @@
 #include<stdlib.h>
 #include<math.h>
 
-double *weisberg_bingham (x, n)
-  double *x;
-  int n;
+double *weisberg_bingham  (double *x, int n)
+
 {
   static double y[2];
   double suma = 0.0, sumb = 0.0, sumc = 0.0, sumd = 0.0, z, *xcopy;

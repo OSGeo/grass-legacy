@@ -2,9 +2,8 @@
 #include<stdlib.h>
 #include<math.h>
 
-double *anderson_darling (x, n)
-  double *x;
-  int n;
+double *anderson_darling  (double *x, int n)
+
 {
   int i, dcmp();
   static double y[2];

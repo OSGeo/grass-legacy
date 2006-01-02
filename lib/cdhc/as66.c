@@ -28,9 +28,8 @@
 #define LTONE 7.0
 #define UTZERO 18.66
 
-double alnorm (x, upper)
-  double x;
-  int upper;
+double alnorm  (double x, int upper)
+
 {
   double ret, z, y;
   int up;

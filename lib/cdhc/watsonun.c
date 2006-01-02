@@ -2,9 +2,8 @@
 #include<stdlib.h>
 #include<math.h>
 
-double *watson_u2 (x, n)
-  double *x;
-  int n;
+double *watson_u2  (double *x, int n)
+
 {
   double *xcopy, mean = 0.0, sdx = 0.0, sqrt2, zbar = 0.0; 
   double fn2, fx, sum4 = 0.0, normp();

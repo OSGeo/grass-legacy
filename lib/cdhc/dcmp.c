@@ -1,5 +1,5 @@
-int dcmp (i, j)
-    double *i, *j;
+int dcmp  (double *i, double *j)
+
 {
     if (*i < *j)
         return  -1;
