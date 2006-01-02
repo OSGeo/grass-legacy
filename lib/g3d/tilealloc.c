@@ -24,10 +24,7 @@
  */
 
 char *
-G3d_allocTilesType (map, nofTiles, type)
-
-     G3D_Map *map;
-     int nofTiles, type;
+G3d_allocTilesType  (G3D_Map *map, int nofTiles, int type)
 
 {
   char *tiles;
@@ -55,10 +52,7 @@ G3d_allocTilesType (map, nofTiles, type)
  */
 
 char *
-G3d_allocTiles (map, nofTiles)
-
-     G3D_Map *map;
-     int nofTiles;
+G3d_allocTiles  (G3D_Map *map, int nofTiles)
 
 {
   char *tiles;
@@ -85,9 +79,7 @@ G3d_allocTiles (map, nofTiles)
  */
 
 void
-G3d_freeTiles (tiles)
-
-     char *tiles;
+G3d_freeTiles  (char *tiles)
 
 {
   G3d_free (tiles);

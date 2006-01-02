@@ -8,9 +8,7 @@
 /*---------------------------------------------------------------------------*/
 
 static int
-G3d_readIndex (map)
-
-     G3D_Map *map;
+G3d_readIndex  (G3D_Map *map)
 
 {
   unsigned char *tmp, *tmp2;
@@ -75,9 +73,7 @@ G3d_readIndex (map)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_flushIndex (map)
-
-     G3D_Map *map;
+G3d_flushIndex  (G3D_Map *map)
 
 {
   int sizeCompressed, indexLength, tileIndex;
@@ -137,9 +133,7 @@ G3d_flushIndex (map)
 static long *cmpIndex;
 
 static int
-indexSortCompare (a, b)
-
-     void *a, *b;
+indexSortCompare  (void *a, void *b)
 
 {
   long offset1, offset2;
@@ -155,10 +149,7 @@ indexSortCompare (a, b)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_initIndex (map, hasIndex)
-
-     G3D_Map *map;
-     int hasIndex;
+G3d_initIndex  (G3D_Map *map, int hasIndex)
 
 {
   int tile;

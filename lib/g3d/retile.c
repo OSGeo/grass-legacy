@@ -7,16 +7,12 @@
 /*---------------------------------------------------------------------------*/
 
 static void
-retileNocache (map, nameOut, tileX, tileY, tileZ)
-
-     void *map;
-     char *nameOut;
-     int tileX, tileY, tileZ;
+retileNocache  (void *map, char *nameOut, int tileX, int tileY, int tileZ)
 
 {
   void *map2;
   int x, y, z, saveType, nx, ny, nz;
-  int rows, cols, depths, typeIntern;
+  int typeIntern;
   char *data;
   int tileXsave, tileYsave, tileZsave;
   G3D_Region region;
@@ -75,11 +71,7 @@ retileNocache (map, nameOut, tileX, tileY, tileZ)
  */
 
 void
-G3d_retile (map, nameOut, tileX, tileY, tileZ)
-
-     void *map;
-     char *nameOut;
-     int tileX, tileY, tileZ;
+G3d_retile  (void *map, char *nameOut, int tileX, int tileY, int tileZ)
 
 {
   void *map2;

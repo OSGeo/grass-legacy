@@ -17,10 +17,7 @@
  */
 
 void
-G3d_extract2dRegion (region3d, region2d)
-
-     G3D_Region *region3d;
-     struct Cell_head *region2d;
+G3d_extract2dRegion  (G3D_Region *region3d, struct Cell_head *region2d)
 
 {
   region2d->proj = region3d->proj;
@@ -49,10 +46,7 @@ G3d_extract2dRegion (region3d, region2d)
  */
 
 void
-G3d_regionToCellHead ( region3d, region2d )
-
-     G3D_Region *region3d;
-     struct Cell_head *region2d;
+G3d_regionToCellHead  (G3D_Region *region3d, struct Cell_head *region2d)
 
 {
   region2d->proj = region3d->proj;
@@ -92,10 +86,7 @@ G3d_regionToCellHead ( region3d, region2d )
  */
 
 void
-G3d_incorporate2dRegion (region2d, region3d)
-
-     struct Cell_head *region2d;
-     G3D_Region *region3d;
+G3d_incorporate2dRegion  (struct Cell_head *region2d, G3D_Region *region3d)
 
 {
   region3d->proj = region2d->proj;
@@ -125,10 +116,7 @@ G3d_incorporate2dRegion (region2d, region3d)
  */
 
 void
-G3d_regionFromToCellHead (region2d, region3d)
-
-     struct Cell_head *region2d;
-     G3D_Region *region3d;
+G3d_regionFromToCellHead  (struct Cell_head *region2d, G3D_Region *region3d)
 
 {
   region3d->proj = region2d->proj;
@@ -164,9 +152,7 @@ G3d_regionFromToCellHead (region2d, region3d)
  */
 
 void
-G3d_adjustRegion (region)
-
-     G3D_Region *region;
+G3d_adjustRegion  (G3D_Region *region)
 
 {
   struct Cell_head region2d;
@@ -197,9 +183,7 @@ G3d_adjustRegion (region)
  */
 
 void
-G3d_adjustRegionRes (region)
-
-     G3D_Region *region;
+G3d_adjustRegionRes  (G3D_Region *region)
 
 {
   struct Cell_head region2d;
@@ -235,9 +219,7 @@ G3d_adjustRegionRes (region)
  */
 
 void
-G3d_regionCopy (regionDest, regionSrc)
-
-     G3D_Region *regionDest, *regionSrc;
+G3d_regionCopy  (G3D_Region *regionDest, G3D_Region *regionSrc)
 
 {
   G_copy (regionDest, regionSrc, sizeof (G3D_Region));
@@ -264,12 +246,7 @@ G3d_regionCopy (regionDest, regionSrc)
  */
 
 void
-G3d_getRegionValue (map, north, east, top, value, type)
-
-     G3D_Map *map;
-     double north, east, top;
-     char *value;
-     int type;
+G3d_getRegionValue  (G3D_Map *map, double north, double east, double top, char *value, int type)
 
 {
   int row, col, depth;
@@ -299,10 +276,7 @@ G3d_getRegionValue (map, north, east, top, value, type)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_readRegionMap (name, mapset, region)
-
-     char *name, *mapset;
-     G3D_Region *region;
+G3d_readRegionMap  (char *name, char *mapset, G3D_Region *region)
 
 {
   char fullName[1000];

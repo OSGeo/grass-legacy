@@ -4,13 +4,7 @@
 /*----------------------------------------------------------------------------*/
 
 void *
-G3d_openNewParam (name, typeIntern, cache, region, 
-		  type, doLzw, doRle, precision, tileX, tileY, tileZ)
-
-     char *name;
-     int typeIntern, cache;
-     G3D_Region *region;
-     int type, doLzw, doRle, precision, tileX, tileY, tileZ;
+G3d_openNewParam  (char *name, int typeIntern, int cache, G3D_Region *region, int type, int doLzw, int doRle, int precision, int tileX, int tileY, int tileZ)
 
 {
   void *map;

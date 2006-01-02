@@ -14,9 +14,7 @@ static unsigned char clearMask[9] =
 /*---------------------------------------------------------------------------*/
 
 static void
-G3d_float2xdrFloat (f, xdrf)
-
-     float *f, *xdrf;
+G3d_float2xdrFloat  (float *f, float *xdrf)
 
 {
   XDR xdrEncodeStream;
@@ -35,9 +33,7 @@ G3d_float2xdrFloat (f, xdrf)
 /*---------------------------------------------------------------------------*/
 
 static void
-G3d_double2xdrDouble (d, xdrd)
-
-     double *d, *xdrd;
+G3d_double2xdrDouble  (double *d, double *xdrd)
 
 {
   XDR xdrEncodeStream;
@@ -56,11 +52,8 @@ G3d_double2xdrDouble (d, xdrd)
 /*---------------------------------------------------------------------------*/
 
 static void
-G3d_truncFloat (f, p)
+G3d_truncFloat  (float *f, int p)
 
-     float *f;
-     int p;
-    
 {
   unsigned char *c;
 
@@ -91,11 +84,8 @@ G3d_truncFloat (f, p)
 /*---------------------------------------------------------------------------*/
 
 static void
-G3d_truncDouble (d, p)
+G3d_truncDouble  (double *d, int p)
 
-     double *d;
-     int p;
-    
 {
   unsigned char *c;
 
@@ -168,11 +158,8 @@ G3d_truncDouble (d, p)
 /*---------------------------------------------------------------------------*/
 
 static void
-G3d_float2Double (f, d)
+G3d_float2Double  (float *f, double *d)
 
-     float *f;
-     double *d;
-    
 {
   unsigned char *c1, *c2, sign, c;
   int e;
@@ -212,13 +199,8 @@ G3d_float2Double (f, d)
 /*---------------------------------------------------------------------------*/
 
 static int
-G3d_compareFloats (f1, p1, f2, p2)
+G3d_compareFloats  (float *f1, int p1, float *f2, int p2)
 
-     float *f1;
-     int p1;
-     float *f2;
-     int p2;
-     
 {
   unsigned char *c1, *c2;
   float xdrf1, xdrf2;
@@ -249,12 +231,7 @@ G3d_compareFloats (f1, p1, f2, p2)
 /*---------------------------------------------------------------------------*/
 
 static int
-G3d_compareDoubles (d1, p1, d2, p2)
-
-     double *d1;
-     int p1;
-     double *d2;
-     int p2;
+G3d_compareDoubles  (double *d1, int p1, double *d2, int p2)
 
 {
   unsigned char *c1, *c2;
@@ -288,13 +265,8 @@ G3d_compareDoubles (d1, p1, d2, p2)
 /*---------------------------------------------------------------------------*/
 
 static int
-G3d_compareFloatDouble (f, p1, d, p2)
+G3d_compareFloatDouble  (float *f, int p1, double *d, int p2)
 
-     float *f;
-     int p1;
-     double *d;
-     int p2;
-     
 {
   unsigned char *c1, *c2;
   float xdrf, fTmp;
@@ -338,9 +310,7 @@ G3d_compareFloatDouble (f, p1, d, p2)
 /*---------------------------------------------------------------------------*/
 
 static void
-compareFilesNocache (map, map2)
-
-     void *map, *map2; 
+compareFilesNocache  (void *map, void *map2)
 
 {
   double n1 = 0, n2 = 0;
@@ -425,10 +395,7 @@ compareFilesNocache (map, map2)
  */
 
 void
-G3d_compareFiles (f1, mapset1, f2, mapset2)
-
-     char *f1, *f2;
-     char *mapset1, *mapset2;
+G3d_compareFiles  (char *f1, char *mapset1, char *f2, char *mapset2)
 
 {
   void *map, *map2; 

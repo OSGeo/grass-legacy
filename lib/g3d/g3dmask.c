@@ -80,7 +80,6 @@ int
 G3d_maskOpenOld ()
 
 {
-  double min, max;
   G3D_Region region;
 
   /* No Idea if this is correct return value */
@@ -108,10 +107,7 @@ G3d_maskOpenOld ()
 /*--------------------------------------------------------------------------*/
 
 static float
-G3d_getMaskFloat (map, x, y, z)
-
-     G3D_Map *map; 
-     int x, y, z;
+G3d_getMaskFloat  (G3D_Map *map, int x, int y, int z)
 
 {
   double north, east, top;
@@ -144,9 +140,7 @@ G3d_getMaskFloat (map, x, y, z)
  */
 
 int
-G3d_maskReopen (cache)
-
-     int cache;
+G3d_maskReopen  (int cache)
 
 {
   int tmp;
@@ -187,10 +181,7 @@ G3d_maskReopen (cache)
  */
 
 int
-G3d_isMasked (map, x, y, z)
-
-     G3D_Map *map; 
-     int x, y, z;
+G3d_isMasked  (G3D_Map *map, int x, int y, int z)
 
 {
   if (! G3d_maskMapExistsVar) return 0;
@@ -218,12 +209,7 @@ G3d_isMasked (map, x, y, z)
  */
 
 void
-G3d_maskNum (map, x, y, z, value, type)
-
-     G3D_Map *map; 
-     int x, y, z;
-     void *value;
-     int type;
+G3d_maskNum  (G3D_Map *map, int x, int y, int z, void *value, int type)
 
 {
   if (! G3d_maskMapExistsVar) return;
@@ -246,11 +232,7 @@ G3d_maskNum (map, x, y, z, value, type)
  */
 
 void
-G3d_maskFloat (map, x, y, z, value)
-
-     G3D_Map *map; 
-     int x, y, z;
-     float *value;
+G3d_maskFloat  (G3D_Map *map, int x, int y, int z, float *value)
 
 {
   if (! G3d_maskMapExistsVar) return;
@@ -273,11 +255,7 @@ G3d_maskFloat (map, x, y, z, value)
  */
 
 void
-G3d_maskDouble (map, x, y, z, value)
-
-     G3D_Map *map; 
-     int x, y, z;
-     double *value;
+G3d_maskDouble  (G3D_Map *map, int x, int y, int z, double *value)
 
 {
   if (! G3d_maskMapExistsVar) return;
@@ -305,12 +283,7 @@ G3d_maskDouble (map, x, y, z, value)
  */
 
 void
-G3d_maskTile (map, tileIndex, tile, type)
-
-     G3D_Map *map; 
-     int tileIndex;
-     char *tile;
-     int type;
+G3d_maskTile  (G3D_Map *map, int tileIndex, char *tile, int type)
 
 {
   int nofNum, rows, cols, depths, xRedundant, yRedundant, zRedundant;
@@ -372,7 +345,10 @@ G3d_maskTile (map, tileIndex, tile, type)
  */
 
 void
-G3d_maskOn (map) G3D_Map *map; { map->useMask = 1; }
+G3d_maskOn  (G3D_Map *map)
+{ 
+  map->useMask = 1;
+}
 
 
 /*!
@@ -387,7 +363,10 @@ G3d_maskOn (map) G3D_Map *map; { map->useMask = 1; }
  */
 
 void 
-G3d_maskOff (map) G3D_Map *map; { map->useMask = 0; }
+G3d_maskOff (G3D_Map *map)
+{
+ map->useMask = 0;
+}
 
 
 /*!
@@ -401,7 +380,10 @@ G3d_maskOff (map) G3D_Map *map; { map->useMask = 0; }
  */
 
 int
-G3d_maskIsOn (map) G3D_Map *map; { return map->useMask; }
+G3d_maskIsOn (G3D_Map *map)
+{
+ return map->useMask;
+}
 
 
 /*!
@@ -414,7 +396,10 @@ G3d_maskIsOn (map) G3D_Map *map; { return map->useMask; }
  */
 
 int
-G3d_maskIsOff (map) G3D_Map *map; { return ! map->useMask; }
+G3d_maskIsOff (G3D_Map *map)
+{
+ return ! map->useMask;
+}
 
 
 /*!
@@ -426,7 +411,10 @@ G3d_maskIsOff (map) G3D_Map *map; { return ! map->useMask; }
  */
 
 char * 
-G3d_maskFile () { return G3D_MASK_MAP; }
+G3d_maskFile (void)
+{
+ return G3D_MASK_MAP;
+}
 
 
 /*!
@@ -438,4 +426,7 @@ G3d_maskFile () { return G3D_MASK_MAP; }
  */
 
 int
-G3d_maskMapExists () { return G3d_maskMapExistsVar; }
+G3d_maskMapExists (void)
+{
+ return G3d_maskMapExistsVar;
+}

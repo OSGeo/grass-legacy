@@ -17,10 +17,7 @@
  */
 
 void
-G3d_getCoordsMap (map, rows, cols, depths)
-
-     G3D_Map *map;
-     int *rows, *cols, *depths;
+G3d_getCoordsMap  (G3D_Map *map, int *rows, int *cols, int *depths)
 
 {
   *rows = map->region.rows;
@@ -31,10 +28,7 @@ G3d_getCoordsMap (map, rows, cols, depths)
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_getCoordsMapWindow (map, rows, cols, depths)
-
-     G3D_Map *map;
-     int *rows, *cols, *depths;
+G3d_getCoordsMapWindow  (G3D_Map *map, int *rows, int *cols, int *depths)
 
 {
   *rows = map->window.rows;
@@ -59,10 +53,7 @@ G3d_getCoordsMapWindow (map, rows, cols, depths)
  */
 
 void
-G3d_getNofTilesMap (map, nx, ny, nz)
-
-     G3D_Map *map;
-     int *nx, *ny, *nz;
+G3d_getNofTilesMap  (G3D_Map *map, int *nx, int *ny, int *nz)
 
 {
   *nx = map->nx;
@@ -89,10 +80,7 @@ G3d_getNofTilesMap (map, nx, ny, nz)
  */
 
 void
-G3d_getRegionMap (map, north, south, east, west, top, bottom)
-
-     G3D_Map *map;
-     double *north, *south, *east, *west, *top, *bottom;
+G3d_getRegionMap  (G3D_Map *map, double *north, double *south, double *east, double *west, double *top, double *bottom)
 
 {
   *north = map->region.north;  
@@ -106,10 +94,7 @@ G3d_getRegionMap (map, north, south, east, west, top, bottom)
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_getWindowMap (map, north, south, east, west, top, bottom)
-
-     G3D_Map *map;
-     double *north, *south, *east, *west, *top, *bottom;
+G3d_getWindowMap  (G3D_Map *map, double *north, double *south, double *east, double *west, double *top, double *bottom)
 
 {
   *north = map->window.north;  
@@ -134,10 +119,7 @@ G3d_getWindowMap (map, north, south, east, west, top, bottom)
  */
 
 void
-G3d_getRegionStructMap (map, region)
-
-     G3D_Map *map;
-     G3D_Region *region;
+G3d_getRegionStructMap  (G3D_Map *map, G3D_Region *region)
 
 {
   G3d_regionCopy (region, &(map->region));
@@ -146,10 +128,7 @@ G3d_getRegionStructMap (map, region)
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_getWindowStructMap (map, window)
-
-     G3D_Map *map;
-     G3D_Region *window;
+G3d_getWindowStructMap  (G3D_Map *map, G3D_Region *window)
 
 {
   G3d_regionCopy (window, &(map->window));
@@ -171,10 +150,7 @@ G3d_getWindowStructMap (map, window)
  */
 
 void
-G3d_getTileDimensionsMap (map, x, y, z)
-
-     G3D_Map *map;
-     int *x, *y, *z;
+G3d_getTileDimensionsMap  (G3D_Map *map, int *x, int *y, int *z)
 
 {
   *x = map->tileX; 
@@ -195,9 +171,7 @@ G3d_getTileDimensionsMap (map, x, y, z)
  */
 
 int
-G3d_tileTypeMap (map)
-
-     G3D_Map *map;
+G3d_tileTypeMap  (G3D_Map *map)
 
 {
   return map->typeIntern;
@@ -216,9 +190,7 @@ G3d_tileTypeMap (map)
  */
 
 int
-G3d_fileTypeMap (map)
-
-     G3D_Map *map;
+G3d_fileTypeMap  (G3D_Map *map)
 
 {
   return map->type;
@@ -237,9 +209,7 @@ G3d_fileTypeMap (map)
  */
 
 int
-G3d_tilePrecisionMap (map)
-
-     G3D_Map *map;
+G3d_tilePrecisionMap  (G3D_Map *map)
 
 {
   return map->precision;
@@ -258,9 +228,7 @@ G3d_tilePrecisionMap (map)
  */
 
 int
-G3d_tileUseCacheMap (map)
-
-     G3D_Map *map;
+G3d_tileUseCacheMap  (G3D_Map *map)
 
 {
   return map->useCache;
@@ -278,9 +246,7 @@ G3d_tileUseCacheMap (map)
  */
 
 void 
-G3d_printHeader (map)
-
-     G3D_Map *map;
+G3d_printHeader  (G3D_Map *map)
 
 {
   double rangeMin, rangeMax;

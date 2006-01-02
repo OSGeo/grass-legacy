@@ -3,11 +3,7 @@
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_longEncode (source, dst, nofNums)
-
-     long *source;
-     unsigned char *dst;
-     int nofNums;
+G3d_longEncode  (long * source, unsigned char *dst, int nofNums)
 
 {
   long *src, d;
@@ -38,11 +34,7 @@ G3d_longEncode (source, dst, nofNums)
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_longDecode (source, dst, nofNums, longNbytes)
-
-     unsigned char *source;
-     long *dst;
-     int nofNums, longNbytes;
+G3d_longDecode  (unsigned char *source, long * dst, int nofNums, int longNbytes)
 
 {
   long *dest;

@@ -9,12 +9,7 @@
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_writeDoubles (fd, useXdr, i, nofNum)
-
-     int fd;
-     int useXdr;
-     double *i;
-     int nofNum;
+G3d_writeDoubles  (int fd, int useXdr, double *i, int nofNum)
 
 {
    int firstTime = 1;
@@ -76,12 +71,7 @@ G3d_writeDoubles (fd, useXdr, i, nofNum)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_readDoubles (fd, useXdr, i, nofNum)
-
-     int fd;
-     int useXdr;
-     double *i;
-     int nofNum;
+G3d_readDoubles  (int fd, int useXdr, double *i, int nofNum)
 
 {
   int firstTime = 1;

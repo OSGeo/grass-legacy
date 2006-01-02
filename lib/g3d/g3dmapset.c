@@ -7,9 +7,7 @@
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_makeMapsetMapDirectory (mapName)
-
-     char *mapName;
+G3d_makeMapsetMapDirectory  (char *mapName)
 
 {
   char buf[200];

@@ -83,15 +83,7 @@ G3d_setStandard3dInputParams()
 /*----------------------------------------------------------------------------*/
 
 int
-G3d_getStandard3dParams (useTypeDefault, type, 
-			 useLzwDefault, doLzw, 
-			 useRleDefault, doRle, 
-			 usePrecisionDefault, precision,
-			 useDimensionDefault, tileX, tileY, tileZ)
-
-     int *useTypeDefault, *type, *useLzwDefault, *doLzw, *useRleDefault;
-     int *doRle, *usePrecisionDefault, *precision, *useDimensionDefault;
-     int *tileX, *tileY, *tileZ;
+G3d_getStandard3dParams  (int *useTypeDefault, int *type, int *useLzwDefault, int *doLzw, int *useRleDefault, int *doRle, int *usePrecisionDefault, int *precision, int *useDimensionDefault, int *tileX, int *tileY, int *tileZ)
 
 {
   int doCompress;

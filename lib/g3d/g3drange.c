@@ -10,13 +10,7 @@
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_range_updateFromTile (map, tile, rows, cols, depths,
-			  xRedundant, yRedundant, zRedundant, nofNum, type)
-
-     G3D_Map *map; 
-     char *tile;
-     int rows, cols, depths, xRedundant, yRedundant, zRedundant, nofNum;
-     int type;
+G3d_range_updateFromTile  (G3D_Map *map, char *tile, int rows, int cols, int depths, int xRedundant, int yRedundant, int zRedundant, int nofNum, int type)
 
 {
   int y, z, cellType;
@@ -55,10 +49,11 @@ G3d_range_updateFromTile (map, tile, rows, cols, depths,
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_readRange (name, mapset, drange) /* adapted from G_read_fp_range */
+G3d_readRange  (char *name, char *mapset, struct FPRange *drange)
+ /* adapted from G_read_fp_range */
 
-     char *name, *mapset;
-     struct FPRange *drange;
+
+
 
 {
   struct Range range;
@@ -120,9 +115,7 @@ error:
  */
 
 int
-G3d_range_load (map) 
-
-     G3D_Map *map;
+G3d_range_load  (G3D_Map *map)
 
 {
   if (map->operation == G3D_WRITE_DATA) return 1;
@@ -149,10 +142,7 @@ G3d_range_load (map)
  */
 
 void
-G3d_range_min_max (map, min, max)
-
-     G3D_Map *map;
-     double *min, *max;
+G3d_range_min_max  (G3D_Map *map, double *min, double *max)
 
 {
   G_get_fp_range_min_max (&(map->range), min, max);
@@ -161,10 +151,11 @@ G3d_range_min_max (map, min, max)
 /*-------------------------------------------------------------------------*/
 
 static int
-writeRange (name, range) /* adapted from G_write_fp_range */
+writeRange  (char *name, struct FPRange *range)
+ /* adapted from G_write_fp_range */
 
-     char *name;
-     struct FPRange *range;
+
+
 
 {
   int fd;
@@ -220,9 +211,7 @@ error:
  */
 
 int
-G3d_range_write (map)
-
-     G3D_Map *map;
+G3d_range_write  (G3D_Map *map)
 
 {
   char path[4096], element[100];
@@ -241,9 +230,7 @@ G3d_range_write (map)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_range_init (map)
-
-     G3D_Map *map;
+G3d_range_init  (G3D_Map *map)
 
 {
   return G_init_fp_range (&(map->range));

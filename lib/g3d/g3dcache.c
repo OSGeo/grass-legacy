@@ -8,11 +8,7 @@
 /*---------------------------------------------------------------------------*/
 
 static int
-cacheRead_readFun (tileIndex, tileBuf, map)
-
-     int tileIndex;
-     char *tileBuf;
-     G3D_Map *map;
+cacheRead_readFun  (int tileIndex, char *tileBuf, G3D_Map *map)
 
 {
   if (! G3d_readTile (map, tileIndex, tileBuf, map->typeIntern)) {
@@ -25,10 +21,7 @@ cacheRead_readFun (tileIndex, tileBuf, map)
 /*---------------------------------------------------------------------------*/
 
 static int
-initCacheRead (map, nCached)
-
-     G3D_Map *map;
-     int nCached;
+initCacheRead  (G3D_Map *map, int nCached)
 
 {
   map->cache = G3d_cache_new_read (nCached, 
@@ -64,11 +57,7 @@ to convert from index to the fileposition.
 /*---------------------------------------------------------------------------*/
 
 static int
-cacheWrite_readFun (tileIndex, tileBuf, map)
-
-     int tileIndex;
-     char *tileBuf;
-     G3D_Map *map;
+cacheWrite_readFun  (int tileIndex, char *tileBuf, G3D_Map *map)
 
 {
   int index, nBytes;
@@ -148,11 +137,7 @@ cacheWrite_readFun (tileIndex, tileBuf, map)
 /*---------------------------------------------------------------------------*/
 
 static int
-cacheWrite_writeFun (tileIndex, tileBuf, map)
-
-     int tileIndex;
-     char *tileBuf;
-     G3D_Map *map;
+cacheWrite_writeFun  (int tileIndex, char *tileBuf, G3D_Map *map)
 
 {
   int nBytes;
@@ -185,9 +170,7 @@ cacheWrite_writeFun (tileIndex, tileBuf, map)
 /*---------------------------------------------------------------------------*/
 
 static int
-disposeCacheWrite (map)
-
-     G3D_Map *map;
+disposeCacheWrite  (G3D_Map *map)
 
 {
   if (map->cacheFD >= 0) {
@@ -207,10 +190,8 @@ disposeCacheWrite (map)
 /*---------------------------------------------------------------------------*/
 
 static int
-initCacheWrite (map, nCached)
+initCacheWrite  (G3D_Map *map, int nCached)
 
-     G3D_Map *map;
-     int nCached; 
 {
   map->cacheFileName = G_tempfile ();
   map->cacheFD = open (map->cacheFileName, O_RDWR | O_CREAT | O_TRUNC, 0666);
@@ -240,10 +221,7 @@ initCacheWrite (map, nCached)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_initCache (map, nCached)
-
-     G3D_Map *map;
-     int nCached;
+G3d_initCache  (G3D_Map *map, int nCached)
 
 {
   if (map->operation == G3D_READ_DATA) {
@@ -265,9 +243,7 @@ G3d_initCache (map, nCached)
 /*---------------------------------------------------------------------------*/
 
 static int
-disposeCacheRead (map)
-
-     G3D_Map *map;
+disposeCacheRead  (G3D_Map *map)
 
 {
   G3d_cache_dispose (map->cache);
@@ -277,9 +253,7 @@ disposeCacheRead (map)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_disposeCache (map)
-
-     G3D_Map *map;
+G3d_disposeCache  (G3D_Map *map)
 
 {
   if (map->operation == G3D_READ_DATA) {
@@ -302,11 +276,7 @@ G3d_disposeCache (map)
 /*---------------------------------------------------------------------------*/
 
 static int
-cacheFlushFun (tileIndex, tileBuf, map)
-
-     int tileIndex;
-     char *tileBuf;
-     G3D_Map *map;
+cacheFlushFun  (int tileIndex, char *tileBuf, G3D_Map *map)
 
 {
   if (! G3d_writeTile (map, tileIndex, tileBuf, map->typeIntern)) {
@@ -320,9 +290,7 @@ cacheFlushFun (tileIndex, tileBuf, map)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_flushAllTiles (map)
-
-     G3D_Map *map;
+G3d_flushAllTiles  (G3D_Map *map)
 
 {
   int tileIndex, nBytes;

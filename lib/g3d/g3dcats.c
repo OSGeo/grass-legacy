@@ -24,14 +24,15 @@
  */
 
 int
-G3d_writeCats (name, cats) /* adapted from G_write_cats */
+G3d_writeCats  (char *name, struct Categories *cats)
+ /* adapted from G_write_cats */
 
-     char *name;
-     struct Categories *cats;
+
+
 
 {
   FILE *fd;
-  int i, nx;
+  int i;
   char *descr;
   DCELL val1, val2;
   char str1[100], str2[100], buf[200], buf2[200], xname[512], xmapset[512];
@@ -81,11 +82,12 @@ G3d_writeCats (name, cats) /* adapted from G_write_cats */
 /*---------------------------------------------------------------------------*/
 
 static int
-read_cats (name, mapset, pcats) /* adapted from G__read_cats */
+read_cats  (char *name, char *mapset, struct Categories *pcats)
+ /* adapted from G__read_cats */
 
-     char *name;
-     char *mapset;
-     struct Categories *pcats;
+
+
+
 
 {
   FILE *fd;
@@ -106,7 +108,7 @@ read_cats (name, mapset, pcats) /* adapted from G__read_cats */
   if (! (fd = G_fopen_old (buff, buf2, mapset))) return -2;
 
 /* Read the number of categories */
-  if (G_getl (buff,sizeof buff,fd) == 0) goto error;
+  if (G_getl (buff,sizeof (buff),fd) == 0) goto error;
 
   if (sscanf ( buff, "# %ld"   , &num) == 1)
     old = 0;
@@ -114,7 +116,7 @@ read_cats (name, mapset, pcats) /* adapted from G__read_cats */
     old = 1;
 
 /* Read the title for the file */
-  if (G_getl (buff,sizeof buff,fd) == 0) goto error;
+  if (G_getl (buff,sizeof (buff),fd) == 0) goto error;
   G_strip (buff);
 
   G_init_raster_cats (buff, pcats);
@@ -124,9 +126,9 @@ read_cats (name, mapset, pcats) /* adapted from G__read_cats */
     char fmt[256];
     float m1,a1,m2,a2;
 
-    if (G_getl(fmt,sizeof fmt,fd) == 0) goto error;
+    if (G_getl(fmt,sizeof (fmt),fd) == 0) goto error;
     /* next line contains equation coefficients */
-    if (G_getl(buff,sizeof buff,fd) == 0) goto error;
+    if (G_getl(buff,sizeof (buff),fd) == 0) goto error;
     if(sscanf(buff, "%f %f %f %f", &m1, &a1, &m2, &a2) != 4) goto error;
     G_set_raster_cats_fmt (fmt, m1, a1, m2, a2, pcats);
   }
@@ -135,7 +137,7 @@ read_cats (name, mapset, pcats) /* adapted from G__read_cats */
   for (cat=0;;cat++) {
     char label[1024];
 
-    if (G_getl(buff, sizeof buff, fd) == 0) break;
+    if (G_getl(buff, sizeof (buff), fd) == 0) break;
 
     if (old)
       G_set_cat (cat, buff, pcats);
@@ -181,11 +183,13 @@ error:
  */
 
 int
-G3d_readCats (name, mapset, pcats) /* adapted from G_read_cats */
+G3d_readCats  (char *name, char *mapset, struct Categories *pcats)
+ /* adapted from G_read_cats */
 
-     char *name;
-     char *mapset;
-     struct Categories *pcats;
+
+
+
+
 {
   char err[100];
   char *type;

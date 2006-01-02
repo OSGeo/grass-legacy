@@ -19,10 +19,7 @@
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpcompress_printBinary (c, numBits)
-
-     char *c;
-     int numBits;
+G_fpcompress_printBinary  (char *c, int numBits)
 
 {
   unsigned char bit;
@@ -39,9 +36,7 @@ G_fpcompress_printBinary (c, numBits)
 /*--------------------------------------------------------------------------*/
 
 void
-G_fpcompress_dissectXdrDouble (numPointer)
-     
-     unsigned char *numPointer;
+G_fpcompress_dissectXdrDouble  (unsigned char *numPointer)
 
 {
   char sign, exponent;
@@ -74,12 +69,7 @@ static unsigned char clearMask[9] =
 /*--------------------------------------------------------------------------*/
 
 static void
-G_fpcompress_rearrangeEncodeFloats (src, size, precision, dst, 
-				    length, offsetMantissa)
-
-     int size, precision;
-     unsigned char *src, *dst;
-     int *length, *offsetMantissa;
+G_fpcompress_rearrangeEncodeFloats  (unsigned char *src, int size, int precision, unsigned char *dst, int *length, int *offsetMantissa)
 
 {
   unsigned int nNullBits, nBits;
@@ -214,12 +204,7 @@ G_fpcompress_rearrangeEncodeFloats (src, size, precision, dst,
 /*--------------------------------------------------------------------------*/
 
 static void
-G_fpcompress_rearrangeEncodeDoubles (src, size, precision, dst, 
-				    length, offsetMantissa)
-
-     int size, precision;
-     unsigned char *src, *dst;
-     int *length, *offsetMantissa;
+G_fpcompress_rearrangeEncodeDoubles  (unsigned char *src, int size, int precision, unsigned char *dst, int *length, int *offsetMantissa)
 
 {
   unsigned int nNullBits, nBits;
@@ -378,10 +363,7 @@ G_fpcompress_rearrangeEncodeDoubles (src, size, precision, dst,
 /*--------------------------------------------------------------------------*/
 
 static void
-G_fpcompress_rearrangeDecodeFloats (src, size, precision, dst)
-
-     int size, precision;
-     unsigned char *src, *dst;
+G_fpcompress_rearrangeDecodeFloats  (unsigned char *src, int size, int precision, unsigned char *dst)
 
 {
   unsigned int nNullBits, nBits;
@@ -512,10 +494,7 @@ G_fpcompress_rearrangeDecodeFloats (src, size, precision, dst)
 /*--------------------------------------------------------------------------*/
 
 static void
-G_fpcompress_rearrangeDecodeDoubles (src, size, precision, dst)
-
-     int size, precision;
-     unsigned char *src, *dst;
+G_fpcompress_rearrangeDecodeDoubles  (unsigned char *src, int size, int precision, unsigned char *dst)
 
 {
   unsigned int nNullBits, nBits;
@@ -673,14 +652,7 @@ G_fpcompress_rearrangeDecodeDoubles (src, size, precision, dst)
 /* IMPORTANT!!! this function changes the "src". */
 
 int
-G_fpcompress_writeXdrNums (fd, src, nofNum, precision, compressBuf, isFloat,
-			   useRle, useLzw)
-
-     int fd;
-     char *src;
-     int nofNum, precision;
-     char *compressBuf;
-     int isFloat, useRle, useLzw;
+G_fpcompress_writeXdrNums  (int fd, char *src, int nofNum, int precision, char *compressBuf, int isFloat, int useRle, int useLzw)
 
 {
   /* this table is used to determine the number of bits that should be used */
@@ -764,14 +736,7 @@ G_fpcompress_writeXdrNums (fd, src, nofNum, precision, compressBuf, isFloat,
 /*--------------------------------------------------------------------------*/
 
 int
-G_fpcompress_writeXdrFloats (fd, src, nofNum, precision, compressBuf, 
-			     useRle, useLzw)
-
-     int fd;
-     char *src;
-     int nofNum, precision;
-     char *compressBuf;
-     int useRle, useLzw;
+G_fpcompress_writeXdrFloats  (int fd, char *src, int nofNum, int precision, char *compressBuf, int useRle, int useLzw)
 
 {
   if (! G_fpcompress_writeXdrNums (fd, src, nofNum, precision, compressBuf, 1,
@@ -787,14 +752,7 @@ G_fpcompress_writeXdrFloats (fd, src, nofNum, precision, compressBuf,
 /*--------------------------------------------------------------------------*/
 
 int
-G_fpcompress_writeXdrDouble (fd, src, nofNum, precision, compressBuf, 
-			     useRle, useLzw)
-
-     int fd;
-     char *src;
-     int nofNum, precision;
-     char *compressBuf;
-     int useRle, useLzw;
+G_fpcompress_writeXdrDouble  (int fd, char *src, int nofNum, int precision, char *compressBuf, int useRle, int useLzw)
 
 {
   if (! G_fpcompress_writeXdrNums (fd, src, nofNum, precision, compressBuf, 0,
@@ -810,14 +768,7 @@ G_fpcompress_writeXdrDouble (fd, src, nofNum, precision, compressBuf,
 /*--------------------------------------------------------------------------*/
 
 int
-G_fpcompress_readXdrNums (fd, dst, nofNum, fileBytes, precision, 
-			  compressBuf, isFloat)
-
-     int fd;
-     char *dst;
-     int nofNum, fileBytes, precision;
-     char *compressBuf;
-     int isFloat;
+G_fpcompress_readXdrNums  (int fd, char *dst, int nofNum, int fileBytes, int precision, char *compressBuf, int isFloat)
 
 {
   int status, lengthEncode, lengthDecode;
@@ -868,13 +819,7 @@ G_fpcompress_readXdrNums (fd, dst, nofNum, fileBytes, precision,
 /*--------------------------------------------------------------------------*/
 
 int
-G_fpcompress_readXdrFloats (fd, dst, nofNum, fileBytes, precision, 
-			    compressBuf)
-
-     int fd;
-     char *dst;
-     int nofNum, fileBytes, precision;
-     char *compressBuf;
+G_fpcompress_readXdrFloats  (int fd, char *dst, int nofNum, int fileBytes, int precision, char *compressBuf)
 
 {
   if (! G_fpcompress_readXdrNums (fd, dst, nofNum, fileBytes, precision, 
@@ -890,13 +835,7 @@ G_fpcompress_readXdrFloats (fd, dst, nofNum, fileBytes, precision,
 /*--------------------------------------------------------------------------*/
 
 int
-G_fpcompress_readXdrDoubles (fd, dst, nofNum, fileBytes, precision, 
-			     compressBuf)
-
-     int fd;
-     char *dst;
-     int nofNum, fileBytes, precision;
-     char *compressBuf;
+G_fpcompress_readXdrDoubles  (int fd, char *dst, int nofNum, int fileBytes, int precision, char *compressBuf)
 
 {
   if (! G_fpcompress_readXdrNums (fd, dst, nofNum, fileBytes, precision, 

@@ -17,9 +17,10 @@ static int read_old_colors(FILE *,struct Colors *);
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_removeColor (name) /* adapted from G_remove_colr */
+G3d_removeColor  (char *name)
+ /* adapted from G_remove_colr */
 
-     char *name;
+
 
 {
   char buf[200], secondary[500], buf2[200], xname[512], xmapset[512];
@@ -43,11 +44,12 @@ G3d_removeColor (name) /* adapted from G_remove_colr */
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_readColors (name, mapset, colors) /* adapted from G_read_colors */
+G3d_readColors  (char *name, char *mapset, struct Colors *colors)
+ /* adapted from G_read_colors */
 
-     char *name;
-     char *mapset;
-     struct Colors *colors;
+
+
+
 
 {
   char buf[512], buf2[200];
@@ -355,11 +357,12 @@ static int read_old_colors ( FILE *fd, struct Colors *colors )
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_writeColors (name, mapset, colors) /* adapted from G_write_colors */
+G3d_writeColors  (char *name, char *mapset, struct Colors *colors)
+ /* adapted from G_write_colors */
 
-     char *name;
-     char *mapset;
-     struct Colors *colors;
+
+
+
 
 {
   char element[512], buf[512], buf2[200];

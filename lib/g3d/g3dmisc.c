@@ -9,9 +9,7 @@
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_g3dType2cellType (g3dType)
-
-     int g3dType;
+G3d_g3dType2cellType  (int g3dType)
 
 {
   if (g3dType == G3D_FLOAT) return FCELL_TYPE;
@@ -21,12 +19,7 @@ G3d_g3dType2cellType (g3dType)
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_copyFloat2Double (src, offsSrc, dst, offsDst, nElts)
-
-     float *src;
-     int offsSrc;
-     double *dst;
-     int offsDst, nElts;
+G3d_copyFloat2Double  (float *src, int offsSrc, double *dst, int offsDst, int nElts)
 
 {
   float *srcStop;
@@ -40,12 +33,7 @@ G3d_copyFloat2Double (src, offsSrc, dst, offsDst, nElts)
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_copyDouble2Float (src, offsSrc, dst, offsDst, nElts)
-
-     double *src;
-     int offsSrc;
-     float *dst;
-     int offsDst, nElts;
+G3d_copyDouble2Float  (double *src, int offsSrc, float *dst, int offsDst, int nElts)
 
 {
   double *srcStop;
@@ -59,12 +47,7 @@ G3d_copyDouble2Float (src, offsSrc, dst, offsDst, nElts)
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_copyValues (src, offsSrc, typeSrc, dst, offsDst, typeDst, nElts)
-
-     char *src;
-     int offsSrc, typeSrc;
-     char *dst;
-     int offsDst, typeDst, nElts;
+G3d_copyValues  (char *src, int offsSrc, int typeSrc, char *dst, int offsDst, int typeDst, int nElts)
 
 {
   char *srcStop;
@@ -94,9 +77,7 @@ G3d_copyValues (src, offsSrc, typeSrc, dst, offsDst, typeDst, nElts)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_length (t)
-     
-     int t;
+G3d_length  (int t)
 
 {
   if (! G3D_IS_CORRECT_TYPE (t)) G3d_fatalError ("G3d_length: invalid type");
@@ -107,9 +88,7 @@ G3d_length (t)
 }
 
 int
-G3d_externLength (t)
-     
-     int t;
+G3d_externLength  (int t)
 
 {
   if (! G3D_IS_CORRECT_TYPE (t)) G3d_fatalError ("G3d_externLength: invalid type");

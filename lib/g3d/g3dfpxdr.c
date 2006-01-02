@@ -18,10 +18,7 @@
 #define XDR_NULL_BYTE_7 255
 
 int
-G3d_isXdrNullNum (num, isFloat)
-
-     unsigned char *num;
-     int isFloat;
+G3d_isXdrNullNum  (unsigned char *num, int isFloat)
 
 {
   if (*num++ != XDR_NULL_BYTE_0) return 0;
@@ -40,9 +37,7 @@ G3d_isXdrNullNum (num, isFloat)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_isXdrNullFloat (f)
-
-     float *f;
+G3d_isXdrNullFloat  (float *f)
 
 {
   return G3d_isXdrNullNum ((unsigned char *) f, 1);
@@ -51,9 +46,7 @@ G3d_isXdrNullFloat (f)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_isXdrNullDouble (d)
-
-     double *d;
+G3d_isXdrNullDouble  (double *d)
 
 {
   return G3d_isXdrNullNum ((unsigned char *) d, 0);
@@ -62,10 +55,7 @@ G3d_isXdrNullDouble (d)
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_setXdrNullNum (num, isFloat)
-
-     unsigned char *num;
-     int isFloat;
+G3d_setXdrNullNum  (unsigned char *num, int isFloat)
 
 {
   *num++ = XDR_NULL_BYTE_0;
@@ -84,9 +74,7 @@ G3d_setXdrNullNum (num, isFloat)
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_setXdrNullDouble (d)
-
-     double *d;
+G3d_setXdrNullDouble  (double *d)
 
 {
   G3d_setXdrNullNum ((unsigned char *) d, 0);
@@ -95,9 +83,7 @@ G3d_setXdrNullDouble (d)
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_setXdrNullFloat (f)
-
-     float *f;
+G3d_setXdrNullFloat  (float *f)
 
 {
   G3d_setXdrNullNum ((unsigned char *) f, 1);
@@ -108,10 +94,11 @@ G3d_setXdrNullFloat (f)
 XDR xdrEncodeStream, xdrDecodeStream; /* xdr support structures */
 
 int
-G3d_initFpXdr (map, misuseBytes)
+G3d_initFpXdr  (G3D_Map *map, int misuseBytes)
 
-     G3D_Map *map;
-     int misuseBytes; /* nof addtl bytes allocated for the xdr array so that */
+
+
+ /* nof addtl bytes allocated for the xdr array so that */
                       /* the array can also be (mis)used for other purposes */
 
 {
@@ -163,10 +150,7 @@ static XDR *xdrs;
 static double tmpValue, *tmp;
 
 int
-G3d_initCopyToXdr (map, sType)
-
-     G3D_Map *map;
-     int sType;
+G3d_initCopyToXdr  (G3D_Map *map, int sType)
 
 {
   xdrTmp = xdr;
@@ -194,10 +178,7 @@ G3d_initCopyToXdr (map, sType)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_copyToXdr (src, nofNum)
-
-     char *src;
-     int nofNum;
+G3d_copyToXdr  (char *src, int nofNum)
 
 {
   char *srcLast;
@@ -245,10 +226,7 @@ G3d_copyToXdr (src, nofNum)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_initCopyFromXdr (map, dType)
-
-     G3D_Map *map;
-     int dType;
+G3d_initCopyFromXdr  (G3D_Map *map, int dType)
 
 {
   xdrTmp = xdr;
@@ -276,10 +254,7 @@ G3d_initCopyFromXdr (map, dType)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_copyFromXdr (nofNum, dst)
-
-     int nofNum;
-     char *dst;
+G3d_copyFromXdr  (int nofNum, char *dst)
 
 {
   char *dstLast;

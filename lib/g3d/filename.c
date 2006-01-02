@@ -7,9 +7,7 @@
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_filename (path, elementName, mapName, mapset)
-
-     char *path, *elementName, *mapName, *mapset;
+G3d_filename  (char *path, char *elementName, char *mapName, char *mapset)
 
 {
   char map[300];

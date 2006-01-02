@@ -22,9 +22,7 @@
  */
 
 void *
-G3d_malloc (nBytes)
-
-     int nBytes;
+G3d_malloc  (int nBytes)
 
 {
   char *buf;
@@ -50,10 +48,7 @@ G3d_malloc (nBytes)
  */
 
 void *
-G3d_realloc (ptr, nBytes)
-     
-     void *ptr;
-     int nBytes; 
+G3d_realloc  (void *ptr, int nBytes)
 
 {
   if (nBytes <= 0) nBytes = 1;
@@ -74,9 +69,7 @@ G3d_realloc (ptr, nBytes)
  */
 
 void
-G3d_free (buf)
-
-     void *buf;
+G3d_free  (void *buf)
 
 {
   free (buf);

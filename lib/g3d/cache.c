@@ -65,9 +65,7 @@ typedef struct {
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_cache_reset (c)
-
-     G3D_cache *c;
+G3d_cache_reset  (G3D_cache *c)
 
 {
   int i;
@@ -102,9 +100,7 @@ cache_dummy_fun ()
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_cache_dispose (c)
-
-     G3D_cache *c;
+G3d_cache_dispose  (G3D_cache *c)
 
 {
   if (c == NULL) return;
@@ -123,14 +119,7 @@ G3d_cache_dispose (c)
 /*---------------------------------------------------------------------------*/
 
 void *
-G3d_cache_new (nofElts, sizeOfElts, nofNames, eltRemoveFun, eltRemoveFunData,
-	      eltLoadFun, eltLoadFunData)
-
-     int nofElts, sizeOfElts, nofNames;
-     int (* eltRemoveFun) ();
-     void *eltRemoveFunData;
-     int (* eltLoadFun) ();
-     void *eltLoadFunData;
+G3d_cache_new  (int nofElts, int sizeOfElts, int nofNames, int (*eltRemoveFun)(), void *eltRemoveFunData, int (*eltLoadFun)(), void *eltLoadFunData)
 
 {
   G3D_cache *tmp;
@@ -179,11 +168,7 @@ G3d_cache_new (nofElts, sizeOfElts, nofNames, eltRemoveFun, eltRemoveFunData,
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_cache_set_removeFun (c, eltRemoveFun, eltRemoveFunData)
-
-     G3D_cache *c;
-     int (* eltRemoveFun) ();
-     void *eltRemoveFunData;
+G3d_cache_set_removeFun  (G3D_cache *c, int (*eltRemoveFun)(), void *eltRemoveFunData)
 
 {
   c->eltRemoveFun = eltRemoveFun;
@@ -193,11 +178,7 @@ G3d_cache_set_removeFun (c, eltRemoveFun, eltRemoveFunData)
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_cache_set_loadFun (c, eltLoadFun, eltLoadFunData)
-
-     G3D_cache *c;
-     int (* eltLoadFun) ();
-     void *eltLoadFunData;
+G3d_cache_set_loadFun  (G3D_cache *c, int (*eltLoadFun)(), void *eltLoadFunData)
 
 {
   c->eltLoadFun = eltLoadFun;
@@ -207,12 +188,7 @@ G3d_cache_set_loadFun (c, eltLoadFun, eltLoadFunData)
 /*---------------------------------------------------------------------------*/
 
 void *
-G3d_cache_new_read (nofElts, sizeOfElts, nofNames, 
-		   eltLoadFun, eltLoadFunData)
-
-     int nofElts, sizeOfElts, nofNames;
-     int (* eltLoadFun) ();
-     void *eltLoadFunData;
+G3d_cache_new_read  (int nofElts, int sizeOfElts, int nofNames, int (*eltLoadFun)(), void *eltLoadFunData)
 
 {
   return G3d_cache_new (nofElts, sizeOfElts, nofNames,
@@ -223,10 +199,7 @@ G3d_cache_new_read (nofElts, sizeOfElts, nofNames,
 /*---------------------------------------------------------------------------*/
 
 static void
-cache_queue_dequeue (c, index)
-
-     G3D_cache *c;
-     int index;
+cache_queue_dequeue  (G3D_cache *c, int index)
 
 {
   if (IS_NOT_IN_QUEUE_ELT (index))
@@ -244,10 +217,7 @@ cache_queue_dequeue (c, index)
 /*---------------------------------------------------------------------------*/
 
 static void
-cache_queue_enqueue (c, left, index)
-
-     G3D_cache *c;
-     int left, index;
+cache_queue_enqueue  (G3D_cache *c, int left, int index)
 
 {
   if (IS_IN_QUEUE_ELT (index))
@@ -290,9 +260,7 @@ cache_queue_enqueue (c, left, index)
 /*---------------------------------------------------------------------------*/
 
 static int
-cache_queue_get_top (c)
-
-     G3D_cache *c;
+cache_queue_get_top  (G3D_cache *c)
 
 {
   int top;
@@ -307,10 +275,7 @@ cache_queue_get_top (c)
 /*---------------------------------------------------------------------------*/
 
 static void
-cache_queue_append (c, index)
-
-     G3D_cache *c;
-     int index;
+cache_queue_append  (G3D_cache *c, int index)
 
 {
   cache_queue_enqueue (c, c->last, index);
@@ -319,10 +284,7 @@ cache_queue_append (c, index)
 /*---------------------------------------------------------------------------*/
 
 static void
-cache_queue_preppend (c, index)
-
-     G3D_cache *c;
-     int index;
+cache_queue_preppend  (G3D_cache *c, int index)
 
 {
   cache_queue_enqueue (c, -1, index);
@@ -337,10 +299,7 @@ cache_queue_preppend (c, index)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_cache_lock (c, name)
-
-     G3D_cache *c;
-     int name;
+G3d_cache_lock  (G3D_cache *c, int name)
 
 {
   int index;
@@ -364,10 +323,7 @@ G3d_cache_lock (c, name)
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_cache_lock_intern (c, index)
-
-     G3D_cache *c;
-     int index;
+G3d_cache_lock_intern  (G3D_cache *c, int index)
 
 {
   if (IS_LOCKED_ELT (index)) return;
@@ -379,10 +335,7 @@ G3d_cache_lock_intern (c, index)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_cache_unlock (c, name)
-
-     G3D_cache *c;
-     int name;
+G3d_cache_unlock  (G3D_cache *c, int name)
 
 {
   int index;
@@ -404,9 +357,7 @@ G3d_cache_unlock (c, name)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_cache_unlock_all (c)
-
-     G3D_cache *c;
+G3d_cache_unlock_all  (G3D_cache *c)
 
 {
   int index;
@@ -424,9 +375,7 @@ G3d_cache_unlock_all (c)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_cache_lock_all (c)
-
-     G3D_cache *c;
+G3d_cache_lock_all  (G3D_cache *c)
 
 {
   int index;
@@ -440,9 +389,7 @@ G3d_cache_lock_all (c)
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_cache_autolock_on (c)
-
-     G3D_cache *c;
+G3d_cache_autolock_on  (G3D_cache *c)
 
 {
   c->autoLock = 1;
@@ -451,9 +398,7 @@ G3d_cache_autolock_on (c)
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_cache_autolock_off (c)
-
-     G3D_cache *c;
+G3d_cache_autolock_off  (G3D_cache *c)
 
 {
   c->autoLock = 0;
@@ -462,10 +407,7 @@ G3d_cache_autolock_off (c)
 /*---------------------------------------------------------------------------*/
 
 void
-G3d_cache_set_minUnlock (c, nofMinUnLocked)
-
-     G3D_cache *c;
-     int nofMinUnLocked;
+G3d_cache_set_minUnlock  (G3D_cache *c, int nofMinUnLocked)
 
 {
   c->minUnlocked = nofMinUnLocked;
@@ -474,10 +416,7 @@ G3d_cache_set_minUnlock (c, nofMinUnLocked)
 /*---------------------------------------------------------------------------*/
 
 static int
-cache_remove_elt (c, name, doFlush)
-
-     G3D_cache *c;
-     int name, doFlush;
+cache_remove_elt  (G3D_cache *c, int name, int doFlush)
 
 {
   int index;
@@ -513,10 +452,7 @@ cache_remove_elt (c, name, doFlush)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_cache_remove_elt (c, name)
-
-     G3D_cache *c;
-     int name;
+G3d_cache_remove_elt  (G3D_cache *c, int name)
 
 {
   if (! cache_remove_elt (c, name, 0)) {
@@ -530,10 +466,7 @@ G3d_cache_remove_elt (c, name)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_cache_flush (c, name)
-
-     G3D_cache *c;
-     int name;
+G3d_cache_flush  (G3D_cache *c, int name)
 
 {
   if (! cache_remove_elt (c, name, 1)) {
@@ -547,9 +480,7 @@ G3d_cache_flush (c, name)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_cache_remove_all (c)
-
-     G3D_cache *c;
+G3d_cache_remove_all  (G3D_cache *c)
 
 {
   int index;
@@ -567,9 +498,7 @@ G3d_cache_remove_all (c)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_cache_flush_all (c)
-
-     G3D_cache *c;
+G3d_cache_flush_all  (G3D_cache *c)
 
 {
   int index;
@@ -587,10 +516,7 @@ G3d_cache_flush_all (c)
 /*---------------------------------------------------------------------------*/
 
 char *
-G3d_cache_elt_ptr (c, name)
-
-     G3D_cache *c;
-     int name;
+G3d_cache_elt_ptr  (G3D_cache *c, int name)
 
 {
   int index, oldName, doUnlock;
@@ -643,10 +569,7 @@ G3d_cache_elt_ptr (c, name)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_cache_load (c, name)
-
-     G3D_cache *c;
-     int name;
+G3d_cache_load  (G3D_cache *c, int name)
 
 {
   if (G3d_cache_elt_ptr (c, name) == NULL) {
@@ -660,11 +583,7 @@ G3d_cache_load (c, name)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_cache_get_elt (c, name, dst)
-
-     G3D_cache *c;
-     int name;
-     char *dst;
+G3d_cache_get_elt  (G3D_cache *c, int name, char *dst)
 
 {
   char *elt, *eltStop;
@@ -684,11 +603,7 @@ G3d_cache_get_elt (c, name, dst)
 /*---------------------------------------------------------------------------*/
 
 int
-G3d_cache_put_elt (c, name, src)
-
-     G3D_cache *c;
-     int name;
-     char *src;
+G3d_cache_put_elt  (G3D_cache *c, int name, char *src)
 
 {
   char *elt, *eltStop;
@@ -714,9 +629,7 @@ G3d_cache_put_elt (c, name, src)
 /*---------------------------------------------------------------------------*/
 
 static void
-cache_test_print (c)
-
-    G3D_cache *c;
+cache_test_print  (G3D_cache *c)
 
 {
   int i, al;
@@ -747,11 +660,7 @@ cache_test_print (c)
 /*---------------------------------------------------------------------------*/
 
 static int
-cache_test_flush_fun (name, eltPtr, data)
-
-     int name;
-     int *eltPtr;
-     void *data;
+cache_test_flush_fun  (int name, int *eltPtr, void *data)
 
 {
   printf ("flushing name %d value %d\n", name, eltPtr[17]);
@@ -768,11 +677,7 @@ typedef struct {
 } cache_test_data_type;
 
 static int
-cache_test_load_fun (name, eltPtr, data)
-
-     int name;
-     char *eltPtr;
-     void *data;
+cache_test_load_fun  (int name, char *eltPtr, void *data)
 
 {
   char *eltStop, *src;
@@ -791,10 +696,7 @@ cache_test_load_fun (name, eltPtr, data)
 static cache_test_data_type ctd;
 
 static void
-cache_test_add (c, name, val)
-
-     void *c;
-     int name, val;
+cache_test_add  (void *c, int name, int val)
 
 {
   static int firstTime = 1;

@@ -11,17 +11,7 @@
 /*---------------------------------------------------------------------------*/
 
 static int
-G3d_readWriteWindow (windowKeys, doRead,
-		     proj, zone,
-		     north, south, east, west, top, bottom,
-		     rows, cols, depths, ew_res, ns_res, tb_res)
-
-     struct Key_Value *windowKeys;
-     int doRead;
-     int *proj, *zone;
-     double *north, *south, *east, *west, *top, *bottom;
-     int *rows, *cols, *depths;
-     double *ew_res, *ns_res, *tb_res;
+G3d_readWriteWindow  (struct Key_Value *windowKeys, int doRead, int *proj, int *zone, double *north, double *south, double *east, double *west, double *top, double *bottom, int *rows, int *cols, int *depths, double *ew_res, double *ns_res, double *tb_res)
 
 {
   int returnVal;
@@ -65,10 +55,7 @@ G3d_readWriteWindow (windowKeys, doRead,
  * otherwise G3D_WINDOW_DATABASE ("$MAPSET/windows3d/$NAME")
  */
 static void
-G3d_getFullWindowPath (path, windowName)
-     
-     char path[1024];
-     char *windowName;
+G3d_getFullWindowPath  (char path[1024], char *windowName)
 
 {
   char xname[512], xmapset[512];
@@ -147,10 +134,7 @@ G3d_getWindowLocation (path, windowName)
  */
 
 int
-G3d_readWindow (window, windowName)
-
-     G3D_Region *window;
-     char *windowName;
+G3d_readWindow  (G3D_Region *window, char *windowName)
 
 {
   struct Cell_head win;

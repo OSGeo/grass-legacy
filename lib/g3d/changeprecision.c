@@ -21,11 +21,7 @@
  */
 
 void
-G3d_changePrecision (map, precision, nameOut)
-
-     void *map;
-     int precision;
-     char *nameOut;
+G3d_changePrecision  (void *map, int precision, char *nameOut)
 
 {
   void *map2;
