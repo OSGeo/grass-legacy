@@ -81,7 +81,13 @@ Note: This text contains *some* rules only applicable to the
      grass$MAJOR$MINOR/manuals/html$MAJOR$MINOR_user
 
 2. Tell others about it:
-   - related announcement press release at:
+
+ * If release candidate:
+    - <grass-announce@grass.itc.it>
+    - <grass5@grass.itc.it>
+
+ * If official release:
+   - publish related announcement press release at:
 
    Our GRASS web site: /announces/
 
