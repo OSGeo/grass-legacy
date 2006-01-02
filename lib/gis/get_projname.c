@@ -20,10 +20,9 @@
 #include  "gis.h"
 #include  "glocale.h"
 
-int G_ask_proj_name(proj_id, proj_name)
- char *proj_id;
- char *proj_name;
-     {
+int G_ask_proj_name (char *proj_id, char *proj_name)
+
+{
 	char path[1024], buff[1024], answer[50], *a;
         struct Key_Value *in_proj_keys;
 	char  *Tmp_file;
