@@ -55,22 +55,34 @@ resultant raster map.
 <h2>EXAMPLES</h2>
 
 <em>1. Convert a vector map and use column SPEED from attribute table</em><br>
-<b>db.describe -c table=</b><em>vect_map</em>
-<pre>
+<div class="code"><pre>
+db.describe -c table=vect_map
+
 ncols:3
 Column 1: CAT
 Column 2: SPEED
 Column 3: WIDTH 
-</pre>
+</pre></div>
 
-<b>v.to.rast in=</b><em>vect_map</em> <b>out=</b><em>raster_map</em> <b>col=</b><em>SPEED</em>
+<div class="code"><pre>
+v.to.rast in=vect_map out=raster_map col=SPEED
+</pre></div>
 
 <P>
 <P>
 <em>2. Calculate stream directions from a river vector map (Spearfish)</em><br>
+<div class="code"><pre>
+v.to.rast in=streams out=streamsdir use=d
+</pre></div>
 
-<b>v.to.rast in=</b><em>streams</em> <b>out=</b><em>streamsdir</em> <b>use=</b><em>d</em>
+<p>
 
+<h2>SEE ALSO</h2>
+<em>
+<a HREF="db.describe.html">db.describe</a>,
+<a HREF="v.category.html">v.category</a>
+
+<br>
 
 <h2>AUTHORS</h2>
 
@@ -80,4 +92,5 @@ GRAS 6 updates: Radim Blazek, ITC-Irst, Trento, Italy
 <br>
 Stream directions: Jaro Hofierka and Helena Mitasova
 
+<p>
 <p><i>Last changed: $Date$</i>

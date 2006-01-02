@@ -21,17 +21,17 @@ writes only lines which are 'alive'.
 <h2>EXAMPLES</h2>
 
 <h4>Start a monitor and display a raster to help setup and zoom to area of interest</h4>
-<pre>
-    d.mon x0
-    d.rast name_of_raster
-</pre>
+<div class="code"><pre>
+d.mon x0
+d.rast name_of_raster
+</pre></div>
 
 <p>
 
 <h4>Digitizing an area based on a existing raster map; creating a new vector map</h4>
-<pre>
-    v.digit -n map=name_of_new_vector_map bgcmd="d.rast map=name_of_raster"
-</pre>
+<div class="code"><pre>
+v.digit -n map=name_of_new_vector_map bgcmd="d.rast map=name_of_raster"
+</pre></div>
 <p>
 The "<b>-n</b>" flag specifies that your vector map does not yet exist and
 thus will be created with the name given by "<b>map=</b>". "<b>bgcmd=</b>"
@@ -41,10 +41,10 @@ The <em>v.digit</em> GUI appears -- after exiting <em>v.digit</em> GUI the
 vector map "name_of_new_vector_map" is created.
 <P>
 After leaving <em>v.digit</em>, run:
-<pre>
-    d.erase
-    d.vect "name_of_new_vector_map" 
-</pre>
+<div class="code"><pre>
+d.erase
+d.vect "name_of_new_vector_map" 
+</pre></div>
 The display should be cleared and the newly created vector should appear in 
 the monitor.
 <p>
@@ -52,10 +52,10 @@ the monitor.
 <h4>Digitizing a second vector, using your first vector and the raster image
 as background</h4>
 <p>
-<pre>
-    v.digit -n map=name_of_second_vector \
-      bgcmd="d.rast map=name_of_your_raster; d.vect map=name_of_new_vector_map"
-</pre>
+<div class="code"><pre>
+v.digit -n map=name_of_second_vector \
+bgcmd="d.rast map=name_of_your_raster; d.vect map=name_of_new_vector_map"
+</pre></div>
 <p>
 The <em>v.digit</em> GUI appears and the layers defined with <b>bgcmd</b>
 are displayed in the background. As the <b>bgcmd</b> commands are executed 
@@ -66,9 +66,10 @@ displays over the top of the earlier raster image.<br>
 <h4> Combining <b>bgcmd</b> with <em>d.save</em> to use the existing
 display as a backdrop</h4>
 <P>
-<pre>
-    v.digit map=name bgcmd="`d.save -o | cut -f1 -d'#' | tr '\n' ';'`"
-</pre>
+<div class="code"><pre>
+v.digit map=name bgcmd="`d.save -o | cut -f1 -d'#' | tr '\n' ';'`"
+</pre></div>
+
 <a href="d.save.html"><em>d.save</em></a> will list the commands used to draw
 the current display; <em>cut</em> and <em>tr</em> are UNIX commands which are
 used to remove comments and trade newlines for semi-colons, respectively.

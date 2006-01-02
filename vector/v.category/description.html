@@ -12,9 +12,10 @@ table.
 <h2>EXAMPLES</h2>
 
 <em>1) Report vector categories</em><br>
-<b>v.category in=</b><em>testmap</em> <b>option=</b><em>report</em>
-<pre>
-FIELD 1:
+<div class="code"><pre>
+v.category in=testmap option=report
+
+LAYER/TABLE 1/testmap:
 type       count        min        max
 point          0          0          0
 line        1379          1       1379
@@ -22,19 +23,20 @@ boundary       0          0          0
 centroid       0          0          0
 area           0          0          0
 all         1379          1       1379
-</pre>
+</pre></div>
 <P>
 
-<em>2) Delete all vector categories in field 1</em><br>
-<b>v.category in=</b><em>testmap</em> out=</b><em>outmap</em>
-<b>option=</b><em>del</em> 
+<em>2) Delete all vector categories in layer 1</em><br>
+<div class="code"><pre>
+v.category in=testmap out=outmap option=del
+</pre></div>
 <p>
 
-<em>3) Add vector categories in field 1 with step=2</em><br>
-<b>v.category in=</b><em>outmap</em> out=</b><em>stepmap</em>
-<b>option=</b><em>add</em> <b>step=</b><em>2</em>
-<pre>
-FIELD 1:
+<em>3) Add vector categories in layer 1 with step=2</em><br>
+<div class="code"><pre>
+v.category in=outmap out=stepmap option=add step=2
+
+LAYER/TABLE 1/outmap:
 type       count        min        max
 point          0          0          0
 line        1379          1       2757
@@ -42,12 +44,13 @@ boundary       0          0          0
 centroid       0          0          0
 area           0          0          0
 all         1379          1       2757
-</pre>
+</pre></div>
 <P>
 
 <em>4) Add categories/centroids to a vector map without categories</em><br>
-<b>v.category in=</b><em>wkt</em> out=</b><em>wktnew</em>
-<b>option=</b><em>add</em>
+<div class="code"><pre>
+v.category in=wkt out=wktnew option=add
+</pre></div>
 <P>
 Results can be tested using <em><a HREF="d.what.vect.html">d.what.vect</a></em>. 
 

@@ -22,23 +22,33 @@ installation (OGR library), for details see
 <h2>EXAMPLES</h2>
 
 <B>SHAPE files</B><BR>
-<b>v.external dsn=</b><em>/home/user/shape_data</em>
-<b>layer=</b><em>test_shape</em> <b>output=</b><em>grass_map</em> <br>
+<div class="code"><pre>
+v.external dsn=/home/user/shape_data layer=test_shape output=grass_map 
+</pre></div>
+
 <P>
 <B>MapInfo files</B><BR>
-<b>v.external dsn=</b><em>./</em> <b>layer=</b><em>mapinfo_test</em> 
-<b>output=</b><em>grass_map</em> 
+<div class="code"><pre>
+v.external dsn=./ layer=mapinfo_test output=grass_map
+</pre></div>
 <P>
 <B>SDTS files</B> (you have to select the CATD file)<BR>
-<b>v.external dsn=</b><em>CITXCATD.DDF</em> <b>output=</b><em>cities</em> 
+<div class="code"><pre>
+v.external dsn=CITXCATD.DDF output=cities
+</pre></div>
+
 <P>
 <B>TIGER files</B><BR>
-<b>v.external dsn=</b><em>input/2000/56015/</em>
-    <b>layer=</b><em>CompleteChain,PIP</em> <b>output=</b><em>t56015_all</em>
+<div class="code"><pre>
+v.external dsn=input/2000/56015/ layer=CompleteChain,PIP output=t56015_all
+</pre></div>
+
 <P>
 <B>PostGIS maps (area example)</B><BR>
-<b>v.external dsn=</b><em>"PG:host=localhost user=postgres dbname=postgis"</em>
-    <b>layer=</b><em>polymap</em> <b>output=</b><em>polygons</em>
+<div class="code"><pre>
+v.external dsn="PG:host=localhost user=postgres dbname=postgis" layer=polymap \
+output=polygons
+</pre></div>
 
 <P>
 

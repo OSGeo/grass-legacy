@@ -5,10 +5,10 @@ positions read from 'stdin'.
 
 <P>
 The format is:
-<pre>
+<div class="code"><pre>
 P &lt;point id&gt;   &lt;line cat&gt; &lt;offset&gt; [&lt;side offset&gt;]
 L &lt;segment id&gt; &lt;line cat&gt; &lt;start offset&gt; &lt;end offset&gt; [&lt;side offset&gt;]
-</pre>
+</pre></div>
 
 A segment is only created for the first line found of the specified category.
 <P>
@@ -20,11 +20,11 @@ The side offset is a orthogonal distance from the line.
 <h3>EXAMPLE</h3>
 
 The user must send to stdin something like:
-<pre>
+<div class="code"><pre>
 P 1 356 24.56
 P 2 495 12.31
 ...
-</pre>
+</pre></div>
 (pipe into the command).<br>
 For points, to calculate the offset (half of the length) the command <em>v.to.db</em>
 can be used.

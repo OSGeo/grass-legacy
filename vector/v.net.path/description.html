@@ -9,15 +9,15 @@ Shortest paths are written to output vector file and attached attribute table.
 
 Nodes can be piped into the program from file or from stdin. The
 syntax is as follows:
-<pre>
-   id start_point_category end_point_category
-</pre>
+<div class="code"><pre>
+id start_point_category end_point_category
+</pre></div>
 
 or
 
-<pre>
-   id start_point_x start_point_y end_point_x end_point_y
-</pre>
+<div class="code"><pre>
+id start_point_x start_point_y end_point_x end_point_y
+</pre></div>
 
 Points specified by category must be exactly on network nodes,
 while, when specifying coordinates, the next node to a given
@@ -41,10 +41,10 @@ by <em>v.to.db</em>.
 
 Shortest path from node 9 to 12 (nlayer=1 if no extra table for nodes):
 
-<pre>
-    echo "1 9 12" | v.net.path network afcol=forward abcol=backward out=mypath nlayer=1
-    d.vect mypath col=red
-</pre>
+<div class="code"><pre>
+echo "1 9 12" | v.net.path network afcol=forward abcol=backward out=mypath nlayer=1
+d.vect mypath col=red
+</pre></div>
 
 
 <h2>SEE ALSO</h2>
