@@ -1,6 +1,7 @@
 #include<math.h>
-double ppnd7 (p)
-  double p;
+double ppnd7  (double p)
+
+
 
 /*-
  * algorithm as241  appl. statist. (1988) 37(3):477-484.
@@ -10,6 +11,7 @@ double ppnd7 (p)
  * the hash sums below are the sums of the mantissas of the coefficients.
  * they are included for use in checking transcription.
  */
+
 {
   static double zero = 0.0, one = 1.0, half = 0.5;
   static double split1 = 0.425, split2 = 5.0;
@@ -73,8 +75,9 @@ double ppnd7 (p)
   }
 }
 
-double ppnd16 (p)
-  double p;
+double ppnd16  (double p)
+
+
 
 /*-
  * algorithm as241  appl. statist. (1988) 37(3):
@@ -86,6 +89,7 @@ double ppnd16 (p)
  * coefficients.   they are included for use in checking
  * transcription.
  */
+
 {
   static double zero = 0.0, one = 1.0, half = 0.5;
   static double split1 = 0.425, split2 = 5.0;

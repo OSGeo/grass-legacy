@@ -5,9 +5,8 @@
 /* this is actually the Weisberg-Bingham stat. I need to
 OCR the constants and implment this correctly */
 
-double *shapiro_francia (x, n)
-  double *x;
-  int n;
+double *shapiro_francia  (double *x, int n)
+
 {
   static double y[2];
   double suma = 0.0, sumb = 0.0, sumc = 0.0, sumd = 0.0, z, *xcopy;

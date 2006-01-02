@@ -4,9 +4,8 @@
 
 /* could probably use some cleanup/optimization */
 
-double *durbins_exact (x, n)
-  double *x;
-  int n;
+double *durbins_exact  (double *x, int n)
+
 {
   static double y[2];
   double *xcopy, sumx = 0.0, sumx2 = 0.0, s2, *b, *c, *g, *z, sqrt2;

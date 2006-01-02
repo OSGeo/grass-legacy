@@ -2,9 +2,8 @@
 #include<stdlib.h>
 #include<math.h>
 
-double *watson_u2_exp (x, n)
-  double *x;
-  int n;
+double *watson_u2_exp  (double *x, int n)
+
 {
   double *xcopy, mean = 0.0, zbar = 0.0, fn2, fx, sum4 = 0.0;
   static double y[2];

@@ -16,11 +16,13 @@
 #include<math.h>
 #include<stdio.h>
 
-void nscor1 (s, n, n2, work, ifault)
-  double s[], work[];
-  int n, n2, *ifault;
+void nscor1  (double s[], int n, int n2, double work[], int *ifault)
+
+
+
 
 /* exact calculation of normal scores */
+
 {
   double ani, c, c1, d, scor, alnfac();
   int i,j;
@@ -52,8 +54,8 @@ void nscor1 (s, n, n2, work, ifault)
   return;
 }
 
-void init (work)
-  double work[];
+void init  (double work[])
+
 {
   double xstart = -9.0, pi2 = -0.918938533, xx, alnorm();
   int i;
@@ -71,12 +73,14 @@ void init (work)
   return;
 }
 
-double alnfac (j)
-  int j;
+double alnfac  (int j)
+
+
 
 /*-Algorithm AS 177.2 Appl. Statist. (1982) Vol.31, No.2
  * Natural logarithm of factorial for non-negative argument
  */
+
 {
   static double r[7] = {0.0, 0.0, 0.69314718056, 1.79175946923,
   3.17805383035, 4.78749174278, 6.57925121101};
@@ -92,13 +96,15 @@ double alnfac (j)
     (((4.0 - 3.0 * z) * z - 14.0) * z + 420.0) / (5040.0 * w);
 }
 
-void nscor2 (s, n, n2, ifault)
-  double s[];
-  int n, n2, *ifault;
+void nscor2  (double s[], int n, int n2, int *ifault)
+
+
+
 
 /*-Algorithm AS 177.3 Appl. Statist. (1982) Vol.31, No.2
  * Approximation for Rankits
  */
+
 {
   static double eps[4] = {0.419885, 0.450536, 0.456936, 0.468488};
   static double dl1[4] = {0.112063, 0.121770, 0.239299, 0.215159};
@@ -146,13 +152,15 @@ void nscor2 (s, n, n2, ifault)
   return;
 }
 
-double correc (i, n)
-  int i, n;
+double correc  (int i, int n)
+
+
 
 /*-Algorithm AS 177.4 Appl. Statist. (1982) Vol.31, No.2
  * Calculates correction for tail area of noraml distribution
  * corresponding to ith largest rankit in sample size n.
  */
+
 {
   static double c1[7] = {9.5, 28.7, 1.9, 0.0, -7.0, -6.2, -1.6};
   static double c2[7] = {-6.195e3, -9.569e3, -6.728e3, -17.614e3,

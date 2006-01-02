@@ -1,6 +1,6 @@
 #include<math.h>
-double enormp (x)
-  double x;
+double enormp  (double x)
+
 {
   double x1, x2, x3, x4, ret_val;
   static double xp[5] = {7.7105849500132e-5, -0.00133733772997339,

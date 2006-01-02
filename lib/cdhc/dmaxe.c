@@ -2,9 +2,8 @@
 #include<stdlib.h>
 #include<math.h>
 
-double *dmax_exp (x, n)
-  double *x;
-  int n;
+double *dmax_exp  (double *x, int n)
+
 {
   static double y[2];
   double mean=0.0, zmax, tmax, *xcopy, t, z, fx;

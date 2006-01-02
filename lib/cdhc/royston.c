@@ -8,9 +8,8 @@
  * needs as181.c as177.c as241.c dcmp.c as66.c 
  */
 
-double *royston(x,n)
-double *x;
-int n;
+double *royston (double *x, int n)
+
 {
   static double y[2];
   double *a, eps, w, pw, mean=0, ssq=0, *xcopy;

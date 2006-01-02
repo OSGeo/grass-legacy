@@ -1,9 +1,8 @@
 #include<stdio.h>
 #include<math.h>
 
-double *kolmogorov_smirnov_exp (x, n)
-  double *x;
-  int n;
+double *kolmogorov_smirnov_exp  (double *x, int n)
+
 {
   static double y[2];
   double *d, sqrtn, *dmax_exp();

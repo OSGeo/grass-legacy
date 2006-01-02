@@ -2,9 +2,8 @@
 #include<stdlib.h>
 #include<math.h>
 
-double *dmax (x, n)
-  double *x;
-  int n;
+double *dmax  (double *x, int n)
+
 {
   static double y[2];
   double *xcopy, sqrt2, sqrtn, mean = 0.0, sdx = 0.0, fx;

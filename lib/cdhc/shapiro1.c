@@ -2,9 +2,8 @@
 #include<stdlib.h>
 #include<math.h>
 
-double *shapiro_wilk (x, n)
-  double *x;
-  int n;
+double *shapiro_wilk  (double *x, int n)
+
 {
   static double y[2];
   double a[25], s2, *xcopy;

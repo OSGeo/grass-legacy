@@ -1,8 +1,7 @@
-#include<math.h>
-#include<stdio.h>
-void wext (x, n, ssq, a, n2, eps, w, pw, ifault)
-  double x[], ssq, a[], eps, *w, *pw;
-  int n, n2, *ifault;
+#include <math.h>
+#include <stdio.h>
+
+void wext  (double x[], int n, double ssq, double a[], int n2, double eps, double *w, double *pw, int *ifault)
 
 /*-Algorithm AS 181
  * by J.P. Royston, 1982.
@@ -18,6 +17,7 @@ void wext (x, n, ssq, a, n2, eps, w, pw, ifault)
 
  * Note: ppnd() from as66 was replaced with ppnd16() from as241.
  */
+
 {
   double eu3, lamda, ybar, sdy, al, un, ww, y, z;
   int i, j, n3, nc;
@@ -150,15 +150,17 @@ void wext (x, n, ssq, a, n2, eps, w, pw, ifault)
   }
 }
 
-void wcoef (a, n, n2, eps, ifault)
-  double a[], *eps;
-  int n, n2, *ifault;
+void wcoef  (double a[], int n, int n2, double *eps, int *ifault)
+
+
+
 
 /*
  * Algorithm AS 181.1   Appl. Statist.  (1982) Vol. 31, No. 2
  * 
  * Obtain array A of weights for calculating W
  */
+
 {
   static double c4[2] = {0.6869, 0.1678};
   static double c5[2] = {0.6647, 0.2412};
@@ -231,9 +233,10 @@ void wcoef (a, n, n2, eps, ifault)
   return;
 }
 
-double poly (c, nord, x)
-  double c[], x;
-  int nord;
+double poly  (double c[], int nord, double x)
+
+
+
 
 /*
  * Algorithm AS 181.2   Appl. Statist.  (1982) Vol. 31, No. 2
@@ -241,6 +244,7 @@ double poly (c, nord, x)
  * Calculates the algebraic polynomial of order nored-1 with array of
  * coefficients c.  Zero order coefficient is c(1)
  */
+
 {
   double p;
   int n2, i, j;
@@ -258,9 +262,7 @@ double poly (c, nord, x)
   return c[0] + p;
 }
 
-void wgp (x, n, ssq, gp, h, a, n2, eps, w, u, p, ifault)
-  double x[], a[], ssq, gp, h, *eps, w, u, p;
-  int n, n2, *ifault;
+void wgp  (double x[], int n, double ssq, double gp, double h, double a[], int n2, double eps, double w, double u, double p, int *ifault)
 
 /*
  * AS R63 Appl. Statist. (1986) Vol. 35, No.2
@@ -272,6 +274,7 @@ void wgp (x, n, ssq, gp, h, a, n2, eps, w, u, p, ifault)
  * Auxiliary functions required: ALNORM = algorithm AS 66, and PPND =
  * algorithm AS 111 (or PPND7 from AS 241).
  */
+
 {
   double zbar, zsd, an1, hh, alnorm(), ppnd16();
 
@@ -290,7 +293,7 @@ void wgp (x, n, ssq, gp, h, a, n2, eps, w, u, p, ifault)
     if (h > 1.5)
       return;
   }
-  wext (x, n, ssq, a, n2, eps, w, p, ifault);
+  wext (x, n, ssq, a, n2, eps, &w, &p, &ifault);
   if (*ifault != 0)
     return;
   if (!(p > 0.0 && p < 1.0))

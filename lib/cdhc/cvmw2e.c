@@ -2,9 +2,8 @@
 #include<stdlib.h>
 #include<math.h>
 
-double *cramer_von_mises_exp (x, n)
-  double *x;
-  int n;
+double *cramer_von_mises_exp  (double *x, int n)
+
 {
   static double y[2];
   double *xcopy, mean=0.0, fx, fn2, sum4 = 0.0;

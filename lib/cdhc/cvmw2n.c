@@ -2,9 +2,8 @@
 #include<stdlib.h>
 #include<math.h>
 
-double *cramer_von_mises (x, n)
-  double *x;
-  int n;
+double *cramer_von_mises  (double *x, int n)
+
 {
   int i, dcmp();
   static double y[2];

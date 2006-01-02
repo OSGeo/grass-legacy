@@ -1,9 +1,8 @@
 #include<stdio.h>
 #include<math.h>
 
-double *kotz_families (x, n)
-  double *x;
-  int n;
+double *kotz_families  (double *x, int n)
+
 {
   static double y[2];
   int i;

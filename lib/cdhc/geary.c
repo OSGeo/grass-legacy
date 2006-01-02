@@ -1,9 +1,8 @@
 #include<stdio.h>
 #include<math.h>
 
-double *geary_test (x, n)
-  double *x;
-  int n;
+double *geary_test  (double *x, int n)
+
 {
   int i;
   static double y[2];
