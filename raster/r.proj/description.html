@@ -124,6 +124,16 @@ are provided.
 
 <h2>Notes</h2>
 
+To avoid excessive time consumption when reprojecting a map, the
+region and resolution in the target location should be set appropriately.
+A simple way to do this is to generate a vector "box" map of the region in  
+the source location using <em>v.in.region</em>. This "box" map is then
+reprojected into the target location. The region is set to the new vector 
+map with <em>g.region</em> along with the desired raster resolution
+(<em>g.region</em> -m can be used in Latitude/Longitude locations to measure
+the geodetic length of a pixel in the source location). Now <em>r.proj</em>
+is used on the raster map the user wants to reproject into the target location.
+<P>
 When reprojecting whole-world maps the user should disable map-trimming with the
 <em>-n</em> flag. Trimming is not useful here because the module has the whole
 map in memory anyway. Besides that, world "edges" are hard (or impossible)
@@ -139,19 +149,19 @@ the UNIX environment - a user's manual.  USGS Open-File Report 90-284
 Richards, John A. (1993), Remote Sensing Digital Image Analysis,
 Springer-Verlag, Berlin, 2nd edition. 
 <P>
-<a href=http://www.remotesensing.org/proj/>PROJ 4</a>: Projection/datum support library.
+<a href=http://proj.maptools.org/>PROJ 4</a>: Projection/datum support library.
 
 <H2>SEE ALSO</H2>
 
 <EM>
-<A HREF="v.proj.html">v.proj</A><BR>
-<A HREF="g.proj.html">g.proj</A><BR>
 <A HREF="g.region.html">g.region</A><BR>
+<A HREF="g.proj.html">g.proj</A><BR>
 <A HREF="g.setproj.html">g.setproj</A><BR>
 <A HREF="i.rectify.html">i.rectify</A><BR>
 <!-- <A HREF="r.support.html">r.support</A><BR>  -->
 <A HREF="r.stats.html">r.stats</A><BR>
-<A HREF="v.surf.rst.html">v.surf.rst</A><BR>
+<A HREF="v.proj.html">v.proj</A><BR>
+<A HREF="v.in.region.html">v.in.region</A><BR>
 </EM>
 
 <H2>AUTHOR</H2>
