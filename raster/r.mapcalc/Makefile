@@ -9,6 +9,7 @@ COMMON = \
 	$(OBJDIR)/y.tab.o \
 	$(OBJDIR)/lex.yy.o \
 	\
+	$(OBJDIR)/column_shift.o \
 	$(OBJDIR)/evaluate.o \
 	$(OBJDIR)/expression.o \
 	$(OBJDIR)/function.o \
