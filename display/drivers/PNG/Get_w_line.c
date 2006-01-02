@@ -14,9 +14,12 @@
  * the button pressed in returned in *button.
  */
 
-Get_location_with_line2(cx, cy, wx, wy, button)
-	int cx, cy ;      /* current x,y coordinate   */
-	int *wx, *wy ;    /* new x,y coordinate       */
-	int *button ;     /* button pressed to return */
+void
+Get_location_with_line2 (int cx, int cy, int *wx, int *wy, int *button)
+     /* current x,y coordinate   */
+     /* new x,y coordinate       */
+     /* button pressed to return */
+
 {
+  /* nothing ?? */
 }

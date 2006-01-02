@@ -22,8 +22,8 @@
 #include "proto.h" 
 
 int
-db__driver_open_database (handle)
-    dbHandle *handle;
+db__driver_open_database  (dbHandle *handle)
+
 {
     char   *name;
     int    len; 
