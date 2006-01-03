@@ -77,8 +77,10 @@ Note: This text contains *some* rules only applicable to the
      write announcement
       - store in Web as announces/announce_grass$MAJOR$MINOR$RELEASE.html
 
- o upload user HTML manual in case of final release at
-     grass$MAJOR$MINOR/manuals/html$MAJOR$MINOR_user
+ o upload user HTML manual in case of *final release* from compiled English
+   version at:
+     cd dist.$ARCH/docs/html
+     scp * neteler@grass.itc.it:www/grass$MAJOR$MINOR/manuals/html$MAJOR$MINOR_user/
 
 2. Tell others about it:
 
@@ -100,6 +102,7 @@ Note: This text contains *some* rules only applicable to the
 
    DebianGIS:          <pkg-grass-general@lists.alioth.debian.org>
    FreeGIS:            <freegis-list@intevation.de>
+   Geowanking:         <geowanking@lists.burri.to>
 
    news:comp.infosystems.gis
    http://spatialnews.geocomm.com/submitnews.html (not free any more)
