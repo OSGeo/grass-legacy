@@ -1,3 +1,4 @@
+#include <math.h>
 #include "gis.h"
 
 int G_set_color_range ( CELL min,CELL max, struct Colors *colors)
@@ -48,7 +49,6 @@ G_set_d_color_range (DCELL min, DCELL max, struct Colors *colors)
 int 
 G_get_color_range (CELL *min, CELL *max, struct Colors *colors)
 {
-    double floor(), ceil();
     if(!colors->is_float)
     {
        *min = (CELL) floor(colors->cmin);
