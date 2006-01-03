@@ -19,7 +19,7 @@ int do_remove (int n, char *old)
 		G_fatal_error ("Vector map <%s> not found\n", old);
 	ret = Vect_delete ( old );
 	if ( ret == -1 ) {
-	    G_warning ("Cannot delete vector %", old );
+	    G_warning ("Cannot delete vector %s", old );
 	}
     } else {
 	for (i = 0; i < list[n].nelem; i++)
