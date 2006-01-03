@@ -9,13 +9,13 @@
  * represented by ctrl-C, e.g., control A is represented by ctrl-A. 0177 is
  * represented by DEL/RUB. Normal characters remain unchanged.
  *
- *  \param c
+ *  \param int c
  *  \return char * 
  */
 
 char *
-G_unctrl(c)
-    unsigned char c;
+G_unctrl (int c)
+
 {
     static char buf[20];
 

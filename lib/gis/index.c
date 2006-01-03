@@ -1,3 +1,5 @@
+/* TODO: should this go into strings.c ? */
+
 #include "gis.h"
 
 
@@ -12,8 +14,8 @@
  */
 
 char *
-G_index (str, delim)
-    register char *str, delim;
+G_index  (char *str, int delim)
+
 {
     while (*str && *str != delim)
 	str++;
@@ -34,10 +36,10 @@ G_index (str, delim)
  */
 
 char *
-G_rindex (str, delim)
-    register char *str, delim;
+G_rindex  (char *str, int delim)
+
 {
-    register char *p;
+    char *p;
 
     p = NULL;
     while (*str)
