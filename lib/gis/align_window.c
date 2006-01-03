@@ -1,5 +1,6 @@
-#include "gis.h"
 #include <stdio.h>
+#include <math.h>
+#include "gis.h"
 
 /*!
  * \brief align two regions
@@ -26,7 +27,6 @@ G_align_window  (struct Cell_head *window, struct Cell_head *ref)
 
 {
     int preserve;
-    double floor(), ceil();
 
     window->ns_res = ref->ns_res;
     window->ew_res = ref->ew_res;
