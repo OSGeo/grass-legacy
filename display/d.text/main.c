@@ -1,6 +1,4 @@
 /*
-* $Id$
-*
 ****************************************************************************
 *
 * MODULE:       d.text
@@ -101,7 +99,7 @@ main (int argc, char **argv)
 	opt4->options	= "0-100";
 	opt4->required	= NO ;
 	opt4->description=
-	   _("Screen postion at which text will begin to be drawn (percentage, [0,0] is lower left)");
+	   _("Screen position at which text will begin to be drawn (percentage, [0,0] is lower left)");
 
 	opt5 = G_define_option();
 	opt5->key         = "rotation";
