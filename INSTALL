@@ -8,6 +8,7 @@ Note: During the development stages, this version of GRASS was
 
 
 Table of contents
+PREREQUISITES
 (A) SOURCE CODE DISTRIBUTION
 (B) COMPILATION
 (C) COMPILATION NOTES for 64bit platforms
@@ -23,6 +24,19 @@ Table of contents
 (M) DRAFT TUTORIAL
 
 
+PREREQUISITES
+
+The install order matters. GRASS needs at least to libraries
+which have to be installed before installing/compiling GRASS:
+For links to the software, see ./REQUIREMENTS.html in this
+directory:
+
+Installation order:
+	1. PROJ4
+	2. GDAL-OGR  (compiled without GRASS support)
+        3. optionally: databases such as PostgreSQL, MySQL, sqlite
+	4. GRASS
+        5. optionally: GDAL-OGR-GRASS plugin
 
 (A) SOURCE CODE DISTRIBUTION
 
