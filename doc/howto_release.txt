@@ -20,9 +20,9 @@ Note: This text contains *some* rules only applicable to the
 6
 0
 2RC1
-2005
-
+2006
       rm -f include/VERSION~
+
    - submit include/VERSION to CVS
    - Create release branch (only if not yet existing)
 
@@ -59,11 +59,11 @@ Note: This text contains *some* rules only applicable to the
 6
 0
 2cvs
-2005
+2006
 
  o Store the source tarball in (use scp -p FILES grass:):
      http://grass.itc.it/grass/grass$MAJOR$MINOR/source/
-     along with associated files:
+   along with associated files:
      scp grass-$VERSION.* AUTHORS ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING neteler@grass.itc.it:www/grass$MAJOR$MINOR/source/
 
  o update web site to new version (HTML in Web-CVS)
