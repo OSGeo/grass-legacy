@@ -7,7 +7,7 @@
 * open new and old imagery group files in the current mapset
 *******************************************************/
 
-static error  (char *group, char *file, char *msga, char *msgb)
+static void error  (char *group, char *file, char *msga, char *msgb)
 
 {
     char buf[100];
