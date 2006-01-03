@@ -5,6 +5,9 @@
 #define START_COL	xy[incr].col
 #define STOP_COL	xy[incr+1].col
 
+int write_record(int , float, float, int ) ;
+
+
 static int rec_num = 0 ;
 
 save_area(xy, num_points, category)

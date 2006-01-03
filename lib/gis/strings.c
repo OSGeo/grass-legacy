@@ -54,9 +54,14 @@
  *  Author Beverly Wallace (LMCO)
  */
 
+#include <sys/types.h>
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
+
+#ifndef NULL
+#define NULL            0
+#endif
 
 static char *G_strend (char *S)
 {
@@ -147,17 +152,6 @@ int G_strcasecmp(const char *x, const char *y)
     if (*y) return -1;
     return 0;
 }
-
-
-
-#include <sys/types.h>
-#include <string.h>
-#include <stdlib.h>
-
-#ifndef NULL
-#define NULL		0
-#endif
-
 
 char *G_strstr(char *mainString, const char *subString)
 {

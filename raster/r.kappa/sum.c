@@ -5,6 +5,8 @@
 	(updated upon return to point to next stat)
      nl is the layer number (or level) */
 
+int same_cats (int ,int ,int);
+
 long
 count_sum (ns,nl)
   int *ns;

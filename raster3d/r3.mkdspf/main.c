@@ -25,13 +25,16 @@
 */
 
 #define MAIN
+#include <stdlib.h>
+#include <math.h>
 #include "vizual.h"
 #include "gis.h"
 #include "G3d.h"
-#include <math.h>
 
 char *check_get_any_dspname();
-
+int viz_make_header(file_info *, double, double, G3D_Region *);
+int viz_iso_surface(void *, G3D_Region *,cmndln_info *,int);
+int viz_calc_tvals(cmndln_info *,char **,char *,char *,char *,char *,int);
 
 int main(int argc, char *argv[])
 {

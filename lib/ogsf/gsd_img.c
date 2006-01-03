@@ -3,6 +3,7 @@
  * added little/big endian test Markus Neteler 9/2000 
  * changed 10/99 Jaro*/
 
+#include <stdlib.h>
 #include "image.h"
 #include "gstypes.h"
 

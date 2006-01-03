@@ -24,6 +24,7 @@
 #include <stdio.h>  /* needed here for ifdef/else */
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 
 /********
@@ -33,10 +34,6 @@
 
 #if defined(HAVE_LIBLAPACK) && defined(HAVE_LIBBLAS) && defined(HAVE_G2C_H)
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
 #include "gis.h"
 #include "la.h"
 

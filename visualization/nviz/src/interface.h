@@ -187,6 +187,15 @@ int Nvol_draw_all_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nready_draw_cmd(void);
 int Ndone_draw_cmd(void);
 int check_blank(Tcl_Interp *, int);
+int Ndraw_all_cmd(Nv_data *, Tcl_Interp *,int ,char **);
+GLuint load_font(char *);
+int auto_draw(Nv_data *, Tcl_Interp *);
+void GS_draw_Narrow(int *, int , GLuint );
+void GS_draw_all_list(void);
+void GS_delete_list(GLuint);
+int GS_draw_legend(char *, GLuint *, int , int *, float *, int *);
+int GS_draw_fringe(int , int *);
+
 /* exag.c */
 int Nget_first_exag_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nget_height_cmd(Nv_data *, Tcl_Interp *, int, char **);
@@ -335,3 +344,24 @@ int slice_move_up(int, Tcl_Interp *, int, char *[]);
 int slice_move_down(int, Tcl_Interp *, int, char *[]);
 int slice_get_transp(int, Tcl_Interp *, int, char *[]);
 int slice_set_transp(int, Tcl_Interp *, int, char *[]);
+/* GK2.c */
+void GK_print_keys(char *);
+void GK_show_vol(int);
+/* GS2.c */
+void GS_zoom_setup(int *, int *, int *, int *, int *, int *);
+void GS_getlight_color(int , float *, float *, float *);
+void GS_setlight_ambient(int , float , float , float);
+void GS_getlight_ambient(int , float *, float *, float *);
+/* gsd_img_ppm */
+int GS_write_zoom(char *, unsigned int , unsigned int);
+/* do_zoom.c */
+int Create_OS_Ctx(int , int);
+int Destroy_OS_Ctx(void);
+int init_ctx(void);
+/* GLV2.c */
+int GVL_isosurf_move_up(int , int);
+int GVL_isosurf_move_down(int , int);
+int GVL_slice_move_up(int , int);
+int GVL_slice_move_down(int , int);
+int GVL_slice_get_transp(int , int , int *);
+int GVL_slice_set_transp(int , int , int);

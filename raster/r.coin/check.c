@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "coin.h"
 
 /* computes the approximate number of lines/pages an 80 column

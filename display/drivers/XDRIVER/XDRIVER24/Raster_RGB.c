@@ -34,6 +34,7 @@
 #include "gis.h"
 #include "driverlib.h"
 #include "driver.h"
+#include "XDRIVER.h"
 
 #ifndef min
 #define min(a, b) ((a) < (b) ? (a) : (b))

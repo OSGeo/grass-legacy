@@ -14,6 +14,7 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "local_proto.h"
 #include "glocale.h"

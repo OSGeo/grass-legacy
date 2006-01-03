@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "display.h"
 #include "local_proto.h"
+#include "raster.h"
 
 #define NEW_YES
 

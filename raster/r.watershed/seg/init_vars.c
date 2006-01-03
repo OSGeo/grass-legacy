@@ -1,5 +1,6 @@
-#include "Gwater.h"
+#include <stdlib.h>
 #include <unistd.h>
+#include "Gwater.h"
 
 int 
 init_vars (int argc, char *argv[])

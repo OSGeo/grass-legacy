@@ -2,6 +2,7 @@
 /* select a camera reference file for a given imagery group */
 
 #define  MAIN   1
+#include <stdlib.h>
 #include "orthophoto.h"
 #include "globals.h"
 

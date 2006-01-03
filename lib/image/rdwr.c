@@ -5,6 +5,7 @@
  *
  */
 #include	<stdio.h>
+#include	<unistd.h>
 #include	"image.h"
 
 img_seek(image, y, z)

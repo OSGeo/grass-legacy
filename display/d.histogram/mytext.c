@@ -1,3 +1,5 @@
+#include "raster.h"
+
 #ifdef R_text
 #undef R_text
 #endif

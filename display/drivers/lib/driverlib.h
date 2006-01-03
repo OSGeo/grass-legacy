@@ -11,10 +11,13 @@ int draw_line(int, int, int, int);
 int draw_point(int, int);
 /* Get_w_box.c */
 int Get_location_with_box(int, int, int *, int *, int *);
+int Get_location_with_box2(int, int, int *, int *, int *,int);
 /* Get_w_line.c */
 int Get_location_with_line(int, int, int *, int *, int *);
+int Get_location_with_line2(int, int, int *, int *, int *,int);
 /* Get_w_pnt.c */
 int Get_location_with_pointer(int *, int *, int *);
+int Get_location_with_pointer2(int *, int *, int *,int);
 /* Panel.c */
 int Panel_save(char *, int, int, int, int);
 int Panel_restore(char *);
@@ -34,6 +37,8 @@ int Screen_bot(int *);
 int Screen_top(int *);
 int Get_num_colors(int *);
 int color(int);
+/* Respond.c */
+void Respond(void);
 /* Work.c */
 int Has_work(void);
 int Work_stream(void);
@@ -117,6 +122,7 @@ int check_connection(char *,char *);
 
 /* command.c */
 void command_init(int,int);
+int get_command(char *c);
 int command_get_input(void);
 int process_command(int);
 

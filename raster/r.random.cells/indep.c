@@ -8,6 +8,8 @@
 #undef MAIN
 #include "ransurf.h"
 
+int FlagGet(FLAG *,int,int);
+
 Indep( )
 {
 	int	Count, DRow, DCol;

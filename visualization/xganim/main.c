@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <math.h>
 #include <limits.h>
 #include "gis.h"
@@ -39,6 +40,10 @@ short _get_Xlookup();
 char **gee_wildfiles();
 char *G__mapset_name ();
 void parse_command();
+int make_buttons(struct gui_data *,Widget, Screen *);
+int set_buttons_pixmap(Display *,Drawable);
+Colormap InitColorTableFixed(Colormap);
+int _get_lookup_for_color(int , int , int );
 /*char *strchr();*/
 
 

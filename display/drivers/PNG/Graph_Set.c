@@ -21,6 +21,7 @@
 
 #include "gis.h"
 #include "pngdriver.h"
+void InitColorTableFixed(void);
 
 char *file_name;
 int currentColor;

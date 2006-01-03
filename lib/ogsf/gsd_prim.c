@@ -10,6 +10,7 @@
 /* DEBUG */
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "gstypes.h"
 
@@ -920,7 +921,7 @@ void gsd_calllist(int listno)
 
 
 /************************************************************************/
-void gsd_calllists(int listno)
+void gsd_calllists()
 {
     int i;
 

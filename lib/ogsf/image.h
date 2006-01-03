@@ -78,6 +78,10 @@ typedef struct {
 
 IMAGE *iopen();
 IMAGE *icreate();
+int iclose(IMAGE *);
+int putrow(IMAGE *,short *,unsigned int,unsigned int);
+int i_seterror(void (*)());
+
 unsigned short *ibufalloc();
 
 #define IMAGEDEF		/* for backwards compatibility */

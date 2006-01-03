@@ -1,4 +1,4 @@
-
+#include <stdlib.h>
 #include "globals.h"
 #include "local_proto.h"
 #include <unistd.h>

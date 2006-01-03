@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "gis.h"
 
 int get_stats (char *name, char *mapset, struct Cell_stats *statf, int quiet)

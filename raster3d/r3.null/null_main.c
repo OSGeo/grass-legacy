@@ -3,6 +3,7 @@
 #include <string.h>
 #include "gis.h"
 #include "G3d.h"
+#include "mask.h"
 
 /*--------------------------------------------------------------------------*/
 

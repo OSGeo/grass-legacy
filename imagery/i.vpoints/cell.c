@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "globals.h"
 
 static int use = 1;

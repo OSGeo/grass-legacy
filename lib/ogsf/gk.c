@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 
 #include "gstypes.h"
 #include "keyframe.h"

@@ -1,8 +1,18 @@
+#include <stdlib.h>
 #include "vizual.h"
 #include "cell_table.h"
 #include "cell_table.h"
 #include "gis.h"
 #include "G3d.h"
+
+int percent(int,int);
+int normalize(float *);
+int calc_fnorm(int);
+int xings_fnorm(int,int);
+int xings_grad (float **,int,int,int,int,int);
+int calc_cube_info(float **,int);
+int fill_cfax(Cube_data *, int,int, float **, float **);
+int r3read_level (void *, G3D_Region *, file_info *, float *, int);
 
 #define XDIMYDIM (Headfax.xdim*Headfax.ydim)
 

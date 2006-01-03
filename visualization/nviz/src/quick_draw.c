@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "tk.h"
 #include "interface.h"
+void GVL_draw_wire(int id);
 
 int Nquick_draw_cmd(Nv_data * dc, Tcl_Interp * interp)
 {

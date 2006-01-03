@@ -15,6 +15,7 @@
 *****************************************************************************/
 
 
+#include <string.h>
 #include "gstypes.h"
 #include "rgbpack.h"
 #include <assert.h>

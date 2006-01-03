@@ -1,6 +1,8 @@
 /* @(#)do_dots.c	2.1   6/26/87 */
 #include "ply_to_cll.h"
 
+int write_record(int , float, float, int ) ;
+
 do_dots(xarray, yarray, num_verticies, category )
 	double xarray[], yarray[] ;
 	int num_verticies ;

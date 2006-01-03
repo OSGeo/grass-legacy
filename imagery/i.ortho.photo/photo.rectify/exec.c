@@ -5,6 +5,7 @@
                     Handles things like support files.
 */                   
 
+#include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
 #include <sys/types.h>

@@ -1,6 +1,7 @@
 /* main.c */
 
 #define  MAIN  1
+#include <stdlib.h>
 #include "globals.h"
 #include <string.h>
 

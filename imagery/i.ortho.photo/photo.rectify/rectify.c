@@ -5,6 +5,7 @@
  */
 
 #include <string.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include "global.h"
 #include "local_proto.h"

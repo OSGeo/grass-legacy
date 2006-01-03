@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <string.h>
+
 #include "gis.h"
 #include "options.h"
 #include "display.h"

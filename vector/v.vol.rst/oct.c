@@ -34,7 +34,7 @@
 #include "externs.h"
 #include "dataoct.h"
 
-
+int OT_divide_oct (struct octtree *);
 
 
 struct octfunc * OT_functions_new(compare,divide_data,add_data,

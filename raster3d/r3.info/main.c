@@ -12,8 +12,10 @@
     fprintf (out,"%c\n",x)
 
 extern char * G_find_grid3 ();
+extern format_double (double, char *);
 
 static char *name;
+
 
 int main (argc, argv)   
     int argc;

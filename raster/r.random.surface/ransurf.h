@@ -71,3 +71,17 @@ GLOBAL  struct Option *Distance, *Exponent, *Weight;
 #else
 #define FUNCTION(a)
 #endif
+
+/* Function definition */
+
+int CopyFilter( FILTER  *,FILTER);
+int DistDecay( double *,int,int);
+int MakeBigF();
+int Digits( double,int);
+int IsLegal (char *);
+int Init(int,char **);
+int SaveMap(int,int);
+int CalcSD();
+int GenNorm();
+int ZeroMapCells();
+int CalcSurface();

@@ -76,6 +76,8 @@ int Nliteral_from_logical_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
                   char *argv[]);
 int Nlogical_from_literal_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
                   char *argv[]);
+int slice(int , int , Tcl_Interp *, int, char **);
+int isosurf(int , int , Tcl_Interp * , int , char **);
 
 /*
  * Nliteral_from_logical_cmd --

@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #define GLOBAL
 #include "global.h"
 #include "local_proto.h"

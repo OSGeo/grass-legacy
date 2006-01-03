@@ -1,5 +1,7 @@
 /* ask_elev .c */
 
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "vask.h"
 #include "elev.h"

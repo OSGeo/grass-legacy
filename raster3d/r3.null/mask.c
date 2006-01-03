@@ -2,16 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
-
-typedef struct _d_interval {
-	double low, high;
-	int inf;
-	struct _d_interval *next;
-} d_Interval;
-
-typedef struct _d_mask {
-	d_Interval *list;
-} d_Mask;
+#include "mask.h"
 
 static
 init_d_mask_rules (d_mask)

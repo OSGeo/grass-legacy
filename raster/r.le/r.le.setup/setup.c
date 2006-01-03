@@ -21,8 +21,12 @@
 *				                           *
 ************************************************************/
 
+#include <stdlib.h>
+#include <unistd.h>
 #include "setup.h"
 #include "config.h"
+#include "display.h"
+#include "raster.h"
 
 struct Colors  *colors_old;
 

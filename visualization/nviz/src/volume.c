@@ -5,6 +5,7 @@
 */
 
 /* Nvision includes */
+#include <stdlib.h>
 #include "interface.h"
 
 /* Extern declarations */

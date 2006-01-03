@@ -8,6 +8,7 @@ Help text inserted by
 */
 
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 #define MAIN
 #include "basin.h"

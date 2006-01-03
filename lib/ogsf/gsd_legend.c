@@ -2,6 +2,10 @@
  * Converted code from legend.c in SG3d
  * routines to set viewport, close viewport, and make legend
 */
+#include <stdlib.h>
+
+void gluOrtho2D (GLdouble , GLdouble , GLdouble , GLdouble );
+
 #include "gstypes.h"
 #include "rgbpack.h"
 

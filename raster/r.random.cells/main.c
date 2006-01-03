@@ -17,6 +17,9 @@
 #include "glocale.h"
 #undef MAIN
 
+Init (int, char **);
+int Indep(void);
+
 int
 main (int argc, char *argv[])
 {

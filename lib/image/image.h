@@ -82,6 +82,25 @@ typedef struct {
 IMAGE *iopen();
 IMAGE *icreate();
 unsigned short *ibufalloc();
+int putrow(IMAGE *,unsigned short *,unsigned int,unsigned int);
+int iflush(IMAGE *);
+int cvtlongs(long *,long);
+int cvtshorts(unsigned short *,long);
+int cvtimage(long *);
+int img_write(IMAGE *,char *,long);
+int img_optseek(IMAGE *,unsigned long);
+int i_errhdlr();
+int getrow(IMAGE *,unsigned short *,unsigned int, unsigned int);
+int isetname(IMAGE *,char *);
+int ifilbuf(IMAGE *);
+int iflsbuf(IMAGE *,unsigned long);
+int img_badrow(IMAGE *,int,int);
+int img_seek(IMAGE *,unsigned int,unsigned int);
+int img_read(IMAGE *,char *,long);
+int img_getrowsize(IMAGE *);
+int img_setrowsize(IMAGE *,long, long, long);
+int img_rle_compact(unsigned short *, int, unsigned short *, int, int);
+int img_rle_expand(unsigned short *, int, unsigned short *,int);
 
 #define IMAGEDEF		/* for backwards compatibility */
 #endif	/* !__GL_IMAGE_H__ */

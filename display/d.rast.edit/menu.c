@@ -8,6 +8,7 @@
 
  */
 #include <string.h>
+#include <stdlib.h>
 #include "edit.h"
 #include "D.h"
 

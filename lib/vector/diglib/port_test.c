@@ -19,6 +19,7 @@
 *****************************************************************************/
 #include <stdio.h>
 #include "Vect.h"
+int dumpflags (void);
 /*
    **  Written by Dave Gerdes  9/1988
    **  US Army Construction Engineering Research Lab

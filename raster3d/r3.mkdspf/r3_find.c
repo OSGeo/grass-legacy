@@ -3,8 +3,9 @@
 *
 * Find the a 3dcell in the current mapset
 **************************************************************/
+#include <string.h>
 #include "gis.h"
-
+char * G_find_grid3 (char *,char *);
 
 g3_find_dsp_file (cell, file, mset)
     char *cell, *mset;

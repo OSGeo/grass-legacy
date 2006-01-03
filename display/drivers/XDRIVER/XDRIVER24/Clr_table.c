@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "includes.h"
 #include "colors.h"
+#include "XDRIVER.h"
 
 static int table_type = FIXED;
 

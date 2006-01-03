@@ -17,6 +17,9 @@
 #include "stash.h"
 #include "glocale.h"
 
+int insert ( POINT **,int,int,int,int);
+int path_finder (int,int,int,int);
+
 struct Cell_head window;
 char *value;
 double east, north, west;

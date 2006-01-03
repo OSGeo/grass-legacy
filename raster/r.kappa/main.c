@@ -6,6 +6,12 @@
 #define GLOBAL
 #include "kappa.h"
 
+int calc_kappa();
+int prn_header();
+int prn_error_mat(int,int);
+int stats();
+int layer (char *);
+
 int
 main (argc, argv)
  int argc;
