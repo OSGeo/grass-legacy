@@ -32,7 +32,7 @@ Note: This text contains *some* rules only applicable to the
      #version:
      MAJOR=6
      MINOR=0
-     RELEASE=2RC1
+     RELEASE=`cat include/VERSION | head -3 | tail -1`
      VERSION=${MAJOR}.${MINOR}.${RELEASE}
      echo $VERSION
      #create ChangeLog on release branch:
