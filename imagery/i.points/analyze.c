@@ -260,7 +260,7 @@ analyze (void)
     R_panel_delete (tempfile1);
     R_flush();
 
-    free (xres); free (yres); free (gnd);
+    G_free (xres); G_free (yres); G_free (gnd);
     I_put_control_points (group.name, &group.points);
     display_points(1);
     return 0; /* return but don't QUIT */

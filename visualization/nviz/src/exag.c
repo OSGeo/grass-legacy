@@ -5,10 +5,8 @@
  */
 
 
+#include <stdlib.h>
 #include "interface.h"
-
-extern void free();
-double rint();
 
 #ifdef OLD
 

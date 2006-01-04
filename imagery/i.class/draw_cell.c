@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "gis.h"
 #include "globals.h"
 #include "display.h"
 #include "raster.h"
@@ -63,7 +64,7 @@ int draw_cell (View *view, int overlay)
       D_d_raster (dcell, ncols, repeat, &colr);
     }
   G_close_cell (fd);
-  free (dcell);
+  G_free (dcell);
   G_free_colors (&colr);
 
   return row==nrows;

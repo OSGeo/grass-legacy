@@ -53,7 +53,7 @@ void removeDuplicates()
 	if(j != nsites)
 	{
 		nsites = j;
-		sites = (struct Site *) realloc(sites,nsites*sizeof(*sites));
+		sites = (struct Site *) G_realloc (sites,nsites*sizeof(*sites));
 	}
 
 }
@@ -89,7 +89,7 @@ readsites ( void )
 	sites[nsites].refcnt = 0;
 	nsites += 1;
 	if (nsites % 4000 == 0)
-	    sites = (struct Site *) realloc(sites,(nsites+4000)*sizeof(*sites));
+	    sites = (struct Site *) G_realloc (sites,(nsites+4000)*sizeof(*sites));
     }
 
     qsort(sites, nsites, sizeof(*sites), scomp);

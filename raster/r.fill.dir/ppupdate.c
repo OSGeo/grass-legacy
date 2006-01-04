@@ -43,11 +43,11 @@ void ppupdate(int fe, int fb, int nl, int nbasins, struct band3 *elev, struct ba
    for(i=1;i<=nbasins;i+=1)
    {
       list[i].next=-1;
-      list[i].pp=malloc(bpe());
+      list[i].pp=G_malloc (bpe());
       set_max(list[i].pp);
 
       list[i].next_alt=-1;
-      list[i].pp_alt=malloc(bpe());
+      list[i].pp_alt=G_malloc (bpe());
       set_max(list[i].pp_alt);
 
       list[i].trace=0;

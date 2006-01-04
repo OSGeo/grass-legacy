@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <dbmi.h>
+#include "gis.h"
 #include "globals.h"
 #include "proto.h"
 
@@ -31,12 +32,12 @@ int db__driver_execute_immediate(sql)
 	report_error();
 	PQclear(res);
 	if ( str ) 
-	    free ( str );
+	    G_free ( str );
 	return DB_FAILED;
     }
     
     if ( str ) 
-	free ( str );
+	G_free ( str );
     PQclear(res);
 
     return DB_OK;

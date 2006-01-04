@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include "gis.h"
 #include "list.h"
 #include "mapcalc.h"
 #include "vector.h"
@@ -187,7 +188,7 @@ setpnt (SYMBOL *var, SYMBOL *pnt)
     if (sym)
     {
       if (--((VECTOR *)sym->v.p)->refcnt < 1)
-	free (sym->v.p);
+	G_free (sym->v.p);
       /*
        * If refcnt(pnt) == 1, this was anonymous, else it's used
        * somewhere else. Must we dup then?
@@ -197,7 +198,7 @@ setpnt (SYMBOL *var, SYMBOL *pnt)
   }
 
   if (--((VECTOR *)var->v.p)->refcnt < 1)
-    free (var->v.p);
+    G_free (var->v.p);
   var->v.p = NULL;
   freesym (var);
 
@@ -299,7 +300,7 @@ pntfunc (SYMBOL *func, SYMBOL *arglist)
     parseerror = 1;
     sym = (SYMBOL *)listdelall ((LIST *)sym, freesym);
     if (res)
-      free (res);
+      G_free (res);
     return NULL;
   }
   sym->v.p = res;

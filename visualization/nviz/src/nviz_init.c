@@ -341,14 +341,14 @@ int Ngetargs(Tcl_Interp * interp,	/* Current interpreter. */
 		    strstr(argv0, "script_get_line") != NULL ||
 		    strstr(argv0, "script_file_tools") != NULL) {
 	    fprintf(stderr, "Entering script mode ...\n");
-	    tmp2 = (char *)malloc((strlen(cmd) + 2) * (sizeof(char)));
+	    tmp2 = (char *)G_malloc ((strlen(cmd) + 2) * (sizeof(char)));
 	    sprintf(tmp2, "%s", cmd);
 	    script_mode = 1;
     } else if ( strstr(cmd, argv0) == NULL) {
-	    tmp2 = (char *)malloc((strlen(cmd) + strlen(argv0) + strlen(tmp) + 4 ) * (sizeof(char)));
+	    tmp2 = (char *)G_malloc ((strlen(cmd) + strlen(argv0) + strlen(tmp) + 4 ) * (sizeof(char)));
 	    sprintf(tmp2, "%s %s %s", cmd, argv0, tmp);
     } else {
-	    tmp2 = (char *)malloc((strlen(argv0) + strlen(tmp) + 2) * (sizeof(char)));
+	    tmp2 = (char *)G_malloc ((strlen(argv0) + strlen(tmp) + 2) * (sizeof(char)));
 	    sprintf(tmp2, "%s %s", argv0, tmp);
     }
 
@@ -423,7 +423,7 @@ int set_default_wirecolors(Nv_data * dc, int surfs)
 	RGB_TO_INT(greyval, greyval, greyval, color);
 	GS_set_wire_color(surf_list[i], color);
     }
-    free(surf_list);
+    G_free (surf_list);
 
 #else
 

@@ -1,6 +1,7 @@
 #define MAIN
 #include <stdlib.h>
 #include <string.h>
+#include "gis.h"
 #include "list.h"
 #include "local_proto.h"
 
@@ -141,7 +142,7 @@ main (int argc, char *argv[])
 		    fprintf(fp, "name: %s\n", new);
 		    fprintf(fp, "mapset: %s\n", mapset);
 		    fwrite(str, l, 1, fp);
-		    free(str);
+		    G_free (str);
 		    fclose(fp);
 		}
             }

@@ -106,7 +106,7 @@ void filldir(int fe, int fd, int nl, struct band3 *bnd, struct metrics* m)
 /* determine the flow direction in each cell.  On outer rows and columns
  * the flow direction is always directly out of the map */
 
-   dir=calloc(bnd->ns,sizeof(CELL));
+   dir=G_calloc (bnd->ns,sizeof(CELL));
    bufsz=bnd->ns*sizeof(CELL);
 
    lseek(fe,0,SEEK_SET);
@@ -122,7 +122,7 @@ void filldir(int fe, int fd, int nl, struct band3 *bnd, struct metrics* m)
    build_one_row(i,nl,bnd->ns,bnd,dir,m[i]);
    write(fd,dir,bufsz);
 
-   free(dir);
+   G_free (dir);
 
    return;
 }

@@ -248,10 +248,10 @@ back:
      get_1recl(line, 0);
      fputs(line, fp);
      if (line[0] == 'e' && line[1] == 'n' && line[2] == 'd'){
-	free(line);
+	G_free (line);
 	break;
      }
-     free(line);
+     G_free (line);
   }
 
   fclose(fp);
@@ -353,7 +353,7 @@ void  ask_fromto()
         fprintf(stderr, "\n\n  Please enter \"TO\" attribute group followed by \"0 end\"\n");
   }
   fclose(fp);
-  free(buf);
+  G_free (buf);
   return;
 }
 

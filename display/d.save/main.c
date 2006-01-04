@@ -348,8 +348,8 @@ int main (int argc, char **argv)
 				fprintf (stdout,"%-70s # %d\n", List->string, i--);
 				temp_list = List;
 				List = List->ptr;
-				free(temp_list->string);
-				free(temp_list);
+				G_free (temp_list->string);
+				G_free (temp_list);
 			}
 			List_last = NULL;
 		}

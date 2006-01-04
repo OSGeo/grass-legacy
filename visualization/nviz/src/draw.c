@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "gis.h"
 #include "togl.h"
 
 #define FontBase_MAIN
@@ -44,7 +45,7 @@ int Nunset_cancel_func_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
     )
 {
     if (cancel_script != NULL)
-	free(cancel_script);
+	G_free (cancel_script);
 
     cancel_script = NULL;
 
@@ -65,10 +66,10 @@ int Nset_cancel_func_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
     }
 
     if (cancel_script != NULL)
-	free(cancel_script);
+	G_free (cancel_script);
 
     cancel_interp = interp;
-    cancel_script = (char *) malloc(sizeof(char) * (strlen(argv[1]) + 1));
+    cancel_script = (char *) G_malloc (sizeof(char) * (strlen(argv[1]) + 1));
     strcpy(cancel_script, argv[1]);
 
     GS_set_cxl_func(CancelFunc_Hook);
@@ -526,7 +527,7 @@ int surf_draw_all(Nv_data * dc, Tcl_Interp * interp)
 
     surf_list = GS_get_surf_list(&nsurfs);
     sort_surfs_max(surf_list, sortSurfs, sorti, nsurfs);
-    free(surf_list);
+    G_free (surf_list);
 
     if (doclear == 1)
 	GS_clear(dc->BGcolor);
@@ -593,7 +594,7 @@ int Nvect_draw_all_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpret
 	    GV_draw_vect(vect_list[i]);
 	}
     }
-    free(vect_list);
+    G_free (vect_list);
 
     GS_done_draw();
 
@@ -627,7 +628,7 @@ int Nsite_draw_all_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpret
 	    GP_draw_site(site_list[i]);
 	}
     }
-    free(site_list);
+    G_free (site_list);
 
     G_debug(3, "Done drawing\n");
 
@@ -659,7 +660,7 @@ int Nvol_draw_all_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interprete
 	    GVL_draw_vol(vol_list[i]);
 	}
     }
-    free(vol_list);
+    G_free (vol_list);
 
     GS_done_draw();
 
@@ -714,7 +715,7 @@ int check_blank(Tcl_Interp * interp, int map_id)
 	}
     }
 
-    free((char *) listArgv);
+    G_free ((char *) listArgv);
     return rval;
 
 }

@@ -110,45 +110,45 @@ fclose(fdsfile);
 	  if(wdepth!=NULL)
         cell12=G_allocate_d_raster_buf();
 
-        zz = (float **)malloc(sizeof(float)*(my));
-        v1 = (double **)malloc(sizeof(double)*(my));
-        v2 = (double **)malloc(sizeof(double)*(my));
+        zz = (float **)G_malloc (sizeof(float)*(my));
+        v1 = (double **)G_malloc (sizeof(double)*(my));
+        v2 = (double **)G_malloc (sizeof(double)*(my));
 	if(rain != NULL)
-        si = (double **)malloc(sizeof(double)*(my));
+        si = (double **)G_malloc (sizeof(double)*(my));
         if(infil != NULL)
-        inf = (double **)malloc(sizeof(double)*(my));
+        inf = (double **)G_malloc (sizeof(double)*(my));
         if(traps != NULL)
-        trap = (float **)malloc(sizeof(float)*(my));
-        cchez = (float **)malloc(sizeof(float)*(my));
+        trap = (float **)G_malloc (sizeof(float)*(my));
+        cchez = (float **)G_malloc (sizeof(float)*(my));
           if(detin!=NULL)
-        dc = (float **)malloc(sizeof(float)*(my));
+        dc = (float **)G_malloc (sizeof(float)*(my));
           if(tranin!=NULL)
-        ct = (float **)malloc(sizeof(float)*(my));
+        ct = (float **)G_malloc (sizeof(float)*(my));
           if(tauin!=NULL)
-        tau = (float **)malloc(sizeof(float)*(my));
+        tau = (float **)G_malloc (sizeof(float)*(my));
 	  if(wdepth!=NULL)
-        gama = (double **)malloc(sizeof(double)*(my));
+        gama = (double **)G_malloc (sizeof(double)*(my));
 
   for(l=0;l<my;l++)
    {
-        zz[l]   = (float*)malloc(sizeof(float)*(mx));
-        v1[l]   = (double*)malloc(sizeof(double)*(mx));
-        v2[l]   = (double*)malloc(sizeof(double)*(mx));
+        zz[l]   = (float*)G_malloc (sizeof(float)*(mx));
+        v1[l]   = (double*)G_malloc (sizeof(double)*(mx));
+        v2[l]   = (double*)G_malloc (sizeof(double)*(mx));
         if(rain != NULL)
-        si[l]   = (double*)malloc(sizeof(double)*(mx));
+        si[l]   = (double*)G_malloc (sizeof(double)*(mx));
         if(infil != NULL)
-        inf[l]   = (double*)malloc(sizeof(double)*(mx));
+        inf[l]   = (double*)G_malloc (sizeof(double)*(mx));
         if(traps != NULL)
-        trap[l]   = (float*)malloc(sizeof(float)*(mx));
-        cchez[l]   = (float*)malloc(sizeof(float)*(mx));
+        trap[l]   = (float*)G_malloc (sizeof(float)*(mx));
+        cchez[l]   = (float*)G_malloc (sizeof(float)*(mx));
           if(detin!=NULL)
-        dc[l]   = (float*)malloc(sizeof(float)*(mx));
+        dc[l]   = (float*)G_malloc (sizeof(float)*(mx));
           if(tranin!=NULL)
-        ct[l]   = (float*)malloc(sizeof(float)*(mx));
+        ct[l]   = (float*)G_malloc (sizeof(float)*(mx));
           if(tauin!=NULL)
-        tau[l]  = (float*)malloc(sizeof(float)*(mx));
+        tau[l]  = (float*)G_malloc (sizeof(float)*(mx));
           if(wdepth!=NULL)
-	gama[l]  = (double*)malloc(sizeof(double)*(mx));
+	gama[l]  = (double*)G_malloc (sizeof(double)*(mx));
         }
 
    printf("Running MAY 10 version\n");
@@ -369,11 +369,11 @@ int grad_check ()
 	
 /* mandatory alloc. - should be moved to main.c*/
 
-        slope = (double **)malloc(sizeof(double)*(my));
+        slope = (double **)G_malloc (sizeof(double)*(my));
 
            for(l=0;l<my;l++)
               {
-                slope[l]   = (double*)malloc(sizeof(double)*(mx));
+                slope[l]   = (double*)G_malloc (sizeof(double)*(mx));
               }
            for (j = 0; j < my; j++)
               {

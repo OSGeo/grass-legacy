@@ -414,7 +414,7 @@ main (int argc, char *argv[])
 	if (spotting) {	
 		spotdist = G_allocate_cell_buf();
 		elev = G_allocate_cell_buf();
-		map_elev = (CELL *) calloc (nrows*ncols, sizeof(CELL));
+		map_elev = (CELL *) G_calloc (nrows*ncols, sizeof(CELL));
 	}
 
 	/*  Open input cell layers for reading  */
@@ -736,7 +736,7 @@ main (int argc, char *argv[])
 	G_close_cell(maxdir_fd);
 	if (spotting) {		G_close_cell(spotdist_fd);
 				G_close_cell(spotdist_fd);
-				free (map_elev);
+				G_free (map_elev);
 	}
 
 /*	

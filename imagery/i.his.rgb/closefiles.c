@@ -17,7 +17,7 @@ int closefiles(CELL *rowbuf[NBANDS])
 	for (band=0; band<NBANDS; band++)
 	{
 		G_close_cell(fd_output[band]);
-		free(rowbuf[band]);
+		G_free (rowbuf[band]);
 		G_read_range(outputfiles[band], G_mapset(), &range) ;
 		G_get_range_min_max (&range, &min, &max);
 		G_make_grey_scale_colors(&colors, min, max) ;

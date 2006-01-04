@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include "gis.h"
 #include "profile.h"
 #include "display.h"
 #include "raster.h"
@@ -417,7 +418,7 @@ if (max < 0) max = 0;
         }
         else
         {
-            free(profile.ptr);
+            G_free (profile.ptr);
         }
     }
 

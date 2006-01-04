@@ -74,7 +74,7 @@ void free_cursor( cursor *c )
     if ( c->hLayer )
        OGR_DS_ReleaseResultSet( hDs, c->hLayer );
 
-    free ( c->cols );
+    G_free ( c->cols );
     G_free(c);  
 
     db_drop_token(c->token);

@@ -155,7 +155,7 @@ main (int argc, char **argv)
 
   ncoor = 0;
   acoor = 100;
-  coor = (COOR *) malloc ( sizeof(COOR) * acoor );
+  coor = (COOR *) G_malloc ( sizeof(COOR) * acoor );
 
   nnodes = Vect_get_num_nodes ( &Out );
   for ( node = 1; node <= nnodes; node++ ) {
@@ -166,7 +166,7 @@ main (int argc, char **argv)
 
 	  if ( ncoor == acoor - 5 ) { /* always space for 5 region corners */
 	      acoor += 100; 
-	      coor = (COOR *) realloc ( coor, sizeof(COOR) * acoor );
+	      coor = (COOR *) G_realloc ( coor, sizeof(COOR) * acoor );
 	  }
 	  
 	  coor[ncoor].x = x;
@@ -206,7 +206,7 @@ main (int argc, char **argv)
      Vect_write_line ( &Out, Type, Points, Cats );
   }
 
-  free (coor);
+  G_free (coor);
 
   /* Copy input points as centroids */
   nfields = Vect_cidx_get_num_fields ( &In );

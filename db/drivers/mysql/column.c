@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <dbmi.h>
+#include "gis.h"
 #include "globals.h"
 #include "proto.h"
 
@@ -30,7 +31,7 @@ int add_column(int tab, int type, char *name, int width, int decimals)
     if (db.tables[tab].ncols == db.tables[tab].acols) {
 	db.tables[tab].acols += 15;
 	db.tables[tab].cols =
-	    (COLUMN *) realloc(db.tables[tab].cols,
+	    (COLUMN *) G_realloc (db.tables[tab].cols,
 			       db.tables[tab].acols * sizeof(TABLE));
     }
 

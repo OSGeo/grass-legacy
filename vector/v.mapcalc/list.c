@@ -4,6 +4,7 @@
 #include <time.h>
 #if 0
 #include <dmalloc.h>
+#include "gis.h"
 #endif
 #include "list.h"
 
@@ -49,7 +50,7 @@ listitem (size_t size)
 {
   LIST *item;
 
-  item = calloc (1, size);
+  item = G_calloc (1, size);
   if (!item)
   {
     fprintf (stderr, "Out of memory!\n");
@@ -266,7 +267,7 @@ listdel (LIST *head, LIST *elt, freefunc func)
 
   if (func)
     (*func)(elt);
-  free (elt);
+  G_free (elt);
 
   return head;
 }
@@ -501,7 +502,7 @@ listshuffle (LIST *head)
     }
   }
 
-  free (array);
+  G_free (array);
 
   return newhead;
 }
@@ -520,7 +521,7 @@ listdelall (LIST *head, freefunc func)
     next = item->next;
     if (func)
       (*func)(item);
-    free (item);
+    G_free (item);
     item = next;
   }
 
@@ -529,7 +530,7 @@ listdelall (LIST *head, freefunc func)
 
 /*
  * list2array()				build an array with members of list
- * array is allocated and needs to be free()ed, list not changed.
+ * array is allocated and needs to be G_free ()ed, list not changed.
  */
 
 LIST **
@@ -542,7 +543,7 @@ list2array (LIST *head)
   if (!n)
     return NULL;
 
-  array = (LIST **)calloc (n + 1, sizeof (LIST *));
+  array = (LIST **)G_calloc (n + 1, sizeof (LIST *));
   if (!array)
   {
     fprintf (stderr, "Out of memory\n");

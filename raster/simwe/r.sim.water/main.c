@@ -334,10 +334,10 @@ int main ( int argc, char *argv[])
 
 /* memory allocation for output grids */
 
-        gama = (double **)malloc(sizeof(double)*(my));
+        gama = (double **)G_malloc (sizeof(double)*(my));
            for(l=0;l<my;l++)
               {
-                gama[l]   = (double*)malloc(sizeof(double)*(mx));
+                gama[l]   = (double*)G_malloc (sizeof(double)*(mx));
               }
            for (j = 0; j < my; j++)
               {
@@ -347,10 +347,10 @@ int main ( int argc, char *argv[])
 
    if (err != NULL)
       {
-        gammas = (double **)malloc(sizeof(double)*(my));
+        gammas = (double **)G_malloc (sizeof(double)*(my));
            for(l=0;l<my;l++)
               {
-                gammas[l]   = (double*)malloc(sizeof(double)*(mx));
+                gammas[l]   = (double*)G_malloc (sizeof(double)*(mx));
               }
            for (j = 0; j < my; j++)
               {
@@ -359,10 +359,10 @@ int main ( int argc, char *argv[])
                }
        }
 
-        dif = (float **)malloc(sizeof(float)*(my));
+        dif = (float **)G_malloc (sizeof(float)*(my));
            for(l=0;l<my;l++)
               {
-                dif[l]   = (float*)malloc(sizeof(float)*(mx));
+                dif[l]   = (float*)G_malloc (sizeof(float)*(mx));
               }
            for (j = 0; j < my; j++)
               {

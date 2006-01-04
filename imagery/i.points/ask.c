@@ -267,7 +267,7 @@ ask_gis_files (char *type, char *file, char *xname, char *xmapset, int position)
     R_panel_delete (tempfile2);
     R_flush();
 
-    free (page_offset);
+    G_free (page_offset);
     return stat;
 }
 

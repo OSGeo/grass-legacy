@@ -91,7 +91,7 @@ THIS IS THE END PART OF THE NUNCTION Nquick_draw_cmd WITH flythrough_postdraw_cb
 {
 	...
     GS_done_draw();
-    free(surf_list);
+    G_free (surf_list);
 
 /*** ACS_MODIFY flythrough  ONE LINE ******************************************/
 	flythrough_postdraw_cb();
@@ -145,6 +145,7 @@ WARNING: 	remember to add "togl_flythrough.o"
 
 #include <sys/time.h>
 #include <math.h>
+#include "gis.h"
 
 #define TOGL_FLY_OTHER	-1
 #define TOGL_FLY_BASIC	0
@@ -686,7 +687,7 @@ int surf_draw_all_together(Nv_data * dc, Tcl_Interp * interp)
 
 	surf_list = GS_get_surf_list(&nsurfs);
     sort_surfs_max(surf_list, sortSurfs, sorti, nsurfs);
-    free(surf_list);
+    G_free (surf_list);
 
 /* re-initialize lights */
     GS_setlight_position(num, x, y, z, w);
@@ -720,7 +721,7 @@ int vect_draw_all_together(Nv_data * data, Tcl_Interp * interp)
 	    GV_draw_vect(vect_list[i]);
 	}
     }
-    free(vect_list);
+    G_free (vect_list);
 
     GS_set_cancel(0);
     return (TCL_OK);
@@ -740,7 +741,7 @@ int site_draw_all_together(Nv_data * data, Tcl_Interp * interp)
 	    GP_draw_site(site_list[i]);
 	}
     }
-    free(site_list);
+    G_free (site_list);
 
     GS_set_cancel(0);
     return (TCL_OK);
@@ -762,7 +763,7 @@ int vol_draw_all_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter
 	    GVL_draw_vol(vol_list[i]);
 	}
     }
-    free(vol_list);
+    G_free (vol_list);
 
 
     GS_set_cancel(0);

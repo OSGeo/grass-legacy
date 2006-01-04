@@ -59,7 +59,7 @@ int zoom (struct Cell_head *window,char *name,char *mapset)
 	    right = mark;
     }
     G_close_cell (fd);
-    free (raster);
+    G_free (raster);
 
 /* no data everywhere? */
     if (bottom < 0)

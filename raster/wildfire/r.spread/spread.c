@@ -70,7 +70,7 @@ spread (void)
 		ncells = nrows*ncols;
 		fprintf (stderr, "Finding spread time - number of cells visited in percentage ...  %3d%%", 0);
 	}
-	pres_cell = (struct costHa *) malloc(sizeof(struct costHa));
+	pres_cell = (struct costHa *) G_malloc (sizeof(struct costHa));
 	get_minHa(heap, pres_cell, heap_len);
 #ifdef DEBUG
 printf("\nbegin spread: cost(%d,%d)=%f",pres_cell->row, pres_cell->col, pres_cell->min_cost);
@@ -99,7 +99,7 @@ while (to_cell!=NULL) {printf("(%d,%d) ",to_cell->row,to_cell->col); to_cell=to_
 	       		{       old_to_cell = to_cell;
 				to_cell = to_cell->next;
                 		front_cell = to_cell;
-				free(old_to_cell);
+				G_free (old_to_cell);
 				continue; 
         		}
 
@@ -111,7 +111,7 @@ printf("\n	finish a link: cost(%d,%d)->(%d,%d)=%f",pres_cell->row, pres_cell->co
    		        old_to_cell = to_cell;
 		        to_cell = to_cell->next;
                         front_cell = to_cell;
-		        free(old_to_cell);
+		        G_free (old_to_cell);
 		} 
 
         	/*compute spotting fires*/
@@ -135,7 +135,7 @@ printf("\n	finish a link: cost(%d,%d)->(%d,%d)=%f",pres_cell->row, pres_cell->co
 printf("\nin while:     heap_len=%d pres_cell->min_cost=%f time_lag=%d", heap_len, pres_cell->min_cost, time_lag);
 #endif
 	} /*end 'while (heap_len-- >0)'*/
-        free (pres_cell); 
+        G_free (pres_cell); 
 
         /*Assign min_cost values to un-reached area*/
         for ( row=0; row<nrows; row++)

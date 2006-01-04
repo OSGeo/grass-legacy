@@ -33,7 +33,7 @@ int init_font(char *filename)
     /* Read entire font into memory */
     lseek(file, 0L, 0);
     if (font != NULL)
-        free((char *) font);
+        G_free ((char *) font);
     font = (unsigned char *) G_malloc((size_t) offset);
     if (font == NULL) {
         perror("insufficient memory for font");
@@ -48,7 +48,7 @@ int init_font(char *filename)
     read(file, (char *) &nchars, sizeof nchars);
     size = nchars * sizeof(*index);
     if (index != NULL)
-        free((char *) index);
+        G_free ((char *) index);
     index = (long *) G_malloc((size_t) size);
     if (index == NULL) {
         perror("insufficient memory for index");

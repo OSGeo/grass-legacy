@@ -12,6 +12,7 @@
 *
 **************************************************************/
 #include <stdlib.h>
+#include "gis.h"
 #include "dbmi.h"
 #include "globals.h"
 #include "proto.h"
@@ -61,7 +62,7 @@ db__driver_execute_immediate (sql)
 
     /*
     if ( rest )
-	free ( rest );
+	G_free ( rest );
     */
     
     return DB_OK;

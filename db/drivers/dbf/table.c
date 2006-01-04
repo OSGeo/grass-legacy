@@ -30,9 +30,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <gis.h>
 #include <dbmi.h>
 #include <shapefil.h>
+#include "gis.h"
 #include "globals.h"
 #include "proto.h" 
 
@@ -44,7 +44,7 @@ int add_table (char *table, char *name)
     if ( db.atables == db.ntables )
       {
         db.atables += 15; 
-	db.tables = (TABLE *) realloc ( db.tables, db.atables * sizeof (TABLE) ); 
+	db.tables = (TABLE *) G_realloc ( db.tables, db.atables * sizeof (TABLE) ); 
       }
     
     strcpy ( db.tables[db.ntables].name, table );
@@ -172,7 +172,7 @@ load_table ( int t)
     ncols = db.tables[t].ncols;
     nrows = DBFGetRecordCount( dbf );
     rows = db.tables[t].rows;
-    rows = (ROW *) malloc ( nrows * sizeof(ROW) );
+    rows = (ROW *) G_malloc ( nrows * sizeof(ROW) );
     db.tables[t].arows = nrows;
     
     G_debug ( 2, "  ncols = %d nrows = %d", ncols, nrows);
@@ -180,7 +180,7 @@ load_table ( int t)
     for( i = 0; i < nrows; i++ )
       {
          rows[i].alive = TRUE;
-         rows[i].values = (VALUE *) calloc ( ncols, sizeof (VALUE) );
+         rows[i].values = (VALUE *) G_calloc ( ncols, sizeof (VALUE) );
 
          for( j = 0; j < ncols; j++ )
            {
@@ -343,13 +343,13 @@ int free_table (int tab)
 	  {
             if ( db.tables[tab].cols[j].type == DBF_CHAR && db.tables[tab].rows[i].values[j].c != NULL )
 	      {	    
-                free ( db.tables[tab].rows[i].values[j].c );
+                G_free ( db.tables[tab].rows[i].values[j].c );
 	      }
 	  }
-        free ( db.tables[tab].rows[i].values );
+        G_free ( db.tables[tab].rows[i].values );
       }
     
-    free ( db.tables[tab].rows );
+    G_free ( db.tables[tab].rows );
 	      
     return DB_OK;
 }

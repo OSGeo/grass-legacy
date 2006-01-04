@@ -16,8 +16,8 @@
 #include <stdlib.h> 
 #include <string.h>
 #include <dirent.h>
-#include <gis.h>
 #include <dbmi.h>
+#include "gis.h"
 #include "globals.h"
 #include "proto.h" 
 
@@ -115,7 +115,7 @@ db__driver_close_database()
 	save_table (i);  
 	free_table (i);  
       }
-    free ( db.tables );
+    G_free ( db.tables );
     
     return DB_OK;
 }

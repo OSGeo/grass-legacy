@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include "gis.h"
 #include "htmlmap.h"
 #include "driverlib.h"
 
@@ -12,8 +13,8 @@ int Text (char *text)
     char *d, *s;
 
     if (len > last_text_len) {
-        free (last_text);
-        last_text = (char *) malloc(len+1);
+        G_free (last_text);
+        last_text = (char *) G_malloc (len+1);
         last_text_len = len;
     }
 

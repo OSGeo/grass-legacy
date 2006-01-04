@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include "gis.h"
 #include "list.h"
 #include "mapcalc.h"
 #include "number.h"
@@ -32,9 +33,9 @@ freesym (const void *elt)
   sym = (SYMBOL *)elt;
 
   if (sym->name)
-    free (sym->name);
+    G_free (sym->name);
   if (sym->proto)
-    free (sym->proto);
+    G_free (sym->proto);
 
   if (sym->itype == st_pnt)
   {
@@ -44,7 +45,7 @@ freesym (const void *elt)
     {
       next = vec->next;
       if (--vec->refcnt < 1)
-	free (vec);
+	G_free (vec);
       vec = next;
     }
   }
@@ -56,7 +57,7 @@ freesym (const void *elt)
     {
       next = map->next;
       if (--map->refcnt < 1)
-	free (map);		/* more needs to be done! */
+	G_free (map);		/* more needs to be done! */
       map = next;
     }
   }
@@ -68,12 +69,12 @@ freesym (const void *elt)
     {
       next = any->next;
       if (--any->refcnt < 1)
-	free (any);
+	G_free (any);
       any = next;
     }
   }
   else if (sym->itype == st_str && sym->v.p)
-    free (sym->v.p);
+    G_free (sym->v.p);
 }
 
 SYMBOL *

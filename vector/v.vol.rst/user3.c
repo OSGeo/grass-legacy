@@ -259,17 +259,17 @@ c
 
     if (!w2)
     {
-      if (!(w2 = (double *) malloc (sizeof (double) * (KMAX2 + 1))))
+      if (!(w2 = (double *) G_malloc (sizeof (double) * (KMAX2 + 1))))
         clean_fatal_error("Cannot allocate w2");
     }
     if (!wz2)
     {
-      if (!(wz2 = (double *) malloc (sizeof (double) * (KMAX2 + 1))))
+      if (!(wz2 = (double *) G_malloc (sizeof (double) * (KMAX2 + 1))))
         clean_fatal_error("Cannot allocate wz2");
     }
    if (!wz1)
     {
-      if (!(wz1 = (double *) malloc (sizeof (double) * (KMAX2 + 1))))
+      if (!(wz1 = (double *) G_malloc (sizeof (double) * (KMAX2 + 1))))
         clean_fatal_error("Cannot allocate wz1");
     }      
 

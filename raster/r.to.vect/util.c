@@ -130,7 +130,7 @@ void *xmalloc(int size,char *label)
 
 int xfree(void *addr,char *label)
 {
-	/* free(addr);*/
+	/* G_free (addr);*/
 	G_free(addr);
 
 	return 0;

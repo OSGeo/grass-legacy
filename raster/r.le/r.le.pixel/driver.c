@@ -21,6 +21,7 @@
 ************************************************************/
 
 
+#include "gis.h"
 #include "pixel.h"
 #include "config.h"
 
@@ -477,7 +478,7 @@ void  mv_driver()
 	   break;
      }
      G_free(nul_buf);
-     free(richwhole);
+     G_free (richwhole);
   }
 
 					/* main loop for clipping & measuring 
@@ -575,7 +576,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(b1, tmp_buf2);
-           free(tmp_buf2);
+           G_free (tmp_buf2);
 	}
      }
      if (choice->att[2]) {
@@ -597,7 +598,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(b2, tmp_buf2);
-           free(tmp_buf2);
+           G_free (tmp_buf2);
 	}
      }
      if (choice->att[3]) {
@@ -619,7 +620,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(b3, tmp_buf2);
-           free(tmp_buf2);
+           G_free (tmp_buf2);
 	}
      }
      if (choice->att[4]) {
@@ -641,7 +642,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(b4, tmp_buf2);
-           free(tmp_buf2);
+           G_free (tmp_buf2);
 	}
      }
      if (choice->div[1]) {
@@ -663,7 +664,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(d1, tmp_buf2);
-           free(tmp_buf2);
+           G_free (tmp_buf2);
 	}
      }
      if (choice->div[2]) {
@@ -685,7 +686,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(d2, tmp_buf2);
-           free(tmp_buf2);
+           G_free (tmp_buf2);
 	}
      }
      if (choice->div[3]) {
@@ -707,7 +708,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(d3, tmp_buf2);
-           free(tmp_buf2);
+           G_free (tmp_buf2);
 	}
      }
      if (choice->div[4]) {
@@ -729,7 +730,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(d4, tmp_buf2);
-           free(tmp_buf2);
+           G_free (tmp_buf2);
 	}
      }
      if (choice->te2[1]) {
@@ -751,7 +752,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(t1, tmp_buf2);
-           free(tmp_buf2);
+           G_free (tmp_buf2);
 	}
      }
      if (choice->te2[2]) {
@@ -773,7 +774,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(t2, tmp_buf2);
-           free(tmp_buf2);
+           G_free (tmp_buf2);
 	}
      }
      if (choice->te2[3]) {
@@ -795,7 +796,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(t3, tmp_buf2);
-           free(tmp_buf2);
+           G_free (tmp_buf2);
 	}
      }
      if (choice->te2[4]) {
@@ -817,7 +818,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(t4, tmp_buf2);
-           free(tmp_buf2);
+           G_free (tmp_buf2);
 	}
      }
      if (choice->te2[5]) {
@@ -839,7 +840,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(t5, tmp_buf2);
-           free(tmp_buf2);
+           G_free (tmp_buf2);
 	}
      }
      if (choice->jux[1]) {
@@ -861,7 +862,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(j1, tmp_buf2);
-           free(tmp_buf2);
+           G_free (tmp_buf2);
 	}
      }
      if (choice->jux[2]) {
@@ -883,7 +884,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(j2, tmp_buf2);
-           free(tmp_buf2);
+           G_free (tmp_buf2);
 	}
      }
      if (choice->edg[1]) {
@@ -905,7 +906,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(e1, tmp_buf2);
-           free(tmp_buf2);
+           G_free (tmp_buf2);
 	}
      }
      if (choice->edg[2]) {
@@ -927,12 +928,12 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(e2, tmp_buf2);
-           free(tmp_buf2);
+           G_free (tmp_buf2);
 	}
      }
 
 
-     free(tmp_buf);
+     G_free (tmp_buf);
   }
 
   time(&finished_time); 
@@ -943,10 +944,10 @@ void  mv_driver()
 					   mask and other buffer */
 
   if (fmask > 0)
-     free(row_buf);
+     G_free (row_buf);
   for (p = 0; p < nc + 1; p++)
-     free(buff[p]);
-  free(buff);
+     G_free (buff[p]);
+  G_free (buff);
 
 					/* close the raster files, set the
 					   color table for the new raster
@@ -1251,7 +1252,7 @@ void read_mwind (int *uw, int *ul, int *nc, int *nr, int *x0, int *y0, float *ra
   *nc = ww - *uw + 1;  
   *nr = wl - *ul + 1;
 
-  free(buf);
+  G_free (buf);
   fclose(fp);
 
   return;
@@ -1379,7 +1380,7 @@ void  unit_driver()
 	   break;
      }
      G_free(nul_buf);
-     free(richwhole);
+     G_free (richwhole);
   }
 
                       			/* dynamically allocate storage for the
@@ -1475,16 +1476,16 @@ void  unit_driver()
            G_put_raster_row(fd, unit_buf, CELL_TYPE);
         }
         G_close_cell(fd);
-        free(unit_buf);
+        G_free (unit_buf);
      }
   }
 
   if (choice->units) {
      for (m = 0; m < wind.rows + 3; m++)
-        free(units[m]);
-     free(units);
+        G_free (units[m]);
+     G_free (units);
   }
-  free(buf);
+  G_free (buf);
   fclose(fp);
   return;
 }
@@ -1673,7 +1674,7 @@ void  whole_reg_driver()
 	   break;
      }
      G_free(nul_buf);
-     free(richwhole);
+     G_free (richwhole);
   }
 
   if(choice->wrum != 'r') {
@@ -1733,8 +1734,8 @@ void  whole_reg_driver()
         ptrthis = ptrthis->next;
      }
      G_close_cell(fr);
-     free (row_buf);
-     free(ptrnew);
+     G_free (row_buf);
+     G_free (ptrnew);
   }
 
   return;

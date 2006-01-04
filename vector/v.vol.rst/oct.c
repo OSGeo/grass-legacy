@@ -29,6 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "gis.h"
 
 #include "oct.h"
 #include "externs.h"
@@ -49,7 +50,7 @@ struct octfunc * OT_functions_new (int (*compare)(), VOID_T **(*divide_data)(), 
 
 {
     struct octfunc *functions;
-    if (!(functions = (struct octfunc *) malloc (sizeof (struct octfunc))))
+    if (!(functions = (struct octfunc *) G_malloc (sizeof (struct octfunc))))
     {
 	return NULL;
     }
@@ -76,7 +77,7 @@ struct octtree * OT_tree_new  (VOID_T *data, struct octtree **leafs, struct octt
 
 {
     struct octtree *tree;
-    if (!(tree = (struct octtree *) malloc (sizeof (struct octtree))))
+    if (!(tree = (struct octtree *) G_malloc (sizeof (struct octtree))))
     {
 	return NULL;
     }
@@ -163,7 +164,7 @@ OT_divide_oct  (struct octtree *tree)
       return -7;
    }
    par = tree;
-   leafs = (struct octtree **)malloc(sizeof(struct octtree * ) *NUMLEAFS);
+   leafs = (struct octtree **)G_malloc (sizeof(struct octtree * ) *NUMLEAFS);
    for (i=1;i<=NUMLEAFS;i++) {
      leafs[i-1]=OT_tree_new(datas[i],NULL,par,tree->functions,i);
    }

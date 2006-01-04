@@ -15,14 +15,14 @@ free_item(ITEM *item)
     LIST *list, *next;
 
     if (item->name != NULL)
-        free((char *) item->name);
+        G_free ((char *) item->name);
     for (list = item->list; list != NULL; list = next) {
         next = list->next;
         if (list->value)
-            free((char *) list->value);
-        free((char *) list);
+            G_free ((char *) list->value);
+        G_free ((char *) list);
     }
-    free((char *) item);
+    G_free ((char *) item);
 
     return 0;
 }
@@ -38,7 +38,7 @@ new_item(PAD *pad, char *name)
 
     item->name = store(name);
     if (item->name == NULL) {
-        free((char *) item);
+        G_free ((char *) item);
         return (ITEM *) NULL;
     }
     item->list = NULL;
@@ -61,8 +61,8 @@ remove_value(ITEM *item, char *value)
 	if (value && l->value && !strcmp(value, l->value)) {
 	    *p = l->next;
 	    if (l->value)
-		free(l->value);
-	    free(l);
+		G_free (l->value);
+	    G_free (l);
 	}
 	else
 	    p = &l->next;
@@ -88,7 +88,7 @@ append_item(PAD *pad, char *name, char *value, int replace)
     list->next = NULL;
     list->value = store(value);
     if (list->value == NULL) {
-        free((char *) list);
+        G_free ((char *) list);
         return 0;
     }
     /* find the named item for the current pad */
@@ -183,7 +183,7 @@ create_pad(char *name)
         return 0;
     pad->name = store(name);
     if (pad->name == NULL) {
-        free((char *) pad);
+        G_free ((char *) pad);
         return 0;
     }
     pad->items = NULL;
@@ -210,7 +210,7 @@ delete_pad(PAD *pad)
         next = item->next;
         free_item(item);
     }
-    free((char *) pad);
+    G_free ((char *) pad);
 
     return 1;
 }

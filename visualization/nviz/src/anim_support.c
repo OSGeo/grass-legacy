@@ -13,6 +13,7 @@
 /* Standard includes*/
 #include <stdio.h>
 #include <stdlib.h>
+#include "gis.h"
 
 /* ********************************************************
   Nset_interp_mode_cmd --
@@ -402,12 +403,12 @@ int Nadd_key_cmd(Nv_data * data,	/* Local data */
 	else {
 	    sprintf(interp->result, "Error: mask constant %s not understood",
 		    listels[i]);
-	    free(listels);
+	    G_free (listels);
 	    return (TCL_ERROR);
 	}
     }
 
-    free(listels);
+    G_free (listels);
 
     /* Call the function */
     GK_add_key((float) pos, fmask, force_replace, (float) precis);

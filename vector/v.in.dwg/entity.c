@@ -262,9 +262,9 @@ void wrentity (PAD_ENT_HDR adenhd,PAD_ENT aden, int level, AD_VMADDR entlist, in
   G_debug( 1, "Entity: %s", buf);
       
   Txt = NULL;
-  adenhd2=(PAD_ENT_HDR)malloc(sizeof(AD_ENT_HDR));
-  aden2=(PAD_ENT)malloc(sizeof(AD_ENT));
-  adblkh=(PAD_BLKH)malloc(sizeof(AD_BLKH));
+  adenhd2=(PAD_ENT_HDR)G_malloc (sizeof(AD_ENT_HDR));
+  aden2=(PAD_ENT)G_malloc (sizeof(AD_ENT));
+  adblkh=(PAD_BLKH)G_malloc (sizeof(AD_BLKH));
   Vect_reset_line ( Points );
   
   /* Check space for lower level */
@@ -436,7 +436,7 @@ void wrentity (PAD_ENT_HDR adenhd,PAD_ENT aden, int level, AD_VMADDR entlist, in
 
   } /* end of switch */
 
-  free(aden2);
-  free(adenhd2);
+  G_free (aden2);
+  G_free (adenhd2);
 }
 

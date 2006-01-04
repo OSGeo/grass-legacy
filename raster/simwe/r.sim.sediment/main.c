@@ -322,10 +322,10 @@ int main ( int argc, char *argv[])
 /* mandatory for si,sigma */
 
 
-   si = (double **)malloc(sizeof(double)*(my));
+   si = (double **)G_malloc (sizeof(double)*(my));
        for(l=0;l<my;l++)
           {
-            si[l]   = (double*)malloc(sizeof(double)*(mx));
+            si[l]   = (double*)G_malloc (sizeof(double)*(mx));
            }
        for (j = 0; j < my; j++)
            {
@@ -333,10 +333,10 @@ int main ( int argc, char *argv[])
               si[j][i] = 0.;
              }
 
-   sigma = (double **)malloc(sizeof(double)*(my));
+   sigma = (double **)G_malloc (sizeof(double)*(my));
        for(l=0;l<my;l++)
           {
-            sigma[l]   = (double*)malloc(sizeof(double)*(mx));
+            sigma[l]   = (double*)G_malloc (sizeof(double)*(mx));
            }
        for (j = 0; j < my; j++)
            {
@@ -346,10 +346,10 @@ int main ( int argc, char *argv[])
 
 /* memory allocation for output grids */
 
-        dif = (float **)malloc(sizeof(float)*(my));
+        dif = (float **)G_malloc (sizeof(float)*(my));
            for(l=0;l<my;l++)
               {
-                dif[l]   = (float*)malloc(sizeof(float)*(mx));
+                dif[l]   = (float*)G_malloc (sizeof(float)*(mx));
               }
            for (j = 0; j < my; j++)
               {
@@ -359,10 +359,10 @@ int main ( int argc, char *argv[])
 
    if (erdep != NULL || et != NULL)
       {
-        er = (float **)malloc(sizeof(float)*(my));
+        er = (float **)G_malloc (sizeof(float)*(my));
            for(l=0;l<my;l++)
               {
-                er[l]   = (float*)malloc(sizeof(float)*(mx));
+                er[l]   = (float*)G_malloc (sizeof(float)*(mx));
               }
            for (j = 0; j < my; j++)
               {

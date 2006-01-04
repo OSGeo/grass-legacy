@@ -307,13 +307,13 @@ int main(int argc, char **argv)
     resolve(fd, nrows, &bndC);
 
     /* free the buffers already used */
-    free(bndC.b[0]);
-    free(bndC.b[1]);
-    free(bndC.b[2]);
+    G_free (bndC.b[0]);
+    G_free (bndC.b[1]);
+    G_free (bndC.b[2]);
 
-    free(bnd.b[0]);
-    free(bnd.b[1]);
-    free(bnd.b[2]);
+    G_free (bnd.b[0]);
+    G_free (bnd.b[1]);
+    G_free (bnd.b[2]);
 
     /* determine the drainage paths */
 

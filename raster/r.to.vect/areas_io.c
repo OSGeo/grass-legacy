@@ -191,7 +191,7 @@ static int write_smooth_bnd(struct COOR *line_begin, struct COOR *line_end,	/* s
 	total++;
 	Vect_append_point(Points, x, y, 0.0);
 
-	/* free(last); */
+	/* G_free (last); */
     }				/* end of for i */
 
     y = cell_head.north - (double) p->row * cell_head.ns_res;

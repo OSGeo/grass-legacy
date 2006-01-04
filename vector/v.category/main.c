@@ -324,9 +324,9 @@ main (int argc, char *argv[])
 			if ( !ret ) /* field report doesn't exist */
 		          {
 			    nfreps++; 	    
-                            freps = (FREPORT **) realloc ( freps, nfreps * sizeof (FREPORT *));
+                            freps = (FREPORT **) G_realloc ( freps, nfreps * sizeof (FREPORT *));
                             fld = nfreps - 1;
-                            freps[fld] = (FREPORT *) calloc ( 1, sizeof (FREPORT));
+                            freps[fld] = (FREPORT *) G_calloc ( 1, sizeof (FREPORT));
                             freps[fld]->field = field;
 			    if ((Fi = Vect_get_field (&In, field)) != NULL) {
 			      freps[fld]->table = G_store (Fi->table);

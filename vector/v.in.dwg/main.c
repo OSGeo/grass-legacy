@@ -105,9 +105,9 @@ main (int argc, char *argv[])
 
     db_init_string (&sql);
     db_init_string (&str);
-    adenhd=(PAD_ENT_HDR)malloc(sizeof(AD_ENT_HDR));
-    aden=(PAD_ENT)malloc(sizeof(AD_ENT));
-    Layer=(PAD_LAY)malloc(sizeof(AD_LAY));
+    adenhd=(PAD_ENT_HDR)G_malloc (sizeof(AD_ENT_HDR));
+    aden=(PAD_ENT)G_malloc (sizeof(AD_ENT));
+    Layer=(PAD_LAY)G_malloc (sizeof(AD_LAY));
     Points = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
     Block = NULL;
@@ -136,7 +136,7 @@ main (int argc, char *argv[])
 	int i;
 	char on, frozen, vpfrozen, locked;
 
-	adtb=(PAD_TB)malloc(sizeof(AD_TB));
+	adtb=(PAD_TB)G_malloc (sizeof(AD_TB));
 
 	G_debug (2, "%d layers", (int) adNumLayers(dwghandle) );
 	adReadHeaderBlock(dwghandle,&adhd);

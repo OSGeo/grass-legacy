@@ -69,6 +69,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include "gis.h"
 #include "binio.h"
 #include "v5d.h"
 #include "vis5d.h"
@@ -936,7 +937,7 @@ v5dstruct *v5dNewStruct( void )
 {
    v5dstruct *v;
 
-   v = (v5dstruct *) malloc( sizeof(v5dstruct) );
+   v = (v5dstruct *) G_malloc ( sizeof(v5dstruct) );
    if (v) {
       v5dInitStruct(v);
    }
@@ -951,7 +952,7 @@ v5dstruct *v5dNewStruct( void )
 void v5dFreeStruct( v5dstruct* v )
 {
    /*assert( v5dVerifyStruct( v ) );*/
-   free( v );
+   G_free ( v );
    v = 0;
 }
 
@@ -1349,7 +1350,7 @@ static int read_comp_header( int f, v5dstruct *v )
          v->MaxVal[i] = -999999.9;
       }
 
-      /*compgrid = (char *) malloc( gridsize );*/
+      /*compgrid = (char *) G_malloc ( gridsize );*/
 
       for (it=0; it<v->NumTimes; it++) {
          for (iv=0; iv<v->NumVars; iv++) {
@@ -1372,7 +1373,7 @@ static int read_comp_header( int f, v5dstruct *v )
          }
       }
 
-      /*free( compgrid );*/
+      /*G_free ( compgrid );*/
 
       /* done */
    }
@@ -2060,7 +2061,7 @@ int v5dReadGrid( v5dstruct *v, int time, int var, float data[] )
    else if (v->CompressMode==4) {
       bytes = v->Nr * v->Nc * v->Nl[var] * sizeof(float);
    }
-   compdata = (void *) malloc( bytes );
+   compdata = (void *) G_malloc ( bytes );
    if (!compdata) {
       printf("Error in v5dReadGrid: out of memory (needed %d bytes)\n", bytes);
       return 0;
@@ -2076,7 +2077,7 @@ int v5dReadGrid( v5dstruct *v, int time, int var, float data[] )
                       compdata, ga, gb, data );
 
    /* free compdata */
-   free( compdata );
+   G_free ( compdata );
    return 1;
 }
 
@@ -2450,7 +2451,7 @@ int v5dWriteGrid( v5dstruct *v, int time, int var, const float data[] )
    else if (v->CompressMode==4) {
       bytes = v->Nr * v->Nc * v->Nl[var] * sizeof(float);
    }
-   compdata = (void *) malloc( bytes );
+   compdata = (void *) G_malloc ( bytes );
    if (!compdata) {
       printf("Error in v5dWriteGrid: out of memory (needed %d bytes)\n",
              bytes );
@@ -2471,7 +2472,7 @@ int v5dWriteGrid( v5dstruct *v, int time, int var, const float data[] )
    n = v5dWriteCompressedGrid( v, time, var, ga, gb, compdata );
 
    /* free compdata */
-   free( compdata );
+   G_free ( compdata );
 
    return n;
 }

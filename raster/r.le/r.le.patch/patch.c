@@ -18,6 +18,7 @@
 *				                           *
 ************************************************************/
 
+#include "gis.h"
 #include "config.h"
 #include "patch.h"
 
@@ -294,7 +295,7 @@ void df_patch  (PATCH *patch_list)
   if (choice->perim[5]) fclose(p5);
   if (choice->perim[6]) fclose(p6);
 
-  free(type_dens);
+  G_free (type_dens);
   total_patches = 0;
   return;
 }
@@ -341,7 +342,7 @@ void df_att (PATCH *tmp, int type_coh, int *type_dens)
   if (!tmp->next) {
      save_att(w_att, w_att2, total, total2, sumx, sumx2, type_dens, area);
      w_att = w_att2 = total = sumx = sumx2 = 0.0;
-     free(area);
+     G_free (area);
   }
   return;
 }
@@ -522,19 +523,19 @@ void df_core (PATCH *tmp, int type_coh, int *type_dens)
      save_core(sumc2, sume2, mcore, medge, mcore1, medge1, sum22c, sum22e,
         densityc, densitye, type_dens, density1c, density1e);
      mcore = medge = sumc2 = sume2 = 0;
-     free(densityc);
-     free(densitye);
-     free(sum22c);
-     free(sum22e);
-     free(mcore1);
-     free(medge1);
+     G_free (densityc);
+     G_free (densitye);
+     G_free (sum22c);
+     G_free (sum22e);
+     G_free (mcore1);
+     G_free (medge1);
      if (choice->core2) {
         for(i = 0; i < 25; i++) {
-           free(density1c[i]);
-           free(density1e[i]);
+           G_free (density1c[i]);
+           G_free (density1e[i]);
         }
-        free(density1c);
-        free(density1e);
+        G_free (density1c);
+        G_free (density1e);
      }
      first = 1;
   }
@@ -750,13 +751,13 @@ void df_size (PATCH *tmp, int type_coh, int *type_dens)
   if (!tmp->next) {
      save_size(sum2, msize, msize1, sum22, density, type_dens, density1);
      msize = sum2 = 0.0;
-     free(density);
-     free(msize1);
-     free(sum22);
+     G_free (density);
+     G_free (msize1);
+     G_free (sum22);
      if (density1) {
         for(i = 0; i < 25; i++)
-           free(density1[i]);
-        free(density1);
+           G_free (density1[i]);
+        G_free (density1);
      }
      first = 1;
   }
@@ -987,9 +988,9 @@ void df_shape (PATCH *tmp, int type_coh, int *type_dens)
         density3 = (int **)G_calloc(25, sizeof(int *));
 
         for(i = 0; i < 25; i++)
-           if (!(density1[i] = (int *)calloc(25, sizeof(int))) ||
-               !(density2[i] = (int *)calloc(25, sizeof(int))) ||
-               !(density3[i] = (int *)calloc(25, sizeof(int))) )
+           if (!(density1[i] = (int *)G_calloc (25, sizeof(int))) ||
+               !(density2[i] = (int *)G_calloc (25, sizeof(int))) ||
+               !(density3[i] = (int *)G_calloc (25, sizeof(int))) )
               G_fatal_error("Failure to allocate memory for sh2, exit.\n");
      }
 
@@ -1010,24 +1011,24 @@ void df_shape (PATCH *tmp, int type_coh, int *type_dens)
         mshape1_r, type_dens, den1, den2, den3, density1,
         density2, density3);
      mshape = sq1 = sq2 =sq3 = mshape_p = mshape_r = 0;
-     free(mshape1);
-     free(mshape1_p);
-     free(mshape1_r);
-     free(sqr11);
-     free(sqr21);
-     free(sqr31);
-     free(den1);
-     free(den2);
-     free(den3);
+     G_free (mshape1);
+     G_free (mshape1_p);
+     G_free (mshape1_r);
+     G_free (sqr11);
+     G_free (sqr21);
+     G_free (sqr31);
+     G_free (den1);
+     G_free (den2);
+     G_free (den3);
      if (density1) {
         for(i = 0; i < 25; i++) {
-           free(density1[i]);
-           free(density2[i]);
-           free(density3[i]);
+           G_free (density1[i]);
+           G_free (density2[i]);
+           G_free (density3[i]);
         }
-        free(density1);
-        free(density2);
-        free(density3);
+        G_free (density1);
+        G_free (density2);
+        G_free (density3);
      }
      new = 1;
   }
@@ -1444,8 +1445,8 @@ void df_perim (PATCH *tmp, int type_coh, int *type_dens)
         fputs("\n", p6);
      }
 
-     free(perim1);
-     free(sum21);
+     G_free (perim1);
+     G_free (sum21);
      first = 1;
      perim = sum2 = 0;
   }

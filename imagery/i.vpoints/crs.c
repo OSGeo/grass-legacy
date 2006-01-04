@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <limits.h>
+#include "gis.h"
 
 /*
 #define MSDOS 1
@@ -361,22 +362,22 @@ calccoef (struct Control_Points *cp, double E[], double N[], int order)
 
   /* INITIALIZE MATRIX */
 
-  m.v = (DOUBLE *)calloc(m.n*m.n,sizeof(DOUBLE));
+  m.v = (DOUBLE *)G_calloc (m.n*m.n,sizeof(DOUBLE));
   if(m.v == NULL)
     {
     return(MMEMERR);
     }
-  a = (DOUBLE *)calloc(m.n,sizeof(DOUBLE));
+  a = (DOUBLE *)G_calloc (m.n,sizeof(DOUBLE));
   if(a == NULL)
     {
-    free((char *)m.v);
+    G_free ((char *)m.v);
     return(MMEMERR);
     }
-  b = (DOUBLE *)calloc(m.n,sizeof(DOUBLE));
+  b = (DOUBLE *)G_calloc (m.n,sizeof(DOUBLE));
   if(b == NULL)
     {
-    free((char *)m.v);
-    free((char *)a);
+    G_free ((char *)m.v);
+    G_free ((char *)a);
     return(MMEMERR);
     }
 
@@ -385,9 +386,9 @@ calccoef (struct Control_Points *cp, double E[], double N[], int order)
   else
     status = calcls(cp,&m,a,b,E,N);
 
-  free((char *)m.v);
-  free((char *)a);
-  free((char *)b);
+  G_free ((char *)m.v);
+  G_free ((char *)a);
+  G_free ((char *)b);
 
   return(status);
   }

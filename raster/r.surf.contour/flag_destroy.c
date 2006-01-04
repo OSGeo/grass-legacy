@@ -1,11 +1,12 @@
 #include <stdlib.h>
+#include "gis.h"
 #include "flag.h"
 
 int flag_destroy (FLAG *flags)
 {
-	free(flags->array[0]);
-	free(flags->array);
-	free(flags);
+	G_free (flags->array[0]);
+	G_free (flags->array);
+	G_free (flags);
 
 	return 0;
 }

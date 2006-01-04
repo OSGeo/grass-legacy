@@ -606,7 +606,7 @@ void create_history(const char *dst, expression *e)
 
 	G_write_history((char *) dst, &hist);
 
-	free(expr);
+	G_free (expr);
 }
 
 /****************************************************************************/

@@ -36,7 +36,7 @@ delete (struct point *PT_TO_DELETE, struct point *head, SEGMENT *seg_out_p, int 
         {
                 NEXT_PT_BACK_PTR = NULL;
                 head = PT_NEXT_TO_DELETED;
-                free(PT_TO_DELETE); 
+                G_free (PT_TO_DELETE); 
                 return(head);
         }
 
@@ -44,7 +44,7 @@ delete (struct point *PT_TO_DELETE, struct point *head, SEGMENT *seg_out_p, int 
 
                 NEXT_PT_BACK_PTR = PT_PREVIOUS_TO_DELETED;
                 PREVIOUS_PT_NEXT_PTR = PT_NEXT_TO_DELETED;
-                free(PT_TO_DELETE); 
+                G_free (PT_TO_DELETE); 
 
                 return(head);
  

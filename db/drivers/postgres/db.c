@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
-#include <gis.h>
 #include <dbmi.h>
+#include "gis.h"
 #include "globals.h"
 #include "proto.h"
 
@@ -38,8 +38,8 @@ int db__driver_open_database(handle)
     pg_conn = PQsetdbLogin( pgconn.host, pgconn.port, pgconn.options, pgconn.tty, 
 		            pgconn.dbname, user, password );
 
-    free ( user );
-    free ( password );
+    G_free ( user );
+    G_free ( password );
     
     if (PQstatus(pg_conn) == CONNECTION_BAD) {
 	append_error ( "Cannot connect to Postgres: " );

@@ -216,12 +216,12 @@ int loadrect (char *name)
     if(!fp)
     {
       fprintf(stderr," Error: Could not open file %s for reading\n",name);
-      free(buffer);
+      G_free (buffer);
       return 0;
     }
     fread (&xsiz, sizeof (int), 1, fp);
     fread (&ysiz, sizeof (int), 1, fp);
-    if (NULL == (buffer = (unsigned long *)malloc (xsiz * ysiz * sizeof (long))))
+    if (NULL == (buffer = (unsigned long *)G_malloc (xsiz * ysiz * sizeof (long))))
     {
        fprintf (stderr, "Out of memory\n");
        return -1;
@@ -244,7 +244,7 @@ int loadrect (char *name)
 
     glXSwapBuffers(XtDisplay(MainOGLWindow.widget), MainOGLWindow.window);
     fclose (fp);
-    free(buffer);
+    G_free (buffer);
 
 
      aspect = (float)MainOGLWindow.width / (float)MainOGLWindow.height;
@@ -287,7 +287,7 @@ int dumprect (char *name)
     long xsiz, ysiz;
     unsigned long *buffer;
     new_getsize(&xsiz,&ysiz);
-    if (NULL == (buffer = (unsigned long *)malloc (xsiz * ysiz * sizeof (long))))
+    if (NULL == (buffer = (unsigned long *)G_malloc (xsiz * ysiz * sizeof (long))))
     {
        fprintf (stderr, "Out of memory\n");
        return -1;
@@ -299,7 +299,7 @@ int dumprect (char *name)
     if(!fp)
     {
       fprintf(stderr," Error: Could not open file %s for writing\n",name);
-      free(buffer);
+      G_free (buffer);
       return 0;
     }
     
@@ -314,7 +314,7 @@ int dumprect (char *name)
 	fprintf (stderr, "Write failed file '%s'\n", name);
 
     fclose (fp);
-    free(buffer);
+    G_free (buffer);
 
 
     return (0);
@@ -350,7 +350,7 @@ int dumpgif (char *name)
 
 
 
-    if (NULL == (pixels = (unsigned long *)malloc (xwid * ywid * sizeof (long))))
+    if (NULL == (pixels = (unsigned long *)G_malloc (xwid * ywid * sizeof (long))))
     {
        fprintf (stderr, "Out of memory\n");
        return -1;
@@ -363,7 +363,7 @@ int dumpgif (char *name)
     if(!fp)
     {
       fprintf(stderr," Error: Could not open file %s for writing\n",name);
-      free(pixels);
+      G_free (pixels);
       return 0;
     }
     
@@ -388,7 +388,7 @@ int dumpgif (char *name)
 
 
     fclose (fp);
-    free(pixels);
+    G_free (pixels);
 
 
     return (0);
@@ -418,6 +418,7 @@ void winset_colortable()
 #include <Xm/ToggleB.h>
 #include <Xm/Frame.h>
 #include <Xm/SeparatoG.h>
+#include "gis.h"
 static String Fallback_resources[] = 
 {
 "*.fontList:-adobe-helvetica-bold-r-normal--12-120-75-75-p-70-iso8859-1",

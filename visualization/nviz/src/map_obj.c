@@ -6,13 +6,13 @@
  * or site files.
  */
 
-#include "interface.h"
-#include <sys/time.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/time.h>
+#include "gis.h"
+#include "interface.h"
 
 /* Extern declarations */
-extern void free();
 extern char *int_to_tcl_color();
 
 /* Prototypes */
@@ -249,11 +249,11 @@ int set_logical_name(int id, Tcl_Interp * interp, int argc, char *argv[])
 
     /* Free any olf space for logical name */
     if (data->logical_name != NULL)
-    free(data->logical_name);
+    G_free (data->logical_name);
 
     /* Allocate new space and copy name */
     data->logical_name =
-    (char *) malloc(sizeof(char) * (strlen(argv[2]) + 1));
+    (char *) G_malloc (sizeof(char) * (strlen(argv[2]) + 1));
     if (data->logical_name == NULL) {
     Tcl_SetResult(interp,
               "Error: out of memory in set_logical_name - allocating new space",
@@ -332,7 +332,7 @@ int Nget_surf_list_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
         Tcl_AppendElement(interp, temp);
     }
 
-    free(surf_list);
+    G_free (surf_list);
     }
 
     return (TCL_OK);
@@ -357,7 +357,7 @@ int Nget_vect_list_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
         Tcl_AppendElement(interp, temp);
     }
 
-    free(vect_list);
+    G_free (vect_list);
     }
 
     return (TCL_OK);
@@ -382,7 +382,7 @@ int Nget_site_list_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
         Tcl_AppendElement(interp, temp);
     }
 
-    free(site_list);
+    G_free (site_list);
     }
 
     return (TCL_OK);
@@ -407,7 +407,7 @@ int Nget_vol_list_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
             Tcl_AppendElement(interp, temp);
         }
 
-        free(vol_list);
+        G_free (vol_list);
     }
 
     return (TCL_OK);
@@ -510,7 +510,7 @@ int Nnew_map_obj_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
         GP_select_surf(new_id, surf_list[i]);
         }
     }
-    free(surf_list);
+    G_free (surf_list);
 
     sprintf(id, "Nsite%d", new_id);
 
@@ -544,7 +544,7 @@ int Nnew_map_obj_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
         GV_select_surf(new_id, surf_list[i]);
         }
     }
-    free(surf_list);
+    G_free (surf_list);
 
     sprintf(id, "Nvect%d", new_id);
 
@@ -579,7 +579,7 @@ int Nnew_map_obj_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
     }
 
     /* Initialize the client data filed for the new map object */
-    new_data = (Nv_clientData *) malloc(sizeof(Nv_clientData));
+    new_data = (Nv_clientData *) G_malloc (sizeof(Nv_clientData));
     if (new_data == NULL) {
     Tcl_SetResult(interp,
               "Error: out of memory in Nnew_map_object - creating client data",
@@ -605,7 +605,7 @@ int Nnew_map_obj_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
 
         log_name += 5;
         new_data->logical_name =
-        (char *) malloc(sizeof(char) * (strlen(log_name) + 1));
+        (char *) G_malloc (sizeof(char) * (strlen(log_name) + 1));
         if (new_data->logical_name == NULL) {
         Tcl_SetResult(interp,
                   "Error: out of memory in Nnew_map_object - copying logical name",
@@ -628,7 +628,7 @@ int Nnew_map_obj_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
     sprintf(temp_space, "%s*%ld", argv[1], tp.tv_sec);
 
     new_data->logical_name =
-        (char *) malloc(sizeof(char) * (strlen(temp_space) + 1));
+        (char *) G_malloc (sizeof(char) * (strlen(temp_space) + 1));
     if (new_data->logical_name == NULL) {
         Tcl_SetResult(interp,
               "Error: out of memory in Nnew_map_object - creating logical name",

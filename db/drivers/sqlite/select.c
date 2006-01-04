@@ -13,6 +13,7 @@
 **************************************************************/
 #include <stdlib.h>
 #include <dbmi.h>
+#include "gis.h"
 #include "globals.h"
 #include "proto.h"
 
@@ -44,7 +45,7 @@ int db__driver_open_select_cursor(sel, dbc, mode)
 			    &(c->statement), &rest );
 
     if ( str )
-	free ( str );
+	G_free ( str );
 
     if ( ret != SQLITE_OK )
     {

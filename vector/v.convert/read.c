@@ -143,13 +143,13 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
 	} else {   /* GV_POINT or GV_LINE */
 	    if ( line >= lalloc ) {
 	        lalloc += 10000;
-	        lines = (struct Line *) realloc ( lines, lalloc * sizeof(struct Line));
+	        lines = (struct Line *) G_realloc ( lines, lalloc * sizeof(struct Line));
 	    }
 	    lines[line].type = type;
 	    lines[line].n_points = nline->n_points;
 	    lines[line].cat = -1;
-	    lines[line].x = (double *) malloc ( nline->n_points * sizeof (double));
-	    lines[line].y = (double *) malloc ( nline->n_points * sizeof (double));
+	    lines[line].x = (double *) G_malloc ( nline->n_points * sizeof (double));
+	    lines[line].y = (double *) G_malloc ( nline->n_points * sizeof (double));
 	    memcpy ( (void *) lines[line].x, (void *) nline->x,
 		     nline->n_points * sizeof(double));
 	    memcpy ( (void *) lines[line].y, (void *) nline->y,
@@ -247,7 +247,7 @@ int read_att (FILE *Attin, struct Categ **pcats )
 			
 	if ( cat >= ctalloc ) {
 	    ctalloc += 10000;
-	    cats = (struct Categ *) realloc ( cats, ctalloc * sizeof(struct Categ));
+	    cats = (struct Categ *) G_realloc ( cats, ctalloc * sizeof(struct Categ));
 	}
         cats[cat].type = type;         
         cats[cat].x = x;         

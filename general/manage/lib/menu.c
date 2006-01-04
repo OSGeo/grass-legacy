@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include "gis.h"
 #include "list.h"
 
 static int count;
@@ -122,7 +123,7 @@ int
 free_menu (void)
 {
     while (count-- > 0)
-	free (text[count]);
+	G_free (text[count]);
 
     return 0;
 }

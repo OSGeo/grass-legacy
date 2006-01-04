@@ -3,6 +3,7 @@
 #include <string.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include "gis.h"
 #include "list.h"
 #include "mapcalc.h"
 #include "map.h"
@@ -206,10 +207,10 @@ freemap (MAP *map)
     if (map->refcnt > 0)
       return map;
     if (map->name)
-      free (map->name);
+      G_free (map->name);
     if (map->mapinfo)
-      free (map->mapinfo);		/* call grass to handle map */
-    free (map);
+      G_free (map->mapinfo);		/* call grass to handle map */
+    G_free (map);
   }
   return NULL;
 }

@@ -81,8 +81,8 @@ int main(
     fprintf(stderr,"\n");
 
 
-    free(ibuf);
-    free(dbuf);
+    G_free (ibuf);
+    G_free (dbuf);
     G_close_cell(cellfile);
     
     return(0);

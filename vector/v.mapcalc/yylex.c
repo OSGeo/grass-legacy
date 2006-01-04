@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include "gis.h"
 #include "list.h"
 #include "mapcalc.h"
 #include "yylex.h"
@@ -45,7 +46,7 @@ yylex (void)
     if (length == 0)
     {
       length = 40;
-      symbuf = (char *)malloc (length + 1);
+      symbuf = (char *)G_malloc (length + 1);
     }
 
     i = 0;
@@ -54,7 +55,7 @@ yylex (void)
       if (i == length)
       {
         length *= 2;
-        symbuf = (char *)realloc (symbuf, length + 1);
+        symbuf = (char *)G_realloc (symbuf, length + 1);
       }
       symbuf[i++] = c;
       c = getchar ();

@@ -28,6 +28,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "gis.h"
 #include "dataoct.h" 
 #include "externs.h" 
 #include "user.h"
@@ -37,7 +38,7 @@ struct quadruple *point_new(double x, double y, double z, double w, double sm)
 {
 struct quadruple *point;
 
-if(!(point = (struct quadruple *)malloc(sizeof(struct quadruple)))) {
+if(!(point = (struct quadruple *)G_malloc (sizeof(struct quadruple)))) {
  return NULL;
 }
 
@@ -59,7 +60,7 @@ struct octdata *data_new (double x_orig, double y_orig, double z_orig, int n_row
 struct octdata *data; 
 int i;
 
-if (!(data = (struct octdata*)malloc(sizeof(struct octdata)))) {
+if (!(data = (struct octdata*)G_malloc (sizeof(struct octdata)))) {
   return NULL;
 }
 
@@ -70,7 +71,7 @@ data->n_rows=n_rows;
 data->n_cols=n_cols;
 data->n_levs=n_levs;
 data->n_points=n_points;
-data->points = (struct quadruple *)malloc(sizeof(struct quadruple)*(KMAX+1));
+data->points = (struct quadruple *)G_malloc (sizeof(struct quadruple)*(KMAX+1));
 for (i=0;i<=KMAX;i++) {
   data->points[i].x=0;
   data->points[i].y=0;
@@ -213,7 +214,7 @@ struct octdata ** oct_divide_data(struct octdata *data)
     x_or=data->x_orig;
     y_or=data->y_orig;
     z_or=data->z_orig;
-    if (!(datas=(struct octdata **) malloc(sizeof(struct octdata *) * 9)))
+    if (!(datas=(struct octdata **) G_malloc (sizeof(struct octdata *) * 9)))
     {
         return NULL;
     }

@@ -207,15 +207,15 @@ interp_call  (struct octtree *root, struct octtree *tree)
 	    {
 		first = 0;
 
-		if (!(A = (double *) malloc (sizeof(double) * ((KMAX2+1) * (KMAX2+2) + 1))))
+		if (!(A = (double *) G_malloc (sizeof(double) * ((KMAX2+1) * (KMAX2+2) + 1))))
 		{
 		    clean_fatal_error("Cannot allocate A");
 		}
-		if (!(b = (double *) malloc (sizeof (double) * (KMAX2 + 2))))
+		if (!(b = (double *) G_malloc (sizeof (double) * (KMAX2 + 2))))
 		{
 		    clean_fatal_error("Cannot allocate b");
 		}
-		if (!(w = (double *) malloc (sizeof (double) * (KMAX2 + 1))))
+		if (!(w = (double *) G_malloc (sizeof (double) * (KMAX2 + 1))))
 		{
 		    clean_fatal_error("Cannot allocate w");
 		}
@@ -292,9 +292,9 @@ if (!COGRR1 (xmn, ymn, zmn, ((struct octdata *) (tree->data))->n_rows,
 	    return 0;
         }
 	
-/*	free (points);*/
+/*	G_free (points);*/
 	
-	/* free (A); */
+	/* G_free (A); */
 	/* show after to catch 100% */
 	cursegm++;
         if (totsegm != 0)

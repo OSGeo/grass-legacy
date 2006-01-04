@@ -144,12 +144,12 @@ old2new (char *in, char *out, int endian)
 
     /* free memory */
     for (i=0; i < nlines; i++) {
-	free (lines[i].x);    
-	free (lines[i].y);    
+	G_free (lines[i].x);    
+	G_free (lines[i].y);    
     }
-    free (lines);
+    G_free (lines);
     if (att)
-        free (cats);
+        G_free (cats);
     
     Vect_destroy_cats_struct (cat_out);
     Vect_destroy_line_struct (pnt_out);

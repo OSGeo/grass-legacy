@@ -15,6 +15,7 @@
 *****************************************************************************/
 #include <stdlib.h>
 #include <dbmi.h>
+#include "gis.h"
 #include "globals.h"
 #include "proto.h"
 
@@ -64,7 +65,7 @@ void free_cursor( cursor *c)
 {
     db_drop_token(c->token);
     sqpFreeStmt( c->st );  
-    free(c);  
+    G_free (c);  
 }
 
 

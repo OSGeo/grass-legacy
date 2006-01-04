@@ -6,7 +6,7 @@ char *falloc(int nelem,int elsize)
 {
 	char *ptr ;
 
-	ptr = calloc(nelem, elsize) ;
+	ptr = G_calloc (nelem, elsize) ;
 
 	if (!ptr)
 	   G_fatal_error ("ERROR: no more memory available") ;
@@ -18,7 +18,7 @@ char *frealloc(char *oldptr, int nelem,int elsize, int oldnelem)
 {
 	char *ptr ;
 
-	ptr = calloc(nelem, elsize) ;
+	ptr = G_calloc (nelem, elsize) ;
 	if (!ptr)
 	    G_fatal_error ("ERROR: no more memory available") ;
 
@@ -33,6 +33,6 @@ char *frealloc(char *oldptr, int nelem,int elsize, int oldnelem)
 			*a++ = *b++ ;
 	}
 
-	free(oldptr) ;
+	G_free (oldptr) ;
 	return(ptr) ;
 }

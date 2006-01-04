@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <dbmi.h>
+#include "gis.h"
 #include "globals.h"
 #include "proto.h"
 
@@ -47,12 +48,12 @@ int db__driver_open_select_cursor (dbString *sel, dbCursor *dbc, int mode)
 	report_error();
 	PQclear(c->res);
         if ( str )
-            free ( str );
+            G_free ( str );
 	return DB_FAILED;
     }
 
     if ( str )
-	free ( str );
+	G_free ( str );
 
     if ( describe_table( c->res, &table, c) == DB_FAILED ) {
 	append_error("Cannot describe table\n");

@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
+#include "gis.h"
 #include "globals.h"
 #include "local_proto.h"
 
@@ -45,7 +46,7 @@ int prepare_group_list (void)
 	fprintf (fd, "%s %s\n", group.ref.file[idx[n]].name, group.ref.file[idx[n]].mapset);
     fclose (fd);
 
-    free (idx);
+    G_free (idx);
 
     return 0;
 }

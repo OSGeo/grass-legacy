@@ -371,7 +371,7 @@ OUTGR ()
   current_region.bottom=z_orig_in;
   current_region.top=nsizl*tb_res_in + z_orig_in;
 
-  if (!(data = (float *) malloc(sizeof(float)*nsizr*nsizc*nsizl))) {
+  if (!(data = (float *) G_malloc (sizeof(float)*nsizr*nsizc*nsizl))) {
     clean_fatal_error("Error: out of memory");
   }
 
@@ -725,7 +725,7 @@ OUTGR ()
     }
   }
 
-  free(data);
+  G_free (data);
   
   return 1;
 }

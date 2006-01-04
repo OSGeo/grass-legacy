@@ -153,7 +153,7 @@ int sel(SQLPSTMT * st, int tab, int **selset, int *n_cols, int **colset)
     nflds = db.tables[tab].ncols;
 
     if (nflds) {
-	cols = (int *) malloc(nflds * sizeof(int));
+	cols = (int *) G_malloc (nflds * sizeof(int));
 	for (i = 0; i < nflds; i++)
 	    cols[i] = i;
     }
@@ -162,7 +162,7 @@ int sel(SQLPSTMT * st, int tab, int **selset, int *n_cols, int **colset)
 
 
     nrws = db.tables[tab].nrows;
-    set = (int *) malloc(nrws * sizeof(int));
+    set = (int *) G_malloc (nrws * sizeof(int));
     for (i = 0; i < db.tables[tab].nrows; i++) {
 	set[i] = i;
     }

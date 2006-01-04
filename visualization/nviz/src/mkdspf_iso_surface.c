@@ -1,3 +1,4 @@
+#include "gis.h"
 # include "viz.h"
 #include "cell_table.h"
 
@@ -36,7 +37,7 @@ viz_iso_surface(linefax, interp)
 	if (!z) {		/* first time thru need to read in four slices of data */
 	    for (slice = 0; slice < 4; slice++) {
 		if ((data[slice] =
-		     (float *) malloc(sizeof(float) * XDIMYDIM)) == NULL) {
+		     (float *) G_malloc (sizeof(float) * XDIMYDIM)) == NULL) {
 		    Tcl_AppendResult(interp, "error in allocating memory\n",
 				     NULL);
 		    return (TCL_ERROR);

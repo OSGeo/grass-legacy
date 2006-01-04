@@ -3,6 +3,7 @@
 ** and drawn to the screen not being stored at this time
 */
 
+#include "gis.h"
 #include "vizual.h"
 #include "G3d.h"
 /*
@@ -43,7 +44,7 @@ G3D_Region *g3reg;
 
 /* NOTE: code only written for floats at this time */
 /* malloc memory for buffer that will hold slice of data */
-    if ((D_Cap->D_buff = (float *)malloc(dim1*dim2*sizeof(float))) == NULL)
+    if ((D_Cap->D_buff = (float *)G_malloc (dim1*dim2*sizeof(float))) == NULL)
     {
 	fprintf(stderr,"ERROR: in mallocing memory for D_Cap->D_buff\n");
 	return(-1);

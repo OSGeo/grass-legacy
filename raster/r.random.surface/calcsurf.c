@@ -5,6 +5,7 @@
 
 #undef MAIN
 #include <stdlib.h>
+#include "gis.h"
 #include "ransurf.h"
 #include "local_proto.h"
 
@@ -139,6 +140,6 @@ end OLD */
         }
     }
 
-    free( Randoms);
+    G_free ( Randoms);
     FUNCTION(end calcsurf);
 }

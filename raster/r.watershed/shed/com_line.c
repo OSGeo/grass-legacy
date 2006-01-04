@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "gis.h"
 #include "watershed.h"
 #include "string.h"
 
@@ -11,8 +12,8 @@ int com_line_Gwater (INPUT *input, OUTPUT *output)
   
   window = &(output->window);
   if (0 == G_yes ("Continue?", 1)) exit (0);
-  input->haf_name = (char *) calloc (40, sizeof (char));
-  input->accum_name = (char *) calloc (40, sizeof (char));
+  input->haf_name = (char *) G_calloc (40, sizeof (char));
+  input->accum_name = (char *) G_calloc (40, sizeof (char));
   fprintf (stdout,"\nThis set of questions will organize the command line for the\n");
   fprintf (stdout,"%s program to run properly for your application.\n", NON_NAME);
   fprintf (stdout,"The first question is whether you want %s to run\n", NON_NAME);
@@ -31,7 +32,7 @@ int com_line_Gwater (INPUT *input, OUTPUT *output)
   input->slow = 0;
   if (G_yes (buf,1))	{
 	input->fast = 1;
-  	input->com_line_ram = (char *) calloc (400, sizeof (char));
+  	input->com_line_ram = (char *) G_calloc (400, sizeof (char));
 	prog_name = G_store (RAM_NAME);
   	sprintf(input->com_line_ram, 
 		"%s/etc/water/%s", G_getenv("GISBASE"), RAM_NAME);
@@ -39,14 +40,14 @@ int com_line_Gwater (INPUT *input, OUTPUT *output)
   	sprintf (buf, "should the slow mode (%s) be run instead?", SEG_NAME);
   	if (G_yes (buf,1)) {
 		input->slow = 1;
-  		input->com_line_seg = (char *) calloc (400, sizeof (char));
+  		input->com_line_seg = (char *) G_calloc (400, sizeof (char));
   		sprintf(input->com_line_seg, 
 			"%s/etc/water/%s", G_getenv("GISBASE"), SEG_NAME);
 	}
   } else	{
   	input->slow = 1;
 	prog_name = G_store (SEG_NAME);
-  	input->com_line_seg = (char *) calloc (400, sizeof (char));
+  	input->com_line_seg = (char *) G_calloc (400, sizeof (char));
   	sprintf(input->com_line_seg, 
 		"%s/etc/water/%s", G_getenv("GISBASE"), SEG_NAME);
   }

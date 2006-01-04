@@ -67,17 +67,17 @@ FILE *ofp;
             mult08131[index] = -0.08131*index;
         }
 
-	if(NULL == (cy = (unsigned char *)malloc(rows*cols*
+	if(NULL == (cy = (unsigned char *)G_malloc (rows*cols*
 		    sizeof(unsigned char)))){
 	    fprintf(stderr,"Out of memory\n");
 	    exit(0);
 	}
-	if(NULL == (cr = (unsigned char *)malloc((rows/2)*(cols/2)*
+	if(NULL == (cr = (unsigned char *)G_malloc ((rows/2)*(cols/2)*
 		    sizeof(unsigned char)))){
 	    fprintf(stderr,"Out of memory\n");
 	    exit(0);
 	}
-	if(NULL == (cb = (unsigned char *)malloc((rows/2)*(cols/2)*
+	if(NULL == (cb = (unsigned char *)G_malloc ((rows/2)*(cols/2)*
 		    sizeof(unsigned char)))){
 	    fprintf(stderr,"Out of memory\n");
 	    exit(0);
