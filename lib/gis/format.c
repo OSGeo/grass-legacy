@@ -154,7 +154,7 @@ int G__read_row_ptrs(int fd)
 	fcb->row_ptr[row] = v;
     }
 
-    free(buf);
+    G_free (buf);
 
     return 1;
 

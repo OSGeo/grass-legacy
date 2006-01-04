@@ -122,20 +122,20 @@ static int close_old (int fd)
     /* if G__.auto_mask was only allocated for reading map rows to create
        non-existant null rows, and not for actuall mask, free G__.mask_row 
        if(G__.auto_mask <=0)
-          free(G__.mask_buf);
+          G_free (G__.mask_buf);
        This is obsolete since now the mask_bus is always allocated
     */
 
     for (i=0;i<NULL_ROWS_INMEM;i++)
-       free (FCB.NULL_ROWS[i]);
-    free(FCB.null_work_buf);
+       G_free (FCB.NULL_ROWS[i]);
+    G_free (FCB.null_work_buf);
 
     if (FCB.cellhd.compressed)
-	free (FCB.row_ptr);
-    free (FCB.col_map);
-    free (FCB.mapset);
-    free (FCB.data);
-    free (FCB.name);
+	G_free (FCB.row_ptr);
+    G_free (FCB.col_map);
+    G_free (FCB.mapset);
+    G_free (FCB.data);
+    G_free (FCB.name);
     if (FCB.reclass_flag)
 	G_free_reclass (&FCB.reclass);
     FCB.open_mode = -1;
@@ -173,7 +173,7 @@ case OPEN_NEW_RANDOM: fprintf (stderr, "close %s random\n",FCB.name); break;
 	    G_zero_raster_buf (FCB.data, FCB.map_type);
 	    for (row = FCB.cur_row; row < FCB.cellhd.rows; row++)
 	        G_put_raster_row (fd, FCB.data, FCB.map_type);
-            free (FCB.data);
+            G_free (FCB.data);
 	    FCB.data = NULL;
 	}
 
@@ -265,11 +265,11 @@ case OPEN_NEW_RANDOM: fprintf (stderr, "close %s random\n",FCB.name); break;
     FCB.open_mode = -1;
 
     if (FCB.data != NULL)
-	free (FCB.data);
+	G_free (FCB.data);
 
     if (FCB.null_temp_name != NULL)
     {
-	free (FCB.null_temp_name);
+	G_free (FCB.null_temp_name);
         FCB.null_temp_name = NULL;
     }
 
@@ -299,7 +299,7 @@ case OPEN_NEW_RANDOM: fprintf (stderr, "close %s random\n",FCB.name); break;
         }
     }
     if (FCB.temp_name != NULL) {
-	free (FCB.temp_name);
+	G_free (FCB.temp_name);
     }
 
     if (ok) {
@@ -371,12 +371,12 @@ case OPEN_NEW_RANDOM: fprintf (stderr, "close %s random\n",FCB.name); break;
        }
     } /* OK */
 
-    free (FCB.name);
-    free (FCB.mapset);
+    G_free (FCB.name);
+    G_free (FCB.mapset);
 
     for (i=0;i<NULL_ROWS_INMEM;i++)
-       free (FCB.NULL_ROWS[i]);
-    free(FCB.null_work_buf);
+       G_free (FCB.NULL_ROWS[i]);
+    G_free (FCB.null_work_buf);
 
     if(FCB.map_type != CELL_TYPE)
        G_quant_free(&FCB.quant);

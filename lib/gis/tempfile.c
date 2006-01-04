@@ -13,7 +13,7 @@
  * returns:
  *   pointer to a character string containing the name.
  *   the name is copied to allocated memory and may be
- *   released by the unix free() routine.
+ *   released by the unix free () routine.
  *
  * note:
  *   It is recommended to unlink() the tempfile on exit/error.
@@ -43,7 +43,7 @@
  *
  *  \return char:  pointer to a character string containing the name.
  *   the name is copied to allocated memory and may be
- *   released by the unix free() routine.
+ *   released by the unix free () routine.
  */
 
 char *G_tempfile(void)

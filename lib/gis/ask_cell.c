@@ -111,7 +111,7 @@ static int lister(char *name,char *mapset,char *buf)
     strcpy (buf, title = G_get_cell_title (name, mapset));
     if (*buf == 0)
 	strcpy (buf, _("(no title)"));
-    free (title);
+    G_free (title);
 
     return 0;
 }

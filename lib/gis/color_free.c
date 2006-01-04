@@ -36,7 +36,7 @@ int G__color_free_rules (
     for (rule = cp->rules; rule; rule = next)
     {
 	next = rule->next;
-	free (rule);
+	G_free (rule);
     }
     cp->rules = NULL;
 
@@ -48,10 +48,10 @@ int G__color_free_lookup (
 {
     if (cp->lookup.active)
     {
-	free (cp->lookup.red);
-	free (cp->lookup.blu);
-	free (cp->lookup.grn);
-	free (cp->lookup.set);
+	G_free (cp->lookup.red);
+	G_free (cp->lookup.blu);
+	G_free (cp->lookup.grn);
+	G_free (cp->lookup.set);
 	cp->lookup.active = 0;
     }
 
@@ -62,8 +62,8 @@ int G__color_free_fp_lookup ( struct _Color_Info_ *cp)
 {
     if (cp->fp_lookup.active)
     {
-	free (cp->fp_lookup.vals);
-	free (cp->fp_lookup.rules);
+	G_free (cp->fp_lookup.vals);
+	G_free (cp->fp_lookup.rules);
 	cp->fp_lookup.active = 0;
 	cp->fp_lookup.nalloc = 0;
     }
