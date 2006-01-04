@@ -2,11 +2,11 @@
  * Library support for placing labels.
  */
 
-#include "interface.h"
 #include <stdlib.h>
+#include "interface.h"
+#include "gis.h"
 
 extern int get_idnum();
-extern void free();
 
 int Nplace_label_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
 		     int argc,	/* Number of arguments. */

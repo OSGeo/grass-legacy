@@ -1,3 +1,4 @@
+#include "gis.h"
 #include "globals.h"
 #define NLINES 18
 struct box
@@ -241,7 +242,7 @@ ask_line_color (char *colors, int len1, char *xname, int position)
     R_panel_delete (tempfile2);
     R_flush();
 
-    free (page_offset);
+    G_free (page_offset);
     return stat;
 }
 

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "gis.h"
 #include "kappa.h"
 #include "local_proto.h"
 
@@ -62,7 +63,7 @@ void prn_error_mat(int out_cols, int hdr)
     qsort(rlst,ncat1+ncat2,sizeof(long),longcomp);
     ncat = collapse(rlst,ncat1+ncat2);
     rlst = (long *) G_realloc (rlst, ncat * sizeof(long)); 
-    free (clst);
+    G_free (clst);
 
 /* allocate matrix and fill in with cats' value */ 
    matr = (long *) G_malloc (ncat*ncat*sizeof(long));
@@ -167,7 +168,7 @@ void prn_error_mat(int out_cols, int hdr)
      }
      fprintf (fd, "%9ld\n", grand_count);
    }
-   free (matr);
+   G_free (matr);
    if (output != NULL)
      fclose(fd);
   }

@@ -158,8 +158,8 @@ int main (int argc, char **argv)
 
 /* free allocated memory */
     free_row_lists (rowlist, nrows);
-    free (rowlook);
-    free (collook);
+    G_free (rowlook);
+    G_free (collook);
     if (ll)
 	free_dist_params ();
     G_close_cell(fd);

@@ -20,6 +20,7 @@
 #include <unistd.h>
 #include <dbmi.h>
 #include <shapefil.h>
+#include "gis.h"
 #include "globals.h"
 #include "proto.h"
 
@@ -63,11 +64,11 @@ int execute(char *sql, cursor * c)
 
     if (yyparse() != 0) {
 	sqpFreeStmt(st);
-	free ( tmpsql) ;
+	G_free ( tmpsql) ;
 	append_error("SQL parser error in statement:\n%s\n", sql);
 	return DB_FAILED;
     }
-    free ( tmpsql) ;
+    G_free ( tmpsql) ;
 
     G_debug (3, "SQL statement parsed successfully" );
 
@@ -103,7 +104,7 @@ int execute(char *sql, cursor * c)
     if (st->command == SQLP_INSERT || st->command == SQLP_SELECT
 	|| st->command == SQLP_UPDATE) {
 	if (ncols > 0) {	/* colums were specified */
-	    cols = (int *) malloc(ncols * sizeof(int));
+	    cols = (int *) G_malloc (ncols * sizeof(int));
 	    for (i = 0; i < ncols; i++) {
 		cols[i] = find_column(tab, st->Col[i].s);
 		if ( cols[i] == -1 ) {
@@ -115,7 +116,7 @@ int execute(char *sql, cursor * c)
 	else {			/* all columns */
 
 	    ncols = db.tables[tab].ncols;
-	    cols = (int *) malloc(ncols * sizeof(int));
+	    cols = (int *) G_malloc (ncols * sizeof(int));
 	    for (i = 0; i < ncols; i++)
 		cols[i] = i;
 	}
@@ -151,7 +152,7 @@ int execute(char *sql, cursor * c)
 	/* Add column to each row */
 	for ( i = 0; i < db.tables[tab].nrows; i++ ) {
 	    db.tables[tab].rows[i].values = 
-	        (VALUE *) realloc( db.tables[tab].rows[i].values, db.tables[tab].ncols * sizeof(VALUE));
+	        (VALUE *) G_realloc ( db.tables[tab].rows[i].values, db.tables[tab].ncols * sizeof(VALUE));
 
             dbval = &(db.tables[tab].rows[i].values[db.tables[tab].ncols-1]);
 	    dbval->i = 0;
@@ -200,13 +201,13 @@ int execute(char *sql, cursor * c)
 	if (db.tables[tab].nrows == db.tables[tab].arows) {
 	    db.tables[tab].arows += 1000;
 	    db.tables[tab].rows =
-		(ROW *) realloc(db.tables[tab].rows,
+		(ROW *) G_realloc (db.tables[tab].rows,
 				db.tables[tab].arows * sizeof(ROW));
 	}
 	dbrows = db.tables[tab].rows;
 	row = db.tables[tab].nrows;
 	dbrows[row].values =
-	    (VALUE *) calloc(db.tables[tab].ncols, sizeof(VALUE));
+	    (VALUE *) G_calloc (db.tables[tab].ncols, sizeof(VALUE));
 	dbrows[row].alive = TRUE;
         
 	/* set to null */
@@ -351,11 +352,11 @@ int eval_val(int tab, int row, int col, SQLPVALUE * inval, SQLPVALUE *val)
 	  /* Ok, got a value, propagate it to the proper type */
 	  if( val->type == SQLP_I ){
 	    val->d = (double)val->i;
-	    val->s = (char*)malloc(32*sizeof(char));
+	    val->s = (char*)G_malloc (32*sizeof(char));
 	    snprintf( val->s, 32*sizeof(char), "%d", val->i );
 	  }else if( val->type == SQLP_D ){
 	    val->i = (int)val->d;
-	    val->s = (char*)malloc(32*sizeof(char));
+	    val->s = (char*)G_malloc (32*sizeof(char));
 	    snprintf( val->s, 32*sizeof(char), "%g", val->d );
 	  }else if( val->type == SQLP_S ){
 	    val->i = atoi( val->s );
@@ -491,7 +492,7 @@ int sel(SQLPSTMT * st, int tab, int **selset)
     }
 
     aset = 1;
-    set = (int *) malloc(aset * sizeof(int));
+    set = (int *) G_malloc (aset * sizeof(int));
 
     if (st->upperNodeptr) {
 	int node_type;
@@ -522,7 +523,7 @@ int sel(SQLPSTMT * st, int tab, int **selset)
 		} else if ( condition == NODE_TRUE ) { /* true */
 		    if (nset == aset) {
 			aset += 1000;
-			set = (int *) realloc(set, aset * sizeof(int));
+			set = (int *) G_realloc (set, aset * sizeof(int));
 		    }
 		    set[nset] = i;
 		    nset++;
@@ -537,7 +538,7 @@ int sel(SQLPSTMT * st, int tab, int **selset)
 	}
     } else { /* Select all */
 	aset = db.tables[tab].nrows;
-	set = (int *) realloc(set, aset * sizeof(int));
+	set = (int *) G_realloc (set, aset * sizeof(int));
 	for (i = 0; i < db.tables[tab].nrows; i++) {
 	    set[i] = i;
 	}

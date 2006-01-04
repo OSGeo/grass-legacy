@@ -9,6 +9,7 @@
  */
 #include <stdlib.h>
 #include <string.h>
+#include "gis.h"
 #include "edit.h"
 #include "D.h"
 
@@ -218,7 +219,7 @@ color_menu (char *title)
     if(strlen(title) > 20)
         error(1, "color_menu: title too long");
 */
-    options[0] = (char *) malloc(sizeof(char) * strlen(title) + 1);
+    options[0] = (char *) G_malloc (sizeof(char) * strlen(title) + 1);
 
     strcpy(options[0], title);
 

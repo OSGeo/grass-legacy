@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "gis.h"
 #include "raster.h"
 #include "display.h"
 #include "setup.h"
@@ -202,8 +203,8 @@ back:
      else {
         get_group_drv(sel);
         for(i = 0; i < 9; i++)
-           free(sel[i]);
-        free(sel);
+           G_free (sel[i]);
+        G_free (sel);
      }
   }
 
@@ -251,7 +252,7 @@ void paint_map (char *n1, char *n2, char *n3)
      sprintf(cmd, "d.vect %s color=black", n3);
      G_system(cmd);
   }
-  free(cmd);
+  G_free (cmd);
   return;
 }
 
@@ -412,8 +413,8 @@ back1:
   }
 
   R_close_driver();
-  free(x);
-  free(y);
+  G_free (x);
+  G_free (y);
   unlink (tempfile);
   return;
 
@@ -594,7 +595,7 @@ void save_rgn (char *name, char *tempfile, FILE *tmp, int *x, int *y, int pts, i
      G_gisbase(), tempfile, G_gisbase(), name);
   fprintf(stderr, "    Generating '%s' file... %20c\n\n", name, ' ') ;
   G_system(cmd) ;
-  free(cmd);
+  G_free (cmd);
 
 				/* set the color table for the regions
 				   file to color wave */
@@ -606,12 +607,12 @@ void save_rgn (char *name, char *tempfile, FILE *tmp, int *x, int *y, int pts, i
   				/* overlay the region file on the
 				   screen */
 
-  if (!(cmd = malloc(20)))
+  if (!(cmd = G_malloc (20)))
      G_fatal_error("Can't allocate enough memory\n");
   R_close_driver();
   sprintf(cmd, "d.rast -o  %s", name);
   G_system(cmd);
-  free(cmd);
+  G_free (cmd);
   sleep(4);			/* hold the screen for 4 seconds */
   R_open_driver();
   return;

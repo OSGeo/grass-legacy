@@ -16,8 +16,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <glocale.h>
-#include <gis.h>
 #include <dbmi.h>
+#include "gis.h"
 #include "globals.h"
 #include "proto.h"
 
@@ -124,8 +124,8 @@ int db__driver_open_database(handle)
     ret_conn = mysql_real_connect(&mysql_conn, myconn.host, user, password, myconn.dbname, 
 		myconn.port, myconn.socket, 0);
 
-    free ( user );
-    free ( password );
+    G_free ( user );
+    G_free ( password );
 
     if ( ret_conn == NULL ) {
 	  G_asprintf(&emsg, "mysql_real_connect() error (%d): %s\n",
@@ -161,7 +161,7 @@ int db__driver_close_database()
 
 	free_table(i);
     }
-    free(db.tables);
+    G_free (db.tables);
 
     mysql_close(&mysql_conn);
 

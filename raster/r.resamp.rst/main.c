@@ -555,7 +555,7 @@ int main(int argc, char *argv[])
 			      &dnorm, &outhd, &winhd, smooth, NPOINT) < 0)
 	clean_fatal_error("Can not write cell files--try increasing cell size");
 
-    free(zero_array_cell);
+    G_free (zero_array_cell);
     if (elev != NULL)
 	fclose(Tmp_fd_z);
     if (slope != NULL)
@@ -595,7 +595,7 @@ void create_temp_files(void)
 {
     int i;
 
-    zero_array_cell = (FCELL *) malloc(sizeof(FCELL) * nsizc);
+    zero_array_cell = (FCELL *) G_malloc (sizeof(FCELL) * nsizc);
     if (!zero_array_cell)
 	G_fatal_error(_("Not enough memory for zero_array_cell"));
 

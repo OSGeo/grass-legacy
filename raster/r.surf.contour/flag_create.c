@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "gis.h"
 #include "flag.h"
 
 FLAG *flag_create (int nrows, int ncols)
@@ -7,7 +8,7 @@ FLAG *flag_create (int nrows, int ncols)
 	FLAG *new_flag;
 	register int i;
 
-	new_flag  = (FLAG *)malloc(sizeof(FLAG));
+	new_flag  = (FLAG *)G_malloc (sizeof(FLAG));
 	if (new_flag == NULL)
 	{
 		return ((FLAG *) NULL);
@@ -15,17 +16,17 @@ FLAG *flag_create (int nrows, int ncols)
 	new_flag->nrows = nrows;
 	new_flag->ncols = ncols;
 	new_flag->leng = (ncols + 7) / 8;
-	new_flag->array = (unsigned char **)malloc(nrows * sizeof(unsigned char *));
+	new_flag->array = (unsigned char **)G_malloc (nrows * sizeof(unsigned char *));
 	if (new_flag->array == NULL)
 	{
-		free(new_flag);
+		G_free (new_flag);
 		return((FLAG *) NULL);
 	}
-	temp = (unsigned char *)calloc(nrows * new_flag->leng, sizeof(unsigned char));
+	temp = (unsigned char *)G_calloc (nrows * new_flag->leng, sizeof(unsigned char));
 	if (temp == NULL)
 	{
-		free(new_flag->array);
-		free(new_flag);
+		G_free (new_flag->array);
+		G_free (new_flag);
 		return((FLAG *) NULL);
 	}
 	for (i=0; i<nrows; i++)

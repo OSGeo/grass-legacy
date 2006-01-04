@@ -2,6 +2,7 @@
  ** uses libgsf to draw wire frame surfaces
  */
 #include <stdlib.h>
+#include "gis.h"
 #include "tk.h"
 #include "interface.h"
 
@@ -22,7 +23,7 @@ int Nquick_draw_cmd(Nv_data * dc, Tcl_Interp * interp)
 	}
     }
 
-	free(surf_list);
+	G_free (surf_list);
 
 	vol_list = GVL_get_vol_list(&max);
 	max = GVL_num_vols();

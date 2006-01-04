@@ -1,3 +1,4 @@
+#include "gis.h"
 #include "local_proto.h"
 
 
@@ -32,7 +33,7 @@ initialize(void)
 	misc.qs0 = params.qs0 * input.dt;
 	misc.qss = exp(misc.lnTe - misc.lambda);
 
-	misc.tch = (double *) malloc(params.nch * sizeof(double));
+	misc.tch = (double *) G_malloc (params.nch * sizeof(double));
 	misc.tch[0] = params.d[0] / misc.vch;
 	for(i=1; i<params.nch; i++)
 		misc.tch[i] = misc.tch[0] + (params.d[i]-params.d[0]) / misc.vr;
@@ -44,7 +45,7 @@ initialize(void)
 
 	misc.nreach -= misc.ndelay;
 
-	misc.Ad = (double *) malloc(misc.nreach * sizeof(double));
+	misc.Ad = (double *) G_malloc (misc.nreach * sizeof(double));
 	for(i=0; i<misc.nreach; i++){
 		t = misc.ndelay + i + 1;
 		if(t > misc.tch[params.nch - 1]){
@@ -72,12 +73,12 @@ initialize(void)
 		misc.Ad[i] *= params.A;
 	}
 
-	misc.Srz = (double **) malloc(input.ntimestep * sizeof(double *));
-	misc.Suz = (double **) malloc(input.ntimestep * sizeof(double *));
+	misc.Srz = (double **) G_malloc (input.ntimestep * sizeof(double *));
+	misc.Suz = (double **) G_malloc (input.ntimestep * sizeof(double *));
 	for(i=0; i<input.ntimestep; i++){
-		misc.Srz[i] = (double *) malloc(misc.nidxclass *
+		misc.Srz[i] = (double *) G_malloc (misc.nidxclass *
 							sizeof(double));
-		misc.Suz[i] = (double *) malloc(misc.nidxclass *
+		misc.Suz[i] = (double *) G_malloc (misc.nidxclass *
 							sizeof(double));
 	}
 
@@ -86,10 +87,10 @@ initialize(void)
 		misc.Suz[0][i] = 0.0;
 	}
 
-	misc.S_mean = (double *) malloc(input.ntimestep * sizeof(double));
+	misc.S_mean = (double *) G_malloc (input.ntimestep * sizeof(double));
 	misc.S_mean[0] = - params.m * log(misc.qs0 / misc.qss);
 
-	misc.Qt = (double *) malloc(input.ntimestep * sizeof(double));
+	misc.Qt = (double *) G_malloc (input.ntimestep * sizeof(double));
 	for(i=0; i<input.ntimestep; i++)
 		misc.Qt[i] = 0.0;
 
@@ -116,28 +117,28 @@ implement(void)
 	double	_qo, _qv;
 
 	
-	misc.S = (double **) malloc(input.ntimestep * sizeof(double *));
-	misc.Ea = (double **) malloc(input.ntimestep * sizeof(double *));
-	misc.ex = (double **) malloc(input.ntimestep * sizeof(double *));
+	misc.S = (double **) G_malloc (input.ntimestep * sizeof(double *));
+	misc.Ea = (double **) G_malloc (input.ntimestep * sizeof(double *));
+	misc.ex = (double **) G_malloc (input.ntimestep * sizeof(double *));
 
-	misc.qt = (double **) malloc(input.ntimestep * sizeof(double *));
-	misc.qo = (double **) malloc(input.ntimestep * sizeof(double *));
-	misc.qv = (double **) malloc(input.ntimestep * sizeof(double *));
+	misc.qt = (double **) G_malloc (input.ntimestep * sizeof(double *));
+	misc.qo = (double **) G_malloc (input.ntimestep * sizeof(double *));
+	misc.qv = (double **) G_malloc (input.ntimestep * sizeof(double *));
 
-	misc.qs = (double *) malloc(input.ntimestep * sizeof(double));
-	misc.f = (double *) malloc(input.ntimestep * sizeof(double));
-	misc.fex = (double *) malloc(input.ntimestep * sizeof(double));
+	misc.qs = (double *) G_malloc (input.ntimestep * sizeof(double));
+	misc.f = (double *) G_malloc (input.ntimestep * sizeof(double));
+	misc.fex = (double *) G_malloc (input.ntimestep * sizeof(double));
 
 	for(i=0; i<input.ntimestep; i++){
-		misc.S[i] = (double *) malloc(misc.nidxclass * sizeof(double));
-		misc.Ea[i] = (double *) malloc(misc.nidxclass * sizeof(double));
-		misc.ex[i] = (double *) malloc(misc.nidxclass * sizeof(double));
+		misc.S[i] = (double *) G_malloc (misc.nidxclass * sizeof(double));
+		misc.Ea[i] = (double *) G_malloc (misc.nidxclass * sizeof(double));
+		misc.ex[i] = (double *) G_malloc (misc.nidxclass * sizeof(double));
 
-		misc.qt[i] = (double *) malloc((misc.nidxclass + 1) * 
+		misc.qt[i] = (double *) G_malloc ((misc.nidxclass + 1) * 
 							sizeof(double));
-		misc.qo[i] = (double *) malloc((misc.nidxclass + 1) * 
+		misc.qo[i] = (double *) G_malloc ((misc.nidxclass + 1) * 
 					       		sizeof(double));
-		misc.qv[i] = (double *) malloc((misc.nidxclass + 1) * 
+		misc.qv[i] = (double *) G_malloc ((misc.nidxclass + 1) * 
 					       		sizeof(double));
 
 		misc.qt[i][misc.nidxclass] = 0.0;

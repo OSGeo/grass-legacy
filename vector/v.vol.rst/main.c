@@ -454,34 +454,34 @@ int main (int argc, char *argv[])
     /************************************/
     KMIN = npmin;
     /***************        KMAX2 = GRADPARAM1*npmax;***************/
-    az = (double *) malloc (sizeof (double) * (n_cols + 1));
+    az = (double *) G_malloc (sizeof (double) * (n_cols + 1));
     if (! az)
       G_fatal_error("Not enough memory for az");
-    adx = (double *) malloc (sizeof (double) * (n_cols + 1));
+    adx = (double *) G_malloc (sizeof (double) * (n_cols + 1));
     if (! adx)
       G_fatal_error ("Not enough memory for adx");
-    ady = (double *) malloc (sizeof (double) * (n_cols + 1));
+    ady = (double *) G_malloc (sizeof (double) * (n_cols + 1));
     if (! ady)
       G_fatal_error ("Not enough memory for ady");
-    adxx = (double *) malloc (sizeof (double) * (n_cols + 1));
+    adxx = (double *) G_malloc (sizeof (double) * (n_cols + 1));
     if (! adxx)
       G_fatal_error ("Not enough memory for adxx");
-    adyy = (double *) malloc (sizeof (double) * (n_cols + 1));
+    adyy = (double *) G_malloc (sizeof (double) * (n_cols + 1));
     if (! adyy)
       G_fatal_error ("Not enough memory for adyy");
-    adxy = (double *) malloc (sizeof (double) * (n_cols + 1));
+    adxy = (double *) G_malloc (sizeof (double) * (n_cols + 1));
     if (! adxy)
       G_fatal_error ("Not enough memory for adxy");
-    adz = (double *) malloc (sizeof (double) * (n_cols + 1));
+    adz = (double *) G_malloc (sizeof (double) * (n_cols + 1));
     if (! adz)
       G_fatal_error ("Not enough memory for adz");
-    adxz = (double *) malloc (sizeof (double) * (n_cols + 1));
+    adxz = (double *) G_malloc (sizeof (double) * (n_cols + 1));
     if (! adxz)
       G_fatal_error ("Not enough memory for adxz");
-    adyz = (double *) malloc (sizeof (double) * (n_cols + 1));
+    adyz = (double *) G_malloc (sizeof (double) * (n_cols + 1));
     if (! adyz)
       G_fatal_error ("Not enough memory for adyz");
-    adzz = (double *) malloc (sizeof (double) * (n_cols + 1));
+    adzz = (double *) G_malloc (sizeof (double) * (n_cols + 1));
     if (! adzz)
       G_fatal_error ("Not enough memory for adzz");
 
@@ -559,7 +559,7 @@ int main (int argc, char *argv[])
         fdcout = G_open_fp_cell_new(cellout);
         if(fdcout < 0)
           G_fatal_error (_("Cannot open %s"), cellout);
-	zero_array_cell = (FCELL *) malloc (sizeof (FCELL) * n_cols);
+	zero_array_cell = (FCELL *) G_malloc (sizeof (FCELL) * n_cols);
 	if (! zero_array_cell) 
           clean_fatal_error("Not enough memory for zero_array_cell\n");
 	  for (i=0;i<n_cols;i++) zero_array_cell[i] = 0;
@@ -583,7 +583,7 @@ int main (int argc, char *argv[])
 
       if (outz != NULL) {
         /* allocating temp array for writing to corresponding temp file */
-	zero_array1 = (float *) malloc (sizeof (float) * n_cols);
+	zero_array1 = (float *) G_malloc (sizeof (float) * n_cols);
 	if (! zero_array1) 
           clean_fatal_error("Not enough memory for zero_array1\n");
 	for (i=0;i<n_cols;i++) zero_array1[i] = 0.;
@@ -600,7 +600,7 @@ int main (int argc, char *argv[])
       }
       if (gradient != NULL) {
         /* allocating temp array for writing to corresponding temp file */
-	zero_array2 = (float *) malloc (sizeof (float) * n_cols);
+	zero_array2 = (float *) G_malloc (sizeof (float) * n_cols);
 	if (! zero_array2) 
           clean_fatal_error("Not enough memory for zero_array2\n");
 	for (i=0;i<n_cols;i++) zero_array2[i] = 0.;
@@ -617,7 +617,7 @@ int main (int argc, char *argv[])
       }
       if (aspect1 != NULL) {
         /* allocating temp array for writing to corresponding temp file */
-	zero_array3 = (float *) malloc (sizeof (float) * n_cols);
+	zero_array3 = (float *) G_malloc (sizeof (float) * n_cols);
 	if (! zero_array3) 
           clean_fatal_error("Not enough memory for zero_array3\n");
 	for (i=0;i<n_cols;i++) zero_array3[i] = 0.;
@@ -634,7 +634,7 @@ int main (int argc, char *argv[])
       }
       if (aspect2 != NULL) {
         /* allocating temp array for writing to corresponding temp file */
-	zero_array4 = (float *) malloc (sizeof (float) * n_cols);
+	zero_array4 = (float *) G_malloc (sizeof (float) * n_cols);
 	if (! zero_array4) 
           clean_fatal_error("Not enough memory for zero_array4\n");
 	for (i=0;i<n_cols;i++) zero_array4[i] = 0.;
@@ -651,7 +651,7 @@ int main (int argc, char *argv[])
       }
       if (ncurv != NULL) {
         /* allocating temp array for writing to corresponding temp file */
-	zero_array5 = (float *) malloc (sizeof (float) * n_cols);
+	zero_array5 = (float *) G_malloc (sizeof (float) * n_cols);
 	if (! zero_array5) 
           clean_fatal_error("Not enough memory for zero_array5\n");
 	for (i=0;i<n_cols;i++) zero_array5[i] = 0.;
@@ -668,7 +668,7 @@ int main (int argc, char *argv[])
       }
       if (gcurv != NULL) {
         /* allocating temp array for writing to corresponding temp file */
-	zero_array6 = (float *) malloc (sizeof (float) * n_cols);
+	zero_array6 = (float *) G_malloc (sizeof (float) * n_cols);
 	if (! zero_array6) 
           clean_fatal_error("Not enough memory for zero_array6\n");
 	for (i=0;i<n_cols;i++) zero_array6[i] = 0.;
@@ -685,7 +685,7 @@ int main (int argc, char *argv[])
       }
       if (mcurv != NULL) {
         /* allocating temp array for writing to corresponding temp file */
-	zero_array7 = (float *) malloc (sizeof (float) * n_cols);
+	zero_array7 = (float *) G_malloc (sizeof (float) * n_cols);
 	if (! zero_array7) 
           clean_fatal_error("Not enough memory for zero_array7\n");
 	for (i=0;i<n_cols;i++) zero_array7[i] = 0.;
@@ -703,29 +703,29 @@ int main (int argc, char *argv[])
       cursegm = 0;
       if (interp_call (root,root))
       {
-	if (outz != NULL)      free (zero_array1);
-	if (gradient != NULL)  free (zero_array2);
-	if (aspect1 != NULL)   free (zero_array3);
-	if (aspect2 != NULL)   free (zero_array4);
-	if (ncurv != NULL)    free (zero_array5);
-	if (gcurv != NULL)    free (zero_array6);
-	if (mcurv != NULL)    free (zero_array7);
+	if (outz != NULL)      G_free (zero_array1);
+	if (gradient != NULL)  G_free (zero_array2);
+	if (aspect1 != NULL)   G_free (zero_array3);
+	if (aspect2 != NULL)   G_free (zero_array4);
+	if (ncurv != NULL)    G_free (zero_array5);
+	if (gcurv != NULL)    G_free (zero_array6);
+	if (mcurv != NULL)    G_free (zero_array7);
 
 fprintf(stderr,"finished interpolating\n");
 
         if (fd4 != NULL)
  	  fprintf (fd4, "max. error found = %f \n", ertot);
-	free (root);
-	free(az);
-	free(adx);
-	free(ady);
-	free(adz);
-	free(adxx);
-	free(adyy);
-	free(adxy);
-	free(adxz);
-	free(adyz);
-	free(adzz);
+	G_free (root);
+	G_free (az);
+	G_free (adx);
+	G_free (ady);
+	G_free (adz);
+	G_free (adxx);
+	G_free (adyy);
+	G_free (adxy);
+	G_free (adxz);
+	G_free (adyz);
+	G_free (adzz);
 
 	OUTGR ();
         if ((cellinp != NULL)) {

@@ -6,10 +6,8 @@
 
 /* Nvision includes */
 #include <stdlib.h>
+#include "gis.h"
 #include "interface.h"
-
-/* Extern declarations */
-extern void free();
 
 /* set polygon resolution for isosurfaces */
 int isosurf_set_res(int id, Tcl_Interp *interp, int argc, char *argv[])

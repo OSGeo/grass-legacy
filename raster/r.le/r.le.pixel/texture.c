@@ -18,6 +18,7 @@
 *				                           *
 ************************************************************/
 
+#include "gis.h"
 #include "config.h"
 #include "pixel.h"
 
@@ -167,17 +168,17 @@ void mv_texture (int nrows, int ncols, double **buf, double **null_buf, double *
   }
 
   if (choice->jux[0]) {
-     free(atts);
+     G_free (atts);
      for (i = 0; i < cntwhole; i++)
-        free(weight[i]);
-     free(weight);
+        G_free (weight[i]);
+     G_free (weight);
   }
 
   if (choice->edg[2]) {
-     free(edgeatts);
+     G_free (edgeatts);
      for (i = 0; i < cntwhole; i++)
-	free(edgemat[i]);
-     free(edgemat);
+	G_free (edgemat[i]);
+     G_free (edgemat);
   }
   					/* put the calculated value for the
 					   selected measure into the 
@@ -435,17 +436,17 @@ void df_texture (int nrows, int ncols, double **buf, double **null_buf, double *
   }
 
   if (choice->jux[0]) {
-     free(atts);
+     G_free (atts);
      for(i = 0; i < cntwhole; i++)
-        free(weight[i]);
-     free(weight);
+        G_free (weight[i]);
+     G_free (weight);
   }
 
   if (choice->edg[2]) {
-     free(edgeatts);
+     G_free (edgeatts);
      for (i = 0; i < cntwhole; i++)
-        free(edgemat[i]);
-     free(edgemat);
+        G_free (edgemat[i]);
+     G_free (edgemat);
   }   
 
 					/* if the edge map was requested */
@@ -492,27 +493,27 @@ void df_texture (int nrows, int ncols, double **buf, double **null_buf, double *
      }
      switch (data_type) {
         case (CELL_TYPE):
-           free(edge_buf_c);
+           G_free (edge_buf_c);
            for(i = 0; i < nrows + 3; i++)
-              free(edgemap_c[i]);
-           free(edgemap_c);
+              G_free (edgemap_c[i]);
+           G_free (edgemap_c);
 	   break;
         case (FCELL_TYPE):
-           free(edge_buf_f);
+           G_free (edge_buf_f);
            for(i = 0; i < nrows + 3; i++)
-              free(edgemap_f[i]);
-           free(edgemap_f);
+              G_free (edgemap_f[i]);
+           G_free (edgemap_f);
 	   break;
         case (DCELL_TYPE):
-           free(edge_buf_d);
+           G_free (edge_buf_d);
            for(i = 0; i < nrows + 3; i++)
-              free(edgemap_d[i]);
-           free(edgemap_d);
+              G_free (edgemap_d[i]);
+           G_free (edgemap_d);
 	   break;
      }
      for (i = 0; i < nrows + 3; i++)
-        free(edgenull[i]);
-     free(edgenull);
+        G_free (edgenull[i]);
+     G_free (edgenull);
      G_close_cell(fc);
   }
 
@@ -531,7 +532,7 @@ void df_texture (int nrows, int ncols, double **buf, double **null_buf, double *
         }
         G_put_raster_row(fd, zscor_buf, DCELL_TYPE);
      }
-     free(zscor_buf);
+     G_free (zscor_buf);
      G_close_cell(fd);
   }
 
@@ -714,7 +715,7 @@ void cal_divers (double **buf, double **null_buf, int i0, int j0, int nr, int nc
      diver[2] = entr - diver[1];     	/* dominance */
 
      diver[3] = 1/diver[3];          	/* recip. Simpson */
-     free(density);
+     G_free (density);
 
   }
 
@@ -883,8 +884,8 @@ void cal_tex (double **buf, double **null_buf, int i0, int j0, int nr, int nc, i
      tex[0] = 2*log((double)(cnt)) - tex[3];  /* Contagion */
 
      for(i = 0; i < cnt; i++)
-        free(GLCM[i]);
-     free(GLCM);
+        G_free (GLCM[i]);
+     G_free (GLCM);
   }
 
   return;

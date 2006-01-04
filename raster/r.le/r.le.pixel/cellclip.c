@@ -18,6 +18,7 @@
 *				                           *
 ************************************************************/
 
+#include "gis.h"
 #include "pixel.h"
 #include "config.h"
 #include "local_proto.h"
@@ -112,7 +113,7 @@ void cell_clip_drv (int col0, int row0, int ncols, int nrows, double **value, in
      for (i = 0; i < cnt; i++) {
         rich[i] = richtmp[i];
      }
-     free(richtmp);     
+     G_free (richtmp);     
 
 					/* call ANSI C runtime library
 					   function qsort to sort the 
@@ -141,19 +142,19 @@ void cell_clip_drv (int col0, int row0, int ncols, int nrows, double **value, in
            df_texture(nrows, ncols, buf, null_buf, rich, cnt, cntwhole);
 
      for(i = 0; i < nrows + 3; i++)
-        free(*(buf + i));
-     free(buf);
+        G_free (*(buf + i));
+     G_free (buf);
 
 				/* free memory allocated for null buffer */
  
      for(i = 0; i < nrows + 3; i++)
-        free(null_buf[i]);
-     free(null_buf);
+        G_free (null_buf[i]);
+     G_free (null_buf);
   
-     free(rich);
+     G_free (rich);
   }
   else 
-     free(richtmp);
+     G_free (richtmp);
 
   return;
 }
@@ -413,20 +414,20 @@ void cell_clip (DCELL **buf, DCELL **null_buf, int row0, int col0, int nrows, in
 
   switch (data_type) {
      case CELL_TYPE:
-        free(tmp);
+        G_free (tmp);
         break;
      case FCELL_TYPE:
-        free(ftmp);
+        G_free (ftmp);
         break;
      case DCELL_TYPE:
-        free(dtmp);
+        G_free (dtmp);
         break;
   }
   if (choice->wrum == 'r') {
-     free(tmp1);
+     G_free (tmp1);
      G_close_cell(fr);
   }
-  free(nulltmp);
+  G_free (nulltmp);
   return;
 }
 

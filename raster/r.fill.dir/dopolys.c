@@ -44,9 +44,9 @@ int dopolys (int fd, int fm, int nl, int ns)
    int *dir;
 
    bufsz=ns*sizeof(int);
-   dir=(int *)calloc(ns,sizeof(int));
+   dir=(int *)G_calloc (ns,sizeof(int));
    cellsz=3*ns;
-   cells=(int *)malloc(cellsz*sizeof(int));
+   cells=(int *)G_malloc (cellsz*sizeof(int));
 
    found=0;
 
@@ -64,7 +64,7 @@ int dopolys (int fd, int fm, int nl, int ns)
          if(found >= cellsz)
          {
             cellsz+=3*ns;
-            cells=(int *)realloc(cells,cellsz*sizeof(int));
+            cells=(int *)G_realloc (cells,cellsz*sizeof(int));
          }
       }
    }
@@ -99,8 +99,8 @@ int dopolys (int fd, int fm, int nl, int ns)
       write(fm,dir,bufsz);
    }
 
-   free(cells);
-   free(dir);
+   G_free (cells);
+   G_free (dir);
 
    return flag;
 }

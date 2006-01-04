@@ -46,7 +46,7 @@ int fill_row(int nl, int ns, struct band3 *bnd)
 
    inc=bpe();
 
-   min=malloc(bpe());
+   min=G_malloc (bpe());
 
    rc=0;
    for(j=1;j<ns-1;j+=1)
@@ -174,7 +174,7 @@ void filldir(int fe, int fd, int nl, struct band3 *bnd)
 /* determine the flow direction in each cell.  On outer rows and columns
  * the flow direction is always directly out of the map */
 
-   dir=calloc(bnd->ns,sizeof(CELL));
+   dir=G_calloc (bnd->ns,sizeof(CELL));
    bufsz=bnd->ns*sizeof(CELL);
 
    lseek(fe,0,SEEK_SET);
@@ -190,7 +190,7 @@ void filldir(int fe, int fd, int nl, struct band3 *bnd)
    build_one_row(i,nl,bnd->ns,bnd,dir);
    write(fd,dir,bufsz);
 
-   free(dir);
+   G_free (dir);
 
    return;
 }

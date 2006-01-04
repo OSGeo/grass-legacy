@@ -93,7 +93,7 @@ int main (int argc, char *argv[])
   else
      set_map(choice->fn, window, t0, bot, l0, right, NULL);
 
-  free(choice) ;
+  G_free (choice) ;
 }
 
 
@@ -232,9 +232,9 @@ void show_patch (char *fn, double *msc, char *cmd)
         patch_attr(fp, tmp, 1);
         tmp0 = tmp;
         tmp = tmp->next;
-        free(tmp0->row);
-        free(tmp0->col);
-        free(tmp0);
+        G_free (tmp0->row);
+        G_free (tmp0->col);
+        G_free (tmp0);
      }
   }
   else {
@@ -245,9 +245,9 @@ void show_patch (char *fn, double *msc, char *cmd)
            patch_attr(fp, tmp, 1);
            tmp0 = tmp;
            tmp = tmp->next;
-           free(tmp0->row);
-           free(tmp0->col);
-           free(tmp0);
+           G_free (tmp0->row);
+           G_free (tmp0->col);
+           G_free (tmp0);
         }
      }
      else {
@@ -255,9 +255,9 @@ void show_patch (char *fn, double *msc, char *cmd)
            patch_attr(fp, tmp, 0);
            tmp0 = tmp;
            tmp = tmp->next;
-           free(tmp0->row);
-           free(tmp0->col);
-           free(tmp0);
+           G_free (tmp0->row);
+           G_free (tmp0->col);
+           G_free (tmp0);
         }
      }
   }
@@ -470,9 +470,9 @@ void cell_clip_drv (int col0, int row0, int ncols, int nrows, double **value, in
 /*  if (total_patches) {
      list_head = patch_list;
      while(list_head) {
-        free(list_head->col);
-        free(list_head->row);
-        free(list_head);
+        G_free (list_head->col);
+        G_free (list_head->row);
+        G_free (list_head);
         list_head = list_head->next;
      }
   }
@@ -696,13 +696,13 @@ void cell_clip (DCELL **buf, DCELL **null_buf, int row0, int col0, int nrows, in
 
   switch (data_type) {
      case CELL_TYPE:
-        free(tmp);
+        G_free (tmp);
         break;
      case FCELL_TYPE:
-        free(ftmp);
+        G_free (ftmp);
         break;
      case DCELL_TYPE:
-        free(dtmp);
+        G_free (dtmp);
         break;
   }
   return;
@@ -1263,7 +1263,7 @@ i,j,i+1,j-1,*(*(buf + i + 1) + j - 1),*(*(patchmap + i + 1) + j - 1),
         }
 
         ptrthis = ptrthis->next;
-        free(ptrfree);
+        G_free (ptrfree);
         i++;
      }
 
@@ -1472,8 +1472,8 @@ patch->omega,patch->area);
 				/* free the memory allocated for patchmap */
 
      for (i = 0; i < nrows + 3; i++)
-        free(patchmap[i]);
-     free(patchmap);
+        G_free (patchmap[i]);
+     G_free (patchmap);
 
          			/* send the patch info back to trace */
 

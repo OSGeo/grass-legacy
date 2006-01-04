@@ -20,22 +20,22 @@ getcells(void)
 	}
 
 	if(data_type == CELL_TYPE)
-		ccell = (CELL *)malloc(sizeof(CELL)*window.cols);
+		ccell = (CELL *)G_malloc (sizeof(CELL)*window.cols);
 	else
 	if(data_type == FCELL_TYPE)
-		fcell = (FCELL *)malloc(sizeof(FCELL)*window.cols);
+		fcell = (FCELL *)G_malloc (sizeof(FCELL)*window.cols);
 
-	cell = (DCELL **)malloc(sizeof(DCELL *)*window.rows);
-	atb  = (DCELL **)malloc(sizeof(DCELL *)*window.rows);
-	a    = (DCELL **)malloc(sizeof(DCELL *)*window.rows);
+	cell = (DCELL **)G_malloc (sizeof(DCELL *)*window.rows);
+	atb  = (DCELL **)G_malloc (sizeof(DCELL *)*window.rows);
+	a    = (DCELL **)G_malloc (sizeof(DCELL *)*window.rows);
 
 	fprintf(stderr,"Reading elevation map:");
 	for(i=0;i<window.rows;i++){
 		G_percent(i,window.rows,2);
 
-		cell[i] = (DCELL *)malloc(sizeof(DCELL)*window.cols);
-		atb[i]  = (DCELL *)malloc(sizeof(DCELL)*window.cols);
-		a[i]    = (DCELL *)malloc(sizeof(DCELL)*window.cols);
+		cell[i] = (DCELL *)G_malloc (sizeof(DCELL)*window.cols);
+		atb[i]  = (DCELL *)G_malloc (sizeof(DCELL)*window.cols);
+		a[i]    = (DCELL *)G_malloc (sizeof(DCELL)*window.cols);
 
 		if(data_type == CELL_TYPE){
 			if(G_get_c_raster_row(fd,ccell,i) < 0){
@@ -65,10 +65,10 @@ getcells(void)
 		}
 	}
 	if(data_type == CELL_TYPE)
-		free(ccell);
+		G_free (ccell);
 	else
 	if(data_type == FCELL_TYPE)
-		free(fcell);
+		G_free (fcell);
 	G_percent(i,window.rows,2);
 	G_close_cell(fd);
 }

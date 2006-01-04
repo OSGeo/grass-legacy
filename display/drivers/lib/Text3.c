@@ -143,7 +143,7 @@ static int convert_str(char* from,char* in,unsigned char** out)
 	res = 2*(len+1);
 /* 	res = 4*(len+1); */
 
-	*out = (unsigned char*)malloc(res);
+	*out = (unsigned char*)G_malloc (res);
 	memset(*out,res,0);
 	p1 = in;
 	p2 = *out;
@@ -177,7 +177,7 @@ static int convert_str(char* from,char* in,unsigned char** out)
 
 static void release_convert_str(unsigned char* out)
 {
-	free(out);
+	G_free (out);
 }
 
 static int draw_text(FT_Face face,FT_Vector* pen,FT_Matrix* matrix,unsigned char* out,int len,int color)

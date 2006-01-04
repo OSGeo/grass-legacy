@@ -148,7 +148,7 @@ void convert  (char *openFile, G3D_Region *region, int convertNull, double nullV
 	region->bottom = v5d.VertArgs[0];
 	region->top = region->bottom + region->depths * res_l;
 
-        data1 = (float *) malloc( nrncnl * sizeof(float) );
+        data1 = (float *) G_malloc ( nrncnl * sizeof(float) );
         if (!data1)
         G_fatal_error("Not enough memory for data1");
 
@@ -170,7 +170,7 @@ void convert  (char *openFile, G3D_Region *region, int convertNull, double nullV
          }
        }
 
-        free(data1);
+        G_free (data1);
 
         }
    }

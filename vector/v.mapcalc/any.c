@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "gis.h"
 #include "list.h"
 #include "mapcalc.h"
 #include "any.h"
@@ -83,13 +84,13 @@ setany (SYMBOL *var, SYMBOL *any)
     if (sym)
     {
       if (--((ANY *)sym->v.p)->refcnt < 1)
-	free (sym->v.p);
+	G_free (sym->v.p);
       sym->v.p = any->v.p;
     }
   }
 
   if (--((ANY *)var->v.p)->refcnt < 1)
-    free (var->v.p);
+    G_free (var->v.p);
   var->v.p = NULL;
   freesym (var);
 

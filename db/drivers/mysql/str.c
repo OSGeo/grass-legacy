@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <dbmi.h>
+#include "gis.h"
 #include "globals.h"
 
 /* save string to value */
@@ -24,7 +25,7 @@ int save_string(VALUE * val, char *c)
     int len;
 
     len = strlen(c) + 1;
-    val->c = (char *) realloc(val->c, len);
+    val->c = (char *) G_realloc (val->c, len);
 
     strcpy(val->c, c);
 

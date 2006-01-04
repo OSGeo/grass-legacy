@@ -289,7 +289,7 @@ int main(int argc, char **argv)
 
 		OLD_PT = PRES_PT;
 		PRES_PT = NEXT_PT;
-		free (OLD_PT);
+		G_free (OLD_PT);
 	}
 
 	/* Write pending updates by segment_put() to outputmap */

@@ -241,14 +241,14 @@ int free_table(int tab)
     for (i = 0; i < db.tables[tab].nrows; i++) {
 	for (j = 0; j < db.tables[tab].ncols; j++) {
 	    if (db.tables[tab].cols[j].type == MYSQL_CHAR) {
-		free(db.tables[tab].rows[i].values[j].c);
+		G_free (db.tables[tab].rows[i].values[j].c);
 	    }
 	}
-	free(db.tables[tab].rows[i].values);
+	G_free (db.tables[tab].rows[i].values);
     }
 
-    free(db.tables[tab].rows);
-    free(db.tables[tab].cols);
+    G_free (db.tables[tab].rows);
+    G_free (db.tables[tab].cols);
 
     return DB_OK;
 }

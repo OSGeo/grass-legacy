@@ -575,7 +575,7 @@ int main(int argc, char *argv[])
     if (mcurv != NULL)
 	Tmp_file_xy = G_tempfile();
 
-    zero_array_cell = (FCELL *) malloc(sizeof(FCELL) * n_cols);
+    zero_array_cell = (FCELL *) G_malloc (sizeof(FCELL) * n_cols);
     if (!zero_array_cell)
 	G_fatal_error(_("Not enough memory for zero_array_cell"));
 
@@ -732,7 +732,7 @@ int main(int argc, char *argv[])
     if (ii < 0)
 	clean_fatal_error
 	    (_("Cannot write cell files -- try to increase resolution"));
-    free(zero_array_cell);
+    G_free (zero_array_cell);
     if (elev != NULL)
 	fclose(Tmp_fd_z);
     if (slope != NULL)
@@ -825,7 +825,7 @@ int print_tree(struct multtree *tree,
 	    clean_fatal_error(_("Out of memory"));
 	Vect_write_line(Map, (unsigned int) type, Points, Cats);
 
-	free(Points);
+	G_free (Points);
     }
     return 1;
 }

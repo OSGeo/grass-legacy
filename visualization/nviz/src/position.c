@@ -2,6 +2,7 @@
 *	function added to handle postgres queries
 */
 #include <stdlib.h>
+#include "gis.h"
 #include "interface.h"
 
 int Ninit_view_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
@@ -114,7 +115,7 @@ int Nset_focus_gui_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpret
 
     if (argc == 3 && surf_list != NULL) {
 	id = surf_list[0];
-	free(surf_list);
+	G_free (surf_list);
 	GS_get_dims(id, &rows, &cols);
 	/* get coordinates from gui (0->1) and convert to screen */
 	GS_get_region(&n, &s, &w, &e);
@@ -159,7 +160,7 @@ int Nget_focus_gui_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpret
     surf_list = GS_get_surf_list(&num_surfs);
     if (surf_list != NULL) {
 	id = surf_list[0];
-	free(surf_list);
+	G_free (surf_list);
 	GS_get_dims(id, &rows, &cols);
 	/* get coordinates from gui (0->1) and convert to screen */
 	GS_get_region(&n, &s, &w, &e);
@@ -312,7 +313,7 @@ int Nset_focus_top_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpret
     surf_list = GS_get_surf_list(&num_surfs);
     if (surf_list != NULL) {
 	id = surf_list[0];
-	free(surf_list);
+	G_free (surf_list);
 	GS_get_dims(id, &rows, &cols);
     }
 
@@ -352,7 +353,7 @@ int Nset_focus_map_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpret
 		if (GS_num_surfs() > 0) {
 			surf_list = GS_get_surf_list(&num_surfs);
 			id = surf_list[0];
-			free(surf_list);
+			G_free (surf_list);
 
 			GS_set_focus_center_map(id);
 			return (TCL_OK);
@@ -361,7 +362,7 @@ int Nset_focus_map_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpret
 		if (GVL_num_vols() > 0) {
 			vol_list = GVL_get_vol_list(&num_surfs);
 			id = vol_list[0];
-			free(vol_list);
+			G_free (vol_list);
 
 			GVL_set_focus_center_map(id);
 			return (TCL_OK);
@@ -905,7 +906,7 @@ int Nsave_3dview_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter
 	else
 	    first_surf = (int) atoi(list_space[0]);
 
-	free(list_space);
+	G_free (list_space);
     }
 
     /* Finally make the GSF library call */
@@ -952,7 +953,7 @@ int Nload_3dview_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter
 	else
 	    first_surf = (int) atoi(list_space[0]);
 
-	free(list_space);
+	G_free (list_space);
     }
     /* Finally make the GSF library call */
     GS_load_3dview(argv[1], first_surf);

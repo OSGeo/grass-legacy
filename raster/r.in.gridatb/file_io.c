@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "gis.h"
 #include "local_proto.h"
 
 
@@ -32,7 +33,7 @@ rdwr_gridatb()
 
 	fd = G_open_raster_new(oname, FCELL_TYPE);
 
-	cell = (FCELL *) malloc(sizeof(FCELL)*cellhd.cols);
+	cell = (FCELL *) G_malloc (sizeof(FCELL)*cellhd.cols);
 
 	for(i=0; i<cellhd.rows; i++){
 		G_percent(i,cellhd.rows,2);

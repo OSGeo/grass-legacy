@@ -126,7 +126,7 @@ static int cell_draw(
 
     /* Wrap up and return */
     G_close_cell(cellfile) ;
-    free (xarray);
+    G_free (xarray);
     return(0) ;
 }
 

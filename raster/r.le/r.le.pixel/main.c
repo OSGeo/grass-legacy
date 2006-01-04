@@ -123,7 +123,7 @@ int main (int argc, char **argv)
      G_system("mkdir r.le.out");
 
   texture_fore();
-  free(choice);
+  G_free (choice);
 
   return 0;
 }

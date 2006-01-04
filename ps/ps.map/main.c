@@ -54,6 +54,7 @@ int eps_output;
 int ps_copies = 1;
 
 #include <signal.h>
+#include "gis.h"
 int main(int argc,char *argv[])
 {
     char buf[1024];
@@ -392,7 +393,7 @@ int main(int argc,char *argv[])
 		    dmax = val_list[i+1];
 		    G_add_d_raster_color_rule (&dmin, r,g,b, &dmax,r,g,b, &PS.colors);
 		}
-		free (val_list);
+		G_free (val_list);
 	    }
 	    continue;
 	}

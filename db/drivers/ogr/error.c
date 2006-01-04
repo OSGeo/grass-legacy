@@ -16,8 +16,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
-#include <gis.h>
 #include <dbmi.h>
+#include "gis.h"
 #include "ogr_api.h"
 #include "globals.h"
 #include "proto.h"
@@ -46,11 +46,11 @@ append_error ( const char *fmt, ...)
     va_start (ap, fmt);
     if ((fp = tmpfile())) {
         count = vfprintf (fp, fmt, ap);
-        if (count >= 0 && (work = calloc(count+1,1)) ) {
+        if (count >= 0 && (work = G_calloc (count+1,1)) ) {
 	    rewind (fp);
 	    fread (work, 1, count, fp);
 	    db_append_string ( errMsg, work);
-	    free (work);
+	    G_free (work);
         }
         fclose (fp);
     }

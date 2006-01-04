@@ -5,6 +5,7 @@
 #define MAIN
 #include <stdlib.h>
 #include <dbmi.h>
+#include "gis.h"
 #include "globals.h"
 
 int
@@ -48,7 +49,7 @@ main(int argc, char *argv[])
     	db_get_handle_dbpath (&handle));
 /* DO NOT free the handle since we saved the pointers to the name,path */
     
-    select = (dbString *) malloc(1024);
+    select = (dbString *) G_malloc (1024);
 
     db_init_string (select);
 

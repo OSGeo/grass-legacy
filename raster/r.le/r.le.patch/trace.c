@@ -19,6 +19,7 @@
 *				                           *
 ************************************************************/
 
+#include "gis.h"
 #include "config.h"
 #include "patch.h"
 
@@ -351,7 +352,7 @@ i),*(list_head->col + i));
 
   if (choice->patchmap) {
      G_close_cell(fd);
-     free(pat_buf);
+     G_free (pat_buf);
   }
 
 				/* close the core file, copy the category
@@ -416,13 +417,13 @@ i),*(list_head->col + i));
      G_free_colors (&colr);
      switch (data_type) {
         case CELL_TYPE:
-           free(cor_cell_buf);
+           G_free (cor_cell_buf);
            break;
         case FCELL_TYPE:
-           free(cor_fcell_buf);
+           G_free (cor_fcell_buf);
            break;
         case DCELL_TYPE:
-           free(cor_dcell_buf);
+           G_free (cor_dcell_buf);
            break;
      }
   }
@@ -745,7 +746,7 @@ void cell_clip (DCELL **buf, DCELL **null_buf, int row0, int col0, int nrows, in
         break;
   }
   if (choice->wrum == 'r') {
-     free(tmp1);
+     G_free (tmp1);
      G_close_cell(fr);
   }
   return;
@@ -1408,7 +1409,7 @@ i,j,i+1,j-1,*(*(buf + i + 1) + j - 1),*(*(patchmap + i + 1) + j - 1),
         }
 
         ptrthis = ptrthis->next;
-        free(ptrfree);
+        G_free (ptrfree);
         i++;
      }
 
@@ -1616,8 +1617,8 @@ patch->omega,patch->area); */
 				/* free the memory allocated for patchmap */
 
      for (i = 0; i < nrows + 3; i++)
-        free(patchmap[i]);
-     free(patchmap);
+        G_free (patchmap[i]);
+     G_free (patchmap);
 
 				/* send the patch info back to trace */
 

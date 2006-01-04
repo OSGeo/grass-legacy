@@ -91,7 +91,7 @@ char *multialloc(
 
 /*
  * multifree releases all memory that we have already declared analogous to
- * free() when using malloc() 
+ * G_free () when using G_malloc () 
  */
 void multifree (char *r, int d)
 {

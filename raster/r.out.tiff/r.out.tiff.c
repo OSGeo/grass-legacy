@@ -311,9 +311,9 @@ main (int argc, char *argv[])
 			fprintf (stdout,"linebytes = %d, TIFFscanlinesize = %d\n", linebytes,
 			    TIFFScanlineSize(out));
 		if (TIFFScanlineSize(out) > linebytes)
-			buf = (u_char *)malloc(linebytes);
+			buf = (u_char *)G_malloc (linebytes);
 		else
-			buf = (u_char *)malloc(TIFFScanlineSize(out));
+			buf = (u_char *)G_malloc (TIFFScanlineSize(out));
 		if (rowsperstrip != (u_short)-1)
 			rowsperstrip = (u_short)(8*1024/linebytes);
 		if (DEBUG)

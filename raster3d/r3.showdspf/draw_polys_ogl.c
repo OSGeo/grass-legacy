@@ -1,3 +1,4 @@
+#include "gis.h"
 #include "vizual.h"
 /*
 ** the corner of the cube 
@@ -165,7 +166,7 @@ struct dspec	*D_spec;
 	for (i = 0; i < 2; i++)
 	{
 	    if((slice[i] =
-	       (float*)malloc(sizeof(float)*xdim*ydim)) == NULL)
+	       (float*)G_malloc (sizeof(float)*xdim*ydim)) == NULL)
 	    {
 		fprintf(stderr,"error in allocating memory\n");
 		fprintf(stderr,"unable to use colortable\n");
@@ -399,8 +400,8 @@ struct dspec	*D_spec;
   }
   if (color_on)
   {
-    free (slice[0]);
-    free (slice[1]);
+    G_free (slice[0]);
+    G_free (slice[1]);
   }
   glDisable(GL_COLOR_MATERIAL);
 }

@@ -49,6 +49,7 @@
 #endif
 #include <tcl.h>
 #include <tk.h>
+#include "gis.h"
 #if defined(X11)
 #if TK_MAJOR_VERSION==4 && TK_MINOR_VERSION==0
 #  include "tkInt4.0.h"
@@ -1030,7 +1031,7 @@ static int Togl_Cmd(ClientData clientData, Tcl_Interp *interp,
    Tk_SetClass(tkwin, "Togl");
 
    /* Create Togl data structure */
-   togl = (struct Togl *)malloc(sizeof(struct Togl));
+   togl = (struct Togl *)G_malloc (sizeof(struct Togl));
    if (!togl) {
       return TCL_ERROR;
    }
@@ -1143,7 +1144,7 @@ static int Togl_Cmd(ClientData clientData, Tcl_Interp *interp,
 
 error:
    Tcl_DeleteCommand(interp, "togl");
-   /*free(togl);   Don't free it, if we do a crash occurs later...*/
+   /*G_free (togl);   Don't free it, if we do a crash occurs later...*/
    return TCL_ERROR;
 }
 
@@ -1367,9 +1368,9 @@ static int Togl_MakeWindowExist(struct Togl *togl)
             }
 
             /* for EPS Output */
-            if ( togl->EpsRedMap) free( ( char *)togl->EpsRedMap);
-            if ( togl->EpsGreenMap) free( ( char *)togl->EpsGreenMap);
-            if ( togl->EpsBlueMap) free( ( char *)togl->EpsBlueMap);
+            if ( togl->EpsRedMap) G_free ( ( char *)togl->EpsRedMap);
+            if ( togl->EpsGreenMap) G_free ( ( char *)togl->EpsGreenMap);
+            if ( togl->EpsBlueMap) G_free ( ( char *)togl->EpsBlueMap);
             togl->EpsRedMap = togl->EpsGreenMap = togl->EpsBlueMap = NULL;
             togl->EpsMapSize = 0;
          }
@@ -1569,9 +1570,9 @@ static int Togl_MakeWindowExist(struct Togl *togl)
       }
 
       /* for EPS Output */
-      if ( togl->EpsRedMap) free( ( char *)togl->EpsRedMap);
-      if ( togl->EpsGreenMap) free( ( char *)togl->EpsGreenMap);
-      if ( togl->EpsBlueMap) free( ( char *)togl->EpsBlueMap);
+      if ( togl->EpsRedMap) G_free ( ( char *)togl->EpsRedMap);
+      if ( togl->EpsGreenMap) G_free ( ( char *)togl->EpsGreenMap);
+      if ( togl->EpsBlueMap) G_free ( ( char *)togl->EpsBlueMap);
       togl->EpsRedMap = togl->EpsGreenMap = togl->EpsBlueMap = NULL;
       togl->EpsMapSize = 0;
 #endif /* X11 */
@@ -1755,13 +1756,13 @@ static int Togl_MakeWindowExist(struct Togl *togl)
       index_size = togl->CiColormapSize;
 #endif /* X11 */
       if ( togl->EpsMapSize != index_size) {
-         if ( togl->EpsRedMap) free( ( char *)togl->EpsRedMap);
-         if ( togl->EpsGreenMap) free( ( char *)togl->EpsGreenMap);
-         if ( togl->EpsBlueMap) free( ( char *)togl->EpsBlueMap);
+         if ( togl->EpsRedMap) G_free ( ( char *)togl->EpsRedMap);
+         if ( togl->EpsGreenMap) G_free ( ( char *)togl->EpsGreenMap);
+         if ( togl->EpsBlueMap) G_free ( ( char *)togl->EpsBlueMap);
          togl->EpsMapSize = index_size;
-         togl->EpsRedMap = ( GLfloat *)calloc( index_size, sizeof( GLfloat));
-         togl->EpsGreenMap = ( GLfloat *)calloc( index_size, sizeof( GLfloat));
-         togl->EpsBlueMap = ( GLfloat *)calloc( index_size, sizeof( GLfloat));
+         togl->EpsRedMap = ( GLfloat *)G_calloc ( index_size, sizeof( GLfloat));
+         togl->EpsGreenMap = ( GLfloat *)G_calloc ( index_size, sizeof( GLfloat));
+         togl->EpsBlueMap = ( GLfloat *)G_calloc ( index_size, sizeof( GLfloat));
       }
    }
 
@@ -1857,7 +1858,7 @@ static void Togl_Destroy( ClientData clientData )
    /* remove from linked list */
    RemoveFromList(togl);
 
-   free(togl);
+   G_free (togl);
 }
 
 
@@ -2047,7 +2048,7 @@ noFaultXAllocColor( Display *dpy, Colormap cmap, int cmapSize,
 
    /* Retrieve color table entries. */
    /* XXX alloca candidate. */
-   ctable = (XColor *) malloc(cmapSize * sizeof(XColor));
+   ctable = (XColor *) G_malloc (cmapSize * sizeof(XColor));
    for (i = 0; i < cmapSize; i++) {
       ctable[i].pixel = i;
    }
@@ -2071,7 +2072,7 @@ noFaultXAllocColor( Display *dpy, Colormap cmap, int cmapSize,
    subColor.red = ctable[bestmatch].red;
    subColor.green = ctable[bestmatch].green;
    subColor.blue = ctable[bestmatch].blue;
-   free(ctable);
+   G_free (ctable);
    /* Try to allocate the closest match color.  This should only
     * fail if the cell is read/write.  Otherwise, we're incrementing
     * the cell's reference count.
@@ -2677,7 +2678,7 @@ static int get_free_color_cells( Display *display, int screen,
 
       long r, g, b;
 
-      ToglMesaUsedPixelCells = ( unsigned long *)calloc( ncolors, sizeof( unsigned long));
+      ToglMesaUsedPixelCells = ( unsigned long *)G_calloc ( ncolors, sizeof( unsigned long));
 
       /* Allocate X colors and initialize color_table[], red_table[], etc */
       /* de Mesa 2.1: xmesa1.c setup_dithered_(...) */
@@ -2710,7 +2711,7 @@ static void free_default_color_cells( Display *display, Colormap colormap)
    if ( ToglMesaUsedPixelCells) {
       XFreeColors( display, colormap, ToglMesaUsedPixelCells,
                    ToglMesaUsedFreeCells, 0x00000000);
-      free( ( char *)ToglMesaUsedPixelCells);
+      G_free ( ( char *)ToglMesaUsedPixelCells);
       ToglMesaUsedPixelCells = NULL;
       ToglMesaUsedFreeCells = 0;
    }
@@ -2750,7 +2751,7 @@ static GLvoid *grabPixels(int inColor, unsigned int width, unsigned int height)
       size = width * height * 1;
    }
 
-   buffer = (GLvoid *) malloc(size);
+   buffer = (GLvoid *) G_malloc (size);
    if (buffer == NULL)
       return NULL;
 
@@ -2901,7 +2902,7 @@ static int generateEPS(const char *filename, int inColor,
       fprintf(fp, "\n");
 
    fprintf(fp, "grestore\n");
-   free(pixels);
+   G_free (pixels);
    fclose(fp);
    return 0;
 }
@@ -2959,14 +2960,14 @@ int Togl_DumpToEpsFile( const struct Togl *togl, const char *filename,
        {
            int n, i;
            TkWinColormap *cmap = (TkWinColormap *)Tk_Colormap(togl->TkWin);
-           LPPALETTEENTRY entry = malloc(togl->EpsMapSize * sizeof(PALETTEENTRY));
+           LPPALETTEENTRY entry = G_malloc (togl->EpsMapSize * sizeof(PALETTEENTRY));
            n = GetPaletteEntries(cmap->palette, 0, togl->EpsMapSize, entry);
            for (i=0; i<n; i++) {
                togl->EpsRedMap[i] = entry[i].peRed / 255.0;
                togl->EpsGreenMap[i] = entry[i].peGreen / 255.0;
                togl->EpsBlueMap[i] = entry[i].peBlue / 255.0;
            }
-           free(entry);
+           G_free (entry);
        }
 #endif /* WIN32 */
 

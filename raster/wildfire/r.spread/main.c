@@ -434,18 +434,18 @@ main (int argc, char *argv[])
 	if (y_out)	y_cell = G_allocate_cell_buf();
 
 	/*  Allocate memories for a map  */
-	map_max = (CELL *) calloc (nrows*ncols + 1, sizeof(CELL));
-	map_dir = (CELL *) calloc (nrows*ncols + 1, sizeof(CELL));
-	map_base = (CELL *) calloc (nrows*ncols + 1, sizeof(CELL));
-	map_visit = (CELL *) calloc (nrows*ncols + 1, sizeof(CELL));
-	map_out = (float *) calloc (nrows*ncols + 1, sizeof(float));
+	map_max = (CELL *) G_calloc (nrows*ncols + 1, sizeof(CELL));
+	map_dir = (CELL *) G_calloc (nrows*ncols + 1, sizeof(CELL));
+	map_base = (CELL *) G_calloc (nrows*ncols + 1, sizeof(CELL));
+	map_visit = (CELL *) G_calloc (nrows*ncols + 1, sizeof(CELL));
+	map_out = (float *) G_calloc (nrows*ncols + 1, sizeof(float));
 	if (spotting) {
-		map_spotdist = (CELL *) calloc (nrows*ncols + 1, sizeof(CELL));
-		map_velocity = (CELL *) calloc (nrows*ncols + 1, sizeof(CELL));
-		map_mois = (CELL *) calloc (nrows*ncols + 1, sizeof(CELL));
+		map_spotdist = (CELL *) G_calloc (nrows*ncols + 1, sizeof(CELL));
+		map_velocity = (CELL *) G_calloc (nrows*ncols + 1, sizeof(CELL));
+		map_mois = (CELL *) G_calloc (nrows*ncols + 1, sizeof(CELL));
 	}
-	if (x_out) map_x_out = (CELL *) calloc (nrows*ncols + 1, sizeof(CELL));
-	if (y_out) map_y_out = (CELL *) calloc (nrows*ncols + 1, sizeof(CELL));
+	if (x_out) map_x_out = (CELL *) G_calloc (nrows*ncols + 1, sizeof(CELL));
+	if (y_out) map_y_out = (CELL *) G_calloc (nrows*ncols + 1, sizeof(CELL));
 	
 
 	/*   Write the input layers in the map "arrays"  */
@@ -502,7 +502,7 @@ main (int argc, char *argv[])
 	G_get_range_min_max (&range, &range_min, &range_max);
 
         /*  Initialize the heap  */
-        heap = (struct costHa *) calloc(nrows*ncols + 1, sizeof(struct costHa));
+        heap = (struct costHa *) G_calloc (nrows*ncols + 1, sizeof(struct costHa));
         heap_len = 0;
 
 	if (verbose)
@@ -539,16 +539,16 @@ printf ("Done\n");
 	/* copy maps in ram to output maps */
 	ram2out ();
 
-	free(map_max); 
-	free(map_dir); 
-	free(map_base); 
-	free(map_out); 
-	free(map_visit);
-	if (x_out)	free(map_x_out);
-	if (y_out)	free(map_y_out);
-	if (spotting) { free(map_spotdist); 
-			free(map_mois); 
-			free(map_velocity); 
+	G_free (map_max); 
+	G_free (map_dir); 
+	G_free (map_base); 
+	G_free (map_out); 
+	G_free (map_visit);
+	if (x_out)	G_free (map_x_out);
+	if (y_out)	G_free (map_y_out);
+	if (spotting) { G_free (map_spotdist); 
+			G_free (map_mois); 
+			G_free (map_velocity); 
 	}
 	
 	G_close_cell(max_fd);	

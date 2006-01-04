@@ -202,7 +202,7 @@ int main (int argc, char **argv)
   /* Tidy up */
   Vect_destroy_line_struct (points);
   Vect_destroy_cats_struct (Cats);
-  free ( lines_visited );
+  G_free ( lines_visited );
   Vect_close (&map);
   Vect_build (&Out, stdout); 
   Vect_close (&Out);

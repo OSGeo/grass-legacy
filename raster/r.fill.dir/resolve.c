@@ -93,7 +93,7 @@ void resolve(int fd, int nl, struct band3 *bnd)
    int *active;
    int offset,isz,i,j,pass,activity,goagain,done;
 
-   active=(int *)calloc(nl,sizeof(int));
+   active=(int *)G_calloc (nl,sizeof(int));
 
    isz=sizeof(CELL);
 
@@ -201,7 +201,7 @@ void resolve(int fd, int nl, struct band3 *bnd)
 
    }while(!done);
 
-   free(active);
+   G_free (active);
 
    return;
 

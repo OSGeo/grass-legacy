@@ -44,9 +44,9 @@ FLAG *FlagCreate(int nrows, int ncols)
 
 void FlagDestroy(FLAG *flags)
 {
-	free(flags->array[0]);
-	free(flags->array);
-	free(flags);
+	G_free (flags->array[0]);
+	G_free (flags->array);
+	G_free (flags);
 }
 
 

@@ -63,13 +63,13 @@ static void char_init(vgl_GIFWriter *dataPtr);
 vgl_GIFWriter *vgl_GIFWriterBegin(void)
 {
     vgl_GIFWriter *gifwriter;
-    gifwriter = (vgl_GIFWriter *)malloc(sizeof(vgl_GIFWriter));
+    gifwriter = (vgl_GIFWriter *)G_malloc (sizeof(vgl_GIFWriter));
     return gifwriter;
 }
 /************************** vgl_GIFWriterEnd() ********************************/
 void vgl_GIFWriterEnd(vgl_GIFWriter *gifwriter)
 {
-   free(gifwriter);
+   G_free (gifwriter);
 }
 /********************** vgl_GIFWriterWriteGIFFile() ****************************/
 void vgl_GIFWriterWriteGIFFile(vgl_GIFWriter *gifwriter,unsigned long *buffer,
@@ -219,9 +219,9 @@ static short **makedittab(int levels,int mult,int add)
     short **tab;
 
     nshades = XSIZE*YSIZE*(levels-1)+1;
-    tab = (short **)malloc(YSIZE*sizeof(short *));
+    tab = (short **)G_malloc (YSIZE*sizeof(short *));
     for(j=0; j<YSIZE; j++) {
-	tab[j] = (short *)malloc(XSIZE*256*sizeof(short));
+	tab[j] = (short *)G_malloc (XSIZE*256*sizeof(short));
 	for(i=0; i<XSIZE; i++ ) {
 	    matval = dithmat[i][j]; 
 	    for(k=0; k<256; k++) {
@@ -461,6 +461,7 @@ static void Putword(int w,FILE * fp )
  *
  */
 #include <ctype.h>
+#include "gis.h"
 
 #define ARGVAL() (*++(*argv) || (--argc && *++argv))
 
@@ -756,7 +757,7 @@ main(int argc,char *argv[] )
     gifwriter = vgl_GIFWriterBegin();
 
     xsize = ysize = 200;
-    buffer = (unsigned long *)malloc((xsize)*(ysize) * sizeof(unsigned long));
+    buffer = (unsigned long *)G_malloc ((xsize)*(ysize) * sizeof(unsigned long));
     for(i = 0; i < ysize; i++)
     {
        for(j = 0; j < xsize; j++)

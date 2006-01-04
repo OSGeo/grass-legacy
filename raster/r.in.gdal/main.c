@@ -466,11 +466,11 @@ int main (int argc, char *argv[])
                       oproj;                 /* output map proj parameters   */
 
             sPoints.count = GDALGetGCPCount( hDS );
-            sPoints.e1 = (double *) malloc(sizeof(double) * sPoints.count * 4);
+            sPoints.e1 = (double *) G_malloc (sizeof(double) * sPoints.count * 4);
             sPoints.n1 = sPoints.e1 + sPoints.count;
             sPoints.e2 = sPoints.e1 + 2 * sPoints.count;
             sPoints.n2 = sPoints.e1 + 3 * sPoints.count;
-            sPoints.status = (int *) malloc(sizeof(int) * sPoints.count);
+            sPoints.status = (int *) G_malloc (sizeof(int) * sPoints.count);
             
             fprintf (stderr, "COPYING %d GCPS IN POINTS FILE FOR %s\n", 
                      sPoints.count, output );
@@ -519,8 +519,8 @@ int main (int argc, char *argv[])
 
             I_put_control_points( output, &sPoints );
 
-            free( sPoints.e1 );
-            free( sPoints.status );
+            G_free ( sPoints.e1 );
+            G_free ( sPoints.status );
         }
     }
 

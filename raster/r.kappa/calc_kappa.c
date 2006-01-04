@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "gis.h"
 #include "kappa.h"
 #include "local_proto.h"
 
@@ -99,10 +100,10 @@ void calc_kappa(void)
   fprintf(fd, "%ld\t\t%ld\t\t%f\n", (long) obs, total, (100.*obs/total));
   if (output != NULL)
     fclose (fd);
-  free(pi);
-  free(pj);
-  free(pii);
-  free(kpp);
+  G_free (pi);
+  G_free (pj);
+  G_free (pii);
+  G_free (kpp);
 /* print labels for categories of maps */
   prt_label();
 }

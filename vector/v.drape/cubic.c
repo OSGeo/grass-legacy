@@ -226,10 +226,10 @@ double cubic ( int fd, struct Cell_head *window, struct Categories *cats,
 	   row, col, tmp[0], tmp[1], tmp[2], tmp[3], east, north);
 #endif
 
-  free(arow);
-  free(brow);
-  free(crow);
-  free(drow);
+  G_free (arow);
+  G_free (brow);
+  G_free (crow);
+  G_free (drow);
 
   /* user horner's method again for the final interpolation */
   return (north * (north * (north * (tmp[3] - tmp[2]

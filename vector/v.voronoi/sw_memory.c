@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "gis.h"
 #include "sw_defs.h"
 
 int freeinit (struct Freelist *fl, int size)
@@ -34,7 +35,7 @@ char *
 myalloc (unsigned n)
 {
 char *t;
-if ((t=malloc(n)) == (char *) 0)
+if ((t=G_malloc (n)) == (char *) 0)
 {    fprintf(stderr,"Insufficient memory processing site %d (%d bytes in use)\n",
 		siteidx, total_alloc);
      exit(0);

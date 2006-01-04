@@ -21,6 +21,7 @@
 ************************************************************/
 
 #include <stdlib.h>
+#include "gis.h"
 #include "setup.h"
 #include "config.h"
 #include "raster.h"
@@ -314,7 +315,7 @@ getradius:
                        count++;
 	         }
 	      }
-	      free(row_buf);
+	      G_free (row_buf);
 	      G_close_cell(fr);
 	      cnt = (double)(count);
 	      if (cnt)
@@ -366,7 +367,7 @@ tryagain:
                           count++;
 	            }
 	         }
-	         free(row_buf);
+	         G_free (row_buf);
 	         G_close_cell(fr);
 	         cnt = (double)(count);
 	         if (cnt)
@@ -632,8 +633,8 @@ last:
 
 				/* free dynamically allocated memory */
 
-  free(ux);
-  free(uy);
+  G_free (ux);
+  G_free (uy);
   fclose(fp);
   return;
 }
@@ -854,7 +855,7 @@ back:
 	      G_get_map_row_nomask(fmask, row_buf, t+top1+u_l-1);
 	      if (!(*(row_buf+l+left1) && *(row_buf+l+left1+u_w-1)))
 		 goto back;
-	      free(row_buf);
+	      G_free (row_buf);
 	   }
 
 				/* check for sampling unit overlap */
@@ -944,7 +945,7 @@ back:
      cmd = G_malloc(100);
      sprintf(cmd, "d.vect %s color=black",sites_file_name);
      G_system(cmd);
-     free(cmd);
+     G_free (cmd);
 
   }
 
@@ -1262,7 +1263,7 @@ back1:
 		 fprintf(stderr, "\n    The unit would be outside the mask; ");
 		 fprintf(stderr, "try again\n");
 
-	         free(row_buf);
+	         G_free (row_buf);
 		 goto back1;
  	      }
 	      G_zero_cell_buf (row_buf);
@@ -1271,10 +1272,10 @@ back1:
 		 fprintf(stderr, "\n    The unit would be outside the mask; ");
 		 fprintf(stderr, "try again\n");
 
-	         free(row_buf);
+	         G_free (row_buf);
 		 goto back1;
 	      }
-	      free(row_buf);
+	      G_free (row_buf);
 	   }
 
 	   if (xp-x0 > 0 && yp-y0 > 0) {
@@ -1371,7 +1372,7 @@ back2:
 		 fprintf(stderr, "\n    The unit would be outside the mask; ");
 		 fprintf(stderr, "try again");
 
-		 free(row_buf);
+		 G_free (row_buf);
 		 goto back2;
  	      }
 	      G_zero_cell_buf (row_buf);
@@ -1379,10 +1380,10 @@ back2:
 	      if (!(*(row_buf + al) && *(row_buf + ar - 1))) {
 		 fprintf(stderr, "\n    The unit would be outside the mask; ");
 		 fprintf(stderr, "try again");
-	         free(row_buf);
+	         G_free (row_buf);
 		 goto back2;
 	      }
-	      free(row_buf);
+	      G_free (row_buf);
 	   }
 
 				/* check for sampling unit overlap */

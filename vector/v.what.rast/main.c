@@ -322,7 +322,7 @@ int main(int argc,char *argv[])
     }
 
     db_commit_transaction ( driver );
-    free(catexst);	
+    G_free (catexst);	
     db_close_database_shutdown_driver ( driver );
     db_free_string (&stmt);
 

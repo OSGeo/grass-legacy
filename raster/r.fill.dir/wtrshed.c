@@ -77,8 +77,8 @@ void wtrshed(int fm, int fd, int nl, int ns, int mxbuf)
    mxbuf=2*half;
 
 /* allocate buffers for drainage directions and basin areas */
-   for(i=0;i<mxbuf;i+=1)bas[i].p=(CELL *)calloc(ns,sizeof(CELL));
-   for(i=0;i<mxbuf;i+=1)dir[i].p=(CELL *)calloc(ns,sizeof(CELL));
+   for(i=0;i<mxbuf;i+=1)bas[i].p=(CELL *)G_calloc (ns,sizeof(CELL));
+   for(i=0;i<mxbuf;i+=1)dir[i].p=(CELL *)G_calloc (ns,sizeof(CELL));
 
    pass=0;
 

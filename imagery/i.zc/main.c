@@ -169,7 +169,7 @@ int main( int argc, char *argv[])
         }
         /* close input cell map and release the row buffer */
         G_close_cell(inputfd);
-        free(cell_row);
+        G_free (cell_row);
 
         /* take the del**2g of image */
         del2g(data, size, Width);
@@ -195,10 +195,10 @@ int main( int argc, char *argv[])
         }
         G_close_cell(zcfd);
 
-        free(cell_row);
+        G_free (cell_row);
 
         /* Release memory resources */
-        for (i=0 ; i<2 ; i++) free(data[i]);
+        for (i=0 ; i<2 ; i++) G_free (data[i]);
         fprintf(stderr, "Transform successful\n");
         exit(0);
 }

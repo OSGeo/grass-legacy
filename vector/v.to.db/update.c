@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "gis.h"
 #include "global.h"
 #include "dbmi.h"
 
@@ -194,7 +195,7 @@ update (struct Map_info *Map)
     
     db_commit_transaction ( driver );
 
-    free(catexst);	
+    G_free (catexst);	
     db_close_database_shutdown_driver ( driver );
     db_free_string (&stmt);
 

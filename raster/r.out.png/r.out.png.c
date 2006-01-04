@@ -340,11 +340,11 @@ int main(int argc, char *argv[])
 
     png_write_end(png_ptr, info_ptr);
     /* png_write_destroy (png_ptr); this is no longer supported with libpng, al 11/2000 */
-    /* flush first because free(png_ptr) can segfault due to jmpbuf problems
+    /* flush first because G_free (png_ptr) can segfault due to jmpbuf problems
      * in png_write_destroy */
     fflush(stdout);
-    /* free (png_ptr); */
-    /* free (info_ptr); */
+    /* G_free (png_ptr); */
+    /* G_free (info_ptr); */
     png_destroy_write_struct(&png_ptr, &info_ptr);	/* al 11/2000 */
 
 

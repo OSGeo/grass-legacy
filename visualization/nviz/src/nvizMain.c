@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <tk.h>
+#include "gis.h"
 #include "interface.h"
 
 extern int NVIZ_AppInit(Tcl_Interp *);
@@ -40,7 +41,7 @@ int main(int argc,		/* Number of command-line arguments. */
 		{
 			for (i = argc; i>= 1; i--)
 				argv[i] = argv[i-1];
-			argv[1] = (char *)malloc(2 * (sizeof(char)));
+			argv[1] = (char *)G_malloc (2 * (sizeof(char)));
 			sprintf(argv[1], "--");
 			argc++;
 		}

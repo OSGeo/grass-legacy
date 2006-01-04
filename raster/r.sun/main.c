@@ -473,14 +473,14 @@ int INPUT(void)
     cell2 = G_allocate_f_raster_buf();
     cell3 = G_allocate_f_raster_buf();
 
-    z = (float **)malloc(sizeof(float) * (m));
-    o = (float **)malloc(sizeof(float) * (m));
-    s = (float **)malloc(sizeof(float) * (m));
+    z = (float **)G_malloc (sizeof(float) * (m));
+    o = (float **)G_malloc (sizeof(float) * (m));
+    s = (float **)G_malloc (sizeof(float) * (m));
 
     for (l = 0; l < m; l++) {
-	z[l] = (float *)malloc(sizeof(float) * (n));
-	o[l] = (float *)malloc(sizeof(float) * (n));
-	s[l] = (float *)malloc(sizeof(float) * (n));
+	z[l] = (float *)G_malloc (sizeof(float) * (n));
+	o[l] = (float *)G_malloc (sizeof(float) * (n));
+	s[l] = (float *)G_malloc (sizeof(float) * (n));
 
     }
 
@@ -499,9 +499,9 @@ int INPUT(void)
 
     if (linkein != NULL) {
 	cell4 = G_allocate_f_raster_buf();
-	li = (float **)malloc(sizeof(float) * (m));
+	li = (float **)G_malloc (sizeof(float) * (m));
 	for (l = 0; l < m; l++)
-	    li[l] = (float *)malloc(sizeof(float) * (n));
+	    li[l] = (float *)G_malloc (sizeof(float) * (n));
 
 	if ((mapset = G_find_cell(linkein, "")) == NULL)
 	    G_fatal_error("linkein cell file not found");
@@ -511,9 +511,9 @@ int INPUT(void)
 
     if (albedo != NULL) {
 	cell5 = G_allocate_f_raster_buf();
-	a = (float **)malloc(sizeof(float) * (m));
+	a = (float **)G_malloc (sizeof(float) * (m));
 	for (l = 0; l < m; l++)
-	    a[l] = (float *)malloc(sizeof(float) * (n));
+	    a[l] = (float *)G_malloc (sizeof(float) * (n));
 
 	if ((mapset = G_find_cell(albedo, "")) == NULL)
 	    G_fatal_error("albedo cell file not found");
@@ -523,9 +523,9 @@ int INPUT(void)
 
     if (latin != NULL) {
 	cell6 = G_allocate_f_raster_buf();
-	la = (float **)malloc(sizeof(float) * (m));
+	la = (float **)G_malloc (sizeof(float) * (m));
 	for (l = 0; l < m; l++)
-	    la[l] = (float *)malloc(sizeof(float) * (n));
+	    la[l] = (float *)G_malloc (sizeof(float) * (n));
 
 	if ((mapset = G_find_cell(latin, "")) == NULL)
 	    G_fatal_error("latin cell file not found");
@@ -535,9 +535,9 @@ int INPUT(void)
 
     if (coefbh != NULL) {
 	rast1 = G_allocate_f_raster_buf();
-	cbhr = (float **)malloc(sizeof(float) * (m));
+	cbhr = (float **)G_malloc (sizeof(float) * (m));
 	for (l = 0; l < m; l++)
-	    cbhr[l] = (float *)malloc(sizeof(float) * (n));
+	    cbhr[l] = (float *)G_malloc (sizeof(float) * (n));
 
 	if ((mapset = G_find_cell(coefbh, "")) == NULL)
 	    G_fatal_error("coefbh cell file not found");
@@ -547,9 +547,9 @@ int INPUT(void)
 
     if (coefdh != NULL) {
 	rast2 = G_allocate_f_raster_buf();
-	cdhr = (float **)malloc(sizeof(float) * (m));
+	cdhr = (float **)G_malloc (sizeof(float) * (m));
 	for (l = 0; l < m; l++)
-	    cdhr[l] = (float *)malloc(sizeof(float) * (n));
+	    cdhr[l] = (float *)G_malloc (sizeof(float) * (n));
 
 	if ((mapset = G_find_cell(coefdh, "")) == NULL)
 	    G_fatal_error("coefdh cell file not found");
@@ -1327,9 +1327,9 @@ void calculate(void)
     double lum, q1;
 
     if (incidout != NULL) {
-	lumcl = (float **)malloc(sizeof(float) * (m));
+	lumcl = (float **)G_malloc (sizeof(float) * (m));
 	for (l = 0; l < m; l++) {
-	    lumcl[l] = (float *)malloc(sizeof(float) * (n));
+	    lumcl[l] = (float *)G_malloc (sizeof(float) * (n));
 	}
 	for (j = 0; j < m; j++) {
 	    for (i = 0; i < n; i++)
@@ -1338,9 +1338,9 @@ void calculate(void)
     }
 
     if (beam_rad != NULL) {
-	beam = (float **)malloc(sizeof(float) * (m));
+	beam = (float **)G_malloc (sizeof(float) * (m));
 	for (l = 0; l < m; l++) {
-	    beam[l] = (float *)malloc(sizeof(float) * (n));
+	    beam[l] = (float *)G_malloc (sizeof(float) * (n));
 	}
 
 	for (j = 0; j < m; j++) {
@@ -1350,9 +1350,9 @@ void calculate(void)
     }
 
     if (insol_time != NULL) {
-	insol = (float **)malloc(sizeof(float) * (m));
+	insol = (float **)G_malloc (sizeof(float) * (m));
 	for (l = 0; l < m; l++) {
-	    insol[l] = (float *)malloc(sizeof(float) * (n));
+	    insol[l] = (float *)G_malloc (sizeof(float) * (n));
 	}
 
 	for (j = 0; j < m; j++) {
@@ -1362,9 +1362,9 @@ void calculate(void)
     }
 
     if (diff_rad != NULL) {
-	diff = (float **)malloc(sizeof(float) * (m));
+	diff = (float **)G_malloc (sizeof(float) * (m));
 	for (l = 0; l < m; l++) {
-	    diff[l] = (float *)malloc(sizeof(float) * (n));
+	    diff[l] = (float *)G_malloc (sizeof(float) * (n));
 	}
 
 	for (j = 0; j < m; j++) {
@@ -1374,9 +1374,9 @@ void calculate(void)
     }
 
     if (refl_rad != NULL) {
-	refl = (float **)malloc(sizeof(float) * (m));
+	refl = (float **)G_malloc (sizeof(float) * (m));
 	for (l = 0; l < m; l++) {
-	    refl[l] = (float *)malloc(sizeof(float) * (n));
+	    refl[l] = (float *)G_malloc (sizeof(float) * (n));
 	}
 
 	for (j = 0; j < m; j++) {

@@ -192,7 +192,7 @@ void convert(char *fileout, int rows, int cols, int depths, int trueCoords) {
         BottomHgt = 0.0;
 /****************/
 
-   g = (float *) malloc( rows * cols * Nl[0] * sizeof(float) );
+   g = (float *) G_malloc ( rows * cols * Nl[0] * sizeof(float) );
    if (!g)
       G_fatal_error(_("Out of memory"));
 

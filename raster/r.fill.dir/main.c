@@ -182,16 +182,16 @@ main(int argc, char **argv)
 /* buffers for internal use */
    bndC.ns=ncols;
    bndC.sz=sizeof(CELL)*ncols;
-   bndC.b[0]=calloc(ncols,sizeof(CELL));
-   bndC.b[1]=calloc(ncols,sizeof(CELL));
-   bndC.b[2]=calloc(ncols,sizeof(CELL));
+   bndC.b[0]=G_calloc (ncols,sizeof(CELL));
+   bndC.b[1]=G_calloc (ncols,sizeof(CELL));
+   bndC.b[2]=G_calloc (ncols,sizeof(CELL));
 
 /* buffers for external use */
    bnd.ns=ncols;
    bnd.sz=ncols*bpe();
-   bnd.b[0]=calloc(ncols,bpe());
-   bnd.b[1]=calloc(ncols,bpe());
-   bnd.b[2]=calloc(ncols,bpe());
+   bnd.b[0]=G_calloc (ncols,bpe());
+   bnd.b[1]=G_calloc (ncols,bpe());
+   bnd.b[2]=G_calloc (ncols,bpe());
 
    in_buf = get_buf();
 
@@ -240,13 +240,13 @@ main(int argc, char **argv)
       nbasins=dopolys(fd,fm,nrows,ncols);  
    }
   
-   free(bndC.b[0]);
-   free(bndC.b[1]);
-   free(bndC.b[2]);
+   G_free (bndC.b[0]);
+   G_free (bndC.b[1]);
+   G_free (bndC.b[2]);
 
-   free(bnd.b[0]);
-   free(bnd.b[1]);
-   free(bnd.b[2]);
+   G_free (bnd.b[0]);
+   G_free (bnd.b[1]);
+   G_free (bnd.b[2]);
 
    out_buf=G_allocate_c_raster_buf();
    bufsz=ncols*sizeof(CELL);

@@ -173,7 +173,7 @@ int main (int argc, char *argv[])
         }
         /* close input cell map and release the row buffer */
         G_close_cell(inputfd);
-        free(cell_row);
+        G_free (cell_row);
 
         /* perform FFT */
         G_message(_("Starting FFT..."));
@@ -254,14 +254,14 @@ int main (int argc, char *argv[])
         }
         G_close_cell(realfd);
         G_close_cell(imagfd);
-        free(cell_row);
-        free(cell_row2);
+        G_free (cell_row);
+        G_free (cell_row2);
 
         /* set up the color tables for histogram streched grey scale */
         fft_colors();
 
         /* Release memory resources */
-        for (i=0 ; i<2 ; i++) free(data[i]);
+        for (i=0 ; i<2 ; i++) G_free (data[i]);
         G_message(_("Transform successful."));
 
 exit(0);

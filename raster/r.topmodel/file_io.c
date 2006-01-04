@@ -1,3 +1,4 @@
+#include "gis.h"
 #include "local_proto.h"
 
 
@@ -30,8 +31,8 @@ read_inputs(void)
 
 	/* Read topographic index statistics file */
 	fp = fopen(file.idxstats, "r");
-	idxstats.atb = (double *) malloc(misc.nidxclass * sizeof(double));
-	idxstats.Aatb_r = (double *) malloc(misc.nidxclass * sizeof(double));
+	idxstats.atb = (double *) G_malloc (misc.nidxclass * sizeof(double));
+	idxstats.Aatb_r = (double *) G_malloc (misc.nidxclass * sizeof(double));
 
 	misc.ncell = 0;
 
@@ -121,8 +122,8 @@ read_inputs(void)
 			break;
 	}
 
-	params.d = (double *) malloc(params.nch * sizeof(double));
-	params.Ad_r = (double *) malloc(params.nch * sizeof(double));
+	params.d = (double *) G_malloc (params.nch * sizeof(double));
+	params.Ad_r = (double *) G_malloc (params.nch * sizeof(double));
 
 	for(i=0; i<params.nch && !feof(fp); ){
 		get_line(fp, buf);
@@ -146,8 +147,8 @@ read_inputs(void)
 			break;
 	}
 
-	input.R = (double *) malloc(input.ntimestep * sizeof(double));
-	input.Ep = (double *) malloc(input.ntimestep * sizeof(double));
+	input.R = (double *) G_malloc (input.ntimestep * sizeof(double));
+	input.Ep = (double *) G_malloc (input.ntimestep * sizeof(double));
 
 	for(i=0; i<input.ntimestep && !feof(fp); ){
 		get_line(fp, buf);
@@ -165,7 +166,7 @@ read_inputs(void)
 		fp = fopen(file.Qobs, "r");
 
 		misc.Qobs =
-			(double *) malloc(input.ntimestep * sizeof(double));
+			(double *) G_malloc (input.ntimestep * sizeof(double));
 
 		for(i=0; i<input.ntimestep && !feof(fp); ){
 			get_line(fp, buf);

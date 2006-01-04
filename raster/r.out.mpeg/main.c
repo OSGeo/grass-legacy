@@ -143,33 +143,33 @@ struct Colors colors;
 
     size = nrows * ncols;
 
-    if(NULL == (pr = malloc(size))){
+    if(NULL == (pr = G_malloc (size))){
 	    fprintf(stderr,"Can't malloc memory for imagebuffer\n");
 	    exit(1);
     }
-    if(NULL == (pg = malloc(size))){
+    if(NULL == (pg = G_malloc (size))){
 	    fprintf(stderr,"Can't malloc memory for imagebuffer\n");
 	    exit(1);
     }
-    if(NULL == (pb = malloc(size))){
+    if(NULL == (pb = G_malloc (size))){
 	    fprintf(stderr,"Can't malloc memory for imagebuffer\n");
 	    exit(1);
     }
     tsiz = G_window_cols();
 
-    if(NULL == (tr = (unsigned char *) malloc(tsiz))){
+    if(NULL == (tr = (unsigned char *) G_malloc (tsiz))){
         fprintf(stderr,"Unable to malloc.\n");
         exit (0);
     }
-    if(NULL == (tg = (unsigned char *) malloc(tsiz))){
+    if(NULL == (tg = (unsigned char *) G_malloc (tsiz))){
         fprintf(stderr,"Unable to malloc.\n");
         exit (0);
     }
-    if(NULL == (tb = (unsigned char *) malloc(tsiz))){
+    if(NULL == (tb = (unsigned char *) G_malloc (tsiz))){
         fprintf(stderr,"Unable to malloc.\n");
         exit (0);
     }
-    if(NULL == (tset = (unsigned char *) malloc(tsiz))){
+    if(NULL == (tset = (unsigned char *) G_malloc (tsiz))){
         fprintf(stderr,"Unable to malloc.\n");
         exit (0);
     }
@@ -284,14 +284,14 @@ struct Colors colors;
 
     clean_files(mpfilename, yfiles, cnt);
 
-    free(voidc);
-    free(tset);
-    free(tr);
-    free(tg);
-    free(tb);
-    free(pr);
-    free(pg);
-    free(pb);
+    G_free (voidc);
+    G_free (tset);
+    G_free (tr);
+    G_free (tg);
+    G_free (tb);
+    G_free (pr);
+    G_free (pg);
+    G_free (pb);
 
     return(cnt);
 
@@ -364,7 +364,7 @@ FILE *tf;
     *num = cnt;
     sprintf(cmd, "\\rm %s", tfile );
     G_system(cmd);
-    free (tfile);
+    G_free (tfile);
     return(newfiles);
 
 }

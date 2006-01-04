@@ -37,11 +37,11 @@ close_band_files (void)
   nbands = Refer.nfiles ;
   for (n=0; n < nbands; n++)
     {
-      free(Bandbuf[n]);
+      G_free (Bandbuf[n]);
       G_close_cell(Bandfd[n]);
     }
-  free(Bandbuf);
-  free(Bandfd);
+  G_free (Bandbuf);
+  G_free (Bandfd);
 
   return 0;
 }

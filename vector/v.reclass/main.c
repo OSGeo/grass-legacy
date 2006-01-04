@@ -319,7 +319,7 @@ main (int argc, char *argv[])
 		
 		db_CatValArray_sort ( &cvarr );
 
-		free ( cats );
+		G_free ( cats );
 		cat = 0;
 		where = label = NULL;
 	    }

@@ -39,7 +39,7 @@ int analyze_sig (void)
 /* clean up after analysis */
   if (Region.perimeter) 
     {
-      free (Region.perimeter);
+      G_free (Region.perimeter);
       Region.perimeter = 0;
     }
   erase_region();

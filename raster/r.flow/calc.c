@@ -30,6 +30,7 @@
 
 #include <stdlib.h>      /* for the random number generation */
 #include <time.h>
+#include "gis.h"
 #include "r.flow.h"
 #include "mem.h"
 #include "io.h"
@@ -377,10 +378,10 @@ void calculate()
 	    G_put_f_raster_row(lgfd, lg);
     }
 
-    free(fls.px);
-    free(fls.py);
-/*    free(fls); */ /* commented 19/10/99 MN */
-    free(lg);
+    G_free (fls.px);
+    G_free (fls.py);
+/*    G_free (fls); */ /* commented 19/10/99 MN */
+    G_free (lg);
     Vect_destroy_line_struct(points);
     Vect_destroy_cats_struct(cats);
 

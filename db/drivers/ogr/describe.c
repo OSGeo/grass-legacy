@@ -184,7 +184,7 @@ int describe_table( OGRLayerH hLayer, dbTable **table, cursor *c)
 	c->cols = cols;
         c->ncols = ncols;
     } else {
-	free ( cols );
+	G_free ( cols );
     }
 
     return DB_OK;

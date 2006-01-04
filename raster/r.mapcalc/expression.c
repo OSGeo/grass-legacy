@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "gis.h"
 
 #include "mapcalc.h"
 #include "func_proto.h"
@@ -34,7 +35,7 @@ static expression *find_variable(const char *name)
 
 static expression *allocate(int type, int res_type)
 {
-	expression *e = malloc(sizeof(expression));
+	expression *e = G_malloc (sizeof(expression));
 	e->type = type;
 	e->res_type = res_type;
 	e->buf = NULL;
@@ -46,9 +47,9 @@ static expression *allocate(int type, int res_type)
 static expression *to_int(expression *e1)
 {
 	expression *e = allocate(expr_type_function, CELL_TYPE);
-	expression **args = malloc(2 * sizeof(expression *));
-	int *argt = malloc(2 * sizeof(int));
-	void **argv = malloc(2 * sizeof(void *));
+	expression **args = G_malloc (2 * sizeof(expression *));
+	int *argt = G_malloc (2 * sizeof(int));
+	void **argv = G_malloc (2 * sizeof(void *));
 
 	argt[0] = CELL_TYPE;
 
@@ -68,9 +69,9 @@ static expression *to_int(expression *e1)
 static expression *to_float(expression *e1)
 {
 	expression *e = allocate(expr_type_function, FCELL_TYPE);
-	expression **args = malloc(2 * sizeof(expression *));
-	int *argt = malloc(2 * sizeof(int));
-	void **argv = malloc(2 * sizeof(void *));
+	expression **args = G_malloc (2 * sizeof(expression *));
+	int *argt = G_malloc (2 * sizeof(int));
+	void **argv = G_malloc (2 * sizeof(void *));
 
 	argt[0] = FCELL_TYPE;
 
@@ -90,9 +91,9 @@ static expression *to_float(expression *e1)
 static expression *to_double(expression *e1)
 {
 	expression *e = allocate(expr_type_function, DCELL_TYPE);
-	expression **args = malloc(2 * sizeof(expression *));
-	int *argt = malloc(2 * sizeof(int));
-	void **argv = malloc(2 * sizeof(void *));
+	expression **args = G_malloc (2 * sizeof(expression *));
+	int *argt = G_malloc (2 * sizeof(int));
+	void **argv = G_malloc (2 * sizeof(void *));
 
 	argt[0] = DCELL_TYPE;
 
@@ -125,7 +126,7 @@ void define_variable(expression *e)
 
 char *composite(const char *name, const char *mapset)
 {
-	char *buf = malloc(strlen(name) + strlen(mapset) + 2);
+	char *buf = G_malloc (strlen(name) + strlen(mapset) + 2);
 	strcpy(buf, name);
 	strcat(buf, "@");
 	strcat(buf, mapset);
@@ -134,7 +135,7 @@ char *composite(const char *name, const char *mapset)
 
 expr_list *list(expression *exp, expr_list *next)
 {
-	expr_list *l = malloc(sizeof(struct expr_list));
+	expr_list *l = G_malloc (sizeof(struct expr_list));
 	l->exp = exp;
 	l->next = next;
 	return l;
@@ -228,9 +229,9 @@ expression *operator(const char *name, const char *oper, int prec, expr_list *ar
 {
 	func_desc *d = find_func(name);
 	int argc = list_length(arglist);
-	expression **args = malloc((argc + 1) * sizeof(expression *));
-	int *argt = malloc((argc + 1) * sizeof(int));
-	void **argv = malloc((argc + 1) * sizeof(void *));
+	expression **args = G_malloc ((argc + 1) * sizeof(expression *));
+	int *argt = G_malloc ((argc + 1) * sizeof(int));
+	void **argv = G_malloc ((argc + 1) * sizeof(void *));
 	expression *e;
 	expr_list *l;
 	int i;
@@ -373,7 +374,7 @@ static char *format_function(const expression *e, int prec)
 		len += strlen(args[i]);
 	}
 
-	result = malloc(len);
+	result = G_malloc (len);
 
 	strcpy(result, e->data.func.name);
 	strcat(result, "(");
@@ -382,7 +383,7 @@ static char *format_function(const expression *e, int prec)
 		if (i > 1)
 			strcat(result, ", ");
 		strcat(result, args[i]);
-		free(args[i]);
+		G_free (args[i]);
 	}
 	strcat(result, ")");
 
@@ -399,36 +400,36 @@ static char *format_operator(const expression *e, int prec)
 	{
 	case 1:
 		arg1 = format_expression_prec(e->data.func.args[1], prec2);
-		result = malloc(strlen(e->data.func.oper) + strlen(arg1) + 3);
+		result = G_malloc (strlen(e->data.func.oper) + strlen(arg1) + 3);
 		sprintf(result, "%s%s%s%s",
 			prec <= prec2 ? "(" : "",
 			e->data.func.oper, arg1,
 			prec <= prec2 ? ")" : "");
-		free(arg1);
+		G_free (arg1);
 		return result;
 	case 2:
 		arg1 = format_expression_prec(e->data.func.args[1], (prec2 + 1));
 		arg2 = format_expression_prec(e->data.func.args[2], prec2);
-		result = malloc(strlen(e->data.func.oper) + strlen(arg1) + strlen(arg2) + 5);
+		result = G_malloc (strlen(e->data.func.oper) + strlen(arg1) + strlen(arg2) + 5);
 		sprintf(result, "%s%s %s %s%s",
 			prec <= prec2 ? "(" : "",
 			arg1, e->data.func.oper, arg2,
 			prec <= prec2 ? ")" : "");
-		free(arg1);
-		free(arg2);
+		G_free (arg1);
+		G_free (arg2);
 		return result;
 	case 3:
 		arg1 = format_expression_prec(e->data.func.args[1], prec2);
 		arg2 = format_expression_prec(e->data.func.args[2], prec2);
 		arg3 = format_expression_prec(e->data.func.args[3], (prec2 + 1));
-		result = malloc(strlen(arg1) + strlen(arg2) + strlen(arg3) + 9);
+		result = G_malloc (strlen(arg1) + strlen(arg2) + strlen(arg3) + 9);
 		sprintf(result, "%s%s ? %s : %s%s",
 			prec <= prec2 ? "(" : "",
 			arg1, arg2, arg3,
 			prec <= prec2 ? ")" : "");
-		free(arg1);
-		free(arg2);
-		free(arg3);
+		G_free (arg1);
+		G_free (arg2);
+		G_free (arg3);
 		return result;
 	default:
 		fprintf(stderr, "Illegal number of arguments (%d) for operator '%s'\n",
@@ -449,7 +450,7 @@ static char *format_binding(const expression *e, int prec)
 	char *result;
 	char *expr = format_expression_prec(e->data.bind.val, 8);
 
-	result = malloc(strlen(e->data.bind.var) + strlen(expr) + 6);
+	result = G_malloc (strlen(e->data.bind.var) + strlen(expr) + 6);
 
 	sprintf(result, "%s%s = %s%s",
 		prec < 8 ? "(" : "",
@@ -457,7 +458,7 @@ static char *format_binding(const expression *e, int prec)
 		expr,
 		prec < 8 ? ")" : "");
 
-	free(expr);
+	G_free (expr);
 
 	return result;
 }
