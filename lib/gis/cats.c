@@ -1607,21 +1607,21 @@ int G_free_raster_cats (struct Categories *pcats)
 
     if (pcats->title != NULL)
     {
-	free (pcats->title);
+	G_free (pcats->title);
 	pcats->title = NULL;
     }
     if (pcats->fmt != NULL)
     {
-	free (pcats->fmt);
+	G_free (pcats->fmt);
 	pcats->fmt = NULL;
     }
     if (pcats->ncats > 0)
     {
 	for (i = 0; i < pcats->ncats; i++)
 	    if (pcats->labels[i] != NULL)
-		free (pcats->labels[i]);
-	free (pcats->labels);
-	free (pcats->marks);
+		G_free (pcats->labels[i]);
+	G_free (pcats->labels);
+	G_free (pcats->marks);
 	pcats->labels = NULL;
     }
     G_quant_free (&pcats->q);

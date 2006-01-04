@@ -229,7 +229,7 @@ long G_get_histogram_count (int n, struct Histogram *histogram)
 int G_free_histogram ( struct Histogram *histogram)
 {
     if (histogram->num > 0)
-	free (histogram->list);
+	G_free (histogram->list);
     histogram->num = 0;
     histogram->list = NULL;
     return 1;

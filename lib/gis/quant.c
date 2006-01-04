@@ -315,11 +315,11 @@ void G_quant_free (struct Quant *q)
 {
   G_quant_clear (q);
 
-  if (q->maxNofRules > 0) free (q->table);
+  if (q->maxNofRules > 0) G_free (q->table);
   if (q->fp_lookup.active)
   {
-     free(q->fp_lookup.vals);
-     free(q->fp_lookup.rules);
+     G_free (q->fp_lookup.vals);
+     G_free (q->fp_lookup.rules);
      q->fp_lookup.nalloc = 0;
      q->fp_lookup.active = 0;
   }
@@ -704,8 +704,8 @@ void G_quant_add_rule (
   /* destroy lookup table, it has to be rebuilt */
   if (q->fp_lookup.active)
   {
-     free(q->fp_lookup.vals);
-     free(q->fp_lookup.rules);
+     G_free (q->fp_lookup.vals);
+     G_free (q->fp_lookup.rules);
      q->fp_lookup.active = 0;
      q->fp_lookup.nalloc = 0;
   }

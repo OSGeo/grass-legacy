@@ -189,7 +189,7 @@ char *G_strdup(const char *string)
 {
     char *p;
 
-    p = malloc(strlen(string) + 1);
+    p = G_malloc (strlen(string) + 1);
 
     if (p != NULL) {
 	strcpy(p, string);
@@ -223,7 +223,7 @@ char *G_strchg(char* bug, char character, char new) {
       char *name;
       name = G_str_replace ( inbuf, ".exe", "" );
       ... 
-      free(name);
+      G_free (name);
   \endverbatim
 --------------------------------------------------------------------*/
 char *G_str_replace(char* buffer, const char* old_str, const char* new_str) 

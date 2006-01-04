@@ -110,7 +110,7 @@ int G_get_cellhd  (char *name, char *mapset, struct Cell_head *cellhd)
 	sprintf (tail, _("Invalid format\n"));
     tail = buf + strlen(buf);
     strcpy (tail, err);
-    free (err);
+    G_free (err);
     G_warning (buf);
     return -1;
 }

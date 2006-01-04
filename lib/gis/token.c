@@ -23,7 +23,7 @@ char **G_tokenize ( char *buf, char *delim)
 	char **tokens;
 
 	i = 0;
-	while (*buf == ' ' || *buf == '\t')  /* needed for free () */
+	while (*buf == ' ' || *buf == '\t')  /* needed for G_free () */
 		buf++;
 
 	buf = G_store (buf);
@@ -64,7 +64,7 @@ int G_number_of_tokens(char **tokens)
 int G_free_tokens (char **tokens)
 {
     if (tokens[0] != NULL)
-	free (tokens[0]);
-    free (tokens);
+	G_free (tokens[0]);
+    G_free (tokens);
     return (0);
 }

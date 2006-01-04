@@ -441,8 +441,8 @@ int G_free_cell_stats (struct Cell_stats *s)
     int i;
 
     for (i = 1; i <= s->N; i++)
-	free (s->node[i].count);
-    free (s->node);
+	G_free (s->node[i].count);
+    G_free (s->node);
 
     return 0;
 }

@@ -27,7 +27,7 @@ int G__check_for_auto_masking (void)
     if (G__.auto_mask < -1)
         return G__.auto_mask ;  
 
-    /* if(G__.mask_fd > 0) free(G__.mask_buf);*/
+    /* if(G__.mask_fd > 0) G_free (G__.mask_buf);*/
 
 /* look for the existence of the MASK file */
     G__.auto_mask = (G_find_cell ("MASK", G_mapset()) != 0);
@@ -66,7 +66,7 @@ int G_suppress_masking (void)
     if (G__.auto_mask > 0)
     {
 	G_close_cell (G__.mask_fd);
-	/* free (G__.mask_buf); */
+	/* G_free (G__.mask_buf); */
 	G__.mask_fd = -1;
     }
     G__.auto_mask = -2;

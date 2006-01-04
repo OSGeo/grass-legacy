@@ -681,7 +681,7 @@ int G_plot_area (double **xs, double **ys, int *rpnts, int rings)
                 }
         }
     }
-    free (shift1);
+    G_free (shift1);
     return OK;
 
 }
@@ -735,12 +735,12 @@ static int edge_point( double x, register int y)
 	if (npalloc > 0)
 	{
 	    npalloc *= 2;
-	    P = (POINT *) realloc (P, npalloc * sizeof (POINT));
+	    P = (POINT *) G_realloc (P, npalloc * sizeof (POINT));
 	}
 	else
 	{
 	    npalloc = 32;
-	    P = (POINT *) malloc (npalloc * sizeof (POINT));
+	    P = (POINT *) G_malloc (npalloc * sizeof (POINT));
 	}
 	if (P == NULL)
 	{

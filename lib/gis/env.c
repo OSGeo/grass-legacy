@@ -148,7 +148,7 @@ static int set_env ( char *name, char *value, int loc)
     G_strip (tv);
     if (*tv == 0)
     {
-	free (tv);
+	G_free (tv);
 	unset_env (name, loc);
 	return 1;
     }
@@ -197,7 +197,7 @@ static int unset_env (char *name, int loc)
     for (n = 0; n < count; n++)
 	if (env[n].name && (strcmp(env[n].name, name)==0) && env[n].loc == loc )
 	{
-	    free (env[n].name);
+	    G_free (env[n].name);
 	    env[n].name = 0;
 	    return 1;
 	}

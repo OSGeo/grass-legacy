@@ -67,7 +67,7 @@ int G_set_window (struct Cell_head *window)
     if (G__.auto_mask > 0)
     {
 	G_close_cell (maskfd);
-/*	free (G__.mask_buf);*/
+/*	G_free (G__.mask_buf);*/
 	G__.mask_fd = -1;
 	G__.auto_mask = -1;	/* turn off masking */
     }
@@ -96,7 +96,7 @@ int G_set_window (struct Cell_head *window)
 /*      else */
         /* opened for writing */
 /*      {
-            free(G__.fileinfo[i].data);
+            G_free (G__.fileinfo[i].data);
             G__.fileinfo[i].data = (unsigned char *) G_calloc (G__.window.cols,
                  G_raster_size(G__.fileinfo[i].map_type));
         }
@@ -104,7 +104,7 @@ int G_set_window (struct Cell_head *window)
         /* allocate null bitstream buffers for reading/writing null rows */
 /*      for (j=0;j< NULL_ROWS_INMEM; j++)
         {
-           free(G__.fileinfo[i].NULL_ROWS[j]);
+           G_free (G__.fileinfo[i].NULL_ROWS[j]);
            G__.fileinfo[i].NULL_ROWS[j] = G__allocate_null_bits(G__.window.cols);
         }
 */

@@ -315,7 +315,7 @@ G_ask_old_file_ext (prompt, name, element, desc, option, lister)
 
 int G_set_ask_return_msg (char *msg)
 {
-    if (ask_return_msg) free (ask_return_msg);
+    if (ask_return_msg) G_free (ask_return_msg);
     ask_return_msg = G_store (msg);
     clear_return_msg = 0;
 
@@ -364,7 +364,7 @@ static char *ask (
 /* RETURN msg */
     if(clear_return_msg)
     {
-	free (ask_return_msg);
+	G_free (ask_return_msg);
 	ask_return_msg = 0;
     }
     clear_return_msg = ask_return_msg ? 1 : 0;

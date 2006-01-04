@@ -55,7 +55,7 @@ _get_make_pipe_path (void)
     int len, status;
     struct _stat theStat;
     
-    user = G_whoami(); /* Don't free() return value ever! */
+    user = G_whoami(); /* Don't G_free () return value ever! */
     if (user == NULL) {
         user = whoami;
     }
@@ -91,7 +91,7 @@ _get_make_pipe_path (void)
         
  /* ----------------------------------------------------------------------
  * G_pipe_get_fname(), builds the full path for a UNIX socket.  Caller 
- * should free() the return value when it is no longer needed.  Returns
+ * should G_free () the return value when it is no longer needed.  Returns
  * NULL on failure.
  * ---------------------------------------------------------------------*/
 char *

@@ -1,5 +1,5 @@
 #include <time.h>	/*  For time()	*/
-#include <stdlib.h>	/*  For free(), rand() and srand()	*/
+#include <stdlib.h>	/*  For rand() and srand() */
 #include "gis.h"
 
 #define MAX_COLORS 1024

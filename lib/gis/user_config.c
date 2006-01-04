@@ -41,7 +41,7 @@
 /**************************************************************************
  * _make_toplevel(): make user's toplevel config directory if it doesn't
  * already exist.  Adjust perms to 1700. Returns the toplevel directory
- * path [caller must free()] on success, or NULL on failure
+ * path [caller must G_free ()] on success, or NULL on failure
  *************************************************************************/
 static char *
 _make_toplevel (void)

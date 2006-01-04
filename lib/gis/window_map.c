@@ -50,7 +50,7 @@ int G__create_window_mapping (int fd)
     if (FCB.open_mode >= 0 && FCB.open_mode != OPEN_OLD)  /* open for write? */
         return 0;
     if (FCB.open_mode == OPEN_OLD) /* already open ? */
-        free (CMAP);
+        G_free (CMAP);
 
     col = CMAP = alloc_index (WINDOW_NCOLS) ;
 

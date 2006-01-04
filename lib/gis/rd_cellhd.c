@@ -1,6 +1,6 @@
 /* read cell header, or window.
    returns NULL if ok, error message otherwise
-   note:  the error message can be freed using free().
+   note:  the error message can be freed using G_free ().
 */
 
 #include "gis.h"
