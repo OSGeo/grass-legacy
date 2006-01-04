@@ -303,34 +303,39 @@ srclibsdist: FORCE distclean
 	-rm -r ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
 	@ echo "Distribution source package: grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}.tar.gz ready."
 
-#alternatively, the docs can be generated as single HTML document set:
-#  (cd lib/ ; make htmldocs)
+# generate docs as single HTML document:
+htmldocs-single:
+	(cd lib/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs)
+	(cd swig/; $(MAKE) cleandocs ; $(MAKE) htmldocs)
+
+# generate docs as multiple HTML documents:
 htmldocs:
-	(cd lib/db/ ; $(MAKE) htmldocs)
-	(cd lib/g3d/ ; $(MAKE) pdfdocs)
-	(cd lib/gis/ ; $(MAKE) htmldocs)
-	(cd lib/gmath/ ; $(MAKE) htmldocs)
-	(cd lib/ogsf/ ; $(MAKE) htmldocs)
-	(cd lib/proj/ ; $(MAKE) htmldocs)
-	(cd lib/segment/; $(MAKE) htmldocs)
-	(cd lib/vector/ ; $(MAKE) htmldocs)
-	(cd swig/; $(MAKE) htmldocs)
+	(cd lib/db/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs)
+	(cd lib/g3d/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs)
+	(cd lib/gis/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs)
+	(cd lib/gmath/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs)
+	(cd lib/ogsf/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs)
+	(cd lib/proj/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs)
+	(cd lib/segment/; $(MAKE) cleandocs ; $(MAKE) htmldocs)
+	(cd lib/vector/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs)
+	(cd swig/; $(MAKE) cleandocs ; $(MAKE) htmldocs)
 
 packagehtmldocs: htmldocs
 	tar cvfz grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}refman_`date '+%Y_%m_%d'`_html.tar.gz lib/db/html lib/g3d/html lib/gis/html lib/gmath/html lib/proj/html lib/ogsf/html lib/segment/html lib/vector/html swig/html
 
 #alternatively, the docs can be generated as single PDF document (see doxygen FAQ for 'TeX capacity exceeded'):
 #  (cd lib/ ; make pdfdocs)
+
 pdfdocs:
-	(cd lib/db/ ; $(MAKE) pdfdocs)
-	(cd lib/g3d/ ; $(MAKE) pdfdocs)
-	(cd lib/gis/ ; $(MAKE) pdfdocs)
-	(cd lib/gmath/ ; $(MAKE) pdfdocs)
-	(cd lib/ogsf/ ; $(MAKE) pdfdocs)
-	(cd lib/proj/ ; $(MAKE) pdfdocs)
-	(cd lib/segment/; $(MAKE) pdfdocs)
-	(cd lib/vector/ ; $(MAKE) pdfdocs)
-	(cd swig/; $(MAKE) pdfdocs)
+	(cd lib/db/ ; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
+	(cd lib/g3d/ ; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
+	(cd lib/gis/ ; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
+	(cd lib/gmath/ ; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
+	(cd lib/ogsf/ ; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
+	(cd lib/proj/ ; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
+	(cd lib/segment/; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
+	(cd lib/vector/ ; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
+	(cd swig/; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
 	@echo "Written PDF docs in: lib/db/latex/, lib/g3d/latex/, lib/gis/latex/, lib/gmath/latex/ lib/ogsf/latex/, lib/proj//latex, lib/segment/latex, lib/vector/latex/ swig/latex"
 
 changelog:
