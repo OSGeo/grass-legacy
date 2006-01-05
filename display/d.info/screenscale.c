@@ -29,6 +29,7 @@
 #include "raster.h"
 #include "glocale.h"
 
+#ifdef X11
 int screeninfo(void)
 {
     char window_name[255];
@@ -125,3 +126,6 @@ int screeninfo(void)
 
     return (0);
 }
+
+#endif
+
