@@ -12,6 +12,7 @@
 #include "gis.h"
 #include "dbmi.h"
 #include "Vect.h"
+#include "glocale.h"
 
 #define OP_OVERLAP 0
 
@@ -119,7 +120,7 @@ main (int argc, char *argv[])
     pre[1] ="b";
 
     module = G_define_module();
-    module->description = "Select features from ainput by features from binput.";
+    module->description = _("Select features from ainput by features from binput");
 
     in_opt[0] = G_define_standard_option(G_OPT_V_INPUT);
     in_opt[0]->key = "ainput";
@@ -148,16 +149,17 @@ main (int argc, char *argv[])
     operator_opt->multiple = NO;
     operator_opt->options = "overlap";
     operator_opt->answer = "overlap";
-    operator_opt->description = "Operator defines required relation between features. "
+    operator_opt->description = _("Operator defines required relation between features. "
 	"A feature is written to output if the result of operation 'ainput operator binput' is true. "
 	"An input feature is considered to be true, if category of given layer is defined.\n"
-	"\t overlap : features partialy or completely overlap\n";
+	"\t overlap: features partially or completely overlap");
 
     table_flag = G_define_flag ();
     table_flag->key             = 't';
-    table_flag->description     = "Do not create attribute table.";
+    table_flag->description     = _("Do not create attribute table");
 
-    if (G_parser (argc, argv)) exit(-1);
+    if (G_parser (argc, argv))
+       exit(EXIT_FAILURE);
 
     if ( operator_opt->answer[0] == 'o' ) operator = OP_OVERLAP;
 
@@ -168,7 +170,7 @@ main (int argc, char *argv[])
 	Vect_check_input_output_name ( in_opt[input]->answer, out_opt->answer, GV_FATAL_EXIT );
 
 	if ((mapset[input] = G_find_vector2 (in_opt[input]->answer, NULL)) == NULL) {
-	    G_fatal_error ("Could not find vector '%s'\n", in_opt[input]->answer);
+	    G_fatal_error (_("Could not find vector '%s'"), in_opt[input]->answer);
 	}
 
 	Vect_set_open_level (2);
@@ -201,7 +203,7 @@ main (int argc, char *argv[])
     
     /* Lines in A. Go through all lines and mark those that meets condition */
     if ( type[0] & (GV_POINTS | GV_LINES) ) {
-	fprintf ( stderr, "Processing ainput lines ... " );
+	G_message (_("Processing ainput lines ...") );
 
 	for ( aline = 1; aline <= nalines; aline++ ) {
 	    BOUND_BOX abox;
@@ -276,7 +278,7 @@ main (int argc, char *argv[])
     if ( type[0] & GV_AREA ) {
         int  aarea, naareas;
 
-	fprintf ( stderr, "Processing ainput areas ... " );
+	G_message ( _("Processing ainput areas ...") );
 
 	naareas = Vect_get_num_areas (  &(In[0]) );
 
@@ -417,7 +419,7 @@ main (int argc, char *argv[])
     if ( !(table_flag->answer) ) {
 	int ttype, ntabs=0;
 	
-	G_message ( "Writing attributes ...\n" );
+	G_message ( _("Writing attributes ...") );
 
 	/* Number of output tabs */
 	for ( i = 0; i < Vect_get_num_dblinks ( &(In[0]) ); i++ ) {
@@ -444,7 +446,7 @@ main (int argc, char *argv[])
 
 	    if ( fields[i] == 0 ) continue;
 	
-	    G_message ( "Layer %d", fields[i] );
+	    G_message ( _("Layer %d"), fields[i] );
 
 	    /* Make a list of categories */
 	    IFi = Vect_get_field ( &(In[0]), fields[i] );
@@ -460,12 +462,12 @@ main (int argc, char *argv[])
 				  IFi->key, cats[i], ncats[i] );
 
 	    if ( ret == DB_FAILED ) {
-		G_warning ( "Cannot copy table" );
+		G_warning ( _("Cannot copy table") );
 	    } else {
 		Vect_map_add_dblink ( &Out, OFi->number, OFi->name, OFi->table, 
 				      IFi->key, OFi->database, OFi->driver);
 	    }
-	    G_message ( "Done." );
+	    G_done_msg("");
 	}
     }
 
@@ -474,6 +476,6 @@ main (int argc, char *argv[])
     Vect_build (&Out, stderr); 
     Vect_close (&Out);
     
-    exit (0);
+    exit (EXIT_SUCCESS);
 }
 
