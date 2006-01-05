@@ -1,6 +1,4 @@
 /*
- * $Id$
- *
  ****************************************************************************
  *
  * MODULE:       d.info
@@ -14,16 +12,19 @@
  *
  *****************************************************************************/
 
+#include <stdlib.h>
 #include <stdio.h>
 #include "gis.h"
 #include "raster.h"
 #include "display.h"
 #include "glocale.h"
 
+int screeninfo (void);
+
 int main(int argc,char *argv[])
 {
 	struct GModule *module;
-	struct Flag *rflag, *dflag, *cflag, *fflag;
+	struct Flag *rflag, *dflag, *cflag, *fflag, *sflag;
 	int l, r, t, b;
 	char window_name[128];
 	struct Cell_head window;
@@ -50,13 +51,17 @@ int main(int argc,char *argv[])
 	cflag->key = 'c';
 	cflag->description = _("Display number of colors");
 
-	if (argc > 1 && G_parser(argc, argv))
-		return 1;
+	sflag = G_define_flag();
+	sflag->key = 's';
+	sflag->description = _("Display approximate screen scale");
 
-	if(!rflag->answer && !dflag->answer && !cflag->answer && !fflag->answer)
+	if (argc > 1 && G_parser(argc, argv))
+		exit(EXIT_FAILURE);
+
+	if(!rflag->answer && !dflag->answer && !cflag->answer && !fflag->answer && !sflag->answer)
 	{
 		G_usage();
-		return 1;
+		exit(EXIT_FAILURE);
 	}
 
 	if (R_open_driver() != 0)
@@ -108,7 +113,10 @@ int main(int argc,char *argv[])
 	    fprintf(stdout, "frame: %d %d %d %d\n", l, r, t, b);
 	}
 	
+	if(sflag->answer)
+		screeninfo();
+	
 	R_close_driver();	
 
-	return 0;
+	return EXIT_SUCCESS;
 }
