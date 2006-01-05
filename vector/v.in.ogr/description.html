@@ -134,10 +134,16 @@ The characters used for table column names are limited. Supported are:<br>
 [A-Za-z][A-Za-z0-9_]*
 </pre></div>
 
-That means that SQL neither supports '.' (dots) nor '-' (minus) nor '#' in table
+This means that SQL neither supports '.' (dots) nor '-' (minus) nor '#' in table
 column names. Also a table name must start with a character, not a number.<br>
 <em>v.in.ogr</em> converts '.', '-' and '#' to '_' (underscore) during import.
 Use the <em>cnames</em> parameter to define new column names during import.
+
+<P>
+If a message like "WARNING: Area size 1.3e-06, area not imported." appears,
+the <em>min_area</em> may be adjusted to a smaller value in case that all
+areas shall be imported. Otherwise tiny areas are filtered out during import
+(useful to polish digitization errors or non-topological data).
 
 <H2>REFERENCES</H2>
 
@@ -150,6 +156,7 @@ documentation
 <h2>SEE ALSO</h2>
 
 <em><a HREF="v.clean.html">v.clean</a></em>,
+<em><a HREF="v.build.polylines.html">v.build.polylines</a></em>,
 <em><a HREF="v.db.connect.html">v.db.connect</a></em>,
 <em><A HREF="v.external.html">v.external</A></em>,
 <em><a HREF="v.out.ogr.html">v.out.ogr</a></em>
