@@ -4,6 +4,7 @@
 #define MAIN
 #include "mask.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 static int parse_catlist ( char **, Mask *);
 static int parse_vallist ( char **, d_Mask *);
@@ -30,8 +31,8 @@ int main(
 
 	module = G_define_module();
 	module->description =
-		"Displays and overlays raster map layers "
-		"in the active display frame on the graphics monitor.";
+		_("Displays and overlays raster map layers "
+		"in the active display frame on the graphics monitor");
 
 /* set up command line */
     map              = G_define_option();
@@ -39,7 +40,7 @@ int main(
     map->type        = TYPE_STRING;
     map->required    = YES;
     map->gisprompt   = "old,cell,raster" ;
-    map->description = "Raster map to be displayed";
+    map->description = _("Raster map to be displayed");
 
     catlist              = G_define_option();
     catlist->key         = "catlist";
@@ -47,7 +48,7 @@ int main(
     catlist->type        = TYPE_STRING;
     catlist->required    = NO;
     catlist->multiple    = YES;
-    catlist->description = "List of categories to be displayed (INT maps)";
+    catlist->description = _("List of categories to be displayed (INT maps)");
 
     vallist              = G_define_option();
     vallist->key         = "vallist";
@@ -55,7 +56,7 @@ int main(
     vallist->type        = TYPE_STRING;
     vallist->required    = NO;
     vallist->multiple    = YES;
-    vallist->description = "List of values to be displayed (FP maps)";
+    vallist->description = _("List of values to be displayed (FP maps)");
 
     bg              = G_define_option();
     bg->key         = "bg";
@@ -63,22 +64,22 @@ int main(
     bg->type        = TYPE_STRING;
     bg->required    = NO;
     bg->options     = color_list();
-    bg->description = "Background color (for null)";
+    bg->description = _("Background color (for null)");
 
     flag_o = G_define_flag();
     flag_o->key = 'o';
-    flag_o->description = "Overlay (non-null values only)";
+    flag_o->description = _("Overlay (non-null values only)");
 
     flag_i = G_define_flag();
     flag_i->key = 'i';
-    flag_i->description = "Invert catlist";
+    flag_i->description = _("Invert catlist");
 
     flag_x = G_define_flag();
     flag_x->key = 'x';
-    flag_x->description = "Don't add to list of rasters and commands in monitor";
+    flag_x->description = _("Don't add to list of rasters and commands in monitor");
 
     if (G_parser(argc, argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
     name = map->answer;
     overlay = flag_o->answer;
@@ -87,24 +88,20 @@ int main(
 /* Make sure map is available */
     mapset = G_find_cell2 (name, "") ;
     if (mapset == NULL)
-    {
-	char buf[256];
-        sprintf(buf,"Raster map [%s] not available", name);
-        G_fatal_error(buf) ;
-    }
+        G_fatal_error(_("Raster map [%s] not available"), name) ;
 
     if (R_open_driver() != 0)
-	G_fatal_error ("No graphics device selected");
+	G_fatal_error (_("No graphics device selected"));
 
     fp = G_raster_map_is_fp(name, mapset);
     if(catlist->answer)
     {
-       if(fp) G_warning("Ignoring catlist: map is floating point (please use 'val=')");
+       if(fp) G_warning(_("Ignoring catlist: map is floating point (please use 'val=')"));
        else parse_catlist (catlist->answers, &mask);
     }
     if(vallist->answer)
     {
-       if(!fp) G_warning("Ignoring vallist: map is integer (please use 'cat=')");
+       if(!fp) G_warning(_("Ignoring vallist: map is integer (please use 'cat=')"));
        else parse_vallist (vallist->answers, &d_mask);
     }
 
@@ -117,7 +114,7 @@ int main(
 
     R_close_driver();
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 static int parse_catlist ( char **catlist, Mask *mask)
@@ -138,7 +135,7 @@ static int parse_catlist ( char **catlist, Mask *mask)
 	    {
 		perror (*catlist);
 		G_usage();
-		exit(1);
+		exit(EXIT_FAILURE);
 	    }
 	    while (fgets (buf, sizeof buf, fd))
 	    {
@@ -173,7 +170,7 @@ static int parse_vallist ( char **vallist, d_Mask *d_mask)
 	    {
 		perror (*vallist);
 		G_usage();
-		exit(1);
+		exit(EXIT_FAILURE);
 	    }
 	    while (fgets (buf, sizeof buf, fd))
 	    {
