@@ -9,9 +9,9 @@ Note: This text contains *some* rules only applicable to the
 1. Local work (basically at ITC-irst)
 
  o - cleanup rubbish:
-       find . -name '*~'
-       find . -name '*~' | xargs rm
-       find . -name '*.bak'
+       find . -name '*~'  | xargs rm
+       find . -name '*.o' | xargs rm
+       find . -name '*.bak' | xargs rm
 
    - Update VERSION file to release version:
       vim include/VERSION
