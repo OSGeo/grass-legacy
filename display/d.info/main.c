@@ -19,15 +19,10 @@
 #include "display.h"
 #include "glocale.h"
 
-int screeninfo (void);
-
 int main(int argc,char *argv[])
 {
 	struct GModule *module;
 	struct Flag *rflag, *dflag, *cflag, *fflag;
-#ifdef X11
-	struct Flag *sflag;
-#endif
 	int l, r, t, b;
 	char window_name[128];
 	struct Cell_head window;
@@ -54,20 +49,10 @@ int main(int argc,char *argv[])
 	cflag->key = 'c';
 	cflag->description = _("Display number of colors");
 
-#ifdef X11
-	sflag = G_define_flag();
-	sflag->key = 's';
-	sflag->description = _("Display approximate screen scale");
-#endif
-
 	if (argc > 1 && G_parser(argc, argv))
 		exit(EXIT_FAILURE);
 
-#ifdef X11
-	if(!rflag->answer && !dflag->answer && !cflag->answer && !fflag->answer && !sflag->answer)
-#else
 	if(!rflag->answer && !dflag->answer && !cflag->answer && !fflag->answer)
-#endif
 	{
 		G_usage();
 		exit(EXIT_FAILURE);
@@ -122,10 +107,6 @@ int main(int argc,char *argv[])
 	    fprintf(stdout, "frame: %d %d %d %d\n", l, r, t, b);
 	}
 	
-#ifdef X11
-	if(sflag->answer)
-		screeninfo();
-#endif	
 	R_close_driver();	
 
 	return EXIT_SUCCESS;
