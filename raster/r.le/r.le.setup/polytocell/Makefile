@@ -23,3 +23,6 @@ $(BIN)/poly_to_bmif: $(OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS)
 
 OBJS: ply_to_cll.h
+
+clean:
+	rm -f *.o
