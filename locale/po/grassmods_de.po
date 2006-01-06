@@ -2763,7 +2763,7 @@ msgstr "Lese Bild..."
 #: ../imagery/i.cluster/main.c:268
 msgid "Out of Memory. Please run again and choose a smaller sample size"
 msgstr ""
-"Speicher voll! Bitte benutzen Sie das Programm nocheinmal mit einer "
+"Speicher voll! Bitte benutzen Sie das Programm noch einmal mit einer "
 "kleineren Beispiellgröße."
 
 #: ../imagery/i.cluster/main.c:273
@@ -5731,8 +5731,7 @@ msgstr "Glättungswerte (Smoothing) können nicht negativ oder NULL sein."
 #: ../raster/r.resamp.rst/main.c:426
 msgid "Input map resolution differs from current region resolution!"
 msgstr ""
-"Auflösung der Eingabekarte unterscheidet sich von der aktuellen Regions-"
-"Auflösung!"
+"Auflösung der Eingabekarte unterscheidet sich von der aktuellen Regionsauflösung!"
 
 #: ../raster/r.resamp.rst/main.c:429
 #, c-format
@@ -6634,7 +6633,7 @@ msgstr "Für welchen Layer soll die Header-Datei editiert werden?"
 msgid "[%s] is a reclass of [%s] - cannot edit header! Run support on [%s]."
 msgstr ""
 "[%s] ist eine reklassifizierte Karte von [%s] - kann den Header nicht "
-"editieren! Benutzte support für Karte [%s]."
+"editieren! Wende support für Karte [%s] an."
 
 #: ../raster/r.support/modhead/modhead.c:89
 #, c-format
@@ -6676,11 +6675,11 @@ msgstr "Pre 3.0 Komprimierung %s angezeigt.\n"
 #: ../raster/r.support/modhead/modhead.c:200
 #, c-format
 msgid "[%s] appears to be compressed. Is it? "
-msgstr "[%s] erscheint, als sei sie komprimiert. Ist sie es?"
+msgstr "[%s] scheint komprimiert zu sein. Ist sie es?"
 
 #: ../raster/r.support/modhead/modhead.c:207
 msgid "Please indicate the type of compression:\n"
-msgstr "Bitte geben Sie den Type der Komprimierung an:\n"
+msgstr "Bitte geben Sie den Typ der Komprimierung an:\n"
 
 #: ../raster/r.support/modhead/modhead.c:208
 msgid "  1. Pre 3.0 compression\n"
@@ -8006,11 +8005,11 @@ msgstr "Kann die Ausgabe-Karte nicht schließen."
 
 #: ../raster3d/r3.in.rast/main.c:79
 msgid "2d raster maps which represent the slices"
-msgstr "2D-Rasterkarte, die die Scheiben repräsentiert."
+msgstr "2D-Rasterkarte, die die Schnitte repräsentiert."
 
 #: ../raster3d/r3.in.rast/main.c:89
 msgid "output 3dcell map which will be filled with the 2D raster slices"
-msgstr "Ausgabe-3dcell-Karte, die mit 2D-Rasterscheiben gefüllt wird."
+msgstr "Ausgabe-3dcell-Karte, die mit 2D-Rasterschnitten gefüllt wird."
 
 #: ../raster3d/r3.in.rast/main.c:112
 #, c-format
@@ -8020,7 +8019,7 @@ msgstr "RasterToG3D: Schreibe %i Rasterkarten mit Zeilen %i Spalten."
 #: ../raster3d/r3.in.rast/main.c:117
 #, c-format
 msgid "Writing g3d slice %i\n"
-msgstr "Schreibe g3d-Scheibe %i\n"
+msgstr "Schreibe g3d-Schnitt %i\n"
 
 #: ../raster3d/r3.in.rast/main.c:122
 msgid "Cold not get raster row \n"
@@ -8028,7 +8027,7 @@ msgstr "Kann die Rasterzeile nicht holen\n"
 
 #: ../raster3d/r3.in.rast/main.c:187
 msgid "Converts 2D raster map slices to one 3D raster map"
-msgstr "Konvertiert 2D Rasterkartenscheiben in eine 3D Rasterkarte."
+msgstr "Konvertiert 2D Rasterkartenschnitt in eine 3D Rasterkarte."
 
 #: ../raster3d/r3.in.rast/main.c:199
 msgid "No output map"
