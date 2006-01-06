@@ -12,6 +12,7 @@ Note: This text contains *some* rules only applicable to the
        find . -name '*~'  | xargs rm
        find . -name '*.o' | xargs rm
        find . -name '*.bak' | xargs rm
+       find . -name '.#*' | xargs rm
 
    - Update VERSION file to release version:
       vim include/VERSION
@@ -24,6 +25,7 @@ Note: This text contains *some* rules only applicable to the
       rm -f include/VERSION~
 
    - submit include/VERSION to CVS
+   - cvs up -dP
    - Create release branch (only if not yet existing)
 
  o Create Changelog file
