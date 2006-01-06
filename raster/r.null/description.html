@@ -21,11 +21,23 @@ The <b>null</b> parameter eliminates the NULL value and replaces it with
 value. This argument is applied only to existing NULL values, and not to the
 NULLs created by the setnull argument.
 
+<h2>EXAMPLES</h2>
+Set specific values of a classified map to NULL:<br>
+<div class="code"><pre>
+r.null map=landcover.30m setnull=21,22
+</pre></div>
+
+Set NULL-values of a map to a specific value:<br>
+<div class="code"><pre>
+r.null map=fields null=99
+</pre></div>
+
+
 <H2>NOTES</H2>
 
 Note that value is restricted to integer if the map is an integer map. 
 <p>
-r.null and reclassified maps:<br>
+<em>r.null</em> and reclassified maps:<br>
 The problem is, if r.null was run on the reclass raster it would alter the
 original and any other reclass rasters of the original.  Therefore r.null 
 doesn't allow to recode reclassified maps (products of r.reclass).
@@ -33,8 +45,10 @@ doesn't allow to recode reclassified maps (products of r.reclass).
 So, the way to recode such a map is: The user makes a raster out of the
 reclass that isn't a reclass by copying it:<br>
 
-<tt>r.mapcalc newmap = reclass</tt><br>
-Then user recodes this copy.
+<div class="code"><pre>
+r.mapcalc newmap = reclass
+</pre></div>
+
 
 <H2>SEE ALSO</H2>
 
