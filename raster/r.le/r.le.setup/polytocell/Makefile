@@ -25,4 +25,4 @@ $(BIN)/poly_to_bmif: $(OBJS)
 OBJS: ply_to_cll.h
 
 clean:
-	rm -f *.o
+	rm -f $(OBJS) bmf_to_cll.o
