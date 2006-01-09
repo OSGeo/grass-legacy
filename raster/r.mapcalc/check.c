@@ -99,11 +99,11 @@ c_varop(int argc, int *argt)
 	argt[0] = CELL_TYPE;
 
 	for (i = 1; i <= argc; i++)
-		if (argt[1] == FCELL_TYPE)
+		if (argt[i] == FCELL_TYPE)
 			argt[0] = FCELL_TYPE;
 
 	for (i = 1; i <= argc; i++)
-		if (argt[1] == DCELL_TYPE)
+		if (argt[i] == DCELL_TYPE)
 			argt[0] = DCELL_TYPE;
 
 	for (i = 1; i <= argc; i++)
