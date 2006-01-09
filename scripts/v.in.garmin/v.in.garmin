@@ -24,7 +24,7 @@
 #             http://www.metalab.unc.edu/pub/Linux/science/cartography/
 #             ftp://www.mayko.com/pub/gpstrans
 #      -  unix tools: grep, cat, tac, cut, paste, awk/nawk or gawk, sed
-#      -  cs2cs from PROJ.4    http://www.remotesensing.org/proj
+#      -  cs2cs from PROJ.4    http://proj.maptools.org
 #
 
 #%Module
@@ -197,7 +197,7 @@ fi
 #### set up projection info
 IN_PROJ="+proj=longlat +towgs84=0.000,0.000,0.000"
 OUT_PROJ="`g.proj -jf`"
-PROJ_TYPE=`g.region -p | grep projection | cut -f2 -d" "`
+PROJ_TYPE=`g.region -p | grep 'projection' | cut -f2 -d" "`
 if [ $PROJ_TYPE -eq 0 ] && [ $KEEP_WGS84 -ne 1 ] ; then
     echo "Cannot project to a XY location." 1>&2
     rm -f ${TMP}*
@@ -327,9 +327,9 @@ else # CREATE_LINES
 	    $1=="R" { printf("L %d 1\n", R) ; R=0 } END {;}' | tac > "${TMP}.base"
 
 	# create attr table: cat(int), id number(int 0-19), name varchar(16+), starting_wpt(varchar 10)
-	cat "${TMP}.gpst" | grep ^R | cut -f2,3 | grep -n ^ | \
+	cat "${TMP}.gpst" | grep '^R' | cut -f2,3 | grep -n '^' | \
 	    sed -e 's/:/\t/' > "${TMP}.route_ids"
-	cat "${TMP}.gpst" | sed -e '1d' | grep ^R -A 1 | grep ^W | cut -f2 > "${TMP}.route_start"
+	cat "${TMP}.gpst" | sed -e '1d' | grep '^R' -A 1 | grep '^W' | cut -f2 > "${TMP}.route_start"
 	paste "${TMP}.route_ids" "${TMP}.route_start" > "${TMP}.route_atts"
 	ATTR_FILE="${TMP}.route_atts"
 	ATTR_COLS='cat int, route_id int, name varchar(20), start_wpt varchar(10)'
@@ -343,10 +343,10 @@ else # CREATE_LINES
 
 	# create attr table: cat(int), start_time varchar(40), start_lat(double), start_lon(double), \
 	#			end_time varchar(40), end_lat(double), end_lon(double)
-	cat "${TMP}.gpst" | sed -e '1d' | grep ^$ -B 1 | grep ^T | cut -f2,3,4 > "${TMP}.end_time"
-	cat "${TMP}.gpst" | grep ^T | tail -1 | cut -f2,3,4 >> "${TMP}.end_time"
-	cat "${TMP}.gpst" | sed -e '1d' | grep ^$ -A 1 | grep ^T | cut -f2,3,4 | \
-	    grep -n ^ | sed -e 's/:/\t/'  > "${TMP}.start_time"
+	cat "${TMP}.gpst" | sed -e '1d' | grep '^$' -B 1 | grep '^T' | cut -f2,3,4 > "${TMP}.end_time"
+	cat "${TMP}.gpst" | grep '^T' | tail -n 1 | cut -f2,3,4 >> "${TMP}.end_time"
+	cat "${TMP}.gpst" | sed -e '1d' | grep '^$' -A 1 | grep '^T' | cut -f2,3,4 | \
+	    grep -n '^' | sed -e 's/:/\t/'  > "${TMP}.start_time"
 	paste "${TMP}.start_time" "${TMP}.end_time" > "${TMP}.track_atts"
 	ATTR_FILE="${TMP}.track_atts"
 	ATTR_COLS='cat int, start_time varchar(40), start_lat double, start_lon double, end_time varchar(40), end_lat double, end_lon double'
