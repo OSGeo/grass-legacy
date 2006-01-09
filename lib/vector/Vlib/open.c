@@ -322,7 +322,7 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
       Vect_hist_write ( Map, "---------------------------------------------------------------------------------\n");
       
   } else {
-      if ( Map->format == GV_FORMAT_NATIVE ) {
+      if ( Map->format == GV_FORMAT_NATIVE || Map->format == GV_FORMAT_OGR ) {
           Map->hist_fp = G_fopen_old (buf, GRASS_VECT_HIST_ELEMENT, Map->mapset);
           /* If NULL (does not exist) then Vect_hist_read() handle that */
       } else { 
