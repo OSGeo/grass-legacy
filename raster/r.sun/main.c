@@ -71,7 +71,8 @@ char *beam_rad = NULL;
 char *insol_time = NULL;
 char *diff_rad = NULL;
 char *refl_rad = NULL;
-char *mapset = NULL;
+char *mapset1 = NULL, *mapset2 = NULL, *mapset3 = NULL, *mapset4 = NULL,
+     *mapset5 = NULL, *mapset6 = NULL, *mapset7 = NULL, *mapset8 = NULL;
 char *per;
 char *shade;
 
@@ -161,7 +162,7 @@ int main(int argc, char *argv[])
 	"the topography is optionally incorporated.");
 
     if (G_get_set_window(&cellhd) == -1)
-	G_fatal_error("G_get_set_window()");
+	G_fatal_error("G_get_set_window() failed");
 
     stepx = cellhd.ew_res;
     stepy = cellhd.ns_res;
@@ -358,7 +359,7 @@ int main(int argc, char *argv[])
     refl_rad = parm.refl_rad->answer;
 
     if((insol_time != NULL) && (incidout != NULL))
-	G_fatal_error("insol_time and incidout are incompatible options");
+	G_fatal_error(_("insol_time and incidout are incompatible options"));
 
     sscanf(parm.day->answer, "%d", &day);
     sscanf(parm.step->answer, "%lf", &step);
@@ -424,7 +425,7 @@ int main(int argc, char *argv[])
 
 	if ((in_proj_info = G_get_projinfo()) == NULL)
 	    G_fatal_error
-		("Can't get projection info of current location: please set latitude via 'lat' or 'latin' option!");
+		(_("Can't get projection info of current location: please set latitude via 'lat' or 'latin' option!"));
 
 	if ((in_unit_info = G_get_projunits()) == NULL)
 	    G_fatal_error(_("Can't get projection units of current location"));
@@ -484,18 +485,18 @@ int INPUT(void)
 
     }
 
-    if ((mapset = G_find_cell(elevin, "")) == NULL)
-	G_fatal_error("elevin cell file not found");
+    if ((mapset1 = G_find_cell(elevin, "")) == NULL)
+	G_fatal_error(_("elevin cell file <%s> not found"), elevin);
 
-    if ((mapset = G_find_cell(aspin, "")) == NULL)
-	G_fatal_error("aspin cell file not found");
+    if ((mapset2 = G_find_cell(aspin, "")) == NULL)
+	G_fatal_error(_("aspin cell file <%s> not found"), aspin);
 
-    if ((mapset = G_find_cell(slopein, "")) == NULL)
-	G_fatal_error("slopein cell file not found");
+    if ((mapset3 = G_find_cell(slopein, "")) == NULL)
+	G_fatal_error(_("slopein cell file <%s> not found"), slopein);
 
-    fd1 = G_open_cell_old(elevin, mapset);
-    fd2 = G_open_cell_old(aspin, mapset);
-    fd3 = G_open_cell_old(slopein, mapset);
+    fd1 = G_open_cell_old(elevin, mapset1);
+    fd2 = G_open_cell_old(aspin, mapset2);
+    fd3 = G_open_cell_old(slopein, mapset3);
 
     if (linkein != NULL) {
 	cell4 = G_allocate_f_raster_buf();
@@ -503,10 +504,10 @@ int INPUT(void)
 	for (l = 0; l < m; l++)
 	    li[l] = (float *)G_malloc (sizeof(float) * (n));
 
-	if ((mapset = G_find_cell(linkein, "")) == NULL)
-	    G_fatal_error("linkein cell file not found");
+	if ((mapset4 = G_find_cell(linkein, "")) == NULL)
+	    G_fatal_error(_("linkein cell file <%s> not found"), linkein);
 
-	fd4 = G_open_cell_old(linkein, mapset);
+	fd4 = G_open_cell_old(linkein, mapset4);
     }
 
     if (albedo != NULL) {
@@ -515,10 +516,10 @@ int INPUT(void)
 	for (l = 0; l < m; l++)
 	    a[l] = (float *)G_malloc (sizeof(float) * (n));
 
-	if ((mapset = G_find_cell(albedo, "")) == NULL)
-	    G_fatal_error("albedo cell file not found");
+	if ((mapset5 = G_find_cell(albedo, "")) == NULL)
+	    G_fatal_error(_("albedo cell file <%s> not found"), albedo);
 
-	fd5 = G_open_cell_old(albedo, mapset);
+	fd5 = G_open_cell_old(albedo, mapset5);
     }
 
     if (latin != NULL) {
@@ -527,10 +528,10 @@ int INPUT(void)
 	for (l = 0; l < m; l++)
 	    la[l] = (float *)G_malloc (sizeof(float) * (n));
 
-	if ((mapset = G_find_cell(latin, "")) == NULL)
-	    G_fatal_error("latin cell file not found");
+	if ((mapset6 = G_find_cell(latin, "")) == NULL)
+	    G_fatal_error(_("latin cell file <%s> not found"), latin);
 
-	fd6 = G_open_cell_old(latin, mapset);
+	fd6 = G_open_cell_old(latin, mapset6);
     }
 
     if (coefbh != NULL) {
@@ -539,10 +540,10 @@ int INPUT(void)
 	for (l = 0; l < m; l++)
 	    cbhr[l] = (float *)G_malloc (sizeof(float) * (n));
 
-	if ((mapset = G_find_cell(coefbh, "")) == NULL)
-	    G_fatal_error("coefbh cell file not found");
+	if ((mapset7 = G_find_cell(coefbh, "")) == NULL)
+	    G_fatal_error(_("coefbh cell file <%s> not found"), coefbh);
 
-	fr1 = G_open_cell_old(coefbh, mapset);
+	fr1 = G_open_cell_old(coefbh, mapset7);
     }
 
     if (coefdh != NULL) {
@@ -551,10 +552,10 @@ int INPUT(void)
 	for (l = 0; l < m; l++)
 	    cdhr[l] = (float *)G_malloc (sizeof(float) * (n));
 
-	if ((mapset = G_find_cell(coefdh, "")) == NULL)
-	    G_fatal_error("coefdh cell file not found");
+	if ((mapset8 = G_find_cell(coefdh, "")) == NULL)
+	    G_fatal_error(_("coefdh cell file <%s> not found"), coefdh);
 
-	fr2 = G_open_cell_old(coefdh, mapset);
+	fr2 = G_open_cell_old(coefdh, mapset8);
     }
 
 
@@ -725,13 +726,13 @@ int OUTGR(void)
 
 
     if (G_set_window(&cellhd) < 0)
-	exit(3);
+	G_fatal_error ("region error");
 
     if (m != G_window_rows())
-	G_fatal_error("rows changed from %d to %d", m, G_window_rows());
+	G_fatal_error(_("rows changed from %d to %d"), m, G_window_rows());
 
     if (n != G_window_cols())
-	G_fatal_error("cols changed from %d to %d", n, G_window_cols());
+	G_fatal_error(_("cols changed from %d to %d"), n, G_window_cols());
 
 
     for (iarc = 0; iarc < m; iarc++) {
@@ -1431,9 +1432,8 @@ void calculate(void)
 			longitude = xp;
 			latitude = yp;
 
-			if (pj_do_proj(&longitude, &latitude, &iproj, &oproj) <
-			    0) {
-			    G_fatal_error("Error in pj_do_proj");
+			if (pj_do_proj(&longitude, &latitude, &iproj, &oproj) < 0) {
+			    G_fatal_error(_("Error in pj_do_proj"));
 			}
 
 			la_max = AMAX1(la_max, latitude);
