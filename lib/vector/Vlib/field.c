@@ -426,15 +426,15 @@ Vect_read_dblinks ( struct Map_info *Map )
 	db_auto_print_errors(1);
 	
 	if (FID) {
-	    G_message ( _("Using FID column in OGR DB"));
+	    G_debug (3, "Using FID column in OGR DB");
 	    Vect_add_dblink ( dbl, 1, NULL, Map->fInfo.ogr.layer_name, "FID", Map->fInfo.ogr.dsn, "ogr" ) ;
 	} else {
 	     if (OGC_FID) {
-	         G_message ( _("Using ogc_fid column in OGR DB"));
+	         G_debug (3, "Using ogc_fid column in OGR DB");
 	         Vect_add_dblink ( dbl, 1, NULL, Map->fInfo.ogr.layer_name, "ogc_fid", Map->fInfo.ogr.dsn, "ogr" ) ;
 	     } else {
 	         if (OGR_FID) {
-	             G_message ( _("Using ogr_fid column in OGR DB"));
+	             G_debug (3, "Using ogr_fid column in OGR DB");
 	             Vect_add_dblink ( dbl, 1, NULL, Map->fInfo.ogr.layer_name, "ogr_fid", Map->fInfo.ogr.dsn, "ogr" ) ;
 	         }
 	     }
