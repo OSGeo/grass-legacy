@@ -652,7 +652,6 @@ int INPUT(void)
 
     /* needs to be eliminated */
 
-    /*for (i = 0; i < m; ++i) */
     for (i = 0; i < m; i++) {
 	for (j = 0; j < n; j++) {
 	    zmax = AMAX1(zmax, z[i][j]);
@@ -661,7 +660,7 @@ int INPUT(void)
 		    o[i][j] = 90. - o[i][j];
 		else
 		    o[i][j] = 450. - o[i][j];
-		/*   printf("o,z = %d  %d i,j, %d %d \n", o[i][j],z[i][j],i,j); */
+		G_debug (3, "o:%f  z:%f  i:%d  j:%d", o[i][j], z[i][j], i, j);
 
 		if (z[i][j] == UNDEFZ || o[i][j] == UNDEFZ || s[i][j] == UNDEFZ)
 		    z[i][j] = UNDEFZ;
