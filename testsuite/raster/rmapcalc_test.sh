@@ -39,6 +39,7 @@ cleanup()
  g.remove rast=$TMPNAME > /dev/null
  echo "Restoring user region"
  g.region region=$TMPNAME
+ g.remove region=$TMPNAME > /dev/null
  #restore user mask if present:
  if test -f $LOCATION/cell/$USERMASK ; then
   echo "Restoring user MASK"
