@@ -8,6 +8,10 @@
 #   - calculate statistics
 #   - compare with known results
 
+#
+# TODO
+#   - how big EPSILON?
+
 if [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program."
     exit 1
@@ -29,7 +33,8 @@ LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 # some definitions
 PIXEL=3
-EPSILON=1000000000000000000000
+# how big EPSILON?
+EPSILON=1000000000000
 PID=$$
 TMPNAME="`echo ${PID}_tmp_testmap | sed 's+\.+_+g'`"
 
@@ -88,9 +93,9 @@ compare_result()
  # check for difference + 1
  DIFF=`echo $EXPECTED $FOUND $EPSILON | awk '{printf "%f", ($1 - $2) * $3 + 1}'`
  #make absolute value
- DIFF=`echo $DIFF | awk '{if ($i < 0) $i = -$i ; print "%f"}'`
+ DIFF=`echo $DIFF | awk '{printf("%f", sqrt($1 * $1))}'`
  #round to integer
- DIFF=`echo $DIFF | awk '{printf("%8d", int($1+0.5))}'`
+ DIFF=`echo $DIFF | awk '{printf("%20d", int($1+0.5))}'`
 
  # check if difference > 1
  if [ $DIFF -gt 1 ] ; then
