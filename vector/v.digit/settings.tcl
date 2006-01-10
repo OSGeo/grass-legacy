@@ -145,6 +145,8 @@ proc settings {} {
  
     set nb [NoteBook $stt.nb]  
     
+    $nb compute_size
+
     # --- Symbology ---
     set symbf [$nb insert end colors -text [G_msg "Symbology"]]
 
