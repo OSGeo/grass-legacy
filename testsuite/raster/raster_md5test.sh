@@ -44,10 +44,24 @@ PIXEL=3
 PID=$$
 TMPNAME="`echo ${PID}_tmp_testmap | sed 's+\.+_+g'`"
 
+# some functions - keep order here
 cleanup()
 {
  echo "Removing temporary map"
  g.remove rast=$TMPNAME > /dev/null
+}
+
+# check if a MASK is already present:
+MASKTMP=mask.$TMPNAME
+USERMASK=usermask_${MASKTMP}
+if test -f $LOCATION/cell/MASK
+then
+ echo "A user raster mask (MASK) is present. Saving it..."
+ g.rename MASK,$USERMASK > /dev/null
+fi
+
+finalcleanup()
+{
  echo "Restoring user region"
  g.region region=$TMPNAME
  g.remove region=$TMPNAME > /dev/null
@@ -63,11 +77,12 @@ check_exit_status()
 {
  if [ $1 -ne 0 ] ; then
   echo "An error occured."
-  cleanup
+  cleanup ; finalcleanup
   exit 1
  fi
 }
 
+########## test function goes here
 check_md5sum()
 {
  EXPECTED="$1"
@@ -76,26 +91,16 @@ check_md5sum()
  # test for NAN
  if [ "$FOUND" = "nan" ] ; then
   echo "ERROR. $VALUENAME: Expected=$EXPECTED | FOUND=$FOUND"
-  cleanup
+  cleanup ; finalcleanup
   exit 1
  fi
 
  if [ "$EXPECTED" != "$FOUND" ] ; then
   echo "ERROR. The md5sum differs."
-  cleanup
+  cleanup ; finalcleanup
   exit 1
  fi
 }
-
-#check if a MASK is already present:
-MASKTMP=mask.$TMPNAME
-USERMASK=usermask_${MASKTMP}
-if test -f $LOCATION/cell/MASK
-then
- echo "A user raster mask (MASK) is present. Saving it..."
- g.rename MASK,$USERMASK > /dev/null
- check_exit_status $?
-fi
 
 echo "Saving current & setting test region."
 g.region save=$TMPNAME
@@ -133,5 +138,8 @@ echo "##################################"
 
 ###########
 # if we arrive here...
+
+finalcleanup
+
 echo "All tests successful. Congrats."
 exit 0

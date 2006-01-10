@@ -13,7 +13,7 @@ if [ -z "$GISBASE" ] ; then
     exit 1
 fi
 
-#### check if we have sed
+#### check if we have awk
 if [ ! -x "`which awk`" ] ; then
     echo "$PROG: awk required, please install first" 1>&2
     exit 1
@@ -33,10 +33,24 @@ EPSILON=1000000000000000000000
 PID=$$
 TMPNAME="`echo ${PID}_tmp_testmap | sed 's+\.+_+g'`"
 
+# some functions - keep order here
 cleanup()
 {
  echo "Removing temporary map"
  g.remove rast=$TMPNAME > /dev/null
+}
+
+# check if a MASK is already present:
+MASKTMP=mask.$TMPNAME
+USERMASK=usermask_${MASKTMP}
+if test -f $LOCATION/cell/MASK
+then
+ echo "A user raster mask (MASK) is present. Saving it..."
+ g.rename MASK,$USERMASK > /dev/null
+fi
+
+finalcleanup()
+{
  echo "Restoring user region"
  g.region region=$TMPNAME
  g.remove region=$TMPNAME > /dev/null
@@ -52,11 +66,12 @@ check_exit_status()
 {
  if [ $1 -ne 0 ] ; then
   echo "An error occured."
-  cleanup
+  cleanup ; finalcleanup
   exit 1
  fi
 }
 
+########## test function goes here
 compare_result()
 {
  EXPECTED=$1
@@ -66,7 +81,7 @@ compare_result()
  # test for NAN
  if [ "$FOUND" = "nan" ] ; then
   echo "ERROR. $VALUENAME: Expected=$EXPECTED | FOUND=$FOUND"
-  cleanup
+  cleanup ; finalcleanup
   exit 1
  fi
 
@@ -80,7 +95,7 @@ compare_result()
  # check if difference > 1
  if [ $DIFF -gt 1 ] ; then
   echo "ERROR. $VALUENAME: Expected=$EXPECTED | FOUND=$FOUND"
-  cleanup
+  cleanup ; finalcleanup
   exit 1
  fi
 }
@@ -149,6 +164,8 @@ echo "##################################"
 
 ###########
 # if we arrive here...
+
+finalcleanup
 echo "All tests successful. Congrats."
 exit 0
 
