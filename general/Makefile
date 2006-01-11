@@ -11,6 +11,7 @@ SUBDIRS = \
 	g.mapsets \
 	g.parser \
 	g.proj \
+	g.pnmcomp \
 	g.region \
 	g.setproj \
 	g.tempfile \
