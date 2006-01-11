@@ -34,7 +34,8 @@ LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 # some definitions
 PIXEL=3
 # how big EPSILON?
-EPSILON=1000000000000
+#    epsilon for doubles in IEEE is 2.220446e-16
+EPSILON=22204460000000000
 PID=$$
 TMPNAME="`echo ${PID}_tmp_testmap | sed 's+\.+_+g'`"
 
@@ -91,14 +92,14 @@ compare_result()
  fi
 
  # check for difference + 1
- DIFF=`echo $EXPECTED $FOUND $EPSILON | awk '{printf "%f", ($1 - $2) * $3 + 1}'`
+ DIFF=`echo $EXPECTED $FOUND $EPSILON | awk '{printf "%16f", ($1 - $2) * $3 }'`
  #make absolute value
  DIFF=`echo $DIFF | awk '{printf("%f", sqrt($1 * $1))}'`
  #round to integer
  DIFF=`echo $DIFF | awk '{printf("%20d", int($1+0.5))}'`
 
- # check if difference > 1
- if [ $DIFF -gt 1 ] ; then
+ # check if difference > 0
+ if [ $DIFF -gt 0 ] ; then
   echo "ERROR. $VALUENAME: Expected=$EXPECTED | FOUND=$FOUND"
   cleanup ; finalcleanup
   exit 1
