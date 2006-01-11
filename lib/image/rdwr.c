@@ -4,11 +4,12 @@
  *				Paul Haeberli - 1984
  *
  */
-#include	<stdio.h>
-#include	<unistd.h>
-#include	<sys/types.h>
-#include	"image.h"
-#include	"local_proto.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include "config.h"
+#include "image.h"
+#include "local_proto.h"
 
 
 long img_seek(IMAGE *image, unsigned int y, unsigned int z)

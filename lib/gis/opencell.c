@@ -103,6 +103,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include "config.h"
 #include "G.h"
 #include "gis.h"
 #include "glocale.h"
