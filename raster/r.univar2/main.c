@@ -184,8 +184,10 @@ int main(int argc, char *argv[]) {
     /* all these calculations get promoted to doubles, so any DIV0 becomes nan */
     mean = sum/n;
     variance = (sumsq - sum*sum/n)/n;
+    if (variance < GRASS_EPSILON )
+        variance=0.0;
     stdev = sqrt(variance);
-    var_coef = (stdev/mean)*100;  /* perhaps stdev/fabs(mean) ? */
+    var_coef = (stdev/mean)*100.;  /* perhaps stdev/fabs(mean) ? */
 
 
     if( ! (quiet->answer || shell_style->answer) ) {

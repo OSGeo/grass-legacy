@@ -84,6 +84,9 @@ static const char *GRASS_copyright __attribute__((unused))
 #undef M_PI_4
 #define M_PI_4  0.78539816339744830962 /* pi/4 */
 
+/* epsilon (IEEE: 2.220446e-16) */
+#define GRASS_EPSILON 1.0e-15
+
 /* Location of envariment variables */
 #define G_VAR_GISRC    0
 #define G_VAR_MAPSET   1
