@@ -88,7 +88,7 @@ int main (int argc, char *argv[])
     pointsfile->required	= NO;
     pointsfile->multiple	= NO;
     pointsfile->description	= "file holding transform coordinates";
-    pointsfile->gisprompt       = "old_file,,points";
+    pointsfile->gisprompt       = "file,file,file";
 
     xshift = G_define_option();
     xshift->key		= "xshift";
