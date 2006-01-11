@@ -113,10 +113,13 @@ int main (int argc, char **argv)
     if (G_parser (argc, argv))
         exit (EXIT_FAILURE);
 
+    /* The check must allow '.' in the name (schema.table) */
+    /*
     if (dbtable->answer) {
        if ( db_legal_tablename(dbtable->answer) == DB_FAILED )
             G_fatal_error ( _("Table name '%s' is not valid."), dbtable->answer );
     }
+    */
 
     /* set input vector file name and mapset */
     input = inopt->answer;
