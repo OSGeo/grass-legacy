@@ -115,7 +115,7 @@ r.mapcalc "$TMPNAME=1"
 check_exit_status $?
 
 echo "MD5 checksum on output of INT/CELL test."
-MD5="`r.out.ascii $TMPNAME | md5sum | cut -d' ' -f1`"
+MD5="`r.out.ascii $TMPNAME dp=15 | md5sum | cut -d' ' -f1`"
 check_md5sum "549e7dabe70df893803690571d2e1503" "$MD5"
 
 cleanup
@@ -129,7 +129,7 @@ r.mapcalc "$TMPNAME=$VALUE"
 check_exit_status $?
 
 echo "MD5 checksum on output of FLOAT/FCELL test."
-MD5="`r.out.ascii $TMPNAME | md5sum | cut -d' ' -f1`"
+MD5="`r.out.ascii $TMPNAME dp=15 | md5sum | cut -d' ' -f1`"
 check_md5sum "9665565e7185db1cd129b34adcb02c02" "$MD5"
 
 cleanup
