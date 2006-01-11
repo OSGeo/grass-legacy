@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
+#include "config.h"
+#include "gis.h"
 #include "segment.h"
 
 int segment_seek (SEGMENT *SEG,int n,int index)

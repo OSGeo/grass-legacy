@@ -1,6 +1,3 @@
-/* 
- * $Id$ */
-
 /* Line thinning program */
 /*   Input/output and file support functions */
 
@@ -35,6 +32,7 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include <fcntl.h>
+#include "config.h"
 #include "gis.h"
 #include "rowio.h"
 
