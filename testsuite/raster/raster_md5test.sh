@@ -130,7 +130,7 @@ check_exit_status $?
 
 echo "MD5 checksum on output of FLOAT/FCELL test."
 MD5="`r.out.ascii $TMPNAME dp=15 | md5sum | cut -d' ' -f1`"
-check_md5sum "9665565e7185db1cd129b34adcb02c02" "$MD5"
+check_md5sum "379f3d880b6d509051af6b4ccf470762" "$MD5"
 
 cleanup
 echo "FLOAT/FCELL md5sum test successful"
