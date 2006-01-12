@@ -686,15 +686,22 @@ else
     fi
   fi
 
-  ac_save_libs="$LIBS"
-  LIBS="$GDAL_LIBS $LIBS"
-  AC_CHECK_FUNC(GDALOpen,[],[
-  LIBS="$GDAL_DEP_LIBS $LIBS"
-  AC_CHECK_FUNC(GDALOpen,[GDAL_LIBS="$GDAL_LIBS $GDAL_DEP_LIBS"],[
-      AC_MSG_ERROR([*** Unable to locate GDAL library.])
-  ])
-  ])
-  LIBS=$ac_save_libs
+  # GDAL test fails with MinGW cross compiler 
+  # (does not compile with C compiler which is used by autoconf
+  #  C++ compiler is necessary)
+  if test "$MINGW" != "yes" ; then
+    ac_save_libs="$LIBS"
+    LIBS="$GDAL_LIBS $LIBS"
+    AC_CHECK_FUNC(GDALOpen,[],[
+    LIBS="$GDAL_DEP_LIBS $LIBS"
+    AC_CHECK_FUNC(GDALOpen,[GDAL_LIBS="$GDAL_LIBS $GDAL_DEP_LIBS"],[
+        AC_MSG_ERROR([*** Unable to locate GDAL library.])
+    ])
+    ])
+    LIBS=$ac_save_libs
+  else
+    GDAL_LIBS="$GDAL_LIBS $GDAL_DEP_LIBS"
+  fi
 
   AC_SUBST(GDAL_LIBS)
   AC_SUBST(GDAL_CFLAGS)
