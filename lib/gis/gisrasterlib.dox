@@ -6,6 +6,11 @@
 
 \section gisrastintro GRASS Raster File Processing
 
+<P>
+<B>TODO: this sections needs to be cleaned up. The upper GRASS 4.x
+ and the lower GRASS 5.x/6.x parts need to me merged.
+ </B>
+<P>
 Raster files are the heart and soul of GRASS.  Because of this, a
 suite of routines which process raster file data has been
 provided. The processing of raster files consists of determining which
@@ -1411,7 +1416,7 @@ int G_set_raster_value_d(void *p, DCELL val, RASTER_MAP_TYPE
   assigning DCELL values to raster cells of any type.
 
 <P>
-CELLG_get_raster_value_c(void *p, RASTER_MAP_TYPE
+CELL G_get_raster_value_c(void *p, RASTER_MAP_TYPE
   data_type) Retrieves the value of type data_type from pointer p,
   converts it to CELL type and returns the result. If null value is stored in
   p, returns CELL null value. Used for retreiving CELL values from raster cells
@@ -1419,14 +1424,14 @@ CELLG_get_raster_value_c(void *p, RASTER_MAP_TYPE
   only type conversion.
 
 <P>
-FCELLG_get_raster_value_f(void *p, RASTER_MAP_TYPE
+FCELL G_get_raster_value_f(void *p, RASTER_MAP_TYPE
   data_type) Retrieves the value of type data_type from pointer p,
   converts it to FCELL type and returns the result. If null value is stored in
   p, returns FCELL null value. Used for retreiving FCELL values from raster
   cells of any type.
 
 <P>
-DCELLG_get_raster_value_d(void *p, RASTER_MAP_TYPE
+DCELL G_get_raster_value_d(void *p, RASTER_MAP_TYPE
   data_type) Retrieves the value of type data_type from pointer p,
   converts it to DCELL type and returns the result. If null value is stored in
   p, returns DCELL null value. Used for retreiving DCELL values from raster
@@ -2262,7 +2267,7 @@ The order of the rules returned by increasing <EM>n</EM> is the order in which
   used.
 
 <P>
-CELLG_quant_get_cell_value(struct Quant *q, DCELL value) 
+CELL G_quant_get_cell_value(struct Quant *q, DCELL value) 
   Returns a CELL category for the floating-point <EM>value</EM> based on the
   quantization rules in <EM>q</EM>. The first rule found that applies is used.
   The rules are searched in the reverse order they are added to <EM>q</EM>.  If no
