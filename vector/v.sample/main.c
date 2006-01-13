@@ -264,7 +264,7 @@ int main  (int argc, char **argv)
       switch (method)
       {
       case BILINEAR:
-        predicted = scale * bilinear (fdrast, &window, NULL, Points->y[0], Points->x[0], 0);
+        predicted = scale * G_get_raster_sample_bilinear (fdrast, &window, NULL, Points->y[0], Points->x[0], 0);
         break;
       case CUBIC:
         predicted = scale * cubic (fdrast, &window, NULL, Points->y[0], Points->x[0], 0);

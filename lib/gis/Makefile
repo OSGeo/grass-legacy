@@ -19,6 +19,7 @@ LIB_OBJS = \
 	ask_vctrs.o\
 	asprintf.o\
 	auto_mask.o\
+	bilinear.o\
 	bres_line.o\
 	cats.o\
 	cell_stats.o\

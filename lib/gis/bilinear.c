@@ -4,15 +4,21 @@
  *
  * This program is free software under the GPL (>=v2)
  * Read the file GPL.TXT coming with GRASS for details.
+ *
+ * 1/2006: moved to libgis from v.sample for clone removal
+ ***************************************************
+ * TODO: need RASTER_MAP_TYPE data_type?
  */
 
+#include <string.h>
 #include <unistd.h>
 #include <math.h>
 #include "gis.h"
-#include "methods.h"
 
-double bilinear ( int fd, struct Cell_head *window, struct Categories *cats,
-	          double north, double east, int usedesc)
+double scancatlabel (char *);
+
+double G_get_raster_sample_bilinear (int fd, struct Cell_head *window, struct Categories *cats,
+                  double north, double east, int usedesc)
 {
   char *buf;
   int i, row, col;
@@ -133,3 +139,20 @@ double bilinear ( int fd, struct Cell_head *window, struct Categories *cats,
   return (north * tmp2 + (window->ns_res - north) * tmp1)
          /(window->ns_res);
 }
+
+
+double scancatlabel (char *str)
+{
+  double val;
+
+  if (strcmp(str,"no data") != 0)
+    sscanf(str, "%lf", &val);
+  else
+  {
+    G_warning("\"no data\" label found; setting to zero");
+    val=0.0;
+  }
+
+  return val;
+}
+
