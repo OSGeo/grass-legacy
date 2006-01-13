@@ -17,6 +17,21 @@
 
 double scancatlabel (char *);
 
+/*!
+ *  \function double G_get_raster_sample_bilinear (int fd, struct Cell_head *window, 
+ *                   struct Categories *cats, double north, double east, int usedesc)
+ *  \brief extract a cell value from raster map at given position with
+ *         bilinear sampling of 3x3
+ *
+ *  \param fd file descriptor
+ *  \param window 
+ *  \param cats categories
+ *  \param north north position
+ *  \param east east position
+ *  \param usedesc flag to scan category label
+ *  \return cell value at given position
+ */
+
 double G_get_raster_sample_bilinear (int fd, struct Cell_head *window, struct Categories *cats,
                   double north, double east, int usedesc)
 {
