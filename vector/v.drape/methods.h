@@ -12,6 +12,5 @@
 #define CUBIC 3
 
 double nearest (int fd, struct Cell_head *window, struct Categories *cats, double north, double east, int usedesc);
-double bilinear (int fd, struct Cell_head *window, struct Categories *cats, double north, double east, int usedesc);
 double cubic (int fd, struct Cell_head *window, struct Categories *cats, double north, double east, int usedesc);
 double scancatlabel (char *);

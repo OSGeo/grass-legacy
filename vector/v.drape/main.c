@@ -29,7 +29,7 @@
 	\li methods.h
 	\li utils.c
 	\li nearest.c
-	\li bilinear.c
+	\li bilinear.c -> implemented as G_get_raster_sample_bilinear()
 	\li cubic.c
  
 
@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
 		switch (method) {
 		case BILINEAR:
 		    estimated_elevation =
-			scale * bilinear(fdrast, &window, NULL, Points->y[0],
+			scale * G_get_raster_sample_bilinear(fdrast, &window, NULL, Points->y[0],
 					 Points->x[0], 0);
 		    break;
 		case CUBIC:
@@ -214,7 +214,7 @@ int main(int argc, char *argv[])
 		    switch (method) {
 		    case BILINEAR:
 			estimated_elevation =
-			    scale * bilinear(fdrast, &window, NULL,
+			    scale * G_get_raster_sample_bilinear(fdrast, &window, NULL,
 					     Points->y[j], Points->x[j], 0);
 			break;
 		    case CUBIC:
@@ -250,7 +250,7 @@ int main(int argc, char *argv[])
 		    switch (method) {
 		    case BILINEAR:
 			estimated_elevation =
-			    scale * bilinear(fdrast, &window, NULL,
+			    scale * G_get_raster_sample_bilinear(fdrast, &window, NULL,
 					     Points->y[j], Points->x[j], 0);
 			break;
 		    case CUBIC:
