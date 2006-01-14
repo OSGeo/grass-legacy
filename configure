@@ -13759,53 +13759,53 @@ echo "  NVIZ:                       `if test -n "${USE_TOGL}" ; then echo yes ; 
 echo ""
 
 
-echo "  X11 support:                `if test -n "${USE_X11}" ; then echo yes ; else echo no ; fi`"
-
-echo "  JPEG support:               `if test -n "${USE_JPEG}" ; then echo yes ; else echo no ; fi`"
-
-echo "  TIFF support:               `if test -n "${USE_TIFF}" ; then echo yes ; else echo no ; fi`"
-
-echo "  PNG support:                `if test -n "${USE_PNG}" ; then echo yes ; else echo no ; fi`"
-
-echo "  Tcl/Tk support:             `if test -n "${USE_TCLTK}" ; then echo yes ; else echo no ; fi`"
-
-echo "  PostgreSQL support:         `if test -n "${USE_POSTGRES}" ; then echo yes ; else echo no ; fi`"
-
-echo "  MySQL support:              `if test -n "${USE_MYSQL}" ; then echo yes ; else echo no ; fi`"
-
-echo "  SQLite support:             `if test -n "${USE_SQLITE}" ; then echo yes ; else echo no ; fi`"
-
-echo "  FFMPEG support:             `if test -n "${USE_FFMPEG}" ; then echo yes ; else echo no ; fi`"
-
-echo "  OpenGL(R) support:          `if test -n "${USE_OPENGL}" ; then echo yes ; else echo no ; fi`"
-
-echo "  ODBC support:               `if test -n "${USE_ODBC}" ; then echo yes ; else echo no ; fi`"
-
-echo "  FFTW support:               `if test -n "${USE_FFTW}" ; then echo yes ; else echo no ; fi`"
-
 echo "  BLAS support:               `if test -n "${USE_BLAS}" ; then echo yes ; else echo no ; fi`"
-
-echo "  LAPACK support:             `if test -n "${USE_LAPACK}" ; then echo yes ; else echo no ; fi`"
-
-echo "  Motif support:              `if test -n "${USE_MOTIF}" ; then echo yes ; else echo no ; fi`"
-
-echo "  FreeType support:           `if test -n "${USE_FREETYPE}" ; then echo yes ; else echo no ; fi`"
-
-echo "  GLw support:                `if test -n "${USE_GLW}" ; then echo yes ; else echo no ; fi`"
-
-echo "  NLS support:                `if test -n "${USE_NLS}" ; then echo yes ; else echo no ; fi`"
-
-echo "  Readline support:           `if test -n "${USE_READLINE}" ; then echo yes ; else echo no ; fi`"
 
 echo "  C++ support:                `if test -n "${USE_CXX}" ; then echo yes ; else echo no ; fi`"
 
-echo "  openDWG support:            `if test -n "${USE_OPENDWG}" ; then echo yes ; else echo no ; fi`"
+echo "  DWG support:                `if test -n "${USE_OPENDWG}" ; then echo yes ; else echo no ; fi`"
+
+echo "  FFMPEG support:             `if test -n "${USE_FFMPEG}" ; then echo yes ; else echo no ; fi`"
+
+echo "  FFTW support:               `if test -n "${USE_FFTW}" ; then echo yes ; else echo no ; fi`"
+
+echo "  FreeType support:           `if test -n "${USE_FREETYPE}" ; then echo yes ; else echo no ; fi`"
 
 echo "  GDAL support:               `if test -n "${USE_GDAL}" ; then echo yes ; else echo no ; fi`"
 
-echo "  OGR support:                `if test -n "${USE_OGR}" ; then echo yes ; else echo no ; fi`"
+echo "  GLw support:                `if test -n "${USE_GLW}" ; then echo yes ; else echo no ; fi`"
+
+echo "  JPEG support:               `if test -n "${USE_JPEG}" ; then echo yes ; else echo no ; fi`"
+
+echo "  LAPACK support:             `if test -n "${USE_LAPACK}" ; then echo yes ; else echo no ; fi`"
 
 echo "  Large File Support (LFS):   `if test -n "${USE_LARGEFILES}" ; then echo yes ; else echo no ; fi`"
+
+echo "  Motif support:              `if test -n "${USE_MOTIF}" ; then echo yes ; else echo no ; fi`"
+
+echo "  MySQL support:              `if test -n "${USE_MYSQL}" ; then echo yes ; else echo no ; fi`"
+
+echo "  NLS support:                `if test -n "${USE_NLS}" ; then echo yes ; else echo no ; fi`"
+
+echo "  ODBC support:               `if test -n "${USE_ODBC}" ; then echo yes ; else echo no ; fi`"
+
+echo "  OGR support:                `if test -n "${USE_OGR}" ; then echo yes ; else echo no ; fi`"
+
+echo "  OpenGL(R) support:          `if test -n "${USE_OPENGL}" ; then echo yes ; else echo no ; fi`"
+
+echo "  PNG support:                `if test -n "${USE_PNG}" ; then echo yes ; else echo no ; fi`"
+
+echo "  PostgreSQL support:         `if test -n "${USE_POSTGRES}" ; then echo yes ; else echo no ; fi`"
+
+echo "  Readline support:           `if test -n "${USE_READLINE}" ; then echo yes ; else echo no ; fi`"
+
+echo "  SQLite support:             `if test -n "${USE_SQLITE}" ; then echo yes ; else echo no ; fi`"
+
+echo "  Tcl/Tk support:             `if test -n "${USE_TCLTK}" ; then echo yes ; else echo no ; fi`"
+
+echo "  TIFF support:               `if test -n "${USE_TIFF}" ; then echo yes ; else echo no ; fi`"
+
+echo "  X11 support:                `if test -n "${USE_X11}" ; then echo yes ; else echo no ; fi`"
 
 echo ""
 
