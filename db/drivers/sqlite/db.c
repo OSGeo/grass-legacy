@@ -18,8 +18,8 @@
 #include "globals.h"
 #include "proto.h"
 
-int db__driver_open_database(handle)
-     dbHandle *handle;
+int db__driver_open_database (dbHandle *handle)
+
 {
     char *name, name2[2000];
     

@@ -18,9 +18,8 @@
 #include "proto.h"
 #include "glocale.h"
 
-int db__driver_describe_table(table_name, table)
-     dbString *table_name;
-     dbTable **table;
+int db__driver_describe_table (dbString *table_name, dbTable **table)
+
 {
     dbString sql;
     sqlite3_stmt *statement;

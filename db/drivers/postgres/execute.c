@@ -4,8 +4,8 @@
 #include "globals.h"
 #include "proto.h"
 
-int db__driver_execute_immediate(sql)
-     dbString *sql;
+int db__driver_execute_immediate (dbString *sql)
+
 {
     PGresult *res;
     char     *str;

@@ -5,8 +5,8 @@
 #include "globals.h"
 #include "proto.h"
 
-int db__driver_open_database(handle)
-     dbHandle *handle;
+int db__driver_open_database (dbHandle *handle)
+
 {
     char *name, *schema, *user, *password, buf[500];
     dbConnection connection;

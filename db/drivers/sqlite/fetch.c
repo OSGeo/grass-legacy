@@ -19,10 +19,8 @@
 #include "glocale.h"
 
 int
-db__driver_fetch(cn, position, more)
-    dbCursor *cn;
-    int position;
-    int *more;
+db__driver_fetch (dbCursor *cn, int position, int *more)
+
 {
     cursor     *c;
     dbToken    token;    
@@ -140,8 +138,8 @@ db__driver_fetch(cn, position, more)
 }
 
 int
-db__driver_get_num_rows (cn )
-            dbCursor *cn;
+db__driver_get_num_rows  (dbCursor *cn)
+
 {
     cursor     *c;
     dbToken    token;

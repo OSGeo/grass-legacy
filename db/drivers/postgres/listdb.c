@@ -2,11 +2,8 @@
 #include "globals.h"
 #include "proto.h"
 
-int db__driver_list_databases(dbpath, npaths, dblist, dbcount)
-     dbString *dbpath;
-     int npaths;
-     dbHandle **dblist;
-     int *dbcount;
+int db__driver_list_databases (dbString *dbpath, int npaths, dbHandle **dblist, int *dbcount)
+
 {
     int i;
     PGCONN pgconn;
