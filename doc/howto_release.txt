@@ -107,6 +107,7 @@ Note: This text contains *some* rules only applicable to the
    Geowanking:         <geowanking@lists.burri.to>
 
    news:comp.infosystems.gis
+   http://slashgeo.org/submit.pl
    http://spatialnews.geocomm.com/submitnews.html (not free any more)
    http://freshmeat.net/projects/grass/?highlight=GRASS
    http://linuxtoday.com/contribute.php3
