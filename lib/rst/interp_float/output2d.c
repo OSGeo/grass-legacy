@@ -418,6 +418,7 @@ int IL_output_2d (
 	sprintf (hist1.datsrc_1, "site file %s", input);
       hist1.edlinecnt = 1;
 
+      G_command_history(&hist1);
       G_write_history (params->slope, &hist1);
       if(params->ts)
 	  G_write_raster_timestamp(params->slope,params->ts);
@@ -494,6 +495,7 @@ int IL_output_2d (
 	sprintf (hist2.datsrc_1, "site file %s", input);
       hist2.edlinecnt = 1;
 
+      G_command_history(&hist2);
       G_write_history (params->aspect, &hist2);
       if(params->ts)
 	  G_write_raster_timestamp(params->aspect,params->ts);
@@ -560,6 +562,7 @@ int IL_output_2d (
 	  sprintf (hist3.datsrc_1, "site file %s", input);
 	hist3.edlinecnt = 1;
 
+	G_command_history(&hist3);
 	G_write_history (params->pcurv, &hist3);
         if(params->ts)
 	    G_write_raster_timestamp(params->pcurv,params->ts);
@@ -587,6 +590,7 @@ int IL_output_2d (
 	  sprintf (hist4.datsrc_1, "site file %s", input);
 	hist4.edlinecnt = 1;
 
+	G_command_history(&hist4);
 	G_write_history (params->tcurv, &hist4);
         if(params->ts)
 	    G_write_raster_timestamp(params->tcurv,params->ts);
@@ -614,6 +618,7 @@ int IL_output_2d (
 	  sprintf (hist5.datsrc_1, "site file %s", input);
 	hist5.edlinecnt = 1;
 
+	G_command_history(&hist5);
 	G_write_history (params->mcurv, &hist5);
         if(params->ts)
 	    G_write_raster_timestamp(params->mcurv,params->ts);
@@ -677,14 +682,18 @@ int IL_output_2d (
     sprintf (hist.edhist[4], "zmin_int=%f, zmax_int=%f", zminac, zmaxac);
 
     if((params->theta) && (params->scalex))
+    {
     sprintf (hist.edhist[5], "theta=%f, scalex=%f", params->theta, params->scalex);
+    hist.edlinecnt = 6;
+    } else
+	    hist.edlinecnt = 5;
 
     if (vect)
       sprintf (hist.datsrc_1, "vector file %s", input);
     else
       sprintf (hist.datsrc_1, "site file %s", input);
 
-    hist.edlinecnt = 6;
+    G_command_history(&hist);
     G_write_history (params->elev, &hist);
     if(params->ts)
 	G_write_raster_timestamp(params->elev,params->ts);
