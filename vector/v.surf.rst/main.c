@@ -513,8 +513,8 @@ int main(int argc, char *argv[])
     open_check = Vect_open_old(&Map, input, mapset);
     if (open_check < 1)
 	G_fatal_error(_("Could not open vector file <%s>"), input);
-    if (open_check < 2)
-	G_fatal_error(_("You first need to run v.build on vector file <%s>"), input);
+/*    if (open_check < 2)
+	G_fatal_error(_("You first need to run v.build on vector file <%s>"), input);*/
 
     /* we can't read the input file's timestamp as they don't exist in   */
     /*   the new vector format. Even so, a TimeStamp structure is needed */
