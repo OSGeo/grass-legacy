@@ -51,7 +51,7 @@ int IL_vector_input_data_2d (
 {
   double  dmax2;	/* max distance between points squared*/
   double c1, c2, c3, c4;
-  int i, line, k = 0, nlines, nnodes;
+  int i, line, k = 0, nnodes;
   double ns_res, ew_res;
   int npoint, OUTRANGE;
   int totsegm;
@@ -69,7 +69,7 @@ int IL_vector_input_data_2d (
   OUTRANGE = 0;
   npoint = 0;
 
-  G_debug(2, "IL_vector_input_data_2d(): field = %d, zcol = %s, scol = %s", field, zcol, scol);
+ G_debug(2, "IL_vector_input_data_2d(): field = %d, zcol = %s, scol = %s", field, zcol, scol);
   ns_res = (data->ymax - data->y_orig) / data->n_rows;
   ew_res = (data->xmax - data->x_orig) / data->n_cols;
   dmax2=*dmax * *dmax;
@@ -82,7 +82,6 @@ int IL_vector_input_data_2d (
 
   if ( field > 0 && zcol != NULL ) { /* open db driver */
     fprintf (stdout, "Loading data from attribute table ...\n");
-    
     Fi = Vect_get_field( Map, field);
     if ( Fi == NULL )
 	G_fatal_error(_("Cannot get layer info"));   
@@ -124,15 +123,15 @@ int IL_vector_input_data_2d (
   /* Lines without nodes */
   fprintf (stderr, "Reading lines from vector map ... ");
   sm = 0;
-  nlines = Vect_get_num_lines (Map);
-  for ( line = 1; line < nlines; line++ ) { 
-      G_debug ( 5, "  line %d", line );
-      G_percent ( line, nlines-1, 1 );
-      ltype = Vect_read_line (Map, Points, Cats, line);
-      if ( ! (ltype & ( GV_LINE | GV_BOUNDARY ) ) ) continue;
-
+  line=1;
+  while ( (ltype=Vect_read_next_line(Map, Points, Cats)) != -2 ) { 
+      
+	if ( ! (ltype & ( GV_POINT | GV_LINE | GV_BOUNDARY ) ) ) continue;
+      
       if ( field > 0 ) { /* use cat or attribute */
         Vect_cat_get( Cats, field, &cat);
+
+    /*    line++;*/
         if ( zcol == NULL  ){ /* use categories */
 	    z = (double) cat;
 	} else { /* read att from db */
@@ -162,13 +161,24 @@ int IL_vector_input_data_2d (
             G_debug ( 5, "  z = %f sm = %f", z, sm );
 	}
       }
-
-      /* Insert all points except nodes (end points) */
-      for ( i = 1; i < Points->n_points - 1; i++ ) { 
+	
+      if  ( Vect_level(Map) == 1) {
+      /* Insert all points including nodes (end points) */
+      for ( i = 0; i < Points->n_points; i++ ) { 
         if ( field == 0 ) z = Points->z[i];
 	process_point ( Points->x[i], Points->y[i], z, sm, info, params->zmult, xmin,
 	                xmax, ymin, ymax, zmin, zmax, &npoint, &OUTRANGE, &k);
 
+      }
+      }
+      else {
+	/* Insert all points except nodes (end points) */
+	for ( i = 1; i < Points->n_points - 1; i++ ) {
+          if ( field == 0 ) z = Points->z[i];
+          process_point ( Points->x[i], Points->y[i], z, sm, info, params->zmult, xmin,
+	                  xmax, ymin, ymax, zmin, zmax, &npoint, &OUTRANGE, &k);
+
+        }
       }
 
       /* Check all segments */
@@ -187,8 +197,8 @@ int IL_vector_input_data_2d (
 	      xt = x1 - j1 * ((x1 - xprev) / times);
 	      yt = y1 - j1 * ((y1 - yprev) / times);
               if ( field == 0 ) z = z1 - j1 * ((z1 - zprev) / times);
-	      
-	      process_point (xt, yt, z, sm, info, params->zmult, 
+
+	      process_point (xt, yt, z, sm, info, params->zmult,
 		             xmin, xmax, ymin, ymax, zmin, zmax, &npoint, &OUTRANGE, &k);
 	    }
 	  }
@@ -198,7 +208,7 @@ int IL_vector_input_data_2d (
       }
   }
 
-  /* Process all nodes */
+    /* Process all nodes */
   fprintf (stderr, "Reading nodes from vector map ... ");
   nnodes = Vect_get_num_nodes (Map);
   for (k1 = 1; k1 <= nnodes; k1++) {
@@ -209,42 +219,42 @@ int IL_vector_input_data_2d (
     /* TODO: check more lines ? */
     if ( field > 0 ) {
         line = abs ( Vect_get_node_line ( Map, k1, 0 ) );
-	ltype = Vect_read_line ( Map, NULL, Cats, line );
+        ltype = Vect_read_line ( Map, NULL, Cats, line );
         Vect_cat_get( Cats, field, &cat);
         if ( zcol == NULL  ){ /* use categories */
-	    if ( cat < 0 ) continue;
-	    z = (double) cat;
-	} else { /* read att from db */
-	    int ret, intval;
-	    if ( cat == 0 ) continue;
+            if ( cat < 0 ) continue;
+            z = (double) cat;
+        } else { /* read att from db */
+            int ret, intval;
+            if ( cat == 0 ) continue;
 
-	    if ( zctype == DB_C_TYPE_INT ) {
-		ret = db_CatValArray_get_value_int ( &zarray, cat, &intval );
-		z = intval;
-	    } else { /* DB_C_TYPE_DOUBLE */
-		ret = db_CatValArray_get_value_double ( &zarray, cat, &z );
-	    }
+            if ( zctype == DB_C_TYPE_INT ) {
+                ret = db_CatValArray_get_value_int ( &zarray, cat, &intval );
+                z = intval;
+            } else { /* DB_C_TYPE_DOUBLE */
+                ret = db_CatValArray_get_value_double ( &zarray, cat, &z );
+            }
 
-	    if ( ret != DB_OK ) {
-		G_warning(_("Database record for cat %d not found"), cat);
-		continue;
-	    }
-		
+            if ( ret != DB_OK ) {
+                G_warning(_("Database record for cat %d not found"), cat);
+                continue;
+            }
+
             if ( scol != NULL ) {
-		if ( sctype == DB_C_TYPE_INT ) {
-		    ret = db_CatValArray_get_value_int ( &sarray, cat, &intval );
-		    sm = intval;
-		} else { /* DB_C_TYPE_DOUBLE */
-		    ret = db_CatValArray_get_value_double ( &sarray, cat, &sm );
-		}
-		if(sm < 0.0) G_fatal_error("Negative value of smoothing detected: sm must be >= 0");
-	    }
+                if ( sctype == DB_C_TYPE_INT ) {
+                    ret = db_CatValArray_get_value_int ( &sarray, cat, &intval );
+                    sm = intval;
+                } else { /* DB_C_TYPE_DOUBLE */
+                    ret = db_CatValArray_get_value_double ( &sarray, cat, &sm );
+                }
+                if(sm < 0.0) G_fatal_error("Negative value of smoothing detected: sm must be >= 0");
+            }
             G_debug ( 5, "  z = %f sm = %f", z, sm );
-	}
+        }
     }
 
     process_point (x1, y1, z, sm, info, params->zmult, xmin, xmax, ymin, ymax, zmin, zmax, 
-	           &npoint, &OUTRANGE, &k);
+                   &npoint, &OUTRANGE, &k);
   }
 
   if ( field > 0 && zcol != NULL )
