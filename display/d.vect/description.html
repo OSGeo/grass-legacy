@@ -10,12 +10,11 @@ There are a large variety of optional parameters which allow the user to
 specify vector type, colors, data fields, SQL queries, label size and 
 justification, etc.
 <P>
-Vector area fill-colors may be specified in an attribute table column
-named 'GRASSRGB' (which is a <tt>varchar</tt> column containing <tt>RRR:GGG:BBB</tt> values).
-The <em>-a</em> flag is then used to fill areas based upon the color value
-associated with each category number.
+Colors may be specified in an attribute table column
+named 'GRASSRGB' (which is a <tt>varchar</tt> column containing <tt>RRR:GGG:BBB</tt> values),
+see the flag <em>-a</em>.
 <P>
-A table for a vector area map might look like this:
+A table for a vector map might look like this:
 
 <PRE>
   echo "select * from testisola" | db.select
@@ -39,7 +38,7 @@ To add/change a color, the SQL <em>update</em> function is used:
 </PRE>
 <P>
 A much simpler method of color coding is by using the <em>-c</em> flag which 
-fills areas of like category number with a random color.
+displays vector elements of like category number with a random color.
 <P>
 This module can use FreeType/TrueType fonts if they have already been selected with
 <em>d.font.freetype</em>.
