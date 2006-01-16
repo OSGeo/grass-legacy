@@ -1156,7 +1156,7 @@ static void G_usage_html (void)
 		fprintf(stdout, "<DL>\n");
 		while(flag != NULL)
 		{
-			fprintf (stdout, "<DT><b>-%c</b>\n", flag->key);
+			fprintf (stdout, "<DT><b>-%c</b></DT>\n", flag->key);
 
 		        if ( flag->label ) {
 				fprintf(stdout, "<DD>");
@@ -1207,7 +1207,7 @@ static void G_usage_html (void)
 			if (opt->multiple) {
 				fprintf(stdout,"[,<i>%s</i>,...]", type);
 			}
-			fprintf(stdout,"</em>\n");
+			fprintf(stdout,"</em></DT>\n");
 
 		        if ( opt->label ) {
 				fprintf(stdout, "<DD>");
