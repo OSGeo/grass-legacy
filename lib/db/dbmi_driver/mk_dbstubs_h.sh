@@ -10,14 +10,14 @@ cat <<'EOT'> dbstubs.h
 #ifdef	DB_DRIVER_C
 EOT
 
-grep -h '^\( *int *\)\?db__driver' ../stubs/*.c | sed -e 's/^\( *int *\)\?/extern int /' -e 's/ *(.*).*$/();/' > $tmp
+grep -h '^\( *int *\)\?db__driver' ../stubs/*.c | sed -e 's/^\( *int *\)*/extern int /' -e 's/ *(.*).*$/();/' > $tmp
 cat $tmp >> dbstubs.h
-sed 's/^extern int *db__\([a-zA-Z_]\+\).*$/int (*db_\1)() = db__\1;/' $tmp >> dbstubs.h
+sed 's/^extern int *db__\([a-zA-Z_]*\).*$/int (*db_\1)() = db__\1;/' $tmp >> dbstubs.h
 
 cat <<'EOT'>> dbstubs.h
 #else
 EOT
-sed 's/^extern int *db__\([a-zA-Z_]\+\).*$/extern int (*db_\1)();/' $tmp >> dbstubs.h
+sed 's/^extern int *db__\([a-zA-Z_]*\).*$/extern int (*db_\1)();/' $tmp >> dbstubs.h
 cat <<'EOT'>> dbstubs.h
 #endif
 
