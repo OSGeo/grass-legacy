@@ -3,7 +3,6 @@
 
 double
 get_f (double t, double R)
-
 {
 	static	double	cumf = 0.0;
 	static	char	ponding = 0;

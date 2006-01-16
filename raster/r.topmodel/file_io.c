@@ -4,7 +4,6 @@
 
 void
 get_line (FILE *fp, char *buffer)
-
 {
 	char	*str;
 

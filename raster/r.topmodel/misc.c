@@ -3,7 +3,6 @@
 
 int
 run (char *cmd)
-
 {
 	int	retval;
 
@@ -72,10 +71,10 @@ void
 basin_elevation(void)
 {
 	sprintf(buf, "%s/bin/r.mapcalc "
-		     "'%s = if(isnull(%s), %s, %s)' > /dev/null",
-			gisbase, map.belev, map.basin, map.basin, map.elev);
-	fprintf(stderr, "r.mapcalc '%s = if(isnull(%s), %s, %s)' ... ",
-			map.belev, map.basin, map.basin, map.elev);
+		     "'%s = if(%s == 0 || isnull(%s), null(), %s)' > /dev/null",
+			gisbase, map.belev, map.basin, map.elev);
+	fprintf(stderr, "r.mapcalc '%s = if(%s == 0 || isnull(%s), null(), %s)'"
+			" ... ", map.belev, map.basin, map.elev);
 
 	if(run(buf))
 		exit(1);

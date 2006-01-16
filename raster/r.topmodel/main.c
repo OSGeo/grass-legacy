@@ -1,8 +1,8 @@
 /*
- * r.topmodel: simulates TOPMODEL.
- * 	       Based on TMOD9502.FOR.
+ * r.topmodel: simulates TOPMODEL based on TMOD9502.FOR.
  *
  * TMOD9502.FOR Author: Keith Beven <k.beven@lancaster.ac.uk>
+ *			http://www.es.lancs.ac.uk/hfdg/topmodel.html
  *
  *	Copyright (C) 2000 by the GRASS Development Team
  *	Author: Huidae Cho <grass4u@gmail.com>
@@ -25,14 +25,13 @@
 
 int
 main (int argc, char **argv)
-
 {
 
 	struct GModule *module;
 	struct
 	{
-		struct	Option	*elev;
 		struct	Option	*basin;
+		struct	Option	*elev;
 		struct	Option	*fill;
 		struct	Option	*dir;
 		struct	Option	*belev;
@@ -61,21 +60,21 @@ main (int argc, char **argv)
 	_("Simulates TOPMODEL which is a physically based hydrologic model.");
 
 	/* Parameter definitions */
-	param.elev			= G_define_option();
-	param.elev->key			= "elevation";
-	param.elev->description		=
-		_("(i)   Rectangular elevation map");
-	param.elev->type		= TYPE_STRING;
-	param.elev->required		= NO;
-	param.elev->gisprompt		= "old,cell,raster";
-
 	param.basin			= G_define_option();
 	param.basin->key		= "basin";
 	param.basin->description	=
-		_("(i)   Basin map created by r.water.outlet");
+		_("(i)   Basin map created by r.water.outlet (MASK)");
 	param.basin->type		= TYPE_STRING;
 	param.basin->required		= NO;
 	param.basin->gisprompt		= "old,cell,raster";
+
+	param.elev			= G_define_option();
+	param.elev->key			= "elevation";
+	param.elev->description		=
+		_("(i)   Elevation map");
+	param.elev->type		= TYPE_STRING;
+	param.elev->required		= NO;
+	param.elev->gisprompt		= "old,cell,raster";
 
 	param.fill			= G_define_option();
 	param.fill->key			= "depressionless";
@@ -88,7 +87,7 @@ main (int argc, char **argv)
 	param.dir			= G_define_option();
 	param.dir->key			= "direction";
 	param.dir->description		=
-		_("(o)   Direction map with depressionless elevation map");
+		_("(o)   Direction map for depressionless elevation map");
 	param.dir->type			= TYPE_STRING;
 	param.dir->required		= NO;
 	param.dir->gisprompt		= "new,cell,raster";
@@ -96,7 +95,7 @@ main (int argc, char **argv)
 	param.belev			= G_define_option();
 	param.belev->key		= "belevation";
 	param.belev->description	=
-		_("(o) Basin elevation map (extracted)");
+		_("(o/i) Basin elevation map (MASK applied)");
 	param.belev->type		= TYPE_STRING;
 	param.belev->required		= NO;
 	param.belev->gisprompt		= "new,cell,raster";
@@ -104,7 +103,7 @@ main (int argc, char **argv)
 	param.topidx			= G_define_option();
 	param.topidx->key		= "topidx";
 	param.topidx->description	=
-		_("(o) Topographic index ln(a/tanB) map (extracted)");
+		_("(o)   Topographic index ln(a/tanB) map (MASK applied)");
 	param.topidx->type		= TYPE_STRING;
 	param.topidx->required		= NO;
 	param.topidx->gisprompt		= "new,cell,raster";
@@ -148,21 +147,21 @@ main (int argc, char **argv)
 	param.Qobs			= G_define_option();
 	param.Qobs->key			= "Qobs";
 	param.Qobs->description		=
-		_("      Observed Q file");
+		_("(i)   OPTIONAL Observed flow file");
 	param.Qobs->type		= TYPE_STRING;
 	param.Qobs->required		= NO;
 
 	param.timestep			= G_define_option();
 	param.timestep->key		= "timestep";
 	param.timestep->description	=
-		_("      output for given time step");
+		_("(i)   OPTIONAL Output for given time step");
 	param.timestep->type		= TYPE_INTEGER;
 	param.timestep->required	= NO;
 
 	param.idxclass			= G_define_option();
 	param.idxclass->key		= "idxclass";
 	param.idxclass->description	=
-		_("      output for given topographic index class");
+		_("(i)   OPTIONAL Output for given topographic index class");
 	param.idxclass->type		= TYPE_INTEGER;
 	param.idxclass->required	= NO;
 
@@ -183,8 +182,8 @@ main (int argc, char **argv)
 	}
 
 	/* Store given parameters and flags */
-	map.elev	= param.elev->answer;
 	map.basin	= param.basin->answer;
+	map.elev	= param.elev->answer;
 	map.belev	= param.belev->answer;
 	map.fill	= param.fill->answer;
 	map.dir		= param.dir->answer;
