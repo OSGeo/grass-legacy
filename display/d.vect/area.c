@@ -1,6 +1,6 @@
 /* Author: Radim Blazek
 *
-* added color support: Markus Neteler
+* added color support: Markus Neteler, Martin Landa
 */
 
 #include "gis.h"
@@ -8,33 +8,10 @@
 #include "display.h"
 #include "raster.h"
 #include "plot.h"
+#include "local_proto.h"
 #include "colors.h"
 #include "dbmi.h"
-
-/* TODO: should use 24bit instead of 16 colors, maybe implement
-   predefined color tables? */
-struct rgb_color {
-        unsigned char R, G, B;
-       };
-static const int palette_ncolors = 16;
-static struct rgb_color palette[16] =  {
-	{198, 198, 198}, /*  1: light gray */
-	{127, 127, 127}, /*  2: medium/dark gray */
-	{255,   0,   0}, /*  3: bright red */
-	{139,   0,   0}, /*  4: dark red */
-	{  0, 255,   0}, /*  5: bright green */
-	{  0, 139,   0}, /*  6: dark green */
-	{  0,   0, 255}, /*  7: bright blue */
-	{  0,   0, 139}, /*  8: dark blue   */
-	{255, 255,   0}, /*  9: yellow */
-	{139, 126,  10}, /* 10: olivey brown */
-	{255, 165,   0}, /* 11: orange */
-	{255, 192, 203}, /* 12: pink   */
-	{255,   0, 255}, /* 13: magenta */
-	{139,   0, 139}, /* 14: dark magenta */
-	{  0, 255, 255}, /* 15: cyan */
-	{  0, 139, 139}  /* 16: dark cyan */
-};
+#include "glocale.h"
 
 int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor, 
 	     int chcat, int id_flag, int table_colors_flag, int cats_color_flag, struct Cell_head *window) {
@@ -47,13 +24,12 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 
     struct field_info *fi=NULL;
     dbDriver *driver = NULL;
-    dbHandle handle;
-    dbString stmt, valstr;
-    dbCursor cursor;
-    dbTable  *table;
-    dbColumn *column;
-    char buf[2000], colorstring[12]; /* RRR:GGG:BBB */
-    int more, ret;
+    dbCatValArray cvarr;
+    dbCatVal *cv_rgb = NULL;
+    int nrec;
+
+    int i, rgb = 0;  /* 0|1 */
+    char colorstring[12]; /* RRR:GGG:BBB */
     unsigned char which;
 
     G_debug (1, "display areas:");
@@ -63,16 +39,41 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 
     if( table_colors_flag ) {
       /* for reading RRR:GGG:BBB color strings from table */
-      db_init_string (&stmt);
-      db_init_string (&valstr);
-      fi = Vect_get_field( Map, Clist->field);
-      if ( fi == NULL )   G_fatal_error ("Cannot read field info");
-      driver = db_start_driver(fi->driver);
-      if (driver == NULL) G_fatal_error("Cannot open driver %s", fi->driver);
-      db_init_handle (&handle);
-      db_set_handle (&handle, fi->database, NULL);
-      if (db_open_database(driver, &handle) != DB_OK)
-	  G_fatal_error("Cannot open database %s", fi->database);
+      db_CatValArray_init (&cvarr);     
+
+      fi = Vect_get_field (Map, Clist -> field);
+      if (fi == NULL) {
+	G_fatal_error (_("Cannot read field info"));
+      }
+      
+      driver = db_start_driver_open_database(fi->driver, fi->database);
+      if (driver == NULL)
+	G_fatal_error (_("Cannot open database %s by driver %s"), fi->database, fi->driver);
+
+      nrec = db_select_CatValArray(driver, fi->table, fi->key, 
+				   "GRASSRGB", NULL, &cvarr);
+
+      G_debug (3, "nrec (grassrgb) = %d", nrec);
+
+      if (cvarr.ctype != DB_C_TYPE_STRING)
+	G_fatal_error (_("Column type (grassrgb) not supported"));
+
+      if ( nrec < 0 ) G_fatal_error (_("Cannot select data (grassrgb) from table"));
+
+      G_debug(2, "\n%d records selected from table", nrec);
+
+      db_close_database_shutdown_driver(driver);
+
+      for ( i = 0; i < cvarr.n_values; i++ ) {
+	G_debug (4, "cat = %d grassrgb = %s", cvarr.value[i].cat, 
+		 db_get_string(cvarr.value[i].val.s));
+
+	/* test for background color */
+	if (test_bg_color (db_get_string(cvarr.value[i].val.s))) {
+	  G_warning (_("Category <%d>: Area fill color and background color are the same!"),
+		     cvarr.value[i].cat);
+	}
+      }
     }
     
     num = Vect_get_num_areas(Map);
@@ -141,67 +142,98 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 	    Vect_append_points ( Points, IPoints, GV_FORWARD);
 	    Vect_append_point ( Points, xl, yl, 0.0 ); /* ??? */
 	}
-	
+
+	cat = Vect_get_area_cat ( Map, area, Clist -> field );
+
+	if (!Vect_get_area_centroid (Map, area) && cat == -1) {
+	  continue;
+	}
+
 	if( table_colors_flag ) {
-	     cat=Vect_get_area_cat ( Map, area, Clist->field );
-	     if( cat >= 0 ){
-		G_debug (3, "display area %d, centroid %d, cat %d", area, centroid, cat);
-
-		/* Read RGB colors from db for current area # */
-		db_init_string (&stmt);
-		db_init_string (&valstr);
-		sprintf ( buf, "select %s from %s where %s = %d", "GRASSRGB", fi->table,  fi->key, cat);
-		G_debug (3, "SQL: %s", buf);
-		db_append_string ( &stmt, buf);
-		if (db_open_select_cursor(driver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
-			G_fatal_error ("Cannot select attributes for area # %d.", area);
-
-		table = db_get_cursor_table (&cursor);
-		column = db_get_table_column(table, 0); /* first column */
-
-		if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK) continue;
-		db_convert_column_value_to_string (column, &valstr);
-		sprintf (colorstring, "%s", db_get_string(&valstr));
-
-		/* only draw if GRASSRGB was defined */
-		if (strlen(colorstring) != 0) {
-			G_debug(3, "area centroid %d: colorstring: %s", centroid, colorstring);
-	
-			ret =  G_str_to_color(colorstring, &red, &grn, &blu);
-			if ( ret == 1 ) {
-				R_RGB_color ((unsigned char) red, (unsigned char) grn, (unsigned char) blu);
-				G_debug(3, "area:%d  cat %d r:%d g:%d b:%d", area, cat, red, grn, blu);
-				G_plot_polygon ( Points->x, Points->y, Points->n_points);
-			} else if ( ret == 0 ) { /* error */
-				G_warning("Error in color definition column GRASSRGB, area %d with cat %d: colorstring %s (not drawing this area)", area, cat, colorstring);
-			}
-		}
-	     } /* end if cat */
+	  centroid = Vect_get_area_centroid ( Map, area );
+	  if( cat >= 0 ) {
+	    G_debug (3, "display area %d, centroid %d, cat %d", area, centroid, cat);
+	    
+	    /* Read RGB colors from db for current area # */
+	    if (db_CatValArray_get_value (&cvarr, cat, &cv_rgb) != DB_OK) {
+	      rgb = 0;
+	    }
+	    else {
+	      sprintf (colorstring, "%s", db_get_string(cv_rgb -> val.s));
+	      
+	      if (strlen(colorstring) != 0) {
+		
+		G_debug(3, "area %d: colorstring: %s", area, colorstring);
+		
+		if ( G_str_to_color(colorstring, &red, &grn, &blu) == 1) {
+		  rgb = 1;
+		  G_debug (3, "area:%d  cat %d r:%d g:%d b:%d", area, cat, red, grn, blu);
+		} 
+		else { 
+		  rgb = 0;
+		  G_warning (_("Error in color definition column GRASSRGB, area %d "
+			       "with cat %d: colorstring %s"), 
+			     area, cat, colorstring);
+		} 
+	      }
+	      else {
+		G_warning (_("Error in color definition column GRASSRGB, area %d with cat %d"), 
+			  area, cat);
+		rgb = 0;
+	      }
+	    }
+	  } /* end if cat */
+	  else {
+	    rgb = 0;
+	  } 
 	} /* end if table_colors_flag */
  	
 	/* random colors */
 	if( cats_color_flag ) {
-	    cat=Vect_get_area_cat ( Map, area, Clist->field );
-	     if( cat >= 0 ){
-		G_debug (3, "display area %d, centroid %d, cat %d", area, centroid, cat);
-		/* fetch color number from category */
-		which = (cat % palette_ncolors);
-		G_debug(3,"cat:%d which color:%d r:%d g:%d b:%d",cat, which,palette[which].R,palette[which].G,palette[which].B);
-		R_RGB_color (palette[which].R,palette[which].G,palette[which].B);
-		G_plot_polygon ( Points->x, Points->y, Points->n_points);
-	     }
+	    centroid = Vect_get_area_centroid ( Map, area );
+	    if( cat >= 0 ) {
+	      G_debug (3, "display area %d, centroid %d, cat %d", area, centroid, cat);
+	      /* fetch color number from category */
+	      which = (cat % palette_ncolors);
+	      G_debug(3,"cat:%d which color:%d r:%d g:%d b:%d",cat, which,palette[which].R,palette[which].G,palette[which].B);
+	      rgb = 1;
+	      red = palette[which].R;
+	      grn = palette[which].G;
+	      blu = palette[which].B;
+	    }
+	    else {
+	      rgb = 0;
+	    }
 	}
 	
-	if ( fcolor > -1 && !table_colors_flag && !cats_color_flag) {
-                R_color(fcolor) ;
-		G_plot_polygon ( Points->x, Points->y, Points->n_points);
+	if ( fcolor > -1 ) {
+	  if (!table_colors_flag && !cats_color_flag) {
+	    R_color(fcolor);
+	    G_plot_polygon ( Points->x, Points->y, Points->n_points);
+	  }
+	  else {
+	    if (rgb) {
+	      R_RGB_color ((unsigned char) red, (unsigned char) grn, (unsigned char) blu);
+	    }
+	    else {
+	      R_color (fcolor);
+	    }
+	    if (cat >= 0) {
+	      G_plot_polygon ( Points->x, Points->y, Points->n_points);
+	    }
+	  }
 	}
-	
+
 	/* boundary */
 	if ( bcolor > -1 ) {
 	    int i, j;
 	    Vect_get_area_points ( Map, area, Points );   
-	    R_color(bcolor) ;
+	    if (rgb) {
+	      R_RGB_color ((unsigned char) red, (unsigned char) grn, (unsigned char) blu);
+	    }
+	    else {
+	      R_color (bcolor);
+	    }
 	    for ( i = 0; i < Points->n_points - 1; i++) { 
 		G_plot_line (Points->x[i], Points->y[i], Points->x[i+1], Points->y[i+1]);
 	    }
@@ -215,14 +247,9 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 	}
     } /* end for */
 
-    if( table_colors_flag ) {
-       db_close_database(driver);
-       db_shutdown_driver(driver);
-    }
-
     Vect_destroy_line_struct (Points);
+    Vect_destroy_line_struct (IPoints);
     Vect_destroy_cats_struct (Cats);
-    
+
     return 0;
 }
-

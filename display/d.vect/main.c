@@ -1,9 +1,17 @@
 /*
- *   d.vect
+ ****************************************************************************
  *
- *   Draw the binary vector (dig) file that
- *   the user wants displayed on top of the current image.
- */
+ * MODULE:       d.vect
+ * AUTHOR(S):    CERL, Radim Blazek, others
+ * PURPOSE:      Display the binary vector (dig) file that the user wants displayed 
+ *               on top of the current image.
+ * COPYRIGHT:    (C) 2004-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
 
 #include <stdlib.h>
 #include <string.h>
@@ -70,6 +78,24 @@ static char *icon_files(void)
 		list[len-1] = 0;
 
 	return list;
+}
+
+/* test for background color */
+int test_bg_color (const char* colorstring) {
+
+  int ret_bg, r_bg, g_bg, b_bg;
+  int ret, r, g, b;
+
+  ret_bg = G_str_to_color (DEFAULT_BG_COLOR, &r_bg, &g_bg, &b_bg);
+  ret    = G_str_to_color (colorstring, &r, &g, &b);
+
+  if (ret == 1 && ret_bg == 1) {
+    if (r == r_bg && g == g_bg && b == b_bg) {
+      return 1;
+    }
+  }
+
+  return 0;
 }
 
 int 
@@ -242,12 +268,12 @@ main (int argc, char **argv)
 	table_acolors_flag = G_define_flag ();
 	table_acolors_flag->key		= 'a';
 	table_acolors_flag->description	=
-	    _("Get area fill colors from map table column 'GRASSRGB' (RRR:GGG:BBB)");
+	    _("Get colors from map table column 'GRASSRGB' (RRR:GGG:BBB)");
 
 	cats_acolors_flag = G_define_flag ();
 	cats_acolors_flag->key		= 'c';
 	cats_acolors_flag->description	=
-	    _("Fill areas with random colors according to category number");
+	    _("Random colors according to category number");
 
 	id_flag = G_define_flag ();
 	id_flag->key		= 'i';
@@ -299,6 +325,10 @@ main (int argc, char **argv)
 	R_line_width(width);
 
 	color = WHITE;
+	/* test for background color */
+	if (test_bg_color (color_opt->answer)) {
+	  G_warning (_("Line color and background color are the same!"));
+	}
 	ret =  G_str_to_color(color_opt->answer, &r, &g, &b);
 	if ( ret == 1 ) {
 	    colornum++;
@@ -311,6 +341,10 @@ main (int argc, char **argv)
 	}
 	
 	fcolor = WHITE;
+	/* test for background color */
+	if (test_bg_color (fcolor_opt->answer)) {
+	  G_warning (_("Area fill color and background color are the same!"));
+	}
 	ret = G_str_to_color(fcolor_opt->answer, &r, &g, &b);
         if ( ret == 1 ) {
 	    colornum++;
@@ -518,7 +552,7 @@ main (int argc, char **argv)
 		if ( id_flag->answer && level < 2 ) {
 		    G_warning(_("Cannot display lines by id, topology not available"));
 		} else {
-		    stat = plot1 ( &Map, type, area, Clist, color, fcolor, chcat, Symb, size, (int) id_flag->answer );
+		    stat = plot1 ( &Map, type, area, Clist, color, fcolor, chcat, Symb, size, (int) id_flag->answer, table_acolors_flag->answer, cats_acolors_flag->answer);
 		}
 	    }
 
