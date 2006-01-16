@@ -118,9 +118,9 @@ please take care of following rules:
 	if [ "$VARIABLE" != "" ] ; then
 
 
-9.  Inernationalization proofing Awk. In some areas (e.g. some European
+9.  Internationalization proofing Awk: In some areas (e.g. some European
     countries) the decimal place is held with a comma instead of a dot.
-    When scanning variables awk doesn't unstand this, so scripts need to 
+    When scanning variables awk doesn't understand this, so scripts need to 
     temporarily discard locale settings before calling awk.
 
 	# set environment so that awk works properly in all languages
