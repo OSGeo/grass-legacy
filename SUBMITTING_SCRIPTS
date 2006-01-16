@@ -9,6 +9,10 @@ please take care of following rules:
 
 [ see SUBMITTING for C code hints ]
 
+0.  Instructions for the GRASS script parser can be found in the g.parser 
+    module's help page.
+    http://grass.ibiblio.org/grass61/manuals/html61_user/g.parser.html
+
 1.  Use the directory structure to place your script appropriately into
     the source tree
     	- scripts go into scripts/
@@ -54,7 +58,7 @@ please take care of following rules:
     which will perform the same function. In this case, the path of the grass60
     command is saved if grass60 is found in $PATH. This won't recognize aliased
     command name.
-    
+
 	# Search for grass5 command in user's path
 	for i in `echo $PATH | sed 's/^:/.:/
     	    	    		    s/::/:.:/g
@@ -70,7 +74,75 @@ please take care of following rules:
 	    fi
 	done
 
-6.  Use "GRASS_TCLSH" and "GRASS_WISH" environment variables instead of
+<?>
+    If you must use "which", use as follows:
+
+	# check if we have awk
+	if [ ! -x "`which awk`" ] ; then
+	    echo "ERROR: awk required, please install awk or gawk first" 1>&2
+	    exit 1
+	fi
+</?>
+
+6.  Add a test to check if the user is in GRASS before starting main part 
+    of script. Result of running the script is unpredicable otherwise.
+
+	if [ -z "$GISBASE" ] ; then
+	    echo "You must be in GRASS GIS to run this program." 1>&2
+	    exit 1
+	fi
+
+7.  Create and use secure temporary files and directories. Use the g.tempfile
+    module to do this. e.g.
+
+	# setup temporary file
+	TMP="`g.tempfile pid=$$`"
+	if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+	    echo "ERROR: unable to create temporary files" 1>&2
+	    exit 1
+	fi
+
+    For temportary directories remove the newly created file and mkdir using 
+    the same name. Beware of commands like "rm -f ${TMP}*" as this becomes
+    "rm -f *" if $TMP is unset (hence the test above).
+
+8.  Testing the existence of variables. For portability, use
+	if [ -z "$VARIABLE" ] ; then
+    instead of
+	if [ "$VARIABLE" == "" ] ; then
+
+    and
+
+	if [ -n "$VARIABLE" ] ; then
+    instead of
+	if [ "$VARIABLE" != "" ] ; then
+
+
+9.  Inernationalization proofing Awk. In some areas (e.g. some European
+    countries) the decimal place is held with a comma instead of a dot.
+    When scanning variables awk doesn't unstand this, so scripts need to 
+    temporarily discard locale settings before calling awk.
+
+	# set environment so that awk works properly in all languages
+	unset LC_ALL
+	export LC_NUMERIC=C
+
+	awk '{print $1}'
+
+
+10. Use g.findfile when there is a need to test if a map exists.
+
+	# test for input raster map
+	eval `g.findfile element=cell file="$INPUT"`
+	if [ ! "$file" ] ; then
+	  echo "Input map not found"
+	  exit 1
+	fi
+
+11. Send solely informational output to stderr, not stdout.
+	echo "Done." 1>&2
+
+12. Use "GRASS_TCLSH" and "GRASS_WISH" environment variables instead of
     "tclsh" and "wish" at the start of Tcl/Tk scripts. This allows users to
     override the default names, so that developers don't need worry about the
     shell names.
@@ -88,9 +160,9 @@ please take care of following rules:
 	# the next line restarts using wish \
 	exec $GRASS_WISH "$0" "$@"
 
-7.  For consistency, use README rather than README.txt for any README files.
+13. For consistency, use README rather than README.txt for any README files.
 
-8.  Be sure to develop on top of the LATEST GRASS code (which is in CVS).
+14. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
     You can re-check before submission with 'cvs diff':
 
     Be sure to create unified ("diff -u") format. "Plain"
@@ -102,13 +174,13 @@ please take care of following rules:
     "cvs diff -u display/d.vect/main.c"; that way, the diff will
     include the pathname rather than just "main.c".
 
-9.  Tell the other developers about the new code using the following e-mail:
+15. Tell the other developers about the new code using the following e-mail:
     grass5@grass.itc.it
  
     To subscribe to this mailing list, see
     http://grass.itc.it/devel/index.php
 
-10. In case of questions feel free to contact the developers at the above
+16. In case of questions feel free to contact the developers at the above
     mailing list.
     http://grass.itc.it/devel/index.php#submission
 
