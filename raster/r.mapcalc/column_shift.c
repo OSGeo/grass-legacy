@@ -69,6 +69,7 @@ void column_shift(void *buf, int res_type, int col)
 
             for (; i >= 0; i--)
                 SET_NULL_C(&ibuf[i]);
+	    break;
 
         case FCELL_TYPE:
             for (i = columns - 1; i >= col; i--) {
@@ -80,6 +81,7 @@ void column_shift(void *buf, int res_type, int col)
 
             for (; i >= 0; i--)
                 SET_NULL_F(&fbuf[i]);
+	    break;
 
         case DCELL_TYPE:
             for (i = columns - 1; i >= col; i--) {
@@ -91,6 +93,7 @@ void column_shift(void *buf, int res_type, int col)
 
             for (; i >= 0; i--)
                 SET_NULL_D(&dbuf[i]);
+	    break;
         }
     }
 }

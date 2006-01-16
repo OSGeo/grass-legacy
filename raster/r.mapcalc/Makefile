@@ -72,7 +72,7 @@ LIBES3 = $(G3DLIB) $(GISLIB) $(BTREELIB) $(READLINELIBPATH) $(READLINELIB) $(HIS
 
 EXTRA_CLEAN_FILES = y.tab.c y.tab.h lex.yy.c y.output lex.backup
 
-default: $(BIN)/$(PGM2) $(BIN)/$(PGM3) htmlcmd
+default: $(BIN)/$(PGM2) $(BIN)/$(PGM3) html
 
 $(BIN)/$(PGM2): $(LIST2) $(DEPLIBS2)
 	$(CC) $(LDFLAGS) -o $@ $(LIST2) $(LIBES2) $(MATHLIB) $(XDRLIB)
@@ -86,7 +86,7 @@ y.tab.c y.tab.h: mapcalc.y
 lex.yy.c: mapcalc.l y.tab.h
 	$(LEX) -t mapcalc.l > $@
 
-htmlcmd:
+html:
 	$(MKDIR) $(GISBASE)/docs/html
 	$(INSTALL) -m 644 $(PGM2).html $(GISBASE)/docs/html/
 	$(INSTALL) -m 644 $(PGM3).html $(GISBASE)/docs/html/
