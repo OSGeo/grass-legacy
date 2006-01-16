@@ -5,41 +5,42 @@ hydrologic model.
 <P>
 Note: (i) means input; (o) means output; (o/i) means input or output
 <P>
-The <B>-i</B> flag defines that input data are given for (o/i).  Without
-this flag, all input data (i) and intermediate output (o/i) should be given
-and intermediate output can not be input for run.
-For example, [belevation] map will be created from [elevation] and
-[basin] in every run.  However, every [belevation] output is the same and
-this is useless process if [belevation] map is already given.
-With this flag, intermediate output can be input for run.  (o/i) parameters
-will be affected by this flag.
+The <B>-i</B> flag indicates that input data are given for (o/i).  Without this
+flag, all inputs (i) and intermediate outputs (o/i) should be given.  For
+example, [belevation] map will be created from [elevation] and [basin] in every
+run.  However, given the same [elevation] and [basin], [belevation] output will
+be the same all the time, so r.topmodel can directly take [belevation] as an
+input with this flag to save time.
 <P>
 
 <H3>Selected Parameters:</H3>
 
-<DT><B>depressionless</B>
-<DD>(o)   Depressionless elevation map
-<DD>This can be omitted if [elevation] map is already depressionless map. 
-If this is given, [depressionless] map will be used as [elevation] map.
+<DL>
+<DT><B>depressionless</B></DT>
+<DD>[depressionless] map is created as follows:
+<pre>
+r.fill.dir input=elevation elev=depressionless dir=direction type=grass
+</pre>
+This option can be omitted if [elevation] map is already depressionless.</DD>
 
-<DT><B>belevation</B>
-<DD>(o/i) Basin elevation map (extracted).  Study basin extracted elevation
-map
+<DT><B>belevation</B></DT>
+<DD>[belevation] map will be created from [elevation] with [basin] mask applied.
+<pre>
+r.mapcalc "belevation = if(basin == 0 || isnull(basin), null(), elevation)"
+</pre>
+</DD>
 
-<DT><B>topidx</B>
-<DD>(o/i) Topographic index ln(a/tanB) map (extracted).  Study basin
-extracted topographic index map
-
-<DT><B>Qobs</B>
-<DD>Observed Q file.  Compare Qt with Qobs and calculate model efficiency
+<DT><B>Qobs</B></DT>
+<DD>Compare simulated flows with observed flows and calculate model
+efficiency.</DD>
+</DL>
 
 <H2>SEE ALSO</H2>
 <EM><A HREF="r.topidx.html">r.topidx</A></EM>
 
 <H2>AUTHORS</H2>
-Main algorithm sources are rewritten from TMOD9502.FOR.<BR>
-TMOD9502.FOR is available from <A HREF=http://www.es.lancs.ac.uk/hfdg/topmodel.html>
-www.es.lancs.ac.uk/hfdg/topmodel.html</A>.
+Main algorithm sources are rewritten in C based on TMOD9502.FOR.<BR>
+TMOD9502.FOR is available from <A HREF=http://www.es.lancs.ac.uk/hfdg/topmodel.html>http://www.es.lancs.ac.uk/hfdg/topmodel.html</A>.
 <BR>
 Thanks to Keith Beven.
 <P>

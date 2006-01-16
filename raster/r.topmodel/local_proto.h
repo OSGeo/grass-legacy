@@ -85,7 +85,7 @@ GLOBAL	struct
 /* Map names */
 GLOBAL	struct
 {
-	char	*elev, *basin, *belev, *fill, *dir, *topidx;
+	char	*basin, *elev, *belev, *fill, *dir, *topidx;
 } map;
 
 /* File names */ 
