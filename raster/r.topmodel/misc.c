@@ -72,9 +72,9 @@ basin_elevation(void)
 {
 	sprintf(buf, "%s/bin/r.mapcalc "
 		     "'%s = if(%s == 0 || isnull(%s), null(), %s)' > /dev/null",
-			gisbase, map.belev, map.basin, map.elev);
+			gisbase, map.belev, map.basin, map.basin, map.elev);
 	fprintf(stderr, "r.mapcalc '%s = if(%s == 0 || isnull(%s), null(), %s)'"
-			" ... ", map.belev, map.basin, map.elev);
+			" ... ", map.belev, map.basin, map.basin, map.elev);
 
 	if(run(buf))
 		exit(1);
