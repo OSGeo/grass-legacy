@@ -44,7 +44,8 @@ SUBDIRS = \
 	d.what.rast \
 	d.what.vect \
 	d.where \
-	d.zoom
+	d.zoom \
+	gis.m 
 
 FREETYPEBASED = d.text.freetype d.font.freetype
 
