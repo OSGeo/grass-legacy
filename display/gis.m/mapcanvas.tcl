@@ -28,9 +28,10 @@ set bgcolor HoneyDew2
 namespace eval mapcan {
 	variable array can # mon
 	variable array mapcan # mon
-	variable array mcwd # mon
-	variable array mcht # mon
-	variable array canvas_geom # mon dim
+	variable array canvas_w # mon
+	variable array canvas_h # mon
+	variable array canvas_w # mon
+	variable array canvas_h # mon
     variable cmstatus
 	}
 
@@ -58,18 +59,21 @@ proc mapcan::create { } {
     global tree_pane
     global mon
     global win
+    global currmon
 
 	variable mapcan
 	variable can
-	variable mcwd
-	variable mcht
-	variable canvas_geom
+	variable canvas_w
+	variable canvas_h
+	variable canvas_w
+	variable canvas_h
+
 #	variable tree
 	
 	# Initialize window and map geometry
 	
-	set mcwd($mon) $initwd
-	set mcht($mon) $initht
+	set canvas_w($mon) $initwd
+	set canvas_h($mon) $initht
 	set env(GRASS_WIDTH) $initwd
 	set env(GRASS_HEIGHT) $initht
 	
@@ -92,7 +96,7 @@ proc mapcan::create { } {
     set can($mon) [canvas $mapframe.can \
         -background #ffffff -borderwidth 0 -closeenough 1.0 \
         -insertbackground black -relief ridge -selectbackground #c4c4c4 \
-        -selectforeground black -width $mcwd($mon) -height $mcht($mon) ]
+        -selectforeground black -width $canvas_w($mon) -height $canvas_h($mon) ]
     
     # setting geometry
     place $mapframe.can \
@@ -114,21 +118,42 @@ proc mapcan::create { } {
 
 	# bindings for display canvas
 
+	set currmon $mon
+	
 	# mouse handlers
 	bind $can($mon) <ButtonPress-1> {
-		global currmon mon b1east b1north win
+		global  mon b1east b1north win
 		variable tree		
 		set winx [winfo pointerx .]
 		set winy [winfo pointery .]
 		set win [winfo containing $winx $winy]
 		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
 		set mon $currmon
-		#GmTree::saveload $mon
 		set b1east  [mapcan::scrx2mape %x]
 		set b1north [mapcan::scry2mapn %y]
 		GmTree::switchpage $mon
 	}
 	
+	bind $mapframe <ButtonPress-1> {
+		global  mon b1east b1north win
+		variable tree		
+		set winx [winfo pointerx .]
+		set winy [winfo pointery .]
+		set win [winfo containing $winx $winy]
+		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
+		set mon $currmon
+		GmTree::switchpage $mon
+	}
+	bind .mapcan($mon) <ButtonPress-1> {
+		global  mon b1east b1north win
+		variable tree		
+		set winx [winfo pointerx .]
+		set winy [winfo pointery .]
+		set win [winfo containing $winx $winy]
+		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
+		set mon $currmon
+		GmTree::switchpage $mon
+	}
 
 	bind $can($mon) <Motion> {
 		set scrxmov %x
@@ -143,22 +168,46 @@ proc mapcan::create { } {
     set map_ind  [$mapframe addindicator -textvariable coords \
     	-width 25 -justify left -padx 15]
     	
-	#GmTree::create $mon
 
 #    update idletasks    
 
 
 #	window configuration change handler for resizing
     bind $can($mon) <Configure> {
-		set canvas_geom($mon,w) %w
+    	variable canvas_w
+    	variable canvas_h
+    	#global currmon
+		set canvas_w($mon) %w
 		set scrwidth %w
-		set canvas_geom($mon,h) %h
+		set canvas_h($mon) %h
 		set order %d
-		regexp -nocase {.*\((\d*)(\).*)} $win win1 changemon win2
-		#set mon $currmon
-		if { $order == "below" } { set leavemon $changemon }
+		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
+		set mon $currmon
+		#if { $order == "below" } { set leavemon $changemon }
 		after cancel mapcan::do_resize $mon
 		after idle mapcan::do_resize $mon
+	}
+    bind $mapframe <Configure> {
+    	variable canvas_w
+    	variable canvas_h
+    	#global currmon
+		set canvas_w($mon) %w
+		set scrwidth %w
+		set canvas_h($mon) %h
+		set order %d
+		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
+		set mon $currmon
+	}
+    bind .mapcan($mon) <Configure> {
+    	variable canvas_w
+    	variable canvas_h
+    	#global currmon
+		set canvas_w($mon) %w
+		set scrwidth %w
+		set canvas_h($mon) %h
+		set order %d
+		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
+		set mon $currmon
 	}
 	
 }
@@ -213,8 +262,8 @@ proc mapcan::mapsettings { mon } {
 	
 	variable mapcan
 	variable can
-	variable mcwd
-	variable mcht
+	variable canvas_w
+	variable canvas_h
 			
     set monregion "$gisdbase/$location_name/$mapset/windows/mon_$mon"
 	if {[file exists $monregion] } {
@@ -236,13 +285,13 @@ proc mapcan::mapsettings { mon } {
 	
 	set mapwd [expr abs(1.0 * ($map_e - $map_w))]
 	set mapht [expr abs(1.0 * ($map_n - $map_s))]
-
-	if { [expr $mcht($mon) / $mcwd($mon)] > [expr $mapht / $mapwd] } {
-		set mapdispht [expr 1.0 * $mcwd($mon) * $mapht / $mapwd]
-		set mapdispwd $mcwd($mon)
+	
+	if { [expr $canvas_h($mon) / $canvas_w($mon)] > [expr $mapht / $mapwd] } {
+		set mapdispht [expr 1.0 * $canvas_w($mon) * $mapht / $mapwd]
+		set mapdispwd $canvas_w($mon)
 	} else {
-		set mapdispht $mcht($mon)
-		set mapdispwd [expr 1.0 * $mcht($mon) * $mapwd / $mapht]
+		set mapdispht $canvas_h($mon)
+		set mapdispwd [expr 1.0 * $canvas_h($mon) * $mapwd / $mapht]
 	}
 
 	set env(GRASS_WIDTH) $mapdispwd
@@ -264,8 +313,8 @@ proc mapcan::drawmap { mon } {
 	
 	variable mapcan
 	variable can
-	variable mcwd
-	variable mcht
+	variable canvas_w
+	variable canvas_h
 		
 	$outtext delete 1.0 end
 	
@@ -295,13 +344,15 @@ proc mapcan::drawmap { mon } {
 
 proc mapcan::do_resize {mon} {
 	
-	variable mcwd
-	variable mcht
+	variable canvas_w
+	variable canvas_h
 	variable can
-	global canvas_geom
+	variable canvas_w
+	variable canvas_h
+
 		
-	set mcwd($mon) $canvas_geom($mon,w)
-	set mcht($mon) $canvas_geom($mon,h)
+	set canvas_w($mon) $canvas_w($mon)
+	set canvas_h($mon) $canvas_h($mon)
 	
 	update idletasks
 	mapcan::coordconv $mon
@@ -329,6 +380,7 @@ proc mapcan::erase { mon } {
 proc mapcan::zoom_default { mon } {
 	variable can
     
+	run "g.region save=previous_zoom --o"
 	set cmd "g.region -d save=mon_$mon --o"
     run_panel $cmd 
 	
@@ -345,6 +397,7 @@ proc mapcan::zoom_region { mon } {
    
     set reg [GSelect windows]
     if { $reg != "" } {
+		run "g.region save=previous_zoom --o"
 		set cmd "g.region region=$reg save=mon_$mon --o"
 		run_panel $cmd 
     }
@@ -440,6 +493,7 @@ proc mapcan::zoomregion { mon zoom } {
 
 	# zoom in
 	if { $zoom == 1 } {
+		run "g.region save=previous_zoom --o"
 		set cmd "g.region n=$north s=$south \
 			e=$east w=$west save=mon_$mon --o"
 		run $cmd
@@ -451,6 +505,7 @@ proc mapcan::zoomregion { mon zoom } {
 		set downsouth [expr $map_s - abs($south - $map_s)]
 		set backeast  [expr $map_e + abs($map_e - $east)]
 		set outwest  [expr $map_w - abs($west - $map_w)]
+		run "g.region save=previous_zoom --o"
 		set cmd "g.region n=$upnorth s=$downsouth \
 			e=$backeast w=$outwest save=mon_$mon --o"
 		run $cmd
@@ -563,6 +618,7 @@ proc mapcan::pan { mon } {
 	set west  [expr $map_w - ($to_e - $from_e)]
 	
 	# reset region and redraw map
+	run "g.region save=previous_zoom --o"
 	set cmd "g.region n=$north s=$south \
 		e=$east w=$west save=mon_$mon --o"
 	run $cmd
@@ -802,8 +858,8 @@ proc mapcan::coordconv { mon } {
 	global mapimg.$mon
 	
 	variable can
-	variable mcwd
-	variable mcht
+	variable canvas_w
+	variable canvas_h
 	
 
 #	get current map coordinates from g.region
@@ -835,10 +891,10 @@ if { [info exists "mapimg.$mon"] } {
 	set scr_e [image width "mapimg.$mon"]
 	set scr_s [image height "mapimg.$mon"]
 }	else {
-	set scr_ew $mcwd($mon)
-	set scr_ns $mcht($mon)
-	set scr_e $mcwd($mon)
-	set scr_s $mcht($mon)
+	set scr_ew $canvas_w($mon)
+	set scr_ns $canvas_h($mon)
+	set scr_e $canvas_w($mon)
+	set scr_s $canvas_h($mon)
 }
 
 	set scr_n 0.0
