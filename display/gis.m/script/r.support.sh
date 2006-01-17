@@ -2,9 +2,9 @@
 #
 ############################################################################
 #
-# MODULE:		r.support.sh for GRASS 5.7
+# MODULE:	r.support.sh for GRASS 5.7
 # AUTHOR(S):	Michael Barton; 
-# PURPOSE:		Runs r.support from GIS Manager GUI
+# PURPOSE:	Runs r.support from GIS Manager GUI
 # COPYRIGHT:	(C) 2004 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
@@ -26,7 +26,7 @@
 #%end
 
 
-if  [ -z $GISBASE ] ; then
+if  [ -z "$GISBASE" ] ; then
  echo "You must be in GRASS GIS to run this program."
  exit 1
 fi   
