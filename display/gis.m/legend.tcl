@@ -33,7 +33,6 @@ proc GmLegend::create { tree parent } {
         
     set opt($count,_check) 1 
     set opt($count,map) "" 
-    set opt($count,legmon) "x1" 
     set opt($count,erase) 1 
     set opt($count,color) "black" 
     set opt($count,lines) 0 
@@ -56,7 +55,7 @@ proc GmLegend::create { tree parent } {
 proc GmLegend::set_option { node key value } {
     variable opt
  
-    set id [Gm::node_id $node]
+    set id [GmTree::node_id $node]
     set opt($id,$key) $value
 }
 
@@ -66,7 +65,7 @@ proc GmLegend::select_map { id } {
     set m [GSelect cell]
     if { $m != "" } { 
         set GmLegend::opt($id,map) $m
-        Gm::autoname "legend for $m"
+        GmTree::autonamel "legend for $m"
     }
 }
 
@@ -93,12 +92,9 @@ proc GmLegend::options { id frm } {
 
     # monitor for legend
     set row [ frame $frm.monitor ]
-    Label $row.a -text [G_msg "Display legend in monitor: "] 
-    ComboBox $row.b -padx 2 -width 3 -textvariable GmLegend::opt($id,legmon) \
-                    -values {"x0" "x1" "x2" "x3" "x4" "x5" "x6"} -entrybg white
-    checkbutton $row.c -text [G_msg " erase monitor before drawing legend"] -variable \
+    checkbutton $row.a -text [G_msg " erase monitor before drawing legend"] -variable \
         GmLegend::opt($id,erase) 
-    pack $row.a $row.b $row.c -side left
+    pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
     # text color
@@ -191,24 +187,27 @@ proc GmLegend::options { id frm } {
 proc GmLegend::save { tree depth node } {
     variable opt
     
-    set id [Gm::node_id $node]
+    set id [GmTree::node_id $node]
 
     foreach key { _check map color lines thin labelnum at use range \
-            legmon nolbl noval skip smooth mouse flip } {
-        Gm::rc_write $depth "$key $opt($id,$key)"
+             nolbl noval skip smooth mouse flip } {
+        GmTree::rc_write $depth "$key $opt($id,$key)"
     } 
 }
 
 
 proc GmLegend::display { node } {
     variable opt
+    variable tree
+    global mon
+    global gmpath
+
     set line ""
     set input ""
-    global gmpath
     set cmd ""
 
-    set tree $Gm::tree
-    set id [Gm::node_id $node]
+    set tree($mon) $GmTree::tree($mon)
+    set id [GmTree::node_id $node]
 
 
     if { ! ( $opt($id,_check) ) } { return } 
@@ -258,34 +257,10 @@ proc GmLegend::display { node } {
         append cmd " -f"
     }
 
-    #display legend in selected monitor
-    if { $cmd != "" } { 
-        if ![catch {open "|d.mon -L" r} input] {
-            while {[gets $input line] >= 0} {
-                 if {[regexp -nocase {.*(selected).*} $line]} {
-                    regexp -nocase {..} $line currmon
-                }              
-            }
-        }
-
-        Gm::displmon $opt($id,legmon)
-        if { $opt($id,erase) == 1 } {run "d.erase white"}
-        run_panel $cmd
-        run "d.mon select=$currmon"
-    }
-}
-
-proc GmLegend::print { file node } {
-    variable opt
+    #display legend
+	if { $opt($id,erase) == 1 } {run "d.erase white"}
+	run_panel $cmd
     
-    set tree $Gm::tree
-    set id [Gm::node_id $node]
-
-    if { ! ( $opt($id,_check) ) } { return } 
-
-    if { $opt($id,map) == "" } { return } 
-
-    puts $file "legend $opt($id,map)"
 }
 
 
@@ -322,7 +297,6 @@ proc GmLegend::duplicate { tree parent node id } {
     set opt($count,_check) $opt($id,_check)
 
     set opt($count,map) "$opt($id,map)" 
-    set opt($count,legmon) "$opt($id,legmon)" 
     set opt($count,color) "$opt($id,color)" 
     set opt($count,lines) "$opt($id,lines)" 
     set opt($count,thin) "$opt($id,thin)" 
