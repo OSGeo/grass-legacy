@@ -2,7 +2,7 @@
 #
 ############################################################################
 #
-# MODULE:		v.in.asciipoints for GRASS 5.7
+# MODULE:	v.in.asciipoints for GRASS 5.7
 # AUTHOR(S):	Michael Barton 
 # PURPOSE:	Imports ASCII point file using v.in.ascii
 # COPYRIGHT:	(C) 2004 by the GRASS Development Team
@@ -73,9 +73,7 @@
 #% multiple: yes
 #%end
 
-
-
-if  [ -z $GISBASE ] ; then
+if  [ -z "$GISBASE" ] ; then
  echo "You must be in GRASS GIS to run this program."
  exit 1
 fi   

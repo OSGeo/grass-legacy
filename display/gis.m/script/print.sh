@@ -2,7 +2,7 @@
 #
 ############################################################################
 #
-# MODULE:		print.sh for GRASS 6
+# MODULE:	print.sh for GRASS 6
 # AUTHOR(S):	Michael Barton 
 # PURPOSE:	    Print current display monitor on default printer from GIS Manager
 # COPYRIGHT:	(C) 2005 by the GRASS Development Team
