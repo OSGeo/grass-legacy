@@ -357,6 +357,7 @@ proc Gm::create { } {
     global options
     global pgs
     global mainframe
+    global fon
     
     variable mainframe
 #    variable options
