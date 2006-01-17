@@ -719,11 +719,15 @@ proc mapcan::querybind { mon } {
 	variable can
 	global dtxt
 	global stop
+	global map_ew
+	global map_ns	
+	global scr_ew
+	global scr_ns
+	global vdist
 
-	bind $can($mon) <2> ""
-	bind $can($mon) <B1-Motion> ""
-	bind $can($mon) <ButtonRelease-1> ""
 
+	# set query 'snapping' distance to 10 screen pixels
+	set vdist [expr $map_ew / (10* $scr_ew) ]
 	
 	bind $can($mon) <1> {mapcan::startquery $mon %x %y}
 	bind $can($mon) <3> {mapcan::stopquery $mon}

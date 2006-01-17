@@ -494,6 +494,7 @@ proc GmVector::query { node east north } {
     variable opt
     variable tree
     global mon
+    global vdist
     
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
@@ -510,7 +511,7 @@ proc GmVector::query { node east north } {
          !$opt($id,type_boundary)  && !$opt($id,type_centroid) && 
          !$opt($id,type_area) && !$opt($id,type_face) } { return } 
 
-    set cmd "v.what -a map=$opt($id,map) east=$east north=$north distance=100\n\n"
+    set cmd "v.what -a map=$opt($id,map) east=$east north=$north distance=$vdist\n\n"
 #    if { $opt($id,_query_text) && !$opt($id,_query_edit) } { 
 #        append cmd " -x" 
 #    } 
