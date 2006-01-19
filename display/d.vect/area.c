@@ -2,7 +2,7 @@
 *
 * added color support: Markus Neteler, Martin Landa
 */
-
+#include <string.h>
 #include "gis.h"
 #include "Vect.h"
 #include "display.h"
@@ -14,7 +14,9 @@
 #include "glocale.h"
 
 int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor, 
-	     int chcat, int id_flag, int table_colors_flag, int cats_color_flag, struct Cell_head *window) {
+	     int chcat, int id_flag, int table_colors_flag, int cats_color_flag,
+	     struct Cell_head *window, char *rgb_column) {
+
     int    num, area, isle, n_isles, n_points;
     double xl, yl;
     struct line_pnts *Points, *IPoints;
@@ -39,6 +41,10 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 
     if( table_colors_flag ) {
       /* for reading RRR:GGG:BBB color strings from table */
+
+      if ( rgb_column == NULL || strlen(rgb_column) == 0 )
+	G_fatal_error(_("Color definition column not specified."));
+
       db_CatValArray_init (&cvarr);     
 
       fi = Vect_get_field (Map, Clist -> field);
@@ -51,21 +57,24 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 	G_fatal_error (_("Cannot open database %s by driver %s"), fi->database, fi->driver);
 
       nrec = db_select_CatValArray(driver, fi->table, fi->key, 
-				   "GRASSRGB", NULL, &cvarr);
+				   rgb_column, NULL, &cvarr);
 
-      G_debug (3, "nrec (grassrgb) = %d", nrec);
+      G_debug (3, "nrec (%s) = %d", rgb_column, nrec);
 
       if (cvarr.ctype != DB_C_TYPE_STRING)
-	G_fatal_error (_("Column type (grassrgb) not supported"));
+	G_fatal_error (_("Color definition column (%s) not a string. "
+	    "Column must be of form RRR:GGG:BBB where RGB values range 0-255."), rgb_column);
 
-      if ( nrec < 0 ) G_fatal_error (_("Cannot select data (grassrgb) from table"));
+
+      if ( nrec < 0 )
+	G_fatal_error (_("Cannot select data (%s) from table"), rgb_column);
 
       G_debug(2, "\n%d records selected from table", nrec);
 
       db_close_database_shutdown_driver(driver);
 
       for ( i = 0; i < cvarr.n_values; i++ ) {
-	G_debug (4, "cat = %d grassrgb = %s", cvarr.value[i].cat, 
+	G_debug (4, "cat = %d  %s = %s", cvarr.value[i].cat, rgb_column,
 		 db_get_string(cvarr.value[i].val.s));
 
 	/* test for background color */
@@ -171,14 +180,14 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 		} 
 		else { 
 		  rgb = 0;
-		  G_warning (_("Error in color definition column GRASSRGB, area %d "
-			       "with cat %d: colorstring %s"), 
-			     area, cat, colorstring);
+		  G_warning (_("Error in color definition column (%s), area %d "
+			       "with cat %d: colorstring [%s]"), 
+			     rgb_column, area, cat, colorstring);
 		} 
 	      }
 	      else {
-		G_warning (_("Error in color definition column GRASSRGB, area %d with cat %d"), 
-			  area, cat);
+		G_warning (_("Error in color definition column (%s), area %d with cat %d"), 
+			  rgb_column, area, cat);
 		rgb = 0;
 	      }
 	    }

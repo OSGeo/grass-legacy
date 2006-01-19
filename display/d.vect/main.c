@@ -111,7 +111,8 @@ main (int argc, char **argv)
 	double minreg, maxreg, reg;
 	char map_name[128] ;
 	struct GModule *module;
-	struct Option *map_opt, *color_opt, *fcolor_opt;
+	struct Option *map_opt;
+	struct Option *color_opt, *fcolor_opt, *rgbcol_opt;
 	struct Option *type_opt, *display_opt;
 	struct Option *icon_opt, *size_opt;
 	struct Option *where_opt;
@@ -196,6 +197,15 @@ main (int argc, char **argv)
 	fcolor_opt->answer     = "gray" ;
 	fcolor_opt->description= _("Area fill color");
 
+	rgbcol_opt = G_define_option();
+	rgbcol_opt->key        = "rgb_column";
+	rgbcol_opt->type       = TYPE_STRING ;
+	rgbcol_opt->required   = NO ;
+	rgbcol_opt->multiple   = NO ;
+	rgbcol_opt->description=
+	    _("Name of color definition column (for use with -a flag)");
+	rgbcol_opt->answer     = "GRASSRGB" ;
+
 	lfield_opt = G_define_standard_option(G_OPT_V_FIELD) ;
 	lfield_opt->key        = "llayer" ;
 	lfield_opt->description= "Layer for labels" ;
@@ -268,7 +278,7 @@ main (int argc, char **argv)
 	table_acolors_flag = G_define_flag ();
 	table_acolors_flag->key		= 'a';
 	table_acolors_flag->description	=
-	    _("Get colors from map table column 'GRASSRGB' (RRR:GGG:BBB)");
+	    _("Get colors from map table column (of form RRR:GGG:BBB)");
 
 	cats_acolors_flag = G_define_flag ();
 	cats_acolors_flag->key		= 'c';
@@ -543,7 +553,9 @@ main (int argc, char **argv)
 	     
 	    if ( area ) {
 		if ( level >= 2 )
-		    stat = darea ( &Map, Clist, color, fcolor, chcat, (int) id_flag->answer, table_acolors_flag->answer, cats_acolors_flag->answer, &window );
+		    stat = darea ( &Map, Clist, color, fcolor, chcat,
+			(int) id_flag->answer, table_acolors_flag->answer,
+			cats_acolors_flag->answer, &window, rgbcol_opt->answer );
 		else
 		    G_warning(_("Cannot display areas, topology not available"));
 	    }
@@ -552,7 +564,9 @@ main (int argc, char **argv)
 		if ( id_flag->answer && level < 2 ) {
 		    G_warning(_("Cannot display lines by id, topology not available"));
 		} else {
-		    stat = plot1 ( &Map, type, area, Clist, color, fcolor, chcat, Symb, size, (int) id_flag->answer, table_acolors_flag->answer, cats_acolors_flag->answer);
+		    stat = plot1 ( &Map, type, area, Clist, color, fcolor, chcat, Symb,
+			size, (int) id_flag->answer, table_acolors_flag->answer,
+			cats_acolors_flag->answer, rgbcol_opt->answer) ;
 		}
 	    }
 
