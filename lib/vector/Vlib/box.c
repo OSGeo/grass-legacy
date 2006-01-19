@@ -98,6 +98,101 @@ Vect_box_extend (BOUND_BOX *A, BOUND_BOX *B)
     return 1;
 }
 
+
+/*!
+ * \fn int Vect_box_clip (double *x, double *y, double *c_x, double *c_y, BOUND_BOX *Box)
+ * \brief clip coordinates to box, if necessary, lines extending outside of a box.
+ *
+ * A line represented by the coordinates <b>x, y</b> and <b>c_x, c_y</b> is clipped to
+ * the window defined by <b>s</b> (south), <b>n</b> (north), <b>w</b>
+ * (west), and <b>e</b> (east). Note that the following constraints must be
+ * true:
+ * w <e
+ * s <n
+ * The <b>x</b> and <b>c_x</b> are values to be compared to <b>w</b> and
+ * <b>e.</b> The <b>y</b> and <b>c_y</b> are values to be compared to
+ * <b>s</b> and <b>n.</b>
+ * The <b>x</b> and <b>c_x</b> values returned lie between <b>w</b> and 
+ * <b>e.</b> The <b>y</b> and <b>c_y</b> values returned lie between 
+ * <b>s</b> and <b>n.</b>
+ *
+ *  \param x
+ *  \param y
+ *  \param c_x
+ *  \param c_y
+ *  \param boundary box
+ *  \return 1 if any clipping occured, 0 otherwise
+ */
+
+int
+Vect_box_clip (double *x, double *y, double *c_x, double *c_y, BOUND_BOX *Box)
+{
+	int mod ;
+
+	mod = 0 ;
+
+	if (*x < Box->W)
+	{
+		if (*c_x != *x)
+			*y = *y + (Box->W - *x)/(*c_x - *x) * (*c_y - *y) ;
+		*x = Box->W ;
+		mod = 1 ;
+	}
+	if (*x > Box->E)
+	{
+		if (*c_x != *x)
+			*y = *y + (Box->E - *x)/(*c_x - *x) * (*c_y - *y) ;
+		*x = Box->E ;
+		mod = 1 ;
+	}
+	if (*c_x < Box->W)
+	{
+		if (*c_x != *x)
+			*c_y = *c_y + (Box->W - *c_x)/(*x - *c_x) * (*y - *c_y) ;
+		*c_x = Box->W ;
+		mod = 1 ;
+	}
+	if (*c_x > Box->E)
+	{
+		if (*c_x != *x)
+			*c_y = *c_y + (Box->E - *c_x)/(*x - *c_x) * (*y - *c_y) ;
+		*c_x = Box->E ;
+		mod = 1 ;
+	}
+	if (*y < Box->S)
+	{
+		if (*c_y != *y)
+			*x = *x + (Box->S - *y)/(*c_y - *y) * (*c_x - *x) ;
+		*y = Box->S ;
+		mod = 1 ;
+	}
+	if (*y > Box->N)
+	{
+		if (*c_y != *y)
+			*x = *x + (Box->N - *y)/(*c_y - *y) * (*c_x - *x) ;
+		*y = Box->N ;
+		mod = 1 ;
+	}
+	if (*c_y < Box->S)
+	{
+		if (*c_y != *y)
+			*c_x = *c_x + (Box->S - *c_y)/(*y - *c_y) * (*x - *c_x) ;
+		*c_y = Box->S ;
+		mod = 1 ;
+	}
+	if (*c_y > Box->N)
+	{
+		if (*c_y != *y)
+			*c_x = *c_x + (Box->N - *c_y)/(*y - *c_y) * (*x - *c_x) ;
+		*c_y = Box->N ;
+		mod = 1 ;
+	}
+
+	return (mod) ;
+}
+
+
+
 /*!
  \fn int Vect_get_line_box (struct Map_info *Map, int line, BOUND_BOX *Box )
  \brief get line number in boundary box ??
