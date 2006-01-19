@@ -1,5 +1,6 @@
 /* plot1() - Level One vector reading */
 
+#include <string.h>
 #include "gis.h"
 #include "Vect.h"
 #include "display.h"
@@ -13,7 +14,7 @@
 int plot1 (
     struct Map_info *Map, int type, int area, 
     struct cat_list *Clist, int color, int fcolor, int chcat, SYMBOL *Symb, int size, int id_flag,
-    int table_colors_flag, int cats_color_flag)
+    int table_colors_flag, int cats_color_flag, char *rgb_column)
 {
     int i, j, k, ltype, nlines = 0, line, cat = -1;
     double *x, *y, xd, yd, xd0 = 0, yd0 = 0;
@@ -43,6 +44,10 @@ int plot1 (
 
     if( table_colors_flag ) {
       /* for reading RRR:GGG:BBB color strings from table */
+
+      if ( rgb_column == NULL || strlen(rgb_column) == 0 )
+	G_fatal_error(_("Color definition column not specified."));
+
       db_CatValArray_init (&cvarr);     
 
       fi = Vect_get_field (Map, Clist -> field);
@@ -55,21 +60,23 @@ int plot1 (
 	G_fatal_error (_("Cannot open database %s by driver %s"), fi->database, fi->driver);
 
       nrec = db_select_CatValArray(driver, fi->table, fi->key, 
-				   "GRASSRGB", NULL, &cvarr);
+				   rgb_column, NULL, &cvarr);
 
-      G_debug (3, "nrec (grassrgb) = %d", nrec);
+      G_debug (3, "nrec (%s) = %d", rgb_column, nrec);
 
       if (cvarr.ctype != DB_C_TYPE_STRING)
-	G_fatal_error (_("Column type (grassrgb) not supported"));
+	G_fatal_error (_("Color definition column (%s) not a string. "
+	    "Column must be of form RRR:GGG:BBB where RGB values range 0-255."), rgb_column);
 
-      if ( nrec < 0 ) G_fatal_error (_("Cannot select data (grassrgb) from table"));
+      if ( nrec < 0 )
+	G_fatal_error (_("Cannot select data (%s) from table"), rgb_column);
 
       G_debug (2, "\n%d records selected from table", nrec);
 
       db_close_database_shutdown_driver(driver);
 
       for ( i = 0; i < cvarr.n_values; i++ ) {
-	G_debug (4, "cat = %d grassrgb = %s", cvarr.value[i].cat, 
+	G_debug (4, "cat = %d  %s = %s", cvarr.value[i].cat, rgb_column,
 		 db_get_string(cvarr.value[i].val.s));
 
 	/* test for background color */
@@ -152,12 +159,14 @@ int plot1 (
 		} 
 		else { 
 		  rgb = 0;
-		  G_warning (_("Error in color definition column GRASSRGB, element %d with cat %d: colorstring %s"), line, cat, colorstring);
-		} 
+		  G_warning(_("Error in color definition column (%s), element %d "
+		    "with cat %d: colorstring [%s]"), rgb_column, line, cat, colorstring);
+		}
 	      }
 	      else {
 		rgb = 0;
-		G_warning (_("Error in color definition column GRASSRGB, element %d with cat %d"), line, cat);
+		G_warning (_("Error in color definition column (%s), element %d with cat %d"),
+		    rgb_column, line, cat);
 	      }
 	    }
 	  } /* end if cat */
