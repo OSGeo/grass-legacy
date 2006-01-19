@@ -192,9 +192,9 @@ int plot1 (
 
         if ( (ltype & GV_POINTS) && Symb != NULL ) {
 	    /* Note: this should go to some library function */
-	  if (color > -1) {
-	    G_plot_where_xy(x[0], y[0], &x0, &y0);  
-	  }
+	  if ((color != -1 || fcolor != -1) || rgb) {
+	    G_plot_where_xy(x[0], y[0], &x0, &y0);
+	  }  
  
             for ( i = 0; i < Symb->count; i++ ) {
                 part = Symb->part[i];
@@ -204,7 +204,7 @@ int plot1 (
 			/* Note: it may seem to be strange to calculate coor in pixels, then convert
 			 *       to E-N and plot. I hope that we get some D_polygon later. */
 			if ( (part->fcolor.color == S_COL_DEFAULT && fcolor > -1) ||
-			      part->fcolor.color == S_COL_DEFINED ) 
+			      part->fcolor.color == S_COL_DEFINED || rgb) 
 			{
 			    if (!table_colors_flag && !cats_color_flag) {
 			      if ( part->fcolor.color == S_COL_DEFAULT )
@@ -228,9 +228,7 @@ int plot1 (
 				for ( k = 0; k < chain->scount; k++ ) { 
 				    xp  = x0 + chain->sx[k];
 				    yp  = y0 - chain->sy[k];
-				    if (color > -1) {
-				      G_plot_where_en ( xp, yp, &xd, &yd );
-				    }
+				    G_plot_where_en ( xp, yp, &xd, &yd );
 				    Vect_append_point ( PPoints, xd, yd, 0.0);
 				}
 				if ( j == 0 ) {
@@ -241,9 +239,8 @@ int plot1 (
 				}
 			    }
 			    
-			    if (color > -1) {
-			      G_plot_polygon ( PPoints->x, PPoints->y, PPoints->n_points);
-			    }
+			    G_plot_polygon ( PPoints->x, PPoints->y, PPoints->n_points);
+
 			}
 			if ( (part->color.color == S_COL_DEFAULT && color > -1 ) ||
 			      part->color.color == S_COL_DEFINED  ) 
@@ -302,7 +299,7 @@ int plot1 (
                         break;
                 }
             }
-	} else if (color > -1 ) {
+	} else if (color > -1 || rgb) {
 	  if (!table_colors_flag && !cats_color_flag) {
 	    R_color (color);
 	  }
