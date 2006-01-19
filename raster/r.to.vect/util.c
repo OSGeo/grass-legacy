@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <string.h>
+
+#ifndef __MINGW32__
 #include <sys/wait.h>
+#endif
+
 #include "gis.h"
 #include "dbmi.h"
 #include "Vect.h"

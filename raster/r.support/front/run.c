@@ -17,7 +17,7 @@ int run_etc_support(char *pgm, char *rast)
              G_gisbase(), pgm, rast);
 
     if ((stat = G_system(buf)))
-	sleep(3);
+	G_sleep(3);
 
     return stat;
 }

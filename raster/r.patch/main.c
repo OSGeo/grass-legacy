@@ -94,7 +94,7 @@ int main (int argc, char *argv[])
         if (mapset == NULL)
         {
             fprintf (stderr, "%s - %s not found\n", G_program_name(), name);
-            sleep(3);
+            G_sleep(3);
             ok = 0;
         }
         if (!ok) 
