@@ -92,6 +92,7 @@ int Vect_point_in_box (double, double, double, BOUND_BOX *);
 int Vect_box_overlap (BOUND_BOX *, BOUND_BOX *);
 int Vect_box_copy (BOUND_BOX *, BOUND_BOX *);
 int Vect_box_extend (BOUND_BOX *, BOUND_BOX *);
+int Vect_box_clip (double *, double *, double *, double *, BOUND_BOX *);
 int Vect_region_box ( struct Cell_head *, BOUND_BOX * );
 
     /* Spatial index */
