@@ -23,6 +23,14 @@ CALLS:
 #include <unistd.h>
 #include "vask.h"
 
+#ifdef __MINGW32__
+unsigned int sleep (unsigned int seconds)
+{
+    /* TODO: no sleep for now */
+    return 0;
+}
+#endif
+
 int V_error( char *message )
 {
 	fprintf(stderr,"V_ask error: %s\n", message) ;
