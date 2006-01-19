@@ -107,6 +107,8 @@ PNGBASED = r.out.png
 
 CXXBASED = r.terraflow
 
+TIFFBASED = r.out.tiff
+
 #compile if GDAL present:
 ifneq ($(USE_GDAL),)
     SUBDIRS += $(GDALBASED)
@@ -125,6 +127,11 @@ endif
 #compile if C++ compiler present:
 ifneq ($(strip $(CXX)),)
     SUBDIRS += $(CXXBASED)
+endif
+
+#compile if TIFF present:
+ifneq ($(strip $(TIFFLIB)),)
+    SUBDIRS += $(TIFFBASED)
 endif
 
 default: subdirs htmldir
