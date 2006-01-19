@@ -2,6 +2,7 @@
 /* Ported to GRASS6 by Brad Douglas <rez@touchofmadness.com> */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 #include "gis.h"
 #include "glocale.h"
