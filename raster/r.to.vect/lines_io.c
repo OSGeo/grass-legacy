@@ -22,6 +22,7 @@
  * Pierre de Mouveaux - 20 april 2000.
  */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/wait.h>
