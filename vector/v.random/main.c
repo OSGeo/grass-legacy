@@ -49,7 +49,7 @@
 #endif
 double myrand(void);
 
-#if defined(__CYGWIN__) || defined(__APPLE__) 
+#if defined(__CYGWIN__) || defined(__APPLE__) || defined(__MINGW32__)
 double drand48()
 {
 	return(rand()/32767.0);
