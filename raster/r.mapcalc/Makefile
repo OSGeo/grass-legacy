@@ -2,8 +2,10 @@ MODULE_TOPDIR = ../..
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-PGM2 = r.mapcalc$(EXE_SUFFIX)
-PGM3 = r3.mapcalc$(EXE_SUFFIX)
+NAME2 = r.mapcalc$(EXE_SUFFIX)
+NAME3 = r3.mapcalc$(EXE_SUFFIX)
+PGM2 = $(NAME2)$(EXE_SUFFIX)
+PGM3 = $(NAME3)$(EXE_SUFFIX)
 
 COMMON = \
 	$(OBJDIR)/y.tab.o \
@@ -88,5 +90,5 @@ lex.yy.c: mapcalc.l y.tab.h
 
 html:
 	$(MKDIR) $(GISBASE)/docs/html
-	$(INSTALL) -m 644 $(PGM2).html $(GISBASE)/docs/html/
-	$(INSTALL) -m 644 $(PGM3).html $(GISBASE)/docs/html/
+	$(INSTALL) -m 644 $(NAME2).html $(GISBASE)/docs/html/
+	$(INSTALL) -m 644 $(NAME3).html $(GISBASE)/docs/html/
