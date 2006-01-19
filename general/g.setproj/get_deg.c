@@ -28,7 +28,7 @@ int get_deg(char *strng, int ll_swt)
 			if (!G_scan_easting(strng, &degrees, PROJECTION_LL)) {
 				fprintf(stderr,
 					"\n\t** %s is invalid for longitude **\n", strng);
-				sleep(2);
+				G_sleep(2);
 				return (0);
 			}
 			break;

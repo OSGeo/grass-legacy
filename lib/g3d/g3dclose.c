@@ -1,3 +1,6 @@
+#ifdef __MINGW32__
+#  include <windows.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -26,7 +29,11 @@ G3d_closeNew  (G3D_Map *map)
 
   /* finally move tempfile to data file */
   G3d_filename (path, G3D_CELL_ELEMENT, map->fileName, map->mapset);
+#ifdef __MINGW32__
+  if ( CopyFile ( map->tempName, path, FALSE ) == 0 ) {
+#else
   if (link (map->tempName, path) < 0) {
+#endif
     sprintf (command, "mv %s %s", map->tempName, path);
     if(system (command)) {
       sprintf (buf,
