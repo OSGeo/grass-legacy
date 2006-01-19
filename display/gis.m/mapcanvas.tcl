@@ -400,11 +400,17 @@ proc mapcan::zoom_region { mon } {
 # zoom bindings
 proc mapcan::zoombind { mon zoom } {
 	variable can
+	global mapcursor
+	
+	set mapcursor [$can($mon) cget -cursor]
 
 	bind $can($mon) <2> ""
 	bind $can($mon) <3> ""
 	
-	bind $can($mon) <1> "mapcan::markzoom $mon %x %y"
+	bind $can($mon) <1> {
+		mapcan::markzoom $mon %x %y
+		mapcan::setcursor $mon "plus"
+		}
 	bind $can($mon) <B1-Motion> "mapcan::drawzoom $mon %x %y"
 	bind $can($mon) <ButtonRelease-1> "mapcan::zoomregion $mon $zoom"
 
@@ -510,6 +516,9 @@ proc mapcan::zoomregion { mon zoom } {
 	bind $can($mon) <B1-Motion> ""
 	bind $can($mon) <ButtonRelease-1> ""
 
+	mapcan::restorecursor $mon 		
+
+
 	return
 }
 
@@ -543,13 +552,20 @@ proc mapcan::zoom_back { mon } {
 # pan bindings
 proc mapcan::panbind { mon } {
 	variable can
+	global mapcursor
+	
+	set mapcursor [$can($mon) cget -cursor]
 	
 	bind $can($mon) <2> ""
 	bind $can($mon) <3> ""
+	mapcan::setcursor $mon "hand2"
 
-	bind $can($mon) <1> "mapcan::startpan $mon %x %y"
-	bind $can($mon) <B1-Motion> "mapcan::dragpan $mon %x %y"
-	bind $can($mon) <ButtonRelease-1> "mapcan::pan $mon"
+	bind $can($mon) <1> {mapcan::startpan $mon %x %y}
+	bind $can($mon) <B1-Motion> {mapcan::dragpan $mon %x %y}
+	bind $can($mon) <ButtonRelease-1> {
+		mapcan::pan $mon
+		mapcan::restorecursor $mon 
+		}
 }
 
 
@@ -623,6 +639,22 @@ proc mapcan::pan { mon } {
     return
 }
 
+proc mapcan::setcursor { mon  ctype } {
+	global mapcursor
+	variable can
+
+	$can($mon) configure -cursor $ctype
+	return
+}
+
+proc mapcan::restorecursor {mon} {
+	global mapcursor
+	variable can
+	
+	$can($mon) configure -cursor $mapcursor
+	return
+}
+
 ###############################################################################
 # procedures for measuring 
 
@@ -630,6 +662,9 @@ proc mapcan::pan { mon } {
 proc mapcan::measurebind { mon } {
 	variable can
 	global mlength totmlength dtxt
+	global mapcursor
+	
+	set mapcursor [$can($mon) cget -cursor]
 
 	bind $can($mon) <2> ""
 	
@@ -657,7 +692,9 @@ proc mapcan::markmline {mon x y} {
     
     # create window for measurement output
     # put some code here
-    
+	
+	mapcan::setcursor $mon "plus"
+
     #start line
     if { ![info exists linex1] } {
     	set linex1 [$can($mon) canvasx $x]
@@ -718,8 +755,6 @@ proc mapcan::measure { mon } {
 	
 	set linex1 $linex2
 	set liney1 $liney2
-
-
 }
 
 # end measurement
@@ -748,6 +783,8 @@ proc mapcan::stopmeasure { mon } {
 	bind $can($mon) <B1-Motion> ""
 	bind $can($mon) <ButtonRelease-1> ""
 	bind $can($mon) <3> ""
+
+	mapcan::restorecursor $mon
 
 	return
 }
