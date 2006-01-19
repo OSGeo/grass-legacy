@@ -1,13 +1,10 @@
 #include <stdlib.h>
+#include <math.h>
 #include "gis.h"
 #include "glocale.h"
 #include "bouman.h"
 #include "region.h"
 
-
-#ifdef __CYGWIN__
-#define HUGE HUGE_VAL
-#endif
 #define EM_PRECISION 1e-4
 #define ML_PRECISION 1e-6
 
@@ -234,7 +231,7 @@ segmentation and texture statistics. */
   for(nn1=0; nn1<3; nn1++) 
   for(nn2=0; nn2<2; nn2++) {
     tmp=(alpha0*nn0+alpha1*nn1+alpha2*nn2)+Constant;
-    if(tmp==0) log_tbl[nn0][nn1][nn2] = HUGE;
+    if(tmp==0) log_tbl[nn0][nn1][nn2] = HUGE_VAL;
     else log_tbl[nn0][nn1][nn2] = - log(tmp);
     if(statflag) N[nn0][nn1][nn2] = 0; 
   } 
@@ -243,7 +240,7 @@ segmentation and texture statistics. */
   for(i=region->ymin; i<region->ymax; i+=period) 
   for(j=region->xmin; j<region->xmax; j+=period) { 
     /* compute minimum cost class */
-    mincost = HUGE; 
+    mincost = HUGE_VAL; 
     bflag=up_char(i,j,region,sf2,nbr); 
     for(m=0; m<M; m++) { 
       nn0=n0[m] = (m==(*nbr[0]));
@@ -259,7 +256,7 @@ segmentation and texture statistics. */
     if((!bflag)&&(statflag)) {
       Z=0.0;
       for(m=0; m<M; m++) {
-        if(pdf[m]==HUGE) pdf[m]=0;
+        if(pdf[m]==HUGE_VAL) pdf[m]=0;
         else pdf[m] = exp(mincost-pdf[m]);
         Z += pdf[m];
       }
