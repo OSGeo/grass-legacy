@@ -30,7 +30,7 @@ write_ep (struct Edge *e )
 	    y2 = e->ep[re]->coord.y;
 
 	    if( !Vect_point_in_box(x1,y1,0.0,&Box) || !Vect_point_in_box(x2,y2,0.0,&Box) ) {
-		D_clip( Box.S, Box.N, Box.W, Box.E, &x1, &y1, &x2, &y2 );
+		Vect_box_clip(&x1, &y1, &x2, &y2, &Box);
 	    }
 
 	    /* Don't write zero length */
