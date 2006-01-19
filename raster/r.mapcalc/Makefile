@@ -2,8 +2,8 @@ MODULE_TOPDIR = ../..
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-NAME2 = r.mapcalc$(EXE_SUFFIX)
-NAME3 = r3.mapcalc$(EXE_SUFFIX)
+NAME2 = r.mapcalc
+NAME3 = r3.mapcalc
 PGM2 = $(NAME2)$(EXE_SUFFIX)
 PGM3 = $(NAME3)$(EXE_SUFFIX)
 
