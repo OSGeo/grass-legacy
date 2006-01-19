@@ -35,7 +35,7 @@ int run_system(char *pgm)
 
     snprintf(buf, sizeof(buf), "%s", pgm);
     if ((stat = G_system(buf)))
-	sleep(3);
+	G_sleep(3);
 
     return stat;
 }
