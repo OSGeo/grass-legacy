@@ -38,7 +38,7 @@ int get_deg(char *strng, int ll_swt)
 			if (G_scan_northing(strng, &degrees, PROJECTION_LL) == 0) {
 				fprintf(stderr,
 					"\n\t** %s is invalid for latitude **\n", strng);
-				sleep(2);
+				G_sleep(2);
 				return (0);
 			}
 			break;
