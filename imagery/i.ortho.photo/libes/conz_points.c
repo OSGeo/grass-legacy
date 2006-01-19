@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include "imagery.h"
 #include "orthophoto.h"
+#include "gis.h"
 
 #define POINT_FILE "CONTROL_POINTS"
 
@@ -101,7 +102,7 @@ int I_get_con_points (char *group, struct Ortho_Control_Points *cp)
 	sprintf (msg, "unable to open control point (Z) file for group [%s in %s]",
 		group, G_mapset());
 	G_warning (msg);
-	sleep(4);
+	G_sleep(4);
 	return 0;
     }
 
@@ -112,7 +113,7 @@ int I_get_con_points (char *group, struct Ortho_Control_Points *cp)
 	sprintf (msg, "bad format in control point file for group [%s in %s]",
 		group, G_mapset());
 	G_warning (msg);
-	sleep(4);
+	G_sleep(4);
 	return 0;
     }
     return 1;
@@ -129,7 +130,7 @@ int I_put_con_points (char *group, struct Ortho_Control_Points *cp)
 	sprintf (msg, "unable to create control point file for group [%s in %s]",
 		group, G_mapset());
 	G_warning (msg);
-	sleep(4);
+	G_sleep(4);
 	return 0;
     }
 
@@ -153,7 +154,7 @@ int I_convert_con_points (char *group, struct Ortho_Control_Points *con_cp,
 	sprintf (msg, "unable to open control point (Z) file for group [%s in %s]",
 		group, G_mapset());
 	G_warning (msg);
-	sleep(4);
+	G_sleep(4);
 	return 0;
     }
 
@@ -164,7 +165,7 @@ int I_convert_con_points (char *group, struct Ortho_Control_Points *con_cp,
 	sprintf (msg, "bad format in control point file for group [%s in %s]",
 		group, G_mapset());
 	G_warning (msg);
-	sleep(4);
+	G_sleep(4);
 	return 0;
     }
 

@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include "orthophoto.h"
 #include "ortholib.h"
-
+#include "gis.h"
 
 #define IN_BUF 200
 
@@ -48,7 +48,7 @@ I_get_group_elev (char *group, char *elev, char *mapset_elev, char *tl, char *ma
     if (!fd) 
     {
        G_warning ("unable to open elevation file for group [%s] in mapset [%s]", group, G_mapset());
-       sleep(3);
+       G_sleep(3);
 
        return 0;
     }
