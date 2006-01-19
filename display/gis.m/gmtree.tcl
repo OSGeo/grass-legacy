@@ -18,6 +18,7 @@ namespace eval GmTree {
 }
 
 
+
 ###############################################################################
 
 
@@ -56,7 +57,8 @@ proc GmTree::create { mon } {
 	$pgs raise page_$mon
 
 	# destroy old panel with options
-    if {[info exists options.fr]} {destroy $options.fr}
+#    if {[info exists options.fr]} {destroy $options.fr}
+    destroy $options.fr
 
 	set sw    [ScrolledWindow $pg($mon).sw \
 		-relief flat -borderwidth 0 ]
@@ -131,23 +133,6 @@ proc GmTree::scrollview { mon } {
 
 ###############################################################################
 
-
-# save old tree and load new one
-proc GmTree::saveload { mon } {
-	variable currenttree
-	variable currentmon
-	variable tree
-	global treefile
-	
-	GmTree::save $treefile$currentmon
-	GmTree::load $treefile$mon
-	
-
-}
-
-
-###############################################################################
-
 proc GmTree::drop { from to where operation type data } {
     variable tree
     global mon
@@ -211,16 +196,16 @@ proc GmTree::close { tree node } {
 proc GmTree::selectn { tree node } {
     variable selected 
 
-    if { $selected == $node } {
-        $tree selection clear $node
-        set selected ""
-        GmTree::deselect $node
-    } else {
+#    if { $selected == $node } {
+#        $tree selection clear $node
+#        set selected ""
+#        GmTree::deselect $node
+#    } else {
         $tree selection set $node
         update
         set selected $node
         GmTree::select $node
-    }
+#    }
 
 }
 
@@ -896,6 +881,7 @@ proc GmTree::rc_write { depth args } {
 proc GmTree::node_type { node } {
     variable tree
     global mon
+    global type
 
     if { [string compare $node "root"] == 0 } {
        return "group"
@@ -948,47 +934,6 @@ proc GmTree::node_type { node } {
 
 ###############################################################################
 
-# query selected map
-proc GmTree::query { mon east north } {
-    variable tree
-#    variable options
-	global options
-
-    set sel [ lindex [$tree($mon) selection get] 0 ]
-    if { $sel == "" } { return }
-
-    set type [GmTree::node_type $sel]
-
-    switch $type {
-        raster {
-            GmRaster::query $sel $east $north
-        }
-        labels {
-            GmLabels::query $sel $east $north
-        }
-        vector {
-            GmVector::query $sel $east $north
-        }
-        cmd {
-            GmCmd::query $sel $east $north
-        }
-        rgbhis {
-            GmRgbhis::query $sel $east $north
-            #return
-        }
-        dframe {
-            return
-        }
-        chart {
-            return
-        }
-        thematic {
-            return
-        }
-    }
-}
-
-###############################################################################
 
 #digitize
 proc GmTree::edit { } {
@@ -1017,6 +962,7 @@ proc GmTree::edit { } {
     }
 
 }
+
 ###############################################################################
 
 

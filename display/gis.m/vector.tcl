@@ -156,17 +156,22 @@ proc GmVector::show_columns { id } {
 	global bgcolor
 	set mapname $opt($id,map)
 	set layernum $opt($id,field)
-	exec xterm -bg $bgcolor -title "$mapname columns" \
-		-geometry 40x25-10+30 -sb -hold -e v.info -c map=$mapname \
-		layer=$layernum &		
+	set cmd "v.info -c map=$mapname layer=$layernum"		
+	run_panel $cmd
+	
+#	exec xterm -bg $bgcolor -title "$mapname columns" \
+#		-geometry 40x25-10+30 -sb -hold -e v.info -c map=$mapname \
+#		layer=$layernum &		
 }
 
 proc GmVector::show_data { id } {
 	variable opt
 	global bgcolor
 	set mapname $opt($id,map)
-	exec xterm -bg $bgcolor -title "$mapname data" \
-		-geometry 60x40-10+30 -sb -hold -e db.select table=$mapname &
+	set cmd "db.select table=$mapname"
+	run_panel $cmd
+#	exec xterm -bg $bgcolor -title "$mapname data" \
+#		-geometry 60x40-10+30 -sb -hold -e db.select table=$mapname &
 }
 
 # select symbols from directories
@@ -489,19 +494,21 @@ proc GmVector::display { node } {
 }
 
 
-
-proc GmVector::query { node east north } {
+# get selected vector map (used for query)
+proc GmVector::mapname { node } {
     variable opt
     variable tree
     global mon
     global vdist
+	#global mapname
+
     
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
 
-    if { ! ( $opt($id,_check) ) } { return } 
+    if { ! ( $opt($id,_check) ) } { return "" } 
 
-    if { $opt($id,map) == "" } { return } 
+    if { $opt($id,map) == "" } { return ""} 
 
     if { !$opt($id,display_shape) && !$opt($id,display_cat) &&
          !$opt($id,display_topo)  && !$opt($id,display_dir) &&
@@ -509,21 +516,10 @@ proc GmVector::query { node east north } {
 
     if { !$opt($id,type_point) && !$opt($id,type_line) &&
          !$opt($id,type_boundary)  && !$opt($id,type_centroid) && 
-         !$opt($id,type_area) && !$opt($id,type_face) } { return } 
+         !$opt($id,type_area) && !$opt($id,type_face) } { return ""} 
 
-    set cmd "v.what -a map=$opt($id,map) east=$east north=$north distance=$vdist\n\n"
-#    if { $opt($id,_query_text) && !$opt($id,_query_edit) } { 
-#        append cmd " -x" 
-#    } 
-#    if { $opt($id,_query_edit) } { 
-#        append cmd " -e" 
-#    } 
-
-    if { $opt($id,_query_text) && !$opt($id,_query_edit) } {
-        run_panel $cmd
-    } else {
-        run_panel $cmd
-    }
+    set mapname $opt($id,map)
+	return $mapname
 }
 
 proc GmVector::WorkOnVector { node } {

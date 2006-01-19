@@ -260,21 +260,24 @@ proc GmRgbhis::duplicate { tree parent node id } {
     return $node
 }
 
-proc GmRgbhis::query { node } {
+proc GmRgbhis::mapname { node } {
     variable opt
     variable tree
     global mon
+    global mapname
     
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
 
     if { ! ( $opt($id,_check) ) } { return } 
 
-    if { $opt($id,map1) == "" } { return }
-    if { $opt($id,map2) == "" } { return }
-    if { $opt($id,map3) == "" } { return }
+    if { $opt($id,map1) == "" && $opt($id,map2) == "" } { return }
 
-    set cmd "d.what.rast map=$opt($id,map1),$opt($id,map2),$opt($id,map3)"
+    set mapname "$opt($id,map1),$opt($id,map2)"
+
+    if {$opt($id,map3) != ""} {
+    	append mapname ",$opt($id,map3)"
+    }
     
-    term $cmd
+    return $mapname
 }

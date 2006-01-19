@@ -32,6 +32,7 @@ namespace eval mapcan {
 	variable array canvas_h # mon
 	variable array canvas_w # mon
 	variable array canvas_h # mon
+    variable array tree # mon
     variable cmstatus
 	}
 
@@ -123,36 +124,48 @@ proc mapcan::create { } {
 	# mouse handlers
 	bind $can($mon) <ButtonPress-1> {
 		global  mon b1east b1north win
+		global currmon
 		variable tree		
 		set winx [winfo pointerx .]
 		set winy [winfo pointery .]
 		set win [winfo containing $winx $winy]
 		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
-		set mon $currmon
+		#set mon $currmon
 		set b1east  [mapcan::scrx2mape %x]
 		set b1north [mapcan::scry2mapn %y]
-		GmTree::switchpage $mon
+		if { $mon ne $currmon } {
+			GmTree::switchpage $currmon
+		}
+		set currmon $mon
 	}
 	
 	bind $mapframe <ButtonPress-1> {
 		global  mon b1east b1north win
+		global currmon
 		variable tree		
 		set winx [winfo pointerx .]
 		set winy [winfo pointery .]
 		set win [winfo containing $winx $winy]
 		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
-		set mon $currmon
-		GmTree::switchpage $mon
+		#set mon $currmon
+		if { $mon != $currmon } {
+			GmTree::switchpage $currmon
+		}
+		set currmon $mon
 	}
 	bind .mapcan($mon) <ButtonPress-1> {
 		global  mon b1east b1north win
+		global currmon
 		variable tree		
 		set winx [winfo pointerx .]
 		set winy [winfo pointery .]
 		set win [winfo containing $winx $winy]
 		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
+		#set mon $currmon
+		if { $mon != $currmon } {
+			GmTree::switchpage $currmon
+		}
 		set mon $currmon
-		GmTree::switchpage $mon
 	}
 
 	bind $can($mon) <Motion> {
@@ -167,10 +180,6 @@ proc mapcan::create { } {
     # indicator creation	
     set map_ind  [$mapframe addindicator -textvariable coords \
     	-width 25 -justify left -padx 15]
-    	
-
-#    update idletasks    
-
 
 #	window configuration change handler for resizing
     bind $can($mon) <Configure> {
@@ -178,12 +187,11 @@ proc mapcan::create { } {
     	variable canvas_h
     	#global currmon
 		set canvas_w($mon) %w
-		set scrwidth %w
+		#set scrwidth %w
 		set canvas_h($mon) %h
-		set order %d
+		#set order %d
 		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
 		set mon $currmon
-		#if { $order == "below" } { set leavemon $changemon }
 		after cancel mapcan::do_resize $mon
 		after idle mapcan::do_resize $mon
 	}
@@ -192,9 +200,9 @@ proc mapcan::create { } {
     	variable canvas_h
     	#global currmon
 		set canvas_w($mon) %w
-		set scrwidth %w
+		#set scrwidth %w
 		set canvas_h($mon) %h
-		set order %d
+		#set order %d
 		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
 		set mon $currmon
 	}
@@ -203,33 +211,13 @@ proc mapcan::create { } {
     	variable canvas_h
     	#global currmon
 		set canvas_w($mon) %w
-		set scrwidth %w
+		#set scrwidth %w
 		set canvas_h($mon) %h
-		set order %d
+		#set order %d
 		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
 		set mon $currmon
 	}
 	
-}
-
-###############################################################################
-# procedures for linking layer tree to display
-
-# show tree for display
-proc mapcan::showtree { mon } {
-	global tree
-	global sw
-
-#	$tree($mon) opentree "root"
-    $sw setwidget $tree($mon)
-
-}
-
-# hide tree for display
-proc mapcan::hidetree { mon } {
-	variable tree
-	
-#	$tree($mon) closetree "root"
 }
 
 ###############################################################################
@@ -376,7 +364,7 @@ proc mapcan::erase { mon } {
 
 ###############################################################################
 
-# display all
+# zoom to default region
 proc mapcan::zoom_default { mon } {
 	variable can
     
@@ -391,7 +379,7 @@ proc mapcan::zoom_default { mon } {
 
 ###############################################################################
 
-# display region
+# zoom to saved region
 proc mapcan::zoom_region { mon } {
    	variable can
    
@@ -407,7 +395,7 @@ proc mapcan::zoom_region { mon } {
 }
 
 ###############################################################################
-# procedures for zooming in and zooming out
+# procedures for interactive zooming in and zooming out
 
 # zoom bindings
 proc mapcan::zoombind { mon zoom } {
@@ -772,7 +760,6 @@ proc mapcan::stopmeasure { mon } {
 
 # query bindings
 proc mapcan::querybind { mon } {
-	variable can
 	global dtxt
 	global stop
 	global map_ew
@@ -780,33 +767,91 @@ proc mapcan::querybind { mon } {
 	global scr_ew
 	global scr_ns
 	global vdist
-
-
-	# set query 'snapping' distance to 10 screen pixels
-	set vdist [expr $map_ew / (10* $scr_ew) ]
+	global type
+	global options
+	global mapname
+	global selected
+	variable tree
+	variable can
 	
-	bind $can($mon) <1> {mapcan::startquery $mon %x %y}
-	bind $can($mon) <3> {mapcan::stopquery $mon}
+	# set query 'snapping' distance to 10 screen pixels
+	set vdist [expr 10* ($map_ew / $scr_ew) ]
 	
 	if { ![winfo exists .dispout]} {Gm::create_disptxt $mon}
 
 	$dtxt insert end "Use mouse (L button) to query features\n"
 	$dtxt insert end "Press right mouse button to stop query session\n\n"
 	$dtxt yview end 
-	catch {cmd_output $fh}
-	
+
+	bind $can($mon) <1> {mapcan::startquery $mon %x %y }
+	bind $can($mon) <3> {mapcan::stopquery $mon}
+
 }
 
 # query
 proc mapcan::startquery { mon x y } {
 	global stop
+	global vdist
+	variable tree
+	variable can
 
 	set east  [scrx2mape $x]
 	set north [scry2mapn $y]
+
+	# get currently selected map for querying
+    set tree($mon) $GmTree::tree($mon)
+    
+    set sel [ lindex [$tree($mon) selection get] 0 ]
+
+    if { $sel == "" } { return }
+    
+    set type [GmTree::node_type $sel]
+
+    switch $type {
+        raster {
+            set mapname [GmRaster::mapname $sel]
+			if { $mapname == "" } {
+				$dtxt insert end "You must select a map to query\n"
+				$dtxt yview end 
+				catch {cmd_output $fh}	
+				return
+			}
+			set cmd "r.what -f input=$mapname east_north=$east,$north\n\n"
+        }
+        vector {
+            set mapname [GmVector::mapname $sel]
+            GmRaster::mapname $sel
+			if { $mapname == "" } {
+				$dtxt insert end "You must select a map to query\n"
+				$dtxt yview end 
+				catch {cmd_output $fh}	
+				return
+			}
+	    	set cmd "v.what -a map=$mapname east=$east north=$north distance=$vdist\n\n"
+        }
+        rgbhis {
+            set mapname [GmRgbhis::mapname $sel]
+			if { $mapname == "" } {
+				$dtxt insert end "You must select a map to query\n"
+				$dtxt yview end 
+				catch {cmd_output $fh}	
+				return
+			}
+			set cmd "r.what -f input=$mapname east_north=$east,$north\n\n"
+        }
+        dframe {
+            return
+        }
+        chart {
+            return
+        }
+        thematic {
+            return
+        }
+    }
 	
-	set stop 0
-	GmTree::query $mon $east $north
-	if { $stop == 1 } { return }
+	puts "mapname is $mapname"
+	run_panel $cmd
 }
 
 # query
@@ -814,14 +859,9 @@ proc mapcan::stopquery { mon } {
 	global stop x y east north
 	variable can
 	
-	set stop 1
-	update
-
 	# release bindings
 	bind $can($mon) <1> ""
 	bind $can($mon) <3> ""
-
-	return stop
 	
 }
 ###############################################################################

@@ -217,11 +217,12 @@ proc GmRaster::display { node } {
 
 }
 
-
-proc GmRaster::query { node east north } {
+# get selected raster map (used for query)
+proc GmRaster::mapname { node } {
     variable opt
     variable tree
     global mon
+    global mapname
     
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
@@ -229,11 +230,9 @@ proc GmRaster::query { node east north } {
     if { ! ( $opt($id,_check) ) } { return } 
 
     if { $opt($id,map) == "" } { return } 
-
-    set cmd "r.what -f input=$opt($id,map) east_north=$east,$north\n\n"
     
-    run_panel $cmd
-
+    set mapname $opt($id,map)
+    return $mapname
 }
 
 proc GmRaster::duplicate { tree parent node id } {
