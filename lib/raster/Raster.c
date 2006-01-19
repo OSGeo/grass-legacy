@@ -1,6 +1,7 @@
+#include <stdio.h>
+#include "gis.h"
 #include "raster.h"
 #include "graph.h"
-#include <stdio.h>
 
 
 /*!
@@ -28,7 +29,6 @@ int R_raster(
 {
 	register int z ;
 	register int *ptr ;
-	char *malloc(), *realloc();
 	static int nalloc = 0 ;
 	static unsigned char *chararray ;
 
@@ -53,14 +53,14 @@ int R_raster(
     /* If all one byte values, copy to char raster and call raster_char */
 	if (! nalloc)
 	{
-		chararray = (unsigned char *)malloc(num) ;
+		chararray = (unsigned char *)G_malloc(num) ;
 		nalloc = num ;
 	}
 	else
 	{
 		if (num > nalloc)
 		{
-			chararray = (unsigned char *)realloc(chararray, num) ;
+			chararray = (unsigned char *)G_realloc(chararray, num) ;
 			nalloc = num ;
 		}
 	}

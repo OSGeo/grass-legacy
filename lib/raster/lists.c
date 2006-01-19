@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "gis.h"
 #include "raster.h"
 
 int _get_list ( char ***list, int *count)
@@ -16,9 +17,9 @@ int _get_list ( char ***list, int *count)
     for (n = 0; *buf != 0 ; n++)
     {
 	if (n == 0)
-	    a = (char **) malloc (sizeof(char *));
+	    a = (char **) G_malloc (sizeof(char *));
 	else
-	    a = (char **) realloc (a, (n+1) * sizeof(char *));
+	    a = (char **) G_realloc (a, (n+1) * sizeof(char *));
 	if (a == NULL)
 	{
 	    fprintf (stderr, "out of memory");
@@ -46,8 +47,8 @@ int R_pad_freelist ( char **list, int count)
     if (count > 0)
     {
 	for (i = 0; i < count; i++)
-	    free (list[i]);
-	free (list);
+	    G_free (list[i]);
+	G_free (list);
     }
 
     return 0;
