@@ -365,14 +365,11 @@ proc Gm::create { } {
     variable prgtext
     variable prgindic
 	
-    set prgtext [G_msg "Loading GIS Manager"]
+    set prgtext "Loading GIS Manager"
     set prgindic -1
     _create_intro
     update
     
-        
-    # eval "exec sleep 20"
-
     global env
 	source $gmpath/gmmenu.tcl
 
@@ -422,20 +419,41 @@ proc Gm::create { } {
     pack $options_pane -expand yes -fill both 
     pack $options_sw $options_sf -fill both -expand yes
  
-    # output
+    # command output
     set output_pane  [$pw1 add -minsize 50 -weight 2 ]
+    set output_frame [frame $output_pane.fr]
+    set output_bbox [ButtonBox $output_pane.bb -bg $bgcolor -default 0 \
+    	-padx 0 -pady 0]
+    
+    pack $output_frame -expand yes -fill both 
     pack $output_pane -expand yes -fill both 
 
-    set output_sw [ScrolledWindow $output_pane.win -relief sunken -borderwidth 1]
-	set outtext [text $output_sw.text -height 5 -width 30 -bg #ffffff] 
+    set output_sw [ScrolledWindow $output_frame.win -relief sunken -borderwidth 1]
+	set outtext [text $output_sw.text -height 6 -width 30 -bg #ffffff] 
 	$output_sw setwidget $outtext
+	
+#	set output_buttons [buttonbox $output_bframe]
+
+	$output_bbox add -text "run" -command "Gm::run_txt $outtext"  -bg #dddddd \
+		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 -width 8 \
+        -helptext [G_msg "run command at cursor"] 
+	$output_bbox add -text "clear" -command "Gm::clear_txt $outtext" -bg #dddddd \
+		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 -width 8 \
+        -helptext [G_msg "Clear output"] -highlightbackground $bgcolor
+	$output_bbox add -text "save" -command "Gm::save_txt $outtext"  -bg #dddddd \
+		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 -width 8 \
+        -helptext [G_msg "Save output to file"] -highlightbackground $bgcolor
+
+	
+	pack $output_bbox -expand yes -fill none 
     pack $output_sw $outtext -fill both -expand yes
     pack $pw1 -side top -expand yes -fill both -anchor n 
   
 
-    set prgtext   [G_msg "Done"]
+	# finish up
+    set prgtext "Done"
 
-    set Gm::status [G_msg "Welcome to the GRASS GIS manager"]
+    set Gm::status [G_msg "Welcome GRASS GIS"]
     $mainframe showstatusbar status 
 
     pack $mainframe -fill both -expand yes
@@ -458,6 +476,7 @@ proc Gm::startmon { } {
 
 	incr mon 1
 
+	#create initial display canvas and layer tree
 	mapcan::create
 	GmTree::create $mon
 	
@@ -486,11 +505,12 @@ proc Gm::_create_intro { } {
 
     set frame [frame $ximg.f -background white]
     set lab1  [label $frame.lab1 -text "GRASS$GRASSVERSION GIS Manager - $location_name" \
-                     -background white -foreground black -font {times 16}]
-    set lab2  [label $frame.lab2 -textvariable Gm::prgtext -background white -font {times 12} -width 35]
+                     -background white -foreground black -font {times 14}]
+    set lab2  [label $frame.lab2 -textvariable Gm::prgtext -background white \
+    	-font {times 12}]
     set prg   [ProgressBar $frame.prg -width 50 -height 15 -background white \
                    -variable Gm::prgindic -maximum $max_prgindic]
-    pack $lab1 $prg $lab2 -side left
+    pack $lab1 $prg $lab2 -side left -fill both -expand yes
     place $frame -x 0 -y 0 -anchor nw
     pack $ximg
     BWidget::place $top 0 0 center
@@ -498,7 +518,6 @@ proc Gm::_create_intro { } {
 }
 
 ###############################################################################
-# output window procedures
 
 # create output window
 proc Gm::create_disptxt { mon } {
@@ -527,10 +546,10 @@ proc Gm::create_disptxt { mon } {
 	# control buttons
 	set dout_tb [$doutfr addtoolbar]
 	set dbb [ButtonBox $dout_tb.bb -orient horizontal -background $bgcolor]
-	$dbb add -text "clear" -command "Gm::clear_dtxt" -bg #dddddd \
+	$dbb add -text "clear" -command "Gm::clear_txt $dtxt" -bg #dddddd \
 		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
         -helptext [G_msg "Clear output"]
-	$dbb add -text "save" -command "save"  -bg #dddddd \
+	$dbb add -text "save" -command "Gm::save_txt $dtxt"  -bg #dddddd \
 		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
         -helptext [G_msg "Save output to file"]
 
@@ -543,15 +562,49 @@ proc Gm::create_disptxt { mon } {
     wm deiconify $dout
 }
 
-# clear output window
-proc Gm::clear_dtxt { } {
-	global dtxt
+###############################################################################
+# run selected text (pass to GRASS command line interpreter)
+proc Gm::run_txt { txt } {
+	global env
+
+	set runtxt [$txt get "insert linestart" "insert lineend"]
+	if { $runtxt == "" } {
+		set runtxt [$txt get "end linestart" "end lineend"]
+	}
 	
-	$dtxt delete 1.0 end
+	run_panel $runtxt
+	return
+}
+
+
+# clear output window
+proc Gm::clear_txt { txt } {
+	
+	$txt delete 1.0 end
 }
 
 # save output window
-proc Gm::save_dtxt { } {
+proc Gm::save_txt { txt } {
+	global env
+
+	set svtxt [dtxt get sel.first sel.last]
+	if { $svtxt == "" } {
+		set svtxt [dtxt get 1.0 end]
+	}
+
+	if { [info exists HOME] } {
+		set dir $env(HOME)
+	} else {
+		set dir ""
+	}
+
+	set path [tk_getSaveFile -initialdir $dir]
+	if { $path == "" } { return }
+
+	
+	set txtfile [open $path w]
+	puts $txtfile $svtxt
+	close $txtfile
 	return
 }
 
@@ -776,7 +829,7 @@ proc Gm::SaveFileBox {w} {
 
 proc Gm::cleanup { } {
 	runcmd "g.mremove -f region=mon_* >/dev/null"
-	eval exec "rm -f dispmon_*.png dispmon_*.ppm dispmon_*.pgm >/dev/null"
+	eval exec "rm dispmon_*.png >/dev/null"
 	eval exec "rm $treefile*"
 	destroy mon
 }
