@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "monitors.h"
+#include "gis.h"
 #include "raster.h"
 #include "glocale.h"
 
@@ -66,7 +67,7 @@ struct MON_CAP *R_parse_monitorcap(int field, char *key)
 		}
 		build_path (line, gisbase);
 		cap.path = cap.comment = cap.link = cap.tty = cap.where = NULL;
-		if ((cap.name = malloc(strlen(line)+1)) == NULL)
+		if ((cap.name = G_malloc(strlen(line)+1)) == NULL)
 			return(NULL);
 		strcpy(cap.name,line);
 		if ((p = substr(":",cap.name)) != NULL)
@@ -97,7 +98,7 @@ struct MON_CAP *R_parse_monitorcap(int field, char *key)
 			}
 		}
 		if( cap.path==NULL || cap.link==NULL || cap.where==NULL|| cap.tty == NULL || cap.comment==NULL)
-		   free(cap.name);
+		   G_free(cap.name);
                 else
 		{
   		   if (field == MON_NEXT || (field == MON_NAME && !strcmp(key,cap.name))
@@ -105,7 +106,7 @@ struct MON_CAP *R_parse_monitorcap(int field, char *key)
 		       || (field == MON_LINK && !strcmp(key,cap.link)))
 		   	return(&cap);
 		   else
-		   	free(cap.name);
+		   	G_free(cap.name);
                 }
 	}
 }

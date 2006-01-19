@@ -184,7 +184,7 @@ _get_text_2 (void)
 	if (i >= len)
 	{
 	    len += 1000;
-	    buf = realloc(buf, len);
+	    buf = G_realloc(buf, len);
 	    if (!buf)
 	    {
 		fprintf(stderr, _("Unable to allocate memory\n"));
@@ -370,7 +370,7 @@ R_open_driver(void)
         {
             fprintf (stderr, _("Couldn't connect to monitor. "
 		     "Will try once more.\n"));
-            sleep (1);
+            G_sleep (1);
         }
         else if (verbose && try > 0)
         {
@@ -659,7 +659,7 @@ lock_driver (int lock_pid)
             if (get_ids (file, id, 2))
                 break;
             if (n == 0)
-                sleep(1); /* allow time for file creator to write its pid */
+                G_sleep(1); /* allow time for file creator to write its pid */
         }
         if (n == 2)
             return CANT_READ;
