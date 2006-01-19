@@ -179,6 +179,7 @@ int main (int argc, char *argv[])
     struct octtree *tree;
 /*DEBUG  int testout = 1; */
     struct Map_info In;
+    struct History  hist;
 
     struct
     {
@@ -731,6 +732,9 @@ fprintf(stderr,"finished interpolating\n");
         if ((cellinp != NULL)) {
           G_close_cell(fdcout);
 	  if ((cellout != NULL)) {
+		  G_short_history (cellout,"raster", &hist);
+		  G_command_history(&hist);
+		  G_write_history (cellout, &hist);
 		  fclose(Tmp_fd_cell);
 		  unlink(Tmp_file_cell);
 	  }
