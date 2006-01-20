@@ -12,6 +12,7 @@
  *   	    	Read the file COPYING that comes with GRASS for details.
  ****************************************************************************
  *
+ * TODO: if bottom > top, the tbres becomes negative and window struct is reset. BUG
  */
 
 #include <string.h>
