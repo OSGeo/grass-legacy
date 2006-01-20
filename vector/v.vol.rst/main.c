@@ -777,7 +777,7 @@ fprintf(stderr,"finished interpolating\n");
 
 	fprintf (stderr, "\n");
 	fprintf (stderr, "The number of points in sites file is %d\n", NPT);
-	fprintf (stderr, "The number of points outside of region %d\n", OUTRANGE);
+	fprintf (stderr, "The number of points outside of 2D/3D region %d\n", OUTRANGE);
 	fprintf (stderr, "The number of points used (after reduction) is %d\n", NPOINT);
 
       }
