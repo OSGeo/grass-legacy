@@ -181,7 +181,7 @@ INPUT ( struct Map_info *In, char *column, char *scol)
     
     if (!((c1 >= 0)&&(c2 >= 0)&&(c3 >= 0)&&(c4 >= 0)&&(c5 >=0)&&(c6 >=0))) {
       if (!OUTRANGE) {
-	fprintf (stderr, "Warning: some points outside of region -- will ignore...\n");
+	fprintf (stderr, "Warning: some points outside of 2D/3D region -- will ignore...\n");
       }
       OUTRANGE++;
     } else {
