@@ -123,6 +123,7 @@ Note: This text contains *some* rules only applicable to the
    http://www.kde-apps.org/content/show.php?content=19776
    http://news.eoportal.org/cgi-bin/eoportal_header.pl?dw=psr&site=software&words=type
    http://www.osdir.com/Downloads+index-req-viewsdownload-sid-206.phtml
+   http://www.foss4g.org/FOSS4G/modules.php?name=Submit_News
 
    ... anywhere else? Please add here.
 
