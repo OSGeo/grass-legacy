@@ -30,8 +30,8 @@ namespace eval mapcan {
 	variable array mapcan # mon
 	variable array canvas_w # mon
 	variable array canvas_h # mon
-	variable array canvas_w # mon
-	variable array canvas_h # mon
+	global array canvas_w # mon
+	global array canvas_h # mon
     variable array tree # mon
     variable cmstatus
 	}
@@ -61,13 +61,11 @@ proc mapcan::create { } {
     global mon
     global win
     global currmon
+    global canvas_w
+    global canvas_h
 
 	variable mapcan
 	variable can
-	variable canvas_w
-	variable canvas_h
-	variable canvas_w
-	variable canvas_h
 
 #	variable tree
 	
@@ -87,12 +85,10 @@ proc mapcan::create { } {
     set mapframe [MainFrame .mapcan($mon).mapframe \
    		-background $bgcolor -textvariable mapcan::status ]
 
-
     # toolbar creation
     set map_tb  [$mapframe addtoolbar]
     MapToolBar::create $map_tb
 
-    
 	# canvas creation
     set can($mon) [canvas $mapframe.can \
         -background #ffffff -borderwidth 0 -closeenough 1.0 \
@@ -108,9 +104,9 @@ proc mapcan::create { } {
     	"geographic coordinates under cursor (east north)"
     $mapframe showstatusbar $mapcan::status 
 
+	pack $map_tb -expand yes -fill both -anchor nw -side top
+	pack $mapframe.can -fill both -expand yes -anchor nw -side top	
     pack $mapframe -expand yes -fill both -ipadx 0 -ipady 0
-	pack $map_tb -expand no -fill x -anchor nw -side bottom
-	pack $mapframe.can -fill both -expand yes -anchor n -side top	
  
     set fon [font create -family Verdana -size 12 ]
     DynamicHelp::configure -font $fon -background yellow
@@ -183,37 +179,29 @@ proc mapcan::create { } {
 
 #	window configuration change handler for resizing
     bind $can($mon) <Configure> {
-    	variable canvas_w
-    	variable canvas_h
-    	#global currmon
+    	global canvas_w
+    	global canvas_h
 		set canvas_w($mon) %w
-		#set scrwidth %w
 		set canvas_h($mon) %h
-		#set order %d
 		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
 		set mon $currmon
+		update idletasks
 		after cancel mapcan::do_resize $mon
 		after idle mapcan::do_resize $mon
 	}
     bind $mapframe <Configure> {
-    	variable canvas_w
-    	variable canvas_h
-    	#global currmon
+    	global canvas_w
+    	global canvas_h
 		set canvas_w($mon) %w
-		#set scrwidth %w
 		set canvas_h($mon) %h
-		#set order %d
 		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
 		set mon $currmon
 	}
     bind .mapcan($mon) <Configure> {
-    	variable canvas_w
-    	variable canvas_h
-    	#global currmon
+    	global canvas_w
+    	global canvas_h
 		set canvas_w($mon) %w
-		#set scrwidth %w
 		set canvas_h($mon) %h
-		#set order %d
 		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
 		set mon $currmon
 	}
@@ -250,8 +238,8 @@ proc mapcan::mapsettings { mon } {
 	
 	variable mapcan
 	variable can
-	variable canvas_w
-	variable canvas_h
+	global canvas_h
+	global canvas_w
 			
     set monregion "$gisdbase/$location_name/$mapset/windows/mon_$mon"
 	if {[file exists $monregion] } {
@@ -288,7 +276,6 @@ proc mapcan::mapsettings { mon } {
 	set env(GRASS_TRANSPARENT) "TRUE"
 	set env(GRASS_PNG_AUTO_WRITE) "TRUE"
 	set env(GRASS_TRUECOLOR) "TRUE"
-	
 }
 
 # draw map using png driver and open in canvas
@@ -301,8 +288,8 @@ proc mapcan::drawmap { mon } {
 	
 	variable mapcan
 	variable can
-	variable canvas_w
-	variable canvas_h
+	global canvas_w
+	global canvas_h
 		
 	$outtext delete 1.0 end
 	
@@ -331,18 +318,10 @@ proc mapcan::drawmap { mon } {
 ###############################################################################
 
 proc mapcan::do_resize {mon} {
-	
-	variable canvas_w
-	variable canvas_h
+	global canvas_w
+	global canvas_h
 	variable can
-	variable canvas_w
-	variable canvas_h
-
-		
-	set canvas_w($mon) $canvas_w($mon)
-	set canvas_h($mon) $canvas_h($mon)
 	
-	update idletasks
 	mapcan::coordconv $mon
 	$can($mon) delete map$mon
 	mapcan::mapsettings $mon
@@ -367,6 +346,8 @@ proc mapcan::erase { mon } {
 # zoom to default region
 proc mapcan::zoom_default { mon } {
 	variable can
+	global canvas_h
+	global canvas_w
     
 	run "g.region save=previous_zoom --o"
 	set cmd "g.region -d save=mon_$mon --o"
@@ -382,6 +363,8 @@ proc mapcan::zoom_default { mon } {
 # zoom to saved region
 proc mapcan::zoom_region { mon } {
    	variable can
+	global canvas_h
+	global canvas_w
    
     set reg [GSelect windows]
     if { $reg != "" } {
@@ -448,6 +431,8 @@ proc mapcan::drawzoom { mon x y } {
 # zoom region
 proc mapcan::zoomregion { mon zoom } {
 	variable can
+	global canvas_h
+	global canvas_w
 	
     global areaX1 areaY1 areaX2 areaY2
 	
@@ -518,7 +503,6 @@ proc mapcan::zoomregion { mon zoom } {
 
 	mapcan::restorecursor $mon 		
 
-
 	return
 }
 
@@ -536,11 +520,13 @@ set areaY2 0
 # zoom back
 proc mapcan::zoom_back { mon } {
     variable can
+	global canvas_h
+	global canvas_w
     
     set cmd "g.region region=previous_zoom save=mon_$mon --o"
     runcmd $cmd
 	$can($mon) delete map$mon
-	mapcan::mapsettings $mon
+	mapcan::mmapsettings $mon
 	mapcan::drawmap $mon
 
 }
@@ -598,6 +584,8 @@ proc mapcan::pan { mon } {
     global from_x from_y
     global to_x to_y
 	variable can
+	global canvas_h
+	global canvas_w
 	
 	# get map coordinate shift    
     set from_e [scrx2mape $from_x]
@@ -808,6 +796,7 @@ proc mapcan::querybind { mon } {
 	global options
 	global mapname
 	global selected
+	global mapcursor
 	variable tree
 	variable can
 	
@@ -815,12 +804,17 @@ proc mapcan::querybind { mon } {
 	set vdist [expr 10* ($map_ew / $scr_ew) ]
 	
 	if { ![winfo exists .dispout]} {Gm::create_disptxt $mon}
+	
+	set mapcursor [$can($mon) cget -cursor]
 
 	$dtxt insert end "Use mouse (L button) to query features\n"
 	$dtxt insert end "Press right mouse button to stop query session\n\n"
 	$dtxt yview end 
 
-	bind $can($mon) <1> {mapcan::startquery $mon %x %y }
+	bind $can($mon) <1> {
+		mapcan::startquery $mon %x %y 
+		mapcan::setcursor $mon "crosshair"
+		}
 	bind $can($mon) <3> {mapcan::stopquery $mon}
 
 }
@@ -899,6 +893,8 @@ proc mapcan::stopquery { mon } {
 	# release bindings
 	bind $can($mon) <1> ""
 	bind $can($mon) <3> ""
+	mapcan::restorecursor $mon 		
+
 	
 }
 ###############################################################################
@@ -935,8 +931,8 @@ proc mapcan::coordconv { mon } {
 	global mapimg.$mon
 	
 	variable can
-	variable canvas_w
-	variable canvas_h
+	global canvas_w
+	global canvas_h
 	
 
 #	get current map coordinates from g.region
