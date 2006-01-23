@@ -3,34 +3,33 @@
 static FILE *_send, *_recv;
 
 void
-db__set_protocol_fds (send, recv)
-    FILE *send, *recv;
+db__set_protocol_fds (FILE *send, FILE *recv)
 {
     _send = send;
     _recv = recv;
 }
 
-xdr_begin_send(xdrs)
-    XDR *xdrs;
+int
+xdr_begin_send(XDR *xdrs)
 {
     xdrstdio_create (xdrs, _send, XDR_ENCODE);
 }
 
-xdr_begin_recv(xdrs)
-    XDR *xdrs;
+int
+xdr_begin_recv(XDR *xdrs)
 {
     xdrstdio_create (xdrs, _recv, XDR_DECODE);
 }
 
-xdr_end_send(xdrs)
-    XDR *xdrs;
+int
+xdr_end_send(XDR *xdrs)
 {
     fflush(_send);
     xdr_destroy (xdrs);
 }
 
-xdr_end_recv(xdrs)
-    XDR *xdrs;
+int
+xdr_end_recv(XDR *xdrs)
 {
     xdr_destroy (xdrs);
 }
