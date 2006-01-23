@@ -42,13 +42,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#if !(defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__APPLE_CC__))
-/* <malloc.h> has been replaced by <stdlib.h> in *BSD. */
-/* and Mac OS X is based on BSD, but apparently doesn't define those symbols */
-/* At the moment, if APPLE_CC is defined, we're using Apple's compilers - */
-/* but that probably isn't the best test.  What is a better way ? */
-#include <malloc.h>
-#endif
 
 #include "config.h"
 #ifdef HAVE_UNISTD_H
