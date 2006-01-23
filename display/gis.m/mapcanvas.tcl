@@ -538,8 +538,14 @@ proc mapcan::zoom_back { mon } {
 # pan bindings
 proc mapcan::panbind { mon } {
 	variable can
-	global mapcursor
+	global mapcursor dtxt
+	global bgcolor
 	
+	set msgtxt "Use mouse (L button) to drag and pan map\nPress right mouse button to stop panning" 
+	
+	set answer [tk_messageBox -message $msgtxt -type okcancel -parent .mapcan($mon)]
+	if { $answer == "cancel" } {return}
+
 	set mapcursor [$can($mon) cget -cursor]
 	
 	bind $can($mon) <2> ""
@@ -550,8 +556,8 @@ proc mapcan::panbind { mon } {
 	bind $can($mon) <B1-Motion> {mapcan::dragpan $mon %x %y}
 	bind $can($mon) <ButtonRelease-1> {
 		mapcan::pan $mon
-		mapcan::restorecursor $mon 
 		}
+	bind $can($mon) <3> {mapcan::stoppan $mon}
 }
 
 
@@ -617,8 +623,16 @@ proc mapcan::pan { mon } {
 	
 	$can($mon) delete map$mon
 	mapcan::mapsettings $mon
-	mapcan::drawmap $mon    
-	
+	mapcan::drawmap $mon 
+}
+
+#stop panning
+proc mapcan::stoppan { mon } {
+	variable can
+
+	# reset cursor to normal
+	mapcan::restorecursor $mon 
+
 	# unbind events
 	bind $can($mon) <1> ""
 	bind $can($mon) <B1-Motion> ""
@@ -626,6 +640,8 @@ proc mapcan::pan { mon } {
 
     return
 }
+
+###############################################################################
 
 proc mapcan::setcursor { mon  ctype } {
 	global mapcursor
@@ -664,11 +680,12 @@ proc mapcan::measurebind { mon } {
 	
 	if { ![winfo exists .dispout]} {Gm::create_disptxt $mon}
 	
-	$dtxt insert end "Use mouse (L button) to draw measurement line\n"
-	$dtxt insert end "Press right mouse button to end measurement\n\n"
-	$dtxt yview end 
-	catch {cmd_output $fh}
+	set msgtxt "Use mouse (L button) to draw measurement line\nPress right mouse button to send measurement" 
 	
+	set answer [tk_messageBox -message $msgtxt -type okcancel -parent .mapcan($mon)]
+	if { $answer == "cancel" } {return}
+	
+	mapcan::setcursor $mon "plus"
 	set mlength 0
 	set totmlength 0
 
@@ -682,8 +699,6 @@ proc mapcan::markmline {mon x y} {
     # create window for measurement output
     # put some code here
 	
-	mapcan::setcursor $mon "plus"
-
     #start line
     if { ![info exists linex1] } {
     	set linex1 [$can($mon) canvasx $x]
@@ -816,13 +831,15 @@ proc mapcan::querybind { mon } {
 	
 	set mapcursor [$can($mon) cget -cursor]
 
-	$dtxt insert end "Use mouse (L button) to query features\n"
-	$dtxt insert end "Press right mouse button to stop query session\n\n"
-	$dtxt yview end 
+	set msgtxt "Use mouse (L button) to query features\nPress right mouse button to stop query session" 
+	
+	set answer [tk_messageBox -message $msgtxt -type okcancel -parent .mapcan($mon)]
+	if { $answer == "cancel" } {return}
+
+	mapcan::setcursor $mon "crosshair"
 
 	bind $can($mon) <1> {
 		mapcan::startquery $mon %x %y 
-		mapcan::setcursor $mon "crosshair"
 		}
 	bind $can($mon) <3> {mapcan::stopquery $mon}
 
