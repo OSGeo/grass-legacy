@@ -7,7 +7,7 @@
 
 #include "dbmi.h"
 
-xdr_begin_send(XDR *);
-xdr_begin_recv(XDR *);
-xdr_end_send(XDR *);
-xdr_end_recv(XDR *);
+int xdr_begin_send(XDR *xdrs);
+int xdr_begin_recv(XDR *xdrs);
+int xdr_end_send(XDR *xdrs);
+int xdr_end_recv(XDR *xdrs);
