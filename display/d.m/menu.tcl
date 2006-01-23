@@ -295,7 +295,6 @@ global execom
 			 {command "Create/rebuild topology" {} "v.build" {} -command {execute v.build }}
 			 {command "Clean vector files" {} "v.clean" {} -command {execute v.clean }}
 			 {separator}
-			 {command "Break lines at intersections" {} "v.topo.check" {} -command {execute v.topo.check }}
 			 {command "Build polylines from adjacent segments" {} "v.build.polylines" {} -command {execute v.build.polylines }}
 			 {command "Split polylines into segments" {} "v.segment" {} -command {execute v.segment }}
 			 {command "Create lines parallel to existing lines" {} "v.parallel" {} -command {execute v.parallel }}
