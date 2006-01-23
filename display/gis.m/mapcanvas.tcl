@@ -651,6 +651,7 @@ proc mapcan::measurebind { mon } {
 	variable can
 	global mlength totmlength dtxt
 	global mapcursor
+    global linex1 liney1 linex2 liney2
 	
 	set mapcursor [$can($mon) cget -cursor]
 
@@ -688,7 +689,15 @@ proc mapcan::markmline {mon x y} {
     	set linex1 [$can($mon) canvasx $x]
     	set liney1 [$can($mon) canvasy $y]
     }
-    
+
+	#check for click with no drag
+    if { ![info exists linex2] } {
+		set linex2 $linex1
+	}
+    if { ![info exists liney2] } {
+		set liney2 $liney1
+	}
+
     $can($mon) delete mline
 }
 
@@ -837,9 +846,10 @@ proc mapcan::startquery { mon x y } {
     if { $sel == "" } { return }
     
     set type [GmTree::node_type $sel]
+    puts "type is $type"
 
     switch $type {
-        raster {
+        "raster" {
             set mapname [GmRaster::mapname $sel]
 			if { $mapname == "" } {
 				$dtxt insert end "You must select a map to query\n"
@@ -849,9 +859,8 @@ proc mapcan::startquery { mon x y } {
 			}
 			set cmd "r.what -f input=$mapname east_north=$east,$north\n\n"
         }
-        vector {
+        "vector" {
             set mapname [GmVector::mapname $sel]
-            GmRaster::mapname $sel
 			if { $mapname == "" } {
 				$dtxt insert end "You must select a map to query\n"
 				$dtxt yview end 
@@ -860,7 +869,7 @@ proc mapcan::startquery { mon x y } {
 			}
 	    	set cmd "v.what -a map=$mapname east=$east north=$north distance=$vdist\n\n"
         }
-        rgbhis {
+        "rgbhis" {
             set mapname [GmRgbhis::mapname $sel]
 			if { $mapname == "" } {
 				$dtxt insert end "You must select a map to query\n"
