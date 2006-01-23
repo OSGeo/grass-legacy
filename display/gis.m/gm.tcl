@@ -829,7 +829,7 @@ proc Gm::SaveFileBox {w} {
 
 proc Gm::cleanup { } {
 	runcmd "g.mremove -f region=mon_* >/dev/null"
-	eval exec "rm dispmon_*.png >/dev/null"
+	eval exec "rm dispmon_* >/dev/null"
 	eval exec "rm $treefile*"
 	destroy mon
 }
