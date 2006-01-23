@@ -20,14 +20,14 @@ struct element
 /* quick and dirty declaration - module will be discontinued if nobody supports it*/
 void do_dots();
 void write_record();
-line();
-line_initialize();
-line_flush();
-save_line();
-yadjust();
-set_limits();
-find_area();
-save_area();
-do_line();
-write_end_record();
+void line(int, int, int, int, int);
+void line_initialize(void);
+void line_flush(void);
+void yadjust();
+void save_line();
+void set_limits();
+int find_area();
+void save_area();
+int do_line();
+int write_end_record(int, int, int, int);
 
