@@ -99,7 +99,7 @@ int main(int argc, char **argv)
 
   net_opt = G_define_standard_option(G_OPT_V_INPUT);
   net_opt->key         = "net";
-  net_opt->description = _("Input network vector");
+  net_opt->description = _("Input network vector map");
   net_opt->required    = NO;
 
   out_opt              = G_define_option();
