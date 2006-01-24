@@ -18,8 +18,7 @@
 #include "proto.h"
 
 int
-db__driver_close_cursor(dbc)
-   dbCursor *dbc;
+db__driver_close_cursor(dbCursor *dbc)
 {
     cursor *c;
 

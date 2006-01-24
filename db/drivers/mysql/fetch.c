@@ -19,10 +19,7 @@
 #include "proto.h" 
 
 int
-db__driver_fetch(cn, position, more)
-    dbCursor *cn;
-    int position;
-    int *more;
+db__driver_fetch(dbCursor *cn, int position, int *more)
 {
     cursor     *c;
     dbToken    token;    
