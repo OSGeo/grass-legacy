@@ -17,8 +17,7 @@
 #define MAIN
 #include "globals.h"
 
-int main(argc, argv)
-     char *argv[];
+int main(int argc, char *argv[])
 {
 	init_dbdriver();
 	exit(db_driver(argc, argv));
