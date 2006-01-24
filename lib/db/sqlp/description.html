@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>SQL support for GRASS GIS</title>
+<title>SQL support in GRASS GIS</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" href="grassdocs.css" type="text/css">
 </head>
@@ -12,127 +12,26 @@
 
 <img src="grass.smlogo.gif" alt="GRASS logo"><hr align=center size=6 noshade>
 
-<H2>DESCRIPTION</H2>
+<H2>SQL support in GRASS GIS</H2>
 
-SQL support for GRASS GIS.
-<P>
-If the default dbf driver is used, only a limited set of SQL functions
-and operators is supported. Coupling GRASS to a DBMS enables full SQL
-support on the attribute tables.
-<P>
-<H2>FUNCTIONS</H2>
-<div class="code"><pre>
-  ALTER TABLE table ADD [COLUMN] columndef
-  CREATE TABLE table ( columndefs )
-  DROP TABLE table
-  SELECT columns FROM table
-  SELECT columns FROM table WHERE condition
-  DELETE FROM table
-  DELETE FROM table WHERE condition
-  INSERT INTO table VALUES (value1[,value2,...])
-  INSERT INTO table ( column1[,column2,...] ) VALUES (value1[,value2,...])
-  UPDATE table SET assignment1[,assignment2,...]
-  UPDATE table SET assignment1[,assignment2,...] WHERE condition
-</pre></div>
+GRASS can use various RDBMS and embeded databases. 
+SQL queries are directly passed to the underlying 
+database system. 
+The set of supported SQL commnads depends on the RDMBS 
+and driver selected.  
 
-<H2>OPERATORS</H2>
-<div class="code"><pre>
-  "="  : equal
-  "<"  : smaller than
-  "<=" : smaller/equal than
-  ">"  : larger than
-  ">=" : larger/equal than
-  "<>" : not equal
-  "~"  : Substring matching
-</pre></div>
-
-<p> Arithmetic expressions using constants and field values are allowed in condition clauses and in the RHS of assignments. Usual precedence rules and bracketing (using '(' and ')') are supported. Type conversion is performed if necessary (experimental). </p>
-<p> Aggregate functions (sum, count, min, max,...) are NOT currently supported in SELECT clauses. </p>
-<p> Mathematic functions (sin, cos, exp, log,...) are NOT currently supported in expressions. </p>
-<p> Conditions allow boolean expressions using the AND, OR and NOT operators, with the usual precedence rules. </p>
-<p> NULLs can be tested by 'colname IS NULL' in conditions. The negation is 'colname NOT NULL'.</p>
-
-<H2>NOTES</H2>
-
-<ul>
-<li> SQL does not support '.' (dots) in table names.
-<li> Supported table name characters are only:<br>
-    [A-Za-z][A-Za-z0-9_]*
-<li> A table name must start with a character, not a number.
-<li> Text-string matching requires the text part to be 'single quoted' and
-     multiple queries should be contained in "double quotes". e.g.<br>
-<div class="code"><pre>
-d.vect map where="individual='juvenile' and area='beach'"
-</pre></div>
-<li> An error message such as "dbmi: Protocol error" either indicates an invalid column name
-     or an unsupported column type (then the GRASS SQL parser needs to be extended).
-<li> DBF column names are limited to 10 characters (DBF API definition)
-</ul>
-
-<h2>EXAMPLES</h2>
-
-Display all vector points except for LAMAR valley and <i>extensive trapping</i> (brackets are superfluous in this example):
-<div class="code"><pre>
-d.vect trapping_sites_points fcol=black icon=basic/diamond col=white size=13 \
-    where="valley <> 'LAMAR' OR (valley = 'LAMAR' AND description = 'extensive trapping')"
-</pre></div>
+<H2>Drivers</H2>  
+The list of available drivers can vary in various binary 
+distributions of GRASS. 
 <p>
-Select all attributes from table where str1 column values are not 'No Name':
-<div class="code"><pre>
-echo "SELECT * FROM archsites WHERE str1 <> 'No Name'" | db.select
-</pre></div>
-<p>
+<table border=1 >
+<tr><td><a href=dbf.html>dbf</a></td><td>DBF files. Data are stored in DBF files.</td><td>&nbsp;</td></tr>
+<tr><td>sqlite</a></td><td>SQLite embeded database.</td><td><a href="http://sqlite.org/">http://sqlite.org/</a></td></tr>
+<tr><td>pg</a></td><td>PostgreSQL RDBMS.</td><td><a href="http://postgresql.org/">http://postgresql.org/</a></td></tr>
+<tr><td><a href=mysql.html>mysql</a></td><td>MySQL RDBMS.</td><td><a href="http://mysql.org/">http://mysql.org/</a></td></tr>
+<tr><td>odbc</td><td>UnixODBC.</td><td><a href="http://www.unixodbc.org/">http://www.unixodbc.org/</a></td></tr>
 
-<p>Example of null handling:
-<div class="code"><pre>
-v.db.addcol map=roads col="nulltest int"
-v.db.update map=roads col=nulltest value=1 where="cat >2"
-d.vect roads where="nulltest is null"
-v.db.update map=roads col=nulltest value=2 where="cat <=2"
-</pre></div>
-</p>
-
-<p>Examples of complex expressions in updates (using v.db.* modules):
-<div class="code"><pre>
-v.db.addcol map=roads col="exprtest double"
-v.db.update map=roads col=exprtest value=cat/nulltest
-v.db.update map=roads col=exprtest value=cat/nulltest+cat where=cat=1
-</pre></div>
-</p>
-
-<p>Examples of complex expressions in updates (using db.* modules):
-<div class="code"><pre>
-echo "UPDATE roads SET exprtest=null"
-echo "UPDATE roads SET exprtest=cat/2" | db.execute
-echo "UPDATE roads SET exprtest=cat/2+cat/3" | db.execute
-echo "UPDATE roads SET exprtest=NULL WHERE cat>2" | db.execute
-echo "UPDATE roads SET exprtest=cat/3*(cat+1) WHERE exprtest IS NULL" | db.execute"
-</pre></div>
-</p>
-
-
-<p>You actually don't always have to create/update columns with expressions, but you can use them directly in other commands:
-<div class="code"><pre>
-d.vect roads where="(cat/3*(cat+1))>8"
-d.vect roads where="cat>exprtest"
-</pre></div>
-</p>
-
-<h2>SEE ALSO</h2>
-<em>
-<a HREF="db.execute.html">db.execute</a>,
-<a HREF="db.select.html">db.select</a>,
-<a HREF="db.tables.html">db.tables</a>,
-<a HREF="d.vect.html">d.vect</a>,
-<a HREF="v.db.addcol.html">v.db.addcol</a>,
-<a HREF="v.db.addtable.html">v.db.addtable</a>,
-<a HREF="v.db.droptable.html">v.db.droptable</a>,
-<a HREF="v.db.select.html">v.db.select</a>
-<a HREF="v.db.update.html">v.db.update</a>
-<BR>
-<a HREF="http://grass.itc.it/grass57/tutorial/links.html">SQL reference links</a>
-</em>
-
+</table>
 
 <p><i>Last changed: $Date$</i>
 <HR>
