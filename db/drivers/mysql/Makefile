@@ -15,6 +15,8 @@ EXTRA_INC = -I$(GRASS_LIBDIR)/db/dbmi_driver
 
 DEPENDENCIES = $(GISDEP)
 
+DRVDOC=$(GISBASE)/docs/html/mysql.html
+
 OBJS 	=  \
 	create_table.o \
 	cursor.o \
@@ -32,8 +34,11 @@ OBJS 	=  \
 
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 
-default: $(DRIVER)
+default: $(DRIVER) $(DRVDOC)
 
 $(DRIVER): $(ARCH_OBJS)
 	$(CC) -g $(LDFLAGS) -o $@ $(ARCH_OBJS) $(LIBES) $(MYSQLLIBPATH) $(MYSQLLIB) \
 		$(TCLTKLIBPATH) $(TCLTKLIBS) $(MATHLIB) $(XDRLIB)
+
+$(DRVDOC): mysql.html
+	$(INSTALL) -m 644 mysql.html $(DRVDOC)
