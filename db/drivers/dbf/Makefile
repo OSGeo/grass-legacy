@@ -11,6 +11,8 @@ EXTRA_INC = -I$(GRASS_LIBDIR)/db/dbmi_driver
 
 LIBES = $(DBMIDRIVERLIB) $(DBMIBASELIB) $(DBMIEXTRALIB) $(SQLPLIB) $(SHAPELIB) $(DBSTUBSLIB) $(GISLIB) $(DATETIMELIB)
 
+DRVDOC=$(GISBASE)/docs/html/dbf.html
+
 OBJS 	=  \
 	column.o \
 	cursor.o \
@@ -51,8 +53,10 @@ D_ARCH_OBJS := $(foreach obj,$(D_OBJS),$(OBJDIR)/$(obj))
 debug_driver: $(D_ARCH_OBJS)
 	$(CC) $(LDFLAGS) -o dbf $(D_ARCH_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-default: $(DRIVER)
+default: $(DRIVER) $(DRVDOC)
 
 $(DRIVER): $(ARCH_OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
+$(DRVDOC): dbf.html
+	$(INSTALL) -m 644 dbf.html $(DRVDOC)
