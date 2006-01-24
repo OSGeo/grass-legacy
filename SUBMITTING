@@ -4,7 +4,7 @@ NOTE: Please improve this list!
 
 Dear (new) GRASS Developer,
 
-When submitting C code to GRASS CVS repositiory, please take
+When submitting C code to GRASS CVS repository, please take
 care of following rules:
 
 [ see SUBMITTING_SCRIPTS for script hints ]
