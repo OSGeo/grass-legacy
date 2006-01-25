@@ -1,3 +1,4 @@
+#ifdef HAVE_CURSES_H
 #include "vask.h"
 #include "imagery.h"
 #include <stdlib.h>
@@ -8,3 +9,4 @@ int I_v_exec()
     if (!V_call()) exit(0);
     return 0;
 }
+#endif

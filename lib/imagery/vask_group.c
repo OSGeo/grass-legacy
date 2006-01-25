@@ -1,3 +1,4 @@
+#ifdef HAVE_CURSES_H
 #include "vask.h"
 #include "imagery.h"
 #include <string.h>
@@ -184,3 +185,4 @@ static int ask (
 	I_put_subgroup (group, subgroup);
     return 1;
 }
+#endif
