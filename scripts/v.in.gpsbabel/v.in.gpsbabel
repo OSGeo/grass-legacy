@@ -303,7 +303,7 @@ if [ $CREATE_POINTS -eq 1 ] ; then
     paste -d"|" "$TMP".vertices "$TMP".attributes > "$TMP".asc
 
 
-    if [ -z "$NAME"] ; then
+    if [ -z "$NAME" ] ; then
 	echo "ASCII file redirected to stdout" 1>&2
 	cat "${TMP}.asc" 2> /dev/null
     else
