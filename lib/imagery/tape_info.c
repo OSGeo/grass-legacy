@@ -1,3 +1,4 @@
+#ifdef HAVE_CURSES_H
 #include "vask.h"
 #include "imagery.h"
 int I_clear_tape_info(struct Tape_Info *t)
@@ -43,3 +44,4 @@ int I_edit_tape_info (struct Tape_Info *t)
 
     return 0;
 }
+#endif

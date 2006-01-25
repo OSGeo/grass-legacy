@@ -1,3 +1,4 @@
+#ifdef HAVE_CURSES_H
 #include <string.h>
 #include "gis.h"
 #include "imagery.h"
@@ -210,3 +211,4 @@ static int show_color(char *label,int n,struct Ref *ref)
 
 	return 0;
 }
+#endif

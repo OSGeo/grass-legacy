@@ -1,7 +1,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include "imagery.h"
+#ifdef HAVE_CURSES_H
 #include "vask.h"
+#endif
 #include "gis.h"
 
 #define MAX 11
@@ -29,6 +31,7 @@ int I_set_band_prefix(char *p)
 	return 0;
 }
 
+#ifdef HAVE_CURSES_H
 int *I_ask_bands (int nbands)
 {
     char **x;
@@ -78,6 +81,7 @@ int *I_ask_bands (int nbands)
     ask_bandname_prefix (num, nbands);
     return num;
 }
+#endif
 
 static int ask_bandname_prefix(int *num,int nbands)
 {
