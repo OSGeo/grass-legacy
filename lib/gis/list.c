@@ -168,10 +168,15 @@ static int list_element( FILE *out, char *element,
  * if a title so that we can call lister() with the names
  * otherwise the ls must be forced into columnar form.
  */
+
+#ifndef __MINGW32__
 	if (lister)
 	    sprintf(buf,"ls '%s'", path);
 	else
 	    sprintf(buf,"ls -C '%s'", path);
+#else
+        G_warning("libgis list_element(): List is not yet supported.");
+#endif /* __MINGW32__ */
 
 	if ((ls = G_popen(buf,"r")))
 	{
