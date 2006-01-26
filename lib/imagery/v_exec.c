@@ -1,3 +1,4 @@
+#include "gis.h"
 #ifdef HAVE_CURSES_H
 #include "vask.h"
 #include "imagery.h"
