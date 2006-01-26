@@ -1,6 +1,6 @@
-#ifdef HAVE_CURSES_H
 #include <string.h>
 #include "gis.h"
+#ifdef HAVE_CURSES_H
 #include "imagery.h"
 #include "vask.h"
 static int show_color(char *,int,struct Ref *);

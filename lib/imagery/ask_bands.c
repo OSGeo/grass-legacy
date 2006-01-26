@@ -1,10 +1,10 @@
 #include <string.h>
 #include <stdlib.h>
+#include "gis.h"
 #include "imagery.h"
 #ifdef HAVE_CURSES_H
 #include "vask.h"
 #endif
-#include "gis.h"
 
 #define MAX 11
 static char prefix[100];
