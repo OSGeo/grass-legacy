@@ -13,10 +13,11 @@
 
 #ifdef HAVE_SYS_MTIO_H
 
-#include "imagery.h"
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <sys/mtio.h>
+#include <unistd.h>
+#include "imagery.h"
 
 
 int I_tape_advance(int fd,int n)
