@@ -44,7 +44,7 @@
 #% key: themetype
 #% type: string
 #% options: graduated_colors,graduated_points,graduated_lines
-#% answer: colors
+#% answer: graduated_colors
 #% description: Type of thematic display
 #% required : yes
 #%end
@@ -439,17 +439,30 @@ if [ "$GIS_OPT_themetype" = "graduated_colors" ] ; then
 	    startc="0:0:255"
 	    endc="0:255:0"
 	    ;;
-		"cyan-yellow" )
+	"green-blue" )
+	    startc="0:255:0"
+	    endc="0:0:255"
+	    ;;
+	"cyan-yellow" )
 	    startc="0:255:255"
 	    endc="255:255:0"
 	    ;;
-		"yellow-cyan" )
+	"yellow-cyan" )
 	    startc="255:255:0"
 	    endc="0:255:255"
 	    ;;
-        "custom gradient" )
+        "custom_gradient" )
 	    startc="$GIS_OPT_startcolor"
 	    endc="$GIS_OPT_endcolor"
+	    ;;
+        "single_color" )
+	    if [ "$GIS_OPT_themetype" = "graduated_points" ]; then
+		startc="$GIS_OPT_linecolor"
+		endc="$GIS_OPT_linecolor"
+	    else
+		startc="$GIS_OPT_pointcolor"
+		endc="$GIS_OPT_pointcolor"
+	    fi
 	    ;;
         "*")
 	    echo "This should not happen: gparser error. Unknown color scheme $GIS_OPT_colorscheme"
