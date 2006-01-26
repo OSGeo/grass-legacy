@@ -11,12 +11,13 @@
 
 #include "config.h"
 
+#include <unistd.h>
+
 #ifdef HAVE_SYS_MTIO_H
 
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <sys/mtio.h>
-#include <unistd.h>
 #include "imagery.h"
 
 
