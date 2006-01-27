@@ -94,6 +94,7 @@ int main(int argc, char *argv[])
     ingeo = G_define_option();
     ingeo->key = "georef";
     ingeo->type = TYPE_STRING;
+    ingeo->key_desc = "file";
     ingeo->required = NO;
     ingeo->description = "Georeferenced data file to read projection "
 	"information from";
@@ -101,6 +102,7 @@ int main(int argc, char *argv[])
     inwkt = G_define_option();
     inwkt->key = "wkt";
     inwkt->type = TYPE_STRING;
+    inwkt->key_desc = "file";
     inwkt->required = NO;
     inwkt->description = "ASCII file containing a single line WKT "
 	"projection description (- for stdin)";
@@ -108,6 +110,7 @@ int main(int argc, char *argv[])
     inproj4 = G_define_option();
     inproj4->key = "proj4";
     inproj4->type = TYPE_STRING;
+    inproj4->key_desc = "params";
     inproj4->required = NO;
     inproj4->description = "PROJ.4 projection description (- for stdin)";
 #endif
@@ -120,6 +123,7 @@ int main(int argc, char *argv[])
     location = G_define_option();
     location->key = "location";
     location->type = TYPE_STRING;
+    location->key_desc = "name";
     location->required = NO;
     location->description = "Name of new location to create";
 
@@ -198,7 +202,7 @@ int main(int argc, char *argv[])
         SetCSVFilenameHook( GPJ_set_csv_loc );
        
 	hSRS = OSRNewSpatialReference(NULL);
-	if (OSRImportFromProj4(hSRS, proj4string) < 0)
+	if (OSRImportFromProj4(hSRS, proj4string) != OGRERR_NONE)
 	    G_fatal_error("Can't parse PROJ.4-style parameter string");
 
 	G_free(proj4string);
@@ -389,6 +393,13 @@ int main(int argc, char *argv[])
 	        /* Create flag given but no location specified; overwrite
 		 * projection files for current location */
 
+		int go_ahead = 0;
+		char *mapset = G_mapset();
+		   
+		if (strcmp(mapset, "PERMANENT") != 0)
+                    G_fatal_error("You must select the PERMANENT mapset before updating the "
+				  "current location's projection. (Current mapset is %s)", mapset);
+		   
 	        if(old_projinfo && old_projunits) {
 		    /* Warn as in g.setproj before overwriting current location */
 		    fprintf(stderr, "\n\nWARNING!  A projection file already exists for this location\n");
@@ -398,38 +409,52 @@ int main(int argc, char *argv[])
 		    fprintf(stderr, "    interpreted differently by the projection software.\n%c%c%c", 7, 7, 7);
 		    fprintf(stderr, "    GRASS will not re-project your data automatically\n\n");
 
-		    if (G_yes("Would you still like to overwrite the current projection information ", 0)) {
+		    if (G_yes("Would you still like to overwrite the current projection information ", 0))
+		        go_ahead = 1;
+		}
+	        else {
+		    /* Projection files missing for some reason;
+		     * go ahead and update */
+		    go_ahead = 1;
+		}
+	       
+	        if(go_ahead) {		    		       
+		    int out_stat;
+		    char path[4096];
+
+                    /* Write out the PROJ_INFO, and PROJ_UNITS if available. */
+                    if( projinfo != NULL ) {
+                        G__file_name( path, "", "PROJ_INFO", "PERMANENT" );
+                        G_write_key_value_file( path, projinfo, &out_stat );
+                        if( out_stat != 0 )
+                            G_fatal_error("Error writing PROJ_INFO");
+                    }
+
+                    if( projunits != NULL ) {
+                        G__file_name( path, "", "PROJ_UNITS", "PERMANENT" );
+                        G_write_key_value_file( path, projunits, &out_stat );
+                        if( out_stat != 0 )
+                            G_fatal_error("Error writing PROJ_UNITS");
+		    }
 		       
-		        int out_stat;
-		        char path[4096];
-		       
-                        /* Create the default, and current window files */
+		    if ( (old_cellhd.zone != cellhd.zone) || (old_cellhd.proj != cellhd.proj) ) {
+                        /* Recreate the default, and current window files if projection
+			 * number or zone have changed */
                         G__put_window( &cellhd, "", "DEFAULT_WIND" );
                         G__put_window( &cellhd, "", "WIND" );
-
-                        /* Write out the PROJ_INFO, and PROJ_UNITS if available. */
-                        if( projinfo != NULL ) {
-                            G__file_name( path, "", "PROJ_INFO", "PERMANENT" );
-                            G_write_key_value_file( path, projinfo, &out_stat );
-                            if( out_stat != 0 )
-                                G_fatal_error("Error writing PROJ_INFO");
-                        }
-
-                        if( projunits != NULL ) {
-                            G__file_name( path, "", "PROJ_UNITS", "PERMANENT" );
-                            G_write_key_value_file( path, projunits, &out_stat );
-                            if( out_stat != 0 )
-                                G_fatal_error("Error writing PROJ_UNITS");
-			}
-		        fprintf(stderr, "Projection information updated!\n");
+		        fprintf(stderr, "\nN.B. The default region was updated to the new projection, but if you have\n"
+				        "multiple mapsets g.region -d should be run in each to update the region from\n"
+					"the default.\n");
 		    }
-		    else
-		        fprintf(stderr, "The projection information will not be updated.\n");
-	       	       
+		    fprintf(stderr, "\nProjection information updated!\n\n");		       
 		}
-	    }
-	}
-    }
+	        else
+		    fprintf(stderr, "The projection information will not be updated.\n");
+	       	       
+	    }	   
+	}       
+    }   
+
 
     if (projinfo != NULL)
 	G_free_key_value(projinfo);
