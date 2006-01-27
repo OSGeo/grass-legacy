@@ -15,9 +15,7 @@
  * same reason we can't use snprintf ;-)  Comments welcome.
  */
 
-/* Make sure the macro doesn't impact our function, if it is defined */
-#undef G_asprintf
-
+#ifndef G_asprintf
 
 /* We cheat by printing to a tempfile via vfprintf and then reading it
  * back in.  Not the most efficient way, probably.
@@ -72,3 +70,5 @@ int G_asprintf(char **out, const char *fmt, ...)
 
     return ret_status;
 }
+
+#endif
