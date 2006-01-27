@@ -116,6 +116,9 @@
 /* define if drand48() exists */
 #undef HAVE_DRAND48
 
+/* define if asprintf() exists */
+#undef HAVE_ASPRINTF
+
 /* define if postgres is to be used */
 #undef HAVE_POSTGRES
 
