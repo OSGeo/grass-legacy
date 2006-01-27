@@ -230,7 +230,7 @@ proc DmThematic::options { id frm } {
     Label $row.a -text [G_msg "Graduate colors: preset color schemes"] 
     ComboBox $row.b -padx 2 -width 18 -textvariable DmThematic::opt($id,colorscheme) \
         -values {"blue-red" "red-blue" "green-red" "red-green" \
-        "blue-green" "custom gradient" "single color" } -entrybg white
+        "blue-green" "custom_gradient" "single_color" } -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
@@ -321,7 +321,7 @@ proc DmThematic::display { node } {
             maxsize=$opt($id,maxsize) nint=$opt($id,nint) pointcolor=$pointcolor \
 			linecolor=$linecolor startcolor=$startcolor endcolor=$endcolor \
 			monitor=$opt($id,legmon) themetype=$opt($id,themetype) \
-			themecalc=$opt($id,themecalc) {colorscheme=$opt($id,colorscheme)}"
+			themecalc=$opt($id,themecalc) colorscheme=$opt($id,colorscheme)"
              
     # breakpoints
     if { $opt($id,breakpoints) != "" } { 
