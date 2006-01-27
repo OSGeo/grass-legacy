@@ -32,11 +32,11 @@ func_desc func_descs[] = {
 	{"sin",		c_double1,	f_sin		},
 	{"cos",		c_double1,	f_cos		},
 	{"tan",		c_double1,	f_tan		},
+	{"acos",	c_double1,	f_acos		},
+	{"asin",	c_double1,	f_asin		},
 
 	{"exp",		c_double12,	f_exp		},
 	{"log",		c_double12,	f_log		},
-	{"acos",	c_double12,	f_acos		},
-	{"asin",	c_double12,	f_asin		},
 	{"atan",	c_double12,	f_atan		},
 
 	{"int",		c_int,		f_int		},
