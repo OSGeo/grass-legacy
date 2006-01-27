@@ -108,18 +108,21 @@ char *G_ask_vector_any(char *, char *);
 char *G_ask_vector_in_mapset(char *, char *);
 
 /* asprintf.c */
+/* Do it better if you know how */
 #ifndef HAVE_ASPRINTF
  int G_asprintf (char ** /* out */, const char * /* fmt */, ...);
 #else
   #ifdef __MINGW32__
-    int asprintf ((char **, const char *, ...));
-    #define G_asprintf(pp,fmt,...) asprintf(pp, fmt, __VA_ARGS__)
+    int asprintf (char **, const char *, ...);
+    #define G_asprintf(pp,fmt,args...) asprintf(pp, fmt, ## args)
   #else
-    #if defined __STDC__VERSION__ + 0 >= 199900L
-      #define G_asprintf(pp,fmt,...) asprintf(pp, fmt, __VA_ARGS__)
-    #else
-      #define G_asprintf(pp,fmt,args...) asprintf(pp, fmt, args)
-    #endif /* __STDC_VERSION__ of variadic macro */
+    int asprintf(char **, const char *, ...);
+    #define G_asprintf(pp,fmt,args...) asprintf(pp, fmt, ## args)
+    //#if defined __STDC__VERSION__ + 0 >= 199900L
+    //  #define G_asprintf(pp,fmt,...) asprintf(pp, fmt, __VA_ARGS__)
+    //#else
+      //#define G_asprintf(pp,fmt,args...) asprintf(pp, fmt, args)
+    //#endif /* __STDC_VERSION__ of variadic macro */
   #endif /*__MINGW32__ */
 #endif /* older GNU version of variadic macro */
 
