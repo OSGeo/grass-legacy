@@ -232,10 +232,12 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
     struct Key_Value *temp_projinfo;
     char *pszProj4 = NULL, *pszRemaining;
     char *pszProj = NULL;
-    OGRSpatialReferenceH hSRS = *phSRS;
+    OGRSpatialReferenceH hSRS;
     
-    if( hSRS == NULL )
+    if( phSRS == NULL )
         goto default_to_xy;
+
+    hSRS = *phSRS;
  
     /* Set finder function for locating OGR csv co-ordinate system tables */
     SetCSVFilenameHook( GPJ_set_csv_loc );
