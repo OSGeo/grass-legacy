@@ -36,6 +36,8 @@ extern args_t c_double1	;
 
 extern func_t f_exp	;
 extern func_t f_log	;
+extern func_t f_acos	;
+extern func_t f_asin	;
 extern func_t f_atan	;
 extern args_t c_double12;
 

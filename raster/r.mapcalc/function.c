@@ -35,6 +35,8 @@ func_desc func_descs[] = {
 
 	{"exp",		c_double12,	f_exp		},
 	{"log",		c_double12,	f_log		},
+	{"acos",	c_double12,	f_acos		},
+	{"asin",	c_double12,	f_asin		},
 	{"atan",	c_double12,	f_atan		},
 
 	{"int",		c_int,		f_int		},

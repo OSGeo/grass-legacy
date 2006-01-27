@@ -21,6 +21,8 @@ COMMON = \
 	$(OBJDIR)/xabs.o \
 	$(OBJDIR)/xadd.o \
 	$(OBJDIR)/xand.o \
+	$(OBJDIR)/xacos.o \
+	$(OBJDIR)/xasin.o \
 	$(OBJDIR)/xatan.o \
 	$(OBJDIR)/xcos.o \
 	$(OBJDIR)/xdiv.o \
