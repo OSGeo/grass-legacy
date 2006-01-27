@@ -490,6 +490,9 @@ AC_CHECK_LIB(xdr, xdrmem_create, XDRLIB="-lxdr -liberty -lws2_32" ,
 ])])])])
 AC_SUBST(XDRLIB)
 
+AC_CHECK_FUNCS(asprintf)
+AC_SUBST(HAVE_ASPRINTF)
+
 # Test if mathlib needs -lm flag or is included with libc
 AC_CHECK_FUNC(atan, MATHLIB=, [
 AC_CHECK_LIB(m, atan, MATHLIB=-lm, [
