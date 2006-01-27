@@ -109,12 +109,13 @@ char *G_ask_vector_in_mapset(char *, char *);
 
 /* asprintf.c */
 /* Do it better if you know how */
-#ifndef HAVE_ASPRINTF
- int G_asprintf (char ** /* out */, const char * /* fmt */, ...);
+/* asprintf is not found on MINGW but exists */
+#ifdef __MINGW32__
+  int asprintf (char **, const char *, ...);
+  #define G_asprintf(pp,fmt,args...) asprintf(pp, fmt, ## args)
 #else
-  #ifdef __MINGW32__
-    int asprintf (char **, const char *, ...);
-    #define G_asprintf(pp,fmt,args...) asprintf(pp, fmt, ## args)
+  #ifndef HAVE_ASPRINTF
+    int G_asprintf (char ** /* out */, const char * /* fmt */, ...);
   #else
     int asprintf(char **, const char *, ...);
     #define G_asprintf(pp,fmt,args...) asprintf(pp, fmt, ## args)
@@ -122,9 +123,9 @@ char *G_ask_vector_in_mapset(char *, char *);
     //  #define G_asprintf(pp,fmt,...) asprintf(pp, fmt, __VA_ARGS__)
     //#else
       //#define G_asprintf(pp,fmt,args...) asprintf(pp, fmt, args)
-    //#endif /* __STDC_VERSION__ of variadic macro */
-  #endif /*__MINGW32__ */
-#endif /* older GNU version of variadic macro */
+    //#endif /* older GNU version of variadic macro */
+  #endif /* HAVE_ASPRINTF */
+#endif /*__MINGW32__ */
 
 
 /* auto_mask.c */
