@@ -226,12 +226,13 @@ OGRSpatialReferenceH *GPJ_grass_to_osr(struct Key_Value * proj_info,
 }
 
 int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo, 
-                     struct Key_Value **projunits, OGRSpatialReferenceH *hSRS,
+                     struct Key_Value **projunits, OGRSpatialReferenceH *phSRS,
 		     int interactive)
 {
     struct Key_Value *temp_projinfo;
     char *pszProj4 = NULL, *pszRemaining;
     char *pszProj = NULL;
+    OGRSpatialReferenceH hSRS = *phSRS;
     
     if( hSRS == NULL )
         goto default_to_xy;
@@ -373,6 +374,7 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
         {
 	    /* Need to make a new copy of the string so we don't mess
 	     * around with the memory inside the OGRSpatialReferenceH? */
+
 	    G_asprintf( &pszDatumName, pszDatumNameConst );
             GPJ_DatumNameMassage( &pszDatumName );
 
