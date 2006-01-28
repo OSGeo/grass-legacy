@@ -119,11 +119,14 @@ char *G_ask_vector_in_mapset(char *, char *);
   #else
     int asprintf(char **, const char *, ...);
     #define G_asprintf(pp,fmt,args...) asprintf(pp, fmt, ## args)
-    //#if defined __STDC__VERSION__ + 0 >= 199900L
-    //  #define G_asprintf(pp,fmt,...) asprintf(pp, fmt, __VA_ARGS__)
-    //#else
-      //#define G_asprintf(pp,fmt,args...) asprintf(pp, fmt, args)
-    //#endif /* older GNU version of variadic macro */
+    /*
+      #if defined __STDC__VERSION__ + 0 >= 199900L
+        #define G_asprintf(pp,fmt,...) asprintf(pp, fmt, __VA_ARGS__)
+      #else
+        #define G_asprintf(pp,fmt,args...) asprintf(pp, fmt, args)
+      #endif
+     */
+    /* older GNU version of variadic macro */
   #endif /* HAVE_ASPRINTF */
 #endif /*__MINGW32__ */
 
