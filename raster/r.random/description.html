@@ -1,7 +1,7 @@
 <H2>DESCRIPTION</H2>
 
 The program <EM>r.random</EM> allows the user to create a
-raster map layer and a site list file containing 
+raster map layer and a vector points map containing 
 coordinates of points whose locations have been randomly
 determined.  The program locates these randomly generated
 sites (vector points) within the current geographic region and mask (if
@@ -15,7 +15,7 @@ cells (even those with NULL values).
 The <EM>raster_output</EM> raster map layer is created in
 the user's current mapset.  The category values and
 corresponding category names already associated with the
-random site locations in the <EM>input</EM> map layer are
+random vector point locations in the <EM>input</EM> map layer are
 assigned to these sites in the <EM>raster_output</EM> map
 layer. If the <B>-z</B> is specified, then a unique entry
 is made for the value used where the <EM>input</EM> was NULL.
@@ -47,15 +47,15 @@ one percent may be stated as decimals.
 non-interactively.  The user may provide program arguments
 on the command line, specifying an input map layer name
 (<B>input=</B><EM>name</EM>), output raster map layer name
-(<B>raster_output=</B><EM>name</EM>), output site list file
+(<B>raster_output=</B><EM>name</EM>), output vector points map
 name (<B>vector_output=</B><EM>name</EM>), and 
 the number of sites to be randomly generated as a
-total number of sites (<B>nsites=</B><EM>number</EM>) or as
+total number of sites (<B>n=</B><EM>number</EM>) or as
 a percentage of the map's size
-(<B>nsites=</B><EM>number</EM><B>%</B>).  The user can also
+(<B>n=</B><EM>number</EM><B>%</B>).  The user can also
 direct that <EM>r.random</EM> run quietly (using the
 <B>-q</B>)</EM> option, and/or direct <EM>r.random</EM> to
-also generate random site locations against cells
+also generate random vector point locations against cells
 containing NULL values (using the <B>-z</B> option).  The
 <B>-i</B> can be used to get a count of the total cells and
 NULL cells given the current region settings.
@@ -83,7 +83,7 @@ messages.
 <DT><B>-z</B>
 
 <DD>Include NULL cells in the pool
-from which <EM>r.random</EM> will randomly generate site locations. 
+from which <EM>r.random</EM> will randomly generate vector point locations. 
 
 <DT><B>-i</B>
 
@@ -92,6 +92,11 @@ the total number of cells under the current region settings, and
 the number of NULL valued cells under the current region settings.
 Then exit without doing anything.  Useful for deciding on the number
 of sites to have <EM>r.random</EM> create.
+
+<DT><B>-d</B>
+
+<DD>Generate vector points with 3D geometry instead of 2D geometry.
+The z values correspond to the raster map values. 
 </DL>
 
 <P>
@@ -103,7 +108,7 @@ of sites to have <EM>r.random</EM> create.
 <DD>An existing raster map layer in the user's current mapset search path. 
 <EM>r.random</EM> will randomly generate sites on a user-specified portion 
 of the cells in this <EM>input</EM> raster map. 
-<DT><B>nsites=</B><EM>number</EM>
+<DT><B>n=</B><EM>number</EM>
 <DD>Specify the quantity of sites to be randomly generated as 
 either a <EM>positive</EM> integer</B>, or 
 as a <EM>percentage</EM> value</B> of the number of cells in the <EM>input</EM> map layer. 
@@ -134,13 +139,13 @@ no <EM>vector_output</EM> file will be created by <EM>r.random</B>.</EM>
 
 Note. Although the user need not request that <EM>r.random</EM> output 
 both a raster map layer (<EM>raster_output</EM>) 
-and a site list file (<EM>vector_output</EM>), the user must 
+and a vector points map (<EM>vector_output</EM>), the user must 
 specify that at least one of these outputs be produced. 
 </DL>
 
 <H2>NOTES</H2>
 
-To create random site locations within some, but not all, 
+To create random vector point locations within some, but not all, 
 non-zero categories of the input raster map layer, 
 the user must first create a reclassified raster map layer 
 of the original raster map layer (e.g., using the GRASS 
@@ -150,7 +155,7 @@ and then use the reclassed raster map layer as input to <EM>r.random</B>.</EM>
 
 <H2>BUGS</H2>
 
-It's not possible to use the <B>-i</B> flag and not also specify the <B>nsites</B> 
+It's not possible to use the <B>-i</B> flag and not also specify the <B>n</B> 
 parameter.
 
 <H2>SEE ALSO</H2>
