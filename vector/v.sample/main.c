@@ -84,33 +84,33 @@ int main  (int argc, char **argv)
   G_gisinit (argv[0]);
   
   module = G_define_module();
-  module->description = "Sample a raster file at site locations.";
+  module->description = _("Sample a raster file at site locations");
                   
   parm.input = G_define_option ();
   parm.input->key = "input";
   parm.input->type = TYPE_STRING;
   parm.input->required = YES;
-  parm.input->description = "Vector map defining sample points";
+  parm.input->description = _("Vector map defining sample points");
   parm.input->gisprompt = "old,vector,vector";
 
   parm.column = G_define_option();
   parm.column->key = "column";
   parm.column->type = TYPE_STRING;
   parm.column->required = YES;
-  parm.column->description = "Vector map attribute column to use for comparison";
+  parm.column->description = _("Vector map attribute column to use for comparison");
 
   parm.output = G_define_option ();
   parm.output->key = "output";
   parm.output->type = TYPE_STRING;
   parm.output->required = YES;
-  parm.output->description = "Vector map to store differences";
+  parm.output->description = _("Vector map to store differences");
   parm.output->gisprompt = "new,vector,vector";
 
   parm.rast = G_define_option ();
   parm.rast->key = "rast";
   parm.rast->type = TYPE_STRING;
   parm.rast->required = YES;
-  parm.rast->description = "Raster map to be sampled";
+  parm.rast->description = _("Raster map to be sampled");
   parm.rast->gisprompt = "old,cell,raster";
 
   parm.z = G_define_option ();
@@ -118,20 +118,20 @@ int main  (int argc, char **argv)
   parm.z->type = TYPE_DOUBLE;
   parm.z->required = NO;
   parm.z->answer = "1.0";
-  parm.z->description = "Option scaling factor for values read from raster map. "
-                        "Sampled values will be multiplied by this factor.";
+  parm.z->description = _("Option scaling factor for values read from raster map. "
+                        "Sampled values will be multiplied by this factor");
 
   flag.B = G_define_flag ();
   flag.B->key = 'B';
-  flag.B->description = "Bilinear interpolation [default is nearest neighbor]";
+  flag.B->description = _("Bilinear interpolation [default is nearest neighbor]");
 
   flag.C = G_define_flag ();
   flag.C->key = 'C';
-  flag.C->description = "Cubic convolution interpolation [default is nearest neighbor]";
+  flag.C->description = _("Cubic convolution interpolation [default is nearest neighbor]");
 
   flag.q = G_define_flag ();
   flag.q->key = 'q';
-  flag.q->description = "Quiet";
+  flag.q->description = _("Quiet");
 
   if (G_parser (argc, argv))
     exit (EXIT_FAILURE);
@@ -147,7 +147,7 @@ int main  (int argc, char **argv)
     if (b)
       method = BILINEAR;
     if (b && c)
-      G_fatal_error (_("flags -B & -C are mutually exclusive. Choose only one"));
+      G_fatal_error(_("flags -B & -C are mutually exclusive. Choose only one."));
   }
   else
     method = NEAREST;
@@ -157,39 +157,38 @@ int main  (int argc, char **argv)
   G_get_window (&window);
 
   /* Open input */
-  if ((mapset = G_find_vector2 (parm.input->answer, "")) == NULL) {
-    G_fatal_error ( "Could not find input map <%s>\n", parm.input->answer);
-  }
+  if ((mapset = G_find_vector2(parm.input->answer, "")) == NULL)
+    G_fatal_error(_("could not find input map <%s>"), parm.input->answer);
+
   Vect_set_open_level (2);
   Vect_open_old (&In, parm.input->answer, mapset);
 
-  if ((mapset = G_find_cell2 (parm.rast->answer, "")) == NULL) {
-    G_fatal_error ( "cell file [%s] not found", parm.rast->answer);
-  }
+  if ((mapset = G_find_cell2 (parm.rast->answer, "")) == NULL)
+    G_fatal_error(_("cell file [%s] not found"), parm.rast->answer);
 
-  if ((fdrast = G_open_cell_old (parm.rast->answer, mapset)) < 0) {
-    G_fatal_error ("can't open cell file [%s]", parm.rast->answer);
-  }
+  if ((fdrast = G_open_cell_old (parm.rast->answer, mapset)) < 0)
+    G_fatal_error(_("unable to open cell file [%s]"), parm.rast->answer);
 
   /* Read attributes */
   Fi = Vect_get_field( &In, 1);
-  if ( Fi == NULL ) {
-      G_fatal_error ("Cannot get layer info for vector map");
-  }
+  if (Fi == NULL)
+      G_fatal_error(_("cannot get layer info for vector map"));
 
   Driver = db_start_driver_open_database ( Fi->driver, Fi->database );
   if (Driver == NULL)
-    G_fatal_error("Cannot open database %s by driver %s", Fi->database, Fi->driver);
+    G_fatal_error(_("cannot open database %s by driver %s"), Fi->database, Fi->driver);
   
   nrecords = db_select_CatValArray ( Driver, Fi->table, Fi->key, parm.column->answer, NULL, &cvarr );
   G_debug (3, "nrecords = %d", nrecords );
 
   ctype = cvarr.ctype;
-  if ( ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE )
-      G_fatal_error ( "Column type not supported" );
+  if (ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE)
+      G_fatal_error(_("column type not supported"));
 
-  if ( nrecords < 0 ) G_fatal_error ("Cannot select data from table");
-  fprintf (stderr, "%d records selected from table\n", nrecords);
+  if (nrecords < 0)
+      G_fatal_error(_("cannot select data from table"));
+
+  G_message(_("%d records selected from table"), nrecords);
 
   db_close_database_shutdown_driver(Driver);
 
@@ -204,24 +203,23 @@ int main  (int argc, char **argv)
   
   Driver = db_start_driver_open_database ( Fi->driver, Vect_subst_var(Fi->database,&Out) );
   if (Driver == NULL)
-    G_fatal_error("Cannot open database %s by driver %s", Fi->database, Fi->driver);
+    G_fatal_error(_("cannot open database %s by driver %s"), Fi->database, Fi->driver);
 
   sprintf ( buf, "create table %s ( cat integer, pnt_val double precision, rast_val double precision, "
                  "diff double precision)", Fi->table );
   db_set_string ( &sql, buf);
   
-  if (db_execute_immediate (Driver, &sql) != DB_OK ) {
-    G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql ) );
-  }
+  if (db_execute_immediate (Driver, &sql) != DB_OK)
+      G_fatal_error(_("cannot create table: %s"), db_get_string(&sql));
 
-  if ( db_create_index2(Driver, Fi->table, Fi->key ) != DB_OK )
-      G_warning ( "Cannot create index" );
+  if (db_create_index2(Driver, Fi->table, Fi->key) != DB_OK)
+      G_warning(_("cannot create index"));
 
-  if (db_grant_on_table (Driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
-       G_fatal_error ( "Cannot grant privileges on table %s", Fi->table );
+  if (db_grant_on_table (Driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK)
+       G_fatal_error(_("cannot grant privileges on table %s"), Fi->table);
 
   if (verbose)
-    G_message ("Checking vector points ...                 ");
+    G_message(_("Checking vector points ..."));
 
   Points = Vect_new_line_struct();
   Cats = Vect_new_cats_struct();
@@ -244,18 +242,18 @@ int main  (int argc, char **argv)
       /* find actual value */
       if ( ctype == DB_C_TYPE_INT ) {
 	  ret = db_CatValArray_get_value_int ( &cvarr, cat, &cval );
-	  if ( ret != DB_OK ) {
-	      G_warning ("No record for cat = %d", cat );
-	  } 
+	  if (ret != DB_OK)
+	      G_warning(_("no record for cat = %d"), cat);
+
 	  actual = cval;
       } else if ( ctype == DB_C_TYPE_DOUBLE ) {
 	  ret = db_CatValArray_get_value_double ( &cvarr, cat, &dval );
-	  if ( ret != DB_OK ) {
-	      G_warning ("No record for cat = %d", cat );
-	  }
+	  if (ret != DB_OK)
+	      G_warning(_("no record for cat = %d"), cat);
+
 	  actual = dval;
       } else {
-	  G_fatal_error ("Column type  not supported" );
+	  G_fatal_error(_("column type  not supported"));
       }
       
       G_debug ( 4, "actual = %e", actual );
@@ -272,9 +270,8 @@ int main  (int argc, char **argv)
 	                                                         predicted - actual );
       db_set_string ( &sql, buf);
 
-      if (db_execute_immediate (Driver, &sql) != DB_OK ) {
-	G_fatal_error ( "Cannot insert row: %s", db_get_string ( &sql ) );
-      }
+      if (db_execute_immediate (Driver, &sql) != DB_OK)
+        G_fatal_error(_("cannot insert row: %s"), db_get_string(&sql));
 
       Vect_write_line ( &Out, GV_POINT, Points, Cats );
   } 
