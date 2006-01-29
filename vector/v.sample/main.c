@@ -42,18 +42,18 @@
 #include <string.h>
 #include <math.h>
 #include "gis.h"
+#include "glocale.h"
 #include "dbmi.h"
 #include "Vect.h"
-#include "methods.h"
+
 
 int main  (int argc, char **argv)
-
 {
   int b, c;
   char   *mapset;
   double scale, predicted, actual;
   int verbose;
-  int method = 0;		/* one of NEAREST, BILINEAR, or CUBIC */
+  INTERP_TYPE method = UNKNOWN;
   int fdrast;	/* file descriptor for raster file is int */
   struct Cell_head window;
   struct GModule *module;
@@ -147,7 +147,7 @@ int main  (int argc, char **argv)
     if (b)
       method = BILINEAR;
     if (b && c)
-      G_warning ("Flags -B & -C mutually exclusive. Bilinear method used.");
+      G_fatal_error (_("flags -B & -C are mutually exclusive. Choose only one"));
   }
   else
     method = NEAREST;
@@ -261,21 +261,7 @@ int main  (int argc, char **argv)
       G_debug ( 4, "actual = %e", actual );
       
       /* find predicted value */
-      switch (method)
-      {
-      case BILINEAR:
-        predicted = scale * G_get_raster_sample_bilinear (fdrast, &window, NULL, Points->y[0], Points->x[0], 0);
-        break;
-      case CUBIC:
-        predicted = scale * cubic (fdrast, &window, NULL, Points->y[0], Points->x[0], 0);
-        break;
-      case NEAREST:
-        predicted = scale * nearest (fdrast, &window, NULL, Points->y[0], Points->x[0], 0);
-        break;
-      default:
-        G_fatal_error ("unknown method");	/* cannot happen */
-        break;
-      }
+      predicted = scale * G_get_raster_sample(fdrast, &window, NULL, Points->y[0], Points->x[0], 0, method);
       
       G_debug ( 4, "predicted = %e", predicted );
         

@@ -136,6 +136,12 @@ typedef enum {
 #define DEFAULT_FG_COLOR "black"
 #define DEFAULT_BG_COLOR "white"
 
+/* for G_get_raster_sample() */
+#define UNKNOWN	  0
+#define NEAREST   1  /* nearest neighbor interpolation	*/
+#define BILINEAR  2  /* bilinear interpolation 		*/
+#define CUBIC     3  /* cubic interpolation 		*/
+
 /*=========================== Typedefs/Structures ==========================*/
 
 typedef int CELL;
@@ -144,6 +150,9 @@ typedef float FCELL;
 extern CELL CELL_NODATA;
 
 typedef int RASTER_MAP_TYPE;
+
+/* for G_get_raster_sample() */
+typedef int INTERP_TYPE;
 
 struct Cell_head
 {

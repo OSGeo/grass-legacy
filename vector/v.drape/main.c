@@ -25,19 +25,10 @@
 \author Dylan Beaudette
 \date 2005.09.20
  
-\note Routines for sampling rasters were borrowed from v.sample. Until these functions are integrated into GRASS, the support files from v.sample are required:
-	\li methods.h
-	\li utils.c
-	\li nearest.c
-	\li bilinear.c -> implemented as G_get_raster_sample_bilinear()
-	\li cubic.c
- 
-
 \todo add support for areas
 \todo Enhanced error checking such as
 	\li does the elevation raster cover the entire are of the vector file?
 	\li does the current region include the entire input vector file ?
-\todo Check on routines used to sample the rast file, as borrowed from v.sample
 \todo Make a description.html for documentation
 
  */
@@ -50,8 +41,6 @@
 #include "Vect.h"
 #include "glocale.h"
 
-/* borrowed from v.sample module */
-#include "methods.h"
 
 int main(int argc, char *argv[])
 {
@@ -61,13 +50,13 @@ int main(int argc, char *argv[])
     struct line_pnts *Points;
     struct line_cats *Cats;
     /* int    layer; */
-    int line, nlines, centroid, otype, ltype;
+    int line, nlines, otype, ltype;
 
     /* Raster stuff from v.sample::main.c */
     char *mapset;
-    int b, c, j;
+    int j;
     double scale, estimated_elevation;
-    int method = 0;		/* one of NEAREST, BILINEAR, or CUBIC */
+    INTERP_TYPE method = UNKNOWN;
     int fdrast;			/* file descriptor for raster file is int */
     struct Cell_head window;
     /* end raster stuff */
@@ -109,11 +98,15 @@ int main(int argc, char *argv[])
 	exit(EXIT_FAILURE);
 
     /* which interpolation method should we use */
-    method = NEAREST;
     if ( method_opt->answer[0] == 'b' )
 	method = BILINEAR;
     else if ( method_opt->answer[0] == 'c' )
 	method = CUBIC;
+    else
+    {
+        G_message(_("defaulting to nearest neighbor sampling"));
+        method = NEAREST;
+    }
 
     /* setup the raster for sampling */
 
@@ -175,32 +168,15 @@ int main(int argc, char *argv[])
 	    case GV_POINT:
 	    case GV_CENTROID:
 	    case GV_KERNEL:
+                /* sample raster at this point, and update the z-coordinate
+                 * (note that input vector should not be 3D!)
+                 */
+                estimated_elevation = scale * G_get_raster_sample(fdrast,
+                            &window, NULL, Points->y[0], Points->x[0], 0, method);
 
-		/* sample raster at this point, and update the z-coordinate (note that input vector should not be 3D!) */
-		switch (method) {
-		case BILINEAR:
-		    estimated_elevation =
-			scale * G_get_raster_sample_bilinear(fdrast, &window, NULL, Points->y[0],
-					 Points->x[0], 0);
-		    break;
-		case CUBIC:
-		    estimated_elevation =
-			scale * cubic(fdrast, &window, NULL, Points->y[0],
-				      Points->x[0], 0);
-		    break;
-		case NEAREST:
-		    estimated_elevation =
-			scale * nearest(fdrast, &window, NULL, Points->y[0],
-					Points->x[0], 0);
-		    break;
-		default:
-		    G_fatal_error(_("unknown interpolation method"));	/* cannot happen */
-		    break;
-		}
 		/* update the elevation value for each data point */
 		Points->z[0] = estimated_elevation;
 		break;
-
 		/* standard lines (at least 2 vertexes) */
 	    case GV_LINE:
 	    case GV_BOUNDARY:
@@ -209,32 +185,12 @@ int main(int argc, char *argv[])
 
 		/* loop through each point in a line */
 		for (j = 0; j < Points->n_points; j++) {
-
 		    /* sample raster at this point, and update the z-coordinate (note that input vector should not be 3D!) */
-		    switch (method) {
-		    case BILINEAR:
-			estimated_elevation =
-			    scale * G_get_raster_sample_bilinear(fdrast, &window, NULL,
-					     Points->y[j], Points->x[j], 0);
-			break;
-		    case CUBIC:
-			estimated_elevation =
-			    scale * cubic(fdrast, &window, NULL, Points->y[j],
-					  Points->x[j], 0);
-			break;
-		    case NEAREST:
-			estimated_elevation =
-			    scale * nearest(fdrast, &window, NULL, Points->y[j],
-					    Points->x[j], 0);
-			break;
-		    default:
-			G_fatal_error(_("unknown interpolation method"));	/* cannot happen */
-			break;
-		    }		
+                    estimated_elevation = scale * G_get_raster_sample(fdrast,
+                                &window, NULL, Points->y[j], Points->x[j], 0, method);
 
 		    /* update the elevation value for each data point */
 		    Points->z[j] = estimated_elevation;
-
 		}		/* end looping through point in a line */
 		break;
 
@@ -245,33 +201,13 @@ int main(int argc, char *argv[])
 
 		/* loop through each point in a line */
 		for (j = 0; j < Points->n_points; j++) {
-
 		    /* sample raster at this point, and update the z-coordinate (note that input vector should not be 3D!) */
-		    switch (method) {
-		    case BILINEAR:
-			estimated_elevation =
-			    scale * G_get_raster_sample_bilinear(fdrast, &window, NULL,
-					     Points->y[j], Points->x[j], 0);
-			break;
-		    case CUBIC:
-			estimated_elevation =
-			    scale * cubic(fdrast, &window, NULL, Points->y[j],
-					  Points->x[j], 0);
-			break;
-		    case NEAREST:
-			estimated_elevation =
-			    scale * nearest(fdrast, &window, NULL, Points->y[j],
-					    Points->x[j], 0);
-			break;
-		    default:
-			G_fatal_error(_("unknown interpolation method"));	/* cannot happen */
-			break;
-		    }		/* end switch */
+                    estimated_elevation = scale * G_get_raster_sample(fdrast,
+                                &window, NULL, Points->y[j], Points->x[j], 0, method);
 
-		    /* update the elevation value for each data point; */
+		    /* update the elevation value for each data point */
 		    Points->z[j] = estimated_elevation;
 		}
-
 		break;
 	    }			/* end line type switch */
 

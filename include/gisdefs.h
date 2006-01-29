@@ -136,10 +136,6 @@ int G__check_for_auto_masking(void);
 int G_suppress_masking(void);
 int G_unsuppress_masking(void);
 
-/* bilinear.c */
-double G_get_raster_sample_bilinear (int, struct Cell_head *, struct Categories *,
-    double, double, int);
-
 /* bres_line.c */
 int G_bresenham_line(register int, register int, int, int, int (*)());
 
@@ -1016,6 +1012,10 @@ double G_rhumbline_lat_from_lon(double);
 
 /* rm_colr.c */
 int G_remove_colr(char *);
+
+/* sample.c */
+double G_get_raster_sample(int, struct Cell_head *, struct Categories *,
+             double, double, int, INTERP_TYPE);
 
 /* set_window.c */
 int G_get_set_window(struct Cell_head *);
