@@ -22011,7 +22011,7 @@ XS(_wrap_G_version) {
         dXSARGS;
         
         if ((items < 3) || (items > 3)) {
-            SWIG_croak("Usage: G_version(char *,char *,char *);");
+            SWIG_croak("Usage: G_version(char **,char **,char **);");
         }
         if (!SvOK((SV*) ST(0))) arg1 = 0;
         else arg1 = (char *) SvPV(ST(0), PL_na);
@@ -22019,7 +22019,7 @@ XS(_wrap_G_version) {
         else arg2 = (char *) SvPV(ST(1), PL_na);
         if (!SvOK((SV*) ST(2))) arg3 = 0;
         else arg3 = (char *) SvPV(ST(2), PL_na);
-        result = (int)G_version(arg1,arg2,arg3);
+        result = (int)G_version(&arg1,&arg2,&arg3);
         
         ST(argvi) = sv_newmortal();
         sv_setiv(ST(argvi++), (IV) result);

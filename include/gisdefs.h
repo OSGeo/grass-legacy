@@ -1134,7 +1134,7 @@ int G_sock_connect(char *);
 int G_sock_socketpair(int, int, int, int *);
 
 /* version.c */
-int G_version(char *, char *, char *);
+int G_version(char **, char **, char **);
 
 /* view.c */
 int G_3dview_warning(int);
