@@ -136,7 +136,7 @@ typedef enum {
 #define DEFAULT_FG_COLOR "black"
 #define DEFAULT_BG_COLOR "white"
 
-/* for G_get_raster_sample() */
+/* for G_get_raster_sample(), INTERP_TYPE */
 #define UNKNOWN	  0
 #define NEAREST   1  /* nearest neighbor interpolation	*/
 #define BILINEAR  2  /* bilinear interpolation 		*/
