@@ -29,9 +29,9 @@ x5:driver/XDRIVER:X-windows graphics display: \
 x6:driver/XDRIVER:X-windows graphics display: \
      dev/fifo.7a dev/fifo.7b \
      ::any terminal
-CELL:driver/CELL:Create GRASS Raster File: \
-     dev/fifo.8a dev/fifo.8b \
-     ::any terminal
+#CELL:driver/CELL:Create GRASS Raster File: \
+#     dev/fifo.8a dev/fifo.8b \
+#     ::any terminal
 #sunview:driver/SUNVIEW:Sun graphics display: \
 #     dev/fifo.9a dev/fifo.9b \
 #     ::any terminal
@@ -50,3 +50,9 @@ CELL:driver/CELL:Create GRASS Raster File: \
 #mass:driver/MASS:Masscomp graphics display: \
 #     dev/fifo.14a dev/fifo.14b \
 #     ::any terminal
+PNG:driver/PNG:Create PNG Map: \
+     dev/fifo.16a dev/fifo.16b \
+     ::any terminal
+gism:driver/PNG:Create PNG Map for gism: \
+     dev/fifo.16a dev/fifo.20b \
+     ::any terminal
