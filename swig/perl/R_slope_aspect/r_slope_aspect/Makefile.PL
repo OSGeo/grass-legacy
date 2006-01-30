@@ -16,7 +16,7 @@ $co_files =~ s/\.c/.o/g;
 WriteMakefile(
 	      NAME      => 'R_slope_aspect::r_slope_aspect',
 	      INC	=> $incs,
-	      DEFINE    => '-ggdb -Wall',
+	      DEFINE    => $fopt,
 	      clean     => {'FILES' => 'libr_slope_aspect$(LIB_EXT)'},
 	      );
 
