@@ -1,3 +1,4 @@
+#define _GNU_SOURCE /* enable asprintf */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -5,6 +6,8 @@
 #include <assert.h>
 #include "gis.h"
 
+/* Warning: Temporarily the G_asprintf macro cannot be used 
+* see explanation in gisdefs.h */
 
 /*
  * Eric G. Miller egm2@jps.net 
@@ -36,6 +39,21 @@
  * \return int
  */
 
+#ifdef HAVE_ASPRINTF
+
+int G_asprintf(char **out, const char *fmt, ...)
+{
+    va_list ap;
+    int count;
+
+    va_start(ap, fmt);
+    count = vasprintf (out, fmt, ap);
+    va_end(ap);
+
+    return count;
+}
+
+#else
 int G_asprintf(char **out, const char *fmt, ...)
 {
     va_list ap;
@@ -70,5 +88,6 @@ int G_asprintf(char **out, const char *fmt, ...)
 
     return ret_status;
 }
+#endif
 
 #endif
