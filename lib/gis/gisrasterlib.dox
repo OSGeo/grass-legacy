@@ -1526,10 +1526,11 @@ int G_zero_raster_row(void *rast, RASTER_MAP_TYPE
   CELLs, FCELLs, or DCELLs stored in cell buffer.
 
 <P>
-double G_get_raster_sample_bilinear (int fd, struct Cell_head *window,
- struct Categories *cats, double north, double east, int usedesc)
- extracts a cell value from raster map at given position with
- bilinear sampling of 3x3
+double G_get_raster_sample(int, struct Cell_head *, struct Categories *,
+             double, double, int, INTERP_TYPE)
+extracts a cell value from raster map at given position with
+INTERP_TYPE 0:UNKNOWN; 1: nearest neighbor interpolation;
+2: bilinear interpolation; 3: cubic interpolation.
 
 \section Upgrades_to_Raster_Functions Upgrades to Raster Functions  (comparing to GRASS 4.x)
 
