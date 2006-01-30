@@ -21,13 +21,11 @@ db__driver_init  (int argc, char *argv[])
 
 {
     init_error();
-    connection = mysql_init(NULL);
     return DB_OK;
 }
 
 int
 db__driver_finish()
 {
-    free ( connection );
     return DB_OK;
 }
