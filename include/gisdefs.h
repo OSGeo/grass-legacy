@@ -110,15 +110,26 @@ char *G_ask_vector_in_mapset(char *, char *);
 /* asprintf.c */
 /* Do it better if you know how */
 /* asprintf is not found on MINGW but exists */
+
+/* 
+*  Because configure script in GDAL test is G_asprintf exists in gis lib
+*  the G_asprintf macro is disabled until a stable version of GDAL
+*  with a different function becomes widely used 
+*/  
+int G_asprintf (char **, const char *, ...);
+
+/*
 #ifdef __MINGW32__
   int asprintf (char **, const char *, ...);
   #define G_asprintf(pp,fmt,args...) asprintf(pp, fmt, ## args)
 #else
   #ifndef HAVE_ASPRINTF
-    int G_asprintf (char ** /* out */, const char * /* fmt */, ...);
+    int G_asprintf (char **, const char *, ...);
   #else
     int asprintf(char **, const char *, ...);
     #define G_asprintf(pp,fmt,args...) asprintf(pp, fmt, ## args)
+*/
+    /* This does not work: */
     /*
       #if defined __STDC__VERSION__ + 0 >= 199900L
         #define G_asprintf(pp,fmt,...) asprintf(pp, fmt, __VA_ARGS__)
@@ -126,9 +137,10 @@ char *G_ask_vector_in_mapset(char *, char *);
         #define G_asprintf(pp,fmt,args...) asprintf(pp, fmt, args)
       #endif
      */
-    /* older GNU version of variadic macro */
-  #endif /* HAVE_ASPRINTF */
-#endif /*__MINGW32__ */
+/*
+  #endif
+#endif
+*/
 
 
 /* auto_mask.c */
