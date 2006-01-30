@@ -22003,9 +22003,9 @@ XS(_wrap_G_sock_socketpair) {
 
 XS(_wrap_G_version) {
     {
-        char *arg1 ;
-        char *arg2 ;
-        char *arg3 ;
+        char **arg1 = (char **) 0 ;
+        char **arg2 = (char **) 0 ;
+        char **arg3 = (char **) 0 ;
         int result;
         int argvi = 0;
         dXSARGS;
@@ -22013,12 +22013,21 @@ XS(_wrap_G_version) {
         if ((items < 3) || (items > 3)) {
             SWIG_croak("Usage: G_version(char **,char **,char **);");
         }
-        if (!SvOK((SV*) ST(0))) arg1 = 0;
-        else arg1 = (char *) SvPV(ST(0), PL_na);
-        if (!SvOK((SV*) ST(1))) arg2 = 0;
-        else arg2 = (char *) SvPV(ST(1), PL_na);
-        if (!SvOK((SV*) ST(2))) arg3 = 0;
-        else arg3 = (char *) SvPV(ST(2), PL_na);
+        {
+            if (SWIG_ConvertPtr(ST(0), (void **) &arg1, SWIGTYPE_p_p_char,0) < 0) {
+                SWIG_croak("Type error in argument 1 of G_version. Expected _p_p_char");
+            }
+        }
+        {
+            if (SWIG_ConvertPtr(ST(1), (void **) &arg2, SWIGTYPE_p_p_char,0) < 0) {
+                SWIG_croak("Type error in argument 2 of G_version. Expected _p_p_char");
+            }
+        }
+        {
+            if (SWIG_ConvertPtr(ST(2), (void **) &arg3, SWIGTYPE_p_p_char,0) < 0) {
+                SWIG_croak("Type error in argument 3 of G_version. Expected _p_p_char");
+            }
+        }
         result = (int)G_version(&arg1,&arg2,&arg3);
         
         ST(argvi) = sv_newmortal();
