@@ -1,6 +1,7 @@
-          # 1 Sept 2005
-# panel for d.text
-# Michael Barton, Arizona State University
+###############################################################
+# dtext.tcl - standard text layer options file for GRASS GIS Manager
+# January 2006 Michael Barton, Arizona State University
+###############################################################
 
 namespace eval GmDtext {
     variable array opt # dtext options

@@ -1,4 +1,7 @@
-# 18 March 2005
+###############################################################
+# vector.tcl - vector display layer options file for GRASS GIS Manager
+# January 2006 Michael Barton, Arizona State University
+###############################################################
 
 namespace eval GmVector {
     variable array opt # vector options
@@ -137,7 +140,7 @@ proc GmVector::create { tree parent } {
 proc GmVector::set_option { node key value } {
     variable opt
  
-    set id [Gm::node_id $node]
+    set id [GmTree::node_id $node]
     set opt($id,$key) $value
 
     GmVector::legend $id
@@ -158,10 +161,6 @@ proc GmVector::show_columns { id } {
 	set layernum $opt($id,field)
 	set cmd "v.info -c map=$mapname layer=$layernum"		
 	run_panel $cmd
-	
-#	exec xterm -bg $bgcolor -title "$mapname columns" \
-#		-geometry 40x25-10+30 -sb -hold -e v.info -c map=$mapname \
-#		layer=$layernum &		
 }
 
 proc GmVector::show_data { id } {
@@ -170,8 +169,6 @@ proc GmVector::show_data { id } {
 	set mapname $opt($id,map)
 	set cmd "db.select table=$mapname"
 	run_panel $cmd
-#	exec xterm -bg $bgcolor -title "$mapname data" \
-#		-geometry 60x40-10+30 -sb -hold -e db.select table=$mapname &
 }
 
 # select symbols from directories
@@ -393,14 +390,13 @@ proc GmVector::options { id frm } {
 proc GmVector::save { tree depth node } {
     variable opt
     
-    set id [Gm::node_id $node]
-
+    set id [GmTree::node_id $node]
 
     foreach key { _check map display_shape display_cat display_topo display_dir display_attr
                   type_point type_line type_boundary type_centroid type_area type_face
                   color _use_color fcolor _use_fcolor lcolor rdmcolor sqlcolor icon size lwidth field lfield attribute
                   xref yref lsize cat where _query_text _query_edit _use_where minreg maxreg _width } {
-        Gm::rc_write $depth "$key $opt($id,$key)"
+        GmTree::rc_write $depth "$key $opt($id,$key)"
     } 
 }
 

@@ -1,19 +1,20 @@
-# Layer tree and related procedures for GRASS GIS Manager
-# January 2006
-# Michael Barton (Arizona State University)
-#
+###############################################################
+# gmtree.tcl - GRASS GIS Manager procedures for creating and managing
+# layer tree
+# January 2006 Michael Barton, Arizona State University
+###############################################################
 
 namespace eval GmTree {
     variable count
+    variable node
     variable selected ""
     variable dblclick
     variable legend_height 20
     variable legend_width 30
     variable treeht 6
-	variable array tree # mon
+	global array tree # mon
+	global array filename # mon
 	variable array pg # mon
-
-	variable currenttree
 
 }
 
@@ -37,19 +38,21 @@ proc GmTree::create { mon } {
     variable legend_height
     variable legend_width
     variable treeht
-    variable currenttree
-    variable currentmon
     variable pg
     variable page
+    variable node
     global treefile
 	global tree_pane
 	global pgs
 	global sw
 	global options
 	global win
+	global filename
 	
 	set currpg ""
 	set pth ""
+	set node 0
+	set filename($mon) ""
 
 
 	# add new page	
@@ -57,7 +60,6 @@ proc GmTree::create { mon } {
 	$pgs raise page_$mon
 
 	# destroy old panel with options
-#    if {[info exists options.fr]} {destroy $options.fr}
     destroy $options.fr
 
 	set sw    [ScrolledWindow $pg($mon).sw \
@@ -69,8 +71,8 @@ proc GmTree::create { mon } {
             -relief flat -borderwidth 0 -highlightthickness 0 \
             -redraw 1 -dropenabled 1 -dragenabled 1 \
             -dragevent 1 -dropcmd "GmTree::drop" \
-            -opencmd   "GmTree::open $sw.tree_$mon" \
-            -closecmd  "GmTree::close $sw.tree_$mon" \
+            -opencmd   "GmTree::open_node $sw.tree_$mon" \
+            -closecmd  "GmTree::close_node $sw.tree_$mon" \
             -deltay $lh -padx $lw ]
             
 	$tree($mon) configure -height $treeht
@@ -81,15 +83,12 @@ proc GmTree::create { mon } {
     pack $sw  -side top -expand yes -fill both
     pack $tree($mon)  -side top -expand yes -fill both
 
+    $tree($mon) configure -redraw 1
+
     $tree($mon) bindText  <ButtonPress-1> "GmTree::selectn $tree($mon)"
     $tree($mon) bindImage <ButtonPress-1> "GmTree::selectn $tree($mon)"
-    $tree($mon) bindText  <Double-ButtonPress-1> {"GmTree::edit $tree($mon) $node"}
-
-    $tree($mon) configure -redraw 1
+    $tree($mon) bindText  <Double-ButtonPress-1> "GmTree::edit $tree($mon)"
     
-    set currenttree $tree($mon)
-    set currentmon $mon
-
     return $tree($mon)
 }
 
@@ -175,7 +174,7 @@ proc GmTree::drop { from to where operation type data } {
 
 ###############################################################################
 
-proc GmTree::open { tree node } {
+proc GmTree::open_node { tree node } {
     global mon
 
     GmGroup::open [GmTree::node_id $node]
@@ -184,7 +183,7 @@ proc GmTree::open { tree node } {
 ###############################################################################
 
 
-proc GmTree::close { tree node } {
+proc GmTree::close_node { tree node } {
     global mon
 
     GmGroup::close [GmTree::node_id $node]
@@ -196,26 +195,20 @@ proc GmTree::close { tree node } {
 proc GmTree::selectn { tree node } {
     variable selected 
 
-#    if { $selected == $node } {
-#        $tree selection clear $node
-#        set selected ""
-#        GmTree::deselect $node
-#    } else {
-        $tree selection set $node
-        update
-        set selected $node
-        GmTree::select $node
-#    }
-
+	$tree selection set $node
+	update
+	set selected $node
+	GmTree::select $node
 }
 
 
 ###############################################################################
 
 proc GmTree::edit { tree node } {
-	global mon
-
-    set res [$tree edit $node [$tree($mon) itemcget $node -text]]
+	#global mon
+	#global tree
+	
+    set res [$tree edit $node [$tree itemcget $node -text]]
     if { $res != "" } {
 	$tree itemconfigure $node -text $res
     }
@@ -237,16 +230,17 @@ proc GmTree::new { } {
     global options
     global new_root_node
     global mon
+    global filename
     
     $tree($mon) delete [$tree($mon) nodes root]
     destroy $options.fr
 
-    catch {unset ::GmTree::filename}
-    GmPrint::init
+    catch {unset filename($mon)}
+    #GmPrint::init
     set new_root_node [GmGroup::create $tree($mon) "root"]
-    $tree($mon) itemconfigure $new_root_node -text "UNTITLED"
+    $tree($mon) itemconfigure $new_root_node -text "UNTITLED_$mon"
     
-    set ::GmTree::filename Untitled.dmrc 
+    set filename($mon) Untitled_$mon.dmrc 
 }
 
 ###############################################################################
@@ -256,14 +250,16 @@ proc GmTree::FileClose { stay_alive} {
     variable tree
     global options
  	global mon
+    global filename
  	
     $tree($mon) delete [$tree($mon) nodes root]
     destroy $options.fr
 
     if { $stay_alive == ""} {
-    	catch {unset ::GmTree::filename}
+    	catch {unset filename($mon)}
     }
 }
+
 
 ###############################################################################
 
@@ -310,6 +306,15 @@ proc GmTree::add { type } {
         }
         rgbhis {
             GmRgbhis::create $tree($mon)  $parent_node
+        }
+        hist {
+            GmHist::create $tree($mon)  $parent_node
+        }
+        rnums {
+            GmRnums::create $tree($mon)  $parent_node
+        }
+        arrows {
+            GmArrows::create $tree($mon)  $parent_node
         }
         legend {
             GmLegend::create $tree($mon)  $parent_node
@@ -380,6 +385,15 @@ proc GmTree::select { node } {
         }
         rgbhis {
             GmRgbhis::options $id $opt
+        }
+        hist {
+            GmHist::options $id $opt
+        }
+        rnums {
+            GmRnums::options $id $opt
+        }
+        arrows {
+            GmArrows::options $id $opt
         }
         legend {
             GmLegend::options $id $opt
@@ -462,6 +476,15 @@ proc GmTree::display_node { node } {
 	rgbhis {
 	    GmRgbhis::display $node
 	}
+	hist {
+	    GmHist::display $node
+	}
+	rnums {
+	    GmRnums::display $node
+	}
+	arrows {
+	    GmArrows::display $node
+	}
 	legend {
 	    GmLegend::display $node
 	}
@@ -534,6 +557,15 @@ proc GmTree::duplicate { } {
         rgbhis {
             GmRgbhis::duplicate $tree($mon) $parent_node $sel $id
         }
+        hist {
+            GmHist::duplicate $tree($mon) $parent_node $sel $id
+        }
+        rnums {
+            GmRnums::duplicate $tree($mon) $parent_node $sel $id
+        }
+        arrows {
+            GmArrows::duplicate $tree($mon) $parent_node $sel $id
+        }
         legend {
             GmLegend::duplicate $tree($mon) $parent_node $sel $id
         }
@@ -572,13 +604,14 @@ proc GmTree::save { spth } {
     variable tree
 
     set fpath $spth
+    
     set rcfile [open $fpath w]
 
-#    GmPrint::save
     GmGroup::save $tree($mon) 0 "root"
 
     close $rcfile
 }
+
 
 ###############################################################################
 
@@ -587,89 +620,105 @@ proc GmTree::save_node { depth node } {
     variable rcfile
     variable tree
     global mon
+	global filename
+
 
     set type [GmTree::node_type $node]
     set name [$tree($mon) itemcget $node -text]
 
-    if { $type == "group" && $name == "UNTITLED" } {
-    set name "File $::GmTree::filename"
+    if { $type == "group" && $name == "UNTITLED_$mon" } {
+    	set name "File $filename($mon)"
     }
 
     switch $type {
-        group {
+		group {
             GmTree::rc_write $depth Group $name
             incr depth
-            GmGroup::save $tree($mon) $depth $node
-	}
-	raster {
+			GmGroup::save $tree($mon) $depth $node
+		}
+		raster {
             GmTree::rc_write $depth Raster $name
             incr depth
-	    GmRaster::save $tree($mon) $depth $node
-	}
-	labels {
+	    	GmRaster::save $tree($mon) $depth $node
+		}
+		labels {
             GmTree::rc_write $depth Labels $name
             incr depth
-	    GmLabels::save $tree($mon) $depth $node
-	}
-	vector {
+			GmLabels::save $tree($mon) $depth $node
+		}
+		vector {
             GmTree::rc_write $depth Vector $name
             incr depth
-	    GmVector::save $tree($mon) $depth $node
-	}
-	cmd {
+		    GmVector::save $tree($mon) $depth $node
+		}
+		cmd {
             GmTree::rc_write $depth Cmd $name
             incr depth
-	    GmCmd::save $tree($mon) $depth $node
-	}
-	gridline {
+		    GmCmd::save $tree($mon) $depth $node
+		}
+		gridline {
             GmTree::rc_write $depth gridline $name
             incr depth
-	    GmGridline::save $tree($mon) $depth $node
-	}
-	rgbhis {
+	    	GmGridline::save $tree($mon) $depth $node
+		}
+		rgbhis {
             GmTree::rc_write $depth rgbhis $name
             incr depth
-	    GmRgbhis::save $tree($mon) $depth $node
-	}
-	legend {
+	    	GmRgbhis::save $tree($mon) $depth $node
+		}
+		hist {
+            GmTree::rc_write $depth hist $name
+            incr depth
+	    	GmHist::save $tree($mon) $depth $node
+		}
+		rnums {
+            GmTree::rc_write $depth rnums $name
+            incr depth
+	    	GmRnums::save $tree($mon) $depth $node
+		}
+		arrows {
+            GmTree::rc_write $depth arrows $name
+            incr depth
+	    	GmArrows::save $tree($mon) $depth $node
+		}
+		legend {
             GmTree::rc_write $depth legend $name
             incr depth
-	    GmLegend::save $tree($mon) $depth $node
-	}
-	dframe {
+	    	GmLegend::save $tree($mon) $depth $node
+		}
+		dframe {
             GmTree::rc_write $depth dframe $name
             incr depth
-	    GmDframe::save $tree($mon) $depth $node
-	}
-	barscale {
+	    	GmDframe::save $tree($mon) $depth $node
+		}
+		barscale {
             GmTree::rc_write $depth barscale $name
             incr depth
-	    GmBarscale::save $tree($mon) $depth $node
-	}
-	chart {
+	    	GmBarscale::save $tree($mon) $depth $node
+		}
+		chart {
             GmTree::rc_write $depth chart $name
             incr depth
-	    GmChart::save $tree($mon) $depth $node
-	}
-	thematic {
+	    	GmChart::save $tree($mon) $depth $node
+		}
+		thematic {
             GmTree::rc_write $depth thematic $name
             incr depth
-	    GmThematic::save $tree($mon) $depth $node
-	}
-	fttext {
+	    	GmThematic::save $tree($mon) $depth $node
+		}
+		fttext {
             GmTree::rc_write $depth fttext $name
             incr depth
-	    GmFTtext::save $tree($mon) $depth $node
-	}
-	dtext {
+	    	GmFTtext::save $tree($mon) $depth $node
+		}
+		dtext {
             GmTree::rc_write $depth dtext $name
             incr depth
-	    GmDtext::save $tree($mon) $depth $node
-	}
+	    	GmDtext::save $tree($mon) $depth $node
+		}
     } 
     set depth [expr $depth - 1]
     GmTree::rc_write $depth End
-    
 }
 
 ###############################################################################
@@ -678,10 +727,14 @@ proc GmTree::save_node { depth node } {
 proc GmTree::load { lpth } {
     global gisdbase location_name mapset
     global env mon
+    global max_prgindic
+    global prgtext
+    global prgindic
+    global filename
+    global mon
+
     variable rcfile
     variable tree
-    variable max_prgindic
-    variable prgtext
 
     set prgtext "Loading layers..."
 
@@ -695,7 +748,6 @@ proc GmTree::load { lpth } {
     set file_size [file size $fpath]
     set nrows [expr $file_size / 15]
 
-    set print_section 0
     set parent root
     set row 0
     while { [gets $rcfile in] > -1 } {
@@ -704,154 +756,156 @@ proc GmTree::load { lpth } {
         set in [string trim $in " "] 
 	if { $in == "" } { continue }
 
-	if { ![regexp -- {([^ ]+) (.+)$} $in r key val] } {
-           set key $in
-        }
+	if { ![regexp -- {([^ ]+) (.+)$} $in r key val] } {set key $in}
         
-        # Print
-        if { $print_section } {
-            if { $key == "End" } { 
-                set print_section 0 
-            } else {
-	        GmPrint::set_option $key $val
-            }
-        } else {
-            if { $key == "Print" } {
-                 set print_section 1
-	    } else {  
-		# Tree of layers	
-		switch $key {
-		    Group {
-
-			if { [regexp -- {^File (.+)} $val r leftover]  && ($leftover !=
-			$::GmTree::filename)} {
-			    	set val "<-- $leftover"
+	# Tree of layers	
+	switch $key {
+		Group {
+			if {[regexp -- {^File (.+)} $val r leftover]  && ($leftover != $filename($mon))} {
+				set val "<-- $leftover"
 			}
-
 			set current_node [GmGroup::create $tree($mon) $parent]
-			$tree itemconfigure $current_node -text $val 
+			$tree($mon) itemconfigure $current_node -text $val 
 			set parent $current_node
-		    }
-		    Raster {
+		}
+		Raster {
 			set current_node [GmRaster::create $tree($mon) $parent]
-			$tree itemconfigure $current_node -text $val 
-		    }
-		    Labels {
+			$tree($mon) itemconfigure $current_node -text $val 
+		}
+		Labels {
 			set current_node [GmLabels::create $tree($mon) $parent]
-			$tree itemconfigure $current_node -text $val 
-		    }
-		    Vector {
+			$tree($mon) itemconfigure $current_node -text $val 
+		}
+		Vector {
 			set current_node [GmVector::create $tree($mon) $parent]
-			$tree itemconfigure $current_node -text $val 
-		    }
-		    Cmd {
+			$tree($mon) itemconfigure $current_node -text $val 
+		}
+		Cmd {
 			set current_node [GmCmd::create $tree($mon) $parent]
-			$tree itemconfigure $current_node -text $val 
-		    }
-		    gridline {
+			$tree($mon) itemconfigure $current_node -text $val 
+		}
+		gridline {
 			set current_node [GmGridline::create $tree($mon) $parent]
-			$tree itemconfigure $current_node -text $val 
-		    }
-		    rgbhis {
+			$tree($mon) itemconfigure $current_node -text $val 
+		}
+		rgbhis {
 			set current_node [GmRgbhis::create $tree($mon) $parent]
-			$tree itemconfigure $current_node -text $val 
-		    }
-		    legend {
+			$tree($mon) itemconfigure $current_node -text $val 
+		}
+		hist {
+			set current_node [GmHist::create $tree($mon) $parent]
+			$tree($mon) itemconfigure $current_node -text $val 
+		}
+		rnums {
+			set current_node [GmRnums::create $tree($mon) $parent]
+			$tree($mon) itemconfigure $current_node -text $val 
+		}
+		arrows {
+			set current_node [GmArrows::create $tree($mon) $parent]
+			$tree($mon) itemconfigure $current_node -text $val 
+		}
+		legend {
 			set current_node [GmLegend::create $tree($mon) $parent]
-			$tree itemconfigure $current_node -text $val 
-		    }
-		    dframe {
+			$tree($mon) itemconfigure $current_node -text $val 
+		}
+		dframe {
 			set current_node [GmDframe::create $tree($mon) $parent]
-			$tree itemconfigure $current_node -text $val 
-		    }
-		    barscale {
+			$tree($mon) itemconfigure $current_node -text $val 
+		}
+		barscale {
 			set current_node [GmBarscale::create $tree($mon) $parent]
-			$tree itemconfigure $current_node -text $val 
-		    }
-		    chart {
+			$tree($mon) itemconfigure $current_node -text $val 
+		}
+		chart {
 			set current_node [GmChart::create $tree($mon) $parent]
-			$tree itemconfigure $current_node -text $val 
-		    }
-		    thematic {
+			$tree($mon) itemconfigure $current_node -text $val 
+		}
+		thematic {
 			set current_node [GmThematic::create $tree($mon) $parent]
-			$tree itemconfigure $current_node -text $val 
-		    }
-		    fttext {
+			$tree($mon) itemconfigure $current_node -text $val 
+		}
+		fttext {
 			set current_node [GmFTtext::create $tree($mon) $parent]
-			$tree itemconfigure $current_node -text $val 
-		    }
-		    dtext {
+			$tree($mon) itemconfigure $current_node -text $val 
+		}
+		dtext {
 			set current_node [GmDtext::create $tree($mon) $parent]
-			$tree itemconfigure $current_node -text $val 
-		    }
-		    End {
+			$tree($mon) itemconfigure $current_node -text $val 
+		}
+		End {
 			set type [GmTree::node_type $current_node]
 			if { $type == "group"  } {
-			    set parent [$tree($mon) parent $parent]
+				set parent [$tree($mon) parent $parent]
 			}
 			set current_node [$tree($mon) parent $current_node]
-		    }
-		    default {
-		      if {[catch {GmTree::node_type $current_node}] } {
-			tk_messageBox -type ok -message "Can't open $fpath - bad file format"
-			break
-		      } else {
-
-			set type [GmTree::node_type $current_node]
-			switch $type {
-			    group { 
-				GmGroup::set_option $current_node $key $val
-			    }
-			    raster { 
-				GmRaster::set_option $current_node $key $val
-			    }
-			    labels { 
-				GmLabels::set_option $current_node $key $val
-			    }
-			    vector { 
-				GmVector::set_option $current_node $key $val
-			    }
-			    cmd { 
-				GmCmd::set_option $current_node $key $val
-			    }
-			    gridline { 
-				GmGridline::set_option $current_node $key $val
-			    }
-			    rgbhis { 
-				GmRgbhis::set_option $current_node $key $val
-			    }
-			    legend { 
-				GmLegend::set_option $current_node $key $val
-			    }
-			    dframe { 
-				GmDframe::set_option $current_node $key $val
-			    }
-			    barscale { 
-				GmBarscale::set_option $current_node $key $val
-			    }
-			    chart { 
-				GmChart::set_option $current_node $key $val
-			    }
-			    thematic { 
-				GmThematic::set_option $current_node $key $val
-			    }
-			    fttext { 
-				GmFTtext::set_option $current_node $key $val
-			    }
-			    dtext { 
-				GmDtext::set_option $current_node $key $val
-			    }
-			}
-		      }
-		    }           
 		}
-	    }
-	    incr row
-	    set prg [expr $max_prgindic * $row / $nrows]
-	    if { $prg > $max_prgindic } { set prg $max_prgindic }
-	    set Gm::prgindic $prg
-        }
-    }
+		default {
+			if {[catch {GmTree::node_type $current_node}] } {
+				tk_messageBox -type ok -message "Can't open $fpath - bad file format"
+				break
+			} else {
+				set type [GmTree::node_type $current_node]
+				switch $type {
+					group { 
+					GmGroup::set_option $current_node $key $val
+					}
+					raster { 
+					GmRaster::set_option $current_node $key $val
+					}
+					labels { 
+					GmLabels::set_option $current_node $key $val
+					}
+					vector { 
+					GmVector::set_option $current_node $key $val
+					}
+					cmd { 
+					GmCmd::set_option $current_node $key $val
+					}
+					gridline { 
+					GmGridline::set_option $current_node $key $val
+					}
+					rgbhis { 
+					GmRgbhis::set_option $current_node $key $val
+					}
+					hist { 
+					GmHist::set_option $current_node $key $val
+					}
+					rnums { 
+					GmRnums::set_option $current_node $key $val
+					}
+					arrows { 
+					GmArrows::set_option $current_node $key $val
+					}
+					legend { 
+					GmLegend::set_option $current_node $key $val
+					}
+					dframe { 
+					GmDframe::set_option $current_node $key $val
+					}
+					barscale { 
+					GmBarscale::set_option $current_node $key $val
+					}
+					chart { 
+					GmChart::set_option $current_node $key $val
+					}
+					thematic { 
+					GmThematic::set_option $current_node $key $val
+					}
+					fttext { 
+					GmFTtext::set_option $current_node $key $val
+					}
+					dtext { 
+					GmDtext::set_option $current_node $key $val
+					}
+				} #switch2
+			} #if
+		} #default
+		incr row
+		set prg [expr $max_prgindic * $row / $nrows]
+		if { $prg > $max_prgindic } { set prg $max_prgindic }
+			set Gm::prgindic $prg
+		} 
+	} #switch
     close $rcfile
     set Gm::prgindic $max_prgindic
     set prgtext "Layers loaded"
@@ -907,6 +961,15 @@ proc GmTree::node_type { node } {
     if { [string match rgbhis* $node] } {
        return "rgbhis"
     }  
+    if { [string match hist* $node] } {
+       return "hist"
+    }  
+    if { [string match rnums* $node] } {
+       return "rnums"
+    }  
+    if { [string match arrows* $node] } {
+       return "arrows"
+    }  
     if { [string match legend* $node] } {
        return "legend"
     }  
@@ -936,7 +999,7 @@ proc GmTree::node_type { node } {
 
 
 #digitize
-proc GmTree::edit { } {
+proc GmTree::vedit { } {
     variable tree
 #    variable options
 	global options

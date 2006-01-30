@@ -1,8 +1,6 @@
 ##########################################################################
 #
-# MapCanvas.tcl
-#
-# TclTk canvas display monitors  and display controls 
+# MapCanvas.tcl -TclTk canvas display monitors  and display controls 
 #    for GIS Manager: GUI for GRASS 6 
 #
 # Author: Michael Barton (Arizona State University)
@@ -28,19 +26,24 @@ set bgcolor HoneyDew2
 namespace eval mapcan {
 	variable array can # mon
 	variable array mapcan # mon
+	variable array mapframe # mon
 	variable array canvas_w # mon
 	variable array canvas_h # mon
+	variable array map_ind # mon
+	variable array coords # mon
 	global array canvas_w # mon
 	global array canvas_h # mon
     variable array tree # mon
     variable cmstatus
+    variable mapmon
 	}
 
 set initwd 640
 set initht 480
 set east 0
 set north 0
-image create photo mapimg.$mon
+
+#image create photo mapimg.$mon
 
 ###############################################################################
 
@@ -54,8 +57,6 @@ proc mapcan::create { } {
     global initht
     global east 
     global north
-    global coords
-    global mapframe
     global b1east b1north
     global tree_pane
     global mon
@@ -63,11 +64,15 @@ proc mapcan::create { } {
     global currmon
     global canvas_w
     global canvas_h
-
+    global drawprog
+	global array mapcan::msg # mon
+	
+	variable mapmon
+    variable mapframe
 	variable mapcan
 	variable can
-
-#	variable tree
+	variable coords
+	variable map_ind
 	
 	# Initialize window and map geometry
 	
@@ -75,38 +80,35 @@ proc mapcan::create { } {
 	set canvas_h($mon) $initht
 	set env(GRASS_WIDTH) $initwd
 	set env(GRASS_HEIGHT) $initht
-	
+	set drawprog 0
 	set win ""
 
 
 	# Create canvas monitor as top level mainframe
 	toplevel .mapcan($mon)
 
-    set mapframe [MainFrame .mapcan($mon).mapframe \
-   		-background $bgcolor -textvariable mapcan::status ]
+    set mapframe($mon) [MainFrame .mapcan($mon).mapframe \
+   		-background $bgcolor -textvariable mapcan::msg($mon) \
+   		-progressvar drawprog -progressmax 100 -progresstype incremental]
 
     # toolbar creation
-    set map_tb  [$mapframe addtoolbar]
+    set map_tb  [$mapframe($mon) addtoolbar]
     MapToolBar::create $map_tb
 
 	# canvas creation
-    set can($mon) [canvas $mapframe.can \
+    set can($mon) [canvas $mapframe($mon).can \
         -background #ffffff -borderwidth 0 -closeenough 1.0 \
         -insertbackground black -relief ridge -selectbackground #c4c4c4 \
         -selectforeground black -width $canvas_w($mon) -height $canvas_h($mon) ]
     
     # setting geometry
-    place $mapframe.can \
-        -in $mapframe -x 0 -y 0 -anchor nw \
+    place $mapframe($mon).can \
+        -in $mapframe($mon) -x 0 -y 0 -anchor nw \
         -bordermode ignore 
 	
-    set mapcan::status \
-    	"geographic coordinates under cursor (east north)"
-    $mapframe showstatusbar $mapcan::status 
-
 	pack $map_tb -expand yes -fill both -anchor nw -side top
-	pack $mapframe.can -fill both -expand yes -anchor nw -side top	
-    pack $mapframe -expand yes -fill both -ipadx 0 -ipady 0
+	pack $mapframe($mon).can -fill both -expand yes -anchor nw -side top	
+    pack $mapframe($mon) -expand yes -fill both -ipadx 0 -ipady 0
  
     set fon [font create -family Verdana -size 12 ]
     DynamicHelp::configure -font $fon -background yellow
@@ -126,16 +128,15 @@ proc mapcan::create { } {
 		set winy [winfo pointery .]
 		set win [winfo containing $winx $winy]
 		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
-		#set mon $currmon
 		set b1east  [mapcan::scrx2mape %x]
 		set b1north [mapcan::scry2mapn %y]
-		if { $mon ne $currmon } {
-			GmTree::switchpage $currmon
+		if { $mon != $currmon } {
+			set mon $currmon
+			GmTree::switchpage $mon
 		}
-		set currmon $mon
 	}
 	
-	bind $mapframe <ButtonPress-1> {
+	bind $mapframe($mon) <ButtonPress-1> {
 		global  mon b1east b1north win
 		global currmon
 		variable tree		
@@ -143,11 +144,10 @@ proc mapcan::create { } {
 		set winy [winfo pointery .]
 		set win [winfo containing $winx $winy]
 		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
-		#set mon $currmon
 		if { $mon != $currmon } {
-			GmTree::switchpage $currmon
+			set mon $currmon
+			GmTree::switchpage $mon
 		}
-		set currmon $mon
 	}
 	bind .mapcan($mon) <ButtonPress-1> {
 		global  mon b1east b1north win
@@ -157,11 +157,10 @@ proc mapcan::create { } {
 		set winy [winfo pointery .]
 		set win [winfo containing $winx $winy]
 		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
-		#set mon $currmon
 		if { $mon != $currmon } {
-			GmTree::switchpage $currmon
+			set mon $currmon
+			GmTree::switchpage $mon
 		}
-		set mon $currmon
 	}
 
 	bind $can($mon) <Motion> {
@@ -169,57 +168,38 @@ proc mapcan::create { } {
 		set scrymov %y
 		set eastcoord [eval mapcan::scrx2mape %x]
 		set northcoord [eval mapcan::scry2mapn %y]
-		set coords "$eastcoord $northcoord"
+		set coords($mon) "$eastcoord $northcoord"
 	}
 
 
     # indicator creation	
-    set map_ind  [$mapframe addindicator -textvariable coords \
+    set map_ind($mon) [$mapframe($mon) addindicator -textvariable coords($mon) \
     	-width 25 -justify left -padx 15]
 
 #	window configuration change handler for resizing
     bind $can($mon) <Configure> {
     	global canvas_w
     	global canvas_h
-		set canvas_w($mon) %w
-		set canvas_h($mon) %h
-		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
+		set rwinx [winfo pointerx .]
+		set rwiny [winfo pointery .]
+		set rwin [winfo containing $rwinx $rwiny]
+		regexp -nocase {.*\((\d*)(\).*)} $rwin rwin1 currmon rwin2
 		set mon $currmon
-		update idletasks
-		after cancel mapcan::do_resize $mon
-		after idle mapcan::do_resize $mon
+    	if { $canvas_w($mon) != %w || $canvas_h($mon) != %h } {
+			set canvas_w($mon) %w
+			set canvas_h($mon) %h
+			update idletasks
+			after cancel mapcan::do_resize $mon
+			after idle mapcan::do_resize $mon
+		}
 	}
-    bind $mapframe <Configure> {
-    	global canvas_w
-    	global canvas_h
-		set canvas_w($mon) %w
-		set canvas_h($mon) %h
-		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
-		set mon $currmon
-	}
-    bind .mapcan($mon) <Configure> {
-    	global canvas_w
-    	global canvas_h
-		set canvas_w($mon) %w
-		set canvas_h($mon) %h
-		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
-		set mon $currmon
+
+	# bindings for closing map display window
+	bind .mapcan($mon) <Destroy> {
+		set destroywin %W
+		mapcan::cleanup $mon $destroywin
 	}
 	
-}
-
-###############################################################################
-# coordinate conversions for moving mouse pointer
-
-proc mapcan::coordmov { mon } {
-	global winxmov winymov coords
-	global scrxmov scrymov
-	variable mapcan
-	variable can
-	
-	set eastcoord [eval mapcan::scrx2mape $scrxmov]
-	set northcoord [eval mapcan::scry2mapn $scrymov]
-	set coords "$eastcoord $northcoord"
 }
 
 
@@ -283,35 +263,47 @@ proc mapcan::drawmap { mon } {
 	global outtext
 	global env
 	global gmpath
-	global mapimg.$mon
 	global mapset
+	global canvas_w
+	global canvas_h
+	global mapimg.mon
+	global mapfile
+	global drawprog
+	variable mapframe
+	global mapcan::msg
 	
 	variable mapcan
 	variable can
-	global canvas_w
-	global canvas_h
+	set drawprog 0
+
+    set mapcan::msg($mon) "please wait..."
+    $mapframe($mon) showstatusbar progression 
 		
-	$outtext delete 1.0 end
-	
-    if ![catch {open "|d.mon -L" r} input] {
-        while {[gets $input line] >= 0} {
-			if {[regexp "^PNG.*not running" $line]} {
-				run "d.mon start=PNG"
-			} elseif {[regexp "^PNG.* running" $line]} {
-				set env(MONITOR_OVERRIDE) "PNG"
+	# start draw map routine only if gism PNG driver is not running
+	if ![catch {open "|d.mon -L" r} input] {
+		while {[gets $input line] >= 0} {
+			if {[regexp "^gism.*not running" $line]} {
+				runcmd "d.mon start=gism"
+				incr drawprog
+				runcmd "d.frame -e"
+				incr drawprog
+				GmGroup::display "root"
+				incr drawprog
+				runcmd "d.mon stop=gism" 
+				incr drawprog
+				image create photo mapimg.$mon -file "dispmon_$mon.ppm" 
+				set drawprog 100
+				$can($mon) create image 0 0 -anchor nw \
+					-image "mapimg.$mon" \
+					-tag map$mon
 			}
 		}
 	}
-
- 	runcmd "d.frame -e" 
-    GmGroup::display "root" 
-    runcmd "d.mon stop=PNG" 
 	
-	$can($mon) create image 0 0 -anchor nw \
-		-image [image create photo mapimg.$mon -file "dispmon_$mon.ppm" ] \
-		-tag map$mon
 	mapcan::coordconv $mon
-	
+	set drawprog 0
+    set mapcan::msg($mon) "window shows coordinates under cursor (east north)"
+    $mapframe($mon) showstatusbar status 
 	return
 }
 
@@ -320,12 +312,16 @@ proc mapcan::drawmap { mon } {
 proc mapcan::do_resize {mon} {
 	global canvas_w
 	global canvas_h
+	global mapimg.$mon
+	global draw
+	global drawprog
 	variable can
-	
+
 	mapcan::coordconv $mon
 	$can($mon) delete map$mon
 	mapcan::mapsettings $mon
 	mapcan::drawmap $mon
+		
 }
 
 
@@ -784,10 +780,6 @@ proc mapcan::stopmeasure { mon } {
 	unset liney1
 	unset linex2
 	unset liney2
-
-    #destroy measurement window
-	#put some code here
-	
 	
 	# release bindings
 	bind $can($mon) <1> ""
@@ -863,7 +855,6 @@ proc mapcan::startquery { mon x y } {
     if { $sel == "" } { return }
     
     set type [GmTree::node_type $sel]
-    puts "type is $type"
 
     switch $type {
         "raster" {
@@ -884,7 +875,7 @@ proc mapcan::startquery { mon x y } {
 				catch {cmd_output $fh}	
 				return
 			}
-	    	set cmd "v.what -a map=$mapname east=$east north=$north distance=$vdist\n\n"
+	    	set cmd "v.what -a map=$mapname east_north=$east,$north distance=$vdist\n\n"
         }
         "rgbhis" {
             set mapname [GmRgbhis::mapname $sel]
@@ -907,7 +898,6 @@ proc mapcan::startquery { mon x y } {
         }
     }
 	
-	puts "mapname is $mapname"
 	run_panel $cmd
 }
 
@@ -929,9 +919,14 @@ proc mapcan::stopquery { mon } {
 proc mapcan::printcanvas { mon } {
 	variable mapcan
 	variable can
-		
-	$can($mon) postscript -file "map$mon.eps"
-
+	global canvas_w
+	global canvas_h
+	
+	set cv $can($mon)
+	
+	# open print window
+	psprint::init
+    psprint::window $mon $cv $canvas_w($mon) $canvas_h($mon)
 }
 
 ###############################################################################
@@ -957,6 +952,7 @@ proc mapcan::coordconv { mon } {
 	global mapimg.$mon
 	
 	variable can
+	variable mapframe
 	global canvas_w
 	global canvas_h
 	
@@ -1073,19 +1069,21 @@ proc winx2canx { x } {
 
 ###############################################################################
 # cleanup procedure on closing window
-proc mapcan::cleanup { mon } {
+proc mapcan::cleanup { mon destroywin} {
 	global pgs
-	
-	$pgs delete "page_$mon"
-	runcmd "g.mremove -f region=mon_$mon >/dev/null"
-	destroy mon
+
+	if { $destroywin == ".mapcan($mon)" } { 
+		$pgs delete "page_$mon"
+		runcmd "g.mremove -f region=mon_$mon "
+		#destroy $mon
+	}
+	return
 }
 
 ###############################################################################
 	
 
-
-	wm geom . [wm geom .]
+wm geom . [wm geom .]
 
 
 

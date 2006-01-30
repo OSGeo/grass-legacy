@@ -1,6 +1,7 @@
-# 4 Sept 2005
-# panel for d.barscale
-# Michael Barton, Arizona State University
+###############################################################
+# barscale.tcl - barscale layer options file for GRASS GIS Manager
+# January 2006 Michael Barton, Arizona State University
+###############################################################
 
 namespace eval GmBarscale {
     variable array opt # barscale options

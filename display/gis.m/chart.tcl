@@ -1,6 +1,7 @@
-# 4 Sept 2005
-# panel for d.vect.chart
-# Michael Barton, Arizona State University
+###############################################################
+# chart.tcl - vector chart layer options file for GRASS GIS Manager
+# January 2006 Michael Barton, Arizona State University
+###############################################################
 
 namespace eval GmChart {
     variable array opt # chart options
@@ -74,17 +75,16 @@ proc GmChart::show_columns { id } {
 	global bgcolor
 	set mapname $opt($id,map)
 	set layernum $opt($id,layer)
-	exec xterm -bg $bgcolor -title "$mapname columns" \
-		-geometry 40x25-10+30 -sb -hold -e v.info -c map=$mapname \
-		layer=$layernum &		
+	set cmd "v.info -c map=$mapname layer=$layernum"
+	run_panel $cmd
 }
 
 proc GmChart::show_data { id } {
 	variable opt
 	global bgcolor
 	set mapname $opt($id,map)
-	exec xterm -bg $bgcolor -title "$mapname data" \
-		-geometry 60x40-10+30 -sb -hold -e db.select table=$mapname &
+	set cmd "db.select table=$mapname"
+	run_panel $cmd
 }
 
 # chart options

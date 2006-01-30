@@ -4,14 +4,14 @@
 #
 # Primary tcltk script for GIS Manager: GUI for GRASS 6 
 # Author: Michael Barton (Arizona State University)
-# Based on Display Manager for GRASS 5.7 by Radim Blazek (ITC-IRST)
+# Based in part on Display Manager for GRASS 5.7 by Radim Blazek (ITC-IRST)
 # and tcltkgrass for GRASS 5.7 by Michael Barton (Arizona State University)--
 # with contributions by Glynn Clements, Markus Neteler, Lorenzo Moretti, 
 # Florian Goessmann, and others
 #
-# 12 November 2005
+# January 2006
 #
-# COPYRIGHT:	(C) 1999 - 2005 by the GRASS Development Team
+# COPYRIGHT:	(C) 1999 - 2006 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -32,13 +32,15 @@ set mapset [exec g.gisenv get=MAPSET]
 
 
 set gmpath $env(GISBASE)/etc/gm
+global gmpath
 
 set keycontrol "Control"
 set tmenu "1"
 set keyctrl "Ctrl"
 set execom "execute"
 set msg 0
-set mon 0
+set mon 1
+set moncount 1
 
 if {[info exists env(HOSTTYPE)]} {
 	set HOSTTYPE $env(HOSTTYPE)
@@ -84,6 +86,9 @@ source $gmpath/raster.tcl
 source $gmpath/labels.tcl
 source $gmpath/gridline.tcl
 source $gmpath/rgbhis.tcl
+source $gmpath/histogram.tcl
+source $gmpath/rastnums.tcl
+source $gmpath/rastarrows.tcl
 source $gmpath/legend.tcl
 source $gmpath/frames.tcl
 source $gmpath/barscale.tcl
@@ -97,17 +102,21 @@ source $gmpath/mapcanvas.tcl
 
 namespace eval Gm {
     variable mainframe
-#    variable options
     variable status
-    variable prgtext
-    variable prgindic
-    variable max_prgindic 20
     variable array tree # mon
     variable rcfile
+	global array filename # mon
+
 }
 
 
 global topwin
+global prgtext ""
+global prgindic
+global max_prgindic 
+
+set max_prgindic 20
+
 
 ################################################################################
 
@@ -134,11 +143,11 @@ proc spawn {cmd args} {
 
 ###############################################################################
 	proc cmd_output {fh} {
-		global dtxt
+		global dtxt val
 		while {![eof $fh]} {
 			set str [gets $fh]
 			if {[regexp -- {^GRASS_INFO_PERCENT: (.+)$} $str match val rest]} {
-				#do nothing
+				puts "$match $val $rest"
 			} else {
 				append str "\n"
 				if { [fblocked $fh] } { set str [read $fh] }
@@ -313,10 +322,7 @@ proc Gm::xmon { type cmd } {
 					runcmd "d.mon start=x$xmon"
 					set nextmon [expr $xmon + 1]
 					if { $type == "term" } {
-    					eval exec -- xterm -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd
-    					set str $cmd
-						$outtext insert end "$cmd\n"
-						$outtext yview end
+						term_panel $cmd
 					} else {
 						run_panel $cmd
 					}
@@ -325,10 +331,7 @@ proc Gm::xmon { type cmd } {
 					runcmd "d.mon start=x$xmon"
 					set nextmon [expr $xmon + 1]
 					if { $type == "term" } {
-    					eval exec -- xterm -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd
-    					set str $cmd
-						$outtext insert end "$cmd\n"
-						$outtext yview end
+						term_panel $cmd
 					} else {
 						run_panel $cmd
 					}
@@ -336,9 +339,6 @@ proc Gm::xmon { type cmd } {
        		}
     	}
     }
-    
-    runcmd "d.mon stop=x$xmon"
-    
     
     return
 }
@@ -358,12 +358,11 @@ proc Gm::create { } {
     global pgs
     global mainframe
     global fon
+    global prgtext
+    global prgindic
     
     variable mainframe
-#    variable options
     variable tree
-    variable prgtext
-    variable prgindic
 	
     set prgtext "Loading GIS Manager"
     set prgindic -1
@@ -419,7 +418,7 @@ proc Gm::create { } {
     pack $options_pane -expand yes -fill both 
     pack $options_sw $options_sf -fill both -expand yes
  
-    # command output
+    # command console 
     set output_pane  [$pw1 add -minsize 50 -weight 2 ]
     set output_frame [frame $output_pane.fr]
     set output_bbox [ButtonBox $output_pane.bb -bg $bgcolor -default 0 \
@@ -432,8 +431,6 @@ proc Gm::create { } {
 	set outtext [text $output_sw.text -height 6 -width 30 -bg #ffffff] 
 	$output_sw setwidget $outtext
 	
-#	set output_buttons [buttonbox $output_bframe]
-
 	$output_bbox add -text "run" -command "Gm::run_txt $outtext"  -bg #dddddd \
 		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 -width 8 \
         -helptext [G_msg "run command at cursor"] 
@@ -443,7 +440,6 @@ proc Gm::create { } {
 	$output_bbox add -text "save" -command "Gm::save_txt $outtext"  -bg #dddddd \
 		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 -width 8 \
         -helptext [G_msg "Save output to file"] -highlightbackground $bgcolor
-
 	
 	pack $output_bbox -expand yes -fill none 
     pack $output_sw $outtext -fill both -expand yes
@@ -462,7 +458,6 @@ proc Gm::create { } {
 
 	Gm::startmon
 	Gm::create_disptxt $mon
-#update idletasks
 }
 
 
@@ -472,9 +467,11 @@ proc Gm::create { } {
 proc Gm::startmon { } {
 	global mainwindow
 	global mon
+	global moncount
 	variable tree
 
-	incr mon 1
+	set mon $moncount
+	incr moncount 1
 
 	#create initial display canvas and layer tree
 	mapcan::create
@@ -482,9 +479,7 @@ proc Gm::startmon { } {
 	
 	wm title .mapcan($mon) [G_msg "Map Display $mon"]
 	wm withdraw .mapcan($mon)
-#	BWidget::place .mapcan($mon) 0 0 
 	wm deiconify .mapcan($mon)
-#	raise .mapcan($mon)	
 }
 
 
@@ -494,7 +489,8 @@ proc Gm::_create_intro { } {
     global gmpath
     global GRASSVERSION
     global location_name
-    variable max_prgindic
+    global max_prgindic
+    global prg
 
     set top [toplevel .intro -relief raised -borderwidth 2]
 
@@ -510,7 +506,8 @@ proc Gm::_create_intro { } {
     	-font {times 12}]
     set prg   [ProgressBar $frame.prg -width 50 -height 15 -background white \
                    -variable Gm::prgindic -maximum $max_prgindic]
-    pack $lab1 $prg $lab2 -side left -fill both -expand yes
+    pack $lab1 $prg -side left -fill both -expand yes
+    pack $lab2 -side right -expand yes
     place $frame -x 0 -y 0 -anchor nw
     pack $ximg
     BWidget::place $top 0 0 center
@@ -622,18 +619,6 @@ proc Gm::monitor { } {
     return
 }
 
-
-###############################################################################
-proc message_dialog { msgtxt } {
-	set msg [MessageDlg .msgdlg  \
-		-title "The Message Dialog" \
-		-message $msgtxt \
-		-type yesno ]
-if { $msg == 1 } {puts "no way" }
-if { $msg == 0 } {puts "way to go"}
-
-}
-
 ###############################################################################
 
 # nviz
@@ -686,152 +671,71 @@ proc Gm::help { } {
 
 ###############################################################################
 
-# display node
-proc Gm::print_node { file node } {
-    variable tree
-    global raster_printed
-
-    set type [Gm::node_type $node]
-
-    switch $type {
-        group {
-            GmGroup::print $file $node
-	}
-	raster {
-            if { ! $raster_printed } { 
-	        GmRaster::print $file $node
-                set raster_printed 1
-            }
-	}
-	labels {
-	    GmLabels::print $file $node
-	}
-	vector {
-	    GmVector::print $file $node
-	}
-	cmd {
-            puts "Command may not be printed to postscript file"
-	}
-	gridline {
-            puts "not be printed to postscript file"
-	}
-	rgbhis {
-            puts "not be printed to postscript file"
-	}
-	legend {
-            puts "not be printed to postscript file"
-	}
-	dframe {
-            puts "not be printed to postscript file"
-	}
-	barscale {
-            puts "not be printed to postscript file"
-	}
-	chart {
-            puts "not be printed to postscript file"
-	}
-	thematic {
-            puts "not be printed to postscript file"
-	}
-	fttext {
-            puts "not be printed to postscript file"
-	}
-	dtext {
-            puts "not be printed to postscript file"
-	}
-    } 
-}
-
-###############################################################################
-
-# execute command
-proc Gm::execute { cmd } {
-    global env
-
-    # warning: DBMI - be careful and test 'd.vect where=' after changes
-    puts stdout $cmd
-    
-      ## This was old version - does not work, because $shell have not LD_LIBRARY_PATH to GRASS libs ? 
-      #set shell $env(SHELL)
-      #set cmd [ string map { \" \\\" \$ \\\$ } $cmd ]
-      #eval "exec echo \"$cmd\" | $shell >@stdout 2>@stdout"
-
-    eval "exec $cmd >@stdout 2>@stdout"
-}
-
-###############################################################################
-
-# open print window
-proc Gm::print { } {
-    GmPrint::window
-}
-
-###############################################################################
-
 #open dialog box
-proc Gm::OpenFileBox {w} {
+proc Gm::OpenFileBox { } {
     global mainwindow
     variable win
+    global filename    
+    global mon
 
     set win $w
-    
-    if { $win == ""} {set win $mainwindow}
-    
+        
     set types {
         {{Adm Resource Files} {{.dm} {.dmrc}}}
         {{All Files} *}
     }
 
         if {[catch {tk_getOpenFile \
-                -parent $win \
+                -parent $mainwindow \
                 -filetypes $types \
                 -title {Load File}} \
-                ::Gm::filename_new] || \
-                [string match {} $::Gm::filename_new]} return
+                filename_new] || \
+                [string match {} $filename_new]} return
 	
-	if {[catch {if { [ regexp -- {^Untitled.dmrc$} $::Gm::filename r]} {}}] } {
-		set ::Gm::filename $::Gm::filename_new
+	if {[catch {if { [ regexp -- {^Untitled_?.dmrc$} $filename($mon) r]} {}}] } {
+		set filename($mon) $filename_new
 	}
 	
-	Gm::load $::Gm::filename_new
+	GmTree::load $filename($mon)_new
 		
 };
 
 ###############################################################################
 
 #save dialog box
-proc Gm::SaveFileBox {w} {
+proc Gm::SaveFileBox { } {
     global mainwindow
-    variable win
+    global filename
+    global mon
 
-    set win $w
-    if { $win == ""} {set win $mainwindow}
-    catch {if { [ regexp -- {^Untitled.dmrc$} $::Gm::filename r]} {unset ::Gm::filename}}
-    if {[catch {Gm::save $::Gm::filename}]} {
+    catch {
+   	if {[ regexp -- {^Untitled_?.dmrc$} $filename($mon) r]} {
+    		set filename($mon) ""
+    	}
+    }
+    
+    if { $filename($mon) != "" } {
+    	GmTree::save $filename($mon)
+    } else {
         set types {
-            {{Adm Resource Files} {{.dm} {.dmrc}}}
+            {{GRASS Resource Files} {{.dm} {.dmrc}}}
             {{All Files} *}
-        }
-        if {[catch {tk_getSaveFile \
-                -parent $win \
-                -filetypes $types \
-                -title {Save File}} \
-                ::Gm::filename] || \
-                [string match {} $::Gm::filename]} return
-	
-	Gm::save $::Gm::filename
-	Gm::FileClose stay_alive
-	Gm::load $::Gm::filename
+		}
+    	set filename($mon) [tk_getSaveFile -parent $mainwindow -filetypes $types \
+    		-title {Save File}]
+    	if { $filename($mon) == "" } { return}
+    	GmTree::save $filename($mon)    	
     }
 };
 
 ###############################################################################
 
 proc Gm::cleanup { } {
-	runcmd "g.mremove -f region=mon_* >/dev/null"
-	eval exec "rm dispmon_* >/dev/null"
-	eval exec "rm $treefile*"
+	foreach file [glob -nocomplain dispmon_*] {
+		file delete $file
+	}
 	destroy mon
+	run "g.mremove -f region=mon_*"
 }
 
 ###############################################################################
@@ -842,6 +746,8 @@ proc main {argc argv} {
     global location_name
     global keycontrol
     global mainframe
+    global filename
+    global mon
 
     wm withdraw .
     wm title . [G_msg "GRASS$GRASSVERSION GIS Manager - $location_name"]
@@ -862,7 +768,7 @@ proc main {argc argv} {
 	Gm::delete
     }
     bind . <$keycontrol-Key-w> {
-	Gm::FileClose {}
+	GmTree::FileClose {}
     }
     bind . <$keycontrol-Key-p> {
     Gm::print
@@ -870,8 +776,6 @@ proc main {argc argv} {
 
 
     Gm::create
-#    GmPrint::init
-#    GmPrint::init_tmpfiles
     BWidget::place . 0 0 at 400 100
 
     wm deiconify .
@@ -879,17 +783,13 @@ proc main {argc argv} {
     focus -force .
     destroy .intro
     if { $argc == "1"} { 
-    	set ::Gm::filename $argv
-	Gm::load $::Gm::filename
+    	set filename($mon) $argv
+		GmTree::load $filename($mon)
     }
 }
 
 bind . <Destroy> { 
 	if { "%W" == "."} { Gm::cleanup }
-	if { "%W" == ".mapcan($mon)" } {
-		regexp -nocase {.*\((\d*)(\).*)} %W win1 mon win2
-		mapcan::cleanup $mon 
-	}
 } 
 
 main $argc $argv

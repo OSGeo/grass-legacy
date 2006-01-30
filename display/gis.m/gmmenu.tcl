@@ -1,10 +1,12 @@
-# Updated January 2006 by Michael Barton, Arizona State University
-# gmmenu.tcl
-# produces menu bar for gm.tcl
+###############################################################
+# gmmenu.tcl - menu file for GRASS GIS Manager
+# January 2006 Michael Barton, Arizona State University
+###############################################################
 
 global tmenu
 global keyctrl
 global execom 
+global mon
 
  set descmenu [subst  {
  "&File" all file $tmenu {
@@ -93,16 +95,11 @@ global execom
         {command "New" {} "Create new group file" {} -accelerator $keyctrl-N -command { Gm::new}}
         {command "Open..." {} "Open group file" {} -accelerator $keyctrl-O -command { Gm::OpenFileBox {}}}
         {command "Save" {} "Save group file" {} -accelerator $keyctrl-S -command { Gm::SaveFileBox {}}}
-        {command "Save as..." {} "Save group file as name" {} -command { catch {unset ::Gm::filename} ; Gm::SaveFileBox {}}}
-        {command "Close" {} "Close group" {} -accelerator $keyctrl-W -command { Gm::FileClose {}}}
+        {command "Save as..." {} "Save group file as name" {} -command { catch {unset ::Gm::filename.$mon} ; Gm::SaveFileBox {}}}
+        {command "Close" {} "Close group" {} -accelerator $keyctrl-W -command { GmTree::FileClose {}}}
     }}
     {separator}
- 	{cascad "Save display to image file" {} "" $tmenu {			
-        {command "XWD (Save display, selected with mouse, to map.xwd in home directory )" {} "" {} -command { spawn xwd -out map.xwd }}
-        {command "Save displays to multiple graphic file formats" {} "d.out.file" {} -command { execute d.out.file }}
-    }}
-    {command "Save map to Postscript file" {} "ps.map" {} -command { execute ps.map }}
-    {command "Print to default printer" {} "print" {} -accelerator $keyctrl-P -command {spawn print.sh} }
+    {command "Create ps.map file for postscript printing" {} "ps.map" {} -command { execute ps.map }}
     {separator}
     {command "E&xit" {} "Exit Display Manager" {} -accelerator $keyctrl-Q -command { exit } }
  }
@@ -110,7 +107,6 @@ global execom
  	{cascad "Region" {} "" $tmenu {			
         {command "Display region settings" {} "g.region -p" {} -command {run_panel "g.region -p" }}
         {command "Manage region" {} " g.region" {} -command {execute g.region }}
-        {command "Select default region" {} "g.region -d" {} -command {run g.region -d ; run d.redraw }}
         {command "Zoom to maximum extent of all displayed maps" {} "d.extend" {} -command {run d.extend }}
         {separator}
         {command "Create WIND3 (default 3D window) from current 2D region" {} "g3.createwind" {} -command {execute g3.createwind }}
@@ -128,21 +124,21 @@ global execom
         {command "Show projection information and create projection files" {} "g.proj" {} -command {execute g.proj }}
  	}}
     {cascad "Text" {} "" $tmenu {			
-        {command "Select default text font" {} "d.font" {} -command {Gm::xmon "term" "d.font" }}
-        {command "Select default freetype text font" {} "" {} -command {$execom d.font.freetype }}
+        {command "Select default text font" {} "d.font" {} -command {execute term d.font }}
+        {command "Select default freetype text font" {} "" {} -command {execute d.font.freetype }}
         {command "Show standard GRASS fonts" {} "show.fonts.sh" {} -command {$execom show.fonts.sh }}
 	 }}
- 	{cascad "Displays" {} "" $tmenu {
-        {command "Configure displays" {} "d.mon" {} -command {execute d.mon }}
-        {command "Configure frames" {} "d.frame" {} -command {execute d.frame }}
-        {command "Start/restart display at specified window size" {} "d.monsize" {} -command {execute d.monsize }}
-        {command "Set active display to specified size" {} "d.resize" {} -command {execute d.resize }}
-        {command "Display information about active display monitor" {} "d.info" {} -command {execute d.info }}
+ 	{cascad "X-monitor displays" {} "" $tmenu {
+        {command "Configure xmonitor displays" {} "d.mon" {} -command {execute d.mon }}
+        {command "Configure frames for xmonitors" {} "d.frame" {} -command {execute d.frame }}
+        {command "Start/restart xmonitor at specified window size" {} "d.monsize" {} -command {execute d.monsize }}
+        {command "Set active xmonitor to specified size" {} "d.resize" {} -command {execute d.resize }}
+        {command "Display information about active xmonitor" {} "d.info" {} -command {execute d.info }}
     }}
  } 
  "&Raster" all options $tmenu {
     {cascad "Develop map" {} "" $tmenu {			
-        {command "Digitize raster" {} "r.digit" {} -command {Gm::xmon "term" "r.digit" }}
+        {command "Digitize raster" {} "r.digit" {} -command {Gm::xmon term r.digit }}
         {separator}
         {command "Compress/decompress raster file" {} "r.compress" {} -command {execute r.compress }}
         {command "Manage boundary definitions" {} "r.region" {} -command {execute r.region }}
@@ -156,7 +152,6 @@ global execom
         {command "Reproject raster from other location" {} "r.proj" {} -command {execute r.proj }}
     }}
     {cascad "Manage map colors" {} "" $tmenu {			
-        {command "Modify color table" {} "d.colors.sh" {} -command {Gm::xmon "run" "d.colors.sh" }}
         {command "Set colors to predefined color tables" {} "r.colors" {} -command {execute r.colors }}
         {command "Set colors using color rules" {} "r.colors.rules" {} -command {execute $env(GISBASE)/etc/gm/script/r.colors.rules }}
         {separator}
@@ -166,7 +161,6 @@ global execom
     }}
     {separator}
     {command "Query by coordinate(s)" {} "r.what" {} -command { execute r.what }}
-    {command "Query with mouse" {} "d.what.rast" {} -command { execute d.what.rast }}
     {separator}
     {command "Create raster buffers" {} "r.buffer" {} -command { execute r.buffer }}
     {command "Create raster MASK" {} "r.mask" {} -command { execute r.mask }}
@@ -191,11 +185,9 @@ global execom
         {command "Calculate cumulative movement costs between locales" {} "r.walk" {} -command {execute r.walk }}
         {command "Cost surface" {} "r.cost" {} -command {execute r.cost }}
         {command "Least cost route or flow" {} "r.drain" {} -command {execute r.drain }}
-        {command "Profile analysis" {} "d.profile" {} -command {Gm::xmon "run" "d.profile" }}
+        {command "Profile analysis" {} "d.profile" {} -command {Gm::xmon run d.profile }}
         {command "Shaded relief map" {} "r.shaded.relief" {} -command {execute r.shaded.relief }}
         {command "Slope and aspect" {} "r.slope.aspect" {} -command {execute r.slope.aspect }}
-        {command "Overlay slope arrows on aspect raster map" {} "d.rast.arrow" {} \
-        	-command {Gm::xmon "run" "d.rast.arrow" }}
         {command "Terrain parameters" {} "r.param.scale" {} -command {execute r.param.scale }}
         {command "Textural features" {} "r.texture" {} -command {execute r.texture }}
         {command "Visibility/line of sight" {} "r.los" {} -command {execute r.los }}
@@ -231,7 +223,7 @@ global execom
     {separator}
     {cascad "Change category values and labels" {} "" $tmenu {			
         {command "Edit category values of individual cells for displayed raster map" {} "d.rast.edit" {} \
-        	-command {Gm::xmon "term" "d.rast.edit" }}
+        	-command {Gm::xmon term d.rast.edit }}
         {separator}
         {command "Reclassify categories for areas of specified sizes" {} "r.reclass.area" {} -command {execute r.reclass.area }}
         {command "Reclassify categories using rules" {} "r.reclass.rules" {} -command {execute $env(GISBASE)/etc/gm/script/r.reclass.rules }}
@@ -272,8 +264,6 @@ global execom
     {cascad "Reports and statistics" {} "" $tmenu {			
         {command "Report basic file information" {} "r.info" {} -command {execute r.info }}
         {command "Report category labels and values" {} "r.cats" {} -command {execute r.cats }}
-        {command "Display category values in raster map cells" {} "d.rast.num" {} \
-        	-command {Gm::xmon "run" "d.rast.num" }}
         {separator}
         {command "General statistics" {} "r.stats" {} -command {execute r.stats }}
         {command "Range of all category values" {} "r.describe" {} -command {execute r.describe }}
@@ -293,7 +283,7 @@ global execom
  } 
  "&Vector" all options $tmenu {
 			{cascad "Develop map" {} "" $tmenu {			
-			 {command "Digitize" {} "v.digit" {} -command {Gm::xmon "run" "v.digit" }}
+			 {command "Digitize" {} "v.digit" {} -command {Gm::xmon run v.digit }}
 			 {separator}
 			 {command "Create/rebuild topology" {} "v.build" {} -command {execute v.build }}
 			 {command "Clean vector files" {} "v.clean" {} -command {execute v.clean }}
@@ -319,7 +309,6 @@ global execom
 			{separator}
 			{command "Query by attributes" {} "v.extract" {} -command {execute v.extract }}
 			{command "Query by map features" {} " v.select" {} -command {execute v.select }}
-			{command "Query with mouse (form mode, editing enabled)" {} "d.what.vect -ef" {} -command {spawn d.what.vect -ef}}
 			{separator}
 			{command "Create vector buffers" {} "v.buffer" {} -command {execute v.buffer }}
 			{command "Locate nearest features to points or centroids" {} "v.distance" {} -command {execute v.distance }}
@@ -327,7 +316,7 @@ global execom
 			 {command "Allocate subnets" {} "v.net.alloc" {} -command {execute v.net.alloc }}
 			 {command "Network maintenance" {} "v.net" {} -command {execute v.net }}
 			 {command "Shortest route" {} "v.net.path" {} -command {execute v.net.path }}
-			 {command "Shortest route (visualization only)" {} "d.path" {} -command {Gm::xmon "run" "d.path" }}
+			 {command "Shortest route (visualization only)" {} "d.path" {} -command {Gm::xmon run d.path }}
 			 {command "Split net to bands between cost isolines" {} "v.net.iso" {} -command {execute v.net.iso }}
 			 {command "Steiner tree" {} "v.net.steiner" {} -command {execute v.net.steiner }}
 			 {command "Traveling salesman analysis" {} "v.net.salesman" {} -command {execute v.net.salesman }}
@@ -385,9 +374,9 @@ global execom
 			}}
 			{cascad "Rectify and georeference image group" {} "" $tmenu {			
 			 {command "Set ground control points (GCP's) from raster map or keyboard entry" {} "i.points" {} \
-			 	-command {Gm::xmon "term ""i.points"}}
+			 	-command {Gm::xmon term i.points }}
 			 {command "Set ground control points (GCP's) from vector map or keyboard entry" {} "i.vpoints" {} \
-			 	-command {Gm::xmon "term" "i.vpoints"}}
+			 	-command {Gm::xmon term i.vpoints }}
 			 {command "Affine and Polynomial rectification (rubber sheet)" {} "i.rectify" {} -command {execute i.rectify }}
 			 {command "Ortho photo rectification" {} "i.ortho.photo" {} -command {term i.ortho.photo }}
 			}}
@@ -420,7 +409,6 @@ global execom
 			 {command "Report basic file information" {} "r.info" {} -command {execute r.info }}
 			 {command "Range of image values" {} "r.describe" {} -command {execute r.describe }}
 			 {separator}
-	 		{command "Display histogram" {} "d.histogram" {} -command {Gm::xmon "run" "d.histogram" }}
 			 {separator}
 			 {command "Bit pattern comparison for ID of low quality pixels" {} "r.bitpattern" {} -command {execute r.bitpattern }}
 			 {command "Kappa classification accuracy assessment" {} "r.kappa" {} -command {execute r.kappa }}
@@ -462,25 +450,7 @@ global execom
 			}}
  } 
  "&Xtns" all options 1 {
-			{command "Open QGIS application" {} "d.qgis - open QGIS (Quantum GIS) with Grass support enabled" {} -command { execute d.qgis }}
- 			{cascad "Dempster Shafer Theory" {} "" 1 {
- 			 {command "Create new DST base file" {} "execute dst.create" {} -command {execute dst.create }}
- 			 {command "Remove a DST base file" {} "execute dst.remove" {} -command {execute dst.remove }}
- 			 {command "Rename a DST base file" {} "execute dst.rename" {} -command {execute dst.rename }}
- 			 {separator}
- 			 {command "BPA raster maps for spatial prediction" {} "execute r.dst.bpa" {} -command {execute r.dst.bpa }}
- 			 {separator}
- 			 {command "Dump contents of DST base file" {} "execute dst.view" {} -command {execute dst.view }}
- 			 {command "Manage evidence in a DST base file" {} "execute dst.update" {} -command {execute dst.update }}
- 			 {command "Add source to DST base file" {} "execute dst.source" {} -command {execute dst.source }}
- 			 {command "Combine evidences from DST base file" {} " execute dst.combine" {} -command { execute dst.combine }}
- 			 {separator}
- 			 {command "DST spatial predictive modelling" {} "execute dst.predict" {} -command {execute dst.predict }}
- 			}}
- 			{cascad "Viewshed Analysis" {} "" 1 {
- 			 {command "Calculate cumulative viewsheds" {} "execute r.cva" {} -command {execute r.cva }}
- 			 {command "Llobera's Prominence Index" {} "execute r.prominence" {} -command {execute r.prominence }}
- 			}}
+	{command "Add extensions here" {} "help" {} -command { execute "" }}
  }
  "&Help" all options $tmenu {
     {command "GRASS help" {} "g.manual" {} -command { exec g.manual -i > /dev/null & } }

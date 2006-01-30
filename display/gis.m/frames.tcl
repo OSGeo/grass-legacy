@@ -1,6 +1,7 @@
-# 1 Sept 2005
-# panel for d.frame
-# Michael Barton, Arizona State University
+###############################################################
+# frames.tcl - display frames layer options file for GRASS GIS Manager
+# January 2006 Michael Barton, Arizona State University
+###############################################################
 
 namespace eval GmDframe {
     variable array opt # frame options

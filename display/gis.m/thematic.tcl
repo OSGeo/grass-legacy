@@ -1,6 +1,7 @@
-# 15 Dec 2005
-# panel for d.vect.thematic
-# Michael Barton, Arizona State University
+###############################################################
+# thematic.tcl - thematic vector mapping layer options file for GRASS GIS Manager
+# January 2006 Michael Barton, Arizona State University
+###############################################################
 
 namespace eval GmThematic {
     variable array opt # thematic options
@@ -83,17 +84,16 @@ proc GmThematic::show_columns { id } {
 	global bgcolor
 	set mapname $opt($id,map)
 	set layernum $opt($id,layer)
-	exec xterm -bg $bgcolor -title "$mapname columns" \
-		-geometry 40x25-10+30 -sb -hold -e v.info -c map=$mapname \
-		layer=$layernum &		
+	set cmd "v.info -c map=$mapname layer=$layernum"
+	run_panel $cmd
 }
 
 proc GmThematic::show_data { id } {
 	variable opt
 	global bgcolor
 	set mapname $opt($id,map)
-	exec xterm -bg $bgcolor -title "$mapname data" \
-		-geometry 60x40-10+30 -sb -hold -e db.select table=$mapname &
+	set cmd "db.select table=$mapname"
+	run_panel $cmd
 }
 
 # select symbols from directories
@@ -230,7 +230,7 @@ proc GmThematic::options { id frm } {
     Label $row.a -text [G_msg "Graduate colors: preset color schemes"] 
     ComboBox $row.b -padx 2 -width 18 -textvariable GmThematic::opt($id,colorscheme) \
         -values {"blue-red" "red-blue" "green-red" "red-green" \
-        "blue-green" "custom gradient" "single color" } -entrybg white
+        "blue-green" "custom_gradient" "single_color" } -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
@@ -324,7 +324,7 @@ proc GmThematic::display { node } {
             maxsize=$opt($id,maxsize) nint=$opt($id,nint) pointcolor=$pointcolor \
 			linecolor=$linecolor startcolor=$startcolor endcolor=$endcolor \
 			monitor=$opt($id,legmon) themetype=$opt($id,themetype) \
-			themecalc=$opt($id,themecalc) {colorscheme=$opt($id,colorscheme)}"
+			themecalc=$opt($id,themecalc) colorscheme=$opt($id,colorscheme)"
              
     # breakpoints
     if { $opt($id,breakpoints) != "" } { 
