@@ -1,4 +1,7 @@
-# 18 March 2005
+###############################################################
+# raster.tcl - raster layer options file for GRASS GIS Manager
+# January 2006 Michael Barton, Arizona State University
+###############################################################
 
 namespace eval GmRaster {
     variable array opt # raster options
@@ -203,17 +206,6 @@ proc GmRaster::display { node } {
     } else {
         run_panel $cmd2
     }
-
-
-
-	#set current monitor for raster display
-	if ![catch {open "|d.mon -L" r} input] {
-		while {[gets $input line] >= 0} {
-			if {[regexp -nocase {.*(selected).*} $line]} {
-				regexp -nocase {..} $line currmon
-			}              
-		}
-	}
 
 }
 

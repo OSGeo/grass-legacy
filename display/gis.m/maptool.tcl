@@ -1,7 +1,7 @@
-# Toolbar for map display canvas, GRASS GIS Manager
-# January 2006
-# Michael Barton (Arizona State University)
-#
+###############################################################
+# maptool.tcl - toolbar file GRASS GIS Manager map display canvas
+# January 2006 Michael Barton, Arizona State University
+###############################################################
 
 
 namespace eval MapToolBar {
@@ -114,10 +114,10 @@ proc MapToolBar::create { tb } {
     pack $bbox4 -side left -anchor w
 
 	# menu for saving display
-	set savefile [menu $mapsave.sf -type normal]
-	set pngfile [menu $savefile.png -type normal]
-	set ppmfile [menu $savefile.ppm -type normal]
-	set jpgfile [menu $savefile.jpg -type normal]
+	set savefile [menu $mapsave.sf -type normal -bg $bgcolor]
+	set pngfile [menu $savefile.png -type normal -bg $bgcolor]
+	set ppmfile [menu $savefile.ppm -type normal -bg $bgcolor]
+	set jpgfile [menu $savefile.jpg -type normal -bg $bgcolor]
 
 	$savefile add cascade -label "PNG/PPM/PNM" -menu $pngfile
 		$pngfile add command -label "no compression" \
@@ -149,19 +149,20 @@ proc MapToolBar::create { tb } {
 proc MapToolBar::savepng { compression } {
 	global env
 	global mon
-	
-	if { [info exists HOME] } {
-		set dir $env(HOME)
-	} else {
-		set dir ""
-	}
-	
+		
 	set types {
     {{PNG} {.png}}
     {{PPM/PNM} {.ppm}}
 	}
+
+	if { [info exists HOME] } {
+		set dir $env(HOME)
+		set path [tk_getSaveFile -filetypes $types -initialdir $dir]
+	} else {
+		set path [tk_getSaveFile -filetypes $types ]
+	}
 	
-	set path [tk_getSaveFile -filetypes $types -initialdir $dir]
+	
 	
 	mapcan::mapsettings $mon
 	set env(GRASS_PNG_COMPRESSION) $compression
@@ -178,11 +179,11 @@ proc MapToolBar::savegdal { type quality } {
 	
 	if { [info exists HOME] } {
 		set dir $env(HOME)
+		set path [tk_getSaveFile -defaultextension .ppm -initialdir $dir]
 	} else {
-		set dir ""
+		set path [tk_getSaveFile -defaultextension .ppm ]
 	}
 	
-	set path [tk_getSaveFile -defaultextension .ppm -initialdir $dir]
 	
 	mapcan::mapsettings $mon
 	set env(GRASS_PNGFILE) "$path"

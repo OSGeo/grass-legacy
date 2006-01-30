@@ -1,3 +1,7 @@
+###############################################################
+# labels.tcl - vector labels layer options file for GRASS GIS Manager
+# January 2006 Michael Barton, Arizona State University
+###############################################################
 
 namespace eval GmLabels {
     variable array opt # labels options

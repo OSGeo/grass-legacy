@@ -1,6 +1,7 @@
-# 31 August 2005
-# panel for d.rgb and d.his
-# Michael Barton, Arizona State University
+###############################################################
+# rgbhis.tcl - RGB and HIS display layer options file for GRASS GIS Manager
+# January 2006 Michael Barton, Arizona State University
+###############################################################
 
 namespace eval GmRgbhis {
     variable array opt # rgbhis options
@@ -18,8 +19,8 @@ proc GmRgbhis::create { tree parent } {
     set frm [ frame .rgbicon$count]
     set fon [font create -size 10] 
     set check [checkbutton $frm.check -font $fon \
-                           -variable GmRgbhis::opt($count,_check) \
-                           -height 1 -padx 0 -width 0]
+		-variable GmRgbhis::opt($count,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo rgbico -file "$gmpath/rgbhis.gif"
     set ico [label $frm.ico -image rgbico -bd 1 -relief raised]

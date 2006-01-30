@@ -1,6 +1,7 @@
-# 1 Sept 2005
-# panel for d.text.freetype
-# Michael Barton, Arizona State University
+###############################################################
+# fftext.tcl - freetype text layer options file for GRASS GIS Manager
+# January 2006 Michael Barton, Arizona State University
+###############################################################
 
 namespace eval GmFTtext {
     variable array opt # fttext options

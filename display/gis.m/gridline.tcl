@@ -1,6 +1,7 @@
-# 30 August 2005
-# panel for grid and line overlays
-# Michael Barton, Arizona State University
+###############################################################
+# grid.tcl - grid and line overlay layer options file for GRASS GIS Manager
+# January 2006 Michael Barton, Arizona State University
+###############################################################
 
 namespace eval GmGridline {
     variable array opt # grid and line options

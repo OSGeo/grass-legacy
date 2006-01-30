@@ -1,6 +1,7 @@
-# 1 Sept 2005
-# panel for d.legend
-# Michael Barton, Arizona State University
+###############################################################
+# legend.tcl - raster legend layer options file for GRASS GIS Manager
+# January 2006 Michael Barton, Arizona State University
+###############################################################
 
 namespace eval GmLegend {
     variable array opt # legend options

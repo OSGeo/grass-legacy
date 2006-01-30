@@ -1,7 +1,7 @@
-# Upper toolbar for GRASS GIS Manager
-# January 2006
-# Michael Barton (Arizona State University)
-#
+###############################################################
+# gmtool1.tcl - upper toolbar file for GRASS GIS Manager main window
+# January 2006 Michael Barton, Arizona State University
+###############################################################
 
 namespace eval GmToolBar1 {
     variable toolbar
@@ -45,10 +45,28 @@ proc GmToolBar1::create { tb } {
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "Add RGB or HIS layer"]
 
-    # add legend
-    $bbox1 add -image [image create photo -file "$gmpath/legend.gif"] -command "GmTree::add legend"\
+    # add histogram layer
+    $bbox1 add -image [image create photo -file "$gmpath/histogram.gif"] \
+        -command "GmTree::add hist" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
-        -helptext [G_msg "Add legend"]
+        -helptext [G_msg "Add histogram layer"]
+
+    # add cell values layer
+    $bbox1 add -image [image create photo -file "$gmpath/rastnums.gif"] \
+        -command "GmTree::add rnums" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "Add cell values layer"]
+
+    # add cell values layer
+    $bbox1 add -image [image create photo -file "$gmpath/rastarrows.gif"] \
+        -command "GmTree::add arrows" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "Add directional arrows layer"]
+
+    # add legend
+    $bbox1 add -image [image create photo -file "$gmpath/legend.gif"] \
+    	-command "GmTree::add legend" -highlightthickness 0 -takefocus 0 \
+    	-relief raised -borderwidth 1 -helptext [G_msg "Add raster legend layer"]
 
     pack $bbox1 -side left -anchor w
 
@@ -70,8 +88,6 @@ proc GmToolBar1::create { tb } {
         -command "GmTree::add chart" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "Add thematic charts layer"]
-
-    pack $bbox2 -side left -anchor w
 
     # add thematic
     $bbox2 add -image [image create photo -file "$gmpath/thematic.gif"] \
@@ -103,37 +119,23 @@ proc GmToolBar1::create { tb } {
     $bbox3 add -image [image create photo -file "$gmpath/dtext.gif"] \
         -command "GmTree::add dtext" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
-        -helptext [G_msg "Add text layer"]
+        -helptext [G_msg "Add standard text layer"]
     pack $bbox3 -side left -anchor w
 
     set sep3 [Separator $toolbar.sep3 -orient vertical -background aquamarine2 ]
     pack $sep3 -side left -fill y -padx 5 -anchor w
-
-    # OTHER LAYERS
+    
+    # Command layer
     set bbox4 [ButtonBox $toolbar.bbox4 -spacing 0 -background $bgcolor ]
 
-    # add scale and north arrow
-    $bbox4 add -image [image create photo -file "$gmpath/barscale.gif"] -command "GmTree::add barscale" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
-        -helptext [G_msg "Scalebar and north arrow"]
-
-    # add grid and lines
-    $bbox4 add -image [image create photo -file "$gmpath/grid.gif"] -command "GmTree::add gridline"\
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
-        -helptext [G_msg "Overlay grids and lines"]
-
-    # add frame
-    $bbox4 add -image [image create photo -file "$gmpath/frames.gif"] -command "GmTree::add dframe"\
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
-        -helptext [G_msg "Create or select display frame"]
-
-    # add command
+	# add command
     $bbox4 add -image [image create photo -file "$gmpath/cmd.gif"] \
         -command "GmTree::add cmd" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "Add command layer"]
 
     pack $bbox4 -side left -anchor w
+
 
 
 }
