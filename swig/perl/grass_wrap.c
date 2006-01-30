@@ -22028,7 +22028,7 @@ XS(_wrap_G_version) {
                 SWIG_croak("Type error in argument 3 of G_version. Expected _p_p_char");
             }
         }
-        result = (int)G_version(&arg1,&arg2,&arg3);
+        result = (int)G_version(arg1,arg2,arg3);
         
         ST(argvi) = sv_newmortal();
         sv_setiv(ST(argvi++), (IV) result);
