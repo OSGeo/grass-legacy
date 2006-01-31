@@ -80,7 +80,9 @@ htmlgen:
 	fi
 	-$(MKDIR) $(GISBASE)/docs/html
 	-mv -f $(PGM).tmp.html $(GISBASE)/docs/html/$(PGM).html
-	-$(INSTALL) *.png *.jpg $(GISBASE)/docs/html 2> /dev/null ; true
+	-for file in  *.png *.jpg ; do \
+		$(INSTALL_DATA) $$file $(GISBASE)/docs/html ; \
+		done 2> /dev/null ; true
 
 htmldesc = \
 	GISRC=$(GISBASE)/demolocation/.grassrc${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} \
