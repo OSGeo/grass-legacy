@@ -17,7 +17,7 @@ int label (
     struct line_cats *Cats;
     int X, Y, T, B, L, R, Xoffset, Yoffset, xarr[5], yarr[5];
     int cat;
-    char text[50];
+    char text[100];
     
     Points = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();

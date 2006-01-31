@@ -18,7 +18,7 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
     struct line_cats *Cats;
     int X, Y, T, B, L, R, Xoffset, Yoffset, xarr[5], yarr[5];
     int cat;
-    char buf[2000], text[50];
+    char buf[2000], text[100];
     struct field_info *fi;
     dbDriver *driver;
     dbString stmt, valstr;
