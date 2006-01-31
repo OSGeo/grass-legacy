@@ -16,26 +16,36 @@ input with this flag to save time.
 <H3>Selected Parameters:</H3>
 
 <DL>
-<DT><B>depressionless</B></DT>
-<DD>[depressionless] map is created as follows:
-<pre>
+<DT><B>depressionless</B> map is created as follows:</DT>
+<DD><div class="code"><pre>
 r.fill.dir input=elevation elev=depressionless dir=direction type=grass
-</pre>
-This option can be omitted if [elevation] map is already depressionless.</DD>
-
-<DT><B>belevation</B></DT>
-<DD>[belevation] map will be created from [elevation] with [basin] mask applied.
-<pre>
-r.mapcalc "belevation = if(basin == 0 || isnull(basin), null(), elevation)"
-</pre>
+</pre></div>
+This option can be omitted if [elevation] map is already depressionless.
 </DD>
+<P>
+
+<DT><B>belevation</B> map is created from [elevation] with [basin] mask applied:</DT>
+<DD><div class="code"><pre>
+r.mapcalc "belevation = if(basin == 0 || isnull(basin), null(), elevation)"
+</pre></div></DD>
+<P>
+
+<DT><B>topidx</B> map is created as follows:</DT>
+<DD><div class="code"><pre>
+r.topidx input=elevation output=topidx
+</pre></div></DD>
+<P>
 
 <DT><B>Qobs</B></DT>
 <DD>Compare simulated flows with observed flows and calculate model
-efficiency.</DD>
+efficiency.
+</DD>
+<P>
 </DL>
 
 <H2>SEE ALSO</H2>
+<EM><A HREF="r.fill.dir.html">r.fill.dir</A></EM>,
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>,
 <EM><A HREF="r.topidx.html">r.topidx</A></EM>,
 <EM><A HREF="http://geni.ath.cx/r.topmodel.html">How to run r.topmodel</A>
 
