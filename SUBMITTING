@@ -116,6 +116,12 @@ care of following rules:
 
     G_message() output is not expected to be sent to pipe or file.
 
+    Always use the gettext macros with _("") for user messages,
+    example:
+      G_fatal_error ( _("Vector file [%s] not available"), name); 
+
+
+    Pipe/file data output:
     For data output redirected to pipe or file, please use fprintf() and 
     specify the stdout stream as follows:
 
@@ -124,7 +130,6 @@ care of following rules:
 
       fflush(stdout) always required when using fprintf(stdout, ...).
 
-    i18N: Add gettext macros with _("") (see ./locale/README for details)
 
 9.  Use the following GRASS library functions instead of the standard C
     functions. The reason for this is that the following functions ensure
