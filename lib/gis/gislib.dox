@@ -8,7 +8,6 @@
 This chapter is divided in the following sections:
 - \subpage \ref gislibintro 
 - \subpage \ref gisrasterlib
-- \subpage \ref gissiteslib
 - \subpage \ref gisvectorlib
 
 \section gislibintro Introduction
@@ -766,7 +765,7 @@ two-dimensional matrix with known boundaries and rectangular cells.
 There are logically two different regions. The first is the database
 region that the user has set in the current mapset. The other is the
 region that is active in the module. This active module region is what
-controls reading and writing of raster file data and sites files. The
+controls reading and writing of raster file data. The
 vector map export does not take care for the active region settings.
 
 <P>
@@ -1492,12 +1491,7 @@ pole; 0 if it contains neither pole.
 \section Vector_File_Processing GRASS Vector File Processing
 
  Please refer to GRASS Vector File Processing in Chapter \ref gisvectintro .
-
-
-\section Sites_File_Processing GRASS Sites File Processing
-
- Please refer to GRASS Sites File Processing in Chapter \ref gissitesintro .
- Note, that sites are stored as vector points in GRASS 6.
+ Note, that the old "sites" are stored as vector points in GRASS 6.
 
 \section General_Plotting_Routines General Plotting Routines
 
@@ -3752,7 +3746,7 @@ raster     : GRASS raster display library (raster map functions are in gis/)
 rowio      : row in/out library
 rst        : library for interpolation with regularized splines with tension 
 segment    : segment library
-sites      : old Sites library, now interfaced to vect library
+sites      : old sites library (deprecated), now interfaced to vect library
 symbol     : drawing symbols for point vector data
 vask       : Curses management library
 vect       : GRASS vector and Direct Graph library
