@@ -914,8 +914,6 @@ if test -n "$USE_MYSQL"; then
   LOC_CHECK_LIBS(mysqlclient,mysql_query,MySQL,$MYSQLLIBPATH,MYSQLLIB,,,,$ZLIB,$SOCKLIB,$MATHLIB)
 
   # Check for libmysqld (for embeded version of the driver)
-  AC_MSG_CHECKING(libmysqld)
-
   AC_PATH_PROG(MYSQLD_CONFIG, mysql_config, no)
 
   if test "$MYSQLD_CONFIG" = "no" ; then
@@ -923,7 +921,13 @@ if test -n "$USE_MYSQL"; then
   fi
 
   if test "$MYSQLD_CONFIG" != "" ; then
+    ac_save_libs="$LIBS"
     MYSQLDLIB=`"$MYSQLD_CONFIG" --libmysqld-libs`
+
+    LIBS="$MYSQLDLIB $LIBS"
+    AC_CHECK_FUNC(mysql_server_init,,[MYSQLDLIB="";
+                  AC_MSG_WARN([libmysqld not found])] )
+    LIBS=$ac_save_libs
   fi
 
 fi # $USE_MYSQL
