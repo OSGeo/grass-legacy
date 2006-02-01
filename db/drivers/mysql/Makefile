@@ -17,6 +17,7 @@ EXTRA_INC = -I$(GRASS_LIBDIR)/db/dbmi_driver
 DEPENDENCIES = $(GISDEP)
 
 DRVDOC=$(GISBASE)/docs/html/mysql.html
+EDRVDOC=$(GISBASE)/docs/html/mesql.html
 
 OBJS 	=  \
 	create_table.o \
@@ -44,7 +45,7 @@ ifneq ($(strip $(CXX)),)
 endif
 endif
     
-default: $(CLIENT_DRIVER) $(EDRIVER) $(DRVDOC)
+default: $(CLIENT_DRIVER) $(EDRIVER) $(DRVDOC) $(EDRVDOC)
 
 $(CLIENT_DRIVER): $(CLIENT_ARCH_OBJS)
 	$(CC) -g $(LDFLAGS) -o $@ $(CLIENT_ARCH_OBJS) $(LIBES) \
@@ -61,3 +62,6 @@ $(OBJDIR)/dbe.o : db.c $(DEPENDENCIES) $(LOCAL_HEADERS)
 					
 $(DRVDOC): mysql.html
 	$(INSTALL) -m 644 mysql.html $(DRVDOC)
+
+$(EDRVDOC): mesql.html
+	$(INSTALL) -m 644 mesql.html $(EDRVDOC)
