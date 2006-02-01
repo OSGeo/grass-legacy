@@ -189,7 +189,7 @@ int what(double east, double north, double maxdist, int width, int mwidth, int t
 		{
             if (Map[i].head.with_z && getz) 
             {
-                fprintf(stdout, _("Oject type: Area \nArea height: %f\n"), z);
+                fprintf(stdout, _("Object type: Area \nArea height: %f\n"), z);
             } 
             else 
             {
@@ -266,7 +266,7 @@ int what(double east, double north, double maxdist, int width, int mwidth, int t
         }
     } /* for nvects */
     
-	fflush(stdout);
+    fflush(stdout);
 
     return 0;
 }

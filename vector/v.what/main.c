@@ -23,9 +23,9 @@
 #include <string.h>
 #include "glocale.h"
 #include "gis.h"
-/*#include "display.h"*/
 #include "Vect.h"
 #include "raster.h"
+#include "display.h"
 #include "what.h"
 #include "dbmi.h"
 #include "glocale.h"
@@ -33,14 +33,15 @@
 
 /* Vector map grabbing taken from d.zoom */
 
-int main(int argc, char **argv)
+int
+main(int argc, char **argv)
 {
   struct Flag *printattributes, *topo_flag;
   struct Option *opt1, *opt4, *maxdistance;
   struct Cell_head window;
   struct GModule *module;
   char *mapset;
-  char temp[128], *str;
+  char *str;
   int i, j, level, width = 0, mwidth = 0;
   double xval, yval, xres, yres, maxd, x;
   double EW_DIST1, EW_DIST2, NS_DIST1, NS_DIST2;
@@ -77,7 +78,7 @@ int main(int argc, char **argv)
     maxdistance->key = "distance";
     maxdistance->answer = "0";
     maxdistance->multiple = NO;
-    maxdistance->description = "Maximum distance";
+    maxdistance->description = _("Maximum distance");
 
     opt1 = G_define_option() ;
     opt1->key        = "map" ;
@@ -87,20 +88,20 @@ int main(int argc, char **argv)
           opt1->answers = vect;
     opt1->required   = YES;
     opt1->gisprompt  = "old,vector,vector" ;
-    opt1->description= "Name of existing vector map" ;
+    opt1->description= _("Name of existing vector map") ;
   
     topo_flag = G_define_flag();
     topo_flag->key = 'd';
-    topo_flag->description = "Print topological information (debugging).";
+    topo_flag->description = _("Print topological information (debugging)");
  
     printattributes = G_define_flag();
     printattributes->key = 'a';
-    printattributes->description = "Print attribute information.";
+    printattributes->description = _("Print attribute information");
   
     module = G_define_module();
     module->description = 
-    "Allows the user to interactively query a vector map layer "
-    "at user-selected locations within the current geographic region.";
+    _("Allows the user to interactively query a vector map layer "
+      "at user-selected locations within the current geographic region");
 
     if(!vect)
         opt1->required = YES;
@@ -167,14 +168,10 @@ int main(int argc, char **argv)
     
             level = Vect_open_old (&Map[i], vect[i], mapset);
             if (level < 0) 
-            {
                 G_fatal_error ( _("Vector file [%s] not available"), vect[i]);
-            }
     
             if (level < 2) 
-            {
                 G_fatal_error ( _("%s: You must build topology on vector file"), vect[i]);
-            }
 
             /* G_message ("Building spatial index ..."); */
             Vect_build_spatial_index ( &Map[i], NULL );
@@ -188,7 +185,7 @@ int main(int argc, char **argv)
 
   R_pad_freelist(vect, nvects);
 
-  fprintf(stderr, _("\n")); 
+  /* fprintf(stderr, _("\n")); */
   exit(EXIT_SUCCESS);
 }
 
