@@ -1,0 +1,53 @@
+<html>
+<head>
+<title>MySQL embeded driver</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body bgcolor="white">
+    
+<h1>MySQL embeded driver in GRASS</h1>
+
+MySQL database driver in GRASS enables GRASS to store vector
+attributes in MySQL emebded databas without necessity 
+to run MySQL server.
+<p>
+
+<h2>Driver and database name</h2>
+GRASS modules require 2 parameters to connect to a database.
+Those parameters are 'driver' and 'database'. For MySQL embeded 
+driver the parameter 'driver' should be set to value 'mesql'.
+The parameter 'database' is a full path to the directory 
+where database tables are stored. The best place is 
+a directory in the mapset. The directory must be created 
+before use of the driver. In the name of database 
+it is possible to use 3 variables:
+<ul>
+  <li> $GISDBASE - path to current GISBASE
+  <li> $LOCATION_NAME - name of current location
+  <li> $MAPSET - name of current mapset
+</ul>
+
+<p>
+Examples of connection parameters:
+<pre>
+  db.connect driver=mesql database='$GISDBASE/$LOCATION_NAME/$MAPSET/mysql'
+  db.connect driver=mesql database=/home/user1/db
+</pre>
+
+<h2>Data types, indexes</h2>
+For more informations about supported data types and indexes
+see the documentation for 
+<a href="mysql.html">MySQL (mysql) driver</a>
+
+<h2>Database type</h2>
+Because database closing was found very slow if InnoDB was used,
+the InnoDB storage is disabled by default (hardcoded 
+'--skip-innodb' server option).
+
+<h2>Note</h2>
+The embeded server is started with hardcoded '--bootstrap'
+option to avoid warning about missing 
+mysql.time_zone_leap_second table. This can be fixed in future.
+
+</body>
+</html>
