@@ -7,7 +7,6 @@
  *
  * 1/2006: moved to libgis from v.sample/v.drape for clone removal
  ***************************************************
- * TODO: need RASTER_MAP_TYPE data_type?
  */
 
 #include <string.h>
