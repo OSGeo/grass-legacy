@@ -220,12 +220,18 @@ care of following rules:
     See lib/gis/parser.c for details of the function definition.
 
 20. Module manual page:
-    Place the documentation in HTML format into description.html
+    Place the documentation in HTML format into 'description.html'.
     The easiest way to do this is to study an existing HTML page
     (to get the page style, e.g. vector/v.to.db/description.html).
     With a few exceptions header and footer are NOT allowed.
 
-    Examples should be coded like this:
+    Note that the parameter information is auto-generated upon
+    compilation. This is done by running module in a virtual session
+    after compilation (see the output of 'make'). To subsequently
+    verify the final HTML page, check the resulting HTML pages which
+    will be stored with the name of the module.
+
+    Examples (please add some) should be coded like this:
 
     <div class="code"><pre>
     v.to.db map=soils type=area option=area col=area_size unit=h
