@@ -6,6 +6,7 @@
 namespace eval GmLabels {
     variable array opt # labels options
     variable count 1
+    variable array tree # mon    
 }
 
 
@@ -113,9 +114,11 @@ proc GmLabels::display { node } {
     variable opt
     variable tree
     global mon
+
+    set tree($mon) $GmTree::tree($mon)
+    set id [GmTree::node_id $node]
     
     if { ! ( $opt($id,_check) ) } { return } 
-
     if { $opt($id,map) == "" } { return } 
 
     set cmd "d.labels labels=$opt($id,map)"

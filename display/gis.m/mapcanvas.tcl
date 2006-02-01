@@ -174,7 +174,7 @@ proc mapcan::create { } {
 
     # indicator creation	
     set map_ind($mon) [$mapframe($mon) addindicator -textvariable coords($mon) \
-    	-width 25 -justify left -padx 15]
+    	-width 33 -justify left -padx 5]
 
 #	window configuration change handler for resizing
     bind $can($mon) <Configure> {
@@ -283,7 +283,9 @@ proc mapcan::drawmap { mon } {
 	if ![catch {open "|d.mon -L" r} input] {
 		while {[gets $input line] >= 0} {
 			if {[regexp "^gism.*not running" $line]} {
-				runcmd "d.mon start=gism"
+				runcmd "d.mon start=gism -s"
+				incr drawprog
+				set env(MONITOR_OVERRIDE) "gism"
 				incr drawprog
 				runcmd "d.frame -e"
 				incr drawprog
@@ -300,9 +302,10 @@ proc mapcan::drawmap { mon } {
 		}
 	}
 	
+	close $input
 	mapcan::coordconv $mon
 	set drawprog 0
-    set mapcan::msg($mon) "window shows coordinates under cursor (east north)"
+    set mapcan::msg($mon) "east & north coordinates under cursor"
     $mapframe($mon) showstatusbar status 
 	return
 }
@@ -522,7 +525,7 @@ proc mapcan::zoom_back { mon } {
     set cmd "g.region region=previous_zoom save=mon_$mon --o"
     runcmd $cmd
 	$can($mon) delete map$mon
-	mapcan::mmapsettings $mon
+	mapcan::mapsettings $mon
 	mapcan::drawmap $mon
 
 }
@@ -1077,6 +1080,15 @@ proc mapcan::cleanup { mon destroywin} {
 		runcmd "g.mremove -f region=mon_$mon "
 		#destroy $mon
 	}
+	# stop gism PNG driver if it is still running due to error
+	if ![catch {open "|d.mon -L" r} input] {
+		while {[gets $input line] >= 0} {
+			if {[regexp "^gism            Create PNG Map for gism        running" $line]} {
+				runcmd "d.mon stop=gism"
+			}
+		}
+	}
+	close $input
 	return
 }
 

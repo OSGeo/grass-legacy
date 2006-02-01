@@ -457,55 +457,55 @@ proc GmTree::display_node { node } {
     switch $type {
         group {
             GmGroup::display $node
-	}
-	raster {
-	    GmRaster::display $node
-	}
-	labels {
-	    GmLabels::display $node
-	}
-	vector {
-	    GmVector::display $node
-	}
-	cmd {
-	    GmCmd::display $node
-	}
-	gridline {
-	    GmGridline::display $node
-	}
-	rgbhis {
-	    GmRgbhis::display $node
-	}
-	hist {
-	    GmHist::display $node
-	}
-	rnums {
-	    GmRnums::display $node
-	}
-	arrows {
-	    GmArrows::display $node
-	}
-	legend {
-	    GmLegend::display $node
-	}
-	dframe {
-	    GmDframe::display $node
-	}
-	barscale {
-	    GmBarscale::display $node
-	}
-	chart {
-	    GmChart::display $node
-	}
-	thematic {
-	    GmThematic::display $node
-	}
-	fttext {
-	    GmFTtext::display $node
-	}
-	dtext {
-	    GmDtext::display $node
-	}
+		}
+		raster {
+			GmRaster::display $node
+		}
+		labels {
+			GmLabels::display $node
+		}
+		vector {
+			GmVector::display $node
+		}
+		cmd {
+			GmCmd::display $node
+		}
+		gridline {
+			GmGridline::display $node
+		}
+		rgbhis {
+			GmRgbhis::display $node
+		}
+		hist {
+			GmHist::display $node
+		}
+		rnums {
+			GmRnums::display $node
+		}
+		arrows {
+			GmArrows::display $node
+		}
+		legend {
+			GmLegend::display $node
+		}
+		dframe {
+			GmDframe::display $node
+		}
+		barscale {
+			GmBarscale::display $node
+		}
+		chart {
+			GmChart::display $node
+		}
+		thematic {
+			GmThematic::display $node
+		}
+		fttext {
+			GmFTtext::display $node
+		}
+		dtext {
+			GmDtext::display $node
+		}
     } 
 }
 
@@ -844,7 +844,6 @@ proc GmTree::load { lpth } {
 					break
 				} else {
 					set type [GmTree::node_type $current_node]
-					puts "current node $current_node"
 					switch $type {
 						group { 
 						GmGroup::set_option $current_node $key $val
@@ -857,7 +856,6 @@ proc GmTree::load { lpth } {
 						}
 						vector { 
 						GmVector::set_option $current_node $key $val
-						puts "options value $val"
 						}
 						cmd { 
 						GmCmd::set_option $current_node $key $val
@@ -899,13 +897,13 @@ proc GmTree::load { lpth } {
 						GmDtext::set_option $current_node $key $val
 						}
 					} 
-				} 
+				}
 			} 
-			incr row
-			set prg [expr $max_prgindic * $row / $nrows]
-			if { $prg > $max_prgindic } { set prg $max_prgindic }
-			set Gm::prgindic $prg
-		}
+		}			
+		incr row
+		set prg [expr $max_prgindic * $row / $nrows]
+		if { $prg > $max_prgindic } { set prg $max_prgindic }
+		set Gm::prgindic $prg
 	} 
     close $rcfile
     set Gm::prgindic $max_prgindic
