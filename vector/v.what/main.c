@@ -23,7 +23,7 @@
 #include <string.h>
 #include "glocale.h"
 #include "gis.h"
-#include "display.h"
+/*#include "display.h"*/
 #include "Vect.h"
 #include "raster.h"
 #include "what.h"
@@ -168,14 +168,12 @@ int main(int argc, char **argv)
             level = Vect_open_old (&Map[i], vect[i], mapset);
             if (level < 0) 
             {
-                sprintf(temp, "Vector file [%s] not available", vect[i]);
-                G_fatal_error (temp);
+                G_fatal_error ( _("Vector file [%s] not available"), vect[i]);
             }
     
             if (level < 2) 
             {
-                sprintf(temp, "%s: You must build topology on vector file", vect[i]);
-                G_fatal_error (temp);
+                G_fatal_error ( _("%s: You must build topology on vector file"), vect[i]);
             }
 
             /* G_message ("Building spatial index ..."); */
