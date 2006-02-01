@@ -240,7 +240,7 @@ proc GmTree::new { } {
     set new_root_node [GmGroup::create $tree($mon) "root"]
     $tree($mon) itemconfigure $new_root_node -text "UNTITLED_$mon"
     
-    set filename($mon) Untitled_$mon.dmrc 
+    set filename($mon) Untitled_$mon.grc 
 }
 
 ###############################################################################
@@ -746,166 +746,167 @@ proc GmTree::load { lpth } {
 
     set rcfile [open $fpath r]
     set file_size [file size $fpath]
-    set nrows [expr $file_size / 15]
+    set nrows [expr $file_size / 16]
 
     set parent root
     set row 0
     while { [gets $rcfile in] > -1 } {
-	set key ""
-	set val ""
+		set key ""
+		set val ""
         set in [string trim $in " "] 
-	if { $in == "" } { continue }
-
-	if { ![regexp -- {([^ ]+) (.+)$} $in r key val] } {set key $in}
+		if { $in == "" } { continue }
+		if { ![regexp -- {([^ ]+) (.+)$} $in r key val] } {set key $in}
         
-	# Tree of layers	
-	switch $key {
-		Group {
-			if {[regexp -- {^File (.+)} $val r leftover]  && ($leftover != $filename($mon))} {
-				set val "<-- $leftover"
+		# Tree of layers	
+		switch $key {
+			Group {
+				if {[regexp -- {^File (.+)} $val r leftover]  && ($leftover != $filename($mon))} {
+					set val "<-- $leftover"
+				}
+				set current_node [GmGroup::create $tree($mon) $parent]
+				$tree($mon) itemconfigure $current_node -text $val 
+				set parent $current_node
 			}
-			set current_node [GmGroup::create $tree($mon) $parent]
-			$tree($mon) itemconfigure $current_node -text $val 
-			set parent $current_node
-		}
-		Raster {
-			set current_node [GmRaster::create $tree($mon) $parent]
-			$tree($mon) itemconfigure $current_node -text $val 
-		}
-		Labels {
-			set current_node [GmLabels::create $tree($mon) $parent]
-			$tree($mon) itemconfigure $current_node -text $val 
-		}
-		Vector {
-			set current_node [GmVector::create $tree($mon) $parent]
-			$tree($mon) itemconfigure $current_node -text $val 
-		}
-		Cmd {
-			set current_node [GmCmd::create $tree($mon) $parent]
-			$tree($mon) itemconfigure $current_node -text $val 
-		}
-		gridline {
-			set current_node [GmGridline::create $tree($mon) $parent]
-			$tree($mon) itemconfigure $current_node -text $val 
-		}
-		rgbhis {
-			set current_node [GmRgbhis::create $tree($mon) $parent]
-			$tree($mon) itemconfigure $current_node -text $val 
-		}
-		hist {
-			set current_node [GmHist::create $tree($mon) $parent]
-			$tree($mon) itemconfigure $current_node -text $val 
-		}
-		rnums {
-			set current_node [GmRnums::create $tree($mon) $parent]
-			$tree($mon) itemconfigure $current_node -text $val 
-		}
-		arrows {
-			set current_node [GmArrows::create $tree($mon) $parent]
-			$tree($mon) itemconfigure $current_node -text $val 
-		}
-		legend {
-			set current_node [GmLegend::create $tree($mon) $parent]
-			$tree($mon) itemconfigure $current_node -text $val 
-		}
-		dframe {
-			set current_node [GmDframe::create $tree($mon) $parent]
-			$tree($mon) itemconfigure $current_node -text $val 
-		}
-		barscale {
-			set current_node [GmBarscale::create $tree($mon) $parent]
-			$tree($mon) itemconfigure $current_node -text $val 
-		}
-		chart {
-			set current_node [GmChart::create $tree($mon) $parent]
-			$tree($mon) itemconfigure $current_node -text $val 
-		}
-		thematic {
-			set current_node [GmThematic::create $tree($mon) $parent]
-			$tree($mon) itemconfigure $current_node -text $val 
-		}
-		fttext {
-			set current_node [GmFTtext::create $tree($mon) $parent]
-			$tree($mon) itemconfigure $current_node -text $val 
-		}
-		dtext {
-			set current_node [GmDtext::create $tree($mon) $parent]
-			$tree($mon) itemconfigure $current_node -text $val 
-		}
-		End {
-			set type [GmTree::node_type $current_node]
-			if { $type == "group"  } {
-				set parent [$tree($mon) parent $parent]
+			Raster {
+				set current_node [GmRaster::create $tree($mon) $parent]
+				$tree($mon) itemconfigure $current_node -text $val 
 			}
-			set current_node [$tree($mon) parent $current_node]
-		}
-		default {
-			if {[catch {GmTree::node_type $current_node}] } {
-				tk_messageBox -type ok -message "Can't open $fpath - bad file format"
-				break
-			} else {
+			Labels {
+				set current_node [GmLabels::create $tree($mon) $parent]
+				$tree($mon) itemconfigure $current_node -text $val 
+			}
+			Vector {
+				set current_node [GmVector::create $tree($mon) $parent]
+				$tree($mon) itemconfigure $current_node -text $val 
+			}
+			Cmd {
+				set current_node [GmCmd::create $tree($mon) $parent]
+				$tree($mon) itemconfigure $current_node -text $val 
+			}
+			gridline {
+				set current_node [GmGridline::create $tree($mon) $parent]
+				$tree($mon) itemconfigure $current_node -text $val 
+			}
+			rgbhis {
+				set current_node [GmRgbhis::create $tree($mon) $parent]
+				$tree($mon) itemconfigure $current_node -text $val 
+			}
+			hist {
+				set current_node [GmHist::create $tree($mon) $parent]
+				$tree($mon) itemconfigure $current_node -text $val 
+			}
+			rnums {
+				set current_node [GmRnums::create $tree($mon) $parent]
+				$tree($mon) itemconfigure $current_node -text $val 
+			}
+			arrows {
+				set current_node [GmArrows::create $tree($mon) $parent]
+				$tree($mon) itemconfigure $current_node -text $val 
+			}
+			legend {
+				set current_node [GmLegend::create $tree($mon) $parent]
+				$tree($mon) itemconfigure $current_node -text $val 
+			}
+			dframe {
+				set current_node [GmDframe::create $tree($mon) $parent]
+				$tree($mon) itemconfigure $current_node -text $val 
+			}
+			barscale {
+				set current_node [GmBarscale::create $tree($mon) $parent]
+				$tree($mon) itemconfigure $current_node -text $val 
+			}
+			chart {
+				set current_node [GmChart::create $tree($mon) $parent]
+				$tree($mon) itemconfigure $current_node -text $val 
+			}
+			thematic {
+				set current_node [GmThematic::create $tree($mon) $parent]
+				$tree($mon) itemconfigure $current_node -text $val 
+			}
+			fttext {
+				set current_node [GmFTtext::create $tree($mon) $parent]
+				$tree($mon) itemconfigure $current_node -text $val 
+			}
+			dtext {
+				set current_node [GmDtext::create $tree($mon) $parent]
+				$tree($mon) itemconfigure $current_node -text $val 
+			}
+			End {
 				set type [GmTree::node_type $current_node]
-				switch $type {
-					group { 
-					GmGroup::set_option $current_node $key $val
-					}
-					raster { 
-					GmRaster::set_option $current_node $key $val
-					}
-					labels { 
-					GmLabels::set_option $current_node $key $val
-					}
-					vector { 
-					GmVector::set_option $current_node $key $val
-					}
-					cmd { 
-					GmCmd::set_option $current_node $key $val
-					}
-					gridline { 
-					GmGridline::set_option $current_node $key $val
-					}
-					rgbhis { 
-					GmRgbhis::set_option $current_node $key $val
-					}
-					hist { 
-					GmHist::set_option $current_node $key $val
-					}
-					rnums { 
-					GmRnums::set_option $current_node $key $val
-					}
-					arrows { 
-					GmArrows::set_option $current_node $key $val
-					}
-					legend { 
-					GmLegend::set_option $current_node $key $val
-					}
-					dframe { 
-					GmDframe::set_option $current_node $key $val
-					}
-					barscale { 
-					GmBarscale::set_option $current_node $key $val
-					}
-					chart { 
-					GmChart::set_option $current_node $key $val
-					}
-					thematic { 
-					GmThematic::set_option $current_node $key $val
-					}
-					fttext { 
-					GmFTtext::set_option $current_node $key $val
-					}
-					dtext { 
-					GmDtext::set_option $current_node $key $val
-					}
-				} #switch2
-			} #if
-		} #default
-		incr row
-		set prg [expr $max_prgindic * $row / $nrows]
-		if { $prg > $max_prgindic } { set prg $max_prgindic }
+				if { $type == "group"  } {
+					set parent [$tree($mon) parent $parent]
+				}
+				set current_node [$tree($mon) parent $current_node]
+			}
+			default {
+				if {[catch {GmTree::node_type $current_node}] } {
+					tk_messageBox -type ok -message "Can't open $fpath - bad file format"
+					break
+				} else {
+					set type [GmTree::node_type $current_node]
+					puts "current node $current_node"
+					switch $type {
+						group { 
+						GmGroup::set_option $current_node $key $val
+						}
+						raster { 
+						GmRaster::set_option $current_node $key $val
+						}
+						labels { 
+						GmLabels::set_option $current_node $key $val
+						}
+						vector { 
+						GmVector::set_option $current_node $key $val
+						puts "options value $val"
+						}
+						cmd { 
+						GmCmd::set_option $current_node $key $val
+						}
+						gridline { 
+						GmGridline::set_option $current_node $key $val
+						}
+						rgbhis { 
+						GmRgbhis::set_option $current_node $key $val
+						}
+						hist { 
+						GmHist::set_option $current_node $key $val
+						}
+						rnums { 
+						GmRnums::set_option $current_node $key $val
+						}
+						arrows { 
+						GmArrows::set_option $current_node $key $val
+						}
+						legend { 
+						GmLegend::set_option $current_node $key $val
+						}
+						dframe { 
+						GmDframe::set_option $current_node $key $val
+						}
+						barscale { 
+						GmBarscale::set_option $current_node $key $val
+						}
+						chart { 
+						GmChart::set_option $current_node $key $val
+						}
+						thematic { 
+						GmThematic::set_option $current_node $key $val
+						}
+						fttext { 
+						GmFTtext::set_option $current_node $key $val
+						}
+						dtext { 
+						GmDtext::set_option $current_node $key $val
+						}
+					} 
+				} 
+			} 
+			incr row
+			set prg [expr $max_prgindic * $row / $nrows]
+			if { $prg > $max_prgindic } { set prg $max_prgindic }
 			set Gm::prgindic $prg
-		} 
-	} #switch
+		}
+	} 
     close $rcfile
     set Gm::prgindic $max_prgindic
     set prgtext "Layers loaded"
