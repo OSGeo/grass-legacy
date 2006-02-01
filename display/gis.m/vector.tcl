@@ -567,6 +567,8 @@ proc GmVector::WorkOnVector { node } {
        		}
     	}
     }
+    
+    close $input
     return
 }
 

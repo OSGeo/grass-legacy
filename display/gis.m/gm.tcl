@@ -286,27 +286,6 @@ proc Gm::color { color } {
 
 ###############################################################################
 
-proc Gm::setenv { } {
-	global env
-	global gmpath
-	
-	set env(GRASS_PNGFILE) "mon0.ppm"
-	set env(GRASS_TRANSPARENT) "TRUE"
-	set env(GRASS_PNG_AUTO_WRITE) "TRUE"
-	set env(GRASS_TRUECOLOR) "TRUE"
-
-    if ![catch {open "|d.mon -L" r} input] {
-        while {[gets $input line] >= 0} {
-            if {[regexp -nocase "PNG.*not running" $line]} {
-				run "d.mon start=PNG" 
-            } 
-        }
-    }
-
-}
-
-###############################################################################
-
 proc Gm::xmon { type cmd } {
     global dmpath outtext
     global env
@@ -339,7 +318,7 @@ proc Gm::xmon { type cmd } {
        		}
     	}
     }
-    
+    close $input
     return
 }
 
@@ -381,16 +360,6 @@ proc Gm::create { } {
 
     set mainwindow [$mainframe getframe]
 
-	# check for currently active monitor    
-	if ![catch {open "|d.mon -L" r} input] {
-		while {[gets $input line] >= 0} {
-			if {[regexp -nocase {.*(selected).*} $line]} {
-				regexp -nocase {..} $line xmon
-			}              
-		}
-	}
-
-
     # toolbar 1 & 2 creation
     set tb1  [$mainframe addtoolbar]
     GmToolBar1::create $tb1
@@ -421,8 +390,8 @@ proc Gm::create { } {
     # command console 
     set output_pane  [$pw1 add -minsize 50 -weight 2 ]
     set output_frame [frame $output_pane.fr]
-    set output_bbox [ButtonBox $output_pane.bb -bg $bgcolor -default 0 \
-    	-padx 0 -pady 0]
+    set output_bbox [ButtonBox $output_pane.bb -bg $bgcolor \
+    	-padx 0 -pady 0 -homogeneous 0]
     
     pack $output_frame -expand yes -fill both 
     pack $output_pane -expand yes -fill both 
@@ -433,12 +402,16 @@ proc Gm::create { } {
 	
 	$output_bbox add -text "run" -command "Gm::run_txt $outtext"  -bg #dddddd \
 		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 -width 8 \
-        -helptext [G_msg "run command at cursor"] 
+        -helptext [G_msg "run command at cursor"] -highlightbackground $bgcolor
 	$output_bbox add -text "clear" -command "Gm::clear_txt $outtext" -bg #dddddd \
 		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 -width 8 \
         -helptext [G_msg "Clear output"] -highlightbackground $bgcolor
 	$output_bbox add -text "save" -command "Gm::save_txt $outtext"  -bg #dddddd \
 		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 -width 8 \
+        -helptext [G_msg "Save output to file"] -highlightbackground $bgcolor
+	$output_bbox add -text "open output window" -command "Gm::create_disptxt $mon"  \
+		-bg #dddddd -highlightthickness 0 -takefocus 0 -relief raised \
+		-borderwidth 1 -width 20 \
         -helptext [G_msg "Save output to file"] -highlightbackground $bgcolor
 	
 	pack $output_bbox -expand yes -fill none 
@@ -524,6 +497,8 @@ proc Gm::create_disptxt { mon } {
 	variable mainframe
 	variable can
 
+	if { [info exists dout] } {return}
+
 	set douttitle "output"
     set dout [toplevel .dispout]
     wm title .dispout [G_msg $douttitle]
@@ -545,10 +520,10 @@ proc Gm::create_disptxt { mon } {
 	set dbb [ButtonBox $dout_tb.bb -orient horizontal -background $bgcolor]
 	$dbb add -text "clear" -command "Gm::clear_txt $dtxt" -bg #dddddd \
 		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
-        -helptext [G_msg "Clear output"]
+        -helptext [G_msg "Clear output"]  -highlightbackground $bgcolor
 	$dbb add -text "save" -command "Gm::save_txt $dtxt"  -bg #dddddd \
 		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
-        -helptext [G_msg "Save output to file"]
+        -helptext [G_msg "Save output to file"]  -highlightbackground $bgcolor
 
 	pack $doutfr -expand yes -fill both -padx 0 -pady 0
 	pack $dout_sw -fill both -expand yes
@@ -606,20 +581,6 @@ proc Gm::save_txt { txt } {
 }
 
 ###############################################################################
-# open monitor if no one is runnning
-proc Gm::monitor { } {
-    if ![catch {open "|d.mon -L" r} input] {
-        while {[gets $input line] >= 0} {
-            if {[regexp -nocase {(x.).*display *running} $line buffer monitor]} {
-                return
-            }
-        }
-    }
-    runcmd d.mon start=x0"
-    return
-}
-
-###############################################################################
 
 # nviz
 proc Gm::nviz { } {
@@ -674,29 +635,20 @@ proc Gm::help { } {
 #open dialog box
 proc Gm::OpenFileBox { } {
     global mainwindow
-    variable win
     global filename    
     global mon
-
-    set win $w
-        
+    
     set types {
-        {{Adm Resource Files} {{.dm} {.dmrc}}}
-        {{All Files} *}
+            {{Map Resource File} {{.dm} {.dmrc} {.grc}}}
+            {{All Files} *}
     }
 
-        if {[catch {tk_getOpenFile \
-                -parent $mainwindow \
-                -filetypes $types \
-                -title {Load File}} \
-                filename_new] || \
-                [string match {} $filename_new]} return
-	
-	if {[catch {if { [ regexp -- {^Untitled_?.dmrc$} $filename($mon) r]} {}}] } {
-		set filename($mon) $filename_new
-	}
-	
-	GmTree::load $filename($mon)_new
+	set filename_new [tk_getOpenFile -parent $mainwindow -filetypes $types \
+		-title {Save File} ]
+	if { $filename_new == "" } { return}
+	set filename($mon) $filename_new	
+	puts "files $filename($mon) $filename_new"
+	GmTree::load $filename($mon)
 		
 };
 
@@ -709,7 +661,7 @@ proc Gm::SaveFileBox { } {
     global mon
 
     catch {
-   	if {[ regexp -- {^Untitled_?.dmrc$} $filename($mon) r]} {
+   	if {[ regexp -- {^Untitled_?.grc$} $filename($mon) r]} {
     		set filename($mon) ""
     	}
     }
@@ -718,11 +670,11 @@ proc Gm::SaveFileBox { } {
     	GmTree::save $filename($mon)
     } else {
         set types {
-            {{GRASS Resource Files} {{.dm} {.dmrc}}}
+            {{Map Resource File} {{.dm} {.dmrc} {.grc}}}
             {{All Files} *}
 		}
     	set filename($mon) [tk_getSaveFile -parent $mainwindow -filetypes $types \
-    		-title {Save File}]
+    		-title {Save File} -defaultextension .grc] 
     	if { $filename($mon) == "" } { return}
     	GmTree::save $filename($mon)    	
     }
