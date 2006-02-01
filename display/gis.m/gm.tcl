@@ -683,11 +683,25 @@ proc Gm::SaveFileBox { } {
 ###############################################################################
 
 proc Gm::cleanup { } {
+
+	# delete all map display ppm files
 	foreach file [glob -nocomplain dispmon_*] {
 		file delete $file
 	}
 	destroy mon
-	run "g.mremove -f region=mon_*"
+	
+	# stop gism PNG driver if it is still running due to error
+	if ![catch {open "|d.mon -L" r} input] {
+		while {[gets $input line] >= 0} {
+			if {[regexp "^gism            Create PNG Map for gism        running" $line]} {
+				runcmd "d.mon stop=gism"
+			}
+		}
+	}
+	close $input
+	
+	# delete temporary region files for map displays
+	runcmd "g.mremove -f region=mon_*"
 }
 
 ###############################################################################
