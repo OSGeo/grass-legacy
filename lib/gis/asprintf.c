@@ -39,7 +39,13 @@
  * \return int
  */
 
-#ifdef HAVE_ASPRINTF
+#ifdef __MINGW32__
+  int asprintf (char **, const char *, ...);
+  int vasprintf(char **, const char *, va_list);
+  #define HAVE_ASPRINTF 1
+#endif
+
+#ifdef HAVE_ASPRINTF 
 
 int G_asprintf(char **out, const char *fmt, ...)
 {
