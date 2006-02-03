@@ -557,7 +557,7 @@ proc GmVector::WorkOnVector { node } {
 
             	} elseif {[regexp -nocase "$xmon.* running" $line]} {
 					incr xmon 1
-					runcmd "d.mon start=x$xmon"
+					runcmd "d.mon select=x$xmon"
 					set nextmon [expr $xmon + 1]
     				GmGroup::display "root" 
 					set bg [exec d.save -o | cut -f1 -d# | tr {\n} {;}]
