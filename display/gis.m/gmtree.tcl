@@ -48,6 +48,7 @@ proc GmTree::create { mon } {
 	global options
 	global win
 	global filename
+	global keycontrol
 	
 	set currpg ""
 	set pth ""
@@ -88,6 +89,7 @@ proc GmTree::create { mon } {
     $tree($mon) bindText  <ButtonPress-1> "GmTree::selectn $tree($mon)"
     $tree($mon) bindImage <ButtonPress-1> "GmTree::selectn $tree($mon)"
     $tree($mon) bindText  <Double-ButtonPress-1> "GmTree::edit $tree($mon)"
+	$tree($mon) bindText <$keycontrol-Key-x> "GmTree::delete"
     
     return $tree($mon)
 }
