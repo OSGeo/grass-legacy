@@ -7,6 +7,7 @@ global tmenu
 global keyctrl
 global execom 
 global mon
+global filename
 
  set descmenu [subst  {
  "&File" all file $tmenu {
@@ -93,9 +94,9 @@ global mon
     {separator}
     {cascad "Groups" {} "" $tmenu {			
         {command "New" {} "Create new group file" {} -accelerator $keyctrl-N -command { Gm::new}}
-        {command "Open..." {} "Open group file" {} -accelerator $keyctrl-O -command { Gm::OpenFileBox {}}}
-        {command "Save" {} "Save group file" {} -accelerator $keyctrl-S -command { Gm::SaveFileBox {}}}
-        {command "Save as..." {} "Save group file as name" {} -command { catch {unset ::Gm::filename.$mon} ; Gm::SaveFileBox {}}}
+        {command "Open..." {} "Open group file" {} -accelerator $keyctrl-O -command { Gm::OpenFileBox }}
+        {command "Save" {} "Save group file" {} -accelerator $keyctrl-S -command { Gm::SaveFileBox }}
+        {command "Save as..." {} "Save group file as name" {} -command { set filename($mon) "" ; Gm::SaveFileBox }}
         {command "Close" {} "Close group" {} -accelerator $keyctrl-W -command { GmTree::FileClose {}}}
     }}
     {separator}
