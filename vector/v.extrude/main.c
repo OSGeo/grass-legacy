@@ -27,10 +27,12 @@
 #include "glocale.h"
 #include "dbmi.h"
 
-long extrude(struct Map_info Out, struct line_cats *Cats,
+
+static long extrude(struct Map_info Out, struct line_cats *Cats,
 	    struct line_pnts *Points, struct line_pnts *NewPoints, int fdrast,
 	    int trace, double objheight, double voffset,
 	    struct Cell_head window, int area);
+
 
 int main(int argc, char *argv[])
 {
@@ -197,14 +199,12 @@ int main(int argc, char *argv[])
 	G_get_window(&window);
 
 	/* check for the elev raster, and check for error condition */
-	if ((mapset = G_find_cell2(elevation->answer, "")) == NULL) {
-	    G_fatal_error("cell file [%s] not found", elevation->answer);
-	}
+	if ((mapset = G_find_cell2(elevation->answer, "")) == NULL)
+	    G_fatal_error(_("cell file [%s] not found"), elevation->answer);
 
 	/* open the elev raster, and check for error condition */
-	if ((fdrast = G_open_cell_old(elevation->answer, mapset)) < 0) {
-	    G_fatal_error("can't open cell file [%s]", elevation->answer);
-	}
+	if ((fdrast = G_open_cell_old(elevation->answer, mapset)) < 0)
+	    G_fatal_error(_("can't open cell file [%s]"), elevation->answer);
     }
 
     /* if area */
@@ -281,7 +281,6 @@ int main(int argc, char *argv[])
 		    Vect_cat_set(Cats, 1, i);
 		    i++;
 		}
-
 	    }
 	    else if (type == GV_AREA) {
 		if (Vect_cat_get(Cats, 1, &cat) == 0) {
@@ -341,10 +340,11 @@ int main(int argc, char *argv[])
     exit(EXIT_SUCCESS);
 }
 
+
 /* for each point int struct line_pnts *Poins calculates "roof" and "walls", 
  * result is stored to struct line_pnts *NewPoints 
  */
-long extrude(struct Map_info Out, struct line_cats *Cats,
+static long extrude(struct Map_info Out, struct line_cats *Cats,
 	    struct line_pnts *Points, struct line_pnts *NewPoints, int fdrast,
 	    int trace, double objheight, double voffset,
 	    struct Cell_head window, int area)
@@ -430,5 +430,4 @@ long extrude(struct Map_info Out, struct line_cats *Cats,
 
     return result;
 }
-
 
