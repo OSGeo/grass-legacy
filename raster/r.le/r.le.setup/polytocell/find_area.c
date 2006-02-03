@@ -2,17 +2,13 @@
 #include <stdlib.h>
 #include "ply_to_cll.h"
 
-find_area(xarray, yarray, num_verticies, xy, num_points)
-	double xarray[], yarray[] ;
-	int num_verticies ;
-	struct element xy[] ;
-	int *num_points ;
+static int compare(const void *, const void *);
+
+void find_area(double *xarray, double *yarray, int num_verticies, struct element *xy, int *num_points)
 {
-	int compare() ;
 	int node ;
 	int row ;
-	int incr ;
-	register double A, B ;
+	double A, B ;
 	double delta_x, delta_y ;
 	int first_row, last_row ;
 
@@ -95,9 +91,10 @@ fprintf(stderr,"%2d %2d %6.2f\n",
 #endif
 }
 
-compare(element1, element2)
-	struct element *element1, *element2 ;
+static int compare(const void *e1, const void *e2)
 {
+	const struct element *element1 = e1;
+	const struct element *element2 = e2;
 	if (element1->row < element2->row)
 		return(-1) ;
 	if (element1->row > element2->row)
