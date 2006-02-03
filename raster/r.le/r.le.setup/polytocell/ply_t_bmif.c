@@ -15,7 +15,7 @@
 
 struct element xy[MAX_VERTICIES] ;
 
-main()
+int main(void)
 {
 	static double x[MAX_VERTICIES] ;
 	static double y[MAX_VERTICIES] ;
@@ -48,7 +48,7 @@ main()
 	for(;;)
 	{
 		if (FGET==NULL)  
-			return ; 
+			return 1;
 		if (! strncmp("SIZE", buff, 4))
 		{
 			sscanf (buff,"SIZE %d %d\n", &numrows, &numcols) ;

@@ -1,10 +1,7 @@
 /* @(#)do_line.c	2.2   8/31/87 */
 #include "ply_to_cll.h"
 
-do_line(xarray, yarray, num_verticies, category )
-	double xarray[], yarray[] ;
-	int num_verticies ;
-	int category ;
+void do_line(double *xarray, double *yarray, int num_verticies, int category)
 {
 	int node ;
 
@@ -22,15 +19,12 @@ do_line(xarray, yarray, num_verticies, category )
 	line_flush() ;
 }
 
-line(cat, x0, y0, x1, y1)
-	int cat ;
-	register x0, y0;
+void line(int cat, int x0, int y0, int x1, int y1)
 {
 	int dx, dy;
 	int xinc, yinc;
-	register res1;
+	int res1;
 	int res2;
-	int slope;
 
 #ifdef DEBUG
 	fprintf(stderr,"Line %d %d %d %d\n", x0, y0, x1, y1) ;
@@ -128,7 +122,7 @@ line(cat, x0, y0, x1, y1)
 static int l_row, l_col1, l_col2, l_dum, l_cat ;
 static int have_first = 0 ;
 
-line_initialize() 
+void line_initialize(void)
 {
 	l_row = 0 ;
 	l_col1= 0 ;
@@ -138,14 +132,13 @@ line_initialize()
 	have_first = 0 ;
 }
 
-line_flush()
+void line_flush(void)
 {
 	if (have_first)
 		write_record (l_row, (float)l_col1, (float)l_col2, l_cat) ;
 }
 
-save_line(row, col1, col2, dum, cat) 
-	int row, col1, col2, dum, cat ;
+void save_line(int row, int col1, int col2, int dum, int cat) 
 {
 	have_first = 1 ;
 	if ( (row != l_row) || (col1 != l_col1) ||

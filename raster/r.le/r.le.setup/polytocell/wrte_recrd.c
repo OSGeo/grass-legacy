@@ -3,8 +3,7 @@ static int rec_num = 1 ;
 static int maxrow, minrow ;
 static float maxcol, mincol ;
 
-set_limits(numrows, numcols) 
-	int numrows, numcols ;
+void set_limits(int numrows, int numcols) 
 {
 	maxrow = numrows ;
 	maxcol = (float)(numcols - 1) ;
@@ -12,9 +11,7 @@ set_limits(numrows, numcols)
 	mincol = 0.0 ;
 }
 
-check_limits(row, first_cell, last_cell)
-	int *row ;
-	float *first_cell, *last_cell ;
+static int check_limits(int *row, float *first_cell, float *last_cell)
 {
 	if (*row < minrow)
 		return(0) ;
@@ -32,9 +29,7 @@ check_limits(row, first_cell, last_cell)
 	return(1) ;
 }
 
-write_record(row, first_cell, last_cell, category ) 
-	int row, category ;
-	float first_cell, last_cell ;
+void write_record(int row, float first_cell, float last_cell, int category) 
 {
 	float fc, lc ;
 
@@ -50,8 +45,7 @@ write_record(row, first_cell, last_cell, category )
 			category) ;
 }
 
-write_end_record(row, first_cell, last_cell, category ) 
-	int row, first_cell, last_cell, category ;
+void write_end_record(int row, int first_cell, int last_cell, int category) 
 {
 		printf ("%d %8d:%d:%d:%d\n", 
 			row, rec_num++, first_cell, last_cell, category) ;

@@ -6,13 +6,10 @@
  * THEN   add .0001 to all integer y values 
  *        This takes care of all sorts of evils and time later on  
  */
-void
-yadjust(yarray, num_verticies)
-	double yarray[] ;
-	int num_verticies ;
+void yadjust(double *yarray, int num_verticies)
 {
-	register int row, incr ;
-	register double *pointer ;
+	int row, incr ;
+	double *pointer ;
 
 	for(pointer = yarray, incr=0; incr<=num_verticies; incr++, pointer++)
 	{
