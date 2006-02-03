@@ -322,6 +322,7 @@ proc Gm::xmon { type cmd } {
     return
 }
 
+
 ###############################################################################
 
 
@@ -339,10 +340,11 @@ proc Gm::create { } {
     global fon
     global prgtext
     global prgindic
+    global keycontrol
     
     variable mainframe
     variable tree
-	
+   
     set prgtext "Loading GIS Manager"
     set prgindic -1
     _create_intro
@@ -350,7 +352,7 @@ proc Gm::create { } {
     
     global env
 	source $gmpath/gmmenu.tcl
-
+	
     set prgtext   "Creating MainFrame..."
     
     set mainframe [MainFrame .mainframe \
@@ -418,6 +420,9 @@ proc Gm::create { } {
     pack $output_sw $outtext -fill both -expand yes
     pack $pw1 -side top -expand yes -fill both -anchor n 
   
+	bind $outtext <$keycontrol-c> "tk_textCopy %W"
+	bind $outtext <$keycontrol-v> "tk_textPaste %W"
+	bind $outtext <$keycontrol-x> "tk_textCut %W"
 
 	# finish up
     set prgtext "Done"
@@ -431,6 +436,8 @@ proc Gm::create { } {
 
 	Gm::startmon
 	Gm::create_disptxt $mon
+	
+
 }
 
 
@@ -494,6 +501,7 @@ proc Gm::create_disptxt { mon } {
 	global douttitle
 	global bgcolor
 	global dtxt
+	global keycontrol
 	variable mainframe
 	variable can
 
@@ -530,6 +538,10 @@ proc Gm::create_disptxt { mon } {
 	pack $dtxt -fill both -expand yes
 	pack $dbb -fill both -expand no
 	
+	bind $dtxt <$keycontrol-c> "tk_textCopy %W"
+	bind $dtxt <$keycontrol-v> "tk_textPaste %W"
+	bind $dtxt <$keycontrol-x> "tk_textCut %W"
+		
 	BWidget::place $dout 0 0 at 800 150
     wm deiconify $dout
 }
@@ -559,21 +571,20 @@ proc Gm::clear_txt { txt } {
 proc Gm::save_txt { txt } {
 	global env
 
-	set svtxt [dtxt get sel.first sel.last]
+	set svtxt [$dtxt get sel.first sel.last]
 	if { $svtxt == "" } {
 		set svtxt [dtxt get 1.0 end]
 	}
 
 	if { [info exists HOME] } {
 		set dir $env(HOME)
+		set path [tk_getSaveFile -initialdir $dir]
 	} else {
-		set dir ""
+		set path [tk_getSaveFile ]
 	}
 
-	set path [tk_getSaveFile -initialdir $dir]
 	if { $path == "" } { return }
 
-	
 	set txtfile [open $path w]
 	puts $txtfile $svtxt
 	close $txtfile
@@ -644,7 +655,7 @@ proc Gm::OpenFileBox { } {
     }
 
 	set filename_new [tk_getOpenFile -parent $mainwindow -filetypes $types \
-		-title {Save File} ]
+		-title {Open File} ]
 	if { $filename_new == "" } { return}
 	set filename($mon) $filename_new	
 	puts "files $filename($mon) $filename_new"
@@ -670,7 +681,8 @@ proc Gm::SaveFileBox { } {
     	GmTree::save $filename($mon)
     } else {
         set types {
-            {{Map Resource File} {{.dm} {.dmrc} {.grc}}}
+            {{Map Resource File} {{.grc}}}
+            {{DM Resource File} {{.dm} {.dmrc}}}
             {{All Files} *}
 		}
     	set filename($mon) [tk_getSaveFile -parent $mainwindow -filetypes $types \
@@ -719,27 +731,20 @@ proc main {argc argv} {
     wm title . [G_msg "GRASS$GRASSVERSION GIS Manager - $location_name"]
 
     bind . <$keycontrol-Key-o> {
-	Gm::OpenFileBox {}
+	Gm::OpenFileBox
     }
     bind . <$keycontrol-Key-n> {
-	Gm::new
+	GmTree::new
     }
     bind . <$keycontrol-Key-s> {
-	Gm::SaveFileBox {}
+	Gm::SaveFileBox
     }
     bind . <$keycontrol-Key-q> {
-	GmPrint::clean;  exit
-    }
-    bind . <$keycontrol-Key-x> {
-	Gm::delete
-    }
+    	exit
+   	}
     bind . <$keycontrol-Key-w> {
 	GmTree::FileClose {}
     }
-    bind . <$keycontrol-Key-p> {
-    Gm::print
-    }
-
 
     Gm::create
     BWidget::place . 0 0 at 400 100
