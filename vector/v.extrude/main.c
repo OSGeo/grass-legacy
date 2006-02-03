@@ -25,7 +25,6 @@
 #include "gis.h"
 #include "Vect.h"
 #include "glocale.h"
-#include "nearest.h"
 #include "dbmi.h"
 
 long extrude(struct Map_info Out, struct line_cats *Cats,
@@ -369,8 +368,8 @@ long extrude(struct Map_info Out, struct line_cats *Cats,
 		/* should the voffset be set from the elevation? */
 		if (fdrast) {
 		    estimated_elevation =
-			nearest(fdrast, &window, NULL, Points->y[k],
-				Points->x[k], 0);
+			G_get_raster_sample(fdrast, &window, NULL, 
+                                Points->y[k], Points->x[k], 0, NEAREST);
 		    if (trace) {
 			voffset = estimated_elevation;
 		    }
@@ -403,11 +402,11 @@ long extrude(struct Map_info Out, struct line_cats *Cats,
             /* should the voffset be set from the elevation? */
             if (trace && fdrast) {
                 voffset_curr =
-                    nearest(fdrast, &window, NULL, Points->y[k],
-                            Points->x[k], 0);
+                    G_get_raster_sample(fdrast, &window, NULL, 
+                            Points->y[k], Points->x[k], 0, NEAREST);
                 voffset_next =
-                    nearest(fdrast, &window, NULL, Points->y[k + 1],
-                            Points->x[k + 1], 0);
+                    G_get_raster_sample(fdrast, &window, NULL, 
+                            Points->y[k + 1], Points->x[k + 1], 0, NEAREST);
             }
             else {
                 voffset_curr = voffset;
