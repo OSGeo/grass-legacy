@@ -3,8 +3,12 @@
  */
 
 #include "enforce.h"
+#include "glocale.h"
 
 
+/*
+ * pg_init - initialize PointGrp variables
+ */
 void pg_init(PointGrp *pg)
 {
     pg->sum_x = pg->sum_y = pg->sum_xy = pg->sum_x_sq = 0.0;
@@ -12,61 +16,81 @@ void pg_init(PointGrp *pg)
 }
 
 
+/*
+ * pg_y_from_x - determine y value for a given x value in a PointGrp
+ */
 double pg_y_from_x(PointGrp *pg, double x)
 { 
     return ((pg->slope * x) + pg->yinter); 
 }
 
 
+/*
+ * pg_addpt - Add a point to a PointGrp
+ */
 void pg_addpt(PointGrp *pg, Point2 pt)
 {
-    double x, y, denom;
+    if (pg->npts < MAX_PTS - 1)
+    {
+        double x, y;
 
-    if (pg->npts < MAX_PTS - 1){
-	pg->pnts[pg->npts][0] = x = pt[0];
-	pg->pnts[pg->npts][1] = y = pt[1];
-
-	pg->sum_x += x;
-	pg->sum_y += y;
-	pg->sum_xy += (x * y); 
-	pg->sum_x_sq += (x * x);
-	++pg->npts;
+        /* add point to group */
+        pg->pnts[pg->npts][0] = x = pt[0];
+        pg->pnts[pg->npts][1] = y = pt[1];
+        pg->sum_x += x;
+        pg->sum_y += y;
+        pg->sum_xy += (x * y); 
+        pg->sum_x_sq += SQR(x);
+        ++pg->npts;
     }
 
-    if (pg->npts > 1) {
-	denom = DET2_2(pg->sum_x_sq, pg->sum_x, pg->sum_x, pg->npts);
+    if (pg->npts > 1)
+    {
+        double denom;
 
-	/* should check for 0 denom */
-	pg->slope = (DET2_2(pg->sum_xy, pg->sum_x, pg->sum_y, pg->npts)) / 
-                     denom;
-	pg->yinter = (DET2_2(pg->sum_x_sq, pg->sum_xy, pg->sum_x, pg->sum_y)) /
-                     denom;
+        /* solve for x and y using Cramer's Rule */
+
+        /* check for divide by zero */
+        if (0 == (denom = DET2_2(pg->sum_x_sq, pg->sum_x, pg->sum_x, pg->npts)))
+        {
+            G_warning(_("trying to divide by zero...no unique solution for "
+                        "system...skipping..."));
+            pg->slope = pg->yinter = 0.0;
+        }
+        else
+        {
+            pg->slope  = DET2_2(pg->sum_xy, pg->sum_x, pg->sum_y, pg->npts) / 
+                         denom;
+            pg->yinter = DET2_2(pg->sum_x_sq, pg->sum_xy, pg->sum_x, pg->sum_y) /
+                         denom;
+        }
     }
 }
 
 
+/*
+ * pg_getpoints - returns the Point2 structure from a PointGrp
+ */
 Point2 *pg_getpoints(PointGrp *pg)
 {
     return pg->pnts;
 }
 
 
+/*
+ * pg_getpoints_reversed - reverse points in PointGrp and returns Point2
+ */
 Point2 *pg_getpoints_reversed(PointGrp *pg)
 {
     int i;
     int iter = pg->npts / 2;
-    double bgnx, bgny, endx, endy;
 
-    for (i=0; i < iter; i++) {
-	bgnx = pg->pnts[i][0];
-	bgny = pg->pnts[i][1];
-	endx = pg->pnts[pg->npts-i-1][0];
-	endy = pg->pnts[pg->npts-i-1][1];
-
-	pg->pnts[i][0] = endx;
-	pg->pnts[i][1] = endy;
-	pg->pnts[pg->npts-i-1][0] = bgnx;
-	pg->pnts[pg->npts-i-1][1] = bgny;
+    for (i = 0; i < iter; i++) {
+        /* swap points */
+        pg->pnts[i][0] = pg->pnts[pg->npts-i-1][0];
+        pg->pnts[i][1] = pg->pnts[pg->npts-i-1][1];
+        pg->pnts[pg->npts-i-1][0] = pg->pnts[i][0];
+        pg->pnts[pg->npts-i-1][1] = pg->pnts[i][1];
     }
 
     /* call recalc? */
@@ -80,29 +104,40 @@ Point2 *pg_getpoints_reversed(PointGrp *pg)
 void pg_recalc(PointGrp *pg)
 {
     int i;
-    double x, y, denom;
+    double x, y;
 
     pg->sum_x = pg->sum_y = pg->sum_xy = pg->sum_x_sq = 0.0;
 
-    for (i=0; i < pg->npts; i++) {
-	x = pg->pnts[pg->npts][0];
-	y = pg->pnts[pg->npts][1];
+    for (i = 0; i < pg->npts; i++) {
+        x = pg->pnts[pg->npts][0];
+        y = pg->pnts[pg->npts][1];
 
-	pg->sum_x += x;
-	pg->sum_y += y;
-	pg->sum_xy += (x * y);
-	pg->sum_x_sq += (x * x);
+        pg->sum_x += x;
+        pg->sum_y += y;
+        pg->sum_xy += (x * y);
+        pg->sum_x_sq += SQR(x);
     }
 
-    if (pg->npts > 1) {
-        denom = DET2_2(pg->sum_x_sq, pg->sum_x, pg->sum_x, pg->npts);
+    if (pg->npts > 1)
+    {
+        double denom;
 
-        /* should check for 0 denom */
-        pg->slope = (DET2_2(pg->sum_xy, pg->sum_x, pg->sum_y, pg->npts)) /
-                     denom;
-        pg->yinter = (DET2_2(pg->sum_x_sq, pg->sum_xy, pg->sum_x, pg->sum_y)) /
-                     denom;
+        /* solve for x and y using Cramer's Rule */
+
+        /* check for divide by zero */
+        if (0 == (denom = DET2_2(pg->sum_x_sq, pg->sum_x, pg->sum_x, pg->npts)))
+        {
+            G_warning(_("trying to divide by zero...no unique solution for "
+                        "system...skipping..."));
+            pg->slope = pg->yinter = 0.0;
+        }
+        else
+        {
+            pg->slope  = DET2_2(pg->sum_xy, pg->sum_x, pg->sum_y, pg->npts) / 
+                         denom;
+            pg->yinter = DET2_2(pg->sum_x_sq, pg->sum_xy, pg->sum_x, pg->sum_y) /
+                         denom;
+        }
     }
 }
 #endif
-
