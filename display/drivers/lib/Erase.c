@@ -1,15 +1,21 @@
+#include "driver.h"
 #include "driverlib.h"
 
-int Erase (void)
+void COM_Erase(void)
 {
-	int top, bot, left, rite ;
+	int top, bot, left, rite;
 
-	Screen_top(&top) ;
-	Screen_bot(&bot) ;
-	Screen_rite(&rite) ;
-	Screen_left(&left) ;
+	if (driver->Erase)
+	{
+		(*driver->Erase)();
+		return;
+	}
 
-	Box_abs(left, top, rite, bot) ;
+	COM_Screen_top(&top);
+	COM_Screen_bot(&bot);
+	COM_Screen_rite(&rite);
+	COM_Screen_left(&left);
 
-	return 0;
+	COM_Box_abs(left, top, rite, bot);
 }
+

@@ -1,39 +1,28 @@
-/* These return the values as defined in the Graph_Set() routine */
-
 #include "driver.h"
+#include "driverlib.h"
 
-int Screen_left (int *index)
+void COM_Screen_left(int *index)
 {
-    *index = screen_left;
-
-    return 0;
+	*index = screen_left;
 }
 
-int Screen_rite (int *index)
+void COM_Screen_rite(int *index)
 {
-    *index = screen_right;
-
-    return 0;
+	*index = screen_right;
 }
 
-int Screen_bot (int *index)
+void COM_Screen_bot(int *index)
 {
-    *index = screen_bottom;
-
-    return 0;
+	*index = screen_bottom;
 }
 
-int Screen_top (int *index)
+void COM_Screen_top(int *index)
 {
-    *index = screen_top;
-
-    return 0;
+	*index = screen_top;
 }
 
-int Get_num_colors (int *ncolors)
+void COM_Get_num_colors(int *ncolors)
 {
-    *ncolors = NCOLORS;
-
-    return 0;
+	*ncolors = NCOLORS;
 }
 

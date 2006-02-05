@@ -1,14 +1,14 @@
 
 #include "pngdriver.h"
 
-int Raster_int(int num, int nrows, int *array, int withzeros, int color_type)
+void PNG_Raster_int(int num, int nrows, const int *array, int withzeros, int color_type)
 {
-	int (*set_color)(int);
+	void (*set_color)(int);
 	int x, y;
 	
 	set_color = color_type
-		? Color
-		: color;
+		? COM_Color
+		: DRV_color;
 
 	for (x = 0; x < num; x++)
 	{
@@ -29,7 +29,5 @@ int Raster_int(int num, int nrows, int *array, int withzeros, int color_type)
 	}
 
 	modified = 1;
-
-	return 0;
 }
 

@@ -13,7 +13,6 @@
 #include "driverlib.h"
 #include "driver.h"
 #include "pad.h"
-#include "utils.h"
 #include "glocale.h"
 
 #define REC(a,b)    if ((eof=rec((a),(b)))) break
@@ -56,8 +55,18 @@ static int n_yarray;
 
 static char lc;
 
-void
-command_init(int rfd, int wfd)
+static void *xalloc(void *buf, int *cur, int new, int len)
+{
+	if (*cur < new)
+	{
+		buf = G_realloc(buf, (size_t) new * len);
+		*cur = new;
+	}
+
+	return buf;
+}
+
+void command_init(int rfd, int wfd)
 {
     _rfd = rfd;
     _wfd = wfd;
@@ -68,14 +77,12 @@ command_init(int rfd, int wfd)
     eof = 0;
 }
 
-int
-command_get_input(void)
+int LIB_command_get_input(void)
 {
     return _rfd;
 }
 
-int
-process_command(int c)
+int process_command(int c)
 {
     static char *name;
     static int name_size;
@@ -105,79 +112,79 @@ process_command(int c)
 	SEND(&ch, 1);
 	break;
     case RESPOND:
-	Respond();
+	COM_Respond();
 	SEND(&ch, 1);
 	break;
     case GET_NUM_COLORS:
-	Number_of_colors(&index);
+	COM_Number_of_colors(&index);
 	SEND(&index, sizeof index);
 	break;
     case STANDARD_COLOR:
 	REC(&index, sizeof index);
-	Standard_color(index);
+	COM_Standard_color(index);
 	break;
     case COLOR:
 	REC(&index, sizeof index);
-	Color(index);
+	COM_Color(index);
 	break;
     case RGB_COLOR:
 	REC(&red, sizeof red);
 	REC(&grn, sizeof grn);
 	REC(&blu, sizeof blu);
-	RGB_color(red, grn, blu);
+	COM_Color_RGB(red, grn, blu);
 	break;
     case COLOR_TABLE_FIXED:
-	x = Color_table_fixed();
+	x = COM_Color_table_fixed();
 	SEND(&x, sizeof x);
 	break;
     case COLOR_TABLE_FLOAT:
-	x = Color_table_float();
+	x = COM_Color_table_float();
 	SEND(&x, sizeof x);
 	break;
     case COLOR_OFFSET:
 	REC(&index, sizeof index);
-	Color_offset(index);
+	COM_Color_offset(index);
 	break;
     case COLOR_PRINT:
 	break;
     case LINE_WIDTH:
 	REC(&number, sizeof number);
-	line_width(number);
+	COM_Line_width(number);
 	break;
     case CONT_ABS:
 	REC(&x, sizeof x);
 	REC(&y, sizeof y);
-	Cont_abs(x, y);
+	COM_Cont_abs(x, y);
 	break;
     case CONT_REL:
 	REC(&x, sizeof x);
 	REC(&y, sizeof y);
-	Cont_rel(x, y);
+	COM_Cont_rel(x, y);
 	break;
     case BOX_ABS:
 	REC(&l, sizeof l);
 	REC(&t, sizeof t);
 	REC(&r, sizeof r);
 	REC(&b, sizeof b);
-	Box_abs(l, t, r, b);
+	COM_Box_abs(l, t, r, b);
 	break;
     case BOX_REL:
 	REC(&l, sizeof l);
 	REC(&t, sizeof t);
-	Box_rel(l, t);
+	COM_Box_rel(l, t);
 	break;
     case ERASE:
-	Erase();
+	COM_Erase();
 	break;
     case GET_LOCATION_WITH_BOX:
 	REC(&t, sizeof t);
 	REC(&b, sizeof b);
 	REC(&x, sizeof x);
 	REC(&y, sizeof y);
-	Get_location_with_box2(t, b, &x, &y, &button, 1); /* start */
+	COM_Get_location_with_box(t, b, &x, &y, &button, 1); /* start */
         while ( 1 ) {
 	    /* Check monitor and send result back */
-	    ret = Get_location_with_box2(t, b, &x, &y, &button, 2);
+	    ret = COM_Get_location_with_box(t, b, &x, &y, &button, 2);
 	    if ( ret == 0 ) button = 0;
 	    /* we send back current position but button set to 0 */
 	    SEND(&x, sizeof x);
@@ -187,7 +194,7 @@ process_command(int c)
 	    /* Should we continue (0) or break (1) */
 	    REC(&ret, sizeof ret );
 	    if ( ret == 1 ) { /* break */
-	        ret = Get_location_with_box2(t, b, &x, &y, &button, 3);
+	        ret = COM_Get_location_with_box(t, b, &x, &y, &button, 3);
             	break;
 	    }
 	}	
@@ -197,10 +204,10 @@ process_command(int c)
 	REC(&b, sizeof b);
 	REC(&x, sizeof x);
 	REC(&y, sizeof y);
-	Get_location_with_line2(t, b, &x, &y, &button, 1); /* start */
+	COM_Get_location_with_line(t, b, &x, &y, &button, 1); /* start */
         while ( 1 ) {
 	    /* Check monitor and send result back */
-	    ret = Get_location_with_line2(t, b, &x, &y, &button, 2);
+	    ret = COM_Get_location_with_line(t, b, &x, &y, &button, 2);
 	    if ( ret == 0 ) button = 0;
 	    /* we send back current position but button set to 0 */
 	    SEND(&x, sizeof x);
@@ -210,7 +217,7 @@ process_command(int c)
 	    /* Should we continue (0) or break (1) */
 	    REC(&ret, sizeof ret );
 	    if ( ret == 1 ) { /* break */
-	        ret = Get_location_with_line2(t, b, &x, &y, &button, 3);
+	        ret = COM_Get_location_with_line(t, b, &x, &y, &button, 3);
             	break;
 	    }
 	}	
@@ -219,10 +226,10 @@ process_command(int c)
 	REC(&x, sizeof x);
 	REC(&y, sizeof y);
 	REC(&button, sizeof button);
-	Get_location_with_pointer2(&x, &y, &button, 1); /* start */
+	COM_Get_location_with_pointer(&x, &y, &button, 1); /* start */
         while ( 1 ) {
 	    /* Check monitor and send result back */
-	    ret = Get_location_with_pointer2(&x, &y, &button, 2);
+	    ret = COM_Get_location_with_pointer(&x, &y, &button, 2);
 	    if ( ret == 0 ) button = 0;
 	    /* we send back current position but button set to 0 */
 	    SEND(&x, sizeof x);
@@ -232,27 +239,23 @@ process_command(int c)
 	    /* Should we continue (0) or break (1) */
 	    REC(&ret, sizeof ret );
 	    if ( ret == 1 ) { /* break */
-	        ret = Get_location_with_pointer2(&x, &y, &button, 3);
+	        ret = COM_Get_location_with_pointer(&x, &y, &button, 3);
             	break;
 	    }
 	}	
 	break;
     case GRAPH_CLOSE:
-	Graph_Close();
+	COM_Graph_close();
 	exit(0);
-    case LINEMOD:
-	REC(&index, sizeof index);
-	Linemod(&index);
-	break;
     case MOVE_ABS:
 	REC(&x, sizeof x);
 	REC(&y, sizeof y);
-	Move_abs(x, y);
+	COM_Move_abs(x, y);
 	break;
     case MOVE_REL:
 	REC(&x, sizeof x);
 	REC(&y, sizeof y);
-	Move_rel(x, y);
+	COM_Move_rel(x, y);
 	break;
     case RASTER_CHAR:
 	REC(&x, sizeof x);
@@ -260,8 +263,9 @@ process_command(int c)
 	REC(&index, sizeof index);
 	blua = (unsigned char *) xalloc(blua, &blu_alloc, x, sizeof(*blua));
 	REC(blua, x * sizeof(char));
-	if (index != 0) index = 1;
-	Raster_char(x, y, blua, index, 1);
+	if (index != 0)
+		index = 1;
+	COM_Raster_char(x, y, blua, index, 1);
 	break;
     case RASTER_INT:
 	REC(&x, sizeof x);
@@ -269,8 +273,9 @@ process_command(int c)
 	REC(&index, sizeof index);
 	xarray = (int *) xalloc(xarray, &n_xarray, x, sizeof(*xarray));
 	REC(xarray, x * sizeof(*xarray));
-	if (index != 0) index = 1;
-	Raster_int(x, y, xarray, index, 1);
+	if (index != 0)
+		index = 1;
+	COM_Raster_int(x, y, xarray, index, 1);
 	break;
     case RGB_RASTER:
 	REC(&x, sizeof x);
@@ -284,7 +289,7 @@ process_command(int c)
 	REC(blua, x * sizeof(char));
 	REC(nula, x * sizeof(char));
 	REC(&t, sizeof t);
-	RGB_raster(x, y, reda, grna, blua, t ? nula : NULL);
+	COM_RGB_raster(x, y, reda, grna, blua, t ? nula : NULL);
 	break;
     case RGB_COLORS:
 	reda = (unsigned char *) xalloc(reda, &red_alloc, 256, sizeof(*reda));
@@ -293,7 +298,7 @@ process_command(int c)
 	REC(reda, 256);
 	REC(grna, 256);
 	REC(blua, 256);
-	Set_RGB_color(reda, grna, blua);
+	COM_RGB_set_colors(reda, grna, blua);
 	break;
     case POLYGON_ABS:
 	REC(&number, sizeof number);
@@ -301,7 +306,7 @@ process_command(int c)
 	yarray = (int *) xalloc(yarray, &n_yarray, number, sizeof(*yarray));
 	REC(xarray, number * sizeof(xarray[0]));
 	REC(yarray, number * sizeof(yarray[0]));
-	Polygon_abs(xarray, yarray, number);
+	COM_Polygon_abs(xarray, yarray, number);
 	break;
     case POLYGON_REL:
 	REC(&number, sizeof number);
@@ -309,7 +314,7 @@ process_command(int c)
 	yarray = (int *) xalloc(yarray, &n_yarray, number, sizeof(*yarray));
 	REC(xarray, number * sizeof(xarray[0]));
 	REC(yarray, number * sizeof(yarray[0]));
-	Polygon_rel(xarray, yarray, number);
+	COM_Polygon_rel(xarray, yarray, number);
 	break;
     case POLYLINE_ABS:
 	REC(&number, sizeof number);
@@ -317,7 +322,7 @@ process_command(int c)
 	yarray = (int *) xalloc(yarray, &n_yarray, number, sizeof(*yarray));
 	REC(xarray, number * sizeof(xarray[0]));
 	REC(yarray, number * sizeof(yarray[0]));
-	Polyline_abs(xarray, yarray, number);
+	COM_Polyline_abs(xarray, yarray, number);
 	break;
     case POLYLINE_REL:
 	REC(&number, sizeof number);
@@ -325,7 +330,7 @@ process_command(int c)
 	yarray = (int *) xalloc(yarray, &n_yarray, number, sizeof(*yarray));
 	REC(xarray, number * sizeof(xarray[0]));
 	REC(yarray, number * sizeof(yarray[0]));
-	Polyline_rel(xarray, yarray, number);
+	COM_Polyline_rel(xarray, yarray, number);
 	break;
     case POLYDOTS_ABS:
 	REC(&number, sizeof number);
@@ -333,7 +338,7 @@ process_command(int c)
 	yarray = (int *) xalloc(yarray, &n_yarray, number, sizeof(*yarray));
 	REC(xarray, number * sizeof(xarray[0]));
 	REC(yarray, number * sizeof(yarray[0]));
-	Polydots_abs(xarray, yarray, number);
+	COM_Polydots_abs(xarray, yarray, number);
 	break;
     case POLYDOTS_REL:
 	REC(&number, sizeof number);
@@ -341,7 +346,7 @@ process_command(int c)
 	yarray = (int *) xalloc(yarray, &n_yarray, number, sizeof(*yarray));
 	REC(xarray, number * sizeof(xarray[0]));
 	REC(yarray, number * sizeof(yarray[0]));
-	Polydots_rel(xarray, yarray, number);
+	COM_Polydots_rel(xarray, yarray, number);
 	break;
     case RESET_COLORS:
 	REC(&min, sizeof min);
@@ -353,29 +358,29 @@ process_command(int c)
 	REC(reda, number * sizeof(char));
 	REC(grna, number * sizeof(char));
 	REC(blua, number * sizeof(char));
-	Reset_colors(min, max, reda, grna, blua);
+	COM_Reset_colors(min, max, reda, grna, blua);
 	break;
     case RESET_COLOR:
 	REC(&red, sizeof red);
 	REC(&grn, sizeof grn);
 	REC(&blu, sizeof blu);
 	REC(&number, sizeof number);
-	Reset_color(red, grn, blu, number);
+	COM_Reset_color(red, grn, blu, number);
 	break;
     case SCREEN_LEFT:
-	Screen_left(&index);
+	COM_Screen_left(&index);
 	SEND(&index, sizeof index);
 	break;
     case SCREEN_RITE:
-	Screen_rite(&index);
+	COM_Screen_rite(&index);
 	SEND(&index, sizeof index);
 	break;
     case SCREEN_BOT:
-	Screen_bot(&index);
+	COM_Screen_bot(&index);
 	SEND(&index, sizeof index);
 	break;
     case SCREEN_TOP:
-	Screen_top(&index);
+	COM_Screen_top(&index);
 	SEND(&index, sizeof index);
 	break;
     case SET_WINDOW:
@@ -383,11 +388,11 @@ process_command(int c)
 	REC(&b, sizeof b);
 	REC(&l, sizeof l);
 	REC(&r, sizeof r);
-	Set_window(t, b, l, r);
+	COM_Set_window(t, b, l, r);
 	break;
     case GET_TEXT_BOX:
 	RECTEXT(text, text_size);
-	Get_text_box(text, &t, &b, &l, &r);
+	COM_Get_text_box(text, &t, &b, &l, &r);
 	SEND(&t, sizeof t);
 	SEND(&b, sizeof b);
 	SEND(&l, sizeof l);
@@ -395,35 +400,35 @@ process_command(int c)
 	break;
     case FONT:
 	RECTEXT(text, text_size);
-	x = Font_get(text);
+	x = COM_Font_get(text);
 	SEND(&x, sizeof x);
 	break;
     case FONT_FREETYPE:
 	RECTEXT(text, text_size);
-	x = Font_freetype_get(text);
+	x = COM_Font_freetype_get(text);
 	SEND(&x, sizeof x);
 	break;
     case FONT_FREETYPE_RELEASE:
-	x = Font_freetype_release();
+	x = COM_Font_freetype_release();
 	SEND(&x, sizeof x);
 	break;
     case CHARSET:
 	RECTEXT(text, text_size);
-	x = init_font_charset(text);
+	x = COM_Font_init_charset(text);
 	SEND(&x, sizeof x);
 	break;
     case TEXT:
 	RECTEXT(text, text_size);
-	Text(text);
+	COM_Text(text);
 	break;
     case TEXT_SIZE:
 	REC(&x, sizeof x);
 	REC(&y, sizeof y);
-	Text_size(x, y);
+	COM_Text_size(x, y);
 	break;
     case TEXT_ROTATION:
 	REC(&wx, sizeof wx);
-	Text_rotation(wx);
+	COM_Text_rotation(wx);
 	break;
     case PANEL_SAVE:
 	RECTEXT(text, text_size);
@@ -431,15 +436,15 @@ process_command(int c)
 	REC(&b, sizeof b);
 	REC(&l, sizeof l);
 	REC(&r, sizeof r);
-	Panel_save(text, t, b, l, r);
+	COM_Panel_save(text, t, b, l, r);
 	break;
     case PANEL_RESTORE:
 	RECTEXT(text, text_size);
-	Panel_restore(text);
+	COM_Panel_restore(text);
 	break;
     case PANEL_DELETE:
 	RECTEXT(text, text_size);
-	Panel_delete(text);
+	COM_Panel_delete(text);
 	break;
     case PAD_CREATE:
 	RECTEXT(text, text_size);

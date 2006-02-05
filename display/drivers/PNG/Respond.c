@@ -1,8 +1,7 @@
 
 #include "pngdriver.h"
 
-void
-Respond(void)
+void PNG_Respond(void)
 {
 	if (auto_write)
 		write_image();

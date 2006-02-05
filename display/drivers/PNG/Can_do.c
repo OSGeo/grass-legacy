@@ -5,8 +5,8 @@
 
 #include "pngdriver.h"
 
-int 
-can_do_float (void)
+int PNG_Can_do_float(void)
 {
 	return !true_color ;
 }
+

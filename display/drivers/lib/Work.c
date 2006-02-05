@@ -1,20 +1,21 @@
-
+#include "driver.h"
 #include "driverlib.h"
 
-int
-Has_work(void)
+int COM_Has_work(void)
 {
-	return 0;
+	return driver->Do_work ? 1 : 0;
 }
 
-int
-Work_stream(void)
+int COM_Work_stream(void)
 {
-	return -1;
+	return driver->Work_stream
+		? (*driver->Work_stream)()
+		: -1;
 }
 
-void
-Do_work(int opened)
+void COM_Do_work(int opened)
 {
+	if (driver->Do_work)
+		(*driver->Do_work)(opened);
 }
 

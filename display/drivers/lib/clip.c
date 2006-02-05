@@ -17,8 +17,7 @@
  *    the y and c_y values returned lie between s and n
  */
 
-int 
-clip (register double s, register double n, register double w, register double e, register double *x, register double *y, register double *c_x, register double *c_y)
+int clip(double s, double n, double w, double e, double *x, double *y, double *c_x, double *c_y)
 {
 	int mod ;
 

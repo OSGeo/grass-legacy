@@ -1125,12 +1125,12 @@ int G_trim_decimal(char *);
 char *G_unctrl(int);
 
 /* unix_socks.c */
-char *G_sock_get_fname(char *);
-int G_sock_exists(char *);
-int G_sock_bind(char *);
+char *G_sock_get_fname(const char *);
+int G_sock_exists(const char *);
+int G_sock_bind(const char *);
 int G_sock_listen(int, unsigned int);
 int G_sock_accept(int);
-int G_sock_connect(char *);
+int G_sock_connect(const char *);
 int G_sock_socketpair(int, int, int, int *);
 
 /* version.c */
