@@ -32,18 +32,6 @@ extern int enforce_downstream(int infd, int outfd, char *outvect,
                     RASTER_MAP_TYPE rtype, double width, double depth, 
                     int noflat, int quiet);
 
-/* line_dist.c */
-#if 0
-extern double distance2(double fromx, double fromy, double tox, double toy);
-extern double distance2_point_to_seg(double x, double y, double x1, 
-                    double y1, double x2, double y2);
-#endif
-extern double xy_distance2_point_to_seg(double *px, double *py,
-                    double x1, double y1, double x2, double y2);
-extern double xy_distance3_point_to_seg(double *px, double *py,
-                    double x1, double y1, double x2, double y2,
-                    int *status);
-
 /* lobf.c */
 extern Point2 *pg_getpoints(PointGrp *pg);
 extern Point2 *pg_getpoints_reversed(PointGrp *pg);

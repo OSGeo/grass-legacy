@@ -5,18 +5,17 @@
 
 
 /*
- *  Update a history file.  Some of the digit file information  is 
- *  placed in the hist file.
- *  returns  0  -  successful creation of history file
- *          -1  -  error
-*/
-
+ * update_history - Update a history file.  Some of the digit file 
+ * information is placed in the history file.
+ * returns  0  -  successful creation of history file
+ *         -1  -  error
+ */
 int update_history(char *raster_name)
 {
     struct History hist;
 
-    if(raster_name == NULL)
-        return(-1) ;
+    if (raster_name == NULL)
+        return -1;
 
     if (G_read_history(raster_name, G_mapset(), &hist) < 0)
 	return -1;
@@ -28,5 +27,5 @@ int update_history(char *raster_name)
     sprintf(hist.datsrc_1, "raster elevation file: %s", raster_name);
     hist.edlinecnt = 2;
 
-    return (G_write_history(raster_name, &hist)) ;
+    return G_write_history(raster_name, &hist);
 }

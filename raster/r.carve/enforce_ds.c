@@ -1,8 +1,10 @@
 /* Written by Bill Brown, UIUC GIS Laboratory */
+#include <stdio.h>
 #include <string.h>
 #include "gis.h"
 #include "glocale.h"
 #include "enforce.h"
+
 
 #ifndef MAX
 #  define MIN(a,b)      ((a<b) ? a : b)
@@ -250,18 +252,14 @@ int enforce_downstream(int infd, int outfd, char *outvect,
                     /* Thought about not going past endpoints (use 
                      * status to check) but then pieces end up missing 
                      * from outside corners - if it goes past ends, 
-                     * should probably do some interp or will get flats */
-                    /* here we use a bitmap and only change cells once 
+                     * should probably do some interp or will get flats.
+                     * Here we use a bitmap and only change cells once 
                      * on the way down */
-#if 1
-                    if (xy_distance2_point_to_seg(&cellx, &celly,
-                           pgxypts[i-1][0], pgxypts[i-1][1], pgxypts[i][0],
-                           pgxypts[i][1]) <= SQR(width))
-#else
-                    if (xy_distance3_point_to_seg(&cellx, &celly,
-                           pgxypts[i-1][0], pgxypts[i-1][1], pgxypts[i][0],
-                           pgxypts[i][1], &status) <= SQR(width))
-#endif
+
+                    if (dig_distance2_point_to_line(cellx, celly, 0,
+                           pgxypts[i-1][0], pgxypts[i-1][1], 0,
+                           pgxypts[i][0], pgxypts[i][1], 0,
+                           0, &cellx, &celly, NULL, NULL, NULL))
                     {
                         if (!BM_get(bm, c, r))
                         {
