@@ -113,7 +113,7 @@ _get_make_sock_path (void)
  * NULL on failure.
  * ---------------------------------------------------------------------*/
 char *
-G_sock_get_fname (char *name)
+G_sock_get_fname (const char *name)
 {
     char *path, *dirpath;
     int len;
@@ -141,7 +141,7 @@ G_sock_get_fname (char *name)
  * -------------------------------------------------------------------*/
     
 int
-G_sock_exists (char *name)
+G_sock_exists (const char *name)
 {
     struct stat theStat;
 
@@ -163,7 +163,7 @@ G_sock_exists (char *name)
  * ----------------------------------------------------------------*/
 
 int
-G_sock_bind (char *name)
+G_sock_bind (const char *name)
 {
     int    sockfd;
     size_t size;
@@ -243,7 +243,7 @@ G_sock_accept (int sockfd)
  * --------------------------------------------------------------------*/
 
 int
-G_sock_connect (char *name)
+G_sock_connect (const char *name)
 {
     int    sockfd;
     struct sockaddr_un addr;

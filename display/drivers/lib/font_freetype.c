@@ -1,41 +1,30 @@
 #include <string.h>
 #include "driverlib.h"
 
-static char filename[255];
+static char filename[256];
 static char charset[50] = "EUC-JP";
 
-int init_font_freetype(char* name) {
-	size_t len = 0;
-
-	len = strlen(name);
-	if(len>253) {
-		strncpy(filename,name,len);
-		filename[len+1] = '\0';
-	}else{
-		strncpy(filename,name, (size_t)253);
-		filename[254] = '\0';
-	}
+int font_init_freetype(const char *name)
+{
+	strncpy(filename, name, sizeof(filename));
+	filename[sizeof(filename) - 1] = '\0';
 	return 0;
 }
 
-int init_font_charset(char* str) {
-	size_t len = 0;
-
-	len = strlen(str);
-	if(len>47) {
-		strncpy(charset,str,len);
-		charset[len+1] = '\0';
-	}else{
-		strncpy(charset,str, (size_t)48);
-		charset[49] = '\0';
-	}
+int font_init_charset(const char *str)
+{
+	strncpy(charset, str, sizeof(charset));
+	charset[sizeof(charset) - 1] = '\0';
 	return 0;
 }
 
-char* getFreeTypeName() {
+const char *font_get_freetype_name(void)
+{
 	return filename;
 }
 
-char* getCharset() {
+const char *font_get_charset(void)
+{
 	return charset;
 }
+

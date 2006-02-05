@@ -5,236 +5,230 @@
 #include <string.h>
 #include "gis.h"
 #include "pad.h"
-#include "utils.h"
 
 static PAD *padlist;
 
-static int
-free_item(ITEM *item)
+static int free_item(ITEM *item)
 {
-    LIST *list, *next;
+	LIST *list, *next;
 
-    if (item->name != NULL)
-        G_free ((char *) item->name);
-    for (list = item->list; list != NULL; list = next) {
-        next = list->next;
-        if (list->value)
-            G_free ((char *) list->value);
-        G_free ((char *) list);
-    }
-    G_free ((char *) item);
-
-    return 0;
-}
-
-static ITEM *
-new_item(PAD *pad, char *name)
-{
-    ITEM *item;
-
-    item = (ITEM *) G_malloc((size_t) sizeof(ITEM));
-    if (item == NULL)
-        return (ITEM *) NULL;
-
-    item->name = store(name);
-    if (item->name == NULL) {
-        G_free ((char *) item);
-        return (ITEM *) NULL;
-    }
-    item->list = NULL;
-    item->next = pad->items;
-    if (item->next != NULL)
-        item->next->prev = item;
-    item->prev = NULL;
-    pad->items = item;
-
-    return item;
-}
-
-static int
-remove_value(ITEM *item, char *value)
-{
-    LIST **p = &item->list;
-    LIST *l = *p;
-
-    for (l = *p; l; l = *p) {
-	if (value && l->value && !strcmp(value, l->value)) {
-	    *p = l->next;
-	    if (l->value)
-		G_free (l->value);
-	    G_free (l);
+	if (item->name != NULL)
+		G_free(item->name);
+	for (list = item->list; list != NULL; list = next)
+	{
+		next = list->next;
+		if (list->value)
+			G_free(list->value);
+		G_free(list);
 	}
+	G_free(item);
+
+	return 0;
+}
+
+static ITEM *new_item(PAD *pad, char *name)
+{
+	ITEM *item;
+
+	item = (ITEM *) G_malloc((size_t) sizeof(ITEM));
+	if (item == NULL)
+		return (ITEM *) NULL;
+
+	item->name = G_store(name);
+	if (item->name == NULL)
+	{
+		G_free(item);
+		return (ITEM *) NULL;
+	}
+	item->list = NULL;
+	item->next = pad->items;
+	if (item->next != NULL)
+		item->next->prev = item;
+	item->prev = NULL;
+	pad->items = item;
+
+	return item;
+}
+
+static int remove_value(ITEM *item, char *value)
+{
+	LIST **p = &item->list;
+	LIST *l = *p;
+
+	for (l = *p; l; l = *p)
+	{
+		if (value && l->value && !strcmp(value, l->value))
+		{
+			*p = l->next;
+			if (l->value)
+				G_free (l->value);
+			G_free (l);
+		}
+		else
+			p = &l->next;
+	}
+
+	return 0;
+}
+
+int append_item(PAD *pad, char *name, char *value, int replace)
+{
+	ITEM *item;
+	LIST *cur, *prev;
+	LIST *list;
+
+	if (pad == NULL)
+		return 0;
+
+	/* allocate a list struct and put value into it */
+	list = (LIST *) G_malloc((size_t) sizeof(LIST));
+	if (list == NULL)
+		return 0;
+	list->next = NULL;
+	list->value = G_store(value);
+	if (list->value == NULL)
+	{
+		G_free(list);
+		return 0;
+	}
+	/* find the named item for the current pad */
+	item = find_item(pad, name);
+	if (item == NULL)
+		item = new_item(pad,name);
+	if (item == NULL)
+		return 0;
+
+	/* remove any existing occurences of the value */
+	if (replace)
+		remove_value(item, value);
+
+	/* add the LIST at the end of the item LIST */
+	prev = NULL;
+	for (cur = item->list; cur != NULL; cur = cur->next)
+		prev = cur;
+
+	if (prev == NULL)
+		item->list = list;
 	else
-	    p = &l->next;
-    }
+		prev->next = list;
 
-    return 0;
+	return 1;
 }
 
-int
-append_item(PAD *pad, char *name, char *value, int replace)
+int delete_item(PAD *pad, char *name)
 {
-    ITEM *item;
-    LIST *cur, *prev;
-    LIST *list;
+	ITEM *item;
 
-    if (pad == NULL)
-        return 0;
+	item = find_item(pad, name);
+	if (item == NULL)
+		return 0;
 
-    /* allocate a list struct and put value into it */
-    list = (LIST *) G_malloc((size_t) sizeof(LIST));
-    if (list == NULL)
-        return 0;
-    list->next = NULL;
-    list->value = store(value);
-    if (list->value == NULL) {
-        G_free ((char *) list);
-        return 0;
-    }
-    /* find the named item for the current pad */
-    item = find_item(pad, name);
-    if (item == NULL)
-        item = new_item(pad,name);
-    if (item == NULL)
-        return 0;
+	if (item->prev == NULL)
+		pad->items = item->next;
+	else
+		item->prev->next = item->next;
 
-    /* remove any existing occurences of the value */
-    if (replace)
-	remove_value(item, value);
+	if (item->next != NULL)
+		item->next->prev = item->prev;
 
-    /* add the LIST at the end of the item LIST */
-    prev = NULL;
-    for (cur = item->list; cur != NULL; cur = cur->next)
-        prev = cur;
+	/* free the item */
+	free_item(item);
 
-    if (prev == NULL)
-        item->list = list;
-    else
-        prev->next = list;
-
-    return 1;
+	return 1;
 }
 
-int
-delete_item(PAD *pad, char *name)
+ITEM *find_item(PAD *pad, char *name)
 {
-    ITEM *item;
+	ITEM *item;
 
-    item = find_item(pad, name);
-    if (item == NULL)
-        return 0;
-
-    if (item->prev == NULL)
-        pad->items = item->next;
-    else
-        item->prev->next = item->next;
-
-    if (item->next != NULL)
-        item->next->prev = item->prev;
-
-    /* free the item */
-    free_item(item);
-
-    return 1;
+	if (pad != NULL)
+		for (item = pad->items; item != NULL; item = item->next)
+			if (strcmp(name, item->name) == 0)
+				return item;
+	return (ITEM *) NULL;
 }
 
-ITEM *
-find_item(PAD *pad, char *name)
+PAD *pad_list(void)
 {
-    ITEM *item;
-
-    if (pad != NULL)
-        for (item = pad->items; item != NULL; item = item->next)
-            if (strcmp(name, item->name) == 0)
-                return item;
-    return (ITEM *) NULL;
+	return padlist;
 }
 
-PAD *
-pad_list(void)
+static int delink_pad(PAD *pad)
 {
-    return padlist;
+	if (pad == NULL)
+		return 1;
+
+	if (pad->prev == NULL)
+		padlist = pad->next;
+	else
+		pad->prev->next = pad->next;
+
+	if (pad->next != NULL)
+		pad->next->prev = pad->prev;
+
+	return 0;
 }
 
-static int
-delink_pad(PAD *pad)
+int create_pad(char *name)
 {
-    if (pad == NULL)
-        return 1;
+	PAD *pad;
 
-    if (pad->prev == NULL)
-        padlist = pad->next;
-    else
-        pad->prev->next = pad->next;
-
-    if (pad->next != NULL)
-        pad->next->prev = pad->prev;
-
-    return 0;
+	pad = (PAD *) G_malloc((size_t) sizeof(PAD));
+	if (pad == NULL)
+		return 0;
+	pad->name = G_store(name);
+	if (pad->name == NULL)
+	{
+		G_free(pad);
+		return 0;
+	}
+	pad->items = NULL;
+	pad->next = padlist;
+	if (pad->next != NULL)
+		pad->next->prev = pad;
+	pad->prev = NULL;
+	padlist = pad;
+	return 1;
 }
 
-int
-create_pad(char *name)
+int delete_pad(PAD *pad)
 {
-    PAD *pad;
+	ITEM *item, *next;
 
-    pad = (PAD *) G_malloc((size_t) sizeof(PAD));
-    if (pad == NULL)
-        return 0;
-    pad->name = store(name);
-    if (pad->name == NULL) {
-        G_free ((char *) pad);
-        return 0;
-    }
-    pad->items = NULL;
-    pad->next = padlist;
-    if (pad->next != NULL)
-        pad->next->prev = pad;
-    pad->prev = NULL;
-    padlist = pad;
-    return 1;
+	if (pad == NULL)
+		return 0;
+
+	delink_pad(pad);
+
+	/* free the items */
+	for (item = pad->items; item != NULL; item = next)
+	{
+		next = item->next;
+		free_item(item);
+	}
+	G_free(pad);
+
+	return 1;
 }
 
-int 
-delete_pad(PAD *pad)
+PAD *find_pad(char *name)
 {
-    ITEM *item, *next;
+	PAD *pad;
 
-    if (pad == NULL)
-        return 0;
-
-    delink_pad(pad);
-
-    /* free the items */
-    for (item = pad->items; item != NULL; item = next) {
-        next = item->next;
-        free_item(item);
-    }
-    G_free ((char *) pad);
-
-    return 1;
+	for (pad = padlist; pad != NULL; pad = pad->next)
+		if (strcmp(name, pad->name) == 0)
+			return pad;
+	return (PAD *) NULL;
 }
 
-PAD *
-find_pad(char *name)
+int invent_pad(char *name)
 {
-    PAD *pad;
+	static int i = 0;
 
-    for (pad = padlist; pad != NULL; pad = pad->next)
-        if (strcmp(name, pad->name) == 0)
-            return pad;
-    return (PAD *) NULL;
-}
+	do
+		sprintf(name, "%d", ++i);
+	while (find_pad(name) != NULL);
 
-int
-invent_pad(char *name)
-{
-    static int i = 0;
-
-    do
-        sprintf(name, "%d", ++i);
-    while (find_pad(name) != NULL);
-
-    return 0;
+	return 0;
 }
 

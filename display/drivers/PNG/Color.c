@@ -10,21 +10,19 @@
 #include "colors.h"
 #include "pngdriver.h"
 
-int color(int number)
+void PNG_color(int number)
 {
-    if (number >= NCOLORS || number < 0)
-    {
-        G_warning("Color: can't set color %d\n", number);
-        return 0;
-    }
+	if (number >= NCOLORS || number < 0)
+	{
+		G_warning("Color: can't set color %d\n", number);
+		return;
+	}
 
-    if (get_table_type() == FLOAT)
-        currentColor = number;
-    else if (true_color)
-        currentColor = number;
-    else
-        currentColor = xpixels[number];
-
-    return 0;
+	if (PNG_get_table_type() == FLOAT)
+		currentColor = number;
+	else if (true_color)
+		currentColor = number;
+	else
+		currentColor = xpixels[number];
 }
 

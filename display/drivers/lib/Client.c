@@ -1,13 +1,15 @@
-
+#include "driver.h"
 #include "driverlib.h"
 
-void
-Client_Open(void)
+void COM_Client_Open(void)
 {
+	if (driver->Client_Open)
+		(*driver->Client_Open)();
 }
 
-void
-Client_Close(void)
+void COM_Client_Close(void)
 {
+	if (driver->Client_Close)
+		(*driver->Client_Close)();
 }
 

@@ -28,7 +28,7 @@ timeout(int sig)
 }
 
 int
-get_connection_fifo(char *files, int *rfd, int *wfd, int nonblock)
+get_connection_fifo(const char *files, int *rfd, int *wfd, int nonblock)
 {
 	char input[1024], output[1024];
 	RETSIGTYPE (*def)(int);
@@ -84,7 +84,7 @@ get_connection_fifo(char *files, int *rfd, int *wfd, int nonblock)
 /* this is the AT&T version. */
 
 int
-check_connection(char *me, char *link)
+check_connection(const char *me, const char *link)
 {
 	static int time = 2;	/* time to wait for opens below */
 	struct stat buf;

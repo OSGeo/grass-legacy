@@ -10,8 +10,7 @@
 
 #include "pngdriver.h"
 
-static void
-store_xy(int x, int y)
+static void store_xy(int x, int y)
 {
 	int xi, xi_end, yi, yi_end;
 	double theta;
@@ -39,8 +38,7 @@ store_xy(int x, int y)
 	}
 }
 
-int 
-draw_line(int x1, int y1, int x2, int y2)
+void PNG_draw_line(int x1, int y1, int x2, int y2)
 {
 	int x, y, x_end, y_end;
 	int xinc, yinc, error;
@@ -54,7 +52,7 @@ draw_line(int x1, int y1, int x2, int y2)
 	if (x == x_end && y == y_end )
 	{
 		store_xy(x, y);
-		return 0;
+		return;
 	}
 
 	/* generate equation */
@@ -129,7 +127,5 @@ draw_line(int x1, int y1, int x2, int y2)
 	store_xy(x, y);
 
 	modified = 1;
-
-	return 0;
 }
 

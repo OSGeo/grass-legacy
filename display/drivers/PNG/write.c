@@ -6,8 +6,7 @@
 #include "gis.h"
 #include "pngdriver.h"
 
-static void
-write_png(void)
+static void write_png(void)
 {
 	static jmp_buf jbuf;
 	static png_struct *png_ptr;
@@ -105,8 +104,7 @@ write_png(void)
 	fclose(output);
 }
 
-static void
-write_ppm(void)
+static void write_ppm(void)
 {
 	FILE *output;
 	int x, y;
@@ -142,8 +140,7 @@ write_ppm(void)
 	fclose(output);
 }
 
-static void
-write_pgm(void)
+static void write_pgm(void)
 {
 	char *mask_name = G_store(file_name);
 	FILE *output;
@@ -176,8 +173,7 @@ write_pgm(void)
 	fclose(output);
 }
 
-void
-write_image(void)
+void write_image(void)
 {
 	char *p = file_name + strlen(file_name) - 4;
 

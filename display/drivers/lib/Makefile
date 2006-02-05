@@ -7,29 +7,28 @@ EXTRA_LIBS=$(GISLIB)
 LIB_NAME = $(DRIVER_LIBNAME)
 
 LIB_OBJS =\
-	Box_abs.o\
-	Box_rel.o\
+	Box.o\
+	Can_do.o\
 	Client.o\
-	Clr_table.o\
+	Color_table.o\
 	Color.o\
-	Cont_abs.o\
-	Cont_rel.o\
+	Cont.o\
 	Erase.o\
-	Font_get.o\
+	Font.o\
+	Get_location.o\
 	Get_t_box.o\
-	Linemod.o\
-	Move_abs.o\
-	Move_rel.o\
+	Graph.o\
+	Line_width.o\
+	Move.o\
 	Num_colors.o \
-	Plydts_abs.o\
-	Plydts_rel.o\
-	Plylne_abs.o\
-	Plylne_rel.o\
-	Polygn_rel.o\
+	Panel.o\
+	Polydots.o\
+	Polyline.o\
+	Polygon.o\
+	Raster_RGB.o\
 	Raster_int.o\
-	Raster_chr.o\
-	Raster_def.o\
-	Reset_clrs.o\
+	Raster_char.o\
+	Reset_colors.o\
 	Respond.o\
 	Returns.o\
 	Set_window.o\
@@ -37,20 +36,18 @@ LIB_OBJS =\
 	Text_size.o\
 	Work.o\
 	clip.o\
-	color_supp.o\
+	color_support.o\
 	command.o\
 	connect_fifo.o\
 	connect_sock.o\
 	font.o\
+	font_freetype.o\
 	main.o\
 	pad.o\
-	utils.o\
-	RGB.o\
-	Text2.o\
-	Text3.o\
-	font_freetype.o
+	text2.o\
+	text3.o
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
-default: stlib
+default: lib
 

@@ -7,21 +7,21 @@ include $(MODULE_TOPDIR)/include/Make/Rules.make
 EXTRA_CFLAGS = $(PNGINC) -I../lib
 
 OBJS =  \
+	Box.o\
 	Can_do.o\
 	Client.o\
-	Clr_table.o\
 	Color.o\
+	Color_table.o\
 	Draw_line.o\
 	Draw_point.o\
-	Get_w_box.o\
-	Get_w_line.o\
-	Get_w_pnt.o\
-	Graph_Clse.o\
-	Graph_Set.o\
-	Panel.o\
-	Polygn_abs.o\
-	write.o\
-	line_attr.o
+	Erase.o\
+	Graph_close.o\
+	Graph_set.o\
+	Line_width.o\
+	Raster_int.o\
+	Respond.o\
+	main.o\
+	write.o
 
 ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
