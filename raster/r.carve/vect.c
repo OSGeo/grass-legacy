@@ -3,6 +3,9 @@
 #include "enforce.h"
 
 
+/*
+ * open_new_vect - opens new vector file for writing
+ */
 int open_new_vect(struct Map_info *map, char *vect)
 {
     Vect_open_new(map, vect, 1);
@@ -14,6 +17,9 @@ int open_new_vect(struct Map_info *map, char *vect)
 }
 
 
+/*
+ * close_vect - builds vector support and frees up resources
+ */
 int close_vect(struct Map_info *map, int build_support)
 {
     if (build_support)
@@ -26,9 +32,10 @@ int close_vect(struct Map_info *map, int build_support)
 }
 
  
-/* Writes a sites file from 2 Point2 lists, using x & y from first 
- * list and y from second list as third dimension in site. */
-
+/*
+ * write_xyz_points - Writes a sites file from two Point2 lists, using x 
+ * and y from pgxypts and y from pgpts as the third (z) dimension.
+ */
 int write_xyz_points(struct Map_info *map, Point2 *pgxypts, Point2 *pgpts,
                     const int npts, const double depth)
 {
@@ -48,11 +55,13 @@ int write_xyz_points(struct Map_info *map, Point2 *pgxypts, Point2 *pgpts,
     Vect_reset_line(points);
 
     for (i = 0; i < npts; i++) {
+        G_debug(3, "x:%.2lf y:%.2lf z:%.2lf", pgxypts[i][0],
+                pgxypts[i][1], pgpts[i][1] - depth);
         Vect_append_point(points, pgxypts[i][0], pgxypts[i][1], 
                           pgpts[i][1] - depth);
-        Vect_write_line(map, GV_POINT, points, cats);
     }
 
+    Vect_write_line(map, GV_POINT, points, cats);
 
     return 1;
 }
