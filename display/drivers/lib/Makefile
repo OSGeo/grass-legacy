@@ -40,7 +40,7 @@ LIB_OBJS =\
 	command.o\
 	connect_fifo.o\
 	connect_sock.o\
-	font.o\
+	font2.o\
 	font_freetype.o\
 	main.o\
 	pad.o\
