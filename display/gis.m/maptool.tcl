@@ -161,9 +161,7 @@ proc MapToolBar::savepng { compression } {
 	} else {
 		set path [tk_getSaveFile -filetypes $types ]
 	}
-	
-	
-	
+		
 	mapcan::mapsettings $mon
 	set env(GRASS_PNG_COMPRESSION) $compression
 	set env(GRASS_PNGFILE) "$path"

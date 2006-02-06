@@ -393,6 +393,7 @@ proc psprint::print { cv } {
 		eval exec "cat $tmppsfile | gs  $format -sDEVICE=pdfwrite -r$res -sNOPAUSE -sOutputFile=$pdffile -dBATCH - " 
 	}
 
+	# output to eps file
 	if { $printmode == "eps" && $epsfile != "" } {
 		if { $orient == "portrait" } {
 			$cv postscript -file "$epsfile"
