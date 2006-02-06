@@ -68,6 +68,17 @@ proc GmArrows::select_map { id } {
     }
 }
 
+proc GmArrows::select_magmap { id } {
+    variable tree
+    variable node
+    global mon
+    
+    set m [GSelect cell]
+    if { $m != "" } { 
+        set GmArrows::opt($id,magnitude_map) $m
+        GmTree::autonamel "arrows for $m"
+    }
+}
 # display histogram options
 proc GmArrows::options { id frm } {
     variable opt
@@ -99,7 +110,7 @@ proc GmArrows::options { id frm } {
     # raster map for arrow magnitude
     set row [ frame $frm.mag ]
     Button $row.a -text [G_msg "Raster map for arrow length:"] \
-           -command "GmArrows::select_map $id"
+           -command "GmArrows::select_magmap $id"
     Entry $row.b -width 49 -text " $opt($id,magnitude_map)" \
           -textvariable GmArrows::opt($id,magnitude_map) \
           -background white
