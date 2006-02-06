@@ -1078,7 +1078,7 @@ proc mapcan::cleanup { mon destroywin} {
 	if { $destroywin == ".mapcan($mon)" } { 
 		$pgs delete "page_$mon"
 		runcmd "g.mremove -f region=mon_$mon "
-		#destroy $mon
+		if { [winfo exists .tlegend($mon)] } { destroy .tlegend($mon) }
 	}
 	# stop gism PNG driver if it is still running due to error
 	if ![catch {open "|d.mon -L" r} input] {
