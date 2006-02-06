@@ -138,7 +138,7 @@
 #% key: monitor
 #% type: string
 #% description: Select display monitor for legend
-#% options: x0,x1,x2,x3,x4,x5,x6
+#% options: x0,x1,x2,x3,x4,x5,x6,none
 #% answer: x1
 #% required : no
 #%end
@@ -172,6 +172,10 @@
 #%flag 
 #%key: l
 #%description: Create graphic legend in display monitor
+#%end
+#%flag 
+#%key: s
+#%description: Save graphic legend output in tlegend.txt file for d.graph display in GIS Manager
 #%end
 #%flag 
 #%key: m
@@ -257,6 +261,14 @@ if [ $? -ne 0 ] || [ -z "$TMP5" ] ; then
     exit 1
 fi
 
+# create file to hold elements for GIS Manager legend
+TMP6="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMP6" ] ; then
+    echo "ERROR: unable to create temporary file for GIS Manager legend" 1>&2
+    exit 1
+fi
+
+
 # Set display variables for group
 atype=0
 ptype=0
@@ -296,12 +308,8 @@ currmon=`eval d.mon -L | grep "(selected)" | awk '{print $1}'`
 
 if [ -z $currmon ] ; then
 	echo ""
-	echo "***Starting monitor X0***"
+	echo "*** You must open a display monitor ***"
 	echo ""
-	d.mon start=x0
-	currmon="x0"
-#	cleanup
-#	exit 1
 fi
 
 
@@ -393,13 +401,15 @@ esac
 pointstep=`echo $GIS_OPT_maxsize $ptsize $numint | awk '{print (($1 - $2) / ($3-1))}'`
 
 # legend title
-echo "color black" > "$TMP2"
+echo "color 0:0:0" > "$TMP2"
 echo "size 2 2" >> "$TMP2"
 echo "move 1 95" >> "$TMP2"
 echo "text Thematic map legend for column $GIS_OPT_column of map $GIS_OPT_map" >> "$TMP2"
 echo "size 1.5 1.8" >> "$TMP2"
 echo "move 4 90" >> "$TMP2"
 echo "text Value range: $min - $max" >> "$TMP2"
+
+echo "title - - - {Thematic map legend for column $GIS_OPT_column of map $GIS_OPT_map}" > "$TMP6"
 
 echo "text 1% 95% Thematic map legend for column $GIS_OPT_column of map $GIS_OPT_map" >> "$TMP5"
 echo "  ref bottom left" >> $TMP5
@@ -419,7 +429,7 @@ echo "Value range: $min - $max"
 if [ "$GIS_OPT_themetype" = "graduated_colors" ] ; then
     # set color schemes for graduated color maps
     case "$GIS_OPT_colorscheme" in
-	"blue-red" )
+		"blue-red" )
 	    startc="0:0:255"
 	    endc="255:0:0"
 	    ;;    
@@ -439,15 +449,15 @@ if [ "$GIS_OPT_themetype" = "graduated_colors" ] ; then
 	    startc="0:0:255"
 	    endc="0:255:0"
 	    ;;
-	"green-blue" )
+		"green-blue" )
 	    startc="0:255:0"
 	    endc="0:0:255"
 	    ;;
-	"cyan-yellow" )
+		"cyan-yellow" )
 	    startc="0:255:255"
 	    endc="255:255:0"
 	    ;;
-	"yellow-cyan" )
+		"yellow-cyan" )
 	    startc="255:255:0"
 	    endc="0:255:255"
 	    ;;
@@ -457,11 +467,11 @@ if [ "$GIS_OPT_themetype" = "graduated_colors" ] ; then
 	    ;;
         "single_color" )
 	    if [ "$GIS_OPT_themetype" = "graduated_points" ]; then
-		startc="$GIS_OPT_linecolor"
-		endc="$GIS_OPT_linecolor"
+			startc="$GIS_OPT_linecolor"
+			endc="$GIS_OPT_linecolor"
 	    else
-		startc="$GIS_OPT_pointcolor"
-		endc="$GIS_OPT_pointcolor"
+			startc="$GIS_OPT_pointcolor"
+			endc="$GIS_OPT_pointcolor"
 	    fi
 	    ;;
         "*")
@@ -490,6 +500,8 @@ if [ "$GIS_OPT_themetype" = "graduated_colors" ] ; then
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by $numint intervals of $step" >> "$TMP2"
 
+		echo "subtitle - - - {Mapped by $numint intervals of $step}" >> "$TMP6"
+
         echo "text 4% 87% Mapped by $numint intervals of $step" >> "$TMP5"
         echo "  ref bottom left" >> $TMP5
         echo "end" >> $TMP5
@@ -503,6 +515,8 @@ if [ "$GIS_OPT_themetype" = "graduated_colors" ] ; then
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by standard deviation units of $sd (mean =$mean)" >> "$TMP2"
 
+		echo "subtitle - - - {Mapped by standard deviation units of $sd (mean =$mean)}" >> "$TMP6"
+
         echo "text 4% 87% Mapped by standard deviation units of $sd (mean =$mean)" >> "$TMP5"
         echo "  ref bottom left" >> $TMP5
         echo "end" >> $TMP5
@@ -515,6 +529,8 @@ if [ "$GIS_OPT_themetype" = "graduated_colors" ] ; then
 
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by quartiles (median =$q2)" >> "$TMP2"
+
+		echo "subtitle - - - {Mapped by quartiles (median =$q2)}" >> "$TMP6"
 
         echo "text 4% 87% Mapped by quartiles (median =$q2)" >> "$TMP5"
         echo "  ref bottom left" >> $TMP5
@@ -617,31 +633,33 @@ if [ "$GIS_OPT_themetype" = "graduated_colors" ] ; then
 		echo "draw 5 $line3" >> "$TMP2"
 		echo "draw 5 $line1" >> "$TMP2"
         echo "move 14 $line2" >> "$TMP2"
-        echo "color black" >> "$TMP2"
+        echo "color 0:0:0" >> "$TMP2"
         echo "text $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP2"
 
+		echo "area $themecolor $linecolor - {$openbracket$rangemin - $rangemax$closebracket $extranote}" >> "$TMP6"
+
         if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
-	  echo "line 5% $line1% 8% $line1%" >> $TMP5
-	  echo "  color $linecolor" >> $TMP5
-	  echo "end" >> $TMP5
+		  echo "line 5% $line1% 8% $line1%" >> $TMP5
+		  echo "  color $linecolor" >> $TMP5
+		  echo "end" >> $TMP5
           echo "text 14% $line1% $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP5"
           echo "  ref center left" >> $TMP5
           echo "end" >> $TMP5
         elif [ "$GIS_OPT_type" = "point" -o "$GIS_OPT_type" = "centroid" ] ; then
           echo "point 8% $line1%" >> "$TMP5"
-	  echo "  color $linecolor" >> "$TMP5"
-	  echo "  fcolor $themecolor" >> "$TMP5"
-	  echo "  size $GIS_OPT_size" >> "$TMP5"
-	  echo "  symbol $GIS_OPT_icon" >> "$TMP5"
-	  echo "end" >> "$TMP5"
+		  echo "  color $linecolor" >> "$TMP5"
+		  echo "  fcolor $themecolor" >> "$TMP5"
+		  echo "  size $GIS_OPT_size" >> "$TMP5"
+		  echo "  symbol $GIS_OPT_icon" >> "$TMP5"
+		  echo "end" >> "$TMP5"
           echo "text 14% $line1% $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP5"
           echo "  ref center left" >> $TMP5
           echo "end" >> $TMP5
-	else
+		else
           echo "rectangle 5% $line1% 8% $line3%" >> "$TMP5"
-	  echo "  color black" >> "$TMP5"
-	  echo "  fcolor $themecolor" >> "$TMP5"
-	  echo "end" >> "$TMP5"
+		  echo "  color 0:0:0" >> "$TMP5"
+		  echo "  fcolor $themecolor" >> "$TMP5"
+		  echo "end" >> "$TMP5"
           echo "text 14% $line3% $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP5"
           echo "  ref bottom left" >> $TMP5
           echo "end" >> $TMP5
@@ -650,11 +668,11 @@ if [ "$GIS_OPT_themetype" = "graduated_colors" ] ; then
 
 
         echo $themecolor@$rangemin@$rangemax@$extranote@$openbracket@$closebracket | awk -F@ '{print $1 "\t\t" $5$2" - "$3$6" "$4}'
-	if [ -z "$GIS_OPT_where" ] ; then
+		if [ -z "$GIS_OPT_where" ] ; then
             sqlwhere="$GIS_OPT_column $mincomparison $rangemin and $GIS_OPT_column<=$rangemax"
-	else
+		else
             sqlwhere="$GIS_OPT_column $mincomparison $rangemin and $GIS_OPT_column<=$rangemax AND $GIS_OPT_where"
-	fi
+		fi
 
         # update color to database?
         if [ $GIS_FLAG_u -eq 1 ] ; then
@@ -723,42 +741,42 @@ if [ "$GIS_OPT_themetype" = "graduated_colors" ] ; then
             color=$linecolor fcolor=$themecolor icon=$GIS_OPT_icon size=$ptsize
 
         if [ "$GIS_OPT_type" = "line" -o "$GIS_OPT_type" = "boundary" ] ; then
-	  echo "vlines $GIS_OPT_map" >> $TMP4
-	  echo "  type $GIS_OPT_type" >> $TMP4
-	  echo "  layer $GIS_OPT_layer" >> $TMP4
-	  echo "  where $sqlwhere" >> $TMP4
-	  echo "  color $linecolor" >> $TMP4
-	  echo "end" >> $TMP4
+		  echo "vlines $GIS_OPT_map" >> $TMP4
+		  echo "  type $GIS_OPT_type" >> $TMP4
+		  echo "  layer $GIS_OPT_layer" >> $TMP4
+		  echo "  where $sqlwhere" >> $TMP4
+		  echo "  color $linecolor" >> $TMP4
+		  echo "end" >> $TMP4
         elif [ "$GIS_OPT_type" = "point" -o "$GIS_OPT_type" = "centroid" ] ; then
-	  echo "vpoints $GIS_OPT_map" >> $TMP4
-	  echo "  type $GIS_OPT_type" >> $TMP4
-	  echo "  layer $GIS_OPT_layer" >> $TMP4
-	  echo "  where $sqlwhere" >> $TMP4
-	  echo "  color $linecolor" >> $TMP4
-	  echo "  fcolor $themecolor" >> $TMP4
-	  echo "  symbol $GIS_OPT_icon" >> $TMP4
-	  echo "end" >> $TMP4
-	else
-	  echo "vareas $GIS_OPT_map" >> $TMP4
-	  echo "  layer $GIS_OPT_layer" >> $TMP4
-	  echo "  where $sqlwhere" >> $TMP4
-	  echo "  color $linecolor" >> $TMP4
-	  echo "  fcolor $themecolor" >> $TMP4
-	  echo "end" >> $TMP4
-        fi
+		  echo "vpoints $GIS_OPT_map" >> $TMP4
+		  echo "  type $GIS_OPT_type" >> $TMP4
+		  echo "  layer $GIS_OPT_layer" >> $TMP4
+		  echo "  where $sqlwhere" >> $TMP4
+		  echo "  color $linecolor" >> $TMP4
+		  echo "  fcolor $themecolor" >> $TMP4
+		  echo "  symbol $GIS_OPT_icon" >> $TMP4
+		  echo "end" >> $TMP4
+		else
+		  echo "vareas $GIS_OPT_map" >> $TMP4
+		  echo "  layer $GIS_OPT_layer" >> $TMP4
+		  echo "  where $sqlwhere" >> $TMP4
+		  echo "  color $linecolor" >> $TMP4
+		  echo "  fcolor $themecolor" >> $TMP4
+		  echo "end" >> $TMP4
+		fi
 
 
         # increment for next theme
         let i=i+1
-	if [ $i = $numint ] ; then
-	  let color1=$endcolor1
-	  let color2=$endcolor2
-	  let color3=$endcolor3
-	else
+		if [ $i = $numint ] ; then
+		  let color1=$endcolor1
+		  let color2=$endcolor2
+		  let color3=$endcolor3
+		else
           let color1=color1-clrstep1
           let color2=color2-clrstep2
           let color3=color3-clrstep3
-	fi
+		fi
         let line1=line1-4
         let line2=line2-4
         let line3=line3-4
@@ -774,6 +792,8 @@ if [ "$GIS_OPT_themetype" = "graduated_points" -o "$GIS_OPT_themetype" = "gradua
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by $numint intervals of $step" >> "$TMP2"
 
+		echo "subtitle - - - {Mapped by $numint intervals of $step}" >> "$TMP6"
+
         echo "text 4% 87% Mapped by $numint intervals of $step" >> "$TMP5"
         echo "  ref bottom left" >> $TMP5
         echo "end" >> $TMP5
@@ -787,12 +807,12 @@ if [ "$GIS_OPT_themetype" = "graduated_points" -o "$GIS_OPT_themetype" = "gradua
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by standard deviation units of $sd (mean =$mean)" >> "$TMP2"
 
-        echo "text 4% 87% Mapped by standard deviation units of $sd (mean =$mean)" >> "$TMP5"
-	echo "  ref bottom left" >> $TMP5
-	echo "end" >> $TMP5
-			
-	
+		echo "subtitle - - - {Mapped by standard deviation units of $sd (mean =$mean)}" >> "$TMP6"
 
+        echo "text 4% 87% Mapped by standard deviation units of $sd (mean =$mean)" >> "$TMP5"
+		echo "  ref bottom left" >> $TMP5
+		echo "end" >> $TMP5
+	
         echo "Mapped by standard deviation units of $sd (mean =$mean)"
     fi
     
@@ -801,6 +821,8 @@ if [ "$GIS_OPT_themetype" = "graduated_points" -o "$GIS_OPT_themetype" = "gradua
 
         echo "move 4 87" >> "$TMP2"
         echo "text Mapped by quartiles (median =$q2)" >> "$TMP2"
+
+		echo "subtitle - - - {Mapped by quartiles (median =$q2)}" >> "$TMP6"
 
         echo "text 4% 87% Mapped by quartiles (median =$q2)" >> "$TMP5"
         echo "  ref bottom left" >> $TMP5
@@ -898,12 +920,14 @@ if [ "$GIS_OPT_themetype" = "graduated_points" -o "$GIS_OPT_themetype" = "gradua
 
 		if [ "$GIS_OPT_themetype" = "graduated_lines" ]; then
 	        echo "color $linecolor" >> "$TMP2"
+			echo "line $themecolor $linecolor $ptsize {$openbracket$rangemin - $rangemax$closebracket $extranote}" >> "$TMP6"
 	    else
 			echo "color $themecolor" >> "$TMP2"
+			echo "point $themecolor $linecolor $ptsize {$openbracket$rangemin - $rangemax$closebracket $extranote}" >> "$TMP6"
 		fi
 
         echo "icon + $iconsize 5 $line1" >> "$TMP2"
-        echo "color black" >> "$TMP2"
+        echo "color 0:0:0" >> "$TMP2"
         echo "move 10 $line2" >> "$TMP2"
         echo "text $ptsize pts" >> "$TMP2"
         echo "move 25 $line2" >> "$TMP2"
@@ -1015,7 +1039,7 @@ if [ "$GIS_OPT_themetype" = "graduated_points" -o "$GIS_OPT_themetype" = "gradua
 fi
 
 # Create graphic legend
-if [ "$GIS_FLAG_l" -eq 1 ] ; then
+if [ "$GIS_FLAG_l" -eq 1 -a "$GIS_OPT_monitor" <> "none" ] ; then
     echo ""
     echo ""
     if [ `eval d.mon -L | grep $GIS_OPT_monitor | awk '{print $5}'` = "not" ] ; then
@@ -1044,6 +1068,11 @@ fi
 echo "end" >> "$TMP5"
 if [ "$GIS_OPT_psmap" ] ; then
     cat $TMP5 > $GIS_OPT_psmap\_legend.psmap
+fi
+
+# Create text file to use with d.graph in GIS Manager
+if [ "$GIS_FLAG_s" -eq 1 ] ; then
+    cp $TMP6 "gismlegend.txt"
 fi
 
 cleanup
