@@ -517,8 +517,7 @@ proc Gm::create_disptxt { mon } {
 
 	# output text window
 	set doutfr [MainFrame .dispout.fr -bg $bgcolor ]
-    set dout_sw [ScrolledWindow $doutfr.sw -relief sunken -borderwidth 1\
-    	-bg $bgcolor]
+    set dout_sw [ScrolledWindow $doutfr.sw -relief sunken -borderwidth 1]
 	set dtxt [text $dout_sw.txt -height 20 -width 40 -bg #ffffff] 
 
     $dout_sw setwidget $dtxt
@@ -563,24 +562,33 @@ proc Gm::run_txt { txt } {
 
 # clear output window
 proc Gm::clear_txt { txt } {
+	global dtxt
 	
 	$txt delete 1.0 end
 }
 
-# save output window
+# save text in output window
 proc Gm::save_txt { txt } {
 	global env
+	global dtxt
 
-	set svtxt [$dtxt get sel.first sel.last]
-	if { $svtxt == "" } {
-		set svtxt [dtxt get 1.0 end]
+	if ![catch {$dtxt get sel.first}] {
+		set svtxt [$dtxt get sel.first sel.last]
+	} else {
+		set svtxt [$dtxt get 1.0 end]
+	} 
+	
+	set types {
+    {{TXT} {.txt}}
 	}
 
 	if { [info exists HOME] } {
 		set dir $env(HOME)
-		set path [tk_getSaveFile -initialdir $dir]
+		set path [tk_getSaveFile -initialdir $dir -filetypes $types \
+			-defaultextension ".txt"]
 	} else {
-		set path [tk_getSaveFile ]
+		set path [tk_getSaveFile -filetypes $types \
+			-defaultextension ".txt"]
 	}
 
 	if { $path == "" } { return }
