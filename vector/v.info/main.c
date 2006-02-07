@@ -78,7 +78,7 @@ main (int argc, char *argv[])
   gflag->description    = _("Print vector map region only");
 
   if (G_parser(argc,argv))
-    exit(1);
+    exit(EXIT_FAILURE);
 
   /* open input vector */
   if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
@@ -216,6 +216,6 @@ main (int argc, char *argv[])
 
   Vect_close (&Map);
 
-  return (0);
+  return (EXIT_SUCCESS);
 }
 
