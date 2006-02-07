@@ -1,6 +1,4 @@
 /*
- * $Id$
- * 
  * Written by Bill Brown, USA-CERL
  * January, 1993
  *
@@ -12,6 +10,7 @@
 #include <strings.h>
 #include <math.h>
 #include "gis.h"
+#include "glocale.h"
 
 typedef int FILEDESC;
 double distance ( double *,double *, double, double, int);
@@ -40,47 +39,42 @@ int main(
 
 	module = G_define_module();
 	module->description =
-		"Creates a raster map containing concentric "
-		"rings around a given point.";
+		_("Creates a raster map containing concentric "
+		"rings around a given point");
 
-    out_file = G_define_option();
-    out_file->key                    = "output";
-    out_file->type                   = TYPE_STRING;
-    out_file->required               = YES;
-    out_file->multiple               = NO;
-    out_file->description            = "Name for new raster file";
+    out_file = G_define_standard_option(G_OPT_R_OUTPUT);
 
     coord = G_define_option() ;
     coord->key        = "coordinate" ;
     coord->type       = TYPE_STRING ;
     coord->required   = YES ;
     coord->key_desc   = "x,y" ;
-    coord->description= "The coordinate of the center (east,north)" ;
+    coord->description= _("The coordinate of the center (east,north)") ;
 
     min = G_define_option();
     min->key                    = "min";
     min->type                   = TYPE_DOUBLE;
     min->required               = NO;
-    min->description            = "minimum radius for ring/circle map (in meters)";
+    min->description            = _("Minimum radius for ring/circle map (in meters)");
 
     max = G_define_option();
     max->key                    = "max";
     max->type                   = TYPE_DOUBLE;
     max->required               = NO;
-    max->description            = "maximum radius for ring/circle map (in meters)";
+    max->description            = _("Maximum radius for ring/circle map (in meters)");
 
     mult = G_define_option();
     mult->key                    = "mult";
     mult->type                   = TYPE_DOUBLE;
     mult->required               = NO;
-    mult->description            = "Multiplier";
+    mult->description            = _("Multiplier");
 
     flag = G_define_flag();
     flag->key         = 'b' ;
-    flag->description = "Generate binary raster map" ;
+    flag->description = _("Generate binary raster map") ;
             
     if (G_parser (argc, argv))
-	exit (-1);
+	exit (EXIT_FAILURE);
     
     G_scan_easting  (coord->answers[0], &east, G_projection()) ;
     G_scan_northing (coord->answers[1], &north, G_projection()) ;
@@ -146,7 +140,7 @@ int main(
     G_close_cell(cellfile);
 
     
-    return(1);
+    return(EXIT_SUCCESS);
 }
 
 

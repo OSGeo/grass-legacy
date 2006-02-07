@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "coin.h"
+#include "gis.h"
+#include "glocale.h"
 
 
 int 
@@ -51,24 +53,18 @@ command_version (int argc, char *argv[])
     flag.w->description = "Wide report, 132 columns (default: 80)";
 
     if (G_parser(argc, argv))
-	exit(1);
+	exit(EXIT_FAILURE);
     strcpy (map1name, parm.map1->answer);
     strcpy (map2name, parm.map2->answer);
     mapset1 = G_find_cell2 (map1name, "");
     if(!mapset1)
-    {
-	fprintf (stderr, "%s: <%s> raster map not found\n", argv[0], map1name);
-	exit (1);
-    }
+	G_fatal_error (_("%s: <%s> raster map not found"), argv[0], map1name);
     mapset2 = G_find_cell2 (map2name, "");
     if(!mapset2)
-    {
-	fprintf (stderr, "%s: <%s> raster map not found\n", argv[0], map2name);
-	exit (1);
-    }
+        G_fatal_error (_("%s: <%s> raster map not found"), argv[0], map2name);
 
     make_coin(!flag.q->answer);
     print_coin (*parm.units->answer, flag.w->answer?132:80, 0);
 
-  return 0;
+  exit(EXIT_SUCCESS);
 }

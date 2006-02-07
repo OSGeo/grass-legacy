@@ -35,26 +35,11 @@ main (int argc, char *argv[])
 		"areas assigned the same category value in a "
 		"user-specified base map.");
 
-    basemap = G_define_option();
-    basemap->key        = "base";
-    basemap->type       = TYPE_STRING ;
-    basemap->required   = YES ;
-    basemap->gisprompt  = "old,cell,raster" ;
-    basemap->description = _("base raster map");
+    basemap = G_define_standard_option(G_OPT_R_BASE);
 
-    covermap = G_define_option();
-    covermap->key       = "cover";
-    covermap->type      = TYPE_STRING;
-    covermap->required  = YES ;
-    covermap->gisprompt  = "old,cell,raster" ;
-    covermap->description = _("cover raster map");
+    covermap = G_define_standard_option(G_OPT_R_COVER);
 
-    outputmap = G_define_option();
-    outputmap->key       = "output";
-    outputmap->type      = TYPE_STRING;
-    outputmap->required  = YES ;
-    outputmap->gisprompt  = "new,cell,raster" ;
-    outputmap->description = _("resultant raster map");
+    outputmap = G_define_standard_option(G_OPT_R_OUTPUT);
 
     flag_c = G_define_flag();
     flag_c->key = 'c';

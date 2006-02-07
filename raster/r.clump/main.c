@@ -15,14 +15,14 @@ main (int argc, char *argv[])
     char title[512];
     char name[GNAME_MAX];
     char *OUTPUT;
-    char *INPUT; 
-	struct GModule *module;
+    char *INPUT;
+    struct GModule *module;
     struct Flag *flag1 ;
     struct Option *opt1 ;
     struct Option *opt2 ;
     struct Option *opt3 ;
     static int verbose = 1;
-    char rname[256], rmapset[256];
+    char rname[GNAME_MAX], rmapset[GMAPSET_MAX];
 
     G_gisinit (argv[0]);
 
@@ -33,20 +33,9 @@ main (int argc, char *argv[])
 		_("Recategorizes data in a raster map layer by grouping cells " 
 		"that form physically discrete areas into unique categories.");
 						
-    opt1 = G_define_option() ;
-    opt1->key        = "input";
-    opt1->type       = TYPE_STRING;
-    opt1->required   = YES;
-    opt1->gisprompt  = "old,cell,raster" ;
-    opt1->description= _("Input layer name");
+    opt1 = G_define_standard_option(G_OPT_R_INPUT);
 
-
-    opt2 = G_define_option() ;
-    opt2->key        = "output";
-    opt2->type       = TYPE_STRING;
-    opt2->required   = YES;
-    opt2->gisprompt  = "new,cell,raster" ;
-    opt2->description= _("Output layer name");
+    opt2 = G_define_standard_option(G_OPT_R_OUTPUT);
 
     opt3 = G_define_option() ;
     opt3->key        = "title";
@@ -62,7 +51,7 @@ main (int argc, char *argv[])
     flag1->description = _("Quiet") ;
 
     if (G_parser(argc, argv) < 0)
-	exit(-1);
+	exit(EXIT_FAILURE);
 
     verbose = (! flag1->answer);
 
@@ -72,35 +61,23 @@ main (int argc, char *argv[])
     strcpy (name, INPUT);
     mapset = G_find_cell2 (name,"");
     if (!mapset)
-    {
-        char err[100];
-
-        sprintf (err, "%s: <%s> not found", G_program_name(), INPUT);
-        G_fatal_error (err);
-        exit(1);
-    }
+        G_fatal_error (_("%s: <%s> not found"), G_program_name(), INPUT);
 
     if (G_legal_filename (OUTPUT) < 0)
-    {
-    	char err[100];
-    	sprintf (err, "%s: <%s> illegal name", G_program_name(), OUTPUT);
-    	G_fatal_error (err);
-	exit(1);
-    }
+    	G_fatal_error (_("%s: <%s> illegal name"), G_program_name(), OUTPUT);
 
     in_fd = G_open_cell_old (name, mapset);
     if (in_fd < 0)
-        exit(1);
-
+        G_fatal_error (_("%s: Cannot open <%s>"), G_program_name(), INPUT);
 
     out_fd = G_open_cell_new (OUTPUT);
     if (out_fd < 0)
-        exit(1);
+        G_fatal_error (_("%s: Cannot open <%s>"), G_program_name(), OUTPUT);
 
     clump (in_fd, out_fd, verbose);
 
     if (verbose)
-    	fprintf (stderr, "CREATING SUPPORT FILES ... "); fflush (stderr);
+    	G_message (_("CREATING SUPPORT FILES ..."));
   
     G_close_cell (in_fd);
     G_close_cell (out_fd);
@@ -118,9 +95,6 @@ main (int argc, char *argv[])
     G_make_random_colors (&colr, min, max);
     G_write_colors (OUTPUT, G_mapset(), &colr);
 
-    if (verbose)
-    	fprintf (stderr, "\n");
-   
-    fprintf (stdout,"%d clumps\n", range.max);
-    exit(0);
+    G_message (_("%d clumps"), range.max);
+    exit(EXIT_SUCCESS);
 }

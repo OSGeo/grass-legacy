@@ -60,7 +60,7 @@ int main (int argc, char *argv[])
 
 
     if (G_parser(argc,argv))
-	exit(1);
+	exit(EXIT_FAILURE);
     stat = 0;
     for (n = 0; name = map->answers[n]; n++)
 	if (process (name, uncompress->answer, quiet->answer))

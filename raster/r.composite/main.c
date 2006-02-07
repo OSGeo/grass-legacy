@@ -134,7 +134,7 @@ int main(int argc, char **argv)
 	flg_c->description  = _("Use closest color");
 
 	if (G_parser(argc, argv))
-		exit(-1);
+		exit(EXIT_FAILURE);
 
 	levels = atoi(opt_lev->answer);
 
@@ -192,12 +192,10 @@ int main(int argc, char **argv)
 
 	mapset = G_find_cell2(out_name, "");
 	if (mapset != NULL)
-	{
 		G_remove("cell", out_name);
-	}
 
 	if ((out_file = G_open_cell_new(out_name)) < 0)
-		G_fatal_error("Unable to create output <%s>", out_name);
+		G_fatal_error(_("Unable to create output <%s>"), out_name);
 
 	out_array = G_allocate_cell_buf() ;
 
@@ -218,7 +216,7 @@ int main(int argc, char **argv)
 				    b->array[1],
 				    b->array[2],
 				    nulls) < 0)
-				G_fatal_error("Error reading '%s' map", color_names[i]);
+				G_fatal_error(_("Error reading '%s' map"), color_names[i]);
 
 			if (dither)
 			{
@@ -272,7 +270,7 @@ int main(int argc, char **argv)
 		}
 
 		if(G_put_raster_row(out_file, out_array, CELL_TYPE) < 0)
-			G_fatal_error("G_put_raster_row failed (file system full?)");
+			G_fatal_error(_("G_put_raster_row failed (file system full?)"));
 	}
 
 	G_percent(window.rows, window.rows, 5);
@@ -285,7 +283,7 @@ int main(int argc, char **argv)
 	G_close_cell(out_file);
 	G_write_colors(out_name, G_mapset(), &out_colors);
 
-	return 0;
+	exit(EXIT_SUCCESS);
 }
 
 static int quantize(int c, int x)

@@ -17,11 +17,9 @@ int main(int argc, char *argv[])
     int nfiles;
     int i,j;
     int row, col;
-    int maskfd;
-    int with_masking;
     int verbose;
     int correlation;
-	struct GModule *module;
+    struct GModule *module;
     struct Option *maps;
     struct
     {
@@ -36,13 +34,7 @@ int main(int argc, char *argv[])
 		_("Outputs a covariance/correlation matrix "
 		"for user-specified raster map layer(s).");
 
-    maps = G_define_option();
-    maps->key = "map";
-    maps->required = YES;
-    maps->multiple = YES;
-    maps->type = TYPE_STRING;
-    maps->gisprompt  = "old,cell,raster" ;
-    maps->description = _("Raster map(s) to be read");
+    maps = G_define_standard_option(G_OPT_R_MAPS);
 
     flag.r = G_define_flag();
     flag.r->key = 'r';
@@ -53,7 +45,7 @@ int main(int argc, char *argv[])
     flag.q->description = _("Quiet");
 
     if (G_parser(argc, argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
 /* flags */
     verbose = !flag.q->answer;
@@ -74,16 +66,10 @@ int main(int argc, char *argv[])
 	name = maps->answers[i];
 	mapset = G_find_cell(name, "");
 	if (!mapset)
-	{
-	    fprintf(stderr, "%s - raster map not found\n", name);
-	    exit(1);
-	}
+	    G_fatal_error(_("%s - raster map not found"), name);
 	fd[i] = G_open_cell_old (name, mapset);
 	if (fd[i] < 0)
-	{
-	    fprintf(stderr, "%s - can't open raster map\n", name);
-	    exit(1);
-	}
+	    G_fatal_error(_("%s - can't open raster map"), name);
     }
 
     nrows = G_window_rows();
@@ -120,10 +106,7 @@ int main(int argc, char *argv[])
     if (verbose)
 	G_percent (row, nrows, 2);
     if (count <= 1.1)
-    {
-	fprintf (stderr, "No non-null values\n");
-	exit(1);
-    }
+	G_fatal_error(_("No non-null values"));
 
     ii = jj = 1.0;
     for (i = 0; i < nfiles; i++)
@@ -144,5 +127,5 @@ int main(int argc, char *argv[])
 	}
 	fprintf (stdout,"\n");
     }
-    exit(0);
+    exit(EXIT_SUCCESS);
 }

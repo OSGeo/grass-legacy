@@ -48,19 +48,9 @@ int main (int argc, char *argv[])
 		_("Creates a raster map layer showing buffer zones "
 		"surrounding cells that contain non-NULL category values.");
 
-    opt1 = G_define_option() ;
-    opt1->key        = "input" ;
-    opt1->type       = TYPE_DOUBLE;
-    opt1->required   = YES ;
-    opt1->gisprompt  = "old,cell,raster" ;
-    opt1->description= _("Name of input map") ;
+    opt1 = G_define_standard_option(G_OPT_R_INPUT);
 
-    opt2 = G_define_option() ;
-    opt2->key        = "output" ;
-    opt2->type       = TYPE_STRING ;
-    opt2->required   = YES ;
-    opt2->gisprompt  = "new,cell,raster" ;
-    opt2->description= _("Name of output map") ;
+    opt2 = G_define_standard_option(G_OPT_R_OUTPUT);
 
     opt3 = G_define_option() ;
     opt3->key        = "distances" ;
@@ -79,14 +69,14 @@ int main (int argc, char *argv[])
 
     flag1 = G_define_flag() ;
     flag1->key         = 'q';
-    flag1->description = "Run quietly";
+    flag1->description = _("Run quietly");
 
     flag2 = G_define_flag() ;
     flag2->key         = 'z' ;  
     flag2->description = _("Ignore zero (0) data cells instead of NULL cells") ;
 
     if (G_parser(argc, argv))
-        exit(-1);
+        exit(EXIT_FAILURE);
 
     init_grass();
 
@@ -104,16 +94,10 @@ int main (int argc, char *argv[])
         
     mapset = G_find_cell (input, "");
     if (mapset == NULL)
-    {
-	fprintf (stderr, "%s: %s - not found\n", pgm_name, input);
-	exit(1);
-    }
+	G_fatal_error(_("%s: %s - not found"), pgm_name, input);
 
     if (G_legal_filename(output) < 0)
-    {
-	fprintf (stderr, "%s: %s - illegal name\n", pgm_name, output);
-	exit(1);
-    }
+	G_fatal_error(_("%s: %s - illegal name"), pgm_name, output);
 
 /* Initialze History */
 	type = "raster";
@@ -134,20 +118,11 @@ int main (int argc, char *argv[])
     else if (strcmp(units, "nautmiles") == 0)
 	to_meters = NAUT_MILES_TO_METERS;
     else
-    {
-	fprintf (stderr, "%s: %s - illegal units\n", pgm_name, units);
-	G_usage();
-	exit(1);
-    }
-
+	G_fatal_error(_("%s: %s - illegal units"), pgm_name, units);
 
 	/* parse distances */
     if(!(count = parse_distances (zone_list, to_meters)))
-    {
-	G_usage();
-	exit(1);
-    }
-
+        G_fatal_error(_("parse distances error"));
 
 
 	/* need to keep track of distance zones - in memory.
@@ -203,5 +178,6 @@ int main (int argc, char *argv[])
 /* Write out New History */
 	G_write_history (output, &hist);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
+

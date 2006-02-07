@@ -2,7 +2,7 @@
  * Originally written by: Terry Baker 3 1992
  * US Army Construction Engineering Research Lab
  *
- * Fixes 3/2001: Andrea Aime  <aaime@libero.it>
+ * Fixes 3/2001: Andrea Aime  <aaime libero.it>
  *
  * o category support bug has been fixed: r.contour now produces also dig_cats
  *   file, so d.what.vect no more complain about missing category support.
@@ -71,19 +71,9 @@ int main ( int argc, char *argv[])
     module->description = _("Produces a GRASS binary vector map of specified "
 		          "contours from GRASS raster map layer.");
 
-    map=G_define_option () ;
-    map->key        = "input";
-    map->type       = TYPE_STRING;
-    map->required   = YES;
-    map->gisprompt  = "old,cell,raster";
-    map->description= _("Name of an existing raster map") ;
+    map = G_define_standard_option(G_OPT_R_INPUT);
 
-    vect=G_define_option () ;
-    vect->key        = "output";
-    vect->type       = TYPE_STRING;
-    vect->required   = YES;
-    vect->gisprompt  = "new,vector,vector";
-    vect->description= _("Name of output vector file") ;
+    vect = G_define_standard_option(G_OPT_V_OUTPUT);
 
     levels=G_define_option () ;
     levels->key        = "levels";
@@ -131,24 +121,14 @@ int main ( int argc, char *argv[])
     name = map->answer;
     mapset = G_find_cell2 (name, "");
     if  (mapset == NULL)
-    {
-    	char msg[100];
-
-    	sprintf  (msg, "<%s> raster file not found", name);
-    	G_fatal_error  (msg);
-    }
+    	G_fatal_error  (_("<%s> raster file not found"), name);
 
     fd = G_open_cell_old  (name, mapset);
     if  (fd < 0)
-    {
-    	char msg[100];
-
-    	sprintf  (msg, "<%s> unable to open raster file\n", name);
-    	G_fatal_error  (msg);
-    }
+    	G_fatal_error  (_("<%s> unable to open raster file"), name);
 
     if (G_read_fp_range (name, mapset, &range) < 0)
-	    G_fatal_error ("could not read range file");
+	G_fatal_error (_("Could not read range file"));
 
     /* get window info */
     G_get_window  (&Wind);
@@ -164,7 +144,7 @@ int main ( int argc, char *argv[])
     
     Driver = db_start_driver_open_database ( Fi->driver, Vect_subst_var(Fi->database,&Map) );
     if (Driver == NULL)
-      G_fatal_error("Cannot open database %s by driver %s", Fi->database, Fi->driver);
+      G_fatal_error(_("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
 
     sprintf ( buf, "create table %s ( cat integer, level double precision )", Fi->table );
 
@@ -173,14 +153,14 @@ int main ( int argc, char *argv[])
     G_debug ( 1, "SQL: %s", db_get_string(&sql) );
     
     if (db_execute_immediate (Driver, &sql) != DB_OK ) {
-      G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql ) );
+      G_fatal_error (_("Cannot create table: %s"), db_get_string ( &sql ) );
     }
 
     if ( db_create_index2(Driver, Fi->table, "cat" ) != DB_OK )
 	G_warning ( "Cannot create index" );
 
     if (db_grant_on_table (Driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
-	G_fatal_error ( "Cannot grant privileges on table %s", Fi->table );
+	G_fatal_error ( _("Cannot grant privileges on table %s"), Fi->table );
     
     z_array = get_z_array (fd,Wind.rows,Wind.cols, quiet->answer);
     lev = getlevels(levels, max, min, step, &range, &nlevels, quiet->answer);
@@ -196,7 +176,7 @@ int main ( int argc, char *argv[])
         G_debug ( 3, "SQL: %s", db_get_string(&sql) );
 
 	if (db_execute_immediate (Driver, &sql) != DB_OK ) {
-	    G_fatal_error ( "Cannot insert row: %s", db_get_string ( &sql ) );
+	    G_fatal_error ( _("Cannot insert row: %s"), db_get_string ( &sql ) );
 	}
     }
   
@@ -206,9 +186,9 @@ int main ( int argc, char *argv[])
     Vect_close (&Map);
 
     if (!quiet->answer)
-	    fprintf(stderr, "\nFinished.\n");
+	    G_message(_("Finished"));
 
-    exit (0);
+    exit (EXIT_SUCCESS);
 }
 
 /*********************************************************************/

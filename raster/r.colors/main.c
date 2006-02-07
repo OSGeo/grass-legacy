@@ -83,7 +83,6 @@ static void list_rules_files(void)
 	for (;;)
 	{
 		struct dirent *d = readdir(dir);
-		int n;
 
 		if (!d)
 			break;
@@ -122,7 +121,6 @@ int main (int argc, char *argv[])
     char *name, *mapset;
     char *type, *cmap, *cmapset;
     char *rules;
-    char errbuf[256];
     int fp;
     struct GModule *module;
     struct Flag *flag1, *flag2, *flag3;
@@ -135,12 +133,7 @@ int main (int argc, char *argv[])
 		_("Creates/Modifies the color table associated with "
 		"a raster map layer.");
 
-    opt1 = G_define_option();
-    opt1->key         = "map";
-    opt1->type        = TYPE_STRING;
-    opt1->required    = NO;
-    opt1->gisprompt  = "old,cell,raster" ;
-    opt1->description = _("Raster map name");
+    opt1 = G_define_standard_option(G_OPT_R_MAP);
 
     opt2 = G_define_option();
     opt2->key         = "color";
@@ -190,9 +183,7 @@ int main (int argc, char *argv[])
     flag3->description = _("List rules");
 
     if (G_parser(argc, argv) < 0)
-    {
-	exit(1);
-    }
+	exit(EXIT_FAILURE);
 
     if (flag3->answer)
     {
@@ -207,18 +198,10 @@ int main (int argc, char *argv[])
     rules = opt4->answer;
 
     if (!name)
-    {
-	G_warning("No map specified");
-	G_usage();
-	exit(1);
-    }
+	G_fatal_error(_("No map specified"));
 
     if(!cmap && !type && !rules)
-    {
-	G_warning("One of options \"color\", \"rast\" OR \"rules\" MUST be specified!");
-	G_usage();
-	exit(1);
-    }
+	G_fatal_error(_("One of options \"color\", \"rast\" OR \"rules\" MUST be specified!"));
 
     if(cmap && type)
 	G_warning("Both options \"color\" AND \"rast\" specified - ignoring rast");
@@ -231,10 +214,7 @@ int main (int argc, char *argv[])
 
     mapset = G_find_cell2 (name, "");
     if (mapset == NULL)
-    {
-	fprintf (stderr, "ERROR: %s - map not found\n", name);
-	exit(1);
-    }
+	G_fatal_error(_("%s - map not found"), name);
 
     
     G_suppress_warnings (1);
@@ -261,8 +241,7 @@ int main (int argc, char *argv[])
 	if (strcmp (type, "random") == 0)
 	{
 	    if(fp)
-	       G_fatal_error
-		  ("Can't make random color table for floating point map\n");
+	       G_fatal_error (_("Can't make random color table for floating point map"));
 	    G_make_random_colors (&colors, (CELL) min, (CELL) max);
 	}
 	else if (strcmp (type, "ramp") == 0)
@@ -275,14 +254,14 @@ int main (int argc, char *argv[])
 	{
 	    if(fp)
 		G_fatal_error
-		   ("Can't make grey.eq color table for floating point map\n");
+		   (_("Can't make grey.eq color table for floating point map"));
 	    eq_grey_colors (name, mapset, &colors, flag2->answer);
 	}
 	else if (strcmp (type, "grey.log") == 0)
 	{
 	    if(fp)
 		G_fatal_error
-		   ("Can't make logarithmic color table for floating point map\n");
+		   (_("Can't make logarithmic color table for floating point map"));
 	    log_grey_colors (name, mapset, &colors, flag2->answer, (CELL) min, (CELL) max);
 	}
 	else if (strcmp (type, "aspect") == 0)
@@ -303,11 +282,8 @@ int main (int argc, char *argv[])
 	      exit(1); 
 	}
 	else
-	{
-	    fprintf (stderr, "ERROR: %s - unknown color request\n", type);
-	    G_usage();
-	    exit(1);
-	}
+	    G_fatal_error(_("%s - unknown color request"), type);
+	
 	if(fp) G_mark_colors_as_fp(&colors);
 
 	if (G_write_colors (name, mapset, &colors) >= 0 && !flag2->answer)
@@ -321,9 +297,9 @@ int main (int argc, char *argv[])
 	sprintf(path, "%s/etc/colors/%s", G_gisbase(), rules);
 	rules_fp = fopen(path, "r");
 	if (!rules_fp)
-	    G_fatal_error("Unable to open rules file %s in %s", rules, path);
+	    G_fatal_error(_("Unable to open rules file %s in %s"), rules, path);
 	if (!read_color_rules(rules_fp, &colors, flag2->answer, min, max, fp))
-	    exit(1); 
+	    exit(EXIT_FAILURE); 
 	fclose(rules_fp);
 	if(fp) G_mark_colors_as_fp(&colors);
 
@@ -333,20 +309,16 @@ int main (int argc, char *argv[])
     else
     {  /* use color from another map (cmap) */
 	cmapset = G_find_cell2 (cmap, "");
-	if (cmapset == NULL) {
-	    fprintf (stderr, "ERROR: %s - map not found\n", cmap);
-	    exit(1);
-	}
-	if(0 > G_read_colors (cmap, cmapset, &colors)){
-	    sprintf(errbuf,"Unable to read color table for %s", cmap);
-	    G_fatal_error(errbuf);
-	}
+	if (cmapset == NULL)
+	    G_fatal_error(_("%s - map not found"), cmap);
+	if(0 > G_read_colors (cmap, cmapset, &colors))
+	    G_fatal_error(_("Unable to read color table for %s"), cmap);
 
 	if(fp) G_mark_colors_as_fp(&colors);
 
 	if (G_write_colors (name, mapset, &colors) >= 0 && !flag2->answer)
-	    fprintf (stdout, "Color table for [%s] set to %s\n", name, cmap);
+	    G_message(_("Color table for [%s] set to %s"), name, cmap);
     }
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }

@@ -28,19 +28,9 @@ int main( int argc, char *argv[])
 	module->description =
 		_("Bilinear interpolation utility for raster map layers.");
 
-    rastin = G_define_option();
-    rastin->key            	   = "input";
-    rastin->type           	   = TYPE_STRING;
-    rastin->required     	           = YES;
-    rastin->gisprompt    		   = "old,cell,raster";
-    rastin->description  		   = _("Name of existing raster file.");
+    rastin = G_define_standard_option(G_OPT_R_INPUT);
 
-    rastout = G_define_option();
-    rastout->key                    = "output";
-    rastout->type                   = TYPE_STRING;
-    rastout->required               = YES;
-    rastout->gisprompt              = "new,cell,raster";
-    rastout->description            = _("Name of new raster file.");
+    rastout = G_define_standard_option(G_OPT_R_OUTPUT);
 
     northoff = G_define_option();
     northoff->key                    = "north";
@@ -55,7 +45,7 @@ int main( int argc, char *argv[])
     eastoff->required               = NO;
 
     if (G_parser (argc, argv))
-	exit (-1);
+	exit (EXIT_FAILURE);
 
     o_east = o_north = 0.0;
 
@@ -251,6 +241,6 @@ fprintf(stderr,"row %d maprow1 %d maprow2 %d\n", row, maprow1, maprow2);
     G_close_cell(infile);
     G_close_cell(outfile);
     
-    return(1);
+    return(EXIT_SUCCESS);
 
 }
