@@ -79,10 +79,10 @@ EXTRA_CLEAN_FILES = y.tab.c y.tab.h lex.yy.c y.output lex.backup
 default: $(BIN)/$(PGM2) $(BIN)/$(PGM3) html
 
 $(BIN)/$(PGM2): $(LIST2) $(DEPLIBS2)
-	$(CC) $(LDFLAGS) -o $@ $(LIST2) $(LIBES2) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST2) $(FMODE_OBJ) $(LIBES2) $(MATHLIB) $(XDRLIB)
 
 $(BIN)/$(PGM3): $(LIST3) $(DEPLIBS3)
-	$(CC) $(LDFLAGS) -o $@ $(LIST3) $(LIBES3) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST3) $(FMODE_OBJ) $(LIBES3) $(MATHLIB) $(XDRLIB)
 
 y.tab.c y.tab.h: mapcalc.y
 	$(YACC) -b y -d mapcalc.y
