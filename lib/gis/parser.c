@@ -325,7 +325,7 @@ G_define_standard_option (int opt)
 	    Opt->key_desc     = "name";
 	    Opt->required     = YES;
 	    Opt->gisprompt    = "old,cell,raster";
-	    Opt->description  = _("Name of input raster");
+	    Opt->description  = _("Name of input raster map");
 	    break;
 	case G_OPT_R_OUTPUT:
 	    Opt->key          = "output";
@@ -333,7 +333,7 @@ G_define_standard_option (int opt)
 	    Opt->key_desc     = "name";
 	    Opt->required     = YES;
 	    Opt->gisprompt    = "new,cell,raster";
-	    Opt->description  = _("Name of output raster");
+	    Opt->description  = _("Name of output raster map");
 	    break;
 	case G_OPT_R_MAP:
 	    Opt->key          = "map";
@@ -341,7 +341,32 @@ G_define_standard_option (int opt)
 	    Opt->key_desc     = "name";
 	    Opt->required     = YES;
 	    Opt->gisprompt    = "old,cell,raster";
-	    Opt->description  = _("Name of input raster");
+	    Opt->description  = _("Name of input raster map");
+	    break;
+	case G_OPT_R_MAPS:
+	    Opt->key          = "map";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = YES;
+	    Opt->multiple     = YES;
+	    Opt->gisprompt    = "old,cell,raster";
+	    Opt->description  = _("Name of input raster map(s)");
+	    break;
+	case G_OPT_R_BASE:
+	    Opt->key          = "base";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = YES;
+	    Opt->gisprompt    = "old,cell,raster";
+	    Opt->description  = _("Name of base raster map");
+	    break;
+	case G_OPT_R_COVER:
+	    Opt->key          = "cover";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = YES;
+	    Opt->gisprompt    = "old,cell,raster";
+	    Opt->description  = _("Name of cover raster map");
 	    break;
 	    
 	case G_OPT_V_INPUT:
@@ -350,7 +375,7 @@ G_define_standard_option (int opt)
 	    Opt->key_desc     = "name";
 	    Opt->required     = YES;
 	    Opt->gisprompt    = "old,vector,vector";
-	    Opt->description  = _("Name of input vector");
+	    Opt->description  = _("Name of input vector map");
 	    break;
 	case G_OPT_V_OUTPUT:
 	    Opt->key          = "output";
@@ -358,7 +383,7 @@ G_define_standard_option (int opt)
 	    Opt->key_desc     = "name";
 	    Opt->required     = YES;
 	    Opt->gisprompt    = "new,vector,vector";
-	    Opt->description  = _("Name of output vector");
+	    Opt->description  = _("Name of output vector map");
 	    break;
 	case G_OPT_V_MAP:
 	    Opt->key          = "map";
@@ -366,7 +391,7 @@ G_define_standard_option (int opt)
 	    Opt->key_desc     = "name";
 	    Opt->required     = YES;
 	    Opt->gisprompt    = "old,vector,vector";
-	    Opt->description  = _("Name of input vector");
+	    Opt->description  = _("Name of input vector map");
 	    break;
 	case G_OPT_V_TYPE:
 	    Opt->key          = "type";
