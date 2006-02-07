@@ -113,6 +113,9 @@ typedef enum {
     G_OPT_R_INPUT,  /* old input raster */
     G_OPT_R_OUTPUT, /* new output raster */
     G_OPT_R_MAP,    /* old input raster */
+    G_OPT_R_MAPS,   /* old input rasters */
+    G_OPT_R_BASE,   /* old input base raster */
+    G_OPT_R_COVER,  /* old input cover raster */
 
     G_OPT_V_INPUT,  /* old input vector */
     G_OPT_V_OUTPUT, /* new output vector */
