@@ -4325,11 +4325,11 @@ msgstr "Name der Ergebniskarte"
 
 #: ../raster/r.composite/main.c:130
 msgid "Dither"
-msgstr "schwankend"
+msgstr "Dither"
 
 #: ../raster/r.composite/main.c:134
 msgid "Use closest color"
-msgstr "Benutze dichteste Farbe"
+msgstr "Benutze nächste Farbe"
 
 #: ../raster/r.compress/main.c:43
 msgid "Compresses and decompresses raster files."
