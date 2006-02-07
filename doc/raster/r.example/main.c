@@ -82,18 +82,10 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->description = _("My first raster module.");
 
-    /* Define the different options */
-    input = G_define_option();
-    input->key = "input";
-    input->type = TYPE_STRING;
-    input->required = YES;
-    input->description = _("Name of an input layer");
+    /* Define the different options as defined in gis.h */
+    input  = G_define_standard_option(G_OPT_R_INPUT);
 
-    output = G_define_option();
-    output->key = "output";
-    output->type = TYPE_STRING;
-    output->required = YES;
-    output->description = _("Name of an output layer");
+    output = G_define_standard_option(G_OPT_R_OUTPUT);
 
     /* Define the different flags */
     flag1 = G_define_flag();
