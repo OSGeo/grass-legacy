@@ -14,7 +14,7 @@ default: $(ETC)/lister/cell $(ETC)/lister/vector
 
 $(ETC)/lister/cell: $(OBJDIR)/cell.o $(LIST)
 	$(MKDIR) $(ETC)/lister
-	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/cell.o $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/cell.o $(FMODE_OBJ) $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(ETC)/lister/vector: $(OBJDIR)/vector.o $(LIST)
-	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/vector.o $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/vector.o $(FMODE_OBJ) $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)

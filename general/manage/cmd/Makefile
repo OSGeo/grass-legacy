@@ -17,16 +17,16 @@ default: \
 	htmlmulti
 
 $(BIN)/g.copy: $(OBJDIR)/copy.o $(LIST)
-	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/copy.o $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/copy.o $(FMODE_OBJ) $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(BIN)/g.list: $(OBJDIR)/list.o $(LIST)
-	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/list.o $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/list.o $(FMODE_OBJ) $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(BIN)/g.remove: $(OBJDIR)/remove.o $(LIST)
-	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/remove.o $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/remove.o $(FMODE_OBJ) $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(BIN)/g.rename: $(OBJDIR)/rename.o $(LIST)
-	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/rename.o $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/rename.o $(FMODE_OBJ) $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 PROGRAMS = g.copy g.list g.remove g.rename
 

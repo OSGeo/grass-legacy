@@ -12,6 +12,7 @@ endif
 
 default: $(ARCH_INCDIR)/version.h \
 	lib \
+	$(FMODE_OBJ) \
 	$(ETC)/ellipse.table \
 	$(ETC)/datum.table \
 	$(ETC)/datumtransform.table \
@@ -20,6 +21,11 @@ default: $(ARCH_INCDIR)/version.h \
 	$(ETC)/state27 \
 	$(ETC)/state83 \
 	$(ETC)/gui.tcl
+
+$(FMODE_OBJ):
+	@test -d $(OBJDIR) || mkdir $(OBJDIR)
+	echo -e "#include <stdlib.h>\n#include <fcntl.h>\n#undef _fmode\nint _fmode = _O_BINARY;" > $(OBJDIR)/fmode.c
+	$(CC) $(CFLAGS) $(INC) -o $(FMODE_OBJ) -c $(OBJDIR)/fmode.c
 
 $(ARCH_INCDIR)/version.h:
 	echo 'static char *GRASS_VERSION_STRING = "@(#) GRASS $(GRASS_VERSION_NUMBER) ($(GRASS_VERSION_DATE))";' > $@
