@@ -10,7 +10,7 @@
 int 
 plot ( int ctype, struct Map_info *Map, int type, int field, 
        char *columns, int ncols, char *sizecol, int size, double scale, 
-       COLOR *ocolor, COLOR *colors)
+       COLOR *ocolor, COLOR *colors, int y_center, double *max_reference)
 {
     int    ltype, nlines, line, col, more, coltype, nselcols;
     double x, y, csize, len;
@@ -47,7 +47,8 @@ plot ( int ctype, struct Map_info *Map, int type, int field,
     Vect_rewind ( Map );
     
     nlines = Vect_get_num_lines ( Map );
-
+	
+	/* loop through each vector feature */
     for ( line = 1; line <= nlines; line++ ) {
 	G_debug ( 3, "line = %d", line );
 	ltype =  Vect_read_line (Map, Points, Cats, line);   
@@ -114,7 +115,7 @@ plot ( int ctype, struct Map_info *Map, int type, int field,
 	    }
 	    pie ( x, y, size, val, ncols, ocolor, colors );
 	} else { 
-	    bar ( x, y, size, scale, val, ncols, ocolor, colors );
+	    bar ( x, y, size, scale, val, ncols, ocolor, colors, y_center, max_reference );
 	}
     }
 
