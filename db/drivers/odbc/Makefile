@@ -32,5 +32,5 @@ ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 default: $(DRIVER)
 
 $(DRIVER): $(ARCH_OBJS)
-	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(LIBES) $(ODBCLIB) $(MATHLIB) $(XDRLIB) $(ICONVLIB)
+	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(FMODE_OBJ) $(LIBES) $(ODBCLIB) $(MATHLIB) $(XDRLIB) $(ICONVLIB)
 

@@ -30,33 +30,12 @@ OBJS 	=  \
 	table.o \
 	create_table.o
 
-D_OBJS 	=  \
-	column.o \
-	cursor.o \
-	db.o \
-	dbfexe.o \
-	describe.o \
-	driver.o \
-	error.o \
-	execute.o \
-	fetch.o \
-	listtab.o \
-	main_debug.o \
-	select.o \
-	str.o \
-	table.o \
-	create_table.o
-	
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
-D_ARCH_OBJS := $(foreach obj,$(D_OBJS),$(OBJDIR)/$(obj))
-
-debug_driver: $(D_ARCH_OBJS)
-	$(CC) $(LDFLAGS) -o dbf $(D_ARCH_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 default: $(DRIVER) $(DRVDOC)
 
 $(DRIVER): $(ARCH_OBJS)
-	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(FMODE_OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(DRVDOC): dbf.html
 	$(INSTALL) -m 644 dbf.html $(DRVDOC)
