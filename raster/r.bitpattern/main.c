@@ -63,19 +63,9 @@ main(int argc, char *argv[])
 
     /* Define the different options */
 
-    input = G_define_option();
-    input->key = "input";
-    input->type = TYPE_STRING;
-    input->required = YES;
-    input->gisprompt = "old,cell,raster";
-    input->description = _("Name of an input layer");
+    input = G_define_standard_option(G_OPT_R_INPUT);
 
-    output = G_define_option();
-    output->key = "output";
-    output->type = TYPE_STRING;
-    output->required = YES;
-    output->gisprompt = "new,cell,raster";
-    output->description = _("Name of an output layer");
+    output = G_define_standard_option(G_OPT_R_OUTPUT);
 
     pattern = G_define_option();
     pattern->key = "pattern";
@@ -96,7 +86,7 @@ main(int argc, char *argv[])
     flag1->description = _("Quiet");
 
     if (G_parser(argc, argv))
-	exit(-1);
+	exit(EXIT_FAILURE);
 
     name = input->answer;
     result = output->answer;
@@ -163,5 +153,5 @@ main(int argc, char *argv[])
     G_close_cell(infd);
     G_close_cell(outfd);
 
-    return 0;
+    return (EXIT_SUCCESS);
 }

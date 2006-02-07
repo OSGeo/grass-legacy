@@ -26,7 +26,7 @@ main (int argc, char *argv[])
     char buf[1024];
     CELL result;
     CELL cross();
-	struct GModule *module;
+    struct GModule *module;
     struct
     {
 	struct Option *input, *output;
@@ -54,12 +54,7 @@ main (int argc, char *argv[])
     sprintf(parm.input->description= G_malloc(60),
 	_("Names of 2-%d input raster maps"), NFILES);
 
-    parm.output = G_define_option() ;
-    parm.output->key        = "output";
-    parm.output->type       = TYPE_STRING;
-    parm.output->required   = YES;
-    parm.output->description= _("Name of the resulting map");
-    parm.output->gisprompt  = "new,cell,raster" ;
+    parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
 
 /* Define the different flags */
 
@@ -72,7 +67,7 @@ main (int argc, char *argv[])
     flag.z->description = _("Non-zero data only") ;
 
     if (G_parser(argc, argv))
-	exit (1);
+	exit (EXIT_FAILURE);
 
     nrows = G_window_rows();
     ncols = G_window_cols();
@@ -88,22 +83,14 @@ main (int argc, char *argv[])
     for (nfiles = 0; name = parm.input->answers[nfiles]; nfiles++)
     {
         if (nfiles >= NFILES)
-        {
-            sprintf (buf, "%s: more than %d files not allowed", G_program_name(), NFILES);
-            G_fatal_error (buf);
-            exit(1);
-        }
+            G_fatal_error (_("%s: more than %d files not allowed"), G_program_name(), NFILES);
         mapset = G_find_cell2 (name, "");
         if (!mapset)
-        {
-            sprintf (buf,"%s: [%s] not found", G_program_name(), name);
-            G_fatal_error (buf);
-            exit(1);
-        }
+            G_fatal_error (_("%s: [%s] not found"), G_program_name(), name);
         names[nfiles] = name;
         fd[nfiles] = G_open_cell_old (name, mapset);
         if (fd[nfiles] < 0)
-            exit(1);
+            G_fatal_error (_("%s: Cannot open [%s]"), G_program_name(), name);
         G_read_range (name, mapset, &range);
         ncats = range.max - range.min;
 
@@ -115,16 +102,12 @@ main (int argc, char *argv[])
     }
    
     if (nfiles <= 1)
-    {
-	fprintf(stderr, "ERROR ** must specify 2 or more input maps **\n");
-	G_usage();
-	exit (-1);
-    } 
+	G_fatal_error (_("Must specify 2 or more input maps"));
     output = parm.output->answer; 
     outfd = G_open_cell_new (output);
 
     if (outfd < 0)
-	exit(1);
+	G_fatal_error (_("%s: Cannot open [%s]"), G_program_name(), parm.output->answer);
 
     sprintf (buf, "Cross of %s", names[0]);
     for (i = 1; i < nfiles-1; i++)
@@ -195,7 +178,7 @@ main (int argc, char *argv[])
     }
 
     fprintf (stdout,"%ld categories\n", (long) result);
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 static int cmp(const void *aa, const void *bb)

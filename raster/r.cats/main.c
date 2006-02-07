@@ -31,12 +31,7 @@ main (int argc, char *argv[])
 		_("Prints category values and labels associated "
 		"with user-specified raster map layers.");
 
-    parm.raster = G_define_option() ;
-    parm.raster->key        = "map";
-    parm.raster->type       = TYPE_STRING;
-    parm.raster->required   = YES;
-	parm.raster->gisprompt  = "old,cell,raster" ;
-    parm.raster->description= _("Name of a raster map") ;
+    parm.raster = G_define_standard_option(G_OPT_R_MAP);
 
     parm.vals = G_define_option() ;
     parm.vals->key        = "vals" ;
@@ -62,7 +57,7 @@ main (int argc, char *argv[])
     parm.fs->description= _("Output separator character (default: tab)") ;
 
     if (G_parser(argc, argv))
-	exit(-1);
+	exit(EXIT_FAILURE);
 
     name = parm.raster->answer;
 
