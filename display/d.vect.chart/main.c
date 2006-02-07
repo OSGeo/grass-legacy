@@ -24,36 +24,39 @@
 #include "symbol.h"
 #include "dbmi.h"
 #include "global.h"
-
+#include "glocale.h"
 
 int 
 main (int argc, char **argv)
 {
     char *mapset, *p ;
+    int y_center  ;
     int i, j, ret, type, field, ctype, ncols;
     COLOR ocolor, *colors;
     int r, g, b;
     int size;
-    double scale;
+    double scale, *max_reference;
     struct GModule *module;
     struct Option *map_opt;
     struct Option *type_opt, *ctype_opt;
-    struct Option *size_opt, *scale_opt;
+    struct Option *size_opt, *scale_opt, *max_reference_opt;
     struct Option *field_opt;
     struct Option *ocolor_opt, *colors_opt;
     struct Option *columns_opt, *sizecol_opt;
+    struct Flag *y_center_flag;
+/*   struct Flag *horizontal_bar_flag; */
     struct Map_info Map;
     COLOR defcols[] = { { 0,   0,   0, 255 }, /* blue */
                         { 0,   0, 255, 255 }, /* cyan */ 	
                         { 0,   0, 255,   0 }, /* green */ 	
                         { 0, 255, 255,   0 }, /* yellow */ 	
                         { 0, 255,   0,   0 }, /* red */ 	
-                        { -1,  0,   0,   0 } /* END */ 	
+                        { -1,  0,   0,   0 }  /* END */ 	
 		      };
     
     module = G_define_module();
-    module->description = "Displays charts of GRASS vector data in the active frame on the "
-	                  "graphics monitor.";
+    module->description = _("Displays charts of GRASS vector data in the active frame on the "
+	                  "graphics monitor");
 
     map_opt = G_define_standard_option(G_OPT_V_MAP); 
 
@@ -69,50 +72,76 @@ main (int argc, char **argv)
     ctype_opt->multiple   = NO ;
     ctype_opt->answer     = "pie" ;
     ctype_opt->options    = "pie,bar";
-    ctype_opt->description= "Chart type" ;
+    ctype_opt->description= _("Chart type") ;
     
     columns_opt = G_define_option() ;
     columns_opt->key        = "columns" ;
     columns_opt->type       = TYPE_STRING ;
     columns_opt->required   = YES ;
     columns_opt->multiple   = YES ;
-    columns_opt->description= "Attribute columns containing data" ;
+    columns_opt->description= _("Attribute columns containing data") ;
     
     sizecol_opt = G_define_option() ;
     sizecol_opt->key        = "sizecol" ;
     sizecol_opt->type       = TYPE_STRING ;
     sizecol_opt->required   = NO ;
-    sizecol_opt->description= "Column used for pie chart size" ;
+    sizecol_opt->description= _("Column used for pie chart size") ;
 
     size_opt = G_define_option() ;
     size_opt->key        = "size" ;
     size_opt->type       = TYPE_INTEGER ;
     size_opt->answer     = "40" ;
-    size_opt->description= "Size of chart (diameter for pie, total width for bar)" ;
+    size_opt->description= _("Size of chart (diameter for pie, total width for bar)") ;
 
     scale_opt = G_define_option() ;
     scale_opt->key        = "scale" ;
     scale_opt->type       = TYPE_DOUBLE ;
     scale_opt->answer     = "1" ;
-    scale_opt->description= "Scale for size (to get size in pixels)" ;
+    scale_opt->description= _("Scale for size (to get size in pixels)") ;
     
     ocolor_opt = G_define_option() ;
     ocolor_opt->key        = "ocolor" ;
     ocolor_opt->type       = TYPE_STRING ;
     ocolor_opt->answer     = DEFAULT_FG_COLOR ;
-    ocolor_opt->description= "Outline color" ;
+    ocolor_opt->description= _("Outline color") ;
 
     colors_opt = G_define_option() ;
     colors_opt->key        = "colors" ;
     colors_opt->type       = TYPE_STRING ;
     colors_opt->required   = NO ;
     colors_opt->multiple   = YES ;
-    colors_opt->description= "Colors used to fill charts" ;
+    colors_opt->description= _("Colors used to fill charts") ;
+	
+    y_center_flag = G_define_flag();
+    y_center_flag->key = 'c';
+    y_center_flag->description = _("Center the bar chart around a data point") ;
+    
+    max_reference_opt = G_define_option() ;
+    max_reference_opt->key        = "max_ref" ;
+    max_reference_opt->type       = TYPE_DOUBLE ;
+    max_reference_opt->required   = NO ;
+    max_reference_opt->multiple   = YES;
+    max_reference_opt->description= _("Maximum value used for bar plot reference") ;
+	
+   /*
+    horizontal_bar_flag = G_define_flag();
+    horizontal_bar_flag->key = 'h';
+    horizontal_bar_flag->description = _("Create a horizontal bar chart from left to right");
+    */
 
     G_gisinit(argv[0]) ;
 
-    if (G_parser(argc, argv)) exit(-1);
-    
+    if (G_parser(argc, argv))
+        exit(EXIT_FAILURE);
+
+    /* Center the barchart around the y coordinate?  */
+	if(y_center_flag->answer)
+		y_center = 1; /* center the bar graphs around the y_coord of a point */
+	else
+		y_center = 0; /* do not center the bar graphs around the y_coord of a point */
+		
+
+
     /* Read options */
     type = Vect_option_to_types ( type_opt );
     field = atoi (field_opt->answer);
@@ -133,9 +162,14 @@ main (int argc, char **argv)
 	ncols++; p++;
     }
     G_debug ( 3, "ncols = %d", ncols );
-    
+
+
     /* Fill colors */
     colors = (COLOR *) G_malloc ( ncols * sizeof ( COLOR ) );
+    
+    /* Fill max_reference values */
+    max_reference = (double *) G_malloc ( ncols * sizeof ( double ) );
+    
     /* default colors */
     j = 0;
     for ( i = 0; i < ncols; i++ ) {
@@ -168,7 +202,7 @@ main (int argc, char **argv)
 
     /* Make sure map is available */
     mapset = G_find_vector2 (map_opt->answer, NULL) ; 
-    if (mapset == NULL) G_fatal_error("Vector file [%s] not available", map_opt->answer) ;
+    if (mapset == NULL) G_fatal_error(_("Vector file [%s] not available"), map_opt->answer) ;
 
     /* open vector */
     Vect_set_open_level (2);
@@ -178,17 +212,29 @@ main (int argc, char **argv)
     ctype = CTYPE_PIE;
     if ( ctype_opt->answer[0] == 'b' ) ctype = CTYPE_BAR;
     
-    if (R_open_driver() != 0) G_fatal_error ("No graphics device selected");
-
+    if (R_open_driver() != 0) G_fatal_error (_("No graphics device selected"));
+	
+	/* should we plot the maximum reference on bar plots? */
+	if(max_reference_opt->answer != NULL) {
+		
+		/* loop through the given values */
+		for ( i = 0; i < ncols; i++ ) {
+			if ( max_reference_opt->answers[i] == NULL ) break;
+			
+			max_reference[i] = atof(max_reference_opt->answers[i]); /* remember to convert to float */
+		}
+	}
+	
+	
     D_setup(0);
 
     G_setup_plot (D_get_d_north(), D_get_d_south(), D_get_d_west(), D_get_d_east(),
 		  D_move_abs, D_cont_abs);
-
+	
     ret = plot( ctype, &Map, type, field, 
 	         columns_opt->answer, ncols, 
 		 sizecol_opt->answer, size, scale, 
-		 &ocolor, colors );
+		 &ocolor, colors, y_center, max_reference );
 
     if(ret == 0) {
 	D_add_to_list(G_recreate_command()) ;
@@ -200,6 +246,6 @@ main (int argc, char **argv)
 
     Vect_close (&Map);
 
-    exit(ret);
+    exit(EXIT_SUCCESS);
 }
 
