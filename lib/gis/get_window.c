@@ -51,9 +51,15 @@ int G_get_window (struct Cell_head *window )
 
     if (first)
     {
-	char *err;
+	char *wind, *err;
 
-	if((err = G__get_window (&dbwindow,"","WIND",G_mapset())))
+	wind = getenv("WIND_OVERRIDE");
+	if (wind)
+	    err = G__get_window (&dbwindow,"windows",wind,G_mapset());
+	else
+	    err = G__get_window (&dbwindow,"","WIND",G_mapset());
+
+	if (err)
 	{
 	    G_fatal_error (_("region for current mapset %s\nrun \"g.region\""), err);
 	    G_free (err);
@@ -61,12 +67,12 @@ int G_get_window (struct Cell_head *window )
     }
 
     first = 0;
-    G_copy ((char *) window, (char *) &dbwindow, sizeof(dbwindow) ) ;
+    G_copy (window, &dbwindow, sizeof(dbwindow) ) ;
 
     if (!G__.window_set)
     {
 	G__.window_set = 1;
-	G_copy((char *) &G__.window, (char *) &dbwindow, sizeof(dbwindow) ) ;
+	G_copy(&G__.window, &dbwindow, sizeof(dbwindow) ) ;
     }
 
     return 1;
@@ -102,7 +108,6 @@ char *G__get_window ( struct Cell_head *window,
 {
     FILE *fd ;
     char *err;
-    char *G__read_Cell_head();
 
     G_zero ((char *) window, sizeof (struct Cell_head));
     if (!(fd = G_fopen_old (element, name, mapset) ))
