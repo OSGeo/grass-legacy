@@ -17,7 +17,7 @@ extern int width, height;
 extern unsigned int *grid;
 extern unsigned char palette[256][4];
 extern unsigned int transparent;
-unsigned int background;
+extern unsigned int background;
 extern int modified;
 
 extern int linewidth;
