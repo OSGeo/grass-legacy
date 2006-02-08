@@ -27,7 +27,7 @@ PREREQUISITES
 
 PREREQUISITES
 
-The install order matters. GRASS needs at least to libraries
+The install order matters. GRASS needs at least two libraries
 which have to be installed before installing/compiling GRASS:
 For links to the software, see ./REQUIREMENTS.html in this
 directory:
