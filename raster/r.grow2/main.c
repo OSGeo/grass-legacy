@@ -118,7 +118,7 @@ int main(int argc, char **argv)
 	opt.rad->key         = "radius";
 	opt.rad->type        = TYPE_DOUBLE;
 	opt.rad->required    = NO;
-	opt.rad->description = _("Radius of buffer");
+	opt.rad->description = _("Radius of buffer in map units");
 	opt.rad->answer      = "1.01";
 
 	opt.met = G_define_option();
