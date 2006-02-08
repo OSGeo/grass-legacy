@@ -1,3 +1,4 @@
+
 /***************************************************************************
 * MODULE:       r3.mask
 *
@@ -24,152 +25,150 @@
 
 /*--------------------------------------------------------------------------*/
 
-typedef struct {
-  struct Option *map, *maskVals;
+typedef struct
+{
+    struct Option *map, *maskVals;
 } paramType;
 
 static paramType params;
-extern void * G3d_openNewParam ();
+extern void *G3d_openNewParam();
 
-static void
-setParams ()
+static void setParams()
 {
-  params.map = G_define_option();
-  params.map->key = "map";
-  params.map->type = TYPE_STRING ;
-  params.map->required = YES ;
-  params.map->multiple = NO ;
-  params.map->gisprompt = "old,grid3,3d-raster";
-  params.map->description = _("3dcell map with reference values");
+    params.map = G_define_option();
+    params.map->key = "map";
+    params.map->type = TYPE_STRING;
+    params.map->required = YES;
+    params.map->multiple = NO;
+    params.map->gisprompt = "old,grid3,3d-raster";
+    params.map->description = _("3dcell map with reference values");
 
-  params.maskVals = G_define_option();
-  params.maskVals->key = "maskvalues";
-  params.maskVals->key_desc = "val[-val]";
-  params.maskVals->type = TYPE_STRING ;
-  params.maskVals->required = NO ;
-  params.maskVals->multiple = YES ;
-  params.maskVals->description = _("List of cell values to be masked out");
+    params.maskVals = G_define_option();
+    params.maskVals->key = "maskvalues";
+    params.maskVals->key_desc = "val[-val]";
+    params.maskVals->type = TYPE_STRING;
+    params.maskVals->required = NO;
+    params.maskVals->multiple = YES;
+    params.maskVals->description = _("List of cell values to be masked out");
 }
 
 /*--------------------------------------------------------------------------*/
 
-void
-getParams  (char **name, d_Mask **maskRules)
-
+void getParams(char **name, d_Mask ** maskRules)
 {
- *name = params.map->answer;
- parse_vallist (params.maskVals->answers, maskRules);
+    *name = params.map->answer;
+    parse_vallist(params.maskVals->answers, maskRules);
 }
 
 /*-------------------------------------------------------------------------*/
 
 #define MAX(a,b) (a > b ? a : b)
 
-static void
-makeMask  (char *name, d_Mask *maskRules)
-
+static void makeMask(char *name, d_Mask * maskRules)
 {
-  void *map, *mask;
-  G3D_Region region;
-  int tileX, tileY, tileZ, x, y, z, cacheSize;
-  double value;
-  float floatNull;
+    void *map, *mask;
+    G3D_Region region;
+    int tileX, tileY, tileZ, x, y, z, cacheSize;
+    double value;
+    float floatNull;
 
-  cacheSize = G3d_cacheSizeEncode (G3D_USE_CACHE_XY, 1);
+    cacheSize = G3d_cacheSizeEncode(G3D_USE_CACHE_XY, 1);
 
-  if (NULL == G_find_grid3 (name, ""))
-        G3d_fatalError (_("Requested g3d file not found"));
+    if (NULL == G_find_grid3(name, ""))
+	G3d_fatalError(_("Requested g3d file not found"));
 
-  map = G3d_openCellOld (name, G_mapset (), G3D_DEFAULT_WINDOW,
-			 G3D_DOUBLE, cacheSize);
+    map = G3d_openCellOld(name, G_mapset(), G3D_DEFAULT_WINDOW,
+			  G3D_DOUBLE, cacheSize);
 
-  if (map == NULL) G3d_fatalError (_("makeMask: error opening map."));
+    if (map == NULL)
+	G3d_fatalError(_("makeMask: error opening map."));
 
-  G3d_getRegionStructMap (map, &region);
-  
-  G3d_getTileDimensionsMap (map, &tileX, &tileY, &tileZ);
+    G3d_getRegionStructMap(map, &region);
 
-  mask = G3d_openNewParam (G3d_maskFile (), G3D_FLOAT, cacheSize,
-			   &region, G3D_FLOAT, G3D_NO_LZW, G3D_USE_RLE, 0,
-			   tileX, tileY, tileZ);
+    G3d_getTileDimensionsMap(map, &tileX, &tileY, &tileZ);
 
-  if (mask == NULL) G3d_fatalError (_("makeMask: error opening g3d mask file"));
+    mask = G3d_openNewParam(G3d_maskFile(), G3D_FLOAT, cacheSize,
+			    &region, G3D_FLOAT, G3D_NO_LZW, G3D_USE_RLE, 0,
+			    tileX, tileY, tileZ);
 
-  G3d_minUnlocked (map, G3D_USE_CACHE_X);
-  G3d_autolockOn (map);
-  G3d_unlockAll (map);
-  G3d_minUnlocked (mask, G3D_USE_CACHE_X);
-  G3d_autolockOn (mask);
-  G3d_unlockAll (mask);
+    if (mask == NULL)
+	G3d_fatalError(_("makeMask: error opening g3d mask file"));
 
-  G3d_setNullValue (&floatNull, 1, G3D_FLOAT);
+    G3d_minUnlocked(map, G3D_USE_CACHE_X);
+    G3d_autolockOn(map);
+    G3d_unlockAll(map);
+    G3d_minUnlocked(mask, G3D_USE_CACHE_X);
+    G3d_autolockOn(mask);
+    G3d_unlockAll(mask);
 
-  for (z = 0; z < region.depths; z++) {
-    if ((z % tileZ) == 0) {
-      G3d_unlockAll (map);
-      G3d_unlockAll (mask);
+    G3d_setNullValue(&floatNull, 1, G3D_FLOAT);
+
+    for (z = 0; z < region.depths; z++) {
+	if ((z % tileZ) == 0) {
+	    G3d_unlockAll(map);
+	    G3d_unlockAll(mask);
+	}
+	/*for (y = region.rows-1; y >= 0; y--) *//* go north to south */
+	for (y = 0; y < region.rows; y++)	/*I dont know which one is right; soeren 04 Aug 05 */
+	    for (x = 0; x < region.cols; x++) {
+		value = G3d_getDoubleRegion(map, x, y, z);
+		if (mask_d_select((DCELL *) & value, maskRules))
+		    G3d_putFloat(mask, x, y, z, (float)floatNull);	/* mask-out value */
+		else
+		    G3d_putFloat(mask, x, y, z, (float)0.0);	/* not mask-out value */
+	    }
+	if ((z % tileZ) == 0) {
+	    if (!G3d_flushTilesInCube
+		(mask, 0, 0, MAX(0, z - tileZ), region.rows - 1,
+		 region.cols - 1, z))
+		G3d_fatalError(_("makeMask: error flushing tiles in cube"));
+	}
     }
-    /*for (y = region.rows-1; y >= 0; y--) */   /* go north to south */
-    for (y = 0; y < region.rows; y++) /*I dont know which one is right; soeren 04 Aug 05*/
-      for (x = 0; x < region.cols; x++) {
-	value = G3d_getDoubleRegion (map, x, y, z);
-	if (mask_d_select ((DCELL *) &value, maskRules))
-	  G3d_putFloat (mask, x, y, z, (float) floatNull); /* mask-out value */
-	else
-	  G3d_putFloat (mask, x, y, z, (float) 0.0); /* not mask-out value */
-      }
 
-    if (! G3d_flushTilesInCube (mask, 
-				0, 0, MAX (0, z - tileZ),
-				region.rows - 1,
-				region.cols - 1, z))
-      G3d_fatalError (_("makeMask: error flushing tiles"));
+    if (!G3d_flushAllTiles(mask))
+	G3d_fatalError(_("makeMask: error flushing all tiles"));
 
-  }
+    G3d_autolockOff(map);
+    G3d_unlockAll(map);
+    G3d_autolockOff(mask);
+    G3d_unlockAll(mask);
 
-  if (! G3d_flushAllTiles (mask))  
-    G3d_fatalError (_("makeMask: error flushing tiles"));
-
-  G3d_autolockOff (map);
-  G3d_unlockAll (map);
-  G3d_autolockOff (mask);
-  G3d_unlockAll (mask);
-
-  if (! G3d_closeCell (mask)) 
-    G3d_fatalError (_("makeMask: error closing g3d mask file"));
-  if (! G3d_closeCell (map)) 
-    G3d_fatalError (_("makeMask: error closing map"));
+    if (!G3d_closeCell(mask))
+	G3d_fatalError(_("makeMask: error closing g3d mask file"));
+    if (!G3d_closeCell(map))
+	G3d_fatalError(_("makeMask: error closing map"));
 }
 
 /*--------------------------------------------------------------------------*/
 
-int
-main  (int argc, char *argv[])
-
+int main(int argc, char *argv[])
 {
-  char *name;
-  d_Mask *maskRules;
-  struct GModule *module;
+    char *name;
+    d_Mask *maskRules;
+    struct GModule *module;
 
-  G_gisinit (argv[0]);
-  
-  module = G_define_module();
-  module->description = _("Establishes the current working 3D raster mask.");
+    G_gisinit(argv[0]);
+
+    module = G_define_module();
+    module->description = _("Establishes the current working 3D raster mask.");
 
 
-  if (G3d_maskFileExists ())
-    G_fatal_error ( _("Cannot create mask file: G3D_MASK already exists!\n Use 'g.remove rast3d=G3D_MASK' to remove the existing mask."));
+    if (G3d_maskFileExists())
+	G_fatal_error(_
+		      ("Cannot create mask file: G3D_MASK already exists!\n Use 'g.remove rast3d=G3D_MASK' to remove the existing mask."));
 
-  setParams ();
-  if (G_parser (argc, argv))
-      exit(EXIT_FAILURE);
-  getParams (&name, &maskRules);
+    setParams();
+    if (G_parser(argc, argv))
+	exit(EXIT_FAILURE);
+    getParams(&name, &maskRules);
 
-  makeMask (name, maskRules);
+    makeMask(name, maskRules);
 
-  return 0;
+    exit(EXIT_SUCCESS);
 }
 
 /*--------------------------------------------------------------------------*/
+
 /*--------------------------------------------------------------------------*/
+
 /*--------------------------------------------------------------------------*/
