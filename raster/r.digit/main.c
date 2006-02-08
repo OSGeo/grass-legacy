@@ -13,9 +13,9 @@
 
 int main (int argc, char **argv)
 {
-	struct GModule *module;
+    struct GModule *module;
     char *polyfile;
-    char name[256];
+    char name[GNAME_MAX];
     FILE *fd;
     int any;
 
@@ -81,7 +81,7 @@ int main (int argc, char **argv)
     if (any && get_map_name(name))
 	create_map (name, polyfile);
     else
-	fprintf (stdout,"No map created\n");
+	G_message (_("No map created"));
     unlink (polyfile);
     return(EXIT_SUCCESS) ;
 }

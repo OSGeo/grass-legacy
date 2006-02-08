@@ -110,19 +110,9 @@ int main(int argc, char **argv)
 		_("Generates a raster map layer"
 		"with contiguous areas grown by one cell.");
 
-	opt.in = G_define_option();
-	opt.in->key          = "input";
-	opt.in->type         = TYPE_STRING;
-	opt.in->required     = YES;
-	opt.in->gisprompt    = "old,cell,raster";
-	opt.in->description  = _("Name of existing input raster file");
+	opt.in = G_define_standard_option(G_OPT_R_INPUT);
 
-	opt.out = G_define_option();
-	opt.out->key         = "output";
-	opt.out->type        = TYPE_STRING;
-	opt.out->required    = YES;
-	opt.out->gisprompt   = "new,cell,raster";
-	opt.out->description = _("Name of output raster file");
+	opt.out = G_define_standard_option(G_OPT_R_OUTPUT);
 
 	opt.rad = G_define_option();
 	opt.rad->key         = "radius";
@@ -156,7 +146,7 @@ int main(int argc, char **argv)
 	flag.q->description = _("Quiet");
 
 	if (G_parser(argc, argv))
-		exit(1);
+		exit(EXIT_FAILURE);
 
 	in_name = opt.in->answer;
 	out_name = opt.out->answer;
@@ -303,6 +293,6 @@ int main(int argc, char **argv)
 		if (G_write_colors(out_name, G_mapset(), &colr) == -1)
 			G_warning(_("Error writing colr file for <%s>."), out_name);
 
-	return 0;
+	return EXIT_SUCCESS;
 }
 

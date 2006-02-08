@@ -17,8 +17,6 @@ main (int argc, char *argv[])
 	char *output;
 	char *title;
 	char *temp;
-	char err[64];
-	char tmp[1024];
 	FILE *fd, *ft;
 	int cf,direction,sz;
 	struct Cell_head cellhd;
@@ -47,19 +45,11 @@ main (int argc, char *argv[])
 	module->description =
 		_("Convert an ASCII raster text file into a (binary) raster map layer.");
 
-	parm.input = G_define_option();
-	parm.input->key = "input";
-	parm.input->type = TYPE_STRING;
-	parm.input->required = YES;
+	parm.input = G_define_standard_option(G_OPT_R_INPUT);
 	parm.input->description = _("Ascii raster file to be imported");
 	parm.input->gisprompt = "file,file,file";
 
-	parm.output = G_define_option();
-	parm.output->key = "output";
-	parm.output->type = TYPE_STRING;
-	parm.output->required = YES;
-	parm.output->description = _("Name for resultant raster map");
-	parm.output->gisprompt = "any,cell,raster";
+	parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
 
 	parm.title = G_define_option();
 	parm.title->key = "title";
@@ -105,7 +95,7 @@ main (int argc, char *argv[])
 		_("SURFER (Golden Software) ascii grid file will be imported");
 
 	if (G_parser(argc,argv))
-		exit(1);
+		exit(EXIT_FAILURE);
 	input = parm.input->answer;
 	output = parm.output->answer;
 
@@ -123,11 +113,7 @@ main (int argc, char *argv[])
 	    G_set_d_null_value(&mult, 1);
         else
 	   if ((sscanf(parm.mult->answer,"%lf",&mult)) != 1) 
-	   {
-	      sprintf(tmp, "wrong entry for multiplier: %s", parm.mult->answer);
-	      G_usage();
-	      exit(-1) ;
-           }
+	      G_fatal_error ( _("Wrong entry for multiplier: %s"), parm.mult->answer);
 	if(strcmp(parm.nv->answer, "* or read from header")==0)
 	   null_val_str = NULL;
         else
@@ -181,45 +167,26 @@ main (int argc, char *argv[])
 	else sz=gethead(fd, &cellhd, &data_type, &mult, &null_val_str);
 
 	if(!sz)
-	{
-		fprintf (stderr, "Can't proceed\n");
-		exit(1);
-	}
+		G_fatal_error ( _("Can't get cell header"));
 
 	nrows = cellhd.rows;
 	ncols = cellhd.cols;
 	if(G_set_window(&cellhd) < 0)
-		exit(3);
+		G_fatal_error ( _("Can't set window"));
 
 	if (nrows != G_window_rows())
-	{
-		fprintf (stderr,
-		  "OOPS: rows changed from %d to %d\n", nrows, G_window_rows());
-		exit(1);
-	}
+		G_fatal_error ( _("OOPS: rows changed from %d to %d"), nrows, G_window_rows());
 	if (ncols != G_window_cols())
-	{
-		fprintf (stderr,
-		  "OOPS: cols changed from %d to %d\n", ncols, G_window_cols());
-		exit(1);
-	}
+		G_fatal_error ( _("OOPS: cols changed from %d to %d"), ncols, G_window_cols());
 
 
 	rast_ptr=G_allocate_raster_buf(data_type);
 	rast = rast_ptr;
-	if (G_legal_filename(output) < 0) {
-	  sprintf(err, "%s -- illegal output file name", output);
-	  G_fatal_error(err);
-	  exit(1);
-	}
+	if (G_legal_filename(output) < 0)
+	   G_fatal_error ( _("%s -- illegal output file name"), output);
 	cf = G_open_raster_new(output, data_type);
 	if (cf < 0)
-	{
-		char msg[100];
-		sprintf (msg, "unable to create raster map %s", output);
-		G_fatal_error (msg);
-		exit(1);
-	}
+	   G_fatal_error ( _("Unable to create raster map %s"), output);
 	for (row = 0; row < nrows; row++)
 	{
 		G_percent(row, nrows, 2);
@@ -227,13 +194,8 @@ main (int argc, char *argv[])
 		{
 			if (fscanf (fd, "%s", y) != 1)
 			{
-				char msg[100];
 				G_unopen_cell (cf);
-				sprintf (msg,
-				  "data conversion failed at row %d, col %d\n",
-				   row+1, col+1);
-				G_fatal_error (msg);
-				exit(1);
+				G_fatal_error ( _("Data conversion failed at row %d, col %d"), row+1, col+1);
 			}
 			if (strcmp(y, null_val_str)) {
 			  x = atof(y);
@@ -257,7 +219,7 @@ main (int argc, char *argv[])
 		rast_ptr = rast;
 	}
 	G_percent(nrows, nrows, 2);
-	fprintf (stderr, "CREATING SUPPORT FILES FOR %s\n", output);
+	G_message (_("CREATING SUPPORT FILES FOR %s"), output);
 
 	sz=0;
 	if(direction<0)
