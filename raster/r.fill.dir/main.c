@@ -65,7 +65,7 @@ main(int argc, char **argv)
    int cell_open(), cell_open_new();
    int map_id, dir_id, bas_id;
    char map_name[GNAME_MAX], *map_mapset, new_map_name[GNAME_MAX];
-   char buf[200], *tempfile1, *tempfile2, *tempfile3;
+   char *tempfile1, *tempfile2, *tempfile3;
    char dir_name[GNAME_MAX];
    char bas_name[GNAME_MAX];
 
@@ -86,11 +86,7 @@ main(int argc, char **argv)
        _("Filters and generates a depressionless elevation map and a flow "
        "direction map from a given elevation layer");
 
-   opt1 = G_define_option();
-   opt1->key        = "input" ;
-   opt1->type       = TYPE_STRING ;
-   opt1->required   = YES ;
-   opt1->gisprompt  = "old,cell,raster" ;
+   opt1 = G_define_standard_option(G_OPT_R_INPUT);
    opt1->description= _("Name of existing raster map containing elevation surface") ;
    
    opt2 = G_define_option() ;
@@ -131,7 +127,7 @@ main(int argc, char **argv)
 
 
    if (G_parser(argc, argv))
-   	exit(-1);
+   	exit(EXIT_FAILURE);
 
    if(flag1->answer!='0' && opt5->answer==NULL)
    {
@@ -162,11 +158,8 @@ main(int argc, char **argv)
 
 /*      get the name of the elevation map layer for filling */
    map_mapset = G_find_cell(map_name,"");
-   if (!map_mapset) {
-      sprintf(buf,"Could not access %s layer.", map_name);
-      G_fatal_error (buf);
-      exit(0);
-   }
+   if (!map_mapset)
+      G_fatal_error ( _("Could not access %s layer"), map_name);
 
 /*      allocate cell buf for the map layer */
    in_type = G_raster_map_type (map_name, map_mapset);
@@ -295,7 +288,7 @@ main(int argc, char **argv)
    G_free (in_buf);
    G_free (out_buf);
 
-   exit (0);
+   exit (EXIT_SUCCESS);
 }
 
 int dir_type (int type, int dir)

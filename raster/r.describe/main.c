@@ -13,9 +13,8 @@ int main (int argc, char *argv[])
 	int range;
 	int windowed;
 	int nsteps;
-	char name[200];
+	char name[GNAME_MAX];
 	char *mapset;
-	char msg[100];
 	char *no_data_str;
 	struct GModule *module;
 	struct
@@ -40,13 +39,7 @@ int main (int argc, char *argv[])
 		_("Prints terse list of category values found in a raster map layer.");
 
 	/* define different options */
-	option.map = G_define_option() ;
-	option.map->key        = "map" ;
-	option.map->type       = TYPE_STRING ;
-	option.map->required   = YES ;
-	option.map->multiple   = NO;
-	option.map->description= _("Name of raster map") ;
-	option.map->gisprompt  = "old,cell,raster" ;
+	option.map = G_define_standard_option(G_OPT_R_MAP);
 
 	option.nv = G_define_option() ;
 	option.nv->key		= "nv" ;
@@ -89,7 +82,7 @@ int main (int argc, char *argv[])
 	verbose = 1;
 
 	if (0 > G_parser(argc,argv))
-		exit(-1);
+		exit(EXIT_FAILURE);
 
 	verbose = (! flag.q->answer);
 	compact = (! flag.one->answer);
@@ -97,21 +90,16 @@ int main (int argc, char *argv[])
 	windowed =  flag.d->answer;
 	as_int =  flag.i->answer;
 	no_data_str =  option.nv->answer;
-	if (sscanf(option.nsteps->answer, "%d", &nsteps) != 1 || nsteps < 1) {
-	  fprintf(stderr, "ERROR: %s = %s -- must be greater than zero\n",
+	if (sscanf(option.nsteps->answer, "%d", &nsteps) != 1 || nsteps < 1)
+	  G_fatal_error ( _("%s = %s -- must be greater than zero"),
                option.nsteps->key,option.nsteps->answer);
-	  G_usage();
-	  exit(1);
-	}
 	strcpy (name, option.map->answer);
 
 	if (mapset =  G_find_cell2 (name, ""))
 	{
 		describe(name, mapset, compact, verbose, no_data_str,
 			range, windowed, nsteps, as_int);
-		exit(0);
+		exit(EXIT_SUCCESS);
 	}
-	sprintf (msg,"%s: [%s] not found", G_program_name(), name);
-	G_fatal_error (msg);
-	exit(1);
+	G_fatal_error ( _("%s: [%s] not found"), G_program_name(), name);
 }

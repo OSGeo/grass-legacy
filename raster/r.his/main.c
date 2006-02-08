@@ -112,7 +112,7 @@ main (int argc, char **argv)
 	nulldraw->description = _("Respect NULL values while drawing");
 
 	if (G_parser(argc, argv))
-		exit(-1);
+		exit(EXIT_FAILURE);
 
 	/* read in current window */
 	G_get_window(&window) ;
@@ -122,13 +122,13 @@ main (int argc, char **argv)
 
 	mapset = G_find_cell2(name_h, "");
 	if (mapset == NULL)
-		G_fatal_error("%s: <%s> cell file not found\n",
+		G_fatal_error(_("%s: <%s> cell file not found"),
 			      G_program_name(),
 			      opt_h->answer);
 
 	/* Make sure map is available */
 	if ((hue_file = G_open_cell_old(name_h, mapset)) == -1)
-		G_fatal_error("Not able to open cellfile for [%s]",
+		G_fatal_error(_("Not able to open cellfile for [%s]"),
 			      name_h) ;
 
 	hue_r = G_malloc(window.cols);
@@ -140,7 +140,7 @@ main (int argc, char **argv)
 
 	/* Reading color lookup table */
 	if (G_read_colors(name_h, mapset, &hue_colors) == -1)
-		G_fatal_error("Color file for [%s] not available",
+		G_fatal_error(_("Color file for [%s] not available"),
 			      name_h) ;
 
 	int_used = 0 ;
@@ -155,7 +155,7 @@ main (int argc, char **argv)
 			int_used = 1 ;
 			/* Make sure map is available */
 			if ((int_file = G_open_cell_old(name_i, mapset)) == -1)
-				G_fatal_error("Not able to open cellfile for [%s]",
+				G_fatal_error(_("Not able to open cellfile for [%s]"),
 					      name_i) ;
 
 			int_r = G_malloc(window.cols);
@@ -163,11 +163,11 @@ main (int argc, char **argv)
 
 			/* Reading color lookup table */
 			if (G_read_colors(name_i, mapset, &int_colors) == -1)
-				G_fatal_error("Color file for [%s] not available",
+				G_fatal_error(_("Color file for [%s] not available"),
 					      name_i) ;
 		}
 		else
-			G_fatal_error("Not able to find cellfile [%s]", name_i) ;
+			G_fatal_error(_("Not able to find cellfile [%s]"), name_i) ;
 
 	}
 
@@ -184,7 +184,7 @@ main (int argc, char **argv)
 
 			/* Make sure map is available */
 			if ((sat_file = G_open_cell_old(name_s, mapset)) == -1)
-				G_fatal_error("Not able to open cellfile for [%s]",
+				G_fatal_error(_("Not able to open cellfile for [%s]"),
 					      name_s) ;
 
 			sat_r = G_malloc(window.cols);
@@ -192,11 +192,11 @@ main (int argc, char **argv)
 
 			/* Reading color lookup table */
 			if (G_read_colors(name_s, mapset, &sat_colors) == -1)
-				G_fatal_error("Color file for [%s] not available",
+				G_fatal_error(_("Color file for [%s] not available"),
 					      name_s) ;
 		}
 		else
-			G_fatal_error("Not able to find cellfile [%s]", name_s) ;
+			G_fatal_error(_("Not able to find cellfile [%s]"), name_s) ;
 
 	}
 
@@ -253,11 +253,11 @@ main (int argc, char **argv)
 		G_percent (atrow, window.rows, 2);
 
 		if (G_get_raster_row_colors(hue_file, atrow, &hue_colors, hue_r, hue_g, hue_b, hue_n) < 0)
-			G_fatal_error("Error reading 'hue' map");
+			G_fatal_error(_("Error reading 'hue' map"));
 		if (int_used && (G_get_raster_row_colors(int_file, atrow, &int_colors, int_r, dummy, dummy, int_n) < 0))
-			G_fatal_error("Error reading 'intensity' map");
+			G_fatal_error(_("Error reading 'intensity' map"));
 		if (sat_used && (G_get_raster_row_colors(sat_file, atrow, &sat_colors, sat_r, dummy, dummy, sat_n) < 0))
-			G_fatal_error("Error reading 'saturation' map");
+			G_fatal_error(_("Error reading 'saturation' map"));
 
 		for (atcol=0; atcol<window.cols; atcol++)
 		{
@@ -321,5 +321,5 @@ main (int argc, char **argv)
 		G_write_colors (name_b, G_mapset(), &gray_colors);
 	}
 
-	return 0;
+	return EXIT_SUCCESS;
 }

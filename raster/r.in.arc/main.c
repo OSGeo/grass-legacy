@@ -24,7 +24,6 @@ int main (int argc, char *argv[])
 	DCELL *dcell;
 	int row, col;
 	int nrows, ncols;
-	int i;
 	static int missingval;
 	int rtype;
 	double mult_fact ;
@@ -82,7 +81,7 @@ int main (int argc, char *argv[])
 
 
 	if (G_parser(argc,argv))
-		exit(1);
+		exit(EXIT_FAILURE);
 	input = parm.input->answer;
 	output = parm.output->answer;
 	if(title = parm.title->answer)
@@ -117,27 +116,17 @@ int main (int argc, char *argv[])
 	}
 
 	if(!gethead (fd, &cellhd, &missingval))
-	{
-		fprintf (stderr, "Can't proceed\n");
-		exit(1);
-	}
-	
+		G_fatal_error ( _("Can't get cell header"));
 
 	nrows = cellhd.rows;
 	ncols = cellhd.cols;
 	if(G_set_window (&cellhd) < 0)
-		exit(3);
+		G_fatal_error ( _("Can't set window"));
 
 	if (nrows != G_window_rows())
-	{
-		fprintf (stderr, "OOPS: rows changed from %d to %d\n", nrows, G_window_rows());
-		exit(1);
-	}
+		G_fatal_error ( _("OOPS: rows changed from %d to %d"), nrows, G_window_rows());
 	if (ncols != G_window_cols())
-	{
-		fprintf (stderr, "OOPS: cols changed from %d to %d\n", ncols, G_window_cols());
-		exit(1);
-	}
+		G_fatal_error ( _("OOPS: cols changed from %d to %d"), ncols, G_window_cols());
 
         switch (rtype){
 	    case CELL_TYPE:
@@ -152,12 +141,7 @@ int main (int argc, char *argv[])
 	}
 	cf = G_open_raster_new (output, rtype);
 	if (cf < 0)
-	{
-		char msg[100];
-		sprintf (msg, "unable to create raster map %s", output);
-		G_fatal_error (msg);
-		exit(1);
-	}
+		G_fatal_error ( _("Unable to create raster map %s"), output);
 	
 	for (row = 0; row < nrows; row++)
 	{
@@ -166,11 +150,8 @@ int main (int argc, char *argv[])
 		{
 			if (fscanf (fd, "%lf", &x) != 1)
 			{
-				char msg[100];
 				G_unopen_cell (cf);
-				sprintf (msg, "data conversion failed at row %d, col %d\n", row+1, col+1);
-				G_fatal_error (msg);
-				exit(1);
+				G_fatal_error ( _("Data conversion failed at row %d, col %d"), row+1, col+1);
 			}
 			switch (rtype){
 			    case CELL_TYPE:
@@ -205,12 +186,12 @@ int main (int argc, char *argv[])
 			break;
 		}
 	}
-	fprintf (stderr, "CREATING SUPPORT FILES FOR %s\n", output);
+	G_message(_("CREATING SUPPORT FILES FOR %s"), output);
 	G_close_cell (cf);
 	if (title)
 		G_put_cell_title (output, title);
 
-	exit (0);
+	exit (EXIT_SUCCESS);
 }
 
 int 
