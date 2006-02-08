@@ -85,6 +85,7 @@ SUBDIRS = \
 	r.texture \
 	r.thin \
 	r.timestamp \
+	r.to.rast3 \
 	r.to.vect \
 	r.topidx \
 	r.topmodel \
