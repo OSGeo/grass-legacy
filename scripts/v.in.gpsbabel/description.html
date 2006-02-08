@@ -7,15 +7,13 @@ GPS data of many common formats. Translation is done via the
 
 <P>
 This software is not intended as a primary means of navigation.
-Use at your own risk. This software comes with absolutely no warranty.
 
-<P>
 <H2>EXAMPLES</H2>
 
 Import waypoint data from a Garmin GPS connected at /dev/ttyS0 and save
 to a GRASS vector file named <i>waypoints</i>.
 <div class="code"><pre>
-<b>v.in.gpsbabel -w input=</B>/dev/ttyS0 <b>format=</b>garmin <b>output=</b>waypoints
+v.in.gpsbabel -w input=/dev/ttyS0 format=garmin output=waypoints
 </pre></div>
 
 <p>
@@ -24,19 +22,16 @@ named <i>tracks</i>. <!-- (currently buggy) The gpxlogger program distributed wi
 <a href="http://gpsd.berlios.de/">GPSd</a> >2.30 is a good program for 
 creating these logs. -->
 <div class="code"><pre>
-<B>v.in.gpsbabel -t input=</B>gpslog.gpx <b>format=</b>gpx <b>output=</b>tracks
+v.in.gpsbabel -t input=gpslog.gpx format=gpx output=tracks
 </pre></div>
-
 
 <p>
 Import route data as a series of points from a Garmin GPS connected at 
 /dev/gps and save to a GRASS vector file named <i>routePoints</i>.
 <div class="code"><pre>
-<B>v.in.gpsbabel -r -p file=</B>/dev/gps <b>format=</b>garmin <b>output=</b>routePoints
+v.in.gpsbabel -r -p file=/dev/gps format=garmin output=routePoints
 </pre></div>
 
-
-<P>
 <H2>NOTES</H2>
 
 <em>v.in.gpsbabel</em> automatically reprojects data using the 
@@ -93,7 +88,3 @@ from <i>garmin</i> to <i>xcsv</i> ...
 -->
 
 <p><i>Last changed: $Date$</i>
-<HR>
-<BR>
-<a href=index.html>Help Index</a>
-</body></html>
