@@ -95,6 +95,7 @@ int describe_table( PGresult *res, dbTable **table, cursor *c)
 	G_debug(3, "col: %s, kcols %d, pgtype : %d, gpgtype : %d, sqltype %d, fsize : %d", 
 		    fname, kcols, pgtype, gpgtype, sqltype, fsize);
 
+	/* PG types defined in globals.h (and pg_type.h) */
 	if ( sqltype == DB_SQL_TYPE_UNKNOWN ) {
 	    /* Warn, ignore and continue */
 	    G_warning ( _("pg driver: column '%s', type %d  is not supported"), fname, pgtype);
