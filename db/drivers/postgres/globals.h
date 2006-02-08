@@ -15,7 +15,7 @@ typedef struct {
         char *host, *port, *options, *tty, *dbname, *user, *password, *schema;
 } PGCONN;
 
-/* Postgres data types defined in GRASS */
+/* Postgres data types defined in GRASS, see pg_type.h */
 typedef enum {     /* name in pg_type, aliases */
   PG_TYPE_UNKNOWN,  /* all types not supported by GRASS */
 
@@ -38,7 +38,7 @@ typedef enum {     /* name in pg_type, aliases */
   PG_TYPE_TIME,      /* time */
   PG_TYPE_TIMESTAMP, /* timestamp */
 
-  PG_TYPE_BOOL,      /* bool, boolean */
+  PG_TYPE_BOOL       /* bool, boolean */
 } PG_TYPES;
 
 
