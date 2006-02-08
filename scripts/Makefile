@@ -49,6 +49,7 @@ SUBDIRS = \
 	v.in.garmin \
 	v.in.e00 \
 	v.in.gns \
+	v.in.gpsbabel \
 	v.in.mapgen \
 	v.in.sites.all \
 	v.rast.stats \
