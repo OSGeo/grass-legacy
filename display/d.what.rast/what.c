@@ -1,6 +1,7 @@
 #include <string.h>
 #include <grass/raster.h>
 #include <grass/display.h>
+#include <grass/glocale.h>
 #include "what.h"
 #include "local_proto.h"
 
@@ -54,6 +55,10 @@ int what (int once, int terse, int colrow, char *fs, int width, int mwidth)
 	G_set_d_null_value(&null_dcell,1);
         for (i = 0; i < nrasts; i++)
 	{
+            if (row < 0 || row >= nrows || col < 0 || col >= ncols) {
+                G_message(_("You are clicking outside the map"));
+                continue;
+            }
             if (G_get_c_raster_row (fd[i], buf, row) < 0)
                 show_cat (width, mwidth, name[i], mapset[i], null_cell,
                     "ERROR reading cell file", terse, fs, map_type[i]);
