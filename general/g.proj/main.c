@@ -187,7 +187,7 @@ int main(int argc, char *argv[])
 	char buff[8192];
 	char *proj4string;
 	int interactive = 1;
-	OGRSpatialReferenceH *hSRS;
+	OGRSpatialReferenceH hSRS;
 
 	if (strcmp(inproj4->answer, "-") == 0) {
 	    infd = stdin;
@@ -207,7 +207,7 @@ int main(int argc, char *argv[])
 
 	G_free(proj4string);
 
-	GPJ_osr_to_grass(&cellhd, &projinfo, &projunits, hSRS, interactive);
+	GPJ_osr_to_grass(&cellhd, &projinfo, &projunits, &hSRS, interactive);
 
 	OSRDestroySpatialReference(hSRS);
     }
