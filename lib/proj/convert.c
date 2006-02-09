@@ -53,7 +53,7 @@ char *GPJ_grass_to_wkt(struct Key_Value *proj_info,
 		       struct Key_Value *proj_units,
 		       int esri_style, int prettify)
 {
-    OGRSpatialReferenceH *hSRS = NULL;
+    OGRSpatialReferenceH hSRS;
     char *wkt;
 
     hSRS = GPJ_grass_to_osr(proj_info, proj_units);
@@ -79,17 +79,16 @@ char *GPJ_grass_to_wkt(struct Key_Value *proj_info,
  * \param proj_info Set of GRASS PROJ_INFO key/value pairs
  * \param proj_units Set of GRASS PROJ_UNIT key/value pairs
  * 
- * \return Pointer to an OGRSpatialReferenceH object representing the
- *         co-ordinate system defined by proj_info and proj_units
- *         or NULL if it fails
+ * \return OGRSpatialReferenceH object representing the co-ordinate system
+ *         defined by proj_info and proj_units or NULL if it fails
  **/
 
-OGRSpatialReferenceH *GPJ_grass_to_osr(struct Key_Value * proj_info,
+OGRSpatialReferenceH GPJ_grass_to_osr(struct Key_Value * proj_info,
 				       struct Key_Value * proj_units)
 {
     struct pj_info pjinfo;
     char *proj4, *proj4mod, *wkt, *modwkt, *startmod, *lastpart;
-    OGRSpatialReferenceH *hSRS, *hSRS2;
+    OGRSpatialReferenceH hSRS, hSRS2;
     OGRErr errcode;
     struct gpj_datum dstruct;
     size_t len;
@@ -555,13 +554,13 @@ int GPJ_wkt_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
         retval = GPJ_osr_to_grass(cellhd, projinfo, projunits, NULL, interactive);
     else
     {
-        OGRSpatialReferenceH *hSRS;
+        OGRSpatialReferenceH hSRS;
 
         /* Set finder function for locating OGR csv co-ordinate system tables */
         SetCSVFilenameHook( GPJ_set_csv_loc );
        
         hSRS = OSRNewSpatialReference(wkt);
-        retval = GPJ_osr_to_grass(cellhd, projinfo, projunits, hSRS, interactive);
+        retval = GPJ_osr_to_grass(cellhd, projinfo, projunits, &hSRS, interactive);
         OSRDestroySpatialReference(hSRS);
     }
    

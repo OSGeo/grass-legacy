@@ -64,7 +64,7 @@ int pj_print_proj_params (struct pj_info *, struct pj_info *);
 #ifdef HAVE_OGR
 char * GPJ_grass_to_wkt (struct Key_Value *, 
 			       struct Key_Value *, int, int );
-OGRSpatialReferenceH * GPJ_grass_to_osr (struct Key_Value *, 
+OGRSpatialReferenceH GPJ_grass_to_osr (struct Key_Value *, 
                                                struct Key_Value * );
 int GPJ_wkt_to_grass(struct Cell_head *, struct Key_Value **,
                      struct Key_Value **, const char *, int);
