@@ -63,7 +63,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <sys/types.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 #ifndef NULL
 #define NULL		0

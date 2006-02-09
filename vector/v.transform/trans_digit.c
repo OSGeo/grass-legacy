@@ -18,9 +18,9 @@
 */
 
 #include <math.h>
-#include "libtrans.h"
-#include "Vect.h"
-#include "gis.h"
+#include <grass/libtrans.h>
+#include <grass/Vect.h>
+#include <grass/gis.h>
 #include "trans.h"
 
 #define PI M_PI

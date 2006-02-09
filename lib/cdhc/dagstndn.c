@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 
 double *dagostino_d  (double *x, int n)

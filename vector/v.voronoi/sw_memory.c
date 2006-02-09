@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "sw_defs.h"
 
 int freeinit (struct Freelist *fl, int size)

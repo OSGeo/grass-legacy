@@ -2,10 +2,10 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "gis.h"
-#include "dbmi.h"
-#include "Vect.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 #define	A_DIR	"dig_ascii"

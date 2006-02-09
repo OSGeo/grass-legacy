@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "numerical.h"
-#include "gmath.h"
+#include <grass/gmath.h>
 
 /***************************************************************************/
 

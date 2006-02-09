@@ -2,13 +2,13 @@
 #include <string.h>
 #include <unistd.h>
 #include <math.h>
-#include "gis.h"
-#include "raster.h"
-#include "display.h"
-#include "Vect.h"
-#include "colors.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/display.h>
+#include <grass/Vect.h>
+#include <grass/colors.h>
 #include "proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 #define WDTH 5
 

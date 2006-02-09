@@ -2,7 +2,7 @@
 #define GRASS_DBMI_H
 
 #include <stdio.h>
-#include <gis.h>
+#include <grass/gis.h>
 
 #define DB_VERSION "0"
 
@@ -283,6 +283,6 @@ typedef struct
     char **label;   /* array of new category labels */
 }dbRclsRule;
 
-#include "proto_dbmi.h"
+#include <grass/proto_dbmi.h>
 
 #endif

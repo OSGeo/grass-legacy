@@ -20,8 +20,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 /* Init head structure */
 int 

@@ -21,7 +21,7 @@
 /****************     C-CODE   *****************/
 
 %{
-#include "sqlp.h"
+#include <grass/sqlp.h>
 #include "y.tab.h"
 #include <string.h>
 

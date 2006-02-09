@@ -25,10 +25,10 @@
 #include <stdio.h>
 #include <math.h>
 #include <unistd.h>
-#include "gis.h"
-#include "bitmap.h"
+#include <grass/gis.h>
+#include <grass/bitmap.h>
 
-#include "interpf.h"
+#include <grass/interpf.h>
 
 
 #define CEULER .57721566

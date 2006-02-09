@@ -2,9 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include "gis.h"
-#include "dbmi.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
 #include "local_proto.h"
 
 /* Determine if the string is integer, e.g. 123, +123, -123

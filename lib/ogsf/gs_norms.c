@@ -7,7 +7,7 @@
     functions for calculating normals
 */
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 #include "gsget.h"
 #include "rowcol.h"
 #include <math.h>

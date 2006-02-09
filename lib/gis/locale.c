@@ -1,6 +1,6 @@
 
-#include "config.h"
-#include "glocale.h"
+#include <grass/config.h>
+#include <grass/glocale.h>
 
 #include <stdlib.h>
 #include <string.h>

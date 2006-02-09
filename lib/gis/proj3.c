@@ -1,6 +1,6 @@
 #include <string.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 static int lookup(char *, char *, char *, int);
 static int equal(char *, char *);

@@ -2,8 +2,8 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "vask.h"
+#include <grass/gis.h>
+#include <grass/vask.h>
 #include "elev.h"
 
 int ask_elev (char *group, char *location, char *mapset)

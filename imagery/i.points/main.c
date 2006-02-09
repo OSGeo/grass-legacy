@@ -3,11 +3,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "globals.h"
 #include "local_proto.h"
-#include "raster.h"
-#include "glocale.h"
+#include <grass/raster.h>
+#include <grass/glocale.h>
 
 #ifdef __GNUC_MINOR__
 int quit (int) __attribute__ ((__noreturn__));

@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 #ifndef GRASS_G3D_H
 #define GRASS_G3D_H

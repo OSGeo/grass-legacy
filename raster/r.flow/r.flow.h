@@ -30,10 +30,10 @@
  */
 
 #include <math.h>
-#include "gis.h"
-#include "segment.h"
-#include "Vect.h"
-#include "bitmap.h"
+#include <grass/gis.h>
+#include <grass/segment.h>
+#include <grass/Vect.h>
+#include <grass/bitmap.h>
 
 #ifndef hypot
 #define hypot(x,y) (sqrt(x*x+y*y))

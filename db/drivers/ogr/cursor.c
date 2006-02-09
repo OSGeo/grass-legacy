@@ -14,8 +14,8 @@
 *
 *****************************************************************************/
 #include <stdio.h>
-#include "gis.h"
-#include "dbmi.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
 #include "ogr_api.h"
 #include "globals.h"
 #include "proto.h"

@@ -6,9 +6,9 @@
  
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "glocale.h"
-#include "imagery.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
+#include <grass/imagery.h>
 
 
 int 

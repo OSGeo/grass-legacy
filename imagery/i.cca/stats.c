@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include "globals.h"
 #include "local_proto.h"
 

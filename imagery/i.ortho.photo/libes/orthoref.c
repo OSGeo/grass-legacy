@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "orthophoto.h"
-#include "imagery.h"
+#include <grass/imagery.h>
 #include "mat.h"
 #include "matrixdefs.h"
 #include "local_proto.h"

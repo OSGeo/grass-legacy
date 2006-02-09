@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 char *
 explain_perms (int group, int other, int will)
 {

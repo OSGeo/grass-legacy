@@ -1,4 +1,4 @@
-#include "raster.h"
+#include <grass/raster.h>
 
 #ifdef R_text
 #undef R_text

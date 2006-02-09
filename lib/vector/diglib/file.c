@@ -18,8 +18,8 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 /* 
 *  Note: seems that the time is almost the same for both cases: 

@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 static FILE *fd;
 static void reclass (CELL,CELL,CELL);

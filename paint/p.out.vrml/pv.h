@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 /*  VRML VERSION - only 1.0 currently supported
 #define VRML2

@@ -54,8 +54,8 @@
 
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 #define X 0
 #define Y 1

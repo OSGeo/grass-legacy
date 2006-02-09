@@ -24,9 +24,9 @@
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
-#include "gis.h"
-#include "Vect.h"
-#include "dbmi.h" 
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
 
 static int *cat_array, cat_count, cat_size;
 int scan_cats(char *, int *, int *);

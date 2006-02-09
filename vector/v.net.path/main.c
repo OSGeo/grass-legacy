@@ -15,8 +15,8 @@
  *
  ****************************************************************/
 #include <stdlib.h>
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 int path ( struct Map_info *, struct Map_info *, int, double, int );
 

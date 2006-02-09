@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 /* 10/99 from GMSL, updated to new GRASS 5 code style , changed default "prec" to float*/
 

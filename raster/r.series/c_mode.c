@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
 
 void c_mode(DCELL *result, DCELL *values, int n)

@@ -20,13 +20,13 @@
 *				                           *
 ************************************************************/
 
-#include "config.h"
+#include <grass/config.h>
 #include "stdio.h"
 #include "math.h"
 #include "ctype.h"
 #include "stdlib.h"
 #include "string.h"
-#include "gis.h"
+#include <grass/gis.h>
 
 #define EQ(a, b)    (a-b < 0.01 && a-b > -0.01 )
 #define BIG   500000000.0

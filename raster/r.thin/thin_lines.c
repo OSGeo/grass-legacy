@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
 
 #define LEFT 1

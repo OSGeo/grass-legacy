@@ -2,7 +2,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "cseg.h"
 
 int cseg_open (CSEG *cseg, int srows, int scols, int nsegs_in_memory)

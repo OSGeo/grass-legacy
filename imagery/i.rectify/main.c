@@ -5,7 +5,7 @@
 #include <string.h>
 #include "global.h"
 #include "crs.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 #define NFILES 15
 

@@ -130,10 +130,10 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-#include "config.h"
+#include <grass/config.h>
 
 #include "G.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 static int _zeros_r_nulls = 1;
 

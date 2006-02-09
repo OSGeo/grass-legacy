@@ -8,7 +8,7 @@
 		drawn before the current path segment.
 		 
  ***********************************************************************/
-#include "segment.h"
+#include <grass/segment.h>
 
 
 void drawline(int x1, int y1, int x2, int y2)

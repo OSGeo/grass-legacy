@@ -6,10 +6,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
-#include "interpf.h"
+#include <grass/interpf.h>
 
 static double  smallest_segment( struct multtree *, int);
 

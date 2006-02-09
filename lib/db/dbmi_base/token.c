@@ -1,4 +1,4 @@
-#include "dbmi.h"
+#include <grass/dbmi.h>
 
 /* these routines manage a mapping between tokens (ints) and memory addresses */
 #define NONE ( (dbAddress) NULL )

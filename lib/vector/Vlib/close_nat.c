@@ -14,7 +14,7 @@
 *   	    	for details.
 *
 *****************************************************************************/
-#include "Vect.h"
+#include <grass/Vect.h>
 #include <stdlib.h>
 
 /* 

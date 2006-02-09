@@ -1,8 +1,8 @@
 #include <string.h>
-#include "display.h"
-#include "D.h"
-#include "raster.h"
-#include "gis.h"
+#include <grass/display.h>
+#include <grass/D.h>
+#include <grass/raster.h>
+#include <grass/gis.h>
 #include <stdio.h>
 
 #define METERS_TO_MILES(x) ((x) * 6.213712e-04)

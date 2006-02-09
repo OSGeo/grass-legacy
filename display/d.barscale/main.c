@@ -3,12 +3,12 @@
 #include <unistd.h>
 #include <string.h>
 
-#include "gis.h"
-#include "display.h"
-#include "raster.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/raster.h>
 #include "options.h"
-#include "colors.h"
-#include "glocale.h"
+#include <grass/colors.h>
+#include <grass/glocale.h>
 
 int color1;
 int color2;

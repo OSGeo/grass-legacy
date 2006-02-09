@@ -19,7 +19,7 @@
 ************************************************************/
 
 #include "pixel.h"
-#include "config.h"
+#include <grass/config.h>
 
 
 

@@ -4,7 +4,7 @@
  * This program is free software under the GPL (>=v2)
  * Read the file GPL.TXT coming with GRASS for details.
  */
-#include "datetime.h"
+#include <grass/datetime.h>
 
 
 static int have(int x, DateTime *dt)

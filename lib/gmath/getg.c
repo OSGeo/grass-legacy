@@ -11,7 +11,7 @@ Author:         Bill Hoff,2-114C,8645,3563478 (hoff) at uicsl
 #include <stdio.h>
 #include <math.h>
 #include "numerical.h"
-#include "gmath.h"
+#include <grass/gmath.h>
 
 int 
 getg (double w, double *g[2], int size)

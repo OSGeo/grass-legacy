@@ -1,6 +1,6 @@
 #include <unistd.h>
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 void recurse_list(int flag, int *cells, int sz, int start)
 {

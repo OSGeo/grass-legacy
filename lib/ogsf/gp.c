@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 
 #define FIRST_SITE_ID 21720
 

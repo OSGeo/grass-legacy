@@ -9,7 +9,7 @@
  * will supercede the original.
  ******************************************************************/
 #include <stdio.h>
-#include "segment.h"
+#include <grass/segment.h>
 
 static int check(SEGMENT *,int,int,char *);
 

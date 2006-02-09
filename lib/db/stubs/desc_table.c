@@ -1,4 +1,4 @@
-#include "dbmi.h"
+#include <grass/dbmi.h>
 
 int
 db__driver_describe_table (dbString *name, dbTable *table)

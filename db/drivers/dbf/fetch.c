@@ -13,7 +13,7 @@
 *   	    	for details.
 *
 *****************************************************************************/
-#include <dbmi.h>
+#include <grass/dbmi.h>
 #include "globals.h"
 #include "proto.h" 
 

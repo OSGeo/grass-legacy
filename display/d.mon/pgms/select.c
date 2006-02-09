@@ -1,11 +1,11 @@
 /* select a monitor for graphics */
 
-#include "raster.h"
-#include "display.h"
+#include <grass/raster.h>
+#include <grass/display.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "gis.h"
-#include "monitors.h"
+#include <grass/gis.h>
+#include <grass/monitors.h>
 
 int 
 main (int argc, char *argv[])

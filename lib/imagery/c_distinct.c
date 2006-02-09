@@ -1,4 +1,4 @@
-#include "imagery.h"
+#include <grass/imagery.h>
 
 int I_cluster_distinct(struct Cluster *C, double separation)
 {

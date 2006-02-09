@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
-#include "glocale.h"
+#include <grass/glocale.h>
 
 #include "local_proto.h"
 

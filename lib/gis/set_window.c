@@ -14,8 +14,8 @@
  *   'window'.
  *******************************************************************/
 
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "G.h"
 
 int G_get_set_window (struct Cell_head *window)

@@ -47,8 +47,8 @@
 /* for using the close statement */
 #include <unistd.h>
 
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 #define DEBUG
 #include "tinf.h"

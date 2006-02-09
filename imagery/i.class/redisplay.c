@@ -1,6 +1,6 @@
 #include "globals.h"
-#include "raster.h"
-#include "glocale.h"
+#include <grass/raster.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 static int use = 1;

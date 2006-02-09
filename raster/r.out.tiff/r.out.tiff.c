@@ -32,7 +32,7 @@
 #include <string.h>
 #include <float.h>
 #include <sys/types.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "rasterfile.h"
 #include "tiffio.h"
 

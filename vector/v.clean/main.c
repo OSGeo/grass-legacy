@@ -17,10 +17,10 @@
 #include <stdlib.h> 
 #include <string.h> 
 #include <stdio.h> 
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 #include "proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 int rmdac ( struct Map_info *Out );
 void remove_bridges ( struct Map_info *Map, struct Map_info *Err );

@@ -6,7 +6,7 @@
 #define _KFTYPES_H
 
 #ifndef _KEYFRAME_H
-#include "keyframe.h"
+#include <grass/keyframe.h>
 #endif
 
 #define KF_FROMX 0

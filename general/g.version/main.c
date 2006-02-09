@@ -15,8 +15,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 #ifndef GRASS_VERSION_UPDATE_PKG
 #define GRASS_VERSION_UPDATE_PKG "0.1"

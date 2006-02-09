@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 double euclidean_distance(double *x, double *y, int n);
 double gaussian2dBySigma( double d, double sigma );

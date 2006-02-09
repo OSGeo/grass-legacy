@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <limits.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 /*
 #define MSDOS 1
@@ -49,7 +49,7 @@ typedef double DOUBLE;
 
 #else
 
-#include "imagery.h"
+#include <grass/imagery.h>
 
 typedef double DOUBLE;
 

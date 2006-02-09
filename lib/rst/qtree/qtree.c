@@ -12,8 +12,8 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "dataquad.h"
-#include "qtree.h"
+#include <grass/dataquad.h>
+#include <grass/qtree.h>
 
 struct multfunc *
 MT_functions_new (int (*compare)(struct triple *, struct quaddata *),

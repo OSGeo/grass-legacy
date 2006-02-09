@@ -14,10 +14,10 @@
  *
  *****************************************************************************/
 
-#include "config.h"
+#include <grass/config.h>
 #include <stdio.h>
-#include "gis.h"
-#include "gprojects.h"
+#include <grass/gis.h>
+#include <grass/gprojects.h>
 #ifdef HAVE_OGR
 #  include <gdal.h>
 #  include <ogr_api.h>

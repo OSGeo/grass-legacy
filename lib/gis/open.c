@@ -72,14 +72,14 @@
  *               or NULL could not open
  *******************************************************************/
 
-#include "config.h"
+#include <grass/config.h>
 #include <string.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
-#include "gis.h"
+#include <grass/gis.h>
 #include <unistd.h>
 #include <fcntl.h>
 

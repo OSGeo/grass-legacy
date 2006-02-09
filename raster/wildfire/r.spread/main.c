@@ -27,12 +27,12 @@
 #include <math.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "cmd_line.h"
 #include "costHa.h"
 #include "cell_ptrHa.h"
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 #define DATA(map, r, c)		(map)[(r) * ncols + (c)]
 

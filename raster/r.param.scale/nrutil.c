@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "nrutil.h"
 #define NR_END 1
 #define FREE_ARG char*

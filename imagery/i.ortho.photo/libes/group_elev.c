@@ -5,7 +5,7 @@
 * fopen() the imagery group elev reference file "ELEVATION"
 * (containing the name of the elev associated with the block)
 **********************************************************/
-#include "imagery.h"
+#include <grass/imagery.h>
 #include "orthophoto.h"
 
 FILE *I_fopen_group_elev_new (char *group)

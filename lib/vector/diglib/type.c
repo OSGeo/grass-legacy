@@ -13,8 +13,8 @@
 *   	    	for details.
 *
 *****************************************************************************/
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 /*!
  \fn int dig_type_to_store (int type)

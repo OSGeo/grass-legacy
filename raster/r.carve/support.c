@@ -1,6 +1,6 @@
 #include <string.h>
 #include <stdio.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "enforce.h"
 
 

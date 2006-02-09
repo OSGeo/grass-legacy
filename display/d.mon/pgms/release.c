@@ -4,10 +4,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "gis.h"
-#include "monitors.h"
+#include <grass/gis.h>
+#include <grass/monitors.h>
 #include "open.h"
-#include "raster.h"
+#include <grass/raster.h>
 #include "local_proto.h"
 
 int 

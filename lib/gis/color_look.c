@@ -1,5 +1,5 @@
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 /* old 4.1 routine */
 

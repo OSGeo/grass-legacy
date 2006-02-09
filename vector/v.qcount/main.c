@@ -35,8 +35,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 #include "quaddefs.h"
 
 int main ( int argc, char **argv)

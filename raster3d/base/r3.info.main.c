@@ -26,9 +26,9 @@ int format_double (double value, char *buf);
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "G3d.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/G3d.h>
+#include <grass/glocale.h>
 
 #define printline(x) fprintf (out," | %-74.74s |\n",x)
 #define divider(x) \

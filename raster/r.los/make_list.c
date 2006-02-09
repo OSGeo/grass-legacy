@@ -9,8 +9,8 @@
 
 #include <stdlib.h>
 #include <math.h>
-#include "segment.h"
-#include "gis.h"
+#include <grass/segment.h>
+#include <grass/gis.h>
 #include "point.h"
 #include "local_proto.h"
 

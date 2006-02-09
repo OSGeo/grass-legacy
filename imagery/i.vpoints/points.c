@@ -1,5 +1,5 @@
 #include "globals.h"
-#include "raster.h"
+#include <grass/raster.h>
 
 int display_points (int in_color)
 {

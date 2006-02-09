@@ -1,6 +1,6 @@
 /*  @(#)m_mult.c	2.1  6/26/87  */
 #include <stdio.h>
-#include "libtrans.h"
+#include <grass/libtrans.h>
 
 #define		N	3
 

@@ -22,10 +22,10 @@
 #include <unistd.h>
 #include <string.h>
 #include <ctype.h>
-#include "gis.h"
-#include "dbmi.h"
-#include "site.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/site.h>
+#include <grass/Vect.h>
 
 int main (int argc, char *argv[])
 {

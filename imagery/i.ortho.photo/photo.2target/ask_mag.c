@@ -1,5 +1,5 @@
 /* ask_mag.c */
-#include "raster.h"
+#include <grass/raster.h>
 #include "globals.h"
 #include "local_proto.h"
 

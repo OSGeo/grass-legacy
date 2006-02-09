@@ -1,6 +1,6 @@
 #include "filter.h"
 #include <unistd.h>
-#include "rowio.h"
+#include <grass/rowio.h>
 #include "glob.h"
 
 int 

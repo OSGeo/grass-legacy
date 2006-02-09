@@ -38,13 +38,13 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include "gis.h"
-#include "site.h"
-#include "segment.h"
+#include <grass/gis.h>
+#include <grass/site.h>
+#include <grass/segment.h>
 #include "cost.h"
 #include "stash.h"
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 struct Cell_head window;
 

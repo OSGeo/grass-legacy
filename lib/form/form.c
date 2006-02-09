@@ -5,9 +5,9 @@
 #include <tcl.h>
 #include <tk.h>
 #include <locale.h>
-#include "gis.h"
-#include "dbmi.h"
-#include "form.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/form.h>
 
 #ifdef __MINGW32__
 #define        F_SETFL         4       /* Set file status flags.  */

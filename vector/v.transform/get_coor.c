@@ -15,7 +15,7 @@
 
 #include <stdio.h>
 #include "trans.h"
-#include "gis.h"
+#include <grass/gis.h>
 
 int 
 get_coor_from_file (FILE *fp)

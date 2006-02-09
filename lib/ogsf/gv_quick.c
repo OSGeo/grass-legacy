@@ -15,7 +15,7 @@ it when doing interactive translations.
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 #include "rowcol.h"
 
 /* target number of desired points to represent entire file */

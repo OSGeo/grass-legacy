@@ -1,4 +1,4 @@
-#include "imagery.h"
+#include <grass/imagery.h>
 #include "signature.h"
 #include "files.h"
 int 

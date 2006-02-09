@@ -1,4 +1,4 @@
-#include "config.h"
+#include <grass/config.h>
 
 #include <stdio.h>
 #include <string.h>
@@ -8,8 +8,7 @@
 #include <unistd.h>
 #include <errno.h>
 
-#include "gis.h"
-#include "graph.h"
+#include <grass/gis.h>
 #include "driverlib.h"
 #include "driver.h"
 #include "pad.h"

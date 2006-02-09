@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 int inpt (FILE *rulefd,  char *buf)
 {

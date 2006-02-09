@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 /* for convenience, but to be avoided if possible */
 

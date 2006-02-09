@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include "vizual.h"
 /*
 ** the corner of the cube 

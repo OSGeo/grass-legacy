@@ -3,7 +3,7 @@
 /* Nvision stuff */
 #include "interface.h"
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 viz_calc_linefax(linefax, args, nargs, interp)
      cmndln_info *linefax;

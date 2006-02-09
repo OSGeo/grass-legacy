@@ -1,5 +1,5 @@
 #include "globals.h"
-#include "raster.h"
+#include <grass/raster.h>
 
 static int x1, y1, x2, y2;
 static View *pick_view, *zoom_view, *main_view;

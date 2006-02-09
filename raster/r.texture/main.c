@@ -23,9 +23,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "h_measure.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 static const char *suffixes[56] = {
 	"_ASM_0", "_ASM_45", "_ASM_90", "_ASM_135",

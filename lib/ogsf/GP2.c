@@ -9,9 +9,9 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 #include "gsget.h"
 
 static int Site_ID[MAX_SITES];

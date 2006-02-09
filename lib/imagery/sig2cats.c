@@ -1,4 +1,4 @@
-#include "imagery.h"
+#include <grass/imagery.h>
 
 int I_signature_to_cats( struct Signature *S, struct Categories *cats)
 {

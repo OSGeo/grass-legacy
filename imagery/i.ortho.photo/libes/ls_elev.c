@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 
 static char *tempfile = NULL;
 

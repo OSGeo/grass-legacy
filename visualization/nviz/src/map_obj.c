@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/time.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "interface.h"
 
 /* Extern declarations */

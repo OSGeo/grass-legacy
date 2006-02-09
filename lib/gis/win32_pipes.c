@@ -28,7 +28,7 @@
 
 #ifdef __MINGW32__
 
-#include "gis.h"
+#include <grass/gis.h>
 #include <windows.h>
 #include <io.h>
 #include <errno.h>

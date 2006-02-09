@@ -1,8 +1,8 @@
 #include <stdlib.h>
-#include "dbmi.h"
-#include "gis.h"
-#include "codes.h"
-#include "glocale.h"
+#include <grass/dbmi.h>
+#include <grass/gis.h>
+#include <grass/codes.h>
+#include <grass/glocale.h>
 
 void parse_command_line();
 

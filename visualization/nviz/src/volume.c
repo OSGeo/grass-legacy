@@ -6,7 +6,7 @@
 
 /* Nvision includes */
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "interface.h"
 
 /* set polygon resolution for isosurfaces */

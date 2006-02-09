@@ -35,8 +35,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 /* typedef unsigned short uint16;
 typedef unsigned int uint32; */

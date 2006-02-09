@@ -1,7 +1,7 @@
 /* look for at least one file in the element */
 #include <string.h>
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 int 
 empty (char *elem)
 {

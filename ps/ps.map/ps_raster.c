@@ -11,7 +11,7 @@
 ** These changes are made by Olga Waupotitsch 4/94
 */
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "ps_info.h"
 #include "group.h"
 #include "local_proto.h"

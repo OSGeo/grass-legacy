@@ -4,11 +4,11 @@
 
 /* possible TODO: add support for magnify (zoom=) */
 
-#include "gis.h"
-#include "display.h"
-#include "raster.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/raster.h>
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 
 int do_pan(struct Cell_head *window) {

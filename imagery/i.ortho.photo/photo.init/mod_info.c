@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <curses.h>
-#include "vask.h"
+#include <grass/vask.h>
 #include "globals.h"
 
 int mod_init_info (int have_old, struct Ortho_Camera_Exp_Init *init_info)

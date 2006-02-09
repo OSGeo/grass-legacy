@@ -1,9 +1,9 @@
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include <unistd.h>
 #include <stdlib.h>
 
-#include "config.h"
+#include <grass/config.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>

@@ -10,9 +10,9 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/stat.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "G.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 struct G__ G__ ;
 static int initialized = 0;

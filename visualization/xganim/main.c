@@ -23,8 +23,8 @@
 #include <math.h>
 #include <limits.h>
 #include <unistd.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "gui.h"
 #define MAIN
 #include "local_proto.h"

@@ -1,6 +1,6 @@
 #include <unistd.h>
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "globals.h"
 /* read the target for the group and cast it into the alternate GRASS env */
 

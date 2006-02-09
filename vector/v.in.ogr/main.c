@@ -18,16 +18,16 @@
  * TODO: make fixed field length of OFTIntegerList dynamic
  **************************************************************/
 #define MAIN
-#include "config.h"
+#include <grass/config.h>
 #include <stdlib.h> 
 #include <string.h> 
-#include "gis.h"
-#include "dbmi.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
 #include "ogr_api.h"
 #include "global.h"
-#include "gprojects.h"
-#include "glocale.h"
+#include <grass/gprojects.h>
+#include <grass/glocale.h>
 
 int geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_area, int type, int mk_centr );
 int centroid(OGRGeometryH hGeom, CENTR *Centr, SPATIAL_INDEX *Sindex, int field, int cat, double min_area, int type);

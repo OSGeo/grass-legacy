@@ -49,7 +49,7 @@
 #endif
 #include <tcl.h>
 #include <tk.h>
-#include "gis.h"
+#include <grass/gis.h>
 #if defined(X11)
 #if TK_MAJOR_VERSION==4 && TK_MINOR_VERSION==0
 #  include "tkInt4.0.h"

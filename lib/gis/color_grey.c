@@ -9,7 +9,7 @@
  *
  **********************************************************************/
 
-#include "gis.h"
+#include <grass/gis.h>
 
 static int add_grey_scale_colors (struct Colors *, DCELL, DCELL);
 

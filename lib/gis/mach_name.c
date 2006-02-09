@@ -1,5 +1,5 @@
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 /* this routine returns a name for the machine
  * it returns the empty string, if this info
  * not available (it never returns a NULL pointer)
@@ -11,7 +11,7 @@
  *
  */
 
-#include "config.h"
+#include <grass/config.h>
 
 #ifndef HAVE_GETHOSTNAME
 #ifdef HAVE_SYS_UTSNAME_H

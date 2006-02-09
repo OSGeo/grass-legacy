@@ -1,4 +1,4 @@
-#include "rowio.h"
+#include <grass/rowio.h>
 
 /*!
  * \brief get file descriptor

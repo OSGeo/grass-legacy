@@ -1,4 +1,4 @@
-#include "config.h"
+#include <grass/config.h>
 
 extern char * G_gettext(const char *, const char *);
 

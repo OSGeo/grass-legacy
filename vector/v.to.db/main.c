@@ -13,10 +13,10 @@
 /********************************************************************/
 
 #define MAIN
-#include "gis.h"
+#include <grass/gis.h>
 #include "global.h"
-#include "glocale.h"
-#include "Vect.h"
+#include <grass/glocale.h>
+#include <grass/Vect.h>
 
 int 
 main (int argc, char *argv[])

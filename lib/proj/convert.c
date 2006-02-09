@@ -15,14 +15,14 @@
  *
  *****************************************************************************/
 
-#include "config.h"
+#include <grass/config.h>
 
 #ifdef HAVE_OGR
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "gprojects.h"
+#include <grass/gis.h>
+#include <grass/gprojects.h>
 #include <cpl_csv.h>
 #include "local_proto.h"
 

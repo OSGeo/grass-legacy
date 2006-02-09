@@ -1,5 +1,5 @@
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
 
 int can_invert (double **a, int n)

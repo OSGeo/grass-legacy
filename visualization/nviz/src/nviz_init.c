@@ -6,11 +6,11 @@
 #include <stdlib.h>
 #include "tk.h"
 #include "interface.h"
-#include "gis.h"
+#include <grass/gis.h>
 #include "coldefs.h"
-#include "bitmap.h"
+#include <grass/bitmap.h>
 /* get from gislib: */
-#include "version.h"
+#include <grass/version.h>
 
 char startup_script[] = "toplevel .wait_ok\n\
 label .wait_ok.wait -text \"Please wait...\" -fg red -bg black\n\

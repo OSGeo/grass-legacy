@@ -14,7 +14,7 @@
 *
 *****************************************************************************/
 
-#include <dbmi.h>
+#include <grass/dbmi.h>
 #include "globals.h"
 
 int

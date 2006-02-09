@@ -22,9 +22,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
-#include "gis.h"
-#include "Vect.h"
-#include "site.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/site.h>
 
 
 struct Point {

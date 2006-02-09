@@ -1,4 +1,4 @@
-#include "dbmi.h"
+#include <grass/dbmi.h>
 
 int
 db__driver_create_table (dbTable *table)

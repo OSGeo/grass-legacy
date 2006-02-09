@@ -3,8 +3,8 @@
  * it writes the WIND file and sets the current program window
  * it sets the zone,proj to 0, resolutions to 1.0
  */
-#include "imagery.h"
-#include "gis.h"
+#include <grass/imagery.h>
+#include <grass/gis.h>
 
 
 int I__firstrow_;

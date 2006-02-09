@@ -1,4 +1,4 @@
-#include <sqlp.h>
+#include <grass/sqlp.h>
 
 #define DBF_COL_NAME 20 /* maximum column name (in fact shouldn't be > 10) */
 

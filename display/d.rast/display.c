@@ -1,10 +1,10 @@
 #include <stdlib.h>
-#include "gis.h"
-#include "raster.h"
-#include "display.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/display.h>
 #include "mask.h"
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 static int cell_draw(char *,char *,struct Colors *,int,int,RASTER_MAP_TYPE);
 

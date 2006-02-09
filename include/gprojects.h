@@ -16,7 +16,7 @@
  *
  *****************************************************************************/
 
-#include "config.h"
+#include <grass/config.h>
 #include <proj_api.h>
 #ifdef HAVE_OGR
 #    include <ogr_srs_api.h>

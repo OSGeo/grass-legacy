@@ -17,8 +17,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include  "gis.h"
-#include  "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 int G_ask_proj_name (char *proj_id, char *proj_name)
 

@@ -4,7 +4,7 @@
 **  US Army Construction Engineering Research Lab
 **  Copyright  H. Mitasova, I. Kosinovsky, D.Gerdes  USA-CERL  1992
 */
-#include "gis.h"
+#include <grass/gis.h>
 
 /* for resample program */
 struct fcell_triple   {

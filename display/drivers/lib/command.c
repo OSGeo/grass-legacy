@@ -8,12 +8,12 @@
 #include <sys/time.h>
 #include <sys/types.h>
 
-#include "gis.h"
-#include "graph.h"
+#include <grass/gis.h>
+#include <grass/graphics.h>
 #include "driverlib.h"
 #include "driver.h"
 #include "pad.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 #define REC(a,b)    if ((eof=rec((a),(b)))) break
 #define RECTEXT(x,s)  if ((eof=rectext(&x,&s))) break

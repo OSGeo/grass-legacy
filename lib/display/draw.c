@@ -25,9 +25,9 @@
  *   
  *
  */
-#include "raster.h"
-#include "gis.h"
-#include "display.h"
+#include <grass/raster.h>
+#include <grass/gis.h>
+#include <grass/display.h>
 
 static int clip (void);
 static int line_eq(int,int,int,int,int,int);

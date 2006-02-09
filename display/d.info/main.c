@@ -14,10 +14,10 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "gis.h"
-#include "raster.h"
-#include "display.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/display.h>
+#include <grass/glocale.h>
 
 int main(int argc,char *argv[])
 {

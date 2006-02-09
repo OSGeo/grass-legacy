@@ -5,8 +5,8 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <curses.h>
-#include "config.h"
-#include "vask.h"
+#include <grass/config.h>
+#include <grass/vask.h>
 
 int V__dump_window()
 {

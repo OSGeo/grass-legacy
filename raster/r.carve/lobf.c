@@ -3,7 +3,7 @@
  */
 
 #include "enforce.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 
 /*

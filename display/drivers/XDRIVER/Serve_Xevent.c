@@ -7,10 +7,10 @@
 #include <sys/wait.h>
 #include <sys/time.h>
 #include "includes.h"
-#include "colors.h"
+#include <grass/colors.h>
 #include "pad.h"
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "XDRIVER.h"
 
 static void spawn_redraw_process(void);

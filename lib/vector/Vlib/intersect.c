@@ -17,8 +17,8 @@
 *****************************************************************************/
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 
 /* function prototypes */

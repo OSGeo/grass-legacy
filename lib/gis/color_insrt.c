@@ -3,7 +3,7 @@
  * It is used by G_add_color_rule() and G__read_old_colors().
  * These routines know when it is approriate to call this routine.
  */
-#include "gis.h"
+#include <grass/gis.h>
 #define umalloc(n) (unsigned char *) G_malloc((size_t)n)
 #define urealloc(s,n) (unsigned char *) G_realloc(s,(size_t)n)
 

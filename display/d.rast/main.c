@@ -1,10 +1,10 @@
 #include <stdlib.h>
-#include "gis.h"
-#include "raster.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
 #define MAIN
 #include "mask.h"
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 static int parse_catlist ( char **, Mask *);
 static int parse_vallist ( char **, d_Mask *);

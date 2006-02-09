@@ -11,9 +11,9 @@
  * returned in (*nx, *ny) and the button pressed in returned in
  * *button. */
 
-#include "gis.h"
+#include <grass/gis.h>
 #include "includes.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 /* Returns: -1  error
 *            0

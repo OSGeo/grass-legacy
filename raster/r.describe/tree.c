@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 #define INCR 10
 #define NCATS 100

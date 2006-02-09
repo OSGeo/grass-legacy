@@ -21,7 +21,7 @@ CALLS:
 
 #include <stdio.h>
 #include <unistd.h>
-#include "vask.h"
+#include <grass/vask.h>
 
 #ifdef __MINGW32__
 unsigned int sleep (unsigned int seconds)

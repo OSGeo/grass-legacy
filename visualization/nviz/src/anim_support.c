@@ -5,7 +5,7 @@
 */
 
 /* gsf includes */
-#include "keyframe.h"
+#include <grass/keyframe.h>
 
 /* Nvision includes */
 #include "interface.h"
@@ -13,7 +13,7 @@
 /* Standard includes*/
 #include <stdio.h>
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 /* ********************************************************
   Nset_interp_mode_cmd --

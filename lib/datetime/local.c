@@ -5,7 +5,7 @@
  * Read the file GPL.TXT coming with GRASS for details.
  */
 #include <time.h>
-#include "datetime.h"
+#include <grass/datetime.h>
 
 extern struct tm *localtime();
 extern struct tm *gmtime();

@@ -40,9 +40,9 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <string.h>
-#include "gis.h"
-#include "Vect.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/glocale.h>
 
 #ifndef RAND_MAX 
 #define RAND_MAX (pow(2.0,31.0)-1) 

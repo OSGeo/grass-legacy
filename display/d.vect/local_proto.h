@@ -1,4 +1,4 @@
-#include "symbol.h"
+#include <grass/symbol.h>
 
 FILE *open_vect(char *, char *);
 int close_vect(FILE *);

@@ -1,4 +1,4 @@
-#include "imagery.h"
+#include <grass/imagery.h>
 /************************************************************
  * add_cov (n1, n2, m1a, m1b, m2a, m2b, cov1, cov2)
  *

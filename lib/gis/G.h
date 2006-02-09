@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #define MAXFILES    256
 #include <rpc/types.h>
 #include <rpc/xdr.h>

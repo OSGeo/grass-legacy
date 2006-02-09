@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "dbmi.h"
-#include "sqlp.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/sqlp.h>
 
 int
 main (int argc, char **argv) 

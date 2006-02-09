@@ -3,15 +3,15 @@
 * added color support: Markus Neteler, Martin Landa
 */
 #include <string.h>
-#include "gis.h"
-#include "Vect.h"
-#include "display.h"
-#include "raster.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/display.h>
+#include <grass/raster.h>
 #include "plot.h"
 #include "local_proto.h"
-#include "colors.h"
-#include "dbmi.h"
-#include "glocale.h"
+#include <grass/colors.h>
+#include <grass/dbmi.h>
+#include <grass/glocale.h>
 
 int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor, 
 	     int chcat, int id_flag, int table_colors_flag, int cats_color_flag,

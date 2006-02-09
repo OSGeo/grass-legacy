@@ -42,7 +42,7 @@
  ******************************************************************************/
 #include <stdio.h>
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "cmd_line.h"
 #include "costHa.h"
 #include "cell_ptrHa.h"

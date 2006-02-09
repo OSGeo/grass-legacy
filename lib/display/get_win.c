@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "raster.h"
+#include <grass/raster.h>
 
 int get_win_w_mouse(float *top,float *bottom,float *left,float *right )
 {

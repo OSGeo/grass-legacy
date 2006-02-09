@@ -6,7 +6,7 @@
 */
 #include <string.h>
 #include <stdlib.h>
-#include "linkm.h"
+#include <grass/linkm.h>
 
 
 struct link_head *link_new (struct link_head *Head)

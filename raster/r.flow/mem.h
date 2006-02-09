@@ -1,6 +1,6 @@
 /************************** MEMORY MANAGEMENT ***************************/
 
-#include "gis.h"
+#include <grass/gis.h>
 #define KB 1024
 #define MB (KB * KB)
 #define SEGSINMEM 9

@@ -17,9 +17,9 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include  "gis.h"
-#include  "dbmi.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
 
 int reclass ( struct Map_info *In, struct Map_info *Out, int type, int field, dbCatValArray *cvarr, int dissolve)
 {

@@ -6,9 +6,9 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "gstypes.h"
-#include "keyframe.h"
-#include "kftypes.h"
+#include <grass/gstypes.h>
+#include <grass/keyframe.h>
+#include <grass/kftypes.h>
 
 static float spl3(float, double, double, double, double, double, double,
 		  double);

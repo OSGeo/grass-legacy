@@ -1,4 +1,4 @@
-#include "dbmi.h"
+#include <grass/dbmi.h>
 
 /*!
  \fn int db__driver_add_column (dbString *tableName, dbColumn *column)

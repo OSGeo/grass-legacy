@@ -5,7 +5,7 @@
 ** modified to use G_plot_line() by Olga Waupotitsch on dec,93
 */
 
-#include "Vect.h"
+#include <grass/Vect.h>
 #include "ps_info.h"
 #include "local_proto.h"
 #include "vector.h"

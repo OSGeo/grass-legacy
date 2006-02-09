@@ -1,8 +1,8 @@
 #include "stdio.h"
-#include "display.h"
-#include "D.h"
-#include "raster.h"
-#include "gis.h"
+#include <grass/display.h>
+#include <grass/D.h>
+#include <grass/raster.h>
+#include <grass/gis.h>
 #include "profile.h"
 
 int What(

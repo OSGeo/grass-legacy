@@ -6,9 +6,9 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include <gis.h>
-#include <raster.h>
-#include "graph.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/graphics.h>
 
 /*!
  * \brief screen left edge

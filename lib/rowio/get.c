@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "rowio.h"
+#include <grass/rowio.h>
 
 static char *my_select ( ROWIO *,int);
 static int pageout ( ROWIO *,int);

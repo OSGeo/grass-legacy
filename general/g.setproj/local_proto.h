@@ -1,4 +1,4 @@
-#include "geo.h"
+#include <grass/geo.h>
 
 /* $GISBASE-relative locations of parameter files */
 #define STP1927PARAMS "/etc/state27"

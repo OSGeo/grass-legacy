@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 /*! 
  \fn G_colors_count ( struct Colors *colors )

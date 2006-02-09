@@ -34,7 +34,10 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.4  2005-03-24 14:26:44  markus
+ * Revision 1.5  2006-02-09 03:08:55  glynn
+ * Use <grass/gis.h> etc rather than <gis.h>
+ *
+ * Revision 1.4  2005/03/24 14:26:44  markus
  * updated to GDAL 1.2.6
  *
  * Revision 1.46  2005/02/11 17:17:46  fwarmerdam
@@ -182,7 +185,7 @@
  *
  */
 
-#include "shapefil.h"
+#include <grass/shapefil.h>
 
 #include <math.h>
 #include <limits.h>

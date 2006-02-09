@@ -19,9 +19,9 @@
 #include <math.h>
 #include "binio.h"
 #include "v5d.h"
-#include "gis.h"
-#include "G3d.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/G3d.h>
+#include <grass/glocale.h>
 
 #define MAX(a,b) (a > b ? a : b)
 

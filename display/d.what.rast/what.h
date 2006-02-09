@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 #ifndef GLOBAL
 #define GLOBAL extern

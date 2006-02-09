@@ -15,9 +15,9 @@
 *   	    	for details.
 *
 *****************************************************************************/
-#include "Vect.h"
+#include <grass/Vect.h>
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 /* ADD comment what and why a list */
 

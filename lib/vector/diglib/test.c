@@ -18,7 +18,7 @@
 *
 *****************************************************************************/
 #include <stdio.h>
-#include "Vect.h"
+#include <grass/Vect.h>
 
 /* Test portable r/w functions */
 

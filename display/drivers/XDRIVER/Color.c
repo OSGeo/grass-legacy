@@ -6,8 +6,8 @@
 
 #include <stdio.h>
 #include "includes.h"
-#include "colors.h"
-#include "gis.h"
+#include <grass/colors.h>
+#include <grass/gis.h>
 #include "XDRIVER.h"
 
 void XD_color(int number)

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "dbmi.h"
+#include <grass/dbmi.h>
 
 static char ds = '-';
 static char ts = ':';

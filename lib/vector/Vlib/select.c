@@ -15,8 +15,8 @@
 *
 *****************************************************************************/
 #include <stdlib.h>
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 /*!
  \fn int Vect_select_lines_by_box (struct Map_info *Map, BOUND_BOX *Box, 

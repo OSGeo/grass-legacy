@@ -9,7 +9,7 @@
  *     parms determined by format_parms()
  ***************************************************/
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "global.h"
 
 int format_parms (double v, int *n, int *dp, int *eformat, int e_option)

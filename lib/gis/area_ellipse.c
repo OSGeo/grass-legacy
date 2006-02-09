@@ -1,6 +1,6 @@
 #include <math.h>
 #include "pi.h"
-#include "gis.h"
+#include <grass/gis.h>
 
 static double E;
 static double M;

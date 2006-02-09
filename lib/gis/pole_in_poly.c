@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 /**********************************************************
  * G_pole_in_polygon(x, y, n)
  *     double *x, *y, n;

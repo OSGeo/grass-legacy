@@ -1,5 +1,5 @@
 #include "globals.h"
-#include "raster.h"
+#include <grass/raster.h>
 
 static int active = 0;
 static int replot;

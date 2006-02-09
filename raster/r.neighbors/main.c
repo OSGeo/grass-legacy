@@ -1,13 +1,13 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #define MAIN
 #include "ncb.h"
 #include "method.h"
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 /*
  * July 99 - BB - added RASTER_MAP_TYPE args to methods in order

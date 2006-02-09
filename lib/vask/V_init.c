@@ -24,8 +24,8 @@ CALLS:
 
 ***********************************************************************/
 #include <stdlib.h>
-#include "config.h"
-#include "vask.h"
+#include <grass/config.h>
+#include <grass/vask.h>
 
 /*-----------------------------------------------------------------*/
 /* Prepare to use Viewform library                                 */

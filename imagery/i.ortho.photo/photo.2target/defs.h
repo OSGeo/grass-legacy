@@ -1,5 +1,5 @@
 #include "orthophoto.h"
-#include "rowio.h"
+#include <grass/rowio.h>
 #include <curses.h>
 
 /* this is a curses structure */

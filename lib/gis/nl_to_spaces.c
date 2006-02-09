@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 void G_newlines_to_spaces( char *s)
 {

@@ -18,9 +18,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
-#include "glocale.h"
-#include "gis.h"
-#include "Vect.h"
+#include <grass/glocale.h>
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 
 #ifndef HAVE_OGR

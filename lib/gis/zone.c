@@ -6,7 +6,7 @@
  *
  **********************************************************************/
 
-#include "gis.h"
+#include <grass/gis.h>
 
 /*!
  * \brief query cartographic zone

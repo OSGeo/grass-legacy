@@ -8,7 +8,7 @@
 #include <string.h>
 #include <math.h>
 #include <tk.h>
-#include "gis.h"
+#include <grass/gis.h>
 #ifdef SGI
 #include <gl.h>
 #include <gl/gl.h>
@@ -19,7 +19,7 @@
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 */
-#include "gsurf.h"
+#include <grass/gsurf.h>
 
 extern int *GV_get_vect_list(int *);
 extern int *GS_get_surf_list(int *);

@@ -1,4 +1,4 @@
-#include "imagery.h"
+#include <grass/imagery.h>
 #include "files.h"
 
 int closefiles (struct files *files)

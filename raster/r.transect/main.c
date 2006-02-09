@@ -1,8 +1,8 @@
 #include <string.h>
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 int main (int argc, char *argv[])
 {

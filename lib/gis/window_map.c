@@ -25,7 +25,7 @@
  *************************************************************/
 
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "G.h"
 
 #define FCB     G__.fileinfo[fd]

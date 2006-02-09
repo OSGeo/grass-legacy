@@ -2,7 +2,7 @@
 #include <math.h>
 #include <limits.h>
 #include <float.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "tinf.h"
 #include "local.h"
 

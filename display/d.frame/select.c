@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <string.h>
-#include "display.h"
-#include "D.h"
+#include <grass/display.h>
+#include <grass/D.h>
 #include <time.h>
-#include "raster.h"
-#include "gis.h"
+#include <grass/raster.h>
+#include <grass/gis.h>
 
 /*
  *   d.frame.choose [frame=name] {use mouse if frame= not specified}

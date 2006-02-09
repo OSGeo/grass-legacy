@@ -1,4 +1,4 @@
-#include "segment.h"
+#include <grass/segment.h>
 /*bugfix: buf: char* vs int* -> wrong pointer arithmetics!!!. Pierre de Mouveaux - 09 april 2000 */
 /*  
  * int segment_put (SEGMENT *SEG,int *buf,int row,int col) */

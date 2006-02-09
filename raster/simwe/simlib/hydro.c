@@ -3,13 +3,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
-#include "site.h"
-#include "bitmap.h"
-#include "linkm.h"
+#include <grass/gis.h>
+#include <grass/site.h>
+#include <grass/bitmap.h>
+#include <grass/linkm.h>
 
 #define MAIN
-#include "waterglobs.h"
+#include <grass/waterglobs.h>
 
 /* **************************************************** */
 /*       create walker representation of si */

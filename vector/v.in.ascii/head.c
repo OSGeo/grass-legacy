@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "Vect.h"
-#include "gis.h"
-#include "glocale.h"
+#include <grass/Vect.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 int 
 read_head ( FILE * dascii, struct Map_info *Map )

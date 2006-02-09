@@ -1,5 +1,5 @@
-#include <dbmi.h>
-#include <datetime.h>
+#include <grass/dbmi.h>
+#include <grass/datetime.h>
 #include "odbc.h"
 #include "globals.h"
 #include "proto.h"

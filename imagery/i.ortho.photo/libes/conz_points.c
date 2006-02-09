@@ -1,7 +1,7 @@
 #include <unistd.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 #include "orthophoto.h"
-#include "gis.h"
+#include <grass/gis.h>
 
 #define POINT_FILE "CONTROL_POINTS"
 

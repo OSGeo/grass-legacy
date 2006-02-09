@@ -1,4 +1,4 @@
-#include "display.h"
+#include <grass/display.h>
 #include "graphics.h"
 #include <stdio.h>
 #define GETEM	if (notgotem) getem()

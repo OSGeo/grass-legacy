@@ -1,6 +1,6 @@
 #include <string.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 static char *NULL_STRING = "null";
 static int reclass_type(FILE *,char *,char *);

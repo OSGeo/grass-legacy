@@ -16,7 +16,7 @@
  * 2 = 'distance-weighted'; row = sigma(row)/n,
  * col = sigma(col)/n.
  */
-#include "gis.h"
+#include <grass/gis.h>
 
 int centroids(int fd,		/* File descriptor of map layer to process */
 	      /* This file is assumed to be opened before calling */

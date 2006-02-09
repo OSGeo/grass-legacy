@@ -3,7 +3,7 @@
 * I_put_group_camera (group, &Cam_Ref);
 **********************************************************/
 #include "orthophoto.h"
-#include "ortholib.h"
+#include <grass/ortholib.h>
 
 /* Put the "camera" name into the group file "CAMERA" */
 int I_put_group_camera (char *group, char *camera)

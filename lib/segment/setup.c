@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "segment.h"
+#include <grass/segment.h>
 
 /* SEG must have the following parms set
  *  fd (open for read and write)

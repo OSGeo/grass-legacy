@@ -32,9 +32,9 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include <fcntl.h>
-#include "config.h"
-#include "gis.h"
-#include "rowio.h"
+#include <grass/config.h>
+#include <grass/gis.h>
+#include <grass/rowio.h>
 
 #define PAD 2
 #define MAX_ROW 7

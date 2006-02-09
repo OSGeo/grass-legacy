@@ -9,8 +9,8 @@
  *************************************************************/
 
 #include <string.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 int G_put_cell_title (char *name, char *title)
 {

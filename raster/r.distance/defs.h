@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 struct EdgeList                  /* keep track of edge cells */
 {

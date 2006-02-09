@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include "options.h"
 
 int fancy(char *mapset,

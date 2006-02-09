@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "config.h"
+#include <grass/config.h>
 #ifdef HAVE_ICONV_H
 #include <iconv.h>
 #endif
@@ -16,7 +16,7 @@
 #include FT_FREETYPE_H
 #endif
 
-#include "gis.h"
+#include <grass/gis.h>
 #include "driver.h"
 #include "driverlib.h"
 

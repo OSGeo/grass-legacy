@@ -17,9 +17,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "gis.h"
-#include "Vect.h"
-#include "dbmi.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
 
 typedef struct {
     int cat;   /* category number */

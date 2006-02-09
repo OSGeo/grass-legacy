@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include "profile.h"
 
 int is_null_value (RASTER_MAP_PTR *ptr, int col)

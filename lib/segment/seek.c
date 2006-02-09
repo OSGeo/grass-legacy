@@ -3,9 +3,9 @@
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
-#include "config.h"
-#include "gis.h"
-#include "segment.h"
+#include <grass/config.h>
+#include <grass/gis.h>
+#include <grass/segment.h>
 
 int segment_seek (SEGMENT *SEG,int n,int index)
 {

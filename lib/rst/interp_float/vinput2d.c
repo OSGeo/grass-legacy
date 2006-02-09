@@ -14,14 +14,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "bitmap.h"
-#include "linkm.h"
-#include "gis.h"
-#include "dbmi.h"
-#include "Vect.h"
-#include "glocale.h"
+#include <grass/bitmap.h>
+#include <grass/linkm.h>
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
+#include <grass/glocale.h>
 
-#include "interpf.h"
+#include <grass/interpf.h>
 
 int IL_vector_input_data_2d (
     struct interp_params *params,

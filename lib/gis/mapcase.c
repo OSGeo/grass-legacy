@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 /*
  * Map uppercase A-Z to lower case a-z
  *

@@ -18,9 +18,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "glocale.h"
-#include "gis.h"
-#include "Vect.h"
+#include <grass/glocale.h>
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 extern FILE *Msgout;
 extern int prnmsg ( char *msg, ...) ;

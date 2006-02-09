@@ -2,10 +2,10 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include "gis.h"
-#include "config.h"
-#include "raster.h"
-#include "display.h"
+#include <grass/gis.h>
+#include <grass/config.h>
+#include <grass/raster.h>
+#include <grass/display.h>
 
 #ifndef GLOBAL
 #define GLOBAL extern

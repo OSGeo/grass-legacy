@@ -4,7 +4,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "G3d_intern.h"
 #include "g3dkeys.h"
 

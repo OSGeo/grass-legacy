@@ -16,7 +16,7 @@ static char *SCCSid = "@(#)bilinear.c	v1.5 - 27 Jun 1995 	-emes-";
  *  See: Press, W.H. et al. (1992), Numerical recipes in C.
  */
 
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
 #include <math.h>
 

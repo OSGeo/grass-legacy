@@ -1,5 +1,5 @@
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "pi.h"
 
 /* WARNING: this code is preliminary and may be changed,

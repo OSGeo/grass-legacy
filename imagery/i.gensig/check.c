@@ -1,5 +1,5 @@
-#include "imagery.h"
-#include "glocale.h"
+#include <grass/imagery.h>
+#include <grass/glocale.h>
 #include "signature.h"
 #include "local_proto.h"
 

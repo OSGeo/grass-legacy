@@ -1,6 +1,6 @@
 #include <tcl.h>
 #include <tk.h>
-#include "Vect.h"
+#include <grass/Vect.h>
 
 #ifdef MAIN
   #define Global

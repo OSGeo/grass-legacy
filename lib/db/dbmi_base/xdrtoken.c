@@ -1,4 +1,4 @@
-#include "dbmi.h"
+#include <grass/dbmi.h>
 
 db__send_token  (dbToken *token)
 

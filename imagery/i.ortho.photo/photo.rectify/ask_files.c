@@ -2,7 +2,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "global.h"
-#include "vask.h"
+#include <grass/vask.h>
 
 #define NFILES 15
 

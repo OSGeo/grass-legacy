@@ -11,11 +11,11 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "gis.h"
-#include "bitmap.h"
+#include <grass/gis.h>
+#include <grass/bitmap.h>
 
-#include "gsurf.h"
-#include "gstypes.h"
+#include <grass/gsurf.h>
+#include <grass/gstypes.h>
 /* for geoview & geodisplay in 3dview stuff */
 #include "gsget.h"
 /* for update_attrange - might be able to move this func now */

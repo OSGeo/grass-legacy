@@ -31,7 +31,7 @@ NOTE: These routines are used by G_format_northing(), G_format_easting(), and
       these projection specific routines. In other words, these routines
       are for the library only, programmers shouldn't use them.
 ***************************************************************/
-#include "gis.h"
+#include <grass/gis.h>
 #include <string.h>
 
 static int format ( char *, int,int, double, char);

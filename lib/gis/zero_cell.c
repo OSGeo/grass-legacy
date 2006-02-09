@@ -8,7 +8,7 @@
  *  Zeros out a cell buffer 
  ****************************************************************/
 
-#include "gis.h"
+#include <grass/gis.h>
 
 /*!
  * \brief zero a raster buffer

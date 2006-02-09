@@ -3,7 +3,7 @@
 *
 * Find the a camera initial file in the current group (if it exists)
 **************************************************************/
-#include "gis.h"
+#include <grass/gis.h>
 
 int 
 I_find_initial (char *group)

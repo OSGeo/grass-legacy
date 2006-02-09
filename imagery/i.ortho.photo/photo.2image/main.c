@@ -4,9 +4,9 @@
 #include <string.h>
 #include <unistd.h>
 #include <signal.h>
-#include "gis.h"
-#include "raster.h"
-#include "imagery.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/imagery.h>
 #include "globals.h"
 
 

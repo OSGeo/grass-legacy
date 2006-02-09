@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include "globals.h"
 
 int fft_colors (void)

@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 double 
 length (register int np, register double *x, register double *y)

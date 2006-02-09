@@ -25,7 +25,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <assert.h>
-#include "sqlp.h"
+#include <grass/sqlp.h>
 
 /* save string to value */
 int sqpSaveStr(SQLPVALUE *val, char *c )

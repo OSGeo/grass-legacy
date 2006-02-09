@@ -4,7 +4,7 @@
 */
 
 #include <string.h>
-#include "symbol.h"
+#include <grass/symbol.h>
 #include "clr.h"
 #include "ps_info.h"
 #include "local_proto.h"

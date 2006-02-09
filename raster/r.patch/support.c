@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 /*
  * creates new category and color structures from the patching
  * files category and color files

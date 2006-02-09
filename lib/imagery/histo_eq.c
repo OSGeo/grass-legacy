@@ -9,8 +9,8 @@
 * inputs: histo
 * outputs map,min,max
 ****************************************************************/
-#include "imagery.h"
-#include "gis.h"
+#include <grass/imagery.h>
+#include <grass/gis.h>
 
 int I_histo_eq (
     struct Histogram *histo,

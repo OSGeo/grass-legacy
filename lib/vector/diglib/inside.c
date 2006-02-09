@@ -17,8 +17,8 @@
 *   	    	for details.
 *
 *****************************************************************************/
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 double 
 dig_x_intersect (

@@ -13,9 +13,9 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/stat.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "gmt_grd.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 typedef unsigned short uint16;
 typedef unsigned int uint32;

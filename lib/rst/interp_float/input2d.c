@@ -16,12 +16,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
-#include "site.h"
-#include "bitmap.h"
-#include "linkm.h"
+#include <grass/gis.h>
+#include <grass/site.h>
+#include <grass/bitmap.h>
+#include <grass/linkm.h>
 
-#include "interpf.h"
+#include <grass/interpf.h>
 
 struct BM * 
 IL_create_bitmask (struct interp_params *params)

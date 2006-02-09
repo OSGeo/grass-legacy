@@ -16,10 +16,10 @@
  **************************************************************/
 #include <string.h>
 #include <stdlib.h>
-#include "gis.h"
-#include "Vect.h"
-#include "dbmi.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
+#include <grass/glocale.h>
 
 #define printline(x) fprintf (stdout, " | %-74.74s |\n", x)
 #define divider(x) \

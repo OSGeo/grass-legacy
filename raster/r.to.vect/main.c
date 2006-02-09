@@ -2,12 +2,12 @@
 
 #include <stdio.h> 
 #include <stdlib.h>
-#include "gis.h"
-#include "dbmi.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
 #include "global.h"
 #include "lines.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 /* 
 * Attributes for lines are ignored. For points and area by default unique new category is assigned

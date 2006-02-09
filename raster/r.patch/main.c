@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "nfiles.h"
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 int main (int argc, char *argv[])
 {

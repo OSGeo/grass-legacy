@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include "format.h"
 #include "local_proto.h"
 #define debug stderr

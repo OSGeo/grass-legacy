@@ -1,4 +1,4 @@
-#include "config.h"
+#include <grass/config.h>
 
 #ifndef TIME_WITH_SYS_TIME
 #ifdef HAVE_TIME
@@ -12,7 +12,7 @@
 #include <sys/time.h>
 #endif
 
-#include "imagery.h"
+#include <grass/imagery.h>
 
 #ifndef GLOBAL
 # define GLOBAL extern

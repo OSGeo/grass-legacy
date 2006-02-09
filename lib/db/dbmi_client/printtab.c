@@ -1,5 +1,5 @@
 #include <string.h>
-#include "dbmi.h"
+#include <grass/dbmi.h>
 
 static void print_priv();
 

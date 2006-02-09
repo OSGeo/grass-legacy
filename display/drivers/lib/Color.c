@@ -1,4 +1,4 @@
-#include "colors.h"
+#include <grass/colors.h>
 #include "driver.h"
 #include "driverlib.h"
 

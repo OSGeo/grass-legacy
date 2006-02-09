@@ -11,7 +11,7 @@
  *               1  ok
  *********************************************************************/
 
-#include "gis.h"
+#include <grass/gis.h>
 
 /*!
  * \brief write the database region

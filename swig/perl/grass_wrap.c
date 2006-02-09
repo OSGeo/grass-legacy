@@ -829,7 +829,7 @@ SWIGEXPORT(void) SWIG_init (CV *cv, CPerlObj *);
 #endif
 
 
-#include "gis.h"
+#include <grass/gis.h>
 
 #ifdef PERL_OBJECT
 #define MAGIC_CLASS _wrap_Grass_var::

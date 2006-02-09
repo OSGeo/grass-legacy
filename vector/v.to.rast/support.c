@@ -7,7 +7,7 @@
 
 #include <string.h>
 #include <stdio.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 int update_hist (char *raster_name, char *vector_name,
     char *vector_mapset, long scale)

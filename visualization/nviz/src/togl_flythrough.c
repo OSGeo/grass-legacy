@@ -145,7 +145,7 @@ WARNING: 	remember to add "togl_flythrough.o"
 
 #include <sys/time.h>
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 #define TOGL_FLY_OTHER	-1
 #define TOGL_FLY_BASIC	0

@@ -1,6 +1,6 @@
-#include "gis.h"
+#include <grass/gis.h>
 
-#include "config.h"
+#include <grass/config.h>
 #ifndef __MINGW32__
 #ifdef HAVE_TERMIO_H
 # include <termio.h>

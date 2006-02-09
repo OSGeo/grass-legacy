@@ -9,7 +9,7 @@
  *
  **********************************************************************/
 
-#include "gis.h"
+#include <grass/gis.h>
 
 static int add_ramp_colors (struct Colors *, DCELL, DCELL);
 

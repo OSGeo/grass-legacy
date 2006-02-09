@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <time.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #define GLOBAL
 #include "global.h"
 #include "local_proto.h"

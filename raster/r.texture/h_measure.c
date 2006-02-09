@@ -23,8 +23,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 #define RADIX 2.0
 #define EPSILON 0.000000001

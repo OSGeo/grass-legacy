@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include <stdlib.h>
 
 #define LOOKUP_COLORS 2048

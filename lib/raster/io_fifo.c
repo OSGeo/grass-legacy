@@ -1,5 +1,5 @@
 
-#include "config.h"
+#include <grass/config.h>
 
 #ifndef USE_G_SOCKS
 #ifndef __MINGW32__
@@ -19,11 +19,10 @@
 #endif
 #include <sys/stat.h>
 
-#include "graph.h"
-#include "monitors.h"
-#include "gis.h"
-#include "raster.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
+#include <grass/raster.h>
+#include <grass/monitors.h>
 
 #include "open.h"
 

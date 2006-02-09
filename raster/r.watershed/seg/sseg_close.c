@@ -1,6 +1,6 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include <unistd.h>
-#include "segment.h"
+#include <grass/segment.h>
 #include "cseg.h"
 
 int 

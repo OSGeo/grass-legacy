@@ -15,9 +15,9 @@
 *   	    	for details.
 *
 *****************************************************************************/
-#include "gis.h"
-#include "glocale.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
+#include <grass/Vect.h>
 
 static long write_dummy () { 
     G_warning ( _("Vect_write_line() for this format/level not supported") );

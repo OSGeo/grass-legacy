@@ -14,7 +14,7 @@
 *   	    	for details.
 *
 *****************************************************************************/
-#include "Vect.h"
+#include <grass/Vect.h>
 
 /*!
  \fn int Vect_tin_get_z ( struct Map_info *Map,

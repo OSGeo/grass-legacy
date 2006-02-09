@@ -103,10 +103,10 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include "config.h"
+#include <grass/config.h>
 #include "G.h"
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 #define FCB G__.fileinfo[fd]
 #define WINDOW G__.window

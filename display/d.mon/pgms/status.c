@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
-#include "raster.h"
-#include "gis.h"
-#include "monitors.h"
+#include <grass/raster.h>
+#include <grass/gis.h>
+#include <grass/monitors.h>
 #include "open.h"
 
 int 

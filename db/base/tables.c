@@ -6,10 +6,10 @@
  ****************************************************************/
 
 #include <stdlib.h>
-#include "gis.h"
-#include "dbmi.h"
-#include "codes.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/codes.h>
+#include <grass/glocale.h>
 
 struct {
 	char *driver, *database;

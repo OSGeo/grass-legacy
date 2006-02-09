@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "dbmi.h"
-#include "form.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/form.h>
 
 /* Generate form in HTML/TXT format.
 *  Pointer to resulting string is stored to 'form'. This string must be freed by application.

@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <rpc/types.h>
 #include <rpc/xdr.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "G3d_intern.h"
 
 static int read_colors(char *,char *,char *,struct Colors *);

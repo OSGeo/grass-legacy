@@ -1,15 +1,15 @@
 #include <string.h>
 #include <unistd.h>
 #include <math.h>
-#include "gis.h"
-#include "raster.h"
-#include "display.h"
-#include "colors.h"
-#include "Vect.h"
-#include "form.h"
-#include "dbmi.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/display.h>
+#include <grass/colors.h>
+#include <grass/Vect.h>
+#include <grass/form.h>
+#include <grass/dbmi.h>
 #include "what.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 static int nlines = 50;
 

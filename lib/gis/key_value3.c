@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 int G_write_key_value_file (
     char *file,

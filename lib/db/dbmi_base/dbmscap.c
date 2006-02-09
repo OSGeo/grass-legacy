@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include <unistd.h>
-#include "dbmi.h"
-#include "gis.h"
+#include <grass/dbmi.h>
+#include <grass/gis.h>
 
 static
 char *dbmscap_files[] = {

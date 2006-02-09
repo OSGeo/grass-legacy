@@ -1,11 +1,11 @@
 #include <math.h>
 #include <string.h>
 
-#include "gis.h"
-#include "display.h"
-#include "raster.h"
-#include "gprojects.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/raster.h>
+#include <grass/gprojects.h>
+#include <grass/glocale.h>
 
 #include "local_proto.h"
 

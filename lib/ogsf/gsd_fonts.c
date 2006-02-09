@@ -16,7 +16,7 @@
 
 #include <string.h>
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 #include "rgbpack.h"
 #include <assert.h>
 #include "local_proto.h"

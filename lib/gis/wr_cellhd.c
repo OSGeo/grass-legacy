@@ -1,6 +1,6 @@
 /* write cell header, or window.  */
 
-#include "gis.h"
+#include <grass/gis.h>
 
 int G__write_Cell_head ( FILE *fd,
     struct Cell_head *cellhd,int is_cellhd)

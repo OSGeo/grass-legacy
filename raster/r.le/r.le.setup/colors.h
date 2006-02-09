@@ -20,7 +20,7 @@
 *				                           *
 ************************************************************/
 
-#include "config.h"
+#include <grass/config.h>
 #define RED		1
 #define ORANGE		2
 #define YELLOW		3

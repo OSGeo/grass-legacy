@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "mask.h"
 #include "local_proto.h"
 

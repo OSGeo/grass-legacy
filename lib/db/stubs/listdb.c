@@ -1,4 +1,4 @@
-#include "dbmi.h"
+#include <grass/dbmi.h>
 
 int
 db__driver_list_databases (dbString *path, int npaths, dbHandle **handles, int *num)

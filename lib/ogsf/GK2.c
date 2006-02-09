@@ -4,9 +4,9 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "gstypes.h"
-#include "keyframe.h"
-#include "kftypes.h"
+#include <grass/gstypes.h>
+#include <grass/keyframe.h>
+#include <grass/kftypes.h>
 
 static int _add_key(Keylist *, int, float);
 static void _remove_key(Keylist *);

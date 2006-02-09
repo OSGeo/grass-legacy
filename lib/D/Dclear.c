@@ -1,6 +1,6 @@
-#include "gis.h"
-#include "raster.h"
-#include "display.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/display.h>
 
 
 int Dclearscreen()

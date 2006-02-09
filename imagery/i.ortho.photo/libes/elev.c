@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "orthophoto.h"
-#include "ortholib.h"
-#include "gis.h"
+#include <grass/ortholib.h>
+#include <grass/gis.h>
 
 #define IN_BUF 200
 

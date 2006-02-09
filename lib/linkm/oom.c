@@ -1,4 +1,4 @@
-#include "linkm.h"
+#include <grass/linkm.h>
 #include <stdlib.h>
 
 int 

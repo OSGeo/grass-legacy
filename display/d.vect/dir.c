@@ -1,11 +1,11 @@
 /* plot1() - Level One vector reading */
 
-#include "gis.h"
-#include "Vect.h"
-#include "display.h"
-#include "raster.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/display.h>
+#include <grass/raster.h>
 #include "plot.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 
 int dir ( struct Map_info *Map, int type, struct cat_list * Clist, int chcat )

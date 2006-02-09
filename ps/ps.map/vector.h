@@ -4,7 +4,7 @@
  * Modified by: Hamish Bowman Sept 2005; sizecol added to LAYER
  */
 
-#include "gis.h"
+#include <grass/gis.h>
 #include "clr.h"
 
 #define PI M_PI

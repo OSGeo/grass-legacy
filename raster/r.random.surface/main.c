@@ -1,8 +1,8 @@
 /* main.c */
 #include <stdlib.h>
 #include <stdio.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 #undef TRACE
 #undef DEBUG

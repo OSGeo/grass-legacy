@@ -1,7 +1,7 @@
 /* #include "gis.h" */
 #include <stdlib.h>
 #include <string.h>
-#include "vask.h"
+#include <grass/vask.h>
 #include "global.h"
 
 #define ZERO_DATA  0

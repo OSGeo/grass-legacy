@@ -1,7 +1,7 @@
 #include <math.h>
 #include <stdlib.h>
-#include "gis.h"
-#include "imagery.h"
+#include <grass/gis.h>
+#include <grass/imagery.h>
 #include "local_proto.h"
 
 #define PI M_PI

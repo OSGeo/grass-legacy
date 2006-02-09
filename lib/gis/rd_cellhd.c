@@ -3,8 +3,8 @@
    note:  the error message can be freed using G_free ().
 */
 
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include <string.h>
 
 #define ERROR(x,line) return error(x,line)

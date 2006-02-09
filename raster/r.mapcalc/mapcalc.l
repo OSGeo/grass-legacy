@@ -4,14 +4,14 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "config.h" 
+#include <grass/config.h>
 
 #ifdef HAVE_READLINE_READLINE_H
 #include <readline/readline.h>
 #include <readline/history.h>
 #endif
 
-#include "gis.h"
+#include <grass/gis.h>
 
 #include "mapcalc.h"
 

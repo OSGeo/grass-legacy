@@ -15,8 +15,8 @@
  *
  **************************************************************/
 #include <stdlib.h> 
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 void remove_dangles ( struct Map_info *Map, int type, int chtype, double maxlength, 
 	              struct Map_info *Err, FILE *msgout );

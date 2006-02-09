@@ -1,4 +1,4 @@
-#include "vask.h"
+#include <grass/vask.h>
 /* this routine remove trailing zeros from decimal number
  * for example: 23.45000 would come back as 23.45
  */

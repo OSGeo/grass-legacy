@@ -29,17 +29,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
-#include "G3d.h"
-#include "dbmi.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/G3d.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
 #include "oct.h"
 #include "surf.h"
 #include "dataoct.h"
 #include "userextern.h"
 #include "userglobs.h"
 #include "user.h"
-#include "bitmap.h"
+#include <grass/bitmap.h>
 
 
 /*

@@ -95,7 +95,7 @@
  ***************************************************************************
 */
 
-#include "config.h"
+#include <grass/config.h>
 
 #if defined(HAVE_LANGINFO_H)
 #include <langinfo.h>
@@ -107,8 +107,8 @@
 #include <ctype.h>
 #include <unistd.h>
 #include <stdarg.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 #define BAD_SYNTAX  1
 #define OUT_OF_RANGE    2

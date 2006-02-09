@@ -12,10 +12,10 @@
 #include <unistd.h>
 #include <math.h>
 #include <string.h>
-#include "gis.h"
-#include "imagery.h"
-#include "gprojects.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/imagery.h>
+#include <grass/gprojects.h>
+#include <grass/glocale.h>
 
 #include "gdal.h"
 #include "ogr_srs_api.h"

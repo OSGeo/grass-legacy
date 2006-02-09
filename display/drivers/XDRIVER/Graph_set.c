@@ -6,7 +6,7 @@
  * Heavily modified by Glynn Clements, May 2001
  */
 
-#include "config.h"
+#include <grass/config.h>
 
 /* This driver extensively updated by P. Thompson
  * (phils@athena.mit.edu) on 9/13/90 Driver modified to work with
@@ -17,11 +17,11 @@
 #include "includes.h"
 #include <X11/Xatom.h>
 #include <X11/cursorfont.h>
-#include "gis.h"
-#include "colors.h"
+#include <grass/gis.h>
+#include <grass/colors.h>
 #include "icon.bit"
-#include "winname.h"
-#include "glocale.h"
+#include <grass/winname.h>
+#include <grass/glocale.h>
 #include "XDRIVER.h"
 
 /* This program is a rewrite of the original Grah_Set from the GRASS

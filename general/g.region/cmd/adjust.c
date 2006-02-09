@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 int 
 adjust_window (struct Cell_head *window)

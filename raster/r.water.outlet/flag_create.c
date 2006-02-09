@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include "flag.h"
 
 FLAG *flag_create(int nrows, int ncols)

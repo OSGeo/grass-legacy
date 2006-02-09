@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 
 
 int I_get_group_title (char *group, char *title, int n)

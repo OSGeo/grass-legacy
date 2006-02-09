@@ -1,4 +1,4 @@
-#include "imagery.h"
+#include <grass/imagery.h>
 #include "parms.h"
 #include "files.h"
 

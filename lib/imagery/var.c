@@ -1,5 +1,5 @@
 #include <math.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 /* sum: sum of x
  * sum2: sum of x squared
  * n:    number of points

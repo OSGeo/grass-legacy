@@ -1,7 +1,7 @@
-#include <gis.h>
+#include <grass/gis.h>
 
-#include "raster.h"
-#include "graph.h"
+#include <grass/raster.h>
+#include <grass/graphics.h>
 
 static int do_get(int *wx, int *wy, int *button)
 {

@@ -2,7 +2,7 @@
 #include "local_proto.h"
 #include <stdio.h>
 #include "externs.h"
-#include "gis.h"
+#include <grass/gis.h>
 int 
 get_mapset_path (void)
 {

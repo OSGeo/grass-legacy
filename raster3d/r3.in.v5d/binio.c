@@ -54,7 +54,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #include <unistd.h>
 #ifdef _CRAY
 #  include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 #endif
 #include "binio.h"
 

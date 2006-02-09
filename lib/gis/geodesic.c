@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 /*
  * This code is preliminary. I don't know if it is even
  * correct.

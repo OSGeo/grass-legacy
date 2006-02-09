@@ -51,8 +51,8 @@
 #include <time.h>
 #include <stdarg.h>
 #include <sys/types.h>
-#include "glocale.h"
-#include "gis.h"
+#include <grass/glocale.h>
+#include <grass/gis.h>
 
 #define MSG  0
 #define WARN 1

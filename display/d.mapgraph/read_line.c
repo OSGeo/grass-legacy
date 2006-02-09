@@ -1,5 +1,5 @@
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "options.h"
 
 static int line = 0;

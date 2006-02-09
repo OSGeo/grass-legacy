@@ -1,7 +1,7 @@
 #ifndef GRASS_IMAGERY_H
 #define GRASS_IMAGERY_H
 
-#include "gis.h"
+#include <grass/gis.h>
 
 /* File/directory name lengths */
 #define INAME_LEN GNAME_MAX /* coupled to raster map name length */
@@ -122,6 +122,6 @@ struct SigSet
 #define GROUPFILE "CURGROUP"
 #define SUBGROUPFILE "CURSUBGROUP"
 
-#include "imagedefs.h"
+#include <grass/imagedefs.h>
 
 #endif

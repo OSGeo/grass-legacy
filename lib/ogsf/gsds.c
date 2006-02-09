@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 
 /*  The idea here is to treat datasets as seperate objects, which SHOULD:
  *     - allow easier reuse of data for different attributes.

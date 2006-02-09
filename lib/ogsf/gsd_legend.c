@@ -6,8 +6,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "GL/glu.h"
-#include "gis.h"
-#include "gstypes.h"
+#include <grass/gis.h>
+#include <grass/gstypes.h>
 #include "rgbpack.h"
 
 

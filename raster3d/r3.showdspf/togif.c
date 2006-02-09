@@ -461,7 +461,7 @@ static void Putword(int w,FILE * fp )
  *
  */
 #include <ctype.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 #define ARGVAL() (*++(*argv) || (--argc && *++argv))
 

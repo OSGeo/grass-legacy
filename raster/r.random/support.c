@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
 
 int make_support (struct rr_state *theState, int percent)

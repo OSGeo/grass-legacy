@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 
 int opennew (char *name, RASTER_MAP_TYPE wr_type)

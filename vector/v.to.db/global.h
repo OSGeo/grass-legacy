@@ -4,8 +4,8 @@
 # define EXT
 #endif
 
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 typedef struct {
     int     cat;   /* category */

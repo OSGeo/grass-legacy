@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "includes.h"
-#include "colors.h"
+#include <grass/colors.h>
 #include "XDRIVER.h"
 
 static XImage *grimage;

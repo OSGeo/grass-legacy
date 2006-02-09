@@ -1,4 +1,4 @@
-#include "btree.h"
+#include <grass/btree.h>
 
 int btree_rewind (BTREE *B)
 {

@@ -16,8 +16,8 @@
 *
 *****************************************************************************/
 #include <stdlib.h>
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 /*!
  \fn int Vect_get_area_points (

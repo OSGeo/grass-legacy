@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
 
 static char cur[2000];

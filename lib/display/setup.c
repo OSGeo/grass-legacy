@@ -19,9 +19,9 @@
  *   0: do not clear frame
  */
 #include <string.h>
-#include "gis.h"
-#include "display.h"
-#include "raster.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/raster.h>
 
 
 /*!

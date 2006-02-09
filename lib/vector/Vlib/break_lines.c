@@ -15,8 +15,8 @@
  *
  **************************************************************/
 #include <stdlib.h> 
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 /*!
  \fn void Vect_break_lines ( struct Map_info *Map, int type, struct Map_info *Err, FILE *msgout)

@@ -16,8 +16,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 /***********************************************************************
  * G_ask_datum_name(char *datumname, char *ellpsname)

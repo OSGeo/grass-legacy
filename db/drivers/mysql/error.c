@@ -10,9 +10,9 @@
  **********************************************************/
 #include <stdio.h>
 
-#include "gis.h"
-#include "dbmi.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/glocale.h>
 
 #include "globals.h"
 #include "proto.h"

@@ -1,5 +1,5 @@
 #include <time.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
 
 #define INCR 1024

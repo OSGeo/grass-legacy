@@ -1,4 +1,4 @@
-#include "Vect.h" 
+#include <grass/Vect.h>
 /* plot.c */
 int plot(char *, char *, struct line_pnts *);
 /* plot1.c */

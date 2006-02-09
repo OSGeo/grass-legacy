@@ -1,4 +1,4 @@
-#include "dbmi.h"
+#include <grass/dbmi.h>
 
 int
 db__driver_open_select_cursor (dbString *select, dbCursor *cursor, int *mode)

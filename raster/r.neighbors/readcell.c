@@ -1,5 +1,5 @@
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "ncb.h"
 #include "local_proto.h"
 

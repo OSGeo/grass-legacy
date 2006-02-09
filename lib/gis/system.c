@@ -4,8 +4,8 @@
 #ifndef __MINGW32__
 #include <sys/wait.h>
 #endif
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 /****************************************************************
  * G_system (command)
  *     char *command;

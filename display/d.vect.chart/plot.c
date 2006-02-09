@@ -1,9 +1,9 @@
-#include "gis.h"
-#include "Vect.h"
-#include "dbmi.h"
-#include "display.h"
-#include "raster.h"
-#include "symbol.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
+#include <grass/display.h>
+#include <grass/raster.h>
+#include <grass/symbol.h>
 #include "global.h"
 
 /* Returns 0 - ok , 1 - error */

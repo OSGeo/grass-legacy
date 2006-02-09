@@ -20,7 +20,7 @@
 #define	MAIN
 #include "local_proto.h"
 #undef	MAIN
-#include "glocale.h"
+#include <grass/glocale.h>
 
 
 int

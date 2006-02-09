@@ -1,6 +1,6 @@
 #include <string.h>
 #include "orthophoto.h"
-#include "ortholib.h"
+#include <grass/ortholib.h>
 
 #define IN_BUF 100
 #define CAMERA_FILE "CAMERA"

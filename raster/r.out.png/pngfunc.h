@@ -1,5 +1,5 @@
 #include "png.h"	/* includes zlib.h and setjmp.h */
-#include "version.h"	/* VERSION macro */
+#include <grass/version.h>
 
 
 typedef struct _jmpbuf_wrapper {

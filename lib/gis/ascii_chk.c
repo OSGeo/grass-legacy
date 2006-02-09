@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 #define TAB		011
 #define SPACE	040

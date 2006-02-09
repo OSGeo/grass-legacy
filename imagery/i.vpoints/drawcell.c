@@ -1,6 +1,6 @@
 #include "globals.h"
-#include "raster.h"
-#include "display.h"
+#include <grass/raster.h>
+#include <grass/display.h>
 #include <stdlib.h>
 
 /* initflag: 0 means don't initialize VIEW_MAP1 or VIEW_MAP2 */

@@ -4,7 +4,7 @@
 	to cells from which the cumulative cost was determined 
 
 *********************************************************************/
-#include "segment.h"
+#include <grass/segment.h>
 #include "local_proto.h"
 
 

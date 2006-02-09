@@ -4,8 +4,8 @@
 /****************************************************************/
 
 #include <stdlib.h>
-#include "gmath.h"
-#include "config.h"
+#include <grass/gmath.h>
+#include <grass/config.h>
 
 float 
 rand1(int seed)

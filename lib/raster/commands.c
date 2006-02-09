@@ -1,8 +1,6 @@
 
-#include <gis.h>
-#include <raster.h>
-
-#include "graph.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
 
 /*!
  * \brief flush graphics

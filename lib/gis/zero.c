@@ -1,5 +1,5 @@
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 /****************************************************************
  *  G_zero (buf, i)
  *     char *buf           buffer to be zeroed

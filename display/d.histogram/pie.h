@@ -6,7 +6,7 @@
 /* not available in SysV 
  * #include "strings.h"
  */
-#include "gis.h"
+#include <grass/gis.h>
 #include "options.h"
 #include "dhist.h"
 

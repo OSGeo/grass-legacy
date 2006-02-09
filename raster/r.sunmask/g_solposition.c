@@ -32,8 +32,8 @@
 #include <math.h>
 #include <string.h>
 #include <stdio.h>
-#include "gis.h"
-#include "gprojects.h"
+#include <grass/gis.h>
+#include <grass/gprojects.h>
 #include "solpos00.h"
 
 struct posdata pd, *pdat; /* declare solpos data struct and a pointer for it */

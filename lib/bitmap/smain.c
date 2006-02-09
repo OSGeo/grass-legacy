@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "bitmap.h"
+#include <grass/bitmap.h>
 
 
 static int dump_map (struct BM *map);

@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 #include "rowcol.h"
 
 #define CHK_FREQ 50

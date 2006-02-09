@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 void c_min(DCELL *result, DCELL *values, int n)
 {

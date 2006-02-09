@@ -5,8 +5,8 @@
 
 #include <stdio.h>
 #include <math.h>
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 #include "local_proto.h"
 
 struct cell{

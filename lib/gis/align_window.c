@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 /*!
  * \brief align two regions

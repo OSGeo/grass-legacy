@@ -21,8 +21,8 @@
  *          missing or invalid.
  *********************************************************************/
 
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include <string.h>
 
 static int read_colors(char *,char *,char *,struct Colors *);

@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 static struct Cell_stats statf;
 

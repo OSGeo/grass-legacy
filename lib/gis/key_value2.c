@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 /* returns 0, ok
  * -1 error writing

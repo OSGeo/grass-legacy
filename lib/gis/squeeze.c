@@ -1,5 +1,5 @@
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 /*
  * squeeze - edit superfluous white space out of strings
  *

@@ -26,7 +26,7 @@
 
 #include <stdio.h>
 #include    <math.h>
-#include "Vect.h"
+#include <grass/Vect.h>
 
 static double d_atan2 (double, double);
 

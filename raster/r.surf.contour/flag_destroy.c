@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "flag.h"
 
 int flag_destroy (FLAG *flags)

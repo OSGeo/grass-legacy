@@ -15,8 +15,8 @@
  *
  **************************************************************/
 #include <stdlib.h> 
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 /*!
  \fn void Vect_clean_small_angles_at_nodes ( struct Map_info *Map, int type, struct Map_info *Err, FILE *msgout)

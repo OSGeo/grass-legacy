@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include "local_proto.h"
 
-#include "config.h"
+#include <grass/config.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>

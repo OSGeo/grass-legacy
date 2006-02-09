@@ -31,18 +31,18 @@
 #include <unistd.h>
 #include <math.h>
 
-#include "gis.h"
-#include "Vect.h"
-#include "dbmi.h"
-#include "site.h"
-#include "glocale.h"
-#include "linkm.h"
-#include "bitmap.h"
-#include "interpf.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
+#include <grass/site.h>
+#include <grass/glocale.h>
+#include <grass/linkm.h>
+#include <grass/bitmap.h>
+#include <grass/interpf.h>
 
-#include "qtree.h"
+#include <grass/qtree.h>
 #include "surf.h"
-#include "dataquad.h"
+#include <grass/dataquad.h>
 
 
 #define SCIK1 1			/*100000 */

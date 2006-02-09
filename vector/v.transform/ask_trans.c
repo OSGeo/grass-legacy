@@ -26,10 +26,10 @@
 
 #include <unistd.h>
 #include <stdio.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "trans.h"
-#include "vask.h"
-#include "glocale.h"
+#include <grass/vask.h>
+#include <grass/glocale.h>
 
 static int shrink_map_coor (void);
 

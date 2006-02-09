@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
 extern FILE *tracefd;
 

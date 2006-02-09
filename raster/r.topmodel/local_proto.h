@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <math.h>
 #include <time.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 
 #define	FILL		0x1

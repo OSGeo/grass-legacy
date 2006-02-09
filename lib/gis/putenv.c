@@ -1,8 +1,8 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "config.h"
-#include "gis.h"
+#include <grass/config.h>
+#include <grass/gis.h>
 
 /*******************************************************************
  * G_putenv (name, value)

@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 int 
 get_map_name (char *name)
 {

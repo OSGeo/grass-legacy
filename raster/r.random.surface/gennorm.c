@@ -5,7 +5,7 @@
 
 #undef MAIN
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "ransurf.h"
 
 

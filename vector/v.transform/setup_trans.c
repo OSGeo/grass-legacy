@@ -26,8 +26,8 @@
 
 #include	<stdlib.h>
 #include	<stdio.h>
-#include        "glocale.h"
-#include        "gis.h"
+#include <grass/glocale.h>
+#include <grass/gis.h>
 #include	"trans.h"
 
 int 

@@ -1,5 +1,5 @@
-#include "gis.h"
-#include "imagery.h"
+#include <grass/gis.h>
+#include <grass/imagery.h>
 
 /* #define DEBUG  1 */
 
@@ -141,4 +141,4 @@ int I_get_init_info (char *, struct Ortho_Camera_Exp_Init *);
 int I_put_init_info (char *, struct Ortho_Camera_Exp_Init *);
 
 
-#include "ortholib.h"
+#include <grass/ortholib.h>

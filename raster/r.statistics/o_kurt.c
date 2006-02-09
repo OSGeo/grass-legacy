@@ -2,7 +2,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "method.h"
 
 #define MEM  1024

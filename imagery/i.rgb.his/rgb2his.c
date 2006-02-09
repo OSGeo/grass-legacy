@@ -15,7 +15,7 @@ ASSUMPTION:
 /* For GRASS one row from each cell map is passed in and each cell in
    each band is processed and written out.   CWU GIS Lab: DBS 8/90*/
 
-#include "gis.h"
+#include <grass/gis.h>
 #include "globals.h"
 
 void 

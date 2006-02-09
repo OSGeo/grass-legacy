@@ -1,5 +1,5 @@
 #include "globals.h"
-#include "raster.h"
+#include <grass/raster.h>
 
 static int get_point2 (double *,double *);
 static int keyboard(void);

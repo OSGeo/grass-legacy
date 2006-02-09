@@ -14,12 +14,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "gis.h"
-#include "display.h"
-#include "raster.h"
-#include "Vect.h"
-#include "dbmi.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/raster.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
+#include <grass/glocale.h>
 
 #define PI M_PI
 

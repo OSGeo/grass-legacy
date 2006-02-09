@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 double d_var (
     register DCELL *values,

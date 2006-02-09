@@ -20,7 +20,7 @@
 #include <string.h>
 #include <dirent.h>
 #include <unistd.h> 
-#include "gis.h"
+#include <grass/gis.h>
 
 static char **mapset_name ;
 static char **mapset_name2 ;

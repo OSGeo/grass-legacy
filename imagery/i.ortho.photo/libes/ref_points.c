@@ -3,7 +3,7 @@
  * I_put_ref_points()
  **********************************************************************/
 #include "orthophoto.h"
-#include "imagery.h"
+#include <grass/imagery.h>
 
 #define REF_POINT_FILE "REF_POINTS"
 

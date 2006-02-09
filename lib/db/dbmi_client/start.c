@@ -8,7 +8,7 @@
 unsigned int _CRT_fmode = _O_BINARY;
 #endif
 
-#include "dbmi.h"
+#include <grass/dbmi.h>
 
 #define READ  0
 #define WRITE 1

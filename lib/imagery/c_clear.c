@@ -1,4 +1,4 @@
-#include "imagery.h"
+#include <grass/imagery.h>
 int I_cluster_clear (struct Cluster *C)
 {
     C->points = NULL;

@@ -51,9 +51,9 @@ email: hofierka@geomodel.sk,marcel.suri@jrc.it,suri@geomodel.sk
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
-#include "gprojects.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/gprojects.h>
+#include <grass/glocale.h>
 
 FILE *felevin, *faspin, *fslopein, *flinkein, *falbedo, *flatin;
 FILE *fincidout, *fbeam_rad, *finsol_time, *fdiff_rad, *frefl_rad;

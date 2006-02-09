@@ -1,5 +1,5 @@
 #ifndef _GRASS_GIS_LIB_
-#include "gis.h"
+#include <grass/gis.h>
 #endif
 #ifndef _GRASS_DISPLAY_LIB_
 #define _GRASS_DISPLAY_LIB_

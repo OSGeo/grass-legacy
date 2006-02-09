@@ -20,8 +20,8 @@
  *      name = nnn and mapset = ppp
  **********************************************************************/
 
-#include "gis.h"
-#include "vect/dig_defines.h"
+#include <grass/gis.h>
+#include <grass/vect/dig_defines.h>
 
 char *
 G_find_vector  (char *name, char *mapset)

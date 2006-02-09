@@ -21,7 +21,7 @@
  *  Color range is 0-255.
  *
  **********************************************************************/
-#include "gis.h"
+#include <grass/gis.h>
 #include <math.h>
 
 

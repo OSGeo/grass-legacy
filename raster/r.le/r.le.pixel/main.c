@@ -21,9 +21,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "pixel.h"
-#include "config.h"
+#include <grass/config.h>
 
 
 

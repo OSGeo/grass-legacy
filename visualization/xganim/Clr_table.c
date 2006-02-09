@@ -6,9 +6,9 @@
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 
-#include "gis.h"
-#include "glocale.h"
-#include "colors.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
+#include <grass/colors.h>
 #include "local_proto.h"
 
 Display *dpy;

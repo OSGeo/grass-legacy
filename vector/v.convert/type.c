@@ -1,6 +1,6 @@
-#include "Vect.h"
+#include <grass/Vect.h>
 #include "conv.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 /* conversion of old file format elment type codes to new 
 *

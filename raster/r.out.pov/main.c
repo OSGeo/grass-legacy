@@ -19,8 +19,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 void writeHeader(FILE *outf);
 void processProfiles(int inputFile, FILE *outputF);

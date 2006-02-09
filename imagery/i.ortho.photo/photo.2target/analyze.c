@@ -2,7 +2,7 @@
 #include <math.h>
 #include <unistd.h>
 #include <string.h>
-#include "raster.h"
+#include <grass/raster.h>
 #include "globals.h"
 #include "local_proto.h"
 

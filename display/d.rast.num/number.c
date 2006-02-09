@@ -38,11 +38,11 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "raster.h"
-#include "display.h"
-#include "colors.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/display.h>
+#include <grass/colors.h>
+#include <grass/glocale.h>
 
 #define MAIN
 int draw_number(double, RASTER_MAP_TYPE);

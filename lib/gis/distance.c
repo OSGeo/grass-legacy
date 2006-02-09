@@ -1,5 +1,5 @@
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 static double min4(double, double, double, double);
 static double min2(double, double);
 static double dabs (double);

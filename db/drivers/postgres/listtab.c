@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include <dbmi.h>
+#include <grass/dbmi.h>
 #include "globals.h"
 #include "proto.h"
 

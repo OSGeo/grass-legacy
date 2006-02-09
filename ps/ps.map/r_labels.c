@@ -1,5 +1,5 @@
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "labels.h"
 #include "local_proto.h"
 

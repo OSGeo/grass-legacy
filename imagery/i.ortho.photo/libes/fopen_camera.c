@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 /******************************************************
 * I_fopen_cam_file_new()
 * I_fopen_cam_file_append()

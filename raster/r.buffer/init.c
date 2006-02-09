@@ -1,5 +1,5 @@
 #include "distance.h"
-#include "gis.h"
+#include <grass/gis.h>
 
 int init_grass (void)
 {

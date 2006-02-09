@@ -1,5 +1,5 @@
-#include "geo.h"
-#include "gis.h"
+#include <grass/geo.h>
+#include <grass/gis.h>
 
 /* Copied from geo.h - remove when all uses are cleaned up */
 #if 0

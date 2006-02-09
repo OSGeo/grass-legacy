@@ -1,5 +1,5 @@
-#include "gis.h"
-#include "version.h"
+#include <grass/gis.h>
+#include <grass/version.h>
 #include <stdlib.h>
 #include <string.h>
 

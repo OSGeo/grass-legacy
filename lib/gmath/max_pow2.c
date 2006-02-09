@@ -1,5 +1,5 @@
-#include "gis.h"
-#include "gmath.h"
+#include <grass/gis.h>
+#include <grass/gmath.h>
 #include "numerical.h"
 
 /*****************************************************************************/

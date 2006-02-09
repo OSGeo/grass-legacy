@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 static int width, height;
 static char *in_buf;

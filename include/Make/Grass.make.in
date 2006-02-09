@@ -42,8 +42,8 @@ GRASS_INCDIR    = $(GRASS_HOME)/include
 ARCH_INCDIR     = $(ARCH_DISTDIR)/include/grass
 
 GRASS_INC	= -I$(GRASS_INCDIR)
-ARCH_INC	= -I$(ARCH_INCDIR)
-INC		= $(GRASS_INC) $(ARCH_INC)
+ARCH_INC	= -I$(ARCH_DISTDIR)/include
+INC		= $(ARCH_INC)
 VECT_INC        = 
 
 # libraries
@@ -80,6 +80,7 @@ GRASS_BUILD_FILE      = $(ETC)/BUILD
 
 ##################### other #############################################
 CFLAGS      =  $(INC) $(COMPILE_FLAGS) $(USE_TERMIO)
+CXXFLAGS    =  $(INC) $(COMPILE_FLAGS_CXX) $(USE_TERMIO)
 LDFLAGS     =  $(LINK_FLAGS) $(LIBPATH) $(LD_SEARCH_FLAGS) $(PQLIBPATH) $(USE_TERMIO)
 VECT_CFLAGS =  $(GDALCFLAGS) 
 

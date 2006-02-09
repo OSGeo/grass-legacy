@@ -18,7 +18,7 @@
 *				                           *
 ************************************************************/
 
-#include "config.h"
+#include <grass/config.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <time.h>
@@ -27,7 +27,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 #define  SML   0.5
 #define  MIN   2

@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include "G3d.h"
+#include <grass/G3d.h>
 
 /*--------------------------------------------------------------------------*/
 

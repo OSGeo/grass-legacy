@@ -1,4 +1,4 @@
-#include "imagery.h"
+#include <grass/imagery.h>
 
 #ifndef GLOBAL
 #define GLOBAL extern

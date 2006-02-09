@@ -1,5 +1,5 @@
 
-#include "gis.h"
+#include <grass/gis.h>
 
 typedef void cfunc(DCELL *, DCELL *, int);
 

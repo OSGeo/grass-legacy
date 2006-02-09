@@ -4,7 +4,7 @@
 **  Copyright 1992 USA-CERL   All rights reserved.
 **
 */
-#include "linkm.h"
+#include <grass/linkm.h>
 
 VOID_T *link__get_next (VOID_T *list)
 {

@@ -12,8 +12,8 @@
  *
  ***********************************************************************/
 
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 int G_put_cellhd (char *name, struct Cell_head *cellhd)
 {

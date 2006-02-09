@@ -14,9 +14,9 @@
  *
  **********************************************************************/
 
-#include "gis.h"
-#include "vask.h"
-#include "edit.h"
+#include <grass/gis.h>
+#include <grass/vask.h>
+#include <grass/edit.h>
 
 int E_edit_history ( struct History *phist )
 {

@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 /* If the projection has absolute limits (like lat/lon), then
  * these routines modify the input coordinate to be within the

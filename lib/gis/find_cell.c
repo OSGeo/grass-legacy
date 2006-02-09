@@ -20,7 +20,7 @@
  *      name = nnn and mapset = ppp
  **********************************************************************/
 
-#include "gis.h"
+#include <grass/gis.h>
 
 
 /*!

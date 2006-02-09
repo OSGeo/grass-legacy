@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "global.h"
-#include "dbmi.h"
+#include <grass/dbmi.h>
 
 static int srch(); 
 

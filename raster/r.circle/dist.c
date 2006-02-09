@@ -9,8 +9,8 @@
 #include <stdlib.h>
 #include <strings.h>
 #include <math.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 typedef int FILEDESC;
 double distance ( double *,double *, double, double, int);

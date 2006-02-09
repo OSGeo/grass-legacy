@@ -2,9 +2,9 @@
 
 #include <stdlib.h>
 
-#include "gmath.h"
+#include <grass/gmath.h>
 #include "numerical.h"
-#include "gis.h"
+#include <grass/gis.h>
 
 int 
 eigen ( 

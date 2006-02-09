@@ -29,11 +29,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "trans.h"
-#include "gis.h"
-#include "Vect.h"
-#include "dbmi.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 int main (int argc, char *argv[])
 {

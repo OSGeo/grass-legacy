@@ -27,7 +27,7 @@ CALLS:
 
 ***********************************************************************/
 
-#include "vask.h"
+#include <grass/vask.h>
 
 /*!
  * \brief define screen constant

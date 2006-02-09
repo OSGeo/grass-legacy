@@ -39,8 +39,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "geo.h"
-#include "gis.h"
+#include <grass/geo.h>
+#include <grass/gis.h>
 #include "local_proto.h"
 #define MAIN
 

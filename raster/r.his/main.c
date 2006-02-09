@@ -16,11 +16,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "gis.h"
-#include "display.h"
-#include "raster.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/raster.h>
 #include "his.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 int 
 main (int argc, char **argv)

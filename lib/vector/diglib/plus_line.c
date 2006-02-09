@@ -18,7 +18,7 @@
 *
 *****************************************************************************/
 #include <stdlib.h>
-#include "Vect.h"
+#include <grass/Vect.h>
 
 /* dig_add_line ()
 ** Add new line to plus structure.

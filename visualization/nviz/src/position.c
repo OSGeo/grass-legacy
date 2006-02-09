@@ -2,7 +2,7 @@
 *	function added to handle postgres queries
 */
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "interface.h"
 
 int Ninit_view_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */

@@ -3,8 +3,8 @@
 *
 * Find the a group in the current mapset
 **************************************************************/
-#include "imagery.h"
-#include "gis.h"
+#include <grass/imagery.h>
+#include <grass/gis.h>
 
 
 /*!

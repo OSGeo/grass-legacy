@@ -30,9 +30,9 @@
  *   as well as the struct stat_list (defined in dhist.h).
  *****************************************************************************/
 
-#include "gis.h"
-#include "display.h"
-#include "raster.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/raster.h>
 #include <stdlib.h>
 #include <string.h>
 #define MAIN

@@ -12,7 +12,7 @@
  * Note:
  *  Hopefully, cartographic style projection plotting will be added later.
  *******************************************************************/
-#include "gis.h"
+#include <grass/gis.h>
 #include <stdlib.h>
 
 static double xconv, yconv;

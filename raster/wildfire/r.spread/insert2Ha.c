@@ -9,7 +9,7 @@
 /*                                                             */
 /***************************************************************/
 
-#include "gis.h" 
+#include <grass/gis.h>
 #include "cell_ptrHa.h"
 #include "local_proto.h"
 

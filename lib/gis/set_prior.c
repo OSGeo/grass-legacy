@@ -21,7 +21,7 @@
 **
 */
 
-#include "config.h"
+#include <grass/config.h>
 
 #include <stdio.h>
 

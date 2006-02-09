@@ -1,5 +1,5 @@
 #include <math.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 
 int I_cluster_reassign(struct Cluster *C, int *interrupted)
 {

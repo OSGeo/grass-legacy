@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include <string.h>
 /* puts commas into numbers:
 	1234567    becomes 1,234,567

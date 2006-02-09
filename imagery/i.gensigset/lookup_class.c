@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 /* build index of cell values from list */
 /* -1 means not found in list */
 

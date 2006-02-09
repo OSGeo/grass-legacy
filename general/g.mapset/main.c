@@ -18,10 +18,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include "gis.h"
-#include "raster.h"
-#include "display.h"
-#include "D.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/display.h>
+#include <grass/D.h>
 
 int 
 main (int argc, char *argv[])

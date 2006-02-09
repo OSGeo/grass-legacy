@@ -1,6 +1,9 @@
 /*-
  * $Log$
- * Revision 2.0  2004-11-09 13:06:32  bernhard
+ * Revision 2.1  2006-02-09 03:08:54  glynn
+ * Use <grass/gis.h> etc rather than <gis.h>
+ *
+ * Revision 2.0  2004/11/09 13:06:32  bernhard
  * copied within CVS repository from grass/src/include/site.h
  *
  * Revision 1.7  2000/10/09 01:57:03  eric
@@ -172,5 +175,5 @@ int G_readsites_xyz(
 	SITE_XYZ *xyz    /* The site array of size 'size'                   */
 	);
 
-#include "P_site.h"
+#include <grass/P_site.h>
 

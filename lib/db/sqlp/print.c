@@ -18,7 +18,7 @@
 *
 *****************************************************************************/
 
-#include "sqlp.h"
+#include <grass/sqlp.h>
 #include <stdio.h>
 
 static void print_node ( SQLPNODE *nptr, int level) 

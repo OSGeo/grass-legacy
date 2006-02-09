@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include "bouman.h"
 #include "region.h"
 

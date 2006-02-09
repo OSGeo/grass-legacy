@@ -8,8 +8,8 @@
 /****************************************************************/
 
 #include <stdlib.h>
-#include "gis.h"
-#include "segment.h"
+#include <grass/gis.h>
+#include <grass/segment.h>
 #include "point.h"
 
 #define  PT_TO_DELETE_X		  PT_TO_DELETE->x

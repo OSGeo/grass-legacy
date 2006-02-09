@@ -5,7 +5,7 @@
  * Read the file GPL.TXT coming with GRASS for details.
  */
 #include <stdlib.h>
-#include "datetime.h"
+#include <grass/datetime.h>
 #include "math.h"
 
 /*************************************************************/

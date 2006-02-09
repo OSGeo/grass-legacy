@@ -12,8 +12,8 @@ Zero Crossings for GRASS
 #include <stdlib.h>
 #include "local_proto.h"
 #include <math.h>
-#include "gis.h"
-#include "gmath.h"
+#include <grass/gis.h>
+#include <grass/gmath.h>
 #include "globals.h"
 
 

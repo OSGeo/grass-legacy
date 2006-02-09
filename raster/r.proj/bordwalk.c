@@ -26,8 +26,8 @@
  */
 
 #include <stdio.h>
-#include "gis.h"
-#include "gprojects.h"
+#include <grass/gis.h>
+#include <grass/gprojects.h>
 #include <math.h>
 
 void bordwalk(struct Cell_head *from_hd, struct Cell_head *to_hd, 

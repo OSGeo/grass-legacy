@@ -38,9 +38,7 @@
 /* #include <pnm.h> this is already included from pngfunc.h */
 #endif /* _MYINCLUDE_H */
 
-#include "version.h"		/* VERSION macro */
-
-#include "gis.h"
+#include <grass/gis.h>
 
 #define DEF_RED 255
 #define DEF_GRN 255

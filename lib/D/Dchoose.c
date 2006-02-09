@@ -1,6 +1,6 @@
 #include <time.h>
-#include "display.h"
-#include "D.h"
+#include <grass/display.h>
+#include <grass/D.h>
 
 int Dchoose(char *name)
 {

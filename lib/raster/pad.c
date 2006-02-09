@@ -2,10 +2,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <gis.h>
-#include <raster.h>
-
-#include "graph.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/graphics.h>
 
 /* PAD FUNCTIONS
        The monitor has a very simple database management capabil­

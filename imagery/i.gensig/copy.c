@@ -1,4 +1,4 @@
-#include "imagery.h"
+#include <grass/imagery.h>
 int 
 copy_covariances (double **a, double **b, int n)
 {

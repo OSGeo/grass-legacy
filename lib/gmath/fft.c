@@ -1,6 +1,6 @@
 /***** Fast Fourier Transformation of Two Dimensional Satellite Data *****/
 
-#include "config.h"
+#include <grass/config.h>
 
 #if defined(HAVE_FFTW_H) || defined(HAVE_DFFTW_H)
 
@@ -14,8 +14,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include "gmath.h"
-#include "gis.h"
+#include <grass/gmath.h>
+#include <grass/gis.h>
 
 /*****************************************************************************
  *                                                                           *

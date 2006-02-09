@@ -4,7 +4,7 @@
 
 #include <stdlib.h>
 #include "interface.h"
-#include "gis.h"
+#include <grass/gis.h>
 
 extern int get_idnum();
 

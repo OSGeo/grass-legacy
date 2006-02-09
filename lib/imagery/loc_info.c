@@ -1,6 +1,6 @@
-#include "imagery.h"
+#include <grass/imagery.h>
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 /* makes a three part title with location, mapset info */
 int I_location_info(

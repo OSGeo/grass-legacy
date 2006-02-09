@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 /*!
  * \brief gets a line of text from a file

@@ -19,7 +19,7 @@
 *****************************************************************************/
 
 #include <stdlib.h>
-#include "Vect.h"
+#include <grass/Vect.h>
 
 /*  These routines all eventually call calloc() to allocate and zero
    **  the new space.  BUT It is not neccessarily safe to assume that

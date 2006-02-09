@@ -15,7 +15,7 @@
 *   	    	for details.
 *
 *****************************************************************************/
-#include "Vect.h"
+#include <grass/Vect.h>
 
 
 static int read_next_dummy () { return -1; }

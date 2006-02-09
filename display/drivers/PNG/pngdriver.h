@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "config.h"
+#include <grass/config.h>
 #include "driver.h"
 
 #define FILE_NAME  "map.png"

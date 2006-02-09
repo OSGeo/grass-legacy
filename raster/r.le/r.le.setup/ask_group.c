@@ -22,10 +22,10 @@
 ************************************************************/
 
 #include "setup.h"
-#include "config.h"
-#include "vask.h"
+#include <grass/config.h>
+#include <grass/vask.h>
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 
 

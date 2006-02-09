@@ -20,8 +20,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
-#include "interpf.h"
+#include <grass/gis.h>
+#include <grass/interpf.h>
 
 static int input_data ( struct interp_params *,
   int ,int , struct fcell_triple *, int ,int, int ,int, double , double ,double);

@@ -1,6 +1,6 @@
 #include <stdlib.h>
-#include "gis.h"
-#include "dbmi.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
 
 /*!
  \fn 

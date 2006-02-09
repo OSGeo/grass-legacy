@@ -22,8 +22,8 @@ CALLS:
 
 ***********************************************************************/
 
-#include "config.h"
-#include "vask.h"
+#include <grass/config.h>
+#include <grass/vask.h>
 int V_exit()
 {
 #ifdef HAVE_KEYPAD

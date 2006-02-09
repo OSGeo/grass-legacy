@@ -15,8 +15,8 @@
 *   	    	for details.
 *
 *****************************************************************************/
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 #include <stdlib.h>
 
 /* INTERFACE LEVEL II  */

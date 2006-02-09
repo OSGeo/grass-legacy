@@ -31,7 +31,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "includes.h"
-#include "gis.h"
+#include <grass/gis.h>
 #include "XDRIVER.h"
 
 #ifndef min

@@ -19,8 +19,8 @@
 *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 /* 
 *  dig_spindex_init ()

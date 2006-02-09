@@ -17,9 +17,9 @@ and
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
-#include "glocale.h"
-#include "gmath.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
+#include <grass/gmath.h>
 #include "globals.h"
 #include "local_proto.h"
 

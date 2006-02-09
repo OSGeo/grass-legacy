@@ -1,8 +1,8 @@
 /* mod_elev.c*/
 
 #include <stdlib.h>
-#include "gis.h"
-#include "vask.h"
+#include <grass/gis.h>
+#include <grass/vask.h>
 #include "elev.h"
 
 #define ZERO_DATA  0

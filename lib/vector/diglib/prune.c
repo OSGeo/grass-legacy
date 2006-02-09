@@ -70,7 +70,7 @@
  */
 
 #include <stdio.h>
-#include "Vect.h"
+#include <grass/Vect.h>
 #include <math.h>
 
 int 

@@ -5,7 +5,7 @@
 #else
 #include <sys/wait.h>
 #endif
-#include "dbmi.h"
+#include <grass/dbmi.h>
 #include "macros.h"
 
 /*!

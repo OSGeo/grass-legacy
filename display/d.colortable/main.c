@@ -6,10 +6,10 @@
 
 #include <stdlib.h>
 #include <math.h>
-#include "display.h"
-#include "gis.h"
-#include "D.h"
-#include "raster.h"
+#include <grass/display.h>
+#include <grass/gis.h>
+#include <grass/D.h>
+#include <grass/raster.h>
 
 int main(int argc, char **argv)
 {

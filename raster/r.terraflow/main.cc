@@ -52,7 +52,7 @@
 
 
 extern "C" {
-#include "gis.h"
+#include <grass/gis.h>
 }
 
 #include "option.h"

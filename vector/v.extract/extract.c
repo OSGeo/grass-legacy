@@ -9,9 +9,9 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include  "gis.h"
-#include "Vect.h"
-#include "dbmi.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
 
 static int *cats_array;
 static int ncats_array;

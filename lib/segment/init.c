@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
-#include "segment.h"
+#include <grass/segment.h>
 
 static int read_int(int,int *);
 

@@ -1,9 +1,9 @@
 #include <unistd.h>
-#include "gis.h"
-#include "display.h"
-#include "raster.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/raster.h>
 #include "graphics.h"
-#include "colors.h"
+#include <grass/colors.h>
 
 static int save_colors( char *,char *, struct Colors *);
 static int yes ( char *,char *);

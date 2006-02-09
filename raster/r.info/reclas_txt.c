@@ -1,5 +1,5 @@
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
 
 int reclass_text (char *text, CELL cat, struct Reclass *reclass, int next)

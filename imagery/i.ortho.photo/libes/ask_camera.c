@@ -7,7 +7,7 @@
 *************************************************************/
 #include <string.h>
 #include "orthophoto.h"
-#include "ortholib.h"
+#include <grass/ortholib.h>
 
 static int ask_camera (char *, char *);
 

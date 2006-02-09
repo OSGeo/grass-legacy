@@ -1,5 +1,5 @@
-#include "imagery.h"
-#include "gis.h"
+#include <grass/imagery.h>
+#include <grass/gis.h>
 
 int I_get_histogram( char *name,char *mapset, struct Histogram *histogram)
 {

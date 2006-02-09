@@ -13,8 +13,8 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include "gis.h"
-#include "gmath.h"
+#include <grass/gis.h>
+#include <grass/gmath.h>
 #include <math.h>
 
 static CELL round_c (double x)

@@ -4,7 +4,7 @@
 #include <math.h>
 #include <limits.h>
 #include <float.h> 
-#include "gis.h"
+#include <grass/gis.h>
 #include "tinf.h"
 
 /* get the slope between two cells and return a slope direction */

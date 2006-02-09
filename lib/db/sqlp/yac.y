@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "sqlp.h"
+#include <grass/sqlp.h>
 
 #define YYDEBUG 1
 

@@ -1,6 +1,6 @@
 #include <unistd.h>
 #include <fcntl.h>
-#include "rowio.h"
+#include <grass/rowio.h>
 #include "glob.h"
 #include "filter.h"
 #include "local_proto.h"

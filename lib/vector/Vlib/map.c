@@ -21,10 +21,10 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include "glocale.h"
-#include "gis.h"
-#include "Vect.h"
-#include "dbmi.h"
+#include <grass/glocale.h>
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
 
 /*!
  \fn int Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )

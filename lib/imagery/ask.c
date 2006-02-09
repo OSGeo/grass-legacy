@@ -21,7 +21,7 @@ PARMS:		prompt: prompt to print
 			if NULL just wait for c/r
 		nullok: allow RETURN alone
 ******************************************************/
-#include "imagery.h"
+#include <grass/imagery.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

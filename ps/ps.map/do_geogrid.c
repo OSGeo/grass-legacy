@@ -10,7 +10,7 @@
 #include "ps_info.h"
 #include "local_proto.h"
 
-#include "gprojects.h"
+#include <grass/gprojects.h>
 
 #define LEFT 0
 #define RIGHT 1

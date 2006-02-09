@@ -1,9 +1,9 @@
 #ifndef __USERGLOBS_H__
 #define __USERGLOBS_H__
 
-#include "G3d.h"
-#include "Vect.h"
-#include "dbmi.h"
+#include <grass/G3d.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
 
 #ifdef USERMAIN
 double /* pargr */ xmin, xmax, ymin, ymax, zmin, zmax, wmin, wmax;

@@ -15,7 +15,7 @@
 *****************************************************************************/
 #include <stdio.h>
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 #ifndef ABS
 #	define ABS(a) ((a) > 0 ? (a) : -(a))

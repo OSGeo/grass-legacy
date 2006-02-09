@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 /* compute square of distance of point (x,y) to line segment (x1,y1 - x2,y2) */
 
 #define ZERO(x) x < tolerance && x > -tolerance

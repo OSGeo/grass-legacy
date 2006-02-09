@@ -1,6 +1,6 @@
 #include <stdlib.h>
-#include "gis.h"
-#include "imagery.h"
+#include <grass/gis.h>
+#include <grass/imagery.h>
 /***************************************************************
  * I_grey_scale (histo, colr)
  *

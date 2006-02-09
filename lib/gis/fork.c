@@ -1,7 +1,7 @@
-#include "config.h"
+#include <grass/config.h>
 
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 /*************************************************************
  * G_fork() 
  *

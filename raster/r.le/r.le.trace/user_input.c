@@ -18,7 +18,7 @@
 *				                           *
 ************************************************************/
 
-#include "config.h"
+#include <grass/config.h>
 #include "r.le.trace.h"
 
 extern struct CHOICE *choice ;

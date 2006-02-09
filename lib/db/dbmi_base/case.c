@@ -1,4 +1,4 @@
-#include "dbmi.h"
+#include <grass/dbmi.h>
 
 /*!
  \fn void db_char_to_lowercase (char *s)

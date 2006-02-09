@@ -11,11 +11,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
-#include "segment.h"
-#include "gis.h"
+#include <grass/segment.h>
+#include <grass/gis.h>
 #define MAIN
 #include "stash.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 

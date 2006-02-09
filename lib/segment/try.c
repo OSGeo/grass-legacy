@@ -1,4 +1,4 @@
-#include "segment.h"
+#include <grass/segment.h>
 
 #define NCOLS 100
 #define NROWS 100

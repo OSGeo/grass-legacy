@@ -21,7 +21,7 @@
 #include <string.h>
 #include <math.h>
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "rom_proto.h"
 
 

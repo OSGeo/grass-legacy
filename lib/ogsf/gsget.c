@@ -2,7 +2,7 @@
 * $Id$
 */
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 
 int get_mapatt(typbuff * buff, int offset, float *att)
 {

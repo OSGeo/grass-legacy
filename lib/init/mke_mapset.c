@@ -8,7 +8,7 @@
 #include <errno.h>
 extern int errno;
 
-#include "gis.h"
+#include <grass/gis.h>
 
 #ifdef __MINGW32__
 # define mkdir(name, mode) ((mkdir) (name))

@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 #include "orthophoto.h"
 #include "elev.h"
 

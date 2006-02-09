@@ -18,8 +18,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 void delete_area_cats_from_cidx ( struct Map_info *Map, int area ) 
 {

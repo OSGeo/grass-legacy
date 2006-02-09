@@ -15,9 +15,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "gis.h"
-#include "Vect.h"
-#include "dbmi.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
 
 int patch(struct Map_info *, struct Map_info *, int, int *);
 int copy_records ( dbDriver *driver_in, dbString *table_name_in,

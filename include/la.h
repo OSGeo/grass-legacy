@@ -43,8 +43,8 @@
    to platform, at least partly
 */
 
-#include "blas.h"
-#include "lapack.h"
+#include <grass/blas.h>
+#include <grass/lapack.h>
 
 
 

@@ -1,4 +1,4 @@
-#include "imagery.h"
+#include <grass/imagery.h>
 
 /* compute sum of squares for each class */
 int I_cluster_sum2(struct Cluster *C)

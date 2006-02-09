@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include "gis.h"
-#include "dbmi.h"
-#include "Vect.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
+#include <grass/glocale.h>
 
 /* *  convert dig_cats to database table
 *  return: number of records inserted

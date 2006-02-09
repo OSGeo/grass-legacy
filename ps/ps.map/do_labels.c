@@ -8,7 +8,7 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "glocale.h"
+#include <grass/glocale.h>
 
 #include "ps_info.h"
 #include "labels.h"

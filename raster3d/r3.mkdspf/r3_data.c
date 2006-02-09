@@ -1,5 +1,5 @@
 #include "vizual.h"
-#include "G3d.h"
+#include <grass/G3d.h>
 
 
 #define NO_RESAMPLE

@@ -8,7 +8,7 @@
 * perform histogram equalization
 * inputs are histo, output is map,min,max
 ****************************************************************/
-#include "gis.h"
+#include <grass/gis.h>
 int G_histogram_eq (
     struct Histogram *histo,
     unsigned char **map,

@@ -1,7 +1,7 @@
 #include <string.h>
 #include "global.h"
-#include "Vect.h"
-#include "glocale.h"
+#include <grass/Vect.h>
+#include <grass/glocale.h>
 
 int parse_units();
 int parse_option();

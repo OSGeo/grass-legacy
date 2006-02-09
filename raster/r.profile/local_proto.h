@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "gis.h"
-#include "display.h"
-#include "raster.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/raster.h>
+#include <grass/glocale.h>
 
 /* main.c */
 int do_profile(double, double, double, double, char *, int, double, int, int, FILE *, char *);

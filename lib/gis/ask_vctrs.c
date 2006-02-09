@@ -27,7 +27,7 @@
  *      char *pointer to a string with name of mapset
  *       where file was found, or NULL if not found
  **********************************************************************/
-#include "gis.h"
+#include <grass/gis.h>
 
 
 /*!

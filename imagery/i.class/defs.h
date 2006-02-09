@@ -1,6 +1,6 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include <curses.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 #include "point.h"
 
 /* this is a curses structure */

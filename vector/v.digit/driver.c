@@ -1,8 +1,8 @@
-#include "gis.h"
-#include "raster.h"
-#include "display.h"
-#include "D.h" 
-#include "colors.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/display.h>
+#include <grass/D.h>
+#include <grass/colors.h>
 #include "global.h"
 #include "proto.h"
 

@@ -1,7 +1,7 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "raster.h"
+#include <grass/raster.h>
 int main(int argc,char *argv[])
 {
 	struct GModule *module;
