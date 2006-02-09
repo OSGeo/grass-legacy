@@ -369,7 +369,7 @@ main (int argc, char *argv[])
         /* Convert projection information interactively as it is important
 	 * to set up datum etc. */
         if ( GPJ_osr_to_grass( &cellhd, &proj_info, 
-			       &proj_units, Ogr_projection, 1) < 0 )
+			       &proj_units, &Ogr_projection, 1) < 0 )
 	    G_fatal_error (_("Unable to convert input map projection to GRASS "
 			  "format; cannot create new location."));
 	else		  
@@ -382,7 +382,7 @@ main (int argc, char *argv[])
 
         /* Projection only required for checking so convert non-interactively */
         if ( GPJ_osr_to_grass( &cellhd, &proj_info, 
-			       &proj_units, Ogr_projection, 0) < 0 )
+			       &proj_units, &Ogr_projection, 0) < 0 )
             G_warning (_("Unable to convert input map projection information to "
 		      "GRASS format for checking"));
 
