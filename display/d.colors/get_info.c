@@ -4,6 +4,7 @@
 #include <grass/display.h>
 #include <grass/raster.h>
 #include <grass/colors.h>
+#include "colors.h"
 
 int 
 get_map_info (char *name, char *mapset)

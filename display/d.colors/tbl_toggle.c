@@ -1,5 +1,5 @@
 #include <grass/gis.h>
-#include <grass/colors.h>
+#include "colors.h"
 
 int toggle_number = 0 ;
 
