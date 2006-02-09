@@ -3,7 +3,7 @@
 #include <grass/display.h>
 #include <grass/raster.h>
 #include "graphics.h"
-#include <grass/colors.h>
+#include "colors.h"
 
 static int save_colors( char *,char *, struct Colors *);
 static int yes ( char *,char *);
