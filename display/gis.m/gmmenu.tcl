@@ -84,7 +84,7 @@ global filename
     }}
  	{cascad "Map type conversions" {} "" $tmenu {			
         {command "Raster to vector map" {} "r.to.vect" {} -command {execute r.to.vect }}
-        {command "Raster map series to volume" {} "r3.in.rast" {} -command {execute r3.in.rast }}
+        {command "Raster map series to volume" {} "r.to.rast3" {} -command {execute r.to.rast3 }}
         {command "Vector to raster" {} "v.to.rast" {} -command {execute v.to.rast }}
         {command "Vector line to points" {} "v.to.points" {} -command {execute v.to.points }}
         {command "Vector 3D points to volume" {} "v.to.rast3" {} -command {execute v.to.rast3 }}
