@@ -1,5 +1,8 @@
+#include <curses.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "globals.h"
 #include "local_proto.h"
 
@@ -8,7 +11,9 @@ static int inited = 0;
 static WINDOW *save;
 WINDOW *newwin();
 
-static Window *make_window (int top, int bottom, int left, int right)
+
+static Window *
+make_window (int top, int bottom, int left, int right)
 {
     Window *window;
 
@@ -16,7 +21,7 @@ static Window *make_window (int top, int bottom, int left, int right)
     ||	bottom-top <= 1 || right-left <= 1)
     {
 	End_curses();
-	fprintf (stderr, "make_window(%d,%d,%d,%d): illegal screen values\n",
+	G_warning(_("make_window(%d,%d,%d,%d): illegal screen values."),
 		top, bottom, left, right);
 	sleep(3);
 	exit(1);
@@ -53,7 +58,8 @@ int Begin_curses (void)
     return 0;
 }
 
-int End_curses (void)
+int 
+End_curses (void)
 {
 /* should only be called upon program exit */
 
@@ -63,7 +69,8 @@ int End_curses (void)
     return 0;
 }
 
-int Suspend_curses (void)
+int 
+Suspend_curses (void)
 {
     overwrite (stdscr, save);
     clear();
@@ -73,7 +80,8 @@ int Suspend_curses (void)
     return 0;
 }
 
-int Resume_curses (void)
+int 
+Resume_curses (void)
 {
     clear();
     refresh();
@@ -82,7 +90,8 @@ int Resume_curses (void)
     return 0;
 }
 
-int Curses_allow_interrupts (int ok)
+int 
+Curses_allow_interrupts (int ok)
 {
     refresh();
     if (ok)
@@ -92,7 +101,8 @@ int Curses_allow_interrupts (int ok)
     return 0;
 }
 
-int Curses_clear_window (Window *window)
+int 
+Curses_clear_window (Window *window)
 {
     int y,x;
 
@@ -108,7 +118,8 @@ if (!inited) return 1;
     return 0;
 }
 
-int Curses_outline_window (Window *window)
+int 
+Curses_outline_window (Window *window)
 {
     int x, y;
 
@@ -139,13 +150,14 @@ int Curses_outline_window (Window *window)
     return 0;
 }
 
-int Curses_write_window (Window *window, int line, int col, char *message)
+int 
+Curses_write_window (Window *window, int line, int col, char *message)
 {
     int y,x,i;
 
 if (!inited)
 {
-	fprintf (stderr, "%s\n", message);
+	G_message(_("%s"), message);
 	return 1;
 }
     if (line <= 0 || line >= window->bottom-window->top)
@@ -168,7 +180,8 @@ if (!inited)
 }
 
 
-int Curses_replot_screen (void) 
+int 
+Curses_replot_screen (void) 
 {
     int x,y;
     getyx (stdscr, y, x);
@@ -178,7 +191,8 @@ int Curses_replot_screen (void)
     return 0;
 }
 
-int Curses_prompt_gets (char *prompt, char *answer)
+int 
+Curses_prompt_gets (char *prompt, char *answer)
 {
     char c ;
     int n;
