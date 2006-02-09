@@ -9,7 +9,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "driverlib.h"
 
 #define MAX_STD_COLORS	15

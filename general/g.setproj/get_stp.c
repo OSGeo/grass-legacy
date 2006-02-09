@@ -1,8 +1,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "gis.h"
-#include "geo.h"
+#include <grass/gis.h>
+#include <grass/geo.h>
 #include "local_proto.h"
 
 void get_stp_proj(char string[])

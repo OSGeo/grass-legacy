@@ -4,8 +4,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include "gis.h"
-#include "dbmi.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
 
 typedef struct {
     char *driver;

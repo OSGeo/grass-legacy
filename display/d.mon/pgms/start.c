@@ -27,12 +27,12 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include "config.h"
+#include <grass/config.h>
 
-#include "raster.h"
-#include "monitors.h"
+#include <grass/raster.h>
+#include <grass/monitors.h>
 #include "local_proto.h"
-#include "gis.h"
+#include <grass/gis.h>
 
 #ifdef __W98__
 

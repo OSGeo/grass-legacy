@@ -21,10 +21,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
-#include "glocale.h"
-#include "gis.h"
-#include "dbmi.h"
-#include "Vect.h"
+#include <grass/glocale.h>
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
 #include "sw_defs.h"
 #include "defs.h"
 

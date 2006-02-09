@@ -21,7 +21,7 @@
 
 #include <float.h>
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 #define BIG_NUM (FLT_MAX/4.0)
 

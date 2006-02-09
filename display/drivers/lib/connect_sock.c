@@ -1,5 +1,5 @@
 
-#include "config.h"
+#include <grass/config.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,7 +9,7 @@
 #include <sys/time.h>
 #include <sys/types.h>
 
-#include "gis.h"
+#include <grass/gis.h>
 #include "driverlib.h"
 
 #ifdef USE_G_SOCKS

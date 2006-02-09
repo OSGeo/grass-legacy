@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 /* open and close vector file for level one access */
 

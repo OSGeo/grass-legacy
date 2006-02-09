@@ -45,7 +45,7 @@ Let calling routine worry about copying points for caching.
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 #include "gsget.h"
 #include "rowcol.h"
 #include "math.h"

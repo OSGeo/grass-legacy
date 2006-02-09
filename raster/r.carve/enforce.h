@@ -2,9 +2,9 @@
 #define __ENFORCE_H__
 
 #include <stdio.h>
-#include "gis.h"
-#include "bitmap.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/bitmap.h>
+#include <grass/Vect.h>
 
 
 #define APP_VERSION 1.0

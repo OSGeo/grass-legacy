@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 static void regression(DCELL *result, DCELL *values, int n, int offset)
 {

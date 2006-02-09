@@ -3,7 +3,7 @@
 ** Author: Paul W. Carlson	April 1992
 */
 
-#include "gis.h"
+#include <grass/gis.h>
 
 int 
 get_font (char *data)

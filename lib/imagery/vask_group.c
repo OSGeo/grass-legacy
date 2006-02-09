@@ -1,7 +1,7 @@
-#include "gis.h"
+#include <grass/gis.h>
 #ifdef HAVE_CURSES_H
-#include "vask.h"
-#include "imagery.h"
+#include <grass/vask.h>
+#include <grass/imagery.h>
 #include <string.h>
 #include <stdio.h>
 #define OLD 1

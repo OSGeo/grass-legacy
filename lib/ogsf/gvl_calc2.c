@@ -8,8 +8,8 @@ Tomas Paudits, 2004
 
 #include <float.h>
 
-#include "gis.h"
-#include "gstypes.h"
+#include <grass/gis.h>
+#include <grass/gstypes.h>
 
 #include "mc33_table.h"
 

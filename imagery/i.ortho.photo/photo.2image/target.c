@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <string.h>
-#include "gis.h"
-#include "imagery.h"
+#include <grass/gis.h>
+#include <grass/imagery.h>
 #include "globals.h"
 
 

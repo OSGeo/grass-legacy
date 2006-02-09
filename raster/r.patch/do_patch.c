@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 /*
  * patch in non-zero data over zero data
  * keep track of the categories which are patched in

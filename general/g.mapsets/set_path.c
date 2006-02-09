@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "externs.h"
-#include "gis.h"
+#include <grass/gis.h>
 
 int set_mapset_path (void)
 {

@@ -15,7 +15,7 @@
 *   	    	for details.
 *
 *****************************************************************************/
-#include "Vect.h"
+#include <grass/Vect.h>
 
 /*!
  \fn int Vect_level (struct Map_info *Map)

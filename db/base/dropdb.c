@@ -1,8 +1,8 @@
-#include "dbmi.h"
-#include "gis.h"
-#include "codes.h"
+#include <grass/dbmi.h>
+#include <grass/gis.h>
+#include <grass/codes.h>
 #include <stdlib.h>
-#include "glocale.h"
+#include <grass/glocale.h>
 
 struct {
 	char *driver, *database;

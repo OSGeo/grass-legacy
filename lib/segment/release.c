@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "segment.h"
+#include <grass/segment.h>
 
 /*!
  * \brief free allocated memory

@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "G3d.h"
+#include <grass/G3d.h>
 #include "G3d_intern.h"
 
 /*---------------------------------------------------------------------------*/

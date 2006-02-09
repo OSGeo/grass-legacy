@@ -4,7 +4,7 @@
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
 /**************************************************************
  * clean_temp

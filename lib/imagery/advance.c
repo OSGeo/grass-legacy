@@ -9,7 +9,7 @@
  * and one (slow) for those which do not
  *******************************************/
 
-#include "config.h"
+#include <grass/config.h>
 
 #include <unistd.h>
 
@@ -18,7 +18,7 @@
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <sys/mtio.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 
 
 int I_tape_advance(int fd,int n)

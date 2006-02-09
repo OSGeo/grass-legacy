@@ -1,5 +1,5 @@
-#include "gis.h"
-#include "segment.h"
+#include <grass/gis.h>
+#include <grass/segment.h>
 #include "cseg.h"
 
 static char *me = "dseg_write_cell";

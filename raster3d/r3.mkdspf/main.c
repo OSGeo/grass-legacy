@@ -28,10 +28,10 @@
 #include <stdlib.h>
 #include <math.h>
 #include "vizual.h"
-#include "gis.h"
-#include "G3d.h"
+#include <grass/gis.h>
+#include <grass/G3d.h>
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 int main(int argc, char *argv[])
 {

@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <unistd.h>
-#include "gis.h"
-#include "display.h"
-#include "raster.h"
-#include "colors.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/raster.h>
+#include <grass/colors.h>
+#include <grass/glocale.h>
 
 #define MAIN
 #include "options.h"

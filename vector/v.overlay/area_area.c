@@ -9,9 +9,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "gis.h"
-#include "dbmi.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
 #include "local.h"
 
 int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct field_info *Fi, 

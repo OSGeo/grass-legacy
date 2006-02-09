@@ -1,5 +1,5 @@
 #include <math.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 #include "mat.h"
 #include "local_proto.h"
 

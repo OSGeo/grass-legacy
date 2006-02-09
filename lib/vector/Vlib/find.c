@@ -16,8 +16,8 @@
 *
 *****************************************************************************/
 #include <math.h>
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 #ifndef HUGE_VAL
 #define HUGE_VAL 9999999999999.0

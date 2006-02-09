@@ -15,7 +15,7 @@
 *
 *****************************************************************************/
 #include <string.h>
-#include "Vect.h"
+#include <grass/Vect.h>
 
 /* This is file is just example and starting point for writing overlay functions!!! */
 int Vect_overlay_and ( struct Map_info *, int, struct ilist *, struct ilist *,

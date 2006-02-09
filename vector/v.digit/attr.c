@@ -3,13 +3,13 @@
 #include <math.h>
 #include <tcl.h>
 #include <tk.h>
-#include "gis.h"
-#include "Vect.h"
-#include "dbmi.h"
-#include "raster.h"
-#include "display.h"
-#include "colors.h"
-#include "form.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
+#include <grass/raster.h>
+#include <grass/display.h>
+#include <grass/colors.h>
+#include <grass/form.h>
 #include "global.h"
 #include "proto.h"
 

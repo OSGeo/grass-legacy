@@ -15,8 +15,8 @@
 *   	    	for details.
 *
 *****************************************************************************/
-#include "Vect.h"
-#include "gis.h"
+#include <grass/Vect.h>
+#include <grass/gis.h>
 /*
    **  These routines can affect the read_next_line funtions
    **    by restricting what they return.

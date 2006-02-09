@@ -1,6 +1,6 @@
 #include <string.h>
 #include "rule.h"
-#include "gis.h"
+#include <grass/gis.h>
 
 static int scan_value (CELL *);
 static char *cur;

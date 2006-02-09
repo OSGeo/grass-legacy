@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <math.h>
-#include <Vect.h>
+#include <grass/Vect.h>
 #include "sw_defs.h"
 #include "defs.h"
 #include "write.h"

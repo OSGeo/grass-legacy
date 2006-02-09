@@ -10,7 +10,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 
 /* Values needed for Ray-Convex Polyhedron Intersection Test below
  * originally by Eric Haines, erich@eye.com

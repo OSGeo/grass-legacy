@@ -15,8 +15,8 @@
 *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
-#include <dbmi.h>
-#include "gis.h"
+#include <grass/dbmi.h>
+#include <grass/gis.h>
 #include "globals.h"
 
 /* save string to value */

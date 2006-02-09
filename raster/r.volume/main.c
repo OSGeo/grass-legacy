@@ -16,9 +16,9 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "site.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/site.h>
+#include <grass/glocale.h>
 
 int centroids(int, int *, int *, int, int);
 

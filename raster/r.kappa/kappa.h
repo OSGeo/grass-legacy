@@ -5,7 +5,7 @@
 # define INIT(x)=x
 #endif
  
-#include "gis.h"
+#include <grass/gis.h>
 #include <math.h>
 
 GLOBAL struct Cell_head window;

@@ -6,8 +6,8 @@
  *      Color() in ../lib/Color.c
  */
 
-#include "gis.h"
-#include "colors.h"
+#include <grass/gis.h>
+#include <grass/colors.h>
 #include "pngdriver.h"
 
 void PNG_color(int number)

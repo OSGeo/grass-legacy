@@ -4,7 +4,7 @@
 #include <time.h>
 #if 0
 #include <dmalloc.h>
-#include "gis.h"
+#include <grass/gis.h>
 #endif
 #include "list.h"
 

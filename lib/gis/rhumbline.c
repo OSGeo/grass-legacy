@@ -17,7 +17,7 @@
  */
 
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "pi.h"
 
 static double TAN_A, TAN1, TAN2, L;

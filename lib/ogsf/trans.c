@@ -31,7 +31,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 
 #define MAX_STACK 20
 

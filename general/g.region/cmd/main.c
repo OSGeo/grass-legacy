@@ -17,12 +17,12 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include "gis.h"
-#include "G3d.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/G3d.h>
+#include <grass/Vect.h>
 #include "local_proto.h"
 #include "projects.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 static int nsew(char *,char *,char *,char *);
 static void die(struct Option *);

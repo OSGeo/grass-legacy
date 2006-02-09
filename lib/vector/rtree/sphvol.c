@@ -39,7 +39,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 static void print_volume(int dimension, double volume)
 {

@@ -12,7 +12,7 @@
 #include <math.h>
 #include <string.h>
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 
 /************************************************************************/
 double GS_geodistance(double *from, double *to, char *units)

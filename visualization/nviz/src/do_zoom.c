@@ -13,7 +13,7 @@
 
 #define USE_GL_NORMALIZE
 
-#include "config.h"
+#include <grass/config.h>
 /* Nvision includes */
 #include "interface.h"
 

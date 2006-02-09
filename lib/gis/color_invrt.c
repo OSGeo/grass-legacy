@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 int G_invert_colors (
     struct Colors *colors)

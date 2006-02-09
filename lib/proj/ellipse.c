@@ -21,9 +21,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>		/* for sqrt() */
-#include "gis.h"
-#include "glocale.h"
-#include "gprojects.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
+#include <grass/gprojects.h>
 
 struct ellps_list
 {

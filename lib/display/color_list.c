@@ -1,4 +1,4 @@
-#include "colors.h"
+#include <grass/colors.h>
 
 char *D_color_list(void)
 {

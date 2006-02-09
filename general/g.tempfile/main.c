@@ -3,7 +3,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 int main (int argc, char *argv[])
 {

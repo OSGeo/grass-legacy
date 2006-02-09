@@ -52,7 +52,7 @@ using namespace std;
 #include "option.h"
 #include "types.h" /* for dimension_type */
 extern "C" {
-#include "gis.h"
+#include <grass/gis.h>
 }
 
 

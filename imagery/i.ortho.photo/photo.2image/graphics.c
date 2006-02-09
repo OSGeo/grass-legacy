@@ -1,7 +1,7 @@
-#include "gis.h"
-#include "D.h"
-#include "display.h"
-#include "raster.h"
+#include <grass/gis.h>
+#include <grass/D.h>
+#include <grass/display.h>
+#include <grass/raster.h>
 #include "globals.h"
 
 static View *makeview (double bottom, double top, double left, double right)

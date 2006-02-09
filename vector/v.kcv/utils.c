@@ -6,7 +6,7 @@
  * Read the file GPL.TXT coming with GRASS for details.
  */
 
-#include "gis.h"
+#include <grass/gis.h>
 #include "kcv.h"
 
 double 

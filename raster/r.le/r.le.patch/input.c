@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "config.h"
+#include <grass/config.h>
 #include "patch.h"
 
 

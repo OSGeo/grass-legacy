@@ -1,4 +1,4 @@
-#include "imagery.h"
+#include <grass/imagery.h>
 #include "bouman.h"
 
 int create_output_labels (struct SigSet *S, struct files *files)

@@ -18,7 +18,7 @@
  *********************************************************************/
 
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 char *G__file_name ( 
 	char *path,

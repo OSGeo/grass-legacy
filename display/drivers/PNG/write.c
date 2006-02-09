@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <png.h>
 
-#include "gis.h"
+#include <grass/gis.h>
 #include "pngdriver.h"
 
 static void write_png(void)

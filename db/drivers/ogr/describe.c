@@ -13,13 +13,13 @@
 *   	    	for details.
 *
 *****************************************************************************/
-#include <dbmi.h>
-#include <datetime.h>
-#include "gis.h"
+#include <grass/dbmi.h>
+#include <grass/datetime.h>
+#include <grass/gis.h>
 #include "ogr_api.h"
 #include "globals.h"
 #include "proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 int db__driver_describe_table( dbString *table_name, dbTable **table )
 {

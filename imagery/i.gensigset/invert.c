@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 int invert ( 
 /* inverts a matrix of arbitrary size input as a 2D array. */

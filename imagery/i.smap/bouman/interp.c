@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "bouman.h"
 #include "region.h"
 

@@ -20,9 +20,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "localproto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 
 int

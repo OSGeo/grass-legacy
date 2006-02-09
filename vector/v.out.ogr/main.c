@@ -18,14 +18,14 @@
  * **************************************************************/
 #include <stdlib.h> 
 #include <string.h> 
-#include "gis.h"
-#include "dbmi.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
 #include "ogr_api.h"
 #include "cpl_string.h"
-#include "config.h"
-#include "gprojects.h"
-#include "glocale.h"
+#include <grass/config.h>
+#include <grass/gprojects.h>
+#include <grass/glocale.h>
 
 int    fout, fskip; /* features written/ skip */
 int    nocat, noatt, nocatskip; /* number of features without cats/atts written/skip */

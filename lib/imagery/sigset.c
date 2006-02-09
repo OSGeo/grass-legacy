@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
-#include "imagery.h"
-#include "gis.h"
+#include <grass/imagery.h>
+#include <grass/gis.h>
 
 static int gettag( FILE *, char *);
 static int get_nbands( FILE *, struct SigSet *);

@@ -1,5 +1,5 @@
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 /* convert type "RASTER_MAP_TYPE" into index */
 #define F2I(map_type) \

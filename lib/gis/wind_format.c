@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 static int format_double(double,char *);
 

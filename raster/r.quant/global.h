@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #ifdef MAIN
   struct Quant quant_struct;
   CELL old_min, old_max;

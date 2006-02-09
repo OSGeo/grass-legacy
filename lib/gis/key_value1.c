@@ -1,6 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 struct Key_Value *
 G_create_key_value()

@@ -23,11 +23,11 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-#include "gis.h"
-#include "display.h"
-#include "raster.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/raster.h>
 #include "local.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 int cut_val, frame = 0;
 int height_flag = 0;

@@ -5,7 +5,7 @@
 #include <rpc/rpc.h>
 #endif
 
-#include "dbmi.h"
+#include <grass/dbmi.h>
 
 int xdr_begin_send(XDR *xdrs);
 int xdr_begin_recv(XDR *xdrs);

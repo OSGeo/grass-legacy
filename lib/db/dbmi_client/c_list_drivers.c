@@ -1,4 +1,4 @@
-#include "dbmi.h"
+#include <grass/dbmi.h>
 
 /*!
  \fn char *db_list_drivers(void)

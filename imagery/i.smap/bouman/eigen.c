@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 int eigen ( 
 /* Computes eigenvalues (and eigen vectors if desired) for	*

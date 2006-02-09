@@ -1,4 +1,4 @@
-#include "imagery.h"
+#include <grass/imagery.h>
 
 int I_cluster_nclasses (struct Cluster *C,int minsize)
 {

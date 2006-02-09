@@ -11,10 +11,10 @@
 #ifndef __MINGW32__
 #include <sys/wait.h>
 #endif
-#include "config.h"
-#include "gis.h"
-#include "glocale.h"
-#include "spawn.h"
+#include <grass/config.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
+#include <grass/spawn.h>
 
 #define MAX_ARGS 256
 #define MAX_BINDINGS 256

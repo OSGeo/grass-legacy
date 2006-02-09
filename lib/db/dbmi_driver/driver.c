@@ -2,8 +2,8 @@
 #include <sys/stat.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "gis.h"
-#include "dbmi.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
 #include "procs.h"
 #define	DB_DRIVER_C
 #include "dbstubs.h"

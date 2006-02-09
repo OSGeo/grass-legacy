@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include <string.h>
 
 /* -1 can't open file for reading

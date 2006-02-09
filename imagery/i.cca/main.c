@@ -15,9 +15,9 @@
 #include <math.h>
 
 #define MAIN
-#include "imagery.h"
-#include "gmath.h"
-#include "glocale.h"
+#include <grass/imagery.h>
+#include <grass/gmath.h>
+#include <grass/glocale.h>
 #include "globals.h"
 #include "local_proto.h"
 

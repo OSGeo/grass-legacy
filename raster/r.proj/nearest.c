@@ -7,7 +7,7 @@
  *		    x,y position
  */ 
 
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
 #include <math.h>
 

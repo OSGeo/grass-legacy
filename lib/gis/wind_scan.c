@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 static int scan_double(char *,double *);
 
 

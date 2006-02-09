@@ -28,9 +28,9 @@
  **********************************************************************/
 #include <string.h>
 #include <stdlib.h>
-#include "vask.h"
-#include "gis.h"
-#include "edit.h"
+#include <grass/vask.h>
+#include <grass/gis.h>
+#include <grass/edit.h>
 
 
 static void format_value(int (*func)(double, char *, int), 

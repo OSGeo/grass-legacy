@@ -18,7 +18,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "gis.h"
+#include <grass/gis.h>
 #define PRECISION 30
 #define THRESHOLD .0000000000000000000000000000005
 /* .5 * 10 ^(-30) */

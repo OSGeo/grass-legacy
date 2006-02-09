@@ -22,8 +22,8 @@
 
 #include <stdio.h>
 #include <math.h>
-#include "gis.h"
-#include "interpf.h"
+#include <grass/gis.h>
+#include <grass/interpf.h>
 
 double IL_crst (double r, double fi)
 /*

@@ -1,9 +1,9 @@
 #include <string.h>
 #include <math.h>
 #include <unistd.h>
-#include "gis.h"
-#include "imagery.h"
-#include "raster.h"
+#include <grass/gis.h>
+#include <grass/imagery.h>
+#include <grass/raster.h>
 #include "globals.h"
 
 

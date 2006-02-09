@@ -10,7 +10,7 @@
 /* DEBUG */
 #include <stdio.h>
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 #include "rowcol.h"
 
 static void init_cplane(void);

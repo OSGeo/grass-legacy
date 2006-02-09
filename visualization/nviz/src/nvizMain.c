@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <tk.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "interface.h"
 
 extern int NVIZ_AppInit(Tcl_Interp *);

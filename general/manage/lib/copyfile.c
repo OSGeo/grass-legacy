@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include <unistd.h>
 int 
 copyfile (char *element, char *old, char *mapset, char *new)

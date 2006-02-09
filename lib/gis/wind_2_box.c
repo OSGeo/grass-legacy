@@ -16,7 +16,7 @@
  *      nothing
  **********************************************************************/
 
-#include "gis.h"
+#include <grass/gis.h>
 
 int G_adjust_window_to_box (
     struct Cell_head *src,struct Cell_head *dst,int rows,int cols)

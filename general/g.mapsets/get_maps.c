@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "externs.h"
-#include "gis.h"
+#include <grass/gis.h>
 
 int get_available_mapsets (void)
 {

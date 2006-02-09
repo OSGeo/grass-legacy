@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 
 
 void *I_malloc(size_t n)

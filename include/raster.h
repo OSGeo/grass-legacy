@@ -1,7 +1,7 @@
 #ifndef _GRASS_RASTER_H
 #define _GRASS_RASTER_H
 
-#include "monitors.h"
+#include <grass/monitors.h>
 
 /* commands.c */
 int R_flush(void);

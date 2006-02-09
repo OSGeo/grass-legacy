@@ -19,10 +19,10 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include "glocale.h"
-#include "gis.h"
-#include "Vect.h"
-#include "dbmi.h"
+#include <grass/glocale.h>
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
 
 /*!
  \fn char *Vect_get_column_names(struct Map_info *Map, int field)

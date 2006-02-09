@@ -1,8 +1,8 @@
 /* list.mon - list entries in monitorcap file */
 
-#include "raster.h"
+#include <grass/raster.h>
 #include <stdio.h>
-#include "monitors.h"
+#include <grass/monitors.h>
 
 int 
 main (int argc, char *argv[])

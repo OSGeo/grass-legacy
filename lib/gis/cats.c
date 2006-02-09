@@ -320,8 +320,8 @@
   
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 static int get_cond ( char **, char *, DCELL);
 static int get_fmt ( char **, char *, int *);

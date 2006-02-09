@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "site.h"
+#include <grass/gis.h>
+#include <grass/site.h>
 
 int main(int argc, char *argv[])
 {

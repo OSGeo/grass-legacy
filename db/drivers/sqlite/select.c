@@ -12,8 +12,8 @@
 *
 **************************************************************/
 #include <stdlib.h>
-#include <dbmi.h>
-#include "gis.h"
+#include <grass/dbmi.h>
+#include <grass/gis.h>
 #include "globals.h"
 #include "proto.h"
 

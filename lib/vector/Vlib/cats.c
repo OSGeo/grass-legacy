@@ -17,8 +17,8 @@
 *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 
 static int cmp(const void *pa, const void *pb);

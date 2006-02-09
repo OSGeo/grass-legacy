@@ -18,7 +18,7 @@
 *
 *****************************************************************************/
 #include <stdio.h>
-#include "Vect.h"
+#include <grass/Vect.h>
 
 /*
    **  Written by Dave Gerdes  9/1988

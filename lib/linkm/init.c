@@ -5,7 +5,7 @@
 **
 */
 #include <stdlib.h>
-#include "linkm.h"
+#include <grass/linkm.h>
 
 static int link_chunk_size = 100;
 static int link_exit_flag = 0;

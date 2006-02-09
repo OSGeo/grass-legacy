@@ -1,6 +1,6 @@
 #include <string.h>
 #include <ctype.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
 
 static int scan_int (char *, void *, int);

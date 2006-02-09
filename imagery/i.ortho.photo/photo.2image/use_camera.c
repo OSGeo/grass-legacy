@@ -1,7 +1,7 @@
 #include <string.h>
-#include "gis.h"
-#include "raster.h"
-#include "imagery.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/imagery.h>
 #include "globals.h"
 #define  GLOBALCAM
 #include "camera_ref.h"

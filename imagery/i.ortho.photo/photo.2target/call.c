@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include "raster.h"
+#include <grass/raster.h>
 #include "globals.h"
 #include "local_proto.h"
 

@@ -3,7 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "gis.h"
+#include <grass/gis.h>
 
 enum state
 {

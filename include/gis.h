@@ -28,8 +28,8 @@
 #endif
 
 /* Grass and local include files */
-#include "config.h"
-#include "datetime.h"
+#include <grass/config.h>
+#include <grass/datetime.h>
 
 /*=========================== Constants/Defines ============================*/
 
@@ -512,6 +512,6 @@ struct TimeStamp
 
 /* Since there are so many prototypes for the gis library they are stored */
 /* in the file gisdefs.h */
-#include "gisdefs.h"
+#include <grass/gisdefs.h>
 
 #endif /* GRASS_GIS_H */

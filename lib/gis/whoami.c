@@ -18,7 +18,7 @@
 #include <pwd.h>
 #endif
 
-#include "gis.h"
+#include <grass/gis.h>
 
 
 /*!

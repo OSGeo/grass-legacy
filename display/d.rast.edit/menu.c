@@ -9,9 +9,9 @@
  */
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
+#include <grass/D.h>
 #include "edit.h"
-#include "D.h"
 
 char new_color[28];
 char arrow_layer[128];

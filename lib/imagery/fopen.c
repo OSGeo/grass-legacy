@@ -1,5 +1,5 @@
-#include "imagery.h"
-#include "gis.h"
+#include <grass/imagery.h>
+#include <grass/gis.h>
 /******************************************************
 * I_fopen_group_file_new()
 * I_fopen_group_file_append()

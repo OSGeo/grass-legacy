@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include "gis.h"
-#include "vask.h"
+#include <grass/gis.h>
+#include <grass/vask.h>
 #include "local_proto.h"
 
 int ask_target (char *group, char *location, char *mapset)

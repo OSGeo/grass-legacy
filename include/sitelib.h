@@ -2,7 +2,7 @@
 #define GRASS_SITELIB_H
 /* From src/sites/Lib */
 #ifndef GRASS_SITE_H
-#include "site.h"
+#include <grass/site.h>
 #endif
 /* announce.c */
 int announce(char *);

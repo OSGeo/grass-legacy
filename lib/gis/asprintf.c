@@ -4,7 +4,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <assert.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 /* Warning: Temporarily the G_asprintf macro cannot be used 
 * see explanation in gisdefs.h */

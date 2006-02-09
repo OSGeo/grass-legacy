@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "vask.h"
+#include <grass/vask.h>
 #include "orthophoto.h"
 #include "globals.h"
 

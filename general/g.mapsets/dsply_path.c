@@ -1,6 +1,6 @@
 #include <string.h>
 #include "externs.h"
-#include "gis.h"
+#include <grass/gis.h>
 
 int display_mapset_path(int verbose)
 {

@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "gis.h"
-#include "raster.h"
-#include "display.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/display.h>
 #include "options.h"
 
 int mouse_query(int toptext)

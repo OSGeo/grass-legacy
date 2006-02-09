@@ -1,6 +1,6 @@
 #include <time.h>	/*  For time()	*/
 #include <stdlib.h>	/*  For rand() and srand() */
-#include "gis.h"
+#include <grass/gis.h>
 
 #define MAX_COLORS 1024
 #define DEVIATION 128

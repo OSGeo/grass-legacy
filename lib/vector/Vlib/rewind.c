@@ -15,7 +15,7 @@
 *   	    	for details.
 *
 *****************************************************************************/
-#include "Vect.h"
+#include <grass/Vect.h>
 
 
 /*  Rewind vector data file to cause reads to start at beginning */

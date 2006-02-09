@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "raster.h"
+#include <grass/raster.h>
 #include "local_proto.h"
 
 int 

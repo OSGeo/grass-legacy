@@ -17,16 +17,16 @@
 #include <string.h>
 #include <sys/types.h>
 #include <dirent.h>
-#include "gis.h"
-#include "raster.h"
-#include "display.h"
-#include "Vect.h"
-#include "colors.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/display.h>
+#include <grass/Vect.h>
+#include <grass/colors.h>
 #include "plot.h"
-#include "symbol.h"
-#include "dbmi.h"
+#include <grass/symbol.h>
+#include <grass/dbmi.h>
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 int width;
 int quiet = 1;

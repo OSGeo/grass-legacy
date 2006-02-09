@@ -1,5 +1,5 @@
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "cseg.h"
 
 static char *me="bseg_read_cell";

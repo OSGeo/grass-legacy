@@ -20,7 +20,7 @@ as the dependency doesn't loop back.
 
 #include <stdio.h>
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 #include "gsget.h"
 
 static geosurf *Refsurf = NULL;

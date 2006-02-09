@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "raster.h"
+#include <grass/raster.h>
 #include "local_proto.h"
 /* button 1 is whereami: no return, keep looping
  *        2 is mark point, return 1 (ok)

@@ -25,9 +25,9 @@
  ***************************************************************************/
 #include <string.h>
 #include <stdlib.h>
-#include "gis.h"
-#include "raster.h"
-#include "display.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/display.h>
 
 #define Y_BORDER	5
 #define X_BORDER	5

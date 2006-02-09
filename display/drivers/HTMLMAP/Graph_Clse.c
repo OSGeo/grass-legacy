@@ -5,7 +5,7 @@
 
 
 #include "htmlmap.h"
-#include "gis.h"
+#include <grass/gis.h>
 #include "driverlib.h"
 
 /* sreen dimensions defined in Graph_Set.c */

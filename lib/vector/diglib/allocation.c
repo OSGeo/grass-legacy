@@ -19,7 +19,7 @@
 *****************************************************************************/
 #include <unistd.h>
 #include <stdlib.h>
-#include "Vect.h"
+#include <grass/Vect.h>
 
 /*  functions - alloc_space(), falloc(), frealloc() _falloc() _frealloc() */
 

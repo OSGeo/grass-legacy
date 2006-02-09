@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 #define RAM_NAME		"ram"
 #define SEG_NAME		"seg"

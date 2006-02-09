@@ -8,7 +8,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 #undef MAIN
 #include "ransurf.h"

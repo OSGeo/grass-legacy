@@ -1,6 +1,6 @@
 /* sort an array of CELL */
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 static int ascending (const void *, const void *);
 static int descending (const void *, const void *);

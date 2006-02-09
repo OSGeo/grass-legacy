@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include "cseg.h"
 
 int 

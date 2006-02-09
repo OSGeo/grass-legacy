@@ -20,10 +20,10 @@
 *				                           *
 ************************************************************/
 
-#include "raster.h"
-#include "display.h"
+#include <grass/raster.h>
+#include <grass/display.h>
 #include "setup.h"
-#include "config.h"
+#include <grass/config.h>
 
 
 

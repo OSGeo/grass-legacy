@@ -1,7 +1,7 @@
 /* main.c */
 #include <stdlib.h>
 #include <stdio.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 #include "orthophoto.h"
 #include "local_proto.h"
 

@@ -18,10 +18,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "glocale.h"
-#include "gis.h"
-#include "dbmi.h"
-#include "Vect.h"
+#include <grass/glocale.h>
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
 
 /*!
  \fn struct dblinks *Vect_new_dblinks_struct ( void )

@@ -5,10 +5,10 @@
 ** modified to use G_plot_line() by Olga Waupotitsch on dec,93
 */
 
-#include "Vect.h"
-#include "dbmi.h"
-#include "symbol.h"
-#include "glocale.h"
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
+#include <grass/symbol.h>
+#include <grass/glocale.h>
 
 #include "ps_info.h"
 #include "clr.h"

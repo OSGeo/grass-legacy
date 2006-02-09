@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include "imagery.h"
-#include "ortholib.h"
+#include <grass/imagery.h>
+#include <grass/ortholib.h>
 
 static char *tempfile = NULL;
 

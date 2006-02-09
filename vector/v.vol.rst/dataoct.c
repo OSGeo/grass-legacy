@@ -28,7 +28,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "dataoct.h" 
 #include "externs.h" 
 #include "user.h"

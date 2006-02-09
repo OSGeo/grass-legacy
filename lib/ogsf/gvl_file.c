@@ -2,9 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "gstypes.h"
-#include "gsurf.h"
-#include "G3d.h"
+#include <grass/gstypes.h>
+#include <grass/gsurf.h>
+#include <grass/G3d.h>
 
 #define LUCKY                 33
 

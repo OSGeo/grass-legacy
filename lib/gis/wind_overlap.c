@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 /*
  * given a map window, and a box of N,S,E,W

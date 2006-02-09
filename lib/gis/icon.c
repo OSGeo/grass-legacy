@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 int trans ( double *x, double *y, int n_points, double angle, double scale, 
                      double xc, double yc ) {

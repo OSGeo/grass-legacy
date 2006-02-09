@@ -16,10 +16,10 @@
  **************************************************************/
 #include <stdlib.h> 
 #include <string.h> 
-#include "gis.h"
-#include "Vect.h"
-#include "dbmi.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
+#include <grass/glocale.h>
 
 #define DEBUG_NONE   0
 #define DEBUG_BUFFER 1

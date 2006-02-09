@@ -1,6 +1,6 @@
-#include "imagery.h"
-#include "gis.h"
-#include "glocale.h"
+#include <grass/imagery.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 
 int 

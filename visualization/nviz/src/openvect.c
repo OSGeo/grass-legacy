@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 char *openvect(name)
      char *name;

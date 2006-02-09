@@ -34,21 +34,21 @@
 
 #define USERMAIN
 
-#include "gis.h"
-#include "site.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/site.h>
+#include <grass/Vect.h>
 #include "userglobs.h"
 
 /* include G3d defs */
-#include "G3d.h"
+#include <grass/G3d.h>
 
 #include "oct.h"
 #include "surf.h"
 #include "dataoct.h"
 #include "user.h"
-#include "bitmap.h"
-#include "dbmi.h"
-#include "glocale.h"
+#include <grass/bitmap.h>
+#include <grass/dbmi.h>
+#include <grass/glocale.h>
 
 /* pargr */
 double ns_res, ew_res, tb_res;

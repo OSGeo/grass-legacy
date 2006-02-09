@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 /* For lat-lon,
  *   this routine adjusts the values of the longitudes so that
  *   the difference between them is less than 180.

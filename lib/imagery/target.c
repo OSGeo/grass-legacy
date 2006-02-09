@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "gis.h"
-#include "imagery.h"
+#include <grass/gis.h>
+#include <grass/imagery.h>
 
 
 /*!

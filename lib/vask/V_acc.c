@@ -1,4 +1,4 @@
-#include "vask.h"
+#include <grass/vask.h>
 
 
 /*!

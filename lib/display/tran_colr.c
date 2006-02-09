@@ -3,8 +3,8 @@
  */
 
 #include <string.h>
-#include "display.h"
-#include "colors.h"
+#include <grass/display.h>
+#include <grass/colors.h>
 
 
 /*!

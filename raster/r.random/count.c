@@ -2,7 +2,7 @@
 #include <float.h>
 #include <math.h>
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
 
 void set_min(struct RASTER_MAP_PTR *from, int col, struct RASTER_MAP_PTR *to);

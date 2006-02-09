@@ -3,7 +3,7 @@
 #include <string.h>
 #include <dirent.h>
 #include <sys/stat.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "list.h"
 #include "mapcalc.h"
 #include "map.h"

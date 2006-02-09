@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "kappa.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 

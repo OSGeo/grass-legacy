@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "Vect.h"
+#include <grass/Vect.h>
 
 /*!
  \fn int Vect_hist_command ( struct Map_info *Map )

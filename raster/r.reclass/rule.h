@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 #define RULE struct _rule_
 RULE

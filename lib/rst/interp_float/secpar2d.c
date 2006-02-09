@@ -14,9 +14,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <unistd.h>
-#include "gis.h"
-#include "bitmap.h"
-#include "interpf.h"
+#include <grass/gis.h>
+#include <grass/bitmap.h>
+#include <grass/interpf.h>
 
 int IL_secpar_loop_2d (
     struct interp_params *params,

@@ -3,9 +3,9 @@
 
 #include <stdlib.h>
 #include <strings.h>
-#include "gis.h"
-#include "dbmi.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
 #include "global.h"
 
 int extract_points( int z_flag )

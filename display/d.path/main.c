@@ -18,12 +18,12 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "raster.h"
-#include "display.h"
-#include "colors.h"
-#include "Vect.h"
-#include "dbmi.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/display.h>
+#include <grass/colors.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
 #include "proto.h"
 
 int main(int argc, char **argv)

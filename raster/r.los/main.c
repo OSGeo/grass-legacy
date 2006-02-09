@@ -16,13 +16,13 @@
 #include <unistd.h>
 #include <math.h>
 #include <fcntl.h>
-#include "gis.h"
+#include <grass/gis.h>
 #define MAIN
-#include "segment.h"
+#include <grass/segment.h>
 #include "cmd_line.h"
 #include "point.h"
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 #define   COLOR_SHIFT      155.0
 #define   COLOR_MAX        255.0

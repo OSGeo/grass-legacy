@@ -12,7 +12,7 @@
 #  define tst(a,b)        (*mode == 'r'? (b) : (a))
 #endif
 
-#include "gis.h"
+#include <grass/gis.h>
 
 #define READ      0
 #define WRITE     1

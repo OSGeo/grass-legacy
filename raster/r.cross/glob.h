@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 #define NFILES 10  /* maximum number of layers */
 #define SHIFT 6 /* 2^SHIFT cats per node */

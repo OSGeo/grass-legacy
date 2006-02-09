@@ -17,10 +17,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "colors.h"
-#include "raster.h"
-#include "display.h"
+#include <grass/gis.h>
+#include <grass/colors.h>
+#include <grass/raster.h>
+#include <grass/display.h>
 #include "global.h"
 #include "proto.h"
 

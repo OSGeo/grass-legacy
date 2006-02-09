@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "glob.h"
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 static int cmp(const void *, const void *);
 

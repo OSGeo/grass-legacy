@@ -2,11 +2,11 @@
  * modified by Brown in June 1999 - added elatt & smatt
  * modified by Mitasova Nov. 9, 1999 - added parameter for dtens to output2d
 */
-#include "Vect.h"
-#include "bitmap.h"
-#include "dataquad.h"
-#include "qtree.h"
-#include "dbmi.h"
+#include <grass/Vect.h>
+#include <grass/bitmap.h>
+#include <grass/dataquad.h>
+#include <grass/qtree.h>
+#include <grass/dbmi.h>
 
 /* for resample program */
 struct fcell_triple   {

@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include "gis.h"
-#include "display.h"
-#include "raster.h"
-#include "colors.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/raster.h>
+#include <grass/colors.h>
 
 int Derase(char *color)
 {

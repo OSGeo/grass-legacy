@@ -15,10 +15,10 @@
    
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
-#include "raster.h"
-#include "display.h"
-#include "colors.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/display.h>
+#include <grass/colors.h>
 #include "linegraph.h"
 
 #define MAX(x,y) ((x) > (y) ? (x) : (y))

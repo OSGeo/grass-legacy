@@ -11,8 +11,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "gstypes.h"
+#include <grass/gis.h>
+#include <grass/gstypes.h>
 
 #include "GL/gl.h"
 #include "GL/glu.h"

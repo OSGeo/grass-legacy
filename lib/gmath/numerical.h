@@ -6,7 +6,7 @@
  *     Originally: frac.h by Jo Wood, V 1.0  - 19th October, 1994
 */
 
-#include "gis.h"                /* This MUST be included in all GRASS   */
+#include <grass/gis.h>
                                 /* programs. It sets up the necessary   */
                                 /* prototypes for GRASS library calls.  */
 #include "string.h"

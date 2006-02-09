@@ -12,9 +12,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "G3d.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/G3d.h>
+#include <grass/glocale.h>
 
 int main (int argc, char *argv[])
 {

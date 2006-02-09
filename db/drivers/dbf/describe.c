@@ -14,9 +14,9 @@
 *
 *****************************************************************************/
 
-#include <dbmi.h>
-#include <datetime.h>
-#include <shapefil.h>
+#include <grass/dbmi.h>
+#include <grass/datetime.h>
+#include <grass/shapefil.h>
 #include "globals.h"
 #include "proto.h"
 

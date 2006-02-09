@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "access.h"
 #include "local_proto.h"
 

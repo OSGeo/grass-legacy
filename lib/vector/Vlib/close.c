@@ -21,7 +21,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include "Vect.h"
+#include <grass/Vect.h>
 
 static int
 clo_dummy () {

@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "globals.h"
 
 static int inited = 0;

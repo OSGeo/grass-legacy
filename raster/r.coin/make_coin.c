@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "coin.h"
-#include "gis.h"
+#include <grass/gis.h>
 
 static int cmp (const void *, const void *);
 

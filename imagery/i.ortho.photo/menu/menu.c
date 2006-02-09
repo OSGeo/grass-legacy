@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 #include "orthophoto.h"
 #include "local_proto.h"
 

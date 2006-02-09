@@ -13,9 +13,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 
-#include "interpf.h"
+#include <grass/interpf.h>
 
 int IL_write_temp_2d (
     struct interp_params *params,

@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 
 int I_init_signatures (struct Signature *S,int nbands)
 {

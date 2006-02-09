@@ -7,7 +7,7 @@
     December 1993
 */
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 
 void (*Cxl_func) ();
 void (*Swap_func) ();

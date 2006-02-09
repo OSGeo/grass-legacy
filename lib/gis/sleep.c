@@ -1,4 +1,4 @@
-#include "config.h"
+#include <grass/config.h>
 
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
@@ -22,7 +22,7 @@
 #include <time.h>
 #endif
 #endif
-#include "gis.h"
+#include <grass/gis.h>
 
 /*******************************************************************************
 *       sleep_ltp       (see manual, Internal Functions)                <in>   *

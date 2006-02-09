@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "dataquad.h"
+#include <grass/dataquad.h>
 
 /* sm added to point structure */
 struct triple *

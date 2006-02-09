@@ -14,11 +14,11 @@
 
 #include <stdio.h>
 #include <math.h>
-#include "gis.h"
-#include "bitmap.h"
-#include "linkm.h"
+#include <grass/gis.h>
+#include <grass/bitmap.h>
+#include <grass/linkm.h>
 
-#include "interpf.h"
+#include <grass/interpf.h>
 
 
 /* output cell maps for elevation, aspect, slope and curvatures */

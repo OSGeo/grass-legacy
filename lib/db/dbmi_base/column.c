@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "dbmi.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
 
 /*!
  \brief returns column structure for given table and column number

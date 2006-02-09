@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "btree.h"
+#include <grass/btree.h>
 
 static char *store(char *,int);
 

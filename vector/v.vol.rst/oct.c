@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 #include "oct.h"
 #include "externs.h"

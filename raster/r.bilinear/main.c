@@ -3,8 +3,8 @@
  */
 
 #include <stdlib.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 typedef int FILEDESC;
 

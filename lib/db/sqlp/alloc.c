@@ -20,7 +20,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "sqlp.h"
+#include <grass/sqlp.h>
 
 /* alloc structure */
 SQLPSTMT * sqpInitStmt( void  )

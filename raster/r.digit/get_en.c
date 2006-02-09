@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 int get_east_north (int x, int y, char *east, char *north)
 {

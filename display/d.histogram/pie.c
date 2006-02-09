@@ -29,8 +29,8 @@
  */
 
 #include <string.h>
-#include "display.h"
-#include "raster.h"
+#include <grass/display.h>
+#include <grass/raster.h>
 #include "pie.h"
 
 /*#define DEBUG*/

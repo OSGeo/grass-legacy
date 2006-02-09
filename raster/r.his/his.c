@@ -1,5 +1,5 @@
 
-#include "gis.h"
+#include <grass/gis.h>
 
 /****************************************************************************
  * HIS_to_RGB() returns the R/G/B values for the proper HIS color associated

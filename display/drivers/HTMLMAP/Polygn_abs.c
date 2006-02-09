@@ -1,6 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "math.h"
 #include "htmlmap.h"
 #include "driverlib.h"

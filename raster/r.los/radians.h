@@ -7,7 +7,7 @@
 /*                                                              */
 /****************************************************************/
 
-#include "gis.h"
+#include <grass/gis.h>
 
 #define		PI		M_PI
 #define		PIBYFOUR 	M_PI_4

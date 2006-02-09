@@ -19,8 +19,8 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include "gis.h"
-#include "display.h"
+#include <grass/gis.h>
+#include <grass/display.h>
 
 int main(int argc, char **argv)
 {

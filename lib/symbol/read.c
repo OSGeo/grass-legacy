@@ -16,9 +16,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
-#include "gis.h"
-#include "symbol.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/symbol.h>
+#include <grass/glocale.h>
 
 static char key[100], data[500];
 

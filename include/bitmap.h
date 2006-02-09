@@ -11,7 +11,7 @@
 #define BM_SPARSE    1
 
 #ifndef GRASS_LINKM_H
-#include "linkm.h"
+#include <grass/linkm.h>
 #endif
 
 struct BM {

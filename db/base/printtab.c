@@ -1,7 +1,7 @@
-#include "gis.h"
-#include "dbmi.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 int
 print_table_definition (dbTable *table)

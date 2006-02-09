@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "gis.h"
-#include "colors.h"
+#include <grass/gis.h>
+#include <grass/colors.h>
 #include "pngdriver.h"
 
 static int table_type = FIXED;

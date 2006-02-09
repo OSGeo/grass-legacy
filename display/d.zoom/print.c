@@ -1,7 +1,7 @@
 #include <string.h>
-#include "gis.h"
-#include "display.h"
-#include "raster.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/raster.h>
 #include "local_proto.h"
 
 static int max(int a,int b)

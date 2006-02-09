@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 CELL *
 open_cell (char *name, char *mapset, int *fd)

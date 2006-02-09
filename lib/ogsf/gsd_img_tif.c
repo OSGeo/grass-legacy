@@ -10,10 +10,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/types.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "image.h"
 #include "tiffio.h"
-#include "gstypes.h"
+#include <grass/gstypes.h>
 
 
 u_short config = PLANARCONFIG_CONTIG;

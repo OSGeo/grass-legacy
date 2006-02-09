@@ -5,7 +5,7 @@
 
 #include <unistd.h>
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 int gaussurf (
     char *out,				/* Name of cell files to be opened.	*/

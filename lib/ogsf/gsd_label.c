@@ -15,7 +15,7 @@
 *
 *****************************************************************************/
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 #include "rgbpack.h"
 #define MAX_LIST 20
 

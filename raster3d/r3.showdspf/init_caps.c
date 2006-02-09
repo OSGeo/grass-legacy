@@ -3,9 +3,9 @@
 ** and drawn to the screen not being stored at this time
 */
 
-#include "gis.h"
+#include <grass/gis.h>
 #include "vizual.h"
-#include "G3d.h"
+#include <grass/G3d.h>
 /*
 #define DEBUG1
 */

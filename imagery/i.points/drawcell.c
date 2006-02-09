@@ -1,8 +1,8 @@
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "globals.h"
-#include "display.h"
-#include "raster.h"
+#include <grass/display.h>
+#include <grass/raster.h>
 #include "local_proto.h"
 
 int drawcell(View *view)

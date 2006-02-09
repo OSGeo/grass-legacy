@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 int make_history (char *name, char *group, char *subgroup, char *sigfile)
 {

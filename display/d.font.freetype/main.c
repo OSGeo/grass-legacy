@@ -2,17 +2,17 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "config.h"
+#include <grass/config.h>
 #ifdef HAVE_ICONV_H
 #include <iconv.h>
 #endif
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
-#include "gis.h"
-#include "display.h"
-#include "raster.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/raster.h>
+#include <grass/glocale.h>
 
 #include <stdio.h>
 /* #define DEBUG_LOG(S) {FILE *fp = fopen("debug.TXT","a");fputs(S,fp);fclose(fp);} */

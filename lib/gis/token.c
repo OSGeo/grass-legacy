@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 /* break buf into tokens. delimiters are replaced by NULLs
    and tokens array will point to varous locations in buf
    buf must not have a new line

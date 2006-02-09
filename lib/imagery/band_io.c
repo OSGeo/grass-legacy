@@ -13,7 +13,7 @@
  * a histogram-stretched grey scale color table.
  ***************************************************/
 #include <string.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 
 int I_open_band_new (int band)
 {

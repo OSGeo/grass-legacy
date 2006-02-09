@@ -34,8 +34,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "linkm.h"
-#include "bitmap.h"
+#include <grass/linkm.h>
+#include <grass/bitmap.h>
 
 
 #define BM_col_to_byte(x)  ((x)/8)

@@ -15,8 +15,8 @@
  *
  **************************************************************/
 #include <stdlib.h> 
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 void
 remove_bridges ( struct Map_info *Map, int chtype, struct Map_info *Err, FILE *msgout );

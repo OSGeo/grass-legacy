@@ -37,9 +37,9 @@
 
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
-#include "Vect.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/glocale.h>
 
 
 int main(int argc, char *argv[])

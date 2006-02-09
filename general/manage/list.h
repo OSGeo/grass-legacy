@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 struct list
 {
     char **element;	/* list of related elements */

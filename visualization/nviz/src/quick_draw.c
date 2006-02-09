@@ -2,7 +2,7 @@
  ** uses libgsf to draw wire frame surfaces
  */
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "tk.h"
 #include "interface.h"
 

@@ -18,7 +18,7 @@
 
 #include <stdio.h>
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "costHa.h"
 #include "cell_ptrHa.h"
 #include "local_proto.h"

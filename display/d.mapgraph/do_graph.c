@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "options.h"
-#include "display.h"
-#include "raster.h"
-#include "colors.h"
+#include <grass/display.h>
+#include <grass/raster.h>
+#include <grass/colors.h>
 
 #include "local_proto.h"
 

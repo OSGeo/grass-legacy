@@ -1,5 +1,5 @@
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 static char *append(char *, char *);
 static int do_text(char *,long,long);

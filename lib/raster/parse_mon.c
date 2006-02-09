@@ -4,10 +4,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-#include "monitors.h"
-#include "gis.h"
-#include "raster.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
+#include <grass/raster.h>
+#include <grass/monitors.h>
 
 static FILE *monitors = NULL;
 static struct MON_CAP cap;

@@ -62,8 +62,8 @@
 
 #include <string.h>
 #include <stdio.h>
-#include "display.h"
-#include "raster.h"
+#include <grass/display.h>
+#include <grass/raster.h>
 
 
 /*!

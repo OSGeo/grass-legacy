@@ -34,7 +34,7 @@
 
  returns 1 if input format is ok, 0 otherwise.
 ******************************************************************************/
-#include "gis.h"
+#include <grass/gis.h>
 
 static int scan_ll(char *,char *,double *,int);
 static int check_minutes(char *);

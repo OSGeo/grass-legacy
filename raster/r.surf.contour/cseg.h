@@ -1,4 +1,4 @@
-#include "segment.h"
+#include <grass/segment.h>
 
 #define CSEG struct _c_s_e_g_
 CSEG

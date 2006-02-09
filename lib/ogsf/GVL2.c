@@ -4,9 +4,9 @@
     Tomas Paudits, Februar 2004
 */
 
-#include "gis.h"
-#include "G3d.h"
-#include "gstypes.h"
+#include <grass/gis.h>
+#include <grass/G3d.h>
+#include <grass/gstypes.h>
 #include "gsget.h"
 
 #ifdef TRACE_FUNCS

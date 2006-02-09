@@ -14,7 +14,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "gis.h"
+#include <grass/gis.h>
 #include "driverlib.h"
 #include "driver.h"
 #include "htmlmap.h"

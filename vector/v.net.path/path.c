@@ -2,9 +2,9 @@
 #include <string.h>
 #include <unistd.h>
 #include <math.h>
-#include "gis.h"
-#include "Vect.h"
-#include "dbmi.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
 
 /* Result code */
 #define SP_OK          0  /* Path found */

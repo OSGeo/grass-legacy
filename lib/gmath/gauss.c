@@ -9,7 +9,7 @@
 
 #include <math.h>
 #include "numerical.h"
-#include "gmath.h"
+#include <grass/gmath.h>
 
 
 float gauss (int seed)

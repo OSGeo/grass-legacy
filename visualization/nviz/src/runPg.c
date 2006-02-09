@@ -1,6 +1,6 @@
-#include "config.h"
+#include <grass/config.h>
 #if defined(HAVE_LIBPQ_FE_H)
-#include "gis.h"
+#include <grass/gis.h>
 #include "pg.h"
 #include <libpq-fe.h>
 #include <stdio.h>

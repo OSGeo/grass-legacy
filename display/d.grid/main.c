@@ -20,12 +20,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "display.h"
-#include "raster.h"
-#include "colors.h"
-#include "gprojects.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/raster.h>
+#include <grass/colors.h>
+#include <grass/gprojects.h>
+#include <grass/glocale.h>
 
 #include "local_proto.h"
 

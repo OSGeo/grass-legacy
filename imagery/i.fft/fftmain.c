@@ -19,9 +19,9 @@ Programmer : Ali R. Vali
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
-#include "gmath.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/gmath.h>
+#include <grass/glocale.h>
 #include "globals.h"
 #include "local_proto.h"
 

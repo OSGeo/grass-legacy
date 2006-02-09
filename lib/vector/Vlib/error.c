@@ -16,8 +16,8 @@
 *
 *****************************************************************************/
 #include <string.h>
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 static int fatal_err = GV_FATAL_EXIT;
 

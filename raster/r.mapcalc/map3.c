@@ -4,9 +4,9 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "gis.h"
-#include "G3d.h"
-#include "btree.h"
+#include <grass/gis.h>
+#include <grass/G3d.h>
+#include <grass/btree.h>
 
 #include "mapcalc.h"
 #include "globals.h"

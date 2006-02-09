@@ -23,8 +23,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <unistd.h>
-#include "gis.h"
-#include "interpf.h"
+#include <grass/gis.h>
+#include <grass/interpf.h>
 
 int IL_matrix_create (
     struct interp_params *params,

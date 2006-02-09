@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "globals.h"
 
 

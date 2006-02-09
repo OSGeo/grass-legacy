@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 int 
 get_item (FILE *fd, int *type, long *cat, double **x, double **y, int *count, struct Categories *labels)
 {

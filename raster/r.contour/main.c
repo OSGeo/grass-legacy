@@ -28,11 +28,11 @@
 #include <math.h>
 #include <ctype.h>
 #include <float.h>
-#include "gis.h"
-#include "dbmi.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 int main ( int argc, char *argv[])
 {

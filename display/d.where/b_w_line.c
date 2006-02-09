@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "raster.h"
+#include <grass/raster.h>
 
 int 
 black_and_white_line (int c1, int c2, int screen_x, int screen_y, int cur_screen_x, int cur_screen_y)

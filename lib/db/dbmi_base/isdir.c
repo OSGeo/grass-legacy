@@ -1,4 +1,4 @@
-#include "dbmi.h"
+#include <grass/dbmi.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 

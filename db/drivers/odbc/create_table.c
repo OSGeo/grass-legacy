@@ -1,4 +1,4 @@
-#include "dbmi.h"
+#include <grass/dbmi.h>
 #include "odbc.h"
 #include "globals.h"
 #include "proto.h"

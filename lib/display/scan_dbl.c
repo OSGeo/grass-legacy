@@ -1,4 +1,4 @@
-#include "display.h"
+#include <grass/display.h>
 
 int D_scan_double (char *buf, double *f)
 {

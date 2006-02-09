@@ -1,6 +1,6 @@
-#include "imagery.h"
-#include "ortholib.h"
-#include "gis.h"
+#include <grass/imagery.h>
+#include <grass/ortholib.h>
+#include <grass/gis.h>
 /******************************************************
 * I_open_cam_file_new()
 * I_open_cam_file_old()

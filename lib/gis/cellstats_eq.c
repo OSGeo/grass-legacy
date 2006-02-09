@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 int G_cell_stats_histo_eq (
     struct Cell_stats *statf,
     CELL min1,CELL max1, /* input range to be rescaled */

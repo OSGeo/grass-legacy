@@ -1,6 +1,6 @@
 #include <unistd.h>
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
 
 int scan_gis (char *element, char *desc, char *key, char *data,

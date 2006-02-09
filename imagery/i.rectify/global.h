@@ -4,7 +4,7 @@
  * mind that although you think the i/o will decrease, system paging
  * (which goes on behind the scenes) may actual increase the i/o.
  */
-#include "gis.h"
+#include <grass/gis.h>
 
 #define NROWS 64
 #define NCOLS 256
@@ -15,7 +15,7 @@
 #define GLOBAL extern
 #endif
 
-#include "imagery.h"
+#include <grass/imagery.h>
 #include "rowcol.h"
 
 #define IDX int

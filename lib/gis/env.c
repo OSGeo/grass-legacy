@@ -55,8 +55,8 @@
 #include <stdlib.h>
 #include <unistd.h>   /* for sleep() */
 #include <string.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 #define ENV struct env
 ENV

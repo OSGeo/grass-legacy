@@ -16,7 +16,7 @@
  * **************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "global.h"
 #include "proto.h"
 

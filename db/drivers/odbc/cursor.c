@@ -1,6 +1,6 @@
-#include <dbmi.h>
+#include <grass/dbmi.h>
 #include <stdio.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "odbc.h"
 #include "globals.h"
 #include "proto.h"

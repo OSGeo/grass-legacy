@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
 
 int get_area (FILE *fd, struct Categories *labels)

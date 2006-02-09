@@ -19,10 +19,10 @@
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
-#include "glocale.h"
-#include "gis.h"
-#include "Vect.h"
-#include "dbmi.h" 
+#include <grass/glocale.h>
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
 
 int main (int argc, char **argv)
 {

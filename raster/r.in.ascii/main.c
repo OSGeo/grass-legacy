@@ -1,9 +1,9 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 FILE *Tmp_fd = NULL;
 char *Tmp_file = NULL;

@@ -69,8 +69,8 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "config.h"
-#include "gis.h"
+#include <grass/config.h>
+#include <grass/gis.h>
 #include "binio.h"
 #include "v5d.h"
 #include "vis5d.h"

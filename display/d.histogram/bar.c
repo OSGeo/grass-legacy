@@ -27,8 +27,8 @@
  */
 
 #include <string.h>
-#include "display.h"
-#include "raster.h"
+#include <grass/display.h>
+#include <grass/raster.h>
 #include "bar.h"
 
 int bar (

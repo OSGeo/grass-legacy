@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "gstypes.h"
+#include <grass/gstypes.h>
 #include "gsget.h"
 
 #define FIRST_VOL_ID 81721

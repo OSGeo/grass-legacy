@@ -1,4 +1,4 @@
-#include "dbmi.h"
+#include <grass/dbmi.h>
 
 /*!
  \fn int db__driver_close_cursor (dbCursor *cursor)

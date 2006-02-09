@@ -17,9 +17,9 @@
 *****************************************************************************/
 #include <math.h>
 #include <stdlib.h>
-#include "Vect.h"
-#include "gis.h"
-#include "linkm.h"
+#include <grass/Vect.h>
+#include <grass/gis.h>
+#include <grass/linkm.h>
 
 struct Slink
   {

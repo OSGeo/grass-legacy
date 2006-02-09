@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 int new_range (char *name, struct Reclass *reclass)
 {

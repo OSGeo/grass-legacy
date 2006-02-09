@@ -5,8 +5,8 @@ returns: TRUE (1) point added ok, FALSE (0) could not add, list full
 *************************************************************/
 
 #include "globals.h"
-#include "raster.h"
-#include "glocale.h"
+#include <grass/raster.h>
+#include <grass/glocale.h>
 
 
 int 

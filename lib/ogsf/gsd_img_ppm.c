@@ -13,7 +13,7 @@
 
 #include "local_proto.h"
 #include "image.h"
-#include "gstypes.h"
+#include <grass/gstypes.h>
 
 /* FFMPEG stuff */
 #ifdef HAVE_FFMPEG

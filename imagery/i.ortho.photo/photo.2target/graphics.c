@@ -1,6 +1,6 @@
-#include "raster.h"
-#include "D.h"
-#include "display.h"
+#include <grass/raster.h>
+#include <grass/D.h>
+#include <grass/display.h>
 #include "globals.h"
 #include "local_proto.h"
 

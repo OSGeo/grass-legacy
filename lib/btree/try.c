@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "btree.h"
+#include <grass/btree.h>
 
 int main (void)
 {

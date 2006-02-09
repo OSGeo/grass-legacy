@@ -1,7 +1,7 @@
 
 
 /* #include <dgl/bst.h> */
-#include <dgl/type.h>
-#include <dgl/graph.h>
-/* #include <dgl/heap.h>
-#include <dgl/tree.h> */
+#include <grass/dgl/type.h>
+#include <grass/dgl/graph.h>
+/* #include <dgl/heap.h> */
+#include <grass/dgl/tree.h>

@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #ifdef MAIN
   RASTER_MAP_TYPE in_type;
   RASTER_MAP_TYPE out_type;

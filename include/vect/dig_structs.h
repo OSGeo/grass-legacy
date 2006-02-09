@@ -2,7 +2,7 @@
    **  Written by Dave Gerdes  5/1988
    **  US Army Construction Engineering Research Lab
  */
-#include "config.h"
+#include <grass/config.h>
 
 #ifndef  DIG___STRUCTS___
 #define DIG___STRUCTS___
@@ -12,10 +12,10 @@
 #include <stdio.h>
 #endif
 
-#include "dgl.h"
-#include "shapefil.h"
-#include "btree.h"
-#include "rtree.h"
+#include <grass/dgl.h>
+#include <grass/shapefil.h>
+#include <grass/btree.h>
+#include <grass/rtree.h>
 
 
 #ifdef HAVE_OGR

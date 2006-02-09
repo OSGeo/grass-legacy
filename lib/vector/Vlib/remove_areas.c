@@ -15,8 +15,8 @@
  *
  **************************************************************/
 #include <stdlib.h> 
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 /*!
  \fn void Vect_remove_small_areas ( struct Map_info *Map, double thresh, struct Map_info *Err, FILE *msgout)

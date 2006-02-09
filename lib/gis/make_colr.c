@@ -19,8 +19,8 @@
  *            1 color table is ok
  **********************************************************************/
 
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 int G_make_colors  (char *name, char *mapset, struct Colors *pcolr)
 

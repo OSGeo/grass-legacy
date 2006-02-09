@@ -24,7 +24,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/stat.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 /*!
  * \brief returns a temporary file name

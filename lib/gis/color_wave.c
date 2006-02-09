@@ -9,7 +9,7 @@
  *
  **********************************************************************/
 
-#include "gis.h"
+#include <grass/gis.h>
 
 static int add_wave_colors (struct Colors *, DCELL, DCELL);
 

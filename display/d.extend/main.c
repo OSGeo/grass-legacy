@@ -12,11 +12,11 @@
  */
 
 #include <stdlib.h>
-#include "gis.h"
-#include "site.h"
-#include "Vect.h"
-#include "raster.h"
-#include "display.h"
+#include <grass/gis.h>
+#include <grass/site.h>
+#include <grass/Vect.h>
+#include <grass/raster.h>
+#include <grass/display.h>
 
 int 
 main (int argc, char **argv)

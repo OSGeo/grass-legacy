@@ -4,10 +4,10 @@
 #include <unistd.h>
 #include <tcl.h>
 #include <tk.h>
-#include "gis.h"
-#include "Vect.h"
-#include "dbmi.h"
-#include "raster.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
+#include <grass/raster.h>
 #include "global.h"
 #include "proto.h"
 

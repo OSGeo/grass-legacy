@@ -1,5 +1,5 @@
 
-#include "gis.h"
+#include <grass/gis.h>
 #include "globals.h"
 #include "globals2.h"
 #include "expression.h"

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "vask.h"
+#include <grass/gis.h>
+#include <grass/vask.h>
 
 static int round (double *);
 static int visually_equal (double, double);

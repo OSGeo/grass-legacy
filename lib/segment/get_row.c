@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
-#include "segment.h"
+#include <grass/segment.h>
 
 /* bugfix:
  * int segment_get_row (SEGMENT *SEG, CELL *buf,int row) */

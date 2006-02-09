@@ -13,7 +13,7 @@
 **********************************************************/
 #include <string.h>
 #include <stdlib.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 static int get_ref(char *,char *,struct Ref *);
 static int set_color(char *,char *,char *,struct Ref *);
 static int put_ref(char *,char *,struct Ref *);

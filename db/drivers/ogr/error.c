@@ -16,8 +16,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
-#include <dbmi.h>
-#include "gis.h"
+#include <grass/dbmi.h>
+#include <grass/gis.h>
 #include "ogr_api.h"
 #include "globals.h"
 #include "proto.h"

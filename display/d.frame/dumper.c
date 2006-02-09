@@ -1,7 +1,7 @@
 #include <stdlib.h>
-#include "raster.h"
+#include <grass/raster.h>
 #include <stdio.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 int 
 main (void)

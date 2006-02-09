@@ -1,4 +1,4 @@
-#include "raster.h"
+#include <grass/raster.h>
 #include "globals.h"
 int display_ref_points (int in_color)
 {

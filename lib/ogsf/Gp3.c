@@ -9,11 +9,11 @@
 */
 
 #include <stdlib.h>
-#include "gis.h"
-#include "site.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/site.h>
+#include <grass/Vect.h>
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 
 /* used when site attribute mode is ST_ATT_COLOR */
 /* Gets color structure for grass file, goes through points and

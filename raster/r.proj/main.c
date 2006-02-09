@@ -63,10 +63,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "gis.h"
-#include "gprojects.h"
+#include <grass/gis.h>
+#include <grass/gprojects.h>
 #include "r.proj.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 /* modify this table to add new methods */
 struct menu menu[] = {

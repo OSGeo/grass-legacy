@@ -3,8 +3,8 @@
 #include <unistd.h>
 #include <ctype.h>
 
-#include "gis.h"
-#include "site.h"
+#include <grass/gis.h>
+#include <grass/site.h>
 
 #include "local_proto.h"
 

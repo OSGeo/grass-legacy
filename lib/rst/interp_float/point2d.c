@@ -24,13 +24,13 @@
 #include <stdio.h>
 #include <math.h>
 #include <unistd.h>
-#include "gis.h"
-#include "site.h"
-#include "Vect.h"
-#include "dbmi.h"
+#include <grass/gis.h>
+#include <grass/site.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
 
 #define	POINT2D_C
-#include "interpf.h"
+#include <grass/interpf.h>
 
 int IL_check_at_points_2d (
     struct interp_params *params,

@@ -1,4 +1,4 @@
-#include "imagery.h"
+#include <grass/imagery.h>
 int I_cluster_signatures ( struct Cluster *C)
 {
     int c, p, band1, band2;

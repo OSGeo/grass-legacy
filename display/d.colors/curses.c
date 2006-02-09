@@ -1,6 +1,6 @@
 #include <curses.h>
-#include "gis.h"
-#include "colors.h"
+#include <grass/gis.h>
+#include <grass/colors.h>
 
 
 /*               " <------------ Room for text --------------> " */

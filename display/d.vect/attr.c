@@ -1,11 +1,11 @@
 #include <string.h>
-#include "gis.h"
-#include "Vect.h"
-#include "display.h"
-#include "raster.h"
-#include "dbmi.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/display.h>
+#include <grass/raster.h>
+#include <grass/dbmi.h>
 #include "plot.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 extern int width;
 

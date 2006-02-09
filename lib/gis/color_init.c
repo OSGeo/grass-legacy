@@ -6,7 +6,7 @@
  * Initializes the color structure for subsequent calls to G_add_color_rule()
  *********************************************************************/
 
-#include "gis.h"
+#include <grass/gis.h>
 
 
 /*!

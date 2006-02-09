@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "driver.h"
 #include "driverlib.h"
-#include "colors.h"
+#include <grass/colors.h>
 
 void DRV_reset_color(int number, int red, int grn, int blu)
 {

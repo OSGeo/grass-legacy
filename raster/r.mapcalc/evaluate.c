@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "gis.h"
+#include <grass/gis.h>
 #include "mapcalc.h"
 #include "globals.h"
 

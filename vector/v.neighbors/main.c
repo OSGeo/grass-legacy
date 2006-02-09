@@ -17,8 +17,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 /* TODO: add more methods */
 

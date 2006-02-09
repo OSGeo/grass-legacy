@@ -1,6 +1,6 @@
 #include <math.h>
 
-#include "imagery.h"
+#include <grass/imagery.h>
 
 int I_cluster_assign ( struct Cluster *C, int *interrupted)
 {

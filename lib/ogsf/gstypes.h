@@ -10,8 +10,8 @@
 #ifndef _GSTYPES_H
 #define _GSTYPES_H
 
-#include "gsurf.h"
-#include "bitmap.h"
+#include <grass/gsurf.h>
+#include <grass/bitmap.h>
 #include <GL/gl.h>
 
 /*#define TRACE_FUNCS*/

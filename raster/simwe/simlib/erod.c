@@ -3,12 +3,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
-#include "site.h"
-#include "bitmap.h"
-#include "linkm.h"
+#include <grass/gis.h>
+#include <grass/site.h>
+#include <grass/bitmap.h>
+#include <grass/linkm.h>
 
-#include "waterglobs.h"
+#include <grass/waterglobs.h>
 
 /* divergence computation from a given field */
 

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 #include "list.h"
 
 int do_rename (int n, char *old, char *new)

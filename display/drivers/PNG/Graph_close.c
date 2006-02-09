@@ -3,7 +3,7 @@
  * termination time.
  */
 
-#include "gis.h"
+#include <grass/gis.h>
 #include "pngdriver.h"
 
 void PNG_Graph_close(void)

@@ -36,9 +36,9 @@
 #include <math.h>
 #include <fcntl.h>
 #include <unistd.h> 
-#include "gis.h"
-#include "dbmi.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
 #include "ad2.h"
 #include "io/odio.h"
 #include "global.h"

@@ -7,7 +7,7 @@
     September 1993
 */
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 #include "gsget.h"
 #include <stdio.h>
 

@@ -13,7 +13,7 @@
 *   	    	for details.
 *
 *****************************************************************************/
-#include <dbmi.h>
+#include <grass/dbmi.h>
 #include "ogr_api.h"
 #include "globals.h"
 #include "proto.h"

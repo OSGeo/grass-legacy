@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 int 
 G_shift_colors (int shift, struct Colors *colors)
 {

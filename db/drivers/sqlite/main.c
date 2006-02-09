@@ -13,7 +13,7 @@
 **************************************************************/
 #define MAIN
 #include <stdlib.h>
-#include "dbmi.h"
+#include <grass/dbmi.h>
 #include "globals.h"
 #include "dbdriver.h"
 

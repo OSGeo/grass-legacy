@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <string.h>
-#include "gis.h"
-#include "form.h"
-#include "dbmi.h"
-#include "display.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/form.h>
+#include <grass/dbmi.h>
+#include <grass/display.h>
+#include <grass/Vect.h>
 
 char *query_vect( char *name, double x, double y )
 {

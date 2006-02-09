@@ -5,9 +5,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
-#include "raster.h"
-#include "imagery.h"
-#include "ortholib.h"
+#include <grass/raster.h>
+#include <grass/imagery.h>
+#include <grass/ortholib.h>
 #include "globals.h"
 #include "local_proto.h"
 

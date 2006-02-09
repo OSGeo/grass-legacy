@@ -1,7 +1,7 @@
 /* $Id$ */
 #include <math.h>
-#include "gis.h"
-#include "display.h"
+#include <grass/gis.h>
+#include <grass/display.h>
 
 int plot_border (double grid_size, double east, double north)
 {

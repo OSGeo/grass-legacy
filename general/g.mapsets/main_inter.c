@@ -3,7 +3,7 @@
 #define MAIN
 #include "externs.h"
 #include "local_proto.h"
-#include "gis.h"
+#include <grass/gis.h>
 int 
 main (int argc, char **argv)
 {

@@ -2,8 +2,8 @@
 * I_number_of_group_ref_files (group)
 * I_number_of_subgroup_ref_files (group, subgroup)
 *************************************************************/
-#include "imagery.h"
-#include "gis.h"
+#include <grass/imagery.h>
+#include <grass/gis.h>
 #include <stdio.h>
 
 static int nfiles(char *,char *);

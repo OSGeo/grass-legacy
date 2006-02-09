@@ -23,14 +23,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "raster.h"
-#include "display.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/display.h>
 #include "local_proto.h"
 
 #define MAIN
 #include "setup.h"
-#include "config.h"
+#include <grass/config.h>
 
 
 				/* MAIN PROGRAM */

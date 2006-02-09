@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 #include "oct.h"
 #include "surf.h"

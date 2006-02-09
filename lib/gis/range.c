@@ -80,7 +80,7 @@
 #include <rpc/types.h> /* need this for sgi */
 #include <rpc/xdr.h>
 #include "G.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 #define DEFAULT_CELL_MIN 1
 #define DEFAULT_CELL_MAX 255
 

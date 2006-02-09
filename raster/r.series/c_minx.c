@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 
 void c_minx(DCELL *result, DCELL *values, int n)

@@ -1,4 +1,4 @@
-#include "config.h"
+#include <grass/config.h>
 
 #include <string.h>
 #include <stdlib.h>
@@ -9,9 +9,9 @@
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
 #endif
-#include "gis.h"
-#include "glocale.h"
-#include "edit.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
+#include <grass/edit.h>
 #include "local_proto.h"
 
 

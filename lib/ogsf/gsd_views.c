@@ -10,7 +10,7 @@
 /* DEBUG */
 #include <stdio.h>
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 #include "math.h"
 #include "GL/gl.h"
 #include "GL/glu.h"

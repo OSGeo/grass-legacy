@@ -317,7 +317,7 @@ pm_check(FILE * file, const enum pm_check_type check_type,
 /* By making this <> instead of "", we avoid making shhopt.h a dependency
    of every program in the package when we do make dep.
 */
-#include <shhopt.h>
+#include <grass/shhopt.h>
 
 void pm_optParseOptions(int *argc, char *argv[],
                         optStruct opt[], int allowNegNum);

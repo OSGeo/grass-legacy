@@ -18,8 +18,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "glocale.h" /* for gettext macros - i18N localization */
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 /* 
  * global function declaration 

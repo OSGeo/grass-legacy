@@ -21,8 +21,8 @@
 #include <ctype.h>
 #include <math.h>
 #include <string.h>
-#include "gis.h"
-#include "gprojects.h"
+#include <grass/gis.h>
+#include <grass/gprojects.h>
 #define MAIN
 
 /* Finder function for datum conversion lookup tables */

@@ -1,6 +1,6 @@
 #ifndef __MINGW32__
 
-#include "config.h"
+#include <grass/config.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,11 +9,10 @@
 #include <unistd.h>
 #include <errno.h>
 
-#include "graph.h"
-#include "monitors.h"
-#include "gis.h"
-#include "raster.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
+#include <grass/raster.h>
+#include <grass/graphics.h>
 
 #include "open.h"
 

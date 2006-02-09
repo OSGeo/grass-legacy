@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 #include "gsget.h"
 #include "math.h"
 #include "rowcol.h"

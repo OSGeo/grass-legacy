@@ -1,5 +1,5 @@
-#include "gis.h"
-#include "config.h"
+#include <grass/gis.h>
+#include <grass/config.h>
 
 typedef struct _ucat {
 	RASTER_MAP_TYPE type;

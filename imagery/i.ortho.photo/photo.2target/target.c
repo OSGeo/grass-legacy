@@ -1,6 +1,6 @@
 #include <unistd.h>
 #include <string.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 #include "globals.h"
 #include "local_proto.h"
 

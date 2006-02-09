@@ -26,7 +26,7 @@
  *
  */
 
-#include "gis.h"
+#include <grass/gis.h>
 
 #include <stdlib.h>
 #include <string.h>

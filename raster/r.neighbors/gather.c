@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include "ncb.h"
 /*
    given the starting col of the neighborhood,

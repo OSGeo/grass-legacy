@@ -7,7 +7,7 @@
 /***								      ***/
 /************************************************************************/
 
-#include "gis.h" 		/* This MUST be included in all GRASS	*/
+#include <grass/gis.h>
 				/* programs. It sets up the necessary 	*/
 				/* prototypes for GRASS library calls.	*/
 #include <math.h>

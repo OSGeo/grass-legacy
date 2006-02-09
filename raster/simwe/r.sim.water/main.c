@@ -43,18 +43,18 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "config.h"
+#include <grass/config.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#include "gis.h"
-#include "Vect.h"
-#include "linkm.h"
-#include "bitmap.h"
-#include "site.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/linkm.h>
+#include <grass/bitmap.h>
+#include <grass/site.h>
 
 #define MAIN
-#include "waterglobs.h"
+#include <grass/waterglobs.h>
 
 char fncdsm[32];
 char filnam[10];

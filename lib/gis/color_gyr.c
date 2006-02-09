@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 static int add_gyr_colors (struct Colors *, DCELL, DCELL);
 

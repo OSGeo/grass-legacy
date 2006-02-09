@@ -9,7 +9,7 @@
  *  returns:    0
  *********************************************************************/
 
-#include "gis.h"
+#include <grass/gis.h>
 int G_remove_colr (char *name )
 {
     char secondary[50];

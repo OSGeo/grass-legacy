@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "defs.h"
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 void 
 parse (int argc, char *argv[], struct Parms *parms)

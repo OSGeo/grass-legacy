@@ -3,7 +3,7 @@
 /* written by Chuck Ehlschlaeger        	*/
 /* last modified 03/26/91           		*/
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "ramseg.h"
 #include "flag.h"
 

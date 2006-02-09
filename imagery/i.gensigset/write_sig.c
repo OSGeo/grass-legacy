@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 #include "parms.h"
 
 int write_sigfile (struct parms *parms, struct SigSet *S)

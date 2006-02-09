@@ -1,4 +1,4 @@
-#include "imagery.h"
+#include <grass/imagery.h>
 
 int I_ask_sigset_file_any(
     char *prompt, char *group, char *subgroup, char *name)

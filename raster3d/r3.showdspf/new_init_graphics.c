@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include "vizual.h"
 
-#include "config.h"
+#include <grass/config.h>
 
 #include <Xm/Xm.h>
 #include <Xm/Form.h>
@@ -418,7 +418,7 @@ void winset_colortable()
 #include <Xm/ToggleB.h>
 #include <Xm/Frame.h>
 #include <Xm/SeparatoG.h>
-#include "gis.h"
+#include <grass/gis.h>
 static String Fallback_resources[] = 
 {
 "*.fontList:-adobe-helvetica-bold-r-normal--12-120-75-75-p-70-iso8859-1",

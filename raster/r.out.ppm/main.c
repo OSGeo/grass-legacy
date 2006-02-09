@@ -9,8 +9,8 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 #define DEF_RED 255
 #define DEF_GRN 255

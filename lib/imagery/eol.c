@@ -6,7 +6,7 @@
 * len should be the length of line in bytes. This allows for
 * a NULL to be added at the end.
 ***********************************************************/
-#include "imagery.h"
+#include <grass/imagery.h>
 #include <stdio.h>
 int I_get_to_eol(char *line, int len, FILE *fd)
 {

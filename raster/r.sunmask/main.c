@@ -29,9 +29,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "solpos00.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 /* to be displayed in r.sunmask */
 static char *SOLPOSVERSION = "11 April 2001";

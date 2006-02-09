@@ -1,7 +1,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "globals.h"
-#include "raster.h"
+#include <grass/raster.h>
 #include "crs.h"
 
 #define NLINES 18

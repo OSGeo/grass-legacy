@@ -11,12 +11,12 @@
  *       0,0 is lower left; 100,100 is upper right
  */
 
-#include "gis.h"
-#include "display.h"
-#include "D.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/D.h>
 #include <string.h>
 #include <stdlib.h>
-#include "raster.h"
+#include <grass/raster.h>
 
 
 int 

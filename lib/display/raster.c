@@ -28,9 +28,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "gis.h"
-#include "raster.h"
-#include "display.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/display.h>
 
 static int *D_to_A_tab = NULL;
 static int D_x_beg, D_y_beg, D_x_end, D_y_end ;

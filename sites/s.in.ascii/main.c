@@ -18,8 +18,8 @@
 
 #include <string.h>
 #include <stdio.h>
-#include "gis.h"
-#include "site.h"
+#include <grass/gis.h>
+#include <grass/site.h>
 #include "local_proto.h"
 #include <stdlib.h>
 

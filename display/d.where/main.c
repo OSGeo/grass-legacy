@@ -1,10 +1,10 @@
 #include <string.h>
-#include "gis.h"
-#include "gprojects.h"
-#include "display.h"
-#include "raster.h"
+#include <grass/gis.h>
+#include <grass/gprojects.h>
+#include <grass/display.h>
+#include <grass/raster.h>
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 struct pj_info iproj, oproj;
 

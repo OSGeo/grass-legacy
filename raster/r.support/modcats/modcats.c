@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "glocale.h"
-#include "edit.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
+#include <grass/edit.h>
 
 
 /*

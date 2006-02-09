@@ -9,10 +9,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "gis.h"
-#include "dbmi.h"
-#include "Vect.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
+#include <grass/glocale.h>
 
 #define OP_OVERLAP 0
 

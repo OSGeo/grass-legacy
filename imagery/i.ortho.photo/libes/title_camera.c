@@ -1,5 +1,5 @@
-#include "imagery.h"
-#include "ortholib.h"
+#include <grass/imagery.h>
+#include <grass/ortholib.h>
 
 int 
 I_get_cam_title (char *camera, char *title, int n)

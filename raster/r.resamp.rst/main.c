@@ -37,13 +37,13 @@
 
 #define MAIN
 
-#include "dbmi.h"
-#include "gis.h"
-#include "linkm.h"
-#include "bitmap.h"
+#include <grass/dbmi.h>
+#include <grass/gis.h>
+#include <grass/linkm.h>
+#include <grass/bitmap.h>
 #include "surf.h"
-#include "interpf.h"
-#include "glocale.h"
+#include <grass/interpf.h>
+#include <grass/glocale.h>
 
 #include "local_proto.h"
 

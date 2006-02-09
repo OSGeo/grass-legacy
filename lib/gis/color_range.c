@@ -1,5 +1,5 @@
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 int G_set_color_range ( CELL min,CELL max, struct Colors *colors)
 {

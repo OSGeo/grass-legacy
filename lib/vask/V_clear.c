@@ -23,7 +23,7 @@ ALGORITHM:
 CALLS:		
 
 ***********************************************************************/
-#include "vask.h"
+#include <grass/vask.h>
 
 #define DECIMAL_PLACES -1
 

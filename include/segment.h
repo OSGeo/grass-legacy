@@ -1,7 +1,7 @@
 #ifndef GRASS_SEGMENT_H
 #define GRASS_SEGMENT_H
 
-#include "config.h"
+#include <grass/config.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -44,7 +44,7 @@ SEEK_OFFSET lseek();
 #endif
 
 #ifndef _GRASS_GIS_LIB
-#include "gis.h"
+#include <grass/gis.h>
 #endif
 
 int segment_address ( SEGMENT *, int, int, int *, int *);

@@ -1,6 +1,6 @@
-#include "gis.h"
-#include "display.h"
-#include "D.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/D.h>
 int 
 set_colors (struct Colors *colors)
 {

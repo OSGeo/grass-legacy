@@ -45,8 +45,8 @@
 #include <unistd.h>
 #include <signal.h>
 #include <string.h>
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 static int broken_pipe;
 static int hit_return = 0;

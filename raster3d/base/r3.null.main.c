@@ -19,10 +19,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "G3d.h"
+#include <grass/gis.h>
+#include <grass/G3d.h>
 #include "mask_functions.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 
 #define MAX(a,b) (a > b ? a : b)

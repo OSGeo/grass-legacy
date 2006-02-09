@@ -9,7 +9,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "glocale.h"
+#include <grass/glocale.h>
 
 #include "map_info.h"
 #include "vector.h"
@@ -54,7 +54,7 @@ int eps_output;
 int ps_copies = 1;
 
 #include <signal.h>
-#include "gis.h"
+#include <grass/gis.h>
 int main(int argc,char *argv[])
 {
     char buf[1024];

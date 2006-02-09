@@ -14,7 +14,7 @@
 #define GLOBAL
 #include "distance.h"
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 int main (int argc, char *argv[])
 {

@@ -6,7 +6,7 @@
  *   returns pointer to string containing cell title. (from cats file)
  *************************************************************/
 
-#include "gis.h"
+#include <grass/gis.h>
 
 char *
 G_get_dig_title (name, mapset)

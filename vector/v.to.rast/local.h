@@ -1,6 +1,6 @@
-#include "gis.h"
-#include "dbmi.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
 
 #define ISNULL(x)   G_is_c_null_value(x)
 #define ISDNULL(x)   G_is_d_null_value(x)

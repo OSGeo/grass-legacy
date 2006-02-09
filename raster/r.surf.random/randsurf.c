@@ -4,7 +4,7 @@
 
 #include <unistd.h>
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 int randsurf (
     char *out,				/* Name of cell files to be opened.	*/

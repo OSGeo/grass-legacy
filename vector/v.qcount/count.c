@@ -9,8 +9,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 #include "quaddefs.h"
 
 void count_sites (COOR *quads, int nquads, int *counts, double radius, struct Map_info *Map)

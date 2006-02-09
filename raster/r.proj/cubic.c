@@ -18,7 +18,7 @@
  *	 Springer-Verlag, Berlin, 2nd edition.
  */
 
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
 #include <math.h>
 

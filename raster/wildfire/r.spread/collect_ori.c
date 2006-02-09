@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "cmd_line.h"
 #include "costHa.h"
 #include "local_proto.h"

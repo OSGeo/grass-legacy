@@ -16,7 +16,7 @@
  * note: if all values in x are zero, the point is rejected
  ***************************************************************/
 
-#include "imagery.h"
+#include <grass/imagery.h>
 static int extend(struct Cluster *,int);
 static int all_zero(struct Cluster *,int);
 

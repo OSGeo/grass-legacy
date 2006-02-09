@@ -1,7 +1,7 @@
 #include <stdlib.h>
-#include "gis.h"
-#include "dbmi.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
 #include "local_proto.h"
 
 void cpvalue (struct RASTER_MAP_PTR *from, int fcol, 

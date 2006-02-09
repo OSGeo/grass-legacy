@@ -19,7 +19,7 @@
 *****************************************************************************/
 #include <stdlib.h>
 #include <math.h>
-#include "Vect.h"
+#include <grass/Vect.h>
 
 static double dist_squared (double, double, double, double);
 

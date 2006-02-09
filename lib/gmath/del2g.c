@@ -14,14 +14,14 @@ Details:        This routine does a convolution of the Marr-Hildreth operator
 
 Author:         Bill Hoff,2-114C,8645,3563478 (hoff) at uicsl
 */
-#include "config.h"
+#include <grass/config.h>
 
 #if defined(HAVE_FFTW_H) || defined(HAVE_DFFTW_H)
 
 #include <stdio.h>
-#include "gmath.h"
+#include <grass/gmath.h>
 #include "numerical.h"
-#include "gis.h"
+#include <grass/gis.h>
 
 double *g[2];   /* the filter function */
 

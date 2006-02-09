@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 /****************************************************************
  * I_cluster_begin (C,nbands)
  *

@@ -9,10 +9,10 @@
 #define MAIN
 #include <stdio.h>
 #include <stdlib.h>
-#include "gis.h"
-#include "display.h"
-#include "raster.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/raster.h>
+#include <grass/glocale.h>
 #include "options.h"
 #include "local_proto.h"
 

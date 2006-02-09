@@ -1,7 +1,7 @@
 #ifndef GRASS_VECT_H
 #define GRASS_VECT_H
-#include "gis.h"
-#include "vect/digit.h"
+#include <grass/gis.h>
+#include <grass/vect/digit.h>
 
 /* --- ANSI prototypes for the lib/vector/Vlib functions --- */
 /* "Public" functions, for use in modules */

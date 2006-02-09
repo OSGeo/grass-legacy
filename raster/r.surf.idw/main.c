@@ -15,10 +15,10 @@
 
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 #define MAIN
 #include "main.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 static int error_flag = 0;
 static char *input;

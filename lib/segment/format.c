@@ -2,8 +2,8 @@
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
-#include "segment.h"
-#include "config.h"
+#include <grass/segment.h>
+#include <grass/config.h>
 
 static int _segment_format (int,int,int,int,int,int,int);
 static int write_int(int,int);

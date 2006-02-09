@@ -1,4 +1,4 @@
-#include "rowio.h"
+#include <grass/rowio.h>
 
 void rowio_forget (ROWIO *R,int row)
 {

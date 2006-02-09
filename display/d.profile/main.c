@@ -12,12 +12,12 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "profile.h"
-#include "display.h"
-#include "raster.h"
+#include <grass/display.h>
+#include <grass/raster.h>
 #include "math.h"
-#include "D.h"
+#include <grass/D.h>
 
 struct Profile profile;
 

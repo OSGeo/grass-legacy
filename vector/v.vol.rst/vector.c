@@ -31,18 +31,18 @@
 #include <math.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include "gis.h"
-#include "Vect.h"
-#include "dbmi.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/dbmi.h>
 
-#include "site.h"
+#include <grass/site.h>
 #include "oct.h"
 #include "surf.h"
 #include "dataoct.h"
 #include "userextern.h"
 #include "userglobs.h"
 #include "user.h"
-#include "G3d.h"
+#include <grass/G3d.h>
 #include "points.h"
 
 int

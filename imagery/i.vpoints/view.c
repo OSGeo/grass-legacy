@@ -1,6 +1,6 @@
 #include "globals.h"
 #include <string.h>
-#include "raster.h"
+#include <grass/raster.h>
 
 int Configure_view (
     View *view,

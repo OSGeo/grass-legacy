@@ -19,8 +19,8 @@
 *				                           *
 ************************************************************/
 
-#include "gis.h"
-#include "config.h"
+#include <grass/gis.h>
+#include <grass/config.h>
 #include "patch.h"
 
 

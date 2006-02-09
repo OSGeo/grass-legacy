@@ -15,8 +15,8 @@
 *
 *  will print percent complete for row/nrows in multiples of 10  
 *****************************************************************/ 
-#include "gis.h"
-#include "imagery.h"
+#include <grass/gis.h>
+#include <grass/imagery.h>
 
 int I_percent (int n,int d,int s)
 {

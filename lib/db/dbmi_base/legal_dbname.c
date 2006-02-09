@@ -1,6 +1,6 @@
-#include "gis.h"
-#include "dbmi.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/glocale.h>
 
 /* TODO: are we as restrictive here as for vector names? */
 

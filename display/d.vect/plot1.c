@@ -1,15 +1,15 @@
 /* plot1() - Level One vector reading */
 
 #include <string.h>
-#include "gis.h"
-#include "Vect.h"
-#include "display.h"
-#include "raster.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/display.h>
+#include <grass/raster.h>
 #include "plot.h"
 #include "local_proto.h"
-#include "symbol.h"
-#include "glocale.h"
-#include "dbmi.h"
+#include <grass/symbol.h>
+#include <grass/glocale.h>
+#include <grass/dbmi.h>
 
 int plot1 (
     struct Map_info *Map, int type, int area, 

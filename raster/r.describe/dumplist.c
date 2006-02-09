@@ -1,5 +1,5 @@
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 static int show (CELL,CELL, int *,DCELL,DCELL, RASTER_MAP_TYPE,int);
 

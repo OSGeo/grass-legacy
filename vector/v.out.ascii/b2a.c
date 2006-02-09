@@ -1,5 +1,5 @@
-#include "Vect.h"
-#include "gis.h"
+#include <grass/Vect.h>
+#include <grass/gis.h>
 #include "local_proto.h"
 
 int bin_to_asc(

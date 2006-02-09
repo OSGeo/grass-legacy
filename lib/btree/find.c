@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "btree.h"
+#include <grass/btree.h>
 
 int btree_find ( BTREE *B, char *key, char **data)
 {

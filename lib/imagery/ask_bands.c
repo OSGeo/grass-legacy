@@ -1,9 +1,9 @@
 #include <string.h>
 #include <stdlib.h>
-#include "gis.h"
-#include "imagery.h"
+#include <grass/gis.h>
+#include <grass/imagery.h>
 #ifdef HAVE_CURSES_H
-#include "vask.h"
+#include <grass/vask.h>
 #endif
 
 #define MAX 11

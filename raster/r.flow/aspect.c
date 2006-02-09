@@ -25,7 +25,7 @@
 
 
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "r.flow.h"
 
 DCELL

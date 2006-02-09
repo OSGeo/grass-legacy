@@ -3,8 +3,8 @@
 #include <signal.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include "gis.h"
-#include "raster.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
 #include "globals.h"
 /*
  * call a subroutine, but as a child process

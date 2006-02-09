@@ -6,7 +6,7 @@
 * of files and the names of the cell files which comprise
 * the group)
 **********************************************************/
-#include "imagery.h"
+#include <grass/imagery.h>
 
 FILE *
 I_fopen_group_init_new (char *group)

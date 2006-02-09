@@ -25,9 +25,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "glocale.h"
-#include "gis.h"
-#include "Vect.h"
+#include <grass/glocale.h>
+#include <grass/gis.h>
+#include <grass/Vect.h>
 #include "trans.h"
 #include "local_proto.h"
 

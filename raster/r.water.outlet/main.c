@@ -14,8 +14,8 @@ Help text inserted by
 #include "basin.h"
 #include "outletP.h"
 #undef MAIN
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 int main (int argc, char *argv[])
 {

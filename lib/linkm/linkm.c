@@ -13,7 +13,7 @@
 **   list backwards.
 */
 #include <stdio.h>
-#include "linkm.h"
+#include <grass/linkm.h>
 
 struct link {
     char let;

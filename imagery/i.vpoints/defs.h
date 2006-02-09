@@ -1,5 +1,5 @@
 #include <curses.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 
 /* this is a curses structure */
 typedef struct

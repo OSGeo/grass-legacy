@@ -7,9 +7,9 @@
 #include <stdio.h>
 #include <sys/types.h>
 
-#include "gis.h"
+#include <grass/gis.h>
 #include "image.h"
-#include "gstypes.h"
+#include <grass/gstypes.h>
 
 
 static unsigned short rbuf[8192];

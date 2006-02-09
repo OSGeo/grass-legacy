@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 #include "globals.h"
 #define NLINES 18
 struct box

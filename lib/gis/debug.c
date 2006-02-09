@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "G.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 
 /*!

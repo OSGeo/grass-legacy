@@ -1,7 +1,7 @@
 #include <string.h>
 #include <math.h>
-#include "gis.h"
-#include "geo.h"
+#include <grass/gis.h>
+#include <grass/geo.h>
 #include "local_proto.h"
 
 char answer[200];

@@ -1,5 +1,5 @@
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 #define TINY 1.0e-20;
 
 int G_ludcmp(double **a,int n,int *indx,double *d)

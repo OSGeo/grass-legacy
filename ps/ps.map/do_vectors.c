@@ -7,9 +7,9 @@
 */
 
 #include <string.h>
-#include "gis.h"
-#include "Vect.h"
-#include "symbol.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/symbol.h>
 #include "clr.h"
 #include "vector.h"
 #include "ps_info.h"

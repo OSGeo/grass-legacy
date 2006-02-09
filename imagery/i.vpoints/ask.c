@@ -1,6 +1,6 @@
 #include <string.h>
 #include "globals.h"
-#include "raster.h"
+#include <grass/raster.h>
 
 #define NLINES 18
 struct box

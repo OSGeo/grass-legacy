@@ -1,9 +1,9 @@
 /* plot2() - Level One vector reading */
 
 #include <unistd.h>
-#include "gis.h"
-#include "Vect.h"
-#include "display.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/display.h>
 #include "vectpoints.h"
 #include "globals.h"
 

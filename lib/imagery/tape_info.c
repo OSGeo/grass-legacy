@@ -1,7 +1,7 @@
-#include "gis.h"
+#include <grass/gis.h>
 #ifdef HAVE_CURSES_H
-#include "vask.h"
-#include "imagery.h"
+#include <grass/vask.h>
+#include <grass/imagery.h>
 int I_clear_tape_info(struct Tape_Info *t)
 {
     struct Tape_Info template;

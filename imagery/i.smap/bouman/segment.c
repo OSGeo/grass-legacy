@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <unistd.h>
-#include "imagery.h"
-#include "glocale.h"
+#include <grass/imagery.h>
+#include <grass/glocale.h>
 #include "bouman.h"
 #include "region.h"
 

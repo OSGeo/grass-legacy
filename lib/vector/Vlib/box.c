@@ -15,8 +15,8 @@
 *
 *****************************************************************************/
 #include <stdlib.h>
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 /*!
  \fn int Vect_point_in_box (double x, double y, double z, BOUND_BOX *Box)

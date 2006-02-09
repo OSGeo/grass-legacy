@@ -83,8 +83,8 @@
 #include <rpc/types.h> /* need this for sgi */
 #include <rpc/xdr.h>
 
-#include "config.h"
-#include "glocale.h"
+#include <grass/config.h>
+#include <grass/glocale.h>
 
 #include "G.h"
 

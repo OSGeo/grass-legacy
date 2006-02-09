@@ -6,8 +6,8 @@
 
 #include <stdio.h>
 
-#include "config.h"
-#include "gis.h"
+#include <grass/config.h>
+#include <grass/gis.h>
 
 #include "expression.h"
 

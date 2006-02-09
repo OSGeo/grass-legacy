@@ -5,7 +5,7 @@
 
 #undef MAIN
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "ransurf.h"
 #include "local_proto.h"
 

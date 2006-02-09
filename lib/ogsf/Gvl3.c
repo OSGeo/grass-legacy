@@ -4,9 +4,9 @@
     December 2003
 */
 
-#include "gis.h"
-#include "G3d.h"
-#include "gstypes.h"
+#include <grass/gis.h>
+#include <grass/G3d.h>
+#include <grass/gstypes.h>
 
 /***********************************************************************/
 int Gvl_load_colors_data(void **color_data, char *name)

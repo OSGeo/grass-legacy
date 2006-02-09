@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "list.h"
 #include "mapcalc.h"
 #include "yylex.h"

@@ -6,9 +6,9 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <string.h>
-#include "gis.h"
-#include "Vect.h"
-#include "gprojects.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/gprojects.h>
 #include "local_proto.h"
 
 int main (int argc, char *argv[])

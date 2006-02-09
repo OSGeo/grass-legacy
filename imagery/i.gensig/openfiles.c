@@ -1,6 +1,6 @@
 #include <stdlib.h>
-#include "imagery.h"
-#include "glocale.h"
+#include <grass/imagery.h>
+#include <grass/glocale.h>
 #include "parms.h"
 #include "files.h"
 

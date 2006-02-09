@@ -17,8 +17,8 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include "Vect.h"
-#include "gis.h"
+#include <grass/Vect.h>
+#include <grass/gis.h>
 
 #ifdef HAVE_OGR
 #include "ogr_api.h"

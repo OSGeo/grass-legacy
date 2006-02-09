@@ -16,9 +16,9 @@
 #include <string.h>
 #include <math.h>
 
-#include "gis.h"
+#include <grass/gis.h>
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 #include "gsget.h"
 #include "rowcol.h"
 #include "rgbpack.h"

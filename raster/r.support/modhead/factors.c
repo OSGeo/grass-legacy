@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
-#include "glocale.h"
-#include "gis.h"
+#include <grass/glocale.h>
+#include <grass/gis.h>
 
 
 /*

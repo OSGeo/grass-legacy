@@ -9,8 +9,8 @@
 #include <string.h>
 
 #include "param.h"
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 void interface(int argc, char **argv) 
 {

@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "globals.h"
-#include "raster.h"
+#include <grass/raster.h>
 
 int display_title (View *view)
 {

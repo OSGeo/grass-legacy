@@ -5,8 +5,8 @@
  * (which goes on behind the scenes) may actual increase the i/o.
  */
 
-#include "imagery.h"
-#include "ortholib.h"
+#include <grass/imagery.h>
+#include <grass/ortholib.h>
 #include "defs.h"
 
 /* the large, the worse the results in mountaneous regions!! 128 is MAX! 

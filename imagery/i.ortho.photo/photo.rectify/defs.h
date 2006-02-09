@@ -1,6 +1,6 @@
 #include <curses.h>
 #include "orthophoto.h"
-#include "rowio.h"
+#include <grass/rowio.h>
 #include "rowcol.h"
 
 /* this is a curses structure */

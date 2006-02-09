@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 #define	cv(i,j)		cell[i][j]
 #define	av(i,j)		a[i][j]

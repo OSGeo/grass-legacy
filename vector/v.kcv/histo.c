@@ -7,7 +7,7 @@
  */
 
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 int 
 make_histo (int **p, int np, int nsites)

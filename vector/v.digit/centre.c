@@ -17,8 +17,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "gis.h"
-#include "display.h"
+#include <grass/gis.h>
+#include <grass/display.h>
 #include "global.h"
 #include "proto.h"
 

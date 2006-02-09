@@ -1,7 +1,7 @@
 #include "vizual2.h"
 #include <GL/gl.h>
 
-#include "gis.h"
+#include <grass/gis.h>
 
 #define WITHIN(a,x,b)   (((a) <= (x) && (x) <= (b)) ? 1 : 0)
 

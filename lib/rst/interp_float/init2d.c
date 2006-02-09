@@ -12,8 +12,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <unistd.h>
-#include "gis.h"
-#include "interpf.h"
+#include <grass/gis.h>
+#include <grass/interpf.h>
 
 void IL_init_params_2d (
 /* initialize parameters */

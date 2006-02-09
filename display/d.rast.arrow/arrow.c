@@ -39,11 +39,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "gis.h"
-#include "raster.h"
-#include "display.h"
-#include "colors.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/display.h>
+#include <grass/colors.h>
+#include <grass/glocale.h>
 
 # define RpD ((2 * M_PI) / 360.)	/* radians/degree */
 # define D2R(d) (double)(d * RpD)	/* degrees->radians */

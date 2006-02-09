@@ -15,9 +15,9 @@
 *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 #define printline(x) fprintf (out," | %-74.74s |\n",x)
 #define divider(x) \

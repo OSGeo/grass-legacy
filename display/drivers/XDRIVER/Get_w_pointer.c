@@ -9,9 +9,9 @@
  * coordinate is returned in (*wx, *wy) and the button pressed in
  * returned in *button. */
 
-#include "gis.h"
+#include <grass/gis.h>
 #include "includes.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 int XD_Get_location_with_pointer (int *wx, int *wy, int *button, int cmd)
 {

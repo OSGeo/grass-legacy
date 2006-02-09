@@ -13,9 +13,9 @@
 *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "dbmi.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
 
 /* TODO: Vect_graph_free ( GRAPH *graph ) */
 

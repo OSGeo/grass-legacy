@@ -111,7 +111,7 @@
  ********************************************************************
  */
 
-#include "config.h"
+#include <grass/config.h>
 
 #ifndef HAVE_ZLIB_H
 
@@ -123,7 +123,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 #define G_ZLIB_COMPRESSED_NO (unsigned char)'0'
 #define G_ZLIB_COMPRESSED_YES (unsigned char)'1'

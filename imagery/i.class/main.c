@@ -3,9 +3,9 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "raster.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/glocale.h>
 #include "globals.h"
 #include "local_proto.h"
 

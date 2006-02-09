@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 #include "conv.h"
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 int 
 old2new (char *in, char *out, int endian)

@@ -1,6 +1,6 @@
 #include "list.h"
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 #include <string.h>
 
 int do_remove (int n, char *old)

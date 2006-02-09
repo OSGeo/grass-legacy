@@ -1,4 +1,4 @@
-#include "imagery.h"
+#include <grass/imagery.h>
 #include <math.h>
 
 int I_cluster_means (struct Cluster *C)

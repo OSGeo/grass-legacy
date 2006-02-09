@@ -30,12 +30,12 @@
 /********
  ******** only compile this LAPACK/BLAS wrapper file if g2c.h is present!
  ********/
-#include "config.h"
+#include <grass/config.h>
 
 #if defined(HAVE_LIBLAPACK) && defined(HAVE_LIBBLAS) && defined(HAVE_G2C_H)
 
-#include "gis.h"
-#include "la.h"
+#include <grass/gis.h>
+#include <grass/la.h>
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 

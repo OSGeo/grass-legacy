@@ -87,8 +87,8 @@ CALLS:
 ***********************************************************************/
 #include <stdlib.h>
 #include <string.h>
-#include "config.h"
-#include "vask.h"
+#include <grass/config.h>
+#include <grass/vask.h>
 
 static int centered(const char *);
 static int fmt(char *,int,double);

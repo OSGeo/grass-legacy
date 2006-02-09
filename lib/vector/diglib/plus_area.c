@@ -18,7 +18,7 @@
 *
 *****************************************************************************/
 #include <stdlib.h>
-#include "Vect.h"
+#include <grass/Vect.h>
 
 /*
 ** build_area_with_line ()

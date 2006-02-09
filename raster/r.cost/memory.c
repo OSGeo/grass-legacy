@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "memory.h"
 
 #define NUM_IN_BLOCK	1024*8

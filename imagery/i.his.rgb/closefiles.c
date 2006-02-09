@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "globals.h"
 
 /* This routine closes up the cell maps, frees up the row buffers and

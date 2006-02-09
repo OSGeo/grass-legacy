@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "list.h"
 #include "mapcalc.h"
 #include "number.h"

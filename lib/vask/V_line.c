@@ -21,7 +21,7 @@ CALLS:
 
 ***********************************************************************/
 
-#include "vask.h"
+#include <grass/vask.h>
 
 /*!
  * \brief add line of text to screen

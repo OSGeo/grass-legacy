@@ -12,7 +12,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "ps_info.h"
 #include "paper.h"
 

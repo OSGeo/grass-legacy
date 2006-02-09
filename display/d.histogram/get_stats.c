@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdarg.h>
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "options.h"
 #include "dhist.h"
 

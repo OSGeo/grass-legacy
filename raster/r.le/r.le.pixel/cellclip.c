@@ -18,9 +18,9 @@
 *				                           *
 ************************************************************/
 
-#include "gis.h"
+#include <grass/gis.h>
 #include "pixel.h"
-#include "config.h"
+#include <grass/config.h>
 #include "local_proto.h"
 
 

@@ -14,7 +14,7 @@
 *
 **********************************************************/
 #include <stdlib.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 
 
 static unsigned char *read_color(char *,char *,char *,char *,CELL *,CELL *);

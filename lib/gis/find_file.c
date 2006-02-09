@@ -28,7 +28,7 @@
 
 #include <string.h>
 #include <unistd.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 static char *G__find_file (
     char *element,

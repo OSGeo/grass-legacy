@@ -17,7 +17,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <sys/types.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 int get_deg(char *strng, int ll_swt)
 {

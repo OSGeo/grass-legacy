@@ -15,7 +15,7 @@ Details:        This routine finds the locations and orientations of zero
 */
 #include <stdio.h>
 #include <math.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "globals.h"
 
 #define PI      M_PI

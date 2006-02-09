@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 #include "files.h"
 #include "parms.h"
 

@@ -1,5 +1,5 @@
 #include <string.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 
 int I_list_subgroup (
     char *group,

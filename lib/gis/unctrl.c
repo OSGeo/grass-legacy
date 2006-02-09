@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 /*!
  * \brief printable version of control character

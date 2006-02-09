@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 /* write the GRASS ASCII heading */
 int writeGRASSheader(FILE *fp)

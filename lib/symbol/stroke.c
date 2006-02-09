@@ -15,8 +15,8 @@
 *****************************************************************************/
 #include <stdlib.h>
 #include <math.h>
-#include "gis.h"
-#include "symbol.h"
+#include <grass/gis.h>
+#include <grass/symbol.h>
 
 #define PI M_PI
 

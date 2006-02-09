@@ -21,9 +21,9 @@
 
 /*========================= Required Include Files =========================*/
 
-#include "gis.h"
-#include "gstypes.h"
-#include "kftypes.h"
+#include <grass/gis.h>
+#include <grass/gstypes.h>
+#include <grass/kftypes.h>
 
 /*===================== User Visible Constants/Defines =====================*/
 

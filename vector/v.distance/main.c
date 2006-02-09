@@ -22,9 +22,9 @@
 #include <string.h>
 #include <unistd.h>
 #include <math.h>
-#include "gis.h"
-#include "dbmi.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
 
 /* TODO: support all types (lines, boundaries, areas for 'from' (from_type) */
 

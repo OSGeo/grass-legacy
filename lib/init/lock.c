@@ -6,7 +6,7 @@
 #include <sys/stat.h>
 #include <signal.h>
 #include "local_proto.h"
-#include "gis.h"
+#include <grass/gis.h>
 
 /******************************************************************
 *lock file pid

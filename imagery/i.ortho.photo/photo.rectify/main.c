@@ -1,7 +1,7 @@
 #define GLOBAL
 #include <stdlib.h>
 #include <string.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 #include "global.h"
 
 int main (int argc, char *argv[])

@@ -20,8 +20,8 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "gis.h"
-#include "gprojects.h"
+#include <grass/gis.h>
+#include <grass/gprojects.h>
 
 /* a couple defines to simplify reading the function */
 #define MULTIPLY_LOOP(x,y,c,m) \

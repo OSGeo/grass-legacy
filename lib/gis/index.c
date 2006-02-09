@@ -1,6 +1,6 @@
 /* TODO: should this go into strings.c ? */
 
-#include "gis.h"
+#include <grass/gis.h>
 
 
 /*!

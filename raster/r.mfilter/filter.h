@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 typedef struct
 {
     int size;       /* size of filter matrix */

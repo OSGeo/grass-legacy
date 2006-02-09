@@ -1,5 +1,5 @@
 #include <string.h>
-#include "imagery.h"
+#include <grass/imagery.h>
 
 static int lister(char *,char *,char *);
 static char *g;

@@ -32,7 +32,7 @@
 #include <unistd.h>
 
 /* Grass and local include files */
-#include "gis.h"
+#include <grass/gis.h>
 
 /*======================= Internal Constants/Defines =======================*/
 

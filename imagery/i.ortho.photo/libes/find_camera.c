@@ -3,7 +3,7 @@
 *
 * Look for the named camera reference file in the current mapset
 **************************************************************/
-#include "gis.h"
+#include <grass/gis.h>
 
 int 
 I_find_camera (char *camera)

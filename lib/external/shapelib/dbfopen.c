@@ -34,7 +34,10 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.5  2005-03-24 14:27:16  markus
+ * Revision 1.6  2006-02-09 03:08:55  glynn
+ * Use <grass/gis.h> etc rather than <gis.h>
+ *
+ * Revision 1.5  2005/03/24 14:27:16  markus
  * GDAL bugfix #809 (http://208.24.120.44/show_bug.cgi?id=809)
  *
  * Revision 1.59  2005/03/14 15:20:28  fwarmerdam
@@ -220,7 +223,7 @@
  * Added header.
  */
 
-#include "shapefil.h"
+#include <grass/shapefil.h>
 
 #include <math.h>
 #include <stdlib.h>

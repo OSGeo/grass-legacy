@@ -21,9 +21,9 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-#include "gis.h"
-#include "glocale.h"
-#include "gprojects.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
+#include <grass/gprojects.h>
 #include "local_proto.h"
 
 struct datum_transform_list

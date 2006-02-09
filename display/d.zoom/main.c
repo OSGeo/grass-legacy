@@ -6,13 +6,13 @@
 
 #include <stdlib.h>
 #include <string.h> 
-#include "gis.h"
-#include "display.h"
-#include "raster.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/raster.h>
+#include <grass/Vect.h>
 #define	MAIN
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 int 
 main (int argc, char **argv)

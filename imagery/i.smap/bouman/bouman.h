@@ -1,6 +1,6 @@
 #include <math.h>
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 
 #define LIKELIHOOD float
 

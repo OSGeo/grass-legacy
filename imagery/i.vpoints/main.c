@@ -21,7 +21,7 @@ VERSION DATE: 6-30-92
 #include <signal.h>
 #define GLOBAL
 #include "globals.h"
-#include "raster.h"
+#include <grass/raster.h>
 
 int main (int argc, char *argv[])
 {

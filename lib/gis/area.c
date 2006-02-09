@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 static struct Cell_head window;
 static double square_meters;

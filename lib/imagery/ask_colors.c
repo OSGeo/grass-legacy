@@ -1,8 +1,8 @@
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 #ifdef HAVE_CURSES_H
-#include "imagery.h"
-#include "vask.h"
+#include <grass/imagery.h>
+#include <grass/vask.h>
 static int show_color(char *,int,struct Ref *);
 
 /******************************************************************************

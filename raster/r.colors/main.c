@@ -8,9 +8,9 @@
 #include <string.h>
 #include <sys/types.h>
 #include <dirent.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 
 static char *rules_files(void)

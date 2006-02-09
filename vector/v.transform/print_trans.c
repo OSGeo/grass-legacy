@@ -16,9 +16,9 @@
 
 
 #include <stdio.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "trans.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 int 
 print_transform_resids (int n_points)

@@ -1,4 +1,4 @@
-#include "gis.h"
+#include <grass/gis.h>
 
 void c_maxx(DCELL *result, DCELL *values, int n)
 {

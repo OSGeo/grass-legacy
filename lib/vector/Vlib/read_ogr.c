@@ -13,8 +13,8 @@
 *   	    	for details.
 *
 *****************************************************************************/
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 #ifdef HAVE_OGR
 #include "ogr_api.h"

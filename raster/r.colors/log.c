@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "local_proto.h"
 
 /* generate log transformed color table for skewed datasets MN 8/2001 */

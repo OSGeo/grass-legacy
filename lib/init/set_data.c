@@ -45,9 +45,9 @@ static char *map_text=
 #include <sys/stat.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "gis.h"
-#include "vask.h"
-#include "edit.h"
+#include <grass/gis.h>
+#include <grass/vask.h>
+#include <grass/edit.h>
 #include "local_proto.h"
 
 int main (int argc, char *argv[])

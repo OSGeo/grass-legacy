@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <string.h>
-#include "gis.h"
-#include "raster.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
 #include "globals.h"
 
 static char    buf[300];

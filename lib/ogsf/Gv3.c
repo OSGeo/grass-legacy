@@ -8,10 +8,10 @@
     Uses GRASS routines!
 */
 #include <stdlib.h>
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
-#include "gstypes.h"
+#include <grass/gstypes.h>
 
 #define TRAK_MEM
 

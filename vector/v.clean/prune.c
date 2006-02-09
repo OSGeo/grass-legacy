@@ -15,8 +15,8 @@
  * *
  * **************************************************************/
 #include <stdlib.h> 
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 
 /* Pruning of boundaries MUST NOT destroy topology of areas. This is guaranteed by 3 rules:
  *

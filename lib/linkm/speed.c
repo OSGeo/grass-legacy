@@ -9,7 +9,7 @@
 **  This is a simple best case performance comparison between linkm and malloc
 */
 #include <stdio.h>
-#include "linkm.h"
+#include <grass/linkm.h>
 
 struct link {
     char let;

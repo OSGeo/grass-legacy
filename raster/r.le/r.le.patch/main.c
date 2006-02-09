@@ -22,9 +22,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
+#include <grass/gis.h>
 
-#include "config.h"
+#include <grass/config.h>
 #define MAIN
 #include "patch.h"
 

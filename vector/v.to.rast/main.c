@@ -1,10 +1,10 @@
 #include <stdio.h> 
 #include <stdlib.h>
-#include "gis.h"
-#include "dbmi.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
 #include "local.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 int main (int argc, char *argv[])
 {

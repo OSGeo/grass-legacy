@@ -1,8 +1,8 @@
 #include <string.h>
-#include "raster.h"
-#include "display.h"
+#include <grass/raster.h>
+#include <grass/display.h>
 #include "vectpoints.h"
-#include "Vect.h"
+#include <grass/Vect.h>
 #include "globals.h"
 
 #define VFILES 12

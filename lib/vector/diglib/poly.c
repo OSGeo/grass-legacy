@@ -18,7 +18,7 @@
 *
 *****************************************************************************/
 #include <math.h>
-#include "Vect.h"
+#include <grass/Vect.h>
 
 
 #ifndef HUGE_VAL

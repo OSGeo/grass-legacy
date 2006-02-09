@@ -1,4 +1,4 @@
-#include "btree.h"
+#include <grass/btree.h>
 #include <stdlib.h>
 
 int btree_free (BTREE *B)

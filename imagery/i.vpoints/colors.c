@@ -1,5 +1,5 @@
 #include "globals.h"
-#include "display.h"
+#include <grass/display.h>
 
 static int use = 1;
 static int set_blue(void);

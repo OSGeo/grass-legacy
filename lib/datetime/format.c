@@ -6,7 +6,7 @@
  */
 #include <stdio.h>
 #include <string.h>
-#include "datetime.h"
+#include <grass/datetime.h>
 
 
 static char *months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",

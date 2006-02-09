@@ -18,9 +18,9 @@
 *
 *****************************************************************************/
 #include <string.h>
-#include "gis.h"
-#include "portable.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/portable.h>
+#include <grass/Vect.h>
 
 struct Port_info *Cur_Head;
 

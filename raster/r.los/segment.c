@@ -7,7 +7,7 @@
 /*								*/
 /****************************************************************/
 
-#include "segment.h"
+#include <grass/segment.h>
 #include "point.h"
 
 #define	  NEXT_PT		PRESENT_PT->next

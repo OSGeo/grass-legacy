@@ -4,7 +4,7 @@
 #undef DEBUG
 
 #undef MAIN
-#include "gis.h"
+#include <grass/gis.h>
 #include "ransurf.h"
 
 #define M1 259200

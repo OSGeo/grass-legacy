@@ -2,8 +2,8 @@
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
-#include "segment.h"
-#include "gis.h"
+#include <grass/segment.h>
+#include <grass/gis.h>
 
 /*	buf is CELL *   WRAT code	*/
 /*  

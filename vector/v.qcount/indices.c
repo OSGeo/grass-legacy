@@ -6,8 +6,8 @@
  * Read the file GPL.TXT coming with GRASS for details.
  */
 
-#include "gis.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/Vect.h>
 #include "quaddefs.h"
 
 void qindices  (int *cnt, int n, double *fisher, double *david, double *douglas, double *lloyd, double *lloydip, double *morisita)

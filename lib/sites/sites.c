@@ -16,10 +16,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
-#include "gis.h"
-#include "site.h"
-#include "dbmi.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/site.h>
+#include <grass/dbmi.h>
+#include <grass/Vect.h>
 
 #define DQUOTE '"'
 #define SPACE ' '

@@ -14,7 +14,7 @@
 *               for details.
 *****************************************************************************/
 
-#include <rtree/card.h>
-#include <rtree/index.h>
+#include <grass/rtree/card.h>
+#include <grass/rtree/index.h>
 /* #include <rtree/split_l.h> */
-#include <rtree/split_q.h>
+#include <grass/rtree/split_q.h>

@@ -30,13 +30,13 @@
 
 #include <stdlib.h>      /* for the random number generation */
 #include <time.h>
-#include "gis.h"
+#include <grass/gis.h>
 #include "r.flow.h"
 #include "mem.h"
 #include "io.h"
 #include "aspect.h"
 #include "precomp.h"
-#include "glocale.h"
+#include <grass/glocale.h>
 
 #define HORIZ	1		/* \		*/
 #define VERT	0		/* |		*/

@@ -19,10 +19,10 @@
 #include <stdlib.h>
 #include <tcl.h>
 #include <tk.h>
-#include "gis.h"
-#include "display.h"
-#include "raster.h"
-#include "Vect.h"
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/raster.h>
+#include <grass/Vect.h>
 #include "global.h"
 #include "proto.h"
 

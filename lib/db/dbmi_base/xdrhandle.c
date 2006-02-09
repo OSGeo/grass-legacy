@@ -1,4 +1,4 @@
-#include "dbmi.h"
+#include <grass/dbmi.h>
 #include "macros.h"
 
 db__send_handle  (dbHandle *handle)

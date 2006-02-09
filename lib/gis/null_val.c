@@ -21,8 +21,8 @@
 #include <string.h>
 
 /* Grass and local include files */
-#include "gis.h"
-#include "glocale.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 /*======================= Internal Constants/Defines =======================*/
 

@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "what.h"
-#include "display.h"
-#include "raster.h"
+#include <grass/display.h>
+#include <grass/raster.h>
 #include "local_proto.h"
 
 int main (int argc, char **argv)

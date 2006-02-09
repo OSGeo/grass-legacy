@@ -17,7 +17,7 @@
 *
 *****************************************************************************/
 #include <stdlib.h>
-#include "Vect.h"
+#include <grass/Vect.h>
 
 /* 
 *  dig_line_box ()
