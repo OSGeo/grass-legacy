@@ -236,16 +236,16 @@ int main(int argc, char *argv[])
 	    if ((ogr_ds = OGROpen(ingeo->answer, FALSE, NULL))
 		&& (OGR_DS_GetLayerCount(ogr_ds) > 0)) {
 		OGRLayerH ogr_layer;
-		OGRSpatialReferenceH *ogr_srs = NULL;
+		OGRSpatialReferenceH ogr_srs;
 
 		fprintf(stderr, "...succeeded.\n");
 		/* Get the first layer */
 		ogr_layer = OGR_DS_GetLayer(ogr_ds, 0);
 		ogr_srs = OGR_L_GetSpatialRef(ogr_layer);
-		GPJ_osr_to_grass(&cellhd, &projinfo, &projunits, ogr_srs, 1);
+		GPJ_osr_to_grass(&cellhd, &projinfo, &projunits, &ogr_srs, 1);
 
 		OGR_DS_Destroy(ogr_ds);
-		 /* OSRDestroySpatialReference(ogr_srs); */ /* crashes */
+		OSRDestroySpatialReference(ogr_srs);
 	    }
 	    else
 		G_fatal_error("Could not read georeferenced file %s using "
