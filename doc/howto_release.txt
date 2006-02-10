@@ -108,6 +108,7 @@ Note: This text contains *some* rules only applicable to the
 
    news:comp.infosystems.gis
    http://slashgeo.org/submit.pl
+   http://osgeo.org (? to be defined)
    http://spatialnews.geocomm.com/submitnews.html (not free any more)
    http://freshmeat.net/projects/grass/?highlight=GRASS
    http://linuxtoday.com/contribute.php3
@@ -118,6 +119,7 @@ Note: This text contains *some* rules only applicable to the
    http://www.giscafe.com/  (link: submit material, needs registration)
    http://www.freegis.org
    http://www.directionsmag.com/pressreleases.php (click on 'Contact Us')
+   http://www.gismonitor.com/news/submit_news.php
    http://www.gisdevelopment.net (click on 'Submit Press Release')
    http://www.gnu.org/directory/science/geography/grass.html
    http://www.kde-apps.org/content/show.php?content=19776
