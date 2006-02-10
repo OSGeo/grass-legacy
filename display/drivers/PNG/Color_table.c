@@ -47,7 +47,6 @@ static void init_colors_indexed(void)
 
 	NCOLORS = 256;
 
-	xpixels = G_realloc(xpixels, NCOLORS * sizeof(unsigned int));
 	n_pixels = 0;
 
 	if (has_alpha)
@@ -74,15 +73,12 @@ static void init_colors_indexed(void)
 		set_color(n_pixels++, 0, 0, 0);
 
 	for (i = 0; i < 256; i++)
-		xpixels[i] = i;
-
-	for (i = 0; i < 256; i++)
 	{
 		int k = i * 6 / 256;
 
 		Red[i] = k * 6 * 6;
 		Grn[i] = k * 6;
-		Blu[i] = k + has_alpha; /* + 1 for transparent color */
+		Blu[i] = k;
 	}
 }
 
@@ -169,7 +165,7 @@ static int get_color_indexed(int r, int g, int b)
 	if (has_alpha && transparent == ((r << 16) | (g << 8) | b))
 		return 0;
 
-	return Red[r] + Grn[g] + Blu[b];
+	return Red[r] + Grn[g] + Blu[b] + has_alpha;
 }
 
 int PNG_lookup_color(int r, int g, int b)

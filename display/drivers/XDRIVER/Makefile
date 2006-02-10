@@ -69,7 +69,15 @@ PGM=xdriver
 #    OBJS += $(FREETYPEBASED)
 #endif
 
-default: $(DRIVERDIR)/XDRIVER htmlgen
+default: $(DRIVERDIR)/XDRIVER htmlgen moncap
+
+moncap:
+	@if [-f $(ETC)/monitorcap ] && egrep '^x0' $(ETC)/monitorcap >/dev/null 2>&1 ; then \
+	echo XDRIVER already defined in $(ETC)/monitorcap ; \
+	else \
+	echo adding XDRIVER to $(ETC)/monitorcap ; \
+	cat moncap.entry >> $(ETC)/monitorcap ; \
+	fi
 
 $(DRIVERDIR)/XDRIVER: $(ARCH_OBJS) $(DEPENDENCIES) $(ARCH_INCDIR)/winname.h
 	$(CC) $(LDFLAGS) -o $@ $(XLDFLAGS) $(LIBPATH) $(ARCH_OBJS) $(LIBES) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB)

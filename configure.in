@@ -426,6 +426,7 @@ fi
 
 AC_SUBST(XLIB)
 AC_SUBST(XTLIB)
+AC_SUBST(USE_X11)
 
 # Enable Curses option
 

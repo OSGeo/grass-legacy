@@ -38,6 +38,7 @@ extern void PNG_Raster_int(int,int,const int *,int,int);
 extern void PNG_Respond(void);
 extern void PNG_reset_color(int,int,int,int);
 extern void PNG_color(int);
+extern int PNG_get_color(void);
 extern void PNG_draw_line(int,int,int,int);
 extern void PNG_draw_point(int,int);
 extern int PNG_get_table_type(void);
