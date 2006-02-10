@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <sys/types.h>
+#include <dirent.h>
 #include <grass/gis.h>
 #include <grass/display.h>
 #include <grass/D.h>
@@ -9,29 +11,32 @@ int main( int argc , char **argv )
 {
         char fonts[2048];
         char buf[1024];
-        FILE *fd;
-		struct GModule *module;
+	DIR *dirp;
+	struct dirent *dp;
+	struct GModule *module;
         struct Option *opt1;
 
 	G_gisinit(argv[0]);
 
-		module = G_define_module();
-		module->description =
+	module = G_define_module();
+	module->description =
 			"Selects the font in which text will be displayed "
 			"on the user's graphics monitor.";
 
         /* find out what fonts we have */
         *fonts = 0;
-        sprintf (buf, "ls %s/fonts", G_gisbase());
-        fd = popen(buf,"r");
-        if (fd != NULL)
+        sprintf (buf, "%s/fonts", G_gisbase());
+	if ((dirp = opendir(buf)) != NULL)
         {
-                while (fscanf(fd, "%s", buf)==1)
+                while ((dp = readdir(dirp)) != NULL)
                 {
+			if(dp->d_name[0] == '.')
+				continue;
+
                         if (*fonts) strcat(fonts, ",");
-                        strcat(fonts,buf);
+                        strcat(fonts, dp->d_name);
                 }
-                pclose(fd);
+                closedir(dirp);
         }
         if (*fonts == 0)
                 G_fatal_error("ERROR: no fonts available");
