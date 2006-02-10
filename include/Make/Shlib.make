@@ -1,7 +1,7 @@
 # common dependencies and rules for building shared libraries
 
 ifdef MINGW
-SHLIB = $(ARCH_LIBDIR)/$(SHLIB_PREFIX)$(SHLIB_NAME)$(SHLIB_SUFFIX)
+SHLIB = $(ARCH_LIBDIR)/$(SHLIB_NAME)$(SHLIB_SUFFIX)
 else
 SHLIB = $(ARCH_LIBDIR)/$(SHLIB_PREFIX)$(SHLIB_NAME).$(GRASS_VERSION_NUMBER)$(SHLIB_SUFFIX)
 endif
