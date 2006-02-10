@@ -32,7 +32,9 @@ int font_init(const char *filename)
 
 	/* Read entire font into memory */
 	lseek(file, 0L, 0);
-	font = G_realloc(font, (size_t) offset);
+	if(font)
+		G_free(font);
+	font = G_malloc((size_t) offset);
 
 	size = read(file, font, (size_t) offset);
 	if (size != offset)
@@ -43,7 +45,9 @@ int font_init(const char *filename)
 	read(file, &nchars, sizeof nchars);
 	size = nchars * sizeof(*findex);
 
-	findex = G_realloc(font, (size_t) size);
+	if(findex)
+		G_free(findex);
+	findex = G_malloc((size_t) size);
 	if (read(file, findex, size) != size)
 		G_fatal_error("can't read findex!");
 
