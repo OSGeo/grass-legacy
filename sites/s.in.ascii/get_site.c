@@ -278,4 +278,4 @@ int is_decimal(char *att)
     return 1;
 }
     
-/* vim: softtabstop=4 shiftwidth=4 expandtab */
+/* vim: set softtabstop=4 shiftwidth=4 expandtab: */
