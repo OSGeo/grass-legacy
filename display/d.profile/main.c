@@ -469,4 +469,4 @@ void myDcell (char *name, char *mapset, int overlay)
     G_free (cell);
 }
 
-/* vim: softtabstop=4 shiftwidth=4 expandtab: */
+/* vim: set softtabstop=4 shiftwidth=4 expandtab: */
