@@ -60,6 +60,7 @@ struct driver
 	int (*lookup_color)(int,int,int);
 	int (*get_table_type)(void);
 	void (*color)(int);
+	int (*get_color)(void);
 	void (*draw_line)(int,int,int,int);
 	void (*draw_point)(int,int);
 };
@@ -168,6 +169,7 @@ extern void COM_Do_work(int);
 /* Color.c */
 extern int DRV_lookup_color(int,int,int);
 extern void DRV_color(int);
+extern int DRV_get_color(void);
 /* Color_table.c */
 extern int DRV_get_table_type(void);
 /* Reset_colors.c */

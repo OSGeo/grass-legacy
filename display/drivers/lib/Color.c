@@ -20,6 +20,13 @@ void DRV_color(int number)
 		(*driver->color)(number);
 }
 
+int DRV_get_color(void)
+{
+	if (driver->get_color)
+		return (*driver->get_color)();
+	return 0;
+}
+
 void COM_Color(int number)
 {
 	DRV_color(LIB_get_color_index(number));

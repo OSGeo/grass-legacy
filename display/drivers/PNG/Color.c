@@ -18,11 +18,11 @@ void PNG_color(int number)
 		return;
 	}
 
-	if (PNG_get_table_type() == FLOAT)
-		currentColor = number;
-	else if (true_color)
-		currentColor = number;
-	else
-		currentColor = xpixels[number];
+	currentColor = number;
+}
+
+int PNG_get_color(void)
+{
+	return currentColor;
 }
 
