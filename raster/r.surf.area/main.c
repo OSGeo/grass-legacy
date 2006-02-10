@@ -300,4 +300,4 @@ v3mag (double v1[3], double *mag)
     *mag = sqrt(v1[X] * v1[X] + v1[Y] * v1[Y] +v1[Z] * v1[Z]);
 }
 /************************************************************************/
-/* vim: softtabstop=4 shiftwidth=4 expandtab */
+/* vim: set softtabstop=4 shiftwidth=4 expandtab: */
