@@ -12,7 +12,6 @@ int main( int argc , char **argv )
         FILE *fd;
 		struct GModule *module;
         struct Option *opt1;
-        int i;
 
 	G_gisinit(argv[0]);
 
@@ -55,6 +54,8 @@ int main( int argc , char **argv )
         /* load the font */
         if (R_open_driver() != 0)
 		G_fatal_error ("No graphics device selected");
+
+	R_font_freetype_release();
         R_font(opt1->answer) ;
 
         /* add this command to the list */
