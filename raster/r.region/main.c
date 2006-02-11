@@ -91,7 +91,7 @@ int main (int argc, char *argv[])
 	parm.region->required	= NO;
 	parm.region->multiple	= NO;
 	parm.region->type	= TYPE_STRING;
-	parm.region->description= _("Set current region from named region");
+	parm.region->description= _("Set region from named region");
 
 	parm.raster = G_define_option();
 	parm.raster->key	= "raster";
