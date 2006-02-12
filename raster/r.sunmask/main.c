@@ -38,7 +38,7 @@ static char *SOLPOSVERSION = "11 April 2001";
 
 extern struct posdata pd, *pdat; /* declare a posdata struct and a pointer for
                                     it (if desired, the structure could be
-                                    allocated dynamically with malloc) */
+                                    allocated dynamically with G_malloc) */
 struct Cell_head window;
 
  
