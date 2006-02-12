@@ -56,7 +56,7 @@ int DEBUG = 0;
 
 
 /* global functions */
-static int write_tfw(char *, struct Cell_head *, int);
+static int write_tfw(const char *, const struct Cell_head *, int);
 
 
 int 
@@ -404,7 +404,7 @@ main (int argc, char *argv[])
 
 
 static int
-write_tfw(char *fname, struct Cell_head *win, int verbose)
+write_tfw(const char *fname, const struct Cell_head *win, int verbose)
 {
 	int  width = DBL_DIG;
 	FILE *outfile;
@@ -417,15 +417,14 @@ write_tfw(char *fname, struct Cell_head *win, int verbose)
 	if (win == NULL)
 		G_fatal_error(_("Got null region struct"));
 	
-	outfile = fopen(fname, "w");
-	if (outfile == NULL)
+	if ((outfile = fopen(fname, "w")) == NULL)
 		G_fatal_error(_("Couldn't open TIFF world file for writing"));
 	
 	fprintf (outfile, "%36.*f \n", width, win->ew_res);
 	fprintf (outfile, "%36.*f \n", width, 0.0);
 	fprintf (outfile, "%36.*f \n", width, 0.0);
 	fprintf (outfile, "%36.*f \n", width, -1 * win->ns_res);
-	fprintf (outfile, "%36.*f \n", width, win->west + win->ew_res / 2.0 );
+	fprintf (outfile, "%36.*f \n", width, win->west + win->ew_res / 2.0);
         fprintf (outfile, "%36.*f \n", width, win->north - win->ns_res / 2.0);
 
 	fclose(outfile);
