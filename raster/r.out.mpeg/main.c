@@ -53,15 +53,15 @@ int main ( int  argc, char **argv)
     G_gisinit (argv[0]);
     parse_command(argc, argv, vfiles, &numviews, &frames, &quality, &r_out);
 
-
     /* find a working encoder */
     if(256 == G_system("ppmtompeg 2> /dev/null"))
 	strcpy(encoder, "ppmtompeg");
     else if(256 == G_system("mpeg_encode 2> /dev/null"))
 	strcpy(encoder, "mpeg_encode");
-    else G_fatal_error("either mpeg_encode or ppmtompeg must be installed");
-/*    G_debug(1, "encoder = [%s]\n", encoder); */
+    else
+        G_fatal_error(_("either mpeg_encode or ppmtompeg must be installed"));
 
+    G_debug(1, "encoder = [%s]", encoder);
 
     vrows = G_window_rows();
     vcols = G_window_cols();
@@ -69,7 +69,7 @@ int main ( int  argc, char **argv)
     ncols = vcols;
 
     /* short dimension */
-    sdimp = nrows>ncols? &ncols: &nrows;
+    sdimp = nrows>ncols ? &ncols : &nrows;
 
     /* these proportions should work fine for 1 or 4 views, but for
     2 views, want to double the narrow dim & for 3 views triple it */
@@ -78,7 +78,7 @@ int main ( int  argc, char **argv)
     else if(numviews == 3)
 	*sdimp *= 3;
 
-    longdim = nrows>ncols? nrows: ncols;
+    longdim = nrows>ncols ? nrows : ncols;
 
     scale = 1.0;
 
@@ -122,11 +122,11 @@ int main ( int  argc, char **argv)
     else
 	load_files();
 
-    return(0);
-
+    return (EXIT_SUCCESS);
 }
 
-int load_files()
+
+int load_files(void)
 {
 void    *voidc;
 int     rtype;
@@ -156,7 +156,6 @@ struct Colors colors;
 
     for (cnt = 0; cnt < frames; cnt++)
     {
-	
         if (cnt > MAXIMAGES)
 	{
 	    cnt--;
@@ -172,12 +171,14 @@ struct Colors colors;
 		vyoff = (irows == vrows)? BORDER_W : 
 			    BORDER_W + vnum*(BORDER_W+vrows);
 	    }
-	    else if (irows == vrows){
+	    else if (irows == vrows)
+            {
 		vxoff = (icols == vcols)? BORDER_W : 
 			    BORDER_W + vnum*(BORDER_W+vcols);
 		vyoff =  BORDER_W;
 	    }
-	    else{ /* 4 views */
+	    else
+            { /* 4 views */
 		/* assumes we want :
 		    view1	view2
 
@@ -189,20 +190,20 @@ struct Colors colors;
 
 	    strcpy(name,vfiles[vnum][cnt]);
 	    if(!quiet)
-		G_message("\rReading file '%s'", name);
+		G_message(_("\rReading file '%s'"), name);
 
 	    mapset = G_find_cell2 (name, "");
 	    if (mapset == NULL)
-		G_fatal_error ("%s: <%s> cellfile not found", 
+		G_fatal_error (_("%s: <%s> cellfile not found"),
 					    G_program_name(), name);
 
 	    fd = G_open_cell_old (name, mapset);
 	    if (fd < 0)
-		exit(1);
+		exit(EXIT_FAILURE);
 
 	    ret = G_read_colors(name, mapset, &colors);
 	    if (ret < 0)
-		exit(1);
+		exit(EXIT_FAILURE);
 
             rtype = G_raster_map_type(name, mapset);
             if (rtype == CELL_TYPE)
@@ -212,21 +213,25 @@ struct Colors colors;
             else if (rtype == DCELL_TYPE)
                 voidc = G_allocate_d_raster_buf();
             else
-                exit(1);
+                exit(EXIT_FAILURE);
 
 	    for (row = 0; row < vrows; row++){
 		if (G_get_raster_row (fd, voidc, 
                                       (int)(row/vscale), rtype) < 0)
-		    exit(1);
+		    exit(EXIT_FAILURE);
+
 		rowoff = (vyoff+row)*ncols;
                 G_lookup_raster_colors(voidc, tr, tg, tb,
 				       tset, tsiz, &colors, rtype);
+
                 for (col = 0; col < vcols; col++){
                     coff= (int)(col/vscale);
 		    offset = rowoff + col + vxoff;
+
                     if(!tset[coff])
                         pr[offset] = pg[offset] = pb[offset] = (char) 255;
-		    else{
+		    else
+                    {
 			pr[offset] = (char) tr[coff];	
 			pg[offset] = (char) tg[coff];	
 			pb[offset] = (char) tb[coff];	
@@ -244,21 +249,18 @@ struct Colors colors;
 #else
 	write_ycc(pr, pg, pb, nrows, ncols, &y_rows, &y_cols, yfiles[cnt]);
 #endif
-
-
     }
 
     mpfilename = G_tempfile();
     write_params(mpfilename, yfiles, outfile, cnt, quality, y_rows, y_cols, 0);
 
     if(quiet)
-	sprintf(cmd, "%s %s 2> /dev/null > /dev/null", 
-		encoder, mpfilename);
+	sprintf(cmd, "%s %s 2> /dev/null > /dev/null", encoder, mpfilename);
     else
 	sprintf(cmd, "%s %s", encoder, mpfilename);
 
     if(0 != G_system(cmd))
-	G_warning("mpeg_encode ERROR");
+	G_warning(_("mpeg_encode ERROR"));
 
     clean_files(mpfilename, yfiles, cnt);
 
@@ -272,36 +274,32 @@ struct Colors colors;
     G_free (pb);
 
     return(cnt);
-
 }
 
 
-int use_r_out()
+int use_r_out(void)
 {
-char	*mpfilename, cmd[1000];
+    char *mpfilename, cmd[1000];
 
     mpfilename = G_tempfile();
-    write_params(mpfilename, vfiles[0], 
-		outfile, frames, quality, 0, 0, 1);
+    write_params(mpfilename, vfiles[0], outfile, frames, quality, 0, 0, 1);
 
     if(quiet)
-	sprintf(cmd, "%s %s 2> /dev/null > /dev/null", 
-		encoder, mpfilename);
+	sprintf(cmd, "%s %s 2> /dev/null > /dev/null", encoder, mpfilename);
     else
 	sprintf(cmd, "%s %s", encoder, mpfilename);
 
     if(0 != G_system(cmd))
-	G_warning("mpeg_encode ERROR");
+	G_warning(_("mpeg_encode ERROR"));
 
     clean_files(mpfilename, NULL, 0);
 
-    return(1);
-
+    return (1);
 }
+
 
 /* ###################################################### */
 char **gee_wildfiles (char *wildarg, char *element, int *num)
-
 {
 int n, cnt=0;
 char path[1000], *mapset, cmd[1000], buf[512];
@@ -311,10 +309,12 @@ FILE *tf;
    
     *num = 0;
     tfile = G_tempfile();
+
     /* build list of filenames */
     for(n=0; (mapset = G__mapset_name (n)); n++){
 	if (strcmp (mapset,".") == 0)
 	    mapset = G_mapset();
+
 	G__file_name (path, element, "", mapset);
 	if(access(path, 0) == 0) {
 	    sprintf(cmd, "cd %s; \\ls %s >> %s 2> /dev/null", 
@@ -322,10 +322,13 @@ FILE *tf;
 	    G_system(cmd);
 	}
     }
-    if(NULL == (tf = fopen(tfile, "r"))){
-	G_message("Error reading wildcard");
+
+    if (NULL == (tf = fopen(tfile, "r")))
+    {
+        G_warning(_("Error reading wildcard"));
     }
-    else{
+    else
+    {
 	while(NULL != fgets(buf,512,tf)){
 	    /* replace newline with null */
 	    if( (p = strchr(buf, '\n')) )
@@ -339,20 +342,21 @@ FILE *tf;
 	}
 	fclose(tf);
     }
+
     *num = cnt;
     sprintf(cmd, "\\rm %s", tfile );
     G_system(cmd);
     G_free (tfile);
-    return(newfiles);
 
+    return(newfiles);
 }
 
 
 /********************************************************************/
-void parse_command (int argc, char *argv[], char *vfiles[MAXVIEWS][MAXIMAGES], int *numviews, int *numframes, int *quality, int *convert)
-
+void parse_command (int argc, char *argv[], char *vfiles[MAXVIEWS][MAXIMAGES],
+                    int *numviews, int *numframes, int *quality, int *convert)
 {
-	struct GModule *module;
+    struct GModule *module;
     struct Option *viewopts[MAXVIEWS], *out, *qual; 
     struct Flag *qt, *conv;
     char buf[BUFSIZ], **wildfiles;
@@ -363,7 +367,8 @@ void parse_command (int argc, char *argv[], char *vfiles[MAXVIEWS][MAXIMAGES], i
 		_("Raster File Series to MPEG Conversion Program.");
 
     *numviews = *numframes = 0;
-    for(i=0; i<MAXVIEWS; i++){
+    for(i=0; i<MAXVIEWS; i++)
+    {
 	viewopts[i] = G_define_option();
 	sprintf(buf,"view%d", i+1);
 	viewopts[i]->key		= G_store(buf);
@@ -402,7 +407,7 @@ void parse_command (int argc, char *argv[], char *vfiles[MAXVIEWS][MAXIMAGES], i
     conv->description = _("Convert on the fly, use less disk space\n\t(requires r.out.ppm with stdout option)");
    
     if (G_parser (argc, argv))
-	    exit (-1);
+        exit (EXIT_FAILURE);
 
     *convert = 0; 
     if(qt->answer) quiet = 1;
@@ -420,9 +425,12 @@ void parse_command (int argc, char *argv[], char *vfiles[MAXVIEWS][MAXIMAGES], i
 	strcpy(outfile, "gmovie.mpg");
 
     for(i=0; i<MAXVIEWS; i++){
-	if(viewopts[i]->answers){
+	if(viewopts[i]->answers)
+        {
 	    (*numviews)++;
-	    for (j = 0, numi=0 ; viewopts[i]->answers[j] ; j++){
+
+	    for (j = 0, numi=0 ; viewopts[i]->answers[j] ; j++)
+            {
 		if((NULL != strchr(viewopts[i]->answers[j], '*')) || 
 		   (NULL != strchr(viewopts[i]->answers[j], '?')) || 
 		   (NULL != strchr(viewopts[i]->answers[j], '['))){
@@ -439,7 +447,6 @@ void parse_command (int argc, char *argv[], char *vfiles[MAXVIEWS][MAXIMAGES], i
 	    *numframes = *numframes? *numframes > numi? numi: *numframes: numi;
 	}
     }
-
 }
 
 /*********************************************************************/
