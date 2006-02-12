@@ -22,14 +22,14 @@
 #include <math.h>
 #include <unistd.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "rom_proto.h"
 
 
 #ifndef USE_PPM
 /*******************************************************/
-void write_ycc(tr, tg, tb, nrows, ncols, y_rows, y_cols, filename)
-char *tr, *tg, *tb, *filename;
-int nrows, ncols, *y_rows, *y_cols;
+void write_ycc(char *tr, char *tg, char *tb, int nrows, int ncols, 
+               int *y_rows, int *y_cols, char *filename)
 {
 register int x, y;
 register unsigned char *dy0, *dy1;
@@ -50,7 +50,8 @@ FILE *ofp;
     *y_rows &= ~0x0f;
     *y_cols &= ~0x0f;
 
-    if(first){
+    if(first)
+    {
         register int index;
 
 	rows = *y_rows;
@@ -67,30 +68,18 @@ FILE *ofp;
             mult08131[index] = -0.08131*index;
         }
 
-	if(NULL == (cy = (unsigned char *)G_malloc (rows*cols*
-		    sizeof(unsigned char)))){
-	    fprintf(stderr,"Out of memory\n");
-	    exit(0);
-	}
-	if(NULL == (cr = (unsigned char *)G_malloc ((rows/2)*(cols/2)*
-		    sizeof(unsigned char)))){
-	    fprintf(stderr,"Out of memory\n");
-	    exit(0);
-	}
-	if(NULL == (cb = (unsigned char *)G_malloc ((rows/2)*(cols/2)*
-		    sizeof(unsigned char)))){
-	    fprintf(stderr,"Out of memory\n");
-	    exit(0);
-	}
-	
+	cy = (unsigned char *)G_malloc (rows*cols*sizeof(unsigned char));
+	cr = (unsigned char *)G_malloc ((rows / 2) * (cols / 2)
+                                        * sizeof(unsigned char));
+	cb = (unsigned char *)G_malloc ((rows / 2) * (cols / 2)
+                                        * sizeof(unsigned char));
+
         first = 0;
   
     }
 
-    if(*y_rows != rows || *y_cols != cols){
-	fprintf(stderr,"Size mismatch error!\n");
-	exit (0);
-    }
+    if(*y_rows != rows || *y_cols != cols)
+	G_fatal_error(_("Size mismatch error!"));
 
     for (y = 0; y < rows-1; y += 2) {
 	dy0 = &cy[y*cols];
@@ -99,7 +88,6 @@ FILE *ofp;
 	dcb = &cb[(cols/2)*(y / 2)];
 
 	for ( x = 0; x < cols-1; x += 2, dy0 += 2, dy1 += 2, dcr++, dcb++) {
-	    
 	    src0[0] = tr[y * ncols + x];
 	    src0[1] = tg[y * ncols + x];
 	    src0[2] = tb[y * ncols + x];
@@ -155,14 +143,12 @@ FILE *ofp;
 		     mult5[src1[3]] +
 		     mult41869[src1[4]] +
 		     mult08131[src1[5]]) / 4) + 128;
-
 	}
     }
     
-    if(NULL == (ofp = fopen(filename,"wb"))){
-	fprintf(stderr,"Unable to open output file\n");
-	exit (0);
-    }
+    if(NULL == (ofp = fopen(filename,"wb")))
+	G_fatal_error(_("Unable to open output file"));
+
     for(y=0; y < rows; y++)
         fwrite(cy+(y*cols), 1, cols, ofp);
 
@@ -173,14 +159,11 @@ FILE *ofp;
         fwrite(cr+((y/2)*cols), 1, cols/2, ofp);
 
     fclose(ofp);
-
-
 }
 #endif
 
 /*******************************************************/
 void write_ppm (char *tr, char *tg, char *tb, int nrows, int ncols, int *y_rows, int *y_cols, char *filename)
-
 {
 register int x, y;
 static int rows, cols;
@@ -200,15 +183,11 @@ FILE *ofp;
         first = 0;
     }
 
-    if(*y_rows != rows || *y_cols != cols){
-	fprintf(stderr,"Size mismatch error!\n");
-	exit (0);
-    }
+    if(*y_rows != rows || *y_cols != cols)
+	G_fatal_error(_("Size mismatch error!"));
 
-    if(NULL == (ofp = fopen(filename,"w"))){
-	fprintf(stderr,"Unable to open output file\n");
-	exit (0);
-    }
+    if(NULL == (ofp = fopen(filename,"w")))
+	G_fatal_error(_("Unable to open output file"));
 
     fprintf(ofp,"P6\n");
     /* Magic number meaning rawbits, 24bit color to ppm format */
@@ -224,35 +203,36 @@ FILE *ofp;
 	    putc(*tg++,ofp);
 	    putc(*tb++,ofp);
 	}
+
 	tr+=(ncols-cols);
 	tg+=(ncols-cols);
 	tb+=(ncols-cols);
     }
     
     fclose(ofp);
-
 }
 
 
 
 /*******************************************************/
-void write_params (char *mpfilename, char *yfiles[], char *outfile, int frames, int quality, int y_rows, int y_cols, int fly)
-
+void write_params (char *mpfilename, char *yfiles[], char *outfile,
+                   int frames, int quality, int y_rows, int y_cols, int fly)
 {
 FILE *fp;
-char buf[1000], dir[1000], *enddir;
+char dir[1000], *enddir;
 int i, dirlen=0;
 
 
-    if(NULL == (fp = fopen(mpfilename, "w"))){
-	sprintf(buf, "Unable to create temporary files.");
-	G_fatal_error(buf);
-    }
+    if(NULL == (fp = fopen(mpfilename, "w")))
+	G_fatal_error(_("Unable to create temporary files."));
     
-    if(!fly){
+    if(!fly)
+    {
 	strcpy(dir, yfiles[0]);
 	enddir = strrchr(dir, '/');
-	if(enddir){
+
+	if(enddir)
+        {
 	    *enddir = '\0';
 	    dirlen = strlen(dir)+1;
 	}
@@ -277,6 +257,7 @@ int i, dirlen=0;
     fprintf(fp, "FORCE_ENCODE_LAST_FRAME\n");
     fprintf(fp, "OUTPUT          %s\n", outfile);
     fprintf(fp, "\n");
+
     if(!fly)
 	fprintf(fp, "INPUT_DIR       %s\n", dir);
     else
@@ -310,6 +291,7 @@ int i, dirlen=0;
 	fprintf(fp, "INPUT_CONVERT   *\n");
     else
 	fprintf(fp, "INPUT_CONVERT   r.out.ppm -q * out=-\n");
+
     fprintf(fp, "GOP_SIZE        30\n");
     fprintf(fp, "SLICES_PER_FRAME  1\n");
     fprintf(fp, "\n");
@@ -319,6 +301,7 @@ int i, dirlen=0;
     fprintf(fp, "PSEARCH_ALG     TWOLEVEL\n");
     fprintf(fp, "BSEARCH_ALG     CROSS2\n");
     fprintf(fp, "\n");
+
     switch(quality){
 	case 1:
 	    fprintf(fp, "IQSCALE         5\n");
@@ -350,20 +333,20 @@ int i, dirlen=0;
     fprintf(fp, "REFERENCE_FRAME DECODED\n");
 
     fclose(fp);
-
 }
 
 
 /*******************************************************/
 void clean_files (char *file, char *files[], int num)
-
 {
 char cmd[1000];
 int i;
 
     sprintf(cmd, "\\rm %s", file);
     G_system(cmd);
-    for(i=0; i<num; i++){
+
+    for(i=0; i<num; i++)
+    {
 	sprintf(cmd, "\\rm %s", files[i]);
 	G_system(cmd);
     }
