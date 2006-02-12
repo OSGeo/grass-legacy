@@ -195,6 +195,8 @@ int main(int argc, char **argv)
 
     /* Open output */
     Vect_open_new(&Out, parm.output->answer, 0);
+    Vect_hist_copy (&In, &Out);
+    Vect_hist_command (&Out);
 
     /* Create table */
     db_init_string(&sql);

@@ -175,6 +175,8 @@ int main(int argc, char *argv[])
 
     Vect_set_open_level(2);
     Vect_open_new(&Out, new->answer, WITH_Z);
+    Vect_hist_copy (&In, &Out);
+    Vect_hist_command (&Out);
 
     /* opening old vector */
     Vect_open_old(&In, old->answer, mapset);
