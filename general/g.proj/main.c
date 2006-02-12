@@ -207,7 +207,7 @@ int main(int argc, char *argv[])
 
 	G_free(proj4string);
 
-	GPJ_osr_to_grass(&cellhd, &projinfo, &projunits, &hSRS, interactive);
+	GPJ_osr_to_grass(&cellhd, &projinfo, &projunits, hSRS, interactive);
 
 	OSRDestroySpatialReference(hSRS);
     }
@@ -242,7 +242,7 @@ int main(int argc, char *argv[])
 		/* Get the first layer */
 		ogr_layer = OGR_DS_GetLayer(ogr_ds, 0);
 		ogr_srs = OGR_L_GetSpatialRef(ogr_layer);
-		GPJ_osr_to_grass(&cellhd, &projinfo, &projunits, &ogr_srs, 1);
+		GPJ_osr_to_grass(&cellhd, &projinfo, &projunits, ogr_srs, 1);
 
 		OGR_DS_Destroy(ogr_ds);
 		OSRDestroySpatialReference(ogr_srs);
