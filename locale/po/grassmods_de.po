@@ -10835,7 +10835,7 @@ msgstr ""
 #: ../vector/v.to.rast/main.c:81
 msgid "Column parameter cannot be combined with use of value option"
 msgstr ""
-"Der Parameter Spalte kann nicht mit der Benutzung der Wert Option kombiniert "
+"Der Parameter Spalte kann nicht mit der Benutzung der Wert-Option kombiniert "
 "werden."
 
 #: ../vector/v.to.rast/main.c:85
