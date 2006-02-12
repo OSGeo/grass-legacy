@@ -31,17 +31,17 @@
 void write_ycc(char *tr, char *tg, char *tb, int nrows, int ncols, 
                int *y_rows, int *y_cols, char *filename)
 {
-register int x, y;
-register unsigned char *dy0, *dy1;
-register unsigned char *dcr, *dcb;
-register unsigned char src0[6], src1[6];
-static int rows, cols;
-static int  first = 1;
-static float  mult299[256], mult587[256], mult114[256];
-static float  mult16874[256], mult33126[256], mult5[256];
-static float  mult41869[256], mult08131[256];
-static unsigned char *cy, *cr, *cb;
-FILE *ofp;
+    register int x, y;
+    register unsigned char *dy0, *dy1;
+    register unsigned char *dcr, *dcb;
+    register unsigned char src0[6], src1[6];
+    static int rows, cols;
+    static int  first = 1;
+    static float  mult299[256], mult587[256], mult114[256];
+    static float  mult16874[256], mult33126[256], mult5[256];
+    static float  mult41869[256], mult08131[256];
+    static unsigned char *cy, *cr, *cb;
+    FILE *ofp;
 
     *y_rows = nrows;
     *y_cols = ncols;
@@ -50,20 +50,21 @@ FILE *ofp;
     *y_rows &= ~0x0f;
     *y_cols &= ~0x0f;
 
-    if(first)
+    if (first)
     {
         register int index;
 
 	rows = *y_rows;
 	cols = *y_cols;
 
-        for ( index = 0; index <= 255; index++ ) {
-            mult299[index] = index*0.29900;
-            mult587[index] = index*0.58700;
-            mult114[index] = index*0.11400;
+        for (index = 0; index <= 255; index++ )
+        {
+            mult299[index]   = index*0.29900;
+            mult587[index]   = index*0.58700;
+            mult114[index]   = index*0.11400;
             mult16874[index] = -0.16874*index;
             mult33126[index] = -0.33126*index;
-            mult5[index] = index*0.50000;
+            mult5[index]     = index*0.50000;
             mult41869[index] = -0.41869*index;
             mult08131[index] = -0.08131*index;
         }
@@ -75,19 +76,20 @@ FILE *ofp;
                                         * sizeof(unsigned char));
 
         first = 0;
-  
     }
 
-    if(*y_rows != rows || *y_cols != cols)
+    if (*y_rows != rows || *y_cols != cols)
 	G_fatal_error(_("Size mismatch error!"));
 
-    for (y = 0; y < rows-1; y += 2) {
+    for (y = 0; y < rows-1; y += 2)
+    {
 	dy0 = &cy[y*cols];
 	dy1 = &cy[(y+1)*cols];
 	dcr = &cr[(cols/2)*(y / 2)];
 	dcb = &cb[(cols/2)*(y / 2)];
 
-	for ( x = 0; x < cols-1; x += 2, dy0 += 2, dy1 += 2, dcr++, dcb++) {
+	for (x = 0; x < cols-1; x += 2, dy0 += 2, dy1 += 2, dcr++, dcb++)
+        {
 	    src0[0] = tr[y * ncols + x];
 	    src0[1] = tg[y * ncols + x];
 	    src0[2] = tb[y * ncols + x];
@@ -146,29 +148,31 @@ FILE *ofp;
 	}
     }
     
-    if(NULL == (ofp = fopen(filename,"wb")))
+    if (NULL == (ofp = fopen(filename,"wb")))
 	G_fatal_error(_("Unable to open output file"));
 
-    for(y=0; y < rows; y++)
+    for (y=0; y < rows; y++)
         fwrite(cy+(y*cols), 1, cols, ofp);
 
-    for(y=0; y < rows/2; y++)
+    for (y=0; y < rows/2; y++)
         fwrite(cb+((y/2)*cols), 1, cols/2, ofp);
 
-    for(y=0; y < rows/2; y++)
+    for (y=0; y < rows/2; y++)
         fwrite(cr+((y/2)*cols), 1, cols/2, ofp);
 
     fclose(ofp);
 }
 #endif
 
+
 /*******************************************************/
-void write_ppm (char *tr, char *tg, char *tb, int nrows, int ncols, int *y_rows, int *y_cols, char *filename)
+void write_ppm (char *tr, char *tg, char *tb, int nrows, int ncols,
+                int *y_rows, int *y_cols, char *filename)
 {
-register int x, y;
-static int rows, cols;
-static int  first = 1;
-FILE *ofp;
+    register int x, y;
+    static int rows, cols;
+    static int  first = 1;
+    FILE *ofp;
 
     *y_rows = nrows;
     *y_cols = ncols;
@@ -177,28 +181,30 @@ FILE *ofp;
     *y_rows &= ~0x0f;
     *y_cols &= ~0x0f;
 
-    if(first){
+    if (first)
+    {
 	rows = *y_rows;
 	cols = *y_cols;
         first = 0;
     }
 
-    if(*y_rows != rows || *y_cols != cols)
+    if (*y_rows != rows || *y_cols != cols)
 	G_fatal_error(_("Size mismatch error!"));
 
-    if(NULL == (ofp = fopen(filename,"w")))
+    if (NULL == (ofp = fopen(filename,"w")))
 	G_fatal_error(_("Unable to open output file"));
 
-    fprintf(ofp,"P6\n");
+    fprintf(ofp, "P6\n");
     /* Magic number meaning rawbits, 24bit color to ppm format */
-    fprintf(ofp,"%d %d\n",cols,rows);
+    fprintf(ofp, "%d %d\n",cols,rows);
     /* width & height */
-    fprintf(ofp,"255\n");
+    fprintf(ofp, "255\n");
     /* max intensity val */
 
-
-    for (y = 0; y < rows; y ++) {
-	for ( x = 0; x < cols; x++) {
+    for (y = 0; y < rows; y ++)
+    {
+	for ( x = 0; x < cols; x++)
+        {
 	    putc(*tr++,ofp);
 	    putc(*tg++,ofp);
 	    putc(*tb++,ofp);
@@ -213,20 +219,18 @@ FILE *ofp;
 }
 
 
-
 /*******************************************************/
 void write_params (char *mpfilename, char *yfiles[], char *outfile,
                    int frames, int quality, int y_rows, int y_cols, int fly)
 {
-FILE *fp;
-char dir[1000], *enddir;
-int i, dirlen=0;
+    FILE *fp;
+    char dir[1000], *enddir;
+    int i, dirlen=0;
 
-
-    if(NULL == (fp = fopen(mpfilename, "w")))
+    if (NULL == (fp = fopen(mpfilename, "w")))
 	G_fatal_error(_("Unable to create temporary files."));
     
-    if(!fly)
+    if (!fly)
     {
 	strcpy(dir, yfiles[0]);
 	enddir = strrchr(dir, '/');
@@ -238,7 +242,7 @@ int i, dirlen=0;
 	}
     }
     
-    switch(quality){
+    switch (quality) {
 	case 1:
 	    fprintf(fp, "PATTERN         IBPB\n");
 	    break;
@@ -258,13 +262,13 @@ int i, dirlen=0;
     fprintf(fp, "OUTPUT          %s\n", outfile);
     fprintf(fp, "\n");
 
-    if(!fly)
+    if (!fly)
 	fprintf(fp, "INPUT_DIR       %s\n", dir);
     else
 	fprintf(fp, "INPUT_DIR       %s\n", "in=");
     fprintf(fp, "INPUT\n");
 
-    if(!fly)
+    if (!fly)
 	for (i=0; i<frames; i++)
 	    fprintf(fp, "%s\n", yfiles[i]+dirlen);
     else
@@ -276,18 +280,19 @@ int i, dirlen=0;
 #ifdef USE_PPM
     fprintf(fp, "BASE_FILE_FORMAT        PPM\n");
 #else
-    if(!fly)
+
+    if (!fly)
 	fprintf(fp, "BASE_FILE_FORMAT        YUV\n");
     else
 	fprintf(fp, "BASE_FILE_FORMAT        PPM\n");
 #endif
 
 #ifndef USE_PPM
-    if(!fly)
+    if (!fly)
 	fprintf(fp, "YUV_SIZE   %dx%d\n", y_cols, y_rows);
 #endif
 
-    if(!fly)
+    if (!fly)
 	fprintf(fp, "INPUT_CONVERT   *\n");
     else
 	fprintf(fp, "INPUT_CONVERT   r.out.ppm -q * out=-\n");
@@ -302,7 +307,7 @@ int i, dirlen=0;
     fprintf(fp, "BSEARCH_ALG     CROSS2\n");
     fprintf(fp, "\n");
 
-    switch(quality){
+    switch (quality) {
 	case 1:
 	    fprintf(fp, "IQSCALE         5\n");
 	    fprintf(fp, "PQSCALE         8\n");
@@ -339,13 +344,13 @@ int i, dirlen=0;
 /*******************************************************/
 void clean_files (char *file, char *files[], int num)
 {
-char cmd[1000];
-int i;
+    char cmd[1000];
+    int i;
 
     sprintf(cmd, "\\rm %s", file);
     G_system(cmd);
 
-    for(i=0; i<num; i++)
+    for (i=0; i<num; i++)
     {
 	sprintf(cmd, "\\rm %s", files[i]);
 	G_system(cmd);
