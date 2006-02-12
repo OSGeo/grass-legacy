@@ -72,7 +72,7 @@ PGM=xdriver
 default: $(DRIVERDIR)/XDRIVER htmlgen moncap
 
 moncap:
-	@if [-f $(ETC)/monitorcap ] && egrep '^x0' $(ETC)/monitorcap >/dev/null 2>&1 ; then \
+	@if [ -f $(ETC)/monitorcap ] && egrep '^x0' $(ETC)/monitorcap >/dev/null 2>&1 ; then \
 	echo XDRIVER already defined in $(ETC)/monitorcap ; \
 	else \
 	echo adding XDRIVER to $(ETC)/monitorcap ; \

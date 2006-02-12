@@ -32,7 +32,7 @@ PGM=pngdriver
 default: $(DRIVERDIR)/PNG htmlgen moncap
 
 moncap:
-	@if [-f $(ETC)/monitorcap ] && egrep '^PNG' $(ETC)/monitorcap >/dev/null 2>&1 ; then \
+	@if [ -f $(ETC)/monitorcap ] && egrep '^PNG' $(ETC)/monitorcap >/dev/null 2>&1 ; then \
 	echo PNG already defined in $(ETC)/monitorcap ; \
 	else \
 	echo adding PNG driver to $(ETC)/monitorcap ; \
