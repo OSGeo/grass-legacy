@@ -143,36 +143,16 @@ struct Colors colors;
 
     size = nrows * ncols;
 
-    if(NULL == (pr = G_malloc (size))){
-	    fprintf(stderr,"Can't malloc memory for imagebuffer\n");
-	    exit(1);
-    }
-    if(NULL == (pg = G_malloc (size))){
-	    fprintf(stderr,"Can't malloc memory for imagebuffer\n");
-	    exit(1);
-    }
-    if(NULL == (pb = G_malloc (size))){
-	    fprintf(stderr,"Can't malloc memory for imagebuffer\n");
-	    exit(1);
-    }
+    pr = G_malloc (size);
+    pg = G_malloc (size);
+    pb = G_malloc (size);
+
     tsiz = G_window_cols();
 
-    if(NULL == (tr = (unsigned char *) G_malloc (tsiz))){
-        fprintf(stderr,"Unable to malloc.\n");
-        exit (0);
-    }
-    if(NULL == (tg = (unsigned char *) G_malloc (tsiz))){
-        fprintf(stderr,"Unable to malloc.\n");
-        exit (0);
-    }
-    if(NULL == (tb = (unsigned char *) G_malloc (tsiz))){
-        fprintf(stderr,"Unable to malloc.\n");
-        exit (0);
-    }
-    if(NULL == (tset = (unsigned char *) G_malloc (tsiz))){
-        fprintf(stderr,"Unable to malloc.\n");
-        exit (0);
-    }
+    tr = (unsigned char *) G_malloc (tsiz);
+    tg = (unsigned char *) G_malloc (tsiz);
+    tb = (unsigned char *) G_malloc (tsiz);
+    tset = (unsigned char *) G_malloc (tsiz);
 
     for (cnt = 0; cnt < frames; cnt++)
     {
@@ -209,15 +189,13 @@ struct Colors colors;
 
 	    strcpy(name,vfiles[vnum][cnt]);
 	    if(!quiet)
-		fprintf (stderr, "\rReading file '%s'\n", name);
+		G_message("\rReading file '%s'", name);
+
 	    mapset = G_find_cell2 (name, "");
-	    if (mapset == NULL){
-		char msg[100];	
-		sprintf (msg, "%s: <%s> cellfile not found\n", 
+	    if (mapset == NULL)
+		G_fatal_error ("%s: <%s> cellfile not found", 
 					    G_program_name(), name);
-		G_fatal_error (msg);
-		exit(1);
-	    }
+
 	    fd = G_open_cell_old (name, mapset);
 	    if (fd < 0)
 		exit(1);
@@ -345,7 +323,7 @@ FILE *tf;
 	}
     }
     if(NULL == (tf = fopen(tfile, "r"))){
-	fprintf(stderr, "Error reading wildcard\n");
+	G_message("Error reading wildcard");
     }
     else{
 	while(NULL != fgets(buf,512,tf)){
