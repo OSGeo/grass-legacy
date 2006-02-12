@@ -225,19 +225,16 @@ OGRSpatialReferenceH GPJ_grass_to_osr(struct Key_Value * proj_info,
 }
 
 int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo, 
-                     struct Key_Value **projunits, OGRSpatialReferenceH *phSRS,
+                     struct Key_Value **projunits, OGRSpatialReferenceH hSRS,
 		     int interactive)
 {
     struct Key_Value *temp_projinfo;
     char *pszProj4 = NULL, *pszRemaining;
     char *pszProj = NULL;
-    OGRSpatialReferenceH hSRS;
     
-    if( phSRS == NULL )
+    if( hSRS == NULL )
         goto default_to_xy;
 
-    hSRS = *phSRS;
- 
     /* Set finder function for locating OGR csv co-ordinate system tables */
     SetCSVFilenameHook( GPJ_set_csv_loc );
      
@@ -560,7 +557,7 @@ int GPJ_wkt_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
         SetCSVFilenameHook( GPJ_set_csv_loc );
        
         hSRS = OSRNewSpatialReference(wkt);
-        retval = GPJ_osr_to_grass(cellhd, projinfo, projunits, &hSRS, interactive);
+        retval = GPJ_osr_to_grass(cellhd, projinfo, projunits, hSRS, interactive);
         OSRDestroySpatialReference(hSRS);
     }
    

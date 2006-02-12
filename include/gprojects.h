@@ -67,7 +67,7 @@ OGRSpatialReferenceH GPJ_grass_to_osr (struct Key_Value *, struct Key_Value * );
 int GPJ_wkt_to_grass(struct Cell_head *, struct Key_Value **,
                      struct Key_Value **, const char *, int);
 int GPJ_osr_to_grass(struct Cell_head *, struct Key_Value **,
-                     struct Key_Value **, OGRSpatialReferenceH *, int);
+                     struct Key_Value **, OGRSpatialReferenceH, int);
 const char *GPJ_set_csv_loc(const char *);
 #endif
 
