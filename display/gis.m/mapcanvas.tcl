@@ -23,7 +23,7 @@ source $env(GISBASE)/etc/gui.tcl
 
 set bgcolor HoneyDew2
 
-namespace eval mapcan {
+namespace eval MapCanvas {
 	variable array can # mon
 	variable array mapcan # mon
 	variable array mapframe # mon
@@ -48,7 +48,7 @@ set north 0
 ###############################################################################
 
 # Create window and canvas for display
-proc mapcan::create { } {
+proc MapCanvas::create { } {
     global gmpath
     global bgcolor
     global outtext
@@ -65,7 +65,7 @@ proc mapcan::create { } {
     global canvas_w
     global canvas_h
     global drawprog
-	global array mapcan::msg # mon
+	global array MapCanvas::msg # mon
 	
 	variable mapmon
     variable mapframe
@@ -87,33 +87,36 @@ proc mapcan::create { } {
 	# Create canvas monitor as top level mainframe
 	toplevel .mapcan($mon)
 
-    set mapframe($mon) [MainFrame .mapcan($mon).mapframe \
-   		-background $bgcolor -textvariable mapcan::msg($mon) \
+    set mapframe($mon) [MainFrame .mapcan($mon).mf \
+   		-background $bgcolor -textvariable MapCanvas::msg($mon) \
    		-progressvar drawprog -progressmax 100 -progresstype incremental]
 
     # toolbar creation
     set map_tb  [$mapframe($mon) addtoolbar]
     MapToolBar::create $map_tb
 
+
 	# canvas creation
     set can($mon) [canvas $mapframe($mon).can \
-        -background #ffffff -borderwidth 0 -closeenough 1.0 \
-        -insertbackground black -relief ridge -selectbackground #c4c4c4 \
+        -background #ffffff -borderwidth 0 -closeenough 10.0 \
+        -insertbackground black -relief groove -selectbackground #c4c4c4 \
         -selectforeground black -width $canvas_w($mon) -height $canvas_h($mon) ]
-    
-    # setting geometry
-    place $mapframe($mon).can \
-        -in $mapframe($mon) -x 0 -y 0 -anchor nw \
-        -bordermode ignore 
-	
-	pack $map_tb -expand yes -fill both -anchor nw -side top
-	pack $mapframe($mon).can -fill both -expand yes -anchor nw -side top	
-    pack $mapframe($mon) -expand yes -fill both -ipadx 0 -ipady 0
  
+    # setting geometry
+    place $can($mon) -in $mapframe($mon) -x 0 -y 0 -anchor nw 
+	
+	pack $can($mon) -fill both -expand yes
+ 
+    # indicator creation	
+    set map_ind($mon) [$mapframe($mon) addindicator -textvariable coords($mon) \
+    	-width 33 -justify left -padx 5]
+
     set fon [font create -family Verdana -size 12 ]
     DynamicHelp::configure -font $fon -background yellow
 
-	mapcan::coordconv $mon 
+    pack $mapframe($mon) -fill both -expand yes
+
+	MapCanvas::coordconv $mon 
 
 	# bindings for display canvas
 
@@ -128,8 +131,8 @@ proc mapcan::create { } {
 		set winy [winfo pointery .]
 		set win [winfo containing $winx $winy]
 		regexp -nocase {.*\((\d*)(\).*)} $win win1 currmon win2
-		set b1east  [mapcan::scrx2mape %x]
-		set b1north [mapcan::scry2mapn %y]
+		set b1east  [MapCanvas::scrx2mape %x]
+		set b1north [MapCanvas::scry2mapn %y]
 		if { $mon != $currmon } {
 			set mon $currmon
 			GmTree::switchpage $mon
@@ -166,15 +169,10 @@ proc mapcan::create { } {
 	bind $can($mon) <Motion> {
 		set scrxmov %x
 		set scrymov %y
-		set eastcoord [eval mapcan::scrx2mape %x]
-		set northcoord [eval mapcan::scry2mapn %y]
+		set eastcoord [eval MapCanvas::scrx2mape %x]
+		set northcoord [eval MapCanvas::scry2mapn %y]
 		set coords($mon) "$eastcoord $northcoord"
 	}
-
-
-    # indicator creation	
-    set map_ind($mon) [$mapframe($mon) addindicator -textvariable coords($mon) \
-    	-width 33 -justify left -padx 5]
 
 #	window configuration change handler for resizing
     bind $can($mon) <Configure> {
@@ -189,15 +187,15 @@ proc mapcan::create { } {
 			set canvas_w($mon) %w
 			set canvas_h($mon) %h
 			update idletasks
-			after cancel mapcan::do_resize $mon
-			after idle mapcan::do_resize $mon
+			after cancel MapCanvas::do_resize $mon
+			after idle MapCanvas::do_resize $mon
 		}
 	}
 
 	# bindings for closing map display window
 	bind .mapcan($mon) <Destroy> {
 		set destroywin %W
-		mapcan::cleanup $mon $destroywin
+		MapCanvas::cleanup $mon $destroywin
 	}
 	
 }
@@ -207,7 +205,7 @@ proc mapcan::create { } {
 # map display procedures
 
 # set up map geometry 
-proc mapcan::mapsettings { mon } {
+proc MapCanvas::mapsettings { mon } {
 	global outtext
 	global env
 	global gmpath
@@ -253,13 +251,13 @@ proc mapcan::mapsettings { mon } {
 	set env(GRASS_WIDTH) $mapdispwd
 	set env(GRASS_HEIGHT) $mapdispht
 	set env(GRASS_PNGFILE) "dispmon_$mon.ppm"
-	set env(GRASS_TRANSPARENT) "TRUE"
+	set env(GRASS_TRANSPARENT) "FALSE"
 	set env(GRASS_PNG_AUTO_WRITE) "TRUE"
 	set env(GRASS_TRUECOLOR) "TRUE"
 }
 
 # draw map using png driver and open in canvas
-proc mapcan::drawmap { mon } {
+proc MapCanvas::drawmap { mon } {
 	global outtext
 	global env
 	global gmpath
@@ -269,14 +267,14 @@ proc mapcan::drawmap { mon } {
 	global mapimg.mon
 	global mapfile
 	global drawprog
+	global MapCanvas::msg
 	variable mapframe
-	global mapcan::msg
 	
 	variable mapcan
 	variable can
 	set drawprog 0
 
-    set mapcan::msg($mon) "please wait..."
+    set MapCanvas::msg($mon) "please wait..."
     $mapframe($mon) showstatusbar progression 
 		
 	# start draw map routine only if gism PNG driver is not running
@@ -298,21 +296,23 @@ proc mapcan::drawmap { mon } {
 				$can($mon) create image 0 0 -anchor nw \
 					-image "mapimg.$mon" \
 					-tag map$mon
+				GmTree::cvdisplay "root"
+				incr drawprog
 			}
 		}
 	}
 	
 	close $input
-	mapcan::coordconv $mon
+	MapCanvas::coordconv $mon
 	set drawprog 0
-    set mapcan::msg($mon) "east & north coordinates under cursor"
+    set MapCanvas::msg($mon) "east & north coordinates under cursor"
     $mapframe($mon) showstatusbar status 
 	return
 }
 
 ###############################################################################
 
-proc mapcan::do_resize {mon} {
+proc MapCanvas::do_resize {mon} {
 	global canvas_w
 	global canvas_h
 	global mapimg.$mon
@@ -320,10 +320,10 @@ proc mapcan::do_resize {mon} {
 	global drawprog
 	variable can
 
-	mapcan::coordconv $mon
+	MapCanvas::coordconv $mon
 	$can($mon) delete map$mon
-	mapcan::mapsettings $mon
-	mapcan::drawmap $mon
+	MapCanvas::mapsettings $mon
+	MapCanvas::drawmap $mon
 		
 }
 
@@ -331,19 +331,38 @@ proc mapcan::do_resize {mon} {
 ###############################################################################
 
 # erase to white
-proc mapcan::erase { mon } {
+proc MapCanvas::erase { mon } {
     	
 	variable mapcan
 	variable can
 		
 	$can($mon) delete map$mon
+	$can($mon) delete all
+	
 }
 
 
 ###############################################################################
 
+# zoom to current region
+proc MapCanvas::zoom_current { mon } {
+	variable can
+	global canvas_h
+	global canvas_w
+    
+	run "g.region save=previous_zoom --o"
+	set cmd "g.region save=mon_$mon --o"
+    run_panel $cmd 
+	
+	$can($mon) delete map$mon
+	MapCanvas::mapsettings $mon
+    MapCanvas::drawmap $mon
+}
+
+###############################################################################
+
 # zoom to default region
-proc mapcan::zoom_default { mon } {
+proc MapCanvas::zoom_default { mon } {
 	variable can
 	global canvas_h
 	global canvas_w
@@ -353,14 +372,14 @@ proc mapcan::zoom_default { mon } {
     run_panel $cmd 
 	
 	$can($mon) delete map$mon
-	mapcan::mapsettings $mon
-    mapcan::drawmap $mon
+	MapCanvas::mapsettings $mon
+    MapCanvas::drawmap $mon
 }
 
 ###############################################################################
 
 # zoom to saved region
-proc mapcan::zoom_region { mon } {
+proc MapCanvas::zoom_region { mon } {
    	variable can
 	global canvas_h
 	global canvas_w
@@ -372,34 +391,39 @@ proc mapcan::zoom_region { mon } {
 		run_panel $cmd 
     }
 	$can($mon) delete map$mon
-	mapcan::mapsettings $mon
-    mapcan::drawmap $mon
+	MapCanvas::mapsettings $mon
+    MapCanvas::drawmap $mon
 }
 
 ###############################################################################
 # procedures for interactive zooming in and zooming out
 
 # zoom bindings
-proc mapcan::zoombind { mon zoom } {
+proc MapCanvas::zoombind { mon zoom } {
 	variable can
 	global mapcursor
+	global MapCanvas::msg
 	
 	set mapcursor [$can($mon) cget -cursor]
+
+    set MapCanvas::msg($mon) "L mouse button draws zoom rectangle, R button zooms"
 
 	bind $can($mon) <2> ""
 	bind $can($mon) <3> ""
 	
 	bind $can($mon) <1> {
-		mapcan::markzoom $mon %x %y
-		mapcan::setcursor $mon "plus"
+		MapCanvas::markzoom $mon %x %y
+		MapCanvas::setcursor $mon "plus"
 		}
-	bind $can($mon) <B1-Motion> "mapcan::drawzoom $mon %x %y"
-	bind $can($mon) <ButtonRelease-1> "mapcan::zoomregion $mon $zoom"
+	bind $can($mon) <B1-Motion> "MapCanvas::drawzoom $mon %x %y"
+#	bind $can($mon) <ButtonRelease-1> "MapCanvas::zoomregion $mon $zoom"
+
+	bind $can($mon) <3>  "MapCanvas::zoomregion $mon $zoom"
 
 }
 
 # start zoom rectangle
-proc mapcan::markzoom {mon x y} {
+proc MapCanvas::markzoom {mon x y} {
     global areaX1 areaY1
     variable can
     
@@ -409,7 +433,7 @@ proc mapcan::markzoom {mon x y} {
 }
 
 # draw zoom rectangle
-proc mapcan::drawzoom { mon x y } {
+proc MapCanvas::drawzoom { mon x y } {
 	variable can
 	
     global areaX1 areaY1 areaX2 areaY2
@@ -428,7 +452,7 @@ proc mapcan::drawzoom { mon x y } {
 }	
 
 # zoom region
-proc mapcan::zoomregion { mon zoom } {
+proc MapCanvas::zoomregion { mon zoom } {
 	variable can
 	global canvas_h
 	global canvas_w
@@ -492,18 +516,22 @@ proc mapcan::zoomregion { mon zoom } {
 	# redraw map
 	$can($mon) delete map$mon
     $can($mon) delete area
-	mapcan::mapsettings $mon
-	mapcan::drawmap $mon
+	MapCanvas::mapsettings $mon
+	MapCanvas::drawmap $mon
 	
 	# release bindings
 	bind $can($mon) <1> ""
 	bind $can($mon) <B1-Motion> ""
 	bind $can($mon) <ButtonRelease-1> ""
 
-	mapcan::restorecursor $mon 		
+	# reset status display to normal
+	set MapCanvas::msg($mon) "east & north coordinates under cursor"
+
+	MapCanvas::restorecursor $mon 		
 
 	return
 }
+
 
 # reinitialize zoom rectangle corners
 
@@ -517,7 +545,7 @@ set areaY2 0
 ###############################################################################
 
 # zoom back
-proc mapcan::zoom_back { mon } {
+proc MapCanvas::zoom_back { mon } {
     variable can
 	global canvas_h
 	global canvas_w
@@ -525,8 +553,8 @@ proc mapcan::zoom_back { mon } {
     set cmd "g.region region=previous_zoom save=mon_$mon --o"
     runcmd $cmd
 	$can($mon) delete map$mon
-	mapcan::mapsettings $mon
-	mapcan::drawmap $mon
+	MapCanvas::mapsettings $mon
+	MapCanvas::drawmap $mon
 
 }
 
@@ -535,32 +563,30 @@ proc mapcan::zoom_back { mon } {
 #procedures for panning
 
 # pan bindings
-proc mapcan::panbind { mon } {
+proc MapCanvas::panbind { mon } {
 	variable can
 	global mapcursor dtxt
 	global bgcolor
-	
-	set msgtxt "Use mouse (L button) to drag and pan map\nPress right mouse button to stop panning" 
-	
-	set answer [tk_messageBox -message $msgtxt -type okcancel -parent .mapcan($mon)]
-	if { $answer == "cancel" } {return}
+	global MapCanvas::msg
 
+    set MapCanvas::msg($mon) "L mouse button to drag & pan, R button stops panning"
+    
 	set mapcursor [$can($mon) cget -cursor]
 	
 	bind $can($mon) <2> ""
-	bind $can($mon) <3> ""
-	mapcan::setcursor $mon "hand2"
 
-	bind $can($mon) <1> {mapcan::startpan $mon %x %y}
-	bind $can($mon) <B1-Motion> {mapcan::dragpan $mon %x %y}
+	MapCanvas::setcursor $mon "hand2"
+
+	bind $can($mon) <1> {MapCanvas::startpan $mon %x %y}
+	bind $can($mon) <B1-Motion> {MapCanvas::dragpan $mon %x %y}
 	bind $can($mon) <ButtonRelease-1> {
-		mapcan::pan $mon
+		MapCanvas::pan $mon
 		}
-	bind $can($mon) <3> {mapcan::stoppan $mon}
+	bind $can($mon) <3> {MapCanvas::stoppan $mon}
 }
 
 
-proc mapcan::startpan {mon x y} {
+proc MapCanvas::startpan {mon x y} {
     global start_x start_y
     global from_x from_y
 	variable can
@@ -572,7 +598,7 @@ proc mapcan::startpan {mon x y} {
 
 }
 
-proc mapcan::dragpan {mon x y} {
+proc MapCanvas::dragpan {mon x y} {
     global start_x start_y
     global to_x to_y
 	variable can
@@ -585,7 +611,7 @@ proc mapcan::dragpan {mon x y} {
    	set start_x $to_x
 }
 
-proc mapcan::pan { mon } {
+proc MapCanvas::pan { mon } {
     global from_x from_y
     global to_x to_y
 	variable can
@@ -621,16 +647,20 @@ proc mapcan::pan { mon } {
 	run $cmd
 	
 	$can($mon) delete map$mon
-	mapcan::mapsettings $mon
-	mapcan::drawmap $mon 
+	MapCanvas::mapsettings $mon
+	MapCanvas::drawmap $mon 
 }
 
 #stop panning
-proc mapcan::stoppan { mon } {
+proc MapCanvas::stoppan { mon } {
+	global MapCanvas::msg
 	variable can
 
 	# reset cursor to normal
-	mapcan::restorecursor $mon 
+	MapCanvas::restorecursor $mon 
+	
+	# reset status display to normal
+	set MapCanvas::msg($mon) "east & north coordinates under cursor"
 
 	# unbind events
 	bind $can($mon) <1> ""
@@ -642,7 +672,7 @@ proc mapcan::stoppan { mon } {
 
 ###############################################################################
 
-proc mapcan::setcursor { mon  ctype } {
+proc MapCanvas::setcursor { mon  ctype } {
 	global mapcursor
 	variable can
 
@@ -650,7 +680,7 @@ proc mapcan::setcursor { mon  ctype } {
 	return
 }
 
-proc mapcan::restorecursor {mon} {
+proc MapCanvas::restorecursor {mon} {
 	global mapcursor
 	variable can
 	
@@ -662,42 +692,37 @@ proc mapcan::restorecursor {mon} {
 # procedures for measuring 
 
 # measurement bindings
-proc mapcan::measurebind { mon } {
+proc MapCanvas::measurebind { mon } {
 	variable can
 	global mlength totmlength dtxt
 	global mapcursor
     global linex1 liney1 linex2 liney2
+	global MapCanvas::msg
 	
 	set mapcursor [$can($mon) cget -cursor]
 
 	bind $can($mon) <2> ""
 	
-	bind $can($mon) <1> "mapcan::markmline $mon %x %y"
-	bind $can($mon) <B1-Motion> "mapcan::drawmline $mon %x %y"
-	bind $can($mon) <ButtonRelease-1> "mapcan::measure $mon"
-	bind $can($mon) <3> "mapcan::stopmeasure $mon"
+	bind $can($mon) <1> "MapCanvas::markmline $mon %x %y"
+	bind $can($mon) <B1-Motion> "MapCanvas::drawmline $mon %x %y"
+	bind $can($mon) <ButtonRelease-1> "MapCanvas::measure $mon"
+	bind $can($mon) <3> "MapCanvas::stopmeasure $mon"
 	
 	if { ![winfo exists .dispout]} {Gm::create_disptxt $mon}
-	
-	set msgtxt "Use mouse (L button) to draw measurement line\nPress right mouse button to send measurement" 
-	
-	set answer [tk_messageBox -message $msgtxt -type okcancel -parent .mapcan($mon)]
-	if { $answer == "cancel" } {return}
-	
-	mapcan::setcursor $mon "plus"
+
+    set MapCanvas::msg($mon) "L mouse button, draw line to measure, R button to stop"
+		
+	MapCanvas::setcursor $mon "plus"
 	set mlength 0
 	set totmlength 0
 
 }
 
 # start measurement line
-proc mapcan::markmline {mon x y} {
+proc MapCanvas::markmline {mon x y} {
     global linex1 liney1 linex2 liney2
     variable can
     
-    # create window for measurement output
-    # put some code here
-	
     #start line
     if { ![info exists linex1] } {
     	set linex1 [$can($mon) canvasx $x]
@@ -716,7 +741,7 @@ proc mapcan::markmline {mon x y} {
 }
 
 # draw measurement line
-proc mapcan::drawmline { mon x y } {
+proc MapCanvas::drawmline { mon x y } {
 	variable can
 	
     global linex1 liney1 linex2 liney2
@@ -736,7 +761,7 @@ proc mapcan::drawmline { mon x y } {
 }	
 
 # measure line length
-proc mapcan::measure { mon } {
+proc MapCanvas::measure { mon } {
 	variable can
 	
     global linex1 liney1 linex2 liney2
@@ -769,7 +794,8 @@ proc mapcan::measure { mon } {
 }
 
 # end measurement
-proc mapcan::stopmeasure { mon } {
+proc MapCanvas::stopmeasure { mon } {
+	global MapCanvas::msg
 	variable can
 	
     global linex1 liney1 linex2 liney2
@@ -791,7 +817,10 @@ proc mapcan::stopmeasure { mon } {
 	bind $can($mon) <ButtonRelease-1> ""
 	bind $can($mon) <3> ""
 
-	mapcan::restorecursor $mon
+	# reset status display to normal
+	set MapCanvas::msg($mon) "east & north coordinates under cursor"
+
+	MapCanvas::restorecursor $mon
 
 	return
 }
@@ -803,7 +832,7 @@ proc mapcan::stopmeasure { mon } {
 # procedures for querying 
 
 # query bindings
-proc mapcan::querybind { mon } {
+proc MapCanvas::querybind { mon } {
 	global dtxt
 	global stop
 	global map_ew
@@ -826,22 +855,18 @@ proc mapcan::querybind { mon } {
 	
 	set mapcursor [$can($mon) cget -cursor]
 
-	set msgtxt "Use mouse (L button) to query features\nPress right mouse button to stop query session" 
-	
-	set answer [tk_messageBox -message $msgtxt -type okcancel -parent .mapcan($mon)]
-	if { $answer == "cancel" } {return}
-
-	mapcan::setcursor $mon "crosshair"
+    set MapCanvas::msg($mon) "L mouse button to query features, R button to stop query"
 
 	bind $can($mon) <1> {
-		mapcan::startquery $mon %x %y 
+		MapCanvas::startquery $mon %x %y 
+		MapCanvas::setcursor $mon "plus"
 		}
-	bind $can($mon) <3> {mapcan::stopquery $mon}
+	bind $can($mon) <3> {MapCanvas::stopquery $mon}
 
 }
 
 # query
-proc mapcan::startquery { mon x y } {
+proc MapCanvas::startquery { mon x y } {
 	global stop
 	global vdist
 	variable tree
@@ -905,21 +930,25 @@ proc mapcan::startquery { mon x y } {
 }
 
 # query
-proc mapcan::stopquery { mon } {
+proc MapCanvas::stopquery { mon } {
 	global stop x y east north
 	variable can
 	
 	# release bindings
 	bind $can($mon) <1> ""
 	bind $can($mon) <3> ""
-	mapcan::restorecursor $mon 		
+
+	# reset status display to normal
+	set MapCanvas::msg($mon) "east & north coordinates under cursor"
+
+	MapCanvas::restorecursor $mon 		
 
 	
 }
 ###############################################################################
 
 # print to eps file
-proc mapcan::printcanvas { mon } {
+proc MapCanvas::printcanvas { mon } {
 	variable mapcan
 	variable can
 	global canvas_w
@@ -935,7 +964,7 @@ proc mapcan::printcanvas { mon } {
 ###############################################################################
 
 #	Set up initial variables for screen to map conversion
-proc mapcan::coordconv { mon } {
+proc MapCanvas::coordconv { mon } {
 
 	global map_n
 	global map_s
@@ -1021,7 +1050,7 @@ if { [info exists "mapimg.$mon"] } {
 # screen to map and map to screen conversion procedures
 
 # map north to screen y
-proc mapcan::mapn2scry { north } {
+proc MapCanvas::mapn2scry { north } {
 	global map_n
 	global scr_n
 	global map2scry_conv
@@ -1030,7 +1059,7 @@ proc mapcan::mapn2scry { north } {
 }
 
 # map east to screen x
-proc mapcan::mape2scrx { east } {
+proc MapCanvas::mape2scrx { east } {
 	global map_w
 	global scr_w
 	global map2scrx_conv
@@ -1040,7 +1069,7 @@ proc mapcan::mape2scrx { east } {
 }
 
 # screen y to map north
-proc mapcan::scry2mapn { y } {
+proc MapCanvas::scry2mapn { y } {
 	global map_n
 	global scr_n
 	global map2scry_conv
@@ -1050,7 +1079,7 @@ proc mapcan::scry2mapn { y } {
 }
 
 # screen x to map east
-proc mapcan::scrx2mape { x } {
+proc MapCanvas::scrx2mape { x } {
 	global map_w
 	global scr_w
 	global map2scrx_conv
@@ -1071,8 +1100,17 @@ proc winx2canx { x } {
 
 
 ###############################################################################
+# pass mapcan parameter
+proc MapCanvas::getmapcan { mon } {
+	variable mapcan
+	
+	set mc $mapcan($mon)
+	return $mc
+}
+
+###############################################################################
 # cleanup procedure on closing window
-proc mapcan::cleanup { mon destroywin} {
+proc MapCanvas::cleanup { mon destroywin} {
 	global pgs
 
 	if { $destroywin == ".mapcan($mon)" } { 

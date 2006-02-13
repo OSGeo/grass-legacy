@@ -336,8 +336,8 @@ proc GmTree::add { type } {
         fttext {
             GmFTtext::create $tree($mon)  $parent_node
         }
-        dtext {
-            GmDtext::create $tree($mon)  $parent_node
+        ctext {
+            GmCtext::create $tree($mon)  $parent_node
         }
     }
 }
@@ -415,8 +415,8 @@ proc GmTree::select { node } {
         fttext {
             GmFTtext::options $id $opt
         }
-        dtext {
-            GmDtext::options $id $opt
+        ctext {
+            GmCtext::options $id $opt
         }
     }
 }
@@ -450,7 +450,7 @@ proc GmTree::delete { } {
 
 ###############################################################################
 
-# display node
+# display nodes for GRASS display modules
 proc GmTree::display_node { node } {
     variable tree
 
@@ -505,8 +505,32 @@ proc GmTree::display_node { node } {
 		fttext {
 			GmFTtext::display $node
 		}
-		dtext {
-			GmDtext::display $node
+    } 
+}
+
+###############################################################################
+
+# display nodes for canvas graphics
+proc GmTree::display_cvnode { node } {
+    variable tree
+
+    set type [GmTree::node_type $node]
+
+    switch $type {
+		clabels {
+			GmClabels::display $node
+		}
+		cgrid {
+			GmcGridl::display $node
+		}
+		cframe {
+			GmCframe::display $node
+		}
+		cbarscale {
+			GmCbarscale::display $node
+		}
+		ctext {
+			GmCtext::display $node
 		}
     } 
 }
@@ -586,8 +610,8 @@ proc GmTree::duplicate { } {
         fttext {
             GmFTtext::duplicate $tree($mon) $parent_node $sel $id
         }
-        dtext {
-            GmDtext::duplicate $tree($mon) $parent_node $sel $id
+        ctext {
+            GmCtext::duplicate $tree($mon) $parent_node $sel $id
         }
         group {
             GmGroup::duplicate $tree($mon) $parent_node $sel $id
@@ -713,10 +737,10 @@ proc GmTree::save_node { depth node } {
             incr depth
 	    	GmFTtext::save $tree($mon) $depth $node
 		}
-		dtext {
-            GmTree::rc_write $depth dtext $name
+		ctext {
+            GmTree::rc_write $depth ctext $name
             incr depth
-	    	GmDtext::save $tree($mon) $depth $node
+	    	GmCtext::save $tree($mon) $depth $node
 		}
     } 
     set depth [expr $depth - 1]
@@ -829,8 +853,8 @@ proc GmTree::load { lpth } {
 				set current_node [GmFTtext::create $tree($mon) $parent]
 				$tree($mon) itemconfigure $current_node -text $val 
 			}
-			dtext {
-				set current_node [GmDtext::create $tree($mon) $parent]
+			ctext {
+				set current_node [GmCtext::create $tree($mon) $parent]
 				$tree($mon) itemconfigure $current_node -text $val 
 			}
 			End {
@@ -895,8 +919,8 @@ proc GmTree::load { lpth } {
 						fttext { 
 						GmFTtext::set_option $current_node $key $val
 						}
-						dtext { 
-						GmDtext::set_option $current_node $key $val
+						ctext { 
+						GmCtext::set_option $current_node $key $val
 						}
 					} 
 				}
@@ -989,8 +1013,8 @@ proc GmTree::node_type { node } {
     if { [string match fttext* $node] } {
        return "fttext"
     }  
-    if { [string match dtext* $node] } {
-       return "dtext"
+    if { [string match ctext* $node] } {
+       return "ctext"
     }  
     
     return ""
@@ -1042,3 +1066,17 @@ proc GmTree::node_id { node } {
     }
 }
 
+###############################################################################
+
+proc GmTree::cvdisplay { node } {
+    variable opt
+    variable tree
+	global mon
+	global drawprog
+
+    foreach n [$tree($mon) nodes $node] {
+        GmTree::display_cvnode $n
+        incr drawprog
+    }
+
+}
