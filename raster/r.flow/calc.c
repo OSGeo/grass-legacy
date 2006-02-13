@@ -392,6 +392,8 @@ void calculate()
 
 int main(int argc, char	*argv[])
 {
+    struct History history;
+
     initialize_globals(argc, argv);
 
     if ((G_projection() == PROJECTION_LL)) /* added MN 2005 */
@@ -411,5 +413,16 @@ int main(int argc, char	*argv[])
 	deallocate_heap();
     }
 
-    exit(0);
+    if (parm.dsout) {
+	G_short_history(parm.dsout, "raster", &history);
+	G_command_history(&history);
+	G_write_history(parm.dsout, &history);
+    }
+    if (parm.lgout) {
+	G_short_history(parm.lgout, "raster", &history);
+	G_command_history(&history);
+	G_write_history(parm.lgout, &history);
+    }
+    
+    exit(EXIT_SUCCESS);
 }
