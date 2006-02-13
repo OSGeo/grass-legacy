@@ -44,7 +44,7 @@ main (int argc, char *argv[])
     int    field;
     struct GModule *module;
     struct Option *in_opt, *dsn_opt, *layer_opt, *type_opt, *frmt_opt, *field_opt, *dsco, *lco;
-    struct Flag   *cat_flag, *esristyle;
+    struct Flag   *cat_flag, *esristyle, *poly_flag;
     char   buf[2000];
     char   key1[200], key2[200];
     struct Key_Value *projinfo, *projunits;
@@ -142,6 +142,10 @@ main (int argc, char *argv[])
     esristyle = G_define_flag();
     esristyle->key = 'e';
     esristyle->description = _("Use ESRI-style .prj file format (applies to SHAPE output only)");
+
+    poly_flag = G_define_flag();
+    poly_flag->key = 'p';
+    poly_flag->description = _("Export lines as polygons");
 		
     if (G_parser (argc, argv)) exit(1); 
     
@@ -326,10 +330,33 @@ main (int argc, char *argv[])
 
 
 	    /* Geometry */
-	    Ogr_geometry = OGR_G_CreateGeometry( wkbtype );
-	    for ( j = 0; j < Points->n_points; j++ ) {
-		OGR_G_AddPoint( Ogr_geometry, Points->x[j], Points->y[j], Points->z[j] );
-	    }
+            if ( type == GV_LINE && poly_flag->answer ) 
+            {
+                OGRGeometryH    ring;
+
+                ring = OGR_G_CreateGeometry( wkbLinearRing );
+                Ogr_geometry = OGR_G_CreateGeometry( wkbPolygon );
+
+                /* Area */
+                for ( j = 0; j < Points->n_points; j++ ) {
+                    OGR_G_AddPoint( ring, Points->x[j], Points->y[j], Points->z[j] );
+                }
+                if ( Points->x[Points->n_points-1] != Points->x[0] ||
+                     Points->y[Points->n_points-1] != Points->y[0] ||
+                     Points->z[Points->n_points-1] != Points->z[0] )
+                {
+                    OGR_G_AddPoint( ring, Points->x[0], Points->y[0], Points->z[0] );
+                }  
+                
+                OGR_G_AddGeometryDirectly ( Ogr_geometry, ring );
+            } 
+            else
+            {
+                Ogr_geometry = OGR_G_CreateGeometry( wkbtype );
+                for ( j = 0; j < Points->n_points; j++ ) {
+                    OGR_G_AddPoint( Ogr_geometry, Points->x[j], Points->y[j], Points->z[j] );
+                }
+            }
 	    OGR_F_SetGeometry( Ogr_feature, Ogr_geometry ); 
 
 	    /* Output one feature for each category */
