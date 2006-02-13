@@ -5,8 +5,8 @@
 #include <unistd.h>
 #endif
 #include <grass/gis.h>
-#include "local_proto.h"
 #include <grass/glocale.h>
+#include "local_proto.h"
 
 FILE *Tmp_fd = NULL;
 char *Tmp_file = NULL;
@@ -29,6 +29,7 @@ int main (int argc, char *argv[])
 	double mult_fact ;
 	double x;
 	struct GModule *module;
+	struct History history;
 	struct
 	{
 		struct Option *input, *output, *type, *title, *mult ;
@@ -49,12 +50,7 @@ int main (int argc, char *argv[])
 	parm.input->description = _("ARC/INFO ascii raster file (GRID) to be imported");
 	parm.input->gisprompt = "file,file,file";
 
-	parm.output = G_define_option();
-	parm.output->key = "output";
-	parm.output->type = TYPE_STRING;
-	parm.output->required = YES;
-	parm.output->description = _("Name for resultant raster map");
-	parm.output->gisprompt = "any,cell,raster";
+	parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
 
 	parm.type = G_define_option();
 	parm.type->key = "type";
@@ -190,6 +186,10 @@ int main (int argc, char *argv[])
 	G_close_cell (cf);
 	if (title)
 		G_put_cell_title (output, title);
+        G_short_history(output, "raster", &history);
+        G_command_history(&history);
+        G_write_history(output, &history);
+
 
 	exit (EXIT_SUCCESS);
 }
