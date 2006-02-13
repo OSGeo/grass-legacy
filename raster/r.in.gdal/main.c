@@ -53,7 +53,7 @@ int main (int argc, char *argv[])
     char	error_msg[8096];
     int 	projcomp_error=0;
 
-	struct GModule *module;
+    struct GModule *module;
     struct
     {
         struct Option *input, *output, *target, *title, *outloc, *band;
@@ -128,7 +128,7 @@ int main (int argc, char *argv[])
     flag_k->description = _("Keep band numbers instead of using band color names");
 
     if (G_parser(argc,argv))
-        exit(1);
+        exit(EXIT_FAILURE);
 
     input = parm.input->answer;
 
@@ -177,7 +177,7 @@ int main (int argc, char *argv[])
 	        pszRWFlag,
 	        GDALGetDriverLongName( hDriver ) );
 	}
-	exit(0);
+	exit(EXIT_SUCCESS);
     }
 
 /* -------------------------------------------------------------------- */
@@ -370,7 +370,7 @@ int main (int argc, char *argv[])
 /*      Set the active window to match the available data.              */
 /* -------------------------------------------------------------------- */
     if(G_set_window (&cellhd) < 0)
-        exit(3);
+        exit(EXIT_FAILURE);
 
 /* -------------------------------------------------------------------- */
 /*      Do we want to generate a simple raster, or an imagery group?    */
@@ -548,7 +548,7 @@ int main (int argc, char *argv[])
     } 
 
     G_done_msg("");
-    exit (0);
+    exit (EXIT_SUCCESS);
 }
 
 /************************************************************************/
@@ -571,7 +571,7 @@ static void SetupReprojector( const char *pszSrcWKT, const char *pszDstLoc,
 /* -------------------------------------------------------------------- */
 /*      Translate GCP WKT coordinate system into GRASS format.          */
 /* -------------------------------------------------------------------- */
-    GPJ_wkt_to_grass( &cellhd, &proj_info, &proj_units, pszSrcWKT, 1 );
+    GPJ_wkt_to_grass( &cellhd, &proj_info, &proj_units, &pszSrcWKT, 1 );
 
     if (pj_get_kv(iproj, proj_info, proj_units) < 0)
         G_fatal_error("Can't translate projection key values of input GCPs.");
@@ -627,10 +627,10 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
     CELL *cell,*cellReal,*cellImg;
     float *bufComplex;
     double dfNoData;
-    char msg[100];
-    char outputReal[200], outputImg[200];
+    char outputReal[GNAME_MAX], outputImg[GNAME_MAX];
     char *nullFlags = NULL;
     int (*raster_open_new_func)(char *, RASTER_MAP_TYPE) = G_open_raster_new;
+    struct History history;
 
 /* -------------------------------------------------------------------- */
 /*      Select a cell type for the new cell.                            */
@@ -681,20 +681,12 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
         sprintf( outputReal, "%s.real", output);
         cfR = (*raster_open_new_func)((char *)outputReal, data_type);
         if (cfR < 0)
-	{
-            sprintf (msg, "unable to create raster map %s", outputReal);
-            G_fatal_error (msg);
-            exit(1);
-	}
+            G_fatal_error(_("Unable to create raster map %s"), outputReal);
         sprintf( outputImg, "%s.imaginary", output);
 
         cfI = (*raster_open_new_func)((char *)outputImg, data_type);
         if (cfI < 0)
-	{
-            sprintf (msg, "unable to create raster map %s", outputImg);
-            G_fatal_error (msg);
-            exit(1);
-	}
+            G_fatal_error(_("Unable to create raster map %s"), outputImg);
 
         cellReal = G_allocate_raster_buf(data_type);
         cellImg = G_allocate_raster_buf(data_type);
@@ -710,11 +702,7 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
     {
         cf = (*raster_open_new_func)((char *)output, data_type);
         if (cf < 0)
-	{
-            sprintf (msg, "unable to create raster map %s", output);
-            G_fatal_error (msg);
-            exit(1);
-	}
+            G_fatal_error(_("Unable to create raster map %s"), output);
 
         if( group_ref != NULL )
             I_add_file_to_group_ref ((char *) output, G_mapset(), group_ref);
@@ -851,9 +839,15 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
     {
         fprintf (stderr, "CREATING SUPPORT FILES FOR %s\n", outputReal);
         G_close_cell (cfR);
+        G_short_history((char *)outputReal, "raster", &history);
+        G_command_history(&history);
+        G_write_history((char *)outputReal, &history);
 
         fprintf (stderr, "CREATING SUPPORT FILES FOR %s\n", outputImg);
         G_close_cell (cfI);
+        G_short_history((char *)outputImg, "raster", &history);
+        G_command_history(&history);
+        G_write_history((char *)outputImg, &history);
 
         G_free( bufComplex );
     }
@@ -861,6 +855,9 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
     {
         fprintf (stderr, "CREATING SUPPORT FILES FOR %s\n", output);
         G_close_cell (cf);
+        G_short_history((char *)output, "raster", &history);
+        G_command_history(&history);
+        G_write_history((char *)output, &history);
     }
 
     if( nullFlags != NULL )
