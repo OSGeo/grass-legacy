@@ -21,17 +21,17 @@ proc GmToolBar2::create { tb } {
 
     # add scale and north arrow
     $bbox1 add -image [image create photo -file "$gmpath/barscale.gif"] -command "GmTree::add barscale" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
         -helptext [G_msg "Scalebar and north arrow"]
 
     # add grid and lines
     $bbox1 add -image [image create photo -file "$gmpath/grid.gif"] -command "GmTree::add gridline"\
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
         -helptext [G_msg "Overlay grids and lines"]
 
     # add frame
     $bbox1 add -image [image create photo -file "$gmpath/frames.gif"] -command "GmTree::add dframe"\
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
         -helptext [G_msg "Create or select display frame"]
 
     pack $bbox1 -side left -anchor w
@@ -44,18 +44,18 @@ proc GmToolBar2::create { tb } {
 
     # add group
     $bbox2 add -image [image create photo -file "$gmpath/group.gif"] \
-        -command "GmTree::add group" -borderwidth 1\
+        -command "GmTree::add group" -borderwidth 2\
         -highlightthickness 0 -takefocus 0 -relief raised \
         -helptext [G_msg "Add group"]
 
     $bbox2 add -image [image create photo -file "$gmpath/copy.gif"] \
         -command "GmTree::duplicate" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Duplicate Layer"]    
 
     $bbox2 add -image [image create photo -file "$gmpath/cut.gif"] -command \
     	"GmTree::delete" -highlightthickness 0 -takefocus 0 -relief raised \
-    	-borderwidth 1 -helptext [G_msg "Delete layer"]
+    	-borderwidth 2 -helptext [G_msg "Delete layer"]
        
     pack $bbox2 -side left -anchor w
 
@@ -67,15 +67,15 @@ proc GmToolBar2::create { tb } {
 
      $bbox3 add -image [image create photo -file "$gmpath/new.gif"] \
      	-command "GmTree::new" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
         -helptext [G_msg "Create new workspace file (erase current workspace settings first)"]
     $bbox3 add -image [image create photo -file "$gmpath/open.gif"] \
     	-command "Gm::OpenFileBox"\
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
         -helptext [G_msg "Open existing workspace file"]
     $bbox3 add -image [image create photo -file "$gmpath/save.gif"]  \
     	-command "Gm::SaveFileBox"\
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Save workspace file"]
 
     pack $bbox3 -side left -anchor w
@@ -89,19 +89,19 @@ proc GmToolBar2::create { tb } {
     # zoom
     $bbox4 add -image [image create photo -file "$gmpath/nviz.gif"] \
         -command "Gm::nviz" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
         -helptext [G_msg "NVIZ - n dimensional visualization"]
     
     # zoom.back
     $bbox4 add -image [image create photo -file "$gmpath/fly.gif"] \
         -command "Gm::fly" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1\
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2\
         -helptext [G_msg "Fly through path for NVIZ"]
 
     # pan
     $bbox4 add -image [image create photo -file "$gmpath/xganim.gif"] \
         -command "Gm::xganim" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1\
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2\
         -helptext [G_msg "Animate raster map series"]
 
 
@@ -116,7 +116,7 @@ proc GmToolBar2::create { tb } {
     #digitize
     $bbox5 add -image [image create photo -file "$gmpath/dig.gif"] \
         -command "GmTree::vedit" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Digitize map (select or create new map first)"]
 
     pack $bbox5 -side left -anchor w
