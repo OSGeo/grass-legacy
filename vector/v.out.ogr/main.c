@@ -147,7 +147,7 @@ main (int argc, char *argv[])
     poly_flag->key = 'p';
     poly_flag->description = _("Export lines as polygons");
 		
-    if (G_parser (argc, argv)) exit(1); 
+    if (G_parser (argc, argv)) exit(EXIT_FAILURE); 
     
     /* read options */
     field = atoi( field_opt->answer );
@@ -467,7 +467,7 @@ main (int argc, char *argv[])
 	G_warning ( "%d features of different type skip", fskip);
     */
 	 
-    exit(0) ;
+    exit(EXIT_SUCCESS) ;
 }
 
 int
