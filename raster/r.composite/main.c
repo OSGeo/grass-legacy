@@ -63,6 +63,7 @@ int main(int argc, char **argv)
 	struct Cell_head window;
 	unsigned char *dummy, *nulls;
 	int i, j;
+	struct History history;
 
 	G_gisinit(argv[0]);
 
@@ -282,6 +283,10 @@ int main(int argc, char **argv)
 	/* Close the output file */
 	G_close_cell(out_file);
 	G_write_colors(out_name, G_mapset(), &out_colors);
+	G_short_history(out_name, "raster", &history);
+	G_command_history(&history);
+	G_write_history(out_name, &history);
+
 
 	exit(EXIT_SUCCESS);
 }
