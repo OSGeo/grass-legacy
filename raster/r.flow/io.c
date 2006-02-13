@@ -26,6 +26,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <grass/glocale.h>
 #include "r.flow.h"
 #include "mem.h"
 
@@ -60,6 +61,8 @@ parameter (char *key, int type, int required, char *options, char *gisprompt, ch
     struct Option *opt = G_define_option();
 
     opt->key = key;
+    if (type == TYPE_STRING)
+        opt->key_desc = "name";
     opt->type = type;
     opt->required = required;
     opt->options = options;
@@ -86,7 +89,7 @@ void
 parse_command_line (int argc, char *argv[])
 
 {
-	struct GModule *module;
+    struct GModule *module;
     struct Option *pelevin, *paspin, *pbarin, *pskip, *pbound, 
               *pflout, *plgout, *pdsout;
 
@@ -100,9 +103,9 @@ parse_command_line (int argc, char *argv[])
     
 	module = G_define_module();
 	module->description =
-		"Construction of slope curves (flowlines), flowpath "
+		_("Construction of slope curves (flowlines), flowpath "
 		"lengths, and flowline densities (upslope areas) from "
-		"a raster digital elevation model(DEM).";
+		"a raster digital elevation model(DEM)");
 
     larger = ((region.cols < region.rows) ? region.rows : region.cols);
     if (larger < 50)
@@ -132,15 +135,15 @@ parse_command_line (int argc, char *argv[])
     sprintf (offset_opt, "0.0-500.0");
     
     pelevin = parameter("elevin", TYPE_STRING, YES, NULL, "old,cell,raster",
-			"Input elevation file", NULL);
+			_("Input elevation file"), NULL);
     paspin  = parameter("aspin", TYPE_STRING, NO, NULL, "old,cell,raster",
-			"Input aspect file", NULL);
+			_("Input aspect file"), NULL);
     pbarin  = parameter("barin", TYPE_STRING, NO, NULL, "old,cell,raster",
-			"Input barrier file", NULL);
+			_("Input barrier file"), NULL);
     pskip   = parameter("skip", TYPE_INTEGER, NO, skip_opt, NULL,
-			"Number of cells between flowlines", default_skip_ans);
+			_("Number of cells between flowlines"), default_skip_ans);
     pbound  = parameter("bound", TYPE_INTEGER, NO, default_bound_ans, NULL,
-			"Maximum number of segments per flowline",
+			_("Maximum number of segments per flowline"),
 			default_bound_ans + 2);
 /* removed by helena June 2005
     poffset = parameter("offset", TYPE_DOUBLE, NO, offset_opt, NULL,
@@ -148,21 +151,21 @@ parse_command_line (int argc, char *argv[])
 			default_offset_ans); 
 */
     pflout  = parameter("flout", TYPE_STRING, NO, NULL, "any,dig,vector",
-			"Output flowline vector file", NULL);
+			_("Output flowline vector file"), NULL);
     plgout  = parameter("lgout", TYPE_STRING, NO, NULL, "any,cell,raster",
-			"Output slope length raster file", NULL);
+			_("Output slope length raster file"), NULL);
     pdsout  = parameter("dsout", TYPE_STRING, NO, NULL, "any,cell,raster",
-			"Output flowline density raster file", NULL);
+			_("Output flowline density raster file"), NULL);
 
-    fup	  = flag('u', "Compute upslope flowlines");
-    flg	  = flag('3', "3-D lengths instead of 2-D");
-    fmem  = flag('m', "Use less memory, at a performance penalty");
+    fup	  = flag('u', _("Compute upslope flowlines"));
+    flg	  = flag('3', _("3-D lengths instead of 2-D"));
+    fmem  = flag('m', _("Use less memory, at a performance penalty"));
 /*    fseg  = flag('M', "Use much less memory, at a severe performance penalty");*/
-    fquiet= flag('q', "Quiet operation");
-    fcprght = flag('h', "Display Reference Information");
+    fquiet= flag('q', _("Quiet operation"));
+    fcprght = flag('h', _("Display Reference Information"));
 
     if (G_parser(argc, argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
     parm.elevin	= pelevin->answer;
     parm.aspin	= paspin->answer;
@@ -180,7 +183,7 @@ parse_command_line (int argc, char *argv[])
     parm.quiet	= fquiet->answer;
 
     if(!pflout->answer && !plgout->answer && !pdsout->answer)
-	G_fatal_error("You must select one or more output maps (flout, lgout, dsout)."); 
+	G_fatal_error(_("You must select one or more output maps (flout, lgout, dsout)")); 
 
     if (fcprght->answer) { 
       fprintf(stderr, "\n");
@@ -238,16 +241,10 @@ open_existing_cell_file (char *fname, struct Cell_head *chd)
     char   *mapset = G_find_cell(fname, "");
 
     if (mapset == NULL)
-    {
-	sprintf(string, "r.flow: cannot find file %s", fname);
-	G_fatal_error(string);
-    }
+        G_fatal_error(_("Cannot find file %s"), fname);
 
     if (chd && (G_get_cellhd(fname, mapset, chd) < 0))
-    {
-	sprintf(string, "r.flow: cannot get header for %s", fname);
-	G_fatal_error(string);
-    }
+        G_fatal_error(_("Cannot get header for %s"), fname);
 
     return G_open_cell_old(fname, mapset);
 }
@@ -264,8 +261,8 @@ read_input_files()
     fd = open_existing_cell_file(parm.elevin, &hd);
     if (!((region.ew_res == hd.ew_res)
 	  && (region.ns_res == hd.ns_res)))
-	G_fatal_error("r.flow: elevation file's resolution differs from \
-                       current region resolution");
+	G_fatal_error(_("Elevation file's resolution differs from \
+                       current region resolution"));
     for (row = 0; row < region.rows; row++)
     {
 	G_get_d_raster_row(fd, el.buf[row], row);
@@ -282,8 +279,8 @@ read_input_files()
 	fd = open_existing_cell_file(parm.aspin, &hd);
 	if (!((region.ew_res == hd.ew_res)
 	      && (region.ns_res == hd.ns_res)))
-	G_fatal_error("r.flow: aspect file's resolution differs from \
-                       current region resolution");
+	G_fatal_error(_("Aspect file's resolution differs from \
+                       current region resolution"));
 	for (row = 0; row < region.rows; row++)
 	{
 	    G_get_d_raster_row(fd, as.buf[row], row);
@@ -331,28 +328,19 @@ open_segment_file (char *name, layer l, int new)
     if (new || !(mapset = G_find_file(string, name, "")))
     {
 	if ((fd = G_open_new(string, name)) < 0)
-	{
-	    sprintf(string, "r.flow: cannot create segment file %s",
+	    G_fatal_error(_("Cannot create segment file %s"),
 		    name);
-	    G_fatal_error(string);
-	}
 	if (segment_format(fd, region.rows + l.row_offset * 2, 
 		       region.cols + l.col_offset * 2, SEGROWS, SEGCOLS,
 		       sizeof(DCELL)) < 1)
-	{
-	    sprintf(string, "r.flow: cannot format segment file %s",
+	    G_fatal_error(_("Cannot format segment file %s"),
 		    name);
-	    G_fatal_error(string);
-	}
 	close(fd);
 	mapset = G_mapset();
     }
 /*    if ((fd = G_open_update(string, name, mapset)) < 0)*/ /* update 10/99*/
     if ((fd = G_open_update(string, name)) < 0)
-    {
-	sprintf(string, "r.flow: cannot open segment file %s", name);
-	G_fatal_error(string);
-    }
+	G_fatal_error(_("Cannot open segment file %s"), name);
     return fd;
 }
 
@@ -370,18 +358,12 @@ open_output_files()
     }
 
     if (parm.lgout && ((lgfd = G_open_raster_new(parm.lgout, FCELL_TYPE)) < 0))
-    {
-	sprintf(string, "r.flow: cannot create raster map %s",
+	G_fatal_error(_("Cannot create raster map %s"),
 		parm.lgout);
-	G_fatal_error(string);
-    }
 
     if (parm.flout && (Vect_open_new(&fl, parm.flout, 0) < 0))
-    {
-	sprintf(string, "r.flow: cannot create vector map %s",
+	G_fatal_error(_("Cannot create vector map %s"),
 		parm.flout);
-	G_fatal_error(string);
-    }
 
     diag("done.\n");
 }
@@ -416,20 +398,14 @@ write_density_file()
     struct  Colors colors;
 
     if (G_set_window(&region) < 0)
-    {
-	sprintf(string, "r.flow: cannot reset current region");
-	G_fatal_error(string);
-    }
+	G_fatal_error(_("Cannot reset current region"));
 
     diag("Writing density file...");
 /*    dsfd = G_open_cell_new(parm.dsout); */
     dsfd = G_open_raster_new(parm.dsout, DCELL_TYPE);
     if (dsfd < 0)
-    {
-	sprintf(string, "r.flow: cannot create raster map %s",
+	G_fatal_error(_("Cannot create raster map %s"),
 		parm.dsout);
-	G_fatal_error(string);
-    }
     for (row = 0; row < region.rows; row++)
     {
 	G_put_raster_row(dsfd, get_row(ds, row), DCELL_TYPE);
@@ -449,10 +425,7 @@ write_density_file()
     G_add_color_rule(1000, 0,0,255,     (CELL) dsmax, 0,0,0,	 &colors);
     
     if ((mapset = G_find_file("cell", parm.dsout, "")) == NULL)
-    {
-	sprintf(string, "r.flow: cannot find file %s", parm.dsout);
-	G_fatal_error(string);
-    }
+	G_fatal_error(_("Cannot find file %s"), parm.dsout);
     G_write_colors(parm.dsout, mapset, &colors);
     G_free_colors(&colors);
     diag("done.\n");
