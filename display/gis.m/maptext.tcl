@@ -40,7 +40,7 @@ proc GmCtext::create { tree parent } {
     set opt($count,font) "times 12" 
     set opt($count,fill) \#000000 
     set opt($count,width)  100
-    set opt($count,anchor) "left center" 
+    set opt($count,anchor) "center_left" 
     set opt($count,justify) "left" 
     set opt($count,coordinates) "pixels" 
     
@@ -108,8 +108,8 @@ proc GmCtext::options { id frm } {
     set row [ frame $frm.textopt1 ]
     Label $row.a -text [G_msg "     align text with coordinate point  "] 
     ComboBox $row.b -padx 2 -width 12 -textvariable GmCtext::opt($id,anchor) \
-                    -values {"lower left" "bottom center" "lower right" "center left" "center" 
-                    "center right" "upper left" "top center" "upper right" } \
+                    -values {"lower_left" "bottom_center" "lower_right" "center_left" "center" 
+                    "center_right" "upper_left" "top_center" "upper_right" } \
                     -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -178,15 +178,15 @@ proc GmCtext::display { node } {
     if { $opt($id,text) == "" } { return } 
         
     switch $opt($id,anchor) {
-    	"lower left" 	{ set anchor "sw"}
-    	"bottom center" { set anchor "s" }
-    	"lower right" 	{ set anchor "se"}
-    	"center left" 	{ set anchor "w" }
+    	"lower_left" 	{ set anchor "sw"}
+    	"bottom_center" { set anchor "s" }
+    	"lower_right" 	{ set anchor "se"}
+    	"center_left" 	{ set anchor "w" }
     	"center" 		{ set anchor "center" }
-    	"center right" 	{ set anchor "e" }
-    	"upper left" 	{ set anchor "nw"}
-    	"top center" 	{ set anchor "n" }
-    	"upper right" 	{ set anchor "ne"}
+    	"center_right" 	{ set anchor "e" }
+    	"upper_left" 	{ set anchor "nw"}
+    	"top_center" 	{ set anchor "n" }
+    	"upper_right" 	{ set anchor "ne"}
     }
         
     if {$opt($id,coordinates) == "geographic"} {
