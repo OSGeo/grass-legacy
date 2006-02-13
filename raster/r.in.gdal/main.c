@@ -133,7 +133,7 @@ int main (int argc, char *argv[])
     input = parm.input->answer;
 
     output = parm.output->answer;
-    if(title = parm.title->answer)
+    if((title = parm.title->answer))
         G_strip (title);
 
 /* -------------------------------------------------------------------- */
@@ -571,7 +571,7 @@ static void SetupReprojector( const char *pszSrcWKT, const char *pszDstLoc,
 /* -------------------------------------------------------------------- */
 /*      Translate GCP WKT coordinate system into GRASS format.          */
 /* -------------------------------------------------------------------- */
-    GPJ_wkt_to_grass( &cellhd, &proj_info, &proj_units, &pszSrcWKT, 1 );
+    GPJ_wkt_to_grass( &cellhd, &proj_info, &proj_units, pszSrcWKT, 1 );
 
     if (pj_get_kv(iproj, proj_info, proj_units) < 0)
         G_fatal_error("Can't translate projection key values of input GCPs.");
