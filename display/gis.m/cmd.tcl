@@ -51,11 +51,19 @@ proc GmCmd::set_option { node key value } {
 proc GmCmd::options { id frm } {
     variable opt
 
+    # Panel heading
+    set row [ frame $frm.heading ]
+    Label $row.a -text "Enter any GRASS command" \
+    	-fg MediumBlue
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
     # cmd name
     set row [ frame $frm.name ]
     Label $row.a -text [G_msg "Command:"] 
-    Entry $row.b -width 40 -text "$opt($id,cmd)" \
-          -textvariable GmCmd::opt($id,cmd)
+    Entry $row.b -width 50 -text "$opt($id,cmd)" \
+          -textvariable GmCmd::opt($id,cmd) \
+          -background white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 }

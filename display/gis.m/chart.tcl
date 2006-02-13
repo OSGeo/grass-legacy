@@ -93,19 +93,30 @@ proc GmChart::options { id frm } {
     global gmpath
     global bgcolor
 
+    # Panel heading
+    set row [ frame $frm.heading1 ]
+    Label $row.a -text "Display pie and bar charts of attribute values at vector object locations" \
+    	-fg MediumBlue
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
     # vector name
     set row [ frame $frm.map ]
-    Button $row.a -text [G_msg "Vector map to chart:"] \
-           -command "GmChart::select_map $id"
-    Entry $row.b -width 40 -text " $opt($id,map)" \
+    Label $row.a -text [G_msg "Vector map to chart:"]
+    Button $row.b -image [image create photo -file "$gmpath/vector.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "vector map to chart"] \
+		-command "GmChart::select_map $id"
+    Entry $row.c -width 30 -text " $opt($id,map)" \
           -textvariable GmChart::opt($id,map) \
           -background white
-    Button $row.c -text [G_msg "Help"] \
+    Label $row.d -text "   "
+    Button $row.e -text [G_msg "Help"] \
             -image [image create photo -file "$gmpath/grass.gif"] \
             -command "run g.manual d.vect.chart" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
-    pack $row.a $row.b $row.c -side left
+    pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
     # vector type
@@ -121,46 +132,51 @@ proc GmChart::options { id frm } {
 
     # attributes1 and data
     set row [ frame $frm.attr1 ]
-    Label $row.a -text "Attribute to chart: layer"
+    Label $row.a -text "Attributes to chart: attribute layer"
     LabelEntry $row.b -textvariable GmChart::opt($id,layer) -width 5 \
-            -entrybg white
-    Label $row.c -text [G_msg "  show attribute columns"] 
-    Button $row.d -text [G_msg "columns"] \
-            -image [image create photo -file "$gmpath/columns.gif"] \
-            -command "GmChart::show_columns $id" \
-            -background $bgcolor \
-            -helptext [G_msg "Show columns"]
-    Label $row.e -text [G_msg "     show data"] 
-    Button $row.f -text [G_msg "data"] \
-            -image [image create photo -file "$gmpath/columns.gif"] \
-            -command "GmChart::show_data $id" \
-            -background $bgcolor \
-            -helptext [G_msg "Show data"]
-    pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
+		-entrybg white
+    pack $row.a $row.b -side left
+    pack $row -side top -fill both -expand yes
+
+    # show data and columns
+    set row [ frame $frm.showcolumns ]
+    Label $row.a -text [G_msg "     show attribute columns"] 
+    Button $row.b -text [G_msg "columns"] \
+		-image [image create photo -file "$gmpath/columns.gif"] \
+		-command "GmChart::show_columns $id" \
+		-background $bgcolor \
+		-helptext [G_msg "Show columns"]
+    Label $row.c -text [G_msg "   show attribute data"] 
+    Button $row.d -text [G_msg "data"] \
+		-image [image create photo -file "$gmpath/columns.gif"] \
+		-command "GmChart::show_data $id" \
+		-background $bgcolor \
+		-helptext [G_msg "Show data"]
+    pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
     # attributes2
     set row [ frame $frm.attr2 ]
-    Label $row.a -text "   columns to chart (col1,col2,...)  "
-    LabelEntry $row.b -textvariable GmChart::opt($id,columns) -width 35 \
+    Label $row.a -text "     columns to chart (col1,col2,...)  "
+    LabelEntry $row.b -textvariable GmChart::opt($id,columns) -width 30 \
             -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # attributes3
     set row [ frame $frm.attr3 ]
-    Label $row.a -text "   colors for columns (clr1,clr2,...)"
-    LabelEntry $row.b -textvariable GmChart::opt($id,fcolors) -width 35 \
+    Label $row.a -text "     colors for columns (clr1,clr2,...)"
+    LabelEntry $row.b -textvariable GmChart::opt($id,fcolors) -width 30 \
             -entrybg white -padx 2
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # attributes4
     set row [ frame $frm.attr4 ]
-    Label $row.a -text "   column for variable chart size"
+    Label $row.a -text "     column for variable chart size"
     LabelEntry $row.b -textvariable GmChart::opt($id,sizecol) -width 12 \
             -entrybg white -padx 9
-    Label $row.c -text " scale factor"
+    Label $row.c -text "   scale factor"
     LabelEntry $row.d -textvariable GmChart::opt($id,cscale) -width 4 \
             -entrybg white
     pack $row.a $row.b $row.c $row.d -side left
@@ -171,7 +187,7 @@ proc GmChart::options { id frm } {
     Label $row.a -text [G_msg "Chart type:"] 
     ComboBox $row.b -padx 2 -width 4 -textvariable GmChart::opt($id,ctype) \
                     -values {"pie" "bar"} -entrybg white
-    Label $row.c -text " fixed chart size (if size column not used)"
+    Label $row.c -text "       fixed chart size (if size column not used)"
     LabelEntry $row.d -textvariable GmChart::opt($id,csize) -width 4 \
             -entrybg white
     pack $row.a $row.b $row.c $row.d -side left
@@ -179,9 +195,9 @@ proc GmChart::options { id frm } {
 
     # chart options2
     set row [ frame $frm.chopt2 ]
-    Label $row.a -text [G_msg "    chart outline color:"] 
+    Label $row.a -text [G_msg "     chart outline color:"] 
     ComboBox $row.b -padx 0 -width 10 -textvariable GmChart::opt($id,ocolor) \
-                    -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
+                    -values {"none" "white" "grey" "gray" "black" "brown" "red" "orange" \
                     "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} \
                     -entrybg white
     pack $row.a $row.b -side left

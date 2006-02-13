@@ -142,19 +142,36 @@ proc GmThematic::options { id frm } {
     global gmpath
     global bgcolor
 
+    # Panel heading
+    set row [ frame $frm.heading1 ]
+    Label $row.a -text "Display vector maps thematically by graduate colors (all types)" \
+    	-fg MediumBlue
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
+    set row [ frame $frm.heading2 ]
+    Label $row.a -text "  or by graduated sizes (points and lines)" \
+    	-fg MediumBlue
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
     # vector name
     set row [ frame $frm.map ]
-    Button $row.a -text [G_msg "Vector map:"] \
-           -command "GmThematic::select_map $id"
-    Entry $row.b -width 40 -text " $opt($id,map)" \
+    Label $row.a -text [G_msg "Vector map:"]
+    Button $row.b -image [image create photo -file "$gmpath/vector.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "vector for thematic mapping"] \
+		-command "GmThematic::select_map $id"
+    Entry $row.c -width 35 -text " $opt($id,map)" \
           -textvariable GmThematic::opt($id,map) \
           -background white
-    Button $row.c -text [G_msg "Help"] \
+    Label $row.d -text "   "
+    Button $row.e -text [G_msg "Help"] \
             -image [image create photo -file "$gmpath/grass.gif"] \
             -command "run g.manual d.vect.thematic" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
-    pack $row.a $row.b $row.c -side left
+    pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
     # vector type and layer
@@ -184,7 +201,7 @@ proc GmThematic::options { id frm } {
             -command "GmThematic::show_columns $id" \
             -background $bgcolor \
             -helptext [G_msg "Show columns"]
-    Label $row.c -text [G_msg "     show data"] 
+    Label $row.c -text [G_msg "   show data"] 
     Button $row.d -text [G_msg "data"] \
             -image [image create photo -file "$gmpath/columns.gif"] \
             -command "GmThematic::show_data $id" \
@@ -193,16 +210,15 @@ proc GmThematic::options { id frm } {
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
     
-
     # Thematic type
     set row [ frame $frm.ttype ]
     Label $row.a -text [G_msg "Thematic map: type"] 
     ComboBox $row.b -padx 2 -width 16 -textvariable GmThematic::opt($id,themetype) \
-                    -values {"graduated_colors" "graduated_points" "graduated_lines"} -entrybg white
+		-values {"graduated_colors" "graduated_points" "graduated_lines"} -entrybg white
     Label $row.c -text [G_msg " map by"] 
     ComboBox $row.d -padx 2 -width 15 -textvariable GmThematic::opt($id,themecalc) \
-                    -values {"interval" "std_deviation" "quartiles" \
-                    "custom_breaks"} -entrybg white
+		-values {"interval" "std_deviation" "quartiles" \
+		"custom_breaks"} -entrybg white
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
@@ -224,8 +240,8 @@ proc GmThematic::options { id frm } {
 
     # where
     set row [ frame $frm.where ]
-    Label $row.a -text "    query with SQL where clause"
-    LabelEntry $row.b -textvariable GmThematic::opt($id,where) -width 34 \
+    Label $row.a -text "    query with SQL where clause   "
+    LabelEntry $row.b -textvariable GmThematic::opt($id,where) -width 32 \
             -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -286,8 +302,10 @@ proc GmThematic::options { id frm } {
 
     # legend 1
     set row [ frame $frm.legend1 ]
-    Label $row.a -text [G_msg "Legend: title font"] 
-	Button $row.b -text [G_msg "font"] \
+    Label $row.a -text [G_msg "Legend: title font "] 
+    Button $row.b -image [image create photo -file "$gmpath/font.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "title font for legend"] \
 	    -command "GmThematic::select_tfont $id"
     Entry $row.c -width 15 -text "$opt($id,titlefont)" \
 	    -textvariable GmThematic::opt($id,titlefont) \
@@ -299,8 +317,10 @@ proc GmThematic::options { id frm } {
     
     # legend 2
     set row [ frame $frm.legend2 ]
-    Label $row.a -text [G_msg "    subtitle font   "] 
-	Button $row.b -text [G_msg "font"] \
+    Label $row.a -text [G_msg "    subtitle font    "] 
+    Button $row.b -image [image create photo -file "$gmpath/font.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "subtitle font for legend"] \
 	    -command "GmThematic::select_stfont $id"
     Entry $row.c -width 15 -text "$opt($id,subtitlefont)" \
 	    -textvariable GmThematic::opt($id,subtitlefont) \
@@ -310,8 +330,10 @@ proc GmThematic::options { id frm } {
     
     # legend 3
     set row [ frame $frm.legend3 ]
-    Label $row.a -text [G_msg "    label font       "] 
-	Button $row.b -text [G_msg "font"] \
+    Label $row.a -text [G_msg "    label font        "] 
+    Button $row.b -image [image create photo -file "$gmpath/font.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "label font for legend"] \
 	    -command "GmThematic::select_lfont $id"
     Entry $row.c -width 15 -text "$opt($id,labelfont)" \
 	    -textvariable GmThematic::opt($id,labelfont) \

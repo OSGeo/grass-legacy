@@ -72,13 +72,20 @@ proc GmGridline::options { id frm } {
     global gmpath
     global bgcolor
 
+    # Panel heading
+    set row [ frame $frm.heading1 ]
+    Label $row.a -text "Display grid lines, and geodesic lines or rhumblines" \
+    	-fg MediumBlue
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
     # grid options 1
     set row [ frame $frm.grid1 ]
     Label $row.a -text "Grid options: "
     checkbutton $row.b -text [G_msg "draw grid"] -variable GmGridline::opt($id,griddraw) 
     checkbutton $row.c -text [G_msg "geodetic grid"] -variable GmGridline::opt($id,gridgeod) 
     SelectColor $row.d -type menubutton -variable GmGridline::opt($id,gridcolor)    
-    Label $row.e -text [G_msg " grid color "] 
+    Label $row.e -text [G_msg " grid color   "] 
     Button $row.f -text [G_msg "Help"] \
             -image [image create photo -file "$gmpath/grass.gif"] \
             -command "run g.manual d.grid" \
@@ -100,11 +107,11 @@ proc GmGridline::options { id frm } {
 
     # grid options 3
     set row [ frame $frm.grid3 ]
-    Label $row.a -text "      grid size"
-    LabelEntry $row.b -textvariable GmGridline::opt($id,gridsize) -width 10 \
+    Label $row.a -text "    grid size (map units)"
+    LabelEntry $row.b -textvariable GmGridline::opt($id,gridsize) -width 7 \
             -entrybg white
-    Label $row.c -text " grid origin (x,y)"
-    LabelEntry $row.d -textvariable GmGridline::opt($id,gridorigin) -width 29 \
+    Label $row.c -text " grid origin (east, north)"
+    LabelEntry $row.d -textvariable GmGridline::opt($id,gridorigin) -width 15 \
             -entrybg white
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
@@ -124,12 +131,12 @@ proc GmGridline::options { id frm } {
             -background $bgcolor \
             -helptext [G_msg "Help for geodesic lines"]
     Label $row.d -text " line color"
-    ComboBox $row.e -padx 2 -width 10 -textvariable GmGridline::opt($id,geodcolor) \
+    ComboBox $row.e -padx 2 -width 7 -textvariable GmGridline::opt($id,geodcolor) \
                     -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
                     "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} \
                     -entrybg white
     Label $row.f -text " text color"
-    ComboBox $row.g -padx 2 -width 10 -textvariable GmGridline::opt($id,geodtxtcolor) \
+    ComboBox $row.g -padx 2 -width 7 -textvariable GmGridline::opt($id,geodtxtcolor) \
                     -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
                     "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} \
                     -entrybg white
@@ -139,7 +146,7 @@ proc GmGridline::options { id frm } {
     # geodesic line options 2
     set row [ frame $frm.geod2 ]
     Label $row.a -text "     line endpoints (x1,y1,x2,y2)"
-    LabelEntry $row.b -textvariable GmGridline::opt($id,geodcoor) -width 39 \
+    LabelEntry $row.b -textvariable GmGridline::opt($id,geodcoor) -width 35 \
             -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -154,7 +161,7 @@ proc GmGridline::options { id frm } {
             -background $bgcolor \
             -helptext [G_msg "Help for rhumblines"]
     Label $row.d -text " line color"
-    ComboBox $row.e -padx 2 -width 10 -textvariable GmGridline::opt($id,rhumbcolor) \
+    ComboBox $row.e -padx 2 -width 7 -textvariable GmGridline::opt($id,rhumbcolor) \
                     -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
                     "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} \
                     -entrybg white
@@ -164,7 +171,7 @@ proc GmGridline::options { id frm } {
     # rhumbline options 2
     set row [ frame $frm.rhumb2 ]
     Label $row.a -text "     line endpoints (x1,y1,x2,y2)"
-    LabelEntry $row.b -textvariable GmGridline::opt($id,rhumbcoor) -width 39 \
+    LabelEntry $row.b -textvariable GmGridline::opt($id,rhumbcoor) -width 35 \
             -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes

@@ -86,42 +86,63 @@ proc GmRaster::options { id frm } {
     global gmpath
     global bgcolor
 
+    # Panel heading
+    set row [ frame $frm.heading ]
+    Label $row.a -text "Display raster maps" \
+    	-fg MediumBlue
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
     # raster name
     set row [ frame $frm.name ]
-    Button $row.a -text [G_msg "Raster name:"] \
-           -command "GmRaster::select_map1 $id"
-    Entry $row.b -width 49 -text " $opt($id,map)" \
+    Label $row.a -text "Base map:        "
+    Button $row.b -image [image create photo -file "$gmpath/raster.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "base raster map to display"]\
+		-command "GmRaster::select_map1 $id"
+    Entry $row.c -width 35 -text " $opt($id,map)" \
           -textvariable GmRaster::opt($id,map) \
-          -background white
-    Button $row.c -text [G_msg "Help"] \
+          -background white -text
+    Label $row.d -text "   "
+    Button $row.e -text [G_msg "Help"] \
             -image [image create photo -file "$gmpath/grass.gif"] \
             -command "run g.manual d.rast" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
-    pack $row.a $row.b $row.c -side left
+    pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
     # raster query
     set row [ frame $frm.rquery ]
-    Label $row.a -text "Raster values to display"
-    LabelEntry $row.b -textvariable GmRaster::opt($id,rastquery) -width 42 \
+    Label $row.a -text "     values to display"
+    LabelEntry $row.b -textvariable GmRaster::opt($id,rastquery) -width 35 \
             -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
     
     # drape name
-    set row [ frame $frm.drape ]
-    Button $row.a -text [G_msg "Raster to drape over 1st map:"] \
-           -command "GmRaster::select_map2 $id"
-    Entry $row.b -width 35 -text " $opt($id,drapemap)" \
-          -textvariable GmRaster::opt($id,drapemap) \
-          -background white
-    pack $row.a $row.b -side left
-    pack $row -side top -fill both -expand yes
-    set row [ frame $frm.drapeinfo ]
-    Label $row.a -text "     (color over relief map or data fusion--1st map for shading, 2nd for color)"
+    set row [ frame $frm.drapeinfo1 ]
+    Label $row.a -text "     Optional color draping. Use base map for shading,"
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
+
+    set row [ frame $frm.drapeinfo2 ]
+    Label $row.a -text "     drape map for color in color relief map or data fusion"
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
+    set row [ frame $frm.drape ]
+    Label $row.a -text "     drape map:  "
+    Button $row.b -image [image create photo -file "$gmpath/raster.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "raster map to drape over base map"]\
+		-command "GmRaster::select_map2 $id"
+    Entry $row.c -width 35 -text " $opt($id,drapemap)" \
+          -textvariable GmRaster::opt($id,drapemap) \
+          -background white
+    pack $row.a $row.b $row.c -side left
+    pack $row -side top -fill both -expand yes
+    
         
     # overlay
     set row [ frame $frm.over ]

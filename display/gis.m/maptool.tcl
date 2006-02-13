@@ -25,14 +25,14 @@ proc MapToolBar::create { tb } {
     
     # display
     $bbox1 add -image [image create photo -file "$gmpath/display.gif"] \
-        -command "mapcan::mapsettings $mon; mapcan::drawmap $mon" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -command "MapCanvas::mapsettings $mon; MapCanvas::drawmap $mon" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Display active layers in current region"]
 
     # erase
     $bbox1 add -image [image create photo -file "$gmpath/erase.gif"] \
-        -command "mapcan::erase $mon" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -command "MapCanvas::erase $mon" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Erase to white"]
 
     pack $bbox1 -side left -anchor w
@@ -45,50 +45,56 @@ proc MapToolBar::create { tb } {
 
     # zoom in
     $bbox3 add -image [image create photo -file "$gmpath/zoom.gif"] \
-        -command "mapcan::zoombind $mon 1" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
+        -command "MapCanvas::zoombind $mon 1" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
         -helptext [G_msg "Zoom"]
     
     #zoom out
     $bbox3 add -image [image create photo -file "$gmpath/zoomout.gif"] \
-        -command "mapcan::zoombind $mon -1" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
+        -command "MapCanvas::zoombind $mon -1" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
         -helptext [G_msg "Zoom out"]
     
     # zoom.back
     $bbox3 add -image [image create photo -file "$gmpath/zoom.back.gif"] \
-        -command "mapcan::zoom_back $mon" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1\
+        -command "MapCanvas::zoom_back $mon" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2\
         -helptext [G_msg "Return to previous zoom"]
 
-    # zoom to default region  
-    $bbox3 add -image [image create photo -file "$gmpath/zoom_default.gif"] \
-        -command "mapcan::zoom_default $mon" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
-        -helptext [G_msg "Zoom to default region"]
+    # zoom to current region  
+    $bbox3 add -image [image create photo -file "$gmpath/zoom_current.gif"] \
+        -command "MapCanvas::zoom_current $mon" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
+        -helptext [G_msg "Zoom to current region"]
 
     # zoom to saved region
     $bbox3 add -image [image create photo -file "$gmpath/zoom_region.gif"] \
-        -command "mapcan::zoom_region $mon" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -command "MapCanvas::zoom_region $mon" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Zoom to saved region"]
+
+    # zoom to default region  
+    $bbox3 add -image [image create photo -file "$gmpath/zoom_default.gif"] \
+        -command "MapCanvas::zoom_default $mon" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
+        -helptext [G_msg "Zoom to default region"]
 
     # pan
     $bbox3 add -image [image create photo -file "$gmpath/pan.gif"] \
-        -command "mapcan::panbind $mon" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1\
+        -command "MapCanvas::panbind $mon" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2\
         -helptext [G_msg "Pan and recenter"]
 
     # query
     $bbox3 add -image [image create photo -file "$gmpath/query.gif"] \
-        -command "mapcan::querybind $mon" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
+        -command "MapCanvas::querybind $mon" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
         -helptext [G_msg "Query map (select map first)"]
 
     # measure
     $bbox3 add -image [image create photo -file "$gmpath/measure.gif"]  \
-    	-command "mapcan::measurebind $mon"\
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
+    	-command "MapCanvas::measurebind $mon"\
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
         -helptext [G_msg "Measure lengths and areas"]
 
     pack $bbox3 -side left -anchor w
@@ -100,13 +106,13 @@ proc MapToolBar::create { tb } {
     set bbox4 [ButtonBox $toolbar.bbox4 -spacing 0 -background $bgcolor ]
 
     $bbox4 add -image [image create photo -file "$gmpath/print.gif"]  \
-    	-command "mapcan::printcanvas $mon" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+    	-command "MapCanvas::printcanvas $mon" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Print raster & vector maps to eps file"]
 
 	set mapsave [menubutton $tb.mapsave  \
 		-image [image create photo -file "$gmpath/save.gif"] \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -bg $bgcolor -width 28 -indicatoron 1 -direction below]
 
 
@@ -162,10 +168,10 @@ proc MapToolBar::savepng { compression } {
 		set path [tk_getSaveFile -filetypes $types ]
 	}
 		
-	mapcan::mapsettings $mon
+	MapCanvas::mapsettings $mon
 	set env(GRASS_PNG_COMPRESSION) $compression
 	set env(GRASS_PNGFILE) "$path"
-	mapcan::drawmap $mon
+	MapCanvas::drawmap $mon
 	set env(GRASS_PNG_COMPRESSION) 0
 	return
 }
@@ -183,9 +189,9 @@ proc MapToolBar::savegdal { type quality } {
 	}
 	
 	
-	mapcan::mapsettings $mon
+	MapCanvas::mapsettings $mon
 	set env(GRASS_PNGFILE) "$path"
-	mapcan::drawmap $mon
+	MapCanvas::drawmap $mon
 	
 	if { $path != "" } {
 		if { $type == "tif" } { 
