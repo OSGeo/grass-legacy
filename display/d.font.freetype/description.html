@@ -15,48 +15,50 @@ texts from vector labels, legends, etc.
 
 <H2>USAGE</H2>
 
-<ol>
-<li> To enable displaying of a TrueType font on the GRASS monitor, run:
-<pre>
-       d.mon x0
-       d.font.freetype [font=TrueTypefontname] [charset=encoding]
-       
-       #with:
-       # [font]:    TrueType font path (full path including font file name)
-       # [charset]: character encoding (EUC-JP, UTF-8, SJIS)
+To enable displaying of a TrueType font on the GRASS monitor, run:
 
-       # Examples on Redhat Linux 9.x:
-       d.font.freetype font=/usr/share/fonts/ja/TrueType/kochi-gothic.ttf charset=EUC-JP
+<div class="code"><pre>
+d.mon x0
+d.font.freetype [font=TrueTypefontname] [charset=encoding]
 
-       d.font.freetype font=/usr/X11R6/lib/X11/fonts/TTF/luximb.ttf
+#with:
+# [font]:    TrueType font path (full path including font file name)
+# [charset]: character encoding (EUC-JP, UTF-8, SJIS)
+
+# Examples on Redhat Linux 9.x:
+d.font.freetype font=/usr/share/fonts/ja/TrueType/kochi-gothic.ttf charset=EUC-JP
+
+d.font.freetype font=/usr/X11R6/lib/X11/fonts/TTF/luximb.ttf
 
 
-       # Example on Mandrake 10:
-       d.font.freetype font=/usr/X11R6/lib/X11/fonts/TTF/ipag.ttf charset=EUC-JP
+# Example on Mandrake 10:
+d.font.freetype font=/usr/X11R6/lib/X11/fonts/TTF/ipag.ttf charset=EUC-JP
    
-       d.font.freetype font=/usr/share/fonts/openoffice/Vera.ttf
+d.font.freetype font=/usr/share/fonts/openoffice/Vera.ttf
 
-       d.font.freetype font=/usr/share/fonts/ttf/vera/Vera.ttf
+d.font.freetype font=/usr/share/fonts/ttf/vera/Vera.ttf
 
-       # Example using the freetypecap file:
-       d.font.freetype -l
-       d.font.freetype font=batang
-</pre>
-<li> To disable to display a TrueType font on the monitor, run:
-<pre>
-       d.font.freetype font=
-</pre>
-</ol>
+# Example using the freetypecap file:
+d.font.freetype -l
+d.font.freetype font=batang
+</pre></div>
+<p>
+
+To disable to display a TrueType font on the monitor, run:
+<div class="code"><pre>
+d.font.freetype font=
+</pre></div>
+
 
 <H2>DEFINITION FILE</H2>
 
 To help users select fonts conveniently, the definition file,
 <TT>$(GISBASE)/etc/freetypecap</TT>, is provided.  Its format is as follows:
 
-<PRE>
-	font:fontpath:charset:description
-	*default_font:fontpath:charset:description
-</PRE>
+<div class="code"><pre>
+font:fontpath:charset:description
+*default_font:fontpath:charset:description
+</pre></div>
 
 See the file for examples.
 
@@ -70,7 +72,7 @@ See the file for examples.
 
 <H2>AUTHOR</H2>
 
-<A HREF="http://www.foss4g.org">FOSS4G</A> members. <br>
+<A HREF="http://www.foss4g.org">FOSS4G</A> members.<br>
 Project sponsored by IPA (Information-technology Promotion Agency, Japan)
 
 <p><i>Last changed: $Date$</i>
