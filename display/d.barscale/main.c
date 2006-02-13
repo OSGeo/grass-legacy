@@ -81,7 +81,7 @@ int main (int argc, char **argv)
 	    _("The screen coordinates for top-left corner of label ([0,0] is top-left of frame)");
 
 	if (G_parser(argc, argv) < 0)
-		exit(-1);
+		exit(EXIT_FAILURE);
 
 	G_get_window(&W) ;
 	if (W.proj == PROJECTION_LL)
@@ -186,10 +186,9 @@ int main (int argc, char **argv)
 
 		/* Add this command to list */
 		D_add_to_list(cmdbuf) ;
-		return 1;
 	}
 
 	R_close_driver();
 
-	return 0;
+	exit(EXIT_SUCCESS);
 }
