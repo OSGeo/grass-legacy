@@ -33,6 +33,7 @@ global filename
             {separator}
             {command "ESRI e00 format" {} "v.in.e00" {} -command { execute v.in.e00 }}
             {command "Garmin GPS Waypoints/Routes/Tracks" {} "v.in.garmin" {} -command { execute v.in.garmin }}
+            {command "Garmin GPS Waypoints/Routes/Tracks using GPSBabel" {} "v.in.gpsbabel" {} -command { execute v.in.gpsbabel }}
             {command "GEOnet Name server country files (US-NGA GNS)" {} "v.in.gns" {} -command { execute v.in.gns }}
             {command "Matlab and MapGen files" {} "v.in.mapgen" {} -command { execute v.in.mapgen }}
         }}
@@ -194,15 +195,18 @@ global filename
         {command "Visibility/line of sight" {} "r.los" {} -command {execute r.los }}
     }}
     {cascad "Transform features" {} "" $tmenu {			
-        {command "Clump small areas" {} "r.clump" {} -command {execute r.clump }}
-        {command "Grow areas" {} "r.grow" {} -command {execute r.grow }}
+        {command "Clump small areas (statistics calculated by r.volume)" {} "r.clump" {} -command {execute r.clump }}
+        {command "Grow areas" {} "r.grow2" {} -command {execute r.grow2 }}
         {command "Thin linear features" {} "r.thin" {} -command {execute r.thin }}
     }}
     {separator}
     {cascad "Hydrologic modeling" {} "" $tmenu {			
+        {command "Carve stream channels into elevation map using vector streams map" {} "r.carve" {} -command {execute r.carve }}
         {command "Depressionless elevation map and flowline map" {} "r.fill.dir" {} -command {execute r.fill.dir }}
         {command "Flow accumulation for massive grids" {} "r.terraflow" {} -command {spawn r.terraflow }}
         {command "Generate flow lines for raster map" {} "r.flow" {} -command {exec r.flow > /dev/null & }}
+        {command "SIMWE overland flow modeling" {} "r.sim.water" {} -command {execute r.sim.water }}
+        {command "SIMWE sediment erosion, transport, & deposition modeling" {} "r.sim.sediment" {} -command {execute r.sim.sediment }}
         {command "Topographic index map" {} "r.topidx" {} -command {execute r.topidx }}
         {command "TOPMODEL simulation" {} "r.topmodel" {} -command {execute r.topmodel }}
         {command "Watershed subbasins" {} "r.basins.fill" {} -command {execute r.basins.fill }}
@@ -270,6 +274,7 @@ global filename
         {command "Range of all category values" {} "r.describe" {} -command {execute r.describe }}
         {command "Sum all cell category values" {} "r.sum" {} -command {execute r.sum }}
         {command "Sum area by map and category" {} "r.report" {} -command {execute r.report }}
+        {command "Summary statistics for clumped cells (works with r.clump)" {} "r.volume" {} -command {execute r.volume }}
         {command "Total surface area corrected for topography" {} "r.surf.area" {} -command {execute r.surf.area }}
         {command "Univariate statistics" {} "r.univar" {} -command {execute r.univar }}
         {command "Univariate statistics (script version)" {} " r.univar.sh" {} -command {execute r.univar.sh }}
@@ -309,6 +314,7 @@ global filename
 			{command "Rectify and georeference vector map" {} "v.transform" {} -command {execute v.transform }}
 			{separator}
 			{command "Query by attributes" {} "v.extract" {} -command {execute v.extract }}
+    		{command "Query by coordinate(s)" {} "v.what" {} -command { execute v.what }}
 			{command "Query by map features" {} " v.select" {} -command {execute v.select }}
 			{separator}
 			{command "Create vector buffers" {} "v.buffer" {} -command {execute v.buffer }}
@@ -350,6 +356,7 @@ global filename
  			{command "Sample raster neighborhood around points" {} "v.sample" {} -command {execute v.sample }}
  			}}
  			{command "Partition points into test/training sets for k-fold cross validatation" {} "v.kcv" {} -command {execute v.kcv }}
+ 			{command "Transfer attribute data from queried vector map to points" {} "v.what.vect" {} -command {execute v.what.vect }}
 			}}
 			{separator}
 			{cascad "Reports and statistics" {} "" $tmenu {			
