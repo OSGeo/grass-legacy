@@ -589,12 +589,15 @@ proc MapCanvas::panbind { mon } {
 proc MapCanvas::startpan {mon x y} {
     global start_x start_y
     global from_x from_y
+    global to_x to_y
 	variable can
 
     set start_x [$can($mon) canvasx $x]
     set start_y [$can($mon) canvasy $y]
 	set from_x $start_x
     set from_y $start_y
+	set to_x $start_x
+    set to_y $start_y
 
 }
 
@@ -654,6 +657,7 @@ proc MapCanvas::pan { mon } {
 #stop panning
 proc MapCanvas::stoppan { mon } {
 	global MapCanvas::msg
+	global mapcursor
 	variable can
 
 	# reset cursor to normal
