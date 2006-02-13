@@ -94,8 +94,7 @@ source $gmpath/frames.tcl
 source $gmpath/barscale.tcl
 source $gmpath/chart.tcl
 source $gmpath/thematic.tcl
-source $gmpath/fttext.tcl
-source $gmpath/dtext.tcl
+source $gmpath/maptext.tcl
 source $gmpath/mapprint.tcl
 source $gmpath/mapcanvas.tcl
 
@@ -393,7 +392,7 @@ proc Gm::create { } {
     set output_pane  [$pw1 add -minsize 50 -weight 2 ]
     set output_frame [frame $output_pane.fr]
     set output_bbox [ButtonBox $output_pane.bb -bg $bgcolor \
-    	-padx 0 -pady 0 -homogeneous 0]
+    	-padx 0 -pady 0 -homogeneous 0 ]
     
     pack $output_frame -expand yes -fill both 
     pack $output_pane -expand yes -fill both 
@@ -404,17 +403,21 @@ proc Gm::create { } {
 	
 	$output_bbox add -text "run" -command "Gm::run_txt $outtext"  -bg #dddddd \
 		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 -width 8 \
-        -helptext [G_msg "run command at cursor"] -highlightbackground $bgcolor
+        -helptext [G_msg "run command at cursor"] -highlightbackground $bgcolor \
+        -pady 3
 	$output_bbox add -text "clear" -command "Gm::clear_txt $outtext" -bg #dddddd \
 		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 -width 8 \
-        -helptext [G_msg "Clear output"] -highlightbackground $bgcolor
+        -helptext [G_msg "Clear output"] -highlightbackground $bgcolor \
+        -pady 3
 	$output_bbox add -text "save" -command "Gm::save_txt $outtext"  -bg #dddddd \
 		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 -width 8 \
-        -helptext [G_msg "Save output to file"] -highlightbackground $bgcolor
+        -helptext [G_msg "Save output to file"] -highlightbackground $bgcolor \
+        -pady 3
 	$output_bbox add -text "open output window" -command "Gm::create_disptxt $mon"  \
 		-bg #dddddd -highlightthickness 0 -takefocus 0 -relief raised \
 		-borderwidth 1 -width 20 \
-        -helptext [G_msg "Save output to file"] -highlightbackground $bgcolor
+        -helptext [G_msg "Save output to file"] -highlightbackground $bgcolor \
+        -pady 3
 	
 	pack $output_bbox -expand yes -fill none 
     pack $output_sw $outtext -fill both -expand yes
@@ -454,7 +457,7 @@ proc Gm::startmon { } {
 	incr moncount 1
 
 	#create initial display canvas and layer tree
-	mapcan::create
+	MapCanvas::create
 	GmTree::create $mon
 	
 	wm title .mapcan($mon) [G_msg "Map Display $mon"]
