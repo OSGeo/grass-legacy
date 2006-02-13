@@ -72,35 +72,55 @@ proc GmRnums::options { id frm } {
     global gmpath
     global bgcolor
 
+    # Panel heading
+    set row [ frame $frm.heading1 ]
+    Label $row.a -text "Display cell values from raster map or image" \
+    	-fg MediumBlue
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
+    set row [ frame $frm.heading2 ]
+    Label $row.a -text "  (resolution must be 100x100 or less)"
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
     # raster name for histogram
     set row [ frame $frm.name ]
-    Button $row.a -text [G_msg "Raster name:"] \
-           -command "GmRnums::select_map $id"
-    Entry $row.b -width 49 -text " $opt($id,map)" \
+    Label $row.a -text "Raster to display: "
+    Button $row.b -image [image create photo -file "$gmpath/raster.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+		-command "GmRnums::select_map $id"
+    Entry $row.c -width 35 -text " $opt($id,map)" \
           -textvariable GmRnums::opt($id,map) \
           -background white
-    Button $row.c -text [G_msg "Help"] \
+    Label $row.d -text "   "
+    Button $row.e -text [G_msg "Help"] \
 		-image [image create photo -file "$gmpath/grass.gif"] \
 		-command "run g.manual d.rast.num" \
 		-background $bgcolor -helptext [G_msg "Help"]
-    pack $row.a $row.b $row.c -side left
+    pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
-    # grid and text colors
-    set row [ frame $frm.style ]
-    Label $row.a -text "Grid color"
+    # grid color
+    set row [ frame $frm.grid ]
+    Label $row.a -text "Color for cell grid:       "
     ComboBox $row.b -padx 2 -width 10 -textvariable GmRnums::opt($id,grid_color) \
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
 		"magenta"} -entrybg white
-    Label $row.c -text "Text color"
-    ComboBox $row.d -padx 2 -width 10 -textvariable GmRnums::opt($id,text_color) \
+    pack $row.a $row.b -side left
+    pack $row -side top -fill both -expand yes
+
+    # text color
+    set row [ frame $frm.text ]
+    Label $row.a -text "Color for cell values:   "
+    ComboBox $row.b -padx 2 -width 10 -textvariable GmRnums::opt($id,text_color) \
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
 		"magenta"} -entrybg white
-    checkbutton $row.e -text [G_msg "use raster colors for text"] \
+    checkbutton $row.c -text [G_msg "use raster colors for cell values"] \
         -variable GmRnums::opt($id,cellcolor) 
-    pack $row.a $row.b $row.c $row.d $row.e -side left
+    pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 }
 

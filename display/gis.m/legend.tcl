@@ -46,7 +46,6 @@ proc GmLegend::create { tree parent } {
     set opt($count,noval) 0 
     set opt($count,skip) 0 
     set opt($count,smooth) 0 
-    set opt($count,mouse) 0 
     set opt($count,flip) 0 
     
     incr count
@@ -76,113 +75,133 @@ proc GmLegend::options { id frm } {
     global gmpath
     global bgcolor
 
+    # Panel heading
+    set row [ frame $frm.heading1 ]
+    Label $row.a -text "Display legend for raster map using cat values and labels" \
+    	-fg MediumBlue
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
     # raster name
     set row [ frame $frm.map ]
-    Button $row.a -text [G_msg "Raster map for legend:"] \
-           -command "GmLegend::select_map $id"
-    Entry $row.b -width 40 -text " $opt($id,map)" \
+    Label $row.a -text "Raster map: "
+    Button $row.b -image [image create photo -file "$gmpath/raster.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+		-command "GmLegend::select_map $id"
+    Entry $row.c -width 35 -text " $opt($id,map)" \
           -textvariable GmLegend::opt($id,map) \
           -background white
-    Button $row.c -text [G_msg "Help"] \
+    Label $row.d -text "   "
+    Button $row.e -text [G_msg "Help"] \
             -image [image create photo -file "$gmpath/grass.gif"] \
             -command "run g.manual d.legend" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
-    pack $row.a $row.b $row.c -side left
+    pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
-    # monitor for legend
-    set row [ frame $frm.monitor ]
-    checkbutton $row.a -text [G_msg " erase monitor before drawing legend"] -variable \
-        GmLegend::opt($id,erase) 
+    # placement
+    set row [ frame $frm.at1 ]
+    Label $row.a -text "    legend placement as 0-100% of display height/width from bottom left"
     pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
+    set row [ frame $frm.at2 ]
+    Label $row.a -text "    set legend corners (bottom,top,left,right)"
+    LabelEntry $row.b -textvariable GmLegend::opt($id,at) -width 15 \
+            -entrybg white
+    pack $row.a $row.b -side left
+    pack $row -side top -fill both -expand yes
+
+    # erase
+    set row [ frame $frm.monitor ]
+    Label $row.a -text "    "
+    checkbutton $row.b -text [G_msg " erase display before drawing legend"] -variable \
+        GmLegend::opt($id,erase) 
+    pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # text color
     set row [ frame $frm.color ]
-    Label $row.a -text [G_msg "Text color: "] 
+    Label $row.a -text [G_msg "Legend appearance: text color"] 
     ComboBox $row.b -padx 0 -width 10 -textvariable GmLegend::opt($id,color) \
-                    -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
-                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} \
-                    -entrybg white
+		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
+		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} \
+		-entrybg white
     pack $row.a $row.b -side left
+    pack $row -side top -fill both -expand yes
+    
+    # no category labels or numbers
+    set row [ frame $frm.cats ]
+    Label $row.a -text "    " 
+    checkbutton $row.b -text [G_msg "do not display labels"] -variable \
+        GmLegend::opt($id,nolbl) 
+    checkbutton $row.c -text [G_msg "do not display values"] -variable \
+        GmLegend::opt($id,noval) 
+    pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
     # display lines
     set row [ frame $frm.lines ]
-    Label $row.a -text "Number of lines to display (0=display all):" 
+    Label $row.a -text "    number of lines (0=display all):" 
     SpinBox $row.b -range {0 1000 1} -textvariable GmLegend::opt($id,lines) \
-                   -entrybg white -width 5 -helptext "Lines to display" 
-    pack $row.a $row.b -side left
+		-entrybg white -width 5 -helptext "Lines to display" 
+    Label $row.c -text "  " 
+    checkbutton $row.d -text [G_msg "invert legend"] -variable \
+        GmLegend::opt($id,flip) 
+    pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
     
     # thin
     set row [ frame $frm.thin ]
-    Label $row.a -text "Interval between categories (thinning interval) of integer maps:" 
+    Label $row.a -text "    interval between categories (integer maps)" 
     SpinBox $row.b -range {1 1000 1} -textvariable GmLegend::opt($id,thin) \
-                   -entrybg white -width 5 -helptext "Thinning interval" 
+		-entrybg white -width 5 -helptext "Thinning interval" 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
     
     # labelnum
     set row [ frame $frm.labelnum ]
-    Label $row.a -text "Maximum number of labels for smooth gradients" 
-    SpinBox $row.b -range {2 100 1} -textvariable GmLegend::opt($id,labelnum) \
-                   -entrybg white -width 4 -helptext "Maximum labels for gradient" 
+    Label $row.a -text "  " 
+    checkbutton $row.b -text [G_msg "draw smooth gradient (fp maps)"] -variable \
+        GmLegend::opt($id,smooth) 
+    Label $row.c -text "with maximum of" 
+    SpinBox $row.d -range {2 100 1} -textvariable GmLegend::opt($id,labelnum) \
+                   -entrybg white -width 4 -helptext "Maximum lines to display for gradient" 
+    Label $row.e -text "lines" 
+    pack $row.a $row.b $row.c $row.d $row.e -side left
+    pack $row -side top -fill both -expand yes
+            
+	# display subset of values
+    set row [ frame $frm.subset ]
+    Label $row.a -text "Display legend for subset of raster values"
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
+    # skip
+    set row [ frame $frm.opts ]
+    Label $row.a -text "  " 
+    checkbutton $row.b -text [G_msg "skip categories with no labels"] -variable \
+        GmLegend::opt($id,skip) 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
-    
-    # at
-    set row [ frame $frm.at ]
-    Label $row.a -text "Place legend at 0-100% from bottom left (bottom,top,left,right)"
-    LabelEntry $row.b -textvariable GmLegend::opt($id,at) -width 15 \
-            -entrybg white
-    pack $row.a $row.b -side left
-    pack $row -side top -fill both -expand yes
-        
+
     # use cats
     set row [ frame $frm.use ]
-    Label $row.a -text "Display only these categories"
-    LabelEntry $row.b -textvariable GmLegend::opt($id,use) -width 42 \
+    Label $row.a -text "    legend for only these categories     "
+    LabelEntry $row.b -textvariable GmLegend::opt($id,use) -width 28 \
             -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
     
     # range
     set row [ frame $frm.range ]
-    Label $row.a -text "Display only this range of values"
-    LabelEntry $row.b -textvariable GmLegend::opt($id,range) -width 39 \
+    Label $row.a -text "    legend for only this range of values"
+    LabelEntry $row.b -textvariable GmLegend::opt($id,range) -width 28 \
             -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
-    
-    # no category labels or numbers
-    set row [ frame $frm.cats ]
-    checkbutton $row.a -text [G_msg "do not show cat labels"] -variable \
-        GmLegend::opt($id,nolbl) 
-    checkbutton $row.b -text [G_msg "do not show cat numbers"] -variable \
-        GmLegend::opt($id,noval) 
-    pack $row.a $row.b -side left
-    pack $row -side top -fill both -expand yes
 
-    # skip, gradient, and flip
-    set row [ frame $frm.opts ]
-    checkbutton $row.a -text [G_msg "skip cats with no labels"] -variable \
-        GmLegend::opt($id,skip) 
-    checkbutton $row.b -text [G_msg "draw smooth gradient"] -variable \
-        GmLegend::opt($id,smooth) 
-    checkbutton $row.c -text [G_msg "flip legend"] -variable \
-        GmLegend::opt($id,flip) 
-    pack $row.a $row.b $row.c -side left
-    pack $row -side top -fill both -expand yes
-
-    # mouse
-    set row [ frame $frm.mouse ]
-    checkbutton $row.a -text \
-        [G_msg "place with mouse (cannot save placement with group)"] \
-        -variable GmLegend::opt($id,mouse) 
-    pack $row.a -side left
-    pack $row -side top -fill both -expand yes
 }
 
 proc GmLegend::save { tree depth node } {
@@ -191,7 +210,7 @@ proc GmLegend::save { tree depth node } {
     set id [GmTree::node_id $node]
 
     foreach key { _check map color lines thin labelnum at use range \
-             nolbl noval skip smooth mouse flip } {
+             nolbl noval skip smooth flip } {
         GmTree::rc_write $depth "$key $opt($id,$key)"
     } 
 }
@@ -247,12 +266,7 @@ proc GmLegend::display { node } {
     if { $opt($id,smooth) != 0 } { 
         append cmd " -s"
     }
-    
-    # mouse
-    if { $opt($id,mouse) != 0 } { 
-        append cmd " -m"
-    }
-    
+        
     # flip
     if { $opt($id,flip) != 0 } { 
         append cmd " -f"
@@ -309,7 +323,6 @@ proc GmLegend::duplicate { tree parent node id } {
     set opt($count,noval) "$opt($id,noval)" 
     set opt($count,skip) "$opt($id,skip)" 
     set opt($count,smooth) "$opt($id,smooth)"
-    set opt($count,mouse) "$opt($id,mouse)" 
     set opt($count,flip) "$opt($id,flip)" 
 
     incr count

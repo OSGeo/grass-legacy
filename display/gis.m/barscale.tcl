@@ -42,7 +42,6 @@ proc GmBarscale::create { tree parent } {
     set opt($count,at) "2,2" 
     set opt($count,feet) 0 
     set opt($count,top) 0 
-    set opt($count,mouse) 0 
     
     incr count
     return $node
@@ -62,53 +61,65 @@ proc GmBarscale::options { id frm } {
     global gmpath
     global bgcolor
 
+    # Panel heading
+    set row [ frame $frm.heading1 ]
+    Label $row.a -text "Display scale and north arrow"
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
     # color
     set row [ frame $frm.color ]
-    Label $row.a -text [G_msg "Text color: "] 
+    Label $row.a -text [G_msg "Scale appearance:  text color"] 
     SelectColor $row.b -type menubutton -variable GmBarscale::opt($id,tcolor)
-    Label $row.c -text [G_msg " Background color: "] 
-    SelectColor $row.d -type menubutton -variable GmBarscale::opt($id,bcolor)
-    checkbutton $row.e -text [G_msg "no background color"] -variable \
-        GmBarscale::opt($id,bcolor_none) 
-    Label $row.f -text [G_msg " "] 
-    Button $row.g -text [G_msg "Help"] \
+    Label $row.c -text [G_msg "   "] 
+    Button $row.d -text [G_msg "Help"] \
             -image [image create photo -file "$gmpath/grass.gif"] \
             -command "run g.manual d.barscale" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
-    pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
+    pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
     
+    # background
+    set row [ frame $frm.background ]
+    Label $row.a -text [G_msg "    background color "] 
+    SelectColor $row.b -type menubutton -variable GmBarscale::opt($id,bcolor)
+    Label $row.c -text [G_msg "   "] 
+    checkbutton $row.d -text [G_msg "transparent background"] \
+    	-variable GmBarscale::opt($id,bcolor_none) 
+    pack $row.a $row.b $row.c $row.d -side left
+    pack $row -side top -fill both -expand yes
+
+    # text on top
+    set row [ frame $frm.textontop ]
+    Label $row.a -text [G_msg "    "] 
+    checkbutton $row.b -text [G_msg "text on top of scale, instead of to right"] \
+    	-variable GmBarscale::opt($id,top) 
+    pack $row.a $row.b -side left
+    pack $row -side top -fill both -expand yes
+
+    # scale options
+    set row [ frame $frm.opts ]
+    Label $row.a -text [G_msg "    "] 
+    checkbutton $row.b -text [G_msg "line scale instead of bar"] \
+    	-variable GmBarscale::opt($id,line) 
+    checkbutton $row.c -text [G_msg "use feet/miles instead of meters"] \
+    	-variable GmBarscale::opt($id,feet) 
+    pack $row.a $row.b $row.c -side left
+    pack $row -side top -fill both -expand yes
+
     # at
-    set row [ frame $frm.at ]
-    Label $row.a -text "Place left corner of scale at 0-100% from top left of monitor (x,y)"
+    set row [ frame $frm.at1 ]
+    Label $row.a -text "Scale placement: 0-100% from top left of display"
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+        
+    # at
+    set row [ frame $frm.at2 ]
+    Label $row.a -text "    enter x,y for scale lower left corner"
     LabelEntry $row.b -textvariable GmBarscale::opt($id,at) -width 8 \
             -entrybg white
     pack $row.a $row.b -side left
-    pack $row -side top -fill both -expand yes
-        
-    # scale options
-    set row [ frame $frm.opts ]
-    checkbutton $row.a -text [G_msg "line scale instead of bar scale"] -variable \
-        GmBarscale::opt($id,line) 
-    checkbutton $row.b -text [G_msg "text on top of scale, instead of to right"] -variable \
-        GmBarscale::opt($id,top) 
-    pack $row.a $row.b  -side left
-    pack $row -side top -fill both -expand yes
-
-    # english units
-    set row [ frame $frm.units ]
-    checkbutton $row.a -text [G_msg "use feet/miles instead of meters"] -variable \
-        GmBarscale::opt($id,feet) 
-    pack $row.a -side left
-    pack $row -side top -fill both -expand yes
-
-    # mouse
-    set row [ frame $frm.mouse ]
-    checkbutton $row.a -text \
-        [G_msg "place with mouse (cannot save placement with group)"] \
-        -variable GmBarscale::opt($id,mouse) 
-    pack $row.a -side left
     pack $row -side top -fill both -expand yes
 }
 
@@ -119,7 +130,7 @@ proc GmBarscale::save { tree depth node } {
     
     set id [GmTree::node_id $node]
 
-    foreach key { _check bcolor bcolor_none tcolor at feet line top mouse } {
+    foreach key { _check bcolor bcolor_none tcolor at feet line top } {
         GmTree::rc_write $depth "$key $opt($id,$key)"
     } 
 }
@@ -149,7 +160,7 @@ proc GmBarscale::display { node } {
         set bcolor "none"
     }
 
-    set cmd "d.barscale tcolor=$tcolor bcolor=$bcolor "
+    set cmd "d.barscale tcolor=$tcolor bcolor=$bcolor at=$opt($id,at)"
 
     # line scale
     if { $opt($id,line) != 0 } { 
@@ -166,18 +177,7 @@ proc GmBarscale::display { node } {
         append cmd " -f"
     }
 
-    # place with coordinates
-    if { $opt($id,at) != "" && $opt($id,mouse) == 0 } { 
-        append cmd " at=$opt($id,at)"
-        run_panel $cmd
-    }
-
-    # place with mouse
-    if { $opt($id,mouse) != 0 } { 
-        append cmd " -m"
-        term_panel $cmd
-    }
-    
+	run_panel $cmd    
     
 }
 
@@ -214,7 +214,6 @@ proc GmBarscale::duplicate { tree parent node id } {
     set opt($count,at) "$opt($id,at)"
     set opt($count,feet) "$opt($id,feet)"
     set opt($count,top) "$opt($id,top)"
-    set opt($count,mouse) "$opt($id,mouse)" 
 
     incr count
     return $node

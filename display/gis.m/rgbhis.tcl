@@ -86,16 +86,19 @@ proc GmRgbhis::options { id frm } {
     global bgcolor
 
     # Panel heading
-    set row [ frame $frm.rquery ]
-    Label $row.a -text "Display 3 raster maps as Red Green Blue channels or Hue Intensity Saturation"
+    set row [ frame $frm.heading ]
+    Label $row.a -text "Display 3 raster maps as red/green/blue or hue/intensity/saturation channels" \
+    	-fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
     # raster1 name
     set row [ frame $frm.name1 ]
-    Label $row.a -text "     "
-    Button $row.b -text [G_msg "red (RGB) or hue (HIS):"] \
-           -command "GmRgbhis::select_map1 $id"
+    Label $row.a -text "     red (RGB) or hue (HIS):           "
+    Button $row.b -image [image create photo -file "$gmpath/rgbhis1.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "raster map for red or hue channel"]\
+		-command "GmRgbhis::select_map1 $id"
     Entry $row.c -width 30 -text " $opt($id,map1)" \
           -textvariable GmRgbhis::opt($id,map1) \
           -background white
@@ -104,9 +107,11 @@ proc GmRgbhis::options { id frm } {
 
     # raster2 name
     set row [ frame $frm.name2 ]
-    Label $row.a -text "     "
-    Button $row.b -text [G_msg "green (RGB) or intensity (HIS):"] \
-           -command "GmRgbhis::select_map2 $id"
+    Label $row.a -text "     green (RGB) or intensity (HIS):"
+    Button $row.b -image [image create photo -file "$gmpath/rgbhis2.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "raster map for green or intensity channel"]\
+		-command "GmRgbhis::select_map2 $id"
     Entry $row.c -width 30 -text " $opt($id,map2)" \
           -textvariable GmRgbhis::opt($id,map2) \
           -background white
@@ -115,9 +120,11 @@ proc GmRgbhis::options { id frm } {
 
     # raster3 name
     set row [ frame $frm.name3 ]
-    Label $row.a -text "     "
-    Button $row.b -text [G_msg "blue (RGB) or saturation (HIS):"] \
-           -command "GmRgbhis::select_map3 $id"
+    Label $row.a -text "     blue (RGB) or saturation (HIS):"
+    Button $row.b -image [image create photo -file "$gmpath/rgbhis3.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "raster map for blue or saturation channel"]\
+		-command "GmRgbhis::select_map3 $id"
     Entry $row.c -width 30 -text " $opt($id,map3)" \
           -textvariable GmRgbhis::opt($id,map3) \
           -background white

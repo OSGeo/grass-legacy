@@ -106,11 +106,14 @@ proc GmVector::create { tree parent } {
     set opt($count,icon) "basic/x"
     set opt($count,size) 5 
 
-    set opt($count,field) 1 
+    set opt($count,layer) 1 
     set opt($count,lfield) 1 
     set opt($count,cat) "" 
     set opt($count,where) "" 
     set opt($count,_use_where) 1
+    set opt($count,qmap) "" 
+	set opt($count,qsave) 0
+	set opt($count,qoverwrite) 0
 
     set opt($count,attribute) "" 
     set opt($count,xref) "left"
@@ -154,11 +157,19 @@ proc GmVector::select_map { id } {
     }
 }
 
+proc GmVector::select_qmap { id } {
+    set m [GSelect vector]
+    if { $m != "" } { 
+        set GmVector::opt($id,qmap) $m
+        GmTree::autonamel $m
+    }
+}
+
 proc GmVector::show_columns { id } {
 	variable opt
 	global bgcolor
 	set mapname $opt($id,map)
-	set layernum $opt($id,field)
+	set layernum $opt($id,layer)
 	set cmd "v.info -c map=$mapname layer=$layernum"		
 	run_panel $cmd
 }
@@ -188,19 +199,30 @@ proc GmVector::options { id frm } {
     global mapname
     set mapname ""
 
+    # Panel heading
+    set row [ frame $frm.heading ]
+    Label $row.a -text "Display vector maps" \
+    	-fg MediumBlue
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
     # vector name
     set row [ frame $frm.name ]
-    Button $row.a -text [G_msg "Vector name:"] \
-           -command "GmVector::select_map $id"
-    Entry $row.b -width 40 -text "$opt($id,map)" \
-          -textvariable GmVector::opt($id,map) \
-          -background white
-    Button $row.c -text [G_msg "Help"] \
-            -image [image create photo -file "$gmpath/grass.gif"] \
-            -command "run g.manual d.vect" \
-            -background $bgcolor \
-            -helptext [G_msg "Help"]
-    pack $row.a $row.b $row.c -side left
+    Label $row.a -text [G_msg "Vector map:"]
+    Button $row.b -image [image create photo -file "$gmpath/vector.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "vector map to display"] \
+		-command "GmVector::select_map $id"
+    Entry $row.c -width 40 -text "$opt($id,map)" \
+		-textvariable GmVector::opt($id,map) \
+		-background white
+    Label $row.d -text "   "
+    Button $row.e -text [G_msg "Help"] \
+		-image [image create photo -file "$gmpath/grass.gif"] \
+		-command "run g.manual d.vect" \
+		-background $bgcolor \
+		-helptext [G_msg "Help"]
+    pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
     # display
@@ -283,60 +305,74 @@ proc GmVector::options { id frm } {
     pack $row -side top -fill both -expand yes
 
     # labels
-    set row [ frame $frm.label ]
+    set row [ frame $frm.label1 ]
     Label $row.a -text [G_msg "Label vectors:"] 
     checkbutton $row.b -text [G_msg "label"] -variable GmVector::opt($id,display_attr) \
                 -command "GmVector::legend $id"
-    Label $row.c -text [G_msg "color"] 
+    Label $row.c -text [G_msg "tect color"] 
     SelectColor $row.d -type menubutton -variable GmVector::opt($id,lcolor) \
                 -command "GmVector::legend $id"
-    Label $row.e -text [G_msg " size"] 
+    Label $row.e -text [G_msg " text size"] 
     SpinBox $row.f -range {1 50 1} -textvariable GmVector::opt($id,lsize) \
                    -width 2 -helptext [G_msg "text size"] \
                    -modifycmd "GmVector::legend $id" -entrybg white 
-    ComboBox $row.g -label [G_msg " align with pt"] \
-                    -width 6  -textvariable GmVector::opt($id,xref) \
-                    -entrybg white \
-                    -values {"left" "center" "right"} \
-                    -modifycmd "GmVector::legend $id"
-    ComboBox $row.h -width 6  -textvariable GmVector::opt($id,yref) \
-                    -entrybg white \
-                    -values {"top" "center" "bottom"} \
-                    -modifycmd "GmVector::legend $id"
-    pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g $row.h -side left
+    pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
+    pack $row -side top -fill both -expand yes
+
+	# label alighment
+    set row [ frame $frm.label2 ]
+    Label $row.a -text [G_msg "     "] 
+    ComboBox $row.b -label [G_msg "label part to align with vector point"] \
+		-width 6  -textvariable GmVector::opt($id,xref) \
+		-entrybg white \
+		-values {"left" "center" "right"} \
+		-modifycmd "GmVector::legend $id"
+    ComboBox $row.c -label [G_msg " justification"] \
+    	-width 6  -textvariable GmVector::opt($id,yref) \
+		-entrybg white \
+		-values {"top" "center" "bottom"} \
+		-modifycmd "GmVector::legend $id"
+    pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
     # labels layer and attribute column
-    set row [ frame $frm.attribute ]
+    set row [ frame $frm.label3 ]
     LabelEntry $row.a -label [G_msg "     layer for labels"] \
                 -textvariable GmVector::opt($id,lfield) -width 3 \
                 -entrybg white
     LabelEntry $row.b -label [G_msg " attribute col for labels"] \
-                -textvariable GmVector::opt($id,attribute) -width 26 \
+                -textvariable GmVector::opt($id,attribute) -width 23 \
                 -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
-    # category
-    set row [ frame $frm.cat ]
-    Label $row.a -text [G_msg "Query vectors: "] 
+    # query
+    set row [ frame $frm.query1 ]
+    Label $row.a -text [G_msg "Query vectors for display: "] 
     LabelEntry $row.b -label [G_msg "layer for query"] \
-                -textvariable GmVector::opt($id,field) -width 3 \
+                -textvariable GmVector::opt($id,layer) -width 3 \
                 -entrybg white
-    LabelEntry $row.c -label [G_msg " query cat values"] \
-                -textvariable GmVector::opt($id,cat) \
-               -width 5 -entrybg white
-    checkbutton $row.d -text [G_msg "SQL query"] -variable GmVector::opt($id,_use_where) \
-                -command "GmVector::legend $id"
-    pack $row.a $row.b $row.c $row.d -side left
+    pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
-    # sql where
+	# query cat
+    set row [ frame $frm.query2 ]
+    Label $row.a -text [G_msg "    "] 
+    LabelEntry $row.b -label [G_msg "query cat values    "] \
+                -textvariable GmVector::opt($id,cat) \
+               -width 40 -entrybg white
+    pack $row.a $row.b -side left
+    pack $row -side top -fill both -expand yes
+
+    # sql query
     set row [ frame $frm.where ]
-    LabelEntry $row.a -label [G_msg "     SQL where statement"] \
-                -textvariable GmVector::opt($id,where) \
-               -width 44 -entrybg white
-    pack $row.a -side left
+    Label $row.a -text [G_msg "    "] 
+    checkbutton $row.b -variable GmVector::opt($id,_use_where) \
+		-command "GmVector::legend $id"
+    LabelEntry $row.c -label [G_msg "use SQL query"] \
+		-textvariable GmVector::opt($id,where) \
+		-width 40 -entrybg white
+    pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
     
 	#show columns and data
@@ -345,25 +381,37 @@ proc GmVector::options { id frm } {
     Button $row.b -text [G_msg "columns"] \
             -image [image create photo -file "$gmpath/columns.gif"] \
             -command "GmVector::show_columns $id" \
-            -background $bgcolor \
+            -background $bgcolor -borderwidth 1\
             -helptext [G_msg "Show columns"]
-    Label $row.c -text [G_msg "     show data"] 
+    Label $row.c -text [G_msg "   show attribute data"] 
     Button $row.d -text [G_msg "data"] \
             -image [image create photo -file "$gmpath/columns.gif"] \
             -command "GmVector::show_data $id" \
-            -background $bgcolor \
+            -background $bgcolor  -borderwidth 1\
             -helptext [G_msg "Show data"]
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
+	# save query to new vector file
+	set row [ frame $frm.qsave ]
+    Label $row.a -text [G_msg "    "] 
+    checkbutton $row.b -text [G_msg "save displayed objects to new vector file "] \
+                -variable GmVector::opt($id,qsave) 
+    checkbutton $row.c -text [G_msg "overwrite existing"] \
+                -variable GmVector::opt($id,qoverwrite) 
+    pack $row.a $row.b $row.c -side left
+    pack $row -side top -fill both -expand yes
 
-    # mouse query setup
-    set row [ frame $frm.query ]
-    Label $row.a -text [G_msg "Mouse query setup:"]
-    checkbutton $row.b -text [G_msg "edit attributes (form mode)"] \
-                -variable GmVector::opt($id,_query_edit) 
-    checkbutton $row.c -text [G_msg "results as text in terminal"] \
-                -variable GmVector::opt($id,_query_text) 
+    # save query vector name
+    set row [ frame $frm.qname ]
+    Label $row.a -text [G_msg "     new vector"] 
+    Button $row.b -image [image create photo -file "$gmpath/vector.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+		-command "GmVector::select_qmap $id" \
+		-helptext [G_msg "select existing vector for saving queried objects"]
+    Entry $row.c -width 40 -text "$opt($id,qmap)" \
+          -textvariable GmVector::opt($id,qmap) \
+          -background white
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
@@ -377,14 +425,6 @@ proc GmVector::options { id frm } {
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
-    # Width
-    set row [ frame $frm.print ]
-    Label $row.a -text [G_msg "Line width for ps.map print output:"] 
-    SpinBox $row.b -range {1 100 1} -textvariable GmVector::opt($id,_width) \
-                   -width 2 -helptext [G_msg "Line width used for printing"] \
-                   -entrybg white 
-    pack $row.a $row.b -side left
-    pack $row -side top -fill both -expand yes
 }
 
 proc GmVector::save { tree depth node } {
@@ -394,7 +434,7 @@ proc GmVector::save { tree depth node } {
 
     foreach key { _check map display_shape display_cat display_topo display_dir display_attr
                   type_point type_line type_boundary type_centroid type_area type_face
-                  color _use_color fcolor _use_fcolor lcolor rdmcolor sqlcolor icon size lwidth field lfield attribute
+                  color _use_color fcolor _use_fcolor lcolor rdmcolor sqlcolor icon size lwidth layer lfield attribute
                   xref yref lsize cat where _query_text _query_edit _use_where minreg maxreg _width } {
         GmTree::rc_write $depth "$key $opt($id,$key)"
     } 
@@ -422,6 +462,7 @@ proc GmVector::display { node } {
          !$opt($id,type_area) && !$opt($id,type_face) } { return } 
 
     set cmd "d.vect map=$opt($id,map)"
+    set cmd2 "v.extract input=$opt($id,map) output=$opt($id,qmap)"
 
     # color
     if { $opt($id,rdmcolor) } { append cmd " -c" }
@@ -452,6 +493,7 @@ proc GmVector::display { node } {
     }
     set type [join $tlist , ]
     append cmd " type=$type"
+    append cmd2 " type=$type"
 
     append cmd " icon=$opt($id,icon) size=$opt($id,size)" 
 
@@ -460,8 +502,9 @@ proc GmVector::display { node } {
     } 
 
 
-    if { $opt($id,field) != "" } { 
-        append cmd " layer=$opt($id,field)" 
+    if { $opt($id,layer) != "" } { 
+        append cmd " layer=$opt($id,layer)" 
+        append cmd2 " layer=$opt($id,layer)" 
     } 
     if { $opt($id,attribute) != "" && $opt($id,display_attr) } { 
         append cmd " {att=$opt($id,attribute)}" 
@@ -475,9 +518,11 @@ proc GmVector::display { node } {
     } 
     if { $opt($id,cat) != "" } { 
         append cmd " cat=$opt($id,cat)" 
+        append cmd2 " list=$opt($id,cat)"
     } 
     if { $opt($id,where) != "" && $opt($id,_use_where) } { 
         append cmd " {where=$opt($id,where)}" 
+        append cmd2 " {where=$opt($id,where)}" 
     } 
     if { $opt($id,minreg) != "" } { 
         append cmd " minreg=$opt($id,minreg)" 
@@ -486,7 +531,15 @@ proc GmVector::display { node } {
         append cmd " maxreg=$opt($id,maxreg)" 
     } 
 
+    if { $opt($id,qoverwrite) == 1 } { 
+        append cmd2 " --o" 
+    } 
+
     run_panel $cmd
+    
+    if { $opt($id,qsave) ==1 && $opt($id,qmap) != "" } {
+    	run_panel $cmd2
+    }
 }
 
 
@@ -629,7 +682,7 @@ proc GmVector::duplicate { tree parent node id } {
     set opt($count,size)  $opt($id,size)
     set opt($count,lwidth)  $opt($id,lwidth)
 
-    set opt($count,field) $opt($id,field)
+    set opt($count,layer) $opt($id,layer)
     set opt($count,lfield) $opt($id,lfield)
     set opt($count,cat) "$opt($id,cat)"
     set opt($count,where)  "$opt($id,where)"

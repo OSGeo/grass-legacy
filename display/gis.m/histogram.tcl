@@ -73,18 +73,28 @@ proc GmHist::options { id frm } {
     global gmpath
     global bgcolor
 
+    # Panel heading
+    set row [ frame $frm.heading ]
+    Label $row.a -text "Draw histogram of values from raster map or image" \
+    	-fg MediumBlue
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
     # raster name for histogram
     set row [ frame $frm.name ]
-    Button $row.a -text [G_msg "Raster name:"] \
-           -command "GmHist::select_map $id"
-    Entry $row.b -width 49 -text " $opt($id,map)" \
+    Label $row.a -text "Raster to histogram: "
+    Button $row.b -image [image create photo -file "$gmpath/raster.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+		-command "GmHist::select_map $id"
+    Entry $row.c -width 35 -text " $opt($id,map)" \
           -textvariable GmHist::opt($id,map) \
           -background white
-    Button $row.c -text [G_msg "Help"] \
+    Label $row.d -text "   "
+    Button $row.e -text [G_msg "Help"] \
 		-image [image create photo -file "$gmpath/grass.gif"] \
 		-command "run g.manual d.histogram" \
 		-background $bgcolor -helptext [G_msg "Help"]
-    pack $row.a $row.b $row.c -side left
+    pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
     # graph style and color

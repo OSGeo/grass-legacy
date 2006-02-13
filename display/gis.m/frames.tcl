@@ -36,7 +36,7 @@ proc GmDframe::create { tree parent } {
     set opt($count,erase) 0 
     set opt($count,create) 1 
     set opt($count,select) 0 
-    set opt($count,at) "" 
+    set opt($count,at) "50,100,0,50" 
     
     incr count
     return $node
@@ -56,13 +56,20 @@ proc GmDframe::options { id frm } {
     global gmpath
     global bgcolor
 
+    # Panel heading
+    set row [ frame $frm.heading1 ]
+    Label $row.a -text "Divide map display into frames for displaying multiple maps" \
+    	-fg MediumBlue
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
     # create, select, or erase frames
     set row [ frame $frm.cats ]
     checkbutton $row.a -text [G_msg "create and select frame"] -variable \
         GmDframe::opt($id,create) 
     checkbutton $row.b -text [G_msg "select frame"] -variable \
         GmDframe::opt($id,select) 
-    checkbutton $row.c -text [G_msg "remove all frames"] -variable \
+    checkbutton $row.c -text [G_msg "remove all frames   "] -variable \
         GmDframe::opt($id,erase) 
     Button $row.d -text [G_msg "Help"] \
             -image [image create photo -file "$gmpath/grass.gif"] \
@@ -82,7 +89,7 @@ proc GmDframe::options { id frm } {
 
     # place frame1
     set row [ frame $frm.at1 ]
-    Label $row.a -text "Set frame borders at 0-100% from lower left corner of monitor "
+    Label $row.a -text "Set frame borders at 0-100% from lower left corner of display "
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
     
@@ -93,13 +100,7 @@ proc GmDframe::options { id frm } {
             -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
-    
-    # place frame3
-    set row [ frame $frm.at3 ]
-    Label $row.a -text "     If blank, frame created interactively with mouse (but not saved with group)"
-    pack $row.a -side left
-    pack $row -side top -fill both -expand yes
-        
+            
 }
 
 proc GmDframe::save { tree depth node } {
@@ -116,11 +117,7 @@ proc GmDframe::save { tree depth node } {
 proc GmDframe::display { node } {
     variable opt
     variable tree
-    global opt
-    set line ""
-    set input ""
-    global gmpath
-    set cmd ""
+    global mon
 
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
@@ -129,6 +126,7 @@ proc GmDframe::display { node } {
     if { ! ( $opt($id,_check) ) } { return } 
 
     if { $opt($id,create) == 0 && $opt($id,select) == 0 && $opt($id,erase) == 0 } { return } 
+    if { $opt($id,at) == "" } { return }
     set cmd "d.frame"
 
 

@@ -85,46 +85,60 @@ proc GmArrows::options { id frm } {
     global gmpath
     global bgcolor
 
+    # Panel heading
+    set row [ frame $frm.heading1 ]
+    Label $row.a -text "Display arrows whose orientations are based on raster aspect map" \
+    	-fg MediumBlue
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
+    set row [ frame $frm.heading2 ]
+    Label $row.a -text "  (optionally, arrow lengths are based on slope or intensity map)" \
+    	-fg MediumBlue
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
     # raster map for arrow direction
     set row [ frame $frm.map ]
-    Button $row.a -text [G_msg "Raster map for arrow direction:"] \
-           -command "GmArrows::select_map $id"
-    Entry $row.b -width 49 -text " $opt($id,map)" \
+    Label $row.a -text "Aspect map: "
+    Button $row.b -image [image create photo -file "$gmpath/rastarrowsdir.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+		-command "GmArrows::select_map $id"
+    Entry $row.c -width 35 -text " $opt($id,map)" \
           -textvariable GmArrows::opt($id,map) \
           -background white
-    Button $row.c -text [G_msg "Help"] \
+    Label $row.d -text "   "
+    Button $row.e -text [G_msg "Help"] \
 		-image [image create photo -file "$gmpath/grass.gif"] \
 		-command "run g.manual d.rast.arrow" \
 		-background $bgcolor -helptext [G_msg "Help"]
-    pack $row.a $row.b $row.c -side left
+    pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
     # map type
     set row [ frame $frm.type ]
-    Label $row.a -text "Aspect value type"
+    Label $row.a -text "    aspect value type"
     ComboBox $row.b -padx 2 -width 8 -textvariable GmArrows::opt($id,type) \
 		-values {"grass" "compass" "agnps" "answers"} -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 		
-    # raster map for arrow magnitude
-    set row [ frame $frm.mag ]
-    Button $row.a -text [G_msg "Raster map for arrow length:"] \
-           -command "GmArrows::select_magmap $id"
-    Entry $row.b -width 49 -text " $opt($id,magnitude_map)" \
-          -textvariable GmArrows::opt($id,magnitude_map) \
-          -background white
+    # skip factor
+    set row [ frame $frm.skip ]
+    Label $row.a -text "    draw arrows every Nth grid cell" 
+    SpinBox $row.b -range {1 200 1} -textvariable GmArrows::opt($id,skip) \
+		-width 4 -entrybg white 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
-		
+
     # arrow and grid color
     set row [ frame $frm.color1 ]
-    Label $row.a -text "Arrow color"
+    Label $row.a -text "    arrow color     "
     ComboBox $row.b -padx 2 -width 10 -textvariable GmArrows::opt($id,arrow_color) \
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
 		"magenta"} -entrybg white
-    Label $row.c -text " Grid color"
+    Label $row.c -text "      cell grid color"
     ComboBox $row.d -padx 2 -width 10 -textvariable GmArrows::opt($id,grid_color) \
 		-values {"none" "white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
@@ -134,12 +148,12 @@ proc GmArrows::options { id frm } {
     
     # x and unknown color
     set row [ frame $frm.color2 ]
-    Label $row.a -text "Color for null value X"
+    Label $row.a -text "    null value color"
     ComboBox $row.b -padx 2 -width 10 -textvariable GmArrows::opt($id,x_color) \
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
 		"magenta"} -entrybg white
-    Label $row.c -text " Color for unknown information"
+    Label $row.c -text { 'unknowns' color}
     ComboBox $row.d -padx 2 -width 10 -textvariable GmArrows::opt($id,unknown_color) \
 		-values {"none" "white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
@@ -147,14 +161,23 @@ proc GmArrows::options { id frm } {
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
-    # skip and scale
-    set row [ frame $frm.skip ]
-    Label $row.a -text "Draw arrows every Nth grid cell" 
-    SpinBox $row.b -range {1 200 1} -textvariable GmArrows::opt($id,skip) \
-		-width 4 -entrybg white 
-    LabelEntry $row.c -label [G_msg "Scale factor for arrow length"] \
-		-textvariable GmArrows::opt($id,scale) -width 5 -entrybg white
+    # raster map for arrow magnitude
+    set row [ frame $frm.mag ]
+    Label $row.a -text "Slope/intensity map: "
+    Button $row.b -image [image create photo -file "$gmpath/rastarrowsint.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+		-command "GmArrows::select_magmap $id"
+    Entry $row.c -width 35 -text " $opt($id,magnitude_map)" \
+          -textvariable GmArrows::opt($id,magnitude_map) \
+          -background white
     pack $row.a $row.b $row.c -side left
+    pack $row -side top -fill both -expand yes
+		
+    # scale arrow length
+    set row [ frame $frm.scale ]
+    LabelEntry $row.a -label [G_msg "    scale factor for computing arrow length"] \
+		-textvariable GmArrows::opt($id,scale) -width 5 -entrybg white
+    pack $row.a -side left
     pack $row -side top -fill both -expand yes
 }
 
