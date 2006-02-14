@@ -39,9 +39,9 @@ int main(int argc, char **argv)
 	drv.lookup_color	= XD_lookup_color;
 	drv.get_table_type	= XD_get_table_type;
 	drv.color		= XD_color;
-	drv.get_color		= XD_get_color;
 	drv.draw_line		= XD_draw_line;
 	drv.draw_point		= XD_draw_point;
+	drv.draw_bitmap		= XD_draw_bitmap;
 
 	return LIB_main(&drv, argc, argv);
 }

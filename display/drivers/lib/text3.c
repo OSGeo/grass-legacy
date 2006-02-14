@@ -234,27 +234,25 @@ static void set_text_box(FT_Bitmap *bitmap, FT_Int x, FT_Int y)
 
 static void draw_bitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y)
 {
-	static int *buf;
+	static unsigned char *buf;
 	static int nalloc;
-	int color = DRV_get_color();
-	int j;
+	int w = bitmap->width;
+	int h = bitmap->rows;
+	const unsigned char *sbuf = bitmap->buffer;
+	int i, j;
 
-	if (nalloc < bitmap->width)
+	if (nalloc < w * h)
 	{
-		nalloc = bitmap->width;
-		buf = G_realloc(buf, nalloc * sizeof(int));
+		nalloc = w * h;
+		buf = G_realloc(buf, nalloc);
 	}
 
-	for (j = 0; j < bitmap->rows; j++)
-	{
-		int i;
+	for (j = 0; j < h; j++)
+		for (i = 0; i < w; i++)
+			buf[j * w + i] = sbuf[j * w + i] > 128 ? 1 : 0;
 
-		for (i = 0; i < bitmap->width; i++)
-			buf[i] = bitmap->buffer[j * bitmap->width + i] > 128 ? color : 0;
-
-		COM_Move_abs(x, y + j);
-		COM_Raster_int(bitmap->width, 1, buf, 0, 0);
-	}
+	COM_Move_abs(x, y);
+	DRV_draw_bitmap(w, h, buf);
 }
 #endif
 
