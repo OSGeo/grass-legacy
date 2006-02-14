@@ -31,7 +31,9 @@
 #include <assert.h>
 #include <unistd.h>
 #include <string.h>
+#ifndef __MINGW32__
 #include <pwd.h>
+#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
@@ -43,6 +45,7 @@
  * already exist.  Adjust perms to 1700. Returns the toplevel directory
  * path [caller must G_free ()] on success, or NULL on failure
  *************************************************************************/
+#ifndef __MINGW32__  /* TODO */
 static char *
 _make_toplevel (void)
 {
@@ -91,7 +94,11 @@ _make_toplevel (void)
     {
         if (errno == ENOENT)
         {
+#ifdef __MINGW32__
+            status = mkdir (path);  
+#else
             status = mkdir (path, S_IRWXU); /* drwx------ */ 
+#endif
     
             if (status != 0)  /* mkdir failed */
             {
@@ -243,7 +250,11 @@ _make_sublevels(char *elems)
         if (status != 0)
         {
             /* the element doesn't exist */
-            status = mkdir (path, S_IRWXU); /* drwx------ */
+#ifdef __MINGW32__
+            status = mkdir (path);  
+#else
+            status = mkdir (path, S_IRWXU); /* drwx------ */ 
+#endif
             if (status != 0)
             {
                 /* Some kind of problem... */
@@ -343,3 +354,4 @@ G_rc_path (char *element, char *item)
 
 
 /* vim: set softtabstop=4 shiftwidth=4 expandtab: */
+#endif
