@@ -18,7 +18,7 @@ default: stlib $(ETC)/element_list $(ETC)/copy
 
 $(ETC)/element_list: Element_List
 	if [ ! -d $(ETC) ]; then $(MKDIR) $(ETC); fi
-	$(INSTALL) -m 444 $? $@
+	$(INSTALL) -m 644 $? $@
 
 $(ETC)/copy: copy.sh
 	$(INSTALL) -m 755 $? $@
