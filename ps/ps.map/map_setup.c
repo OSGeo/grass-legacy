@@ -11,9 +11,7 @@ extern int verbose;
 
 int map_setup (void)
 {
-    int row, col, cells_per_inch;
     double w, h;
-    long num_cells, limit;
 
     /* set top of map */
     if (PS.set_y < PS.min_y) PS.min_y = PS.set_y;
@@ -71,37 +69,8 @@ int map_setup (void)
     	PS.ew_res = PS.w.ew_res;
     	PS.ns_res = PS.w.ns_res;
 
-    	/* adjust sampling if too big */
-	cells_per_inch = (int)((double)PS.cells_wide / PS.map_width + 0.5);
-    	num_cells = (long)PS.cells_high * (long)PS.cells_wide;
     	PS.row_delta = 1;
     	PS.col_delta = 1;
-	if (PS.grey || PS.level == 1) limit = 300000000L;
-	else limit = 100000000L;
-    	while (num_cells > limit || cells_per_inch > PS.res)
-    	{	
-	    if (PS.cells_high >= PS.cells_wide)
-            {   
-	    	PS.cells_high /= 2;
-	    	PS.ns_res *= 2.0;
-	    	PS.row_delta++;
-		cells_per_inch /= 2;
-	    }
-	    else
-	    { 
-	    	PS.cells_wide /= 2;
-	    	PS.ew_res *= 2.0;
-	    	PS.col_delta++;
-		cells_per_inch /= 2;
-	    }
-    	    num_cells = (long)PS.cells_high * (long)PS.cells_wide;
-    	}
-
-    	/* adjust image rows and cols to match values in writing hex string */
-    	for (PS.cells_high = row = 0; row < PS.w.rows; row++) 
-	    if ((row % PS.row_delta) == 0) PS.cells_high++;
-    	for (PS.cells_wide = col = 0; col < PS.w.cols; col += PS.col_delta) 
-		PS.cells_wide++;
 
     	/* compute conversion factors */
     	PS.ew_to_x = PS.map_pix_wide  / (PS.w.east  - PS.w.west);
