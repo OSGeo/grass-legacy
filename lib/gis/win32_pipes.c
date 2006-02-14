@@ -26,6 +26,7 @@
 *
 *****************************************************************************/
 
+#ifndef __MINGW32__ /* TODO */
 #ifdef __MINGW32__
 
 #include <grass/gis.h>
@@ -258,4 +259,5 @@ G_pipe_connect (char *name)
     return ( hPipe );
 }
 
+#endif /* __MINGW32__ */
 #endif /* __MINGW32__ */
