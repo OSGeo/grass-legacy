@@ -457,6 +457,15 @@ int main( int argc, char **argv )
 		    min_ind = 1;
 		    max_ind = 0;
 		   } */
+
+		if(horiz)
+		    sprintf(DispFormat, "%%d");
+		else{
+		    if(maxCat > 0.0)
+		        sprintf(DispFormat, "%%%dd", (int)(log10(fabs(maxCat)))+1);
+		    else
+		        sprintf(DispFormat, "%%2d");
+		}
         }
 	else { /* is fp */
 		if (G_read_fp_range(map_name, mapset, &fprange) == -1)
@@ -493,6 +502,18 @@ int main( int argc, char **argv )
 		}
 		do_cats = 0;	/* if only to get rid of the compiler warning  */
 		cats_num = 0;	/* if only to get rid of the compiler warning  */
+		/* determine how many significant digits to display based on range */
+		if( 0 == (dmax - dmin) )		/* trap divide by 0 for single value rasters */
+			sprintf(DispFormat, "%%f");
+		else{
+			SigDigits = (int)ceil(log10(fabs(25/(dmax - dmin))));
+			if(SigDigits < 0)
+			    SigDigits = 0;
+			if(SigDigits < 7)
+			    sprintf(DispFormat, "%%.%df", SigDigits);
+			else
+			    sprintf(DispFormat, "%%.2g");	/* eg 4.2e-9  */
+		}
 	}
 
 	if(use_catlist) {
@@ -551,10 +572,10 @@ int main( int argc, char **argv )
 		if(1 == steps) steps = 2;	/* ward off the ppl floating point exception */ 
 	    }
 
-	    for(k = 0; k< steps; k++) {
+	    for(k = 0; k < steps; k++) {
 		if(!fp) {
 		    if(!flip)
-			 tcell = min_ind + k * (double)(max_ind - min_ind)/(steps-1);
+			tcell = min_ind + k * (double)(max_ind - min_ind)/(steps-1);
 		    else
 			tcell = max_ind - k * (double)(max_ind - min_ind)/(steps-1);
 
@@ -563,18 +584,16 @@ int main( int argc, char **argv )
 			hide_catstr=1;
 		    else
 			hide_catstr = hidestr->answer;
-		    if(hide_catnum && ! hide_catstr) /* str only */
-			sprintf(buff, " %s", cstr);
-		    else {
-			if(! hide_catnum && hide_catstr) /* num only */
-			    sprintf(buff, "%2d", tcell);
-			else {
-			    if(hide_catnum && hide_catstr) /* nothing, box only */
-			       buff[0] = 0;
-			    else
-			       sprintf(buff, "%2d) %s", tcell, cstr); /* both */
-			}
+
+		    /* nothing, box only */
+		    buff[0] = 0;
+		    if(!hide_catnum){ /* num */
+			    sprintf(buff, DispFormat, tcell);
+			    if(!hide_catstr) /* both */
+				    strcat(buff, ")");
 		    }
+		    if(!hide_catstr) /* str */
+			    sprintf(buff+strlen(buff), " %s", cstr);
 		}
 		else {   /* ie FP map */
 		    if(!flip)
@@ -582,19 +601,7 @@ int main( int argc, char **argv )
 		    else
 			val = dmax - k * (dmax - dmin)/(steps-1); 
 
-		    if( 0 == (dmax - dmin) )		/* trap divide by 0 for single value rasters */
-			sprintf(buff, "%f", val);
-		    else {
-			/* determine how many significant digits to display based on range */
-			SigDigits = (int)ceil(log10(fabs(25/(dmax - dmin))));
-			if(SigDigits < 0)
-			    SigDigits = 0;
-			if(SigDigits < 7)
-			    sprintf(DispFormat, "%%.%df", SigDigits);
-			else
-			    sprintf(DispFormat, "%%.2g");	/* eg 4.2e-9  */
-			sprintf(buff, DispFormat, val);
-		    }
+		    sprintf(buff, DispFormat, val);
 		}
 
 		/* this probably shouldn't happen mid-loop as text sizes 
@@ -643,8 +650,7 @@ int main( int argc, char **argv )
 			R_move_abs(x0 +ppl*k -(strlen(buff)*txsiz*.81/2), y1+4+txsiz);
 		}
 
-		if(! hide_catnum)
-		    R_text(buff);
+		R_text(buff);
 
 	    } /*for*/
 
@@ -787,32 +793,25 @@ int main( int argc, char **argv )
 		    R_standard_color(color) ;
 
 		    if(!fp) {
-			if(hide_catnum && ! hide_catstr) /* str only */
-				sprintf(buff, " %s", cstr);
-			else {
-				if(! hide_catnum && hide_catstr) { /* num only */
-				    if(!flip)			
-					sprintf(buff, "%2d", (int)catlist[i]);
+			    /* nothing, box only */
+			    buff[0] = 0;
+			    if(!hide_catnum){ /* num */
+				    sprintf(buff, DispFormat, (int)catlist[i]);
+				    if(!flip)
+					    sprintf(buff, DispFormat, (int)catlist[i]);
 				    else
-					sprintf(buff, "%2d", (int)catlist[catlistCount-i-1]);
-				}
-				else{
-					if(hide_catnum && hide_catstr) /* nothing, box only */
-						buff[0] = 0;
-					else {
-						if(!flip)
-						    sprintf(buff, "%2d) %s", (int)catlist[i], cstr); /* both */
-						else
-						    sprintf(buff, "%2d) %s", (int)catlist[catlistCount-i-1], cstr);
-					}
-				}
-			}
+					    sprintf(buff, DispFormat, (int)catlist[catlistCount-i-1]);
+				    if(!hide_catstr) /* both */
+					    strcat(buff, ")");
+			    }
+			    if(!hide_catstr) /* str */
+				    sprintf(buff+strlen(buff), " %s", cstr);
 		    }
 		    else {	/* is fp */
 			if(!flip)
-				sprintf(buff, "%s", opt8->answers[i]);
+				sprintf(buff, DispFormat, catlist[i]);
 			else
-				sprintf(buff, "%s", opt8->answers[catlistCount-i-1]);
+				sprintf(buff, DispFormat, catlist[catlistCount-i-1]);
 		    }
 
 		    R_move_abs((l+3+dots_per_line), (cur_dot_row)-3);
