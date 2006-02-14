@@ -84,14 +84,14 @@ static void poly(const struct point *p, int n)
 			y1 = p[i].y;
 	}
 
-	if (y1 < screen_bottom || y0 > screen_top)
+	if (y0 > screen_bottom || y1 < screen_top)
 		return;
 
-	if (y0 < screen_bottom)
-		y0 = screen_bottom;
+	if (y0 < screen_top)
+		y0 = screen_top;
 
-	if (y1 > screen_top)
-		y1 = screen_top;
+	if (y1 > screen_bottom)
+		y1 = screen_bottom;
 
 	for (y = y0; y < y1; y++)
 		line(p, n, y);
