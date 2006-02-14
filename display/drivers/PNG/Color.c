@@ -21,8 +21,3 @@ void PNG_color(int number)
 	currentColor = number;
 }
 
-int PNG_get_color(void)
-{
-	return currentColor;
-}
-

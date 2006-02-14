@@ -39,6 +39,7 @@ OBJS =  \
 	Client.o\
 	Color_table.o\
 	Color.o\
+	Draw_bitmap.o\
 	Draw_line.o\
 	Draw_point.o\
 	Get_w_box.o\

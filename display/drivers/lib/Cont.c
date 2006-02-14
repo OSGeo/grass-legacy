@@ -3,8 +3,7 @@
 
 void COM_Cont_abs(int x, int y)
 {
-	if (driver->draw_line)
-		(*driver->draw_line)(cur_x, cur_y, x, y);
+	DRV_draw_line(cur_x, cur_y, x, y);
 	cur_x = x;
 	cur_y = y;
 }

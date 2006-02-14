@@ -10,7 +10,7 @@
 #include <grass/gis.h>
 #include "XDRIVER.h"
 
-static int currentColor;
+int current_color;
 
 void XD_color(int number)
 {
@@ -20,18 +20,15 @@ void XD_color(int number)
 		return;
 	}
 
-	currentColor = number;
+	current_color = number;
 
 	if (DRV_get_table_type() == FLOAT)
-		XSetForeground(dpy, gc, number);
+		current_color = number;
 	else if (use_visual->class >= TrueColor)
-		XSetForeground(dpy, gc, number);
+		current_color = number;
 	else
-		XSetForeground(dpy, gc, xpixels[number]);
-}
+		current_color = xpixels[number];
 
-int XD_get_color(void)
-{
-	return currentColor;
+	XSetForeground(dpy, gc, current_color);
 }
 

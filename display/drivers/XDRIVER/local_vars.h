@@ -24,3 +24,5 @@ extern int needs_flush;
 
 extern pid_t redraw_pid;
 
+extern int current_color;
+

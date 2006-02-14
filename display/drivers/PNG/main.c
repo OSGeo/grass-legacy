@@ -39,9 +39,9 @@ int main(int argc, char **argv)
 	drv.lookup_color	= PNG_lookup_color;
 	drv.get_table_type	= PNG_get_table_type;
 	drv.color		= PNG_color;
-	drv.get_color		= PNG_get_color;
 	drv.draw_line		= PNG_draw_line;
 	drv.draw_point		= PNG_draw_point;
+	drv.draw_bitmap		= NULL;
 
 	return LIB_main(&drv, argc, argv);
 }

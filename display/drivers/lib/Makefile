@@ -13,6 +13,7 @@ LIB_OBJS =\
 	Color_table.o\
 	Color.o\
 	Cont.o\
+	Draw.o\
 	Erase.o\
 	Font.o\
 	Get_location.o\

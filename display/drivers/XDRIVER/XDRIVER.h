@@ -28,7 +28,7 @@ extern void XD_Raster_int(int,int,const int *,int,int);
 extern void XD_Respond(void);
 extern int XD_Work_stream(void);
 extern void XD_color(int);
-extern int XD_get_color(void);
+extern void XD_draw_bitmap(int,int,const unsigned char *);
 extern void XD_draw_line(int,int,int,int);
 extern void XD_draw_point(int,int);
 extern int XD_get_table_type(void);
