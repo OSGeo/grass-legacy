@@ -11,7 +11,7 @@ if($x ne ''){
 }
 
 
-$grass_inc_dir = "$grass_dir/include";
+$grass_inc_dir = "$grass_dir/dist.$grass_arch/include";
 $grass_lib_dir = "$grass_dir/dist.$grass_arch/lib";
 
 WriteMakefile(
