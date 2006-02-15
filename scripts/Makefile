@@ -11,6 +11,7 @@ SUBDIRS = \
 	d.out.gpsdrive \
 	d.out.png \
 	d.out.file \
+	d.polar \
 	d.rast.leg \
 	d.redraw \
 	d.resize \
