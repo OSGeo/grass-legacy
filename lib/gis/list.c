@@ -45,6 +45,8 @@
 #include <unistd.h>
 #include <signal.h>
 #include <string.h>
+#include <sys/types.h>
+#include <dirent.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
@@ -143,9 +145,11 @@ static int list_element( FILE *out, char *element,
 {
     char path[1000];
     char buf[400];
+    DIR *dirp;
+    struct dirent *dp;
     FILE *ls;
     FILE *G_popen();
-    int count;
+    int count, maxlen, num_cols;
 
     count = 0;
 /*
@@ -178,44 +182,67 @@ static int list_element( FILE *out, char *element,
         G_warning("libgis list_element(): List is not yet supported.");
 #endif /* __MINGW32__ */
 
-	if ((ls = G_popen(buf,"r")))
+	if((dirp = opendir(path)) == NULL)
+		G_fatal_error("ERROR: %s: open failed.", path);
+
+	maxlen = num_cols = 0;
+	if(!lister)
 	{
-	    while (!broken_pipe && fgets(buf, sizeof buf, ls))
-	    {
-		if (count++ == 0)
+		int i;
+
+		while((dp = readdir(dirp)) != NULL)
 		{
-		    fprintf(out, _("%s files available in mapset %s:\n"), desc, mapset);
-		    if (lister)
-		    {
-			char title[400];
-			char name[GNAME_MAX];
-
-			*name = *title = 0;
-			lister (name, mapset, title);
-			if (*title)
-			    fprintf(out,"\n%-18s %-.60s\n",name,title);
-		    }
+			if(dp->d_name[0] == '.')
+				continue;
+			if(maxlen < (i = strlen(dp->d_name)))
+				maxlen = i;
 		}
-		if (lister)
-		{
-		    char *b;
-		    char title[400];
+		rewinddir(dirp);
 
-		/* remove the trailing newline */
-		    for (b = buf; *b; b++)
-			if (*b == '\n')
-			    *b = 0;
-
-		    lister (buf, mapset, title);
-		    fprintf(out,"%-18s %-.60s\n",buf,title);
-		}
-		else
-		    fprintf(out,"%s", buf);
-	    }
-	    G_pclose (ls);
+		num_cols = 80 / (maxlen + 1); /* + 1: column separator */
 	}
+
+	while ((dp = readdir(dirp)) != NULL)
+	{
+	    if(dp->d_name[0] == '.')
+		    continue;
+
+	    if (count++ == 0)
+	    {
+	        fprintf(out, _("%s files available in mapset %s:\n"), desc, mapset);
+	        if (lister)
+	        {
+	    	char title[400];
+	    	char name[GNAME_MAX];
+
+	    	*name = *title = 0;
+	    	lister (name, mapset, title);
+	    	if (*title)
+	    	    fprintf(out,"\n%-18s %-.60s\n",name,title);
+	        }
+	    }
+	    if (lister)
+	    {
+	        char *b;
+	        char title[400];
+
+	    /* remove the trailing newline */
+	        for (b = dp->d_name; *b; b++)
+	    	if (*b == '\n')
+	    	    *b = 0;
+
+	        lister (dp->d_name, mapset, title);
+	        fprintf(out,"%-18s %-.60s\n",dp->d_name,title);
+	    }
+	    else
+	        fprintf(out,"%-*s", maxlen+1, dp->d_name);
+	    if(!lister && !(count % num_cols))
+		fprintf(out, "\n");
+	}
+	closedir(dirp);
     }
-    if (!broken_pipe && (count > 0))
+    if (!lister && (count % num_cols))
 	fprintf(out,"\n");
+
     return count;
 }
