@@ -696,6 +696,7 @@ int G_lookup_key_value_from_file(char *, char *, char [], int);
 
 /* legal_name.c */
 int G_legal_filename(char *);
+int G_check_input_output_name ( char *, char *, int );
 
 /* line_dist.c */
 int G_set_distance_to_line_tolerance(double);

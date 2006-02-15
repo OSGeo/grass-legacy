@@ -1,3 +1,4 @@
+#include <string.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 /**********************************************************************
@@ -37,3 +38,68 @@ int G_legal_filename (char *s)
 
     return 1;
 }
+
+/*!
+ \fn int Vect_check_input_output_name ( char * input, char * output, int error );
+ \brief  Check : 1) output is legal vector name
+ 		 2) if can find input map
+                 3) if input was found in current mapset, check if input != output
+ \return 0 OK
+ \return 1 error
+ \param  input input name
+ \param  output output name
+ \param  error error type GR_FATAL_EXIT, GR_FATAL_PRINT, GR_FATAL_RETURN
+*/
+
+int G_check_input_output_name ( char * input, char * output, int error )
+{
+    char *mapset;
+
+    if ( G_legal_filename(output) == -1 ) {
+	if ( error == GR_FATAL_EXIT ) {
+	    G_fatal_error ( _("Output name '%s' is not valid rast name."), output );  
+	} else if ( error == GR_FATAL_PRINT ) {
+	    G_warning ( _("Output name '%s' is not valid rast name."), output );
+	    return 1;
+	} else { /* GR_FATAL_RETURN */
+	    return 1;
+	}
+    }
+
+    mapset = G_find_cell2 (input, "");
+    
+    if ( mapset == NULL ) {
+	if ( error == GR_FATAL_EXIT ) {
+	    G_fatal_error ( _("Cannot find input map '%s'"), input );  
+	} else if ( error == GR_FATAL_PRINT ) {
+	    G_warning ( _("Cannot find input map '%s'"), input );
+	    return 1;
+	} else { /* GR_FATAL_RETURN */
+	    return 1;
+	}
+    }
+
+    if ( strcmp(mapset,G_mapset()) == 0 ) {
+	char *in, nm[1000], ms[1000];
+	
+        if ( G__name_is_fully_qualified(input,nm,ms) ) {
+	    in = nm;
+	} else {
+	    in = input;
+	}
+	
+     	if ( strcmp(in,output) == 0 ) {
+	    if ( error == GR_FATAL_EXIT ) {
+		G_fatal_error ( _("Output map '%s' is used as input"), output );  
+	    } else if ( error == GR_FATAL_PRINT ) {
+		G_warning ( _("Output map '%s' is used as input"), output );
+		return 1;
+	    } else { /* GR_FATAL_RETURN */
+		return 1;
+	    }
+	}
+    }
+
+    return 0;
+}
+

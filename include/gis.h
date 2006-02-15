@@ -145,6 +145,11 @@ typedef enum {
 #define BILINEAR  2  /* bilinear interpolation 		*/
 #define CUBIC     3  /* cubic interpolation 		*/
 
+/* for raster maps */
+#define GR_FATAL_EXIT    0
+#define GR_FATAL_PRINT   1
+#define GR_FATAL_RETURN  2
+
 /*=========================== Typedefs/Structures ==========================*/
 
 typedef int CELL;
