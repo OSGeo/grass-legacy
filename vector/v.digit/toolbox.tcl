@@ -168,6 +168,11 @@ $bbox add -image [image create photo -file "$vdpath/display.cats.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
         -helptext [G_msg "Display categories"]
 
+$bbox add -image [image create photo -file "$vdpath/copy.cats.gif"] \
+        -command "c_next_tool copy_cats" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
+        -helptext [G_msg "Copy categories"]
+
 $bbox add -image [image create photo -file "$vdpath/display.attributes.gif"] \
         -command "c_next_tool display_attributes" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \

@@ -81,6 +81,10 @@ tool_centre ( void )
 		Tool_next = TOOL_NOTHING;
 		display_cats ();
 		break;
+	    case TOOL_COPY_CATS :
+		Tool_next = TOOL_NOTHING;
+		copy_cats ();
+		break;
 	    case TOOL_DISPLAY_ATTRIBUTES :
 		Tool_next = TOOL_NOTHING;
 		display_attributes ();

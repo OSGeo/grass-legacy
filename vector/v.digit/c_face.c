@@ -60,6 +60,8 @@ c_next_tool ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 	Tool_next = TOOL_DELETE_LINE;
     else if ( strcmp ( tl, "display_cats" ) == 0 )
 	Tool_next = TOOL_DISPLAY_CATS;
+    else if ( strcmp ( tl, "copy_cats" ) == 0 )
+	Tool_next = TOOL_COPY_CATS;
     else if ( strcmp ( tl, "display_attributes" ) == 0 )
 	Tool_next = TOOL_DISPLAY_ATTRIBUTES;
     else if ( strcmp ( tl, "exit" ) == 0 )

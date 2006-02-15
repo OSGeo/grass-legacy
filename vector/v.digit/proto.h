@@ -38,6 +38,7 @@ int move_line (void);
 int delete_line (void);
 
 /* Attributes */
+int copy_cats (void);
 int display_cats (void);
 int del_cat (int, int, int);
 int add_cat (int, int, int);

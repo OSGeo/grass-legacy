@@ -241,6 +241,132 @@ int display_cats (void)
 
     return 1;
 }
+
+/* Copy categories from one feature to another */
+int copy_cats (void)
+{
+    int line, src_line, dest_line, new_line, type, i;
+    int sxn, syn, button;
+    double x,y,thresh;
+    struct line_pnts* Points;
+    struct line_cats *Src_Cats,*Dest_Cats;
+    
+    G_debug (2, "copy_cats()");
+
+    Points = Vect_new_line_struct ();
+    Src_Cats = Vect_new_cats_struct ();
+    Dest_Cats = Vect_new_cats_struct ();
+    
+    i_prompt ( "Copy attributes:"); 
+    i_prompt_buttons ( "Select source object", "", "Quit tool"); 
+    
+    driver_open();
+    
+    /* TODO: use some better threshold */
+    thresh = fabs ( D_d_to_u_col ( 10 ) - D_d_to_u_col ( 0 ) ) ; 
+    G_debug (2, "thresh = %f", thresh );
+    
+    line = 0;
+    src_line = 0;
+    dest_line = 0;
+    sxn = COOR_NULL; syn = COOR_NULL;
+    while ( 1 ) {
+	/* Get next coordinate */
+        R_set_update_function ( update );
+        R_get_location_with_pointer ( &sxn, &syn, &button); 
+        
+        if (button==0 || button==3) break; /* Quit tool */
+        
+	x =  D_d_to_u_col ( sxn );
+	y =  D_d_to_u_row ( syn );
+	G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
+        
+        if (src_line>0)
+            display_line (src_line, SYMB_DEFAULT, 1);
+        if (dest_line>0)
+            display_line (dest_line, SYMB_DEFAULT, 1);
+        if (button==1) {
+            line = Vect_find_line (&Map, x, y, 0, GV_LINES|GV_POINTS, thresh, 0, 0);
+            G_debug (3, "before: src_line=%d dest_line=%d line=%d",src_line,dest_line,line);
+            if (dest_line>0) {
+                /* We have a source- and a destination-object
+                 * => copy categories */
+                type = Vect_read_line (&Map, Points, Dest_Cats, dest_line);
+                new_line = Vect_rewrite_line (&Map, dest_line, type, Points, Src_Cats);
+		if (line==dest_line)
+			line = new_line;
+		dest_line = new_line;
+                
+                for (i=0; i<Dest_Cats->n_cats; i++) {
+                    check_record (Dest_Cats->field[i], Dest_Cats->cat[i]);
+                }
+                
+                updated_lines_and_nodes_erase_refresh_display ();
+                
+                /* move the selections on */
+                src_line = dest_line;
+                dest_line = line;
+            } else if (src_line>0) {
+                /* We have a source-object and possibly a destination object
+                 * was selected */
+                if (line<=0)
+                    src_line = 0;
+                else if (line!=src_line)
+                    dest_line = line;
+            } else {
+                /* We have no object selected and possible a source-object
+                 * was selected => read its categories into Src_Cats */
+                src_line = line;
+                if (src_line>0)
+                    Vect_read_line (&Map, Points, Src_Cats, src_line);
+            }
+            G_debug (3, "after: src_line=%d dest_line=%d line=%d",src_line,dest_line,line);
+        } else if (button==2) {
+            /* We need to deselect the last line selected */
+            if (dest_line>0) {
+                display_line (dest_line, SYMB_DEFAULT, 1);
+                dest_line = 0;
+            } else if (src_line>0) {
+                display_line (src_line, SYMB_DEFAULT, 1);
+                src_line = 0;
+            }
+        }
+                
+        /* Display the selected lines accordingly and set the button prompts */
+        if (dest_line>0) {
+            display_line (dest_line, SYMB_HIGHLIGHT, 1);
+            display_line (src_line, SYMB_HIGHLIGHT, 1);
+            i_prompt("Select the target object");
+            i_prompt_buttons("Conform and select next","Deselect Target","Quit tool");
+        } else if (src_line>0) {
+            display_line (src_line, SYMB_HIGHLIGHT, 1);
+            i_prompt("Select the target object");
+            i_prompt_buttons("Select","Deselect Source","Quit tool");
+        } else {
+            i_prompt ( "Copy attributes:"); 
+            i_prompt_buttons ( "Select source object", "", "Quit tool"); 
+        }
+    }
+    if (dest_line>0)
+        display_line (dest_line, SYMB_DEFAULT, 1);
+    if (src_line>0)
+        display_line (src_line, SYMB_DEFAULT, 1);
+    
+    driver_close();
+    
+    i_prompt (""); 
+    i_prompt_buttons ( "", "", ""); 
+    i_coor ( COOR_NULL, COOR_NULL);
+    
+    Vect_destroy_line_struct (Points);
+    Vect_destroy_cats_struct (Src_Cats);
+    Vect_destroy_cats_struct (Dest_Cats);
+    
+    G_debug (3, "copy_cats(): End");
+    
+    return 1;
+}
+
 /* Display attributes */
 int display_attributes (void)
 {
