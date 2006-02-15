@@ -1,10 +1,10 @@
 #include <stdlib.h>
+#include <string.h>
 #include <sys/types.h>
 #include <dirent.h>
 #include <grass/gis.h>
 #include <grass/display.h>
 #include <grass/D.h>
-#include <string.h>
 #include <grass/raster.h>
 
 int main( int argc , char **argv )
