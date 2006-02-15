@@ -13,9 +13,10 @@
  *
  ***********************************************************************/
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <stdlib.h>
 #include <grass/gis.h>
 
 
@@ -38,10 +39,9 @@
 int G_rename ( char *element,
     char *oldname, char *newname)
 {
-    char mv[1024];
-    char *path;
     char *mapset;
     char xname[512], xmapset[512];
+    char from[512], to[512];
 
 /* name in mapset legal only if mapset is current mapset */
     mapset = G_mapset();
@@ -52,18 +52,12 @@ int G_rename ( char *element,
     && strcmp (mapset, xmapset))
 	    return -1;
 
-    strcpy (mv, "mv ");
-    path = mv + strlen (mv);
-
 /* if file does not exist return 0 */
-    if (access (G__file_name (path, element, oldname, mapset),0) != 0)
+    if (access (G__file_name (from, element, oldname, mapset),0) != 0)
 	    return 0;
 
-/* now add new name to mv command */
-    path = mv + strlen (mv);
-    *path++ = ' ';
-    G__file_name (path, element, newname, mapset);
+    G__file_name (to, element, newname, mapset);
 
-/* return result of the mv command */
-    return system (mv) == 0 ? 1 : -1;
+/* return result of rename */
+    return rename(from, to) == 0 ? 1 : -1;
 }

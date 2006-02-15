@@ -24,8 +24,9 @@
 #  include <windows.h>
 #endif
 
-#include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <signal.h>
@@ -158,7 +159,6 @@ static int close_new (int fd,int ok)
     CELL cell_min, cell_max;
     int row, i, open_mode;
     char element[100];
-    char command[4096];
 
     if (ok) {
 #ifdef DEBUG
@@ -213,8 +213,7 @@ case OPEN_NEW_RANDOM: fprintf (stderr, "close %s random\n",FCB.name); break;
 #else
 	    if(link (FCB.null_temp_name, path) < 0) {
 #endif
-	        sprintf(command, "mv %s %s", FCB.null_temp_name, path);
-	        if(system(command)) {
+		if(rename(FCB.null_temp_name, path)) {
 	            sprintf(buf,"closecell: can't move %s\nto null file %s",
 		    FCB.null_temp_name, path);
 	            G_warning (buf);
@@ -287,8 +286,7 @@ case OPEN_NEW_RANDOM: fprintf (stderr, "close %s random\n",FCB.name); break;
 #else
 	if(link (FCB.temp_name, path) < 0) {
 #endif
-	    sprintf(command, "mv %s %s", FCB.temp_name, path);
-	    if(system(command)) {
+	    if(rename(FCB.temp_name, path)) {
 	        sprintf(buf,"closecell: can't move %s\nto cell file %s",
 	        FCB.temp_name, path);
 	        G_warning (buf);
