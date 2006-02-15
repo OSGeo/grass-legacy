@@ -144,14 +144,10 @@ static int list_element( FILE *out, char *element,
     char *desc, char *mapset, int (*lister)())
 {
     char path[1000];
-    char buf[400];
     DIR *dirp;
     struct dirent *dp;
-    FILE *ls;
-    FILE *G_popen();
-    int count, maxlen, num_cols;
+    int count = 0, maxlen = 0, num_cols = 0;
 
-    count = 0;
 /*
  * convert . to current mapset
  */
@@ -173,19 +169,9 @@ static int list_element( FILE *out, char *element,
  * otherwise the ls must be forced into columnar form.
  */
 
-#ifndef __MINGW32__
-	if (lister)
-	    sprintf(buf,"ls '%s'", path);
-	else
-	    sprintf(buf,"ls -C '%s'", path);
-#else
-        G_warning("libgis list_element(): List is not yet supported.");
-#endif /* __MINGW32__ */
-
 	if((dirp = opendir(path)) == NULL)
 		G_fatal_error("ERROR: %s: open failed.", path);
 
-	maxlen = num_cols = 0;
 	if(!lister)
 	{
 		int i;
