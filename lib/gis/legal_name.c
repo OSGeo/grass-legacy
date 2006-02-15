@@ -40,8 +40,8 @@ int G_legal_filename (char *s)
 }
 
 /*!
- \fn int Vect_check_input_output_name ( char * input, char * output, int error );
- \brief  Check : 1) output is legal vector name
+ \fn int G_check_input_output_name ( char * input, char * output, int error );
+ \brief  Check : 1) output is legal raster name
  		 2) if can find input map
                  3) if input was found in current mapset, check if input != output
  \return 0 OK
@@ -55,6 +55,7 @@ int G_check_input_output_name ( char * input, char * output, int error )
 {
     char *mapset;
 
+    if ( output == NULL) return 0; /* don't die on undefined parameters */
     if ( G_legal_filename(output) == -1 ) {
 	if ( error == GR_FATAL_EXIT ) {
 	    G_fatal_error ( _("Output name '%s' is not valid rast name."), output );  
