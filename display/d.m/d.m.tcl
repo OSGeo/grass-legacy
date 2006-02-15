@@ -39,7 +39,7 @@ set keyctrl "Ctrl"
 set execom "execute"
 set msg 0
 set mon ""
-
+set HOSTTYPE $env(HOSTTYPE)
 
 set bgcolor HoneyDew2
 
@@ -167,7 +167,6 @@ proc spawn {cmd args} {
 		$outtext insert end "$cmd_name\n"
 		$outtext yview end 
 		catch {cmd_output $fh}
-		
 		set env(GRASS_MESSAGE_FORMAT) $message_env
 	}
 
@@ -279,7 +278,9 @@ proc Dm::displmon { mon } {
         }
     }
     return
+	close $input
 }
+
 
 ###############################################################################
 
@@ -322,9 +323,9 @@ proc Dm::create { } {
 			if {[regexp -nocase {.*(selected).*} $line]} {
 				regexp -nocase {..} $line mon
 			}              
-		}
+		}	
 	}
-
+	close $input
 
     # toolbar 1 & 2 creation
     set tb1  [$mainframe addtoolbar]
@@ -371,7 +372,7 @@ proc Dm::create { } {
     set options_pane  [$pw2 add -minsize 50 -weight 1]
     set options_sw [ScrolledWindow $options_pane.sw -relief raised -borderwidth 1]
     set options_sf [ScrollableFrame $options_sw.sf]
-    $options_sf configure -height 180 -width 500
+    $options_sf configure -height 145 -width 500
     $options_sw setwidget $options_sf
     set options [$options_sf getframe]
     pack $options_pane -expand yes -fill both 
@@ -395,7 +396,7 @@ proc Dm::create { } {
 
     pack $mainframe -fill both -expand yes
  
-    set fon [font create -family Times -size 14 ]
+    set fon [font create -family Verdana -size 12 ]
     DynamicHelp::configure -font $fon -background yellow
 
 
@@ -636,6 +637,7 @@ proc Dm::monitor { } {
     }
     run "d.mon start=x0"
     return
+	close $input
 }
 
 ###############################################################################
@@ -805,9 +807,19 @@ proc Dm::position { } {
 
 # nviz
 proc Dm::nviz { } {
+global osxaqua
+global HOSTTYPE
     
     set cmd "nviz"
-    spawn $cmd
+	if { $HOSTTYPE == "macintosh" || $HOSTTYPE == "powermac" || $HOSTTYPE == "powerpc"} {
+		if { $osxaqua == "1"} {
+			spawn $cmd
+		} else {
+			term $cmd
+		}
+	} else {
+		spawn $cmd
+	}
 
 }
 
@@ -1232,12 +1244,12 @@ proc Dm::load { lpth } {
     set parent root
     set row 0
     while { [gets $rcfile in] > -1 } {
-	set key ""
-	set val ""
+		set key ""
+		set val ""
         set in [string trim $in " "] 
-	if { $in == "" } { continue }
+		if { $in == "" } { continue }
 
-	if { ![regexp -- {([^ ]+) (.+)$} $in r key val] } {
+		if { ![regexp -- {([^ ]+) (.+)$} $in r key val] } {
            set key $in
         }
         
@@ -1318,11 +1330,11 @@ proc Dm::load { lpth } {
 			$tree itemconfigure $current_node -text $val 
 		    }
 		    End {
-			set type [Dm::node_type $current_node]
-			if { $type == "group"  } {
-			    set parent [$tree parent $parent]
-			}
-			set current_node [$tree parent $current_node]
+				set type [Dm::node_type $current_node]
+				if { $type == "group"  } {
+					set parent [$tree parent $parent]
+				}
+				set current_node [$tree parent $current_node]
 		    }
 		    default {
 		      if {[catch {Dm::node_type $current_node}] } {

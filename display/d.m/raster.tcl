@@ -229,7 +229,7 @@ proc DmRaster::display { node } {
 			}              
 		}
 	}
-
+	close $input
 
     #display legend1 for raster map
     if { $opt($id,legend1) } { 

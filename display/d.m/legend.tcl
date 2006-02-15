@@ -273,6 +273,7 @@ proc DmLegend::display { node } {
         run_panel $cmd
         run "d.mon select=$currmon"
     }
+	close $input
 }
 
 proc DmLegend::print { file node } {
