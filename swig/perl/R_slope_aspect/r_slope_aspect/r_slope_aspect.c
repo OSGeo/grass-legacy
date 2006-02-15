@@ -2,12 +2,14 @@
 #include <string.h>
 #include <math.h>
 #include <grass/gis.h>
-#include "local_proto.h"
 #include <grass/glocale.h>
+#include "local_proto.h"
 
 /* 10/99 from GMSL, updated to new GRASS 5 code style , changed default "prec" to float*/
 
+
 #define abs(x) ((x)<0?-(x):(x))
+
 
 /**************************************************************************
  * input is from command line.
@@ -34,8 +36,6 @@
 int r_slope_aspect (int argc, char *argv[])
 {
     struct Categories cats;
-    int verbose;
-    int align;
     int elevation_fd;
     int aspect_fd ;
     int slope_fd ;
@@ -50,22 +50,21 @@ int r_slope_aspect (int argc, char *argv[])
     DCELL *c1, *c2, *c3, *c4, *c5, *c6, *c7, *c8, *c9;
     DCELL tmp1, tmp2;
     FCELL dat1, dat2;
-    void * asp_raster, *asp_ptr;
-    void * slp_raster, *slp_ptr;
-    void * pcurv_raster, *pcurv_ptr;
-    void * tcurv_raster, *tcurv_ptr;
-    void * dx_raster, *dx_ptr ;
-    void * dy_raster, *dy_ptr ;
-    void * dxx_raster, *dxx_ptr ;
-    void * dyy_raster, *dyy_ptr ;
-    void * dxy_raster, *dxy_ptr ;
+    void * asp_raster, *asp_ptr = NULL;
+    void * slp_raster, *slp_ptr = NULL;
+    void * pcurv_raster, *pcurv_ptr = NULL;
+    void * tcurv_raster, *tcurv_ptr = NULL;
+    void * dx_raster, *dx_ptr = NULL;
+    void * dy_raster, *dy_ptr = NULL;
+    void * dxx_raster, *dxx_ptr = NULL;
+    void * dyy_raster, *dyy_ptr = NULL;
+    void * dxy_raster, *dxy_ptr = NULL;
     int i;
-    RASTER_MAP_TYPE out_type, data_type;
+    RASTER_MAP_TYPE out_type = 0, data_type;
     int Wrap;  /* global wraparound */
     struct Cell_head window, cellhd;
     struct History  hist;
     struct Colors colors;
-    double ceil();
 
     char *elev_name;
     char *aspect_name;
@@ -82,14 +81,10 @@ int r_slope_aspect (int argc, char *argv[])
     int nrows, row;
     int ncols, col;
 
-    double G_distance();
-    double G_row_to_northing();
-    double G_col_to_easting();
     double north, east, south, west, ns_med;
 
     double radians_to_degrees;
     double degrees_to_radians;
-    double sqrt(), tan(), atan2(), atan();
     double H,V;
     double dx;              /* partial derivative in ew direction */
     double dy;              /* partial derivative in ns direction */
@@ -110,12 +105,11 @@ int r_slope_aspect (int argc, char *argv[])
     double key;
     double slp_in_perc, slp_in_deg;
     double min_slp=900., max_slp=0., min_slp_allowed;
-    int low, hi, test;
+    int low, hi, test = 0;
     int deg=0;
     int perc=0;
     char *slope_fmt;
-    char *str;
-	struct GModule *module;
+    struct GModule *module;
     struct
     {
 	struct Option *elevation, *slope_fmt, *slope, *aspect, *pcurv, *tcurv,
@@ -252,8 +246,8 @@ int r_slope_aspect (int argc, char *argv[])
     flag.q->key         = 'q' ;
     flag.q->description = _("Quiet") ;
 
-    radians_to_degrees = 180.0 / 3.14159 ;
-    degrees_to_radians = 3.14159 / 180.0 ;
+    radians_to_degrees = 180.0 / M_PI ;
+    degrees_to_radians = M_PI / 180.0 ;
 
 /* INC BY ONE
     answer[0] = 0.0;
@@ -277,10 +271,7 @@ int r_slope_aspect (int argc, char *argv[])
     }
 
     if (G_parser(argc, argv))
-        return(-1);
-
-    verbose = (!flag.q->answer);
-    align   = (!flag.a->answer);
+        exit(EXIT_FAILURE);
 
     elev_name = parm.elevation->answer;
     slope_name = parm.slope->answer;
@@ -294,18 +285,18 @@ int r_slope_aspect (int argc, char *argv[])
     dxy_name = parm.dxy->answer;
     if (sscanf (parm.zfactor->answer, "%lf", &zfactor) != 1 || zfactor <= 0.0)
     {
-        fprintf (stderr, "ERROR: %s=%s - must be a postive number\n",
-                       parm.zfactor->key, parm.zfactor->answer);
+        G_warning("%s=%s - must be a postive number", parm.zfactor->key,
+                       parm.zfactor->answer);
         G_usage();
-        return(1);
+        exit(EXIT_FAILURE);
     }
 
     if (sscanf (parm.min_slp_allowed->answer, "%lf", &min_slp_allowed) != 1 || min_slp_allowed < 0.0)
     {
-        fprintf (stderr, "ERROR: %s=%s - must be a non_negative number\n",
-                       parm.min_slp_allowed->key, parm.min_slp_allowed->answer);
+        G_warning("%s=%s - must be a non-negative number", parm.min_slp_allowed->key,
+                       parm.min_slp_allowed->answer);
         G_usage();
-        return(1);
+        exit(EXIT_FAILURE);
     }
 
     slope_fmt = parm.slope_fmt->answer;
@@ -317,26 +308,22 @@ int r_slope_aspect (int argc, char *argv[])
 	&& dx_name == NULL && dy_name == NULL 
 	&& dxx_name == NULL && dyy_name == NULL && dxy_name == NULL)
     {
-	fprintf(stderr, "\nYou must specify at least one of the parameters:");
-	fprintf(stderr, 
+	G_warning("You must specify at least one of the parameters:"
 		"\n<%s>, <%s>, <%s>, <%s>, <%s>, <%s>, <%s>, <%s>,  or <%s>\n", 
 		parm.slope->key, parm.aspect->key, parm.pcurv->key, 
 		parm.tcurv->key, parm.dx->key, parm.dy->key, 
 		parm.dxx->key, parm.dyy->key, parm.dxy->key);
 	G_usage();
-	return(1);
+	exit(EXIT_FAILURE);
     }
 
     /* check elevation file existence */
     mapset = G_find_cell2(elev_name, "");
     if (!mapset)
-    {
-        sprintf (buf, "elevation file [%s] not found\n", elev_name);
-        G_fatal_error (buf);
-        return(1);
-    }
-/* set the window from the header for the elevation file */
-    if (align)
+        G_fatal_error (_("elevation file [%s] not found"), elev_name);
+
+    /* set the window from the header for the elevation file */
+    if (!flag.a->answer)
     {
 	G_get_window (&window);
 	if (G_get_cellhd (elev_name, mapset, &cellhd) >= 0)
@@ -346,20 +333,17 @@ int r_slope_aspect (int argc, char *argv[])
 	}
     }
     
-   str = parm.out_precision->answer;
-   if(strcmp(str, "double")==0)
+   if(strcmp(parm.out_precision->answer, "double") == 0)
        out_type = DCELL_TYPE;
-   else if(strcmp(str, "float")==0)
+   else if(strcmp(parm.out_precision->answer, "float") == 0)
        out_type = FCELL_TYPE;
-   else if(strcmp(str, "int")==0)
+   else if(strcmp(parm.out_precision->answer, "int") == 0)
        out_type = CELL_TYPE;
-   else if(strcmp(str, "default")==0)
+   else if(strcmp(parm.out_precision->answer, "default") == 0)
        out_type = -1;
    else
-   {
-        sprintf(buf, "wrong type: %s", str);
-        G_fatal_error(buf);
-   }
+        G_fatal_error(_("wrong type: %s"), parm.out_precision->answer);
+
    data_type = out_type;
    if(data_type < 0) data_type = DCELL_TYPE;
    /* data type is the type of data being processed,
@@ -387,9 +371,7 @@ int r_slope_aspect (int argc, char *argv[])
    /* give warning if location units are different from meters and zfactor=1*/
     factor = G_database_units_to_meters_factor();
     if (factor != 1.0)
-    {
-    fprintf (stderr, "WARNING: converting units to meters, factor=%.6f\n", factor);
-    }
+        G_warning("converting units to meters, factor=%.6f", factor);
 
     G_begin_distance_calculations();
     north = G_row_to_northing(0.5, &window);
@@ -419,7 +401,7 @@ int r_slope_aspect (int argc, char *argv[])
 
     /* open the elevation file for reading */
     elevation_fd = G_open_cell_old (elev_name, mapset);
-    if (elevation_fd < 0) return(1);
+    if (elevation_fd < 0) exit(EXIT_FAILURE);
     elev_cell[0] = (DCELL *) G_calloc (ncols + 1, sizeof(DCELL));
     G_set_d_null_value(elev_cell[0], ncols);
     elev_cell[1] = (DCELL *) G_calloc (ncols + 1, sizeof(DCELL));
@@ -546,7 +528,7 @@ int r_slope_aspect (int argc, char *argv[])
 
     if (aspect_fd < 0 && slope_fd < 0 && pcurv_fd < 0 && tcurv_fd < 0
 	&& dx_fd < 0 && dy_fd < 0 && dxx_fd < 0 && dyy_fd < 0 && dxy_fd < 0)
-        return(1);
+        exit(EXIT_FAILURE);
 
     if(Wrap)
     {
@@ -564,12 +546,10 @@ int r_slope_aspect (int argc, char *argv[])
     }
     else G_get_d_raster_row_nomask (elevation_fd, elev_cell[2],1);
 
-    if (verbose) fprintf (stderr, "percent complete: ");
+    if (!flag.q->answer) fprintf (stderr, "percent complete: ");
     for (row = 2; row < nrows; row++)
     {
-
-/*  if projection is Lat/Lon, recalculate  V and H   */
-
+        /*  if projection is Lat/Lon, recalculate  V and H   */
 	if (G_projection()==PROJECTION_LL)
 	{
           north = G_row_to_northing((row-2 + 0.5), &window);
@@ -598,11 +578,12 @@ int r_slope_aspect (int argc, char *argv[])
 */
 	}
 
-        if (verbose) G_percent (row, nrows, 2);
+        if (!flag.q->answer) G_percent (row, nrows, 2);
         temp = elev_cell[0];
         elev_cell[0] = elev_cell[1];
         elev_cell[1] = elev_cell[2];
 	elev_cell[2] = temp;
+
         if(Wrap)
         {
            G_get_d_raster_row_nomask (elevation_fd, elev_cell[2] + 1, row);
@@ -626,16 +607,14 @@ int r_slope_aspect (int argc, char *argv[])
 	    if(Wrap)
 	       asp_ptr = asp_raster;
             else 
-	       asp_ptr = G_incr_void_ptr(asp_raster, 
-				  G_raster_size(data_type));
+	       asp_ptr = G_incr_void_ptr(asp_raster, G_raster_size(data_type));
         }
 	if (slope_fd >= 0)
 	{
 	    if(Wrap)
 	       slp_ptr = slp_raster;
             else 
-	       slp_ptr = G_incr_void_ptr(slp_raster, 
-				  G_raster_size(data_type));
+	       slp_ptr = G_incr_void_ptr(slp_raster, G_raster_size(data_type));
         }
 
         if (pcurv_fd >= 0)
@@ -643,8 +622,7 @@ int r_slope_aspect (int argc, char *argv[])
             if(Wrap)
                pcurv_ptr = pcurv_raster;
             else
-               pcurv_ptr = G_incr_void_ptr(pcurv_raster,
-				G_raster_size(data_type));
+               pcurv_ptr = G_incr_void_ptr(pcurv_raster, G_raster_size(data_type));
         }
 
         if (tcurv_fd >= 0)
@@ -652,8 +630,7 @@ int r_slope_aspect (int argc, char *argv[])
             if(Wrap)
                tcurv_ptr = tcurv_raster;
             else
-               tcurv_ptr = G_incr_void_ptr(tcurv_raster,
-                                G_raster_size(data_type));
+               tcurv_ptr = G_incr_void_ptr(tcurv_raster, G_raster_size(data_type));
         }
 
         if (dx_fd >= 0)
@@ -661,8 +638,7 @@ int r_slope_aspect (int argc, char *argv[])
             if(Wrap)
                dx_ptr = dx_raster;
             else
-               dx_ptr = G_incr_void_ptr(dx_raster,
-                                G_raster_size(data_type));
+               dx_ptr = G_incr_void_ptr(dx_raster, G_raster_size(data_type));
         }
 
         if (dy_fd >= 0)
@@ -670,8 +646,7 @@ int r_slope_aspect (int argc, char *argv[])
             if(Wrap)
                dy_ptr = dy_raster;
             else
-               dy_ptr = G_incr_void_ptr(dy_raster,
-                                G_raster_size(data_type));
+               dy_ptr = G_incr_void_ptr(dy_raster, G_raster_size(data_type));
         }
 
         if (dxx_fd >= 0)
@@ -679,8 +654,7 @@ int r_slope_aspect (int argc, char *argv[])
             if(Wrap)
                dxx_ptr = dxx_raster;
             else
-               dxx_ptr = G_incr_void_ptr(dxx_raster,
-                                G_raster_size(data_type));
+               dxx_ptr = G_incr_void_ptr(dxx_raster, G_raster_size(data_type));
         }
 
         if (dyy_fd >= 0)
@@ -688,8 +662,7 @@ int r_slope_aspect (int argc, char *argv[])
             if(Wrap)
                dyy_ptr = dyy_raster;
             else
-               dyy_ptr = G_incr_void_ptr(dyy_raster,
-                                G_raster_size(data_type));
+               dyy_ptr = G_incr_void_ptr(dyy_raster, G_raster_size(data_type));
         }
 
         if (dxy_fd >= 0)
@@ -697,8 +670,7 @@ int r_slope_aspect (int argc, char *argv[])
             if(Wrap)
                dxy_ptr = dxy_raster;
             else
-               dxy_ptr = G_incr_void_ptr(dxy_raster,
-                                G_raster_size(data_type));
+               dxy_ptr = G_incr_void_ptr(dxy_raster, G_raster_size(data_type));
         }
 
 
@@ -772,6 +744,7 @@ int r_slope_aspect (int argc, char *argv[])
             key = dx*dx + dy*dy;
 	    slp_in_perc = 100*sqrt(key);  
             slp_in_deg = atan(sqrt(key)) * radians_to_degrees;
+
 	    /* now update min and max */
 	    if(deg)
 	    {
@@ -945,7 +918,6 @@ int r_slope_aspect (int argc, char *argv[])
 	       if(c1max < pcurv) c1max = pcurv;
                if(c2min > tcurv) c2min = tcurv;
                if(c2max < tcurv) c2max = tcurv;
-
 	     }
 
 	     if (pcurv_fd > 0)
@@ -996,18 +968,17 @@ int r_slope_aspect (int argc, char *argv[])
             G_put_raster_row(dxy_fd, dxy_raster, data_type);
 
     } /* row loop */
-    if (verbose) G_percent (row, nrows, 2);
+    if (flag.q->answer) G_percent (row, nrows, 2);
 
     G_close_cell (elevation_fd);
-    if (verbose)
-        fprintf (stderr,"CREATING SUPPORT FILES\n");
+    if (!flag.q->answer)
+        G_message(_("CREATING SUPPORT FILES"));
 
-    fprintf (stdout, "ELEVATION PRODUCTS for mapset [%s] in [%s]\n",
+    G_message(_("ELEVATION PRODUCTS for mapset [%s] in [%s]"),
         G_mapset(), G_location());
 
     if (aspect_fd >= 0)
     {
-
         /* colortable for aspect  same as in s.surf.rst
      G_init_colors (&colors);
      G_add_color_rule (0, 255, 255, 255, 0, 255, 255, 255, &colors);
@@ -1030,12 +1001,12 @@ int r_slope_aspect (int argc, char *argv[])
         G_read_raster_cats (aspect_name, G_mapset(), &cats);
         G_set_raster_cats_title ("aspect counterclockwise in degrees from east", &cats);
 
-	fprintf(stdout, "min computed aspect %.4f  max computed aspect %.4f\n", min_asp, max_asp);
+	G_message(_("min computed aspect %.4f  max computed aspect %.4f"), min_asp, max_asp);
 	/* the categries quant intervals are 1.0 long, plus
 	   we are using reverse order so that the label looked up
 	   for i-.5 is not the one defined for i-.5, i+.5 interval, but
 	   the one defile for i-1.5, i-.5 interval which is added later */
-	for(i=ceil(max_asp);i>=1;i--)
+	for(i = ceil(max_asp); i >= 1; i--)
 	{
 	       if(i==360)sprintf(buf,"east");
 	       else if(i==360)sprintf(buf,"east");
@@ -1080,12 +1051,12 @@ int r_slope_aspect (int argc, char *argv[])
         hist.edlinecnt = 3;
         G_write_history (aspect_name, &hist);
 
-        fprintf (stdout, "ASPECT [%s] COMPLETE\n", aspect_name);
+        G_message(_("ASPECT [%s] COMPLETE"), aspect_name);
     }
 
     if (slope_fd >= 0)
     {
-	      /* colortable for slopes */
+      /* colortable for slopes */
       G_init_colors (&colors);
       G_add_color_rule (0, 255, 255, 255, 2, 255, 255, 0, &colors);
       G_add_color_rule (2, 255, 255, 0, 5, 0, 255, 0, &colors);
@@ -1120,7 +1091,7 @@ int r_slope_aspect (int argc, char *argv[])
         if(deg) G_set_raster_cats_title ("slope in degrees", &cats);
         else if(perc) G_set_raster_cats_title ("percent slope", &cats);
 
-	fprintf(stdout, "min computed slope %.4f  max computed slope %.4f\n", min_slp, max_slp);
+	G_message(_("min computed slope %.4f  max computed slope %.4f"), min_slp, max_slp);
 	/* the categries quant intervals are 1.0 long, plus
 	   we are using reverse order so that the label looked up
 	   for i-.5 is not the one defined for i-.5, i+.5 interval, but
@@ -1170,7 +1141,7 @@ int r_slope_aspect (int argc, char *argv[])
         hist.edlinecnt = 3;
         G_write_history (slope_name, &hist);
 
-        fprintf (stdout, "SLOPE [%s] COMPLETE\n", slope_name);
+        G_message(_("SLOPE [%s] COMPLETE"), slope_name);
     }
 
     /* colortable for curvatures */
@@ -1215,8 +1186,6 @@ int r_slope_aspect (int argc, char *argv[])
                                  &dat2, 255, 0, 200, &colors);
 	}
 
-
-    
     if (pcurv_fd >= 0)
     {
         G_set_null_value(pcurv_raster, G_window_cols(), data_type);
@@ -1241,7 +1210,7 @@ int r_slope_aspect (int argc, char *argv[])
         hist.edlinecnt = 3;
         G_write_history (pcurv_name, &hist);
 
-        fprintf (stdout, "PROFILE CURVE [%s] COMPLETE\n", pcurv_name);
+        G_message(_("PROFILE CURVE [%s] COMPLETE"), pcurv_name);
     }
 
     if (tcurv_fd >= 0)
@@ -1268,7 +1237,7 @@ int r_slope_aspect (int argc, char *argv[])
         hist.edlinecnt = 3;
         G_write_history (tcurv_name, &hist);
 
-        fprintf (stdout, "TANGENTIAL CURVE [%s] COMPLETE\n", tcurv_name);
+        G_message(_("TANGENTIAL CURVE [%s] COMPLETE"), tcurv_name);
     }   
 
     if (dx_fd >= 0)
@@ -1293,7 +1262,7 @@ int r_slope_aspect (int argc, char *argv[])
         hist.edlinecnt = 3;
         G_write_history (dx_name, &hist);
 
-        fprintf (stdout, "E-W SLOPE [%s] COMPLETE\n", dx_name);
+        G_message(_("E-W SLOPE [%s] COMPLETE"), dx_name);
     }   
 
     if (dy_fd >= 0)
@@ -1318,7 +1287,7 @@ int r_slope_aspect (int argc, char *argv[])
         hist.edlinecnt = 3;
         G_write_history (dy_name, &hist);
 
-        fprintf (stdout, "N-S SLOPE [%s] COMPLETE\n", dy_name);
+        G_message(_("N-S SLOPE [%s] COMPLETE"), dy_name);
     }   
 
     if (dxx_fd >= 0)
@@ -1343,7 +1312,7 @@ int r_slope_aspect (int argc, char *argv[])
         hist.edlinecnt = 3;
         G_write_history (dxx_name, &hist);
 
-        fprintf (stdout, "DXX [%s] COMPLETE\n", dxx_name);
+        G_message(_("DXX [%s] COMPLETE"), dxx_name);
     }   
 
     if (dyy_fd >= 0)
@@ -1368,7 +1337,7 @@ int r_slope_aspect (int argc, char *argv[])
         hist.edlinecnt = 3;
         G_write_history (dyy_name, &hist);
 
-        fprintf (stdout, "DYY [%s] COMPLETE\n", dyy_name);
+        G_message(_("DYY [%s] COMPLETE"), dyy_name);
     }   
 
     if (dxy_fd >= 0)
@@ -1393,8 +1362,8 @@ int r_slope_aspect (int argc, char *argv[])
         hist.edlinecnt = 3;
         G_write_history (dxy_name, &hist);
 
-        fprintf (stdout, "DXY [%s] COMPLETE\n", dxy_name);
+        G_message(_("DXY [%s] COMPLETE"), dxy_name);
     }   
 
-    return(0);
+    exit(EXIT_SUCCESS);
 }
