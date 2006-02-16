@@ -14,7 +14,7 @@
 #define lstat(path, sb) stat(path, sb)
 #endif
 
-static int recursive_copy(const char *from, const char *to);
+static int recursive_copy(const char *src, const char *dst);
 
 int do_copy (int n, char *old, char *mapset, char *new)
 {
@@ -78,29 +78,29 @@ int do_copy (int n, char *old, char *mapset, char *new)
  * This rule is designed according to general/manage/lib/copy.sh.
  *
  * POSSIBLE CASES:
- * if 'from' is a file:
- * 	if 'to' does not exist:
- * 		copy 'from' to 'to'			RULE 1
- * 	if 'to' is a file:
- * 		delete 'to' and copy 'from' to 'to'	RULE 2
- * 	if 'to' is a directory:
- * 		try recursive_copy('from', 'to/from')	RULE 3
- * if 'from' is a directory:
- * 	if 'to' does not exist:
- * 		copy 'from' to 'to'			RULE 1
- * 	if 'to' is a file:
- * 		delete 'to' and copy 'from' to 'to'	RULE 2
- * 	if 'to' is a directory:
+ * if src is a file:
+ * 	if dst does not exist:
+ * 		copy src to dst				RULE 1
+ * 	if dst is a file:
+ * 		delete dst and copy src to dst		RULE 2
+ * 	if dst is a directory:
+ * 		try recursive_copy(src, dst/src)	RULE 3
+ * if src is a directory:
+ * 	if dst does not exist:
+ * 		copy src to dst				RULE 1
+ * 	if dst is a file:
+ * 		delete dst and copy src to dst		RULE 2
+ * 	if dst is a directory:
  * 		try					RULE 4
- * 		for i in `ls from`
+ * 		for i in `ls src`
  * 		do
- * 			recursive_copy('from/$i', 'to/$i')
+ * 			recursive_copy(src/$i, dst/$i)
  * 		done
  *
  * RETURN: 0 if successful, otherwise 1
  */
 static int
-recursive_copy(const char *from, const char *to)
+recursive_copy(const char *src, const char *dst)
 {
 	DIR *dirp;
 	struct dirent *dp;
@@ -110,26 +110,26 @@ recursive_copy(const char *from, const char *to)
 	size_t len, len2;
 	mode_t mode;
 
-	if(lstat(from, &sb))
+	if(lstat(src, &sb))
 		return 1;
 
-	/* from is a file */
+	/* src is a file */
 	if(!S_ISDIR((mode = sb.st_mode)))
 	{
-		if(!lstat(to, &sb) && S_ISDIR(sb.st_mode))
+		if(!lstat(dst, &sb) && S_ISDIR(sb.st_mode))
 		{
-			const char *p = strrchr(from, '/');
-			/* from => to/from */
-			sprintf(buf, "%s/%s", to, (p?p+1:from));
+			const char *p = strrchr(src, '/');
+			/* src => dst/src */
+			sprintf(buf, "%s/%s", dst, (p?p+1:src));
 
-			return recursive_copy(from, buf);
+			return recursive_copy(src, buf);
 		}
 
-		/* from => to */
-		if((fd = open(from, O_RDONLY)) < 0)
+		/* src => dst */
+		if((fd = open(src, O_RDONLY)) < 0)
 			return 1;
 
-		if((fd2 = open(to, O_CREAT|O_TRUNC|O_WRONLY, mode & 0777)) < 0)
+		if((fd2 = open(dst, O_CREAT|O_TRUNC|O_WRONLY, mode & 0777)) < 0)
 		{
 			close(fd);
 			return 1;
@@ -145,29 +145,29 @@ recursive_copy(const char *from, const char *to)
 		return 0;
 	}
 
-	/* from is a directory */
+	/* src is a directory */
 
-	if(lstat(to, &sb))
+	if(lstat(dst, &sb))
 	{
-		if(mkdir(to, mode & 0777))
+		if(mkdir(dst, mode & 0777))
 			return 1;
 	}else
-	/* if to already exists and it's a file, try to remove it */
+	/* if dst already exists and it's a file, try to remove it */
 	if(!S_ISDIR(sb.st_mode))
 	{
-		if(remove(to) || mkdir(to, mode & 0777))
+		if(remove(dst) || mkdir(dst, mode & 0777))
 			return 1;
 	}
 
-	if((dirp = opendir(from)) == NULL)
+	if((dirp = opendir(src)) == NULL)
 		return 1;
 	while((dp = readdir(dirp)) != NULL)
 	{
 		/* do not copy hidden files */
 		if(dp->d_name[0] == '.')
 			continue;
-		sprintf(buf, "%s/%s", from, dp->d_name);
-		sprintf(buf2, "%s/%s", to, dp->d_name);
+		sprintf(buf, "%s/%s", src, dp->d_name);
+		sprintf(buf2, "%s/%s", dst, dp->d_name);
 		if(recursive_copy(buf, buf2))
 			return 1;
 	}
