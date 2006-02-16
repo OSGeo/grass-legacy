@@ -193,7 +193,7 @@ See also: http://gcc.gnu.org/
 A real fast GRASS version (and small binaries) will be created with
 LDFLAGS set to "stripping" (but this disables debugging):
 
-  CFLAGS="-O3 -mcpu=pentium4 -Wall" LDFLAGS="-s" ./configure
+  CFLAGS="-O2 -mcpu=pentium4 -Wall" LDFLAGS="-s" ./configure
 
 
 (I) DEBUGGING OPTIONS
