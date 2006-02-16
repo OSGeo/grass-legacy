@@ -64,11 +64,11 @@ struct windows profiles[] =
         {"pro3", 22,  43,  50, 100},
         {"pro4",  0,  22,  50, 100}
         } ;
-int another_button, leftb, middleb, rightb;
+int leftb, middleb, rightb;
 #else
 extern struct windows windows[];
 extern struct windows profiles[];
-extern int another_button, leftb, middleb, rightb;
+extern int leftb, middleb, rightb;
 #endif
 
 #define MOU     windows[0]

@@ -26,8 +26,8 @@ int
 i_prompt_buttons (char *l, char *m, char *r)
 {
     Tcl_SetVar(Toolbox, "prompt_left", l, TCL_GLOBAL_ONLY);  
-    Tcl_SetVar(Toolbox, "prompt_middle", m, TCL_GLOBAL_ONLY);  
-    Tcl_SetVar(Toolbox, "prompt_right", r, TCL_GLOBAL_ONLY);  
+    Tcl_SetVar(Toolbox, "prompt_middle", (middleb==2?m:r), TCL_GLOBAL_ONLY);  
+    Tcl_SetVar(Toolbox, "prompt_right", (middleb==2?r:m), TCL_GLOBAL_ONLY);  
     return 1;
 }
 
