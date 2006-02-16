@@ -35,21 +35,9 @@ main (int argc, char *argv[])
 	char   *mapset;
 	struct Option *old, *new;
 
-	old = G_define_option();
-	old->key = "input";
-	old->type =  TYPE_STRING;
-	old->required = YES;
-	old->multiple = NO;
-	old->gisprompt = "input vector";
-	old->description  = _("name of input vector file");
+	old = G_define_standard_option(G_OPT_V_INPUT);
 	
-	new = G_define_option();
-	new->key = "output";
-	new->type =  TYPE_STRING;
-	new->required = YES;
-	new->multiple = NO;
-	new->gisprompt = "output vector";
-        new->description = _("name of resulting vector file");
+	new = G_define_standard_option(G_OPT_V_OUTPUT);
 
 	G_gisinit(argv[0]);
         if (G_parser (argc, argv))
@@ -58,10 +46,13 @@ main (int argc, char *argv[])
         Points = Vect_new_line_struct ();
 	Cats = Vect_new_cats_struct ();
 	
-        if ((mapset = G_find_vector2 (old->answer, "")) == NULL)
+	Vect_check_input_output_name ( inopt->answer, outopt->answer, GV_FATAL_EXIT );
+
+	if ((mapset = G_find_vector2 (old->answer, "")) == NULL)
 	     G_fatal_error ( _("Could not find input %s"), old->answer);
-	     
-        Vect_set_open_level (2); 
+	
+        Vect_set_open_level (2);
+	
 	if (1 > Vect_open_old (&In, old->answer, mapset) )
 	     G_fatal_error ( _("Could not open input") );
 	
@@ -93,7 +84,6 @@ main (int argc, char *argv[])
 	Vect_close (&In);
 	Vect_close (&Out);
 
-	exit(0) ;
+	exit(EXIT_SUCCESS) ;
 }
-
 
