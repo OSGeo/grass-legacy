@@ -221,10 +221,10 @@ proc MapCanvas::mapsettings { mon } {
 			
     set monregion "$gisdbase/$location_name/$mapset/windows/mon_$mon"
 	if {[file exists $monregion] } {
-		set cmd "g.region region=mon_$mon"	
+		set cmd "g.region -a region=mon_$mon"	
 		runcmd $cmd
 	} else {
-		set cmd "g.region save=mon_$mon --o"	
+		set cmd "g.region -a save=mon_$mon --o"	
 		runcmd $cmd
 	}
 		
@@ -367,8 +367,8 @@ proc MapCanvas::zoom_default { mon } {
 	global canvas_h
 	global canvas_w
     
-	run "g.region save=previous_zoom --o"
-	set cmd "g.region -d save=mon_$mon --o"
+	run "g.region -a save=previous_zoom --o"
+	set cmd "g.region -ad save=mon_$mon --o"
     run_panel $cmd 
 	
 	$can($mon) delete map$mon
@@ -386,8 +386,8 @@ proc MapCanvas::zoom_region { mon } {
    
     set reg [GSelect windows]
     if { $reg != "" } {
-		run "g.region save=previous_zoom --o"
-		set cmd "g.region region=$reg save=mon_$mon --o"
+		run "g.region -a save=previous_zoom --o"
+		set cmd "g.region -a region=$reg save=mon_$mon --o"
 		run_panel $cmd 
     }
 	$can($mon) delete map$mon
@@ -406,7 +406,7 @@ proc MapCanvas::zoombind { mon zoom } {
 	
 	set mapcursor [$can($mon) cget -cursor]
 
-    set MapCanvas::msg($mon) "L mouse button draws zoom rectangle, R button zooms"
+    set MapCanvas::msg($mon) "Drag mouse to zoom/unzoom, R button stops zooming"
 
 	bind $can($mon) <2> ""
 	bind $can($mon) <3> ""
@@ -416,9 +416,9 @@ proc MapCanvas::zoombind { mon zoom } {
 		MapCanvas::setcursor $mon "plus"
 		}
 	bind $can($mon) <B1-Motion> "MapCanvas::drawzoom $mon %x %y"
-#	bind $can($mon) <ButtonRelease-1> "MapCanvas::zoomregion $mon $zoom"
+	bind $can($mon) <ButtonRelease-1> "MapCanvas::zoomregion $mon $zoom"
 
-	bind $can($mon) <3>  "MapCanvas::zoomregion $mon $zoom"
+	bind $can($mon) <3>  "MapCanvas::stopzoom $mon"
 
 }
 
@@ -495,8 +495,8 @@ proc MapCanvas::zoomregion { mon zoom } {
 
 	# zoom in
 	if { $zoom == 1 } {
-		run "g.region save=previous_zoom --o"
-		set cmd "g.region n=$north s=$south \
+		run "g.region -a save=previous_zoom --o"
+		set cmd "g.region -a n=$north s=$south \
 			e=$east w=$west save=mon_$mon --o"
 		run $cmd
 	}
@@ -507,8 +507,8 @@ proc MapCanvas::zoomregion { mon zoom } {
 		set downsouth [expr $map_s - abs($south - $map_s)]
 		set backeast  [expr $map_e + abs($map_e - $east)]
 		set outwest  [expr $map_w - abs($west - $map_w)]
-		run "g.region save=previous_zoom --o"
-		set cmd "g.region n=$upnorth s=$downsouth \
+		run "g.region -a save=previous_zoom --o"
+		set cmd "g.region -a n=$upnorth s=$downsouth \
 			e=$backeast w=$outwest save=mon_$mon --o"
 		run $cmd
 	}
@@ -518,6 +518,14 @@ proc MapCanvas::zoomregion { mon zoom } {
     $can($mon) delete area
 	MapCanvas::mapsettings $mon
 	MapCanvas::drawmap $mon
+}
+
+# stop zooming
+proc MapCanvas::stopzoom { mon } {
+	variable can
+	global canvas_h
+	global canvas_w
+
 	
 	# release bindings
 	bind $can($mon) <1> ""
@@ -550,7 +558,7 @@ proc MapCanvas::zoom_back { mon } {
 	global canvas_h
 	global canvas_w
     
-    set cmd "g.region region=previous_zoom save=mon_$mon --o"
+    set cmd "g.region -a region=previous_zoom save=mon_$mon --o"
     runcmd $cmd
 	$can($mon) delete map$mon
 	MapCanvas::mapsettings $mon
@@ -582,7 +590,7 @@ proc MapCanvas::panbind { mon } {
 	bind $can($mon) <ButtonRelease-1> {
 		MapCanvas::pan $mon
 		}
-	bind $can($mon) <3> {MapCanvas::stoppan $mon}
+	bind $can($mon) <3> "MapCanvas::stoppan $mon"
 }
 
 
@@ -644,8 +652,8 @@ proc MapCanvas::pan { mon } {
 	set west  [expr $map_w - ($to_e - $from_e)]
 	
 	# reset region and redraw map
-	run "g.region save=previous_zoom --o"
-	set cmd "g.region n=$north s=$south \
+	run "g.region -a save=previous_zoom --o"
+	set cmd "g.region -a n=$north s=$south \
 		e=$east w=$west save=mon_$mon --o"
 	run $cmd
 	
