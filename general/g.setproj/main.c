@@ -339,8 +339,8 @@ int main(int argc, char *argv[])
 	   **  written out once it is opened for write 
 	 */
 	if (exist) {
-		sprintf(buff, "mv %s %s~", path, path);
-		system(buff);
+		sprintf(buff, "%s~", path);
+		rename(path, buff);
 	}
 	if (Out_proj == 0)
 		goto write_units;
@@ -684,8 +684,8 @@ int main(int argc, char *argv[])
 	   ** so if units file is here, remove it.
 	 */
 	if (access(path, 0) == 0) {
-		sprintf(buff, "mv -f %s %s~", path, path);
-		system(buff);
+		sprintf(buff, "%s~", path);
+		rename(path, buff);
 	}
 	if (Out_proj == 0)
 		leave(0);
@@ -759,8 +759,7 @@ int main(int argc, char *argv[])
 #ifdef FOO
 						if (proj_index == STP && !strcmp(answer, "feet")) {
 							fprintf(stderr, "%cPROJECTION 99 State Plane cannot be in FEET.\n", 7);
-							sprintf(buff, "rm -f %s", path);
-							system(buff);	/* remove file */
+							remove(path);	/* remove file */
 							leave(SP_FATAL);
 						}
 #endif
