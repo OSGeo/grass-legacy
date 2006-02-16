@@ -249,6 +249,13 @@ proc settings {} {
                 -command { set_color node_2 $symb(node_2,color) }
     pack $row.a -side left; pack $row.c $row.b -side right; pack $row -side top -fill x -expand yes
 
+    # Linewidth
+    set row [ frame $symbf.row13 ]
+    Label $row.a -anchor w -width $clw -text [G_msg "Linewidth (Pixels)"]  
+    Entry $row.b -width 10 -textvariable GVariable(linewidth) \
+                           -command { c_var_set linewidth $GVariable(linewidth) } 
+    pack $row.a -side left; pack $row.b -side right; pack $row -side top -fill x -expand yes
+
     # --- Settings ---
     set setf [$nb insert end settings -text [G_msg "Settings"]]
 

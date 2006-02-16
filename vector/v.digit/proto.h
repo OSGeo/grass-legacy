@@ -36,6 +36,7 @@ int rm_vertex (void);
 int split_line (void);
 int move_line (void);
 int delete_line (void);
+int edit_line (void);
 
 /* Attributes */
 int copy_cats (void);

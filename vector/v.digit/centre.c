@@ -69,6 +69,10 @@ tool_centre ( void )
 		Tool_next = TOOL_NOTHING;
 		split_line ();
 		break;
+	    case TOOL_EDIT_LINE :
+		Tool_next = TOOL_NOTHING;
+		edit_line ();
+		break;
 	    case TOOL_MOVE_LINE :
 		Tool_next = TOOL_NOTHING;
 		move_line ();
