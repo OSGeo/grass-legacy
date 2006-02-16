@@ -23,3 +23,6 @@ default: $(DRIVER)
 $(DRIVER): $(ARCH_OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(FMODE_OBJ) $(SQLITELIBPATH) $(LIBES) \
 		$(MATHLIB) $(XDRLIB)
+
+$(DRVDOC): sqlite.html
+        $(INSTALL) -m 644 sqlite.html $(DRVDOC)
