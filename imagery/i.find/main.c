@@ -78,8 +78,8 @@ main (int argc, char *argv[])
 	    G_system(command);
 	}
 	unlink (tempfile);
-        G_free(tempfile);
     }
+    G_free(tempfile);
 
     return 0;
 }
