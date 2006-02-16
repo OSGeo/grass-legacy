@@ -21,7 +21,11 @@
 #include <dirent.h>
 #include <grass/gis.h>
 
-static int _remove(const char *path);
+#ifdef __MINGW32__
+#define lstat(path, sb) stat(path, sb)
+#endif
+
+static int recursive_remove(const char *path);
 
 /*!
  * \brief remove a database file
@@ -57,7 +61,7 @@ int G_remove ( char *element, char *name)
     if (access (G__file_name (path, element, name, mapset),0) != 0)
 	    return 0;
 
-    if (_remove(path) == 0)
+    if (recursive_remove(path) == 0)
 	    return 1;
 
     return -1;
@@ -65,7 +69,7 @@ int G_remove ( char *element, char *name)
 
 /* equivalent to rm -rf path */
 static int
-_remove(const char *path)
+recursive_remove(const char *path)
 {
 	DIR *dirp;
 	struct dirent *dp;
@@ -84,12 +88,7 @@ _remove(const char *path)
 		if(dp->d_name[0] == '.')
 			continue;
 		sprintf(path2, "%s/%s", path, dp->d_name);
-		if(lstat(path2, &sb))
-			continue;
-		if(S_ISDIR(sb.st_mode))
-			_remove(path2);
-		else
-			remove(path2);
+		recursive_remove(path2);
 	}
 	closedir(dirp);
 
