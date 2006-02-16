@@ -35,8 +35,6 @@ void XD_Polyline_rel(const int *xarray, const int *yarray, int number)
 	}
 
 	XDrawLines(dpy, bkupmap, gc, xpnts, number, CoordModePrevious);
-	cur_x = xarray[number - 1];
-	cur_y = yarray[number - 1];
 	needs_flush = 1;
 }
 
