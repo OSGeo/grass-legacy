@@ -97,6 +97,8 @@ int do_copy (int n, char *old, char *mapset, char *new)
  * 		do
  * 			recursive_copy('from/$i', 'to/$i')
  * 		done
+ *
+ * RETURN: 0 if successful, otherwise 1
  */
 static int
 recursive_copy(const char *from, const char *to)
