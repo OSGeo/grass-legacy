@@ -143,15 +143,16 @@ wordcount ${TMP}_binned_radians | sort -n -t ' ' -k 1 > ${TMP}_occurencies
 MAXRADIUS="`cat ${TMP}_occurencies | sort -n -t ' ' -k 2 | tail -n 1 | cut -d' ' -f2`"
 
 # now do cos() sin()
-cat ${TMP}_occurencies | awk '{printf "%f %f\n", cos($1) * $2 , sin($1) *$2'} > ${TMP}_sine_cosine
+cat ${TMP}_occurencies | awk '{printf "%f %f\n", cos($1) * $2 , sin($1) *$2}' > ${TMP}_sine_cosine
 
 # to close the curve, we replicate the first value
 REPLICATE=`head -n 1 ${TMP}_sine_cosine`
-cat ${TMP}_sine_cosine > ${TMP}_sine_cosine_replic
+echo "\"Real data angles"           >  ${TMP}_sine_cosine_replic
+cat ${TMP}_sine_cosine >> ${TMP}_sine_cosine_replic
 echo $REPLICATE >> ${TMP}_sine_cosine_replic
 
 rm -f ${TMP}_outercircle
-
+echo "\"All Data incl. NULL"           > ${TMP}_outercircle
 for i in `seq 0 360` ; do
  echo "$i $TOTALNUMBER $TOTALVALIDNUMBER $MAXRADIUS" | \
    awk '{printf "%.8f %.8f\n", cos($1 * 3.14159265 / 180.)* $2/$3 * $4, sin($1 * 3.14159265 / 180.) * $2/$3 * $4}' >> ${TMP}_outercircle
@@ -160,8 +161,9 @@ done
 #################################
 # fix vector length to become visible (x? of $MAXRADIUS):
 AUTOSTRETCH="1"
-echo "0 0" > ${TMP}_vector
-echo "$UNITVECTOR $MAXRADIUS $AUTOSTRETCH" | awk '{printf "%f %f\n", $1 *$3*$4, $2 *$3*$4'} >> ${TMP}_vector
+echo "\"Direction" >  ${TMP}_vector
+echo "0 0"         >> ${TMP}_vector
+echo "$UNITVECTOR $MAXRADIUS $AUTOSTRETCH" | awk '{printf "%f %f\n", $1 *$3*$4, $2 *$3*$4}' >> ${TMP}_vector
 
 #################################
 
