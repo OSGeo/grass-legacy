@@ -14,11 +14,8 @@ DEPENDENCIES = $(GISDEP) $(VECTDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
-default: stlib $(ETC)/element_list $(ETC)/copy
+default: stlib $(ETC)/element_list
 
 $(ETC)/element_list: Element_List
 	if [ ! -d $(ETC) ]; then $(MKDIR) $(ETC); fi
 	$(INSTALL) -m 644 $? $@
-
-$(ETC)/copy: copy.sh
-	$(INSTALL) -m 755 $? $@
