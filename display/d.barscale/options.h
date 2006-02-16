@@ -6,6 +6,7 @@ extern double north;
 extern int use_feet;
 extern int do_background;
 extern int do_bar;
+extern int draw;
 
 /* draw_scale.c */
 int draw_scale(char *save, int toptext);
