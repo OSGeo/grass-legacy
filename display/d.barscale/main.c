@@ -17,6 +17,7 @@ double north;
 int use_feet;
 int do_background = 1;
 int do_bar = 1;
+int draw = 0;
 
 int main (int argc, char **argv)
 {
@@ -25,7 +26,7 @@ int main (int argc, char **argv)
 	int t, b, l, r ;
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3 ;
-	struct Flag *mouse, *feet, *top, *linescale ;
+	struct Flag *mouse, *feet, *top, *linescale, *northarrow, *scalebar;
 	struct Cell_head W ;
 	int R, G, B;
 	const int customFGcolor = MAXCOLORS + 1;
@@ -53,6 +54,14 @@ int main (int argc, char **argv)
 	top = G_define_flag() ;
 	top->key         = 't';
 	top->description= _("Write text on top of the scale, not to the right");
+
+	northarrow = G_define_flag();
+	northarrow->key  = 'n';
+	northarrow->description=_("Draw a north arrow only");
+
+	scalebar = G_define_flag();
+	scalebar->key  = 's';
+	scalebar->description=_("Draw a scale bar only");
 
 	opt1 = G_define_option() ;
 	opt1->key        = "bcolor" ;
@@ -91,7 +100,14 @@ int main (int argc, char **argv)
 		do_bar = 0;
 
 	use_feet = feet->answer ? 1 : 0;
+	if(northarrow->answer && scalebar->answer)
+		G_fatal_error(_("Choose either -n or -s flag"));
 
+	if(northarrow->answer)
+		draw = 1;
+	else
+	if(scalebar->answer)
+		draw = 2;
 
         /* Parse and select background color */
 	if(sscanf(opt1->answer, "%d:%d:%d", &R, &G, &B) == 3) {
@@ -183,6 +199,10 @@ int main (int argc, char **argv)
 			strcat(cmdbuf, " -f");
 		if(linescale->answer)
 			strcat(cmdbuf, " -l");
+		if(northarrow->answer)
+			strcat(cmdbuf, " -n");
+		if(scalebar->answer)
+			strcat(cmdbuf, " -s");
 
 		/* Add this command to list */
 		D_add_to_list(cmdbuf) ;
