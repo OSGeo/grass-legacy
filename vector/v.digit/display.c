@@ -25,9 +25,11 @@ void display_points ( struct line_pnts *Points, int flsh )
     
     G_debug (2, "display_points()");
 
+    R_line_width ( var_geti( VAR_LINEWIDTH ) );
     for(i=1; i < Points->n_points; i++) {
         G_plot_line ( Points->x[i-1], Points->y[i-1], Points->x[i], Points->y[i]);
     }
+    R_line_width ( 0 );
    
     if ( flsh ) R_flush();
 }
@@ -37,7 +39,9 @@ void display_icon ( double x, double y, int icon, double angle, int size , int f
 {
     G_debug (2, "display_icon()");
 
+    R_line_width ( var_geti( VAR_LINEWIDTH ) );
     G_plot_icon(x, y, icon, angle, Scale * size);
+    R_line_width ( 0 );
 
     if ( flsh ) R_flush();
 }
@@ -142,7 +146,7 @@ void display_map ( void )
     /* Because after resize of monitor we expect manual call to display_map()
     *  it is good to refresh D_* here */
     driver_refresh ();
-    
+
     /* Lines */
     n = Vect_get_num_lines ( &Map );
     symb_set_driver_color ( SYMB_HIGHLIGHT );

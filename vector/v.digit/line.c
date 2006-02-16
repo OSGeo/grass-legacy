@@ -220,6 +220,155 @@ int new_line ( int type )
     return 1;
 }
 
+/* Continue work on the end of a line */
+int edit_line (void) {
+    int i,sxn,syn,sxo,syo,button,line,line_type,reversed;
+    int node1,node2;
+    double x,y,thresh,nodex,nodey,nodez,dist;
+    struct line_pnts *Points;
+    struct line_cats *Cats;
+    
+    G_debug (2, "edit_line()");
+    
+    i_prompt ( "Edit line or boundary:");
+    i_prompt_buttons ( "Select", "", "Quit tool");
+    
+    driver_open();
+    
+    /* TODO: use some better threshold */
+    thresh = fabs ( D_d_to_u_col ( 10 ) - D_d_to_u_col ( 0 ) ) ; 
+    G_debug (2, "thresh = %f", thresh );
+    
+    line = 0;
+    sxn = COOR_NULL; syn = COOR_NULL;
+    while (line<=0) {
+	/* Get next coordinate */
+        R_set_update_function ( update );
+        R_get_location_with_pointer ( &sxn, &syn, &button); 
+	    
+	x =  D_d_to_u_col ( sxn );
+	y =  D_d_to_u_row ( syn );
+	G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
+        
+        if (button==0 || button==3) break; /* Quit tool */
+        
+        if (button!=1)
+            continue;
+        
+        /* Find nearest point or line */
+        line = Vect_find_line (&Map, x, y, 0, GV_LINE|GV_BOUNDARY, thresh, 0, 0);
+        G_debug (2, "line found = %d", line );
+        
+        /* Display new selected line if any */
+        if ( line > 0 ) {
+            display_line ( line, SYMB_HIGHLIGHT, 1);
+        }
+    }
+    
+    if (line<=0) {
+        driver_close();
+        
+        i_prompt (""); 
+        i_prompt_buttons ( "", "", ""); 
+        i_coor ( COOR_NULL, COOR_NULL); 
+        
+        G_debug (3, "edit_line(): End");
+    
+        return 1;
+    }
+
+    Points = Vect_new_line_struct ();
+    Cats = Vect_new_cats_struct ();    
+    line_type = Vect_read_line (&Map, Points, Cats, line);
+    
+    reversed = 0;
+    
+    /* Find out the node nearest to the line */
+    Vect_get_line_nodes (&Map, line, &node1, &node2);
+    
+    Vect_get_node_coor (&Map, node2, &nodex, &nodey, &nodez);
+    dist=(x-nodex)*(x-nodex)+(y-nodey)*(y-nodey);
+    
+    Vect_get_node_coor (&Map, node1, &nodex, &nodey, &nodez);
+    if ((x-nodex)*(x-nodex)+(y-nodey)*(y-nodey)<dist) {
+        /* The first node is the nearest => reverse the line and remember
+         * doing so. */
+         Vect_line_reverse (Points);
+         reversed = 1;
+    }
+    
+    display_node ( node1, SYMB_BACKGROUND, 1);
+    display_node ( node2, SYMB_BACKGROUND, 1);
+    i_prompt_buttons ( "New Point", "Undo Last Point", "Close line");
+    sxo = D_u_to_d_col ( Points->x[Points->n_points - 1] );
+    syo = D_u_to_d_row ( Points->y[Points->n_points - 1] );
+    /* Do the actual editing */
+    while (1) {
+        R_set_update_function ( update );
+        R_get_location_with_line (sxo, syo, &sxn, &syn, &button); 
+	
+	x =  D_d_to_u_col ( sxn );
+	y =  D_d_to_u_row ( syn );
+	G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
+
+	if ( button == 0 || button==3 ) break; /* Tool broken by GUI */
+        if ( button == 1 ) { /* New point */
+            snap ( &x, &y );
+            Vect_append_point ( Points, x, y, 0 );	
+            
+            if ( line_type == GV_LINE ) symb_set_driver_color ( SYMB_LINE );
+            else symb_set_driver_color ( SYMB_BOUNDARY_0 );
+
+            display_points ( Points, 1);
+            sxo=sxn;syo=syn;
+            i_prompt_buttons ( "New Point", "Undo Last Point", "Close line");
+        } else if ( button == 2 ) { /* Undo last point */
+            if ( Points->n_points > 1 ) {
+                symb_set_driver_color ( SYMB_BACKGROUND ); 
+                display_points ( Points, 1);
+                
+                Points->n_points--;
+
+                if ( line_type == GV_LINE ) symb_set_driver_color ( SYMB_LINE );
+                else symb_set_driver_color ( SYMB_BOUNDARY_0 );
+
+                display_points ( Points, 1);
+                sxo = D_u_to_d_col ( Points->x[Points->n_points - 1] );
+                syo = D_u_to_d_row ( Points->y[Points->n_points - 1] );
+                if (Points->n_points==1)
+                    i_prompt_buttons ( "New Point", "", "Delete line and exit");
+            }
+        }
+    }
+    
+    if (reversed)
+        Vect_line_reverse (Points);
+    
+    if (Points->n_points>1) {
+        Vect_rewrite_line (&Map, line, line_type, Points, Cats);
+        updated_lines_and_nodes_erase_refresh_display ();
+    } else {
+        /* delete lines with less than two points */
+        Vect_delete_line ( &Map, line ); 
+        for ( i = 0 ; i < Cats->n_cats; i++ ) {
+            check_record ( Cats->field[i], Cats->cat[i] );
+        }
+    }
+    
+    driver_close();
+    
+    Vect_destroy_line_struct (Points);
+    Vect_destroy_cats_struct (Cats);
+    
+    i_prompt (""); 
+    i_prompt_buttons ( "", "", ""); 
+    i_coor ( COOR_NULL, COOR_NULL); 
+    
+    G_debug (3, "edit_line(): End");
+    
+    return 1;
+}
+
 /* Delete line */
 int delete_line (void)
 {

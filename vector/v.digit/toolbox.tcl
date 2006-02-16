@@ -113,6 +113,11 @@ $bbox add -image [image create photo -file "$vdpath/split.line.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
         -helptext [G_msg "Split line"]
 
+$bbox add -image [image create photo -file "$vdpath/edit.line.gif"] \
+        -command "c_next_tool edit_line" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
+        -helptext [G_msg "Edit line/boundary"]
+
 $bbox add -image [image create photo -file "$vdpath/move.line.gif"] \
         -command "c_next_tool move_line" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \

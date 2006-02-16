@@ -21,6 +21,7 @@ typedef enum
     TOOL_ADD_VERTEX,    /* add vertex on line */
     TOOL_RM_VERTEX,     /* remove vertex from line */
     TOOL_SPLIT_LINE,
+    TOOL_EDIT_LINE,     /* continue editing a line or boundary */
     TOOL_MOVE_LINE,  
     TOOL_DELETE_LINE,  
     TOOL_DISPLAY_CATS,  
@@ -111,6 +112,8 @@ typedef struct {
 #define VARN_ZOOM_REGION "zoom_region" /* Name of region to zoom in */ 
 #define VAR_ANSWER      10        
 #define VARN_ANSWER      "answer" /* Answer from dialog */ 
+#define VAR_LINEWIDTH   11        
+#define VARN_LINEWIDTH   "linewidth" /* Width for lines and boundaries */
 
 #ifdef MAIN
 VAR Variable[] = {
@@ -125,6 +128,7 @@ VAR Variable[] = {
     { VAR_SNAP_MAP, VARN_SNAP_MAP, VART_DOUBLE, 0, 0, NULL },
     { VAR_ZOOM_REGION, VARN_ZOOM_REGION, VART_CHAR, 0, 0, NULL },
     { VAR_ANSWER, VARN_ANSWER, VART_INT, 0, 0, NULL },
+    { VAR_LINEWIDTH, VARN_LINEWIDTH, VART_INT, 3, 0, NULL },
     { 0, NULL, 0, 0, 0, NULL }
 };
 #else
