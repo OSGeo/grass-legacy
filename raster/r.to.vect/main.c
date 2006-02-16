@@ -5,9 +5,9 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "global.h"
 #include "lines.h"
-#include <grass/glocale.h>
 
 /* 
 * Attributes for lines are ignored. For points and area by default unique new category is assigned
@@ -59,7 +59,7 @@ int main (int argc, char *argv[])
     z_flg->description = _("Write raster values as z coordinate. Table is not created. "
 	                   "Currently supported only for points");
 
-    if (G_parser (argc, argv)) exit (-1);
+    if (G_parser (argc, argv)) exit (EXIT_FAILURE);
 
     cell_name = G_store ( in_opt->answer );
     feature = Vect_option_to_types ( feature_opt );
@@ -235,5 +235,5 @@ int main (int argc, char *argv[])
 
     Vect_close (&Map);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
