@@ -122,7 +122,7 @@ int main (int argc, char **argv)
 
     /* heeeerrrrrre's the   PARSER */
     if (G_parser (argc, argv))
-        exit (-1);
+        exit (EXIT_FAILURE);
 
     /* start checking options and flags */
     type_only = 0;
@@ -355,7 +355,7 @@ int main (int argc, char **argv)
     
     Vect_close (&Out);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 int 
