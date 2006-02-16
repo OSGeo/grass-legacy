@@ -145,19 +145,20 @@ int draw_scale(char *save, int toptext)
 
 	if(do_bar) {
 		R_move_abs (x_pos + 25, y_pos + 17) ;
-		R_cont_rel ((int) line_len, 0) ;
+		R_cont_rel ((int) line_len - 1, 0) ;
 		R_cont_rel (0, -4) ;
-		R_cont_rel ((int) (line_len * -1), 0) ;
+		R_cont_rel ((int) (line_len * -1 + 1), 0) ;
 		R_cont_rel (0, 4) ;
+		R_move_rel (0, 1) ;
 		xarr[0] = 0; yarr[0] = 0;
 		xarr[1] = (int) seg_len; yarr[1] = 0;
-		xarr[2] = 0; yarr[2] = -4;
+		xarr[2] = 0; yarr[2] = -5;
 		xarr[3] = (int) (seg_len * -1); yarr[3] = 0;
-		xarr[4] = 0; yarr[4] = 4;
+		xarr[4] = 0; yarr[4] = 5;
 		for (i = 1; i <= scales[incr].seg; i+=2)
 		{
-			R_polygon_rel(xarr, yarr ,4);
-			R_move_rel((int) (seg_len * 2 + 1), 0);
+			R_polygon_rel(xarr, yarr, 4);
+			R_move_rel((int) (seg_len * 2), 0);
 		}
 	}
 	else {  /* draw simple line scale */
