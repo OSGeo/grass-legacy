@@ -13,7 +13,7 @@ static int
 G3d_closeNew  (G3D_Map *map)
 
 {
-  char path[4096], command[4096], buf[4096];
+  char path[4096], buf[4096];
   struct Categories cats;
 
   G3d_removeColor (map->fileName);
@@ -34,8 +34,7 @@ G3d_closeNew  (G3D_Map *map)
 #else
   if (link (map->tempName, path) < 0) {
 #endif
-    sprintf (command, "mv %s %s", map->tempName, path);
-    if(system (command)) {
+    if(rename(map->tempName, path)) {
       sprintf (buf,
 	   "G3d_closeNew: can't move temp raster file %s\nto 3d data file %s",
 	       map->tempName, path);
