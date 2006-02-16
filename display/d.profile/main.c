@@ -74,12 +74,10 @@ int main (int argc, char **argv)
         exit(1);
 
     if(getenv("GRASS_ANOTHER_BUTTON")){
-            another_button = 1;
 	    leftb   = 1;
 	    middleb = 3;
 	    rightb  = 2;
     }else{
-            another_button = 0;
 	    leftb   = 1;
 	    middleb = 2;
 	    rightb  = 3;
@@ -178,7 +176,7 @@ if (max < 0) max = 0;
         DrawText(25,1,1,"GRASS PROGRAM: profile");
         R_standard_color(D_translate_color(DEFAULT_FG_COLOR));
         DrawText(15,3,1,"MOUSE   | Left:   Where am I?");
-        if(another_button){
+        if(middleb == 3){
             DrawText(15,4,1,"BUTTON  | Right:  Set FIRST point\n");
             DrawText(15,5,1,"MENU    | Middle: Quit this");
         }else{
@@ -242,7 +240,7 @@ if (max < 0) max = 0;
         DrawText(25,1,1,"GRASS PROGRAM: profile");
         R_standard_color(D_translate_color(DEFAULT_FG_COLOR));
         DrawText(15,3,1,"MOUSE   | Left:   Where am I?");
-        if(another_button){
+        if(middleb == 3){
             DrawText(15,4,1,"BUTTON  | Right:  Set SECOND point\n");
             DrawText(15,5,1,"MENU    | Middle: Quit this");
         }else{
@@ -388,7 +386,7 @@ if (max < 0) max = 0;
         DrawText(25,1,1,"GRASS PROGRAM: profile");
         R_standard_color(D_translate_color(DEFAULT_FG_COLOR));
         DrawText(15,3,1,"MOUSE   | Left:   DO ANOTHER");
-        if(another_button){
+        if(middleb == 3){
             DrawText(15,4,1,"BUTTON  | Right:  CLEAR DISPLAY");
             DrawText(15,5,1,"MENU    | Middle: QUIT");
         }else{

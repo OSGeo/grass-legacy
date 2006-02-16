@@ -320,14 +320,9 @@ int edit_mouse_info (void)
 	fprintf(stderr, "\n     +--------EDIT MODE mouse button menu--------+\n");
 	fprintf(stderr, "     |       Use mouse on graphics monitor       |\n");
 	fprintf(stderr, "     |                                           |\n");
-	fprintf(stderr, "     |left   button:     What's here?            |\n");
-	if(another_button){
-		fprintf(stderr, "     |right  button:     Edit cell value         |\n");
-		fprintf(stderr, "     |middle button:     Quit edit mode          |\n");
-	}else{
-		fprintf(stderr, "     |middle button:     Edit cell value         |\n");
-		fprintf(stderr, "     |right  button:     Quit edit mode          |\n");
-	}
+	fprintf(stderr, "     |%s button:     What's here?            |\n", lefts);
+	fprintf(stderr, "     |%s button:     Edit cell value         |\n", middles);
+	fprintf(stderr, "     |%s button:     Quit edit mode          |\n", rights);
 	fprintf(stderr, "     +-------------------------------------------+\n\n");
 
 	return 0;
@@ -360,14 +355,9 @@ int edit_mouse_info2(DCELL def,DCELL current)
 	fprintf(stderr, "     |                                           |\n");
 	fprintf(stderr, "     |       Current value: %5s                |\n", cur_str);
 	fprintf(stderr, "     |                                           |\n");
-	fprintf(stderr, "     |left   button:     Cancel                  |\n");
-	if(another_button){
-		fprintf(stderr, "     |right  button:     Use value %5s?        |\n", def_str);
-		fprintf(stderr, "     |middle button:     Select new value        |\n");
-	}else{
-		fprintf(stderr, "     |middle button:     Use value %5s?        |\n", def_str);
-		fprintf(stderr, "     |right  button:     Select new value        |\n");
-	}
+	fprintf(stderr, "     |%s button:     Cancel                  |\n", lefts);
+	fprintf(stderr, "     |%s button:     Use value %5s?        |\n", middles, def_str);
+	fprintf(stderr, "     |%s button:     Select new value        |\n", rights);
 	fprintf(stderr, "     +-------------------------------------------+\n\n");
 
 	return 0;

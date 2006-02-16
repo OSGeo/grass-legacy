@@ -114,7 +114,17 @@ main (int argc, char *argv[])
     new_f->description     = "Create new file if it does not exist.";
     
     if (G_parser (argc, argv)) exit(-1); 
-   
+
+    if(getenv("GRASS_ANOTHER_BUTTON")){
+	    leftb   = 1;
+	    middleb = 3;
+	    rightb  = 2;
+    }else{
+	    leftb   = 1;
+	    middleb = 2;
+	    rightb  = 3;
+    }
+
     module = G_define_module(); 
     module->description = "Edit GRASS vector.";
 

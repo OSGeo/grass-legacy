@@ -35,15 +35,13 @@ int main(int argc, char **argv)
 	G_gisinit(argv[0]);
 
 	if(getenv("GRASS_ANOTHER_BUTTON")){
-	    another_button = 1;
-	    leftb   = 1;
-	    middleb = 3;
-	    rightb  = 2;
+	    leftb   = 1; lefts   = "left  ";
+	    middleb = 3; middles = "right ";
+	    rightb  = 2; rights  = "middle";
 	}else{
-	    another_button = 0;
-	    leftb   = 1;
-	    middleb = 2;
-	    rightb  = 3;
+	    leftb   = 1; lefts   = "left  ";
+	    middleb = 2; middles = "middle";
+	    rightb  = 3; rights  = "right ";
 	}
 
 	/*
