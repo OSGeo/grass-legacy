@@ -25,4 +25,4 @@ $(DRIVER): $(ARCH_OBJS)
 		$(MATHLIB) $(XDRLIB)
 
 $(DRVDOC): sqlite.html
-        $(INSTALL) -m 644 sqlite.html $(DRVDOC)
+	$(INSTALL) -m 644 sqlite.html $(DRVDOC)
