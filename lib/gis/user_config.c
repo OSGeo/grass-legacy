@@ -39,6 +39,9 @@
 #include <errno.h>
 #include <grass/gis.h>
 
+#ifdef __MINGW32__
+# define mkdir(name, mode) ((mkdir) (name))
+#endif
 
 /**************************************************************************
  * _make_toplevel(): make user's toplevel config directory if it doesn't
@@ -94,11 +97,7 @@ _make_toplevel (void)
     {
         if (errno == ENOENT)
         {
-#ifdef __MINGW32__
-            status = mkdir (path);  
-#else
             status = mkdir (path, S_IRWXU); /* drwx------ */ 
-#endif
     
             if (status != 0)  /* mkdir failed */
             {
@@ -250,11 +249,7 @@ _make_sublevels(char *elems)
         if (status != 0)
         {
             /* the element doesn't exist */
-#ifdef __MINGW32__
-            status = mkdir (path);  
-#else
             status = mkdir (path, S_IRWXU); /* drwx------ */ 
-#endif
             if (status != 0)
             {
                 /* Some kind of problem... */
