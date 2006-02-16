@@ -1,25 +1,28 @@
 /* look for at least one file in the element */
-#include <string.h>
-#include <unistd.h>
+#include <sys/types.h>
+#include <dirent.h>
 #include <grass/gis.h>
+
 int 
 empty (char *elem)
 {
-    FILE *ls, *popen();
-    char command[1024];
-    char *dir;
-    int any;
+	DIR *dirp;
+	struct dirent *dp;
+	char dir[1024];
+	int any;
 
-    dir = command;
-    sprintf (dir, "ls ");
-    dir += strlen (dir);
-    G__file_name (dir, elem, "", G_mapset());
+	G__file_name (dir, elem, "", G_mapset());
 
-    any = 0;
-    if (access(dir,0) == 0 && (ls = popen(command, "r")))
-    {
-	any = fgets(command, 10, ls) != 0;
-	pclose (ls);
-    }
-    return any == 0;
+	any = 0;
+	if((dirp = opendir(dir)) != NULL)
+	{
+		while(!any && (dp = readdir(dirp)) != NULL)
+		{
+			if(dp->d_name[0] != '.')
+				any = 1;
+		}
+		closedir(dirp);
+	}
+
+	return any == 0;
 }
