@@ -39,7 +39,11 @@ set keyctrl "Ctrl"
 set execom "execute"
 set msg 0
 set mon ""
-set HOSTTYPE $env(HOSTTYPE)
+if {[info exists env(HOSTTYPE)]} {
+        set HOSTTYPE $env(HOSTTYPE)
+} else {
+        set HOSTTYPE ""
+}
 
 set bgcolor HoneyDew2
 
