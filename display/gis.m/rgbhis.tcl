@@ -54,29 +54,27 @@ proc GmRgbhis::set_option { node key value } {
 proc GmRgbhis::select_map1 { id } {
     variable tree
     variable node
-    set m [GSelect cell]
-    if { $m != "" } { 
-        set GmRgbhis::opt($id,map1) $m
-        GmTree::autonamel "RGB-HIS $m"
+    set m1 [GSelect cell]
+    if { $m1 != "" } { 
+        set GmRgbhis::opt($id,map1) $m1
+        GmTree::autonamel "RGB-HIS $m1"
     }
 }
 
 proc GmRgbhis::select_map2 { id } {
     variable tree
     variable node
-    set m [GSelect cell]
-    if { $m != "" } { 
-        set GmRgbhis::opt($id,map2) $m
-        GmTree::autonamel "RGB-HIS $m"
+    set m2 [GSelect cell]
+    if { $m2 != "" } { 
+        set GmRgbhis::opt($id,map2) $m2
     }
 }
 proc GmRgbhis::select_map3 { id } {
     variable tree
     variable node
-    set m [GSelect cell]
-    if { $m != "" } { 
-        set GmRgbhis::opt($id,map3) $m
-        GmTree::autonamel "RGB-HIS $m"
+    set m3 [GSelect cell]
+    if { $m3 != "" } { 
+        set GmRgbhis::opt($id,map3) $m3
     }
 }
 # display RGB and HIS options
