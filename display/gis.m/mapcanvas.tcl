@@ -66,6 +66,7 @@ proc MapCanvas::create { } {
     global canvas_h
     global drawprog
 	global array MapCanvas::msg # mon
+	global mapcursor
 	
 	variable mapmon
     variable mapframe
@@ -90,20 +91,21 @@ proc MapCanvas::create { } {
     set mapframe($mon) [MainFrame .mapcan($mon).mf \
    		-background $bgcolor -textvariable MapCanvas::msg($mon) \
    		-progressvar drawprog -progressmax 100 -progresstype incremental]
+   		
+   	set mf_frame [$mapframe($mon) getframe]
 
     # toolbar creation
     set map_tb  [$mapframe($mon) addtoolbar]
     MapToolBar::create $map_tb
 
-
 	# canvas creation
-    set can($mon) [canvas $mapframe($mon).can \
+    set can($mon) [canvas $mf_frame.can \
         -background #ffffff -borderwidth 0 -closeenough 10.0 \
         -insertbackground black -relief groove -selectbackground #c4c4c4 \
         -selectforeground black -width $canvas_w($mon) -height $canvas_h($mon) ]
  
     # setting geometry
-    place $can($mon) -in $mapframe($mon) -x 0 -y 0 -anchor nw 
+    place $can($mon) -in $mf_frame -x 0 -y 0 -anchor nw 
 	
 	pack $can($mon) -fill both -expand yes
  
@@ -115,6 +117,8 @@ proc MapCanvas::create { } {
     DynamicHelp::configure -font $fon -background yellow
 
     pack $mapframe($mon) -fill both -expand yes
+
+	set mapcursor [$can($mon) cget -cursor]
 
 	MapCanvas::coordconv $mon 
 
@@ -165,7 +169,15 @@ proc MapCanvas::create { } {
 			GmTree::switchpage $mon
 		}
 	}
+	
+	bind .mapcan($mon) <ConfigureRequest> {
+		set wstack %d
+			puts "stack is $wstack"
+			puts "mouse click $mon"
 
+
+	}
+	
 	bind $can($mon) <Motion> {
 		set scrxmov %x
 		set scrymov %y
@@ -236,6 +248,8 @@ proc MapCanvas::mapsettings { mon } {
 			regexp -nocase {w=(.*)} $line w1 map_w
 		}
 	}
+	
+	close $input
 	
 	set mapwd [expr abs(1.0 * ($map_e - $map_w))]
 	set mapht [expr abs(1.0 * ($map_n - $map_s))]
@@ -403,8 +417,9 @@ proc MapCanvas::zoombind { mon zoom } {
 	variable can
 	global mapcursor
 	global MapCanvas::msg
+    global areaX1 areaY1 areaX2 areaY2
 	
-	set mapcursor [$can($mon) cget -cursor]
+	MapCanvas::setcursor $mon "plus"
 
     set MapCanvas::msg($mon) "Drag mouse to zoom/unzoom, R button stops zooming"
 
@@ -413,7 +428,6 @@ proc MapCanvas::zoombind { mon zoom } {
 	
 	bind $can($mon) <1> {
 		MapCanvas::markzoom $mon %x %y
-		MapCanvas::setcursor $mon "plus"
 		}
 	bind $can($mon) <B1-Motion> "MapCanvas::drawzoom $mon %x %y"
 	bind $can($mon) <ButtonRelease-1> "MapCanvas::zoomregion $mon $zoom"
@@ -424,8 +438,14 @@ proc MapCanvas::zoombind { mon zoom } {
 
 # start zoom rectangle
 proc MapCanvas::markzoom {mon x y} {
-    global areaX1 areaY1
+    global areaX1 areaY1 areaX2 areaY2
     variable can
+
+	# initialize corners
+	set areaX1 0
+	set areaY1 0
+	set areaX2 0
+	set areaY2 0
     
     set areaX1 [$can($mon) canvasx $x]
     set areaY1 [$can($mon) canvasy $y]
@@ -435,7 +455,8 @@ proc MapCanvas::markzoom {mon x y} {
 # draw zoom rectangle
 proc MapCanvas::drawzoom { mon x y } {
 	variable can
-	
+	global canvas_h
+	global canvas_w
     global areaX1 areaY1 areaX2 areaY2
 	    
 	set xc [$can($mon) canvasx $x]
@@ -449,15 +470,29 @@ proc MapCanvas::drawzoom { mon x y } {
 		set areaX2 $xc
 		set areaY2 $yc
 	}
-}	
+}
+
 
 # zoom region
 proc MapCanvas::zoomregion { mon zoom } {
 	variable can
 	global canvas_h
 	global canvas_w
-	
     global areaX1 areaY1 areaX2 areaY2
+    
+    # if click and no drag, zoom in or out by 80% of original area
+    
+	if {($areaX2 == 0) && ($areaY2 == 0)} {
+		set X2 [expr $areaX1 + (0.8 * $canvas_w($mon) / 2) ]
+		set X1 [expr $areaX1 - (0.8 * $canvas_w($mon) / 2) ]
+		set Y2 [expr $areaY1 + (0.8 * $canvas_h($mon) / 2) ]
+		set Y1 [expr $areaY1 - (0.8 * $canvas_h($mon) / 2) ]	
+		set areaX1 $X1
+		set areaY1 $Y1
+		set areaX2 $X2
+		set areaY2 $Y2
+	}
+    
 	
 	# get region extents
 	if ![catch {open "|g.region -g" r} input] {
@@ -468,22 +503,24 @@ proc MapCanvas::zoomregion { mon zoom } {
 			regexp -nocase {w=(.*)} $line w1 map_w
 		}
 	}
+	
+	close $input
 
 	# get zoom rectangle extents in canvas coordinates
-	if { $areaX2 > $areaX1 } {
-		set cleft $areaX1 
-		set cright $areaX2
-	} else {
+	if { $areaX2 < $areaX1 } {
 		set cright $areaX1
 		set cleft $areaX2
+	} else {
+		set cleft $areaX1 
+		set cright $areaX2
 	}
 	
-	if { $areaY2 > $areaY1 } {
-		set ctop $areaY1 
-		set cbottom $areaY2
-	} else {
+	if { $areaY2 < $areaY1 } {
 		set cbottom $areaY1
 		set ctop $areaY2
+	} else {
+		set ctop $areaY1 
+		set cbottom $areaY2
 	}
 
 	# get zoom rectangle extents in map coordinates
@@ -578,9 +615,7 @@ proc MapCanvas::panbind { mon } {
 	global MapCanvas::msg
 
     set MapCanvas::msg($mon) "L mouse button to drag & pan, R button stops panning"
-    
-	set mapcursor [$can($mon) cget -cursor]
-	
+    	
 	bind $can($mon) <2> ""
 
 	MapCanvas::setcursor $mon "hand2"
@@ -644,6 +679,8 @@ proc MapCanvas::pan { mon } {
 			regexp -nocase {w=(.*)} $line w1 map_w
 		}
 	}
+	
+	close $input
 
 	# set new region extents
 	set north [expr $map_n - ($to_n - $from_n)]
@@ -711,8 +748,6 @@ proc MapCanvas::measurebind { mon } {
     global linex1 liney1 linex2 liney2
 	global MapCanvas::msg
 	
-	set mapcursor [$can($mon) cget -cursor]
-
 	bind $can($mon) <2> ""
 	
 	bind $can($mon) <1> "MapCanvas::markmline $mon %x %y"
@@ -724,7 +759,7 @@ proc MapCanvas::measurebind { mon } {
 
     set MapCanvas::msg($mon) "L mouse button, draw line to measure, R button to stop"
 		
-	MapCanvas::setcursor $mon "plus"
+	MapCanvas::setcursor $mon "pencil"
 	set mlength 0
 	set totmlength 0
 
@@ -865,15 +900,13 @@ proc MapCanvas::querybind { mon } {
 	
 	if { ![winfo exists .dispout]} {Gm::create_disptxt $mon}
 	
-	set mapcursor [$can($mon) cget -cursor]
-
     set MapCanvas::msg($mon) "L mouse button to query features, R button to stop query"
 
 	bind $can($mon) <1> {
 		MapCanvas::startquery $mon %x %y 
-		MapCanvas::setcursor $mon "plus"
 		}
 	bind $can($mon) <3> {MapCanvas::stopquery $mon}
+	MapCanvas::setcursor $mon "crosshair"
 
 }
 
@@ -1012,6 +1045,8 @@ proc MapCanvas::coordconv { mon } {
 		}
 	}
 
+	close $input
+	
 # 	calculate dimensions
 
 	set map_n [expr 1.0*($map_n)]
