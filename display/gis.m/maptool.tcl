@@ -32,7 +32,7 @@ proc MapToolBar::create { tb } {
     $bbox1 add -image [image create photo -file "$gmpath/nviz.gif"] \
         -command {GmGroup::nvdisplay "root"} \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
-        -helptext [G_msg "Display active layers in current region"]
+        -helptext [G_msg "Start NVIZ using active layers in current region"]
 
     # erase
     $bbox1 add -image [image create photo -file "$gmpath/erase.gif"] \
