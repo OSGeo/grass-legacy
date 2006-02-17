@@ -1,3 +1,4 @@
+
 /***************************************************************************
 *
 * MODULE:       r.info
@@ -31,11 +32,11 @@ int format_double(double value, char *buf);
 static char *name;
 
 /**************************************************************************/
-int
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
     char *mapset;
     char *line = NULL;
+    char *time1, *time2;	/*begin and end timestamp string */
     char tmp1[100], tmp2[100], tmp3[100];
     int i;
     CELL mincat, maxcat, cat;
@@ -46,7 +47,7 @@ main(int argc, char *argv[])
     struct Categories cats;
     struct History hist;
     struct TimeStamp ts;
-    int time_ok = 0;
+    int time_ok = 0, first_time_ok = 0, second_time_ok = 0;
     int head_ok;
     int cats_ok;
     int hist_ok;
@@ -77,7 +78,7 @@ main(int argc, char *argv[])
 
     sflag = G_define_flag();
     sflag->key = 's';
-    sflag->description = _("Print resolution (NS-res, EW-res) only");
+    sflag->description = _("Print raster map resolution (NS-res, EW-res) only");
 
     tflag = G_define_flag();
     tflag->key = 't';
@@ -94,7 +95,8 @@ main(int argc, char *argv[])
     timestampflag = G_define_flag();
     timestampflag->key = 'p';
     timestampflag->description =
-	_("Print additionally map timestamp, (day.month.year hour:minute:seconds)");
+	_
+	("Print raster map timestamp (day.month.year hour:minute:seconds) only");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
@@ -110,8 +112,14 @@ main(int argc, char *argv[])
     data_type = G_raster_map_type(name, mapset);
 
     /*Check the Timestamp */
-    if (timestampflag->answer)
-	time_ok = G_read_raster_timestamp(name, mapset, &ts) >= 0;
+    time_ok = G_read_raster_timestamp(name, mapset, &ts) >= 0;
+    /*Check for valid entries, show none if the first month has value 0! */
+    if (time_ok) {
+	if (ts.dt[0].month != 0)
+	    first_time_ok = 1;
+	if (ts.dt[1].month != 0)
+	    second_time_ok = 1;
+    }
 
     if (G_read_fp_range(name, mapset, &range) < 0)
 	G_fatal_error(_("could not read range file"));
@@ -120,7 +128,7 @@ main(int argc, char *argv[])
     out = stdout;
 
     if (!rflag->answer && !sflag->answer && !tflag->answer && !gflag->answer &&
-	!hflag->answer) {
+	!hflag->answer && !timestampflag->answer) {
 	divider('+');
 
 	if (G_asprintf
@@ -155,20 +163,36 @@ main(int argc, char *argv[])
 	    G_fatal_error(_("Cannot allocate memory for string"));
 
 	/*This shows the TimeStamp */
-	if (time_ok && timestampflag->answer) {
-	    if (G_asprintf
-		(&line,
-		 "Timestamp: %i.%i.%i %02i:%02i:%02g to %i.%i.%i %02i:%02i:%02g",
-		 ts.dt[0].day, ts.dt[0].month, ts.dt[0].year, ts.dt[0].hour,
-		 ts.dt[0].minute, ts.dt[0].second, ts.dt[1].day, ts.dt[1].month,
-		 ts.dt[1].year, ts.dt[1].hour, ts.dt[1].minute,
-		 ts.dt[1].second) > 0) {
-
-		printline(line);
-	    }
-	    else {
+	if (time_ok && (first_time_ok || second_time_ok)) {
+	    /*Create the first timestamp string */
+	    if (G_asprintf(&time1, "%i.%i.%i %02i:%02i:%02g",
+			   ts.dt[0].day, ts.dt[0].month, ts.dt[0].year,
+			   ts.dt[0].hour, ts.dt[0].minute,
+			   ts.dt[0].second) <= 0)
 		G_fatal_error(_("Cannot allocate memory for string"));
-	    }
+
+	    /*Create the second timestamp string */
+	    if (G_asprintf(&time2, "%i.%i.%i %02i:%02i:%02g",
+			   ts.dt[1].day, ts.dt[1].month, ts.dt[1].year,
+			   ts.dt[1].hour, ts.dt[1].minute,
+			   ts.dt[1].second) <= 0)
+		G_fatal_error(_("Cannot allocate memory for string"));
+
+	    /*Create the r.info timestamp string */
+	    if (G_asprintf(&line,
+			   "Timestamp: %s to %s",
+			   first_time_ok ? time1 : "none",
+			   second_time_ok ? time2 : "none") > 0)
+		printline(line);
+	    else
+		G_fatal_error(_("Cannot allocate memory for string"));
+
+	}
+	else {
+	    if (G_asprintf(&line, "Timestamp: none") > 0)
+		printline(line);
+	    else
+		G_fatal_error(_("Cannot allocate memory for string"));
 	}
 
 	divider('|');
@@ -404,6 +428,33 @@ main(int argc, char *argv[])
 		}
 	    }
 	}
+	else if (timestampflag->answer) {
+	    if (time_ok && (first_time_ok || second_time_ok)) {
+		/*Create the first timestamp string */
+		if (G_asprintf(&time1, "%i.%i.%i %02i:%02i:%02g",
+			       ts.dt[0].day, ts.dt[0].month, ts.dt[0].year,
+			       ts.dt[0].hour, ts.dt[0].minute,
+			       ts.dt[0].second) <= 0)
+		    G_fatal_error(_("Cannot allocate memory for string"));
+
+		/*Create the second timestamp string */
+		if (G_asprintf(&time2, "%i.%i.%i %02i:%02i:%02g",
+			       ts.dt[1].day, ts.dt[1].month, ts.dt[1].year,
+			       ts.dt[1].hour, ts.dt[1].minute,
+			       ts.dt[1].second) <= 0)
+		    G_fatal_error(_("Cannot allocate memory for string"));
+
+		/*Create the r.info timestamp string */
+		fprintf(out, "Timestamp=\"%s to %s\"",
+			first_time_ok ? time1 : "none",
+			second_time_ok ? time2 : "none");
+
+	    }
+	    else {
+		fprintf(out, "Timestamp=\"none\"");
+	    }
+	}
+
     }				/* else rflag or sflag or tflag or gflag or hflag */
 
     return EXIT_SUCCESS;
