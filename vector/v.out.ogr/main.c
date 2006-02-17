@@ -87,8 +87,8 @@ main (int argc, char *argv[])
 
     type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
     type_opt->answer = "line,boundary";
-    type_opt->description = _("Feature type. Possible combinations of more types: "
-			    "point,centroid or line,boundary.");
+    type_opt->description = _("Feature type. Combination of types is not supported"
+                              " by all formats.");
     
     dsn_opt = G_define_option();
     dsn_opt->key = "dsn";
@@ -154,16 +154,23 @@ main (int argc, char *argv[])
     
     /* Check output type */
     otype = Vect_option_to_types ( type_opt ); 
-    if ( ((GV_POINTS & otype) && (GV_LINES & otype)) ||
-	 ((GV_POINTS & otype) && (GV_AREA & otype)) || 
-	 ((GV_LINES & otype) && (GV_AREA & otype)) ) 
-      {
-	 G_fatal_error (_("The combination of types is not allowed."));
-      }
 
     if ( otype & GV_POINTS ) wkbtype = wkbPoint;
     else if ( otype & GV_LINES ) wkbtype = wkbLineString;
     else if ( otype & GV_AREA ) wkbtype = wkbPolygon;
+
+    if ( poly_flag->answer ) wkbtype = wkbPolygon;
+
+    if ( ((GV_POINTS & otype) && (GV_LINES & otype)) ||
+	 ((GV_POINTS & otype) && (GV_AREA & otype)) || 
+	 ((GV_LINES & otype) && (GV_AREA & otype)) ) 
+      {
+	 G_warning (_("The combination of types is not supported "
+
+                      " by all formats."));
+          wkbtype=wkbUnknown;
+      }
+
     
     if ( cat_flag->answer ) donocat = 0; else donocat = 1;
     
@@ -350,9 +357,14 @@ main (int argc, char *argv[])
                 
                 OGR_G_AddGeometryDirectly ( Ogr_geometry, ring );
             } 
-            else
+            else if ( type == GV_POINT )
             {
-                Ogr_geometry = OGR_G_CreateGeometry( wkbtype );
+                Ogr_geometry = OGR_G_CreateGeometry( wkbPoint );
+                OGR_G_AddPoint( Ogr_geometry, Points->x[0], Points->y[0], Points->z[0] );
+            }
+            else  /* GV_LINE or GV_BOUNDARY */
+            {
+                Ogr_geometry = OGR_G_CreateGeometry( wkbLineString );
                 for ( j = 0; j < Points->n_points; j++ ) {
                     OGR_G_AddPoint( Ogr_geometry, Points->x[j], Points->y[j], Points->z[j] );
                 }
@@ -400,9 +412,7 @@ main (int argc, char *argv[])
 	    Vect_get_area_points ( &In, i, Points );
 
 	    /* Geometry */
-	    /* TODO: Use something better than WKT */
-	    Ogr_geometry = OGR_G_CreateGeometry( wkbtype ); /* wkbPolygon */
-	    
+	    Ogr_geometry = OGR_G_CreateGeometry( wkbPolygon );
 	
 	    ring = OGR_G_CreateGeometry( wkbLinearRing );
 	    
