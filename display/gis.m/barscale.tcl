@@ -42,6 +42,9 @@ proc GmBarscale::create { tree parent } {
     set opt($count,at) "2,2" 
     set opt($count,feet) 0 
     set opt($count,top) 0 
+    set opt($count,arrow) 0 
+    set opt($count,scale) 0 
+    
     
     incr count
     return $node
@@ -88,6 +91,16 @@ proc GmBarscale::options { id frm } {
     checkbutton $row.d -text [G_msg "transparent background"] \
     	-variable GmBarscale::opt($id,bcolor_none) 
     pack $row.a $row.b $row.c $row.d -side left
+    pack $row -side top -fill both -expand yes
+
+    # arrow or scale only
+    set row [ frame $frm.arrow ]
+    Label $row.a -text [G_msg "    "] 
+    checkbutton $row.b -text [G_msg "display N. arrow only"] \
+    	-variable GmBarscale::opt($id,arrow) 
+    checkbutton $row.c -text [G_msg "display scale only"] \
+    	-variable GmBarscale::opt($id,arrow) 
+    pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
     # text on top
@@ -176,6 +189,16 @@ proc GmBarscale::display { node } {
     if { $opt($id,feet) != 0} { 
         append cmd " -f"
     }
+
+	# arrow only
+	if { $opt($id,arrow) != 0 } {
+		append cmd " -n"
+	}
+	
+	# scale only
+	if { $opt($id,scale) != 0 } {
+		append cmd " -s"
+	}
 
 	run_panel $cmd    
     
