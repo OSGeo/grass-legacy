@@ -391,7 +391,7 @@ proc Gm::create { } {
     # command console 
     set output_pane  [$pw1 add -minsize 50 -weight 2 ]
     set output_frame [frame $output_pane.fr]
-    set output_bbox [ButtonBox $output_pane.bb -bg $bgcolor \
+    set output_bbox [ButtonBox $mainwindow.bb -bg $bgcolor \
     	-padx 0 -pady 0 -homogeneous 0 ]
     
     pack $output_frame -expand yes -fill both 
@@ -419,9 +419,9 @@ proc Gm::create { } {
         -helptext [G_msg "Save output to file"] -highlightbackground $bgcolor \
         -pady 3
 	
-	pack $output_bbox -expand yes -fill none 
     pack $output_sw $outtext -fill both -expand yes
     pack $pw1 -side top -expand yes -fill both -anchor n 
+	pack $output_bbox -expand yes -fill none -anchor s
   
 	bind $outtext <$keycontrol-c> "tk_textCopy %W"
 	bind $outtext <$keycontrol-v> "tk_textPaste %W"
