@@ -387,7 +387,7 @@ int main(int argc, char *argv[])
 	    fprintf(out, "tbres=%g\n", cellhd.tb_res);
 	}			/*Datatype */
 	else if (tflag->answer) {
-	    fprintf(out, "datatype=%s",
+	    fprintf(out, "datatype=\"%s\"\n",
 		    (data_type ==
 		     G3D_FLOAT ? "float" : (data_type ==
 					    G3D_DOUBLE ? "double" : "??")));
@@ -410,17 +410,22 @@ int main(int argc, char *argv[])
 		    G_fatal_error(_("Cannot allocate memory for string"));
 
 		/*Create the r.info timestamp string */
-		fprintf(out, "Timestamp=\"%s to %s\"",
+		fprintf(out, "Timestamp=\"%s to %s\"\n",
 			first_time_ok ? time1 : "none",
 			second_time_ok ? time2 : "none");
 
 	    }
 	    else {
-		fprintf(out, "Timestamp=\"none\"");
+		fprintf(out, "Timestamp=\"none\"\n");
 	    }
 	}
 
     }
+
+    /*Close the opened map*/
+    if (!G3d_closeCell(g3map))
+         G_fatal_error(_("Error closing g3d file"));
+
 
     return 0;
 }
