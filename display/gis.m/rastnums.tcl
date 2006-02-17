@@ -168,7 +168,6 @@ proc GmRnums::display { node } {
 	regexp {rows=(\d*)} $rowscolumns string rows
 	regexp {cols=(\d*)} $rowscolumns string cols
 	set cells [expr $rows * $cols]
-	puts "cells are $rows x $cols = $cells"
 	if { $cells <= 10000} {
 		runcmd $cmd 
 	} else {
