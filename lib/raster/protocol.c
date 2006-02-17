@@ -399,7 +399,7 @@ int R_cont_rel(int x, int y)
  * \brief draw a series of dots
  *
  * Pixels at the <b>num</b> absolute positions in the <b>x</b> and
- * <b>y</b> arrays are turned to the current color. The current position is
+ * <b>y</b> arrays are turned to the current color. The current location is
  * left updated to the position of the last dot.
  *
  *  \param xarray x
@@ -424,7 +424,7 @@ int R_polydots_abs(int *xarray, int *yarray, int number)
  * Pixels at the <b>number</b> relative positions in the <b>x</b> and
  * <b>y</b> arrays are turned to the current color. The first position is
  * relative to the starting current location; the succeeding positions are then
- * relative to the previous position. The current position is updated to the
+ * relative to the previous position. The current location is updated to the
  * position of the last dot.
  *
  *  \param xarray x
@@ -448,7 +448,7 @@ int R_polydots_rel(int *xarray, int  *yarray, int number)
  *
  * The <b>number</b> absolute positions in the <b>x</b> and <b>y</b>
  * arrays are used to generate a multisegment line (often curved). This line is
- * drawn with the current color. The current position is left updated to the
+ * drawn with the current color. The current location is left updated to the
  * position of the last point.
  * <b>Note.</b> It is not assumed that the line is closed, i.e., no line is
  * drawn from the last point to the first point.
@@ -475,7 +475,7 @@ int R_polyline_abs(int *xarray, int  *yarray, int number)
  * The <b>number</b> relative positions in the <b>x</b> and <b>y</b>
  * arrays are used to generate a multisegment line (often curved). The first
  * position is relative to the starting current location; the succeeding
- * positions are then relative to the previous position. The current position is
+ * positions are then relative to the previous position. The current location is
  * updated to the position of the last point. This line is drawn with the current
  * color.
  * <b>Note.</b> No line is drawn between the last point and the first point.
@@ -501,7 +501,7 @@ int R_polyline_rel(int *xarray, int *yarray, int number)
  *
  * The <b>number</b> absolute positions in the <b>x</b> and <b>y</b> arrays
  * outline a closed polygon which is filled with the current color. The current
- * position is left updated to the position of the last point.
+ * location is undefined afterwards.
  *
  *  \param xarray x
  *  \param yarray y
@@ -525,8 +525,8 @@ int R_polygon_abs(int *xarray, int *yarray, int number)
  * The <b>number</b> relative positions in the <b>x</b> and <b>y</b>
  * arrays outline a closed polygon which is filled with the current color. The
  * first position is relative to the starting current location; the succeeding
- * positions are then relative to the previous position. The current position is
- * updated to the position of the last point.
+ * positions are then relative to the previous position. The current location is
+ * undefined afterwards.
  *
  *  \param xarray x
  *  \param yarray y
@@ -548,8 +548,8 @@ int R_polygon_rel(int *xarray, int *yarray, int number)
  * \brief fill a box
  *
  * A box is drawn in the current color using the coordinates <b>x1,y1</b> and
- * <b>x2,y2</b> as opposite corners of the box. The current location is updated
- * to <b>x2,y2.</b>
+ * <b>x2,y2</b> as opposite corners of the box. The current location is undefined
+ * afterwards
  *
  *  \param x1
  *  \param y1
@@ -575,11 +575,7 @@ int R_box_abs(int x1, int y1, int x2, int y2)
  *
  * A box is drawn in the current color using the current location as one corner 
  * and the current location plus <b>x</b> and <b>y</b> as the opposite corner 
- * of the box. The current location is updated:
-  \code
-    Newx = Oldx + x;
-    Newy = Oldy + y;
-  \endcode
+ * of the box. The current location is undefined afterwards.
  *
  *  \param x
  *  \param y
@@ -845,7 +841,7 @@ int R_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *b)
  *
  * This is useful
  * only in fixed color mode (see <i>R_color_table_fixed</i>). Starting at
- * the current position, the <b>num</b> colors represented by the intensities
+ * the current location, the <b>num</b> colors represented by the intensities
  * described in the <b>red, grn</b>, and <b>blu</b> arrays are drawn for
  * <b>nrows</b> consecutive pixel rows. The raw values in these arrays are in
  * the range of 0-255. They are used to map into the intensity maps which were
@@ -886,7 +882,7 @@ int R_RGB_raster(int n, int nrows,
  * Sends arguments to the driver, preceded by the RASTER_CHAR opcode; 
  * the actual work is done by the driver. A raster drawing operation is
  * performed. The result is that a rectangular area of width <b>num</b> 
- * and height <b>nrows</b>, with its top-left corner at the current position,
+ * and height <b>nrows</b>, with its top-left corner at the current location,
  * is filled with <b>nrows</b> copies of the data pointed to by <b>ras</b>.
  *
  * \param num is the number of columns.
