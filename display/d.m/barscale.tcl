@@ -85,9 +85,18 @@ proc DmBarscale::options { id frm } {
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
         
+    # arrow or scale only
+    set row [ frame $frm.arrow ]
+    checkbutton $row.a -text [G_msg "display N. arrow only "] \
+    	-variable DmBarscale::opt($id,arrow) 
+    checkbutton $row.b -text [G_msg "display scale only"] \
+    	-variable DmBarscale::opt($id,arrow) 
+    pack $row.a $row.b -side left
+    pack $row -side top -fill both -expand yes
+
     # scale options
     set row [ frame $frm.opts ]
-    checkbutton $row.a -text [G_msg "line scale instead of bar scale"] -variable \
+    checkbutton $row.a -text [G_msg "line scale instead of bar scale "] -variable \
         DmBarscale::opt($id,line) 
     checkbutton $row.b -text [G_msg "text on top of scale, instead of to right"] -variable \
         DmBarscale::opt($id,top) 
