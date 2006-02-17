@@ -174,6 +174,42 @@ proc GmRaster::save { tree depth node } {
     } 
 }
 
+
+# append elevation maps display lists for NVIZ
+proc GmRaster::addelev {node nvelev} {
+    variable opt
+    variable tree
+    global mon
+    
+    set tree($mon) $GmTree::tree($mon)
+    set id [GmTree::node_id $node]
+    
+    if { ! ( $opt($id,_check) ) } { return } 
+
+	set nvelev "$opt($id,map)"
+	
+	return $nvelev
+}
+
+# append drape colors to display lists for NVIZ
+proc GmRaster::addcolor {node nvcolor} {
+    variable opt
+    variable tree
+    global mon
+    
+    set tree($mon) $GmTree::tree($mon)
+    set id [GmTree::node_id $node]
+
+    if { ! ( $opt($id,_check) ) } { return } 
+
+	if { $opt($id,drapemap) != "" } {
+		set nvcolor $opt($id,drapemap)
+	} else { 
+		set nvcolor $opt($id,map)
+    } 
+    return $nvcolor
+}
+
 proc GmRaster::display { node } {
     variable opt
     variable rasttype

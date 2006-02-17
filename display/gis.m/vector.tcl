@@ -440,6 +440,46 @@ proc GmVector::save { tree depth node } {
     } 
 }
 
+###############################################################################
+
+# append vector maps to display list for NVIZ
+proc GmVector::addvect {node} {
+    variable opt
+    variable tree
+    global mon
+    
+    set tree($mon) $GmTree::tree($mon)
+    set id [GmTree::node_id $node]
+    
+    if { ! ( $opt($id,_check) ) } { return } 
+
+	set vect $opt($id,map)
+	
+	return $vect
+}
+
+# set vector type for NVIZ display
+proc GmVector::vecttype { vect } {
+
+	set string ""
+	set points 0
+	set rest ""
+
+	set rv [open "|v.info map=$vect" r]
+	set vinfo [read $rv]
+	close $rv
+	regexp {points:       (\d*)} $vinfo string points
+	if { $points > 0} {
+		set vecttype "points"
+	} else {
+		set vecttype "lines"
+	}
+
+	return $vecttype
+}
+
+###############################################################################
+
 
 proc GmVector::display { node } {
     variable opt

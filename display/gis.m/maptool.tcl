@@ -29,6 +29,11 @@ proc MapToolBar::create { tb } {
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Display active layers in current region"]
 
+    $bbox1 add -image [image create photo -file "$gmpath/nviz.gif"] \
+        -command {GmGroup::nvdisplay "root"} \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
+        -helptext [G_msg "Display active layers in current region"]
+
     # erase
     $bbox1 add -image [image create photo -file "$gmpath/erase.gif"] \
         -command "MapCanvas::erase $mon" \
