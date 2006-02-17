@@ -501,6 +501,8 @@ proc MapCanvas::zoomregion { mon zoom } {
 			regexp -nocase {^s=(.*)} $line s1 map_s
 			regexp -nocase {e=(.*)} $line e1 map_e
 			regexp -nocase {w=(.*)} $line w1 map_w
+			regexp -nocase {nsres=(.*)} $line w1 yres
+			regexp -nocase {ewres=(.*)} $line w1 xres
 		}
 	}
 	
@@ -534,6 +536,7 @@ proc MapCanvas::zoomregion { mon zoom } {
 	if { $zoom == 1 } {
 		run "g.region -a save=previous_zoom --o"
 		set cmd "g.region -a n=$north s=$south \
+			nsres=$yres ewres=$xres \
 			e=$east w=$west save=mon_$mon --o"
 		run $cmd
 	}
@@ -546,6 +549,7 @@ proc MapCanvas::zoomregion { mon zoom } {
 		set outwest  [expr $map_w - abs($west - $map_w)]
 		run "g.region -a save=previous_zoom --o"
 		set cmd "g.region -a n=$upnorth s=$downsouth \
+			nsres=$yres ewres=$xres \
 			e=$backeast w=$outwest save=mon_$mon --o"
 		run $cmd
 	}
