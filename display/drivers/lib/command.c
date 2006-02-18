@@ -149,7 +149,8 @@ int process_command(int c)
 	break;
     case LINE_WIDTH:
 	REC(&number, sizeof number);
-	COM_Line_width(number);
+	x = COM_Line_width(number);
+	SEND(&x, sizeof x);
 	break;
     case CONT_ABS:
 	REC(&x, sizeof x);

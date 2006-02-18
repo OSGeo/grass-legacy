@@ -272,9 +272,11 @@ int R_reset_colors(int min, int max,
 }
 
 /*!
- * \brief change the width of line
+ * \brief change and return the width of line
  *
- * Changes the <b>width</b> of line to be used in subsequent draw commands.
+ * Changes the <b>width</b> of line to be used in subsequent draw commands and
+ * returns the previous line width.  Use width -1 to get the current value
+ * without changing it.
  *
  *  \param width
  *  \return int
@@ -284,8 +286,9 @@ int R_line_width(int width)
 {
 	_send_ident(LINE_WIDTH);
 	_send_int(&width);
+	_get_int(&width);
 
-	return 0;
+	return width;
 }
 
 /*!

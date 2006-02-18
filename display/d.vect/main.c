@@ -120,7 +120,7 @@ main (int argc, char **argv)
 	struct Option *lcolor_opt, *bgcolor_opt, *bcolor_opt;
 	struct Option *lsize_opt, *font_opt, *xref_opt, *yref_opt;
 	struct Option *attrcol_opt, *maxreg_opt, *minreg_opt;
-	struct Option *width_opt;
+	struct Option *width_opt, *fill_opt;
 	struct Flag   *_quiet, *id_flag, *table_acolors_flag, *cats_acolors_flag, *x_flag;
 	struct cat_list *Clist;
 	int *cats, ncat;
@@ -178,6 +178,12 @@ main (int argc, char **argv)
 	field_opt = G_define_standard_option(G_OPT_V_FIELD) ;
 	cat_opt = G_define_standard_option(G_OPT_V_CATS) ;
 	where_opt = G_define_standard_option(G_OPT_WHERE) ;
+
+	fill_opt = G_define_option() ;
+	fill_opt->key         = "fill";
+	fill_opt->type        = TYPE_INTEGER ;
+	fill_opt->answer      = "0";
+	fill_opt->description = _("Fill style: 0 for solid fill, positive value for dotted fill");
 
 	width_opt = G_define_option() ;
 	width_opt->key        = "width";
@@ -531,6 +537,7 @@ main (int argc, char **argv)
         G_setup_plot (D_get_d_north(), D_get_d_south(), 
                       D_get_d_west(), D_get_d_east(),
                       D_move_abs, D_cont_abs);
+	G_setup_fill(atoi(fill_opt->answer));
 
 	if (!quiet)
 	     fprintf (stdout,_("Plotting ... ")); fflush (stdout);

@@ -33,9 +33,12 @@ POINT
     int y;
 };
 static int edge_order(const void *, const void *);
-static int row_fill(int,double,double);
+static int row_solid_fill(int,double,double);
+static int row_dotted_fill(int,double,double);
+static int dotted_fill_gap = 2;
 static int ifloor(double);
 static int iceil(double);
+static int (*row_fill)() = row_dotted_fill;
 static int (*move)() = NULL;
 static int (*cont)() = NULL;
 
@@ -125,6 +128,28 @@ int G_setup_plot (
 
     move = Move;
     cont = Cont;
+
+    return 0;
+}
+
+/*!
+ * \brief set row_fill routine to row_solid_fill or row_dotted_fill
+ *
+ * After calling this function, <b>G_plot_polygon()</b> and
+ * <b>G_plot_area()</b> fill shapes with solid or dotted lines.  If gap is
+ * greater than zero, this value will be used for row_dotted_fill.  Otherwise,
+ * row_solid_fill is used.
+ *
+ *  \param int
+ *  \return int
+ */
+int G_setup_fill(int gap)
+{
+    if (gap > 0) {
+        row_fill = row_dotted_fill;
+        dotted_fill_gap = gap + 1;
+    } else
+        row_fill = row_solid_fill;
 
     return 0;
 }
@@ -765,7 +790,7 @@ static int edge_order(const void *aa, const void *bb)
     return (0);
 }
 
-static int row_fill(int y,double x1,double x2)
+static int row_solid_fill(int y,double x1,double x2)
 {
     int i1,i2;
 
@@ -775,6 +800,27 @@ static int row_fill(int y,double x1,double x2)
     {
 	move (i1, y);
 	cont (i2, y);
+    }
+
+    return 0;
+}
+
+static int row_dotted_fill(int y,double x1,double x2)
+{
+    int i1,i2,i;
+
+    if(y != iceil(y / dotted_fill_gap) * dotted_fill_gap)
+	    return 0;
+
+    i1 = iceil(x1 / dotted_fill_gap) * dotted_fill_gap;
+    i2 = ifloor(x2);
+    if (i1 <= i2)
+    {
+	for(i = i1; i <= i2; i += dotted_fill_gap)
+	{
+	    move (i, y);
+	    cont (i, y);
+	}
     }
 
     return 0;

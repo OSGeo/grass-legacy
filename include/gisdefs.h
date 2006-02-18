@@ -872,6 +872,7 @@ int G_percent2(int, int, int, FILE *);
 
 /* plot.c */
 int G_setup_plot(double, double, double, double, int (*)(), int (*)());
+int G_setup_fill(int);
 int G_plot_where_xy(double, double, int *, int *);
 int G_plot_where_en(int, int, double *, double *);
 int G_plot_point(double, double);

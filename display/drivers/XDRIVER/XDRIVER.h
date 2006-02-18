@@ -12,7 +12,7 @@ extern int XD_Get_location_with_line(int,int,int *,int *,int *,int);
 extern int XD_Get_location_with_pointer(int *,int *,int *,int);
 extern void XD_Graph_close(void);
 extern int XD_Graph_set(int,char **);
-extern void XD_Line_width(int);
+extern int XD_Line_width(int);
 extern void XD_Panel_delete(const char *);
 extern void XD_Panel_restore(const char *);
 extern void XD_Panel_save(const char *,int,int,int,int);
