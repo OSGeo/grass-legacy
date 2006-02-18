@@ -33,7 +33,7 @@ extern int PNG_Color_table_float(void);
 extern void PNG_Erase(void);
 extern void PNG_Graph_close(void);
 extern int PNG_Graph_set(int,char **);
-extern void PNG_Line_width(int);
+extern int PNG_Line_width(int);
 extern void PNG_Raster_int(int,int,const int *,int,int);
 extern void PNG_Respond(void);
 extern void PNG_reset_color(int,int,int,int);

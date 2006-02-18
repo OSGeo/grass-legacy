@@ -31,7 +31,7 @@ struct driver
 	int (*Get_with_pointer)(int *,int *,int *,int);
 	int (*Graph_set)(int,char **);
 	void (*Graph_close)(void);
-	void (*Line_width)(int);
+	int (*Line_width)(int);
 	void (*Panel_save)(const char *,int,int,int,int);
 	void (*Panel_restore)(const char *);
 	void (*Panel_delete)(const char *);
@@ -116,7 +116,7 @@ extern void COM_Get_text_box(const char *,int *,int *,int *,int *);
 extern int COM_Graph_set(int,char **);
 extern void COM_Graph_close(void);
 /* Line_width.c */
-extern void COM_Line_width(int);
+extern int COM_Line_width(int);
 /* Move.c */
 extern void COM_Move_abs(int,int);
 extern void COM_Move_rel(int,int);
