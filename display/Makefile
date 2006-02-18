@@ -22,7 +22,6 @@ SUBDIRS = \
 	d.info \
 	d.legend \
 	d.linegraph \
-	d.m \
 	d.mapgraph \
 	d.measure \
 	d.mon \
@@ -44,8 +43,7 @@ SUBDIRS = \
 	d.what.rast \
 	d.what.vect \
 	d.where \
-	d.zoom \
-	gis.m 
+	d.zoom
 
 FREETYPEBASED = d.text.freetype d.font.freetype
 
