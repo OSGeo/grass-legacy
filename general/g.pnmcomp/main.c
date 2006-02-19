@@ -180,6 +180,31 @@ overlay(void)
 }
 
 static void
+overlay_alpha(float alpha)
+{
+	const unsigned char *p = in_buf;
+	const unsigned char *q = mask_buf;
+	unsigned char *r = out_buf;
+	int row, col, i;
+
+	alpha *= 256.0 / 255;
+
+	for (row = 0; row < height; row++)
+		for (col = 0; col < width; col++)
+		{
+			int c1 = (int) (*q++ * alpha);
+			int c0 = 255 - c1;
+
+			for (i = 0; i < 3; i++)
+			{
+				*r = (*r * c0 + *p * c1) / 256;
+				p++;
+				r++;
+			}
+		}
+}
+
+static void
 write_ppm(const char *filename, const char *buf)
 {
 	const unsigned char *p = buf;
@@ -202,7 +227,7 @@ main(int argc, char *argv[])
 {
 	struct GModule *module;
 	struct {
-		struct Option *in, *mask, *out, *width, *height, *bg;
+		struct Option *in, *mask, *alpha, *out, *width, *height, *bg;
 	} opt;
 	int i;
 
@@ -224,6 +249,12 @@ main(int argc, char *argv[])
 	opt.mask->type		= TYPE_STRING;
 	opt.mask->multiple	= YES;
 	opt.mask->description	= "Names of mask files.";
+
+	opt.alpha = G_define_option();
+	opt.alpha->key		= "opacity";
+	opt.alpha->type		= TYPE_DOUBLE;
+	opt.alpha->multiple	= YES;
+	opt.alpha->description	= "Layer opacities.";
 
 	opt.out = G_define_option();
 	opt.out->key		= "output";
@@ -275,7 +306,10 @@ main(int argc, char *argv[])
 		{
 			read_pnm(infile, in_buf, 3);
 			read_pnm(maskfile, mask_buf, 1);
-			overlay();
+			if (opt.alpha->answer)
+				overlay_alpha(atof(opt.alpha->answers[i]));
+			else
+				overlay();
 		}
 		else
 			read_pnm(infile, out_buf, 3);
