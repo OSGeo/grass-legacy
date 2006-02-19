@@ -146,7 +146,7 @@ static int list_element( FILE *out, char *element,
     char path[1000];
     DIR *dirp;
     struct dirent *dp;
-    int count = 0, maxlen = 0, num_cols = 0;
+    int count = 0, maxlen = 0, num_cols = 1;
 
 /*
  * convert . to current mapset
@@ -187,9 +187,6 @@ static int list_element( FILE *out, char *element,
 
 		num_cols = 80 / (maxlen + 1); /* + 1: column separator */
 	}
-
-	if (num_cols < 1)
-		num_cols = 1;
 
 	while ((dp = readdir(dirp)) != NULL)
 	{
