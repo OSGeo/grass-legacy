@@ -1,4 +1,4 @@
-MODULE_TOPDIR = ../..
+MODULE_TOPDIR = ../../..
 
 PGM=d.m
 PGM2=d.m.tcl
