@@ -5,7 +5,6 @@
 #include <grass/colors.h>
 #include "XDRIVER.h"
 
-/* TODO: transparency? */
 void XD_draw_bitmap(int ncols, int nrows, const unsigned char *array)
 {
 	static GC and_gc, or_gc;

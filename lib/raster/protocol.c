@@ -182,12 +182,12 @@ int R_standard_color(int index)
  *
  * When in
  * float mode (see <i>R_color_table_float</i>), this call selects the color
- * most closely matched to the <b>red, grn</b>, and <b>blu</b> intensities
+ * most closely matched to the <b>red, grn</b>, and <b>blue</b> intensities
  * requested. These values must be in the range of 0-255.
  *
  *  \param red
  *  \param grn
- *  \param blu
+ *  \param blue
  *  \return int
  */
 
@@ -272,30 +272,9 @@ int R_reset_colors(int min, int max,
 }
 
 /*!
- * \brief set and return transparency
+ * \brief change the width of line
  *
- * Sets transparency for raster and line drawings and returns the previous
- * value.  <b>number</b> should be between 0.0 and 1.0.  Use negative value to
- * just retrieve the previous transparency without changing anything.
- *
- *  \param trans
- *  \return float
- */
-float R_transparency(float trans)
-{
-	_send_ident(TRANSPARENCY);
-	_send_float(&trans);
-	_get_float(&trans);
-
-	return trans;
-}
-
-/*!
- * \brief change and return the width of line
- *
- * Changes the <b>width</b> of line to be used in subsequent draw commands and
- * returns the previous line width.  Use width -1 to get the current value
- * without changing it.
+ * Changes the <b>width</b> of line to be used in subsequent draw commands.
  *
  *  \param width
  *  \return int
@@ -305,9 +284,8 @@ int R_line_width(int width)
 {
 	_send_ident(LINE_WIDTH);
 	_send_int(&width);
-	_get_int(&width);
 
-	return width;
+	return 0;
 }
 
 /*!

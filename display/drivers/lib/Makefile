@@ -12,7 +12,6 @@ LIB_OBJS =\
 	Client.o\
 	Color_table.o\
 	Color.o\
-	Transparency.o\
 	Cont.o\
 	Draw.o\
 	Erase.o\

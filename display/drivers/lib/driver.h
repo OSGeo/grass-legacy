@@ -16,9 +16,6 @@ extern double text_size_x;
 extern double text_size_y;
 extern double text_rotation;
 
-extern int support_transparency;
-extern float transparency;
-
 struct driver
 {
 	void (*Box_abs)(int,int,int,int);
@@ -34,7 +31,7 @@ struct driver
 	int (*Get_with_pointer)(int *,int *,int *,int);
 	int (*Graph_set)(int,char **);
 	void (*Graph_close)(void);
-	int (*Line_width)(int);
+	void (*Line_width)(int);
 	void (*Panel_save)(const char *,int,int,int,int);
 	void (*Panel_restore)(const char *);
 	void (*Panel_delete)(const char *);
@@ -61,7 +58,6 @@ struct driver
 
 	void (*reset_color)(int,int,int,int);
 	int (*lookup_color)(int,int,int);
-	void (*lookup_rgb)(int,int *,int *,int *);
 	int (*get_table_type)(void);
 	void (*color)(int);
 	void (*draw_line)(int,int,int,int);
@@ -100,8 +96,6 @@ extern void COM_Color_offset(int);
 /* Color_table.c */
 extern int COM_Color_table_float(void);
 extern int COM_Color_table_fixed(void);
-/* Transparency.c */
-extern float COM_Transparency(float);
 /* Cont.c */
 extern void COM_Cont_abs(int,int);
 extern void COM_Cont_rel(int,int);
@@ -122,7 +116,7 @@ extern void COM_Get_text_box(const char *,int *,int *,int *,int *);
 extern int COM_Graph_set(int,char **);
 extern void COM_Graph_close(void);
 /* Line_width.c */
-extern int COM_Line_width(int);
+extern void COM_Line_width(int);
 /* Move.c */
 extern void COM_Move_abs(int,int);
 extern void COM_Move_rel(int,int);
@@ -174,7 +168,6 @@ extern void COM_Do_work(int);
 
 /* Color.c */
 extern int DRV_lookup_color(int,int,int);
-extern void DRV_lookup_rgb(int,int *,int *,int *);
 extern void DRV_color(int);
 /* Color_table.c */
 extern int DRV_get_table_type(void);

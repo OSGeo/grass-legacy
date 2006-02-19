@@ -14,12 +14,6 @@ int DRV_lookup_color(int r, int g, int b)
 	return 0;
 }
 
-void DRV_lookup_rgb(int number, int *r, int *g, int *b)
-{
-	if (driver->lookup_rgb)
-		(*driver->lookup_rgb)(number, r, g, b);
-}
-
 void DRV_color(int number)
 {
 	if (driver->color)

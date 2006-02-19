@@ -147,15 +147,9 @@ int process_command(int c)
 	break;
     case COLOR_PRINT:
 	break;
-    case TRANSPARENCY:
-	REC(&wx, sizeof wx);
-	wx = COM_Transparency(wx);
-	SEND(&wx, sizeof wx);
-	break;
     case LINE_WIDTH:
 	REC(&number, sizeof number);
-	x = COM_Line_width(number);
-	SEND(&x, sizeof x);
+	COM_Line_width(number);
 	break;
     case CONT_ABS:
 	REC(&x, sizeof x);

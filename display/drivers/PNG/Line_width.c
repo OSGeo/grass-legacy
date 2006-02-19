@@ -1,14 +1,9 @@
 #include "pngdriver.h"
 
-int linewidth = 0;
+int linewidth;
 
-int PNG_Line_width(int width)
+void PNG_Line_width(int width)
 {
-	int ret = linewidth;
-
-	if(width >= 0)
-		linewidth = (width < 0 ? 0 : width);
-
-	return ret;
+	linewidth = (width < 0 ? 0 : width);
 }
 

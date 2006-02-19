@@ -26,4 +26,3 @@ extern pid_t redraw_pid;
 
 extern int current_color;
 
-extern int support_transparency;
