@@ -3,9 +3,9 @@
 ############################################################################
 #
 # MODULE:	r.univar
-# AUTHOR(S):	Markus Neteler. neteler itc.it
+# AUTHOR(S):	Markus Neteler. neteler itc it
 # PURPOSE:	Calculates univariate statistics from a GRASS raster map
-# COPYRIGHT:	(C) 1998,2002,2003 by the GRASS Development Team
+# COPYRIGHT:	(C) 1998,2002,2003,2006 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -18,7 +18,7 @@
 #%End
 #%flag
 #%  key: e
-#%  description: extended statistics (quartiles and 90th percentile)
+#%  description: extended statistics (quartiles and percentile)
 #%END
 #%option
 #% key: map
@@ -26,6 +26,13 @@
 #% gisprompt: old,cell,raster
 #% description: Name of raster map
 #% required : yes
+#%End
+#%option
+#% key: percentile
+#% type: integer
+#% description: Percentile to calculate (requires -e flag)
+#% answer : 90
+#% required : no
 #%End
 
 if  [ -z "$GISBASE" ] ; then
@@ -53,6 +60,18 @@ TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
     echo "ERROR: unable to create temporary files" 1>&2
     exit 1
+fi
+
+echo "$GIS_OPT_percentile" | grep '\.' > /dev/null
+if [ $? -eq 0 ] ; then
+	echo "Sorry, percentile must be between 0 and 100"
+        exit 1
+	fi
+
+if test $GIS_OPT_percentile -lt 0 -o $GIS_OPT_percentile -gt 100
+then
+        echo "Sorry, percentile must be between 0 and 100"
+        exit 1
 fi
 
 cleanup()
@@ -140,11 +159,11 @@ if [ $GIS_FLAG_e -eq 1 ] ; then
   QELEMENT=`head -n $QPOS $TMP.sort | tail -n 1`
   echo "3rd Quartile: $QELEMENT"
 
-  # 0.90 percentile
-  QUARTILE=0.9
-  QPOS=`echo $NUMBER $QUARTILE | awk '{printf "%d", $1 * $2 + 0.5}'`
-  QELEMENT=`head -n $QPOS $TMP.sort | tail -n 1`
-  echo "90th Percentile: $QELEMENT"
+  # XX percentile
+  QUARTILE=$GIS_OPT_percentile
+  QPOS=`echo $NUMBER $QUARTILE | awk '{printf "%d", $1 * $2/100. + 0.5}'`
+  QELEMENT=`head -n $QPOS $TMP.sort | tail -1`
+  echo "${GIS_OPT_percentile} Percentile: $QELEMENT"
 
 fi
 
