@@ -120,8 +120,9 @@ main (int argc, char **argv)
 	struct Option *lcolor_opt, *bgcolor_opt, *bcolor_opt;
 	struct Option *lsize_opt, *font_opt, *xref_opt, *yref_opt;
 	struct Option *attrcol_opt, *maxreg_opt, *minreg_opt;
-	struct Option *width_opt, *fill_opt;
-	struct Flag   *_quiet, *id_flag, *table_acolors_flag, *cats_acolors_flag, *x_flag;
+	struct Option *width_opt, *trans_opt;
+	struct Flag   *_quiet, *id_flag, *table_acolors_flag;
+	struct Flag   *cats_acolors_flag, *x_flag;
 	struct cat_list *Clist;
 	int *cats, ncat;
 	LATTR lattr;
@@ -133,7 +134,9 @@ main (int argc, char **argv)
 	BOUND_BOX box;
 	double overlap;
 	SYMBOL *Symb;
-	
+	float prev_trans;
+	int prev_width;
+
 	module = G_define_module();
 	module->description = _("Displays GRASS vector data in the active frame on the "
 		              "graphics monitor.");
@@ -179,11 +182,11 @@ main (int argc, char **argv)
 	cat_opt = G_define_standard_option(G_OPT_V_CATS) ;
 	where_opt = G_define_standard_option(G_OPT_WHERE) ;
 
-	fill_opt = G_define_option() ;
-	fill_opt->key         = "fill";
-	fill_opt->type        = TYPE_INTEGER ;
-	fill_opt->answer      = "0";
-	fill_opt->description = _("Fill style: 0 for solid fill, positive value for dotted fill");
+	trans_opt = G_define_option() ;
+	trans_opt->key         = "transparency";
+	trans_opt->type        = TYPE_INTEGER ;
+	trans_opt->answer      = "0";
+	trans_opt->description = _("Transparency: 0 - 100%");
 
 	width_opt = G_define_option() ;
 	width_opt->key        = "width";
@@ -338,7 +341,15 @@ main (int argc, char **argv)
 	width = atoi(width_opt->answer);
 	if( width < 0 )
 		width = 0;
-	R_line_width(width);
+	prev_width = R_line_width(width);
+
+	i = atoi(trans_opt->answer);
+	if(i < 0)
+		i = 0;
+	else
+	if(i > 100)
+		i = 100;
+	prev_trans = R_transparency(i/100.0);
 
 	color = WHITE;
 	/* test for background color */
@@ -537,7 +548,6 @@ main (int argc, char **argv)
         G_setup_plot (D_get_d_north(), D_get_d_south(), 
                       D_get_d_west(), D_get_d_east(),
                       D_move_abs, D_cont_abs);
-	G_setup_fill(atoi(fill_opt->answer));
 
 	if (!quiet)
 	     fprintf (stdout,_("Plotting ... ")); fflush (stdout);
@@ -610,7 +620,8 @@ main (int argc, char **argv)
 	/* reset line width: Do we need to get line width from display driver
 	 * (not implemented)?  It will help restore previous line width (not
 	 * just 0) determined by another module (e.g., d.linewidth). */
-	R_line_width(0);
+	R_line_width(prev_width);
+	R_transparency(prev_trans);
 	R_close_driver();
 
         if (!quiet)

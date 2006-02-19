@@ -182,12 +182,12 @@ int R_standard_color(int index)
  *
  * When in
  * float mode (see <i>R_color_table_float</i>), this call selects the color
- * most closely matched to the <b>red, grn</b>, and <b>blue</b> intensities
+ * most closely matched to the <b>red, grn</b>, and <b>blu</b> intensities
  * requested. These values must be in the range of 0-255.
  *
  *  \param red
  *  \param grn
- *  \param blue
+ *  \param blu
  *  \return int
  */
 
@@ -269,6 +269,25 @@ int R_reset_colors(int min, int max,
 	}
 
 	return 0;
+}
+
+/*!
+ * \brief set and return transparency
+ *
+ * Sets transparency for raster and line drawings and returns the previous
+ * value.  <b>number</b> should be between 0.0 and 1.0.  Use negative value to
+ * just retrieve the previous transparency without changing anything.
+ *
+ *  \param trans
+ *  \return float
+ */
+float R_transparency(float trans)
+{
+	_send_ident(TRANSPARENCY);
+	_send_float(&trans);
+	_get_float(&trans);
+
+	return trans;
 }
 
 /*!

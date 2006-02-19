@@ -33,4 +33,5 @@ extern void XD_draw_line(int,int,int,int);
 extern void XD_draw_point(int,int);
 extern int XD_get_table_type(void);
 extern int XD_lookup_color(int, int, int);
+extern void XD_lookup_rgb(int, int *, int *, int *);
 extern void XD_reset_color(int,int,int,int);

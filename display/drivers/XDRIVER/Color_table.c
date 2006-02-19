@@ -14,6 +14,8 @@ static int r_pos, g_pos, b_pos;
 static int r_size, g_size, b_size;
 static int r_scale, g_scale, b_scale;
 
+static int gray_max, r_max, g_max, b_max;
+
 static void get_shifts(unsigned mask, int *pos, int *size, int *scale)
 {
 	int i, j;
@@ -218,7 +220,7 @@ static Colormap ramp_colormap(void)
 Colormap init_color_table(Colormap cmap)
 {
 	int n_colors = use_visual->map_entries;
-	int r, g, b, y, i;
+	int i;
 
 	/* "truecolor" really indicates that we can't do "float" color mode */
 	switch (use_visual->class)
@@ -240,36 +242,36 @@ Colormap init_color_table(Colormap cmap)
 	case StaticGray:
 	case GrayScale:
 		/* determine how many levels of gray we can actually get */
-		y = try_get_grays(cmap, n_colors);
-		if (y > 2 && y < n_colors)
-			y = try_get_grays(cmap, y);
-		if (y < 2)
+		gray_max = try_get_grays(cmap, n_colors);
+		if (gray_max > 2 && gray_max < n_colors)
+			gray_max = try_get_grays(cmap, gray_max);
+		if (gray_max < 2)
 			G_fatal_error("Unable to get sufficient gray shades\n");
 
-		NCOLORS = y;
+		NCOLORS = gray_max;
 
 		for (i = 0; i < 256; i++)
-			Gray[i] = i * y / 256;
+			Gray[i] = i * gray_max / 256;
 
 		break;
 
 	case StaticColor:
 	case PseudoColor:
 		/* determine how many levels of r, g, and b are possible */
-		get_max_levels(n_colors, &r, &g, &b);
+		get_max_levels(n_colors, &r_max, &g_max, &b_max);
 
 		/* now see how many we can actually get */
-		while (!try_get_colors(cmap, r, g, b))
-			if (!get_fewer_levels(&r, &g, &b))
+		while (!try_get_colors(cmap, r_max, g_max, b_max))
+			if (!get_fewer_levels(&r_max, &g_max, &b_max))
 				G_fatal_error("Unable to get sufficient colors\n");
 
-		NCOLORS = r * g * b;
+		NCOLORS = r_max * g_max * b_max;
 
 		for (i = 0; i < 256; i++)
 		{
-			Red[i] = (i * r / 256) * g * b;
-			Grn[i] = (i * g / 256) * b;
-			Blu[i] = (i * b / 256);
+			Red[i] = (i * r_max / 256) * g_max * b_max;
+			Grn[i] = (i * g_max / 256) * b_max;
+			Blu[i] = (i * b_max / 256);
 		}
 
 		break;
@@ -316,7 +318,6 @@ Colormap init_color_table(Colormap cmap)
 	return cmap;
 }
 
-
 int XD_lookup_color(int r, int g, int b)
 {
 	switch (use_visual->class)
@@ -339,6 +340,49 @@ int XD_lookup_color(int r, int g, int b)
 	default:
 		G_fatal_error("Unknown visual class %d\n", use_visual->class);
 		return 0;
+		break;
+	}
+}
+
+void XD_lookup_rgb(int number, int *r, int *g, int *b)
+{
+	unsigned int i;
+
+	switch (use_visual->class)
+	{
+	case StaticGray:
+	case GrayScale:
+		*r = *g = *b = number * 256 / gray_max;
+		break;
+
+	case StaticColor:
+	case PseudoColor:
+		*b = number % b_max;
+		number = (number - *b) / b_max;
+		*g = number % g_max;
+		number = (number - *g) / g_max;
+		*r = number % r_max;
+
+		*b = *b * 256 / b_max;
+		*g = *g * 256 / g_max;
+		*r = *r * 256 / r_max;
+		break;
+
+	case DirectColor:
+	case TrueColor:
+		*r = number & (~0 << r_pos);
+		number &= ~(*r);
+		*g = number & (~0 << g_pos);
+		number &= ~(*g);
+		*b = number & (~0 << b_pos);
+		*r = (*r >> r_pos) << r_scale;
+		*g = (*g >> g_pos) << g_scale;
+		*b = (*b >> b_pos) << b_scale;
+		break;
+
+	default:
+		G_fatal_error("Unknown visual class %d\n", use_visual->class);
+		return;
 		break;
 	}
 }
