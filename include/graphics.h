@@ -95,6 +95,9 @@
 /* line attributes */
 #define LINE_WIDTH                  79
 
+/* transparency */
+#define TRANSPARENCY                80
+
 /* return codes for pad routines */
 
 #define OK 0

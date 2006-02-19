@@ -16,6 +16,9 @@ extern double text_size_x;
 extern double text_size_y;
 extern double text_rotation;
 
+extern int support_transparency;
+extern float transparency;
+
 struct driver
 {
 	void (*Box_abs)(int,int,int,int);
@@ -58,6 +61,7 @@ struct driver
 
 	void (*reset_color)(int,int,int,int);
 	int (*lookup_color)(int,int,int);
+	void (*lookup_rgb)(int,int *,int *,int *);
 	int (*get_table_type)(void);
 	void (*color)(int);
 	void (*draw_line)(int,int,int,int);
@@ -96,6 +100,8 @@ extern void COM_Color_offset(int);
 /* Color_table.c */
 extern int COM_Color_table_float(void);
 extern int COM_Color_table_fixed(void);
+/* Transparency.c */
+extern float COM_Transparency(float);
 /* Cont.c */
 extern void COM_Cont_abs(int,int);
 extern void COM_Cont_rel(int,int);
@@ -168,6 +174,7 @@ extern void COM_Do_work(int);
 
 /* Color.c */
 extern int DRV_lookup_color(int,int,int);
+extern void DRV_lookup_rgb(int,int *,int *,int *);
 extern void DRV_color(int);
 /* Color_table.c */
 extern int DRV_get_table_type(void);

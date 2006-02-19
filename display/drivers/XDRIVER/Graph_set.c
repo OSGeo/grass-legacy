@@ -50,6 +50,8 @@ int truecolor;
 
 int external_window;
 
+int support_transparency;
+
 unsigned long *xpixels;	/* lookup table for FIXED color mode */
 
 #ifdef X11R3
@@ -388,6 +390,10 @@ int XD_Graph_set(int argc, char **argv)
 	XSetForeground(dpy, gc, WhitePixel(dpy, scrn));
 
 	XClearWindow(dpy, grwin);
+
+	/* TODO: Can we support transparency with xpixel[] array? */
+	support_transparency = (DRV_get_table_type() == FLOAT ||
+			use_visual->class >= TrueColor);
 
 	/* prepare to catch signals */
 	signal(SIGHUP, sigint);

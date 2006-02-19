@@ -78,6 +78,7 @@ int R_standard_color(int);
 int R_RGB_color(unsigned char,unsigned char,unsigned char);
 int R_reset_color(unsigned char,unsigned char,unsigned char,int);
 int R_reset_colors(int,int,unsigned char *,unsigned char *,unsigned char *);
+float R_transparency(float);
 
 int R_line_width(int);
 int R_erase(void);

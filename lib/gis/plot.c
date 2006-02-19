@@ -38,7 +38,7 @@ static int row_dotted_fill(int,double,double);
 static int dotted_fill_gap = 2;
 static int ifloor(double);
 static int iceil(double);
-static int (*row_fill)() = row_dotted_fill;
+static int (*row_fill)() = row_solid_fill;
 static int (*move)() = NULL;
 static int (*cont)() = NULL;
 

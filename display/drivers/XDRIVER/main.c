@@ -37,6 +37,7 @@ int main(int argc, char **argv)
 	drv.Do_work		= XD_Do_work;
 	drv.reset_color		= XD_reset_color;
 	drv.lookup_color	= XD_lookup_color;
+	drv.lookup_rgb		= XD_lookup_rgb;
 	drv.get_table_type	= XD_get_table_type;
 	drv.color		= XD_color;
 	drv.draw_line		= XD_draw_line;

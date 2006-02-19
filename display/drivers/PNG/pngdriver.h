@@ -42,3 +42,4 @@ extern void PNG_draw_line(int,int,int,int);
 extern void PNG_draw_point(int,int);
 extern int PNG_get_table_type(void);
 extern int PNG_lookup_color(int, int, int);
+extern void PNG_lookup_rgb(int, int *, int *, int *);

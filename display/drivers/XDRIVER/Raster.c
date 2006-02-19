@@ -21,6 +21,8 @@ void XD_Raster_int(int num, int nrows, const int *array, int withzeros, int colo
 	XWindowAttributes xwa;
 	int bytes_per_pixel;
 	int i;
+	int c, r, g, b, r2, g2, b2;
+	XImage *bgimage;
 
 	/* Unless this is 1st time thru or if raster line length has
 	 * changed we don't need to reallocate space or re-create the
@@ -73,6 +75,9 @@ void XD_Raster_int(int num, int nrows, const int *array, int withzeros, int colo
 		grimage->data =  G_realloc(grimage->data, num * bytes_per_pixel);
 	}
 
+	if (transparency > 0.0)
+		bgimage = XGetImage(dpy, bkupmap, cur_x, cur_y, num, 1, ~0, ZPixmap);
+
 	/* If zeros are to be included, an entire raster row can be constructed */
 	if (withzeros)
 	{
@@ -91,15 +96,26 @@ void XD_Raster_int(int num, int nrows, const int *array, int withzeros, int colo
 			array = array2;
 		}
 
-		if (DRV_get_table_type() == FLOAT)
-			for (i = 0; i < num; i++)
-				XPutPixel(grimage, i, 0, (u_long) array[i]);
-		else if (use_visual->class >= TrueColor)
-			for (i = 0; i < num; i++)
-				XPutPixel(grimage, i, 0, (u_long) array[i]);
-		else
+		if (support_transparency) {
+			for (i = 0; i < num; i++) {
+				c = array[i];
+				if (transparency > 0.0) {
+					DRV_lookup_rgb(XGetPixel(bgimage, i, 0), &r, &g, &b);
+					DRV_lookup_rgb(c, &r2, &g2, &b2);
+					c = DRV_lookup_color(
+						r*transparency+
+						r2*(1-transparency),
+						g*transparency+
+						g2*(1-transparency),
+						b*transparency+
+						b2*(1-transparency));
+				}
+				XPutPixel(grimage, i, 0, (u_long) c);
+			}
+		} else {
 			for (i = 0; i < num; i++)
 				XPutPixel(grimage, i, 0, (u_long) xpixels[array[i]]);
+		}
 
 		for (i = 0; i < nrows; i++)
 			XPutImage(dpy, bkupmap, gc, grimage, 0, 0, cur_x, cur_y + i, num, 1);
@@ -117,7 +133,7 @@ void XD_Raster_int(int num, int nrows, const int *array, int withzeros, int colo
 
 		for (i = 0; i < num; i++)
 		{
-			int c = array[i];
+			c = array[i];
 
 			if (c == 0)
 			{
@@ -141,12 +157,22 @@ void XD_Raster_int(int num, int nrows, const int *array, int withzeros, int colo
 					c = LIB_get_color_index(c);
 
 				/* non-zero pixel, put into the image */
-				if (DRV_get_table_type() == FLOAT)
+				if (support_transparency) {
+					if (transparency > 0.0) {
+						DRV_lookup_rgb(XGetPixel(bgimage, i, 0), &r, &g, &b);
+						DRV_lookup_rgb(c, &r2, &g2, &b2);
+						c = DRV_lookup_color(
+							r*transparency+
+							r2*(1-transparency),
+							g*transparency+
+							g2*(1-transparency),
+							b*transparency+
+							b2*(1-transparency));
+					}
 					XPutPixel(grimage, width++, 0, (u_long) c);
-				else if (use_visual->class >= TrueColor)
-					XPutPixel(grimage, width++, 0, (u_long) c);
-				else
+				} else {
 					XPutPixel(grimage, width++, 0, (u_long) xpixels[c]);
+				}
 			}
 		}
 		/* Flush out any remaining data */
@@ -159,6 +185,9 @@ void XD_Raster_int(int num, int nrows, const int *array, int withzeros, int colo
 					  cur_x + start_col, cur_y + j, width, 1);
 		}
 	}
+
+	if (transparency > 0.0)
+		XDestroyImage(bgimage);
 
 	needs_flush = 1;
 }

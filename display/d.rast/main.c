@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/raster.h>
+#include <grass/glocale.h>
 #define MAIN
 #include "mask.h"
 #include "local_proto.h"
-#include <grass/glocale.h>
 
 static int parse_catlist ( char **, Mask *);
 static int parse_vallist ( char **, d_Mask *);
@@ -17,20 +17,23 @@ int main(
     char *name ;
     int overlay;
     int invert, fp;
-	struct GModule *module;
+    struct GModule *module;
     struct Option *map;
     struct Option *catlist;
     struct Option *vallist;
     struct Option *bg;
+    struct Option *trans;
     struct Flag *flag_o;
     struct Flag *flag_i;
     struct Flag *flag_x;
+    float prev_trans;
+    int i;
 
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
-	module = G_define_module();
-	module->description =
+    module = G_define_module();
+    module->description =
 		_("Displays and overlays raster map layers "
 		"in the active display frame on the graphics monitor");
 
@@ -66,6 +69,12 @@ int main(
     bg->options     = color_list();
     bg->description = _("Background color (for null)");
 
+    trans              = G_define_option() ;
+    trans->key         = "transparency";
+    trans->type        = TYPE_INTEGER ;
+    trans->answer      = "0";
+    trans->description = _("Transparency: 0 - 100%");
+
     flag_o = G_define_flag();
     flag_o->key = 'o';
     flag_o->description = _("Overlay (non-null values only)");
@@ -93,6 +102,14 @@ int main(
     if (R_open_driver() != 0)
 	G_fatal_error (_("No graphics device selected"));
 
+    i = atoi(trans->answer);
+    if(i < 0)
+	i = 0;
+    else
+    if(i > 100)
+	i = 100;
+    prev_trans = R_transparency(i/100.0);
+
     fp = G_raster_map_is_fp(name, mapset);
     if(catlist->answer)
     {
@@ -112,6 +129,7 @@ int main(
     else
         display (name, mapset, overlay, bg->answer, CELL_TYPE, invert, flag_x->answer) ;
 
+    R_transparency(prev_trans);
     R_close_driver();
 
     exit(EXIT_SUCCESS);

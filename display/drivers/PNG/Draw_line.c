@@ -1,4 +1,3 @@
-
 /*
  * draw a line between two given points in the current color.
  *
@@ -7,18 +6,29 @@
  */
 
 #include <math.h>
-
 #include "pngdriver.h"
+
+static int cr, cg, cb;
 
 static void store_xy(int x, int y)
 {
-	int xi, xi_end, yi, yi_end;
+	int xi, xi_end, yi, yi_end, ind;
 	double theta;
+	int c, r, g, b;
 
 	if (x < 0 || x >= width || y < 0 || y >= height)
 		return;
 
-	grid[y * width + x] = currentColor;
+	ind = y * width + x;
+	c = currentColor;
+	if (transparency > 0.0) {
+		DRV_lookup_rgb(grid[ind], &r, &g, &b);
+		c = DRV_lookup_color(
+				r*transparency+cr*(1-transparency),
+				g*transparency+cg*(1-transparency),
+				b*transparency+cb*(1-transparency));
+	}
+	grid[ind] = c;
 
 	if(linewidth <= 1)
 		return;
@@ -31,9 +41,19 @@ static void store_xy(int x, int y)
 		if(xi == x)
 			yi = linewidth / 2;
 		yi_end = y + yi;
-		for(yi = y - yi; yi < yi_end; yi++){
-			if(xi >= 0 && xi < width && yi >= 0 && yi < height)
-				grid[yi * width + xi] = currentColor;
+		for(yi = y - yi; yi < yi_end; yi++) {
+			if(xi >= 0 && xi < width && yi >= 0 && yi < height) {
+				ind = yi * width + xi;
+				c = currentColor;
+				if (transparency > 0.0) {
+					DRV_lookup_rgb(grid[ind], &r, &g, &b);
+					c = DRV_lookup_color(
+					    r*transparency+cr*(1-transparency),
+					    g*transparency+cg*(1-transparency),
+					    b*transparency+cb*(1-transparency));
+				}
+				grid[ind] = c;
+			}
 		}
 	}
 }
@@ -44,10 +64,16 @@ void PNG_draw_line(int x1, int y1, int x2, int y2)
 	int xinc, yinc, error;
 	int delta_x, delta_y;
 
+	if (transparency == 1.0)
+		return;
+
 	x = x1;
 	x_end = x2;
 	y = y1;
 	y_end = y2;
+
+	if (transparency > 0.0)
+		DRV_lookup_rgb(currentColor, &cr, &cg, &cb);
 
 	if (x == x_end && y == y_end )
 	{
