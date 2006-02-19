@@ -171,6 +171,8 @@ static int draw_cell(
             }
 	    rasptr = G_incr_void_ptr(rasptr, G_raster_size(data_type));
         }
+	if (R_transparency(-1) > 0.0)
+		send_raster = 1;
     }
 
     /* Send the raster */
