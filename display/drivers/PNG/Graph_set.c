@@ -35,7 +35,6 @@ unsigned char palette[256][4];
 unsigned int transparent;
 unsigned int background;
 int modified;
-int support_transparency;
 
 int PNG_Graph_set(int argc, char **argv)
 {
@@ -85,8 +84,6 @@ int PNG_Graph_set(int argc, char **argv)
 	}
 
 	init_color_table();
-
-	support_transparency = 1;
 
 	COM_Erase();
 

@@ -175,32 +175,6 @@ int PNG_lookup_color(int r, int g, int b)
 		: get_color_indexed(r, g, b);
 }
 
-void PNG_lookup_rgb(int number, int *r, int *g, int *b)
-{
-	if (true_color) {
-		*r = (number & 0xff0000) >> 16;
-		*g = (number & 0x00ff00) >> 8;
-		*b = number & 0x0000ff;
-		return;
-	}
-
-	if (has_alpha && transparent == number) {
-		*r = *g = *b = 0;
-		return;
-	}
-
-	number -= has_alpha;
-	*b = number % 6;
-	number = (number - *b) / 6;
-	*g = number % 6;
-	number = (number - *g) / 6;
-	*r = number % 6;
-
-	*b = *b * 256 / 6;
-	*g = *g * 256 / 6;
-	*r = *r * 256 / 6;
-}
-
 int PNG_get_table_type(void)
 {
 	return table_type;

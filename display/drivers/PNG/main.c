@@ -37,7 +37,6 @@ int main(int argc, char **argv)
 	drv.Do_work		= NULL;
 	drv.reset_color		= PNG_reset_color;
 	drv.lookup_color	= PNG_lookup_color;
-	drv.lookup_rgb		= PNG_lookup_rgb;
 	drv.get_table_type	= PNG_get_table_type;
 	drv.color		= PNG_color;
 	drv.draw_line		= PNG_draw_line;
