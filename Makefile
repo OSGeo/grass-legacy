@@ -37,6 +37,7 @@ SUBDIRS = \
 	db \
 	display \
 	general \
+	gui \
 	imagery \
 	misc \
 	paint \
