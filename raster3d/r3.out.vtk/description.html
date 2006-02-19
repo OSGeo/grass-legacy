@@ -36,6 +36,25 @@ choosen null value in the VTK-ASCII file.
    </li>
 </ul>
 
+<H2>EXAMPLE</H2>
+
+This is a simple Spearfish example:
+
+<div class="code"><pre>
+g.region -d
+g.region res=150 res3=150 t=80 b=0 tbres=10
+r.mapcalc "bottom=0"
+
+# synthetic data, could be geological structures:
+r3.mapcalc "map3d=row()+col()+depth()"
+
+#export of volume to VTK:
+r3.out.vtk -s input=map3d top=elevation.10m bottom=bottom output=/tmp/out.vtk
+
+# visualize in paraview or other VTK viewer:
+paraview --data=/tmp/out.vtk
+</pre></div>
+
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="r.out.vtk.html">r.out.vtk</A></EM><br>
