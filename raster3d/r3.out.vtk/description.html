@@ -38,7 +38,7 @@ choosen null value in the VTK-ASCII file.
 
 <H2>EXAMPLE</H2>
 
-This is a simple Spearfish example:
+<H3>Simple Spearfish example</H3>
 
 <div class="code"><pre>
 g.region -d
@@ -54,6 +54,24 @@ r3.out.vtk -s input=map3d top=elevation.10m bottom=bottom output=/tmp/out.vtk
 # visualize in paraview or other VTK viewer:
 paraview --data=/tmp/out.vtk
 </pre></div>
+
+
+<H3>Slovakia3d example</H3>
+
+<div class="code"><pre>
+#reduce resolution:
+g.region -dp res=1000 res3=1000
+r.mapcalc "bottom=100"
+
+#export of volume to VTK:
+r3.out.vtk -s in=precip3d.500z50 top=dem500 bottom=bottom out=/tmp/slovakia3d.vtk
+
+# visualize in paraview or other VTK viewer:
+paraview --data=/tmp/slovakia3d.vtk
+# set Display style to 'surface#
+# set Actor Control z to 10
+</pre></div>
+
 
 <H2>SEE ALSO</H2>
 
