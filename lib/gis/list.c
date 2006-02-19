@@ -188,6 +188,9 @@ static int list_element( FILE *out, char *element,
 		num_cols = 80 / (maxlen + 1); /* + 1: column separator */
 	}
 
+	if (num_cols < 1)
+		num_cols = 1;
+
 	while ((dp = readdir(dirp)) != NULL)
 	{
 	    if(dp->d_name[0] == '.')
