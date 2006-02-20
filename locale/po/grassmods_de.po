@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-02-18 16:36+0100\n"
-"PO-Revision-Date: 2006-02-18 17:52+0100\n"
+"PO-Revision-Date: 2006-02-20 22:08+0100\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -189,9 +189,9 @@ msgid "List all database drivers."
 msgstr "Listet alle verfügbaren Datenbanktreiber auf."
 
 #: ../db/base/dropdb.c:24
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot start driver <%s>."
-msgstr "Start s."
+msgstr "Kann den Treiber <%s> nicht starten."
 
 #: ../db/base/execute.c:68 ../db/base/execute.c:72
 #, c-format
@@ -261,84 +261,72 @@ msgid "The password was stored in file."
 msgstr "Das Passwort ist in einer Datei gespeichert."
 
 #: ../db/drivers/mysql/cursor.c:46
-#, fuzzy
 msgid "Cannot allocate cursor."
-msgstr "Kann 'Select'-Cursor nicht öffnen."
+msgstr "Kann den Cursor nicht belegen."
 
 #: ../db/drivers/mysql/cursor.c:55
-#, fuzzy
 msgid "Cannot ad new token."
-msgstr "token."
+msgstr "Kann kein neues Zeichenhinzufügen."
 
 #: ../db/drivers/mysql/db.c:66 ../db/drivers/mysql/db.c:118
-#, fuzzy
 msgid "Cannot connect to MySQL: "
-msgstr "Kann nicht an Tabelle '%s' anfügen."
+msgstr "Kann nicht zu MySQL verbinden."
 
 #: ../db/drivers/mysql/db.c:83
-#, fuzzy
 msgid "Cannot parse MySQL embeded database name"
-msgstr "database"
+msgstr "Kann den Datenbankname der eingebetteten MySQL-Datenbank nicht interpretieren."
 
 #: ../db/drivers/mysql/db.c:100
 msgid "Cannot initialize MySQL embeded server"
 msgstr "Kann den eingebetteten MySQL-Server nicht initialisieren."
 
 #: ../db/drivers/mysql/describe.c:120
-#, fuzzy, c-format
+#, c-format
 msgid "MySQL driver: column '%s', type %d is not supported"
-msgstr "s ist nicht"
+msgstr "MySQL-Treiber: Spalte '%s', Typ %d is nicht definiert."
 
 #: ../db/drivers/mysql/describe.c:126
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "column '%s' : type BIGINT is stored as integer (4 bytes) some data may be "
 "damaged"
-msgstr "s ist einige"
+msgstr "Spalte '%s': Typ BIGINT wird als integer (4 Bypte) abgespeichert. Einige Datensätze können beschädigt sein."
 
 #: ../db/drivers/mysql/error.c:29
-#, fuzzy
 msgid "DBMI-MySQL driver error:\n"
-msgstr "Fehler n"
+msgstr "DBMI-MySQL Treiber-Fehler: \n"
 
 #: ../db/drivers/mysql/fetch.c:34
-#, fuzzy
 msgid "Cursor not found"
-msgstr "nicht"
+msgstr "Cursor nicht gefunden."
 
 #: ../db/drivers/mysql/fetch.c:53
-#, fuzzy
 msgid "Cursor position is not supported by MySQL driver"
-msgstr "ist nicht"
+msgstr "Cursor-Position wird nicht von MySQL unterstützt."
 
 #: ../db/drivers/mysql/fetch.c:180
-#, fuzzy
 msgid "Cannot scan timestamp: "
-msgstr "Kann Tabelle '%s' nicht erstellen."
+msgstr "Kann den Zeitstempel nicht auslesen:"
 
 #: ../db/drivers/mysql/fetch.c:188
 msgid "Unknown timestamp format: "
 msgstr "Unbekanntes Zeitstempelformat:"
 
 #: ../db/drivers/mysql/fetch.c:202
-#, fuzzy
 msgid "Cannot scan date: "
-msgstr "Kann die Daten nicht holen."
+msgstr "Kann das Datum nicht auslesen:"
 
 #: ../db/drivers/mysql/fetch.c:215
-#, fuzzy
 msgid "Cannot scan time: "
-msgstr "Zeit "
+msgstr "Kann die Zeit nicht auslesen:"
 
 #: ../db/drivers/mysql/fetch.c:230
-#, fuzzy
 msgid "Cannot scan datetime: "
-msgstr "Kann Tabelle '%s' nicht erstellen."
+msgstr "Kann Datum und Zeit (datetime) nicht auslesen:"
 
 #: ../db/drivers/mysql/parse.c:59
-#, fuzzy
 msgid "Wrong port number in MySQL database definition: "
-msgstr "database "
+msgstr "Falsche Portnummer in der MySQL-Datenbankdefinition:"
 
 #: ../db/drivers/mysql/parse.c:72 ../db/drivers/postgres/parse.c:53
 msgid "'user' in database definition is not supported, use db.login"
@@ -353,19 +341,16 @@ msgstr ""
 "login' benutzen."
 
 #: ../db/drivers/mysql/parse.c:82
-#, fuzzy
 msgid "Unknown option in database definition for "
-msgstr "option database für "
+msgstr "Unbekannte Option in der Datenbankdefinition für"
 
 #: ../db/drivers/mysql/listtab.c:37
-#, fuzzy
 msgid "Cannot get list of tables:\n"
-msgstr "list von n"
+msgstr "Kann die Liste der Tabellen nicht holen:\n"
 
 #: ../db/drivers/mysql/select.c:44
-#, fuzzy
 msgid "Cannot select data: \n"
-msgstr "n"
+msgstr "Kann die Daten nicht auswählen:\n"
 
 #: ../db/drivers/ogr/describe.c:88
 #, c-format
@@ -519,14 +504,12 @@ msgid "Write text on top of the scale, not to the right"
 msgstr "Schreibe den Text oberhalb des Maßstabs, nicht rechts davon."
 
 #: ../display/d.barscale/main.c:60
-#, fuzzy
 msgid "Draw a north arrow only"
-msgstr "Ziehen a Norden"
+msgstr "Zeichne nur einen Nordpfeil."
 
 #: ../display/d.barscale/main.c:64
-#, fuzzy
 msgid "Draw a scale bar only"
-msgstr "Ziehen a skalieren"
+msgstr "Zeichne nur eine Maßstabsleiste."
 
 #: ../display/d.barscale/main.c:72
 msgid "Background color, either a standard GRASS color, R:G:B triplet, or \"none\""
@@ -553,9 +536,8 @@ msgid "%s does not work with a latitude-longitude location"
 msgstr "%s funktioniert nicht in einer Lat/Lon-Location."
 
 #: ../display/d.barscale/main.c:104
-#, fuzzy
 msgid "Choose either -n or -s flag"
-msgstr "n s"
+msgstr "Wähle entweder die Flagge -n oder -s."
 
 #: ../display/d.barscale/main.c:127 ../display/d.barscale/main.c:141
 #: ../display/d.graph/do_graph.c:106 ../display/d.graph/main.c:81
@@ -681,9 +663,9 @@ msgstr ""
 " Einstellungen des FreeType-Releases\n"
 
 #: ../display/d.graph/do_graph.c:50 ../display/d.graph/do_graph.c:78
-#, fuzzy, c-format
+#, c-format
 msgid "Problem parsing coordinates [%s]"
-msgstr "Problem s"
+msgstr "Probleme beim Auslesen der Koordinaten [%s]."
 
 #: ../display/d.graph/do_graph.c:99
 msgid "Unable to read color"
