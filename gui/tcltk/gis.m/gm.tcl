@@ -382,7 +382,7 @@ proc Gm::create { } {
     set options_pane  [$pw1 add -minsize 50 -weight 1]
     set options_sw [ScrolledWindow $options_pane.sw -relief flat -borderwidth 1]
     set options_sf [ScrollableFrame $options_sw.sf]
-    $options_sf configure -height 145 -width 450
+    $options_sf configure -height 145 -width 460
     $options_sw setwidget $options_sf
     set options [$options_sf getframe]
     pack $options_pane -expand yes -fill both 
