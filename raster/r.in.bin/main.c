@@ -138,12 +138,7 @@ int main (int argc, char *argv[])
 	parm.input->description = _("Bin raster file to be imported");
 	parm.input->gisprompt = "file,file,file";
 
-	parm.output = G_define_option();
-	parm.output->key = "output";
-	parm.output->type = TYPE_STRING;
-	parm.output->required = YES;
-	parm.output->description = _("Name for resultant raster map");
-	parm.output->gisprompt = "any,cell,raster";
+	parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
 
 	parm.title = G_define_option();
 	parm.title->key = "title";
