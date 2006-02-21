@@ -1,4 +1,5 @@
 /* main.c */
+
 int INPUT(void);
 int OUTGR(void);
 int min(int, int);
@@ -6,17 +7,16 @@ int max(int, int);
 void com_par(void);
 void com_par_const(void);
 double lumcline2(void);
-double joules2(void);
-int quadrant(void);
-double coef_of_line(void);
-void new_point_x(int, double *, double *, double *);
-void new_point_y(int, double *, double *, double *);
-void which_one(double, double, double, double, double, double);
-int combine_x(int, int, int, int);
-int combine_y(int, int, int, int);
-int vertex(int, int);
-int mesh_vertex(void);
-int mesh_line(void);
+void joules2(void);
+
+int new_point(void);
+int searching(void);
+void where_is_point(void);
+void cube(int, int);
+void (*func) (int, int);
+
 void calculate(void);
-double com_sol_const(void);
+double com_sol_const(int);
 double com_declin(int);
+double brad(double);
+double drad(double);
