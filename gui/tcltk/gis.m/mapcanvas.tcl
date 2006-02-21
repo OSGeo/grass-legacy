@@ -287,9 +287,9 @@ proc MapCanvas::drawmap { mon } {
 	if ![catch {open "|d.mon -L" r} input] {
 		while {[gets $input line] >= 0} {
 			if {[regexp "^gism.*not running" $line]} {
-				runcmd "d.mon start=gism -s"
+				runcmd "d.mon start=gism"
 				incr drawprog
-				set env(MONITOR_OVERRIDE) "gism"
+				#set env(MONITOR_OVERRIDE) "gism"
 				incr drawprog
 				runcmd "d.frame -e"
 				incr drawprog
