@@ -27,10 +27,12 @@ email: hofierka@geomodel.sk,marcel.suri@jrc.it,suri@geomodel.sk
 
 /*v. 2.0 July 2002, NULL data handling, JH */
 /*v. 2.1 January 2003, code optimization by Thomas Huld, JH */
+/*v. 3.0 February 2006, several changes (shadowing algorithm, earth's curvature JH */
 
 #define M2_PI    2. * M_PI
 #define RAD      360. / (2. * M_PI)
 #define DEG      (2. * M_PI)/360.
+#define EARTHRADIUS 6371000.    /* appx. for most ellipsoids or projections */
 #define UNDEF    0.		/* undefined value for terrain aspect */
 #define UNDEFZ   -9999.		/* internal undefined value for NULL */
 #define SKIP    "1"
@@ -42,11 +44,11 @@ email: hofierka@geomodel.sk,marcel.suri@jrc.it,suri@geomodel.sk
 #define STEP     "0.5"
 #define BSKY	  1.0
 #define DSKY	  1.0
-#define DIST     "1.0"
+#define DIST      0.8
 
 #define AMAX1(arg1, arg2) ((arg1) >= (arg2) ? (arg1) : (arg2))
 #define AMIN1(arg1, arg2) ((arg1) <= (arg2) ? (arg1) : (arg2))
-#define DISTANCE2(x00, y00) ((xx0 - x00)*(xx0 - x00) + (yy0 - y00)*(yy0 - y00))
+#define DISTANCE1(x1, x2, y1, y2) (sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)))
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -94,9 +96,6 @@ void joules2(void);
 int new_point(void);
 int searching(void);
 void where_is_point(void);
-void vertex(int, int);
-void line_x(int, int);
-void line_y(int, int);
 void cube(int, int);
 void (*func) (int, int);
 
@@ -115,7 +114,7 @@ double sr_min = 24., sr_max = 0., ss_min = 24., ss_max = 0.;
 float **lumcl, **beam, **insol, **diff, **refl;
 double xmin, xmax, ymin, ymax, zmax = 0.;
 int d, day, tien = 0;
-double length, zmult = 1.0, c, declin, linke, alb, step, dist;
+double length, zmult = 1.0, c, declin, linke, alb, step;
 double li_max = 0., li_min = 100., al_max = 0., al_min = 1.0, la_max = -90.,
     la_min = 90.;
 char *tt, *lt;
@@ -129,7 +128,7 @@ double longit_l, latid_l, cos_u, cos_v, sin_u, sin_v;
 double sin_phi_l, tan_lam_l, lum_C31_l, lum_C33_l;
 double beam_e, diff_e, refl_e, bh, dh, rr, insol_t;
 double cbh, cdh;
-double TOLER;
+double offsetx, offsety;
 
 int main(int argc, char *argv[])
 {
@@ -139,7 +138,7 @@ int main(int argc, char *argv[])
     {
 	struct Option *elevin, *aspin, *slopein, *linkein, *lin, *albedo, *alb,
 	    *latin, *lat, *coefbh, *coefdh, *incidout, *beam_rad, *insol_time,
-	    *diff_rad, *refl_rad, *day, *step, *declin, *ltime, *dist;
+	    *diff_rad, *refl_rad, *day, *step, *declin, *ltime;
     }
     parm;
 
@@ -168,6 +167,8 @@ int main(int argc, char *argv[])
     stepy = cellhd.ns_res;
     invstepx = 1. / stepx;
     invstepy = 1. / stepy;
+    offsetx = 2. *  invstepx;
+    offsety = 2. * invstepy;
     n /*n_cols */  = cellhd.cols;
     m /*n_rows */  = cellhd.rows;
     xmin = cellhd.west;
@@ -327,13 +328,6 @@ int main(int argc, char *argv[])
     parm.ltime->required = NO;
     parm.ltime->description = _("Local (solar) time (to be set for mode 1 only) [decimal hours]");
 
-    parm.dist = G_define_option();
-    parm.dist->key = "dist";
-    parm.dist->type = TYPE_DOUBLE;
-    parm.dist->answer = DIST;
-    parm.dist->required = NO;
-    parm.dist->description = _("Sampling distance step coefficient (0.5-1.5)");
-
     flag.shade = G_define_flag();
     flag.shade->key = 's';
     flag.shade->description =
@@ -388,10 +382,8 @@ int main(int argc, char *argv[])
 	cbh = BSKY;
     if (parm.coefdh->answer == NULL)
 	cdh = DSKY;
-    sscanf(parm.dist->answer, "%lf", &dist);
 
-    stepxy = dist * 0.5 * (stepx + stepy);
-    TOLER = stepxy * EPS;
+    stepxy = DIST * 0.5 * (stepx + stepy);
 
     if (parm.declin->answer == NULL)
 	declination = com_declin(day);
@@ -1120,181 +1112,40 @@ void where_is_point(void)
 {
     double sx, sy;
     double dx, dy;
-    double adx, ady;
     int i, j;
 
-    sx = xx0 * invstepx + TOLER;
-    sy = yy0 * invstepy + TOLER;
+    sx = xx0 * invstepx  + offsetx; /* offset 0.5 cell size to get the right cell i, j */
+    sy = yy0 * invstepy  + offsety;
 
-    /*        sx += TOLER; sy += TOLER;
-     */
     i = (int)sx;
     j = (int)sy;
+
     if (i < n - 1 && j < m - 1) {
-	/*       zp  = z[j][i]; */
 
-	dx = xx0 - (double)i *stepx;
-	dy = yy0 - (double)j *stepy;
+        dx = (double)i *stepx;
+        dy = (double)j *stepy;
 
-	adx = fabs(dx);
-	ady = fabs(dy);
+	length = DISTANCE1(xg0, dx, yg0, dy); /* dist from orig. grid point to the current grid point */
 
-	if ((adx > TOLER) && (ady > TOLER)) {
-	    cube(j, i);
-	    return;
-	}
-	else if ((adx > TOLER) && (ady < TOLER)) {
-	    line_x(j, i);
-	    return;
-	}
-	else if ((adx < TOLER) && (ady > TOLER)) {
-	    line_y(j, i);
-	    return;
-	}
-	else if ((adx < TOLER) && (ady < TOLER)) {
-	    vertex(j, i);
-	    return;
-	}
-
+        cube(j, i);
+        return;
 
     }
-    else {
+    else 
 	func = NULL;
-    }
-}
-
-void vertex(int jmin, int imin)
-{
-    zp = z[jmin][imin];
-    if ((zp == UNDEFZ))
-	func = NULL;
-}
-
-void line_x(int jmin, int imin)
-{
-    double c1, c2;
-    double d1, d2, e1, e2;
-    e1 = (double)imin *stepx;
-    e2 = (double)(imin + 1) * stepx;
-
-    c1 = z[jmin][imin];
-    c2 = z[jmin][imin + 1];
-    if (!((c1 == UNDEFZ) || (c2 == UNDEFZ))) {
-
-	if (dist <= 1.0) {
-	    d1 = (xx0 - e1) / (e2 - e1);
-	    d2 = 1 - d1;
-	    if (d1 < d2)
-		zp = c1;
-	    else
-		zp = c2;
-	}
-
-	if (dist > 1.0)
-	    zp = AMAX1(c1, c2);
-    }
-    else
-	func = NULL;
-}
-
-
-void line_y(int jmin, int imin)
-{
-    double c1, c2;
-    double d1, d2, e1, e2;
-    e1 = (double)jmin *stepy;
-    e2 = (double)(jmin + 1) * stepy;
-
-    c1 = z[jmin][imin];
-    c2 = z[jmin + 1][imin];
-    if (!((c1 == UNDEFZ) || (c2 == UNDEFZ))) {
-
-	if (dist <= 1.0) {
-	    d1 = (yy0 - e1) / (e2 - e1);
-	    d2 = 1 - d1;
-	    if (d1 < d2)
-		zp = c1;
-	    else
-		zp = c2;
-	}
-
-	if (dist > 1.0)
-	    zp = AMAX1(c1, c2);
-
-    }
-    else
-	func = NULL;
-
 }
 
 void cube(int jmin, int imin)
 {
-    int i, ig = 0;
-    double x1, x2, y1, y2;
-    double v[4], vmin = BIG;
-    double c[4], cmax = -BIG;
-
-    x1 = (double)imin *stepx;
-    x2 = x1 + stepx;
-
-    y1 = (double)jmin *stepy;
-    y2 = y1 + stepy;
-
-    v[0] = DISTANCE2(x1, y1);
-
-    if (v[0] < vmin) {
-	ig = 0;
-	vmin = v[0];
-    }
-    v[1] = DISTANCE2(x2, y1);
-
-    if (v[1] < vmin) {
-	ig = 1;
-	vmin = v[1];
-    }
-
-    v[2] = DISTANCE2(x2, y2);
-    if (v[2] < vmin) {
-	ig = 2;
-	vmin = v[2];
-    }
-
-    v[3] = DISTANCE2(x1, y2);
-    if (v[3] < vmin) {
-	ig = 3;
-	vmin = v[3];
-    }
-
-    c[0] = z[jmin][imin];
-    c[1] = z[jmin][imin + 1];
-    c[2] = z[jmin + 1][imin + 1];
-    c[3] = z[jmin + 1][imin];
-
-
-    if (dist <= 1.0) {
-
-	if (c[ig] != UNDEFZ)
-	    zp = c[ig];
-	else
-	    func = NULL;
-	return;
-    }
-
-    if (dist > 1.0) {
-	for (i = 0; i < 4; i++) {
-	    if (c[i] != UNDEFZ) {
-		cmax = AMAX1(cmax, c[i]);
-		zp = cmax;
-	    }
-	    else
-		func = NULL;
-	}
-    }
+        zp = z[jmin][imin];
+        if ((zp == UNDEFZ))
+            func = NULL;
 }
 
 int searching(void)
 {
     double z2;
+    double curvature_diff;
     int succes = 0;
 
     if (zp == UNDEFZ)
@@ -1305,8 +1156,11 @@ int searching(void)
 	where_is_point();
 	if (func == NULL)
 	    return (3);
-	length += stepxy;
-	z2 = z_orig + length * tanh0;
+/*	length += stepxy;*/
+
+	curvature_diff = EARTHRADIUS*(1.-cos(length/EARTHRADIUS));
+	z2 = z_orig + curvature_diff + length * tanh0; /* also corrected to the earth's curvature */
+	
 	if (z2 < zp)
 	    succes = 2;		/* shadow */
 	if (z2 > zmax)
