@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-16 09:45+0100\n"
+"POT-Creation-Date: 2006-02-22 00:41+0100\n"
 "PO-Revision-Date: 2005-06-21 06:00+0200\n"
 "Last-Translator: Markus Neteler <neteler@itc.it>\n"
 "Language-Team: Russian\n"
@@ -42,22 +42,22 @@ msgstr "������"
 msgid "(no title)"
 msgstr "(������)"
 
-#: ../lib/gis/list.c:111
+#: ../lib/gis/list.c:113
 #, fuzzy, c-format
 msgid "no %s files available in current mapset\n"
 msgstr " "
 
-#: ../lib/gis/list.c:113
+#: ../lib/gis/list.c:115
 #, fuzzy, c-format
 msgid "no %s files available in mapset %s\n"
 msgstr "   "
 
-#: ../lib/gis/list.c:127
+#: ../lib/gis/list.c:129
 #, fuzzy, c-format
 msgid "hit RETURN to continue -->"
 msgstr "����RETURN ��������-->"
 
-#: ../lib/gis/list.c:182
+#: ../lib/gis/list.c:198
 #, fuzzy, c-format
 msgid "%s files available in mapset %s:\n"
 msgstr "%s ��� ���� ��� %s:\n"
@@ -503,49 +503,64 @@ msgid ""
 msgstr ""
 
 #: ../lib/gis/parser.c:328 ../lib/gis/parser.c:344
-msgid "Name of input raster"
-msgstr ""
+#, fuzzy
+msgid "Name of input raster map"
+msgstr "×ÅËÔÏÒ"
 
 #: ../lib/gis/parser.c:336
-msgid "Name of output raster"
-msgstr ""
-
-#: ../lib/gis/parser.c:353 ../lib/gis/parser.c:369
 #, fuzzy
-msgid "Name of input vector"
+msgid "Name of output raster map"
+msgstr "×ÅËÔÏÒ"
+
+#: ../lib/gis/parser.c:353
+#, fuzzy
+msgid "Name of input raster map(s)"
 msgstr "×ÅËÔÏÒ"
 
 #: ../lib/gis/parser.c:361
+msgid "Name of base raster map"
+msgstr ""
+
+#: ../lib/gis/parser.c:369
+msgid "Name of cover raster map"
+msgstr ""
+
+#: ../lib/gis/parser.c:378 ../lib/gis/parser.c:394
 #, fuzzy
-msgid "Name of output vector"
+msgid "Name of input vector map"
 msgstr "×ÅËÔÏÒ"
 
-#: ../lib/gis/parser.c:378
+#: ../lib/gis/parser.c:386
+#, fuzzy
+msgid "Name of output vector map"
+msgstr "×ÅËÔÏÒ"
+
+#: ../lib/gis/parser.c:403
 msgid "Type"
 msgstr ""
 
-#: ../lib/gis/parser.c:385
+#: ../lib/gis/parser.c:410
 msgid "Layer number"
 msgstr ""
 
-#: ../lib/gis/parser.c:391
+#: ../lib/gis/parser.c:416
 msgid "Category value"
 msgstr ""
 
-#: ../lib/gis/parser.c:398
+#: ../lib/gis/parser.c:423
 msgid "Category values"
 msgstr ""
 
-#: ../lib/gis/parser.c:399
+#: ../lib/gis/parser.c:424
 msgid "Example: 1,3,7-9,13"
 msgstr ""
 
-#: ../lib/gis/parser.c:640
+#: ../lib/gis/parser.c:665
 #, fuzzy, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "   "
 
-#: ../lib/gis/parser.c:709
+#: ../lib/gis/parser.c:734
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -554,7 +569,7 @@ msgstr ""
 "\n"
 "ïÐÉÓÁÎÉÅ:\n"
 
-#: ../lib/gis/parser.c:713
+#: ../lib/gis/parser.c:738
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -565,77 +580,77 @@ msgstr ""
 "úÁÐÕÓË:\n"
 " "
 
-#: ../lib/gis/parser.c:774
+#: ../lib/gis/parser.c:799
 #, c-format
 msgid ""
 "\n"
 "Flags:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:797
+#: ../lib/gis/parser.c:822
 #, c-format
 msgid ""
 "\n"
 "Parameters:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:819
+#: ../lib/gis/parser.c:844
 #, fuzzy, c-format
 msgid "  %*s   default: %s\n"
 msgstr "   "
 
-#: ../lib/gis/parser.c:1378
+#: ../lib/gis/parser.c:1403
 #, fuzzy, c-format
 msgid "  %*s   options: "
 msgstr "  "
 
-#: ../lib/gis/parser.c:1425 ../lib/gis/parser.c:1442
+#: ../lib/gis/parser.c:1450 ../lib/gis/parser.c:1467
 #, fuzzy, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr " "
 
-#: ../lib/gis/parser.c:1497
+#: ../lib/gis/parser.c:1522
 #, fuzzy, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "   "
 
-#: ../lib/gis/parser.c:1504
+#: ../lib/gis/parser.c:1529
 #, fuzzy, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "   "
 
-#: ../lib/gis/parser.c:1589
+#: ../lib/gis/parser.c:1614
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Error: illegal range syntax for parameter <%s>\n"
 msgstr " "
 
-#: ../lib/gis/parser.c:1591
+#: ../lib/gis/parser.c:1616
 #, fuzzy, c-format
 msgid "       Presented as: %s\n"
 msgstr " "
 
-#: ../lib/gis/parser.c:1594
+#: ../lib/gis/parser.c:1619
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Error: value <%s> out of range for parameter <%s>\n"
 msgstr "   "
 
-#: ../lib/gis/parser.c:1596
+#: ../lib/gis/parser.c:1621
 #, fuzzy, c-format
 msgid "       Legal range: %s\n"
 msgstr " "
 
-#: ../lib/gis/parser.c:1599
+#: ../lib/gis/parser.c:1624
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Error: Missing value for parameter <%s>\n"
 msgstr " "
 
-#: ../lib/gis/parser.c:1759
+#: ../lib/gis/parser.c:1784
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -645,24 +660,24 @@ msgstr ""
 " \n"
 "  "
 
-#: ../lib/gis/parser.c:1862
+#: ../lib/gis/parser.c:1887
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Error: option <%s> must be provided in multiples of %d\n"
 msgstr " "
 
-#: ../lib/gis/parser.c:1864
+#: ../lib/gis/parser.c:1889
 #, fuzzy, c-format
 msgid "       You provided %d items:\n"
 msgstr "       ÷Ù ÚÁÄÁÌÉ %d ÒÁÚ:\n"
 
-#: ../lib/gis/parser.c:1920
+#: ../lib/gis/parser.c:1945
 #, fuzzy, c-format
 msgid "Error: option <%s>: <%s> exists.\n"
 msgstr "   "
 
-#: ../lib/gis/parser.c:1967
+#: ../lib/gis/parser.c:1992
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -671,59 +686,59 @@ msgstr ""
 "\n"
 "æìáç: õÓÔÁÎÏ×ÉÔØ ÄÁÎÎÙÊ ÆÌÁÇ?\n"
 
-#: ../lib/gis/parser.c:1980
+#: ../lib/gis/parser.c:2005
 #, fuzzy, c-format
 msgid ""
 "\n"
 "OPTION:   %s\n"
 msgstr " "
 
-#: ../lib/gis/parser.c:1981
+#: ../lib/gis/parser.c:2006
 #, fuzzy, c-format
 msgid "     key: %s\n"
 msgstr " "
 
-#: ../lib/gis/parser.c:1983
+#: ../lib/gis/parser.c:2008
 #, fuzzy, c-format
 msgid "  format: %s\n"
 msgstr " "
 
-#: ../lib/gis/parser.c:1985
+#: ../lib/gis/parser.c:2010
 #, fuzzy, c-format
 msgid " default: %s\n"
 msgstr " "
 
-#: ../lib/gis/parser.c:1986
+#: ../lib/gis/parser.c:2011
 #, fuzzy, c-format
 msgid "required: %s\n"
 msgstr " "
 
-#: ../lib/gis/parser.c:1988
+#: ../lib/gis/parser.c:2013
 #, fuzzy, c-format
 msgid "multiple: %s\n"
 msgstr " "
 
-#: ../lib/gis/parser.c:1990
+#: ../lib/gis/parser.c:2015
 #, fuzzy, c-format
 msgid " options: %s\n"
 msgstr " "
 
-#: ../lib/gis/parser.c:2003
+#: ../lib/gis/parser.c:2028
 #, fuzzy, c-format
 msgid "enter option > "
 msgstr "ÚÁÄÁÊÔÅ ÏÐÃÉÀ > "
 
-#: ../lib/gis/parser.c:2017 ../lib/gis/parser.c:2028
+#: ../lib/gis/parser.c:2042 ../lib/gis/parser.c:2053
 #, fuzzy
 msgid "   Try again? "
 msgstr "   ðÏÐÒÏÂÏ×ÁÔØ ÓÎÏ×Á? "
 
-#: ../lib/gis/parser.c:2026
+#: ../lib/gis/parser.c:2051
 #, fuzzy, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "   "
 
-#: ../lib/gis/parser.c:2037
+#: ../lib/gis/parser.c:2062
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -733,12 +748,12 @@ msgstr ""
 "\n"
 "  "
 
-#: ../lib/gis/parser.c:2038
+#: ../lib/gis/parser.c:2063
 #, fuzzy
 msgid "Is this correct? "
 msgstr "ðÒÁ×ÉÌØÎÏ?"
 
-#: ../lib/gis/parser.c:2096
+#: ../lib/gis/parser.c:2121
 #, fuzzy
 msgid "to accept the default"
 msgstr "ÞÔÏÂÙ ÕÓÔÁÎÏ×ÉÔØ ÐÏ ÕÍÏÌÞÁÎÉÀ"
@@ -788,7 +803,7 @@ msgstr "������� ���"
 msgid "MAPSET %s not found"
 msgstr "������%s � ���"
 
-#: ../lib/gis/get_window.c:58
+#: ../lib/gis/get_window.c:64
 #, fuzzy, c-format
 msgid ""
 "region for current mapset %s\n"
@@ -797,17 +812,17 @@ msgstr ""
 "��� ������� ��� %s\n"
 "�����\"g.region\""
 
-#: ../lib/gis/get_window.c:94
+#: ../lib/gis/get_window.c:100
 #, fuzzy, c-format
 msgid "default region %s"
 msgstr "��� � �����%s"
 
-#: ../lib/gis/get_window.c:115
+#: ../lib/gis/get_window.c:120
 #, fuzzy
 msgid "is not set"
 msgstr "� �����"
 
-#: ../lib/gis/get_window.c:125
+#: ../lib/gis/get_window.c:130
 #, fuzzy, c-format
 msgid ""
 "is invalid\n"
@@ -1077,78 +1092,6 @@ msgstr "G_set_null_value: ���� �����!"
 msgid "Fail of initial read of compressed file [%s in %s]"
 msgstr "��� ��� �������[%s �%s]"
 
-#: ../lib/gis/readsites_xyz.c:119
-#, fuzzy
-msgid "Unable to guess site format!"
-msgstr "����� ����� ��� ��� ����!"
-
-#: ../lib/gis/readsites_xyz.c:133
-#, fuzzy
-msgid "No n-dims in site_list"
-msgstr "��n-dims ���� ����"
-
-#: ../lib/gis/readsites_xyz.c:136
-#, fuzzy
-msgid "Dimension index out of range"
-msgstr "��� ������� �������. �����"
-
-#: ../lib/gis/readsites_xyz.c:141
-#, fuzzy
-msgid "No double attributes in site_list"
-msgstr "�������������. �����"
-
-#: ../lib/gis/readsites_xyz.c:144
-#, fuzzy
-msgid "Double attribute index out of range"
-msgstr "�������. ��. � �������. �����"
-
-#: ../lib/gis/readsites_xyz.c:149
-#, fuzzy
-msgid "No string attributes in site_list"
-msgstr "����������������"
-
-#: ../lib/gis/readsites_xyz.c:152
-#, fuzzy
-msgid "String attribute index out of range"
-msgstr "����������� �������. �����"
-
-#: ../lib/gis/readsites_xyz.c:159
-#, fuzzy
-msgid "Unknown attribute type in call to G_readsites_xyz()!\n"
-msgstr "��� ��������G_readsites_xyz()!\n"
-
-#: ../lib/gis/readsites_xyz.c:191
-#, fuzzy
-msgid "Failed to convert string attribute."
-msgstr "����� ���������� ����"
-
-#: ../lib/gis/readsites.c:41
-#, fuzzy, c-format
-msgid "Reading sites list ...                  "
-msgstr "�� ��� ���� ...                  "
-
-#: ../lib/gis/readsites.c:45
-#, fuzzy
-msgid "failed to guess format"
-msgstr "����� ����� ���"
-
-#: ../lib/gis/readsites.c:49
-#, fuzzy, c-format
-msgid "decimal field %i not present in sites file"
-msgstr "����� �� %i ��������������"
-
-#: ../lib/gis/readsites.c:55
-#, fuzzy
-msgid ""
-"I'm finding records that do not have a floating point attributes (fields "
-"prefixed with '%')."
-msgstr "������ ���, � ��������� ���. ��� (�� ������'%')."
-
-#: ../lib/gis/readsites.c:60 ../lib/gis/readsites.c:69
-#, fuzzy
-msgid "cannot allocate memory"
-msgstr "����� ���� ���"
-
 #: ../lib/gis/get_ellipse.c:89 ../lib/gis/get_ellipse.c:114
 #, fuzzy, c-format
 msgid "invalid a: field %s in file %s in %s"
@@ -1234,7 +1177,7 @@ msgstr "����� �����������dependency �� ��
 msgid "map [%s] - unable to write row %d"
 msgstr "���[%s] - ����� ���� ��� %d"
 
-#: ../lib/gis/put_row.c:785 ../lib/gis/put_row.c:791
+#: ../lib/gis/put_row.c:793 ../lib/gis/put_row.c:799
 #, c-format
 msgid "error writing null row %d"
 msgstr ""
@@ -1249,15 +1192,45 @@ msgstr "����� ���� �������������: �
 msgid "Cannot write quant rules for map %s"
 msgstr "����� ���� ������������� �����%s"
 
-#: ../lib/gis/legal_name.c:28
+#: ../lib/gis/sample.c:74
+#, fuzzy
+msgid "unknown interpolation type"
+msgstr "��� �����"
+
+#: ../lib/gis/sample.c:473
+msgid "\"no data\" label found; setting to zero"
+msgstr ""
+
+#: ../lib/gis/sample.c:487
+msgid "problem reading raster cell file"
+msgstr ""
+
+#: ../lib/gis/legal_name.c:29
 #, fuzzy, c-format
 msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
 msgstr "��������� �����  � ����� '.' ��'NULL'\n"
 
-#: ../lib/gis/legal_name.c:34
+#: ../lib/gis/legal_name.c:35
 #, fuzzy, c-format
 msgid "Illegal filename. character <%c> not allowed."
 msgstr "��������� ����� �� <%c> �����."
+
+#: ../lib/gis/legal_name.c:61 ../lib/gis/legal_name.c:63
+#, fuzzy, c-format
+msgid "Output name '%s' is not valid rast name."
+msgstr "   ."
+
+#: ../lib/gis/legal_name.c:74 ../lib/gis/legal_name.c:76
+#: ../lib/vector/Vlib/legal_vname.c:72 ../lib/vector/Vlib/legal_vname.c:74
+#, fuzzy, c-format
+msgid "Cannot find input map '%s'"
+msgstr " "
+
+#: ../lib/gis/legal_name.c:94 ../lib/gis/legal_name.c:96
+#: ../lib/vector/Vlib/legal_vname.c:92 ../lib/vector/Vlib/legal_vname.c:94
+#, fuzzy, c-format
+msgid "Output map '%s' is used as input"
+msgstr "   "
 
 #: ../lib/gis/rd_cellhd.c:93
 #, fuzzy
@@ -2174,159 +2147,149 @@ msgstr "��������� ����� �� <%c> �����.
 msgid "Output name '%s' is not valid vector name."
 msgstr "   ."
 
-#: ../lib/vector/Vlib/legal_vname.c:72 ../lib/vector/Vlib/legal_vname.c:74
-#, fuzzy, c-format
-msgid "Cannot find input map '%s'"
-msgstr " "
-
-#: ../lib/vector/Vlib/legal_vname.c:92 ../lib/vector/Vlib/legal_vname.c:94
-#, fuzzy, c-format
-msgid "Output map '%s' is used as input"
-msgstr "   "
-
-#: ../lib/raster/io.c:190
-#, fuzzy, c-format
-msgid "Unable to allocate memory\n"
-msgstr "����� ���� ���"
-
-#: ../lib/raster/io.c:211
+#: ../lib/raster/io.c:42
 #, fuzzy, c-format
 msgid "ERROR %s from graphics driver.\n"
 msgstr "��� ��� ���%s ������%s\n"
 
-#: ../lib/raster/io.c:282
+#: ../lib/raster/io.c:171
+#, fuzzy, c-format
+msgid "Unable to allocate memory\n"
+msgstr "����� ���� ���"
+
+#: ../lib/raster/io.c:218
+#, fuzzy, c-format
+msgid "ERROR - eof from graphics monitor.\n"
+msgstr "��� ��� %s"
+
+#: ../lib/raster/io.c:235
+#, fuzzy, c-format
+msgid "Warning - no response from graphics monitor <%s>.\n"
+msgstr "��� ��� ����� ��� datum ��%s � ��."
+
+#: ../lib/raster/io.c:237
+#, fuzzy, c-format
+msgid "Check to see if the mouse is still active.\n"
+msgstr " "
+
+#: ../lib/raster/io.c:240
+#, fuzzy, c-format
+msgid "ERROR - no response from graphics monitor <%s>.\n"
+msgstr "��� ��� ���%s ������%s\n"
+
+#: ../lib/raster/parse_mon.c:30
+#, fuzzy, c-format
+msgid "ERROR: GISBASE not set\n"
+msgstr "GISRC - ����� � ������"
+
+#: ../lib/raster/io_sock.c:65 ../lib/raster/io_fifo.c:341
 #, fuzzy, c-format
 msgid "No graphics monitor has been selected for output.\n"
 msgstr "îÅ ×ÙÂÒÁÎ ÇÒÁÆÉÞÅÓËÉÊ ÄÉÓÐÌÅÊ ÄÌÑ ×Ù×ÏÄÁ.\n"
 
-#: ../lib/raster/io.c:283
+#: ../lib/raster/io_sock.c:66 ../lib/raster/io_fifo.c:342
 #, fuzzy, c-format
 msgid "Please run \"d.mon\" to select a graphics monitor.\n"
 msgstr "���� �������GRASS � �� ���.\n"
 
-#: ../lib/raster/io.c:293
-#, fuzzy, c-format
-msgid "No such graphics monitor as <%s>.\n"
-msgstr "����������������"
-
-#: ../lib/raster/io.c:294
-#, fuzzy, c-format
-msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
-msgstr "���� <%s> ���������n"
-
-#: ../lib/raster/io.c:306
+#: ../lib/raster/io_sock.c:77
 #, fuzzy, c-format
 msgid "Failed to get socket name for monitor <%s>.\n"
 msgstr "���������NEW ��� %s\n"
 
-#: ../lib/raster/io.c:319
+#: ../lib/raster/io_sock.c:90
 #, fuzzy, c-format
 msgid "No socket to connect to for monitor <%s>.\n"
 msgstr ""
 "\n"
 "���: ���� <%s> ������������<%s>\n"
 
-#: ../lib/raster/io.c:346
+#: ../lib/raster/io_sock.c:117
 #, fuzzy, c-format
 msgid ""
 "Socket is already in use or not accepting connections.\n"
 "Use d.mon to select a monitor\n"
 msgstr "����, %s � �����\n"
 
-#: ../lib/raster/io.c:354
+#: ../lib/raster/io_sock.c:125
 #, fuzzy, c-format
 msgid ""
 "Trying to connect to something not a socket.\n"
 "Probably program error.\n"
 msgstr "���: ����� �� ��������. ���G_gisinit()\n"
 
-#: ../lib/raster/io.c:361
+#: ../lib/raster/io_sock.c:132
 #, fuzzy, c-format
 msgid "Connect attempt timed out. Probably an error with the server.\n"
 msgstr "÷ÒÅÍÑ ÄÌÑ ÕÓÔÁÎÏ×ËÉ ÓÏÅÄÉÎÅÎÉÑ ÚÁËÏÎÞÉÌÏÓØ. ÷ÅÒÏÑÔÎÁ ÏÛÉÂËÁ ÓÅÒ×ÅÒÁ.\n"
 
-#: ../lib/raster/io.c:368
+#: ../lib/raster/io_sock.c:139
 #, fuzzy, c-format
 msgid "Not connected...\n"
 msgstr "îÅÔ ÓÏÅÄÉÎÅÎÉÑ...\n"
 
-#: ../lib/raster/io.c:371
+#: ../lib/raster/io_sock.c:142
 #, fuzzy, c-format
 msgid "Couldn't connect to monitor. Will try once more.\n"
 msgstr "îÅ×ÏÚÍÏÖÎÏ ÐÏÄËÌÀÞÉÔØ ÄÉÓÐÌÅÊ. åÝÅ ÏÄÎÁ ÐÏÐÙÔËÁ.\n"
 
-#: ../lib/raster/io.c:377
+#: ../lib/raster/io_sock.c:148
 #, fuzzy, c-format
 msgid "Connection failed.\n"
 msgstr "îÅÔ ÐÏÄËÌÀÞÅÎÉÑ\n"
 
-#: ../lib/raster/io.c:392
+#: ../lib/raster/io_fifo.c:352
+#, fuzzy, c-format
+msgid "No such graphics monitor as <%s>.\n"
+msgstr "����������������"
+
+#: ../lib/raster/io_fifo.c:353
+#, fuzzy, c-format
+msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
+msgstr "���� <%s> ���������n"
+
+#: ../lib/raster/io_fifo.c:365
 #, fuzzy, c-format
 msgid "Can't stat %s\n"
 msgstr "����RETURN %s\n"
 
-#: ../lib/raster/io.c:408
+#: ../lib/raster/io_fifo.c:381
 #, fuzzy, c-format
 msgid "Error - Monitor <%s> is in use.\n"
 msgstr ""
 "\n"
 "���: ���� <%s> ������������<%s>\n"
 
-#: ../lib/raster/io.c:410
+#: ../lib/raster/io_fifo.c:383
 #, fuzzy, c-format
 msgid "Error - Monitor <%s> is in use by %s.\n"
 msgstr ""
 "\n"
 "���: ���� <%s> ������������<%s>\n"
 
-#: ../lib/raster/io.c:420
+#: ../lib/raster/io_fifo.c:393
 #, fuzzy, c-format
 msgid "Error - Could not complete locking process for monitor <%s>.\n"
 msgstr ""
 "\n"
 "���: ���������� �����<%s>\n"
 
-#: ../lib/raster/io.c:434
+#: ../lib/raster/io_fifo.c:407
 #, fuzzy, c-format
 msgid "Error - Can't set up pipe to graphics device.\n"
 msgstr "����� ������ ����������%s ���%s ��� ��� %s"
 
-#: ../lib/raster/io.c:440
+#: ../lib/raster/io_fifo.c:413
 #, fuzzy, c-format
 msgid "Error - Graphics monitor <%s> not running!\n"
 msgstr ""
 "\n"
 "���: ���� <%s> ������������<%s>\n"
 
-#: ../lib/raster/io.c:444
+#: ../lib/raster/io_fifo.c:417
 #, fuzzy, c-format
 msgid "Please start graphics monitor <%s>.\n"
 msgstr "���� �������GRASS � �� ���.\n"
-
-#: ../lib/raster/io.c:509
-#, fuzzy, c-format
-msgid "ERROR - eof from graphics monitor.\n"
-msgstr "��� ��� %s"
-
-#: ../lib/raster/io.c:526
-#, fuzzy, c-format
-msgid "Warning - no response from graphics monitor <%s>.\n"
-msgstr "��� ��� ����� ��� datum ��%s � ��."
-
-#: ../lib/raster/io.c:528
-#, fuzzy, c-format
-msgid "Check to see if the mouse is still active.\n"
-msgstr " "
-
-#: ../lib/raster/io.c:531
-#, fuzzy, c-format
-msgid "ERROR - no response from graphics monitor <%s>.\n"
-msgstr "��� ��� ���%s ������%s\n"
-
-#: ../lib/raster/parse_mon.c:29
-#, fuzzy, c-format
-msgid "ERROR: GISBASE not set\n"
-msgstr "GISRC - ����� � ������"
 
 #: ../lib/rst/interp_float/vinput2d.c:81
 #, fuzzy
@@ -2379,7 +2342,7 @@ msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:291
 #, fuzzy, c-format
-msgid "there are points outside specified region--ignored %d points"
+msgid "there are points outside specified 2D/3D region--ignored %d points"
 msgstr " "
 
 #: ../lib/rst/interp_float/vinput2d.c:293
@@ -2442,6 +2405,64 @@ msgstr " "
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr ""
+
+#, fuzzy
+#~ msgid "Unable to guess site format!"
+#~ msgstr "����� ����� ��� ��� ����!"
+
+#, fuzzy
+#~ msgid "No n-dims in site_list"
+#~ msgstr "��n-dims ���� ����"
+
+#, fuzzy
+#~ msgid "Dimension index out of range"
+#~ msgstr "��� ������� �������. �����"
+
+#, fuzzy
+#~ msgid "No double attributes in site_list"
+#~ msgstr "�������������. �����"
+
+#, fuzzy
+#~ msgid "Double attribute index out of range"
+#~ msgstr "�������. ��. � �������. �����"
+
+#, fuzzy
+#~ msgid "No string attributes in site_list"
+#~ msgstr "����������������"
+
+#, fuzzy
+#~ msgid "String attribute index out of range"
+#~ msgstr "����������� �������. �����"
+
+#, fuzzy
+#~ msgid "Unknown attribute type in call to G_readsites_xyz()!\n"
+#~ msgstr "��� ��������G_readsites_xyz()!\n"
+
+#, fuzzy
+#~ msgid "Failed to convert string attribute."
+#~ msgstr "����� ���������� ����"
+
+#, fuzzy
+#~ msgid "Reading sites list ...                  "
+#~ msgstr "�� ��� ���� ...                  "
+
+#, fuzzy
+#~ msgid "failed to guess format"
+#~ msgstr "����� ����� ���"
+
+#, fuzzy
+#~ msgid "decimal field %i not present in sites file"
+#~ msgstr "����� �� %i ��������������"
+
+#, fuzzy
+#~ msgid ""
+#~ "I'm finding records that do not have a floating point attributes (fields "
+#~ "prefixed with '%')."
+#~ msgstr "������ ���, � ��������� ���. ��� (�� ������'%')."
+
+#, fuzzy
+#~ msgid "cannot allocate memory"
+#~ msgstr "����� ���� ���"
 
 #, fuzzy
 #~ msgid "WARNING: can not create a new process\n"
