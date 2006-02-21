@@ -169,15 +169,7 @@ proc MapCanvas::create { } {
 			GmTree::switchpage $mon
 		}
 	}
-	
-	bind .mapcan($mon) <ConfigureRequest> {
-		set wstack %d
-			puts "stack is $wstack"
-			puts "mouse click $mon"
-
-
-	}
-	
+		
 	bind $can($mon) <Motion> {
 		set scrxmov %x
 		set scrymov %y
@@ -409,6 +401,39 @@ proc MapCanvas::zoom_region { mon } {
     MapCanvas::drawmap $mon
 }
 
+
+###############################################################################
+
+# stop display management tools
+proc MapCanvas::stoptool { mon } {
+	global MapCanvas::msg
+	global stop x y east north
+    global linex1 liney1 linex2 liney2
+    global mlength totmlength
+	variable can
+	
+	if {[$can($mon) find withtag mline] != 0} {
+    	$can($mon) delete mline
+	}
+
+	if {[$can($mon) find withtag mline] != 0} {
+    	$can($mon) delete totmline
+	}
+	
+	# release bindings
+	bind $can($mon) <1> ""
+	bind $can($mon) <2> ""
+	bind $can($mon) <3> ""
+	bind $can($mon) <B1-Motion> ""
+	bind $can($mon) <ButtonRelease-1> ""
+
+	# reset status display to normal
+	set MapCanvas::msg($mon) "east & north coordinates under cursor"
+
+	MapCanvas::restorecursor $mon 		
+	
+}
+
 ###############################################################################
 # procedures for interactive zooming in and zooming out
 
@@ -418,21 +443,27 @@ proc MapCanvas::zoombind { mon zoom } {
 	global mapcursor
 	global MapCanvas::msg
     global areaX1 areaY1 areaX2 areaY2
-	
+    
+    # initialize zoom rectangle corners
+
+	set areaX1 0
+	set areaY1 0
+	set areaX2 0
+	set areaY2 0
+
 	MapCanvas::setcursor $mon "plus"
-
-    set MapCanvas::msg($mon) "Drag mouse to zoom/unzoom, R button stops zooming"
-
-	bind $can($mon) <2> ""
-	bind $can($mon) <3> ""
 	
+	if {$zoom == 1} {
+		set MapCanvas::msg($mon) "Drag or click mouse to zoom"
+	} elseif {$zoom == -1} {
+		set MapCanvas::msg($mon) "Drag or click mouse to unzoom"
+	}
+
 	bind $can($mon) <1> {
 		MapCanvas::markzoom $mon %x %y
 		}
 	bind $can($mon) <B1-Motion> "MapCanvas::drawzoom $mon %x %y"
 	bind $can($mon) <ButtonRelease-1> "MapCanvas::zoomregion $mon $zoom"
-
-	bind $can($mon) <3>  "MapCanvas::stopzoom $mon"
 
 }
 
@@ -561,34 +592,6 @@ proc MapCanvas::zoomregion { mon zoom } {
 	MapCanvas::drawmap $mon
 }
 
-# stop zooming
-proc MapCanvas::stopzoom { mon } {
-	variable can
-	global canvas_h
-	global canvas_w
-
-	
-	# release bindings
-	bind $can($mon) <1> ""
-	bind $can($mon) <B1-Motion> ""
-	bind $can($mon) <ButtonRelease-1> ""
-
-	# reset status display to normal
-	set MapCanvas::msg($mon) "east & north coordinates under cursor"
-
-	MapCanvas::restorecursor $mon 		
-
-	return
-}
-
-
-# reinitialize zoom rectangle corners
-
-set areaX1 0
-set areaY1 0
-set areaX2 0
-set areaY2 0
-
 
 
 ###############################################################################
@@ -618,10 +621,8 @@ proc MapCanvas::panbind { mon } {
 	global bgcolor
 	global MapCanvas::msg
 
-    set MapCanvas::msg($mon) "L mouse button to drag & pan, R button stops panning"
+    set MapCanvas::msg($mon) "Drag with mouse to pan"
     	
-	bind $can($mon) <2> ""
-
 	MapCanvas::setcursor $mon "hand2"
 
 	bind $can($mon) <1> {MapCanvas::startpan $mon %x %y}
@@ -629,7 +630,6 @@ proc MapCanvas::panbind { mon } {
 	bind $can($mon) <ButtonRelease-1> {
 		MapCanvas::pan $mon
 		}
-	bind $can($mon) <3> "MapCanvas::stoppan $mon"
 }
 
 
@@ -703,26 +703,6 @@ proc MapCanvas::pan { mon } {
 	MapCanvas::drawmap $mon 
 }
 
-#stop panning
-proc MapCanvas::stoppan { mon } {
-	global MapCanvas::msg
-	global mapcursor
-	variable can
-
-	# reset cursor to normal
-	MapCanvas::restorecursor $mon 
-	
-	# reset status display to normal
-	set MapCanvas::msg($mon) "east & north coordinates under cursor"
-
-	# unbind events
-	bind $can($mon) <1> ""
-	bind $can($mon) <B1-Motion> ""
-	bind $can($mon) <ButtonRelease-1> "" 
-
-    return
-}
-
 ###############################################################################
 
 proc MapCanvas::setcursor { mon  ctype } {
@@ -751,17 +731,19 @@ proc MapCanvas::measurebind { mon } {
 	global mapcursor
     global linex1 liney1 linex2 liney2
 	global MapCanvas::msg
-	
-	bind $can($mon) <2> ""
-	
+    
+	if {[info exists linex1]} {unset linex1}
+	if {[info exists liney1]} {unset liney1}
+	if {[info exists linex2]} {unset linex2}
+	if {[info exists liney2]} {unset liney2}
+		
 	bind $can($mon) <1> "MapCanvas::markmline $mon %x %y"
 	bind $can($mon) <B1-Motion> "MapCanvas::drawmline $mon %x %y"
 	bind $can($mon) <ButtonRelease-1> "MapCanvas::measure $mon"
-	bind $can($mon) <3> "MapCanvas::stopmeasure $mon"
 	
 	if { ![winfo exists .dispout]} {Gm::create_disptxt $mon}
 
-    set MapCanvas::msg($mon) "L mouse button, draw line to measure, R button to stop"
+    set MapCanvas::msg($mon) "Draw measure line with mouse"
 		
 	MapCanvas::setcursor $mon "pencil"
 	set mlength 0
@@ -844,40 +826,6 @@ proc MapCanvas::measure { mon } {
 	set liney1 $liney2
 }
 
-# end measurement
-proc MapCanvas::stopmeasure { mon } {
-	global MapCanvas::msg
-	variable can
-	
-    global linex1 liney1 linex2 liney2
-    global mlength totmlength
-
-	# delete measurement line
-    $can($mon) delete mline
-    $can($mon) delete totmline
-    
-	unset linex1 
-	unset liney1
-	unset linex2
-	unset liney2
-	
-	# release bindings
-	bind $can($mon) <1> ""
-	bind $can($mon) <2> ""
-	bind $can($mon) <B1-Motion> ""
-	bind $can($mon) <ButtonRelease-1> ""
-	bind $can($mon) <3> ""
-
-	# reset status display to normal
-	set MapCanvas::msg($mon) "east & north coordinates under cursor"
-
-	MapCanvas::restorecursor $mon
-
-	return
-}
-
-
-
 
 ###############################################################################
 # procedures for querying 
@@ -904,18 +852,18 @@ proc MapCanvas::querybind { mon } {
 	
 	if { ![winfo exists .dispout]} {Gm::create_disptxt $mon}
 	
-    set MapCanvas::msg($mon) "L mouse button to query features, R button to stop query"
+    set MapCanvas::msg($mon) "Click to query feature"
 
 	bind $can($mon) <1> {
-		MapCanvas::startquery $mon %x %y 
+		MapCanvas::query $mon %x %y 
 		}
-	bind $can($mon) <3> {MapCanvas::stopquery $mon}
+
 	MapCanvas::setcursor $mon "crosshair"
 
 }
 
 # query
-proc MapCanvas::startquery { mon x y } {
+proc MapCanvas::query { mon x y } {
 	global stop
 	global vdist
 	variable tree
@@ -978,22 +926,6 @@ proc MapCanvas::startquery { mon x y } {
 	run_panel $cmd
 }
 
-# query
-proc MapCanvas::stopquery { mon } {
-	global stop x y east north
-	variable can
-	
-	# release bindings
-	bind $can($mon) <1> ""
-	bind $can($mon) <3> ""
-
-	# reset status display to normal
-	set MapCanvas::msg($mon) "east & north coordinates under cursor"
-
-	MapCanvas::restorecursor $mon 		
-
-	
-}
 ###############################################################################
 
 # print to eps file

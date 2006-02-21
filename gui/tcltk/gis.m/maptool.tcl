@@ -16,8 +16,12 @@ proc MapToolBar::create { tb } {
     global bgcolor
     global mon
     global env
+    global maptools
+    global selclr
     variable toolbar
     
+    set selcolor #88aa88
+    set maptools "pointer"
     set toolbar $tb
 
     # DISPLAY AND MONITOR SELECTION
@@ -46,19 +50,56 @@ proc MapToolBar::create { tb } {
     pack $sep1 -side left -fill y -padx 5 -anchor w
     
     # DISPLAY TOOLS
-    set bbox3 [ButtonBox $toolbar.bbox3 -background $bgcolor -spacing 0  ]
+
+    # pointer
+    set pointer [radiobutton $tb.pointer \
+    	-image [image create photo -file "$gmpath/pointer.gif"] \
+        -command "MapCanvas::stoptool $mon" \
+		-variable maptools -value pointer \
+        -indicatoron false -bg $bgcolor -selectcolor $selcolor]    
 
     # zoom in
-    $bbox3 add -image [image create photo -file "$gmpath/zoom.gif"] \
-        -command "MapCanvas::zoombind $mon 1" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
-        -helptext [G_msg "Zoom"]
+    set zoomin [radiobutton $tb.zoomin \
+    	-image [image create photo -file "$gmpath/zoom.gif"] \
+        -command "MapCanvas::stoptool $mon; MapCanvas::zoombind $mon 1" \
+		-variable maptools -value zoomin \
+        -indicatoron false -bg $bgcolor -selectcolor $selcolor]    
     
     #zoom out
-    $bbox3 add -image [image create photo -file "$gmpath/zoomout.gif"] \
+    set zoomout [radiobutton $tb.zoomout \
+		-image [image create photo -file "$gmpath/zoomout.gif"] \
         -command "MapCanvas::zoombind $mon -1" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
-        -helptext [G_msg "Zoom out"]
+		-variable maptools -value zoomout \
+        -indicatoron false -bg $bgcolor -selectcolor $selcolor]    
+
+    # pan
+    set pan [radiobutton $tb.pan \
+		-image [image create photo -file "$gmpath/pan.gif"] \
+        -command "MapCanvas::panbind $mon" \
+		-variable maptools -value pan \
+        -indicatoron false -bg $bgcolor -selectcolor $selcolor]    
+
+    # query
+    set query [radiobutton $tb.query \
+		-image [image create photo -file "$gmpath/query.gif"] \
+        -command "MapCanvas::querybind $mon" \
+		-variable maptools -value query \
+        -indicatoron false -bg $bgcolor -selectcolor $selcolor]    
+
+    # measure
+    set measure [radiobutton $tb.measure \
+		-image [image create photo -file "$gmpath/measure.gif"]  \
+    	-command "MapCanvas::measurebind $mon"\
+		-variable maptools -value measure \
+        -indicatoron false -bg $bgcolor -selectcolor $selcolor]    
+
+    pack $pointer $zoomin $zoomout $pan $query $measure -side left -anchor w
+
+
+    set sep3 [Separator $toolbar.sep3 -orient vertical -background aquamarine2 ]
+    pack $sep3 -side left -fill y -padx 5 -anchor w
+
+    set bbox3 [ButtonBox $toolbar.bbox3 -background $bgcolor -spacing 0  ]
     
     # zoom.back
     $bbox3 add -image [image create photo -file "$gmpath/zoom.back.gif"] \
@@ -84,28 +125,10 @@ proc MapToolBar::create { tb } {
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Zoom to default region"]
 
-    # pan
-    $bbox3 add -image [image create photo -file "$gmpath/pan.gif"] \
-        -command "MapCanvas::panbind $mon" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2\
-        -helptext [G_msg "Pan and recenter"]
-
-    # query
-    $bbox3 add -image [image create photo -file "$gmpath/query.gif"] \
-        -command "MapCanvas::querybind $mon" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
-        -helptext [G_msg "Query map (select map first)"]
-
-    # measure
-    $bbox3 add -image [image create photo -file "$gmpath/measure.gif"]  \
-    	-command "MapCanvas::measurebind $mon"\
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
-        -helptext [G_msg "Measure lengths and areas"]
-
     pack $bbox3 -side left -anchor w
 
-    set sep3 [Separator $toolbar.sep3 -orient vertical -background aquamarine2 ]
-    pack $sep3 -side left -fill y -padx 5 -anchor w
+    set sep4 [Separator $toolbar.sep4 -orient vertical -background aquamarine2 ]
+    pack $sep4 -side left -fill y -padx 5 -anchor w
 
     # FILE & PRINT
     set bbox4 [ButtonBox $toolbar.bbox4 -spacing 0 -background $bgcolor ]
