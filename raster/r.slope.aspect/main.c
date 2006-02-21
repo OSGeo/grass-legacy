@@ -141,7 +141,7 @@ int main (int argc, char *argv[])
     parm.slope->type       = TYPE_STRING ;
     parm.slope->required   = NO ;
     parm.slope->answer     = NULL ;
-    parm.slope->gisprompt  = "any,cell,raster" ;
+    parm.slope->gisprompt  = "new,cell,raster" ;
     parm.slope->description= _("Output slope filename") ;
 
     parm.slope_fmt = G_define_option() ;
@@ -165,7 +165,7 @@ int main (int argc, char *argv[])
     parm.aspect->type       = TYPE_STRING ;
     parm.aspect->required   = NO ;
     parm.aspect->answer     = NULL ;
-    parm.aspect->gisprompt  = "any,cell,raster" ;
+    parm.aspect->gisprompt  = "new,cell,raster" ;
     parm.aspect->description= _("Output aspect filename") ;
 
     parm.pcurv = G_define_option() ;
@@ -173,7 +173,7 @@ int main (int argc, char *argv[])
     parm.pcurv->type       = TYPE_STRING ;
     parm.pcurv->required   = NO ;
     parm.pcurv->answer     = NULL ;
-    parm.pcurv->gisprompt  = "any,cell,raster" ;
+    parm.pcurv->gisprompt  = "new,cell,raster" ;
     parm.pcurv->description= _("Output profile curvature filename" );
 
     parm.tcurv = G_define_option() ;
@@ -181,7 +181,7 @@ int main (int argc, char *argv[])
     parm.tcurv->type       = TYPE_STRING ;
     parm.tcurv->required   = NO ;
     parm.tcurv->answer     = NULL ;
-    parm.tcurv->gisprompt  = "any,cell,raster" ;
+    parm.tcurv->gisprompt  = "new,cell,raster" ;
     parm.tcurv->description= _("Output tangential curvature filename") ;
 
     parm.dx = G_define_option() ;
@@ -189,7 +189,7 @@ int main (int argc, char *argv[])
     parm.dx->type       = TYPE_STRING ;
     parm.dx->required   = NO ;
     parm.dx->answer     = NULL ;
-    parm.dx->gisprompt  = "any,cell,raster" ;
+    parm.dx->gisprompt  = "new,cell,raster" ;
     parm.dx->description= _("Output first order partial derivative dx (E-W slope) filename") ;
 
     parm.dy = G_define_option() ;
@@ -197,7 +197,7 @@ int main (int argc, char *argv[])
     parm.dy->type       = TYPE_STRING ;
     parm.dy->required   = NO ;
     parm.dy->answer     = NULL ;
-    parm.dy->gisprompt  = "any,cell,raster" ;
+    parm.dy->gisprompt  = "new,cell,raster" ;
     parm.dy->description= _("Output first order partial derivative dy (N-S slope) filename") ;
 
     parm.dxx = G_define_option() ;
@@ -205,7 +205,7 @@ int main (int argc, char *argv[])
     parm.dxx->type       = TYPE_STRING ;
     parm.dxx->required   = NO ;
     parm.dxx->answer     = NULL ;
-    parm.dxx->gisprompt  = "any,cell,raster" ;
+    parm.dxx->gisprompt  = "new,cell,raster" ;
     parm.dxx->description= _("Output second order partial derivative dxx filename") ;
 
     parm.dyy = G_define_option() ;
@@ -213,7 +213,7 @@ int main (int argc, char *argv[])
     parm.dyy->type       = TYPE_STRING ;
     parm.dyy->required   = NO ;
     parm.dyy->answer     = NULL ;
-    parm.dyy->gisprompt  = "any,cell,raster" ;
+    parm.dyy->gisprompt  = "new,cell,raster" ;
     parm.dyy->description= _("Output second order partial derivative dyy filename") ;
 
     parm.dxy = G_define_option() ;
@@ -221,7 +221,7 @@ int main (int argc, char *argv[])
     parm.dxy->type       = TYPE_STRING ;
     parm.dxy->required   = NO ;
     parm.dxy->answer     = NULL ;
-    parm.dxy->gisprompt  = "any,cell,raster" ;
+    parm.dxy->gisprompt  = "new,cell,raster" ;
     parm.dxy->description= _("Output second order partial derivative dxy filename") ;
 
     parm.zfactor = G_define_option();

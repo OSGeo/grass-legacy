@@ -62,7 +62,7 @@ int main (int argc, char **argv)
     parm.output->type = TYPE_STRING;
     parm.output->required = YES;
     parm.output->description = _("Output raster map");
-    parm.output->gisprompt = "any,cell,raster";
+    parm.output->gisprompt = "new,cell,raster";
 
     parm.npoints = G_define_option();
     parm.npoints->key = "npoints";

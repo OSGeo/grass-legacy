@@ -103,7 +103,7 @@ int main (int argc, char *argv[])
 	parm.output->key        = "output" ;
 	parm.output->type       = TYPE_STRING ;
 	parm.output->required   = YES ;
-	parm.output->gisprompt  = "any,cell,raster" ;
+	parm.output->gisprompt  = "new,cell,raster" ;
 	parm.output->description= _("Name of the new raster file") ;
 
 	parm.method = G_define_option() ;
