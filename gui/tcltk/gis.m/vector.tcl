@@ -10,6 +10,11 @@ namespace eval GmVector {
 
 global gmpath
 source $gmpath/group.tcl
+global xmon
+global nextmon
+    
+set xmon 0
+set nextmon 1
 
 proc GmVector::legend { id } {
     variable opt
@@ -178,7 +183,16 @@ proc GmVector::show_data { id } {
 	variable opt
 	global bgcolor
 	set mapname $opt($id,map)
-	set cmd "db.select table=$mapname"
+	set layer $opt($id,layer)
+	set vdb [open "|v.db.connect map=$mapname layer=$layer -g" r]
+	set vectdb [read $vdb]
+	close $vdb
+	set vdblist [split $vectdb " "]
+	set tbl [lindex $vdblist 1]
+	set db [lindex $vdblist 3]
+	set drv [lindex $vdblist 4]
+	puts "table=$tbl database=$db driver=$drv"
+	set cmd "db.select table=$tbl database=$db driver=$drv"
 	run_panel $cmd
 }
 
@@ -616,6 +630,9 @@ proc GmVector::WorkOnVector { node } {
     variable bg
     variable tree
     global mon
+    global xmon
+    global nextmon
+    
     
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
@@ -633,9 +650,6 @@ proc GmVector::WorkOnVector { node } {
          !$opt($id,type_area) && !$opt($id,type_face) } { return } 
 
     global dmpath 
-    
-    set xmon 0
-    set nextmon 1
     
 	if { $xmon < 7 } {    
 		if ![catch {open "|d.mon -L" r} input] {

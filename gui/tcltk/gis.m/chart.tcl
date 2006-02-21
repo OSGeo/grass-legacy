@@ -83,7 +83,16 @@ proc GmChart::show_data { id } {
 	variable opt
 	global bgcolor
 	set mapname $opt($id,map)
-	set cmd "db.select table=$mapname"
+	set layer $opt($id,layer)
+	set vdb [open "|v.db.connect map=$mapname layer=$layer -g" r]
+	set vectdb [read $vdb]
+	close $vdb
+	set vdblist [split $vectdb " "]
+	set tbl [lindex $vdblist 1]
+	set db [lindex $vdblist 3]
+	set drv [lindex $vdblist 4]
+	puts "table=$tbl database=$db driver=$drv"
+	set cmd "db.select table=$tbl database=$db driver=$drv"
 	run_panel $cmd
 }
 
