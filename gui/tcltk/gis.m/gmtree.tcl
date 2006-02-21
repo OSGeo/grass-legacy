@@ -535,6 +535,35 @@ proc GmTree::display_cvnode { node } {
     } 
 }
 
+
+###############################################################################
+
+# display nodes for GRASS display modules
+proc GmTree::nvdisplay_node { node nvelev nvcolor} {
+    variable tree
+
+    set type [GmTree::node_type $node]
+
+    switch $type {
+        group {
+            GmGroup::nvdisplay $node
+		}
+		raster {
+			if {$nvelev == "" } {
+				set nvelev [GmRaster::addelev $node $nvelev]
+			} else {
+				append nvelev ", [GmRaster::addelev $node $nvelev]"
+			}
+				
+			if {$nvcolor == "" } {
+				set nvcolor [GmRaster::addcolor $node $nvcolor]
+			} else {
+				append nvcolor ", [GmRaster::addcolor $node $nvcolor]"
+			}
+		}
+    } 
+}
+
 ###############################################################################
 
 # duplicate selected layer
@@ -1041,7 +1070,7 @@ proc GmTree::vedit { } {
 
     switch $type {
         raster {
-        term r.digit $sel
+        Gm::xmon term r.digit
             return
         }
         vector {
