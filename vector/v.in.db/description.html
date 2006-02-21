@@ -11,13 +11,6 @@ creates new vector (points) map from database table containing coordinates.
  v.in.db driver=pg database="host=myserver.itc.it,dbname=mydb,user=name" \
          table=pat_stazioni x=east y=north z=quota key=id output=pat_stazioni
 </pre></div>
-<P>
-If an ID column is not not present in the PostgreSQL table,
-the 'object ID' of PostgreSQL can be used. In this case set:<br>
-<div class="code"><pre>
-  cat=OID
-</pre></div>
-<P>
 <p>
 
 <h3>2) Creating a map from PostGIS:</h3>
