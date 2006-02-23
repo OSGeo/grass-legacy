@@ -99,7 +99,7 @@ proc GmBarscale::options { id frm } {
     checkbutton $row.b -text [G_msg "display N. arrow only"] \
     	-variable GmBarscale::opt($id,arrow) 
     checkbutton $row.c -text [G_msg "display scale only"] \
-    	-variable GmBarscale::opt($id,arrow) 
+    	-variable GmBarscale::opt($id,scale) 
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
