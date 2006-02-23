@@ -1,0 +1,71 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.out.vtk</em> 
+converts a GRASS vector map in binary format to the VTK ASCII 
+output. 
+<P>
+If the <b>output</b> parameter is not given, the output will be send to stdout.
+
+<h2>NOTES</h2>
+
+Only one feature can be exported at a time, available features are:
+<ul>
+	<li>point</li>
+	<li>line</li>
+	<li>centroid</li>
+	<li>boundary</li>
+	<li>area</li>
+</ul>
+
+Categorie data (cat) for the selected feature + layer will be written as scalar
+data with name "cat". If no cat exists, the value will set to -1.
+(Normal cat's are always positiv)
+The Data is always written with x,y and z coordinates.
+If no elevation is available for the choosen feature, 0 will be set as z coordinate.
+The data is converted into the polydata format of VTK: 
+
+<ul>
+ <li><i>vtk Vertices</i> -- representing points and centroids </li>
+ <li><i>vtk lines</i> -- representing lines and boundaries </li> 
+ <li><i>vtk polygons</i> -- representing areas </li>
+</li>
+</ul>
+<p>
+The data can be visualize with Paraview or MayaVi.
+<br>
+<br>
+<h2>Attention</h2>
+If areas are exported, the data have to be triangulated within Paraview or
+MayaVi!
+</p>
+
+<h2>EXAMPLE</h2>
+
+Spearfish example:
+<P>
+Export the soils with cats in layer 1:
+<div class="code"><pre>
+v.out.vtk input=soils feature=area layer=1 output=/tmp/soils.vtk
+</pre></div>
+Export the streams with cats in layer 1:
+<div class="code"><pre>
+v.out.vtk input=streams feature=line layer=1 output=/tmp/streams.vtk
+</pre></div>
+Write the archsite vtk outpout to stdout with cats in layer 1:
+<div class="code"><pre>
+v.out.vtk input=archsites featur=point layer=1
+</pre></div>
+
+<h2>SEE ALSO</h2>
+
+<em>
+<a HREF="v.out.ascii.html">v.out.ascii</a><BR>
+<a HREF="r.out.vtk.html">r.out.vtk</a><BR>
+<a HREF="r3.out.vtk.html">r3.out.vtk</a><BR>
+</em>
+
+
+<h2>AUTHORS</h2>
+
+Soeren Gebbert
+
