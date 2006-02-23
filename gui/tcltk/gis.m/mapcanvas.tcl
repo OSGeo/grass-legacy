@@ -305,10 +305,10 @@ proc MapCanvas::drawmap { mon } {
 				GmTree::cvdisplay "root"
 				incr drawprog
 			}
+		close $input
 		}
 	}
 	
-	close $input
 	MapCanvas::coordconv $mon
 	set drawprog 0
     set MapCanvas::msg($mon) "east & north coordinates under cursor"
@@ -1108,8 +1108,8 @@ proc MapCanvas::cleanup { mon destroywin} {
 				runcmd "d.mon stop=gism"
 			}
 		}
+		close $input
 	}
-	close $input
 	return
 }
 
