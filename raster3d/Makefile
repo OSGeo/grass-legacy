@@ -3,6 +3,7 @@ MODULE_TOPDIR = ..
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 SUBDIRS = \
+	r3.cross.rast \
 	r3.in.ascii \
 	r3.in.v5d \
 	r3.out.ascii \
