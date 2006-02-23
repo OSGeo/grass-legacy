@@ -280,9 +280,9 @@ proc Dm::displmon { mon } {
 				run "d.mon select=$mon"
             }              
         }
+		close $input
     }
     return
-	close $input
 }
 
 
@@ -328,8 +328,8 @@ proc Dm::create { } {
 				regexp -nocase {..} $line mon
 			}              
 		}	
+		close $input
 	}
-	close $input
 
     # toolbar 1 & 2 creation
     set tb1  [$mainframe addtoolbar]
@@ -638,10 +638,10 @@ proc Dm::monitor { } {
                 return
             }
         }
+		close $input
     }
     run "d.mon start=x0"
     return
-	close $input
 }
 
 ###############################################################################
