@@ -37,6 +37,7 @@ SUBDIRS = \
 	v.out.ascii \
 	v.out.dxf \
 	v.out.pov \
+	v.out.vtk \
 	v.overlay \
 	v.parallel \
 	v.patch \
