@@ -2,7 +2,7 @@
  *
  ****************************************************************************
  *
- * MODULE:     r.out.ascii
+ * MODULE:     v.out.ascii
  * AUTHOR(S):  Michael Higgins, U.S. Army Construction Engineering Research Laboratory
  *             James Westervelt, U.S. Army Construction Engineering Research Laboratory
  *             Radim Blazek, ITC-Irst, Trento, Italy
