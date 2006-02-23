@@ -38,10 +38,10 @@ namespace eval MapCanvas {
     variable mapmon
 	}
 
-set initwd 640
-set initht 480
-set east 0
-set north 0
+set initwd 640.0
+set initht 480.0
+set east 0.0
+set north 0.0
 
 #image create photo mapimg.$mon
 
@@ -225,35 +225,34 @@ proc MapCanvas::mapsettings { mon } {
 			
     set monregion "$gisdbase/$location_name/$mapset/windows/mon_$mon"
 	if {[file exists $monregion] } {
-		set cmd "g.region -a region=mon_$mon"	
-		runcmd $cmd
+		set cmd "g.region region=mon_$mon"	
+		run_panel $cmd
 	} else {
-		set cmd "g.region -a save=mon_$mon --o"	
-		runcmd $cmd
+		set cmd "g.region -u save=mon_$mon --o"	
+		run_panel $cmd
 	}
 		
-	if ![catch {open "|g.region -g" r} input] {
+	if ![catch {open "|g.region -gu" r} input] {
 		while {[gets $input line] >= 0} {
-			regexp -nocase {n=(.*)} $line n1 map_n
+			regexp -nocase {^n=(.*)} $line n1 map_n
 			regexp -nocase {^s=(.*)} $line s1 map_s
-			regexp -nocase {e=(.*)} $line e1 map_e
-			regexp -nocase {w=(.*)} $line w1 map_w
+			regexp -nocase {^e=(.*)} $line e1 map_e
+			regexp -nocase {^w=(.*)} $line w1 map_w
 		}
+		close $input
 	}
-	
-	close $input
-	
+		
 	set mapwd [expr abs(1.0 * ($map_e - $map_w))]
 	set mapht [expr abs(1.0 * ($map_n - $map_s))]
 	
-	if { [expr $canvas_h($mon) / $canvas_w($mon)] > [expr $mapht / $mapwd] } {
+	if { [expr 1.0 * $canvas_h($mon) / $canvas_w($mon)] > [expr $mapht / $mapwd] } {
 		set mapdispht [expr 1.0 * $canvas_w($mon) * $mapht / $mapwd]
 		set mapdispwd $canvas_w($mon)
 	} else {
 		set mapdispht $canvas_h($mon)
 		set mapdispwd [expr 1.0 * $canvas_h($mon) * $mapwd / $mapht]
 	}
-
+	
 	set env(GRASS_WIDTH) $mapdispwd
 	set env(GRASS_HEIGHT) $mapdispht
 	set env(GRASS_PNGFILE) "dispmon_$mon.ppm"
@@ -305,8 +304,8 @@ proc MapCanvas::drawmap { mon } {
 				GmTree::cvdisplay "root"
 				incr drawprog
 			}
-		close $input
 		}
+		close $input
 	}
 	
 	MapCanvas::coordconv $mon
@@ -326,8 +325,8 @@ proc MapCanvas::do_resize {mon} {
 	global drawprog
 	variable can
 
-	MapCanvas::coordconv $mon
 	$can($mon) delete map$mon
+	MapCanvas::coordconv $mon
 	MapCanvas::mapsettings $mon
 	MapCanvas::drawmap $mon
 		
@@ -356,8 +355,8 @@ proc MapCanvas::zoom_current { mon } {
 	global canvas_h
 	global canvas_w
     
-	run "g.region save=previous_zoom --o"
-	set cmd "g.region save=mon_$mon --o"
+	run "g.region -u save=previous_zoom --o"
+	set cmd "g.region -pu save=mon_$mon --o"
     run_panel $cmd 
 	
 	$can($mon) delete map$mon
@@ -373,8 +372,8 @@ proc MapCanvas::zoom_default { mon } {
 	global canvas_h
 	global canvas_w
     
-	run "g.region -a save=previous_zoom --o"
-	set cmd "g.region -ad save=mon_$mon --o"
+	run "g.region -u save=previous_zoom --o"
+	set cmd "g.region -pd save=mon_$mon --o"
     run_panel $cmd 
 	
 	$can($mon) delete map$mon
@@ -392,8 +391,8 @@ proc MapCanvas::zoom_region { mon } {
    
     set reg [GSelect windows]
     if { $reg != "" } {
-		run "g.region -a save=previous_zoom --o"
-		set cmd "g.region -a region=$reg save=mon_$mon --o"
+		run "g.region -u save=previous_zoom --o"
+		set cmd "g.region -p region=$reg save=mon_$mon --o"
 		run_panel $cmd 
     }
 	$can($mon) delete map$mon
@@ -526,19 +525,18 @@ proc MapCanvas::zoomregion { mon zoom } {
     
 	
 	# get region extents
-	if ![catch {open "|g.region -g" r} input] {
+	if ![catch {open "|g.region -gu" r} input] {
 		while {[gets $input line] >= 0} {
-			regexp -nocase {n=(.*)} $line n1 map_n
+			regexp -nocase {^n=(.*)} $line n1 map_n
 			regexp -nocase {^s=(.*)} $line s1 map_s
-			regexp -nocase {e=(.*)} $line e1 map_e
-			regexp -nocase {w=(.*)} $line w1 map_w
-			regexp -nocase {nsres=(.*)} $line w1 yres
-			regexp -nocase {ewres=(.*)} $line w1 xres
+			regexp -nocase {^e=(.*)} $line e1 map_e
+			regexp -nocase {^w=(.*)} $line w1 map_w
+			regexp -nocase {^nsres=(.*)} $line w1 yres
+			regexp -nocase {^ewres=(.*)} $line w1 xres
 		}
+		close $input
 	}
 	
-	close $input
-
 	# get zoom rectangle extents in canvas coordinates
 	if { $areaX2 < $areaX1 } {
 		set cright $areaX1
@@ -565,11 +563,11 @@ proc MapCanvas::zoomregion { mon zoom } {
 
 	# zoom in
 	if { $zoom == 1 } {
-		run "g.region -a save=previous_zoom --o"
-		set cmd "g.region -a n=$north s=$south \
+		run "g.region -u save=previous_zoom --o"
+		set cmd "g.region -p n=$north s=$south \
 			nsres=$yres ewres=$xres \
 			e=$east w=$west save=mon_$mon --o"
-		run $cmd
+		run_panel $cmd
 	}
 	
 	#zoom out
@@ -578,11 +576,11 @@ proc MapCanvas::zoomregion { mon zoom } {
 		set downsouth [expr $map_s - abs($south - $map_s)]
 		set backeast  [expr $map_e + abs($map_e - $east)]
 		set outwest  [expr $map_w - abs($west - $map_w)]
-		run "g.region -a save=previous_zoom --o"
-		set cmd "g.region -a n=$upnorth s=$downsouth \
+		run "g.region -u save=previous_zoom --o"
+		set cmd "g.region -p n=$upnorth s=$downsouth \
 			nsres=$yres ewres=$xres \
 			e=$backeast w=$outwest save=mon_$mon --o"
-		run $cmd
+		run_panel $cmd
 	}
 
 	# redraw map
@@ -602,8 +600,8 @@ proc MapCanvas::zoom_back { mon } {
 	global canvas_h
 	global canvas_w
     
-    set cmd "g.region -a region=previous_zoom save=mon_$mon --o"
-    runcmd $cmd
+    set cmd "g.region -p region=previous_zoom save=mon_$mon --o"
+    run_panel $cmd
 	$can($mon) delete map$mon
 	MapCanvas::mapsettings $mon
 	MapCanvas::drawmap $mon
@@ -675,16 +673,15 @@ proc MapCanvas::pan { mon } {
     set to_n   [scry2mapn $to_y]
     
 	# get region extents
-	if ![catch {open "|g.region -g" r} input] {
+	if ![catch {open "|g.region -gu" r} input] {
 		while {[gets $input line] >= 0} {
 			regexp -nocase {n=(.*)} $line n1 map_n
 			regexp -nocase {^s=(.*)} $line s1 map_s
 			regexp -nocase {e=(.*)} $line e1 map_e
 			regexp -nocase {w=(.*)} $line w1 map_w
 		}
+		close $input
 	}
-	
-	close $input
 
 	# set new region extents
 	set north [expr $map_n - ($to_n - $from_n)]
@@ -693,10 +690,10 @@ proc MapCanvas::pan { mon } {
 	set west  [expr $map_w - ($to_e - $from_e)]
 	
 	# reset region and redraw map
-	run "g.region -a save=previous_zoom --o"
-	set cmd "g.region -a n=$north s=$south \
+	run "g.region -u save=previous_zoom --o"
+	set cmd "g.region -p n=$north s=$south \
 		e=$east w=$west save=mon_$mon --o"
-	run $cmd
+	run_panel $cmd
 	
 	$can($mon) delete map$mon
 	MapCanvas::mapsettings $mon
@@ -972,16 +969,15 @@ proc MapCanvas::coordconv { mon } {
 
 #	get current map coordinates from g.region
 
-	if ![catch {open "|g.region -g" r} input] {
+	if ![catch {open "|g.region -ug" r} input] {
 		while {[gets $input line] >= 0} {
 			regexp -nocase {n=(.*)} $line n1 map_n
 			regexp -nocase {^s=(.*)} $line s1 map_s
 			regexp -nocase {e=(.*)} $line e1 map_e
 			regexp -nocase {w=(.*)} $line w1 map_w
 		}
+		close $input
 	}
-
-	close $input
 	
 # 	calculate dimensions
 
@@ -1070,17 +1066,6 @@ proc MapCanvas::scrx2mape { x } {
 	return [expr $map_w + (($x - $scr_w) / $map2scrx_conv)]
 
 }
-
-###############################################################################
-# transform window x to canvas x
-proc winx2canx { x } {
-	global mon
-	variable can
-	
-	return [$can($mon) canvasx x]
-}
-
-
 
 ###############################################################################
 # pass mapcan parameter
