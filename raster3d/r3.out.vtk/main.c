@@ -26,7 +26,7 @@
 /** Parameters and global variables ******************************************/
 typedef struct
 {
-    struct Option *input, *output, *null_val, *elevscale, *top, *bottom;
+    struct Option *input, *output, *null_val, *elevscale, *top, *bottom, *decimals;
     struct Flag *mask, *point, *origin, *structgrid;
     /*struct Flag *xml; *//*maybe xml support in the future */
 } paramType;
@@ -42,10 +42,10 @@ paramType param;		/*Parameters */
 /** prototypes ***************************************************************/
 void fatalError(char *errorMsg);	/*Simple Error message */
 void setParams();		/*Fill the paramType structure */
-void writeVTKStructuredPointHeader(FILE * fp, char *vtkFile, G3D_Region region);	/*write the vtk-header */
+void writeVTKStructuredPointHeader(FILE * fp, char *vtkFile, G3D_Region region, int dp);	/*write the vtk-header */
 void writeVTKStructuredGridHeader(FILE * fp, char *vtkFile, G3D_Region region);	/*write the vtk-header */
-void writeVTKPoints(FILE * fp, G3D_Region region);	/*Write the outputdata */
-void G3dTovtk(FILE * fp, G3D_Region region, char *varname);	/*Write the outputdata */
+void writeVTKPoints(FILE * fp, G3D_Region region, int dp);	/*Write the outputdata */
+void G3dTovtk(FILE * fp, G3D_Region region, char *varname, int dp);	/*Write the outputdata */
 int OpenInputMap(char *name, char *mapset);	/*opens the outputmap */
 void CloseInputMap(int fd);	/*close the map */
 
@@ -125,6 +125,15 @@ void setParams()
     param.elevscale->required = NO;
     param.elevscale->description = _("Scale factor for elevation");
     param.elevscale->answer = "1.0";
+    
+    param.decimals = G_define_option ();
+    param.decimals->key = "dp";
+    param.decimals->type = TYPE_INTEGER;
+    param.decimals->required = NO;
+    param.decimals->multiple = NO;
+    param.decimals->answer = "12";
+    param.decimals->options = "0-20";
+    param.decimals->description = _("Number of significant digits (floating point only)");
 
     param.mask = G_define_flag();
     param.mask->key = 'm';
@@ -170,7 +179,7 @@ void writeVTKStructuredGridHeader(FILE * fp, char *vtkFile, G3D_Region region)
 /* ************************************************************************* */
 /* This function writes the point coordinates ****************************** */
 /* ************************************************************************* */
-void writeVTKPoints(FILE * fp, G3D_Region region)
+void writeVTKPoints(FILE * fp, G3D_Region region, int dp)
 {
     int x, y, z, status = 0;
     int rows, cols, depths;
@@ -178,7 +187,7 @@ void writeVTKPoints(FILE * fp, G3D_Region region)
     void *rast_bottom = NULL;
     void *ptr_top = NULL;
     void *ptr_bottom = NULL;
-    double topval, bottomval;
+    double topval = 0, bottomval = 0;
     double zcoor, ycoor, xcoor;
     double scale;
 
@@ -200,10 +209,10 @@ void writeVTKPoints(FILE * fp, G3D_Region region)
 	    status++;
 
 	    if (!G_get_raster_row(top, rast_top, y, topMapType))
-		fatalError(_("Cold not get raster row \n"));
+		fatalError(_("Could not get top raster row \n"));
 
 	    if (!G_get_raster_row(bottom, rast_bottom, y, bottomMapType))
-		fatalError(_("Cold not get raster row \n"));
+		fatalError(_("Could not get bottom raster row \n"));
 
 	    for (x = 0, ptr_top = rast_top, ptr_bottom = rast_bottom; x < cols;
 		 x++, ptr_top =
@@ -267,7 +276,9 @@ void writeVTKPoints(FILE * fp, G3D_Region region)
 		    (bottomval +
 		     z * (topval - bottomval) / (depths - 1)) * scale;
 
-		fprintf(fp, "%lf %lf %lf\n", xcoor, ycoor, zcoor);
+		fprintf(fp, "%.*f ", dp, xcoor);
+		fprintf(fp, "%.*f ", dp, ycoor);
+		fprintf(fp, "%.*f\n", dp, zcoor);
 	    }
 	}
     }
@@ -279,7 +290,7 @@ void writeVTKPoints(FILE * fp, G3D_Region region)
 /* ************************************************************************* */
 /* Writes the strcutured points Header ************************************* */
 /* ************************************************************************* */
-void writeVTKStructuredPointHeader(FILE * fp, char *vtkFile, G3D_Region region)
+void writeVTKStructuredPointHeader(FILE * fp, char *vtkFile, G3D_Region region, int dp)
 {
     double scale;
 
@@ -300,25 +311,25 @@ void writeVTKStructuredPointHeader(FILE * fp, char *vtkFile, G3D_Region region)
 	fprintf(fp, "DIMENSIONS %i %i %i\n", region.cols + 1, region.rows + 1,
 		region.depths + 1);
 
-    fprintf(fp, "SPACING %g %g %g\n", region.ew_res, region.ns_res,
+    fprintf(fp, "SPACING %.*f %.*f %.*f\n", dp, region.ew_res, dp, region.ns_res, dp,
 	    (region.tb_res * scale));
 
     if (param.point->answer) {
 	if (param.origin->answer)
-	    fprintf(fp, "ORIGIN %g %g %g\n", region.west + region.ew_res / 2,
-		    region.south + region.ns_res / 2,
+	    fprintf(fp, "ORIGIN %.*f %.*f %.*f\n", dp, region.west + region.ew_res / 2, dp,
+		    region.south + region.ns_res / 2, dp,
 		    region.bottom * scale + (region.tb_res * scale) / 2);
 	else
-	    fprintf(fp, "ORIGIN %g %g %g\n", region.west + region.ew_res / 2,
-		    region.south + region.ns_res / 2,
+	    fprintf(fp, "ORIGIN %.*f %.*f %.*f\n", dp, region.west + region.ew_res / 2, dp,
+		    region.south + region.ns_res / 2, dp, 
 		    region.bottom + (region.tb_res * scale) / 2);
     }
     else {
 	if (param.origin->answer)
-	    fprintf(fp, "ORIGIN %g %g %g\n", region.west, region.south,
+	    fprintf(fp, "ORIGIN %.*f %.*f %.*f\n", dp, region.west, dp, region.south, dp,
 		    region.bottom * scale);
 	else
-	    fprintf(fp, "ORIGIN %g %g %g\n", region.west, region.south,
+	    fprintf(fp, "ORIGIN %.*f %.*f %.*f\n", dp, region.west, dp, region.south, dp,
 		    region.bottom);
     }
 
@@ -331,7 +342,7 @@ void writeVTKStructuredPointHeader(FILE * fp, char *vtkFile, G3D_Region region)
 /* ************************************************************************* */
 /* This function does all the work. **************************************** */
 /* ************************************************************************* */
-void G3dTovtk(FILE * fp, G3D_Region region, char *varname)
+void G3dTovtk(FILE * fp, G3D_Region region, char *varname, int dp)
 {
     double d1 = 0;
     double *d1p;
@@ -371,13 +382,13 @@ void G3dTovtk(FILE * fp, G3D_Region region, char *varname)
 			if (G3d_isNullValueNum(f1p, G3D_FLOAT))
 			    fprintf(fp, "%s ", param.null_val->answer);
 			else
-			    fprintf(fp, "%g ", *f1p);
+			    fprintf(fp, "%.*f ", dp, *f1p);
 		    }
 		    else {
 			if (G3d_isNullValueNum(&d1, G3D_DOUBLE))
 			    fprintf(fp, "%s ", param.null_val->answer);
 			else
-			    fprintf(fp, "%g ", d1);
+			    fprintf(fp, "%.*f ", dp, d1);
 		    }
 		}
 		fprintf(fp, "\n");
@@ -394,13 +405,13 @@ void G3dTovtk(FILE * fp, G3D_Region region, char *varname)
 			if (G3d_isNullValueNum(f1p, G3D_FLOAT))
 			    fprintf(fp, "%s ", param.null_val->answer);
 			else
-			    fprintf(fp, "%g ", *f1p);
+			    fprintf(fp, "%.*f ", dp, *f1p);
 		    }
 		    else {
 			if (G3d_isNullValueNum(&d1, G3D_DOUBLE))
 			    fprintf(fp, "%s ", param.null_val->answer);
 			else
-			    fprintf(fp, "%g ", d1);
+			    fprintf(fp, "%.*f ", dp, d1);
 		    }
 		}
 		fprintf(fp, "\n");
@@ -418,7 +429,7 @@ int main(int argc, char *argv[])
     G3D_Region region;
     FILE *fp = NULL;
     struct GModule *module;
-    int i, changemask = 0;
+    int dp, i, changemask = 0;
     int rows, cols;
     char *name, *mapset;
 
@@ -435,6 +446,17 @@ int main(int argc, char *argv[])
     /* Have GRASS get inputs */
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
+	
+   /*The precision of the output */
+    if (param.decimals->answer) {
+        if (sscanf(param.decimals->answer, "%d", &dp) != 1)
+            G_fatal_error(_("failed to interpret dp as an integer"));
+        if (dp > 20 || dp < 0)
+            G_fatal_error(_("dp has to be from 0 to 20"));
+    }
+    else {
+        dp = 8; /*This value is taken from the lib settings in G_format_easting */
+    }
 
     /*open the output */
     if (param.output->answer) {
@@ -492,12 +514,12 @@ int main(int argc, char *argv[])
 
 	/* Write the vtk-header and the points */
 	writeVTKStructuredGridHeader(fp, output, region);
-	writeVTKPoints(fp, region);
+	writeVTKPoints(fp, region, dp);
 
     }
     else {
 	/* Write the vtk-header */
-	writeVTKStructuredPointHeader(fp, output, region);
+	writeVTKStructuredPointHeader(fp, output, region, dp);
     }
 
     /*Loop over all 3d input maps! */
@@ -530,7 +552,7 @@ int main(int argc, char *argv[])
 	}
 
 	/* Now barf out the contents of the map in vtk form */
-	G3dTovtk(fp, region, param.input->answers[i]);
+	G3dTovtk(fp, region, param.input->answers[i], dp);
 
 	/*We set the Mask off, if it was off before */
 	if (param.mask->answer) {
