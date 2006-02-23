@@ -315,9 +315,9 @@ proc Gm::xmon { type cmd } {
 					}
             	}              
        		}
+		    close $input
     	}
     }
-    close $input
     return
 }
 
@@ -720,8 +720,8 @@ proc Gm::cleanup { } {
 				runcmd "d.mon stop=gism"
 			}
 		}
+		close $input
 	}
-	close $input
 	
 	# delete temporary region files for map displays
 	runcmd "g.mremove -f region=mon_*"
