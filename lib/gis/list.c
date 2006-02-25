@@ -245,7 +245,8 @@ static int list_element( FILE *out, char *element,
             fprintf(out, "\n");
 	G_free(list[i]);
     }
-    G_free(list);
+    if(list)
+        G_free(list);
 
     if (!lister && (i % num_cols))
         fprintf(out,"\n");
