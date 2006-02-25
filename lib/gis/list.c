@@ -241,14 +241,14 @@ static int list_element( FILE *out, char *element,
         }
         else
             fprintf(out,"%-*s", maxlen+1, list[i]);
-        if(!lister && !(i % num_cols))
+        if(!lister && !((i+1) % num_cols))
             fprintf(out, "\n");
 	G_free(list[i]);
     }
     if(list)
         G_free(list);
 
-    if (!lister && (i % num_cols))
+    if (!lister && (count % num_cols))
         fprintf(out,"\n");
 
     return count;
