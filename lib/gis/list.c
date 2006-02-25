@@ -166,7 +166,7 @@ static int list_element( FILE *out, char *element,
  * if lister() routine is given, the ls command must give 1 name
  */
     G__file_name (path, element, "", mapset);
-    if(access(path, 0) != 0)
+    if (access(path, 0) != 0)
     {
 	fprintf(out,"\n");
     	return count;
@@ -177,16 +177,16 @@ static int list_element( FILE *out, char *element,
  * otherwise the ls must be forced into columnar form.
  */
 
-    if((dirp = opendir(path)) == NULL)
+    if ((dirp = opendir(path)) == NULL)
     	G_fatal_error("ERROR: %s: open failed.", path);
 
-    if(!lister)
+    if (!lister)
     {
     	while((dp = readdir(dirp)) != NULL)
     	{
-    		if(dp->d_name[0] == '.')
+    		if (dp->d_name[0] == '.')
     			continue;
-    		if(maxlen < (i = strlen(dp->d_name)))
+    		if (maxlen < (i = strlen(dp->d_name)))
     			maxlen = i;
     	}
     	rewinddir(dirp);
@@ -197,10 +197,10 @@ static int list_element( FILE *out, char *element,
     list = NULL;
     while ((dp = readdir(dirp)) != NULL)
     {
-        if(dp->d_name[0] == '.')
+        if (dp->d_name[0] == '.')
     	    continue;
 
-        if((list = (char **)G_realloc(list,(count+1)*sizeof(char *))) == NULL ||
+        if ((list=(char **)G_realloc(list, (count+1)*sizeof(char *))) == NULL ||
            (list[count] = (char *)G_malloc(strlen(dp->d_name)+1)) == NULL)
     	    G_fatal_error("ERROR: memory allocation error!");
         strcpy(list[count++], dp->d_name);
@@ -228,10 +228,10 @@ static int list_element( FILE *out, char *element,
     {
         if (lister)
         {
+	    char title[400];
             char *b;
-            char title[400];
     
-        /* remove the trailing newline */
+            /* remove the trailing newline */
             for (b = list[i]; *b; b++)
         	if (*b == '\n')
         	    *b = 0;
@@ -241,15 +241,18 @@ static int list_element( FILE *out, char *element,
         }
         else
             fprintf(out,"%-*s", maxlen+1, list[i]);
-        if(!lister && !((i+1) % num_cols))
+
+        if (!lister && !((i+1) % num_cols))
             fprintf(out, "\n");
+
 	G_free(list[i]);
     }
-    if(list)
-        G_free(list);
 
     if (!lister && (count % num_cols))
         fprintf(out,"\n");
+
+    if (list)
+        G_free(list);
 
     return count;
 }
