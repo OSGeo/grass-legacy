@@ -42,6 +42,9 @@ Note: This text contains *some* rules only applicable to the
      mv ChangeLog ChangeLog_$VERSION
      gzip ChangeLog_$VERSION
 
+ o   Tag release:
+          cvs tag grass_${MAJOR}_${MINOR}_${RELEASE}
+
  o create source package (in the source directory):
      mkdir grass-${VERSION}
      mv * grass-${VERSION}/
