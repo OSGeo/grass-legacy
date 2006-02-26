@@ -8904,7 +8904,7 @@ msgstr "Rasterkarte(n), die in das VTK-ASCII-Format konvertiert werden sollen."
 #: ../raster/r.out.vtk/parameters.c:44
 msgid "Raster map that represents the elevation, used for the 3D information"
 msgstr ""
-"Rasterkartem die die Höheninformationen beinhaltet. Wird für die 3D-"
+"Rasterkarte, die die Höheninformationen beinhaltet. Wird für die 3D-"
 "Informationen benötigt."
 
 #: ../raster/r.out.vtk/parameters.c:52
