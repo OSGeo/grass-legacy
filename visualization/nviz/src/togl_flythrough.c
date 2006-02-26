@@ -644,7 +644,7 @@ void do_navigation (struct Togl *togl)
 
 		GS_set_viewdir(dir);		/* calls gsd_set_view */
 
-	    GS_set_draw(GSD_BACK);
+	    GS_set_draw(GSD_BACK); /* needs to be BACK to avoid flickering */
 		GS_clear(cb->nv_data->BGcolor);
 
 		if (cb->coarse_draw) {
@@ -785,7 +785,7 @@ int Ndraw_all_together_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
 
 	Tcl_SetVar(interp, "is_drawing", "1", TCL_GLOBAL_ONLY);
 
-	GS_set_draw(GSD_FRONT);
+	GS_set_draw(GSD_BACK); /* needs to be BACK to avoid flickering */
 	GS_clear(data->BGcolor);
 	GS_ready_draw();
 
