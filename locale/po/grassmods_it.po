@@ -939,7 +939,7 @@ msgstr "Non riesco ad eseguire il driver '%s'"
 
 #: ../db/base/connect.c:27
 msgid "print current connection parameters and exit"
-msgstr "mostra i parmetri della connessione in uso ed esce"
+msgstr "mostra i parametri della connessione in uso ed esce"
 
 #: ../db/base/connect.c:35
 msgid "driver name:"
@@ -4000,7 +4000,7 @@ msgstr ""
 #: ../vector/v.db.connect/main.c:92
 #, fuzzy
 msgid "Print current connection parameters and exit"
-msgstr "mostra i parmetri della connessione in uso ed esce"
+msgstr "mostra i parametri della connessione in uso ed esce"
 
 #: ../vector/v.db.connect/main.c:96
 msgid ""
@@ -4015,7 +4015,7 @@ msgstr ""
 #: ../vector/v.db.connect/main.c:105
 #, fuzzy
 msgid "Overwrite connection parameter for certain layer"
-msgstr "mostra i parmetri della connessione in uso ed esce"
+msgstr "mostra i parametri della connessione in uso ed esce"
 
 #: ../vector/v.db.connect/main.c:109
 msgid "Delete connection for certain layer (not the table)"
