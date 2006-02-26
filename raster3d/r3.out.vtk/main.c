@@ -85,7 +85,7 @@ void setParams()
     param.input->gisprompt = "old,grid3,3d-raster";
     param.input->multiple = YES;
     param.input->description =
-	_("3dcell map(s) to be converted to VTK-ASCII data format");
+	_("G3D map(s) to be converted to VTK-ASCII data format");
 
     param.top = G_define_option();
     param.top->key = "top";
@@ -93,7 +93,7 @@ void setParams()
     param.top->required = NO;
     param.top->gisprompt = "old,cell,raster";
     param.top->multiple = NO;
-    param.top->description = _("2d rater map representing the top surface");
+    param.top->description = _("2D raster map representing the top surface");
 
     param.bottom = G_define_option();
     param.bottom->key = "bottom";
@@ -102,7 +102,7 @@ void setParams()
     param.bottom->gisprompt = "old,cell,raster";
     param.bottom->multiple = NO;
     param.bottom->description =
-	_("2d rater map representing the bottom surface");
+	_("2D raster map representing the bottom surface");
 
     param.output = G_define_option();
     param.output->key = "output";
