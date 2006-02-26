@@ -18,9 +18,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "grass/gis.h"
-#include "grass/G3d.h"
-#include "grass/glocale.h"
+#include <grass/gis.h>
+#include <grass/G3d.h>
+#include <grass/glocale.h>
 
 
 /*- Parameter and global variables -----------------------------------------*/
@@ -69,7 +69,7 @@ void FatalError(void *map, int elevfd, int outfd, char *errorMsg)
 
 
 /* ************************************************************************* */
-/* Set up the arguments we are expexting *********************************** */
+/* Set up the arguments we are expecting *********************************** */
 /* ************************************************************************* */
 void SetParameter()
 {
@@ -78,21 +78,21 @@ void SetParameter()
     Parameter.input->type = TYPE_STRING;
     Parameter.input->required = YES;
     Parameter.input->gisprompt = "old,grid3,3d-raster";
-    Parameter.input->description = _("Input 3d raster map for cross section.");
+    Parameter.input->description = _("Input 3D raster map for cross section.");
 
     Parameter.elevation = G_define_option();
     Parameter.elevation->key = "elevation";
     Parameter.elevation->type = TYPE_STRING;
     Parameter.elevation->required = YES;
     Parameter.elevation->description =
-	_("2d elevation map used to create the cross section map");
+	_("2D elevation map used to create the cross section map");
     Parameter.elevation->gisprompt = "old,cell,raster";
 
     Parameter.output = G_define_option();
     Parameter.output->key = "output";
     Parameter.output->type = TYPE_STRING;
     Parameter.output->required = YES;
-    Parameter.output->description = _("Resulting cross section 2d raster map");
+    Parameter.output->description = _("Resulting cross section 2D raster map");
     Parameter.output->gisprompt = "new,cell,raster";
 
     Parameter.mask = G_define_flag();
@@ -256,7 +256,7 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->description =
 	_
-	("Creates a cross section 2d map from one g3d raster map based on a 2d elevation map");
+	("Creates cross section 2D raster map from g3d raster volume map based on 2D elevation map");
 
     /* Get Parametereters from user */
     SetParameter();
