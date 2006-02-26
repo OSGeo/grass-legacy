@@ -15,12 +15,13 @@ Only one feature can be exported at a time, available features are:
 	<li>centroid</li>
 	<li>boundary</li>
 	<li>area</li>
+	<li>face</li>
 </ul>
 
 Categorie data (cat) for the selected feature + layer will be written as scalar
-data with name "cat". If no cat exists, the value will set to -1.
-(Normal cat's are always positiv)
-The Data is always written with x,y and z coordinates.
+data with name "cat". If no cat exists, the value will set to -1 as normal cat's are
+always positive.
+The VTK data is always written with x, y and z coordinates.
 If no elevation is available for the choosen feature, 0 will be set as z coordinate.
 The data is converted into the polydata format of VTK: 
 
@@ -53,7 +54,7 @@ v.out.vtk input=streams feature=line layer=1 output=/tmp/streams.vtk
 </pre></div>
 Write the archsite vtk outpout to stdout with cats in layer 1:
 <div class="code"><pre>
-v.out.vtk input=archsites featur=point layer=1
+v.out.vtk input=archsites feature=point layer=1
 </pre></div>
 
 <h2>SEE ALSO</h2>

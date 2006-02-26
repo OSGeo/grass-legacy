@@ -13,7 +13,7 @@ void writePoints(struct line_pnts *Points, int dp, FILE * ascii);
 int writeVTK(FILE * ascii, struct Map_info *Map, int layer, int feature, int dp)
 {
     int cat, type, i, j, centroid, generatedata = 1;
-    int numpoints = 0, numlines = 0, numareas = 0;
+    int numpoints = 0, numlines = 0, numareas = 0, cur;
     static struct line_pnts *Points;
     struct line_cats *Cats;
 
@@ -35,7 +35,9 @@ int writeVTK(FILE * ascii, struct Map_info *Map, int layer, int feature, int dp)
 	Vect_rewind(Map);
 
 	/*Write the coordinates */
+	cur=0;
 	while (1) {
+	    if (cur <=numpoints) G_percent(cur,numpoints,2);
 	    if (-1 == (type = Vect_read_next_line(Map, Points, Cats)))
 		break;
 	    if (type == -2)	/* EOF */
@@ -46,6 +48,7 @@ int writeVTK(FILE * ascii, struct Map_info *Map, int layer, int feature, int dp)
 		if (Cats->n_cats == 0)
 		    generatedata = 0;	/*No data generation */
 	    }
+	    cur++;
 	}
 
 	/*Write the vertices */
@@ -79,7 +82,7 @@ int writeVTK(FILE * ascii, struct Map_info *Map, int layer, int feature, int dp)
 	}
 
     }				/*LINE AND BOUNDARY feature with celldata */
-    else if (feature == GV_LINE || feature == GV_BOUNDARY) {
+    else if (feature == GV_LINE || feature == GV_BOUNDARY || feature == GV_FACE ) {
 
 	/*count the number of line_nodes and lines */
 	Vect_rewind(Map);
@@ -104,8 +107,9 @@ int writeVTK(FILE * ascii, struct Map_info *Map, int layer, int feature, int dp)
 
 	/*Write the coordinates */
 	Vect_rewind(Map);
+	cur=0;
 	while (1) {
-
+	    if (cur <= numlines) G_percent(cur,numlines,2);
 	    if (-1 == (type = Vect_read_next_line(Map, Points, Cats)))
 		break;
 	    if (type == -2)	/* EOF */
@@ -113,10 +117,15 @@ int writeVTK(FILE * ascii, struct Map_info *Map, int layer, int feature, int dp)
 	    if (type == feature) {
 		writePoints(Points, dp, ascii);
 	    }
+	    cur++;
 	}
 
 	/*Write the lines */
-	fprintf(ascii, "LINES %i %i\n", numlines, numpoints + numlines);
+	if (feature == GV_FACE)
+		fprintf(ascii, "POLYGONS %i %i\n", numlines, numpoints + numlines);
+	else
+		fprintf(ascii, "LINES %i %i\n", numlines, numpoints + numlines);
+
 	Vect_rewind(Map);
 	i = 0;
 	while (1) {
