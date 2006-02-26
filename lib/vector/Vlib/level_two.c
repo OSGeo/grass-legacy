@@ -79,6 +79,19 @@ Vect_get_num_areas (struct Map_info *map)
 }
 
 /*!
+ *  \fn int Vect_get_num_faces (struct Map_info *map)
+ *  \brief get number of faces
+ *  \return number of faces
+ *  \param Map_info structure
+ *
+ */
+int
+Vect_get_num_faces (struct Map_info *map)
+{
+	  return (map->plus.n_flines);
+}
+
+/*!
  \fn int Vect_get_num_islands (struct Map_info *map)
  \brief get number of islands
  \return number of islands
