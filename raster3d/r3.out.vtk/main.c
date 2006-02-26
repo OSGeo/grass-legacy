@@ -146,13 +146,13 @@ void setParams()
 
     param.origin = G_define_flag();
     param.origin->key = 'o';
-    param.origin->description = _("Scalefactor effects the origin");
+    param.origin->description = _("Scale factor effects the origin");
 
     param.structgrid = G_define_flag();
     param.structgrid->key = 's';
     param.structgrid->description =
 	_
-	("Create 3d elevation output with a top and a bottom surface, booth raster maps are required.");
+	("Create 3d elevation output with a top and a bottom surface, both raster maps are required.");
 
     /* Maybe needed in the future
      * param.xml = G_define_flag ();
