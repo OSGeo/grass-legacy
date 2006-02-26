@@ -1,22 +1,34 @@
 <H2>DESCRIPTION</H2>
-This module creates a cross section 2d map from one g3d raster map based on a 2d elevation map.
-It checks whether the value of the elevation map is located in the z-coordinate of the 3d map. 
-In that case the 3d map value for this position is copied to the cross section output map, 
-otherwise the NULL value is set.
+
+This module creates a cross section 2D map from one g3d raster volume
+map based on a 2D elevation map.  It checks if the value of the
+elevation map is located in the z-coordinate space of the 3d map.  If
+so, the 3D voxel value for this position is transferred to the related
+cross section output map cell, otherwise the NULL value is set.
 
 <H2>ATTENTION</H2>
-The region settings for 2d raster and 3d raster maps have to be equal (res == res3)!
+
+The region resolution settings for 2D raster and 3D raster maps have
+to be equal (res == res3)!
 
 <H2>NOTES</H2>
-To create a cut plane elevation map use r.mapcalc. Some examples:
+
+To create a cut plane elevation map use <em>r.mapcalc</em>. Some examples:
 <ul>
-	<li>To create a cut plane elevation map in x direction type <br><i>r.mapcalc "cutplane = col()*x"</i><br>, x is the value
-	for your elevation. If the range of col() is 1 ... 10, the elevation map has the range 1 ... 10 if x == 1 and
-	if x == 10 the range 10 ... 100</li>
-	<li>To create a cut plane elevation map in y direction type <br><i>r.mapcalc "cutplane = row()*x"</i><br>, x is the value
-	for your elevation. If the range of col() is 1 ... 10, the elevation map has the range 1 ... 10 if x == 1 and
-	if x == 10 the range 10 ... 100</li>
-	<li>You can also make a cut in y and x direction with r.mapcalc, just type <br><i>r.mapcalc "cutplane = (row()+col())*x"</i></li>
+ <li>To create a cut plane elevation map in x direction type
+ <br><i>r.mapcalc "cutplane = col()*x"</i>,<br> x be the value for
+ the elevation. If the range of col() is 1 ... 10, the elevation map
+ has the range 1 ... 10 if x == 1 and if x == 10 the range 10
+ ... 100</li>
+
+ <li>To create a cut plane elevation map in y direction type
+ <br><i>r.mapcalc "cutplane = row()*x"</i>,<br> x be the value for
+ the elevation. If the range of col() is 1 ... 10, the elevation map
+ has the range 1 ... 10 if x == 1 and if x == 10 the range 10
+ ... 100</li>
+
+ <li>The user can also make a cut in y and x direction with <em>r.mapcalc</em> by
+     using <br><i>r.mapcalc "cutplane = (row()+col())*x"</i></li>
 </ul>
 
 <H2>EXAMPLE</H2>
@@ -35,16 +47,15 @@ r.mapcalc "cutplane = col()*10"
 
 #create the cross section map
 r3.cross.rast input=map3d elevation=cutplane output=crosssection
-
 </pre></div>
 
 
 <H2>SEE ALSO</H2>
 
-<EM><A HREF="r3.to.rast.html">r3.to.rast</A></EM><br>
 <EM><A HREF="g.region.html">g.region</A></EM><br>
 <EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM><br>
-<EM><A HREF="r3.mapcalc.html">r.mapcalc</A></EM><br>
+<EM><A HREF="r3.mapcalc.html">r3.mapcalc</A></EM><br>
+<EM><A HREF="r3.to.rast.html">r3.to.rast</A></EM><br>
 
 <H2>AUTHOR</H2>
 Soeren Gebbert
