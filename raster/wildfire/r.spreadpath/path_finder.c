@@ -6,6 +6,8 @@
 *********************************************************************/
 #include "segment.h"
 
+int drawline(int,int,int,int);
+
 path_finder (row, col, backrow, backcol)
 
 int row, col, backrow, backcol;

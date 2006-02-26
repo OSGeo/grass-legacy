@@ -1,6 +1,7 @@
 #define MAIN
 #include "Gwater.h"
 #include <unistd.h>
+#include <stdlib.h>
 #undef MAIN
 
 int 

@@ -24,12 +24,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
+#include "display.h"
+#include "raster.h"
 
 #define MAIN
 #include "setup.h"
 #include "config.h"
 
 
+void user_input(int, char **);
 				/* MAIN PROGRAM */
 
 int

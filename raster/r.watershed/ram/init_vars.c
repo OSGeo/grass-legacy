@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "Gwater.h"
 
 int init_vars (int argc, char *argv[])

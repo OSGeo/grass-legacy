@@ -277,7 +277,7 @@ Vect_rename ( char *in, char *out, FILE *msgout )
 	/* Change the link */
 	Vect_map_del_dblink ( &Map, Fin->number );
 	
-	Vect_map_add_dblink ( &Map, Fout->number, Fout->name, Fout->table, Fout->key, 
+	Vect_map_add_dblink ( &Map, Fout->number, Fout->name, Fout->table, Fin->key, 
 		                    Fout->database, Fout->driver);
 
 	/* Delete old table */
@@ -292,7 +292,7 @@ Vect_rename ( char *in, char *out, FILE *msgout )
 	if ( driver == NULL ) {
 	    G_warning ( "Cannot open database -> create index" );
 	} else {
-	    if ( db_create_index2(driver, Fout->table, Fout->key ) != DB_OK )
+	    if ( db_create_index2(driver, Fout->table, Fin->key ) != DB_OK )
 		G_warning ( "Cannot create index" );
 
 	    db_close_database_shutdown_driver ( driver );

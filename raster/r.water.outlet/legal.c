@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "gis.h"
 
 int do_legal (char *file_name)

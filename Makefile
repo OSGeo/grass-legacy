@@ -55,7 +55,7 @@ else
 	LOCALE=0
 endif
 
-FILES = COPYING README REQUIREMENTS.html
+FILES = AUTHORS COPYING README REQUIREMENTS.html
 
 BIN_DIST_FILES = $(FILES) \
 	grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp \
@@ -74,7 +74,9 @@ default: builddemolocation
 	@echo "GRASS GIS compilation log"     > $(GRASS_HOME)/error.log
 	@echo "-------------------------"    >> $(GRASS_HOME)/error.log
 	@echo "Started compilation: `date`"  >> $(GRASS_HOME)/error.log
+	@echo "--"                           >> $(GRASS_HOME)/error.log
 	@echo "Errors in:"                   >> $(GRASS_HOME)/error.log
+	chmod 744 install-sh
 	@list='$(SUBDIRS)'; \
 	for subdir in $$list; do \
 		$(MAKE) -C $$subdir; \
@@ -83,6 +85,7 @@ default: builddemolocation
 	-cp -f $(FILES) ${ARCH_DISTDIR}/
 	-cp -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} ${ARCH_DISTDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp
 	@(cd tools ; sh -c "./build_html_index.sh")
+	@echo "--"                           >> $(GRASS_HOME)/error.log
 	@echo "Finished compilation: `date`" >> $(GRASS_HOME)/error.log
 	@echo "(In case of errors please change into the directory with error and run 'make')" >> $(GRASS_HOME)/error.log
 	@cat $(GRASS_HOME)/error.log
@@ -136,7 +139,7 @@ cleandistdirs:
 	-rm -rf ${ARCH_DISTDIR}/scripts/     2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/demolocation/ 2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/tcltkgrass/ 2>/dev/null
-	-rm -f ${ARCH_DISTDIR}/README ${ARCH_DISTDIR}/REQUIREMENTS.html ${ARCH_DISTDIR}/COPYING ${ARCH_DISTDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp 2>/dev/null
+	-rm -f ${ARCH_DISTDIR}/AUTHORS ${ARCH_DISTDIR}/README ${ARCH_DISTDIR}/REQUIREMENTS.html ${ARCH_DISTDIR}/COPYING ${ARCH_DISTDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp 2>/dev/null
 	-rmdir ${ARCH_DISTDIR}
 	-rm -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} 2>/dev/null
 	-rmdir ${ARCH_BINDIR}
@@ -325,7 +328,7 @@ changelog:
 GISRCFILE = ${ARCH_DISTDIR}/demolocation/.grassrc${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}
 
 builddemolocation:
-	@ cp -rpf demolocation ${ARCH_DISTDIR}/
+	-tar cBf - demolocation | (cd ${ARCH_DISTDIR}/ ; tar xBfo - ) 2>/dev/null
 	@ echo "GISDBASE: ${ARCH_DISTDIR}" > ${GISRCFILE}
 	@ echo "LOCATION_NAME: demolocation" >> ${GISRCFILE}
 	@ echo "MAPSET: PERMANENT" >> ${GISRCFILE}

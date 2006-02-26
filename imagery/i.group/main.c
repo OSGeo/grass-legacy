@@ -116,7 +116,9 @@ int main(int argc, char *argv[])
 		    fprintf(stderr, "Creating new group %s\n", group);
 		}
 		if (sgrp->answer) {
-		    fprintf(stderr, "Adding files to sub-group\n");
+		    fprintf(stderr, "Adding files to group <%s>\n", group);
+		    add_or_update_group(group, rasters, k);
+		    fprintf(stderr, "Adding files to sub-group <%s>\n", subgroup);
 		    add_or_update_subgroup(group, subgroup, rasters, k);
 		}
 		else {

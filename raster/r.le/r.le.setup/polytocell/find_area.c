@@ -1,5 +1,8 @@
 /* @(#)find_area.c	2.1   6/26/87 */
+#include <stdlib.h>
 #include "ply_to_cll.h"
+
+int  yadjust(double *,int);
 
 find_area(xarray, yarray, num_verticies, xy, num_points)
 	double xarray[], yarray[] ;

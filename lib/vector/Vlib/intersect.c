@@ -105,8 +105,8 @@ int Vect_segment_intersection (
     /* TODO: Works for points ?*/
         
     G_debug (4, "Vect_segment_intersection()" ); 
-    G_debug (4, "    %e , %e  - %e , %e", ax1, ay1, ax2, ay2 ); 
-    G_debug (4, "    %e , %e  - %e , %e", bx1, by1, bx2, by2 ); 
+    G_debug (4, "    %.15g , %.15g  - %.15g , %.15g", ax1, ay1, ax2, ay2 ); 
+    G_debug (4, "    %.15g , %.15g  - %.15g , %.15g", bx1, by1, bx2, by2 ); 
 
     /* TODO 3D */
     if ( with_z && first_3d ) {
@@ -117,7 +117,7 @@ int Vect_segment_intersection (
     /* Check identical lines */
     if ( ( ax1 == bx1 && ay1 == by1 && ax2 == bx2 && ay2 == by2 ) ||
 	 ( ax1 == bx2 && ay1 == by2 && ax2 == bx1 && ay2 == by1 ) ) {
-        G_debug (2, " -> identical lines" ); 
+        G_debug (2, " -> identical segments" ); 
 	*x1 = ax1; *y1 = ay1; *z1 = az1;
 	*x2 = ax2; *y2 = ay2; *z2 = az2;
 	return 5;
@@ -248,7 +248,13 @@ int Vect_segment_intersection (
 	} 
 	
 	/* should not be reached */
-	G_warning("Vect_segment_intersection() ERROR");
+	G_warning("Vect_segment_intersection() ERROR (collinear vertical segments)");
+	G_warning("%.15g %.15g", ax1, ay1);
+	G_warning("%.15g %.15g", ax2, ay2);
+	G_warning("x");
+	G_warning("%.15g %.15g", bx1, by1);
+	G_warning("%.15g %.15g", bx2, by2);
+    
 	return 0;
     }
     
@@ -312,14 +318,25 @@ int Vect_segment_intersection (
         }
 	return 2;
     } 
-    if ( by2 > ay1 && by2 < ay2 ) { /* b2 is in a */
-	*x1 = bx2; *y1 = by2; *z1 = 0;
-	*x2 = ax1; *y2 = ay1; *z2 = 0;
+    if ( bx2 > ax1 && bx2 < ax2 ) { /* b2 is in a */
+        if ( !switched ) {
+	    *x1 = bx2; *y1 = by2; *z1 = 0;
+	    *x2 = ax1; *y2 = ay1; *z2 = 0;
+	} else {
+	    *x1 = ax1; *y1 = ay1; *z1 = 0;
+	    *x2 = bx2; *y2 = by2; *z2 = 0;
+        }
 	return 2;
     } 
 
     /* should not be reached */
-    G_warning("Vect_segment_intersection() ERROR");
+    G_warning("Vect_segment_intersection() ERROR (collinear non vertical segments)");
+    G_warning("%.15g %.15g", ax1, ay1);
+    G_warning("%.15g %.15g", ax2, ay2);
+    G_warning("x");
+    G_warning("%.15g %.15g", bx1, by1);
+    G_warning("%.15g %.15g", bx2, by2);
+
     return 0;
 }
 
@@ -414,11 +431,12 @@ static int cross_seg(int id, int *arg)
     /* add ALL (including end points and duplicates), clean later */
     if ( ret > 0 ) {
 	G_debug(2, "  -> %d x %d: intersection type = %d", i, j, ret );
-	if ( ret == 1 || ret == 2 ) { /* one intersection on segment A */
+	if ( ret == 1 ) { /* one intersection on segment A */
 	    G_debug(3, "    in %f, %f ",  x1, y1 );
 	    add_cross ( i, 0.0, j, 0.0, x1, y1 );
-	} else if ( ret == 3 || ret == 4 || ret == 5 ) { 
-	    /* a contains b; a is broken in 2 points (but 1 may be end)
+	} else if ( ret == 2 || ret == 3 || ret == 4 || ret == 5 ) { 
+	    /*  partial overlap; a broken in one, b broken in one
+	     *  or a contains b; a is broken in 2 points (but 1 may be end)
 	     *  or b contains a; b is broken in 2 points (but 1 may be end) 
 	     *  or identical */ 
 	    G_debug(3, "    in %f, %f; %f, %f",  x1, y1, x2, y2 );

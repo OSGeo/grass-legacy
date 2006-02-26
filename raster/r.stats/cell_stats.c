@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "global.h"
 
 int cell_stats (int fd[], int verbose, int with_percents, int with_counts,

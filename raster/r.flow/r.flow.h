@@ -35,6 +35,10 @@
 #include "Vect.h"
 #include "bitmap.h"
 
+#ifndef hypot
+#define hypot(x,y) (sqrt(x*x+y*y))
+#endif
+
 #define D_PI	180.
 #define D2_PI	(2. * D_PI)
 #define DEG2RAD	(M_PI / D_PI)
@@ -55,7 +59,7 @@ typedef struct
     char   *dsout;		/* name of output density file		*/
     int     skip;		/* cells between flowlines output	*/
     int	    bound;		/* constant bound on path length	*/
-    double  offset;             /* magnitude of random grid offset      */
+/*    double  offset;              magnitude of random grid offset      */
     char    up;			/* direction to compute lines		*/
     char    l3d;		/* three-dimensional length		*/
     char    mem;		/* always recompute aspect		*/

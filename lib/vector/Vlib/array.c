@@ -196,7 +196,7 @@ int
 Vect_set_varray_from_db ( struct Map_info *Map, int field, char *where,
                                 int type, int value, VARRAY *varray )
 {
-    int i, n, centr, cat, *cats, ncats;
+    int i, n, c, centr, cat, *cats, ncats;
     int ni = 0; /* number of items set */
     int ltype; /* line type */
     struct line_cats *Cats;
@@ -245,12 +245,22 @@ Vect_set_varray_from_db ( struct Map_info *Map, int field, char *where,
 	    if ( centr <= 0 ) continue; /* No centroid */
 	    
 	    Vect_read_line (Map, NULL, Cats, centr);
-	    if ( !Vect_cat_get(Cats, field, &cat) ) continue; /* No such field */
-	    
+	    /*if ( !Vect_cat_get(Cats, field, &cat) ) continue; No such field */
+	    for (c = 0; c < Cats->n_cats; c++) {
+	      if (Cats->field[c] == field && in_array ( cats, ncats, Cats->cat[c] )) {
+		cat = Cats->cat[c];
+		varray->c[i] = value;
+		ni++;
+		break;
+	      }
+	    }
+
+	    /*
 	    if ( in_array ( cats, ncats, cat ) ) {
 		varray->c[i] = value;
 		ni++;
 	    }
+	    */
 	}
     } else { /* Lines */
 	n = Vect_get_num_lines (Map);
@@ -265,12 +275,21 @@ Vect_set_varray_from_db ( struct Map_info *Map, int field, char *where,
         
 	    if ( !(ltype & type) ) continue; /* is not specified type */
 	    
-	    if ( !Vect_cat_get(Cats, field, &cat) ) continue; /* No such field */
-
+	    /* if ( !Vect_cat_get(Cats, field, &cat) ) continue;  No such field */
+	    for (c = 0; c < Cats->n_cats; c++) {
+	      if (Cats->field[c] == field && in_array ( cats, ncats, Cats->cat[c] )) {
+		cat = Cats->cat[c];
+		varray->c[i] = value;
+		ni++;
+		break;
+	      }
+	    }
+	    /*
 	    if ( in_array ( cats, ncats, cat ) ) {
 		varray->c[i] = value;
 		ni++;
 	    }
+	    */
 	}
 
     }

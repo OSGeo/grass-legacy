@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <curses.h>
+#include <stdlib.h>
 #include "vask.h"
 #include "globals.h"
 

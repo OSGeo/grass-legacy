@@ -2,6 +2,7 @@
 #include <sys/stat.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "gis.h"
 #include "dbmi.h"
 #include "procs.h"
 #define	DB_DRIVER_C
@@ -24,15 +25,21 @@ db_driver(int argc,
     int i;
     int rfd, wfd;
     FILE *send, *recv;
+    char *modestr;
 
     /* Read and set enviroment variables, see dbmi_client/start.c */
-    if ( getenv ( "GISRC_MODE_MEMORY" ) ) {
-        G_set_gisrc_mode ( G_GISRC_MODE_MEMORY );
-	G__setenv( "DEBUG", getenv ( "DEBUG" ) );
-	G__setenv( "GISDBASE", getenv ( "GISDBASE" ) );
-	G__setenv( "LOCATION_NAME", getenv ( "LOCATION_NAME" ) );
-	G__setenv( "MAPSET", getenv ( "MAPSET" ) );
-	G_debug (3, "Driver GISDBASE set to '%s'", G_getenv ( "GISDBASE" ) );
+    if ( (modestr = getenv ( "GRASS_DB_DRIVER_GISRC_MODE" )) ) {
+	int mode;
+	mode = atoi ( modestr );
+		
+	if ( mode == G_GISRC_MODE_MEMORY ) {
+	    G_set_gisrc_mode ( G_GISRC_MODE_MEMORY );
+	    G__setenv( "DEBUG", getenv ( "DEBUG" ) );
+	    G__setenv( "GISDBASE", getenv ( "GISDBASE" ) );
+	    G__setenv( "LOCATION_NAME", getenv ( "LOCATION_NAME" ) );
+	    G__setenv( "MAPSET", getenv ( "MAPSET" ) );
+	    G_debug (3, "Driver GISDBASE set to '%s'", G_getenv ( "GISDBASE" ) );
+	}
     }
 
     send = stdout;

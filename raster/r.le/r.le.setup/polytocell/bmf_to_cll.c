@@ -1,10 +1,13 @@
 
+#include <stdlib.h>
 #include "ply_to_cll.h"
 #include "gis.h"
 #include <stdio.h>
 #define ROW_SHIFT	-1
 
 char *gets() ;
+int quit();
+int write_record(int , float, float, int ) ;
 
 #define MAXLINE	 500
 #define FGET	    gets(buffer)

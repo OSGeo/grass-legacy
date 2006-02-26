@@ -1,5 +1,6 @@
 #include "gis.h"
 #include <stdlib.h>
+#include <string.h>
 
 /* Changed for truecolor 24bit support by 
  * Roberto Flor/ITC-Irst, Trento, Italy

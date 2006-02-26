@@ -72,7 +72,7 @@ main (int argc, char *argv[])
     in_opt->gisprompt = "file,file,file";
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
-    out_opt->required = NO;
+    out_opt->required = YES;
 
     layers_opt= G_define_option();
     layers_opt->key = "layers";

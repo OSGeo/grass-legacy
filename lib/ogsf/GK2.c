@@ -3,6 +3,7 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "gstypes.h"
 #include "keyframe.h"
 #include "kftypes.h"

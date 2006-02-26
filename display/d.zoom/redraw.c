@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include "local_proto.h"
+#include "display.h"
+#include "raster.h"
 
 int redraw(void)
 {

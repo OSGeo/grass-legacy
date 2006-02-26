@@ -11,6 +11,7 @@
 #include "pad.h"
 #include "gis.h"
 #include "glocale.h"
+#include "XDRIVER.h"
 
 static void spawnRedrawProcess(void);
 static void checkRedrawProcess(void);

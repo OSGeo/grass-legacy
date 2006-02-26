@@ -45,6 +45,7 @@ int db__driver_describe_table( dbString *table_name, dbTable **table )
 	return DB_FAILED;
     }
     
+	G_debug (3, "->>");
     if ( describe_table( hLayer, table, NULL) == DB_FAILED ) {
 	append_error("Cannot describe table\n");
 	report_error();
@@ -177,15 +178,14 @@ int describe_table( OGRLayerH hLayer, dbTable **table, cursor *c)
         db_set_column_update_priv_granted (column);
         db_set_column_update_priv_not_granted (column); 
 	*/
-
     }
 
-    if ( c ) 
+    if ( c ) {
 	c->cols = cols;
-    else
+        c->ncols = ncols;
+    } else {
 	free ( cols );
-
-    c->ncols = ncols;
+    }
 
     return DB_OK;
 }

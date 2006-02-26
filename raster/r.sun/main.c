@@ -156,7 +156,7 @@ int main(int argc, char *argv[])
 	_("Computes direct (beam), diffuse and reflected solar irradiation raster "
 	"maps for given day, latitude, surface and atmospheric conditions. Solar "
 	"parameters (e.g. sunrise, sunset times, declination, extraterrestrial "
-	"irradiance, daylight length) are saved in a local text file. "
+	"irradiance, daylight length) are saved in the map history file. "
 	"Alternatively, a local time can be specified to compute solar "
 	"incidence angle and/or irradiance raster maps. The shadowing effect of "
 	"the topography is optionally incorporated.");

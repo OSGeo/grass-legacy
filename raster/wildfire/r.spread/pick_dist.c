@@ -15,6 +15,7 @@
  * Date: 06/11/1994
  ******************************************************************************/
 #include <limits.h>
+#include <stdlib.h>
 #include <math.h>
 #include "local_proto.h"
 

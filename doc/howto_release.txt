@@ -2,48 +2,115 @@ How to release GRASS binaries and source code
 
 $Date$
 
-Note: This text contains some rules only applicable to the
-      development coordinator (currently Markus Neteler).
+Note: This text contains *some* rules only applicable to the
+      development coordinators (currently Markus Neteler, Radim Blazek).
 
 
 1. Local work (basically at ITC-irst)
 
- o Store the source tarball in:
-     http://grass.itc.it/grass/grass6x/source/
+ o - cleanup rubbish:
+       find . -name '*~'
+       find . -name '*~' | xargs rm
+       find . -name '*.bak'
+
+   - Update VERSION file to release version:
+      vim include/VERSION
+
+#example:
+6
+0
+2RC1
+2005
+
+      rm -f include/VERSION~
+   - submit include/VERSION to CVS
+   - Create release branch (only if not yet existing)
+
+ o Create Changelog file
+     CVSBRANCH=`cat CVS/Entries | grep AUTHORS | cut -d'/' -f6 | cut -b2-`
+     echo $CVSBRANCH
+     #version:
+     MAJOR=6
+     MINOR=0
+     RELEASE=2RC1
+     VERSION=${MAJOR}.${MINOR}.${RELEASE}
+     echo $VERSION
+     #create ChangeLog on release branch:
+     sh tools/cvs2cl.pl --follow "$CVSBRANCH"
+     mv ChangeLog ChangeLog_$VERSION
+     gzip ChangeLog_$VERSION
+
+ o create source package (in the source directory):
+     mkdir grass-${VERSION}
+     mv * grass-${VERSION}/
+     # do not include the debian control files:
+     mv grass-${VERSION}/debian .
+     # create the package:
+     tar cvfzh grass-${VERSION}.tar.gz grass-${VERSION}/* --exclude=CVS
+     # restore src code location:
+     mv ./grass-${VERSION}/* .
+     rmdir ./grass-${VERSION}
+     # Calculating MD5 sum:
+     md5sum grass-${VERSION}.tar.gz > grass-${VERSION}.md5sum
+
+ o reset include/VERSION file to CVS version
+
+#example
+6
+0
+2cvs
+2005
+
+ o Store the source tarball in (use scp -p FILES grass:):
+     http://grass.itc.it/grass/grass$MAJOR$MINOR/source/
      along with associated files:
-          NEWS.html ChangeLog SUBMITTING REQUIREMENTS.html INSTALL
+     scp grass-$VERSION.* AUTHORS ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING neteler@grass.itc.it:www/grass$MAJOR$MINOR/source/
 
  o update web site to new version (HTML in Web-CVS)
       - main.inc
       - download/software.inc
-      - grass6x/index.php
+      - grass$MAJOR$MINOR/main.inc
       - devel/grasshist.html
-      - devel/grass_releases.html
-      - bugtracking/bugreport.html
-      
-     write announcement
-      - store in Web as announces/announce_grass6xx.html
+      - devel/grassreleases.html
+      - bugtracking/bugreport.html (not always)
 
+     write announcement
+      - store in Web as announces/announce_grass$MAJOR$MINOR$RELEASE.html
+
+ o upload user HTML manual in case of final release at
+     grass$MAJOR$MINOR/manuals/html$MAJOR$MINOR_user
 
 2. Tell others about it:
    - related announcement press release at:
 
    Our GRASS web site: /announces/
 
+   Our mailing lists:  http://grass.itc.it/mailman/listinfo/grass-announce
+                         <grass-announce@grass.itc.it>
+                       http://grass.itc.it/mailman/listinfo/grass5
+                         <grass5@grass.itc.it>
+                       http://grass.itc.it/community/support.php#int_list
+                         <grasslist@baylor.edu>
+
+   DebianGIS:          <pkg-grass-general@lists.alioth.debian.org>
+   FreeGIS:            <freegis-list@intevation.de>
+
    news:comp.infosystems.gis
    http://spatialnews.geocomm.com/submitnews.html (not free any more)
    http://freshmeat.net/projects/grass/?highlight=GRASS
-   http://www.linuxapps.com/?page=application&database=current&id=40
+   http://linuxtoday.com/contribute.php3
    http://www.newsforge.com/submit.pl
-   http://osx.macnn.com/ (email to news tips)
+   http://programming.newsforge.com/submit.pl
+   http://osx.macnn.com/    (email to news tips)
    http://www.gis-news.de/  (news@gismngt.de)
-   http://www.giscafe.com/   (link: submit material, needs registration)
-   http://www.geopoint.de/  (German GIS journal)
+   http://www.giscafe.com/  (link: submit material, needs registration)
    http://www.freegis.org
    http://www.directionsmag.com/pressreleases.php (click on 'Contact Us')
    http://www.gisdevelopment.net (click on 'Submit Press Release')
    http://www.gnu.org/directory/science/geography/grass.html
    http://www.kde-apps.org/content/show.php?content=19776
+   http://news.eoportal.org/cgi-bin/eoportal_header.pl?dw=psr&site=software&words=type
+   http://www.osdir.com/Downloads+index-req-viewsdownload-sid-206.phtml
 
-   ... anywhere else?
+   ... anywhere else? Please add here.
 

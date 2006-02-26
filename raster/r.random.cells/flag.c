@@ -2,6 +2,7 @@
  * $Id$
  */
 
+#include <stdlib.h>
 #include "flag.h"
 
 void FlagClearAll(flags)
@@ -23,7 +24,6 @@ FLAG *
 FlagCreate(nrows,ncols)
 int nrows, ncols;
 {
-	char *malloc(), *calloc();
 	unsigned char *temp;
 	FLAG *new_flag;
 	register int i;

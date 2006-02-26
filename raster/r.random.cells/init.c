@@ -10,7 +10,12 @@
 #undef DEBUG
 
 #undef MAIN
+#include <stdlib.h>
+#include <unistd.h>
 #include "ransurf.h"
+
+int FlagGet(FLAG *,int,int);
+int IsLegal (char *);
 
 FLAG *FlagCreate();
 

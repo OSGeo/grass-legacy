@@ -45,7 +45,7 @@ main (int argc, char *argv[])
     struct Flag *over_flag, *extend_flag, *formats_flag;
     char   buf[2000], namebuf[2000];
     char   *separator;
-    struct Key_Value *loc_proj_info, *loc_proj_units;
+    struct Key_Value *loc_proj_info = NULL, *loc_proj_units = NULL;
     struct Key_Value *proj_info, *proj_units;
     struct Cell_head cellhd, loc_wind;
     char   error_msg[8192];
@@ -114,7 +114,7 @@ main (int argc, char *argv[])
     layer_opt->type = TYPE_STRING;
     layer_opt->required = NO;
     layer_opt->multiple = YES;
-    layer_opt->description = "OGR layer name. If not given, available layers are printed + exit.\n"
+    layer_opt->description = "OGR layer name. If not given, all available layers are imported.\n"
 			   "\t\tESRI Shapefile: shapefile name\n"
 			   "\t\tMapInfo File: mapinfo file name";
 
@@ -241,7 +241,7 @@ main (int argc, char *argv[])
 
     /* Open OGR DSN */
     Ogr_ds = OGROpen( dsn_opt->answer, FALSE, NULL );
-    if( Ogr_ds == NULL ) G_fatal_error ("Cannot open data source");
+    if ( Ogr_ds == NULL ) G_fatal_error ("Cannot open data source: %s", dsn_opt->answer);
 
     /* Make a list of available layers */
     navailable_layers = OGR_DS_GetLayerCount(Ogr_ds);
@@ -383,12 +383,14 @@ main (int argc, char *argv[])
 		      "GRASS format for checking");
 
         /* Does the projection of the current location match the dataset? */
-        /* fetch LOCATION PROJ info */
-        loc_proj_info = G_get_projinfo();
-        loc_proj_units = G_get_projunits();
         /* G_get_window seems to be unreliable if the location has been changed */
         G__get_window ( &loc_wind, "", "DEFAULT_WIND", "PERMANENT");
-    
+        /* fetch LOCATION PROJ info */
+        if (loc_wind.proj != PROJECTION_XY) {
+            loc_proj_info = G_get_projinfo();
+            loc_proj_units = G_get_projunits();
+        }
+
         if( over_flag->answer )
         {
             cellhd.proj = loc_wind.proj;

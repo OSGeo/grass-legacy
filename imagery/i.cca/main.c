@@ -10,11 +10,12 @@
 
 */
 
-#define MAIN
-
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
+#define MAIN
+
 #include "imagery.h"
 #include "gmath.h"
 #include "globals.h"

@@ -9,6 +9,8 @@ FILE *Tmp_fd = NULL;
 char *Tmp_file = NULL;
 
 const float GS_BLANK=1.70141E+038;
+int getgrdhead (FILE *,struct Cell_head *);
+
 
 int 
 main (int argc, char *argv[])

@@ -102,6 +102,15 @@ r.in.bin ETOPO2.dos.bin out=ETOPO2min r=5400 c=10800 n=90 s=-90 w=-180 e=180 byt
 r.colors ETOPO2min rules=terrain
 </TT>
 
+<h3>TOPEX/SRTM30 PLUS</h3>
+The following is a sample call of <EM>r.in.bin</EM> to import 
+<a href="http://topex.ucsd.edu/WWW_html/srtm30_plus.html">SRTM30 PLUS</a> data:
+<P>
+<TT>
+r.in.bin -sb input=e020n40.Bathmetry.srtm output=e020n40_topex bytes=2 north=40 south=-10 east=60 west=20 r=6000 c=4800<br>
+r.colors e020n40_topex rules=etopo2
+</TT>
+
 
 <H2>SEE ALSO</H2>
 

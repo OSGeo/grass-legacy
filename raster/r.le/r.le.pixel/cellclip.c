@@ -22,7 +22,7 @@
 #include "pixel.h"
 #include "config.h"
 
-
+int center_is_not_null(DCELL **,DCELL **,int,int);
 
 extern struct CHOICE *choice;
 extern int	     finput;

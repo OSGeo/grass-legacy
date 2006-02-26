@@ -1,4 +1,7 @@
+#include <stdlib.h>
 #include "kappa.h"
+
+int collapse (long *,int);
 
 static int
 longcomp(const void *aa, const void *bb)

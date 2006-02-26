@@ -15,6 +15,11 @@
 #include "gis.h"
 #include "G3d.h"
 
+int G_read_grid3_timestamp (char *,char *, struct TimeStamp *);
+int G_remove_grid3_timestamp (char *);
+int G_write_grid3_timestamp (char *,struct TimeStamp *);
+
+
 int main (int argc, char *argv[])
 {
     struct Option *map, *date;

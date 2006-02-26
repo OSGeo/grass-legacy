@@ -33,7 +33,7 @@ set GRASSVERSION [read -nonewline $fp]
 close $fp
 
 #HTML help
-source $env(GISBASE)/docs/nviz/help.tcl
+source $env(GISBASE)/etc/help.tcl
 proc make_help_window { w } {
 
         frame $w
@@ -453,6 +453,14 @@ proc gisSetWindow {} {
                 cd $database
                 cd $location
                 file mkdir $mymapset
+                #generate default DB definition, create dbf subdirectory:
+                set varfp [open $mymapset/VAR "w"]
+                puts $varfp "DB_DRIVER: dbf"
+                puts $varfp "DB_DATABASE: \$GISDBASE/\$LOCATION_NAME/\$MAPSET/dbf/"
+                close $varfp
+                file attributes $mymapset/VAR -permissions u+rw,go+r
+                file mkdir $mymapset/dbf
+                #copy over the WIND definition:
                 file copy $mymapset/../PERMANENT/WIND $mymapset
                 file attributes $mymapset/WIND -permissions u+rw,go+r
                 .frame0.frameMS.listbox insert end $mymapset

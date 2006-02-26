@@ -88,6 +88,7 @@ int GS_new_light(void);
 void GS_setlight_position(int, float, float, float, int);
 void GS_setlight_color(int, float, float, float);
 void GS_setlight_ambient(int, float, float, float);
+void GS_getlight_position(int , float *, float *, float *, int *);
 void GS_lights_off(void);
 void GS_lights_on(void);
 void GS_switchlight(int, int);
@@ -435,6 +436,10 @@ void gsd_draw_cplane(int);
 
 /* From gsd_fonts.c */
 GLuint gsd_set_font(const char *);
+int gsd_get_txtwidth(char *, int );
+int gsd_get_txtheight(int);
+void do_label_display(GLuint , float *, char *);
+int get_txtxoffset();
 
 /* From gsd_img.c */
 int GS_write_rgb(char *);
@@ -450,6 +455,11 @@ void gs_put_label(char *, GLuint , int , unsigned long, int *);
 void gsd_remove_curr(void);
 void gsd_remove_all(void);
 void gsd_call_label(void);
+/* From gsd_legend.c */
+GLuint gsd_put_legend(char *, GLuint *, int , int *, float *, int *);
+void gsd_bgn_legend_viewport(GLint , GLint , GLint , GLint );
+void gsd_end_legend_viewport(void);
+int gsd_make_nice_number(float *);
 
 /* From gsd_objs.c */
 void gsd_plus(float *, int, float);
@@ -524,6 +534,11 @@ void gsd_bgnlist(int, int);
 void gsd_endlist(void);
 void gsd_calllist(int);
 void gsd_deletelist(GLuint, int);
+void gsd_getwindow(int *, int *, double *, double *);
+void gsd_calllists();
+int gsd_getViewport(GLint *, GLint *);
+
+int gsd_writeView(unsigned long **, unsigned int , unsigned int );
 
 /* From gsd_surf.c */
 int gsd_surf(geosurf *);

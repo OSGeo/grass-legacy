@@ -142,7 +142,7 @@ main (int argc, char *argv[])
 	fprintf (stderr, SEP );
 	
 	db_init_string (&stmt);
-	driver = db_start_driver_open_database ( Fi->driver, Fi->database );
+	driver = db_start_driver_open_database ( Fi->driver, Vect_subst_var(Fi->database, &Out) );
 	if ( driver == NULL ) {
 	    Vect_close (&Out);
 	    G_fatal_error ( "Cannot open database %s by driver %s", Fi->database, Fi->driver );
@@ -189,16 +189,19 @@ main (int argc, char *argv[])
 		            field[input], type[input]) , sizeof(ATTR) ); /* this may be more than necessary */
 
 	index = Vect_cidx_get_field_index (  &(In[input]), field[input] );
-	ncats = Vect_cidx_get_num_cats_by_index ( &(In[input]), index );
-	for ( i = 0; i < ncats; i++ ) {
-	    int cat, ctype, id;
 
-	    Vect_cidx_get_cat_by_index ( &(In[input]), index, i, &cat, &ctype, &id );
-	    if ( !(ctype & type[input]) ) continue;
-		  
-	    if ( attr[input].n == 0 || cat != attr[input].attr[attr[input].n-1].cat ) {
-		attr[input].attr[attr[input].n].cat = cat;
-		attr[input].n++;
+	if ( index >= 0 ) {
+	    ncats = Vect_cidx_get_num_cats_by_index ( &(In[input]), index );
+	    for ( i = 0; i < ncats; i++ ) {
+		int cat, ctype, id;
+
+		Vect_cidx_get_cat_by_index ( &(In[input]), index, i, &cat, &ctype, &id );
+		if ( !(ctype & type[input]) ) continue;
+		      
+		if ( attr[input].n == 0 || cat != attr[input].attr[attr[input].n-1].cat ) {
+		    attr[input].attr[attr[input].n].cat = cat;
+		    attr[input].n++;
+		}
 	    }
 	}
 
@@ -400,7 +403,7 @@ main (int argc, char *argv[])
 	Vect_map_add_dblink ( &Out, ofield[0], NULL, Fi->table, "cat", Fi->database, Fi->driver);
     }
 
-    fprintf ( stderr, "Buiding partial topology ...\n" );
+    fprintf ( stderr, "Building partial topology ...\n" );
     /* do not print output, because befor cleaning it is nonsense */
     Vect_build_partial ( &Out, GV_BUILD_BASE, NULL ); 
 
@@ -425,7 +428,8 @@ main (int argc, char *argv[])
     Vect_close ( &(In[0]) );
     Vect_close ( &(In[1]) );
     Vect_close (&Out);
-    
+
+    G_done_msg("");
     exit (0);
 }
 

@@ -12,12 +12,6 @@ creates new vector (points) map from database table containing coordinates.
          table=pat_stazioni x=east y=north z=quota key=id output=pat_stazioni
 </pre>
 <P>
-If an ID column is not not present in the PostgreSQL table,
-the 'object ID' of PostgreSQL can be used. In this case set:<br>
-<pre>
-  cat=OID
-</pre>
-<P>
 <p>
 
 <b>2) Creating a map from PostGIS:</b>
@@ -37,27 +31,19 @@ the 'object ID' of PostgreSQL can be used. In this case set:<br>
 <P>
 
 <b>3) Import of a points table (x, y, z) from DBF file to vector points map:</b>
-<P>
-The DBF file has to be copied into $MAPSET/dbf/ (to be created
-if not existing yet). Then the DBMI needs to be connected to
-this directory:
 
 <pre>
- #check current DB settings:
- db.connect -p
- #only needed, if not already defined:
- db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
+#create vector map from DBF table (here, 'idcol' contains unique row IDs, 'z' is optional):
+#the 'database' parameter is the directory where the DBF file is stored:
+v.in.db driver=dbf database=/home/user/tables/ table=pointsfile x=x y=y z=z \
+        key=idcol out=dtmpoints
 
- #create vector map from DBF table ('idcol' is containing unique row IDs):
- v.in.db table=pointsfile x=x y=y z=z key=idcol out=dtmpoints
-
- #check result:
- v.info dtmpoints
- v.info -c dtmpoints
+#check result:
+v.info dtmpoints
+v.info -c dtmpoints
 </pre>
 <P>
-If an ID column is missing in the DBF file, such a column with unique
-IDs has to be added beforehand.
+If an ID column is missing in the DBF file, it has to be added beforehand, e.g. with OpenOffice.
 
 <H2>AUTHOR</H2>
 <A HREF=mailto:blazek@itc.it>Radim Blazek</A>

@@ -43,6 +43,16 @@ then
 	exec g.parser "$0" "$@"
 fi
 
+#### check if we have awk
+if [ ! -x "`which awk`" ] ; then
+    echo "$PROG: awk required, please install awk/gawk first" 2>&1
+    exit 1
+fi
+
+# setting environment, so that awk works properly in all languages
+unset LC_ALL
+export LC_NUMERIC=C
+
 # Check the current status of the monitor
 monitorcheck=`d.mon -p|sed s/'No monitor currently selected for output'//`
 

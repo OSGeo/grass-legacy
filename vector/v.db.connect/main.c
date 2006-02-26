@@ -170,7 +170,7 @@ int main (int argc, char **argv)
         } /* end print */
         else /* columns */
         {
-          if ( (fi = Vect_get_dblink( &Map, field-1)) == NULL)
+          if ( (fi = Vect_get_field( &Map, field)) == NULL)
                G_fatal_error("Database connection not defined for layer <%d>", field);
           driver = db_start_driver(fi->driver);
           if (driver == NULL)
@@ -185,12 +185,14 @@ int main (int argc, char **argv)
           if(db_describe_table (driver, &table_name, &table) != DB_OK)
              G_fatal_error("Cannot open table <%s>", fi->table);
 
+          ncols = db_get_table_number_of_columns(table);
+          for (col = 0; col < ncols; col++) {
+	      fprintf (stdout,"%s|%s\n", db_sqltype_name(db_get_column_sqltype(db_get_table_column(table, col))), 
+		                         db_get_column_name(db_get_table_column(table, col)));
+	  }
+
           db_close_database(driver);
           db_shutdown_driver(driver);
-
-          ncols = db_get_table_number_of_columns(table);
-          for (col = 0; col < ncols; col++)
-	      fprintf (stdout,"%s|%s\n", db_sqltype_name(db_get_column_sqltype(db_get_table_column(table, col))), db_get_column_name(db_get_table_column(table, col)));
         }
       } /* end else num_dblinks */
     } /* end print/columns */

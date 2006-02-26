@@ -19,6 +19,7 @@
 #include "colors.h"
 #include "linegraph.h"
 #include <math.h>
+#include <stdlib.h>
 
 #define MAX(x,y) ((x) > (y) ? (x) : (y))
 #define MIN(x,y) ((x) < (y) ? (x) : (y))

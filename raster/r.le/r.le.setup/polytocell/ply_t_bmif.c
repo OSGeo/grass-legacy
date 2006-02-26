@@ -1,4 +1,7 @@
 /* @(#)ply_t_bmif.c	2.1   6/26/87 */
+#include <stdlib.h>
+#include <string.h>
+
 #define A(x)	fprintf(stderr,"%d\n", x)
 #include "ply_to_cll.h"
 #include <stdio.h>
@@ -9,6 +12,13 @@
 					sscanf (buff,"%1c %lf %lf %d\n", &type, &U_y, &U_x, &code)
 #define XADJ(x)	 (x * U_to_A_xconv + U_to_A_xadd) ;
 #define YADJ(y)	 (y * U_to_A_yconv + U_to_A_yadd) ;
+
+int set_limits(int,int);
+int find_area(double *,double *,int,struct element *,int *);
+int write_end_record(int,int,int,int);
+int save_area(struct element*,int,int);
+int do_line(double *,double *,int,int);
+int do_dots(double *,double *,int,int);
 
 struct element xy[MAX_VERTICIES] ;
 

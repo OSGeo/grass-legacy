@@ -6,6 +6,7 @@
 #undef DEBUG
 
 #undef MAIN
+#include <string.h>
 #include "ransurf.h"
 
 SaveMap( NumMap, MapSeed)

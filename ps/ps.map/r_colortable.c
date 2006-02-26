@@ -137,18 +137,8 @@ read_colortable (void)
 	    }
     }
 
-    if ( w > 0 ) { 
-        ct.width = w;
-    } else {
-        ct.width = 2 * ct.fontsize / 72.0 ;
-    }
-	
-    if ( h > 0 ) {
-        ct.height = h;
-    } else {
-        ct.height = 10 * ct.fontsize / 72.0 ;
-    }
-
+    ct.width = w;
+    ct.height = h;
     ct.color = color;
     ct.cols = cols;
 

@@ -1,5 +1,6 @@
 #include "gis.h"
 #include <math.h>
+#include "gmath.h"
 #include "globals.h"
 #include "local_proto.h"
 

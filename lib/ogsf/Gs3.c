@@ -6,6 +6,8 @@
     Bill Brown, USACERL  
     January 1993
 */
+#include <stdlib.h>
+#include <string.h>
 
 #include "gis.h"
 #include "bitmap.h"

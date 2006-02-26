@@ -40,7 +40,7 @@
 #% required : no
 #%end
 
-if  [ -z $GISBASE ] ; then
+if  [ -z "$GISBASE" ] ; then
  echo "You must be in GRASS GIS to run this program."
  exit 1
 fi   
@@ -49,6 +49,15 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
+#### check if we have awk
+if [ ! -x "`which awk`" ] ; then
+    echo "$PROG: awk required, please install awk/gawk first" 2>&1
+    exit 1
+fi
+
+# setting environment, so that awk works properly in all languages
+unset LC_ALL
+export LC_NUMERIC=C
 
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
@@ -73,14 +82,20 @@ print A, B, R, tot, F, mediaX, sdX, mediaY, sdY}' "$TMP" > "$TMP"b
 #send output to screen or text file
 if [ -z "$GIS_OPT_output" ] 
 then
-	RESULTADO = `cat "$TMP"b`
-        echo "y = a + b*x"
-        echo "           a, b: coefficients"
-        echo "a  b"
-	echo $RESULTADO[1]  $RESULTADO[2]
+	RESULTADO=`cat "$TMP"b`
+	echo "y = a + b*x"
+        echo "   a: offset"
+        echo "   b: gain"
+        echo "   R: sumXY - sumX*sumY/tot"
+        echo "   N: number of elements"
+        echo "   medX, medY: Medians"
+        echo "   sdX, sdY: Standard deviations"
+        echo "a  b  R  N  F medX  sdX  medY  sdY"
+        echo ${RESULTADO}
 else
         echo "y = a + b*x"
-        echo "   a, b: coefficients"
+        echo "   a: offset"
+        echo "   b: gain"
         echo "   R: sumXY - sumX*sumY/tot"
         echo "   N: number of elements"
         echo "   medX, medY: Medians"

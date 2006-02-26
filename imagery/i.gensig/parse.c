@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "gis.h"
 #include "imagery.h"
 #include "parms.h"

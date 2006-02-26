@@ -23,6 +23,7 @@ char *cancel_script = NULL;
 Tcl_Interp *cancel_interp;
 static GLuint legend_list = 0;
 
+
 /* this function is used as a hook to
  * call a particular script when the
  * cancel button is pressed during a draw

@@ -5,6 +5,7 @@
 #include "includes.h"
 #include "colors.h"
 #include "driver.h"
+#include "XDRIVER.h"
 
 static XImage *grimage;
 static int alloc;

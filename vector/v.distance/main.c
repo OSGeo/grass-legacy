@@ -37,8 +37,9 @@
 #define FROM_ALONG 6 /* distance to nearest point on 'from' along linear feature */
 #define TO_ALONG   7 /* distance to nearest point on 'to' along linear feature */
 #define DIST       8 /* minimum distance to nearest feature */
+#define TO_ANGLE   9 /* angle of linear feature in nearest point */
 
-#define END        9 /* end of list */
+#define END        10 /* end of list */
 
 /* Structure where are stored infos about nearest feature for each category */
 typedef struct {
@@ -47,6 +48,7 @@ typedef struct {
     int    to_cat;  /* category (to) */
     double from_x, from_y, to_x, to_y;    /* coordinates of nearest point */
     double from_along, to_along;    /* distance along a linear feature to the nearest point */
+    double to_angle; /* angle of linear feature in nearest point */
     double dist;  /* distance to nearest feature */
 } NEAR;
 
@@ -141,7 +143,7 @@ int main (int argc, char *argv[])
     upload_opt->type = TYPE_STRING;
     upload_opt->required = YES;
     upload_opt->multiple = YES;
-    upload_opt->options = "cat,dist,to_x,to_y,to_along";
+    upload_opt->options = "cat,dist,to_x,to_y,to_along,to_angle";
     upload_opt->description = "Values describing the relation between two nearest features:\n"
 	"\tcat - category of the nearest feature\n"
 	"\tdist - minimum distance to nearest feature\n"
@@ -150,8 +152,10 @@ int main (int argc, char *argv[])
 	"\tto_x - x coordinate of the nearest point on 'to' feature\n"
 	"\tto_y - y coordinate of the nearest point on 'to' feature\n"
      /* "\tfrom_along - distance to the nearest point on 'from' feature along linear feature\n" */
-	"\tto_along - distance to the nearest point on 'from' feature along linear feature";
-
+	"\tto_along - distance to the nearest point on 'from' feature along linear feature\n"
+	"\tto_angle - angle of linear feature in nearest point, counterclockwise from positive " 
+	              "x axis, in radians, which is between -PI and PI inclusive.";
+    
     column_opt = G_define_option();
     column_opt->key = "column";
     column_opt->type = TYPE_STRING;
@@ -212,6 +216,8 @@ int main (int argc, char *argv[])
 	    Upload[i].upload = TO_ALONG;
 	else if ( strcmp(upload_opt->answers[i], "dist") == 0 )
 	    Upload[i].upload = DIST;
+	else if ( strcmp(upload_opt->answers[i], "to_angle") == 0 )
+	    Upload[i].upload = TO_ANGLE;
 
 	i++;
     }
@@ -348,6 +354,7 @@ int main (int argc, char *argv[])
     if ( to_type & (GV_POINTS | GV_LINES) ) {
 	for ( fline = 1; fline <= nfrom ; fline++ ) {
 	    int tmp_tcat;
+	    double tmp_tangle, tangle;
 
 	    G_debug (3, "fline = %d", fline);
 	    ftype = Vect_read_line ( &From, FPoints, FCats, fline );
@@ -369,6 +376,8 @@ int main (int argc, char *argv[])
 
 		tseg = Vect_line_distance ( TPoints, FPoints->x[0], FPoints->y[0], 0, 0, 
 				   &tmp_tx, &tmp_ty, NULL, &tmp_dist, NULL, &tmp_talong);
+
+		Vect_point_on_line ( TPoints, tmp_talong, NULL, NULL, NULL, &tmp_tangle, NULL );
 
 		if ( tmp_dist > max ) continue; /* not in threshold */
 		
@@ -392,6 +401,7 @@ int main (int argc, char *argv[])
 		    near->to_x = tmp_tx;
 		    near->to_y = tmp_ty;    
 		    near->to_along = tmp_talong; /* 0 for points */
+		    near->to_angle = tmp_tangle;
 		    near->count++;
 		    count++;
 		} else { 
@@ -402,6 +412,7 @@ int main (int argc, char *argv[])
 			tx = tmp_tx;
 			ty = tmp_ty;
 			talong = tmp_talong;
+			tangle = tmp_tangle;
 		    }
 		}
 	    }
@@ -421,6 +432,7 @@ int main (int argc, char *argv[])
 		    near->to_x = tx;
 		    near->to_y = ty;    
 		    near->to_along = talong; /* 0 for points */
+		    near->to_angle = tangle;
 		}
 		near->count++;
 	    }
@@ -512,6 +524,7 @@ int main (int argc, char *argv[])
 		    near->to_x = tmp_tx;
 		    near->to_y = tmp_ty;    
 		    near->to_along = 0; /* nonsense for areas */
+		    near->to_angle = 0; /* not supported for areas */
 		    near->count++;
 		    count++;
 		} else if ( tarea == 0 || tmp_dist < dist ) {
@@ -538,6 +551,7 @@ int main (int argc, char *argv[])
 		    near->to_x = tx;
 		    near->to_y = ty;    
 		    near->to_along = 0; /* nonsense for areas */
+		    near->to_angle = 0; /* not supported for areas */
 		}
 		near->count++;
 	    }
@@ -575,6 +589,7 @@ int main (int argc, char *argv[])
 		case TO_Y:
 		case FROM_ALONG:
 		case TO_ALONG:
+		case TO_ANGLE:
 		    sprintf (buf2, "%s double precision", Upload[j].column );
 	    }
 	    db_append_string (&stmt, buf2);
@@ -593,7 +608,7 @@ int main (int argc, char *argv[])
 	ncatexist = db_select_int( driver, Fi->table, Fi->key, NULL, &catexist);
         G_debug (1, "%d cats selected from the table", ncatexist );	
     }
-    update_ok = update_err = update_exist = update_notexist = update_dupl = update_notfound;
+    update_ok = update_err = update_exist = update_notexist = update_dupl = update_notfound = 0;
 
     if ( !all ) count = nfcats;
     
@@ -656,6 +671,9 @@ int main (int argc, char *argv[])
 			case TO_ALONG:
 			    fprintf(stdout, "|%f", Near[i].to_along );
 			    break;
+			case TO_ANGLE:
+			    fprintf(stdout, "|%f", Near[i].to_angle );
+			    break;
 		    }
 		}
 		j++;
@@ -693,6 +711,9 @@ int main (int argc, char *argv[])
 			break;
 		    case TO_ALONG:
 			sprintf (buf2, " %f", Near[i].to_along );
+			break;
+		    case TO_ANGLE:
+			sprintf (buf2, " %f", Near[i].to_angle );
 			break;
 		}
 		db_append_string (&stmt, buf2);
@@ -755,6 +776,9 @@ int main (int argc, char *argv[])
 			    break;
 			case TO_ALONG:
 			    sprintf (buf2, " %f", Near[i].to_along );
+			    break;
+			case TO_ANGLE:
+			    sprintf (buf2, " %f", Near[i].to_angle );
 			    break;
 		    }
 		    db_append_string (&stmt, buf2);

@@ -262,7 +262,7 @@ proc do_label {dlg optn desc type reqd} {
 	set suf $opt($dlg,suf)
 
 	set req [expr {$reqd ? "required" : "optional"}]
-	label $suf.lab$optn -text "$desc ($type, $req):" -anchor w -justify left
+	label $suf.lab$optn -text "$desc ($type; $req):" -anchor w -justify left
 	pack $suf.lab$optn -side top -fill x
 }
 

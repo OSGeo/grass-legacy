@@ -1,6 +1,4 @@
 /*
-* $Id$
-*
 * Copyright (C) 2000 by the GRASS Development Team
 * Author: Bob Covill <bcovill@tekmap.ns.ca>
 * 
@@ -100,7 +98,7 @@ int main(int argc, char *argv[])
     parm.dist->key = "dist";
     parm.dist->type = TYPE_DOUBLE;
     parm.dist->required = YES;
-    parm.dist->description = "Camera layback distance";
+    parm.dist->description = "Camera layback distance (in map units)";
 
     parm.ht = G_define_option();
     parm.ht->key = "ht";

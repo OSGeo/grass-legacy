@@ -16,14 +16,7 @@ extern void create_cb();
 extern void reshape_cb();
 extern void display_cb();
 
-  /* added 3-12-99 to conform with 8.0.4 */
-/*
- * The following variable is a special hack that is needed in order for
- * Sun shared libraries to be used for Tcl.
-*/
-
-extern int matherr();
-int *tclDummyMathPtr = (int *) matherr;
+static void RunScripts(ClientData);
 
 /*
  *----------------------------------------------------------------------
@@ -39,7 +32,7 @@ int *tclDummyMathPtr = (int *) matherr;
  *----------------------------------------------------------------------
  */
 
-static void RunScripts(ClientData clientData)
+void RunScripts(ClientData clientData)
 {
     Tcl_GlobalEval(clientData, "PlayNextLine");
 }

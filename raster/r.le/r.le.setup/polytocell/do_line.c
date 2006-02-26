@@ -1,27 +1,9 @@
 /* @(#)do_line.c	2.2   8/31/87 */
 #include "ply_to_cll.h"
 
-do_line(xarray, yarray, num_verticies, category )
-	double xarray[], yarray[] ;
-	int num_verticies ;
-	int category ;
-{
-	int node ;
+int save_line(int,int,int,int,int);
 
-	num_verticies-- ;
-
-	line_initialize() ;
-	for (node=0; node<num_verticies; node++)
-	{
-		line( category, 
-			(int)(xarray[node]),
-			(int)(yarray[node]+.5),
-			(int)(xarray[node+1]),
-			(int)(yarray[node+1]+.5) );
-	}
-	line_flush() ;
-}
-
+int write_record(int , float, float, int ) ;
 line(cat, x0, y0, x1, y1)
 	int cat ;
 	register x0, y0;
@@ -181,3 +163,25 @@ save_line(row, col1, col2, dum, cat)
 		}
 	}
 }
+
+do_line(xarray, yarray, num_verticies, category )
+	double xarray[], yarray[] ;
+	int num_verticies ;
+	int category ;
+{
+	int node ;
+
+	num_verticies-- ;
+
+	line_initialize() ;
+	for (node=0; node<num_verticies; node++)
+	{
+		line( category, 
+			(int)(xarray[node]),
+			(int)(yarray[node]+.5),
+			(int)(xarray[node+1]),
+			(int)(yarray[node+1]+.5) );
+	}
+	line_flush() ;
+}
+

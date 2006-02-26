@@ -22,6 +22,8 @@
 ************************************************************/
 
 #include "setup.h"
+#include "display.h"
+#include "raster.h"
 #include "config.h"
 
 

@@ -55,7 +55,10 @@ int execute_random (struct rr_state *theState)
     }
     if (theState->outsites)
     {
-        Vect_open_new (&Out, theState->outsites, 0);
+        if (theState->z_geometry)
+	  Vect_open_new (&Out, theState->outsites, 1);
+	else
+	  Vect_open_new (&Out, theState->outsites, 0);
         Vect_hist_command ( &Out );
 
         fi = Vect_default_field_info ( &Out, 1, NULL, GV_1TABLE );
@@ -96,7 +99,7 @@ int execute_random (struct rr_state *theState)
         if (theState->outsites && theState->outraster)
                 fprintf (stderr, "and ");
         if (theState->outsites)
-                fprintf (stderr, "site file [%s] ", theState->outsites);
+                fprintf (stderr, "vector file [%s] ", theState->outsites);
         fprintf (stderr, "... ");
         G_percent (0, theState->nRand, 2);
     }
@@ -105,7 +108,7 @@ int execute_random (struct rr_state *theState)
     nc = (theState->use_nulls) ? theState->nCells : 
             theState->nCells - theState->nNulls ;
     nt = theState->nRand;
-    cat = 0;
+    cat = 1;
     for (row = 0; row < nrows && nt ; row++)
     {
         if (G_get_raster_row (infd, theState->buf.data.v, row, theState->buf.type) < 0)
@@ -140,8 +143,11 @@ int execute_random (struct rr_state *theState)
                     
                     val = cell_as_dbl(&theState->buf, col);
 
-                    Vect_append_point ( Points, x, y, 0.0 );
-                    Vect_cat_set (Cats, 1, cat++);
+                    if (theState->z_geometry)
+		      Vect_append_point ( Points, x, y, val );
+		    else
+		      Vect_append_point ( Points, x, y, 0.0 );
+                    Vect_cat_set (Cats, 1, cat);
 
                     Vect_write_line ( &Out, GV_POINT, Points, Cats );
 
@@ -150,6 +156,8 @@ int execute_random (struct rr_state *theState)
                     
                     if (db_execute_immediate (driver, &sql) != DB_OK )
                         G_fatal_error ( "Cannot insert new row: %s", db_get_string ( &sql )  );
+
+                    cat++;
                 }
                 G_percent ((theState->nRand - nt), theState->nRand, 2);
             }
@@ -237,9 +245,8 @@ void set_to_null (struct RASTER_MAP_PTR *buf, int col)
 }
 
 int
-is_null_value(buf, col)
-    struct  RASTER_MAP_PTR buf;
-    int     col;
+is_null_value (struct RASTER_MAP_PTR buf, int col)
+
 {
     switch(buf.type)
     {

@@ -1,3 +1,4 @@
+#include <string.h>
 #include "kappa.h"
 
 static reclass_text ();

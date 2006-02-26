@@ -1,4 +1,5 @@
 #define MAIN
+#include <stdlib.h>
 #include <unistd.h>
 #include "Gwater.h"
 #undef MAIN

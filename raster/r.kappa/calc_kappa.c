@@ -1,4 +1,7 @@
+#include <stdlib.h>
 #include "kappa.h"
+long count_sum (int *,int *);
+int prt_label();
 
 calc_kappa()
 {

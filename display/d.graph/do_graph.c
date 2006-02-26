@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "options.h"
 #include "display.h"
 #include "raster.h"

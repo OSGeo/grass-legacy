@@ -1,5 +1,6 @@
 /* main.c */
 #include <stdio.h>
+#include <stdlib.h>
 #include "imagery.h"
 #include "orthophoto.h"
 #include "local_proto.h"

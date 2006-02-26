@@ -1,4 +1,5 @@
 #define GLOBAL
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <signal.h>

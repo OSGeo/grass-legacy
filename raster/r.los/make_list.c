@@ -7,6 +7,7 @@
 /*								*/
 /****************************************************************/	
 
+#include <stdlib.h>
 #include <math.h>
 #include "segment.h"
 #include "gis.h"

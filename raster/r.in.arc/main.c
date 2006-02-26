@@ -1,6 +1,8 @@
 #include "config.h"
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
 #endif
 #include "gis.h"
 #include "local_proto.h"

@@ -82,10 +82,16 @@ int main (int argc, char *argv[])
 	if ( !col->answer )
     	    G_fatal_error ("col parameter missing (or use value parameter)" );
     } else if ( use_opt->answer[0] == 'c' ) {
+	if ( col->answer )
+    	    G_fatal_error ("Column parameter cannot be combined with use of category values option" );
 	use = USE_CAT;
     } else if ( use_opt->answer[0] == 'v' ) {
+	if ( col->answer )
+    	    G_fatal_error ("Column parameter cannot be combined with use of value option" );
 	use = USE_VAL;
     } else if ( use_opt->answer[0] == 'z' ) {
+	if ( col->answer )
+    	    G_fatal_error ("Column parameter cannot be combined with use of z coordinate" );
 	use = USE_Z;
     }
 

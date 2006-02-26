@@ -6,6 +6,7 @@
 #undef DEBUG
 
 #undef MAIN
+#include <stdlib.h>
 #include "ransurf.h"
 
 CalcSurface()

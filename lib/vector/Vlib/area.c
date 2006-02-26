@@ -223,7 +223,7 @@ Vect_get_isle_boundaries (
 {
   int i, line;
   struct Plus_head *Plus;
-  P_AREA *Isle;
+  P_ISLE *Isle;
   
   G_debug ( 3, "Vect_get_isle_boundaries(): isle = %d", isle );	
 
@@ -454,7 +454,7 @@ Vect_get_area_cat ( struct Map_info *Map, int area, int field )
     else
 	Vect_reset_cats ( Cats );
 
-    if ( Vect_get_area_cats ( Map, area, Cats ) == 1 ) {
+    if ( Vect_get_area_cats ( Map, area, Cats ) == 1 || Cats->n_cats == 0) {
 	return -1;
     }
     
@@ -464,6 +464,6 @@ Vect_get_area_cat ( struct Map_info *Map, int area, int field )
 	}
     }
      
-    return 1;
+    return -1;
 }
 

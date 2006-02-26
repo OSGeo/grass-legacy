@@ -8,6 +8,8 @@
  * on RGB dump 
  */
 
+#include <stdlib.h>
+
 #include "image.h"
 #include "gstypes.h"
 

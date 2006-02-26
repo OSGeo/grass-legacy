@@ -5,6 +5,14 @@ according to the formula y = a + b*x, where x and y represent raster maps.
 Optionally saves regression coefficients to an ASCII file.
 <br>
 
+<H2>EXAMPLE</H2>
+
+Comparison of the old and the new DEM in Spearfish:
+<PRE>
+g.region rast=elevation.10m
+r.regression.line elevation.dem map2=elevation.10m
+</PRE>
+
 <H2>AUTHOR</H2>
 
 Dr. Agustin Lobo - alobo@ija.csic.es<BR>

@@ -112,9 +112,9 @@ is less than or equal to zero, the default vertical location is used.
 
 <DD>The size of the PostScript font in 1/72 inch.  The default is 10.
 
-</DT>
+</DD>
 <P>
-
+<BR><BR>
 <H2>colortable</H2>
 
 Prints the color table for the raster map layer anywhere on the page.
@@ -234,11 +234,9 @@ The user may also specify the <B>scale</B> of the icon
 (default is 1.0), the <B>rotate</B> i.e. rotation in degrees
 (default is 0)
 and whether the point is to be <B>masked</B>
-by the current mask. (See manual entry for <EM>
-<A HREF="r.mask.html">r.mask</A>
-</EM> for more
-information on the mask.)
-
+by the current mask.
+<!-- (See manual entry for <EM><A HREF="r.mask.html">r.mask</A></EM> 
+for more information on the mask.) -->
 <P>
 
 This example would place a EPS file ./epsf/logo.eps
@@ -399,7 +397,7 @@ EXAMPLE:
 
 Selects a labels file for output (see manual entry for
 <EM>
-<A HREF="p.labels.html">p.labels</A>
+<A HREF="v.label.html">v.label</A>
 ).</EM>
 <PRE>
 USAGE:	<B>labels</B>  labelfile|<EM>list</EM>
@@ -416,6 +414,7 @@ towns on the map.
 <PRE>
 EXAMPLE:	
 	<B>labels</B> town.names
+	<B>end</B>
 </PRE>
 <P>
 
@@ -438,12 +437,9 @@ The user may also specify line
 <B>color</B>,
 <B>width</B>
 in pixels (accepts decimal points [floating points] as well as integers),
-and if the line is to be
-<B>masked</B>
-by the current mask. (See manual entry for <EM>
-<A HREF="r.mask.html">r.mask</A>
-</EM> for more
-information on the mask.)
+and if the line is to be <B>masked</B> by the current mask.
+<!-- (See manual entry for <EM><A HREF="r.mask.html">r.mask</A>
+</EM> for more information on the mask.) -->
 <P>
 
 This example would draw a yellow line from the point x=10% y=80%
@@ -618,11 +614,9 @@ coordinates or by using percentages of the geographic region.
 The user may also specify the point <B>color</B>,
 the <B>size</B> is size of symbol in point 
 and whether the point is to be <B>masked</B>
-by the current mask. (See manual entry for <EM>
-<A HREF="r.mask.html">r.mask</A>
-</EM> for more
-information on the mask.)
-
+by the current mask.
+<!-- (See manual entry for <EM> <A HREF="r.mask.html">r.mask</A>
+</EM> for more information on the mask.) -->
 <P>
 
 This example would place a purple diamond (from icon file
@@ -742,12 +736,9 @@ by using percentages of the geographic region.
 The user may also specify line
 <B>color</B>, fill color <B>fcolor</B>, <B>width</B>
 in pixels (accepts decimal points [floating points] as well as integers),
-and if the rectangle is to be
-<B>masked</B>
-by the current mask. (See manual entry for <EM>
-<A HREF="r.mask.html">r.mask</A>
-</EM> for more
-information on the mask.)
+and if the rectangle is to be <B>masked</B> by the current mask.
+<!-- (See manual entry for <EM><A HREF="r.mask.html">r.mask</A></EM>
+for more information on the mask.) -->
 <P>
 
 This example would draw a yellow rectangle filled by green from the point x=10% y=80%
@@ -853,7 +844,7 @@ The scale can be selected either as:
 
 <DD>the number of miles per inch, e.g. 1 inch equals 4 miles.
 
-</DT>
+</DD>
 
 <P>
 
@@ -1084,10 +1075,9 @@ The user can specify:
 (accepts decimal points [floating points] as well as integers);
 <P>
 <B>masked</B> - whether or not the raster map layer is to be masked
-by the current mask 
-(see manual entry <EM>
-<A HREF="r.mask.html">r.mask</A>
-</EM> for more information on the mask);
+by the current mask;
+<!-- (see manual entry <EM><A HREF="r.mask.html">r.mask</A></EM>
+for more information on the mask) -->
 <P>
 <B>cats</B> - which categories should be plotted (default is all);
 <P>
@@ -1121,7 +1111,7 @@ in pattern file.
 
 <PRE>
 EXAMPLE:	
-	<B>vector</B> forest
+	<B>vareas</B> forest
 	<B>color</B> blue
 	<B>width</B> 1
 	<B>masked</B> y
@@ -1179,10 +1169,9 @@ used in legend;
 <B>ref</B> (experimental) - line justification. 
 <P>
 <B>masked</B> - whether or not the raster map layer is to be masked
-by the current mask 
-(see manual entry <EM>
-<A HREF="r.mask.html">r.mask</A>
-</EM> for more information on the mask);
+by the current mask;
+<!-- (see manual entry <EM><A HREF="r.mask.html">r.mask</A></EM>
+for more information on the mask); -->
 <P>
 <B>style</B> - the line style allows the vectors
 to be dashed in different patterns.  This is done by typing a
@@ -1240,7 +1229,7 @@ USAGE:	<B>vpoints</B> vector
 </PRE>
 The user may specify the
 the <B>color</B> of the sites (see section on NAMED COLORS below);
-the <B>eps</B> Encapsulate Postscript file to be used to represent the presence of a site;
+the <B>eps</B> Encapsulated Postscript file to be used to represent the presence of a site;
 If <B>$</B> is used in EPS file path it is replaced by category number. 
 the <B>size</B> of the icon (number of times larger than the size it is in
 the icon file);

@@ -270,7 +270,7 @@ int IL_vector_input_data_2d (
 
   fprintf (stderr, "\n");
   if (OUTRANGE > 0)
-    fprintf (stderr, "Warning: there are points outside specified region--ignored %d points\n", OUTRANGE);
+    fprintf (stderr, "Warning: there are points outside specified 2D/3D region--ignored %d points\n", OUTRANGE);
   if (npoint > 0)
     fprintf (stderr, "Warning: ignoring %d points -- too dense\n", npoint);
   npoint = k - npoint - OUTRANGE;
@@ -298,7 +298,7 @@ int IL_vector_input_data_2d (
 
   fprintf (stdout, "\n");
   fprintf (stdout, "The number of points from vector file is %d\n", k);
-  fprintf (stdout, "The number of points outside of region %d\n", OUTRANGE);
+  fprintf (stdout, "The number of points outside of 2D/3D region %d\n", OUTRANGE);
   fprintf (stdout, "The number of points being used is %d\n", npoint);
   fflush(stdout);
   *n_points = npoint;

@@ -40,12 +40,6 @@ int	fd_out,			/* File descriptor of output raster     */
 double	H;			/* Hausdorff-Besickovitch dimension.	*/
 
 
-/* jacobi.c */
-#define MC 50
-extern char outputfile[50];
-extern char groupname[50], subgroup[50], signame[50];
-extern struct Command_keys Command_keys[];
-
 /* del2g.c */
  /* fft constants */
 #define FORWARD 1

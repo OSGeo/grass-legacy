@@ -24,7 +24,8 @@
 #include <stdlib.h>
 #include "setup.h"
 #include "config.h"
-
+#include "display.h"
+#include "raster.h"
 
 
 int  tag = 0;

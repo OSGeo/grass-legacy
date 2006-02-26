@@ -2,6 +2,9 @@
 #include "dbmi.h"
 #include "glocale.h"
 
+int print_priv ();
+int print_column_definition(dbColumn *);
+
 int
 print_table_definition(table)
     dbTable *table;

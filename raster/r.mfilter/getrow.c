@@ -1,7 +1,7 @@
-#include "gis.h"
+#include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
-#include <unistd.h>
+#include "gis.h"
 #include "glob.h"
 
 int getmaprow (int fd,CELL *buf,int row,int len)

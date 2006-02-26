@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "glob.h"
 #include "local_proto.h"
 

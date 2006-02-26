@@ -216,6 +216,7 @@ main (int argc, char *argv[])
 	    if ( !(Vect_read_line(&(In[0]), APoints, NULL, aline) & type[0]) ) continue;
 
 	    Vect_get_line_box ( &(In[0]), aline, &abox );
+	    abox.T = PORT_DOUBLE_MAX; abox.B = -PORT_DOUBLE_MAX;
 
 	    /* Check if this line overlaps any feature in B */
 
@@ -287,6 +288,7 @@ main (int argc, char *argv[])
 
 	    if ( Vect_get_area_cat(&(In[0]), aarea, field[0]) < 0 ) continue;
 	    Vect_get_area_box ( &(In[0]), aarea, &abox );
+	    abox.T = PORT_DOUBLE_MAX; abox.B = -PORT_DOUBLE_MAX;
 
 	    /* x Lines in B */
 	    if ( type[1] & (GV_POINTS | GV_LINES) ) {

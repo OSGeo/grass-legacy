@@ -428,6 +428,9 @@ int G_edit_history(struct History *);
 int G_tqli(double [], double [], int, double **);
 void G_tred2(double **, int, double [], double []);
 
+/* endian.c */
+int G_is_little_endian(void);
+
 /* env.c */
 char *G_getenv(char *);
 char *G_getenv2(char *, int);

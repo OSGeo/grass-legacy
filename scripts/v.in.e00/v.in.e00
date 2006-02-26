@@ -9,7 +9,7 @@
 # PURPOSE:      Import E00 data into a GRASS vector map
 #		Imports single and split E00 files (.e00, .e01, .e02 ...)
 #
-# COPYRIGHT:    (c) 2004 GDF Hannover bR, http://www.gdf-hannover.de
+# COPYRIGHT:    (c) 2004, 2005 GDF Hannover bR, http://www.gdf-hannover.de
 #
 #               This program is free software under the GNU General Public
 #               License (>=v2). Read the file COPYING that comes with GRASS
@@ -49,17 +49,24 @@
 #% required : no
 #%end
 
-
+if  [ -z "$GISBASE" ] ; then
+    echo "You must be in GRASS GIS to run this program."
+ exit 1
+fi   
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-
-if test "$GISBASE" = ""; then
- echo "You must be in GRASS GIS to run this program." >&2
- exit 1
+#### check if we have awk
+if [ ! -x "`which awk`" ] ; then
+    echo "$PROG: awk required, please install awk/gawk first" 2>&1
+    exit 1
 fi
+
+# setting environment, so that awk works properly in all languages
+unset LC_ALL
+export LC_NUMERIC=C
 
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
@@ -84,14 +91,6 @@ if [ "$E00CONV" = "" ] ; then
     exit 1
 fi
 
-#### check if we have awk
-AWK=`which awk`
-if [ "$AWK" = "" ] ; then
-    echo "$PROG: awk required, please install awk/gawk first" 2>&1
-    exit 1
-fi
-
-
 #### trap ctrl-c so that we can clean up tmp
 #### take care to define ${TMP}:
 #trap 'rm -f ${TMP}' 2 3 15
@@ -100,6 +99,8 @@ if [ -n "$GIS_OPT_file" ] ; then
     E00NAME=`basename $GIS_OPT_file .e00`
     # to avoid CAPs problem:
     E00NAME=`basename $E00NAME .E00`
+    # avcimport only accepts 13 chars:
+    E00SHORTNAME="`echo $E00NAME | cut -b1-13`"
 fi
 
 #check if this is a split E00 file (.e01, .e02 ...):
@@ -134,6 +135,21 @@ fi
 
 ### do import
 
+#make a temporary directory
+TMPDIR="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMPDIR" ] ; then
+    echo "ERROR: unable to create temporary files" 1>&2
+    exit 1
+fi
+
+rm -f "$TMPDIR"
+mkdir "$TMPDIR"
+
+install -m 644 $E00NAME.e* $E00NAME.E* "$TMPDIR" 2>/dev/null
+
+#change to temporary directory to later avoid removal problems (rm -r ...)
+cd "$TMPDIR"
+
 #check for binay E00 file (we can just check if import fails):
 #avcimport doesn't set exist status :-(
 
@@ -148,27 +164,30 @@ if [ $MERGING -eq 1 ] ; then
   fi
 fi
 
-avcimport $GIS_OPT_file $E00NAME 2>&1 | grep 'Error parsing'
+echo "An error may appear next which will be ignored..."
+avcimport $GIS_OPT_file $E00SHORTNAME 2>/dev/null >/dev/null
 if [ $? -eq 1 ] ; then
    echo "E00 ASCII found and converted to Arc Coverage in current directory"
 else
    echo "E00 Compressed ASCII found. Will uncompress first..."
-   rm -rf $E00NAME info
+   rm -rf $E00SHORTNAME info
    e00conv $GIS_OPT_file $E00TMP.e00
    echo "...converted to Arc Coverage in current directory"
-   avcimport $E00TMP.e00 $E00NAME 2>/dev/null
+   avcimport $E00TMP.e00 $E00SHORTNAME 2>/dev/null
 fi
 
 ## let's import...
 ## point
 
+#SQL name fix:
+NAME=`echo $NAME | sed 's+-+_+g'`
 
 if [ "$GIS_OPT_type" = "point" ] ; then
-        echo "Importing..."
-        v.in.ogr -o dsn=$E00NAME layer=LAB type=point output=$NAME
+        echo "Importing points..."
+        v.in.ogr -o dsn=$E00SHORTNAME layer=LAB type=point output=$NAME
 	if [ $? -eq 1 ] ; then
    	echo "An error occurred. Stop."
-   	rm -rf $E00TMP.e00 $E00NAME info 2>&1 > /dev/null
+   	rm -rf $E00TMP.e00 $E00SHORTNAME info 2>&1 > /dev/null
    	exit 1
 	fi
 fi
@@ -176,11 +195,11 @@ fi
 ## line
 
 if [ "$GIS_OPT_type" = "line" ] ; then
-        echo "Importing..."
-        v.in.ogr -o dsn=$E00NAME layer=ARC type=line output=$NAME
+        echo "Importing lines..."
+        v.in.ogr -o dsn=$E00SHORTNAME layer=ARC type=line output=$NAME
 	if [ $? -eq 1 ] ; then
    	echo "An error occurred. Stop."
-   	rm -rf $E00TMP.e00 $E00NAME info 2>&1 > /dev/null
+   	rm -rf $E00TMP.e00 $E00SHORTNAME info 2>&1 > /dev/null
    	exit 1
 	fi
 fi
@@ -189,11 +208,12 @@ fi
 
 
 if [ "$GIS_OPT_type" = "area" ] ; then
-        echo "Importing..."
-        v.in.ogr -o dsn=$E00NAME layer=LAB,ARC type=centroid,boundary output=$NAME
+        echo "Importing areas..."
+        # we must reconstruct topology and cleanup polygons:
+        v.in.ogr -o dsn=$E00SHORTNAME layer=LAB,ARC type=centroid,boundary output=$NAME
 	if [ $? -eq 1 ] ; then
    	echo "An error occurred. Stop."
-   	rm -rf $E00TMP.e00 $E00NAME info 2>&1 > /dev/null
+   	rm -rf $E00TMP.e00 $E00SHORTNAME info 2>&1 > /dev/null
    	exit 1
 	fi
 fi
@@ -202,7 +222,10 @@ echo ""
 echo "Imported $GIS_OPT_type vector map <$NAME>."
 
 #### clean up the mess
-rm -rf $E00TMP.e00 $E00NAME info $E00NAME.cat.$E00TMP.e00 2>&1 > /dev/null
+rm -f "$TMPDIR"/$E00NAME.e* "$TMPDIR"/$E00NAME.E*
+rm -rf $E00TMP.e00 $E00SHORTNAME info $E00NAME.cat.$E00TMP.e00 2>&1 > /dev/null
+cd ..
+rmdir "$TMPDIR"
 
 #### end
 echo 2>&1

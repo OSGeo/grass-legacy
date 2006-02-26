@@ -20,7 +20,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "gis.h"
+#include "raster.h"
+#include "display.h"
 #include "config.h"
 #include "r.le.trace.h"
 
@@ -31,6 +34,7 @@ PATCH 			*patch_list = NULLPTR;
 FILE  			*fp;
 
 
+void user_input(int, char **);
 
 				/* MAIN PROGRAM */
 
@@ -75,7 +79,7 @@ char *argv[];
     bot = t0 + (r0 - l0) / Rw_l; 
   }
 
-  D_setup();
+  D_setup(0);
   D_new_window("a", t0, bot, l0, right);
   D_set_cur_wind("a");
   D_show_window(D_translate_color("green"));

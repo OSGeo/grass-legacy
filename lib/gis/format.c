@@ -174,9 +174,6 @@ int G__write_row_ptrs(int fd)
 
     lseek(fd, 0L, 0);
 
-    if (nbytes > 4 && fcb->row_ptr[nrows] <= 0xffffffff)
-	nbytes = 4;
-
     len = (nrows + 1) * nbytes + 1;
     b = buf = G_malloc(len);
     *b++ = nbytes;

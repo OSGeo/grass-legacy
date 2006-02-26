@@ -1,5 +1,6 @@
 #define MAIN
 
+#include <stdlib.h>
 #include <string.h>
 #include "gis.h"
 #include "globals.h"
@@ -86,6 +87,7 @@ int main( int argc, char **argv)
 
 	openfiles(rowbuffer);
 	for (i=0; i<rows; i++) {
+		G_percent(i, rows, 2);
 		/* read in a row from each cell map */
 		for (band=0; band<NBANDS; band++) {
 			if(G_get_map_row(fd_input[band], rowbuffer[band], i) < 0)

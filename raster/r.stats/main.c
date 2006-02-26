@@ -9,7 +9,8 @@ int main (int argc, char *argv[])
 {
     char *to_screen = " output to screen ";
     int *fd;
-    int i;
+    char **names;
+    char **ptr;
     char *name;
     char *mapset;
 /* flags */
@@ -32,7 +33,6 @@ int main (int argc, char *argv[])
 	struct GModule *module;
     struct
     {
-	struct Flag *A ;   /* print averaged values instead of intervals */
 	struct Flag *a ;   /* area */
 	struct Flag *c ;   /* cell counts */
 	struct Flag *p ;   /* percents */
@@ -121,10 +121,6 @@ int main (int argc, char *argv[])
     flag.one->key         = '1' ;
     flag.one->description = _("One cell (range) per line" );
 
-    flag.A = G_define_flag() ;
-    flag.A->key         = 'A' ;
-    flag.A->description = _("Print averaged values instead of intervals") ;
-
     flag.a = G_define_flag() ;
     flag.a->key         = 'a' ;
     flag.a->description = _("Print area totals") ;
@@ -188,12 +184,11 @@ int main (int argc, char *argv[])
     sscanf(option.nsteps->answer, "%d", &nsteps);
     if(nsteps <= 0)
     {
-         G_warning("nsteps must be greater than zero; using nsteps=255");
+         G_warning(_("nsteps must be greater than zero; using nsteps=255"));
 	 nsteps = 255;
     }
     cat_ranges = flag.C->answer;
 
-    averaged = flag.A->answer;
     raw = flag.r->answer;
     as_int = flag.i->answer;
     nrows = G_window_rows();
@@ -239,16 +234,14 @@ int main (int argc, char *argv[])
     }
 
 /* open all cell files */
-    for (i = 0; name = option.cell->answers[i]; i++)
+    names = option.cell->answers;
+    ptr = option.cell->answers;
+    for (; *ptr != NULL; ptr++)
     {
-	char msg[100];
-
-	mapset = G_find_cell (name, "");
+	name = *ptr;
+	mapset = G_find_cell2 (name, "");
 	if (!mapset)
-	{
-	    sprintf (msg,"%s: [%s] not found", G_program_name(), name);
-	    G_fatal_error (msg);
-	}
+	    G_fatal_error (_("%s: [%s] not found"), G_program_name(), name);
 	fd = (int *) G_realloc (fd, (nfiles+1) * sizeof(int));
         is_fp = (int *) G_realloc (is_fp, (nfiles+1) * sizeof(int));
         DMAX = (DCELL *) G_realloc (DMAX, (nfiles+1) * sizeof(DCELL));
@@ -263,17 +256,14 @@ int main (int argc, char *argv[])
 	{
 	    is_fp[nfiles] = 0;
 	    if(cat_ranges || nsteps != 255)
-	    {
-	         sprintf(msg, "%s: -i means read %s as integer! -C flag and/or nsteps option will be ignored", G_program_name(),name);
-	         G_warning(msg);
-            }
+	         G_warning(_("%s: -i means read %s as integer! -C flag and/or nsteps option will be ignored"), G_program_name(),name);
         }
 	if (with_labels || (cat_ranges && is_fp[nfiles])) 
 	{
 	    labels = (struct Categories *)
 		   G_realloc (labels, (nfiles+1) * sizeof(struct Categories));
-	    if (G_read_cats (name, mapset, &labels[i]) < 0)
-		G_init_cats((CELL) 0, "", &labels[i]);
+	    if (G_read_cats (name, mapset, &labels[nfiles]) < 0)
+		G_init_cats((CELL) 0, "", &labels[nfiles]);
 	}
 	if(is_fp[nfiles])
 	/* floating point map */
@@ -281,25 +271,18 @@ int main (int argc, char *argv[])
 	   G_quant_init(&q);
 	   if(cat_ranges)
 	   {
-	      if(! G_quant_nof_rules (&labels[i].q))
+	      if(! G_quant_nof_rules (&labels[nfiles].q))
 	      {
-	         sprintf(msg, "%s: cats for %s are either missing or have no explicit labels. Using nsteps=%d", G_program_name(),name, nsteps);
-	         G_warning(msg);
+	         G_warning(_("%s: cats for %s are either missing or have no explicit labels. Using nsteps=%d"), G_program_name(),name, nsteps);
 		 cat_ranges = 0;
               }
 	      else if (nsteps != 255)
-	      {
-	         sprintf(msg, "%s: -C flag was given, using cats fp ranges of %s, ignoring nsteps option", G_program_name(),name);
-	         G_warning(msg);
-              }
+	         G_warning(_("%s: -C flag was given, using cats fp ranges of %s, ignoring nsteps option"), G_program_name(),name);
            }
 	   if(!cat_ranges) /* DO NOT use else here, cat_ranges can change */
 	   {
 	      if(G_read_fp_range (name, mapset, &fp_range) < 0)
-	      {
-	         sprintf (msg,"%s: can't read fp range for [%s]",G_program_name(),name);
-	         G_fatal_error (msg);
-              }
+	         G_fatal_error (_("%s: can't read fp range for [%s]"),G_program_name(),name);
 	      G_get_fp_range_min_max (&fp_range, &DMIN[nfiles], &DMAX[nfiles]);
  	      G_quant_add_rule (&q, DMIN[nfiles], DMAX[nfiles], 1, nsteps);
 	      /* set the quant rules for reading the map */
@@ -310,17 +293,15 @@ int main (int argc, char *argv[])
 	   else /* cats ranges */
 	   {
 	      /* set the quant rules for reading the map */
-	      G_set_quant_rules(fd[nfiles], &labels[i].q); 
-	      G_quant_get_limits (&labels[i].q, &dmin, &dmax, &min, &max);
+	      G_set_quant_rules(fd[nfiles], &labels[nfiles].q); 
+	      G_quant_get_limits (&labels[nfiles].q, &dmin, &dmax, &min, 
+&max);
            }
         }
 	else
 	{
 	   if(G_read_range (name, mapset, &range) < 0)
-	   {
-	      sprintf (msg,"%s: can't read range for [%s]",G_program_name(),name);
-	      G_fatal_error (msg);
-           }
+	      G_fatal_error (_("%s: can't read range for [%s]"),G_program_name(),name);
 	   G_get_range_min_max (&range, &min, &max);
         }
 	if(!null_set)
