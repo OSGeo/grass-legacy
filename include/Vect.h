@@ -152,6 +152,7 @@ int Vect_get_num_nodes (struct Map_info *);
 int Vect_get_num_primitives (struct Map_info *, int);
 int Vect_get_num_lines (struct Map_info *);
 int Vect_get_num_areas (struct Map_info *);
+int Vect_get_num_faces (struct Map_info *);
 int Vect_get_num_islands (struct Map_info *);
 int Vect_get_line_box (struct Map_info *, int, BOUND_BOX *);
 int Vect_get_area_box (struct Map_info *, int, BOUND_BOX *);
