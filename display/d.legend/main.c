@@ -267,6 +267,11 @@ int main( int argc, char **argv )
 	      "[bottom,top,left,right]:\n  \"at=%.1f,%.1f,%.1f,%.1f\"",
 		100.*(b-y1)/(b-t), 100.*(b-y0)/(b-t), 100.*x0 /(r-l),
 		100.*x1/(r-l) );
+
+	    Y1 = 100.-(y1-t)*100./(b-t);
+	    Y0 = 100.-(y0-t)*100./(b-t);
+	    X0 = (x0-l)*100./(r-l);
+	    X1 = (x1-l)*100./(r-l);
 	}
 	else {
 		if (opt7->answer != NULL) {	/* should this be answerS ? */
@@ -841,8 +846,17 @@ int main( int argc, char **argv )
 		    R_text(buff) ;
 		}
 	}
-	if(!use_mouse)
-	    D_add_to_list(G_recreate_command()) ;
+	if(use_mouse)
+	{
+		char buf[512];
+
+		mouse->answer = 0;
+		sprintf(buf, "%s at=%.1f,%.1f,%.1f,%.1f", G_recreate_command(),
+				Y1, Y0, X0, X1);
+		D_add_to_list(buf);
+	}
+	else
+		D_add_to_list(G_recreate_command()) ;
 
 	R_close_driver();
 	exit(0);
