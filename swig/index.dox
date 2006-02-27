@@ -6,7 +6,8 @@ GRASS GIS (Geographic Resources Analysis Support System) is an open source,
 Free Software Geographical Information System (GIS) with raster, topological
 vector, image processing, and graphics production functionality that
 operates on various platforms through a graphical user interface and shell
-in X-Window. It is released under GNU General Public License (GPL).
+in X-Window. GRASS is released under GNU General Public License (GPL).
+The GRASS SWIG interface partially released under X11/MIT License.
 
 <P>
 <i>Cited from <a href="http://www.swig.org/">SWIG Web site</a>:</i><br>
@@ -35,5 +36,16 @@ See: \ref GRASS_SWIG_PERL
 
 <P>
 See <a href="http://www.google.com/search?num=20&hl=en&lr=&q=swig+%5BGRASS5%5D+site%3Agrass.itc.it&btnG=Search">here</a> for discussions in the developers mailing list.
+
+<h2>Code availability</h2>
+
+The source code is available here:
+
+<ul>
+<li> in <a href="http://grass.itc.it/devel/index.php#software">GRASS 6 CVS HEAD</a>
+<li> in the <a href="http://grass.itc.it/grass61/source/snapshot/">weekly CVS snapshot</a> (swig/ subdirectory)
+<li> via <a href="http://freegis.org/cgi-bin/viewcvs.cgi/grass6/swig/">CVS HTML Web interface</a>
+</ul>
+
 */
 
