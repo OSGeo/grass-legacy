@@ -4,8 +4,8 @@
 * MODULE:       r3.out.vtk  
 *   	    	
 * AUTHOR(S):    Original author 
-*               Soeren Gebbert soerengebbert@gmx.de
-* 		08 01 2005 Berlin
+*               Soeren Gebbert soerengebbert at gmx de
+* 		27 Feb 2006 Berlin
 * PURPOSE:      Converts 3D raster maps (G3D) into the VTK-Ascii format  
 *
 * COPYRIGHT:    (C) 2005 by the GRASS Development Team
@@ -26,7 +26,8 @@
 /** Parameters and global variables ******************************************/
 typedef struct
 {
-    struct Option *input, *output, *null_val, *elevscale, *top, *bottom, *decimals;
+    struct Option *input, *output, *null_val, *elevscale, *top, *bottom,
+	*decimals, *rgbmaps;
     struct Flag *mask, *point, *origin, *structgrid;
     /*struct Flag *xml; *//*maybe xml support in the future */
 } paramType;
@@ -42,13 +43,14 @@ paramType param;		/*Parameters */
 /** prototypes ***************************************************************/
 void fatalError(char *errorMsg);	/*Simple Error message */
 void setParams();		/*Fill the paramType structure */
+void OpenWriteRGBMaps(G3D_Region region, FILE * fp, int dp);	/*Open the rgb voxel maps and write the data to the output */
+int OpenInputMap(char *name, char *mapset);	/*opens the outputmap */
+void CloseInputMap(int fd);	/*close the map */
 void writeVTKStructuredPointHeader(FILE * fp, char *vtkFile, G3D_Region region, int dp);	/*write the vtk-header */
 void writeVTKStructuredGridHeader(FILE * fp, char *vtkFile, G3D_Region region);	/*write the vtk-header */
 void writeVTKPoints(FILE * fp, G3D_Region region, int dp);	/*Write the outputdata */
-void G3dTovtk(FILE * fp, G3D_Region region, char *varname, int dp);	/*Write the outputdata */
-int OpenInputMap(char *name, char *mapset);	/*opens the outputmap */
-void CloseInputMap(int fd);	/*close the map */
-
+void writeVTKData(FILE * fp, G3D_Region region, char *varname, int dp);	/*Write the outputdata */
+void writeVTKRGBVoxelData(void *map_r, void *map_g, void *map_b, FILE * fp, const char *string, G3D_Region region, int dp);	/*Write the rgb voxel data to the output */
 
 /* ************************************************************************* */
 /* Error handling ********************************************************** */
@@ -119,25 +121,36 @@ void setParams()
 	_("Float value to represent no data cell/points");
     param.null_val->answer = "-99999.99";
 
+    param.rgbmaps = G_define_option();
+    param.rgbmaps->key = "rgbmaps";
+    param.rgbmaps->type = TYPE_STRING;
+    param.rgbmaps->required = NO;
+    param.rgbmaps->gisprompt = "old,grid3,3d-raster";
+    param.rgbmaps->multiple = YES;
+    param.rgbmaps->description =
+	_
+	("Three g3d raster maps (r,g,b) which are used to create rgb values [redmap,greenmap,bluemap]");
+
     param.elevscale = G_define_option();
     param.elevscale->key = "elevscale";
     param.elevscale->type = TYPE_DOUBLE;
     param.elevscale->required = NO;
     param.elevscale->description = _("Scale factor for elevation");
     param.elevscale->answer = "1.0";
-    
-    param.decimals = G_define_option ();
+
+    param.decimals = G_define_option();
     param.decimals->key = "dp";
     param.decimals->type = TYPE_INTEGER;
     param.decimals->required = NO;
     param.decimals->multiple = NO;
     param.decimals->answer = "12";
     param.decimals->options = "0-20";
-    param.decimals->description = _("Number of significant digits (floating point only)");
+    param.decimals->description =
+	_("Number of significant digits (floating point only)");
 
     param.mask = G_define_flag();
     param.mask->key = 'm';
-    param.mask->description = _("Use G3D mask (if exists) with input maps");
+    param.mask->description = _("Use g3d mask (if exists) with input maps");
 
     param.point = G_define_flag();
     param.point->key = 'p';
@@ -161,6 +174,181 @@ void setParams()
      */
 }
 
+
+/* ************************************************************************* */
+/* Open the raster input map *********************************************** */
+/* ************************************************************************* */
+int OpenInputMap(char *name, char *mapset)
+{
+    int fd;
+
+    G_debug(3, "Open Raster file %s in Mapset %s", name, mapset);
+
+
+    /* open raster file */
+    fd = G_open_cell_old(name, mapset);
+
+    if (fd < 0)
+	G_fatal_error(_("Could not open map %s"), name);
+
+
+    return fd;
+}
+
+/* ************************************************************************* */
+/* Close the raster input map ********************************************** */
+/* ************************************************************************* */
+void CloseInputMap(int fd)
+{
+    if (G_close_cell(fd) < 0)
+	G_fatal_error(_("unable to close input map"));
+}
+
+/* ************************************************************************* */
+/* Prepare the VTK RGB voxel data for writing ****************************** */
+/* ************************************************************************* */
+void OpenWriteRGBMaps(G3D_Region region, FILE * fp, int dp)
+{
+    int i, changemask[3] = { 0, 0, 0 };
+    void *map_r = NULL;		/*The 3D Rastermap Red */
+    void *map_g = NULL;		/*The 3D Rastermap Green */
+    void *map_b = NULL;		/*The 3D Rastermap Blue */
+    void *maprgb = NULL;
+
+    if (param.rgbmaps->answers != NULL) {
+
+	if (param.rgbmaps->answers[0] != NULL &&
+	    param.rgbmaps->answers[1] != NULL &&
+	    param.rgbmaps->answers[2] != NULL) {
+
+	    /*Loop over all input maps! */
+	    for (i = 0; i < 3; i++) {
+		G_debug(3, _("Open g3d raster file %s"),
+			param.rgbmaps->answers[i]);
+
+
+		maprgb = NULL;
+		if (NULL == G_find_grid3(param.rgbmaps->answers[i], ""))
+		    G3d_fatalError(_("Requested g3d file not found"));
+
+
+		/*Open the map */
+		maprgb =
+		    G3d_openCellOld(param.rgbmaps->answers[i],
+				    G_find_grid3(param.rgbmaps->answers[i], ""),
+				    G3D_DEFAULT_WINDOW, G3D_TILE_SAME_AS_FILE,
+				    G3D_USE_CACHE_DEFAULT);
+		if (maprgb == NULL)
+		    G3d_fatalError(_("Error opening g3d file"));
+
+		/*if requested set the Mask on */
+		if (param.mask->answer) {
+		    if (G3d_maskFileExists()) {
+			changemask[i] = 0;
+			if (G3d_maskIsOff(maprgb)) {
+			    G3d_maskOn(maprgb);
+			    changemask[i] = 1;
+			}
+		    }
+		}
+
+		if (i == 0)
+		    map_r = maprgb;
+		if (i == 1)
+		    map_g = maprgb;
+		if (i == 2)
+		    map_b = maprgb;
+	    }
+
+
+	    G_debug(3, _("Writing VTK VoxelData\n"));
+	    writeVTKRGBVoxelData(map_r, map_g, map_b, fp, "RGB_Voxel", region,
+				 dp);
+
+	    for (i = 0; i < 3; i++) {
+		if (i == 0)
+		    maprgb = map_r;
+		if (i == 1)
+		    maprgb = map_g;
+		if (i == 2)
+		    maprgb = map_b;
+
+		/*We set the Mask off, if it was off before */
+		if (param.mask->answer) {
+		    if (G3d_maskFileExists())
+			if (G3d_maskIsOn(maprgb) && changemask[i])
+			    G3d_maskOff(maprgb);
+		}
+		/* Close files */
+		if (!G3d_closeCell(maprgb))
+		    fatalError(_("Error closing g3d file"));
+	    }
+	}
+	else {
+	    G_warning(_("Wrong RGB maps. RGB output not added!"));
+	    /*do nothing */
+	}
+
+    }
+    return;
+}
+
+/* ************************************************************************* */
+/* Writes the strcutured points Header ************************************* */
+/* ************************************************************************* */
+void writeVTKStructuredPointHeader(FILE * fp, char *vtkFile, G3D_Region region,
+				   int dp)
+{
+    double scale;
+
+    scale = atof(param.elevscale->answer);
+    G_debug(3, _("writeVTKHeader: Writing VTK-Header"));
+
+    /*Simple vtk ASCII header */
+
+    fprintf(fp, "# vtk DataFile Version 3.0\n");
+    fprintf(fp, "GRASS 6 Export\n");
+    fprintf(fp, "ASCII\n");
+    fprintf(fp, "DATASET STRUCTURED_POINTS\n");	/*We are using the structured point dataset. */
+
+    if (param.point->answer)
+	fprintf(fp, "DIMENSIONS %i %i %i\n", region.cols, region.rows,
+		region.depths);
+    else
+	fprintf(fp, "DIMENSIONS %i %i %i\n", region.cols + 1, region.rows + 1,
+		region.depths + 1);
+
+    fprintf(fp, "SPACING %.*f %.*f %.*f\n", dp, region.ew_res, dp,
+	    region.ns_res, dp, (region.tb_res * scale));
+
+    if (param.point->answer) {
+	if (param.origin->answer)
+	    fprintf(fp, "ORIGIN %.*f %.*f %.*f\n", dp,
+		    region.west + region.ew_res / 2, dp,
+		    region.south + region.ns_res / 2, dp,
+		    region.bottom * scale + (region.tb_res * scale) / 2);
+	else
+	    fprintf(fp, "ORIGIN %.*f %.*f %.*f\n", dp,
+		    region.west + region.ew_res / 2, dp,
+		    region.south + region.ns_res / 2, dp,
+		    region.bottom + (region.tb_res * scale) / 2);
+    }
+    else {
+	if (param.origin->answer)
+	    fprintf(fp, "ORIGIN %.*f %.*f %.*f\n", dp, region.west, dp,
+		    region.south, dp, region.bottom * scale);
+	else
+	    fprintf(fp, "ORIGIN %.*f %.*f %.*f\n", dp, region.west, dp,
+		    region.south, dp, region.bottom);
+    }
+
+    if (param.point->answer)
+	fprintf(fp, "POINT_DATA %i\n", region.cols * region.rows * region.depths);	/*We have pointdata */
+    else
+	fprintf(fp, "CELL_DATA %i\n", region.cols * region.rows * region.depths);	/*We have celldata */
+}
+
+
 /* ************************************************************************* */
 /* Writes the strcutured grid Header **************************************** */
 /* ************************************************************************* */
@@ -175,6 +363,8 @@ void writeVTKStructuredGridHeader(FILE * fp, char *vtkFile, G3D_Region region)
 	    region.depths);
     fprintf(fp, "POINTS %i float\n", region.cols * region.rows * region.depths);
 }
+
+
 
 /* ************************************************************************* */
 /* This function writes the point coordinates ****************************** */
@@ -286,67 +476,13 @@ void writeVTKPoints(FILE * fp, G3D_Region region, int dp)
     fprintf(fp, "POINT_DATA %i\n", region.cols * region.rows * region.depths);	/*We have pointdata */
 }
 
-
 /* ************************************************************************* */
-/* Writes the strcutured points Header ************************************* */
+/* Wwrite the VTK Cell or point data *************************************** */
 /* ************************************************************************* */
-void writeVTKStructuredPointHeader(FILE * fp, char *vtkFile, G3D_Region region, int dp)
+void writeVTKData(FILE * fp, G3D_Region region, char *varname, int dp)
 {
-    double scale;
-
-    scale = atof(param.elevscale->answer);
-    G_debug(3, _("writeVTKHeader: Writing VTK-Header"));
-
-    /*Simple vtk ASCII header */
-
-    fprintf(fp, "# vtk DataFile Version 3.0\n");
-    fprintf(fp, "GRASS 6 Export\n");
-    fprintf(fp, "ASCII\n");
-    fprintf(fp, "DATASET STRUCTURED_POINTS\n");	/*We are using the structured point dataset. */
-
-    if (param.point->answer)
-	fprintf(fp, "DIMENSIONS %i %i %i\n", region.cols, region.rows,
-		region.depths);
-    else
-	fprintf(fp, "DIMENSIONS %i %i %i\n", region.cols + 1, region.rows + 1,
-		region.depths + 1);
-
-    fprintf(fp, "SPACING %.*f %.*f %.*f\n", dp, region.ew_res, dp, region.ns_res, dp,
-	    (region.tb_res * scale));
-
-    if (param.point->answer) {
-	if (param.origin->answer)
-	    fprintf(fp, "ORIGIN %.*f %.*f %.*f\n", dp, region.west + region.ew_res / 2, dp,
-		    region.south + region.ns_res / 2, dp,
-		    region.bottom * scale + (region.tb_res * scale) / 2);
-	else
-	    fprintf(fp, "ORIGIN %.*f %.*f %.*f\n", dp, region.west + region.ew_res / 2, dp,
-		    region.south + region.ns_res / 2, dp, 
-		    region.bottom + (region.tb_res * scale) / 2);
-    }
-    else {
-	if (param.origin->answer)
-	    fprintf(fp, "ORIGIN %.*f %.*f %.*f\n", dp, region.west, dp, region.south, dp,
-		    region.bottom * scale);
-	else
-	    fprintf(fp, "ORIGIN %.*f %.*f %.*f\n", dp, region.west, dp, region.south, dp,
-		    region.bottom);
-    }
-
-    if (param.point->answer)
-	fprintf(fp, "POINT_DATA %i\n", region.cols * region.rows * region.depths);	/*We have pointdata */
-    else
-	fprintf(fp, "CELL_DATA %i\n", region.cols * region.rows * region.depths);	/*We have celldata */
-}
-
-/* ************************************************************************* */
-/* This function does all the work. **************************************** */
-/* ************************************************************************* */
-void G3dTovtk(FILE * fp, G3D_Region region, char *varname, int dp)
-{
-    double d1 = 0;
-    double *d1p;
-    float *f1p;
+    double dvalue;
+    float fvalue;
     int x, y, z, status;
     int rows, cols, depths, typeIntern;
 
@@ -357,16 +493,13 @@ void G3dTovtk(FILE * fp, G3D_Region region, char *varname, int dp)
 
     G_debug(3,
 	    _
-	    ("G3dTovtk: Writing Celldata %s with rows %i cols %i depths %i to vtk-ascii file"),
+	    ("writeVTKData: Writing Celldata %s with rows %i cols %i depths %i to vtk-ascii file"),
 	    varname, rows, cols, depths);
 
     fprintf(fp, "SCALARS %s float 1\n", varname);
     fprintf(fp, "LOOKUP_TABLE default\n");
 
     typeIntern = G3d_tileTypeMap(map);
-
-    d1p = &d1;
-    f1p = (float *)&d1;
 
     status = 0;
 
@@ -377,18 +510,19 @@ void G3dTovtk(FILE * fp, G3D_Region region, char *varname, int dp)
 		status++;
 
 		for (x = 0; x < cols; x++) {
-		    G3d_getValue(map, x, y, z, d1p, typeIntern);
 		    if (typeIntern == G3D_FLOAT) {
-			if (G3d_isNullValueNum(f1p, G3D_FLOAT))
+			G3d_getValue(map, x, y, z, &fvalue, typeIntern);
+			if (G3d_isNullValueNum(&fvalue, G3D_FLOAT))
 			    fprintf(fp, "%s ", param.null_val->answer);
 			else
-			    fprintf(fp, "%.*f ", dp, *f1p);
+			    fprintf(fp, "%.*f ", dp, fvalue);
 		    }
 		    else {
-			if (G3d_isNullValueNum(&d1, G3D_DOUBLE))
+			G3d_getValue(map, x, y, z, &dvalue, typeIntern);
+			if (G3d_isNullValueNum(&dvalue, G3D_DOUBLE))
 			    fprintf(fp, "%s ", param.null_val->answer);
 			else
-			    fprintf(fp, "%.*f ", dp, d1);
+			    fprintf(fp, "%.*f ", dp, dvalue);
 		    }
 		}
 		fprintf(fp, "\n");
@@ -400,18 +534,19 @@ void G3dTovtk(FILE * fp, G3D_Region region, char *varname, int dp)
 		status++;
 
 		for (x = 0; x < cols; x++) {
-		    G3d_getValue(map, x, y, z, d1p, typeIntern);
 		    if (typeIntern == G3D_FLOAT) {
-			if (G3d_isNullValueNum(f1p, G3D_FLOAT))
+			G3d_getValue(map, x, y, z, &fvalue, typeIntern);
+			if (G3d_isNullValueNum(&fvalue, G3D_FLOAT))
 			    fprintf(fp, "%s ", param.null_val->answer);
 			else
-			    fprintf(fp, "%.*f ", dp, *f1p);
+			    fprintf(fp, "%.*f ", dp, fvalue);
 		    }
 		    else {
-			if (G3d_isNullValueNum(&d1, G3D_DOUBLE))
+			G3d_getValue(map, x, y, z, &dvalue, typeIntern);
+			if (G3d_isNullValueNum(&dvalue, G3D_DOUBLE))
 			    fprintf(fp, "%s ", param.null_val->answer);
 			else
-			    fprintf(fp, "%.*f ", dp, d1);
+			    fprintf(fp, "%.*f ", dp, dvalue);
 		    }
 		}
 		fprintf(fp, "\n");
@@ -420,8 +555,153 @@ void G3dTovtk(FILE * fp, G3D_Region region, char *varname, int dp)
     }
 }
 
+
 /* ************************************************************************* */
-/* Main function, opens the input and output files, then call G3dtovtk. **** */
+/* Write the VTK RGB Voxel Data ******************************************** */
+/* ************************************************************************* */
+void writeVTKRGBVoxelData(void *map_r, void *map_g, void *map_b,
+			  FILE * fp, const char *varname,
+			  G3D_Region region, int dp)
+{
+    double dvalue = 0;
+    float fvalue = 0;
+    int x, y, z, status, k;
+    int rows, cols, depths;
+    int typeIntern[3];
+    void *maprgb = NULL;
+
+    rows = region.rows;
+    cols = region.cols;
+    depths = region.depths;
+
+    typeIntern[0] = G3d_tileTypeMap(map_r);
+    typeIntern[1] = G3d_tileTypeMap(map_g);
+    typeIntern[2] = G3d_tileTypeMap(map_b);
+
+    status = 0;
+
+    /********************** WRITE RGB VOXEL DATA; CELL OR POINT ****************/
+    fprintf(fp, "COLOR_SCALARS %s 3\n", varname);
+
+    for (z = depths - 1; z >= 0; z--) {	/*From the bottom to the top */
+	if (param.structgrid->answer) {
+	    for (y = 0; y < rows; y++) {
+		G_percent(status, (rows * depths - 1), 10);
+		status++;
+
+		for (x = 0; x < cols; x++) {
+		    for (k = 0; k < 3; k++) {
+
+			if (k == 0)
+			    maprgb = map_r;
+			if (k == 1)
+			    maprgb = map_g;
+			if (k == 2)
+			    maprgb = map_b;
+
+			if (typeIntern[k] == G3D_FLOAT) {
+			    G3d_getValue(maprgb, x, y, z, &fvalue,
+					 typeIntern[k]);
+			    if (G3d_isNullValueNum(&fvalue, G3D_FLOAT))
+				fprintf(fp, "0 ");
+			    else {
+				/*Test of value range, the data should be 1 byte gray values */
+				if (fvalue > 255 || fvalue < 0) {
+				    G_warning(_
+					      ("Wrong g3d map values! Values should in between 0 and 255!\n"));
+				    fprintf(fp, "0 ");
+				}
+				else {
+
+				    fprintf(fp, "%.*f ", dp, (fvalue / 255));
+				}
+			    }
+			}
+			else {
+			    G3d_getValue(maprgb, x, y, z, &dvalue,
+					 typeIntern[k]);
+			    if (G3d_isNullValueNum(&dvalue, G3D_DOUBLE))
+				fprintf(fp, "0 ");
+			    else {
+				/*Test of value range, the data should be 1 byte gray values */
+				if (dvalue > 255 || dvalue < 0) {
+				    G_warning(_
+					      ("Wrong g3d map values! Values should in between 0 and 255!\n"));
+				    fprintf(fp, "0 ");
+				}
+				else {
+
+				    fprintf(fp, "%.*f ", dp, (dvalue / 255));
+				}
+			    }
+			}
+		    }
+		    fprintf(fp, "\n");
+		}
+	    }
+	}
+	else {
+	    for (y = rows - 1; y >= 0; y--) {	/*From south to the north */
+		G_percent(status, (rows * depths - 1), 10);
+		status++;
+
+		for (x = 0; x < cols; x++) {
+		    for (k = 0; k < 3; k++) {
+
+			if (k == 0)
+			    maprgb = map_r;
+			if (k == 1)
+			    maprgb = map_g;
+			if (k == 2)
+			    maprgb = map_b;
+
+			if (typeIntern[k] == G3D_FLOAT) {
+			    G3d_getValue(maprgb, x, y, z, &fvalue,
+					 typeIntern[k]);
+			    if (G3d_isNullValueNum(&fvalue, G3D_FLOAT))
+				fprintf(fp, "0 ");
+			    else {
+				/*Test of value range, the data should be 1 byte gray values */
+				if (fvalue > 255 || fvalue < 0) {
+				    G_warning(_
+					      ("Wrong rgb map values! Values should in between 0 and 255!\n"));
+				    fprintf(fp, "0 ");
+				}
+				else {
+
+				    fprintf(fp, "%.*f ", dp, (fvalue / 255));
+				}
+			    }
+			}
+			else {
+			    G3d_getValue(maprgb, x, y, z, &dvalue,
+					 typeIntern[k]);
+			    if (G3d_isNullValueNum(&dvalue, G3D_DOUBLE))
+				fprintf(fp, "0 ");
+			    else {
+				/*Test of value range, the data should be 1 byte gray values */
+				if (dvalue > 255 || dvalue < 0) {
+				    G_warning(_
+					      ("Wrong rgb map values! Values should in between 0 and 255!\n"));
+				    fprintf(fp, "0 ");
+				}
+				else {
+
+				    fprintf(fp, "%.*f ", dp, (dvalue / 255));
+				}
+			    }
+			}
+		    }
+		    fprintf(fp, "\n");
+		}
+	    }
+	}
+    }
+    return;
+}
+
+/* ************************************************************************* */
+/* Main function, opens most of the input and output files ***************** */
 /* ************************************************************************* */
 int main(int argc, char *argv[])
 {
@@ -446,16 +726,16 @@ int main(int argc, char *argv[])
     /* Have GRASS get inputs */
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
-	
-   /*The precision of the output */
+
+    /*The precision of the output */
     if (param.decimals->answer) {
-        if (sscanf(param.decimals->answer, "%d", &dp) != 1)
-            G_fatal_error(_("failed to interpret dp as an integer"));
-        if (dp > 20 || dp < 0)
-            G_fatal_error(_("dp has to be from 0 to 20"));
+	if (sscanf(param.decimals->answer, "%d", &dp) != 1)
+	    G_fatal_error(_("failed to interpret dp as an integer"));
+	if (dp > 20 || dp < 0)
+	    G_fatal_error(_("dp has to be from 0 to 20"));
     }
     else {
-        dp = 8; /*This value is taken from the lib settings in G_format_easting */
+	dp = 8;			/*This value is taken from the lib settings in G_format_easting */
     }
 
     /*open the output */
@@ -516,12 +796,16 @@ int main(int argc, char *argv[])
 	writeVTKStructuredGridHeader(fp, output, region);
 	writeVTKPoints(fp, region, dp);
 
+	/*Close top and bottom maps */
+	CloseInputMap(top);
+	CloseInputMap(bottom);
     }
     else {
-	/* Write the vtk-header */
+	/* Write the structured point vtk-header */
 	writeVTKStructuredPointHeader(fp, output, region, dp);
     }
 
+    /*Write the normal VTK data (cell or point data) */
     /*Loop over all 3d input maps! */
     for (i = 0; param.input->answers[i] != NULL; i++) {
 
@@ -551,8 +835,8 @@ int main(int argc, char *argv[])
 	    }
 	}
 
-	/* Now barf out the contents of the map in vtk form */
-	G3dTovtk(fp, region, param.input->answers[i], dp);
+	/* Write the point or cell data */
+	writeVTKData(fp, region, param.input->answers[i], dp);
 
 	/*We set the Mask off, if it was off before */
 	if (param.mask->answer) {
@@ -561,52 +845,20 @@ int main(int argc, char *argv[])
 		    G3d_maskOff(map);
 	}
 
-	/* Close files and exit */
+	/* Close the g3d map */
 	if (!G3d_closeCell(map))
 	    fatalError(_("Error closing g3d file"));
 
 	map = NULL;
     }
 
-    /*Close top and bottom maps */
-    if (param.structgrid->answer) {
-	CloseInputMap(top);
-	CloseInputMap(bottom);
-    }
+    /*Write the RGB voxel data */
+    OpenWriteRGBMaps(region, fp, dp);
 
+    /*Close the output file */
     if (param.output->answer && fp != NULL)
 	if (fclose(fp))
 	    fatalError(_("Error closing VTK-ASCII file"));
 
     return 0;
-}
-
-
-/* ************************************************************************* */
-/* Open the raster input map *********************************************** */
-/* ************************************************************************* */
-int OpenInputMap(char *name, char *mapset)
-{
-    int fd;
-
-    G_debug(3, "Open Raster file %s in Mapset %s", name, mapset);
-
-
-    /* open raster file */
-    fd = G_open_cell_old(name, mapset);
-
-    if (fd < 0)
-	G_fatal_error(_("Could not open map %s"), name);
-
-
-    return fd;
-}
-
-/* ************************************************************************* */
-/* Close the raster input map ********************************************** */
-/* ************************************************************************* */
-void CloseInputMap(int fd)
-{
-    if (G_close_cell(fd) < 0)
-	G_fatal_error(_("unable to close input map"));
 }
