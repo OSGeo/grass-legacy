@@ -21,6 +21,12 @@
 #%  description: show vector maps rather than raster maps
 #%END
 #%option
+#% key: prefix
+#% type: string
+#% description: map prefix. Specify character(s) to view selected maps only
+#% required : no
+#%end
+#%option
 #% key: across
 #% type: integer
 #% description: map number show across the monitor
@@ -32,12 +38,6 @@
 #% type: integer
 #% description: map number show down the monitor
 #% gisprompt: 3
-#% required : no
-#%end
-#%option
-#% key: prefix
-#% type: string
-#% description: map prefix. Specify character(s) to view selected maps only
 #% required : no
 #%end
 #%option
