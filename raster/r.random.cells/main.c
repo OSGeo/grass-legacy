@@ -13,12 +13,10 @@
 
 #define MAIN
 #include "gis.h"
-#include "ransurf.h"
 #include "glocale.h"
+#include "ransurf.h"
+#include "local_proto.h"
 #undef MAIN
-
-Init (int, char **);
-int Indep(void);
 
 int
 main (int argc, char *argv[])

@@ -59,8 +59,7 @@
 #include <math.h>
 #include "gis.h"
 #include "glocale.h"
-
-spot_dist (float,int,int,float,int,int);
+#include "local_proto.h"
 
 #define DATA(map, r, c)         (map)[(r) * ncols + (c)]
 #define DEBUG
