@@ -91,8 +91,8 @@ int draw_scale(char *save, int toptext)
 
 		pl = x_pos;
 		pt = y_pos;
-		pr = x_pos + w;
-		pb = y_pos + h;
+		pr = x_pos + w + 2;	/* 1 pixel margin for both sides */
+		pb = y_pos + h + 2;	/* 1 pixel margin for both sides */
 
 		if(save)
 			R_panel_save(save,pt,pb,pl,pr);
@@ -111,7 +111,7 @@ int draw_scale(char *save, int toptext)
 		else
 		    R_standard_color(color2);
 
-		R_move_abs(pl + w/2, pt + 17);
+		R_move_abs(pl + w/2 + 1, pt + 17 + 1);
 		xarr[0] = 0; yarr[0] = 0;
 		xarr[1] = -w/2; yarr[1] = 2*w;
 		xarr[2] = w/2; yarr[2] = -w/2;
