@@ -90,6 +90,7 @@ int main(int argc, char *argv[])
 
     void *ptr2;
     RASTER_MAP_TYPE data_type;
+    struct History history;
     double peak = 0.0;
     int dsize;
 
@@ -1013,6 +1014,10 @@ int main(int argc, char *argv[])
     close(out_fd);
     unlink(in_file);		/* remove submatrix files  */
     unlink(out_file);
+
+    G_short_history(cum_cost_layer, "raster", &history);
+    G_command_history(&history);
+    G_write_history(cum_cost_layer, &history);
 
     /*  Create colours for output map    */
 
