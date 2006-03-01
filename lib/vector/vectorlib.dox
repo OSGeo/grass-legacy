@@ -259,8 +259,9 @@ for OGR sources, SHAPE-link.
 \endverbatim
 
 Face and kernel are 3D equivalents of boundary and centroid, but there 
-is no support (yet) for 3D topology (volumes). The only current use of 
-face is possibility to display vertical planes in NVIZ.
+is no support (yet) for 3D topology (volumes). Faces are used in a
+couple of modules including NVIZ to visualize 3D buildings and other
+volumetric figures.
 
 \verbatim
 /* Topology level details */
