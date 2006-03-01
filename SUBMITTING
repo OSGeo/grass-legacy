@@ -13,10 +13,10 @@ care of following rules:
 1.  Get and read the GRASS 6 Programmer's Manual here:
     http://grass.itc.it/devel/index.php#prog
 
-  or generate it from this source code (the programmer's manual
-  is integrated in the source code in doxygen style):
-    make htmldocs
-    make pdfdocs
+    or generate it from this source code (the programmer's manual is
+    integrated in the source code in doxygen style):
+      make htmldocs
+      make pdfdocs
 
 
 2.  Use the directory structure to place your module appropriately into
@@ -29,6 +29,7 @@ care of following rules:
     Consider to take a look at "GNU Coding Standards"
     http://www.gnu.org/prep/standards.html                                          
 
+
 3.  Add a header section to each file you submit and make sure you include
     the copyright. The purpose section is meant to contain a general
     overview of the code in the file to assist other programmers that will
@@ -36,33 +37,34 @@ care of following rules:
 
     Example (ficticious header for a file called color.c) :
 
-/*
-****************************************************************************
-*
-* MODULE:       d.rast (or new higher level module name (eg GRASS core) 
-*   	    	for 6.1)
-* AUTHOR(S):    Original author unknown - probably CERL
-*               John Doe - jdoe@some.where.org
-* PURPOSE:      To provide storage and manipulation of colors used for 
-*               rendering the raster. The colors are stored in a doubly linked
-*   	    	list which must be initialized with InitColors() before it can
-*   	    	be used. Note that most linked list functionality (add,
-*   	    	remove, get) is supported, but their is no sorting
-*   	    	functionality.
-* COPYRIGHT:    (C) 2005 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/****************************************************************************
+ *
+ * MODULE:       d.rast (or new higher level module name (eg GRASS core) 
+ *               for 6.1)
+ * AUTHOR(S):    Original author unknown - probably CERL
+ *               John Doe - jdoe@some.where.org
+ * PURPOSE:      To provide storage and manipulation of colors used for 
+ *               rendering the raster. The colors are stored in a doubly linked
+ *               list which must be initialized with InitColors() before it can
+ *               be used. Note that most linked list functionality (add,
+ *               remove, get) is supported, but their is no sorting
+ *               functionality.
+ * COPYRIGHT:    (C) 2005 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
     The copyright protects your rights according to GNU General Public
     License (www.gnu.org).
 
+
 4.  - deleted.
-    We don't want the $ ID $ in source code any more as it
-    causes problems for the CVS branches.
+    We don't want the $ ID $ in source code any more as it causes problems
+    for the CVS branches.
+
 
 5.  To ensure that the software system continues to work, please include
 
@@ -74,21 +76,26 @@ care of following rules:
     system functions within the software; include the proper header files
     (conditionally dependent on config.h macros if necessary) instead.
 
+
 6. Order of include headers
 
     In general, headers should be included in the order:
  
     1. Core system headers (stdio.h, ctype.h, ...)
     2. Headers for non-core system components (X11, libraries).
-    3. Headers for core systems of the package being compiled (gis.h, glocale.h ...)
+    3. Headers for core systems of the package being compiled (grass/gis.h, grass/glocale.h ...)
     4. Headers for the specific library/program being compiled (geodesic.h, ...)
  
     Each class of header has an obligation to be compatible with those
     above it in the list, but not those below it.
-    
+
+
 7.  Always specify the return type for ALL functions including those that
     return type "void", and insert return statements for ALL functions.
-    Also, use ANSI C prototypes to declare your functions. Examples:
+    Also, use ANSI C prototypes to declare your functions. 
+    For module return values, see "Exit status" below.
+
+    Examples:
     
     void G_something(void);
     int G_somethingElse(int, int);
@@ -106,8 +113,21 @@ care of following rules:
 	
 	return(0);
     }
-    
-8.  Use fprintf instead of printf. But:
+
+
+8.  Exit status is defined as EXIT_SUCCESS or EXIT_FAILURE, e.g.
+
+    {
+      ...
+      if (G_parser (argc, argv))
+          exit (EXIT_FAILURE);
+
+      ...
+      exit (EXIT_SUCCESS)
+    }
+
+
+9.  Use fprintf instead of printf. But:
     
     For errors and warnings please use the G_fatal_error() and
     G_warning() functions. General messages for the user should use
@@ -131,7 +151,20 @@ care of following rules:
       fflush(stdout) always required when using fprintf(stdout, ...).
 
 
-9.  Use the following GRASS library functions instead of the standard C
+10. Use the GRASS library function G_asprintf() instead of the 
+    standard C functions asprintf(), vsnprintf() and snprintf().  These 
+    functions are not portable or have other issues.  Example:
+
+    char *msg;
+
+    G_asprintf(&msg, "%s", parameters);
+    do_something_with_msg();
+    G_free(msg);
+
+    Note that you should free memory when G_asprintf() is used.
+
+
+11. Use the following GRASS library functions instead of the standard C
     functions. The reason for this is that the following functions ensure
     good programming practice (eg always checking if memory was allocated)
     and/or improves portability. PLEASE refer to the programmers manual
@@ -152,19 +185,8 @@ care of following rules:
 	Could somebody please add others (please verify that they are
 	useful and safe first)
 
-10. Use the GRASS library function G_asprintf() instead of the 
-    standard C functions asprintf(), vsnprintf() and snprintf().  These 
-    functions are not portable or have other issues.  Example:
 
-    char *msg;
-
-    G_asprintf(&msg, "%s", parameters);
-    do_something_with_msg();
-    G_free(msg);
-
-    Note that you should free memory when G_asprintf() is used.
-
-11. Don't use the C++ comment style! This confuses several compilers.
+12. Don't use the C++ comment style! This confuses several compilers.
     Use instead:
        /* C-comments */
 
@@ -180,50 +202,64 @@ care of following rules:
       make htmldocs
     ). See lib/gis/*.c for examples.
 
-12. PLEASE take the time to add comments throughout your code explaining what
+
+13. PLEASE take the time to add comments throughout your code explaining what
     the code is doing. It will save a HUGE amount of time and frustration for
     other programmers that may have to change your code in the future.
+
+
+14. To promote a consistent coding style, please use the "indent" program
+    on all new C modules using the following switches:
     
-13. Platform dependent code:
+     $ indent -nbad -bap -bbb -nbbo -nbc -br -bli1 -bls -cbi0 -ncdb -nce \
+        -ci4 -cli0 -ncs -d0 -di0 -fc1 -nfca -hnl -i4 -ip4 -l80 -lc80 -lp \
+	-npcs -pi4 -nprs -npsl -sbi0 -sc -nsob -ss -ts8  main.c
+
+    Existing code should not be re-indented except in extreme cases, as this
+    will make "diff" comparisons with older versions impossible. If indent is 
+    needed, do not check in any changes other than the indentation in the same 
+    commit! Do add the indent switches and any indent warning messages to the 
+    CVS log. Any change or fix mixed in with an indent is very hard to track 
+    making it hard for others to follow the change or fix any new bugs.
+
+
+15. Platform dependent code:
     Do not remove #ifdef __CYGWIN__ and/or #ifndef __CYGWIN__ lines and 
     their encapsulated lines from source code (one example was that someone
     removed drand48 definition.)
 
-14. Exit status is defined as EXIT_SUCCESS or EXIT_FAILURE, e.g.
 
-    {
-      ...
-      if (G_parser (argc, argv))
-          exit (EXIT_FAILURE);
+16. Make sure a new line is at the end of each file.
 
-      ...
-      exit (EXIT_SUCCESS)
-    }
 
-15. Make sure a new line is at the end of each file
-
-16. When writing Makefiles, use the current standard
+17. When writing Makefiles, use the current standard
 
     Example: see raster/r.info/Makefile or others
 
-17. Have a look at ./INSTALL
 
-18. Have a function included in your module which writes to the history
+18. Have a look at ./INSTALL
+
+
+19. Have a function included in your module which writes to the history
     file of the map (e.g. command line, parameters etc.). See eg
-    raster/r.slope.aspect/main.c
+    raster/r.patch/main.c
 
     (the same applies to vector modules!)
 
-19. Standard parser options: use G_define_standard_option() whenever possible
+
+20. Standard parser options: use G_define_standard_option() whenever possible
     to define standard module command line options. This will save you time,
     create fewer bugs, and make things easier on the translators.
     See lib/gis/parser.c for details of the function definition.
 
-20. Module manual page:
+
+21. Module manual page:
     Place the documentation in HTML format into 'description.html'.
     The easiest way to do this is to study an existing HTML page
     (to get the page style, e.g. vector/v.to.db/description.html).
     With a few exceptions header and footer are NOT allowed.
+    You can add figures (PNG format), the figure name prefix should be the 
+    module name. See raster/r.terraflow/description.html for an example.
 
     Note that the parameter information is auto-generated upon
     compilation. This is done by running module in a virtual session
@@ -239,35 +275,40 @@ care of following rules:
  
     The online WWW man pages will be updated every Saturday by CVS.
 
-21. Add/update, if required the related d.m menu:
+
+22. Add/update, if required the related d.m GUI menu:
      display/d.m/menu.tcl
 
-22. For consistency, use README rather than README.txt for any README files.
 
-23. GRASS/Environment variables:
+23. For consistency, use README rather than README.txt for any README files.
+
+
+24. GRASS/Environment variables:
     If you add a new variable, please follow the naming convention.
     All variables are described in
     lib/init/variables.html
 
-24. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
+
+25. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
     You can re-check before submission with 'cvs diff':
 
-    Be sure to create unified ("diff -u") format. "Plain"
-    diffs (the default format) are risky, because they will apply without
-    warning to code which has been substantially changed; they are also
-    harder to read than unified.
+    Be sure to create unified ("diff -u") format. "Plain" diffs (the default
+    format) are risky, because they will apply without warning to code which
+    has been substantially changed; they are also harder to read than unified.
 
     Such diffs should be made from the top-level directory, e.g.
     "cvs diff -u display/d.vect/main.c"; that way, the diff will
     include the pathname rather than just "main.c".
 
-25. Tell the other developers about the new code using the following e-mail:
+
+26. Tell the other developers about the new code using the following e-mail:
     grass5@grass.itc.it
  
     To subscribe to this mailing list, see
     http://grass.itc.it/devel/index.php
 
-26. In case of questions feel free to contact the developers at the above
+
+27. In case of questions feel free to contact the developers at the above
     mailing list.
     http://grass.itc.it/devel/index.php#submission
 
