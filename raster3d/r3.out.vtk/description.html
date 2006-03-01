@@ -43,7 +43,7 @@ choosen null value in the VTK-ASCII file.
 <div class="code"><pre>
 g.region -d
 g.region res=150 res3=150 t=80 b=0 tbres=10
-r.mapcalc "bottom=0"
+r.mapcalc "bottom=1800. - elevation.10m"
 
 # synthetic data, could be geological structures:
 r3.mapcalc "map3d=row()+col()+depth()"
