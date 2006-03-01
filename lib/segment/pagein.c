@@ -11,6 +11,7 @@ int segment_pagein ( SEGMENT *SEG,int n)
     int age;
     int cur;
     int i;
+    int read_result;
 
 /* is n the current segment? */
     if (n == SEG->scb[SEG->cur].n)
@@ -45,9 +46,19 @@ int segment_pagein ( SEGMENT *SEG,int n)
     SEG->scb[cur].n = n;
     SEG->scb[cur].dirty = 0;
     segment_seek (SEG, SEG->scb[cur].n, 0);
-    if (read (SEG->fd, SEG->scb[cur].buf, SEG->size) != SEG->size)
+
+    read_result = read (SEG->fd, SEG->scb[cur].buf, SEG->size);
+    if (read_result != SEG->size)
     {
-	G_warning ("segment_pagein: %s\n", strerror(errno));
+	G_debug(2, "segment_pagein: read_result=%d  SEG->size=%d", read_result, SEG->size);
+
+	if(read_result < 0)
+	    G_warning ("segment_pagein: %s\n", strerror(errno));
+	else if(read_result == 0)
+	    G_warning ("segment_pagein: read EOF\n");
+	else
+	    G_warning ("segment_pagein: short count during read()\n");
+
 	return -1;
     }
 
