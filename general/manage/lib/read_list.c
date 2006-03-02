@@ -37,7 +37,7 @@ read_list (int check_if_empty)
     list = 0;
     any = 0;
 
-    if (env = getenv ("ELEMENT_LIST"))
+    if ((env = getenv ("ELEMENT_LIST")))
 	strcpy (element_list, env);
     else
 	sprintf (element_list, "%s/etc/element_list", G_gisbase());
