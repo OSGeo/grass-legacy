@@ -26,6 +26,74 @@
 #define MAIN
 #include "parameters.h"
 
+/*local protos */
+void CheckInputMaps();
+
+
+/* ************************************************************************* */
+/* Check the input maps **************************************************** */
+/* ************************************************************************* */
+void CheckInputMaps()
+{
+    char *mapset = NULL;
+    int i;
+
+    /*Check for elevation map */
+    if (param.elevationmap->answer) {
+
+	mapset = G_find_cell2(param.elevationmap->answer, "");
+	if (mapset == NULL) {
+	    G_fatal_error(_("Cell file [%s] not found\n"),
+			  param.elevationmap->answer);
+	    exit(EXIT_FAILURE);
+	}
+    }
+
+    /*Check for normal input map */
+    if (param.input->answers != NULL) {
+	for (i = 0; param.input->answers[i] != NULL; i++) {
+
+	    mapset = NULL;
+	    mapset = G_find_cell2(param.input->answers[i], "");
+	    if (mapset == NULL) {
+		G_fatal_error(_("Cell file [%s] not found\n"),
+			      param.input->answers[i]);
+		exit(EXIT_FAILURE);
+	    }
+	}
+    }
+
+    /*RGB raster maps */
+    if (param.rgbmaps->answers != NULL) {
+	if (param.rgbmaps->answers[0] != NULL &&
+	    param.rgbmaps->answers[1] != NULL &&
+	    param.rgbmaps->answers[2] != NULL) {
+
+	    /*Loop over all input maps! */
+	    for (i = 0; i < 3; i++) {
+
+		mapset = NULL;
+		mapset = G_find_cell2(param.rgbmaps->answers[i], "");
+		if (mapset == NULL) {
+		    G_fatal_error(_("rgb cell map [%s] not found\n"),
+				  param.rgbmaps->answers[i]);
+		    exit(EXIT_FAILURE);
+		}
+	    }
+	}
+	else {
+	    G_fatal_error(_("Please provide three RGB maps"));
+	}
+    }
+
+    /*Give a warning if no output cell/point or rgb data is specified */
+    if (param.input->answers == NULL && param.rgbmaps->answers == NULL) {
+	G_warning
+	    ("No g3d data or RGB maps are provided! Will only write the geometry.");
+    }
+
+    return;
+}
 
 
 /* ************************************************************************* */
@@ -69,6 +137,9 @@ int main(int argc, char *argv[])
     else
 	fp = stdout;
 
+    /*Check the input maps */
+    CheckInputMaps();
+
     /* Figure out the region from the map */
     if (G__get_window(&region, "", "WIND", G_mapset()) != NULL) {
 	G_get_default_window(&region);
@@ -93,12 +164,6 @@ int main(int argc, char *argv[])
 	mapset = G_find_cell2(param.elevationmap->answer, "");
 	out_type = G_raster_map_type(param.elevationmap->answer, mapset);
 
-	if (mapset == NULL) {
-	    G_fatal_error(_("Cell file [%s] not found\n"),
-			  param.elevationmap->answer);
-	    exit(EXIT_FAILURE);
-	}
-
 	/* open raster file */
 	fd = G_open_cell_old(param.elevationmap->answer, mapset);
 	if (fd < 0) {
@@ -106,8 +171,6 @@ int main(int argc, char *argv[])
 			  param.elevationmap->answer);
 	    exit(EXIT_FAILURE);
 	}
-
-
 
 	/*The write the Coordinates */
 	if (param.usestruct->answer) {
@@ -129,8 +192,6 @@ int main(int argc, char *argv[])
 					 atof(param.elevscale->answer),
 					 polytype);
 	}
-	/*We have Pointdata */
-	writeVTKPointDataHeader(fp, region);
 	G_close_cell(fd);
     }
     else {
@@ -148,54 +209,52 @@ int main(int argc, char *argv[])
 	else
 	    writeVTKNormalHeader(fp, region, atof(param.elev->answer),
 				 headertype);
+    }
 
-	if (param.point->answer)
+
+  /******************** WRITE THE POINT OR CELL DATA HEADER ******************/
+    if (param.input->answers != NULL || param.rgbmaps->answers != NULL) {
+	if (param.point->answer || param.elevationmap->answer)
 	    writeVTKPointDataHeader(fp, region);
 	else
 	    writeVTKCellDataHeader(fp, region);
     }
 
-
   /********************** WRITE NORMAL DATA; CELL OR POINT *******************/
     /*Loop over all input maps! */
-    for (i = 0; param.input->answers[i] != NULL; i++) {
+    if (param.input->answers != NULL) {
 
-	G_debug(3, _("Open Raster file %s"), param.input->answers[i]);
+	for (i = 0; param.input->answers[i] != NULL; i++) {
 
-	mapset = NULL;
 
-	mapset = G_find_cell2(param.input->answers[i], "");
+	    G_debug(3, _("Open Raster file %s"), param.input->answers[i]);
 
-	if (mapset == NULL) {
-	    G_fatal_error(_("Cell file [%s] not found\n"),
-			  param.input->answers[i]);
-	    exit(EXIT_FAILURE);
+	    mapset = NULL;
+	    mapset = G_find_cell2(param.input->answers[i], "");
+	    out_type = G_raster_map_type(param.input->answers[i], mapset);
+
+	    /* open raster file */
+	    fd = G_open_cell_old(param.input->answers[i], mapset);
+	    if (fd < 0) {
+		G_fatal_error(_("Could not open map %s\n"),
+			      param.input->answers[i]);
+		exit(EXIT_FAILURE);
+	    }
+	    /*Now write the data */
+	    writeVTKData(fd, fp, param.input->answers[i], region, out_type,
+			 null_value);
+	    G_close_cell(fd);
 	}
-
-	out_type = G_raster_map_type(param.input->answers[i], mapset);
-
-	/* open raster file */
-	fd = G_open_cell_old(param.input->answers[i], mapset);
-	if (fd < 0) {
-	    G_fatal_error(_("Could not open map %s\n"),
-			  param.input->answers[i]);
-	    exit(EXIT_FAILURE);
-	}
-
-	/*Now write the data */
-	writeVTKData(fd, fp, param.input->answers[i], region, out_type,
-		     null_value);
-	G_close_cell(fd);
     }
 
   /********************** WRITE RGB IMAGE DATA; CELL OR POINT ****************/
     if (param.rgbmaps->answers != NULL) {
-
 	if (param.rgbmaps->answers[0] != NULL &&
 	    param.rgbmaps->answers[1] != NULL &&
 	    param.rgbmaps->answers[2] != NULL) {
 
-	    /*Loop over all input maps! */
+
+	    /*Loop over all three rgb input maps! */
 	    for (i = 0; i < 3; i++) {
 		G_debug(3, _("Open Raster file %s"), param.rgbmaps->answers[i]);
 
@@ -204,13 +263,6 @@ int main(int argc, char *argv[])
 		mapset = G_find_cell2(param.rgbmaps->answers[i], "");
 		celltype[i] =
 		    G_raster_map_type(param.rgbmaps->answers[i], mapset);
-
-		if (mapset == NULL) {
-		    G_fatal_error(_("Cell file [%s] not found\n"),
-				  param.input->answers[i]);
-		    exit(EXIT_FAILURE);
-		}
-
 
 		/* open raster file */
 		rgbfd[i] = G_open_cell_old(param.rgbmaps->answers[i], mapset);
@@ -221,27 +273,25 @@ int main(int argc, char *argv[])
 		}
 	    }
 
+	    /*Maps have to be from the same type */
 	    if (celltype[0] == celltype[1] && celltype[0] == celltype[2]) {
 		G_debug(3, _("Writing VTK ImageData\n"));
 
 		out_type = celltype[0];
+
 		/*Now write the data */
 		writeVTKRGBImageData(rgbfd[0], rgbfd[1], rgbfd[2], fp,
 				     "RGB_Image", region, out_type);
 	    }
 	    else {
 		G_warning(_
-			  ("Wrong RGB maps. Maps should be the same type! RGB output not added!"));
+			  ("Wrong RGB maps. Maps should have the same type! RGB output not added!"));
 		/*do nothing */
 	    }
 
+	    /*Close the maps */
 	    for (i = 0; i < 3; i++)
 		G_close_cell(rgbfd[i]);
-
-	}
-	else {
-	    G_warning(_("Wrong RGB maps. RGB output not added!"));
-	    /*do nothing */
 	}
     }
 
@@ -253,3 +303,4 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+
