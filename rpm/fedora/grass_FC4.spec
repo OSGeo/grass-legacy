@@ -1,6 +1,5 @@
-# GRASS 6.1 RPM spec file for Fedora
-# This file is Free Software under GNU GPL v>=2. 
-# $Id$
+# GRASS 6.1 RPM spec file for FC4/RHEL4 
+# This file is Free Software under GNU GPL v>=2.
 
 %define PACKAGE_NAME grass
 %define PACKAGE_VERSION 6.1.cvs
@@ -8,44 +7,46 @@
 %define _prefix /usr
 %define _bindir /usr/bin
 %define shortver 61
+%define cvssnapshot	_src_snapshot_2006_02_25
 
-## Disable the automatic running of the _find_requires macro.  
-#%define _find_requires %{nil}  
+%define with_blas	0
+%define with_ffmpeg	0
+%define with_odbc	0
+%define with_mysql	0
+%define with_postgres	1
+%define with_largefiles	1
 
-## Turn off automatic generation of dependencies to 
-## avoid a problem with libgrass* dependency issues.  
-## Other dependencies listed below.  
+# Turn off automatic generation of dependencies to
+# avoid a problem with libgrass* dependency issues.
+# Other dependencies listed below.
+%define _use_internal_dependency_generator 0
+# Filter out the library number on provides
+%define __find_provides %{_tmppath}/find_provides.sh
+# Disable the _find_requires macro.
+%define __find_requires %{nil}
 
-Autoreq: 0  
+
 
 #Query the RPM database to find which redhat/fedora release we are running.
 %if %(rpmquery fedora-release | grep -cv 'not installed$')
     %define FCL 1
     %define VER1 %(rpmquery --qf '%{VERSION}' fedora-release)
 %endif
-%if %(rpmquery redhat-release | grep -cv 'not installed$')
-    %define RHL 1
-    %define VER1 %(rpmquery --qf '%{VERSION}' redhat-release)	
-%endif
 %if %(rpmquery redhat-release | grep -v 'not installed$' | grep -c -e '-[0-9][AEW]S')
     %define ENT 1
+    %define VER1 %(rpmquery --qf '%{VERSION}' redhat-release|cut -c1)	
 %endif
-
-#??
-#%define REL 4
-
-
 
 Summary:	GRASS - Geographic Resources Analysis Support System
 Name:		%PACKAGE_NAME
 Version:	%PACKAGE_VERSION
 Epoch: 0
 %{?FCL:Release: 0.fdr.%{REL}.fc%{VER1}}
-%{?RHL:Release: 0.fdr.%{REL}.rh%{VER1}}
-Source:	        ftp://grass.itc.it/pub/grass/grass%{shortver}/source/grass-%{version}.tar.gz
+%{?ENT:Release: 0.E%{VER1}}
+Source:	        ftp://grass.itc.it/pub/grass/grass%{shortver}/source/snapshot/grass-%{version}%{cvssnapshot}.tar.gz
 License:	GPL, Copyright by the GRASS Development Team
 Group:		Sciences/Geosciences
-Packager:       Markus Neteler <neteler@itc.it> 
+Packager:       Markus Neteler <neteler@itc.it>
 URL:            %PACKAGE_URL
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)/%{name}-%{version}
 Prefix:         %{_prefix}
@@ -69,31 +70,46 @@ Requires:       libpng >= 1.2.8
 Requires:       libstdc++ >= 3.4
 Requires:       libtiff >= 3.6
 Requires:       zlib >= 1.2
-#Requires:       blas >= 3.0
-#Requires:       lapack >= 3.0
-
-#Requires:	lesstif
-#Requires:	unixODBC
-#Requires:	mysql
-#Requires:	postgresql >= 7.3
+%if "%{with_blas}" == "1"
+Requires:       blas >= 3.0
+Requires:       lapack >= 3.0
+%endif
+%if "%{with_ffmpeg}" == "1"
+Requires:       ffmpeg
+%endif
+%if "%{with_odbc}" == "1"
+Requires:	unixODBC
+%endif
+%if "%{with_mysql}" == "1"
+Requires:	mysql
+%endif
+%if "%{with_postgres}" == "1"
+Requires:	postgresql-libs >= 7.3
+%endif
 BuildRequires:	bison
-#BuildRequires:	fftw2-devel
+BuildRequires:  fftw-devel >= 2.1
+BuildRequires:  fftw-devel < 3.0
 BuildRequires:	flex
-#BuildRequires:	freetype2-devel >= 2.0.0
-#BuildRequires:	gcc-g77
+BuildRequires:	freetype-devel >= 2.0.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 1.2.2
 BuildRequires:	man
-#BuildRequires:	lesstif-devel
 BuildRequires:	ncurses-devel >= 5.2
-#BuildRequires:	mysql-devel
-#BuildRequires:	postgresql-devel
-#BuildRequires:	unixODBC-devel
+%if "%{with_mysql}" == "1"
+BuildRequires:	mysql-devel
+%endif
+%if "%{with_postgres}" == "1"
+BuildRequires:	postgresql-devel
+%endif
+%if "%{with_odbc}" == "1"
+BuildRequires:	unixODBC-devel
+%endif
 BuildRequires:	zlib-devel
 
-
-Vendor: GRASS 
-
+Vendor: GRASS
+#
+# clean up of provides for other packages: gdal-grass, qgis etc.
+#
 
 %description
 GRASS (Geographic Resources Analysis Support System) is a Geographic
@@ -105,25 +121,38 @@ agencies and environmental consulting companies.
 
 
 %prep
-%setup -q   ## run quietly with minimal output. 
-%setup  -n %{name}-%{version}  ## name the directory 
-
+#%setup -q   ## run quietly with minimal output.
+%setup  -n %{name}-%{version}%{cvssnapshot}  ## name the directory
+#
+# Filter out library number
+#
+cat > %{_tmppath}/find_provides.sh <<EOF
+#!/bin/sh
+/usr/lib/rpm/redhat/find-provides | sed -e 's/%{version}\.//g' | sort -u
+exit 0
+EOF
+chmod ugo+x %{_tmppath}/find_provides.sh
 
 %build
-
+#
 #configure with shared libs:
-
-CFLAGS="-O2" 
-LDFLAGS="-s"   
+#
+CFLAGS="-O2 -g -Wall -Werror-implicit-function-declaration -fno-common"
+CXXFLAGS="-g -Wall"
+#LDFLAGS="-s"
 
 ( %configure  \
    --prefix=%{buildroot}/%{_prefix} \
    --bindir=%{buildroot}/%{_bindir} \
    --enable-shared \
+%if "%{with_largefiles}" == "1"
+   --enable-largefile \
+%endif
    --with-fftw \
    --with-includes=/usr/include \
    --with-libs=/usr/lib \
    --with-motif \
+   --with-motif-includes=/usr/X11R6/include/Xm \
    --with-freetype=yes \
    --with-freetype-includes=/usr/include/freetype2 \
    --with-nls \
@@ -132,24 +161,42 @@ LDFLAGS="-s"
    --with-proj-includes=/usr/include \
    --with-proj-libs=/usr/lib \
    --with-glw \
+   --with-sqlite \
+%if "%{with_mysql}" == "1"
+   --with-mysql \
+   --with-mysql-includes=/usr/include/mysql \
+   --with-mysql-libs=/usr/lib/mysql \
+%else
+   --without-mysql \
+%endif
+%if "%{with_odbc}" == "1"
+   --with-odbc  \
+   --with-odbc-libs=/usr/lib \
+   --with-odbc-includes=/usr/include \
+%else
+   --without-odbc \
+%endif
+%if "%{with_postgres}" == "1"
+   --with-postgres  \
+   --with-postgres-includes=/usr/include/pgsql \
+   --with-postgres-libs=/usr/lib  \
+%else
+   --without-postgres  \
+%endif
+%if "%{with_blas}" == "1"
+   --with-blas  \
+   --with-lapack  \
+%endif
+%if "%{with_ffmpeg}" == "1"
+   --with-ffmpeg \
+%endif
    --with-cxx
-#   --with-mysql \
-#   --with-mysql-includes=/usr/include/mysql \
-#   --with-mysql-libs=/usr/lib/mysql \
-#   --with-odbc  \
-#   --with-odbc-libs=/usr/lib \ 
-#   --with-odbc-includes=/usr/include \
-#   --with-postgres  \
-#   --with-postgres-includes=/usr/include/pgsql \ 
-#   --with-postgres-libs=/usr/lib 
 )
-  
 
 #configure with shared libs:
 
 make prefix=%{buildroot}%{_prefix} BINDIR=%{buildroot}%{_bindir}  \
-     PREFIX=%{buildroot}%{_prefix}  
-
+     PREFIX=%{buildroot}%{_prefix}
 
 %install
 
@@ -168,6 +215,10 @@ cat  %{buildroot}%{_bindir}/grass%{shortver}.tmp | \
 rm %{buildroot}%{_bindir}/grass%{shortver}.tmp
 chmod +x %{buildroot}%{_bindir}/grass%{shortver}
 
+# Make grass libraries available on the system
+install -d %{buildroot}/etc/ld.so.conf.d
+echo %{_prefix}/grass-%{version}/lib >> %{buildroot}/etc/ld.so.conf.d/grass-%{version}.conf
+
 %clean
 rm -rf %{buildroot}
 
@@ -177,62 +228,25 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root)
 
-%doc AUTHORS COPYING GPL.TXT README REQUIREMENTS.html 
+%doc AUTHORS COPYING GPL.TXT README REQUIREMENTS.html
 
-%attr(0755,root,root) 
+%attr(0755,root,root)
 
 %{_bindir}/grass%{shortver}
-#%{_prefix}/bin/grass%{shortver}
-# %attr(1777,root,root) 
-#%{_prefix}/grass-%{version}/locks
 %{_prefix}/grass-%{version}
+/etc/ld.so.conf.d/grass-%{version}.conf
 
-%post
-#echo -n "Running ldconfig..."
-ldconfig
-#echo "done."
+%post -p /sbin/ldconfig
 
-echo -n "linking libgrass ..."
-cd %{_prefix}/lib/
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_I.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_vask.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_gmath.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_gis.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_datetime.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_vect.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_dig2.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_dbmiclient.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_dbmibase.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_shape.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_dgl.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_rtree.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_linkm.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_form.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_gproj.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_vect.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_dig2.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_dbmiclient.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_dbmibase.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_shape.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_dgl.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_rtree.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_linkm.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_form.so .
-ln -s %{_prefix}/grass-%{version}/lib/libgrass_gproj.so .
-echo "done."
-
-%postun
-#echo -n "Running ldconfig..."
-ldconfig
-#echo "done."
-
-# delete softlinks for libgrass
-rm -f /usr/lib/libgrass_*
+%postun -p /sbin/ldconfig
 
 %Changelog
+* Tue Feb 28 2006 Roberto Flor <flor@itc.it>
+  - Small changes and cleanup. Requires FC4 or RH Enterprise 4.
+  - Dirty fix for provides error
 * Thu Oct 12 2005 Markus Neteler <neteler@itc.it>
   - First build of RPM for Fedora Core 4.
-* Thu Mar 30 2005 Craig Aumann <caumann@ualberta.ca> 
+* Thu Mar 30 2005 Craig Aumann <caumann@ualberta.ca>
   - First build of RPM for Fedora Core 3.
 * Wed Sep 01 2004 Bernhard Reiter <bernhard@intevation.de>
   - made ready to be checked into GRASS CVS: added header, disabled Patch1
@@ -240,4 +254,3 @@ rm -f /usr/lib/libgrass_*
   - small changes to fit to Fedora naming conventions
 * Thu Jul 01 2004 Silke Reimer <silke.reimer@intevation.net>
   - Initial build
-
