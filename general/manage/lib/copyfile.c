@@ -5,9 +5,7 @@ copyfile (char *element, char *old, char *mapset, char *new)
 {
     char buf[1024];
     int in, out;
-    int ix, ox;
-
-    in = out = -1;
+    int ix, ox = 0;
 
     in = G_open_old (element, old, mapset);
     if (in < 0)
@@ -19,7 +17,7 @@ copyfile (char *element, char *old, char *mapset, char *new)
 	return -2;
     }
     while ((ix = read (in, buf, sizeof buf)) > 0)
-	if ((ox = write (out, buf, ix)) != ix)
+	if ((ox = write (out, buf, (size_t)ix)) != ix)
 	    break;
 
     close (in);
