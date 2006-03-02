@@ -20,6 +20,18 @@ If you have a G3D map with partly no data, use the threshold filter in paraview 
 visualize the valid data. Just filter all data which is greater/lesser than the 
 choosen null value in the VTK-ASCII file.
 
+<BR><BR>
+The <I>input</I> and <I>rgbmaps</I> options are optional, so only the geometry can be 
+exported.
+<BR><BR>
+If you use <I>top</I> and <I>bottom</I> be sure your region settings are accordingly.
+The 2d and 3d resolution of the current region must be equal (take a look at the example).
+<BR><BR>
+The RGB voxel data can be created from 2d raster maps (Landsat TM images) 
+with <EM><A HREF="r.to.rast3.html">r.to.rast3</A></EM>. The values of the RGB maps
+must be within 0 and 255. Whether not, the values are set automaticly 
+to 0 and warnings will be printed to stderr.
+
 <H3>Difference between point- and celldata</H3>
 
 <em>r3.out.vtk</em> can export G3D cells with different representations.
@@ -53,6 +65,36 @@ r3.out.vtk -s input=map3d top=elevation.10m bottom=bottom output=/tmp/out.vtk
 
 # visualize in paraview or other VTK viewer:
 paraview --data=/tmp/out.vtk
+</pre></div>
+
+<H3>Spearfish example with RGB data</H3>
+
+<div class="code"><pre>
+#set the region
+g.region -d
+g.region n=4926970 s=4914857 w=591583 e=607793 res=50 res3=50 t=80 b=0 tbres=10
+
+#create a bottom surface
+r.mapcalc "bottom=1800. - elevation.10m"
+
+# synthetic data, could be geological structures:
+r3.mapcalc "map3d=row()+col()+depth()"
+
+#get some satellite images with r.in.onearth
+r.in.onearth -l output=Sat tmband=Red
+r.in.onearth -l output=Sat tmband=IR1
+r.in.onearth -l output=Sat tmband=IR2
+
+#Convert the 2d maps to g3d maps with r.to.rast3
+r.to.rast3 input=SatLandsatTM_Red output=SatLandsatTM_Red
+r.to.rast3 input=SatLandsatTM_IR1 output=SatLandsatTM_IR1
+r.to.rast3 input=SatLandsatTM_IR2 output=SatLandsatTM_IR2
+
+#export of volume to VTK:
+r3.out.vtk -s rgbmaps=SatLandsatTM_IR1,SatLandsatTM_IR2,SatLandsatTM_Red input=map3d top=elevation.10m bottom=bottom output=/tmp/out.vtk
+
+# visualize in paraview or other VTK viewer:
+paraview --data=/tmp/out.vtk 
 </pre></div>
 
 
