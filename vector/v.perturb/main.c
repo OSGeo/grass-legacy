@@ -21,10 +21,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  * Modification History:
+ * 3/2006              added min and seed MN/SM ITC-irst
+ * 2005                updated to GRASS 6 RB ITC-irst
  * 0.1B <18 Feb 1994>  first version (jdm)
  * 0.2B <02 Jan 1995>  clean man page, added html page (jdm)
  * 0.3B <25 Feb 1995>  cleaned up 'gcc -Wall' warnings (jdm)
  * <13 Sept 2000>      released under GPL
+ *
+ * TODO: see code below
  */
 
 #include <stdlib.h>
@@ -39,12 +43,13 @@
 int main(int argc, char **argv)
 {
     char *mapset;
-    double p1, p2, numbers[1000];
+    double p1, p2, numbers[1000],numbers2[1000];
     int (*rng) ();
     int i, verbose;
     int line, nlines, ttype, n, ret, seed;
     struct field_info *Fi, *Fin;
     double min=0.;
+    int debuglevel=3;
 
     struct Map_info In, Out;
 
@@ -158,6 +163,7 @@ int main(int argc, char **argv)
     /* Generate a bunch of random numbers */
     zufalli(&seed);
     myrng(numbers, 1000, rng, p1 - min, p2);
+    myrng(numbers2, 1000, rng, p1, p2);
 
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
@@ -171,32 +177,37 @@ int main(int argc, char **argv)
 	type = Vect_read_line(&In, Points, Cats, line);
 
 	if (type & GV_POINT) {
-	    if (i >= 997) {
+	    if (i >= 800) {
 		/* Generate some more random numbers */
 		myrng(numbers, 1000, rng, p1 - min, p2);
+		myrng(numbers2, 1000, rng, p1, p2);
 		i = 0;
 	    }
 
-	    G_debug(3, "x:      %f y:      %f", Points->x[0], Points->y[0]);
+	    G_debug(debuglevel, "x:      %f y:      %f", Points->x[0], Points->y[0]);
 
-	    /* perturb */
-	    if ( numbers[i] >= 0){
-	       G_debug(3, "deltax: %f", numbers[i] + min);
-	       Points->x[0] += numbers[i++] + min ;
+	    /* perturb */  /* TODO: tends to concentrate in box corners when min is used */
+	    if ( numbers2[i] >= 0){
+	      if ( numbers[i] >= 0){
+		G_debug(debuglevel, "deltax: %f", numbers[i] + min);
+		Points->x[0] += numbers[i++] + min ;
+	      }else{
+		G_debug(debuglevel, "deltax: %f", numbers[i] - min);
+		Points->x[0] += numbers[i++] - min ;
+	      }
+	      Points->y[0] += numbers2[i++];
 	    }else{
-	       G_debug(3, "deltax: %f", numbers[i] - min);
-	       Points->x[0] += numbers[i++] - min ;
-	    }
-	    
-	    if ( numbers[i] >= 0){
-	       G_debug(3, "deltay: %f", numbers[i] + min);
-	       Points->y[0] += numbers[i++] + min ;
-	    }else{ 
-	       G_debug(3, "deltay: %f", numbers[i] - min);
-	       Points->y[0] += numbers[i++] - min ;
+	      if ( numbers[i] >= 0){
+		G_debug(debuglevel, "deltay: %f", numbers[i] + min);
+		Points->y[0] += numbers[i++] + min ;
+	      }else{ 
+		G_debug(debuglevel, "deltay: %f", numbers[i] - min);
+		Points->y[0] += numbers[i++] - min ;
+	      }
+	      Points->x[0] += numbers2[i++];
 	    }
 
-	    G_debug(3, "x_pert: %f y_pert: %f", Points->x[0], Points->y[0]);
+	    G_debug(debuglevel, "x_pert: %f y_pert: %f", Points->x[0], Points->y[0]);
 	}
 
 	Vect_write_line(&Out, type, Points, Cats);
