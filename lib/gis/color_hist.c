@@ -107,7 +107,7 @@ int G_make_histogram_log_colors (
     int x, grey;
 
     G_init_colors (colors);
-    G_set_null_value_color (0, 0, 0, colors);
+    G_set_null_value_color (255, 255, 255, colors);
 
     total = 0;
 
