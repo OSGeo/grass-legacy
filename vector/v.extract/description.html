@@ -9,6 +9,7 @@ areas have the same output category, the boundary is removed.
 
 <h2>EXAMPLES</h2>
 
+<h3>Extract areas by category number with dissolving</h3>
 <div class="code"><pre>
 v.extract -d list=1,2,3,4 input=soils output=soil_groupa type=area new=1
 </pre></div>
@@ -19,7 +20,8 @@ boundaries from <em>soils</em> with area category numbers of 1 thru 4;  any
 common boundaries are dissolved, and all areas of the new map will be
 assigned category number 1.
 
-<P>
+
+<h3>Extract areas by category label with dissolving</h3>
 <div class="code"><pre>
 v.extract -d list=Abc,Def1,12A,WWd input=soils output=soil_groupa type=area new=0
 </pre></div>
@@ -31,7 +33,7 @@ boundaries are dissolved, all areas of the new map will be retain their
 original category numbers 1 thru 4, in this case, since new was set to
 0.
 
-<P>
+<h3>Extract areas to uniquely labeled area</h3>
 <div class="code"><pre>
 v.extract input=soils output=soil_groupa type=area new=1 file=sample
 </pre></div>
@@ -41,7 +43,7 @@ produces a new vector area file <em>soil_groupa</em> containing 'area'
 boundaries from <em>soils</em>.  No common boundaries are dissolved, all areas
 of the new map will be assigned category number 1.
 
-<p>
+<h3>Extract vectors with SQL</h3>
 <div class="code"><pre>
 v.extract input=markveggy.shp output=markveggy.1 new=1 \
           where="(VEGTYPE = 'Wi') or (VEGTYPE = 'PS') or (PRIME_TYPE='Wi')"
@@ -50,7 +52,17 @@ v.extract input=markveggy.shp output=markveggy.1 new=1 \
 
 produces a new vector map with category label 1 if the SQL statement is
 fulfilled.
-</DL>
+
+
+<h3>Dissolving based on column attributes</h3>
+<div class="code"><pre>
+v.reclass pol_italy out=pol_italy_recl_nam col=region
+v.extract -d pol_italy_recl_nam out=pol_italy_regions
+</pre></div>
+<p>
+
+produces a new vector map with common boundaries dissolved
+if the attribute of the left and right polygon is identical.
 
 <h2>SEE ALSO</h2>
 
