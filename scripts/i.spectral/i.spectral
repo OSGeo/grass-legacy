@@ -1,68 +1,40 @@
 #!/bin/sh
 # written by Markus Neteler 18. August 1998
-#            neteler@geog.uni-hannover.de
-#
+#            neteler geog.uni-hannover.de
+# 
 # bugfix: 25. Nov.98/20. Jan. 1999
+# 3 March 2006: Added multiple images and group support by Francesco Pirotti - CIRGEO
 # this script needs gnuplot
 
 #%Module
-#%  description: displays spectral response at user specified locations in images
+#%  description: displays spectral response at user specified locations in group or images
 #%End
 #%option
-#% key: band1
+#% key: group
 #% type: string
-#% gisprompt: old,cell,raster
-#% description: raster input map
-#% required : yes
-#%end
-#%option
-#% key: band2
-#% type: string
-#% gisprompt: old,cell,raster
-#% description: raster input map
+#% gisprompt: old,group
+#% description: group input
 #% required : no
 #%end
 #%option
-#% key: band3
+#% key: bands
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: raster input map
+#% description: raster input maps
+#% multiple : yes
 #% required : no
 #%end
-#%option
-#% key: band4
-#% type: string
-#% gisprompt: old,cell,raster
-#% description: raster input map
-#% required : no
+#%flag 
+#%key: i
+#%description: Use image list and not group
 #%end
-#%option
-#% key: band5
-#% type: string
-#% gisprompt: old,cell,raster
-#% description: raster input map
-#% required : no
+#%flag 
+#%key: m
+#%description: Select multiple points
 #%end
-#%option
-#% key: band6
-#% type: string
-#% gisprompt: old,cell,raster
-#% description: raster input map
-#% required : no
-#%end
-#%option
-#% key: band7
-#% type: string
-#% gisprompt: old,cell,raster
-#% description: raster input map
-#% required : no
-#%end
-#%option
-#% key: band8
-#% type: string
-#% gisprompt: old,cell,raster
-#% description: raster input map
-#% required : no
+#%flag 
+#%key: c
+#%description: label with coordinates instead of numbering
 #%end
 
 if test "$GISBASE" = ""; then
@@ -77,66 +49,196 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 #check if present
-GNUPLOT=`type -p gnuplot`
-if [ -z "$GNUPLOT" ] ; then
-  echo "Requires 'gnuplot' which could not be found in PATH"
-  exit 1
+if [ ! -x "`which gnuplot`" ] ; then
+    echo "$PROG: gnuplot required, please install first" 2>&1
+    exit 1
 fi
-
-# get y-data for gnuplot-data file
-
-RASTERMAPS="$GIS_OPT_band1 $GIS_OPT_band2 $GIS_OPT_band3 $GIS_OPT_band4 $GIS_OPT_band5 $GIS_OPT_band6 $GIS_OPT_band7 $GIS_OPT_band8"
-RASTERMAPS=`echo $RASTERMAPS | sed 's+ $++g' | sed 's+ +,+g'`
+GNUPLOT=gnuplot
 
 TMP1="`g.tempfile pid=$$`"
 TMP2="`g.tempfile pid=$$`"
 
-d.where -1 | r.what input=$RASTERMAPS > "$TMP1"
-cat "$TMP1" | cut -d'|' -f4,5,6,7,8,9,10| tr '|' '\012' > "$TMP2"
-COORD="`cat "$TMP1" | cut -d'|' -f1,2 | tr '|' ' '`"
-NUM="`cat "$TMP2" | wc -l`"
-NUM2=`expr $NUM + 1`
+# get y-data for gnuplot-data file
+# get data from group files and set the x-axis labels
+
+xlabels=""
+
+if [ ! "$GIS_OPT_group" ] ; then
+   if [ $GIS_FLAG_i -eq 0 ] ; then
+      echo "Please use -i if you don't use the 'group' parameter"
+      exit 1
+   fi
+fi
+
+if [ $GIS_FLAG_i -eq 0 ] ; then
+
+	# ## PARSES THE GROUP FILES - gets rid of ugly header info from group list output
+	i.group  group=$GIS_OPT_group -l | sed 's+ in + +g' | grep "group" -v | grep "\-\-\-\-$" -v > "$TMP2"
+	as=0
+	lists=""
+	xlabels=""
+	ass=0
+	for i in $( cat "$TMP2" ); do
+		er=`expr $as % 2`
+		as=`expr $as + 1`
+		if [ "$er" -eq "0" ]; then
+			ass=`expr $ass + 1`
+			if [ "$as" -eq "1" ]; then
+  	                  lists=$i
+			  xlabels="'$i' 1"
+			else
+   	                  lists=$lists,$i
+			  xlabels="$xlabels, '$i' $ass"
+		        fi
+ 		fi       
+	 done
+
+NUMBANDS=$ass
+RASTERMAPS="$lists"
+
+# ## get data from list of files and set the x-axis labels
+else
+  RASTERMAPS="$GIS_OPT_bands"
+  news=`echo $GIS_OPT_bands | sed 's+,+ +g'`
+  as=0
+  for g in $news; do 
+    as=`expr $as + 1`
+    if [ "$as" -eq "1" ]; then
+       xlabels="'$g' $as"
+    else
+       xlabels="$xlabels, '$g' $as"
+    fi
+   done
+
+   NUMBANDS=$as
+fi
+
+rm -f "$TMP2"
+
+#RASTERMAPS=`echo $RASTERMAPS | sed 's+ $++g' | sed 's+ +,+g'`
+
+if [ "$GIS_FLAG_m" -eq "0" ]; then
+  d.where -1 | r.what input=$RASTERMAPS > "$TMP1"
+
+else 
+  asss=0
+  d.where | r.what input=$RASTERMAPS > "$TMP1"
+  cat "$TMP1" > tmper
+  rm -f "$TMP1"
+  for asas in $(cat "tmper"); do
+    asss=`expr $asss + 1`
+    echo $asas | sed 's+||+|'$asss'|+g' >> "$TMP1"
+  done
+fi
+
+cc=0
+
+TT="`cat "$TMP1" | sed 's+\*+0+g' | sed 's+|+ +g'`"
+
+NUMCLICKS="`cat "$TMP1" | wc -l`"
+START=0
+
+# tell data to outpu in different files to accept multiple plots - cache coordinates for output
+for hell in $( cat "$TMP1"); do
+   START=`expr $START + 1`
+   #cc=`expr $cc + 1`
+   COORD[$START]="`echo $hell | cut -d'|' -f1,2 | tr '|' ' '`"
+   #LABELS[$START]="`cat "$TMP1" | cut -d'|' -f3 `"
+   TOT="`echo $hell | sed 's+\*+0+g' | sed 's+|+ +g'`"
+   cc=0
+   for ix in $TOT; do
+    cc=`expr $cc + 1`
+    if [ "$cc" -gt 3 ]; then
+      echo $ix >> "$TMP2"_$START
+    fi
+   done
+
+done
+
+rm -f "$TMP1"
+
+NUM=$NUMBANDS
+NUM2=`expr $NUM / $NUMCLICKS`
+NUM2=`expr $NUM2 + 1`
 
 
 # build data file
 # the x-axis... depending on number of bands
-rm -f spectrum.data.dum
+rm -f data.dum
 
-i=1
+  i=0
+  while [ $i != $NUMBANDS ]
+   do
+    i=`expr $i + 1`
+    echo $i >> data.dum
+   done 
 
-while [ $i != $NUM2 ]
+r=0
+while [ $r != $NUMCLICKS ]
 do
- echo $i >> spectrum.data.dum
- i=`expr $i + 1`
-done 
+  r=`expr $r + 1`
+  paste -d' ' data.dum "$TMP2"_$r > data_$r
+  rm -f "$TMP2"_$r
+done
+
 # paste to data file
-paste -d' ' spectrum.data.dum "$TMP2" > spectrum.data
-rm -f "$TMP1" "$TMP2"
-echo ""
-echo "Band - DN at $COORD"
-cat  spectrum.data
+#paste -d' ' data.dum "$TMP2" > data
+xrange=`expr $NUMBANDS + 1`
 
 # build gnuplot script
-echo "set xtics ('$GIS_OPT_band1' 1, '$GIS_OPT_band2' 2, '$GIS_OPT_band3' 3, '$GIS_OPT_band4' 4, '$GIS_OPT_band5' 5, '$GIS_OPT_band6' 6, '$GIS_OPT_band7' 7, '$GIS_OPT_band8' 8)" >> spectrum.gnuplot
+echo "set xtics ($xlabels)" >> spectrum.gnuplot
 echo "set grid" >> spectrum.gnuplot
-echo "set title 'Spectral response at $COORD'" >> spectrum.gnuplot
+echo "set title 'Spectral signatures'" >> spectrum.gnuplot
 ##echo "set yrange [0:255]" >> spectrum.gnuplot
-echo "set xrange [0:$NUM2]" >> spectrum.gnuplot
+echo "set xrange [0:$xrange]" >> spectrum.gnuplot
 echo "set noclabel" >> spectrum.gnuplot
-echo "set xlabel 'Band number'" >> spectrum.gnuplot
+echo "set xlabel 'Bands'" >> spectrum.gnuplot
 echo "set ylabel 'DN Value'" >> spectrum.gnuplot
 
 ## if more then 2 points we can draw an interpolated spline:
 #if [ $PARAM_NUM -gt 2 ]
 #then
 #   echo "set data style linespoints" >> spectrum.gnuplot
-#   echo "plot 'spectrum.data' with points pt 779, '' smooth csplines t 'spline interpolated'" >> spectrum.gnuplot
+#   echo "plot 'data' with points pt 779, '' smooth csplines t 'spline interpolated'" >> spectrum.gnuplot
 #else
    echo "set data style lines" >> spectrum.gnuplot
-   echo "plot 'spectrum.data' with linespoints pt 779" >> spectrum.gnuplot
-#fi
+  
 
-# display it...
-$GNUPLOT -persist spectrum.gnuplot
+ rm -f data.dum
 
-rm -f spectrum.data spectrum.data.dum spectrum.gnuplot
+ i=0
+str=""
+  while [ $i != $NUMCLICKS ]
+   do
+    i=`expr $i + 1`
+    if [ "$i" -eq "1" ]
+     then
+      if [ $GIS_FLAG_c -eq 0 ] ; then
+        str="plot 'data_$i' title '$i'" 
+      else
+        str="plot 'data_$i' title '${COORD[$i]}'" 
+      fi
+     else
+      if [ $GIS_FLAG_c -eq 0 ] ; then
+        str=$str",'data_$i' title '$i'" 
+      else
+        str=$str",'data_$i' title '${COORD[$i]}'" 
+      fi
+     fi
+
+   done 
+str=$str" with linespoints pt 779"
+echo $str >> spectrum.gnuplot
+
+
+$GNUPLOT -persist spectrum.gnuplot 
+ 
+
+i=0
+while [ $i != $NUMCLICKS ]
+   do
+ i=`expr $i + 1`
+ rm -f data_$i
+done
+
+rm -f spectrum.gnuplot
