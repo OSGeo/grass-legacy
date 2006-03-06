@@ -121,7 +121,7 @@ Note: This text contains *some* rules only applicable to the
    http://www.gis-news.de/  (news@gismngt.de)
    http://www.giscafe.com/  (link: submit material, needs registration)
    http://www.freegis.org
-   http://www.directionsmag.com/pressreleases.php (click on 'Contact Us')
+   http://www.directionsmag.com/pressreleases.php (News -> Post Press Release)
    http://www.gismonitor.com/news/submit_news.php
    http://www.gisdevelopment.net (click on 'Submit Press Release')
    http://www.gnu.org/directory/science/geography/grass.html
