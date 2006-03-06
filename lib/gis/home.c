@@ -14,6 +14,7 @@
  *
  ***************************************************************/
 #include <stdlib.h>
+#include <string.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
@@ -57,14 +58,35 @@ G__home ()
 {
     static char *home = 0;
     char buf[1024];
-    FILE *fd,*G_popen();
+
+    if (home)
+        return home;
+
+#ifdef __MINGW32__
+    { 
+	/* TODO: we should probably check if the dir exists */
+	home = getenv ( "USERPROFILE" ) ;
+
+        if ( !home ) 
+        {
+	    sprintf ( buf, "%s%s", getenv ( "HOMEDRIVE" ), 
+				   getenv ( "HOMEPATH" ) );
+
+	    if ( strlen(buf) >= 0 )
+		home = G_store ( buf );
+        }
+
+	if ( !home )
+	    home = getenv ( "HOME" ) ;
+    }
+#else
+    {
+	FILE *fd,*G_popen();
 
 /* first call must get home
 * execute the command "cd; pwd" and read the
 * output to get the home directory
 */
-    if (!home)
-    {
 	if((fd = G_popen ("cd; pwd","r")))
 	{
 	    if (fscanf (fd,"%s", buf) == 1)
@@ -72,6 +94,7 @@ G__home ()
 	    G_pclose (fd);
 	}
     }
-
+#endif
+    G_debug (0, "G__home home = %s", home );
     return home;
 }
