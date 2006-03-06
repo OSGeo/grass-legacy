@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-05 14:26+0100\n"
-"PO-Revision-Date: 2006-03-05 19:31+0100\n"
+"PO-Revision-Date: 2006-03-06 21:33+0100\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -683,9 +683,8 @@ msgid "Problem parsing command [%s]"
 msgstr "Probleme beim Interpretieren des Kommandos [%s]."
 
 #: ../display/d.graph/main.c:32
-#, fuzzy
 msgid "Program for generating and displaying simple graphics on the display monitor."
-msgstr "für Erstellen der Datei  ein."
+msgstr "Programm zum Erstellen und Anzeigen von einfachen Grafiken auf dem Monitor."
 
 #: ../display/d.graph/main.c:39
 msgid ""
@@ -696,19 +695,17 @@ msgstr ""
 "von der Standardeingabe gelesen."
 
 #: ../display/d.graph/main.c:47
-#, fuzzy
 msgid "Color to draw with, either a standard GRASS color or R:G:B triplet"
-msgstr "a"
+msgstr "Farbe zum Zeichnen, entweder eine GRASS Standard-Farbe oder eine R:G:B-Tripel."
 
 #: ../display/d.graph/main.c:53
-#, fuzzy
 msgid "Coordinates are given in map units"
-msgstr "Koordinaten"
+msgstr "Koordinaten sind in Karteneinheiten angegeben."
 
 #: ../display/d.graph/main.c:70
-#, fuzzy, c-format
+#, c-format
 msgid "Graph file <%s> not found"
-msgstr "s nicht"
+msgstr "Grafik-Datei <%s> nicht gefunden."
 
 #: ../display/d.grid/main.c:55
 msgid ""
@@ -1180,9 +1177,8 @@ msgid "  Distance to the network = %f, distance from the network = %f\n"
 msgstr "Abstand zum Netzwerk = %f, Abstand vom Netzwerk = %f\n"
 
 #: ../display/d.rast/display.c:95
-#, fuzzy
 msgid "Cannot use current window"
-msgstr "Kein aktuelles Fenster."
+msgstr "Kann aktuelles Fenster nicht benutzen."
 
 #: ../display/d.rast/display.c:100 ../raster/r.bilinear/main.c:76
 #: ../raster/r.bilinear/main.c:87 ../raster/r.his/main.c:131
@@ -1230,19 +1226,17 @@ msgid "Don't add to list of rasters and commands in monitor"
 msgstr "hinzufügen list von"
 
 #: ../display/d.rast/main.c:91
-#, fuzzy, c-format
+#, c-format
 msgid "Raster map [%s] not available"
-msgstr "s nicht"
+msgstr "Rasterkarte [%s] nicht vorhanden."
 
 #: ../display/d.rast/main.c:99
-#, fuzzy
 msgid "Ignoring catlist: map is floating point (please use 'val=')"
-msgstr "ist Punkt"
+msgstr "Igniriere Kategorieliste: Karte ist ein Fließkommakarte (Bitte benutzen Sie 'val=')."
 
 #: ../display/d.rast/main.c:104
-#, fuzzy
 msgid "Ignoring vallist: map is integer (please use 'cat=')"
-msgstr "ist"
+msgstr "Ignoriere Vallist: Karte ist eine Integerkarte (Bitte benutzen Sie 'cat=')."
 
 #: ../display/d.rast.arrow/arrow.c:113
 msgid ""
@@ -1377,11 +1371,10 @@ msgid "The screen line number on which text will begin to be drawn"
 msgstr "Die Zeile des Monitors, in der der Text beginnt."
 
 #: ../display/d.text/main.c:102
-#, fuzzy
 msgid ""
 "Screen position at which text will begin to be drawn (percentage, [0,0] is "
 "lower left)"
-msgstr "Bildschirm an ist Links"
+msgstr "Bildschirmposition, an der der Text angefangen wird, zu zeichnen (in Prozent, [0,0] ist die untere linke Ecke)."
 
 #: ../display/d.text/main.c:109 ../display/d.text.freetype/main.c:221
 msgid "Rotation angle in degrees (counter-clockwise)"
@@ -1523,9 +1516,8 @@ msgid "%s: Unable to read FreeType definition file"
 msgstr "%s: Kann die FreeType Definitionsdatei nicht lesen."
 
 #: ../display/d.vect/area.c:46 ../display/d.vect/plot1.c:49
-#, fuzzy
 msgid "Color definition column not specified."
-msgstr "nicht."
+msgstr "Farbspalte nicht angegeben."
 
 #: ../display/d.vect/area.c:52 ../display/d.vect/plot1.c:55
 #: ../vector/v.surf.idw/read_sites.c:34
@@ -1544,31 +1536,31 @@ msgid "Cannot open database %s by driver %s"
 msgstr "Kann Datenbank '%s' mit Treiber '%s' nicht öffnen."
 
 #: ../display/d.vect/area.c:65 ../display/d.vect/plot1.c:68
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Color definition column (%s) not a string. Column must be of form RRR:GGG:"
 "BBB where RGB values range 0-255."
-msgstr "s nicht a von."
+msgstr "Farbdefinitionsspalte (%s) ist keine Zeichenkette. Die Spalte muss die folgende Form haben: RRR:GGG:BBB. Die RGB-Werte müssen zwischen 0 und 255 liegen."
 
 #: ../display/d.vect/area.c:70 ../display/d.vect/plot1.c:72
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot select data (%s) from table"
-msgstr "s von Tabelle"
+msgstr "Kann die Daten (%s) nicht aus der Tabelle selektieren."
 
 #: ../display/d.vect/area.c:82
-#, fuzzy, c-format
+#, c-format
 msgid "Category <%d>: Area fill color and background color are the same!"
-msgstr "Fläche Hintergrund!"
+msgstr "Kategorie <%d>: Flächenfüllfarbe und Hintergrund haben die gleiche Farbe!"
 
 #: ../display/d.vect/area.c:183
-#, fuzzy, c-format
+#, c-format
 msgid "Error in color definition column (%s), area %d with cat %d: colorstring [%s]"
-msgstr "s Bereich s"
+msgstr "Fehler in der Spaltendefinition (%s), Fläche %d mit Kategorie %d: Farbwert [%s]."
 
 #: ../display/d.vect/area.c:189
-#, fuzzy, c-format
+#, c-format
 msgid "Error in color definition column (%s), area %d with cat %d"
-msgstr "s Bereich"
+msgstr "Fehler in der Farbdefinitionsspalte (%s), Fläche %d mit Kategorie %d."
 
 #: ../display/d.vect/attr.c:54 ../display/d.vect/dir.c:33
 #: ../display/d.vect/label.c:33 ../display/d.vect/plot1.c:111
@@ -1614,9 +1606,8 @@ msgid "Area fill color"
 msgstr "Flächenfüllfarbe"
 
 #: ../display/d.vect/main.c:206
-#, fuzzy
 msgid "Name of color definition column (for use with -a flag)"
-msgstr "von für a"
+msgstr "Name der Farbdefinitionsspalte (mit dem Schalter -a zu benutzen)."
 
 #: ../display/d.vect/main.c:217
 msgid "Label color"
@@ -1661,14 +1652,12 @@ msgid "Run verbosely"
 msgstr "Detaillierte Ausgabe"
 
 #: ../display/d.vect/main.c:281
-#, fuzzy
 msgid "Get colors from map table column (of form RRR:GGG:BBB)"
-msgstr "Annehmen von Tabelle von"
+msgstr "Hole die Farbe aus der Tabellenspalte (RRR:GGG:BBB)."
 
 #: ../display/d.vect/main.c:286
-#, fuzzy
 msgid "Random colors according to category number"
-msgstr "Fülle die Flächen mit zufälligen Farben entsprechend den Kategorienummern."
+msgstr "Füllt die Flächen mit zufälligen Farben entsprechend den Kategorienummern."
 
 #: ../display/d.vect/main.c:290
 msgid "Use values from 'cats' option as line ID"
@@ -1692,9 +1681,8 @@ msgid "Region size is greater than maxreg, nothing displayed.\n"
 msgstr "Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt.\n"
 
 #: ../display/d.vect/main.c:340
-#, fuzzy
 msgid "Line color and background color are the same!"
-msgstr "Hintergrund!"
+msgstr "Linienfarbe und Hintergrund-Farbe sind gleich!"
 
 #: ../display/d.vect/main.c:350 ../display/d.vect/main.c:366
 #, c-format
@@ -1702,9 +1690,8 @@ msgid "Unknown color: [%s]"
 msgstr "Unbekannte Farbe: [%s]."
 
 #: ../display/d.vect/main.c:356
-#, fuzzy
 msgid "Area fill color and background color are the same!"
-msgstr "Fläche Hintergrund!"
+msgstr "Flächenfüllfarbe und Hintergrund sind gleich!"
 
 #: ../display/d.vect/main.c:373
 msgid "Cannot read symbol, cannot display points"
@@ -1768,33 +1755,31 @@ msgid "Done\n"
 msgstr "Fertig\n"
 
 #: ../display/d.vect/plot1.c:84
-#, fuzzy, c-format
+#, c-format
 msgid "Category <%d>: Line color and background color are the same!"
-msgstr "Hintergrund!"
+msgstr "Kategorie <%d>: Linienfarbe und Hintergrund sind gleich!"
 
 #: ../display/d.vect/plot1.c:162
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error in color definition column (%s), element %d with cat %d: colorstring [%"
 "s]"
-msgstr "s Element s"
+msgstr "Fehler in der Farbdefinitionsspalte (%s), Element %d mit Kategorie %d: Farbwert [%s]."
 
 #: ../display/d.vect/plot1.c:168
-#, fuzzy, c-format
+#, c-format
 msgid "Error in color definition column (%s), element %d with cat %d"
-msgstr "s Element"
+msgstr "Fehler in der Farbdefinitionsspalte (%s), Element %d mit Kategorie %d."
 
 #: ../display/d.vect.chart/main.c:58
-#, fuzzy
 msgid ""
 "Displays charts of GRASS vector data in the active frame on the graphics "
 "monitor"
-msgstr "von ein"
+msgstr "Stellt Diagramme von GRASS-Vektordaten im aktiven GRASS-Monirot dar."
 
 #: ../display/d.vect.chart/main.c:75
-#, fuzzy
 msgid "Chart type"
-msgstr "Diagramm"
+msgstr "Diagrammtyp"
 
 #: ../display/d.vect.chart/main.c:82
 #, fuzzy
