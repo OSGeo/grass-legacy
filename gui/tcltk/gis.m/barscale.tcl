@@ -143,7 +143,7 @@ proc GmBarscale::save { tree depth node } {
     
     set id [GmTree::node_id $node]
 
-    foreach key { _check bcolor bcolor_none tcolor at feet line top } {
+    foreach key { _check bcolor bcolor_none tcolor at feet line top arrow scale} {
         GmTree::rc_write $depth "$key $opt($id,$key)"
     } 
 }
