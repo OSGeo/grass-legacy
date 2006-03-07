@@ -95,6 +95,6 @@ G__home ()
 	}
     }
 #endif
-    G_debug (0, "G__home home = %s", home );
+    G_debug (2, "G__home home = %s", home );
     return home;
 }
