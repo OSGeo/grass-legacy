@@ -68,28 +68,28 @@ proc MapToolBar::create { tb } {
     #zoom out
     set zoomout [radiobutton $tb.zoomout \
 		-image [image create photo -file "$gmpath/zoomout.gif"] \
-        -command "MapCanvas::zoombind $mon -1" \
+        -command "MapCanvas::stoptool $mon; MapCanvas::zoombind $mon -1" \
 		-variable maptools -value zoomout \
         -indicatoron false -bg $bgcolor -selectcolor $selcolor]    
 
     # pan
     set pan [radiobutton $tb.pan \
 		-image [image create photo -file "$gmpath/pan.gif"] \
-        -command "MapCanvas::panbind $mon" \
+        -command "MapCanvas::stoptool $mon; MapCanvas::panbind $mon" \
 		-variable maptools -value pan \
         -indicatoron false -bg $bgcolor -selectcolor $selcolor]    
 
     # query
     set query [radiobutton $tb.query \
 		-image [image create photo -file "$gmpath/query.gif"] \
-        -command "MapCanvas::querybind $mon" \
+        -command "MapCanvas::stoptool $mon; MapCanvas::querybind $mon" \
 		-variable maptools -value query \
         -indicatoron false -bg $bgcolor -selectcolor $selcolor]    
 
     # measure
     set measure [radiobutton $tb.measure \
 		-image [image create photo -file "$gmpath/measure.gif"]  \
-    	-command "MapCanvas::measurebind $mon"\
+    	-command "MapCanvas::stoptool $mon; MapCanvas::measurebind $mon"\
 		-variable maptools -value measure \
         -indicatoron false -bg $bgcolor -selectcolor $selcolor]    
 
