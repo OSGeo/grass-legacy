@@ -96,7 +96,7 @@ proc GmRgbhis::options { id frm } {
     Button $row.b -image [image create photo -file "$gmpath/rgbhis1.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "raster map for red or hue channel"]\
-		-command "GmRgbhis::select_map1 $id"
+		-command "GmRgbhis::select_map1 $id" -height 26
     Entry $row.c -width 30 -text " $opt($id,map1)" \
           -textvariable GmRgbhis::opt($id,map1) \
           -background white
@@ -109,7 +109,7 @@ proc GmRgbhis::options { id frm } {
     Button $row.b -image [image create photo -file "$gmpath/rgbhis2.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "raster map for green or intensity channel"]\
-		-command "GmRgbhis::select_map2 $id"
+		-command "GmRgbhis::select_map2 $id" -height 26
     Entry $row.c -width 30 -text " $opt($id,map2)" \
           -textvariable GmRgbhis::opt($id,map2) \
           -background white
@@ -122,7 +122,7 @@ proc GmRgbhis::options { id frm } {
     Button $row.b -image [image create photo -file "$gmpath/rgbhis3.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "raster map for blue or saturation channel"]\
-		-command "GmRgbhis::select_map3 $id"
+		-command "GmRgbhis::select_map3 $id" -height 26
     Entry $row.c -width 30 -text " $opt($id,map3)" \
           -textvariable GmRgbhis::opt($id,map3) \
           -background white
