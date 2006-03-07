@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 int main( int   argc, char *argv[])
 {
@@ -18,7 +19,7 @@ int main( int   argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Prints GRASS data base file names.";
+		_("Prints GRASS data base file names.");
 
 	/* Define the different options */
 
@@ -26,27 +27,31 @@ int main( int   argc, char *argv[])
 	opt1->key        = "element";
 	opt1->type       = TYPE_STRING;
 	opt1->required   = YES;
-	opt1->description= "Name of an element" ;
+	opt1->description= _("Name of an element") ;
 
 
 	opt2 = G_define_option() ;
 	opt2->key        = "mapset";
 	opt2->type       = TYPE_STRING;
-	opt2->required   = YES;
-	opt2->description= "Name of a mapset" ;
+	opt2->required   = NO;
+	opt2->description= _("Name of a mapset (default: current)") ;
 
 	opt3 = G_define_option() ;
 	opt3->key        = "file";
 	opt3->type       = TYPE_STRING;
 	opt3->required   = YES;
-	opt3->description= "Name of an database file" ;
+	opt3->description= _("Name of a database file") ;
 
 	if (G_parser(argc, argv))
-		exit(-1);
+	    exit(EXIT_FAILURE);
 
 	element = opt1->answer;
-	mapset = opt2->answer;
 	name = opt3->answer;
+
+	if(opt2->answer)
+	    mapset = opt2->answer;
+	else
+	    mapset = G_mapset();
 
 	if (strcmp (mapset, ".") == 0 || strcmp (mapset, "") == 0)
 		mapset = G_mapset();
@@ -55,5 +60,5 @@ int main( int   argc, char *argv[])
 	G__file_name (path, element, name, mapset);
 
 	fprintf (stdout,"file='%s'\n", path);
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
