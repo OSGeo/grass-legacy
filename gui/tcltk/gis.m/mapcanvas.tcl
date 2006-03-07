@@ -291,6 +291,7 @@ proc MapCanvas::drawmap { mon } {
 				set env(MONITOR_OVERRIDE) "gism"
 				incr drawprog
 				runcmd "d.frame -e"
+				runcmd "d.font romans"
 				incr drawprog
 				GmGroup::display "root"
 				unset env(MONITOR_OVERRIDE)
