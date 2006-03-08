@@ -549,10 +549,10 @@ could be used to say that tables should not be copied for backups of
 map river because table is stored in reliable RDBMS. 
 
 
-\section dglib DGLib (Directed Graph Library)
+\section grassdglib DGLib (Directed Graph Library)
 
 The Directed Graph Library or DGLib (Micarelli 2002,
-http://grass.itc.it/dglib/) provides functionality for vector network
+\ref dglib , http://grass.itc.it/dglib/) provides functionality for vector network
 analysis. This library released under GPL is hosted by the GRASS project (in
 the CVS server within the GRASS source code). As stand-alone library it
 may also be used by other software project.
