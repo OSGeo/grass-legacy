@@ -50,6 +50,8 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
+PROG=`basename $0`
+
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
     echo "$PROG: awk required, please install awk/gawk first" 2>&1
@@ -64,7 +66,6 @@ eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 LOCATION="$GISDBASE"/"$LOCATION_NAME"/"$MAPSET"
 
-PROG=`basename $0`
 
 if [ -n "$GIS_OPT_file" ] ; then
     FILEORIG=$GIS_OPT_file
