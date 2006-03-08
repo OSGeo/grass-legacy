@@ -43,6 +43,8 @@ then
 	exec g.parser "$0" "$@"
 fi
 
+PROG=`basename $0`
+
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
     echo "$PROG: awk required, please install awk or gawk first" 2>&1
