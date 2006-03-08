@@ -128,7 +128,6 @@ double longit_l, latid_l, cos_u, cos_v, sin_u, sin_v;
 double sin_phi_l, tan_lam_l, lum_C31_l, lum_C33_l;
 double beam_e, diff_e, refl_e, bh, dh, rr, insol_t;
 double cbh, cdh;
-double offsetx, offsety;
 
 int main(int argc, char *argv[])
 {
@@ -167,8 +166,6 @@ int main(int argc, char *argv[])
     stepy = cellhd.ns_res;
     invstepx = 1. / stepx;
     invstepy = 1. / stepy;
-    offsetx = 2. *  invstepx;
-    offsety = 2. * invstepy;
     n /*n_cols */  = cellhd.cols;
     m /*n_rows */  = cellhd.rows;
     xmin = cellhd.west;
@@ -1114,13 +1111,13 @@ void where_is_point(void)
     double dx, dy;
     int i, j;
 
-    sx = xx0 * invstepx  + offsetx; /* offset 0.5 cell size to get the right cell i, j */
-    sy = yy0 * invstepy  + offsety;
+    sx = xx0 * invstepx  + 0.5; /* offset 0.5 cell size to get the right cell i, j */
+    sy = yy0 * invstepy  + 0.5;
 
     i = (int)sx;
     j = (int)sy;
 
-    if (i < n - 1 && j < m - 1) {
+    if (i <= n - 1 && j <= m - 1) {
 
         dx = (double)i *stepx;
         dy = (double)j *stepy;
