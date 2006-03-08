@@ -562,10 +562,21 @@ lines and/or nodes. That means that costs can be accumulated while traveling
 along polylines. The user can assign individual costs to all lines and/or
 nodes of a vector map and later calculate shortest path connections based on
 the accumulated costs. Applications are transport analysis, connectivity and
-more. 
+more. Implemented applications cover Shortest path, Traveling salesman (round trip),
+Allocation of sources (creation of subnetworks), Minimum Steiner trees 
+(star-like connections), and iso-distances (from centers).
 
-For details please read Blazek et al. 2002 (see below).
+For details, please read Blazek et al. 2002 (see below).
 
+Related vector functions are:
+ Vect_graph_add_edge(),
+ Vect_graph_init(),
+ Vect_graph_set_node_costs(),
+ Vect_graph_shortest_path(),
+ Vect_net_build_graph(),
+ Vect_net_nearest_nodes(),
+ Vect_net_shortest_path(), and
+ Vect_net_shortest_path_coor().
 
 
 \section vlibfunc List of vector library functions
