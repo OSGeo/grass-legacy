@@ -46,7 +46,7 @@ main (int argc, char *argv[])
         Points = Vect_new_line_struct ();
 	Cats = Vect_new_cats_struct ();
 	
-	Vect_check_input_output_name ( inopt->answer, outopt->answer, GV_FATAL_EXIT );
+	Vect_check_input_output_name ( new->answer, old->answer, GV_FATAL_EXIT );
 
 	if ((mapset = G_find_vector2 (old->answer, "")) == NULL)
 	     G_fatal_error ( _("Could not find input %s"), old->answer);
