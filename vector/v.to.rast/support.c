@@ -36,6 +36,9 @@ int update_hist (char *raster_name, char *vector_name,
         dlg_struct->head.orig_scale) ;
     ***/
 
+    /* store command line options */
+    G_command_history(&hist);
+
     return (G_write_history(raster_name, &hist)) ;
 }
 
