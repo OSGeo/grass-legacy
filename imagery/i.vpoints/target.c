@@ -1,5 +1,6 @@
-#include <string.h>
 #include <unistd.h>
+#include <string.h>
+#include <grass/gis.h>
 #include "globals.h"
 
 /* read the target for the group and cast it into the alternate GRASS env */
@@ -8,8 +9,8 @@ static int which_env;
 
 int get_target (void)
 {
-    char location[40];
-    char mapset[40];
+    char location[GNAME_MAX];
+    char mapset[GMAPSET_MAX];
     char buf[1024];
     int stat;
 
