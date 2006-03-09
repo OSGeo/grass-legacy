@@ -371,7 +371,8 @@ int main(int argc, char *argv[])
 	search_mapset = "";
 
 	search_mapset = G_find_sites(opt7->answer, "");
-	G_fatal_error(_("Can't find starting vector %s "), opt7->answer);
+	if (search_mapset == NULL)
+	    G_fatal_error(_("Can't find starting vector %s "), opt7->answer);
 	fp = G_fopen_sites_old(opt7->answer, search_mapset);
 
 	site = G_site_new_struct(-1, 2, 0, 0);
@@ -413,7 +414,8 @@ int main(int argc, char *argv[])
 	search_mapset = "";
 
 	search_mapset = G_find_sites(opt8->answer, "");
-	G_fatal_error(_("Can't find stop vector %s"), opt8->answer);
+	if (search_mapset == NULL)
+	    G_fatal_error(_("Can't find stop vector %s"), opt8->answer);
 	fp = G_fopen_sites_old(opt8->answer, search_mapset);
 
 	site = G_site_new_struct(-1, 2, 0, 0);
@@ -482,7 +484,7 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("%s - not found"), dtm_layer);
 
     if (cost_mapset == NULL)
-	G_fatal_error(_("%s - not found"), dtm_layer);
+	G_fatal_error(_("%s - not found"), cost_layer);
 
     /*  Check if specified output layer name is legal   */
 
