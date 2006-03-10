@@ -1,23 +1,26 @@
 #include "local_proto.h"
 
 
+/* The Green-and-Ampt Model */
 double
 get_f (double t, double R)
 {
-	static	double	cumf = 0.0;
+	static	double	cumf = 0.0, f_ = 0.0;
 	static	char	ponding = 0;
-	double	f, f_, f1, f2, fc, R2, cnst, pt, psi_dtheta, sum;
+	double	f, f1, f2, fc, R2, cnst, pt, psi_dtheta, sum;
 	int	factorial;
 	int	i, j;
 
 
+	/* reset if there is no rainfall */
 	if(R <= 0.0){
 		cumf = 0.0;
+		f_ = 0.0;
 		ponding = 0;
 		return 0.0;
 	}
 
-	f_ = f1 = cnst = pt = 0.0;
+	f1 = cnst = pt = 0.0;
 	psi_dtheta = params.psi * params.dtheta;
 	if(!ponding){
 		if(cumf){
@@ -25,6 +28,8 @@ get_f (double t, double R)
 			R2 = - params.K0 / params.m *
 				(psi_dtheta + f1) /
 				(1 - exp(f1 / params.m));
+			/* rainfall intensity is greater than infiltration
+			 * rate, so ponding starts */
 			if(R2 < R){
 				f_ = cumf;
 				pt = t - input.dt;
@@ -37,12 +42,15 @@ get_f (double t, double R)
 		R2 = - params.K0 / params.m *
 			(psi_dtheta + f2) /
 			(1 - exp(f2 / params.m));
+		/* rainfall intensity is less than infiltration rate. all
+		 * rainfall will be infiltrated. */
 		if(f2 == 0.0 || R2 > R){
 			f = R;
 			cumf += f * input.dt;
 			ponding = 0;
 			return f;
 		}
+		/* rainfall intensity is greater than infiltration rate. */
 		f_ = cumf + R2 * input.dt;
 		for(i=0; i<MAXITER; i++){
 			R2 = - params.K0 / params.m *
@@ -85,6 +93,7 @@ cont1:
 		ponding = 1;
 	}
 
+	/* Newton-Raphson */
 	for(i=0; i<MAXITER; i++){
 		fc  = f_ + psi_dtheta;
 		sum = 0.0;
@@ -108,9 +117,10 @@ cont1:
 		return f;
 	}
 
-	if(f_ < cumf + R){
+	if(f_ < cumf + R * input.dt){
 		f    = (f_ - cumf) / input.dt;
 		cumf = f_;
+		/* initial guess for next time step */
 		f_  += f * input.dt;
 	}
 
