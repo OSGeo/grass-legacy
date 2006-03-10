@@ -153,7 +153,7 @@ parse_command_line (int argc, char *argv[])
     pflout  = parameter("flout", TYPE_STRING, NO, NULL, "any,dig,vector",
 			_("Output flowline vector file"), NULL);
     plgout  = parameter("lgout", TYPE_STRING, NO, NULL, "any,cell,raster",
-			_("Output slope length raster file"), NULL);
+			_("Output flowpath length raster file"), NULL);
     pdsout  = parameter("dsout", TYPE_STRING, NO, NULL, "any,cell,raster",
 			_("Output flowline density raster file"), NULL);
 
