@@ -320,7 +320,7 @@ void calculate()
 	     col < region.cols;
 	     col += loopstep, x += xstep)
 	{
-	    G_percent(row, region.rows, 1);
+	    G_percent(row, region.rows, 2);
 
 	    length		= 0.0;
 	    fls.index		= 0;
