@@ -14,7 +14,7 @@ DEFS=-DPACKAGE=\"$(PACKAGE)\"
 NLS_CFLAGS=$(GETHOSTNAME) $(ZLIBINCPATH) $(PICFLAGS) $(DEFS)
 
 # default cc rules
-$(OBJDIR)/%.o : %.c $(DEPENDENCIES) $(LOCAL_HEADERS) 
+$(OBJDIR)/%.o : %.c $(LOCAL_HEADERS) 
 	@test -d $(OBJDIR) || mkdir $(OBJDIR)	
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) $(EXTRA_INC) $(INC) \
 		-o $(OBJDIR)/$*.o -c $*.c
