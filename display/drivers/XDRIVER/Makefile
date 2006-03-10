@@ -80,9 +80,5 @@ moncap:
 	cat moncap.entry >> $(ETC)/monitorcap ; \
 	fi
 
-$(DRIVERDIR)/XDRIVER: $(ARCH_OBJS) $(DEPENDENCIES) $(ARCH_INCDIR)/winname.h
+$(DRIVERDIR)/XDRIVER: $(ARCH_OBJS) $(DEPENDENCIES)
 	$(CC) $(LDFLAGS) -o $@ $(XLDFLAGS) $(LIBPATH) $(ARCH_OBJS) $(LIBES) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB)
-
-$(ARCH_INCDIR)/winname.h:
-	echo '#define WIN_NAME "GRASS $(VERSION_NUMBER)"' > $@
-

@@ -5,9 +5,9 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 
 PGM = current_time_s_ms
 
-default: $(PGM)
+default: $(ETC)/$(PGM)
 
-$(PGM): main.c
+$(ETC)/$(PGM): main.c
 	$(CC) -c $<
 	$(CC) -o $(ETC)/$(PGM) $<
 
