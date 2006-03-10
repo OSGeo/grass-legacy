@@ -28,7 +28,15 @@ proc GmGroup::create { tree parent } {
     pack $check $image -side left
 
     set node "group:$count"
-    $tree insert end $parent $node \
+    
+	#insert new layer
+	if {[$tree selection get] != "" } {
+		set sellayer [$tree index [$tree selection get]]
+    } else { 
+    	set sellayer "end" 
+    }
+
+    $tree insert $sellayer $parent $node \
 		-text      "group $count" \
 		-window    $frm \
 		-drawcross auto \
@@ -57,20 +65,31 @@ proc GmGroup::save { tree depth node } {
 
 }
 
-proc GmGroup::display { node } {
+proc GmGroup::display { node mod } {
     variable opt
     variable tree
 	global mon
 	global drawprog
+	global complist
+	global opclist
+	global masklist
 
     set tree($mon) $GmTree::tree($mon)
+	set layers ""
+
     if { $node != "root" } {
 		set id [GmTree::node_id $node] 
         if { ! ( $opt($id,_check) ) } { return }
     }
 
-    foreach n [$tree($mon) nodes $node] {
-        GmTree::display_node $n
+	#invert layer list to put first tree node as top map layer
+	foreach n [$tree($mon) nodes $node] {
+		set layers [linsert $layers 0 $n]
+	}
+	
+	# display each node/layer
+    foreach n $layers {
+        GmTree::display_node $n $mod
         incr drawprog
     }
 

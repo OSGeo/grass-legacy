@@ -1,18 +1,30 @@
-###############################################################
+##########################################################################
 # labels.tcl - vector labels layer options file for GRASS GIS Manager
-# January 2006 Michael Barton, Arizona State University
-###############################################################
+# March 2006 Michael Barton, Arizona State University
+# COPYRIGHT:	(C) 1999 - 2006 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+##########################################################################
 
 namespace eval GmLabels {
-    variable array opt # labels options
+    variable array opt # labels current options
     variable count 1
     variable array tree # mon    
+    variable array lfile # raster
+    variable array lfilemask # raster
+    variable optlist
 }
 
 
 proc GmLabels::create { tree parent } {
     variable opt
     variable count 
+    variable lfile
+    variable lfilemask
+    variable optlist
     global gmpath
 
     set node "labels:$count"
@@ -20,7 +32,7 @@ proc GmLabels::create { tree parent } {
     set frm [ frame .labelsicon$count]
     set fon [font create -size 10] 
     set check [checkbutton $frm.check -font $fon \
-                           -variable GmLabels::opt($count,_check) \
+                           -variable GmLabels::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
     image create photo labels_ico -file "$gmpath/labels.gif"
@@ -28,18 +40,40 @@ proc GmLabels::create { tree parent } {
     
     pack $check $ico -side left
 
-    $tree insert end $parent $node \
+	#insert new layer
+	if {[$tree selection get] != "" } {
+		set sellayer [$tree index [$tree selection get]]
+    } else { 
+    	set sellayer "end" 
+    }
+
+    $tree insert $sellayer $parent $node \
 	-text      "labels $count" \
 	-window    $frm \
 	-drawcross auto 
 
-    set opt($count,_check) 1 
+    set opt($count,1,_check) 1 
 
-    set opt($count,map) "" 
-    set opt($count,minreg) "" 
-    set opt($count,maxreg) "" 
-    set opt($count,ignore_rot) 0 
+    set opt($count,1,map) "" 
+	set opt($count,1,opacity) 1.0
+    set opt($count,1,minreg) "" 
+    set opt($count,1,maxreg) "" 
+    set opt($count,1,ignore_rot) 0 
+    set opt($count,1,mod) 1
 
+	set optlist { _check map minreg maxreg opacity}
+
+    foreach key $optlist {
+		set opt($count,0,$key) $opt($count,1,$key)
+    } 
+    
+	# create files in tmp diretory for layer output
+	set mappid [pid]
+	set lfile($count) [eval exec "g.tempfile pid=$mappid"]
+	set lfilemask($count) $lfile($count)
+	append lfile($count) ".ppm"
+	append lfilemask($count) ".pgm"
+    
     incr count
     return $node
 }
@@ -48,13 +82,13 @@ proc GmLabels::set_option { node key value } {
     variable opt
  
     set id [GmTree::node_id $node]
-    set opt($id,$key) $value
+    set opt($id,1,$key) $value
 }
 
 proc GmLabels::select_labels { id } {
     set m [GSelect paint/labels]
     if { $m != "" } { 
-        set GmLabels::opt($id,map) $m
+        set GmLabels::opt($id,1,map) $m
         GmTree::autonamel $m
     }
 }
@@ -72,6 +106,16 @@ proc GmLabels::options { id frm } {
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
+	#opacity
+	set row [ frame $frm.opc]
+	Label $row.a -text [G_msg "Opaque "]
+	scale $row.b -from 1.0 -to 0.0 -showvalue 1  \
+		-orient horizontal -length 300 -resolution 0.01 -fg "#656565"\
+		-variable GmLabels::opt($id,1,opacity) 
+	Label $row.c -text [G_msg " Transparent"]
+    pack $row.a $row.b $row.c -side left
+    pack $row -side top -fill both -expand yes	
+	
     # labels name
     set row [ frame $frm.name ]
     Label $row.a -text [G_msg "Labels file:"]
@@ -79,8 +123,8 @@ proc GmLabels::options { id frm } {
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "labels file to display"] \
 		-command "GmLabels::select_labels $id"
-    Entry $row.c -width 40 -text "$opt($id,map)" \
-		-textvariable GmLabels::opt($id,map) \
+    Entry $row.c -width 40 -text "$opt($id,1,map)" \
+		-textvariable GmLabels::opt($id,1,map) \
 		-background white
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
@@ -94,9 +138,9 @@ proc GmLabels::options { id frm } {
     # display only in limited region size range
     set row [ frame $frm.region ]
     Label $row.a -text [G_msg "Display constraints:"]
-    LabelEntry $row.b -label "min" -textvariable GmLabels::opt($id,minreg) \
+    LabelEntry $row.b -label "min" -textvariable GmLabels::opt($id,1,minreg) \
             -width 8 -entrybg white
-    LabelEntry $row.c -label "max" -textvariable GmLabels::opt($id,maxreg) \
+    LabelEntry $row.c -label "max" -textvariable GmLabels::opt($id,1,maxreg) \
             -width 8 -entrybg white
     Label $row.d -text [G_msg "region size"]
     pack $row.a $row.b $row.c $row.d -side left
@@ -105,7 +149,7 @@ proc GmLabels::options { id frm } {
     # ignore rotation
     set row [ frame $frm.ignore_rot ]
     checkbutton $row.a -text [G_msg " ignore rotation setting and draw horizontally"] -variable \
-        GmLabels::opt($id,ignore_rot) 
+        GmLabels::opt($id,1,ignore_rot) 
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
@@ -121,36 +165,86 @@ proc GmLabels::options { id frm } {
 
 proc GmLabels::save { tree depth node } {
     variable opt
+    variable optlist
     
     set id [GmTree::node_id $node]
 
 
-    foreach key { _check map minreg maxreg } {
-        GmTree::rc_write $depth "$key $opt($id,$key)"
+    foreach key $optlist {
+        GmTree::rc_write $depth "$key $opt($id,1,$key)"
     } 
 }
 
-proc GmLabels::display { node } {
-    variable opt
-    variable tree
+proc GmLabels::display { node mod } {
+    global mapfile
+    global maskfile
+    global complist
+    global opclist
+    global masklist
+    global gmpath
     global mon
-
+    variable optlist
+    variable lfile 
+    variable lfilemask
+    variable opt
+    variable rasttype
+    variable tree
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
     
-    if { ! ( $opt($id,_check) ) } { return } 
-    if { $opt($id,map) == "" } { return } 
+    if { ! ( $opt($id,1,_check) ) } { return } 
+    if { $opt($id,1,map) == "" } { return } 
 
-    set cmd "d.labels labels=$opt($id,map)"
+    set cmd "d.labels labels=$opt($id,1,map)"
 
-    if { $opt($id,minreg) != "" } { 
-        append cmd " minreg=$opt($id,minreg)"
+    if { $opt($id,1,minreg) != "" } { 
+        append cmd " minreg=$opt($id,1,minreg)"
     }
-    if { $opt($id,maxreg) != "" } { 
-        append cmd " maxreg=$opt($id,maxreg)"
+    if { $opt($id,1,maxreg) != "" } { 
+        append cmd " maxreg=$opt($id,1,maxreg)"
     }
 
-    run_panel $cmd
+    # check to see if options have changed
+    foreach key $optlist {
+        if {$opt($id,0,$key) != $opt($id,1,$key)} {
+        	set opt($id,1,mod) 1
+        	set opt($id,0,$key) $opt($id,1,$key)
+        }
+    } 
+    
+    # if options have change (or mod flag set by other procedures) re-render map
+	if {$opt($id,1,mod) == 1} {
+		run_panel $cmd
+		file copy -force $mapfile($mon) $lfile($id)
+		file copy -force $maskfile($mon) $lfilemask($id)
+    }
+
+    if { ! ( $opt($id,1,_check) ) } { return } 
+
+    #add lfile to compositing list
+	if {$complist($mon) != "" } {
+	    append complist($mon) ","
+	    append complist($mon) [file tail $lfile($id)]
+	} else {
+	    append complist($mon) [file tail $lfile($id)]
+	}	
+
+	if {$masklist($mon) != "" } {
+	    append masklist($mon) ","
+	    append masklist($mon) [file tail $lfilemask($id)]
+	} else {
+	    append masklist($mon) [file tail $lfilemask($id)]
+	}	
+
+	if {$opclist($mon) != "" } {
+	    append opclist($mon) ","
+	    append opclist($mon) $opt($id,1,opacity)
+	} else {
+	    append opclist($mon) $opt($id,1,opacity)
+	}	
+	
+	# reset options changed flag
+	set opt($id,1,mod) 0
 }
 
 
@@ -168,7 +262,7 @@ proc GmLabels::duplicate { tree parent node id } {
     set frm [ frame .labelsicon$count]
     set fon [font create -size 10] 
     set check [checkbutton $frm.check -font $fon \
-                           -variable GmLabels::opt($count,_check) \
+                           -variable GmLabels::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
     image create photo labels_ico -file "$gmpath/labels.gif"
@@ -176,23 +270,24 @@ proc GmLabels::duplicate { tree parent node id } {
     
     pack $check $ico -side left
 	
-	if { $opt($id,map) == ""} {
+	if { $opt($id,1,map) == ""} {
     	$tree insert end $parent $node \
 		-text      "labels $count" \
 		-window    $frm \
 		-drawcross auto
 	} else {
 	    $tree insert end $parent $node \
-		-text      "$opt($id,map)" \
+		-text      "$opt($id,1,map)" \
 		-window    $frm \
 		-drawcross auto
 	}
 
-    set opt($count,_check)  $opt($id,_check)
+    set opt($count,1,_check)  $opt($id,1,_check)
 
-    set opt($count,map) "$opt($id,map)" 
-    set opt($count,minreg) "$opt($id,minreg)" 
-    set opt($count,maxreg) "$opt($id,maxreg)" 
+    set opt($count,1,map) "$opt($id,1,map)" 
+	set opt($count,1,opacity) opt($id,1,opacity)
+    set opt($count,1,minreg) "$opt($id,1,minreg)" 
+    set opt($count,1,maxreg) "$opt($id,1,maxreg)" 
 
     incr count
     return $node

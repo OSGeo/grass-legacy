@@ -1,11 +1,20 @@
-###############################################################
+##########################################################################
 # vector.tcl - vector display layer options file for GRASS GIS Manager
-# January 2006 Michael Barton, Arizona State University
-###############################################################
+# March 2006 Michael Barton, Arizona State University
+# COPYRIGHT:	(C) 1999 - 2006 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+##########################################################################
 
 namespace eval GmVector {
-    variable array opt # vector options
+    variable array opt # vector current options
     variable count 1
+    variable array lfile # vector
+    variable array lfilemask # vector
+    variable optlist
 }
 
 global gmpath
@@ -22,47 +31,59 @@ proc GmVector::legend { id } {
     set lh $GmTree::legend_height
     set lw $GmTree::legend_width
     set mar 2
-    set leg $opt($id,_legend)
+    set leg $opt($id,1,_legend)
 
     $leg delete all
 
+    # area    
+    if { $opt($id,1,type_area) || $opt($id,1,type_line) || $opt($id,1,type_boundary) || $opt($id,1,type_face)} {
+		set x1 [expr $mar ]
+		set x2 [expr $lw - $mar ]
+		set y1 [expr $mar ]
+		set y2 [expr $lh - $mar ]
+		set lwidth  $opt($id,1,lwidth)
+		if { $lwidth == 0 } { set lwidth 1 }
+		if {$opt($id,1,_use_color) == 1} {
+			if {$opt($id,1,_use_fcolor) == 1} {		
+				$leg create rectangle $x1 $y1 $x2 $y2 -outline $opt($id,1,color) \
+					-fill $opt($id,1,fcolor) -width $lwidth
+			} else {
+				$leg create rectangle $x1 $y1 $x2 $y2 -outline $opt($id,1,color) \
+					 -width $lwidth
+			}
+		} else {
+			if {$opt($id,1,_use_fcolor) == 1} {		
+				$leg create rectangle $x1 $y1 $x2 $y2 -fill $opt($id,1,fcolor) \
+					-width 0
+			}
+		}
+    }
+
     # point 
-    set xc [expr $lw / 6 + 1 ]
+    set xc [expr $lw / 2 + $mar - 1 ]
     set yc [expr $lh / 2 ]
-    set size $opt($id,size)
+    set size $opt($id,1,size)
    
     set maxpsize  [expr $lw / 3 - 2 ]
     if { $size > $maxpsize } { set size $maxpsize }
-    set x1 [expr $xc - $size / 2 ]
-    set x2 [expr $xc + $size / 2 + 1 ]
-    set y1  [expr $yc - $size / 2 ]
-    set y2  [expr $yc + $size / 2 + 1 ]
+	set x1 [expr $xc - $size / 2 ]
+	set x2 [expr $xc + $size / 2 + 1 ]
+	set y1  [expr $yc - $size / 2 ]
+	set y2  [expr $yc + $size / 2 + 1 ]
 
-    if { $opt($id,type_point) || $opt($id,type_centroid) } {
-        $leg create line $x1 $yc $x2 $yc -fill $opt($id,color)
-	$leg create line $xc $y1 $xc $y2 -fill $opt($id,color)
+    if { $opt($id,1,type_point) || $opt($id,1,type_centroid) } {
+        $leg create line $x1 $yc $x2 $yc -fill $opt($id,1,color) -width $lwidth
+		$leg create line $xc $y1 $xc $y2 -fill $opt($id,1,color) -width $lwidth
     }
-    # line    
-    if { $opt($id,type_line) || $opt($id,type_boundary) || $opt($id,type_face) } {
-	set x1 [expr $lw / 3 + $mar ]
-	set x2 [expr 2 * $lw / 3 - $mar ]
-	set y1 [expr $lh - $mar ]
-	set y2 [expr $mar ]
-        $leg create line $x1 $y1 $x2 $y2 -fill $opt($id,color)
-    }
-    # area    
-    if { $opt($id,type_area) } {
-	set x1 [expr 2 * $lw / 3 + $mar ]
-	set x2 [expr $lw - $mar ]
-	set y1 [expr $mar ]
-	set y2 [expr $lh - $mar ]
-	$leg create rectangle $x1 $y1 $x2 $y2 -outline $opt($id,color) \
-                              -fill $opt($id,fcolor)
-    }
+
+
+	set opt($id,1,mod) "1"
 }
 
 proc GmVector::create { tree parent } {
-    global form_mode
+    variable optlist
+    variable lfile
+    variable lfilemask
     variable opt
     variable count
 
@@ -71,85 +92,102 @@ proc GmVector::create { tree parent } {
     set frm [ frame .vectoricon$count]
     set fon [font create -size 10] 
     set check [checkbutton $frm.check -font $fon \
-                           -variable GmVector::opt($count,_check) \
+                           -variable GmVector::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
     set can [ canvas $frm.c -width $GmTree::legend_width \
                      -height $GmTree::legend_height ]
-    set opt($count,_legend) $can
+    set opt($count,1,_legend) $can
     pack $check $can -side left
 
-    $tree insert end $parent $node \
+	#insert new layer
+	if {[$tree selection get] != "" } {
+		set sellayer [$tree index [$tree selection get]]
+    } else { 
+    	set sellayer "end" 
+    }
+
+    $tree insert $sellayer $parent $node \
 	-text      "vector $count" \
 	-window    $frm \
 	-drawcross auto 
 
-    set opt($count,_check) 1 
+    set opt($count,1,_check) 1 
 
-    set opt($count,map) "" 
-    set opt($count,display_shape) 1 
-    set opt($count,display_cat) 0
-    set opt($count,display_topo) 0 
-    set opt($count,display_dir) 0 
-    set opt($count,display_attr) 0
-    set opt($count,type_point) 1 
-    set opt($count,type_line) 1
-    set opt($count,type_boundary) 1
-    set opt($count,type_centroid) 1
-    set opt($count,type_area) 1
-    set opt($count,type_face) 0 
+    set opt($count,1,vect) "" 
+	set opt($count,1,opacity) 1.0
+    set opt($count,1,display_shape) 1 
+    set opt($count,1,display_cat) 0
+    set opt($count,1,display_topo) 0 
+    set opt($count,1,display_dir) 0 
+    set opt($count,1,display_attr) 0
+    set opt($count,1,type_point) 1 
+    set opt($count,1,type_line) 1
+    set opt($count,1,type_boundary) 1
+    set opt($count,1,type_centroid) 1
+    set opt($count,1,type_area) 1
+    set opt($count,1,type_face) 0 
 
-    set opt($count,color) \#000000
-    set opt($count,sqlcolor) 0
-    set opt($count,rdmcolor) 0
-    set opt($count,fcolor) \#AAAAAA 
-    set opt($count,lcolor) \#000000
-    set opt($count,_use_color) 1
-    set opt($count,_use_fcolor) 1
-    set opt($count,lwidth) 1 
+    set opt($count,1,color) \#000000
+    set opt($count,1,sqlcolor) 0
+    set opt($count,1,rdmcolor) 0
+    set opt($count,1,fcolor) \#AAAAAA 
+    set opt($count,1,lcolor) \#000000
+    set opt($count,1,_use_color) 1
+    set opt($count,1,_use_fcolor) 1
+    set opt($count,1,lwidth) 0
 
-    set opt($count,symdir) "basic"
-    set opt($count,icon) "basic/x"
-    set opt($count,size) 5 
+    set opt($count,1,symdir) "basic"
+    set opt($count,1,icon) "basic/x"
+    set opt($count,1,size) 5 
 
-    set opt($count,layer) 1 
-    set opt($count,lfield) 1 
-    set opt($count,cat) "" 
-    set opt($count,where) "" 
-    set opt($count,_use_where) 1
-    set opt($count,qmap) "" 
-	set opt($count,qsave) 0
-	set opt($count,qoverwrite) 0
+    set opt($count,1,layer) 1 
+    set opt($count,1,lfield) 1 
+    set opt($count,1,cat) "" 
+    set opt($count,1,where) "" 
+    set opt($count,1,_use_where) 1
+    set opt($count,1,qmap) "" 
+	set opt($count,1,qsave) 0
+	set opt($count,1,qoverwrite) 0
 
-    set opt($count,attribute) "" 
-    set opt($count,xref) "left"
-    set opt($count,yref) "center"
-    set opt($count,lsize) 8
+    set opt($count,1,attribute) "" 
+    set opt($count,1,xref) "left"
+    set opt($count,1,yref) "center"
+    set opt($count,1,lsize) 8
 
-    set opt($count,minreg) "" 
-    set opt($count,maxreg) "" 
+    set opt($count,1,minreg) "" 
+    set opt($count,1,maxreg) "" 
+    set opt($count,1,mod) 1
 
-    # Default form mode used for vectors, it can be 'gui' (default) or 'txt'
-    set form_mode [exec g.gisenv get=DM_FORM_MODE]
-    if { $form_mode == "txt" } {
-        set opt($count,_query_text) 1 
-    } else {
-        set opt($count,_query_text) 0
-    }
-    set opt($count,_query_edit) 0 
+	set optlist { _check vect display_shape display_cat display_topo display_dir \
+				display_attr type_point type_line type_boundary type_centroid \
+				type_area type_face color _use_color fcolor _use_fcolor lcolor \
+				rdmcolor sqlcolor icon size lwidth layer lfield attribute \
+				xref yref lsize cat where _use_where minreg maxreg opacity}
+                  
+    foreach key $optlist {
+		set opt($count,0,$key) $opt($count,1,$key)
+    } 
 
-    set opt($count,_width) 1
 
     GmVector::legend $count
 
+	# create files in tmp diretory for layer output
+	set mappid [pid]
+	set lfile($count) [eval exec "g.tempfile pid=$mappid"]
+	set lfilemask($count) $lfile($count)
+	append lfile($count) ".ppm"
+	append lfilemask($count) ".pgm"
+
     incr count
     return $node
+    
 }
 
 proc GmVector::set_option { node key value } {
     variable opt
  
     set id [GmTree::node_id $node]
-    set opt($id,$key) $value
+    set opt($id,1,$key) $value
 
     GmVector::legend $id
 }
@@ -157,7 +195,7 @@ proc GmVector::set_option { node key value } {
 proc GmVector::select_map { id } {
     set m [GSelect vector]
     if { $m != "" } { 
-        set GmVector::opt($id,map) $m
+        set GmVector::opt($id,1,vect) $m
         GmTree::autonamel $m
     }
 }
@@ -165,7 +203,7 @@ proc GmVector::select_map { id } {
 proc GmVector::select_qmap { id } {
     set m [GSelect vector]
     if { $m != "" } { 
-        set GmVector::opt($id,qmap) $m
+        set GmVector::opt($id,1,qmap) $m
         GmTree::autonamel $m
     }
 }
@@ -173,27 +211,27 @@ proc GmVector::select_qmap { id } {
 proc GmVector::show_columns { id } {
 	variable opt
 	global bgcolor
-	set mapname $opt($id,map)
-	set layernum $opt($id,layer)
+	set mapname $opt($id,1,vect)
+	set layernum $opt($id,1,layer)
 	set cmd "v.info -c map=$mapname layer=$layernum"		
 	run_panel $cmd
 }
 
-proc GmVector::show_data { id } {
+proc GmVector::show_data { id } { 
 	variable opt
 	global bgcolor
-	set mapname $opt($id,map)
-	set layer $opt($id,layer)
-	set vdb [open "|v.db.connect map=$mapname layer=$layer -g" r]
-	set vectdb [read $vdb]
-	close $vdb
-	set vdblist [split $vectdb " "]
-	set tbl [lindex $vdblist 1]
-	set db [lindex $vdblist 3]
-	set drv [lindex $vdblist 4]
-	puts "table=$tbl database=$db driver=$drv"
-	set cmd "db.select table=$tbl database=$db driver=$drv"
-	run_panel $cmd
+	set mapname $opt($id,1,vect)
+	set layer $opt($id,1,layer)
+	if ![catch {open "|v.db.connect map=$mapname layer=$layer -g" r} vdb] {
+		set vectdb [read $vdb]
+		catch {close $vdb}
+		set vdblist [split $vectdb " "]
+		set tbl [lindex $vdblist 1]
+		set db [lindex $vdblist 3]
+		set drv [lindex $vdblist 4]
+		set cmd "db.select table=$tbl database=$db driver=$drv"
+		run_panel $cmd
+	}
 }
 
 # select symbols from directories
@@ -201,7 +239,7 @@ proc GmVector::select_symbol { id } {
     variable opt
     set i [GSelect symbol]
     if { $i != "" } {
-        set GmVector::opt($id,icon) $i
+        set GmVector::opt($id,1,icon) $i
     }
 }
 
@@ -210,8 +248,8 @@ proc GmVector::options { id frm } {
     variable opt
     global gmpath
     global bgcolor
-    global mapname
-    set mapname ""
+    
+    set mapname ""    
 
     # Panel heading
     set row [ frame $frm.heading ]
@@ -220,6 +258,16 @@ proc GmVector::options { id frm } {
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
+	#opacity
+	set row [ frame $frm.opc]
+	Label $row.a -text [G_msg "Opaque "]
+	scale $row.b -from 1.0 -to 0.0 -showvalue 1  \
+		-orient horizontal -length 300 -resolution 0.01 -fg "#656565"\
+		-variable GmVector::opt($id,1,opacity) 
+	Label $row.c -text [G_msg " Transparent"]
+    pack $row.a $row.b $row.c -side left
+    pack $row -side top -fill both -expand yes	
+	
     # vector name
     set row [ frame $frm.name ]
     Label $row.a -text [G_msg "Vector map:"]
@@ -227,8 +275,8 @@ proc GmVector::options { id frm } {
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "vector map to display"] \
 		-command "GmVector::select_map $id"
-    Entry $row.c -width 40 -text "$opt($id,map)" \
-		-textvariable GmVector::opt($id,map) \
+    Entry $row.c -width 40 -text "$opt($id,1,vect)" \
+		-textvariable GmVector::opt($id,1,vect) \
 		-background white
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
@@ -238,35 +286,35 @@ proc GmVector::options { id frm } {
 		-helptext [G_msg "Help"]
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
-
+	
     # display
     set row [ frame $frm.disp ]
     Label $row.a -text [G_msg "Display:"]
-    checkbutton $row.b -text [G_msg "shapes"] -variable GmVector::opt($id,display_shape) \
-                -command "GmVector::legend $id"
-    checkbutton $row.c -text [G_msg "categories"] -variable GmVector::opt($id,display_cat) \
-                -command "GmVector::legend $id"
-    checkbutton $row.d -text [G_msg "topology"] -variable GmVector::opt($id,display_topo) \
-                -command "GmVector::legend $id"
-    checkbutton $row.e -text [G_msg "line directions"] -variable GmVector::opt($id,display_dir) \
-                -command "GmVector::legend $id"
+    checkbutton $row.b -text [G_msg "shapes"] -variable GmVector::opt($id,1,display_shape) \
+                -command "GmVector::legend $id"  
+    checkbutton $row.c -text [G_msg "categories"] -variable GmVector::opt($id,1,display_cat) \
+                -command "GmVector::legend $id"  
+    checkbutton $row.d -text [G_msg "topology"] -variable GmVector::opt($id,1,display_topo) \
+                -command "GmVector::legend $id"  
+    checkbutton $row.e -text [G_msg "line directions"] -variable GmVector::opt($id,1,display_dir) \
+                -command "GmVector::legend $id" 
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
     # type
     set row [ frame $frm.type ]
     Label $row.a -text [G_msg "            "]
-    checkbutton $row.b -text [G_msg "points"] -variable GmVector::opt($id,type_point) \
+    checkbutton $row.b -text [G_msg "points"] -variable GmVector::opt($id,1,type_point) \
                 -command "GmVector::legend $id"
-    checkbutton $row.c -text [G_msg "lines"] -variable GmVector::opt($id,type_line) \
+    checkbutton $row.c -text [G_msg "lines"] -variable GmVector::opt($id,1,type_line) \
                 -command "GmVector::legend $id"
-    checkbutton $row.d -text [G_msg "boundaries"] -variable GmVector::opt($id,type_boundary) \
+    checkbutton $row.d -text [G_msg "boundaries"] -variable GmVector::opt($id,1,type_boundary) \
                 -command "GmVector::legend $id"
-    checkbutton $row.e -text [G_msg "centroids"] -variable GmVector::opt($id,type_centroid)\
+    checkbutton $row.e -text [G_msg "centroids"] -variable GmVector::opt($id,1,type_centroid)\
                 -command "GmVector::legend $id"
-    checkbutton $row.f -text [G_msg "areas"] -variable GmVector::opt($id,type_area) \
+    checkbutton $row.f -text [G_msg "areas"] -variable GmVector::opt($id,1,type_area) \
                 -command "GmVector::legend $id"
-    checkbutton $row.g -text [G_msg "faces"] -variable GmVector::opt($id,type_face) \
+    checkbutton $row.g -text [G_msg "faces"] -variable GmVector::opt($id,1,type_face) \
                 -command "GmVector::legend $id"
     pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
     pack $row -side top -fill both -expand yes
@@ -276,11 +324,11 @@ proc GmVector::options { id frm } {
     Label $row.a -text "Point symbols:" 
     Button $row.b -text [G_msg "icon"] \
             -command "GmVector::select_symbol $id"
-    Entry $row.c -width 15 -text "$opt($id,icon)" \
-        	-textvariable GmVector::opt($id,icon) \
+    Entry $row.c -width 15 -text "$opt($id,1,icon)" \
+        	-textvariable GmVector::opt($id,1,icon) \
         	-background white 
     Label $row.d -text "  size" 
-    SpinBox $row.e -range {1 50 1} -textvariable GmVector::opt($id,size) \
+    SpinBox $row.e -range {1 50 1} -textvariable GmVector::opt($id,1,size) \
                    -width 2 -helptext "Icon size" -modifycmd "GmVector::legend $id" \
                    -entrybg white 
     pack $row.a $row.b $row.c $row.d $row.e -side left
@@ -289,13 +337,13 @@ proc GmVector::options { id frm } {
     # lines
     set row [ frame $frm.color ]
     Label $row.a -text [G_msg "Draw lines:"] 
-    checkbutton $row.b -variable GmVector::opt($id,_use_color) \
+    checkbutton $row.b -variable GmVector::opt($id,1,_use_color) \
                 -command "GmVector::legend $id"
     Label $row.c -text [G_msg "color"] 
-    SelectColor $row.d  -type menubutton -variable GmVector::opt($id,color) \
+    SelectColor $row.d  -type menubutton -variable GmVector::opt($id,1,color) \
                -command "GmVector::legend $id"
     Label $row.e -text " width" 
-    SpinBox $row.f -range {1 50 1} -textvariable GmVector::opt($id,lwidth) \
+    SpinBox $row.f -range {0 50 1} -textvariable GmVector::opt($id,1,lwidth) \
                    -entrybg white -width 2 -helptext "Line width" \
                    -modifycmd "GmVector::legend $id"
     Label $row.g -text "(pixels) " 
@@ -305,15 +353,15 @@ proc GmVector::options { id frm } {
     # fills
     set row [ frame $frm.multicolor ]
     Label $row.a -text [G_msg "Fill areas:"] 
-    checkbutton $row.b -variable GmVector::opt($id,_use_fcolor) \
+    checkbutton $row.b -variable GmVector::opt($id,1,_use_fcolor) \
                 -command "GmVector::legend $id"
     Label $row.c -text [G_msg "color"] 
-    SelectColor $row.d -type menubutton -variable GmVector::opt($id,fcolor) \
+    SelectColor $row.d -type menubutton -variable GmVector::opt($id,1,fcolor) \
                 -command "GmVector::legend $id"
     Label $row.e -text [G_msg "  "] 
-    checkbutton $row.f -text [G_msg "random colors"] -variable GmVector::opt($id,rdmcolor) \
+    checkbutton $row.f -text [G_msg "random colors"] -variable GmVector::opt($id,1,rdmcolor) \
                 -command "GmVector::legend $id"
-    checkbutton $row.g -text [G_msg "GRASSRGB column colors"] -variable GmVector::opt($id,sqlcolor) \
+    checkbutton $row.g -text [G_msg "GRASSRGB column colors"] -variable GmVector::opt($id,1,sqlcolor) \
                 -command "GmVector::legend $id"
     pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
     pack $row -side top -fill both -expand yes
@@ -321,13 +369,13 @@ proc GmVector::options { id frm } {
     # labels
     set row [ frame $frm.label1 ]
     Label $row.a -text [G_msg "Label vectors:"] 
-    checkbutton $row.b -text [G_msg "label"] -variable GmVector::opt($id,display_attr) \
+    checkbutton $row.b -text [G_msg "label"] -variable GmVector::opt($id,1,display_attr) \
                 -command "GmVector::legend $id"
     Label $row.c -text [G_msg "tect color"] 
-    SelectColor $row.d -type menubutton -variable GmVector::opt($id,lcolor) \
+    SelectColor $row.d -type menubutton -variable GmVector::opt($id,1,lcolor) \
                 -command "GmVector::legend $id"
     Label $row.e -text [G_msg " text size"] 
-    SpinBox $row.f -range {1 50 1} -textvariable GmVector::opt($id,lsize) \
+    SpinBox $row.f -range {1 50 1} -textvariable GmVector::opt($id,1,lsize) \
                    -width 2 -helptext [G_msg "text size"] \
                    -modifycmd "GmVector::legend $id" -entrybg white 
     pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
@@ -337,12 +385,12 @@ proc GmVector::options { id frm } {
     set row [ frame $frm.label2 ]
     Label $row.a -text [G_msg "     "] 
     ComboBox $row.b -label [G_msg "label part to align with vector point"] \
-		-width 6  -textvariable GmVector::opt($id,xref) \
+		-width 6  -textvariable GmVector::opt($id,1,xref) \
 		-entrybg white \
 		-values {"left" "center" "right"} \
 		-modifycmd "GmVector::legend $id"
     ComboBox $row.c -label [G_msg " justification"] \
-    	-width 6  -textvariable GmVector::opt($id,yref) \
+    	-width 6  -textvariable GmVector::opt($id,1,yref) \
 		-entrybg white \
 		-values {"top" "center" "bottom"} \
 		-modifycmd "GmVector::legend $id"
@@ -352,10 +400,10 @@ proc GmVector::options { id frm } {
     # labels layer and attribute column
     set row [ frame $frm.label3 ]
     LabelEntry $row.a -label [G_msg "     layer for labels"] \
-                -textvariable GmVector::opt($id,lfield) -width 3 \
+                -textvariable GmVector::opt($id,1,lfield) -width 3 \
                 -entrybg white
     LabelEntry $row.b -label [G_msg " attribute col for labels"] \
-                -textvariable GmVector::opt($id,attribute) -width 23 \
+                -textvariable GmVector::opt($id,1,attribute) -width 23 \
                 -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -364,7 +412,7 @@ proc GmVector::options { id frm } {
     set row [ frame $frm.query1 ]
     Label $row.a -text [G_msg "Query vectors for display: "] 
     LabelEntry $row.b -label [G_msg "layer for query"] \
-                -textvariable GmVector::opt($id,layer) -width 3 \
+                -textvariable GmVector::opt($id,1,layer) -width 3 \
                 -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -373,7 +421,7 @@ proc GmVector::options { id frm } {
     set row [ frame $frm.query2 ]
     Label $row.a -text [G_msg "    "] 
     LabelEntry $row.b -label [G_msg "query cat values    "] \
-                -textvariable GmVector::opt($id,cat) \
+                -textvariable GmVector::opt($id,1,cat) \
                -width 40 -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -381,10 +429,10 @@ proc GmVector::options { id frm } {
     # sql query
     set row [ frame $frm.where ]
     Label $row.a -text [G_msg "    "] 
-    checkbutton $row.b -variable GmVector::opt($id,_use_where) \
+    checkbutton $row.b -variable GmVector::opt($id,1,_use_where) \
 		-command "GmVector::legend $id"
     LabelEntry $row.c -label [G_msg "use SQL query"] \
-		-textvariable GmVector::opt($id,where) \
+		-textvariable GmVector::opt($id,1,where) \
 		-width 40 -entrybg white
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
@@ -410,9 +458,9 @@ proc GmVector::options { id frm } {
 	set row [ frame $frm.qsave ]
     Label $row.a -text [G_msg "    "] 
     checkbutton $row.b -text [G_msg "save displayed objects to new vector file "] \
-                -variable GmVector::opt($id,qsave) 
+                -variable GmVector::opt($id,1,qsave) 
     checkbutton $row.c -text [G_msg "overwrite existing"] \
-                -variable GmVector::opt($id,qoverwrite) 
+                -variable GmVector::opt($id,1,qoverwrite) 
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
@@ -423,8 +471,8 @@ proc GmVector::options { id frm } {
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmVector::select_qmap $id" \
 		-helptext [G_msg "select existing vector for saving queried objects"]
-    Entry $row.c -width 40 -text "$opt($id,qmap)" \
-          -textvariable GmVector::opt($id,qmap) \
+    Entry $row.c -width 40 -text "$opt($id,1,qmap)" \
+          -textvariable GmVector::opt($id,1,qmap) \
           -background white
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
@@ -432,25 +480,22 @@ proc GmVector::options { id frm } {
     # display only in limited region size range
     set row [ frame $frm.region ]
     Label $row.a -text [G_msg "Display when avg. region dimension is"]
-    LabelEntry $row.b -label ">" -textvariable GmVector::opt($id,minreg) \
+    LabelEntry $row.b -label ">" -textvariable GmVector::opt($id,1,minreg) \
                 -width 8 -entrybg white
-    LabelEntry $row.c -label " or <" -textvariable GmVector::opt($id,maxreg) \
+    LabelEntry $row.c -label " or <" -textvariable GmVector::opt($id,1,maxreg) \
                 -width 8 -entrybg white
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
-
 }
 
 proc GmVector::save { tree depth node } {
     variable opt
+    variable optlist
     
     set id [GmTree::node_id $node]
 
-    foreach key { _check map display_shape display_cat display_topo display_dir display_attr
-                  type_point type_line type_boundary type_centroid type_area type_face
-                  color _use_color fcolor _use_fcolor lcolor rdmcolor sqlcolor icon size lwidth layer lfield attribute
-                  xref yref lsize cat where _query_text _query_edit _use_where minreg maxreg _width } {
-        GmTree::rc_write $depth "$key $opt($id,$key)"
+    foreach key $optlist {
+        GmTree::rc_write $depth "$key $opt($id,1,$key)"
     } 
 }
 
@@ -465,9 +510,9 @@ proc GmVector::addvect {node} {
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
     
-    if { ! ( $opt($id,_check) ) } { return } 
+    if { ! ( $opt($id,1,_check) ) } { return } 
 
-	set vect $opt($id,map)
+	set vect $opt($id,1,vect)
 	
 	return $vect
 }
@@ -495,47 +540,56 @@ proc GmVector::vecttype { vect } {
 ###############################################################################
 
 
-proc GmVector::display { node } {
+proc GmVector::display { node mod } {
+    global mon
+    global mapfile
+    global maskfile
+    global complist
+    global opclist
+    global masklist
+    variable optlist
+    variable lfile 
+    variable lfilemask
     variable opt
     variable tree
-    global mon
+    
     
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
 
-    if { ! ( $opt($id,_check) ) } { return } 
+    set opt($id,1,mod) $mod
 
-    if { $opt($id,map) == "" } { return } 
+    if { $opt($id,1,vect) == "" } { return } 
 
-    if { !$opt($id,display_shape) && !$opt($id,display_cat) &&
-         !$opt($id,display_topo)  && !$opt($id,display_dir) &&
-         !$opt($id,display_attr) } { return } 
+    if { !$opt($id,1,display_shape) && !$opt($id,1,display_cat) &&
+         !$opt($id,1,display_topo)  && !$opt($id,1,display_dir) &&
+         !$opt($id,1,display_attr) } { return } 
 
-    if { !$opt($id,type_point) && !$opt($id,type_line) &&
-         !$opt($id,type_boundary)  && !$opt($id,type_centroid) && 
-         !$opt($id,type_area) && !$opt($id,type_face) } { return } 
+    if { !$opt($id,1,type_point) && !$opt($id,1,type_line) &&
+         !$opt($id,1,type_boundary)  && !$opt($id,1,type_centroid) && 
+         !$opt($id,1,type_area) && !$opt($id,1,type_face) } { return } 
 
-    set cmd "d.vect map=$opt($id,map)"
-    set cmd2 "v.extract input=$opt($id,map) output=$opt($id,qmap)"
+    set cmd "d.vect map=$opt($id,1,vect)"
+    set cmd2 "v.extract input=$opt($id,1,vect) output=$opt($id,1,qmap)"
 
     # color
-    if { $opt($id,rdmcolor) } { append cmd " -c" }
-    if { $opt($id,sqlcolor) } { append cmd " -a" }
-    set color [Gm::color $opt($id,color)]
-    set fcolor [Gm::color $opt($id,fcolor)]
-    set lcolor [Gm::color $opt($id,lcolor)]
+    if { $opt($id,1,rdmcolor) } { append cmd " -c" }
+    if { $opt($id,1,sqlcolor) } { append cmd " -a" }
+    set color [Gm::color $opt($id,1,color)]
+    set fcolor [Gm::color $opt($id,1,fcolor)]
+    set lcolor [Gm::color $opt($id,1,lcolor)]
 
-    if { $opt($id,_use_color) } { append cmd " color=$color" } { append cmd " color=none" }
+    if { $opt($id,1,_use_color) } { append cmd " color=$color" } { append cmd " color=none" }
     append cmd " lcolor=$lcolor" 
 
-    if { $opt($id,_use_fcolor) } { append cmd " fcolor=$fcolor" } { append cmd " fcolor=none" }
+    if { $opt($id,1,_use_fcolor) } { append cmd " fcolor=$fcolor" } { append cmd " fcolor=none" }
 
     # display
     set dlist [list]
     foreach d { shape cat topo dir } {
-       if { $opt($id,display_$d) } { lappend dlist $d }
+       if { $opt($id,1,display_$d) } { lappend dlist $d }
     }
-    if { $opt($id,display_attr) && $opt($id,attribute) != "" } { lappend dlist attr }
+    if { $opt($id,1,display_attr) && $opt($id,1,attribute) != "" } { lappend dlist attr }
     
     set display [join $dlist , ]
     append cmd " display=$display"
@@ -543,57 +597,99 @@ proc GmVector::display { node } {
     # type
     set tlist [list]
     foreach t { point line boundary centroid area face } {
-       if { $opt($id,type_$t) } { lappend tlist $t }
+       if { $opt($id,1,type_$t) } { lappend tlist $t }
     }
     set type [join $tlist , ]
     append cmd " type=$type"
     append cmd2 " type=$type"
 
-    append cmd " icon=$opt($id,icon) size=$opt($id,size)" 
+    append cmd " icon=$opt($id,1,icon) size=$opt($id,1,size)" 
 
-    if { $opt($id,lwidth) != 1 } { 
-        append cmd " width=$opt($id,lwidth)" 
+    if { $opt($id,1,lwidth) != 1 } { 
+        append cmd " width=$opt($id,1,lwidth)" 
     } 
 
 
-    if { $opt($id,layer) != "" } { 
-        append cmd " layer=$opt($id,layer)" 
-        append cmd2 " layer=$opt($id,layer)" 
+    if { $opt($id,1,layer) != "" } { 
+        append cmd " layer=$opt($id,1,layer)" 
+        append cmd2 " layer=$opt($id,1,layer)" 
     } 
-    if { $opt($id,attribute) != "" && $opt($id,display_attr) } { 
-        append cmd " {att=$opt($id,attribute)}" 
+    if { $opt($id,1,attribute) != "" && $opt($id,1,display_attr) } { 
+        append cmd " {att=$opt($id,1,attribute)}" 
     } 
-    append cmd " lsize=$opt($id,lsize)" 
+    append cmd " lsize=$opt($id,1,lsize)" 
     
-    append cmd " xref=$opt($id,xref) yref=$opt($id,yref)"
+    append cmd " xref=$opt($id,1,xref) yref=$opt($id,1,yref)"
 
-    if { $opt($id,lfield) != "" } { 
-        append cmd " llayer=$opt($id,lfield)" 
+    if { $opt($id,1,lfield) != "" } { 
+        append cmd " llayer=$opt($id,1,lfield)" 
     } 
-    if { $opt($id,cat) != "" } { 
-        append cmd " cat=$opt($id,cat)" 
-        append cmd2 " list=$opt($id,cat)"
+    if { $opt($id,1,cat) != "" } { 
+        append cmd " cat=$opt($id,1,cat)" 
+        append cmd2 " list=$opt($id,1,cat)"
     } 
-    if { $opt($id,where) != "" && $opt($id,_use_where) } { 
-        append cmd " {where=$opt($id,where)}" 
-        append cmd2 " {where=$opt($id,where)}" 
+    if { $opt($id,1,where) != "" && $opt($id,1,_use_where) } { 
+        append cmd " {where=$opt($id,1,where)}" 
+        append cmd2 " {where=$opt($id,1,where)}" 
     } 
-    if { $opt($id,minreg) != "" } { 
-        append cmd " minreg=$opt($id,minreg)" 
+    if { $opt($id,1,minreg) != "" } { 
+        append cmd " minreg=$opt($id,1,minreg)" 
     } 
-    if { $opt($id,maxreg) != "" } { 
-        append cmd " maxreg=$opt($id,maxreg)" 
+    if { $opt($id,1,maxreg) != "" } { 
+        append cmd " maxreg=$opt($id,1,maxreg)" 
     } 
 
-    if { $opt($id,qoverwrite) == 1 } { 
+    if { $opt($id,1,qoverwrite) == 1 } { 
         append cmd2 " --o" 
     } 
-
-    run_panel $cmd
     
-    if { $opt($id,qsave) ==1 && $opt($id,qmap) != "" } {
+    # check to see if options have changed
+    foreach key $optlist {
+        if {$opt($id,0,$key) != $opt($id,1,$key)} {
+        	set opt($id,1,mod) 1
+        	set opt($id,0,$key) $opt($id,1,$key)
+        }
+    } 
+
+	# redraw if options changed
+	if {$opt($id,1,mod) == 1} {
+	    run_panel $cmd
+    	file copy -force $mapfile($mon) $lfile($id)
+    	file copy -force $maskfile($mon) $lfilemask($id)
+	}
+
+    # use v.extract to save queried vector - will not go into redraw
+    if { $opt($id,1,qsave) ==1 && $opt($id,1,qmap) != "" } {
     	run_panel $cmd2
     }
+    
+    if { ! ( $opt($id,1,_check) ) } { return } 
+
+    #add lfile to compositing list
+	if {$complist($mon) != "" } {
+	    append complist($mon) ","
+	    append complist($mon) [file tail $lfile($id)]
+	} else {
+	    append complist($mon) [file tail $lfile($id)]
+	}	
+
+	if {$masklist($mon) != "" } {
+	    append masklist($mon) ","
+	    append masklist($mon) [file tail $lfilemask($id)]
+	} else {
+	    append masklist($mon) [file tail $lfilemask($id)]
+	}	
+
+	if {$opclist($mon) != "" } {
+	    append opclist($mon) ","
+	    append opclist($mon) $opt($id,1,opacity)
+	} else {
+	    append opclist($mon) $opt($id,1,opacity)
+	}	
+	
+	# reset options changed flag
+	set opt($id,1,mod) 0
+
 }
 
 
@@ -603,29 +699,28 @@ proc GmVector::mapname { node } {
     variable tree
     global mon
     global vdist
-	#global mapname
-
     
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
 
-    if { ! ( $opt($id,_check) ) } { return "" } 
+    if { ! ( $opt($id,1,_check) ) } { return "" } 
 
-    if { $opt($id,map) == "" } { return ""} 
+    if { $opt($id,1,vect) == "" } { return ""} 
 
-    if { !$opt($id,display_shape) && !$opt($id,display_cat) &&
-         !$opt($id,display_topo)  && !$opt($id,display_dir) &&
-         !$opt($id,display_attr) } { return } 
+    if { !$opt($id,1,display_shape) && !$opt($id,1,display_cat) &&
+         !$opt($id,1,display_topo)  && !$opt($id,1,display_dir) &&
+         !$opt($id,1,display_attr) } { return } 
 
-    if { !$opt($id,type_point) && !$opt($id,type_line) &&
-         !$opt($id,type_boundary)  && !$opt($id,type_centroid) && 
-         !$opt($id,type_area) && !$opt($id,type_face) } { return ""} 
+    if { !$opt($id,1,type_point) && !$opt($id,1,type_line) &&
+         !$opt($id,1,type_boundary)  && !$opt($id,1,type_centroid) && 
+         !$opt($id,1,type_area) && !$opt($id,1,type_face) } { return ""} 
 
-    set mapname $opt($id,map)
+    set mapname $opt($id,1,vect)
 	return $mapname
 }
 
-proc GmVector::WorkOnVector { node } {
+# used for v.digit
+proc GmVector::WorkOnVector { node mod } {
     variable opt
     variable bg
     variable tree
@@ -633,43 +728,43 @@ proc GmVector::WorkOnVector { node } {
     global xmon
     global nextmon
     
-    
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
 
-    if { ! ( $opt($id,_check) ) } { return } 
+    if { ! ( $opt($id,1,_check) ) } { return } 
 
-    if { $opt($id,map) == "" } { return } 
+    if { $opt($id,1,vect) == "" } { return } 
 
-    if { !$opt($id,display_shape) && !$opt($id,display_cat) &&
-         !$opt($id,display_topo)  && !$opt($id,display_dir) &&
-         !$opt($id,display_attr) } { return } 
+    if { !$opt($id,1,display_shape) && !$opt($id,1,display_cat) &&
+         !$opt($id,1,display_topo)  && !$opt($id,1,display_dir) &&
+         !$opt($id,1,display_attr) } { return } 
 
-    if { !$opt($id,type_point) && !$opt($id,type_line) &&
-         !$opt($id,type_boundary)  && !$opt($id,type_centroid) && 
-         !$opt($id,type_area) && !$opt($id,type_face) } { return } 
+    if { !$opt($id,1,type_point) && !$opt($id,1,type_line) &&
+         !$opt($id,1,type_boundary)  && !$opt($id,1,type_centroid) && 
+         !$opt($id,1,type_area) && !$opt($id,1,type_face) } { return } 
 
     global dmpath 
     
+    # start xmon for v.digit
 	if { $xmon < 7 } {    
 		if ![catch {open "|d.mon -L" r} input] {
 			while {[gets $input line] >= 0} {
             	if {[regexp -nocase "$xmon.*not running" $line]} {
 					runcmd "d.mon start=x$xmon"
 					set nextmon [expr $xmon + 1]
-    				GmGroup::display "root" 
+    				GmGroup::display "root" $mod
 					set bg [exec d.save -o | cut -f1 -d# | tr {\n} {;}]
     				set bg "$bg"
-					spawn v.digit -n map=$opt($id,map) bgcmd=$bg
+					spawn v.digit -n map=$opt($id,1,vect) bgcmd=$bg
 
             	} elseif {[regexp -nocase "$xmon.* running" $line]} {
 					incr xmon 1
 					runcmd "d.mon select=x$xmon"
 					set nextmon [expr $xmon + 1]
-    				GmGroup::display "root" 
+    				GmGroup::display "root" $mod
 					set bg [exec d.save -o | cut -f1 -d# | tr {\n} {;}]
     				set bg "$bg"
-					spawn v.digit -n map=$opt($id,map) bgcmd=$bg
+					spawn v.digit -n map=$opt($id,1,vect) bgcmd=$bg
             	}              
        		}
     	}
@@ -680,7 +775,6 @@ proc GmVector::WorkOnVector { node } {
 }
 
 proc GmVector::duplicate { tree parent node id } {
-    global form_mode
     variable opt
     variable count
 
@@ -689,77 +783,69 @@ proc GmVector::duplicate { tree parent node id } {
     set frm [ frame .vectoricon$count]
     set fon [font create -size 10] 
     set check [checkbutton $frm.check -font $fon \
-                           -variable GmVector::opt($count,_check) \
+                           -variable GmVector::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
     set can [ canvas $frm.c -width $GmTree::legend_width \
                      -height $GmTree::legend_height -borderwidth 0 ]
-    set opt($count,_legend) $can
+    set opt($count,1,_legend) $can
     pack $check $can -side left
 
-	if { $opt($id,map) == ""} {
+	if { $opt($id,1,vect) == ""} {
     	$tree insert end $parent $node \
 		-text      "vector $count" \
 		-window    $frm \
 		-drawcross auto
 	} else {
 	    $tree insert end $parent $node \
-		-text      "$opt($id,map)" \
+		-text      "$opt($id,1,vect)" \
 		-window    $frm \
 		-drawcross auto
 	} 
 
-    set opt($count,_check) $opt($id,_check)
+    set opt($count,1,_check) $opt($id,1,_check)
 
-    set opt($count,map) "$opt($id,map)" 
-    set opt($count,display_shape) $opt($id,display_shape)
-    set opt($count,display_cat) $opt($id,display_cat)
-    set opt($count,display_topo) $opt($id,display_topo)
-    set opt($count,display_dir) $opt($id,display_dir)
-    set opt($count,display_attr) $opt($id,display_attr)
-    set opt($count,type_point) $opt($id,type_point)
-    set opt($count,type_line) $opt($id,type_line)
-    set opt($count,type_boundary) $opt($id,type_boundary)
-    set opt($count,type_centroid) $opt($id,type_centroid)
-    set opt($count,type_area) $opt($id,type_area)
-    set opt($count,type_face)  $opt($id,type_face)
+    set opt($count,1,vect) "$opt($id,1,vect)" 
+	set opt($count,1,opacity) opt($id,1,opacity)
+    set opt($count,1,display_shape) $opt($id,1,display_shape)
+    set opt($count,1,display_cat) $opt($id,1,display_cat)
+    set opt($count,1,display_topo) $opt($id,1,display_topo)
+    set opt($count,1,display_dir) $opt($id,1,display_dir)
+    set opt($count,1,display_attr) $opt($id,1,display_attr)
+    set opt($count,1,type_point) $opt($id,1,type_point)
+    set opt($count,1,type_line) $opt($id,1,type_line)
+    set opt($count,1,type_boundary) $opt($id,1,type_boundary)
+    set opt($count,1,type_centroid) $opt($id,1,type_centroid)
+    set opt($count,1,type_area) $opt($id,1,type_area)
+    set opt($count,1,type_face)  $opt($id,1,type_face)
 
-    set opt($count,color) $opt($id,color)
-    set opt($count,sqlcolor) $opt($id,sqlcolor)
-    set opt($count,rdmcolor) $opt($id,rdmcolor)
-    set opt($count,fcolor) $opt($id,fcolor)
-    set opt($count,lcolor) $opt($id,lcolor)
-    set opt($count,_use_color) $opt($id,_use_color)
-    set opt($count,_use_fcolor) $opt($id,_use_fcolor)
+    set opt($count,1,color) $opt($id,1,color)
+    set opt($count,1,sqlcolor) $opt($id,1,sqlcolor)
+    set opt($count,1,rdmcolor) $opt($id,1,rdmcolor)
+    set opt($count,1,fcolor) $opt($id,1,fcolor)
+    set opt($count,1,lcolor) $opt($id,1,lcolor)
+    set opt($count,1,_use_color) $opt($id,1,_use_color)
+    set opt($count,1,_use_fcolor) $opt($id,1,_use_fcolor)
 
-    set opt($count,symdir) "$opt($id,symdir)"
-    set opt($count,icon) "$opt($id,icon)"
-    set opt($count,size)  $opt($id,size)
-    set opt($count,lwidth)  $opt($id,lwidth)
+    set opt($count,1,symdir) "$opt($id,1,symdir)"
+    set opt($count,1,icon) "$opt($id,1,icon)"
+    set opt($count,1,size)  $opt($id,1,size)
+    set opt($count,1,lwidth)  $opt($id,1,lwidth)
 
-    set opt($count,layer) $opt($id,layer)
-    set opt($count,lfield) $opt($id,lfield)
-    set opt($count,cat) "$opt($id,cat)"
-    set opt($count,where)  "$opt($id,where)"
-    set opt($count,_use_where) $opt($id,_use_where)
+    set opt($count,1,layer) $opt($id,1,layer)
+    set opt($count,1,lfield) $opt($id,1,lfield)
+    set opt($count,1,cat) "$opt($id,1,cat)"
+    set opt($count,1,where)  "$opt($id,1,where)"
+    set opt($count,1,_use_where) $opt($id,1,_use_where)
 
-    set opt($count,attribute) "$opt($id,attribute)"
-    set opt($count,xref) "$opt($id,xref)"
-    set opt($count,yref) "$opt($id,yref)"
-    set opt($count,lsize) $opt($id,lsize)
+    set opt($count,1,attribute) "$opt($id,1,attribute)"
+    set opt($count,1,xref) "$opt($id,1,xref)"
+    set opt($count,1,yref) "$opt($id,1,yref)"
+    set opt($count,1,lsize) $opt($id,1,lsize)
 
-    set opt($count,minreg) "$opt($id,minreg)" 
-    set opt($count,maxreg)  "$opt($id,maxreg)"
+    set opt($count,1,minreg) "$opt($id,1,minreg)" 
+    set opt($count,1,maxreg)  "$opt($id,1,maxreg)"
 
-    # Default form mode used for vectors, it can be 'gui' (default) or 'txt'
-    set form_mode [exec g.gisenv get=DM_FORM_MODE]
-    if { $form_mode == "txt" } {
-        set opt($count,_query_text) $opt($id,_query_text)
-    } else {
-        set opt($count,_query_text) $opt($id,_query_text)
-    }
-    set opt($count,_query_edit) $opt($id,_query_edit)
-
-    set opt($count,_width) $opt($id,_width)
+    set opt($count,1,mod) 0
 
     GmVector::legend $count
 

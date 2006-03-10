@@ -27,7 +27,14 @@ proc GmCtext::create { tree parent } {
     
     pack $check $ico -side left
     
-    $tree insert end $parent $node \
+	#insert new layer
+	if {[$tree selection get] != "" } {
+		set sellayer [$tree index [$tree selection get]]
+    } else { 
+    	set sellayer "end" 
+    }
+
+    $tree insert $sellayer $parent $node \
 	-text  "text layer $count"\
 	-window    $frm \
 	-drawcross auto  

@@ -1,14 +1,22 @@
-###############################################################
+##########################################################################
 # thematic.tcl - thematic vector mapping layer options file for GRASS GIS Manager
-# February 2006 Michael Barton, Arizona State University
-###############################################################
+# March 2006 Michael Barton, Arizona State University
+# COPYRIGHT:	(C) 1999 - 2006 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+##########################################################################
 
 namespace eval GmThematic {
-    variable array opt # thematic options
+    variable array opt # thematic current options
 	variable array tlegend # mon
 	variable array tlegcan # mon
-
     variable count 1
+    variable array lfile # raster
+    variable array lfilemask # raster
+    variable optlist
 }
 
 
@@ -18,13 +26,16 @@ proc GmThematic::create { tree parent } {
     global gmpath
     global mon
     global frm
+    variable lfile
+    variable lfilemask
+    variable optlist
 
     set node "thematic:$count"
 
     set frm [ frame .thematicicon$count]
     set fon [font create -size 10] 
     set check [checkbutton $frm.check -font $fon \
-                           -variable GmThematic::opt($count,_check) \
+                           -variable GmThematic::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
     image create photo thematicico -file "$gmpath/thematic.gif"
@@ -32,39 +43,64 @@ proc GmThematic::create { tree parent } {
     
     pack $check $ico -side left
     
-    $tree insert end $parent $node \
+	#insert new layer
+	if {[$tree selection get] != "" } {
+		set sellayer [$tree index [$tree selection get]]
+    } else { 
+    	set sellayer "end" 
+    }
+
+    $tree insert $sellayer $parent $node \
 	-text  "thematic $count"\
 	-window    $frm \
 	-drawcross auto  
         
-    set opt($count,_check) 1 
+    set opt($count,1,_check) 1 
     
-    set opt($count,map) "" 
-    set opt($count,type) "area"
-    set opt($count,column) "" 
-    set opt($count,themetype) "graduated_colors" 
-    set opt($count,themecalc) "interval" 
-    set opt($count,breakpoints) "" 
-    set opt($count,where) "" 
-    set opt($count,layer) 1 
-    set opt($count,icon) "basic/circle" 
-    set opt($count,ptsize) 5 
-    set opt($count,maxsize) 20 
-    set opt($count,nint) 4 
-    set opt($count,colorscheme) "blue-red" 
-    set opt($count,pointcolor) \#FF0000 
-    set opt($count,linecolor) \#000000 
-    set opt($count,startcolor) \#FF0000 
-    set opt($count,endcolor) \#0000FF 
-    set opt($count,update_rgb) 0 
-    set opt($count,math) 0 
-    set opt($count,psmap) "" 
-    set opt($count,border) 1 
-    set opt($count,titlefont) "{times} 14 bold" 
-    set opt($count,subtitlefont) "{times} 12 bold" 
-    set opt($count,labelfont) "{times} 12" 
-    set opt($count,tfontcolor) \#000000  
-    set opt($count,lfontcolor) \#000000  
+    set opt($count,1,map) "" 
+	set opt($count,1,opacity) 1.0
+    set opt($count,1,type) "area"
+    set opt($count,1,column) "" 
+    set opt($count,1,themetype) "graduated_colors" 
+    set opt($count,1,themecalc) "interval" 
+    set opt($count,1,breakpoints) "" 
+    set opt($count,1,where) "" 
+    set opt($count,1,layer) 1 
+    set opt($count,1,icon) "basic/circle" 
+    set opt($count,1,ptsize) 5 
+    set opt($count,1,maxsize) 20 
+    set opt($count,1,nint) 4 
+    set opt($count,1,colorscheme) "blue-red" 
+    set opt($count,1,pointcolor) \#FF0000 
+    set opt($count,1,linecolor) \#000000 
+    set opt($count,1,startcolor) \#FF0000 
+    set opt($count,1,endcolor) \#0000FF 
+    set opt($count,1,update_rgb) 0 
+    set opt($count,1,math) 0 
+    set opt($count,1,psmap) "" 
+    set opt($count,1,border) 1 
+    set opt($count,1,titlefont) "{times} 14 bold" 
+    set opt($count,1,subtitlefont) "{times} 12 bold" 
+    set opt($count,1,labelfont) "{times} 12" 
+    set opt($count,1,tfontcolor) \#000000  
+    set opt($count,1,lfontcolor) \#000000  
+    set opt($count,1,mod) 1
+
+	set optlist { _check map type column themetype themecalc breakpoints where \
+             layer icon ptsize maxsize nint colorscheme pointcolor linecolor\
+             startcolor endcolor border update_rgb math psmap opacity\
+             titlefont tfontcolor subtitlefont labelfont lfontcolor} 
+
+    foreach key $optlist {
+		set opt($count,0,$key) $opt($count,1,$key)
+    } 
+    
+	# create files in tmp diretory for layer output
+	set mappid [pid]
+	set lfile($count) [eval exec "g.tempfile pid=$mappid"]
+	set lfilemask($count) $lfile($count)
+	append lfile($count) ".ppm"
+	append lfilemask($count) ".pgm"
     
     incr count
     return $node
@@ -74,7 +110,7 @@ proc GmThematic::set_option { node key value } {
     variable opt
  
     set id [GmTree::node_id $node]
-    set opt($id,$key) $value
+    set opt($id,1,$key) $value
 }
 
 proc GmThematic::select_map { id } {
@@ -82,7 +118,7 @@ proc GmThematic::select_map { id } {
     variable node
     set m [GSelect vector]
     if { $m != "" } { 
-        set GmThematic::opt($id,map) $m
+        set GmThematic::opt($id,1,map) $m
         GmTree::autonamel "thematic map for $m"
     }
 }
@@ -92,7 +128,7 @@ proc GmThematic::select_tfont { id } {
     global frm 
     
     set fon [SelectFont $frm.font -type dialog -sampletext 1 -title "Select font"]
-	if { $fon != "" } {set opt($id,titlefont) $fon}
+	if { $fon != "" } {set opt($id,1,titlefont) $fon}
 }
 
 proc GmThematic::select_stfont { id } {
@@ -100,21 +136,21 @@ proc GmThematic::select_stfont { id } {
     global frm 
     
     set fon [SelectFont $frm.font -type dialog -sampletext 1 -title "Select font"]
-	if { $fon != "" } {set opt($id,subtitlefont) $fon}
+	if { $fon != "" } {set opt($id,1,subtitlefont) $fon}
 }
 proc GmThematic::select_lfont { id } {
 	variable opt
     global frm 
     
     set fon [SelectFont $frm.font -type dialog -sampletext 1 -title "Select font"]
-	if { $fon != "" } {set opt($id,labelfont) $fon}
+	if { $fon != "" } {set opt($id,1,labelfont) $fon}
 }
 
 proc GmThematic::show_columns { id } {
 	variable opt
 	global bgcolor
-	set mapname $opt($id,map)
-	set layernum $opt($id,layer)
+	set mapname $opt($id,1,map)
+	set layernum $opt($id,1,layer)
 	set cmd "v.info -c map=$mapname layer=$layernum"
 	run_panel $cmd
 }
@@ -122,18 +158,18 @@ proc GmThematic::show_columns { id } {
 proc GmThematic::show_data { id } {
 	variable opt
 	global bgcolor
-	set mapname $opt($id,map)
-	set layer $opt($id,layer)
-	set vdb [open "|v.db.connect map=$mapname layer=$layer -g" r]
-	set vectdb [read $vdb]
-	close $vdb
-	set vdblist [split $vectdb " "]
-	set tbl [lindex $vdblist 1]
-	set db [lindex $vdblist 3]
-	set drv [lindex $vdblist 4]
-	puts "table=$tbl database=$db driver=$drv"
-	set cmd "db.select table=$tbl database=$db driver=$drv"
-	run_panel $cmd
+	set mapname $opt($id,1,map)
+	set layer $opt($id,1,layer)
+	if ![catch {open "|v.db.connect map=$mapname layer=$layer -g" r} vdb] {
+		set vectdb [read $vdb]
+		catch {close $vdb}
+		set vdblist [split $vectdb " "]
+		set tbl [lindex $vdblist 1]
+		set db [lindex $vdblist 3]
+		set drv [lindex $vdblist 4]
+		set cmd "db.select table=$tbl database=$db driver=$drv"
+		run_panel $cmd
+	}
 }
 
 # select symbols from directories
@@ -141,7 +177,7 @@ proc GmThematic::select_symbol { id } {
     variable opt
     set i [GSelect symbol]
     if { $i != "" } {
-        set GmThematic::opt($id,icon) $i
+        set GmThematic::opt($id,1,icon) $i
     }
 }
 
@@ -164,6 +200,16 @@ proc GmThematic::options { id frm } {
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
+	#opacity
+	set row [ frame $frm.opc]
+	Label $row.a -text [G_msg "Opaque "]
+	scale $row.b -from 1.0 -to 0.0 -showvalue 1  \
+		-orient horizontal -length 300 -resolution 0.01 -fg "#656565"\
+		-variable GmThematic::opt($id,1,opacity) 
+	Label $row.c -text [G_msg " Transparent"]
+    pack $row.a $row.b $row.c -side left
+    pack $row -side top -fill both -expand yes	
+	
     # vector name
     set row [ frame $frm.map ]
     Label $row.a -text [G_msg "Vector map:"]
@@ -171,8 +217,8 @@ proc GmThematic::options { id frm } {
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "vector for thematic mapping"] \
 		-command "GmThematic::select_map $id"
-    Entry $row.c -width 35 -text " $opt($id,map)" \
-          -textvariable GmThematic::opt($id,map) \
+    Entry $row.c -width 35 -text " $opt($id,1,map)" \
+          -textvariable GmThematic::opt($id,1,map) \
           -background white
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
@@ -186,10 +232,10 @@ proc GmThematic::options { id frm } {
     # vector type and layer
     set row [ frame $frm.vtype ]
     Label $row.a -text [G_msg "    vector type"] 
-    ComboBox $row.b -padx 2 -width 10 -textvariable GmThematic::opt($id,type) \
+    ComboBox $row.b -padx 2 -width 10 -textvariable GmThematic::opt($id,1,type) \
                     -values {"area" "point" "centroid" "line" "boundary"} -entrybg white
     Label $row.c -text " attribute layer"
-    LabelEntry $row.d -textvariable GmThematic::opt($id,layer) -width 3 \
+    LabelEntry $row.d -textvariable GmThematic::opt($id,1,layer) -width 3 \
             -entrybg white
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
@@ -197,7 +243,7 @@ proc GmThematic::options { id frm } {
     # vector column
     set row [ frame $frm.column ]
     Label $row.a -text "    NUMERIC attribute column to use for thematic map"
-    LabelEntry $row.b -textvariable GmThematic::opt($id,column) -width 15 \
+    LabelEntry $row.b -textvariable GmThematic::opt($id,1,column) -width 15 \
             -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -222,10 +268,10 @@ proc GmThematic::options { id frm } {
     # Thematic type
     set row [ frame $frm.ttype ]
     Label $row.a -text [G_msg "Thematic map: type"] 
-    ComboBox $row.b -padx 2 -width 16 -textvariable GmThematic::opt($id,themetype) \
+    ComboBox $row.b -padx 2 -width 16 -textvariable GmThematic::opt($id,1,themetype) \
 		-values {"graduated_colors" "graduated_points" "graduated_lines"} -entrybg white
     Label $row.c -text [G_msg " map by"] 
-    ComboBox $row.d -padx 2 -width 15 -textvariable GmThematic::opt($id,themecalc) \
+    ComboBox $row.d -padx 2 -width 15 -textvariable GmThematic::opt($id,1,themecalc) \
 		-values {"interval" "std_deviation" "quartiles" \
 		"custom_breaks"} -entrybg white
     pack $row.a $row.b $row.c $row.d -side left
@@ -234,7 +280,7 @@ proc GmThematic::options { id frm } {
     # intervals
     set row [ frame $frm.int ]
     Label $row.a -text "    number of intervals to map (interval themes):" 
-    SpinBox $row.b -range {1 99 1} -textvariable GmThematic::opt($id,nint) \
+    SpinBox $row.b -range {1 99 1} -textvariable GmThematic::opt($id,1,nint) \
                    -entrybg white -width 3 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -242,7 +288,7 @@ proc GmThematic::options { id frm } {
     # breakpoints
     set row [ frame $frm.break ]
     Label $row.a -text "    custom breakpoints (val val ...)"
-    LabelEntry $row.b -textvariable GmThematic::opt($id,breakpoints) -width 32 \
+    LabelEntry $row.b -textvariable GmThematic::opt($id,1,breakpoints) -width 32 \
             -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -250,7 +296,7 @@ proc GmThematic::options { id frm } {
     # where
     set row [ frame $frm.where ]
     Label $row.a -text "    query with SQL where clause   "
-    LabelEntry $row.b -textvariable GmThematic::opt($id,where) -width 32 \
+    LabelEntry $row.b -textvariable GmThematic::opt($id,1,where) -width 32 \
             -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -260,23 +306,23 @@ proc GmThematic::options { id frm } {
     Label $row.a -text "Graduated points & lines: " 
     Button $row.b -text [G_msg "icon"] \
 	    -command "GmThematic::select_symbol $id"
-    Entry $row.c -width 10 -text "$opt($id,icon)" \
-	    -textvariable GmThematic::opt($id,icon) \
+    Entry $row.c -width 10 -text "$opt($id,1,icon)" \
+	    -textvariable GmThematic::opt($id,1,icon) \
 	    -background white 
     Label $row.d -text [G_msg "point color"] 
-    SelectColor $row.e -type menubutton -variable GmThematic::opt($id,pointcolor)
+    SelectColor $row.e -type menubutton -variable GmThematic::opt($id,1,pointcolor)
     Label $row.f -text [G_msg "line color"] 
-    SelectColor $row.g -type menubutton -variable GmThematic::opt($id,linecolor)
+    SelectColor $row.g -type menubutton -variable GmThematic::opt($id,1,linecolor)
     pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
     pack $row -side top -fill both -expand yes
 
     # point options2
     set row [ frame $frm.pts2 ]  
     Label $row.a -text "    size/min size (graduated pts/lines)" 
-    SpinBox $row.b -range {1 50 1} -textvariable GmThematic::opt($id,ptsize) \
+    SpinBox $row.b -range {1 50 1} -textvariable GmThematic::opt($id,1,ptsize) \
         -width 2 -helptext "icon size/min size (graduated pts/lines)" -entrybg white 
     Label $row.c -text "max size (graduated pts)" 
-    SpinBox $row.d -range {1 50 1} -textvariable GmThematic::opt($id,maxsize) \
+    SpinBox $row.d -range {1 50 1} -textvariable GmThematic::opt($id,1,maxsize) \
         -width 2 -helptext " max size (graduated pts/lines)" -entrybg white 
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
@@ -284,7 +330,7 @@ proc GmThematic::options { id frm } {
     # color options1
     set row [ frame $frm.color1 ]
     Label $row.a -text [G_msg "Graduated colors: preset color schemes"] 
-    ComboBox $row.b -padx 2 -width 18 -textvariable GmThematic::opt($id,colorscheme) \
+    ComboBox $row.b -padx 2 -width 18 -textvariable GmThematic::opt($id,1,colorscheme) \
         -values {"blue-red" "red-blue" "green-red" "red-green" \
         "blue-green" "green-blue" "cyan-yellow" "yellow-cyan" "custom_gradient" \
         "single_color" } -entrybg white
@@ -294,10 +340,10 @@ proc GmThematic::options { id frm } {
     # color options2
     set row [ frame $frm.color2 ]
     Label $row.a -text "    custom color scheme - start color"
-    SelectColor $row.b -type menubutton -variable GmThematic::opt($id,startcolor)
+    SelectColor $row.b -type menubutton -variable GmThematic::opt($id,1,startcolor)
     Label $row.c -text " end color"
-    SelectColor $row.d -type menubutton -variable GmThematic::opt($id,endcolor)
-    checkbutton $row.e -text [G_msg "draw border"] -variable GmThematic::opt($id,border)     
+    SelectColor $row.d -type menubutton -variable GmThematic::opt($id,1,endcolor)
+    checkbutton $row.e -text [G_msg "draw border"] -variable GmThematic::opt($id,1,border)     
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
     
@@ -305,7 +351,7 @@ proc GmThematic::options { id frm } {
     set row [ frame $frm.color3 ]
     Label $row.a -text "   "
     checkbutton $row.b -text [G_msg "save thematic colors to GRASSRGB column of vector file"] -variable \
-        GmThematic::opt($id,update_rgb) 
+        GmThematic::opt($id,1,update_rgb) 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
@@ -316,11 +362,11 @@ proc GmThematic::options { id frm } {
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "title font for legend"] \
 	    -command "GmThematic::select_tfont $id"
-    Entry $row.c -width 15 -text "$opt($id,titlefont)" \
-	    -textvariable GmThematic::opt($id,titlefont) \
+    Entry $row.c -width 15 -text "$opt($id,1,titlefont)" \
+	    -textvariable GmThematic::opt($id,1,titlefont) \
 	    -background white 
     Label $row.d -text " font color"
-    SelectColor $row.e -type menubutton -variable GmThematic::opt($id,tfontcolor)
+    SelectColor $row.e -type menubutton -variable GmThematic::opt($id,1,tfontcolor)
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
     
@@ -331,8 +377,8 @@ proc GmThematic::options { id frm } {
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "subtitle font for legend"] \
 	    -command "GmThematic::select_stfont $id"
-    Entry $row.c -width 15 -text "$opt($id,subtitlefont)" \
-	    -textvariable GmThematic::opt($id,subtitlefont) \
+    Entry $row.c -width 15 -text "$opt($id,1,subtitlefont)" \
+	    -textvariable GmThematic::opt($id,1,subtitlefont) \
 	    -background white 
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
@@ -344,11 +390,11 @@ proc GmThematic::options { id frm } {
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "label font for legend"] \
 	    -command "GmThematic::select_lfont $id"
-    Entry $row.c -width 15 -text "$opt($id,labelfont)" \
-	    -textvariable GmThematic::opt($id,labelfont) \
+    Entry $row.c -width 15 -text "$opt($id,1,labelfont)" \
+	    -textvariable GmThematic::opt($id,1,labelfont) \
 	    -background white 
     Label $row.d -text " font color"
-    SelectColor $row.e -type menubutton -variable GmThematic::opt($id,lfontcolor)
+    SelectColor $row.e -type menubutton -variable GmThematic::opt($id,1,lfontcolor)
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
     
@@ -356,14 +402,14 @@ proc GmThematic::options { id frm } {
     set row [ frame $frm.legend4 ]
     Label $row.a -text "   "
     checkbutton $row.b -text [G_msg "use math notation in legend"] -variable \
-        GmThematic::opt($id,math) 
+        GmThematic::opt($id,1,math) 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # psmap
     set row [ frame $frm.psmap ]
     Label $row.a -text "Name for ps.map instruction files"
-    LabelEntry $row.b -textvariable GmThematic::opt($id,psmap) -width 34 \
+    LabelEntry $row.b -textvariable GmThematic::opt($id,1,psmap) -width 34 \
             -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -371,22 +417,30 @@ proc GmThematic::options { id frm } {
 
 proc GmThematic::save { tree depth node } {
     variable opt
+    variable optlist
     
     set id [GmTree::node_id $node]
 
-    foreach key { _check map type column themetype themecalc breakpoints where \
-             layer icon ptsize maxsize nint colorscheme pointcolor linecolor\
-             startcolor endcolor border legmon thmlegend update_rgb math psmap\
-             titlefont tfontcolor subtitlefont labelfont lfontcolor} {
-        GmTree::rc_write $depth "$key $opt($id,$key)"
+    foreach key $optlist {
+        GmTree::rc_write $depth "$key $opt($id,1,$key)"
     } 
 }
 
 
-proc GmThematic::display { node } {
-    variable opt
-    variable tree
+proc GmThematic::display { node mod } {
+    global mapfile
+    global maskfile
+    global complist
+    global opclist
+    global masklist
+    global gmpath
     global mon
+    variable optlist
+    variable lfile 
+    variable lfilemask
+    variable opt
+    variable rasttype
+    variable tree
     
     set line ""
     set input ""
@@ -396,61 +450,98 @@ proc GmThematic::display { node } {
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
 
-
-    if { ! ( $opt($id,_check) ) } { return } 
-
-    if { $opt($id,map) == "" } { return } 
-    if { $opt($id,column) == "" } { return }
+    if { $opt($id,1,map) == "" } { return } 
+    if { $opt($id,1,column) == "" } { return }
 
     # set hex colors to rgb         
-    set pointcolor [Gm::color $opt($id,pointcolor)]
-    set linecolor [Gm::color $opt($id,linecolor)]
-    set startcolor [Gm::color $opt($id,startcolor)]
-    set endcolor [Gm::color $opt($id,endcolor)]
+    set pointcolor [Gm::color $opt($id,1,pointcolor)]
+    set linecolor [Gm::color $opt($id,1,linecolor)]
+    set startcolor [Gm::color $opt($id,1,startcolor)]
+    set endcolor [Gm::color $opt($id,1,endcolor)]
     
     # turn off x11 display
     set monitor "none"
 
     #create d.vect.thematic command
-    set cmd "d.vect.thematic -s map=$opt($id,map) type=$opt($id,type) column=$opt($id,column) \
-			layer=$opt($id,layer) icon=$opt($id,icon) size=$opt($id,ptsize) \
-            maxsize=$opt($id,maxsize) nint=$opt($id,nint) pointcolor=$pointcolor \
+    set cmd "d.vect.thematic -s map=$opt($id,1,map) type=$opt($id,1,type) column=$opt($id,1,column) \
+			layer=$opt($id,1,layer) icon=$opt($id,1,icon) size=$opt($id,1,ptsize) \
+            maxsize=$opt($id,1,maxsize) nint=$opt($id,1,nint) pointcolor=$pointcolor \
 			linecolor=$linecolor startcolor=$startcolor endcolor=$endcolor \
-			themetype=$opt($id,themetype) monitor=$monitor \
-			themecalc=$opt($id,themecalc) colorscheme=$opt($id,colorscheme)"
+			themetype=$opt($id,1,themetype) monitor=$monitor \
+			themecalc=$opt($id,1,themecalc) colorscheme=$opt($id,1,colorscheme)"
              
     # breakpoints
-    if { $opt($id,breakpoints) != "" } { 
-        append cmd " {breakpoints=$opt($id,breakpoints)}"
+    if { $opt($id,1,breakpoints) != "" } { 
+        append cmd " {breakpoints=$opt($id,1,breakpoints)}"
     }
 
     # where query
-    if { $opt($id,where) != "" } { 
-        append cmd " {where=$opt($id,where)}"
+    if { $opt($id,1,where) != "" } { 
+        append cmd " {where=$opt($id,1,where)}"
     }
 
     # psmap file 
-    if { $opt($id,psmap) != "" } { 
-        append cmd " psmap=$opt($id,psmap)"
+    if { $opt($id,1,psmap) != "" } { 
+        append cmd " psmap=$opt($id,1,psmap)"
     }
 
     # hide border
-    if { $opt($id,border) == 0 } { 
+    if { $opt($id,1,border) == 0 } { 
         append cmd "  -f"
     }
 
     # update_rgb
-    if { $opt($id,update_rgb) == 1 } { 
+    if { $opt($id,1,update_rgb) == 1 } { 
         append cmd " -u"
     }
 
     # math notation
-    if { $opt($id,math) == 1 } { 
+    if { $opt($id,1,math) == 1 } { 
         append cmd " -m"
     }
     
+    # check to see if options have changed
+    foreach key $optlist {
+        if {$opt($id,0,$key) != $opt($id,1,$key)} {
+        	set opt($id,1,mod) 1
+        	set opt($id,0,$key) $opt($id,1,$key)
+        }
+    } 
+    
+    # if options have change (or mod flag set by other procedures) re-render map
+	if {$opt($id,1,mod) == 1} {
+		run_panel $cmd
+		file copy -force $mapfile($mon) $lfile($id)
+		file copy -force $maskfile($mon) $lfilemask($id)
+    }
 
-	run_panel $cmd
+    if { ! ( $opt($id,1,_check) ) } { return } 
+
+    #add lfile to compositing list
+	if {$complist($mon) != "" } {
+	    append complist($mon) ","
+	    append complist($mon) [file tail $lfile($id)]
+	} else {
+	    append complist($mon) [file tail $lfile($id)]
+	}	
+
+	if {$masklist($mon) != "" } {
+	    append masklist($mon) ","
+	    append masklist($mon) [file tail $lfilemask($id)]
+	} else {
+	    append masklist($mon) [file tail $lfilemask($id)]
+	}	
+
+	if {$opclist($mon) != "" } {
+	    append opclist($mon) ","
+	    append opclist($mon) $opt($id,1,opacity)
+	} else {
+	    append opclist($mon) $opt($id,1,opacity)
+	}	
+	
+	# reset options changed flag
+	set opt($id,1,mod) 0
+
 	GmThematic::tlegend $mon
 	GmThematic::tleg_item $mon $id
 }
@@ -466,7 +557,7 @@ proc GmThematic::duplicate { tree parent node id } {
     set frm [ frame .thematicicon$count]
     set fon [font create -size 10] 
     set check [checkbutton $frm.check -font $fon \
-                           -variable GmThematic::opt($count,_check) \
+                           -variable GmThematic::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
     image create photo thematicico -file "$gmpath/thematic.gif"
@@ -474,48 +565,47 @@ proc GmThematic::duplicate { tree parent node id } {
     
     pack $check $ico -side left
 
-	if { $opt($id,map) == ""} {
+	if { $opt($id,1,map) == ""} {
     	$tree insert end $parent $node \
 		-text      "thematic $count" \
 		-window    $frm \
 		-drawcross auto
 	} else {
 	    $tree insert end $parent $node \
-		-text      "thematic map for $opt($id,map)" \
+		-text      "thematic map for $opt($id,1,map)" \
 		-window    $frm \
 		-drawcross auto
 	}
 
-    set opt($count,_check) $opt($id,_check)
+    set opt($count,1,_check) $opt($id,1,_check)
 
-    set opt($count,map) "$opt($id,map)" 
-    set opt($count,type) "$opt($id,type)"
-    set opt($count,column) "$opt($id,column)"
-    set opt($count,themetype) "$opt($id,themetype)" 
-    set opt($count,themecalc) "$opt($id,themecalc)" 
-    set opt($count,breakpoints) "$opt($id,breakpoints)" 
-    set opt($count,where) "$opt($id,where)" 
-    set opt($count,layer) "$opt($id,layer)"
-    set opt($count,icon) "$opt($id,icon)" 
-    set opt($count,ptsize) "$opt($id,ptsize)"
-    set opt($count,maxsize) "$opt($id,maxsize)"
-    set opt($count,nint) "$opt($id,nint)"
-    set opt($count,colorscheme) "$opt($id,colorscheme)"
-    set opt($count,pointcolor) "$opt($id,pointcolor)"
-    set opt($count,linecolor) "$opt($id,linecolor)"
-    set opt($count,startcolor) "$opt($id,startcolor)"
-    set opt($count,endcolor) "$opt($id,endcolor)"
-    set opt($count,border) "$opt($id,border)"
-    set opt($count,legmon) "$opt($id,legmon)"
-    set opt($count,thmlegend) "$opt($id,thmlegend)"
-    set opt($count,update_rgb) "$opt($id,update_rgb)" 
-    set opt($count,math) "$opt($id,math)" 
-    set opt($count,psmap) "$opt($id,psmap)" 
-    set opt($count,titlefont) "$opt($id,titlefont)"
-    set opt($count,subtitlefont) "$opt($id,subtitlefont)"
-    set opt($count,labelfont) "$opt($id,labelfont)"
-    set opt($count,tfontcolor) "$opt($id,tfontcolor)" 
-    set opt($count,lfontcolor) "$opt($id,lfontcolor)" 
+    set opt($count,1,map) "$opt($id,1,map)" 
+	set opt($count,1,opacity) opt($id,1,opacity)
+    set opt($count,1,type) "$opt($id,1,type)"
+    set opt($count,1,column) "$opt($id,1,column)"
+    set opt($count,1,themetype) "$opt($id,1,themetype)" 
+    set opt($count,1,themecalc) "$opt($id,1,themecalc)" 
+    set opt($count,1,breakpoints) "$opt($id,1,breakpoints)" 
+    set opt($count,1,where) "$opt($id,1,where)" 
+    set opt($count,1,layer) "$opt($id,1,layer)"
+    set opt($count,1,icon) "$opt($id,1,icon)" 
+    set opt($count,1,ptsize) "$opt($id,1,ptsize)"
+    set opt($count,1,maxsize) "$opt($id,1,maxsize)"
+    set opt($count,1,nint) "$opt($id,1,nint)"
+    set opt($count,1,colorscheme) "$opt($id,1,colorscheme)"
+    set opt($count,1,pointcolor) "$opt($id,1,pointcolor)"
+    set opt($count,1,linecolor) "$opt($id,1,linecolor)"
+    set opt($count,1,startcolor) "$opt($id,1,startcolor)"
+    set opt($count,1,endcolor) "$opt($id,1,endcolor)"
+    set opt($count,1,border) "$opt($id,1,border)"
+    set opt($count,1,update_rgb) "$opt($id,1,update_rgb)" 
+    set opt($count,1,math) "$opt($id,1,math)" 
+    set opt($count,1,psmap) "$opt($id,1,psmap)" 
+    set opt($count,1,titlefont) "$opt($id,1,titlefont)"
+    set opt($count,1,subtitlefont) "$opt($id,1,subtitlefont)"
+    set opt($count,1,labelfont) "$opt($id,1,labelfont)"
+    set opt($count,1,tfontcolor) "$opt($id,1,tfontcolor)" 
+    set opt($count,1,lfontcolor) "$opt($id,1,lfontcolor)" 
 
     incr count
     return $node
@@ -586,16 +676,16 @@ proc GmThematic::tleg_item { mon id } {
 	set x1 30
 	set y1 40
 	set txtx 60
-	set font $opt($id,labelfont)
+	set font $opt($id,1,labelfont)
 	regexp {.*\s(\d*)} $font string lineht
 	set yinc [expr $lineht * 2]	
 	
-	set titlefont $opt($id,titlefont)
-	set tfontcolor $opt($id,tfontcolor)
-	set subtitlefont $opt($id,subtitlefont)
+	set titlefont $opt($id,1,titlefont)
+	set tfontcolor $opt($id,1,tfontcolor)
+	set subtitlefont $opt($id,1,subtitlefont)
 
-	set labelfont $opt($id,labelfont)
-	set lfontcolor $opt($id,lfontcolor)
+	set labelfont $opt($id,1,labelfont)
+	set lfontcolor $opt($id,1,lfontcolor)
 	while {![eof $ltxt]} {
 		gets $ltxt line
 		set type [lindex $line 0]

@@ -1,16 +1,31 @@
-###############################################################
+##########################################################################
 # frames.tcl - display frames layer options file for GRASS GIS Manager
-# January 2006 Michael Barton, Arizona State University
-###############################################################
+# March 2006 Michael Barton, Arizona State University
+# COPYRIGHT:	(C) 1999 - 2006 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+##########################################################################
 
 namespace eval GmDframe {
-    variable array opt # frame options
+    variable array opt # frame current options
     variable count 1
+    variable array tree # mon
+    variable array lfile # raster
+    variable array lfilemask # raster
+    variable optlist
+    variable first
 }
 
 proc GmDframe::create { tree parent } {
     variable opt
     variable count
+    variable lfile
+    variable lfilemask
+    variable optlist
+    variable first
     global gmpath
 
     set node "dframe:$count"
@@ -18,7 +33,7 @@ proc GmDframe::create { tree parent } {
     set frm [ frame .dframeicon$count]
     set fon [font create -size 10] 
     set check [checkbutton $frm.check -font $fon \
-                           -variable GmDframe::opt($count,_check) \
+                           -variable GmDframe::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
     image create photo dfrmico -file "$gmpath/frames.gif"
@@ -26,17 +41,39 @@ proc GmDframe::create { tree parent } {
     
     pack $check $ico -side left
     
-    $tree insert end $parent $node \
+	#insert new layer
+	if {[$tree selection get] != "" } {
+		set sellayer [$tree index [$tree selection get]]
+    } else { 
+    	set sellayer "end" 
+    }
+
+    $tree insert $sellayer $parent $node \
 	-text  "frame $count"\
 	-window    $frm \
 	-drawcross auto  
         
-    set opt($count,_check) 1 
-    set opt($count,frame) "" 
-    set opt($count,erase) 0 
-    set opt($count,create) 1 
-    set opt($count,select) 0 
-    set opt($count,at) "50,100,0,50" 
+    set opt($count,1,_check) 1 
+    set opt($count,1,frame) "" 
+    set opt($count,1,erase) 0 
+    set opt($count,1,create) 1 
+    set opt($count,1,select) 0 
+    set opt($count,1,at) "50,100,0,50" 
+    set opt($count,1,mod) 1
+    set first 1
+
+	set optlist { _check frame erase create select at }
+
+    foreach key $optlist {
+		set opt($count,0,$key) $opt($count,1,$key)
+    } 
+    
+	# create files in tmp diretory for layer output
+	set mappid [pid]
+	set lfile($count) [eval exec "g.tempfile pid=$mappid"]
+	set lfilemask($count) $lfile($count)
+	append lfile($count) ".ppm"
+	append lfilemask($count) ".pgm"
     
     incr count
     return $node
@@ -46,7 +83,7 @@ proc GmDframe::set_option { node key value } {
     variable opt
  
     set id [GmTree::node_id $node]
-    set opt($id,$key) $value
+    set opt($id,1,$key) $value
 }
 
 
@@ -66,11 +103,11 @@ proc GmDframe::options { id frm } {
     # create, select, or erase frames
     set row [ frame $frm.cats ]
     checkbutton $row.a -text [G_msg "create and select frame"] -variable \
-        GmDframe::opt($id,create) 
+        GmDframe::opt($id,1,create) 
     checkbutton $row.b -text [G_msg "select frame"] -variable \
-        GmDframe::opt($id,select) 
+        GmDframe::opt($id,1,select) 
     checkbutton $row.c -text [G_msg "remove all frames   "] -variable \
-        GmDframe::opt($id,erase) 
+        GmDframe::opt($id,1,erase) 
     Button $row.d -text [G_msg "Help"] \
             -image [image create photo -file "$gmpath/grass.gif"] \
             -command "run g.manual d.frame" \
@@ -82,7 +119,7 @@ proc GmDframe::options { id frm } {
     # frame name
     set row [ frame $frm.frame ]
     Label $row.a -text "Frame name (optional): "
-    LabelEntry $row.b -textvariable GmDframe::opt($id,frame) -width 40 \
+    LabelEntry $row.b -textvariable GmDframe::opt($id,1,frame) -width 40 \
             -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -96,7 +133,7 @@ proc GmDframe::options { id frm } {
     # place frame2
     set row [ frame $frm.at2 ]
     Label $row.a -text "     set borders (bottom,top,left,right): "
-    LabelEntry $row.b -textvariable GmDframe::opt($id,at) -width 25 \
+    LabelEntry $row.b -textvariable GmDframe::opt($id,1,at) -width 25 \
             -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -105,57 +142,108 @@ proc GmDframe::options { id frm } {
 
 proc GmDframe::save { tree depth node } {
     variable opt
+    variable optlist
     
     set id [GmTree::node_id $node]
 
-    foreach key { _check frame erase create select at } {
-        GmTree::rc_write $depth "$key $opt($id,$key)"
+    foreach key $optlist {
+        GmTree::rc_write $depth "$key $opt($id,1,$key)"
     } 
 }
 
 
-proc GmDframe::display { node } {
-    variable opt
-    variable tree
+proc GmDframe::display { node mod } {
+    global mapfile
+    global maskfile
+    global complist
+    global opclist
+    global masklist
+    global gmpath
     global mon
+    variable optlist
+    variable lfile 
+    variable lfilemask
+    variable opt
+    variable rasttype
+    variable tree
+    variable first
 
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
 
+    set opt($id,1,mod) $mod    
 
-    if { ! ( $opt($id,_check) ) } { return } 
-
-    if { $opt($id,create) == 0 && $opt($id,select) == 0 && $opt($id,erase) == 0 } { return } 
-    if { $opt($id,at) == "" } { return }
+    if { $opt($id,1,create) == 0 && $opt($id,1,select) == 0 && $opt($id,1,erase) == 0 } { return } 
+    if { $opt($id,1,at) == "" } { return }
     set cmd "d.frame"
 
 
     # create
-    if { $opt($id,create) == 1 } { 
+    if { $opt($id,1,create) == 1 } { 
         append cmd " -c"
     }
 
     # select
-    if { $opt($id,select) == 1 } { 
+    if { $opt($id,1,select) == 1 } { 
         append cmd " -s"
     }
 
     # erase and remove
-    if { $opt($id,erase) == 1 } { 
+    if { $opt($id,1,erase) == 1 } { 
         append cmd " -e"
     }
 
     # frame name
-    if { $opt($id,frame) != "" } { 
-        append cmd " frame=$opt($id,frame)"
+    if { $opt($id,1,frame) != "" } { 
+        append cmd " frame=$opt($id,1,frame)"
     }
 
     # frame placement
-    if { $opt($id,at) != "" } { 
-        append cmd " at=$opt($id,at)"
+    if { $opt($id,1,at) != "" } { 
+        append cmd " at=$opt($id,1,at)"
     }
 
-    run_panel $cmd
+    # check to see if options have changed
+    foreach key $optlist {
+        if {$opt($id,0,$key) != $opt($id,1,$key)} {
+        	set opt($id,1,mod) 1
+        	set opt($id,0,$key) $opt($id,1,$key)
+        }
+    } 
+    
+    # if options have change (or mod flag set by other procedures) re-render map
+	if {$opt($id,1,mod) == 1 || $first == 1 } {
+		run_panel $cmd
+		file copy -force $mapfile($mon) $lfile($id)
+		file copy -force $maskfile($mon) $lfilemask($id)
+    }
+
+    if { ! ( $opt($id,1,_check) ) } { return } 
+
+    #add lfile to compositing list
+	if {$complist($mon) != "" } {
+	    append complist($mon) ","
+	    append complist($mon) [file tail $lfile($id)]
+	} else {
+	    append complist($mon) [file tail $lfile($id)]
+	}	
+
+	if {$masklist($mon) != "" } {
+	    append masklist($mon) ","
+	    append masklist($mon) [file tail $lfilemask($id)]
+	} else {
+	    append masklist($mon) [file tail $lfilemask($id)]
+	}	
+
+	if {$opclist($mon) != "" } {
+	    append opclist($mon) ","
+	    append opclist($mon) 1.0
+	} else {
+	    append opclist($mon) 1.0
+	}	
+	
+	# reset options changed flag
+	set opt($id,1,mod) 0
 }
 
 
@@ -169,7 +257,7 @@ proc GmDframe::duplicate { tree parent node id } {
     set frm [ frame .dframeicon$count]
     set fon [font create -size 10] 
     set check [checkbutton $frm.check -font $fon \
-                           -variable GmDframe::opt($count,_check) \
+                           -variable GmDframe::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
     image create photo dfrmico -file "$gmpath/frames.gif"
@@ -177,25 +265,25 @@ proc GmDframe::duplicate { tree parent node id } {
     
     pack $check $ico -side left
 
-	if { $opt($id,frame) == ""} {
+	if { $opt($id,1,frame) == ""} {
     	$tree insert end $parent $node \
 		-text      "frame $count" \
 		-window    $frm \
 		-drawcross auto
 	} else {
 	    $tree insert end $parent $node \
-		-text      "frame $opt($id,frame)" \
+		-text      "frame $opt($id,1,frame)" \
 		-window    $frm \
 		-drawcross auto
 	}
 
-    set opt($count,_check) $opt($id,_check)
+    set opt($count,1,_check) $opt($id,1,_check)
     
-    set opt($count,frame) "$opt($id,frame)" 
-    set opt($count,erase) "$opt($id,erase)" 
-    set opt($count,at) "$opt($id,at)"
-    set opt($count,create) "$opt($id,create)"
-    set opt($count,select) "$opt($id,select)"
+    set opt($count,1,frame) "$opt($id,1,frame)" 
+    set opt($count,1,erase) "$opt($id,1,erase)" 
+    set opt($count,1,at) "$opt($id,1,at)"
+    set opt($count,1,create) "$opt($id,1,create)"
+    set opt($count,1,select) "$opt($id,1,select)"
 
     incr count
     return $node
