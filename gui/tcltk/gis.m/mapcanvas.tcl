@@ -33,6 +33,12 @@ namespace eval MapCanvas {
 	variable array coords # mon
 	global array canvas_w # mon
 	global array canvas_h # mon
+	global array mapfile # mon
+	global array maskfile # mon
+	global array outfile # mon
+	global array complist # mon
+	global array opclist # mon
+	global array masklist # mon
     variable array tree # mon
     variable cmstatus
     variable mapmon
@@ -67,6 +73,12 @@ proc MapCanvas::create { } {
     global drawprog
 	global array MapCanvas::msg # mon
 	global mapcursor
+	global mapfile
+	global maskfile
+	global outfile
+	global complist
+	global opclist
+	global masklist
 	
 	variable mapmon
     variable mapframe
@@ -125,6 +137,23 @@ proc MapCanvas::create { } {
 	# bindings for display canvas
 
 	set currmon $mon
+	
+	# set tempfile for ppm output
+	set mappid [pid]
+	set mapfile($mon) [eval exec "g.tempfile pid=$mappid"]
+	set maskfile($mon) $mapfile($mon)
+	append mapfile($mon) ".ppm"
+	append maskfile($mon) ".pgm"
+	
+	# set tempfile for composite output
+	set mappid [pid]
+	set outfile($mon) [eval exec "g.tempfile pid=$mappid"]
+	append outfile($mon) ".ppm"
+		
+	set complist($mon) ""
+	set opclist($mon) ""
+	set masklist($mon) ""
+
 	
 	# mouse handlers
 	bind $can($mon) <ButtonPress-1> {
@@ -187,10 +216,10 @@ proc MapCanvas::create { } {
 		set rwin [winfo containing $rwinx $rwiny]
 		regexp -nocase {.*\((\d*)(\).*)} $rwin rwin1 currmon rwin2
 		set mon $currmon
+		after 1000
     	if { $canvas_w($mon) != %w || $canvas_h($mon) != %h } {
 			set canvas_w($mon) %w
 			set canvas_h($mon) %h
-			update idletasks
 			after cancel MapCanvas::do_resize $mon
 			after idle MapCanvas::do_resize $mon
 		}
@@ -217,12 +246,17 @@ proc MapCanvas::mapsettings { mon } {
 	global gisdbase
 	global location_name
 	global mapset
+	global canvas_h
+	global canvas_w
+	global mapdispwd
+	global mapdispht
+	global mapfile
 	
 	variable mapcan
 	variable can
-	global canvas_h
-	global canvas_w
-			
+				
+	if {[info exists env(MONITOR_OVERRIDE)]} {unset env(MONITOR_OVERRIDE)}
+
     set monregion "$gisdbase/$location_name/$mapset/windows/mon_$mon"
 	if {[file exists $monregion] } {
 		set cmd "g.region region=mon_$mon"	
@@ -252,17 +286,44 @@ proc MapCanvas::mapsettings { mon } {
 		set mapdispht $canvas_h($mon)
 		set mapdispwd [expr 1.0 * $canvas_h($mon) * $mapwd / $mapht]
 	}
-	
+
+	# stop display driver in order to set display environment parameters
+	if ![catch {open "|d.mon -L" r} input] {
+		while {[gets $input line] >= 0} {
+			if {[regexp "^gism.*       running" $line]} {
+				runcmd "d.mon stop=gism"
+				break
+			}
+		}
+		close $input
+	}
+		
+	#wait to make sure that the driver is shut down
+	after 500
+		
+	#set display environment
 	set env(GRASS_WIDTH) $mapdispwd
 	set env(GRASS_HEIGHT) $mapdispht
-	set env(GRASS_PNGFILE) "dispmon_$mon.ppm"
-	set env(GRASS_TRANSPARENT) "FALSE"
+	set env(GRASS_PNGFILE) "$mapfile($mon)"
+	set env(GRASS_BACKGROUNDCOLOR) "ffffff"
+	set env(GRASS_TRANSPARENT) "TRUE"
 	set env(GRASS_PNG_AUTO_WRITE) "TRUE"
 	set env(GRASS_TRUECOLOR) "TRUE"
+		
+	#restart display driver to apply environment settings
+	if ![catch {open "|d.mon -L" r} input] {
+		while {[gets $input line] >= 0} {
+			if {[regexp "^gism.*       not running" $line]} {
+				runcmd "d.mon start=gism -s"
+				break
+			}
+		}
+		close $input
+	}
 }
 
 # draw map using png driver and open in canvas
-proc MapCanvas::drawmap { mon } {
+proc MapCanvas::drawmap { mon mod } {
 	global outtext
 	global env
 	global gmpath
@@ -273,49 +334,76 @@ proc MapCanvas::drawmap { mon } {
 	global mapfile
 	global drawprog
 	global MapCanvas::msg
+	global mapfile
+	global drawprog
+	global complist
+	global masklist
+	global opclist
 	variable mapframe
-	
 	variable mapcan
 	variable can
+	
 	set drawprog 0
-
+	
+	# reset compositing list prior to rendering
+	set complist($mon) ""
+	set opclist($mon) ""
+	set masklist($mon) ""
+	
     set MapCanvas::msg($mon) "please wait..."
     $mapframe($mon) showstatusbar progression 
 		
-	# start draw map routine only if gism PNG driver is not running
-	if ![catch {open "|d.mon -L" r} input] {
-		while {[gets $input line] >= 0} {
-			if {[regexp "^gism.*not running" $line]} {
-				runcmd "d.mon start=gism -s"
-				incr drawprog
-				set env(MONITOR_OVERRIDE) "gism"
-				incr drawprog
-				runcmd "d.frame -e"
-				runcmd "d.font romans"
-				incr drawprog
-				GmGroup::display "root"
-				unset env(MONITOR_OVERRIDE)
-				incr drawprog
-				runcmd "d.mon stop=gism" 
-				incr drawprog
-				image create photo mapimg.$mon -file "dispmon_$mon.ppm" 
-				set drawprog 100
-				$can($mon) create image 0 0 -anchor nw \
-					-image "mapimg.$mon" \
-					-tag map$mon
-				GmTree::cvdisplay "root"
-				incr drawprog
-			}
-		}
-		close $input
-	}
-	
+	incr drawprog
+	set env(MONITOR_OVERRIDE) "gism"
+	runcmd "d.frame -e"
+	incr drawprog
+	runcmd "d.font romans"
+	incr drawprog
+	GmGroup::display "root" $mod
+	incr drawprog
+	after 1000
+	incr drawprog
+	if {[info exists env(MONITOR_OVERRIDE)]} {unset env(MONITOR_OVERRIDE)}
+	incr drawprog
+}
+
+# composite maps and create canvas
+proc MapCanvas::composite {mon } {
+	global mapdispwd
+	global mapdispht
+	global drawprog
+	global complist
+	global masklist
+	global opclist
+	global mapfile
+	global maskfile
+	global outfile
+	variable mapframe
+	variable mapcan
+	variable can
+
+	set currdir [pwd]
+	cd [file dirname $outfile($mon)]
+	incr drawprog
+	runcmd "g.pnmcomp in=$complist($mon) mask=$masklist($mon) opacity=$opclist($mon) background=255:255:255 width=$mapdispwd height=$mapdispht out=$outfile($mon)"
+	cd $currdir
+
+	image create photo mapimg.$mon -file "$outfile($mon)" 
+	incr drawprog
+	$can($mon) create image 0 0 -anchor nw \
+		-image "mapimg.$mon" \
+		-tag map$mon
+	GmTree::cvdisplay "root"
+	set drawprog 100
+
 	MapCanvas::coordconv $mon
 	set drawprog 0
     set MapCanvas::msg($mon) "east & north coordinates under cursor"
     $mapframe($mon) showstatusbar status 
 	return
+
 }
+
 
 ###############################################################################
 
@@ -330,7 +418,8 @@ proc MapCanvas::do_resize {mon} {
 	$can($mon) delete map$mon
 	MapCanvas::coordconv $mon
 	MapCanvas::mapsettings $mon
-	MapCanvas::drawmap $mon
+	MapCanvas::drawmap $mon 1
+	MapCanvas::composite $mon
 		
 }
 
@@ -363,7 +452,8 @@ proc MapCanvas::zoom_current { mon } {
 	
 	$can($mon) delete map$mon
 	MapCanvas::mapsettings $mon
-    MapCanvas::drawmap $mon
+    MapCanvas::drawmap $mon 1
+	MapCanvas::composite $mon 
 }
 
 ###############################################################################
@@ -380,7 +470,8 @@ proc MapCanvas::zoom_default { mon } {
 	
 	$can($mon) delete map$mon
 	MapCanvas::mapsettings $mon
-    MapCanvas::drawmap $mon
+    MapCanvas::drawmap $mon 1
+	MapCanvas::composite $mon 
 }
 
 ###############################################################################
@@ -399,7 +490,8 @@ proc MapCanvas::zoom_region { mon } {
     }
 	$can($mon) delete map$mon
 	MapCanvas::mapsettings $mon
-    MapCanvas::drawmap $mon
+    MapCanvas::drawmap $mon 1
+	MapCanvas::composite $mon 
 }
 
 
@@ -586,10 +678,12 @@ proc MapCanvas::zoomregion { mon zoom } {
 	}
 
 	# redraw map
+	after 500
 	$can($mon) delete map$mon
     $can($mon) delete area
 	MapCanvas::mapsettings $mon
-	MapCanvas::drawmap $mon
+	MapCanvas::drawmap $mon 1
+	MapCanvas::composite $mon 
 }
 
 
@@ -606,8 +700,8 @@ proc MapCanvas::zoom_back { mon } {
     run_panel $cmd
 	$can($mon) delete map$mon
 	MapCanvas::mapsettings $mon
-	MapCanvas::drawmap $mon
-
+	MapCanvas::drawmap $mon 1
+	MapCanvas::composite $mon 
 }
 
 
@@ -699,7 +793,8 @@ proc MapCanvas::pan { mon } {
 	
 	$can($mon) delete map$mon
 	MapCanvas::mapsettings $mon
-	MapCanvas::drawmap $mon 
+	MapCanvas::drawmap $mon 1
+	MapCanvas::composite $mon 
 }
 
 ###############################################################################
@@ -1088,16 +1183,18 @@ proc MapCanvas::cleanup { mon destroywin} {
 		runcmd "g.mremove -f region=mon_$mon "
 		if { [winfo exists .tlegend($mon)] } { destroy .tlegend($mon) }
 	}
+
 	# stop gism PNG driver if it is still running due to error
 	if ![catch {open "|d.mon -L" r} input] {
 		while {[gets $input line] >= 0} {
 			if {[regexp "^gism            Create PNG Map for gism        running" $line]} {
 				runcmd "d.mon stop=gism"
+				break
 			}
 		}
 		close $input
 	}
-	return
+	
 }
 
 ###############################################################################
