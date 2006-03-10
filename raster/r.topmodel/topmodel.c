@@ -146,7 +146,7 @@ implement(void)
 		misc.qv[i][misc.nidxclass] = 0.0;
 		misc.qs[i] = 0.0;
 
-		if(params.infex && input.R[i] > 0.0){
+		if(params.infex){
 			misc.f[i] = input.dt *
 			       get_f((i + 1) * input.dt, input.R[i] / input.dt);
 			misc.fex[i] = input.R[i] - misc.f[i];
