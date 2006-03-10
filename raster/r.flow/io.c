@@ -157,7 +157,7 @@ parse_command_line (int argc, char *argv[])
     pdsout  = parameter("dsout", TYPE_STRING, NO, NULL, "any,cell,raster",
 			_("Output flowline density raster file"), NULL);
 
-    fup	  = flag('u', _("Compute upslope flowlines"));
+    fup	  = flag('u', _("Compute upslope flowlines instead of default downhill flowlines"));
     flg	  = flag('3', _("3-D lengths instead of 2-D"));
     fmem  = flag('m', _("Use less memory, at a performance penalty"));
 /*    fseg  = flag('M', "Use much less memory, at a severe performance penalty");*/
