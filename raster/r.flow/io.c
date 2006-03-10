@@ -105,7 +105,7 @@ parse_command_line (int argc, char *argv[])
 	module->description =
 		_("Construction of slope curves (flowlines), flowpath "
 		"lengths, and flowline densities (upslope areas) from "
-		"a raster digital elevation model(DEM)");
+		"a raster digital elevation model (DEM)");
 
     larger = ((region.cols < region.rows) ? region.rows : region.cols);
     if (larger < 50)
