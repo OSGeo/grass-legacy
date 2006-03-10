@@ -9,7 +9,7 @@
 # with contributions by Glynn Clements, Markus Neteler, Lorenzo Moretti, 
 # Florian Goessmann, and others
 #
-# January 2006
+# March 2006
 #
 # COPYRIGHT:	(C) 1999 - 2006 by the GRASS Development Team
 #
@@ -366,7 +366,8 @@ proc Gm::create { } {
     GmToolBar1::create $tb1
     set tb2  [$mainframe addtoolbar]
     GmToolBar2::create $tb2
-    set pw1 [PanedWindow $mainwindow.pw1 -side left -pad 0 -width 10 -background $bgcolor]    
+    set pw1 [PanedWindow $mainwindow.pw1 -side left -pad 0 -width 10 \
+    	-background $bgcolor]    
    
     # tree 
     set treemon [expr $mon + 1]
@@ -439,6 +440,12 @@ proc Gm::create { } {
 
 	Gm::startmon
 	Gm::create_disptxt $mon
+	
+	bind .mainframe <Destroy> { 
+		set destroywin %W
+		Gm::cleanup $destroywin
+	} 
+		
 	
 
 }
@@ -519,14 +526,15 @@ proc Gm::create_disptxt { mon } {
     #wm overrideredirect $txt 1
 
 	# output text window
-	set doutfr [MainFrame .dispout.fr -bg $bgcolor ]
+	set doutmf [MainFrame .dispout.fr -bg $bgcolor ]
+	set doutfr [$doutmf getframe]
     set dout_sw [ScrolledWindow $doutfr.sw -relief sunken -borderwidth 1]
 	set dtxt [text $dout_sw.txt -height 20 -width 40 -bg #ffffff] 
 
     $dout_sw setwidget $dtxt
 
 	# control buttons
-	set dout_tb [$doutfr addtoolbar]
+	set dout_tb [$doutmf addtoolbar]
 	set dbb [ButtonBox $dout_tb.bb -orient horizontal -background $bgcolor]
 	$dbb add -text "clear" -command "Gm::clear_txt $dtxt" -bg #dddddd \
 		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
@@ -535,6 +543,7 @@ proc Gm::create_disptxt { mon } {
 		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
         -helptext [G_msg "Save output to file"]  -highlightbackground $bgcolor
 
+	pack $doutmf -expand yes -fill both
 	pack $doutfr -expand yes -fill both -padx 0 -pady 0
 	pack $dout_sw -fill both -expand yes
 	pack $dtxt -fill both -expand yes
@@ -669,7 +678,6 @@ proc Gm::OpenFileBox { } {
 		-title {Open File} ]
 	if { $filename_new == "" } { return}
 	set filename($mon) $filename_new	
-	puts "files $filename($mon) $filename_new"
 	GmTree::load $filename($mon)
 		
 };
@@ -705,24 +713,36 @@ proc Gm::SaveFileBox { } {
 
 ###############################################################################
 
-proc Gm::cleanup { } {
+proc Gm::cleanup { destroywin } {
+	global mapfile
+	global mon
 
-	# delete all map display ppm files
-	foreach file [glob -nocomplain dispmon_*] {
-		file delete $file
-	}
-	destroy mon
-	
 	# stop gism PNG driver if it is still running due to error
 	if ![catch {open "|d.mon -L" r} input] {
 		while {[gets $input line] >= 0} {
-			if {[regexp "^gism            Create PNG Map for gism        running" $line]} {
-				runcmd "d.mon stop=gism"
+			if {[regexp "^gism.*       running" $line]} {
+				open "|d.mon stop=gism"
+				break
 			}
 		}
 		close $input
 	}
+
+	# delete all map display ppm files
+	set path [file dirname $mapfile($mon)]
+	set deleteppm $path
+	append deleteppm "/*.ppm"
+	foreach file [glob -nocomplain $deleteppm] {
+		file delete $file
+	}
+	set deletepgm $path
+	append deletepgm "/*.pgm"
+	foreach file [glob -nocomplain $deletepgm] {
+		file delete $file
+	}
 	
+	unset mon
+
 	# delete temporary region files for map displays
 	runcmd "g.mremove -f region=mon_*"
 }

@@ -18,6 +18,7 @@ proc MapToolBar::create { tb } {
     global env
     global maptools
     global selclr
+    global mapfile
     variable toolbar
     
     set selcolor #88aa88
@@ -29,7 +30,7 @@ proc MapToolBar::create { tb } {
     
     # display
     $bbox1 add -image [image create photo -file "$gmpath/display.gif"] \
-        -command "MapCanvas::mapsettings $mon; MapCanvas::drawmap $mon" \
+        -command "MapCanvas::drawmap $mon 0; MapCanvas::composite $mon" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Display active layers in current region"]
 
@@ -153,22 +154,16 @@ proc MapToolBar::create { tb } {
 	set ppmfile [menu $savefile.ppm -type normal -bg $bgcolor]
 	set jpgfile [menu $savefile.jpg -type normal -bg $bgcolor]
 
-	$savefile add cascade -label "PNG/PPM/PNM" -menu $pngfile
-		$pngfile add command -label "no compression" \
-			-command { MapToolBar::savepng 0}
-		$pngfile add command -label "fastest compression"  \
-			-command { MapToolBar::savepng 1}
-		$pngfile add command -label "most compression"  \
-			-command { MapToolBar::savepng 9}
-	$savefile add command -label "TIF*" -command {MapToolBar::savegdal tif 0}
+	$savefile add command -label "PPM/PNM" -command {MapToolBar::savefile ppm 0}
+	$savefile add command -label "TIF*" -command {MapToolBar::savefile tif 0}
 	$savefile add cascade -label "JPG*" -menu $jpgfile
 		$jpgfile add command -label "low quality (50)"  \
-			-command {MapToolBar::savegdal jpg 50}
+			-command {MapToolBar::savefile jpg 50}
 		$jpgfile add command -label "mid quality (75)" \
-			-command {MapToolBar::savegdal jpg 75}
+			-command {MapToolBar::savefile jpg 75}
 		$jpgfile add command -label "high quality (95)" \
-			-command {MapToolBar::savegdal jpg 95}
-	$savefile add command -label "BMP*" -command {MapToolBar::savegdal bmp 0}
+			-command {MapToolBar::savefile jpg 95}
+	$savefile add command -label "BMP*" -command {MapToolBar::savefile bmp 0}
 	$savefile add command -label "(* requires gdal)" -state disabled
 
 	$mapsave configure -menu $savefile
@@ -180,60 +175,41 @@ proc MapToolBar::create { tb } {
 # procedures for saving files
 
 # save png file
-proc MapToolBar::savepng { compression } {
+proc MapToolBar::savefile { type quality } {
 	global env
 	global mon
-		
-	set types {
-    {{PNG} {.png}}
-    {{PPM/PNM} {.ppm}}
-	}
+	global outfile
+	
 
 	if { [info exists HOME] } {
 		set dir $env(HOME)
-		set path [tk_getSaveFile -filetypes $types -initialdir $dir]
+		set path [tk_getSaveFile -initialdir $dir \
+			-title "Save file: do not add extension to file name"]
 	} else {
-		set path [tk_getSaveFile -filetypes $types ]
+		set path [tk_getSaveFile  \
+			 -title "Save file: do not add extension to file name"]
 	}
-		
-	MapCanvas::mapsettings $mon
-	set env(GRASS_PNG_COMPRESSION) $compression
-	set env(GRASS_PNGFILE) "$path"
-	MapCanvas::drawmap $mon
-	set env(GRASS_PNG_COMPRESSION) 0
-	return
-}
-
-# save files to ppm and use gdal_translate to save them to another format
-proc MapToolBar::savegdal { type quality } {
-	global env
-	global mon
+	file copy -force $outfile($mon) $path.ppm
+	puts "path is $path"
 	
-	if { [info exists HOME] } {
-		set dir $env(HOME)
-		set path [tk_getSaveFile -defaultextension .ppm -initialdir $dir]
-	} else {
-		set path [tk_getSaveFile -defaultextension .ppm ]
-	}
-	
-	
-	MapCanvas::mapsettings $mon
-	set env(GRASS_PNGFILE) "$path"
-	MapCanvas::drawmap $mon
-	
-	if { $path != "" } {
-		if { $type == "tif" } { 
-		    eval exec {gdal_translate $path $path.tif -of GTIFF}
-			eval exec "rm $path"
-		}
-		if { $type == "bmp" } { 
-			eval exec {gdal_translate $path $path.bmp -of BMP}
-			eval exec "rm $path"
-		}
-		if { $type == "jpg" } { 
-    		eval exec {gdal_translate $path $path.jpg -of JPEG -co \
-    			QUALITY=$quality}
-			eval exec "rm $path"
+	if { $path != "" } {				
+		switch $type {
+			"ppm" {
+				return
+			}
+			"tif" { 
+				eval exec {gdal_translate $path.ppm $path.tif -of GTIFF}
+				eval exec "rm $path.ppm"
+			}
+			"bmp" { 
+				eval exec {gdal_translate $path.ppm $path.bmp -of BMP}
+				eval exec "rm $path.ppm"
+			}
+			"jpg" { 
+				eval exec {gdal_translate $path.ppm $path.jpg -of JPEG -co \
+					QUALITY=$quality}
+				eval exec "rm $path.ppm"
+			}
 		}
 	}
 	return

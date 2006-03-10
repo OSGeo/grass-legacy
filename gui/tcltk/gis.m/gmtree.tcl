@@ -1,8 +1,14 @@
 ###############################################################
 # gmtree.tcl - GRASS GIS Manager procedures for creating and managing
 # layer tree
-# January 2006 Michael Barton, Arizona State University
-###############################################################
+# March 2006 Michael Barton, Arizona State University
+# COPYRIGHT:	(C) 1999 - 2006 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+##########################################################################
 
 namespace eval GmTree {
     variable count
@@ -451,59 +457,57 @@ proc GmTree::delete { } {
 ###############################################################################
 
 # display nodes for GRASS display modules
-proc GmTree::display_node { node } {
+proc GmTree::display_node { node mod } {
+	global mon
     variable tree
 
     set type [GmTree::node_type $node]
 
     switch $type {
         group {
-            GmGroup::display $node
+            GmGroup::display $node $mod
 		}
 		raster {
-			GmRaster::display $node
+			GmRaster::display $node $mod
 		}
 		labels {
-			GmLabels::display $node
+			GmLabels::display $node $mod
 		}
 		vector {
-			GmVector::display $node
+			GmVector::display $node $mod
 		}
 		cmd {
-			GmCmd::display $node
+			GmCmd::display $node $mod
 		}
 		gridline {
-			GmGridline::display $node
+			GmGridline::display $node $mod
 		}
 		rgbhis {
-			GmRgbhis::display $node
+			GmRgbhis::display $node $mod
 		}
 		hist {
-			GmHist::display $node
+			GmHist::display $node $mod
 		}
 		rnums {
-			GmRnums::display $node
+			GmRnums::display $node $mod
 		}
 		arrows {
-			GmArrows::display $node
+			GmArrows::display $node $mod
 		}
 		legend {
-			GmLegend::display $node
+			GmLegend::display $node $mod
 		}
 		dframe {
-			GmDframe::display $node
+			GmDframe::display $node $mod
 		}
 		barscale {
-			GmBarscale::display $node
+			GmBarscale::display $node $mod
 		}
 		chart {
-			GmChart::display $node
+			GmChart::display $node $mod
 		}
 		thematic {
-			GmThematic::display $node
-		}
-		fttext {
-			GmFTtext::display $node
+			GmThematic::display $node $mod
 		}
     } 
 }
@@ -1074,7 +1078,7 @@ proc GmTree::vedit { } {
             return
         }
         vector {
-	    GmVector::WorkOnVector $sel
+	    GmVector::WorkOnVector $sel 0
         }
     }
 
