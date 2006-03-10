@@ -58,7 +58,9 @@ proc epsgLocCom args {
         global thelocation
         global browsedepsg 
         
-        set browsedepsg "/usr/local/share/proj/epsg"
+	# NOTE: the epsg file is generated in GDAL for PROJ4 
+	# with gdal/pymod/epsg_tr.py
+	set browsedepsg "/usr/local/share/proj/epsg"
         set epsgLocation "newLocation"
         set epsg_code ""
         
