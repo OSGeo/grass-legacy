@@ -10,8 +10,7 @@ ifneq ($(USE_LARGEFILES),)
 	EXTRA_CFLAGS = -D_FILE_OFFSET_BITS=64
 endif
 
-default: $(ARCH_INCDIR)/version.h \
-	lib \
+default: lib \
 	$(FMODE_OBJ) \
 	$(ETC)/ellipse.table \
 	$(ETC)/datum.table \
@@ -26,9 +25,6 @@ $(FMODE_OBJ):
 	@test -d $(OBJDIR) || mkdir $(OBJDIR)
 	echo -e "#include <stdlib.h>\n#include <fcntl.h>\n#undef _fmode\nint _fmode = _O_BINARY;" > $(OBJDIR)/fmode.c
 	$(CC) $(CFLAGS) $(INC) -o $(FMODE_OBJ) -c $(OBJDIR)/fmode.c
-
-$(ARCH_INCDIR)/version.h:
-	echo 'static char *GRASS_VERSION_STRING = "@(#) GRASS $(GRASS_VERSION_NUMBER) ($(GRASS_VERSION_DATE))";' > $@
 
 $(ETC)/ellipse.table: ellipse.table
 	rm -f $@
@@ -113,7 +109,6 @@ $(OBJDIR)/geodist.o: pi.h
 $(OBJDIR)/get_row.o: G.h
 $(OBJDIR)/get_window.o: G.h
 $(OBJDIR)/gisinit.o: G.h
-$(OBJDIR)/gisinit.o: $(ARCH_INCDIR)/version.h
 $(OBJDIR)/maskfd.o: G.h
 $(OBJDIR)/opencell.o: G.h
 $(OBJDIR)/put_row.o: G.h
