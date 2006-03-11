@@ -315,12 +315,12 @@ void calculate()
 	 row += loopstep, y -= ystep)
     {
 	xstep = ew_dist[row] * (double) loopstep;
+	G_percent(row, region.rows, 2);
 
 	for (col = 0, x = (double) region.west + (ew_dist[row] * .5);
 	     col < region.cols;
 	     col += loopstep, x += xstep)
 	{
-	    G_percent(row, region.rows, 2);
 
 	    length		= 0.0;
 	    fls.index		= 0;
