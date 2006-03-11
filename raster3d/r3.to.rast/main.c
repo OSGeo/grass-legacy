@@ -121,7 +121,7 @@ void G3dToRaster(void *map, G3D_Region region, int *fd)
 
     pos = 0;
     /*Every Rastermap */
-    for (z = depths - 1; z >= 0; z--) {	/*From the bottom to the top */
+    for (z = 0; z < depths; z++) {	/*From the bottom to the top */
 	G_debug(3, _("Writing raster map %i\n"), z + 1);
 	for (y = 0; y < rows; y++) {
 	    G_percent(y, rows - 1, 10);
@@ -130,14 +130,14 @@ void G3dToRaster(void *map, G3D_Region region, int *fd)
 		if (typeIntern == G3D_FLOAT) {
 		    G3d_getValue(map, x, y, z, &f1, typeIntern);
 		    if (G3d_isNullValueNum(&f1, G3D_FLOAT))
-		        G_set_null_value(&fcell[x], 1, FCELL_TYPE);
+			G_set_null_value(&fcell[x], 1, FCELL_TYPE);
 		    else
 			fcell[x] = (FCELL) f1;
 		}
 		else {
 		    G3d_getValue(map, x, y, z, &d1, typeIntern);
 		    if (G3d_isNullValueNum(&d1, G3D_DOUBLE))
-		        G_set_null_value(&dcell[x], 1, DCELL_TYPE);
+			G_set_null_value(&dcell[x], 1, DCELL_TYPE);
 		    else
 			dcell[x] = (DCELL) d1;
 		}
@@ -175,6 +175,7 @@ void G3dToRaster(void *map, G3D_Region region, int *fd)
 int main(int argc, char *argv[])
 {
     G3D_Region region;
+    struct Cell_head window2d;
     struct GModule *module;
     void *map = NULL;		/*The 3D Rastermap */
     int i = 0, changemask = 0;
@@ -204,10 +205,30 @@ int main(int argc, char *argv[])
     if (NULL == G_find_grid3(param.input->answers[i], ""))
 	G3d_fatalError(_("Requested g3d file not found"));
 
+    /* Figure out the region from the map */
+    G3d_initDefaults();
+    G3d_getWindow(&region);
+
+    /*Check if the g3d-region is equal to the 2d rows and cols */
+    rows = G_window_rows();
+    cols = G_window_cols();
+
+    /*If not equal, set the 3D window correct */
+    if (rows != region.rows || cols != region.cols) {
+	G_message
+	    ("The 2d and 3d region settings are different. I will use the 2d window settings to adjust the 2d part of the 3d region.");
+	G_get_set_window(&window2d);
+	region.ns_res = window2d.ns_res;
+	region.ew_res = window2d.ew_res;
+	region.rows = window2d.rows;
+	region.cols = window2d.cols;
+	G3d_setWindow(&region);
+    }
+
     /*Open the g3d map */
     map = G3d_openCellOld(param.input->answer,
 			  G_find_grid3(param.input->answer, ""),
-			  G3D_DEFAULT_WINDOW, G3D_TILE_SAME_AS_FILE,
+			  &region, G3D_TILE_SAME_AS_FILE,
 			  G3D_USE_CACHE_DEFAULT);
 
     if (map == NULL)
@@ -216,22 +237,8 @@ int main(int argc, char *argv[])
     /*Get the output type */
     output_type = G3d_fileTypeMap(map);
 
+
     if (output_type == G3D_FLOAT || output_type == G3D_DOUBLE) {
-
-	/* Figure out the region from the map */
-	G3d_initDefaults();
-	G3d_getWindow(&region);
-
-	/*Check if the g3d-region is equal to the 2d rows and cols */
-	rows = G_window_rows();
-	cols = G_window_cols();
-
-	if (rows != region.rows || cols != region.cols) {
-	    fatalError(map, NULL, 0,
-		       _
-		       ("Resolution of raster and raster3d maps should be equal!"));
-	}
-
 
 	/*prepare the filehandler */
 	fd = (int *)G_malloc(region.depths * sizeof(int));
@@ -333,3 +340,4 @@ void close_output_map(int fd)
     if (G_close_cell(fd) < 0)
 	G_fatal_error(_("unable to close output map"));
 }
+
