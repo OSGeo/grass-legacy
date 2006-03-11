@@ -60,6 +60,7 @@ global filename
             {command "PPM image from red, green, blue raster maps" {} "r.out.ppm3" {} -command { execute r.out.ppm3 }}
             {command "POVray height-field" {} "r.out.pov" {} -command { execute r.out.pov }}
             {command "TIFF image (8/24bit)" {} "r.out.tiff" {} -command { execute r.out.tiff }}
+            {command "VTK ASCII file" {} "r.out.vtk" {} -command { execute r.out.vtk }}
         }}
         {cascad "Vector map" {} "" $tmenu {			
             {command "Various formats using OGR (SHAPE, MapInfo etc)" {} "v.out.ogr" {} -command { execute v.out.ogr }}
@@ -67,6 +68,7 @@ global filename
             {command "DXF file (ASCII)" {} "v.out.dxf" {} -command { execute v.out.dxf }}
             {command "ASCII vector or point file/old GRASS ASCII vector file" {} "v.out.ascii" {} -command { execute v.out.ascii }}
             {command "POV-Ray format" {} "v.out.pov" {} -command { execute v.out.pov }}
+            {command "VTK ASCII file" {} "v.out.vtk" {} -command { execute v.out.vtk }}
         }}
         {cascad "Grid 3D" {} "" $tmenu {			
             {command "ASCII 3D file" {} "r3.out.ascii" {} -command { execute r3.out.ascii }}
