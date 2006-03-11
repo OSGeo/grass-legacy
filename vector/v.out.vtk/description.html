@@ -8,7 +8,7 @@ If the <b>output</b> parameter is not given, the output will be send to stdout.
 
 <h2>NOTES</h2>
 
-Only one feature can be exported at a time, available features are:
+Only <emph>one</emph> feature can be exported at a time, available features are:
 <ul>
 	<li>point</li>
 	<li>line</li>
@@ -18,17 +18,24 @@ Only one feature can be exported at a time, available features are:
 	<li>face</li>
 </ul>
 
-Categorie data (cat) for the selected feature + layer will be written as scalar
+Categorie data (cat) for the selected feature and layer will be written as scalar
 data with name "cat". If no cat exists, the value will set to -1 as normal cat's are
 always positive.
-The VTK data is always written with x, y and z coordinates.
+If a feature has more categories in one layer, only the first category
+will be exported.
+<br>
+<br>
+3d vectors are supported by default. The created VTK data always includes x, y and z coordinates.
 If no elevation is available for the choosen feature, 0 will be set as z coordinate.
-The data is converted into the polydata format of VTK: 
+You can easily convert your 2d vectors into 3d vectors with v.drape.
+<br>
+<br>
+The GRASS vector data is converted into the polydata format of VTK: 
 
 <ul>
  <li><i>vtk Vertices</i> -- representing points and centroids </li>
  <li><i>vtk lines</i> -- representing lines and boundaries </li> 
- <li><i>vtk polygons</i> -- representing areas </li>
+ <li><i>vtk polygons</i> -- representing areas and faces </li>
 </li>
 </ul>
 <p>
@@ -38,8 +45,8 @@ The data can be visualized
 <EM><A HREF="http://mayavi.sourceforge.net">MayaVi</A></EM> which are based on VTK.
 
 <h2>Attention</h2>
-If areas are exported, the data have to be triangulated within Paraview or
-MayaVi!
+If areas or faces are exported, the data have to be triangulated within Paraview or
+MayaVi! 
 </p>
 
 <h2>EXAMPLE</h2>
