@@ -243,10 +243,11 @@ void G3dCrossRaster(void *map, G3D_Region region, int elevfd, int outfd)
 int main(int argc, char *argv[])
 {
     G3D_Region region;
+    struct Cell_head window2d;
     struct GModule *module;
     void *map = NULL;		/*The 3D Rastermap */
     int changemask = 0;
-    int elevfd = -1, outfd = -1;		/*file descriptors */
+    int elevfd = -1, outfd = -1;	/*file descriptors */
     int output_type, cols, rows;
     char *mapset = NULL;
 
@@ -270,13 +271,34 @@ int main(int argc, char *argv[])
     if (NULL == G_find_grid3(Parameter.input->answer, ""))
 	G3d_fatalError(_("Requested g3d file not found"));
 
+    /* Figure out the region from the map */
+    G3d_initDefaults();
+    G3d_getWindow(&region);
+
+    /*Check if the g3d-region is equal to the 2d rows and cols */
+    rows = G_window_rows();
+    cols = G_window_cols();
+
+    /*If not equal, set the 2D windows correct */
+    if (rows != region.rows || cols != region.cols) {
+	G_message
+	    ("The 2d and 3d region settings are different. I will use the g3d settings to adjust the 2d region.");
+	G_get_set_window(&window2d);
+	window2d.ns_res = region.ns_res;
+	window2d.ew_res = region.ew_res;
+	window2d.rows = region.rows;
+	window2d.cols = region.cols;
+	G_set_window(&window2d);
+    }
+
+
     /*******************/
     /*Open the g3d map */
 
     /*******************/
     map = G3d_openCellOld(Parameter.input->answer,
 			  G_find_grid3(Parameter.input->answer, ""),
-			  G3D_DEFAULT_WINDOW, G3D_TILE_SAME_AS_FILE,
+			  &region, G3D_TILE_SAME_AS_FILE,
 			  G3D_USE_CACHE_DEFAULT);
 
     if (map == NULL)
@@ -286,20 +308,6 @@ int main(int argc, char *argv[])
     output_type = G3d_fileTypeMap(map);
 
     if (output_type == G3D_FLOAT || output_type == G3D_DOUBLE) {
-
-	/* Figure out the region from the map */
-	G3d_initDefaults();
-	G3d_getWindow(&region);
-
-	/*Check if the g3d-region is equal to the 2d rows and cols */
-	rows = G_window_rows();
-	cols = G_window_cols();
-
-	if (rows != region.rows || cols != region.cols) {
-	    FatalError(map, -1, -1,
-		       _
-		       ("Resolution of 2d raster and 3d raster maps should be equal!"));
-	}
 
 	/********************************/
 	/*Open the elevation raster map */
@@ -392,3 +400,4 @@ void CloseOutputMap(int fd)
     if (G_close_cell(fd) < 0)
 	G_fatal_error(_("unable to close output map"));
 }
+
