@@ -35,6 +35,7 @@
 #define G3D_CATS_ELEMENT   "cats"
 #define G3D_RANGE_ELEMENT  "range"
 #define G3D_HEADER_ELEMENT "cellhd"
+#define G3D_HISTORY_ELEMENT "hist"
 #define G3D_COLOR_ELEMENT  "color"
 #define G3D_COLOR2_DIRECTORY  "colr2"
 #define G3D_MASK_MAP       "G3D_MASK"
@@ -327,6 +328,9 @@ int G3d_initCopyToXdr(G3D_Map *, int);
 int G3d_copyToXdr(char *, int);
 int G3d_initCopyFromXdr(G3D_Map *, int);
 int G3d_copyFromXdr(int, char *);
+/* grass/src/libes/g3d/g3dhistory.c */
+int G3d_writeHistory(char *, struct History *);
+int G3d_readHistory(char *, char *, struct History *);
 /* grass/src/libes/g3d/g3dintio.c */
 int G3d_writeInts(int, int, int *, int);
 int G3d_readInts(int, int, int *, int);
