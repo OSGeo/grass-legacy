@@ -295,7 +295,7 @@ void OpenWriteRGBMaps(G3D_Region region, FILE * fp, int dp)
 	    maprgb =
 		G3d_openCellOld(param.rgbmaps->answers[i],
 				G_find_grid3(param.rgbmaps->answers[i], ""),
-				G3D_DEFAULT_WINDOW, G3D_TILE_SAME_AS_FILE,
+				&region, G3D_TILE_SAME_AS_FILE,
 				G3D_USE_CACHE_DEFAULT);
 	    if (maprgb == NULL)
 		G3d_fatalError(_
@@ -568,7 +568,7 @@ void writeVTKData(FILE * fp, G3D_Region region, char *varname, int dp)
 
     status = 0;
 
-    for (z = depths - 1; z >= 0; z--) {	/*From the bottom to the top */
+    for (z = 0; z < depths; z++) {
 	if (param.structgrid->answer) {
 	    for (y = 0; y < rows; y++) {
 		G_percent(status, (rows * depths - 1), 10);
@@ -594,7 +594,7 @@ void writeVTKData(FILE * fp, G3D_Region region, char *varname, int dp)
 	    }
 	}
 	else {
-	    for (y = rows - 1; y >= 0; y--) {	/*From south to the north */
+	    for (y = rows - 1; y >= 0; y--) {
 		G_percent(status, (rows * depths - 1), 10);
 		status++;
 
@@ -648,7 +648,7 @@ void writeVTKRGBVoxelData(void *map_r, void *map_g, void *map_b,
     /********************** WRITE RGB VOXEL DATA; CELL OR POINT ****************/
     fprintf(fp, "COLOR_SCALARS %s 3\n", varname);
 
-    for (z = depths - 1; z >= 0; z--) {	/*From the bottom to the top */
+    for (z = 0; z < depths; z++) {	/*From the bottom to the top */
 	if (param.structgrid->answer) {
 	    for (y = 0; y < rows; y++) {
 		G_percent(status, (rows * depths - 1), 10);
@@ -773,6 +773,7 @@ int main(int argc, char *argv[])
 {
     char *output = NULL;
     G3D_Region region;
+    struct Cell_head window2d;
     FILE *fp = NULL;
     struct GModule *module;
     int dp, i, changemask = 0;
@@ -830,10 +831,18 @@ int main(int argc, char *argv[])
 	rows = G_window_rows();
 	cols = G_window_cols();
 
+	/*If not equal, set the 2D windows correct */
 	if (rows != region.rows || cols != region.cols) {
-	    G3d_fatalError(_
-			   ("The 2d resolution (res) and the 3d resolution (res3) should be equal. Please set this with g.region."));
+	    G_message
+		("The 2d and 3d region settings are different. I will use the g3d settings to adjust the 2d region.");
+	    G_get_set_window(&window2d);
+	    window2d.ns_res = region.ns_res;
+	    window2d.ew_res = region.ew_res;
+	    window2d.rows = region.rows;
+	    window2d.cols = region.cols;
+	    G_set_window(&window2d);
 	}
+
 	/*open top */
 	mapset = NULL;
 	name = NULL;
@@ -874,7 +883,7 @@ int main(int argc, char *argv[])
 	    map =
 		G3d_openCellOld(param.input->answers[i],
 				G_find_grid3(param.input->answers[i], ""),
-				G3D_DEFAULT_WINDOW, G3D_TILE_SAME_AS_FILE,
+				&region, G3D_TILE_SAME_AS_FILE,
 				G3D_USE_CACHE_DEFAULT);
 	    if (map == NULL)
 		G3d_fatalError(_("Error opening g3d file"));
@@ -919,3 +928,4 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+
