@@ -126,15 +126,15 @@ int main(int argc, char *argv[])
     /*Get the maptype */
     data_type = G3d_fileTypeMap(g3map);
     head_ok = G3d_readRegionMap(name, mapset, &cellhd) >= 0;
-    hist_ok = 0;		/*not yet implemented */
+    hist_ok = G3d_readHistory(name, mapset, &hist) >= 0;
     cats_ok = G3d_readCats(name, mapset, &cats) >= 0;
     /*Check the Timestamp */
-    time_ok = G_read_grid3_timestamp(name, mapset, &ts) >= 0;
-    /*Check for valid entries, show none if the first month has value 0! */
+    time_ok = G_read_grid3_timestamp(name, mapset, &ts) > 0;
+    /*Check for valid entries, show none if no entire available! */
     if (time_ok) {
-	if (ts.dt[0].month != 0)
+	if (ts.count > 0)
 	    first_time_ok = 1;
-	if (ts.dt[1].month != 0)
+	if (ts.count > 1)
 	    second_time_ok = 1;
     }
 
