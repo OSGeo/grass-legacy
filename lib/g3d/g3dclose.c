@@ -15,6 +15,7 @@ G3d_closeNew  (G3D_Map *map)
 {
   char path[4096], buf[4096];
   struct Categories cats;
+  struct History hist;
 
   G3d_removeColor (map->fileName);
 
@@ -22,6 +23,17 @@ G3d_closeNew  (G3D_Map *map)
   G_init_raster_cats ((char *) NULL, &cats);
   G3d_writeCats (map->fileName, &cats);
   G_free_cats (&cats);
+
+  /*genrate the history file, use the normal G_ functions */
+  G_short_history(map->fileName, "raster3d", &hist);
+  G_command_history(&hist);
+  /*Use the G3d function to write the history file,
+   * otherwise the path is wrong */
+  if (!G3d_writeHistory(map->fileName, &hist)) {
+      sprintf(buf, "G3d_closeNew: can't write raster3d history");
+      G3d_error(buf);
+  }
+
 
   G3d_range_write (map);
   
