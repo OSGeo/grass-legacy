@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     char *time1, *time2;	/*begin and end timestamp string */
     char tmp1[100], tmp2[100], tmp3[100];
     int i;
-    CELL mincat, maxcat, cat;
+    CELL mincat = 0, maxcat = 0, cat;
     double zmin, zmax;		/* min and max data values */
     FILE *out, *fopen();
     struct FPRange range;
@@ -112,12 +112,12 @@ int main(int argc, char *argv[])
     data_type = G_raster_map_type(name, mapset);
 
     /*Check the Timestamp */
-    time_ok = G_read_raster_timestamp(name, mapset, &ts) >= 0;
+    time_ok = G_read_raster_timestamp(name, mapset, &ts) > 0;
     /*Check for valid entries, show none if the first month has value 0! */
     if (time_ok) {
-	if (ts.dt[0].month != 0)
+	if (ts.count > 0)
 	    first_time_ok = 1;
-	if (ts.dt[1].month != 0)
+	if (ts.count > 1)
 	    second_time_ok = 1;
     }
 
