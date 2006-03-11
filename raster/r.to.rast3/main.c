@@ -96,7 +96,7 @@ void SetParameters()
 void RasterToG3D(void *map, G3D_Region region, int *fd)
 {
     int x, y, z;
-    int rows, cols, depths, pos = 0;
+    int rows, cols, depths;
     void *rast;
     void *ptr;
     FCELL fvalue;
@@ -112,12 +112,12 @@ void RasterToG3D(void *map, G3D_Region region, int *fd)
 	    depths, rows, cols);
 
     /*Every Rastermap */
-    for (pos = 0, z = depths - 1; z >= 0; pos++, z--) {	/*From the bottom to the top */
+    for (z = 0; z < depths; z++) {	/*From the bottom to the top */
 	G_debug(2, _("Writing g3d slice %i\n"), z + 1);
 	for (y = 0; y < rows; y++) {
 	    G_percent(y, rows - 1, 10);
 
-	    if (!G_get_raster_row(fd[pos], rast, y, globalRastMapType))
+	    if (!G_get_raster_row(fd[z], rast, y, globalRastMapType))
 		FatalError(map, fd, depths, _("Cold not get raster row \n"));
 
 	    for (x = 0, ptr = rast; x < cols; x++,
@@ -173,6 +173,7 @@ void RasterToG3D(void *map, G3D_Region region, int *fd)
 int main(int argc, char *argv[])
 {
     G3D_Region region;
+    struct Cell_head window2d;
     struct GModule *module;
     void *map = NULL;		/*The 3D Rastermap */
     int i = 0;
@@ -209,10 +210,15 @@ int main(int argc, char *argv[])
     rows = G_window_rows();
     cols = G_window_cols();
 
+    /*If not equal, set the 2D windows correct*/
     if (rows != region.rows || cols != region.cols) {
-	FatalError(map, NULL, 0,
-		   _
-		   ("The resolution of raster and raster3d maps should be equal!"));
+	G_message("The 2d and 3d region settings are different. I will use the g3d settings to adjust the 2d region.");
+	G_get_set_window(&window2d);
+	window2d.ns_res = region.ns_res;
+	window2d.ew_res = region.ew_res;
+	window2d.rows = region.rows;
+	window2d.cols = region.cols;
+	G_set_window(&window2d);
     }
 
 
@@ -336,7 +342,7 @@ int OpenInputMap(char *name, char *mapset)
 }
 
 /* ************************************************************************* */
-/* Close the raster output map ********************************************* */
+/* Close the raster input map ********************************************** */
 /* ************************************************************************* */
 void CloseInputMap(int fd)
 {
