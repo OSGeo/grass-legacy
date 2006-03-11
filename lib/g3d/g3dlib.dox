@@ -1376,9 +1376,9 @@ Applications can use the standard grass functions to work with categories,
 except for the file manipulations.
 
 <P>
-int G3d_readCats(char *name, char *mapset, struct Categories
-  *pcatsReads the categories file for map <EM>name</EM> in <EM>mapset</EM> and
-stores the categories in the <EM>pcats</EM> structure.  See <EM>G_read_cats</EM>
+int G3d_readCats(char *name, char *mapset, struct Categories *cats)
+Reads the categories file for map <EM>name</EM> in <EM>mapset</EM> and
+stores the categories in the <EM>cats</EM> structure.  See <EM>G_read_cats</EM>
 (Raster_Category_File) for details and return values.
 
 <P>
@@ -1386,6 +1386,28 @@ int G3d_writeCats(char *name, struct Categories *cats) Writes the
   categories stored in the <EM>cats</EM> structure into the categories file for
   map <EM>name</EM> in the current mapset.  See <EM>G_write_cats</EM>
   (Raster_Category_File) for details and return values.
+
+<P>
+
+
+\subsection G3D_History_Support G3D History Support
+
+<P>
+Applications can use the standard grass functions to work with histories, 
+except for the file manipulations.
+
+<P>
+int G3d_readHistory(char *name, char *mapset, struct History *hist)
+  Reads the history file for map <EM>name</EM> in <EM>mapset</EM> and
+  stores the history in the <EM>hist</EM> structure.  See <EM>G_read_history</EM>
+  (Raster_History_File) for details and return values.
+
+<P>
+int G3d_writeHistory(char *name, struct History *hist) 
+  Writes the
+  history stored in the <EM>hist</EM> structure into the categories file for
+  map <EM>name</EM> in the current mapset.  See <EM>G_write_history</EM>
+  (Raster_History_File) for details and return values.
 
 <P>
 
