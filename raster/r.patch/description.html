@@ -1,8 +1,14 @@
 <H2>DESCRIPTION</H2>
 
-The GRASS program <EM>r.patch</EM> allows the user to assign known data
-values from other raster map layers to the <EM>"no data"</EM> areas (those
-assigned category value NULL/0) in another raster map layer.  This program
+The GRASS program <EM>r.patch</EM> allows the user to build a new
+raster map the size and resolution of the current region by assigning
+known data values from input raster maps to the cells in this region.
+This is done by filling in "no data" cells, those that do not yet
+contain data, contain NULL data, or, optionally contain 0 data,
+with the data from the first input map.
+Once this is done the remaining holes are filled in by the next input map,
+and so on.
+This program
 is useful for making a composite raster map layer from two or more adjacent
 map layers, for filling in "holes" in a raster map layer's data (e.g., in
 digital elevation data), or for updating an older map layer with more recent
@@ -11,12 +17,10 @@ respected.
 <P>
 The first <EM>name</EM> listed in the string
 <B>input=</B><EM>name</EM>,<EM>name</EM>,<EM>name</EM>, ... is the name of
-the base map whose zero data values will be attempted to be filled by
-non-zero data values in the second through tenth input <EM>name</EM> maps
-listed.  The second through 200 (max) input <EM>name</EM> maps will be used to
-supply remaining missing (zero) data values for the first input map
-<EM>name</EM>, based on the order in which they are listed in the string
-<B>input=</B><EM>name</EM>,<EM>name</EM>,<EM>name</EM>, ...
+the first map whose data values will be used to fill in "no data" cells
+in the current region. The second through 200 (max) input <EM>name</EM>
+maps will be used, in order, to supply data values for for the remaining
+"no data" cells.
 
 <H2>EXAMPLE</H2>
 
@@ -56,7 +60,8 @@ maps align neatly.
 <P>
 The user should check the current geographic region settings before running 
 <EM>r.patch</EM>, to ensure that the region boundaries encompass all 
-of the data desired to be included in the composite map. 
+of the data desired to be included in the composite map and to ensure that the
+region resolution is the resolution of the desired data.
 
 <P>
 

@@ -36,11 +36,14 @@ int do_patch (
 	if (G_is_zero_value(result, out_type) ||
 	    G_is_null_value(result, out_type))
 	{
-	    if(G_is_zero_value(patch, out_type) ||
-	       G_is_null_value(patch, out_type))
+	    /* Don't patch hole with a null, just mark as more */
+	    if(G_is_null_value(patch, out_type))
 		more = 1;
             else
 	    {
+	        /* Mark that there is more to be done if we patch with 0 */
+	        if(G_is_zero_value(patch, out_type))
+	            more = 1;
 	        G_raster_cpy(result, patch, 1, out_type);
 		if(out_type==CELL_TYPE)
 	            G_update_cell_stats ((CELL *) result, 1, statf);
