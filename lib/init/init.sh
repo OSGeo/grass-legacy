@@ -702,7 +702,7 @@ csh|tcsh)
     export HOME
     ;;
 
-bash)
+bash|msh)
     USERHOME="$HOME"      # save original home
     HOME="$LOCATION"      # save .bashrc in $LOCATION
     export HOME
