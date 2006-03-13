@@ -1,6 +1,6 @@
-
 MODULE_TOPDIR = ..
 
+include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 SUBDIRS1 = \
 	i.ask \
@@ -22,8 +22,6 @@ SUBDIRS1 = \
 
 FFTWBASED = i.cca i.fft i.ifft i.pca i.zc
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
-
 #compile if FFTW present:
 ifneq ($(strip $(FFTWLIB)),)
     SUBDIRS2 = $(SUBDIRS1) $(FFTWBASED)
@@ -32,6 +30,9 @@ else
 endif
 
 SUBDIRS = $(SUBDIRS2)
-default: subdirs
+
+default: subdirs htmldir
 
 clean: cleansubdirs
+
+PGM = imageryintro
