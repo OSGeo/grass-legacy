@@ -1,9 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Vector data processing in GRASS GIS</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" href="grassdocs.css" type="text/css">
+ <title>Vector data processing in GRASS GIS</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="Author" content="Markus Neteler/GRASS Development Team">
+ <link rel="stylesheet" href="grassdocs.css" type="text/css">
 </head>
 <body bgcolor="white">
 
@@ -36,14 +37,15 @@ GRASS is a topological GIS which helps to produce and maintain vector
 maps with clean geometry. The following vector objects are available:
 
 <ul>
-<li> point: a point
-<li> line: a sequence of vertices connected by line(s) with two endpoints called nodes
-<li> boundary: the border line of an area
-<li> centroid: the label point of an area
-<li> area: the topological composition of centroid and boundary
-<li> face: a 3D area
-<li> kernel: a 3D centroid in a volume (not yet implemented)
-<li> volume: a 3D corpus (not yet implemented)
+<li> <b>point:</b> a point
+<li> <b>line:</b> a sequence of vertices connected by line(s) with two endpoints
+     called nodes
+<li> <b>boundary:</b> the border line of an area
+<li> <b>centroid:</b> the label point of an area
+<li> <b>area:</b> the topological composition of centroid and boundary
+<li> <b>face:</b> a 3D area
+<li> <b>kernel:</b> a 3D centroid in a volume (not yet implemented)
+<li> <b>volume:</b> a 3D corpus (not yet implemented)
 </ul>
 
 The <a href="v.type.html">v.type</a> module can be used to convert between
@@ -68,16 +70,16 @@ on the vector map.
      link attribute(s) to each vector object. The category number is stored
      within the geometry file for each vector object. Using
      <a href="v.category.html">v.category</a> the category numbers can be printed
-     or maintained.
+     or maintained.</li>
 <li><b>Layers:</b> It is possible to link a vector object to one or several tables.
      By default the first layer is active, i.e. the first table corresponds to the
      first layer. Further tables are linked to subsequent layers. Using 
-     <a href="v.db.connect.html">v.db.connect</a> layers can be listed or maintained.
+     <a href="v.db.connect.html">v.db.connect</a> layers can be listed or maintained.</li>
 <li><b>SQL support:</b> The DBF driver provides only very limited SQL support (as 
      DBF is not an SQL DB) while the other DBMS backends (such as PostgreSQL, MySQL etc)
      provide full SQL support since the SQL commands are sent directly to the DBMI.
      SQL commands can be directly executed with <a href="db.execute.html">db.execute</a>,
-     <a href="db.select.html">db.select</a> and the other db.* modules.
+     <a href="db.select.html">db.select</a> and the other db.* modules.</li>
 </ul>
 
 When creating vector maps from scratch, in general an attribute table must be created and
@@ -89,7 +91,26 @@ along with the definition of table column types.
 
 To manually edit attributes of a table, the map has to be
 queried in 'edit mode' using <a href="d.what.vect.html">d.what.vect</a>.
-To bulk process attributes, it is recommended to use SQL.
+To bulk process attributes, it is recommended to use SQL
+(<a href="db.execute.html">db.execute</a>).
+
+<h3>Vector network analysis</h3>
+
+GRASS provides support for vector network analysis. The following algorithms
+are implemented:
+
+<ul>
+<li> Vector maintenance: <a href="v.net.html">v.net</a></li>
+<li> Shortest path: <a href="d.path.html">d.path</a> and 
+     <a href="v.net.path.html">v.net.path</a></li>
+<li> Traveling salesman (round trip): <a href="v.net.salesman.html">v.net.salesman</a></li>
+<li> Allocation of sources (create subnetworks, e.g. police station zones):
+     <a href="v.net.alloc.html">v.net.alloc</a></li>
+<li> Minimum Steiner trees (star-like connections, e.g. broadband cable 
+     connections): <a href="v.net.steiner.html">v.net.steiner</a></li>
+<li> Iso-distances (from centers): <a href="v.net.iso.html">v.net.iso</a></li>
+</ul>
+
 
 <h3>See also</h3>
 

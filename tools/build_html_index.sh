@@ -50,11 +50,15 @@ GPL'ed), image processing and geographic information system (GIS).
 
 <!-- the files grass6.html & helptext.html file live in lib/init/ -->
 <ul>
-<li><a href="grass6.html">GRASS manual page</a></li>
+<li><a href="grass6.html">GRASS startup manual page</a></li>
 <li><a href="helptext.html">How to start with GRASS</a></li>
-<li><a href="rasterintro.html">Introduction to GRASS raster map processing</a></li>
-<li><a href="raster3dintro.html">Introduction to GRASS 3D raster map (voxel) processing</a></li>
-<li><a href="vectorintro.html">Introduction to GRASS vector map processing</a></li>
+<li>Introductions
+ <ul>
+  <li><a href="rasterintro.html">2D raster map processing</a></li>
+  <li><a href="raster3dintro.html">3D raster map (voxel) processing</a></li>
+  <li><a href="imageryintro.html">Image processing</a></li>
+  <li><a href="vectorintro.html">Vector map processing and network analysis</a></li>
+ </ul>
 </ul>
 <P>
 

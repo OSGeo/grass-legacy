@@ -1,9 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>3D Raster data (voxel) processing in GRASS GIS</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" href="grassdocs.css" type="text/css">
+ <title>3D Raster data (voxel) processing in GRASS GIS</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="Author" content="Markus Neteler/GRASS Development Team">
+ <link rel="stylesheet" href="grassdocs.css" type="text/css">
 </head>
 <body bgcolor="white">
 
@@ -52,15 +53,22 @@ or 2D raster maps can be also extracted.
 
 <h3>Voxel export</h3>
 
-GRASS 3D raster maps can be exported to VTK. Such files can be visualized with the 
+GRASS 3D raster maps can be exported to VTK (<a href="r3.out.vtk.html">r3.out.vtk</a>).
+VTK files can be visualized with the 
 <em><a href="http://www.vtk.org">VTK Toolkit</a></em>, 
 <em><a href="http://www.paraview.org">Paraview</a></em> and 
-<em><a href="http://mayavi.sourceforge.net">MayaVi</a></em> which are based on VTK.
-
+<em><a href="http://mayavi.sourceforge.net">MayaVi</a></em>.
+GRASS 2D raster maps can be exported to VTK with <a href="r.out.vtk.html">r.out.vtk</a>,
+GRASS vector maps can be exported to VTK with <a href="v.out.vtk.html">v.out.vtk</a>.
+<p>
 Alternatively, GRASS 3D raster maps can be imported and exported from/to Vis5D
 (<a href="r3.in.v5d.html">r3.in.v5d</a>, <a href="r3.out.v5d.html">r3.out.v5d</a>).
+<p>
+Finally, export to 3D ASCII is also possible (<a href="r3.out.ascii.html">r3.out.ascii</a>).
 
-Finally, export to 3D ASCII is possible (<a href="r3.out.ascii.html">r3.out.ascii</a>).
+<h3>See also</h3>
+
+<a href=rasterintro.html>Introduction to GRASS raster map processing</a>
 
 <HR>
 <P><a href="index.html">Main index</a> - <a href="raster3D.html">raster3D index</a> - <a href="full_index.html">full index</a>
