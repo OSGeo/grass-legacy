@@ -285,16 +285,22 @@ proc do_combo {dlg optn vals} {
 
 ################################################################################
 
-proc begin_dialog {pgm desc} {
+proc begin_dialog {pgm optlist} {
 	global opt dlg path
 	incr dlg
+
+	array set opts $optlist
+
+	if {$opts(label) == {}} {
+		set opts(label) $opts(desc)
+	}
 
 	set root [expr {$path == "" ? "." : $path}]
 
 	set opt($dlg,pgm_name) $pgm
 	wm title $root $pgm
 	make_dialog $dlg $path $root
-	module_description $dlg $desc
+	module_description $dlg $opts(label)
 }
 
 proc end_dialog {n} {
@@ -312,11 +318,16 @@ proc add_option {optn optlist} {
 
 	set opts(class) [expr {$opts(multi) && $opts(options) != {} ? "multi" : "opt"}]
 
-	foreach key {class name type multi desc required options answer prompt} {
+	# Use description for label if label is absent
+	if {$opts(label) == {}} {
+		set opts(label) $opts(desc)
+	}
+
+	foreach key {class name type multi desc required options answer prompt label guisection} {
 		set opt($dlg,$optn,$key) $opts($key)
 	}
 
-	do_label $dlg $optn $opts(desc) $opts(type) $opts(required)
+	do_label $dlg $optn $opts(label) $opts(type) $opts(required)
 	frame $suf.val$optn
 
 	if {$opts(options) != {}} {
@@ -356,15 +367,26 @@ proc add_option {optn optlist} {
 	pack $suf.val$optn -side top -fill x
 }
 
-proc add_flag {optn key desc} {
+proc add_flag {optn optlist} {
 	global opt dlg
 	set suf $opt($dlg,suf)
+	
+	array set opts $optlist
+
+	# Use description for label if label is absent
+	if {$opts(label) == {}} {
+		set opts(label) $opts(desc)
+	}
 
 	set opt($dlg,$optn,class) flag
+
+	foreach key {name desc label guisection} {
+		set opt($dlg,$optn,$key) $opts($key)
+	}
+
 	frame $suf.val$optn
-	checkbutton $suf.val$optn.chk -text $desc -variable opt($dlg,$optn,val) -onvalue 1 -offvalue 0 -anchor w
+	checkbutton $suf.val$optn.chk -text $opts(label) -variable opt($dlg,$optn,val) -onvalue 1 -offvalue 0 -anchor w
 	pack $suf.val$optn.chk -side left
-	set opt($dlg,$optn,name) $key
 	pack $suf.val$optn -side top -fill x
 }
 

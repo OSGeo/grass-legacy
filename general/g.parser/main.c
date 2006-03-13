@@ -57,6 +57,13 @@ static void parse_toplevel(struct context *ctx, const char *cmd)
 
 static void parse_module(struct context *ctx, const char *cmd, const char *arg)
 {
+
+    if (strcasecmp(cmd, "label") == 0)
+    {
+	ctx->module->label = strdup(arg);
+	return;
+    }
+
     if (strcasecmp(cmd, "description") == 0)
     {
 	ctx->module->description = strdup(arg);
@@ -87,9 +94,21 @@ static void parse_flag(struct context *ctx, const char *cmd, const char *arg)
 	return;
     }
 
+    if (strcasecmp(cmd, "label") == 0)
+    {
+	ctx->flag->label = strdup(arg);
+	return;
+    }
+
     if (strcasecmp(cmd, "description") == 0)
     {
 	ctx->flag->description = strdup(arg);
+	return;
+    }
+
+    if (strcasecmp(cmd, "guisection") == 0)
+    {
+	ctx->flag->guisection = strdup(arg);
 	return;
     }
 
@@ -172,9 +191,21 @@ static void parse_option(struct context *ctx, const char *cmd, const char *arg)
 	return;
     }
 
+    if (strcasecmp(cmd, "label") == 0)
+    {
+	ctx->option->label = strdup(arg);
+	return;
+    }
+
     if (strcasecmp(cmd, "description") == 0)
     {
 	ctx->option->description = strdup(arg);
+	return;
+    }
+
+    if (strcasecmp(cmd, "descriptions") == 0)
+    {
+	ctx->option->descriptions = strdup(arg);
 	return;
     }
 
@@ -187,6 +218,12 @@ static void parse_option(struct context *ctx, const char *cmd, const char *arg)
     if (strcasecmp(cmd, "gisprompt") == 0)
     {
 	ctx->option->gisprompt = strdup(arg);
+	return;
+    }
+
+    if (strcasecmp(cmd, "guisection") == 0)
+    {
+	ctx->option->guisection = strdup(arg);
 	return;
     }
 
