@@ -257,7 +257,7 @@ void parallel_line (struct line_pnts *Points, double d, double tol, struct line_
 	return;
     }
 
-    side = d/abs(d);
+    side = (int)(d/fabs(d));
     atol = 2 * acos( 1-tol/fabs(d) );
 
     for (i = 0; i < np-1; i++)
@@ -282,7 +282,9 @@ void parallel_line (struct line_pnts *Points, double d, double tol, struct line_
 	    aw = atan2 ( wy, wx );
 	    a = (aw - av) * side;
 	    if ( a < 0 )  a+=2*PI;
-	    if ( a < PI && a > atol)
+
+            /* TODO: a <= PI can probably fail because of representation error */
+	    if ( a <= PI && a > atol)
 	    {
 		na = (int) (a/atol);
 		atol2 = a/(na+1) * side;
