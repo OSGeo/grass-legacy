@@ -111,7 +111,8 @@ int main(int argc, char **argv)
     
     cost_opt = G_define_option() ;
     cost_opt->key         = "costs" ;
-    cost_opt->type        = TYPE_STRING ;
+    cost_opt->type        = TYPE_INTEGER ;
+    cost_opt->multiple    = YES ;
     cost_opt->required    = YES;
     cost_opt->description = "Costs for isolines" ;
     
