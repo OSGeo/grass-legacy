@@ -33,19 +33,40 @@ current region beforehand (<a href="v.in.region.html">v.in.region</a>,
 
 <h3>Vector model and topology</h3>
 
-GRASS is a topological GIS which helps to produce and maintain vector
-maps with clean geometry. The following vector objects are available:
+GRASS is a topological GIS. This means that adjacent geographic
+components in a single vector file are related. For example in a
+non-topological GIS if two areas shared a common border that border
+would be digitized two times and also stored in duplicate. In a
+topological GIS this border exists once and is shared between two
+areas.  Topological represenation of vector data helps to produce and
+maintain vector maps with clean geometry as well as enables certain
+analyses that can not be conducted with non-topological or spaghetti
+data. In GRASS topological data are refered to as level 2 data and
+spaghetti data is referred to as level 1.
+<p>
+Sometimes topology is not necessary and the additional memory and
+space requirements are burdensome to a particular task. Therefore two
+modules allow for working level 1 (non-topological) data within
+GRASS. The <a href="v.in.ascii.html">v.in.ascii</a> module allows
+users to input points without building topology. This is very useful
+for large files where memory restrictions may cause difficulties. The
+other module which works with level 1 data is
+
+<a href="v.surf.rst.html">v.surf.rst</a> which enables spatial
+approximation and topographic analysis from a point or isoline file.
+
+<p> In GRASS, the following vector objects are available:
 
 <ul>
-<li> <b>point:</b> a point
-<li> <b>line:</b> a sequence of vertices connected by line(s) with two endpoints
-     called nodes
-<li> <b>boundary:</b> the border line of an area
-<li> <b>centroid:</b> the label point of an area
-<li> <b>area:</b> the topological composition of centroid and boundary
-<li> <b>face:</b> a 3D area
-<li> <b>kernel:</b> a 3D centroid in a volume (not yet implemented)
-<li> <b>volume:</b> a 3D corpus (not yet implemented)
+<li> <b>point:</b> a point</li>
+<li> <b>line:</b> a sequence of vertices connected by line(s) with two endpoints</li>
+     called nodes</li>
+<li> <b>boundary:</b> the border line of an area</li>
+<li> <b>centroid:</b> the label point of an area</li>
+<li> <b>area:</b> the topological composition of centroid and boundary</li>
+<li> <b>face:</b> a 3D area</li>
+<li> <b>kernel:</b> a 3D centroid in a volume (not yet implemented)</li>
+<li> <b>volume:</b> a 3D corpus (not yet implemented)</li>
 </ul>
 
 The <a href="v.type.html">v.type</a> module can be used to convert between
@@ -66,20 +87,37 @@ attribute management, while the <em>v.db.*</em> set of commands operates
 on the vector map.
 
 <ul>
-<li><b>Category:</b> The category number is the vector ID. It is used to
-     link attribute(s) to each vector object. The category number is stored
-     within the geometry file for each vector object. Using
-     <a href="v.category.html">v.category</a> the category numbers can be printed
-     or maintained.</li>
-<li><b>Layers:</b> It is possible to link a vector object to one or several tables.
-     By default the first layer is active, i.e. the first table corresponds to the
-     first layer. Further tables are linked to subsequent layers. Using 
-     <a href="v.db.connect.html">v.db.connect</a> layers can be listed or maintained.</li>
-<li><b>SQL support:</b> The DBF driver provides only very limited SQL support (as 
-     DBF is not an SQL DB) while the other DBMS backends (such as PostgreSQL, MySQL etc)
-     provide full SQL support since the SQL commands are sent directly to the DBMI.
-     SQL commands can be directly executed with <a href="db.execute.html">db.execute</a>,
-     <a href="db.select.html">db.select</a> and the other db.* modules.</li>
+<li><b>Categories:</b> The category number is the vector ID. It is
+used to link attribute(s) to each vector object. A vector object can
+have zero, one, two, or more categories. The category number is stored
+within the geometry file for each vector object. Using 
+<a href="v.category.html">v.category</a> the category numbers can be
+printed or maintained.</li>
+
+<li><b>Layers:</b> It is possible to link the geographic objects in
+one vector file to one or more tables. Each link to a distinct
+attribute table is called a layer. GRASS layers do not contain any
+geographic objects, but consist of links to attribute tables in which
+vector objects can have zero or more categories. If a vector object
+has zero categories in a layer, then it does not appear in that
+layer. In this fasion some vector objects may appear in some layers
+but not in others. The practical benefit of this system is that it
+allows placement of thematically distinct but topologically related
+objects in a single file (e.g. forests and lakes). These virtual
+layers also are useful for linking time series attribute data to a
+series of locations that did not change over time. By default the
+first layer is active, i.e. the first table corresponds to the first
+layer. Further tables are linked to subsequent layers.  Using
+<a href="v.db.connect.html">v.db.connect</a> layers can be listed or
+maintained.</li>
+
+<li><b>SQL support:</b> The DBF driver provides only very limited SQL
+support (as DBF is not an SQL DB) while the other DBMS backends (such
+as PostgreSQL, MySQL etc) provide full SQL support since the SQL
+commands are sent directly to the DBMI. SQL commands can be directly
+executed with <a href="db.execute.html">db.execute</a>,
+<a href="db.select.html">db.select</a> and the other db.* modules.
+</li>
 </ul>
 
 When creating vector maps from scratch, in general an attribute table must be created and
@@ -118,8 +156,8 @@ Some of the vector modules deal with spatial or volumetric
 approximation (also called interpolation). Please refer to the
 following sections for details:
 <ul>
-<li><a href=rasterintro.html>Introduction to GRASS raster map processing</a></li>
-<li><a href=raster3dintro.html>Introduction to GRASS 3D raster map (voxel) processing</a></li>
+<li><a href="rasterintro.html">Introduction to GRASS raster map processing</a></li>
+<li><a href="raster3dintro.html">Introduction to GRASS 3D raster map (voxel) processing</a></li>
 </ul>
 
 <HR>
