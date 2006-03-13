@@ -280,6 +280,7 @@ G_define_option (void)
 	opt->opts      = NULL ;
 	opt->description  = NULL ;
 	opt->descriptions = NULL ;
+	opt->guisection   = NULL ;
 
 	current_option = opt ;
 	n_opts++ ;
@@ -1289,12 +1290,13 @@ static void G_usage_html (void)
 
 static void generate_tcl(FILE *fp)
 {
-	char *type, *desc;
+	char *type;
 	int optn;
 
-	fprintf(fp, "begin_dialog {%s} {%s}\n", pgm_name,
-		module_info.label ? module_info.label : 
-		module_info.description ? module_info.description : "");
+	fprintf(fp, "begin_dialog {%s} {\n", pgm_name);
+	fprintf(fp, " label {%s}\n", module_info.label ? module_info.label : "");
+	fprintf(fp, " desc {%s}\n", module_info.description ? module_info.description : "");
+	fprintf(fp, "}\n");
 
 	optn = 1;
     
@@ -1322,17 +1324,19 @@ static void generate_tcl(FILE *fp)
 				break;
 			}
 
-			desc = opt->label ? opt->label : opt->description;
-
 			fprintf(fp, "add_option %d {\n", optn);
 			fprintf(fp, " name {%s}\n", opt->key);
 			fprintf(fp, " type {%s}\n", type);
 			fprintf(fp, " multi %d\n", opt->multiple);
-			fprintf(fp, " desc {%s}\n", desc);
+			fprintf(fp, " desc {%s}\n", opt->description);
 			fprintf(fp, " required %d\n", opt->required);
 			fprintf(fp, " options {%s}\n", opt->options ? opt->options : "");
 			fprintf(fp, " answer {%s}\n", opt->answer ? opt->answer : "");
 			fprintf(fp, " prompt {%s}\n", opt->gisprompt ? opt->gisprompt : "");
+			/* It should be up to the gui as to what
+			   to do with the label and description */
+			fprintf(fp, " label {%s}\n", opt->label ? opt->label : "");
+			fprintf(fp, " guisection {%s}\n", opt->guisection ? opt->guisection : "");
 			fprintf(fp, "}\n");
 		}
 	}
@@ -1342,8 +1346,14 @@ static void generate_tcl(FILE *fp)
 		struct Flag *flag;
 
 		for (flag = &first_flag; flag; flag = flag->next_flag, optn++) {
-			desc = flag->label ? flag->label : flag->description;
-			fprintf(fp, "add_flag %d {%c} {%s}\n", optn, flag->key, desc);
+			fprintf(fp, "add_flag %d {\n", optn);
+			fprintf(fp, " name {%c}\n", flag->key);
+			fprintf(fp, " desc {%s}\n", flag->description);
+			/* It should be up to the gui as to what
+			   to do with the label and description */
+			fprintf(fp, " label {%s}\n", flag->label ? flag->label : "");
+			fprintf(fp, " guisection {%s}\n", flag->guisection ? flag->guisection : "");
+			fprintf(fp, "}\n");
 		}
 	}
    

@@ -486,6 +486,7 @@ struct Option                	    /* Structure that stores option info */
     char **answers;                 /* Option answers (for multiple=YES)*/
     struct Option *next_opt;        /* Pointer to next option struct    */
     char *gisprompt;                /* Interactive prompt guidance      */
+    char *guisection;               /* GUI Layout guidance: ';' delimited heirarchical tree position */
     int (*checker)();               /* Routine to check answer or NULL  */
     int count;
 };
@@ -496,6 +497,7 @@ struct Flag                 	    /* Structure that stores flag info  */
     char answer;                    /* Stores flag state: 0/1           */
     char *label;                    /* Optional short label, used in GUI as item label */
     char *description;              /* String describing flag meaning   */
+    char *guisection;               /* GUI Layout guidance: ';' delimited heirarchical tree position */
     struct Flag *next_flag;         /* Pointer to next flag struct      */
 };
 
