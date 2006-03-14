@@ -29,6 +29,11 @@ int main( int   argc, char *argv[])
 	opt1->required   = YES;
 	opt1->description= _("Name of an element") ;
 
+	opt3 = G_define_option() ;
+	opt3->key        = "file";
+	opt3->type       = TYPE_STRING;
+	opt3->required   = YES;
+	opt3->description= _("Name of a database file") ;
 
 	opt2 = G_define_option() ;
 	opt2->key        = "mapset";
@@ -36,11 +41,6 @@ int main( int   argc, char *argv[])
 	opt2->required   = NO;
 	opt2->description= _("Name of a mapset (default: current)") ;
 
-	opt3 = G_define_option() ;
-	opt3->key        = "file";
-	opt3->type       = TYPE_STRING;
-	opt3->required   = YES;
-	opt3->description= _("Name of a database file") ;
 
 	if (G_parser(argc, argv))
 	    exit(EXIT_FAILURE);
