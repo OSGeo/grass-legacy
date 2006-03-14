@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include <grass/Vect.h>
 #include "proto.h"
 
@@ -28,6 +29,7 @@ int main (int argc, char **argv)
     struct Option *output;
     struct Option *action;
     struct Option *afield_opt, *nfield_opt;
+    struct Flag *cats_flag;
     int    afield, nfield;
 
     /*  Initialize the GIS calls */
@@ -73,6 +75,11 @@ int main (int argc, char **argv)
     nfield_opt->key = "nlayer";
     nfield_opt->answer = "2";
     nfield_opt->description = "Node layer";    
+
+    cats_flag = G_define_flag();
+    cats_flag->key = 'c';
+    cats_flag->description =
+        _("Assign unique categories to new points (operation=nodes)");
   
     if (G_parser(argc, argv))
         exit (-1);
@@ -86,7 +93,7 @@ int main (int argc, char **argv)
         if ( output->answer == NULL ) 
 	    G_fatal_error("Output vector map must be specified");
 
-        nodes ( input->answer, output->answer);
+        nodes ( input->answer, output->answer, cats_flag->answer, nfield);
     }
 
     if ( action->answer[0] == 'r' ) /* report */
