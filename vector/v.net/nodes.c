@@ -19,7 +19,7 @@
 #include <grass/Vect.h>
 #include "proto.h"
 
-int nodes ( char *in, char *out)
+int nodes ( char *in, char *out, int add_cats, int nfield)
 {
     int    i, node, nnodes, line, nlines, count, type, found;
     double x, y, z;
@@ -27,6 +27,7 @@ int nodes ( char *in, char *out)
     char   *mapset;
     struct line_pnts *Points, *Pout;
     struct line_cats *Cats;
+    int    cat;
 
     mapset = G_find_vector2 (in, "");
     if (mapset == NULL) 
@@ -51,13 +52,28 @@ int nodes ( char *in, char *out)
     Cats = Vect_new_cats_struct ();
     
     /* Rewrite all primitives to output file */
-    while ( (type = Vect_read_next_line (&In, Points, Cats)) >= 0) {
+    cat = 0;
+    while ( (type = Vect_read_next_line (&In, Points, Cats)) >= 0) 
+    {
+        if ( type == GV_POINT )
+        {
+            /* Get max cat in input */
+	    int j;
+	    for ( j = 0; j < Cats->n_cats; j++ ) 
+            {
+                if ( Cats->field[j] == nfield &&
+                     Cats->cat[j] > cat )
+                {
+                    cat = Cats->cat[j];
+                }
+            }
+        }
         Vect_write_line (&Out, type, Points, Cats);      
     }
+    cat++;
     
     /* Go thorough all nodes in old map and write a new point if missing */    
     nnodes = Vect_get_num_nodes ( &In );
-    Vect_reset_cats (Cats);
     count = 0;
     for ( node = 1; node <= nnodes; node++ ) {
 	int has_lines = 0;
@@ -78,6 +94,11 @@ int nodes ( char *in, char *out)
 	    Vect_reset_line ( Pout );    
 	    Vect_get_node_coor ( &In, node, &x, &y, &z);
 	    Vect_append_point ( Pout, x, y, z);
+            Vect_reset_cats (Cats);
+            if ( add_cats )
+            {
+                Vect_cat_set ( Cats, nfield, cat++ );
+            }
 	    Vect_write_line ( &Out, GV_POINT, Pout, Cats);
 	    count++;
 	}
