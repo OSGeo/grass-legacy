@@ -75,7 +75,9 @@ The program writes values of selected input and internally computed parameters t
 <h2>NOTES</h2>
 
 <em>v.surf.rst </em>uses regularized spline with tension for approximation
-from vector data. Additional points are used for approximation between
+from vector data. The module does not require input data with topology, therefore
+both level1 (no topology) and level2 (with topology) vector point data are supported.
+Additional points are used for approximation between
 each 2 points on a line if the distance between them is greater than specified
 <em>dmax</em>. If <em>dmax</em> is small (less than cell size) the number of
 added data points can be vary large and slow down approximation significantly.
