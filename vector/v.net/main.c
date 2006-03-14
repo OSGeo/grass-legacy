@@ -61,10 +61,11 @@ int main (int argc, char **argv)
     action->required = NO;
     action->multiple = NO;
     action->answer = "nodes";
-    action->options = "nodes,report";
+    action->options = "nodes,report,nreport";
     action->description = "Operation to be performed\n"
 	    "\t\tnodes - new point is placed on each node (line end) if doesn't exist\n"
-	    "\t\treport - print to standard output: line_category start_point_category end_point_category";
+	    "\t\treport - print to standard output: line_category start_point_category end_point_category"
+	    "\t\tnreport - print to standard output: point_category line_category[,line_category...]";
 
     afield_opt = G_define_standard_option(G_OPT_V_FIELD);
     afield_opt->key = "alayer";
@@ -87,17 +88,29 @@ int main (int argc, char **argv)
     afield = atoi (afield_opt->answer);
     nfield = atoi (nfield_opt->answer);
     
-    if ( action->answer[0] == 'n' ) { /* nodes */
+    if ( strcmp ( action->answer, "nodes") == 0  ) { /* nodes */
 	Vect_check_input_output_name ( input->answer, output->answer, GV_FATAL_EXIT );
 	
         if ( output->answer == NULL ) 
 	    G_fatal_error("Output vector map must be specified");
 
         nodes ( input->answer, output->answer, cats_flag->answer, nfield);
-    }
+    } 
+    else  /* report */
+    {
+        int  act;
 
-    if ( action->answer[0] == 'r' ) /* report */
-      report ( input->answer, afield, nfield);
+	if ( strcmp ( action->answer, "report") == 0  ) 
+        {
+            act = REPORT;
+        } 
+        else 
+        {
+            act = NREPORT;
+        }
+        
+	report ( input->answer, afield, nfield, act);
+    }
 
   return (0);
 }
