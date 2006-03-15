@@ -62,9 +62,19 @@ db.connect -p
 db.tables -p
 </pre></div>
 
-<h3>MySQL</h3>
+<h3>MySQL (local)</h3>
 
-Network storage: (may require the use of <a href=db.login.html>db.login</a>):<br> 
+Local storage (<a href=db.login.html>db.login</a> may not be needed):<br>
+<div class="code"><pre>
+db.connect driver=mysql database=mydb
+db.login user=myname pass=secret
+db.connect -p
+db.tables -p
+</pre></div>
+
+<h3>MySQL (external server)</h3>
+
+Network storage: (may require the use of <a href=db.login.html>db.login</a>):<br>
 <div class="code"><pre>
 db.connect driver=mysql database="host=myserver.itc.it,dbname=mydb"
 db.login user=myname pass=secret
