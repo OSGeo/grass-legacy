@@ -48,23 +48,29 @@ proc mksurfPanel { BASE } {
     
     set tmp [frame $BASE.top.t1]
     ########## make buttons that control surface & drawing style#############
+
+#*** ACS_MODIFY 1.0 BEGIN ******************************************************
+# Several string modified in menubuttons Draw Mode and Coarse Style.
+# Only strings have been modified, behavior (functions) are unchanged
+
     menubutton $tmp.style -menu $tmp.style.m -relief raised \
-	-text "Surface Style:" -underline 0 -indicatoron 1
-    menu $tmp.style.m 
-	$tmp.style.m add radiobutton -label Wire -value wire \
+	-text "Draw Mode:" -underline 0 -indicatoron 1
+    menu $tmp.style.m
+	$tmp.style.m add radiobutton -label Coarse -value wire \
 	-variable Nv_(SurfStyle) -command set_drawmode
-	$tmp.style.m add radiobutton -label Polygon -value poly \
+	$tmp.style.m add radiobutton -label Fine -value poly \
 	-variable Nv_(SurfStyle) -command set_drawmode
-	$tmp.style.m add radiobutton -label Wire/Poly -value wire_poly \
+	$tmp.style.m add radiobutton -label Both -value wire_poly \
 	-variable Nv_(SurfStyle) -command set_drawmode
 
     menubutton $tmp.gstyle -menu $tmp.gstyle.m -relief raised \
-	-text "Grid Style:" -underline 0 -indicatoron 1
+	-text "Coarse Style:" -underline 0 -indicatoron 1
     menu $tmp.gstyle.m
 	$tmp.gstyle.m add radiobutton -label Wire -value grid_wire \
 	-variable Nv_(GridStyle) -command set_drawmode
-	$tmp.gstyle.m add radiobutton -label "Coarse Surface" -value grid_surf \
+	$tmp.gstyle.m add radiobutton -label "Surface" -value grid_surf \
 	-variable Nv_(GridStyle) -command set_drawmode
+#*** ACS_MODIFY 1.0 END ********************************************************
 
     menubutton $tmp.shading -text "Shading:" -menu $tmp.shading.m \
 	-relief raised -underline 0 -indicatoron 1
@@ -80,10 +86,19 @@ proc mksurfPanel { BASE } {
     
         
     set tmp [frame $BASE.top.t2]
+#*** ACS_MODIFY 1.0 BEGIN ******************************************************
+    label $tmp.subsampling -text "Subsampling"
+    pack $tmp.subsampling -side top -fill x
+#*** ACS_MODIFY 1.0 END ********************************************************
+
     ########### make arrows for surf & grid resolution control ###################
-    Nv_mkArrows $tmp.gridarrows "Grid Resolution" [concat set_res wire] 8
+# *** ACS_MODIFY 1.0 - one line
+#    Nv_mkArrows $tmp.gridarrows "Grid Resolution" [concat set_res wire] 8
+    Nv_mkArrows $tmp.gridarrows " Coarse(rel) / Wire(abs)" [concat set_res wire] 8
     set Nv_(WireResWidget) $tmp.gridarrows.f2.entry
-    Nv_mkArrows $tmp.polyarrows "Polygon  Resolution" [concat set_res poly] 8
+    Nv_mkArrows $tmp.polyarrows "         Fine           " [concat set_res poly] 8
+# *** ACS_MODIFY 1.0 - one line
+#    Nv_mkArrows $tmp.polyarrows "Polygon  Resolution" [concat set_res poly] 8
     set Nv_(PolyResWidget) $tmp.polyarrows.f2.entry
    
 #Add bindings for resolution update
@@ -456,6 +471,7 @@ proc change_wirecolor {me} {
 proc delete_surf {} {
     
     set curr [Nget_current surf]
+
     if {0 != $curr} {
 	Nsurf$curr delete
 	
