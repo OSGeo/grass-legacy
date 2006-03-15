@@ -37,7 +37,8 @@ OBJS = nvizAppInit.o change_view.o draw.o exag.o glwrappers.o \
 	label.o nvizMain.o togl.o togl_cb.o\
 	query_vect.o \
 	volume.o \
-	togl_flythrough.o
+	togl_flythrough.o pick_vect_commands.o site_attr_commands.o site_highlight_commands.o
+
 # mkdspf_calc_linefax.o mkdspf_init_file.o mkdspf_main.o \
 # mkdspf_fill_cfax.o mkdspf_iso_surface.o
 
