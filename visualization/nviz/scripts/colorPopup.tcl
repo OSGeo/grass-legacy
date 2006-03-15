@@ -44,6 +44,10 @@ proc mkColorPopup {w name {color "#000000"} {mode 0}} {
     Nv_mkColorScale $w.top.left Red $r red  $w.top.color
     Nv_mkColorScale $w.top.left Green $g green  $w.top.color
     Nv_mkColorScale $w.top.left Blue $b blue  $w.top.color
+
+    # ACS One line: without next line, the scales and $w.top.color are set to white next time
+    # after a color button (not sliders) has been used, regardless $color. Don't know why
+    setScales $w.top.left $color
     
     pack $w.top.left.red $w.top.left.green $w.top.left.blue -side top -expand 1
     set CurrColor $color
