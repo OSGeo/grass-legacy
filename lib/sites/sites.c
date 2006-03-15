@@ -1197,3 +1197,141 @@ char *G_site_format (Site *s, char *fs, int id)
   return buf;
 }
 
+/*******************************************************************************/
+/*******************************************************************************/
+/*** ACS_MODIFY_BEGIN - sites_attribute management *****************************/
+/*
+ These functions are used in visualization/nviz/src/site_attr_commands.c
+
+ Functions to obtain fields in order to draw sites with each point having a
+ geometric property depending from database values.
+
+ IN ALL THESE FUNCTIONS I FOLLOW THE CONVENTION TO PASS Map_info* as FILE*
+  FOR COHERENCE WITH OTHER ALREADY WRITTEN FUNCTION IN sites.c FILE.
+*/
+
+/*
+ Returns a pointer to the SITE_ATT in Map_info *ptr and with category cat
+*/
+SITE_ATT * G_sites_get_atts (FILE * ptr, int* cat)
+{
+    struct Map_info *Map;
+    Map = (struct Map_info *) ptr;
+
+	return (SITE_ATT *) bsearch ( (void *) cat, (void *)Map->site_att, Map->n_site_att,
+					 sizeof(SITE_ATT), site_att_cmp );
+}
+
+/*
+ Returns field names, types and indexes in double and string Map_info arrays
+
+  WARNING: user is responsible to free allocated memory, directly or calling G_sites_free_fields()
+*/
+int G_sites_get_fields(FILE * ptr, char*** cnames, int** ctypes, int** ndx)
+{
+    struct Map_info *Map;
+    Map = (struct Map_info *) ptr;
+
+	struct field_info *fi;
+    int nrows, row, ncols, col, ndbl, nstr, ctype;
+
+    dbDriver *driver;
+    dbString stmt;
+    dbCursor cursor;
+    dbTable  *table;
+    dbColumn *column;
+    /*dbValue  *value;*/
+
+	/* warning: we are using "1" as cat field in Vect_get_field because G_sites_open_old
+		(in lib/sites/sites.c), that we use here to open sites, does the same and then
+		queries the db in the same way we do here.
+		Should it be not true in the future, maybe we'll have to change this by choosing
+		appropriate fields and multiple categories */
+
+	fi = (struct field_info *)Vect_get_field(Map, 1);
+
+
+    if ( fi == NULL ) {  /* not attribute table */
+	G_debug ( 1, "No attribute table" );
+	return -1;
+    }
+
+    driver = db_start_driver_open_database ( fi->driver, fi->database );
+    if ( driver == NULL )
+    	G_fatal_error ( "Cannot open database %s by driver %s", fi->database, fi->driver );
+
+    db_init_string (&stmt);
+    db_set_string ( &stmt, "select * from ");
+    db_append_string ( &stmt, fi->table );
+
+    if (db_open_select_cursor(driver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
+	G_fatal_error ("Cannot select attributes.");
+
+    nrows = db_get_num_rows ( &cursor );
+    G_debug ( 1, "%d rows selected from vector attribute table", nrows);
+
+    table = db_get_cursor_table (&cursor);
+    ncols = db_get_table_number_of_columns(table);
+
+	if (ncols <=0) return ncols;
+
+    row = 0;
+
+	/* Get number of each type */
+	ndbl = nstr = 0;
+
+	*cnames=(char**)malloc(ncols*sizeof(char*));
+	*ctypes=(int*)malloc(ncols*sizeof(int));
+	*ndx=(int*)malloc(ncols*sizeof(int));
+
+	for (col = 0; col < ncols; col++) {
+		column = db_get_table_column ( table, col );
+		ctype =  db_sqltype_to_Ctype ( db_get_column_sqltype(column) );
+
+		char * name=db_get_column_name(column);
+
+		*(*cnames+col) = (char*)malloc(strlen(name) + 1);
+		strcpy(*(*cnames+col), db_get_column_name(column));
+
+		/* ctypes is 'c' for cat, 'd' for double, 's' for string */
+		if (strcmp(name, fi->key)==0) {
+			*(*ctypes+col)='c';
+			*(*ndx+col)=-1;
+		} else {
+			switch ( ctype ) {
+				case DB_C_TYPE_INT:
+				case DB_C_TYPE_DOUBLE:
+					*(*ctypes+col)='d';
+					*(*ndx+col)=ndbl;
+					ndbl++;
+				break;
+				case DB_C_TYPE_STRING:
+				case DB_C_TYPE_DATETIME:
+					*(*ctypes+col)='s';
+					*(*ndx+col)=nstr;
+					nstr++;
+				break;
+			}
+		}
+	}
+
+    db_close_database_shutdown_driver ( driver );
+    return ncols;
+}
+
+/*
+ Frees fields allocated with G_sites_get_fields
+*/
+void G_sites_free_fields(int ncols, char** cnames, int* ctypes, int* ndx)
+{
+	for (; ncols > 0; ncols--) free(*(cnames+ncols-1));
+	free(cnames);
+	free(ctypes);
+	free(ndx);
+}
+
+/*** ACS_MODIFY_END - sites_attribute management *******************************/
+/*******************************************************************************/
+/*******************************************************************************/
+
+
