@@ -126,7 +126,11 @@ void gk_follow_frames(Viewnode * view, int numsteps, Keylist * keys, int step,
 	    fprintf(stderr, "FROM: %f %f %f\n", tmp[X], tmp[Y], tmp[Z]);
 	}
 #endif
-	GS_get_focus(tmp);
+/* ACS 1 line: was 	GS_get_focus(tmp);
+ 	with this kanimator works also for flythrough navigation
+	also changed in GK2.c
+*/
+	GS_get_viewdir(tmp);
 	if ((mask & KF_DIRX_MASK)) {
 	    tmp[X] = v->fields[KF_DIRX];
 	}
