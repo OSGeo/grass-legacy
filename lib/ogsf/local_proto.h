@@ -480,6 +480,7 @@ void gsd_remove_all(void);
 void gsd_call_label(void);
 
 /* From gsd_objs.c */
+void gsd_box(float *, int , float *);
 void gsd_plus(float *, int, float);
 void gsd_line_onsurf(geosurf *, float *, float *);
 int gsd_nline_onsurf(geosurf *, float *, float *, float *, int);
