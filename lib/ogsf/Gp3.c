@@ -124,6 +124,11 @@ geopoint *Gp_load_sites(char *grassname, int *nsites, int *has_z,
 	    if (ndec > 0) {
 		*has_att = 1;
 		gpt->fattr = nextsite->dbl_att[0];
+/* ACS_MODIFY_OneLine site_attr management - new */
+		gpt->cat = nextsite->ccat;
+
+/* ACS_MODIFY_OneLine highlight management - new */
+		gpt->highlight_color = gpt->highlight_size = gpt->highlight_marker = FALSE;
 	    }
 	    else {
 		gpt->fattr = 0;
