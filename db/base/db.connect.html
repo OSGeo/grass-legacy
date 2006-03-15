@@ -66,7 +66,7 @@ db.tables -p
 
 Network storage: (may require the use of <a href=db.login.html>db.login</a>):<br> 
 <div class="code"><pre>
-db.connect driver=mysql database=gtest
+db.connect driver=mysql database="host=myserver.itc.it,dbname=mydb"
 db.login user=myname pass=secret
 db.connect -p
 db.tables -p
