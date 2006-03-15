@@ -258,7 +258,7 @@ int main(int argc, char *argv[])
 	}
 
 	/*if only one map is given, open it depths - times */
-	G_message(_("Open raster map %s\n"), name);
+	G_message(_("Open raster map %s - one time for each depth (%d/%d)"), name, i+1, region.depths );
 	fd[i] = OpenInputMap(name, mapset);
 	opencells++;
 
