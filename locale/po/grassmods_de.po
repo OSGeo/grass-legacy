@@ -10705,7 +10705,7 @@ msgid ""
 "Projection of input dataset and current location appear to match.\n"
 "Proceeding with import...\n"
 msgstr ""
-"Die Projektionsinformationen des Eingabedatensatztes und der aktuellen "
+"Die Projektionsinformationen des Eingabedatensatzes und der aktuellen "
 "Location stimmen überein.\n"
 "Fahre mit dem Import fort...\n"
 
