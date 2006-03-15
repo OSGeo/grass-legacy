@@ -35,6 +35,9 @@ install:
 	$(MKDIR) $(INSTALL_DIR)/bitmaps
 	(cd scripts; $(INSTALL) script_get_line script_play script_tools script_file_tools $(INSTALL_DIR)/scripts)
 	$(INSTALL) scripts/*.tcl $(INSTALL_DIR)/scripts
+### ACS - BEGIN ###############################################################
+	$(INSTALL) scripts/nviz_params $(INSTALL_DIR)/scripts/nviz_params
+### ACS - END #################################################################
 	$(INSTALL) scripts/*Index $(INSTALL_DIR)/scripts
 	(cd bitmaps; tar -cf - *  | (cd $(INSTALL_DIR)/bitmaps; tar  -xf - 2>/dev/null ); true)
 	$(INSTALL) scripts/$(NV_VER)_script $(INSTALL_DIR)/scripts
