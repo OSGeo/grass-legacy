@@ -9,6 +9,11 @@
 
 ##########################################################################
 
+#*** ACS_MODIFY 1.0 BEGIN ******************************************************
+	set Nv_(SiteAttr) 1
+	if {$Nv_(SiteAttr)} {source $src_boot/etc/nviz2.2/scripts/site_attr.tcl}
+#*** ACS_MODIFY 1.0 END ********************************************************
+
 ############################################################################
 # procedure to make main control area
 ###########################################################################
@@ -115,11 +120,22 @@ proc mksitePanel { BASE } {
     radiobutton $tmp.siteshape.aster -relief flat -text "use 3D asterisk" \
 	-value aster -anchor nw -variable Nv_(siteshape) \
 	-command change_marker
+#*** ACS_MODIFY site_attr BEGIN ************************************************
+#was
+#    pack $tmp.siteshape.x $tmp.siteshape.sphere $tmp.siteshape.diamond  \
+#	$tmp.siteshape.cube $tmp.siteshape.box $tmp.siteshape.gyro \
+#	$tmp.siteshape.aster \
+#	-fill x -expand 1
+
+    radiobutton $tmp.siteshape.histogram -relief flat -text "use histogram" \
+	-value histogram -anchor nw -variable Nv_(siteshape) \
+	-command change_marker
 
     pack $tmp.siteshape.x $tmp.siteshape.sphere $tmp.siteshape.diamond  \
 	$tmp.siteshape.cube $tmp.siteshape.box $tmp.siteshape.gyro \
-	$tmp.siteshape.aster \
+	$tmp.siteshape.aster $tmp.siteshape.histogram \
 	-fill x -expand 1
+#*** ACS_MODIFY site_attr END **************************************************
     pack $tmp.sitesize $tmp.linewidth $tmp.siteshape \
 	-side top -expand 1 -fill x
     pack $tmp -side left  -fill y -expand 1
@@ -139,6 +155,9 @@ proc mksitePanel { BASE } {
     pack $tmp.sitedisp $tmp.list  -side top
     pack $tmp -side right -fill y -expand 1
     
+# ACS_MODIFY One Line ###########################################################
+	if {$Nv_(SiteAttr)} {site_attr_gui $BASE $curr}
+
     return $panel
 }
 
