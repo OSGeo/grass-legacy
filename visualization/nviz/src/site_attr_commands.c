@@ -219,7 +219,9 @@ Files involved:
 #include <string.h>
 #include <stdlib.h>
 
-#include <grass/vect/digit.h>
+#include <grass/Vect.h>
+#include <grass/site.h>
+
 #include "interface.h"
 
 #define	R_G_B_2_RGB(r,g,b) ((b) & 0xff) | (((g) & 0xff) << 8) | (((r) & 0xff) << 16)

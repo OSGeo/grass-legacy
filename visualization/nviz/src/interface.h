@@ -358,3 +358,38 @@ int slice_move_up(int, Tcl_Interp *, int, char *[]);
 int slice_move_down(int, Tcl_Interp *, int, char *[]);
 int slice_get_transp(int, Tcl_Interp *, int, char *[]);
 int slice_set_transp(int, Tcl_Interp *, int, char *[]);
+
+/* site_attr_commands.c */
+int site_attr_open_map(geosite *, int, struct Map_info **, int *, char ***, int **, int **);
+int site_attr_set_color(geosite *, int, int, int, char**, char**);
+int site_attr_set_size(geosite *, int, int, int, char**, char**);
+int site_attr_set_fixed_color(geosite *, int, unsigned int);
+int site_attr_set_fixed_size(geosite *, int, float);
+int site_attr_set_fixed_marker(geosite *, int, int);
+int site_attr_set(Tcl_Interp *, geosite *, int, char *, int, char *, char *);
+int site_attr_unset(Tcl_Interp *, geosite *, int, char *);
+int site_attr_get(Tcl_Interp *, geosite *, int);
+int site_attr_set_color(geosite *, int, int, int, char**, char**);
+int site_attr_set_size(geosite *, int, int, int, char**, char**);
+int site_attr_set_fixed_color(geosite *, int, unsigned int);
+int site_attr_set_fixed_size(geosite *, int, float);
+int site_attr_set_fixed_marker(geosite *, int, int);
+void site_attr_init_tcl(Tcl_Interp *, Nv_data *);
+void site_attr_init(int);
+int attr_interp_entries(int , char** , char** , float **, float **, float **);
+int attr_interp_colors(int , char** , char** , float **, float **, float **, float **, float **, float **, float **);
+int attr_get_int_BBGGRR(char* );
+int attr_interp_entries(int , char** , char** , float **, float **, float **);
+int attr_interp_entries_string(int , char** , float **);
+int attr_interp_colors(int , char** , char** , float **,float **, float **, float **, float **, float **, float **);
+int attr_interp_colors_string(int , char** , float **, float **, float **);
+int attr_eval_color(float , int , float *, float *, float *, float *, float *, float *, float *);
+int attr_eval_color_string(char* , int , char** , float *, float *, float *);
+float attr_eval_entry_string(char* , int , char** , float*);
+
+/* pick_vect_commands.c */
+void pick_init_tcl(Tcl_Interp *, Nv_data *);
+
+/* site_highlight_commands.c */
+void site_highlight_init_tcl(Tcl_Interp *, Nv_data *);
+	
