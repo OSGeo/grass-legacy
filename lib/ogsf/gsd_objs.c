@@ -168,7 +168,9 @@ void gsd_line_onsurf(geosurf * gs, float *v1, float *v2)
 	gsd_bgnline();
 
 	for (i = 0; i < np; i++) {
-	    pts[i][Z] += fudge;
+	    /* ACS */
+            /*	    pts[i][Z] += fudge;*/
+	    pts[i][Z] *= fudge;
 	    gsd_vert_func(pts[i]);
 	}
 
@@ -1094,3 +1096,81 @@ void primitive_cylinder(unsigned long col, int caps)
 
     return;
 }
+
+/*** ACS_MODIFY_BEGIN - sites_attribute management ********************************/
+/*
+ Draws boxes that are used for histograms by gpd_obj function in gpd.c
+ for site_attribute management
+*/
+#include "local_proto.h"
+
+ /* vertices for box */
+float Box[8][3] = {{ 1.0,  1.0, -1.0},{-1.0,  1.0, -1.0},{-1.0,  1.0,  1.0},{ 1.0,  1.0,  1.0},
+    				{ 1.0, -1.0, -1.0},{-1.0, -1.0, -1.0},{-1.0, -1.0,  1.0},{ 1.0, -1.0,  1.0}};
+
+float BoxN[6][3] = {{0, 0, -ONORM},{0, 0, ONORM},{0, ONORM, 0},{0, -ONORM, 0},{ONORM, 0, 0},{-ONORM, 0, 0}};
+
+/* Warning siz is an array (we need it for scale only Z in histograms) */
+void gsd_box(float *center, int colr, float *siz)
+{
+    int preshade;
+
+	gsd_pushmatrix();
+    gsd_translate(center[X], center[Y], center[Z] + siz[2]);
+    gsd_scale(siz[0], siz[1], siz[2]);
+    preshade = gsd_getshademodel();
+    gsd_shademodel(0);		/* want flat shading */
+
+	/* Top */
+    gsd_bgnpolygon();
+    gsd_litvert_func(BoxN[2], colr, Box[0]);
+    gsd_litvert_func(BoxN[2], colr, Box[1]);
+    gsd_litvert_func(BoxN[2], colr, Box[2]);
+    gsd_litvert_func(BoxN[2], colr, Box[3]);
+    gsd_endpolygon();
+
+	/* Bottom */
+    gsd_bgnpolygon();
+    gsd_litvert_func(BoxN[3], colr, Box[7]);
+    gsd_litvert_func(BoxN[3], colr, Box[6]);
+    gsd_litvert_func(BoxN[3], colr, Box[5]);
+    gsd_litvert_func(BoxN[3], colr, Box[4]);
+    gsd_endpolygon();
+
+	/* Right */
+    gsd_bgnpolygon();
+    gsd_litvert_func(BoxN[4], colr, Box[0]);
+    gsd_litvert_func(BoxN[4], colr, Box[3]);
+    gsd_litvert_func(BoxN[4], colr, Box[7]);
+    gsd_litvert_func(BoxN[4], colr, Box[4]);
+    gsd_endpolygon();
+
+	/* Left */
+    gsd_bgnpolygon();
+    gsd_litvert_func(BoxN[5], colr, Box[1]);
+    gsd_litvert_func(BoxN[5], colr, Box[5]);
+    gsd_litvert_func(BoxN[5], colr, Box[6]);
+    gsd_litvert_func(BoxN[5], colr, Box[2]);
+    gsd_endpolygon();
+
+	/* Front */
+    gsd_bgnpolygon();
+    gsd_litvert_func(BoxN[0], colr, Box[0]);
+    gsd_litvert_func(BoxN[0], colr, Box[4]);
+    gsd_litvert_func(BoxN[0], colr, Box[5]);
+    gsd_litvert_func(BoxN[0], colr, Box[1]);
+    gsd_endpolygon();
+
+	/* Back */
+    gsd_bgnpolygon();
+    gsd_litvert_func(BoxN[1], colr, Box[3]);
+    gsd_litvert_func(BoxN[1], colr, Box[2]);
+    gsd_litvert_func(BoxN[1], colr, Box[6]);
+    gsd_litvert_func(BoxN[1], colr, Box[7]);
+    gsd_endpolygon();
+
+    gsd_popmatrix();
+    gsd_shademodel(preshade);
+    return;
+}
+/*** ACS_MODIFY_END - sites_attribute management ********************************/
