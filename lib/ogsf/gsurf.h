@@ -78,6 +78,8 @@
 #define ST_CON_TREE     7
 #define ST_ASTER    8
 #define ST_GYRO            9
+/* ACS_MODIFY_One Line site_attr management ***************************************/
+#define ST_HISTOGRAM       10
 
 /* site attribute modes (what attribute of marker category is used for) */
 /* TODO: may want to make these OR'able */
