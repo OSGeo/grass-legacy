@@ -150,14 +150,14 @@ main (int argc, char **argv)
 
     Hcolor = G_define_option();
     Hcolor->key = "hcolor";
-    Hcolor->description = _("Highlight color for text (only for ps.map output)");
+    Hcolor->description = _("Highlight color for text");
     Hcolor->type = TYPE_STRING;
     Hcolor->answer = "none";
     Hcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
 
     Hwidth = G_define_option();
     Hwidth->key = "hwidth";
-    Hwidth->description = _("Line width of highlight color (only for ps.map output)");
+    Hwidth->description = _("Width of highlight coloring");
     Hwidth->type = TYPE_DOUBLE;
     Hwidth->answer = "0";
 
