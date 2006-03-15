@@ -18,6 +18,112 @@
 /* BOB -- border allowed outside of viewport*/
 #define v_border 50
 
+/* ACS_MODIFY_BEGIN site_attr management ***************************************/
+static float _cur_size_;
+
+/* This substitutes gpd_obj */
+int gpd_obj_site_attr(geosurf * gs, geosite * gp, geopoint *gpt, Point3 site)
+{
+    float size, z, y, x, z_scale, z_offset;
+    int marker, color, i, ii, iii;
+	int use_attr, has_drawn;
+	int _put_aside_;
+
+	_put_aside_ = 0;
+	_cur_size_ = gp->size;
+
+    z_scale = GS_global_exag();
+	z_offset = 0.0;
+
+	has_drawn = 0;
+
+	for(i=0; i<GPT_MAX_ATTR; i++) {
+		color = gp->color; marker = gp->marker; size = gp->size;
+		use_attr = 0;
+
+		if (gp->use_attr[i] & ST_ATT_COLOR) {
+			use_attr = 1;
+			color = gpt->color[i];
+		}
+
+		if (gp->use_attr[i] & ST_ATT_MARKER) {
+			use_attr = 1;
+			marker = gpt->marker[i];
+		}
+
+		if (gp->use_attr[i] & ST_ATT_SIZE) {
+			use_attr = 1;
+			size = gpt->size[i] * gp->size;
+			if (gp->marker == ST_HISTOGRAM) _put_aside_ = 1;
+		}
+
+/* ACS_MODIFY_BEGIN site_highlight management **********************************/
+		if (gpt->highlight_color) color = gpt->highlight_color_value;
+		if (gpt->highlight_marker) marker = gpt->highlight_marker_value;
+		if (gpt->highlight_size) size *= gpt->highlight_size_value;
+/* ACS_MODIFY_END site_highlight management ************************************/
+
+		if (_put_aside_) {
+			if (use_attr == 1) {
+				has_drawn = 1;
+
+/*******************************************************************************
+		fixed size = gp->size
+		this is mailny intended for "histograms" that grow in z, but not in xy
+
+        square filling to right and then up
+
+         15 14 13 12
+          8  7  6 11
+          3  2  5 10
+          0  1  4  9
+
+*******************************************************************************/
+				x = site[X];
+				y = site[Y];
+
+				ii = (int)(sqrt(i));
+				iii = ii * ii + ii;
+
+				if (i <= iii) {
+					site[X] += ii * 2.2 * gp->size;
+					site[Y] += (i-ii) * 2.2 * gp->size;
+				} else {
+					site[X] += (ii-(i-iii)) * 2.2 * gp->size;
+					site[Y] += ii * 2.2 * gp->size;
+
+				}
+
+				gpd_obj(gs, color, size, marker, site);
+
+				site[X] = x;
+				site[Y] = y;
+			}
+		} else {
+			if (i>0) z_offset += size;
+			if (use_attr == 1) {
+				has_drawn = 1;
+
+				z = site[Z];
+				site[Z] += z_offset / z_scale;
+
+				gpd_obj(gs, color, size, marker, site);
+
+				site[Z] = z;
+			}
+
+			z_offset += size;
+		}
+	}
+
+	if (has_drawn == 0)
+		gpd_obj(gs, color, size, marker, site);
+
+	return(0);
+}
+/* ACS_MODIFY_END site_attr management *****************************************/
+
+
 /* check for cancel every CHK_FREQ points */
 
 int gs_point_in_region(geosurf * gs, float *pt, float *region)
@@ -54,6 +160,28 @@ void gpd_obj(geosurf * gs, int color, float size, int marker, Point3 pt)
     GS_v3eq(lpt, pt);		/* CHANGING Z OF POINT PASSED, so use copy */
 
     switch (marker) {
+/* ACS_MODIFY_BEGIN site_attr management ***************************************/
+    case ST_HISTOGRAM:
+	gsd_colormode(CM_DIFFUSE);
+	gsd_pushmatrix();
+
+	if (sz) {
+	    lpt[Z] *= sz;
+	    gsd_scale(1.0, 1.0, 1. / sz);
+	}
+
+	float siz[3];
+	siz[0] = _cur_size_;
+	siz[1] = _cur_size_;
+	siz[2] = size;
+
+	gsd_box(lpt, color, siz);
+
+	gsd_popmatrix();
+	gsd_colormode(CM_COLOR);
+
+	break;
+/* ACS_MODIFY_END   site_attr management ***************************************/
     case ST_DIAMOND:
 	/*
 	   gsd_colormode(CM_AD);
@@ -233,7 +361,8 @@ int gpd_2dsite(geosite * gp, geosurf * gs, int do_fast)
 			(site, window, viewport, modelMatrix, projMatrix))
 			continue;
 		    else
-			gpd_obj(gs, color, size, marker, site);
+/* ACS_MODIFY_OneLine site_attr management - was: gpd_obj(gs, color, size, marker, site); */
+			gpd_obj_site_attr(gs, gp, gpt, site);
 		}
 	    }
 	    else if (src == CONST_ATT) {
@@ -243,7 +372,8 @@ int gpd_2dsite(geosite * gp, geosurf * gs, int do_fast)
 			(site, window, viewport, modelMatrix, projMatrix))
 			continue;
 		    else
-			gpd_obj(NULL, color, size, marker, site);
+/* ACS_MODIFY_OneLine site_attr management - was: gpd_obj(NULL, color, size, marker, site); */
+			gpd_obj_site_attr(NULL, gp, gpt, site);
 		}
 	    }
 	}
@@ -311,7 +441,8 @@ int gpd_3dsite(geosite * gp, float xo, float yo, int do_fast)
 	    continue;
 	else
 	    /* clip points outside default region? */
-	    gpd_obj(NULL, color, size, marker, site);
+/* ACS_MODIFY_OneLine site_attr management - was: gpd_obj(NULL, color, size, marker, site); */
+	    gpd_obj_site_attr(NULL, gp, gpt, site);
     }
 
     gsd_linewidth(1);
