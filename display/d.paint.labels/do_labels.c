@@ -25,10 +25,10 @@ static int xoffset ;
 static int yoffset ;
 static int xref ;
 static int yref ;
-static int color ;
+static int color, highlight_color ;
 static double size ;
 static int fontsize;
-static int width ;
+static int width, highlight_width ;
 static int background ;
 static int border ;
 static int opaque ;
@@ -50,9 +50,11 @@ int initialize_options (void)
     xref = CENT ;
     yref = CENT ;
     color = D_translate_color("black") ;
+    highlight_color = D_translate_color("white") ;
     size = 1000. ;
     fontsize = 0;
     width = 1 ;
+    highlight_width = 0;
     background = D_translate_color("white") ;
     border = D_translate_color("black") ;
     opaque = YES ;
@@ -128,22 +130,13 @@ do_labels (FILE *infile, int do_rotation)
 	    if(do_rotation)
 		sscanf(text,"%*s %lf", &rotation);
 	}
-	else if (! strncmp (text, "hco", 3))
+	else if (! strncmp(text, "hco", 3))
 	{
-	    /* not used by this module but correct field */
-	    /*
-	    if (sscanf (text, "%1s", buff) == 1)
-		fprintf(stderr,"Ignoring: %s\n", text) ;
-	    */
+		sscanf(text,"%*s %s", buff) ;
+		highlight_color = D_translate_color(buff) ;
 	}
-	else if (! strncmp (text, "hwi", 3))
-	{
-	    /* not used by this module but correct field */
-	    /*	
-	    if (sscanf (text, "%1s", buff) == 1)
-		fprintf(stderr,"Ignoring: %s\n", text) ;
-	    */
-	}
+	else if (! strncmp(text, "hwi", 3))
+	    sscanf(text,"%*s %d", &highlight_width) ;
 
 	else if (! strncmp(text, "tex", 3))
 		show_it() ;
@@ -161,6 +154,7 @@ do_labels (FILE *infile, int do_rotation)
 
 int show_it (void)
 {
+    int i;
     int n_lines ;
     int n_chars ;
     char line[256] ;
@@ -304,6 +298,60 @@ int show_it (void)
     tptr++ ;
 
 /* Draw text */
+
+    /* draw highlighted text background */
+    if(highlight_width && highlight_color) {
+	R_standard_color(highlight_color);
+
+	n_lines = 0 ;
+	for(;;) {
+	    n_chars = 0 ;
+	    for(lptr = line; *tptr && *tptr != NL; *lptr++ = *tptr++) {
+		if ((*tptr == BACK) && (*(tptr+1) == 'n'))
+		    break ;
+		n_chars++ ;
+	    }
+
+	    n_lines++ ;
+	    if (n_chars == 0)
+		break ;
+
+	    *lptr = '\0' ;
+
+	    Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((n_lines-1)*line_size) ));
+	    R_set_window(scrT, scrB, scrL, scrR) ;
+
+	    for(i = 1; i <= highlight_width; i++) {
+		/* smear it around. probably a better way (knight's move? rand?) */
+		R_move_abs(X + Xoffset, Y + Yoffset + i);
+		R_text(line);
+		R_move_abs(X + Xoffset, Y + Yoffset - i);
+		R_text(line);
+		R_move_abs(X + Xoffset + i, Y + Yoffset);
+		R_text(line);
+		R_move_abs(X + Xoffset - i, Y + Yoffset);
+		R_text(line);
+
+		R_move_abs(X + Xoffset +i, Y + Yoffset +i);
+		R_text(line);
+		R_move_abs(X + Xoffset -i, Y + Yoffset -i);
+		R_text(line);
+		R_move_abs(X + Xoffset +i, Y + Yoffset -i);
+		R_text(line);
+		R_move_abs(X + Xoffset -i, Y + Yoffset +i);
+		R_text(line);
+	    }
+
+	    if ( (*tptr == '\0') || (*tptr == NL) )
+		break ;
+	    tptr++ ; tptr++ ;
+	}
+    }
+
+    /* reset pointer for main text draw */
+    for(tptr=text; *tptr != ':'; tptr++) ;
+    tptr++ ;
+
     R_standard_color(color) ;
 
     n_lines = 0 ;
