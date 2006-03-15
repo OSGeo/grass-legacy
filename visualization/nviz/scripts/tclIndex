@@ -375,3 +375,7 @@ set auto_index(PlayNextLine) [list source [file join $dir send_support.tcl]]
 set auto_index(St_create) [list source [file join $dir structlib.tcl]]
 set auto_index(St_set) [list source [file join $dir structlib.tcl]]
 set auto_index(St_get) [list source [file join $dir structlib.tcl]]
+#ACS
+set auto_index(mkresizePanel) [list source [file join $dir panel_resize.tcl]]
+set auto_index(mkpickPanel) [list source [file join $dir panel_pick.tcl]]
+set auto_index(mkhighlightPanel) [list source [file join $dir panel_highlight.tcl]]
