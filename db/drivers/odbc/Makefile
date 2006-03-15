@@ -1,4 +1,3 @@
-
 MODULE_TOPDIR = ../../..
 
 include $(MODULE_TOPDIR)/include/Make/Platform.make
@@ -29,8 +28,12 @@ OBJS 	=  \
 	
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 
-default: $(DRIVER)
+DRVDOC=$(GISBASE)/docs/html/odbc.html
+
+default: $(DRIVER) $(DRVDOC)
 
 $(DRIVER): $(ARCH_OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(FMODE_OBJ) $(LIBES) $(ODBCLIB) $(MATHLIB) $(XDRLIB) $(ICONVLIB)
 
+$(DRVDOC): odbc.html
+	$(INSTALL) -m 644 odbc.html $(DRVDOC)

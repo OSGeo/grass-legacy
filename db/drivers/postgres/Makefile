@@ -18,8 +18,13 @@ OBJS = $(subst .c,.o,$(wildcard *.c))
 	
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 
-default: $(DRIVER)
+DRVDOC=$(GISBASE)/docs/html/pg.html
+
+default: $(DRIVER) $(DRVDOC)
 
 $(DRIVER): $(ARCH_OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(FMODE_OBJ) $(PQLIBPATH) $(LIBES) $(TCLTKLIBPATH) $(TCLTKLIBS) \
 		$(MATHLIB) $(XDRLIB)
+
+$(DRVDOC): pg.html
+	$(INSTALL) -m 644 pg.html $(DRVDOC)

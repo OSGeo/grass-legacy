@@ -17,7 +17,7 @@
 GRASS can use various RDBMS and embeded databases. 
 SQL queries are directly passed to the underlying 
 database system. 
-The set of supported SQL commnads depends on the RDMBS 
+The set of supported SQL commands depends on the RDMBS 
 and driver selected.  
 
 <H2>Drivers</H2>  
@@ -25,12 +25,12 @@ The list of available drivers can vary in various binary
 distributions of GRASS. 
 <p>
 <table border=1 >
-<tr><td><a href=dbf.html>dbf</a></td><td>DBF files. Data are stored in DBF files.</td><td>&nbsp;</td></tr>
-<tr><td>sqlite</a></td><td>SQLite embeded database.</td><td><a href="http://sqlite.org/">http://sqlite.org/</a></td></tr>
-<tr><td>pg</a></td><td>PostgreSQL RDBMS.</td><td><a href="http://postgresql.org/">http://postgresql.org/</a></td></tr>
-<tr><td><a href=mysql.html>mysql</a></td><td>MySQL RDBMS.</td><td><a href="http://mysql.org/">http://mysql.org/</a></td></tr>
-<tr><td><a href=mesql.html>mesql</a></td><td>MySQL embeded database.</td><td><a href="http://mysql.org/">http://mysql.org/</a></td></tr>
-<tr><td>odbc</td><td>UnixODBC.</td><td><a href="http://www.unixodbc.org/">http://www.unixodbc.org/</a></td></tr>
+<tr><td><a href="dbf.html">dbf</a></td><td>DBF files. Data are stored in DBF files.</td><td><a href="http://shapelib.maptools.org/dbf_api.html">http://shapelib.maptools.org/dbf_api.html</a></td></tr>
+<tr><td><a href="sqlite.html">sqlite</a></a></td><td>SQLite embedded database.</td><td><a href="http://sqlite.org/">http://sqlite.org/</a></td></tr>
+<tr><td><a href="pg.html">pg</a></td><td>PostgreSQL RDBMS.</td><td><a href="http://postgresql.org/">http://postgresql.org/</a></td></tr>
+<tr><td><a href="mysql.html">mysql</a></td><td>MySQL RDBMS.</td><td><a href="http://mysql.org/">http://mysql.org/</a></td></tr>
+<tr><td><a href="mesql.html">mesql</a></td><td>MySQL embedded database.</td><td><a href="http://mysql.org/">http://mysql.org/</a></td></tr>
+<tr><td><a href="odbc.html">odbc</a></td><td>UnixODBC.</td><td><a href="http://www.unixodbc.org/">http://www.unixodbc.org/</a></td></tr>
 
 </table>
 
@@ -100,6 +100,10 @@ d.vect roads where="(cat/3*(cat+1))&gt;8"
 d.vect roads where="cat&gt;exprtest"
 </pre></div>
 </p>
+
+<h2>SEE ALSO</h2>
+
+<a href="database.html">database modules</a>
 
 <p><i>Last changed: $Date$</i>
 <HR>
