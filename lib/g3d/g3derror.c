@@ -2,8 +2,12 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <time.h>
+#include <stdarg.h>
 #include <rpc/types.h>
 #include <rpc/xdr.h>
+#include <grass/gis.h>
+
 #include "G3d_intern.h"
 
 /*---------------------------------------------------------------------------*/
@@ -49,28 +53,24 @@ G3d_printError  (char *msg)
  * \brief 
  *
  *  This function prints the
- * error message <em>msg</em> to <em>stderr</em>, flushes <em>stdout</em> 
- * and <em>stderr</em>, and terminates the program with a segementation fault.
+ * error message <em>msg</em>, and terminates the program with an error status.
  *
  *  \param 
  *  \return void
  */
 
 void
-G3d_fatalError  (char *msg)
+G3d_fatalError  (char *msg, ...)
 
 {
-  void (*x) () = NULL;
+    char buffer[2000];  /* No novels to the error logs, OK? */
+    va_list ap;
 
-  fprintf (stderr, "FATAL ERROR: ");
-  fprintf (stderr, msg);
-  fprintf (stderr, "\n");
+    va_start(ap,msg);
+    vsprintf(buffer,msg,ap);
+    va_end(ap);
 
-  fflush (stdout);
-  fflush (stderr);
-
-  exit (1);
-  x ();
+    G_fatal_error (buffer);
 }
 
 void
