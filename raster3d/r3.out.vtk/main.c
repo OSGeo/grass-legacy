@@ -247,7 +247,7 @@ void CheckInputMaps()
     if (param.input->answers != NULL) {
 	for (i = 0; param.input->answers[i] != NULL; i++) {
 	    if (NULL == G_find_grid3(param.input->answers[i], ""))
-		G3d_fatalError(_("Requested g3d data map not found"));
+		G3d_fatalError(_("Requested g3d data map <%s> not found"), param.input->answers[i]);
 	}
     }
 
@@ -256,7 +256,7 @@ void CheckInputMaps()
 	if (param.rgbmaps->answers[i] != NULL) {
 	    for (i = 0; i < 3; i++) {
 		if (NULL == G_find_grid3(param.rgbmaps->answers[i], ""))
-		    G3d_fatalError(_("Requested g3d RGB map not found"));
+		    G3d_fatalError(_("Requested g3d RGB map <%s> not found"), param.rgbmaps->answers[i]);
 	    }
 	}
 	else {
@@ -266,10 +266,10 @@ void CheckInputMaps()
 
     if (param.input->answers == NULL && param.rgbmaps->answers == NULL) {
 	G_warning
-	    ("No g3d data or RGB maps are provided! Will only write the geometry.");
+	    (_("No g3d data or RGB maps are provided! Will only write the geometry."));
     }
 
-    return;
+    return ;
 }
 
 
