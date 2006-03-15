@@ -314,7 +314,7 @@ int G3d_readDoubles(int, int, double *, int);
 /* grass/src/libes/g3d/g3derror.c */
 void G3d_skipError(char *);
 void G3d_printError(char *);
-void G3d_fatalError(char *);
+void G3d_fatalError(char *, ...);
 void G3d_error(char *);
 /* grass/src/libes/g3d/g3dfpxdr.c */
 int G3d_isXdrNullNum(unsigned char *, int);
