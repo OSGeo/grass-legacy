@@ -58,6 +58,9 @@ GPL'ed), image processing and geographic information system (GIS).
   <li><a href="raster3dintro.html">3D raster map (voxel) processing</a></li>
   <li><a href="imageryintro.html">Image processing</a></li>
   <li><a href="vectorintro.html">Vector map processing and network analysis</a></li>
+  <li><a href="sql.html">SQL support</a></li>
+  <li><a href="displaydrivers.html">Display drivers</a></li>
+  <li><a href="variables.html">GRASS variables and environment variables</a></li>
  </ul>
 </ul>
 <P>
@@ -116,15 +119,6 @@ if [ $? -eq 1 ] ; then
 fi
 
 FULLINDEX=full_index.html
-
-#hardcoded list of notes etc:
-NOTESLIST="sql"
-
-#hardcoded list of drivers etc:
-DRIVERLIST="displaydrivers"
-
-#hardcoded list of variables etc:
-VARIABLES="variables"
 
 ################
 
@@ -244,42 +238,6 @@ echo "<li><a href=\"xganim.html\">xganim</a> tool  for animating a raster map se
 echo "</ul>" >> $FILENAME
 echo "<p>"   >> $FILENAME
 
-#notes:
-echo "<b>Notes sections:</b>" >> $FILENAME
-echo "<ul>" >> $FILENAME
-#for all notes:
-for k in $NOTESLIST
-do 
-  echo "<li><a href=\"$k.html\">$k notes</a>" >> $FILENAME
-done
-echo "</ul>" >> $FILENAME
-echo "<p>"   >> $FILENAME
-
-#############
-#drivers:
-
-echo "<b>Drivers sections:</b>" >> $FILENAME
-echo "<ul>" >> $FILENAME
-#for all drivers:
-for k in $DRIVERLIST
-do 
-  echo "<li><a href=\"$k.html\">$k notes</a>" >> $FILENAME
-done
-echo "</ul>" >> $FILENAME
-echo "<p>"   >> $FILENAME
-
-#############
-#variables:
-
-echo "<b>GRASS variables and environment variables:</b>" >> $FILENAME
-echo "<ul>" >> $FILENAME
-#for all drivers:
-for k in $VARIABLES
-do 
-  echo "<li><a href=\"$k.html\">$k notes</a>" >> $FILENAME
-done
-echo "</ul>" >> $FILENAME
-echo "<p>"   >> $FILENAME
 
 #############
 write_html_footer $FILENAME index.html
