@@ -489,6 +489,9 @@ int Nnew_map_obj_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
     }
     new_id = GP_new_site();
 
+/* ACS_MODIFY One line (added) - site_attr management **************************/
+	site_attr_init(new_id);
+
     /* See if there is a default file name specified */
     if ((argc >= 3) && (strncmp(argv[2], "name=", 5))) {
         arglist[2] = argv[2];
@@ -1592,17 +1595,29 @@ int get_att(int id, int type, Nv_data * data, Tcl_Interp * interp, int argc,
         Tcl_SetResult(interp, temp, TCL_VOLATILE);
         break;
         case SV_ATT_USEATT:
-        switch (atmod) {
-        case ST_ATT_SIZE:
-            sprintf(temp, "z");
-            break;
-        case ST_ATT_COLOR:
-            sprintf(temp, "color");
-            break;
-        case ST_ATT_NONE:
-            sprintf(temp, "none");
-        }
-        Tcl_SetResult(interp, temp, TCL_VOLATILE);
+/*** ACS_MODIFY BEGIN - site_attr management ***********************************/
+/* BEGIN original code
+		switch (atmod) {
+		case ST_ATT_SIZE:
+		    sprintf(temp, "z");
+		    break;
+		case ST_ATT_COLOR:
+		    sprintf(temp, "color");
+		    break;
+		case ST_ATT_NONE:
+		    sprintf(temp, "none");
+		}
+		Tcl_SetResult(interp, temp, TCL_VOLATILE);
+  END original code*/
+		{
+			geosite *gp;
+			if (gp = gp_get_site(id)) {
+				if (TCL_OK != site_attr_get(interp, gp, atoi(argv[3])))
+					return (TCL_ERROR);
+			}
+			/* result should be in interp */
+		}
+/*** ACS_MODIFY END - site_attr management *************************************/
 
         break;
         case SV_ATT_DISPLAY:
@@ -1710,7 +1725,6 @@ int set_att(int id, int type, Nv_data * data, Tcl_Interp * interp, int argc,
     else {
 
 	    G_debug(3, "Loading attribute map %s\n", argv[3]);
-
 	    ret = GS_load_att_map(id, argv[3], att);
     }
 
@@ -1816,10 +1830,37 @@ int set_att(int id, int type, Nv_data * data, Tcl_Interp * interp, int argc,
         marker =
         (strcmp(argv[2], "marker")) ? marker :
         get_int_marker(argv[3]);
-        useatt =
-        (strcmp(argv[2], "useatt")) ? useatt : (!strcmp(argv[3], "z"))
-        ? ST_ATT_SIZE : ((!strcmp(argv[3], "color")) ? ST_ATT_COLOR :
-                 ST_ATT_NONE);
+
+/*** ACS_MODIFY BEGIN - site_attr management ***********************************/
+/* This let the points of the sites be related to associated (if any)
+	database fields */
+
+/* Original code: this lacks of or-ing more than an att and we need to call
+	a function that prepares the parameters
+		useatt =
+		(strcmp(argv[2], "useatt")) ? useatt : (!strcmp(argv[3], "z"))
+		? ST_ATT_SIZE : ((!strcmp(argv[3], "color")) ? ST_ATT_COLOR :
+				 ST_ATT_NONE);
+*/
+
+
+		if (!strcmp(argv[2], "useatt")) {
+			geosite *gp;
+			if (gp = gp_get_site(id)) {
+
+				if (TCL_OK != site_attr_set(interp, gp, atoi(argv[3]), argv[4], atoi(argv[5]), argv[6], argv[7]))
+					return (TCL_ERROR);
+
+				if (!strcmp(argv[3], "size")) {
+					useatt |= ST_ATT_SIZE;
+				} else if (!strcmp(argv[3], "color")) {
+					useatt |= ST_ATT_COLOR;
+				} else if (!strcmp(argv[3], "marker")) {
+					useatt |= ST_ATT_MARKER;
+				}
+			}
+		}
+/*** ACS_MODIFY END - site_attr management *************************************/
 
         GP_set_sitemode(id, useatt, col, width, size, marker);
     }
@@ -1879,6 +1920,31 @@ int unset_att(int id, int type, Tcl_Interp * interp, int argc, char *argv[])
     int att;
 
     att = att_atoi(argv[2]);
+    
+/*** ACS_MODIFY 1.0 BEGIN - site_attr management *******************************/
+    int col, width, marker, useatt;
+	float size;
+
+	if (type == SITE) {
+		if (!strcmp(argv[2], "useatt") && argc == 5) {
+		    GP_get_sitemode(id, &useatt, &col, &width, &size, &marker);
+			geosite *gp;
+			if (gp = gp_get_site(id)) {
+				site_attr_unset(interp, gp, atoi(argv[3]), argv[4]);
+
+				if (!strcmp(argv[3], "size")) {
+					useatt &= ~ST_ATT_SIZE;
+				} else if (!strcmp(argv[3], "color")) {
+					useatt &= ~ST_ATT_COLOR;
+				} else if (!strcmp(argv[3], "marker")) {
+					useatt &= ~ST_ATT_MARKER;
+				}
+			}
+		    GP_set_sitemode(id, useatt, col, width, size, marker);
+		}
+		return TCL_OK;
+	}
+/*** ACS_MODIFY 1.0 END - site_attr management *********************************/
 
     if (type != SURF) {
     Tcl_SetResult(interp, "Type must be SURF for unset_att",
@@ -2062,6 +2128,11 @@ int get_char_marker(int m, char *marker)
     case ST_GYRO:
     sprintf(marker, "gyro");
     break;
+/*** ACS_MODIFY BEGIN - site_attr management ***********************************/
+    case ST_HISTOGRAM:
+    sprintf(marker, "histogram");
+    break;
+/*** ACS_MODIFY END - site_attr management *************************************/
     default:
     /* This is the equivalent of returning a NULL to tcl */
     sprintf(marker, "");
@@ -2105,6 +2176,11 @@ int get_int_marker(char *marker)
     else if (!strcmp(marker, "gyro")) {
     return (ST_GYRO);
     }
+/*** ACS_MODIFY BEGIN - site_attr management ***********************************/
+    else if (!strcmp(marker, "histogram")) {
+    return (ST_HISTOGRAM);
+    }
+/*** ACS_MODIFY END - site_attr management *************************************/
     else {
     return (-1);
     }
