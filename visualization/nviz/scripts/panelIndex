@@ -12,3 +12,6 @@ sdiff
 label
 scale
 pos
+resize
+pick
+highlight
