@@ -102,7 +102,7 @@ int G_fatal_error ( char *msg,...)
 
     if ( ext_error ) return 0; /* do not exit error routine is specified */
     
-    exit (1);
+    exit (EXIT_FAILURE);
 }
 
 int G_warning ( char *msg, ...)
