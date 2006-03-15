@@ -181,12 +181,33 @@ typedef struct g_vect{
     void *clientdata;
 } geovect;
 
+/* ACS_MODIFY one line site_attr ***********************************************/
+#define GPT_MAX_ATTR 8
+
 typedef struct g_point{
     int dims;
     Point3 p3;
     float fattr; /* may want to make these pointers or arrays for mult atts */
     int iattr;
     char *cattr;
+
+/* ACS_MODIFY_BEGIN site_attr **************************************************/
+    int cat;
+	int color[GPT_MAX_ATTR];
+    float size[GPT_MAX_ATTR];
+    int marker[GPT_MAX_ATTR];
+/* ACS_MODIFY_END site_attr ****************************************************/
+
+/* ACS_MODIFY_BEGIN highlight **************************************************/
+	int highlight_color;
+	int highlight_size;
+	int highlight_marker;
+
+	int highlight_color_value;
+	float highlight_size_value;
+	int highlight_marker_value;
+/* ACS_MODIFY_END highlight ****************************************************/
+
     struct g_point *next;
 } geopoint;
 
@@ -197,6 +218,10 @@ typedef struct g_site{
     int color, width, marker, use_z, use_mem;
     int has_z, has_att;  /* set when file loaded */
     int attr_mode; /* ST_ATT_COLOR, ST_ATT_MARKER, ST_ATT_SIZE, ST_ATT_NONE */
+
+/* ACS_MODIFY OneLine site_attr ************************************************/
+    int use_attr[GPT_MAX_ATTR]; /* ST_ATT_COLOR, ST_ATT_MARKER, ST_ATT_SIZE, ST_ATT_NONE, for multiple attr's */
+
     char filename[NAME_SIZ];
     transform attr_trans;
     float size;
