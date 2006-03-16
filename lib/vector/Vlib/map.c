@@ -21,6 +21,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <fcntl.h>
 #include <grass/glocale.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
@@ -83,6 +84,44 @@ Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
     return ret;
 }
 
+/* Copy file
+ * returns 0 OK
+ *         1 error
+ */
+int
+copy_file(const char *src, const char *dst)
+{
+    char buf[1024];
+    int fd, fd2;
+    FILE *f2; 
+    unsigned int len, len2;
+
+    if((fd = open(src, O_RDONLY)) < 0) return 1;
+    
+    /* if((fd2 = open(dst, O_CREAT|O_TRUNC|O_WRONLY)) < 0) */
+    if((f2 = fopen(dst, "w")) == NULL)
+    {
+        close(fd);
+        return 1;
+    }   
+
+    fd2 = fileno(f2);
+
+    while((len = read(fd, buf, 1024)) > 0)
+    {
+        while(len && (len2 = write(fd2, buf, len)) >= 0)
+           len -= len2;
+    }
+
+    close(fd);
+    /* close(fd2); */
+    fclose(f2);
+
+    if ( len == -1 || len2 == -1  ) return 1;
+
+    return 0;
+}
+
 /*!
  \fn int Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
  \brief copy a map including attribute tables
@@ -98,8 +137,13 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
     int i, n, ret, type;
     struct Map_info In, Out;
     struct field_info *Fi, *Fin;
-    char   old_path[1000], new_path[1000], cmd[2000]; 
+    char   old_path[1000], new_path[1000], buf[1000]; 
     struct stat info;
+    char *files[] = { GRASS_VECT_FRMT_ELEMENT, GRASS_VECT_COOR_ELEMENT,
+                      GRASS_VECT_HEAD_ELEMENT, GRASS_VECT_HIST_ELEMENT,
+                      GV_TOPO_ELEMENT, GV_SIDX_ELEMENT, GV_CIDX_ELEMENT,
+                      NULL };
+      
     dbDriver *driver;
 
     G_debug (2, "Copy vector '%s' in '%s' to '%s'", in, mapset, out );
@@ -119,23 +163,30 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
 
     /* Copy the directory */
     G__make_mapset_element ( GRASS_VECT_DIRECTORY );
-    G__file_name (old_path, GRASS_VECT_DIRECTORY, in, mapset );
-    G__file_name (new_path, GRASS_VECT_DIRECTORY, out, G_mapset() );
-    sprintf ( cmd, "cp -r '%s' '%s'", old_path, new_path );
-    G_debug (2, "system: %s", cmd );
-    ret = system ( cmd );
+    sprintf ( buf, "%s/%s", GRASS_VECT_DIRECTORY, out );
+    G__make_mapset_element ( buf );
 
-    if  (ret != 0 ) {
-	G_warning ( "Cannot copy vector" );
-        return -1;
+    i = 0;
+    while ( files[i] )
+    {
+        sprintf ( buf, "%s/%s", in, files[i] );
+	G__file_name (old_path, GRASS_VECT_DIRECTORY, buf, mapset );
+        sprintf ( buf, "%s/%s", out, files[i] );
+	G__file_name (new_path, GRASS_VECT_DIRECTORY, buf, G_mapset() );
+
+        if ( stat (old_path, &info) == 0)       /* file exists? */
+        {
+           G_debug (0, "copy %s to %s", old_path, new_path );
+            if ( copy_file ( old_path, new_path ) )
+            {
+	        G_warning ( "Cannot copy vector file '%s' to '%s'", old_path, new_path );
+            }
+        }
+        i++;
     }
 
-    /* remove dbln */
-    sprintf (old_path, "%s/%s", GRASS_VECT_DIRECTORY, out);
-    G__file_name ( new_path, old_path, GRASS_VECT_DBLN_ELEMENT, G_mapset ());
-
-    if (stat (new_path, &info) == 0)      /* file exists? */
-	unlink (new_path);
+    G__file_name (old_path, GRASS_VECT_DIRECTORY, in, mapset );
+    G__file_name (new_path, GRASS_VECT_DIRECTORY, out, G_mapset() );
 
     /* Open input */
     Vect_set_open_level (1);
