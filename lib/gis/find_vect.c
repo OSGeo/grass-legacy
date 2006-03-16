@@ -27,32 +27,12 @@ char *
 G_find_vector  (char *name, char *mapset)
 
 {
-	char buf[200], buf2[200], xname[512], xmapset[512];
-
-        if (G__name_is_fully_qualified (name, xname, xmapset)) {
-	    sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, xname);
-	    sprintf (buf2, "%s@%s", GRASS_VECT_HEAD_ELEMENT, xmapset);
-        } else {
-	    sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, name);
-	    sprintf (buf2, "%s", GRASS_VECT_HEAD_ELEMENT);
-        }
-	
-	return G_find_file (buf, buf2, mapset);
+	return G_find_file ( GRASS_VECT_DIRECTORY, name, mapset);
 }
 
 char *
 G_find_vector2  (char *name, char *mapset)
 
 {
-	char buf[200], buf2[200], xname[512], xmapset[512];
-
-        if (G__name_is_fully_qualified (name, xname, xmapset)) {
-	    sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, xname);
-	    sprintf (buf2, "%s@%s", GRASS_VECT_HEAD_ELEMENT, xmapset);
-        } else {
-	    sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, name);
-	    sprintf (buf2, "%s", GRASS_VECT_HEAD_ELEMENT);
-        }
-	
-	return G_find_file2 (buf, buf2, mapset);
+	return G_find_file2 (GRASS_VECT_DIRECTORY, name, mapset);
 }
