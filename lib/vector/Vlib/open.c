@@ -193,8 +193,7 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
   /* Read vector head */
   if ( Vect__read_head (Map) != GRASS_OK ) {
       sprintf ( errmsg, _("Cannot open old vector %s on level %d"), Vect_get_full_name(Map), level_request ); 
-      fatal_error (ferror, errmsg);
-      return -1;
+      G_warning ( "Cannot read head file." );
   }
   
   G_debug ( 1, "Level request = %d", level_request);
