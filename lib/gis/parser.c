@@ -474,6 +474,7 @@ int G_parser (int argc, char **argv)
 	char *ptr ;
 	int i;
 	struct Option *opt ;
+	char force_gui = FALSE;
 
 	error = 0 ;
 	need_first_opt = 1 ;
@@ -613,19 +614,21 @@ int G_parser (int argc, char **argv)
 			return -1;
 		}
 
-		/* If first arg is "--ui" then run G_gui() */
-		if (strcmp(argv[1],"--ui") == 0)
-		{
-			G_gui();
-			return -1;
-		}
-
 		/* If first arg is "--tcltk" then then generate
 		 * code for tcltkgrass */
 		if (strcmp(argv[1],"--tcltk") == 0)
 		{
 			G_tcltk();
 			exit(0);
+		}
+
+		/* If first arg is "--ui" then run G_gui() */
+		/* Do so after parsing any answers on the command line */
+		if (strcmp(argv[1],"--ui") == 0)
+		{
+			force_gui = TRUE;
+			++argv;
+			--argc;
 		}
 
 		/* Loop thru all command line arguments */
@@ -660,7 +663,7 @@ int G_parser (int argc, char **argv)
 				need_first_opt = 0 ;
 			}
 
-  	        /* If we see the non valid argument (no "=", just argument) */
+			/* If we see the non valid argument (no "=", just argument) */
 			else if (contains(ptr, '=') == 0)
 			{
 				fprintf(stderr, _("Sorry <%s> is not a valid option\n"), ptr);
@@ -668,6 +671,12 @@ int G_parser (int argc, char **argv)
 			}
 
 		}
+	}
+
+	/* Run the gui if it was specifically requested */
+	if (force_gui) {
+		G_gui();
+		return -1;
 	}
 
 	/* Split options where multiple answers are OK */
@@ -1349,6 +1358,7 @@ static void generate_tcl(FILE *fp)
 			fprintf(fp, "add_flag %d {\n", optn);
 			fprintf(fp, " name {%c}\n", flag->key);
 			fprintf(fp, " desc {%s}\n", flag->description);
+			fprintf(fp, " answer %d\n", flag->answer);
 			/* It should be up to the gui as to what
 			   to do with the label and description */
 			fprintf(fp, " label {%s}\n", flag->label ? flag->label : "");
