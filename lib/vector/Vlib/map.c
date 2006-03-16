@@ -337,48 +337,57 @@ Vect_delete ( char *map )
 	return -1;
     }
 
-    /* Open input */
-    Vect_set_open_level (1); /* Topo not needed */
-    ret = Vect_open_old_head (&Map, map, G_mapset());
-    if ( ret < 1 ) {
-	G_warning ( "Cannot open vector %s", map );
-	return -1;
-    }
+    sprintf ( buf, "%s/%s/%s/%s/%s/%s", G_gisdbase(), G_location(), 
+              G_mapset(), GRASS_VECT_DIRECTORY, map, 
+              GRASS_VECT_DBLN_ELEMENT );
 
-    /* Delete all tables, NOT external (OGR) */
-    if ( Map.format == GV_FORMAT_NATIVE ) {
+    G_debug (1, "dbln file: %s", buf);  
 
-	n = Vect_get_num_dblinks ( &Map );
-	for ( i = 0; i < n; i++ ) {
-	    Fi = Vect_get_dblink ( &Map, i );
-	    if ( Fi == NULL ) {
-		G_warning ( "Cannot get db link info" );
-		Vect_close ( &Map );
-		return -1;
-	    }
-	    G_debug (3, "Delete drv:db:table '%s:%s:%s'", Fi->driver, Fi->database, Fi->table);
-	    
-	    ret = db_table_exists ( Fi->driver, Fi->database, Fi->table );
-	    if ( ret == -1 ) {
-		G_warning ( "Cannot get info if table '%s' linked to vector exists.", Fi->table );
-		Vect_close ( &Map );
-		return -1;
-            }
-	    
-	    if ( ret == 1 ) {
-		ret = db_delete_table ( Fi->driver, Fi->database, Fi->table );
-		if ( ret == DB_FAILED ) {
-		    G_warning ( "Cannot delete table" );
+    if ( access(buf,F_OK) == 0 )
+    {
+	/* Open input */
+	Vect_set_open_level (1); /* Topo not needed */
+	ret = Vect_open_old_head (&Map, map, G_mapset());
+	if ( ret < 1 ) {
+	    G_warning ( "Cannot open vector %s", map );
+	    return -1;
+	}
+
+	/* Delete all tables, NOT external (OGR) */
+	if ( Map.format == GV_FORMAT_NATIVE ) {
+
+	    n = Vect_get_num_dblinks ( &Map );
+	    for ( i = 0; i < n; i++ ) {
+		Fi = Vect_get_dblink ( &Map, i );
+		if ( Fi == NULL ) {
+		    G_warning ( "Cannot get db link info" );
 		    Vect_close ( &Map );
 		    return -1;
 		}
-	    } else {
-		G_warning ( "Table '%s' linked to vector did not exist.", Fi->table );
+		G_debug (3, "Delete drv:db:table '%s:%s:%s'", Fi->driver, Fi->database, Fi->table);
+		
+		ret = db_table_exists ( Fi->driver, Fi->database, Fi->table );
+		if ( ret == -1 ) {
+		    G_warning ( "Cannot get info if table '%s' linked to vector exists.", Fi->table );
+		    Vect_close ( &Map );
+		    return -1;
+		}
+		
+		if ( ret == 1 ) {
+		    ret = db_delete_table ( Fi->driver, Fi->database, Fi->table );
+		    if ( ret == DB_FAILED ) {
+			G_warning ( "Cannot delete table" );
+			Vect_close ( &Map );
+			return -1;
+		    }
+		} else {
+		    G_warning ( "Table '%s' linked to vector did not exist.", Fi->table );
+		}
 	    }
 	}
+	    
+	Vect_close ( &Map );
     }
-	
-    Vect_close ( &Map );
 
     /* Delete all files from vector/name directory */
     sprintf ( buf, "%s/%s/vector/%s", G_location_path(), G_mapset(), map );
