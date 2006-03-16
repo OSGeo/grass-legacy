@@ -37,7 +37,7 @@ int Nget_to_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
 
 
     interp->result = Tcl_Merge(3, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
     return (TCL_OK);
 }
 
@@ -62,7 +62,7 @@ int Nget_from_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
 
 
     interp->result = Tcl_Merge(3, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
 
 
     return (TCL_OK);
@@ -459,7 +459,7 @@ int Nget_fov_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
     list[0] = fov_name;
     list[1] = NULL;
     interp->result = Tcl_Merge(1, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
 
 
     return (TCL_OK);
@@ -498,7 +498,7 @@ int Nget_twist_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. 
     list[0] = twist_name;
     list[1] = NULL;
     interp->result = Tcl_Merge(1, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
 
     return (TCL_OK);
 }
@@ -525,7 +525,7 @@ int Nget_region_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter.
     list[4] = NULL;
 
     interp->result = Tcl_Merge(4, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
 
     return (TCL_OK);
 }
@@ -551,7 +551,7 @@ int Nget_point_on_surf_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
     if (!GS_get_selected_point_on_surface(sx, sy, &id, &x, &y, &z)) {
 	list[0] = NULL;
 	interp->result = Tcl_Merge(0, list);
-	interp->freeProc = (Tcl_FreeProc *) free;
+	interp->freeProc = TCL_DYNAMIC;
 
 	return (TCL_OK);
     }
@@ -568,7 +568,7 @@ int Nget_point_on_surf_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
     list[4] = NULL;
 
     interp->result = Tcl_Merge(4, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
 
     return (TCL_OK);
 
@@ -600,7 +600,7 @@ int Nget_point_on_surf_vect (Nv_data *data, Tcl_Interp *interp, int argc, char *
     if (!GS_get_selected_point_on_surface(sx, sy, &id, &x, &y, &z)) {
 	list[0] = NULL;
 	interp->result = Tcl_Merge(0, list);
-	interp->freeProc = (Tcl_FreeProc *) free;
+	interp->freeProc = TCL_DYNAMIC;
 
 	return (TCL_OK);
     }
@@ -618,7 +618,7 @@ int Nget_point_on_surf_vect (Nv_data *data, Tcl_Interp *interp, int argc, char *
     list[5] = NULL;
 
     interp->result = Tcl_Merge(5, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
 
     return (TCL_OK);
 
@@ -791,7 +791,7 @@ int Nget_zrange_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter.
 
 
     interp->result = Tcl_Merge(2, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
     return (TCL_OK);
 }
 
@@ -834,7 +834,7 @@ int Nget_zextents_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interprete
     list[3] = NULL;
 
     interp->result = Tcl_Merge(3, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
 
     return (TCL_OK);
 }

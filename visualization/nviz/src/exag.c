@@ -128,7 +128,7 @@ int Nget_height_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter.
     list[2] = max;
     list[3] = NULL;
     interp->result = Tcl_Merge(3, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
 
     return TCL_OK;
 

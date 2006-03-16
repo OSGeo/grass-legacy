@@ -241,7 +241,7 @@ int Nset_Narrow_cmd(Nv_data * data, Tcl_Interp * interp,        /* Current inter
     list[3] = NULL;
 
     interp->result = Tcl_Merge(3, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
 
     return (TCL_OK);
 }

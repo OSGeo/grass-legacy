@@ -49,7 +49,7 @@ int isosurf_get_res(int id, Tcl_Interp *interp, int argc, char *argv[])
     list[3] = NULL;
 
     interp->result = Tcl_Merge(3, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
 
     return (TCL_OK);
 }
@@ -449,7 +449,7 @@ int slice_get_res(int id, Tcl_Interp *interp, int argc, char *argv[])
     list[3] = NULL;
 
     interp->result = Tcl_Merge(3, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
 
     return (TCL_OK);
 }
@@ -569,7 +569,7 @@ int slice_get_pos(int id, Tcl_Interp *interp, int argc, char *argv[])
     list[7] = NULL;
 
     interp->result = Tcl_Merge(7, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
 
     return (TCL_OK);
 }
