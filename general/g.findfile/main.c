@@ -41,7 +41,7 @@ int main( int   argc, char *argv[])
 	opt3->description= "Name of an existing map" ;
 
 	if (G_parser(argc, argv))
-		exit(-1);
+		exit(EXIT_FAILURE);
 
 	search_mapset = opt2->answer ;
 	if(strcmp (".", search_mapset) == 0)
