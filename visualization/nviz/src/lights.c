@@ -121,7 +121,7 @@ static int getlgt_ambient(Nv_data * data, Tcl_Interp * interp, int argc,	/* Numb
     list[3] = NULL;
 
     interp->result = Tcl_Merge(3, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
     return (TCL_OK);
 }
 
@@ -142,7 +142,7 @@ static int getlgt_color(Nv_data * data, Tcl_Interp * interp, int argc,	/* Number
     list[3] = NULL;
 
     interp->result = Tcl_Merge(3, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
     return (TCL_OK);
 }
 
@@ -166,7 +166,7 @@ static int getlgt_position(Nv_data * data, Tcl_Interp * interp, int argc,	/* Num
     list[4] = NULL;
 
     interp->result = Tcl_Merge(4, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
     return (TCL_OK);
 }
 
