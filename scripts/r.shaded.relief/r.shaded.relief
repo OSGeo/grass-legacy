@@ -123,7 +123,10 @@ zmult=$GIS_OPT_zmult
 scale=$GIS_OPT_scale
 
 eval `g.findfile element=cell file=$elev`
-elev=$GIS_OPT_map
+if [ "$name" = "" ] ; then
+   echo "ERROR: map <$elev> not found."
+   exit 1
+fi
 
 if [ "$GIS_OPT_map" = "$GIS_OPT_shadedmap" ]; then
 	echo ""
@@ -134,7 +137,7 @@ fi
 if [ -z "$GIS_OPT_shadedmap" ]; then
     ELEVSHADE=$elev"_shade"
 else
-	ELEVSHADE=$GIS_OPT_shadedmap
+    ELEVSHADE=$GIS_OPT_shadedmap
 fi
 
 if test $alt -lt 0 -o $alt -gt 90
