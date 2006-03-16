@@ -87,6 +87,17 @@ Vect__read_head (struct Map_info *Map)
     char buff[2001];
     char *ptr;
 
+    /* Reset / init */
+    Vect_set_organization ( Map, "" );  
+    Vect_set_date ( Map, "" );  
+    Vect_set_person ( Map, "" );  
+    Vect_set_map_name ( Map, "" );  
+    Vect_set_map_date ( Map, "" );  
+    Vect_set_scale ( Map, 1 );  
+    Vect_set_comment ( Map, "" );  
+    Vect_set_zone ( Map, 0 );  
+    Vect_set_thresh ( Map, 0. );  
+
     G_debug (1, "Vect__read_head(): vector = %s@%s", Map->name, Map->mapset);
     sprintf (buff, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
     head_fp = G_fopen_old (buff, GRASS_VECT_HEAD_ELEMENT, Map->mapset); 
