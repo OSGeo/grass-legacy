@@ -251,6 +251,8 @@ static int list_element( FILE *out, char *element,
     if (!lister && (count % num_cols))
         fprintf(out,"\n");
 
+    fprintf(out, "\n");
+
     if (list)
         G_free(list);
 
