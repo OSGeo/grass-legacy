@@ -122,12 +122,12 @@ fi
 
 #################################
 # unit vector on raw data converted to radians without no data:
-cat ${TMP}_raw | grep -v '^*'| awk 'BEGIN {sum = 0.0}
+cat ${TMP}_raw | grep -v '^*' | grep -v "^${GIS_OPT_undef}$" | awk 'BEGIN {sum = 0.0}
 NR == 1{}
        {sum += cos(3.14159265 * $1 / 180.)}
 END{print sum}' > ${TMP}_cos_sums
 
-cat ${TMP}_raw | grep -v '^*' | awk 'BEGIN {sum = 0.0}
+cat ${TMP}_raw | grep -v '^*' | grep -v "^${GIS_OPT_undef}$" | awk 'BEGIN {sum = 0.0}
 NR == 1{}
        {sum += sin(3.14159265 * $1 / 180.)}
 END{print sum}' > ${TMP}_sin_sums
