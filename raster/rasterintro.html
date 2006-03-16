@@ -36,12 +36,13 @@ reading non-georeferenced data, the imported map will usually have its
 lower-left corner at (0,0) in the location's coordinate system; ther user
 needs to use <a href="r.region.html">r.region</a> to "place" the imported map.
 <P>
-Some programs which need to perform specific types of resampling (e.g. 
-<a href="r.resamp.rst.html">r.resamp.rst</a>) read the input maps at their original resolution then do
-the resampling themselves.
+Some programs which need to perform specific types of resampling (e.g.
+<a href="r.resamp.rst.html">r.resamp.rst</a>) read the input maps at
+their original resolution then do the resampling themselves.
 <P>
-<a href="r.proj.html">r.proj</a> has to deal with two regions (source and destination)
-simultaneously; both will have an impact upon the final result.
+<a href="r.proj.html">r.proj</a> has to deal with two regions (source
+and destination) simultaneously; both will have an impact upon the
+final result.
 
 
 <h3>Raster import</h3>
@@ -70,9 +71,29 @@ performed (nearest neighbor resampling). If this is not desired, the
 input map(s) has/have to be resampled beforehand with one of the dedicated
 modules.
 
+<h3>Raster map statistics</h3>
+
+A couple of commands are available to calculate local statistics
+(<a href="r.neighbors.html">r.neighbors</a>), and global statistics
+(<a href="r.statistics.html">r.statistics</a>, <a href="r.surf.area.html">r.surf.area</a>,
+<a href="r.sum.html">r.sum</a>).  Profiles and transects can be generated
+(<a href="d.profile.html">d.profile</a>, <a href="r.profile.html">r.profile</a>,
+<a href="r.transect.html">r.transect</a>) as well as histograms
+(<a href="d.histogram.html">d.histogram</a>) and polar diagrams
+(<a href="d.polar.html">d.polar</a>).
+
+Univariate statistics (<a href="r.univar.html">r.univar</a>) and
+reports are also available (<a href="r.report.html">r.report</a>,<a
+href="r.stats.html">r.stats</a>, <a href="r.volume.html">r.volume</a>).
+
+<h3>Raster map algebra</h3>
+
+The <a href="r.mapcalc.html">r.mapcalc</a> command provides raster map
+algebra methods.
+
 <h3>Raster map interpolation methods</h3>
 
-GRASS offers various 2D raster interpolation methods:
+GRASS offers various raster interpolation methods:
 
 <ul>
 <li> Inverse distance weighted average (IDW) interpolation</li>
