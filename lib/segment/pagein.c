@@ -53,11 +53,11 @@ int segment_pagein ( SEGMENT *SEG,int n)
 	G_debug(2, "segment_pagein: read_result=%d  SEG->size=%d", read_result, SEG->size);
 
 	if(read_result < 0)
-	    G_warning ("segment_pagein: %s\n", strerror(errno));
+	    G_warning ("segment_pagein: %s", strerror(errno));
 	else if(read_result == 0)
-	    G_warning ("segment_pagein: read EOF\n");
+	    G_warning ("segment_pagein: read EOF");
 	else
-	    G_warning ("segment_pagein: short count during read()\n");
+	    G_warning ("segment_pagein: short count during read(), expected %d, got %d",read_result,SEG->size);
 
 	return -1;
     }
