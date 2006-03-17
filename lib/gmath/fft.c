@@ -2,13 +2,20 @@
 
 #include <grass/config.h>
 
-#if defined(HAVE_FFTW_H) || defined(HAVE_DFFTW_H)
+#if defined(HAVE_FFTW_H) || defined(HAVE_DFFTW_H) || defined(HAVE_FFTW3_H)
 
 #ifdef HAVE_FFTW_H
 #include <fftw.h>
 #endif
+
 #ifdef HAVE_DFFTW_H
 #include <dfftw.h>
+#endif
+
+#ifdef HAVE_FFTW3_H
+#include <fftw3.h>
+#define c_re(c) ((c)[0])
+#define c_im(c) ((c)[1])
 #endif
 
 #include <stdlib.h>
@@ -37,7 +44,11 @@
 
 int fft(int i_sign, double *DATA[2], int NN, int dimc, int dimr)
 {
+#ifdef HAVE_FFTW3_H
+	fftw_plan plan;
+#else
 	fftwnd_plan plan;
+#endif
 	fftw_complex *data;
 	double norm;
 	int i;
@@ -48,10 +59,20 @@ int fft(int i_sign, double *DATA[2], int NN, int dimc, int dimr)
 
 	for (i = 0; i < NN; i++)
 	{
-		data[i].re = DATA[0][i];
-		data[i].im = DATA[1][i];
+		c_re(data[i]) = DATA[0][i];
+		c_im(data[i]) = DATA[1][i];
 	}
 
+#ifdef HAVE_FFTW3_H
+	plan = fftw_plan_dft_2d(
+		dimc, dimr, data, data,
+		(i_sign < 0) ? FFTW_FORWARD : FFTW_BACKWARD,
+		FFTW_ESTIMATE);
+
+	fftw_execute(plan);
+
+	fftw_destroy_plan(plan);
+#else
 	plan = fftw2d_create_plan(
 		dimc, dimr,
 		(i_sign < 0) ? FFTW_FORWARD : FFTW_BACKWARD,
@@ -60,11 +81,11 @@ int fft(int i_sign, double *DATA[2], int NN, int dimc, int dimr)
 	fftwnd_one(plan, data, data);
 
 	fftwnd_destroy_plan(plan);
-
+#endif
 	for (i = 0; i < NN; i++)
 	{
-		DATA[0][i] = data[i].re * norm;
-		DATA[1][i] = data[i].im * norm;
+		DATA[0][i] = c_re(data[i]) * norm;
+		DATA[1][i] = c_im(data[i]) * norm;
 	}
 
 	G_free(data);
