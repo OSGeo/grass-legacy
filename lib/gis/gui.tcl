@@ -1,3 +1,4 @@
+# Read README.GUI !
 
 lappend auto_path $env(GISBASE)/bwidget
 package require -exact BWidget 1.2.1
@@ -9,8 +10,6 @@ set env(MAPSET) [exec g.gisenv get=MAPSET]
 
 set dlg 0
 set path {}
-set imagepath $env(GISBASE)/bwidget/images/
-
 set iconpath $env(GISBASE)/etc/gui/icons/
 
 ################################################################################
@@ -18,22 +17,22 @@ set iconpath $env(GISBASE)/etc/gui/icons/
 
 proc icon {class member} {
 	global iconpath
-	if {$class == "module"} {
+	set name "::img::icon-$class-$member"
+	if {! [catch {image type $name}]} {
+		return $name
+	}
+	if {! [catch {image create photo $name -file "$iconpath/$class-$member.gif"}]} {
+		return $name
+	}
+	if {$class == "module" && $member != ""} {
 		set memberparts [split $member "."]
-		while {$memberparts != {}} {
-			set member [join $memberparts "."]
-			if {! [catch { set icon [image create photo -file "$iconpath/$class-$member.gif"]}]} {
-				return $icon
-			}
-			set memberparts [lrange $memberparts 0 end-1]
-		}
-		return 0
+		# tcl/tk8.0: Can't use end-1
+		set memberparts [lrange $memberparts 0 [expr [llength $memberparts] - 2]]
+		set member [join $memberparts "."]
+		return [icon $class $member]
 	}
-	if {[catch { set icon [image create photo -file "$iconpath/$class-$member.gif"]}]} {
-		return 0
-	} else {
-		return $icon
-	}
+			
+	return 0
 }
 
 # Frame scrolling that works:
@@ -42,6 +41,12 @@ proc handle_scroll {window ammount} {
 		$window yview scroll [expr {-$ammount/120}] units
 	}
 }
+
+# Use the default font instead for balloon help:
+if {[lsearch [font names] balloon-help] == -1} {
+	font create balloon-help -family Helvetica -size -12 -weight bold
+}
+DynamicHelp::configure -font balloon-help -fg black -bg "#FFFF77"
 
 ################################################################################
 
@@ -107,9 +112,17 @@ proc prnout {dlg fh} {
 	set outtext $opt($dlg,outtext)
 
 	if [eof $fh] {
-		close $fh
-		$outtext image create end -image [image create photo -file "$imagepath/info.gif"] 
+		set result [catch {close $fh} error_text]
+		if {$result == 0} {
+			set icon [icon status success]
+		} else {
+			set icon [icon status failure]
+		}
+		if {$icon != 0} {
+			$outtext image create end -image $icon
+		}
 		$outtext insert end " Done.\n"
+		catch {$opt($dlg,run_button) configure -state normal}
 	} else {
 		set str [gets $fh]
 		append str "\n"
@@ -124,12 +137,9 @@ proc prnout {dlg fh} {
 			$outtext insert end $str1
 		}
 		if { [regexp -- {^GRASS_INFO_([^(]+)\(([0-9]+),([0-9]+)\): (.+)$} $str match key message_pid message_id val rest] } {
-			if { $key == "MESSAGE" } {
-				$outtext image create end -image [image create photo -file "$imagepath/info.gif"] 
-			} elseif { $key == "WARNING" } {
-				$outtext image create end -image [image create photo -file "$imagepath/warning.gif"] 
-			} elseif { $key == "ERROR" } {
-				$outtext image create end -image [image create photo -file "$imagepath/error.gif"] 
+			set icon [icon status [string tolower $key]]
+			if {$icon != 0} {
+				$outtext image create end -image $icon
 			}
 			$outtext insert end $val
 		} elseif { [regexp -- {^GRASS_INFO_PERCENT: (.+)$} $str match val rest] } {
@@ -177,7 +187,9 @@ proc run_cmd {dlg} {
 	global opt env
 	
 	set path $opt($dlg,path)
-	$path.nb raise out
+	
+	set title "Output"
+	layout_raise_special_frame $dlg [list $title] $title]
 
 	set outtext $opt($dlg,outtext)
         progress $dlg -1
@@ -194,7 +206,9 @@ proc run_cmd {dlg} {
 	}
 	$outtext insert end "\n"
 	# Put a start icon in the output text
-	$outtext image create end -image [icon gui cmd]
+	if {[set icon [icon module $opt($dlg,pgm_name)]] != 0 } {
+		$outtext image create end -image $icon
+	}
 	$outtext insert end " $cmd_string\n"
 	$outtext yview end
 	set cmd [concat | $cmd 2>@ stdout]
@@ -205,6 +219,7 @@ proc run_cmd {dlg} {
 	if { $ret } {
 		error $fh
 	} {
+		catch {$opt($dlg,run_button) configure -state disabled}
 		fconfigure $fh -blocking 0
 		fileevent $fh readable [list prnout $dlg $fh]
 	}
@@ -243,10 +258,11 @@ proc progress {dlg percent} {
 }
 
 ################################################################################
-# Section based layout
+# Default layout rule:
+# Section based notebook layout
 
 # Make a frame for part of the layout tree
-proc make_frame {dlg guisection} {
+proc layout_make_frame {dlg guisection optn} {
 	global opt
 
 	if {$guisection == {}} {set guisection {{}}}
@@ -258,18 +274,18 @@ proc make_frame {dlg guisection} {
 		if {$label == {}} {
 			set label "Options"
 		}
-		if {! [info exists opt($dlg,first_tab)]} {
-			set opt($dlg,first_tab) $label
-		}
 		set path $opt($dlg,path)
-		# Make a tab
-		set optpane [$path.nb insert end-1 $label -text $label]
+		set optpane [$path.nb insert end $label -text $label]
+		# Specials don't get scrolling frames:
+		if {$optn == -1} {
+			$path.nb raise $label
+			return $optpane
+		}
 		# And the frames and scrollers:
 		set optwin [ScrolledWindow $optpane.optwin -relief sunken -borderwidth 2]
 		set optfra [ScrollableFrame $optwin.fra -height 200]
 		$optwin setwidget $optfra
 		pack $optwin -fill both -expand yes
-		pack $optpane -fill both -expand yes
 
 		# Bindings for scrolling the frame
 		bind all <MouseWheel> "+handle_scroll $optfra %D"
@@ -285,8 +301,9 @@ proc make_frame {dlg guisection} {
 	} else {
 		# Make a frame for things in this guisection
 		# We could add labels, but I fear it would just make a clutter
-		set parent_section [lrange $guisection 0 end-1]
-		set parent_frame [get_frame $dlg $parent_section]
+		# tcl/tk8.0: Can't use end-1
+		set parent_section [lrange $guisection 0 [expr [llength $guisection]-2]]
+		set parent_frame [layout_get_frame $dlg $parent_section $optn]
 		set id [llength [winfo children $parent_frame]]
 		set suf [frame $parent_frame.fra$id]
 		pack $suf -side top -fill x
@@ -294,23 +311,48 @@ proc make_frame {dlg guisection} {
 	}
 }
 
-# Get the frame for a guisection, or make it if it doesn't exist yet
-proc get_frame {dlg guisection} {
+# Get the frame for an option, or make it if it doesn't exist yet
+proc layout_get_frame {dlg guisection optn} {
 	global opt
-	if {! [info exists opt($dlg,section_frame,$guisection)] } {
-		set frame [make_frame $dlg $guisection]
-		set opt($dlg,section_frame,$guisection) $frame
+	if {! [info exists opt($dlg,layout_frame,$guisection)] } {
+		set frame [layout_make_frame $dlg $guisection $optn]
+		set opt($dlg,layout_frame,$guisection) $frame
 	}
-	return $opt($dlg,section_frame,$guisection)
+	return $opt($dlg,layout_frame,$guisection)
+}
+
+proc layout_get_special_frame {dlg guisection key} {
+	return [layout_get_frame $dlg $guisection -1]
+}
+
+proc layout_raise_frame {dlg guisection optn} {
+	global opt
+	set path $opt($dlg,path)
+	if {$guisection == {}} {set guisection {{}}}
+	set label [lindex $guisection 0]
+	if {$label == {}} {
+		set label "Options"
+	}
+	$path.nb raise $label
+}
+
+proc layout_raise_special_frame {dlg guisection key} {
+	layout_raise_frame $dlg $guisection -1
+}
+
+# Make the layout:
+proc make_layout {dlg path root} {
+	# Make the tabs (notebook)
+	set pw [NoteBook $path.nb -side top]
+	pack $pw -fill both -expand yes
 }
 
 ################################################################################
 # Make widgets
 
-proc make_dialog {dlg path root} {
+proc make_module_description {dlg path root} {
 	global opt
 
-	# Module information at the top
 	if {$opt($dlg,label) != {}} {
 		set l1 $opt($dlg,label)
 		set l2 $opt($dlg,desc)
@@ -330,57 +372,60 @@ proc make_dialog {dlg path root} {
 	pack $path.module.r.labdesc1 $path.module.r.labdesc2 -side top -fill x
 	pack $path.module.r -side left -fill x
 	pack $path.module -side top -fill x
+}
 
-	# Make the tabs (notebook)
-	set pw [NoteBook $path.nb -side top]
-	# Make the output text tab and widgets
-	set outpane [$pw insert 1 out -text "Output"]
-	pack $outpane -fill both -expand yes
-	pack $pw -fill both -expand yes
-
-	set outwin [ScrolledWindow $outpane.win -relief sunken -borderwidth 2]
-	set outtext [text $outwin.text -height 5 -width 60] 
-	$outwin setwidget $outtext
-	pack $outwin -expand yes -fill both
-
-	$pw raise out
-
+proc make_command_label {dlg path root} {
 	# Widget for displaying current command
 	frame $path.cmd
 	set cmdlabel [label $path.cmd.label -textvariable opt($dlg,cmd_string) -anchor w -justify left]
 	bind $cmdlabel <Configure> "$cmdlabel configure -wraplength \[winfo width $cmdlabel\]"
-	button $path.cmd.copy -image [icon edit copy] -anchor n -command "show_cmd $dlg\nclipboard clear -displayof $cmdlabel\nclipboard append -displayof $cmdlabel \$opt($dlg,cmd_string)"
+	button $path.cmd.copy -text "Copy" -anchor n -command "show_cmd $dlg\nclipboard clear -displayof $cmdlabel\nclipboard append -displayof $cmdlabel \$opt($dlg,cmd_string)"
+	if {[set icon [icon edit copy]] != 0} {
+		$path.cmd.copy configure -image $icon
+	}
 	pack $path.cmd.copy -side left
 	pack $cmdlabel -fill x -side top
 	pack $path.cmd -expand no -fill x
 
 	# Bindings for updating command
-	bind $root <Button> "+show_cmd $dlg"
-	bind $root <Key> "+show_cmd $dlg"
-	bind $root <ButtonRelease> "+show_cmd $dlg"
-	bind $root <KeyRelease> "+show_cmd $dlg"
-	
+	bind [winfo toplevel $root] <Button> "+show_cmd $dlg"
+	bind [winfo toplevel $root] <Key> "+show_cmd $dlg"
+	bind [winfo toplevel $root] <ButtonRelease> "+show_cmd $dlg"
+	bind [winfo toplevel $root] <KeyRelease> "+show_cmd $dlg"
+}
+
+proc make_output {dlg path root} {
+	global opt
+
+	set title "Output"
+	set outpane [layout_get_special_frame $dlg [list $title] $title]
+	set outwin [ScrolledWindow $outpane.win -relief sunken -borderwidth 2]
+	set outtext [text $outwin.text -height 5 -width 60] 
+	$outwin setwidget $outtext
+	pack $outwin -expand yes -fill both
+	set opt($dlg,outtext) $outtext
+}
+
+proc make_progress {dlg path root} {
+	global opt
+
 	# Progress bar
 	set opt($dlg,percent) -1
         set progress [ProgressBar $path.progress -fg green -height 20 -relief raised -maximum 100 -variable opt($dlg,percent) ]
 	pack $progress -expand no -fill x
-
-
-	set opt($dlg,path) $path
-	set opt($dlg,root) $root
-	set opt($dlg,outtext) $outtext
 	set opt($dlg,progress) $progress
 }
 
-proc add_buttons {dlg} {
+proc make_buttons {dlg path root} {
 	global opt env
-	set path $opt($dlg,path)
 	set pgm_name $opt($dlg,pgm_name)
 
 	button $path.run   -text Run   -command "run_cmd $dlg"
 	button $path.help  -text Help  -command "help_cmd $dlg"
 	button $path.clear -text Clear -command "clear_cmd $dlg"
 	button $path.close -text Close -command "close_cmd $dlg"
+
+	set opt($dlg,run_button) $path.run 
 
 	# Turn off help button if the help file doesn't exist
 	if {! [file exists $env(GISBASE)/docs/html/$pgm_name.html]} {
@@ -391,10 +436,25 @@ proc add_buttons {dlg} {
 		-side left -expand yes -padx 20 -pady 5
 }
 
+proc make_dialog {dlg path root} {
+	make_module_description $dlg $path $root
+	make_layout $dlg $path $root
+	make_command_label $dlg $path $root
+}
+
+proc make_dialog_end {dlg path root} {
+	make_output $dlg $path $root
+	make_progress $dlg $path $root
+	make_buttons $dlg $path $root
+}
+
 proc do_button_file {dlg optn suf} {
 	global opt
 
-	button $suf.val$optn.sel -text {>} -command [list get_file $dlg $optn] -image [icon file open]
+	button $suf.val$optn.sel -text {>} -command [list get_file $dlg $optn]
+	if {[set icon [icon file open]] != 0} {
+		$suf.val$optn.sel configure -image $icon
+	}
 	pack $suf.val$optn.sel -side left -fill x
 }
 
@@ -402,8 +462,7 @@ proc do_button_old {dlg optn suf elem} {
 	global opt
 	
 	button $suf.val$optn.sel -text {>} -command [list get_map $dlg $optn $elem]
-	set icon [icon element $elem]
-	if {$icon != 0} {
+	if {[set icon [icon element $elem]] != 0} {
 		$suf.val$optn.sel configure -image $icon
 	}
 	pack $suf.val$optn.sel -side left -fill x
@@ -478,6 +537,66 @@ proc choose_help_text {dlg optn} {
 }
 
 ################################################################################
+# Options interface
+
+proc dialog_set_command {dlg cmd} {
+	global opt
+	set pgm_name $opt($dlg,pgm_name)
+	set nopt $opt($dlg,nopt)
+
+	if {[lindex $cmd 0] != $pgm_name} {
+		return -1
+	}
+
+	# "Parse" the command
+	# Note that these commands shan't have quotes around them
+	foreach argv [lrange $cmd 1 end] {
+		if {[string length $argv] < 2} continue
+		if {[string index $argv 0] == "-"} {
+			foreach char [split [string range $argv 1 end] {}] {
+				set args(-$char) 1
+			}
+		} else {
+			set eq_idx [string first "=" $argv]
+			set name [string range $argv 0 [expr $eq_idx - 1]]
+			set value [string range $argv [expr $eq_idx + 1] end]
+			set args($name) $value
+		}
+	}
+
+	# Query the command for each part of every option
+	for {set i 1} {$i <= $nopt} {incr i} {
+		switch -- $opt($dlg,$i,class) {
+		multi {
+			set name $opt($dlg,$i,name)
+			if {! [info exists args($name)] } continue
+			set nmulti $opt($dlg,$i,nmulti)
+			for {set j 1} {$j <= $nmulti} {incr j} {
+				set opt($dlg,$i,valname,$j) [expr ([lsearch -exact $args($name) $opt($dlg,$i,valname,$j)] != -1) ? 1 : 0]
+			}
+		}
+		opt {
+			set name $opt($dlg,$i,name)
+			if {! [info exists args($name)] } continue
+			set opt($dlg,$i,val) $args($name)
+		}
+		flag {
+			set name -$opt($dlg,$i,name)
+			set opt($dlg,$i,val) [expr [info exists args($name)] ? 1 : 0]
+		}
+		}
+	}
+
+	show_cmd $dlg
+	update
+	return 0
+}
+
+proc dialog_get_command {dlg} {
+	return [mkcmd $dlg]
+}
+
+################################################################################
 
 proc begin_dialog {pgm optlist} {
 	global opt dlg path
@@ -490,16 +609,15 @@ proc begin_dialog {pgm optlist} {
 	}
 
 	set root [expr {$path == "" ? "." : $path}]
+	set opt($dlg,path) $path
+	set opt($dlg,root) $root
 
 	set opt($dlg,pgm_name) $pgm
-	wm title $root $pgm
-	make_dialog $dlg $path $root
-	
-	# Use the default font instead for balloon help:
-	if {[lsearch [font names] balloon-help] == -1} {
-		font create balloon-help -family Helvetica -size -12 -weight bold
+	if {[winfo toplevel $root] == $root} {
+		wm title $root $pgm
 	}
-	DynamicHelp::configure -font balloon-help -fg black -bg "#FFFF77"
+
+	make_dialog $dlg $path $root
 }
 
 proc end_dialog {n} {
@@ -507,13 +625,17 @@ proc end_dialog {n} {
 
 	set opt($dlg,nopt) $n
 
-	add_buttons $dlg
-
 	set path $opt($dlg,path)
-	$path.nb raise out
-	$path.nb raise $opt($dlg,first_tab)
+	set root $opt($dlg,root)
+
+	make_dialog_end $dlg $path $root
+
+	if {$n > 0} {
+		layout_raise_frame $dlg $opt($dlg,1,guisection) 1
+	}
 
 	update
+
 	show_cmd $dlg
 }
 
@@ -528,11 +650,13 @@ proc add_option {optn optlist} {
 		set opt($dlg,$optn,$key) $opts($key)
 	}
 
+	set opt($dlg,optn_index,$opts(name)) $optn
+
 	choose_help_text $dlg $optn
 
 	normalize_guisection $dlg $optn
 
-	set suf [get_frame $dlg $opt($dlg,$optn,guisection)]
+	set suf [layout_get_frame $dlg $opt($dlg,$optn,guisection) $optn]
 
 	do_label $dlg $optn $suf
 	frame $suf.val$optn
@@ -585,12 +709,15 @@ proc add_flag {optn optlist} {
 	foreach key {name desc label guisection} {
 		set opt($dlg,$optn,$key) $opts($key)
 	}
+	set opt($dlg,$optn,val) $opts(answer)
+
+	set opt($dlg,optn_index,-$opts(name)) $optn
 
 	choose_help_text $dlg $optn
 
 	normalize_guisection $dlg $optn
 
-	set suf [get_frame $dlg $opt($dlg,$optn,guisection)]
+	set suf [layout_get_frame $dlg $opt($dlg,$optn,guisection) $optn]
 
 	frame $suf.val$optn
 	checkbutton $suf.val$optn.chk -text $opt($dlg,$optn,label_text) -variable opt($dlg,$optn,val) -onvalue 1 -offvalue 0 -anchor w
