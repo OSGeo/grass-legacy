@@ -143,6 +143,9 @@
 /* define if jpeglib.h exists */
 #undef HAVE_JPEGLIB_H
 
+/* define if fftw3.h exists */
+#undef HAVE_FFTW3_H
+
 /* define if fftw.h exists */
 #undef HAVE_FFTW_H
 
