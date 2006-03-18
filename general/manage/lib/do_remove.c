@@ -3,11 +3,16 @@
 #include <grass/Vect.h>
 #include <string.h>
 
+/* 
+ *  returns 0 - success
+ *          1 - error
+ */
 int do_remove (int n, char *old)
 {
     int i, ret;
     int len;
     char *mapset;
+    int result = 0;
 
     fprintf (stdout,"REMOVE [%s]\n", old);
 
@@ -20,6 +25,7 @@ int do_remove (int n, char *old)
 	ret = Vect_delete ( old );
 	if ( ret == -1 ) {
 	    G_warning ("Cannot delete vector %s", old );
+            result = 1;
 	}
     } else {
 	for (i = 0; i < list[n].nelem; i++)
@@ -29,8 +35,13 @@ int do_remove (int n, char *old)
 
 	    switch (G_remove (list[n].element[i], old))
 	    {
-	    case -1: fprintf (stdout,"COULD NOT REMOVE"); break;
-	    case  0: fprintf (stdout,"MISSING"); break;
+	    case -1: 
+		fprintf (stdout,"COULD NOT REMOVE"); 
+                result = 1;
+		break;
+	    case  0: 
+		fprintf (stdout,"MISSING"); 
+		break;
 	    }
 	    fprintf (stdout,"\n");
 	}
@@ -43,5 +54,5 @@ int do_remove (int n, char *old)
     }
     hold_signals(0);
 
-    return 0;
+    return result;
 }

@@ -16,10 +16,15 @@
 
 static int recursive_copy(const char *src, const char *dst);
 
+/*
+ *  returns 0 - success
+ *          1 - error
+ */
 int do_copy (int n, char *old, char *mapset, char *new)
 {
     int i, ret, len;
     char path[1024], path2[1024];
+    int result = 0;
 
     G_debug (3, "Copy %s", list[n].alias );
     fprintf (stdout,"COPY [%s] to current mapset as [%s]\n", G_fully_qualified_name(old, mapset), new);
@@ -31,6 +36,7 @@ int do_copy (int n, char *old, char *mapset, char *new)
 	ret = Vect_copy ( old, mapset, new, stderr );
 	if ( ret == -1 ) {
 	    G_warning ("Cannot copy %s to current mapset as %s", G_fully_qualified_name(old, mapset), new );
+	    result = 1;
 	}
     } else {
 	for (i = 0; i < list[n].nelem; i++)
@@ -48,7 +54,10 @@ int do_copy (int n, char *old, char *mapset, char *new)
 		continue;
 	    }
 	    G__file_name (path2, list[n].element[i], new, G_mapset());
-	    recursive_copy(path, path2);
+	    if ( recursive_copy(path, path2) == 1 ) 
+	    {
+                result = 1;
+            }
 	    fprintf (stdout,"\n");
 	}
     }
@@ -63,7 +72,7 @@ int do_copy (int n, char *old, char *mapset, char *new)
     }
     hold_signals(0);
 
-    return 0;
+    return result;
 }
 
 /* RULE:
