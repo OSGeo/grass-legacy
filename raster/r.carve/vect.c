@@ -20,7 +20,7 @@ int open_new_vect(struct Map_info *map, char *vect)
 /*
  * close_vect - builds vector support and frees up resources
  */
-int close_vect(struct Map_info *map, int build_support)
+int close_vect(struct Map_info *map, const int build_support)
 {
     if (build_support)
         Vect_build(map, stderr);
@@ -52,16 +52,16 @@ int write_xyz_points(struct Map_info *map, Point2 *pgxypts, Point2 *pgpts,
         Vect_cat_set(cats, 1, 1);
     }
 
-    Vect_reset_line(points);
-
     for (i = 0; i < npts; i++) {
-        G_debug(3, "x:%.2lf y:%.2lf z:%.2lf", pgxypts[i][0],
+        Vect_reset_line(points);
+
+        G_debug(4, "x:%.2lf y:%.2lf z:%.2lf", pgxypts[i][0],
                 pgxypts[i][1], pgpts[i][1] - depth);
         Vect_append_point(points, pgxypts[i][0], pgxypts[i][1], 
                           pgpts[i][1] - depth);
-    }
 
-    Vect_write_line(map, GV_POINT, points, cats);
+        Vect_write_line(map, GV_POINT, points, cats);
+    }
 
     return 1;
 }
