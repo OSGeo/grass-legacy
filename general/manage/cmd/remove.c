@@ -15,6 +15,7 @@ main (int argc, char *argv[])
     int nrmaps;
     char **rmaps, *location_path, buf1[256], buf2[256];
     FILE *fp;
+    int result = 0;
 
     init (argv[0]);
 
@@ -93,8 +94,11 @@ main (int argc, char *argv[])
 		        fclose(fp);
 		    }
 		}
-		do_remove (n, name);
+		if ( do_remove (n, name) == 1 )
+                {
+		    result = 1;
+                }
 	    }
     }
-    exit(0);
+    exit(result);
 }

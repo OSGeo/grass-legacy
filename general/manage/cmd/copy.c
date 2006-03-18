@@ -12,6 +12,7 @@ int main (int argc, char *argv[])
     struct Option **parm, *p;
     char *from, *to;
     char buf1[256], *location_path;
+    int result = 0;
 
     init (argv[0]);
 
@@ -94,11 +95,14 @@ int main (int argc, char *argv[])
                     parm[n]->key,from,to);
                 continue;
             }
-            do_copy (n, from, mapset, to);
+            if ( do_copy (n, from, mapset, to) == 1 )
+            {
+                result = 1;
+            }
 	    sprintf (buf1, "%s/%s/cell_misc/%s/reclassed_to",
 			    location_path, mapset, to);
 	    remove(buf1);
         }
     }
-    exit(0);
+    exit(result);
 }
