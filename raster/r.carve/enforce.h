@@ -35,7 +35,7 @@ extern int enforce_downstream(int infd, int outfd, char *outvect,
 /* lobf.c */
 extern Point2 *pg_getpoints(PointGrp *pg);
 extern Point2 *pg_getpoints_reversed(PointGrp *pg);
-extern double pg_y_from_x(PointGrp *pg, double x);
+extern double pg_y_from_x(PointGrp *pg, const double x);
 extern void pg_init(PointGrp *pg);
 extern void pg_addpt(PointGrp *pg, Point2 pt);
 
@@ -44,7 +44,7 @@ extern int update_history(char *raster_name);
 
 /* vect.c */
 extern int open_new_vect(struct Map_info *map, char *vect);
-extern int close_vect(struct Map_info *map, int build_support);
+extern int close_vect(struct Map_info *map, const int build_support);
 extern int write_xyz_points(struct Map_info *map, Point2 *pgxypts, 
                     Point2 *pgpts, const int npts, const double depth);
 

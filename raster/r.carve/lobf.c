@@ -19,7 +19,7 @@ void pg_init(PointGrp *pg)
 /*
  * pg_y_from_x - determine y value for a given x value in a PointGrp
  */
-double pg_y_from_x(PointGrp *pg, double x)
+double pg_y_from_x(PointGrp *pg, const double x)
 { 
     return ((pg->slope * x) + pg->yinter); 
 }
@@ -100,7 +100,8 @@ Point2 *pg_getpoints_reversed(PointGrp *pg)
 
 #if 0
 /* call after doing a pg_getpoints and changing values, 
- * before calling pg_y_from_x again  */
+ * before calling pg_y_from_x again
+ */
 void pg_recalc(PointGrp *pg)
 {
     int i;
