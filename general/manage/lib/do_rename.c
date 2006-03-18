@@ -4,10 +4,15 @@
 #include <grass/Vect.h>
 #include "list.h"
 
+/*
+ *  returns 0 - success
+ *          1 - error
+ */
 int do_rename (int n, char *old, char *new)
 {
     int i, ret;
     int len;
+    int result = 0;
 
     fprintf (stdout,"RENAME [%s] to [%s]\n", old, new);
     if (strcmp (old,new) == 0) return 1;
@@ -20,6 +25,7 @@ int do_rename (int n, char *old, char *new)
 	ret = Vect_rename ( old, new, stderr );
 	if ( ret == -1 ) {
 	    G_warning ("Cannot rename %s to %s", old, new );
+            result = 1;
 	}
     } else {
 	for (i = 0; i < list[n].nelem; i++)
@@ -30,8 +36,13 @@ int do_rename (int n, char *old, char *new)
 	    G_remove(list[n].element[i], new);
 	    switch (G_rename (list[n].element[i], old, new))
 	    {
-	    case -1: fprintf (stdout,"COULD NOT RENAME"); break;
-	    case  0: fprintf (stdout,"MISSING"); break;
+	    case -1: 
+		fprintf (stdout,"COULD NOT RENAME"); 
+		result = 1;
+		break;
+	    case  0: 
+		fprintf (stdout,"MISSING"); 
+		break;
 	    }
 	    fprintf (stdout,"\n");
 	}
@@ -45,5 +56,5 @@ int do_rename (int n, char *old, char *new)
     }
     hold_signals(0);
 
-    return 0;
+    return result;
 }
