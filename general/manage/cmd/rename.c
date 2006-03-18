@@ -14,6 +14,7 @@ main (int argc, char *argv[])
     char *old, *new;
     int nrmaps;
     char *mapset, *location_path, **rmaps;
+    int result = 0;
 
     init (argv[0]);
 
@@ -146,8 +147,11 @@ main (int argc, char *argv[])
 		    fclose(fp);
 		}
             }
-	    do_rename (n, old, new);
+            if ( do_rename (n, old, new) == 1 )
+            {
+                result = 1;
+            }
 	}
     }
-    exit(0);
+    exit(result);
 }
