@@ -124,7 +124,7 @@ void RasterToG3D(void *map, G3D_Region region, int *fd)
 		 ptr = G_incr_void_ptr(ptr, G_raster_size(globalRastMapType))) {
 		if (globalRastMapType == CELL_TYPE) {
 		    if (G_is_null_value(ptr, globalRastMapType)) {
-			G3d_setNullValue(&fvalue, 1, G3D_DOUBLE);
+			G3d_setNullValue(&dvalue, 1, G3D_DOUBLE);
 		    }
 		    else {
 			dvalue = *(CELL *) ptr;
