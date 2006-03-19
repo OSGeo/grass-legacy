@@ -7,6 +7,13 @@ established.
 Dissolving (optional) is based on the output categories. If 2 adjacent
 areas have the same output category, the boundary is removed.
 
+<h2>NOTES</h2>
+
+Only features with a category number will be extracted. So if you want to 
+extract boundaries (which are usually without category, as that information
+is normally held in the area's centroid) you must first use 
+<a HREF="v.category.html">v.category</a> to add them.
+
 <h2>EXAMPLES</h2>
 
 <h3>Extract areas by category number with dissolving</h3>
@@ -66,8 +73,10 @@ if the attribute of the left and right polygon is identical.
 
 <h2>SEE ALSO</h2>
 
+<em><a HREF="v.category.html">v.category</a></em>,
 <em><a HREF="v.reclass.html">v.reclass</a></em>,
 <em><a HREF="sql.html">GRASS SQL interface</a></em>
+
 
 <h2>AUTHOR</h2>
 
