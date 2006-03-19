@@ -239,9 +239,14 @@ int main (int argc, char *argv[])
 	    *fs = *option.fs->answer;
     }
 
+
 /* open all cell files */
+    if( option.cell->answers[0] == NULL )
+	G_fatal_error(_("Raster map not found."));
+
     names = option.cell->answers;
     ptr = option.cell->answers;
+
     for (; *ptr != NULL; ptr++)
     {
 	name = *ptr;
@@ -300,8 +305,7 @@ int main (int argc, char *argv[])
 	   {
 	      /* set the quant rules for reading the map */
 	      G_set_quant_rules(fd[nfiles], &labels[nfiles].q); 
-	      G_quant_get_limits (&labels[nfiles].q, &dmin, &dmax, &min, 
-&max);
+	      G_quant_get_limits (&labels[nfiles].q, &dmin, &dmax, &min, &max);
            }
         }
 	else
