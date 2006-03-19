@@ -36,6 +36,7 @@ int main(int argc, char *argv[]) {
     double max = 0.0/0.0; /* init as nan */
     double mean, stdev, var_coef;
     double variance;
+    char sum_str[100];
 
     char *infile, *mapset;
     void *raster_row, *ptr;
@@ -189,6 +190,9 @@ int main(int argc, char *argv[]) {
     stdev = sqrt(variance);
     var_coef = (stdev/mean)*100.;  /* perhaps stdev/fabs(mean) ? */
 
+    sprintf(sum_str, "%.10f", sum);
+    G_trim_decimal(sum_str);
+
 
     if( ! (quiet->answer || shell_style->answer) ) {
 	fprintf(stdout, "\ntotal null and non-null cells: %d\n", rows * cols);
@@ -206,7 +210,7 @@ int main(int argc, char *argv[]) {
 	fprintf(stdout, "stddev=%g\n", stdev);
 	fprintf(stdout, "variance=%g\n", variance);
 	fprintf(stdout, "coeff_var=%g\n", var_coef);
-	fprintf(stdout, "sum=%g\n", sum);
+	fprintf(stdout, "sum=%s\n", sum_str);
     }
     else {
 	fprintf(stdout, "n: %d\n", n);
@@ -217,7 +221,7 @@ int main(int argc, char *argv[]) {
 	fprintf(stdout, "standard deviation: %g\n", stdev);
 	fprintf(stdout, "variance: %g\n", variance);
 	fprintf(stdout, "variation coefficient: %g %%\n", var_coef);
-	fprintf(stdout, "sum: %g\n", sum);
+	fprintf(stdout, "sum: %s\n", sum_str);
     }
 
 /*  if(extended->answer) {
