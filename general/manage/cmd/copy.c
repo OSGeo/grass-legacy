@@ -1,6 +1,7 @@
 #define MAIN
 #include <stdlib.h>
 #include <string.h>
+#include <grass/glocale.h>
 #include "list.h"
 #include "local_proto.h"
 
@@ -18,9 +19,9 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Copies available data files in the user's current mapset "
+		_("Copies available data files in the user's current mapset "
 		"search path and location to the appropriate element "
-		"directories under the user's current mapset.";
+		"directories under the user's current mapset.");
 
     parm = (struct Option **) G_calloc (nlist, sizeof(struct Option *));
 
@@ -42,7 +43,7 @@ int main (int argc, char *argv[])
 	if ( strcmp(list[n].alias, "group") == 0 ) p->gisprompt   = "old,group,group" ;
 	/* ?? 3dview ?*/
         p->description = G_malloc (64);
-        sprintf (p->description, "%s file(s) to be copied", list[n].alias);
+        sprintf (p->description, _("%s file(s) to be copied"), list[n].alias);
     }
 
     if (G_parser(argc, argv))
@@ -58,7 +59,7 @@ int main (int argc, char *argv[])
         if (i%2) /* must be even number of names */
         {
             G_usage();
-            G_fatal_error("must be even number of names");
+            G_fatal_error(_("must be even number of names"));
         }
     }
 
@@ -76,22 +77,22 @@ int main (int argc, char *argv[])
             mapset = find (n, from, "");
             if (!mapset)
             {
-                fprintf (stderr, "<%s> not found\n", from);
+                fprintf (stderr, _("<%s> not found\n"), from);
                 continue;
             }
 	    if (find (n, to, G_mapset()) && !(module->overwrite))
 	    {
-		fprintf (stderr, "ERROR: <%s> already exists\n", to);
+		fprintf (stderr, _("ERROR: <%s> already exists\n"), to);
 		continue;
 	    }
             if (G_legal_filename (to) < 0)
             {
-                fprintf (stderr, "ERROR: <%s> illegal name\n", to);
+                fprintf (stderr, _("ERROR: <%s> illegal name\n"), to);
                 continue;
             }
             if (strcmp (mapset, G_mapset()) == 0 && strcmp (from, to) == 0)
             {
-                fprintf (stderr, "%s=%s,%s: files are the same, no copy required\n",
+                fprintf (stderr, _("%s=%s,%s: files are the same, no copy required\n"),
                     parm[n]->key,from,to);
                 continue;
             }

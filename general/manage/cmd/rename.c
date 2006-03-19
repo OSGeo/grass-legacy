@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "list.h"
 #include "local_proto.h"
 
@@ -20,8 +21,7 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"To rename data base element files in "
-		"the user's current mapset.";
+	    _("Renames data base element files in the user's current mapset.");
 
     parm = (struct Option **) G_calloc (nlist, sizeof(struct Option *));
 
@@ -43,7 +43,7 @@ main (int argc, char *argv[])
 	if ( strcmp(list[n].alias, "group") == 0 ) p->gisprompt   = "old,group,group" ;
 	/* ?? 3dview ?*/
 	p->description = G_malloc (64);
-	sprintf (p->description, "%s file(s) to be renamed", list[n].alias);
+	sprintf (p->description, _("%s file(s) to be renamed"), list[n].alias);
     }
 
     if (G_parser(argc, argv))
@@ -59,7 +59,7 @@ main (int argc, char *argv[])
 	if (i%2) /* must be even number of names */
 	{
 	    G_usage();
-	    G_fatal_error("must be even number of names");
+	    G_fatal_error(_("must be even number of names"));
 	}
     }
 
@@ -77,22 +77,22 @@ main (int argc, char *argv[])
 	    new = parm[n]->answers[i++];
 	    if(!find (n, old, mapset))
 	    {
-		fprintf (stderr, "ERROR: <%s> not found\n", old);
+		fprintf (stderr, _("ERROR: <%s> not found\n"), old);
 		continue;
 	    }
 	    if (find (n, new, "") && !(module->overwrite))
 	    {
-		fprintf (stderr, "ERROR: <%s> already exists in mapset <%s>\n", new, find (n, new, ""));
+		fprintf (stderr, _("ERROR: <%s> already exists in mapset <%s>\n"), new, find (n, new, ""));
 		continue;
 	    }
 	    if (G_legal_filename (new) < 0)
 	    {
-		fprintf (stderr, "ERROR: <%s> illegal name\n", new);
+		fprintf (stderr, _("ERROR: <%s> illegal name\n"), new);
 		continue;
 	    }
 	    if (strcmp (old, new) == 0)
 	    {
-		fprintf (stderr, "%s=%s,%s: files are the same, no rename required\n",
+		fprintf (stderr, _("%s=%s,%s: files are the same, no rename required\n"),
 		    parm[n]->key,old,new);
 		continue;
 	    }

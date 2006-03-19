@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <grass/glocale.h>
 #define MAIN
 #include "list.h"
 #include "local_proto.h"
@@ -21,8 +22,8 @@ main (int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-		"Removes data base element files from "
-		"the user's current mapset.";
+		_("Removes data base element files from "
+		"the user's current mapset.");
 
     parm = (struct Option **) G_calloc (nlist, sizeof(struct Option *));
 
@@ -43,7 +44,7 @@ main (int argc, char *argv[])
 	if ( strcmp(list[n].alias, "group") == 0 ) p->gisprompt   = "old,group,group" ;
 	/* ?? 3dview ?*/
 	p->description = G_malloc (64);
-	sprintf (p->description, "%s file(s) to be removed", list[n].alias);
+	sprintf (p->description, _("%s file(s) to be removed"), list[n].alias);
     }
 
     if (G_parser(argc, argv))

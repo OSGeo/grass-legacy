@@ -1,9 +1,11 @@
 #define MAIN
 #include <stdlib.h>
 #include <string.h>
-#include "local_proto.h"
 #include <unistd.h>
+#include <grass/glocale.h>
+#include "local_proto.h"
 #include "list.h"
+
 
 struct Option *element;
 
@@ -19,8 +21,8 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Lists available GRASS data base files "
-		"of the user-specified data type to standard output.";
+		_("Lists available GRASS data base files "
+		"of the user-specified data type to standard output.");
 
 	element = G_define_option();
 	element->key =      "type";
@@ -48,12 +50,12 @@ main (int argc, char *argv[])
 	mapset->type = TYPE_STRING;
 	mapset->required = NO;
 	mapset->multiple = NO;
-	mapset->description = "mapset to list (default: current search path)";
+	mapset->description = _("mapset to list (default: current search path)");
 #define MAPSET mapset->answer
 
 	full = G_define_flag();
 	full->key = 'f';
-	full->description = "verbose listing (also list map titles)";
+	full->description = _("verbose listing (also list map titles)");
 #define FULL full->answer
 
 	n = parse(argc, argv);
@@ -81,7 +83,7 @@ parse (int argc, char *argv[])
 
 	if (G_parser(argc, argv))
 	{
-		fprintf (stderr, "\nWhere %s is one of:\n", element->key);
+		fprintf (stderr, _("\nWhere %s is one of:\n"), element->key);
 		show_elements();
 		exit(1);
 	}
@@ -93,10 +95,10 @@ parse (int argc, char *argv[])
 
 	if (n >= nlist)
 	{
-		fprintf (stderr, "%s: - no such database %s\n",
+		fprintf (stderr, _("%s: - no such database %s\n"),
 		    element->answer, element->key);
 		G_usage();
-		fprintf (stderr, "\nWhere %s is one of:\n", element->key);
+		fprintf (stderr, _("\nWhere %s is one of:\n"), element->key);
 		show_elements();
 		exit(1);
 	}
