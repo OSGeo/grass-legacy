@@ -141,8 +141,12 @@ int main (int argc, char *argv[])
 
 	/* process the input maps */
 	for (i = 0; parm.input->answers[i]; i++)
-		;
+	    ;
 	num_inputs = i;
+
+	if(num_inputs < 1)
+	    G_fatal_error(_("Raster map not found."));
+
 	inputs = G_malloc(num_inputs * sizeof(struct input));
 
 	for (i = 0; i < num_inputs; i++)
