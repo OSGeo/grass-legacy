@@ -5,7 +5,6 @@
 static int x1, y1, x2, y2;
 static View *pick_view, *zoom_view, *main_view;
 static int target_flag;
-static int zoom1 (int,int);
 static int zoom2 (int,int);
 static int cancel (void);
 
@@ -17,7 +16,7 @@ int zoom_box (void)
     {
 	MENU("CANCEL",cancel,&use),
 	INFO(" Mark first corner of window ",&use),
-	OTHER(zoom1,&use),
+	OTHER(zoom_box1,&use),
 	{0}
     };
 
@@ -25,7 +24,7 @@ int zoom_box (void)
     return 1;
 }
 
-static int zoom1 (int x,int y)	/* called by Input_pointer */
+int zoom_box1 (int x,int y)	/* called by Input_pointer */
 {
     static int use = 1;
     static Objects objects[] =

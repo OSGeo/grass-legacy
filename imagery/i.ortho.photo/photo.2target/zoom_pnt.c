@@ -26,13 +26,23 @@ int zoom_point (void)
 
 static int zoom1 (int x,int y)	/* called by Input_pointer */
 {
+    return zoom_point2 ( x, y, 0 );
+}
+
+/* Zoom with point. 
+ * magnify: > 0 dont ask for magnification.
+ *           -1 pan
+ *            0 ask for magnification
+ */
+int zoom_point2 (int x,int y, int magnify)
+{
     int top, bottom, left, right;
     int n,row,col;
     int nrows, ncols;
     struct Cell_head cellhd;
     int mag;
     double north, south, east, west;
-    char buf[100];
+    double dmag;
 
     if (In_view (pick_view = VIEW_MAP1, x, y))
     {
@@ -82,29 +92,52 @@ static int zoom1 (int x,int y)	/* called by Input_pointer */
     Menu_msg("");
 
 /* determine magnification of zoom */
-    if (zoom_view->cell.configured)
+    if ( magnify == 0 )
     {
-	if (zoom_view == pick_view)
-	    mag = floor(magnification (zoom_view) + 1.0) + .1;
+	if (zoom_view->cell.configured)
+	{
+	    if (zoom_view == pick_view)
+		mag = floor(magnification (zoom_view) + 1.0) + .1;
+	    else
+		mag = ceil(magnification (zoom_view)) + .1;
+	}
 	else
-	    mag = ceil(magnification (zoom_view)) + .1;
+	{
+	    mag = floor(magnification (main_view) + 1.0) + .1;
+	}
+	if(!ask_magnification (&mag))
+	    return 1;
+
+        dmag = mag;
     }
-    else
+    else if ( magnify > 0 )
     {
-	mag = floor(magnification (main_view) + 1.0) + .1;
+        dmag = magnify;
     }
-    if(!ask_magnification (&mag))
-	return 1;
+    else if ( magnify == -1 )
+    {
+        /* Use current magnification */
+        if (zoom_view->cell.configured)
+        {
+            dmag = main_view->cell.ns_res /  
+                   ((zoom_view->cell.head.north - zoom_view->cell.head.south) 
+                   / zoom_view->cell.head.rows);
+        }
+        else
+        {   
+	    dmag = 1.;
+        }
+    }
 /* 
  * Determine the the zoom window (ie, cellhd)
  */
 
     G_copy (&cellhd, &main_view->cell.head, sizeof(cellhd));
-    cellhd.ns_res = main_view->cell.ns_res / mag;
-    cellhd.ew_res = main_view->cell.ew_res / mag;
+    cellhd.ns_res = main_view->cell.ns_res / dmag;
+    cellhd.ew_res = main_view->cell.ew_res / dmag;
+
     cellhd.cols   = (cellhd.east - cellhd.west) / cellhd.ew_res;
     cellhd.rows   = (cellhd.north - cellhd.south) / cellhd.ns_res;
-
 
 /* convert x,y to col,row */
 
@@ -118,7 +151,6 @@ static int zoom1 (int x,int y)	/* called by Input_pointer */
 
     ncols = zoom_view->ncols ;
     nrows = zoom_view->nrows ;
-
 
     n = cellhd.cols - col;
     if (n > col)

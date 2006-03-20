@@ -8,23 +8,46 @@
 #include <grass/raster.h>
 #include <grass/imagery.h>
 #include <grass/ortholib.h>
+#include <grass/glocale.h>
 #include "globals.h"
 #include "local_proto.h"
 
 int main (int argc, char *argv[])
 {
     char *name, *location, *mapset, *camera, msg[100];
+    struct GModule *module;
+    struct Option *group_opt, *map_opt, *target_map_opt;
     struct Cell_head cellhd;
     int ok;
     int nfiles;
 
-    if (argc != 2)
-    {
-	fprintf (stderr, "usage: %s group\n", argv[0]);
-	exit(1);
-    }
-
     G_gisinit (argv[0]);
+
+    module = G_define_module();
+    module->description = _("Create control points on an image "
+                            "to be ortho-rectified.");
+
+    group_opt = G_define_option();
+    group_opt->key = "group";
+    group_opt->type = TYPE_STRING;
+    group_opt->required = YES;
+    group_opt->multiple = NO;
+    group_opt->description= _("Name of imagery group");
+
+    map_opt = G_define_standard_option(G_OPT_R_MAP);
+    map_opt->required = NO;
+    map_opt->description= _("Name of image to be rectified which will "
+                            " be initialy drawn on screen.");
+
+    target_map_opt = G_define_standard_option(G_OPT_R_MAP);
+    target_map_opt->key = "target";
+    target_map_opt->required = NO;
+    target_map_opt->description= _("Name of a map from target mapset which "
+                               " will be initialy drawn on screen.");
+
+    if (G_parser(argc, argv))
+	exit(1);
+
     G_suppress_masking();	/* need to do this for target location */
     name     = (char *) G_malloc (40 * sizeof (char));
     location = (char *) G_malloc (80 * sizeof (char));
@@ -35,6 +58,7 @@ int main (int argc, char *argv[])
     tempfile1 = G_tempfile();
     tempfile2 = G_tempfile();
     tempfile_dot = G_tempfile();
+    tempfile_dot2 = G_tempfile();
     cell_list = G_tempfile();
     vect_list = G_tempfile();
     group_list = G_tempfile();
@@ -44,8 +68,7 @@ int main (int argc, char *argv[])
 	G_fatal_error ("No graphics device selected!!!");
 
     /* get group ref */
-    name = argv[1];
-    strcpy (group.name, name);
+    strcpy (group.name, group_opt->answer );
     if (!I_find_group (group.name))
     {
 	fprintf (stderr, "Group [%s] not found\n", group.name);
@@ -149,21 +172,66 @@ int main (int argc, char *argv[])
 #endif
 */
 
-
-    /* ask user for group file to be displayed */
-    do
+    /* Set image to be rectified */
+    if ( map_opt->answer )
     {
-	if(!choose_groupfile (name, mapset))
-	    quit(0);
-        /* display this file in "map1" */
-    } while (G_get_cellhd (name, mapset, &cellhd) < 0);
-
+        char *ms;
+        ms = G_find_cell ( map_opt->answer, "");
+        if (ms == NULL) {
+           G_fatal_error(_("%s map not found"), map_opt->answer);
+        }
+        strcpy ( name, map_opt->answer );
+        strcpy ( mapset, ms );
+        if ( G_get_cellhd (name, mapset, &cellhd) < 0 )
+        {
+           G_fatal_error(_("cannot read head of %s"), map_opt->answer);
+        }
+    }
+    else
+    {
+	/* ask user for group file to be displayed */
+	do
+	{
+	    if(!choose_groupfile (name, mapset))
+		quit(0);
+	    /* display this file in "map1" */
+	} while (G_get_cellhd (name, mapset, &cellhd) < 0);
+    }
 
     G_adjust_window_to_box (&cellhd, &VIEW_MAP1->cell.head, VIEW_MAP1->nrows, 
 			    VIEW_MAP1->ncols);
     Configure_view (VIEW_MAP1, name, mapset, cellhd.ns_res, cellhd.ew_res);
 
     drawcell(VIEW_MAP1);
+
+    /* Set target map if specified */
+    if ( target_map_opt->answer )
+    {
+        char *ms;
+
+        select_target_env();
+        ms = G_find_cell ( target_map_opt->answer, "");
+        if (ms == NULL) {
+           G_fatal_error(_("%s map not found"), target_map_opt->answer);
+        }
+        strcpy ( name, target_map_opt->answer );
+        strcpy ( mapset, ms );
+        if ( G_get_cellhd (name, mapset, &cellhd) < 0 )
+        {
+           G_fatal_error(_("cannot read head of %s"), target_map_opt->answer);
+        }
+
+	G_adjust_window_to_box (&cellhd, &VIEW_MAP2->cell.head, VIEW_MAP2->nrows, 
+				VIEW_MAP2->ncols);
+	Configure_view (VIEW_MAP2, name, mapset, cellhd.ns_res, cellhd.ew_res);
+
+        drawcell(VIEW_MAP2);
+
+        from_flag = 1;
+        from_keyboard = 0;
+        from_screen = 1;
+    }
+
     display_conz_points(1);
 
     Curses_clear_window (PROMPT_WINDOW);
@@ -203,6 +271,7 @@ int quit (int n)
     unlink (digit_points);
     unlink (tempfile_elev);
     unlink (tempfile_dot);
+    unlink (tempfile_dot2);
     exit(n);
 }
 
