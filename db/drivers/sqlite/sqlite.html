@@ -12,17 +12,60 @@
 
 <h1>SQLite driver in GRASS</h1>
 
+
+<H2>Connecting GRASS to SQLite</H2>
+
+The table name 'sqlite.db' is at user's choice.
+Also the file storage location can be freely chosen.
+
+<div class="code"><pre>
+# example for storing DB in mapset directory:
+db.connect driver=sqlite database='$GISDBASE/$LOCATION_NAME/$MAPSET/sqlite.db'
+db.connect -p
+</pre></div>
+
 <H2>Supported SQL commands</H2>
 
 All SQL commands supported by SQLite.
+
 
 <H2>Operators available in conditions</H2>
 
 All SQL operators supported by SQLite.
 
+
+<H2>Browsing table data in DB</H2>
+
+A convenient SQLite front-end is <a href="sqlitebrowser.sourceforge.net/">sqlitebrowser</a>.
+To open a DB file stored within the current mapset,
+the following way is suggested:
+
+<div class="code"><pre>
+eval `g.gisenv`
+sqlitebrowser "$GISDBASE/$LOCATION_NAME/$MAPSET"/sqlite.db
+</pre></div>
+
+
+<H2>Adding an unique ID column</H2>
+
+Import vector module require an unique ID column which can
+be generated as follows for a SQLite table:
+
+<!-- doesnt work yet, why?:
+<div class="code"><pre>
+echo "
+ ALTER TABLE mytable ADD ID integer;
+ CREATE SEQUENCE mytable_seq;
+ UPDATE mytabe SET ID = nextval('mytable_seq');
+ DROP SEQUENCE mytable_seq;
+" | db.execute
+</pre></div>
+-->
+
 <H2>SEE ALSO</H2>
 
 <em><a href="http://www.sqlite.org">SQLite web site</a>,
+<a HREF="db.execute.html">db.execute</a>,
 <a HREF="sql.html">SQL support in GRASS GIS</a></em>
 
 <p><i>Last changed: $Date$</i>
