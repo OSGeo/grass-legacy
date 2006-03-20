@@ -18,13 +18,22 @@ static int cancel (void);
 
 int mark (int x, int y, int button)
 {
-    if (button != 1)
-	return where (x,y);
+    if ( button == 2 ) 
+    {
+        zoom_box1 ( x, y );
+        return 0;
+    }
+    else if ( button == 3 ) 
+    {
+        zoom_point2 ( x, y, -1 );
+        return 0;
+    }
 
     if (VIEW_MAP1->cell.configured && In_view (VIEW_MAP1, x, y))
 	mark_point (VIEW_MAP1, x, y);
     else if (VIEW_MAP1_ZOOM->cell.configured && In_view (VIEW_MAP1_ZOOM, x, y))
 	mark_point (VIEW_MAP1_ZOOM, x, y);
+
     return 0 ; /* return but don't quit */
 }
 
@@ -63,14 +72,14 @@ int mark_point (View *view, int x, int y)
     Curses_clear_window (INFO_WINDOW);
 
     R_standard_color (ORANGE);
-    save_under_dot (x,y);
+    save_under_dot (x,y, tempfile_dot);
     dot(x,y);
 
     if (!get_point2(&e2, &n2, &z2))
     {
 	Curses_clear_window (MENU_WINDOW);
 	Curses_clear_window (INFO_WINDOW);
-	restore_under_dot();
+	restore_under_dot(tempfile_dot);
     }
     else
     {
@@ -98,7 +107,7 @@ int mark_point (View *view, int x, int y)
 	Curses_clear_window (MENU_WINDOW);
 	Curses_clear_window (INFO_WINDOW);
     }
-    release_under_dot();
+    release_under_dot(tempfile_dot);
 
     return 0;
 }
@@ -206,7 +215,7 @@ static int _keyboard (void)
 
 static int digitizer (void)
 { 
-int ok,c;
+int ok;
 char buf[100];
     
         ok = digitizer_point (&E, &N);
@@ -266,6 +275,9 @@ static int screen (int x, int y, int button)
     char buf[50];
     View *view;
 
+    if (button == 3) /* cancel */
+	return -1;
+
     if (In_view (VIEW_MAP2, x, y) && VIEW_MAP2->cell.configured)
 	view = VIEW_MAP2;
     else if (In_view (VIEW_MAP2_ZOOM, x, y) && VIEW_MAP2_ZOOM->cell.configured)
@@ -296,6 +308,11 @@ static int screen (int x, int y, int button)
     Curses_write_window (INFO_WINDOW, 7, 1, "Look ok? (y/n) ");
 #endif
 
+    R_standard_color (ORANGE);
+    save_under_dot (x,y, tempfile_dot2);
+    dot(x,y);
+    R_flush();
+
 	while(1)
 	{
 #ifdef	MOUSE_YN
@@ -308,7 +325,8 @@ static int screen (int x, int y, int button)
 	    }
 	    else if (b == 3)
 	    {
-		ok = -1;
+                restore_under_dot(tempfile_dot2);
+		ok = 0;
 		break;
 	    }
 #else
@@ -322,10 +340,8 @@ static int screen (int x, int y, int button)
 	    Beep();
 	}
     Curses_clear_window (INFO_WINDOW);
-    if (button == 1)
-	return ok;
 
-    return 0;
+    return ok;
 }
 
 static int get_z_from_cell (double north, double east)

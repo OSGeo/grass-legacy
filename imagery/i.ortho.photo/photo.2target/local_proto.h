@@ -40,9 +40,9 @@ int setup_digitizer(void);
 int digitizer_point(double *, double *);
 /* dot.c */
 int dot(int, int);
-int save_under_dot(int, int);
-int restore_under_dot(void);
-int release_under_dot(void);
+int save_under_dot(int, int, char*);
+int restore_under_dot(char*);
+int release_under_dot(char*);
 /* drawcell.c */
 int drawcell(View *);
 /* driver.c */
@@ -104,5 +104,7 @@ int where(int, int);
 int zoom(void);
 /* zoom_box.c */
 int zoom_box(void);
+int zoom_box1 (int ,int );
 /* zoom_pnt.c */
 int zoom_point(void);
+int zoom_point2(int ,int, int);

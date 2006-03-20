@@ -28,20 +28,20 @@ int dot (int x, int y)
     return 0;
 }
 
-int save_under_dot (int x, int y)
+int save_under_dot (int x, int y, char *file)
 {
-    R_panel_save (tempfile_dot, y-dotsize, y+dotsize, x-dotsize, x+dotsize);
+    R_panel_save (file, y-dotsize, y+dotsize, x-dotsize, x+dotsize);
     return 0;
 }
 
-int restore_under_dot (void)
+int restore_under_dot (char *file)
 {
-    R_panel_restore (tempfile_dot);
+    R_panel_restore (file);
     return 0;
 }
 
-int release_under_dot (void)
+int release_under_dot (char *file)
 {
-    R_panel_delete (tempfile_dot);
+    R_panel_delete (file);
     return 0;
 }

@@ -46,6 +46,7 @@ GLOBAL char interrupt_char;
 GLOBAL char *tempfile1;
 GLOBAL char *tempfile2;
 GLOBAL char *tempfile_dot;
+GLOBAL char *tempfile_dot2;
 GLOBAL char *tempfile_elev;
 GLOBAL char *digit_points;            /* digitizer control points */
 GLOBAL int  use_digitizer INIT(0);    /* is there a digitizer out there? */
