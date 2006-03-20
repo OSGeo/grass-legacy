@@ -14,17 +14,46 @@
 
 The driver name is 'pg'.
 
+<H2>Connecting GRASS to PostgreSQL</H2>
+
+<div class="code"><pre>
+# example for connecting to a PostgreSQL server:
+db.connect driver=pg database="host=myserver.itc.it,dbname=mydb"
+db.login user=myname pass=secret
+db.connect -p
+db.tables -p
+</pre></div>
+
+
 <H2>Supported SQL commands</H2>
 
 All SQL commands supported by PostgreSQL.
+
 
 <H2>Operators available in conditions</H2>
 
 All SQL operators supported by PostgreSQL.
 
+
+<H2>Adding an unique ID column</H2>
+
+Import vector module require an unique ID column which can
+be generated as follows in a PostgreSQL table:
+
+<div class="code"><pre>
+echo "
+ ALTER TABLE mytable ADD ID integer;
+ CREATE SEQUENCE mytable_seq;
+ UPDATE mytabe SET ID = nextval('mytable_seq');
+ DROP SEQUENCE mytable_seq;
+" | db.execute
+</pre></div>
+
+
 <H2>SEE ALSO</H2>
 
 <em><a href="http://www.PostgreSQL.org">PostgreSQL web site</a>,
+<a HREF="db.execute.html">db.execute</a>,
 <a HREF="sql.html">SQL support in GRASS GIS</a></em>
 
 <p><i>Last changed: $Date$</i>
