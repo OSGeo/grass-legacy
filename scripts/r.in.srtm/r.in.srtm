@@ -3,7 +3,7 @@
 #import of SRTM hgt files into GRASS
 # written by Markus Neteler 11/2003 neteler AT itc it
 #
-# COPYRIGHT:	(C) 2004 by the GRASS Development Team
+# COPYRIGHT:	(C) 2004, 2006 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -81,9 +81,17 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
+PROG=`basename $0`
+
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk/gawk first" 2>&1
+    echo "$PROG: awk required, please install awk or gawk first" 2>&1
+    exit 1
+fi
+
+#### check if we have unzip
+if [ ! -x "`which unzip`" ] ; then
+    echo "$PROG: unzip required, please install first" 2>&1
     exit 1
 fi
 
@@ -114,17 +122,17 @@ else
   TILEOUT=$GIS_OPT_output
 fi
 
+# file there?
 if test ! -f $FILE.hgt.zip ; then
  echo "File '$FILE.hgt.zip' not found"
  exit 1
 fi
 
-ls -1 "$FILE.hgt.zip" | grep zip > /dev/null
-if [ $? -ne 0 ] ; then
+# really a ZIP file?
+if [ "`file -ib $FILE.hgt.zip`" != "application/x-zip" ] ; then
   echo "$FILE.hgt.zip is no zip file."
   exit 1
 fi
-
 
 #make a temporary directory
 TMPDIR="`g.tempfile pid=$$`"
