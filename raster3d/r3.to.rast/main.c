@@ -196,14 +196,15 @@ int main(int argc, char *argv[])
 	exit(EXIT_FAILURE);
 
 
-    /*Check Input, hmmm normaly not needed, but who knowa .... */
+    /*Check Input, hmmm normaly not needed, but who knows .... */
     if (param.output->answer == NULL)
 	G3d_fatalError(_("No output maps"));
 
-    G_debug(3, _("Open 3DRaster file %s"), param.input->answers[i]);
+    G_debug(3, _("Open g3d map <%s>"), param.input->answer);
 
-    if (NULL == G_find_grid3(param.input->answers[i], ""))
-	G3d_fatalError(_("Requested g3d file <%s> not found"), param.input->answers[i]);
+    if (NULL == G_find_grid3(param.input->answer, ""))
+	G3d_fatalError(_("Requested g3d map <%s> not found"),
+		       param.input->answer);
 
     /* Figure out the region from the map */
     G3d_initDefaults();
@@ -232,80 +233,73 @@ int main(int argc, char *argv[])
 			  G3D_USE_CACHE_DEFAULT);
 
     if (map == NULL)
-	G3d_fatalError(_("Error opening g3d file <%s>"), param.input->answer);
+	G3d_fatalError(_("Error opening g3d map <%s>"), param.input->answer);
 
     /*Get the output type */
     output_type = G3d_fileTypeMap(map);
 
 
-    if (output_type == G3D_FLOAT || output_type == G3D_DOUBLE) {
+    /*prepare the filehandler */
+    fd = (int *)G_malloc(region.depths * sizeof(int));
 
-	/*prepare the filehandler */
-	fd = (int *)G_malloc(region.depths * sizeof(int));
+    if (fd == NULL)
+	fatalError(map, NULL, 0, _("out of memory!"));
 
-	if (fd == NULL)
-	    fatalError(map, NULL, 0, _("out of memory!"));
+    if (G_legal_filename(param.output->answer) < 0)
+	fatalError(map, NULL, 0, _("Illegal output file name"));
 
-	if (G_legal_filename(param.output->answer) < 0)
-	    fatalError(map, NULL, 0, _("Illegal output file name"));
+    G_message(_("Creating %i raster maps\n"), region.depths);
 
-	G_message(_("Creating %i raster maps\n"), region.depths);
+    /*Loop over all output maps! open */
+    for (i = 0; i < region.depths; i++) {
+	/*Create the outputmaps */
+	G_asprintf(&RasterFileName, "%s_%i", param.output->answer, i + 1);
+	G_message(_("Raster map %i Filename: %s\n"), i + 1, RasterFileName);
 
-	/*Loop over all output maps! open */
-	for (i = 0; i < region.depths; i++) {
-	    /*Create the outputmaps */
-	    G_asprintf(&RasterFileName, "%s_%i", param.output->answer, i + 1);
-	    G_message(_("Raster map %i Filename: %s\n"), i + 1, RasterFileName);
+	if (G_find_cell2(RasterFileName, ""))
+	    G_message(_
+		      ("Raster map %i Filename: %s already exists. Will be overwritten!\n"),
+		      i + 1, RasterFileName);
 
-	    if (G_find_cell2(RasterFileName, ""))
-		G_message(_
-			  ("Raster map %i Filename: %s already exists. Will be overwritten!\n"),
-			  i + 1, RasterFileName);
+	if (output_type == G3D_FLOAT)
+	    fd[i] = open_output_map(RasterFileName, FCELL_TYPE);
+	else if (output_type == G3D_DOUBLE)
+	    fd[i] = open_output_map(RasterFileName, DCELL_TYPE);
 
-	    if (output_type == G3D_FLOAT)
-		fd[i] = open_output_map(RasterFileName, FCELL_TYPE);
-	    else if (output_type == G3D_DOUBLE)
-		fd[i] = open_output_map(RasterFileName, DCELL_TYPE);
+    }
 
-	}
-
-	/*if requested set the Mask on */
-	if (param.mask->answer) {
-	    if (G3d_maskFileExists()) {
-		changemask = 0;
-		if (G3d_maskIsOff(map)) {
-		    G3d_maskOn(map);
-		    changemask = 1;
-		}
+    /*if requested set the Mask on */
+    if (param.mask->answer) {
+	if (G3d_maskFileExists()) {
+	    changemask = 0;
+	    if (G3d_maskIsOff(map)) {
+		G3d_maskOn(map);
+		changemask = 1;
 	    }
 	}
-
-	/*Create the Rastermaps */
-	G3dToRaster(map, region, fd);
-
-	/*Loop over all output maps! close */
-	for (i = 0; i < region.depths; i++)
-	    close_output_map(fd[i]);
-
-	/*We set the Mask off, if it was off before */
-	if (param.mask->answer) {
-	    if (G3d_maskFileExists())
-		if (G3d_maskIsOn(map) && changemask)
-		    G3d_maskOff(map);
-	}
-
-
-	/*Cleaning */
-	if (RasterFileName)
-	    G_free(RasterFileName);
-
-	if (fd)
-	    G_free(fd);
     }
-    else {
-	fatalError(map, NULL, 0,
-		   _("Wrong G3D Datatype! Cannot create raster maps."));
+
+    /*Create the Rastermaps */
+    G3dToRaster(map, region, fd);
+
+    /*Loop over all output maps! close */
+    for (i = 0; i < region.depths; i++)
+	close_output_map(fd[i]);
+
+    /*We set the Mask off, if it was off before */
+    if (param.mask->answer) {
+	if (G3d_maskFileExists())
+	    if (G3d_maskIsOn(map) && changemask)
+		G3d_maskOff(map);
     }
+
+
+    /*Cleaning */
+    if (RasterFileName)
+	G_free(RasterFileName);
+
+    if (fd)
+	G_free(fd);
 
     /* Close files and exit */
     if (!G3d_closeCell(map))
