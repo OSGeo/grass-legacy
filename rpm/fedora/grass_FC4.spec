@@ -1,5 +1,6 @@
-# GRASS 6.1 RPM spec file for FC4/RHEL4 
+# GRASS 6.1 RPM spec file for ITC
 # This file is Free Software under GNU GPL v>=2.
+# Derived from grass_FC4.spec
 
 %define PACKAGE_NAME grass
 %define PACKAGE_VERSION 6.1.cvs
@@ -7,14 +8,19 @@
 %define _prefix /usr
 %define _bindir /usr/bin
 %define shortver 61
-%define cvssnapshot	_src_snapshot_2006_02_25
 
-%define with_blas	0
-%define with_ffmpeg	0
-%define with_odbc	0
-%define with_mysql	0
-%define with_postgres	1
-%define with_largefiles	1
+%define with_blas        %{?_with_blas:1}%{!?_with_blas:0}
+%define with_ffmpeg      %{?_with_ffmpeg:1}%{!?_with_ffmpeg:0}
+%define with_odbc        %{?_with_odbc:1}%{!?_with_odbc:0}
+%define with_mysql       %{?_with_mysql:1}%{!?_with_mysql:0}
+%define with_postgres    %{?_without_postgres:0}%{!?_without_postgres:1}
+%define with_largefiles  %{?_without_largefiles:0}%{!?_without_largefiles:1}
+%define with_motif       %{?_without_motif:0}%{!?_without_motif:1}
+%define with_fftw        %{?_without_fftw:0}%{!?_without_fftw:1}
+%define with_freetype    %{?_without_freetype:0}%{!?_without_freetype:1}
+%define with_glw         %{?_without_glw:0}%{!?_without_glw:1}
+%define with_sqlite      %{?_without_sqlite:0}%{!?_without_sqlite:1}
+%define cvssnapshot	 %{?cvs:_src_snapshot_%cvs}%{!?cvs:_src_snapshot_2006_02_25}
 
 # Turn off automatic generation of dependencies to
 # avoid a problem with libgrass* dependency issues.
@@ -56,20 +62,39 @@ Requires:	tcl >= 8.3
 Requires:	tk >= 8.3
 Requires:	proj >= 4.4.9
 Requires:       geos >= 2.1.1
+%if "%{with_freetype}" == "1"
 Requires:       freetype >= 2.0.0
+BuildRequires:	freetype-devel >= 2.0.0
+%endif
 Requires:       bash >= 3.0
+%if "%{with_glw}" == "1"
 Requires:       xorg-x11-Mesa-libGL >= 6.8
+BuildRequires:  xorg-x11-Mesa-libGL >= 6.8
+%endif
 Requires:       xorg-x11-libs >= 6.8
+BuildRequires:  xorg-x11-libs >= 6.8
+%if "%{with_motif}" == "1"
 Requires:       openmotif >= 2.2.3
-Requires:       fftw >= 2.1
-Requires:       fftw < 3.0
+Requires:       xorg-x11-deprecated-libs
+BuildRequires:  xorg-x11-deprecated-libs-devel
+BuildRequires:  openmotif-devel >= 2.2.3
+%endif
+%if "%{with_fftw}" == "1"
+Requires:       fftw
+BuildRequires:  fftw-devel
+%endif
 Requires:       glibc >= 2.0
 Requires:       libgcc >= 3.4.2
 Requires:       ncurses >= 5.4
+BuildRequires:	ncurses-devel >= 5.2
 Requires:       libpng >= 1.2.8
+BuildRequires:	libpng-devel >= 1.2.2
 Requires:       libstdc++ >= 3.4
 Requires:       libtiff >= 3.6
 Requires:       zlib >= 1.2
+BuildRequires:	zlib-devel >= 1.2
+Requires:	libjpeg
+BuildRequires:	libjpeg-devel
 %if "%{with_blas}" == "1"
 Requires:       blas >= 3.0
 Requires:       lapack >= 3.0
@@ -79,32 +104,21 @@ Requires:       ffmpeg
 %endif
 %if "%{with_odbc}" == "1"
 Requires:	unixODBC
+BuildRequires:	unixODBC-devel
 %endif
 %if "%{with_mysql}" == "1"
 Requires:	mysql
 %endif
 %if "%{with_postgres}" == "1"
 Requires:	postgresql-libs >= 7.3
+BuildRequires:	postgresql-devel
 %endif
 BuildRequires:	bison
-BuildRequires:  fftw-devel >= 2.1
-BuildRequires:  fftw-devel < 3.0
 BuildRequires:	flex
-BuildRequires:	freetype-devel >= 2.0.0
-BuildRequires:	libjpeg-devel
-BuildRequires:	libpng-devel >= 1.2.2
 BuildRequires:	man
-BuildRequires:	ncurses-devel >= 5.2
 %if "%{with_mysql}" == "1"
 BuildRequires:	mysql-devel
 %endif
-%if "%{with_postgres}" == "1"
-BuildRequires:	postgresql-devel
-%endif
-%if "%{with_odbc}" == "1"
-BuildRequires:	unixODBC-devel
-%endif
-BuildRequires:	zlib-devel
 
 Vendor: GRASS
 #
@@ -118,7 +132,15 @@ analysis, image processing, graphics/maps production, spatial
 modeling, and visualization. GRASS is currently used in academic and
 commercial settings around the world, as well as by many governmental
 agencies and environmental consulting companies.
+Available rpmbuild options :
 
+--without postgres fftw motif largefiles glw freetype sqlite
+
+to disable default features
+ 
+--with blas ffmpeg odbc mysql 
+
+to enable additional features.
 
 %prep
 #%setup -q   ## run quietly with minimal output.
@@ -145,33 +167,68 @@ CXXFLAGS="-g -Wall"
    --prefix=%{buildroot}/%{_prefix} \
    --bindir=%{buildroot}/%{_bindir} \
    --enable-shared \
+%ifarch x86_64
+   --enable-64bit \
+%endif
 %if "%{with_largefiles}" == "1"
    --enable-largefile \
 %endif
    --with-fftw \
    --with-includes=/usr/include \
+%ifarch x86_64
+   --with-libs=/usr/lib64 \
+%else
    --with-libs=/usr/lib \
+%endif
+%if "%{with_motif}" == "1"
    --with-motif \
    --with-motif-includes=/usr/X11R6/include/Xm \
+%else
+   --without-motif  \
+%endif
+%if "%{with_freetype}" == "1"
    --with-freetype=yes \
    --with-freetype-includes=/usr/include/freetype2 \
+%else
+   --without-freetype  \
+%endif
    --with-nls \
    --with-gdal=/usr/bin/gdal-config \
    --with-proj \
    --with-proj-includes=/usr/include \
+%ifarch x86_64
+   --with-proj-libs=/usr/lib64 \
+%else
    --with-proj-libs=/usr/lib \
+%endif
+%if "%{with_glw}" == "1"
    --with-glw \
+%else
+   --without-glw  \
+%endif
+%if "%{with_sqlite}" == "1"
    --with-sqlite \
+%else
+   --without-sqlite  \
+%endif
 %if "%{with_mysql}" == "1"
    --with-mysql \
    --with-mysql-includes=/usr/include/mysql \
+%ifarch x86_64
+   --with-mysql-libs=/usr/lib64/mysql \
+%else
    --with-mysql-libs=/usr/lib/mysql \
+%endif
 %else
    --without-mysql \
 %endif
 %if "%{with_odbc}" == "1"
    --with-odbc  \
+%ifarch x86_64
+   --with-odbc-libs=/usr/lib64 \
+%else
    --with-odbc-libs=/usr/lib \
+%endif
    --with-odbc-includes=/usr/include \
 %else
    --without-odbc \
@@ -179,7 +236,11 @@ CXXFLAGS="-g -Wall"
 %if "%{with_postgres}" == "1"
    --with-postgres  \
    --with-postgres-includes=/usr/include/pgsql \
+%ifarch x86_64
+   --with-postgres-libs=/usr/lib64  \
+%else
    --with-postgres-libs=/usr/lib  \
+%endif
 %else
    --without-postgres  \
 %endif
@@ -241,6 +302,10 @@ rm -rf %{buildroot}
 %postun -p /sbin/ldconfig
 
 %Changelog
+* Tue Mar 17 2006 Roberto Flor <flor@itc.it>
+  - Added with/without option
+  - Added cvs snapshot option
+  - Fixed a lot of inconsistency on x86_64 lib
 * Tue Feb 28 2006 Roberto Flor <flor@itc.it>
   - Small changes and cleanup. Requires FC4 or RH Enterprise 4.
   - Dirty fix for provides error
