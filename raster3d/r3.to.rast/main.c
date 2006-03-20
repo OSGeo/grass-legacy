@@ -203,7 +203,7 @@ int main(int argc, char *argv[])
     G_debug(3, _("Open 3DRaster file %s"), param.input->answers[i]);
 
     if (NULL == G_find_grid3(param.input->answers[i], ""))
-	G3d_fatalError(_("Requested g3d file not found"));
+	G3d_fatalError(_("Requested g3d file <%s> not found"), param.input->answers[i]);
 
     /* Figure out the region from the map */
     G3d_initDefaults();
@@ -232,7 +232,7 @@ int main(int argc, char *argv[])
 			  G3D_USE_CACHE_DEFAULT);
 
     if (map == NULL)
-	G3d_fatalError(_("Error opening g3d file"));
+	G3d_fatalError(_("Error opening g3d file <%s>"), param.input->answer);
 
     /*Get the output type */
     output_type = G3d_fileTypeMap(map);
