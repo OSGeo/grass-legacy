@@ -269,7 +269,7 @@ int main(int argc, char *argv[])
     G_debug(3, _("Open 3D raster file %s"), Parameter.input->answer);
 
     if (NULL == G_find_grid3(Parameter.input->answer, ""))
-	G3d_fatalError(_("Requested g3d file not found"));
+	G3d_fatalError(_("Requested g3d file not found <%s>"), Parameter.input->answer);
 
     /* Figure out the region from the map */
     G3d_initDefaults();
@@ -302,7 +302,7 @@ int main(int argc, char *argv[])
 			  G3D_USE_CACHE_DEFAULT);
 
     if (map == NULL)
-	G3d_fatalError(_("Error opening g3d file"));
+	G3d_fatalError(_("Error opening g3d file <%s>"), Parameter.input->answer);
 
     /*Get the output type */
     output_type = G3d_fileTypeMap(map);
@@ -386,7 +386,7 @@ int main(int argc, char *argv[])
 
     /* Close files and exit */
     if (!G3d_closeCell(map))
-	G3d_fatalError(_("Could not close G3D map"));
+	G3d_fatalError(_("Could not close G3D map <%s>"), Parameter.input->answer);
 
     return (EXIT_SUCCESS);
 }
