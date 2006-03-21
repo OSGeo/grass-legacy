@@ -11,6 +11,7 @@ int call(int (*)(void), char *);
 int plotcell(int, int);
 /* cellhd.c */
 int Outline_cellhd(View *, struct Cell_head *);
+void Save_cellhd (View *view, struct Cell_head *cellhd, char *file);
 /* colors.c */
 int set_colors(struct Colors *);
 /* conv.c */

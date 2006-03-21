@@ -59,6 +59,8 @@ int main (int argc, char *argv[])
     tempfile2 = G_tempfile();
     tempfile_dot = G_tempfile();
     tempfile_dot2 = G_tempfile();
+    tempfile_win = G_tempfile();
+    tempfile_win2 = G_tempfile();
     cell_list = G_tempfile();
     vect_list = G_tempfile();
     group_list = G_tempfile();
@@ -272,6 +274,8 @@ int quit (int n)
     unlink (tempfile_elev);
     unlink (tempfile_dot);
     unlink (tempfile_dot2);
+    unlink (tempfile_win);
+    unlink (tempfile_win2);
     exit(n);
 }
 
