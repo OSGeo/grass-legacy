@@ -1,7 +1,7 @@
 <h2>DESCRIPTION</h2>
 
 <em>v.external</em> creates new vector as a link to external  
-<a href="http://www.gdal.org/ogr/">OGR</a> layer. 
+<a href="http://www.gdal.org/ogr/">OGR</a> layer (read only). 
 OGR (Simple Features Library) is part of the 
 <a href="http://www.gdal.org">GDAL</a> library, so you need to
 install GDAL to use <em>v.external</em> and external OGR layers.
@@ -59,7 +59,11 @@ the topological format used by GRASS. Instead of true topology,
 so called 'pseudo topology' is created for data linked by v.external.
 User should learn the difference between those to formats, because 
 some modules working correctly with GRASS native data, 
-can produce wrong results with input layers created by v.external. 
+can produce wrong results with input layers created by <em>v.external</em>. 
+<p>
+
+See <a HREF="v.db.connect.html">v.db.connect</a> for an example of
+maintaining attributes in external DBMS in also writeable mode.
 
 <H2>REFERENCES</H2>
 
@@ -72,6 +76,7 @@ documentation
 <h2>SEE ALSO</h2>
 
 <em><a HREF="v.clean.html">v.clean</a></em>,
+<em><a HREF="v.db.connect.html">v.db.connect</a></em>,
 <em><a HREF="v.in.db.html">v.in.db</a></em>,
 <em><a HREF="v.in.ogr.html">v.in.ogr</a></em>,
 <em><a HREF="v.out.ogr.html">v.out.ogr</a></em>
