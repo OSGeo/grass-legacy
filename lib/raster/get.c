@@ -61,6 +61,9 @@ static int do_get(int *wx, int *wy, int *button)
 
 int R_get_location_with_box(int cx,int cy, int *wx, int *wy, int *button)
 {
+	if ( !R_has_update_function() )
+	    return R_get_location_with_box_old ( cx, cy, wx, wy, button );
+
 	_send_ident(GET_LOCATION_WITH_BOX) ;
 	_send_int(&cx) ;
 	_send_int(&cy) ;
@@ -68,6 +71,19 @@ int R_get_location_with_box(int cx,int cy, int *wx, int *wy, int *button)
 	_send_int(wy) ;
 
 	return do_get(wx, wy, button);
+}
+
+int R_get_location_with_box_old(int cx,int cy, int *wx, int *wy, int *button)
+{
+	_send_ident(GET_LOCATION_WITH_BOX_OLD) ;
+	_send_int(&cx) ;
+	_send_int(&cy) ;
+	_send_int(wx) ;
+	_send_int(wy) ;
+	_get_int(wx) ;
+	_get_int(wy) ;
+	_get_int(button) ;
+	return 0;
 }
 
 /*!
@@ -90,6 +106,9 @@ int R_get_location_with_box(int cx,int cy, int *wx, int *wy, int *button)
 
 int R_get_location_with_line(int cx, int cy, int *wx, int *wy, int *button)
 {
+	if ( !R_has_update_function() )
+	    return R_get_location_with_line_old ( cx, cy, wx, wy, button );
+
 	_send_ident(GET_LOCATION_WITH_LINE) ;
 	_send_int(&cx) ;
 	_send_int(&cy) ;
@@ -97,6 +116,19 @@ int R_get_location_with_line(int cx, int cy, int *wx, int *wy, int *button)
 	_send_int(wy) ;
 
 	return do_get(wx, wy, button);
+}
+
+int R_get_location_with_line_old(int cx, int cy, int *wx, int *wy, int *button)
+{
+	_send_ident(GET_LOCATION_WITH_LINE_OLD) ;
+	_send_int(&cx) ;
+	_send_int(&cy) ;
+	_send_int(wx) ;
+	_send_int(wy) ;
+	_get_int(wx) ;
+	_get_int(wy) ;
+	_get_int(button) ;
+	return 0;
 }
 
 /*!
@@ -118,6 +150,9 @@ int R_get_location_with_line(int cx, int cy, int *wx, int *wy, int *button)
 
 int R_get_location_with_pointer(int *wx, int *wy, int *button)
 {
+	if ( !R_has_update_function() )
+	    return R_get_location_with_pointer_old ( wx, wy, button );
+
 	*button = 0; /* ?, how button = -1 is used (see driver) */
 
 	_send_ident(GET_LOCATION_WITH_POINTER) ;
@@ -126,4 +161,18 @@ int R_get_location_with_pointer(int *wx, int *wy, int *button)
 	_send_int(button) ;
 
 	return do_get(wx, wy, button);
+}
+
+int R_get_location_with_pointer_old(int *wx, int *wy, int *button)
+{
+	*button = 0; /* ?, how button = -1 is used (see driver) */
+
+	_send_ident(GET_LOCATION_WITH_POINTER_OLD) ;
+	_send_int(wx) ;
+	_send_int(wy) ;
+	_send_int(button) ;
+	_get_int(wx) ;
+	_get_int(wy) ;
+	_get_int(button) ;
+	return 0;
 }

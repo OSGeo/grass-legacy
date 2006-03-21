@@ -244,6 +244,35 @@ int process_command(int c)
 	    }
 	}	
 	break;
+    case GET_LOCATION_WITH_BOX_OLD:
+	REC(&t, sizeof t);
+	REC(&b, sizeof b);
+	REC(&x, sizeof x);
+	REC(&y, sizeof y);
+	COM_Get_location_with_box(t, b, &x, &y, &button, 4);
+	SEND(&x, sizeof x);
+	SEND(&y, sizeof y);
+	SEND(&button, sizeof button);
+	break;
+    case GET_LOCATION_WITH_LINE_OLD:
+	REC(&t, sizeof t);
+	REC(&b, sizeof b);
+	REC(&x, sizeof x);
+	REC(&y, sizeof y);
+	COM_Get_location_with_line(t, b, &x, &y, &button, 4);
+	SEND(&x, sizeof x);
+	SEND(&y, sizeof y);
+	SEND(&button, sizeof button);
+	break;
+    case GET_LOCATION_WITH_POINTER_OLD:
+	REC(&x, sizeof x);
+	REC(&y, sizeof y);
+	REC(&button, sizeof button);
+	COM_Get_location_with_pointer(&x, &y, &button, 4);
+	SEND(&x, sizeof x);
+	SEND(&y, sizeof y);
+	SEND(&button, sizeof button);
+	break;
     case GRAPH_CLOSE:
 	COM_Graph_close();
 	exit(0);

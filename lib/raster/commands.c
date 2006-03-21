@@ -48,6 +48,19 @@ int R_call_update_function(int wx, int wy)
 	return 1;
 }
 
+/*!
+ * \brief Is update function set?
+ * \return 1 set 
+ * \return 0 not set 
+ */
+
+int R_has_update_function()
+{
+	if (update_function) return 1;
+
+	return 0;
+}
+
 static int cancel;
 
 /*!

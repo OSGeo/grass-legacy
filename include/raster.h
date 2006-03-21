@@ -7,14 +7,18 @@
 int R_flush(void);
 void R_set_update_function(int(*fnc)(int,int));
 int R_call_update_function(int,int);
+int R_has_update_function();
 void R_set_cancel(int);
 int R_get_cancel(void);
 int R_raster(int,int,int,const int *);
 
 /* get.c */
 int R_get_location_with_box(int,int,int *,int *,int *);
+int R_get_location_with_box_old(int,int,int *,int *,int *);
 int R_get_location_with_line(int,int,int *,int *,int *);
+int R_get_location_with_line_old(int,int,int *,int *,int *);
 int R_get_location_with_pointer(int *,int *,int *);
+int R_get_location_with_pointer_old(int *,int *,int *);
 
 /* io.c */
 int _send_ident(int);

@@ -33,6 +33,7 @@ int XD_Get_location_with_line (
     static GC xor_gc;
     XGCValues gcValues;
     unsigned gcMask;
+    int done;
 
     if (redraw_pid)
     {
@@ -41,7 +42,7 @@ int XD_Get_location_with_line (
     }
 
     G_debug (5, "Get_location_with_line2(): cmd = %d", cmd );
-    if ( cmd == 1 ) {
+    if ( cmd == 1 || cmd == 4 ) {
 	drawn = 0;
 	/* Set the crosshair cursor */
 	XDefineCursor(dpy, grwin, cur_xh);
@@ -58,17 +59,27 @@ int XD_Get_location_with_line (
 	 * ButtonReleased */
 	event_mask = ButtonPressMask | PointerMotionMask;
 	XSelectInput(dpy, grwin, event_mask);
-
-	return 0;
     }
 
-    if ( cmd == 2 ) {
-	if ( XCheckWindowEvent(dpy, grwin, event_mask, &event) ) { /* get event */
+    if ( cmd == 1 )
+	return 0;
+
+    if ( cmd == 2 || cmd == 4 ) {
+        for (done = 0; !done; ) {
+	    if ( cmd == 2 && !XCheckWindowEvent(dpy, grwin, event_mask, &event) ) {
+		return 0;
+            }
+
+	    if ( cmd == 4 && !get_xevent(event_mask, &event)) {
+		break;
+            }
+
 	    switch (event.type) {
 		case ButtonPress:
 		    *button = event.xbutton.button;
 		    *nx = event.xbutton.x;
 		    *ny = event.xbutton.y;
+		    done = 1;
 		    break;
 
 		case MotionNotify:
@@ -81,12 +92,10 @@ int XD_Get_location_with_line (
 		    oldx = *nx;
 		    oldy = *ny;
 		    drawn = 1;
-		    return 0;
+		    if ( cmd == 2 ) return 0;
 		    break;
 	    }
-	} else { /* no event -> do nothing */
-	    return 0;
-	}
+        }
     } 
     
     /* This is reached only for 'stop' or 'continue' with button press */
