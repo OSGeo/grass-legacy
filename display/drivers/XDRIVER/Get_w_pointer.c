@@ -53,27 +53,43 @@ int XD_Get_location_with_pointer (int *wx, int *wy, int *button, int cmd)
         XUndefineCursor(dpy, grwin);
         return 1;
     }else{
-        if ( cmd == 1 ) { 
+        if ( cmd == 1 || cmd == 4 ) { 
 	    XDefineCursor(dpy, grwin, cur_xh);
 	    XSelectInput(dpy, grwin, ButtonPressMask | PointerMotionMask );
-	    return 0;
 	}
 
+        if ( cmd == 1 )
+	    return 0;
+
 	if ( cmd == 2 ) {
-	    if ( XCheckWindowEvent(dpy, grwin, ButtonPressMask | PointerMotionMask, &event) ) {
-		*wx = event.xbutton.x;
-		*wy = event.xbutton.y;
-		if ( event.type == ButtonPress ) {
-		    *button = event.xbutton.button;
-		} else { /* Motion */
-		    return 0;
-		}
-	    } else {  /* no event -> do nothing */ 
+	    if ( !XCheckWindowEvent(dpy, grwin, ButtonPressMask | PointerMotionMask, &event) ) {
+		return 0; /* no event -> do nothing */ 
+	    }
+	    *wx = event.xbutton.x;
+	    *wy = event.xbutton.y;
+	    if ( event.type == ButtonPress ) {
+		*button = event.xbutton.button;
+	    } else { /* Motion */
 		return 0;
 	    }
 	}
 
-	if ( ( cmd == 2 && *button > 0 ) || cmd == 3 ) {
+	if ( cmd == 4 ) {
+	    while ( 1 )
+	    {
+                if ( !get_xevent(ButtonPressMask, &event) ) {
+		    break;
+                }
+		*wx = event.xbutton.x;
+		*wy = event.xbutton.y;
+		if ( event.type == ButtonPress ) {
+		    *button = event.xbutton.button;
+                    break;
+		}
+            }
+	}
+
+	if ( ( cmd == 2 && *button > 0 ) || cmd == 3 || cmd == 4 ) {
             XUndefineCursor(dpy, grwin);
 	    XSelectInput(dpy, grwin, gemask);
         }

@@ -34,6 +34,7 @@ int XD_Get_location_with_box (
     static GC xor_gc;
     XGCValues gcValues;
     unsigned gcMask;
+    int done;
 
     if (redraw_pid)
     {
@@ -42,7 +43,7 @@ int XD_Get_location_with_box (
     }
 
     G_debug (5, "Get_location_with_line2(): cmd = %d", cmd );
-    if ( cmd == 1 ) {
+    if ( cmd == 1 || cmd == 4 ) {
 	drawn = 0;
 	/* Set the crosshair cursor */
 	XDefineCursor(dpy, grwin, cur_xh);
@@ -60,16 +61,27 @@ int XD_Get_location_with_box (
 	event_mask = ButtonPressMask | PointerMotionMask;
 	XSelectInput(dpy, grwin, event_mask);
 
-	return 0;
     }
 
-    if ( cmd == 2 ) {
-	if ( XCheckWindowEvent(dpy, grwin, event_mask, &event) ) { /* get event */
+    if  (cmd == 1 )
+	return 0;
+
+    if ( cmd == 2 || cmd == 4 ) {
+        for (done = 0; !done; ) {
+	    if ( cmd == 2 && !XCheckWindowEvent(dpy, grwin, event_mask, &event) ) { 
+		return 0; /* no event -> do nothing */
+	    } 
+
+	    if ( cmd == 4 && !get_xevent(event_mask, &event)) {
+		break;
+            }
+
 	    switch (event.type) {
 		case ButtonPress:
 		    *button = event.xbutton.button;
 		    *nx = event.xbutton.x;
 		    *ny = event.xbutton.y;
+		    done = 1;
 		    break;
 
 		case MotionNotify:
@@ -79,38 +91,39 @@ int XD_Get_location_with_box (
 		    if (drawn)
 			XDrawRectangle(dpy, grwin, xor_gc, oldx, oldy, oldwidth, oldheight);
 
-                    /* need to draw a rectangle with (cx,cy) as one corner and
-                     * (*nx,*ny) as opposite corner. Figure the top left coords
-                     * of such a rectangle */
-                    if (cx < *nx) {
-	                leftx = cx;
-	                width = *nx - cx;
-	            } else {
-	                leftx = *nx;
-                        width = cx - *nx;
-  	            }
-	            if (cy < *ny) {
-		        topy = cy;
+		    /* need to draw a rectangle with (cx,cy) as one corner and
+		     * (*nx,*ny) as opposite corner. Figure the top left coords
+		     * of such a rectangle */
+		    if (cx < *nx) {
+			leftx = cx;
+			width = *nx - cx;
+		    } else {
+			leftx = *nx;
+			width = cx - *nx;
+		    }
+		    if (cy < *ny) {
+			topy = cy;
 			height = *ny - cy;
-                    } else {
-                        topy = *ny;
-                        height = cy - *ny;
-                    }
+		    } else {
+			topy = *ny;
+			height = cy - *ny;
+		    }
 		    
 		    if (width && height) {
-		        XDrawRectangle(dpy, grwin, xor_gc, leftx, topy, width, height);
-		        oldwidth = width;
+			XDrawRectangle(dpy, grwin, xor_gc, leftx, topy, width, height);
+			oldwidth = width;
 			oldheight = height;
 			oldx = leftx;
 			oldy = topy;
-		        drawn = 1;
+			drawn = 1;
+		    } else {
+			drawn = 0;
 		    }
-		    return 0;
+                    if ( cmd == 2 )
+			return 0;
 		    break;
-	    }
-	} else { /* no event -> do nothing */
-	    return 0;
-	}
+	      }
+         }
     } 
     
     /* This is reached only for 'stop' or 'continue' with button press */

@@ -95,6 +95,11 @@
 /* line attributes */
 #define LINE_WIDTH                  79
 
+/* Original functions without call to update function */
+#define GET_LOCATION_WITH_BOX_OLD     81
+#define GET_LOCATION_WITH_LINE_OLD    82
+#define GET_LOCATION_WITH_POINTER_OLD 83
+
 /* return codes for pad routines */
 
 #define OK 0
