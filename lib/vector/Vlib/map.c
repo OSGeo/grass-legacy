@@ -176,7 +176,7 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
 
         if ( stat (old_path, &info) == 0)       /* file exists? */
         {
-           G_debug (0, "copy %s to %s", old_path, new_path );
+           G_debug (2, "copy %s to %s", old_path, new_path );
             if ( copy_file ( old_path, new_path ) )
             {
 	        G_warning ( "Cannot copy vector file '%s' to '%s'", old_path, new_path );
