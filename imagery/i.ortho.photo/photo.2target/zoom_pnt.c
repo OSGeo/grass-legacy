@@ -43,6 +43,7 @@ int zoom_point2 (int x,int y, int magnify)
     int mag;
     double north, south, east, west;
     double dmag;
+    char *winfile;
 
     if (In_view (pick_view = VIEW_MAP1, x, y))
     {
@@ -193,11 +194,20 @@ int zoom_point2 (int x,int y, int magnify)
  * Outline the zoom window on the main map
  * Turn previous one to grey.
  */
+   if ( main_view == VIEW_MAP1 )
+        winfile = tempfile_win;
+    else
+        winfile = tempfile_win2;
+
     if (zoom_view->cell.configured)
     {
 	R_standard_color (GREY);
-	Outline_cellhd (main_view, &zoom_view->cell.head);
+	/* Outline_cellhd (main_view, &zoom_view->cell.head); */
+        R_panel_restore (winfile);
     }
+
+    Save_cellhd ( main_view, &cellhd, winfile);
+
     R_standard_color (RED);
     Outline_cellhd (main_view, &cellhd);
 
