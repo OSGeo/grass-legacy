@@ -87,11 +87,26 @@ char *G_adjust_Cell_head(struct Cell_head *cellhd,int row_flag,int col_flag)
 /* for lat/lon, check north,south. force east larger than west */
     if (cellhd->proj == PROJECTION_LL)
     {
-	if (cellhd->north > 90.0)
-	    return (_("Illegal latitude for North"));
-	if (cellhd->south < -90.0)
-	    return (_("Illegal latitude for South"));
-	while (cellhd->east <= cellhd->west)
+	if (cellhd->north > 90.0) {
+	    if (cellhd->north - 90.0 < .000001 ) /* TODO: find good threshold */
+		cellhd->north = 90.0;
+	    else
+	        return (_("Illegal latitude for North"));
+	}
+
+	if (cellhd->south < -90.0) {
+	    if (cellhd->south + 90.0 < .000001 ) /* TODO: find good threshold */
+		cellhd->south = -90.0;
+	    else
+	        return (_("Illegal latitude for South"));
+	}
+
+	if (cellhd->west + 180.0 < .000001 ) /* TODO: find good threshold */
+	    cellhd->west = -180.0;
+	if (cellhd->east - 180.0 < .000001 ) /* TODO: find good threshold */
+	    cellhd->east = 180.0;
+
+        while (cellhd->east <= cellhd->west)
 	    cellhd->east += 360.0;
     }
 
