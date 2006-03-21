@@ -130,7 +130,11 @@ main (int argc, char *argv[])
     if ( driver == NULL ) {
 	G_fatal_error ( _("Cannot open database %s by driver %s"), fi->database, fi->driver );
     }
-    
+
+    /* check if target table already exists */
+    if( db_table_exists ( driver_opt->answer, database_opt->answer, outvect->answer) == 1 )
+        G_fatal_error(_("Output vector table <%s> already exists"), outvect->answer);
+
     /* Open select cursor */
     buf = G_malloc(strlen(keycol_opt->answer) + strlen(xcol_opt->answer) + strlen(ycol_opt->answer) + 12);
     sprintf ( buf, "select %s, %s, %s", keycol_opt->answer, xcol_opt->answer, ycol_opt->answer );
@@ -198,7 +202,6 @@ main (int argc, char *argv[])
     /* Copy table */
     ret = db_copy_table ( driver_opt->answer, database_opt->answer, table_opt->answer,
                      fi->driver, fi->database, fi->table );
-
     if ( ret == DB_FAILED ) {
 	G_warning ( _("Cannot copy table") );
     } else {
