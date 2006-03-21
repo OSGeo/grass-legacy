@@ -62,7 +62,7 @@ main (int argc, char *argv[])
     int dim, with_z;
     
     /* OGR */
-    OGRDataSourceH Ogr_ds;
+    OGRDataSourceH Ogr_ds=NULL;
     OGRSFDriverH Ogr_driver;  
     OGRLayerH Ogr_layer;	
     OGRFieldDefnH Ogr_field; 
@@ -716,7 +716,7 @@ main (int argc, char *argv[])
     separator = "-----------------------------------------------------\n";
     fprintf ( stderr, separator );
 
-    // TODO: is it necessary to build here? probably not, consumes time
+    /* TODO: is it necessary to build here? probably not, consumes time */
     Vect_build ( &Map, stderr );
     
     if ( !no_clean_flag->answer && Vect_get_num_primitives(&Map, GV_BOUNDARY) > 0) {
