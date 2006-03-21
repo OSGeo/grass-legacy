@@ -1,11 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-</head>
-<body>
 <h2>DESCRIPTION</h2>
-
-
 
 <p><em><b>d.vect.thematic</b></em>  - Creates thematic  maps from vectors of
   all types and numeric attributes (stored in the data table connected to a vector
@@ -45,18 +38,21 @@ directory.</p>
 The algorithm currently uses the script <em><a href="v.univar.sh.html">v.univar.sh</a></em>
 to calculate basic descriptive statistics needed for thematic mapping (minimum,
 maximum, mean, standard deviation, and quartiles).
-<h2>SEE ALSO</h2>
 
+<h2>EXAMPLE</h2>
+
+<div class="code"><pre>
+d.vect.thematic -l recent_earthquakes column=magnitude type=point
+</pre></div>
+
+<h2>SEE ALSO</h2>
 
 <em><a href="d.vect.html">d.vect</a>, 
 <a href="v.univar.sh.html">v.univar.sh</a></em>
 
-<p> AUTHORS
-d.vect.thematic: Michael Barton, Arizona State University, Daniel Cavelo Aros,
-  Martin Landa, and Jachym Cepicky.
-</p>
-<p>
-</p>
+<h2>AUTHORS</h2>
+
+ Michael Barton, Arizona State University, Daniel Cavelo Aros,
+ Martin Landa, and Jachym Cepicky.
+
 <p><i>Last changed: $Date$</i></p>
-</body>
-</html>
