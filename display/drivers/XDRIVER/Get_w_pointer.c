@@ -62,7 +62,7 @@ int XD_Get_location_with_pointer (int *wx, int *wy, int *button, int cmd)
 	    return 0;
 
 	if ( cmd == 2 ) {
-	    if ( !XCheckWindowEvent(dpy, grwin, ButtonPressMask | PointerMotionMask, &event) ) {
+	    if ( !get_xevent(ButtonPressMask | PointerMotionMask, &event, 0) ) {
 		return 0; /* no event -> do nothing */ 
 	    }
 	    *wx = event.xbutton.x;
@@ -77,7 +77,7 @@ int XD_Get_location_with_pointer (int *wx, int *wy, int *button, int cmd)
 	if ( cmd == 4 ) {
 	    while ( 1 )
 	    {
-                if ( !get_xevent(ButtonPressMask, &event) ) {
+                if ( !get_xevent(ButtonPressMask, &event, 1) ) {
 		    break;
                 }
 		*wx = event.xbutton.x;

@@ -66,11 +66,11 @@ int XD_Get_location_with_line (
 
     if ( cmd == 2 || cmd == 4 ) {
         for (done = 0; !done; ) {
-	    if ( cmd == 2 && !XCheckWindowEvent(dpy, grwin, event_mask, &event) ) {
+	    if ( cmd == 2 && !get_xevent(event_mask, &event, 0) ) {
 		return 0;
             }
 
-	    if ( cmd == 4 && !get_xevent(event_mask, &event)) {
+	    if ( cmd == 4 && !get_xevent(event_mask, &event, 1)) {
 		break;
             }
 
