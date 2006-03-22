@@ -39,10 +39,20 @@ The algorithm currently uses the script <em><a href="v.univar.sh.html">v.univar.
 to calculate basic descriptive statistics needed for thematic mapping (minimum,
 maximum, mean, standard deviation, and quartiles).
 
-<h2>EXAMPLE</h2>
+<h2>EXAMPLES</h2>
+
+Earthquake points with color gradient:
 
 <div class="code"><pre>
 d.vect.thematic -l recent_earthquakes column=magnitude type=point
+</pre></div>
+
+<p>
+Earthquake points with different sizes:
+
+<div class="code"><pre>
+d.vect.thematic -l recent_earthquakes column=magnitude type=point \
+                themetype=graduated_points maxsize=15
 </pre></div>
 
 <h2>SEE ALSO</h2>
