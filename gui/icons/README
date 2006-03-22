@@ -33,3 +33,7 @@ edit-copy.gif is needed for one version of gui.tcl
 status
 
 Status icons for grass. Any lowercase key to GRASS_INFO_*, like warning, error, message. Also success and failure for exit codes.
+
+channel
+
+Icons for channels of images
