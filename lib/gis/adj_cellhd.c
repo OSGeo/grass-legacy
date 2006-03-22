@@ -237,10 +237,45 @@ char *G_adjust_Cell_head3(struct Cell_head *cellhd,int row_flag,int col_flag, in
 /* for lat/lon, check north,south. force east larger than west */
     if (cellhd->proj == PROJECTION_LL)
     {
-	if (cellhd->north > 90.0)
-	    return (_("Illegal latitude for North"));
-	if (cellhd->south < -90.0)
-	    return (_("Illegal latitude for South"));
+	double epsilon_ns, epsilon_ew;
+	
+	/* TODO: find good thresholds */
+	epsilon_ns= 1. / cellhd->rows * 0.001;
+	epsilon_ew= .000001;  /* epsilon_ew calculation doesn't work due to cellhd->cols update/global wraparound below */
+
+	G_debug(3,"G_adjust_Cell_head: epsilon_ns: %g, epsilon_ew: %g", epsilon_ns, epsilon_ew);
+	
+	/* TODO: once working, change below G_warning to G_debug */
+	
+	/* fix rounding problems if input map slightly exceeds the world definition -180 90 180 -90 */
+	if (cellhd->north > 90.0) {
+	    if ( ((cellhd->north - 90.0) < epsilon_ns) && ((cellhd->north - 90.0) > GRASS_EPSILON) ) {
+		G_warning (_("Fixing subtle input data rounding error of north boundary (%g>%g)"), cellhd->north - 90.0, epsilon_ns);
+		cellhd->north = 90.0;
+	    } else
+	        return (_("Illegal latitude for North"));
+	}
+
+	if (cellhd->south < -90.0) {
+	    if ( ((cellhd->south + 90.0) < epsilon_ns) && ((cellhd->south + 90.0) < GRASS_EPSILON) ) {
+		G_warning (_("Fixing subtle input data rounding error of south boundary (%g>%g)"), cellhd->south + 90.0, epsilon_ns);
+		cellhd->south = -90.0;
+	    } else
+	        return (_("Illegal latitude for South"));
+	}
+	
+	G_debug(3,"r.in.gdal cellhd->west: %f, devi: %g, eps: %g", cellhd->west, cellhd->west + 180.0, epsilon_ew);
+	if ( (cellhd->west < -180.0) && ((cellhd->west + 180.0) < epsilon_ew) && ((cellhd->west + 180.0) < GRASS_EPSILON) ) {
+	    G_warning (_("Fixing subtle input data rounding error of west boundary (%g>%g)"), cellhd->west + 180.0, epsilon_ew);
+	    cellhd->west = -180.0;
+	}
+
+	G_debug(3,"r.in.gdal cellhd->east: %f, devi: %g, eps: %g", cellhd->east, cellhd->east - 180.0, epsilon_ew);
+	if ( (cellhd->east > 180.0) && ((cellhd->east - 180.0) > epsilon_ew) && ((cellhd->east - 180.0) > GRASS_EPSILON) ) {
+	    G_warning (_("Fixing subtle input data rounding error of east boundary (%g>%g)"), cellhd->east - 180.0, epsilon_ew);
+	    cellhd->east = 180.0;
+	}
+
 	while (cellhd->east <= cellhd->west)
 	    cellhd->east += 360.0;
     }
