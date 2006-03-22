@@ -191,6 +191,9 @@ main (int argc, char *argv[])
     driver_close ();
 
     G_get_window(&window);
+
+    /* Set tool */
+    Tool_next = TOOL_NEW_POINT;
     
     /* Open toolbox */
     Tk_Main(0, argv, Tcl_AppInit);
