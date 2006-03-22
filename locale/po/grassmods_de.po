@@ -10506,8 +10506,8 @@ msgstr "Kann keinen Index erstellen."
 #: ../vector/v.in.db/main.c:50
 msgid "Create new vector (points) from database table containing coordinates."
 msgstr ""
-"Erzeugt neuen Vektor (Punkte) aus einer Datenbanktabelle, die Koordinaten "
-"hat."
+"Erzeugt neue Vektorkarte (Punkte) aus einer Datenbanktabelle, die Koordinaten "
+"beinhaltet."
 
 #: ../vector/v.in.db/main.c:71
 msgid "Input table name"
