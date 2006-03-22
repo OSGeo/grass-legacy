@@ -258,6 +258,7 @@ int main(int argc, char *argv[])
     }
 
     filename = argv[1];
+    G_debug ( 2, "filename = %s", filename );
 
     ctx.fp = fopen(filename, "r");
     if (!ctx.fp)
@@ -331,8 +332,22 @@ int main(int argc, char *argv[])
 	putenv(G_store(buff));
     }
 
-    execl(filename, filename, "@ARGS_PARSED@", NULL);
+#ifdef __MINGW32__
+    {
+        /* TODO: this was not tested because g.parser does not get here.
+         *       g.parser hangs if given paremeter is existing file
+         *       on terminal server - maybe just restrictions of terminal server?  
+         */
+        char cmd[2000];
 
+        sprintf ( cmd, "%s @ARGS_PARSED@", filename );
+        G_system ( cmd );
+        return 0;
+    }
+#else
+    execl(filename, filename, "@ARGS_PARSED@", NULL);
     perror("execl() failed");
     return 1;
+#endif
+
 }
