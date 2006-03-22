@@ -89,8 +89,10 @@ char *G_adjust_Cell_head(struct Cell_head *cellhd,int row_flag,int col_flag)
     {
 	double epsilon_ns, epsilon_ew;
 	
-	epsilon_ns= 1. / cellhd->rows * 0.001; /* TODO: find good threshold */
-	epsilon_ew= 1. / cellhd->cols * 0.001; /* TODO: find good threshold */
+	/* TODO: find good thresholds */
+	epsilon_ns= 1. / cellhd->rows * 0.001;
+	epsilon_ew= .000001;  /* epsilon_ew calculation doesn't work due to cellhd->cols update/global wraparound below */
+
 	G_debug(3,"G_adjust_Cell_head: epsilon_ns: %g, epsilon_ew: %g", epsilon_ns, epsilon_ew);
 	
 	/* TODO: once working, change below G_warning to G_debug */
@@ -112,13 +114,18 @@ char *G_adjust_Cell_head(struct Cell_head *cellhd,int row_flag,int col_flag)
 	        return (_("Illegal latitude for South"));
 	}
 	
-	/* TODO: fix EW exceeds (epsilon_ew) - attention with global wrap around */
-	/* epsilon_ew doesn't work due to cellhd->cols update below */
-	if (cellhd->west + 180.0 < .000001 ) /* TODO: find good threshold */
-	    cellhd->west = -180.0;
-	if (cellhd->east - 180.0 < .000001 ) /* TODO: find good threshold */
-	    cellhd->east = 180.0;
+	G_debug(3,"cellhd->east: %f", cellhd->east);
 
+/* not functional yet due to global wrap around
+	if ( (cellhd->west + 180.0 < epsilon_ew) && (cellhd->west + 180.0 < GRASS_EPSILON) ) {
+	    G_warning (_("Fixing subtle input data rounding error of west boundary (%g<%g)"), cellhd->west + 180.0, epsilon_ew);
+	    cellhd->west = -180.0;
+	}
+	if ( (cellhd->east - 180.0 < epsilon_ew) && (cellhd->east - 180.0 > GRASS_EPSILON) ) {
+	    G_warning (_("Fixing subtle input data rounding error of east boundary (%g<%g)"), cellhd->east - 180.0, epsilon_ew);
+	    cellhd->east = 180.0;
+	}
+*/
         while (cellhd->east <= cellhd->west)
 	    cellhd->east += 360.0;
     }
