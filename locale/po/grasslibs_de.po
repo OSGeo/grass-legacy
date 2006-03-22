@@ -507,7 +507,7 @@ msgstr "%s nicht gesetzt"
 
 #: ../lib/gis/error.c:162
 msgid "WARNING: "
-msgstr "WARNUNG:"
+msgstr "WARNUNG: "
 
 #: ../lib/gis/error.c:163
 msgid "ERROR: "
