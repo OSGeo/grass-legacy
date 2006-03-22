@@ -104,6 +104,11 @@ v.db.connect map=mytable driver=pg database="host=localhost,dbname=meteo" \
 # in PostgreSQL.
 </pre></div>
 
+An alternative is to create a "view" of only ID, x, y [,z] columns and
+to use <em>v.in.db</em> on this view, then connect the original
+table to the geometry. This will be faster if the original table
+is very large.
+
 
 <h2>SEE ALSO</h2>
 
