@@ -3,6 +3,7 @@
 lappend auto_path $env(GISBASE)/bwidget
 package require -exact BWidget 1.2.1
 source $env(GISBASE)/etc/gtcltk/select.tcl
+source $env(GISBASE)/etc/gtcltk/gronsole.tcl
 
 set env(GISDBASE) [exec g.gisenv get=GISDBASE]
 set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
@@ -11,6 +12,21 @@ set env(MAPSET) [exec g.gisenv get=MAPSET]
 set dlg 0
 set path {}
 set iconpath $env(GISBASE)/etc/gui/icons/
+
+##############################################################################
+# Platform
+
+set keycontrol "Control"
+
+if {[info exists env(osxaqua)]} {
+    set osxaqua $env(osxaqua)
+} else {
+    set osxaqua "0"
+}
+
+if { $osxaqua == "1"} {
+    set keycontrol "Command"
+}
 
 ################################################################################
 # Miscellanious
@@ -107,56 +123,6 @@ proc show_cmd {dlg} {
 	set opt($dlg,cmd_string) [mkcmd_string $dlg]
 }
 
-proc prnout {dlg fh} {
-	global opt imagepath
-	set outtext $opt($dlg,outtext)
-
-	if [eof $fh] {
-		set result [catch {close $fh} error_text]
-		if {$result == 0} {
-			set icon [icon status success]
-		} else {
-			set icon [icon status failure]
-		}
-		if {$icon != 0} {
-			$outtext image create end -image $icon
-		}
-		$outtext insert end " Done.\n"
-		catch {$opt($dlg,run_button) configure -state normal}
-	} else {
-		set str [gets $fh]
-		append str "\n"
-		if { [fblocked $fh] } { set str [read $fh] }
-		while {[set idx [string first "\b" $str]] != -1} {
-			set last [expr $idx - 1]
-			set str1 [string range $str 1 $last]
-			set first [expr $idx + 1]
-			set str [string range $str $first end]
-			set pos [$outtext index "end - 1 chars"]
-			$outtext delete $pos
-			$outtext insert end $str1
-		}
-		if { [regexp -- {^GRASS_INFO_([^(]+)\(([0-9]+),([0-9]+)\): (.+)$} $str match key message_pid message_id val rest] } {
-			set icon [icon status [string tolower $key]]
-			if {$icon != 0} {
-				$outtext image create end -image $icon
-			}
-			$outtext insert end $val
-		} elseif { [regexp -- {^GRASS_INFO_PERCENT: (.+)$} $str match val rest] } {
-			progress $dlg $val
-			if { $val >= 100 } { 
-				progress $dlg -1
-				$outtext insert end "\n"
-			}
-		} elseif { [regexp -- {^GRASS_INFO_END.+} $str match key rest] } {
-			# nothing
-		} else {
-			$outtext insert end $str
-                }
-		$outtext yview end
-	}
-}
-
 proc get_file {dlg optn} {
 	global opt
 	set filename [tk_getOpenFile -title {Load File}]
@@ -184,46 +150,17 @@ proc get_map {dlg optn elem} {
 }
 
 proc run_cmd {dlg} {
-	global opt env
-	
-	set path $opt($dlg,path)
-	
+	global opt
+	set gronsole $opt($dlg,gronsole)
+
 	set title "Output"
 	layout_raise_special_frame $dlg [list $title] $title]
 
-	set outtext $opt($dlg,outtext)
-        progress $dlg -1
-
 	set cmd [mkcmd $dlg]
-	set cmd_string {}
-	foreach word $cmd {
-		if {[llength $word] > 1} {
-			regsub -all -- {'} $word {'\''} newword
-			append cmd_string {'} $newword {' }
-		} {
-			append cmd_string $word { }
-		}
-	}
-	$outtext insert end "\n"
-	# Put a start icon in the output text
-	if {[set icon [icon module $opt($dlg,pgm_name)]] != 0 } {
-		$outtext image create end -image $icon
-	}
-	$outtext insert end " $cmd_string\n"
-	$outtext yview end
-	set cmd [concat | $cmd 2>@ stdout]
 
-        set env(GRASS_MESSAGE_FORMAT) gui
-	set ret [catch {open $cmd r} fh]
-        set env(GRASS_MESSAGE_FORMAT) standard
-	if { $ret } {
-		error $fh
-	} {
-		catch {$opt($dlg,run_button) configure -state disabled}
-		fconfigure $fh -blocking 0
-		fileevent $fh readable [list prnout $dlg $fh]
-	}
-	update idletasks
+	catch {$opt($dlg,run_button) configure -state disabled}
+
+	$gronsole run $cmd {} "catch {$opt($dlg,run_button) configure -state active}"
 }
 
 proc help_cmd {dlg} {
@@ -235,10 +172,9 @@ proc help_cmd {dlg} {
 
 proc clear_cmd {dlg} {
 	global opt
-	set outtext $opt($dlg,outtext)
-        progress $dlg -1
+	set gronsole $opt($dlg,gronsole)
 
-	$outtext delete 1.0 end
+	$gronsole clear
 }
 
 proc close_cmd {dlg} {
@@ -399,11 +335,10 @@ proc make_output {dlg path root} {
 
 	set title "Output"
 	set outpane [layout_get_special_frame $dlg [list $title] $title]
-	set outwin [ScrolledWindow $outpane.win -relief sunken -borderwidth 2]
-	set outtext [text $outwin.text -height 5 -width 60] 
-	$outwin setwidget $outtext
-	pack $outwin -expand yes -fill both
-	set opt($dlg,outtext) $outtext
+
+	set gronsole [Gronsole $outpane.gronsole -height 5 -width 60 -bg white]
+	pack $gronsole -expand yes -fill both
+	set opt($dlg,gronsole) $gronsole
 }
 
 proc make_progress {dlg path root} {
