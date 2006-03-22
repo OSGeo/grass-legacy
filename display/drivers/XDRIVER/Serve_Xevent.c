@@ -24,7 +24,7 @@ pid_t redraw_pid;
 
 int needs_flush;
 
-int get_xevent(long event_mask, XEvent *event)
+int get_xevent(long event_mask, XEvent *event, int block)
 {
 	int input_fd = LIB_command_get_input();
 	int display_fd = ConnectionNumber(dpy);
@@ -37,8 +37,8 @@ int get_xevent(long event_mask, XEvent *event)
 		if (XCheckWindowEvent(dpy, grwin, event_mask, event))
 			return 1;
 
-		tv.tv_sec = 1;
-		tv.tv_usec = 0;
+		tv.tv_sec = 0;
+		tv.tv_usec = 200;
 
 		FD_ZERO(&waitset);
 		FD_SET(input_fd, &waitset);
@@ -51,6 +51,9 @@ int get_xevent(long event_mask, XEvent *event)
 
 		if (FD_ISSET(input_fd, &waitset))
 			return 0;
+
+                if ( !block )
+		    return 0;
 	}
 }
 
