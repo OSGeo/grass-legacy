@@ -87,20 +87,33 @@ char *G_adjust_Cell_head(struct Cell_head *cellhd,int row_flag,int col_flag)
 /* for lat/lon, check north,south. force east larger than west */
     if (cellhd->proj == PROJECTION_LL)
     {
+	double epsilon_ns, epsilon_ew;
+	
+	epsilon_ns= 1. / cellhd->rows * 0.001; /* TODO: find good threshold */
+	epsilon_ew= 1. / cellhd->cols * 0.001; /* TODO: find good threshold */
+	G_debug(3,"G_adjust_Cell_head: epsilon_ns: %g, epsilon_ew: %g", epsilon_ns, epsilon_ew);
+	
+	/* TODO: once working, change below G_warning to G_debug */
+	
+	/* fix rounding problems if input map slightly exceeds the world definition -180 90 180 -90 */
 	if (cellhd->north > 90.0) {
-	    if (cellhd->north - 90.0 < .000001 ) /* TODO: find good threshold */
+	    if ( (cellhd->north - 90.0 < epsilon_ns) && (cellhd->north - 90.0 > GRASS_EPSILON) ) {
+		G_warning (_("Fixing subtle input data rounding error of north boundary (%g<%g)"), cellhd->north - 90.0, epsilon_ns);
 		cellhd->north = 90.0;
-	    else
+	    } else
 	        return (_("Illegal latitude for North"));
 	}
 
 	if (cellhd->south < -90.0) {
-	    if (cellhd->south + 90.0 < .000001 ) /* TODO: find good threshold */
+	    if ( (cellhd->south + 90.0 < epsilon_ns) && (cellhd->south + 90.0 < GRASS_EPSILON) ) {
+		G_warning (_("Fixing subtle input data rounding error of south boundary (%g<%g)"), cellhd->south + 90.0, epsilon_ns);
 		cellhd->south = -90.0;
-	    else
+	    } else
 	        return (_("Illegal latitude for South"));
 	}
-
+	
+	/* TODO: fix EW exceeds (epsilon_ew) - attention with global wrap around */
+	/* epsilon_ew doesn't work due to cellhd->cols update below */
 	if (cellhd->west + 180.0 < .000001 ) /* TODO: find good threshold */
 	    cellhd->west = -180.0;
 	if (cellhd->east - 180.0 < .000001 ) /* TODO: find good threshold */
