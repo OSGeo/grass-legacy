@@ -99,33 +99,33 @@ char *G_adjust_Cell_head(struct Cell_head *cellhd,int row_flag,int col_flag)
 	
 	/* fix rounding problems if input map slightly exceeds the world definition -180 90 180 -90 */
 	if (cellhd->north > 90.0) {
-	    if ( (cellhd->north - 90.0 < epsilon_ns) && (cellhd->north - 90.0 > GRASS_EPSILON) ) {
-		G_warning (_("Fixing subtle input data rounding error of north boundary (%g<%g)"), cellhd->north - 90.0, epsilon_ns);
+	    if ( ((cellhd->north - 90.0) < epsilon_ns) && ((cellhd->north - 90.0) > GRASS_EPSILON) ) {
+		G_warning (_("Fixing subtle input data rounding error of north boundary (%g>%g)"), cellhd->north - 90.0, epsilon_ns);
 		cellhd->north = 90.0;
 	    } else
 	        return (_("Illegal latitude for North"));
 	}
 
 	if (cellhd->south < -90.0) {
-	    if ( (cellhd->south + 90.0 < epsilon_ns) && (cellhd->south + 90.0 < GRASS_EPSILON) ) {
-		G_warning (_("Fixing subtle input data rounding error of south boundary (%g<%g)"), cellhd->south + 90.0, epsilon_ns);
+	    if ( ((cellhd->south + 90.0) < epsilon_ns) && ((cellhd->south + 90.0) < GRASS_EPSILON) ) {
+		G_warning (_("Fixing subtle input data rounding error of south boundary (%g>%g)"), cellhd->south + 90.0, epsilon_ns);
 		cellhd->south = -90.0;
 	    } else
 	        return (_("Illegal latitude for South"));
 	}
 	
-	G_debug(3,"cellhd->east: %f", cellhd->east);
-
-/* not functional yet due to global wrap around
-	if ( (cellhd->west + 180.0 < epsilon_ew) && (cellhd->west + 180.0 < GRASS_EPSILON) ) {
-	    G_warning (_("Fixing subtle input data rounding error of west boundary (%g<%g)"), cellhd->west + 180.0, epsilon_ew);
+	G_debug(3,"r.in.gdal cellhd->west: %f, devi: %g, eps: %g", cellhd->west, cellhd->west + 180.0, epsilon_ew);
+	if ( (cellhd->west < -180.0) && ((cellhd->west + 180.0) < epsilon_ew) && ((cellhd->west + 180.0) < GRASS_EPSILON) ) {
+	    G_warning (_("Fixing subtle input data rounding error of west boundary (%g>%g)"), cellhd->west + 180.0, epsilon_ew);
 	    cellhd->west = -180.0;
 	}
-	if ( (cellhd->east - 180.0 < epsilon_ew) && (cellhd->east - 180.0 > GRASS_EPSILON) ) {
-	    G_warning (_("Fixing subtle input data rounding error of east boundary (%g<%g)"), cellhd->east - 180.0, epsilon_ew);
+
+	G_debug(3,"r.in.gdal cellhd->east: %f, devi: %g, eps: %g", cellhd->east, cellhd->east - 180.0, epsilon_ew);
+	if ( (cellhd->east > 180.0) && ((cellhd->east - 180.0) > epsilon_ew) && ((cellhd->east - 180.0) > GRASS_EPSILON) ) {
+	    G_warning (_("Fixing subtle input data rounding error of east boundary (%g>%g)"), cellhd->east - 180.0, epsilon_ew);
 	    cellhd->east = 180.0;
 	}
-*/
+
         while (cellhd->east <= cellhd->west)
 	    cellhd->east += 360.0;
     }
