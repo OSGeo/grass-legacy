@@ -108,8 +108,27 @@ char *G__get_window ( struct Cell_head *window,
 {
     FILE *fd ;
     char *err;
+    char *regvar;
 
     G_zero ((char *) window, sizeof (struct Cell_head));
+
+    /* Optionaly read the region from enviroment variable */
+    regvar = getenv("GRASS_REGION");
+
+    if ( regvar ) 
+    {
+        char **tokens, *delm = ";";
+         
+        tokens = G_tokenize ( regvar, delm ); 
+
+        err = G__read_Cell_head_array ( tokens, window, 0);
+       
+        G_free_tokens ( tokens );
+
+        return err; 
+    }
+
+    /* Read from file */
     if (!(fd = G_fopen_old (element, name, mapset) ))
     {
 /*

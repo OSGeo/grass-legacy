@@ -38,16 +38,59 @@ static char *error(char *,int);
 #define SET(x) flags|=(1<<x)
 #define TEST(x) (flags&(1<<x))
 
+char *G__read_Cell_head_array ( char **array,
+    struct Cell_head *cellhd,int is_cellhd);
+
 char *G__read_Cell_head ( FILE *fd,
     struct Cell_head *cellhd,int is_cellhd)
 {
+    int count;
+    char *result, **array;
     char buf[1024];
+
+    G_debug ( 2, "G__read_Cell_head" );
+
+    /* Count lines */
+    count = 0;
+    fseek (fd, 0L, 0);
+    while ( G_getl (buf, sizeof (buf), fd) ) count++;
+
+    array = (char**) G_calloc ( count+1, sizeof(char**) );
+
+    count = 0;
+    fseek (fd, 0L, 0);
+    while ( G_getl (buf, sizeof (buf), fd) )
+    {
+        array[count] = G_store(buf );
+        count++;
+    }
+
+    result = G__read_Cell_head_array ( array, cellhd, is_cellhd);
+
+    count = 0;
+    while ( array[count] )
+    {
+        G_free ( array[count] );
+        count++;
+    }
+    G_free ( array );
+    
+    return result;
+}
+
+/* Read window from NULL terminated array of strings */ 
+char *G__read_Cell_head_array ( char **array,
+    struct Cell_head *cellhd,int is_cellhd)
+{
+    char *buf;
     char label[200];
     char value[200];
-    int line;
+    int i, line;
     int flags;
     char *G_adjust_Cell_head();
     char *err;
+
+    G_debug ( 2, "G__read_Cell_head_array" );
 
     flags = 0;
 
@@ -75,8 +118,8 @@ char *G__read_Cell_head ( FILE *fd,
 
 /* determine projection, zone first */
 
-    fseek (fd, 0L, 0);
-    for (line = 1; G_getl (buf, sizeof (buf), fd); line++)
+    i = 0;
+    for (line = 1; (buf = array[i++]); line++)
     {
 	if (TEST(F_PROJ) && TEST(F_ZONE))
 	    break;
@@ -116,9 +159,10 @@ char *G__read_Cell_head ( FILE *fd,
 	ERROR (_("zone field missing"),0);
 
 /* read the other info */
-    fseek (fd, 0L, 0);
-    for (line = 1; G_getl (buf, sizeof (buf), fd); line++)
+    i = 0;
+    for (line = 1; (buf = array[i++]); line++)
     {
+        G_debug ( 3, "region item: %s", buf );
 	switch (scan_item (buf, label, value))
 	{
 	case -1: ERROR(buf,line);
