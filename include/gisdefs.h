@@ -1006,6 +1006,7 @@ DCELL G_get_raster_value_d(void *, RASTER_MAP_TYPE);
 
 /* rd_cellhd.c */
 char *G__read_Cell_head(FILE *, struct Cell_head *, int);
+char *G__read_Cell_head_array ( char **, struct Cell_head *, int);
 
 /* reclass.c */
 int G_is_reclass(char *, char *, char *, char *);
