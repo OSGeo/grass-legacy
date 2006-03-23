@@ -15,6 +15,7 @@ namespace eval GmVector {
     variable array lfile # vector
     variable array lfilemask # vector
     variable optlist
+    variable array dup # vector
 }
 
 global gmpath
@@ -25,6 +26,8 @@ global nextmon
 set xmon 0
 set nextmon 1
 
+###############################################################################
+# set dynamic legend display in layer tree for vectors
 proc GmVector::legend { id } {
     variable opt
    
@@ -80,12 +83,16 @@ proc GmVector::legend { id } {
 	set opt($id,1,mod) "1"
 }
 
+###############################################################################
+
+# create new vector layer
 proc GmVector::create { tree parent } {
     variable optlist
     variable lfile
     variable lfilemask
     variable opt
     variable count
+    variable dup
 
     set node "vector:$count"
 
@@ -111,6 +118,7 @@ proc GmVector::create { tree parent } {
 	-window    $frm \
 	-drawcross auto 
 
+    set dup($count) 0
     set opt($count,1,_check) 1 
 
     set opt($count,1,vect) "" 
@@ -162,12 +170,12 @@ proc GmVector::create { tree parent } {
 				display_attr type_point type_line type_boundary type_centroid \
 				type_area type_face color _use_color fcolor _use_fcolor lcolor \
 				rdmcolor sqlcolor icon size lwidth layer lfield attribute \
-				xref yref lsize cat where _use_where minreg maxreg opacity}
+				xref yref lsize cat where _use_where qmap qsave qoverwrite \
+				minreg maxreg}
                   
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
     } 
-
 
     GmVector::legend $count
 
@@ -183,6 +191,8 @@ proc GmVector::create { tree parent } {
     
 }
 
+###############################################################################
+
 proc GmVector::set_option { node key value } {
     variable opt
  
@@ -192,6 +202,9 @@ proc GmVector::set_option { node key value } {
     GmVector::legend $id
 }
 
+###############################################################################
+
+# select vector map from list and put its name in layer node
 proc GmVector::select_map { id } {
     set m [GSelect vector]
     if { $m != "" } { 
@@ -200,6 +213,7 @@ proc GmVector::select_map { id } {
     }
 }
 
+# select vector for output map from v.extract
 proc GmVector::select_qmap { id } {
     set m [GSelect vector]
     if { $m != "" } { 
@@ -208,6 +222,8 @@ proc GmVector::select_qmap { id } {
     }
 }
 
+###############################################################################
+# show attribute columns in output window
 proc GmVector::show_columns { id } {
 	variable opt
 	global bgcolor
@@ -217,6 +233,8 @@ proc GmVector::show_columns { id } {
 	run_panel $cmd
 }
 
+###############################################################################
+# show attribute data in output window
 proc GmVector::show_data { id } { 
 	variable opt
 	global bgcolor
@@ -234,7 +252,8 @@ proc GmVector::show_data { id } {
 	}
 }
 
-# select symbols from directories
+###############################################################################
+# select point symbols
 proc GmVector::select_symbol { id } {
     variable opt
     set i [GSelect symbol]
@@ -243,11 +262,14 @@ proc GmVector::select_symbol { id } {
     }
 }
 
-# display vector options
+###############################################################################
+
+# display and set vector options
 proc GmVector::options { id frm } {
     variable opt
     global gmpath
     global bgcolor
+    global iconpath
     
     set mapname ""    
 
@@ -271,7 +293,7 @@ proc GmVector::options { id frm } {
     # vector name
     set row [ frame $frm.name ]
     Label $row.a -text [G_msg "Vector map:"]
-    Button $row.b -image [image create photo -file "$gmpath/vector.gif"] \
+    Button $row.b -image [image create photo -file "$iconpath/element-vector.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "vector map to display"] \
 		-command "GmVector::select_map $id"
@@ -280,7 +302,7 @@ proc GmVector::options { id frm } {
 		-background white
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
-		-image [image create photo -file "$gmpath/grass.gif"] \
+		-image [image create photo -file "$iconpath/gui-help.gif"] \
 		-command "run g.manual d.vect" \
 		-background $bgcolor \
 		-helptext [G_msg "Help"]
@@ -441,13 +463,13 @@ proc GmVector::options { id frm } {
 	set row [ frame $frm.columns ]
     Label $row.a -text [G_msg "    show attribute columns"] 
     Button $row.b -text [G_msg "columns"] \
-            -image [image create photo -file "$gmpath/columns.gif"] \
+            -image [image create photo -file "$iconpath/db-columns.gif"] \
             -command "GmVector::show_columns $id" \
             -background $bgcolor -borderwidth 1\
             -helptext [G_msg "Show columns"]
     Label $row.c -text [G_msg "   show attribute data"] 
     Button $row.d -text [G_msg "data"] \
-            -image [image create photo -file "$gmpath/columns.gif"] \
+            -image [image create photo -file "$iconpath/db-values.gif"] \
             -command "GmVector::show_data $id" \
             -background $bgcolor  -borderwidth 1\
             -helptext [G_msg "Show data"]
@@ -467,7 +489,7 @@ proc GmVector::options { id frm } {
     # save query vector name
     set row [ frame $frm.qname ]
     Label $row.a -text [G_msg "     new vector"] 
-    Button $row.b -image [image create photo -file "$gmpath/vector.gif"] \
+    Button $row.b -image [image create photo -file "$iconpath/element-vector.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmVector::select_qmap $id" \
 		-helptext [G_msg "select existing vector for saving queried objects"]
@@ -488,6 +510,8 @@ proc GmVector::options { id frm } {
     pack $row -side top -fill both -expand yes
 }
 
+###############################################################################
+# save layer in workspace file
 proc GmVector::save { tree depth node } {
     variable opt
     variable optlist
@@ -501,7 +525,7 @@ proc GmVector::save { tree depth node } {
 
 ###############################################################################
 
-# append vector maps to display list for NVIZ
+# append vector maps to display list for NVIZ display
 proc GmVector::addvect {node} {
     variable opt
     variable tree
@@ -539,7 +563,7 @@ proc GmVector::vecttype { vect } {
 
 ###############################################################################
 
-
+# display vector map and output to graphic file for compositing
 proc GmVector::display { node mod } {
     global mon
     global mapfile
@@ -552,7 +576,8 @@ proc GmVector::display { node mod } {
     variable lfilemask
     variable opt
     variable tree
-    
+    variable dup
+    variable count
     
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
@@ -642,7 +667,7 @@ proc GmVector::display { node mod } {
     if { $opt($id,1,qoverwrite) == 1 } { 
         append cmd2 " --o" 
     } 
-    
+        
     # check to see if options have changed
     foreach key $optlist {
         if {$opt($id,0,$key) != $opt($id,1,$key)} {
@@ -652,46 +677,51 @@ proc GmVector::display { node mod } {
     } 
 
 	# redraw if options changed
-	if {$opt($id,1,mod) == 1} {
+	if {$opt($id,1,mod) == 1 || $dup($id) == 1} {
+		runcmd "d.frame -e"
 	    run_panel $cmd
-    	file copy -force $mapfile($mon) $lfile($id)
-    	file copy -force $maskfile($mon) $lfilemask($id)
+	   	file rename -force $mapfile($mon) $lfile($id)
+    	file rename -force $maskfile($mon) $lfilemask($id)
+		# reset options changed flag
+		set opt($id,1,mod) 0
+		set dup($id) 0
 	}
 
     # use v.extract to save queried vector - will not go into redraw
-    if { $opt($id,1,qsave) ==1 && $opt($id,1,qmap) != "" } {
+    if { $opt($id,1,qsave) == 1 && $opt($id,1,qmap) != "" } {
     	run_panel $cmd2
     }
     
-    if { ! ( $opt($id,1,_check) ) } { return } 
+    if { $opt($id,1,_check) } {
 
-    #add lfile to compositing list
-	if {$complist($mon) != "" } {
-	    append complist($mon) ","
-	    append complist($mon) [file tail $lfile($id)]
-	} else {
-	    append complist($mon) [file tail $lfile($id)]
-	}	
-
-	if {$masklist($mon) != "" } {
-	    append masklist($mon) ","
-	    append masklist($mon) [file tail $lfilemask($id)]
-	} else {
-	    append masklist($mon) [file tail $lfilemask($id)]
-	}	
-
-	if {$opclist($mon) != "" } {
-	    append opclist($mon) ","
-	    append opclist($mon) $opt($id,1,opacity)
-	} else {
-	    append opclist($mon) $opt($id,1,opacity)
-	}	
+		#add lfile to compositing list
+		if {$complist($mon) != "" } {
+			append complist($mon) ","
+			append complist($mon) [file tail $lfile($id)]
+		} else {
+			append complist($mon) [file tail $lfile($id)]
+		}	
 	
-	# reset options changed flag
-	set opt($id,1,mod) 0
+		if {$masklist($mon) != "" } {
+			append masklist($mon) ","
+			append masklist($mon) [file tail $lfilemask($id)]
+		} else {
+			append masklist($mon) [file tail $lfilemask($id)]
+		}	
+	
+		if {$opclist($mon) != "" } {
+			append opclist($mon) ","
+			append opclist($mon) $opt($id,1,opacity)
+		} else {
+			append opclist($mon) $opt($id,1,opacity)
+		}	
+	}
+	
 
 }
 
+
+###############################################################################
 
 # get selected vector map (used for query)
 proc GmVector::mapname { node } {
@@ -719,7 +749,8 @@ proc GmVector::mapname { node } {
 	return $mapname
 }
 
-# used for v.digit
+###############################################################################
+# digitize selected map (v.digit) and show currently displayed maps as background
 proc GmVector::WorkOnVector { node mod } {
     variable opt
     variable bg
@@ -774,11 +805,18 @@ proc GmVector::WorkOnVector { node mod } {
     return
 }
 
+###############################################################################
+# duplicate currently selected vector node
 proc GmVector::duplicate { tree parent node id } {
+    variable optlist
+    variable lfile
+    variable lfilemask
     variable opt
     variable count
-
+	variable dup
+	
     set node "vector:$count"
+	set dup($count) 1
 
     set frm [ frame .vectoricon$count]
     set fon [font create -size 10] 
@@ -790,64 +828,48 @@ proc GmVector::duplicate { tree parent node id } {
     set opt($count,1,_legend) $can
     pack $check $can -side left
 
+	#insert new layer
+	if {[$tree selection get] != "" } {
+		set sellayer [$tree index [$tree selection get]]
+    } else { 
+    	set sellayer "end" 
+    }
+
 	if { $opt($id,1,vect) == ""} {
-    	$tree insert end $parent $node \
+	    $tree insert $sellayer $parent $node \
 		-text      "vector $count" \
 		-window    $frm \
 		-drawcross auto
 	} else {
-	    $tree insert end $parent $node \
+	    $tree insert $sellayer $parent $node \
 		-text      "$opt($id,1,vect)" \
 		-window    $frm \
 		-drawcross auto
 	} 
+	
+	set opt($count,1,opacity) $opt($id,1,opacity)
 
-    set opt($count,1,_check) $opt($id,1,_check)
-
-    set opt($count,1,vect) "$opt($id,1,vect)" 
-	set opt($count,1,opacity) opt($id,1,opacity)
-    set opt($count,1,display_shape) $opt($id,1,display_shape)
-    set opt($count,1,display_cat) $opt($id,1,display_cat)
-    set opt($count,1,display_topo) $opt($id,1,display_topo)
-    set opt($count,1,display_dir) $opt($id,1,display_dir)
-    set opt($count,1,display_attr) $opt($id,1,display_attr)
-    set opt($count,1,type_point) $opt($id,1,type_point)
-    set opt($count,1,type_line) $opt($id,1,type_line)
-    set opt($count,1,type_boundary) $opt($id,1,type_boundary)
-    set opt($count,1,type_centroid) $opt($id,1,type_centroid)
-    set opt($count,1,type_area) $opt($id,1,type_area)
-    set opt($count,1,type_face)  $opt($id,1,type_face)
-
-    set opt($count,1,color) $opt($id,1,color)
-    set opt($count,1,sqlcolor) $opt($id,1,sqlcolor)
-    set opt($count,1,rdmcolor) $opt($id,1,rdmcolor)
-    set opt($count,1,fcolor) $opt($id,1,fcolor)
-    set opt($count,1,lcolor) $opt($id,1,lcolor)
-    set opt($count,1,_use_color) $opt($id,1,_use_color)
-    set opt($count,1,_use_fcolor) $opt($id,1,_use_fcolor)
-
-    set opt($count,1,symdir) "$opt($id,1,symdir)"
-    set opt($count,1,icon) "$opt($id,1,icon)"
-    set opt($count,1,size)  $opt($id,1,size)
-    set opt($count,1,lwidth)  $opt($id,1,lwidth)
-
-    set opt($count,1,layer) $opt($id,1,layer)
-    set opt($count,1,lfield) $opt($id,1,lfield)
-    set opt($count,1,cat) "$opt($id,1,cat)"
-    set opt($count,1,where)  "$opt($id,1,where)"
-    set opt($count,1,_use_where) $opt($id,1,_use_where)
-
-    set opt($count,1,attribute) "$opt($id,1,attribute)"
-    set opt($count,1,xref) "$opt($id,1,xref)"
-    set opt($count,1,yref) "$opt($id,1,yref)"
-    set opt($count,1,lsize) $opt($id,1,lsize)
-
-    set opt($count,1,minreg) "$opt($id,1,minreg)" 
-    set opt($count,1,maxreg)  "$opt($id,1,maxreg)"
-
-    set opt($count,1,mod) 0
+	set optlist { _check vect display_shape display_cat display_topo display_dir \
+				display_attr type_point type_line type_boundary type_centroid \
+				type_area type_face color _use_color fcolor _use_fcolor lcolor \
+				rdmcolor sqlcolor icon size lwidth layer lfield attribute \
+				xref yref lsize cat where _use_where qmap qsave qoverwrite \
+				minreg maxreg minreg maxreg}
+                  
+    foreach key $optlist {
+    	set opt($count,1,$key) $opt($id,1,$key)
+		set opt($count,0,$key) $opt($count,1,$key)
+    } 
 
     GmVector::legend $count
+	set id $count
+	
+	# create files in tmp directory for layer output
+	set mappid [pid]
+	set lfile($count) [eval exec "g.tempfile pid=$mappid"]
+	set lfilemask($count) $lfile($count)
+	append lfile($count) ".ppm"
+	append lfilemask($count) ".pgm"
 
     incr count
     return $node

@@ -16,18 +16,23 @@ namespace eval GmRaster {
     variable array lfile # raster
     variable array lfilemask # raster
     variable optlist
+    variable array dup # vector
 }
 
 source $gmpath/mapcanvas.tcl
 
+###############################################################################
+
+# create raster map node in layer tree
 proc GmRaster::create { tree parent } {
-    variable opt
-    variable count
+    variable optlist
     variable lfile
     variable lfilemask
-    variable optlist
-    
+    variable opt
+    variable count
+    variable dup
     global gmpath
+    global iconpath
     global mon
 
     set node "raster:$count"
@@ -39,7 +44,7 @@ proc GmRaster::create { tree parent } {
                            -variable GmRaster::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
-    image create photo rico -file "$gmpath/raster.gif"
+    image create photo rico -file "$iconpath/element-cell.gif"
     set ico [label $frm.ico -image rico -bd 1 -relief raised]
     pack $check $ico -side left
 
@@ -54,6 +59,8 @@ proc GmRaster::create { tree parent } {
 	-text  "raster $count"\
 	-window    $frm \
 	-drawcross auto  
+
+    set dup($count) 0
     
     #set default option values
     set opt($count,1,_check) 1 
@@ -86,6 +93,8 @@ proc GmRaster::create { tree parent } {
 
 }
 
+###############################################################################
+
 proc GmRaster::set_option { node key value } {
     variable opt
  
@@ -93,6 +102,9 @@ proc GmRaster::set_option { node key value } {
     set opt($id,1,$key) $value
 }
 
+###############################################################################
+
+# select base raster map from list and put name in layer tree node
 proc GmRaster::select_map { id } {
     variable tree
     variable node
@@ -105,6 +117,7 @@ proc GmRaster::select_map { id } {
     }
 }
 
+# select drape raster map from list and put name in layer tree node
 proc GmRaster::select_drapemap { id } {
     variable tree
     variable node
@@ -116,10 +129,14 @@ proc GmRaster::select_drapemap { id } {
         GmTree::autonamel $m
     }
 }
-# display raster options
+
+###############################################################################
+
+# set and display raster options
 proc GmRaster::options { id frm } {
     variable opt
     global gmpath
+    global iconpath
     global bgcolor
 
     # Panel heading
@@ -142,7 +159,7 @@ proc GmRaster::options { id frm } {
     # raster name
     set row [ frame $frm.name ]
     Label $row.a -text "Base map:        "
-    Button $row.b -image [image create photo -file "$gmpath/raster.gif"] \
+    Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "base raster map to display"]\
 		-command "GmRaster::select_map $id"
@@ -151,7 +168,7 @@ proc GmRaster::options { id frm } {
           -background white -text
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
-            -image [image create photo -file "$gmpath/grass.gif"] \
+            -image [image create photo -file "$iconpath/gui-help.gif"] \
             -command "run g.manual d.rast" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
@@ -179,7 +196,7 @@ proc GmRaster::options { id frm } {
 
     set row [ frame $frm.drape ]
     Label $row.a -text "     drape map:  "
-    Button $row.b -image [image create photo -file "$gmpath/raster.gif"] \
+    Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "raster map to drape over base map"]\
 		-command "GmRaster::select_drapemap $id"
@@ -207,6 +224,9 @@ proc GmRaster::options { id frm } {
     pack $row -side top -fill both -expand yes
 }
 
+###############################################################################
+
+# save raster node to workspace grc file
 proc GmRaster::save { tree depth node } {
     variable opt
     variable optlist
@@ -219,6 +239,8 @@ proc GmRaster::save { tree depth node } {
     } 
 }
 
+
+###############################################################################
 
 # append elevation maps display lists for NVIZ
 proc GmRaster::addelev {node nvelev} {
@@ -255,20 +277,23 @@ proc GmRaster::addcolor {node nvcolor} {
     return $nvcolor
 }
 
+###############################################################################
+
+# display raster map and output to graphic file for compositing
 proc GmRaster::display { node mod } {
+    global mon
     global mapfile
     global maskfile
     global complist
     global opclist
     global masklist
-    global gmpath
-    global mon
     variable optlist
     variable lfile 
     variable lfilemask
     variable opt
-    variable rasttype
     variable tree
+    variable dup
+    variable count
 
     set rasttype ""
     set currmon ""
@@ -311,7 +336,7 @@ proc GmRaster::display { node mod } {
         append cmd " bg=$opt($id,1,bkcolor)"
     }
     
-    set cmd2 "d.his -n h_map=$opt($id,1,drapemap) i_map=$opt($id,1,map)"
+    set cmd2 "d.his h_map=$opt($id,1,drapemap) i_map=$opt($id,1,map)"
             
     # check to see if options have changed
     foreach key $optlist {
@@ -322,22 +347,30 @@ proc GmRaster::display { node mod } {
     } 
     
     # if options have change (or mod flag set by other procedures) re-render map
-	if {$opt($id,1,mod) == 1} {
+	if {$opt($id,1,mod) == 1 || $dup($id) == 1} {
 		if { $opt($id,1,drapemap) == "" } { 
 			# redraw raster
+			runcmd "d.frame -e"
 			run_panel $cmd
+			# reset options changed flag
+			set opt($id,1,mod) 0
+			set dup($id) 0
 		} else {
 			# redraw raster as his
+			runcmd "d.frame -e"
 			run_panel $cmd2
+			# reset options changed flag
+			set opt($id,1,mod) 0
+			set dup($id) 0
 		}
-		file copy -force $mapfile($mon) $lfile($id)
-		file copy -force $maskfile($mon) $lfilemask($id)
+		file rename -force $mapfile($mon) $lfile($id)
+		file rename -force $maskfile($mon) $lfilemask($id)
     }
 
     if { ! ( $opt($id,1,_check) ) } { return } 
 
 
-    #add lfile to compositing list
+    #add lfile, maskfile, and opacity to compositing lists
 	if {$complist($mon) != "" } {
 	    append complist($mon) ","
 	    append complist($mon) [file tail $lfile($id)]
@@ -359,9 +392,9 @@ proc GmRaster::display { node mod } {
 	    append opclist($mon) $opt($id,1,opacity)
 	}	
 	
-	# reset options changed flag
-	set opt($id,1,mod) 0
 }
+
+###############################################################################
 
 # get selected raster map (used for query)
 proc GmRaster::mapname { node } {
@@ -380,13 +413,22 @@ proc GmRaster::mapname { node } {
     return $mapname
 }
 
+###############################################################################
+
+# duplicate currently selected layer
 proc GmRaster::duplicate { tree parent node id } {
+    variable optlist
+    variable lfile
+    variable lfilemask
     variable opt
-    variable count 
+    variable count
+    variable dup
     global gmpath
+    global iconpath
     global mon
 
     set node "raster:$count"
+	set dup($count) 1
 
     set frm [ frame .rastericon$count]
     set fon [font create -size 10] 
@@ -394,33 +436,49 @@ proc GmRaster::duplicate { tree parent node id } {
                            -variable GmRaster::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
-    image create photo rico -file "$gmpath/raster.gif"
+    image create photo rico -file "$iconpath/element-cell.gif"
     set ico [label $frm.ico -image rico -bd 1 -relief raised]
     
     pack $check $ico -side left
 
+	# where to insert new layer
+	if {[$tree selection get] != "" } {
+		set sellayer [$tree index [$tree selection get]]
+    } else { 
+    	set sellayer "end" 
+    }
+
 	if { $opt($id,1,map) == ""} {
-    	$tree insert end $parent $node \
+	    $tree insert $sellayer $parent $node \
 		-text      "raster $count" \
 		-window    $frm \
 		-drawcross auto
 	} else {
-	    $tree insert end $parent $node \
+	    $tree insert $sellayer $parent $node \
 		-text      "$opt($id,1,map)" \
 		-window    $frm \
 		-drawcross auto
 	}
 
-    set opt($count,1,_check) $opt($id,1,_check)
+	set opt($count,1,opacity) $opt($id,1,opacity)
 
-    set opt($count,1,map) "$opt($id,1,map)" 
-	set opt($count,1,opacity) "opt($id,1,opacity)"
-    set opt($count,1,drapemap) "$opt($id,1,drapemap)" 
-    set opt($count,1,querytype) "$opt($id,1,querytype)" 
-    set opt($count,1,rastquery) "$opt($id,1,rastquery)" 
-    set opt($count,1,rasttype) "$opt($id,1,rasttype)" 
-    set opt($count,1,bkcolor) "$opt($id,1,bkcolor)" 
-    set opt($count,1,overlay) "$opt($id,1,overlay)"
+
+	set optlist {_check map drapemap querytype rastquery rasttype bkcolor \
+		overlay}
+
+    foreach key $optlist {
+    	set opt($count,1,$key) $opt($id,1,$key)
+		set opt($count,0,$key) $opt($count,1,$key)
+    } 
+    
+	set id $count
+
+	# create files in tmp directory for layer output
+	set mappid [pid]
+	set lfile($count) [eval exec "g.tempfile pid=$mappid"]
+	set lfilemask($count) $lfile($count)
+	append lfile($count) ".ppm"
+	append lfilemask($count) ".pgm"
 
     incr count
     return $node
