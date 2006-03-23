@@ -79,6 +79,8 @@ proc MapCanvas::create { } {
 	global complist
 	global opclist
 	global masklist
+	global tmpdir
+	global mappid
 	
 	variable mapmon
     variable mapframe
@@ -112,7 +114,7 @@ proc MapCanvas::create { } {
 
 	# canvas creation
     set can($mon) [canvas $mf_frame.can \
-        -background #ffffff -borderwidth 0 -closeenough 10.0 \
+        -background #eeeeee -borderwidth 0 -closeenough 10.0 \
         -insertbackground black -relief groove -selectbackground #c4c4c4 \
         -selectforeground black -width $canvas_w($mon) -height $canvas_h($mon) ]
  
@@ -145,9 +147,11 @@ proc MapCanvas::create { } {
 	append mapfile($mon) ".ppm"
 	append maskfile($mon) ".pgm"
 	
-	# set tempfile for composite output
+	# set tempfile and tmp directory path for composite output
 	set mappid [pid]
 	set outfile($mon) [eval exec "g.tempfile pid=$mappid"]
+	set tmpdir [file dirname $outfile($mon)]
+	set outfile($mon) [file tail $outfile($mon)]
 	append outfile($mon) ".ppm"
 		
 	set complist($mon) ""
@@ -355,9 +359,9 @@ proc MapCanvas::drawmap { mon mod } {
 		
 	incr drawprog
 	set env(MONITOR_OVERRIDE) "gism"
-	runcmd "d.frame -e"
-	incr drawprog
 	runcmd "d.font romans"
+	incr drawprog
+	runcmd "d.frame -e"
 	incr drawprog
 	GmGroup::display "root" $mod
 	incr drawprog
@@ -378,28 +382,32 @@ proc MapCanvas::composite {mon } {
 	global mapfile
 	global maskfile
 	global outfile
+	global tmpdir
 	variable mapframe
 	variable mapcan
 	variable can
 
-	set currdir [pwd]
-	cd [file dirname $outfile($mon)]
-	incr drawprog
-	runcmd "g.pnmcomp in=$complist($mon) mask=$masklist($mon) opacity=$opclist($mon) background=255:255:255 width=$mapdispwd height=$mapdispht out=$outfile($mon)"
-	cd $currdir
+	if {$complist($mon) != ""} {
+		set currdir [pwd]
+		cd $tmpdir
+		incr drawprog
+		runcmd "g.pnmcomp in=$complist($mon) mask=$masklist($mon) opacity=$opclist($mon) background=255:255:255 width=$mapdispwd height=$mapdispht out=$outfile($mon)"
+	
+		image create photo mapimg.$mon -file "$outfile($mon)" 
+		incr drawprog
+		$can($mon) create image 0 0 -anchor nw \
+			-image "mapimg.$mon" \
+			-tag map$mon
+		GmTree::cvdisplay "root"
+		cd $currdir
+	}
 
-	image create photo mapimg.$mon -file "$outfile($mon)" 
-	incr drawprog
-	$can($mon) create image 0 0 -anchor nw \
-		-image "mapimg.$mon" \
-		-tag map$mon
-	GmTree::cvdisplay "root"
 	set drawprog 100
 
 	MapCanvas::coordconv $mon
 	set drawprog 0
-    set MapCanvas::msg($mon) "east & north coordinates under cursor"
-    $mapframe($mon) showstatusbar status 
+	set MapCanvas::msg($mon) "east & north coordinates under cursor"
+	$mapframe($mon) showstatusbar status 
 	return
 
 }
