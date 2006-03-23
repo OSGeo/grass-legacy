@@ -28,7 +28,6 @@ SUBDIRS = \
 	i.spectral \
 	i.in.spotvgt \
 	i.tasscap \
-	pg.postgisdb \
 	r.blend \
 	r.fillnulls \
 	r.in.aster \
