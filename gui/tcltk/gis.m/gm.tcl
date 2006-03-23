@@ -32,6 +32,9 @@ set mapset [exec g.gisenv get=MAPSET]
 
 
 set gmpath $env(GISBASE)/etc/gm
+set iconpath $env(GISBASE)/etc/gui/icons
+
+global iconpath
 global gmpath
 
 set keycontrol "Control"
@@ -50,7 +53,7 @@ if {[info exists env(HOSTTYPE)]} {
 
 # set background color and help font
 set bgcolor HoneyDew2
-set fon [font create -family Verdana -size 12 ]
+set helpfont [font create -family Verdana -size 12 ]
 
 # add for OSX aqua
 if {[info exists env(osxaqua)]} {
@@ -113,6 +116,7 @@ global topwin
 global prgtext ""
 global prgindic
 global max_prgindic 
+global helpfont
 
 set max_prgindic 20
 
@@ -340,6 +344,7 @@ proc Gm::create { } {
     global prgtext
     global prgindic
     global keycontrol
+    global helpfont
     
     variable mainframe
     variable tree
@@ -391,15 +396,15 @@ proc Gm::create { } {
  
     # command console 
     set output_pane  [$pw1 add -minsize 50 -weight 2 ]
-    set output_frame [frame $output_pane.fr]
-    set output_bbox [ButtonBox $mainwindow.bb -bg $bgcolor \
+    set output_frame [frame $output_pane.fr -bg $bgcolor]
+    set output_bbox [ButtonBox $output_frame.bb -bg $bgcolor \
     	-padx 0 -pady 0 -homogeneous 0 ]
     
     pack $output_frame -expand yes -fill both 
     pack $output_pane -expand yes -fill both 
 
     set output_sw [ScrolledWindow $output_frame.win -relief sunken -borderwidth 1]
-	set outtext [text $output_sw.text -height 6 -width 30 -bg #ffffff] 
+	set outtext [text $output_sw.text -height 5 -width 30 -bg #ffffff] 
 	$output_sw setwidget $outtext
 	
 	$output_bbox add -text "run" -command "Gm::run_txt $outtext"  -bg #dddddd \
@@ -422,7 +427,7 @@ proc Gm::create { } {
 	
     pack $output_sw $outtext -fill both -expand yes
     pack $pw1 -side top -expand yes -fill both -anchor n 
-	pack $output_bbox -expand yes -fill none -anchor s
+	pack $output_bbox -expand no -fill none -anchor s
   
 	bind $outtext <$keycontrol-c> "tk_textCopy %W"
 	bind $outtext <$keycontrol-v> "tk_textPaste %W"
@@ -436,7 +441,7 @@ proc Gm::create { } {
 
     pack $mainframe -fill both -expand yes
  
-    DynamicHelp::configure -font $fon -background yellow
+    DynamicHelp::configure -font $helpfont -background yellow
 
 	Gm::startmon
 	Gm::create_disptxt $mon
@@ -716,6 +721,8 @@ proc Gm::SaveFileBox { } {
 proc Gm::cleanup { destroywin } {
 	global mapfile
 	global mon
+	global tmpdir
+	global mappid
 
 	# stop gism PNG driver if it is still running due to error
 	if ![catch {open "|d.mon -L" r} input] {
@@ -729,15 +736,10 @@ proc Gm::cleanup { destroywin } {
 	}
 
 	# delete all map display ppm files
-	set path [file dirname $mapfile($mon)]
-	set deleteppm $path
-	append deleteppm "/*.ppm"
-	foreach file [glob -nocomplain $deleteppm] {
-		file delete $file
-	}
-	set deletepgm $path
-	append deletepgm "/*.pgm"
-	foreach file [glob -nocomplain $deletepgm] {
+	cd $tmpdir
+	set deletefile $mappid
+	append deletefile ".*"
+	foreach file [glob -nocomplain $deletefile] {
 		file delete $file
 	}
 	
