@@ -15,13 +15,13 @@
 #
 ##########################################################################
 
-source $gmpath/maptool.tcl
-source $gmpath/gmtree.tcl
-source $env(GISBASE)/etc/gtcltk/gmsg.tcl
-source $env(GISBASE)/etc/gtcltk/select.tcl
-source $env(GISBASE)/etc/gui.tcl
 
-set bgcolor HoneyDew2
+source $gmpath/maptool.tcl
+# All of these must be sourced before using mapcanvas.tcl:
+# source $gmpath/gmtree.tcl
+# source $env(GISBASE)/etc/gtcltk/gmsg.tcl
+# source $env(GISBASE)/etc/gtcltk/select.tcl
+# source $env(GISBASE)/etc/gui.tcl
 
 namespace eval MapCanvas {
 	variable array can # mon
@@ -113,10 +113,9 @@ proc MapCanvas::create { } {
     MapToolBar::create $map_tb
 
 	# canvas creation
-    set can($mon) [canvas $mf_frame.can \
-        -background #eeeeee -borderwidth 0 -closeenough 10.0 \
-        -insertbackground black -relief groove -selectbackground #c4c4c4 \
-        -selectforeground black -width $canvas_w($mon) -height $canvas_h($mon) ]
+    set can($mon) [canvas $mf_frame.mapcanvas \
+	-borderwidth 0 -closeenough 10.0 -relief groove \
+        -width $canvas_w($mon) -height $canvas_h($mon) ]
  
     # setting geometry
     place $can($mon) -in $mf_frame -x 0 -y 0 -anchor nw 
