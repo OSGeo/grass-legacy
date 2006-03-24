@@ -93,12 +93,12 @@ proc GmVector::create { tree parent } {
     variable opt
     variable count
     variable dup
+	global guioptfont
 
     set node "vector:$count"
 
     set frm [ frame .vectoricon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
+    set check [checkbutton $frm.check -font $guioptfont \
                            -variable GmVector::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
     set can [ canvas $frm.c -width $GmTree::legend_width \
@@ -692,9 +692,9 @@ proc GmVector::display { node mod } {
     	run_panel $cmd2
     }
     
+    #add lfile, maskfile, and opacity to compositing lists
     if { $opt($id,1,_check) } {
 
-		#add lfile to compositing list
 		if {$complist($mon) != "" } {
 			append complist($mon) ","
 			append complist($mon) [file tail $lfile($id)]
@@ -814,13 +814,13 @@ proc GmVector::duplicate { tree parent node id } {
     variable opt
     variable count
 	variable dup
+	global guioptfont
 	
     set node "vector:$count"
 	set dup($count) 1
 
     set frm [ frame .vectoricon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
+    set check [checkbutton $frm.check -font $guioptfont \
                            -variable GmVector::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
     set can [ canvas $frm.c -width $GmTree::legend_width \
