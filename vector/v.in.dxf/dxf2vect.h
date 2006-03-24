@@ -77,11 +77,11 @@ GLOBAL char seqend[8];
 GLOBAL char dxf_line[256];
 GLOBAL DXF_DIG layers[MAX_FILES];
 GLOBAL DXF_DIG *closed_layers;
-GLOBAL double XMAX, XMIN, YMAX, YMIN;
+GLOBAL double XMAX, XMIN, YMAX, YMIN, ZMAX, ZMIN;
 GLOBAL int BOUNDARIES;
 GLOBAL struct Flag *txtbox_flag;
 GLOBAL struct Map_info dxf_head;
-GLOBAL double *xinfo, *yinfo;
+GLOBAL double *xinfo, *yinfo, *zinfo;
 
 
 /* add_arc.c */
@@ -90,7 +90,7 @@ int dxf_add_arc(FILE *);
 int dxf_add_boundaries(void);
 /* add_circle.c */
 int dxf_add_circle(FILE *);
-int make_arc(int, double, double, double, double, double, int);
+int make_arc(int, double, double, double, double, double, double, int);
 /* add_extents.c */
 int dxf_add_extents(void);
 /* add_line.c */

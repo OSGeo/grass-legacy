@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 	"Converts files in DXF format to GRASS vector file format.";
 
     /* TODO */
-#if 0
+#ifdef LABEL
     txtbox_flag = G_define_flag();
     txtbox_flag->key = 'n';
     txtbox_flag->description = "Suppress drawing of text outlines";
@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
     line_opt->description = "DXF layers with line data";
 
     /* TODO */
-#if 0
+#ifdef LABEL
     labl_opt = G_define_option();
     labl_opt->key = "labels";
     labl_opt->type = TYPE_STRING;
@@ -106,8 +106,11 @@ int main(int argc, char *argv[])
     if (prefix_opt->answer != NULL)
 	out_name = G_store(prefix_opt->answer);
 
+    /* TODO */
+#ifdef LABEL
     if (txtbox_flag->answer)
 	fprintf(stderr, "text boxes will not be drawn\n");
+#endif
 
     /*DEBUG
      * if (out_name != NULL)
@@ -115,7 +118,6 @@ int main(int argc, char *argv[])
      * else
      * fprintf (stderr, "out = NULL\n");
      * * */
-
 
     debuginit();
 
@@ -199,10 +201,10 @@ int main(int argc, char *argv[])
     }
 
     /*
-     * if (BOUNDARIES == 4)
+     * if (BOUNDARIES == 6)
      * dxf_add_boundaries ();
      */
-    dxf_add_extents();		/*extents of map calculated as points were read in */
+    dxf_add_extents();	/*extents of map calculated as points were read in */
 
     exit(0);
 }
@@ -310,10 +312,13 @@ char *dxf_fgets(char *buf, int size, FILE *fp)
 int extra_help(void)
 {
     /* TODO */
-    /* fprintf(stderr, "\n\nWhere lines and labels are one or more of:\n\n"); */
-    fprintf(stderr, "\n\nWhere lines are one or more of:\n\n");
+#ifdef LABEL
+    fprintf(stderr, "\n\nwhere lines and labels are one or more of:\n\n");
+#else
+    fprintf(stderr, "\n\nwhere lines are one or more of:\n\n");
+#endif
     fprintf(stderr, "    layername1[,layername2,layername3,...]\n\n");
-    fprintf(stderr, "      and/or   \n\n");
+    fprintf(stderr, "and/or\n\n");
     fprintf(stderr,
     "    in_layername1:out_layername1[,inlayername2:outlayername2,.....]\n\n");
 

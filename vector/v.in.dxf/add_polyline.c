@@ -19,6 +19,7 @@ int dxf_add_polyline(FILE * dxf_file)
     int polyline_flag = 0;	/* INDICATES THE TYPE OF POLYLINE */
     int xflag = 0;		/* INDICATES IF A x VALUE HAS BEEN FOUND */
     int yflag = 0;		/* INDICATES IF A y VALUE HAS BEEN FOUND */
+    int zflag = 0;		/* INDICATES IF A z VALUE HAS BEEN FOUND */
     int nu_layer_flag = 1;	/* INDICATES IF A nu_layer WAS FOUND */
     int fprintf_flag1 = 1;	/* INDICATES IF ERROR MESSAGE PRINTED ONCE */
     int fprintf_flag2 = 1;	/* INDICATES IF ERROR MESSAGE PRINTED ONCE */
@@ -98,6 +99,7 @@ int dxf_add_polyline(FILE * dxf_file)
 	}
     }
     dxf_fgets(dxf_line, 256, dxf_file);
+    zinfo[0] = 0.0;
     while (strcmp(dxf_line, seqend) != 0) {	/* LOOP UNTIL SEQEND IN THE DXF FILE */
 	if (feof(dxf_file) != 0)	/* EOF */
 	    return (0);
@@ -139,8 +141,10 @@ int dxf_add_polyline(FILE * dxf_file)
 		    yinfo[arr_size] = atof(dxf_line);
 		    yflag = 1;
 		    break;
-		case 30:
-		    break;	/* Z COORDINATE NOT BEING USED */
+		case 30:	/* Z COORDINATE */
+		    zinfo[arr_size] = atof(dxf_line);
+		    zflag = 1;
+		    break;
 		case 42:	/* bulge */
 		    bulge = atof(dxf_line);
 		    break;
@@ -150,6 +154,7 @@ int dxf_add_polyline(FILE * dxf_file)
 			/* spline frame control point: don't draw it! */
 			xflag = 0;
 			yflag = 0;
+			zflag = 0;
 		    }
 		    break;
 		    /* NOTE: THERE ARE MORE CASES POSSIBLE */
@@ -167,12 +172,11 @@ int dxf_add_polyline(FILE * dxf_file)
 
 	    if (arc_tan == 0.0) {	/* straight line segment */
 		dxf_check_ext(xinfo[arr_size], yinfo[arr_size]);
-		if ((arr_size) >= ARR_MAX - 1) {
+		if (arr_size >= ARR_MAX - 1) {
 		    ARR_MAX += ARR_INCR;
-		    xinfo =
-			(double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
-		    yinfo =
-			(double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
+		    xinfo = (double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
+		    yinfo = (double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
+		    zinfo = (double *)G_realloc(zinfo, ARR_MAX * sizeof(double));
 		}
 		arr_size++;
 	    }
@@ -235,19 +239,18 @@ int dxf_add_polyline(FILE * dxf_file)
 		arr_size--;	/* disregard last 2 points */
 		if (prev_bulge < 0.0)
 		    arc_arr_size = make_arc(arr_size, cent_x, cent_y,
-					    -rad, ang2, ang1, 1);
+					    -rad, ang2, ang1, zinfo[0], 1);
 		/* arc is going in clockwise direction from x2 to x1 */
 		else
 
 		    arc_arr_size = make_arc(arr_size, cent_x, cent_y,
-					    rad, ang1, ang2, 1);
+					    rad, ang1, ang2, zinfo[0], 1);
 		arr_size += arc_arr_size;
-		while ((arr_size) >= ARR_MAX) {
+		while (arr_size >= ARR_MAX) {
 		    ARR_MAX += ARR_INCR;
-		    xinfo =
-			(double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
-		    yinfo =
-			(double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
+		    xinfo = (double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
+		    yinfo = (double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
+		    zinfo = (double *)G_realloc(zinfo, ARR_MAX * sizeof(double));
 		}
 	    }			/* arc */
 	    prev_bulge = bulge;
@@ -263,12 +266,14 @@ int dxf_add_polyline(FILE * dxf_file)
 	    /* ADD ON THE VERTEX POINT TO COMPLETE CLOSED POLYLINE */
 	    xinfo[arr_size] = xinfo[0];
 	    yinfo[arr_size] = yinfo[0];
+	    zinfo[arr_size] = zinfo[0];
 
 	    /* arr_size INCREMENTED TO BE CONSISTENT WITH POLYLINE_FLAG != 1 */
 	    if ((arr_size) >= ARR_MAX - 1) {
 		ARR_MAX += ARR_INCR;
 		xinfo = (double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
 		yinfo = (double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
+		zinfo = (double *)G_realloc(zinfo, ARR_MAX * sizeof(double));
 	    }
 	    arr_size++;
 	}
@@ -277,6 +282,11 @@ int dxf_add_polyline(FILE * dxf_file)
 	layer_fd = dxf_which_layer(nolayername, DXF_ASCII);
 	if (layer_fd == NULL)
 	    return (0);
+    }
+    if(!zflag){
+	    int i;
+	    for(i=0; i<arr_size; i++)
+		    zinfo[i] = 0.0;
     }
     write_polylines(layer_fd, arr_size);
     return (1);
@@ -287,7 +297,7 @@ int write_polylines(DXF_DIG * layer_fd, int arr_size)
 {
     struct line_cats *cats;
 
-    Vect_copy_xyz_to_pnts(Points, xinfo, yinfo, NULL, arr_size);
+    Vect_copy_xyz_to_pnts(Points, xinfo, yinfo, zinfo, arr_size);
     /* TODO */
     cats = Vect_new_cats_struct();
     Vect_write_line(layer_fd->Map, GV_LINE, Points, cats);

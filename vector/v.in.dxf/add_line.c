@@ -14,6 +14,7 @@ int dxf_add_line(FILE * dxf_file)
     int layer_flag = 0;		/* INDICATES IF A LAYER NAME HAS BEEN FOUND */
     int xflag = 0;		/* INDICATES IF A x VALUE HAS BEEN FOUND */
     int yflag = 0;		/* INDICATES IF A y VALUE HAS BEEN FOUND */
+    int zflag = 0;		/* INDICATES IF A z VALUE HAS BEEN FOUND */
     char *nolayername = "UNIDENTIFIED";
     DXF_DIG *layer_fd = NULL;	/* POINTER TO LAYER NAME */
     int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
@@ -45,6 +46,8 @@ int dxf_add_line(FILE * dxf_file)
 	    yflag = 1;
 	    break;
 	case 30:		/* START POINT z COORDINATE */
+	    zinfo[arr_size] = atof(dxf_line);
+	    zflag = 1;
 	    break;
 	case 11:		/* END POINT x COORDINATE */
 	    xinfo[arr_size] = atof(dxf_line);
@@ -55,6 +58,8 @@ int dxf_add_line(FILE * dxf_file)
 	    yflag = 1;
 	    break;
 	case 31:		/* END POINT z COORDINATE */
+	    zinfo[arr_size] = atof(dxf_line);
+	    zflag = 1;
 	    break;
 
 	/* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
@@ -71,10 +76,11 @@ int dxf_add_line(FILE * dxf_file)
 	}
 	if (xflag == 1 && yflag == 1) {
 	    dxf_check_ext(xinfo[arr_size], yinfo[arr_size]);
-	    if ((arr_size) == ARR_MAX) {
+	    if (arr_size == ARR_MAX) {
 		ARR_MAX += ARR_INCR;
 		xinfo = (double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
 		yinfo = (double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
+		zinfo = (double *)G_realloc(zinfo, ARR_MAX * sizeof(double));
 	    }
 	    arr_size++;
 	    xflag = 0;
@@ -89,6 +95,8 @@ int dxf_add_line(FILE * dxf_file)
     }
     if (arr_size == 2) {	/* had both starts and stops */
 	/* PRINTS OUT THE POLYLINE VERTEX DATA TO FILE DESIGNATED AS layer_fd */
+	if (!zflag)
+		zinfo[0] = zinfo[1] = 0.0;
 	write_polylines(layer_fd, arr_size);
     }
     return (1);
