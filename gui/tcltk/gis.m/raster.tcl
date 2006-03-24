@@ -34,13 +34,13 @@ proc GmRaster::create { tree parent } {
     global gmpath
     global iconpath
     global mon
+    global guioptfont
 
     set node "raster:$count"
 
 	#create form for layer tree entry
     set frm [ frame .rastericon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
+    set check [checkbutton $frm.check -font $guioptfont \
                            -variable GmRaster::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
@@ -59,11 +59,11 @@ proc GmRaster::create { tree parent } {
 	-text  "raster $count"\
 	-window    $frm \
 	-drawcross auto  
-
-    set dup($count) 0
     
     #set default option values
     set opt($count,1,_check) 1 
+    set dup($count) 0
+
 	set opt($count,1,opacity) 1.0
     set opt($count,1,map) "" 
     set opt($count,1,drapemap) "" 
@@ -367,31 +367,31 @@ proc GmRaster::display { node mod } {
 		file rename -force $maskfile($mon) $lfilemask($id)
     }
 
-    if { ! ( $opt($id,1,_check) ) } { return } 
-
-
     #add lfile, maskfile, and opacity to compositing lists
-	if {$complist($mon) != "" } {
-	    append complist($mon) ","
-	    append complist($mon) [file tail $lfile($id)]
-	} else {
-	    append complist($mon) [file tail $lfile($id)]
-	}	
+    if { $opt($id,1,_check) } {
 
-	if {$masklist($mon) != "" } {
-	    append masklist($mon) ","
-	    append masklist($mon) [file tail $lfilemask($id)]
-	} else {
-	    append masklist($mon) [file tail $lfilemask($id)]
-	}	
-
-	if {$opclist($mon) != "" } {
-	    append opclist($mon) ","
-	    append opclist($mon) $opt($id,1,opacity)
-	} else {
-	    append opclist($mon) $opt($id,1,opacity)
-	}	
+		if {$complist($mon) != "" } {
+			append complist($mon) ","
+			append complist($mon) [file tail $lfile($id)]
+		} else {
+			append complist($mon) [file tail $lfile($id)]
+		}	
 	
+		if {$masklist($mon) != "" } {
+			append masklist($mon) ","
+			append masklist($mon) [file tail $lfilemask($id)]
+		} else {
+			append masklist($mon) [file tail $lfilemask($id)]
+		}	
+	
+		if {$opclist($mon) != "" } {
+			append opclist($mon) ","
+			append opclist($mon) $opt($id,1,opacity)
+		} else {
+			append opclist($mon) $opt($id,1,opacity)
+		}	
+	}
+		
 }
 
 ###############################################################################
@@ -426,13 +426,13 @@ proc GmRaster::duplicate { tree parent node id } {
     global gmpath
     global iconpath
     global mon
+    global guioptfont
 
     set node "raster:$count"
 	set dup($count) 1
 
     set frm [ frame .rastericon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
+    set check [checkbutton $frm.check -font $guioptfont \
                            -variable GmRaster::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
@@ -461,7 +461,6 @@ proc GmRaster::duplicate { tree parent node id } {
 	}
 
 	set opt($count,1,opacity) $opt($id,1,opacity)
-
 
 	set optlist {_check map drapemap querytype rastquery rasttype bkcolor \
 		overlay}
