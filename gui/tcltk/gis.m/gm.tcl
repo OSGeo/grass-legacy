@@ -118,8 +118,10 @@ global prgtext ""
 global prgindic
 global max_prgindic 
 global helpfont
+global guioptfont
 
 set max_prgindic 20
+set guioptfont [font create -size 10] 
 
 
 ###############################################################################
