@@ -2,6 +2,7 @@
 
 lappend auto_path $env(GISBASE)/bwidget
 package require -exact BWidget 1.2.1
+source $env(GISBASE)/etc/gtcltk/options.tcl
 source $env(GISBASE)/etc/gtcltk/select.tcl
 source $env(GISBASE)/etc/gtcltk/gronsole.tcl
 
@@ -13,20 +14,6 @@ set dlg 0
 set path {}
 set iconpath $env(GISBASE)/etc/gui/icons/
 
-##############################################################################
-# Platform
-
-set keycontrol "Control"
-
-if {[info exists env(osxaqua)]} {
-    set osxaqua $env(osxaqua)
-} else {
-    set osxaqua "0"
-}
-
-if { $osxaqua == "1"} {
-    set keycontrol "Command"
-}
 
 ################################################################################
 # Miscellanious
@@ -57,12 +44,6 @@ proc handle_scroll {window ammount} {
 		$window yview scroll [expr {-$ammount/120}] units
 	}
 }
-
-# Use the default font instead for balloon help:
-if {[lsearch [font names] balloon-help] == -1} {
-	font create balloon-help -family Helvetica -size -12 -weight bold
-}
-DynamicHelp::configure -font balloon-help -fg black -bg "#FFFF77"
 
 ################################################################################
 
