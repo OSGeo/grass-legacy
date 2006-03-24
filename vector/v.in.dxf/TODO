@@ -1,0 +1,13 @@
+- port label import to GRASS 6: because there can be string labels, do we have
+  to use a database file instead of just Cats in the vector format?
+
+3/2006
+
+- add a list flag -l to list DXF labels
+  Problem: the write routines are spreaded in all add_*
+  files. Those needs to be conditionalized.
+
+- merge with v.in.dxf3d to treat the z dimension (here just a
+  warning is printed)
+
+11/2001
