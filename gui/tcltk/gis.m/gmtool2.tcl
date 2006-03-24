@@ -12,6 +12,7 @@ namespace eval GmToolBar2 {
 proc GmToolBar2::create { tb } {
     global gmpath
     global bgcolor
+    global iconpath
     variable toolbar
 
     set toolbar $tb
@@ -20,7 +21,7 @@ proc GmToolBar2::create { tb } {
     set bbox1 [ButtonBox $toolbar.bbox1 -spacing 0 -background $bgcolor ]
 
     # add scale and north arrow
-    $bbox1 add -image [image create photo -file "$gmpath/barscale.gif"] -command "GmTree::add barscale" \
+    $bbox1 add -image [image create photo -file "$iconpath/module-d.barscale.gif"] -command "GmTree::add barscale" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
         -helptext [G_msg "Scalebar and north arrow"]
 
@@ -48,12 +49,12 @@ proc GmToolBar2::create { tb } {
         -highlightthickness 0 -takefocus 0 -relief raised \
         -helptext [G_msg "Add group"]
 
-    $bbox2 add -image [image create photo -file "$gmpath/copy.gif"] \
+    $bbox2 add -image [image create photo -file "$iconpath/edit-copy.gif"] \
         -command "GmTree::duplicate" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Duplicate Layer"]    
 
-    $bbox2 add -image [image create photo -file "$gmpath/cut.gif"] -command \
+    $bbox2 add -image [image create photo -file "$iconpath/edit-cut.gif"] -command \
     	"GmTree::delete" -highlightthickness 0 -takefocus 0 -relief raised \
     	-borderwidth 2 -helptext [G_msg "Delete layer"]
        
@@ -65,15 +66,15 @@ proc GmToolBar2::create { tb } {
  # LAYER FILES
     set bbox3 [ButtonBox $toolbar.bbox3 -spacing 0 -background $bgcolor ]
 
-     $bbox3 add -image [image create photo -file "$gmpath/new.gif"] \
+     $bbox3 add -image [image create photo -file "$iconpath/file-new.gif"] \
      	-command "GmTree::new" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
         -helptext [G_msg "Create new workspace file (erase current workspace settings first)"]
-    $bbox3 add -image [image create photo -file "$gmpath/open.gif"] \
+    $bbox3 add -image [image create photo -file "$iconpath/file-open.gif"] \
     	-command "Gm::OpenFileBox"\
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
         -helptext [G_msg "Open existing workspace file"]
-    $bbox3 add -image [image create photo -file "$gmpath/save.gif"]  \
+    $bbox3 add -image [image create photo -file "$iconpath/file-save.gif"]  \
     	-command "Gm::SaveFileBox"\
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Save workspace file"]
