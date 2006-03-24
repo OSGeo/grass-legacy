@@ -15,26 +15,30 @@ namespace eval GmRgbhis {
     variable array lfile # rgbhis
     variable array lfilemask # rgbhis
     variable optlist
+    variable array dup # vector
 }
 
 
 proc GmRgbhis::create { tree parent } {
-    variable opt
-    variable count
+    variable optlist
     variable lfile
     variable lfilemask
-    variable optlist
+    variable opt
+    variable count
+    variable dup
     global gmpath
+    global iconpath
+    global mon
+    global guioptfont
 
     set node "rgbhis:$count"
 
     set frm [ frame .rgbicon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
+    set check [checkbutton $frm.check -font $guioptfont \
 		-variable GmRgbhis::opt($count,1,_check) \
 		-height 1 -padx 0 -width 0]
 
-    image create photo rgbico -file "$gmpath/rgbhis.gif"
+    image create photo rgbico -file "$iconpath/module-d.rgb.gif"
     set ico [label $frm.ico -image rgbico -bd 1 -relief raised]
     
     pack $check $ico -side left
@@ -51,7 +55,10 @@ proc GmRgbhis::create { tree parent } {
 	-window    $frm \
 	-drawcross auto  
     
+    #set default option values
     set opt($count,1,_check) 1 
+    set dup($count) 0
+
     set opt($count,1,map1) "" 
     set opt($count,1,map2) "" 
     set opt($count,1,map3) "" 
@@ -62,7 +69,7 @@ proc GmRgbhis::create { tree parent } {
     set opt($count,1,mod) 1
 
 
-	set optlist { _check map1 map2 map3 rgb his overlay opacity}
+	set optlist { _check map1 map2 map3 rgb his overlay}
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -117,6 +124,7 @@ proc GmRgbhis::options { id frm } {
     variable opt
     global gmpath
     global bgcolor
+    global iconpath
 
     # Panel heading
     set row [ frame $frm.heading ]
@@ -138,7 +146,7 @@ proc GmRgbhis::options { id frm } {
     # raster1 name
     set row [ frame $frm.name1 ]
     Label $row.a -text "     red (RGB) or hue (HIS):           "
-    Button $row.b -image [image create photo -file "$gmpath/rgbhis1.gif"] \
+    Button $row.b -image [image create photo -file "$iconpath/channel-red.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "raster map for red or hue channel"]\
 		-command "GmRgbhis::select_map1 $id" -height 26
@@ -151,7 +159,7 @@ proc GmRgbhis::options { id frm } {
     # raster2 name
     set row [ frame $frm.name2 ]
     Label $row.a -text "     green (RGB) or intensity (HIS):"
-    Button $row.b -image [image create photo -file "$gmpath/rgbhis2.gif"] \
+    Button $row.b -image [image create photo -file "$iconpath/channel-green.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "raster map for green or intensity channel"]\
 		-command "GmRgbhis::select_map2 $id" -height 26
@@ -164,7 +172,7 @@ proc GmRgbhis::options { id frm } {
     # raster3 name
     set row [ frame $frm.name3 ]
     Label $row.a -text "     blue (RGB) or saturation (HIS):"
-    Button $row.b -image [image create photo -file "$gmpath/rgbhis3.gif"] \
+    Button $row.b -image [image create photo -file "$iconpath/channel-blue.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "raster map for blue or saturation channel"]\
 		-command "GmRgbhis::select_map3 $id" -height 26
@@ -179,14 +187,14 @@ proc GmRgbhis::options { id frm } {
     checkbutton $row.a -text [G_msg "display maps as RGB"] -variable \
         GmRgbhis::opt($id,1,rgb) 
     Button $row.b -text [G_msg "Help"] \
-            -image [image create photo -file "$gmpath/grass.gif"] \
+            -image [image create photo -file "$iconpath/gui-help.gif"] \
             -command "run g.manual d.rgb" \
             -background $bgcolor \
             -helptext [G_msg "Help for RGB"]
     checkbutton $row.c -text [G_msg "display maps as HIS"] -variable \
         GmRgbhis::opt($id,1,his) 
     Button $row.d -text [G_msg "Help"] \
-            -image [image create photo -file "$gmpath/grass.gif"] \
+            -image [image create photo -file "$iconpath/gui-help.gif"] \
             -command "run g.manual d.his" \
             -background $bgcolor \
             -helptext [G_msg "Help for HIS"]
@@ -218,19 +226,19 @@ proc GmRgbhis::save { tree depth node } {
 
 
 proc GmRgbhis::display { node mod} {
+    global mon
     global mapfile
     global maskfile
     global complist
     global opclist
     global masklist
-    global gmpath
-    global mon
     variable optlist
     variable lfile 
     variable lfilemask
     variable opt
-    variable rasttype
     variable tree
+    variable dup
+    variable count
     
     set line ""
     set input ""
@@ -280,90 +288,118 @@ proc GmRgbhis::display { node mod} {
 	}
 
     # if options have change (or mod flag set by other procedures) re-render map
-	if {$opt($id,1,mod) == 1} {
+	if {$opt($id,1,mod) == 1 || $dup($id) == 1} {
 		# display rgb map    
 		if { $cmd1 != "" } { 
 			# redraw rgb
+			runcmd "d.frame -e"
 			run_panel $cmd1
+			# reset options changed flag
+			set opt($id,1,mod) 0
+			set dup($id) 0
 		}
 		# display his map    
 		if { $cmd2 != "" } { 
 			# redraw his
+			runcmd "d.frame -e"
 			run_panel $cmd2
+			# reset options changed flag
+			set opt($id,1,mod) 0
+			set dup($id) 0
 		}
-		file copy -force $mapfile($mon) $lfile($id)
-		file copy -force $maskfile($mon) $lfilemask($id)
-    } 
+		file rename -force $mapfile($mon) $lfile($id)
+		file rename -force $maskfile($mon) $lfilemask($id)
+    }
 
-    if { ! ( $opt($id,1,_check) ) } { return } 
+    #add lfile, maskfile, and opacity to compositing lists
+    if { $opt($id,1,_check) } {
 
-    #add lfile to compositing list
-	if {$complist($mon) != "" } {
-	    append complist($mon) ","
-	    append complist($mon) [file tail $lfile($id)]
-	} else {
-	    append complist($mon) [file tail $lfile($id)]
-	}	
-
-	if {$masklist($mon) != "" } {
-	    append masklist($mon) ","
-	    append masklist($mon) [file tail $lfilemask($id)]
-	} else {
-	    append masklist($mon) [file tail $lfilemask($id)]
-	}	
-
-	if {$opclist($mon) != "" } {
-	    append opclist($mon) ","
-	    append opclist($mon) $opt($id,1,opacity)
-	} else {
-	    append opclist($mon) $opt($id,1,opacity)
-	}	
+		if {$complist($mon) != "" } {
+			append complist($mon) ","
+			append complist($mon) [file tail $lfile($id)]
+		} else {
+			append complist($mon) [file tail $lfile($id)]
+		}	
 	
-	# reset options changed flag
-	set opt($id,1,mod) 0
+		if {$masklist($mon) != "" } {
+			append masklist($mon) ","
+			append masklist($mon) [file tail $lfilemask($id)]
+		} else {
+			append masklist($mon) [file tail $lfilemask($id)]
+		}	
+	
+		if {$opclist($mon) != "" } {
+			append opclist($mon) ","
+			append opclist($mon) $opt($id,1,opacity)
+		} else {
+			append opclist($mon) $opt($id,1,opacity)
+		}	
+	}
 }
 
 
 
 proc GmRgbhis::duplicate { tree parent node id } {
+    variable optlist
+    variable lfile
+    variable lfilemask
     variable opt
-    variable count 
+    variable count
+    variable dup
     global gmpath
+    global iconpath
+    global mon
+    global guioptfont
 
     set node "rgbhis:$count"
+	set dup($count) 1
 
     set frm [ frame .rgbhisicon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
+    set check [checkbutton $frm.check -font $guioptfont \
                            -variable GmRgbhis::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
-    image create photo rgbico -file "$gmpath/rgbhis.gif"
+    image create photo rgbico -file "$iconpath/module-d.rgb.gif"
     set ico [label $frm.ico -image rgbico -bd 1 -relief raised]
     
     pack $check $ico -side left
 
+	# where to insert new layer
+	if {[$tree selection get] != "" } {
+		set sellayer [$tree index [$tree selection get]]
+    } else { 
+    	set sellayer "end" 
+    }
+
 	if { $opt($id,1,map1) == ""} {
-    	$tree insert end $parent $node \
+	    $tree insert $sellayer $parent $node \
 		-text      "RGB-HIS $count" \
 		-window    $frm \
 		-drawcross auto
 	} else {
-	    $tree insert end $parent $node \
+	    $tree insert $sellayer $parent $node \
 		-text      "RGB-HIS $opt($id,1,map1)" \
 		-window    $frm \
 		-drawcross auto
 	}
 
-    set opt($count,1,_check) $opt($id,1,_check)
+	set opt($count,1,opacity) $opt($id,1,opacity)
 
-    set opt($count,1,map1) "$opt($id,1,map1)" 
-    set opt($count,1,map2) "$opt($id,1,map2)"  
-    set opt($count,1,map3) "$opt($id,1,map3)"  
-	set opt($count,1,opacity) opt($id,1,opacity)
-    set opt($count,1,overlay) $opt($id,1,overlay)
-    set opt($count,1,rgb) $opt($id,1,rgb)
-    set opt($count,1,his) $opt($id,1,his) 
+	set optlist { _check map1 map2 map3 rgb his overlay}
+
+    foreach key $optlist {
+    	set opt($count,1,$key) $opt($id,1,$key)
+		set opt($count,0,$key) $opt($count,1,$key)
+    } 
+    
+	set id $count
+
+	# create files in tmp directory for layer output
+	set mappid [pid]
+	set lfile($count) [eval exec "g.tempfile pid=$mappid"]
+	set lfilemask($count) $lfile($count)
+	append lfile($count) ".ppm"
+	append lfilemask($count) ".pgm"
 
     incr count
     return $node

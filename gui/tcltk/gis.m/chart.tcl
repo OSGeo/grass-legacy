@@ -15,26 +15,30 @@ namespace eval GmChart {
     variable array lfile # vector
     variable array lfilemask # vector
     variable optlist
+    variable array dup # vector
 }
 
+
+###############################################################################
 
 proc GmChart::create { tree parent } {
     variable opt
     variable count
-    variable optlist
+    variable dup
     variable lfile
     variable lfilemask
-    global gmpath
+    variable optlist
+    global guioptfont
+    global iconpath
 
     set node "chart:$count"
 
     set frm [ frame .charticon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
+    set check [checkbutton $frm.check -font $guioptfont \
                            -variable GmChart::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
-    image create photo chartico -file "$gmpath/chart.gif"
+    image create photo chartico -file "$iconpath/module-d.chart.gif"
     set ico [label $frm.ico -image chartico -bd 1 -relief raised]
     
     pack $check $ico -side left
@@ -52,6 +56,7 @@ proc GmChart::create { tree parent } {
 	-drawcross auto  
         
     set opt($count,1,_check) 1 
+    set dup($count) 0
     
     set opt($count,1,map) "" 
 	set opt($count,1,opacity) 1.0
@@ -71,7 +76,7 @@ proc GmChart::create { tree parent } {
     set opt($count,1,mod) 1
     
 	set optlist { _check map layer ctype columns sizecol csize cscale ocolor fcolors \
-             type_point type_line type_boundary type_centroid type_area opacity} 
+             type_point type_line type_boundary type_centroid type_area} 
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -87,6 +92,8 @@ proc GmChart::create { tree parent } {
 	incr count
     return $node
 }
+
+###############################################################################
 
 proc GmChart::set_option { node key value } {
     variable opt
@@ -104,6 +111,8 @@ proc GmChart::select_map { id } {
         GmTree::autonamel "chart for $m"
     }
 }
+
+###############################################################################
 
 proc GmChart::show_columns { id } {
 	variable opt
@@ -131,12 +140,15 @@ proc GmChart::show_data { id } {
 	}
 }
 
+###############################################################################
+
 # chart options
 proc GmChart::options { id frm } {
     variable opt
     global gmpath
     global bgcolor
-
+	global iconpath
+	
     # Panel heading
     set row [ frame $frm.heading1 ]
     Label $row.a -text "Display pie and bar charts of attribute values at vector object locations" \
@@ -157,7 +169,7 @@ proc GmChart::options { id frm } {
     # vector name
     set row [ frame $frm.map ]
     Label $row.a -text [G_msg "Vector map to chart:"]
-    Button $row.b -image [image create photo -file "$gmpath/vector.gif"] \
+    Button $row.b -image [image create photo -file "$iconpath/element-vector.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "vector map to chart"] \
 		-command "GmChart::select_map $id"
@@ -166,7 +178,7 @@ proc GmChart::options { id frm } {
           -background white
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
-            -image [image create photo -file "$gmpath/grass.gif"] \
+            -image [image create photo -file "$iconpath/gui-help.gif"] \
             -command "run g.manual d.vect.chart" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
@@ -196,13 +208,13 @@ proc GmChart::options { id frm } {
     set row [ frame $frm.showcolumns ]
     Label $row.a -text [G_msg "     show attribute columns"] 
     Button $row.b -text [G_msg "columns"] \
-		-image [image create photo -file "$gmpath/columns.gif"] \
+		-image [image create photo -file "$iconpath/db-columns.gif"] \
 		-command "GmChart::show_columns $id" \
 		-background $bgcolor \
 		-helptext [G_msg "Show columns"]
     Label $row.c -text [G_msg "   show attribute data"] 
     Button $row.d -text [G_msg "data"] \
-		-image [image create photo -file "$gmpath/columns.gif"] \
+		-image [image create photo -file "$iconpath/db-values.gif"] \
 		-command "GmChart::show_data $id" \
 		-background $bgcolor \
 		-helptext [G_msg "Show data"]
@@ -258,6 +270,8 @@ proc GmChart::options { id frm } {
     pack $row -side top -fill both -expand yes
 }
 
+###############################################################################
+
 proc GmChart::save { tree depth node } {
     variable opt
     variable optlist
@@ -269,6 +283,8 @@ proc GmChart::save { tree depth node } {
     } 
 }
 
+
+###############################################################################
 
 proc GmChart::display { node mod } {
     global mon
@@ -282,6 +298,8 @@ proc GmChart::display { node mod } {
     variable lfilemask
     variable opt
     variable tree
+    variable dup
+    variable count
 
     set line ""
     set input ""
@@ -351,91 +369,106 @@ proc GmChart::display { node mod } {
         	set opt($id,0,$key) $opt($id,1,$key)
         }
     } 
-
-	# redraw if options changed
-	if {$opt($id,1,mod) == 1} {
-	    run_panel $cmd
-    	file copy -force $mapfile($mon) $lfile($id)
-    	file copy -force $maskfile($mon) $lfilemask($id)
-	}
     
-    if { ! ( $opt($id,1,_check) ) } { return } 
+    # if options have change (or mod flag set by other procedures) re-render map
+	if {$opt($id,1,mod) == 1 || $dup($id) == 1} {
+		runcmd "d.frame -e"
+	    run_panel $cmd
+	   	file rename -force $mapfile($mon) $lfile($id)
+    	file rename -force $maskfile($mon) $lfilemask($id)
+		# reset options changed flag
+		set opt($id,1,mod) 0
+		set dup($id) 0
+	}
 
-    #add lfile to compositing list
-	if {$complist($mon) != "" } {
-	    append complist($mon) ","
-	    append complist($mon) [file tail $lfile($id)]
-	} else {
-	    append complist($mon) [file tail $lfile($id)]
-	}	
+    #add lfile, maskfile, and opacity to compositing lists
+    if { $opt($id,1,_check) } {
 
-	if {$masklist($mon) != "" } {
-	    append masklist($mon) ","
-	    append masklist($mon) [file tail $lfilemask($id)]
-	} else {
-	    append masklist($mon) [file tail $lfilemask($id)]
-	}	
-
-	if {$opclist($mon) != "" } {
-	    append opclist($mon) ","
-	    append opclist($mon) $opt($id,1,opacity)
-	} else {
-	    append opclist($mon) $opt($id,1,opacity)
-	}	
+		if {$complist($mon) != "" } {
+			append complist($mon) ","
+			append complist($mon) [file tail $lfile($id)]
+		} else {
+			append complist($mon) [file tail $lfile($id)]
+		}	
 	
-	# reset options changed flag
-	set opt($id,1,mod) 0
-
+		if {$masklist($mon) != "" } {
+			append masklist($mon) ","
+			append masklist($mon) [file tail $lfilemask($id)]
+		} else {
+			append masklist($mon) [file tail $lfilemask($id)]
+		}	
+	
+		if {$opclist($mon) != "" } {
+			append opclist($mon) ","
+			append opclist($mon) $opt($id,1,opacity)
+		} else {
+			append opclist($mon) $opt($id,1,opacity)
+		}	
+	}
 }
 
+###############################################################################
 
 proc GmChart::duplicate { tree parent node id } {
+    variable optlist
+    variable lfile
+    variable lfilemask
     variable opt
-    variable count 
-    global gmpath
+    variable count
+	variable dup
+	global guioptfont
+	global iconpath
 
     set node "chart:$count"
+	set dup($count) 1
 
     set frm [ frame .charticon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
+    set check [checkbutton $frm.check -font $guioptfont \
                            -variable GmChart::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
-    image create photo chartico -file "$gmpath/legend.gif"
+    image create photo chartico -file "$iconpath/module-d.chart.gif"
     set ico [label $frm.ico -image chartico -bd 1 -relief raised]
     
     pack $check $ico -side left
 
+	#insert new layer
+	if {[$tree selection get] != "" } {
+		set sellayer [$tree index [$tree selection get]]
+    } else { 
+    	set sellayer "end" 
+    }
+
 	if { $opt($id,1,map) == ""} {
-    	$tree insert end $parent $node \
+	    $tree insert $sellayer $parent $node \
 		-text      "chart $count" \
 		-window    $frm \
 		-drawcross auto
 	} else {
-	    $tree insert end $parent $node \
+	    $tree insert $sellayer $parent $node \
 		-text      "chart for $opt($id,1,map)" \
 		-window    $frm \
 		-drawcross auto
-	}
+	} 
 
-    set opt($count,1,_check) $opt($id,1,_check)
+	set opt($count,1,opacity) $opt($id,1,opacity)
 
-    set opt($count,1,map) "$opt($id,1,map)" 
-	set opt($count,1,opacity) opt($id,1,opacity)
-    set opt($count,1,type_point) "$opt($id,1,type_point)" 
-    set opt($count,1,type_line)  "$opt($id,1,type_line)"
-    set opt($count,1,type_boundary)  "$opt($id,1,type_boundary)"
-    set opt($count,1,type_centroid)  "$opt($id,1,type_centroid)"
-    set opt($count,1,type_area)  "$opt($id,1,type_area)"
-    set opt($count,1,layer)  "$opt($id,1,layer)"
-    set opt($count,1,ctype)  "$opt($id,1,ctype)" 
-    set opt($count,1,columns)  "$opt($id,1,columns)" 
-    set opt($count,1,sizecol)  "$opt($id,1,sizecol)" 
-    set opt($count,1,csize)  "$opt($id,1,csize)" 
-    set opt($count,1,cscale)  "$opt($id,1,cscale)"
-    set opt($count,1,color) "$opt($id,1,oolor)" 
-    set opt($count,1,color) "$opt($id,1,folors)" 
+	set optlist { _check map layer ctype columns sizecol csize cscale ocolor fcolors \
+             type_point type_line type_boundary type_centroid type_area} 
+
+    foreach key $optlist {
+    	set opt($count,1,$key) $opt($id,1,$key)
+		set opt($count,0,$key) $opt($count,1,$key)
+    } 
+	
+	set id $count
+	
+	# create files in tmp directory for layer output
+	set mappid [pid]
+	set lfile($count) [eval exec "g.tempfile pid=$mappid"]
+	set lfilemask($count) $lfile($count)
+	append lfile($count) ".ppm"
+	append lfilemask($count) ".pgm"
 
     incr count
     return $node
