@@ -309,7 +309,9 @@ char *dxf_fgets(char *buf, int size, FILE *fp)
 
 int extra_help(void)
 {
-    fprintf(stderr, "\n\nWhere lines and labels are one or more of:\n\n");
+    /* TODO */
+    /* fprintf(stderr, "\n\nWhere lines and labels are one or more of:\n\n"); */
+    fprintf(stderr, "\n\nWhere lines are one or more of:\n\n");
     fprintf(stderr, "    layername1[,layername2,layername3,...]\n\n");
     fprintf(stderr, "      and/or   \n\n");
     fprintf(stderr,
