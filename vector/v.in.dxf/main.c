@@ -27,8 +27,12 @@
 /* gotta change this to be malloced */
 #define MAX_ALLOC 100
 
-static char *line_list[MAX_ALLOC][2], *label_list[MAX_ALLOC][2];
-static int num_lines = 0, num_labels = 0;
+static char *line_list[MAX_ALLOC][2];
+static int num_lines = 0;
+#ifdef LABEL
+static char *label_list[MAX_ALLOC][2];
+static int num_labels = 0;
+#endif
 
 /* command line args */
 static char *out_name = NULL;
@@ -45,7 +49,11 @@ int main(int argc, char *argv[])
     char *p;
     int i;
     int count, list;
+#ifdef LABEL
     struct Option *old_opt, *line_opt, *labl_opt, *prefix_opt;
+#else
+    struct Option *old_opt, *line_opt, *prefix_opt;
+#endif
     struct GModule *module;
 
     G_gisinit(argv[0]);
@@ -54,7 +62,6 @@ int main(int argc, char *argv[])
     module->description =
 	"Converts files in DXF format to GRASS vector file format.";
 
-    /* TODO */
 #ifdef LABEL
     txtbox_flag = G_define_flag();
     txtbox_flag->key = 'n';
@@ -76,7 +83,6 @@ int main(int argc, char *argv[])
     line_opt->multiple = YES;
     line_opt->description = "DXF layers with line data";
 
-    /* TODO */
 #ifdef LABEL
     labl_opt = G_define_option();
     labl_opt->key = "labels";
@@ -106,7 +112,6 @@ int main(int argc, char *argv[])
     if (prefix_opt->answer != NULL)
 	out_name = G_store(prefix_opt->answer);
 
-    /* TODO */
 #ifdef LABEL
     if (txtbox_flag->answer)
 	fprintf(stderr, "text boxes will not be drawn\n");
@@ -130,6 +135,7 @@ int main(int argc, char *argv[])
 	}
     }
 
+#if LABEL
     if (labl_opt->answers != NULL) {
 	i = 0;
 	while (labl_opt->answers[i]) {
@@ -137,6 +143,7 @@ int main(int argc, char *argv[])
 	    from_table = 1;
 	}
     }
+#endif
 
 
     if (dxf_file == NULL) {
@@ -214,10 +221,12 @@ int add_line_layer(char *str)
     return add_layer(str, line_list, &num_lines);
 }
 
+#ifdef LABEL
 int add_att_layer(char *str)
 {
     return add_layer(str, label_list, &num_labels);
 }
+#endif
 
 int add_layer(char *str, char *list[][2], int *num)
 {
@@ -265,18 +274,22 @@ char *remap(char *str, int type)
     if (!from_table)
 	return (str);
 
+#ifdef LABEL
     /* do lookups based on label remapping */
     if (type == DXF_LABEL_LINE)
 	type = DXF_LABEL;
+#endif
 
     if (type == DXF_ASCII) {
 	/* list = line_list; */
 	num = num_lines;
     }
+#ifdef LABEL
     else {
 	/* list = label_list; */
 	num = num_labels;
     }
+#endif
 
 
     if (type == DXF_ASCII) {
@@ -285,12 +298,16 @@ char *remap(char *str, int type)
 		return (line_list[i][1]);
 	return (NULL);
     }
+#ifdef LABEL
     else {
 	for (i = 0; i < num; i++)
 	    if (!strcmp(str, label_list[i][0]))
 		return (label_list[i][1]);
 	return (NULL);
     }
+#else
+    return (NULL);
+#endif
 }
 
 
@@ -311,7 +328,6 @@ char *dxf_fgets(char *buf, int size, FILE *fp)
 
 int extra_help(void)
 {
-    /* TODO */
 #ifdef LABEL
     fprintf(stderr, "\n\nwhere lines and labels are one or more of:\n\n");
 #else

@@ -153,7 +153,6 @@ int dxf_find_lines(FILE * dxf_file)
 	else if (strcmp(dxf_line, circle) == 0)
 	    dxf_add_circle(dxf_file);
 
-	/* TODO */
 #ifdef LABEL
 	else if (strcmp(dxf_line, text) == 0)
 	    dxf_add_labelbox(dxf_file);
