@@ -7,7 +7,4 @@
   Problem: the write routines are spreaded in all add_*
   files. Those needs to be conditionalized.
 
-- merge with v.in.dxf3d to treat the z dimension (here just a
-  warning is printed)
-
 11/2001

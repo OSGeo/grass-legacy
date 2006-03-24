@@ -1,4 +1,5 @@
 /* 2006-MAR-24 ported to GRASS 6 by Huidae Cho <grass4u@gmail.com> */
+	Added support for z coordinates
 /* 2001-APR-19 change from Michel Wurtz <michel.wurtz@teledetection.fr> */
 	Cleaning and merge diffs from v.in.dxf2 - v.in.dxf only good
 /* 1998-OCT-06 change from Benjamin Horner-Johnson <ben@earth.nwu.edu> */

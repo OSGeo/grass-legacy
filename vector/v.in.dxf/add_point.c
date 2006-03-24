@@ -19,6 +19,8 @@ int dxf_add_point(FILE * dxf_file)
 
     /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
 
+    zinfo[0] = 0.0;
+
     while ((code = dxf_readcode(dxf_file)) != 0) {
 	if (code == -2)		/* EOF */
 	    return (0);
@@ -43,8 +45,9 @@ int dxf_add_point(FILE * dxf_file)
 	    yinfo[0] = atof(dxf_line);
 	    yflag = 1;
 	    break;
-#ifdef FOO
-	case 30:		/* Z COORDINATE NOT BEING USED */
+	case 30:		/* Z COORDINATE */
+	    zinfo[0] = atof(dxf_line);
+	    break;
 	case 50:		/* ANGLE OF x AXIS FOR THE UCS IN EFFECT */
 
 	/* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
@@ -54,7 +57,6 @@ int dxf_add_point(FILE * dxf_file)
 	case 210:	/* X EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
 	case 220:	/* Y EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
 	case 230:	/* Z EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
-#endif
 
 	default:
 	    break;
@@ -72,12 +74,14 @@ int dxf_add_point(FILE * dxf_file)
 	    }
 	    /* PRINTS OUT THE POLYLINE VERTEX DATA TO FILE DESIGNATED AS layer_fd */
 	    xinfo[1] = xinfo[0];
-	    yinfo[1] = yinfo[1];
-	    Vect_copy_xyz_to_pnts(Points, xinfo, yinfo, NULL, 2);
+	    yinfo[1] = yinfo[0];
+	    zinfo[1] = zinfo[0];
+	    Vect_copy_xyz_to_pnts(Points, xinfo, yinfo, zinfo, 2);
 	    /* TODO */
 	    cats = Vect_new_cats_struct();
 	    Vect_write_line(layer_fd->Map, GV_POINT, Points, cats);
 	    Vect_destroy_cats_struct(cats);
+    	    zinfo[0] = 0.0;
 	}
     }
     return (1);

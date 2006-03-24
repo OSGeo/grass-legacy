@@ -67,7 +67,10 @@ int dxf_find_lines(FILE * dxf_file)
 			    YMAX = atof(dxf_line);
 			    BOUNDARIES += 1;
 			    break;
-			case 30:	/*not looking for z values */
+			case 30:
+			    ZMAX = atof(dxf_line);
+			    BOUNDARIES += 1;
+			    break;
 			default:
 			    break;
 			}
@@ -97,7 +100,9 @@ int dxf_find_lines(FILE * dxf_file)
 			    YMIN = atof(dxf_line);
 			    BOUNDARIES += 1;
 			    break;
-			case 30:	/* not looking for z values */
+			case 30:
+			    ZMIN = atof(dxf_line);
+			    BOUNDARIES += 1;
 			default:
 			    break;
 			}
@@ -116,7 +121,7 @@ int dxf_find_lines(FILE * dxf_file)
 		}
 	    }
 
-	    if (BOUNDARIES == 4)
+	    if (BOUNDARIES == 6)
 		break;
 
 	}
@@ -127,6 +132,7 @@ int dxf_find_lines(FILE * dxf_file)
     /*#endif */
     xinfo = (double *)G_malloc(ARR_INCR * sizeof(double));
     yinfo = (double *)G_malloc(ARR_INCR * sizeof(double));
+    zinfo = (double *)G_malloc(ARR_INCR * sizeof(double));
     ARR_MAX = ARR_INCR;
     n = e = DBL_MIN;
     w = s = DBL_MAX;
@@ -148,7 +154,7 @@ int dxf_find_lines(FILE * dxf_file)
 	    dxf_add_circle(dxf_file);
 
 	/* TODO */
-#if 0
+#ifdef LABEL
 	else if (strcmp(dxf_line, text) == 0)
 	    dxf_add_labelbox(dxf_file);
 #endif

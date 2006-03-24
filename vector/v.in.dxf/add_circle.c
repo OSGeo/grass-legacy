@@ -17,6 +17,7 @@ int dxf_add_circle(FILE * dxf_file)
     double centerx = 0;		/* READ IN FROM DXF FILE */
     double centery = 0;		/* READ IN FROM DXF FILE */
     double radius = 0;		/* READ IN FROM DXF FILE */
+    double zcoor = 0;		/* READ IN FROM DXF FILE */
     char *nolayername = "UNIDENTIFIED";
     DXF_DIG *layer_fd = NULL;	/* POINTER TO LAYER NAME */
     int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
@@ -48,7 +49,8 @@ int dxf_add_circle(FILE * dxf_file)
 	    centery = atof(dxf_line);
 	    yflag = 1;
 	    break;
-	case 30:	/* Z COORDINATE NOT BEING USED */
+	case 30:	/* Z COORDINATE */
+	    zcoor = atof(dxf_line);
 	    break;
 	case 40:	/* RADIUS */
 	    radius = atof(dxf_line);
@@ -72,20 +74,21 @@ int dxf_add_circle(FILE * dxf_file)
 	return (0);
 
     if (xflag && yflag && rflag) {
-	arr_size = make_arc(0, centerx, centery, radius, 0.0, 360.0, 0);
+	arr_size = make_arc(0, centerx, centery, radius, 0.0, 360.0, zcoor, 0);
 	write_polylines(layer_fd, arr_size);
     }
     return (1);
 }
 
 int make_arc(int offset,	/* offset into array of points */
-	     double centerx, double centery,
-	     double radius, double start_angle, double finish_angle, int flag)
+	double centerx, double centery,
+	double radius, double start_angle, double finish_angle, double zcoor,
+	int flag)
 {
     float theta;	/* the angle used for calculating a given point */
     float alpha;	/* theta converted into radians for use in math */
     double extcirclx[4], extcircly[4];	/*to check_extents of circle */
-    int x;		/* looping variable */
+    int i;		/* looping variable */
     int arr_size;
 
     arr_size = offset;
@@ -106,12 +109,14 @@ int make_arc(int offset,	/* offset into array of points */
 	    alpha = 3.141592654 * theta / 180.0; /* converting to radians */
 	    xinfo[arr_size] = radius * cos(alpha) + centerx;
 	    yinfo[arr_size] = radius * sin(alpha) + centery;
+	    zinfo[arr_size] = zcoor;
 	    /*dxf_check_ext(pt_array[arr_size].x,pt_array[arr_size].y); */
 	    theta -= RSTEP;
 	    if (arr_size == ARR_MAX) {
 		ARR_MAX += ARR_INCR;
 		xinfo = (double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
 		yinfo = (double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
+		zinfo = (double *)G_realloc(zinfo, ARR_MAX * sizeof(double));
 	    }
 	    arr_size++;
 	}
@@ -122,12 +127,14 @@ int make_arc(int offset,	/* offset into array of points */
 	    alpha = 3.141592654 * theta / 180.0; /* converting to radians */
 	    xinfo[arr_size] = radius * cos(alpha) + centerx;
 	    yinfo[arr_size] = radius * sin(alpha) + centery;
+	    zinfo[arr_size] = zcoor;
 	    /*dxf_check_ext(pt_array[arr_size].x,pt_array[arr_size].y); */
 	    theta += RSTEP;
 	    if (arr_size == ARR_MAX) {
 		ARR_MAX += ARR_INCR;
 		xinfo = (double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
 		yinfo = (double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
+		zinfo = (double *)G_realloc(zinfo, ARR_MAX * sizeof(double));
 	    }
 	    arr_size++;
 	}
@@ -136,11 +143,13 @@ int make_arc(int offset,	/* offset into array of points */
     alpha = 3.141592654 * finish_angle / 180.0;	/* converting to radians */
     xinfo[arr_size] = radius * cos(alpha) + centerx;
     yinfo[arr_size] = radius * sin(alpha) + centery;
+    zinfo[arr_size] = zcoor;
     /*dxf_check_ext(pt_array[arr_size].x,pt_array[arr_size].y); */
     if (arr_size == ARR_MAX) {
 	ARR_MAX += ARR_INCR;
 	xinfo = (double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
 	yinfo = (double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
+	zinfo = (double *)G_realloc(zinfo, ARR_MAX * sizeof(double));
     }
     arr_size++;
 
@@ -148,8 +157,8 @@ int make_arc(int offset,	/* offset into array of points */
     {
 	/*need to check extent of plotted arcs and circles */
 	if (flag)		/*for an arc */
-	    for (x = offset; x < arr_size; x++)
-		dxf_check_ext(xinfo[x], yinfo[x]);
+	    for (i = offset; i < arr_size; i++)
+		dxf_check_ext(xinfo[i], yinfo[i]);
 
 	else {			/*for a circle */
 
@@ -163,8 +172,8 @@ int make_arc(int offset,	/* offset into array of points */
 
 	    extcircly[3] = centery + radius;
 
-	    for (x = 0; x < 4; x++)
-		dxf_check_ext(extcirclx[x], extcircly[x]);
+	    for (i = 0; i < 4; i++)
+		dxf_check_ext(extcirclx[i], extcircly[i]);
 	}
     }
     return arr_size - offset;

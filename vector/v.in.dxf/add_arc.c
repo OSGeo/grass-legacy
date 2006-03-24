@@ -18,6 +18,7 @@ int dxf_add_arc(FILE * dxf_file)
     double centerx = 0;		/* READ IN FROM DXF FILE */
     double centery = 0;		/* READ IN FROM DXF FILE */
     double radius = 0;		/* READ IN FROM DXF FILE */
+    double zcoor = 0;		/* READ IN FROM DXF FILE */
     float start_angle = 0;	/* READ IN FROM DXF FILE */
     float finish_angle = 0;	/* READ IN FROM DXF FILE */
     char *nolayername = "UNIDENTIFIED";
@@ -51,7 +52,8 @@ int dxf_add_arc(FILE * dxf_file)
 	    centery = atof(dxf_line);
 	    yflag = 1;
 	    break;
-	case 30:		/* Z COORDINATE NOT BEING USED */
+	case 30:		/* Z COORDINATE */
+	    zcoor = atof(dxf_line);
 	    break;
 	case 40:		/* RADIUS */
 	    radius = atof(dxf_line);
@@ -85,8 +87,7 @@ int dxf_add_arc(FILE * dxf_file)
     }
 
     if (xflag && yflag && rflag && sflag && fflag) {
-	arr_size =
-	    make_arc(0, centerx, centery, radius, start_angle, finish_angle, 1);
+	arr_size = make_arc(0, centerx, centery, radius, start_angle, finish_angle, zcoor, 1);
 	write_polylines(layer_fd, arr_size);
     }
     return (1);
