@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     int row, col;
     int searchrow, searchcolumn, pointsfound;
     int *shortlistrows=NULL, *shortlistcolumns=NULL;
-    long ncells;
+    long ncells = 0;
     double north, east;
     double dist;
     double sum1, sum2, interp_value;
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
         int row, column;
         struct cell_list *next;
     };
-    struct cell_list **search_list, **search_list_start;
+    struct cell_list **search_list = NULL, **search_list_start = NULL;
     int max_radius, radius;
     int searchallpoints = 0;
    
@@ -77,13 +77,16 @@ int main(int argc, char *argv[])
     parm.npoints->answer = "12";
 
     parm.dfield = G_define_standard_option(G_OPT_V_FIELD);
+    parm.dfield->description =
+	_("Field value. If set to 0, z coordinates are used. (3D vector only)");
+    parm.dfield->answer = "1";
 
     parm.col = G_define_option() ;
     parm.col->key        = "column" ;
     parm.col->type       = TYPE_STRING ;
-    parm.col->required   = YES ;
-    parm.col->description= _("Attribute table column with values to interpolate");
-   
+    parm.col->required   = NO ;
+    parm.col->description= _("Attribute table column with values to interpolate (if layer>0)");
+
     noindex = G_define_flag();
     noindex->key = 'n';
     noindex->description = _("Don't index points by raster cell (slower but uses"
@@ -101,7 +104,7 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
 
     fprintf(stderr, "%s:\n", G_program_name());
-   
+
     if (G_legal_filename(parm.output->answer) < 0)
         G_fatal_error( _("%s=%s - illegal name"), parm.output->key, parm.output->answer);
 
@@ -111,7 +114,10 @@ int main(int argc, char *argv[])
 
     sscanf(parm.dfield->answer,"%d", &field);
 
-    list = (struct list_Point *) G_calloc (search_points, sizeof (struct list_Point));
+    if (field > 0 && !parm.col->answer)
+	G_fatal_error(_("No attribute column specified"));
+
+    list = (struct list_Point *) G_calloc ((size_t)search_points, sizeof (struct list_Point));
 
 
 /* get the window, dimension arrays */
@@ -330,7 +336,7 @@ int main(int argc, char *argv[])
                 sum2 = 0.0;
                 for (n = 0; n < nsearch; n++)
                 {
-                    if(dist = list[n].dist)
+                    if((dist = list[n].dist))
                     {
                         sum1 += list[n].z / dist;
                         sum2 += 1.0/dist;
@@ -392,7 +398,7 @@ void newpoint ( double z,double east,double north)
 void calculate_distances(int row, int column, double north, 
                          double east, int *pointsfound)
 {
-    int j, n, max;
+    int j, n, max = 0;
     double dx, dy, dist;
     static double maxdist;
    

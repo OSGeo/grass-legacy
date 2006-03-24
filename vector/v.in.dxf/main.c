@@ -69,11 +69,11 @@ int main(int argc, char *argv[])
 #endif
 
     old_opt = G_define_option();
-    old_opt->key = "dxf";
+    old_opt->key = "input";
     old_opt->type = TYPE_STRING;
     old_opt->required = YES;
     old_opt->multiple = NO;
-    /*old_opt->gisprompt                = "old,dxf,dxf"; */
+    old_opt->gisprompt = "file,file,file";
     old_opt->description = "DXF input file";
 
     line_opt = G_define_option();
