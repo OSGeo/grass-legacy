@@ -43,6 +43,8 @@ DynamicHelp::configure -font balloon-help -fg black -bg "#FFFF77"
 
 # Font to use everywhere
 option add *font default
+# Font in labelfrmaes of labels in bwidgets is prefixed with label:
+option add *labelfont default
 
 # Various background colors
 option add *background HoneyDew2
@@ -50,8 +52,10 @@ option add *activeBackground HoneyDew2
 
 # Things that are selected:
 option add *selectBackground #ffff9b
+option add *selectForeground black
 # Menus use active instead of selected
 option add *Menu.activeBackground #ffff9b
+option add *Menu.activeForeground black
 
 # Scrollbar trough color
 option add *troughColor HoneyDew3
