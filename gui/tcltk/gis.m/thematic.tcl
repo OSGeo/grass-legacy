@@ -17,28 +17,31 @@ namespace eval GmThematic {
     variable array lfile # raster
     variable array lfilemask # raster
     variable optlist
+    variable array dup # vector
 }
 
+
+###############################################################################
+# create new thematic layer
 
 proc GmThematic::create { tree parent } {
     variable opt
     variable count
-    global gmpath
-    global mon
-    global frm
+    variable dup
     variable lfile
     variable lfilemask
     variable optlist
+    global guioptfont
+    global iconpath
 
     set node "thematic:$count"
 
     set frm [ frame .thematicicon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
+    set check [checkbutton $frm.check -font $guioptfont \
                            -variable GmThematic::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
-    image create photo thematicico -file "$gmpath/thematic.gif"
+    image create photo thematicico -file "$iconpath/module-d.thematic.gif"
     set ico [label $frm.ico -image thematicico -bd 1 -relief raised]
     
     pack $check $ico -side left
@@ -56,6 +59,7 @@ proc GmThematic::create { tree parent } {
 	-drawcross auto  
         
     set opt($count,1,_check) 1 
+    set dup($count) 0
     
     set opt($count,1,map) "" 
 	set opt($count,1,opacity) 1.0
@@ -88,7 +92,7 @@ proc GmThematic::create { tree parent } {
 
 	set optlist { _check map type column themetype themecalc breakpoints where \
              layer icon ptsize maxsize nint colorscheme pointcolor linecolor\
-             startcolor endcolor border update_rgb math psmap opacity\
+             startcolor endcolor border update_rgb math psmap \
              titlefont tfontcolor subtitlefont labelfont lfontcolor} 
 
     foreach key $optlist {
@@ -105,6 +109,8 @@ proc GmThematic::create { tree parent } {
     incr count
     return $node
 }
+
+###############################################################################
 
 proc GmThematic::set_option { node key value } {
     variable opt
@@ -123,6 +129,8 @@ proc GmThematic::select_map { id } {
     }
 }
 
+###############################################################################
+# select fonts for legend
 proc GmThematic::select_tfont { id } {
 	variable opt
     global frm 
@@ -145,6 +153,9 @@ proc GmThematic::select_lfont { id } {
     set fon [SelectFont $frm.font -type dialog -sampletext 1 -title "Select font"]
 	if { $fon != "" } {set opt($id,1,labelfont) $fon}
 }
+
+###############################################################################
+# show attribute columns and attribute values
 
 proc GmThematic::show_columns { id } {
 	variable opt
@@ -172,6 +183,8 @@ proc GmThematic::show_data { id } {
 	}
 }
 
+###############################################################################
+
 # select symbols from directories
 proc GmThematic::select_symbol { id } {
     variable opt
@@ -181,10 +194,13 @@ proc GmThematic::select_symbol { id } {
     }
 }
 
-# thematic options
+###############################################################################
+
+# set thematic options
 proc GmThematic::options { id frm } {
     variable opt
     global gmpath
+    global iconpath
     global bgcolor
 
     # Panel heading
@@ -213,7 +229,7 @@ proc GmThematic::options { id frm } {
     # vector name
     set row [ frame $frm.map ]
     Label $row.a -text [G_msg "Vector map:"]
-    Button $row.b -image [image create photo -file "$gmpath/vector.gif"] \
+    Button $row.b -image [image create photo -file "$iconpath/element-vector.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "vector for thematic mapping"] \
 		-command "GmThematic::select_map $id"
@@ -222,7 +238,7 @@ proc GmThematic::options { id frm } {
           -background white
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
-            -image [image create photo -file "$gmpath/grass.gif"] \
+            -image [image create photo -file "$iconpath/gui-help.gif"] \
             -command "run g.manual d.vect.thematic" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
@@ -252,13 +268,13 @@ proc GmThematic::options { id frm } {
 	set row [ frame $frm.columns ]
     Label $row.a -text [G_msg "    show attribute columns"] 
     Button $row.b -text [G_msg "columns"] \
-            -image [image create photo -file "$gmpath/columns.gif"] \
+            -image [image create photo -file "$iconpath/db-columns.gif"] \
             -command "GmThematic::show_columns $id" \
             -background $bgcolor \
             -helptext [G_msg "Show columns"]
     Label $row.c -text [G_msg "   show data"] 
     Button $row.d -text [G_msg "data"] \
-            -image [image create photo -file "$gmpath/columns.gif"] \
+            -image [image create photo -file "$iconpath/db-values.gif"] \
             -command "GmThematic::show_data $id" \
             -background $bgcolor \
             -helptext [G_msg "Show data"]
@@ -358,7 +374,7 @@ proc GmThematic::options { id frm } {
     # legend 1
     set row [ frame $frm.legend1 ]
     Label $row.a -text [G_msg "Legend: title font "] 
-    Button $row.b -image [image create photo -file "$gmpath/font.gif"] \
+    Button $row.b -image [image create photo -file "$iconpath/gui-font.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "title font for legend"] \
 	    -command "GmThematic::select_tfont $id"
@@ -373,7 +389,7 @@ proc GmThematic::options { id frm } {
     # legend 2
     set row [ frame $frm.legend2 ]
     Label $row.a -text [G_msg "    subtitle font    "] 
-    Button $row.b -image [image create photo -file "$gmpath/font.gif"] \
+    Button $row.b -image [image create photo -file "$iconpath/gui-font.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "subtitle font for legend"] \
 	    -command "GmThematic::select_stfont $id"
@@ -386,7 +402,7 @@ proc GmThematic::options { id frm } {
     # legend 3
     set row [ frame $frm.legend3 ]
     Label $row.a -text [G_msg "    label font        "] 
-    Button $row.b -image [image create photo -file "$gmpath/font.gif"] \
+    Button $row.b -image [image create photo -file "$iconpath/gui-font.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "label font for legend"] \
 	    -command "GmThematic::select_lfont $id"
@@ -415,6 +431,9 @@ proc GmThematic::options { id frm } {
     pack $row -side top -fill both -expand yes
 }
 
+###############################################################################
+# save to grc file
+
 proc GmThematic::save { tree depth node } {
     variable opt
     variable optlist
@@ -427,24 +446,26 @@ proc GmThematic::save { tree depth node } {
 }
 
 
+###############################################################################
+# render and composite thematic layer
+
 proc GmThematic::display { node mod } {
+    global mon
     global mapfile
     global maskfile
     global complist
     global opclist
     global masklist
-    global gmpath
-    global mon
     variable optlist
     variable lfile 
     variable lfilemask
     variable opt
-    variable rasttype
     variable tree
-    
+    variable dup
+    variable count
+
     set line ""
     set input ""
-    global gmpath
     set cmd ""
 
     set tree($mon) $GmTree::tree($mon)
@@ -509,109 +530,117 @@ proc GmThematic::display { node mod } {
     } 
     
     # if options have change (or mod flag set by other procedures) re-render map
-	if {$opt($id,1,mod) == 1} {
-		run_panel $cmd
-		file copy -force $mapfile($mon) $lfile($id)
-		file copy -force $maskfile($mon) $lfilemask($id)
-    }
+	if {$opt($id,1,mod) == 1 || $dup($id) == 1} {
+		runcmd "d.frame -e"
+	    run_panel $cmd
+	   	file rename -force $mapfile($mon) $lfile($id)
+    	file rename -force $maskfile($mon) $lfilemask($id)
+		# reset options changed flag
+		set opt($id,1,mod) 0
+		set dup($id) 0
+	}
 
-    if { ! ( $opt($id,1,_check) ) } { return } 
+    #add lfile, maskfile, and opacity to compositing lists
+    if { $opt($id,1,_check) } {
 
-    #add lfile to compositing list
-	if {$complist($mon) != "" } {
-	    append complist($mon) ","
-	    append complist($mon) [file tail $lfile($id)]
-	} else {
-	    append complist($mon) [file tail $lfile($id)]
-	}	
-
-	if {$masklist($mon) != "" } {
-	    append masklist($mon) ","
-	    append masklist($mon) [file tail $lfilemask($id)]
-	} else {
-	    append masklist($mon) [file tail $lfilemask($id)]
-	}	
-
-	if {$opclist($mon) != "" } {
-	    append opclist($mon) ","
-	    append opclist($mon) $opt($id,1,opacity)
-	} else {
-	    append opclist($mon) $opt($id,1,opacity)
-	}	
+		if {$complist($mon) != "" } {
+			append complist($mon) ","
+			append complist($mon) [file tail $lfile($id)]
+		} else {
+			append complist($mon) [file tail $lfile($id)]
+		}	
 	
-	# reset options changed flag
-	set opt($id,1,mod) 0
-
-	GmThematic::tlegend $mon
-	GmThematic::tleg_item $mon $id
+		if {$masklist($mon) != "" } {
+			append masklist($mon) ","
+			append masklist($mon) [file tail $lfilemask($id)]
+		} else {
+			append masklist($mon) [file tail $lfilemask($id)]
+		}	
+	
+		if {$opclist($mon) != "" } {
+			append opclist($mon) ","
+			append opclist($mon) $opt($id,1,opacity)
+		} else {
+			append opclist($mon) $opt($id,1,opacity)
+		}	
+		GmThematic::tlegend $mon
+		GmThematic::tleg_item $mon $id
+	}
+	
 }
 
 
+###############################################################################
+# duplicate thematic layer 
 proc GmThematic::duplicate { tree parent node id } {
+    variable optlist
+    variable lfile
+    variable lfilemask
     variable opt
-    variable count 
-    global gmpath
+    variable count
+	variable dup
+	global guioptfont
+	global iconpath
 
     set node "thematic:$count"
+	set dup($count) 1
 
     set frm [ frame .thematicicon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
+    set check [checkbutton $frm.check -font $guioptfont \
                            -variable GmThematic::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
-    image create photo thematicico -file "$gmpath/thematic.gif"
+    image create photo thematicico -file "$iconpath/module-d.thematic.gif"
     set ico [label $frm.ico -image thematicico -bd 1 -relief raised]
     
     pack $check $ico -side left
 
+	#insert new layer
+	if {[$tree selection get] != "" } {
+		set sellayer [$tree index [$tree selection get]]
+    } else { 
+    	set sellayer "end" 
+    }
+
 	if { $opt($id,1,map) == ""} {
-    	$tree insert end $parent $node \
+	    $tree insert $sellayer $parent $node \
 		-text      "thematic $count" \
 		-window    $frm \
 		-drawcross auto
 	} else {
-	    $tree insert end $parent $node \
+	    $tree insert $sellayer $parent $node \
 		-text      "thematic map for $opt($id,1,map)" \
 		-window    $frm \
 		-drawcross auto
-	}
+	} 
 
-    set opt($count,1,_check) $opt($id,1,_check)
+	set opt($count,1,opacity) $opt($id,1,opacity)
+	
+	set optlist { _check map type column themetype themecalc breakpoints where \
+		 layer icon ptsize maxsize nint colorscheme pointcolor linecolor\
+		 startcolor endcolor border update_rgb math psmap \
+		 titlefont tfontcolor subtitlefont labelfont lfontcolor} 
 
-    set opt($count,1,map) "$opt($id,1,map)" 
-	set opt($count,1,opacity) opt($id,1,opacity)
-    set opt($count,1,type) "$opt($id,1,type)"
-    set opt($count,1,column) "$opt($id,1,column)"
-    set opt($count,1,themetype) "$opt($id,1,themetype)" 
-    set opt($count,1,themecalc) "$opt($id,1,themecalc)" 
-    set opt($count,1,breakpoints) "$opt($id,1,breakpoints)" 
-    set opt($count,1,where) "$opt($id,1,where)" 
-    set opt($count,1,layer) "$opt($id,1,layer)"
-    set opt($count,1,icon) "$opt($id,1,icon)" 
-    set opt($count,1,ptsize) "$opt($id,1,ptsize)"
-    set opt($count,1,maxsize) "$opt($id,1,maxsize)"
-    set opt($count,1,nint) "$opt($id,1,nint)"
-    set opt($count,1,colorscheme) "$opt($id,1,colorscheme)"
-    set opt($count,1,pointcolor) "$opt($id,1,pointcolor)"
-    set opt($count,1,linecolor) "$opt($id,1,linecolor)"
-    set opt($count,1,startcolor) "$opt($id,1,startcolor)"
-    set opt($count,1,endcolor) "$opt($id,1,endcolor)"
-    set opt($count,1,border) "$opt($id,1,border)"
-    set opt($count,1,update_rgb) "$opt($id,1,update_rgb)" 
-    set opt($count,1,math) "$opt($id,1,math)" 
-    set opt($count,1,psmap) "$opt($id,1,psmap)" 
-    set opt($count,1,titlefont) "$opt($id,1,titlefont)"
-    set opt($count,1,subtitlefont) "$opt($id,1,subtitlefont)"
-    set opt($count,1,labelfont) "$opt($id,1,labelfont)"
-    set opt($count,1,tfontcolor) "$opt($id,1,tfontcolor)" 
-    set opt($count,1,lfontcolor) "$opt($id,1,lfontcolor)" 
+    foreach key $optlist {
+    	set opt($count,1,$key) $opt($id,1,$key)
+		set opt($count,0,$key) $opt($count,1,$key)
+    } 
+	
+	set id $count
+	
+	# create files in tmp directory for layer output
+	set mappid [pid]
+	set lfile($count) [eval exec "g.tempfile pid=$mappid"]
+	set lfilemask($count) $lfile($count)
+	append lfile($count) ".ppm"
+	append lfilemask($count) ".pgm"
 
     incr count
     return $node
 }
 
 ###############################################################################
+
 # create graphic legend in separate display canvas
 proc GmThematic::tlegend { mon } {
 	global legendtitle
@@ -619,6 +648,7 @@ proc GmThematic::tlegend { mon } {
 	global dtxt
 	global keycontrol
 	global gmpath
+	global iconpath
     global env
 
 	variable tlegend

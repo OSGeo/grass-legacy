@@ -15,26 +15,33 @@ namespace eval GmLegend {
     variable array lfile # raster
     variable array lfilemask # raster
     variable optlist
+    variable array dup # vector
 }
 
 
+###############################################################################
+# create new legend layer
 proc GmLegend::create { tree parent } {
     variable opt
     variable count
     variable lfile
     variable lfilemask
     variable optlist
+    variable first
+	variable dup
     global gmpath
+    global iconpath
+    global guioptfont
 
     set node "legend:$count"
+	set dup($count) 1
 
     set frm [ frame .legendicon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
+    set check [checkbutton $frm.check -font $guioptfont \
                            -variable GmLegend::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
-    image create photo legico -file "$gmpath/legend.gif"
+    image create photo legico -file "$iconpath/module-d.legend.gif"
     set ico [label $frm.ico -image legico -bd 1 -relief raised]
     
     pack $check $ico -side left
@@ -52,6 +59,8 @@ proc GmLegend::create { tree parent } {
 	-drawcross auto  
         
     set opt($count,1,_check) 1 
+    set dup($count) 0
+
     set opt($count,1,map) "" 
 	set opt($count,1,opacity) 1.0
     set opt($count,1,color) "black" 
@@ -69,7 +78,7 @@ proc GmLegend::create { tree parent } {
     set opt($count,1,mod) 1
     
 	set optlist { _check map color lines thin labelnum at use range \
-             nolbl noval skip smooth flip opacity}
+             nolbl noval skip smooth flip}
              
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -86,6 +95,7 @@ proc GmLegend::create { tree parent } {
     return $node
 }
 
+###############################################################################
 proc GmLegend::set_option { node key value } {
     variable opt
  
@@ -93,6 +103,8 @@ proc GmLegend::set_option { node key value } {
     set opt($id,1,$key) $value
 }
 
+###############################################################################
+# select raster map
 proc GmLegend::select_map { id } {
     variable tree
     variable node
@@ -103,6 +115,7 @@ proc GmLegend::select_map { id } {
     }
 }
 
+###############################################################################
 # legend options
 proc GmLegend::options { id frm } {
     variable opt
@@ -129,7 +142,7 @@ proc GmLegend::options { id frm } {
     # raster name
     set row [ frame $frm.map ]
     Label $row.a -text "Raster map: "
-    Button $row.b -image [image create photo -file "$gmpath/raster.gif"] \
+    Button $row.b -image [image create photo -file "$iconpath/channel-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmLegend::select_map $id"
     Entry $row.c -width 35 -text " $opt($id,1,map)" \
@@ -137,7 +150,7 @@ proc GmLegend::options { id frm } {
           -background white
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
-            -image [image create photo -file "$gmpath/grass.gif"] \
+            -image [image create photo -file "$iconpath/gui-help.gif"] \
             -command "run g.manual d.legend" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
@@ -241,6 +254,8 @@ proc GmLegend::options { id frm } {
 	set opt($id,1,mod) "1"
 }
 
+###############################################################################
+#save legend layer to  grc file
 proc GmLegend::save { tree depth node } {
     variable opt
     variable optlist
@@ -253,20 +268,22 @@ proc GmLegend::save { tree depth node } {
 }
 
 
+###############################################################################
+# render and composite legend layer
 proc GmLegend::display { node mod } {
+    global mon
     global mapfile
     global maskfile
     global complist
     global opclist
     global masklist
-    global gmpath
-    global mon
     variable optlist
     variable lfile 
     variable lfilemask
     variable opt
-    variable rasttype
     variable tree
+    variable dup
+    variable count
 
     set line ""
     set input ""
@@ -324,90 +341,108 @@ proc GmLegend::display { node mod } {
         	set opt($id,0,$key) $opt($id,1,$key)
         }
     } 
-
-    # if options have change (or mod flag set by other procedures) re-render map
-	if {$opt($id,1,mod) == 1} {
-		run_panel $cmd
-		file copy -force $mapfile($mon) $lfile($id)
-		file copy -force $maskfile($mon) $lfilemask($id)
-    }
-
-    if { ! ( $opt($id,1,_check) ) } { return } 
-
-    #add lfile to compositing list
-	if {$complist($mon) != "" } {
-	    append complist($mon) ","
-	    append complist($mon) [file tail $lfile($id)]
-	} else {
-	    append complist($mon) [file tail $lfile($id)]
-	}	
-
-	if {$masklist($mon) != "" } {
-	    append masklist($mon) ","
-	    append masklist($mon) [file tail $lfilemask($id)]
-	} else {
-	    append masklist($mon) [file tail $lfilemask($id)]
-	}	
-
-	if {$opclist($mon) != "" } {
-	    append opclist($mon) ","
-	    append opclist($mon) $opt($id,1,opacity)
-	} else {
-	    append opclist($mon) $opt($id,1,opacity)
-	}	
-	
-	# reset options changed flag
-	set opt($id,1,mod) 0
     
+    # if options have change (or mod flag set by other procedures) re-render map
+	if {$opt($id,1,mod) == 1 || $dup($id) == 1} {
+		runcmd "d.frame -e"
+	    run_panel $cmd
+	   	file rename -force $mapfile($mon) $lfile($id)
+    	file rename -force $maskfile($mon) $lfilemask($id)
+		# reset options changed flag
+		set opt($id,1,mod) 0
+		set dup($id) 0
+	}
+
+    #add lfile, maskfile, and opacity to compositing lists
+    if { $opt($id,1,_check) } {
+
+		if {$complist($mon) != "" } {
+			append complist($mon) ","
+			append complist($mon) [file tail $lfile($id)]
+		} else {
+			append complist($mon) [file tail $lfile($id)]
+		}	
+	
+		if {$masklist($mon) != "" } {
+			append masklist($mon) ","
+			append masklist($mon) [file tail $lfilemask($id)]
+		} else {
+			append masklist($mon) [file tail $lfilemask($id)]
+		}	
+	
+		if {$opclist($mon) != "" } {
+			append opclist($mon) ","
+			append opclist($mon) $opt($id,1,opacity)
+		} else {
+			append opclist($mon) $opt($id,1,opacity)
+		}	
+	}
+	
 }
 
 
+###############################################################################
+# duplicate legend layer
 proc GmLegend::duplicate { tree parent node id } {
+    variable optlist
+    variable lfile
+    variable lfilemask
     variable opt
-    variable count 
-    global gmpath
+    variable count
+	variable dup
+	global guioptfont
+	global iconpath
 
     set node "legend:$count"
 
     set frm [ frame .legendicon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
-                           -variable GmLegend::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check -font $guioptfont \
+		-variable GmLegend::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
-    image create photo legico -file "$gmpath/legend.gif"
+    image create photo legico -file "$iconpath/module-d.legend.gif"
     set ico [label $frm.ico -image legico -bd 1 -relief raised]
     
     pack $check $ico -side left
 
+	# where to insert new layer
+	if {[$tree selection get] != "" } {
+		set sellayer [$tree index [$tree selection get]]
+    } else { 
+    	set sellayer "end" 
+    }
+
 	if { $opt($id,1,map) == ""} {
-    	$tree insert end $parent $node \
+	    $tree insert $sellayer $parent $node \
 		-text      "legend $count" \
 		-window    $frm \
 		-drawcross auto
 	} else {
-	    $tree insert end $parent $node \
+	    $tree insert $sellayer $parent $node \
 		-text      "legend for $opt($id,1,map)" \
 		-window    $frm \
 		-drawcross auto
 	}
 
-    set opt($count,1,_check) $opt($id,1,_check)
 
-    set opt($count,1,map) "$opt($id,1,map)" 
-	set opt($count,1,opacity) opt($id,1,opacity)
-    set opt($count,1,color) "$opt($id,1,color)" 
-    set opt($count,1,lines) "$opt($id,1,lines)" 
-    set opt($count,1,thin) "$opt($id,1,thin)" 
-    set opt($count,1,labelnum) "$opt($id,1,labelnum)"
-    set opt($count,1,at) "$opt($id,1,at)"
-    set opt($count,1,use) "$opt($id,1,use)"
-    set opt($count,1,range) "$opt($id,1,range)"
-    set opt($count,1,nolbl) "$opt($id,1,nolbl)" 
-    set opt($count,1,noval) "$opt($id,1,noval)" 
-    set opt($count,1,skip) "$opt($id,1,skip)" 
-    set opt($count,1,smooth) "$opt($id,1,smooth)"
-    set opt($count,1,flip) "$opt($id,1,flip)" 
+	set opt($count,1,opacity) $opt($id,1,opacity)
+
+	set optlist { _check map color lines thin labelnum at use range \
+             nolbl noval skip smooth flip}
+             
+    foreach key $optlist {
+    	set opt($count,1,$key) $opt($id,1,$key)
+		set opt($count,0,$key) $opt($count,1,$key)
+    } 
+	
+	set id $count
+	
+	# create files in tmp directory for layer output
+	set mappid [pid]
+	set lfile($count) [eval exec "g.tempfile pid=$mappid"]
+	set lfilemask($count) $lfile($count)
+	append lfile($count) ".ppm"
+	append lfilemask($count) ".pgm"
 
     incr count
     return $node
