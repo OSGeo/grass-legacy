@@ -9,6 +9,7 @@ namespace eval GmToolBar1 {
 
 proc GmToolBar1::create { tb } {
     global gmpath
+    global iconpath
     global bgcolor
     global mon
     variable toolbar
@@ -34,19 +35,19 @@ proc GmToolBar1::create { tb } {
     set bbox1 [ButtonBox $toolbar.bbox1 -spacing 0 -background $bgcolor ]
     
     # add raster
-    $bbox1 add -image [image create photo -file "$gmpath/raster.gif"] \
+    $bbox1 add -image [image create photo -file "$iconpath/element-cell.gif"] \
         -command "GmTree::add raster" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Add raster layer"]
 
     # add RGB or HIS layer
-    $bbox1 add -image [image create photo -file "$gmpath/rgbhis.gif"] \
+    $bbox1 add -image [image create photo -file "$iconpath/channel-rgb.gif"] \
         -command "GmTree::add rgbhis" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Add RGB or HIS layer"]
 
     # add histogram layer
-    $bbox1 add -image [image create photo -file "$gmpath/histogram.gif"] \
+    $bbox1 add -image [image create photo -file "$iconpath/module-d.histogram.gif"] \
         -command "GmTree::add hist" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Add histogram layer"]
@@ -64,7 +65,7 @@ proc GmToolBar1::create { tb } {
         -helptext [G_msg "Add directional arrows layer"]
 
     # add legend
-    $bbox1 add -image [image create photo -file "$gmpath/legend.gif"] \
+    $bbox1 add -image [image create photo -file "$iconpath/module-d.legend.gif"] \
     	-command "GmTree::add legend" -highlightthickness 0 -takefocus 0 \
     	-relief raised -borderwidth 2 -helptext [G_msg "Add raster legend layer"]
 
@@ -78,24 +79,24 @@ proc GmToolBar1::create { tb } {
     set bbox2 [ButtonBox $toolbar.bbox2 -spacing 0 -background $bgcolor ]
 
     # add vector
-    $bbox2 add -image [image create photo -file "$gmpath/vector.gif"] \
+    $bbox2 add -image [image create photo -file "$iconpath/element-vector.gif"] \
         -command "GmTree::add vector" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Add vector layer"]
 
-    # add chart
-    $bbox2 add -image [image create photo -file "$gmpath/chart.gif"] \
-        -command "GmTree::add chart" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
-        -helptext [G_msg "Add thematic charts layer"]
-
     # add thematic
-    $bbox2 add -image [image create photo -file "$gmpath/thematic.gif"] \
+    $bbox2 add -image [image create photo -file "$iconpath/module-d.thematic.gif"] \
         -command "GmTree::add thematic" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Add thematic map layer"]
 
     pack $bbox2 -side left -anchor w
+
+    # add chart
+    $bbox2 add -image [image create photo -file "$iconpath/module-d.chart.gif"] \
+        -command "GmTree::add chart" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
+        -helptext [G_msg "Add thematic charts layer"]
 
     set sep2 [Separator $toolbar.sep2 -orient vertical -background aquamarine2 ]
     pack $sep2 -side left -fill y -padx 5 -anchor w
@@ -104,7 +105,7 @@ proc GmToolBar1::create { tb } {
     set bbox3 [ButtonBox $toolbar.bbox3 -spacing 0 -background $bgcolor ]
 
     # add paint labels
-    $bbox3 add -image [image create photo -file "$gmpath/labels.gif"] \
+    $bbox3 add -image [image create photo -file "$iconpath/module-d.labels.gif"] \
         -command "GmTree::add labels" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Add paint labels layer (from directory paint/labels)"]
@@ -123,7 +124,7 @@ proc GmToolBar1::create { tb } {
     set bbox4 [ButtonBox $toolbar.bbox4 -spacing 0 -background $bgcolor ]
 
 	# add command
-    $bbox4 add -image [image create photo -file "$gmpath/cmd.gif"] \
+    $bbox4 add -image [image create photo -file "$iconpath/gui-cmd.gif"] \
         -command "GmTree::add cmd" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Add command layer"]
