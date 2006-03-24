@@ -1,18 +1,18 @@
 /*
- **  Written by Dave Gerdes  11/1989
- **  US Army Construction Engineering Research Lab
- **
- **  Modified by Benjamin Horner-Johnson 1998-SEP-30
- **     added flag to suppress text boxes
- **
- **  Modified by Benjamin Horner-Johnson 1998-OCT-01
- **     changed label from int to char, allowed 1 character labels
- **
- **  Modified by Benjamin Horner-Johnson 1998-OCT-06
- **     changed dxf_fgets(dxf_line,80,dxf_file) to
- **             dxf_fgets(dxf_line,256,dxf_file)
- **     changed buf[100] to buf[256] and dxf_fgets(buf,100,dxf_file) to
- **             dxf_fgets(buf,256,dxf_file)
+ *  Written by Dave Gerdes  11/1989
+ *  US Army Construction Engineering Research Lab
+ *
+ *  Modified by Benjamin Horner-Johnson 1998-SEP-30
+ *     added flag to suppress text boxes
+ *
+ *  Modified by Benjamin Horner-Johnson 1998-OCT-01
+ *     changed label from int to char, allowed 1 character labels
+ *
+ *  Modified by Benjamin Horner-Johnson 1998-OCT-06
+ *     changed dxf_fgets(dxf_line,80,dxf_file) to
+ *             dxf_fgets(dxf_line,256,dxf_file)
+ *     changed buf[100] to buf[256] and dxf_fgets(buf,100,dxf_file) to
+ *             dxf_fgets(buf,256,dxf_file)
  */
 
 #include <stdlib.h>
@@ -154,20 +154,20 @@ int dxf_add_labelbox(FILE * dxf_file)
 	write_polylines(layer_fd, arr_size);
     /* And add info to the label file */
     /*
-     ** Changed from using 3rd point to 1st point.
-     **  3rd would be safer, and more in line w/ the way vect lines
-     ** are labelled, but this is often used for PNT labelling
-     ** of elevations, and the 1st point is the real location
-     ** fprintf (label_fd->fd, "L  %lf %lf %d\n",pt_array[2].x,pt_array[2].y,label);
-     ** Labels now characters, not integers  BCH-J
+     * Changed from using 3rd point to 1st point.
+     * 3rd would be safer, and more in line w/ the way vect lines
+     * are labelled, but this is often used for PNT labelling
+     * of elevations, and the 1st point is the real location
+     * fprintf (label_fd->fd, "L  %lf %lf %d\n",pt_array[2].x,pt_array[2].y,label);
+     * Labels now characters, not integers  BCH-J
      */
     fprintf(label_fd->fd, "L  %f %f %s\n", xinfo[0], yinfo[0], label);
     return (0);
 }
 
 /*
- **  Reads next line of input file
- ** returns atoi of line, or  -1 if NON-numeric  or -2 on EOF
+ * Reads next line of input file
+ * returns atoi of line, or  -1 if NON-numeric  or -2 on EOF
  */
 
 int dxf_readcode(FILE * dxf_file)

@@ -1,7 +1,7 @@
 /* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_line */
 /* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char layername */
 /* written by J Moorman
- ** 7/23/90
+ * 7/23/90
  */
 
 #include <stdlib.h>
@@ -78,20 +78,20 @@ int dxf_add_polyline(FILE * dxf_file)
 		}
 	    break;
 
-	    /* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
+	/* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
 	case 6:		/* LINETYPE NAME */
-	case 38:		/* ELEVATION IF NONZERO */
-	case 39:		/* THICKNESS IF NONZERO */
-	case 62:		/* COLOR NUMBER (IF NOT "BYLAYER") */
-	case 210:		/* X EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
-	case 220:		/* Y EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
-	case 230:		/* Z EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
+	case 38:	/* ELEVATION IF NONZERO */
+	case 39:	/* THICKNESS IF NONZERO */
+	case 62:	/* COLOR NUMBER (IF NOT "BYLAYER") */
+	case 210:	/* X EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
+	case 220:	/* Y EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
+	case 230:	/* Z EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
 
 	    /* THE FOLLOWING GROUPS ARE SPECIFIC TO POLYLINE ENTITY */
-	case 41:		/* DEFAULT ENDING WIDTH */
-	case 71:		/* POLYGON MESH */
-	case 72:		/* POLYGON MESH */
-	case 75:		/* SMOOTH SURFACE TYPE -OPTIONAL */
+	case 41:	/* DEFAULT ENDING WIDTH */
+	case 71:	/* POLYGON MESH */
+	case 72:	/* POLYGON MESH */
+	case 75:	/* SMOOTH SURFACE TYPE -OPTIONAL */
 	    /* not used */
 	default:
 	    break;

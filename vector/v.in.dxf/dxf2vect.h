@@ -39,49 +39,49 @@ int num_open_layers = 0;
 int num_closed_layers = 0;
 int from_table = 0;
 
-#define GLOBAL_DXF
+#define GLOBAL
 #else
 extern char *dxf_file;
 extern int num_open_layers;
 extern int num_closed_layers;
 int from_table;
-#define GLOBAL_DXF extern
+#define GLOBAL extern
 #endif
 
-GLOBAL_DXF struct line_pnts *Points;
-GLOBAL_DXF unsigned long file_size;
-GLOBAL_DXF int percent;
-GLOBAL_DXF char dig_path[240];
-GLOBAL_DXF char base_name[100];	/* dpg */
-GLOBAL_DXF int ARR_MAX;
-GLOBAL_DXF double n, s, e, w;
-GLOBAL_DXF long n_off, s_off, e_off, w_off;
-GLOBAL_DXF char zzero[8];
-GLOBAL_DXF char eeight[8];
-GLOBAL_DXF char tten[8];
-GLOBAL_DXF char ttwenty[8];
-GLOBAL_DXF char eelev[8];
-GLOBAL_DXF char ttwentyone[8];
-GLOBAL_DXF char entitie[12];
-GLOBAL_DXF char header[12];
-GLOBAL_DXF char extmin[12];
-GLOBAL_DXF char extmax[12];
-GLOBAL_DXF char polyline[12];
-GLOBAL_DXF char circle[12];
-GLOBAL_DXF char text[12];	/* dpg */
-GLOBAL_DXF char line[8];
-GLOBAL_DXF char point[8];
-GLOBAL_DXF char arc[8];
-GLOBAL_DXF char vertex[8];
-GLOBAL_DXF char seqend[8];
-GLOBAL_DXF char dxf_line[256];
-GLOBAL_DXF DXF_DIG layers[MAX_FILES];
-GLOBAL_DXF DXF_DIG *closed_layers;
-GLOBAL_DXF double XMAX, XMIN, YMAX, YMIN;
-GLOBAL_DXF int BOUNDARIES;
-GLOBAL_DXF struct Flag *txtbox_flag;
-GLOBAL_DXF struct Map_info dxf_head;
-GLOBAL_DXF double *xinfo, *yinfo;
+GLOBAL struct line_pnts *Points;
+GLOBAL unsigned long file_size;
+GLOBAL int percent;
+GLOBAL char dig_path[240];
+GLOBAL char base_name[100];	/* dpg */
+GLOBAL int ARR_MAX;
+GLOBAL double n, s, e, w;
+GLOBAL long n_off, s_off, e_off, w_off;
+GLOBAL char zzero[8];
+GLOBAL char eeight[8];
+GLOBAL char tten[8];
+GLOBAL char ttwenty[8];
+GLOBAL char eelev[8];
+GLOBAL char ttwentyone[8];
+GLOBAL char entitie[12];
+GLOBAL char header[12];
+GLOBAL char extmin[12];
+GLOBAL char extmax[12];
+GLOBAL char polyline[12];
+GLOBAL char circle[12];
+GLOBAL char text[12];	/* dpg */
+GLOBAL char line[8];
+GLOBAL char point[8];
+GLOBAL char arc[8];
+GLOBAL char vertex[8];
+GLOBAL char seqend[8];
+GLOBAL char dxf_line[256];
+GLOBAL DXF_DIG layers[MAX_FILES];
+GLOBAL DXF_DIG *closed_layers;
+GLOBAL double XMAX, XMIN, YMAX, YMIN;
+GLOBAL int BOUNDARIES;
+GLOBAL struct Flag *txtbox_flag;
+GLOBAL struct Map_info dxf_head;
+GLOBAL double *xinfo, *yinfo;
 
 
 /* add_arc.c */

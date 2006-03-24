@@ -1,6 +1,6 @@
 /* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_line */
 /* written by J Moorman
- ** 7/23/90
+ * 7/23/90
  */
 
 #include <stdlib.h>
@@ -57,14 +57,14 @@ int dxf_add_line(FILE * dxf_file)
 	case 31:		/* END POINT z COORDINATE */
 	    break;
 
-	    /* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
+	/* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
 	case 6:		/* LINETYPE NAME */
-	case 38:		/* ELEVATION IF NONZERO */
-	case 39:		/* THICKNESS IF NONZERO */
-	case 62:		/* COLOR NUMBER (IF NOT "BYLAYER") */
-	case 210:		/* X EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
-	case 220:		/* Y EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
-	case 230:		/* Z EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
+	case 38:	/* ELEVATION IF NONZERO */
+	case 39:	/* THICKNESS IF NONZERO */
+	case 62:	/* COLOR NUMBER (IF NOT "BYLAYER") */
+	case 210:	/* X EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
+	case 220:	/* Y EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
+	case 230:	/* Z EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
 
 	default:
 	    break;
