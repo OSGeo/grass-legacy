@@ -113,7 +113,7 @@
 #define BAD_SYNTAX  1
 #define OUT_OF_RANGE    2
 #define MISSING_VALUE   3
-
+#define KEYLENGTH 64
 
 static int interactive_ok = 1 ;
 static int n_opts = 0 ;
@@ -1508,7 +1508,7 @@ static int set_option (char *string)
 	struct Option *opt = NULL;
 	int got_one ;
 	size_t key_len ;
-	char the_key[64] ;
+	char the_key[KEYLENGTH] ;
 	char *ptr ;
 
 	for(ptr=the_key; *string!='='; ptr++, string++)
@@ -1920,8 +1920,8 @@ static int check_multiple_opts (void)
 static int check_overwrite (void)
 {
 	struct Option *opt ;
-	char age[64] ;
-	char element[64] ;
+	char age[KEYLENGTH] ;
+	char element[KEYLENGTH] ;
 	char *ptr1, *ptr2 ;
 	int error = 0;
 	char *overstr;
@@ -2107,9 +2107,9 @@ static int interactive_option(struct Option *opt )
 
 static int gis_prompt (struct Option *opt, char *buff)
 {
-	char age[64] ;
-	char element[64] ;
-	char desc[64] ;
+	char age[KEYLENGTH] ;
+	char element[KEYLENGTH] ;
+	char desc[KEYLENGTH] ;
 	char *ptr1, *ptr2 ;
 
 	for(ptr1=opt->gisprompt,ptr2=age; *ptr1!='\0'; ptr1++, ptr2++)
