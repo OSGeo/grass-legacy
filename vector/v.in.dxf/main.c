@@ -54,9 +54,12 @@ int main(int argc, char *argv[])
     module->description =
 	"Converts files in DXF format to GRASS vector file format.";
 
+    /* TODO */
+#if 0
     txtbox_flag = G_define_flag();
     txtbox_flag->key = 'n';
     txtbox_flag->description = "Suppress drawing of text outlines";
+#endif
 
     old_opt = G_define_option();
     old_opt->key = "dxf";
@@ -91,7 +94,9 @@ int main(int argc, char *argv[])
     prefix_opt->description = "Prefix for output files";
 
     if (G_parser(argc, argv)) {
-	extra_help();
+	/* do not print extra help when --... option is given */
+	if (argv[1] && argv[1][1] != '-')
+	    extra_help();
 	exit(-1);
     }
 
@@ -308,7 +313,7 @@ int extra_help(void)
     fprintf(stderr, "    layername1[,layername2,layername3,...]\n\n");
     fprintf(stderr, "      and/or   \n\n");
     fprintf(stderr,
-	    "    in_layername1:out_layername1[,inlayername2:outlayername2,.....]\n");
+    "    in_layername1:out_layername1[,inlayername2:outlayername2,.....]\n\n");
 
     return 0;
 }
