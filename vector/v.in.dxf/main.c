@@ -46,6 +46,8 @@ int main(int argc, char *argv[])
     struct Option *old_opt, *line_opt, *labl_opt, *prefix_opt;
     struct GModule *module;
 
+    G_gisinit(argv[0]);
+
     module = G_define_module();
     module->description =
 	"Converts files in DXF format to GRASS vector file format.";
@@ -85,8 +87,6 @@ int main(int argc, char *argv[])
     prefix_opt->required = NO;
     prefix_opt->multiple = NO;
     prefix_opt->description = "Prefix for output files";
-
-    G_gisinit(argv[0]);
 
     if (G_parser(argc, argv)) {
 	extra_help();
