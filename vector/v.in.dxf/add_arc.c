@@ -1,6 +1,6 @@
 /* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_line */
 /* adapted  7/23/90  J Moorman from undxf.c code written by:
- ** Programmer: Tom Howard   National Park Service GIS division
+ * Programmer: Tom Howard   National Park Service GIS division
  */
 
 #include <stdlib.h>

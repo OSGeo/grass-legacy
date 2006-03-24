@@ -1,6 +1,6 @@
 /* 1/28/98 change from Jacques Bouchard <bouchard@onera.fr> */
 /* written by J Moorman
- ** 7/23/90
+ * 7/23/90
  */
 
 #include "dxf2vect.h"

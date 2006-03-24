@@ -1,5 +1,5 @@
 /* rewritten by J Moorman
- ** 7/23/90
+ * 7/23/90
  */
 
 #include "dxf2vect.h"

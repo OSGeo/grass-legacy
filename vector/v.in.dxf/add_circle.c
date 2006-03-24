@@ -1,6 +1,6 @@
 /* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_line */
 /* adapted  7/23/90  J Moorman from undxf.c code written by:
- ** Programmer: Tom Howard   National Park Service GIS division
+ * Programmer: Tom Howard   National Park Service GIS division
  */
 
 #include <stdlib.h>
@@ -40,28 +40,28 @@ int dxf_add_circle(FILE * dxf_file)
 		layer_flag = 1;
 	    }
 	    break;
-	case 10:		/* x COORDINATE */
+	case 10:	/* x COORDINATE */
 	    centerx = atof(dxf_line);
 	    xflag = 1;
 	    break;
-	case 20:		/* y COORDINATE */
+	case 20:	/* y COORDINATE */
 	    centery = atof(dxf_line);
 	    yflag = 1;
 	    break;
-	case 30:		/* Z COORDINATE NOT BEING USED */
+	case 30:	/* Z COORDINATE NOT BEING USED */
 	    break;
-	case 40:		/* RADIUS */
+	case 40:	/* RADIUS */
 	    radius = atof(dxf_line);
 	    rflag = 1;
 	    break;
 
-	    /* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
-	case 38:		/* ELEVATION IF NONZERO */
-	case 39:		/* THICKNESS IF NONZERO */
-	case 62:		/* COLOR NUMBER (IF NOT "BYLAYER") */
-	case 210:		/* X EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
-	case 220:		/* Y EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
-	case 230:		/* Z EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
+	/* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
+	case 38:	/* ELEVATION IF NONZERO */
+	case 39:	/* THICKNESS IF NONZERO */
+	case 62:	/* COLOR NUMBER (IF NOT "BYLAYER") */
+	case 210:	/* X EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
+	case 220:	/* Y EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
+	case 230:	/* Z EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
 	default:
 	    break;
 	}
@@ -79,14 +79,13 @@ int dxf_add_circle(FILE * dxf_file)
 }
 
 int make_arc(int offset,	/* offset into array of points */
-	     double centerx,
-	     double centery,
+	     double centerx, double centery,
 	     double radius, double start_angle, double finish_angle, int flag)
 {
-    float theta;		/* the angle used for calculating a given point */
-    float alpha;		/* theta converted into radians for use in math */
+    float theta;	/* the angle used for calculating a given point */
+    float alpha;	/* theta converted into radians for use in math */
     double extcirclx[4], extcircly[4];	/*to check_extents of circle */
-    int x;			/* looping variable */
+    int x;		/* looping variable */
     int arr_size;
 
     arr_size = offset;
@@ -97,14 +96,14 @@ int make_arc(int offset,	/* offset into array of points */
 	finish_angle = 360. + finish_angle;
 
     /* negative radius indicates that arc is to be drawn in a clockwise
-     ** direction from start_angle to finish_angle
+     * direction from start_angle to finish_angle
      */
     if (radius < 0) {
 	start_angle = 360. + start_angle;
 	theta = start_angle;
 	radius = -radius;
 	while (theta > finish_angle) {
-	    alpha = 3.141592654 * theta / 180.0;	/* converting to radians */
+	    alpha = 3.141592654 * theta / 180.0; /* converting to radians */
 	    xinfo[arr_size] = radius * cos(alpha) + centerx;
 	    yinfo[arr_size] = radius * sin(alpha) + centery;
 	    /*dxf_check_ext(pt_array[arr_size].x,pt_array[arr_size].y); */
@@ -120,7 +119,7 @@ int make_arc(int offset,	/* offset into array of points */
     else {
 	theta = start_angle;
 	while (theta < finish_angle) {	/*draw arc counterclockwise */
-	    alpha = 3.141592654 * theta / 180.0;	/* converting to radians */
+	    alpha = 3.141592654 * theta / 180.0; /* converting to radians */
 	    xinfo[arr_size] = radius * cos(alpha) + centerx;
 	    yinfo[arr_size] = radius * sin(alpha) + centery;
 	    /*dxf_check_ext(pt_array[arr_size].x,pt_array[arr_size].y); */

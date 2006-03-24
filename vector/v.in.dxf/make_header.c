@@ -43,8 +43,9 @@ int dxf_make_header(DXF_DIG * Layer)
     dxf_head.head.source_date[0] = 0;
     dxf_head.head.line_3 = (char *)G_malloc(1);
     dxf_head.head.line_3[0] = 0;
-    /*strcpy(dxf_head.source_date, );  MAP DATE
-     **strcpy(dxf_head.line_3, ); OTHER INFO
+    /*
+     * strcpy(dxf_head.source_date, );  MAP DATE
+     * strcpy(dxf_head.line_3, ); OTHER INFO
      */
     dxf_head.head.orig_scale = 2400;
     dxf_head.head.plani_zone = 0;

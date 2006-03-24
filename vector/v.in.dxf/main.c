@@ -27,15 +27,17 @@
 /* gotta change this to be malloced */
 #define MAX_ALLOC 100
 
-char *line_list[MAX_ALLOC][2];
-char *label_list[MAX_ALLOC][2];
-int num_lines = 0, num_labels = 0;
+static char *line_list[MAX_ALLOC][2], *label_list[MAX_ALLOC][2];
+static int num_lines = 0, num_labels = 0;
 
-/*  command line args */
+/* command line args */
 static char *out_name = NULL;
 
+/* TODO */
+#if 0
 int all_lines = 1;		/* dump ALL lines unless user override */
 int all_atts = 1;		/* dump ALL atts  unless user override */
+#endif
 
 int main(int argc, char *argv[])
 {
@@ -142,7 +144,7 @@ int main(int argc, char *argv[])
     }
 
     /* check the number of lines in the file so big_percent can be used while
-     ** program is running
+     * program is running
      */
 
     fseek(dxf_fp, 0L, 2);
@@ -158,8 +160,8 @@ int main(int argc, char *argv[])
     big_percent(0, file_size, percent);	/* initializing variables inside big_percent */
 
     /* make base_name from name of dxf file.  This will be used as
-     ** the prefix for all layers that are created to avoid layer name
-     ** conflicts between dxf files
+     * the prefix for all layers that are created to avoid layer name
+     * conflicts between dxf files
      */
     if (out_name != NULL)
 	strcpy(base_name, out_name);
@@ -178,11 +180,12 @@ int main(int argc, char *argv[])
     dxf_init_chars();
     dxf_find_lines(dxf_fp);
     fclose(dxf_fp);
-    /*NOTE:  examples of dxf files with inaccurate information
-     **have led us not to use the EXTMIN and EXTMAX information
-     **found in the HEAD SECTION of a dxf file */
+    /* NOTE:  examples of dxf files with inaccurate information
+     * have led us not to use the EXTMIN and EXTMAX information
+     * found in the HEAD SECTION of a dxf file
+     */
 
-    list = 1;			/* make a flag similar to v.in.shape after improving the code */
+    list = 1;	/* make a flag similar to v.in.shape after improving the code */
     if (list) {
 	fprintf(stderr, "Following DXF layers found:\n");
 	for (count = 0; count < num_open_layers; count++) {
@@ -312,7 +315,8 @@ int extra_help(void)
 
 /***************************  big_percent  **********************************/
 /* this is a modified version of G_percent created because of the
- * use of unsigned long ints which G_percent does not use */
+ * use of unsigned long ints which G_percent does not use
+ */
 
 
 int big_percent(unsigned long n, unsigned long d, int s)
