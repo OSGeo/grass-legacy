@@ -125,7 +125,7 @@ int dxf_add_polyline(FILE * dxf_file)
 			layer_fd = dxf_which_layer(dxf_line, DXF_ASCII);
 		    if (layer_fd == NULL)
 			return (0);
-		    if ((strcmp(dxf_line, layername)) != 0 &&
+		    if (strcmp(dxf_line, layername) != 0 &&
 			nu_layer_flag == 1) {
 			fprintf(stderr,
 				"ERROR: layer name %s listed but not used \n",
@@ -269,7 +269,7 @@ int dxf_add_polyline(FILE * dxf_file)
 	    zinfo[arr_size] = zinfo[0];
 
 	    /* arr_size INCREMENTED TO BE CONSISTENT WITH POLYLINE_FLAG != 1 */
-	    if ((arr_size) >= ARR_MAX - 1) {
+	    if (arr_size >= ARR_MAX - 1) {
 		ARR_MAX += ARR_INCR;
 		xinfo = (double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
 		yinfo = (double *)G_realloc(yinfo, ARR_MAX * sizeof(double));

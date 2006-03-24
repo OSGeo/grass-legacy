@@ -9,7 +9,7 @@ static int Debug_on = 0;
 int debuginit(void)
 {
 
-    if ((getenv("DEBUG")) != NULL)
+    if (getenv("DEBUG") != NULL)
 	Debug_on = 1;
     else
 	Debug_on = 0;
