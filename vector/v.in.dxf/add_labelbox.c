@@ -16,17 +16,11 @@
  */
 
 #include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
 #include "global.h"
-
-#ifndef PI
-#define PI  3.141592654
-#endif
 
 int add_labelbox(FILE * dxf_file)
 {
-    DXF_DIG *layer_fd, *label_fd;
+    struct dxf_dig *layer_fd, *label_fd;
     int char_cnt, code;
     char label[256];		/* same size as dxf_line */
     double start_x, start_y, angle, theta, height, length, diag;
@@ -54,10 +48,10 @@ int add_labelbox(FILE * dxf_file)
 	case 8:		/* layer name */
 	    layer_fd = which_layer(dxf_line, DXF_LABEL_LINE);
 	    if (layer_fd == NULL)
-		return (0);
+		return 0;
 	    label_fd = which_layer(dxf_line, DXF_LABEL);
 	    if (label_fd == NULL)
-		return (0);
+		return 0;
 	    break;
 	case 10:		/* X */
 	    start_x = atof(dxf_line);
@@ -92,7 +86,7 @@ int add_labelbox(FILE * dxf_file)
     }
     if (code < 0) {
 	debugf("TEXT: Error in DXF file\n");
-	return (-1);
+	return -1;
     }
 
 
@@ -104,18 +98,18 @@ int add_labelbox(FILE * dxf_file)
 	/* this if valid now */
 	/*
 	 * debugf("TEXT: No layer specified\n");
-	 * return (-1);
+	 * return -1;
 	 */
-	return (0);
+	return 0;
     }
     /*      if (label == 0)         Don't see why label can't be 0  BCH-J
      *      {
      *          debugf("TEXT: No label specified\n");
-     *          return (-1);
+     *          return -1;
      *      }               */
     if (start_x == 0.0 || start_y == 0.0) {
 	debugf("TEXT: No x/y position specified\n");
-	return (-1);
+	return -1;
     }
 
     /* now build the points of the box */
@@ -126,11 +120,11 @@ int add_labelbox(FILE * dxf_file)
     }
     arr_size = 5;
 
-    theta = angle * PI / 180.;
+    theta = angle * M_PI / 180.;
     length = (char_cnt - 1) * height;
 
     /* base angles for polar description of rectangle */
-    base1 = PI / 2.;
+    base1 = M_PI / 2.;
     base2 = atan2(1., (double)(char_cnt - 1));	/* == atan2 (height, length) */
     diag = hypot(length, height);
 
@@ -162,5 +156,5 @@ int add_labelbox(FILE * dxf_file)
      * Labels now characters, not integers  BCH-J
      */
     fprintf(label_fd->fd, "L  %f %f %s\n", xinfo[0], yinfo[0], label);
-    return (0);
+    return 0;
 }

@@ -1,5 +1,6 @@
 /* 1/28/98 change from Jacques Bouchard <bouchard@onera.fr> */
 
+#include <stdlib.h>
 #include "global.h"
 
 int add_extents(void)

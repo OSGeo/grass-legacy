@@ -3,7 +3,6 @@
  * Programmer: Tom Howard   National Park Service GIS division
  */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include "global.h"
 
@@ -19,7 +18,7 @@ int add_circle(FILE * dxf_file)
     double radius = 0;		/* READ IN FROM DXF FILE */
     double zcoor = 0;		/* READ IN FROM DXF FILE */
     char *nolayername = "UNIDENTIFIED";
-    DXF_DIG *layer_fd = NULL;	/* POINTER TO LAYER NAME */
+    struct dxf_dig *layer_fd = NULL;	/* POINTER TO LAYER NAME */
     int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
     int arr_size = 0;
 
@@ -27,17 +26,17 @@ int add_circle(FILE * dxf_file)
 
     while ((code = dxf_readcode(dxf_file)) != 0) {
 	if (code == -2)		/* EOF */
-	    return (0);
+	    return 0;
 	dxf_fgets(dxf_line, 256, dxf_file);
 	if (feof(dxf_file) != 0)	/* EOF */
-	    return (0);
+	    return 0;
 
 	switch (code) {
 	case 8:
 	    if (!layer_flag) {
 		layer_fd = which_layer(dxf_line, DXF_ASCII);
 		if (layer_fd == NULL)
-		    return (0);
+		    return 0;
 		layer_flag = 1;
 	    }
 	    break;
@@ -71,11 +70,11 @@ int add_circle(FILE * dxf_file)
     if (!layer_flag)
 	layer_fd = which_layer(nolayername, DXF_ASCII);
     if (layer_fd == NULL)
-	return (0);
+	return 0;
 
     if (xflag && yflag && rflag) {
 	arr_size = make_arc(0, centerx, centery, radius, 0.0, 360.0, zcoor, 0);
 	write_polylines(layer_fd, arr_size);
     }
-    return (1);
+    return 1;
 }

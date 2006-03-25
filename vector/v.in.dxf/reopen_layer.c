@@ -3,6 +3,7 @@
  * 7/23/90
  */
 
+#include <stdlib.h>
 #include "global.h"
 
 int reopen_layer(int type, int cl_count, int o_count)

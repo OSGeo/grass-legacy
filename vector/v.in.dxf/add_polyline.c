@@ -4,12 +4,12 @@
  * 7/23/90
  */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include "global.h"
 
-#define DEG_TO_RAD (3.141592654/180.0)
+#define POLYFLAG1 1
+#define DEG_TO_RAD (M_PI/180.0)
 
 int add_polyline(FILE * dxf_file)
 {
@@ -33,24 +33,24 @@ int add_polyline(FILE * dxf_file)
     double arc_tan = 0.0;	/* for arc curves */
     char *nolayername = "UNIDENTIFIED";
     char layername[256];
-    DXF_DIG *layer_fd = NULL;	/* POINTER TO LAYER NAME */
+    struct dxf_dig *layer_fd = NULL;	/* POINTER TO LAYER NAME */
     int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
 
     /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
 
     while ((code = dxf_readcode(dxf_file)) != 0) {
 	if (code == -2)		/* EOF */
-	    return (0);
+	    return 0;
 	dxf_fgets(dxf_line, 256, dxf_file);
 	if (feof(dxf_file) != 0)	/* EOF */
-	    return (0);
+	    return 0;
 
 	switch (code) {
 	case 8:
 	    if (!layer_flag) {
 		layer_fd = which_layer(dxf_line, DXF_ASCII);
 		if (layer_fd == NULL)
-		    return (0);
+		    return 0;
 		strcpy(layername, dxf_line);
 		layer_flag = 1;
 	    }
@@ -102,29 +102,29 @@ int add_polyline(FILE * dxf_file)
     zinfo[0] = 0.0;
     while (strcmp(dxf_line, seqend) != 0) {	/* LOOP UNTIL SEQEND IN THE DXF FILE */
 	if (feof(dxf_file) != 0)	/* EOF */
-	    return (0);
+	    return 0;
 	if (strcmp(dxf_line, vertex) == 0) {
 	    xflag = 0;
 	    yflag = 0;
 	    while ((code = dxf_readcode(dxf_file)) != 0) {
 		if (code == -2)	/* EOF */
-		    return (0);
+		    return 0;
 		dxf_fgets(dxf_line, 256, dxf_file);
 		if (feof(dxf_file) != 0)	/* EOF */
-		    return (0);
+		    return 0;
 		switch (code) {
 		case 8:	/* LAYER NAMES ARE INCLUDED IN VERTEX ENTITY */
 		    if (!layer_flag) {	/* IF NO LAYER PREVIOUSLY ASSIGNED */
 			layer_fd = which_layer(dxf_line, DXF_ASCII);
 			if (layer_fd == NULL)
-			    return (0);
+			    return 0;
 			strcpy(layername, dxf_line);
 			layer_flag = 1;
 		    }
 		    else	/* COMPARING layer_fd IN POLYLINE ENTITY */
 			layer_fd = which_layer(dxf_line, DXF_ASCII);
 		    if (layer_fd == NULL)
-			return (0);
+			return 0;
 		    if (strcmp(dxf_line, layername) != 0 && nu_layer_flag == 1) {
 			fprintf(stderr,
 				"ERROR: layer name %s listed but not used \n",
@@ -286,7 +286,7 @@ int add_polyline(FILE * dxf_file)
     if (!layer_flag) {		/* NO LAYER DESIGNATED */
 	layer_fd = which_layer(nolayername, DXF_ASCII);
 	if (layer_fd == NULL)
-	    return (0);
+	    return 0;
     }
     if (!zflag) {
 	int i;
@@ -294,5 +294,5 @@ int add_polyline(FILE * dxf_file)
 	    zinfo[i] = 0.0;
     }
     write_polylines(layer_fd, arr_size);
-    return (1);
+    return 1;
 }

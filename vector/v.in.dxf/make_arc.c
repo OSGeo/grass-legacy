@@ -1,6 +1,8 @@
 #include <math.h>
 #include "global.h"
 
+#define RSTEP 5.0
+
 int make_arc(int offset,	/* offset into array of points */
 	     double centerx, double centery,
 	     double radius, double start_angle, double finish_angle,
@@ -27,7 +29,7 @@ int make_arc(int offset,	/* offset into array of points */
 	theta = start_angle;
 	radius = -radius;
 	while (theta > finish_angle) {
-	    alpha = 3.141592654 * theta / 180.0;	/* converting to radians */
+	    alpha = theta * M_PI / 180.0;	/* converting to radians */
 	    xinfo[arr_size] = radius * cos(alpha) + centerx;
 	    yinfo[arr_size] = radius * sin(alpha) + centery;
 	    zinfo[arr_size] = zcoor;
@@ -45,7 +47,7 @@ int make_arc(int offset,	/* offset into array of points */
     else {
 	theta = start_angle;
 	while (theta < finish_angle) {	/*draw arc counterclockwise */
-	    alpha = 3.141592654 * theta / 180.0;	/* converting to radians */
+	    alpha = theta * M_PI / 180.0;	/* converting to radians */
 	    xinfo[arr_size] = radius * cos(alpha) + centerx;
 	    yinfo[arr_size] = radius * sin(alpha) + centery;
 	    zinfo[arr_size] = zcoor;
@@ -61,7 +63,7 @@ int make_arc(int offset,	/* offset into array of points */
 	}
     }
     /* this insures that the last point will be correct */
-    alpha = 3.141592654 * finish_angle / 180.0;	/* converting to radians */
+    alpha = finish_angle * M_PI / 180.0;	/* converting to radians */
     xinfo[arr_size] = radius * cos(alpha) + centerx;
     yinfo[arr_size] = radius * sin(alpha) + centery;
     zinfo[arr_size] = zcoor;

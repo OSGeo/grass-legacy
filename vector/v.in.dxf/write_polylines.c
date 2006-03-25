@@ -1,7 +1,7 @@
 #include "global.h"
 
 /* PRINTS OUT THE POLYLINE VERTEX DATA TO FILE DESIGNATED AS layer_fd */
-int write_polylines(DXF_DIG * layer_fd, int arr_size)
+int write_polylines(struct dxf_dig *layer_fd, int arr_size)
 {
     struct line_cats *cats;
 
