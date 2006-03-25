@@ -22,11 +22,11 @@
  *   fall within the map location.
  */
 
-#include <stdlib.h>
 #include <stdio.h>
-#include "dxf2vect.h"
+#include <stdlib.h>
+#include "global.h"
 
-int dxf_find_lines(FILE * dxf_file)
+int find_lines(FILE * dxf_file)
 {
     int code;			/* atoi of line if numeric */
     int header_flag;		/* set to true if HEADER section found */
@@ -34,7 +34,7 @@ int dxf_find_lines(FILE * dxf_file)
     /* initialize the boundary indicating variables */
     BOUNDARIES = 0;
 
-    header_flag = dxf_header(dxf_file);	/* looks for HEADER in file */
+    header_flag = dxf_find_header(dxf_file);	/* looks for HEADER in file */
     /*#ifdef JCM */
     if (header_flag) {
 	/* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
@@ -126,7 +126,7 @@ int dxf_find_lines(FILE * dxf_file)
 
 	}
 	/* SHOULD CHECK FOR THE RETURN VALUE OF THIS FUNCTION */
-	dxf_entities(dxf_file);
+	dxf_find_entities(dxf_file);
 	/* looks for ENTITIES in file */
     }
     /*#endif */
@@ -139,23 +139,23 @@ int dxf_find_lines(FILE * dxf_file)
     dxf_fgets(dxf_line, 256, dxf_file);
     while (feof(dxf_file) == 0) {
 	if (strcmp(dxf_line, polyline) == 0)
-	    dxf_add_polyline(dxf_file);
+	    add_polyline(dxf_file);
 
 	else if (strcmp(dxf_line, line) == 0)
-	    dxf_add_line(dxf_file);
+	    add_line(dxf_file);
 
 	else if (strcmp(dxf_line, point) == 0)
-	    dxf_add_point(dxf_file);
+	    add_point(dxf_file);
 
 	else if (strcmp(dxf_line, arc) == 0)
-	    dxf_add_arc(dxf_file);
+	    add_arc(dxf_file);
 
 	else if (strcmp(dxf_line, circle) == 0)
-	    dxf_add_circle(dxf_file);
+	    add_circle(dxf_file);
 
 #ifdef LABEL
 	else if (strcmp(dxf_line, text) == 0)
-	    dxf_add_labelbox(dxf_file);
+	    add_labelbox(dxf_file);
 #endif
 
 	dxf_fgets(dxf_line, 256, dxf_file);

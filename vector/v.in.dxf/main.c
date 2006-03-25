@@ -17,25 +17,11 @@
  */
 
 #define MAIN
-#include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
-#include "dxf2vect.h"
+#include <stdlib.h>
+#include "global.h"
 
-/* #define DEBUG */
-
-/* gotta change this to be malloced */
-#define MAX_ALLOC 100
-
-static char *line_list[MAX_ALLOC][2];
-static int num_lines = 0;
-#ifdef LABEL
-static char *label_list[MAX_ALLOC][2];
-static int num_labels = 0;
-#endif
-
-/* command line args */
-static char *out_name = NULL;
+static int extra_help(void);
 
 /* TODO */
 #if 0
@@ -49,6 +35,7 @@ int main(int argc, char *argv[])
     char *p;
     int i;
     int count, list;
+    char *out_name = NULL;
 #ifdef LABEL
     struct Option *old_opt, *line_opt, *labl_opt, *prefix_opt;
 #else
@@ -191,15 +178,15 @@ int main(int argc, char *argv[])
 		*p = '\0';	/* knock off any suffix */
     }
 
-    dxf_init_chars();
-    dxf_find_lines(dxf_fp);
+    init_chars();
+    find_lines(dxf_fp);
     fclose(dxf_fp);
     /* NOTE:  examples of dxf files with inaccurate information
      * have led us not to use the EXTMIN and EXTMAX information
      * found in the HEAD SECTION of a dxf file
      */
 
-    list = 1;	/* make a flag similar to v.in.shape after improving the code */
+    list = 1;			/* make a flag similar to v.in.shape after improving the code */
     if (list) {
 	fprintf(stderr, "Following DXF layers found:\n");
 	for (count = 0; count < num_open_layers; count++) {
@@ -207,126 +194,12 @@ int main(int argc, char *argv[])
 	}
     }
 
-    /*
-     * if (BOUNDARIES == 6)
-     * dxf_add_boundaries ();
-     */
-    dxf_add_extents();	/*extents of map calculated as points were read in */
+    add_extents();		/*extents of map calculated as points were read in */
 
     exit(0);
 }
 
-int add_line_layer(char *str)
-{
-    return add_layer(str, line_list, &num_lines);
-}
-
-#ifdef LABEL
-int add_att_layer(char *str)
-{
-    return add_layer(str, label_list, &num_labels);
-}
-#endif
-
-int add_layer(char *str, char *list[][2], int *num)
-{
-    char buf[200], *buf_p, *p = NULL;
-
-    strcpy(buf, str);
-    G_squeeze(buf);
-    p = G_index(buf, ':');
-    if (*buf == '!') {		/* not to be written out */
-	p = NULL;
-	buf_p = buf + 1;
-    }
-    else {
-	buf_p = buf;
-	if (p != NULL) {	/* have an alias for output */
-	    *p = 0;
-	    p++;
-	}
-	else
-	    p = buf_p;		/* output is same as original layer */
-    }
-
-    return _add_layer(list, num, buf_p, p);
-}
-
-int _add_layer(char *list[][2], int *num, char *from, char *to)
-{
-    list[*num][0] = G_store(from);
-    if (to == NULL)
-	list[*num][1] = NULL;
-    else
-	list[*num][1] = G_store(to);
-    (*num)++;
-
-    return *num;
-}
-
-char *remap(char *str, int type)
-{
-    /*
-     * char *list[][2];
-     */
-    int num, i;
-
-    if (!from_table)
-	return (str);
-
-#ifdef LABEL
-    /* do lookups based on label remapping */
-    if (type == DXF_LABEL_LINE)
-	type = DXF_LABEL;
-#endif
-
-    if (type == DXF_ASCII) {
-	/* list = line_list; */
-	num = num_lines;
-    }
-#ifdef LABEL
-    else {
-	/* list = label_list; */
-	num = num_labels;
-    }
-#endif
-
-
-    if (type == DXF_ASCII) {
-	for (i = 0; i < num; i++)
-	    if (!strcmp(str, line_list[i][0]))
-		return (line_list[i][1]);
-	return (NULL);
-    }
-#ifdef LABEL
-    else {
-	for (i = 0; i < num; i++)
-	    if (!strcmp(str, label_list[i][0]))
-		return (label_list[i][1]);
-	return (NULL);
-    }
-#else
-    return (NULL);
-#endif
-}
-
-
-
-char *dxf_fgets(char *buf, int size, FILE *fp)
-{
-    char *p;
-    static unsigned long current_size = 0;
-
-    p = fgets(buf, size, fp);
-    if (p != NULL) {
-	current_size += strlen(p);
-	big_percent(current_size, file_size, percent);	/* reporting status of job */
-	G_squeeze(buf);
-    }
-    return (p);
-}
-
-int extra_help(void)
+static int extra_help(void)
 {
 #ifdef LABEL
     fprintf(stderr, "\n\nwhere lines and labels are one or more of:\n\n");
@@ -336,34 +209,7 @@ int extra_help(void)
     fprintf(stderr, "    layername1[,layername2,layername3,...]\n\n");
     fprintf(stderr, "and/or\n\n");
     fprintf(stderr,
-    "    in_layername1:out_layername1[,inlayername2:outlayername2,.....]\n\n");
-
-    return 0;
-}
-
-/***************************  big_percent  **********************************/
-/* this is a modified version of G_percent created because of the
- * use of unsigned long ints which G_percent does not use
- */
-
-
-int big_percent(unsigned long n, unsigned long d, int s)
-{
-    unsigned long x;
-    static unsigned long prev = (unsigned long)-1;
-
-    x = n * 100 / d;
-    if (x % s)
-	return 1;
-    if (n <= 0 || n >= d || x != prev) {
-	prev = x;
-	fprintf(stderr, "%4ld%%\b\b\b\b\b", x);
-	fflush(stderr);
-    }
-    if (x >= 100) {
-	fprintf(stderr, "\n");
-	prev = (unsigned long)-1;
-    }
+	    "    in_layername1:out_layername1[,inlayername2:outlayername2,.....]\n\n");
 
     return 0;
 }

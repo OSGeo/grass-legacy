@@ -18,13 +18,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include "dxf2vect.h"
+#include "global.h"
 
 #ifndef PI
 #define PI  3.141592654
 #endif
 
-int dxf_add_labelbox(FILE * dxf_file)
+int add_labelbox(FILE * dxf_file)
 {
     DXF_DIG *layer_fd, *label_fd;
     int char_cnt, code;
@@ -52,10 +52,10 @@ int dxf_add_labelbox(FILE * dxf_file)
 	    strcpy(label, dxf_line);
 	    break;
 	case 8:		/* layer name */
-	    layer_fd = dxf_which_layer(dxf_line, DXF_LABEL_LINE);
+	    layer_fd = which_layer(dxf_line, DXF_LABEL_LINE);
 	    if (layer_fd == NULL)
 		return (0);
-	    label_fd = dxf_which_layer(dxf_line, DXF_LABEL);
+	    label_fd = which_layer(dxf_line, DXF_LABEL);
 	    if (label_fd == NULL)
 		return (0);
 	    break;
@@ -163,29 +163,4 @@ int dxf_add_labelbox(FILE * dxf_file)
      */
     fprintf(label_fd->fd, "L  %f %f %s\n", xinfo[0], yinfo[0], label);
     return (0);
-}
-
-/*
- * Reads next line of input file
- * returns atoi of line, or  -1 if NON-numeric  or -2 on EOF
- */
-
-int dxf_readcode(FILE * dxf_file)
-{
-    char buf[256], *p;
-    int ready = 0;
-
-    if (NULL == dxf_fgets(buf, 256, dxf_file))
-	return (-2);
-    for (p = buf; *p; p++) {
-	if (*p != ' ' && *p != '\t')
-	    ready = 1;
-	if (ready) {
-	    if ('0' <= *p && *p <= '9')
-		return (atoi(buf));
-	    else
-		return (-1);	/* NOT NUMERIC */
-	}
-    }
-    return (-1);		/* NOT NUMERIC */
 }

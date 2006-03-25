@@ -3,10 +3,11 @@
  * Programmer: Tom Howard   National Park Service GIS division
  */
 
+#include <stdio.h>
 #include <stdlib.h>
-#include "dxf2vect.h"
+#include "global.h"
 
-int dxf_add_arc(FILE * dxf_file)
+int add_arc(FILE * dxf_file)
 {
     /* DECLARING VARIABLES */
     int layer_flag = 0;		/* INDICATES IF A LAYER NAME HAS BEEN FOUND */
@@ -38,7 +39,7 @@ int dxf_add_arc(FILE * dxf_file)
 	switch (code) {
 	case 8:
 	    if (!layer_flag) {
-		layer_fd = dxf_which_layer(dxf_line, DXF_ASCII);
+		layer_fd = which_layer(dxf_line, DXF_ASCII);
 		if (layer_fd == NULL)
 		    return (0);
 		layer_flag = 1;
@@ -81,13 +82,15 @@ int dxf_add_arc(FILE * dxf_file)
     }
     if (!layer_flag) {
 	fprintf(stderr, "Inside !layer_flag");
-	layer_fd = dxf_which_layer(nolayername, DXF_ASCII);
+	layer_fd = which_layer(nolayername, DXF_ASCII);
 	if (layer_fd == NULL)
 	    return (0);
     }
 
     if (xflag && yflag && rflag && sflag && fflag) {
-	arr_size = make_arc(0, centerx, centery, radius, start_angle, finish_angle, zcoor, 1);
+	arr_size =
+	    make_arc(0, centerx, centery, radius, start_angle, finish_angle,
+		     zcoor, 1);
 	write_polylines(layer_fd, arr_size);
     }
     return (1);

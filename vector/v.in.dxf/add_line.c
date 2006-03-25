@@ -5,11 +5,11 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "dxf2vect.h"
+#include "global.h"
 
 /* DECLARING SUBROUTINES */
 
-int dxf_add_line(FILE * dxf_file)
+int add_line(FILE * dxf_file)
 {
     int layer_flag = 0;		/* INDICATES IF A LAYER NAME HAS BEEN FOUND */
     int xflag = 0;		/* INDICATES IF A x VALUE HAS BEEN FOUND */
@@ -31,7 +31,7 @@ int dxf_add_line(FILE * dxf_file)
 	switch (code) {
 	case 8:
 	    if (!layer_flag) {
-		layer_fd = dxf_which_layer(dxf_line, DXF_ASCII);
+		layer_fd = which_layer(dxf_line, DXF_ASCII);
 		if (layer_fd == NULL)
 		    return (0);
 		layer_flag = 1;
@@ -62,20 +62,20 @@ int dxf_add_line(FILE * dxf_file)
 	    zflag = 1;
 	    break;
 
-	/* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
+	    /* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
 	case 6:		/* LINETYPE NAME */
-	case 38:	/* ELEVATION IF NONZERO */
-	case 39:	/* THICKNESS IF NONZERO */
-	case 62:	/* COLOR NUMBER (IF NOT "BYLAYER") */
-	case 210:	/* X EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
-	case 220:	/* Y EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
-	case 230:	/* Z EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
+	case 38:		/* ELEVATION IF NONZERO */
+	case 39:		/* THICKNESS IF NONZERO */
+	case 62:		/* COLOR NUMBER (IF NOT "BYLAYER") */
+	case 210:		/* X EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
+	case 220:		/* Y EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
+	case 230:		/* Z EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
 
 	default:
 	    break;
 	}
 	if (xflag == 1 && yflag == 1) {
-	    dxf_check_ext(xinfo[arr_size], yinfo[arr_size]);
+	    check_ext(xinfo[arr_size], yinfo[arr_size]);
 	    if (arr_size == ARR_MAX) {
 		ARR_MAX += ARR_INCR;
 		xinfo = (double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
@@ -89,14 +89,14 @@ int dxf_add_line(FILE * dxf_file)
     }
 
     if (!layer_flag) {		/* NO LAYER DESIGNATED */
-	layer_fd = dxf_which_layer(nolayername, DXF_ASCII);
+	layer_fd = which_layer(nolayername, DXF_ASCII);
 	if (layer_fd == NULL)
 	    return (0);
     }
     if (arr_size == 2) {	/* had both starts and stops */
 	/* PRINTS OUT THE POLYLINE VERTEX DATA TO FILE DESIGNATED AS layer_fd */
 	if (!zflag)
-		zinfo[0] = zinfo[1] = 0.0;
+	    zinfo[0] = zinfo[1] = 0.0;
 	write_polylines(layer_fd, arr_size);
     }
     return (1);

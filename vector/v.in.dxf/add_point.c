@@ -5,9 +5,9 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "dxf2vect.h"
+#include "global.h"
 
-int dxf_add_point(FILE * dxf_file)
+int add_point(FILE * dxf_file)
 {
     /* DECLARING VARIABLES */
     int layer_flag = 0;		/* INDICATES IF A LAYER NAME HAS BEEN FOUND */
@@ -31,7 +31,7 @@ int dxf_add_point(FILE * dxf_file)
 	switch (code) {
 	case 8:
 	    if (!layer_flag) {
-		layer_fd = dxf_which_layer(dxf_line, DXF_ASCII);
+		layer_fd = which_layer(dxf_line, DXF_ASCII);
 		if (layer_fd == NULL)
 		    return (0);
 		layer_flag = 1;
@@ -50,13 +50,13 @@ int dxf_add_point(FILE * dxf_file)
 	    break;
 	case 50:		/* ANGLE OF x AXIS FOR THE UCS IN EFFECT */
 
-	/* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
-	case 38:	/* ELEVATION IF NONZERO */
-	case 39:	/* THICKNESS IF NONZERO */
-	case 62:	/* COLOR NUMBER (IF NOT "BYLAYER") */
-	case 210:	/* X EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
-	case 220:	/* Y EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
-	case 230:	/* Z EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
+	    /* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
+	case 38:		/* ELEVATION IF NONZERO */
+	case 39:		/* THICKNESS IF NONZERO */
+	case 62:		/* COLOR NUMBER (IF NOT "BYLAYER") */
+	case 210:		/* X EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
+	case 220:		/* Y EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
+	case 230:		/* Z EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
 
 	default:
 	    break;
@@ -64,11 +64,11 @@ int dxf_add_point(FILE * dxf_file)
 	if (xflag == 1 && yflag == 1) {
 	    struct line_cats *cats;
 
-	    dxf_check_ext(xinfo[0], yinfo[0]);
+	    check_ext(xinfo[0], yinfo[0]);
 	    xflag = 0;
 	    yflag = 0;
 	    if (!layer_flag) {	/* NO LAYER DESIGNATED */
-		layer_fd = dxf_which_layer(nolayername, DXF_ASCII);
+		layer_fd = which_layer(nolayername, DXF_ASCII);
 		if (layer_fd == NULL)
 		    return (0);
 	    }
@@ -81,7 +81,7 @@ int dxf_add_point(FILE * dxf_file)
 	    cats = Vect_new_cats_struct();
 	    Vect_write_line(layer_fd->Map, GV_POINT, Points, cats);
 	    Vect_destroy_cats_struct(cats);
-    	    zinfo[0] = 0.0;
+	    zinfo[0] = 0.0;
 	}
     }
     return (1);

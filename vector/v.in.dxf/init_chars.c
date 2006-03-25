@@ -1,6 +1,7 @@
-#include "dxf2vect.h"
+#include <string.h>
+#include "global.h"
 
-int dxf_init_chars(void)
+int init_chars(void)
 {
     strcpy(zzero, "0");
     strcpy(eeight, "8");
