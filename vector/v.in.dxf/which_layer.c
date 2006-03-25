@@ -2,11 +2,13 @@
  * 7/23/90
  */
 
-#include "dxf2vect.h"
+#include "global.h"
 
-#define DEBUG
+static int set_status(int);
+static int find_highest_status(void);
 
-DXF_DIG *dxf_which_layer(char *layer_name, int type)
+
+DXF_DIG *which_layer(char *layer_name, int type)
 {
 
     int open_count, closed_count;
@@ -24,10 +26,7 @@ DXF_DIG *dxf_which_layer(char *layer_name, int type)
     if (type == DXF_LABEL_LINE)
 	type = DXF_ASCII;
 
-
-
     /* CHECK TO SEE IF THE FILE IS ALREADY OPEN */
-
     for (open_count = 0; open_count < num_open_layers; open_count++) {
 
 	if (type == layers[open_count].type &&
@@ -40,7 +39,6 @@ DXF_DIG *dxf_which_layer(char *layer_name, int type)
     }
 
     /* CHECK TO SEE IF THE FILE HAS BEEN OPENED PREVIOUSLY */
-
     if (num_closed_layers) {
 	for (closed_count = 0; closed_count < num_closed_layers; closed_count++) {
 
@@ -54,10 +52,10 @@ DXF_DIG *dxf_which_layer(char *layer_name, int type)
 	if (found_flag) {
 	    /* CLOSE AN OPEN FILE */
 	    open_count = find_highest_status();
-	    dxf_close_layer(open_count);
+	    close_layer(open_count);
 
 	    /* OPEN A CLOSED FILE */
-	    dxf_reopen_layer(type, closed_count, open_count);
+	    reopen_layer(type, closed_count, open_count);
 
 
 	    return (&(layers[open_count]));
@@ -71,12 +69,12 @@ DXF_DIG *dxf_which_layer(char *layer_name, int type)
 	/* CLOSE AN OPEN FILE */
 	open_count = find_highest_status();
 	/*fprintf(stderr,"Closing the higest_status file %s\n",layers[open_count].name); */
-	dxf_close_layer(open_count);
+	close_layer(open_count);
 
 	/* OPEN A NEW FILE AND DEFINE THE STRUCTURE ELEMENTS */
 	layers[open_count].name = G_store(layer_name);
 	layers[open_count].type = type;
-	if (0 > dxf_open_layer(type, open_count))
+	if (0 > open_layer(type, open_count))
 	    return (NULL);
 
 
@@ -89,7 +87,7 @@ DXF_DIG *dxf_which_layer(char *layer_name, int type)
     /* AND DEFINE STRUCTURE ELEMENTS */
     layers[num_open_layers].name = G_store(layer_name);
     layers[num_open_layers].type = type;
-    if (0 > dxf_open_layer(type, num_open_layers))
+    if (0 > open_layer(type, num_open_layers))
 	return (NULL);
 
 
@@ -98,7 +96,7 @@ DXF_DIG *dxf_which_layer(char *layer_name, int type)
 }
 
 /* file status is incremented with most recently used file's status set to 0 */
-int set_status(int count)
+static int set_status(int count)
 {
     int t;			/*LOOPING VARIABLE */
 
@@ -110,7 +108,7 @@ int set_status(int count)
 }
 
 /* the file with the highest .status is closed if necessary */
-int find_highest_status(void)
+static int find_highest_status(void)
 {
     int count;
     int highest = 0;

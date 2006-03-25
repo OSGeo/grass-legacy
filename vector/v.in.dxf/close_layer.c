@@ -1,6 +1,6 @@
-#include "dxf2vect.h"
+#include "global.h"
 
-int dxf_close_layer(int o_count)
+int close_layer(int o_count)
 {
     int found_flag = 0;		/* Reinitilized each time */
     int count;
@@ -34,11 +34,8 @@ int dxf_close_layer(int o_count)
      */
 
     closed_layers[count].name = layers[o_count].name;
-
     closed_layers[count].type = layers[o_count].type;
-
     closed_layers[count].status = layers[o_count].status;
-
     closed_layers[count].Map = layers[o_count].Map;
 
 #ifdef DEBUG

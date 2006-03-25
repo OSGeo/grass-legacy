@@ -1,17 +1,17 @@
 /* 1/28/98 change from Jacques Bouchard <bouchard@onera.fr> */
 
-#include "dxf2vect.h"
+#include "global.h"
 
-int dxf_add_extents(void)
+int add_extents(void)
 {
     int count;
     char buf[300];
     FILE *fp;
 
-    dxf_head.plus.box.W = w;
-    dxf_head.plus.box.E = e;
-    dxf_head.plus.box.S = s;
-    dxf_head.plus.box.N = n;
+    head.plus.box.W = w;
+    head.plus.box.E = e;
+    head.plus.box.S = s;
+    head.plus.box.N = n;
 
     for (count = 0; count < num_open_layers; count++) {
 #ifdef DEBUG
@@ -37,7 +37,7 @@ int dxf_add_extents(void)
 	    exit(-1);
 	}
 
-	Vect_copy_head_data(&dxf_head, layers[count].Map);
+	Vect_copy_head_data(&head, layers[count].Map);
 	Vect_close(layers[count].Map);
     }
     for (count = 0; count < num_closed_layers; count++) {
@@ -63,8 +63,26 @@ int dxf_add_extents(void)
 	}
 
 	/* print the extents to this file */
-	Vect_copy_head_data(&dxf_head, closed_layers[count].Map);
+	Vect_copy_head_data(&head, closed_layers[count].Map);
 	Vect_close(closed_layers[count].Map);
+    }
+
+    return 0;
+}
+
+int check_ext(double x, double y)
+{
+    if (y < s) {
+	s = y;
+    }
+    if (y > n) {
+	n = y;
+    }
+    if (x < w) {
+	w = x;
+    }
+    if (x > e) {
+	e = x;
     }
 
     return 0;

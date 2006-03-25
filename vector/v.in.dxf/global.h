@@ -1,8 +1,7 @@
 /* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_line */
 /* 1/28/98 change from Jacques Bouchard <bouchard@onera.fr> */
+
 #include <stdio.h>
-#include <string.h>
-#include <math.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
 
@@ -71,7 +70,7 @@ GLOBAL char extmin[12];
 GLOBAL char extmax[12];
 GLOBAL char polyline[12];
 GLOBAL char circle[12];
-GLOBAL char text[12];	/* dpg */
+GLOBAL char text[12];		/* dpg */
 GLOBAL char line[8];
 GLOBAL char point[8];
 GLOBAL char arc[8];
@@ -83,60 +82,63 @@ GLOBAL DXF_DIG *closed_layers;
 GLOBAL double XMAX, XMIN, YMAX, YMIN, ZMAX, ZMIN;
 GLOBAL int BOUNDARIES;
 GLOBAL struct Flag *txtbox_flag;
-GLOBAL struct Map_info dxf_head;
+GLOBAL struct Map_info head;
 GLOBAL double *xinfo, *yinfo, *zinfo;
 
 
-/* add_arc.c */
-int dxf_add_arc(FILE *);
-/* add_bounds.c */
-int dxf_add_boundaries(void);
-/* add_circle.c */
-int dxf_add_circle(FILE *);
-int make_arc(int, double, double, double, double, double, double, int);
-/* add_extents.c */
-int dxf_add_extents(void);
-/* add_line.c */
-int dxf_add_line(FILE *);
-/* add_point.c */
-int dxf_add_point(FILE *);
-/* add_polyline.c */
-int dxf_add_polyline(FILE *);
-int write_polylines(DXF_DIG *, int);
-/* check_ext.c */
-int dxf_check_ext(double, double);
-/* close_layer.c */
-int dxf_close_layer(int);
 /* debug.c */
 int debuginit(void);
 int debugf(char *, ...);
-/* entities.c */
-int dxf_entities(FILE *);
-/* find_lines.c */
-int dxf_find_lines(FILE *);
-/* header.c */
-int dxf_header(FILE *);
-/* init_chars.c */
-int dxf_init_chars(void);
-/* label_box.c */
-int dxf_add_labelbox(FILE *);
-int dxf_readcode(FILE *);
-/* main.c */
+
+
+/* open_layer.c */
+int open_layer(int, int);
+/* reopen_layer.c */
+int reopen_layer(int, int, int);
+/* which_layer.c */
+DXF_DIG *which_layer(char *, int);
+/* close_layer.c */
+int close_layer(int);
+
+
+/* layer_map.c */
 int add_line_layer(char *);
 int add_att_layer(char *);
-int add_layer(char *, char *[][2], int *);
-int _add_layer(char *[][2], int *, char *, char *);
 char *remap(char *, int);
+
+
+/* read_dxf.c */
+int dxf_readcode(FILE *);
 char *dxf_fgets(char *, int, FILE *);
-int extra_help(void);
+int dxf_find_header(FILE *);
+int dxf_find_entities(FILE *);
 int big_percent(unsigned long, unsigned long, int);
+
+
+/* init_chars.c */
+int init_chars(void);
 /* make_header.c */
-int dxf_make_header(DXF_DIG *);
-/* open_layer.c */
-int dxf_open_layer(int, int);
-/* reopen_layer.c */
-int dxf_reopen_layer(int, int, int);
-/* which_layer.c */
-DXF_DIG *dxf_which_layer(char *, int);
-int set_status(int);
-int find_highest_status(void);
+int make_header(DXF_DIG *);
+
+
+/* find_lines.c */
+int find_lines(FILE *);
+/* add_arc.c */
+int add_arc(FILE *);
+/* add_circle.c */
+int add_circle(FILE *);
+/* add_extents.c */
+int add_extents(void);
+int check_ext(double, double);
+/* add_labelbox.c */
+int add_labelbox(FILE *);
+/* add_line.c */
+int add_line(FILE *);
+/* add_point.c */
+int add_point(FILE *);
+/* add_polyline.c */
+int add_polyline(FILE *);
+/* make_arc.c */
+int make_arc(int, double, double, double, double, double, double, int);
+/* write_polylines.c */
+int write_polylines(DXF_DIG *, int);

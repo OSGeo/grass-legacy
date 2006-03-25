@@ -1,9 +1,7 @@
 /* 1/28/98 change from Jacques Bouchard <bouchard@onera.fr> */
-#include "dxf2vect.h"
+#include "global.h"
 
-/*#define DEBUG */
-
-int dxf_open_layer(int type, int count)
+int open_layer(int type, int count)
 {
     char buf[300];
     FILE *layer_fd;
@@ -33,9 +31,8 @@ int dxf_open_layer(int type, int count)
 	exit(-1);
     }
 
-    if (type == DXF_ASCII) {
-	dxf_make_header(&(layers[count]));
-    }
+    if (type == DXF_ASCII)
+	make_header(&(layers[count]));
 
     return 0;
 }

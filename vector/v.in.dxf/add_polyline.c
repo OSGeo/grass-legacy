@@ -4,14 +4,14 @@
  * 7/23/90
  */
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
-#include "dxf2vect.h"
+#include "global.h"
 
 #define DEG_TO_RAD (3.141592654/180.0)
 
-int dxf_add_polyline(FILE * dxf_file)
+int add_polyline(FILE * dxf_file)
 {
     /* DECLARING VARIABLES */
     int layer_flag = 0;		/* INDICATES IF A LAYER NAME HAS BEEN FOUND */
@@ -48,7 +48,7 @@ int dxf_add_polyline(FILE * dxf_file)
 	switch (code) {
 	case 8:
 	    if (!layer_flag) {
-		layer_fd = dxf_which_layer(dxf_line, DXF_ASCII);
+		layer_fd = which_layer(dxf_line, DXF_ASCII);
 		if (layer_fd == NULL)
 		    return (0);
 		strcpy(layername, dxf_line);
@@ -79,20 +79,20 @@ int dxf_add_polyline(FILE * dxf_file)
 		}
 	    break;
 
-	/* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
+	    /* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
 	case 6:		/* LINETYPE NAME */
-	case 38:	/* ELEVATION IF NONZERO */
-	case 39:	/* THICKNESS IF NONZERO */
-	case 62:	/* COLOR NUMBER (IF NOT "BYLAYER") */
-	case 210:	/* X EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
-	case 220:	/* Y EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
-	case 230:	/* Z EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
+	case 38:		/* ELEVATION IF NONZERO */
+	case 39:		/* THICKNESS IF NONZERO */
+	case 62:		/* COLOR NUMBER (IF NOT "BYLAYER") */
+	case 210:		/* X EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
+	case 220:		/* Y EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
+	case 230:		/* Z EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
 
 	    /* THE FOLLOWING GROUPS ARE SPECIFIC TO POLYLINE ENTITY */
-	case 41:	/* DEFAULT ENDING WIDTH */
-	case 71:	/* POLYGON MESH */
-	case 72:	/* POLYGON MESH */
-	case 75:	/* SMOOTH SURFACE TYPE -OPTIONAL */
+	case 41:		/* DEFAULT ENDING WIDTH */
+	case 71:		/* POLYGON MESH */
+	case 72:		/* POLYGON MESH */
+	case 75:		/* SMOOTH SURFACE TYPE -OPTIONAL */
 	    /* not used */
 	default:
 	    break;
@@ -115,18 +115,17 @@ int dxf_add_polyline(FILE * dxf_file)
 		switch (code) {
 		case 8:	/* LAYER NAMES ARE INCLUDED IN VERTEX ENTITY */
 		    if (!layer_flag) {	/* IF NO LAYER PREVIOUSLY ASSIGNED */
-			layer_fd = dxf_which_layer(dxf_line, DXF_ASCII);
+			layer_fd = which_layer(dxf_line, DXF_ASCII);
 			if (layer_fd == NULL)
 			    return (0);
 			strcpy(layername, dxf_line);
 			layer_flag = 1;
 		    }
 		    else	/* COMPARING layer_fd IN POLYLINE ENTITY */
-			layer_fd = dxf_which_layer(dxf_line, DXF_ASCII);
+			layer_fd = which_layer(dxf_line, DXF_ASCII);
 		    if (layer_fd == NULL)
 			return (0);
-		    if (strcmp(dxf_line, layername) != 0 &&
-			nu_layer_flag == 1) {
+		    if (strcmp(dxf_line, layername) != 0 && nu_layer_flag == 1) {
 			fprintf(stderr,
 				"ERROR: layer name %s listed but not used \n",
 				dxf_line);
@@ -171,12 +170,15 @@ int dxf_add_polyline(FILE * dxf_file)
 		arc_tan = (-1.0) * prev_bulge;
 
 	    if (arc_tan == 0.0) {	/* straight line segment */
-		dxf_check_ext(xinfo[arr_size], yinfo[arr_size]);
+		check_ext(xinfo[arr_size], yinfo[arr_size]);
 		if (arr_size >= ARR_MAX - 1) {
 		    ARR_MAX += ARR_INCR;
-		    xinfo = (double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
-		    yinfo = (double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
-		    zinfo = (double *)G_realloc(zinfo, ARR_MAX * sizeof(double));
+		    xinfo =
+			(double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
+		    yinfo =
+			(double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
+		    zinfo =
+			(double *)G_realloc(zinfo, ARR_MAX * sizeof(double));
 		}
 		arr_size++;
 	    }
@@ -248,9 +250,12 @@ int dxf_add_polyline(FILE * dxf_file)
 		arr_size += arc_arr_size;
 		while (arr_size >= ARR_MAX) {
 		    ARR_MAX += ARR_INCR;
-		    xinfo = (double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
-		    yinfo = (double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
-		    zinfo = (double *)G_realloc(zinfo, ARR_MAX * sizeof(double));
+		    xinfo =
+			(double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
+		    yinfo =
+			(double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
+		    zinfo =
+			(double *)G_realloc(zinfo, ARR_MAX * sizeof(double));
 		}
 	    }			/* arc */
 	    prev_bulge = bulge;
@@ -279,29 +284,15 @@ int dxf_add_polyline(FILE * dxf_file)
 	}
     }
     if (!layer_flag) {		/* NO LAYER DESIGNATED */
-	layer_fd = dxf_which_layer(nolayername, DXF_ASCII);
+	layer_fd = which_layer(nolayername, DXF_ASCII);
 	if (layer_fd == NULL)
 	    return (0);
     }
-    if(!zflag){
-	    int i;
-	    for(i=0; i<arr_size; i++)
-		    zinfo[i] = 0.0;
+    if (!zflag) {
+	int i;
+	for (i = 0; i < arr_size; i++)
+	    zinfo[i] = 0.0;
     }
     write_polylines(layer_fd, arr_size);
     return (1);
-}
-
-/* PRINTS OUT THE POLYLINE VERTEX DATA TO FILE DESIGNATED AS layer_fd */
-int write_polylines(DXF_DIG * layer_fd, int arr_size)
-{
-    struct line_cats *cats;
-
-    Vect_copy_xyz_to_pnts(Points, xinfo, yinfo, zinfo, arr_size);
-    /* TODO */
-    cats = Vect_new_cats_struct();
-    Vect_write_line(layer_fd->Map, GV_LINE, Points, cats);
-    Vect_destroy_cats_struct(cats);
-
-    return 0;
 }

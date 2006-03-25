@@ -3,11 +3,9 @@
  * 7/23/90
  */
 
-#include "dxf2vect.h"
+#include "global.h"
 
-#define DEBUG
-
-int dxf_reopen_layer(int type, int cl_count, int o_count)
+int reopen_layer(int type, int cl_count, int o_count)
 {
     char buf[300];
     FILE *fp;
