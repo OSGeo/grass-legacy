@@ -189,9 +189,9 @@ int main(int argc, char *argv[])
     list = 1;			/* make a flag similar to v.in.shape after improving the code */
     if (list) {
 	fprintf(stderr, "Following DXF layers found:\n");
-	for (count = 0; count < num_open_layers; count++) {
-	    fprintf(stderr, "Layer %d %s\n", count + 1, layers[count].name);
-	}
+	for (count = 0; count < num_open_layers; count++)
+	    fprintf(stderr, "Layer %d %s_%s\n", count + 1, base_name,
+		    layers[count].name);
     }
 
     add_extents();		/*extents of map calculated as points were read in */
