@@ -158,7 +158,6 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs,
 	    len = strlen (tokens[i]);
 	    if ( len > collen[i] ) collen[i] = len;
 	}
-	G_free_tokens(tokens);
 
 	row++;
     }
@@ -169,7 +168,9 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs,
     *column_type = coltype;
     *column_length = collen;
 
+    G_free_tokens(tokens);
     G_free(coorbuf);
+    /* G_free(tmp_token); ?? */ 
 
     return 0;
 }
