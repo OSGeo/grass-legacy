@@ -16,7 +16,7 @@
  * double map_thresh ;
  */
 
-int make_header(DXF_DIG * Layer)
+int make_header(struct dxf_dig *Layer)
 {
     char *date;
     char *name;

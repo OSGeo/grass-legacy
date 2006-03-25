@@ -8,24 +8,14 @@
 /* TODO */
 /* #define LABEL */
 
-#ifndef DBL_MAX
-#define DBL_MAX		9999999999999999999999.9
-#define DBL_MIN		-99999999999999999999.9
-#endif
+#define MAX_FILES 15
 
 #define DXF_ASCII 0
 #define DXF_LABEL 1
 #define DXF_LABEL_LINE 2
 
-#define MAX_FILES 15
-
-#define POLYFLAG1 1
-
-#define RSTEP  5.0
-
-
-#define DXF_DIG		struct dxf_dig
-DXF_DIG {
+struct dxf_dig
+{
     char *name;
     int type;
     FILE *fd;
@@ -36,18 +26,17 @@ DXF_DIG {
 #define ARR_INCR	256
 
 #ifdef MAIN
+#define GLOBAL
 char *dxf_file = NULL;
 int num_open_layers = 0;
 int num_closed_layers = 0;
 int from_table = 0;
-
-#define GLOBAL
 #else
-extern char *dxf_file;
-extern int num_open_layers;
-extern int num_closed_layers;
-int from_table;
 #define GLOBAL extern
+GLOBAL char *dxf_file;
+GLOBAL int num_open_layers;
+GLOBAL int num_closed_layers;
+GLOBAL int from_table;
 #endif
 
 GLOBAL struct line_pnts *Points;
@@ -77,8 +66,8 @@ GLOBAL char arc[8];
 GLOBAL char vertex[8];
 GLOBAL char seqend[8];
 GLOBAL char dxf_line[256];
-GLOBAL DXF_DIG layers[MAX_FILES];
-GLOBAL DXF_DIG *closed_layers;
+GLOBAL struct dxf_dig layers[MAX_FILES];
+GLOBAL struct dxf_dig *closed_layers;
 GLOBAL double XMAX, XMIN, YMAX, YMIN, ZMAX, ZMIN;
 GLOBAL int BOUNDARIES;
 GLOBAL struct Flag *txtbox_flag;
@@ -96,7 +85,7 @@ int open_layer(int, int);
 /* reopen_layer.c */
 int reopen_layer(int, int, int);
 /* which_layer.c */
-DXF_DIG *which_layer(char *, int);
+struct dxf_dig *which_layer(char *, int);
 /* close_layer.c */
 int close_layer(int);
 
@@ -118,7 +107,7 @@ int big_percent(unsigned long, unsigned long, int);
 /* init_chars.c */
 int init_chars(void);
 /* make_header.c */
-int make_header(DXF_DIG *);
+int make_header(struct dxf_dig *);
 
 
 /* find_lines.c */
@@ -141,4 +130,4 @@ int add_polyline(FILE *);
 /* make_arc.c */
 int make_arc(int, double, double, double, double, double, double, int);
 /* write_polylines.c */
-int write_polylines(DXF_DIG *, int);
+int write_polylines(struct dxf_dig *, int);

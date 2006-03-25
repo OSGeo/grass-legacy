@@ -2,17 +2,16 @@
  * 7/23/90
  */
 
+#include <string.h>
 #include "global.h"
 
 static int set_status(int);
 static int find_highest_status(void);
 
-
-DXF_DIG *which_layer(char *layer_name, int type)
+struct dxf_dig *which_layer(char *layer_name, int type)
 {
 
     int open_count, closed_count;
-    int find_highest_status();
     int found_flag = 0;
 
     /* convert DXF name to user alias before doing any file or 'layers' stuff */
@@ -21,7 +20,7 @@ DXF_DIG *which_layer(char *layer_name, int type)
 	layer_name = remap(layer_name, type);
 
     if (layer_name == NULL)	/* layer is not to be written */
-	return (NULL);
+	return NULL;
 
     if (type == DXF_LABEL_LINE)
 	type = DXF_ASCII;
@@ -34,7 +33,7 @@ DXF_DIG *which_layer(char *layer_name, int type)
 
 	    /* give most recently used file the lowest status */
 	    set_status(open_count);
-	    return (&(layers[open_count]));
+	    return &(layers[open_count]);
 	}
     }
 
@@ -58,7 +57,7 @@ DXF_DIG *which_layer(char *layer_name, int type)
 	    reopen_layer(type, closed_count, open_count);
 
 
-	    return (&(layers[open_count]));
+	    return &(layers[open_count]);
 	}
     }
 
@@ -75,11 +74,11 @@ DXF_DIG *which_layer(char *layer_name, int type)
 	layers[open_count].name = G_store(layer_name);
 	layers[open_count].type = type;
 	if (0 > open_layer(type, open_count))
-	    return (NULL);
+	    return NULL;
 
 
 	set_status(open_count);
-	return (&(layers[open_count]));
+	return &(layers[open_count]);
     }
 
 
@@ -88,11 +87,11 @@ DXF_DIG *which_layer(char *layer_name, int type)
     layers[num_open_layers].name = G_store(layer_name);
     layers[num_open_layers].type = type;
     if (0 > open_layer(type, num_open_layers))
-	return (NULL);
+	return NULL;
 
 
     set_status(num_open_layers);
-    return (&(layers[num_open_layers++]));
+    return &(layers[num_open_layers++]);
 }
 
 /* file status is incremented with most recently used file's status set to 0 */
@@ -117,5 +116,5 @@ static int find_highest_status(void)
 	if (layers[highest].status < layers[count].status)
 	    highest = count;
     }
-    return (highest);
+    return highest;
 }

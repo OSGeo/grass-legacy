@@ -4,7 +4,6 @@
  */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include "global.h"
 
 /* DECLARING SUBROUTINES */
@@ -16,24 +15,24 @@ int add_line(FILE * dxf_file)
     int yflag = 0;		/* INDICATES IF A y VALUE HAS BEEN FOUND */
     int zflag = 0;		/* INDICATES IF A z VALUE HAS BEEN FOUND */
     char *nolayername = "UNIDENTIFIED";
-    DXF_DIG *layer_fd = NULL;	/* POINTER TO LAYER NAME */
+    struct dxf_dig *layer_fd = NULL;	/* POINTER TO LAYER NAME */
     int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
     int arr_size = 0;
 
     /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
     while ((code = dxf_readcode(dxf_file)) != 0) {
 	if (code == -2)		/* EOF */
-	    return (0);
+	    return 0;
 	dxf_fgets(dxf_line, 256, dxf_file);
 	if (feof(dxf_file) != 0)	/* EOF */
-	    return (0);
+	    return 0;
 
 	switch (code) {
 	case 8:
 	    if (!layer_flag) {
 		layer_fd = which_layer(dxf_line, DXF_ASCII);
 		if (layer_fd == NULL)
-		    return (0);
+		    return 0;
 		layer_flag = 1;
 	    }
 	    break;
@@ -91,7 +90,7 @@ int add_line(FILE * dxf_file)
     if (!layer_flag) {		/* NO LAYER DESIGNATED */
 	layer_fd = which_layer(nolayername, DXF_ASCII);
 	if (layer_fd == NULL)
-	    return (0);
+	    return 0;
     }
     if (arr_size == 2) {	/* had both starts and stops */
 	/* PRINTS OUT THE POLYLINE VERTEX DATA TO FILE DESIGNATED AS layer_fd */
@@ -99,5 +98,5 @@ int add_line(FILE * dxf_file)
 	    zinfo[0] = zinfo[1] = 0.0;
 	write_polylines(layer_fd, arr_size);
     }
-    return (1);
+    return 1;
 }

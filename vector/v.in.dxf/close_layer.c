@@ -14,15 +14,16 @@ int close_layer(int o_count)
 	}
     }
     if (!num_closed_layers) {	/* this only happens the first time */
-	closed_layers = (DXF_DIG *) G_malloc(sizeof(DXF_DIG));
+	closed_layers = (struct dxf_dig *)G_malloc(sizeof(struct dxf_dig));
 	num_closed_layers++;
 	found_flag = 1;
     }
 
     if (!found_flag) {
-	closed_layers = (DXF_DIG *) G_realloc(closed_layers,
-					      (num_closed_layers +
-					       1) * sizeof(DXF_DIG));
+	closed_layers = (struct dxf_dig *)G_realloc(closed_layers,
+						    (num_closed_layers +
+						     1) *
+						    sizeof(struct dxf_dig));
 	count = num_closed_layers;
 	num_closed_layers++;
     }

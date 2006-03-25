@@ -1,3 +1,4 @@
+#include <string.h>
 #include "global.h"
 
 /* gotta change this to be malloced */
@@ -28,17 +29,17 @@ char *remap(char *str, int type)
     if (type == DXF_ASCII) {
 	for (i = 0; i < num_lines; i++)
 	    if (!strcmp(str, line_list[i][0]))
-		return (line_list[i][1]);
+		return line_list[i][1];
     }
     else {
 	for (i = 0; i < num_labels; i++)
 	    if (!strcmp(str, label_list[i][0]))
-		return (label_list[i][1]);
+		return label_list[i][1];
     }
 #else
     for (i = 0; i < num_lines; i++)
 	if (!strcmp(str, line_list[i][0]))
-	    return (line_list[i][1]);
+	    return line_list[i][1];
 #endif
 
     return NULL;

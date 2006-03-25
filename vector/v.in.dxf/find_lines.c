@@ -22,9 +22,13 @@
  *   fall within the map location.
  */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include "global.h"
+
+#ifndef DBL_MAX
+#define DBL_MAX		9999999999999999999999.9
+#define DBL_MIN		-99999999999999999999.9
+#endif
 
 int find_lines(FILE * dxf_file)
 {
@@ -41,10 +45,10 @@ int find_lines(FILE * dxf_file)
 	code = dxf_readcode(dxf_file);
 	while (code != 0) {
 	    if (code == -2)	/* EOF */
-		return (0);
+		return 0;
 	    dxf_fgets(dxf_line, 256, dxf_file);
 	    if (feof(dxf_file) != 0)	/* EOF */
-		return (0);
+		return 0;
 
 	    if (code == 9 && code != 0) {	/* only looking for 9 groups  */
 		if (strcmp(dxf_line, "$EXTMAX") == 0) {
@@ -54,10 +58,10 @@ int find_lines(FILE * dxf_file)
 			if (code == 9)
 			    break;
 			if (code == -2)	/* EOF */
-			    return (0);
+			    return 0;
 			dxf_fgets(dxf_line, 256, dxf_file);
 			if (feof(dxf_file) != 0)	/* EOF */
-			    return (0);
+			    return 0;
 			switch (code) {
 			case 10:
 			    XMAX = atof(dxf_line);
@@ -85,11 +89,11 @@ int find_lines(FILE * dxf_file)
 			if (code == 9)
 			    break;
 			if (code == -2)	/* EOF */
-			    return (0);
+			    return 0;
 
 			dxf_fgets(dxf_line, 256, dxf_file);
 			if (feof(dxf_file) != 0)	/* EOF */
-			    return (0);
+			    return 0;
 
 			switch (code) {
 			case 10:
@@ -113,10 +117,10 @@ int find_lines(FILE * dxf_file)
 			if (code == 9)
 			    break;
 			if (code == -2)	/* EOF */
-			    return (0);
+			    return 0;
 			dxf_fgets(dxf_line, 256, dxf_file);
 			if (feof(dxf_file) != 0)	/* EOF */
-			    return (0);
+			    return 0;
 		    }
 		}
 	    }
