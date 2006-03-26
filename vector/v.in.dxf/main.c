@@ -192,7 +192,7 @@ int main(int argc, char *argv[])
 
     fprintf(stderr, "Following DXF layers found:\n");
     for (i = 0; i < num_open_layers; i++)
-        fprintf(stderr, "Layer %d %s_%s\n", i + 1, base_name, layers[i].name);
+	fprintf(stderr, "Layer %d %s_%s\n", i + 1, base_name, layers[i].name);
 
     exit(0);
 }
