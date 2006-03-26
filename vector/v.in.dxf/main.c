@@ -34,10 +34,10 @@ int main(int argc, char *argv[])
     FILE *dxf_fp;
     char *p;
     int i;
-    int count, list;
     char *out_name = NULL;
 #ifdef LABEL
     struct Option *old_opt, *line_opt, *labl_opt, *prefix_opt;
+    struct Flag *txtbox_flag;
 #else
     struct Option *old_opt, *line_opt, *prefix_opt;
 #endif
@@ -93,16 +93,15 @@ int main(int argc, char *argv[])
 	exit(-1);
     }
 
-    Points = Vect_new_line_struct();
+#ifdef LABEL
+    txtbox = txtbox_flag->answer;
+    if (txtbox)
+	fprintf(stderr, "text boxes will not be drawn\n");
+#endif
 
     dxf_file = old_opt->answer;
     if (prefix_opt->answer != NULL)
 	out_name = G_store(prefix_opt->answer);
-
-#ifdef LABEL
-    if (txtbox_flag->answer)
-	fprintf(stderr, "text boxes will not be drawn\n");
-#endif
 
     /*DEBUG
      * if (out_name != NULL)
@@ -147,7 +146,6 @@ int main(int argc, char *argv[])
     /* check the number of lines in the file so big_percent can be used while
      * program is running
      */
-
     fseek(dxf_fp, 0L, 2);
     file_size = ftell(dxf_fp);
     rewind(dxf_fp);
@@ -158,7 +156,8 @@ int main(int argc, char *argv[])
 	percent = 5;
     else
 	percent = 2;
-    big_percent(0, file_size, percent);	/* initializing variables inside big_percent */
+    /* initializing variables inside big_percent */
+    big_percent(0, file_size, percent);
 
     /* make base_name from name of dxf file.  This will be used as
      * the prefix for all layers that are created to avoid layer name
@@ -179,22 +178,21 @@ int main(int argc, char *argv[])
     }
 
     init_chars();
-    find_lines(dxf_fp);
+
+    Points = Vect_new_line_struct();
+    create_layers(dxf_fp);
+    Vect_destroy_line_struct(Points);
+
     fclose(dxf_fp);
+
     /* NOTE:  examples of dxf files with inaccurate information
      * have led us not to use the EXTMIN and EXTMAX information
      * found in the HEAD SECTION of a dxf file
      */
 
-    list = 1;			/* make a flag similar to v.in.shape after improving the code */
-    if (list) {
-	fprintf(stderr, "Following DXF layers found:\n");
-	for (count = 0; count < num_open_layers; count++)
-	    fprintf(stderr, "Layer %d %s_%s\n", count + 1, base_name,
-		    layers[count].name);
-    }
-
-    add_extents();		/*extents of map calculated as points were read in */
+    fprintf(stderr, "Following DXF layers found:\n");
+    for (i = 0; i < num_open_layers; i++)
+        fprintf(stderr, "Layer %d %s_%s\n", i + 1, base_name, layers[i].name);
 
     exit(0);
 }

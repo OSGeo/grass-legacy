@@ -35,7 +35,7 @@ char *dxf_fgets(char *buf, int size, FILE * fp)
     p = fgets(buf, size, fp);
     if (p != NULL) {
 	current_size += strlen(p);
-	big_percent(current_size, file_size, percent);	/* reporting status of job */
+	big_percent(current_size, file_size, percent);
 	G_squeeze(buf);
     }
     return p;
@@ -79,20 +79,20 @@ int dxf_find_entities(FILE * dxf_file)
  */
 int big_percent(unsigned long n, unsigned long d, int s)
 {
-    unsigned long x;
-    static unsigned long prev = (unsigned long)-1;
+    int x;
+    static int prev = -1;
 
-    x = n * 100 / d;
+    x = 100 * (double)n / (double)d;
     if (x % s)
 	return 1;
     if (n <= 0 || n >= d || x != prev) {
 	prev = x;
-	fprintf(stderr, "%4ld%%\b\b\b\b\b", x);
+	fprintf(stderr, "%4d%%\b\b\b\b\b", x);
 	fflush(stderr);
     }
     if (x >= 100) {
 	fprintf(stderr, "\n");
-	prev = (unsigned long)-1;
+	prev = -1;
     }
 
     return 0;
