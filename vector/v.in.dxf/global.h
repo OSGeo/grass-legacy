@@ -70,9 +70,11 @@ GLOBAL struct dxf_dig layers[MAX_FILES];
 GLOBAL struct dxf_dig *closed_layers;
 GLOBAL double XMAX, XMIN, YMAX, YMIN, ZMAX, ZMIN;
 GLOBAL int BOUNDARIES;
-GLOBAL struct Flag *txtbox_flag;
 GLOBAL struct Map_info head;
 GLOBAL double *xinfo, *yinfo, *zinfo;
+#ifdef LABEL
+GLOBAL int txtbox;
+#endif
 
 
 /* debug.c */
@@ -110,15 +112,13 @@ int init_chars(void);
 int make_header(struct dxf_dig *);
 
 
-/* find_lines.c */
-int find_lines(FILE *);
+/* create_layers.c */
+int create_layers(FILE *);
+int check_ext(double, double);
 /* add_arc.c */
 int add_arc(FILE *);
 /* add_circle.c */
 int add_circle(FILE *);
-/* add_extents.c */
-int add_extents(void);
-int check_ext(double, double);
 /* add_labelbox.c */
 int add_labelbox(FILE *);
 /* add_line.c */

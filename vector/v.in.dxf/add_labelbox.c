@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include "global.h"
 
+#ifdef LABEL
 int add_labelbox(FILE * dxf_file)
 {
     struct dxf_dig *layer_fd, *label_fd;
@@ -144,7 +145,7 @@ int add_labelbox(FILE * dxf_file)
     /* and finally print it out in digit format */
     /* if "-n" flag not set  [ 1998-SEP-30 BCH-J ] */
 
-    if (!txtbox_flag->answer)
+    if (!txtbox)
 	write_polylines(layer_fd, arr_size);
     /* And add info to the label file */
     /*
@@ -158,3 +159,4 @@ int add_labelbox(FILE * dxf_file)
     fprintf(label_fd->fd, "L  %f %f %s\n", xinfo[0], yinfo[0], label);
     return 0;
 }
+#endif
