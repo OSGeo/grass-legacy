@@ -1,16 +1,16 @@
 #!/bin/sh
 #% Module
-#%  description: Display manager for GRASS
+#%  description: GIS manager for GRASS
 #% End
 #%option
 #% key: dmrc
 #% type: string
-#% description: Name of GRASS settings file (.grc)
+#% description: Name of GIS manager settings file (.grc)
 #% required : no
 #%End
 
 if [ $# -eq 0 ] ; then
-   exec "$GRASS_WISH" $GISBASE/etc/gm/gm.tcl -name gm_tcl
+   exec "$GRASS_WISH" $GISBASE/etc/gm/gm.tcl -name gm_tcl &
    exit 0
 fi
 
