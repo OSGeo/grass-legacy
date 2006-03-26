@@ -224,11 +224,11 @@ static int close_all_layers(void)
 	    exit(-1);
 	}
 
-        fprintf(stderr, "%s_%s:\n", base_name, layers[count].name);
+	fprintf(stderr, "%s_%s:\n", base_name, layers[count].name);
 	Vect_copy_head_data(&head, layers[count].Map);
 	Vect_build(layers[count].Map, stderr);
 	Vect_close(layers[count].Map);
-        fprintf(stderr, "\n");
+	fprintf(stderr, "\n");
     }
     for (count = 0; count < num_closed_layers; count++) {
 	if (closed_layers[count].type != DXF_ASCII)
@@ -252,11 +252,11 @@ static int close_all_layers(void)
 	    exit(-1);
 	}
 
-        fprintf(stderr, "%s_%s:\n", base_name, closed_layers[count].name);
+	fprintf(stderr, "%s_%s:\n", base_name, closed_layers[count].name);
 	Vect_copy_head_data(&head, closed_layers[count].Map);
 	Vect_build(closed_layers[count].Map, stderr);
 	Vect_close(closed_layers[count].Map);
-        fprintf(stderr, "\n");
+	fprintf(stderr, "\n");
     }
 
     return 0;
