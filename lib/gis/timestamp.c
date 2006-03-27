@@ -4,7 +4,7 @@
  *
  * Authors: Michael Shapiro & Bill Brown, CERL
  *          grid3 functions by Michael Pelizzari, LMCO
- *            
+ *
  * G_init_timestamp()
  * G_set_timestamp()
  * G_set_timestamp_range()
@@ -26,6 +26,69 @@
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
  *               for details.
+ *
+ *
+ * The timestamp values must use the format as described in the GRASS
+ * datetime library. The source tree for this library should have a
+ * description of the format. For convience, the formats as of Feb, 1996
+ * are reproduced here:
+ *
+ * There are two types of datetime values: absolute and relative. Absolute
+ * values specify exact dates and/or times. Relative values specify a span
+ * of time. Some examples will help clarify:
+ *
+ * Absolute
+ *
+ * The general format for absolute values is:
+ *
+ * day month year [bc] hour:minute:seconds timezone
+ *
+ * day is 1-31
+ * month is jan,feb,...,dec
+ * year is 4 digit year
+ * [bc] if present, indicates dates is BC
+ * hour is 0-23 (24 hour clock)
+ * mintue is 0-59
+ * second is 0-59.9999 (fractions of second allowed)
+ * timezone is +hhmm or -hhmm (eg, -0600)
+ *
+ * parts can be missing
+ *
+ * 1994 [bc]
+ * Jan 1994 [bc]
+ * 15 jan 1000 [bc]
+ * 15 jan 1994 [bc] 10 [+0000]
+ * 15 jan 1994 [bc] 10:00 [+0100]
+ * 15 jan 1994 [bc] 10:00:23.34 [-0500]
+ *
+ * Relative
+ *
+ * There are two types of relative datetime values, year- month and day-second.
+ *
+ * The formats are:
+ *
+ * [-] # years # months
+ * [-] # days # hours # minutes # seconds
+ *
+ * The words years, months, days, hours, minutes, seconds are literal words,
+ * and the # are the numeric values.
+ *
+ * Examples:
+ *
+ * 2 years
+ * 5 months
+ * 2 years 5 months
+ * 100 days
+ * 15 hours 25 minutes 35.34 seconds
+ * 100 days 25 minutes
+ * 1000 hours 35.34 seconds
+ *
+ * The following are illegal because it mixes year-month and day-second
+ * (because the number of days in a month or in a year vary):
+ *
+ * 3 months 15 days
+ * 3 years 10 days
+ *
  *
  */
 
@@ -67,6 +130,20 @@ int G__read_timestamp (FILE *fd, struct TimeStamp *ts)
     return -2; /* nothing in the file */
 }
 
+
+/*!
+ * \brief output TimeStamp structure to a file as a formatted string
+ *
+ * A handy fd might be "stdout".
+ *
+ * Returns:
+ *  0 on success
+ * -1 error
+ *
+ *  \param fd    file descriptor
+ *  \param ts    TimeStamp struct
+ *  \return int  exit value
+ */
 int G__write_timestamp ( FILE *fd, struct TimeStamp *ts)
 {
     char buf[1024];
@@ -79,29 +156,20 @@ int G__write_timestamp ( FILE *fd, struct TimeStamp *ts)
 
 
 /*!
- * \brief 
+ * \brief Create text string from TimeStamp structure
  *
- * Returns: 1 on success
- * -1 error
- *
- *  \param ts
- *  \param buf
- *  \return int
- */
-
- 
-/*!
- * \brief 
+ * Fills string *buf with info from TimeStamp structure *ts in a pretty
+ * way. The TimeStamp struct is defined in gis.h and populated with e.g.
+ * G_read_raster_timestamp().
  *
  * Returns:
  *  1 on success
- * -1 error 
+ * -1 error
  *
- *  \param ts
- *  \param buf
- *  \return int
+ *  \param ts    TimeStamp structure containing time info
+ *  \param buf   string to receive formatted timestamp
+ *  \return int  exit value
  */
-
 int G_format_timestamp (
     struct TimeStamp *ts,
     char *buf)
@@ -128,29 +196,19 @@ int G_format_timestamp (
 
 
 /*!
- * \brief 
+ * \brief Fill a TimeStamp structure from a datetime string
  *
- * Returns: 1 on success 
- * -1 error
- *
- *  \param ts
- *  \param buf
- *  \return int
- */
-
- 
-/*!
- * \brief 
+ * Populate a TimeStamp structure (defined in gis.h) from a text string.
+ * Checks to make sure text string is in valid GRASS datetime format.
  *
  * Returns:
  * 1 on success
- * -1 error 
+ * -1 error
  *
- *  \param ts
- *  \param buf
- *  \return int
+ *  \param ts   TimeStamp structure to be populated
+ *  \param buf  String containing formatted time info
+ *  \return int exit code
  */
-
 int G_scan_timestamp (
     struct TimeStamp *ts,
     char *buf)
@@ -182,42 +240,24 @@ int G_scan_timestamp (
     }
     return 1;
 }
-	
+
 
 /*!
- * \brief 
+ * \brief copy TimeStamp into [two] Datetimes structs
  *
- * Use to copy the TimeStamp information into Datetimes, so
- * the members of struct TimeStamp shouldn't be accessed directly.  
- * count=0 means no datetimes were copied 
- * count=1 means 1 datetime was copied into dt1 
- * count=2 means 2 datetimes were copied
+ * Use to copy the TimeStamp information into Datetimes, as the members of
+ * struct TimeStamp shouldn't be accessed directly.
  *
- *  \param ts
- *  \param dt1
- *  \param dt2
- *  \param count
- *  \return int
- */
-
- 
-/*!
- * \brief copy TimeStamp into Datetimes
- *
- * Use to copy the TimeStamp
- * information into Datetimes, so the members of struct TimeStamp shouldn't be
- * accessed directly.
  * count=0  means no datetimes were copied
  * count=1  means 1 datetime was copied into dt1
  * count=2  means 2 datetimes were copied
  *
- *  \param ts
- *  \param dt1
- *  \param dt2
- *  \param count
- *  \return int
+ *  \param ts     source TimeStamp structure
+ *  \param dt1    first DateTime struct to be filled
+ *  \param dt2    second DateTime struct to be filled
+ *  \param count  return code
+ *  \return int   always 0
  */
-
 int G_get_timestamps (
     struct TimeStamp *ts,
     DateTime *dt1,DateTime *dt2,
@@ -237,6 +277,7 @@ int G_get_timestamps (
 
     return 0;
 }
+
 
 /* write timestamp file
  * 1 ok
@@ -310,28 +351,17 @@ static int read_timestamp (
 
 
 /*!
- * \brief 
+ * \brief Read timestamp from raster map
  *
- * Returns 1 on success.  0 or negative on error.
+ * Returns:
+ * 1 on success
+ * 0 or negative on error.
  *
- *  \param name
- *  \param mapset
- *  \param ts
+ *  \param name map name
+ *  \param mapset mapset the map lives in
+ *  \param ts TimeStamp struct to populate
  *  \return int
  */
-
- 
-/*!
- * \brief Read raster timestamp
- *
- * Returns 1 on success.  0 or negative on error.
- *
- *  \param name
- *  \param mapset
- *  \param ts
- *  \return int
- */
-
 int G_read_raster_timestamp (
     char *name,char *mapset,
     struct TimeStamp *ts)
@@ -346,19 +376,6 @@ int G_read_raster_timestamp (
 /*!
  * \brief 
  *
- * Only files in current
- * mapset can be removed Returns: 0 if no file 
- * 1 if successful
- * -1 on fail
- *
- *  \param name
- *  \return int
- */
-
- 
-/*!
- * \brief 
- *
  * Only timestamp files in current mapset can be removed
  * Returns:
  * 0  if no file
@@ -368,7 +385,6 @@ int G_read_raster_timestamp (
  *  \param name
  *  \return int
  */
-
 int G_remove_raster_timestamp (char *name)
 {
     char element[128];
@@ -378,20 +394,11 @@ int G_remove_raster_timestamp (char *name)
 }
 
 
-/*!
- * \brief 
- *
- * Returns 1 on success. 0 or negative on error.
- *
- *  \param name
- *  \param mapset
- *  \param ts
- *  \return int
- */
 
- 
 /*!
  * \brief Read vector timestamp
+ *
+ * Is this used anymore with the new GRASS 6 vector engine???
  *
  * Returns 1 on success.  0 or negative on error.
  *
@@ -400,7 +407,6 @@ int G_remove_raster_timestamp (char *name)
  *  \param ts
  *  \return int
  */
-
 int G_read_vector_timestamp (
     char *name,char *mapset,
     struct TimeStamp *ts)
@@ -412,21 +418,11 @@ int G_read_vector_timestamp (
 }
 
 
-/*!
- * \brief 
- *
- * Only files in current
- * mapset can be removed Returns: 0 if no file 
- * 1 if successful
- * -1 on fail
- *
- *  \param name
- *  \return int
- */
 
- 
 /*!
  * \brief 
+ *
+ * Is this used anymore with the new GRASS 6 vector engine???
  *
  * Only timestamp files in current mapset can be removed
  * Returns:
@@ -437,7 +433,6 @@ int G_read_vector_timestamp (
  *  \param name
  *  \return int
  */
-
 int G_remove_vector_timestamp (char *name)
 {
     char element[128];
@@ -458,7 +453,6 @@ int G_remove_vector_timestamp (char *name)
  *  \param ts
  *  \return int
  */
-
 int G_read_grid3_timestamp (
     char *name,char *mapset,
     struct TimeStamp *ts)
@@ -482,7 +476,6 @@ int G_read_grid3_timestamp (
  *  \param name
  *  \return int
  */
-
 int G_remove_grid3_timestamp (char *name)
 {
     char element[128];
@@ -492,24 +485,12 @@ int G_remove_grid3_timestamp (char *name)
 }
 
 
-/*!
- * \brief 
- *
- * Returns: 1 on success
- * -1 error - can't create timestamp file
- * -2 error - invalid datetime in ts
- *
- *  \param name
- *  \param ts
- *  \return int
- */
 
- 
 /*!
  * \brief 
  *
  * Returns:
- * 1 on success.  
+ * 1 on success.
  * -1 error - can't create timestamp file
  * -2 error - invalid datetime in ts
  *
@@ -517,7 +498,6 @@ int G_remove_grid3_timestamp (char *name)
  *  \param ts
  *  \return int
  */
-
 int G_write_raster_timestamp (
     char *name,
     struct TimeStamp *ts)
@@ -529,24 +509,12 @@ int G_write_raster_timestamp (
 }
 
 
-/*!
- * \brief 
- *
- * Returns: 1 on success
- * -1 error - can't create timestamp file
- * -2 error - invalid datetime in ts
- *
- *  \param name
- *  \param ts
- *  \return int
- */
 
- 
 /*!
  * \brief 
  *
  * Returns:
- * 1 on success.  
+ * 1 on success.
  * -1 error - can't create timestamp file
  * -2 error - invalid datetime in ts
  *
@@ -554,7 +522,6 @@ int G_write_raster_timestamp (
  *  \param ts
  *  \return int
  */
-
 int G_write_vector_timestamp (
     char *name,
     struct TimeStamp *ts)
@@ -578,7 +545,6 @@ int G_write_vector_timestamp (
  *  \param ts
  *  \return int
  */
-
 int G_write_grid3_timestamp (
     char *name,
     struct TimeStamp *ts)
