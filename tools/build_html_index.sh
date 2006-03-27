@@ -36,7 +36,8 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">
 
 <h2>GRASS GIS $GRASSVERSION Reference Manual</h2>
 
-Geographic Resources Analysis Support System, commonly referred to as GRASS, 
+Geographic Resources Analysis Support System, commonly referred to as
+<a href="http://grass.itc.it">GRASS</a>, 
 is a Geographic Information System (GIS) used for geospatial data management
 and analysis, image processing, graphics/maps production, spatial modeling,
 and visualization. GRASS is currently used in academic and commercial settings
@@ -124,10 +125,10 @@ FULLINDEX=full_index.html
 
 #copy over CSS:
 cp -f grassdocs.css $HTMLDIR/
-cp -f grassdocs.css $HTMLDIR/../nviz/
+cp -f grassdocs.css $HTMLDIR/nviz/
 #copy over GRASS logo:
 cp -f grass.smlogo.gif $HTMLDIR/
-cp -f grass.smlogo.gif $HTMLDIR/../nviz/
+cp -f grass.smlogo.gif $HTMLDIR/nviz/
 
 #process all HTML pages:
 cd $HTMLDIR
@@ -231,7 +232,7 @@ do
 done
 
 #extra stuff for 'nviz' and 'xganim':
-echo "<li><a href=\"../nviz/index.html\">nviz</a> visualization and animation tool</li>" >> $FILENAME
+echo "<li><a href=\"nviz.html\">nviz</a> visualization and animation tool</li>" >> $FILENAME
 echo "<li><a href=\"xganim.html\">xganim</a> tool  for animating a raster map series</li>" >> $FILENAME
 	      
 echo "</ul>" >> $FILENAME

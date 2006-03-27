@@ -3,7 +3,7 @@ MODULE_TOPDIR = ../../..
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 
-GRASS_NVIZ_DOCS=$(GISBASE)/docs/nviz
+GRASS_NVIZ_DOCS=$(GISBASE)/docs/html/nviz
 
 default:
 	if [ ! -d $(GISBASE)/docs ] ; then mkdir $(GISBASE)/docs; fi
