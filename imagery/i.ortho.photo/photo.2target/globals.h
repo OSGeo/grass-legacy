@@ -63,6 +63,10 @@ GLOBAL int  from_digitizer INIT(-1);
 GLOBAL int  from_screen    INIT(-1);
 GLOBAL int  from_flag      INIT(0);
 
+GLOBAL int  autozoom_flag  INIT(1);
+GLOBAL int  autozoom_on    INIT(1);
+GLOBAL int  autozoom_off   INIT(0);
+
 GLOBAL int  dotsize INIT(4);
 
 

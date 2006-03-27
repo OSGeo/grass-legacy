@@ -79,6 +79,8 @@ int error(char *, int);
 /* mark.c */
 int mark(int, int, int);
 int mark_point(View *, int, int);
+int get_z_from_cell (double,double);
+int get_z_from_cell2 (double,double,double*);
 /* mouse.c */
 int Mouse_pointer(int *, int *, int *);
 int Mouse_box_anchored(int, int, int *, int *, int *);
@@ -103,9 +105,10 @@ double magnification(View *);
 int where(int, int);
 /* zoom.c */
 int zoom(void);
+void auto_zoom(void);
 /* zoom_box.c */
 int zoom_box(void);
 int zoom_box1 (int ,int );
 /* zoom_pnt.c */
 int zoom_point(void);
-int zoom_point2(int ,int, int);
+int zoom_point2(int ,int, int, double);

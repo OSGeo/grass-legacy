@@ -13,7 +13,6 @@ static int keyboard (void);
 static int _keyboard (void);
 static int digitizer (void);
 static int screen (int,int,int);
-static int get_z_from_cell (double,double);
 static int cancel (void);
 
 int mark (int x, int y, int button)
@@ -25,7 +24,7 @@ int mark (int x, int y, int button)
     }
     else if ( button == 3 ) 
     {
-        zoom_point2 ( x, y, -1 );
+        zoom_point2 ( x, y, 1, 1. );
         return 0;
     }
 
@@ -344,15 +343,19 @@ static int screen (int x, int y, int button)
     return ok;
 }
 
-static int get_z_from_cell (double north, double east)
+/* Get height from raster 
+ * return 1 if coors are in raster or cannot open rster
+ *        0 if coors are outside raster
+ */
+int get_z_from_cell2 (double north, double east, double *height)
 { 
-char buf[100];
-int row, col;
-struct Cell_head elevhd;
-RASTER_MAP_TYPE data_type;
+    int row, col;
+    struct Cell_head elevhd;
+    RASTER_MAP_TYPE data_type;
+
+    G_set_d_null_value(height, 1);
 
 /* allocate the elev buffer */
-    
     select_target_env();
     G_get_cellhd (elev_layer, mapset_elev, &elevhd);
     G_set_window(&elevhd);
@@ -367,14 +370,50 @@ RASTER_MAP_TYPE data_type;
     row = (int) northing_to_row (&elevhd, north);
     col = (int) easting_to_col  (&elevhd, east);
 
-
-    if (row < 0 || row >= elevhd.rows
-    ||  col < 0 || col >= elevhd.cols)
+    if (row < 0 || row >= elevhd.rows ||  col < 0 || col >= elevhd.cols)
     {
 	G_close_cell (elev);
 	G_free(elevbuf);
-	select_current_env();
+	return 0;
+    }
 
+    if (G_get_raster_row ( elev, elevbuf, row, data_type) <= 0)
+    {
+	G_close_cell (elev);
+	G_free(elevbuf);
+	return 0;
+    }
+
+    if((data_type ==  CELL_TYPE &&
+	    !G_is_c_null_value(( CELL *)&(( CELL *) elevbuf)[col])) ||
+       (data_type == FCELL_TYPE &&
+	    !G_is_f_null_value((FCELL *)&((FCELL *) elevbuf)[col])) ||
+       (data_type == DCELL_TYPE &&
+	    !G_is_d_null_value((DCELL *)&((DCELL *) elevbuf)[col])))
+    {
+	if(data_type == CELL_TYPE)
+	  *height = (double) ((CELL *) elevbuf)[col];
+	else if(data_type == FCELL_TYPE)
+	  *height = (double) ((FCELL *) elevbuf)[col];
+	else if(data_type == DCELL_TYPE)
+	  *height = (double) ((DCELL *) elevbuf)[col];
+    }
+
+    G_close_cell (elev);
+    G_free(elevbuf);
+    select_current_env();
+    return (1);
+}
+
+int get_z_from_cell (double north, double east)
+{ 
+    char buf[100];
+    int row, col;
+    struct Cell_head elevhd;
+    RASTER_MAP_TYPE data_type;
+
+    if ( !get_z_from_cell2 ( north, east, &Z ) )
+    {
         Curses_write_window (INFO_WINDOW, 5, 1, "point not on elevation map");
         Curses_write_window (INFO_WINDOW, 6, 1, "no elevation data available");
         Beep();
@@ -393,35 +432,10 @@ RASTER_MAP_TYPE data_type;
 	    Beep();
         }      
     }
-    else if (G_get_raster_row ( elev, elevbuf, row, data_type) > 0)
+    else
     {
-	if((data_type ==  CELL_TYPE &&
-		!G_is_c_null_value(( CELL *)&(( CELL *) elevbuf)[col])) ||
-	   (data_type == FCELL_TYPE &&
-	    	!G_is_f_null_value((FCELL *)&((FCELL *) elevbuf)[col])) ||
-	   (data_type == DCELL_TYPE &&
-	    	!G_is_d_null_value((DCELL *)&((DCELL *) elevbuf)[col])))
-	{
-            if(data_type == CELL_TYPE)
-              Z = (double) ((CELL *) elevbuf)[col];
-            else if(data_type == FCELL_TYPE)
-              Z = (double) ((FCELL *) elevbuf)[col];
-            else if(data_type == DCELL_TYPE)
-              Z = (double) ((DCELL *) elevbuf)[col];
-	}
-	else
-	{
-	    G_set_d_null_value(&Z, 1);
-	}
-
-	G_close_cell (elev);
-	G_free(elevbuf);
-	select_current_env();
 	return (1);
     }
-    G_close_cell (elev);
-    G_free(elevbuf);
-    select_current_env();
     return 0;
 }
 

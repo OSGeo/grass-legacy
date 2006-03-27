@@ -26,15 +26,18 @@ int zoom_point (void)
 
 static int zoom1 (int x,int y)	/* called by Input_pointer */
 {
-    return zoom_point2 ( x, y, 0 );
+    return zoom_point2 ( x, y, 2, 1. );
 }
 
 /* Zoom with point. 
  * magnify: > 0 dont ask for magnification.
  *           -1 pan
  *            0 ask for magnification
+ * magnify:  0 use specified magnification
+ *           1 pan
+ *           2 ask for magnification
  */
-int zoom_point2 (int x,int y, int magnify)
+int zoom_point2 (int x,int y, int magnify, double magnific)
 {
     int top, bottom, left, right;
     int n,row,col;
@@ -93,7 +96,7 @@ int zoom_point2 (int x,int y, int magnify)
     Menu_msg("");
 
 /* determine magnification of zoom */
-    if ( magnify == 0 )
+    if ( magnify == 2 )
     {
 	if (zoom_view->cell.configured)
 	{
@@ -111,11 +114,11 @@ int zoom_point2 (int x,int y, int magnify)
 
         dmag = mag;
     }
-    else if ( magnify > 0 )
+    else if ( magnify == 0 )
     {
-        dmag = magnify;
+        dmag = magnific;
     }
-    else if ( magnify == -1 )
+    else if ( magnify == 1 ) /* pan */
     {
         /* Use current magnification */
         if (zoom_view->cell.configured)
@@ -223,6 +226,12 @@ int zoom_point2 (int x,int y, int magnify)
     drawcell (zoom_view);
     select_current_env();
     display_conz_points(1);
+
+    /* Auto zoom VIEW_MAP2_ZOOM */ 
+    if ( main_view == VIEW_MAP1 )
+    {
+	auto_zoom();
+    }
 
     return 1;	/* pop back */
 }
