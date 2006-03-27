@@ -16,28 +16,30 @@ namespace eval GmArrows {
     variable array lfile # raster
     variable array lfilemask # raster
     variable optlist
+    variable array dup # vector
 }
 
 source $gmpath/mapcanvas.tcl
 
 proc GmArrows::create { tree parent } {
-    variable opt
-    variable count
+    variable optlist
     variable lfile
     variable lfilemask
-    variable optlist
-    
+    variable opt
+    variable count
+    variable dup
     global gmpath
+    global iconpath
     global mon
+    global guioptfont
 
     set node "arrows:$count"
 
     set frm [ frame .arrowicon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
+    set check [checkbutton $frm.check -font $guioptfont \
 		-variable GmArrows::opt($count,1,_check) -height 1 -padx 0 -width 0]
 
-    image create photo aico -file "$gmpath/rastarrows.gif"
+    image create photo aico -file "$iconpath/module-d.rast.arrow.gif"
     set ico [label $frm.ico -image aico -bd 1 -relief raised]
     
     pack $check $ico -side left
@@ -54,6 +56,8 @@ proc GmArrows::create { tree parent } {
 		-window $frm -drawcross auto  
     
     set opt($count,1,_check) 1 
+    set dup($count) 0
+
  	set opt($count,1,map) "" 
 	set opt($count,1,opacity) 1.0
     set opt($count,1,type) "grass" 
@@ -67,7 +71,7 @@ proc GmArrows::create { tree parent } {
     set opt($count,1,mod) 1
 
 	set optlist {_check map type arrow_color grid_color x_color unknown_color \
-    	skip magnitude_map scale opacity} 
+    	skip magnitude_map scale} 
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -119,6 +123,7 @@ proc GmArrows::options { id frm } {
     variable opt
     global gmpath
     global bgcolor
+    global iconpath
 
     # Panel heading
     set row [ frame $frm.heading1 ]
@@ -146,7 +151,7 @@ proc GmArrows::options { id frm } {
     # raster map for arrow direction
     set row [ frame $frm.map ]
     Label $row.a -text "Aspect map: "
-    Button $row.b -image [image create photo -file "$gmpath/rastarrowsdir.gif"] \
+    Button $row.b -image [image create photo -file "$iconpath/gui-rastarrowsdir.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmArrows::select_map $id"
     Entry $row.c -width 35 -text " $opt($id,1,map)" \
@@ -154,7 +159,7 @@ proc GmArrows::options { id frm } {
           -background white
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
-		-image [image create photo -file "$gmpath/grass.gif"] \
+		-image [image create photo -file "$iconpath/gui-help.gif"] \
 		-command "run g.manual d.rast.arrow" \
 		-background $bgcolor -helptext [G_msg "Help"]
     pack $row.a $row.b $row.c $row.d $row.e -side left
@@ -209,7 +214,7 @@ proc GmArrows::options { id frm } {
     # raster map for arrow magnitude
     set row [ frame $frm.mag ]
     Label $row.a -text "Slope/intensity map: "
-    Button $row.b -image [image create photo -file "$gmpath/rastarrowsint.gif"] \
+    Button $row.b -image [image create photo -file "$iconpath/gui-rastarrowsint.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmArrows::select_magmap $id"
     Entry $row.c -width 35 -text " $opt($id,1,magnitude_map)" \
@@ -239,19 +244,19 @@ proc GmArrows::save { tree depth node } {
 }
 
 proc GmArrows::display { node mod} {
+    global mon
     global mapfile
     global maskfile
     global complist
     global opclist
     global masklist
-    global gmpath
-    global mon
     variable optlist
     variable lfile 
     variable lfilemask
     variable opt
-    variable rasttype
     variable tree
+    variable dup
+    variable count
 
     set currmon ""
     set input ""
@@ -283,38 +288,41 @@ proc GmArrows::display { node mod} {
     } 
     
     # if options have change (or mod flag set by other procedures) re-render map
-	if {$opt($id,1,mod) == 1} {
-		run_panel $cmd
-		file copy -force $mapfile($mon) $lfile($id)
-		file copy -force $maskfile($mon) $lfilemask($id)
+	if {$opt($id,1,mod) == 1 || $dup($id) == 1} {
+		runcmd "d.frame -e"
+	    run_panel $cmd
+	   	file rename -force $mapfile($mon) $lfile($id)
+    	file rename -force $maskfile($mon) $lfilemask($id)
+		# reset options changed flag
+		set opt($id,1,mod) 0
+		set dup($id) 0
+		set first 0
     }
 
-    if { ! ( $opt($id,1,_check) ) } { return } 
+    #add lfile, maskfile, and opacity to compositing lists
+    if { $opt($id,1,_check) } {
 
-    #add lfile to compositing list
-	if {$complist($mon) != "" } {
-	    append complist($mon) ","
-	    append complist($mon) [file tail $lfile($id)]
-	} else {
-	    append complist($mon) [file tail $lfile($id)]
-	}	
-
-	if {$masklist($mon) != "" } {
-	    append masklist($mon) ","
-	    append masklist($mon) [file tail $lfilemask($id)]
-	} else {
-	    append masklist($mon) [file tail $lfilemask($id)]
-	}	
-
-	if {$opclist($mon) != "" } {
-	    append opclist($mon) ","
-	    append opclist($mon) $opt($id,1,opacity)
-	} else {
-	    append opclist($mon) $opt($id,1,opacity)
-	}	
+		if {$complist($mon) != "" } {
+			append complist($mon) ","
+			append complist($mon) [file tail $lfile($id)]
+		} else {
+			append complist($mon) [file tail $lfile($id)]
+		}	
 	
-	# reset options changed flag
-	set opt($id,1,mod) 0
+		if {$masklist($mon) != "" } {
+			append masklist($mon) ","
+			append masklist($mon) [file tail $lfilemask($id)]
+		} else {
+			append masklist($mon) [file tail $lfilemask($id)]
+		}	
+	
+		if {$opclist($mon) != "" } {
+			append opclist($mon) ","
+			append opclist($mon) $opt($id,1,opacity)
+		} else {
+			append opclist($mon) $opt($id,1,opacity)
+		}	
+	}
 }
     
 proc GmArrows::mapname { node } {
@@ -335,43 +343,66 @@ proc GmArrows::mapname { node } {
 }
 
 proc GmArrows::duplicate { tree parent node id } {
+    variable optlist
+    variable lfile
+    variable lfilemask
     variable opt
-    variable count 
+    variable count
+    variable dup
     global gmpath
+    global iconpath
     global mon
+    global guioptfont
     
     set node "arrows:$count"
+	set dup($count) 1
 
     set frm [ frame .arrowicon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
+    set check [checkbutton $frm.check -font $guioptfont \
 		-variable GmArrows::opt($count,1,_check) \
 		-height 1 -padx 0 -width 0]
 
-    image create photo aico -file "$gmpath/rastarrows.gif"
+    image create photo aico -file "$iconpath/module-d.rast.arrow.gif"
     set ico [label $frm.ico -image aico -bd 1 -relief raised]
     
     pack $check $ico -side left
 
+	# where to insert new layer
+	if {[$tree selection get] != "" } {
+		set sellayer [$tree index [$tree selection get]]
+    } else { 
+    	set sellayer "end" 
+    }
+
 	if { $opt($id,1,map) == ""} {
-    	$tree insert end $parent $node -text "arrows $count" -window $frm \
+	    $tree insert $sellayer $parent $node \
+    		-text "arrows $count" -window $frm \
 			-drawcross auto
 	} else {
-	    $tree insert end $parent $node -text "arrows for $opt($id,1,map)" \
-		-window $frm -drawcross auto
+	    $tree insert $sellayer $parent $node \
+	    	-text "arrows for $opt($id,1,map)" \
+			-window $frm -drawcross auto
 	}
 
-    set opt($count,1,_check) $opt($id,1,_check)
-    set opt($count,1,map) "$opt($id,1,map)" 
-	set opt($count,1,opacity) opt($id,1,opacity)
-    set opt($count,1,type) "$opt($id,1,type)"
-    set opt($count,1,arrow_color) "$opt($id,1,arrow_color)"
-    set opt($count,1,grid_color) "$opt($id,1,grid_color)"
-    set opt($count,1,x_color) "$opt($id,1,x_color)" 
-	set opt($count,1,unknown_color) "$opt($id,1,unknown_color)"
-    set opt($count,1,skip) "$opt($id,1,skip)"
-    set opt($count,1,magnitude_map) "$opt($id,1,magnitude_map)"
-    set opt($count,1,scale)  "$opt($id,1,scale)"
+	set opt($count,1,opacity) $opt($id,1,opacity)
+
+	set optlist {_check map type arrow_color grid_color x_color unknown_color \
+    	skip magnitude_map scale} 
+
+    foreach key $optlist {
+    	set opt($count,1,$key) $opt($id,1,$key)
+		set opt($count,0,$key) $opt($count,1,$key)
+    } 
+    
+	set id $count
+
+	# create files in tmp directory for layer output
+	set mappid [pid]
+	set lfile($count) [eval exec "g.tempfile pid=$mappid"]
+	set lfilemask($count) $lfile($count)
+	append lfile($count) ".ppm"
+	append lfilemask($count) ".pgm"
+
 
     incr count
     return $node

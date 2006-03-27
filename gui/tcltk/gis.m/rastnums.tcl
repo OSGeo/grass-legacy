@@ -16,29 +16,31 @@ namespace eval GmRnums {
     variable array lfile # raster
     variable array lfilemask # raster
     variable optlist
+    variable array dup # vector
 }
 
 source $gmpath/mapcanvas.tcl
 
 proc GmRnums::create { tree parent } {
-    variable opt
-    variable count
+    variable optlist
     variable lfile
     variable lfilemask
-    variable optlist
-    
+    variable opt
+    variable count
+    variable dup
     global gmpath
+    global iconpath
     global mon
+    global guioptfont
 
     set node "rnums:$count"
 
     set frm [ frame .rnumsicon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
+    set check [checkbutton $frm.check -font $guioptfont \
 		-variable GmRnums::opt($count,1,_check) \
 		-height 1 -padx 0 -width 0]
 
-    image create photo nico -file "$gmpath/rastnums.gif"
+    image create photo nico -file "$iconpath/module-d.rast.num.gif"
     set ico [label $frm.ico -image nico -bd 1 -relief raised]
     
     pack $check $ico -side left
@@ -56,6 +58,8 @@ proc GmRnums::create { tree parent } {
 	-drawcross auto  
     
     set opt($count,1,_check) 1 
+    set dup($count) 0
+
     set opt($count,1,map) "" 
 	set opt($count,1,opacity) 1.0
     set opt($count,1,grid_color) "grey" 
@@ -63,7 +67,7 @@ proc GmRnums::create { tree parent } {
     set opt($count,1,cellcolor) 0 
     set opt($count,1,mod) 1
 
-	set optlist {_check map grid_color text_color cellcolor opacity}
+	set optlist {_check map grid_color text_color cellcolor}
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -104,6 +108,7 @@ proc GmRnums::options { id frm } {
     variable opt
     global gmpath
     global bgcolor
+    global iconpath
 
     # Panel heading
     set row [ frame $frm.heading1 ]
@@ -130,7 +135,7 @@ proc GmRnums::options { id frm } {
     # raster name for histogram
     set row [ frame $frm.name ]
     Label $row.a -text "Raster to display: "
-    Button $row.b -image [image create photo -file "$gmpath/raster.gif"] \
+    Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmRnums::select_map $id"
     Entry $row.c -width 35 -text " $opt($id,1,map)" \
@@ -138,7 +143,7 @@ proc GmRnums::options { id frm } {
           -background white
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
-		-image [image create photo -file "$gmpath/grass.gif"] \
+		-image [image create photo -file "$iconpath/gui-help.gif"] \
 		-command "run g.manual d.rast.num" \
 		-background $bgcolor -helptext [G_msg "Help"]
     pack $row.a $row.b $row.c $row.d $row.e -side left
@@ -196,6 +201,8 @@ proc GmRnums::display { node mod } {
     variable opt
     variable rasttype
     variable tree
+    variable dup
+    variable count
 
     set currmon ""
     global gmpath
@@ -236,41 +243,47 @@ proc GmRnums::display { node mod } {
 	# can only display if 10K cells or less in region
 	if { $cells <= 10000} {
     	# if options have change (or mod flag set by other procedures) re-render map
-		runcmd $cmd 
-		set mapdispht $env(GRASS_HEIGHT)
-		set mapdispwd $env(GRASS_WIDTH)
-		file copy -force $mapfile($mon) $lfile($id)
-		file copy -force $maskfile($mon) $lfilemask($id)
+		if {$opt($id,1,mod) == 1 || $dup($id) == 1} {
+			runcmd $cmd 
+			set mapdispht $env(GRASS_HEIGHT)
+			set mapdispwd $env(GRASS_WIDTH)
+			file rename -force $mapfile($mon) $lfile($id)
+			file rename -force $maskfile($mon) $lfilemask($id)
+			# reset options changed flag
+			set opt($id,1,mod) 0
+			set dup($id) 0
+			set first 0
+		}
 		#add lfile to compositing list
-	    if { ! ( $opt($id,1,_check) ) } { return } 
-		if {$complist($mon) != "" } {
-			append complist($mon) ","
-			append complist($mon) [file tail $lfile($id)]
-		} else {
-			append complist($mon) [file tail $lfile($id)]
-		}	
+		if { $opt($id,1,_check) } {
 	
-		if {$masklist($mon) != "" } {
-			append masklist($mon) ","
-			append masklist($mon) [file tail $lfilemask($id)]
-		} else {
-			append masklist($mon) [file tail $lfilemask($id)]
-		}		
-		if {$opclist($mon) != "" } {
-			append opclist($mon) ","
-			append opclist($mon) $opt($id,1,opacity)
-		} else {
-			append opclist($mon) $opt($id,1,opacity)
-		}	
+			if {$complist($mon) != "" } {
+				append complist($mon) ","
+				append complist($mon) [file tail $lfile($id)]
+			} else {
+				append complist($mon) [file tail $lfile($id)]
+			}	
+		
+			if {$masklist($mon) != "" } {
+				append masklist($mon) ","
+				append masklist($mon) [file tail $lfilemask($id)]
+			} else {
+				append masklist($mon) [file tail $lfilemask($id)]
+			}	
+		
+			if {$opclist($mon) != "" } {
+				append opclist($mon) ","
+				append opclist($mon) $opt($id,1,opacity)
+			} else {
+				append opclist($mon) $opt($id,1,opacity)
+			}	
+		}
 	} else {
 		set msgtxt "Cell values can only be displayed\nfor regions of < 10,000 cells" 
 		set answer [tk_messageBox -message $msgtxt -type ok -parent .mapcan($mon)]
 		if { $answer == "ok" } {return}
     }
 
-	
-	# reset options changed flag
-	set opt($id,1,mod) 0
 }
     
 proc GmRnums::mapname { node } {
@@ -291,12 +304,19 @@ proc GmRnums::mapname { node } {
 }
 
 proc GmRnums::duplicate { tree parent node id } {
+    variable optlist
+    variable lfile
+    variable lfilemask
     variable opt
-    variable count 
+    variable count
+    variable dup
     global gmpath
+    global iconpath
     global mon
+    global guioptfont
 
-    set node "hist:$count"
+    set node "rnums:$count"
+	set dup($count) 1
 
     set frm [ frame .rnumsicon$count]
     set fon [font create -size 10] 
@@ -304,29 +324,47 @@ proc GmRnums::duplicate { tree parent node id } {
 		-variable GmRnums::opt($count,1,_check) \
 		-height 1 -padx 0 -width 0]
 
-    image create photo nico -file "$gmpath/histogram.gif"
+    image create photo nico -file "$iconpath/module-d.rast.num.gif"
     set ico [label $frm.ico -image nico -bd 1 -relief raised]
     
     pack $check $ico -side left
 
+	# where to insert new layer
+	if {[$tree selection get] != "" } {
+		set sellayer [$tree index [$tree selection get]]
+    } else { 
+    	set sellayer "end" 
+    }
+
 	if { $opt($id,1,map) == ""} {
-    	$tree insert end $parent $node \
-		-text      "histogram $count" \
+	    $tree insert $sellayer $parent $node \
+		-text      "cell values $count" \
 		-window    $frm \
 		-drawcross auto
 	} else {
-	    $tree insert end $parent $node \
-		-text      "histogram for $opt($id,1,map)" \
+	    $tree insert $sellayer $parent $node \
+		-text      "cell values for $opt($id,1,map)" \
 		-window    $frm \
 		-drawcross auto
 	}
 
-    set opt($count,1,_check) $opt($id,1,_check)
-    set opt($count,1,map) $opt($id,1,map)
-	set opt($count,1,opacity) opt($id,1,opacity)
-    set opt($count,1,grid_color) $opt($id,1,grid_color)
-    set opt($count,1,text_color) $opt($id,1,text_color)
-    set opt($count,1,cellcolor) $opt($id,1,cellcolor)
+	set opt($count,1,opacity) $opt($id,1,opacity)
+
+	set optlist {_check map grid_color text_color cellcolor}
+
+    foreach key $optlist {
+    	set opt($count,1,$key) $opt($id,1,$key)
+		set opt($count,0,$key) $opt($count,1,$key)
+    } 
+    
+	set id $count
+
+	# create files in tmp directory for layer output
+	set mappid [pid]
+	set lfile($count) [eval exec "g.tempfile pid=$mappid"]
+	set lfilemask($count) $lfile($count)
+	append lfile($count) ".ppm"
+	append lfilemask($count) ".pgm"
 
     incr count
     return $node

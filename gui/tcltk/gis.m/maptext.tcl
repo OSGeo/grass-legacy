@@ -11,18 +11,19 @@ namespace eval GmCtext {
 proc GmCtext::create { tree parent } {
     variable opt
     variable count
-    global gmpath
+	variable dup
+    global iconpath
+    global guioptfont
     global frm
 
     set node "ctext:$count"
 
     set frm [ frame .ctexticon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
+    set check [checkbutton $frm.check -font $guioptfont \
                            -variable GmCtext::opt($count,_check) \
                            -height 1 -padx 0 -width 0]
 
-    image create photo ctico -file "$gmpath/maptext.gif"
+    image create photo ctico -file "$iconpath/gui-maptext.gif"
     set ico [label $frm.ico -image ctico -bd 1 -relief raised]
     
     pack $check $ico -side left
@@ -40,7 +41,7 @@ proc GmCtext::create { tree parent } {
 	-drawcross auto  
         
     set opt($count,_check) 1 
-
+	set opt($count,1,opacity) 1.0
     set opt($count,text) "" 
     set opt($count,xcoord) 100
     set opt($count,ycoord) 100
@@ -75,7 +76,7 @@ proc GmCtext::set_option { node key value } {
 # ctext options
 proc GmCtext::options { id frm } {
     variable opt
-    global gmpath
+    global iconpath
     global bgcolor
 
     # Panel heading
@@ -135,7 +136,7 @@ proc GmCtext::options { id frm } {
     # select font
     set row [ frame $frm.font ]
     Label $row.a -text [G_msg "Font:"] 
-    Button $row.b -image [image create photo -file "$gmpath/font.gif"] \
+    Button $row.b -image [image create photo -file "$iconpath/gui-font.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "select font for text"] \
 	    -command "GmCtext::select_font $id"
@@ -166,7 +167,6 @@ proc GmCtext::display { node } {
     variable tree
     variable can
     global mon
-    global gmpath
     global canvas_w
     global canvas_h
 
@@ -230,28 +230,37 @@ proc GmCtext::display { node } {
 
 proc GmCtext::duplicate { tree parent node id } {
     variable opt
-    variable count 
-    global gmpath
+    variable count
+	variable dup
+    global iconpath
+    global guioptfont
+    global frm
 
     set node "ctext:$count"
 
     set frm [ frame .ctexticon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
+    set check [checkbutton $frm.check -font $guioptfont \
                            -variable GmCtext::opt($count,_check) \
                            -height 1 -padx 0 -width 0]
 
-    image create photo ctico -file "$gmpath/maptext.gif"
+    image create photo ctico -file "$iconpath/gui-maptext.gif"
     set ico [label $frm.ico -image ctico -bd 1 -relief raised]
     
     pack $check $ico -side left
+    
+	#insert new layer
+	if {[$tree selection get] != "" } {
+		set sellayer [$tree index [$tree selection get]]
+    } else { 
+    	set sellayer "end" 
+    }
 
-	if { $opt($id,text) == ""} {
-    	$tree insert end $parent $node \
-		-text      "text layer $count" \
-		-window    $frm \
-		-drawcross auto
-	}
+    $tree insert $sellayer $parent $node \
+	-text  "text layer $count"\
+	-window    $frm \
+	-drawcross auto  
+        
+    set opt($count,_check) 1 
 
     set opt($count,_check) $opt($id,_check)
     set opt($count,text) $opt($id,text) 

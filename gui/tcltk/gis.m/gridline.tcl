@@ -16,6 +16,7 @@ namespace eval GmGridline {
     variable array lfilemask # raster
     variable optlist
     variable first
+    variable array dup # vector
 }
 
 proc GmGridline::create { tree parent } {
@@ -25,7 +26,11 @@ proc GmGridline::create { tree parent } {
     variable lfilemask
     variable optlist
     variable first
+	variable dup
+    global mon
     global gmpath
+    global iconpath
+    global guioptfont
 
     set node "gridline:$count"
 
@@ -35,7 +40,7 @@ proc GmGridline::create { tree parent } {
                            -variable GmGridline::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
-    image create photo gico -file "$gmpath/grid.gif"
+    image create photo gico -file "$iconpath/module-d.grid.gif"
     set gdico [label $frm.gdico -image gico -bd 1 -relief raised]
     
     pack $check $gdico -side left
@@ -53,6 +58,7 @@ proc GmGridline::create { tree parent } {
 	-drawcross auto  
 
     set opt($count,1,_check) 1 
+    set dup($count) 0
     
 	set opt($count,1,opacity) 1.0
     set opt($count,1,gridline) "gridline" 
@@ -79,7 +85,7 @@ proc GmGridline::create { tree parent } {
     
 	set optlist { _check gridcolor gridborder gridsize gridorigin griddraw gridgeod \
     			borderdraw textdraw rhumbdraw rhumbcoor geoddraw geodcoor geodcolor \
-    			geodtxtcolor opacity} 
+    			geodtxtcolor} 
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -108,6 +114,7 @@ proc GmGridline::options { id frm } {
     variable opt
     global gmpath
     global bgcolor
+    global iconpath
 
     # Panel heading
     set row [ frame $frm.heading1 ]
@@ -134,7 +141,7 @@ proc GmGridline::options { id frm } {
     SelectColor $row.d -type menubutton -variable GmGridline::opt($id,1,gridcolor)    
     Label $row.e -text [G_msg " grid color   "] 
     Button $row.f -text [G_msg "Help"] \
-            -image [image create photo -file "$gmpath/grass.gif"] \
+            -image [image create photo -file "$iconpath/gui-help.gif"] \
             -command "run g.manual d.grid" \
             -background $bgcolor \
             -helptext [G_msg "Help for grids"]
@@ -173,7 +180,7 @@ proc GmGridline::options { id frm } {
     Label $row.a -text "     "
     checkbutton $row.b -text [G_msg "draw geodesic line"] -variable GmGridline::opt($id,1,geoddraw)
     Button $row.c -text [G_msg "Help"] \
-            -image [image create photo -file "$gmpath/grass.gif"] \
+            -image [image create photo -file "$iconpath/gui-help.gif"] \
             -command "run g.manual d.geodesic" \
             -background $bgcolor \
             -helptext [G_msg "Help for geodesic lines"]
@@ -203,7 +210,7 @@ proc GmGridline::options { id frm } {
     Label $row.a -text "     "
     checkbutton $row.b -text [G_msg "draw rhumbline"] -variable GmGridline::opt($id,1,rhumbdraw)
     Button $row.c -text [G_msg "Help"] \
-            -image [image create photo -file "$gmpath/grass.gif"] \
+            -image [image create photo -file "$iconpath/gui-help.gif"] \
             -command "run g.manual d.rhumbline" \
             -background $bgcolor \
             -helptext [G_msg "Help for rhumblines"]
@@ -238,19 +245,19 @@ proc GmGridline::save { tree depth node } {
 }
 
 proc GmGridline::display { node mod } {
+    global mon
     global mapfile
     global maskfile
     global complist
     global opclist
     global masklist
-    global gmpath
-    global mon
     variable optlist
     variable lfile 
     variable lfilemask
     variable opt
-    variable rasttype
     variable tree
+    variable dup
+    variable count
     variable first
 
     set tree($mon) $GmTree::tree($mon)
@@ -272,7 +279,7 @@ proc GmGridline::display { node mod } {
     # d.grid command
     if { $opt($id,1,griddraw) || $opt($id,1,borderdraw) } {
             set cmd "d.grid size=$opt($id,1,gridsize) origin=$opt($id,1,gridorigin) \
-                color=$gridcolor bordercolor=$gridborder" \
+                color=$gridcolor bordercolor=$gridborder" 
         } 
         
     if { $opt($id,1,gridgeod) && $cmd != "" } {append cmd " -g"} 
@@ -284,12 +291,14 @@ proc GmGridline::display { node mod } {
     if { $opt($id,1,geoddraw) } {
         set cmd2 "d.geodesic coor=$opt($id,1,geodcoor) \
                 lcolor=$opt($id,1,geodcolor) \
-                tcolor=$opt($id,1,geodtxtcolor)"  }
+                tcolor=$opt($id,1,geodtxtcolor)"  
+    }
 
     # d.rhumbline command
     if { $opt($id,1,rhumbdraw) } {
         set cmd3 "d.rhumbline coor=$opt($id,1,rhumbcoor) \
-       lcolor=$opt($id,1,rhumbcolor) " }
+	       lcolor=$opt($id,1,rhumbcolor) " 
+    }
 
     # check to see if options have changed
     foreach key $optlist {
@@ -300,49 +309,59 @@ proc GmGridline::display { node mod } {
     } 
     
     # if options have change (or mod flag set by other procedures) re-render map
-	if {$opt($id,1,mod) == 1 || $first == 1 } {
+	if {$opt($id,1,mod) == 1 || $dup($id) == 1 || $first == 1} {
+		runcmd "d.frame -e"
 		if { $cmd != "" } { run_panel $cmd } 
 		if { $cmd2 != "" } { run_panel $cmd2 } 
 		if { $cmd3 != "" } { run_panel $cmd3 }     
-		file copy -force $mapfile($mon) $lfile($id)
-		file copy -force $maskfile($mon) $lfilemask($id)
-    }
+	   	file rename -force $mapfile($mon) $lfile($id)
+    	file rename -force $maskfile($mon) $lfilemask($id)
+		# reset options changed flag
+		set opt($id,1,mod) 0
+		set dup($id) 0
+		set first 0
+	}
 
-    if { ! ( $opt($id,1,_check) ) } { return } 
+    #add lfile, maskfile, and opacity to compositing lists
+    if { $opt($id,1,_check) } {
 
-    #add lfile to compositing list
-	if {$complist($mon) != "" } {
-	    append complist($mon) ","
-	    append complist($mon) [file tail $lfile($id)]
-	} else {
-	    append complist($mon) [file tail $lfile($id)]
-	}	
-
-	if {$masklist($mon) != "" } {
-	    append masklist($mon) ","
-	    append masklist($mon) [file tail $lfilemask($id)]
-	} else {
-	    append masklist($mon) [file tail $lfilemask($id)]
-	}	
-
-	if {$opclist($mon) != "" } {
-	    append opclist($mon) ","
-	    append opclist($mon) $opt($id,1,opacity)
-	} else {
-	    append opclist($mon) $opt($id,1,opacity)
-	}	
+		if {$complist($mon) != "" } {
+			append complist($mon) ","
+			append complist($mon) [file tail $lfile($id)]
+		} else {
+			append complist($mon) [file tail $lfile($id)]
+		}	
 	
-	# reset options changed flag
-	set opt($id,1,mod) 0
+		if {$masklist($mon) != "" } {
+			append masklist($mon) ","
+			append masklist($mon) [file tail $lfilemask($id)]
+		} else {
+			append masklist($mon) [file tail $lfilemask($id)]
+		}	
+	
+		if {$opclist($mon) != "" } {
+			append opclist($mon) ","
+			append opclist($mon) $opt($id,1,opacity)
+		} else {
+			append opclist($mon) $opt($id,1,opacity)
+		}	
+	}
 }
 
 
 proc GmGridline::duplicate { tree parent node id } {
+    variable optlist
+    variable lfile
+    variable lfilemask
     variable opt
-    variable count 
-    global gmpath
+    variable count
+	variable dup
+	global guioptfont
+	global iconpath
+	global first
 
     set node "gridline:$count"
+	set dup($count) 1
 
     set frm [ frame .gridlineicon$count]
     set fon [font create -size 10] 
@@ -350,44 +369,41 @@ proc GmGridline::duplicate { tree parent node id } {
                            -variable GmGridline::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
-    image create photo gico -file "$gmpath/grid.gif"
+    image create photo gico -file "$iconpath/module-d.grid.gif"
     set gdico [label $frm.gdico -image gico -bd 1 -relief raised]
     
     pack $check $gdico -side left
 
-	if { $opt($id,1,gridline) == ""} {
-    	$tree insert end $parent $node \
-		-text      "gridline $count" \
-		-window    $frm \
-		-drawcross auto
-	} else {
-	    $tree insert end $parent $node \
-		-text      "$opt($id,1,gridline)" \
-		-window    $frm \
-		-drawcross auto
-	}
 
-    set opt($count,1,_check) $opt($id,1,_check)
+	#insert new layer
+	if {[$tree selection get] != "" } {
+		set sellayer [$tree index [$tree selection get]]
+    } else { 
+    	set sellayer "end" 
+    }
 
-	set opt($count,1,opacity) opt($id,1,opacity)
-    set opt($count,1,gridcolor) "$opt($id,1,gridcolor)" 
-    set opt($count,1,gridborder) $opt($id,1,gridborder)
-    set opt($count,1,gridorigin)  $opt($id,1,gridorigin)
-    set opt($count,1,griddraw)  $opt($id,1,griddraw)
-    set opt($count,1,gridgeod)  $opt($id,1,gridgeod)
-    set opt($count,1,gridsize)  $opt($id,1,gridsize) 
-    set opt($count,1,borderdraw)  $opt($id,1,borderdraw)
-    set opt($count,1,rhumbdraw)  $opt($id,1,rhumbdraw)
-    set opt($count,1,rhumbcoor)  $opt($id,1,rhumbcoor)
-    set opt($count,1,rhumbcolor) $opt($id,1,rhumbcolor)
-    set opt($count,1,geoddraw)  $opt($id,1,geoddraw)
-    set opt($count,1,geodcoor)  $opt($id,1,geodcoor)
-    set opt($count,1,geodtxtcolor)  $opt($id,1,geodtxtcolor)
-    set opt($count,1,geodcolor)  $opt($id,1,geodcolor)
-    
-    set opt($count,1,rhumbdraw) 0 
-    set opt($count,1,rhumbcoor) "" 
+     $tree insert $sellayer $parent $node \
+	-text  "gridline $count"\
+	-window    $frm \
+	-drawcross auto  
 
+	set opt($count,1,opacity) $opt($id,1,opacity)
+
+	set optlist { _check gridcolor gridborder gridsize gridorigin griddraw gridgeod \
+    			borderdraw textdraw rhumbdraw rhumbcoor geoddraw geodcoor geodcolor \
+    			geodtxtcolor} 
+
+    foreach key $optlist {
+    	set opt($count,1,$key) $opt($id,1,$key)
+		set opt($count,0,$key) $opt($count,1,$key)
+    } 
+
+	# create files in tmp directory for layer output
+	set mappid [pid]
+	set lfile($count) [eval exec "g.tempfile pid=$mappid"]
+	set lfilemask($count) $lfile($count)
+	append lfile($count) ".ppm"
+	append lfilemask($count) ".pgm"
 
     incr count
     return $node

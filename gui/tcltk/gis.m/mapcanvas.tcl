@@ -397,10 +397,10 @@ proc MapCanvas::composite {mon } {
 		$can($mon) create image 0 0 -anchor nw \
 			-image "mapimg.$mon" \
 			-tag map$mon
-		GmTree::cvdisplay "root"
 		cd $currdir
 	}
 
+	GmTree::cvdisplay "root"
 	set drawprog 100
 
 	MapCanvas::coordconv $mon
@@ -842,8 +842,6 @@ proc MapCanvas::measurebind { mon } {
 	bind $can($mon) <B1-Motion> "MapCanvas::drawmline $mon %x %y"
 	bind $can($mon) <ButtonRelease-1> "MapCanvas::measure $mon"
 	
-	if { ![winfo exists .dispout]} {Gm::create_disptxt $mon}
-
     set MapCanvas::msg($mon) "Draw measure line with mouse"
 		
 	MapCanvas::setcursor $mon "pencil"
@@ -897,6 +895,7 @@ proc MapCanvas::drawmline { mon x y } {
 # measure line length
 proc MapCanvas::measure { mon } {
 	variable can
+	global gronsole
 	
     global linex1 liney1 linex2 liney2
     global mlength totmlength
@@ -918,9 +917,9 @@ proc MapCanvas::measure { mon } {
 	set mlength [expr sqrt(pow(($east1 - $east2), 2) + pow(($north1 - $north2), 2))]
 	set totmlength [expr $totmlength + $mlength]
 	
-	$dtxt insert end " --segment length\t= $mlength\n"
-	$dtxt insert end "cumulative length\t= $totmlength\n"
-	$dtxt yview end 
+	$gronsole insert end " --segment length\t= $mlength\n"
+	$gronsole insert end "cumulative length\t= $totmlength\n"
+	$gronsole yview end 
 	catch {cmd_output $fh}
 	
 	set linex1 $linex2

@@ -19,6 +19,7 @@ proc MapToolBar::create { tb } {
     global maptools
     global selclr
     global mapfile
+    global iconpath
     variable toolbar
     
     set selcolor #88aa88
@@ -29,18 +30,18 @@ proc MapToolBar::create { tb } {
     set bbox1 [ButtonBox $toolbar.bbox1 -spacing 0 -background $bgcolor ]
     
     # display
-    $bbox1 add -image [image create photo -file "$gmpath/display.gif"] \
+    $bbox1 add -image [image create photo -file "$iconpath/gui-display.gif"] \
         -command "MapCanvas::drawmap $mon 0; MapCanvas::composite $mon" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Display active layers in current region"]
 
-    $bbox1 add -image [image create photo -file "$gmpath/nviz.gif"] \
+    $bbox1 add -image [image create photo -file "$iconpath/module-nviz.gif"] \
         -command {GmGroup::nvdisplay "root"} \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Start NVIZ using active layers in current region"]
 
     # erase
-    $bbox1 add -image [image create photo -file "$gmpath/erase.gif"] \
+    $bbox1 add -image [image create photo -file "$iconpath/gui-erase.gif"] \
         -command "MapCanvas::erase $mon" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Erase to white"]
@@ -54,42 +55,42 @@ proc MapToolBar::create { tb } {
 
     # pointer
     set pointer [radiobutton $tb.pointer \
-    	-image [image create photo -file "$gmpath/pointer.gif"] \
+    	-image [image create photo -file "$iconpath/gui-pointer.gif"] \
         -command "MapCanvas::stoptool $mon" \
 		-variable maptools -value pointer \
         -indicatoron false -bg $bgcolor -selectcolor $selcolor]    
 
     # zoom in
     set zoomin [radiobutton $tb.zoomin \
-    	-image [image create photo -file "$gmpath/zoom.gif"] \
+    	-image [image create photo -file "$iconpath/gui-zoom_in.gif"] \
         -command "MapCanvas::stoptool $mon; MapCanvas::zoombind $mon 1" \
 		-variable maptools -value zoomin \
         -indicatoron false -bg $bgcolor -selectcolor $selcolor]    
     
     #zoom out
     set zoomout [radiobutton $tb.zoomout \
-		-image [image create photo -file "$gmpath/zoomout.gif"] \
+		-image [image create photo -file "$iconpath/gui-zoom_out.gif"] \
         -command "MapCanvas::stoptool $mon; MapCanvas::zoombind $mon -1" \
 		-variable maptools -value zoomout \
         -indicatoron false -bg $bgcolor -selectcolor $selcolor]    
 
     # pan
     set pan [radiobutton $tb.pan \
-		-image [image create photo -file "$gmpath/pan.gif"] \
+		-image [image create photo -file "$iconpath/gui-pan.gif"] \
         -command "MapCanvas::stoptool $mon; MapCanvas::panbind $mon" \
 		-variable maptools -value pan \
         -indicatoron false -bg $bgcolor -selectcolor $selcolor]    
 
     # query
     set query [radiobutton $tb.query \
-		-image [image create photo -file "$gmpath/query.gif"] \
+		-image [image create photo -file "$iconpath/gui-query.gif"] \
         -command "MapCanvas::stoptool $mon; MapCanvas::querybind $mon" \
 		-variable maptools -value query \
         -indicatoron false -bg $bgcolor -selectcolor $selcolor]    
 
     # measure
     set measure [radiobutton $tb.measure \
-		-image [image create photo -file "$gmpath/measure.gif"]  \
+		-image [image create photo -file "$iconpath/gui-measure.gif"]  \
     	-command "MapCanvas::stoptool $mon; MapCanvas::measurebind $mon"\
 		-variable maptools -value measure \
         -indicatoron false -bg $bgcolor -selectcolor $selcolor]    
@@ -103,25 +104,25 @@ proc MapToolBar::create { tb } {
     set bbox3 [ButtonBox $toolbar.bbox3 -background $bgcolor -spacing 0  ]
     
     # zoom.back
-    $bbox3 add -image [image create photo -file "$gmpath/zoom.back.gif"] \
+    $bbox3 add -image [image create photo -file "$iconpath/gui-zoom_back.gif"] \
         -command "MapCanvas::zoom_back $mon" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2\
         -helptext [G_msg "Return to previous zoom"]
 
     # zoom to current region  
-    $bbox3 add -image [image create photo -file "$gmpath/zoom_current.gif"] \
+    $bbox3 add -image [image create photo -file "$iconpath/gui-zoom_current.gif"] \
         -command "MapCanvas::zoom_current $mon" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Zoom to current region"]
 
     # zoom to saved region
-    $bbox3 add -image [image create photo -file "$gmpath/zoom_region.gif"] \
+    $bbox3 add -image [image create photo -file "$iconpath/gui-zoom_region.gif"] \
         -command "MapCanvas::zoom_region $mon" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Zoom to saved region"]
 
     # zoom to default region  
-    $bbox3 add -image [image create photo -file "$gmpath/zoom_default.gif"] \
+    $bbox3 add -image [image create photo -file "$iconpath/gui-zoom_default.gif"] \
         -command "MapCanvas::zoom_default $mon" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Zoom to default region"]
@@ -134,13 +135,13 @@ proc MapToolBar::create { tb } {
     # FILE & PRINT
     set bbox4 [ButtonBox $toolbar.bbox4 -spacing 0 -background $bgcolor ]
 
-    $bbox4 add -image [image create photo -file "$gmpath/print.gif"]  \
+    $bbox4 add -image [image create photo -file "$iconpath/file-print.gif"]  \
     	-command "MapCanvas::printcanvas $mon" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Print raster & vector maps to eps file"]
 
 	set mapsave [menubutton $tb.mapsave  \
-		-image [image create photo -file "$gmpath/save.gif"] \
+		-image [image create photo -file "$iconpath/file-save.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -bg $bgcolor -width 28 -indicatoron 1 -direction below]
 

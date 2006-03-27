@@ -38,7 +38,7 @@ proc GmChart::create { tree parent } {
                            -variable GmChart::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
-    image create photo chartico -file "$iconpath/module-d.chart.gif"
+    image create photo chartico -file "$iconpath/module-d.vect.chart.gif"
     set ico [label $frm.ico -image chartico -bd 1 -relief raised]
     
     pack $check $ico -side left
@@ -427,7 +427,7 @@ proc GmChart::duplicate { tree parent node id } {
                            -variable GmChart::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
-    image create photo chartico -file "$iconpath/module-d.chart.gif"
+    image create photo chartico -file "$iconpath/module-d.vect.chart.gif"
     set ico [label $frm.ico -image chartico -bd 1 -relief raised]
     
     pack $check $ico -side left
