@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
     struct start_pt *pres_stop_pt = NULL;
 
     void *ptr2;
-    RASTER_MAP_TYPE dtm_data_type, data_type2, cost_data_type, cum_data_type;
+    RASTER_MAP_TYPE dtm_data_type, data_type2, cost_data_type, cum_data_type, cat;
     double peak = 0.0;
     int dtm_dsize, cost_dsize;
 
@@ -368,10 +368,9 @@ int main(int argc, char *argv[])
 	FILE *fp;
 	struct start_pt *new_start_pt;
 	Site *site = NULL;	/* pointer to Site */
-	search_mapset = "";
-	RASTER_MAP_TYPE cat;
 	int dims, strs, dbls;
 
+	search_mapset = "";
 	search_mapset = G_find_sites(opt7->answer, "");
 	if (search_mapset == NULL)
 	    G_fatal_error(_("Can't find starting vector %s "), opt7->answer);
@@ -415,10 +414,9 @@ int main(int argc, char *argv[])
 	FILE *fp;
 	struct start_pt *new_start_pt;
 	Site *site = NULL;	/* pointer to Site */
-	search_mapset = "";
-	RASTER_MAP_TYPE cat;
 	int dims, strs, dbls;
 
+	search_mapset = "";
 	search_mapset = G_find_sites(opt8->answer, "");
 	if (search_mapset == NULL)
 	    G_fatal_error(_("Can't find stop vector %s"), opt8->answer);
