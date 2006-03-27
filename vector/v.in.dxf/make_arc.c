@@ -15,12 +15,11 @@ int make_arc(int offset,	/* offset into array of points */
     int i;
 
     arr_size = offset;
-    printf
-	("making arc: offset %d  x %.1f y %.1f rad %.1f a1 %.1f a2 %.1f  %d\n",
-	 offset, centerx, centery, radius, start_angle, finish_angle, flag);
+    fprintf(stderr,
+	    "making arc: offset %d  x %.1f y %.1f rad %.1f a1 %.1f a2 %.1f  %d\n",
+	    offset, centerx, centery, radius, start_angle, finish_angle, flag);
     if (start_angle > finish_angle)
 	finish_angle = 360. + finish_angle;
-
     /* negative radius indicates that arc is to be drawn in a clockwise
      * direction from start_angle to finish_angle
      */
@@ -75,24 +74,18 @@ int make_arc(int offset,	/* offset into array of points */
 	zpnts = (double *)G_realloc(zpnts, ARR_MAX * sizeof(double));
     }
     arr_size++;
-
     /* need to check extent of plotted arcs and circles */
     if (flag)			/* for an arc */
 	for (i = offset; i < arr_size; i++)
 	    check_ext(xpnts[i], ypnts[i]);
-
     else {			/* for a circle */
 
 	extcirclx[0] = centerx + radius;
 	extcircly[0] = extcircly[2] = centery;
-
 	extcirclx[1] = extcirclx[3] = centerx;
 	extcircly[1] = centery - radius;
-
 	extcirclx[2] = centerx - radius;
-
 	extcircly[3] = centery + radius;
-
 	for (i = 0; i < 4; i++)
 	    check_ext(extcirclx[i], extcircly[i]);
     }
