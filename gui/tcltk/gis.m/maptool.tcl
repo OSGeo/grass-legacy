@@ -180,6 +180,7 @@ proc MapToolBar::savefile { type quality } {
 	global env
 	global mon
 	global outfile
+	global tmpdir
 	
 
 	if { [info exists HOME] } {
@@ -190,8 +191,12 @@ proc MapToolBar::savefile { type quality } {
 		set path [tk_getSaveFile  \
 			 -title "Save file: do not add extension to file name"]
 	}
+	set currdir [pwd]
+	cd $tmpdir
+
 	file copy -force $outfile($mon) $path.ppm
-	puts "path is $path"
+
+	cd $currdir
 	
 	if { $path != "" } {				
 		switch $type {
