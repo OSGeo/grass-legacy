@@ -17,8 +17,8 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
     int layer_flag = 0;		/* INDICATES IF A LAYER NAME HAS BEEN FOUND */
     int polyline_flag = 0;	/* INDICATES THE TYPE OF POLYLINE */
     int nu_layer_flag = 1;	/* INDICATES IF A nu_layer WAS FOUND */
-    int fprintf_flag66 = 1;	/* INDICATES IF ERROR MESSAGE PRINTED ONCE */
-    int fprintf_flag70 = 1;	/* INDICATES IF ERROR MESSAGE PRINTED ONCE */
+    int warn_flag66 = 1;	/* INDICATES IF ERROR MESSAGE PRINTED ONCE */
+    int warn_flag70 = 1;	/* INDICATES IF ERROR MESSAGE PRINTED ONCE */
     int vert_flag;		/* INDICATES THAT VERTICES ARE FOLLOWING */
     int xflag = 0;		/* INDICATES IF A x VALUE HAS BEEN FOUND */
     int yflag = 0;		/* INDICATES IF A y VALUE HAS BEEN FOUND */
@@ -50,9 +50,9 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 	case 66:		/* FLAG BIT VALUE MEANING VERTICES FOLLOW FLAG */
 	    vert_flag = atoi(dxf_buf);
 	    if (vert_flag != 1)	/* flag must always be 1 */
-		if (fprintf_flag66) {
-		    fprintf(stderr, _("TEXT: vertices following flag missing"));
-		    fprintf_flag66 = 0;
+		if (warn_flag66) {
+		    G_warning(_("TEXT: vertices following flag missing"));
+		    warn_flag66 = 0;
 		}
 	    /* NOTE: WARNING PRINTED ONLY */
 	    break;
@@ -64,9 +64,9 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 	     */
 	    /* NOTE: CODE ONLY EXISTS FOR FLAG = 1 (CLOSED POLYLINE) or 0 */
 	    if (polyline_flag & 8 || polyline_flag & 16 || polyline_flag & 32)
-		if (fprintf_flag70) {
-		    fprintf(stderr, "WARNING: 3-d data in dxf file\n");
-		    fprintf_flag70 = 0;
+		if (warn_flag70) {
+		    G_warning(_("WARNING: 3-d data in dxf file"));
+		    warn_flag70 = 0;
 		}
 	    break;
 
@@ -110,9 +110,8 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 		    }
 		    else if (strcmp(dxf_buf, layername) != 0 &&
 			     nu_layer_flag == 1) {
-			fprintf(stderr,
-				"ERROR: layer name %s listed but not used \n",
-				dxf_buf);
+			G_warning(_("ERROR: layer name %s listed but not used"),
+				  dxf_buf);
 			nu_layer_flag = 0;	/* so ERROR only printed once */
 		    }
 		    break;
