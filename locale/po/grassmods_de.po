@@ -7215,7 +7215,7 @@ msgstr "Durchzuführende Operation"
 
 #: ../raster/r.series/main.c:122
 msgid "Propagate NULLs"
-msgstr "Vermehre NULLs"
+msgstr "Reiche NULLs durch"
 
 #: ../raster/r.series/main.c:138
 #, c-format
