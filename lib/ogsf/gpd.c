@@ -154,6 +154,7 @@ int gs_point_in_region(geosurf * gs, float *pt, float *region)
 void gpd_obj(geosurf * gs, int color, float size, int marker, Point3 pt)
 {
     float sz, lpt[3];
+    float siz[3];
 
     gsd_color_func(color);
     sz = GS_global_exag();
@@ -170,7 +171,6 @@ void gpd_obj(geosurf * gs, int color, float size, int marker, Point3 pt)
 	    gsd_scale(1.0, 1.0, 1. / sz);
 	}
 
-	float siz[3];
 	siz[0] = _cur_size_;
 	siz[1] = _cur_size_;
 	siz[2] = size;

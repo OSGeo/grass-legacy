@@ -58,16 +58,16 @@ void source_to_target (double srx, double sry, double *trx, double *try )
 
 void auto_zoom (void )
 {
-    if (autozoom_off) return;
-
-    Compute_ortho_equation();
-    if (group.con_equation_stat <= 0 ) return;
-
     double srx, sry; /* source raster */
     double trx, try; /* target raster */
     int vx, vy;
     double trl, trr;
     double width, magnific;
+
+    if (autozoom_off) return;
+
+    Compute_ortho_equation();
+    if (group.con_equation_stat <= 0 ) return;
 
     /* Calc scale for target */
     sry = VIEW_MAP1_ZOOM->cell.head.north; 
