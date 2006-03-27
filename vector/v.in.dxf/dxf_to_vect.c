@@ -26,8 +26,8 @@
 #include "global.h"
 
 #ifndef DBL_MAX
-#define DBL_MAX		9999999999999999999999.9
-#define DBL_MIN		-99999999999999999999.9
+#define DBL_MAX 9999999999999999999999.9
+#define DBL_MIN -99999999999999999999.9
 #endif
 
 static void make_head(struct Map_info *);

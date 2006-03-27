@@ -15,9 +15,9 @@ struct dxf_file
     int percent;
 };
 
-#define ARR_INCR	256
+#define ARR_INCR 256
 
-#define UNIDENTIFIED_LAYER	"UNIDENTIFIED"
+#define UNIDENTIFIED_LAYER "UNIDENTIFIED"
 
 #ifdef _MAIN_C_
 #define GLOBAL
