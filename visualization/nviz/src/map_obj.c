@@ -1919,11 +1919,11 @@ int unset_att(int id, int type, Tcl_Interp * interp, int argc, char *argv[])
 {
     int att;
 
-    att = att_atoi(argv[2]);
-    
 /*** ACS_MODIFY 1.0 BEGIN - site_attr management *******************************/
     int col, width, marker, useatt;
-	float size;
+    float size;
+
+    att = att_atoi(argv[2]);
 
 	if (type == SITE) {
 		if (!strcmp(argv[2], "useatt") && argc == 5) {
