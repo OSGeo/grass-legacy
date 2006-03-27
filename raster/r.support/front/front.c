@@ -27,6 +27,10 @@
 *
 **********************************************************************/
 
+/* two less than lib/gis/put_title.c  G_put_cell_title()
+    if only one less a newline gets appended in the cats file. bug? */
+#define MAX_TITLE_LEN 1022
+
 int main(int argc, char *argv[])
 {
     char *rname   = NULL;	/* Reclassed map name */
@@ -34,13 +38,14 @@ int main(int argc, char *argv[])
     char *mapset;		/* Raster mapset      */
     struct Cell_head cellhd;
     struct GModule *module;
-    struct Option *raster;
+    struct Option *raster, *title_opt, *history_opt;
     char element[255];
     char buf[512];
     int cellhd_ok;		/* Is cell header OK? */
     int is_reclass;		/* Is raster reclass? */
     char *infile;
-
+    char title[MAX_TITLE_LEN+1];
+    struct History hist;
 
     /* Initialize GIS engine */
     G_gisinit(argv[0]);
@@ -53,9 +58,23 @@ int main(int argc, char *argv[])
     raster->key = "map";
     raster->required = YES;
 
+    title_opt = G_define_option();
+    title_opt->key = "title";
+    title_opt->key_desc   = "\"phrase\"";
+    title_opt->type        = TYPE_STRING;
+    title_opt->required    = NO;
+    title_opt->description = _("Text to use for new map title");
+
+    history_opt = G_define_option();
+    history_opt->key = "history";
+    history_opt->key_desc   = "\"phrase\"";
+    history_opt->type        = TYPE_STRING;
+    history_opt->required    = NO;
+    history_opt->description = _("Text to append to the next line of the map's metadata file");
+
     /* Parse command-line options */
     if (G_parser(argc,argv))
-        exit(1);
+	exit(EXIT_FAILURE);
 
     /* Make sure raster exists and set mapset */
     infile = raster->answer;
@@ -65,6 +84,39 @@ int main(int argc, char *argv[])
 
     cellhd_ok = (G_get_cellhd(raster->answer, mapset, &cellhd) >= 0);
     is_reclass = (G_is_reclass(raster->answer, mapset, rname, rmapset) > 0);
+
+    if(title_opt->answer) {
+	strncpy(title, title_opt->answer, MAX_TITLE_LEN);
+	title[MAX_TITLE_LEN] = '\0'; /* strncpy doesn't null terminate oversized input */
+	G_strip(title);
+	G_debug(3, "map title= [%s]  (%d chars)", title, strlen(title));
+	G_put_cell_title(raster->answer, title);
+
+	if(! history_opt->answer)
+	    exit(EXIT_SUCCESS);
+    }
+
+    if(history_opt->answer) {
+	G_read_history (raster->answer, mapset, &hist);
+
+	if(hist.edlinecnt >= MAXEDLINES)
+	    G_fatal_error(_("Not enough room in history file."));
+
+	/* two less than defined as if only one less a newline gets appended in the hist file. bug? */
+	if(strlen(history_opt->answer) > RECORD_LEN -2)
+	    G_warning(_("History line too long: truncating to %d characters"), RECORD_LEN-2);
+
+	strncpy(hist.edhist[hist.edlinecnt], history_opt->answer, RECORD_LEN-2);
+	 /* strncpy doesn't null terminate oversized input */
+	hist.edhist[hist.edlinecnt][RECORD_LEN-2] = '\0';
+
+	G_debug(4, "new history line= [%s]  (%d chars)", 
+	  hist.edhist[hist.edlinecnt], strlen(hist.edhist[hist.edlinecnt]) );
+
+	hist.edlinecnt++;
+	G_write_history(raster->answer, &hist);
+	exit(EXIT_SUCCESS);
+    }
 
     /* Cell header */
     sprintf(buf, _("Edit header for [%s]? "), raster->answer);
