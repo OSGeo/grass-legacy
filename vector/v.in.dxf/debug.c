@@ -4,26 +4,21 @@
 
 static int debug_on = 0;
 
-int debuginit(void)
+void debug_init(void)
 {
+    debug_on = (getenv("DEBUG") != NULL);
 
-    if (getenv("DEBUG") != NULL)
-	debug_on = 1;
-    else
-	debug_on = 0;
-
-    return 0;
+    return;
 }
 
-int debugf(char *format, ...)
+void debug_msg(char *format, ...)
 {
     va_list a;
 
     va_start(a, format);
     if (debug_on)
 	vfprintf(stderr, format, a);
-
     va_end(a);
 
-    return 0;
+    return;
 }

@@ -1,213 +1,125 @@
-/*
- * $Id$
- *
- * 2006-MAR-24 ported to GRASS 6 by Huidae Cho <grass4u@gmail.com>
- *
- * 2001-APR-19 change from Michel Wurtz <michel.wurtz@teledetection.fr>
- *             Cleaning and merge diffs from v.in.dxf2
- *
- * 1998-SEP-30 added -n flag to suppress text boxes
- *      Benjamin Horner-Johnson <ben@earth.nwu.edu>
- *
- * 1/28/98 change from Jacques Bouchard <bouchard@onera.fr>
- *
- *  Original written by Chuck Ehlshlaeger  6/89
- *  Revised by Dave Gerdes  12/89
- *  US Army Construction Engineering Research Lab
- */
 
-#define MAIN
+/*******************************************************************************
+ *
+ * MODULE:       v.in.dxf
+ *
+ * AUTHOR(S):    Original written by Chuck Ehlschlaeger, 6/89
+ * 		 Revised by Dave Gerdes, 12/89
+ * 		 US Army Construction Engineering Research Lab
+ *
+ * 		 Contribution:
+ * 		 Benjamin Horner-Johnson <ben@earth.nwu.edu>
+ * 		 Michel Wurtz <michel.wurtz@eledetection.fr>
+ * 		 Jacques Bouchard <bouchard@onera.fr>
+ * 		 J Moorman
+ *
+ * 		 Rewrite for GRASS 6.0:
+ * 		 Huidae Cho <grass4u@gmail.com>
+ *
+ * PURPOSE:      Import DXF file
+ *
+ * COPYRIGHT:    CORRECT ME!
+ *
+ ******************************************************************************/
+
+#define _MAIN_C_
 #include <stdlib.h>
 #include <string.h>
 #include "global.h"
 
-static int extra_help(void);
-
-/* TODO */
-#if 0
-int all_lines = 1;		/* dump ALL lines unless user override */
-int all_atts = 1;		/* dump ALL atts  unless user override */
-#endif
-
 int main(int argc, char *argv[])
 {
-    FILE *dxf_fp;
-    char *p;
-    int i;
-    char *out_name = NULL;
-#ifdef LABEL
-    struct Option *old_opt, *line_opt, *labl_opt, *prefix_opt;
-    struct Flag *txtbox_flag;
-#else
-    struct Option *old_opt, *line_opt, *prefix_opt;
-#endif
+    struct dxf_file *dxf;
+    struct Map_info *Map;
+    char *output_name;
+
     struct GModule *module;
+    struct
+    {
+	struct Flag *table;
+    } flag;
+    struct
+    {
+	struct Option *input;
+	struct Option *output;
+    } opt;
 
     G_gisinit(argv[0]);
 
     module = G_define_module();
     module->description =
-	"Converts files in DXF format to GRASS vector file format.";
+	_("Converts files in DXF format to GRASS vector file format.");
 
-#ifdef LABEL
-    txtbox_flag = G_define_flag();
-    txtbox_flag->key = 'n';
-    txtbox_flag->description = "Suppress drawing of text outlines";
-#endif
+    flag.table = G_define_flag();
+    flag.table->key = 't';
+    flag.table->description = _("Do not create attribute tables");
 
-    old_opt = G_define_option();
-    old_opt->key = "input";
-    old_opt->type = TYPE_STRING;
-    old_opt->required = YES;
-    old_opt->multiple = NO;
-    old_opt->gisprompt = "file,file,file";
-    old_opt->description = "DXF input file";
+    opt.input = G_define_option();
+    opt.input->key = "input";
+    opt.input->type = TYPE_STRING;
+    opt.input->required = YES;
+    opt.input->multiple = NO;
+    opt.input->gisprompt = "file,file,file";
+    opt.input->description = _("DXF input file");
 
-    line_opt = G_define_option();
-    line_opt->key = "lines";
-    line_opt->type = TYPE_STRING;
-    line_opt->required = NO;
-    line_opt->multiple = YES;
-    line_opt->description = "DXF layers with line data";
+    opt.output = G_define_option();
+    opt.output->key = "output";
+    opt.output->type = TYPE_STRING;
+    opt.output->required = NO;
+    opt.output->multiple = NO;
+    opt.output->description = _("Name of output vector map");
 
-#ifdef LABEL
-    labl_opt = G_define_option();
-    labl_opt->key = "labels";
-    labl_opt->type = TYPE_STRING;
-    labl_opt->required = NO;
-    labl_opt->multiple = YES;
-    labl_opt->description = "DXF layers with label data";
-#endif
-
-    prefix_opt = G_define_option();
-    prefix_opt->key = "prefix";
-    prefix_opt->type = TYPE_STRING;
-    prefix_opt->required = NO;
-    prefix_opt->multiple = NO;
-    prefix_opt->description = "Prefix for output files";
-
-    if (G_parser(argc, argv)) {
-	/* do not print extra help when --... option is given */
-	if (argv[1] && argv[1][1] != '-')
-	    extra_help();
+    if (G_parser(argc, argv))
 	exit(-1);
-    }
 
-#ifdef LABEL
-    txtbox = txtbox_flag->answer;
-    if (txtbox)
-	fprintf(stderr, "text boxes will not be drawn\n");
-#endif
+    debug_init();
 
-    dxf_file = old_opt->answer;
-    if (prefix_opt->answer != NULL)
-	out_name = G_store(prefix_opt->answer);
+    flag_table = flag.table->answer;
 
-    /*DEBUG
-     * if (out_name != NULL)
-     * fprintf (stderr, "out = '%s'\n", out_name);
-     * else
-     * fprintf (stderr, "out = NULL\n");
-     * * */
+    /* open DXF file */
+    if (!(dxf = dxf_open(opt.input->answer)))
+	G_fatal_error(_("%s: Cannot open dxf file"), opt.input->answer);
 
-    debuginit();
-
-    /*process line and label arguments */
-    if (line_opt->answers != NULL) {
-	i = 0;
-	while (line_opt->answers[i]) {
-	    add_line_layer(line_opt->answers[i++]);
-	    from_table = 1;
-	}
-    }
-
-#if LABEL
-    if (labl_opt->answers != NULL) {
-	i = 0;
-	while (labl_opt->answers[i]) {
-	    add_att_layer(labl_opt->answers[i++]);
-	    from_table = 1;
-	}
-    }
-#endif
-
-
-    if (dxf_file == NULL) {
-	fprintf(stderr, "%s: Command line error.\n\n", argv[0]);
-	G_usage();
-	exit(-1);
-    }
-
-    if ((dxf_fp = fopen(dxf_file, "r")) == NULL) {
-	fprintf(stderr, "\ncannot open [%s] for dxf file\n", dxf_file);
-	exit(-2);
-    }
-
-    /* check the number of lines in the file so big_percent can be used while
-     * program is running
-     */
-    fseek(dxf_fp, 0L, 2);
-    file_size = ftell(dxf_fp);
-    rewind(dxf_fp);
-    fprintf(stderr, "\nCONVERSION OF %s TO DIG FILE:  ", dxf_file);
-    if (file_size < 500000)
-	percent = 10;
-    else if (file_size < 800000)
-	percent = 5;
-    else
-	percent = 2;
-    /* initializing variables inside big_percent */
-    big_percent(0, file_size, percent);
-
-    /* make base_name from name of dxf file.  This will be used as
-     * the prefix for all layers that are created to avoid layer name
-     * conflicts between dxf files
-     */
-    if (out_name != NULL)
-	strcpy(base_name, out_name);
+    /* make vector file name SQL compliant */
+    if (opt.output->answer)
+	output_name = G_store(opt.output->answer);
     else {
-	p = G_rindex(dxf_file, '/');
-	if (p == NULL)
-	    p = dxf_file;
-	else
+	char *p, *p2;
+
+	if ((p = G_rindex(dxf->name, '/')))
 	    p++;
-	strcpy(base_name, p);
-	if (NULL != (p = G_rindex(base_name, '.')))
-	    if (p != base_name)
-		*p = '\0';	/* knock off any suffix */
+	else
+	    p = dxf->name;
+	output_name = G_store(p);
+	if ((p2 = G_rindex(p, '.')))
+	    output_name[p2 - p] = 0;
+    }
+    {
+	char *p;
+
+	for (p = output_name; *p; p++)
+	    if (*p == '.')
+		*p = '_';
     }
 
-    init_chars();
+    if (Vect_legal_filename(output_name) < 0)
+	G_fatal_error(_("Use output= option to change vector map name"));
 
-    Points = Vect_new_line_struct();
-    create_layers(dxf_fp);
-    Vect_destroy_line_struct(Points);
+    /* create vector file */
+    Map = (struct Map_info *)G_malloc(sizeof(struct Map_info));
+    if (Vect_open_new(Map, output_name, 1) < 0)
+	G_fatal_error(_("%s: Cannot open new vector file"), output_name);
 
-    fclose(dxf_fp);
+    Vect_set_map_name(Map, output_name);
+    G_free(output_name);
 
-    /* NOTE:  examples of dxf files with inaccurate information
-     * have led us not to use the EXTMIN and EXTMAX information
-     * found in the HEAD SECTION of a dxf file
-     */
+    Vect_hist_command(Map);
 
-    fprintf(stderr, "Following DXF layers found:\n");
-    for (i = 0; i < num_open_layers; i++)
-	fprintf(stderr, "Layer %d %s_%s\n", i + 1, base_name, layers[i].name);
+    /* import */
+    dxf_to_vect(dxf, Map);
+
+    dxf_close(dxf);
+    Vect_close(Map);
 
     exit(0);
-}
-
-static int extra_help(void)
-{
-#ifdef LABEL
-    fprintf(stderr, "\n\nwhere lines and labels are one or more of:\n\n");
-#else
-    fprintf(stderr, "\n\nwhere lines are one or more of:\n\n");
-#endif
-    fprintf(stderr, "    layername1[,layername2,layername3,...]\n\n");
-    fprintf(stderr, "and/or\n\n");
-    fprintf(stderr,
-	    "    in_layername1:out_layername1[,inlayername2:outlayername2,.....]\n\n");
-
-    return 0;
 }

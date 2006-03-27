@@ -1,4 +1,4 @@
-/* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_line */
+/* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_buf */
 /* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char layername */
 /* written by J Moorman
  * 7/23/90
@@ -11,71 +11,62 @@
 #define POLYFLAG1 1
 #define DEG_TO_RAD (M_PI/180.0)
 
-int add_polyline(FILE * dxf_file)
+int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 {
-    /* DECLARING VARIABLES */
+    int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
     int layer_flag = 0;		/* INDICATES IF A LAYER NAME HAS BEEN FOUND */
-    int vert_flag;		/* INDICATES THAT VERTICES ARE FOLLOWING */
     int polyline_flag = 0;	/* INDICATES THE TYPE OF POLYLINE */
+    int nu_layer_flag = 1;	/* INDICATES IF A nu_layer WAS FOUND */
+    int fprintf_flag66 = 1;	/* INDICATES IF ERROR MESSAGE PRINTED ONCE */
+    int fprintf_flag70 = 1;	/* INDICATES IF ERROR MESSAGE PRINTED ONCE */
+    int vert_flag;		/* INDICATES THAT VERTICES ARE FOLLOWING */
     int xflag = 0;		/* INDICATES IF A x VALUE HAS BEEN FOUND */
     int yflag = 0;		/* INDICATES IF A y VALUE HAS BEEN FOUND */
     int zflag = 0;		/* INDICATES IF A z VALUE HAS BEEN FOUND */
-    int nu_layer_flag = 1;	/* INDICATES IF A nu_layer WAS FOUND */
-    int fprintf_flag1 = 1;	/* INDICATES IF ERROR MESSAGE PRINTED ONCE */
-    int fprintf_flag2 = 1;	/* INDICATES IF ERROR MESSAGE PRINTED ONCE */
     int arr_size = 0;
     int arc_arr_size = 0;
+    char layername[256];
     double x1, x2, y1, y2, cent_y, cent_x, rad, beta, half_alpha;
     float ang1, ang2;
     /* variables to create arcs */
     double bulge = 0.0;		/* for arc curves */
     double prev_bulge = 0.0;	/* for arc curves */
     double arc_tan = 0.0;	/* for arc curves */
-    char *nolayername = "UNIDENTIFIED";
-    char layername[256];
-    struct dxf_dig *layer_fd = NULL;	/* POINTER TO LAYER NAME */
-    int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
+
+    strcpy(layername, UNIDENTIFIED_LAYER);
 
     /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
-
-    while ((code = dxf_readcode(dxf_file)) != 0) {
-	if (code == -2)		/* EOF */
-	    return 0;
-	dxf_fgets(dxf_line, 256, dxf_file);
-	if (feof(dxf_file) != 0)	/* EOF */
-	    return 0;
+    while ((code = dxf_readcode(dxf)) != 0) {
+	if (code == -2 || !dxf_fgets(dxf_buf, 256, dxf))
+	    return -1;
 
 	switch (code) {
 	case 8:
-	    if (!layer_flag) {
-		layer_fd = which_layer(dxf_line, DXF_ASCII);
-		if (layer_fd == NULL)
-		    return 0;
-		strcpy(layername, dxf_line);
+	    if (!layer_flag && *dxf_buf) {
+		strcpy(layername, dxf_buf);
 		layer_flag = 1;
 	    }
 	    break;
 	case 66:		/* FLAG BIT VALUE MEANING VERTICES FOLLOW FLAG */
-	    vert_flag = atoi(dxf_line);
+	    vert_flag = atoi(dxf_buf);
 	    if (vert_flag != 1)	/* flag must always be 1 */
-		if (fprintf_flag1) {
-		    fprintf(stderr, "TEXT: vertices following flag missing");
-		    fprintf_flag1 = 0;
+		if (fprintf_flag66) {
+		    fprintf(stderr, _("TEXT: vertices following flag missing"));
+		    fprintf_flag66 = 0;
 		}
 	    /* NOTE: WARNING PRINTED ONLY */
 	    break;
 	case 70:		/* POLYLINE FLAGS */
-	    polyline_flag = atoi(dxf_line);
-
+	    polyline_flag = atoi(dxf_buf);
 	    /* polyline flag is 1 for closed polyline
 	     * 2 curve fit vertices have been added
 	     * 4 spline fit vertices have been added
 	     */
 	    /* NOTE: CODE ONLY EXISTS FOR FLAG = 1 (CLOSED POLYLINE) or 0 */
 	    if (polyline_flag & 8 || polyline_flag & 16 || polyline_flag & 32)
-		if (fprintf_flag2) {
+		if (fprintf_flag70) {
 		    fprintf(stderr, "WARNING: 3-d data in dxf file\n");
-		    fprintf_flag2 = 0;
+		    fprintf_flag70 = 0;
 		}
 	    break;
 
@@ -98,58 +89,51 @@ int add_polyline(FILE * dxf_file)
 	    break;
 	}
     }
-    dxf_fgets(dxf_line, 256, dxf_file);
-    zinfo[0] = 0.0;
-    while (strcmp(dxf_line, seqend) != 0) {	/* LOOP UNTIL SEQEND IN THE DXF FILE */
-	if (feof(dxf_file) != 0)	/* EOF */
-	    return 0;
-	if (strcmp(dxf_line, vertex) == 0) {
+
+    zpnts[0] = 0.0;
+    dxf_fgets(dxf_buf, 256, dxf);
+    while (strcmp(dxf_buf, "SEQEND") != 0) {	/* LOOP UNTIL SEQEND IN THE DXF FILE */
+	if (feof(dxf->fp))	/* EOF */
+	    return -1;
+	if (strcmp(dxf_buf, "VERTEX") == 0) {
 	    xflag = 0;
 	    yflag = 0;
-	    while ((code = dxf_readcode(dxf_file)) != 0) {
-		if (code == -2)	/* EOF */
-		    return 0;
-		dxf_fgets(dxf_line, 256, dxf_file);
-		if (feof(dxf_file) != 0)	/* EOF */
-		    return 0;
+	    zflag = 0;
+	    while ((code = dxf_readcode(dxf)) != 0) {
+		if (code == -2 || !dxf_fgets(dxf_buf, 256, dxf))	/* EOF */
+		    return -1;
 		switch (code) {
 		case 8:	/* LAYER NAMES ARE INCLUDED IN VERTEX ENTITY */
-		    if (!layer_flag) {	/* IF NO LAYER PREVIOUSLY ASSIGNED */
-			layer_fd = which_layer(dxf_line, DXF_ASCII);
-			if (layer_fd == NULL)
-			    return 0;
-			strcpy(layername, dxf_line);
+		    if (!layer_flag && *dxf_buf) {	/* IF NO LAYER PREVIOUSLY ASSIGNED */
+			strcpy(layername, dxf_buf);
 			layer_flag = 1;
 		    }
-		    else	/* COMPARING layer_fd IN POLYLINE ENTITY */
-			layer_fd = which_layer(dxf_line, DXF_ASCII);
-		    if (layer_fd == NULL)
-			return 0;
-		    if (strcmp(dxf_line, layername) != 0 && nu_layer_flag == 1) {
+		    else if (strcmp(dxf_buf, layername) != 0 &&
+			     nu_layer_flag == 1) {
 			fprintf(stderr,
 				"ERROR: layer name %s listed but not used \n",
-				dxf_line);
+				dxf_buf);
 			nu_layer_flag = 0;	/* so ERROR only printed once */
 		    }
 		    break;
 		case 10:	/* x COORDINATE */
-		    xinfo[arr_size] = atof(dxf_line);
+		    xpnts[arr_size] = atof(dxf_buf);
 		    xflag = 1;
 		    break;
 		case 20:	/* y COORDINATE */
-		    yinfo[arr_size] = atof(dxf_line);
+		    ypnts[arr_size] = atof(dxf_buf);
 		    yflag = 1;
 		    break;
 		case 30:	/* Z COORDINATE */
-		    zinfo[arr_size] = atof(dxf_line);
+		    zpnts[arr_size] = atof(dxf_buf);
 		    zflag = 1;
 		    break;
 		case 42:	/* bulge */
-		    bulge = atof(dxf_line);
+		    bulge = atof(dxf_buf);
 		    break;
 		case 50:	/* curve fit tangent */
 		case 70:	/* vertex flags */
-		    if (atoi(dxf_line) == 16) {
+		    if (atoi(dxf_buf) == 16) {
 			/* spline frame control point: don't draw it! */
 			xflag = 0;
 			yflag = 0;
@@ -162,6 +146,7 @@ int add_polyline(FILE * dxf_file)
 		}
 	    }
 	}
+
 	if (xflag == 1 && yflag == 1) {
 	    /* if prev segment is an arc  (prev_bulge != 0) prepare to make arc */
 	    if (prev_bulge > 0.0)
@@ -170,36 +155,35 @@ int add_polyline(FILE * dxf_file)
 		arc_tan = (-1.0) * prev_bulge;
 
 	    if (arc_tan == 0.0) {	/* straight line segment */
-		check_ext(xinfo[arr_size], yinfo[arr_size]);
+		check_ext(xpnts[arr_size], ypnts[arr_size]);
 		if (arr_size >= ARR_MAX - 1) {
 		    ARR_MAX += ARR_INCR;
-		    xinfo =
-			(double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
-		    yinfo =
-			(double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
-		    zinfo =
-			(double *)G_realloc(zinfo, ARR_MAX * sizeof(double));
+		    xpnts =
+			(double *)G_realloc(xpnts, ARR_MAX * sizeof(double));
+		    ypnts =
+			(double *)G_realloc(ypnts, ARR_MAX * sizeof(double));
+		    zpnts =
+			(double *)G_realloc(zpnts, ARR_MAX * sizeof(double));
 		}
 		arr_size++;
 	    }
-	    else if (!
-		     (xinfo[arr_size - 1] == xinfo[arr_size] &&
-		      yinfo[arr_size - 1] == yinfo[arr_size]))
+	    else if (!(xpnts[arr_size - 1] == xpnts[arr_size] &&
+		       ypnts[arr_size - 1] == ypnts[arr_size]))
 		/* make an arc */
 	    {
 		/* compute cent_x, cent_y, ang1, ang2 */
 		if (prev_bulge > 0.0) {
-		    x1 = xinfo[arr_size - 1];
-		    x2 = xinfo[arr_size];
-		    y1 = yinfo[arr_size - 1];
-		    y2 = yinfo[arr_size];
+		    x1 = xpnts[arr_size - 1];
+		    x2 = xpnts[arr_size];
+		    y1 = ypnts[arr_size - 1];
+		    y2 = ypnts[arr_size];
 		}
 		else {
 		    /* figure out how to compute the opposite center */
-		    x2 = xinfo[arr_size - 1];
-		    x1 = xinfo[arr_size];
-		    y2 = yinfo[arr_size - 1];
-		    y1 = yinfo[arr_size];
+		    x2 = xpnts[arr_size - 1];
+		    x1 = xpnts[arr_size];
+		    y2 = ypnts[arr_size - 1];
+		    y1 = ypnts[arr_size];
 		}
 		half_alpha = (double)atan(arc_tan) * 2.;
 		rad = hypot(x1 - x2, y1 - y2) * .5 / sin(half_alpha);
@@ -241,58 +225,57 @@ int add_polyline(FILE * dxf_file)
 		arr_size--;	/* disregard last 2 points */
 		if (prev_bulge < 0.0)
 		    arc_arr_size = make_arc(arr_size, cent_x, cent_y,
-					    -rad, ang2, ang1, zinfo[0], 1);
+					    -rad, ang2, ang1, zpnts[0], 1);
 		/* arc is going in clockwise direction from x2 to x1 */
 		else
 
 		    arc_arr_size = make_arc(arr_size, cent_x, cent_y,
-					    rad, ang1, ang2, zinfo[0], 1);
+					    rad, ang1, ang2, zpnts[0], 1);
 		arr_size += arc_arr_size;
 		while (arr_size >= ARR_MAX) {
 		    ARR_MAX += ARR_INCR;
-		    xinfo =
-			(double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
-		    yinfo =
-			(double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
-		    zinfo =
-			(double *)G_realloc(zinfo, ARR_MAX * sizeof(double));
+		    xpnts =
+			(double *)G_realloc(xpnts, ARR_MAX * sizeof(double));
+		    ypnts =
+			(double *)G_realloc(ypnts, ARR_MAX * sizeof(double));
+		    zpnts =
+			(double *)G_realloc(zpnts, ARR_MAX * sizeof(double));
 		}
 	    }			/* arc */
 	    prev_bulge = bulge;
 	    arc_tan = 0.0;
 	    bulge = 0.0;
 	}			/* processing polyline vertex */
-	dxf_fgets(dxf_line, 256, dxf_file);
+	dxf_fgets(dxf_buf, 256, dxf);
     }				/* vertex loop */
     /* done reading vertices */
     if (polyline_flag & POLYFLAG1) {	/* ONLY DEALING WITH polyline_flag = 1 */
 	/* CHECK TO MAKE SURE VERTEX POINTS DESCRIBE A CLOSED POLYLINE */
-	if (xinfo[0] != xinfo[arr_size - 1] || yinfo[0] != yinfo[arr_size - 1]) {
+	if (xpnts[0] != xpnts[arr_size - 1] || ypnts[0] != ypnts[arr_size - 1]) {
 	    /* ADD ON THE VERTEX POINT TO COMPLETE CLOSED POLYLINE */
-	    xinfo[arr_size] = xinfo[0];
-	    yinfo[arr_size] = yinfo[0];
-	    zinfo[arr_size] = zinfo[0];
+	    xpnts[arr_size] = xpnts[0];
+	    ypnts[arr_size] = ypnts[0];
+	    zpnts[arr_size] = zpnts[0];
 
 	    /* arr_size INCREMENTED TO BE CONSISTENT WITH POLYLINE_FLAG != 1 */
 	    if (arr_size >= ARR_MAX - 1) {
 		ARR_MAX += ARR_INCR;
-		xinfo = (double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
-		yinfo = (double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
-		zinfo = (double *)G_realloc(zinfo, ARR_MAX * sizeof(double));
+		xpnts = (double *)G_realloc(xpnts, ARR_MAX * sizeof(double));
+		ypnts = (double *)G_realloc(ypnts, ARR_MAX * sizeof(double));
+		zpnts = (double *)G_realloc(zpnts, ARR_MAX * sizeof(double));
 	    }
 	    arr_size++;
 	}
     }
-    if (!layer_flag) {		/* NO LAYER DESIGNATED */
-	layer_fd = which_layer(nolayername, DXF_ASCII);
-	if (layer_fd == NULL)
-	    return 0;
-    }
+
     if (!zflag) {
 	int i;
+
 	for (i = 0; i < arr_size; i++)
-	    zinfo[i] = 0.0;
+	    zpnts[i] = 0.0;
     }
-    write_polylines(layer_fd, arr_size);
-    return 1;
+
+    write_polylines(Map, layername, arr_size);
+
+    return 0;
 }

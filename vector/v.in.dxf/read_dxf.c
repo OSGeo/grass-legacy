@@ -2,17 +2,55 @@
 #include <string.h>
 #include "global.h"
 
-/*
- * Reads next line of input file
+/* On error, returns -1, otherwise returns 0 */
+struct dxf_file *dxf_open(char *file)
+{
+    struct dxf_file *dxf;
+
+    dxf = (struct dxf_file *)G_malloc(sizeof(struct dxf_file));
+
+    dxf->name = G_store(file);
+    if (!(dxf->fp = fopen(file, "r")))
+	return NULL;
+
+    /* get the file size so that big_percent() can be used */
+    fseek(dxf->fp, 0L, SEEK_END);
+    dxf->size = ftell(dxf->fp);
+    rewind(dxf->fp);
+
+    dxf->pos = 0;
+
+    if (dxf->size < 500000)
+	dxf->percent = 10;
+    else if (dxf->size < 800000)
+	dxf->percent = 5;
+    else
+	dxf->percent = 2;
+
+    /* initialize big_percent() */
+    big_percent(0, dxf->size, dxf->percent);
+
+    return dxf;
+}
+
+void dxf_close(struct dxf_file *dxf)
+{
+    fclose(dxf->fp);
+    G_free(dxf->name);
+    G_free(dxf);
+
+    return;
+}
+
+/* Reads next line of input file
  * returns atoi of line, or  -1 if NON-numeric  or -2 on EOF
  */
-
-int dxf_readcode(FILE * dxf_file)
+int dxf_readcode(struct dxf_file *dxf)
 {
     char buf[256], *p;
     int ready = 0;
 
-    if (NULL == dxf_fgets(buf, 256, dxf_file))
+    if (!dxf_fgets(buf, 256, dxf))
 	return -2;
     for (p = buf; *p; p++) {
 	if (*p != ' ' && *p != '\t')
@@ -21,61 +59,41 @@ int dxf_readcode(FILE * dxf_file)
 	    if ('0' <= *p && *p <= '9')
 		return atoi(buf);
 	    else
-		return -1;	/* NOT NUMERIC */
+		break;
 	}
     }
+
     return -1;			/* NOT NUMERIC */
 }
 
-char *dxf_fgets(char *buf, int size, FILE * fp)
+char *dxf_fgets(char *buf, int size, struct dxf_file *dxf)
 {
     char *p;
-    static unsigned long current_size = 0;
 
-    p = fgets(buf, size, fp);
-    if (p != NULL) {
-	current_size += strlen(p);
-	big_percent(current_size, file_size, percent);
+    if ((p = fgets(buf, size, dxf->fp))) {
+	dxf->pos += strlen(p);
+	big_percent(dxf->pos, dxf->size, dxf->percent);
 	G_squeeze(buf);
     }
+
     return p;
 }
 
 /* returns a zero if header not found, returns a 1 if found */
-int dxf_find_header(FILE * dxf_file)
+int dxf_find_header(struct dxf_file *dxf)
 {
-    dxf_fgets(dxf_line, 256, dxf_file);
+    dxf_fgets(dxf_buf, 256, dxf);
     /* Some dxf files will not have header information */
-    while (strcmp(dxf_line, header) != 0 && strcmp(dxf_line, entitie) != 0) {
-	dxf_fgets(dxf_line, 256, dxf_file);
-	if (feof(dxf_file)) {
-	    fprintf(stderr, "end of file while looking");
-	    fprintf(stderr, " for HEADER\n");
-	    exit(-1);
-	}
+    while (strcmp(dxf_buf, "HEADER") != 0 && strcmp(dxf_buf, "ENTITIES") != 0) {
+	if (!dxf_fgets(dxf_buf, 256, dxf))
+	    G_fatal_error(_("end of file while looking for HEADER"));
     }
-    if (strcmp(dxf_line, header) == 0)
-	return 1;
-    return 0;
+
+    return strcmp(dxf_buf, "HEADER") == 0;
 }
 
-int dxf_find_entities(FILE * dxf_file)
-{
-    dxf_fgets(dxf_line, 256, dxf_file);
-    while (strcmp(dxf_line, entitie) != 0) {
-	dxf_fgets(dxf_line, 256, dxf_file);
-	if (feof(dxf_file)) {
-	    fprintf(stderr, "end of file while looking");
-	    fprintf(stderr, " for ENTITIES\n");
-	    return -1;
-	}
-    }
-    return 0;
-}
-
-/***************************  big_percent  **********************************/
-/* this is a modified version of G_percent created because of the
- * use of unsigned long ints which G_percent does not use
+/* this is a modified version of G_percent created because of the use of
+ * unsigned long ints which G_percent does not use
  */
 int big_percent(unsigned long n, unsigned long d, int s)
 {

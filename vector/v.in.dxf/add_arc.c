@@ -1,4 +1,4 @@
-/* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_line */
+/* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_buf */
 /* adapted  7/23/90  J Moorman from undxf.c code written by:
  * Programmer: Tom Howard   National Park Service GIS division
  */
@@ -6,9 +6,9 @@
 #include <stdlib.h>
 #include "global.h"
 
-int add_arc(FILE * dxf_file)
+int add_arc(struct dxf_file *dxf, struct Map_info *Map)
 {
-    /* DECLARING VARIABLES */
+    int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
     int layer_flag = 0;		/* INDICATES IF A LAYER NAME HAS BEEN FOUND */
     int xflag = 0;		/* INDICATES IF A x VALUE HAS BEEN FOUND */
     int yflag = 0;		/* INDICATES IF A y VALUE HAS BEEN FOUND */
@@ -21,50 +21,44 @@ int add_arc(FILE * dxf_file)
     double zcoor = 0;		/* READ IN FROM DXF FILE */
     float start_angle = 0;	/* READ IN FROM DXF FILE */
     float finish_angle = 0;	/* READ IN FROM DXF FILE */
-    char *nolayername = "UNIDENTIFIED";
-    struct dxf_dig *layer_fd = NULL;	/* POINTER TO LAYER NAME */
-    int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
     int arr_size = 0;
+    char layername[256];
+
+    strcpy(layername, UNIDENTIFIED_LAYER);
 
     /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
-
-    while ((code = dxf_readcode(dxf_file)) != 0) {
-	if (code == -2)		/* EOF */
-	    return 0;
-	dxf_fgets(dxf_line, 256, dxf_file);
-	if (feof(dxf_file) != 0)	/* EOF */
-	    return 0;
+    while ((code = dxf_readcode(dxf)) != 0) {
+	if (code == -2 || !dxf_fgets(dxf_buf, 256, dxf))
+	    return -1;
 
 	switch (code) {
 	case 8:
-	    if (!layer_flag) {
-		layer_fd = which_layer(dxf_line, DXF_ASCII);
-		if (layer_fd == NULL)
-		    return 0;
+	    if (!layer_flag && *dxf_buf) {
+		strcpy(layername, dxf_buf);
 		layer_flag = 1;
 	    }
 	    break;
 	case 10:		/* x COORDINATE */
-	    centerx = atof(dxf_line);
+	    centerx = atof(dxf_buf);
 	    xflag = 1;
 	    break;
 	case 20:		/* y COORDINATE */
-	    centery = atof(dxf_line);
+	    centery = atof(dxf_buf);
 	    yflag = 1;
 	    break;
 	case 30:		/* Z COORDINATE */
-	    zcoor = atof(dxf_line);
+	    zcoor = atof(dxf_buf);
 	    break;
 	case 40:		/* RADIUS */
-	    radius = atof(dxf_line);
+	    radius = atof(dxf_buf);
 	    rflag = 1;
 	    break;
 	case 50:
-	    start_angle = atof(dxf_line);
+	    start_angle = atof(dxf_buf);
 	    sflag = 1;
 	    break;
 	case 51:
-	    finish_angle = atof(dxf_line);
+	    finish_angle = atof(dxf_buf);
 	    fflag = 1;
 	    break;
 
@@ -79,18 +73,12 @@ int add_arc(FILE * dxf_file)
 	    break;
 	}
     }
-    if (!layer_flag) {
-	fprintf(stderr, "Inside !layer_flag");
-	layer_fd = which_layer(nolayername, DXF_ASCII);
-	if (layer_fd == NULL)
-	    return 0;
-    }
 
     if (xflag && yflag && rflag && sflag && fflag) {
 	arr_size =
 	    make_arc(0, centerx, centery, radius, start_angle, finish_angle,
 		     zcoor, 1);
-	write_polylines(layer_fd, arr_size);
+	write_polylines(Map, layername, arr_size);
     }
     return 1;
 }

@@ -1,4 +1,4 @@
-/* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_line */
+/* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_buf */
 /* written by J Moorman
  * 7/23/90
  */
@@ -6,46 +6,40 @@
 #include <stdlib.h>
 #include "global.h"
 
-int add_point(FILE * dxf_file)
+int add_point(struct dxf_file *dxf, struct Map_info *Map)
 {
-    /* DECLARING VARIABLES */
+    int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
     int layer_flag = 0;		/* INDICATES IF A LAYER NAME HAS BEEN FOUND */
     int xflag = 0;		/* INDICATES IF A x VALUE HAS BEEN FOUND */
     int yflag = 0;		/* INDICATES IF A y value has been found */
-    char *nolayername = "UNIDENTIFIED";
-    struct dxf_dig *layer_fd = NULL;	/* POINTER TO LAYER NAME */
-    int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
+    char layername[256];
 
     /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
 
-    zinfo[0] = 0.0;
+    strcpy(layername, UNIDENTIFIED_LAYER);
+    zpnts[0] = 0.0;
 
-    while ((code = dxf_readcode(dxf_file)) != 0) {
-	if (code == -2)		/* EOF */
-	    return 0;
-	dxf_fgets(dxf_line, 256, dxf_file);
-	if (feof(dxf_file) != 0)	/* EOF */
-	    return 0;
+    while ((code = dxf_readcode(dxf)) != 0) {
+	if (code == -2 || !dxf_fgets(dxf_buf, 256, dxf))
+	    return -1;
 
 	switch (code) {
 	case 8:
-	    if (!layer_flag) {
-		layer_fd = which_layer(dxf_line, DXF_ASCII);
-		if (layer_fd == NULL)
-		    return 0;
+	    if (!layer_flag && *dxf_buf) {
+		strcpy(layername, dxf_buf);
 		layer_flag = 1;
 	    }
 	    break;
 	case 10:		/* x COORDINATE */
-	    xinfo[0] = atof(dxf_line);
+	    xpnts[0] = atof(dxf_buf);
 	    xflag = 1;
 	    break;
 	case 20:		/* y COORDINATE */
-	    yinfo[0] = atof(dxf_line);
+	    ypnts[0] = atof(dxf_buf);
 	    yflag = 1;
 	    break;
 	case 30:		/* Z COORDINATE */
-	    zinfo[0] = atof(dxf_line);
+	    zpnts[0] = atof(dxf_buf);
 	    break;
 	case 50:		/* ANGLE OF x AXIS FOR THE UCS IN EFFECT */
 
@@ -61,26 +55,16 @@ int add_point(FILE * dxf_file)
 	    break;
 	}
 	if (xflag == 1 && yflag == 1) {
-	    struct line_cats *cats;
-
-	    check_ext(xinfo[0], yinfo[0]);
+	    check_ext(xpnts[0], ypnts[0]);
 	    xflag = 0;
 	    yflag = 0;
-	    if (!layer_flag) {	/* NO LAYER DESIGNATED */
-		layer_fd = which_layer(nolayername, DXF_ASCII);
-		if (layer_fd == NULL)
-		    return 0;
-	    }
-	    /* PRINTS OUT THE POLYLINE VERTEX DATA TO FILE DESIGNATED AS layer_fd */
-	    xinfo[1] = xinfo[0];
-	    yinfo[1] = yinfo[0];
-	    zinfo[1] = zinfo[0];
-	    Vect_copy_xyz_to_pnts(Points, xinfo, yinfo, zinfo, 2);
-	    /* TODO */
-	    cats = Vect_new_cats_struct();
-	    Vect_write_line(layer_fd->Map, GV_POINT, Points, cats);
-	    Vect_destroy_cats_struct(cats);
-	    zinfo[0] = 0.0;
+	    xpnts[1] = xpnts[0];
+	    ypnts[1] = ypnts[0];
+	    zpnts[1] = zpnts[0];
+
+	    write_point(Map, layername);
+
+	    zpnts[0] = 0.0;
 	}
     }
     return 1;

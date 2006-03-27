@@ -11,8 +11,8 @@ int make_arc(int offset,	/* offset into array of points */
     float theta;		/* the angle used for calculating a given point */
     float alpha;		/* theta converted into radians for use in math */
     double extcirclx[4], extcircly[4];	/*to check_extents of circle */
-    int i;			/* looping variable */
     int arr_size;
+    int i;
 
     arr_size = offset;
     printf
@@ -30,16 +30,16 @@ int make_arc(int offset,	/* offset into array of points */
 	radius = -radius;
 	while (theta > finish_angle) {
 	    alpha = theta * M_PI / 180.0;	/* converting to radians */
-	    xinfo[arr_size] = radius * cos(alpha) + centerx;
-	    yinfo[arr_size] = radius * sin(alpha) + centery;
-	    zinfo[arr_size] = zcoor;
+	    xpnts[arr_size] = radius * cos(alpha) + centerx;
+	    ypnts[arr_size] = radius * sin(alpha) + centery;
+	    zpnts[arr_size] = zcoor;
 	    /*check_ext(pt_array[arr_size].x,pt_array[arr_size].y); */
 	    theta -= RSTEP;
 	    if (arr_size == ARR_MAX) {
 		ARR_MAX += ARR_INCR;
-		xinfo = (double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
-		yinfo = (double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
-		zinfo = (double *)G_realloc(zinfo, ARR_MAX * sizeof(double));
+		xpnts = (double *)G_realloc(xpnts, ARR_MAX * sizeof(double));
+		ypnts = (double *)G_realloc(ypnts, ARR_MAX * sizeof(double));
+		zpnts = (double *)G_realloc(zpnts, ARR_MAX * sizeof(double));
 	    }
 	    arr_size++;
 	}
@@ -48,56 +48,54 @@ int make_arc(int offset,	/* offset into array of points */
 	theta = start_angle;
 	while (theta < finish_angle) {	/*draw arc counterclockwise */
 	    alpha = theta * M_PI / 180.0;	/* converting to radians */
-	    xinfo[arr_size] = radius * cos(alpha) + centerx;
-	    yinfo[arr_size] = radius * sin(alpha) + centery;
-	    zinfo[arr_size] = zcoor;
+	    xpnts[arr_size] = radius * cos(alpha) + centerx;
+	    ypnts[arr_size] = radius * sin(alpha) + centery;
+	    zpnts[arr_size] = zcoor;
 	    /*check_ext(pt_array[arr_size].x,pt_array[arr_size].y); */
 	    theta += RSTEP;
 	    if (arr_size == ARR_MAX) {
 		ARR_MAX += ARR_INCR;
-		xinfo = (double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
-		yinfo = (double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
-		zinfo = (double *)G_realloc(zinfo, ARR_MAX * sizeof(double));
+		xpnts = (double *)G_realloc(xpnts, ARR_MAX * sizeof(double));
+		ypnts = (double *)G_realloc(ypnts, ARR_MAX * sizeof(double));
+		zpnts = (double *)G_realloc(zpnts, ARR_MAX * sizeof(double));
 	    }
 	    arr_size++;
 	}
     }
     /* this insures that the last point will be correct */
     alpha = finish_angle * M_PI / 180.0;	/* converting to radians */
-    xinfo[arr_size] = radius * cos(alpha) + centerx;
-    yinfo[arr_size] = radius * sin(alpha) + centery;
-    zinfo[arr_size] = zcoor;
+    xpnts[arr_size] = radius * cos(alpha) + centerx;
+    ypnts[arr_size] = radius * sin(alpha) + centery;
+    zpnts[arr_size] = zcoor;
     /*check_ext(pt_array[arr_size].x,pt_array[arr_size].y); */
     if (arr_size == ARR_MAX) {
 	ARR_MAX += ARR_INCR;
-	xinfo = (double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
-	yinfo = (double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
-	zinfo = (double *)G_realloc(zinfo, ARR_MAX * sizeof(double));
+	xpnts = (double *)G_realloc(xpnts, ARR_MAX * sizeof(double));
+	ypnts = (double *)G_realloc(ypnts, ARR_MAX * sizeof(double));
+	zpnts = (double *)G_realloc(zpnts, ARR_MAX * sizeof(double));
     }
     arr_size++;
 
-    /* if (BOUNDARIES != 4) dpg */
-    {
-	/*need to check extent of plotted arcs and circles */
-	if (flag)		/*for an arc */
-	    for (i = offset; i < arr_size; i++)
-		check_ext(xinfo[i], yinfo[i]);
+    /* need to check extent of plotted arcs and circles */
+    if (flag)			/* for an arc */
+	for (i = offset; i < arr_size; i++)
+	    check_ext(xpnts[i], ypnts[i]);
 
-	else {			/*for a circle */
+    else {			/* for a circle */
 
-	    extcirclx[0] = centerx + radius;
-	    extcircly[0] = extcircly[2] = centery;
+	extcirclx[0] = centerx + radius;
+	extcircly[0] = extcircly[2] = centery;
 
-	    extcirclx[1] = extcirclx[3] = centerx;
-	    extcircly[1] = centery - radius;
+	extcirclx[1] = extcirclx[3] = centerx;
+	extcircly[1] = centery - radius;
 
-	    extcirclx[2] = centerx - radius;
+	extcirclx[2] = centerx - radius;
 
-	    extcircly[3] = centery + radius;
+	extcircly[3] = centery + radius;
 
-	    for (i = 0; i < 4; i++)
-		check_ext(extcirclx[i], extcircly[i]);
-	}
+	for (i = 0; i < 4; i++)
+	    check_ext(extcirclx[i], extcircly[i]);
     }
+
     return arr_size - offset;
 }
