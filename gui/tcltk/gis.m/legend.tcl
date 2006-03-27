@@ -142,7 +142,7 @@ proc GmLegend::options { id frm } {
     # raster name
     set row [ frame $frm.map ]
     Label $row.a -text "Raster map: "
-    Button $row.b -image [image create photo -file "$iconpath/channel-cell.gif"] \
+    Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmLegend::select_map $id"
     Entry $row.c -width 35 -text " $opt($id,1,map)" \
