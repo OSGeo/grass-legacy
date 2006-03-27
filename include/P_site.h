@@ -12,7 +12,7 @@ int G_site_d_cmp P((const void *a, const void *b));
 int G_site_c_cmp P((const void *a, const void *b));
 int G_site_s_cmp P((const void *a, const void *b));
 char *G_site_format P((Site *s, char *fs, int id));
-SITE_ATT * G_sites_get_atts P((FILE * ptr, int* cat));
+/* SITE_ATT * G_sites_get_atts P((FILE * ptr, int* cat));*/
 int G_sites_get_fields P((FILE * ptr, char*** cnames, int** ctypes, int** ndx));
 void G_sites_free_fields P((int ncols, char** cnames, int* ctypes, int* ndx));
 

@@ -1922,13 +1922,13 @@ int unset_att(int id, int type, Tcl_Interp * interp, int argc, char *argv[])
 /*** ACS_MODIFY 1.0 BEGIN - site_attr management *******************************/
     int col, width, marker, useatt;
     float size;
+    geosite *gp;
 
     att = att_atoi(argv[2]);
 
 	if (type == SITE) {
 		if (!strcmp(argv[2], "useatt") && argc == 5) {
 		    GP_get_sitemode(id, &useatt, &col, &width, &size, &marker);
-			geosite *gp;
 			if (gp = gp_get_site(id)) {
 				site_attr_unset(interp, gp, atoi(argv[3]), argv[4]);
 

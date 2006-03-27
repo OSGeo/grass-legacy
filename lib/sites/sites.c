@@ -1230,11 +1230,10 @@ SITE_ATT * G_sites_get_atts (FILE * ptr, int* cat)
 int G_sites_get_fields(FILE * ptr, char*** cnames, int** ctypes, int** ndx)
 {
     struct Map_info *Map;
-    Map = (struct Map_info *) ptr;
-
-	struct field_info *fi;
+    struct field_info *fi;
     int nrows, row, ncols, col, ndbl, nstr, ctype;
 
+    char * name;
     dbDriver *driver;
     dbString stmt;
     dbCursor cursor;
@@ -1248,7 +1247,8 @@ int G_sites_get_fields(FILE * ptr, char*** cnames, int** ctypes, int** ndx)
 		Should it be not true in the future, maybe we'll have to change this by choosing
 		appropriate fields and multiple categories */
 
-	fi = (struct field_info *)Vect_get_field(Map, 1);
+    Map = (struct Map_info *) ptr;
+    fi = (struct field_info *)Vect_get_field(Map, 1);
 
 
     if ( fi == NULL ) {  /* not attribute table */
@@ -1288,7 +1288,7 @@ int G_sites_get_fields(FILE * ptr, char*** cnames, int** ctypes, int** ndx)
 		column = db_get_table_column ( table, col );
 		ctype =  db_sqltype_to_Ctype ( db_get_column_sqltype(column) );
 
-		char * name=db_get_column_name(column);
+		name=db_get_column_name(column);
 
 		*(*cnames+col) = (char*)malloc(strlen(name) + 1);
 		strcpy(*(*cnames+col), db_get_column_name(column));
