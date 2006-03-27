@@ -46,7 +46,7 @@ ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 
 PGM=nviz
 
-default: $(BIN)/$(PGM)
+default: $(BIN)/$(PGM) htmlcmd
 
 #gsf: 
 #	cd $(SURF_INCDIR) ; $(GMAKE)
