@@ -43,16 +43,18 @@ DynamicHelp::configure -font balloon-help -fg black -bg "#FFFF77"
 
 # Font to use everywhere
 option add *font default
-# Font in labelfrmaes of labels in bwidgets is prefixed with label:
+# Font in labelframes of labels in bwidgets is prefixed with label:
 option add *labelfont default
 
 # Various background colors
-option add *background HoneyDew2
+option add *background #dddddd
 option add *activeBackground HoneyDew2
+option add *highlightbackground HoneyDew2
 
 # Things that are selected:
 option add *selectBackground #ffff9b
 option add *selectForeground black
+
 # Menus use active instead of selected
 option add *Menu.activeBackground #ffff9b
 option add *Menu.activeForeground black
@@ -67,7 +69,7 @@ option add *Entry.font textfont
 option add *Text.font textfont
 
 # Options for map canvases
-option add *mapcanvas.background HoneyDew2
+option add *mapcanvas.background #eeeeee
 option add *mapcanvas.insertbackground black
 option add *mapcanvas.selectbackground #c4c4c4
 option add *mapcanvas.selectforeground black
