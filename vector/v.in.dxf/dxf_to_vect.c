@@ -39,8 +39,6 @@ int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
     int code;			/* atoi of line if numeric */
     int bounds = 0;
 
-    fprintf(stderr, _("\nCONVERSION OF %s TO VECTOR FILE:  "), dxf->name);
-
     if (dxf_find_header(dxf)) {	/* looks for HEADER in file */
 	/* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
 	while ((code = dxf_readcode(dxf))) {

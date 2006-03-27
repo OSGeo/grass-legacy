@@ -76,6 +76,9 @@ int main(int argc, char *argv[])
 
     flag_table = flag.table->answer;
 
+    fprintf(stderr, _("\nCONVERSION OF %s TO VECTOR FILE:  "),
+	    opt.input->answer);
+
     /* open DXF file */
     if (!(dxf = dxf_open(opt.input->answer)))
 	G_fatal_error(_("%s: Cannot open dxf file"), opt.input->answer);
