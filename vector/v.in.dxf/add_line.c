@@ -1,4 +1,4 @@
-/* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_line */
+/* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_buf */
 /* written by J Moorman
  * 7/23/90
  */
@@ -6,58 +6,52 @@
 #include <stdlib.h>
 #include "global.h"
 
-/* DECLARING SUBROUTINES */
-
-int add_line(FILE * dxf_file)
+int add_line(struct dxf_file *dxf, struct Map_info *Map)
 {
+    int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
     int layer_flag = 0;		/* INDICATES IF A LAYER NAME HAS BEEN FOUND */
     int xflag = 0;		/* INDICATES IF A x VALUE HAS BEEN FOUND */
     int yflag = 0;		/* INDICATES IF A y VALUE HAS BEEN FOUND */
     int zflag = 0;		/* INDICATES IF A z VALUE HAS BEEN FOUND */
-    char *nolayername = "UNIDENTIFIED";
-    struct dxf_dig *layer_fd = NULL;	/* POINTER TO LAYER NAME */
-    int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
     int arr_size = 0;
+    char layername[256];
+
+    strcpy(layername, "UNIDENTIFIED");
 
     /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
-    while ((code = dxf_readcode(dxf_file)) != 0) {
-	if (code == -2)		/* EOF */
-	    return 0;
-	dxf_fgets(dxf_line, 256, dxf_file);
-	if (feof(dxf_file) != 0)	/* EOF */
-	    return 0;
+    while ((code = dxf_readcode(dxf)) != 0) {
+	if (code == -2 || !dxf_fgets(dxf_buf, 256, dxf))
+	    return -1;
 
 	switch (code) {
 	case 8:
-	    if (!layer_flag) {
-		layer_fd = which_layer(dxf_line, DXF_ASCII);
-		if (layer_fd == NULL)
-		    return 0;
+	    if (!layer_flag && *dxf_buf) {
+		strcpy(layername, dxf_buf);
 		layer_flag = 1;
 	    }
 	    break;
 	case 10:		/* START POINT x COORDINATE */
-	    xinfo[arr_size] = atof(dxf_line);
+	    xpnts[arr_size] = atof(dxf_buf);
 	    xflag = 1;
 	    break;
 	case 20:		/* START POINT y COORDINATE */
-	    yinfo[arr_size] = atof(dxf_line);
+	    ypnts[arr_size] = atof(dxf_buf);
 	    yflag = 1;
 	    break;
 	case 30:		/* START POINT z COORDINATE */
-	    zinfo[arr_size] = atof(dxf_line);
+	    zpnts[arr_size] = atof(dxf_buf);
 	    zflag = 1;
 	    break;
 	case 11:		/* END POINT x COORDINATE */
-	    xinfo[arr_size] = atof(dxf_line);
+	    xpnts[arr_size] = atof(dxf_buf);
 	    xflag = 1;
 	    break;
 	case 21:		/* END POINT y COORDINATE */
-	    yinfo[arr_size] = atof(dxf_line);
+	    ypnts[arr_size] = atof(dxf_buf);
 	    yflag = 1;
 	    break;
 	case 31:		/* END POINT z COORDINATE */
-	    zinfo[arr_size] = atof(dxf_line);
+	    zpnts[arr_size] = atof(dxf_buf);
 	    zflag = 1;
 	    break;
 
@@ -74,12 +68,12 @@ int add_line(FILE * dxf_file)
 	    break;
 	}
 	if (xflag == 1 && yflag == 1) {
-	    check_ext(xinfo[arr_size], yinfo[arr_size]);
+	    check_ext(xpnts[arr_size], ypnts[arr_size]);
 	    if (arr_size == ARR_MAX) {
 		ARR_MAX += ARR_INCR;
-		xinfo = (double *)G_realloc(xinfo, ARR_MAX * sizeof(double));
-		yinfo = (double *)G_realloc(yinfo, ARR_MAX * sizeof(double));
-		zinfo = (double *)G_realloc(zinfo, ARR_MAX * sizeof(double));
+		xpnts = (double *)G_realloc(xpnts, ARR_MAX * sizeof(double));
+		ypnts = (double *)G_realloc(ypnts, ARR_MAX * sizeof(double));
+		zpnts = (double *)G_realloc(zpnts, ARR_MAX * sizeof(double));
 	    }
 	    arr_size++;
 	    xflag = 0;
@@ -87,16 +81,11 @@ int add_line(FILE * dxf_file)
 	}
     }
 
-    if (!layer_flag) {		/* NO LAYER DESIGNATED */
-	layer_fd = which_layer(nolayername, DXF_ASCII);
-	if (layer_fd == NULL)
-	    return 0;
-    }
     if (arr_size == 2) {	/* had both starts and stops */
-	/* PRINTS OUT THE POLYLINE VERTEX DATA TO FILE DESIGNATED AS layer_fd */
 	if (!zflag)
-	    zinfo[0] = zinfo[1] = 0.0;
-	write_polylines(layer_fd, arr_size);
+	    zpnts[0] = zpnts[1] = 0.0;
+	write_polylines(Map, layername, arr_size);
     }
-    return 1;
+
+    return 0;
 }
