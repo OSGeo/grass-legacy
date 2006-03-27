@@ -874,7 +874,7 @@ int get_drawmode(int type, int id, Nv_data * data, Tcl_Interp * interp)
     list[3] = NULL;
 
     interp->result = Tcl_Merge(3, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
     return (TCL_OK);
 
 }
@@ -997,7 +997,7 @@ int get_res(int id, int type, Tcl_Interp * interp, int argc, char *argv[])
     }
 
     interp->result = Tcl_Merge(n, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
 
     return (TCL_OK);
 }
@@ -1161,7 +1161,7 @@ int get_trans(int id, int type, Tcl_Interp * interp)
     list[3] = NULL;
 
     interp->result = Tcl_Merge(3, list);
-    interp->freeProc = (Tcl_FreeProc *) free;
+    interp->freeProc = TCL_DYNAMIC;
 
     return (TCL_OK);
 }
