@@ -380,15 +380,7 @@ static int compute_transformation (void)
     double e1, n1, z1;
     double xval, yval, gval;
 
-#ifdef DEBUG2
-    FILE *debug2;
-    debug2 = fopen("ortho_analyze.rst", "w");
-    if (debug2 == NULL) {
-       sprintf ("Cant open Bedbug File ortho_anaylze.rst\n");
-       G_fatal_error (msg);
-    }
-    fprintf (debug2, "INVERSE ORTHO:\n");
-#endif
+    G_debug ( 2, "INVERSE ORTHO:\n");
 
     xmax = ymax = gmax = 0;
     xval = yval = gval = 0.0;
@@ -406,15 +398,13 @@ static int compute_transformation (void)
 	if (group.control_points.status[n] <= 0) continue;
 	count++;
 
-
-#ifdef DEBUG2
-        fprintf (debug2, "\tPhoto coordinates\n\t\tx = %f \t y = %f\n",
-            group.control_points.e1[n], group.control_points.n1[n]);
-        fprintf (debug2, "\tCamera \n\t\txc = %f \t yc = %f \t zc = %f\n", 
+        G_debug ( 2, "Photo coordinates \te1 = %f \tn1 = %f \tz2 = %f",
+            group.control_points.e1[n], group.control_points.n1[n],
+	    group.control_points.z2[n]);
+        G_debug ( 2, "Camera \txc = %f \tyc = %f \tzc = %f", 
       	    group.XC, group.YC, group.ZC );
-        fprintf (debug2, " \t\t omega = %f \t phi = %f \t kappa = %f \n",  
+        G_debug ( 2, "       \tomega = %f \tphi = %f \tkappa = %f",  
             group.omega, group.phi, group.kappa);
-#endif
 
 	I_inverse_ortho_ref    (temp_points.e1[n], 
 				temp_points.n1[n], 
@@ -433,11 +423,7 @@ static int compute_transformation (void)
 				group.omega, group.phi, group.kappa);
 *****/
 
-#ifdef DEBUG2
-	fprintf (debug2, "\tGround coordinates\n\t\tx = %f \t y = %f\n", 
-		e1,n1);
-#endif
-
+	G_debug ( 2, "Ground coordinates \tx = %f \ty = %f",e1,n1);
 
 	d = e1-group.control_points.e2[n];
 	xres[n] = d;
@@ -476,10 +462,6 @@ static int compute_transformation (void)
     /* compute overall rms error */
     if (count)
 	rms = sqrt (sum/count);
-
-#ifdef DEBUG2
-    fclose(debug2);
-#endif
 
     return 0;
 }

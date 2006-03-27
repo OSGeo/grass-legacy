@@ -14,10 +14,13 @@ int driver (void)
 	MENU("ZOOM",zoom,&use),
 	MENU("PLOT CELL",plotcell,&use),
 	MENU("ANALYZE",analyze,&use),
-	INFO("  Input method -> ", &from_flag),
+	INFO(" Input method -> ", &from_flag),
 	OPTION("DIGITIZER",2,&from_digitizer),
 	OPTION("KEYBOARD",2,&from_keyboard),
 	OPTION("SCREEN",2,&from_screen),
+	INFO(" Auto zoom -> ", &autozoom_flag),
+	OPTION("ON",3,&autozoom_on),
+	OPTION("OFF",3,&autozoom_off),
 	OTHER(mark, &use),
 	{0}
     };

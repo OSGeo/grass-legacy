@@ -189,6 +189,13 @@ static int zoom2 (int x, int y)
     drawcell (zoom_view);
     select_current_env();
     display_conz_points(1);
+
+    /* Auto zoom VIEW_MAP2_ZOOM */
+    if ( main_view == VIEW_MAP1 )
+    {
+        auto_zoom();
+    }
+
     return 1;	/* pop back */
 }
 
