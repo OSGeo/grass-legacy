@@ -53,9 +53,9 @@ void write_done(void)
 	db_close_database_shutdown_driver(driver);
     }
 
-    fprintf(stderr, "\nFollowing DXF layers found:\n");
+    fprintf(stderr, _("\nFollowing DXF layers found:\n"));
     for (i = 0; i < num_fields; i++) {
-	fprintf(stderr, "Layer %d %s\n", i + 1, fieldnames[i]);
+	fprintf(stderr, _("Layer %d %s\n"), i + 1, fieldnames[i]);
 	G_free(fieldnames[i]);
 	if (!flag_table) {
 	    /* no function to do this? */
