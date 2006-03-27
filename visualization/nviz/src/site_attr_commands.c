@@ -290,11 +290,8 @@ int attr_eval_color(float xvalue, int n, float *x,
 							float *yr, float *yg, float *yb,
 							float *mr, float *mg, float *mb);
 
+/* better move to ../../../include/P_site.h */
 SITE_ATT * G_sites_get_atts (FILE * ptr, int* cat);
-int G_sites_get_fields (FILE * ptr, char*** cnames, int** ctypes, int** ndx);
-void G_sites_free_fields(int ncols, char** cnames, int* ctypes, int* ndx);
-
-
 
 /*******************************************************************************/
 /*******************************************************************************/
@@ -1084,7 +1081,7 @@ float attr_eval_entry(float xvalue, int n, float *x, float *y, float *m)
 	else if (xvalue >= x[n-1]) return(y[n-1]);
 	else {
 		for(i=1; i<n && xvalue > x[i]; i++);
-		// now: x[i-1] < value <= x[i] && i >= 1
+		/* now: x[i-1] < value <= x[i] && i >= 1 */
 		return(m[i-1] * (xvalue - x[i-1]) + y[i-1]);
 	}
 }
@@ -1096,7 +1093,7 @@ float attr_eval_entry_string(char* xvalue, int n, char** x, float* y)
 	else if (strcmp(xvalue, x[n-1]) >= 0) return(y[n-1]);
 	else {
 		for(i=1; i<n && (strcmp(xvalue, x[i]) > 0); i++);
-		// now: x[i-1] < value <= x[i] && i >= 1
+		/* now: x[i-1] < value <= x[i] && i >= 1 */
 		return(y[i-1]);
 	}
 }
@@ -1112,7 +1109,7 @@ int attr_eval_color(float xvalue, int n, float *x,
 	else if (xvalue >= x[n-1]) return(R_G_B_2_RGB((int)(yr[n-1]), (int)(yg[n-1]), (int)(yb[n-1])));
 	else {
 		for(i=1; i<n && xvalue > x[i]; i++);
-		// now: x[i-1] < value <= x[i] && i >= 1
+		/* now: x[i-1] < value <= x[i] && i >= 1 */
 		dx = xvalue - x[i-1];
 
 		r = dx * mr[i-1] + yr[i-1];
@@ -1132,7 +1129,7 @@ int attr_eval_color_string(char* xvalue, int n, char** x,
 	else if (strcmp(xvalue, x[n-1]) >= 0) return(R_G_B_2_RGB((int)(yr[n-1]), (int)(yg[n-1]), (int)(yb[n-1])));
 	else {
 		for(i=1; i<n && (strcmp(xvalue, x[i]) > 0); i++);
-		// now: x[i-1] < value <= x[i] && i >= 1
+		/* now: x[i-1] < value <= x[i] && i >= 1 */
 		return(R_G_B_2_RGB((int)(yr[i-1]), (int)(yg[i-1]), (int)(yb[i-1])));
 	}
 }
