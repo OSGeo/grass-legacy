@@ -41,7 +41,7 @@ proc GmThematic::create { tree parent } {
                            -variable GmThematic::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
-    image create photo thematicico -file "$iconpath/module-d.thematic.gif"
+    image create photo thematicico -file "$iconpath/module-d.vect.thematic.gif"
     set ico [label $frm.ico -image thematicico -bd 1 -relief raised]
     
     pack $check $ico -side left
@@ -590,7 +590,7 @@ proc GmThematic::duplicate { tree parent node id } {
                            -variable GmThematic::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
-    image create photo thematicico -file "$iconpath/module-d.thematic.gif"
+    image create photo thematicico -file "$iconpath/module-d.vect.thematic.gif"
     set ico [label $frm.ico -image thematicico -bd 1 -relief raised]
     
     pack $check $ico -side left

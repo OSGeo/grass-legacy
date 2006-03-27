@@ -12,10 +12,11 @@ namespace eval GmHist {
     variable array opt # hist current options
     variable count 1
     variable array tree # mon
-    variable array tree # mon
-    variable array lfile # raster
-    variable array lfilemask # raster
+    variable array lfile # histogram
+    variable array lfilemask # histogram
     variable optlist
+    variable first
+    variable array dup # layer
 }
 
 source $gmpath/mapcanvas.tcl
@@ -25,19 +26,22 @@ proc GmHist::create { tree parent } {
     variable count
     variable lfile
     variable lfilemask
-    variable optlist    
-    global gmpath
+    variable optlist
+    variable first
+	variable dup
     global mon
+    global gmpath
+    global iconpath
+    global guioptfont
 
     set node "histogram:$count"
 
     set frm [ frame .histicon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
+    set check [checkbutton $frm.check -font $guioptfont \
                            -variable GmHist::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
-    image create photo hico -file "$gmpath/histogram.gif"
+    image create photo hico -file "$iconpath/module-d.histogram.gif"
     set ico [label $frm.ico -image hico -bd 1 -relief raised]
     
     pack $check $ico -side left
@@ -55,6 +59,8 @@ proc GmHist::create { tree parent } {
 	-drawcross auto  
     
     set opt($count,1,_check) 1 
+    set dup($count) 0
+    
     set opt($count,1,map) "" 
 	set opt($count,1,opacity) 1.0
     set opt($count,1,color) "black" 
@@ -63,8 +69,10 @@ proc GmHist::create { tree parent } {
     set opt($count,1,nulls) 0 
     
     set opt($count,1,mod) 1
+    set first 1
 
-	set optlist {_check map color style nsteps nulls opacity}
+	set optlist {_check map color style nsteps nulls}
+
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
     } 
@@ -104,6 +112,7 @@ proc GmHist::options { id frm } {
     variable opt
     global gmpath
     global bgcolor
+    global iconpath
 
     # Panel heading
     set row [ frame $frm.heading ]
@@ -125,7 +134,7 @@ proc GmHist::options { id frm } {
     # raster name for histogram
     set row [ frame $frm.name ]
     Label $row.a -text "Raster to histogram: "
-    Button $row.b -image [image create photo -file "$gmpath/raster.gif"] \
+    Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmHist::select_map $id"
     Entry $row.c -width 35 -text " $opt($id,1,map)" \
@@ -133,7 +142,7 @@ proc GmHist::options { id frm } {
           -background white
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
-		-image [image create photo -file "$gmpath/grass.gif"] \
+		-image [image create photo -file "$iconpath/gui-help.gif"] \
 		-command "run g.manual d.histogram" \
 		-background $bgcolor -helptext [G_msg "Help"]
     pack $row.a $row.b $row.c $row.d $row.e -side left
@@ -178,19 +187,20 @@ proc GmHist::save { tree depth node } {
 }
 
 proc GmHist::display { node mod } {
+    global mon
     global mapfile
     global maskfile
     global complist
     global opclist
     global masklist
-    global gmpath
-    global mon
     variable optlist
     variable lfile 
     variable lfilemask
     variable opt
-    variable rasttype
     variable tree
+    variable dup
+    variable count
+    variable first
 
     set rasttype ""
     set currmon ""
@@ -234,38 +244,41 @@ proc GmHist::display { node mod } {
     } 
     
     # if options have change (or mod flag set by other procedures) re-render map
-	if {$opt($id,1,mod) == 1} {
-		run_panel $cmd
-		file copy -force $mapfile($mon) $lfile($id)
-		file copy -force $maskfile($mon) $lfilemask($id)
-    }
+	if {$opt($id,1,mod) == 1 || $dup($id) == 1 || $first == 1} {
+		runcmd "d.frame -e"
+	    run_panel $cmd
+	   	file rename -force $mapfile($mon) $lfile($id)
+    	file rename -force $maskfile($mon) $lfilemask($id)
+		# reset options changed flag
+		set opt($id,1,mod) 0
+		set dup($id) 0
+		set first 0
+	}
 
-    if { ! ( $opt($id,1,_check) ) } { return } 
+    #add lfile, maskfile, and opacity to compositing lists
+    if { $opt($id,1,_check) } {
 
-    #add lfile to compositing list
-	if {$complist($mon) != "" } {
-	    append complist($mon) ","
-	    append complist($mon) [file tail $lfile($id)]
-	} else {
-	    append complist($mon) [file tail $lfile($id)]
-	}	
-
-	if {$masklist($mon) != "" } {
-	    append masklist($mon) ","
-	    append masklist($mon) [file tail $lfilemask($id)]
-	} else {
-	    append masklist($mon) [file tail $lfilemask($id)]
-	}	
-
-	if {$opclist($mon) != "" } {
-	    append opclist($mon) ","
-	    append opclist($mon) $opt($id,1,opacity)
-	} else {
-	    append opclist($mon) $opt($id,1,opacity)
-	}	
+		if {$complist($mon) != "" } {
+			append complist($mon) ","
+			append complist($mon) [file tail $lfile($id)]
+		} else {
+			append complist($mon) [file tail $lfile($id)]
+		}	
 	
-	# reset options changed flag
-	set opt($id,1,mod) 0
+		if {$masklist($mon) != "" } {
+			append masklist($mon) ","
+			append masklist($mon) [file tail $lfilemask($id)]
+		} else {
+			append masklist($mon) [file tail $lfilemask($id)]
+		}	
+	
+		if {$opclist($mon) != "" } {
+			append opclist($mon) ","
+			append opclist($mon) $opt($id,1,opacity)
+		} else {
+			append opclist($mon) $opt($id,1,opacity)
+		}	
+	}
 }
     
 proc GmHist::mapname { node } {
@@ -286,43 +299,66 @@ proc GmHist::mapname { node } {
 }
 
 proc GmHist::duplicate { tree parent node id } {
+    variable optlist
+    variable lfile
+    variable lfilemask
     variable opt
-    variable count 
-    global gmpath
-    global mon
+    variable count
+	variable dup
+	global guioptfont
+	global iconpath
+	global first
 
     set node "hist:$count"
+	set dup($count) 1
+    set first 1
 
     set frm [ frame .histicon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
+    set check [checkbutton $frm.check -font $guioptfont \
 		-variable GmHist::opt($count,1,_check) \
 		-height 1 -padx 0 -width 0]
 
-    image create photo hico -file "$gmpath/histogram.gif"
+    image create photo hico -file "$iconpath/module-d.histogram.gif"
     set ico [label $frm.ico -image hico -bd 1 -relief raised]
     
     pack $check $ico -side left
 
+	#insert new layer
+	if {[$tree selection get] != "" } {
+		set sellayer [$tree index [$tree selection get]]
+    } else { 
+    	set sellayer "end" 
+    }
+
 	if { $opt($id,1,map) == ""} {
-    	$tree insert end $parent $node \
+ 	   $tree insert $sellayer $parent $node \
 		-text      "histogram $count" \
 		-window    $frm \
 		-drawcross auto
 	} else {
-	    $tree insert end $parent $node \
+	    $tree insert $sellayer $parent $node \
 		-text      "histogram for $opt($id,1,map)" \
 		-window    $frm \
 		-drawcross auto
 	}
 
-    set opt($count,1,_check) $opt($id,1,_check)
-    set opt($count,1,map) "$opt($id,1,map)" 
-	set opt($count,1,opacity) opt($id,1,opacity)
-    set opt($count,1,color) "$opt($id,1,color)"
-    set opt($count,1,style) "$opt($id,1,style)" 
-    set opt($count,1,nsteps) "$opt($id,1,nsteps)"
-    set opt($count,1,nulls) "$opt($id,1,nulls)"
+	set opt($count,1,opacity) $opt($id,1,opacity)
+
+	set optlist {_check map color style nsteps nulls}
+
+    foreach key $optlist {
+    	set opt($count,1,$key) $opt($id,1,$key)
+		set opt($count,0,$key) $opt($count,1,$key)
+    } 
+	
+	set id $count
+	
+	# create files in tmp directory for layer output
+	set mappid [pid]
+	set lfile($count) [eval exec "g.tempfile pid=$mappid"]
+	set lfilemask($count) $lfile($count)
+	append lfile($count) ".ppm"
+	append lfilemask($count) ".pgm"
 
     incr count
     return $node

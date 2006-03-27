@@ -12,11 +12,11 @@
 namespace eval GmBarscale {
     variable array opt # barscale current options
     variable count 1
-    variable array lfile # rgbhis
-    variable array lfilemask # rgbhis
+    variable array lfile # scale
+    variable array lfilemask # scale
     variable optlist
     variable first
-    variable array dup # vector
+    variable array dup # layer
 }
 
 
@@ -219,6 +219,7 @@ proc GmBarscale::display { node mod } {
     global complist
     global opclist
     global masklist
+    global gmpath
     variable optlist
     variable lfile 
     variable lfilemask
@@ -230,7 +231,6 @@ proc GmBarscale::display { node mod } {
 
  	set line ""
     set input ""
-    global gmpath
     set cmd ""
 
     set tree($mon) $GmTree::tree($mon)

@@ -784,6 +784,7 @@ proc GmVector::WorkOnVector { node mod } {
 					runcmd "d.mon start=x$xmon"
 					set nextmon [expr $xmon + 1]
     				GmGroup::display "root" $mod
+    				eval exec "d.save -o > dsaveout.txt"
 					set bg [exec d.save -o | cut -f1 -d# | tr {\n} {;}]
     				set bg "$bg"
 					spawn v.digit -n map=$opt($id,1,vect) bgcmd=$bg
@@ -793,6 +794,7 @@ proc GmVector::WorkOnVector { node mod } {
 					runcmd "d.mon select=x$xmon"
 					set nextmon [expr $xmon + 1]
     				GmGroup::display "root" $mod
+    				eval exec "d.save -o > dsaveout.txt"
 					set bg [exec d.save -o | cut -f1 -d# | tr {\n} {;}]
     				set bg "$bg"
 					spawn v.digit -n map=$opt($id,1,vect) bgcmd=$bg
