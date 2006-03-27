@@ -1,24 +1,36 @@
 <h2>DESCRIPTION</h2>
 
-<b>r.support</b> allows the user to create/edit raster map support 
-layers.  Editing of raster color tables, categories, header and history 
-are allowed.
+<b>r.support</b> allows the user to create and/or edit raster map support 
+information. Editing of raster map color tables, category labels, header, 
+history, and title is supported.
 
-<h2> OPTIONS</h2>
-<p>Currently, <b>r.support</b> needs to be run interactively.</p>
 
-<h3> Parameters:</h3>
-<dl>
-There are no parameters for <b>r.support</b>.
-<br>
+<h2>NOTES</h2>
+
+If the <b>title</b> or <b>history</b> options are given the module will run 
+non-interactively. If only the map name is given <em>r.support</em> will
+run interactively within a terminal shell and the user with be prompted for
+input.
+<P>
+Map metadata information is stored in a "hist" file which may be 
+appended to by using the <b>history</b> option. Currently this is limited to
+50 lines of text with a maximum line length of 78 characters. Any input
+larger than this will be truncated.
+
+
+<h2>SEE ALSO</h2>
+<a href="r.describe.html">r.describe</a>,
+<a href="r.info.html">r.info</a>,
+<a href="r.null">r.null</a>,
+<a href="r.region">r.region</a>,
+<a href="r.report">r.report</a>,
+<a href="r.timestamp.html">r.timestamp</a>
+
 
 <h2>AUTHORS</h2>
 
-Micharl Shapiro - CERL
-Brad Douglas                                                                        
-
-<address>
-<a href="MAILTO:rez@touchofmadness.com">Brad Douglas</a>
-</address>
+Micharl Shapiro, CERL: Original author<BR>
+<a href="MAILTO:rez@touchofmadness.com">Brad Douglas</a>: GRASS 6 Port<BR>
+M. Hamish Bowman: command line enhancements
 
 <p><i>Last changed: $Date$</i> </p>
