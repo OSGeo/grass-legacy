@@ -8,7 +8,6 @@ namespace eval GmToolBar1 {
 }
 
 proc GmToolBar1::create { tb } {
-    global gmpath
     global iconpath
     global bgcolor
     global mon
@@ -22,7 +21,7 @@ proc GmToolBar1::create { tb } {
     set bbox0 [ButtonBox $toolbar.bbox0 -spacing 0 -background $bgcolor ]
     
     # add monitor
-    $bbox0 add -image [image create photo -file "$gmpath/startmon.gif"] \
+    $bbox0 add -image [image create photo -file "$iconpath/gui-startmon.gif"] \
         -command "Gm::startmon" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Start new map display monitor"]
@@ -53,13 +52,13 @@ proc GmToolBar1::create { tb } {
         -helptext [G_msg "Add histogram layer"]
 
     # add cell values layer
-    $bbox1 add -image [image create photo -file "$gmpath/rastnums.gif"] \
+    $bbox1 add -image [image create photo -file "$iconpath/module-d.rast.num.gif"] \
         -command "GmTree::add rnums" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Add cell values layer"]
 
     # add cell values layer
-    $bbox1 add -image [image create photo -file "$gmpath/rastarrows.gif"] \
+    $bbox1 add -image [image create photo -file "$iconpath/module-d.rast.arrow.gif"] \
         -command "GmTree::add arrows" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Add directional arrows layer"]
@@ -85,7 +84,7 @@ proc GmToolBar1::create { tb } {
         -helptext [G_msg "Add vector layer"]
 
     # add thematic
-    $bbox2 add -image [image create photo -file "$iconpath/module-d.thematic.gif"] \
+    $bbox2 add -image [image create photo -file "$iconpath/module-d.vect.thematic.gif"] \
         -command "GmTree::add thematic" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Add thematic map layer"]
@@ -93,7 +92,7 @@ proc GmToolBar1::create { tb } {
     pack $bbox2 -side left -anchor w
 
     # add chart
-    $bbox2 add -image [image create photo -file "$iconpath/module-d.chart.gif"] \
+    $bbox2 add -image [image create photo -file "$iconpath/module-d.vect.chart.gif"] \
         -command "GmTree::add chart" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Add thematic charts layer"]
@@ -111,7 +110,7 @@ proc GmToolBar1::create { tb } {
         -helptext [G_msg "Add paint labels layer (from directory paint/labels)"]
 
     # add text
-    $bbox3 add -image [image create photo -file "$gmpath/maptext.gif"] \
+    $bbox3 add -image [image create photo -file "$iconpath/gui-maptext.gif"] \
         -command "GmTree::add ctext" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Add text layer"]

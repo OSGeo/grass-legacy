@@ -10,7 +10,6 @@ namespace eval GmToolBar2 {
 
 
 proc GmToolBar2::create { tb } {
-    global gmpath
     global bgcolor
     global iconpath
     variable toolbar
@@ -26,14 +25,14 @@ proc GmToolBar2::create { tb } {
         -helptext [G_msg "Scalebar and north arrow"]
 
     # add grid and lines
-    $bbox1 add -image [image create photo -file "$gmpath/grid.gif"] -command "GmTree::add gridline"\
+    $bbox1 add -image [image create photo -file "$iconpath/module-d.grid.gif"] -command "GmTree::add gridline"\
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
         -helptext [G_msg "Overlay grids and lines"]
 
-    # add frame
-    $bbox1 add -image [image create photo -file "$gmpath/frames.gif"] -command "GmTree::add dframe"\
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
-        -helptext [G_msg "Create or select display frame"]
+    # add frame (frames not functional in GIS Manager currently)
+#    $bbox1 add -image [image create photo -file "$iconpath/module-d.frame.gif"] -command "GmTree::add dframe"\
+#        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
+#        -helptext [G_msg "Create or select display frame"]
 
     pack $bbox1 -side left -anchor w
 
@@ -44,7 +43,7 @@ proc GmToolBar2::create { tb } {
     set bbox2 [ButtonBox $toolbar.bbox2 -spacing 0 -background $bgcolor ]
 
     # add group
-    $bbox2 add -image [image create photo -file "$gmpath/group.gif"] \
+    $bbox2 add -image [image create photo -file "$iconpath/gui-group.gif"] \
         -command "GmTree::add group" -borderwidth 2\
         -highlightthickness 0 -takefocus 0 -relief raised \
         -helptext [G_msg "Add group"]
@@ -88,19 +87,19 @@ proc GmToolBar2::create { tb } {
     set bbox4 [ButtonBox $toolbar.bbox4 -spacing 0 -background $bgcolor ]
 
     # zoom
-    $bbox4 add -image [image create photo -file "$gmpath/nviz.gif"] \
+    $bbox4 add -image [image create photo -file "$iconpath/module-nviz.gif"] \
         -command "Gm::nviz" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
         -helptext [G_msg "NVIZ - n dimensional visualization"]
     
     # zoom.back
-    $bbox4 add -image [image create photo -file "$gmpath/fly.gif"] \
+    $bbox4 add -image [image create photo -file "$iconpath/module-d.nviz.gif"] \
         -command "Gm::fly" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2\
         -helptext [G_msg "Fly through path for NVIZ"]
 
     # pan
-    $bbox4 add -image [image create photo -file "$gmpath/xganim.gif"] \
+    $bbox4 add -image [image create photo -file "$iconpath/module-xganim.gif"] \
         -command "Gm::xganim" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2\
         -helptext [G_msg "Animate raster map series"]
@@ -115,7 +114,7 @@ proc GmToolBar2::create { tb } {
     set bbox5 [ButtonBox $toolbar.bbox5 -spacing 20 -background $bgcolor ]
     
     #digitize
-    $bbox5 add -image [image create photo -file "$gmpath/dig.gif"] \
+    $bbox5 add -image [image create photo -file "$iconpath/module-v.digit.gif"] \
         -command "GmTree::vedit" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
         -helptext [G_msg "Digitize map (select or create new map first)"]
