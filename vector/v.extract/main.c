@@ -27,6 +27,7 @@
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
+#include <grass/glocale.h>
 
 static int *cat_array, cat_count, cat_size;
 int scan_cats(char *, int *, int *);
@@ -68,19 +69,19 @@ int main (int argc, char **argv)
     /* set up the options and flags for the command line parser */
     module = G_define_module();
     module->description =
-	"Selects vector objects from an existing vector map and "
+	_("Selects vector objects from an existing vector map and "
 	"creates a new map containing only the selected objects. "
 	"If 'list', 'file' and 'where' options are not specified, "
 	"all features of given type and layer are extracted, categories "
-	"are not changed in that case.";
+	"are not changed in that case.");
 
     d_flag = G_define_flag();
     d_flag->key              = 'd';
-    d_flag->description      = "Dissolve common boundaries (default is no) ";
+    d_flag->description      = _("Dissolve common boundaries (default is no) ");
     
     t_flag = G_define_flag();
     t_flag->key              = 't';
-    t_flag->description      = "Do not copy table (see also 'new' parameter)";
+    t_flag->description      = _("Do not copy table (see also 'new' parameter)");
     
     inopt = G_define_standard_option(G_OPT_V_INPUT);
 
@@ -91,16 +92,16 @@ int main (int argc, char **argv)
     typopt->options    = "point,line,boundary,centroid,area,face" ;
 
     fieldopt = G_define_standard_option(G_OPT_V_FIELD);
-    fieldopt->description = "Layer number. If -1, all features in all layers of given type "
-			   "are extracted";
+    fieldopt->description = _("Layer number. If -1, all features in all layers of given type "
+			   "are extracted.");
 
     newopt = G_define_option();
     newopt->key              = "new";
     newopt->type             =  TYPE_INTEGER;
     newopt->required         =  NO;
     newopt->answer           = "-1";
-    newopt->description      = "Enter -1 to keep original category or a desired NEW category value. "
-	                       "If new >= 0, table is not copied.";
+    newopt->description      = _("Enter -1 to keep original category or a desired NEW category value. "
+	                       "If new >= 0, table is not copied.");
 
     listopt = G_define_option();
     listopt->key             = "list";
@@ -108,13 +109,13 @@ int main (int argc, char **argv)
     listopt->required        =  NO;
     listopt->multiple        =  YES;
     listopt->key_desc        = "range";
-    listopt->description     = "Category ranges: e.g. 1,3-8,13";
+    listopt->description     = _("Category ranges: e.g. 1,3-8,13");
 
     fileopt = G_define_option();
     fileopt->key             = "file";
     fileopt->type            =  TYPE_STRING;
     fileopt->required        =  NO;
-    fileopt->description     = "Text file with category numbers/number ranges ";
+    fileopt->description     = _("Text file with category numbers/number ranges ");
 
     whereopt = G_define_standard_option(G_OPT_WHERE) ;
 
@@ -136,7 +137,7 @@ int main (int argc, char **argv)
     input = inopt->answer;
     mapset = G_find_vector2 (input, "") ;
 
-    if (!mapset) G_fatal_error("Vector file [%s] not available in search list", input);
+    if (!mapset) G_fatal_error(_("Vector file [%s] not available in search list"), input);
       
     G_debug ( 3, "Mapset = %s", mapset);
     /* set output vector file name */
@@ -145,7 +146,7 @@ int main (int argc, char **argv)
     if ( d_flag->answer ) dissolve = 1;
 
     field = atoi ( fieldopt->answer );
-    if ( field == 0 ) G_fatal_error ( "Layer 0 not supported" );
+    if ( field == 0 ) G_fatal_error ( _("Layer 0 not supported") );
 
     if (!newopt->answer) new_cat = 0;
     else new_cat = atoi(newopt->answer);
@@ -170,7 +171,7 @@ int main (int argc, char **argv)
 	for (i = 0; listopt->answers[i]; i++) {
             G_debug ( 2, "catlist item: %s", listopt->answers[i]);
 	    if (!scan_cats (listopt->answers[i], &x, &y))
-		G_fatal_error("Category value in <%s> not valid", listopt->answers[i]);
+		G_fatal_error(_("Category value in <%s> not valid"), listopt->answers[i]);
         }
 	    
 	/* valid list, put into cat value array */
@@ -180,17 +181,17 @@ int main (int argc, char **argv)
 	    while (x <= y) add_cat(x++);
 	}
     } else if ( fileopt->answer != NULL )  {  /* got a file of category numbers */
-	fprintf(stderr,"process file <%s> for category numbers\n",fileopt->answer);
+	fprintf(stderr,_("process file <%s> for category numbers\n"),fileopt->answer);
 
 	/* open input file */
 	if( (in = fopen(fileopt->answer,"r")) == NULL )
-	    G_fatal_error("Can't open specified file <%s>", fileopt->answer) ;
+	    G_fatal_error(_("Can't open specified file <%s>"), fileopt->answer) ;
 	while (1)
 	{
 	    if (!fgets (buffr, 39, in)) break;
 	    G_chop(buffr); /* eliminate some white space, we accept numbers and dashes only */
 	    sscanf (buffr, "%[-0-9]", text);
-	    if (strlen(text) == 0) G_warning("Ignored text entry: %s", buffr);
+	    if (strlen(text) == 0) G_warning(_("Ignored text entry: %s"), buffr);
 
 	    scan_cats (text, &x, &y);
             /* two BUGS here: - fgets stops if white space appears
@@ -200,25 +201,25 @@ int main (int argc, char **argv)
 	fclose(in);
     } else if ( whereopt->answer != NULL ) { 
 	if ( field < 1 ) {
-	    G_fatal_error ( "'layer' must be > 0 for 'where'." );
+	    G_fatal_error ( _("'layer' must be > 0 for 'where'.") );
 	}
         Fi = Vect_get_field( &In, field);
 	if ( !Fi ) {
-	    G_fatal_error ( "No layer database connection." );
+	    G_fatal_error ( _("No layer database connection.") );
 	}
-	fprintf(stderr,"Load cats from the database (table = %s, db = %s).\n",  Fi->table, Fi->database);
+	fprintf(stderr,_("Load cats from the database (table = %s, db = %s).\n"),  Fi->table, Fi->database);
 	
         driver = db_start_driver(Fi->driver);
         if (driver == NULL)
-            G_fatal_error("Cannot open driver %s", Fi->driver) ;
+            G_fatal_error(_("Cannot open driver %s"), Fi->driver) ;
 				 
 	db_init_handle (&handle);
 	db_set_handle (&handle, Fi->database, NULL);
 	if (db_open_database(driver, &handle) != DB_OK)
-            G_fatal_error("Cannot open database %s", Fi->database) ;
+            G_fatal_error(_("Cannot open database %s"), Fi->database) ;
 											 
 	ncats = db_select_int( driver, Fi->table, Fi->key, whereopt->answer, &cats);
-	fprintf(stderr,"%d cats loaded from the database\n",  ncats);
+	fprintf(stderr,_("%d cats loaded from the database\n"),  ncats);
 	
 	db_close_database(driver);
 	db_shutdown_driver(driver);
@@ -273,7 +274,7 @@ int main (int argc, char **argv)
 	}
 
 	/* Copy tables */
-	G_message ( "Writing attributes ...\n" );
+	G_message ( _("Writing attributes ...\n") );
 
 	/* Number of output tabs */
 	for ( i = 0; i < Vect_get_num_dblinks ( &In ); i++ ) {
@@ -302,12 +303,12 @@ int main (int argc, char **argv)
 	    if ( nocats[i] == 0 ) continue;
 	    if ( fields[i] == field && new_cat != -1 ) continue;
 	
-	    G_message ( "Layer %d", fields[i] );
+	    G_message ( _("Layer %d"), fields[i] );
 
 	    /* Make a list of categories */
 	    IFi = Vect_get_field ( &In, fields[i] );
 	    if ( !IFi ) { /* no table */
-		G_message ( "No table." );
+		G_message ( _("No table.") );
 		continue;
 	    }
 	    
@@ -318,12 +319,12 @@ int main (int argc, char **argv)
 				  IFi->key, ocats[i], nocats[i] );
 
 	    if ( ret == DB_FAILED ) {
-		G_warning ( "Cannot copy table" );
+		G_warning ( _("Cannot copy table") );
 	    } else {
 		Vect_map_add_dblink ( &Out, OFi->number, OFi->name, OFi->table, 
 				      IFi->key, OFi->database, OFi->driver);
 	    }
-	    G_message ( "Done." );
+	    G_message ( _("Done.") );
 	}
     }
 
@@ -334,7 +335,7 @@ int main (int argc, char **argv)
     if ( dissolve ) { 
 	int line, nlines, ltype, area;
 	
-	fprintf(stderr,"Removing duplicate centroids ..." );
+	fprintf(stderr,_("Removing duplicate centroids ...") );
 	nlines = Vect_get_num_lines ( &Out );
 	for ( line = 1; line <= nlines; line++) {
 	    if ( !Vect_line_alive ( &Out, line ) ) continue; /* should not happen */
