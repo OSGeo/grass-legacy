@@ -127,12 +127,22 @@ int plot1 (
 		 for ( i = 0; i < Cats->n_cats; i++ ) {
 		     if ( Cats->field[i] == Clist->field && Vect_cat_in_cat_list ( Cats->cat[i], Clist) ) {
 			 found = 1;
-			 cat = Cats->cat[i];
                          break;
                      }
                  }
                  if (!found) continue;
 	     }
+	} else
+	if ( Clist->field > 0 ) {
+		int found = 0;
+
+		for ( i = 0; i < Cats->n_cats; i++ ) {
+			if ( Cats->field[i] == Clist->field ) {
+				found = 1;
+				break;
+			}
+		}
+		if (!found) continue;
 	}
 
 	if( table_colors_flag ) {

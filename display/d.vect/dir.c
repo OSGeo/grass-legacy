@@ -48,7 +48,17 @@ int dir ( struct Map_info *Map, int type, struct cat_list * Clist, int chcat )
 		 }
 	     }
 	     if (!found) continue;
-        }
+        } else if ( Clist->field > 0 ) {
+	     int i, found = 0;
+
+	     for ( i = 0; i < Cats->n_cats; i++ ) {
+		 if ( Cats->field[i] == Clist->field ) {
+		     found = 1;
+		     break;
+		 }
+	     }
+	     if (!found) continue;
+	}
 	
 	len = Vect_line_length ( Points );
 
