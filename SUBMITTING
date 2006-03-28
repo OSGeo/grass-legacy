@@ -248,10 +248,25 @@ care of following rules:
 17. Make sure a new line is at the end of each file.
 
 
-18. When writing Makefiles, use the current standard
+18. When writing Makefiles, use the current standard.
 
-    Example: see raster/r.info/Makefile or others
+    If you have to use commands, please check for:
+    
+            avoid     | use instead
+    ------------------+---------------
+    make target       | $(MAKE) target
+    mkdir target      | $(MKDIR) target
+    cp  (executable)  | $(INSTALL) -m 755 file target
+    cp  (normal file) | $(INSTALL) -m 644 file target
+    ar                | $(AR)
 
+    rm: be VERY careful with recursive remove.
+
+    Examples: see below examples or others
+              raster/r.info/Makefile
+              vector/v.digit/Makefile
+
+    If you are unsure, please ask on the GRASS Developers list.
 
 19. Have a look at ./INSTALL
 
