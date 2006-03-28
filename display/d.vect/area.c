@@ -135,6 +135,25 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 		 if (!found) continue;
 	     } /* end else */
         } /* end if id_flag */
+	else if ( Clist->field > 0 ){
+		int found = 0;
+		
+		centroid = Vect_get_area_centroid ( Map, area );
+		G_debug (3, "centroid = %d", centroid);
+		if ( centroid < 1 ) continue;
+		Vect_read_line (Map, Points, Cats, centroid );
+		
+		for ( i = 0; i < Cats->n_cats; i++ ) {
+			G_debug (3, "  centroid = %d, field = %d, cat = %d", centroid,
+					Cats->field[i], Cats->cat[i]);
+			if ( Cats->field[i] == Clist->field ) {
+				found = 1;
+				break;
+			}
+		}
+		if (!found) continue;
+	}
+
         G_debug (3, "display area %d", area);
 
         /* fill */

@@ -176,6 +176,7 @@ main (int argc, char **argv)
 	size_opt->description= _("Icon size");
 	
 	field_opt = G_define_standard_option(G_OPT_V_FIELD) ;
+	field_opt->description= _("Layer number. If -1, all layers are displayed.");
 	cat_opt = G_define_standard_option(G_OPT_V_CATS) ;
 	where_opt = G_define_standard_option(G_OPT_WHERE) ;
 
@@ -389,6 +390,8 @@ main (int argc, char **argv)
 	
 	if (where_opt->answer)
 	  {
+	    if ( Clist->field < 1 )
+		    G_fatal_error(_("'layer' must be > 0 for 'where'."));
             chcat = 1;  
             if ( (fi = Vect_get_field ( &Map, Clist->field)) == NULL)
                 G_fatal_error(_("Database connection not defined"));
@@ -412,16 +415,16 @@ main (int argc, char **argv)
 	      }
 	  }
         else
+	if (cat_opt->answer)
 	  {
-	    if (cat_opt->answer)
-	      {
-		chcat = 1;  
-	        ret = Vect_str_to_cat_list ( cat_opt->answer, Clist);
-	        if ( ret > 0 )
-	            G_warning (_("%d errors in cat option"), ret);
-              }
-	  }
-	
+	    if ( Clist->field < 1 )
+		G_fatal_error(_("'layer' must be > 0 for 'cats'."));
+	    chcat = 1;  
+	    ret = Vect_str_to_cat_list ( cat_opt->answer, Clist);
+	    if ( ret > 0 )
+	        G_warning (_("%d errors in cat option"), ret);
+          }
+
 	i = 0;
         type = 0; area = FALSE;
 	while (type_opt->answers[i])

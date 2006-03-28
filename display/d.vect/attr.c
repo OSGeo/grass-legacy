@@ -73,8 +73,18 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
 		 }
 	     }
 	     if (!found) continue;
-        }
-	
+        } else if ( Clist->field > 0 ) {
+	     int found = 0;
+
+	     for ( i = 0; i < Cats->n_cats; i++ ) {
+		 if ( Cats->field[i] == Clist->field ) {
+		     found = 1;
+		     break;
+		 }
+	     }
+	     if (!found) continue;
+	}
+
 	if( Vect_cat_get(Cats, lattr->field, &cat) )
 	  {	    
 	    int ncats = 0;
