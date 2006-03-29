@@ -1049,9 +1049,21 @@ int main (int argc, char *argv[])
         G_write_raster_cats (aspect_name, &cats);
         G_free_raster_cats (&cats);
 
+        /*
         sprintf(buf, "r.colors map='%s' c=aspect",
 		G_fully_qualified_name (aspect_name, G_mapset()));
-	system(buf);
+	G_system(buf);
+        */
+        
+        {
+        DCELL min, max;
+        struct FPRange range;
+        G_init_colors (&colors);
+        G_read_fp_range ( aspect_name, G_mapset(), &range);
+        G_get_fp_range_min_max (&range, &min, &max);
+        G_make_aspect_fp_colors (&colors, min, max);
+        G_write_colors (aspect_name, G_mapset(), &colors);
+        }
 
         /* writing history file */
         G_short_history(aspect_name, "raster", &hist);
