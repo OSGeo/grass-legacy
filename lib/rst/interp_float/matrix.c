@@ -98,7 +98,7 @@ C
         {
            A[i1] = RO; /* constant smoothing*/
         }
-        if (i1 == 100) fprintf (stderr,"A[%d]=%f\n",i1,A[i1]);
+/*        if (i1 == 100) fprintf (stderr,"A[%d]=%f\n",i1,A[i1]);*/
 
 /*	A[i1] = RO; */
 	for (l = k2; l <= n_points; l++)
