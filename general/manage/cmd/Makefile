@@ -8,24 +8,28 @@ DEPENDENCIES = $(GISDEP) $(VECTDEP) $(DBMIDEP) $(MANAGEDEP)
 EXTRA_INC = -I..
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
+COPY_MOD = $(BIN)/g.copy$(EXE_SUFFIX)
+LIST_MOD = $(BIN)/g.list$(EXE_SUFFIX)
+REMOVE_MOD = $(BIN)/g.remove$(EXE_SUFFIX)
+RENAME_MOD = $(BIN)/g.rename$(EXE_SUFFIX)
 
 default: \
-	$(BIN)/g.copy \
-	$(BIN)/g.list \
-	$(BIN)/g.remove \
-	$(BIN)/g.rename \
+	$(COPY_MOD) \
+	$(LIST_MOD) \
+	$(REMOVE_MOD) \
+	$(RENAME_MOD) \
 	htmlmulti
 
-$(BIN)/g.copy: $(OBJDIR)/copy.o $(LIST)
+$(COPY_MOD): $(OBJDIR)/copy.o $(LIST)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/copy.o $(FMODE_OBJ) $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(BIN)/g.list: $(OBJDIR)/list.o $(LIST)
+$(LIST_MOD): $(OBJDIR)/list.o $(LIST)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/list.o $(FMODE_OBJ) $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(BIN)/g.remove: $(OBJDIR)/remove.o $(LIST)
+$(REMOVE_MOD): $(OBJDIR)/remove.o $(LIST)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/remove.o $(FMODE_OBJ) $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(BIN)/g.rename: $(OBJDIR)/rename.o $(LIST)
+$(RENAME_MOD): $(OBJDIR)/rename.o $(LIST)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/rename.o $(FMODE_OBJ) $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 PROGRAMS = g.copy g.list g.remove g.rename
