@@ -1,6 +1,6 @@
-/* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_buf */
-/* adapted  7/23/90  J Moorman from undxf.c code written by:
- * Programmer: Tom Howard   National Park Service GIS division
+/* Benjamin Horner-Johnson, 10/06/1998
+ * J Moorman, 07/23/1990 adapted from undxf.c code written by:
+ * Tom Howard, National Park Service GIS division
  */
 
 #include <stdlib.h>
@@ -8,7 +8,7 @@
 
 int add_circle(struct dxf_file *dxf, struct Map_info *Map)
 {
-    int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
+    int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY get_code() */
     int layer_flag = 0;		/* INDICATES IF A LAYER NAME HAS BEEN FOUND */
     int xflag = 0;		/* INDICATES IF A x VALUE HAS BEEN FOUND */
     int yflag = 0;		/* INDICATES IF A y VALUE HAS BEEN FOUND */
@@ -23,8 +23,8 @@ int add_circle(struct dxf_file *dxf, struct Map_info *Map)
     strcpy(layername, UNIDENTIFIED_LAYER);
 
     /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
-    while ((code = dxf_readcode(dxf)) != 0) {
-	if (code == -2 || !dxf_fgets(dxf_buf, 256, dxf))
+    while ((code = dxf_get_code(dxf)) != 0) {
+	if (code == -2)
 	    return -1;
 
 	switch (code) {

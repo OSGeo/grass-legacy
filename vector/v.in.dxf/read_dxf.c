@@ -2,6 +2,8 @@
 #include <string.h>
 #include "global.h"
 
+static char *dxf_fgets(char *, int, struct dxf_file *);
+
 /* On error, returns -1, otherwise returns 0 */
 struct dxf_file *dxf_open(char *file)
 {
@@ -42,31 +44,41 @@ void dxf_close(struct dxf_file *dxf)
     return;
 }
 
-/* Reads next line of input file
- * returns atoi of line, or  -1 if NON-numeric  or -2 on EOF
- */
-int dxf_readcode(struct dxf_file *dxf)
+/* returns a zero if header not found, returns a 1 if found */
+int dxf_find_header(struct dxf_file *dxf)
 {
-    char buf[256], *p;
-    int ready = 0;
-
-    if (!dxf_fgets(buf, 256, dxf))
-	return -2;
-    for (p = buf; *p; p++) {
-	if (*p != ' ' && *p != '\t')
-	    ready = 1;
-	if (ready) {
-	    if ('0' <= *p && *p <= '9')
-		return atoi(buf);
-	    else
-		break;
-	}
+    while (dxf_get_code(dxf) != -2) {
+	/* Some dxf files will not have header information */
+	if (strcmp(dxf_buf, "HEADER") == 0 || strcmp(dxf_buf, "ENTITIES") == 0)
+	    return strcmp(dxf_buf, "HEADER") == 0;
     }
 
-    return -1;			/* NOT NUMERIC */
+    G_fatal_error(_("end of file while looking for HEADER"));
+
+    return -1;
 }
 
-char *dxf_fgets(char *buf, int size, struct dxf_file *dxf)
+/* returns a DXF code
+ * -1 if non-numeric
+ * -2 on EOF
+ */
+int dxf_read_code(struct dxf_file *dxf, char *buf, int size)
+{
+    if (!dxf_fgets(buf, size, dxf))
+	return -2;
+
+    if (buf[0] >= '0' && buf[0] <= '9') {
+	int code = atoi(buf);
+
+	if (!dxf_fgets(buf, size, dxf))
+	    return -2;
+	return code;
+    }
+
+    return -1;	/* not numeric */
+}
+
+static char *dxf_fgets(char *buf, int size, struct dxf_file *dxf)
 {
     char *p;
 
@@ -77,19 +89,6 @@ char *dxf_fgets(char *buf, int size, struct dxf_file *dxf)
     }
 
     return p;
-}
-
-/* returns a zero if header not found, returns a 1 if found */
-int dxf_find_header(struct dxf_file *dxf)
-{
-    dxf_fgets(dxf_buf, 256, dxf);
-    /* Some dxf files will not have header information */
-    while (strcmp(dxf_buf, "HEADER") != 0 && strcmp(dxf_buf, "ENTITIES") != 0) {
-	if (!dxf_fgets(dxf_buf, 256, dxf))
-	    G_fatal_error(_("end of file while looking for HEADER"));
-    }
-
-    return strcmp(dxf_buf, "HEADER") == 0;
 }
 
 /* this is a modified version of G_percent created because of the use of

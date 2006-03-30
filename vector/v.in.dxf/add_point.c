@@ -1,6 +1,5 @@
-/* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_buf */
-/* written by J Moorman
- * 7/23/90
+/* Benjamin Horner-Johnson, 10/06/1998
+ * J Moorman, 07/23/1990
  */
 
 #include <stdlib.h>
@@ -8,7 +7,7 @@
 
 int add_point(struct dxf_file *dxf, struct Map_info *Map)
 {
-    int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
+    int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY get_code() */
     int layer_flag = 0;		/* INDICATES IF A LAYER NAME HAS BEEN FOUND */
     int xflag = 0;		/* INDICATES IF A x VALUE HAS BEEN FOUND */
     int yflag = 0;		/* INDICATES IF A y value has been found */
@@ -19,8 +18,8 @@ int add_point(struct dxf_file *dxf, struct Map_info *Map)
     strcpy(layername, UNIDENTIFIED_LAYER);
     zpnts[0] = 0.0;
 
-    while ((code = dxf_readcode(dxf)) != 0) {
-	if (code == -2 || !dxf_fgets(dxf_buf, 256, dxf))
+    while ((code = dxf_get_code(dxf)) != 0) {
+	if (code == -2)
 	    return -1;
 
 	switch (code) {

@@ -1,18 +1,5 @@
-/*
- *  Written by Dave Gerdes  11/1989
- *  US Army Construction Engineering Research Lab
- *
- *  Modified by Benjamin Horner-Johnson 1998-SEP-30
- *     added flag to suppress text boxes
- *
- *  Modified by Benjamin Horner-Johnson 1998-OCT-01
- *     changed label from int to char, allowed 1 character labels
- *
- *  Modified by Benjamin Horner-Johnson 1998-OCT-06
- *     changed dxf_fgets(dxf_buf,80,dxf_file) to
- *             dxf_fgets(dxf_buf,256,dxf_file)
- *     changed buf[100] to buf[256] and dxf_fgets(buf,100,dxf_file) to
- *             dxf_fgets(buf,256,dxf_file)
+/* Dave Gerdes, US Army Construction Engineering Research Lab, 11/1989
+ * Benjamin Horner-Johnson, 09/1998, 10/1998
  */
 
 #include <stdlib.h>
@@ -40,8 +27,8 @@ int add_text(struct dxf_file *dxf, struct Map_info *Map)
     height = 1.0;
     angle = 0.0;
 
-    while ((code = dxf_readcode(dxf)) > 0) {
-	if (code == -2 || !dxf_fgets(dxf_buf, 256, dxf))
+    while ((code = dxf_get_code(dxf)) > 0) {
+	if (code == -2)
 	    return -1;
 
 	switch (code) {
