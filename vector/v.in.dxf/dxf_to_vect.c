@@ -1,25 +1,5 @@
-/* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_buf */
-/* last modified by J Moorman
- * 7/23/90
- *
- * Dxf files may or may not contain a HEADER section
- * if the HEADER section is found then the map extent information is
- * extracted from the $EXTMAX and $EXTMIN groups
- *
- * in dxf_header()
- * 1.if the HEADER section is not found in the file and the ENTITY
- *   section is not found the program exits
- * 2.if the HEADER section is found a value of 1 is returned
- *   and the map extent information is searched for in this section
- *   noting that the ENTITY section must be searched for after the
- *   HEADER section has been read.
- *   if the map extents are successfully read in bounds will
- *   equal 4 and all calls to the check_ext() are bypassed.
- * 3.if no HEADER section is found but the  ENTITY section is found
- *   a value of 0 is returned and the dxf_entities ()is bypassed
- *   The map extents will be calculated at appropriate places to
- *   insure that all points read in or calculated (arcs,circles) will
- *   fall within the map location.
+/* Benjamin Horner-Johnson, 10/06/1998
+ * J Moorman, 07/23/1990
  */
 
 #include <stdlib.h>
@@ -36,24 +16,25 @@ static BOUND_BOX ext, dxf_ext;
 
 int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
 {
-    int code;			/* atoi of line if numeric */
+    int code;
     int bounds = 0;
 
-    if (dxf_find_header(dxf)) {	/* looks for HEADER in file */
-	/* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
-	while ((code = dxf_readcode(dxf))) {
-	    if (code == -2 || !dxf_fgets(dxf_buf, 256, dxf))	/* EOF */
+    if (dxf_find_header(dxf)) {
+	/* code == 0: end of the header section */
+	code = dxf_get_code(dxf);
+	while (code != 0) {
+	    if (code == -2)	/* EOF */
 		return -1;
 
-	    /* only looking for 9 groups  */
+	    /* only looking for header groups (code == 9) */
 	    if (code != 9)
 		continue;
 
 	    if (strcmp(dxf_buf, "$EXTMAX") == 0) {
 		/* READS IN LINES AND PROCESSES INFORMATION UNTIL A 9
 		 * OR A 0 IS READ IN */
-		while ((code = dxf_readcode(dxf)) != 9) {
-		    if (code == -2 || !dxf_fgets(dxf_buf, 256, dxf))	/* EOF */
+		while ((code = dxf_get_code(dxf)) != 9) {
+		    if (code == -2)	/* EOF */
 			return -1;
 
 		    switch (code) {
@@ -76,11 +57,9 @@ int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
 	    }
 	    else if (strcmp(dxf_buf, "$EXTMIN") == 0) {
 		/* READS IN LINES AND PROCESSES INFORMATION UNTIL A 9
-		 * OR A 0 IS READ IN
-		 */
-
-		while ((code = dxf_readcode(dxf)) != 9) {
-		    if (code == -2 || !dxf_fgets(dxf_buf, 256, dxf))	/* EOF */
+		 * OR A 0 IS READ IN */
+		while ((code = dxf_get_code(dxf)) != 9) {
+		    if (code == -2)	/* EOF */
 			return -1;
 
 		    switch (code) {
@@ -101,15 +80,14 @@ int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
 		}
 	    }
 	    else {
-		while ((code = dxf_readcode(dxf)) != 9) {
-		    if (code == -2 || !dxf_fgets(dxf_buf, 256, dxf))	/* EOF */
+		while ((code = dxf_get_code(dxf)) != 9) {
+		    if (code == -2)	/* EOF */
 			return -1;
 		}
 	    }
 
 	    if (bounds == 6)
 		break;
-
 	}
     }
 
@@ -123,7 +101,8 @@ int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
 
     Points = Vect_new_line_struct();
 
-    while (dxf_fgets(dxf_buf, 256, dxf)) {
+    while (dxf_get_code(dxf) != -2) {
+	printf("%s\n", dxf_buf);
 	if (strcmp(dxf_buf, "POLYLINE") == 0)
 	    add_polyline(dxf, Map);
 

@@ -1,7 +1,5 @@
-/* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_buf */
-/* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char layername */
-/* written by J Moorman
- * 7/23/90
+/* Benjamin Horner-Johnson, 10/06/1998
+ * J Moorman, 07/23/1990
  */
 
 #include <stdlib.h>
@@ -13,7 +11,7 @@
 
 int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 {
-    int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
+    int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY get_code() */
     int layer_flag = 0;		/* INDICATES IF A LAYER NAME HAS BEEN FOUND */
     int polyline_flag = 0;	/* INDICATES THE TYPE OF POLYLINE */
     int nu_layer_flag = 1;	/* INDICATES IF A nu_layer WAS FOUND */
@@ -36,8 +34,8 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
     strcpy(layername, UNIDENTIFIED_LAYER);
 
     /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
-    while ((code = dxf_readcode(dxf)) != 0) {
-	if (code == -2 || !dxf_fgets(dxf_buf, 256, dxf))
+    while ((code = dxf_get_code(dxf)) != 0) {
+	if (code == -2)
 	    return -1;
 
 	switch (code) {
@@ -91,7 +89,6 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
     }
 
     zpnts[0] = 0.0;
-    dxf_fgets(dxf_buf, 256, dxf);
     while (strcmp(dxf_buf, "SEQEND") != 0) {	/* LOOP UNTIL SEQEND IN THE DXF FILE */
 	if (feof(dxf->fp))	/* EOF */
 	    return -1;
@@ -99,8 +96,8 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 	    xflag = 0;
 	    yflag = 0;
 	    zflag = 0;
-	    while ((code = dxf_readcode(dxf)) != 0) {
-		if (code == -2 || !dxf_fgets(dxf_buf, 256, dxf))	/* EOF */
+	    while ((code = dxf_get_code(dxf)) != 0) {
+		if (code == -2)	/* EOF */
 		    return -1;
 		switch (code) {
 		case 8:	/* LAYER NAMES ARE INCLUDED IN VERTEX ENTITY */
@@ -245,7 +242,6 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 	    arc_tan = 0.0;
 	    bulge = 0.0;
 	}			/* processing polyline vertex */
-	dxf_fgets(dxf_buf, 256, dxf);
     }				/* vertex loop */
     /* done reading vertices */
     if (polyline_flag & POLYFLAG1) {	/* ONLY DEALING WITH polyline_flag = 1 */

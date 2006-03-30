@@ -15,9 +15,9 @@ struct dxf_file
     int percent;
 };
 
-#define ARR_INCR 256
-
 #define UNIDENTIFIED_LAYER "UNIDENTIFIED"
+#define ARR_INCR 256
+#define DXF_BUF_SIZE 256
 
 #ifdef _MAIN_C_
 #define GLOBAL
@@ -26,7 +26,7 @@ struct dxf_file
 #endif
 
 GLOBAL int flag_table;
-GLOBAL char dxf_buf[256];
+GLOBAL char dxf_buf[DXF_BUF_SIZE];
 GLOBAL int ARR_MAX;
 GLOBAL double *xpnts, *ypnts, *zpnts;
 GLOBAL struct line_pnts *Points;
@@ -42,9 +42,9 @@ int check_ext(double, double);
 /* read_dxf.c */
 struct dxf_file *dxf_open(char *);
 void dxf_close(struct dxf_file *);
-int dxf_readcode(struct dxf_file *);
-char *dxf_fgets(char *, int, struct dxf_file *);
 int dxf_find_header(struct dxf_file *);
+#define dxf_get_code(a) dxf_read_code(a, dxf_buf, DXF_BUF_SIZE)
+int dxf_read_code(struct dxf_file *, char *, int);
 int big_percent(unsigned long, unsigned long, int);
 
 /* add_arc.c */
