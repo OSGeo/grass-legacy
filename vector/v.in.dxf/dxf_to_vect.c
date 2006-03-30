@@ -90,6 +90,8 @@ int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
 		break;
 	}
     }
+    else
+	dxf_get_code(dxf);
 
     ARR_MAX = ARR_INCR;
     ext.E = ext.N = ext.T = DBL_MIN;
@@ -101,7 +103,7 @@ int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
 
     Points = Vect_new_line_struct();
 
-    while (dxf_get_code(dxf) != -2) {
+    while (!feof(dxf->fp)) {
 	if (strcmp(dxf_buf, "POLYLINE") == 0)
 	    add_polyline(dxf, Map);
 
@@ -121,6 +123,9 @@ int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
 	else if (strcmp(dxf_buf, "TEXT") == 0)
 	    add_text(dxf, Map);
 #endif
+
+	else
+	    dxf_get_code(dxf);
     }
 
     G_free(xpnts);
