@@ -595,7 +595,7 @@ int G_parser (int argc, char **argv)
 			strcmp(argv[1], "--help") == 0)
 		{
 			G_usage();
-			return -1;
+			exit(0);
 		}
 
 		/* If first arg is "--interface-description" then print out
@@ -603,7 +603,7 @@ int G_parser (int argc, char **argv)
 		if (strcmp(argv[1],"--interface-description") == 0)
 		{
 			G_usage_xml();
-			return -1;
+			exit(0);
 		}
 
 		/* If first arg is "--html-description" then print out
@@ -611,7 +611,7 @@ int G_parser (int argc, char **argv)
 		if (strcmp(argv[1],"--html-description") == 0)
 		{
 			G_usage_html();
-			return -1;
+			exit(0);
 		}
 
 		/* If first arg is "--tcltk" then then generate
