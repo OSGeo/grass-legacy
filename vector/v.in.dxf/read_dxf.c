@@ -75,7 +75,7 @@ int dxf_read_code(struct dxf_file *dxf, char *buf, int size)
 	return code;
     }
 
-    return -1;	/* not numeric */
+    return -1;			/* not numeric */
 }
 
 static char *dxf_fgets(char *buf, int size, struct dxf_file *dxf)
