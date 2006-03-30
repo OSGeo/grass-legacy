@@ -2,8 +2,8 @@ MODULE_TOPDIR = ../..
 
 PGM = g.tempfile
 
-LIBES     = $(GISLIB) $(VASKLIB) $(CURSES)
-DEPENDENCIES= $(GISDEP) $(VASKDEP)
+LIBES     = $(GISLIB)
+DEPENDENCIES= $(GISDEP) 
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
