@@ -52,6 +52,7 @@ Find nearest features:<br>
 <div class="code"><pre>
 v.distance from=pnt to=map_to_query upload=cat col=somecol -p
 </pre></div>
+
 <p>
 5) Point-in-polygon: Find <B>area</B> from vector map <B>ar</B> for each point 
 from vector map <B>pnt</B> in which the individual point falls into and write
@@ -62,18 +63,50 @@ attached to vector map <B>pnt</B>:
 v.distance from=pnt to=ar dmax=0 upload=cat column=areacat
 </pre></div>
 
+<p>
+6) Univariate statistics on results: Create a vector map containing connecting
+lines and investigate mean distance to targets.<br>
+An alternative solution is to use the <tt>v.distance upload=dist</tt> option 
+to upload distances into the <i>bugs</i> vector directly, then run v.univar 
+on that. Also note you can  upload two columns at a time.<BR>
+e.g. <tt>v.distance upload=cat,dist column=nearest_id,dist_to_nr</tt>
+<br>
+<div class="code"><pre>
+# create working copy
+g.copy vect=bugsites,bugs
+
+# add new attribute column to hold nearest archsite category number
+v.db.addcol map=bugs column="nrst_arch INTEGER"
+
+v.distance from=bugs to=archsites to_type=point upload=to_attr \
+  to_column=cat column=nrst_arch out=vdistance_vectors_raw
+
+# we need to give the lines category numbers, create a table, and create
+#  a column in that table to hold the distance data.
+v.category vdistance_vectors_raw out=vdistance_vectors type=line op=add
+g.remove v=vdistance_vectors_raw
+
+v.db.addtable map=vdistance_vectors column="length DOUBLE"
+v.to.db map=vdistance_vectors option=length column=length
+
+# calculcate statistics. Use v.univar.sh for extended statistics.
+v.univar vdistance_vectors column=length
+</pre></div>
+
 
 <H2>NOTES</H2>
 If a nearest feature does not have a category, column is updated to <B>null</B>.
 This is true also for areas, which means for example, that if point is in island
 (area WITHOUT category), v.distance does not search for nearest area WITH category,
 island is identified as nearest and category updated to null.
-
+<p>
+The upload <B>column</B>(s) must already exist. Create one with <em>v.db.addcol</em>.
 
 <H2>SEE ALSO</H2>
 
 <EM>
 <a href="r.distance.html">r.distance</a>,
+<a href="v.db.addcol.html">v.db.addcol</a>,
 <a href="v.what.vect.html">v.what.vect</a>
 </EM>
 
