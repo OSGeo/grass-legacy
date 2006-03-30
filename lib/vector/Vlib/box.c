@@ -60,7 +60,7 @@ Vect_box_overlap (BOUND_BOX *A, BOUND_BOX *B)
 
 /*!
  \fn int Vect_box_copy (BOUND_BOX *A, BOUND_BOX *B)
- \brief copy box A to box B
+ \brief copy box B to box A
  \return 1
  \param boundary box1, boundary box2
 */
