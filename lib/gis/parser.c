@@ -595,7 +595,7 @@ int G_parser (int argc, char **argv)
 			strcmp(argv[1], "--help") == 0)
 		{
 			G_usage();
-			exit(0);
+			exit(EXIT_SUCCESS);
 		}
 
 		/* If first arg is "--interface-description" then print out
@@ -603,7 +603,7 @@ int G_parser (int argc, char **argv)
 		if (strcmp(argv[1],"--interface-description") == 0)
 		{
 			G_usage_xml();
-			exit(0);
+			exit(EXIT_SUCCESS);
 		}
 
 		/* If first arg is "--html-description" then print out
@@ -611,7 +611,7 @@ int G_parser (int argc, char **argv)
 		if (strcmp(argv[1],"--html-description") == 0)
 		{
 			G_usage_html();
-			exit(0);
+			exit(EXIT_SUCCESS);
 		}
 
 		/* If first arg is "--tcltk" then then generate
@@ -619,7 +619,7 @@ int G_parser (int argc, char **argv)
 		if (strcmp(argv[1],"--tcltk") == 0)
 		{
 			G_tcltk();
-			exit(0);
+			exit(EXIT_SUCCESS);
 		}
 
 		/* If first arg is "--ui" then run G_gui() */
@@ -1985,7 +1985,7 @@ static int interactive( char *command)
 	if(!n_items)
 	{
 		fprintf(stderr,"Programmer error: no flags or options\n") ;
-		exit(-1) ;
+		exit(EXIT_FAILURE) ;
 	}
 
 	for (item= &first_item ;;)
@@ -2046,7 +2046,7 @@ static int interactive_option(struct Option *opt )
 	   else
 	   {
 		fprintf(stderr,_("enter option > ")) ;
-		if(fgets(buff,1024,stdin) == 0) exit(1); ;
+		if(fgets(buff,1024,stdin) == 0) exit(EXIT_SUCCESS); ;
                 bptr = buff;  /* strip newline  */
                 while(*bptr) {if(*bptr=='\n') *bptr='\0'; bptr++;}
 
@@ -2062,7 +2062,7 @@ static int interactive_option(struct Option *opt )
 		        if (G_yes(_("   Try again? "), 1))
 		    		continue ;
 	    	        else
-				exit(-1) ;
+				exit(EXIT_FAILURE) ;
 		    }
 		}
 		if (opt->checker)
@@ -2073,7 +2073,7 @@ static int interactive_option(struct Option *opt )
 			    if (G_yes(_("   Try again? "), 1))
 			    	continue ;
 			    else
-				exit(-1) ;
+				exit(EXIT_FAILURE) ;
 		    }
 
 		sprintf(buff2,"%s=%s", opt->key, buff) ;
@@ -2094,7 +2094,7 @@ static int interactive_option(struct Option *opt )
 	   } /* if strlen(buf ) !=0 */
 
 	   if ((strlen(buff) == 0) && opt->required && (set_one == 0))
-		exit(-1) ;
+		exit(EXIT_FAILURE) ;
 	   if ((strlen(buff) == 0) && (set_one > 0) && opt->multiple )
 		break ;
 	   if ((strlen(buff) == 0) && !opt->required)
