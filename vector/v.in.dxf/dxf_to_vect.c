@@ -167,7 +167,7 @@ static void make_head(struct Map_info *Map)
     Vect_set_zone(Map, 0);
     Vect_set_thresh(Map, 0.0);
 
-    Vect_box_copy(&ext, &(Map->plus.box));
+    Vect_box_copy(&(Map->plus.box), &ext);
 
     return;
 }
