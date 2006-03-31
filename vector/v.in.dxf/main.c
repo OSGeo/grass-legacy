@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 {
     struct dxf_file *dxf;
     struct Map_info *Map;
-    char *output_name;
+    char *output_name = NULL;
 
     struct GModule *module;
     struct
@@ -144,7 +144,6 @@ int main(int argc, char *argv[])
 	    G_fatal_error(_("%s: Cannot open new vector file"), output_name);
 
 	Vect_set_map_name(Map, output_name);
-	G_free(output_name);
 
 	Vect_hist_command(Map);
     }
@@ -154,8 +153,16 @@ int main(int argc, char *argv[])
 
     dxf_close(dxf);
 
-    if (!flag_list)
+    if (!flag_list) {
 	Vect_close(Map);
+
+	if (!found_layers) {
+	    fprintf(stderr, "REMOVE [%s]\n", output_name);
+	    Vect_delete(output_name);
+	}
+
+	G_free(output_name);
+    }
 
     exit(0);
 }

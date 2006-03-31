@@ -141,7 +141,8 @@ int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
     if (!flag_list) {
 	Vect_destroy_line_struct(Points);
 	write_done(Map);
-	make_head(Map);
+	if (found_layers)
+	    make_head(Map);
     }
 
     return 0;
