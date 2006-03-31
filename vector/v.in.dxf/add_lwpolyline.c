@@ -10,7 +10,7 @@ int add_lwpolyline(struct dxf_file *dxf, struct Map_info *Map)
     int xflag = 0;		/* indicates if a x value has been found */
     int yflag = 0;		/* indicates if a y value has been found */
     int arr_size = 0;
-    char layer_name[256];
+    char layer_name[DXF_BUF_SIZE];
     /* variables to create arcs */
     double bulge = 0.0;		/* for arc curves */
     double prev_bulge = 0.0;	/* for arc curves */
@@ -30,8 +30,6 @@ int add_lwpolyline(struct dxf_file *dxf, struct Map_info *Map)
 		layer_flag = 1;
 	    }
 	    break;
-
-	    /* THE FOLLOWING GROUPS ARE SPECIFIC TO LWPOLYLINE ENTITY */
 	case 10:		/* x coordinate */
 	    xpnts[arr_size] = atof(dxf_buf);
 	    xflag = 1;
@@ -40,8 +38,6 @@ int add_lwpolyline(struct dxf_file *dxf, struct Map_info *Map)
 	    ypnts[arr_size] = atof(dxf_buf);
 	    yflag = 1;
 	    break;
-	case 40:		/* starting width */
-	case 41:		/* ending width */
 	case 42:		/* bulge */
 	    bulge = atof(dxf_buf);
 	    break;
@@ -55,6 +51,9 @@ int add_lwpolyline(struct dxf_file *dxf, struct Map_info *Map)
 	    polyline_flag = atoi(dxf_buf);
 	    break;
 
+	case 40:		/* starting width */
+	case 41:		/* ending width */
+
 	    /* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
 	case 6:		/* linetype name */
 	case 38:		/* elevation if nonzero */
@@ -66,7 +65,7 @@ int add_lwpolyline(struct dxf_file *dxf, struct Map_info *Map)
 	    break;
 	}
 
-	if (xflag == 1 && yflag == 1) {
+	if (xflag && yflag) {
 	    arr_size = make_arc_from_polyline(arr_size, bulge, prev_bulge);
 	    prev_bulge = bulge;
 	    bulge = 0.0;

@@ -11,12 +11,12 @@ int add_point(struct dxf_file *dxf, struct Map_info *Map)
     int layer_flag = 0;		/* indicates if a layer name has been found */
     int xflag = 0;		/* indicates if a x value has been found */
     int yflag = 0;		/* indicates if a y value has been found */
-    char layer_name[256];
+    char layer_name[DXF_BUF_SIZE];
 
-    /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
     strcpy(layer_name, UNIDENTIFIED_LAYER);
-    zpnts[0] = 0.0;
 
+    zpnts[0] = 0.0;
+    /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
     while ((code = dxf_get_code(dxf)) != 0) {
 	if (code == -2)
 	    return -1;
@@ -39,6 +39,7 @@ int add_point(struct dxf_file *dxf, struct Map_info *Map)
 	case 30:		/* Z coordinate */
 	    zpnts[0] = atof(dxf_buf);
 	    break;
+
 	case 50:		/* angle of x axis for the UCS in effect */
 
 	    /* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
@@ -53,14 +54,16 @@ int add_point(struct dxf_file *dxf, struct Map_info *Map)
 	}
     }
 
-    if (xflag == 1 && yflag == 1) {
+    if (xflag && yflag) {
 	check_ext(xpnts[0], ypnts[0]);
-	xpnts[1] = xpnts[0];
-	ypnts[1] = ypnts[0];
-	zpnts[1] = zpnts[0];
+	/*
+	 * xpnts[1] = xpnts[0];
+	 * ypnts[1] = ypnts[0];
+	 * zpnts[1] = zpnts[0];
+	 */
 
 	write_point(Map, layer_name);
     }
 
-    return 1;
+    return 0;
 }
