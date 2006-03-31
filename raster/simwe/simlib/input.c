@@ -244,11 +244,11 @@ fclose(fdsfile);
            zz[row_rev][j] = (float ) (conv * cell1[j]);
 	   else
 		   zz[row_rev][j] = UNDEF;
-	   if(!G_is_f_null_value(cell2+j))
+	   if(!G_is_d_null_value(cell2+j))
            v1[row_rev][j] = (double ) cell2[j];
 	   else
 		   v1[row_rev][j] = UNDEF;
-	   if(!G_is_f_null_value(cell3+j))
+	   if(!G_is_d_null_value(cell3+j))
            v2[row_rev][j] = (double ) cell3[j];
 	   else
 		   v2[row_rev][j] = UNDEF;
@@ -257,14 +257,14 @@ fclose(fdsfile);
 		zz[row_rev][j] = UNDEF; /* undef all area if something's missing */
 	   
 	  if(rain != NULL)
-		  if(!G_is_f_null_value(cell4+j))
+		  if(!G_is_d_null_value(cell4+j))
            si[row_rev][j] = (double ) cell4[j]; /* add conv */
 		  else {
 			  si[row_rev][j] = UNDEF;
 			zz[row_rev][j] = UNDEF;
 		  }
           if(infil != NULL)
-		  if(!G_is_f_null_value(cell4a+j))
+		  if(!G_is_d_null_value(cell4a+j))
            inf[row_rev][j] = (double ) cell4a[j]; /* add conv */
 		  else {
 			  inf[row_rev][j] = UNDEF;
@@ -305,7 +305,7 @@ fclose(fdsfile);
                         zz[row_rev][j] = UNDEF;
 		}
         if(wdepth != NULL)
-		if(!G_is_f_null_value(cell12+j))
+		if(!G_is_d_null_value(cell12+j))
            gama[row_rev][j] = (double ) cell12[j];
 		else {
 			gama[row_rev][j] = UNDEF;
