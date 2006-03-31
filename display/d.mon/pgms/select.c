@@ -10,7 +10,6 @@
 int 
 main (int argc, char *argv[])
 {
-	struct MON_CAP *R_parse_monitorcap();
 	char command[1024];
 	char name[128];
 
