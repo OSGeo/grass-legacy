@@ -13,7 +13,7 @@
 
 
 /* function prototypes */
-static int comp_array(CELLSORTER *p1, CELLSORTER *p2);
+static int comp_array(const void *p1, const void *p2);
 static void IsLegal(char *Name);
 
 
