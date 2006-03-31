@@ -253,7 +253,7 @@ dig_read_cidx ( GVFILE * fp, struct Plus_head *plus, int head_only)
 
 	ci = &(plus->cidx[i]);
 	ci->a_cats = ci->n_cats;
-	ci->cat = (int *) G_malloc ( ci->a_cats * 3 * sizeof(int) );
+	ci->cat = G_malloc ( ci->a_cats * 3 * sizeof(int) );
 
 	if ( dig_fseek ( fp, ci->offset, 0) == -1 ) return 1;
 	
