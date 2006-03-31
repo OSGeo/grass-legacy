@@ -11,10 +11,10 @@ int add_point(struct dxf_file *dxf, struct Map_info *Map)
     int layer_flag = 0;		/* indicates if a layer name has been found */
     int xflag = 0;		/* indicates if a x value has been found */
     int yflag = 0;		/* indicates if a y value has been found */
-    char layername[256];
+    char layer_name[256];
 
     /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
-    strcpy(layername, UNIDENTIFIED_LAYER);
+    strcpy(layer_name, UNIDENTIFIED_LAYER);
     zpnts[0] = 0.0;
 
     while ((code = dxf_get_code(dxf)) != 0) {
@@ -24,7 +24,7 @@ int add_point(struct dxf_file *dxf, struct Map_info *Map)
 	switch (code) {
 	case 8:		/* layer name */
 	    if (!layer_flag && *dxf_buf) {
-		strcpy(layername, dxf_buf);
+		strcpy(layer_name, dxf_buf);
 		layer_flag = 1;
 	    }
 	    break;
@@ -59,7 +59,7 @@ int add_point(struct dxf_file *dxf, struct Map_info *Map)
 	ypnts[1] = ypnts[0];
 	zpnts[1] = zpnts[0];
 
-	write_point(Map, layername);
+	write_point(Map, layer_name);
     }
 
     return 1;

@@ -14,10 +14,10 @@ int add_text(struct dxf_file *dxf, struct Map_info *Map)
     double start_x, start_y, angle, theta, height, length, diag;
     double base1, base2;
     int arr_size = 0;
-    char layername[256];
+    char layer_name[256];
 
     /*  initialize defaults */
-    strcpy(layername, UNIDENTIFIED_LAYER);
+    strcpy(layer_name, UNIDENTIFIED_LAYER);
 
     char_cnt = 0;
     layer_fd = NULL;

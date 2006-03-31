@@ -36,6 +36,7 @@ int main(int argc, char *argv[])
     struct GModule *module;
     struct
     {
+	struct Flag *extent;
 	struct Flag *table;
     } flag;
     struct
@@ -49,6 +50,10 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->description =
 	_("Converts files in DXF format to GRASS vector file format.");
+
+    flag.extent = G_define_flag();
+    flag.extent->key = 'e';
+    flag.extent->description = _("Ignore the map extent of DXF file");
 
     flag.table = G_define_flag();
     flag.table->key = 't';
@@ -74,6 +79,7 @@ int main(int argc, char *argv[])
 
     debug_init();
 
+    flag_extent = flag.extent->answer;
     flag_table = flag.table->answer;
 
     fprintf(stderr, _("\nCONVERSION OF %s TO VECTOR FILE:  "),

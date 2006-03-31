@@ -25,7 +25,7 @@ struct dxf_file
 #define GLOBAL extern
 #endif
 
-GLOBAL int flag_table;
+GLOBAL int flag_extent, flag_table;
 GLOBAL char dxf_buf[DXF_BUF_SIZE];
 GLOBAL int ARR_MAX;
 GLOBAL double *xpnts, *ypnts, *zpnts;

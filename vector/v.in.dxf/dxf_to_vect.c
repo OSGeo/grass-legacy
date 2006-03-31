@@ -137,8 +137,8 @@ int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
 
     Vect_destroy_line_struct(Points);
 
-    make_head(Map);
     write_done(Map);
+    make_head(Map);
 
     return 0;
 }
@@ -173,7 +173,8 @@ static void make_head(struct Map_info *Map)
     Vect_set_zone(Map, 0);
     Vect_set_thresh(Map, 0.0);
 
-    Vect_box_copy(&(Map->plus.box), &ext);
+    if(!flag_extent)
+	Vect_box_copy(&(Map->plus.box), &dxf_ext);
 
     return;
 }
