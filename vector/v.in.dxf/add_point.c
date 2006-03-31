@@ -71,8 +71,7 @@ int add_point(struct dxf_file *dxf, struct Map_info *Map)
 
     if (xflag && yflag) {
 	check_ext(xpnts[0], ypnts[0]);
-	/*
-	 * xpnts[1] = xpnts[0];
+	/* xpnts[1] = xpnts[0];
 	 * ypnts[1] = ypnts[0];
 	 * zpnts[1] = zpnts[0];
 	 */
