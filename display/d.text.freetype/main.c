@@ -770,7 +770,7 @@ transform_string(char *str, int (*func)(int))
 static int
 convert_text(char *charset, char *text, unsigned char **out)
 {
-	int	i, l, ol;
+	size_t	l, i, ol;
 	char	*p1;
 	unsigned char	*p2;
 #ifdef HAVE_ICONV_H
@@ -780,7 +780,7 @@ convert_text(char *charset, char *text, unsigned char **out)
 	l = strlen(text);
 
 	ol = 4 * (l + 1);
-	*out = (unsigned char *) G_malloc(ol);
+	*out = G_malloc(ol);
 
 #ifdef HAVE_ICONV_H
 	p1 = text;
@@ -789,7 +789,7 @@ convert_text(char *charset, char *text, unsigned char **out)
 	if((cd = iconv_open("UCS-4", charset)) < 0)
 		return -1;
 
-	if(iconv(cd, (const char **)&p1, &l, (char **)&p2, &i) < 0)
+	if(iconv(cd, (char **)&p1, &l, (char **)&p2, &i) < 0)
 		return -2;
 
 	iconv_close(cd);
@@ -806,7 +806,7 @@ convert_text(char *charset, char *text, unsigned char **out)
 	ol = l * 4;
 #endif
 
-	return ol;
+	return (int) ol;
 }
 
 static int
