@@ -19,7 +19,7 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
     int yflag = 0;		/* indicates if a y value has been found */
     int zflag = 0;		/* indicates if a z value has been found */
     int arr_size = 0;
-    char layer_name[256];
+    char layer_name[DXF_BUF_SIZE];
     /* variables to create arcs */
     double bulge = 0.0;		/* for arc curves */
     double prev_bulge = 0.0;	/* for arc curves */
@@ -38,8 +38,6 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 		layer_flag = 1;
 	    }
 	    break;
-
-	    /* THE FOLLOWING GROUPS ARE SPECIFIC TO POLYLINE ENTITY */
 	case 66:		/* vertices follow flag */
 	    vert_flag = atoi(dxf_buf);
 	    if (vert_flag != 1)	/* flag must always be 1 */
@@ -76,11 +74,11 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 		    warn_flag70 = 0;
 		}
 	    break;
+
 	case 41:		/* default ending width */
 	case 71:		/* polygon mesh m */
 	case 72:		/* polygon mesh n */
 	case 75:		/* smooth surface type */
-	    break;
 
 	    /* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
 	case 6:		/* linetype name */
@@ -99,6 +97,7 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
     while (strcmp(dxf_buf, "SEQEND") != 0) {
 	if (feof(dxf->fp))	/* EOF */
 	    return -1;
+
 	if (strcmp(dxf_buf, "VERTEX") == 0) {
 	    xflag = 0;
 	    yflag = 0;
@@ -165,7 +164,7 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 	    }
 	}
 
-	if (xflag == 1 && yflag == 1) {
+	if (xflag && yflag) {
 	    arr_size = make_arc_from_polyline(arr_size, bulge, prev_bulge);
 
 	    prev_bulge = bulge;

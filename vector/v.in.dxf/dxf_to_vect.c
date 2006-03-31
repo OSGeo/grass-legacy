@@ -122,10 +122,8 @@ int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
 	else if (strcmp(dxf_buf, "CIRCLE") == 0)
 	    add_circle(dxf, Map);
 
-#ifdef LABEL
 	else if (strcmp(dxf_buf, "TEXT") == 0)
 	    add_text(dxf, Map);
-#endif
 
 	else
 	    dxf_get_code(dxf);
@@ -173,7 +171,7 @@ static void make_head(struct Map_info *Map)
     Vect_set_zone(Map, 0);
     Vect_set_thresh(Map, 0.0);
 
-    if(!flag_extent)
+    if (!flag_extent)
 	Vect_box_copy(&(Map->plus.box), &dxf_ext);
 
     return;

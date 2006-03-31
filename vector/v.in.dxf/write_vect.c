@@ -10,7 +10,8 @@ static dbDriver *driver = NULL;
 static dbString sql;
 static char buf[1000];
 
-void write_vect(struct Map_info *Map, char *layer_name, int arr_size, int type)
+void write_vect(struct Map_info *Map, char *layer_name, int arr_size, int type,
+		char *label)
 {
     struct line_cats *Cats;
     int field, cat;
@@ -25,8 +26,41 @@ void write_vect(struct Map_info *Map, char *layer_name, int arr_size, int type)
 
 	i = get_field_cat(Map, layer_name, &field, &cat);
 	db_init_string(&sql);
-	sprintf(buf, "insert into %s (%s) values (%d)", fi[i]->table,
+	sprintf(buf, "insert into %s (%s, label) values (%d, '", fi[i]->table,
 		fi[i]->key, cat);
+
+	/* TODO */
+#if 0
+	if (label) {
+	    char buf2[DXF_BUF_SIZE * 2], *p, *p2;
+
+	    p = buf2;
+	    p2 = label;
+	    while (*p2) {
+		if (*p2 == '\'')
+		    *p++ = '\\';
+		*p++ = *p2;
+		p2++;
+	    }
+	    *p = 0;
+	    strcat(buf, buf2);
+	}
+#else
+	if (label) {
+	    char buf2[DXF_BUF_SIZE], *p, *p2;
+
+	    p = buf2;
+	    p2 = label;
+	    while (*p2) {
+		*p++ = (*p2 == '\'' ? '"' : *p2);
+		p2++;
+	    }
+	    *p = 0;
+	    strcat(buf, buf2);
+	}
+#endif
+	strcat(buf, "')");
+
 	db_set_string(&sql, buf);
 	if (db_execute_immediate(driver, &sql) != DB_OK)
 	    G_fatal_error(_("Cannot execute: %s"), db_get_string(&sql));
@@ -133,7 +167,8 @@ static int get_field_cat(struct Map_info *Map, char *field_name, int *field,
     }
 
     db_init_string(&sql);
-    sprintf(buf, "create table %s (cat integer)", fi[i]->table);
+    sprintf(buf, "create table %s (cat integer, label varchar(%d))",
+	    fi[i]->table, DXF_BUF_SIZE);
     db_set_string(&sql, buf);
 
     if (db_execute_immediate(driver, &sql) != DB_OK)

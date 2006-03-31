@@ -22,7 +22,7 @@ int add_arc(struct dxf_file *dxf, struct Map_info *Map)
     float start_angle = 0;	/* read in from dxf file */
     float finish_angle = 0;	/* read in from dxf file */
     int arr_size = 0;
-    char layer_name[256];
+    char layer_name[DXF_BUF_SIZE];
 
     strcpy(layer_name, UNIDENTIFIED_LAYER);
 
@@ -80,5 +80,6 @@ int add_arc(struct dxf_file *dxf, struct Map_info *Map)
 		     zcoor, 1);
 	write_polyline(Map, layer_name, arr_size);
     }
-    return 1;
+
+    return 0;
 }

@@ -13,9 +13,9 @@ int add_line(struct dxf_file *dxf, struct Map_info *Map)
     int yflag = 0;		/* indicates if a y value has been found */
     int zflag = 0;		/* indicates if a z value has been found */
     int arr_size = 0;
-    char layer_name[256];
+    char layer_name[DXF_BUF_SIZE];
 
-    strcpy(layer_name, "UNIDENTIFIED");
+    strcpy(layer_name, UNIDENTIFIED_LAYER);
 
     /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
     while ((code = dxf_get_code(dxf)) != 0) {
@@ -33,21 +33,21 @@ int add_line(struct dxf_file *dxf, struct Map_info *Map)
 	    xpnts[arr_size] = atof(dxf_buf);
 	    xflag = 1;
 	    break;
+	case 11:		/* end point x coordinate */
+	    xpnts[arr_size] = atof(dxf_buf);
+	    xflag = 1;
+	    break;
 	case 20:		/* start point y coordinate */
+	    ypnts[arr_size] = atof(dxf_buf);
+	    yflag = 1;
+	    break;
+	case 21:		/* end point y coordinate */
 	    ypnts[arr_size] = atof(dxf_buf);
 	    yflag = 1;
 	    break;
 	case 30:		/* start point z coordinate */
 	    zpnts[arr_size] = atof(dxf_buf);
 	    zflag = 1;
-	    break;
-	case 11:		/* end point x coordinate */
-	    xpnts[arr_size] = atof(dxf_buf);
-	    xflag = 1;
-	    break;
-	case 21:		/* end point y coordinate */
-	    ypnts[arr_size] = atof(dxf_buf);
-	    yflag = 1;
 	    break;
 	case 31:		/* end point z coordinate */
 	    zpnts[arr_size] = atof(dxf_buf);
@@ -65,7 +65,7 @@ int add_line(struct dxf_file *dxf, struct Map_info *Map)
 	    break;
 	}
 
-	if (xflag == 1 && yflag == 1) {
+	if (xflag && yflag) {
 	    check_ext(xpnts[arr_size], ypnts[arr_size]);
 	    if (arr_size == ARR_MAX) {
 		ARR_MAX += ARR_INCR;

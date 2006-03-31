@@ -65,9 +65,10 @@ int add_lwpolyline(struct dxf_file *, struct Map_info *);
 int make_arc(int, double, double, double, double, double, double, int);
 int make_arc_from_polyline(int, double, double);
 /* write_vect.c */
-#define write_polyline(a, b, c) write_vect(a, b, c, GV_LINE)
-#define write_point(a, b) write_vect(a, b, 2, GV_POINT)
-void write_vect(struct Map_info *, char *, int, int);
+#define write_polyline(a, b, c) write_vect(a, b, c, GV_LINE, "")
+#define write_point(a, b) write_vect(a, b, 1, GV_POINT, "")
+#define write_text(a, b, c) write_vect(a, b, 1, GV_POINT, c)
+void write_vect(struct Map_info *, char *, int, int, char *);
 void write_done(struct Map_info *);
 
 #endif

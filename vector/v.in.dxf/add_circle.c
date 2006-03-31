@@ -18,7 +18,7 @@ int add_circle(struct dxf_file *dxf, struct Map_info *Map)
     double radius = 0;		/* read in from dxf file */
     double zcoor = 0;		/* read in from dxf file */
     int arr_size = 0;
-    char layer_name[256];
+    char layer_name[DXF_BUF_SIZE];
 
     strcpy(layer_name, UNIDENTIFIED_LAYER);
 
@@ -66,5 +66,6 @@ int add_circle(struct dxf_file *dxf, struct Map_info *Map)
 	arr_size = make_arc(0, centerx, centery, radius, 0.0, 360.0, zcoor, 0);
 	write_polyline(Map, layer_name, arr_size);
     }
-    return 1;
+
+    return 0;
 }
