@@ -3,14 +3,14 @@
 
 static int get_field_cat(struct Map_info *, char *, int *, int *);
 
-static char **fieldnames = NULL;
+static char **field_names = NULL;
 static int num_fields = 0, *field_cat = NULL;
 static struct field_info **fi = NULL;
 static dbDriver *driver = NULL;
 static dbString sql;
 static char buf[1000];
 
-void write_vect(struct Map_info *Map, char *layername, int arr_size, int type)
+void write_vect(struct Map_info *Map, char *layer_name, int arr_size, int type)
 {
     struct line_cats *Cats;
     int field, cat;
@@ -23,7 +23,7 @@ void write_vect(struct Map_info *Map, char *layername, int arr_size, int type)
     if (!flag_table) {
 	int i;
 
-	i = get_field_cat(Map, layername, &field, &cat);
+	i = get_field_cat(Map, layer_name, &field, &cat);
 	db_init_string(&sql);
 	sprintf(buf, "insert into %s (%s) values (%d)", fi[i]->table,
 		fi[i]->key, cat);
@@ -33,7 +33,7 @@ void write_vect(struct Map_info *Map, char *layername, int arr_size, int type)
 	db_free_string(&sql);
     }
     else
-	get_field_cat(Map, layername, &field, &cat);
+	get_field_cat(Map, layer_name, &field, &cat);
     Vect_cat_set(Cats, field, cat);
 
     /* write */
@@ -57,8 +57,8 @@ void write_done(struct Map_info *Map)
 
     fprintf(stderr, _("\nFollowing DXF layers found:\n"));
     for (i = 0; i < num_fields; i++) {
-	fprintf(stderr, _("Layer %d %s\n"), i + 1, fieldnames[i]);
-	G_free(fieldnames[i]);
+	fprintf(stderr, _("Layer %d %s\n"), i + 1, field_names[i]);
+	G_free(field_names[i]);
 	if (!flag_table) {
 	    /* no function to do this? */
 	    G_free(fi[i]->name);
@@ -69,11 +69,11 @@ void write_done(struct Map_info *Map)
 	    G_free(fi[i]);
 	}
     }
-    G_free(fieldnames);
+    G_free(field_names);
     G_free(field_cat);
 
     num_fields = 0;
-    fieldnames = NULL;
+    field_names = NULL;
     field_cat = NULL;
 
     if (!flag_table) {
@@ -85,14 +85,14 @@ void write_done(struct Map_info *Map)
     return;
 }
 
-static int get_field_cat(struct Map_info *Map, char *fieldname, int *field,
+static int get_field_cat(struct Map_info *Map, char *field_name, int *field,
 			 int *cat)
 {
     int i;
 
     for (i = 0; i < num_fields; i++) {
 	/* field name already exists */
-	if (strcmp(fieldname, fieldnames[i]) == 0) {
+	if (strcmp(field_name, field_names[i]) == 0) {
 	    *field = i + 1;
 	    *cat = ++field_cat[i];
 	    return i;
@@ -102,8 +102,8 @@ static int get_field_cat(struct Map_info *Map, char *fieldname, int *field,
     num_fields++;
 
     /* create new field */
-    fieldnames = (char **)G_realloc(fieldnames, (i + 1) * sizeof(char *));
-    fieldnames[i] = G_store(fieldname);
+    field_names = (char **)G_realloc(field_names, (i + 1) * sizeof(char *));
+    field_names[i] = G_store(field_name);
     field_cat = (int *)G_realloc(field_cat, (i + 1) * sizeof(int));
 
     /* assign field and cat numbers */
@@ -117,8 +117,8 @@ static int get_field_cat(struct Map_info *Map, char *fieldname, int *field,
     fi = (struct field_info **)G_realloc(fi,
 					 (i + 1) * sizeof(struct field_info *));
 
-    fi[i] = Vect_default_field_info(Map, *field, fieldname, GV_MTABLE);
-    Vect_map_add_dblink(Map, *field, fieldname, fi[i]->table, "cat",
+    fi[i] = Vect_default_field_info(Map, *field, field_name, GV_MTABLE);
+    Vect_map_add_dblink(Map, *field, field_name, fi[i]->table, "cat",
 			fi[i]->database, fi[i]->driver);
 
     if (!driver) {

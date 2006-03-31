@@ -13,9 +13,9 @@ int add_line(struct dxf_file *dxf, struct Map_info *Map)
     int yflag = 0;		/* indicates if a y value has been found */
     int zflag = 0;		/* indicates if a z value has been found */
     int arr_size = 0;
-    char layername[256];
+    char layer_name[256];
 
-    strcpy(layername, "UNIDENTIFIED");
+    strcpy(layer_name, "UNIDENTIFIED");
 
     /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
     while ((code = dxf_get_code(dxf)) != 0) {
@@ -25,7 +25,7 @@ int add_line(struct dxf_file *dxf, struct Map_info *Map)
 	switch (code) {
 	case 8:		/* layer name */
 	    if (!layer_flag && *dxf_buf) {
-		strcpy(layername, dxf_buf);
+		strcpy(layer_name, dxf_buf);
 		layer_flag = 1;
 	    }
 	    break;
@@ -82,7 +82,7 @@ int add_line(struct dxf_file *dxf, struct Map_info *Map)
     if (arr_size == 2) {	/* had both starts and stops */
 	if (!zflag)
 	    zpnts[0] = zpnts[1] = 0.0;
-	write_polyline(Map, layername, arr_size);
+	write_polyline(Map, layer_name, arr_size);
     }
 
     return 0;

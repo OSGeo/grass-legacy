@@ -15,7 +15,7 @@ int make_arc(int offset,	/* offset into array of points */
 {
     float theta;		/* the angle used for calculating a given point */
     float alpha;		/* theta converted into radians for use in math */
-    double extcirclx[4], extcircly[4];	/*to check_extents of circle */
+    double extcirclx[4], extcircly[4];	/* to check_extents of circle */
     int arr_size;
     int i;
 
@@ -37,7 +37,7 @@ int make_arc(int offset,	/* offset into array of points */
 	    xpnts[arr_size] = radius * cos(alpha) + centerx;
 	    ypnts[arr_size] = radius * sin(alpha) + centery;
 	    zpnts[arr_size] = zcoor;
-	    /*check_ext(pt_array[arr_size].x,pt_array[arr_size].y); */
+	    /* check_ext(pt_array[arr_size].x,pt_array[arr_size].y); */
 	    theta -= RSTEP;
 	    if (arr_size == ARR_MAX) {
 		ARR_MAX += ARR_INCR;
@@ -50,12 +50,12 @@ int make_arc(int offset,	/* offset into array of points */
     }
     else {
 	theta = start_angle;
-	while (theta < finish_angle) {	/*draw arc counterclockwise */
+	while (theta < finish_angle) {	/* draw arc counterclockwise */
 	    alpha = theta * DEG_TO_RAD;	/* converting to radians */
 	    xpnts[arr_size] = radius * cos(alpha) + centerx;
 	    ypnts[arr_size] = radius * sin(alpha) + centery;
 	    zpnts[arr_size] = zcoor;
-	    /*check_ext(pt_array[arr_size].x,pt_array[arr_size].y); */
+	    /* check_ext(pt_array[arr_size].x,pt_array[arr_size].y); */
 	    theta += RSTEP;
 	    if (arr_size == ARR_MAX) {
 		ARR_MAX += ARR_INCR;
@@ -71,7 +71,7 @@ int make_arc(int offset,	/* offset into array of points */
     xpnts[arr_size] = radius * cos(alpha) + centerx;
     ypnts[arr_size] = radius * sin(alpha) + centery;
     zpnts[arr_size] = zcoor;
-    /*check_ext(pt_array[arr_size].x,pt_array[arr_size].y); */
+    /* check_ext(pt_array[arr_size].x,pt_array[arr_size].y); */
     if (arr_size == ARR_MAX) {
 	ARR_MAX += ARR_INCR;
 	xpnts = (double *)G_realloc(xpnts, ARR_MAX * sizeof(double));

@@ -19,12 +19,12 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
     int yflag = 0;		/* indicates if a y value has been found */
     int zflag = 0;		/* indicates if a z value has been found */
     int arr_size = 0;
-    char layername[256];
+    char layer_name[256];
     /* variables to create arcs */
     double bulge = 0.0;		/* for arc curves */
     double prev_bulge = 0.0;	/* for arc curves */
 
-    strcpy(layername, UNIDENTIFIED_LAYER);
+    strcpy(layer_name, UNIDENTIFIED_LAYER);
 
     /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
     while ((code = dxf_get_code(dxf)) != 0) {
@@ -34,7 +34,7 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 	switch (code) {
 	case 8:		/* layer name */
 	    if (!layer_flag && *dxf_buf) {
-		strcpy(layername, dxf_buf);
+		strcpy(layer_name, dxf_buf);
 		layer_flag = 1;
 	    }
 	    break;
@@ -110,10 +110,10 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 		case 8:	/* layer name */
 		    /* if no layer previously assigned */
 		    if (!layer_flag && *dxf_buf) {
-			strcpy(layername, dxf_buf);
+			strcpy(layer_name, dxf_buf);
 			layer_flag = 1;
 		    }
-		    else if (strcmp(dxf_buf, layername) != 0 &&
+		    else if (strcmp(dxf_buf, layer_name) != 0 &&
 			     nu_layer_flag == 1) {
 			G_warning(_("ERROR: layer name %s listed but not used"),
 				  dxf_buf);
@@ -199,7 +199,7 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 	    zpnts[i] = 0.0;
     }
 
-    write_polyline(Map, layername, arr_size);
+    write_polyline(Map, layer_name, arr_size);
 
     return 0;
 }

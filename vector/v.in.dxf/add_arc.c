@@ -22,9 +22,9 @@ int add_arc(struct dxf_file *dxf, struct Map_info *Map)
     float start_angle = 0;	/* read in from dxf file */
     float finish_angle = 0;	/* read in from dxf file */
     int arr_size = 0;
-    char layername[256];
+    char layer_name[256];
 
-    strcpy(layername, UNIDENTIFIED_LAYER);
+    strcpy(layer_name, UNIDENTIFIED_LAYER);
 
     /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
     while ((code = dxf_get_code(dxf)) != 0) {
@@ -34,7 +34,7 @@ int add_arc(struct dxf_file *dxf, struct Map_info *Map)
 	switch (code) {
 	case 8:		/* layer name */
 	    if (!layer_flag && *dxf_buf) {
-		strcpy(layername, dxf_buf);
+		strcpy(layer_name, dxf_buf);
 		layer_flag = 1;
 	    }
 	    break;
@@ -78,7 +78,7 @@ int add_arc(struct dxf_file *dxf, struct Map_info *Map)
 	arr_size =
 	    make_arc(0, centerx, centery, radius, start_angle, finish_angle,
 		     zcoor, 1);
-	write_polyline(Map, layername, arr_size);
+	write_polyline(Map, layer_name, arr_size);
     }
     return 1;
 }
