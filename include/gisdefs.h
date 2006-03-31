@@ -379,7 +379,7 @@ int G_shift_colors(int, struct Colors *);
 int G_shift_d_colors(DCELL, struct Colors *);
 
 /* color_str.c */
-int G_str_to_color (char *, int *, int *, int *);
+int G_str_to_color (const char *, int *, int *, int *);
 
 /* color_wave.c */
 int G_make_wave_colors(struct Colors *, CELL, CELL);
@@ -669,7 +669,7 @@ char G_intr_char(void);
 
 /* key_value1.c */
 struct Key_Value *G_create_key_value(void);
-int G_set_key_value(char *, char *, struct Key_Value *);
+int G_set_key_value(const char *, const char *, struct Key_Value *);
 char *G_find_key_value(char *, struct Key_Value *);
 int G_free_key_value(struct Key_Value *);
 

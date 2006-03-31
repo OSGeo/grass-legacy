@@ -26,7 +26,7 @@ G_create_key_value()
  *         2 - ok
  */
 int G_set_key_value (
-    char *key,char *value,
+    const char *key, const char *value,
     struct Key_Value *kv)
 {
     int n;
