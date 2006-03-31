@@ -194,7 +194,7 @@ int GPJ__get_datum_params(struct Key_Value *projinfo,
 }
 
 /***********************************************************
- *  G_ask_datum_params(datumname, params)
+ *  GPJ_ask_datum_params(datumname, params)
  *     char *datumname   String containing datum name that
  *                       parameters are to be found for. Must
  *                       exist in datum.table or be "custom"
@@ -242,8 +242,10 @@ int GPJ_ask_datum_params(char *datumname, char **params)
         for(;;) {
             do {
                 fprintf(stderr,("\nNow select Datum Transformation Parameters\n"));
-                fprintf(stderr,("Enter 'list' to see the list of available Parameter sets\n"));
-                fprintf (stderr,("Enter the corresponding number, or <RETURN> to cancel request\n"));
+                fprintf(stderr,("Please think carefully about the area covered by your data\n"
+                                "and the accuracy you require before making your selection.\n"));
+                fprintf(stderr,("\nEnter 'list' to see the list of available Parameter sets\n"));
+                fprintf(stderr,("Enter the corresponding number, or <RETURN> to cancel request\n"));
                 fprintf(stderr,">");
             } while(!G_gets(answer));
             G_strip(answer); 
@@ -391,8 +393,10 @@ static struct datum_transform_list *get_datum_transform_by_name(const char
 		G_malloc(sizeof(struct datum_transform_list));
 	G_asprintf(&(current->params), "towgs84=%.3f,%.3f,%.3f", dstruct.dx,
 		   dstruct.dy, dstruct.dz);
-	G_asprintf(&(current->where_used), "Default %s region", inputname);
-	G_asprintf(&(current->comment), "Default 3-Parameter Transformation");
+	G_asprintf(&(current->where_used), "whole %s region", inputname);
+	G_asprintf(&(current->comment), "Default 3-Parameter Transformation (May not be optimum for "
+		                        "older datums; use this only if no more appropriate options "
+		                        "are available.)");
 	count++;
 	current->count = count;
 	current->next = NULL;
