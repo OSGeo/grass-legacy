@@ -293,7 +293,7 @@ void wgp  (double x[], int n, double ssq, double gp, double h, double a[], int n
     if (h > 1.5)
       return;
   }
-  wext (x, n, ssq, a, n2, eps, &w, &p, &ifault);
+  wext (x, n, ssq, a, n2, eps, &w, &p, ifault);
   if (*ifault != 0)
     return;
   if (!(p > 0.0 && p < 1.0))
