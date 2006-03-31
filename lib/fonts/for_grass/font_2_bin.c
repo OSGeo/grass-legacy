@@ -11,7 +11,7 @@
 #endif
 
 /* read stdin, write font.bin */
-long *index = 0;
+long *findex = 0;
 long nchars = 0;
 
 int main (void)
@@ -57,7 +57,7 @@ int main (void)
  */
     offset = lseek (font, 0L, 1);
     write (font, &nchars, sizeof(nchars));
-    write (font, index, nchars * sizeof (*index));
+    write (font, findex, nchars * sizeof (*findex));
     lseek (font, 0L, 0);
     write (font, &offset, sizeof(offset));
 
@@ -87,14 +87,14 @@ int newchar (int n, long offset)
     if (n > nchars)
     {
 	if (nchars)
-	    index = (long *)realloc (index, n * sizeof(*index));
+	    findex = realloc (findex, n * sizeof(*findex));
 	else
-	    index = (long *)malloc (n * sizeof (*index));
+	    findex = malloc (n * sizeof (*findex));
 	
 	while (nchars < n)
-	    index[nchars++] = 0;
+	    findex[nchars++] = 0;
     }
-    index[n-1] = offset;
+    findex[n-1] = offset;
 
     return 0;
 }
