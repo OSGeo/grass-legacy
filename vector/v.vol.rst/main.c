@@ -433,15 +433,15 @@ int main (int argc, char *argv[])
         if(parm.scol->answer)
         rsm = -1; /* used in InterpLib to indicate variable smoothing */
 
-      if ((cv != NULL && cvdev == NULL) || (cv == NULL && cvdev != NULL))
+      if (cv != (cvdev != NULL))
               G_fatal_error(_("Both crossvalidation options (-c, cvdev) must be specified"));
-      if(cv != NULL && devi != NULL)
+      if (cv && devi != NULL)
               G_fatal_error(_("Both crossvalidation and deviations file specified"));
-      if(cellinp==NULL && outz==NULL && cellout==NULL && gradient==NULL && aspect1==NULL && aspect2==NULL && ncurv==NULL && gcurv==NULL && mcurv==NULL) {
+      if (cellinp==NULL && outz==NULL && cellout==NULL && gradient==NULL && aspect1==NULL && aspect2==NULL && ncurv==NULL && gcurv==NULL && mcurv==NULL) {
               sig1 = 1;
       }
 
-      if((cellinp!=NULL || outz!=NULL || cellout!=NULL || gradient!=NULL || aspect1!=NULL || aspect2!=NULL || ncurv!=NULL || gcurv!=NULL || mcurv!=NULL || devi != NULL) && cv != NULL)
+      if(cv && (cellinp!=NULL || outz!=NULL || cellout!=NULL || gradient!=NULL || aspect1!=NULL || aspect2!=NULL || ncurv!=NULL || gcurv!=NULL || mcurv!=NULL || devi != NULL))
               G_fatal_error("The crossvalidation cannot be computed simultanuously with output grids or devi file");
 
     z_orig_in = z_orig;
