@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <grass/gis.h>
+#include <grass/gprojects.h>
 #include "local_proto.h"
 
 int ask_datum(char *datum, char *ellps, char *params)
