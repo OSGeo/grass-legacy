@@ -98,7 +98,7 @@ int main (int argc, char **argv)
   parm.dfield->description = "Attribute column";
 
   flag.region = G_define_flag ();
-  flag.region->key = '-r';
+  flag.region->key = 'r';
   flag.region->description = "Use only points in current region";
       
   flag.q = G_define_flag ();
