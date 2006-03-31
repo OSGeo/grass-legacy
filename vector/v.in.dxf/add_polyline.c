@@ -6,30 +6,23 @@
 #include <math.h>
 #include "global.h"
 
-#define POLYFLAG1 1
-#define DEG_TO_RAD (M_PI/180.0)
-
 int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 {
-    int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY get_code() */
-    int layer_flag = 0;		/* INDICATES IF A LAYER NAME HAS BEEN FOUND */
-    int polyline_flag = 0;	/* INDICATES THE TYPE OF POLYLINE */
-    int nu_layer_flag = 1;	/* INDICATES IF A nu_layer WAS FOUND */
-    int warn_flag66 = 1;	/* INDICATES IF ERROR MESSAGE PRINTED ONCE */
-    int warn_flag70 = 1;	/* INDICATES IF ERROR MESSAGE PRINTED ONCE */
-    int vert_flag;		/* INDICATES THAT VERTICES ARE FOLLOWING */
-    int xflag = 0;		/* INDICATES IF A x VALUE HAS BEEN FOUND */
-    int yflag = 0;		/* INDICATES IF A y VALUE HAS BEEN FOUND */
-    int zflag = 0;		/* INDICATES IF A z VALUE HAS BEEN FOUND */
+    int code;
+    int layer_flag = 0;		/* indicates if a layer name has been found */
+    int polyline_flag = 0;	/* indicates the type of polyline */
+    int nu_layer_flag = 1;	/* indicates if a nu_layer was found */
+    int warn_flag66 = 1;	/* indicates if error message printed once */
+    int warn_flag70 = 1;	/* indicates if error message printed once */
+    int vert_flag;		/* indicates that vertices are following */
+    int xflag = 0;		/* indicates if a x value has been found */
+    int yflag = 0;		/* indicates if a y value has been found */
+    int zflag = 0;		/* indicates if a z value has been found */
     int arr_size = 0;
-    int arc_arr_size = 0;
     char layername[256];
-    double x1, x2, y1, y2, cent_y, cent_x, rad, beta, half_alpha;
-    float ang1, ang2;
     /* variables to create arcs */
     double bulge = 0.0;		/* for arc curves */
     double prev_bulge = 0.0;	/* for arc curves */
-    double arc_tan = 0.0;	/* for arc curves */
 
     strcpy(layername, UNIDENTIFIED_LAYER);
 
@@ -39,27 +32,43 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 	    return -1;
 
 	switch (code) {
-	case 8:
+	case 8:		/* layer name */
 	    if (!layer_flag && *dxf_buf) {
 		strcpy(layername, dxf_buf);
 		layer_flag = 1;
 	    }
 	    break;
-	case 66:		/* FLAG BIT VALUE MEANING VERTICES FOLLOW FLAG */
+
+	    /* THE FOLLOWING GROUPS ARE SPECIFIC TO POLYLINE ENTITY */
+	case 66:		/* vertices follow flag */
 	    vert_flag = atoi(dxf_buf);
 	    if (vert_flag != 1)	/* flag must always be 1 */
 		if (warn_flag66) {
 		    G_warning(_("TEXT: vertices following flag missing"));
 		    warn_flag66 = 0;
 		}
-	    /* NOTE: WARNING PRINTED ONLY */
 	    break;
-	case 70:		/* POLYLINE FLAGS */
+	case 70:		/* polyline flag */
 	    polyline_flag = atoi(dxf_buf);
-	    /* polyline flag is 1 for closed polyline
-	     * 2 curve fit vertices have been added
-	     * 4 spline fit vertices have been added
-	     */
+
+	    /*******************************************************************
+             Flag bit value                    Meaning
+                    1        This is a closed Polyline (or a polygon
+                             mesh closed in the M direction)
+                    2        Curve-fit vertices have been added
+                    4        Spline-fit vertices have been added
+                    8        This is a 3D Polyline
+                   16        This is a 3D polygon mesh.  Group 75 indi-
+                             cates the smooth surface type, as follows:
+
+                               0 = no smooth surface fitted
+                               5 = quadratic B-spline surface
+                               6 = cubic B-spline surface
+                               8 = Bezier surface
+
+                   32        The polygon mesh is closed in the N direc-
+                             tion
+	     ******************************************************************/
 	    /* NOTE: CODE ONLY EXISTS FOR FLAG = 1 (CLOSED POLYLINE) or 0 */
 	    if (polyline_flag & 8 || polyline_flag & 16 || polyline_flag & 32)
 		if (warn_flag70) {
@@ -67,29 +76,27 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 		    warn_flag70 = 0;
 		}
 	    break;
+	case 41:		/* default ending width */
+	case 71:		/* polygon mesh m */
+	case 72:		/* polygon mesh n */
+	case 75:		/* smooth surface type */
+	    break;
 
 	    /* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
-	case 6:		/* LINETYPE NAME */
-	case 38:		/* ELEVATION IF NONZERO */
-	case 39:		/* THICKNESS IF NONZERO */
-	case 62:		/* COLOR NUMBER (IF NOT "BYLAYER") */
-	case 210:		/* X EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
-	case 220:		/* Y EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
-	case 230:		/* Z EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
-
-	    /* THE FOLLOWING GROUPS ARE SPECIFIC TO POLYLINE ENTITY */
-	case 41:		/* DEFAULT ENDING WIDTH */
-	case 71:		/* POLYGON MESH */
-	case 72:		/* POLYGON MESH */
-	case 75:		/* SMOOTH SURFACE TYPE -OPTIONAL */
-	    /* not used */
-	default:
+	case 6:		/* linetype name */
+	case 38:		/* elevation if nonzero */
+	case 39:		/* thickness if nonzero */
+	case 62:		/* color number (if not "BYLAYER") */
+	case 210:		/* x extrusion if not parallel to the world z axis */
+	case 220:		/* y extrusion if not parallel to the world z axis */
+	case 230:		/* z extrusion if not parallel to the world z axis */
 	    break;
 	}
     }
 
     zpnts[0] = 0.0;
-    while (strcmp(dxf_buf, "SEQEND") != 0) {	/* LOOP UNTIL SEQEND IN THE DXF FILE */
+    /* LOOP UNTIL SEQEND IN THE DXF FILE */
+    while (strcmp(dxf_buf, "SEQEND") != 0) {
 	if (feof(dxf->fp))	/* EOF */
 	    return -1;
 	if (strcmp(dxf_buf, "VERTEX") == 0) {
@@ -100,8 +107,9 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 		if (code == -2)	/* EOF */
 		    return -1;
 		switch (code) {
-		case 8:	/* LAYER NAMES ARE INCLUDED IN VERTEX ENTITY */
-		    if (!layer_flag && *dxf_buf) {	/* IF NO LAYER PREVIOUSLY ASSIGNED */
+		case 8:	/* layer name */
+		    /* if no layer previously assigned */
+		    if (!layer_flag && *dxf_buf) {
 			strcpy(layername, dxf_buf);
 			layer_flag = 1;
 		    }
@@ -112,23 +120,39 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 			nu_layer_flag = 0;	/* so ERROR only printed once */
 		    }
 		    break;
-		case 10:	/* x COORDINATE */
+		case 10:	/* x coordinate */
 		    xpnts[arr_size] = atof(dxf_buf);
 		    xflag = 1;
 		    break;
-		case 20:	/* y COORDINATE */
+		case 20:	/* y coordinate */
 		    ypnts[arr_size] = atof(dxf_buf);
 		    yflag = 1;
 		    break;
-		case 30:	/* Z COORDINATE */
+		case 30:	/* Z coordinate */
 		    zpnts[arr_size] = atof(dxf_buf);
 		    zflag = 1;
 		    break;
+		case 40:	/* starting width */
+		case 41:	/* ending width */
 		case 42:	/* bulge */
 		    bulge = atof(dxf_buf);
 		    break;
-		case 50:	/* curve fit tangent */
-		case 70:	/* vertex flags */
+		case 50:	/* curve fit tangent direction */
+		case 70:	/* vertex flag */
+
+	    /*******************************************************************
+             Flag bit value                    Meaning
+                   1         Extra vertex created by curve fitting
+                   2         Curve fit tangent defined for this vertex.
+                             A curve fit tangent direction of 0 may be
+                             omitted from the DXF output, but is signif-
+                             icant if this bit is set.
+                   4         Unused (never set in DXF files)
+                   8         Spline vertex created by spline fitting
+                   16        Spline frame control point
+                   32        3D Polyline vertex
+                   64        3D polygon mesh vertex
+	     ******************************************************************/
 		    if (atoi(dxf_buf) == 16) {
 			/* spline frame control point: don't draw it! */
 			xflag = 0;
@@ -136,123 +160,28 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 			zflag = 0;
 		    }
 		    break;
-		    /* NOTE: THERE ARE MORE CASES POSSIBLE */
-		default:
-		    break;
+		    /* NOTE: there are more cases possible */
 		}
 	    }
 	}
 
 	if (xflag == 1 && yflag == 1) {
-	    /* if prev segment is an arc  (prev_bulge != 0) prepare to make arc */
-	    if (prev_bulge > 0.0)
-		arc_tan = prev_bulge;
-	    else if (prev_bulge < 0.0)
-		arc_tan = (-1.0) * prev_bulge;
+	    arr_size = make_arc_from_polyline(arr_size, bulge, prev_bulge);
 
-	    if (arc_tan == 0.0) {	/* straight line segment */
-		check_ext(xpnts[arr_size], ypnts[arr_size]);
-		if (arr_size >= ARR_MAX - 1) {
-		    ARR_MAX += ARR_INCR;
-		    xpnts =
-			(double *)G_realloc(xpnts, ARR_MAX * sizeof(double));
-		    ypnts =
-			(double *)G_realloc(ypnts, ARR_MAX * sizeof(double));
-		    zpnts =
-			(double *)G_realloc(zpnts, ARR_MAX * sizeof(double));
-		}
-		arr_size++;
-	    }
-	    else if (!(xpnts[arr_size - 1] == xpnts[arr_size] &&
-		       ypnts[arr_size - 1] == ypnts[arr_size]))
-		/* make an arc */
-	    {
-		/* compute cent_x, cent_y, ang1, ang2 */
-		if (prev_bulge > 0.0) {
-		    x1 = xpnts[arr_size - 1];
-		    x2 = xpnts[arr_size];
-		    y1 = ypnts[arr_size - 1];
-		    y2 = ypnts[arr_size];
-		}
-		else {
-		    /* figure out how to compute the opposite center */
-		    x2 = xpnts[arr_size - 1];
-		    x1 = xpnts[arr_size];
-		    y2 = ypnts[arr_size - 1];
-		    y1 = ypnts[arr_size];
-		}
-		half_alpha = (double)atan(arc_tan) * 2.;
-		rad = hypot(x1 - x2, y1 - y2) * .5 / sin(half_alpha);
-		beta = atan2(x1 - x2, y1 - y2);
-		/* now bring it into range 0 to 360 */
-		beta = 90.0 * DEG_TO_RAD - beta;
-		if (beta <= 0.0)
-		    beta = 360.0 * DEG_TO_RAD + beta;
-		/* now beta is counter clock wise from 0 (direction of (1,0)) to 360 */
-		if (beta >= 0.0 && beta < 90.0) {
-		    cent_x = x2 + rad * sin(half_alpha + beta);
-		    cent_y = y2 - rad * cos(half_alpha + beta);
-		    ang2 = (half_alpha + beta) / DEG_TO_RAD + 90.0;
-		    ang1 = (beta - half_alpha) / DEG_TO_RAD + 90.0;
-		}
-		else if (beta >= 90.0 && beta < 180.0) {
-		    beta -= 90.0;
-		    cent_y = y2 + rad * sin(half_alpha + beta);
-		    cent_x = x2 + rad * cos(half_alpha + beta);
-		    ang2 = (half_alpha + beta) / DEG_TO_RAD + 180.0;
-		    ang1 = (beta - half_alpha) / DEG_TO_RAD + 180.0;
-		}
-		else if (beta >= 180.0 && beta < 270.0) {
-		    beta -= 180.0;
-		    cent_x = x2 - rad * sin(half_alpha + beta);
-		    cent_y = y2 + rad * cos(half_alpha + beta);
-		    ang2 = (half_alpha + beta) / DEG_TO_RAD + 270.0;
-		    ang1 = (beta - half_alpha) / DEG_TO_RAD + 270.0;
-		}
-		else {		/* 270 <= beta < 360 */
-
-		    beta -= 270.0;
-		    cent_y = y2 - rad * sin(half_alpha + beta);
-		    cent_x = x2 - rad * cos(half_alpha + beta);
-		    ang2 = (half_alpha + beta) / DEG_TO_RAD;
-		    ang1 = (beta - half_alpha) / DEG_TO_RAD;
-		}
-
-		arr_size--;	/* disregard last 2 points */
-		if (prev_bulge < 0.0)
-		    arc_arr_size = make_arc(arr_size, cent_x, cent_y,
-					    -rad, ang2, ang1, zpnts[0], 1);
-		/* arc is going in clockwise direction from x2 to x1 */
-		else
-
-		    arc_arr_size = make_arc(arr_size, cent_x, cent_y,
-					    rad, ang1, ang2, zpnts[0], 1);
-		arr_size += arc_arr_size;
-		while (arr_size >= ARR_MAX) {
-		    ARR_MAX += ARR_INCR;
-		    xpnts =
-			(double *)G_realloc(xpnts, ARR_MAX * sizeof(double));
-		    ypnts =
-			(double *)G_realloc(ypnts, ARR_MAX * sizeof(double));
-		    zpnts =
-			(double *)G_realloc(zpnts, ARR_MAX * sizeof(double));
-		}
-	    }			/* arc */
 	    prev_bulge = bulge;
-	    arc_tan = 0.0;
 	    bulge = 0.0;
 	}			/* processing polyline vertex */
     }				/* vertex loop */
     /* done reading vertices */
-    if (polyline_flag & POLYFLAG1) {	/* ONLY DEALING WITH polyline_flag = 1 */
-	/* CHECK TO MAKE SURE VERTEX POINTS DESCRIBE A CLOSED POLYLINE */
+    if (polyline_flag & 1) {	/* only dealing with polyline_flag = 1 */
+	/* check to make sure vertex points describe a closed polyline */
 	if (xpnts[0] != xpnts[arr_size - 1] || ypnts[0] != ypnts[arr_size - 1]) {
-	    /* ADD ON THE VERTEX POINT TO COMPLETE CLOSED POLYLINE */
+	    /* add on the vertex point to complete closed polyline */
 	    xpnts[arr_size] = xpnts[0];
 	    ypnts[arr_size] = ypnts[0];
 	    zpnts[arr_size] = zpnts[0];
 
-	    /* arr_size INCREMENTED TO BE CONSISTENT WITH POLYLINE_FLAG != 1 */
+	    /* arr_size incremented to be consistent with polyline_flag != 1 */
 	    if (arr_size >= ARR_MAX - 1) {
 		ARR_MAX += ARR_INCR;
 		xpnts = (double *)G_realloc(xpnts, ARR_MAX * sizeof(double));

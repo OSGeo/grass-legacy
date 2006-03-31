@@ -104,14 +104,17 @@ int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
     Points = Vect_new_line_struct();
 
     while (!feof(dxf->fp)) {
-	if (strcmp(dxf_buf, "POLYLINE") == 0)
-	    add_polyline(dxf, Map);
+	if (strcmp(dxf_buf, "POINT") == 0)
+	    add_point(dxf, Map);
 
 	else if (strcmp(dxf_buf, "LINE") == 0)
 	    add_line(dxf, Map);
 
-	else if (strcmp(dxf_buf, "POINT") == 0)
-	    add_point(dxf, Map);
+	else if (strcmp(dxf_buf, "POLYLINE") == 0)
+	    add_polyline(dxf, Map);
+
+	else if (strcmp(dxf_buf, "LWPOLYLINE") == 0)
+	    add_lwpolyline(dxf, Map);
 
 	else if (strcmp(dxf_buf, "ARC") == 0)
 	    add_arc(dxf, Map);
@@ -135,9 +138,7 @@ int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
     Vect_destroy_line_struct(Points);
 
     make_head(Map);
-    Vect_build(Map, stderr);
-
-    write_done();
+    write_done(Map);
 
     return 0;
 }
