@@ -291,8 +291,10 @@ int R_stabilize(void)
 
 int R_kill_driver(void)
 {
+    char dummy;
     _send_ident(GRAPH_CLOSE);
     flushout();
+    read(_rfd, &dummy, 1);
     R_release_driver();
 
     return 0;
