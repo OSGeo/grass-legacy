@@ -38,7 +38,7 @@ int main (int argc, char **argv)
 	opt1->required   = NO;
 	opt1->description= _("Name of file containing graphics commands, "
 			   "if not given reads from standard input");
-	opt1->gisprompt  = "file,file,file";
+	opt1->gisprompt  = "old_file,,input";
 
 	opt2 = G_define_option() ;
 	opt2->key        = "color" ;

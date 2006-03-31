@@ -48,7 +48,7 @@ int main (int argc, char *argv[])
 	parm.input->type = TYPE_STRING;
 	parm.input->required = YES;
 	parm.input->description = _("ARC/INFO ascii raster file (GRID) to be imported");
-	parm.input->gisprompt = "file,file,file";
+	parm.input->gisprompt = "old_file,,input";
 
 	parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
 

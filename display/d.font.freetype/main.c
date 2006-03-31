@@ -60,8 +60,8 @@ main( int argc , char **argv )
     opt1->description= _("Font name (not supported interactively, see also -l flag) or path to TrueType font (including file name)");
 #else
     opt1->description= _("Path to TrueType font (including file name)");
+    opt1->gisprompt  = "old_file,,font";
 #endif
-    /* opt1->gisprompt  = "old_file,,TrueType font"; */
 
     opt2 = G_define_option() ;
     opt2->key        = "charset" ;

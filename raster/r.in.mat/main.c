@@ -96,7 +96,7 @@ int main(int argc, char *argv[]) {
     inputfile->key	= "input";
     inputfile->type       = TYPE_STRING;
     inputfile->required   = YES;
-    inputfile->gisprompt  = "file,file,file" ;
+    inputfile->gisprompt  = "old_file,,input" ;
     inputfile->description= _("Name of an existing MAT-File(v4)") ;
 
     outputfile = G_define_option() ;

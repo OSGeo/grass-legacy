@@ -104,7 +104,7 @@ int main(int argc,char *argv[])
     input_file->type = TYPE_STRING;
     input_file->description =
 	_("File containing mapping instructions (or use input=- to enter from keyboard)");
-    input_file->gisprompt = "file,file,file";
+    input_file->gisprompt = "old_file,,input";
     input_file->required = NO;
 
     output_file = G_define_option();

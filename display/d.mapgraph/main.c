@@ -35,7 +35,7 @@ main (int argc, char **argv)
 	opt1->required   = NO ;
 	opt1->description= _("Unix file containg graphing instructions, "
 			   "if not given reads from standard input");
-	opt1->gisprompt  = "file,file,file";
+	opt1->gisprompt  = "old_file,,input";
 
 	opt2 = G_define_option() ;
 	opt2->key        = "color" ;
