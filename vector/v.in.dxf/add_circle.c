@@ -8,15 +8,15 @@
 
 int add_circle(struct dxf_file *dxf, struct Map_info *Map)
 {
-    int code;			/* VARIABLE THAT HOLDS VALUE RETURNED BY get_code() */
-    int layer_flag = 0;		/* INDICATES IF A LAYER NAME HAS BEEN FOUND */
-    int xflag = 0;		/* INDICATES IF A x VALUE HAS BEEN FOUND */
-    int yflag = 0;		/* INDICATES IF A y VALUE HAS BEEN FOUND */
-    int rflag = 0;		/* INDICATES IF A radius HAS BEEN FOUND */
-    double centerx = 0;		/* READ IN FROM DXF FILE */
-    double centery = 0;		/* READ IN FROM DXF FILE */
-    double radius = 0;		/* READ IN FROM DXF FILE */
-    double zcoor = 0;		/* READ IN FROM DXF FILE */
+    int code;
+    int layer_flag = 0;		/* indicates if a layer name has been found */
+    int xflag = 0;		/* indicates if a x value has been found */
+    int yflag = 0;		/* indicates if a y value has been found */
+    int rflag = 0;		/* indicates if a radius has been found */
+    double centerx = 0;		/* read in from dxf file */
+    double centery = 0;		/* read in from dxf file */
+    double radius = 0;		/* read in from dxf file */
+    double zcoor = 0;		/* read in from dxf file */
     int arr_size = 0;
     char layername[256];
 
@@ -28,36 +28,36 @@ int add_circle(struct dxf_file *dxf, struct Map_info *Map)
 	    return -1;
 
 	switch (code) {
-	case 8:
+	case 8:		/* layer name */
 	    if (!layer_flag && *dxf_buf) {
 		strcpy(layername, dxf_buf);
 		layer_flag = 1;
 	    }
 	    break;
-	case 10:		/* x COORDINATE */
+	case 10:		/* x coordinate */
 	    centerx = atof(dxf_buf);
 	    xflag = 1;
 	    break;
-	case 20:		/* y COORDINATE */
+	case 20:		/* y coordinate */
 	    centery = atof(dxf_buf);
 	    yflag = 1;
 	    break;
-	case 30:		/* Z COORDINATE */
+	case 30:		/* z coordinate */
 	    zcoor = atof(dxf_buf);
 	    break;
-	case 40:		/* RADIUS */
+	case 40:		/* radius */
 	    radius = atof(dxf_buf);
 	    rflag = 1;
 	    break;
 
 	    /* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
-	case 38:		/* ELEVATION IF NONZERO */
-	case 39:		/* THICKNESS IF NONZERO */
-	case 62:		/* COLOR NUMBER (IF NOT "BYLAYER") */
-	case 210:		/* X EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
-	case 220:		/* Y EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
-	case 230:		/* Z EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
-	default:
+	case 6:		/* linetype name */
+	case 38:		/* elevation if nonzero */
+	case 39:		/* thickness if nonzero */
+	case 62:		/* color number (if not "BYLAYER") */
+	case 210:		/* x extrusion if not parallel to the world z axis */
+	case 220:		/* y extrusion if not parallel to the world z axis */
+	case 230:		/* z extrusion if not parallel to the world z axis */
 	    break;
 	}
     }

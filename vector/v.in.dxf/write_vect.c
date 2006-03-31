@@ -44,7 +44,7 @@ void write_vect(struct Map_info *Map, char *layername, int arr_size, int type)
     return;
 }
 
-void write_done(void)
+void write_done(struct Map_info *Map)
 {
     int i;
 
@@ -52,6 +52,8 @@ void write_done(void)
 	db_commit_transaction(driver);
 	db_close_database_shutdown_driver(driver);
     }
+
+    Vect_build(Map, stderr);
 
     fprintf(stderr, _("\nFollowing DXF layers found:\n"));
     for (i = 0; i < num_fields; i++) {
