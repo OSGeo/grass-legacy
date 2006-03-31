@@ -115,7 +115,7 @@ parse_command_line (int argc, char *argv[])
     input->type 	= TYPE_STRING;
     input->required 	= NO;
     input->description 	= "filename with sql statement";
-    input->gisprompt    = "file,file,file";
+    input->gisprompt    = "old_file,,input";
 
     i = G_define_flag();
     i->key              = 'i';

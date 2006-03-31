@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 
     flag.list = G_define_flag();
     flag.list->key = 'l';
-    flag.list->description = _("List all available layer names and exit");
+    flag.list->description = _("List available layers and exit");
 
     flag.extent = G_define_flag();
     flag.extent->key = 'e';
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     opt.input->type = TYPE_STRING;
     opt.input->required = YES;
     opt.input->multiple = NO;
-    opt.input->gisprompt = "file,file,file";
+    opt.input->gisprompt = "old_file,,input";
     opt.input->description = _("DXF input file");
 
     opt.output = G_define_standard_option(G_OPT_V_OUTPUT);

@@ -70,7 +70,7 @@ void setParams() {
   param.output = G_define_option();
   param.output->key = "output";
   param.output->type = TYPE_STRING;
-  param.output->gisprompt = "file,file,file";
+  param.output->gisprompt = "new_file,,output";
   param.output->required = YES;
   param.output->description = _("Name for v5d output file");
 
