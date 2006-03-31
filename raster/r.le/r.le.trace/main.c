@@ -26,7 +26,7 @@
 #include <grass/display.h>
 #include <grass/config.h>
 #include "r.le.trace.h"
-#include "local_proto.h">
+#include "local_proto.h"
 struct CHOICE 		*choice;
 int   			finput;
 int   			total_patches=0;
@@ -268,7 +268,7 @@ void show_patch (char *fn, double *msc, char *cmd)
 
 				/* DISPLAY PATCH ATTRIBUTES ON THE SCREEN */
 
-void patch_attr (PATCH *fp, PATCH *p, int show)
+void patch_attr (FILE *fp, PATCH *p, int show)
 
 {
   double  shp1, shp2, shp3;
