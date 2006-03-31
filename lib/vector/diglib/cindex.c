@@ -98,7 +98,7 @@ dig_cidx_add_cat ( struct Plus_head *Plus, int field, int cat, int line, int typ
     ci = &(Plus->cidx[si]);
     if ( ci->n_cats == ci->a_cats ) {
 	ci->a_cats += 5000;
-	ci->cat = (int *) G_realloc ( ci->cat, ci->a_cats * 3 * sizeof(int) );
+	ci->cat = G_realloc ( ci->cat, ci->a_cats * 3 * sizeof(int) );
     }
 
     ci->cat[ci->n_cats][0] = cat;
@@ -187,7 +187,7 @@ dig_cidx_add_cat_sorted ( struct Plus_head *Plus, int field, int cat, int line, 
     ci = &(Plus->cidx[si]);
     if ( ci->n_cats == ci->a_cats ) {
 	ci->a_cats += 5000;
-	ci->cat = (int *) G_realloc ( ci->cat, ci->a_cats * 3 * sizeof(int) );
+	ci->cat = G_realloc ( ci->cat, ci->a_cats * 3 * sizeof(int) );
     }
     
     /* Find position */

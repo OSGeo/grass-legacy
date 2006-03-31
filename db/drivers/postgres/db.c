@@ -91,7 +91,7 @@ int db__driver_open_database (dbHandle *handle)
     }
 
     pg_ntypes = PQntuples(res);
-    pg_types = (int *) G_realloc ( pg_types, 2 * pg_ntypes * sizeof(int) );
+    pg_types = G_realloc ( pg_types, 2 * pg_ntypes * sizeof(int) );
 
     for ( row = 0; row < pg_ntypes; row++ ) {
 	int pgtype, type;
