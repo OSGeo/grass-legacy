@@ -109,6 +109,16 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 		case 8:	/* layer name */
 		    /* if no layer previously assigned */
 		    if (!layer_flag && *dxf_buf) {
+			if (flag_list) {
+			    if (!is_layer_in_list(dxf_buf)) {
+				add_layer_to_list(dxf_buf);
+				fprintf(stdout, _("Layer %d %s\n"), num_layers,
+					dxf_buf);
+			    }
+			    return 0;
+			}
+			if (layers && !is_layer_in_list(dxf_buf))
+			    return 0;
 			strcpy(layer_name, dxf_buf);
 			layer_flag = 1;
 		    }

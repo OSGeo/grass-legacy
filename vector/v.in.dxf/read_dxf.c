@@ -72,6 +72,7 @@ int dxf_read_code(struct dxf_file *dxf, char *buf, int size)
 
 	if (!dxf_fgets(buf, size, dxf))
 	    return -2;
+
 	return code;
     }
 
