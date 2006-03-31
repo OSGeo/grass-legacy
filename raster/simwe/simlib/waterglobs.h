@@ -164,7 +164,7 @@ extern struct {
 
 extern struct Cell_head cellhd;
 
-extern struct Point
+struct Point
 {
     double north, east;
     double z1;
