@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
 	struct Flag *list;
 	struct Flag *extent;
 	struct Flag *table;
+	struct Flag *invert;
     } flag;
     struct
     {
@@ -65,6 +66,10 @@ int main(int argc, char *argv[])
     flag.table->key = 't';
     flag.table->description = _("Do not create attribute tables");
 
+    flag.invert = G_define_flag();
+    flag.invert->key = 'i';
+    flag.invert->description = _("Invert selection by layers (don't import layers in list)");
+
     opt.input = G_define_option();
     opt.input->key = "input";
     opt.input->type = TYPE_STRING;
@@ -89,6 +94,7 @@ int main(int argc, char *argv[])
     flag_list = flag.list->answer;
     flag_extent = flag.extent->answer;
     flag_table = flag.table->answer;
+    flag_invert = flag.invert->answer;
 
     if (!flag_list)
 	fprintf(stderr, _("\nCONVERSION OF %s TO VECTOR FILE:  "),

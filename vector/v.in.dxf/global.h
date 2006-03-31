@@ -25,7 +25,7 @@ struct dxf_file
 #define GLOBAL extern
 #endif
 
-GLOBAL int flag_list, flag_extent, flag_table;
+GLOBAL int flag_list, flag_extent, flag_table, flag_invert;
 GLOBAL int num_layers;
 GLOBAL char **layers;
 GLOBAL char dxf_buf[DXF_BUF_SIZE];
