@@ -2,8 +2,8 @@ MODULE_TOPDIR = ../..
 
 PGM = g.setproj
 
-LIBES     = $(GISLIB)
-DEPENDENCIES= $(GISDEP)
+LIBES     = $(GISLIB) $(GPROJLIB)
+DEPENDENCIES= $(GISDEP) $(GPROJDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 

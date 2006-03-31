@@ -411,10 +411,7 @@ int G_free_fmatrix(float **);
 char *G_date(void);
 
 /* datum.c */
-int G_ask_datum_params(char *, char *);
 int G_get_datum_by_name(const char *);
-int G_datum_shift(int, double *, double *, double *);
-int G_datum_parameters(int, char *, double *, double *, double *);
 char *G_datum_name(int);
 char *G_datum_description(int);
 char *G_datum_ellipsoid(int);
@@ -547,12 +544,6 @@ double G_geodesic_distance(double, double, double, double);
 
 /* get_cellhd.c */
 int G_get_cellhd(char *, char *, struct Cell_head *);
-
-/*get_datum.c */
-int G_get_datum_parameters(double *, double *, double *, double *, double *,
-    double *);
-int G_get_datum_parameters7(double *, double *, double *, double *, double *,
-    double *, double *, double *, double *, double *);
 
 /* get_datum_name.c */
 int G_ask_datum_name(char *, char *);

@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <grass/gis.h>
 #include "local_proto.h"
 
@@ -13,10 +14,16 @@ int ask_datum(char *datum, char *ellps, char *params)
     answer = G_ask_datum_name(datum, ellps);
     if (answer > 0)
     {
-        answer = G_ask_datum_params(datum, params);
- 
+        char *pparams;
+        answer = GPJ_ask_datum_params(datum, &pparams);
+
         if(answer > 0)
+	{
+	    sprintf(params, pparams);
+	    G_free( pparams );
             return 1;
+	}
+       
         else
             return -1;
     }
