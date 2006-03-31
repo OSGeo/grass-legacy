@@ -11,7 +11,6 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
     int code;
     int layer_flag = 0;		/* indicates if a layer name has been found */
     int polyline_flag = 0;	/* indicates the type of polyline */
-    int nu_layer_flag = 1;	/* indicates if a nu_layer was found */
     int warn_flag66 = 1;	/* indicates if error message printed once */
     int warn_flag70 = 1;	/* indicates if error message printed once */
     int vert_flag;		/* indicates that vertices are following */
@@ -32,17 +31,11 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 	    return -1;
 
 	switch (code) {
-	case 8:		/* layer name */
-	    if (!layer_flag && *dxf_buf) {
-		strcpy(layer_name, dxf_buf);
-		layer_flag = 1;
-	    }
-	    break;
 	case 66:		/* vertices follow flag */
 	    vert_flag = atoi(dxf_buf);
 	    if (vert_flag != 1)	/* flag must always be 1 */
 		if (warn_flag66) {
-		    G_warning(_("TEXT: vertices following flag missing"));
+		    G_warning(_("vertices following flag missing"));
 		    warn_flag66 = 0;
 		}
 	    break;
@@ -70,11 +63,12 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 	    /* NOTE: CODE ONLY EXISTS FOR FLAG = 1 (CLOSED POLYLINE) or 0 */
 	    if (polyline_flag & 8 || polyline_flag & 16 || polyline_flag & 32)
 		if (warn_flag70) {
-		    G_warning(_("WARNING: 3-d data in dxf file"));
+		    G_warning(_("3-d data in dxf file"));
 		    warn_flag70 = 0;
 		}
 	    break;
 
+	case 8:		/* layer name */
 	case 41:		/* default ending width */
 	case 71:		/* polygon mesh m */
 	case 72:		/* polygon mesh n */
@@ -126,12 +120,6 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 			    return 0;
 			strcpy(layer_name, dxf_buf);
 			layer_flag = 1;
-		    }
-		    else if (strcmp(dxf_buf, layer_name) != 0 &&
-			     nu_layer_flag == 1) {
-			G_warning(_("ERROR: layer name %s listed but not used"),
-				  dxf_buf);
-			nu_layer_flag = 0;	/* so ERROR only printed once */
 		    }
 		    break;
 		case 10:	/* x coordinate */
