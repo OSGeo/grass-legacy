@@ -36,6 +36,7 @@ int main(int argc, char *argv[])
     struct GModule *module;
     struct
     {
+	struct Flag *list;
 	struct Flag *extent;
 	struct Flag *table;
     } flag;
@@ -43,6 +44,7 @@ int main(int argc, char *argv[])
     {
 	struct Option *input;
 	struct Option *output;
+	struct Option *layers;
     } opt;
 
     G_gisinit(argv[0]);
@@ -50,6 +52,10 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->description =
 	_("Converts files in DXF format to GRASS vector file format.");
+
+    flag.list = G_define_flag();
+    flag.list->key = 'l';
+    flag.list->description = _("List all available layer names and exit");
 
     flag.extent = G_define_flag();
     flag.extent->key = 'e';
@@ -67,68 +73,84 @@ int main(int argc, char *argv[])
     opt.input->gisprompt = "file,file,file";
     opt.input->description = _("DXF input file");
 
-    opt.output = G_define_option();
-    opt.output->key = "output";
-    opt.output->type = TYPE_STRING;
+    opt.output = G_define_standard_option(G_OPT_V_OUTPUT);
     opt.output->required = NO;
-    opt.output->multiple = NO;
-    opt.output->description = _("Name of output vector map");
+
+    opt.layers = G_define_option();
+    opt.layers->key = "layers";
+    opt.layers->type = TYPE_STRING;
+    opt.layers->required = NO;
+    opt.layers->multiple = YES;
+    opt.layers->description = _("List of layers to import");
 
     if (G_parser(argc, argv))
 	exit(-1);
 
     debug_init();
 
+    flag_list = flag.list->answer;
     flag_extent = flag.extent->answer;
     flag_table = flag.table->answer;
 
-    fprintf(stderr, _("\nCONVERSION OF %s TO VECTOR FILE:  "),
-	    opt.input->answer);
+    if (!flag_list)
+	fprintf(stderr, _("\nCONVERSION OF %s TO VECTOR FILE:  "),
+		opt.input->answer);
 
     /* open DXF file */
     if (!(dxf = dxf_open(opt.input->answer)))
 	G_fatal_error(_("%s: Cannot open dxf file"), opt.input->answer);
 
-    /* make vector file name SQL compliant */
-    if (opt.output->answer)
-	output_name = G_store(opt.output->answer);
+    if (flag_list) {
+	num_layers = 0;
+	layers = NULL;
+	Map = NULL;
+    }
     else {
-	char *p, *p2;
+	/* make vector file name SQL compliant */
+	if (opt.output->answer)
+	    output_name = G_store(opt.output->answer);
+	else {
+	    char *p, *p2;
 
-	if ((p = G_rindex(dxf->name, '/')))
-	    p++;
-	else
-	    p = dxf->name;
-	output_name = G_store(p);
-	if ((p2 = G_rindex(p, '.')))
-	    output_name[p2 - p] = 0;
+	    if ((p = G_rindex(dxf->name, '/')))
+		p++;
+	    else
+		p = dxf->name;
+	    output_name = G_store(p);
+	    if ((p2 = G_rindex(p, '.')))
+		output_name[p2 - p] = 0;
+	}
+	{
+	    char *p;
+
+	    for (p = output_name; *p; p++)
+		if (*p == '.')
+		    *p = '_';
+	}
+
+	layers = opt.layers->answers;
+
+	if (Vect_legal_filename(output_name) < 0)
+	    G_fatal_error(_("Use output= option to change vector map name"));
+
+	/* create vector file */
+	Map = (struct Map_info *)G_malloc(sizeof(struct Map_info));
+	if (Vect_open_new(Map, output_name, 1) < 0)
+	    G_fatal_error(_("%s: Cannot open new vector file"), output_name);
+
+	Vect_set_map_name(Map, output_name);
+	G_free(output_name);
+
+	Vect_hist_command(Map);
     }
-    {
-	char *p;
-
-	for (p = output_name; *p; p++)
-	    if (*p == '.')
-		*p = '_';
-    }
-
-    if (Vect_legal_filename(output_name) < 0)
-	G_fatal_error(_("Use output= option to change vector map name"));
-
-    /* create vector file */
-    Map = (struct Map_info *)G_malloc(sizeof(struct Map_info));
-    if (Vect_open_new(Map, output_name, 1) < 0)
-	G_fatal_error(_("%s: Cannot open new vector file"), output_name);
-
-    Vect_set_map_name(Map, output_name);
-    G_free(output_name);
-
-    Vect_hist_command(Map);
 
     /* import */
     dxf_to_vect(dxf, Map);
 
     dxf_close(dxf);
-    Vect_close(Map);
+
+    if (!flag_list)
+	Vect_close(Map);
 
     exit(0);
 }

@@ -25,7 +25,9 @@ struct dxf_file
 #define GLOBAL extern
 #endif
 
-GLOBAL int flag_extent, flag_table;
+GLOBAL int flag_list, flag_extent, flag_table;
+GLOBAL int num_layers;
+GLOBAL char **layers;
 GLOBAL char dxf_buf[DXF_BUF_SIZE];
 GLOBAL int ARR_MAX;
 GLOBAL double *xpnts, *ypnts, *zpnts;
@@ -38,6 +40,10 @@ void debug_msg(char *, ...);
 /* dxf_to_vect.c */
 int dxf_to_vect(struct dxf_file *, struct Map_info *);
 int check_ext(double, double);
+
+/* layer_list.c */
+void add_layer_to_list(char *);
+int is_layer_in_list(char *);
 
 /* read_dxf.c */
 struct dxf_file *dxf_open(char *);

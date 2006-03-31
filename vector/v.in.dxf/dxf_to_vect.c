@@ -91,7 +91,7 @@ int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
 	}
     }
     else
-	dxf_get_code(dxf);
+	code = dxf_get_code(dxf);
 
     ARR_MAX = ARR_INCR;
     ext.E = ext.N = ext.T = DBL_MIN;
@@ -101,10 +101,15 @@ int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
     ypnts = (double *)G_malloc(ARR_MAX * sizeof(double));
     zpnts = (double *)G_malloc(ARR_MAX * sizeof(double));
 
-    Points = Vect_new_line_struct();
+    if (!flag_list)
+	Points = Vect_new_line_struct();
 
     while (!feof(dxf->fp)) {
-	if (strcmp(dxf_buf, "POINT") == 0)
+	/* avoid TEXT having object names: '0' should be followed by objects */
+	if (code != 0)
+	    code = dxf_get_code(dxf);
+
+	else if (strcmp(dxf_buf, "POINT") == 0)
 	    add_point(dxf, Map);
 
 	else if (strcmp(dxf_buf, "LINE") == 0)
@@ -126,17 +131,18 @@ int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
 	    add_text(dxf, Map);
 
 	else
-	    dxf_get_code(dxf);
+	    code = dxf_get_code(dxf);
     }
 
     G_free(xpnts);
     G_free(ypnts);
     G_free(zpnts);
 
-    Vect_destroy_line_struct(Points);
-
-    write_done(Map);
-    make_head(Map);
+    if (!flag_list) {
+	Vect_destroy_line_struct(Points);
+	write_done(Map);
+	make_head(Map);
+    }
 
     return 0;
 }
