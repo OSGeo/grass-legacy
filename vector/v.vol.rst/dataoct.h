@@ -31,6 +31,8 @@ struct octdata {
   struct quadruple  *points;
 }; 
 
+/* defined in oct.h */
+struct octtree;
 
 struct quadruple *point_new();
 struct octdata *data_new (); 
