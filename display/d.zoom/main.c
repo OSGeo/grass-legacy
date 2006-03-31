@@ -344,7 +344,7 @@ main (int argc, char **argv)
       uy1 = tmpwin.north;
       uy2 = tmpwin.south;
 
-      set_win(&tmpwin, ux1, uy1, ux2, uy2, hand);
+      set_win(&tmpwin, ux1, uy1, ux2, uy2, hand->answer);
       
       exit(0);
     }
