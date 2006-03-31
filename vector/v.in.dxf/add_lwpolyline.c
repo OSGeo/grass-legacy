@@ -101,7 +101,7 @@ int add_lwpolyline(struct dxf_file *dxf, struct Map_info *Map)
 	    zpnts[i] = 0.0;
     }
 
-    write_polylines(Map, layername, arr_size);
+    write_polyline(Map, layername, arr_size);
 
     return 0;
 }
