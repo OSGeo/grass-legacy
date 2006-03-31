@@ -133,13 +133,13 @@ G3d_flushIndex  (G3D_Map *map)
 static long *cmpIndex;
 
 static int
-indexSortCompare  (void *a, void *b)
+indexSortCompare  (const void *a, const void *b)
 
 {
   long offset1, offset2;
 
-  offset1 = cmpIndex[*((int *) a)];
-  offset2 = cmpIndex[*((int *) b)];
+  offset1 = cmpIndex[*((const int *) a)];
+  offset2 = cmpIndex[*((const int *) b)];
 
   if (offset1 > offset2) return 1;
   if (offset1 < offset2) return -1;

@@ -138,8 +138,10 @@ void Init(int argc, char **argv)
 }
 
 
-static int comp_array(CELLSORTER *p1, CELLSORTER *p2)
+static int comp_array(const void *q1, const void *q2)
 {
+	const CELLSORTER *p1 = q1;
+	const CELLSORTER *p2 = q2;
 	if( p1->Value < p2->Value)
 		return( -1);
 	if( p2->Value < p1->Value)
