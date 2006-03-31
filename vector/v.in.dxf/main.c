@@ -13,7 +13,7 @@
  * 		 Jacques Bouchard <bouchard@onera.fr>
  * 		 J Moorman
  *
- * 		 Rewrite for GRASS 6.0:
+ * 		 Rewrite for GRASS 6:
  * 		 Huidae Cho <grass4u@gmail.com>
  *
  * PURPOSE:      Import DXF file
