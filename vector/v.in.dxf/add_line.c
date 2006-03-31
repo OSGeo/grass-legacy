@@ -82,7 +82,7 @@ int add_line(struct dxf_file *dxf, struct Map_info *Map)
     if (arr_size == 2) {	/* had both starts and stops */
 	if (!zflag)
 	    zpnts[0] = zpnts[1] = 0.0;
-	write_polylines(Map, layername, arr_size);
+	write_polyline(Map, layername, arr_size);
     }
 
     return 0;

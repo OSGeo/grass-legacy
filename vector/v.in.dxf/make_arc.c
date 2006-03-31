@@ -20,7 +20,7 @@ int make_arc(int offset,	/* offset into array of points */
     int i;
 
     arr_size = offset;
-    fprintf(stderr,
+    G_debug(3,
 	    "making arc: offset %d  x %.1f y %.1f rad %.1f a1 %.1f a2 %.1f  %d\n",
 	    offset, centerx, centery, radius, start_angle, finish_angle, flag);
     if (start_angle > finish_angle)
@@ -33,7 +33,7 @@ int make_arc(int offset,	/* offset into array of points */
 	theta = start_angle;
 	radius = -radius;
 	while (theta > finish_angle) {
-	    alpha = theta * M_PI / 180.0;	/* converting to radians */
+	    alpha = theta * DEG_TO_RAD;	/* converting to radians */
 	    xpnts[arr_size] = radius * cos(alpha) + centerx;
 	    ypnts[arr_size] = radius * sin(alpha) + centery;
 	    zpnts[arr_size] = zcoor;
@@ -51,7 +51,7 @@ int make_arc(int offset,	/* offset into array of points */
     else {
 	theta = start_angle;
 	while (theta < finish_angle) {	/*draw arc counterclockwise */
-	    alpha = theta * M_PI / 180.0;	/* converting to radians */
+	    alpha = theta * DEG_TO_RAD;	/* converting to radians */
 	    xpnts[arr_size] = radius * cos(alpha) + centerx;
 	    ypnts[arr_size] = radius * sin(alpha) + centery;
 	    zpnts[arr_size] = zcoor;
@@ -67,7 +67,7 @@ int make_arc(int offset,	/* offset into array of points */
 	}
     }
     /* this insures that the last point will be correct */
-    alpha = finish_angle * M_PI / 180.0;	/* converting to radians */
+    alpha = finish_angle * DEG_TO_RAD;	/* converting to radians */
     xpnts[arr_size] = radius * cos(alpha) + centerx;
     ypnts[arr_size] = radius * sin(alpha) + centery;
     zpnts[arr_size] = zcoor;

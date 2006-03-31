@@ -136,7 +136,7 @@ int add_text(struct dxf_file *dxf, struct Map_info *Map)
     /* if "-n" flag not set  [ 1998-SEP-30 BCH-J ] */
 
     if (!txtbox)
-	write_polylines(layer_fd, arr_size);
+	write_polyline(layer_fd, arr_size);
     /* And add pnts to the label file */
     /*
      * Changed from using 3rd point to 1st point.

@@ -64,7 +64,7 @@ int add_circle(struct dxf_file *dxf, struct Map_info *Map)
 
     if (xflag && yflag && rflag) {
 	arr_size = make_arc(0, centerx, centery, radius, 0.0, 360.0, zcoor, 0);
-	write_polylines(Map, layername, arr_size);
+	write_polyline(Map, layername, arr_size);
     }
     return 1;
 }

@@ -78,7 +78,7 @@ int add_arc(struct dxf_file *dxf, struct Map_info *Map)
 	arr_size =
 	    make_arc(0, centerx, centery, radius, start_angle, finish_angle,
 		     zcoor, 1);
-	write_polylines(Map, layername, arr_size);
+	write_polyline(Map, layername, arr_size);
     }
     return 1;
 }
