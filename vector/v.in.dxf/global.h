@@ -33,10 +33,6 @@ GLOBAL int ARR_MAX;
 GLOBAL double *xpnts, *ypnts, *zpnts;
 GLOBAL struct line_pnts *Points;
 
-/* debug.c */
-void debug_init(void);
-void debug_msg(char *, ...);
-
 /* dxf_to_vect.c */
 int dxf_to_vect(struct dxf_file *, struct Map_info *);
 int check_ext(double, double);
