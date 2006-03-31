@@ -33,7 +33,7 @@ static struct {
 *           0 - Error 
 * 
 */
-int G_str_to_color (char *str, int *red, int *green, int *blue)
+int G_str_to_color (const char *str, int *red, int *green, int *blue)
 {
     int i, ret;
     char buf[100], temp[10]; 
