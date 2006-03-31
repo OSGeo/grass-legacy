@@ -7,7 +7,7 @@
  */
 
 #include<stdio.h>
-int scan_cats  (char *s, long * x, long * *y)
+int scan_cats  (char *s, long *x, long *y)
 
 {
     char dummy[2];
