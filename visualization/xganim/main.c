@@ -39,7 +39,7 @@
 
 /* function prototypes */
 static int load_files();
-static Boolean do_run(struct gui_data *cd);
+static Boolean do_run(XtPointer);
 static char **gee_wildfiles(char *wildarg, char *element, int *num);
 static void change_label(Widget wid, char *str);
 static void parse_command(int argc, char **argv,
@@ -404,10 +404,11 @@ static int load_files()
 
 
 /* ###################################################### */
-static Boolean do_run(struct gui_data *cd)
+static Boolean do_run(XtPointer p)
 {
+    static int first = 1;
+    struct gui_data *cd = p;
     int i, cnt;
-    static int first=1;
     Drawable dr;
 
     if(first){
