@@ -136,9 +136,11 @@ get_perm  (char *path)
 }
 
 static int
-cmp_dirent  (dbDirent *a, dbDirent *b)
+cmp_dirent  (const void *aa, const void *bb)
 
 {
+    const dbDirent *a = aa;
+    const dbDirent *b = bb;
     return strcmp (db_get_string(&a->name), db_get_string(&b->name));
 }
 
