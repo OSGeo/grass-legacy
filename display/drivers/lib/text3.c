@@ -136,8 +136,8 @@ static int convert_str(const char *from, const char *in, unsigned char **out)
 {
 	iconv_t cd;
 	size_t ret;
-	int len = 0;
-	int i = 0;
+	size_t len = 0;
+	size_t i = 0;
 	int res = 0;
 	const unsigned char *p1;
 	unsigned char *p2;
@@ -147,7 +147,7 @@ static int convert_str(const char *from, const char *in, unsigned char **out)
 /* 	res = 4*(len+1); */
 
 	*out = G_malloc(res);
-	memset(*out,res,0);
+	memset(*out,0,res);
 	p1 = in;
 	p2 = *out;
 
