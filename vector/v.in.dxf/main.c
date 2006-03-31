@@ -86,8 +86,6 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(-1);
 
-    debug_init();
-
     flag_list = flag.list->answer;
     flag_extent = flag.extent->answer;
     flag_table = flag.table->answer;
