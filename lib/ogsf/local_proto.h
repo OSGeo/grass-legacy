@@ -198,7 +198,7 @@ void GS_zoom_setup(int *, int *, int *, int *, int *, int *);
 int GS_write_zoom(char *, unsigned int, unsigned int);
 void GS_draw_all_list(void);
 void GS_delete_list(GLuint);
-int GS_draw_legend(char *, GLuint *, int, int *, float *, int *);
+int GS_draw_legend(char *, GLuint, int, int *, float *, int *);
 int GS_draw_fringe(int, int *);
 void GS_getlight_position(int, float *, float *, float *, int *);
 void GS_getlight_color(int, float *, float *, float *);
@@ -747,7 +747,7 @@ void gsd_fringe_vert_poly (float, geosurf *, int, int);
 void gsd_fringe_vert_line (float, geosurf *, int, int);
 
 /* from gsd_legend.c */
-GLuint gsd_put_legend(char *, GLuint *, int , int *, float *, int *);
+GLuint gsd_put_legend(char *, GLuint, int , int *, float *, int *);
 void gsd_bgn_legend_viewport(GLint, GLint, GLint, GLint);
 void gsd_end_legend_viewport(void);
 int gsd_make_nice_number(float *);
