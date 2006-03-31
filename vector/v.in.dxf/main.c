@@ -68,7 +68,8 @@ int main(int argc, char *argv[])
 
     flag.invert = G_define_flag();
     flag.invert->key = 'i';
-    flag.invert->description = _("Invert selection by layers (don't import layers in list)");
+    flag.invert->description =
+	_("Invert selection by layers (don't import layers in list)");
 
     opt.input = G_define_option();
     opt.input->key = "input";
