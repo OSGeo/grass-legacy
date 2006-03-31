@@ -141,7 +141,7 @@ int gsd_make_nice_number(float *num)
 
 /*****************************************************************/
 GLuint
-gsd_put_legend(char *name, GLuint * fontbase, int size, int *flags,
+gsd_put_legend(char *name, GLuint fontbase, int size, int *flags,
 	       float *rangef, int *pt)
 {
     GLint sl, sr, sb, st;

@@ -663,7 +663,7 @@ geosurf *gs;
 
 /***********************************************************************/
 int
-GS_draw_legend(char *name, GLuint * fontbase, int size, int *flags,
+GS_draw_legend(char *name, GLuint fontbase, int size, int *flags,
 	       float *range, int *pt)
 {
     int list_no;
