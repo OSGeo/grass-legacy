@@ -43,7 +43,12 @@ int add_text(struct dxf_file *dxf, struct Map_info *Map)
 		    }
 		    return 0;
 		}
-		if (layers && !is_layer_in_list(dxf_buf))
+		/* skip if layers != NULL && (
+		 * (flag_invert == 0 && is_layer_in_list == 0) ||
+		 * (flag_invert == 1 && is_layer_in_list == 1)
+		 * )
+		 */
+		if (layers && flag_invert == is_layer_in_list(dxf_buf))
 		    return 0;
 		strcpy(layer_name, dxf_buf);
 		layer_flag = 1;
