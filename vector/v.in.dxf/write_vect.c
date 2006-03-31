@@ -7,7 +7,7 @@ static char **field_names = NULL;
 static int num_fields = 0, *field_cat = NULL;
 static struct field_info **fi = NULL;
 static dbDriver *driver = NULL;
-static dbString sql;
+static dbString sql, str;
 static char buf[1000];
 
 void write_vect(struct Map_info *Map, char *layer_name, int arr_size, int type,
@@ -25,40 +25,14 @@ void write_vect(struct Map_info *Map, char *layer_name, int arr_size, int type,
 	int i;
 
 	i = get_field_cat(Map, layer_name, &field, &cat);
-	db_init_string(&sql);
 	sprintf(buf, "insert into %s (%s, label) values (%d, '", fi[i]->table,
 		fi[i]->key, cat);
 
-	/* TODO */
-#if 0
 	if (label) {
-	    char buf2[DXF_BUF_SIZE * 2], *p, *p2;
-
-	    p = buf2;
-	    p2 = label;
-	    while (*p2) {
-		if (*p2 == '\'')
-		    *p++ = '\\';
-		*p++ = *p2;
-		p2++;
-	    }
-	    *p = 0;
-	    strcat(buf, buf2);
+	    db_set_string(&str, label);
+	    db_double_quote_string(&str);
+	    strcat(buf, db_get_string(&str));
 	}
-#else
-	if (label) {
-	    char buf2[DXF_BUF_SIZE], *p, *p2;
-
-	    p = buf2;
-	    p2 = label;
-	    while (*p2) {
-		*p++ = (*p2 == '\'' ? '"' : *p2);
-		p2++;
-	    }
-	    *p = 0;
-	    strcat(buf, buf2);
-	}
-#endif
 	strcat(buf, "')");
 
 	db_set_string(&sql, buf);
@@ -164,9 +138,11 @@ static int get_field_cat(struct Map_info *Map, char *field_name, int *field,
 			  Vect_subst_var(fi[i]->database, Map), fi[i]->driver);
 
 	db_begin_transaction(driver);
+
+	db_init_string(&sql);
+	db_init_string(&str);
     }
 
-    db_init_string(&sql);
     sprintf(buf, "create table %s (cat integer, label varchar(%d))",
 	    fi[i]->table, DXF_BUF_SIZE);
     db_set_string(&sql, buf);
