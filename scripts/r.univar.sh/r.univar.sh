@@ -65,10 +65,10 @@ if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
 fi
 
 echo "$GIS_OPT_percentile" | grep '\.' > /dev/null
-if [ $? -eq 0 ] ; then
+if [ $? -eq 0 ] || [ -z "$GIS_OPT_percentile" ] ; then
 	echo "Sorry, percentile must be between 0 and 100"
         exit 1
-	fi
+fi
 
 if test $GIS_OPT_percentile -lt 0 -o $GIS_OPT_percentile -gt 100
 then
