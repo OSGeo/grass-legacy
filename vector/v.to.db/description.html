@@ -1,17 +1,26 @@
 <H2>DESCRIPTION</H2>
 
-<em>v.to.db</em> load values from vector map to database.
+<em>v.to.db</em> is used to load vector map features or metrics
+into database fields.
 
 <H2>NOTES</H2>
 The units 'miles', 'feet', 'meters' and 'kilometers' are square 
-for <em>option=area</em>.
+for <b>option=area</b>.
 <P>
-
-When using <em>option=coor</em> on a vector area map, 
+When using <b>option=coor</b> on a vector area map, 
 only coordinates of centroids with unique category will be reported.
 <p>
 When calculating perimeters in Latitude-Longitude locations, the
 geodesic distance between the vertices is used.
+<p>
+The column(s) given by the <b>column</b> option must already exist.
+Create one with <a href="v.db.addcol.html">v.db.addcol</a>.
+<p>
+If the module is apparently slow <b>and</b> the map attributes are stored 
+in an external DBMS such as PostgreSQL, it is highly recommended to
+create an index on the key (category) column.
+
+
 
 <H2>EXAMPLES</H2>
 
@@ -98,16 +107,13 @@ Report number of features for each category in map:<br>
 v.to.db -p roads option=count type=line
 </pre></div>
 
-<h2>NOTES</h2>
-
-If the module is apparently slow <b>and</b> the map attributes are stored 
-in an external DBMS such as PostgreSQL, it is highly recommended to
-create an index on the key (category) column.
-
 <h2>SEE ALSO</h2>
 
 <em>
 <a href="v.category.html">v.category</a>,
+<a href="v.db.addtable.html">v.db.addtable</a>,
+<a href="v.db.addcol.html">v.db.addcol</a>,
+<a href="v.distance.html">v.distance</a>,
 <a href="v.what.vect.html">v.what.vect</a>
 </em>
 
