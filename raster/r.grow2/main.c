@@ -92,8 +92,8 @@ int main(int argc, char **argv)
 	char *in_name;
 	char *out_name;
 	double radius;
-	int oldval;
-	int newval;
+	int oldval = 0;
+	int newval = 0;
 	char *mapset;
 	RASTER_MAP_TYPE type;
 	int in_fd;
