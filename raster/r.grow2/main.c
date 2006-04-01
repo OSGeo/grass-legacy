@@ -107,7 +107,7 @@ int main(int argc, char **argv)
 
 	module = G_define_module();
 	module->description =
-		_("Generates a raster map layer"
+		_("Generates a raster map layer "
 		"with contiguous areas grown by one cell.");
 
 	opt.in = G_define_standard_option(G_OPT_R_INPUT);
