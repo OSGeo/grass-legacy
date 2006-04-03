@@ -718,7 +718,7 @@ proc MapCanvas::zoom_back { mon } {
 # pan bindings
 proc MapCanvas::panbind { mon } {
 	variable can
-	global mapcursor dtxt
+	global mapcursor
 	global bgcolor
 	global MapCanvas::msg
 
@@ -828,10 +828,14 @@ proc MapCanvas::restorecursor {mon} {
 # measurement bindings
 proc MapCanvas::measurebind { mon } {
 	variable can
-	global mlength totmlength dtxt
+	variable measurement_annotation_handle
+	global mlength totmlength
 	global mapcursor
     global linex1 liney1 linex2 liney2
 	global MapCanvas::msg
+
+	# Make the output for the measurement
+	set measurement_annotation_handle [monitor_annotation_start $mon "Measurement" {}]
     
 	if {[info exists linex1]} {unset linex1}
 	if {[info exists liney1]} {unset liney1}
@@ -895,11 +899,11 @@ proc MapCanvas::drawmline { mon x y } {
 # measure line length
 proc MapCanvas::measure { mon } {
 	variable can
-	global gronsole
+    variable measurement_annotation_handle
 	
+    # These should all be variables of the canvas, not globals:
     global linex1 liney1 linex2 liney2
     global mlength totmlength
-    global dtxt
 	
 	# draw cumulative line
 	$can($mon) addtag totmline withtag \
@@ -917,10 +921,8 @@ proc MapCanvas::measure { mon } {
 	set mlength [expr sqrt(pow(($east1 - $east2), 2) + pow(($north1 - $north2), 2))]
 	set totmlength [expr $totmlength + $mlength]
 	
-	$gronsole insert end " --segment length\t= $mlength\n"
-	$gronsole insert end "cumulative length\t= $totmlength\n"
-	$gronsole yview end 
-	catch {cmd_output $fh}
+	monitor_annotate $measurement_annotation_handle " --segment length\t= $mlength\n"
+	monitor_annotate $measurement_annotation_handle "cumulative length\t= $totmlength\n"
 	
 	set linex1 $linex2
 	set liney1 $liney2
@@ -932,7 +934,6 @@ proc MapCanvas::measure { mon } {
 
 # query bindings
 proc MapCanvas::querybind { mon } {
-	global dtxt
 	global stop
 	global map_ew
 	global map_ns	
@@ -949,8 +950,6 @@ proc MapCanvas::querybind { mon } {
 	
 	# set query 'snapping' distance to 10 screen pixels
 	set vdist [expr 10* ($map_ew / $scr_ew) ]
-	
-	if { ![winfo exists .dispout]} {Gm::create_disptxt $mon}
 	
     set MapCanvas::msg($mon) "Click to query feature"
 
@@ -984,32 +983,14 @@ proc MapCanvas::query { mon x y } {
     switch $type {
         "raster" {
             set mapname [GmRaster::mapname $sel]
-			if { $mapname == "" } {
-				$dtxt insert end "You must select a map to query\n"
-				$dtxt yview end 
-				catch {cmd_output $fh}	
-				return
-			}
 			set cmd "r.what -f input=$mapname east_north=$east,$north\n\n"
         }
         "vector" {
             set mapname [GmVector::mapname $sel]
-			if { $mapname == "" } {
-				$dtxt insert end "You must select a map to query\n"
-				$dtxt yview end 
-				catch {cmd_output $fh}	
-				return
-			}
 	    	set cmd "v.what -a map=$mapname east_north=$east,$north distance=$vdist\n\n"
         }
         "rgbhis" {
             set mapname [GmRgbhis::mapname $sel]
-			if { $mapname == "" } {
-				$dtxt insert end "You must select a map to query\n"
-				$dtxt yview end 
-				catch {cmd_output $fh}	
-				return
-			}
 			set cmd "r.what -f input=$mapname east_north=$east,$north\n\n"
         }
         dframe {
@@ -1022,6 +1003,12 @@ proc MapCanvas::query { mon x y } {
             return
         }
     }
+
+	if { $mapname == "" } {
+		set ah [monitor_annotation_start $mon "Query" {}]
+		monitor_annotate $ah "You must select a map to query\n"
+		return
+	}
 	
 	run_panel $cmd
 }

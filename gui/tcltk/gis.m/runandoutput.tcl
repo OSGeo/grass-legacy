@@ -186,3 +186,18 @@ proc term {cmd args} {
 	global env
 	eval exec -- xterm -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd $args &
 }
+
+###############################################################################
+# Annotation procs for gis.m:
+
+proc monitor_annotation_start {mon title tags} {
+	global gronsole
+	set handle [$gronsole annotate $title $tags]
+	$gronsole set_click_command $handle {}
+	return $handle
+}
+
+proc monitor_annotate {handle text} {
+	global gronsole
+	$gronsole annotate_text $handle $text
+}
