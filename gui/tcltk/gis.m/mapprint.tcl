@@ -166,13 +166,9 @@ proc psprint::init_tmpfiles { } {
 # show gs printer devices in output window
 proc psprint::show_devices { } {
 	global gsdevices
-	global dtxt
-	
-	$dtxt insert end "Ghostscript Output Devices"
-	$dtxt insert end "--------------------------"
-	$dtxt insert end "$gsdevices"
-	$dtxt yview end 
-	catch {cmd_output $fh}
+
+	set ah [monitor_annotation_start {} "Ghostscript Output Devices" {}]
+	monitor_annotate $ah $gsdevices
 }
 
 
