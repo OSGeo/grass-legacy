@@ -172,7 +172,13 @@ proc Gronsole::destroy_command {path ci} {
 
 proc Gronsole::do_click {path ci} {
 	variable _data
-	set cc $_data($path,clickCmd) 
+
+	# Use this commands click command if it exists
+	if {[info exists _data($path,$ci,clickCmd)]} {
+		set cc $_data($path,$ci,clickCmd)
+	} else {
+		set cc $_data($path,clickCmd)
+	}
 	if {$cc != {}} {
 		eval $cc $ci [list $_data($path,$ci,cmd)]
 	}
@@ -245,6 +251,11 @@ proc Gronsole::create_command {path cmd} {
 
 ##########################################################################
 # Public tag management. add_data_tag is private
+
+proc Gronsole::set_click_command {path ci cmd} {
+	variable _data
+	set _data($path,$ci,clickCmd) $cmd
+}
 
 proc Gronsole::show_hide_tag_data {path ci tag} {
 	variable _data
@@ -436,6 +447,8 @@ proc Gronsole::execout {path cmd ci execcmd} {
 # Public interface for running commands
 
 proc Gronsole::annotate {path cmd tags} {
+	variable _data
+
 	set ci [Gronsole::create_command $path $cmd]
 
 	foreach tag $tags {
@@ -445,6 +458,11 @@ proc Gronsole::annotate {path cmd tags} {
 	$path.text yview end
 	
 	return $ci
+}
+
+proc Gronsole::annotate_text {path ci text} {
+	Gronsole::output_to_gronsole $path cmdinsert$ci $ci [list cmd$ci cmd$ci-out] $text
+	$path.text see cmdinsert$ci
 }
 
 proc Gronsole::run {path cmd tags donecmd} {
