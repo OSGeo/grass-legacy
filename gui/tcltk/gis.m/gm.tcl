@@ -299,7 +299,7 @@ proc Gm::create { } {
 	# finish up
     set prgtext "Done"
 
-    set Gm::status [G_msg "Welcome GRASS GIS"]
+    set Gm::status [G_msg "Welcome to GRASS GIS"]
     $mainframe showstatusbar status 
 
     pack $mainframe -fill both -expand yes
