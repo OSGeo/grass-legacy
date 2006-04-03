@@ -393,7 +393,7 @@ proc GmVector::options { id frm } {
     Label $row.a -text [G_msg "Label vectors:"] 
     checkbutton $row.b -text [G_msg "label"] -variable GmVector::opt($id,1,display_attr) \
                 -command "GmVector::legend $id"
-    Label $row.c -text [G_msg "tect color"] 
+    Label $row.c -text [G_msg "text color"] 
     SelectColor $row.d -type menubutton -variable GmVector::opt($id,1,lcolor) \
                 -command "GmVector::legend $id"
     Label $row.e -text [G_msg " text size"] 

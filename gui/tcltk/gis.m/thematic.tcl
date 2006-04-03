@@ -645,7 +645,6 @@ proc GmThematic::duplicate { tree parent node id } {
 proc GmThematic::tlegend { mon } {
 	global legendtitle
 	global bgcolor
-	global dtxt
 	global keycontrol
 	global gmpath
 	global iconpath
