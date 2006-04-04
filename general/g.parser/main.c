@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <ctype.h>
 
 #include <grass/gis.h>
 
@@ -318,16 +319,26 @@ int main(int argc, char *argv[])
     if (G_parser(argc - 1, argv + 1) < 0)
 	return 1;
 
+    /* Because shell from MINGW and CygWin converts all variables
+     * to uppercase it was necessary to use uppercase variables.
+     * Set both until all scripts are updated */
     for (flag = ctx.first_flag; flag; flag = flag->next_flag)
     {
 	char buff[12];
 	sprintf(buff, "GIS_FLAG_%c=%d", flag->key, flag->answer ? 1 : 0);
+	putenv(G_store(buff));
+
+	sprintf(buff, "GIS_FLAG_%c=%d", toupper(flag->key), flag->answer ? 1 : 0);
 	putenv(G_store(buff));
     }
 
     for (option = ctx.first_option; option; option = option->next_opt)
     {
 	char buff[1024];
+	sprintf(buff, "GIS_OPT_%s=%s", option->key, option->answer ? option->answer : "");
+	putenv(G_store(buff));
+
+        G_str_to_upper(option->key);
 	sprintf(buff, "GIS_OPT_%s=%s", option->key, option->answer ? option->answer : "");
 	putenv(G_store(buff));
     }
