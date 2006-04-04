@@ -1302,7 +1302,7 @@ msgid ""
 "FLAG: Set the following flag?\n"
 msgstr ""
 "\n"
-"FLAG: Soll das Folgende Flag gesetzt werden?\n"
+"FLAG: Soll das folgende Flag gesetzt werden?\n"
 
 #: ../lib/gis/parser.c:2025
 #, c-format
