@@ -125,7 +125,7 @@ msgstr "Ungültiger Tiefenwert"
 
 #: ../lib/gis/ask.c:339
 msgid "to cancel request"
-msgstr "Aktion abbrechen"
+msgstr "um die Aktion abzubrechen"
 
 #: ../lib/gis/ask.c:395
 #, c-format
