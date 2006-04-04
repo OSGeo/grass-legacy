@@ -65,7 +65,7 @@ show_cmd
 Late version 1 and version 2: Updates the current command label
 
 prnout
-File callback that prints output to the text widget in opt($dlg,outtext). Couldbe overloaded to capture command output, probably a better idea not to.
+Version 1, early version 2: File callback that prints output to the text widget in opt($dlg,outtext). Could be overloaded to capture command output, probably a better idea not to. Removed now, this is handled by the gronsole made in make_output.
 
 get_file
 Opens a file selection dialog
@@ -115,19 +115,19 @@ make_module_description:
 Version 2 only, should make a description of the module. It could be overloaded to turn off the description or to provide a different one. Overloading make_dialog could also turn offf the description. Related to module_description (version 1 only).
 
 make_command_label:
-Version 2 only, makes a little command label withtextvar opt($dlg,cmd_string). See also show_cmd
+Version 2 only, makes a little command label withtextvar opt($dlg,cmd_string). See also show_cmd. Packs against the bottom side.
 
 make_output:
 Version 2 only, Makes a text box for displaying output. Required for make_buttons unless run_cmd is overloaded, since they contain a run button.
 
 make_progress:
-Version 2 only, makes a progress bar, se also progress
+Version 2 only, makes a progress bar, see also progress. No longer used as progress is displayed by the gronsole.
 
 make_buttons:
-Version 2 only, adds buttons to the dialog. Replaces version 1's add_buttons.
+Version 2 only, adds buttons to the dialog. Replaces version 1's add_buttons. Packs against the bottom.
 
 make_dialog
-In version 2 this sets up everything that gets set up before the program is run. By default it does make_module_description, make_layout, and make_command_layer, and is a prime candidate for overloading.
+In version 2 this sets up everything that gets set up before the program is run. By default it does make_module_description, make_command_label, make_layout, and make_buttons and is a prime candidate for overloading.
 
 In version one this set up the windows for options, output, progress, and their associated opt variables opt($dlg, outtext), opt($dlg, progress). It also initialized opt($dlg, path), opt($dlg, root), and opt($dlg, suf). It would have been difficult to overload.
 
