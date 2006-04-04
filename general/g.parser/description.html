@@ -20,7 +20,11 @@ The command provides full parser support for GRASS scripts.
 <H2>OPTIONS</H2>
 
 The arguments are stored in environment variables, named
-GIS_FLAG_&lt;name&gt; for flags and GIS_OPT_&lt;name&gt; for options.
+GIS_FLAG_&lt;NAME&gt; for flags and GIS_OPT_&lt;NAME&gt; for options.
+The names of variables are converted to upper case. For example if option 
+with key <b>input</b> was defined in script header the value will be available 
+in variable <b>GIS_OPT_INPUT</b> and value of flag with key <b>f</b>
+will be available in variable <b>GIS_FLAG_F</b>.
  
 For flags, the value will be "1" if the flag was given, and "0"
 otherwise.
@@ -65,19 +69,19 @@ fi
 
 #add your code here
 echo ""
-if [ $GIS_FLAG_f -eq 1 ] ; then
+if [ $GIS_FLAG_F -eq 1 ] ; then
   echo "Flag -f set"
 else
   echo "Flag -f not set"
 fi
 
 #test if parameter present:
-if [ "$GIS_OPT_option1" != "(null)" ] ; then
-  echo "Value of GIS_OPT_option1: '$GIS_OPT_option1'"
+if [ "$GIS_OPT_OPTION1" != "(null)" ] ; then
+  echo "Value of GIS_OPT_OPTION1: '$GIS_OPT_OPTION1'"
 fi
 
-echo "Value of GIS_OPT_raster: '$GIS_OPT_raster'"
-echo "Value of GIS_OPT_vect: '$GIS_OPT_vector'"
+echo "Value of GIS_OPT_RASTER: '$GIS_OPT_RASTER'"
+echo "Value of GIS_OPT_VECTOR: '$GIS_OPT_VECTOR'"
 
 #add your code here
 </pre></div>
@@ -111,7 +115,7 @@ a script. For example, individual comma separated identities for an option
 named "input" can be parsed with the following Bash shell code:
 
 <div class="code"><pre>IFS=,
-for opt in $GIS_OPT_input ; do
+for opt in $GIS_OPT_INPUT ; do
 	... "$opt"
 done
 </pre></div>
