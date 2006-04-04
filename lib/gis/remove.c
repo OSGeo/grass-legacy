@@ -74,7 +74,7 @@ recursive_remove(const char *path)
 	DIR *dirp;
 	struct dirent *dp;
 	struct stat sb;
-	char path2[1024];
+	char path2[4096];
 
 	if(lstat(path, &sb))
 		return 1;
@@ -86,6 +86,8 @@ recursive_remove(const char *path)
 	while((dp = readdir(dirp)) != NULL)
 	{
 		if(dp->d_name[0] == '.')
+			continue;
+		if (strlen(path) + strlen(dp->d_name) + 2 > sizeof(path2))
 			continue;
 		sprintf(path2, "%s/%s", path, dp->d_name);
 		recursive_remove(path2);
