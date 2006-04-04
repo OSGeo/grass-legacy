@@ -1,3 +1,19 @@
+# Frame scrolling that works:
+proc handle_scroll {window ammount} {
+    if {![winfo exists $window] || ![winfo ismapped $window]} return
+    set focus [focus -displayof $window]
+    if {($focus != "") && ([winfo toplevel $window] == [winfo toplevel $focus])} {
+        $window yview scroll [expr {-$ammount/120}] units
+    }
+}
+
+proc bind_scroll {frame} {
+    bind all <MouseWheel> "+handle_scroll $frame %D"
+    bind all <Button-4> "+handle_scroll $frame 120"
+    bind all <Button-5> "+handle_scroll $frame -120"
+}
+
+##############################################################
 
 proc GSelect { element } {
     
@@ -27,6 +43,7 @@ proc GSelect_::create { element } {
                    -closecmd  "GSelect_::moddir 0 $sw.tree"] 
 
     $sw setwidget $tree
+    bind_scroll $tree
 
     regexp -- {(.+)x(.+)([+-].+)([+-].+)} [wm geometry .] g w h x y
     #set w [expr int(2*$w/3)]
