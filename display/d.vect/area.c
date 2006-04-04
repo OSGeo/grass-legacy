@@ -151,7 +151,8 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 				break;
 			}
 		}
-		if (!found) continue;
+		/* lines with no category will be displayed */
+		if (Cats->n_cats > 0 && !found) continue;
 	}
 
         G_debug (3, "display area %d", area);

@@ -142,7 +142,8 @@ int plot1 (
 				break;
 			}
 		}
-		if (!found) continue;
+	        /* lines with no category will be displayed */
+	        if (Cats->n_cats > 0 && !found) continue;
 	}
 
 	if( table_colors_flag ) {

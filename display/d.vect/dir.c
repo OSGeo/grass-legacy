@@ -57,7 +57,8 @@ int dir ( struct Map_info *Map, int type, struct cat_list * Clist, int chcat )
 		     break;
 		 }
 	     }
-	     if (!found) continue;
+	     /* lines with no category will be displayed */
+	     if (Cats->n_cats > 0 && !found) continue;
 	}
 	
 	len = Vect_line_length ( Points );
