@@ -66,22 +66,22 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
     exec g.parser "$0" "$@"
 fi
 
-cmd1="d.title map=$GIS_OPT_map"
+cmd1="d.title map=$GIS_OPT_MAP"
 cmd2="d.text"
 
-if [ -n "$GIS_OPT_size" ] ; then
-    cmd1="$cmd1 size=$GIS_OPT_size"
+if [ -n "$GIS_OPT_SIZE" ] ; then
+    cmd1="$cmd1 size=$GIS_OPT_SIZE"
 fi
 
-if [ -n "$GIS_OPT_color" ] ; then
-    cmd1="$cmd1 color=$GIS_OPT_color"
+if [ -n "$GIS_OPT_COLOR" ] ; then
+    cmd1="$cmd1 color=$GIS_OPT_COLOR"
 fi
 
-if [ -n "$GIS_OPT_line" ] ; then
-    cmd2="$cmd2 line=$GIS_OPT_line"
+if [ -n "$GIS_OPT_LINE" ] ; then
+    cmd2="$cmd2 line=$GIS_OPT_LINE"
 fi
 
-if [ $GIS_FLAG_b -eq 1 ] ; then
+if [ $GIS_FLAG_B -eq 1 ] ; then
     cmd2="$cmd2 -b"
 fi
 
