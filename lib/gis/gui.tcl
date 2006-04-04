@@ -38,19 +38,6 @@ proc icon {class member} {
 	return 0
 }
 
-# Frame scrolling that works:
-proc handle_scroll {window ammount} {
-	if {[winfo exists $window] && [winfo ismapped $window]} {
-		$window yview scroll [expr {-$ammount/120}] units
-	}
-}
-
-proc bind_scroll {frame} {
-	bind all <MouseWheel> "+handle_scroll $frame %D"
-	bind all <Button-4> "+handle_scroll $frame 120"
-	bind all <Button-5> "+handle_scroll $frame -120"
-}
-
 # Make text in a label wrap:
 proc wrap_text_in_label {path} {
 	bind $path <Configure> "$path configure -wraplength \[winfo width $path\]"
