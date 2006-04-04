@@ -1,11 +1,17 @@
-/* ****************************************************************************
+/****************************************************************************
  *
- *  MODULE: v.select - select features from one map by features in another map.
- *  
+ * MODULE:       v.select - select features from one map by features in another map.
+ * AUTHOR(S):    Radim Blazek <radim.blazek gmail.com> (original contributor)
+ *               Glynn Clements <glynn gclements.plus.com>, Markus Neteler <neteler itc.it>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 2003-2006 by the GRASS Development Team
  *
- *  AUTHOR(S): Radim Blazek
- *  
- ******************************************************************************/
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -478,4 +484,7 @@ main (int argc, char *argv[])
     
     exit (EXIT_SUCCESS);
 }
+
+
+
 
