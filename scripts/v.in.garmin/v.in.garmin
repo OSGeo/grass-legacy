@@ -129,52 +129,52 @@ trap 'rm -f ${TMP}*' 2 3 15
 WPT=0 ; RTE=0 ; TRK=0 ; KEEP_WGS84=0; VERBOSE=0
 
 
-if [ $GIS_FLAG_v -eq 1 ] ; then
+if [ $GIS_FLAG_V -eq 1 ] ; then
     VERBOSE=1
 fi
 
-if [ -n "$GIS_OPT_output" ] ; then
-    NAME="$GIS_OPT_output"
+if [ -n "$GIS_OPT_OUTPUT" ] ; then
+    NAME="$GIS_OPT_OUTPUT"
     if [ $VERBOSE -eq 1 ] ; then
 	echo "output=$NAME" 1>&2
     fi
 fi
-if [ -n "$GIS_OPT_port" ] ; then
-    GPSPORT="-p$GIS_OPT_port"
+if [ -n "$GIS_OPT_PORT" ] ; then
+    GPSPORT="-p$GIS_OPT_PORT"
     if [ $VERBOSE -eq 1 ] ; then
-	echo "port=$GIS_OPT_port" 1>&2
+	echo "port=$GIS_OPT_PORT" 1>&2
     fi
 fi
 
-if [ $GIS_FLAG_w -eq 1 ] && ([ $GIS_FLAG_r -eq 1 ] || [ $GIS_FLAG_t -eq 1 ]) ; then
+if [ $GIS_FLAG_W -eq 1 ] && ([ $GIS_FLAG_R -eq 1 ] || [ $GIS_FLAG_T -eq 1 ]) ; then
     echo "One feature at a time please. Use v.patch if you need to combine them."
     rm -f ${TMP}*
     exit 1
 fi
 # logic eludes me at pressent..  [combine with above]
-if [ $GIS_FLAG_r -eq 1 ] && [ $GIS_FLAG_t -eq 1 ] ; then
+if [ $GIS_FLAG_R -eq 1 ] && [ $GIS_FLAG_T -eq 1 ] ; then
     echo "One feature at a time please. Use v.patch if you need to combine them."
     rm -f ${TMP}*
     exit 1
 fi
 
-if [ $GIS_FLAG_w -eq 1 ] ; then
+if [ $GIS_FLAG_W -eq 1 ] ; then
     WPT=1
     CREATE_POINTS=1
 fi
-if [ $GIS_FLAG_r -eq 1 ] ; then
+if [ $GIS_FLAG_R -eq 1 ] ; then
     RTE=1
     CREATE_POINTS=0
 fi
-if [ $GIS_FLAG_t -eq 1 ] ; then
+if [ $GIS_FLAG_T -eq 1 ] ; then
     TRK=1
     CREATE_POINTS=0
 fi
 
-if [ $GIS_FLAG_p -eq 1 ] ; then
+if [ $GIS_FLAG_P -eq 1 ] ; then
     CREATE_POINTS=1
 fi
-if [ $GIS_FLAG_k -eq 1 ] ; then
+if [ $GIS_FLAG_K -eq 1 ] ; then
     KEEP_WGS84=1
 fi
 

@@ -53,10 +53,10 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
    exec g.parser "$0" "$@"
 fi
 
-OLD_DATABASE=$GIS_OPT_old_database
-NEW_DATABASE=$GIS_OPT_new_database
-OLD_SCHEMA=$GIS_OPT_old_schema
-NEW_SCHEMA=$GIS_OPT_new_schema
+OLD_DATABASE=$GIS_OPT_OLD_DATABASE
+NEW_DATABASE=$GIS_OPT_NEW_DATABASE
+OLD_SCHEMA=$GIS_OPT_OLD_SCHEMA
+NEW_SCHEMA=$GIS_OPT_NEW_SCHEMA
 
 if [ -z "$OLD_DATABASE" ] ; then
   echo "ERROR: old database not specified"

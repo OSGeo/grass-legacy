@@ -69,7 +69,7 @@ fi
 
 
 #calculate regression equation
-r.stats -c input=$GIS_OPT_map1,$GIS_OPT_map2  > "$TMP"
+r.stats -c input=$GIS_OPT_MAP1,$GIS_OPT_MAP2  > "$TMP"
 awk '{tot += $3;sumX +=$1 * $3; sumsqX +=$1*$1*$3;sumY +=$2 * $3; sumsqY +=$2*$2*$3;\
  sumXY +=$1*$2*$3;\
 }\
@@ -82,7 +82,7 @@ print A, B, R, tot, F, mediaX, sdX, mediaY, sdY}' "$TMP" > "$TMP"b
 #cat "$TMP"b
 
 #send output to screen or text file
-if [ -z "$GIS_OPT_output" ] 
+if [ -z "$GIS_OPT_OUTPUT" ] 
 then
 	RESULTADO=`cat "$TMP"b`
 	echo "y = a + b*x"
@@ -104,7 +104,7 @@ else
         echo "   sdX, sdY: Standard deviations"
 	echo "a  b  R  N  F medX  sdX  medY  sdY" > "$TMP"c
 	cat "$TMP"b >> "$TMP"c
-	mv "$TMP"c "$GIS_OPT_output"
-	cat "$GIS_OPT_output"
+	mv "$TMP"c "$GIS_OPT_OUTPUT"
+	cat "$GIS_OPT_OUTPUT"
 fi
 rm -f "$TMP" "$TMP"b "$TMP"c

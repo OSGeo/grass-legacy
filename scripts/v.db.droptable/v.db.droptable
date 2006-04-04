@@ -63,38 +63,38 @@ unset LC_ALL
 export LC_NUMERIC=C
 
 # do some paranoia tests as well:
-if [ -z "$GIS_OPT_table" ] ; then
-    table=`v.db.connect $GIS_OPT_map -g`
+if [ -z "$GIS_OPT_TABLE" ] ; then
+    table=`v.db.connect $GIS_OPT_MAP -g`
     if [ $? -ne 0 ] ; then
        echo "An error occured. Stop."
        exit 1
     fi
-    table=`v.db.connect $GIS_OPT_map -g | grep -w $GIS_OPT_layer | awk '{print $2}'`
+    table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
     if [ -z $table ] ; then
-       echo "No table assigned to layer <$GIS_OPT_layer>"
+       echo "No table assigned to layer <$GIS_OPT_LAYER>"
        exit 1
     fi
-    echo "Removing following table name connected to selected layer: ${GIS_OPT_map}"
+    echo "Removing following table name connected to selected layer: ${GIS_OPT_MAP}"
 else
-    echo "Removing user specified table name: $GIS_OPT_table"
-    existingtable=`v.db.connect $GIS_OPT_map -g | grep -w $GIS_OPT_layer | awk '{print $2}'`
-    table=$GIS_OPT_table
+    echo "Removing user specified table name: $GIS_OPT_TABLE"
+    existingtable=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
+    table=$GIS_OPT_TABLE
     if [ "$existingtable" != "$table" ] ; then
-       echo "User selected table <$table> but the table <$existingtable> is linked to layer <$GIS_OPT_layer>"
+       echo "User selected table <$table> but the table <$existingtable> is linked to layer <$GIS_OPT_LAYER>"
        exit 1
     fi		  
 fi
 
 # we use the DB settings selected layer 
-database=`v.db.connect $GIS_OPT_map -g`
+database=`v.db.connect $GIS_OPT_MAP -g`
 if [ $? -ne 0 ] ; then
    echo "An error occured. Stop."
    exit 1
 fi
-database=`v.db.connect $GIS_OPT_map -g | grep -w $GIS_OPT_layer | awk '{print $4}'`
-driver=`v.db.connect $GIS_OPT_map -g | grep -w $GIS_OPT_layer | awk '{print $5}'`
+database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
+driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'`
 
-echo "Removing table <$table> linked to layer <$GIS_OPT_layer> of vector map <$GIS_OPT_map>"
+echo "Removing table <$table> linked to layer <$GIS_OPT_LAYER> of vector map <$GIS_OPT_MAP>"
 
 # this may not work in GUI mode:
 echo "Are you sure (y/n)? [n]"
@@ -108,10 +108,10 @@ if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
       exit 1
    fi
 
-   v.db.connect -d map=$GIS_OPT_map layer=$GIS_OPT_layer
+   v.db.connect -d map=$GIS_OPT_MAP layer=$GIS_OPT_LAYER
 
    echo "Current attribute table link(s):"
-   v.db.connect -p $GIS_OPT_map
+   v.db.connect -p $GIS_OPT_MAP
 
    exit 0
 else

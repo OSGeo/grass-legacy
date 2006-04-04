@@ -97,21 +97,21 @@ trap "exitprocedure" 2 3 15
 program=`basename $0`
 
 #test:
-if [ ! $GIS_OPT_input ]
+if [ ! $GIS_OPT_INPUT ]
 then
  echo "Please provide an input map name."
  exit 1
 fi
-if [ ! $GIS_OPT_output ]
+if [ ! $GIS_OPT_OUTPUT ]
 then
  echo "Please provide an output name."
  exit 1
 fi
 
 #check if input file exists
-#if test -f $LOCATION/cell/$GIS_OPT_input
-if [ -z `g.findfile elem=cell file="$GIS_OPT_input" | grep ^file | cut -f2 -d=` ] ; then
-    echo "<$GIS_OPT_input> does not exist! Aborting."
+#if test -f $LOCATION/cell/$GIS_OPT_INPUT
+if [ -z `g.findfile elem=cell file="$GIS_OPT_INPUT" | grep ^file | cut -f2 -d=` ] ; then
+    echo "<$GIS_OPT_INPUT> does not exist! Aborting."
     exit 1
 fi
 
@@ -133,7 +133,7 @@ TMP1=r_fillnulls_$$
 
 echo "Locating and isolating NULL areas..."
 #creating 0/1 map:
-r.mapcalc $TMP1="if(isnull($GIS_OPT_input),1,null())"
+r.mapcalc $TMP1="if(isnull($GIS_OPT_INPUT),1,null())"
 
 #generate a ring:
 # the buffer is set to three times the map resolution so you get nominally
@@ -160,7 +160,7 @@ r.mapcalc "MASK=if($TMP1.buf==2,1,null())"
 # Use this outline (raster border) for interpolating the fill data:
 VECTTMP=vecttmp_fillnulls_$$
 echo "Creating interpolation points..."
-r.to.vect input=$GIS_OPT_input output=${VECTTMP} feature=point
+r.to.vect input=$GIS_OPT_INPUT output=${VECTTMP} feature=point
 if [ $? -ne 0 ] ; then
     echo "ERROR detected: $0 abandoned. Removing temporary maps, restoring user mask if needed:"
     g.remove rast=MASK,$TMP1,$TMP1.buf,${TMP1}_filled > /dev/null
@@ -205,9 +205,9 @@ g.remove MASK > /dev/null
 if test -f $LOCATION/cell/$USERMASK
 then
   echo "Using user mask while interpolating"
-  RST_CMD="v.surf.rst zcol=value tension=$GIS_OPT_tension smooth=$GIS_OPT_smooth maskmap=$USERMASK"
+  RST_CMD="v.surf.rst zcol=value tension=$GIS_OPT_TENSION smooth=$GIS_OPT_SMOOTH maskmap=$USERMASK"
 else
-  RST_CMD="v.surf.rst zcol=value tension=$GIS_OPT_tension smooth=$GIS_OPT_smooth"
+  RST_CMD="v.surf.rst zcol=value tension=$GIS_OPT_TENSION smooth=$GIS_OPT_SMOOTH"
 fi
 
 SEGMAX=600
@@ -235,13 +235,13 @@ fi
 #patch orig and fill map
 echo "Patching fill data into NULL areas..."
 # we can use --o here as g.parser already checks on startup
-r.patch in=$GIS_OPT_input,${TMP1}_filled out=$GIS_OPT_output --o
+r.patch in=$GIS_OPT_INPUT,${TMP1}_filled out=$GIS_OPT_OUTPUT --o
 
 #cleanup
 g.remove rast=$TMP1,$TMP1.buf,${TMP1}_filled > /dev/null
 g.remove vect=${VECTTMP} > /dev/null
 
 echo ""
-echo "Filled raster map is: $GIS_OPT_output"
+echo "Filled raster map is: $GIS_OPT_OUTPUT"
 echo
 echo "Done."

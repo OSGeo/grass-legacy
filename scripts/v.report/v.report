@@ -67,15 +67,15 @@ trap 'rm -f "$TMP1" "$TMP2" ; exit 1' 2 3 15
 TMP1="`g.tempfile pid=$$`"
 TMP2="`g.tempfile pid=$$`"
 
-MAP=$GIS_OPT_map
-OPTION=$GIS_OPT_option
-LAYER=$GIS_OPT_layer
+MAP=$GIS_OPT_MAP
+OPTION=$GIS_OPT_OPTION
+LAYER=$GIS_OPT_LAYER
 
 #fetch column names
 COLNAMES="`v.info -c $MAP |grep -v '^Displaying column type' | cut -d '|' -f2 | tr '\n' '|'`"
 
 #special treatment for opt=coor parameter:
-if [ "$GIS_OPT_option" = "coor" ] ; then
+if [ "$GIS_OPT_OPTION" = "coor" ] ; then
   COLUMS="dummy1,dummy2"
   EXTRACOLNAMES="x|y"
 else
@@ -84,8 +84,8 @@ else
 fi   
 
 #check for optional units parameter:
-if  [ ! -z $GIS_OPT_units ] ; then
-  UNITSPARAM="units=$GIS_OPT_units"
+if  [ ! -z $GIS_OPT_UNITS ] ; then
+  UNITSPARAM="units=$GIS_OPT_UNITS"
 fi   
 
 #fetch the attributes sorted by cat:

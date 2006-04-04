@@ -74,10 +74,10 @@ old_TRUECOLOR=`eval g.gisenv get=GRASS_TRUECOLOR`
 curr_mon=`d.mon -p | awk '{printf "%s", $4}'`
 
 #setting variables (get rid of extra png)
-dirname="`dirname $GIS_OPT_output`"
-output="`basename $GIS_OPT_output .png`"
+dirname="`dirname $GIS_OPT_OUTPUT`"
+output="`basename $GIS_OPT_OUTPUT .png`"
 output="$dirname/$output"
-res="$GIS_OPT_res"
+res="$GIS_OPT_RES"
 
 #get GRASS version for display monitor name
 GRASS_VER=`g.version | awk '{printf "%s", $1 " " $2}'`

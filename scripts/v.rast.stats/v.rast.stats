@@ -96,9 +96,9 @@ exitprocedure()
 trap "exitprocedure" 2 3 15
 
 
-VECTOR="$GIS_OPT_vector"
-RASTER="$GIS_OPT_raster"
-COLPREFIX="$GIS_OPT_colprefix"
+VECTOR="$GIS_OPT_VECTOR"
+RASTER="$GIS_OPT_RASTER"
+COLPREFIX="$GIS_OPT_COLPREFIX"
 
 #check the input vector map
 eval `g.findfile element=vector file=$VECTOR`
@@ -174,7 +174,7 @@ for i in n min max range mean stddev variance cf_var sum ; do
   fi
   v.info -c $VECTOR 2> /dev/null | sed 's+^+|+g' |sed 's+$+|+g' | grep "|$CURRCOLUMN|" > /dev/null
   if [ $? -eq 0 ] ; then
-    if [ $GIS_FLAG_c -ne 1 ] ; then
+    if [ $GIS_FLAG_C -ne 1 ] ; then
        echo "ERROR: Cannot create column <$CURRCOLUMN> (already present). Use -c flag to update values in this column."
        exit 1
     fi

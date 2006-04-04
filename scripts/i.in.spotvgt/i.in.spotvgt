@@ -142,13 +142,13 @@ create_VRT_file(){
 PID=$$
 TMPFILE="`g.tempfile $PID`"
 
-if [ ! -z "$GIS_OPT_file" ] ; then
-    SPOTDIR="`dirname $GIS_OPT_file`"
-    SPOTNAME=`basename $GIS_OPT_file .HDF`
+if [ ! -z "$GIS_OPT_FILE" ] ; then
+    SPOTDIR="`dirname $GIS_OPT_FILE`"
+    SPOTNAME=`basename $GIS_OPT_FILE .HDF`
 fi
 
-if [ ! -z "$GIS_OPT_rast" ] ; then
-    NAME="$GIS_OPT_rast"
+if [ ! -z "$GIS_OPT_RAST" ] ; then
+    NAME="$GIS_OPT_RAST"
 else
     NAME=$SPOTNAME
 fi
@@ -165,7 +165,7 @@ VRTFILE=$TMPFILE.vrt
 
 # first process the NDVI:
 rm -f $VRTFILE
-create_VRT_file $VRTFILE $GIS_OPT_file
+create_VRT_file $VRTFILE $GIS_OPT_FILE
 
 ## let's import the NDVI map...
 echo "Import SPOT VGT NDVI map..."
@@ -228,10 +228,10 @@ r.colors ${NAME} rules=ndvi 2>&1 >/dev/null
 #
 # A good map threshold: >= 248
 
-if [ $GIS_FLAG_a -eq 1 ] ; then
+if [ $GIS_FLAG_A -eq 1 ] ; then
   echo "Import SPOT VGT NDVI quality map..."
   rm -f $VRTFILE
-  create_VRT_file $VRTFILE `echo ${GIS_OPT_file} | sed 's+NDV+SM+g'`
+  create_VRT_file $VRTFILE `echo ${GIS_OPT_FILE} | sed 's+NDV+SM+g'`
 
   ## let's import the SM quality map...
   r.in.gdal $VRTFILE output=$NAME.sm

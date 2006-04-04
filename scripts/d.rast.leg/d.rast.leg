@@ -65,12 +65,12 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-if [ $GIS_FLAG_n -eq 1 ] ; then
+if [ $GIS_FLAG_N -eq 1 ] ; then
   OMIT="-n"
 fi
 
 #for -n flag of d.legend
-eval `g.findfile el=cell file=$GIS_OPT_map`
+eval `g.findfile el=cell file=$GIS_OPT_MAP`
 filemapset="${mapset}"
 HISTFILEDIR=$GISDBASE/$LOCATION_NAME/$filemapset/cell_misc/
 
@@ -79,52 +79,52 @@ d.frame -e
 
 #at=bottom,top,left,right
 
-if [ -z "$GIS_OPT_num_of_lines" ]
+if [ -z "$GIS_OPT_NUM_OF_LINES" ]
 then
 
        #draw title
         d.frame -s at=90,100,65,100  frame=title
 #	if test -f $GISBASE/bin/d.text.freetype ; then
-#          d.text.freetype -sp text=$GIS_OPT_map col=black size=18 \
+#          d.text.freetype -sp text=$GIS_OPT_MAP col=black size=18 \
 #	         east_north=20,20 path=/usr/X11R6/lib/X11/fonts/TTF/luximb.ttf
 #	else
-          echo "$GIS_OPT_map" | d.text col=black size=30
+          echo "$GIS_OPT_MAP" | d.text col=black size=30
 #	fi
 
        #draw legend
     	d.frame -s at=0,90,65,100 frame=right
-        if test -f $HISTFILEDIR/$GIS_OPT_map/histogram ; then
-    	     d.legend -n map=$GIS_OPT_map
+        if test -f $HISTFILEDIR/$GIS_OPT_MAP/histogram ; then
+    	     d.legend -n map=$GIS_OPT_MAP
         else
-             d.legend $OMIT map=$GIS_OPT_map
+             d.legend $OMIT map=$GIS_OPT_MAP
         fi
 
        #draw map
 	d.frame -s at=0,100,0,65 frame=left
-    	d.rast map=$GIS_OPT_map
+    	d.rast map=$GIS_OPT_MAP
 
 else
 
        #draw title
         d.frame -s at=90,100,65,100 frame=title
 #	if test -f $GISBASE/bin/d.text.freetype ; then
-#          d.text.freetype -sp text=$GIS_OPT_map col=black size=18 \
+#          d.text.freetype -sp text=$GIS_OPT_MAP col=black size=18 \
 #	         east_north=20,20 path=/usr/X11R6/lib/X11/fonts/TTF/luximb.ttf
 #	else
-          echo "$GIS_OPT_map" | d.text col=black size=30
+          echo "$GIS_OPT_MAP" | d.text col=black size=30
 #	fi
 
        #draw legend
     	d.frame -s at=0,90,65,100 frame=right
-        if test -f $HISTFILEDIR/$GIS_OPT_map/histogram ; then
-             d.legend -n map=$GIS_OPT_map lines=$GIS_OPT_num_of_lines
+        if test -f $HISTFILEDIR/$GIS_OPT_MAP/histogram ; then
+             d.legend -n map=$GIS_OPT_MAP lines=$GIS_OPT_NUM_OF_LINES
         else
-             d.legend $OMIT map=$GIS_OPT_map
+             d.legend $OMIT map=$GIS_OPT_MAP
         fi
 
        #draw map
 	d.frame -s at=0,100,0,65 frame=left
-    	d.rast map=$GIS_OPT_map
+    	d.rast map=$GIS_OPT_MAP
 fi
 
 

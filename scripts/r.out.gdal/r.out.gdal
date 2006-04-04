@@ -82,14 +82,14 @@ if [ -z "`gdalinfo --formats | grep -i GRASS`" ] ; then
    exit 1
 fi
 
-INPUT="$GIS_OPT_input"
-FORMAT="$GIS_OPT_format"
-TYPE="$GIS_OPT_type"
-OUTPUT="$GIS_OPT_output"
-CREATEKEY="-co $GIS_OPT_createopt"
-METAKEY="-mo $GIS_OPT_metaopt"
+INPUT="$GIS_OPT_INPUT"
+FORMAT="$GIS_OPT_FORMAT"
+TYPE="$GIS_OPT_TYPE"
+OUTPUT="$GIS_OPT_OUTPUT"
+CREATEKEY="-co $GIS_OPT_CREATEOPT"
+METAKEY="-mo $GIS_OPT_METAOPT"
 
-if [ $GIS_FLAG_l -eq 1 ] ; then
+if [ $GIS_FLAG_L -eq 1 ] ; then
   gdal_translate | grep ':' | grep -v 'Usage' | grep -v 'The following'
   exit 0
 fi

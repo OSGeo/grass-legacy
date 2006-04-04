@@ -82,20 +82,20 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-GIS_OPT_fs='"'$GIS_OPT_fs'"'
-GIS_OPT_columns="'"$GIS_OPT_columns"'"
+GIS_OPT_FS='"'$GIS_OPT_FS'"'
+GIS_OPT_COLUMNS="'"$GIS_OPT_COLUMNS"'"
 
-cmd="cat "$GIS_OPT_input" | v.in.ascii output="$GIS_OPT_output" xcol="$GIS_OPT_xcol" ycol="$GIS_OPT_ycol" zcol="$GIS_OPT_zcol" catcol="$GIS_OPT_catcol" fs="$GIS_OPT_fs
-#" columns="$GIS_OPT_columns 
+cmd="cat "$GIS_OPT_INPUT" | v.in.ascii output="$GIS_OPT_OUTPUT" xcol="$GIS_OPT_XCOL" ycol="$GIS_OPT_YCOL" zcol="$GIS_OPT_ZCOL" catcol="$GIS_OPT_CATCOL" fs="$GIS_OPT_FS
+#" columns="$GIS_OPT_COLUMNS 
 
-if [ "$GIS_OPT_columns" != "" ] ; then
-    cmd=$cmd" columns="$GIS_OPT_columns
+if [ "$GIS_OPT_COLUMNS" != "" ] ; then
+    cmd=$cmd" columns="$GIS_OPT_COLUMNS
 fi
 
-echo $GIS_OPT_columns
+echo $GIS_OPT_COLUMNS
 echo $cmd
 
 eval $cmd
 
 echo ""
-echo "Done. GRASS vector points file $GIS_OPT_output created from ASCII points file $GIS_OPT_input"
+echo "Done. GRASS vector points file $GIS_OPT_OUTPUT created from ASCII points file $GIS_OPT_INPUT"

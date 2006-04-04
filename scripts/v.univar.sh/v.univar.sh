@@ -97,40 +97,40 @@ exitprocedure()
 trap "exitprocedure" 2 3 15
 
 
-echo "Calculation for column $GIS_OPT_column of table $GIS_OPT_table..."
+echo "Calculation for column $GIS_OPT_COLUMN of table $GIS_OPT_TABLE..."
 echo "Reading column values..."
 
-if [ -z "$GIS_OPT_database" ] ; then
+if [ -z "$GIS_OPT_DATABASE" ] ; then
     db=""
 else
-    db="database=$GIS_OPT_database"
+    db="database=$GIS_OPT_DATABASE"
 fi
 
-if [ -z "$GIS_OPT_driver" ] ; then
+if [ -z "$GIS_OPT_DRIVER" ] ; then
     drv=""
 else
-    drv="driver=$GIS_OPT_driver"
+    drv="driver=$GIS_OPT_DRIVER"
 fi
 
-if [ -z "$GIS_OPT_where" ] ; then
-   db.select table=$GIS_OPT_table $db $drv sql="select $GIS_OPT_column from $GIS_OPT_table" -c > "$TMP"
+if [ -z "$GIS_OPT_WHERE" ] ; then
+   db.select table=$GIS_OPT_TABLE $db $drv sql="select $GIS_OPT_COLUMN from $GIS_OPT_TABLE" -c > "$TMP"
 else
-   db.select table=$GIS_OPT_table $db $drv sql="select $GIS_OPT_column from $GIS_OPT_table WHERE $GIS_OPT_where" -c > "$TMP"
+   db.select table=$GIS_OPT_TABLE $db $drv sql="select $GIS_OPT_COLUMN from $GIS_OPT_TABLE WHERE $GIS_OPT_WHERE" -c > "$TMP"
 fi
 
 
-echo "database = $GIS_OPT_database"
+echo "database = $GIS_OPT_DATABASE"
 echo "db = $db"
 echo ""
 echo "drv = $drv"
-echo "driver = $GIS_OPT_drv"
+echo "driver = $GIS_OPT_DRV"
 echo ""
 
 #check if map contains only NULL's in current region
 LINES=`wc -l "$TMP" | awk '{print $1}'`
 if [ "$LINES" -eq 0 ] ; then
  echo ""
- echo "ERROR: Table $GIS_OPT_table contains no data."
+ echo "ERROR: Table $GIS_OPT_TABLE contains no data."
  cleanup
  exit 1
 fi
@@ -161,7 +161,7 @@ END{
     }
 }'
 
-if [ $GIS_FLAG_e -eq 1 ] ; then
+if [ $GIS_FLAG_E -eq 1 ] ; then
   #preparations:
   cat $TMP | sort -n > $TMP.sort
   NUMBER=`cat $TMP.sort | wc -l | awk '{print $1}'`

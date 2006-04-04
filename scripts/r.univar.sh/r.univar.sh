@@ -56,7 +56,7 @@ fi
 unset LC_ALL
 export LC_NUMERIC=C
 
-COVER="$GIS_OPT_map"
+COVER="$GIS_OPT_MAP"
 
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
@@ -64,13 +64,13 @@ if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
     exit 1
 fi
 
-echo "$GIS_OPT_percentile" | grep '\.' > /dev/null
-if [ $? -eq 0 ] || [ -z "$GIS_OPT_percentile" ] ; then
+echo "$GIS_OPT_PERCENTILE" | grep '\.' > /dev/null
+if [ $? -eq 0 ] || [ -z "$GIS_OPT_PERCENTILE" ] ; then
 	echo "Sorry, percentile must be between 0 and 100"
         exit 1
 fi
 
-if test $GIS_OPT_percentile -lt 0 -o $GIS_OPT_percentile -gt 100
+if test $GIS_OPT_PERCENTILE -lt 0 -o $GIS_OPT_PERCENTILE -gt 100
 then
         echo "Sorry, percentile must be between 0 and 100"
         exit 1
@@ -125,7 +125,7 @@ print "Standard deviation:",sqrt((sum2 - sum*sum/N)/N)
 print "Variation coefficient:",100*(sqrt((sum2 - sum*sum/N)/N))/(sqrt(sum*sum)/N),"%"
 }'
 
-if [ $GIS_FLAG_e -eq 1 ] ; then
+if [ $GIS_FLAG_E -eq 1 ] ; then
   #preparations:
   cat $TMP | sort -n > $TMP.sort
   NUMBER=`cat $TMP.sort | wc -l | awk '{print $1}'`
@@ -162,10 +162,10 @@ if [ $GIS_FLAG_e -eq 1 ] ; then
   echo "3rd Quartile: $QELEMENT"
 
   # XX percentile
-  QUARTILE=$GIS_OPT_percentile
+  QUARTILE=$GIS_OPT_PERCENTILE
   QPOS=`echo $NUMBER $QUARTILE | awk '{printf "%d", $1 * $2/100. + 0.5}'`
   QELEMENT=`head -n $QPOS $TMP.sort | tail -1`
-  echo "${GIS_OPT_percentile} Percentile: $QELEMENT"
+  echo "${GIS_OPT_PERCENTILE} Percentile: $QELEMENT"
 
 fi
 

@@ -61,23 +61,23 @@ fi
 
 cmd="d.text"
 
-if [ -n "$GIS_OPT_size" ] ; then
-    cmd="$cmd size=$GIS_OPT_size"
+if [ -n "$GIS_OPT_SIZE" ] ; then
+    cmd="$cmd size=$GIS_OPT_SIZE"
 fi
 
-if [ -n "$GIS_OPT_color" ] ; then
-    cmd="$cmd color=$GIS_OPT_color"
+if [ -n "$GIS_OPT_COLOR" ] ; then
+    cmd="$cmd color=$GIS_OPT_COLOR"
 fi
 
-if [ -n "$GIS_OPT_line" ] ; then
-    cmd="$cmd line=$GIS_OPT_line"
+if [ -n "$GIS_OPT_LINE" ] ; then
+    cmd="$cmd line=$GIS_OPT_LINE"
 fi
 
-if [ -n "$GIS_OPT_at" ] ; then
-    cmd="$cmd at=$GIS_OPT_at"
+if [ -n "$GIS_OPT_AT" ] ; then
+    cmd="$cmd at=$GIS_OPT_AT"
 fi
 
-if [ $GIS_FLAG_b -eq 1 ] ; then
+if [ $GIS_FLAG_B -eq 1 ] ; then
     cmd="$cmd -b"
 fi
 

@@ -64,21 +64,21 @@ unset LC_ALL
 export LC_NUMERIC=C
 
 
-table=`v.db.connect $GIS_OPT_map -g | grep -w $GIS_OPT_layer | awk '{print $2}'`
-database=`v.db.connect $GIS_OPT_map -g | grep -w $GIS_OPT_layer | awk '{print $4}'`
-driver=`v.db.connect $GIS_OPT_map -g | grep -w $GIS_OPT_layer | awk '{print $5}'`
+table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
+database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
+driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'`
 
 if [ -z "$table" ] ; then
    echo -e "\nERROR: There is no table connected to this map !\nRun v.db.connect first.\n"
    exit 1
 fi
 
-colnum=`echo $GIS_OPT_columns | awk -F, '{print NF}'`
+colnum=`echo $GIS_OPT_COLUMNS | awk -F, '{print NF}'`
 
 n=1
 while [ "$n" -le "$colnum" ]
   do
-    col=`echo $GIS_OPT_columns | cut -d',' -f$n`
+    col=`echo $GIS_OPT_COLUMNS | cut -d',' -f$n`
     
     if [ -z "$col" ] ; then
       echo -e "\nERROR: There is an empty colum !\nDid you leave a trailing comma?\n"

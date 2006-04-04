@@ -70,7 +70,7 @@ do_list() {
 
     sorted_list=`echo "$list" | tr ' ' '\n' | sort | tr '\n' ' '`
 
-    if [ $GIS_FLAG_m -eq 1 ] ; then
+    if [ $GIS_FLAG_M -eq 1 ] ; then
 	MAPSET="@$mapset"
     else
 	MAPSET=""
@@ -104,10 +104,10 @@ fi
 #echo "  Do not forget to enclose expression with '...' to avoid being expanded"
 #echo "  by the shell first."
 
-type="$GIS_OPT_type"
-mapset="$GIS_OPT_mapset"
-sep="$GIS_OPT_sep"
-search="$GIS_OPT_pattern"
+type="$GIS_OPT_TYPE"
+mapset="$GIS_OPT_MAPSET"
+sep="$GIS_OPT_SEP"
+search="$GIS_OPT_PATTERN"
 
 if [ -z "$sep" ] ; then
 #    echo using "\n" as separator
@@ -115,7 +115,7 @@ if [ -z "$sep" ] ; then
 fi
 
 
-if [ $GIS_FLAG_r -ne 1 ] ; then
+if [ $GIS_FLAG_R -ne 1 ] ; then
 #    echo wildcard
     search="^`echo \"$search\" | sed 's/\./\\\\./g; s/?/./g; s/*/.*/g; s/|/$|^/g'`$"
 #else

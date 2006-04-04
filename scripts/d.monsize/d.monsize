@@ -55,8 +55,8 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-export GRASS_WIDTH=$GIS_OPT_setwidth
-export GRASS_HEIGHT=$GIS_OPT_setheight
+export GRASS_WIDTH=$GIS_OPT_SETWIDTH
+export GRASS_HEIGHT=$GIS_OPT_SETHEIGHT
 
 
 # Check the current status of the monitor
@@ -71,25 +71,25 @@ then
   # No monitor running so start a new one....
   echo
   echo "No monitor selected"
-  echo "Starting monitor $GIS_OPT_setmonitor of size $GIS_OPT_setwidthx$GIS_OPT_setheight ..."
-  d.mon start=$GIS_OPT_setmonitor
+  echo "Starting monitor $GIS_OPT_SETMONITOR of size $GIS_OPT_SETWIDTHX$GIS_OPT_SETHEIGHT ..."
+  d.mon start=$GIS_OPT_SETMONITOR
 else
-  if [ "$GIS_OPT_setmonitor" = "$st3" ]
+  if [ "$GIS_OPT_SETMONITOR" = "$st3" ]
   then
     # Monitor is already running...stop it and start new one
-    d.mon stop=$GIS_OPT_setmonitor
+    d.mon stop=$GIS_OPT_SETMONITOR
     echo
     echo "Monitor already running and selected"
-    echo "Restarting monitor $GIS_OPT_setmonitorat size $GIS_OPT_setwidthx$GIS_OPT_setheight ..."
+    echo "Restarting monitor $GIS_OPT_SETMONITORAT size $GIS_OPT_SETWIDTHX$GIS_OPT_SETHEIGHT ..."
     sleep 4
-    d.mon start=$GIS_OPT_setmonitor
+    d.mon start=$GIS_OPT_SETMONITOR
   else
     echo
     echo "A different monitor is selected"
-    echo "Selecting and restarting monitor $GIS_OPT_setwidthx$GIS_OPT_setheight..."
-    #d.mon select=$GIS_OPT_setmonitor
-    d.mon stop=$GIS_OPT_setmonitor
+    echo "Selecting and restarting monitor $GIS_OPT_SETWIDTHX$GIS_OPT_SETHEIGHT..."
+    #d.mon select=$GIS_OPT_SETMONITOR
+    d.mon stop=$GIS_OPT_SETMONITOR
     sleep 4
-    d.mon start=$GIS_OPT_setmonitor
+    d.mon start=$GIS_OPT_SETMONITOR
   fi
 fi

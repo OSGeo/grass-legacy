@@ -33,7 +33,7 @@ then
         exec g.parser "$0" "$@"
 fi
 
-test_file=$GIS_OPT_test
+test_file=$GIS_OPT_TEST
 
 expected=`g.tempfile pid=$$`
 result=`g.tempfile pid=$$`

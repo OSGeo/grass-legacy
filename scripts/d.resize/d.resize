@@ -73,10 +73,10 @@ dsave=`d.save -a`
 mon=`d.mon -p | awk '{printf "%s", $4}'`
 d.mon stop=$mon
 echo ""
-echo "Display set to $GIS_OPT_width x $GIS_OPT_height"
+echo "Display set to $GIS_OPT_WIDTH x $GIS_OPT_HEIGHT"
 echo ""
-export GRASS_WIDTH=$GIS_OPT_width
-export GRASS_HEIGHT=$GIS_OPT_height
+export GRASS_WIDTH=$GIS_OPT_WIDTH
+export GRASS_HEIGHT=$GIS_OPT_HEIGHT
 d.mon start=$mon
 
 #redisplay map

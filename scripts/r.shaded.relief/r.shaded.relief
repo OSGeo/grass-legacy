@@ -116,11 +116,11 @@ fi
 
 PROG=`basename $0`
 
-alt=$GIS_OPT_altitude
-az=$GIS_OPT_azimuth
-elev=$GIS_OPT_map
-zmult=$GIS_OPT_zmult
-scale=$GIS_OPT_scale
+alt=$GIS_OPT_ALTITUDE
+az=$GIS_OPT_AZIMUTH
+elev=$GIS_OPT_MAP
+zmult=$GIS_OPT_ZMULT
+scale=$GIS_OPT_SCALE
 
 eval `g.findfile element=cell file=$elev`
 if [ "$name" = "" ] ; then
@@ -128,16 +128,16 @@ if [ "$name" = "" ] ; then
    exit 1
 fi
 
-if [ "$GIS_OPT_map" = "$GIS_OPT_shadedmap" ]; then
+if [ "$GIS_OPT_MAP" = "$GIS_OPT_SHADEDMAP" ]; then
 	echo ""
 	echo "Input elevation map and output relief map must have different names"
 	exit 1
 fi
 
-if [ -z "$GIS_OPT_shadedmap" ]; then
+if [ -z "$GIS_OPT_SHADEDMAP" ]; then
     ELEVSHADE=$elev"_shade"
 else
-    ELEVSHADE=$GIS_OPT_shadedmap
+    ELEVSHADE=$GIS_OPT_SHADEDMAP
 fi
 
 if test $alt -lt 0 -o $alt -gt 90
@@ -153,13 +153,13 @@ then
 fi
 
 #LatLong locations only:
-if [ "$GIS_OPT_units" = "meters" ]
+if [ "$GIS_OPT_UNITS" = "meters" ]
 then
 scale=111120
 fi
 
 #LatLong locations only:
-if [ "$GIS_OPT_units" = "feet" ]
+if [ "$GIS_OPT_UNITS" = "feet" ]
 then
 scale=370400
 fi		
@@ -191,7 +191,7 @@ EOF
 r.colors $ELEVSHADE color=grey
 
 echo ""
-if [ -n "$GIS_OPT_shadedmap" ] ; then
+if [ -n "$GIS_OPT_SHADEDMAP" ] ; then
     echo "Shaded relief map created and named [$ELEVSHADE]."
 else
     echo "Shaded relief map created and named [$ELEVSHADE]. Consider renaming."

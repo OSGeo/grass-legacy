@@ -18,4 +18,4 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-exec "$GRASS_WISH" "$GISBASE/etc/dm/d.m.tcl" -name d_m_tcl "$GIS_OPT_dmrc" sh &
+exec "$GRASS_WISH" "$GISBASE/etc/dm/d.m.tcl" -name d_m_tcl "$GIS_OPT_DMRC" sh &

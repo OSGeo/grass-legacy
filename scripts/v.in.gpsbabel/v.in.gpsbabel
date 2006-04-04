@@ -140,32 +140,32 @@ trap 'rm -f ${TMP}*' 2 3 15
 WPT=1 ; RTE=0 ; TRK=0 ; KEEP_WGS84=0; VERBOSE=0
 
 
-if [ $GIS_FLAG_v -eq 1 ] ; then
+if [ $GIS_FLAG_V -eq 1 ] ; then
     VERBOSE=1
     PROGVERBOSE="-D 1"
 fi
 
-if [ -n "$GIS_OPT_output" ] ; then
-    NAME="$GIS_OPT_output"
+if [ -n "$GIS_OPT_OUTPUT" ] ; then
+    NAME="$GIS_OPT_OUTPUT"
     if [ $VERBOSE -eq 1 ] ; then
 	echo "output=$NAME" 1>&2
     fi
 fi
-if [ -n "$GIS_OPT_input" ] ; then
-    GPSdevice="-f $GIS_OPT_input"
+if [ -n "$GIS_OPT_INPUT" ] ; then
+    GPSdevice="-f $GIS_OPT_INPUT"
     if [ $VERBOSE -eq 1 ] ; then
-	echo "file=$GIS_OPT_input" 1>&2
+	echo "file=$GIS_OPT_INPUT" 1>&2
     fi
 fi
 
 
-if [ $GIS_FLAG_w -eq 1 ] && ([ $GIS_FLAG_r -eq 1 ] || [ $GIS_FLAG_t -eq 1 ]) ; then
+if [ $GIS_FLAG_W -eq 1 ] && ([ $GIS_FLAG_R -eq 1 ] || [ $GIS_FLAG_T -eq 1 ]) ; then
     echo "One feature at a time please. Use v.patch if you need to combine them."
     rm -f ${TMP}*
     exit 1
 fi
 # logic eludes me at pressent..  [combine with above]
-if [ $GIS_FLAG_r -eq 1 ] && [ $GIS_FLAG_t -eq 1 ] ; then
+if [ $GIS_FLAG_R -eq 1 ] && [ $GIS_FLAG_T -eq 1 ] ; then
     echo "One feature at a time please. Use v.patch if you need to combine them."
     rm -f ${TMP}*
     exit 1
@@ -173,39 +173,39 @@ fi
 
 CREATE_POINTS=0
 
-if [ $GIS_FLAG_w -eq 1 ] ; then
+if [ $GIS_FLAG_W -eq 1 ] ; then
     WPT=1
     CREATE_POINTS=1
 fi
-if [ $GIS_FLAG_r -eq 1 ] ; then
+if [ $GIS_FLAG_R -eq 1 ] ; then
     WPT=0
     RTE=1
     CREATE_POINTS=0
 fi
-if [ $GIS_FLAG_t -eq 1 ] ; then
+if [ $GIS_FLAG_T -eq 1 ] ; then
     WPT=0
     TRK=1
     CREATE_POINTS=0
 fi
 
-if [ $GIS_FLAG_p -eq 1 ] ; then
+if [ $GIS_FLAG_P -eq 1 ] ; then
     CREATE_POINTS=1
 fi
-if [ $GIS_FLAG_k -eq 1 ] ; then
+if [ $GIS_FLAG_K -eq 1 ] ; then
     KEEP_WGS84=1
 fi
 
-if [ $GIS_FLAG_w -eq 0 ] && [ $GIS_FLAG_r -eq 0 ] && [ $GIS_FLAG_t -eq 0 ] ; then
+if [ $GIS_FLAG_W -eq 0 ] && [ $GIS_FLAG_R -eq 0 ] && [ $GIS_FLAG_T -eq 0 ] ; then
 	CREATE_POINTS=1
 	WPT=1
 fi
 
 
 #### set up projection info
-if [ -n "$GIS_OPT_proj"] ; then
+if [ -n "$GIS_OPT_PROJ"] ; then
     IN_PROJ="+proj=longlat +towgs84=0.000,0.000,0.000"
 else
-    IN_PROJ="$GIS_OPT_proj"
+    IN_PROJ="$GIS_OPT_PROJ"
 fi
 g.proj -jf > $TMP.tmp
 read OUT_PROJ < $TMP.tmp
@@ -233,17 +233,17 @@ STYLE="$GISBASE/etc/grass_write_ascii.style"
 
 if [ $CREATE_POINTS -eq 1 ] ; then
     echo "Uploading Waypoints from GPS" 1>&2
-    gpsbabel -w -i $GIS_OPT_format $GPSdevice $PROGVERBOSE -o xcsv,style="$STYLE" -F "$TMP".gpst
+    gpsbabel -w -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o xcsv,style="$STYLE" -F "$TMP".gpst
     EXITCODE=$?
 else
     if [ $RTE -eq 1 ] ; then
 	echo "Uploading Routes from GPS" 1>&2
-	gpsbabel -r -i $GIS_OPT_format $GPSdevice $PROGVERBOSE -o gpx,style="$STYLE" -F "$TMP".gpx
+	gpsbabel -r -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o gpx,style="$STYLE" -F "$TMP".gpx
 	EXITCODE=$?
     fi
     if [ $TRK -eq 1 ] ; then
 	echo "Uploading Tracks from GPS" 1>&2
-	gpsbabel -t -i $GIS_OPT_format $GPSdevice $PROGVERBOSE -o gpx,style="$STYLE" -F "$TMP".gpx
+	gpsbabel -t -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o gpx,style="$STYLE" -F "$TMP".gpx
 	EXITCODE=$?
     fi
 fi

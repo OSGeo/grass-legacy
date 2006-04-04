@@ -55,8 +55,8 @@ fi
 unset LC_ALL
 export LC_NUMERIC=C
 
-infile="$GIS_OPT_input"
-outfile="$GIS_OPT_output"
+infile="$GIS_OPT_INPUT"
+outfile="$GIS_OPT_OUTPUT"
 
 g.region -p | head -n 1 |grep 0 > /dev/null
 if [ $? -eq 0 ] ; then
@@ -66,15 +66,15 @@ if [ $? -eq 0 ] ; then
  exit
 fi
 
-if [ -n "$GIS_OPT_lesser" ] ; then
+if [ -n "$GIS_OPT_LESSER" ] ; then
   op=0
-  limit=$GIS_OPT_lesser
+  limit=$GIS_OPT_LESSER
 fi
-if [ -n "$GIS_OPT_greater" ] ; then
+if [ -n "$GIS_OPT_GREATER" ] ; then
   op=1
-  limit=$GIS_OPT_greater
+  limit=$GIS_OPT_GREATER
 fi
-if [ -z "$GIS_OPT_greater" -a -z "$GIS_OPT_lesser" ] ; then
+if [ -z "$GIS_OPT_GREATER" -a -z "$GIS_OPT_LESSER" ] ; then
   echo "ERROR: you have to specify either lesser= or greater="
   exit 1
 fi
