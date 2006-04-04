@@ -1,3 +1,19 @@
+/****************************************************************************
+ *
+ * MODULE:       v.surf.idw
+ * AUTHOR(S):    Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
+ *               Improved algorithm (indexes points according to cell and ignores
+ *               points outside current region) by Paul Kelly
+ *               further: Radim Blazek <radim.blazek gmail.com>,  Huidae Cho <grass4u gmail.com>,
+ *               Glynn Clements <glynn gclements.plus.com>, Markus Neteler <neteler itc.it>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 2003-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <math.h>
 #include <grass/gis.h>
@@ -494,4 +510,7 @@ void calculate_distances_noindex(double north, double east)
 	    }
 
 }
+
+
+
 
