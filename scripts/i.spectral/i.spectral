@@ -63,17 +63,17 @@ TMP2="`g.tempfile pid=$$`"
 
 xlabels=""
 
-if [ ! "$GIS_OPT_group" ] ; then
-   if [ $GIS_FLAG_i -eq 0 ] ; then
+if [ ! "$GIS_OPT_GROUP" ] ; then
+   if [ $GIS_FLAG_I -eq 0 ] ; then
       echo "Please use -i if you don't use the 'group' parameter"
       exit 1
    fi
 fi
 
-if [ $GIS_FLAG_i -eq 0 ] ; then
+if [ $GIS_FLAG_I -eq 0 ] ; then
 
 	# ## PARSES THE GROUP FILES - gets rid of ugly header info from group list output
-	i.group  group=$GIS_OPT_group -l | sed 's+ in + +g' | grep "group" -v | grep "\-\-\-\-$" -v > "$TMP2"
+	i.group  group=$GIS_OPT_GROUP -l | sed 's+ in + +g' | grep "group" -v | grep "\-\-\-\-$" -v > "$TMP2"
 	as=0
 	lists=""
 	xlabels=""
@@ -98,8 +98,8 @@ RASTERMAPS="$lists"
 
 # ## get data from list of files and set the x-axis labels
 else
-  RASTERMAPS="$GIS_OPT_bands"
-  news=`echo $GIS_OPT_bands | sed 's+,+ +g'`
+  RASTERMAPS="$GIS_OPT_BANDS"
+  news=`echo $GIS_OPT_BANDS | sed 's+,+ +g'`
   as=0
   for g in $news; do 
     as=`expr $as + 1`
@@ -117,7 +117,7 @@ rm -f "$TMP2"
 
 #RASTERMAPS=`echo $RASTERMAPS | sed 's+ $++g' | sed 's+ +,+g'`
 
-if [ "$GIS_FLAG_m" -eq "0" ]; then
+if [ "$GIS_FLAG_M" -eq "0" ]; then
   d.where -1 | r.what input=$RASTERMAPS > "$TMP1"
 
 else 
@@ -213,13 +213,13 @@ str=""
     i=`expr $i + 1`
     if [ "$i" -eq "1" ]
      then
-      if [ $GIS_FLAG_c -eq 0 ] ; then
+      if [ $GIS_FLAG_C -eq 0 ] ; then
         str="plot 'data_$i' title '$i'" 
       else
         str="plot 'data_$i' title '${COORD[$i]}'" 
       fi
      else
-      if [ $GIS_FLAG_c -eq 0 ] ; then
+      if [ $GIS_FLAG_C -eq 0 ] ; then
         str=$str",'data_$i' title '$i'" 
       else
         str=$str",'data_$i' title '${COORD[$i]}'" 

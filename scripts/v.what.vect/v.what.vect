@@ -73,6 +73,6 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 
-v.distance from=$GIS_OPT_vector to=$GIS_OPT_qvector column=$GIS_OPT_column to_column=$GIS_OPT_qcolumn \
-           upload=to_attr dmax=0 from_layer=$GIS_OPT_layer to_layer=$GIS_OPT_qlayer
+v.distance from=$GIS_OPT_VECTOR to=$GIS_OPT_QVECTOR column=$GIS_OPT_COLUMN to_column=$GIS_OPT_QCOLUMN \
+           upload=to_attr dmax=0 from_layer=$GIS_OPT_LAYER to_layer=$GIS_OPT_QLAYER
 

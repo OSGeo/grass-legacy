@@ -62,9 +62,9 @@ fi
 
 #initialize datasets for L1A and L1B
 
-if [ "$GIS_OPT_proctype" = "L1A" ]
+if [ "$GIS_OPT_PROCTYPE" = "L1A" ]
 then
-	case $GIS_OPT_band in
+	case $GIS_OPT_BAND in
 		1)
 		dataset="VNIR_Band1:ImageData" ;;
 		2)
@@ -96,10 +96,10 @@ then
 		14)
 		dataset="TIR_Band14:ImageData" ;;
 	esac
-	srcfile="HDF4_EOS:EOS_SWATH:"\"$GIS_OPT_input\"":"$dataset
-elif [ "$GIS_OPT_proctype" = "L1B" ] 
+	srcfile="HDF4_EOS:EOS_SWATH:"\"$GIS_OPT_INPUT\"":"$dataset
+elif [ "$GIS_OPT_PROCTYPE" = "L1B" ] 
 then
-	case $GIS_OPT_band in
+	case $GIS_OPT_BAND in
 		1)
 		dataset="VNIR_Swath:ImageData1" ;;
 		2)
@@ -131,10 +131,10 @@ then
 		14)
 		dataset="TIR_Swath:ImageData14" ;;
 	esac
-	srcfile="HDF4_EOS:EOS_SWATH:"\"$GIS_OPT_input\"":"$dataset
-elif [ "$GIS_OPT_proctype" = "DEM" ] 
+	srcfile="HDF4_EOS:EOS_SWATH:"\"$GIS_OPT_INPUT\"":"$dataset
+elif [ "$GIS_OPT_PROCTYPE" = "DEM" ] 
 then
-	srcfile=$GIS_OPT_input
+	srcfile=$GIS_OPT_INPUT
 fi
 
 tempfile=`g.tempfile $$`.tif
@@ -153,7 +153,7 @@ echo ""
 echo "importing into GRASS"
 echo ""
 
-r.in.gdal input=$tempfile output=$GIS_OPT_output
+r.in.gdal input=$tempfile output=$GIS_OPT_OUTPUT
 
 #cleanup
 echo ""

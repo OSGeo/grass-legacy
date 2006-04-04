@@ -67,10 +67,10 @@ eval `g.gisenv`
 LOCATION="$GISDBASE"/"$LOCATION_NAME"/"$MAPSET"
 
 
-if [ -n "$GIS_OPT_file" ] ; then
-    FILEORIG=$GIS_OPT_file
-    if [ -n "$GIS_OPT_vect" ] ; then
-       FILE=$GIS_OPT_vect
+if [ -n "$GIS_OPT_FILE" ] ; then
+    FILEORIG=$GIS_OPT_FILE
+    if [ -n "$GIS_OPT_VECT" ] ; then
+       FILE=$GIS_OPT_VECT
     else
        FILE=`basename $FILEORIG .txt`
     fi

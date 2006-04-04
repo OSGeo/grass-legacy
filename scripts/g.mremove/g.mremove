@@ -106,26 +106,26 @@ program=`basename $0`
 
 echo "Collecting map names for current mapset <$MAPSET>..."
 
-if [ $GIS_FLAG_r -eq 1 ] ; then
+if [ $GIS_FLAG_R -eq 1 ] ; then
    regex="-r"
 else
    regex=""
 fi
 
-force=$GIS_FLAG_f
+force=$GIS_FLAG_F
 
 if [ $force -eq 1 ] ; then
    echo forcing ......
 fi
 
-r=$GIS_OPT_rast
-r3=$GIS_OPT_rast3d
-v=$GIS_OPT_vect
-i=$GIS_OPT_icon
-l=$GIS_OPT_label
-rg=$GIS_OPT_region
-g=$GIS_OPT_group
-d=$GIS_OPT_dview
+r=$GIS_OPT_RAST
+r3=$GIS_OPT_RAST3D
+v=$GIS_OPT_VECT
+i=$GIS_OPT_ICON
+l=$GIS_OPT_LABEL
+rg=$GIS_OPT_REGION
+g=$GIS_OPT_GROUP
+d=$GIS_OPT_DVIEW
 
 if [ -n "$r" ] ; then
     rast=`g.mlist $regex type=rast sep=, mapset=$MAPSET pattern="$r"`

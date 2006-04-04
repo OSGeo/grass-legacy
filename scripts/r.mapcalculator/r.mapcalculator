@@ -123,7 +123,7 @@ then
 	exec g.parser "$0" "$@"
 fi
 
-case $GIS_OPT_help in
+case $GIS_OPT_HELP in
 	help)
 	display_help
 	exit 0
@@ -136,59 +136,59 @@ esac
 
 # use old style mapcalc
 
-if [ $GIS_FLAG_e = 1 ] ; then
+if [ $GIS_FLAG_E = 1 ] ; then
 	exec xterm -e r.mapcalc &
 	exit 0
 fi
 
 	
 # Check for required arguments
-if [ -z "$GIS_OPT_formula" ]; then
+if [ -z "$GIS_OPT_FORMULA" ]; then
 	echo "ERROR: Missing formula!"
 	echo "Please enter a formula in the field formula"
 	exit 1
 fi
 
-if [ -z "$GIS_OPT_outfile" ]; then
+if [ -z "$GIS_OPT_OUTFILE" ]; then
 	echo "ERROR: Missing name of outputfile!"
 	echo "Please enter a name for the resulting map and try again."
 	exit 1
-elif [ $GIS_FLAG_o = 1 ]; then
-		echo `g.list type=rast | grep -w "$GIS_OPT_outfile" `
-		outtest=`g.list type=rast | grep -w $GIS_OPT_outfile`
+elif [ $GIS_FLAG_O = 1 ]; then
+		echo `g.list type=rast | grep -w "$GIS_OPT_OUTFILE" `
+		outtest=`g.list type=rast | grep -w $GIS_OPT_OUTFILE`
 		if [ -n "$outtest" ]; then
-			echo "File $GIS_OPT_outfile exists. Exiting."
+			echo "File $GIS_OPT_OUTFILE exists. Exiting."
 			exit 0
 		fi		
 fi
 
-typeset -i form_length=${#GIS_OPT_formula}
+typeset -i form_length=${#GIS_OPT_FORMULA}
 typeset -i count=0
 
 # Get the parts of the formula,
 while [ $count -le $form_length ] 
 	do
-	compart[$count]="${GIS_OPT_formula:$count:1}"
+	compart[$count]="${GIS_OPT_FORMULA:$count:1}"
 	# ... get the rasterfile names
 	case ${compart[$count]} in
 		A)
 		# ... replace them
-		compart[count]=" \"$GIS_OPT_amap\" "
+		compart[count]=" \"$GIS_OPT_AMAP\" "
 		;;
 		B)
-		compart[count]=" \"$GIS_OPT_bmap\" "
+		compart[count]=" \"$GIS_OPT_BMAP\" "
 		;;
 		C)
-		compart[count]=" \"$GIS_OPT_cmap\" "
+		compart[count]=" \"$GIS_OPT_CMAP\" "
 		;;
 		D)
-		compart[count]=" \"$GIS_OPT_dmap\" "
+		compart[count]=" \"$GIS_OPT_DMAP\" "
 		;;
 		E)
-		compart[count]=" \"$GIS_OPT_emap\" "
+		compart[count]=" \"$GIS_OPT_EMAP\" "
 		;;
 		F)
-		compart[count]=" \"$GIS_OPT_fmap\" "
+		compart[count]=" \"$GIS_OPT_FMAP\" "
 		;;
 	esac
 	# .. and put the formula together again
@@ -196,9 +196,9 @@ while [ $count -le $form_length ]
 	let count=count+1
 done
 
-echo r.mapcalc "$GIS_OPT_outfile" ="($command)" # Show the resulting commandline
+echo r.mapcalc "$GIS_OPT_OUTFILE" ="($command)" # Show the resulting commandline
 
-eval `r.mapcalc "$GIS_OPT_outfile" ="($command)"` # Start the command
+eval `r.mapcalc "$GIS_OPT_OUTFILE" ="($command)"` # Start the command
 
 echo ""
 echo ""
@@ -206,7 +206,7 @@ echo "Done"
 
 # Check for errors
 if [ $? -ne 0 ]; then
-	echo "Error calculating $GIS_OPT_outfile. Try expert mode."
+	echo "Error calculating $GIS_OPT_OUTFILE. Try expert mode."
 fi
 
 exit	

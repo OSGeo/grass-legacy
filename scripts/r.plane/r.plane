@@ -103,13 +103,13 @@ eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
-dip=$GIS_OPT_dip
-az=$GIS_OPT_azimuth
-ea=$GIS_OPT_easting
-no=$GIS_OPT_northing
-el=$GIS_OPT_elevation
-name=$GIS_OPT_name
-type=$GIS_OPT_type
+dip=$GIS_OPT_DIP
+az=$GIS_OPT_AZIMUTH
+ea=$GIS_OPT_EASTING
+no=$GIS_OPT_NORTHING
+el=$GIS_OPT_ELEVATION
+name=$GIS_OPT_NAME
+type=$GIS_OPT_TYPE
 
 eval `g.region -g`
 

@@ -114,7 +114,7 @@ export GRASS_WIDTH=1280
 export GRASS_HEIGHT=1024
 
 # get rid of no or double extension
-output="${TYPE}_`basename $GIS_OPT_output .png`.png"
+output="${TYPE}_`basename $GIS_OPT_OUTPUT .png`.png"
 export GRASS_PNGFILE="$HOME/.gpsdrive/$output"
 
 # As .jpg output will overwrite .png of the same name, we check,
@@ -150,7 +150,7 @@ d.mon stop=PNG
 sleep 1
 d.mon select="$curr_mon"
 
-if [ "$GIS_FLAG_j" -eq 1 ] ; then
+if [ "$GIS_FLAG_J" -eq 1 ] ; then
    out_jpeg="`basename $output .png`.jpg"
    cd $HOME/.gpsdrive
    sync  # sleep 1

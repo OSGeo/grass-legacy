@@ -49,7 +49,7 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-if [ "$GIS_FLAG_r" -eq 1 ]; then
+if [ "$GIS_FLAG_R" -eq 1 ]; then
 	if test -f `g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/cell/MASK ; then
  		g.remove rast=MASK
  		echo " "
@@ -72,9 +72,9 @@ else
 	echo "restore raster operations to normal"
 	echo "*************************************************"
 
-	if [ "$GIS_FLAG_o" -eq 1 ]; then
-		echo "$GIS_OPT_maskcats = 1" | r.reclass input=$GIS_OPT_input output=MASK --o
+	if [ "$GIS_FLAG_O" -eq 1 ]; then
+		echo "$GIS_OPT_MASKCATS = 1" | r.reclass input=$GIS_OPT_INPUT output=MASK --o
 	else 
-		echo "$GIS_OPT_maskcats = 1" | r.reclass input=$GIS_OPT_input output=MASK
+		echo "$GIS_OPT_MASKCATS = 1" | r.reclass input=$GIS_OPT_INPUT output=MASK
 	fi
 fi

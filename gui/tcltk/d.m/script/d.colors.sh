@@ -35,4 +35,4 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-eval `exec xterm -e d.colors map=$GIS_OPT_input`
+eval `exec xterm -e d.colors map=$GIS_OPT_INPUT`

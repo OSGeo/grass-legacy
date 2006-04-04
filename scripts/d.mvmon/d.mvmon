@@ -45,11 +45,11 @@ then
 	exec g.parser "$0" "$@"
 fi
 
-to=$GIS_OPT_to
+to=$GIS_OPT_TO
 
-if [ -n "$GIS_OPT_from" ]
+if [ -n "$GIS_OPT_FROM" ]
 then
-	from=$GIS_OPT_from
+	from=$GIS_OPT_FROM
 else
 	from=`d.mon -p | sed 's/^.*: *//'`
 fi
@@ -79,7 +79,7 @@ then
 	d.mon start=$to
 else
 	d.mon select=$to
-	if [ $GIS_FLAG_c -eq 1 ]
+	if [ $GIS_FLAG_C -eq 1 ]
 	then
 		d.erase -x
 	fi
@@ -87,10 +87,10 @@ fi
 
 eval "$dsave"
 
-if [ $GIS_FLAG_s -eq 1 ]
+if [ $GIS_FLAG_S -eq 1 ]
 then
 	d.mon select=$from
-elif [ $GIS_FLAG_k -eq 1 ]
+elif [ $GIS_FLAG_K -eq 1 ]
 then
 	d.mon stop=$from
 fi

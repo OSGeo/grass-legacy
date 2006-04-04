@@ -69,7 +69,7 @@ fi
 
 
 #  Set up the two windows
-if [ "$GIS_OPT_view" = "vert" ]
+if [ "$GIS_OPT_VIEW" = "vert" ]
 then
 #  split it: left (win1) and right (win2)
 	d.frame -e
@@ -77,7 +77,7 @@ then
 	d.frame -c frame=win2  at=0,100,50.5,100
 fi
 
-if [ "$GIS_OPT_view" = "horiz" ]
+if [ "$GIS_OPT_VIEW" = "horiz" ]
 then
 #  split it: top (win1) and bottom (win2)
 	d.frame -e
@@ -86,30 +86,30 @@ then
 fi
 
 
-echo "VIEW DISPLAYED: $GIS_OPT_view"
+echo "VIEW DISPLAYED: $GIS_OPT_VIEW"
 echo ""
 
-if [ "$GIS_OPT_map1" != "" ]
+if [ "$GIS_OPT_MAP1" != "" ]
 then
 	d.frame -s frame=win1
-	echo "WINDOW 1: $GIS_OPT_cmd1 $GIS_OPT_map1"
-	d.rast $GIS_OPT_map1
+	echo "WINDOW 1: $GIS_OPT_CMD1 $GIS_OPT_MAP1"
+	d.rast $GIS_OPT_MAP1
 else
 	d.frame -s frame=win1
-	echo "WINDOW 1: $GIS_OPT_cmd1 $GIS_OPT_map1"
-	$GIS_OPT_cmd1
+	echo "WINDOW 1: $GIS_OPT_CMD1 $GIS_OPT_MAP1"
+	$GIS_OPT_CMD1
 fi
 
 
-if [ "$GIS_OPT_map2" != "" ]
+if [ "$GIS_OPT_MAP2" != "" ]
 then
 	d.frame -s frame=win2
-	echo "WINDOW 2: $GIS_OPT_cmd2 $GIS_OPT_map2"
-	d.rast $GIS_OPT_map2
+	echo "WINDOW 2: $GIS_OPT_CMD2 $GIS_OPT_MAP2"
+	d.rast $GIS_OPT_MAP2
 else
 	d.frame -s frame=win2
-	echo "WINDOW 2: $GIS_OPT_cmd2 $GIS_OPT_map2"
-	$GIS_OPT_cmd2
+	echo "WINDOW 2: $GIS_OPT_CMD2 $GIS_OPT_MAP2"
+	$GIS_OPT_CMD2
 fi
 
 echo DONE

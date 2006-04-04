@@ -78,20 +78,20 @@ else
 	MAPSETS=`echo $MAPSET PERMANENT`
 fi
 
-if [ -n "$GIS_OPT_prefix" ] ; then
-   PREFIX=$GIS_OPT_prefix
+if [ -n "$GIS_OPT_PREFIX" ] ; then
+   PREFIX=$GIS_OPT_PREFIX
 fi
-if [ -n "$GIS_OPT_down" ] ; then
-   DOWN=$GIS_OPT_down
+if [ -n "$GIS_OPT_DOWN" ] ; then
+   DOWN=$GIS_OPT_DOWN
 fi
-if [ -n "$GIS_OPT_across" ] ; then
-   ACROSS=$GIS_OPT_across
+if [ -n "$GIS_OPT_ACROSS" ] ; then
+   ACROSS=$GIS_OPT_ACROSS
 fi
-if [ -n "$GIS_OPT_mapsets" ] ; then
-   MAPSETS=$GIS_OPT_mapsets
+if [ -n "$GIS_OPT_MAPSETS" ] ; then
+   MAPSETS=$GIS_OPT_MAPSETS
 fi
 
-if [ $GIS_FLAG_v -eq 1 ] ; then
+if [ $GIS_FLAG_V -eq 1 ] ; then
    SHOW_VECT=1
 else
    SHOW_VECT=0

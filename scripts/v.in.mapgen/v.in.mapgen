@@ -70,14 +70,14 @@ unset LC_ALL
 export LC_NUMERIC=C
 
 
-FILE="$GIS_OPT_input"
+FILE="$GIS_OPT_INPUT"
 if [ ! -e "$FILE" ] ; then
    echo "ERROR: input file [$FILE] not found." 1>&2
    exit 1
 fi
 
-if [ -n "$GIS_OPT_output" ] ; then
-    NAME="$GIS_OPT_output"
+if [ -n "$GIS_OPT_OUTPUT" ] ; then
+    NAME="$GIS_OPT_OUTPUT"
 else
     unset NAME
 fi
@@ -95,7 +95,7 @@ trap 'rm -f "$TMP"' 2 3 15
 
 
 #### create ascii vector file
-if [ $GIS_FLAG_f  -eq 1 ] ; then
+if [ $GIS_FLAG_F  -eq 1 ] ; then
   ## HB:  OLD v.in.mapgen.sh Matlab import command follows.
   ##    I have no idea what it's all about, so "new" matlab format will be
   ##    a series of x y with "nan nan" breaking lines. (as NOAA provides)

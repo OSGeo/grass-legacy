@@ -82,8 +82,8 @@ start_man()
 
 #keep order!
 #first test for index...
-if [ $GIS_FLAG_i -eq 1 ] ; then
-  if [ $GIS_FLAG_m -eq 1 ] ; then
+if [ $GIS_FLAG_I -eq 1 ] ; then
+  if [ $GIS_FLAG_M -eq 1 ] ; then
     start_man index
     exit 0
   else
@@ -93,15 +93,15 @@ if [ $GIS_FLAG_i -eq 1 ] ; then
 fi
 
 #... then for help parameter:
-if [ -z "$GIS_OPT_entry" ] ; then
+if [ -z "$GIS_OPT_ENTRY" ] ; then
  g.manual help
  exit 0
 fi
 
-if [ $GIS_FLAG_m -eq 1 ] ; then
-  start_man "$GIS_OPT_entry"
+if [ $GIS_FLAG_M -eq 1 ] ; then
+  start_man "$GIS_OPT_ENTRY"
 else
-  start_browser "$GIS_OPT_entry"
+  start_browser "$GIS_OPT_ENTRY"
 fi
 
 exit 0

@@ -99,8 +99,8 @@ old_COMPRESSION=`eval g.gisenv get=GRASS_PNG_COMPRESSION`
 curr_mon=`d.mon -p | awk '{printf "%s", $4}'`
 
 #setting variables (get rid of extra png)
-#output="`basename $GIS_OPT_output .png`"
-res="$GIS_OPT_res"
+#output="`basename $GIS_OPT_OUTPUT .png`"
+res="$GIS_OPT_RES"
 
 #get GRASS version for display monitor name
 GRASS_VER=`g.version | awk '{printf "%s", $1 " " $2}'`
@@ -126,27 +126,27 @@ export GRASS_TRUECOLOR=TRUE
 
 #set other output options
 
-if [ "$GIS_FLAG_b" -eq 1 ] ; then
+if [ "$GIS_FLAG_B" -eq 1 ] ; then
     export GRASS_BACKGROUNDCOLOR=000000
 else
     export GRASS_BACKGROUNDCOLOR=FFFFFF
 fi
 
-if [ "$GIS_FLAG_t" -eq 1 ] ; then
+if [ "$GIS_FLAG_T" -eq 1 ] ; then
     export GRASS_TRANSPARENT=TRUE
 else
     export GRASS_TRANSPARENT=FALSE
 fi
 
-export GRASS_PNG_COMPRESSION=$GIS_OPT_compression
+export GRASS_PNG_COMPRESSION=$GIS_OPT_COMPRESSION
 
 #set output file name and format
-if [ "$GIS_OPT_format" = "png" ] ; then
-    output=$GIS_OPT_output".png"
+if [ "$GIS_OPT_FORMAT" = "png" ] ; then
+    output=$GIS_OPT_OUTPUT".png"
 fi
 
-if [ "$GIS_OPT_format" != "png" ] ; then
-    output=$GIS_OPT_output".ppm"
+if [ "$GIS_OPT_FORMAT" != "png" ] ; then
+    output=$GIS_OPT_OUTPUT".ppm"
 fi
 
 echo "******************"
@@ -178,8 +178,8 @@ echo " "
 echo "Screen export complete (writing the file may take a small amount of time)"
 
 
-if [ "$GIS_OPT_format" != "png" -a  "$GIS_OPT_format" != "ppm" ] ; then
-    output2=$GIS_OPT_output"."$GIS_OPT_format
+if [ "$GIS_OPT_FORMAT" != "png" -a  "$GIS_OPT_FORMAT" != "ppm" ] ; then
+    output2=$GIS_OPT_OUTPUT"."$GIS_OPT_FORMAT
     sleep 5
 else 
     exit 1
@@ -191,19 +191,19 @@ echo "******************"
 echo "Waiting for file to write"
 echo " "
 
-if [ "$GIS_OPT_format" = "tif" ] ; then
+if [ "$GIS_OPT_FORMAT" = "tif" ] ; then
     echo "Translating to TIFF format"
     gdal_translate $output $output2 -of GTIFF
     rm $output
 fi
 
-if [ "$GIS_OPT_format" = "jpg" ] ; then
+if [ "$GIS_OPT_FORMAT" = "jpg" ] ; then
     echo "Translating to JPEG format"
-    gdal_translate $output $output2 -of JPEG -co QUALITY=$GIS_OPT_quality
+    gdal_translate $output $output2 -of JPEG -co QUALITY=$GIS_OPT_QUALITY
     rm $output
 fi
 
-if [ "$GIS_OPT_format" = "bmp" ] ; then
+if [ "$GIS_OPT_FORMAT" = "bmp" ] ; then
     echo "Translating to BMP format"
     gdal_translate $output $output2 -of BMP
     rm $output
