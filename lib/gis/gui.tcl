@@ -104,9 +104,13 @@ proc show_cmd {dlg} {
 	set opt($dlg,cmd_string) [mkcmd_string $dlg]
 }
 
-proc get_file {dlg optn} {
+proc get_file {dlg optn new} {
 	global opt
-	set filename [tk_getOpenFile -title {Load File}]
+	if {$new == 1} {
+		set filename [tk_getSaveFile -title {Save File}]
+	} else {
+		set filename [tk_getOpenFile -title {Load File}]
+	}
 	if {$filename != ""} {
 		if {$opt($dlg,$optn,multi) && $opt($dlg,$optn,val) != ""} {
 			append opt($dlg,$optn,val) "," $filename
@@ -364,10 +368,10 @@ proc make_dialog_end {dlg path root} {
 	make_buttons $dlg $path $root
 }
 
-proc do_button_file {dlg optn suf} {
+proc do_button_file {dlg optn suf new} {
 	global opt
 
-	button $suf.val$optn.sel -text {>} -command [list get_file $dlg $optn]
+	button $suf.val$optn.sel -text {>} -command [list get_file $dlg $optn $new]
 	if {[set icon [icon file open]] != 0} {
 		$suf.val$optn.sel configure -image $icon
 	}
@@ -597,10 +601,11 @@ proc add_option {optn optlist} {
 	} else {
 		set prompt $opts(prompt)
 		if {$prompt != {}} {
-			if {[string match file* $prompt]} {
-				do_button_file $dlg $optn $suf
-			}
-			if {[string match old* $prompt]} {
+			if {[string match old_file,* $prompt]} {
+				do_button_file $dlg $optn $suf 0
+			} elseif {[string match new_file,* $prompt]} {
+				do_button_file $dlg $optn $suf 1
+			} elseif {[string match old,* $prompt]} {
 				set p [split $prompt ,]
 				do_button_old $dlg $optn $suf [lindex $p 1]
 			}
