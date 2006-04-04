@@ -1065,6 +1065,8 @@ char *G_strstr(char *, const char *);
 char *G_strdup(const char *);
 char *G_strchg(char *, char, char);
 char *G_str_replace(char*, const char*, const char*);
+void G_str_to_upper (char *);
+void G_str_to_lower (char *);
 
 /* strip.c */
 int G_strip(char *);
