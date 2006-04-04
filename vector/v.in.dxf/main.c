@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  *
  * MODULE:       v.in.dxf
@@ -8,17 +7,21 @@
  * 		 US Army Construction Engineering Research Lab
  *
  * 		 Contribution:
- * 		 Benjamin Horner-Johnson <ben@earth.nwu.edu>
- * 		 Michel Wurtz <michel.wurtz@eledetection.fr>
- * 		 Jacques Bouchard <bouchard@onera.fr>
+ * 		 Benjamin Horner-Johnson <ben earth.nwu.edu>
+ * 		 Michel Wurtz <michel.wurtz teledetection.fr>
+ * 		 Jacques Bouchard <bouchard onera.fr>
  * 		 J Moorman
  *
  * 		 Rewrite for GRASS 6:
- * 		 Huidae Cho <grass4u@gmail.com>
+ * 		 Huidae Cho <grass4u gmail.com>
  *
  * PURPOSE:      Import DXF file
  *
- * COPYRIGHT:    CORRECT ME!
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
  *
  ******************************************************************************/
 
