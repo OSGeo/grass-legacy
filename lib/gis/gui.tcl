@@ -45,6 +45,17 @@ proc handle_scroll {window ammount} {
 	}
 }
 
+proc bind_scroll {frame} {
+	bind all <MouseWheel> "+handle_scroll $frame %D"
+	bind all <Button-4> "+handle_scroll $frame 120"
+	bind all <Button-5> "+handle_scroll $frame -120"
+}
+
+# Make text in a label wrap:
+proc wrap_text_in_label {path} {
+	bind $path <Configure> "$path configure -wraplength \[winfo width $path\]"
+}
+
 ################################################################################
 
 proc mkcmd {dlg} {
@@ -209,9 +220,7 @@ proc layout_make_frame {dlg guisection optn} {
 		pack $optwin -fill both -expand yes
 
 		# Bindings for scrolling the frame
-		bind all <MouseWheel> "+handle_scroll $optfra %D"
-		bind all <Button-4> "+handle_scroll $optfra 120"
-		bind all <Button-5> "+handle_scroll $optfra -120"
+		bind_scroll $optfra
 
 		set suf [$optfra getframe]
 		# Binding magic to make the whole program start at an appropriate size
@@ -288,10 +297,12 @@ proc make_module_description {dlg path root} {
 		pack $path.module.icon -side left		
 	}
 	frame $path.module.r
-	label $path.module.r.labdesc1 -text $l1 -anchor w -justify left
-	label $path.module.r.labdesc2 -text $l2 -anchor w -justify left
-	pack $path.module.r.labdesc1 $path.module.r.labdesc2 -side top -fill x
-	pack $path.module.r -side left -fill x
+	set label1 [label $path.module.r.labdesc1 -text $l1 -anchor w -justify left -width 10]
+	set label2 [label $path.module.r.labdesc2 -text $l2 -anchor w -justify left -width 10]
+	wrap_text_in_label $label1
+	wrap_text_in_label $label2
+	pack $label1 $label2 -side top -fill x
+	pack $path.module.r -side top -fill x
 	pack $path.module -side top -fill x
 }
 
@@ -299,14 +310,14 @@ proc make_command_label {dlg path root} {
 	# Widget for displaying current command
 	frame $path.cmd
 	set cmdlabel [label $path.cmd.label -textvariable opt($dlg,cmd_string) -anchor w -justify left]
-	bind $cmdlabel <Configure> "$cmdlabel configure -wraplength \[winfo width $cmdlabel\]"
+	wrap_text_in_label $cmdlabel
 	button $path.cmd.copy -text "Copy" -anchor n -command "show_cmd $dlg\nclipboard clear -displayof $cmdlabel\nclipboard append -displayof $cmdlabel \$opt($dlg,cmd_string)"
 	if {[set icon [icon edit copy]] != 0} {
 		$path.cmd.copy configure -image $icon
 	}
 	pack $path.cmd.copy -side left
 	pack $cmdlabel -fill x -side top
-	pack $path.cmd -expand no -fill x
+	pack $path.cmd -expand no -fill x -side bottom
 
 	# Bindings for updating command
 	bind [winfo toplevel $root] <Button> "+show_cmd $dlg"
@@ -340,32 +351,35 @@ proc make_buttons {dlg path root} {
 	global opt env
 	set pgm_name $opt($dlg,pgm_name)
 
-	button $path.run   -text Run   -command "run_cmd $dlg"
-	button $path.help  -text Help  -command "help_cmd $dlg"
-	button $path.clear -text Clear -command "clear_cmd $dlg"
-	button $path.close -text Close -command "close_cmd $dlg"
+	set buttonframe [frame $path.buttonframe]
+	button $buttonframe.run   -text Run   -command "run_cmd $dlg"
+	button $buttonframe.help  -text Help  -command "help_cmd $dlg"
+	button $buttonframe.clear -text Clear -command "clear_cmd $dlg"
+	button $buttonframe.close -text Close -command "close_cmd $dlg"
 
-	set opt($dlg,run_button) $path.run 
+	set opt($dlg,run_button) $buttonframe.run 
 
 	# Turn off help button if the help file doesn't exist
 	if {! [file exists $env(GISBASE)/docs/html/$pgm_name.html]} {
-		$path.help configure -state disabled
+		$buttonframe.help configure -state disabled
 	}
 
-	pack $path.run $path.help $path.clear $path.close \
-		-side left -expand yes -padx 20 -pady 5
+	pack $buttonframe.run $buttonframe.help $buttonframe.clear $buttonframe.close \
+		-side left -expand yes -padx 5 -pady 5
+	pack $buttonframe -expand no -fill x -side bottom
 }
 
 proc make_dialog {dlg path root} {
 	make_module_description $dlg $path $root
-	make_layout $dlg $path $root
+	make_buttons $dlg $path $root
 	make_command_label $dlg $path $root
+	make_layout $dlg $path $root
 }
 
 proc make_dialog_end {dlg path root} {
 	make_output $dlg $path $root
-	make_progress $dlg $path $root
-	make_buttons $dlg $path $root
+	# A progress bar is now wasted space as progress is displayed in gronsole
+	# make_progress $dlg $path $root
 }
 
 proc do_button_file {dlg optn suf new} {
