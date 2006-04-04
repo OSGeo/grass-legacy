@@ -30,11 +30,13 @@
  *   as well as the struct stat_list (defined in dhist.h).
  *****************************************************************************/
 
-#include <grass/gis.h>
-#include <grass/display.h>
-#include <grass/raster.h>
 #include <stdlib.h>
 #include <string.h>
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/D.h>
+#include <grass/raster.h>
+#include <grass/glocale.h>
 #define MAIN
 #include "options.h"
 #include "dhist.h"
@@ -43,7 +45,6 @@ int main (int argc, char **argv)
 {
 	int text_height;
 	int text_width;
-	char buff[256] ;
 	char *mapset ;
 	struct Categories cats ;
 	struct Range range ;
@@ -66,19 +67,19 @@ int main (int argc, char **argv)
 
 	module = G_define_module();
 	module->description =
-		"Displays a histogram in the form of a pie or bar chart "
-		"for a user-specified raster file.";
+		_("Displays a histogram in the form of a pie or bar chart "
+		"for a user-specified raster file.");
 
 	opt1             = G_define_option() ;
 	opt1->key        = "map" ;
-	opt1->description= "Raster map for which histogram will be displayed" ;
+	opt1->description= _("Raster map for which histogram will be displayed");
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = YES ;
 	opt1->gisprompt  = "old,cell,raster" ;
 
 	opt2             = G_define_option() ;
 	opt2->key        = "color" ;
-	opt2->description= "Color for legend and title";
+	opt2->description= _("Color for legend and title");
 	opt2->type       = TYPE_STRING ;
 	opt2->required   = NO ;
 	opt2->answer     = DEFAULT_FG_COLOR ;
@@ -87,7 +88,7 @@ int main (int argc, char **argv)
 #ifdef CAN_DO_AREAS
 	opt3             = G_define_option() ;
 	opt3->key        = "type" ;
-	opt3->description= "Indicate if cell counts or map areas should be displayed" ;
+	opt3->description= _("Indicate if cell counts or map areas should be displayed");
 	opt3->type       = TYPE_STRING ;
 	opt3->required   = NO ;
 	opt3->answer     = "count" ;
@@ -96,32 +97,32 @@ int main (int argc, char **argv)
 
 	opt4             = G_define_option() ;
 	opt4->key        = "style" ;
-	opt4->description= "Indicate if a pie or bar chart is desired" ;
+	opt4->description= _("Indicate if a pie or bar chart is desired");
 	opt4->type       = TYPE_STRING ;
 	opt4->required   = NO ;
 	opt4->answer     = "bar" ;
 
 	opt5             = G_define_option() ;
 	opt5->key        = "nsteps" ;
-	opt5->description= "Number of steps to divide the data range into (fp maps only)" ;
+	opt5->description= _("Number of steps to divide the data range into (fp maps only)");
 	opt5->type       = TYPE_INTEGER ;
 	opt5->required   = NO ;
 	opt5->answer     = "255" ;
 
 	flag1            = G_define_flag() ;
 	flag1->key       = 'n' ;
-	flag1->description= "Display information for null cells" ;
+	flag1->description= _("Display information for null cells");
 
 	flag2            = G_define_flag() ;
 	flag2->key       = 'q' ;
-	flag2->description= "Gather the histogram quietly";
+	flag2->description= _("Gather the histogram quietly");
 
 	flag3            = G_define_flag() ;
 	flag3->key       = 'C' ;
-	flag3->description= "Report for ranges defined in cats file (fp maps only)";
+	flag3->description= _("Report for ranges defined in cats file (fp maps only)");
 
 	if (G_parser(argc, argv))
-		exit(1) ;
+		exit(EXIT_FAILURE) ;
 
 	map_name = opt1->answer ;
 
@@ -141,15 +142,12 @@ int main (int argc, char **argv)
 	   style = PIE;
 
         if(sscanf(opt5->answer, "%d", &nsteps)!=1)
-	{
-	   sprintf(buff, "Invalid number of steps %s\n", opt5->answer);
-	   G_fatal_error(buff);
-        }
+	    G_fatal_error(_("Invalid number of steps: %s"), opt5->answer);
 
         cat_ranges = flag3->answer;
 
 	if(cat_ranges && nsteps!=255)
-	   G_warning("When -C flag is set, the nsteps argument is ignored");
+	   G_warning(_("When -C flag is set, the nsteps argument is ignored"));
 
 	nodata = flag1->answer;
 	quiet  = flag2->answer ? YES : NO ;
@@ -157,28 +155,16 @@ int main (int argc, char **argv)
 	/* Make sure map is available */
 	mapset = G_find_cell2 (map_name, "") ;
 	if (mapset == NULL)
-	{
-		sprintf(buff,"Raster map [%s] not available", map_name);
-		G_fatal_error(buff) ;
-	}
+	    G_fatal_error(_("Raster map [%s] not available"), map_name);
 
 	if (G_read_colors(map_name, mapset, &pcolors) == -1)
-	{
-		sprintf(buff,"color file for [%s] not available", map_name) ;
-		G_fatal_error(buff) ;
-	}
+	    G_fatal_error(_("color file for [%s] not available"), map_name);
 
 	if (G_read_cats(map_name, mapset, &cats) == -1)
-	{
-		sprintf(buff,"Category file for [%s] not available", map_name) ;
-		G_fatal_error(buff) ;
-	}
+	    G_fatal_error(_("Category file for [%s] not available"), map_name);
 
 	if (G_read_range(map_name, mapset, &range) == -1)
-	{
-		sprintf(buff,"Range information for [%s] not available", map_name) ;
-		G_fatal_error(buff) ;
-	}
+	    G_fatal_error(_("Range information for [%s] not available"), map_name);
 
 	/* get the distribution statistics */
 
@@ -187,14 +173,13 @@ int main (int argc, char **argv)
 	/* set up the graphics driver and initialize its color-table */
 
 	if (R_open_driver() != 0)
-		G_fatal_error ("No graphics device selected");
+	    G_fatal_error(_("No graphics device selected"));
 
+	Dclearscreen();
 	D_setup(0);
-
 	D_set_colors(&pcolors);
 
 	/* draw a title for */
-
 	sprintf(title,"%s in mapset %s",map_name,mapset);
 	D_get_screen_window(&t, &b, &l, &r);
 	text_height = (b-t)*0.05;
@@ -206,7 +191,6 @@ int main (int argc, char **argv)
 	R_text(title);
 
 	/* plot the distributrion statistics */
-
 	if (style == PIE)
 		pie(&dist_stats, &pcolors);
 	else
@@ -215,5 +199,5 @@ int main (int argc, char **argv)
 	R_flush();
 	D_add_to_list(G_recreate_command()) ;
 	R_close_driver();
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
