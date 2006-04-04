@@ -89,23 +89,23 @@ global filename
         {command "Raster to vector map" {} "r.to.vect" {} -command {execute r.to.vect }}
         {command "Raster map series to volume" {} "r.to.rast3" {} -command {execute r.to.rast3 }}
         {command "Vector to raster" {} "v.to.rast" {} -command {execute v.to.rast }}
-        {command "Vector line to points" {} "v.to.points" {} -command {execute v.to.points }}
-        {command "Vector 3D points to volume" {} "v.to.rast3" {} -command {execute v.to.rast3 }}
+	{command "Vector to vector" {} "v.type" {} -command {execute v.type }}
+        {command "Vector lines to points" {} "v.to.points" {} -command {execute v.to.points }}
+        {command "Vector 3D points to volume voxels" {} "v.to.rast3" {} -command {execute v.to.rast3 }}
         {command "Sites (GRASS 5.x) to vector" {} "v.in.sites" {} -command {execute v.in.sites }}
         {command "Volumes to raster map series" {} "r3.to.rast" {} -command {execute r3.to.rast }}
  	}}
     {separator}
-    {cascad "Groups" {} "" $tmenu {			
-        {command "New" {} "Create new group file" {} -accelerator $keyctrl-N -command { Gm::new}}
-        {command "Open..." {} "Open group file" {} -accelerator $keyctrl-O -command { Gm::OpenFileBox }}
-        {command "Save" {} "Save group file" {} -accelerator $keyctrl-S -command { Gm::SaveFileBox }}
-        {command "Save as..." {} "Save group file as name" {} -command { set filename($mon) "" ; Gm::SaveFileBox }}
-        {command "Close" {} "Close group" {} -accelerator $keyctrl-W -command { GmTree::FileClose {}}}
+    {cascad "Settings" {} "" $tmenu {			
+        {command "Open..." {} "Open gis.m settings file" {} -accelerator $keyctrl-O -command { Gm::OpenFileBox }}
+        {command "Save" {} "Save gis.m settings file" {} -accelerator $keyctrl-S -command { Gm::SaveFileBox }}
+        {command "Save as..." {} "Save gis.m settings file as new name" {} -command { set filename($mon) "" ; Gm::SaveFileBox }}
+        {command "Close" {} "Close gis.m settings" {} -accelerator $keyctrl-W -command { GmTree::FileClose {}}}
     }}
     {separator}
     {command "Create ps.map file for postscript printing" {} "ps.map" {} -command { execute ps.map }}
     {separator}
-    {command "E&xit" {} "Exit Display Manager" {} -accelerator $keyctrl-Q -command { exit } }
+    {command "E&xit" {} "Exit GIS Manager" {} -accelerator $keyctrl-Q -command { exit } }
  }
  "&Config" all options $tmenu {
  	{cascad "Region" {} "" $tmenu {			
