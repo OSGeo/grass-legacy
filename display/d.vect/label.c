@@ -64,7 +64,8 @@ int label (
 		     break;
 		 }
 	     }
-	     if (!found) continue;
+	     /* lines with no category will be displayed */
+	     if (Cats->n_cats > 0 && !found) continue;
 	}
 
 	if( Vect_cat_get(Cats, lattr->field, &cat) )
