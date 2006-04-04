@@ -23,7 +23,7 @@
 
 #define true 1
 #define false 0
-#define MAX_PASSES    10
+#define MAX_PASSES    200
 #define DELETED_PIX   9999
 
 extern char *error_prefix;
@@ -112,7 +112,7 @@ int thin_lines (void)
 	  
 	   deleted = 1;
 	   i = 1;
-	   while((deleted>0)&&(i<=30))  /* it must be done in <= 30 pathes */
+	   while((deleted>0)&&(i<=MAX_PASSES))  /* it must be done in <= MAX_PASSES pathes */
 	   {
 	      fprintf(stdout, "   Path number %d\n", i); 
 	      i++;
@@ -166,7 +166,10 @@ int thin_lines (void)
               } /* j-loop */
 	      fprintf (stdout,"        Deleted %d  pixels \n", deleted);
         } /* while delete >0 */
-	fprintf(stdout, "thinning completed successfully.\n");
+        if ( (deleted == 0) && (i <= MAX_PASSES ) )
+            fprintf(stdout, "Thinning completed successfully.\n");
+        else
+            fprintf(stdout, "Thinning not completed in %d iterations.\n", MAX_PASSES);
 
 	return 0;
 }
