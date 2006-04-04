@@ -36,7 +36,7 @@ main (int argc, char *argv[])
 	old->type	 =  TYPE_STRING;
 	old->required	 =  NO;
 	old->multiple	 =  NO;
-	old->gisprompt   = "file,,input";
+	old->gisprompt   = "old_file,file,input";
 	old->description =
 	    _("ASCII file to be converted to binary vector file, if not given reads from standard input");
 

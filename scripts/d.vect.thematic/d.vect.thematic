@@ -145,7 +145,7 @@
 #%option
 #% key: group
 #% type: string
-#% gisprompt: file,file,file
+#% gisprompt: new_file,file,group
 #% description: Name of group file where thematic map commands will be saved
 #% required : no
 #%end

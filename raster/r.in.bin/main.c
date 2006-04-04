@@ -136,7 +136,7 @@ int main (int argc, char *argv[])
 	parm.input->type = TYPE_STRING;
 	parm.input->required = YES;
 	parm.input->description = _("Bin raster file to be imported");
-	parm.input->gisprompt = "old_file,,input";
+	parm.input->gisprompt = "old_file,file,input";
 
 	parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
 

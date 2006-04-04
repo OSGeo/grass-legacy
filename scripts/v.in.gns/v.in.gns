@@ -30,7 +30,7 @@
 #% key: file
 #% type: string
 #% description: Uncompressed GNS file from NGA (with .txt extension)
-#% gisprompt: file,file,file
+#% gisprompt: old_file,file,input
 #% required : yes
 #%end
 #%option

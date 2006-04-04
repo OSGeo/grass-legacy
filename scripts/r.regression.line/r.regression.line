@@ -35,7 +35,7 @@
 #%option
 #% key: output
 #% type: string
-#% gisprompt: file,file,file
+#% gisprompt: new_file,file,output
 #% description: ASCII file for storing regression coefficients (output to screen if file not specified).
 #% required : no
 #%end

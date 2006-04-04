@@ -61,7 +61,7 @@ main (int argc, char *argv[])
     dsn_opt->key = "dsn";
     dsn_opt->type =  TYPE_STRING;
     dsn_opt->required = YES;
-    dsn_opt->gisprompt = "file,,dsn";
+    dsn_opt->gisprompt = "old_file,file,dsn";
     dsn_opt->description = "OGR datasource name. Examples:\n"
 			   "\t\tESRI Shapefile: directory containing shapefiles\n"
 			   "\t\tMapInfo File: directory containing mapinfo files";
