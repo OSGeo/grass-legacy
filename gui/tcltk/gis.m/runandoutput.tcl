@@ -40,21 +40,23 @@ proc make_fun_buttons {dlg path} {
 	global opt env
 	set pgm_name $opt($dlg,pgm_name)
 
-	button $path.run   -text Run   -command "run_cmd $dlg"
+	set buttonframe [frame $path.buttonframe]
+	button $buttonframe.run   -text Run   -command "run_cmd $dlg"
 	# In the future we'll have a button to make a layer from here:
-	# button $path.layer -text Layer -command "layer_cmd $dlg"
-	button $path.help  -text Help  -command "help_cmd $dlg"
-	button $path.close -text Close -command "close_cmd $dlg"
+	# button $buttonframe.layer -text Layer -command "layer_cmd $dlg"
+	button $buttonframe.help  -text Help  -command "help_cmd $dlg"
+	button $buttonframe.close -text Close -command "close_cmd $dlg"
 
-	set opt($dlg,run_button) $path.run 
+	set opt($dlg,run_button) $buttonframe.run 
 
 	# Turn off help button if the help file doesn't exist
 	if {! [file exists $env(GISBASE)/docs/html/$pgm_name.html]} {
-		$path.help configure -state disabled
+		$buttonframe.help configure -state disabled
 	}
 
-	pack $path.run $path.help $path.close \
+	pack $buttonframe.run $buttonframe.help $buttonframe.close \
 		-side left -expand yes -padx 5 -pady 5
+	pack $buttonframe -expand no -fill x -side bottom -before [lindex [pack slaves $path] 0]
 }
 
 proc run_ui {cmd} {
