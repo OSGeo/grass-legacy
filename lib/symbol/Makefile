@@ -10,4 +10,4 @@ default: lib symb
 
 symb:
 	$(MKDIR) $(ETC)/symbol
-	find ./symbol -type f | grep -v CVS | xargs tar cBf - |(cd $(ETC); tar xBf -)
+	find ./symbol -type f | grep -v CVS | xargs tar chBf - |(cd $(ETC); tar xBf -)

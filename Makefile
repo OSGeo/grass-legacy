@@ -227,14 +227,14 @@ real-install: FORCE
 	test -d ${BINDIR} || ${MAKE_DIR_CMD} ${BINDIR}
 	-sed -e "s#^GISBASE.*#GISBASE=${INST_DIR}#" ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} > ${BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}
 	-chmod a+x ${BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}
-	-cd ${GISBASE} ; tar cBf - bin | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
-	-cd ${GISBASE} ; tar cBf - bwidget | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
-	-cd ${GISBASE} ; tar cBf - docs | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
-	-cd ${GISBASE} ; tar cBf - driver | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
-	-cd ${GISBASE} ; tar cBf - etc | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
-	-cd ${GISBASE} ; tar cBf - fonts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
-	-cd ${GISBASE} ; tar cBf - man | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
-	-cd ${GISBASE} ; tar cBf - scripts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar chBf - bin | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar chBf - bwidget | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar chBf - docs | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar chBf - driver | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar chBf - etc | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar chBf - fonts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar chBf - man | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar chBf - scripts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	if [ ${LOCALE} -eq 1 ] ; then cd ${GISBASE} ; tar cBf - locale | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; fi
 	@ # The man, include, and lib could go to ${PREFIX}/ BUT if this is
 	@ # done, then the corresponding uninstall instructions must delete
@@ -242,8 +242,8 @@ real-install: FORCE
 	@ # high risk of deleteing system files since PREFIX is defined by
 	@ # default to be /usr/local
 	@##### -cd ${GISBASE} ; tar cBf - man | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
-	-cd ${GISBASE} ; tar cBf - include | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
-	-cd ${GISBASE} ; tar cBf - lib | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar chBf - include | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar chBf - lib | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/monitorcap > ${INST_DIR}/etc/monitorcap
 	@##### -chmod -R 1777 ${INST_DIR}/locks 2>/dev/null
 	-chmod -R a+rX ${INST_DIR} 2>/dev/null
@@ -254,7 +254,7 @@ install-strip: FORCE
 
 
 bindist:  
-	( date=`date '+%d_%m_%Y'`; cd ${ARCH_DISTDIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ../grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}-${ARCH}-$$date.tar.gz)
+	( date=`date '+%d_%m_%Y'`; cd ${ARCH_DISTDIR}; tar chBf - ${BIN_DIST_FILES} | gzip -fc > ../grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}-${ARCH}-$$date.tar.gz)
 	-date=`date '+%d_%m_%Y'`; name=grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}-${ARCH}-$$date.tar.gz; \
             size=`ls -l $$name | awk '{print $$5}'`; \
 	    sed -e "s/BIN_DIST_VERSION/${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}-${ARCH}-$$date/" \
@@ -301,7 +301,7 @@ srclibsdist: FORCE distclean
 
 	-cp -rL --parents db/drivers ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
 
-	tar cvfz grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}.tar.gz ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}/* --exclude=CVS
+	tar chvfz grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}.tar.gz ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}/* --exclude=CVS
 	-rm -r ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
 	@ echo "Distribution source package: grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}.tar.gz ready."
 
@@ -324,7 +324,7 @@ htmldocs:
 	(cd swig/; $(MAKE) cleandocs ; $(MAKE) htmldocs)
 
 packagehtmldocs: htmldocs
-	tar cvfz grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}refman_`date '+%Y_%m_%d'`_html.tar.gz lib/db/html lib/g3d/html lib/gis/html lib/gmath/html lib/proj/html lib/ogsf/html lib/segment/html lib/vector/html lib/vector/dglib/html swig/html
+	tar chvfz grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}refman_`date '+%Y_%m_%d'`_html.tar.gz lib/db/html lib/g3d/html lib/gis/html lib/gmath/html lib/proj/html lib/ogsf/html lib/segment/html lib/vector/html lib/vector/dglib/html swig/html
 
 #alternatively, the docs can be generated as single PDF document (see doxygen FAQ for 'TeX capacity exceeded'):
 #  (cd lib/ ; make pdfdocs)
@@ -352,7 +352,7 @@ changelog:
 GISRCFILE = ${ARCH_DISTDIR}/demolocation/.grassrc${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}
 
 builddemolocation:
-	-tar cBf - demolocation | (cd ${ARCH_DISTDIR}/ ; tar xBfo - ) 2>/dev/null
+	-tar chBf - demolocation | (cd ${ARCH_DISTDIR}/ ; tar xBfo - ) 2>/dev/null
 	@ echo "GISDBASE: ${ARCH_DISTDIR}" > ${GISRCFILE}
 	@ echo "LOCATION_NAME: demolocation" >> ${GISRCFILE}
 	@ echo "MAPSET: PERMANENT" >> ${GISRCFILE}
