@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
     opt.input->type = TYPE_STRING;
     opt.input->required = YES;
     opt.input->multiple = NO;
-    opt.input->gisprompt = "old_file,,input";
+    opt.input->gisprompt = "file,,input";
     opt.input->description = _("DXF input file");
 
     opt.output = G_define_standard_option(G_OPT_V_OUTPUT);
@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
     opt.layers->description = _("List of layers to import");
 
     if (G_parser(argc, argv))
-	exit(-1);
+	exit(EXIT_FAILURE);
 
     flag_list = flag.list->answer;
     flag_extent = flag.extent->answer;
@@ -164,5 +164,5 @@ int main(int argc, char *argv[])
 	G_free(output_name);
     }
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }

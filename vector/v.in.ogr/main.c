@@ -103,8 +103,8 @@ main (int argc, char *argv[])
     dsn_opt->key = "dsn";
     dsn_opt->type =  TYPE_STRING;
     dsn_opt->required = YES;
-    dsn_opt->gisprompt = "old_file,,dsn";
-    dsn_opt->description = _("OGR datasource name.\n"
+    dsn_opt->gisprompt = "file,,dsn";
+    dsn_opt->description = _("OGR datasource name. Examples:\n"
 			   "\t\tESRI Shapefile: directory containing shapefiles\n"
 			   "\t\tMapInfo File: directory containing mapinfo files");
 
@@ -115,7 +115,7 @@ main (int argc, char *argv[])
     layer_opt->type = TYPE_STRING;
     layer_opt->required = NO;
     layer_opt->multiple = YES;
-    layer_opt->description = _("OGR layer name. If not given, all available layers are imported.\n"
+    layer_opt->description = _("OGR layer name. If not given, all available layers are imported. Examples:\n"
 			   "\t\tESRI Shapefile: shapefile name\n"
 			   "\t\tMapInfo File: mapinfo file name");
 
@@ -201,7 +201,7 @@ main (int argc, char *argv[])
     }
     G__setenv ( "OVERWRITE", "1" ); 
 
-    if (G_parser (argc, argv)) exit(-1); 
+    if (G_parser (argc, argv)) exit(EXIT_FAILURE); 
         
     if ( !outloc_opt->answer && !overwrite ) { /* Check if the map exists */
 	if ( G_find_vector2 (out_opt->answer, G_mapset()) ) {
@@ -238,7 +238,7 @@ main (int argc, char *argv[])
 		    OGR_Dr_GetName(poDriver) );
 */
 	}
-	exit(0);
+	exit(EXIT_SUCCESS);
     }
 
     /* Open OGR DSN */
@@ -265,7 +265,7 @@ main (int argc, char *argv[])
     
     if ( list_flag->answer ) {
 	fprintf ( stdout, "\n" );
-        exit(0) ;
+        exit(EXIT_SUCCESS) ;
     }
 
     /* Make a list of layers to be imported */
@@ -918,6 +918,6 @@ main (int argc, char *argv[])
 	G_warning (_("Input data contains 3D features. Created vector is 2D only, "
 		    "use -z flag to import 3D vector."));
 
-    exit(0) ;
+    exit(EXIT_SUCCESS) ;
 }
 

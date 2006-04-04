@@ -21,6 +21,7 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "ogr_api.h"
 
 int 
@@ -60,29 +61,29 @@ main (int argc, char *argv[])
     dsn_opt->key = "dsn";
     dsn_opt->type =  TYPE_STRING;
     dsn_opt->required = YES;
-    dsn_opt->gisprompt = "old_file,,dsn";
-    dsn_opt->description = "OGR datasource name.\n"
+    dsn_opt->gisprompt = "file,,dsn";
+    dsn_opt->description = "OGR datasource name. Examples:\n"
 			   "\t\tESRI Shapefile: directory containing shapefiles\n"
 			   "\t\tMapInfo File: directory containing mapinfo files";
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
     out_opt->required = NO;
-    out_opt->description = "Output vector, if not given, available layers are printed only."; 
+    out_opt->description = _("Output vector, if not given, available layers are printed only"); 
 
     layer_opt = G_define_option();
     layer_opt->key = "layer";
     layer_opt->type = TYPE_STRING;
     layer_opt->required = NO;
     layer_opt->multiple = NO;
-    layer_opt->description = "OGR layer name. If not given, available layers are printed only.\n"
+    layer_opt->description = _("OGR layer name. If not given, available layers are printed only. Examples:\n"
 			   "\t\tESRI Shapefile: shapefile name\n"
-			   "\t\tMapInfo File: mapinfo file name";
+			   "\t\tMapInfo File: mapinfo file name");
 
-    if (G_parser (argc, argv)) exit(-1); 
+    if (G_parser (argc, argv))
+	exit(EXIT_FAILURE); 
 
-    if ( !out_opt->answer && layer_opt->answer ) {
+    if ( !out_opt->answer && layer_opt->answer )
 	G_fatal_error ( "Output vector name was not specified.");
-    }
 
     /* Open OGR DSN */
     Ogr_ds = OGROpen( dsn_opt->answer, FALSE, NULL );
@@ -151,6 +152,6 @@ main (int argc, char *argv[])
     Vect_build ( &Map, stderr );
     Vect_close ( &Map );
     
-    exit(0) ;
+    exit(EXIT_SUCCESS) ;
 }
 

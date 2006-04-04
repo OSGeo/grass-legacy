@@ -50,52 +50,40 @@ int main (int argc, char *argv[])
     G_gisinit(argv[0]) ;
 
     module = G_define_module();
-    module->description = "Transforms an vector map layer from one "
-			  "coordinate system into another coordinate system.";
+    module->description = _("Transforms an vector map layer from one "
+			  "coordinate system into another coordinate system.");
 
     quiet_flag = G_define_flag();
     quiet_flag->key		= 'q';
-    quiet_flag->description = "suppress display of residuals or other information"; 
+    quiet_flag->description = _("Suppress display of residuals or other information"); 
 
     tozero_flag = G_define_flag();
     tozero_flag->key		= 't';
-    tozero_flag->description = "shift all z values to bottom=0"; 
+    tozero_flag->description = _("Shift all z values to bottom=0"); 
 
     shift_flag = G_define_flag();
     shift_flag->key		= 's';
-    shift_flag->description = "Instead of points use transformation options "
-		"(xshift, yshift, zshif, xscale, yscale, zscale, zrot)"; 
+    shift_flag->description = _("Instead of points use transformation options "
+		"(xshift, yshift, zshift, xscale, yscale, zscale, zrot)"); 
 
-    old = G_define_option();
-    old->key			= "input";
-    old->type			= TYPE_STRING;
-    old->required		= YES;
-    old->multiple		= NO;
-    old->gisprompt		= "old,vector,vector";
-    old->description		= "vector map to be transformed";
+    old = G_define_standard_option(G_OPT_V_INPUT);
     
-    new = G_define_option();
-    new->key			= "output";
-    new->type			= TYPE_STRING;
-    new->required		= YES;
-    new->multiple		= NO;
-    new->gisprompt		= "new,vector,vector";
-    new->description		= "resultant vector map";
+    new = G_define_standard_option(G_OPT_V_OUTPUT);
 
     pointsfile = G_define_option();
     pointsfile->key		= "pointsfile";
     pointsfile->type		= TYPE_STRING;
     pointsfile->required	= NO;
     pointsfile->multiple	= NO;
-    pointsfile->description	= "file holding transform coordinates";
-    pointsfile->gisprompt       = "old_file,,points";
+    pointsfile->description	= _("ASCII file holding transform coordinates");
+    pointsfile->gisprompt       = "file,,points";
 
     xshift = G_define_option();
     xshift->key		= "xshift";
     xshift->type	= TYPE_DOUBLE;
     xshift->required	= NO;
     xshift->multiple	= NO;
-    xshift->description	= "shifting value for x coordinates";
+    xshift->description	= _("Shifting value for x coordinates");
     xshift->answer     = "0.0";
 
     yshift = G_define_option();
@@ -103,7 +91,7 @@ int main (int argc, char *argv[])
     yshift->type	= TYPE_DOUBLE;
     yshift->required	= NO;
     yshift->multiple	= NO;
-    yshift->description	= "shifting value for y coordinates";
+    yshift->description	= _("Shifting value for y coordinates");
     yshift->answer     = "0.0";
 
     zshift = G_define_option();
@@ -111,7 +99,7 @@ int main (int argc, char *argv[])
     zshift->type	= TYPE_DOUBLE;
     zshift->required	= NO;
     zshift->multiple	= NO;
-    zshift->description	= "shifting value for z coordinates";
+    zshift->description	= _("Shifting value for z coordinates");
     zshift->answer     = "0.0";
 
     xscale = G_define_option();
@@ -119,7 +107,7 @@ int main (int argc, char *argv[])
     xscale->type	= TYPE_DOUBLE;
     xscale->required	= NO;
     xscale->multiple	= NO;
-    xscale->description	= "scaling factor for x coordinates";
+    xscale->description	= _("Scaling factor for x coordinates");
     xscale->answer     = "1.0";
 
     yscale = G_define_option();
@@ -127,7 +115,7 @@ int main (int argc, char *argv[])
     yscale->type	= TYPE_DOUBLE;
     yscale->required	= NO;
     yscale->multiple	= NO;
-    yscale->description	= "scaling factor for y coordinates";
+    yscale->description	= _("Scaling factor for y coordinates");
     yscale->answer     = "1.0";
 
     zscale = G_define_option();
@@ -135,7 +123,7 @@ int main (int argc, char *argv[])
     zscale->type	= TYPE_DOUBLE;
     zscale->required	= NO;
     zscale->multiple	= NO;
-    zscale->description	= "scaling factor for z coordinates";
+    zscale->description	= _("Scaling factor for z coordinates");
     zscale->answer     = "1.0";
 
     zrot = G_define_option();
@@ -143,11 +131,11 @@ int main (int argc, char *argv[])
     zrot->type	= TYPE_DOUBLE;
     zrot->required	= NO;
     zrot->multiple	= NO;
-    zrot->description	= "rotation around z axis in degrees counterclockwise";
+    zrot->description	= _("Rotation around z axis in degrees counterclockwise");
     zrot->answer     = "0.0";
     
     if (G_parser (argc, argv))
-	exit (-1);
+	exit (EXIT_FAILURE);
     
     strcpy (Current.name, old->answer);
     strcpy (Trans.name, new->answer);
@@ -231,5 +219,5 @@ int main (int argc, char *argv[])
     if (!quiet_flag->answer)
 	    G_message ( _("'%s' has finished the transformation of the vectors.\n"), argv[0]) ;
 
-    exit(0) ;
+    exit(EXIT_SUCCESS) ;
 }
