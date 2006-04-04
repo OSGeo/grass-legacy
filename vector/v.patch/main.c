@@ -1,3 +1,17 @@
+/****************************************************************************
+ *
+ * MODULE:       v.patch
+ * AUTHOR(S):    Dave Gerdes, U.S.Army Construction Engineering Research Laboratory (original contributor)
+ *               Radim Blazek <radim.blazek gmail.com> (update to GRASS 6)
+ *               Glynn Clements <glynn gclements.plus.com>, Markus Neteler <neteler itc.it>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 2002-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /*
 **  v.patch  input=file1,file2,.... output=composite
 **
@@ -75,7 +89,7 @@ main (int argc, char *argv[])
     table_flag->description = "Copy also attribute table. "
           "Only the table of layer 1 is currently supported";
     
-    if (G_parser (argc, argv)) exit(-1);
+    if (G_parser(argc, argv)) exit (EXIT_FAILURE);
 
     out_name = new->answer;
     do_table = table_flag->answer;
@@ -347,7 +361,7 @@ main (int argc, char *argv[])
     fprintf (stderr, "Lines common between files will have to be edited.\n");
     fprintf (stderr, "The header information also may have to be edited.\n");
 
-    exit (0);
+    exit (EXIT_SUCCESS);
 }
 
 
@@ -508,3 +522,6 @@ int max_cat ( struct Map_info *Map, int layer )
     }
     return max;
 }
+
+
+
