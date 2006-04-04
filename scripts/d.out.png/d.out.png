@@ -22,7 +22,7 @@
 #%option
 #% key: output
 #% type: string
-#% gisprompt: file,file,file
+#% gisprompt: new_file,file,output
 #% description: Name of PNG file
 #% required : yes
 #%end

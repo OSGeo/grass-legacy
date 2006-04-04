@@ -181,7 +181,7 @@ main(int argc, char **argv)
 	param.path->type        = TYPE_STRING;
 	param.path->required    = NO;
 	param.path->description = _("Path to TrueType font (including file name)");
-	param.path->gisprompt   = "old_file,,font";
+	param.path->gisprompt   = "old_file,file,font";
 
 	param.charset = G_define_option();
 	param.charset->key         = "charset";

@@ -46,7 +46,7 @@
 #%End
 #%option
 #% key: input
-#% gisprompt: file,file,file
+#% gisprompt: old_file,file,input
 #% type: string
 #% description: SRTM input tile (file without .hgt.zip extension)
 #% required : yes

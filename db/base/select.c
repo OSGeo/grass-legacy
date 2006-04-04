@@ -229,7 +229,7 @@ parse_command_line(int argc, char *argv[])
     input->type 	= TYPE_STRING;
     input->required 	= NO;
     input->description 	= _("filename with sql statement");
-    input->gisprompt    = "old_file,,input";
+    input->gisprompt    = "old_file,file,input";
 
     c			= G_define_flag();
     c->key		= 'c';

@@ -19,7 +19,7 @@
 #%option
 #% key: input
 #% type: string
-#% gisprompt: file,file,file
+#% gisprompt: old_file,file,input
 #% description: Input ASTER image to be georeference & rectified
 #% required : yes
 #%end

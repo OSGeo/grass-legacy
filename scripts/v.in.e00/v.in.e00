@@ -31,7 +31,7 @@
 #% key: file
 #% type: string
 #% description: E00 file
-#% gisprompt: file,file,file
+#% gisprompt: old_file,file,input
 #% required : yes
 #%end
 #%option

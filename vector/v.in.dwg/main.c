@@ -69,7 +69,7 @@ main (int argc, char *argv[])
     in_opt->type =  TYPE_STRING;
     in_opt->required = YES;
     in_opt->description = "DWG or DXF file";
-    in_opt->gisprompt = "file,,input";
+    in_opt->gisprompt = "old_file,file,input";
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
     out_opt->required = YES;

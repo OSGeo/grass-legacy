@@ -35,7 +35,7 @@
 #% key: file
 #% type: string
 #% description: existing SPOT VGT NDVI HDF file (0001_NDV.HDF)
-#% gisprompt: file,file,file
+#% gisprompt: old_file,file,input
 #% required : yes
 #%end
 #%option

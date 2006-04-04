@@ -60,7 +60,7 @@ void SetParameters()
     param.output = G_define_option();
     param.output->key = "output";
     param.output->type = TYPE_STRING;
-    param.output->gisprompt = "new_file,,output";
+    param.output->gisprompt = "new_file,file,output";
     param.output->required = NO;
     param.output->description = _("Name for VTK-ASCII output file");
 
