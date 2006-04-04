@@ -372,3 +372,41 @@ char *G_chop (char *line)
 
     return (line);
 }
+
+/*!
+ * \brief Convert string to upper case
+ *  \param str pointer to string
+ */
+
+void G_str_to_upper (char *str)
+{
+    int i = 0;
+
+    if (!str) return;
+
+    while ( str[i] )
+    {
+        str[i] = toupper(str[i]);
+        i++;
+    }
+}
+
+
+/*!
+ * \brief Convert string to lower case
+ *  \param str pointer to string
+ */
+
+void G_str_to_lower (char *str)
+{
+    int i = 0;
+
+    if (!str) return;
+
+    while ( str[i] )
+    {
+        str[i] = tolower(str[i]);
+        i++;
+    }
+}
+
