@@ -7,6 +7,6 @@ int open_file(char *);
 int close_file(char *);
 int map_size(int *, int *, int *);
 /* thin_lines.c */
-int thin_lines(void);
+int thin_lines(int);
 char encode_neighbours(CELL *, CELL *, CELL *, int, int);
 int print_bin(int);
