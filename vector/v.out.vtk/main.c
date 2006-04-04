@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     output->type = TYPE_STRING;
     output->required = NO;
     output->multiple = NO;
-    output->gisprompt = "new_file,,output";
+    output->gisprompt = "file,,output";
     output->description = _("Path to resulting VTK file.");
 
     feature_opt = G_define_option();

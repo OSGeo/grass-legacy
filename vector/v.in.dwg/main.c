@@ -69,7 +69,7 @@ main (int argc, char *argv[])
     in_opt->type =  TYPE_STRING;
     in_opt->required = YES;
     in_opt->description = "DWG or DXF file";
-    in_opt->gisprompt = "old_file,,input";
+    in_opt->gisprompt = "file,,input";
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
     out_opt->required = YES;
@@ -101,7 +101,8 @@ main (int argc, char *argv[])
     int_flag->key               = 'n';
     int_flag->description       = "Use numeric type for attribute \"layer\"";
 
-    if (G_parser (argc, argv)) exit(-1); 
+    if (G_parser (argc, argv))
+	exit(EXIT_FAILURE); 
 
     db_init_string (&sql);
     db_init_string (&str);
@@ -156,7 +157,7 @@ main (int argc, char *argv[])
 	}
 	adCloseFile(dwghandle);
 	adCloseAd2();
- 	exit(0);	
+ 	exit(EXIT_SUCCESS);
     }
 
 
@@ -237,6 +238,6 @@ main (int argc, char *argv[])
     Vect_build ( &Map, stdout );
     Vect_close ( &Map );
 
-    exit(0) ;
+    exit(EXIT_SUCCESS);
 }
 
