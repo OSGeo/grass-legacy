@@ -25,7 +25,8 @@ int main(int argc, char *argv[])
 {
     char *input, *output;
     struct GModule *module;
-    struct Option *opt1, *opt2;
+    struct Option *opt1, *opt2, *opt3;
+    int iterations;
 
     G_gisinit(argv[0]);
 
@@ -34,28 +35,27 @@ int main(int argc, char *argv[])
 	_("Thins non-zero cells that denote linear "
 	  "features in a raster map layer.");
 
-    opt1 = G_define_option();
-    opt1->key = "input";
-    opt1->type = TYPE_STRING;
-    opt1->required = YES;
-    opt1->gisprompt = "old,cell,raster";
-    opt1->description = _("Name of existing raster map");
+    opt1 = G_define_standard_option(G_OPT_R_INPUT);
 
-    opt2 = G_define_option();
-    opt2->key = "output";
-    opt2->type = TYPE_STRING;
-    opt2->required = YES;
-    opt2->gisprompt = "new,cell,raster";
-    opt2->description = _("Name of output raster file");
+    opt2 = G_define_standard_option(G_OPT_R_OUTPUT);
+
+    opt3 = G_define_option();
+    opt3->key = "iterations";
+    opt3->type = TYPE_INTEGER;
+    opt3->required = NO;
+    opt3->answer   = "100";
+    opt3->description = _("Maximal number of iterations");
 
     if (G_parser(argc, argv))
-	exit(-1);
+	exit(EXIT_FAILURE);
 
     input = opt1->answer;
     output = opt2->answer;
+    iterations = atoi(opt3->answer);
 
     open_file(input);
-    thin_lines();
+    thin_lines(iterations);
     close_file(output);
-    exit(0);
+
+    exit(EXIT_SUCCESS);
 }

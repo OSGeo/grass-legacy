@@ -23,7 +23,6 @@
 
 #define true 1
 #define false 0
-#define MAX_PASSES    10
 #define DELETED_PIX   9999
 
 extern char *error_prefix;
@@ -31,7 +30,7 @@ static char* work_file_name;
 static int n_rows, n_cols, pad_size;
 static int box_right, box_left, box_top, box_bottom;
 
-int thin_lines (void)
+int thin_lines (int iterations)
 {
    int j, i, col, deleted, row;
    CELL *row_buf, *new_med, *med, *bottom, *top, *get_a_row();
@@ -112,9 +111,9 @@ int thin_lines (void)
 	  
 	   deleted = 1;
 	   i = 1;
-	   while((deleted>0)&&(i<=30))  /* it must be done in <= 30 pathes */
+	   while((deleted>0)&&(i<=iterations))  /* it must be done in <= iterations passes */
 	   {
-	      fprintf(stdout, "   Path number %d\n", i); 
+	      fprintf(stdout, "   Pass number %d\n", i); 
 	      i++;
 	      deleted = 0;
 	      for(j=1;j<=4;j++)
@@ -166,7 +165,10 @@ int thin_lines (void)
               } /* j-loop */
 	      fprintf (stdout,"        Deleted %d  pixels \n", deleted);
         } /* while delete >0 */
-	fprintf(stdout, "thinning completed successfully.\n");
+	if ( (deleted == 0) && (i <= iterations) )
+	    fprintf(stdout, "Thinning completed successfully.\n");
+	else
+	    fprintf(stdout, "Thinning not completed, consider to increase 'iterations' parameter.\n");
 
 	return 0;
 }
