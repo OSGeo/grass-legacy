@@ -1,3 +1,17 @@
+/****************************************************************************
+ *
+ * MODULE:       v.build.polylines
+ * AUTHOR(S):    Mark Lake (original contributor)
+ *               Major rewrite by Radim Blazek, October 2002
+ *               Glynn Clements <glynn gclements.plus.com>, Markus Neteler <neteler itc.it>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 2002-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /***********************************************************************/
 /*
   v.build.polylines
@@ -118,7 +132,7 @@ int main (int argc, char **argv)
   quietly->key = 'q';
   quietly->description = "Run quietly";
 
-  if (G_parser(argc, argv)) exit (-1);
+  if (G_parser(argc, argv)) exit (EXIT_FAILURE);
   
   /* Make parser parameters globally available */
   gQuietly = quietly->answer;
@@ -207,5 +221,8 @@ int main (int argc, char **argv)
   Vect_build (&Out, stdout); 
   Vect_close (&Out);
 
-  return (0);
+  exit (EXIT_SUCCESS);
 }
+
+
+

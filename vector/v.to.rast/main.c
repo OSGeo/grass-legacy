@@ -1,3 +1,19 @@
+/****************************************************************************
+ *
+ * MODULE:       v.to.rast
+ * AUTHOR(S):    Original code: Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
+ *               Stream directions: Jaro Hofierka and Helena Mitasova
+ *               Radim Blazek <radim.blazek gmail.com> (GRASS 6 update)
+ *               Brad Douglas <rez touchofmadness.com>, Glynn Clements <glynn gclements.plus.com>,
+ *               Hamish Bowman <hamish_nospam yahoo.com>, Markus Neteler <neteler itc.it>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 2003-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdio.h> 
 #include <stdlib.h>
 #include <grass/gis.h>
@@ -97,4 +113,7 @@ int main (int argc, char *argv[])
 
     exit( vect_to_rast (input->answer, output->answer, field, col->answer, nrows, use, value, value_type) );
 }
+
+
+
 
