@@ -78,11 +78,19 @@ source $env(GISBASE)/etc/gui.tcl
 # $env(GISBASE)/etc/gtcltk/select.tcl
 # $env(GISBASE)/etc/gtcltk/gronsole.tcl
 
-source $gmpath/cmd.tcl
 source $gmpath/gmtree.tcl
 source $gmpath/gmtool1.tcl
 source $gmpath/gmtool2.tcl
+source $gmpath/mapcanvas.tcl
+
+# Procedures used in many layers
+source $gmpath/commonlayer.tcl
+
+# Group layer (branch of tree)
 source $gmpath/group.tcl
+
+# Layers:
+source $gmpath/cmd.tcl
 source $gmpath/vector.tcl
 source $gmpath/raster.tcl
 source $gmpath/labels.tcl
@@ -98,7 +106,6 @@ source $gmpath/chart.tcl
 source $gmpath/thematic.tcl
 source $gmpath/maptext.tcl
 source $gmpath/mapprint.tcl
-source $gmpath/mapcanvas.tcl
 
 # Load a console user interface
 source $gmpath/runandoutput.tcl
