@@ -80,7 +80,7 @@ middle-click the key time.
 <img src="nvimg/panel/keyexample.gif" alt="Keyframe Attributes" width="354" height="226">
 <br><br>
 </dl>
-<dl>
+
 <dt> <strong>Channels</strong></dt>
 <dd>Each keyframe has nine channels that you can either turn on or off. 
 The default for all channels is on. You need to set your channel options 
@@ -117,12 +117,12 @@ before adding a keyframe.
 	<br><br></dd>
 	</dl>
 </dd>
-</dl>
+
 
 <dt> <strong>Add</strong></dt>
 <dd>Adds a key frame at the current key time. The <strong>New Key Time</strong>
- automatically increments by 3 seconds after each keyframe is added.</dd>
-<br><br>
+ automatically increments by 3 seconds after each keyframe is added.
+<br><br></dd>
 
 <dt> <strong>Delete</strong></dt>
 <dd>Deletes all selected keyframes from the animation. You select keyframes 
@@ -138,8 +138,8 @@ To calculate the length of the animation (in frames), use this formula
 <em>(minutes*60 + seconds)*frame rate + frame number</em>. 
 <br><br></dd>
 
-<dt> <strong>Show</strong></dt>
-<dd>Use the next three options to annotate the animation.
+<dt> <strong>Show Feature</strong></dt>
+<dd>Use these options to enable annotations on the animation.
 <br><br></dd>
 <dd>
 	<dl>
@@ -153,6 +153,12 @@ To calculate the length of the animation (in frames), use this formula
 	<br><br></dd>
 	<dt> <strong>Sites</strong></dt>
 	<dd>Draws all loaded sites files in the animation (if selected).
+	<br><br></dd>
+	<dt> <strong>Volume</strong></dt>
+	<dd>Draws all loaded 3D volumes in the animation (if selected).
+	<br><br></dd>
+	<dt> <strong>Labels/Legend</strong></dt>
+	<dd>Draws all labels and legends in the animation (if selected).
 	<br><br></dd>
 	</dl>
 </dd>
@@ -196,8 +202,15 @@ To calculate the length of the animation (in frames), use this formula
 file name prefix, frame start number, image type, and draw type. The image file name includes the file prefix, frame number and image type. For example, frame number 12 with a file prefix of FLY saved as a PPM would be named FLY0012.ppm. You can choose to render the animation off-screen (in memory). To render off-screen, you need to minimize the <strong>NVIZ</strong> viewer. 
 <br><br></dd>
 
+<dt><strong>Save</strong></dt>
+<dd>Saves the current keyframe animation setup to a file.<br><br></dd>
+
+<dt><strong>Load</strong></dt>
+<dd>Loads the keyframe animation setup from a file.<br><br></dd>
+
 <dt><strong>Close</strong></dt>
 <dd>Closes the <strong>KeyFrame Animation</strong> panel.<br><br></dd>
+
 
 <H3>EXAMPLE</H3>
 
@@ -215,8 +228,13 @@ etc.
 <p>
 Rewind & press the play button to preview.
 <p>
-Next click "Animation: [Run and Save]", type in a basename.mpg, click 
-the "<> MPEG-1 button", click the "<> Full Rendering" button, click [Ok].
+<i>Assuming NVIZ was built with FFMPEG support for live MPEG rendering:</i>
+<BR>
+Next click "Animation: [Run and Save]",
+type in a basename.mpg,
+click the "<>&nbsp;MPEG-1&nbsp;button",
+click the "<>&nbsp;Full&nbsp;Rendering" button,
+click [Ok].
 <p>
 whiz-bang-whirl.
 
