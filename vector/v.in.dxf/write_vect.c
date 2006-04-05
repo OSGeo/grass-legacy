@@ -130,15 +130,19 @@ static int get_field_cat(struct Map_info *Map, char *field_name, int *field,
     /* create new field */
     field_names = (char **)G_realloc(field_names, (i + 1) * sizeof(char *));
     field_names[i] = G_store(field_name);
-    field_cat = (int *)G_realloc(field_cat, (i + 1) * sizeof(int));
 
     /* for -1 flag, *field should be always 1 */
     if (flag_one_layer)
 	i = 0;
 
+    if (!flag_one_layer || !field_cat) {
+	field_cat = (int *)G_realloc(field_cat, (i + 1) * sizeof(int));
+	field_cat[i] = 0;
+    }
+
     /* assign field and cat numbers */
     *field = i + 1;
-    *cat = field_cat[i] = 1;
+    *cat = ++field_cat[i];
 
     /* do not create tables */
     if (flag_table)
