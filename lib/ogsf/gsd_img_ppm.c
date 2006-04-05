@@ -134,8 +134,9 @@ int GS_write_zoom(char *name, unsigned int xsize, unsigned int ysize)
 int gsd_init_mpeg(char *name)
 {
 #ifdef HAVE_FFMPEG
-GLuint l, r, b, t;
-GLint tmp[4];
+	GLuint l, r, b, t;
+	GLint tmp[4];
+	int bitrate = 400000;
 
         glGetIntegerv(GL_VIEWPORT, tmp);
         l = tmp[0];
@@ -143,7 +144,7 @@ GLint tmp[4];
         b = tmp[1];
         t = tmp[1] + tmp[3] - 1;
 
-	fprintf(stderr, "Opening MPEG stream\n");
+	fprintf(stderr, "Opening MPEG stream ...\n");
 
         avcodec_init();
 
@@ -154,6 +155,29 @@ GLint tmp[4];
 
         /* find the mpeg1 video encoder */
         codec = avcodec_find_encoder(CODEC_ID_MPEG1VIDEO);
+
+#ifdef USE_XVID
+	/* maybe as an env var later, for now just a compile time hack
+	avcodec_register_all();
+	char *p;
+	int bitr;
+	p = getenv("GRASS_CODEC"));
+	if (!p || strlen(p) == 0)
+	    p = DEFAULT_CODEC;
+	strcpy(codec_name, "CODEC_ID_");
+	strncat(codec_name,p, 24);
+	codec = avcodec_find_encoder(codec_name);
+	p = getenv("GRASS_CODEC_BITRATE"));
+	...
+
+	For Xvid the canvas size must be a multiple of (4?). Best try 16, 
+	 720x720. (File->Set Canval Size) Otherwise the codec won't open.
+	*/
+	register_avcodec(&xvid_encoder);
+	codec = avcodec_find_encoder(CODEC_ID_XVID);
+	bitrate=2000000;
+#endif
+
         if (!codec) {
                 fprintf(stderr, "codec not found\n");
                 return(-1);
@@ -163,7 +187,7 @@ GLint tmp[4];
         picture= avcodec_alloc_frame();
 
         /* put sample parameters */
-        c->bit_rate = 400000;
+        c->bit_rate = bitrate;
         /* resolution must be a multiple of two */
         c->width = r - l + 1;
         c->height = t - b + 1;
@@ -180,6 +204,7 @@ GLint tmp[4];
         /* open it */
         if (avcodec_open(c, codec) < 0) {
                 fprintf(stderr, "could not open codec\n");
+		 G_debug(1, "avcodec_open() returned %d", avcodec_open(c, codec));
                 return(-1);
         }
 
@@ -300,7 +325,7 @@ int i;
         av_free(c);
         av_free(picture);
 
-	fprintf(stderr, "Close MPEG stream\n");
+	fprintf(stderr, "Closed MPEG stream.\n");
 #endif
 
         return (0);
