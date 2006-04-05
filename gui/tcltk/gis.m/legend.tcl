@@ -30,7 +30,6 @@ proc GmLegend::create { tree parent } {
     variable first
 	variable dup
     global gmpath
-    global iconpath
     global guioptfont
 
     set node "legend:$count"
@@ -41,8 +40,8 @@ proc GmLegend::create { tree parent } {
                            -variable GmLegend::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
-    image create photo legico -file "$iconpath/module-d.legend.gif"
-    set ico [label $frm.ico -image legico -bd 1 -relief raised]
+    set ico [label $frm.ico -bd 1 -relief raised -text "Leg"]
+    icon_configure $ico module d.legend
     
     pack $check $ico -side left
     
@@ -142,18 +141,18 @@ proc GmLegend::options { id frm } {
     # raster name
     set row [ frame $frm.map ]
     Label $row.a -text "Raster map: "
-    Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+    Button $row.b -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmLegend::select_map $id"
+	icon_configure $row.b element cell
     Entry $row.c -width 35 -text " $opt($id,1,map)" \
           -textvariable GmLegend::opt($id,1,map) \
           -background white
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
-            -image [image create photo -file "$iconpath/gui-help.gif"] \
             -command "run g.manual d.legend" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
+	icon_configure $row.e gui help
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
@@ -334,50 +333,8 @@ proc GmLegend::display { node mod } {
         append cmd " -f"
     }
 
-    # check to see if options have changed
-    foreach key $optlist {
-        if {$opt($id,0,$key) != $opt($id,1,$key)} {
-        	set opt($id,1,mod) 1
-        	set opt($id,0,$key) $opt($id,1,$key)
-        }
-    } 
-    
-    # if options have change (or mod flag set by other procedures) re-render map
-	if {$opt($id,1,mod) == 1 || $dup($id) == 1} {
-		runcmd "d.frame -e"
-	    run_panel $cmd
-	   	file rename -force $mapfile($mon) $lfile($id)
-    	file rename -force $maskfile($mon) $lfilemask($id)
-		# reset options changed flag
-		set opt($id,1,mod) 0
-		set dup($id) 0
-	}
-
-    #add lfile, maskfile, and opacity to compositing lists
-    if { $opt($id,1,_check) } {
-
-		if {$complist($mon) != "" } {
-			append complist($mon) ","
-			append complist($mon) [file tail $lfile($id)]
-		} else {
-			append complist($mon) [file tail $lfile($id)]
-		}	
-	
-		if {$masklist($mon) != "" } {
-			append masklist($mon) ","
-			append masklist($mon) [file tail $lfilemask($id)]
-		} else {
-			append masklist($mon) [file tail $lfilemask($id)]
-		}	
-	
-		if {$opclist($mon) != "" } {
-			append opclist($mon) ","
-			append opclist($mon) $opt($id,1,opacity)
-		} else {
-			append opclist($mon) $opt($id,1,opacity)
-		}	
-	}
-	
+	# Decide whether to run, run command, and copy files to temp
+	GmCommonLayer::display_command [namespace current] $id $cmd
 }
 
 
@@ -391,7 +348,6 @@ proc GmLegend::duplicate { tree parent node id } {
     variable count
 	variable dup
 	global guioptfont
-	global iconpath
 
     set node "legend:$count"
 
@@ -400,8 +356,8 @@ proc GmLegend::duplicate { tree parent node id } {
 		-variable GmLegend::opt($count,1,_check) \
 		-height 1 -padx 0 -width 0]
 
-    image create photo legico -file "$iconpath/module-d.legend.gif"
-    set ico [label $frm.ico -image legico -bd 1 -relief raised]
+    set ico [label $frm.ico -bd 1 -relief raised -text "Leg"]
+	icon_configure $ico module d.legend
     
     pack $check $ico -side left
 
