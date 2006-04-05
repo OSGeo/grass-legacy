@@ -284,7 +284,7 @@ main (int argc, char **argv)
 	cats_acolors_flag = G_define_flag ();
 	cats_acolors_flag->key		= 'c';
 	cats_acolors_flag->description	=
-	    _("Random colors according to category number");
+	    _("Random colors according to category number (or layer number if 'layer=-1' is given)");
 
 	id_flag = G_define_flag ();
 	id_flag->key		= 'i';
