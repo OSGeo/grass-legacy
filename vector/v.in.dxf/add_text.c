@@ -18,10 +18,10 @@ int add_text(struct dxf_file *dxf, struct Map_info *Map)
     double startz = 0.0;
     double height = 1.0;
     double angle = 0.0;
-    char layer_name[DXF_BUF_SIZE];
+    char layer[DXF_BUF_SIZE];
 
     /*  initialize defaults */
-    strcpy(layer_name, UNIDENTIFIED_LAYER);
+    strcpy(layer, UNIDENTIFIED_LAYER);
 
     while ((code = dxf_get_code(dxf)) != 0) {
 	if (code == -2)
@@ -50,7 +50,7 @@ int add_text(struct dxf_file *dxf, struct Map_info *Map)
 		 */
 		if (layers && flag_invert == is_layer_in_list(dxf_buf))
 		    return 0;
-		strcpy(layer_name, dxf_buf);
+		strcpy(layer, dxf_buf);
 		layer_flag = 1;
 	    }
 	    break;
@@ -133,13 +133,13 @@ int add_text(struct dxf_file *dxf, struct Map_info *Map)
 	ypnts[3] = ypnts[0] + (length * sin(theta));
 	zpnts[3] = startz;
 
-	write_polyline(Map, layer_name, 5);
+	write_polyline(Map, layer, 5);
 #endif
 	xpnts[0] = startx;
 	ypnts[0] = starty;
 	zpnts[0] = startz;
 
-	write_text(Map, layer_name, label);
+	write_text(Map, layer, label);
     }
 
     return 0;

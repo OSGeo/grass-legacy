@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 {
     struct dxf_file *dxf;
     struct Map_info *Map;
-    char *output_name = NULL;
+    char *output = NULL;
 
     struct GModule *module;
     struct
@@ -43,6 +43,7 @@ int main(int argc, char *argv[])
 	struct Flag *extent;
 	struct Flag *table;
 	struct Flag *invert;
+	struct Flag *one_layer;
     } flag;
     struct
     {
@@ -74,6 +75,10 @@ int main(int argc, char *argv[])
     flag.invert->description =
 	_("Invert selection by layers (don't import layers in list)");
 
+    flag.one_layer = G_define_flag();
+    flag.one_layer->key = '1';
+    flag.one_layer->description = _("Import all objects into one layer");
+
     opt.input = G_define_option();
     opt.input->key = "input";
     opt.input->type = TYPE_STRING;
@@ -99,6 +104,7 @@ int main(int argc, char *argv[])
     flag_extent = flag.extent->answer;
     flag_table = flag.table->answer;
     flag_invert = flag.invert->answer;
+    flag_one_layer = flag.one_layer->answer;
 
     if (!flag_list)
 	fprintf(stderr, _("\nCONVERSION OF %s TO VECTOR FILE:  "),
@@ -116,7 +122,7 @@ int main(int argc, char *argv[])
     else {
 	/* make vector file name SQL compliant */
 	if (opt.output->answer)
-	    output_name = G_store(opt.output->answer);
+	    output = G_store(opt.output->answer);
 	else {
 	    char *p, *p2;
 
@@ -124,29 +130,29 @@ int main(int argc, char *argv[])
 		p++;
 	    else
 		p = dxf->name;
-	    output_name = G_store(p);
+	    output = G_store(p);
 	    if ((p2 = G_rindex(p, '.')))
-		output_name[p2 - p] = 0;
+		output[p2 - p] = 0;
 	}
 	{
 	    char *p;
 
-	    for (p = output_name; *p; p++)
+	    for (p = output; *p; p++)
 		if (*p == '.')
 		    *p = '_';
 	}
 
 	layers = opt.layers->answers;
 
-	if (Vect_legal_filename(output_name) < 0)
+	if (Vect_legal_filename(output) < 0)
 	    G_fatal_error(_("Use output= option to change vector map name"));
 
 	/* create vector file */
 	Map = (struct Map_info *)G_malloc(sizeof(struct Map_info));
-	if (Vect_open_new(Map, output_name, 1) < 0)
-	    G_fatal_error(_("%s: Cannot open new vector file"), output_name);
+	if (Vect_open_new(Map, output, 1) < 0)
+	    G_fatal_error(_("%s: Cannot open new vector file"), output);
 
-	Vect_set_map_name(Map, output_name);
+	Vect_set_map_name(Map, output);
 
 	Vect_hist_command(Map);
     }
@@ -160,11 +166,11 @@ int main(int argc, char *argv[])
 	Vect_close(Map);
 
 	if (!found_layers) {
-	    fprintf(stderr, "REMOVE [%s]\n", output_name);
-	    Vect_delete(output_name);
+	    fprintf(stderr, "REMOVE [%s]\n", output);
+	    Vect_delete(output);
 	}
 
-	G_free(output_name);
+	G_free(output);
     }
 
     exit(EXIT_SUCCESS);
