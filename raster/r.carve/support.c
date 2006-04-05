@@ -23,9 +23,9 @@ int update_history(char *raster_name)
     /* write command line to history */
     G_short_history(raster_name, "raster", &hist);
     sprintf(hist.edhist[0], "%s version %.2f", G_program_name(), APP_VERSION);
-    sprintf(hist.edhist[1], "%s", G_recreate_command());
     sprintf(hist.datsrc_1, "raster elevation file: %s", raster_name);
-    hist.edlinecnt = 2;
+    hist.edlinecnt = 1;
+    G_command_history(&hist);
 
     return G_write_history(raster_name, &hist);
 }
