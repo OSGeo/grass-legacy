@@ -50,7 +50,7 @@ int plot1 (
 
       db_CatValArray_init (&cvarr);     
 
-      fi = Vect_get_field (Map, Clist -> field);
+      fi = Vect_get_field (Map, (Clist->field > 0 ? Clist->field : 1));
       if (fi == NULL) {
 	G_fatal_error (_("Cannot read field info"));
       }
@@ -148,7 +148,10 @@ int plot1 (
 
 	if( table_colors_flag ) {
 
-	  cat=Vect_get_line_cat ( Map, line, Clist->field ); /* only first category */
+	  /* only first category */
+	  cat = Vect_get_line_cat ( Map, line,
+			  (Clist->field > 0 ? Clist->field :
+			   (Cats->n_cats > 0 ? Cats->field[0] : 1)));
 	  
 	  if (cat >= 0) {
 	    G_debug (3, "display element %d, cat %d", line, cat);
@@ -188,25 +191,35 @@ int plot1 (
 
 	/* random colors */
 	if( cats_color_flag ) {
-	  cat = Vect_get_line_cat ( Map, line, Clist->field );
-	  if( cat >= 0 ) {
-	    G_debug (3, "display element %d, cat %d", line, cat);
-	    /* fetch color number from category */
-	    which = (cat % palette_ncolors);
-	    G_debug (3,"cat:%d which color:%d r:%d g:%d b:%d", cat, which, 
+	  rgb = 0;
+	  if(Clist->field > 0){
+	    cat = Vect_get_line_cat ( Map, line, Clist->field );
+	    if( cat >= 0 ) {
+	      G_debug (3, "display element %d, cat %d", line, cat);
+	      /* fetch color number from category */
+	      which = (cat % palette_ncolors);
+	      G_debug (3,"cat:%d which color:%d r:%d g:%d b:%d", cat, which, 
 		    palette[which].R, palette[which].G, palette[which].B);
+
+	      rgb = 1;
+	      red = palette[which].R;
+	      grn = palette[which].G;
+	      blu = palette[which].B;
+	    }
+	  } else
+	  if(Cats->n_cats > 0){
+	    /* fetch color number from layer */
+	    which = (Cats->field[0] % palette_ncolors);
+	    G_debug (3,"layer:%d which color:%d r:%d g:%d b:%d", Cats->field[0],
+		   which, palette[which].R, palette[which].G, palette[which].B);
 
 	    rgb = 1;
 	    red = palette[which].R;
 	    grn = palette[which].G;
 	    blu = palette[which].B;
-	    
-	  }
-	  else {
-	    rgb = 0;
 	  }
 	}
-	
+
 	x = Points->x;
 	y = Points->y;
 

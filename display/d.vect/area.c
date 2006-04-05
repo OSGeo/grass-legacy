@@ -47,7 +47,7 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 
       db_CatValArray_init (&cvarr);     
 
-      fi = Vect_get_field (Map, Clist -> field);
+      fi = Vect_get_field (Map, (Clist->field > 0 ? Clist->field : 1));
       if (fi == NULL) {
 	G_fatal_error (_("Cannot read field info"));
       }
@@ -172,7 +172,9 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 	    Vect_append_point ( Points, xl, yl, 0.0 ); /* ??? */
 	}
 
-	cat = Vect_get_area_cat ( Map, area, Clist -> field );
+	cat = Vect_get_area_cat ( Map, area,
+			(Clist->field > 0 ? Clist->field :
+			 (Cats->n_cats > 0 ? Cats->field[0] : 1)));
 
 	if (!Vect_get_area_centroid (Map, area) && cat == -1) {
 	  continue;
@@ -219,7 +221,9 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
  	
 	/* random colors */
 	if( cats_color_flag ) {
-	    centroid = Vect_get_area_centroid ( Map, area );
+	  rgb = 0;
+	  centroid = Vect_get_area_centroid ( Map, area );
+	  if(Clist->field > 0){
 	    if( cat >= 0 ) {
 	      G_debug (3, "display area %d, centroid %d, cat %d", area, centroid, cat);
 	      /* fetch color number from category */
@@ -230,9 +234,18 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 	      grn = palette[which].G;
 	      blu = palette[which].B;
 	    }
-	    else {
-	      rgb = 0;
-	    }
+	  } else
+	  if(Cats->n_cats > 0){
+	    /* fetch color number from layer */
+	    which = (Cats->field[0] % palette_ncolors);
+	    G_debug (3,"layer:%d which color:%d r:%d g:%d b:%d", Cats->field[0],
+	           which, palette[which].R, palette[which].G, palette[which].B);
+
+	    rgb = 1;
+	    red = palette[which].R;
+	    grn = palette[which].G;
+	    blu = palette[which].B;
+	  }
 	}
 	
 	if ( fcolor > -1 ) {
