@@ -442,7 +442,7 @@ proc menu2 { menu } {
 	 Nstart_zoom $fname $wid $ht
 	appNotBusy
 	}	
-	} -underline 0 -label "Save Max. Resolution PPM(s)"
+	} -underline 0 -label "Maximum Resolution PPM"
     }
 
 proc dump_rgb { } {
