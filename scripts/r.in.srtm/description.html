@@ -2,19 +2,20 @@
 
 <EM>r.in.srtm</EM> imports SRTM hgt files into GRASS.
 
-SRTM hgt data sets can be downloaded from NASA at this FTP site:<br>
-<a href="ftp://e0mss21u.ecs.nasa.gov/srtm/">ftp://e0mss21u.ecs.nasa.gov/srtm/</a>
-<br>
-
-<!--
- Formerly <a href="ftp://e0dps01u.ecs.nasa.gov/srtm/">ftp://e0dps01u.ecs.nasa.gov/srtm/</a>
--->
+SRTM data sets can be downloaded from NASA at this FTP site (Version 1 and the
+improved Version 2):<br>
+<a href="ftp://e0srp01u.ecs.nasa.gov/srtm/">ftp://e0srp01u.ecs.nasa.gov/srtm/</a>
 
 <H2>NOTES</H2>
 
 SRTM tiles are of 1 degree by 1 degree size. The SRTM filename contains the
 coordinates which refer to the <b>center</b> of the lower left pixel (e.g., N51E010: 
-lower left cell center at 10E, 51N).
+lower left cell center at 10E, 51N). To itentify a tile name, a grid can be easily
+visualized in the GRASS monitor:
+
+<div class="code"><pre>
+d.grid size=1
+</pre></div>
 
 <H2>SEE ALSO</H2>
 The <a href="http://www2.jpl.nasa.gov/srtm/">Shuttle Radar Topography Mission</a>
@@ -22,6 +23,7 @@ homepage at NASA's JPL.
 
 <H2>AUTHOR</H2>
 
-Markus Neteler
+Markus Neteler<br>
+Improved by W. Kyngesburye and H. Bowman
 
 <p><i>Last changed: $Date$</i>
