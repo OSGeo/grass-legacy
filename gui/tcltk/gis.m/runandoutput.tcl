@@ -152,9 +152,7 @@ proc spawn {cmd args} {
 proc run_panel {cmd} {
 	global gronsole
 
-	puts $cmd
 	$gronsole run_wait $cmd gism
-	puts Done
 }
 
 
