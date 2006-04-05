@@ -270,14 +270,6 @@ proc GmRgbhis::display { node mod} {
          }
      }
 
-    # check to see if options have changed
-    foreach key $optlist {
-        if {$opt($id,0,$key) != $opt($id,1,$key)} {
-        	set opt($id,1,mod) 1
-        	set opt($id,0,$key) $opt($id,1,$key)
-        }
-    } 
-
 	# overlay
 	if { $opt($id,1,overlay) && $opt($id,1,rgb) == 1 } { 
 		append cmd1 " -o"
@@ -287,54 +279,10 @@ proc GmRgbhis::display { node mod} {
 		append cmd2 " -n"
 	}
 
-    # if options have change (or mod flag set by other procedures) re-render map
-	if {$opt($id,1,mod) == 1 || $dup($id) == 1} {
-		# display rgb map    
-		if { $cmd1 != "" } { 
-			# redraw rgb
-			runcmd "d.frame -e"
-			run_panel $cmd1
-			# reset options changed flag
-			set opt($id,1,mod) 0
-			set dup($id) 0
-		}
-		# display his map    
-		if { $cmd2 != "" } { 
-			# redraw his
-			runcmd "d.frame -e"
-			run_panel $cmd2
-			# reset options changed flag
-			set opt($id,1,mod) 0
-			set dup($id) 0
-		}
-		file rename -force $mapfile($mon) $lfile($id)
-		file rename -force $maskfile($mon) $lfilemask($id)
-    }
-
-    #add lfile, maskfile, and opacity to compositing lists
-    if { $opt($id,1,_check) } {
-
-		if {$complist($mon) != "" } {
-			append complist($mon) ","
-			append complist($mon) [file tail $lfile($id)]
-		} else {
-			append complist($mon) [file tail $lfile($id)]
-		}	
-	
-		if {$masklist($mon) != "" } {
-			append masklist($mon) ","
-			append masklist($mon) [file tail $lfilemask($id)]
-		} else {
-			append masklist($mon) [file tail $lfilemask($id)]
-		}	
-	
-		if {$opclist($mon) != "" } {
-			append opclist($mon) ","
-			append opclist($mon) $opt($id,1,opacity)
-		} else {
-			append opclist($mon) $opt($id,1,opacity)
-		}	
-	}
+	# Decide whether to run, run commands, and copy files to temp
+	# Original logic here was to erase before drawing his if both exist
+	# Was this really supposed to be mutually exclusive?
+	GmCommonLayer::display_commands [namespace current] $id [list $cmd1 $cmd2]
 }
 
 

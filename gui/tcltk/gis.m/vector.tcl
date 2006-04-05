@@ -666,58 +666,15 @@ proc GmVector::display { node mod } {
 
     if { $opt($id,1,qoverwrite) == 1 } { 
         append cmd2 " --o" 
-    } 
-        
-    # check to see if options have changed
-    foreach key $optlist {
-        if {$opt($id,0,$key) != $opt($id,1,$key)} {
-        	set opt($id,1,mod) 1
-        	set opt($id,0,$key) $opt($id,1,$key)
-        }
-    } 
+    }
 
-	# redraw if options changed
-	if {$opt($id,1,mod) == 1 || $dup($id) == 1} {
-		runcmd "d.frame -e"
-	    run_panel $cmd
-	   	file rename -force $mapfile($mon) $lfile($id)
-    	file rename -force $maskfile($mon) $lfilemask($id)
-		# reset options changed flag
-		set opt($id,1,mod) 0
-		set dup($id) 0
-	}
-
-    # use v.extract to save queried vector - will not go into redraw
+	# use v.extract to save queried vector - will not go into redraw
     if { $opt($id,1,qsave) == 1 && $opt($id,1,qmap) != "" } {
     	run_panel $cmd2
     }
-    
-    #add lfile, maskfile, and opacity to compositing lists
-    if { $opt($id,1,_check) } {
 
-		if {$complist($mon) != "" } {
-			append complist($mon) ","
-			append complist($mon) [file tail $lfile($id)]
-		} else {
-			append complist($mon) [file tail $lfile($id)]
-		}	
-	
-		if {$masklist($mon) != "" } {
-			append masklist($mon) ","
-			append masklist($mon) [file tail $lfilemask($id)]
-		} else {
-			append masklist($mon) [file tail $lfilemask($id)]
-		}	
-	
-		if {$opclist($mon) != "" } {
-			append opclist($mon) ","
-			append opclist($mon) $opt($id,1,opacity)
-		} else {
-			append opclist($mon) $opt($id,1,opacity)
-		}	
-	}
-	
-
+	# Decide whether to run, run command, and copy files to temp
+	GmCommonLayer::display_command [namespace current] $id $cmd
 }
 
 
