@@ -308,13 +308,13 @@ if {$DEBUG} {puts "panel area made"}
     bind $Nv_(P_AREA) <Configure> "set_scrollsize"
 
     pack [Nv_mkMenu $Nv_(AREA).menu.file File \
-              {"Load State..." "Save State..." \
+              {"Load State ..." "Save State ..." \
                 "" \
                 "Set Canvas Size ..."
                 "" \
-                "Load 3d Settings..." "Save 3d Settings..." \
+                "Load 3d Settings ..." "Save 3d Settings ..." \
                 "" \
-                "Image Dump..." \
+                "Save image as ..." \
                 "" \
                 "Reset" "Quit" } \
               {0 0 0 0 0 0 0 0 0 0 0 0} \
@@ -452,6 +452,7 @@ proc dump_rgb { } {
     appBusy
 
     if {$fname != -1} then {
+	append fname ".rgb"
 	Ndraw_all
 	Nwrite_rgb $fname
     }
@@ -466,6 +467,7 @@ proc dump_ppm { } {
     appBusy
 
     if {$fname != -1} then {
+	append fname ".ppm"
 	Ndraw_all
 	Nwrite_ppm $fname
     }
@@ -480,6 +482,7 @@ proc dump_tif { } {
     appBusy
 
     if {$fname != -1} then {
+	append fname ".tif"
 	Ndraw_all
 	Nwrite_tif $fname
     }
