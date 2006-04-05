@@ -221,13 +221,6 @@ proc GmRnums::display { node mod } {
         append cmd " -f"
     }
 
-	# check to see if options have changed
-	foreach key $optlist {
-		if {$opt($id,0,$key) != $opt($id,1,$key)} {
-			set opt($id,1,mod) 1
-			set opt($id,0,$key) $opt($id,1,$key)
-		}
-	} 
     
 	# only run if less than 100x100 cells
 	set string ""
@@ -242,43 +235,11 @@ proc GmRnums::display { node mod } {
 
 	# can only display if 10K cells or less in region
 	if { $cells <= 10000} {
-    	# if options have change (or mod flag set by other procedures) re-render map
-		if {$opt($id,1,mod) == 1 || $dup($id) == 1} {
-			runcmd $cmd 
-			set mapdispht $env(GRASS_HEIGHT)
-			set mapdispwd $env(GRASS_WIDTH)
-			file rename -force $mapfile($mon) $lfile($id)
-			file rename -force $maskfile($mon) $lfilemask($id)
-			# reset options changed flag
-			set opt($id,1,mod) 0
-			set dup($id) 0
-			set first 0
-		}
-		#add lfile to compositing list
-		if { $opt($id,1,_check) } {
-	
-			if {$complist($mon) != "" } {
-				append complist($mon) ","
-				append complist($mon) [file tail $lfile($id)]
-			} else {
-				append complist($mon) [file tail $lfile($id)]
-			}	
-		
-			if {$masklist($mon) != "" } {
-				append masklist($mon) ","
-				append masklist($mon) [file tail $lfilemask($id)]
-			} else {
-				append masklist($mon) [file tail $lfilemask($id)]
-			}	
-		
-			if {$opclist($mon) != "" } {
-				append opclist($mon) ","
-				append opclist($mon) $opt($id,1,opacity)
-			} else {
-				append opclist($mon) $opt($id,1,opacity)
-			}	
-		}
-	} else {
+		# Decide whether to run, run command, and copy files to temp
+		GmCommonLayer::display_command [namespace current] $id $cmd
+		set mapdispht $env(GRASS_HEIGHT)
+		set mapdispwd $env(GRASS_WIDTH)
+	} elseif {$opt($id,1,_check)} {
 		set msgtxt "Cell values can only be displayed\nfor regions of < 10,000 cells" 
 		set answer [tk_messageBox -message $msgtxt -type ok -parent .mapcan($mon)]
 		if { $answer == "ok" } {return}
