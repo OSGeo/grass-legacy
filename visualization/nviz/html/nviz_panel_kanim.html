@@ -21,7 +21,10 @@ animations where you need precise camera control. Each keyframe that you
 set has nine <em>channels</em>, and each <em>channel</em> represents a part 
 of the current view. For example, the <em>Field of View</em> (FOV) is a 
 separate channel in each keyframe.
-</p>
+<p>
+The <em><a href="../d.nviz.html">d.nviz</a></em> GRASS module may be used to 
+automatically create Keyframe animation templates which can be loaded by
+this panel.
 
 <BR><BR>
 <DL><DD>
@@ -66,16 +69,20 @@ separate channel in each keyframe.
 <dt> <strong>Keyframe Attributes</strong></dt>
 <dd>The <strong>Keyframe Attributes</strong> scrollbar on the left moves 
 through the nine channels of each keyframe. The bottom scrollbar moves 
-through the user defined keyframes.
+through the user defined keyframes in time.
 A thick vertical blue line marks the current position (frame) in the 
-animation. The key time appears below this line in black. A light blue 
-rectangle indicates selected channels for each keyframe. The key time for 
-each keyframe appears below in light blue.
+animation. The current key time appears below this line in black. A light blue
+rectangle indicates selected channels for each keyframe. The key time of
+each keyframe appears vertically below each keyframe in light blue text.
 <br>
-To change the current position (frame) in the animation, click or click and
-drag in the channels area. To change the position (time) of the selected 
-keyframe, click and drag the key time. To select a keyframe(s) for deletion, 
-middle-click the key time.
+To change your current position (frame) in the animation, click or click and
+drag the thick vertical blue line in the channels area.
+<br>
+To change the position (in time) of a keyframe, click and drag the 
+vertical light blue key time text. To select a keyframe (or multiple keyframes)
+for deletion, middle-click the vertical light blue key time. The key times
+of selected keyframes will turn black.
+
 <br><br><br>
 <img src="nvimg/panel/keyexample.gif" alt="Keyframe Attributes" width="354" height="226">
 <br><br></dd>
@@ -120,14 +127,25 @@ before adding a keyframe.
 
 
 <dt> <strong>Add</strong></dt>
-<dd>Adds a key frame at the current key time. The <strong>New Key Time</strong>
- automatically increments by 3 seconds after each keyframe is added.
+<dd>Adds a key frame at the current <strong>New Key Time</strong>.
+The keyframe will store the selected channel information of the currently
+held view (camera angle, camera distance, height, twist, etc.). A keyframe's
+view attributes can not be directly modified after creation. If you wish
+to slightly alter the view at a key time, you will need to create a new
+keyframe at a nearby key time, delete the old keyframe, then move the new
+keyframe into the old keyframe's key time slot.
+<!-- note to "A"-type personalities reading this html source:
+It is also possible to edit a <strong>Save</strong>d keyframe animation 
+project in a text editor if you need to make a minor adjustment. -->
+The <strong>New Key Time</strong> automatically increments by 3 seconds after
+each keyframe is added.
 <br><br></dd>
 
 <dt> <strong>Delete</strong></dt>
 <dd>Deletes all selected keyframes from the animation. You select keyframes 
-from the <strong>Keyframe Attributes</strong> by middle-clicking on the key 
-time. Deleted keyframes are not recoverable. 
+from the <strong>Keyframe Attributes</strong> window by middle-clicking on the 
+light blue vertical key time text. Selected key times will be shown in black.
+Deleted keyframes are not recoverable.
 <br><br></dd>
 
 <dt> <strong>New Key Time</strong></dt>
@@ -135,7 +153,7 @@ time. Deleted keyframes are not recoverable.
 seconds, and frame number. Each time you add a keyframe, the key time 
 automatically increments by 3 seconds. 
 To calculate the length of the animation (in frames), use this formula 
-<em>(minutes*60 + seconds)*frame rate + frame number</em>. 
+<tt>(minutes*60 + seconds)*frame rate + frame number</tt>.
 <br><br></dd>
 
 <dt> <strong>Show Feature</strong></dt>
@@ -229,7 +247,8 @@ click the "<>&nbsp;MPEG-1&nbsp;button",
 click the "<>&nbsp;Full&nbsp;Rendering" button,
 click [Ok].
 <p>
-whiz-bang-whirl.
+whiz-bang-whirl.<BR>
+Done.
 
 </P>
 </body>
