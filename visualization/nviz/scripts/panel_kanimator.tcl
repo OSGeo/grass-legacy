@@ -1747,6 +1747,7 @@ proc keyanimRunAndSave { BASE } {
     destroy .ras_fname
 
     if {$IMG == 4} {
+	append keyanimBaseName ".mpg"
 	Ninit_mpeg $keyanimBaseName
     }
 
