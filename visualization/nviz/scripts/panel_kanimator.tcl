@@ -479,6 +479,11 @@ proc keyanimChangeKeytime { BASE } {
     set seconds [$name.egroup.sentry get]
     set frames  [$name.egroup.fentry get]
 
+    # If field is left blank assume "0"
+    if { [string length $minutes] == 0 } then { set minutes 0 }
+    if { [string length $seconds] == 0 } then { set seconds 0 }
+    if { [string length $frames] == 0 } then { set frames 0 }
+
     if { ($minutes < 0) || ($seconds < 0) || ($frames < 0) } then {
 	tk_dialog .kt_error "KeyTime Error" "Error - All values must be at least zero." \
 	    {} 0 Dismiss
@@ -1040,7 +1045,15 @@ proc keyanimAddKey { BASE } {
     set tf [expr int([string trimleft [lindex $time 2] 0]0/10.0)]
     set new_time [expr $tm*60. + $ts + (1.0*$tf/$keyanimFrameRate) + 0.0]
     lappend new_key $new_time
-    incr tm
+
+    # having fetched the time we advance by 3 seconds for the next frame
+    set dt 3
+    incr ts $dt
+    if { $ts >= 60 } then {
+	incr ts -60
+	incr tm
+    }
+
     set keyanimCurrentKeyTime [keyanimPadNumber $tm]
     append keyanimCurrentKeyTime : [keyanimPadNumber $ts] : [keyanimPadNumber $tf]
 
