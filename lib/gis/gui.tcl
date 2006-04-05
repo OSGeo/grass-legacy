@@ -38,6 +38,12 @@ proc icon {class member} {
 	return 0
 }
 
+proc icon_configure {path class member} {
+	if {[set icon [icon $class $member]] != 0} {
+		$path configure -image $icon
+	}
+}
+
 # Make text in a label wrap:
 proc wrap_text_in_label {path} {
 	bind $path <Configure> "$path configure -wraplength \[winfo width $path\]"
@@ -299,9 +305,7 @@ proc make_command_label {dlg path root} {
 	set cmdlabel [label $path.cmd.label -textvariable opt($dlg,cmd_string) -anchor w -justify left]
 	wrap_text_in_label $cmdlabel
 	button $path.cmd.copy -text "Copy" -anchor n -command "show_cmd $dlg\nclipboard clear -displayof $cmdlabel\nclipboard append -displayof $cmdlabel \$opt($dlg,cmd_string)"
-	if {[set icon [icon edit copy]] != 0} {
-		$path.cmd.copy configure -image $icon
-	}
+	icon_configure $path.cmd.copy edit copy
 	pack $path.cmd.copy -side left
 	pack $cmdlabel -fill x -side top
 	pack $path.cmd -expand no -fill x -side bottom
@@ -373,9 +377,7 @@ proc do_button_file {dlg optn suf new} {
 	global opt
 
 	button $suf.val$optn.sel -text {>} -command [list get_file $dlg $optn $new]
-	if {[set icon [icon file open]] != 0} {
-		$suf.val$optn.sel configure -image $icon
-	}
+	icon_configure $suf.val$optn.sel file open
 	pack $suf.val$optn.sel -side left -fill x
 }
 
@@ -383,9 +385,7 @@ proc do_button_old {dlg optn suf elem} {
 	global opt
 	
 	button $suf.val$optn.sel -text {>} -command [list get_map $dlg $optn $elem]
-	if {[set icon [icon element $elem]] != 0} {
-		$suf.val$optn.sel configure -image $icon
-	}
+	icon_configure $suf.val$optn.sel element $elem
 	pack $suf.val$optn.sel -side left -fill x
 }
 
