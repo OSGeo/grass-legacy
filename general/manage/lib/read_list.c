@@ -74,8 +74,10 @@ read_list (int check_if_empty)
 	    G_strip (text);
 
 	    list = (struct list *) G_realloc (list, (nlist+1) * sizeof (*list));
-	    list[nlist].text = G_store (text);
+	    list[nlist].mainelem = G_store (elem);
 	    list[nlist].alias = G_store (alias);
+	    list[nlist].maindesc = G_store (desc);
+	    list[nlist].text = G_store (text);
 	    list[nlist].nelem = 0;
 	    list[nlist].element = 0;
 	    list[nlist].desc = 0;
