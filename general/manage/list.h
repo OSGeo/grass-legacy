@@ -7,6 +7,8 @@ struct list
     char *text;		/* menu text */
     int nelem;		/* number of elements */
     char status;
+    char *mainelem;	/* main element */
+    char *maindesc;	/* main element description*/
 };
 
 #ifdef MAIN
