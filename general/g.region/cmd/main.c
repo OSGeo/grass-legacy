@@ -80,48 +80,58 @@ int main (int argc, char *argv[])
 	flag.dflt = G_define_flag();
 	flag.dflt->key         = 'd';
 	flag.dflt->description = _("Set from default region");
-
-	flag.gprint = G_define_flag();
-	flag.gprint->key         = 'g';
-	flag.gprint->description = _("Print the current region (shell script style)");
+	flag.dflt->guisection  = _("Existing");
 
 	flag.print = G_define_flag();
 	flag.print->key         = 'p';
 	flag.print->description = _("Print the current region");
+	flag.print->guisection  = _("Print");
 
 	flag.lprint = G_define_flag();
 	flag.lprint->key         = 'l';
 	flag.lprint->description = _("Print the current region in lat/long on current ellipsoid/datum");
+	flag.lprint->guisection  = _("Print");
 
 	flag.eprint = G_define_flag();
 	flag.eprint->key         = 'e';
 	flag.eprint->description = _("Print the current region extent");
+	flag.eprint->guisection  = _("Print");
 
 	flag.center = G_define_flag();
 	flag.center->key         = 'c';
 	flag.center->description = _("Print the current region map center coordinates");
+	flag.center->guisection  = _("Print");
 
         flag.dist_res= G_define_flag();
         flag.dist_res->key         = 'm';
         flag.dist_res->description = _("Print region resolution in meters (geodesic)");
+        flag.dist_res->guisection  = _("Print");
 
         flag.res_set= G_define_flag();
         flag.res_set->key         = 'a';
         flag.res_set->description = _("Align region to resolution (default = align to bounds, "
 	    			    "works only for 2D resolution )");
+        flag.res_set->guisection  = _("Bounds");
 
 	flag.update = G_define_flag();
 	flag.update->key         = 'u';
 	flag.update->description = _("Do not update the current region");
+	flag.update->guisection  = _("Effects");
 
 	flag.z = G_define_flag();
 	flag.z->key         = '3';
 	flag.z->description = _("Print also 3D settings");
+	flag.z->guisection  = _("Print");
+
+	flag.gprint = G_define_flag();
+	flag.gprint->key         = 'g';
+	flag.gprint->description = _("Print the current region (shell script style)");
+	flag.gprint->guisection  = _("Print;Shell Script");
 
 	flag.bbox = G_define_flag();
 	flag.bbox->key         = 'b';
 	flag.bbox->description = _("Print the maximum bounding box in lat/long on WGS84 (-g mode only)");
-
+	flag.bbox->guisection  = _("Print;Shell Script");
 
 	/* parameters */
 
@@ -133,6 +143,7 @@ int main (int argc, char *argv[])
 	parm.region->type        = TYPE_STRING;
 	parm.region->description = _("Set current region from named region");
 	parm.region->gisprompt   = "old,windows,region";
+	parm.region->guisection  = _("Existing");
 
 	parm.raster = G_define_option();
 	parm.raster->key         = "rast";
@@ -142,6 +153,7 @@ int main (int argc, char *argv[])
 	parm.raster->type        = TYPE_STRING;
 	parm.raster->description = _("Set region to match this raster map");
 	parm.raster->gisprompt   = "old,cell,raster";
+	parm.raster->guisection  = _("Existing");
 
 	parm.raster3d = G_define_option();
 	parm.raster3d->key         = "rast3d";
@@ -151,6 +163,7 @@ int main (int argc, char *argv[])
 	parm.raster3d->type        = TYPE_STRING;
 	parm.raster3d->description = _("Set region to match this 3D raster map (both 2D and 3D values)");
 	parm.raster3d->gisprompt   = "old,grid3,raster 3D";
+	parm.raster3d->guisection  = _("Existing");
 
 	parm.vect = G_define_option();
 	parm.vect->key         = "vect";
@@ -160,6 +173,7 @@ int main (int argc, char *argv[])
 	parm.vect->type        = TYPE_STRING;
 	parm.vect->description = _("Set region to match this vector map");
 	parm.vect->gisprompt   = "old,vector,vector";
+	parm.vect->guisection  = _("Existing");
 
 	parm.view = G_define_option();
 	parm.view->key         = "3dview";
@@ -168,6 +182,8 @@ int main (int argc, char *argv[])
 	parm.view->multiple    = NO;
 	parm.view->type        = TYPE_STRING;
 	parm.view->description = _("Set region to match this 3dview file");
+	parm.view->gisprompt   = "old,3d.view,3d view";
+	parm.view->guisection  = _("Existing");
 
 	parm.north = G_define_option();
 	parm.north->key         = "n";
@@ -176,6 +192,7 @@ int main (int argc, char *argv[])
 	parm.north->multiple    = NO;
 	parm.north->type        = TYPE_STRING;
 	parm.north->description = llinfo("Value for the northern edge", G_lat_format_string(), window.proj);
+	parm.north->guisection  = _("Bounds");
 
 	parm.south = G_define_option();
 	parm.south->key         = "s";
@@ -184,6 +201,7 @@ int main (int argc, char *argv[])
 	parm.south->multiple    = NO;
 	parm.south->type        = TYPE_STRING;
 	parm.south->description = llinfo("Value for the southern edge", G_lat_format_string(), window.proj);
+	parm.south->guisection  = _("Bounds");
 
 	parm.east = G_define_option();
 	parm.east->key         = "e";
@@ -192,6 +210,7 @@ int main (int argc, char *argv[])
 	parm.east->multiple    = NO;
 	parm.east->type        = TYPE_STRING;
 	parm.east->description = llinfo("Value for the eastern edge ", G_lon_format_string(), window.proj);
+	parm.east->guisection  = _("Bounds");
 
 	parm.west = G_define_option();
 	parm.west->key         = "w";
@@ -200,6 +219,7 @@ int main (int argc, char *argv[])
 	parm.west->multiple    = NO;
 	parm.west->type        = TYPE_STRING;
 	parm.west->description = llinfo("Value for the western edge ", G_lon_format_string(), window.proj);
+	parm.west->guisection  = _("Bounds");
 
 	parm.top = G_define_option();
 	parm.top->key         = "t";
@@ -208,6 +228,7 @@ int main (int argc, char *argv[])
 	parm.top->multiple    = NO;
 	parm.top->type        = TYPE_STRING;
 	parm.top->description = _("Value for the top edge");
+	parm.top->guisection  = _("Bounds");
 
 	parm.bottom = G_define_option();
 	parm.bottom->key         = "b";
@@ -216,6 +237,7 @@ int main (int argc, char *argv[])
 	parm.bottom->multiple    = NO;
 	parm.bottom->type        = TYPE_STRING;
 	parm.bottom->description = _("Value for the bottom edge");
+	parm.bottom->guisection  = _("Bounds");
 
 	parm.res = G_define_option();
 	parm.res->key         = "res";
@@ -224,6 +246,7 @@ int main (int argc, char *argv[])
 	parm.res->multiple    = NO;
 	parm.res->type        = TYPE_STRING;
 	parm.res->description = _("Grid resolution 2D (both north-south and east-west)");
+	parm.res->guisection  = _("Resolution");
 
 	parm.res3 = G_define_option();
 	parm.res3->key         = "res3";
@@ -232,6 +255,7 @@ int main (int argc, char *argv[])
 	parm.res3->multiple    = NO;
 	parm.res3->type        = TYPE_STRING;
 	parm.res3->description = _("3D grid resolution (north-south, east-west and top-bottom)");
+	parm.res3->guisection  = _("Resolution");
 
 	parm.nsres = G_define_option();
 	parm.nsres->key         = "nsres";
@@ -240,6 +264,7 @@ int main (int argc, char *argv[])
 	parm.nsres->multiple    = NO;
 	parm.nsres->type        = TYPE_STRING;
 	parm.nsres->description = llinfo("North-south grid resolution 2D ", G_llres_format_string(), window.proj);
+	parm.nsres->guisection  = _("Resolution");
 
 	parm.ewres = G_define_option();
 	parm.ewres->key         = "ewres";
@@ -248,6 +273,7 @@ int main (int argc, char *argv[])
 	parm.ewres->multiple    = NO;
 	parm.ewres->type        = TYPE_STRING;
 	parm.ewres->description = llinfo("East-west grid resolution 2D ", G_llres_format_string(), window.proj);
+	parm.ewres->guisection  = _("Resolution");
 
 	parm.tbres = G_define_option();
 	parm.tbres->key         = "tbres";
@@ -256,6 +282,7 @@ int main (int argc, char *argv[])
 	parm.tbres->multiple    = NO;
 	parm.tbres->type        = TYPE_STRING;
 	parm.tbres->description = _("Top-bottom grid resolution 3D");
+	parm.tbres->guisection  = _("Resolution");
 
 	parm.zoom = G_define_option();
 	parm.zoom->key         = "zoom";
@@ -265,6 +292,7 @@ int main (int argc, char *argv[])
 	parm.zoom->type        = TYPE_STRING;
 	parm.zoom->description = _("Raster map to zoom into");
 	parm.zoom->gisprompt   = "old,cell,raster";
+	parm.zoom->guisection  = _("Resolution");
 
 	parm.align = G_define_option();
 	parm.align->key         = "align";
@@ -274,6 +302,7 @@ int main (int argc, char *argv[])
 	parm.align->type        = TYPE_STRING;
 	parm.align->description = _("Raster map to align to");
 	parm.align->gisprompt   = "old,cell,raster";
+	parm.align->guisection  = _("Bounds");
 
 	parm.save = G_define_option();
 	parm.save->key         = "save";
@@ -283,6 +312,7 @@ int main (int argc, char *argv[])
 	parm.save->type        = TYPE_STRING;
 	parm.save->description = _("Save the current region to region definition file");
 	parm.save->gisprompt   = "new,windows,region";
+	parm.save->guisection  = _("Effects");
 
 	if (G_parser(argc,argv))
 		exit(1);
