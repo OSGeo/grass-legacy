@@ -42,9 +42,10 @@ FILE *fp, *fp2;
 
 int main(int argc, char *argv[])
 {
-    char *name, *outfile, *mapset;
+    char *name, *mapset;
+    char outfile[GNAME_MAX];
     int fd, projection;
-    char buf[50], buf1[1024], buf2[1024];
+    char buf[512], buf1[1024], buf2[1024];
     int screen_x, screen_y, button;
     int i, k;
     int frame_start = 0;
@@ -145,7 +146,7 @@ int main(int argc, char *argv[])
 
 
     if (G_parser(argc, argv))
-	exit(-1);
+	exit(EXIT_FAILURE);
 
 /* check arguments */
     if ((!parm.i->answer) && (!parm.route->answer))
@@ -197,7 +198,10 @@ int main(int argc, char *argv[])
 
 
 /* Open ASCII file for output */
-    outfile = parm.output->answer;
+    /* append ".nvscr" to filename if it doesn't already have it */
+    strncpy(outfile, parm.output->answer, GNAME_MAX-7);
+    if(strcmp(&outfile[strlen(outfile) - 6], ".nvscr") != 0 )
+	strcat(outfile, ".nvscr");
 
     if (NULL == (fp = fopen(outfile, "w")))
 	G_fatal_error( _("Not able to open file for [%s]"), outfile);
@@ -268,7 +272,8 @@ int main(int argc, char *argv[])
 
 	while (button != 3) {
 	    count++;
-	    R_get_location_with_pointer(&screen_x, &screen_y, &button);
+	    R_get_location_with_line( (int)(0.5+ D_u_to_d_col(e1)),
+		(int)(0.5+ D_u_to_d_row(n1)), &screen_x, &screen_y, &button);
 	    if (button == 1 || button == 2) {
 		e2 = D_d_to_u_col((double) screen_x);
 		n2 = D_d_to_u_row((double) screen_y);
@@ -294,7 +299,7 @@ int main(int argc, char *argv[])
 
 	if (count < 4) {
 	    G_fatal_error( _("You must select at least four points"));
-	    
+
 	}
 
 	R_close_driver();
@@ -311,7 +316,7 @@ int main(int argc, char *argv[])
 	if (k < 6) {
 /* Only one coordinate pair supplied */
 	    G_fatal_error( _("You must provide at least four points %d"), k);
-	    
+
 	}
 	else {
 	    for (i = 0; i <= k - 2; i += 2) {
@@ -334,7 +339,8 @@ int main(int argc, char *argv[])
 /* generate key-frame script */
     if (key_frames) {
 	strcpy(buf, outfile);
-	strcat(buf, ".kanimator");
+	buf[strlen(outfile)-6] = '\0'; /* skip extension */
+	strcat(buf, ".kanim");
 	fprintf(fp, "\n## The following saves the animation to a format\n");
 	fprintf(fp, "## suitable for editting with the kanimator panel\n");
 	fprintf(fp, "SendScriptLine \"Nprint_keys %s\"\n", buf);
@@ -382,8 +388,8 @@ int main(int argc, char *argv[])
 
     G_close_cell(fd);
     fclose(fp);
-    
-    return 0;
+
+    exit(EXIT_SUCCESS);
 
 }				/* Done with main */
 
@@ -404,7 +410,7 @@ int do_profile
     rows = n1 - n2;
 
     LEN = G_distance(e1, n1, e2, n2);
-    
+
 /* Calculate Azimuth of Line */
     if (rows == 0 && cols == 0) {
 /* Special case for no movement */
@@ -517,88 +523,89 @@ int read_rast
     G_get_window(&window);
     nrows = window.rows;
     ncols = window.cols;
-    
-    row = (window.north - north) / window.ns_res;
-    col = (east - window.west) / window.ew_res;
+
+    row = (int)(0.5+ D_u_to_a_row(north));
+    col = (int)(0.5+ D_u_to_a_col(east));
 
     if (row < 0 || row > nrows || col < 0 || col > ncols) {
-	fprintf(stderr, "Error: selected point is outside region\n");
+	G_debug(3, "Fail: row=%d  nrows=%d   col=%d  ncols=%d",row,nrows,col,ncols);
+	G_warning(_("Skipping this point, selected point is outside region. "
+	  "Perhaps the camera setback distance puts it beyond the edge?"));
+	frame++;
+	return 1;
     }
-    else {
 
-	if (data_type == CELL_TYPE) {
-	    cell = G_allocate_c_raster_buf();
-	    if (G_get_c_raster_row(fd, cell, row) < 0)
-		exit(1);
 
-	    if (G_is_c_null_value(&cell[col]))
-		camera_height = (double) 9999.;
-	    else
-		camera_height = (double) cell[col];
-	}
+    if (data_type == CELL_TYPE) {
+	cell = G_allocate_c_raster_buf();
+	if (G_get_c_raster_row(fd, cell, row) < 0)
+	    exit(1);
 
-	if (data_type == FCELL_TYPE) {
-	    fcell = G_allocate_f_raster_buf();
-	    if (G_get_f_raster_row(fd, fcell, row) < 0)
-		exit(1);
-	    if (G_is_f_null_value(&fcell[col]))
-		camera_height = (double) 9999.;
-	    else
-		camera_height = (double) fcell[col];
-	}
+	if (G_is_c_null_value(&cell[col]))
+	    camera_height = (double) 9999.;
+	else
+	    camera_height = (double) cell[col];
+    }
 
-	if (data_type == DCELL_TYPE) {
-	    dcell = G_allocate_d_raster_buf();
-	    if (G_get_d_raster_row(fd, dcell, row) < 0)
-		exit(1);
-	    if (G_is_d_null_value(&dcell[col]))
-		camera_height = (double) 9999.;
-	    else
-		camera_height = (double) dcell[col];
-	}
+    if (data_type == FCELL_TYPE) {
+	fcell = G_allocate_f_raster_buf();
+	if (G_get_f_raster_row(fd, fcell, row) < 0)
+	    exit(1);
+	if (G_is_f_null_value(&fcell[col]))
+	    camera_height = (double) 9999.;
+	else
+	    camera_height = (double) fcell[col];
+    }
+
+    if (data_type == DCELL_TYPE) {
+	dcell = G_allocate_d_raster_buf();
+	if (G_get_d_raster_row(fd, dcell, row) < 0)
+	    exit(1);
+	if (G_is_d_null_value(&dcell[col]))
+	    camera_height = (double) 9999.;
+	else
+	    camera_height = (double) dcell[col];
+    }
 
 /* Output script commands */
 /*************************/
 
-	/* Set camera Height value */
-	if (camera_height == 9999.)
-	    camera_height = OLD_DEPTH;
+    /* Set camera Height value */
+    if (camera_height == 9999.)
+	camera_height = OLD_DEPTH;
 
-	if (height_flag && out_type)
-	    camera_height = HT;
-	else if (!height_flag && out_type)
-	    camera_height = camera_height + HT;
+    if (height_flag && out_type)
+	camera_height = HT;
+    else if (!height_flag && out_type)
+	camera_height = camera_height + HT;
 
-	if (out_type) {
-	    /* Set Camera Position */
-	    sprintf(buf2, "\nSendScriptLine \"Nmove_to_real %f %f %f\"",
-		    east, north, camera_height);
-	    key_time += (dist + fabs(camera_height - OLD_DEPTH)) / 10000.;
-	}
-	else {
+    if (out_type) {
+	/* Set Camera Position */
+	sprintf(buf2, "\nSendScriptLine \"Nmove_to_real %f %f %f\"",
+		east, north, camera_height);
+	key_time += (dist + fabs(camera_height - OLD_DEPTH)) / 10000.;
+    }
+    else {
 
-	    /* Set Center of View */
-	    sprintf(buf2, "\nSendScriptLine \"Nset_focus %f %f %f\"",
-		    east - window.west - (window.ew_res / 2),
-		    north - window.south - (window.ns_res / 2),
-		    camera_height);
+	/* Set Center of View */
+	sprintf(buf2, "\nSendScriptLine \"Nset_focus %f %f %f\"",
+		east - window.west - (window.ew_res / 2),
+		north - window.south - (window.ns_res / 2),
+		camera_height);
 
-	    /* Use frame number for now -- TODO figure even increment
-	     * based on no. of frames and distance */
-	    sprintf(buf,
-		    "\nSendScriptLine \"Nadd_key %f KF_ALL_MASK 1 0.0\"\n",
-		    key_time);
-	    strcat(buf2, buf);
-	    cnt++;
-	}
+	/* Use frame number for now -- TODO figure even increment
+	 * based on no. of frames and distance */
+	sprintf(buf,
+		"\nSendScriptLine \"Nadd_key %f KF_ALL_MASK 1 0.0\"\n",
+		key_time);
+	strcat(buf2, buf);
+	cnt++;
+    }
 
 /* Out to file */
-	fprintf(fp, "%s", buf2);
-	OLD_DEPTH = camera_height;
-
-    }				/* close region check */
+    fprintf(fp, "%s", buf2);
+    OLD_DEPTH = camera_height;
 
     frame++;
-    
     return 0;
 }
