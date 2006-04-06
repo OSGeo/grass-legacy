@@ -1747,7 +1747,11 @@ proc keyanimRunAndSave { BASE } {
     destroy .ras_fname
 
     if {$IMG == 4} {
-	append keyanimBaseName ".mpg"
+	set fnameExt [file extension $keyanimBaseName]
+	if { [string compare $fnameExt ".mpg"] != 0  &&
+		[string compare $fnameExt ".mpeg"] != 0 } then {
+	    append keyanimBaseName ".mpg"
+	}
 	Ninit_mpeg $keyanimBaseName
     }
 
@@ -1870,6 +1874,11 @@ proc keyanimSaveAnim { base } {
     # portion)
     set file_name [create_file_browser .save_file_browser 1]
     if {$file_name == -1} return
+
+    # give it a ".kanim" extension if it doesn't already have one
+    if { [string compare [file extension $file_name] ".kanim"] != 0 } then {
+	append file_name ".kanim"
+    }
 
     # Simply write out the file as a string, tcl preserves list ordering,
     # etc.
