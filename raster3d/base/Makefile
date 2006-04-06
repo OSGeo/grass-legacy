@@ -7,23 +7,28 @@ DEPENDENCIES = $(G3DDEP) $(GISDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
+R3INFO = $(BIN)/r3.info$(EXE_SUFFIX)
+R3MASK = $(BIN)/r3.mask$(EXE_SUFFIX)
+R3NULL = $(BIN)/r3.null$(EXE_SUFFIX)
+R3TIMESTAMP = $(BIN)/r3.timestamp$(EXE_SUFFIX)
+
 default: \
-	$(BIN)/r3.info \
-	$(BIN)/r3.mask \
-	$(BIN)/r3.null \
-	$(BIN)/r3.timestamp \
+	$(R3INFO) \
+	$(R3MASK) \
+	$(R3NULL) \
+	$(R3TIMESTAMP) \
 	htmlmulti
 
-$(BIN)/r3.mask: $(OBJDIR)/r3.mask.main.o $(OBJDIR)/mask_functions.o
+$(R3MASK): $(OBJDIR)/r3.mask.main.o $(OBJDIR)/mask_functions.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/r3.mask.main.o $(OBJDIR)/mask_functions.o $(FMODE_OBJ) $(LIBES) $(XDRLIB) $(MATHLIB)
 
-$(BIN)/r3.null: $(OBJDIR)/r3.null.main.o $(OBJDIR)/mask_functions.o
+$(R3NULL): $(OBJDIR)/r3.null.main.o $(OBJDIR)/mask_functions.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/r3.null.main.o $(FMODE_OBJ) $(OBJDIR)/mask_functions.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
-$(BIN)/r3.timestamp: $(OBJDIR)/r3.timestamp.main.o 
+$(R3TIMESTAMP): $(OBJDIR)/r3.timestamp.main.o 
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/r3.timestamp.main.o $(FMODE_OBJ) $(LIBES) $(XDRLIB) $(MATHLIB)
 
-$(BIN)/r3.info: $(OBJDIR)/r3.info.main.o 
+$(R3INFO): $(OBJDIR)/r3.info.main.o 
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/r3.info.main.o $(FMODE_OBJ) $(LIBES) $(XDRLIB) $(MATHLIB)
 
 #needed for htmlmulti
