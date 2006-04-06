@@ -34,6 +34,12 @@ proc icon {class member} {
 		set member [join $memberparts "."]
 		return [icon $class $member]
 	}
+	if {$class == "element" && [string first "/" $member] != -1} {
+		# Only use the part after the slash
+		set memberparts [split $member "/"]
+		set member [lindex $memberparts end]
+		return [icon $class $member]
+	}
 			
 	return 0
 }
