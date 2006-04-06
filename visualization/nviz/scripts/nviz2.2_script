@@ -452,7 +452,9 @@ proc dump_rgb { } {
     appBusy
 
     if {$fname != -1} then {
-	append fname ".rgb"
+	if { [string compare [file extension $fname] ".rgb"] != 0 } then {
+	    append fname ".rgb"
+	}
 	Ndraw_all
 	Nwrite_rgb $fname
     }
@@ -467,7 +469,9 @@ proc dump_ppm { } {
     appBusy
 
     if {$fname != -1} then {
-	append fname ".ppm"
+	if { [string compare [file extension $fname] ".ppm"] != 0 } then {
+	    append fname ".ppm"
+	}
 	Ndraw_all
 	Nwrite_ppm $fname
     }
@@ -482,7 +486,9 @@ proc dump_tif { } {
     appBusy
 
     if {$fname != -1} then {
-	append fname ".tif"
+	if { [string compare [file extension $fname] ".tif"] != 0 } then {
+	    append fname ".tif"
+	}
 	Ndraw_all
 	Nwrite_tif $fname
     }
@@ -855,6 +861,11 @@ proc save_state { dummy } {
     # First open a file for writing out the state
     set new_file [create_file_browser .state_file 1 0]
     if {$new_file == -1} then return
+
+    # append ".nviz" extension to the filename if it doesn't already have one
+    if { [string compare [file extension $new_file] ".nviz"] != 0 } then {
+	append new_file ".nviz"
+    }
 
     if {[catch {set file_hook [open $new_file w]} error_code] != 0} then {
 	display_error "While opening file: $error_code"
