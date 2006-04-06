@@ -7,10 +7,13 @@ proc SetScriptFile {} {
     set new_file [create_file_browser .script_file_browser 1]
 
     if {$new_file == -1} then {
-	tkerror "Can't create file"
+	bgerror "Can't create script file"
 	return
     }
-
+    # append ".nvscr" extension if it isn't already there
+    if { [string compare [file extension $new_file ] ".nvscr"] != 0 } then {
+	append new_file ".nvscr"
+    }
     Nv_set_script_file $new_file
 }
 

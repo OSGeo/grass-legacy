@@ -90,7 +90,7 @@ proc fclose_loop {} {
 	set old_name [lindex $floop_names $floop_stack]
 	send $ProcessName "Nv_script_add_string \"set Nv_mapLoopFile \\\$$old_name\""
     } else {
-	tkerror "No corresponding Open File Seq. Loop"
+	bgerror "No corresponding Open File Seq. Loop"
     }
 }
 
@@ -143,7 +143,7 @@ proc close_loop {} {
 	send $ProcessName "Nv_script_add_string \"\}\""
 	incr loop_stack -1
     } else {
-	tkerror "No corresponding Open Loop"
+	bgerror "No corresponding Open Loop"
     }
 }
 
