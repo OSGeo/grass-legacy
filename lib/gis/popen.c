@@ -35,7 +35,7 @@ FILE *G_popen(
     /*setvbuf ( stdout, NULL, _IONBF, 0 );*/
 
     if ( _pipe ( thepipes, 256, O_BINARY ) != -1 ) {
-        execl ( "cmd", "cmd", "/c", cmd, 0 );
+        execl ( "cmd", "cmd", "/c", cmd, (char *) NULL );
 	close ( thepipes[WRITE] );
 	rv = fdopen ( thepipes[READ], mode ); 
     }
@@ -61,7 +61,7 @@ FILE *G_popen(
 	close(tst(0, 1));
 	dup(you);
 	close(you);
-	execl("/bin/sh", "sh", "-c", cmd, 0);
+	execl("/bin/sh", "sh", "-c", cmd, (char *) NULL);
 	_exit(1);
     }
 
