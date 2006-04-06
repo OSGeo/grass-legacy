@@ -368,7 +368,7 @@ if {$DEBUG} {puts "scripting menu 1 made"}
 # DEBUG
 if {$DEBUG} {puts "scripting menu 2 made"}
 
-    $Nv_(AREA).menu.scripting.m add command -label "Scriptfile" \
+    $Nv_(AREA).menu.scripting.m add command -label "Open New Scriptfile" \
 	-underline 0 -command SetScriptFile
 # DEBUG
 if {$DEBUG} {puts "scripting menu 3 made"}
