@@ -200,6 +200,7 @@ int main(int argc, char *argv[])
 /* Open ASCII file for output */
     /* append ".nvscr" to filename if it doesn't already have it */
     strncpy(outfile, parm.output->answer, GNAME_MAX-7);
+    outfile[GNAME_MAX-7] = '\0'; /* strncpy() doesn't null terminate the string */
     if(strcmp(&outfile[strlen(outfile) - 6], ".nvscr") != 0 )
 	strcat(outfile, ".nvscr");
 
