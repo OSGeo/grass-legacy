@@ -354,48 +354,40 @@ if {$DEBUG} {puts "disabled made"}
 # DEBUG
 if {$DEBUG} {puts "scripting menu 0 made"}
 
-    
+
     # Make a menu entry for scripting
     menubutton $Nv_(AREA).menu.scripting -text Scripting \
 	-menu $Nv_(AREA).menu.scripting.m -underline 0
     menu $Nv_(AREA).menu.scripting.m
-# DEBUG
-if {$DEBUG} {puts "scripting menu 1 made"}
 
     $Nv_(AREA).menu.scripting.m add checkbutton -label "On" \
 	-onvalue 1 -offvalue 0 -variable ScriptState \
 	-command "script_handle_on"
-# DEBUG
-if {$DEBUG} {puts "scripting menu 2 made"}
 
-    $Nv_(AREA).menu.scripting.m add command -label "Open New Scriptfile" \
+    $Nv_(AREA).menu.scripting.m add separator
+
+    $Nv_(AREA).menu.scripting.m add command -label "Create New Scriptfile" \
 	-underline 0 -command SetScriptFile
-# DEBUG
-if {$DEBUG} {puts "scripting menu 3 made"}
 
-    $Nv_(AREA).menu.scripting.m add command -label "Script Tools" \
-	-underline 1 -command {exec nviz -f $default_panel_path/script_tools -q &}
-# DEBUG
-if {$DEBUG} {puts "scripting menu 4 made"}
-
-    $Nv_(AREA).menu.scripting.m add command -label "Add Script Line" \
-	-underline 0 -command AddScriptLine
-# DEBUG
-if {$DEBUG} {puts "scripting menu 5 made"}
-
-    $Nv_(AREA).menu.scripting.m add command -label "Add Script Cmd" \
-	-underline 1 -command AddScriptCmd
-# DEBUG
-if {$DEBUG} {puts "scripting menu 6 made"}
-
-    $Nv_(AREA).menu.scripting.m add command -label "Play Script" \
+    $Nv_(AREA).menu.scripting.m add command -label "Open and Play Script" \
 	-underline 0 -command {set ScriptPlaying 1 ; exec nviz -f $default_panel_path/script_play &}
-# DEBUG
-if {$DEBUG} {puts "scripting menu 7 made"}
 
     $Nv_(AREA).menu.scripting.m add command -label "Close Script" \
 	-underline 1 -command Nv_close_scripting
-    
+
+    $Nv_(AREA).menu.scripting.m add separator
+
+    $Nv_(AREA).menu.scripting.m add command -label "Add Script Line" \
+	-underline 0 -command AddScriptLine
+
+    $Nv_(AREA).menu.scripting.m add command -label "Add Script Command" \
+	-underline 1 -command AddScriptCmd
+
+    $Nv_(AREA).menu.scripting.m add separator
+
+    $Nv_(AREA).menu.scripting.m add command -label "Script Tools" \
+	-underline 1 -command {exec nviz -f $default_panel_path/script_tools -q &}
+
     pack $Nv_(AREA).menu.scripting -side left -fill x -expand 0
     
 
