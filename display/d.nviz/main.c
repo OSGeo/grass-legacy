@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
 
     parm.k = G_define_flag();
     parm.k->key = 'k';
-    parm.k->description = _("Output KeyFrame file");
+    parm.k->description = _("Include command in the script to output a KeyFrame file");
 
     parm.o = G_define_flag();
     parm.o->key = 'o';
