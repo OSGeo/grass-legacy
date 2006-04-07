@@ -225,12 +225,16 @@ file name prefix, frame start number, image type, and draw type. The image file 
 
 <H3>EXAMPLE</H3>
 
-Open the <a href="nviz_panel_surf.html">Surface panel</a> (Panel->Surface in
+Open the <a href="nviz_panel_surf.html">Surface panel</a>
+(<em>Panel->Surface</em> in
 the menu) and set the "Fine" polygon resolution to 2.
 (set to 1 if you don't get display artifacts)
 <p>
-Change back to the keyframe animation panel (Panel->Keyframe animation 
-in the menu).
+Many encoder codecs require that the input frame size be divisible by 16.
+Set this in <em>File->Set&nbsp;Canvas&nbsp;Size</em>. (e.g. 512x512)
+<p>
+Change back to the keyframe animation panel (<em>Panel->Keyframe</em>
+animation in the menu).
 <P>
 Set first view, click [Add].<br>
 Set [New key time] to 0:02:00, change view, click [Add].<br>
@@ -239,8 +243,11 @@ etc.
 <p>
 Rewind & press the play button to preview.
 <p>
+If you output to individual frame images (e.g. PPM) you will need to do the
+encoding step on your own. See the relevant documentation that comes with
+your encoder.<br><BR>
 <i>Assuming NVIZ was built with FFMPEG support for live MPEG rendering:</i>
-<BR>
+<BR><BR>
 Next click "Animation: [Run and Save]",
 type in a basename.mpg,
 click the "<>&nbsp;MPEG-1&nbsp;button",
