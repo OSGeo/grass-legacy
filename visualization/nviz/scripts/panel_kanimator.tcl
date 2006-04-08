@@ -479,6 +479,14 @@ proc keyanimChangeKeytime { BASE } {
     set seconds [$name.egroup.sentry get]
     set frames  [$name.egroup.fentry get]
 
+    # If all fields are left blank then do nothing
+    if { ([string length $minutes] == 0) && ([string length $seconds] == 0) &&
+	  ([string length $frames] == 0) } then {
+	destroy $name
+	focus $oldFocus
+	return
+    }
+
     # If field is left blank assume "0"
     if { [string length $minutes] == 0 } then { set minutes 0 }
     if { [string length $seconds] == 0 } then { set seconds 0 }
