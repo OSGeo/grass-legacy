@@ -47,9 +47,12 @@ int G_make_histogram_eq_colors (
     double span, sum;
     int first;
     int x, grey;
+    int R,G,B;
 
     G_init_colors (colors);
-    G_set_null_value_color (0, 0, 0, colors);
+
+    G_str_to_color(DEFAULT_BG_COLOR, &R, &G, &B);
+    G_set_null_value_color(R, G, B, colors);
 
     total = 0;
 
@@ -105,9 +108,12 @@ int G_make_histogram_log_colors (
     CELL prev=0,cat;
     int first;
     int x, grey;
+    int R,G,B;
 
     G_init_colors (colors);
-    G_set_null_value_color (255, 255, 255, colors);
+
+    G_str_to_color(DEFAULT_BG_COLOR, &R, &G, &B);
+    G_set_null_value_color(R, G, B, colors);
 
     total = 0;
 
