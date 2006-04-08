@@ -47,8 +47,8 @@ int main(int argc, char *argv[])
 {
     char *mapset;
     char *line = NULL;
-    char *time1, *time2;	/*begin and end timestamp string */
     char tmp1[TMP_LENGTH], tmp2[TMP_LENGTH], tmp3[TMP_LENGTH];
+    char timebuff[256];
     int i;
     FILE *out;
     G3D_Region cellhd;
@@ -180,29 +180,14 @@ int main(int argc, char *argv[])
 
 	/*This shows the TimeStamp */
 	if (time_ok && (first_time_ok || second_time_ok)) {
-	    /*Create the first timestamp string */
-	    if (G_asprintf(&time1, "%i.%i.%i %02i:%02i:%02g",
-			   ts.dt[0].day, ts.dt[0].month, ts.dt[0].year,
-			   ts.dt[0].hour, ts.dt[0].minute,
-			   ts.dt[0].second) <= 0)
-		G_fatal_error(_("Cannot allocate memory for string"));
 
-	    /*Create the second timestamp string */
-	    if (G_asprintf(&time2, "%i.%i.%i %02i:%02i:%02g",
-			   ts.dt[1].day, ts.dt[1].month, ts.dt[1].year,
-			   ts.dt[1].hour, ts.dt[1].minute,
-			   ts.dt[1].second) <= 0)
-		G_fatal_error(_("Cannot allocate memory for string"));
+	    G_format_timestamp(&ts, timebuff);
 
 	    /*Create the r.info timestamp string */
-	    if (G_asprintf(&line,
-			   "Timestamp: %s to %s",
-			   first_time_ok ? time1 : "none",
-			   second_time_ok ? time2 : "none") > 0)
+	    if (G_asprintf(&line, "Timestamp: %s", timebuff) > 0)
 		printline(line);
 	    else
 		G_fatal_error(_("Cannot allocate memory for string"));
-
 	}
 	else {
 	    if (G_asprintf(&line, "Timestamp: none") > 0)
@@ -395,24 +380,11 @@ int main(int argc, char *argv[])
 	}			/*Timestamp */
 	else if (timestampflag->answer) {
 	    if (time_ok && (first_time_ok || second_time_ok)) {
-		/*Create the first timestamp string */
-		if (G_asprintf(&time1, "%i.%i.%i %02i:%02i:%02g",
-			       ts.dt[0].day, ts.dt[0].month, ts.dt[0].year,
-			       ts.dt[0].hour, ts.dt[0].minute,
-			       ts.dt[0].second) <= 0)
-		    G_fatal_error(_("Cannot allocate memory for string"));
 
-		/*Create the second timestamp string */
-		if (G_asprintf(&time2, "%i.%i.%i %02i:%02i:%02g",
-			       ts.dt[1].day, ts.dt[1].month, ts.dt[1].year,
-			       ts.dt[1].hour, ts.dt[1].minute,
-			       ts.dt[1].second) <= 0)
-		    G_fatal_error(_("Cannot allocate memory for string"));
+	        G_format_timestamp(&ts, timebuff);
 
 		/*Create the r.info timestamp string */
-		fprintf(out, "Timestamp=\"%s to %s\"\n",
-			first_time_ok ? time1 : "none",
-			second_time_ok ? time2 : "none");
+		fprintf(out, "Timestamp=\"%s\"", timebuff);
 
 	    }
 	    else {
