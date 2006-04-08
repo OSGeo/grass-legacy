@@ -1791,7 +1791,7 @@ proc keyanimSaveFrame { fnum } {
 #	set num 0$num
 #    }
 
-inform "Saving Frame $num of [expr $max_time*$keyanimFrameRate]"
+inform "Saving Frame $num of [expr int($max_time*$keyanimFrameRate)]"
 
 if {$IMG == 1} {
     append fname $num ".rgb"
