@@ -19,6 +19,7 @@ SUBDIRS = \
 	v.info \
 	v.in.ascii \
 	v.in.db \
+	v.in.dxf \
 	v.in.region \
 	v.in.sites \
 	v.kcv \
