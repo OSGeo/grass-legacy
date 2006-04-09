@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
     old->type = TYPE_STRING;
     old->required = YES;
     old->multiple = NO;
-    old->gisprompt = "input vector";
+    old->gisprompt = "old,vector,vector";
     old->description = _("Name of input 2D vector map");
 
     new = G_define_option();
@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
     new->type = TYPE_STRING;
     new->required = YES;
     new->multiple = NO;
-    new->gisprompt = "output vector";
+    new->gisprompt = "new,vector,vector";
     new->description = _("Name of resulting 3D vector map");
 
     zshift = G_define_option();
@@ -102,6 +102,7 @@ int main(int argc, char *argv[])
     elevation->type = TYPE_STRING;
     elevation->required = NO;
     elevation->answer = FALSE;
+    elevation->gisprompt = "old,cell,raster";
     elevation->description = _("Elevation raster for height extraction");
 
     height = G_define_option();
@@ -109,7 +110,6 @@ int main(int argc, char *argv[])
     height->type = TYPE_DOUBLE;
     height->required = NO;
     height->multiple = NO;
-    height->gisprompt = "double";
     height->description = _("Fixed height for 3D vector objects");
 
     hcolumn = G_define_option();
