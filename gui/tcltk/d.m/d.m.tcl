@@ -336,10 +336,11 @@ proc Dm::create { } {
     DmToolBar1::create $tb1
     set tb2  [$mainframe addtoolbar]
     DmToolBar2::create $tb2
-    set pw1 [PanedWindow $mainwindow.pw1 -side top -pad 0 -width 6 -background $bgcolor]
-    pack $pw1 -side top -expand no -fill x -anchor n 
     set pw2 [PanedWindow $mainwindow.pw2 -side left -pad 0 -width 10 -background $bgcolor ]   
     pack $pw2 -side left -expand yes -fill both -anchor n 
+	set firstpane [$pw2 add -minsize 50 -weight 1]
+    set pw1 [PanedWindow $firstpane.pw1 -side top -pad 0 -width 6 -background $bgcolor]
+    pack $pw1 -side top -expand yes -fill both -anchor n 
 
     # MANAGE DISPLAY MONITORS
     set monitor_pane  [$pw1 add -minsize 1 -weight 0 ]
@@ -369,7 +370,6 @@ proc Dm::create { } {
     # tree 
     set tree_pane  [$pw1 add  -minsize 50 -weight 1]
     set tree [ DmTree::create $tree_pane ]
-    pack $tree_pane -side right -expand yes -fill both
 
 
     # options
@@ -379,18 +379,16 @@ proc Dm::create { } {
     $options_sf configure -height 145 -width 500
     $options_sw setwidget $options_sf
     set options [$options_sf getframe]
-    pack $options_pane -expand yes -fill both 
-    pack $options_sw $options_sf -fill both -expand yes
+    pack $options_sw -fill both -expand yes
  
     # output
-    set output_pane  [$pw2 add -minsize 50 -weight 2 ]
-    pack $output_pane -expand yes -fill both 
+    set output_pane  [$pw2 add -minsize 50 -weight 1 ] 
     pack $pw2 -fill both -expand yes
 
     set output_sw [ScrolledWindow $output_pane.win -relief sunken -borderwidth 1]
 	set outtext [text $output_sw.text -height 5 -width 30] 
 	$output_sw setwidget $outtext
-    pack $output_sw $outtext -fill both -expand yes
+    pack $output_sw -fill both -expand yes
   
 
     set prgtext   [G_msg "Done"]
