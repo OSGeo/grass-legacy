@@ -1,16 +1,15 @@
 <H2>DESCRIPTION</H2>
 
 
-<EM>r.shaded.relief</EM> is a Bourne shell (sh(1)) script that
+<EM>r.shaded.relief</EM> is a Bourne shell script that
 creates a raster shaded relief map based on current
 resolution settings and on sun altitude, azimuth, and z-exaggeration values
-entered by the user.  The new shaded relief map is
-named <EM>&lt;elevation&gt;.shade</EM> and stored in the user's current
-mapset.  The map is assigned a grey-scale color table.
+entered by the user. If no output shademap name is given, the new shaded
+relief map is named <EM>&lt;input_map&gt;_shade</EM>.
+The map is assigned a grey-scale color table.
 
 
 <P>
-
 If no parameters are provided on startup, this program is interactive;
 thus if the user enters the command:
 
@@ -27,15 +26,16 @@ The program then prompts the user to enter values for:
 <LI>The <B>azimuth</B> of the sun in degrees to the east of north
 (a value between 0 and 360 degrees).
 
-<LI>The name of a raster map layer whose cell category values are to
-provide <B>elevation</B> values for the shaded relief map.  Typically, this
-would be a map layer of elevation;  however, any raster map layer
-can be named.
+<LI>The name of a raster map layer to provide elevation values for the 
+shaded relief map.  Typically, this would be a map layer of elevation;
+however, any raster map layer can be named.
 
 <LI>The scaling parameter, which compensates for a different horizontal
 <B>scale</B> than vertical scale. If 'scale' is a number then the ewres 
 and nsres are multiplied by that scale to calculate the shading. (Default=1.0 
 for equivalent horizontal and vertical scales.)
+<br>For ETOPO2 data a scale factor of 10000 generates an acceptable
+shading effect.
 
 <LI>For the special case when a latitude-longitude projection is used 
 with an elevation map measured in meters or feet, the <B>units</B> can
@@ -43,12 +43,10 @@ be set to automatically set the horizontal scale to the the number of
 meters or feet in a degree of latitude. The script scales latitude and 
 longitude equally, so it's only approximately right, but for shading 
 it's close enough. It makes the difference between a usable and unusable shade.
-<br>For ETOPO2 data a scale factor of 10000 generates an acceptable
-shading effect.
 
-<LI>A z exaggeration factor that changes the apparent <B>relief</B> 
-for the shaded relief map.  This can be any positive (or negative) 
-floating point value. (Default=1.0)
+<LI>The <b>zmult</b> exaggeration factor that changes the apparent relief
+for the shaded relief map.  This can be any positive (or negative) floating
+point value. (Default=1.0)
 
 </OL>
 
@@ -78,8 +76,10 @@ Westervelt, U.S. Army Construction Engineering Research Laboratory
 (March/1991) (get from GRASS web site).
 
 <P>
-<EM><A HREF="shade.clr.sh.html">shade.clr.sh</A></EM><BR>
-<EM><A HREF="g.ask.html">g.ask</A></EM><br>
+<!-- RGB version not ported to GRASS 6:
+  <EM><A HREF="shade.clr.sh.html">shade.clr.sh</A></EM><BR>
+ -->
+<EM><A HREF="d.his.html">d.his</A></EM><br>
 <EM><A HREF="g.region.html">g.region</A></EM><br>
 <EM><A HREF="r.blend.html">r.blend</A></EM><br>
 <EM><A HREF="r.colors.html">r.colors</A></EM><br>
