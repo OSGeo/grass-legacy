@@ -329,6 +329,8 @@ int main(int argc, char *argv[])
 	putenv(G_store(buff));
 
 	sprintf(buff, "GIS_FLAG_%c=%d", toupper(flag->key), flag->answer ? 1 : 0);
+    
+        G_debug ( 2, "set %s", buff );
 	putenv(G_store(buff));
     }
 
@@ -340,10 +342,13 @@ int main(int argc, char *argv[])
 
         G_str_to_upper(option->key);
 	sprintf(buff, "GIS_OPT_%s=%s", option->key, option->answer ? option->answer : "");
+
+        G_debug ( 2, "set %s", buff );
 	putenv(G_store(buff));
     }
 
 #ifdef __MINGW32__
+    G_debug ( 2, "execlp( \"sh\", \"sh\", %s, \"@ARGS_PARSED@\", NULL)", filename );
     execlp( "sh", "sh", filename, "@ARGS_PARSED@", NULL);
 #else
     execl(filename, filename, "@ARGS_PARSED@", NULL);
