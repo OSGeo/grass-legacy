@@ -51,14 +51,14 @@
 #%  key: map
 #%  type: string
 #%  gisprompt: old,cell,raster
-#%  description: Elevation map (Name CANNOT contain dashes '-' or dots '.').
+#%  description: Input elevation map
 #%  required : yes
 #% end
 #% option
 #%  key: shadedmap
 #%  type: string
-#%  gisprompt: old,cell,raster
-#%  description: Shaded relief map name
+#%  gisprompt: new,cell,raster
+#%  description: Output shaded relief map name
 #%  required : no
 #% end
 #% option
@@ -127,6 +127,9 @@ if [ "$name" = "" ] ; then
    echo "ERROR: map <$elev> not found."
    exit 1
 fi
+
+# allow - and . chars in the map name
+elev="\"$elev\""
 
 if [ "$GIS_OPT_MAP" = "$GIS_OPT_SHADEDMAP" ]; then
 	echo ""
