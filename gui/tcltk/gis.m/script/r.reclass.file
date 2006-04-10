@@ -27,7 +27,7 @@
 #%option
 #% key: output
 #% type: string
-#% gisprompt: old,cell,raster
+#% gisprompt: new,cell,raster
 #% description: Name of reclassified raster map
 #% required : yes
 #%end
