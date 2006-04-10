@@ -144,7 +144,7 @@ int gsd_init_mpeg(char *name)
         b = tmp[1];
         t = tmp[1] + tmp[3] - 1;
 
-	fprintf(stderr, "Opening MPEG stream ...\n");
+	fprintf(stderr, "Opening MPEG stream <%s> ...\n", name);
 
         avcodec_init();
 
