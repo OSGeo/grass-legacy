@@ -25,6 +25,7 @@ SUBDIRS = \
 	v.kcv \
 	v.kernel \
 	v.label \
+	v.lrs \
 	v.proj \
 	v.mkgrid \
 	v.neighbors \
