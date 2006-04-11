@@ -584,36 +584,50 @@ void compute_net_distance( double x, double y, struct Map_info *In, struct Map_i
   }
 }
 
-
 void compute_distance( double N, double E, struct Map_info *In, 
 	               double sigma, double term, double *gaussian, double dmax)
 {  
-  int    line, nlines, ltype;
+  int    line, nlines;
   double a[2],b[2];
   double dist;
+
+  /* spatial index handling, borrowed from lib/vector/Vlib/find.c */
+  BOUND_BOX box; 
+  static struct ilist *NList = NULL;  
   static struct line_pnts *Points = NULL;
-  
-  if (!Points)
-      Points = Vect_new_line_struct ();
 
   a[0] = E;
   a[1] = N;
 
+  if (!NList) 
+    NList = Vect_new_list (); 
+  if (!Points)
+      Points = Vect_new_line_struct ();
+
+  /* create bounding box 2x2*dmax size from the current cell center */
+  box.N = N + dmax;
+  box.S = N - dmax;
+  box.E = E + dmax;
+  box.W = E - dmax;
+  box.T = HUGE_VAL;
+  box.B = -HUGE_VAL;
+
+  /* number of lines within dmax box  */
+  nlines = Vect_select_lines_by_box (In, &box, GV_POINT, NList); 
+
   *gaussian=.0;  
   
-  nlines = Vect_get_num_lines(In);
+  for ( line = 0; line < nlines; line++ ) { 
 
-  /* TODO ? : use spatial index */
-  for ( line = 1; line <= nlines; line++){
-      ltype = Vect_read_line (In, Points, NULL, line);
-      if ( !(ltype & GV_POINT ) ) continue;
+    Vect_read_line (In, Points, NULL, NList->value[line]); 
 
-      b[0] = Points->x[0];
-      b[1] = Points->y[0];
+    b[0] = Points->x[0];
+    b[1] = Points->y[0];
 
-      dist = euclidean_distance(a,b,2);
+    dist = euclidean_distance(a,b,2); 
       
-      if(dist<=dmax) 
-	*gaussian += gaussianKernel(dist/sigma,term);    
+    if(dist<=dmax) 
+    *gaussian += gaussianKernel(dist/sigma,term);
+   
   }
 }
