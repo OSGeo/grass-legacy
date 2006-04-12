@@ -395,15 +395,15 @@ else
     	fi
     else
     	L="$1"
-    
+    fi
+
+    if [ "$L" ] ; then
 	if [ "$L" = "." ] ; then
 	    L=`pwd`
 	elif [ `echo "$L" | cut -c 1` != "/" ] ; then
     	    L="`pwd`/$L"
     	fi
-    fi
 
-    if [ "$L" ] ; then
     	MAPSET=`basename "$L"`
     	L=`dirname "$L"`
     
