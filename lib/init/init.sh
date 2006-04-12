@@ -396,7 +396,9 @@ else
     else
     	L="$1"
     
-    	if [ `echo "$L" | cut -c 1` != "/" ] ; then
+	if [ "$L" = "." ] ; then
+	    L=`pwd`
+	elif [ `echo "$L" | cut -c 1` != "/" ] ; then
     	    L="`pwd`/$L"
     	fi
     fi
