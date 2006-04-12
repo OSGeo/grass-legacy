@@ -81,11 +81,15 @@ G__location_path()
     name      = G_location();
     base      = G_gisdbase();
     location  = G_malloc (strlen (base) + strlen (name) + 2);
-#ifdef __MINGW32__
-    sprintf (location, "%s\\%s", base, name);
-#else
+
+    /* Forward slash is supported on Windows and back slash can cause 
+     * problems in scripts */
+
+//#ifdef __MINGW32__
+//    sprintf (location, "%s\\%s", base, name);
+//#else
     sprintf (location, "%s/%s", base, name);
-#endif
+//#endif
 
     return location;
 }
