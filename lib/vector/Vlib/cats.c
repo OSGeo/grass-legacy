@@ -352,7 +352,7 @@ Vect_str_to_cat_list (char *str, struct cat_list *list)
       if( e )
         {
           l = e - s;
-          strncpy (buf, s, sizeof(char));
+          strncpy (buf, s, l);
 	  buf[l] = '\0';
 	  s = e + 1;
 	}
