@@ -3,6 +3,9 @@ MODULE_TOPDIR = ../../..
 
 LIB_NAME = grass_lrs
 DEPENDENCIES = $(GISDEP)
+EXTRA_INC = $(VECT_INC)
+EXTRA_CFLAGS = $(VECT_CFLAGS)
+EXTRA_LIBS = $(VECTLIB) $(DBMILIB) $(GISLIB)
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
