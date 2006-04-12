@@ -5,12 +5,12 @@ PGM = v.lrs.create
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-DEPENDENCIES = $(DISPLAYDEP) $(RASTERDEP) $(VECTDEP) $(DBMIDEP) $(GISDEP) \
+DEPENDENCIES = $(VECTDEP) $(DBMIDEP) $(GISDEP) \
                $(ARCH_LIBDIR)/$(LIB_PREFIX)grass_lrs.$(LIB_SUFFIX)
  
-LIBES        = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) \
+LIBES        = $(VECTLIB) \
                -lgrass_lrs \
-               $(GRAPHLIB) $(DBMILIB) $(GISLIB)
+               $(DBMILIB) $(GISLIB)
 
 EXTRA_INC = $(VECT_INC) 
 EXTRA_CFLAGS = $(VECT_CFLAGS)
