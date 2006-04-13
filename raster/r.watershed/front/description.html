@@ -239,7 +239,8 @@ size.
 
 The <EM>r.watershed</EM> program does not require the user to have the
 current geographic region filled with elevation values.  Areas without
-elevation data MUST be masked out using the <EM><A HREF="r.mask.html">r.mask</A></EM> command.  Areas
+elevation data MUST be masked out, by creating a binary raster (or raster
+reclassification) called MASK.  Areas
 masked out will be treated as if they are off the edge of the region.
 Masks will reduce the memory necessary to run the program.  Masking out 
 unimportant areas can significantly reduce processing time if the watersheds 
@@ -299,7 +300,6 @@ Symposium, Baltimore MD, 1989<br>
 <A HREF="r.drain.html">r.drain</A>,
 <A HREF="r.flow.html">r.flow</A>,
 <A HREF="r.flowmd.html">r.flowmd</A>,
-<A HREF="r.mask.html">r.mask</A>,
 <A HREF="r.param.scale.html">r.param.scale</A>,
 <A HREF="r.topidx.html">r.topidx</A>,
 <A HREF="r.water.outlet.html">r.water.outlet</A>
