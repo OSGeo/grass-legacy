@@ -113,7 +113,7 @@ proc MapToolBar::create { tb } {
     $bbox3 add -image [image create photo -file "$iconpath/gui-zoom_current.gif"] \
         -command "MapCanvas::zoom_current $mon" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
-        -helptext [G_msg "Zoom to current region"]
+        -helptext [G_msg "Zoom to current region and redraw all layers"]
 
     # zoom to saved region
     $bbox3 add -image [image create photo -file "$iconpath/gui-zoom_region.gif"] \
