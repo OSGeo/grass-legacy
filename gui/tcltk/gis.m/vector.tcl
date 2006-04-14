@@ -39,7 +39,7 @@ proc GmVector::legend { id } {
     $leg delete all
 
     # area    
-    if { $opt($id,1,type_area) || $opt($id,1,type_line) || $opt($id,1,type_boundary) || $opt($id,1,type_face)} {
+    if { $opt($id,1,type_area) || $opt($id,1,type_face)} {
 		set x1 [expr $mar ]
 		set x2 [expr $lw - $mar ]
 		set y1 [expr $mar ]
@@ -59,6 +59,20 @@ proc GmVector::legend { id } {
 				$leg create rectangle $x1 $y1 $x2 $y2 -fill $opt($id,1,fcolor) \
 					-width 0
 			}
+		}
+    }
+    
+    #line
+    if { $opt($id,1,type_line) || $opt($id,1,type_boundary) } {
+		set x1 [expr $mar ]
+		set x2 [expr $lw - $mar ]
+		set y1 [expr $mar ]
+		set y2 [expr $lh - $mar ]
+		set lwidth  $opt($id,1,lwidth)
+		if { $lwidth == 0 } { set lwidth 1 }
+		if {$opt($id,1,_use_color) == 1} {
+			$leg create rectangle $x1 $y1 $x2 $y2 -outline $opt($id,1,color) \
+					 -width $lwidth
 		}
     }
 
@@ -311,7 +325,7 @@ proc GmVector::options { id frm } {
 	
     # display
     set row [ frame $frm.disp ]
-    Label $row.a -text [G_msg "Display:"]
+    Label $row.a -text [G_msg "Display: "]
     checkbutton $row.b -text [G_msg "shapes"] -variable GmVector::opt($id,1,display_shape) \
                 -command "GmVector::legend $id"  
     checkbutton $row.c -text [G_msg "categories"] -variable GmVector::opt($id,1,display_cat) \
