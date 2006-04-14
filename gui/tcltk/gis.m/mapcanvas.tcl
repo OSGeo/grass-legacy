@@ -562,7 +562,14 @@ proc MapCanvas::zoombind { mon zoom } {
 	bind $can($mon) <1> {
 		MapCanvas::markzoom $mon %x %y
 		}
-	bind $can($mon) <B1-Motion> "MapCanvas::drawzoom $mon %x %y"
+	bind $can($mon) <B1-Motion> {
+		set scrxmov %x
+		set scrymov %y
+		set eastcoord [eval MapCanvas::scrx2mape %x]
+		set northcoord [eval MapCanvas::scry2mapn %y]
+		set coords($mon) "$eastcoord $northcoord"
+		MapCanvas::drawzoom $mon %x %y
+		}
 	bind $can($mon) <ButtonRelease-1> "MapCanvas::zoomregion $mon $zoom"
 
 }
@@ -727,7 +734,14 @@ proc MapCanvas::panbind { mon } {
 	MapCanvas::setcursor $mon "hand2"
 
 	bind $can($mon) <1> {MapCanvas::startpan $mon %x %y}
-	bind $can($mon) <B1-Motion> {MapCanvas::dragpan $mon %x %y}
+	bind $can($mon) <B1-Motion> {
+		set scrxmov %x
+		set scrymov %y
+		set eastcoord [eval MapCanvas::scrx2mape %x]
+		set northcoord [eval MapCanvas::scry2mapn %y]
+		set coords($mon) "$eastcoord $northcoord"
+		MapCanvas::dragpan $mon %x %y
+		}
 	bind $can($mon) <ButtonRelease-1> {
 		MapCanvas::pan $mon
 		}
@@ -843,7 +857,14 @@ proc MapCanvas::measurebind { mon } {
 	if {[info exists liney2]} {unset liney2}
 		
 	bind $can($mon) <1> "MapCanvas::markmline $mon %x %y"
-	bind $can($mon) <B1-Motion> "MapCanvas::drawmline $mon %x %y"
+	bind $can($mon) <B1-Motion> {
+		set scrxmov %x
+		set scrymov %y
+		set eastcoord [eval MapCanvas::scrx2mape %x]
+		set northcoord [eval MapCanvas::scry2mapn %y]
+		set coords($mon) "$eastcoord $northcoord"
+		MapCanvas::drawmline $mon %x %y
+		}
 	bind $can($mon) <ButtonRelease-1> "MapCanvas::measure $mon"
 	
     set MapCanvas::msg($mon) "Draw measure line with mouse"
