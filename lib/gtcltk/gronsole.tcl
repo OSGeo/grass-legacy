@@ -391,15 +391,19 @@ proc Gronsole::readout {path ci mark fh} {
 	$path.text see $mark
 }
 
-proc Gronsole::file_callback {path ci mark fh} {
+proc Gronsole::done_command {path ci} {
 	variable _data
+	set donecmd $_data($path,$ci,donecmd)
+	set _data($path,$ci,donecmd) {}
+	if {$donecmd != {}} {
+		eval $donecmd
+	}
+}
+
+proc Gronsole::file_callback {path ci mark fh} {
 	if [eof $fh] {
 		Gronsole::readeof $path $ci $mark $fh
-		set donecmd $_data($path,$ci,donecmd)
-		set _data($path,$ci,donecmd) {}
-		if {$donecmd != {}} {
-			eval $donecmd
-		}
+		Gronsole::done_command $path $ci
 	} else {
 		Gronsole::readout $path $ci $mark $fh
 	}
@@ -436,7 +440,8 @@ proc Gronsole::execout {path cmd ci execcmd} {
 	if { $ret } {
 		Gronsole::remove_tag $path $ci running
 		Gronsole::add_tag $path $ci error
-		error $fh
+		catch {close $fh}
+		Gronsole::done_command $path $ci
 	} {
 		$execcmd $path $ci $mark $fh
 	}
