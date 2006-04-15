@@ -155,15 +155,23 @@ proc run_panel {cmd} {
 	$gronsole run_wait $cmd gism
 }
 
+###############################################################################
+proc run {cmd args} {
+	# This and runcmd are being used to run command in the background
+	# These used to go to stdout and stderr
+	# but we don't want to pollute that console.
+	# eval exec -- $cmd $args >@ stdout 2>@ stderr
+	eval exec -- $cmd $args >& /dev/null
+}
 
 ###############################################################################
 
-proc runcmd {cmd} {
+proc runcmd {cmd args} {
 	global gronsole
 
 	set ci [$gronsole annotate $cmd [list gism running]]
 
-	eval exec -- $cmd >@ stdout 2>@ stderr
+	eval run $cmd $args
 
 	$gronsole remove_tag $ci running	
 }
@@ -174,12 +182,6 @@ proc term_panel {cmd} {
 
 	$gronsole run_xterm $cmd gism
 }
-
-###############################################################################
-proc run {cmd args} {
-	eval exec -- $cmd $args >@ stdout 2>@ stderr
-}
-
 
 ###############################################################################
 proc term {cmd args} {
