@@ -11,6 +11,9 @@
 #
 ############################################################################
 
+lappend auto_path $env(GISBASE)/bwidget
+package require -exact BWidget 1.2.1
+
 # set background color and help font
 # These globals are still used in a few places by things in gis.m
 set bgcolor HoneyDew2
@@ -27,7 +30,7 @@ proc fontcreate {font args} {
 	}
 }
 
-fontcreate ballon-help -family Helvetica -size -12 -weight bold
+fontcreate balloon-help -family Helvetica -size -12 -weight bold
 fontcreate default -family Helvetica -size -12
 fontcreate textfont -family Courier -size -12
 fontcreate helpfont -family Verdana -size 12
