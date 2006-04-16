@@ -2021,6 +2021,7 @@ static int interactive_option(struct Option *opt )
 	char buff[1024],*bptr ;
 	char buff2[1024] ;
 	int set_one ;
+	int no_prompt ;
 
 	fprintf(stderr,_("\nOPTION:   %s\n"), opt->description) ;
 	fprintf(stderr,_("     key: %s\n"), opt->key) ;
@@ -2042,8 +2043,10 @@ static int interactive_option(struct Option *opt )
 	{
 	   *buff='\0' ;
 	   if(opt->gisprompt)
-		gis_prompt(opt, buff) ;
+		no_prompt = gis_prompt(opt, buff) ;
 	   else
+		no_prompt = -1;
+	   if (no_prompt)
 	   {
 		fprintf(stderr,_("enter option > ")) ;
 		if(fgets(buff,1024,stdin) == 0) exit(EXIT_SUCCESS); ;
@@ -2157,10 +2160,14 @@ static int gis_prompt (struct Option *opt, char *buff)
 		ptr1 = G_ask_old_file("", buff, element, desc) ;
 	else if (! strcmp("new_file",age))
 		ptr1 = G_ask_new_file("", buff, element, desc) ;
+	else if (! strcmp("color",age))
+		/* These prompts are only implemented in the gui */
+		/* The data can still be entered in the console */
+		return -1;
 	else
 	{
 		fprintf(stderr,"\nPROGRAMMER ERROR: first item in gisprompt is <%s>\n", age) ;
-		fprintf(stderr,"        Must be either new, old, mapset, any, old_file, or new_file\n") ;
+		fprintf(stderr,"        Must be either new, old, mapset, any, old_file, new_file, or color\n") ;
 		return -1;
 	}
 	if (ptr1 == '\0')
