@@ -61,23 +61,24 @@ proc wrap_text_in_label {path} {
 # Colors
 # This almost belongs in a seperate file, and possibly a seperate namespace
 
+# These are the colors from lib/gis/color_str.c
 array set grass_named_colors {
-	{"white"   {255 255 255   0}}
-	{"black"   {0     0   0   0}}
-	{"red"     {255   0   0   0}}
-	{"green"   {  0 255   0   0}}
-	{"blue"    {  0   0 255   0}}
-	{"yellow"  {255 255   0   0}}
-	{"magenta" {255   0 255   0}}
-	{"cyan"    {  0 255 255   0}}
-	{"aqua"    {100 127 255   0}}
-	{"grey"    {127 127 127   0}}
-	{"gray"    {127 127 127   0}}
-	{"orange"  {255 127   0   0}}
-	{"brown"   {180  75  25   0}}
-	{"violet"  {255   0 255   0}}
-	{"indigo"  {  0 127 255   0}}
-	{"none"    {  0   0   0 255}}
+white {255 255 255 0}
+black {0 0 0 0}
+red {255 0 0 0}
+green {0 255 0 0}
+blue {0 0 255 0}
+yellow {255 255 0 0}
+magenta {255 0 255 0}
+cyan {0 255 255 0}
+aqua {100 127 255 0}
+grey {127 127 127 0}
+gray {127 127 127 0}
+orange {255 127 0 0}
+brown {180 75 25 0}
+violet {255 0 255 0}
+indigo {0 127 255 0}
+none {0 0 0 255}
 }
 
 # This procedure takes a string like yellow, none, or 124:36:98 and
