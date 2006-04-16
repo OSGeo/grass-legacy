@@ -166,6 +166,7 @@ main (int argc, char **argv)
 	icon_opt->required   = NO ;
 	icon_opt->multiple   = NO ;
 	icon_opt->answer     = "basic/x" ;
+	/* This could also use ->gisprompt = "old,symbol,symbol" instead of ->options */
 	icon_opt->options    = icon_files();
 	icon_opt->description= _("Point and centroid symbol");
 
@@ -191,12 +192,14 @@ main (int argc, char **argv)
 	color_opt->type       = TYPE_STRING ;
 	color_opt->answer     = DEFAULT_FG_COLOR;
 	color_opt->description= _("Line color");
+	color_opt->gisprompt  = GISPROMPT_COLOR;
 
 	fcolor_opt = G_define_option() ;
 	fcolor_opt->key        = "fcolor" ;
 	fcolor_opt->type       = TYPE_STRING ;
 	fcolor_opt->answer     = "gray" ;
 	fcolor_opt->description= _("Area fill color");
+	fcolor_opt->gisprompt  = GISPROMPT_COLOR;
 
 	rgbcol_opt = G_define_option();
 	rgbcol_opt->key        = "rgb_column";
@@ -216,18 +219,21 @@ main (int argc, char **argv)
 	lcolor_opt->type       = TYPE_STRING ;
 	lcolor_opt->answer     = "red" ;
 	lcolor_opt->description= _("Label color");
+	lcolor_opt->gisprompt  = GISPROMPT_COLOR;
 	
 	bgcolor_opt = G_define_option() ;
 	bgcolor_opt->key        = "bgcolor" ;
 	bgcolor_opt->type       = TYPE_STRING ;
 	bgcolor_opt->answer     = "none" ;
 	bgcolor_opt->description= _("Label background color");
+	bgcolor_opt->gisprompt  = GISPROMPT_COLOR;
 
 	bcolor_opt = G_define_option() ;
 	bcolor_opt->key        = "bcolor" ;
 	bcolor_opt->type       = TYPE_STRING ;
 	bcolor_opt->answer     = "none" ;
 	bcolor_opt->description= _("Label border color");
+	bcolor_opt->gisprompt  = GISPROMPT_COLOR;
 
 	lsize_opt = G_define_option() ;
 	lsize_opt->key        = "lsize" ;
