@@ -18,6 +18,8 @@ set iconpath $env(GISBASE)/etc/gui/icons/
 ################################################################################
 # Miscellanious
 
+# Icons
+
 proc icon {class member} {
 	global iconpath
 	set name "::img::icon-$class-$member"
@@ -54,6 +56,89 @@ proc icon_configure {path class member} {
 proc wrap_text_in_label {path} {
 	bind $path <Configure> "$path configure -wraplength \[winfo width $path\]"
 }
+
+################################################################################
+# Colors
+# This almost belongs in a seperate file, and possibly a seperate namespace
+
+array set grass_named_colors {
+	{"white"   {255 255 255   0}}
+	{"black"   {0     0   0   0}}
+	{"red"     {255   0   0   0}}
+	{"green"   {  0 255   0   0}}
+	{"blue"    {  0   0 255   0}}
+	{"yellow"  {255 255   0   0}}
+	{"magenta" {255   0 255   0}}
+	{"cyan"    {  0 255 255   0}}
+	{"aqua"    {100 127 255   0}}
+	{"grey"    {127 127 127   0}}
+	{"gray"    {127 127 127   0}}
+	{"orange"  {255 127   0   0}}
+	{"brown"   {180  75  25   0}}
+	{"violet"  {255   0 255   0}}
+	{"indigo"  {  0 127 255   0}}
+	{"none"    {  0   0   0 255}}
+}
+
+# This procedure takes a string like yellow, none, or 124:36:98 and
+# returns a list of four values for red, green, blue, and alpha
+proc color_grass_to_rgba255 {string} {
+	global grass_named_colors
+	set string [string tolower $string]
+
+	if {[info exists grass_named_colors($string)]} {
+		set color $grass_named_colors($string)
+	} else {
+		set incolor [split $string :]
+
+		# Make sure we have good values:
+		set color {}
+		for {set i 0} {$i < 4} {incr i} {
+			set inpart [lindex $incolor $i]
+			if {[catch {expr $inpart < 0}] || $inpart == ""} {
+				lappend color 0
+			} elseif {$inpart < 0} {
+				lappend color 0
+			} elseif {$inpart > 255} {
+				lappend color 255
+			} else {
+				lappend color $inpart
+			}
+		}
+	}
+	return $color
+}
+
+proc color_rgba255_to_grass {list} {
+	if {[lindex $list 3] == 255} {
+		return "none"
+	} else {
+		set rgb [lrange $list 0 2]
+		return [join $rgb :]
+	}
+}
+
+proc color_rgba255_to_tcltk {list} {
+	set rX [format %02X [lindex $list 0]]
+	set gX [format %02X [lindex $list 1]]
+	set bX [format %02X [lindex $list 2]]
+	return "#$rX$gX$bX"
+}
+
+proc color_tcltk_to_rgba255 {string} {
+	scan $string "#%2x%2x%2x" red green blue
+	return [list $red $green $blue 0]
+}
+
+proc color_grass_to_tcltk {string} {
+	return [color_rgba255_to_tcltk [color_grass_to_rgba255 $string]]
+}
+
+proc color_tcltk_to_grass {string} {
+	return [color_rgba255_to_grass [color_tcltk_to_rgba255 $string]]
+}
+
+
 
 ################################################################################
 
@@ -141,6 +226,42 @@ proc get_map {dlg optn elem} {
 			set opt($dlg,$optn,val) $val
 		}
 	}
+	show_cmd $dlg
+}
+
+proc get_color {dlg optn type} {
+	global opt
+
+	if {(! $opt($dlg,$optn,multi)) && $opt($dlg,$optn,val) != ""} {
+		if {$type == "tcltk"} {
+			set init $opt($dlg,$optn,val)
+		} else {
+			# Default to grass type color
+			set init [color_grass_to_tcltk $opt($dlg,$optn,val)]
+		}
+	} else {
+		set init [format "#%06X" [expr {int(rand() * 0xFFFFFF)}]]
+	}
+
+	set val [tk_chooseColor -initialcolor $init]
+
+	if {$val != ""} {
+		# Convert it to the correct type
+		if {$type == "tcltk"} {
+			# Pass
+		} else {
+			# Default to grass color type
+			set val [color_tcltk_to_grass $val]
+		}
+
+		# Write it back to the answer
+		if {$opt($dlg,$optn,multi) && $opt($dlg,$optn,val) != ""} {
+			append opt($dlg,$optn,val) "," $val
+		} {
+			set opt($dlg,$optn,val) $val
+		}
+	}
+
 	show_cmd $dlg
 }
 
@@ -395,6 +516,14 @@ proc do_button_old {dlg optn suf elem} {
 	pack $suf.val$optn.sel -side left -fill x
 }
 
+proc do_button_color {dlg optn suf type} {
+	global opt
+	
+	button $suf.val$optn.sel -text {>} -command [list get_color $dlg $optn $type]
+	icon_configure $suf.val$optn.sel edit color
+	pack $suf.val$optn.sel -side left -fill x
+}
+
 proc do_entry {dlg optn suf} {
 	global opt
 
@@ -408,11 +537,22 @@ proc do_label {dlg optn suf} {
 	set label $opt($dlg,$optn,label_text)
 	set type $opt($dlg,$optn,type)
 	set req $opt($dlg,$optn,required)
+	set multi $opt($dlg,$optn,multi)
+	set name $opt($dlg,$optn,name)
 
-	set req [expr {$req ? "required" : "optional"}]
+	set typestring [expr {$multi ? "$type\[,$type,...\]" : $type}]
+	set typestring "$name=$typestring"
+	set typestring [expr {$req ? "$typestring" : "\[$typestring\]"}]
+
+	set reqtext [expr {$req ? "required" : "optional"}]
+	set multitext [expr {$multi ? "multiple" : ""}]
+
+	set typehelp "$name: $multitext $type, $reqtext"
+
 	set frame [frame $suf.lab$optn]
 	label $frame.label -text "$label:" -anchor w -justify left
-	label $frame.req -text "($type; $req)" -anchor e -justify right
+	label $frame.req -text "($typehelp)" -anchor e -justify right
+	DynamicHelp::register $frame.req balloon $typestring
 	pack $frame.label -side left
 	pack $frame.req -side right
 	pack $frame -side top -fill x
@@ -607,14 +747,16 @@ proc add_option {optn optlist} {
 		}
 	} else {
 		set prompt $opts(prompt)
+		set prompt_list [split $prompt ,]
 		if {$prompt != {}} {
 			if {[string match old_file,* $prompt]} {
 				do_button_file $dlg $optn $suf 0
 			} elseif {[string match new_file,* $prompt]} {
 				do_button_file $dlg $optn $suf 1
-			} elseif {[string match old,* $prompt]} {
-				set p [split $prompt ,]
-				do_button_old $dlg $optn $suf [lindex $p 1]
+			} elseif {[string match old,* $prompt]} {		
+				do_button_old $dlg $optn $suf [lindex $prompt_list 1]
+			} elseif {[string match color,* $prompt]} {
+				do_button_color $dlg $optn $suf [lindex $prompt_list 1]
 			}
 		}
 		do_entry $dlg $optn $suf
