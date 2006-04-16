@@ -336,7 +336,7 @@ proc layout_make_frame {dlg guisection optn} {
 		}
 		# And the frames and scrollers:
 		set optwin [ScrolledWindow $optpane.optwin -relief sunken -borderwidth 2]
-		set optfra [ScrollableFrame $optwin.fra -height 200]
+		set optfra [ScrollableFrame $optwin.fra -height 200 -constrainedwidth true]
 		$optwin setwidget $optfra
 		pack $optwin -fill both -expand yes
 
@@ -345,7 +345,7 @@ proc layout_make_frame {dlg guisection optn} {
 
 		set suf [$optfra getframe]
 		# Binding magic to make the whole program start at an appropriate size
-		bind $suf <Configure> {+[winfo parent %W] configure -width [winfo reqwidth %W]}
+		# bind $suf <Configure> {+[winfo parent %W] configure -width [winfo reqwidth %W]}
 		$path.nb raise $label
 
 		return $suf
