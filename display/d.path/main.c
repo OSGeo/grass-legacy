@@ -102,18 +102,21 @@ int main(int argc, char **argv)
     color_opt->type       = TYPE_STRING ;
     color_opt->answer     = DEFAULT_FG_COLOR ;
     color_opt->description= "Original line color" ;
+    color_opt->gisprompt  = GISPROMPT_COLOR ;
 	
     hcolor_opt = G_define_option() ;
     hcolor_opt->key        = "hcolor" ;
     hcolor_opt->type       = TYPE_STRING ;
     hcolor_opt->answer     = "red" ;
     hcolor_opt->description= "Highlight color" ;
+    hcolor_opt->gisprompt  = GISPROMPT_COLOR ;
     
     bgcolor_opt = G_define_option() ;
     bgcolor_opt->key        = "bgcolor" ;
     bgcolor_opt->type       = TYPE_STRING ;
     bgcolor_opt->answer     = DEFAULT_BG_COLOR ;
     bgcolor_opt->description= "Background color" ;
+    bgcolor_opt->gisprompt  = GISPROMPT_COLOR ;
 
     geo_f = G_define_flag ();
     geo_f->key             = 'g';

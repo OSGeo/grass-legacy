@@ -47,6 +47,7 @@ int main (int argc, char **argv)
 	opt2->description= _("Color to draw with, either a standard GRASS color "
 			   "or R:G:B triplet");
 	opt2->answer     = DEFAULT_FG_COLOR;
+	opt2->gisprompt  = GISPROMPT_COLOR;
 
 	mapcoords = G_define_flag();
 	mapcoords->key = 'm';

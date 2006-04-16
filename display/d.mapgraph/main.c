@@ -45,6 +45,7 @@ main (int argc, char **argv)
 
 	opt2->description= _("Color to draw with, either a standard GRASS color "
 			   "or R:G:B triplet (separated by colons)");
+	opt2->gisprompt  = GISPROMPT_COLOR ;
 
 /*
 	opt3 = G_define_option() ;

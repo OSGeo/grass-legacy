@@ -104,6 +104,7 @@ main (int argc, char **argv)
     ocolor_opt->type       = TYPE_STRING ;
     ocolor_opt->answer     = DEFAULT_FG_COLOR ;
     ocolor_opt->description= _("Outline color") ;
+    ocolor_opt->gisprompt  = GISPROMPT_COLOR ;
 
     colors_opt = G_define_option() ;
     colors_opt->key        = "colors" ;
@@ -111,6 +112,7 @@ main (int argc, char **argv)
     colors_opt->required   = NO ;
     colors_opt->multiple   = YES ;
     colors_opt->description= _("Colors used to fill charts") ;
+    colors_opt->gisprompt  = GISPROMPT_COLOR ;
 	
     y_center_flag = G_define_flag();
     y_center_flag->key = 'c';
