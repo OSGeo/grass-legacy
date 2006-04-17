@@ -2,7 +2,13 @@
 # mapprint.tcl - GRASS GIS Manager procedures for postscript and
 # lpr printing, and pdf and eps output
 # January 2006 Michael Barton, Arizona State University
-###############################################################
+# COPYRIGHT:	(C) 1999 - 2006 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+##########################################################################
 
 
 namespace eval psprint {
@@ -196,7 +202,6 @@ proc psprint::window { cm cv cx cy } {
 	global ldevice
 	global gsdevices
 	global gsstate
-    global bgcolor
 	
     set mon $cm
 	
@@ -211,85 +216,82 @@ proc psprint::window { cm cv cx cy } {
     wm title $PW [G_msg "Postscript and LPR printing of map display"]
 
     # Left part paper + output
-    set PWid(left) [ frame $PW.left -bg $bgcolor -padx 5 -pady 5]  
+    set PWid(left) [ frame $PW.left -padx 5 -pady 5]  
     pack $PWid(left) -side left -anchor w
 
     # paper size, scale
-    set PWid(paper) [ frame $PWid(left).paper -bg $bgcolor]  
+    set PWid(paper) [ frame $PWid(left).paper]  
     pack $PWid(paper) -side top -anchor w
 
 	# preset paper sizes (from ghostscript)
-    set row [ frame $PWid(paper).row1 -bg $bgcolor ]
+    set row [ frame $PWid(paper).row1 ]
     radiobutton $row.a -variable paper -value "preset" \
-		-bg $bgcolor -highlightthickness 0 -highlightbackground $bgcolor
-    Label $row.b -anchor w -text [G_msg "Preset paper type"] -bg $bgcolor
-    ComboBox $row.c -label "" -entrybg white\
-    	-width 20  -textvariable paper_preset \
+		-highlightthickness 0 
+    Label $row.b -anchor w -text [G_msg "Preset paper type"]
+    ComboBox $row.c -label "" -width 20  -textvariable paper_preset \
 		-values {"letter" "a4" "legal" "11x17" "a3" "ledger" "a0" "a1" "a2" } \
 		-modifycmd psprint::paper
     pack $row.a $row.b $row.c -side left;
     pack $row -side top -fill x -expand no -anchor n
 
 	# custom paper sizes
-    set row [ frame $PWid(paper).row2  -bg $bgcolor]
+    set row [ frame $PWid(paper).row2 ]
     radiobutton $row.a -variable paper -value "custom" \
-		-bg $bgcolor -highlightthickness 0 -highlightbackground $bgcolor
-    Label $row.b -anchor w -text [G_msg "Custom paper size"] -bg $bgcolor
-    Label $row.c -anchor w -text [G_msg "width:"] -bg $bgcolor
-    Entry $row.d -width 10 -textvariable pgwd -bg white 
-    Label $row.e -anchor w -text [G_msg "  height:"] -bg $bgcolor
-    Entry $row.f -width 10 -textvariable pght -bg white
+		-highlightthickness 0
+    Label $row.b -anchor w -text [G_msg "Custom paper size"]
+    Label $row.c -anchor w -text [G_msg "width:"]
+    Entry $row.d -width 10 -textvariable pgwd
+    Label $row.e -anchor w -text [G_msg "  height:"]
+    Entry $row.f -width 10 -textvariable pght 
     pack $row.a $row.b $row.c $row.d $row.e $row.f -side left;
     pack $row -side top -fill x -expand no -anchor n
     
 	#margins
-    set row [ frame $PWid(paper).row3 -bg $bgcolor]
-    Label $row.a -anchor w -text [G_msg "Margins  left:"] -bg $bgcolor
-    Entry $row.b -width 10 -textvariable mleft -bg white
-    Label $row.c -anchor w -text [G_msg " right:"] -bg $bgcolor 
-    Entry $row.d -width 10 -textvariable mright -bg white
-    Label $row.e -anchor w -text [G_msg " top:"] -bg $bgcolor
-    Entry $row.f -width 10 -textvariable mtop -bg white
-    Label $row.g -anchor w -text [G_msg " bottom:"] -bg $bgcolor
-    Entry $row.h -width 10 -textvariable mbottom -bg white
+    set row [ frame $PWid(paper).row3]
+    Label $row.a -anchor w -text [G_msg "Margins  left:"]
+    Entry $row.b -width 10 -textvariable mleft 
+    Label $row.c -anchor w -text [G_msg " right:"] 
+    Entry $row.d -width 10 -textvariable mright 
+    Label $row.e -anchor w -text [G_msg " top:"]
+    Entry $row.f -width 10 -textvariable mtop 
+    Label $row.g -anchor w -text [G_msg " bottom:"]
+    Entry $row.h -width 10 -textvariable mbottom 
 
     pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g $row.h -side left;
 	pack $row -side top -fill x -expand no -anchor n
 
     # portrait or landscape
-    set row [ frame $PWid(paper).row4 -bg $bgcolor ]
+    set row [ frame $PWid(paper).row4 ]
 	LabelEntry $row.a -label [G_msg "Resolution (dpi) for printing and PDF "] \
-		-textvariable res -width 4 -entrybg white -bg $bgcolor
-    Label $row.b -anchor w -text "  " -bg $bgcolor
+		-textvariable res -width 4
+    Label $row.b -anchor w -text "  "
     radiobutton $row.c -variable orient -value "landscape" \
-		-text "landscape mode" -bg $bgcolor -highlightthickness 0 \
-		-highlightbackground $bgcolor
+		-text "landscape mode" -highlightthickness 0
     radiobutton $row.d -variable orient -value "portrait" \
-		-text "portrait mode  " -bg $bgcolor -highlightthickness 0\
-		-highlightbackground $bgcolor
+		-text "portrait mode  " -highlightthickness 0
     pack $row.a $row.b $row.c $row.d -side left;
     pack $row -side top -fill x -expand no -anchor n
 
     # output options
-    set PWid(output) [ frame $PWid(left).output  -bg $bgcolor]  
+    set PWid(output) [ frame $PWid(left).output ]  
     pack $PWid(output) -side top -anchor w
 
     # LPR printer
-    set row [ frame $PWid(output).lpr -bg $bgcolor ]
-    radiobutton $row.a -variable printmode -value "lpr" -bg $bgcolor \
-    	-state $gsstate -highlightthickness 0 -highlightbackground $bgcolor
+    set row [ frame $PWid(output).lpr ]
+    radiobutton $row.a -variable printmode -value "lpr" \
+    	-state $gsstate -highlightthickness 0
     Label $row.b -anchor w -text [G_msg "Send to LPR printer*"] \
-    	-state $gsstate -bg $bgcolor
+    	-state $gsstate
     pack $row.a $row.b -side left;
     pack $row -side top -fill x -expand no -anchor n
 
     # Postscript printer
-    set row [ frame $PWid(output).psprinter  -bg $bgcolor]
-    radiobutton $row.a -variable printmode -value "psprint" -bg $bgcolor \
-    	-state $gsstate -highlightthickness 0 -highlightbackground $bgcolor
-    Label $row.b -anchor w -text [G_msg "Send to postscript device*"] \
-    	-state $gsstate -bg $bgcolor
-    Entry $row.c -width 30 -textvariable printer -bg white \
+    set row [ frame $PWid(output).psprinter ]
+    radiobutton $row.a -variable printmode -value "psprint" \
+    	-state $gsstate -highlightthickness 0
+    Label $row.b -anchor w -text [G_msg "Send to postscript device* "] \
+    	-state $gsstate
+    Entry $row.c -width 30 -textvariable printer  \
     	-state $gsstate
     Button $row.d -text [G_msg "list devices"] \
     	-command "psprint::show_devices" \
@@ -299,12 +301,12 @@ proc psprint::window { cm cv cx cy } {
     pack $row -side top -fill x -expand no -anchor n
 
     # PDF file
-    set row [ frame $PWid(output).pdffile  -bg $bgcolor]
-    radiobutton $row.a -variable printmode -value "pdf" -bg $bgcolor \
-    	-state $gsstate -highlightthickness 0 -highlightbackground $bgcolor
+    set row [ frame $PWid(output).pdffile]
+    radiobutton $row.a -variable printmode -value "pdf" \
+    	-state $gsstate -highlightthickness 0 
     Label $row.b -anchor w -text [G_msg "Save to PDF file*              "]  \
-    	-state $gsstate -bg $bgcolor
-    Entry $row.c -width 30 -textvariable pdffile -bg white -state $gsstate
+    	-state $gsstate 
+    Entry $row.c -width 30 -textvariable pdffile  -state $gsstate
     Button $row.d -text [G_msg "Browse"]  -command { set pdffile \
 		[tk_getSaveFile -title "Output PDF file" -defaultextension ".pdf"]} \
     	-state $gsstate
@@ -312,18 +314,18 @@ proc psprint::window { cm cv cx cy } {
     pack $row -side top -fill x -expand no -anchor n
 
     # EPS file
-    set row [ frame $PWid(output).epsfile  -bg $bgcolor]
-    radiobutton $row.a -variable printmode -value "eps" -bg $bgcolor \
-     	-highlightthickness 0 -highlightbackground $bgcolor
-    Label $row.b -anchor w -text [G_msg "Save to EPS file               "] -bg $bgcolor
-    Entry $row.c -width 30 -textvariable epsfile -bg white
+    set row [ frame $PWid(output).epsfile ]
+    radiobutton $row.a -variable printmode -value "eps" \
+     	-highlightthickness 0 
+    Label $row.b -anchor w -text [G_msg "Save to EPS file               "] 
+    Entry $row.c -width 30 -textvariable epsfile 
     Button $row.d -text [G_msg "Browse"] -command { set epsfile \
            [ tk_getSaveFile -title "Output EPS file" -defaultextension ".eps"] }
     pack $row.a $row.b $row.c $row.d -side left;
     pack $row -side top -fill x -expand no -anchor n
 
-	set row [ frame $PWid(output).gsmessage  -bg $bgcolor]
-    Label $row.a -anchor w -text [G_msg "*requires ghostscript to be installed and in path"] -bg $bgcolor
+	set row [ frame $PWid(output).gsmessage ]
+    Label $row.a -anchor w -text [G_msg "*requires ghostscript to be installed and in path"]
     pack $row.a -side bottom;
     pack $row -side top -fill x -expand yes -anchor center
 

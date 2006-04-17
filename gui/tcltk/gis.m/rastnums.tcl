@@ -31,12 +31,11 @@ proc GmRnums::create { tree parent } {
     global gmpath
     global iconpath
     global mon
-    global guioptfont
 
     set node "rnums:$count"
 
     set frm [ frame .rnumsicon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
+    set check [checkbutton $frm.check \
 		-variable GmRnums::opt($count,1,_check) \
 		-height 1 -padx 0 -width 0]
 
@@ -139,8 +138,7 @@ proc GmRnums::options { id frm } {
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmRnums::select_map $id"
     Entry $row.c -width 35 -text " $opt($id,1,map)" \
-          -textvariable GmRnums::opt($id,1,map) \
-          -background white
+          -textvariable GmRnums::opt($id,1,map)
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
 		-image [image create photo -file "$iconpath/gui-help.gif"] \
@@ -155,7 +153,7 @@ proc GmRnums::options { id frm } {
     ComboBox $row.b -padx 2 -width 10 -textvariable GmRnums::opt($id,1,grid_color) \
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
-		"magenta"} -entrybg white
+		"magenta"}
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
@@ -165,7 +163,7 @@ proc GmRnums::options { id frm } {
     ComboBox $row.b -padx 2 -width 10 -textvariable GmRnums::opt($id,1,text_color) \
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
-		"magenta"} -entrybg white
+		"magenta"}
     checkbutton $row.c -text [G_msg "use raster colors for cell values"] \
         -variable GmRnums::opt($id,1,cellcolor) 
     pack $row.a $row.b $row.c -side left
@@ -274,14 +272,12 @@ proc GmRnums::duplicate { tree parent node id } {
     global gmpath
     global iconpath
     global mon
-    global guioptfont
 
     set node "rnums:$count"
 	set dup($count) 1
 
     set frm [ frame .rnumsicon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
+    set check [checkbutton $frm.check \
 		-variable GmRnums::opt($count,1,_check) \
 		-height 1 -padx 0 -width 0]
 

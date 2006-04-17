@@ -30,14 +30,13 @@ proc GmLabels::create { tree parent } {
     global mon
     global gmpath
     global iconpath
-    global guioptfont
 
     set node "labels:$count"
 
     set frm [ frame .labelsicon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmLabels::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmLabels::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo labels_ico -file "$iconpath/module-d.labels.gif"
     set ico [label $frm.ico -image labels_ico -bd 1 -relief raised]
@@ -130,8 +129,7 @@ proc GmLabels::options { id frm } {
         -helptext [G_msg "labels file to display"] \
 		-command "GmLabels::select_labels $id"
     Entry $row.c -width 40 -text "$opt($id,1,map)" \
-		-textvariable GmLabels::opt($id,1,map) \
-		-background white
+		-textvariable GmLabels::opt($id,1,map) 
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
 		-image [image create photo -file "$iconpath/gui-help.gif"] \
@@ -145,9 +143,9 @@ proc GmLabels::options { id frm } {
     set row [ frame $frm.region ]
     Label $row.a -text [G_msg "Display constraints:"]
     LabelEntry $row.b -label "min" -textvariable GmLabels::opt($id,1,minreg) \
-            -width 8 -entrybg white
+            -width 8 
     LabelEntry $row.c -label "max" -textvariable GmLabels::opt($id,1,maxreg) \
-            -width 8 -entrybg white
+            -width 8 
     Label $row.d -text [G_msg "region size"]
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
@@ -229,16 +227,15 @@ proc GmLabels::duplicate { tree parent node id } {
     variable opt
     variable count
 	variable dup
-	global guioptfont
 	global iconpath
 
     set node "labels:$count"
 	set dup($count) 1
 
     set frm [ frame .labelsicon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmLabels::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmLabels::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo labels_ico -file "$iconpath/module-d.labels.gif"
     set ico [label $frm.ico -image labels_ico -bd 1 -relief raised]

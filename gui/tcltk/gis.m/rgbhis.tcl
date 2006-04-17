@@ -29,12 +29,11 @@ proc GmRgbhis::create { tree parent } {
     global gmpath
     global iconpath
     global mon
-    global guioptfont
 
     set node "rgbhis:$count"
 
     set frm [ frame .rgbicon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
+    set check [checkbutton $frm.check \
 		-variable GmRgbhis::opt($count,1,_check) \
 		-height 1 -padx 0 -width 0]
 
@@ -145,14 +144,13 @@ proc GmRgbhis::options { id frm } {
 	
     # raster1 name
     set row [ frame $frm.name1 ]
-    Label $row.a -text "     red (RGB) or hue (HIS):           "
+    Label $row.a -text "     red (RGB) or hue (HIS):          "
     Button $row.b -image [image create photo -file "$iconpath/channel-red.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "raster map for red or hue channel"]\
 		-command "GmRgbhis::select_map1 $id" -height 26
     Entry $row.c -width 30 -text " $opt($id,1,map1)" \
-          -textvariable GmRgbhis::opt($id,1,map1) \
-          -background white
+          -textvariable GmRgbhis::opt($id,1,map1)
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
@@ -164,8 +162,7 @@ proc GmRgbhis::options { id frm } {
         -helptext [G_msg "raster map for green or intensity channel"]\
 		-command "GmRgbhis::select_map2 $id" -height 26
     Entry $row.c -width 30 -text " $opt($id,1,map2)" \
-          -textvariable GmRgbhis::opt($id,1,map2) \
-          -background white
+          -textvariable GmRgbhis::opt($id,1,map2) 
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
@@ -177,8 +174,7 @@ proc GmRgbhis::options { id frm } {
         -helptext [G_msg "raster map for blue or saturation channel"]\
 		-command "GmRgbhis::select_map3 $id" -height 26
     Entry $row.c -width 30 -text " $opt($id,1,map3)" \
-          -textvariable GmRgbhis::opt($id,1,map3) \
-          -background white
+          -textvariable GmRgbhis::opt($id,1,map3) 
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
     
@@ -297,15 +293,14 @@ proc GmRgbhis::duplicate { tree parent node id } {
     global gmpath
     global iconpath
     global mon
-    global guioptfont
 
     set node "rgbhis:$count"
 	set dup($count) 1
 
     set frm [ frame .rgbhisicon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmRgbhis::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmRgbhis::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo rgbico -file "$iconpath/module-d.rgb.gif"
     set ico [label $frm.ico -image rgbico -bd 1 -relief raised]

@@ -31,14 +31,13 @@ proc GmDframe::create { tree parent } {
     global mon
     global gmpath
     global iconpath
-    global guioptfont
 
     set node "dframe:$count"
 
     set frm [ frame .dframeicon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmDframe::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmDframe::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo dfrmico -file "$iconpath/module-d.frame.gif"
     set ico [label $frm.ico -image dfrmico -bd 1 -relief raised]
@@ -126,8 +125,7 @@ proc GmDframe::options { id frm } {
     # frame name
     set row [ frame $frm.frame ]
     Label $row.a -text "Frame name (optional): "
-    LabelEntry $row.b -textvariable GmDframe::opt($id,1,frame) -width 40 \
-            -entrybg white
+    LabelEntry $row.b -textvariable GmDframe::opt($id,1,frame) -width 40
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
@@ -140,8 +138,7 @@ proc GmDframe::options { id frm } {
     # place frame2
     set row [ frame $frm.at2 ]
     Label $row.a -text "     set borders (bottom,top,left,right): "
-    LabelEntry $row.b -textvariable GmDframe::opt($id,1,at) -width 25 \
-            -entrybg white
+    LabelEntry $row.b -textvariable GmDframe::opt($id,1,at) -width 25
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
             
@@ -231,7 +228,6 @@ proc GmDframe::duplicate { tree parent node id } {
     variable opt
     variable count
 	variable dup
-	global guioptfont
 	global iconpath
 	global first
 
@@ -239,9 +235,9 @@ proc GmDframe::duplicate { tree parent node id } {
 	set dup($count) 1
 
     set frm [ frame .dframeicon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmDframe::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmDframe::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo dfrmico -file "$iconpath/module-d.frame.gif"
     set ico [label $frm.ico -image dfrmico -bd 1 -relief raised]

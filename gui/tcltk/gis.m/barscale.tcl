@@ -33,12 +33,11 @@ proc GmBarscale::create { tree parent } {
     global mon
     global gmpath
     global iconpath
-    global guioptfont
 
     set node "barscale:$count"
 
     set frm [ frame .barscaleicon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
+    set check [checkbutton $frm.check \
                            -variable GmBarscale::opt($count,1,_check) \
                            -height 1 -padx 0 -width 0]
 
@@ -186,8 +185,7 @@ proc GmBarscale::options { id frm } {
     # at
     set row [ frame $frm.at2 ]
     Label $row.a -text "    enter x,y for scale lower left corner"
-    LabelEntry $row.b -textvariable GmBarscale::opt($id,1,at) -width 8 \
-            -entrybg white
+    LabelEntry $row.b -textvariable GmBarscale::opt($id,1,at) -width 8 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 }
@@ -289,7 +287,6 @@ proc GmBarscale::duplicate { tree parent node id } {
     variable opt
     variable count
 	variable dup
-	global guioptfont
 	global iconpath
 	global first
 
@@ -297,9 +294,9 @@ proc GmBarscale::duplicate { tree parent node id } {
 	set dup($count) 1
 
     set frm [ frame .barscaleicon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmBarscale::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmBarscale::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo scaleico -file "$iconpath/module-d.barscale.gif"
     set ico [label $frm.ico -image scaleico -bd 1 -relief raised]

@@ -30,14 +30,13 @@ proc GmCmd::create { tree parent } {
     global mon
     global gmpath
     global iconpath
-    global guioptfont
 
     set node "cmd:$count"
 
     set frm [ frame .cmdicon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmCmd::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmCmd::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo cico -file "$iconpath/gui-cmd.gif"
     set ico [label $frm.ico -image cico -bd 1 -relief raised]
@@ -112,8 +111,7 @@ proc GmCmd::options { id frm } {
     set row [ frame $frm.name ]
     Label $row.a -text [G_msg "Command:"] 
     Entry $row.b -width 50 -text "$opt($id,1,cmd)" \
-          -textvariable GmCmd::opt($id,1,cmd) \
-          -background white
+          -textvariable GmCmd::opt($id,1,cmd) 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 }
@@ -164,16 +162,15 @@ proc GmCmd::duplicate { tree parent node id} {
     variable opt
     variable count
 	variable dup
-	global guioptfont
 	global iconpath
 
     set node "cmd:$count"
 	set dup($count) 1
 
     set frm [ frame .cmdicon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmCmd::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmCmd::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo cico -file "$iconpath/gui-cmd.gif"
     set ico [label $frm.ico -image cico -bd 1 -relief raised]

@@ -107,14 +107,13 @@ proc GmVector::create { tree parent } {
     variable opt
     variable count
     variable dup
-	global guioptfont
 
     set node "vector:$count"
 
     set frm [ frame .vectoricon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmVector::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmVector::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
     set can [ canvas $frm.c -width $GmTree::legend_width \
                      -height $GmTree::legend_height ]
     set opt($count,1,_legend) $can
@@ -240,7 +239,6 @@ proc GmVector::select_qmap { id } {
 # show attribute columns in output window
 proc GmVector::show_columns { id } {
 	variable opt
-	global bgcolor
 	set mapname $opt($id,1,vect)
 	set layernum $opt($id,1,layer)
 	set cmd "v.info -c map=$mapname layer=$layernum"		
@@ -251,7 +249,6 @@ proc GmVector::show_columns { id } {
 # show attribute data in output window
 proc GmVector::show_data { id } { 
 	variable opt
-	global bgcolor
 	set mapname $opt($id,1,vect)
 	set layer $opt($id,1,layer)
 	if ![catch {open "|v.db.connect map=$mapname layer=$layer -g" r} vdb] {
@@ -312,8 +309,7 @@ proc GmVector::options { id frm } {
         -helptext [G_msg "vector map to display"] \
 		-command "GmVector::select_map $id"
     Entry $row.c -width 40 -text "$opt($id,1,vect)" \
-		-textvariable GmVector::opt($id,1,vect) \
-		-background white
+		-textvariable GmVector::opt($id,1,vect) 
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
 		-image [image create photo -file "$iconpath/gui-help.gif"] \
@@ -359,14 +355,12 @@ proc GmVector::options { id frm } {
     set row [ frame $frm.icon ]  
     Label $row.a -text "Point symbols:" 
     Button $row.b -text [G_msg "icon"] \
-            -command "GmVector::select_symbol $id"
+            -command "GmVector::select_symbol $id" 
     Entry $row.c -width 15 -text "$opt($id,1,icon)" \
-        	-textvariable GmVector::opt($id,1,icon) \
-        	-background white 
+        	-textvariable GmVector::opt($id,1,icon) 
     Label $row.d -text "  size" 
     SpinBox $row.e -range {1 50 1} -textvariable GmVector::opt($id,1,size) \
-                   -width 2 -helptext "Icon size" -modifycmd "GmVector::legend $id" \
-                   -entrybg white 
+                   -width 2 -helptext "Icon size" -modifycmd "GmVector::legend $id" 
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
@@ -380,7 +374,7 @@ proc GmVector::options { id frm } {
                -command "GmVector::legend $id"
     Label $row.e -text " width" 
     SpinBox $row.f -range {0 50 1} -textvariable GmVector::opt($id,1,lwidth) \
-                   -entrybg white -width 2 -helptext "Line width" \
+                   -width 2 -helptext "Line width" \
                    -modifycmd "GmVector::legend $id"
     Label $row.g -text "(pixels) " 
     pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
@@ -413,7 +407,7 @@ proc GmVector::options { id frm } {
     Label $row.e -text [G_msg " text size"] 
     SpinBox $row.f -range {1 50 1} -textvariable GmVector::opt($id,1,lsize) \
                    -width 2 -helptext [G_msg "text size"] \
-                   -modifycmd "GmVector::legend $id" -entrybg white 
+                   -modifycmd "GmVector::legend $id"
     pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
     pack $row -side top -fill both -expand yes
 
@@ -422,12 +416,10 @@ proc GmVector::options { id frm } {
     Label $row.a -text [G_msg "     "] 
     ComboBox $row.b -label [G_msg "label part to align with vector point"] \
 		-width 6  -textvariable GmVector::opt($id,1,xref) \
-		-entrybg white \
 		-values {"left" "center" "right"} \
 		-modifycmd "GmVector::legend $id"
     ComboBox $row.c -label [G_msg " justification"] \
     	-width 6  -textvariable GmVector::opt($id,1,yref) \
-		-entrybg white \
 		-values {"top" "center" "bottom"} \
 		-modifycmd "GmVector::legend $id"
     pack $row.a $row.b $row.c -side left
@@ -436,11 +428,9 @@ proc GmVector::options { id frm } {
     # labels layer and attribute column
     set row [ frame $frm.label3 ]
     LabelEntry $row.a -label [G_msg "     layer for labels"] \
-                -textvariable GmVector::opt($id,1,lfield) -width 3 \
-                -entrybg white
+                -textvariable GmVector::opt($id,1,lfield) -width 3 
     LabelEntry $row.b -label [G_msg " attribute col for labels"] \
-                -textvariable GmVector::opt($id,1,attribute) -width 23 \
-                -entrybg white
+                -textvariable GmVector::opt($id,1,attribute) -width 23
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
@@ -448,8 +438,7 @@ proc GmVector::options { id frm } {
     set row [ frame $frm.query1 ]
     Label $row.a -text [G_msg "Query vectors for display: "] 
     LabelEntry $row.b -label [G_msg "layer for query"] \
-                -textvariable GmVector::opt($id,1,layer) -width 3 \
-                -entrybg white
+                -textvariable GmVector::opt($id,1,layer) -width 3
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
@@ -458,7 +447,7 @@ proc GmVector::options { id frm } {
     Label $row.a -text [G_msg "    "] 
     LabelEntry $row.b -label [G_msg "query cat values    "] \
                 -textvariable GmVector::opt($id,1,cat) \
-               -width 40 -entrybg white
+               -width 40
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
@@ -469,7 +458,7 @@ proc GmVector::options { id frm } {
 		-command "GmVector::legend $id"
     LabelEntry $row.c -label [G_msg "use SQL query"] \
 		-textvariable GmVector::opt($id,1,where) \
-		-width 40 -entrybg white
+		-width 40
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
     
@@ -508,8 +497,7 @@ proc GmVector::options { id frm } {
 		-command "GmVector::select_qmap $id" \
 		-helptext [G_msg "select existing vector for saving queried objects"]
     Entry $row.c -width 40 -text "$opt($id,1,qmap)" \
-          -textvariable GmVector::opt($id,1,qmap) \
-          -background white
+          -textvariable GmVector::opt($id,1,qmap) 
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
@@ -517,9 +505,9 @@ proc GmVector::options { id frm } {
     set row [ frame $frm.region ]
     Label $row.a -text [G_msg "Display when avg. region dimension is"]
     LabelEntry $row.b -label ">" -textvariable GmVector::opt($id,1,minreg) \
-                -width 8 -entrybg white
+                -width 8
     LabelEntry $row.c -label " or <" -textvariable GmVector::opt($id,1,maxreg) \
-                -width 8 -entrybg white
+                -width 8
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 }
@@ -787,15 +775,14 @@ proc GmVector::duplicate { tree parent node id } {
     variable opt
     variable count
 	variable dup
-	global guioptfont
 	
     set node "vector:$count"
 	set dup($count) 1
 
     set frm [ frame .vectoricon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmVector::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmVector::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
     set can [ canvas $frm.c -width $GmTree::legend_width \
                      -height $GmTree::legend_height -borderwidth 0 ]
     set opt($count,1,_legend) $can

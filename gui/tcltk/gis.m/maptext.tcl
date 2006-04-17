@@ -1,7 +1,13 @@
 ###############################################################
-# maptext.tcl - TclTk canvas text layer options file for GRASS GIS Manager
+# maptext.tcl - TclTk canvas postscript text layer options file for GRASS GIS Manager
 # February 2006 Michael Barton, Arizona State University
-###############################################################
+# COPYRIGHT:	(C) 1999 - 2006 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+##########################################################################
 
 namespace eval GmCtext {
     variable array opt # ctext options
@@ -13,15 +19,15 @@ proc GmCtext::create { tree parent } {
     variable count
 	variable dup
     global iconpath
-    global guioptfont
     global frm
+    global env
 
     set node "ctext:$count"
 
     set frm [ frame .ctexticon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmCtext::opt($count,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmCtext::opt($count,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo ctico -file "$iconpath/gui-maptext.gif"
     set ico [label $frm.ico -image ctico -bd 1 -relief raised]
@@ -36,12 +42,11 @@ proc GmCtext::create { tree parent } {
     }
 
     $tree insert $sellayer $parent $node \
-	-text  "text layer $count"\
+	-text  "PS text layer $count"\
 	-window    $frm \
 	-drawcross auto  
         
     set opt($count,_check) 1 
-	set opt($count,1,opacity) 1.0
     set opt($count,text) "" 
     set opt($count,xcoord) 100
     set opt($count,ycoord) 100
@@ -77,11 +82,10 @@ proc GmCtext::set_option { node key value } {
 proc GmCtext::options { id frm } {
     variable opt
     global iconpath
-    global bgcolor
 
     # Panel heading
     set row [ frame $frm.heading ]
-    Label $row.a -text "Display text" \
+    Label $row.a -text "Create postscript text object (for postscript eps, pdf, and print output only)" \
     	-fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
@@ -89,18 +93,15 @@ proc GmCtext::options { id frm } {
     # text
     set row [ frame $frm.text ]
     Label $row.a -text "Text to display:"
-    LabelEntry $row.b -textvariable GmCtext::opt($id,text) -width 50 \
-            -entrybg white
+    LabelEntry $row.b -textvariable GmCtext::opt($id,text) -width 50 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
     
     # coordinates1
     set row [ frame $frm.east_north ]
     Label $row.a -text "Text placement:   x & y coordinates (from upper left) "
-    LabelEntry $row.b -textvariable GmCtext::opt($id,xcoord) -width 8 \
-            -entrybg white
-    LabelEntry $row.c -textvariable GmCtext::opt($id,ycoord) -width 8 \
-            -entrybg white
+    LabelEntry $row.b -textvariable GmCtext::opt($id,xcoord) -width 8
+    LabelEntry $row.c -textvariable GmCtext::opt($id,ycoord) -width 8 
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
         
@@ -108,7 +109,7 @@ proc GmCtext::options { id frm } {
     set row [ frame $frm.textcoord2 ]
     Label $row.a -text [G_msg "     coordinate type for text placement"] 
     ComboBox $row.b -padx 2 -width 10 -textvariable GmCtext::opt($id,coordinates) \
-                    -values {"pixels" "percent" "geographic" } -entrybg white
+                    -values {"pixels" "percent" "geographic" } 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
         
@@ -117,8 +118,7 @@ proc GmCtext::options { id frm } {
     Label $row.a -text [G_msg "     align text with coordinate point  "] 
     ComboBox $row.b -padx 2 -width 12 -textvariable GmCtext::opt($id,anchor) \
                     -values {"lower_left" "bottom_center" "lower_right" "center_left" "center" 
-                    "center_right" "upper_left" "top_center" "upper_right" } \
-                    -entrybg white
+                    "center_right" "upper_left" "top_center" "upper_right" } 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
@@ -126,10 +126,9 @@ proc GmCtext::options { id frm } {
     set row [ frame $frm.textopt2 ]
     Label $row.a -text [G_msg "     justification"] 
     ComboBox $row.b -padx 2 -width 7 -textvariable GmCtext::opt($id,justify) \
-                    -values {"left" "center" "right"} -entrybg white
+                    -values {"left" "center" "right"} 
     Label $row.c -text "  line width"
-    LabelEntry $row.d -textvariable GmCtext::opt($id,width) -width 5 \
-            -entrybg white
+    LabelEntry $row.d -textvariable GmCtext::opt($id,width) -width 5 
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
         
@@ -141,8 +140,7 @@ proc GmCtext::options { id frm } {
         -helptext [G_msg "select font for text"] \
 	    -command "GmCtext::select_font $id"
     Entry $row.c -width 15 -text "$opt($id,font)" \
-	    -textvariable GmCtext::opt($id,font) \
-	    -background white 
+	    -textvariable GmCtext::opt($id,font) 
     Label $row.d -text [G_msg "  color"] 
     SelectColor $row.e -type menubutton -variable GmCtext::opt($id,fill)
     pack $row.a $row.b $row.c $row.d $row.e -side left
@@ -169,10 +167,6 @@ proc GmCtext::display { node } {
     global mon
     global canvas_w
     global canvas_h
-
-    set line ""
-    set input ""
-    set cmd ""
 
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
@@ -233,15 +227,14 @@ proc GmCtext::duplicate { tree parent node id } {
     variable count
 	variable dup
     global iconpath
-    global guioptfont
     global frm
 
     set node "ctext:$count"
 
     set frm [ frame .ctexticon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmCtext::opt($count,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmCtext::opt($count,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo ctico -file "$iconpath/gui-maptext.gif"
     set ico [label $frm.ico -image ctico -bd 1 -relief raised]
@@ -256,7 +249,7 @@ proc GmCtext::duplicate { tree parent node id } {
     }
 
     $tree insert $sellayer $parent $node \
-	-text  "text layer $count"\
+	-text  "PS text layer $count"\
 	-window    $frm \
 	-drawcross auto  
         
