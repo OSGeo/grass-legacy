@@ -11,9 +11,6 @@
 #
 ############################################################################
 
-lappend auto_path $env(GISBASE)/bwidget
-package require -exact BWidget 1.2.1
-
 # set background color and help font
 # These globals are still used in a few places by things in gis.m
 set bgcolor HoneyDew2
@@ -30,7 +27,7 @@ proc fontcreate {font args} {
 	}
 }
 
-fontcreate balloon-help -family Helvetica -size -12 -weight bold
+fontcreate ballon-help -family Helvetica -size -12 -weight bold
 fontcreate default -family Helvetica -size -12
 fontcreate textfont -family Courier -size -12
 fontcreate helpfont -family Verdana -size 12
@@ -51,8 +48,14 @@ option add *labelfont default
 
 # Various background colors
 option add *background #dddddd
-option add *activeBackground HoneyDew2
-option add *highlightbackground HoneyDew2
+option add *activeBackground #dddddd
+option add *highlightBackground #dddddd
+option add *ButtonBox.background HoneyDew2
+option add *ButtonBox*add.highlightBackground HoneyDew2
+option add *MainFrame.background HoneyDew2
+option add *PanedWindow.background HoneyDew2
+option add *Menu.background HoneyDew2
+option add *addindicator.background white
 
 # Things that are selected:
 option add *selectBackground #ffff9b
@@ -67,6 +70,8 @@ option add *troughColor HoneyDew3
 
 # Entry widgets and text widgets should have a white background
 option add *Entry.background white
+option add *Entry.highlightbackground #dddddd
+option add *entrybg white
 option add *Text.background white
 option add *Entry.font textfont
 option add *Text.font textfont
