@@ -4,6 +4,11 @@
 #define FIXED		0
 #define FLOAT		1
 
+/* Don't add more colors here.
+   These colors are the preallocated colors used in displays for efficiency.
+   Adding colors here reduces the number of colors it is possible for a user to display.
+   If support for named colors is needed it should go in G_str_to_color. */
+
 #define BLACK		1
 #define RED		2
 #define GREEN		3
@@ -20,6 +25,7 @@
 #define BROWN		14
 
 #define GREY            GRAY
+#define PURPLE          VIOLET
 
 /* increase when adding more colors */
 #define MAX_COLOR_NUM 14
@@ -28,7 +34,7 @@
 #define MAX_COLOR_NAMES 15
 
 /* These can be in any order. They must match the lookup strings in the table below. */
-#define D_COLOR_LIST "red,orange,yellow,green,blue,indigo,violet,white,black,gray,brown,magenta,aqua,grey,cyan"
+#define D_COLOR_LIST "red,orange,yellow,green,blue,indigo,violet,white,black,gray,brown,magenta,aqua,grey,cyan,purple"
 
 /* max length of color string */
 #define MAX_COLOR_LEN 32
@@ -75,6 +81,7 @@ static struct {
     {"aqua",    AQUA},
     {"indigo",  INDIGO},
     {"violet",  VIOLET},
+    {"purple",  PURPLE},
     {"brown",   BROWN}
 };
 
