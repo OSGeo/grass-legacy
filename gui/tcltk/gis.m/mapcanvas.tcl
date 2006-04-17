@@ -56,7 +56,6 @@ set north 0.0
 # Create window and canvas for display
 proc MapCanvas::create { } {
     global gmpath
-    global bgcolor
     global outtext
     global env
     global initwd
@@ -103,7 +102,7 @@ proc MapCanvas::create { } {
 	toplevel .mapcan($mon)
 
     set mapframe($mon) [MainFrame .mapcan($mon).mf \
-   		-background $bgcolor -textvariable MapCanvas::msg($mon) \
+   		-textvariable MapCanvas::msg($mon) \
    		-progressvar drawprog -progressmax 100 -progresstype incremental]
    		
    	set mf_frame [$mapframe($mon) getframe]
@@ -124,10 +123,7 @@ proc MapCanvas::create { } {
  
     # indicator creation	
     set map_ind($mon) [$mapframe($mon) addindicator -textvariable coords($mon) \
-    	-width 33 -justify left -padx 5]
-
-    set fon [font create -family Verdana -size 12 ]
-    DynamicHelp::configure -font $fon -background yellow
+    	-width 33 -justify left -padx 5 -bg white]
 
     pack $mapframe($mon) -fill both -expand yes
 
@@ -726,7 +722,6 @@ proc MapCanvas::zoom_back { mon } {
 proc MapCanvas::panbind { mon } {
 	variable can
 	global mapcursor
-	global bgcolor
 	global MapCanvas::msg
 
     set MapCanvas::msg($mon) "Drag with mouse to pan"
