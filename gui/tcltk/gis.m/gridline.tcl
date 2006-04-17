@@ -30,15 +30,13 @@ proc GmGridline::create { tree parent } {
     global mon
     global gmpath
     global iconpath
-    global guioptfont
 
     set node "gridline:$count"
 
     set frm [ frame .gridicon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
-                           -variable GmGridline::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmGridline::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo gico -file "$iconpath/module-d.grid.gif"
     set gdico [label $frm.gdico -image gico -bd 1 -relief raised]
@@ -162,11 +160,9 @@ proc GmGridline::options { id frm } {
     # grid options 3
     set row [ frame $frm.grid3 ]
     Label $row.a -text "    grid size (map units)"
-    LabelEntry $row.b -textvariable GmGridline::opt($id,1,gridsize) -width 7 \
-            -entrybg white
+    LabelEntry $row.b -textvariable GmGridline::opt($id,1,gridsize) -width 7
     Label $row.c -text " grid origin (east, north)"
-    LabelEntry $row.d -textvariable GmGridline::opt($id,1,gridorigin) -width 15 \
-            -entrybg white
+    LabelEntry $row.d -textvariable GmGridline::opt($id,1,gridorigin) -width 15
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
     
@@ -187,21 +183,18 @@ proc GmGridline::options { id frm } {
     Label $row.d -text " line color"
     ComboBox $row.e -padx 2 -width 7 -textvariable GmGridline::opt($id,1,geodcolor) \
                     -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
-                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} \
-                    -entrybg white
+                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"}
     Label $row.f -text " text color"
     ComboBox $row.g -padx 2 -width 7 -textvariable GmGridline::opt($id,1,geodtxtcolor) \
                     -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
-                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} \
-                    -entrybg white
+                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"}
     pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
     pack $row -side top -fill both -expand yes
     
     # geodesic line options 2
     set row [ frame $frm.geod2 ]
     Label $row.a -text "     line endpoints (x1,y1,x2,y2)"
-    LabelEntry $row.b -textvariable GmGridline::opt($id,1,geodcoor) -width 35 \
-            -entrybg white
+    LabelEntry $row.b -textvariable GmGridline::opt($id,1,geodcoor) -width 35 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
@@ -217,16 +210,14 @@ proc GmGridline::options { id frm } {
     Label $row.d -text " line color"
     ComboBox $row.e -padx 2 -width 7 -textvariable GmGridline::opt($id,1,rhumbcolor) \
                     -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
-                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} \
-                    -entrybg white
+                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"}
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
     
     # rhumbline options 2
     set row [ frame $frm.rhumb2 ]
     Label $row.a -text "     line endpoints (x1,y1,x2,y2)"
-    LabelEntry $row.b -textvariable GmGridline::opt($id,1,rhumbcoor) -width 35 \
-            -entrybg white
+    LabelEntry $row.b -textvariable GmGridline::opt($id,1,rhumbcoor) -width 35 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 }
@@ -312,7 +303,6 @@ proc GmGridline::duplicate { tree parent node id } {
     variable opt
     variable count
 	variable dup
-	global guioptfont
 	global iconpath
 	global first
 
@@ -320,10 +310,9 @@ proc GmGridline::duplicate { tree parent node id } {
 	set dup($count) 1
 
     set frm [ frame .gridlineicon$count]
-    set fon [font create -size 10] 
-    set check [checkbutton $frm.check -font $fon \
-                           -variable GmGridline::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmGridline::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo gico -file "$iconpath/module-d.grid.gif"
     set gdico [label $frm.gdico -image gico -bd 1 -relief raised]

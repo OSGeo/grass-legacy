@@ -28,15 +28,14 @@ proc GmChart::create { tree parent } {
     variable lfile
     variable lfilemask
     variable optlist
-    global guioptfont
     global iconpath
 
     set node "chart:$count"
 
     set frm [ frame .charticon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmChart::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmChart::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo chartico -file "$iconpath/module-d.vect.chart.gif"
     set ico [label $frm.ico -image chartico -bd 1 -relief raised]
@@ -174,8 +173,7 @@ proc GmChart::options { id frm } {
         -helptext [G_msg "vector map to chart"] \
 		-command "GmChart::select_map $id"
     Entry $row.c -width 30 -text " $opt($id,1,map)" \
-          -textvariable GmChart::opt($id,1,map) \
-          -background white
+          -textvariable GmChart::opt($id,1,map)
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
             -image [image create photo -file "$iconpath/gui-help.gif"] \
@@ -199,8 +197,7 @@ proc GmChart::options { id frm } {
     # attributes1 and data
     set row [ frame $frm.attr1 ]
     Label $row.a -text "Attributes to chart: attribute layer"
-    LabelEntry $row.b -textvariable GmChart::opt($id,1,layer) -width 5 \
-		-entrybg white
+    LabelEntry $row.b -textvariable GmChart::opt($id,1,layer) -width 5
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
@@ -224,27 +221,23 @@ proc GmChart::options { id frm } {
     # attributes2
     set row [ frame $frm.attr2 ]
     Label $row.a -text "     columns to chart (col1,col2,...)  "
-    LabelEntry $row.b -textvariable GmChart::opt($id,1,columns) -width 30 \
-            -entrybg white
+    LabelEntry $row.b -textvariable GmChart::opt($id,1,columns) -width 30 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # attributes3
     set row [ frame $frm.attr3 ]
     Label $row.a -text "     colors for columns (clr1,clr2,...)"
-    LabelEntry $row.b -textvariable GmChart::opt($id,1,fcolors) -width 30 \
-            -entrybg white -padx 2
+    LabelEntry $row.b -textvariable GmChart::opt($id,1,fcolors) -width 30 -padx 2
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # attributes4
     set row [ frame $frm.attr4 ]
     Label $row.a -text "     column for variable chart size"
-    LabelEntry $row.b -textvariable GmChart::opt($id,1,sizecol) -width 12 \
-            -entrybg white -padx 9
+    LabelEntry $row.b -textvariable GmChart::opt($id,1,sizecol) -width 12 -padx 8
     Label $row.c -text "   scale factor"
-    LabelEntry $row.d -textvariable GmChart::opt($id,1,cscale) -width 4 \
-            -entrybg white
+    LabelEntry $row.d -textvariable GmChart::opt($id,1,cscale) -width 4
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
@@ -252,10 +245,9 @@ proc GmChart::options { id frm } {
     set row [ frame $frm.chopt1 ]
     Label $row.a -text [G_msg "Chart type:"] 
     ComboBox $row.b -padx 2 -width 4 -textvariable GmChart::opt($id,1,ctype) \
-                    -values {"pie" "bar"} -entrybg white
+                    -values {"pie" "bar"} 
     Label $row.c -text "       fixed chart size (if size column not used)"
-    LabelEntry $row.d -textvariable GmChart::opt($id,1,csize) -width 4 \
-            -entrybg white
+    LabelEntry $row.d -textvariable GmChart::opt($id,1,csize) -width 4 
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
@@ -264,8 +256,7 @@ proc GmChart::options { id frm } {
     Label $row.a -text [G_msg "     chart outline color:"] 
     ComboBox $row.b -padx 0 -width 10 -textvariable GmChart::opt($id,1,ocolor) \
                     -values {"none" "white" "grey" "gray" "black" "brown" "red" "orange" \
-                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} \
-                    -entrybg white
+                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 }
@@ -375,16 +366,15 @@ proc GmChart::duplicate { tree parent node id } {
     variable opt
     variable count
 	variable dup
-	global guioptfont
 	global iconpath
 
     set node "chart:$count"
 	set dup($count) 1
 
     set frm [ frame .charticon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmChart::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmChart::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo chartico -file "$iconpath/module-d.vect.chart.gif"
     set ico [label $frm.ico -image chartico -bd 1 -relief raised]

@@ -31,13 +31,13 @@ proc GmArrows::create { tree parent } {
     global gmpath
     global iconpath
     global mon
-    global guioptfont
 
     set node "arrows:$count"
 
     set frm [ frame .arrowicon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-		-variable GmArrows::opt($count,1,_check) -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmArrows::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo aico -file "$iconpath/module-d.rast.arrow.gif"
     set ico [label $frm.ico -image aico -bd 1 -relief raised]
@@ -155,8 +155,7 @@ proc GmArrows::options { id frm } {
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmArrows::select_map $id"
     Entry $row.c -width 35 -text " $opt($id,1,map)" \
-          -textvariable GmArrows::opt($id,1,map) \
-          -background white
+          -textvariable GmArrows::opt($id,1,map) 
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
 		-image [image create photo -file "$iconpath/gui-help.gif"] \
@@ -169,7 +168,7 @@ proc GmArrows::options { id frm } {
     set row [ frame $frm.type ]
     Label $row.a -text "    aspect value type"
     ComboBox $row.b -padx 2 -width 8 -textvariable GmArrows::opt($id,1,type) \
-		-values {"grass" "compass" "agnps" "answers"} -entrybg white
+		-values {"grass" "compass" "agnps" "answers"} 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 		
@@ -177,22 +176,22 @@ proc GmArrows::options { id frm } {
     set row [ frame $frm.skip ]
     Label $row.a -text "    draw arrows every Nth grid cell" 
     SpinBox $row.b -range {1 200 1} -textvariable GmArrows::opt($id,1,skip) \
-		-width 4 -entrybg white 
+		-width 4  
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # arrow and grid color
     set row [ frame $frm.color1 ]
-    Label $row.a -text "    arrow color     "
+    Label $row.a -text "    arrow color      "
     ComboBox $row.b -padx 2 -width 10 -textvariable GmArrows::opt($id,1,arrow_color) \
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
-		"magenta"} -entrybg white
-    Label $row.c -text "      cell grid color"
+		"magenta"} 
+    Label $row.c -text "     cell grid color"
     ComboBox $row.d -padx 2 -width 10 -textvariable GmArrows::opt($id,1,grid_color) \
 		-values {"none" "white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
-		"magenta"} -entrybg white
+		"magenta"} 
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
     
@@ -202,12 +201,12 @@ proc GmArrows::options { id frm } {
     ComboBox $row.b -padx 2 -width 10 -textvariable GmArrows::opt($id,1,x_color) \
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
-		"magenta"} -entrybg white
+		"magenta"} 
     Label $row.c -text { 'unknowns' color}
     ComboBox $row.d -padx 2 -width 10 -textvariable GmArrows::opt($id,1,unknown_color) \
 		-values {"none" "white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
-		"magenta"} -entrybg white
+		"magenta"} 
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
@@ -218,15 +217,14 @@ proc GmArrows::options { id frm } {
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmArrows::select_magmap $id"
     Entry $row.c -width 35 -text " $opt($id,1,magnitude_map)" \
-          -textvariable GmArrows::opt($id,1,magnitude_map) \
-          -background white
+          -textvariable GmArrows::opt($id,1,magnitude_map) 
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 		
     # scale arrow length
     set row [ frame $frm.scale ]
     LabelEntry $row.a -label [G_msg "    scale factor for computing arrow length"] \
-		-textvariable GmArrows::opt($id,1,scale) -width 5 -entrybg white
+		-textvariable GmArrows::opt($id,1,scale) -width 5 
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 }
@@ -309,13 +307,12 @@ proc GmArrows::duplicate { tree parent node id } {
     global gmpath
     global iconpath
     global mon
-    global guioptfont
     
     set node "arrows:$count"
 	set dup($count) 1
 
     set frm [ frame .arrowicon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
+    set check [checkbutton $frm.check \
 		-variable GmArrows::opt($count,1,_check) \
 		-height 1 -padx 0 -width 0]
 

@@ -32,14 +32,13 @@ proc GmHist::create { tree parent } {
     global mon
     global gmpath
     global iconpath
-    global guioptfont
 
     set node "histogram:$count"
 
     set frm [ frame .histicon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmHist::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmHist::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo hico -file "$iconpath/module-d.histogram.gif"
     set ico [label $frm.ico -image hico -bd 1 -relief raised]
@@ -138,8 +137,7 @@ proc GmHist::options { id frm } {
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmHist::select_map $id"
     Entry $row.c -width 35 -text " $opt($id,1,map)" \
-          -textvariable GmHist::opt($id,1,map) \
-          -background white
+          -textvariable GmHist::opt($id,1,map)
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
 		-image [image create photo -file "$iconpath/gui-help.gif"] \
@@ -152,13 +150,13 @@ proc GmHist::options { id frm } {
     set row [ frame $frm.style ]
     Label $row.a -text "Graph style"
     ComboBox $row.b -padx 2 -width 4 -textvariable GmHist::opt($id,1,style) \
-		-values {"bar" "pie"} -entrybg white
+		-values {"bar" "pie"} 
     # histogram color
     Label $row.c -text "Histogram frame and text color"
     ComboBox $row.d -padx 2 -width 10 -textvariable GmHist::opt($id,1,color) \
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
-		"magenta"} -entrybg white
+		"magenta"} 
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
     
@@ -166,7 +164,7 @@ proc GmHist::options { id frm } {
     set row [ frame $frm.steps ]
     Label $row.a -text "Steps/bins for values (fp maps only)" 
     SpinBox $row.b -range {2 255 1} -textvariable GmHist::opt($id,1,nsteps) \
-		-width 4 -helptext "steps/bins" -entrybg white 
+		-width 4 -helptext "steps/bins"  
     Label $row.c -text "   "
     checkbutton $row.d -text [G_msg "include null values"] \
         -variable GmHist::opt($id,1,nulls) 
@@ -263,7 +261,6 @@ proc GmHist::duplicate { tree parent node id } {
     variable opt
     variable count
 	variable dup
-	global guioptfont
 	global iconpath
 	global first
 
@@ -272,7 +269,7 @@ proc GmHist::duplicate { tree parent node id } {
     set first 1
 
     set frm [ frame .histicon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
+    set check [checkbutton $frm.check \
 		-variable GmHist::opt($count,1,_check) \
 		-height 1 -padx 0 -width 0]
 

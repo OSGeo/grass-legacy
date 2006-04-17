@@ -30,15 +30,14 @@ proc GmLegend::create { tree parent } {
     variable first
 	variable dup
     global gmpath
-    global guioptfont
 
     set node "legend:$count"
 	set dup($count) 1
 
     set frm [ frame .legendicon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmLegend::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmLegend::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
     set ico [label $frm.ico -bd 1 -relief raised -text "Leg"]
     icon_configure $ico module d.legend
@@ -145,8 +144,7 @@ proc GmLegend::options { id frm } {
 		-command "GmLegend::select_map $id"
 	icon_configure $row.b element cell
     Entry $row.c -width 35 -text " $opt($id,1,map)" \
-          -textvariable GmLegend::opt($id,1,map) \
-          -background white
+          -textvariable GmLegend::opt($id,1,map) 
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
             -command "run g.manual d.legend" \
@@ -164,8 +162,7 @@ proc GmLegend::options { id frm } {
 
     set row [ frame $frm.at2 ]
     Label $row.a -text "    set legend corners (bottom,top,left,right)"
-    LabelEntry $row.b -textvariable GmLegend::opt($id,1,at) -width 15 \
-            -entrybg white
+    LabelEntry $row.b -textvariable GmLegend::opt($id,1,at) -width 15 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
@@ -174,8 +171,7 @@ proc GmLegend::options { id frm } {
     Label $row.a -text [G_msg "Legend appearance: text color"] 
     ComboBox $row.b -padx 0 -width 10 -textvariable GmLegend::opt($id,1,color) \
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
-		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} \
-		-entrybg white
+		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"}
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
     
@@ -193,7 +189,7 @@ proc GmLegend::options { id frm } {
     set row [ frame $frm.lines ]
     Label $row.a -text "    number of lines (0=display all):" 
     SpinBox $row.b -range {0 1000 1} -textvariable GmLegend::opt($id,1,lines) \
-		-entrybg white -width 5 -helptext "Lines to display" 
+		 -width 5 -helptext "Lines to display" 
     Label $row.c -text "  " 
     checkbutton $row.d -text [G_msg "invert legend"] -variable \
         GmLegend::opt($id,1,flip) 
@@ -204,7 +200,7 @@ proc GmLegend::options { id frm } {
     set row [ frame $frm.thin ]
     Label $row.a -text "    interval between categories (integer maps)" 
     SpinBox $row.b -range {1 1000 1} -textvariable GmLegend::opt($id,1,thin) \
-		-entrybg white -width 5 -helptext "Thinning interval" 
+		 -width 5 -helptext "Thinning interval" 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
     
@@ -215,7 +211,7 @@ proc GmLegend::options { id frm } {
         GmLegend::opt($id,1,smooth) 
     Label $row.c -text "with maximum of" 
     SpinBox $row.d -range {2 100 1} -textvariable GmLegend::opt($id,1,labelnum) \
-                   -entrybg white -width 4 -helptext "Maximum lines to display for gradient" 
+                    -width 4 -helptext "Maximum lines to display for gradient" 
     Label $row.e -text "lines" 
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
@@ -237,16 +233,14 @@ proc GmLegend::options { id frm } {
     # use cats
     set row [ frame $frm.use ]
     Label $row.a -text "    legend for only these categories     "
-    LabelEntry $row.b -textvariable GmLegend::opt($id,1,use) -width 28 \
-            -entrybg white
+    LabelEntry $row.b -textvariable GmLegend::opt($id,1,use) -width 28
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
     
     # range
     set row [ frame $frm.range ]
     Label $row.a -text "    legend for only this range of values"
-    LabelEntry $row.b -textvariable GmLegend::opt($id,1,range) -width 28 \
-            -entrybg white
+    LabelEntry $row.b -textvariable GmLegend::opt($id,1,range) -width 28
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
@@ -347,12 +341,11 @@ proc GmLegend::duplicate { tree parent node id } {
     variable opt
     variable count
 	variable dup
-	global guioptfont
 
     set node "legend:$count"
 
     set frm [ frame .legendicon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
+    set check [checkbutton $frm.check \
 		-variable GmLegend::opt($count,1,_check) \
 		-height 1 -padx 0 -width 0]
 

@@ -31,15 +31,14 @@ proc GmThematic::create { tree parent } {
     variable lfile
     variable lfilemask
     variable optlist
-    global guioptfont
     global iconpath
 
     set node "thematic:$count"
 
     set frm [ frame .thematicicon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmThematic::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmThematic::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo thematicico -file "$iconpath/module-d.vect.thematic.gif"
     set ico [label $frm.ico -image thematicico -bd 1 -relief raised]
@@ -234,8 +233,7 @@ proc GmThematic::options { id frm } {
         -helptext [G_msg "vector for thematic mapping"] \
 		-command "GmThematic::select_map $id"
     Entry $row.c -width 35 -text " $opt($id,1,map)" \
-          -textvariable GmThematic::opt($id,1,map) \
-          -background white
+          -textvariable GmThematic::opt($id,1,map) 
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
             -image [image create photo -file "$iconpath/gui-help.gif"] \
@@ -249,18 +247,16 @@ proc GmThematic::options { id frm } {
     set row [ frame $frm.vtype ]
     Label $row.a -text [G_msg "    vector type"] 
     ComboBox $row.b -padx 2 -width 10 -textvariable GmThematic::opt($id,1,type) \
-                    -values {"area" "point" "centroid" "line" "boundary"} -entrybg white
+                    -values {"area" "point" "centroid" "line" "boundary"}
     Label $row.c -text " attribute layer"
-    LabelEntry $row.d -textvariable GmThematic::opt($id,1,layer) -width 3 \
-            -entrybg white
+    LabelEntry $row.d -textvariable GmThematic::opt($id,1,layer) -width 3 
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
     # vector column
     set row [ frame $frm.column ]
     Label $row.a -text "    NUMERIC attribute column to use for thematic map"
-    LabelEntry $row.b -textvariable GmThematic::opt($id,1,column) -width 15 \
-            -entrybg white
+    LabelEntry $row.b -textvariable GmThematic::opt($id,1,column) -width 15
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
     
@@ -285,11 +281,11 @@ proc GmThematic::options { id frm } {
     set row [ frame $frm.ttype ]
     Label $row.a -text [G_msg "Thematic map: type"] 
     ComboBox $row.b -padx 2 -width 16 -textvariable GmThematic::opt($id,1,themetype) \
-		-values {"graduated_colors" "graduated_points" "graduated_lines"} -entrybg white
+		-values {"graduated_colors" "graduated_points" "graduated_lines"} 
     Label $row.c -text [G_msg " map by"] 
     ComboBox $row.d -padx 2 -width 15 -textvariable GmThematic::opt($id,1,themecalc) \
 		-values {"interval" "std_deviation" "quartiles" \
-		"custom_breaks"} -entrybg white
+		"custom_breaks"} 
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
@@ -297,23 +293,21 @@ proc GmThematic::options { id frm } {
     set row [ frame $frm.int ]
     Label $row.a -text "    number of intervals to map (interval themes):" 
     SpinBox $row.b -range {1 99 1} -textvariable GmThematic::opt($id,1,nint) \
-                   -entrybg white -width 3 
+                    -width 3 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # breakpoints
     set row [ frame $frm.break ]
-    Label $row.a -text "    custom breakpoints (val val ...)"
-    LabelEntry $row.b -textvariable GmThematic::opt($id,1,breakpoints) -width 32 \
-            -entrybg white
+    Label $row.a -text "    custom breakpoints (val val ...)  "
+    LabelEntry $row.b -textvariable GmThematic::opt($id,1,breakpoints) -width 32
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # where
     set row [ frame $frm.where ]
     Label $row.a -text "    query with SQL where clause   "
-    LabelEntry $row.b -textvariable GmThematic::opt($id,1,where) -width 32 \
-            -entrybg white
+    LabelEntry $row.b -textvariable GmThematic::opt($id,1,where) -width 32 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
@@ -323,8 +317,7 @@ proc GmThematic::options { id frm } {
     Button $row.b -text [G_msg "icon"] \
 	    -command "GmThematic::select_symbol $id"
     Entry $row.c -width 10 -text "$opt($id,1,icon)" \
-	    -textvariable GmThematic::opt($id,1,icon) \
-	    -background white 
+	    -textvariable GmThematic::opt($id,1,icon)  
     Label $row.d -text [G_msg "point color"] 
     SelectColor $row.e -type menubutton -variable GmThematic::opt($id,1,pointcolor)
     Label $row.f -text [G_msg "line color"] 
@@ -336,10 +329,10 @@ proc GmThematic::options { id frm } {
     set row [ frame $frm.pts2 ]  
     Label $row.a -text "    size/min size (graduated pts/lines)" 
     SpinBox $row.b -range {1 50 1} -textvariable GmThematic::opt($id,1,ptsize) \
-        -width 2 -helptext "icon size/min size (graduated pts/lines)" -entrybg white 
+        -width 2 -helptext "icon size/min size (graduated pts/lines)"  
     Label $row.c -text "max size (graduated pts)" 
     SpinBox $row.d -range {1 50 1} -textvariable GmThematic::opt($id,1,maxsize) \
-        -width 2 -helptext " max size (graduated pts/lines)" -entrybg white 
+        -width 2 -helptext " max size (graduated pts/lines)"  
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
@@ -349,7 +342,7 @@ proc GmThematic::options { id frm } {
     ComboBox $row.b -padx 2 -width 18 -textvariable GmThematic::opt($id,1,colorscheme) \
         -values {"blue-red" "red-blue" "green-red" "red-green" \
         "blue-green" "green-blue" "cyan-yellow" "yellow-cyan" "custom_gradient" \
-        "single_color" } -entrybg white
+        "single_color" } 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
@@ -379,8 +372,7 @@ proc GmThematic::options { id frm } {
         -helptext [G_msg "title font for legend"] \
 	    -command "GmThematic::select_tfont $id"
     Entry $row.c -width 15 -text "$opt($id,1,titlefont)" \
-	    -textvariable GmThematic::opt($id,1,titlefont) \
-	    -background white 
+	    -textvariable GmThematic::opt($id,1,titlefont)  
     Label $row.d -text " font color"
     SelectColor $row.e -type menubutton -variable GmThematic::opt($id,1,tfontcolor)
     pack $row.a $row.b $row.c $row.d $row.e -side left
@@ -394,21 +386,19 @@ proc GmThematic::options { id frm } {
         -helptext [G_msg "subtitle font for legend"] \
 	    -command "GmThematic::select_stfont $id"
     Entry $row.c -width 15 -text "$opt($id,1,subtitlefont)" \
-	    -textvariable GmThematic::opt($id,1,subtitlefont) \
-	    -background white 
+	    -textvariable GmThematic::opt($id,1,subtitlefont)  
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
     
     # legend 3
     set row [ frame $frm.legend3 ]
-    Label $row.a -text [G_msg "    label font        "] 
+    Label $row.a -text [G_msg "    label font       "] 
     Button $row.b -image [image create photo -file "$iconpath/gui-font.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "label font for legend"] \
 	    -command "GmThematic::select_lfont $id"
     Entry $row.c -width 15 -text "$opt($id,1,labelfont)" \
-	    -textvariable GmThematic::opt($id,1,labelfont) \
-	    -background white 
+	    -textvariable GmThematic::opt($id,1,labelfont)  
     Label $row.d -text " font color"
     SelectColor $row.e -type menubutton -variable GmThematic::opt($id,1,lfontcolor)
     pack $row.a $row.b $row.c $row.d $row.e -side left
@@ -425,8 +415,7 @@ proc GmThematic::options { id frm } {
     # psmap
     set row [ frame $frm.psmap ]
     Label $row.a -text "Name for ps.map instruction files"
-    LabelEntry $row.b -textvariable GmThematic::opt($id,1,psmap) -width 34 \
-            -entrybg white
+    LabelEntry $row.b -textvariable GmThematic::opt($id,1,psmap) -width 34 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 }
@@ -542,16 +531,15 @@ proc GmThematic::duplicate { tree parent node id } {
     variable opt
     variable count
 	variable dup
-	global guioptfont
 	global iconpath
 
     set node "thematic:$count"
 	set dup($count) 1
 
     set frm [ frame .thematicicon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmThematic::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmThematic::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo thematicico -file "$iconpath/module-d.vect.thematic.gif"
     set ico [label $frm.ico -image thematicico -bd 1 -relief raised]
@@ -627,8 +615,8 @@ proc GmThematic::tlegend { mon } {
     #wm overrideredirect $txt 1
 
 	# create canvas for legend
-	set tlegmf [MainFrame .tlegend($mon).mf -bg $bgcolor ]
-	set tlegcan($mon) [canvas $tlegmf.can -background #ffffff \
+	set tlegmf [MainFrame .tlegend($mon).mf ]
+	set tlegcan($mon) [canvas $tlegmf.can -bg white\
 		-borderwidth 0 -closeenough 1.0 \
         -relief ridge -selectbackground #c4c4c4 \
         -width 300 -height 300 ]
@@ -640,7 +628,7 @@ proc GmThematic::tlegend { mon } {
 
 	# control buttons
 	set tleg_tb [$tlegmf addtoolbar]
-	set tlbb [ButtonBox $tleg_tb.bb -orient horizontal -background $bgcolor]
+	set tlbb [ButtonBox $tleg_tb.bb -orient horizontal]
 	$tlbb add -text "clear" -command "GmThematic::tleg_erase $mon" -bg #dddddd \
 		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
         -helptext [G_msg "Clear legend"] -highlightbackground $bgcolor

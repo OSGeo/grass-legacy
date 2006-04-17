@@ -32,15 +32,14 @@ proc GmRaster::create { tree parent } {
     global gmpath
     global iconpath
     global mon
-    global guioptfont
 
     set node "raster:$count"
 
 	#create form for layer tree entry
     set frm [ frame .rastericon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmRaster::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmRaster::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo rico -file "$iconpath/element-cell.gif"
     set ico [label $frm.ico -image rico -bd 1 -relief raised]
@@ -162,8 +161,7 @@ proc GmRaster::options { id frm } {
         -helptext [G_msg "base raster map to display"]\
 		-command "GmRaster::select_map $id"
     Entry $row.c -width 35 -text " $opt($id,1,map)" \
-          -textvariable GmRaster::opt($id,1,map) \
-          -background white -text
+          -textvariable GmRaster::opt($id,1,map) 
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
             -image [image create photo -file "$iconpath/gui-help.gif"] \
@@ -176,8 +174,7 @@ proc GmRaster::options { id frm } {
     # raster query
     set row [ frame $frm.rquery ]
     Label $row.a -text "     values to display"
-    LabelEntry $row.b -textvariable GmRaster::opt($id,1,rastquery) -width 35 \
-            -entrybg white
+    LabelEntry $row.b -textvariable GmRaster::opt($id,1,rastquery) -width 35 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
     
@@ -199,8 +196,7 @@ proc GmRaster::options { id frm } {
         -helptext [G_msg "raster map to drape over base map"]\
 		-command "GmRaster::select_drapemap $id"
     Entry $row.c -width 35 -text " $opt($id,1,drapemap)" \
-          -textvariable GmRaster::opt($id,1,drapemap) \
-          -background white
+          -textvariable GmRaster::opt($id,1,drapemap) 
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
         
@@ -216,8 +212,7 @@ proc GmRaster::options { id frm } {
     Label $row.a -text " Set background color (colored null value cells)"
     ComboBox $row.b -padx 2 -width 10 -textvariable GmRaster::opt($id,1,bkcolor) \
                     -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
-                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} \
-                    -entrybg white
+                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 }
@@ -378,15 +373,14 @@ proc GmRaster::duplicate { tree parent node id } {
     global gmpath
     global iconpath
     global mon
-    global guioptfont
 
     set node "raster:$count"
 	set dup($count) 1
 
     set frm [ frame .rastericon$count]
-    set check [checkbutton $frm.check -font $guioptfont \
-                           -variable GmRaster::opt($count,1,_check) \
-                           -height 1 -padx 0 -width 0]
+    set check [checkbutton $frm.check \
+		-variable GmRaster::opt($count,1,_check) \
+		-height 1 -padx 0 -width 0]
 
     image create photo rico -file "$iconpath/element-cell.gif"
     set ico [label $frm.ico -image rico -bd 1 -relief raised]
