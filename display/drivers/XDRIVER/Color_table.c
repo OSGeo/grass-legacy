@@ -219,6 +219,7 @@ Colormap init_color_table(Colormap cmap)
 {
 	int n_colors = use_visual->map_entries;
 	int r, g, b, y, i;
+    int colorindex;
 
 	/* "truecolor" really indicates that we can't do "float" color mode */
 	switch (use_visual->class)
@@ -299,19 +300,11 @@ Colormap init_color_table(Colormap cmap)
 	}
 
 	/* Generate lookup for "standard" colors */
-	LIB_assign_standard_color(RED,     DRV_lookup_color(255,   0,   0));
-	LIB_assign_standard_color(ORANGE,  DRV_lookup_color(255, 128,   0));
-	LIB_assign_standard_color(YELLOW,  DRV_lookup_color(255, 255,   0));
-	LIB_assign_standard_color(GREEN,   DRV_lookup_color(  0, 255,   0));
-	LIB_assign_standard_color(BLUE,    DRV_lookup_color(  0,   0, 255));
-	LIB_assign_standard_color(INDIGO,  DRV_lookup_color(  0, 128, 255));
-	LIB_assign_standard_color(VIOLET,  DRV_lookup_color(255,   0, 255));
-	LIB_assign_standard_color(BLACK,   DRV_lookup_color(  0,   0,   0));
-	LIB_assign_standard_color(WHITE,   DRV_lookup_color(255, 255, 255));
-	LIB_assign_standard_color(GRAY,    DRV_lookup_color(175, 175, 175));
-	LIB_assign_standard_color(BROWN,   DRV_lookup_color(180,  77,  25));
-	LIB_assign_standard_color(MAGENTA, DRV_lookup_color(255,   0, 128));
-	LIB_assign_standard_color(AQUA,    DRV_lookup_color(100, 128, 255));
+    for (colorindex = 1; colorindex <= MAX_COLOR_NUM; colorindex++)
+        LIB_assign_standard_color(colorindex, DRV_lookup_color(
+            (int) standard_colors_rgb[colorindex].r,
+            (int) standard_colors_rgb[colorindex].g,
+            (int) standard_colors_rgb[colorindex].b)) ;
 
 	return cmap;
 }
@@ -371,6 +364,7 @@ void XD_reset_color(int number, int red, int grn, int blu)
 
 int XD_Color_table_float(void)
 {
+    int colorindex;
 	if (!COM_Can_do_float())
 	{
 		G_warning("Color_table_float: not available on this device\n");
@@ -383,42 +377,26 @@ int XD_Color_table_float(void)
 
 	COM_Color_offset(0);
 
-	DRV_reset_color(RED, 255, 0, 0);
-	DRV_reset_color(ORANGE, 255, 127, 0);
-	DRV_reset_color(YELLOW, 255, 255, 0);
-	DRV_reset_color(GREEN, 0, 255, 0);
-	DRV_reset_color(BLUE, 0, 0, 255);
-	DRV_reset_color(INDIGO, 0, 127, 255);
-	DRV_reset_color(VIOLET, 255, 0, 255);
-	DRV_reset_color(WHITE, 255, 255, 255);
-	DRV_reset_color(BLACK, 0, 0, 0);
-	DRV_reset_color(GRAY, 127, 127, 127);
-	DRV_reset_color(BROWN, 180, 75, 25);
-	DRV_reset_color(MAGENTA, 255, 0, 127);
-	DRV_reset_color(AQUA, 100, 127, 255);
+    /* Reset float standard colors */
+    for (colorindex = 1; colorindex <= MAX_COLOR_NUM; colorindex++)
+        DRV_reset_color(colorindex,
+            (int) standard_colors_rgb[colorindex].r,
+            (int) standard_colors_rgb[colorindex].g,
+            (int) standard_colors_rgb[colorindex].b) ;
 
 	return 0;
 }
 int XD_Color_table_fixed(void)
 {
+    int colorindex;
 	table_type = FIXED;
 
-	/* by cho; 2001/08/08 */
-	/* Generate lookup for "fixed" colors */
-	LIB_assign_fixed_color(RED,     DRV_lookup_color(255,   0,   0));
-	LIB_assign_fixed_color(ORANGE,  DRV_lookup_color(255, 128,   0));
-	LIB_assign_fixed_color(YELLOW,  DRV_lookup_color(255, 255,   0));
-	LIB_assign_fixed_color(GREEN,   DRV_lookup_color(  0, 255,   0));
-	LIB_assign_fixed_color(BLUE,    DRV_lookup_color(  0,   0, 255));
-	LIB_assign_fixed_color(INDIGO,  DRV_lookup_color(  0, 128, 255));
-	LIB_assign_fixed_color(VIOLET,  DRV_lookup_color(255,   0, 255));
-	LIB_assign_fixed_color(BLACK,   DRV_lookup_color(  0,   0,   0));
-	LIB_assign_fixed_color(WHITE,   DRV_lookup_color(255, 255, 255));
-	LIB_assign_fixed_color(GRAY,    DRV_lookup_color(175, 175, 175));
-	LIB_assign_fixed_color(BROWN,   DRV_lookup_color(180,  77,  25));
-	LIB_assign_fixed_color(MAGENTA, DRV_lookup_color(255,   0, 128));
-	LIB_assign_fixed_color(AQUA,    DRV_lookup_color(100, 128, 255));
-	/**/
+    /* Generate lookup for fixed colors */
+    for (colorindex = 1; colorindex <= MAX_COLOR_NUM; colorindex++)
+        LIB_assign_fixed_color(colorindex, DRV_lookup_color(
+            (int) standard_colors_rgb[colorindex].r,
+            (int) standard_colors_rgb[colorindex].g,
+            (int) standard_colors_rgb[colorindex].b)) ;
 
 	XSetWindowColormap(dpy, grwin, fixedcmap);
 	return 0;
