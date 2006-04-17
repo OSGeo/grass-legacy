@@ -63,7 +63,6 @@ proc wrap_text_in_label {path} {
 
 # These are the colors from lib/gis/color_str.c
 array set grass_named_colors {
-white {255 255 255 0}
 black {0 0 0 0}
 red {255 0 0 0}
 green {0 255 0 0}
@@ -71,13 +70,15 @@ blue {0 0 255 0}
 yellow {255 255 0 0}
 magenta {255 0 255 0}
 cyan {0 255 255 0}
-aqua {100 127 255 0}
-grey {127 127 127 0}
-gray {127 127 127 0}
-orange {255 127 0 0}
+white {255 255 255 0}
+grey {128 128 128 0}
+gray {128 128 128 0}
+orange {255 128 0 0}
+aqua {100 128 255 0}
+indigo {0 128 255 0}
+violet {128 0 255 0}
+purple {128 0 255 0}
 brown {180 75 25 0}
-violet {255 0 255 0}
-indigo {0 127 255 0}
 none {0 0 0 255}
 }
 
@@ -119,11 +120,8 @@ proc color_rgba255_to_grass {list} {
 	}
 }
 
-proc color_rgba255_to_tcltk {list} {
-	set rX [format %02X [lindex $list 0]]
-	set gX [format %02X [lindex $list 1]]
-	set bX [format %02X [lindex $list 2]]
-	return "#$rX$gX$bX"
+proc color_rgba255_to_tcltk {color} {
+	eval format #%02X%02X%02X $color
 }
 
 proc color_tcltk_to_rgba255 {string} {
@@ -234,12 +232,8 @@ proc get_color {dlg optn type} {
 	global opt
 
 	if {(! $opt($dlg,$optn,multi)) && $opt($dlg,$optn,val) != ""} {
-		if {$type == "tcltk"} {
-			set init $opt($dlg,$optn,val)
-		} else {
-			# Default to grass type color
-			set init [color_grass_to_tcltk $opt($dlg,$optn,val)]
-		}
+		# Convert from grass color type
+		set init [color_grass_to_tcltk $opt($dlg,$optn,val)]
 	} else {
 		set init [format "#%06X" [expr {int(rand() * 0xFFFFFF)}]]
 	}
@@ -248,12 +242,7 @@ proc get_color {dlg optn type} {
 
 	if {$val != ""} {
 		# Convert it to the correct type
-		if {$type == "tcltk"} {
-			# Pass
-		} else {
-			# Default to grass color type
-			set val [color_tcltk_to_grass $val]
-		}
+		set val [color_tcltk_to_grass $val]
 
 		# Write it back to the answer
 		if {$opt($dlg,$optn,multi) && $opt($dlg,$optn,val) != ""} {
