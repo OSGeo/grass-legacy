@@ -18,7 +18,6 @@
 #include <X11/Xatom.h>
 #include <X11/cursorfont.h>
 #include <grass/gis.h>
-#include <grass/colors.h>
 #include "icon.bit"
 #include <grass/winname.h>
 #include <grass/glocale.h>

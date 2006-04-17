@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <grass/gis.h>
 #include "includes.h"
-#include <grass/colors.h>
 #include "XDRIVER.h"
 
 void XD_draw_bitmap(int ncols, int nrows, const unsigned char *array)
