@@ -1,28 +1,18 @@
 #include "string.h"
 #include <grass/gis.h>
+#include <grass/colors.h>
 
-#define NUM_COLORS      15 
+#define NUM_COLORS      0
 
+/* These are color names that work where R:G:B does, but are not
+   preallocated colors on devices */
+/* Currently there are none */
 static struct {
     char *name;
     int r, g, b;
 } _colors[NUM_COLORS] =
 {
-    {"white",   255, 255, 255},
-    {"black",     0,   0,   0},
-    {"red",     255,   0,   0},
-    {"green",     0, 255,   0},
-    {"blue",      0,   0, 255},
-    {"yellow",  255, 255,   0},
-    {"magenta", 255,   0, 255},
-    {"cyan",      0, 255, 255},
-    {"aqua",    100, 127, 255},
-    {"grey",    127, 127, 127},
-    {"gray",    127, 127, 127},
-    {"orange",  255, 127,   0},
-    {"brown",   180,  75,  25},
-    {"violet",  255,   0, 255},
-    {"indigo",    0, 127, 255}
+/*    {"purple",  128,   0, 255}   Example of what a color could be */
 };
 
 /* 
@@ -35,10 +25,10 @@ static struct {
 */
 int G_str_to_color (const char *str, int *red, int *green, int *blue)
 {
-    int i, ret;
+    int i, ret, n;
     char buf[100], temp[10]; 
 
-    strcpy (buf, str );
+    G_strcpy (buf, str );
     G_chop (buf);
     
     G_debug (3, "G_str_to_color(): str = '%s'", buf );
@@ -55,6 +45,18 @@ int G_str_to_color (const char *str, int *red, int *green, int *blue)
 	}
         return 1;
     } else {
+	/* Look for this color in the standard (preallocated) colors */
+	for (i = 0; i < MAX_COLOR_NAMES; i++) {
+	    if ( G_strcasecmp(buf, standard_color_names[i].name) == 0) {
+		n = standard_color_names[i].number;
+		*red   = (int) standard_colors_rgb[i].r;
+		*green = (int) standard_colors_rgb[i].g;
+		*blue  = (int) standard_colors_rgb[i].b;
+                return 1;
+	    }
+        }
+
+	/* Compare to local color table */
 	for (i = 0; i < NUM_COLORS; i++) {
 	    if ( G_strcasecmp(buf, _colors[i].name) == 0) {
 		*red   = _colors[i].r;
