@@ -147,7 +147,7 @@ static int zero_fill(int fd, long nbytes)
 
     buf[0]=0x0;
     G_debug(3,"Using new segmentation code...");
-    if ( lseek(fd,nbytes-1,SEEK_SET) < 0 ) { 
+    if ( lseek(fd,nbytes-1,SEEK_CUR) < 0 ) { 
             G_warning("%s",strerror(errno));
 	    return -1;
     }
