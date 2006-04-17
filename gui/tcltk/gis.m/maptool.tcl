@@ -20,6 +20,7 @@ proc MapToolBar::create { tb } {
     global selclr
     global mapfile
     global iconpath
+    global bgcolor
     variable toolbar
     
     set selcolor #88aa88
@@ -27,23 +28,26 @@ proc MapToolBar::create { tb } {
     set toolbar $tb
 
     # DISPLAY AND MONITOR SELECTION
-    set bbox1 [ButtonBox $toolbar.bbox1 -spacing 0 -background $bgcolor ]
+    set bbox1 [ButtonBox $toolbar.bbox1 -spacing 0 ]
     
     # display
     $bbox1 add -image [image create photo -file "$iconpath/gui-display.gif"] \
         -command "MapCanvas::drawmap $mon 0; MapCanvas::composite $mon" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
-        -helptext [G_msg "Display active layers in current region"]
+        -highlightbackground $bgcolor \
+        -helptext [G_msg "Display active layers"]
 
     $bbox1 add -image [image create photo -file "$iconpath/module-nviz.gif"] \
         -command {GmGroup::nvdisplay "root"} \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
+        -highlightbackground $bgcolor \
         -helptext [G_msg "Start NVIZ using active layers in current region"]
 
     # erase
     $bbox1 add -image [image create photo -file "$iconpath/gui-erase.gif"] \
         -command "MapCanvas::erase $mon" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
+        -highlightbackground $bgcolor \
         -helptext [G_msg "Erase to white"]
 
     pack $bbox1 -side left -anchor w
@@ -101,30 +105,34 @@ proc MapToolBar::create { tb } {
     set sep3 [Separator $toolbar.sep3 -orient vertical -background aquamarine2 ]
     pack $sep3 -side left -fill y -padx 5 -anchor w
 
-    set bbox3 [ButtonBox $toolbar.bbox3 -background $bgcolor -spacing 0  ]
+    set bbox3 [ButtonBox $toolbar.bbox3 -spacing 0  ]
     
     # zoom.back
     $bbox3 add -image [image create photo -file "$iconpath/gui-zoom_back.gif"] \
         -command "MapCanvas::zoom_back $mon" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2\
+        -highlightbackground $bgcolor \
         -helptext [G_msg "Return to previous zoom"]
 
     # zoom to current region  
     $bbox3 add -image [image create photo -file "$iconpath/gui-zoom_current.gif"] \
         -command "MapCanvas::zoom_current $mon" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
+        -highlightbackground $bgcolor \
         -helptext [G_msg "Zoom to current region and redraw all layers"]
 
     # zoom to saved region
     $bbox3 add -image [image create photo -file "$iconpath/gui-zoom_region.gif"] \
         -command "MapCanvas::zoom_region $mon" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
+        -highlightbackground $bgcolor \
         -helptext [G_msg "Zoom to saved region"]
 
     # zoom to default region  
     $bbox3 add -image [image create photo -file "$iconpath/gui-zoom_default.gif"] \
         -command "MapCanvas::zoom_default $mon" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
+        -highlightbackground $bgcolor \
         -helptext [G_msg "Zoom to default region"]
 
     pack $bbox3 -side left -anchor w
@@ -133,16 +141,18 @@ proc MapToolBar::create { tb } {
     pack $sep4 -side left -fill y -padx 5 -anchor w
 
     # FILE & PRINT
-    set bbox4 [ButtonBox $toolbar.bbox4 -spacing 0 -background $bgcolor ]
+    set bbox4 [ButtonBox $toolbar.bbox4 -spacing 0 ]
 
     $bbox4 add -image [image create photo -file "$iconpath/file-print.gif"]  \
     	-command "MapCanvas::printcanvas $mon" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
+        -highlightbackground $bgcolor \
         -helptext [G_msg "Print raster & vector maps to eps file"]
 
 	set mapsave [menubutton $tb.mapsave  \
 		-image [image create photo -file "$iconpath/file-save.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
+        -highlightbackground $bgcolor \
         -bg $bgcolor -width 28 -indicatoron 1 -direction below]
 
 
@@ -150,10 +160,10 @@ proc MapToolBar::create { tb } {
     pack $bbox4 -side left -anchor w
 
 	# menu for saving display
-	set savefile [menu $mapsave.sf -type normal -bg $bgcolor]
-	set pngfile [menu $savefile.png -type normal -bg $bgcolor]
-	set ppmfile [menu $savefile.ppm -type normal -bg $bgcolor]
-	set jpgfile [menu $savefile.jpg -type normal -bg $bgcolor]
+	set savefile [menu $mapsave.sf -type normal]
+	set pngfile [menu $savefile.png -type normal]
+	set ppmfile [menu $savefile.ppm -type normal]
+	set jpgfile [menu $savefile.jpg -type normal]
 
 	$savefile add command -label "PPM/PNM" -command {MapToolBar::savefile ppm 0}
 	$savefile add command -label "TIF*" -command {MapToolBar::savefile tif 0}

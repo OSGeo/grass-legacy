@@ -105,6 +105,7 @@ source $gmpath/barscale.tcl
 source $gmpath/chart.tcl
 source $gmpath/thematic.tcl
 source $gmpath/maptext.tcl
+source $gmpath/maplabels.tcl
 source $gmpath/mapprint.tcl
 
 # Load a console user interface
@@ -239,7 +240,6 @@ proc Gm::xmon { type cmd } {
 proc Gm::create { } {
     global gmpath
     global mainwindow
-    global bgcolor
     global cmd
     global outtext
     global mon
@@ -267,7 +267,7 @@ proc Gm::create { } {
     set prgtext   "Creating MainFrame..."
     
     set mainframe [MainFrame .mainframe \
-                       -menu $descmenu -background $bgcolor \
+                       -menu $descmenu \
                        -textvariable Gm::status \
                        -progressvar  Gm::prgindic ]
 
@@ -278,8 +278,7 @@ proc Gm::create { } {
     GmToolBar1::create $tb1
     set tb2  [$mainframe addtoolbar]
     GmToolBar2::create $tb2
-    set pw1 [PanedWindow $mainwindow.pw1 -side left -pad 0 -width 10 \
-    	-background $bgcolor]    
+    set pw1 [PanedWindow $mainwindow.pw1 -side left -pad 0 -width 10 ]    
    
     # tree 
     set treemon [expr $mon + 1]

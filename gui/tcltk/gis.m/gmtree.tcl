@@ -339,11 +339,11 @@ proc GmTree::add { type } {
         thematic {
             GmThematic::create $tree($mon)  $parent_node
         }
-        fttext {
-            GmFTtext::create $tree($mon)  $parent_node
-        }
         ctext {
             GmCtext::create $tree($mon)  $parent_node
+        }
+        clabels {
+            GmCLabels::create $tree($mon)  $parent_node
         }
     }
 }
@@ -418,11 +418,11 @@ proc GmTree::select { node } {
         thematic {
             GmThematic::options $id $opt
         }
-        fttext {
-            GmFTtext::options $id $opt
-        }
         ctext {
             GmCtext::options $id $opt
+        }
+        clabels {
+            GmCLabels::options $id $opt
         }
     }
 }
@@ -515,14 +515,14 @@ proc GmTree::display_node { node mod } {
 ###############################################################################
 
 # display nodes for canvas graphics
-proc GmTree::display_cvnode { node } {
+proc GmTree::display_cvnode { node} {
     variable tree
 
     set type [GmTree::node_type $node]
 
     switch $type {
 		clabels {
-			GmClabels::display $node
+			GmCLabels::display $node
 		}
 		cgrid {
 			GmcGridl::display $node
@@ -640,11 +640,11 @@ proc GmTree::duplicate { } {
         thematic {
             GmThematic::duplicate $tree($mon) $parent_node $sel $id
         }
-        fttext {
-            GmFTtext::duplicate $tree($mon) $parent_node $sel $id
-        }
         ctext {
             GmCtext::duplicate $tree($mon) $parent_node $sel $id
+        }
+        clabels {
+            GmCLabels::duplicate $tree($mon) $parent_node $sel $id
         }
         group {
             GmGroup::duplicate $tree($mon) $parent_node $sel $id
@@ -765,15 +765,15 @@ proc GmTree::save_node { depth node } {
             incr depth
 	    	GmThematic::save $tree($mon) $depth $node
 		}
-		fttext {
-            GmTree::rc_write $depth fttext $name
-            incr depth
-	    	GmFTtext::save $tree($mon) $depth $node
-		}
 		ctext {
             GmTree::rc_write $depth ctext $name
             incr depth
 	    	GmCtext::save $tree($mon) $depth $node
+		}
+		clabels {
+            GmTree::rc_write $depth clabels $name
+            incr depth
+	    	GmCLabels::save $tree($mon) $depth $node
 		}
     } 
     set depth [expr $depth - 1]
@@ -882,12 +882,12 @@ proc GmTree::load { lpth } {
 				set current_node [GmThematic::create $tree($mon) $parent]
 				$tree($mon) itemconfigure $current_node -text $val 
 			}
-			fttext {
-				set current_node [GmFTtext::create $tree($mon) $parent]
-				$tree($mon) itemconfigure $current_node -text $val 
-			}
 			ctext {
 				set current_node [GmCtext::create $tree($mon) $parent]
+				$tree($mon) itemconfigure $current_node -text $val 
+			}
+			clabels {
+				set current_node [GmCLabels::create $tree($mon) $parent]
 				$tree($mon) itemconfigure $current_node -text $val 
 			}
 			End {
@@ -949,11 +949,11 @@ proc GmTree::load { lpth } {
 						thematic { 
 						GmThematic::set_option $current_node $key $val
 						}
-						fttext { 
-						GmFTtext::set_option $current_node $key $val
-						}
 						ctext { 
 						GmCtext::set_option $current_node $key $val
+						}
+						clabels { 
+						GmCLabels::set_option $current_node $key $val
 						}
 					} 
 				}
@@ -1043,11 +1043,11 @@ proc GmTree::node_type { node } {
     if { [string match thematic* $node] } {
        return "thematic"
     }  
-    if { [string match fttext* $node] } {
-       return "fttext"
-    }  
     if { [string match ctext* $node] } {
        return "ctext"
+    }  
+    if { [string match clabels* $node] } {
+       return "clabels"
     }  
     
     return ""
