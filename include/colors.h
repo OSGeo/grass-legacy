@@ -30,8 +30,8 @@
 /* increase when adding more colors */
 #define MAX_COLOR_NUM 14
 #define MAXCOLORS MAX_COLOR_NUM
-/* This is the number of color names. It is one higher due to grey/gray */
-#define MAX_COLOR_NAMES 15
+/* This is the number of color names. It is two higher due to grey/gray and violet/purple*/
+#define MAX_COLOR_NAMES 16
 
 /* These can be in any order. They must match the lookup strings in the table below. */
 #define D_COLOR_LIST "red,orange,yellow,green,blue,indigo,violet,white,black,gray,brown,magenta,aqua,grey,cyan,purple"
