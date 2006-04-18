@@ -24,6 +24,7 @@ SUBDIRS = \
 	g.mremove \
 	i.fusion.brovey \
 	i.image.mosaic \
+	i.landsat.rgb \
 	i.oif \
 	i.spectral \
 	i.in.spotvgt \
