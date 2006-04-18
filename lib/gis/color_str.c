@@ -2,6 +2,47 @@
 #include <grass/gis.h>
 #include <grass/colors.h>
 
+/* The order in this table is important! It will be indexed by color number */
+const struct color_rgb standard_colors_rgb [MAX_COLOR_NUM + 1] =
+{
+  {  0,  0,  0}, /* This is a dummy value to make lookup easier */
+  {  0,  0,  0}, /* BLACK   */
+  {255,  0,  0}, /* RED     */
+  {  0,255,  0}, /* GREEN   */
+  {  0,  0,255}, /* BLUE    */
+  {255,255,  0}, /* YELLOW  */
+  {  0,255,255}, /* CYAN    */
+  {255,  0,255}, /* MAGENTA */
+  {255,255,255}, /* WHITE   */
+  {128,128,128}, /* GRAY    */
+  {255,128,  0}, /* ORANGE  */
+  {100,128,255}, /* AQUA    */
+  {  0,128,255}, /* INDIGO  */
+  {128,  0,255}, /* VIOLET  */
+  {180, 77, 25}  /* BROWN   */
+};
+
+/* The order in this table has no meaning. */
+const struct color_name standard_color_names[MAX_COLOR_NAMES] =
+{
+    {"black",   BLACK},
+    {"red",     RED},
+    {"green",   GREEN},
+    {"blue",    BLUE},
+    {"yellow",  YELLOW},
+    {"cyan",    CYAN},
+    {"magenta", MAGENTA},
+    {"white",   WHITE},
+    {"grey",    GREY},
+    {"gray",    GRAY},
+    {"orange",  ORANGE},
+    {"aqua",    AQUA},
+    {"indigo",  INDIGO},
+    {"violet",  VIOLET},
+    {"purple",  PURPLE},
+    {"brown",   BROWN}
+};
+
 #define NUM_COLORS      0
 
 /* These are color names that work where R:G:B does, but are not
