@@ -1,0 +1,116 @@
+#!/bin/sh
+
+############################################################################
+#
+# MODULE:	i.landsat.rgb
+# AUTHOR(S):	Markus Neteler. <neteler itc it>
+# PURPOSE:      create pretty LANDSAT RGBs: the trick is to remove outliers 
+#               using percentiles (area under the histogram curve)
+#               Needs GRASS 6.1-CVS.
+#
+# COPYRIGHT:	(C) 2006 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+# TODO: implement better brightness control
+#############################################################################
+
+#%Module
+#%  description: Create LANDSAT RGB natural color composite
+#%End
+#%option
+#% key: blue
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: LANDSAT blue channel
+#% required : yes
+#%end
+#%option
+#% key: green
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: LANDSAT green channel
+#% required : yes
+#%end
+#%option
+#% key: red
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: LANDSAT red channel
+#% required : yes
+#%end
+#%option
+#% key: output
+#% type: string
+#% gisprompt: new,cell,raster
+#% description: raster output map
+#% required : yes
+#%end
+
+# setting environment, so that awk works properly in all languages
+unset LC_ALL
+export LC_NUMERIC=C
+
+PROG=`basename $0`
+
+BLUE=$GIS_OPT_blue
+GREEN=$GIS_OPT_green
+RED=$GIS_OPT_red
+OUT=$GIS_OPT_output
+EXT=nice
+
+#brigntness control (should become a parameter eventuall)
+BRIGHTNESS=0 # think of percent, must be positive or 0
+
+cleanup()
+{
+ g.remove rast=$BLUE.${EXT},$GREEN.${EXT},$RED.${EXT} > /dev/null
+}
+
+# what to do in case of user break:
+exitprocedure()
+{
+ echo "User break!"
+ cleanup
+ exit 1
+}
+# shell check for user break (signal list: trap -l)
+trap "exitprocedure" 2 3 15
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec g.parser "$0" "$@"
+fi
+
+# debug
+# d.rgb b=$BLUE g=$GREEN r=$RED
+
+for i in $BLUE $GREEN $RED ; do
+
+ # 90 or 98? MAX value controls brightness
+ MAXPERCENTILE=`expr 98 - $BRIGHTNESS`
+ MIN=`r.univar.sh -e $i per=2  | grep Percentile | cut -d' ' -f3`
+ MAX=`r.univar.sh -e $i per=$MAXPERCENTILE | grep Percentile | cut -d' ' -f3`
+
+ # >= and <= ??
+ r.mapcalc "$i.${EXT}=round(if($i > $MIN, if($i < $MAX,$i,$MAX),$MIN))"
+ r.info -r $i.${EXT}
+ r.colors $i.${EXT} col=grey
+
+done
+
+# debug
+# d.rgb b=$BLUE.${EXT} g=$GREEN.${EXT} r=$RED.${EXT}
+
+r.composite b=$BLUE.${EXT} g=$GREEN.${EXT} r=$RED.${EXT} out=$OUT --o
+echo "Created raster map <$OUT>"
+
+cleanup
+
+exit 0
