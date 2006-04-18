@@ -1,9 +1,9 @@
 <HEAD>
-<TITLE>GRASS 5.7 Vector Format and API</TITLE>
+<TITLE>GRASS 5.7/6 Vector Format and API</TITLE>
 </HEAD>
 <BODY>
 <P>
-<H1>GRASS 5.7 Vector Format and API</H1>
+<H1>GRASS 5.7/6 Vector Format and API</H1>
 
 This document describes new format for <B>GRASS vector files</B> with 
 <B>multicategory</B> and optional <B>3D</B> support.
@@ -13,15 +13,15 @@ You can send any comments to <A href=mailto:blazek@itc.it>Radim Blazek</A> and
 <P>
 See also:
 <ul>
-<li><A HREF="http://grass.itc.it/grass61/index.html#development">Draft GRASS 5.7 Programmer's manual</A>
+<li><A HREF="http://grass.itc.it/devel/index.php#prog">GRASS 6 Programmer's manual</A>
 <li><A HREF="http://www.ing.unitn.it/~grass/conferences/GRASS2002/proceedings/proceedings/pdfs/Blazek_Radim.pdf">The 
   new GRASS 5.1 vector architecture</a>, R. Blazek, M. Neteler, M. Micarelli 2002. Proc. 'Open source GIS -
   GRASS users conference', Sept. 2002, Trento, Italy.
 </ul>
 
-<h2>GRASS 5.7 vector architecture features </h2>
+<h2>GRASS 5.7/6 vector architecture features </h2>
 
-The new GRASS 5.7 vector architecture implementation covers 
+The new GRASS vector architecture implementation covers 
 the new 3D, multi-attribute, multi-layer vector features. 
 Current available are:   
 
@@ -292,7 +292,7 @@ Vlib, Vect_*(), VECTLIB_REAL, libvect.a, vector library, grass4.x<BR><BR>
 
 Vector library was introduced in grass4.0 to hide vector files' formats
 and structures. 
-In GRASS 5.7 everything is accessed via Vect_* functions, for example:
+In GRASS everything is accessed via Vect_* functions, for example:
 <PRE>
     xx = Map.Att[Map.Area[area_num].att].x;
 </PRE>by new function<PRE>
