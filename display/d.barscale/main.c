@@ -7,7 +7,6 @@
 #include <grass/display.h>
 #include <grass/raster.h>
 #include "options.h"
-#include <grass/colors.h>
 #include <grass/glocale.h>
 
 int color1;
@@ -28,9 +27,6 @@ int main (int argc, char **argv)
 	struct Option *opt1, *opt2, *opt3 ;
 	struct Flag *mouse, *feet, *top, *linescale, *northarrow, *scalebar;
 	struct Cell_head W ;
-	int R, G, B;
-	const int customFGcolor = MAXCOLORS + 1;
-	const int customBGcolor = MAXCOLORS + 2;
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]);
@@ -70,14 +66,15 @@ int main (int argc, char **argv)
 	opt1->required   = NO ;
 	opt1->description=
 	    _("Background color, either a standard GRASS color, R:G:B triplet, or \"none\"");
+	opt1->gisprompt  = GISPROMPT_COLOR ;
 
 	opt2 = G_define_option() ;
 	opt2->key        = "tcolor" ;
 	opt2->type       = TYPE_STRING ;
 	opt2->answer     = DEFAULT_FG_COLOR ;
 	opt2->required   = NO ;
-/*	opt2->options    = D_color_list(); */
 	opt2->description= _("Text color, either a standard GRASS color or R:G:B triplet");
+	opt2->gisprompt  = GISPROMPT_COLOR ;
 
 	opt3 = G_define_option() ;
 	opt3->key        = "at";
@@ -110,35 +107,12 @@ int main (int argc, char **argv)
 		draw = 2;
 
         /* Parse and select background color */
-	if(sscanf(opt1->answer, "%d:%d:%d", &R, &G, &B) == 3) {
-	    if (R>=0 && R<256 && G>=0 && G<256 && B>=0 && B<256) {
-		R_reset_color(R, G, B, customBGcolor);
-		color1 = customBGcolor;
-	    }
-	}
-	else if (!strcmp("none", opt1->answer)) {
+	color1 = D_parse_color(opt1->answer, 1);
+	if (color1 == 0)
 	    do_background = 0;
-	    color1 = 1;	/* dummy value */
-	}
-	else
-	    color1 = D_translate_color(opt1->answer);
 
-	if(!color1)
-	    G_fatal_error(_("[%s]: No such color"), opt1->answer);
-
-
-        /* Parse and select foreground color */
-	if(sscanf(opt2->answer, "%d:%d:%d", &R, &G, &B) == 3) {
-	    if (R>=0 && R<256 && G>=0 && G<256 && B>=0 && B<256) {
-		R_reset_color(R, G, B, customFGcolor);
-		color2 = customFGcolor;
-	    }
-	}
-	else
-	    color2 = D_translate_color(opt2->answer);
-
-	if(!color2)
-	    G_fatal_error(_("[%s]: No such color"), opt2->answer);
+	/* Parse and select foreground color */
+	color2 = D_parse_color(opt2->answer, 0);
 
 
 	sscanf(opt3->answers[0], "%lf", &east) ;

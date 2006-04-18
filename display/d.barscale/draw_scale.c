@@ -8,7 +8,6 @@
 #include <grass/display.h>
 #include <grass/raster.h>
 #include "options.h"
-#include <grass/colors.h>
 
 #define NUMSCALES	16
 
@@ -98,18 +97,12 @@ int draw_scale(char *save, int toptext)
 			R_panel_save(save,pt,pb,pl,pr);
 
 		if (do_background) {
-		    if(color1 > MAXCOLORS)	/* ie custom RGB color */
-			R_color(color1);
-		    else
-			R_standard_color(color1);
+		    D_raster_use_color (color1);
 
 		    R_box_abs(pl, pt, pr, pb);
 		}
 		/* Draw legend */
-		if(color2 > MAXCOLORS)	/* ie custom RGB color */
-		    R_color(color2);
-		else
-		    R_standard_color(color2);
+		D_raster_use_color (color2);
 
 		R_move_abs(pl + w/2 + 1, pt + 17 + 1);
 		xarr[0] = 0; yarr[0] = 0;
@@ -169,19 +162,13 @@ int draw_scale(char *save, int toptext)
 		R_panel_save(save,pt,pb,pl,pr);
 
 	if(do_background) {
-	    if(color1 > MAXCOLORS)	/* ie custom RGB color */
-		R_color(color1);
-	    else
-		R_standard_color(color1);
+	    D_raster_use_color (color1);
 
 	    R_box_abs(pl, pt, pr, pb);
 	}
 	
 	/* Draw legend */
-	if(color2 > MAXCOLORS)	/* ie custom RGB color */
-	    R_color(color2);
-	else
-	    R_standard_color(color2);
+	D_raster_use_color (color2);
 
 	if(draw != 2) {
 		R_move_abs (x_pos + 5, y_pos + 20) ;
