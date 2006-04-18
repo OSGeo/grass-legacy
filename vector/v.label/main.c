@@ -202,7 +202,8 @@ main (int argc, char **argv)
 	fontsize = atoi(FontSize->answer);
 
 	/* figure out space param dynamically from current dispay */
-	if(Along_flag->answer) {
+	/* don't bother if Space was explicitly given (bypasses xmon req) */
+	if(Along_flag->answer && ! Space->answer) {
 	    if (R_open_driver() != 0)  /* connect to the driver */
 		G_fatal_error(_("No graphics device selected"));
 
