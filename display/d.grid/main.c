@@ -23,7 +23,6 @@
 #include <grass/gis.h>
 #include <grass/display.h>
 #include <grass/raster.h>
-#include <grass/colors.h>
 #include <grass/gprojects.h>
 #include <grass/glocale.h>
 
@@ -35,9 +34,6 @@ main (int argc, char **argv)
 {
 	int colorg = 0;
 	int colorb = 0;
-	const int customGcolor = MAXCOLORS + 1;
-	const int customBcolor = MAXCOLORS + 2;
-	int R, G, B;
 	double size=0., gsize=0.; /* initialize to zero */
 	double east, north;
 	int do_text;
@@ -67,9 +63,9 @@ main (int argc, char **argv)
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = NO;
 	opt1->answer     = "gray" ;
-/*	opt1->options    = D_color_list(); */
 	opt1->description=
 	    _("Sets the grid color, either a standard GRASS color or R:G:B triplet (separated by colons)");
+	opt1->gisprompt  = GISPROMPT_COLOR ;
 	    
 	opt3 = G_define_option() ;
 	opt3->key        = "origin" ;
@@ -84,9 +80,9 @@ main (int argc, char **argv)
 	opt4->type       = TYPE_STRING ;
 	opt4->required   = NO;
 	opt4->answer     = "brown" ;
-/*	opt4->options    = D_color_list(); */
 	opt4->description=
 	    _("Sets the border color, either a standard GRASS color or R:G:B triplet");
+	opt4->gisprompt  = GISPROMPT_COLOR ;
 
 	geogrid = G_define_flag();
 	geogrid->key = 'g';
@@ -122,32 +118,10 @@ main (int argc, char **argv)
 	else do_text = TRUE;
 
 	/* Parse and select grid color */
-	if(sscanf(opt1->answer, "%d:%d:%d", &R, &G, &B) == 3) {
-	    if (R>=0 && R<256 && G>=0 && G<256 && B>=0 && B<256) {
-		R_reset_color(R, G, B, customGcolor);
-		colorg = customGcolor;
-	    }
-	}
-	else
-	    colorg = D_translate_color(opt1->answer);
-	
-	
-	if(!colorg)
-	    G_fatal_error(_("[%s]: No such color"), opt1->answer);
-	
+	colorg = D_parse_color (opt1->answer, 0);	
 	
 	/* Parse and select border color */
-	if(sscanf(opt4->answer, "%d:%d:%d", &R, &G, &B) == 3) {
-	    if (R>=0 && R<256 && G>=0 && G<256 && B>=0 && B<256) {
-		R_reset_color(R, G, B, customBcolor);
-		colorb = customBcolor;
-	    }
-	}
-	else
-	    colorb = D_translate_color(opt4->answer);
-
-	if(!colorb)
-	    G_fatal_error(_("[%s]: No such color"), opt4->answer);
+	colorb = D_parse_color (opt4->answer, 0);
 
 
 	/* get grid size */
@@ -186,10 +160,7 @@ main (int argc, char **argv)
 	if(!nogrid->answer)
 	{
 		/* Set grid color */
-		if (colorg > MAXCOLORS)  /* ie custom RGB color */
-			R_color(colorg);
-		else
-			R_standard_color(colorg) ;
+		D_raster_use_color (colorg);
 
 		if (geogrid->answer)
 		{
@@ -210,10 +181,7 @@ main (int argc, char **argv)
 	    else
 	    {
 		/* Set border color */
-		if (colorb > MAXCOLORS)  /* ie custom RGB color */
-		    R_color(colorb);
-		else
-		    R_standard_color(colorb) ;
+		D_raster_use_color (colorb);
 	  
 		/* Do the border plotting */
 		plot_border(size, east, north) ;
