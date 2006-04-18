@@ -124,6 +124,9 @@ int D_setup(int);
 /* tran_colr.c */
 int D_translate_color(const char *);
 int D_translate_or_add_color(const char *, int);
+int D_allocate_color(void);
+int D_parse_color(const char *, int);
+int D_raster_use_color(int);
 /* window.c */
 int D_new_window(char *, int, int, int, int);
 int D_set_cur_wind(char *);
