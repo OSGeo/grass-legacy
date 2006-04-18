@@ -6,7 +6,9 @@
 #include <grass/display.h>
 #include <grass/colors.h>
 #include <grass/raster.h>
+#include <grass/glocale.h>
 
+int allocated_colors = MAXCOLORS; /* This is the number of the highest allocated color */
 
 /*!
  * \brief color name to number
@@ -87,4 +89,68 @@ int D_translate_or_add_color (const char * str, int index)
 	} 
 
 	return -1 ;
+}
+
+/*!
+ * \brief create new suggested color number
+ *
+ * Returns an integer which is a suggested number greater than
+ * the maximum number of basic colors to use as a color index
+ * for custom colors. Each call returns a number one higher
+ * than the number returned by the previous call.
+ *
+ *  \return int
+ */
+
+int D_allocate_color () {
+    return (++allocated_colors) ;
+}
+
+/*!
+ * \brief color option text to usable color number
+ *
+ * Converts or looks up the color provided in the string.
+ * Returns a color number usable by D_raster_use_color.
+ * If the color does not exist exits with a fatal error and message.
+ * If the color is none and none_acceptable is not true exits with
+ * a fatal error and message.
+ *
+ *  \param name_or_code
+ *  \param none_acceptable
+ *  \return int
+ */
+
+int D_parse_color (const char * str, int none_acceptable) {
+    int color ;
+    color = D_translate_or_add_color(str, D_allocate_color());
+    if (color == -1)
+        G_fatal_error(_("[%s]: No such color"), str);
+    if (color == 0 && (! none_acceptable))
+        G_fatal_error(_("[%s]: No such color"), str);
+    return color;
+}
+
+/*!
+ * \brief draw with a color from D_parse_color
+ *
+ * Calls R_color or R_standard_color to use the color provided by 
+ * D_parse_color. Returns 1 if color can be used to draw (is
+ * good and isn't none), 0 otherwise.
+ *
+ *  \param color
+ *  \return int
+ */
+
+int D_raster_use_color (int color) {
+    if (color == 0 || color == -1)
+        return 0 ;
+    if (0 < color && color <= MAXCOLORS)
+    {
+        R_standard_color (color) ;
+        return 1 ;
+    } else {
+        R_color (color) ;
+        return 1;
+    }
+    return 0 ;
 }
