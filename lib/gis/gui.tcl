@@ -63,23 +63,23 @@ proc wrap_text_in_label {path} {
 
 # These are the colors from lib/gis/color_str.c
 array set grass_named_colors {
-black {0 0 0 0}
-red {255 0 0 0}
-green {0 255 0 0}
-blue {0 0 255 0}
-yellow {255 255 0 0}
-magenta {255 0 255 0}
-cyan {0 255 255 0}
-white {255 255 255 0}
-grey {128 128 128 0}
-gray {128 128 128 0}
-orange {255 128 0 0}
-aqua {100 128 255 0}
-indigo {0 128 255 0}
-violet {128 0 255 0}
-purple {128 0 255 0}
-brown {180 75 25 0}
-none {0 0 0 255}
+black {0 0 0 255}
+red {255 0 0 255}
+green {0 255 0 255}
+blue {0 0 255 255}
+yellow {255 255 0 255}
+magenta {255 0 255 255}
+cyan {0 255 255 255}
+white {255 255 255 255}
+grey {128 128 128 255}
+gray {128 128 128 255}
+orange {255 128 0 255}
+aqua {100 128 255 255}
+indigo {0 128 255 255}
+violet {128 0 255 255}
+purple {128 0 255 255}
+brown {180 75 25 255}
+none {0 0 0 0}
 }
 
 # This procedure takes a string like yellow, none, or 124:36:98 and
@@ -98,7 +98,9 @@ proc color_grass_to_rgba255 {string} {
 		for {set i 0} {$i < 4} {incr i} {
 			set inpart [lindex $incolor $i]
 			if {[catch {expr $inpart < 0}] || $inpart == ""} {
-				lappend color 0
+				# This is what will be alpha
+				# So it defaults to 255
+				lappend color 255
 			} elseif {$inpart < 0} {
 				lappend color 0
 			} elseif {$inpart > 255} {
@@ -112,9 +114,16 @@ proc color_grass_to_rgba255 {string} {
 }
 
 proc color_rgba255_to_grass {list} {
-	if {[lindex $list 3] == 255} {
+	global grass_named_colors
+	if {[lindex $list 3] == 0} {
 		return "none"
 	} else {
+		# Convert numebrs back to names if possible
+		foreach name [array names grass_named_colors] {
+			if {$list == $grass_named_colors($name)} {
+				return $name
+			}
+		}
 		set rgb [lrange $list 0 2]
 		return [join $rgb :]
 	}
@@ -126,7 +135,7 @@ proc color_rgba255_to_tcltk {color} {
 
 proc color_tcltk_to_rgba255 {string} {
 	scan $string "#%2x%2x%2x" red green blue
-	return [list $red $green $blue 0]
+	return [list $red $green $blue 255]
 }
 
 proc color_grass_to_tcltk {string} {
