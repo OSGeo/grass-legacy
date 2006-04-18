@@ -360,6 +360,10 @@ q3="`grep '3rd Quartile:' $TMP1 | sed s/'3rd Quartile:'//`"
 q4=$max
 ptsize=$GIS_OPT_SIZE
 
+if [ -n "$GIS_OPT_BREAKPOINTS" ] && [ "$GIS_OPT_THEMECALC" != "custom_breaks" ] ; then
+    echo "WARNING: Custom breakpoints ignored due to themecalc setting."
+fi
+
 # set interval for each thematic map calculation type
 case "$GIS_OPT_THEMECALC" in 
 "interval" )
