@@ -307,8 +307,8 @@ srclibsdist: FORCE distclean
 
 # generate docs as single HTML document:
 htmldocs-single:
-	(cd lib/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs)
-	(cd swig/; $(MAKE) cleandocs ; $(MAKE) htmldocs)
+	(cd lib/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs-single)
+	(cd swig/; $(MAKE) cleandocs ; $(MAKE) htmldocs-single)
 
 # generate docs as multiple HTML documents:
 htmldocs:
