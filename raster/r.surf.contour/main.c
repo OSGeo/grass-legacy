@@ -20,17 +20,18 @@ main (int argc, char *argv[])
 	CELL	con1, con2;
 	double	d1, d2;
 	CELL	*alt_row;
-	char	*con_name, *alt_name, *con_mapset, s_f;
+	char	*con_name, *alt_name, *con_mapset;
 	int	file_fd;
+	int	fast_mode;
 	CELL	value;
 	struct GModule *module;
-	struct Flag *flag1;
+	struct Flag *flag1, *flag_slow;
 	struct Option *opt1, *opt2;
 
 	G_gisinit(argv[0]);
 
-    module = G_define_module();
-    module->description =
+	module = G_define_module();
+	module->description =
 		_("Surface generation program from rasterized contours.");
 
 	opt1 = G_define_option() ;
@@ -49,9 +50,14 @@ main (int argc, char *argv[])
 
 	flag1 = G_define_flag() ;
 	flag1->key         = 'f' ;
-	flag1->description = _("Invoke fast, but memory intensive operation") ;
+	flag1->description = _("Unused; retained for compatibility purposes; "
+	    "will be removed in future");
 
-	s_f = 0;
+	flag_slow = G_define_flag() ;
+	flag_slow->key         = 's' ;
+	flag_slow->description = _("Invoke slow, but memory frugal operation "
+	    "(generally not needed; will be removed in future)");
+
 	on = 1;
 	off = 0;
 
@@ -61,8 +67,11 @@ main (int argc, char *argv[])
 	con_name = opt1->answer;
 	alt_name = opt2->answer;
 
-	if (flag1->answer)
-		s_f++;
+	if (flag_slow->answer)
+	    fast_mode = 0;
+	else
+	    fast_mode = 1;
+
 
 	con_mapset = G_find_cell2(con_name, "");
 	if (!con_mapset)
@@ -74,7 +83,7 @@ main (int argc, char *argv[])
 	cseg_open (&con, 16, 16, 8);
 	cseg_read_cell (&con, con_name, con_mapset);
 	alt_row = (CELL *)G_malloc(ncols * sizeof(CELL));
-	if (s_f) {
+	if (fast_mode) {
 		seen = flag_create (nrows, ncols);
 		mask = flag_create (nrows, ncols);
 	} else {
@@ -84,7 +93,7 @@ main (int argc, char *argv[])
 	if (NULL != G_find_file ("cell", "MASK", G_mapset())) {
 		if ((file_fd = G_open_cell_old ("MASK",G_mapset())) < 0)
 			G_fatal_error ("Unable to open MASK");
-		if (s_f) {
+		if (fast_mode) {
 			for (r = 0; r < nrows; r++) {
 				G_get_map_row_nomask (file_fd, alt_row, r);
 				for (c = 0; c < ncols; c++) 
@@ -112,7 +121,7 @@ main (int argc, char *argv[])
 	for (r=0; r<nrows; r++) {
 		G_percent (r, nrows, 1);
 		for (c=0; c<ncols; c++) {
-			if (s_f) {
+			if (fast_mode) {
 				if (FLAG_GET(mask, r, c))
 					continue;
 			} else {
@@ -125,7 +134,7 @@ main (int argc, char *argv[])
 				alt_row[c] = value;
 				continue;
 			}
-			if (s_f) find_con(r,c,&d1,&d2,&con1,&con2);
+			if (fast_mode) find_con(r,c,&d1,&d2,&con1,&con2);
 			else find_con_slow(r,c,&d1,&d2,&con1,&con2);
 			if(con2 > 0)
 			    alt_row[c] = (CELL)(d2 * con1 / (d1 + d2) +
@@ -136,7 +145,7 @@ main (int argc, char *argv[])
 	}
 	G_percent (r, nrows, 1);
 	cseg_close (&con);
-	if (s_f) {
+	if (fast_mode) {
 		flag_destroy (seen);
 		flag_destroy (mask);
 	} else {
