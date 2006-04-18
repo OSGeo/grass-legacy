@@ -14,13 +14,14 @@
 # Aug 2004: modified to accept files from other directories
 #           (by H. Bowman)
 # June 2005: added flag to read in US 1-arcsec tiles (H. Bowman)
-#
+# April 2006: links updated from ftp://e0dps01u.ecs.nasa.gov/srtm/             
+#             to current links below
 #########################
 #Derived from:
-# ftp://e0dps01u.ecs.nasa.gov/srtm/Documentation/Notes_for_ARCInfo_users.txt
-#     (bugfix: the USGS document was updated silently end of 2003)
+# ftp://e0srp01u.ecs.nasa.gov/srtm/version1/Documentation/Notes_for_ARCInfo_users.txt
+#     (note: document was updated silently end of 2003)
 #
-# ftp://e0dps01u.ecs.nasa.gov/srtm/Documentation/SRTM_Topo.txt
+# ftp://e0srp01u.ecs.nasa.gov/srtm/version1/Documentation/SRTM_Topo.txt
 #  "3.0 Data Formats
 #  [...]
 #  To be more exact, these coordinates refer to the geometric center of 
@@ -37,7 +38,7 @@
 #- GDAL uses *corners* of pixels for its coordinates.
 #
 # NOTE: Even, if small difference: SRTM is referenced to EGM96, not WGS84 ellps
-# http://earth-info.nga.mil/GandG/wgsegm/egm96.html
+# http://earth-info.nga.mil/GandG/wgs84/gravitymod/egm96/intpt.html
 #
 #########################
 
