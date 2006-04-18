@@ -1,4 +1,4 @@
-     
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -84,23 +84,25 @@ static void init_colors_indexed(void)
 
 void init_color_table(void)
 {
-    int colorindex;
+	int colorindex;
 	if (true_color)
 		init_colors_rgb();
 	else
 		init_colors_indexed();
 
-    /* Generate lookup for "standard" colors */
-    for (colorindex = 1; colorindex <= MAX_COLOR_NUM; colorindex++)
-        LIB_assign_standard_color(colorindex, DRV_lookup_color(
-            (int) standard_colors_rgb[colorindex].r,
-            (int) standard_colors_rgb[colorindex].g,
-            (int) standard_colors_rgb[colorindex].b)) ;
+	/* Generate lookup for "standard" colors */
+	for (colorindex = 1; colorindex <= MAX_COLOR_NUM; colorindex++)
+		LIB_assign_standard_color(
+			colorindex,
+			DRV_lookup_color(
+				(int) standard_colors_rgb[colorindex].r,
+				(int) standard_colors_rgb[colorindex].g,
+				(int) standard_colors_rgb[colorindex].b)) ;
 }
 
 int PNG_Color_table_float(void)
 {
-    int colorindex;
+	int colorindex;
 	if (!COM_Can_do_float())
 	{
 		G_warning("Color_table_float: not available on this device\n");
@@ -111,27 +113,29 @@ int PNG_Color_table_float(void)
 
 	COM_Color_offset(0);
 
-    /* Reset float standard colors */
-    for (colorindex = 1; colorindex <= MAX_COLOR_NUM; colorindex++)
-        DRV_reset_color(colorindex,
-            (int) standard_colors_rgb[colorindex].r,
-            (int) standard_colors_rgb[colorindex].g,
-            (int) standard_colors_rgb[colorindex].b) ;
+	/* Reset float standard colors */
+	for (colorindex = 1; colorindex <= MAX_COLOR_NUM; colorindex++)
+		DRV_reset_color(colorindex,
+				(int) standard_colors_rgb[colorindex].r,
+				(int) standard_colors_rgb[colorindex].g,
+				(int) standard_colors_rgb[colorindex].b);
 
 	return 0;
 }
 
 int PNG_Color_table_fixed(void)
 {
-    int colorindex;
+	int colorindex;
 	table_type = FIXED;
 
-    /* Generate lookup for fixed colors */
-    for (colorindex = 1; colorindex <= MAX_COLOR_NUM; colorindex++)
-        LIB_assign_fixed_color(colorindex, DRV_lookup_color(
-            (int) standard_colors_rgb[colorindex].r,
-            (int) standard_colors_rgb[colorindex].g,
-            (int) standard_colors_rgb[colorindex].b)) ;
+	/* Generate lookup for fixed colors */
+	for (colorindex = 1; colorindex <= MAX_COLOR_NUM; colorindex++)
+		LIB_assign_fixed_color(
+			colorindex,
+			DRV_lookup_color(
+				(int) standard_colors_rgb[colorindex].r,
+				(int) standard_colors_rgb[colorindex].g,
+				(int) standard_colors_rgb[colorindex].b)) ;
 
 	return 0;
 }
