@@ -6,10 +6,12 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 checkdoxygen:
 	@(type doxygen > /dev/null || (echo "ERROR: Install 'doxygen' software first (get from http://www.doxygen.org)" && exit 1))
 
+# generate docs as single HTML document:
 htmldocs-single: checkdoxygen cleandocs
 	doxygen $(MODULE_TOPDIR)/include/Make/Doxyfile_arch_html
 	@echo "HTML reference in directory ./html/index.html"
 
+# generate docs as multiple HTML documents:
 htmldocs: checkdoxygen cleandocs
 # hack needed to get main page at beginning:
 	@mv $(DOXNAME)lib.dox $(DOXNAME)lib.dox.org
