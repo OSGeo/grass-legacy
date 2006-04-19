@@ -477,14 +477,16 @@ int main (int argc, char *argv[])
 		struct start_pt  *new_start_pt;
 		Site *site = NULL;               /* pointer to Site */
 		int got_one = 0;
+		int dims, strs, dbls;
+		RASTER_MAP_TYPE cat;
 
-		search_mapset = "";
- 
 		search_mapset = G_find_sites (opt7->answer, "");
 
 		fp = G_fopen_sites_old ( opt7->answer, search_mapset);
 
-		site = G_site_new_struct (-1, 2, 0, 0);
+		if (G_site_describe( fp, &dims, &cat, &strs, &dbls))
+		    G_fatal_error("Failed to guess site file format.");
+		site = G_site_new_struct(cat, dims, strs, dbls);
 
 		for (; (G_site_get(fp,site) != EOF);) {
 			if (!G_site_in_region (site, &window))
@@ -527,14 +529,16 @@ int main (int argc, char *argv[])
 		FILE* fp;
 		struct start_pt  *new_start_pt;
 		Site *site = NULL;               /* pointer to Site */
+		int dims, strs, dbls;
+		RASTER_MAP_TYPE cat;
 
-		search_mapset = "";
- 
 		search_mapset = G_find_sites (opt8->answer, "");
 
 		fp = G_fopen_sites_old ( opt8->answer, search_mapset);
 
-		site = G_site_new_struct (-1, 2, 0, 0);
+		if (G_site_describe( fp, &dims, &cat, &strs, &dbls))
+		    G_fatal_error( "Failed to guess site file format\n");
+		site = G_site_new_struct(cat, dims, strs, dbls);
 
 		for (; (G_site_get(fp,site) != EOF);) {
 			if (!G_site_in_region (site, &window))
