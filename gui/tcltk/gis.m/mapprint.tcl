@@ -390,6 +390,7 @@ proc psprint::print { cv } {
 				$cv postscript -rotate 1 -pagewidth $cdocwd -channel $printmap
 			}
 		}		
+		after 500
 		close $printmap
 		eval exec "cat $tmppsfile | gs  $format -sDEVICE=png16m -r$res -sNOPAUSE -sOutputFile=$tmppngfile -dBATCH - " 
 		eval exec "lpr $tmppngfile" 
@@ -411,6 +412,7 @@ proc psprint::print { cv } {
 				$cv postscript -rotate 1 -pagewidth $cdocwd -channel $printmap
 			}
 		}		
+		after 500
 		close $printmap
 		eval exec "cat $tmppsfile | gs  $format -sDEVICE=$printer -r$res -sNOPAUSE -dBATCH - " 
 	}
@@ -431,6 +433,7 @@ proc psprint::print { cv } {
 				$cv postscript -rotate 1 -pagewidth $cdocwd -channel $printmap
 			}
 		}		
+		after 500
 		close $printmap
 		eval exec "cat $tmppsfile | gs  $format -sDEVICE=pdfwrite -r$res -sNOPAUSE -sOutputFile=$pdffile -dBATCH - " 
 	}
