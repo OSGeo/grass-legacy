@@ -145,7 +145,7 @@ fi
 
 if test $alt -lt 0 -o $alt -gt 90
 then
-	echo "Sorry, altitude must be greater than 0 and less than 90"
+	echo "Sorry, altitude must be between 0 and 90"
 	exit 1
 fi
 
