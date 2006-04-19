@@ -118,7 +118,8 @@ proc GmCLabels::options { id frm } {
 
     # Panel heading2
     set row [ frame $frm.heading2 ]
-    Label $row.a -text "  (for postscript eps, pdf, and print output only)" 
+    Label $row.a -text "  (for postscript eps, pdf, and print output only)" \
+    	-fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
@@ -297,7 +298,7 @@ proc GmCLabels::display { node } {
 			}
 			"color:" {
 				if { $opt($id,1,override) == 0 } {
-					set opt($id,1,lfill) $val
+					set opt($id,1,lfill)  [color_grass_to_tcltk $val]
 				}
 				if { $opt($id,1,lfill) == "" } {
 					set opt($id,1,lfill) "#000000"
@@ -329,9 +330,7 @@ proc GmCLabels::display { node } {
 			}
 			"text:" {
 				set opt($id,1,ltxt) $val
-			}
-			default {
-				# create each label when loop gets to a blank line in the labels file
+				# create each label when loop gets to a text line in the labels file
 				$can($mon) create text $opt($id,1,xcoord) $opt($id,1,ycoord) \
 					-anchor $opt($id,1,anchor) \
 					-justify $opt($id,1,ljust) \
@@ -339,6 +338,10 @@ proc GmCLabels::display { node } {
 					-fill $opt($id,1,lfill) \
 					-font $opt($id,1,lfont) \
 					-text $opt($id,1,ltxt)
+			}
+			default {
+				#for anything else, just move on
+				set x ""
 			}
 		}
 	}
