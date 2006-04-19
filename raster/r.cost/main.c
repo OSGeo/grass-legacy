@@ -465,8 +465,6 @@ int main(int argc, char *argv[])
 	int dims, strs, dbls;
 	RASTER_MAP_TYPE cat;
 
-	search_mapset = "";
-
 	search_mapset = G_find_sites(opt7->answer, "");
 
 	fp = G_fopen_sites_old(opt7->answer, search_mapset);
@@ -517,8 +515,6 @@ int main(int argc, char *argv[])
 	int dims, strs, dbls;
 	RASTER_MAP_TYPE cat;
 
-	search_mapset = "";
-
 	search_mapset = G_find_sites(opt8->answer, "");
 
 	fp = G_fopen_sites_old(opt8->answer, search_mapset);
@@ -563,8 +559,6 @@ int main(int argc, char *argv[])
 	int fd;
 	RASTER_MAP_TYPE data_type2;
 	int got_one = 0;
-
-	search_mapset = "";
 
 	search_mapset = G_find_file("cell", opt9->answer, "");
 
