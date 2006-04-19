@@ -48,7 +48,7 @@ parse_command_line (int argc, char *argv[])
 
     print = G_define_flag();
     print->key          = 'p';
-    print->description  = _("print tables and exit");    
+    print->description  = _("print drivers and exit");    
 
     /* Set description */
     module              = G_define_module();
