@@ -382,6 +382,7 @@ proc MapCanvas::composite {mon } {
 	variable mapcan
 	variable can
 
+	$can($mon) delete all
 	if {$complist($mon) != ""} {
 		set currdir [pwd]
 		cd $tmpdir
