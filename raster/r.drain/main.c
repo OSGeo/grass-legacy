@@ -53,6 +53,9 @@
 #include "tinf.h"
 #include "local.h"
 
+/* should probably be updated to a pointer array & malloc/realloc as needed */
+#define MAX_POINTS 1024
+
 /* define a data structure to hold the point data */
 struct point
 {
@@ -68,7 +71,7 @@ int main(int argc, char **argv)
     int fe, fd;
     int i, have_points = 0;
     int new_id;
-    int nrows, ncols, points_row[100], points_col[100], npoints;
+    int nrows, ncols, points_row[MAX_POINTS], points_col[MAX_POINTS], npoints;
     int cell_open(), cell_open_new();
     int map_id;
     char map_name[GNAME_MAX], *map_mapset, new_map_name[GNAME_MAX];
@@ -87,12 +90,12 @@ int main(int argc, char **argv)
 
     struct point *list;
     struct point *thispoint;
-    int ival, bsz, start_row, start_col, mode = 0;
+    int ival, bsz, start_row, start_col, mode;
     double east, north, val;
     struct point *drain(int, struct point *, int, int);
     int bsort(int, struct point *);
 
-    /*  Initialize the GRASS environment variables */
+
     G_gisinit(argv[0]);
 
     module = G_define_module();
@@ -113,16 +116,16 @@ int main(int argc, char **argv)
     coordopt->multiple = YES;
     coordopt->key_desc = "x,y";
     coordopt->description =
-	_("The map E and N grid coordinates of a starting point");
+	_("The E and N coordinates of starting point(s)");
 
     vpointopt = G_define_option();
     vpointopt->key = "vector_points";
     vpointopt->type = TYPE_STRING;
     vpointopt->required = NO;
     vpointopt->multiple = YES;
-    vpointopt->key_desc = "start,stop";
+    vpointopt->key_desc = "name";
     vpointopt->description =
-	_("Vector maps containing starting point(s) and stop point(s)");
+	_("Vector map(s) containing starting point(s)");
 
     flag1 = G_define_flag();
     flag1->key = 'c';
@@ -139,6 +142,7 @@ int main(int argc, char **argv)
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
+
     strcpy(map_name, opt1->answer);
     strcpy(new_map_name, opt2->answer);
 
@@ -153,13 +157,7 @@ int main(int argc, char **argv)
     /* set the pointers for multi-typed functions */
     set_func_pointers(in_type);
 
-    if (flag1->answer)
-	mode += 1;
-    if (flag2->answer)
-	mode += 1;
-    if (flag3->answer)
-	mode += 1;
-    if (mode > 1)
+    if( (flag1->answer + flag2->answer + flag3->answer) > 1 )
 	G_fatal_error(_("Specify just one of the -c, -a and -n flags"));
 
     mode = 0;
@@ -197,13 +195,14 @@ int main(int argc, char **argv)
 	    points_row[npoints] = start_row;
 	    points_col[npoints] = start_col;
 	    npoints++;
+	    if(npoints >= MAX_POINTS) G_fatal_error(_("Too many start points."));
 	    have_points = 1;
 	}
     }
-    if (vpointopt->answer && (have_points == 0))
+    if (vpointopt->answer) {
 	for (i = 0; vpointopt->answers[i] != NULL; i++) {
 	    FILE *fp;
-	    /*              struct start_pt  *new_start_pt; */
+	    /* struct start_pt  *new_start_pt; */
 	    Site *site = NULL;	/* pointer to Site */
 	    int dims, strs, dbls;
 	    RASTER_MAP_TYPE cat;
@@ -223,21 +222,28 @@ int main(int argc, char **argv)
 	    for (; (G_site_get(fp, site) != EOF);) {
 		if (!G_site_in_region(site, &window))
 		    continue;
+
 		start_col = (int)G_easting_to_col(site->east, &window);
 		start_row = (int)G_northing_to_row(site->north, &window);
 
-		if (start_row < 0 || start_row > nrows ||
-		    start_col < 0 || start_col > ncols) {
-		    G_warning(_("Starting vector map <%s> is outside the current region"),
-			      vpointopt->answers[i]);
+		/* effectively just a duplicate check to G_site_in_region() ??? */
+		if (start_row < 0 || start_row > nrows || start_col < 0 || start_col > ncols)
 		    continue;
-		}
+
 		points_row[npoints] = start_row;
 		points_col[npoints] = start_col;
 		npoints++;
+		if(npoints >= MAX_POINTS) G_fatal_error(_("Too many start points."));
 		have_points = 1;
 	    }
+
+	    /* only catches maps out of range until something is found, not after */
+	    if(!have_points) {
+		G_warning(_("Starting vector map <%s> contains no points in the current region."),
+		      vpointopt->answers[i]);
+	    }
 	}
+    }
     if (have_points == 0)
 	G_fatal_error(_("No start/stop point(s) specified"));
 
