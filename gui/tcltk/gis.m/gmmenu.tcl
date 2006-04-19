@@ -8,6 +8,57 @@ global keyctrl
 global execom 
 global mon
 global filename
+global env
+
+
+# if extensions dir exists: create an "Xtns" menu item
+# and read all menu descriptions from .gem files
+set dirName [set env(GISBASE)]/etc/gm/Xtns
+set XtnsMenu "False"
+set splitError "False"
+
+if { [file exists $dirName] && [file isdirectory $dirName] } {	
+	lappend listNames "Dummy"; # we need this to check for num of elements later
+	foreach fileName [glob -nocomplain [file join $dirName *.gem]] {
+		lappend listNames $fileName
+	}
+	if { [llength $listNames] > 1 } { #only do this, if there is at least one menu file
+		set listNames [lreplace $listNames 0 0]; # let's get rid of the dummy element
+		set listNames [lsort $listNames]
+		#now read each menu file and append to list
+		foreach fileName $listNames {
+			set inputFile [open $fileName "r"]
+			set line [read $inputFile]
+			set splitLines [split $line "\n"]
+			if { [llength $splitLines] == 1 } {
+				# splitting didn't work.
+				# maybe we have Mac style newlines, let's split again!
+				set splitLines [split $line "\r"]
+			}
+			# split up into individual lines for processing
+			foreach line $splitLines {				
+				# strip off comments
+				set commentPos [string first "#" $line]
+				# 1.: leading comment
+				if { $commentPos == 0 } {
+					set line ""
+				}
+				if { $commentPos > 0 } {
+					set line [string range $line 0 [expr $commentPos-1]]
+				}					
+				set line [subst $line]; # substitute variables like $tmenu
+				lappend splitLinesDone $line
+			}
+			# now join individual lines back into one string ...
+			set line [join $splitLinesDone]
+			# ... and append to list of submenus
+			lappend XtnsMenuList [subst {$line}]
+			close $inputFile
+		}
+		set XtnsMenu "True"
+	}
+}
+
 
  set descmenu [subst  {
  "&File" all file $tmenu {
@@ -31,6 +82,7 @@ global filename
             {command "ASCII points file or GRASS ASCII vector file" {} "v.in.ascii" {} -command { execute v.in.ascii }}
             {command "Import old GRASS vector format" {} "v.convert" {} -command { execute v.convert }}
             {separator}
+            {command "dxf file" {} "v.in.dxf" {} -command { execute v.in.dxf }}
             {command "ESRI e00 format" {} "v.in.e00" {} -command { execute v.in.e00 }}
             {command "Garmin GPS Waypoints/Routes/Tracks" {} "v.in.garmin" {} -command { execute v.in.garmin }}
             {command "Garmin GPS Waypoints/Routes/Tracks using GPSBabel" {} "v.in.gpsbabel" {} -command { execute v.in.gpsbabel }}
@@ -459,17 +511,29 @@ global filename
 			 {command "Execute SQL statement" {} "db.execute" {} -command {execute db.execute }}
 			}}
  } 
- "&Xtns" all options 1 {
-	{command "Add extensions here" {} "help" {} -command { execute "" }}
- }
- "&Help" all options $tmenu {
+
+ }]
+
+# Should we add an Xtns menu entry?
+if { $XtnsMenu == "True" } {
+	# build extension menu
+	set XtnsMenuStart "\"&Xtns\" all options $tmenu \{"
+	set XtnsMenuEnd " \}"	
+	set descmenu "$descmenu $XtnsMenuStart"
+	foreach XtnsMenuItem $XtnsMenuList {
+	 	set descmenu "$descmenu [subst {{$XtnsMenuItem}}]"
+	}	
+	set descmenu "$descmenu $XtnsMenuEnd"
+}
+
+# add help menu to the end of the menubar 
+set descmenu "$descmenu [subst {  
+ 	 "&Help" all options $tmenu {
     {command "GRASS help" {} "g.manual" {} -command { exec g.manual -i > /dev/null & } }
     {command "GIS Manager &help" {} "GIS Manager help" {} -command { exec g.manual gis.m > /dev/null & } }
     {command "About &GRASS" {} "About GRASS" {} -command { source $env(GISBASE)/etc/gm/grassabout.tcl} }
-    {command "About &System" {} "About System" {} -command { exec $env(GRASS_WISH) $env(GISBASE)/etc/gm/tksys.tcl --tcltk &          }}
- }
+    {command "About &System" {} "About System" {} -command { exec $env(GRASS_WISH) $env(GISBASE)/etc/gm/tksys.tcl --tcltk & }}
+    }}
+]"
 
- }]
-#(DO_NOT_REMOVE_THIS_COMMENT) <DempsterShaferTheory> {cascad "Dempster Shafer Theory" {} "" 1 {
-#(DO_NOT_REMOVE_THIS_COMMENT) <AdvancedViewshedAnalysis> {cascad "Viewshed Analysis" {} "" 1 {
-
+ 
