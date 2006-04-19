@@ -93,7 +93,7 @@ int main(int argc, char **argv)
     int bsort(int, struct point *);
 
     /*  Initialize the GRASS environment variables */
-    G_gisinit("test");
+    G_gisinit(argv[0]);
 
     module = G_define_module();
     module->description =
@@ -205,14 +205,21 @@ int main(int argc, char **argv)
 	    FILE *fp;
 	    /*              struct start_pt  *new_start_pt; */
 	    Site *site = NULL;	/* pointer to Site */
-	    search_mapset = "";
+	    int dims, strs, dbls;
+	    RASTER_MAP_TYPE cat;
 
 	    search_mapset = G_find_sites(vpointopt->answers[i], "");
 	    if (search_mapset == NULL)
 		G_fatal_error(_("Vector map %s - not found"),
 			      vpointopt->answers[i]);
+
 	    fp = G_fopen_sites_old(vpointopt->answers[i], search_mapset);
-	    site = G_site_new_struct(-1, 2, 0, 0);
+
+	    if (0 != G_site_describe( fp, &dims, &cat, &strs, &dbls))
+		G_fatal_error(_("Failed to guess site file format"));
+
+	    site = G_site_new_struct(cat, dims, strs, dbls);
+
 	    for (; (G_site_get(fp, site) != EOF);) {
 		if (!G_site_in_region(site, &window))
 		    continue;
@@ -221,8 +228,7 @@ int main(int argc, char **argv)
 
 		if (start_row < 0 || start_row > nrows ||
 		    start_col < 0 || start_col > ncols) {
-		    G_warning(_
-			      ("Starting vector map %s is outside the current region"),
+		    G_warning(_("Starting vector map <%s> is outside the current region"),
 			      vpointopt->answers[i]);
 		    continue;
 		}
