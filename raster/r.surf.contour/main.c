@@ -24,6 +24,7 @@ main (int argc, char *argv[])
 	int	file_fd;
 	int	fast_mode;
 	CELL	value;
+	struct History history;
 	struct GModule *module;
 	struct Flag *flag1, *flag_slow;
 	struct Option *opt1, *opt2;
@@ -50,13 +51,13 @@ main (int argc, char *argv[])
 
 	flag1 = G_define_flag() ;
 	flag1->key         = 'f' ;
-	flag1->description = _("Unused; retained for compatibility purposes; "
+	flag1->description = _("Unused; retained for compatibility purposes, "
 	    "will be removed in future");
 
 	flag_slow = G_define_flag() ;
 	flag_slow->key         = 's' ;
 	flag_slow->description = _("Invoke slow, but memory frugal operation "
-	    "(generally not needed; will be removed in future)");
+	    "(generally not needed, will be removed in future)");
 
 	on = 1;
 	off = 0;
@@ -153,5 +154,10 @@ main (int argc, char *argv[])
 		bseg_close (&bmask);
 	}
 	G_close_cell(file_fd);
+
+	G_short_history(alt_name, "raster", &history);
+	G_command_history(&history);
+	G_write_history(alt_name, &history);
+
 	exit(0);
 }
