@@ -29,6 +29,7 @@ SUBDIRS = \
 	i.spectral \
 	i.in.spotvgt \
 	i.tasscap \
+	m.proj \
 	r.blend \
 	r.fillnulls \
 	r.in.aster \
