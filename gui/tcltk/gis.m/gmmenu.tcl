@@ -73,6 +73,7 @@ if { [file exists $dirName] && [file isdirectory $dirName] } {
             {command "ESRI Arc/Info ASCII grid" {} "r.in.arc" {} -command { execute r.in.arc }}
             {command "GRIDATB.FOR map file (TOPMODEL)" {} "r.in.gridatb" {} -command { execute r.in.gridatb }}
             {command "MAT-File (v.4) array (Matlab or Octave)" {} "r.in.mat" {} -command { execute r.in.mat }}
+            {command "SPOT vegetation NDVI data sets" {} "i.in.spotvgt" {} -command { execute i.in.spotvgt }}
             {command "SRTM hgt files" {} "r.in.srtm" {} -command { execute r.in.srtm }}
             {command "Terra ASTER HDF files" {} "r.in.aster" {} -command { execute r.in.aster }}
         }}
@@ -406,6 +407,7 @@ if { [file exists $dirName] && [file isdirectory $dirName] } {
  			 {command "Generate Voronoi diagram/Thiessen polygons for point set" {} "v.voronoi" {} -command {execute v.voronoi }}
  			}}
  			{cascad "Sample raster maps" {} "" $tmenu {			
+ 			{command "Calculate statistics for raster map overlain by vector map" {} "v.rast.stats" {} -command {execute v.rast.stats }}
  			{command "Sample raster map at point locations" {} "v.what.rast" {} -command {execute v.what.rast }}
  			{command "Sample raster neighborhood around points" {} "v.sample" {} -command {execute v.sample }}
  			}}
@@ -416,6 +418,7 @@ if { [file exists $dirName] && [file isdirectory $dirName] } {
 			{cascad "Reports and statistics" {} "" $tmenu {			
 			 {command "Basic information" {} "v.info" {} -command {execute v.info }}
 			 {command "Load vector attributes to database or create reports" {} "v.to.db" {} -command {execute v.to.db }}
+			 {command "Report areas for vector attribute categories" {} "v.report" {} -command {execute v.report }}
 			 {command "Univariate statistics" {} "v.univar" {} -command {execute v.univar }}
  			{separator}
 			 {command "Test normality of point distribution" {} "v.normal" {} -command {execute v.normal }}
@@ -431,6 +434,7 @@ if { [file exists $dirName] && [file isdirectory $dirName] } {
 			 {command "Mosaic up to 4 adjacent images" {} "i.image.mosaic" {} -command {execute i.image.mosaic }}
 			}}
 			{cascad "Manage image colors" {} "" $tmenu {			
+			 {command "Color balance and enhance color tables of multiband imagery for rgb display" {} "i.landsat.rgb" {} -command {execute i.landsat.rgb }}
 			 {command "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)" {} "i.his.rgb" {} -command {execute i.his.rgb }}
 			 {command "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)" {} "i.rgb.his" {} -command {execute i.rgb.his }}
 			}}
