@@ -64,28 +64,30 @@
 #% option
 #%  key: altitude
 #%  type: integer
-#%  description: Altitude of the sun in degrees above the horizon (must be 1-89).
+#%  description: Altitude of the sun in degrees above the horizon
 #%  required : no
+#%  options : 0-90
 #%  answer: 30
 #% end
 #% option
 #%  key: azimuth
 #%  type: integer
-#%  description: Azimuth of the sun in degrees to the east of north (must be 0-360).
+#%  description: Azimuth of the sun in degrees to the east of north
 #%  required : no
+#%  options : 0-360
 #%  answer: 270
 #% end
 #% option
 #%  key: zmult    
 #%  type: double
-#%  description: Factor for exaggerating relief (default=1).
+#%  description: Factor for exaggerating relief
 #%  required : no
 #%  answer: 1
 #% end
 #% option
 #%  key: scale
 #%  type: double
-#%  description: Scale factor for converting horizontal units to elevation units (default=1).
+#%  description: Scale factor for converting horizontal units to elevation units
 #%  required : no
 #%  answer: 1
 #% end
@@ -123,13 +125,10 @@ zmult=$GIS_OPT_ZMULT
 scale=$GIS_OPT_SCALE
 
 eval `g.findfile element=cell file=$elev`
-if [ "$name" = "" ] ; then
+if [ -z "$name" ] ; then
    echo "ERROR: map <$elev> not found."
    exit 1
 fi
-
-# allow - and . chars in the map name
-elev="\"$elev\""
 
 if [ "$GIS_OPT_MAP" = "$GIS_OPT_SHADEDMAP" ]; then
 	echo ""
@@ -138,46 +137,36 @@ if [ "$GIS_OPT_MAP" = "$GIS_OPT_SHADEDMAP" ]; then
 fi
 
 if [ -z "$GIS_OPT_SHADEDMAP" ]; then
-    ELEVSHADE=$elev"_shade"
+    ELEVSHADE="${elev}.shade"
 else
-    ELEVSHADE=$GIS_OPT_SHADEDMAP
+    ELEVSHADE="$GIS_OPT_SHADEDMAP"
 fi
 
-if test $alt -lt 0 -o $alt -gt 90
-then
-	echo "Sorry, altitude must be between 0 and 90"
-	exit 1
-fi
+# allow - and . chars in the map name
+elev="\"$elev\""
+elev_out="\"$ELEVSHADE\""
 
-if test $az -lt 0 -o $alt -gt 360
-then
-	echo "Sorry, azimuth must be between 0 and 360"
-	exit 1
+#LatLong locations only:
+if [ "$GIS_OPT_UNITS" = "meters" ] ; then
+   #scale=111120
+   scale=`echo $scale | awk '{printf("%f", $1 * 111120 )}'`
 fi
 
 #LatLong locations only:
-if [ "$GIS_OPT_UNITS" = "meters" ]
-then
-scale=111120
-fi
-
-#LatLong locations only:
-if [ "$GIS_OPT_UNITS" = "feet" ]
-then
-scale=370400
+if [ "$GIS_OPT_UNITS" = "feet" ] ; then
+   #scale=370400
+   scale=`echo $scale | awk '{printf("%f", $1 * 370400 )}'`
 fi		
 
 #correct azimuth to East (GRASS convention):
 az=`expr $az - 90`
 
-echo ""
 echo "Calculating shading, please stand by."
-echo ""
 
 # Note: no space allowed after \\:
 
 r.mapcalc << EOF
-$ELEVSHADE = eval( \\
+$elev_out = eval( \\
  x=($zmult*$elev[-1,-1] + 2*$zmult*$elev[0,-1] + $zmult*$elev[1,-1] \\
    -$zmult*$elev[-1,1] - 2*$zmult*$elev[0,1] - $zmult*$elev[1,1])/(8.*ewres()*$scale) , \\
  y=($zmult*$elev[-1,-1] + 2*$zmult*$elev[-1,0] + $zmult*$elev[-1,1] \\
@@ -191,7 +180,20 @@ $ELEVSHADE = eval( \\
  if(isnull(cang), null(), 100.*cang))
 EOF
 
-r.colors $ELEVSHADE color=grey
+if [ $? -ne 0 ] ; then 
+   echo "ERROR: in calculation, script aborted."
+   exit 1
+fi
+
+r.colors "$ELEVSHADE" color=grey
+
+# record metadata
+r.support "$ELEVSHADE" title="Shaded relief of \"$GIS_OPT_MAP\"" history=""
+r.support "$ELEVSHADE" history="r.shaded.relief settings:"
+r.support "$ELEVSHADE" history="  altitude=$alt  azimuth=$GIS_OPT_AZIMUTH  zmult=$zmult  scale=$GIS_OPT_SCALE"
+if [ -n "$GIS_OPT_UNITS" ] ; then
+   r.support map="$ELEVSHADE" history="  units=$GIS_OPT_UNITS  (adjusted scale=$scale)"
+fi
 
 echo ""
 if [ -n "$GIS_OPT_SHADEDMAP" ] ; then
@@ -199,3 +201,5 @@ if [ -n "$GIS_OPT_SHADEDMAP" ] ; then
 else
     echo "Shaded relief map created and named [$ELEVSHADE]. Consider renaming."
 fi
+
+exit 0
