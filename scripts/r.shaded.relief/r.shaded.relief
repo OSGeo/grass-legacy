@@ -64,28 +64,30 @@
 #% option
 #%  key: altitude
 #%  type: integer
-#%  description: Altitude of the sun in degrees above the horizon (must be 1-89).
+#%  description: Altitude of the sun in degrees above the horizon
 #%  required : no
+#%  options : 0-90
 #%  answer: 30
 #% end
 #% option
 #%  key: azimuth
 #%  type: integer
-#%  description: Azimuth of the sun in degrees to the east of north (must be 0-360).
+#%  description: Azimuth of the sun in degrees to the east of north
 #%  required : no
+#%  options : 0-360
 #%  answer: 270
 #% end
 #% option
 #%  key: zmult    
 #%  type: double
-#%  description: Factor for exaggerating relief (default=1).
+#%  description: Factor for exaggerating relief
 #%  required : no
 #%  answer: 1
 #% end
 #% option
 #%  key: scale
 #%  type: double
-#%  description: Scale factor for converting horizontal units to elevation units (default=1).
+#%  description: Scale factor for converting horizontal units to elevation units
 #%  required : no
 #%  answer: 1
 #% end
@@ -137,17 +139,6 @@ else
 	ELEVSHADE=$GIS_OPT_shadedmap
 fi
 
-if test $alt -lt 0 -o $alt -gt 90
-then
-	echo "Sorry, altitude must be greater than 0 and less than 90"
-	exit 1
-fi
-
-if test $az -lt 0 -o $alt -gt 360
-then
-	echo "Sorry, azimuth must be between 0 and 360"
-	exit 1
-fi
 
 #LatLong locations only:
 if [ "$GIS_OPT_units" = "meters" ]
