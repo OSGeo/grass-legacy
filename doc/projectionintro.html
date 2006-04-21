@@ -33,7 +33,11 @@ The unreferenced map is geocoded within the XY location by defining
 four corner points or by seeking several ground control points
 (<a href="i.group.html">i.group</a>, <a href="i.target.html">i.target</a>,
  <a href="i.points.html">i.points</a>) and then transformed into the
-target location (<a href="i.rectify.html">i.rectify</a>).
+target location (<a href="i.rectify.html">i.rectify</a>). Polynomial
+transformation of 1st, 2nd and 3rd order are supported.
+<P>
+To simply translate a raster map (without stretching or rotation), the
+<a href="r.region.html">r.region</a> command can be used.
 
 
 <h3>Vector map projections</h3>
