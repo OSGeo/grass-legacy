@@ -248,6 +248,13 @@ struct Colors
     DCELL cmax;
 };
 
+typedef struct
+{
+    int set;			/*  0 unset, 1 set, -1 "none"  */
+    unsigned char r, g, b, a;	/* red, green, blue, and alpha */
+} RGBA_Color ;
+
+
 struct Reclass
 {
     char name[GNAME_MAX];  	    /* name of cell file being reclassed    */
