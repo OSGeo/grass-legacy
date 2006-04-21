@@ -18,8 +18,6 @@ int create_map(char *, char *);
 int digitize(FILE *);
 /* get_en.c */
 int get_east_north(int, int, char *, char *);
-/* get_map.c */
-int get_map_name(char *);
 /* get_point.c */
 int get_point(int *, int *, char *, char *);
 /* get_type.c */

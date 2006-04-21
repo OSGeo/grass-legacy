@@ -1,5 +1,6 @@
 #include <grass/gis.h>
 #include <grass/raster.h>
+#include <grass/glocale.h>
 
 long 
 get_cat (char *type)
@@ -9,7 +10,7 @@ get_cat (char *type)
 
     for(;;)
     {
-        fprintf (stdout,"Enter the category number for this %s: ", type) ;
+        fprintf (stdout, _("Enter the category number for this %s: "), type) ;
         if(!G_gets(buffer)) continue; ;
         if(sscanf(buffer,"%ld", &cat) != 1) continue;
 		break;
@@ -24,7 +25,7 @@ get_label (long cat, struct Categories *labels)
 
     for(;;)
     {
-        fprintf (stdout,"Enter a label for category %ld [%s] ",
+        fprintf (stdout, _("Enter a label for category %ld [%s] "),
 		    cat, G_get_cat ((CELL)cat, labels)) ;
         if(!G_gets(buffer)) continue; ;
 	G_strip(buffer);
@@ -46,7 +47,7 @@ get_category (FILE *fd, char *type, struct Categories *labels)
 	cat = get_cat(type);
 	lbl = get_label (cat, labels);
 	fprintf (stdout,"%ld [%s]\n", cat, *lbl?lbl:G_get_cat((CELL)cat, labels));
-    } while (!G_yes("Look ok? ", -1));
+    } while (!G_yes(_("Look ok? "), 1));
     if (*lbl)
 	G_set_cat ((CELL)cat, lbl, labels);
 
