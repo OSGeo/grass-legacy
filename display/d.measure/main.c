@@ -2,6 +2,7 @@
 #include <grass/gis.h>
 #include <grass/display.h>
 #include <grass/raster.h>
+#include <grass/glocale.h>
 #define MAIN
 #include "local_proto.h"
 
@@ -11,26 +12,26 @@ int main (int argc, char **argv)
 	struct GModule *module;
 	struct
 	{
-	    struct Option *c1;
-	    struct Option *c2;
-	  struct Flag *s;
-	  struct Flag *m;
-	  struct Flag *k;
+	   struct Option *c1;
+	   struct Option *c2;
+	   struct Flag *s;
+	   struct Flag *m;
+	   struct Flag *k;
 	} parm;
 	int color1, color2, s_flag, m_flag, k_flag;
 
-/* Initialize the GIS calls */
+	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
 	module->description =
-		"Measures the lengths and areas of features drawn "
+		_("Measures the lengths and areas of features drawn "
 		"by the user in the active display frame on the "
-		"graphics monitor.";
+		"graphics monitor.");
 
 	parm.c1 = G_define_option();
 	parm.c1->key = "c1";
-	parm.c1->description = "line color 1";
+	parm.c1->description = _("Line color 1");
 	parm.c1->type = TYPE_STRING;
 	parm.c1->required = NO;
 	parm.c1->options=D_color_list();
@@ -38,7 +39,7 @@ int main (int argc, char **argv)
 
 	parm.c2 = G_define_option();
 	parm.c2->key = "c2";
-	parm.c2->description = "line color 2";
+	parm.c2->description = _("Line color 2");
 	parm.c2->type = TYPE_STRING;
 	parm.c2->required = NO;
 	parm.c2->options=D_color_list();
@@ -46,37 +47,37 @@ int main (int argc, char **argv)
 
 	parm.s = G_define_flag();
 	parm.s->key = 's';
-	parm.s->description = "Suppress clear screen";
+	parm.s->description = _("Suppress clear screen");
 
 	parm.m = G_define_flag();
 	parm.m->key = 'm';
-	parm.m->description = "Output in meters";
+	parm.m->description = _("Output in meters only");
 
 	parm.k = G_define_flag();
 	parm.k->key = 'k';
-	parm.k->description = "Output in kilometers";
+	parm.k->description = _("Output in kilometers as well");
 	
 	if (argc > 1 && G_parser(argc,argv))
-	    exit(1);
+	    exit(EXIT_FAILURE);
 
 	if(getenv("GRASS_ANOTHER_BUTTON")){
-	    leftb   = 1; lefts   = "Left:  ";
-	    middleb = 3; middles = "Right: ";
-	    rightb  = 2; rights  = "Middle:";
+	    leftb   = 1; lefts   = _("Left:  ");
+	    middleb = 3; middles = _("Right: ");
+	    rightb  = 2; rights  = _("Middle:");
 	}else{
-	    leftb   = 1; lefts   = "Left:  ";
-	    middleb = 2; middles = "Middle:";
-	    rightb  = 3; rights  = "Right: ";
+	    leftb   = 1; lefts   = _("Left:  ");
+	    middleb = 2; middles = _("Middle:");
+	    rightb  = 3; rights  = _("Right: ");
 	}
 
 	if (R_open_driver() != 0)
-		G_fatal_error ("No graphics device selected");
+	    G_fatal_error (_("No graphics device selected"));
 
 	if (D_get_cur_wind(frame))
-		G_fatal_error("No current frame") ;
+	    G_fatal_error(_("No current frame"));
 
 	if (D_set_cur_wind(frame))
-		G_fatal_error("Current frame not available") ;
+	    G_fatal_error(_("Current frame not available"));
 
 	color1 = D_translate_color (parm.c1->answer);
 	color2 = D_translate_color (parm.c2->answer);
@@ -88,5 +89,5 @@ int main (int argc, char **argv)
 
 	R_close_driver();
 
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
