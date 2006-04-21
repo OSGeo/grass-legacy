@@ -1,22 +1,8 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-<title>r.digit</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" href="grassdocs.css" type="text/css">
-</head>
-<body bgcolor="white">
-
-<img src="grass.smlogo.gif" alt="GRASS logo"><hr align=center size=6 noshade>
-
-<h2>NAME</h2>
-<em><b>r.digit</b></em>
-
 <H2>DESCRIPTION</H2>
 
 The GRASS tool <EM>r.digit</EM> provides the user with a
 way to draw lines, areas, and circles on a monitor screen,
-and to save these features in a cell file.  Lines, areas,
+and to save these features in a raster map.  Lines, areas,
 and circles are to be drawn using a pointing device
 (mouse).  A mouse button menu indicates the consequences of
 pressing each mouse button.  The user is requested to enter
@@ -34,7 +20,7 @@ mask, in analyses, and for display.
 <P>
 
 Digitizing is done in a "polygon" method.  Each area is
-circumscribed completely.  Two or more areas and/or lines
+circumscribed completely.  Two or more overlapping areas and/or lines
 might define a single part of a map.  Each part of the map,
 however, is assigned only the LAST area or line which
 covered it.
@@ -43,10 +29,9 @@ covered it.
 
 <OL>
 
-<LI>Choose to define an area or line, quit, or finish.
+<LI>Choose to define an area or line, exit, or quit.
+If you choose to finish (<tt>exit</tt>) a new map is then created.
 If you quit, the session exits with nothing created.
-If you choose to finish (<EM>done</EM>), you will be prompted for a
-new map name;  the new map is then created.
 
 <LI>If you choose to make an area or line you must identify
 the category number for that area or line.
@@ -59,25 +44,20 @@ or, finish (go to Step 1).
 <H2>SEE ALSO</H2>
 
 
-<EM><A HREF="v.digit.html">v.digit</A></EM>
-Highly interactive tool for digitizing, editing, and labeling
-vector data
-
-<P>
-
-<EM><A HREF="d.mapgraph.html">d.mapgraph</A></EM>
-Draws simple graphics on a map
-
-<P>
-
-<EM><A HREF="r.in.poly.html">r.in.poly</A></EM>
-Tool for importing "polygon" data to raster format
+<EM><A HREF="v.digit.html">v.digit</A></EM>,
+<EM><A HREF="d.graph.html">d.graph</A></EM>,
+<EM><A HREF="d.linegraph.html">d.linegraph</A></EM>,
+<EM><A HREF="d.mapgraph.html">d.mapgraph</A></EM>,
+<EM><A HREF="g.region.html">g.region</A></EM>,
+<EM><A HREF="r.in.poly.html">r.in.poly</A></EM>,
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>,
+<EM><A HREF="r.to.vect.html">r.to.vect</A></EM>,
+<EM><A HREF="v.in.ascii.html">v.in.ascii</A></EM>
 
 
 <H2>AUTHOR</H2>
 
 Michael Shapiro, U.S.Army Construction Engineering 
 Research Laboratory
+
 <p><i>Last changed: $Date$</i>
-</body>
-</html>
