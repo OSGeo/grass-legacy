@@ -195,11 +195,6 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
     exec g.parser "$0" "$@"
 fi
 
-echo ""
-echo ""
-echo "**************************************************"
-echo ""
-
 PROG=`basename $0`
 
 #### check if we have awk
@@ -424,8 +419,6 @@ echo "text 4% 90% Value range: $min - $max" >> "$TMP5"
 echo "  ref bottom left" >> $TMP5
 echo "end" >> $TMP5
 
-echo ""
-echo ""
 echo "Thematic map legend for column $GIS_OPT_COLUMN of map $GIS_OPT_MAP"
 echo ""
 echo "Value range: $min - $max"
