@@ -13,38 +13,36 @@
 
 int main (int argc, char **argv)
 {
-    struct GModule *module;
-    char *polyfile;
-    char name[GNAME_MAX];
     FILE *fd;
+    char *polyfile, *mapname;
     int any;
+    struct GModule *module;
+    struct Option *output;
 
-/* Initialize the GIS calls */
+    /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
-        if (argc > 1 && ( strcmp(argv[1], "help") == 0 ||
-                          strcmp(argv[1], "--help") == 0) )
-        {
-                G_message(_("Interactive tool used to draw and save "
-                "vector features on a graphics monitor using a pointing "
-                "device (mouse)."));
-                exit(EXIT_SUCCESS);
-        }
+    module = G_define_module();
+    module->description =
+      _("Interactive tool used to draw and save vector features on a graphics"
+	" monitor using a pointing device (mouse) and save to a raster map.");
 
-	module = G_define_module();
-	module->description =
-		_("Interactive tool used to draw and save "
-		"vector features on a graphics monitor using a pointing "
-		"device (mouse).");
+    output = G_define_standard_option(G_OPT_R_OUTPUT);
 
-    if(getenv("GRASS_ANOTHER_BUTTON")){
-	    leftb   = 1; lefts   = "Left:  ";
-	    middleb = 3; middles = "Right: ";
-	    rightb  = 2; rights  = "Middle:";
-    }else{
-	    leftb   = 1; lefts   = "Left:  ";
-	    middleb = 2; middles = "Middle:";
-	    rightb  = 3; rights  = "Right: ";
+    if (G_parser(argc, argv))
+	exit(EXIT_FAILURE);
+
+    mapname = output->answer;
+
+    if(getenv("GRASS_ANOTHER_BUTTON")) {
+	    leftb   = 1; lefts   = _("Left:  ");
+	    middleb = 3; middles = _("Right: ");
+	    rightb  = 2; rights  = _("Middle:");
+    }
+    else {
+	    leftb   = 1; lefts   = _("Left:  ");
+	    middleb = 2; middles = _("Middle:");
+	    rightb  = 3; rights  = _("Right: ");
     }
 
 #ifdef DEBUG
@@ -59,16 +57,16 @@ int main (int argc, char **argv)
 	exit(EXIT_FAILURE);
     }
 
-/* open the graphics and get it setup */
+    /* open the graphics and get it setup */
     if (R_open_driver() != 0)
-        G_fatal_error ("No graphics device selected!!!");
+        G_fatal_error(_("No graphics device selected!"));
     setup_graphics();
 
-/* Do the digitizing and record the output into the polyfile */
+    /* Do the digitizing and record the output into the polyfile */
     any = digitize(fd) ;
     fclose (fd);
 
-/* close the graphics */
+    /* close the graphics */
     R_close_driver();
 
 
@@ -77,11 +75,12 @@ int main (int argc, char **argv)
     exit(EXIT_FAILURE);
 #endif
 
-/* ask for a map name */
-    if (any && get_map_name(name))
-	create_map (name, polyfile);
+    if (any)
+	create_map (mapname, polyfile);
     else
 	G_message (_("No map created"));
+
     unlink (polyfile);
+
     return(EXIT_SUCCESS) ;
 }

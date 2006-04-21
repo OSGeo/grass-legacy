@@ -1,4 +1,5 @@
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 int digitize (FILE *fd)
@@ -21,9 +22,11 @@ int digitize (FILE *fd)
 	case 'L':                               /* line */
 		if (get_line(fd, &labels)) any = 1;
 		break;
-	case 'Q':                               /* done */
+	case 'X':                               /* done */
 		return any;
-		break;
+	case 'Q':				/* exit without saving */
+		if (G_yes(_("Quit without creating a map?? "), 0))
+                return 0;
 	}
     }
 }
