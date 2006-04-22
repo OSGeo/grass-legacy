@@ -90,9 +90,9 @@ int G_str_to_color (const char *str, int *red, int *green, int *blue)
 	for (i = 0; i < MAX_COLOR_NAMES; i++) {
 	    if ( G_strcasecmp(buf, standard_color_names[i].name) == 0) {
 		n = standard_color_names[i].number;
-		*red   = (int) standard_colors_rgb[i].r;
-		*green = (int) standard_colors_rgb[i].g;
-		*blue  = (int) standard_colors_rgb[i].b;
+		*red   = (int) standard_colors_rgb[n].r;
+		*green = (int) standard_colors_rgb[n].g;
+		*blue  = (int) standard_colors_rgb[n].b;
                 return 1;
 	    }
         }
