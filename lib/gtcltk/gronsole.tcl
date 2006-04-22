@@ -46,7 +46,7 @@ proc Gronsole::create {path args} {
 
 	set args [Gronsole::dooptions $path $args 1]
 
-	set gronsolewin [ScrolledWindow $path -relief sunken -borderwidth 2]
+	set gronsolewin [ScrolledWindow $path -relief sunken -borderwidth 2 -auto horizontal]
 	set gronsole [eval text $gronsolewin.text $args]
 	$gronsolewin setwidget $gronsole	
 
