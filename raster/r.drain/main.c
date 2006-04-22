@@ -123,6 +123,7 @@ int main(int argc, char **argv)
     vpointopt->type = TYPE_STRING;
     vpointopt->required = NO;
     vpointopt->multiple = YES;
+    vpointopt->gisprompt= "old,vector,vector";
     vpointopt->key_desc = "name";
     vpointopt->description =
 	_("Vector map(s) containing starting point(s)");
