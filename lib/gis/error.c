@@ -9,7 +9,8 @@
  *
  *   Gives the message, msg, to the user.  Also print a message to 
  *   $GISBASE/GIS_ERROR_LOG if the file exists and is writeable; 
- *   and to the file $HOME in the users home directory if $HOME is set.
+ *   and to the file $HOME/GIS_ERROR_LOG in the user's home directory 
+ *   if $HOME is set and the file exists.
  *   G_warning() returns, which G_fatal_error() exits.
  *
  *   note:  By default, the message is handled by an internal routine
