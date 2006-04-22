@@ -9,14 +9,7 @@
 #include <grass/raster.h>
 #include <grass/display.h>
 #include <grass/glocale.h>
-
 #include "local_proto.h"
-
-/* height to width ratio when generating automatic smooth legends */
-#define LEGEND_HTOW 12
-
-#define VAL     0x1
-#define CAT     0x10
 
 
 int main( int argc, char **argv )
@@ -158,7 +151,7 @@ int main( int argc, char **argv )
 
 	/* Check command line */
 	if (G_parser(argc, argv))
-		exit(1);
+		exit(EXIT_FAILURE);
 
 	strcpy(map_name, opt1->answer) ;
 
@@ -262,7 +255,7 @@ int main( int argc, char **argv )
 
 	if(use_mouse) {
 	    if(!get_legend_box(&x0, &x1, &y0, &y1))
-		exit(0);
+		exit(EXIT_SUCCESS);
 	    G_debug(1, "mouse placement as percentage of display window "
 	      "[bottom,top,left,right]:\n  \"at=%.1f,%.1f,%.1f,%.1f\"",
 		100.*(b-y1)/(b-t), 100.*(b-y0)/(b-t), 100.*x0 /(r-l),
@@ -274,23 +267,25 @@ int main( int argc, char **argv )
 	    X1 = (x1-l)*100./(r-l);
 	}
 	else {
-		if (opt7->answer != NULL) {	/* should this be answerS ? */
-			sscanf(opt7->answers[0], "%lf", &Y1) ;
-			sscanf(opt7->answers[1], "%lf", &Y0) ;
-			sscanf(opt7->answers[2], "%lf", &X0) ;
-			sscanf(opt7->answers[3], "%lf", &X1) ;
-			x0 = l+(int)((r-l)*X0/100.);
-			x1 = l+(int)((r-l)*X1/100.);
-			y0 = t+(int)((b-t)*(100.-Y0)/100.);	/* make lower left the origin */
-			y1 = t+(int)((b-t)*(100.-Y1)/100.);
+		if (opt7->answer != NULL) {
+		    sscanf(opt7->answers[0], "%lf", &Y1);
+		    sscanf(opt7->answers[1], "%lf", &Y0);
+		    sscanf(opt7->answers[2], "%lf", &X0);
+		    sscanf(opt7->answers[3], "%lf", &X1);
 		}
 		else {	/* default */
-			x0 = l+4;
-			y0 = t+4;
-			y1 = b-4;
-			x1 = x0 + (y1 - y0)/LEGEND_HTOW;
+		    Y1 = 88;
+		    Y0 = 12;
+		    X0 = 3;
+		    X1 = 7;
 		}
+
+		x0 = l+(int)((r-l)*X0/100.);
+		x1 = l+(int)((r-l)*X1/100.);
+		y0 = t+(int)((b-t)*(100.-Y0)/100.);  /* make lower left the origin */
+		y1 = t+(int)((b-t)*(100.-Y1)/100.);
 	}
+
 	if( y0 > y1) {		/* allow for variety in order of corner */
 		flip = !flip;	/*   selection without broken output    */
 		xyTemp = y0;
@@ -859,5 +854,5 @@ int main( int argc, char **argv )
 		D_add_to_list(G_recreate_command()) ;
 
 	R_close_driver();
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
