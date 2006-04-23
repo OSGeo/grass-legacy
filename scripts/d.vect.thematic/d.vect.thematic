@@ -1038,14 +1038,14 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
 fi
 
 # Create graphic legend
-if [ "$GIS_FLAG_L" -eq 1 -a "$GIS_OPT_MONITOR" <> "none" ] ; then
+if [ "$GIS_FLAG_L" -eq 1 -a "$GIS_OPT_MONITOR" != "none" ] ; then
     echo ""
     echo ""
     if [ `eval d.mon -L | grep $GIS_OPT_MONITOR | awk '{print $5}'` = "not" ] ; then
-        d.mon start=$GIS_OPT_MONITOR >stdout
+        d.mon start=$GIS_OPT_MONITOR > /dev/null
     else 
-        d.mon select=$GIS_OPT_MONITOR >stdout
-	    d.erase
+        d.mon select=$GIS_OPT_MONITOR > /dev/null
+        d.erase
     fi
     d.graph input=$TMP2
     d.mon select=$currmon
