@@ -1,4 +1,3 @@
-#include <stdio.h>
 #ifdef MAIN
 #define EXTERN
 #else

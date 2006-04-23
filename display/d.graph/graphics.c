@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <string.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
@@ -21,7 +21,10 @@ int graphics (FILE *infile)
 			got_new = G_getl2(buff, 128, infile);
 			break;
 		case 's':
-			do_size(buff) ;
+			if(strncmp(buff, "sym", 3) == 0)
+			    do_symbol(buff);
+			else
+			    do_size(buff);
 			got_new = G_getl2(buff, 128, infile);
 			break;
 		case 'r':

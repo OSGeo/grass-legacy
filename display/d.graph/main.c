@@ -6,13 +6,14 @@
  *
  */
 
-#define MAIN
 #include <stdio.h>
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/display.h>
 #include <grass/raster.h>
 #include <grass/glocale.h>
+
+#define MAIN
 #include "options.h"
 #include "local_proto.h"
 
@@ -60,13 +61,7 @@ int main (int argc, char **argv)
 	/* default font scaling: 5% of active frame */
 	hsize = vsize = 5. ;
 
-	if (opt1->answer != NULL)
-	{
-	/* changed 1/4/91 jmoorman
-		infile = G_fopen_old ("graph", opt1->answer, 
-			G_find_file("graph", opt1->answer, "")) ;
-		if (infile == NULL)
-	*/
+	if (opt1->answer != NULL) {
 	    if ((infile = fopen(opt1->answer,"r")) == NULL)
 		G_fatal_error(_("Graph file <%s> not found"), opt1->answer);
 	}

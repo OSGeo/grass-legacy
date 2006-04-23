@@ -1,6 +1,4 @@
 #include <grass/gis.h>
-#include <stdlib.h>
-#include <stdio.h>
 
 char *falloc(int nelem,int elsize)
 {

@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <string.h>
 #include <grass/gis.h>
-#include "options.h"
 #include <grass/display.h>
 #include <grass/raster.h>
+#include <grass/symbol.h>
 #include <grass/glocale.h>
 
+#include "options.h"
 #include "local_proto.h"
 
 #define CHUNK	128
@@ -333,4 +334,63 @@ int do_icon (char *buff)
 		break ;
 	}
 	return(0) ;
+}
+
+int do_symbol(char *buff)
+{
+    double xper, yper;
+    int size;
+    int ix, iy;
+    char *symb_name;
+    SYMBOL *Symb;
+    RGBA_Color *line_color, *fill_color;
+    double rotation = 0.0;
+    char *fg_color_str, *bg_color_str;
+
+    line_color = G_malloc(sizeof(RGBA_Color));
+    fill_color = G_malloc(sizeof(RGBA_Color));
+
+    G_debug(2, "symbol command [%s]", buff);
+
+#ifdef NOTYET
+    /* init line_color_str to "", fill_color_str to "grey", then optional? */
+
+    if ( sscanf(buff, "%*s %s %d %lf %lf %s %s", symb_name, &size, &xper, &yper,
+      line_color_str, fill_color_str) != 6 ) {
+	G_warning(_("Problem parsing command [%s]"), buff);
+	return(-1);
+    }
+
+    if(mapunits) {
+	ix = (int)(D_u_to_d_col(xper)+0.5);
+	iy = (int)(D_u_to_d_row(yper)+0.5);
+	/* consider size in map units too? currently in percentage of display.
+	    use "size * D_get_u_to_d_yconv()" to convert? */
+    }
+    else {
+	if( xper<0. || yper<0. || xper>100. || yper>100.)
+	    return(-1) ;
+
+	ix = l + (int)(xper * xincr) ;
+	iy = b - (int)(yper * yincr) ;
+    }
+
+    Symb = S_read ( symb_name );
+
+    if ( Symb == NULL ) {
+	G_warning(_("Cannot read symbol, cannot display points"));
+	return(-1);
+    }
+    else S_stroke ( Symb, size, rotation, 0 );
+
+    D_symbol(Symb, ix, iy, line_color, fill_color);
+
+#else
+    G_message("Symbol support currently under development.");
+#endif
+
+    G_free(line_color);
+    G_free(fill_color);
+
+    return(0);
 }
