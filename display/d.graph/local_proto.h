@@ -14,7 +14,6 @@ int do_text_rotate(char *);
 int do_text(char *);
 int check_alloc(int);
 int do_icon(char *);
+int do_symbol(char *);
 /* graphics.c */
 int graphics(FILE *);
-/* main.c */
-int main(int, char **);
