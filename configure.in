@@ -579,8 +579,17 @@ LOC_CHECK_LIB_PATH(proj,External PROJ.4,PROJLIB)
 
 LOC_CHECK_LIBS(proj,pj_get_def,External PROJ.4,$PROJLIB,PROJLIB,,,)
 
+# Define share/proj/ directory for epsg code file
+PROJSHARE=
+if test -n "$PROJINC"; then
+        PROJSHARE=/usr/share/proj
+else
+        PROJSHARE=/usr/local/share/proj
+fi
+
 AC_SUBST(PROJINC)
 AC_SUBST(PROJLIB)
+AC_SUBST(PROJSHARE)
 
 # nad2bin needs to be in path for installing datum gridshift files
 
