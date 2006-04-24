@@ -93,7 +93,7 @@ proc epsgLocCom args {
                                         
         bind .optPopup.input3_ppbEntry <Leave> {
              if {$browsedepsg == ""} {
-                set browsedepsg "/usr/local/share/proj/epsg"
+                set browsedepsg "PROJSHARE/epsg"
             }
         }
 
@@ -272,7 +272,7 @@ proc infoEpsg args {
         .infoPopup.text insert end "\nThe Grass database in which the location should be created\n\n"
         .infoPopup.text insert end "\n" 
         .infoPopup.text insert end "\n   EPSG code number of projection:\n\n" subtitle
-        .infoPopup.text insert end "\nEPSG code number of projection (see /usr/local/share/proj/epsg or push the 'EPSG-codes' button)\n\n"
+        .infoPopup.text insert end "\nEPSG code number of projection (see PROJSHARE/epsg or push the 'EPSG-codes' button)\n\n"
         
         pack .infoPopup.text -side left -fill both 
         
