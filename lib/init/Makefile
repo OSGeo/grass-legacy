@@ -125,17 +125,19 @@ $(ETC)/gis_set.tcl: gis_set.tcl
 	rm -f $@
 	$(INSTALL) -m 755 gis_set.tcl $(ETC)
 	
-$(ETC)/epsg_option.tcl: epsg_option.tcl
+$(ETC)/epsg_option.tcl: epsg_option.tcl.in
 	rm -f $@
-	$(INSTALL) -m 755 epsg_option.tcl $(ETC)
+	sh ./projshare.sed "$(PROJSHARE)" epsg_option.tcl.in > $@
+	chmod 755 $@
 
 $(ETC)/help.tcl: help.tcl
 	rm -f $@
 	$(INSTALL) -m 755 help.tcl $(ETC)
 
-$(ETC)/make_location_epsg.sh: make_location_epsg_g57.sh
+$(ETC)/make_location_epsg.sh: make_location_epsg.sh.in
 	rm -f $@
-	$(INSTALL) -m 755 make_location_epsg_g57.sh $(ETC)/make_location_epsg.sh
+	sh ./projshare.sed "$(PROJSHARE)" make_location_epsg.sh.in > $@
+	chmod 755 $@
 
 $(ETC)/grass-run.sh: grass-run.src
 	rm -f $@

@@ -27,7 +27,7 @@ if [ $# -lt 2 ] ; then
  echo "Usage:"
  echo "   make_location_epsg.sh epsg newlocation_name [GISDBASE]"
  echo ""
- echo "       epsg: EPSG code number of projection (see /usr/local/share/proj/epsg)"
+ echo "       epsg: EPSG code number of projection (see PROJSHARE/epsg)"
  echo "       newlocation_name: new location to be created"
  echo "       GISDBASE: full path to GRASS database directory (optional)"
  echo "                 e.g. $HOME/grassdata"
