@@ -80,7 +80,7 @@ public:
   void save(AMI_STREAM<waterType> &str);
   void print();
   void assignDirections(int sfdmode); /* single flow directions */
-  gridElement *grid::getNeighbour(gridElement *datap, int k);
+  gridElement *getNeighbour(gridElement *datap, int k);
   direction_type getDirection(int);
 };
 
