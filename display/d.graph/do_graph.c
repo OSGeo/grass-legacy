@@ -18,6 +18,7 @@ static int *yarray ;
 static float xincr ;
 static float yincr ;
 
+static RGBA_Color last_color;
 
 int set_graph_stuff (void)
 {
@@ -105,16 +106,21 @@ int do_color (char *buff)
 	color = G_str_to_color(in_color, &R, &G, &B);
 	if(color == 0) {
 	    G_warning(_("[%s]: No such color"), in_color);
+	    /* store for backup */
+	    last_color.set = 0;
 	    return(-1);
 	}
 	if(color == 1) {
 	    R_RGB_color(R, G, B);
+	    /* store for backup */
+	    set_last_color(R, G, B, 1);
 	}
 	if(color == 2) {  /* color == 'none' */
 	    R = D_translate_color(DEFAULT_BG_COLOR);
 	    R_standard_color(R);
+	    /* store for backup */
+	    last_color.set = -1;
 	}
-
 	return(0);
 }
 
@@ -343,17 +349,20 @@ int do_symbol(char *buff)
     int ix, iy;
     char *symb_name;
     SYMBOL *Symb;
-    RGBA_Color *line_color, *fill_color;
     double rotation = 0.0;
-    char *fg_color_str, *bg_color_str;
+    char *line_color_str, *fill_color_str;
+    RGBA_Color *line_color, *fill_color;
+    int ret;
+
 
     line_color = G_malloc(sizeof(RGBA_Color));
     fill_color = G_malloc(sizeof(RGBA_Color));
 
-    G_debug(2, "symbol command [%s]", buff);
+    symb_name = G_malloc(sizeof(char) * strlen(buff)+1);  /* well, it won't be any bigger than this */
+    line_color_str = G_malloc(sizeof(char) * strlen(buff)+1);
+    fill_color_str = G_malloc(sizeof(char) * strlen(buff)+1);
 
-#ifdef NOTYET
-    /* init line_color_str to "", fill_color_str to "grey", then optional? */
+    G_debug(3, "do_symbol() [%s]", buff);
 
     if ( sscanf(buff, "%*s %s %d %lf %lf %s %s", symb_name, &size, &xper, &yper,
       line_color_str, fill_color_str) != 6 ) {
@@ -364,15 +373,38 @@ int do_symbol(char *buff)
     if(mapunits) {
 	ix = (int)(D_u_to_d_col(xper)+0.5);
 	iy = (int)(D_u_to_d_row(yper)+0.5);
-	/* consider size in map units too? currently in percentage of display.
-	    use "size * D_get_u_to_d_yconv()" to convert? */
+	/* consider size in map units too? maybe as percentage of display?
+	    perhaps use "size * D_get_u_to_d_yconv()" to convert */
     }
     else {
 	if( xper<0. || yper<0. || xper>100. || yper>100.)
-	    return(-1) ;
+	    return(-1);
+	ix = l + (int)(xper * xincr);
+	iy = b - (int)(yper * yincr);
+    }
 
-	ix = l + (int)(xper * xincr) ;
-	iy = b - (int)(yper * yincr) ;
+    ret = G_str_to_color(line_color_str, &line_color->r, &line_color->g, &line_color->b);
+    if (ret == 1) {
+	line_color->a = 1;    /* alpha channel is not used by the display drivers */
+	line_color->set = 1;
+    }
+    else if (ret == 2) 
+	line_color->set = -1; /* "none" */
+    else {
+	G_warning(_("[%s]: No such color"), line_color_str);
+	return(-1);
+    }
+
+    ret = G_str_to_color(fill_color_str, &fill_color->r, &fill_color->g, &fill_color->b);
+    if (ret == 1) {
+	fill_color->a = 1;    /* alpha channel is not used by the display drivers */
+	fill_color->set = 1;
+    }
+    else if (ret == 2)
+	fill_color->set = -1; /* "none" */
+    else {
+	G_warning(_("[%s]: No such color"), fill_color_str);
+	return(-1);
     }
 
     Symb = S_read ( symb_name );
@@ -385,12 +417,35 @@ int do_symbol(char *buff)
 
     D_symbol(Symb, ix, iy, line_color, fill_color);
 
-#else
-    G_message("Symbol support currently under development.");
-#endif
+    /* restore previous d.graph draw color */
+    if(last_color.set == 1)
+	R_RGB_color(last_color.r, last_color.g, last_color.b);
+    else if(last_color.set == -1) /* none */
+	D_raster_use_color(D_parse_color(DEFAULT_BG_COLOR,0));
+    else /* unset */
+	R_RGB_color(line_color->r, line_color->g, line_color->b);
 
+    G_free(symb_name);
+    G_free(line_color_str);
+    G_free(fill_color_str);
     G_free(line_color);
     G_free(fill_color);
 
     return(0);
+}
+
+/* RGB are 0-255, setval is 0 unset, 1 set, -1 "none" */
+void set_last_color(int R, int G, int B, int setval)
+{
+    if(setval == 1) {
+	last_color.r  = (unsigned char)R;
+	last_color.g  = (unsigned char)G;
+	last_color.b  = (unsigned char)B;
+	last_color.a  = 1; /* unused */
+	last_color.set= 1;
+    }
+    else if(setval == -1) {
+	last_color.set= -1;
+    }
+    else last_color.set= 0;
 }
