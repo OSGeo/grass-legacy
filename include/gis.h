@@ -254,6 +254,7 @@ typedef struct
     unsigned char r, g, b, a;	/* red, green, blue, and alpha */
 } RGBA_Color ;
 
+typedef RGBA_Color RGB_Color;
 
 struct Reclass
 {
