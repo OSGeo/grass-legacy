@@ -49,7 +49,8 @@ int GS_write_ppm(char *name)
 
 
     if (NULL == (fp = fopen(name, "w"))) {
-	fprintf(stderr, "Cannot open file for output\n"), exit(1);
+	fprintf(stderr, "Cannot open file for output.\n");
+	return(1);
     }
 
     fprintf(fp, "P6 %d %d 255\n", xsize, ysize);
@@ -94,7 +95,8 @@ int GS_write_zoom(char *name, unsigned int xsize, unsigned int ysize)
     gsd_writeView(&pixbuf, xsize, ysize);
 
     if (NULL == (fp = fopen(name, "w"))) {
-	fprintf(stderr, "Cannot open file for output\n"), exit(1);
+	fprintf(stderr, "Cannot open file for output.\n");
+	return(1);
     }
 
     fprintf(fp, "P6 %d %d 255\n", xsize, ysize);
@@ -209,7 +211,7 @@ int gsd_init_mpeg(char *name)
         }
 
         if (NULL == (fmpg = fopen(name, "wb"))) {
-                fprintf(stderr, "Cannot open file for output\n");
+                fprintf(stderr, "Cannot open file for output.\n");
                 return(-1);
         }
 

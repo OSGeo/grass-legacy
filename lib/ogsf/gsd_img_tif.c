@@ -37,8 +37,10 @@ int GS_write_tif(char *name)
     gsd_getimage(&pixbuf, &xsize, &ysize);
 
     out = TIFFOpen(name, "w");
-    if (out == NULL)
-	G_fatal_error("Cannot open file for output.");
+    if (out == NULL) {
+	G_warning("Cannot open file for output.");
+	return(1);
+    }
 
     /* Write out TIFF Tags */
     /* Assuming 24 bit RGB Tif */
