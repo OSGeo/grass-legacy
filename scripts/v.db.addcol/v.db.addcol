@@ -81,13 +81,13 @@ while [ "$n" -le "$colnum" ]
     col=`echo $GIS_OPT_COLUMNS | cut -d',' -f$n`
     
     if [ -z "$col" ] ; then
-      echo -e "\nERROR: There is an empty colum !\nDid you leave a trailing comma?\n"
+      echo -e "\nERROR: There is an empty column !\nDid you leave a trailing comma?\n"
       exit 1
     fi
     
     echo "ALTER TABLE $table ADD COLUMN $col" | db.execute database=$database driver=$driver
     if [ $? -eq 1 ] ; then
-      echo "ERROR: Cannot continue (problem to add column)."
+      echo "ERROR: Cannot continue (problem adding column)."
       exit 1
     fi
     let "n += 1"
