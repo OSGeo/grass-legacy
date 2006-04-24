@@ -35,7 +35,7 @@ in x and similarly 0-100 in y,
 regardless of the graphics monitor display frame size and aspect. 
 The (0,0) location is the lower left corner of the active graphics 
 monitor display frame. All values may be floating point.
-If the <B>-m</B> flag is given geographic coordinates will be used.
+If the <B>-m</B> flag is given, geographic coordinates will be used instead.
 
 
 <H2>COMMANDS</H2>
@@ -52,6 +52,7 @@ The graphics language is simple, and uses the following commands:
 <a href="#color">color</a>&nbsp;|
 <a href="#text">text</a>&nbsp;|
 <a href="#size">size</a>&nbsp;|
+<a href="#symbol">symbol</a>&nbsp;|
 <a href="#rotation">rotation</a>&nbsp;|
 <a href="#icon">icon</a>&nbsp;|
 <a href="#width">width</a>
@@ -137,6 +138,17 @@ If only one value is given, then that value will be used for both x and y
 scaling.
 <BR>
 <B>Note.</B> A space must separate <EM>xper</EM> and <EM>yper</EM>.
+
+<a name="symbol"></a>
+<DT><B>symbol</B> <EM>type size xper yper line_color fill_color</EM>
+<DD>A symbol is drawn at the given size on the display monitor. The
+<EM>xper</EM> and <EM>yper</EM> options define the center of the icon and
+are given as a percentage of the display frame (<tt>0,0</tt> is lower left).
+The symbol can be any of those stored in <tt>$GISBASE/etc/symbol/</tt>
+(e.g. <i>basic/circle</i>) or stored in the user's mapset directory in the
+form <tt>$MAPSET/symbol/</tt><em>type/name</em>.
+The colors may be either a standard color name, an R:G:B triplet,
+or "none". If using an R:G:B triplet, each color value can range from 0-255.
 
 <a name="rotation"></a>
 <DT><B>rotation</B> <EM>angle</EM> 

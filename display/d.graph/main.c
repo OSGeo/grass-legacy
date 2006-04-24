@@ -76,10 +76,12 @@ int main (int argc, char **argv)
 	    if(color == 0)
 		G_fatal_error(_("[%s]: No such color"), opt2->answer);
 
-	    if(color == 1)
+	    if(color == 1) {
 		R_RGB_color(R, G, B);
-
-	    /* (color==2) is "none", noop */
+		set_last_color(R, G, B, 1);
+	    }
+	    else /* (color==2) is "none", noop */
+		set_last_color(0, 0, 0, -1);
 	}
 
 	if(mapcoords->answer) mapunits = TRUE;

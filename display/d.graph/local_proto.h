@@ -15,5 +15,6 @@ int do_text(char *);
 int check_alloc(int);
 int do_icon(char *);
 int do_symbol(char *);
+void set_last_color(int, int, int, int);
 /* graphics.c */
 int graphics(FILE *);
