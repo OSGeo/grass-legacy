@@ -3,6 +3,9 @@
 #endif
 #ifndef _GRASS_DISPLAY_LIB_
 #define _GRASS_DISPLAY_LIB_
+
+#include <grass/symbol.h>
+
 /* clip.c */
 int D_clip(register double, register double, register double, register double, register double *, register double *, register double *, register double *);
 /* cnversions.c */
@@ -121,6 +124,8 @@ int D_scan_float(char *, float *);
 int D_scan_int(char *, int *);
 /* setup.c */
 int D_setup(int);
+/* symbol.c */
+D_symbol(SYMBOL *, int, int, RGBA_Color *, RGBA_Color *);
 /* tran_colr.c */
 int D_translate_color(const char *);
 int D_translate_or_add_color(const char *, int);
