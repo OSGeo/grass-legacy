@@ -179,6 +179,8 @@ if { [file exists $dirName] && [file isdirectory $dirName] } {
  	{cascad "Manage projections" {} "" $tmenu {			
         {command "Create/edit projection information for current location" {} "g.setproj" {} -command {term g.setproj }}
         {command "Show projection information and create projection files" {} "g.proj" {} -command {execute g.proj }}
+        {separator}
+        {command "Convert coordinates from one projection to another" {} "m.proj" {} -command {execute m.proj }}
  	}}
     {cascad "Text" {} "" $tmenu {			
         {command "Select default text font" {} "d.font" {} -command {execute term d.font }}
