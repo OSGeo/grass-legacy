@@ -1,4 +1,10 @@
-grass (6.1.0-1) unstable; urgency=low
+grass (6.1.0-3) unstable; urgency=low
+
+  * patch to look for epsg codes no longer needed
+
+ -- Markus Neteler <neteler@itc.it>  Thu, 24 Apr 2006 11:22:00 +0100
+
+grass (6.1.0-2) unstable; urgency=low
 
   * fixed broken rules file
 
