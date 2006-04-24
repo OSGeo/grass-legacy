@@ -4,21 +4,24 @@
 
 <h2>EXAMPLES</h2>
 
-<h3>Buffer around input lines</h3>
+<h4>Buffer around input lines</h4>
+
 <div class="code"><pre>
 v.buffer input=map output=buffer type=line buffer=100
 </pre></div>
+<BR>
 
-<h3>Circles around input points</h3>
+<h4>Circles around input points</h4>
+
 <div class="code"><pre>
 v.buffer input=pointsmap output=circles type=point buffer=1000 
 </pre></div>
-
+<BR>
 Note that attributes are not transferred (due to potential buffer overlap which cannot be 
 resolved automatically).
-<P>
 
-<h3>Non-overlapping circles around input points with attribute transfer</h3>
+<h4>Non-overlapping circles around input points with attribute transfer</h4>
+
 <div class="code"><pre>
 v.buffer input=archsites output=circles type=point buffer=200 
 # change original points to centroids: 
@@ -31,14 +34,24 @@ v.patch in=archcentroids,circles out=circles_db
 v.db.connect map=circles_db table=archsites field=1 key=cat driver=dbf \
 database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf'
 </pre></div>
-	
+<BR>
+
 <h2>BUGS</h2>
-For some data v.buffer can produce strange results, especially if the buffer size is 
-bigger than input features. Usually you can solve the problem if you run v.buffer 
-more times with smaller buffer.
+
+For some data <em>v.buffer</em> can produce strange results, especially if
+the buffer size is bigger than input features. Usually you can solve the
+problem if you run <em>v.buffer</em> more times with smaller buffer.
+<P>
+The <b>bufcol</b> dynamic buffer distance parameter has problems cleaning
+complex features. (holes left filled, etc.) If you experience problems
+try running <em>v.buffer</em> multiple times with a single buffer distance
+and patch the results with <em>v.patch</em> and remove any overlaps with 
+<em>v.extract -d</em>.
 
 <h2>SEE ALSO</h2>
 
+<em><a HREF="r.buffer.html">r.buffer</a></em>,
+<em><a HREF="v.extract.html">v.extract</a></em>,
 <em><a HREF="v.type.html">v.type</a></em>,
 <em><a HREF="v.patch.html">v.patch</a></em>,
 <em><a HREF="v.db.connect.html">v.db.connect</a></em>
@@ -47,4 +60,4 @@ more times with smaller buffer.
 
 Radim Blazek
 
-<p><i>Last changed: $Date$</i>
+<p><i>Last changed: $Date$</i></p>
