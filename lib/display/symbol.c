@@ -1,4 +1,4 @@
-/* plot.c  draw a symbol at pixel coordinates
+/* symbol.c  draw a symbol at pixel coordinates
  *
  *  by Hamish Bowman 19 Dec. 2005
  *  adapted from Radim Blazek's d.vect code
@@ -14,6 +14,19 @@
 #include "grass/symbol.h"
 #include "grass/glocale.h"
 
+/*!
+ * \brief draw a symbol at pixel coordinates
+ *
+ * Draws a symbol (one of $GISBASE/etc/symbols/) to the active display.
+ * The starting x0,y0 coordinate corresponds to the center of the icon.
+ *
+ *  \param Symb The symbol name (e.g. basic/circle)
+ *  \param x0   The starting x display coordinate (pixel)
+ *  \param y0   The starting y display coordinate (pixel)
+ *  \param line_color  Outline color
+ *  \param fill_color  Fill color
+ *  \return int
+ */
 
 int D_symbol(SYMBOL *Symb, int x0, int y0, RGBA_Color *line_color, RGBA_Color *fill_color)
 {
