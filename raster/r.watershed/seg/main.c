@@ -38,5 +38,5 @@ main (int argc, char *argv[])
     	fprintf (stdout,"\nSECTION %d beginning: Closing Maps.\n", tot_parts);
 	close_array_seg ();
     }
-    exit (0);
+    exit (EXIT_SUCCESS);
 }

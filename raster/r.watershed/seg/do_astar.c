@@ -74,7 +74,6 @@ add_pt (SHORT r, SHORT c, SHORT downr, SHORT downc, CELL ele, CELL downe)
 
 if (nxt_avail_pt == do_points) {
 	G_fatal_error ("problem w/ astar algorithm");
-	exit (1);
 }
     slp_value = get_slope(r, c, downr, downc, ele, downe);
     dseg_put (&slp, &slp_value, r, c);

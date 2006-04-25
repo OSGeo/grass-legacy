@@ -122,7 +122,7 @@ if (run_flag) {
 	for (r = 0; r < nrows; r++) {
 		for (c = 0; c < ncols; c++)
 			if (-1 == cseg_put (&wat, &one, r, c))
-				exit (1);
+				exit (EXIT_FAILURE);
 	}
 }
 cseg_open (&asp, SROW, SCOL, num_cseg_bytes);
@@ -133,7 +133,7 @@ if (pit_flag) {
 	for (r = 0; r < nrows; r++) {
 		for (c = 0; c < ncols; c++)
 			if (-1 == cseg_put (&asp, &zero, r, c))
-				exit (1);
+				exit (EXIT_FAILURE);
 	}
 }
 bseg_open (&swale, SROW, SCOL, num_cseg_bytes);
@@ -159,7 +159,6 @@ if (NULL != G_find_file ("cell", "MASK", G_mapset())) {
 	MASK_flag = 1;
 	if ((fd = G_open_cell_old ("MASK", G_mapset())) < 0) {
 		G_fatal_error ("unable to open MASK");
-		exit (1);
 	} else {
 		buf = G_allocate_cell_buf ();
 		for (r = 0; r < nrows; r++) {
@@ -211,7 +210,7 @@ if (MASK_flag) {
 				else if (c == ncols - 1) asp_value = -8;
 				else asp_value = -1;
 				if (-1 == cseg_put (&asp, &asp_value, r, c))
-					exit (1);
+					exit (EXIT_FAILURE);
 				cseg_get (&alt, &alt_value, r, c);
 				add_pt (r, c, -1, -1, alt_value, alt_value);
 			} else if (!bseg_get (&worked, &worked_value, r-1, c)
@@ -322,7 +321,7 @@ if (MASK_flag) {
 				if (wat_value > 0) {
 					wat_value = -wat_value;
 					if (-1 == cseg_put (&wat, &wat_value, r, c))
-						exit (1);
+						exit (EXIT_FAILURE);
 				}
 				if (r == 0) asp_value = -2;
 				else if (c == 0) asp_value = -4;
@@ -330,7 +329,7 @@ if (MASK_flag) {
 				else if (c == ncols - 1) asp_value = -8;
 				else asp_value = -1;
 				if (-1 == cseg_put (&asp, &asp_value, r, c))
-					exit (1);
+					exit (EXIT_FAILURE);
 				cseg_get (&alt, &alt_value, r, c);
 				add_pt (r, c, -1, -1, alt_value, alt_value);
 			} else {
@@ -353,7 +352,6 @@ do_legal (char *file_name)
 		sprintf (buf, "map layer [%s] not legal for GRASS\n",
 			file_name);
 		G_fatal_error (buf);
-		exit (1);
 	}
 
     return 0;
@@ -368,7 +366,6 @@ do_exist (char *file_name)
 	if (file_mapset == NULL)	{
 		sprintf (buf, "[%s] map not found\n", file_name);
 		G_fatal_error (buf);
-		exit (1);
 	}
 	return (file_mapset);
 }
