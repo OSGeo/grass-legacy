@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
 	flag2->description    = _("Allow only horizontal and vertical flow of water") ;
 
 	if (G_parser(argc, argv))
-		exit(1) ;
+		exit(EXIT_FAILURE) ;
 
 /* Check option combinations */
 
@@ -162,8 +162,7 @@ int main(int argc, char *argv[])
 		&& (opt14->answer == NULL)
 		&& (opt15->answer == NULL))
 	{
-		fprintf(stderr,"\nSorry, you must choose some output map\n") ;
-		exit(1) ;
+		G_fatal_error("\nSorry, you must choose some output map.");
 	}
 
 	err = 0 ;
@@ -182,7 +181,7 @@ int main(int argc, char *argv[])
 		fprintf(stderr,"    basin, stream, half.basin, slope, or lS\n") ;
 		fprintf(stderr,"    you MUST provide a value for the basin threshold (basin.threshold)\n") ;
 		G_usage() ;
-		exit(1) ;
+		exit(EXIT_FAILURE);
 	}
 
 	/* Build command line */
