@@ -36,7 +36,7 @@ int enforce_downstream(int infd, int outfd, char *outvect,
 {
     struct Cell_head wind;
     int i, j, retval = 0;
-    int vtype, line, nlines;
+    int line, nlines;
     int nrows, ncols;
     PointGrp pg;
     PointGrp pgxy;   /* copy any points in region to this one */
@@ -95,14 +95,14 @@ int enforce_downstream(int infd, int outfd, char *outvect,
 
     nlines = Vect_get_num_lines(Map);
     for (line = 1; line < nlines; line++) {
-        int row, col, inorder = 0;
-        int do_warn = 0, first_in = -1;
+        int do_warn = 0;
         int npts = 0;
         int prevrow = -1;
+        int in_out = 0;
+        int first_in = -1;
         double totdist = 0.;
 
-        vtype = Vect_read_line(Map, points, cats, line);
-        if (!(vtype & GV_LINE))
+        if (!(Vect_read_line(Map, points, cats, line) & GV_LINE))
             continue;
 
         pg_init(&pg);
@@ -117,21 +117,25 @@ int enforce_downstream(int infd, int outfd, char *outvect,
             G_percent(line, nlines, 10);
 
         for (i = 0; i < points->n_points; i++) {
-            row = G_northing_to_row(points->y[i], &wind);
-            col = G_easting_to_col(points->x[i], &wind);
+            int row = G_northing_to_row(points->y[i], &wind);
+            int col = G_easting_to_col(points->x[i], &wind);
 
             /* rough clipping */
             if (row < 0 || row > nrows - 1 ||
                 col < 0 || col > ncols - 1)
             {
                 if (first_in != -1)
-                    do_warn = 1;
+                    in_out = 1;
+
+                G_debug(3, "outside region - row: %d col: %d", row, col);
 
                 continue;
 	    }
 
             if (first_in < 0)
                 first_in = i;
+            else if (in_out)
+                do_warn = 1;
 
             ptxy[0] = points->x[i];
             ptxy[1] = points->y[i];
@@ -164,19 +168,24 @@ int enforce_downstream(int infd, int outfd, char *outvect,
             npts++;
         }
 
-        if (do_warn) {
+        if (do_warn)
+        {
             G_warning(_("Vect runs out of region and re-enters - "
-                        "this case is not yet implemented!"));
+                        "this case is not yet implemented."));
             retval = 1;
         }
 
         /* TODO: check for NULL */
         /* now check to see if points go downslope(inorder) or upslope */
-        if ((inorder = (pg_y_from_x(&pg, 0.0) > pg_y_from_x(&pg, totdist))))
+        if (pg_y_from_x(&pg, 0.0) > pg_y_from_x(&pg, totdist))
         {
+            G_debug(3, "inorder:1");
+
             pgpts   = pg_getpoints(&pg);
             pgxypts = pg_getpoints(&pgxy);
         } else {
+            G_debug(3, "inorder:0");
+
             /* pgpts is now high to low */
             pgpts = pg_getpoints_reversed(&pg);
 
@@ -188,19 +197,11 @@ int enforce_downstream(int infd, int outfd, char *outvect,
 
         for (i = 0; i < (npts - 1); i++) {
             if (noflat)
-            {
                 /* make sure there are no flat segments in line */
-                if (pgpts[i+1][1] < pgpts[i][1]) 
-                    continue;
-
                 traverse_line_noflat(pgpts, depth, i, npts);
-            } else {
+            else
                 /* ok to have flat segments in line */
-                if (pgpts[i+1][1] <= pgpts[i][1]) 
-                    continue;
-
                 traverse_line_flat(pgpts, i, npts);
-            }
         }
 
         /* points are now in order and adjusted to run high to low with
@@ -228,9 +229,8 @@ int enforce_downstream(int infd, int outfd, char *outvect,
 
         for (i = 1; i < (npts - 1); i++) {
             int c, r;
-
-            row = G_northing_to_row(pgxypts[i][1], &wind);
-            col = G_easting_to_col(pgxypts[i][0], &wind);
+            int row = G_northing_to_row(pgxypts[i][1], &wind);
+            int col = G_easting_to_col(pgxypts[i][0], &wind);
 
             /* get bounding box of line points */
             row1 = MAX(0, MIN(row, prevrow) - rowoff);
@@ -286,7 +286,7 @@ int enforce_downstream(int infd, int outfd, char *outvect,
         }
         }
 
-        G_debug(3, "inorder:%d  %.3lf %.3lf", inorder,
+        G_debug(3, "start:%.3lf end:%.3lf",
                 pg_y_from_x(&pg, 0.0), pg_y_from_x(&pg, totdist));
     }
 
@@ -323,20 +323,25 @@ static void traverse_line_flat(Point2 *pgpts, const int pt, const int npts)
 {
     int j, k;
 
+    if (pgpts[pt + 1][1] <= pgpts[pt][1]) 
+        return;
+
     for (j = (pt + 2); j < npts; j++)
        if (pgpts[j][1] <= pgpts[pt][1])
            break; 
 
     if (j == npts)
+    {
         /* if we got to the end, level it out */
         for (j = (pt + 1); j < npts; j++)
             pgpts[j][1] = pgpts[pt][1];
-    else
+    } else {
         /* linear interp between point i and the next <= */
         for (k = (pt + 1); k < j; k++)
             pgpts[k][1] = LINTERP(pgpts[j][1], pgpts[pt][1],
                                  (pgpts[j][0] - pgpts[k][0]) /
                                  (pgpts[j][0] - pgpts[pt][0]));
+    }
 }
 
 
@@ -344,6 +349,9 @@ static void traverse_line_noflat(Point2 *pgpts, const double depth,
                                  const int pt, const int npts)
 {
     int j, k;
+
+    if (pgpts[pt + 1][1] < pgpts[pt][1]) 
+        return;
 
     for (j = (pt + 2); j < npts; j++)
         if (pgpts[j][1] < pgpts[pt][1])
@@ -377,27 +385,24 @@ static void set_min_point(void *data, int col, int row,
     {
         CELL *cbuf = data;
 
-        G_incr_void_ptr(cbuf, row * G_window_cols());
-        cbuf[col] = MIN(cbuf[col], elev) - (int)depth;
-        G_debug(3, "val=%d", cbuf[col]);
+        cbuf[row * G_window_cols() + col] = MIN(cbuf[row * G_window_cols() + col], elev) - (int)depth;
+        G_debug(3, "row:%d col:%d val=%d", row, col, cbuf[row * G_window_cols() + col]);
     }
     break;
     case FCELL_TYPE:
     {
         FCELL *fbuf = data;
 
-        G_incr_void_ptr(fbuf, row * G_window_cols() * G_raster_size(rtype));
-        fbuf[col] = MIN(fbuf[col], elev) - depth;
-        G_debug(3, "val=%.2lf", fbuf[col]);
+        fbuf[row * G_window_cols() + col] = MIN(fbuf[row * G_window_cols() + col], elev) - depth;
+        G_debug(3, "row:%d col:%d val=%.2lf", row, col, fbuf[row * G_window_cols() + col]);
     }
     break;
     case DCELL_TYPE:
     {
         DCELL *dbuf = data;
 
-        G_incr_void_ptr(dbuf, row * G_window_cols() * G_raster_size(rtype));
-        dbuf[col] = MIN(dbuf[col], elev) - depth;
-        G_debug(3, "val=%.2lf", dbuf[col]);
+        dbuf[row * G_window_cols() + col] = MIN(dbuf[row * G_window_cols() + col], elev) - depth;
+        G_debug(3, "row:%d col:%d val=%.2lf", row, col, dbuf[row * G_window_cols() + col]);
     }
     break;
     }
@@ -434,33 +439,30 @@ static double lowest_cell_near_point(void *data, RASTER_MAP_TYPE rtype,
     {
         CELL *cbuf = data;
 
-        G_incr_void_ptr(cbuf, row1 * G_window_cols());
-        if (G_is_c_null_value(&cbuf[col1]))
+        if (G_is_c_null_value(&cbuf[row1 * G_window_cols() + col1]))
             min = 0.;
         else
-            min = cbuf[col1];
+            min = cbuf[row1 * G_window_cols() + col1];
     }
     break;
     case FCELL_TYPE:
     {
         FCELL *fbuf = data;
 
-        G_incr_void_ptr(fbuf, row1 * G_window_cols() * G_raster_size(rtype));
-        if (G_is_f_null_value(&fbuf[col1]))
+        if (G_is_f_null_value(&fbuf[row1 * G_window_cols() + col1]))
             min = 0.;
         else
-            min = fbuf[col1];
+            min = fbuf[row1 * G_window_cols() + col1];
     }
     break;
     case DCELL_TYPE:
     {
         DCELL *dbuf = data;
 
-        G_incr_void_ptr(dbuf, row1 * G_window_cols() * G_raster_size(rtype));
-        if (G_is_d_null_value(&dbuf[col1]))
+        if (G_is_d_null_value(&dbuf[row1 * G_window_cols() + col1]))
             min = 0.;
         else
-            min = dbuf[col1];
+            min = dbuf[row1 * G_window_cols() + col1];
     }
     break;
     }
@@ -483,27 +485,24 @@ static double lowest_cell_near_point(void *data, RASTER_MAP_TYPE rtype,
                 {
                     CELL *cbuf = data;
 
-                    G_incr_void_ptr(cbuf, r * G_window_cols());
-                    if (cbuf[c] < min)
-                        min = cbuf[c];
+                    if (cbuf[r * G_window_cols() + c] < min)
+                        min = cbuf[r * G_window_cols() + c];
                 }
 		break;
                 case FCELL_TYPE:
                 {
                     FCELL *fbuf = data;
 
-                    G_incr_void_ptr(fbuf, r * G_window_cols() * G_raster_size(rtype));
-                    if (fbuf[c] < min)
-                        min = fbuf[c];
+                    if (fbuf[r * G_window_cols() + c] < min)
+                        min = fbuf[r * G_window_cols() + c];
                 }
                 break;
                 case DCELL_TYPE:
                 {
                     DCELL *dbuf = data;
 
-                    G_incr_void_ptr(dbuf, r * G_window_cols() * G_raster_size(rtype));
-                    if (dbuf[c] < min)
-                        min = dbuf[c];
+                    if (dbuf[r * G_window_cols() + c] < min)
+                        min = dbuf[r * G_window_cols() + c];
                 }
                 break;
                 }
