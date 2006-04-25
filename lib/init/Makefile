@@ -47,6 +47,8 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/msgs \
 	$(ETC)/gis_set.tcl \
 	$(ETC)/epsg_option.tcl \
+	$(ETC)/file_option.tcl \
+	$(ETC)/gintro.gif \
 	$(ETC)/help.tcl \
 	$(ETC)/make_location_epsg.sh \
 	$(ETC)/grass-run.sh
@@ -120,11 +122,15 @@ $(ETC)/msgs: msgs
 	rm -rf $@
 	$(MKDIR) $@
 	$(INSTALL) -m 644 msgs/*.msg $@	
-	
+
+$(ETC)/gintro.gif: gintro.gif
+	rm -f $@
+	$(INSTALL) -m 644 gintro.gif $@
+
 $(ETC)/gis_set.tcl: gis_set.tcl
 	rm -f $@
 	$(INSTALL) -m 755 gis_set.tcl $(ETC)
-	
+
 $(ETC)/epsg_option.tcl: epsg_option.tcl.in
 	rm -f $@
 	sh ./projshare.sed "$(PROJSHARE)" epsg_option.tcl.in > $@
@@ -133,6 +139,10 @@ $(ETC)/epsg_option.tcl: epsg_option.tcl.in
 $(ETC)/help.tcl: help.tcl
 	rm -f $@
 	$(INSTALL) -m 755 help.tcl $(ETC)
+
+$(ETC)/file_option.tcl: file_option.tcl
+	rm -f $@
+	$(INSTALL) -m 755 file_option.tcl $(ETC)
 
 $(ETC)/make_location_epsg.sh: make_location_epsg.sh.in
 	rm -f $@
