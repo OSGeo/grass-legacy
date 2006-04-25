@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
 		&& (opt14->answer == NULL)
 		&& (opt15->answer == NULL))
 	{
-		G_fatal_error("\nSorry, you must choose some output map.");
+		G_fatal_error(_("\nSorry, you must choose some output map."));
 	}
 
 	err = 0 ;
@@ -177,9 +177,10 @@ int main(int argc, char *argv[])
 	
 	if (err)
 	{
-		fprintf(stderr,"\nSorry, if any of the following options are set:\n") ;
-		fprintf(stderr,"    basin, stream, half.basin, slope, or lS\n") ;
-		fprintf(stderr,"    you MUST provide a value for the basin threshold (basin.threshold)\n") ;
+		G_message(_("\nSorry, if any of the following options are set:\n"
+		        "    basin, stream, half.basin, slope, or lS\n"
+		        "    you MUST provide a value for the basin "
+                        "threshold (basin.threshold)."));
 		G_usage() ;
 		exit(EXIT_FAILURE);
 	}
@@ -285,6 +286,7 @@ int main(int argc, char *argv[])
 		strcat(command, opt15->answer) ; strcat(command, "\"") ;
 	}
 	
-	fprintf(stderr,"Running: %s\n", command) ;
+	G_message(_("Running: %s"), command) ;
+
 	exit(system(command)) ;
 }
