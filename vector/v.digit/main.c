@@ -113,7 +113,7 @@ main (int argc, char *argv[])
     new_f->key             = 'n';
     new_f->description     = "Create new file if it does not exist.";
     
-    if (G_parser (argc, argv)) exit(-1); 
+    if (G_parser (argc, argv)) exit(EXIT_FAILURE); 
 
     if(getenv("GRASS_ANOTHER_BUTTON")){
 	    leftb   = 1;
@@ -163,7 +163,7 @@ main (int argc, char *argv[])
            Vect_open_update (&Map, map_opt->answer, G_mapset());
        } else {
             G_message ( "Map does not exist. Add flag -n to create a new map.");
-	   exit ( 1 );
+	   exit (EXIT_FAILURE);
        }
     } else {
         Vect_set_open_level(2);
@@ -199,7 +199,7 @@ main (int argc, char *argv[])
     Tk_Main(0, argv, Tcl_AppInit);
     
     /* Not reached */
-    exit(0) ;
+    exit(EXIT_SUCCESS) ;
 }
 
 int
