@@ -4,13 +4,14 @@
 #
 # MODULE:   	Grass Tcl/Tk Initialization
 # AUTHOR(S):	Original author unknown - probably CERL
-#   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
-#   	    	Markus Neteler - Germany - neteler@geog.uni-hannover.de
+#   	    	Justin Hickey - Thailand - jhickey hpcc.nectec.or.th
+#   	    	Markus Neteler - Germany - neteler geog.uni-hannover.de, itc.it
+#				Michael Barton - USA - Arizona State University
 # PURPOSE:  	The source file for this shell script is in
 #   	    	src/tcltkgrass/main/gis_set.tcl. It allows the user to choose
 #   	    	the database, location, and mapset to use with grass by
 #   	    	presenting a user interface window.
-# COPYRIGHT:    (C) 2000 by the GRASS Development Team
+# COPYRIGHT:    (C) 2000,2006 by the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
 #   	    	License (>=v2). Read the file COPYING that comes with GRASS
@@ -26,6 +27,7 @@ source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 #
 #############################################################################
 source $env(GISBASE)/etc/epsg_option.tcl
+source $env(GISBASE)/etc/file_option.tcl
 
 #fetch GRASS Version number:
 set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]
@@ -125,7 +127,7 @@ proc GetDir {entWidget locList mapList} \
     global database
     
     toplevel .getDir
-    wm title .getDir "New Database Directory"
+    wm title .getDir "New location path"
     wm resizable .getDir 0 0
     
     frame .getDir.base 
@@ -280,13 +282,14 @@ proc gisSetWindow {} {
     # Window manager configurations
 
     wm geometry . +100+100
-    wm title . "GRASS $GRASSVERSION Data Selection"
+    wm title . "GRASS $GRASSVERSION Startup"
 
     global database
     global location
     global mymapset
     global mapset
     global oldDb oldLoc oldMap
+    global env
 
     global grassrc_list
     global gisrc_name
@@ -298,17 +301,22 @@ proc gisSetWindow {} {
     	-borderwidth {2} \
     	-relief {raised}
 
-
-    frame .frame0.intro -borderwidth 2
-    text .frame0.intro.msg -relief ridge -height 4 -width 50 \
-    	-font {Helvetica -12 bold}
-    pack .frame0.intro -side top
-    pack .frame0.intro.msg -side top
+    set titlefrm [frame .frame0.intro -borderwidth 2 ]
+    set introimg  [label $titlefrm.img -image [image create photo -file \
+    	"$env(GISBASE)/etc/gintro.gif"]]
+    set introtitle [text $titlefrm.msg -height 5 \
+    	-relief flat -fg darkgreen \
+    	-font {Helvetica -14 bold} \
+    	-width 50 ]
+    pack $titlefrm -side top
+	pack $introimg -side top
+    pack $introtitle -side top
 
     .frame0.intro.msg tag configure all -justify center
-    .frame0.intro.msg insert end [G_msg "Welcome to GRASS GIS Version $GRASSVERSION\n\n"]
-    .frame0.intro.msg insert end [G_msg "Please select location and mapset\n"]
-    .frame0.intro.msg insert end [G_msg "or define a new location\n"]
+    .frame0.intro.msg insert end [G_msg "Welcome to GRASS GIS Version $GRASSVERSION\n"]
+    .frame0.intro.msg insert end [G_msg "The world's leading open source GIS\n\n"]
+    .frame0.intro.msg insert end [G_msg "Select an existing projection location and GIS mapset\n"]
+    .frame0.intro.msg insert end [G_msg "or define a new projection location\n"]
     .frame0.intro.msg tag add all 1.0 end
     .frame0.intro.msg configure -state disabled
 
@@ -330,17 +338,19 @@ proc gisSetWindow {} {
 
     label .frame0.frameDB.left.label \
     	-anchor {n} \
-    	-text [G_msg "Database : "]
+    	-justify right \
+    	-text [G_msg "Path to location : "]
 
     entry .frame0.frameDB.mid.entry \
     	-relief {sunken} \
     	-textvariable database \
-	-width 40 \
-    	-xscrollcommand { .frame0.frameDB.mid.hscrollbar set}
+		-width 40 \
+    	-xscrollcommand { .frame0.frameDB.mid.hscrollbar set} \
+    	-bg white
     
     scrollbar .frame0.frameDB.mid.hscrollbar \
     	-command { .frame0.frameDB.mid.entry xview} \
-    	-relief {raised} \
+    	-relief {sunken} \
     	-width 12 \
     	-orient {horizontal}
  
@@ -366,22 +376,23 @@ proc gisSetWindow {} {
 
     label .frame0.frameLOC.label \
     	-anchor {w} \
-    	-text [G_msg "Location"] 
+    	-text [G_msg "Projection Location"] 
 
     listbox .frame0.frameLOC.listbox \
-    	-relief {raised} \
+    	-relief {sunken} \
     	-exportselection false \
     	-yscrollcommand {.frame0.frameLOC.vscrollbar set} \
-    	-xscrollcommand {.frame0.frameLOC.hscrollbar set}
+    	-xscrollcommand {.frame0.frameLOC.hscrollbar set} \
+    	-bg white
 
     scrollbar .frame0.frameLOC.vscrollbar -width 12 \
     	-command {.frame0.frameLOC.listbox yview} \
-    	-relief {raised}
+    	-relief {sunken}
 
     scrollbar .frame0.frameLOC.hscrollbar -width 12 \
     	-command {.frame0.frameLOC.listbox xview} \
     	-orient {horizontal} \
-    	-relief {raised}
+    	-relief {sunken}
 
     pack append .frame0.frameLOC \
     	.frame0.frameLOC.label { top fill } \
@@ -398,21 +409,22 @@ proc gisSetWindow {} {
 
     label .frame0.frameMS.label \
     	-anchor {w} \
-    	-text [G_msg "(Accessible) Mapsets"] 
+    	-text [G_msg "(Accessible) GIS Mapsets"] 
 
     listbox .frame0.frameMS.listbox \
-    	-relief {raised} \
+    	-relief {sunken} \
     	-yscrollcommand {.frame0.frameMS.vscrollbar set} \
-    	-xscrollcommand {.frame0.frameMS.hscrollbar set}
+    	-xscrollcommand {.frame0.frameMS.hscrollbar set} \
+    	-bg white
 
     scrollbar .frame0.frameMS.vscrollbar -width 12 \
     	-command {.frame0.frameMS.listbox yview} \
-    	-relief {raised}
+    	-relief {sunken}
 
     scrollbar .frame0.frameMS.hscrollbar -width 12 \
     	-command {.frame0.frameMS.listbox xview} \
     	-orient {horizontal} \
-    	-relief {raised}
+    	-relief {sunken}
 
     pack append .frame0.frameMS \
     	.frame0.frameMS.label { top fill } \
@@ -426,28 +438,42 @@ proc gisSetWindow {} {
     frame .frame0.frameNMS \
     	-borderwidth {2}
 
-    frame .frame0.frameNMS.left \
+    frame .frame0.frameNMS.first \
     	-borderwidth {2}
 
-    frame .frame0.frameNMS.mid \
+    frame .frame0.frameNMS.second \
     	-borderwidth {2}
 
-    frame .frame0.frameNMS.right \
+    frame .frame0.frameNMS.third \
     	-borderwidth {2}
 
-    label .frame0.frameNMS.left.label \
+    frame .frame0.frameNMS.fourth \
+    	-borderwidth {2}
+
+    frame .frame0.frameNMS.fifth \
+    	-borderwidth {2}
+
+    frame .frame0.frameNMS.sixth \
+    	-borderwidth {2}
+
+    frame .frame0.frameNMS.seventh \
+    	-borderwidth {2}
+
+    label .frame0.frameNMS.first.label \
     	-anchor {n} \
-    	-text [G_msg "Create new mapset : "]
+    	-text [G_msg "Create new GIS mapset\nin currrent location"]
 
-    entry .frame0.frameNMS.mid.entry \
+    entry .frame0.frameNMS.second.entry \
     	-relief {sunken} \
     	-textvariable mymapset \
-    	-width 15
+    	-width 22 \
+    	-bg white
 	
-    button .frame0.frameNMS.right.button \
-    	-text [G_msg "Create..."] \
+    button .frame0.frameNMS.third.button \
+    	-text [G_msg "Create new mapset"] \
+    	-width 20 \
      	-command { 
-            .frame0.frameNMS.right.button configure -state disabled
+            .frame0.frameNMS.third.button configure -state disabled
 	    if { $mymapset != "" } {
             	CheckLocation
                 cd $database
@@ -468,13 +494,55 @@ proc gisSetWindow {} {
             }
 	}
 
+    label .frame0.frameNMS.fourth.label \
+    	-anchor {n} \
+    	-text [G_msg "Define new projection location"]
+
+
+    button .frame0.frameNMS.fifth.button \
+    	-text [G_msg "Use projection values"] \
+    	-width 20 \
+    	-relief raised \
+    	-command {
+            puts stdout "OLD_DB='$oldDb';"
+            puts stdout "OLD_LOC='$oldLoc';"
+            puts stdout "OLD_MAP='$oldMap';"
+	    puts stdout "GISDBASE='$database';"
+    	    puts stdout "LOCATION_NAME='##NONE##';"
+            puts stdout "MAPSET='';"
+            set location ""
+            set mapset ""
+            putGRASSRC $gisrc_name
+            destroy . 
+            }
+
+    button .frame0.frameNMS.sixth.button \
+    	-text [G_msg "Use EPSG values"] \
+    	-width 20 \
+    	-relief raised \
+    	-command {epsgLocCom}
+
+    button .frame0.frameNMS.seventh.button \
+    	-text [G_msg "Use georeferenced file"] \
+    	-width 20 \
+    	-relief raised \
+    	-command {fileLocCom}
+
     pack append .frame0.frameNMS
-    pack .frame0.frameNMS.left.label -side top
-    pack .frame0.frameNMS.mid.entry -side top -fill x
-    pack .frame0.frameNMS.right.button -side left -fill x
-    pack .frame0.frameNMS.left -side top  -anchor n
-    pack .frame0.frameNMS.mid -side top -expand yes
-    pack .frame0.frameNMS.right -side bottom -anchor n -expand yes
+    pack .frame0.frameNMS.first.label -side top
+    pack .frame0.frameNMS.second.entry -side top -fill x
+    pack .frame0.frameNMS.third.button -side top -fill x
+    pack .frame0.frameNMS.seventh.button -side bottom -fill x
+    pack .frame0.frameNMS.sixth.button -side bottom -fill x
+    pack .frame0.frameNMS.fifth.button -side bottom -fill x
+    pack .frame0.frameNMS.fourth.label -side bottom
+    pack .frame0.frameNMS.first -side top  -anchor n
+    pack .frame0.frameNMS.second -side top -expand yes
+    pack .frame0.frameNMS.third -side top -anchor n -expand yes
+    pack .frame0.frameNMS.seventh -side bottom -anchor s -expand yes
+    pack .frame0.frameNMS.sixth -side bottom -anchor s -expand yes
+    pack .frame0.frameNMS.fifth -side bottom -anchor s -expand yes
+    pack .frame0.frameNMS.fourth -side bottom -anchor s -expand yes
 
     # ----------------------------------
     # build .frame0.frameBUTTONS
@@ -485,8 +553,8 @@ proc gisSetWindow {} {
     
     button .frame0.frameBUTTONS.ok \
      	-text [G_msg "Enter GRASS"] \
+    	-width 10 \
     	-relief raised \
-     	-padx 10 \
      	-command { 
             if {[file exists "$database/$location/PERMANENT/WIND"] == 0} {
                 DialogGen .wrnDlg "WARNING: not a mapset" warning "Warning: This is not \
@@ -505,61 +573,37 @@ proc gisSetWindow {} {
             } 
         }
 
-    button .frame0.frameBUTTONS.newLoc \
-    	-text [G_msg "Create New Location"] \
-    	-relief raised \
-    	-padx 10 \
-    	-command {
-            puts stdout "OLD_DB='$oldDb';"
-            puts stdout "OLD_LOC='$oldLoc';"
-            puts stdout "OLD_MAP='$oldMap';"
-	    puts stdout "GISDBASE='$database';"
-    	    puts stdout "LOCATION_NAME='##NONE##';"
-            puts stdout "MAPSET='';"
-            set location ""
-            set mapset ""
-            putGRASSRC $gisrc_name
-            destroy . 
-            }
-
     button .frame0.frameBUTTONS.help \
     	-text [G_msg "Help"] \
     	-relief raised \
-    	-padx 10 \
-	-command {
-		if { [winfo exists .help] } {
-                     puts "Help already opened"
-                     wm deiconify .help
-                     raise .help
-                     return
-                }
-                set help [toplevel .help]
-		help::init $env(GISBASE)/docs/html/helptext.html "" $help 500 400
-		wm title $help "GRASS Help"
+    	-bg honeydew2 \
+		-command {
+			if { [winfo exists .help] } {
+				 puts "Help already opened"
+				 wm deiconify .help
+				 raise .help
+				 return
+			}
+			set help [toplevel .help]
+			help::init $env(GISBASE)/docs/html/helptext.html "" $help 500 400
+			wm title $help "GRASS Help"
         }
 	
     button .frame0.frameBUTTONS.cancel \
-    	-text [G_msg "Exit"] \
+    	-text [G_msg "Cancel"] \
+    	-width 10 \
     	-relief raised \
-    	-padx 10 \
     	-command { 
             puts stdout "exit" 
             destroy . 
         }
 
     #############################################################################
-    button .frame0.frameBUTTONS.newLocEpsg \
-    	-text [G_msg "Create Location From EPSG"] \
-    	-relief raised \
-    	-padx 10 \
-    	-command {epsgLocCom}
 
     pack append .frame0.frameBUTTONS \
-    	.frame0.frameBUTTONS.ok { left expand } \
-    	.frame0.frameBUTTONS.newLoc {left expand } \
-    	.frame0.frameBUTTONS.newLocEpsg {left expand } \
-    	.frame0.frameBUTTONS.help { left expand } \
-    	.frame0.frameBUTTONS.cancel { right expand }
+    	.frame0.frameBUTTONS.ok { left  } \
+    	.frame0.frameBUTTONS.cancel { left  } \
+    	.frame0.frameBUTTONS.help { left  } 
 
 
 
@@ -573,9 +617,9 @@ proc gisSetWindow {} {
     	.frame0.frameBUTTONS { bottom expand fill } \
     	.frame0.frameLOC { left expand  } \
     	.frame0.frameMS { left expand  } \
-     	.frame0.frameNMS { right expand fill }
+     	.frame0.frameNMS { left expand fill }
 
-    .frame0.frameNMS.right.button configure -state disabled
+    .frame0.frameNMS.third.button configure -state disabled
 
     pack append . \
     	.frame0 { top frame center expand fill }
@@ -715,8 +759,8 @@ proc gisSetWindow {} {
 	.frame0.frameBUTTONS.ok configure -state normal
   }
 
-  bind .frame0.frameNMS.mid.entry <KeyRelease> {
-	.frame0.frameNMS.right.button configure -state active
+  bind .frame0.frameNMS.second.entry <KeyRelease> {
+	.frame0.frameNMS.third.button configure -state active
   }
   
   grab .
