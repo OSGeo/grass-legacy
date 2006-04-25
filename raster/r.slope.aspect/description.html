@@ -81,7 +81,7 @@ resampled to the current region resolution, the -a flag should be specified.
 <p>The algorithm used to determine slope and aspect uses a 3x3 neighborhood
 around each cell in the elevation file. Thus, it is not possible to determine
 slope and aspect for the cells adjacent to the edges in the elevation map
-layer. These cells are assigned a "no data" value (category 0) in both
+layer. These cells are assigned a "zero slope" value (category 0) in both
 the slope and aspect raster map layers.
 <p>Horn's formula is used to find the derivatives in x and y directions.
 <p>Only when using integer elevation models, the aspect is biased in 0,
@@ -99,21 +99,6 @@ was added (minimum slope for which aspect is computed). The aspect for
 all cells with slope &lt; min_slp is set to 0 (no value).
 <br>When working with floating point elevation models, no such aspect bias
 occurs.
-
-<h2>WARNING</h2>
-<i>(the following may not be true anymore because of introduction of NULL,
-but it has not been tested)</i>
-<p>Elevations of zero (as well as below sea level elevations) are valid.
-This means that areas assigned category value 0 may have one of two possible
-meanings: they may either be areas of "no data" or areas having 0 elevation.
-<p>If the user wishes <i>r.slope.aspect</i> to assume that cells assigned
-category value zero in the elevation map layer represent true elevation
-values, not areas of "no data", the user should set the -z flag when running
-this program.
-<p>If the -z flag is not set and the raster map layer of true elevation
-contains areas of "no data" that are assigned to category 0, either at
-its edges or in its interior, incorrect (and usually quite large) slopes
-will result.
 
 <h2>REFERENCE</h2>
 Horn, B. K. P. (1981). Hill Shading and the Reflectance Map, Proceedings
