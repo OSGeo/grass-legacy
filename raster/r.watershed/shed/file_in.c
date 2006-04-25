@@ -11,7 +11,6 @@ ar_file_in (char *file_name, OUTPUT *output)
 
 	if ((ar_file = fopen (file_name, "r")) == NULL) {
 		G_fatal_error ("unable to open ARMSED file");
-		exit (1);
 	}
 	output->num_basins = 0;
 	bas_alloc = INCR;

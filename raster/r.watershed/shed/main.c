@@ -22,20 +22,18 @@ int main (int argc, char *argv[]) {
     		if (G_system (input.com_line_seg)) {
 			sprintf(buf,"<<%s>> command line failed",
 				input.com_line_seg);
-			G_fatal_error (buf);
 			free_input (&input);
 			free_output (&output);
-			exit (1);
+			G_fatal_error (buf);
 		}
 	      }
 	    }
 	  } else if (G_system (input.com_line_seg)) {
 		sprintf(buf,"<<%s>> command line failed",
 			input.com_line_seg);
-		G_fatal_error (buf);
 		free_input (&input);
 		free_output (&output);
-		exit (1);
+		G_fatal_error (buf);
 	  }
 	}
 
@@ -52,7 +50,6 @@ int main (int argc, char *argv[]) {
 	if ((output.out_file = fopen (output.file_name, "w")) == NULL) {
 		free_output (&output);
 		G_fatal_error ("unable to open output file");
-		exit (1);
 	}
 	if (output.do_basin) {
 		fprintf (output.out_file, "\n\nThese values are accumulations within the basin itself\n");
@@ -71,5 +68,5 @@ int main (int argc, char *argv[]) {
 	end of ARMSED comment code
 	*/
 
-	exit (0);
+	exit (EXIT_SUCCESS);
 }

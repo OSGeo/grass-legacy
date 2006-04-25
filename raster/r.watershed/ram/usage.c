@@ -12,5 +12,4 @@ usage (char *me)
     sprintf (buf, "USAGE for basin delineation:\n%s -4 el=elevation_map t=swale_threshold [ov=overland_flow_map] [dr=drain_direction_map] [de=depression_map] [ac=accumulation_map] [di=display_map] ba=watershed_basin_map [se=stream_segment_map]\n\nUSAGE for ARMSED FILE creation:\n%s [-4] el=elevation_map t=swale_threshold [ov=overland_flow_map] [dr=drain_direction_map] [de=depression_map] [ac=accumulation_map] [di=display_map] [ba=watershed_basin_map] [se=stream_segment_map] ha=half_basin_map ar=ARMSED_file_name\n", me, me);
     */
     G_fatal_error (buf);
-    exit (1);
 }

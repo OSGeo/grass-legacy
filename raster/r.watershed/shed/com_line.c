@@ -11,7 +11,7 @@ int com_line_Gwater (INPUT *input, OUTPUT *output)
   int	i;
   
   window = &(output->window);
-  if (0 == G_yes ("Continue?", 1)) exit (0);
+  if (0 == G_yes ("Continue?", 1)) exit (EXIT_SUCCESS);
   input->haf_name = (char *) G_calloc (40, sizeof (char));
   input->accum_name = (char *) G_calloc (40, sizeof (char));
   fprintf (stdout,"\nThis set of questions will organize the command line for the\n");
@@ -55,7 +55,7 @@ int com_line_Gwater (INPUT *input, OUTPUT *output)
   fprintf (stdout,"program will terminate.\n");
   mapset = G_ask_old ("What is the name of the elevation map layer?",
   		map_layer, "cell", "cell");
-  if (!mapset) exit (1);
+  if (!mapset) exit (EXIT_FAILURE);
   if (input->fast)
   	com_line_add (&(input->com_line_ram), " el=", map_layer, mapset);
   if (input->slow)
@@ -96,7 +96,7 @@ int com_line_Gwater (INPUT *input, OUTPUT *output)
   	G_gets (map_layer);
   	sscanf (map_layer, "%d", &i);
   } while (i > 7 || i < 0);
-  if (!i) exit(0);
+  if (!i) exit(EXIT_SUCCESS);
   output->type_area = (char) i;
   fprintf (stdout,"\nHow large an area (or how many overland flow units) must a drainage basin \n"); 
   fprintf (stdout,"be for it to be an exterior drainage basin: ");
@@ -138,7 +138,7 @@ int com_line_Gwater (INPUT *input, OUTPUT *output)
   		fprintf (stdout,"program will terminate.\n");
   		mapset = G_ask_old ("What is the name of the overland flow map layer?",
   				map_layer, "cell", "cell");
-  		if (!mapset) exit (1);
+  		if (!mapset) exit (EXIT_FAILURE);
   		if (input->fast) {
   			com_line_add (&(input->com_line_ram), " ov=", map_layer, mapset);
 			basin_com_add (&(input->com_line_ram), d, (window->ns_res * window->ew_res), window);

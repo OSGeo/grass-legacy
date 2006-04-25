@@ -18,12 +18,10 @@ int valid_basins (char *accum_name, OUTPUT *output)
 	if (NULL == (mapset = G_find_cell (accum_name, ""))) {
 		free_output (output);
 		G_fatal_error ("accum file missing in valid_basins()");
-		exit (1);
 	}
 	if (-1 == (fd = G_open_cell_old (accum_name, mapset))) {
 		free_output (output);
 		G_fatal_error ("unable to open accum file in valid_basins()");
-		exit (1);
 	}
 	buf = G_allocate_cell_buf ();
 	basin_facts = output->basin_facts;
@@ -40,8 +38,7 @@ int valid_basins (char *accum_name, OUTPUT *output)
 			c = (int) (basin->easting - window->west) / window->ew_res;
 			/*
 			if (r < 0 || r >= nrows || c < 0 || c>= ncols) {
-				fprintf (stderr, "r:%d c:%d big error\n", r,c);
-				exit (-1);
+				G_fatal_error("r:%d c:%d big error", r,c);
 			}
 			*/
 			G_get_c_raster_row (fd, buf, r);

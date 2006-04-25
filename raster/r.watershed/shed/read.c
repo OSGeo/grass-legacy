@@ -18,7 +18,6 @@ int read_basins (char *haf_name, OUTPUT *output)
   mapset = G_find_cell (haf_name, "");
   if (!mapset) {
 	G_fatal_error ("unable to open basin/half basin map");
-	exit (1);
   }
   bas_fd = G_open_cell_old (haf_name, mapset);
   facts = output->basin_facts;
