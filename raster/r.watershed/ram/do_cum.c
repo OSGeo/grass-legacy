@@ -1,4 +1,7 @@
 #include "Gwater.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
+
 
 int do_cum (void)
 {
@@ -6,7 +9,8 @@ int do_cum (void)
     CELL	is_swale, value, valued;
     int		killer, threshold, count;
 
-fprintf (stdout,"\nSECTION 3: Accumulating Surface Flow.       Percent complete: ");
+    G_message(_("\nSECTION 3: Accumulating Surface Flow.       Percent complete: "));
+
 count = 0;
 if (bas_thres <= 0) threshold = 60;
 else	threshold = bas_thres;
@@ -44,7 +48,7 @@ while (first_cum != -1) {
         }
 }
 G_free (astar_pts);
-fprintf (stdout,"\n");
+fprintf (stderr, "\n");
 
 return 0;
 }

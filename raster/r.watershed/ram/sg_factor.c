@@ -1,4 +1,7 @@
 #include "Gwater.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
+
 
 int sg_factor (void)
 {
@@ -6,7 +9,8 @@ int sg_factor (void)
     CELL	low_elev, hih_elev;
     double	height, length, S, sin_theta;
 
-    fprintf (stdout,"\nSECTION 4: Length Slope determination.      Percent complete: ");
+    G_message(_("\nSECTION 4: Length Slope determination.      Percent complete:"));
+
     for (r = 0; r < nrows; r++) {
 	G_percent (r, nrows, 1);
 	if (ril_flag) {
@@ -35,7 +39,7 @@ int sg_factor (void)
 	G_free (ril_buf);
     	G_close_cell (ril_fd);
     }
-    fprintf (stdout,"\n");
+    fprintf (stderr, "\n");
 
     return 0;
 }

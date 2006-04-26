@@ -118,4 +118,4 @@ int slope_length(SHORT, SHORT, SHORT, SHORT);
 /* split_str.c */
 CELL split_stream(int, int, int [], int [], int, CELL, double, CELL);
 /* usage.c */
-int usage(char *);
+void usage(char *);

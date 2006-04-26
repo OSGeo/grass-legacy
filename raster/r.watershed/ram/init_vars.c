@@ -1,5 +1,8 @@
 #include <stdlib.h>
 #include "Gwater.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
+
 
 int init_vars (int argc, char *argv[])
 {
@@ -60,7 +63,7 @@ if ((ele_flag != 1)
 tot_parts = 4;
 if (ls_flag || sg_flag) tot_parts++;
 if (bas_thres > 0) tot_parts++;
-fprintf (stdout,"\nSECTION 1a (of %1d): Initiating Memory.\n", tot_parts);
+G_message(_("\nSECTION 1a (of %1d): Initiating Memory."), tot_parts);
 this_mapset = G_mapset ();
 if (asp_flag)	do_legal (asp_name);
 if (bas_flag)	do_legal (bas_name);
@@ -98,19 +101,19 @@ if (sides == 4)
 	diag *= 0.5;
 buf = G_allocate_cell_buf();
 if (!buf)	{
-	G_fatal_error ("not enough memory for program to run (at buf)");
+	G_fatal_error (_("not enough memory for program to run (at buf)"));
 }
 alt = (CELL *) G_malloc (sizeof(CELL) * size_array(&alt_seg, nrows, ncols));
 if (!alt)	{
-	G_fatal_error ("not enough memory for program to run (at alt)");
+	G_fatal_error (_("not enough memory for program to run (at alt)"));
 }
 r_h = (CELL *) G_malloc (sizeof(CELL) * size_array(&r_h_seg, nrows, ncols));
 if (!r_h)	{
-	G_fatal_error ("not enough memory for program to run (at r_h)");
+	G_fatal_error (_("not enough memory for program to run (at r_h)"));
 }
 fd = G_open_cell_old (ele_name, ele_mapset);
 if (fd < 0)	{
-	G_fatal_error ("unable to open elevation map layer");
+	G_fatal_error (_("unable to open elevation map layer"));
 }
 for (r = 0; r < nrows; r++)	{
 	G_get_c_raster_row (fd, buf, r);
@@ -122,13 +125,13 @@ for (r = 0; r < nrows; r++)	{
 G_close_cell (fd);
 wat = (CELL *) G_malloc (sizeof(CELL) * size_array(&wat_seg, nrows, ncols));
 if (!wat)	{
-	G_fatal_error ("not enough memory for program to run (at wat)");
+	G_fatal_error (_("not enough memory for program to run (at wat)"));
 }
 if (run_flag) {
 	run_mapset = do_exist (run_name);
 	fd = G_open_cell_old (run_name, run_mapset);
 	if (fd < 0)	{
-		G_fatal_error ("unable to open runoff map layer");
+		G_fatal_error (_("unable to open runoff map layer"));
 	}
 	for (r = 0; r < nrows; r++)	{
 		G_get_c_raster_row (fd, buf, r);
@@ -145,13 +148,13 @@ if (run_flag) {
 }
 asp = (CELL *) G_calloc (size_array(&asp_seg, nrows, ncols), sizeof(CELL));
 if (!asp)	{
-	G_fatal_error ("not enough memory for program to run (at asp)");
+	G_fatal_error (_("not enough memory for program to run (at asp)"));
 }
 if (pit_flag) {
 	pit_mapset = do_exist (pit_name);
 	fd = G_open_cell_old (pit_name, pit_mapset);
 	if (fd < 0)	{
-		G_fatal_error ("unable to open depression map layer");
+		G_fatal_error (_("unable to open depression map layer"));
 	}
 	for (r = 0; r < nrows; r++)	{
 		G_get_c_raster_row (fd, buf, r);
@@ -165,7 +168,7 @@ swale = flag_create (nrows, ncols);
 if (ob_flag) {
 	fd = G_open_cell_old (ob_name, ob_mapset);
 	if (fd < 0)	{
-		G_fatal_error ("unable to open blocking map layer");
+		G_fatal_error (_("unable to open blocking map layer"));
 	}
 	for (r = 0; r < nrows; r++)	{
 		G_get_c_raster_row (fd, buf, r);
@@ -178,7 +181,7 @@ if (ob_flag) {
 if (ril_flag)	{
 	ril_fd = G_open_cell_old (ril_name, ril_mapset);
 	if (ril_fd < 0)	{
-		G_fatal_error ("unable to open rill map layer");
+		G_fatal_error (_("unable to open rill map layer"));
 	}
 }
 in_list = flag_create (nrows, ncols);
@@ -188,7 +191,7 @@ do_points = nrows * ncols;
 if (NULL != G_find_file ("cell", "MASK", G_mapset())) {
 	MASK_flag = 1;
 	if ((fd = G_open_cell_old ("MASK", G_mapset())) < 0) {
-		G_fatal_error ("unable to open MASK");
+		G_fatal_error (_("unable to open MASK"));
 	} else {
 		for (r = 0; r < nrows; r++)	{
 			G_get_c_raster_row_nomask (fd, buf, r);
@@ -205,27 +208,28 @@ if (NULL != G_find_file ("cell", "MASK", G_mapset())) {
 }
 s_l = (double *)G_malloc(size_array (&s_l_seg, nrows, ncols) * sizeof(double));
 if (!s_l)	{
-	G_fatal_error ("not enough memory for program to run (at s_l)");
+	G_fatal_error (_("not enough memory for program to run (at s_l)"));
 }
 /* astar_pts = (POINT *) G_malloc (nrows * ncols * sizeof (POINT)); */
 astar_pts = (POINT *) G_malloc (do_points * sizeof (POINT));
 if (!astar_pts)	{
-	G_fatal_error ("not enough memory for program to run (at astar_pts)");
+	G_fatal_error (_("not enough memory for program to run (at astar_pts)"));
 }
 if (sg_flag)	{
 	s_g = (double *) G_malloc (size_array (&s_g_seg, nrows, ncols) * sizeof(double));
 	if (!s_g)	{
-		G_fatal_error ("not enough memory for program to run (at s_g)");
+		G_fatal_error (_("not enough memory for program to run (at s_g)"));
 	}
 }
 if (ls_flag)	{
 	l_s = (double *) G_malloc (size_array (&l_s_seg, nrows, ncols) * sizeof(double));
 	if (!l_s)	{
-		G_fatal_error ("not enough memory for program to run (at l_s)");
+		G_fatal_error (_("not enough memory for program to run (at l_s)"));
 	}
 }
-fprintf (stdout,"\nSECTION 1b (of %1d): Determining Offmap Flow. Percent Complete: ", 
-		tot_parts);
+
+G_message(_("\nSECTION 1b (of %1d): Determining Offmap Flow. Percent Complete: "), tot_parts);
+
 first_astar = first_cum = -1;
 if (MASK_flag) {
 	for (r = 0; r < nrows; r++) {
@@ -335,7 +339,7 @@ if (MASK_flag) {
 		}
 	}
 }
-fprintf (stdout,"\n");
+    fprintf (stderr, "\n");
 
     return 0;
 }
@@ -343,13 +347,8 @@ fprintf (stdout,"\n");
 int 
 do_legal (char *file_name)
 {
-	char buf[120];
-
-	if (G_legal_filename (file_name) == -1) {
-		sprintf (buf, "map layer [%s] not legal for GRASS\n",
-			file_name);
-		G_fatal_error (buf);
-	}
+	if (G_legal_filename (file_name) == -1)
+		G_fatal_error(_("map layer [%s] not legal for GRASS"), file_name);
 
 	return 0;
 }
@@ -357,12 +356,10 @@ do_legal (char *file_name)
 char *
 do_exist (char *file_name)
 {
-	char buf[120], *file_mapset;
+	char *file_mapset = G_find_cell2 (file_name, "");
 
-	file_mapset = G_find_cell2 (file_name, "");
-	if (file_mapset == NULL)	{
-		sprintf (buf, "[%s] map not found\n", file_name);
-		G_fatal_error (buf);
-	}
+	if (file_mapset == NULL)
+		G_fatal_error(_("[%s] map not found."), file_name);
+
 	return (file_mapset);
 }
