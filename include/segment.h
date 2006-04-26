@@ -43,9 +43,8 @@ typedef struct
 SEEK_OFFSET lseek();
 #endif
 
-#ifndef _GRASS_GIS_LIB
+
 #include <grass/gis.h>
-#endif
 
 int segment_address ( SEGMENT *, int, int, int *, int *);
 int segment_flush ( SEGMENT *);
@@ -65,4 +64,5 @@ int segment_put_row (SEGMENT *,void *,int);
 int segment_release (SEGMENT *);
 int segment_seek ( SEGMENT *, int, int);
 int segment_setup (SEGMENT *);
-#endif
+
+#endif /* GRASS_SEGMENT_H */
