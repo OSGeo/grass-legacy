@@ -18,7 +18,7 @@ static int *yarray ;
 static float xincr ;
 static float yincr ;
 
-static RGBA_Color last_color;
+static RGB_Color last_color;
 
 int set_graph_stuff (void)
 {
@@ -351,12 +351,12 @@ int do_symbol(char *buff)
     SYMBOL *Symb;
     double rotation = 0.0;
     char *line_color_str, *fill_color_str;
-    RGBA_Color *line_color, *fill_color;
+    RGB_Color *line_color, *fill_color;
     int ret;
 
 
-    line_color = G_malloc(sizeof(RGBA_Color));
-    fill_color = G_malloc(sizeof(RGBA_Color));
+    line_color = G_malloc(sizeof(RGB_Color));
+    fill_color = G_malloc(sizeof(RGB_Color));
 
     symb_name = G_malloc(sizeof(char) * strlen(buff)+1);  /* well, it won't be any bigger than this */
     line_color_str = G_malloc(sizeof(char) * strlen(buff)+1);
