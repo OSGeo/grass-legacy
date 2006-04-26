@@ -1,13 +1,17 @@
 <h2>DESCRIPTION</h2>
 
 <em>v.what.vect</em> is used to transfer vector attributes from a query vector
-maps to a vector point map at the point positions. The script is based on
+map into a vector point map at the point positions. The script is based on
 <em>v.distance</em>.
 
 <h2>NOTES</h2>
 
 The upload column into which the query results are stored must be present
 in the vector point map or added with <em>v.db.addcol</em>.
+<p>
+This module only uploads attributes which exist at the exact positions of
+the input points. For a "nearest feature" fit use <em>v.distance</em> 
+
 
 <h2>EXAMPLE</h2>
 
@@ -39,4 +43,4 @@ v.db.select myarchsites
 
 Markus Neteler
 
-<p><i>Last changed: $Date$</i>
+<p><i>Last changed: $Date$</i></p>
