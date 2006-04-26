@@ -99,6 +99,9 @@ main (int argc, char *argv[])
     
     G_gisinit(argv[0]);
 
+    module = G_define_module(); 
+    module->description = "Interactive editing and digitization of vector maps.";
+
     map_opt = G_define_standard_option(G_OPT_V_MAP);
     
     bgcmd_opt = G_define_option();
@@ -114,9 +117,7 @@ main (int argc, char *argv[])
     new_f->description     = "Create new file if it does not exist.";
     
     if (G_parser (argc, argv)) exit(-1); 
-   
-    module = G_define_module(); 
-    module->description = "Edit GRASS vector.";
+
 
     G_debug (2, "Variable = %p", Variable );
  
