@@ -751,6 +751,21 @@ proc gisSetWindow {} {
         %W select set [%W nearest %y]
         set mapset [%W get [%W nearest %y]]
 	.frame0.frameBUTTONS.ok configure -state normal
+	if {[file exists "$database/$location/$mapset/WIND"] == 0} {
+	    DialogGen .wrnDlg "WARNING: not a mapset" warning "Warning: This is not \
+	    a valid mapset" \
+	    0 OK;
+	}
+	if { $mapset != "" && [file exists "$database/$location/$mapset/WIND"] != 0} {
+	    CheckLocation
+	    puts stdout "GISDBASE='$database';"
+	    puts stdout "LOCATION_NAME='$location';"
+	    puts stdout "MAPSET='$mapset';"
+	    if {[string compare $location "##ERROR##"] != 0} {
+		putGRASSRC $gisrc_name
+	    }
+	    destroy .
+	}
   }
 
   bind .frame0.frameMS.listbox <ButtonPress-1> {
