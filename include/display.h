@@ -1,9 +1,7 @@
-#ifndef _GRASS_GIS_LIB_
-#include <grass/gis.h>
-#endif
-#ifndef _GRASS_DISPLAY_LIB_
-#define _GRASS_DISPLAY_LIB_
+#ifndef GRASS_DISPLAY_H
+#define GRASS_DISPLAY_H
 
+#include <grass/gis.h>
 #include <grass/symbol.h>
 
 /* clip.c */
@@ -125,7 +123,7 @@ int D_scan_int(char *, int *);
 /* setup.c */
 int D_setup(int);
 /* symbol.c */
-D_symbol(SYMBOL *, int, int, RGBA_Color *, RGBA_Color *);
+int D_symbol(SYMBOL *, int, int, RGB_Color *, RGB_Color *);
 /* tran_colr.c */
 int D_translate_color(const char *);
 int D_translate_or_add_color(const char *, int);
@@ -143,4 +141,5 @@ int D_reset_screen_window(int, int, int, int);
 int D_timestamp(void);
 int D_remove_window(void);
 int D_erase_window(void);
-#endif
+
+#endif /* GRASS_DISPLAY_H */
