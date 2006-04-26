@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "Gwater.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #undef MAIN
+
 
 int main (int argc, char *argv[])
 {
@@ -15,7 +18,7 @@ int main (int argc, char *argv[])
     }
     if (bas_thres <= 0)
     {
-    	fprintf (stdout,"\n\nSECTION %d: Closing Maps.\n", tot_parts);
+    	G_message(_("\n\nSECTION %d: Closing Maps."), tot_parts);
         close_maps ();
     }
     else    
@@ -26,15 +29,16 @@ int main (int argc, char *argv[])
 	}
 	bas = (CELL *)G_calloc(sizeof(CELL), size_array(&bas_seg,nrows,ncols));
 	if (!bas) {
-		G_fatal_error ("not enough memory to run program (at bas)");
+		G_fatal_error (_("not enough memory to run program (at bas)"));
 	}
 	haf = (CELL *)G_calloc(sizeof(CELL), size_array(&haf_seg,nrows,ncols));
 	if (!haf) {
-		G_fatal_error ("not enough memory to run program (at haf)");
+		G_fatal_error (_("not enough memory to run program (at haf)"));
 	}
-	fprintf (stdout,"\nSECTION %d: Watershed determination.\n", tot_parts - 1);
+
+	G_message(_("\nSECTION %d: Watershed determination."), tot_parts - 1);
 	find_pourpts ();
-    	fprintf (stdout,"\nSECTION %d: Closing Maps.\n", tot_parts);
+    	G_message(_("\nSECTION %d: Closing Maps."), tot_parts);
 	close_array_seg ();
     }
 

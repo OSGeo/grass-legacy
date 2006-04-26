@@ -1,5 +1,8 @@
 #include "Gwater.h"
 #include <unistd.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
+
 
 int 
 close_maps (void)
@@ -16,7 +19,7 @@ close_maps (void)
     if (wat_flag)	{
 	fd = G_open_cell_new (wat_name);
 	if (fd < 0)	{
-		G_warning ("unable to open new accum map layer");
+		G_warning (_("unable to open new accum map layer."));
 	} else {
 		for (r = 0; r < nrows; r++)	{
 			for (c = 0; c < ncols; c++)	{
@@ -25,13 +28,13 @@ close_maps (void)
 			G_put_raster_row (fd, buf, CELL_TYPE);
 		}
     		if(G_close_cell(fd) < 0)
-			fprintf (stderr, "Close failed\n") ;
+			G_warning(_("Close failed.")) ;
 	}
     }
     if (asp_flag) {
 	fd = G_open_cell_new (asp_name);
 	if (fd < 0)	{
-		G_warning ("unable to open new aspect map layer");
+		G_warning (_("unable to open new aspect map layer."));
 	} else {
 		for (r = 0; r < nrows; r++)	{
 			for (c = 0; c < ncols; c++)	{
@@ -40,7 +43,7 @@ close_maps (void)
 			G_put_raster_row (fd, buf, CELL_TYPE);
 		}
     		if(G_close_cell(fd) < 0)
-			fprintf (stderr, "Close failed\n") ;
+			G_warning(_("Close failed.")) ;
 	}
 	G_init_colors (&colors);
 	G_make_grey_scale (&colors, 1, 8);
@@ -50,7 +53,7 @@ close_maps (void)
     if (dis_flag) {
 	fd = G_open_cell_new (dis_name);
 	if (fd < 0)	{
-		G_warning ("unable to open new accum map layer");
+		G_warning (_("unable to open new accum map layer."));
 	} else {
 	    if (bas_thres <= 0)	
 			bas_thres = 60;
@@ -69,7 +72,7 @@ close_maps (void)
 		G_put_raster_row (fd, buf, CELL_TYPE);
 	    }
     	    if(G_close_cell(fd) < 0)
-		fprintf (stderr, "Close failed\n") ;
+		G_warning(_("Close failed.")) ;
 	}
 	G_init_colors (&colors);
 	G_make_rainbow_colors (&colors, 1, 120);
@@ -83,7 +86,7 @@ close_maps (void)
     if (ls_flag) {
 	fd = G_open_cell_new (ls_name);
 	if (fd < 0)	{
-		G_warning ("unable to open new L map layer");
+		G_warning (_("unable to open new L map layer."));
 	} else {
 		for (r = 0; r < nrows; r++)	{
 			for (c = 0; c < ncols; c++)	{
@@ -92,14 +95,14 @@ close_maps (void)
 			G_put_raster_row (fd, buf, CELL_TYPE);
 		}
     		if(G_close_cell(fd) < 0)
-			fprintf (stderr, "Close failed\n") ;
+			G_warning(_("Close failed.")) ;
 	}
         G_free (l_s);
     }
     if (sl_flag) {
 	fd = G_open_cell_new (sl_name);
 	if (fd < 0)	{
-		G_warning ("unable to open new slope length map layer");
+		G_warning (_("unable to open new slope length map layer."));
 	} else {
 		for (r = 0; r < nrows; r++)	{
 			for (c = 0; c < ncols; c++)	{
@@ -110,7 +113,7 @@ close_maps (void)
 			G_put_raster_row (fd, buf, CELL_TYPE);
 		}
     		if(G_close_cell(fd) < 0)
-			fprintf (stderr, "Close failed\n") ;
+			G_warning(_("Close failed.")) ;
 	}
     }
     if (sl_flag || ls_flag || sg_flag)
@@ -118,7 +121,7 @@ close_maps (void)
     if (sg_flag) 	{
 	fd = G_open_cell_new (sg_name);
 	if (fd < 0)	{
-		G_warning ("unable to open new S map layer");
+		G_warning (_("unable to open new S map layer."));
 	} else {
 		for (r = 0; r < nrows; r++)	{
 			for (c = 0; c < ncols; c++)	{
@@ -127,7 +130,7 @@ close_maps (void)
 			G_put_raster_row (fd, buf, CELL_TYPE);
 		}
     		if(G_close_cell(fd) < 0)
-			fprintf (stderr, "Close failed\n") ;
+			G_warning(_("Close failed.")) ;
 	}
         G_free (s_g);
     }

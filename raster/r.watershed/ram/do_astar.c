@@ -1,4 +1,7 @@
 #include "Gwater.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
+
 
 int do_astar (void)
 {
@@ -8,7 +11,8 @@ int do_astar (void)
     CELL	alt_val, alt_up, asp_up, wat_val;
     CELL	in_val, drain_val;
 
-fprintf (stdout,"\nSECTION 2: A * Search.                      Percent complete: ");
+    G_message(_("\nSECTION 2: A * Search.                      Percent complete: "));
+
 count = 0;
 while (first_astar != -1) {
     G_percent (count++, do_points, 1);
@@ -16,9 +20,11 @@ while (first_astar != -1) {
     point = &(astar_pts[doer]);
     first_astar = point->nxt;
     point->nxt = first_cum;
+
     r = astar_pts[doer].r = point->r;
     c = astar_pts[doer].c = point->c;
-    /* fprintf (stderr,"R:%2d C:%2d, ", r, c); */
+    G_debug(3, "R:%2d C:%2d, ", r, c);
+
     astar_pts[doer].downr = point->downr;
     astar_pts[doer].downc = point->downc;
     astar_pts[doer].nxt = point->nxt;
@@ -55,7 +61,7 @@ while (first_astar != -1) {
 }
 flag_destroy (worked);
 flag_destroy (in_list);
-fprintf (stdout,"\n");
+fprintf (stderr, "\n");
 
 return 0;
 }
