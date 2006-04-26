@@ -1,5 +1,8 @@
 #include <stdlib.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "watershed.h"
+
 
 int 
 ar_file_in (char *file_name, OUTPUT *output)
@@ -10,7 +13,7 @@ ar_file_in (char *file_name, OUTPUT *output)
 	double	northing, easting, str_slope, str_length;
 
 	if ((ar_file = fopen (file_name, "r")) == NULL) {
-		G_fatal_error ("unable to open ARMSED file");
+		G_fatal_error (_("unable to open ARMSED file"));
 	}
 	output->num_basins = 0;
 	bas_alloc = INCR;
