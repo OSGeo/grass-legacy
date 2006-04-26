@@ -100,21 +100,14 @@ diag = sqrt (window.ew_res * window.ew_res +
 if (sides == 4)
 	diag *= 0.5;
 buf = G_allocate_cell_buf();
-if (!buf)	{
-	G_fatal_error (_("not enough memory for program to run (at buf)"));
-}
 alt = (CELL *) G_malloc (sizeof(CELL) * size_array(&alt_seg, nrows, ncols));
-if (!alt)	{
-	G_fatal_error (_("not enough memory for program to run (at alt)"));
-}
 r_h = (CELL *) G_malloc (sizeof(CELL) * size_array(&r_h_seg, nrows, ncols));
-if (!r_h)	{
-	G_fatal_error (_("not enough memory for program to run (at r_h)"));
-}
+
 fd = G_open_cell_old (ele_name, ele_mapset);
 if (fd < 0)	{
 	G_fatal_error (_("unable to open elevation map layer"));
 }
+
 for (r = 0; r < nrows; r++)	{
 	G_get_c_raster_row (fd, buf, r);
 	for (c = 0; c < ncols; c++)	{
@@ -124,9 +117,7 @@ for (r = 0; r < nrows; r++)	{
 }
 G_close_cell (fd);
 wat = (CELL *) G_malloc (sizeof(CELL) * size_array(&wat_seg, nrows, ncols));
-if (!wat)	{
-	G_fatal_error (_("not enough memory for program to run (at wat)"));
-}
+
 if (run_flag) {
 	run_mapset = do_exist (run_name);
 	fd = G_open_cell_old (run_name, run_mapset);
@@ -147,9 +138,7 @@ if (run_flag) {
 	}
 }
 asp = (CELL *) G_calloc (size_array(&asp_seg, nrows, ncols), sizeof(CELL));
-if (!asp)	{
-	G_fatal_error (_("not enough memory for program to run (at asp)"));
-}
+
 if (pit_flag) {
 	pit_mapset = do_exist (pit_name);
 	fd = G_open_cell_old (pit_name, pit_mapset);
@@ -207,25 +196,14 @@ if (NULL != G_find_file ("cell", "MASK", G_mapset())) {
 	}
 }
 s_l = (double *)G_malloc(size_array (&s_l_seg, nrows, ncols) * sizeof(double));
-if (!s_l)	{
-	G_fatal_error (_("not enough memory for program to run (at s_l)"));
-}
 /* astar_pts = (POINT *) G_malloc (nrows * ncols * sizeof (POINT)); */
 astar_pts = (POINT *) G_malloc (do_points * sizeof (POINT));
-if (!astar_pts)	{
-	G_fatal_error (_("not enough memory for program to run (at astar_pts)"));
-}
+
 if (sg_flag)	{
 	s_g = (double *) G_malloc (size_array (&s_g_seg, nrows, ncols) * sizeof(double));
-	if (!s_g)	{
-		G_fatal_error (_("not enough memory for program to run (at s_g)"));
-	}
 }
 if (ls_flag)	{
 	l_s = (double *) G_malloc (size_array (&l_s_seg, nrows, ncols) * sizeof(double));
-	if (!l_s)	{
-		G_fatal_error (_("not enough memory for program to run (at l_s)"));
-	}
 }
 
 G_message(_("\nSECTION 1b (of %1d): Determining Offmap Flow. Percent Complete: "), tot_parts);
