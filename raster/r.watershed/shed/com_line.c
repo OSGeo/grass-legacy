@@ -1,7 +1,9 @@
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "watershed.h"
 #include "string.h"
+
 
 int com_line_Gwater (INPUT *input, OUTPUT *output)
 {
@@ -14,18 +16,20 @@ int com_line_Gwater (INPUT *input, OUTPUT *output)
   if (0 == G_yes ("Continue?", 1)) exit (EXIT_SUCCESS);
   input->haf_name = (char *) G_calloc (40, sizeof (char));
   input->accum_name = (char *) G_calloc (40, sizeof (char));
-  fprintf (stdout,"\nThis set of questions will organize the command line for the\n");
-  fprintf (stdout,"%s program to run properly for your application.\n", NON_NAME);
-  fprintf (stdout,"The first question is whether you want %s to run\n", NON_NAME);
-  fprintf (stdout,"in its fast mode or its slow mode.  If you run %s\n", NON_NAME);
-  fprintf (stdout,"in the fast mode, the computer will finish about 10 times faster\n");
-  fprintf (stdout,"than in the slow mode, but will not allow other programs to run\n");
-  fprintf (stdout,"at the same time.  The fast mode also places all of the data into\n");
-  fprintf (stdout,"RAM, which limits the size of window that can be run.  The slow \n");
-  fprintf (stdout,"mode uses disk space in the same hard disk partition as where GRASS is\n");
-  fprintf (stdout,"stored.  Thus, if the program does not work in the slow mode, you will\n");
-  fprintf (stdout,"need to remove unnecessary files from that partition.  The slow mode\n");
-  fprintf (stdout,"will allow other processes to run concurrently with %s.\n\n", NON_NAME);
+
+  G_message(_("\nThis set of questions will organize the command line for the"));
+  G_message(_("%s program to run properly for your application."), NON_NAME);
+  G_message(_("The first question is whether you want %s to run"), NON_NAME);
+  G_message(_("in its fast mode or its slow mode.  If you run %s"), NON_NAME);
+  G_message(_("in the fast mode, the computer will finish about 10 times faster"));
+  G_message(_("than in the slow mode, but will not allow other programs to run"));
+  G_message(_("at the same time.  The fast mode also places all of the data into"));
+  G_message(_("RAM, which limits the size of window that can be run.  The slow"));
+  G_message(_("mode uses disk space in the same hard disk partition as where GRASS is"));
+  G_message(_("stored.  Thus, if the program does not work in the slow mode, you will"));
+  G_message(_("need to remove unnecessary files from that partition.  The slow mode"));
+  G_message(_("will allow other processes to run concurrently with %s.\n"), NON_NAME);
+
   sprintf (buf, "Do you want to use the fast mode of %s?", NON_NAME);
   input->com_line_ram = input->com_line_seg  = NULL;
   input->fast = 0;
@@ -36,7 +40,7 @@ int com_line_Gwater (INPUT *input, OUTPUT *output)
 	prog_name = G_store (RAM_NAME);
   	sprintf(input->com_line_ram, 
 		"%s/etc/water/%s", G_getenv("GISBASE"), RAM_NAME);
-  	fprintf (stdout,"\nIf there is not enough ram for the fast mode (%s) to run,\n", RAM_NAME);
+  	fprintf(stderr, "\nIf there is not enough ram for the fast mode (%s) to run,\n", RAM_NAME);
   	sprintf (buf, "should the slow mode (%s) be run instead?", SEG_NAME);
   	if (G_yes (buf,1)) {
 		input->slow = 1;
@@ -51,8 +55,10 @@ int com_line_Gwater (INPUT *input, OUTPUT *output)
   	sprintf(input->com_line_seg, 
 		"%s/etc/water/%s", G_getenv("GISBASE"), SEG_NAME);
   }
-  fprintf (stdout,"\nIf you hit <return> by itself for the next question, this \n");
-  fprintf (stdout,"program will terminate.\n");
+
+  G_message(_("\nIf you hit <return> by itself for the next question, this"));
+  G_message(_("program will terminate."));
+
   mapset = G_ask_old ("What is the name of the elevation map layer?",
   		map_layer, "cell", "cell");
   if (!mapset) exit (EXIT_FAILURE);
@@ -60,13 +66,15 @@ int com_line_Gwater (INPUT *input, OUTPUT *output)
   	com_line_add (&(input->com_line_ram), " el=", map_layer, mapset);
   if (input->slow)
   	com_line_add (&(input->com_line_seg), " el=", map_layer, mapset);
-  fprintf (stdout,"\nOne of the options for %s is a `depression map'.  A\n", prog_name);
-  fprintf (stdout,"depression map indicates all the locations in the current map window where \n");
-  fprintf (stdout,"water accumulates and does not leave by the edge of the map. Lakes without \n");
-  fprintf (stdout,"outlet streams and sinkholes are examples of `depressions'.  If you wish to \n");
-  fprintf (stdout,"have a depression map, prepare a map where non-zero values indicate the \n");
-  fprintf (stdout,"locations where depressions occur.\n\n");
-  fprintf (stdout,"Hit <return> by itself for the next question if there is no depression map.\n");
+
+  G_message(_("\nOne of the options for %s is a `depression map'.  A"), prog_name);
+  G_message(_("depression map indicates all the locations in the current map window where"));
+  G_message(_("water accumulates and does not leave by the edge of the map. Lakes without"));
+  G_message(_("outlet streams and sinkholes are examples of `depressions'.  If you wish to"));
+  G_message(_("have a depression map, prepare a map where non-zero values indicate the"));
+  G_message(_("locations where depressions occur.\n"));
+  G_message(_("Hit <return> by itself for the next question if there is no depression map."));
+
   mapset = G_ask_old ("What is the name of the depression map layer?",
   		map_layer, "cell", "cell");
   if (mapset) {
@@ -75,33 +83,38 @@ int com_line_Gwater (INPUT *input, OUTPUT *output)
      if (input->slow)
 	com_line_add (&(input->com_line_seg), " de=", map_layer, mapset);
   }
-  fprintf (stdout,"\nThe %s program will divide the elevation map into a number of\n", prog_name);
-  fprintf (stdout,"watershed basins.  The number of watershed basins is indirectly determined \n");
-  fprintf (stdout,"by the `basin threshold' value.  The basin threshold is the area necessary for \n");
-  fprintf (stdout,"%s to define a unique watershed basin.  This area only applies to\n", prog_name);
-  fprintf (stdout,"`exterior drainage basins'.  An exterior drainage basin does not have any \n");
-  fprintf (stdout,"drainage basins flowing into it.  Interior drainage basin size is determined \n");
-  fprintf (stdout,"by the surface flow going into stream segments between stream interceptions.  \n");
-  fprintf (stdout,"Thus interior drainage basins can be of any size.  The %s program\n", prog_name);
-  fprintf (stdout,"also allows the user to relate basin size to potential overland flow\n");
-  fprintf (stdout,"(i.e., areas with low infiltration capacities will need smaller areas to\n");
-  fprintf (stdout,"develop stream channels than neighboring areas with high infiltration rates).\n");
-  fprintf (stdout,"The user can create a map layer with potential overland flow values, and\n");
-  fprintf (stdout,"%s will accumulate those values instead of area.\n\n", prog_name);
-  fprintf (stdout,"What unit of measure will you use for the basin threshold:\n");
-  do	{
-	fprintf (stdout," 1) acres,          2) meters sq., 3) miles sq., 4) hectares,\n");
-	fprintf (stdout," 5) kilometers sq., 6) map cells,  7) overland flow units\n");
-  	fprintf (stdout,"Choose 1-7 or 0 to exit this program: ");
+
+  G_message(_("\nThe %s program will divide the elevation map into a number of"), prog_name);
+  G_message(_("watershed basins.  The number of watershed basins is indirectly determined"));
+  G_message(_("by the `basin threshold' value.  The basin threshold is the area necessary for"));
+  G_message(_("%s to define a unique watershed basin.  This area only applies to"), prog_name);
+  G_message(_("`exterior drainage basins'.  An exterior drainage basin does not have any"));
+  G_message(_("drainage basins flowing into it.  Interior drainage basin size is determined"));
+  G_message(_("by the surface flow going into stream segments between stream interceptions."));
+  G_message(_("Thus interior drainage basins can be of any size.  The %s program"), prog_name);
+  G_message(_("also allows the user to relate basin size to potential overland flow"));
+  G_message(_("(i.e., areas with low infiltration capacities will need smaller areas to"));
+  G_message(_("develop stream channels than neighboring areas with high infiltration rates)."));
+  G_message(_("The user can create a map layer with potential overland flow values, and"));
+  G_message(_("%s will accumulate those values instead of area.\n"), prog_name);
+  G_message(_("What unit of measure will you use for the basin threshold:"));
+
+  do {
+	G_message(_(" 1) acres,          2) meters sq., 3) miles sq., 4) hectares,"));
+	G_message(_(" 5) kilometers sq., 6) map cells,  7) overland flow units"));
+  	fprintf (stderr, _("Choose 1-7 or 0 to exit this program: "));
   	G_gets (map_layer);
   	sscanf (map_layer, "%d", &i);
   } while (i > 7 || i < 0);
+
   if (!i) exit(EXIT_SUCCESS);
   output->type_area = (char) i;
-  fprintf (stdout,"\nHow large an area (or how many overland flow units) must a drainage basin \n"); 
-  fprintf (stdout,"be for it to be an exterior drainage basin: ");
+
+  G_message(_("\nHow large an area (or how many overland flow units) must a drainage basin")); 
+  fprintf (stderr, _("be for it to be an exterior drainage basin: "));
   G_gets (map_layer);
   sscanf (map_layer, "%lf", &d);
+
   switch (i)	{
 	case 1: if (input->fast)
 			basin_com_add (&(input->com_line_ram), d, ACRE_TO_METERSQ, window);
@@ -134,8 +147,8 @@ int com_line_Gwater (INPUT *input, OUTPUT *output)
 			basin_com_add (&(input->com_line_seg), d, (window->ns_res * window->ew_res), window);
 		break;
 	case 7: /* needs an overland flow map */
-  		fprintf (stdout,"\nIf you hit <return> by itself for the next question, this \n");
-  		fprintf (stdout,"program will terminate.\n");
+  		G_message(_("\nIf you hit <return> by itself for the next question, this"));
+  		G_message(_("program will terminate."));
   		mapset = G_ask_old ("What is the name of the overland flow map layer?",
   				map_layer, "cell", "cell");
   		if (!mapset) exit (EXIT_FAILURE);
@@ -149,12 +162,15 @@ int com_line_Gwater (INPUT *input, OUTPUT *output)
 		}
 		break;
   }
-  fprintf (stdout,"\n%s must create a map layer of watershed basins\n", prog_name);
-  fprintf (stdout,"before %s can run properly.\n", G_program_name());
+
+  G_message(_("\n%s must create a map layer of watershed basins"), prog_name);
+  G_message(_("before %s can run properly."), G_program_name());
+
   strcpy (buf, "Please name the output watershed basin map:");
   do	{
   	mapset = G_ask_new (buf, input->haf_name, "cell", "");
   } while (NULL == mapset);
+
   if (input->fast)
 	com_line_add (&(input->com_line_ram), " ba=", input->haf_name, NULL);
   if (input->slow)
@@ -167,16 +183,18 @@ int com_line_Gwater (INPUT *input, OUTPUT *output)
   */
 
 #ifdef ARMSED
-  fprintf (stdout,"\n%s must create a file of watershed basin relationships \n", prog_name);
-  fprintf (stdout,"before %s can run properly.\n", G_program_name());
+  G_message(_("\n%s must create a file of watershed basin relationships"), prog_name);
+  G_message(_("before %s can run properly."), G_program_name());
+
   input->ar_file_name = NULL;
   while (input->ar_file_name == NULL)	{
-  	fprintf (stdout,"\nPlease name this file:");
+  	fprintf (stderr, _("\nPlease name this file:"));
   	G_gets (char_input);
   	if ( 1 != G_legal_filename (char_input))	{
-		fprintf (stdout,"[%s] file name not legal\n", char_input);
+		G_message(_("[%s] file name not legal"), char_input);
 	} else	input->ar_file_name = G_store (char_input);
   }
+
   if (input->fast)
 	com_line_add (&(input->com_line_ram), " ar=", input->ar_file_name, NULL);
   if (input->slow)
@@ -195,14 +213,15 @@ in this program: 1) it should be querried before the armsed file query, and 2)
 make the armsed file query manditory if this option is invoked.
 */
 
-  fprintf (stdout,"\n%s will generate a lot of output.  Indicate a file\n", G_program_name());
-  fprintf (stdout,"name for %s to send the output to.\n", G_program_name());
+  G_message(_("\n%s will generate a lot of output.  Indicate a file"), G_program_name());
+  G_message(_("name for %s to send the output to."), G_program_name());
+
   output->file_name = NULL;
   while (output->file_name == NULL)	{
-  	fprintf (stdout,"\nPlease name this file:");
+  	fprintf (stderr, _("\nPlease name this file:"));
   	G_gets (char_input);
   	if ( 1 != G_legal_filename (char_input))	{
-		fprintf (stdout,"[%s] file name not legal\n\n", char_input);
+		G_message(_("[%s] file name not legal\n"), char_input);
 	} else	output->file_name = G_store (char_input);
   }
  
@@ -211,21 +230,24 @@ make the armsed file query manditory if this option is invoked.
  */
 #endif
 
-  fprintf (stdout,"\nThe accumulation map from %s must be present for\n", prog_name);
-  fprintf (stdout,"%s to work properly.\n", G_program_name());
+  G_message(_("\nThe accumulation map from %s must be present for"), prog_name);
+  G_message(_("%s to work properly."), G_program_name());
   strcpy (buf, "Please name the accumulation map:");
   do	{
   	mapset = G_ask_new (buf, input->accum_name, "cell", "");
   } while (NULL == mapset);
+
   if (input->fast)
 	com_line_add (&(input->com_line_ram), " ac=", input->accum_name, NULL);
   if (input->slow)
 	com_line_add (&(input->com_line_seg), " ac=", input->accum_name, NULL);
-  fprintf (stdout,"\n%s can produce several maps not necessary for\n", prog_name);
-  fprintf (stdout,"%s to function (stream channels, overland flow aspect, and \n", G_program_name());
-  fprintf (stdout,"a display version of the accumulation map).  %s also has the \n", prog_name);
-  fprintf (stdout,"ability to generate several variables in the Revised Universal Soil Loss \n");
-  fprintf (stdout,"Equation (Rusle): Slope Length (LS), and Slope Steepness (S).\n\n");
+
+  G_message(_("\n%s can produce several maps not necessary for"), prog_name);
+  G_message(_("%s to function (stream channels, overland flow aspect, and"), G_program_name());
+  G_message(_("a display version of the accumulation map).  %s also has the"), prog_name);
+  G_message(_("ability to generate several variables in the Revised Universal Soil Loss"));
+  G_message(_("Equation (Rusle): Slope Length (LS), and Slope Steepness (S).\n"));
+
   sprintf (buf, "Would you like any of these maps to be created?");
   if (G_yes(buf, 1))	{
 	mapset = G_ask_new ("", map_layer, "cell", "stream channel");
@@ -273,11 +295,13 @@ make the armsed file query manditory if this option is invoked.
 	    if(input->slow)
 		com_line_add (&(input->com_line_seg), " S=", map_layer, NULL);
 	}
+
 	if (i)	{
-	 	fprintf (stdout,"\nThe Slope Length factor (LS) and Slope Steepness (S) are influenced by \n");
-	 	fprintf (stdout,"disturbed land.  %s reflects this with an optional map layer or value\n", prog_name);
-	 	fprintf (stdout,"where the value indicates the percent of disturbed (barren) land in that cell.\n");
-	 	fprintf (stdout,"Type <return> if you do not have a disturbed land map layer.\n");
+	 	G_message(_("\nThe Slope Length factor (LS) and Slope Steepness (S) are influenced by"));
+	 	G_message(_("disturbed land.  %s reflects this with an optional map layer or value"), prog_name);
+	 	G_message(_("where the value indicates the percent of disturbed (barren) land in that cell."));
+	 	G_message(_("Type <return> if you do not have a disturbed land map layer."));
+
 	 	mapset = G_ask_old ("", map_layer, "cell", "disturbed land");
 	 	if (mapset != NULL) {
 		    if (input->fast)
@@ -285,23 +309,25 @@ make the armsed file query manditory if this option is invoked.
 		    if (input->slow)
 			com_line_add (&(input->com_line_seg), " r=", map_layer, NULL);
 	 	}else {
-	 		fprintf (stdout,"\nType the value indicating the percent of disturbed land.  This value will\n");
-			fprintf (stdout,"be used for every cell in the current region.\n");
+	 		G_message(_("\nType the value indicating the percent of disturbed land.  This value will"));
+			G_message(_("be used for every cell in the current region."));
 			i = -6;
 			while (i < 0 || i > 100) {
-				fprintf (stdout,"\nInput value here [0-100]: ");
+				fprintf (stderr, _("\nInput value here [0-100]: "));
 				fgets (buf, 80, stdin);
 				sscanf (buf, "%d", &i);
 			}
 			if (input->fast) com_add (&(input->com_line_ram), " r=", i);
 			if (input->slow) com_add (&(input->com_line_seg), " r=", i);
 	 	}
+
 	 	/*       12345678901234567890123456789012345678901234567890123456789012345678901234567890 */
-	 	fprintf (stdout,"\nOverland surface flow only occurs for a set distance before swales form.\n");
-	 	fprintf (stdout,"Because of digital terrain model limitations, %s cannot pick up\n", prog_name);
-	 	fprintf (stdout,"these swales.  %s allows for an input (warning: kludge factor)\n", prog_name);
-	 	fprintf (stdout,"that prevents the surface flow distance from getting too long.  Normally,\n");
-	 	fprintf (stdout,"maximum slope length is around 600 feet (about 183 meters).\n");
+	 	G_message(_("\nOverland surface flow only occurs for a set distance before swales form."));
+	 	G_message(_("Because of digital terrain model limitations, %s cannot pick up"), prog_name);
+	 	G_message(_("these swales.  %s allows for an input (warning: kludge factor)"), prog_name);
+	 	G_message(_("that prevents the surface flow distance from getting too long.  Normally,"));
+	 	G_message(_("maximum slope length is around 600 feet (about 183 meters)."));
+
 	 	i = -1;
 	 	while (i < 0) {
 			fprintf (stdout,"\nInput maximum slope length here (in meters): ");
@@ -310,11 +336,13 @@ make the armsed file query manditory if this option is invoked.
 	 	}
 	 	if (input->fast) com_add (&(input->com_line_ram), " ms=", i);
 	 	if (input->slow) com_add (&(input->com_line_seg), " ms=", i);
+
 	 	/*       12345678901234567890123456789012345678901234567890123456789012345678901234567890 */
-  		fprintf (stdout,"\nRoads, ditches, changes in ground cover, and other factors will stop\n");
-		fprintf (stdout,"slope length.  You may input a raster map indicating the locations of these\n");
-		fprintf (stdout,"blocking factors.\n\n");
-  		fprintf (stdout,"Hit <return> by itself for the next question if there is no blocking map.\n");
+  		G_message(_("\nRoads, ditches, changes in ground cover, and other factors will stop"));
+		G_message(_("slope length.  You may input a raster map indicating the locations of these"));
+		G_message(_("blocking factors.\n"));
+  		G_message(_("Hit <return> by itself for the next question if there is no blocking map."));
+
   		mapset = G_ask_old ("What is the name of the blocking map layer?",
   				map_layer, "cell", "cell");
   		if (mapset) {

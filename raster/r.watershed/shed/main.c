@@ -1,16 +1,19 @@
 #include <stdlib.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "watershed.h"
 #include "string.h"
+
 
 int main (int argc, char *argv[]) {
 	INPUT	input;
 	OUTPUT	output;
-	char	buf[500];
 
 	G_gisinit (argv[0]);
 	G_set_program_name ("r.watershed");
 	G_get_window (&(output.window));
 	intro ();
+
 	output.num_maps = 0;
 	com_line_Gwater (&input, &output); /* develops r.watershed command line */
 	basin_maps (&input, &output); /* organizes map layers output */
@@ -18,22 +21,19 @@ int main (int argc, char *argv[]) {
 	  if (input.fast) {
 	    if (G_system (input.com_line_ram)) {
 	      if (input.slow) {
-		fprintf (stdout,"Slow version of water analysis program starting now\n");
+		G_message(_("Slow version of water analysis program starting now"));
+
     		if (G_system (input.com_line_seg)) {
-			sprintf(buf,"<<%s>> command line failed",
-				input.com_line_seg);
 			free_input (&input);
 			free_output (&output);
-			G_fatal_error (buf);
+			G_fatal_error(_("<<%s>> command line failed"), input.com_line_seg);
 		}
 	      }
 	    }
 	  } else if (G_system (input.com_line_seg)) {
-		sprintf(buf,"<<%s>> command line failed",
-			input.com_line_seg);
 		free_input (&input);
 		free_output (&output);
-		G_fatal_error (buf);
+		G_fatal_error(_("<<%s>> command line failed"), input.com_line_seg);
 	  }
 	}
 
@@ -49,7 +49,7 @@ int main (int argc, char *argv[]) {
 	free_input (&input);
 	if ((output.out_file = fopen (output.file_name, "w")) == NULL) {
 		free_output (&output);
-		G_fatal_error ("unable to open output file");
+		G_fatal_error (_("unable to open output file"));
 	}
 	if (output.do_basin) {
 		fprintf (output.out_file, "\n\nThese values are accumulations within the basin itself\n");

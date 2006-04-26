@@ -1,5 +1,8 @@
 #include <stdlib.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "watershed.h"
+
 
 int valid_basins (char *accum_name, OUTPUT *output)
 {
@@ -17,12 +20,13 @@ int valid_basins (char *accum_name, OUTPUT *output)
 	*/
 	if (NULL == (mapset = G_find_cell (accum_name, ""))) {
 		free_output (output);
-		G_fatal_error ("accum file missing in valid_basins()");
+		G_fatal_error (_("accum file missing in valid_basins()"));
 	}
 	if (-1 == (fd = G_open_cell_old (accum_name, mapset))) {
 		free_output (output);
-		G_fatal_error ("unable to open accum file in valid_basins()");
+		G_fatal_error (_("unable to open accum file in valid_basins()"));
 	}
+
 	buf = G_allocate_cell_buf ();
 	basin_facts = output->basin_facts;
 	for (i = output->num_basins - 1; i >= 0 ; i--) {

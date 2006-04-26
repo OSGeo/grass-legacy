@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include <unistd.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "watershed.h"
+
 
 int read_basins (char *haf_name, OUTPUT *output)
 {
@@ -17,8 +20,9 @@ int read_basins (char *haf_name, OUTPUT *output)
   bas_buf = G_allocate_cell_buf ();
   mapset = G_find_cell (haf_name, "");
   if (!mapset) {
-	G_fatal_error ("unable to open basin/half basin map");
+	G_fatal_error (_("unable to open basin/half basin map"));
   }
+
   bas_fd = G_open_cell_old (haf_name, mapset);
   facts = output->basin_facts;
   for (r = nrows - 1; r >= 0; r--)	{
@@ -29,6 +33,7 @@ int read_basins (char *haf_name, OUTPUT *output)
 			facts[b].num_cells ++;
 	}
   }
+
   tot_basins = output->num_basins;
   for (m = 0; m < output->num_maps; m++) {
     	map = &(output->maps[m]);
