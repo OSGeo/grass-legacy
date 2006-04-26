@@ -36,11 +36,7 @@ main (int argc, char *argv[])
         _("Creates a raster map layer and vector point map "
         "containing randomly located sites.");
 
-    parm.input = G_define_option() ;
-    parm.input->key        = "input" ;
-    parm.input->type       = TYPE_STRING ;
-    parm.input->required   = YES ;
-    parm.input->gisprompt  = "old,cell,raster" ;
+    parm.input = G_define_standard_option(G_OPT_R_INPUT) ;
     parm.input->description= _("Name of existing raster map") ;
 
     parm.npoints = G_define_option() ;
@@ -50,19 +46,13 @@ main (int argc, char *argv[])
     parm.npoints->required   = YES ;
     parm.npoints->description= _("The number of points to allocate");
 
-    parm.raster = G_define_option() ;
+    parm.raster = G_define_standard_option(G_OPT_R_OUTPUT) ;
+    parm.raster->required   = NO ;
     parm.raster->key        = "raster_output" ;
-    parm.raster->type       = TYPE_STRING ;
-    parm.raster->required   = NO;
-    parm.raster->gisprompt  = "new,cell,raster" ;
-    parm.raster->description= _("Name of the output raster map") ;
 
-    parm.sites = G_define_option() ;
-    parm.sites->key        = "vector_output" ;
-    parm.sites->type       = TYPE_STRING ;
+    parm.sites = G_define_standard_option(G_OPT_V_OUTPUT) ;
     parm.sites->required   = NO ;
-    parm.sites->gisprompt  = "new,vector,vector" ;
-    parm.sites->description= _("Name of the output vector points map");
+    parm.sites->key        = "vector_output" ;
 
     flag.quiet = G_define_flag() ;
     flag.quiet->key         = 'q' ;
@@ -81,7 +71,7 @@ main (int argc, char *argv[])
     flag.z_geometry->description = _("Generate vector points as 3D points");
 
     if (G_parser(argc, argv) != 0)
-        exit(1);
+        exit(EXIT_FAILURE);
     
     /* Set some state variables */
     myState.verbose   = (flag.quiet->answer) ? 0 : 1;
@@ -181,7 +171,6 @@ main (int argc, char *argv[])
                 "%s: There aren't any valid locations in the current region",
                 G_program_name());
             G_fatal_error (msg);
-            exit(1);
         }
         myState.nRand = targets;
     }
