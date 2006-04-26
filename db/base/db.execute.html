@@ -7,6 +7,12 @@
 If parameters for database connection are already set with 
 <a HREF="db.connect.html">db.connect</a>, they are taken as default values and
 do not need to be spcified each time.
+<P>
+If you have a large number of SQL commands to process, it is much much faster
+to place all the SQL statements into a text file and use <em>db.execute</em>'s
+<b>input</b> file parameter than it is to process each statement individually
+in a loop.
+
 
 <h2>EXAMPLES</h2>
 
@@ -81,4 +87,4 @@ cat file.sql | db.execute
 
 CERL
 
-<p><i>Last changed: $Date$</i>
+<p><i>Last changed: $Date$</i></p>
