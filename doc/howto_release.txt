@@ -129,6 +129,7 @@ Note: This text contains *some* rules only applicable to the
    http://news.eoportal.org/cgi-bin/eoportal_header.pl?dw=psr&site=software&words=type
    http://www.osdir.com/Downloads+index-req-viewsdownload-sid-206.phtml
    http://www.foss4g.org/FOSS4G/modules.php?name=Submit_News
+   https://webcommittee.osgeo.org/servlets/Scarab OSGeo-WebCom as news items for www.osgeo.org
 
    ... anywhere else? Please add here.
 
