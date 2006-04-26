@@ -1,0 +1,119 @@
+/*!
+\page rfc1_psc RFC 1: Project Steering Committee Guidelines
+
+Author: Markus Neteler<br>
+Contact: neteler AT itc.it<br>
+Status: Proposed<br>
+
+\section summary Summary
+
+A GRASS Project Steering Committee (PSC) is proposed to formalize
+major decisions on technical issues and project management. It is
+desired to keep the administrational overhead as low as possible.
+
+This document describes how the GRASS Project Steering Committee
+determines membership, and makes decisions on GRASS project issues.
+
+
+\section GRASS Users, Developers and Steering Committee
+
+GRASS is developed by people organized in three concentric circles:
+
+<ul>
+<li> The GRASS Steering Committee members are in the innermost circle.
+     They make strategic decisions and manage the project.</li>
+<li> The GRASS Developers are the second circle and contribute to
+     source code, documentation, testing, and packaging. They have write
+     access to the GRASS source code repository (CVS). This group votes
+     for the members of the GRASS PSC. Developers are also encouraged
+     to closely peer-review code submissions.</li>
+<li> The GRASS Users are the third circle and are the largest group.
+     They contribute to the code, documentation and discussion on existing
+     and new features through the various mailing lists, the Wiki and the
+     bug/wish tracker.</li>
+</ul>
+
+In brief, the PSC votes on proposals on the GRASS Developers mailing
+list ("grass-dev").  Proposals are available for review for at least
+two business days, and a single veto is sufficient to delay progress
+though ultimately a majority of committee members can pass a proposal.
+
+
+\section detailed_process Detailed Process
+
+<ol>
+
+<li> Proposals are written up and submitted on the "grass-dev" mailing
+list for discussion and voting, by any interested party, not just 
+committee members.
+
+<li> Proposals need to be available for review for at least two business
+days before a final decision can be made. 
+
+<li> Respondents may vote "+1" to indicate support for the proposal and a 
+willingness to support implementation. 
+
+<li> Respondents may vote "-1" to veto a proposal, but must provide clear
+reasoning and alternate approaches to resolving the problem within the two
+business days.
+
+<li> A vote of -0 indicates mild disagreement, but has no effect.  A 0 
+indicates no opinion.  A +0 indicate mild support, but has no effect. 
+
+<li> Anyone may comment on proposals on the list, but only members of the
+Project Steering Committee's votes will be counted.
+
+<li> A proposal will be accepted if it receives +2 (including the proposer)
+and no vetoes (-1). 
+
+<li> If a proposal is vetoed, and it cannot be revised to satisfy all parties, 
+then it can be resubmitted for an override vote in which a majority of all 
+eligible voters indicating +1 is sufficient to pass it.  Note that this is 
+a majority of all committee members, not just those who actively vote. 
+
+<li> Upon completion of discussion and voting the proposer should announce
+whether they are proceeding (proposal accepted) or are withdrawing their 
+proposal (vetoed).
+
+<li> The PSC Chair gets a vote.
+
+<li> The Chair is responsible for keeping track of who is a member of
+the Project Steering Committee. 
+
+<li> Addition and removal of members from the committee, as well as selection
+of a Chair should be handled as a proposal to the committee.
+
+<li> The Chair adjudicates in cases of disputes about voting.
+
+</ol>
+
+\section when_vote When is Vote Required?
+
+<ul>
+<li> Anything that could cause backward compatibility issues. 
+<li> Adding substantial amounts of new code.
+<li> Changing inter-subsystem APIs.
+<li> When releases should take place.
+<li> Project Infrastructure issues (hosting etc)
+<li> Anything that might be controversial.
+</ul>
+
+\section observations Observations
+
+<ul>
+<li> The Chair is the ultimate adjudicator if things break down.
+
+<li> The absolute majority rule can be used to override an obstructionist
+veto, but it is intended that in normal circumstances vetoers need to be
+convinced to withdraw their veto.  We are trying to reach consensus.
+</ul>
+
+
+\section bootstrapping Bootstrapping
+
+XXX is declared initial Chair of the Project Steering Committee.
+
+X Y Z are declared to be the founding Project Steering Committee.
+
+*/
+ 
