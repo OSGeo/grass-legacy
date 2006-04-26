@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "Gwater.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
+
 
 int 
 init_vars (int argc, char *argv[])
@@ -64,7 +67,9 @@ if ((ele_flag != 1)
 tot_parts = 4;
 if (ls_flag || sg_flag) tot_parts++;
 if (bas_thres > 0) tot_parts++;
-fprintf (stdout,"\nSECTION 1 beginning: Initiating Variables. %d sections total\n", tot_parts);
+
+G_message(_("\nSECTION 1 beginning: Initiating Variables. %d sections total."), tot_parts);
+
 this_mapset = G_mapset ();
 if (asp_flag)	do_legal (asp_name);
 if (bas_flag)	do_legal (bas_name);
@@ -104,17 +109,21 @@ if (sl_flag) num_cseg_bytes -= sizeof(double) * SROW * SCOL * 4;
 num_cseg = sizeof (CELL) * 3 + sizeof (double);
 num_cseg_bytes /= num_cseg * 4 * SROW * SCOL;
 num_cseg_total = nrows / SROW + 1;
-fprintf (stdout,"    segments in row:	%d\n", num_cseg_total);
+G_message(_("    segments in row:	%d"), num_cseg_total);
+
 num_cseg_total = ncols / SCOL + 1;
-fprintf (stdout,"segments in columns:	%d\n", num_cseg_total);
+G_message(_("segments in columns:	%d"), num_cseg_total);
+
 num_cseg_total = (ncols / SCOL + 1) * (nrows / SROW + 1);
-fprintf (stdout,"     total segments:	%d\n", num_cseg_total);
-fprintf (stdout,"      open segments:	%d\n", num_cseg_bytes);
+G_message(_("     total segments:	%d"), num_cseg_total);
+G_message(_("      open segments:	%d"), num_cseg_bytes);
+
 cseg_open (&alt, SROW, SCOL, num_cseg_bytes);
 cseg_open (&r_h, SROW, SCOL, 4);
 cseg_read_cell (&alt, ele_name, ele_mapset);
 cseg_read_cell (&r_h, ele_name, ele_mapset);
 cseg_open (&wat, SROW, SCOL, num_cseg_bytes);
+
 if (run_flag) {
 	run_mapset = do_exist (run_name);
 	cseg_read_cell (&wat, run_name, run_mapset);
@@ -158,7 +167,7 @@ do_points = nrows * ncols;
 if (NULL != G_find_file ("cell", "MASK", G_mapset())) {
 	MASK_flag = 1;
 	if ((fd = G_open_cell_old ("MASK", G_mapset())) < 0) {
-		G_fatal_error ("unable to open MASK");
+		G_fatal_error (_("unable to open MASK"));
 	} else {
 		buf = G_allocate_cell_buf ();
 		for (r = 0; r < nrows; r++) {
@@ -184,8 +193,9 @@ if (ls_flag)
 seg_open (&astar_pts, 1, do_points, 1, PAGE_BLOCK / sizeof (POINT),
 		4, sizeof (POINT));
 first_astar = first_cum = -1;
-fprintf (stdout,"\nSECTION 1b (of %1d): Determining Offmap Flow. Percent Complete: ",
+G_message(_("\nSECTION 1b (of %1d): Determining Offmap Flow. Percent Complete: "),
 		tot_parts);
+
 if (MASK_flag) {
 	for (r = 0; r < nrows; r++) {
 		G_percent (r, nrows, 1);
@@ -346,13 +356,8 @@ return 0;
 int 
 do_legal (char *file_name)
 {
-	char buf[120];
-
-	if (G_legal_filename (file_name) == -1) {
-		sprintf (buf, "map layer [%s] not legal for GRASS\n",
-			file_name);
-		G_fatal_error (buf);
-	}
+	if (G_legal_filename (file_name) == -1)
+		G_fatal_error(_("map layer [%s] not legal for GRASS"), file_name);
 
     return 0;
 }
@@ -360,12 +365,10 @@ do_legal (char *file_name)
 char *
 do_exist (char *file_name)
 {
-	char buf[120], *file_mapset;
+	char *file_mapset = G_find_cell2 (file_name, "");
 
-	file_mapset = G_find_cell2 (file_name, "");
-	if (file_mapset == NULL)	{
-		sprintf (buf, "[%s] map not found\n", file_name);
-		G_fatal_error (buf);
-	}
+	if (file_mapset == NULL)
+		G_fatal_error(_("[%s] map not found"), file_name);
+
 	return (file_mapset);
 }

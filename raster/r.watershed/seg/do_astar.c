@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "Gwater.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
+
 
 int do_astar (void)
 {
@@ -12,7 +15,8 @@ int do_astar (void)
     CELL	in_val, drain_val;
     double	slope;
 
-fprintf (stdout,"\n\nSECTION 2: A * Search.                      Percent complete: ");
+G_message(_("\n\nSECTION 2: A * Search.                      Percent complete:"));
+
 count = 0;
 while (first_astar != -1) {
     G_percent (count++, do_points, 1);
@@ -59,7 +63,7 @@ while (first_astar != -1) {
 }
 bseg_close (&worked);
 bseg_close (&in_list);
-fprintf (stdout,"\n");
+fprintf (stderr, "\n");
 
     return 0;
 }
@@ -72,9 +76,9 @@ add_pt (SHORT r, SHORT c, SHORT downr, SHORT downc, CELL ele, CELL downe)
     POINT	point, new_point;
     double	slp_value, get_slope();
 
-if (nxt_avail_pt == do_points) {
-	G_fatal_error ("problem w/ astar algorithm");
-}
+if (nxt_avail_pt == do_points)
+	G_fatal_error (_("problem w/ astar algorithm"));
+
     slp_value = get_slope(r, c, downr, downc, ele, downe);
     dseg_put (&slp, &slp_value, r, c);
     bseg_put (&in_list, &one, r, c);

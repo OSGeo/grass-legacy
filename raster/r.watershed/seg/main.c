@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "Gwater.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #undef MAIN
+
 
 int 
 main (int argc, char *argv[])
@@ -19,9 +22,10 @@ main (int argc, char *argv[])
     {
 	sg_factor();
     }
+
     if (bas_thres <= 0)
     {
-    	fprintf (stdout,"\nSECTION %d beginning: Closing Maps.\n", tot_parts);
+    	G_message(_("\nSECTION %d beginning: Closing Maps."), tot_parts);
         close_maps ();
     }
     else    
@@ -32,11 +36,12 @@ main (int argc, char *argv[])
 	}
 	cseg_open (&bas, SROW, SCOL, 4);
 	cseg_open (&haf, SROW, SCOL, 4);
-    	fprintf (stdout,"\nSECTION %d beginning: Watershed determination.\n", 
+    	G_message(_("\nSECTION %d beginning: Watershed determination."), 
 			tot_parts - 1);
 	find_pourpts ();
-    	fprintf (stdout,"\nSECTION %d beginning: Closing Maps.\n", tot_parts);
+    	G_message(_("\nSECTION %d beginning: Closing Maps."), tot_parts);
 	close_array_seg ();
     }
+
     exit (EXIT_SUCCESS);
 }
