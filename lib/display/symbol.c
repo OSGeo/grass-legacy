@@ -2,7 +2,7 @@
  *
  *  by Hamish Bowman 19 Dec. 2005
  *  adapted from Radim Blazek's d.vect code
- *  (c) 2006  Hamish Bowman, and The GRASS GIS Development Team
+ *  (c) 2005-6  M. Hamish Bowman, and The GRASS GIS Development Team
  *
  * License: GNU GPL version 2, or newer. See GPL.TXT for details.
  *
@@ -19,6 +19,16 @@
  *
  * Draws a symbol (one of $GISBASE/etc/symbols/) to the active display.
  * The starting x0,y0 coordinate corresponds to the center of the icon.
+ * The symbol must be pre-processed with S_stroke() before being sent
+ * to this function.
+ *
+ * example:
+ *   #include <grass/display.h>
+ *   #include <grass/symbol.h>
+ *   SYMBOL *Symb;
+ *   Symb = S_read( symbol_name );
+ *   S_stroke( Symb, size, rotation, tolerance );
+ *   D_symbol( Symb, x0, y0, line_color, fill_color );
  *
  *  \param Symb The symbol name (e.g. basic/circle)
  *  \param x0   The starting x display coordinate (pixel)
@@ -28,7 +38,7 @@
  *  \return int
  */
 
-int D_symbol(SYMBOL *Symb, int x0, int y0, RGBA_Color *line_color, RGBA_Color *fill_color)
+int D_symbol(SYMBOL *Symb, int x0, int y0, RGB_Color *line_color, RGB_Color *fill_color)
 {
     int i, j, k;
     SYMBPART *part;
