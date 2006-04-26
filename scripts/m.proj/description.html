@@ -123,8 +123,9 @@ coordinate list to the target projection.
 <P><BR>
 <!-- HB 4/2006: I'm leaving this in from the GRASS 5 help page, but is it accurate? -->
 Datum conversions are automatically handled by the <tt>PROJ.4</tt> library if
-'<tt>+datum=</tt>' is specified on <b>both</b> the input <b>and</b> output
-projections on the command line. <!-- HB: +towgs84=a,b,c defines "datum", yes? -->
+"<tt>+datum</tt>" setings are specified on <b>both</b> the input <b>and</b> output
+projections on the command line. The "<tt>+towgs84</tt>" parameter can be used to 
+define either 3 or 7 term datum transform coefficients, satisfying this requirement.
 <P>
 If a datum is specified there is no need for the '<tt>+ellps=</tt>' or underlying
 parameters, '<tt>+a=</tt>', '<tt>+es=</tt>', etc.
@@ -184,4 +185,5 @@ M. Hamish Bowman, Dept. Marince Science, Otago University, New Zealand<BR>
 Functionality inspired by the <em>m.proj</em> and <em>m.proj2</em> modules for
 GRASS GIS 5.
 
-<p><i>Last changed: $Date$</i>
+<p><i>Last changed: $Date$</i></p>
+
