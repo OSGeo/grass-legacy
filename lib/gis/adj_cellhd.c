@@ -113,20 +113,27 @@ char *G_adjust_Cell_head(struct Cell_head *cellhd,int row_flag,int col_flag)
 	    } else
 	        return (_("Illegal latitude for South"));
 	}
-	
-	G_debug(3,"r.in.gdal cellhd->west: %f, devi: %g, eps: %g", cellhd->west, cellhd->west + 180.0, epsilon_ew);
-	if ( (cellhd->west < -180.0) && ((cellhd->west + 180.0) < epsilon_ew) && ((cellhd->west + 180.0) < GRASS_EPSILON) ) {
-	    G_warning (_("Fixing subtle input data rounding error of west boundary (%g>%g)"), cellhd->west + 180.0, epsilon_ew);
+
+/* DISABLED: this breaks global wrap-around
+	G_debug(3,"G_adjust_Cell_head()  cellhd->west: %f, devi: %g, eps: %g", 
+	   cellhd->west, cellhd->west + 180.0, epsilon_ew);
+	if ( (cellhd->west < -180.0) && ((cellhd->west + 180.0) < epsilon_ew)
+	   && ((cellhd->west + 180.0) < GRASS_EPSILON) ) {
+	    G_warning (_("Fixing subtle input data rounding error of west boundary (%g>%g)"),
+	       cellhd->west + 180.0, epsilon_ew);
 	    cellhd->west = -180.0;
 	}
 
-	G_debug(3,"r.in.gdal cellhd->east: %f, devi: %g, eps: %g", cellhd->east, cellhd->east - 180.0, epsilon_ew);
-	if ( (cellhd->east > 180.0) && ((cellhd->east - 180.0) > epsilon_ew) && ((cellhd->east - 180.0) > GRASS_EPSILON) ) {
-	    G_warning (_("Fixing subtle input data rounding error of east boundary (%g>%g)"), cellhd->east - 180.0, epsilon_ew);
+	G_debug(3,"G_adjust_Cell_head()  cellhd->east: %f, devi: %g, eps: %g",
+	   cellhd->east, cellhd->east - 180.0, epsilon_ew);
+	if ( (cellhd->east > 180.0) && ((cellhd->east - 180.0) > epsilon_ew)
+	   && ((cellhd->east - 180.0) > GRASS_EPSILON) ) {
+	    G_warning (_("Fixing subtle input data rounding error of east boundary (%g>%g)"),
+	       cellhd->east - 180.0, epsilon_ew);
 	    cellhd->east = 180.0;
 	}
-
-        while (cellhd->east <= cellhd->west)
+*/
+	while (cellhd->east <= cellhd->west)
 	    cellhd->east += 360.0;
     }
 
@@ -263,19 +270,26 @@ char *G_adjust_Cell_head3(struct Cell_head *cellhd,int row_flag,int col_flag, in
 	    } else
 	        return (_("Illegal latitude for South"));
 	}
-	
-	G_debug(3,"r.in.gdal cellhd->west: %f, devi: %g, eps: %g", cellhd->west, cellhd->west + 180.0, epsilon_ew);
-	if ( (cellhd->west < -180.0) && ((cellhd->west + 180.0) < epsilon_ew) && ((cellhd->west + 180.0) < GRASS_EPSILON) ) {
-	    G_warning (_("Fixing subtle input data rounding error of west boundary (%g>%g)"), cellhd->west + 180.0, epsilon_ew);
+
+/* DISABLED: this breaks global wrap-around
+	G_debug(3,"G_adjust_Cell_head3() cellhd->west: %f, devi: %g, eps: %g",
+	   cellhd->west, cellhd->west + 180.0, epsilon_ew);
+	if ( (cellhd->west < -180.0) && ((cellhd->west + 180.0) < epsilon_ew)
+	   && ((cellhd->west + 180.0) < GRASS_EPSILON) ) {
+	    G_warning (_("Fixing subtle input data rounding error of west boundary (%g>%g)"),
+	       cellhd->west + 180.0, epsilon_ew);
 	    cellhd->west = -180.0;
 	}
 
-	G_debug(3,"r.in.gdal cellhd->east: %f, devi: %g, eps: %g", cellhd->east, cellhd->east - 180.0, epsilon_ew);
-	if ( (cellhd->east > 180.0) && ((cellhd->east - 180.0) > epsilon_ew) && ((cellhd->east - 180.0) > GRASS_EPSILON) ) {
-	    G_warning (_("Fixing subtle input data rounding error of east boundary (%g>%g)"), cellhd->east - 180.0, epsilon_ew);
+	G_debug(3,"G_adjust_Cell_head3() cellhd->east: %f, devi: %g, eps: %g",
+	   cellhd->east, cellhd->east - 180.0, epsilon_ew);
+	if ( (cellhd->east > 180.0) && ((cellhd->east - 180.0) > epsilon_ew)
+	   && ((cellhd->east - 180.0) > GRASS_EPSILON) ) {
+	    G_warning (_("Fixing subtle input data rounding error of east boundary (%g>%g)"),
+	       cellhd->east - 180.0, epsilon_ew);
 	    cellhd->east = 180.0;
 	}
-
+*/
 	while (cellhd->east <= cellhd->west)
 	    cellhd->east += 360.0;
     }
