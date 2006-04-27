@@ -133,10 +133,10 @@ if [ $? -ne 0 ] ; then
       COLUMN_DEF="cat integer"
    else
       COLUMN_DEF=`echo "cat integer, $GIS_OPT_COLUMNS" | sed \
-	-e 's/cat integer, cat integer, /cat integer, /' \
-	-e 's/cat integer, cat INTEGER, /cat integer, /' \
-	-e 's/cat integer, cat int, /cat integer, /' \
-	-e 's/cat integer, cat INT, /cat integer, /'`
+	-e 's/cat integer, cat integer,/cat integer, /' \
+	-e 's/cat integer, cat INTEGER,/cat integer, /' \
+	-e 's/cat integer, cat int,/cat integer, /' \
+	-e 's/cat integer, cat INT,/cat integer, /'`
    fi
    echo "Creating table with columns ($COLUMN_DEF)" 1>&2
 
