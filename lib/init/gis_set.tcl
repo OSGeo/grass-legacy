@@ -556,12 +556,12 @@ proc gisSetWindow {} {
     	-width 10 \
     	-relief raised \
      	-command { 
-            if {[file exists "$database/$location/PERMANENT/WIND"] == 0} {
-                DialogGen .wrnDlg "WARNING: not a mapset" warning "Warning: This is not \
-                a valid mapset" \
+            if {[file exists "$database/$location/$mapset/WIND"] == 0} {
+                DialogGen .wrnDlg "WARNING: invalid mapset" warning "Warning: \
+		<$mapset> is not a valid mapset" \
                 0 OK;
             }
-            if { $mapset != "" && [file exists "$database/$location/PERMANENT/WIND"] != 0} {
+            if { $mapset != "" && [file exists "$database/$location/$mapset/WIND"] != 0} {
             	CheckLocation
                 puts stdout "GISDBASE='$database';"
                 puts stdout "LOCATION_NAME='$location';"
@@ -688,8 +688,6 @@ proc gisSetWindow {} {
 	.frame0.frameMS.listbox yview $curSelected
 	.frame0.frameMS.listbox select set $curSelected
     }
-    
-
 
   bind .frame0.frameDB.mid.entry <Return> {
         set new_path [%W get]
@@ -752,8 +750,8 @@ proc gisSetWindow {} {
         set mapset [%W get [%W nearest %y]]
 	.frame0.frameBUTTONS.ok configure -state normal
 	if {[file exists "$database/$location/$mapset/WIND"] == 0} {
-	    DialogGen .wrnDlg "WARNING: not a mapset" warning "Warning: This is not \
-	    a valid mapset" \
+	    DialogGen .wrnDlg "WARNING: invalid mapset" warning "Warning: \
+	    <$mapset> is not a valid mapset" \
 	    0 OK;
 	}
 	if { $mapset != "" && [file exists "$database/$location/$mapset/WIND"] != 0} {
