@@ -348,12 +348,26 @@ int main(int argc, char *argv[])
     }
 
 #ifdef __MINGW32__
-    G_debug ( 2, "execlp( \"sh\", \"sh\", %s, \"@ARGS_PARSED@\", NULL)", filename );
-    execlp( "sh", "sh", filename, "@ARGS_PARSED@", NULL);
+    {
+	/* execlp() and _spawnlp ( _P_OVERLAY,..) do not work, they return 
+	 * immediately and that breaks scripts running GRASS scripts
+	 * because they dont wait until GRASS script finished */
+	/* execlp( "sh", "sh", filename, "@ARGS_PARSED@", NULL); */
+	/* _spawnlp ( _P_OVERLAY, "sh", "sh", filename, "@ARGS_PARSED@", NULL ); */
+	int ret;
+	ret = _spawnlp ( _P_WAIT, "sh", "sh", filename, "@ARGS_PARSED@", NULL );
+	G_debug ( 1, "ret = %d", ret );
+	if ( ret == -1 ) 
+	{
+	    perror("_spawnlp() failed");
+	    return 1;
+	}
+	return ret;
+    }
 #else
     execl(filename, filename, "@ARGS_PARSED@", NULL);
-#endif
 
     perror("execl() failed");
     return 1;
+#endif
 }
