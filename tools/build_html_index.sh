@@ -232,7 +232,8 @@ do
   echo "<li><a href=\"$MODCLASS.html\">$MODCLASS commands</a></li>" >> $FILENAME
 done
 
-#extra stuff for 'nviz' and 'xganim':
+#extra stuff for 'nviz' and 'xganim' and GUIs:
+echo "<li><a href=\"d.m.html\">d.m</a> and <a href=\"gis.m.html\">gis.m</a> GIS managers</li>" >> $FILENAME
 echo "<li><a href=\"nviz.html\">nviz</a> visualization and animation tool</li>" >> $FILENAME
 echo "<li><a href=\"xganim.html\">xganim</a> tool  for animating a raster map series</li>" >> $FILENAME
 	      
