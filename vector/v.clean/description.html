@@ -5,6 +5,11 @@ The user does <em>not</em> have to run  <em><a HREF="v.build.html">v.build</a></
 
 <h2>NOTES</h2>
 
+<h3>Removing small angles between lines at nodes</h3>
+
+If the angle between 2 lines at a node is smaller than <em>threshold</em>
+the lines are broken and partially merged.
+
 <h3>What is a bridge?</h3>
 A bridge is an area type connection of an island (polygon in a polygon) to the outer
 polygon. This is topologically incorrect (but OGC Simple Features allow it). <em>v.clean</em>
