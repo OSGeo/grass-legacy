@@ -119,12 +119,13 @@ else
 fi
 
 
-echo "database = $GIS_OPT_DATABASE"
-echo "db = $db"
-echo ""
-echo "drv = $drv"
-echo "driver = $GIS_OPT_DRV"
-echo ""
+# debug:
+#echo "database = $GIS_OPT_DATABASE"
+#echo "db = $db"
+#echo ""
+#echo "drv = $drv"
+#echo "driver = $GIS_OPT_DRV"
+#echo ""
 
 #check if map contains only NULL's in current region
 LINES=`wc -l "$TMP" | awk '{print $1}'`
@@ -138,8 +139,9 @@ fi
 # calculate statistics
 echo "Calculating statistics..."
 cat $TMP | awk 'BEGIN {sum = 0.0 ; sum2 = 0.0; min = 10e10 ; max = -min}
+function abs(x){return x < 0 ? -x : x}
 (NF>0) {
-	sum += $1 ; sum2 += $1 * $1 ; N++;
+	sum += $1 ; sum2 += $1 * $1 ; sum3 += abs($1) ; N++;
         if ($1 > max) {max = $1}
         if ($1 < min) {min = $1}
        }
@@ -152,6 +154,7 @@ END{
 	print "Range:",max-min
 	print "-----"
 	print "Mean:",sum/N
+	print "Arithmetic mean of absolute values:",sum3/N
 	print "Variance:",(sum2 - sum*sum/N)/N
 	print "Standard deviation:",sqrt((sum2 - sum*sum/N)/N)
 	print "Coefficient of variation:",(sqrt((sum2 - sum*sum/N)/N))/(sqrt(sum*sum)/N)
