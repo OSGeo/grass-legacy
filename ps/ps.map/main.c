@@ -1,9 +1,21 @@
-/* Program: ps.map
-**
-** This is an enhanced PostScript version of the p.map program.
-**
-** Author: Paul W. Carlson	1992
-*/
+/****************************************************************************
+ *
+ * MODULE:       ps.map
+ * AUTHOR(S):    Paul W. Carlson	1992 (original contributor)
+ *               Radim Blazek <radim.blazek gmail.com>
+ *               Bob Covill <bcovill tekmap.ns.ca>, Huidae Cho
+ *               <grass4u gmail.com>, Glynn Clements <glynn
+ *               gclements.plus.com>, Hamish Bowman <hamish_nospam
+ *               yahoo.com>, Markus Neteler <neteler itc.it>,
+ *               Alessandro Frigeri <afrigeri unipg.it>
+ * PURPOSE:      This is an enhanced PostScript version of the p.map program
+ * COPYRIGHT:    (C) 2003-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #define MAIN
 #include <string.h>
@@ -132,7 +144,7 @@ int main(int argc,char *argv[])
     /* Print papers */
     if ( pflag->answer ) {
 	print_papers();
-	exit(0);
+	exit(EXIT_SUCCESS);
     }
     
     rotate_plot = rflag->answer;
@@ -213,7 +225,7 @@ int main(int argc,char *argv[])
 	{
 	    fprintf(stderr, "%s - ", G_program_name());
 	    perror(input_file->answer);
-	    exit(1);
+	    exit(EXIT_FAILURE);
 	}
     }
     if (map_scale->answer)
@@ -241,7 +253,7 @@ int main(int argc,char *argv[])
 	{
 	    fprintf(stderr, "%s - ", G_program_name());
 	    perror(output_file->answer);
-	    exit(1);
+	    exit(EXIT_FAILURE);
 	}
     }
     else usage(1);
@@ -713,7 +725,7 @@ int main(int argc,char *argv[])
         fflush(stdout);
     }
     unlink (ps_mask_file);
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 
@@ -721,5 +733,8 @@ int
 usage (int full)
 {
     if (full) G_usage();
-    exit(1);
+    exit(EXIT_FAILURE);
 }
+
+
+
