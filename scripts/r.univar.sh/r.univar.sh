@@ -106,9 +106,10 @@ fi
 
 # calculate statistics
 echo "Calculating statistics..."
-cat $TMP | awk 'BEGIN {sum = 0.0 ; sum2 = 0.0} 
+cat $TMP | awk 'BEGIN {sum = 0.0 ; sum2 = 0.0}
+function abs(x){return x < 0 ? -x : x}
 NR == 1{min = $1 ; max = $1}
-       {sum += $1 ; sum2 += $1 * $1 ; N++}
+       {sum += $1 ; sum2 += $1 * $1 ; sum3 += abs($1) ; N++}
        {
         if ($1 > max) {max = $1}
         if ($1 < min) {min = $1}
@@ -120,6 +121,7 @@ print "Minimum:",min
 print "Maximum:",max
 print "Range:",max-min
 print "Arithmetic mean:",sum/N
+print "Arithmetic mean of absolute values:",sum3/N
 print "Variance:",(sum2 - sum*sum/N)/N
 print "Standard deviation:",sqrt((sum2 - sum*sum/N)/N)
 print "Variation coefficient:",100*(sqrt((sum2 - sum*sum/N)/N))/(sqrt(sum*sum)/N),"%"
