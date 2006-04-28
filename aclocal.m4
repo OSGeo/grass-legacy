@@ -168,6 +168,11 @@ AC_ARG_WITH($1-libs,
 LOC_PAD([  --with-$1-libs=DIRS])[$2 library files are in DIRS])
 ])
 
+AC_DEFUN(LOC_ARG_WITH_SHARE,[
+AC_ARG_WITH($1-share,
+LOC_PAD([  --with-$1-share=DIRS])[$2 data files are in DIRS])
+])
+
 AC_DEFUN(LOC_OPTIONAL,[
 AC_MSG_CHECKING(whether to build $1)
 if test -n "$USE_$2" ; then

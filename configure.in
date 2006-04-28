@@ -233,6 +233,7 @@ LOC_ARG_WITH_LIB(glw, GLw)
 
 LOC_ARG_WITH_INC(proj, External PROJ.4)
 LOC_ARG_WITH_LIB(proj, External PROJ.4)
+LOC_ARG_WITH_SHARE(proj, External PROJ.4)
 
 LOC_ARG_WITH_INC(opendwg, openDWG)
 LOC_ARG_WITH_LIB(opendwg, openDWG)
