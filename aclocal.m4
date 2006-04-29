@@ -50,6 +50,24 @@ if test -n "$with_$1_libs"; then
 fi
 ])
 
+AC_DEFUN(LOC_CHECK_SHARE_PATH,[
+AC_MSG_CHECKING(for location of $2 data files)
+case "$with_$1_share" in
+y | ye | yes | n | no)
+        AC_MSG_ERROR([*** You must supply a directory to --with-$1-share.])
+        ;;
+esac
+AC_MSG_RESULT($with_$1_share)
+
+if test -n "$with_$1_share" ; then
+    if test -d "$with_$1_share"; then
+        $3="$with_$1_share"
+    else
+        AC_MSG_ERROR([*** $2 data directory $dir does not exist.])
+    fi
+fi
+])
+
 AC_DEFUN(LOC_CHECK_INCLUDES,[
 ac_save_cppflags="$CPPFLAGS"
 CPPFLAGS="$3 $CPPFLAGS"
@@ -126,6 +144,12 @@ int main(void) {
 CPPFLAGS=$ac_save_cppflags
 ])
 
+AC_DEFUN(LOC_CHECK_SHARE,[
+AC_CHECK_FILE($3/$1, [], ifelse($4,[],[
+    AC_MSG_ERROR([*** Unable to locate $2 data files.])
+], $4))
+])
+
 AC_DEFUN(LOC_CHECK_VERSION_INT,[
 AC_MSG_CHECKING($3 version)
 ac_save_cppflags="$CPPFLAGS"
@@ -170,7 +194,7 @@ LOC_PAD([  --with-$1-libs=DIRS])[$2 library files are in DIRS])
 
 AC_DEFUN(LOC_ARG_WITH_SHARE,[
 AC_ARG_WITH($1-share,
-LOC_PAD([  --with-$1-share=DIRS])[$2 data files are in DIRS])
+LOC_PAD([  --with-$1-share=DIR])[$2 data files are in DIR])
 ])
 
 AC_DEFUN(LOC_OPTIONAL,[

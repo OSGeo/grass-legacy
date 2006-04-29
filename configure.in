@@ -555,6 +555,7 @@ AC_SUBST(ZLIB)
 
 PROJINC=
 PROJLIB=
+PROJSHARE=
 
 # With PROJ includes directory
 
@@ -580,13 +581,13 @@ LOC_CHECK_LIB_PATH(proj,External PROJ.4,PROJLIB)
 
 LOC_CHECK_LIBS(proj,pj_get_def,External PROJ.4,$PROJLIB,PROJLIB,,,)
 
-# Define share/proj/ directory for epsg code file
-PROJSHARE=
-if test -n "$PROJINC"; then
-        PROJSHARE=/usr/share/proj
-else
-        PROJSHARE=/usr/local/share/proj
-fi
+# With PROJ share directory
+
+LOC_CHECK_SHARE_PATH(proj,External PROJ.4,PROJSHARE)
+
+LOC_CHECK_SHARE(epsg,External PROJ.4,$PROJSHARE,[
+AC_MSG_WARN([*** Unable to locate PROJ data files.])
+])
 
 AC_SUBST(PROJINC)
 AC_SUBST(PROJLIB)
