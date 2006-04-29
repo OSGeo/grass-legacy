@@ -46,7 +46,7 @@ int main (int argc, char **argv)
 
     /* if (G_parser(argc,argv)) */
     if (argc > 1 && G_parser(argc,argv))
-        exit(1);
+        exit(EXIT_FAILURE);
 
     if(latlong->answer && wgs84->answer)
 	G_fatal_error(_("Ambiguous request for lat/long ellipsoids"));
@@ -126,5 +126,5 @@ int main (int argc, char **argv)
     where_am_i(once->answer, have_spheroid, decimal->answer, wgs84->answer, dcoord->answer);
     R_close_driver();
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
