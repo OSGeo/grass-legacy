@@ -36,6 +36,7 @@ SUBDIRS = \
 	lib \
 	db \
 	display \
+	doc \
 	general \
 	gui \
 	imagery \
