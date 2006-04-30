@@ -1,13 +1,15 @@
 #include <grass/dbmi.h>
 #include "macros.h"
 
+/* Note: renamed from db_version to db_gversion to avoid name conflict
+         with Berkeley DB etc */
 /*!
  \fn 
  \brief 
  \return 
  \param 
 */
-db_version (dbDriver *driver, dbString *client_version, dbString *driver_version)
+db_gversion (dbDriver *driver, dbString *client_version, dbString *driver_version)
 
 {
     int ret_code;

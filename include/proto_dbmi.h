@@ -363,7 +363,7 @@ void        db_unset_cursor_mode      P((dbCursor *cursor ));
 void        db_unset_cursor_mode_insensitive P((dbCursor *cursor ));
 void        db_unset_cursor_mode_scroll P((dbCursor *cursor ));
 int         db_update                 P((dbCursor *cursor ));
-int         db_version                P((dbDriver *driver , dbString *client_version , dbString *driver_version ));
+int         db_gversion                P((dbDriver *driver , dbString *client_version , dbString *driver_version ));
 char *      db_whoami                 P((void ));
 void        db_zero                   P((void *s , int n ));
 void         db_zero_string            P((dbString *x ));
