@@ -92,6 +92,7 @@ int main (int argc, char **argv)
 	opt1->required    = NO ;
 	opt1->multiple    = NO ;
 	opt1->gisprompt   = "old,cell,raster" ;
+	opt1->key_desc    = "name";
 	opt1->description = _("Name of existing raster map to be displayed");
 
         opt2              = G_define_option() ;
@@ -100,6 +101,7 @@ int main (int argc, char **argv)
         opt2->required    = NO ;
         opt2->answer      = "gray" ;
         opt2->options     = D_COLOR_LIST ",none";
+	opt2->key_desc    = "color";
         opt2->description = _("Color for drawing grid, or \"none\"");
 
         opt3              = G_define_option();
@@ -108,15 +110,16 @@ int main (int argc, char **argv)
         opt3->required    = NO;
         opt3->answer      = DEFAULT_FG_COLOR;
         opt3->options     = D_COLOR_LIST;
+	opt3->key_desc    = "color";
         opt3->description = _("Color for drawing text");
-    
+
     	text_color              = G_define_flag();
     	text_color->key         = 'f';
     	text_color->description = _("Get text color from cell color value");
-    	
+
 	/* Check command line */
 	if (G_parser(argc, argv))
-		exit(-1);
+	    exit(EXIT_FAILURE);
 
 	if (R_open_driver() != 0)
 	    G_fatal_error (_("No graphics device selected"));
@@ -196,49 +199,49 @@ int main (int argc, char **argv)
 	ncols = window.cols;
 
 	if ((nrows > 75) || (ncols > 75)){
-	    fprintf (stderr,"\n");
-	    fprintf (stderr,"Current window size:\n");
-	    fprintf (stderr,"rows:    %d\n", nrows);
-	    fprintf (stderr,"columns: %d\n", ncols);
-	    fprintf (stderr,"\n");
-	    fprintf (stderr,"Your current window setting may be too large.\n");
-	    fprintf (stderr,"Cells displayed on your graphics window may be too\n");
-	    fprintf (stderr,"small for cell category number to be visible.\n\n");
-	    if(!G_yes(_("Do you wish to continue"), 0))
-		exit(0);
+	    G_warning("!!!");
+	    G_message(_("Current window size:"));
+	    G_message(_("rows:    %d"), nrows);
+	    G_message(_("columns: %d"), ncols);
+
+	    G_message(_("\nYour current window setting may be too large."
+	      " Cells displayed on your graphics window may be too"
+	      " small for cell category number to be visible."));
+	    G_message(" ");
+	}
+	if ((nrows > 200) || (ncols > 200)) {
+	    G_fatal_error(_("Aborting."));
 	}
 
 	/* resolutions */
-
 	ew_res  = window.ew_res;
 	ns_res = window.ns_res;
 
 	/* how many screen units of distance for each cell */
-
 	D_ew = (D_east - D_west) / ncols;
 	D_ns = (D_south - D_north) / nrows;
 
-	/*------------------------------------------
-    fprintf (stdout,"ew_res:  %.2f\n", window.ew_res);
-    fprintf (stdout,"ns_res:  %.2f\n", window.ns_res);
-    fprintf (stdout,"D_ew:  %f D_ns:  %f \n", D_ew, D_ns); 
-    fprintf (stdout,"nrows:    %d\n", nrows);
-    fprintf (stdout,"ncols:    %d\n", ncols);
-    fprintf (stdout,"t:  %d\n", t);
-    fprintf (stdout,"b:  %d\n", b);
-    fprintf (stdout,"l:  %d\n", l);
-    fprintf (stdout,"r:  %d\n", r);
-    fprintf (stdout,"U_west:	%f\n", U_west);
-    fprintf (stdout,"U_east:	%f\n", U_east);
-    fprintf (stdout,"U_south:	%f\n", U_south);
-    fprintf (stdout,"U_north:	%f\n", U_north);
-    fprintf (stdout,"D_west:	%f\n", D_west);
-    fprintf (stdout,"D_east:	%f\n", D_east);
-    fprintf (stdout,"D_south:	%f\n", D_south);
-    fprintf (stdout,"D_north:	%f\n", D_north);
-    fprintf (stdout,"U_to_D_xconv:	%f\n", U_to_D_xconv);
-    fprintf (stdout,"U_to_D_yconv:	%f\n", U_to_D_yconv);
---------------------------------------------------------*/
+	/*-- DEBUG ----------------------------------------
+	fprintf (stdout,"ew_res:  %.2f\n", window.ew_res);
+	fprintf (stdout,"ns_res:  %.2f\n", window.ns_res);
+	fprintf (stdout,"D_ew:  %f D_ns:  %f \n", D_ew, D_ns); 
+	fprintf (stdout,"nrows:    %d\n", nrows);
+	fprintf (stdout,"ncols:    %d\n", ncols);
+	fprintf (stdout,"t:  %d\n", t);
+	fprintf (stdout,"b:  %d\n", b);
+	fprintf (stdout,"l:  %d\n", l);
+	fprintf (stdout,"r:  %d\n", r);
+	fprintf (stdout,"U_west:    %f\n", U_west);
+	fprintf (stdout,"U_east:    %f\n", U_east);
+	fprintf (stdout,"U_south:   %f\n", U_south);
+	fprintf (stdout,"U_north:   %f\n", U_north);
+	fprintf (stdout,"D_west:    %f\n", D_west);
+	fprintf (stdout,"D_east:    %f\n", D_east);
+	fprintf (stdout,"D_south:   %f\n", D_south);
+	fprintf (stdout,"D_north:   %f\n", D_north);
+	fprintf (stdout,"U_to_D_xconv:      %f\n", U_to_D_xconv);
+	fprintf (stdout,"U_to_D_yconv:      %f\n", U_to_D_yconv);
+	--------------------------------------------------------*/
 
 	if(grid_color > 0) { /* ie not "none" */
 	    /* Set grid color */
@@ -303,13 +306,12 @@ int main (int argc, char **argv)
 	D_add_to_list( G_recreate_command() );
 	R_close_driver();
 
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
-
 /* --- end of main --- */
 
-int 
-draw_number (double number, RASTER_MAP_TYPE map_type)
+
+int draw_number (double number, RASTER_MAP_TYPE map_type)
 {
 	extern double D_ew, D_ns;
 	extern int D_x, D_y;
