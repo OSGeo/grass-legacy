@@ -281,7 +281,7 @@ proc gisSetWindow {} {
 
     # Window manager configurations
 
-    wm geometry . +100+100
+    wm geometry . +100+10
     wm title . "GRASS $GRASSVERSION Startup"
 
     global database
