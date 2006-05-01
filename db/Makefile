@@ -8,7 +8,8 @@ SUBDIRS = \
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-default: subdirs
+default: subdirs htmldir
 
 clean: cleansubdirs
 
+PGM = databaseintro

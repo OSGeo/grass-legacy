@@ -60,6 +60,7 @@ GPL'ed), image processing and geographic information system (GIS).
   <li><a href="rasterintro.html">2D raster map processing</a></li>
   <li><a href="raster3dintro.html">3D raster map (voxel) processing</a></li>
   <li><a href="imageryintro.html">Image processing</a></li>
+  <li><a href="databaseintro.html">Database management</a></li>
   <li><a href="vectorintro.html">Vector map processing and network analysis</a></li>
   <li><a href="projectionintro.html">Projections and spatial transformations</a></li>
   <li><a href="sql.html">SQL support</a></li>
