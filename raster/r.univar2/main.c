@@ -100,11 +100,6 @@ int main(int argc, char *argv[]) {
 
     raster_row = G_calloc(G_window_cols()+1, G_raster_size(map_type));
 
-    if( ! (quiet->answer || shell_style->answer) ) {
-	fprintf(stderr, "\nProcessing .. ");
-	fflush(stderr);
-    }
-
     for(row = 0; row<rows; row++) {
 	if (G_get_raster_row(fd, raster_row, row, map_type) < 0)
 	    G_fatal_error("reading map");
@@ -195,7 +190,7 @@ int main(int argc, char *argv[]) {
 
 
     if( ! (quiet->answer || shell_style->answer) ) {
-	fprintf(stdout, "\ntotal null and non-null cells: %d\n", rows * cols);
+	fprintf(stdout, "total null and non-null cells: %d\n", rows * cols);
 	fprintf(stdout, "total null cells: %d\n\n", rows * cols - n);
 	fprintf(stdout, "Of the non-null cells:\n----------------------\n");
     }
