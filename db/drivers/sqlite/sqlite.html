@@ -45,13 +45,13 @@ eval `g.gisenv`
 sqlitebrowser "$GISDBASE/$LOCATION_NAME/$MAPSET"/sqlite.db
 </pre></div>
 
+<!-- doesnt work yet, why?:
 
 <H2>Adding an unique ID column</H2>
 
 Import vector module require an unique ID column which can
 be generated as follows for a SQLite table:
 
-<!-- doesnt work yet, why?:
 <div class="code"><pre>
 echo "
  ALTER TABLE mytable ADD ID integer;

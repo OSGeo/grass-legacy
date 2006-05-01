@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+ <title>Database management in GRASS GIS</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="Author" content="Markus Neteler/GRASS Development Team">
+ <link rel="stylesheet" href="grassdocs.css" type="text/css">
+</head>
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif" alt="_\|/_ GRASS logo"><hr align=center size=6 noshade>
+
+<h2>Database management in GRASS GIS</h2>
+
+<h3>Attribute management in general</h3>
+
+GRASS can be linked to one or many database management systems (DBMS).
+The <em>db.*</em> set of commands provides basic SQL support for
+attribute management, while the <em>v.db.*</em> set of commands operates
+on the vector map (see <a href="vectorintro.html">Vector introduction</a>).
+
+<h3>Available drivers</h3>
+
+Available drivers are listed in <a href="sql.html">SQL support in GRASS GIS</a>.
+<p>
+<b>Notes</b>:<br>
+The default DBF driver provides only very limited SQL
+support (as DBF is not an SQL DB) while the other DBMS backends (such
+as PostgreSQL, MySQL etc) provide full SQL support since the SQL
+commands are sent directly to the DBMI.
+
+<h3>SQL commands</h3>
+
+SQL commands can be directly executed with
+<a href="db.execute.html">db.execute</a>, <a href="db.select.html">db.select</a>
+and the other db.* modules.
+
+<h3>Managing the default settings</h3>
+ 
+Per default vector map attributes are stored in DBF table files. This default
+definition can be modified with <a href="db.connect.html">db.connect</a>. If an
+external DBMS is used, <a href="db.login.html">db.login</a> may be required.
+
+<h3>Creating a database</h3>
+
+Specific commands are explained on the individual driver pages (these
+pages are only available if driver was compiled in this installation):
+
+<ul>
+<li>DBF: see <a href="dbf.html">DBF</a> page</li>
+<li>mySQL: <a href="mysql.html">mySQL</a> page</li>
+<li>PostgreSQL: <a href="pg.html">PostgreSQL</a> page</li>
+<li>ODBC: <a href="odbc.html">ODBC</a> page</li>
+<li>SQLite: <a href="sqlite.html">SQLite</a> page</li>
+</ul>
+
+<h3>Database Schema</h3>
+
+At time schema support only works for PostgreSQL connections. Default schema
+can be set with <a href="db.connect.html">db.connect</a>. Note that the default 
+schema is used by all db.* modules.
+<p>
+<a href="db.tables.html">db.tables</a> returns 'schema.table' if schemas are
+available in the database.
+
+
+<h3>See also</h3>
+
+<ul>
+<li><a href="vectorintro.html">Introduction to GRASS vector map processing</a></li>
+<li><a href="rasterintro.html">Introduction to GRASS raster map processing</a></li>
+</ul>
+
+<HR>
+<BR>
+<a href="index.html">Main index</a> - <a href="database.html">database index</a> - <a href="full_index.html">full index</a>
+</body>
+</html>
