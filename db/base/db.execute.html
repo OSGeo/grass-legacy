@@ -2,17 +2,19 @@
 
 <em>db.execute</em> allows the user to execute SQL statements.  
 
-<h2>NOTE</h2>
+<h2>NOTES</h2>
 
 If parameters for database connection are already set with 
 <a HREF="db.connect.html">db.connect</a>, they are taken as default values and
-do not need to be spcified each time.
+do not need to be specified each time.
 <P>
 If you have a large number of SQL commands to process, it is much much faster
 to place all the SQL statements into a text file and use <em>db.execute</em>'s
 <b>input</b> file parameter than it is to process each statement individually
 in a loop.
-
+<p>
+Please see the individual <a href="sql.html">sql driver</a> pages for how to create
+a new database.
 
 <h2>EXAMPLES</h2>
 
