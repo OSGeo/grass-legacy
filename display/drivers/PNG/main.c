@@ -29,8 +29,8 @@ int main(int argc, char **argv)
 	drv.Polyline_rel	= NULL;
 	drv.Polygon_abs		= NULL;
 	drv.Polygon_rel		= NULL;
-	drv.RGB_set_colors	= NULL;
-	drv.RGB_raster		= NULL;
+	drv.RGB_set_colors	= PNG_RGB_set_colors;
+	drv.RGB_raster		= PNG_RGB_raster;
 	drv.Raster_int		= PNG_Raster_int;
 	drv.Respond		= PNG_Respond;
 	drv.Work_stream		= NULL;

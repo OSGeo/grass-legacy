@@ -18,6 +18,7 @@ OBJS =  \
 	Graph_close.o\
 	Graph_set.o\
 	Line_width.o\
+	Raster_RGB.o\
 	Raster_int.o\
 	Respond.o\
 	main.o\

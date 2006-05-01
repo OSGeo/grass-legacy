@@ -42,3 +42,5 @@ extern void PNG_draw_line(int,int,int,int);
 extern void PNG_draw_point(int,int);
 extern int PNG_get_table_type(void);
 extern int PNG_lookup_color(int, int, int);
+extern void PNG_RGB_set_colors(const unsigned char *, const unsigned char *, const unsigned char *);
+extern void PNG_RGB_raster(int, int,const unsigned char *, const unsigned char *, const unsigned char *,const unsigned char *);
