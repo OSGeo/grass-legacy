@@ -584,6 +584,9 @@ LOC_CHECK_LIBS(proj,pj_get_def,External PROJ.4,$PROJLIB,PROJLIB,,,)
 # With PROJ share directory
 
 LOC_CHECK_SHARE_PATH(proj,External PROJ.4,PROJSHARE)
+if test -z "$PROJSHARE" ; then
+    AC_MSG_WARN([*** External PROJ.4 directory not specified])
+fi
 
 LOC_CHECK_SHARE(epsg,External PROJ.4,$PROJSHARE,[
 AC_MSG_WARN([*** Unable to locate PROJ data files.])
