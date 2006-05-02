@@ -8,6 +8,7 @@ When submitting SHELL SCRIPTS to GRASS CVS repositiory,
 please take care of following rules:
 
 [ see SUBMITTING for C code hints ]
+[ see SUBMITTING_TCLTK for tcl and tk hints ]
 
 0.  Instructions for the GRASS script parser can be found in the g.parser 
     module's help page.
@@ -142,27 +143,9 @@ please take care of following rules:
 11. Send solely informational output to stderr, not stdout.
 	echo "Done." 1>&2
 
-12. Use "GRASS_TCLSH" and "GRASS_WISH" environment variables instead of
-    "tclsh" and "wish" at the start of Tcl/Tk scripts. This allows users to
-    override the default names, so that developers don't need worry about the
-    shell names.
+12. For consistency, use README rather than README.txt for any README files.
 
-    Tcl script:
-
-    	#!/bin/sh
-	# the next line restarts using tclsh \
-	exec $GRASS_TCLSH "$0" "$@"
-
-
-    Tk script:
-
-    	#!/bin/sh
-	# the next line restarts using wish \
-	exec $GRASS_WISH "$0" "$@"
-
-13. For consistency, use README rather than README.txt for any README files.
-
-14. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
+13. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
     You can re-check before submission with 'cvs diff':
 
     Be sure to create unified ("diff -u") format. "Plain"
@@ -174,13 +157,13 @@ please take care of following rules:
     "cvs diff -u display/d.vect/main.c"; that way, the diff will
     include the pathname rather than just "main.c".
 
-15. Tell the other developers about the new code using the following e-mail:
+14. Tell the other developers about the new code using the following e-mail:
     grass5@grass.itc.it
  
     To subscribe to this mailing list, see
     http://grass.itc.it/devel/index.php
 
-16. In case of questions feel free to contact the developers at the above
+15. In case of questions feel free to contact the developers at the above
     mailing list.
     http://grass.itc.it/devel/index.php#submission
 
