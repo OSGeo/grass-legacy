@@ -1,0 +1,342 @@
+#!/bin/sh
+
+############################################################################
+#
+# MODULE:       r.in.wms for GRASS 6
+# AUTHOR(S):    Cedric Shock (cedricgrass AT shockfamily.net)
+# PURPOSE:      To import data from web mapping servers
+# COPYRIGHT:    (C) 2006 by Cedric Shock
+#
+#               This program is free software under the GNU General Public
+#               License (>=v2). Read the file COPYING that comes with GRASS
+#               for details.
+#
+#############################################################################
+
+#%Module
+#%  description: Downloads and imports data from WMS servers
+#%End
+#%flag
+#% key: d
+#% description: Skip to downloading (to resume downloads faster)
+#% guisection: Download
+#%end
+#%flag
+#% key: o
+#% description: Don't request transparent data.
+#% guisection: Request
+#%end
+#%flag
+#% key: c
+#% description: Clean existing data out of download directory.
+#% guisection: Download
+#%end
+#%flag
+#% key: k
+#% description: Keep band numbers instead of using band color names.
+#% guisection: Import
+#%end
+#%flag
+#% key: p
+#% description: Don't reproject the data, just patch it.
+#% guisection: Import
+#%end
+#%option
+#% key: output
+#% type: string
+#% description: Name for resultant raster map
+#% required : yes
+#% guisection: Import
+#%end
+#%option
+#% key: mapserver
+#% type: string
+#% description: Mapserver to request data from
+#% required: yes
+#% guisection: Request
+#%end
+#%option
+#% key: layers
+#% type: string
+#% description: Layers to request from map server
+#% multiple: yes
+#% required: no
+#% guisection: Request
+#%end
+#%option
+#% key: styles
+#% type: string
+#% description: Styles to request from map server
+#% multiple: yes
+#% required: no
+#% guisection: Request
+#%end
+#%option
+#% key: srs
+#% type: string
+#% description: Source projection to request from server
+#% answer:EPSG:4326
+#% guisection: Request
+#%end
+#%option
+#% key: format
+#% type: string
+#% description: Image format requested from the server
+#% options: geotiff,tiff,jpeg,gif,png
+#% answer: geotiff
+#% required: yes
+#% guisection: Request
+#%end
+#%option
+#% key: wmsquery
+#% type:string
+#% description: Addition query options for server
+#% answer: version=1.1.1
+#% guisection: Request
+#%end
+#%option
+#% key: maxcols
+#% type: integer
+#% description: Maximum columns to request at a time
+#% answer: 1024
+#% required : yes
+#% guisection: Request
+#%end
+#%option
+#% key: maxrows
+#% type: integer
+#% description: Maximum rows to request at a time
+#% answer: 1024
+#% required : yes
+#% guisection: Request
+#%end
+#%option
+#% key: tileoptions
+#% type: string
+#% description: Additional options for r.tileset
+#% required : no
+#% guisection: Request
+#%end
+#%option
+#% key: region
+#% type: string
+#% description: Named region to request data for. Current region used if omitted.
+#% required : no
+#% guisection: Request
+#%end
+#%option
+#% key: folder
+#% type: string
+#% description: Folder to save downloaded data to
+#% required : no
+#% guisection: Download
+#%end
+#%option
+#% key: wgetoptions
+#% type: string
+#% description: Additional options for wget
+#% answer: -c -t 5 --user-agent=MSIE5.5 
+#% required : no
+#% guisection: Download
+#%end
+#%option
+#% key: method
+#% type: string
+#% description: Reprojection method to use
+#% options:nearest,bilinear,cubic,cubicspline
+#% answer:nearest
+#% required: yes
+#% guisection: Import
+#%end
+#%option
+#% key: v
+#% type: integer
+#% description: Verbosity level
+#% answer: 1
+#%end
+
+if  [ -z $GISBASE ] ; then
+    echo "You must be in GRASS GIS to run this program." 1>&2
+ exit 1
+fi
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec g.parser "$0" "$@"
+fi
+
+#### setup temporary file
+TMP="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+    echo "ERROR: unable to create temporary files" 1>&2
+    exit 1
+fi
+
+# check if we have wget
+if [ ! -x "`which wget`" ] ; then
+    echo "wget is required, please install it first" 2>&1
+    exit 1
+fi
+
+# check if we have bc -> used in wms.request and wms.download
+if [ ! -x "`which bc`" ] ; then
+    echo "bc is required, please install it first" 2>&1
+    exit 1
+fi
+
+# check if we have sed
+if [ ! -x "`which sed`" ] ; then
+    echo "sed is required, please install it first" 2>&1
+    exit 1
+fi
+
+# check if we have gdalwarp -> used in r.in.gdalwarp
+if [ $GIS_FLAG_p -ne 1 ] ; then
+    if [ ! -x "`which gdalwarp`" ] ; then
+        echo "gdalwarp is required, please install it first" 2>&1
+        exit 1
+    fi
+fi
+
+# Remember the intial field seperator
+defaultIFS=$IFS
+
+# Remember the previous path
+prevPATH=$PATH
+PATH=$PATH:${GISBASE}/etc/r.in.wms/
+export PATH
+
+#####################
+# name:     message
+# purpose:  displays messages to the user
+# usage: message level text
+
+message () {
+	if [ $1 -lt $GIS_OPT_v ] ; then
+		shift
+		echo "$@"  
+	fi
+}
+
+#######################################################################
+# name:     exitprocedure
+# purpose:  removes all temporary files
+#
+exitprocedure()
+{
+	message 0 "User break!"
+	PATH=$prevPATH
+	export PATH
+	rm -f ${TMP}*
+	exit 1
+}
+trap "exitprocedure" 2 3 15
+
+BC="bc"
+BCARGS="-l"
+
+#######################################################################
+# name:     addargument
+# purpose:  make arguments for a sub command
+#
+addargument() {
+	if [ -z "$3" ] ; then
+		message 1 "Skipping argument for $2"
+ 	else
+		eval "$1=\"\$$1 '$2=$3'\""
+	fi
+}
+
+#######################################################################
+# name:     addflag
+# purpose:  make arguments for a sub command
+#
+addflag() {
+	if [ $3 -eq 1 ] ; then
+		eval "$1=\"\$$1 -$2\""
+	fi
+}
+
+#####################3
+# name: calculate
+# purpose: perform calculations
+# usage: varname "expr"
+
+calculate() {
+	message 3 "$2"
+	c_tmp=`echo "$2" | $BC $BCARGS`
+	eval $1=$c_tmp
+}
+
+REQUEST=""
+DOWNLOAD=""
+GDALWARP=""
+
+eval `g.gisenv`
+
+#Job number one: pick a folder
+if [ -z "${GIS_OPT_folder}" ] ; then
+	GIS_OPT_folder=${GISDBASE}/wms_download
+fi
+
+PREFIX=${GIS_OPT_output}
+REQUESTFILE=${GIS_OPT_folder}/${PREFIX}_${GIS_OPT_region}.wget
+
+addflag REQUEST o ${GIS_FLAG_o}
+addflag REQUEST c ${GIS_FLAG_c}
+addflag REQUEST p ${GIS_FLAG_p}
+addargument REQUEST folder "${GIS_OPT_folder}"
+addargument REQUEST prefix ${PREFIX}
+addargument REQUEST region ${GIS_OPT_region}
+addargument REQUEST mapserver ${GIS_OPT_mapserver}
+addargument REQUEST layers ${GIS_OPT_layers}
+addargument REQUEST styles ${GIS_OPT_styles}
+addargument REQUEST srs ${GIS_OPT_srs}
+addargument REQUEST format ${GIS_OPT_format}
+addargument REQUEST wmsquery ${GIS_OPT_wmsquery}
+addargument REQUEST maxcols ${GIS_OPT_maxcols}
+addargument REQUEST maxrows ${GIS_OPT_maxrows}
+addargument REQUEST tileoptions "${GIS_OPT_tileoptions}"
+
+if [ $GIS_FLAG_d -eq 0 ] ; then
+	message 0 "wms.request $REQUEST"
+	eval "wms.request $REQUEST"
+fi
+
+addargument DOWNLOAD requestfile "${REQUESTFILE}"
+addargument DOWNLOAD wgetoptions "${GIS_OPT_wgetoptions}"
+
+message 0 "wms.download $DOWNLOAD"
+eval "wms.download $DOWNLOAD"
+
+# Job 2: make list of files
+
+CONTENTS=`cat "${REQUESTFILE}"`
+
+FILES=""
+COUNT=0
+for line in $CONTENTS ; do
+	eval "$line"
+	if [ $COUNT -eq 0 ] ; then
+		FILES="$OUTPUT_FILE"
+	else
+		FILES="$FILES,$OUTPUT_FILE"
+	fi
+	COUNT=`expr $COUNT + 1`
+done
+
+addflag GDALWARP c 1
+addflag GDALWARP k ${GIS_FLAG_k}
+addflag GDALWARP p ${GIS_FLAG_p}
+addargument GDALWARP input "$FILES"
+addargument GDALWARP output ${GIS_OPT_output}
+addargument GDALWARP method ${GIS_OPT_method}
+addargument GDALWARP s_srs ${GIS_OPT_srs}
+
+message 0 "r.in.gdalwarp $GDALWARP"
+eval "r.in.gdalwarp $GDALWARP"
+
+
+
+# Clean up:
+rm -f ${TMP}*
+

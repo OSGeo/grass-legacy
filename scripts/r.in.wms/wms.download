@@ -1,0 +1,172 @@
+#!/bin/sh
+
+############################################################################
+#
+# MODULE:       wms.download for GRASS 6
+# AUTHOR(S):    Cedric Shock (cedric AT shockfamily.net)
+#               Based on r.in.onearth by Soeren Gebbert and Markus Neteler
+#               And on r.in.wms by Jachym Cepicky
+# PURPOSE:      Downloads data from servers
+# COPYRIGHT:    (C) 2005, 2006 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#               License (>=v2). Read the file COPYING that comes with GRASS
+#               for details.
+#
+#############################################################################
+
+#%Module
+#%  description: Downloads data from servers.
+#%End
+#%option
+#% key: requestfile
+#% type: string
+#% description: File that lists the tiles to download
+#% required : yes
+#%end
+#%option
+#% key: wgetoptions
+#% type: string
+#% description: Additional options for wget
+#% answer: -c -t 5 --user-agent=MSIE5.5 
+#% required : no
+#%end
+#%option
+#% key: v
+#% type: integer
+#% description: Verbosity level
+#% answer: 1
+#%end
+
+if  [ -z $GISBASE ] ; then
+    echo "You must be in GRASS GIS to run this program." 1>&2
+ exit 1
+fi
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec g.parser "$0" "$@"
+fi
+
+#### setup temporary file
+TMP="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+    echo "ERROR: unable to create temporary files" 1>&2
+    exit 1
+fi
+
+# Remember the intial field seperator
+defaultIFS=$IFS
+
+#####################
+# name:     message
+# purpose:  displays messages to the user
+# usage: message level text
+
+message () {
+	if [ $1 -lt $GIS_OPT_v ] ; then
+		shift
+		echo "$@"  
+	fi
+}
+
+#######################################################################
+# name:     exitprocedure
+# purpose:  removes all temporary files
+#
+exitprocedure()
+{
+	message 0 "User break!"
+	rm -f ${TMP}*
+	exit 1
+}
+trap "exitprocedure" 2 3 15
+
+BC="bc"
+BCARGS="-l"
+
+#####################3
+# name: calculate
+# purpose: perform calculations
+# usage: varname "expr"
+
+calculate() {
+	message 3 "$2"
+	c_tmp=`echo "$2" | $BC $BCARGS`
+	eval $1=$c_tmp
+}
+
+################################################################
+# Download the tiles!!
+GetTiles() {
+  message 0 "###############################"
+  message 0 "Downloading tiles"
+  message 0 "###############################"
+
+  CONTENTS=`cat "${REQUESTFILE}"`
+
+  NUMBER_OF_TILES=0
+  for line in $CONTENTS ; do
+	echo "$line"
+	eval "$line"
+	emptyness=`file "$OUTPUT_FILE" | grep empty$`
+	if [ -f "$OUTPUT_FILE" ] && [ -z "$emptyness" ] ; then
+	  message 0 "Tile already downloaded"
+	else
+	  GetData
+	  if [ $? -ne 0 ] ; then
+            NUMBER_OF_TILES=`expr $NUMBER_OF_TILES + 1`
+          fi
+	fi
+  done
+
+  if [ $NUMBER_OF_TILES -ne 0 ] ; then
+    message 0 "$NUMBER_OF_TILES failed to download"
+    return 1
+  else
+    message 0 "#################################"
+    message 0 "All tiles downloaded successfully"
+    message 0 "#################################"
+    return 0
+  fi
+}
+
+##################################
+#Get the data from the WMS server
+GetData() {
+   message 0 " "
+   message 0 " "
+   message 0 "************** DOWNLOAD DATA ****************"
+   message 0 "Requesting Data from ${SERVER}:"
+   message 0 $STRING
+   #download the File from the Server
+   wget ${WGET_OPTIONS}  --post-data=${STRING} ${SERVER} -O ${OUTPUT_FILE} 
+   if [ $? -ne 0 ]; then
+     message 0 " "
+     message 0 "!--------------ERROR-------------------!"
+     message 0 "wget failed downloading the data"
+     message 0 " "
+     return 1
+   fi
+   if [ -f "${OUTPUT_FILE}" ]; then 
+     return 0
+   else
+     message 0 " "
+     message 0 "!--------------ERROR-------------------!"
+     message 0 "wget was not able to download the data"
+     message 0 " "
+     return 1
+   fi
+   return 0
+}
+
+# Initialize variables:
+#wget has many options
+WGET_OPTIONS=${GIS_OPT_wgetoptions}
+REQUESTFILE=${GIS_OPT_requestfile}
+
+#Get all the data
+GetTiles
+
+# Clean up:
+rm -f ${TMP}*
+
