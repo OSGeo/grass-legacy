@@ -21,31 +21,31 @@ proc GmToolBar2::create { tb } {
 
     # add scale and north arrow
     $bbox1 add -image [image create photo -file "$iconpath/module-d.barscale.gif"] -command "GmTree::add barscale" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
-        -highlightbackground $bgcolor \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 \
+        -highlightbackground $bgcolor -activebackground $bgcolor \
         -helptext [G_msg "Scalebar and north arrow"]
 
     # add grid and lines
     $bbox1 add -image [image create photo -file "$iconpath/module-d.grid.gif"] -command "GmTree::add gridline"\
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
-        -highlightbackground $bgcolor \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 \
+        -highlightbackground $bgcolor -activebackground $bgcolor \
         -helptext [G_msg "Overlay grids and lines"]
 
 	# add command
     $bbox1 add -image [image create photo -file "$iconpath/gui-cmd.gif"] \
         -command "GmTree::add cmd" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
-        -highlightbackground $bgcolor \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -highlightbackground $bgcolor -activebackground $bgcolor \
         -helptext [G_msg "Add command layer"]
 
     # add frame (frames not functional in GIS Manager currently)
 #    $bbox1 add -image [image create photo -file "$iconpath/module-d.frame.gif"] -command "GmTree::add dframe"\
-#        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
+#        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 \
 #        -helptext [G_msg "Create or select display frame"]
 
     pack $bbox1 -side left -anchor w
 
-    set sep1 [Separator $toolbar.sep1 -orient vertical -background aquamarine2 ]
+    set sep1 [Separator $toolbar.sep1 -orient vertical -background $bgcolor ]
     pack $sep1 -side left -fill y -padx 5 -anchor w
 
     # LAYER MANAGEMENT
@@ -53,25 +53,25 @@ proc GmToolBar2::create { tb } {
 
     # add group
     $bbox2 add -image [image create photo -file "$iconpath/gui-group.gif"] \
-        -command "GmTree::add group" -borderwidth 2\
-        -highlightthickness 0 -takefocus 0 -relief raised \
-        -highlightbackground $bgcolor \
+        -command "GmTree::add group" -borderwidth 1\
+        -highlightthickness 0 -takefocus 0 -relief link \
+        -highlightbackground $bgcolor -activebackground $bgcolor \
         -helptext [G_msg "Add group"]
 
     $bbox2 add -image [image create photo -file "$iconpath/edit-copy.gif"] \
         -command "GmTree::duplicate" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
-        -highlightbackground $bgcolor \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -highlightbackground $bgcolor -activebackground $bgcolor \
         -helptext [G_msg "Duplicate Layer"]    
 
     $bbox2 add -image [image create photo -file "$iconpath/edit-cut.gif"] -command \
-    	"GmTree::delete" -highlightthickness 0 -takefocus 0 -relief raised \
-        -highlightbackground $bgcolor \
-    	-borderwidth 2 -helptext [G_msg "Delete layer"]
+    	"GmTree::delete" -highlightthickness 0 -takefocus 0 -relief link \
+        -highlightbackground $bgcolor -activebackground $bgcolor \
+    	-borderwidth 1 -helptext [G_msg "Delete layer"]
        
     pack $bbox2 -side left -anchor w
 
-    set sep2 [Separator $toolbar.sep2 -orient vertical -background aquamarine2 ]
+    set sep2 [Separator $toolbar.sep2 -orient vertical -background $bgcolor ]
     pack $sep2 -side left -fill y -padx 5 -anchor w
 
  # LAYER FILES
@@ -79,25 +79,25 @@ proc GmToolBar2::create { tb } {
 
      $bbox3 add -image [image create photo -file "$iconpath/file-new.gif"] \
      	-command "GmTree::new" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
-        -highlightbackground $bgcolor \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 \
+        -highlightbackground $bgcolor -activebackground $bgcolor \
         -helptext [G_msg "Create new workspace file (erase current workspace settings first)"]
 
     $bbox3 add -image [image create photo -file "$iconpath/file-open.gif"] \
     	-command "Gm::OpenFileBox"\
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
-        -highlightbackground $bgcolor \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 \
+        -highlightbackground $bgcolor -activebackground $bgcolor \
         -helptext [G_msg "Open existing workspace file"]
 
     $bbox3 add -image [image create photo -file "$iconpath/file-save.gif"]  \
     	-command "Gm::SaveFileBox"\
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
-        -highlightbackground $bgcolor \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -highlightbackground $bgcolor -activebackground $bgcolor \
         -helptext [G_msg "Save workspace file"]
 
     pack $bbox3 -side left -anchor w
     
-    set sep3 [Separator $toolbar.sep3 -orient vertical -background aquamarine2 ]
+    set sep3 [Separator $toolbar.sep3 -orient vertical -background $bgcolor ]
     pack $sep3 -side left -fill y -padx 5 -anchor w
 
     # 3D AND ANIMATION
@@ -106,28 +106,28 @@ proc GmToolBar2::create { tb } {
     # nviz
     $bbox4 add -image [image create photo -file "$iconpath/module-nviz.gif"] \
         -command "Gm::nviz" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2 \
-        -highlightbackground $bgcolor \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 \
+        -highlightbackground $bgcolor -activebackground $bgcolor \
         -helptext [G_msg "NVIZ - n dimensional visualization"]
     
     # d.nviz
     $bbox4 add -image [image create photo -file "$iconpath/module-d.nviz.gif"] \
         -command "Gm::fly" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2\
-        -highlightbackground $bgcolor \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1\
+        -highlightbackground $bgcolor -activebackground $bgcolor \
         -helptext [G_msg "Fly through path for NVIZ"]
 
     # xganim
     $bbox4 add -image [image create photo -file "$iconpath/module-xganim.gif"] \
         -command "Gm::xganim" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2\
-        -highlightbackground $bgcolor \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1\
+        -highlightbackground $bgcolor -activebackground $bgcolor \
         -helptext [G_msg "Animate raster map series"]
 
 
     pack $bbox4 -side left -anchor w
 
-    set sep4 [Separator $toolbar.sep4 -orient vertical -background aquamarine2 ]
+    set sep4 [Separator $toolbar.sep4 -orient vertical -background $bgcolor ]
     pack $sep4 -side left -fill y -padx 5 -anchor w
 
        # DIGITIZE
@@ -136,8 +136,8 @@ proc GmToolBar2::create { tb } {
     #digitize
     $bbox5 add -image [image create photo -file "$iconpath/module-v.digit.gif"] \
         -command "GmTree::vedit" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 2  \
-        -highlightbackground $bgcolor \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -highlightbackground $bgcolor -activebackground $bgcolor \
         -helptext [G_msg "Digitize map (select or create new map first)"]
 
     pack $bbox5 -side left -anchor w
