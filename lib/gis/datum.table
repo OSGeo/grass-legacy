@@ -82,4 +82,6 @@ ngo48    "NGO_1948"	  modif_bessel  dx=99999    dy=99999    dz=99999
 nzgd49   "New_Zealand_Geodetic_Datum_1949"       international dx=54.4  dy=-20.1  dz=183.1
 nzgd2k   "New_Zealand_Geodetic_Datum_2000"       grs80    dx=0   dy=0    dz=0
 # http://earth-info.nga.mil/GandG/coordsys/onlinedatum/CountrySouthAmericanTable.html (accuracy +/-5m), also: EPSG SQL DB V6.4/V6.8
-cai      "Campo_Inchauspe_1969" international dx=-148 dy=136 dz=90"
+cai      "Campo_Inchauspe_1969" international dx=-148 dy=136 dz=90
+# http://earth-info.nga.mil/GandG/coordsys/onlinedatum/CountryAfricaTable.html#NSD
+nsd      "North_Sahara_1959"       clark80 dx=-186 dy=-93 dz=310
