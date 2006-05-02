@@ -6,16 +6,24 @@
 
 By default data is downloaded to $GISDBASE/wms_download. This can be changed by setting the folder= option when using <EM>r.in.wms</EM>.
 
-To understand the data you are getting it is necessary to look at the capabilities of the WMS server. This should be available via a capabilities request. This is an <a href="http://wms.jpl.nasa.gov/wms.cgi?request=GetCapabilities">example capabilites request to NASA's OnEarth server</a>.
+To understand the data you are getting it is necessary to look at the capabilities of the WMS server. This should be available via a capabilities request. This is an <a href="http://wms.jpl.nasa.gov/wms.cgi?request=GetCapabilities">example capabilities request to NASA's OnEarth server</a>.
 
 <H2>EXAMPLES</H2>
 
 <dl>
 
 <dt><a href="http://wms.jpl.nasa.gov/wms.cgi?request=GetCapabilities">http://wms.jpl.nasa.gov/wms.cgi?request=GetCapabilities</a>
-<dd>A Capabilities request. This is where you should start. It tells you what data is offered, the projections it is in, where to find meta data, resolutions and scales for data, etc.
+<dd>A Capabilities request. This is where you should start. It tells you what data is offered, the projections it is in, where to find meta data, resolutions, scales, and bounds for data, etc.
 
 <p>
+
+<dt><div class="code"><pre>
+r.in.wms mapserver=http://wms.jpl.nasa.gov/wms.cgi -l
+</pre></div
+<dd>List the layers available from the NASA OnEarth server. The output is more reliable if xml2 is installed.
+
+<p>
+
 
 <dt><div class="code"><pre>
 g.region res=30
@@ -48,7 +56,7 @@ r.in.wms output=elevation_feet mapserver=http://wms.jpl.nasa.gov/wms.cgi layers=
 <dt><div class="code"><pre>
 r.in.wms output=elevation_feet mapserver=http://wms.jpl.nasa.gov/wms.cgi layers=us_ned styles=feet_real -o region=panhandle-90ft -d method=cubic
 </pre></div>
-<dd>-d skips ahead to downloading. This could be used to try downlading again (if some files failed last time) or to import the data differently. Since downloaded files are remembered those already received successfully are not re-requested. In this case we are reimporting the data using the cubic interpolation method instead of nearest neighbor.
+<dd>-d skips ahead to downloading. This could be used to try downloading again (if some files failed last time) or to import the data differently. Since downloaded files are remembered those already received successfully are not re-requested. In this case we are reimporting the data using the cubic interpolation method instead of nearest neighbor.
 
 <p>
 
@@ -61,7 +69,7 @@ g.region save=drg-resolution
 <dt><div class="code"><pre>
 r.in.wms output=terraserver-drg mapserver=http://terraserver.microsoft.com/ogcmap6.ashx layers=DRG region=drg-resolution format=jpeg srs=EPSG:26910
 </pre></div>
-<dd>Downloads digital raster graphics from Microsoft terraserver. Note that srs will need to be changed to a projection that is appropriate for your region.
+<dd>Downloads digital raster graphics from Microsoft TerraServer. Note that srs will need to be changed to a projection that is appropriate for your region.
 
 </dl>
 
@@ -80,10 +88,17 @@ r.in.wms output=terraserver-drg mapserver=http://terraserver.microsoft.com/ogcma
 <dt>sed, grep
 <dd>Unix string processing and search programs
 
+<dt>gdalwarp
+<dd>A reprojection tool, needed only if data is projected into this location.
+
+<dt>xml2
+<dd>An xml parser. Enables more accurate listing of layers on the server.
+
 </dl>
 
+
 <H2>SEE ALSO</H2>
-<a href="r.in.onearth.html">r.in.onearth</a>, <a href="r.tileset.html">r.tileset</a>, <a href="r.in.gdal.html">r.in.gdal</a>, <a href="r.patch.html">r.patch</a>
+<a href="r.tileset.html">r.tileset</a>, <a href="r.in.gdal.html">r.in.gdal</a>, <a href="r.patch.html">r.patch</a>
 
 
 <H2>AUTHORS</H2>
