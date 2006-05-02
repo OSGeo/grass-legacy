@@ -21,6 +21,9 @@ global execom
             {command "MAT-File (v.4) array (Matlab or Octave)" {} "r.in.mat" {} -command { execute r.in.mat }}
             {command "SRTM hgt files" {} "r.in.srtm" {} -command { execute r.in.srtm }}
             {command "Terra ASTER HDF files" {} "r.in.aster" {} -command { execute r.in.aster }}
+            {separator}
+            {command "Web Mapping Server" {} "r.in.wms" {} -command { execute r.in.wms }}
+            {command "NASA OnEarth Server" {} "r.in.onearth" {} -command { execute r.in.onearth }}
         }}
         {cascad "Vector map" {} "" $tmenu {			
             {command "Various formats using OGR" {} "v.in.ogr" {} -command { execute v.in.ogr }}
@@ -154,6 +157,7 @@ global execom
         {command "Support file creation and maintenance" {} "r.support" {} -command {execute r.support.sh }}
         {separator}
         {command "Reproject raster from other location" {} "r.proj" {} -command {execute r.proj }}
+        {command "Generate tiling for other projection" {} "r.tileset" {} -command {execute r.tileset }}
     }}
     {cascad "Manage map colors" {} "" $tmenu {			
         {command "Modify color table" {} "d.colors.sh" {} -command {execute d.colors.sh }}
@@ -318,7 +322,11 @@ global execom
 			{command "Query with mouse (form mode, editing enabled)" {} "d.what.vect -ef" {} -command {spawn d.what.vect -ef}}
 			{separator}
 			{command "Create vector buffers" {} "v.buffer" {} -command {execute v.buffer }}
-			{command "Locate nearest features to points or centroids" {} "v.distance" {} -command {execute v.distance }}
+			{cascad "Neighborhood analysis" {} "" $tmenu {			
+			 {command "Locate nearest features to points or centroids" {} "v.distance" {} -command {execute v.distance }}
+			 {command "Generate areas closest to points" {} "v.voronoi" {} -command {execute v.voronoi }}
+			 {command "Generate minimal triangulation" {} "v.delauney" {} -command {execute v.delaunay }}
+			}}
 			{cascad "Network analysis" {} "" $tmenu {			
 			 {command "Allocate subnets" {} "v.net.alloc" {} -command {execute v.net.alloc }}
 			 {command "Network maintenance" {} "v.net" {} -command {execute v.net }}

@@ -76,6 +76,9 @@ if { [file exists $dirName] && [file isdirectory $dirName] } {
             {command "SPOT vegetation NDVI data sets" {} "i.in.spotvgt" {} -command { execute i.in.spotvgt }}
             {command "SRTM hgt files" {} "r.in.srtm" {} -command { execute r.in.srtm }}
             {command "Terra ASTER HDF files" {} "r.in.aster" {} -command { execute r.in.aster }}
+            {separator}
+            {command "Web Mapping Server" {} "r.in.wms" {} -command { execute r.in.wms }}
+            {command "NASA OnEarth Server" {} "r.in.onearth" {} -command { execute r.in.onearth }}
         }}
         {cascad "Vector map" {} "" $tmenu {			
             {command "Various formats using OGR" {} "v.in.ogr" {} -command { execute v.in.ogr }}
@@ -209,6 +212,7 @@ if { [file exists $dirName] && [file isdirectory $dirName] } {
         {command "Support file creation and maintenance" {} "r.support" {} -command {execute r.support.sh }}
         {separator}
         {command "Reproject raster from other location" {} "r.proj" {} -command {execute r.proj }}
+        {command "Generate tiling for other projection" {} "r.tileset" {} -command {execute r.tileset }}
     }}
     {cascad "Manage map colors" {} "" $tmenu {			
         {command "Set colors to predefined color tables" {} "r.colors" {} -command {execute r.colors }}
@@ -375,7 +379,11 @@ if { [file exists $dirName] && [file isdirectory $dirName] } {
 			{command "Query by map features" {} " v.select" {} -command {execute v.select }}
 			{separator}
 			{command "Create vector buffers" {} "v.buffer" {} -command {execute v.buffer }}
-			{command "Locate nearest features to points or centroids" {} "v.distance" {} -command {execute v.distance }}
+			{cascad "Neighborhood analysis" {} "" $tmenu {			
+			 {command "Locate nearest features to points or centroids" {} "v.distance" {} -command {execute v.distance }}
+			 {command "Generate areas closest to points" {} "v.voronoi" {} -command {execute v.voronoi }}
+			 {command "Generate minimal triangulation" {} "v.delauney" {} -command {execute v.delaunay }}
+			}}
 			{cascad "Network analysis" {} "" $tmenu {			
 			 {command "Allocate subnets" {} "v.net.alloc" {} -command {execute v.net.alloc }}
 			 {command "Network maintenance" {} "v.net" {} -command {execute v.net }}
