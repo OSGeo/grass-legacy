@@ -36,6 +36,7 @@ SUBDIRS = \
 	r.in.srtm \
 	r.in.wms \
 	r.mapcalculator \
+	r.mask \
 	r.out.gdal \
 	r.plane \
 	r.reclass.area \
