@@ -1,7 +1,10 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h> 
+#include <sys/time.h>
+#include <sys/types.h>
 #include <tcl.h>
 #include <tk.h>
 #include <locale.h>
@@ -270,7 +273,22 @@ main ( int argc, char *argv[] )
     child_recv = stdin;
     child_send = stdout;
 
-    while ( 1 ) {
+    while ( 1 ) 
+    {
+        fd_set waitset;
+        struct timeval tv;
+
+        tv.tv_sec = 0;
+        tv.tv_usec = 200;
+
+        FD_ZERO(&waitset);
+        FD_SET( fileno(stdin), &waitset);
+
+        if ( select(FD_SETSIZE, &waitset, NULL, NULL, &tv) < 0)
+        {
+             perror("form: select");
+        }
+
 	ret = read ( fileno(stdin) , &(buf[0]), 1);
 	fcntl ( fileno(child_recv), F_SETFL, O_NONBLOCK); /* Don't wait if pipe is empty */
 	if ( ret == 0 ) break; /* Pipe was closed by parent -> quit */
