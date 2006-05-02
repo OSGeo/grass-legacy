@@ -1,0 +1,93 @@
+<H2>DESCRIPTION</H2>
+
+<EM>r.in.wms</EM>  handles all of downloading and importing raster data from an <a href="http://www.opengeospatial.org/specs/?page=specs">OpenGIS</a> "WMS" web mapping server. It need only be told the desired data to collect (bounds and resolution) via a region, the server to get the data from, and the layer or layers to get. It downloads the data in tiles, reprojects it, imports it, and patches it back together.
+
+<H2>NOTES</H2>
+
+By default data is downloaded to $GISDBASE/wms_download. This can be changed by setting the folder= option when using <EM>r.in.wms</EM>.
+
+To understand the data you are getting it is necessary to look at the capabilities of the WMS server. This should be available via a capabilities request. This is an <a href="http://wms.jpl.nasa.gov/wms.cgi?request=GetCapabilities">example capabilites request to NASA's OnEarth server</a>.
+
+<H2>EXAMPLES</H2>
+
+<dl>
+
+<dt><a href="http://wms.jpl.nasa.gov/wms.cgi?request=GetCapabilities">http://wms.jpl.nasa.gov/wms.cgi?request=GetCapabilities</a>
+<dd>A Capabilities request. This is where you should start. It tells you what data is offered, the projections it is in, where to find meta data, resolutions and scales for data, etc.
+
+<p>
+
+<dt><div class="code"><pre>
+g.region res=30
+</pre></div>
+<dd>Set the resolution to 30 (assuming you're in meters)
+
+<dt><div class="code"><pre>
+r.in.wms output=elevation_meters mapserver=http://wms.jpl.nasa.gov/wms.cgi layers=us_ned styles=real -o
+</pre></div>
+<dd>Download real number meter elevation from OnEarth to cover the current region. Uses -o for opaque to get smaller download.
+
+<p>
+
+
+<dt><div class="code"><pre>
+g.region res=90
+</pre></div>
+<dd>Set the resolution to 90 (assuming you're in feet)
+
+<dt><div class="code"><pre>
+g.region save=panhandle-90ft
+</pre></div>
+<dd>Save this region with a name; this makes resuming downloads possible or rather easier.
+
+<dt><div class="code"><pre>
+r.in.wms output=elevation_feet mapserver=http://wms.jpl.nasa.gov/wms.cgi layers=us_ned styles=feet_real -o region=panhandle-90ft
+</pre></div>
+<dd>Download real number feet elevation from OnEarth to cover the current region. Uses -o for opaque to get smaller download. Using a named region lets us resume later easily.
+
+<dt><div class="code"><pre>
+r.in.wms output=elevation_feet mapserver=http://wms.jpl.nasa.gov/wms.cgi layers=us_ned styles=feet_real -o region=panhandle-90ft -d method=cubic
+</pre></div>
+<dd>-d skips ahead to downloading. This could be used to try downlading again (if some files failed last time) or to import the data differently. Since downloaded files are remembered those already received successfully are not re-requested. In this case we are reimporting the data using the cubic interpolation method instead of nearest neighbor.
+
+<p>
+
+<dt><div class="code"><pre>
+g.region res=1.2
+g.region save=drg-resolution
+</pre></div>
+<dd>Set the resolution to 1.2 meters for DRGs. Their native resolution is 2.4 meters, so this is some pretty hefty oversampling.
+
+<dt><div class="code"><pre>
+r.in.wms output=terraserver-drg mapserver=http://terraserver.microsoft.com/ogcmap6.ashx layers=DRG region=drg-resolution format=jpeg srs=EPSG:26910
+</pre></div>
+<dd>Downloads digital raster graphics from Microsoft terraserver. Note that srs will need to be changed to a projection that is appropriate for your region.
+
+</dl>
+
+
+<H2>REQUIRED PROGRAMS</H2>
+
+<EM>r.in.wms</EM> requires the following programs to work:
+
+<dl>
+<dt>wget
+<dd>An http download program
+
+<dt>bc
+<dd>A calculator program
+
+<dt>sed, grep
+<dd>Unix string processing and search programs
+
+</dl>
+
+<H2>SEE ALSO</H2>
+<a href="r.in.onearth.html">r.in.onearth</a>, <a href="r.tileset.html">r.tileset</a>, <a href="r.in.gdal.html">r.in.gdal</a>, <a href="r.patch.html">r.patch</a>
+
+
+<H2>AUTHORS</H2>
+
+Soeren Gebbert, Jachym Cepicky, and Cedric Shock
+
+<p><i>Last changed: $Date$</i>

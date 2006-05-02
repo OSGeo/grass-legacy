@@ -1,0 +1,295 @@
+#!/bin/sh
+
+############################################################################
+#
+# MODULE:       r.in.gdalwarp for GRASS 6
+# AUTHOR(S):    Cedric Shock
+# PURPOSE:      To warp and import data
+# COPYRIGHT:    (C) 2006 by Cedric Shock
+#
+#               This program is free software under the GNU General Public
+#               License (>=v2). Read the file COPYING that comes with GRASS
+#               for details.
+#
+#############################################################################
+
+# Requires:
+#   gdalwarp
+
+#%Module
+#%  description: Warps and imports GDAL supported raster file complete with correct NULL values
+#%End
+#%flag
+#% key: p
+#% description: Don't reproject the data, just patch it.
+#%end
+#%flag
+#% key: e
+#% description: Extend location extents based on new dataset
+#%end
+#%flag
+#% key: c
+#% description: Make color composite image if possible
+#%end
+#%flag
+#% key: k
+#% description: Keep band numbers instead of using band color names
+#%end
+#%option
+#% key: input
+#% type: string
+#% description: Raster file or files to be imported. If multiple files are specified they will be patched together.
+#% multiple: yes
+#% required : yes
+#%end
+#%option
+#% key: output
+#% type: string
+#% description: Name for resultant raster map. Each band will be name output.bandname
+#% required : yes
+#%end
+#%option
+#% key: s_srs
+#% type: string
+#% description: Source projection in gdalwarp format
+#% required : yes
+#%end
+#%option
+#% key: method
+#% type: string
+#% description: Reprojection method to use
+#% options:nearest,bilinear,cubic,cubicspline
+#% answer:nearest
+#% required: yes
+#%end
+#%option
+#% key: warpoptions
+#% type: string
+#% description: Additional options for gdalwarp
+#% required : no
+#%end
+
+
+if  [ -z $GISBASE ] ; then
+    echo "You must be in GRASS GIS to run this program." 1>&2
+ exit 1
+fi
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec g.parser "$0" "$@"
+fi
+
+#### setup temporary file
+TMP="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+    echo "ERROR: unable to create temporary files" 1>&2
+    exit 1
+fi
+
+#######################################################################
+# name:     exitprocedure
+# purpose:  removes all temporary files
+#
+exitprocedure()
+{
+	echo "User break!" 1>&2
+	rm -f ${TMP}*
+	exit 1
+}
+trap "exitprocedure" 2 3 15
+
+# check if we have gdalwarp
+if [ $GIS_FLAG_p -ne 1 ] ; then
+    if [ ! -x "`which gdalwarp`" ] ; then
+        echo "gdalwarp is required, please install it first" 2>&1
+        exit 1
+    fi
+fi
+
+defaultIFS=$IFS
+
+# warpimport file map
+# Warps and imports a single file as a named map
+# This is NOT a function
+# It is a subroutine that makes extensive use of globals
+warpimport () {
+	FILE=$1
+	MAP=$2
+	WARPFILE=${TMP}warped.geotiff
+	TMPMAPNAME=${2}_tmp
+
+	# Warp it and convert it to geotiff with alpha band to be sure we get nulls:
+	echo "gdalwarp -s_srs \"$GIS_OPT_s_srs\" -t_srs \"`g.proj -wf`\" \"$FILE\" \"$WARPFILE\" -co \"ALPHA=yes\" -dstalpha" $GIS_OPT_warpoptions $METHOD 1>&2
+	gdalwarp -s_srs "$GIS_OPT_s_srs" -t_srs "`g.proj -wf`" "$FILE" "$WARPFILE" -co "ALPHA=yes" -dstalpha $GIS_OPT_warpoptions $METHOD
+
+	#Import it into a temporary map:
+	r.in.gdal $FLAGS input="$WARPFILE" output="$TMPMAPNAME"
+
+	# Remove temporary file
+	rm -f "$WARPFILE"
+
+	#Get a list of channels:
+	PATTERN="$TMPMAPNAME*"
+	CHANNEL_LIST=`g.mlist type=rast pattern=$PATTERN`
+	# Get a list of suffixes:
+	CHANNEL_SUFFIXES=`echo "$CHANNEL_LIST" | sed "s/^${TMPMAPNAME}/sfx=/"`
+
+	# Add to the list of all suffixes:
+	SUFFIXES=`echo "$SUFFIXES
+$CHANNEL_SUFFIXES" | sort -u`
+
+	IFS=$defaultIFS
+	for SUFFIX in $CHANNEL_SUFFIXES ; do
+		eval "$SUFFIX"
+		LAST_SUFFIX=$sfx
+	done
+
+	# Find the alpha layer
+	if [ $GIS_FLAG_k -eq 1 ] ; then
+		ALPHALAYER=${TMPMAPNAME}${LAST_SUFFIX}
+	else
+		ALPHALAYER=${TMPMAPNAME}.alpha
+	fi
+
+	# Calculate the new maps:
+	for SUFFIX in $CHANNEL_SUFFIXES ; do
+		eval "$SUFFIX"
+		# Use alpha channel for nulls:
+		r.mapcalculator amap=$ALPHALAYER bmap=${TMPMAPNAME}${sfx} formula="if(A,B,null())" outfile=${MAP}${sfx}
+
+		# Copy the color tables:
+		r.colors map=${MAP}${sfx} rast=${TMPMAPNAME}${sfx}
+
+		# Make patch lists:
+		sfx2=`echo $sfx | sed "s/\./_/"`
+		# This is a hack to make the patch lists empty:
+		if [ $TITER -eq 0 ] ; then
+			eval "PATCHES_$sfx2=\"\""
+		fi
+		eval "PATCHES_$sfx2=\${PATCHES_$sfx2},${MAP}${sfx}"
+	done
+
+	# Remove the old channels:
+	CHANNEL_LIST_COMMA=`echo $CHANNEL_LIST | sed "s/ /,/g"`
+	g.remove rast=$CHANNEL_LIST_COMMA
+}
+
+nowarpimport () {
+	FILE=$1
+	MAP=$2
+
+	r.in.gdal -o $FLAGS input="$FILE" output="$MAP"
+
+	#Get a list of channels:
+	PATTERN="$MAP*"
+	CHANNEL_LIST=`g.mlist type=rast pattern=$PATTERN`
+	# Get a list of suffixes:
+	CHANNEL_SUFFIXES=`echo "$CHANNEL_LIST" | sed "s/^${MAP}/sfx=/"`
+
+	# Add to the list of all suffixes:
+	SUFFIXES=`echo "$SUFFIXES
+$CHANNEL_SUFFIXES" | sort -u`
+
+	IFS=$defaultIFS
+	for SUFFIX in $CHANNEL_SUFFIXES ; do
+		eval "$SUFFIX"
+		# Make patch lists:
+		sfx2=`echo $sfx | sed "s/\./_/"`
+		# This is a hack to make the patch lists empty:
+		if [ $TITER -eq 0 ] ; then
+			eval "PATCHES_$sfx2=\"\""
+		fi
+		eval "PATCHES_$sfx2=\${PATCHES_$sfx2},${MAP}${sfx}"
+	done
+}
+
+
+# Compute flags for r.in.gdal
+FLAGS=""
+if [ $GIS_FLAG_e -eq 1 ] ; then
+	FLAGS="${FLAGS} -e"
+fi
+if [ $GIS_FLAG_k -eq 1 ] ; then
+	FLAGS="${FLAGS} -k"
+fi
+
+# And options for gdalwarp:
+
+case "${GIS_OPT_method}" in
+    "nearest") METHOD="-rn"
+               ;;
+    "bilinear") METHOD="-rb"
+               ;;
+    "cubic") METHOD="-rc"
+               ;;
+    "cubicspline") METHOD="-rcs"
+               ;;
+esac
+
+IFS=,
+SUFFIXES=""
+# We need a way to make sure patches are intialized correctly
+TITER=0
+# Import all the tiles:
+for input in $GIS_OPT_input ; do
+	IFS=$defaultIFS
+	TMPTILENAME=${GIS_OPT_output}_tile_$TITER
+	if [ -f "$input" ] ; then
+		if [ $GIS_FLAG_p -eq 1 ] ; then
+			nowarpimport $input $TMPTILENAME
+		else
+			warpimport $input $TMPTILENAME
+		fi
+		((TITER++))
+	else
+		echo "Missing input $input" 1>&2
+	fi
+done
+NUM_TILES=$TITER
+
+# If there's more than one tile patch them together, otherwise just rename that tile.
+if [ $NUM_TILES -eq 1 ] ; then
+	for SUFFIX in $CHANNEL_SUFFIXES ; do
+		eval "$SUFFIX"
+		#Rename tile 0 to be the output
+		g.rename rast=${GIS_OPT_output}_tile_0${sfx},${GIS_OPT_output}${sfx}
+	done
+else
+	# Patch together each channel:
+	IFS=$defaultIFS
+	for SUFFIX in $SUFFIXES ; do
+		eval "$SUFFIX"
+		sfx2=`echo $sfx | sed "s/\./_/"`
+		eval "PATCHES=\${PATCHES_$sfx2}"
+		# Patch these together (using nulls only):
+		echo "Patching [$sfx] channel" 1>&2
+		r.patch input=$PATCHES output=${GIS_OPT_output}${sfx}
+		# Remove the temporary patches we made
+		g.remove rast=$PATCHES
+	done
+fi
+
+# Set up color counter
+COLORS=0
+
+IFS=$defaultIFS
+for SUFFIX in $SUFFIXES ; do
+	eval "$SUFFIX"
+	# Keep track of colors
+	if [ -z $sfx ] ; then
+		# There's already a no suffix, can't make colors
+		COLORS=4 # Can only go up from here ;)
+	fi
+	if [ "$sfx" = ".red" ] || [ "$sfx" = ".green" ] || [ "$sfx" = ".blue" ]; then
+		((COLORS++))
+	fi
+done
+
+# Make a composite image if asked for and colors exist
+if [ $COLORS -eq 3 ] && [ $GIS_FLAG_c -eq 1 ] ; then
+	echo "Building Color Image" 1>&2
+	r.composite red=${GIS_OPT_output}.red green=${GIS_OPT_output}.green blue=${GIS_OPT_output}.blue output=${GIS_OPT_output}
+fi
+
+# Clean up:
+rm -f ${TMP}*
