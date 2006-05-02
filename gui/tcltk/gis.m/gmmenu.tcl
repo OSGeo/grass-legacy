@@ -380,8 +380,8 @@ if { [file exists $dirName] && [file isdirectory $dirName] } {
 			{command "Create vector buffers" {} "v.buffer" {} -command {execute v.buffer }}
 			{cascad "Neighborhood analysis" {} "" $tmenu {			
 			 {command "Locate nearest features to points or centroids" {} "v.distance" {} -command {execute v.distance }}
-			 {command "Generate areas closest to points" {} "v.voronoi" {} -command {execute v.voronoi }}
-			 {command "Generate minimal triangulation" {} "v.delauney" {} -command {execute v.delaunay }}
+			 {command "Generate Thiessen polygons around points (Voronoi diagram)" {} "v.voronoi" {} -command {execute v.voronoi }}
+			 {command "Connect points to create Delaunay triangles" {} "v.delauney" {} -command {execute v.delaunay }}
 			}}
 			{cascad "Network analysis" {} "" $tmenu {			
 			 {command "Allocate subnets" {} "v.net.alloc" {} -command {execute v.net.alloc }}
