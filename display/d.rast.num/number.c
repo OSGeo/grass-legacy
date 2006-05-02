@@ -357,7 +357,6 @@ int draw_number (double number, RASTER_MAP_TYPE map_type)
     */
 	R_move_abs((int) (D_x+((float) D_ew/2)- ((float)(tr-tl)/2)),(int)(D_y+D_ns*0.7)) ;
 	R_text(no);
-	R_flush();
 
 	return 0;
 }
