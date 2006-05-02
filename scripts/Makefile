@@ -33,13 +33,16 @@ SUBDIRS = \
 	r.blend \
 	r.fillnulls \
 	r.in.aster \
+	r.in.onearth \
 	r.in.srtm \
+	r.in.wms \
 	r.mapcalculator \
 	r.out.gdal \
 	r.plane \
 	r.reclass.area \
 	r.regression.line \
 	r.shaded.relief \
+	r.tileset \
 	r.univar.sh \
 	v.build.all \
 	v.convert.all \
