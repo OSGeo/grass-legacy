@@ -23,7 +23,6 @@ global execom
             {command "Terra ASTER HDF files" {} "r.in.aster" {} -command { execute r.in.aster }}
             {separator}
             {command "Web Mapping Server" {} "r.in.wms" {} -command { execute r.in.wms }}
-            {command "NASA OnEarth Server" {} "r.in.onearth" {} -command { execute r.in.onearth }}
         }}
         {cascad "Vector map" {} "" $tmenu {			
             {command "Various formats using OGR" {} "v.in.ogr" {} -command { execute v.in.ogr }}

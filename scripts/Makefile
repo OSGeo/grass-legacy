@@ -33,7 +33,6 @@ SUBDIRS = \
 	r.blend \
 	r.fillnulls \
 	r.in.aster \
-	r.in.onearth \
 	r.in.srtm \
 	r.in.wms \
 	r.mapcalculator \
