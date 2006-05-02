@@ -1,0 +1,213 @@
+#!/bin/sh
+#############################################################################
+# Download and import satellite images direct from the                      #
+# NASA onearth WMS server into GRASS.                                       #
+# written by Soeren Gebbert 11/2005 soerengebbert AT gmx de                 #
+# and Markus Neteler                                                        #
+#                                                                           #
+# COPYRIGHT:	(C) 2005 by the GRASS Development Team                      #
+#                                                                           #
+#		This program is free software under the GNU General Public  #
+#		License (>=v2). Read the file COPYING that comes with GRASS #
+#		for details.                                                #
+#                                                                           #
+#############################################################################
+
+#%Module
+#% description: Download and import satellite images from the NASA onearth WMS server into GRASS, this is a wrapper for r.in.wms.
+#%End
+#%option
+#% key: output
+# gisprompt: new,cell,raster
+#% type: string
+#% description: Output raster map name prefix
+#% required : yes
+#%end
+#%flag
+#%  key: l
+#%  description: Download and Import WMS Global Mosaic, a High Resolution, Global Coverage, Landsat TM 7 mosaic.
+#%end
+#%flag
+#%  key: s
+#%  description: Download and Import the radar reflectance images produced by the SRTM mission.
+#%end
+#%flag
+#%  key: b
+#%  description: Download and Import the Blue Marble Next Generation layer, one for each month of the year. 
+#%end
+#%flag
+#%  key: t
+#%  description: Download and Import the composite of data produced by the MODIS Rapid Response System, from data collected yesterday by the MODIS/Terra.
+#%end
+#%flag
+#%  key: a
+#%  description: Download and Import the composite of data produced by the MODIS Rapid Response System, from data collected yesterday by the MODIS/Aqua.
+#%end
+#%option
+#% key: tmband
+#% type: string
+#% description: NASA Landsat TM bands
+#% options:  Red,Green,Blue,IR1,IR2,IR3,ThL,ThH,Pan,visual,pseudo 
+#% answer: visual
+#% required : no
+#%end
+#%option
+#% key: srtmband
+#% type: string
+#% description: Radar reflectance bands
+#% options:  default,ss1,ss2,ss3,ss4,all 
+#% answer: default
+#% required : no
+#%end
+#%option
+#% key: month
+#% type: string
+#% description: Blue Marble Next Generation layer
+#% options:  Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec 
+#% answer: Jan
+#% required : no
+#%end
+#%option
+#% key: time
+#% type: string
+#% description: The datum of creation for Aqua or Terra satellite images
+#% answer: 2005-3-24    
+#% required : no
+#%end
+#%option
+#% key: maxcols
+#% type: integer
+#% description: maximum number of cols per tile 
+#% answer: 4096
+#% required : no
+#%end
+#%option
+#% key: maxrows
+#% type: integer
+#% description: maximum number of rows per tile 
+#% answer: 4096
+#% required : no
+#%end
+
+
+#Set up important vars first
+SRC="EPSG:4326" #This is the Projection LatLong wgs84
+FORMAT="geotiff" #GeoTiff import for r.in.gdal
+NASASERVER="http://wms.jpl.nasa.gov/wms.cgi" #this server may change
+IMPORT=0 #0 is true
+GLOBAL_MOSAIC_LAYER="global_mosaic_base" #Thats the NASA WMS Global Mosaic database
+SRTM_MAG_LAYER="srtm_mag" #Thats the NASA srtm_mag database
+BMNG_LAYER="BMNG" #Thats the Blue Marble Next Generation database
+DAILY_TERRA_LAYER="daily_terra" #Thats the NASA daily terra database
+DAILY_AQUA_LAYER="daily_aqua" #Thats the NASA daily aqua database
+
+#Only run if started in GRASS
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi
+
+#Parse the arguments
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec g.parser "$0" "$@"
+fi
+
+#Get the Data and import them
+#import every choice that can be made
+OUTPUT_STRING="output=${GIS_OPT_output}"
+MAPSERVER_STRING="mapserver=${NASASERVER}"
+MAXROWS_STRING="maxrows=${GIS_OPT_maxrows}"
+MAXCOLS_STRING="maxcols=${GIS_OPT_maxcols}"
+SRC_STRING="srs=${SRC}"
+FORMAT_STRING="format=${FORMAT}"
+LAYER_STRING=""
+STYLE_STRING=""
+FLAG="-cd"
+
+if [ $GIS_FLAG_l -eq 1 ] ; then
+LAYER=${GLOBAL_MOSAIC_LAYER}
+STYLE=${GIS_OPT_tmband}
+TYPE="LandsatTM"
+echo " "
+echo "======================================================="
+echo "Will download and import ${TYPE} Data with band ${STYLE}"
+echo "======================================================="
+LAYER_STRING="layer=${LAYER}"
+STYLE_STRING="style=${STYLE}"
+OUTPUT_STRING="output=${GIS_OPT_output}_${TYPE}"
+r.in.wms ${FLAGS} ${OUTPUT_STRING} ${MAPSERVER_STRING}  ${LAYER_STRING} ${STYLE_STRING}  ${MAXROWS_STRING} ${MAXCOLS_STRING} ${SRC_STRING} ${FORMAT_STRING}
+echo " "
+echo " "
+echo "Created map ${GIS_OPT_output}_${TYPE}"
+fi
+
+if [ $GIS_FLAG_s -eq 1 ] ; then
+LAYER=${SRTM_MAG_LAYER}
+STYLE=${GIS_OPT_srtmband}
+TYPE="SRTM"
+echo " "
+echo "======================================================="
+echo "Will download and import ${TYPE} Data with band ${STYLE}"
+echo "======================================================="
+LAYER_STRING="layer=${LAYER}"
+STYLE_STRING="style=${STYLE}"
+OUTPUT_STRING="output=${GIS_OPT_output}_${TYPE}"
+r.in.wms ${FLAGS} ${OUTPUT_STRING} ${MAPSERVER_STRING}  ${LAYER_STRING} ${STYLE_STRING}  ${MAXROWS_STRING} ${MAXCOLS_STRING} ${SRC_STRING} ${FORMAT_STRING}
+echo " "
+echo " "
+echo "Created map ${GIS_OPT_output}_${TYPE}"
+fi
+
+if [ $GIS_FLAG_b -eq 1 ] ; then
+LAYER=${BMNG_LAYER}
+STYLE=${GIS_OPT_month}
+TYPE="BMNG"
+echo " "
+echo "======================================================="
+echo "Will download and import ${TYPE} Data of month ${STYLE}"
+echo "======================================================="
+LAYER_STRING="layer=${LAYER}"
+STYLE_STRING="style=${STYLE}"
+OUTPUT_STRING="output=${GIS_OPT_output}_${TYPE}"
+r.in.wms ${FLAGS} ${OUTPUT_STRING} ${MAPSERVER_STRING}  ${LAYER_STRING} ${STYLE_STRING}  ${MAXROWS_STRING} ${MAXCOLS_STRING} ${SRC_STRING} ${FORMAT_STRING}
+echo " "
+echo " "
+echo "Created map ${GIS_OPT_output}_${TYPE}"
+fi
+
+if [ $GIS_FLAG_t -eq 1 ] ; then
+LAYER=${DAILY_TERRA_LAYER}
+TIME="&time=${GIS_OPT_time}"
+STYLE=""
+TYPE="Daily_Terra"
+echo " "
+echo "======================================================="
+echo "Will download and import ${TYPE} Data"
+echo "======================================================="
+LAYER_STRING="layer=${LAYER}"
+STYLE_STRING="style=${STYLE}"
+OUTPUT_STRING="output=${GIS_OPT_output}_${TYPE}"
+r.in.wms ${FLAGS} ${OUTPUT_STRING} ${MAPSERVER_STRING}  ${LAYER_STRING} ${STYLE_STRING}  ${MAXROWS_STRING} ${MAXCOLS_STRING} ${SRC_STRING} ${FORMAT_STRING}
+echo " "
+echo " "
+echo "Created map ${GIS_OPT_output}_${TYPE}"
+fi
+
+if [ $GIS_FLAG_a -eq 1 ] ; then
+LAYER=${DAILY_AQUA_LAYER}
+TIME="&time=${GIS_OPT_time}"
+STYLE=""
+TYPE="Daily_Aqua"
+echo " "
+echo "======================================================="
+echo "Will download and import ${TYPE} Data"
+echo "======================================================="
+LAYER_STRING="layer=${LAYER}"
+STYLE_STRING="style=${STYLE}"
+OUTPUT_STRING="output=${GIS_OPT_output}_${TYPE}"
+r.in.wms ${FLAGS} ${OUTPUT_STRING} ${MAPSERVER_STRING}  ${LAYER_STRING} ${STYLE_STRING}  ${MAXROWS_STRING} ${MAXCOLS_STRING ${SRC_STRING} ${FORMAT_STRING}}
+echo " "
+echo " "
+echo "Created map ${GIS_OPT_output}_${TYPE}"
+fi
+
