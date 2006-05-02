@@ -47,7 +47,7 @@ main (int argc, char **argv)
     struct Map_info Map;
     struct GModule *module;
     struct Option *Vectfile, *Typopt, *Fieldopt, *Colopt;
-    struct Option *Labelfile, *Space, *FontSize;
+    struct Option *Labelfile, *Space, *FontSize, *Rotation;
     struct Flag   *Along_flag, *Curl_flag;
 
     struct field_info *fi;
@@ -89,6 +89,7 @@ main (int argc, char **argv)
     Labelfile->description = _("Name for new paint-label file");
     Labelfile->type = TYPE_STRING;
     Labelfile->required = YES;
+    Labelfile->key_desc = "name";
 
     Xoffset = G_define_option();
     Xoffset->key = "xoffset";
@@ -112,7 +113,7 @@ main (int argc, char **argv)
 
     Font = G_define_option();
     Font->key = "font";
-    Font->description = "Font";
+    Font->description = _("Font name");
     Font->type = TYPE_STRING;
     Font->answer = "standard";
 
@@ -141,6 +142,15 @@ main (int argc, char **argv)
     Color->type = TYPE_STRING;
     Color->answer = "black";
     Color->options = "aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
+
+    Rotation = G_define_option();
+    Rotation->key = "rotation";
+    Rotation->description = _("Rotation angle (degrees counter-clockwise from East)");
+    Rotation->type = TYPE_DOUBLE;
+    Rotation->required = NO;
+    Rotation->options = "0-360";
+    Rotation->answer = "0";
+    Rotation->key_desc = "angle";
 
     Width = G_define_option();
     Width->key = "width";
@@ -182,8 +192,11 @@ main (int argc, char **argv)
     Opaque->type = TYPE_STRING;
     Opaque->answer = "yes";
     Opaque->options = "yes,no";
+    Opaque->key_desc = "yes|no";
 
-    if (G_parser (argc, argv ) ) exit (-1 );
+
+    if (G_parser (argc, argv))
+	exit (EXIT_FAILURE);
 
     if(Curl_flag->answer) Along_flag->answer = 1;
 
@@ -197,6 +210,7 @@ main (int argc, char **argv)
 
     size = atof (Size->answer);
     space = size;  /* default: set spacing according to letter size (map units) */
+    rotate = atof (Rotation->answer);
 
     if(FontSize->answer) {
 	fontsize = atoi(FontSize->answer);
@@ -300,11 +314,11 @@ main (int argc, char **argv)
 	linlength = Vect_line_length ( Points );
 	
 	if ( ltype & GV_POINTS ) {
-	    print_label (labels, Points->x[0], Points->y[0], 0.0, txt);
+	    print_label (labels, Points->x[0], Points->y[0], rotate, txt);
 	} else if ( !Along_flag->answer ) { /* Line, but not along */
 	    /* get centre */
             Vect_point_on_line ( Points, linlength/2, &x, &y, NULL, NULL, NULL);
-	    print_label (labels, x, y, 0.0, txt);
+	    print_label (labels, x, y, rotate, txt);
 	} else { /* Along line */
 
 	    /* find best orientation (most letters by bottom to down side */
@@ -367,9 +381,9 @@ main (int argc, char **argv)
     db_close_database_shutdown_driver ( driver );
     fclose (labels);
 
-    fprintf (stderr, "Labeled %d lines.\n", cnt);
+    G_message( _("Labeled %d lines."), cnt);
 
-    exit (0);
+    exit (EXIT_SUCCESS);
 }
 
 void print_label ( FILE *labels, double x, double y, double rotate, char *label) {
