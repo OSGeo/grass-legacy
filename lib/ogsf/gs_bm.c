@@ -66,8 +66,14 @@ void gsbm_zero_mask(struct BM *map)
     return;
 }
 
+/* mask types */
+#define MASK_OR		1
+#define MASK_ORNOT	2
+#define MASK_AND	3
+#define MASK_XOR	4
+
 /* must be same size, ORs bitmaps & stores in bmvar */
-int gsbm_or_masks(struct BM *bmvar, struct BM *bmcon)
+static int gsbm_masks(struct BM *bmvar, struct BM *bmcon, const int mask_type)
 {
     int i;
     int varsize, consize, numbytes;
@@ -83,107 +89,56 @@ int gsbm_or_masks(struct BM *bmvar, struct BM *bmcon)
 	    return (-1);
 	}
 
-	if (bmvar->sparse || bmcon->sparse) {
+	if (bmvar->sparse || bmcon->sparse)
 	    return (-1);
-	}
 
-	for (i = 0; i < numbytes; i++) {
-	    bmvar->data[i] |= bmcon->data[i];
-	}
+        switch (mask_type) {
+        case MASK_OR:
+            for (i = 0; i < numbytes; i++)
+                bmvar->data[i] |= bmcon->data[i];
+        break;
+        case MASK_ORNOT:
+            for (i = 0; i < numbytes; i++)
+                bmvar->data[i] |= ~bmcon->data[i];
+        break;
+        case MASK_AND:
+            for (i = 0; i < numbytes; i++)
+                bmvar->data[i] &= bmcon->data[i];
+        break;
+        case MASK_XOR:
+            for (i = 0; i < numbytes; i++)
+                bmvar->data[i] ^= bmcon->data[i];
+        break;
+        }
 
 	return (0);
     }
 
     return (-1);
+}
+
+/* must be same size, ORs bitmaps & stores in bmvar */
+int gsbm_or_masks(struct BM *bmvar, struct BM *bmcon)
+{
+    return gsbm_masks(bmvar, bmcon, MASK_OR);
 }
 
 /* must be same size, ORs bitmap with ~bmcon & stores in bmvar */
 int gsbm_ornot_masks(struct BM *bmvar, struct BM *bmcon)
 {
-    int i;
-    int varsize, consize, numbytes;
-
-    varsize = bmvar->rows * bmvar->cols;
-    consize = bmcon->rows * bmcon->cols;
-    numbytes = bmvar->bytes * bmvar->rows;
-
-    if (bmcon && bmvar) {
-	if (varsize != consize) {
-	    fprintf(stderr, "bitmap mismatch\n");
-
-	    return (-1);
-	}
-
-	if (bmvar->sparse || bmcon->sparse) {
-	    return (-1);
-	}
-
-	for (i = 0; i < numbytes; i++) {
-	    bmvar->data[i] |= ~bmcon->data[i];
-	}
-
-	return (0);
-    }
-
-    return (-1);
+    return gsbm_masks(bmvar, bmcon, MASK_ORNOT);
 }
 
 /* must be same size, ANDs bitmaps & stores in bmvar */
 int gsbm_and_masks(struct BM *bmvar, struct BM *bmcon)
 {
-    int i;
-    int varsize, consize, numbytes;
-
-    varsize = bmvar->rows * bmvar->cols;
-    consize = bmcon->rows * bmcon->cols;
-    numbytes = bmvar->bytes * bmvar->rows;
-
-    if (bmcon && bmvar) {
-	if (varsize != consize) {
-	    return (-1);
-	}
-
-	if (bmvar->sparse || bmcon->sparse) {
-	    return (-1);
-	}
-
-	for (i = 0; i < numbytes; i++) {
-	    bmvar->data[i] &= bmcon->data[i];
-	}
-
-	return (0);
-    }
-
-    return (-1);
+    return gsbm_masks(bmvar, bmcon, MASK_AND);
 }
 
 /* must be same size, XORs bitmaps & stores in bmvar */
 int gsbm_xor_masks(struct BM *bmvar, struct BM *bmcon)
 {
-    int i;
-    int varsize, consize, numbytes;
-
-    varsize = bmvar->rows * bmvar->cols;
-    consize = bmcon->rows * bmcon->cols;
-    numbytes = bmvar->bytes * bmvar->rows;
-
-    if (bmcon && bmvar) {
-	if (varsize != consize) {
-	    return (-1);
-	}
-
-	if (bmvar->sparse || bmcon->sparse) {
-	    return (-1);
-	}
-
-	for (i = 0; i < numbytes; i++) {
-	    bmvar->data[i] ^= bmcon->data[i];
-	}
-
-	return (0);
-    }
-
-    return (-1);
+    return gsbm_masks(bmvar, bmcon, MASK_XOR);
 }
 
 /***********************************************************************/
