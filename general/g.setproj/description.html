@@ -9,9 +9,6 @@
 
 <img src="grass.smlogo.gif" alt="GRASS logo"><hr align=center size=6 noshade>
 
-<h2>NAME</h2>
-<em><b>g.setproj</b></em>
-
 <H2>NAME</H2>
 
 <EM><b>g.setproj</b></EM>  - Allows the user to create the PROJ_INFO and the 
@@ -43,8 +40,7 @@ PROJ_UNITS file.
 
 <P>The user will be prompted for the projection name. 
 Most projections are supported. The 
-<A HREF="http://www.remotesensing.org/proj/">PROJ.4</A> 
-abbreviations for the names are
+<A HREF="http://proj.maptools.org/">PROJ.4</A> abbreviations for the names are
 used with two exceptions, viz. 'll', for latitude / longitude geographic
 co-ordinates, and 'stp', for the State Plane Co-ordinate system (used in the
 USA).</P>
@@ -63,10 +59,9 @@ $GISBASE/etc/ directory.</P>
 <P>Depending on the projection selected, the user will then be prompted for
 the various other parameters required to define it.</P>
 
-
 <P>
 
-The projections of aea, lcc, merc, leae (GRASS 5.x), leac (GRASS 5.x), and 
+The projections of aea, lcc, merc, leae, leac, and 
 tmerc will generate a request to the user for the prime meridian and standard 
 parallel for the output map. 
 
@@ -78,6 +73,13 @@ parallel for the output map.
 <EM><A HREF="v.proj.html">v.proj</A></EM>,
 <EM><A HREF="http://proj.maptools.org">PROJ.4</A></EM>
 
+<P>
+<B>Further reading</B>
+<ul>
+<li> <a href="http://www.asprs.org/resources/grids/">ASPRS Grids and Datum</a>
+<li> <a href="http://www.mapref.org">MapRef - The Collection of Map Projections and Reference Systems for Europe</a>
+<li> <a href="http://www.remotesensing.org/geotiff/proj_list/">Projections Transform List</a> (PROJ4)
+</ul>
 
 <H2>AUTHOR</H2>
 

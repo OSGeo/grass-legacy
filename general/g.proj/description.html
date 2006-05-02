@@ -2,7 +2,7 @@
 
 <P><em>g.proj</em> provides a means of manipulating GRASS projection
 information files. If compiled without 
-<A HREF="http://remotesensing.org/gdal/ogr/">OGR</A> present, the
+<A HREF="http://www.gdal.org/ogr/">OGR</A> present, the
 functionality is limited to reporting the projection information for the
 current location, either in conventional GRASS (-p flag) or PROJ.4 (-j flag) 
 format, and verifying the datum transformation information in the location
@@ -147,6 +147,14 @@ ogr2ogr -t_srs "`g.proj -wef`" polbnda_italy_GB_ovest.shp polbnda_italy_LL.shp
 <a href=http://proj.maptools.org>PROJ 4</a>: Projection/datum support library<br>
 <a href=http://www.gdal.org>GDAL raster library and toolset</a><br>
 <a href=http://www.gdal.org/ogr/>OGR vector library and toolset</a>
+
+<P>
+<B>Further reading</B>
+<ul>
+<li> <a href="http://www.asprs.org/resources/grids/">ASPRS Grids and Datum</a>
+<li> <a href="http://www.mapref.org">MapRef - The Collection of Map Projections and Reference Systems for Europe</a>
+<li> <a href="http://www.remotesensing.org/geotiff/proj_list/">Projections Transform List</a> (PROJ4)
+</ul>
 
 <H2>SEE ALSO</H2>
  
