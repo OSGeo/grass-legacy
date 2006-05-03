@@ -4,6 +4,7 @@
 #include <grass/gis.h>
 #include <grass/display.h>
 #include <grass/raster.h>
+#include <grass/glocale.h>
 
 struct band {
 	struct Option *opt;
@@ -32,21 +33,21 @@ int main(int argc, char **argv)
 
 	module = G_define_module();
 	module->description =
-		"Displays three user-specified raster map layers "
-		"as red, green, and blue overlays in the active graphics frame.";
+	  _("Displays three user-specified raster map layers "
+	  "as red, green, and blue overlays in the active graphics frame.");
 
 	flag_o = G_define_flag();
 	flag_o->key = 'o';
-	flag_o->description = "Overlay (non-null values only)";
+	flag_o->description =_("Overlay (non-null values only)");
 
 	flag_x = G_define_flag();
 	flag_x->key = 'x';
-	flag_x->description = "Don't add to list of commands in monitor";
+	flag_x->description = _("Don't add to list of commands in monitor");
 
 	for (i = 0; i < 3; i++)
 	{
 		char buff[80];
-		sprintf(buff, "Name of raster map to be used for <%s>",
+		sprintf(buff, _("Name of raster map to be used for <%s>"),
 			color_names[i]);
 
 		B[i].opt = G_define_option() ;
@@ -56,14 +57,15 @@ int main(int argc, char **argv)
 		B[i].opt->required   = YES ;
 		B[i].opt->gisprompt  = "old,cell,raster" ;
 		B[i].opt->description= G_store(buff) ;
+		B[i].opt->key_desc   = "name";
 	}
 
 	if (G_parser(argc, argv))
-		exit(-1);
+	    exit(EXIT_FAILURE);
 
 	/* Do screen initializing stuff */
 	if (R_open_driver() != 0)
-		G_fatal_error("No graphics device selected");
+	    G_fatal_error(_("No graphics device selected"));
 
 	D_get_screen_window(&t, &b, &l, &r) ;
 	D_cell_draw_setup_RGB(t, b, l, r) ;
@@ -75,17 +77,17 @@ int main(int argc, char **argv)
 
 		mapset = G_find_cell2(name, "");
 		if (mapset == NULL)
-			G_fatal_error("Cell layer [%s] does not exist", name);
+		    G_fatal_error(_("Raster map [%s] does not exist"), name);
 
 		/* Make sure map is available */
 		if ((B[i].file = G_open_cell_old(name, mapset)) == -1)
-			G_fatal_error("Unable to open cellfile for [%s]", name);
+		    G_fatal_error(_("Unable to open raster map [%s]"), name);
 
 		B[i].type = G_raster_map_type(name, mapset);
 
 		/* Reading color lookup table */
 		if (G_read_colors(name, mapset, &B[i].colors) == -1)
-			G_fatal_error("Color file for [%s] not available", name);
+		    G_fatal_error(_("Color file for [%s] not available"), name);
 
 		B[i].array = G_allocate_raster_buf(B[i].type);
 	}
@@ -103,7 +105,7 @@ int main(int argc, char **argv)
 
 		for (i = 0; i < 3; i++)
 			if (G_get_raster_row(B[i].file, B[i].array, row, B[i].type) < 0)
-				G_fatal_error("G_get_raster_row failed");
+			    G_fatal_error(_("Error reading row of data"));
 
 		if (row == next_row)
 			next_row = D_draw_raster_RGB(
@@ -128,5 +130,5 @@ int main(int argc, char **argv)
 	for (i = 0; i < 3; i++)
 		G_close_cell(B[i].file) ;
 
-	return 0;
+	exit(EXIT_SUCCESS);
 }
