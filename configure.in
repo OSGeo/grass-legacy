@@ -588,9 +588,12 @@ if test -z "$PROJSHARE" ; then
     AC_MSG_WARN([*** External PROJ.4 directory not specified])
 fi
 
+# LOC_CHECK_SHARE does not work when cross compiling
+if test "$MINGW" != "yes" ; then
 LOC_CHECK_SHARE(epsg,External PROJ.4,$PROJSHARE,[
 AC_MSG_WARN([*** Unable to locate PROJ data files.])
 ])
+fi
 
 AC_SUBST(PROJINC)
 AC_SUBST(PROJLIB)
