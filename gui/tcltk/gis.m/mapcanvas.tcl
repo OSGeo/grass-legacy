@@ -24,6 +24,8 @@ source $gmpath/maptool.tcl
 # source $env(GISBASE)/etc/gui.tcl
 
 namespace eval MapCanvas {
+	variable array displayrequest # Indexed by mon, true if it wants to get displayed.
+	variable array canmodified # Something's modified the canvas or view, indexed by mon.
 	variable array can # mon
 	variable array mapcan # mon
 	variable array mapframe # mon
@@ -31,8 +33,6 @@ namespace eval MapCanvas {
 	variable array canvas_h # mon
 	variable array map_ind # mon
 	variable array coords # mon
-	global array canvas_w # mon
-	global array canvas_h # mon
 	global array mapfile # mon
 	global array maskfile # mon
 	global array outfile # mon
@@ -67,8 +67,8 @@ proc MapCanvas::create { } {
     global mon
     global win
     global currmon
-    global canvas_w
-    global canvas_h
+    variable canvas_w
+    variable canvas_h
     global drawprog
 	global array MapCanvas::msg # mon
 	global mapcursor
@@ -207,21 +207,13 @@ proc MapCanvas::create { } {
 	}
 
 #	window configuration change handler for resizing
-    bind $can($mon) <Configure> {
-    	global canvas_w
-    	global canvas_h
+	bind $can($mon) <Configure> {
 		set rwinx [winfo pointerx .]
 		set rwiny [winfo pointery .]
 		set rwin [winfo containing $rwinx $rwiny]
 		regexp -nocase {.*\((\d*)(\).*)} $rwin rwin1 currmon rwin2
 		set mon $currmon
-		after 1000
-    	if { $canvas_w($mon) != %w || $canvas_h($mon) != %h } {
-			set canvas_w($mon) %w
-			set canvas_h($mon) %h
-			after cancel MapCanvas::do_resize $mon
-			after idle MapCanvas::do_resize $mon
-		}
+		MapCanvas::do_resize $mon
 	}
 
 	# bindings for closing map display window
@@ -236,6 +228,37 @@ proc MapCanvas::create { } {
 ###############################################################################
 # map display procedures
 
+# draw map using png driver and open in canvas
+proc MapCanvas::drawmap { mon } {
+	variable canvas_h
+	variable canvas_w
+	variable can
+	variable canmodified
+
+	set w [winfo width $can($mon)]
+	set h [winfo height $can($mon)]
+
+	# Make sure canvas_h and canvas_w are correct
+	if { $canvas_w($mon) != $w || $canvas_h($mon) != $h } {
+		# Flag this as a modified canvas
+		set canmodified($mon) 1
+		set canvas_w($mon) $w
+		set canvas_h($mon) $h
+	}
+
+	set mymodified $canmodified($mon)
+
+	if { $mymodified } {
+		set canmodified($mon) 0
+		# The canvas or view has been modified
+		# Redo the map settings to match the canvas
+		MapCanvas::mapsettings $mon
+	}
+
+	MapCanvas::runprograms $mon $mymodified
+	MapCanvas::composite $mon
+}
+
 # set up map geometry 
 proc MapCanvas::mapsettings { mon } {
 	global outtext
@@ -245,8 +268,8 @@ proc MapCanvas::mapsettings { mon } {
 	global gisdbase
 	global location_name
 	global mapset
-	global canvas_h
-	global canvas_w
+	variable canvas_h
+	variable canvas_w
 	global mapdispwd
 	global mapdispht
 	global mapfile
@@ -291,14 +314,13 @@ proc MapCanvas::mapsettings { mon } {
 		while {[gets $input line] >= 0} {
 			if {[regexp "^gism.*       running" $line]} {
 				runcmd "d.mon stop=gism"
+				#wait to make sure that the driver is shut down
+				after 500
 				break
 			}
 		}
 		close $input
 	}
-		
-	#wait to make sure that the driver is shut down
-	after 500
 		
 	#set display environment
 	set env(GRASS_WIDTH) $mapdispwd
@@ -321,14 +343,14 @@ proc MapCanvas::mapsettings { mon } {
 	}
 }
 
-# draw map using png driver and open in canvas
-proc MapCanvas::drawmap { mon mod } {
+# Run the programs to clear the map and draw all of the layers
+proc MapCanvas::runprograms { mon mod } {
 	global outtext
 	global env
 	global gmpath
 	global mapset
-	global canvas_w
-	global canvas_h
+	variable canvas_w
+	variable canvas_h
 	global mapimg.mon
 	global mapfile
 	global drawprog
@@ -359,8 +381,6 @@ proc MapCanvas::drawmap { mon mod } {
 	runcmd "d.frame -e"
 	incr drawprog
 	GmGroup::display "root" $mod
-	incr drawprog
-	after 1000
 	incr drawprog
 	if {[info exists env(MONITOR_OVERRIDE)]} {unset env(MONITOR_OVERRIDE)}
 	incr drawprog
@@ -408,23 +428,60 @@ proc MapCanvas::composite {mon } {
 
 }
 
+###############################################################################
+# map display server
+# The job of these procedures is to make sure that:
+# 1: we are never running more than one update at once.
+# 2: we don't do exactly the same update multiple times.
+
+proc MapCanvas::display_server {} {
+	variable redrawrequest
+
+	foreach mon [array names redrawrequest] {
+		if {$redrawrequest($mon)} {
+			# Mark that this monitor no longer wants to be redrawn
+			set redrawrequest($mon) 0
+			# Redraw the monitor canvas
+			MapCanvas::drawmap $mon
+		}
+	}
+
+	# Do me again in a short period of time.
+	# vwait might be appropriate here
+	after 100 MapCanvas::display_server
+}
+
+# Request a redraw on a monitor
+proc MapCanvas::request_redraw {mon modified} {
+	variable redrawrequest
+	variable canmodified
+
+	set redrawrequest($mon) 1
+
+	if {$modified} {
+		set canmodified($mon) 1
+	}
+}
+
+# Start the server
+after idle MapCanvas::display_server
 
 ###############################################################################
 
 proc MapCanvas::do_resize {mon} {
-	global canvas_w
-	global canvas_h
-	global mapimg.$mon
-	global draw
-	global drawprog
+	variable canvas_w
+	variable canvas_h
 	variable can
 
-	$can($mon) delete map$mon
-	MapCanvas::coordconv $mon
-	MapCanvas::mapsettings $mon
-	MapCanvas::drawmap $mon 1
-	MapCanvas::composite $mon
-		
+	# Get the actual width and height of the canvas
+	set w [winfo width $can($mon)]
+	set h [winfo height $can($mon)]
+
+	# Only actually resize and redraw if the size is different
+	if { $canvas_w($mon) != $w || $canvas_h($mon) != $h } {
+		$can($mon) delete map$mon
+		MapCanvas::request_redraw $mon 1
+	}
 }
 
 
@@ -447,17 +504,12 @@ proc MapCanvas::erase { mon } {
 # zoom to current region
 proc MapCanvas::zoom_current { mon } {
 	variable can
-	global canvas_h
-	global canvas_w
     
 	run "g.region -u save=previous_zoom --o"
-	set cmd "g.region -pu save=mon_$mon --o"
-    run_panel $cmd 
+	run_panel "g.region -pu save=mon_$mon --o"
 	
 	$can($mon) delete map$mon
-	MapCanvas::mapsettings $mon
-    MapCanvas::drawmap $mon 1
-	MapCanvas::composite $mon 
+	MapCanvas::request_redraw $mon 1
 }
 
 ###############################################################################
@@ -465,37 +517,27 @@ proc MapCanvas::zoom_current { mon } {
 # zoom to default region
 proc MapCanvas::zoom_default { mon } {
 	variable can
-	global canvas_h
-	global canvas_w
     
 	run "g.region -u save=previous_zoom --o"
-	set cmd "g.region -pd save=mon_$mon --o"
-    run_panel $cmd 
-	
+	run_panel "g.region -pd save=mon_$mon --o"
+
 	$can($mon) delete map$mon
-	MapCanvas::mapsettings $mon
-    MapCanvas::drawmap $mon 1
-	MapCanvas::composite $mon 
+	MapCanvas::request_redraw $mon 1
 }
 
 ###############################################################################
 
 # zoom to saved region
 proc MapCanvas::zoom_region { mon } {
-   	variable can
-	global canvas_h
-	global canvas_w
-   
-    set reg [GSelect windows]
-    if { $reg != "" } {
+	variable can
+
+	set reg [GSelect windows]
+	if { $reg != "" } {
 		run "g.region -u save=previous_zoom --o"
-		set cmd "g.region -p region=$reg save=mon_$mon --o"
-		run_panel $cmd 
-    }
-	$can($mon) delete map$mon
-	MapCanvas::mapsettings $mon
-    MapCanvas::drawmap $mon 1
-	MapCanvas::composite $mon 
+		run_panel "g.region -p region=$reg save=mon_$mon --o"
+		$can($mon) delete map$mon
+		MapCanvas::request_redraw $mon 1
+	}
 }
 
 
@@ -590,8 +632,6 @@ proc MapCanvas::markzoom {mon x y} {
 # draw zoom rectangle
 proc MapCanvas::drawzoom { mon x y } {
 	variable can
-	global canvas_h
-	global canvas_w
     global areaX1 areaY1 areaX2 areaY2
 	    
 	set xc [$can($mon) canvasx $x]
@@ -611,8 +651,8 @@ proc MapCanvas::drawzoom { mon x y } {
 # zoom region
 proc MapCanvas::zoomregion { mon zoom } {
 	variable can
-	global canvas_h
-	global canvas_w
+	variable canvas_h
+	variable canvas_w
     global areaX1 areaY1 areaX2 areaY2
     
     # if click and no drag, zoom in or out by 80% of original area
@@ -689,12 +729,9 @@ proc MapCanvas::zoomregion { mon zoom } {
 	}
 
 	# redraw map
-	after 500
 	$can($mon) delete map$mon
-    $can($mon) delete area
-	MapCanvas::mapsettings $mon
-	MapCanvas::drawmap $mon 1
-	MapCanvas::composite $mon 
+	$can($mon) delete area
+	MapCanvas::request_redraw $mon 1
 }
 
 
@@ -703,16 +740,11 @@ proc MapCanvas::zoomregion { mon zoom } {
 
 # zoom back
 proc MapCanvas::zoom_back { mon } {
-    variable can
-	global canvas_h
-	global canvas_w
-    
-    set cmd "g.region -p region=previous_zoom save=mon_$mon --o"
-    run_panel $cmd
+	variable can
+
+	run_panel "g.region -p region=previous_zoom save=mon_$mon --o"
 	$can($mon) delete map$mon
-	MapCanvas::mapsettings $mon
-	MapCanvas::drawmap $mon 1
-	MapCanvas::composite $mon 
+	MapCanvas::request_redraw $mon 1
 }
 
 
@@ -776,8 +808,6 @@ proc MapCanvas::pan { mon } {
     global from_x from_y
     global to_x to_y
 	variable can
-	global canvas_h
-	global canvas_w
 	
 	# get map coordinate shift    
     set from_e [scrx2mape $from_x]
@@ -809,9 +839,7 @@ proc MapCanvas::pan { mon } {
 	run_panel $cmd
 	
 	$can($mon) delete map$mon
-	MapCanvas::mapsettings $mon
-	MapCanvas::drawmap $mon 1
-	MapCanvas::composite $mon 
+	MapCanvas::request_redraw $mon 1
 }
 
 ###############################################################################
@@ -1036,8 +1064,8 @@ proc MapCanvas::query { mon x y } {
 proc MapCanvas::printcanvas { mon } {
 	variable mapcan
 	variable can
-	global canvas_w
-	global canvas_h
+	variable canvas_w
+	variable canvas_h
 	
 	set cv $can($mon)
 	
@@ -1070,8 +1098,8 @@ proc MapCanvas::coordconv { mon } {
 	
 	variable can
 	variable mapframe
-	global canvas_w
-	global canvas_h
+	variable canvas_w
+	variable canvas_h
 	
 
 #	get current map coordinates from g.region

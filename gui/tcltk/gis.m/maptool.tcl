@@ -32,7 +32,7 @@ proc MapToolBar::create { tb } {
     
     # display
     $bbox1 add -image [image create photo -file "$iconpath/gui-display.gif"] \
-        -command "MapCanvas::drawmap $mon 0; MapCanvas::composite $mon" \
+        -command "MapCanvas::request_redraw $mon 0" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
         -highlightbackground $bgcolor  -activebackground $bgcolor\
         -helptext [G_msg "Display active layers"]
