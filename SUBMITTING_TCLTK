@@ -154,7 +154,7 @@ please take care of following rules:
 
     Regular expressions:
     Very slow:
-        regex "x([0-9]+).*not" $string trash number
+        regex "x(\[0-9\]+).*not" $string trash number
     Fast:
         regex {x([0-9]+).*not} $string trash number
 
@@ -179,7 +179,29 @@ please take care of following rules:
 
     Be sure to include a comment as to what you are doing.
 
-16. Tcl C library:
+16. Use the Tcl list functions (list, lappend etc) for manipulating lists.
+
+    For example, use:
+
+        set vals [list $foo $bar]
+
+    rather than:
+
+        set vals "$foo $bar"
+
+    The former will always create a list with two elements, adding braces
+    if necessary, while the latter will split $foo and $bar into multiple
+    elements if they contain spaces. Additionally the first is faster
+    because tcl is not internally converting between strings and lists.
+
+    A related issue is to remember that command lines (as used by exec and
+    open "|...") are lists. exec behaves like execl(), spawnl() etc, and
+    not like system().
+
+    Overlooking either of these points is likely to result in code which
+    fails when a command argument contains a space.
+
+17. Tcl C library:
     Memory allocated with Tcl_Alloc (such as the result of Tcl_Merge)
     must be freed with Tcl_Free. This means that the ->freeProc of
     an interpreter when returning a string using Tcl_Merge should be
