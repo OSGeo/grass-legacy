@@ -38,7 +38,7 @@ int add_text(struct dxf_file *dxf, struct Map_info *Map)
 		if (flag_list) {
 		    if (!is_layer_in_list(dxf_buf)) {
 			add_layer_to_list(dxf_buf);
-			fprintf(stdout, _("Layer %d %s\n"), num_layers,
+			fprintf(stdout, _("Layer %d: %s\n"), num_layers,
 				dxf_buf);
 		    }
 		    return 0;
