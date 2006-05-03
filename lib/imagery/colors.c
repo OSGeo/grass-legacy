@@ -85,9 +85,7 @@ int I_read_group_grn_colors ( char *group, struct Ref *ref)
     return 0;
 }
 
-int I_read_group_blu_colors (
-    char *group,
-    struct Ref *ref)
+int I_read_group_blu_colors (char *group, struct Ref *ref)
 {
     int n;
 
@@ -140,7 +138,7 @@ static unsigned char *read_color (
     struct Histogram histo;
 
 #ifdef DEBUG
-fprintf (stdout,"read_color(%s: %s in %s)\n", file, name, mapset);
+    G_debug(2, "read_color(%s: %s in %s)", file, name, mapset);
 #endif
 
     if(table = get_colors (group, file, name, mapset, min, max))
@@ -153,8 +151,9 @@ fprintf (stdout,"read_color(%s: %s in %s)\n", file, name, mapset);
 }
 
 static unsigned char *get_colors (
-    char *group,char *file,char *name,char *mapset,
-    CELL *min,CELL *max)
+    char *group, char *file, char *name,
+    char *mapset,
+    CELL *min, CELL *max)
 {
     long xmin, xmax;
     int value, n;
@@ -173,6 +172,7 @@ static unsigned char *get_colors (
 	fclose (fd);
 	return (table = NULL);
     }
+
     if (xmin > xmax)
     {
 	long temp;
@@ -182,6 +182,7 @@ static unsigned char *get_colors (
     }
     *min = xmin;
     *max = xmax;
+
     t = table = (unsigned char *) G_malloc (xmax - xmin + 1);
     for (n = xmin; n <= xmax; n++)
     {
@@ -244,6 +245,7 @@ int I_write_group_red_colors (char *group, struct Ref *ref)
 	stat = write_colors (group, "RED",
 		ref->file[n].name, ref->file[n].mapset,
 		ref->red.table, ref->red.min, ref->red.max);
+
     return stat;
 }
 
@@ -257,6 +259,7 @@ int I_write_group_grn_colors (char *group, struct Ref *ref)
 	stat = write_colors (group, "GRN",
 		ref->file[n].name, ref->file[n].mapset,
 		ref->grn.table, ref->grn.min, ref->grn.max);
+
     return stat;
 }
 
@@ -270,11 +273,13 @@ int I_write_group_blu_colors (char *group, struct Ref *ref)
 	stat = write_colors (group, "BLU",
 		ref->file[n].name, ref->file[n].mapset,
 		ref->blu.table, ref->blu.min, ref->blu.max);
+
     return stat;
 }
 
 static int write_colors (
-    char *group,char *file,char *name,char *mapset,
+    char *group, char *file, char *name,
+    char *mapset,
     unsigned char *table,
     CELL min,CELL max)
 {
@@ -286,15 +291,17 @@ static int write_colors (
     fd = G_fopen_new (element, file);
     if (fd == NULL)
     {
-	char msg[300];
-	sprintf (msg, "group [%s] - can't write %s colors for [%s] in [%s]",
+	G_warning("group [%s] - can't write %s colors for [%s] in [%s]",
 		group, file, name, mapset);
-	G_warning (msg);
+
 	return 0;
     }
     fprintf (fd, "%ld %ld\n", (long) min, (long) max);
+
     while (min++ <= max)
 	fprintf (fd, "%d\n", (int) *table++);
+
     fclose (fd);
+
     return 1;
 }
