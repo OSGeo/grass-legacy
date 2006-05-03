@@ -1,4 +1,3 @@
-
 NOTE: Please improve this list!
 
 Dear (new) GRASS Developer,
@@ -183,11 +182,11 @@ please take care of following rules:
 
     For example, use:
 
-        set vals [list $foo $bar]
+        set vals [list $foo $bar]
 
     rather than:
 
-        set vals "$foo $bar"
+        set vals "$foo $bar"
 
     The former will always create a list with two elements, adding braces
     if necessary, while the latter will split $foo and $bar into multiple
