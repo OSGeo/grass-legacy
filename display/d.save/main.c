@@ -21,6 +21,7 @@
 #include <grass/gis.h>
 #include <grass/display.h>
 #include <grass/raster.h>
+#include <grass/glocale.h>
 
 #include "locals.h"
 
@@ -72,11 +73,17 @@ int main (int argc, char **argv)
 	char buff[1024];
 	char current_frame[64];
 
+
 	G_gisinit(argv[0]);
+
+        module = G_define_module();
+        module->description = 
+	  _("Create a list of commands for recreating screen graphics.");
 	
+
 	opt1 = G_define_option();
 	opt1->key = "frame";
-	opt1->description = "Name of frame(s) to save";
+	opt1->description = _("Name of frame(s) to save");
 	opt1->type = TYPE_STRING;
 	opt1->required = NO;
 	opt1->multiple = YES;
@@ -113,14 +120,18 @@ int main (int argc, char **argv)
 
 	opt2 = G_define_option();
 	opt2->key = "remove";
-	opt2->description = "List no's to be removed, which are displayed in the right-most comments.\n\t\tNote: 0 means the first drawing(equals 1), -1 means the last one.";
+	opt2->description =
+	  _("List no's to be removed, which are displayed in the right-most "
+	    "comments.\n\t\tNote: 0 means the first drawing(equals 1), -1 "
+	    "means the last one.");
 	opt2->type = TYPE_INTEGER;
 	opt2->required = NO;
 	opt2->multiple = YES;
 
 	opt3 = G_define_option();
 	opt3->key = "move";
-	opt3->description = "List no's to be moved, \"from\" to \"to\".\n\t\tNote: remove option will be done first, if any.";
+	opt3->description = _("List no's to be moved, \"from\" to \"to\".\n"
+	  "\t\tNote: remove option will be done first, if any.");
 	opt3->type = TYPE_INTEGER;
 	opt3->required = NO;
 	opt3->key_desc = "from,to";
@@ -128,29 +139,26 @@ int main (int argc, char **argv)
 
 	cur_frame = G_define_flag();
 	cur_frame->key = 'c';
-	cur_frame->description = "Save current frame";
+	cur_frame->description = _("Save current frame");
 	cur_frame->answer = 0;
 
 	all_flag = G_define_flag();
 	all_flag->key = 'a';
-	all_flag->description = "Save all the frames";
+	all_flag->description = _("Save all the frames");
 	all_flag->answer = 0;
 
 	only_object = G_define_flag();
 	only_object->key = 'o';
-	only_object->description = "Only map objects without extra header and tailer";
+	only_object->description =
+	  _("Only map objects without extra header and tailer");
 	only_object->answer = 0;
 
-        module = G_define_module();
-        module->description = 
-	  "Create a list of commands for "
-	  "recreating screen graphics.";
-
 	if (G_parser(argc, argv))
-		exit(1);
+	    exit(EXIT_FAILURE);
+
 
 	if (stat) /* Check we have monitor */
-		G_fatal_error ("No monitor selected");
+	    G_fatal_error(_("No monitor selected"));
 
 	total_rno = 0;
 	if (opt2->answers)
@@ -363,7 +371,7 @@ int main (int argc, char **argv)
 	if (redraw)
 		G_system("d.redraw");
 
-	return 0;
+	exit(EXIT_SUCCESS);
 }
 
 /* return 1 if the padname is in the opt->answers list of frame names */
@@ -432,7 +440,6 @@ which_item (char *itemstr)
 int 
 set_item (char *item, char **list)
 {
-	char tempbuf[100];
 	char *err;
 		
 	if (!strcmp(item, "list")) process_list(item, list, 1);
@@ -479,8 +486,7 @@ set_item (char *item, char **list)
 		case 11:
 			break;
 		default:
-			sprintf(tempbuf,"Unkown item type in pad: %s", item);
-			G_warning(tempbuf);
+			G_warning(_("Unknown item type in pad: %s"), item);
 			break;
 		}
 	}
@@ -492,7 +498,6 @@ set_item (char *item, char **list)
 int 
 process_list (char *item, char **list, int count)
 {
-	char tempbuf[100];
 	int n;
 	struct list_struct *new_list;
 
@@ -516,8 +521,7 @@ process_list (char *item, char **list, int count)
 	case 11:
 		break;
 	default: /* otherwise */
-		sprintf(tempbuf,"Unkown item type in pad: %s", item);
-		G_warning(tempbuf);
+		G_warning(_("Unkown item type in pad: %s"), item);
 		break;
 	}
 
