@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <grass/gis.h>
 #include <grass/gprojects.h>
+#include <grass/glocale.h>
 #ifdef HAVE_OGR
 #  include <gdal.h>
 #  include <ogr_api.h>
@@ -56,39 +57,41 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-	"Prints and manipulates GRASS projection information files.";
+	_("Prints and manipulates GRASS projection information files.");
 
     printinfo = G_define_flag();
     printinfo->key = 'p';
-    printinfo->description = "Print projection information (in conventional "
-	"GRASS format)";
+    printinfo->description =
+      _("Print projection information (in conventional GRASS format)");
 
     datuminfo = G_define_flag();
     datuminfo->key = 'd';
-    datuminfo->description = "Verify datum information and print "
-	"transformation parameters";
+    datuminfo->description =
+      _("Verify datum information and print transformation parameters");
 
     printproj4 = G_define_flag();
     printproj4->key = 'j';
-    printproj4->description = "Print projection information "
-	"in PROJ.4 format";
+    printproj4->description =
+      _("Print projection information in PROJ.4 format");
 
 #ifdef HAVE_OGR
     printwkt = G_define_flag();
     printwkt->key = 'w';
-    printwkt->description = "Print projection information in WKT format";
+    printwkt->description =
+      _("Print projection information in WKT format");
 
     esristyle = G_define_flag();
     esristyle->key = 'e';
     esristyle->description =
-	"Use ESRI-style format (applies to WKT output only)";
+      _("Use ESRI-style format (applies to WKT output only)");
 
 #endif
 
     dontprettify = G_define_flag();
     dontprettify->key = 'f';
-    dontprettify->description = "Print 'flat' output with no linebreaks "
-	"(applies to WKT and PROJ.4 output)";
+    dontprettify->description =
+      _("Print 'flat' output with no linebreaks (applies to WKT and "
+        "PROJ.4 output)");
 
 #ifdef HAVE_OGR
     ingeo = G_define_option();
@@ -96,39 +99,40 @@ int main(int argc, char *argv[])
     ingeo->type = TYPE_STRING;
     ingeo->key_desc = "file";
     ingeo->required = NO;
-    ingeo->description = "Georeferenced data file to read projection "
-	"information from";
+    ingeo->description = _("Georeferenced data file to read projection "
+	"information from");
 
     inwkt = G_define_option();
     inwkt->key = "wkt";
     inwkt->type = TYPE_STRING;
     inwkt->key_desc = "file";
     inwkt->required = NO;
-    inwkt->description = "ASCII file containing a single line WKT "
-	"projection description (- for stdin)";
+    inwkt->description = _("ASCII file containing a single line WKT "
+	"projection description (- for stdin)");
 
     inproj4 = G_define_option();
     inproj4->key = "proj4";
     inproj4->type = TYPE_STRING;
     inproj4->key_desc = "params";
     inproj4->required = NO;
-    inproj4->description = "PROJ.4 projection description (- for stdin)";
+    inproj4->description = _("PROJ.4 projection description (- for stdin)");
 #endif
 
     create = G_define_flag();
     create->key = 'c';
-    create->description = "Create new projection files (modifies current "
-	"location unless 'location' option specified)";
+    create->description = _("Create new projection files (modifies current "
+	"location unless 'location' option specified)");
 
     location = G_define_option();
     location->key = "location";
     location->type = TYPE_STRING;
     location->key_desc = "name";
     location->required = NO;
-    location->description = "Name of new location to create";
+    location->description = _("Name of new location to create");
 
     if (G_parser(argc, argv))
-	exit(-1);
+	exit(EXIT_FAILURE);
+
 
     /* Always read projection information from current location first */
     G_get_default_window(&old_cellhd);
@@ -155,7 +159,7 @@ int main(int argc, char *argv[])
 #ifdef HAVE_OGR       
     }
     else if (importformats > 1)
-	G_fatal_error("Only one of '%s', '%s' or '%s' options may be specified",
+	G_fatal_error(_("Only one of '%s', '%s' or '%s' options may be specified"),
 		      ingeo->key, inwkt->key, inproj4->key);
     else if (inwkt->answer) {
 	FILE *infd;
@@ -176,7 +180,7 @@ int main(int argc, char *argv[])
 	    G_asprintf(&wktstring, buff);
 	}
 	else
-	    G_fatal_error("Unable to open file %s for reading", inwkt->answer);
+	    G_fatal_error(_("Unable to open file [%s] for reading"), inwkt->answer);
 
 	GPJ_wkt_to_grass(&cellhd, &projinfo, &projunits, wktstring,
 			 interactive);
@@ -203,7 +207,7 @@ int main(int argc, char *argv[])
        
 	hSRS = OSRNewSpatialReference(NULL);
 	if (OSRImportFromProj4(hSRS, proj4string) != OGRERR_NONE)
-	    G_fatal_error("Can't parse PROJ.4-style parameter string");
+	    G_fatal_error(_("Can't parse PROJ.4-style parameter string"));
 
 	G_free(proj4string);
 
@@ -216,13 +220,13 @@ int main(int argc, char *argv[])
 	GDALDatasetH gdal_ds;
 
 	/* Try opening file with GDAL first */
-	fprintf(stderr, "Trying to open with GDAL...");
+	fprintf(stderr, _("Trying to open with GDAL..."));
 	GDALAllRegister();
 
 	if ((gdal_ds = GDALOpen(ingeo->answer, GA_ReadOnly))) {
 	    char *wktstring;
 
-	    fprintf(stderr, "...succeeded.\n");
+	    G_message(_("...succeeded."));
 	    wktstring = (char *)GDALGetProjectionRef(gdal_ds);
 	    GPJ_wkt_to_grass(&cellhd, &projinfo, &projunits, wktstring, 1);
 	}
@@ -230,7 +234,7 @@ int main(int argc, char *argv[])
 	    /* Try opening with OGR */
 	    OGRDataSourceH ogr_ds;
 
-	    fprintf(stderr, "Trying to open with OGR...");
+	    fprintf(stderr, _("Trying to open with OGR..."));
 	    OGRRegisterAll();
 
 	    if ((ogr_ds = OGROpen(ingeo->answer, FALSE, NULL))
@@ -238,7 +242,7 @@ int main(int argc, char *argv[])
 		OGRLayerH ogr_layer;
 		OGRSpatialReferenceH ogr_srs;
 
-		fprintf(stderr, "...succeeded.\n");
+		G_message(_("...succeeded."));
 		/* Get the first layer */
 		ogr_layer = OGR_DS_GetLayer(ogr_ds, 0);
 		ogr_srs = OGR_L_GetSpatialRef(ogr_layer);
@@ -248,13 +252,13 @@ int main(int argc, char *argv[])
 		OSRDestroySpatialReference(ogr_srs);
 	    }
 	    else
-		G_fatal_error("Could not read georeferenced file %s using "
-			      "either GDAL nor OGR", ingeo->answer);
+		G_fatal_error(_("Could not read georeferenced file %s using "
+			      "either GDAL nor OGR"), ingeo->answer);
 	}
 
 	if (cellhd.proj == PROJECTION_XY)
-	    G_warning("Read of file %s was successful, but it did not contain "
-		      "projection information. 'XY (unprojected)' will be used",
+	    G_warning(_("Read of file %s was successful, but it did not contain "
+		      "projection information. 'XY (unprojected)' will be used"),
 		      ingeo->answer);
     }
    
@@ -282,7 +286,7 @@ int main(int argc, char *argv[])
 
     if ((cellhd.proj != PROJECTION_XY)
 	&& (projinfo == NULL || projunits == NULL))
-	G_fatal_error("Projection files missing");
+	G_fatal_error(_("Projection files missing"));
 
     if ((cellhd.proj == PROJECTION_XY) && (printinfo->answer
 #ifdef HAVE_OGR
@@ -378,7 +382,7 @@ int main(int argc, char *argv[])
 	        G_free(outwkt);	       
 	    }
 	    else
-	        G_warning("%s: Unable to convert to WKT", G_program_name() );
+	        G_warning(_("%s: Unable to convert to WKT"), G_program_name() );
 	}
 #endif
        
@@ -387,7 +391,7 @@ int main(int argc, char *argv[])
 	    if(location->answer) {
 	        if( G_make_location( location->answer, &cellhd, 
                                      projinfo, projunits, NULL ) == 0)
-		    fprintf(stderr, "Location %s created!\n", location->answer);
+		    G_message(_("Location %s created!"), location->answer);
 	    }
 	    else {
 	        /* Create flag given but no location specified; overwrite
@@ -397,19 +401,19 @@ int main(int argc, char *argv[])
 		char *mapset = G_mapset();
 		   
 		if (strcmp(mapset, "PERMANENT") != 0)
-                    G_fatal_error("You must select the PERMANENT mapset before updating the "
-				  "current location's projection. (Current mapset is %s)", mapset);
+                    G_fatal_error(_("You must select the PERMANENT mapset before updating the "
+				  "current location's projection. (Current mapset is %s)"), mapset);
 		   
 	        if(old_projinfo && old_projunits) {
 		    /* Warn as in g.setproj before overwriting current location */
-		    fprintf(stderr, "\n\nWARNING!  A projection file already exists for this location\n");
+		    fprintf(stderr, _("\n\nWARNING!  A projection file already exists for this location\n"));
 		    fprintf(stderr, "\nThis file contains all the parameters for the\nlocation's projection: %s\n", G_find_key_value("proj", old_projinfo));
 		    fprintf(stderr, "\n    Overriding this information implies that the old projection parameters\n");
 		    fprintf(stderr, "    were incorrect.  If you change the parameters, all existing data will be\n");
 		    fprintf(stderr, "    interpreted differently by the projection software.\n%c%c%c", 7, 7, 7);
 		    fprintf(stderr, "    GRASS will not re-project your data automatically\n\n");
 
-		    if (G_yes("Would you still like to overwrite the current projection information ", 0))
+		    if (G_yes(_("Would you still like to overwrite the current projection information "), 0))
 		        go_ahead = 1;
 		}
 	        else {
@@ -427,14 +431,14 @@ int main(int argc, char *argv[])
                         G__file_name( path, "", "PROJ_INFO", "PERMANENT" );
                         G_write_key_value_file( path, projinfo, &out_stat );
                         if( out_stat != 0 )
-                            G_fatal_error("Error writing PROJ_INFO");
+                            G_fatal_error(_("Error writing PROJ_INFO"));
                     }
 
                     if( projunits != NULL ) {
                         G__file_name( path, "", "PROJ_UNITS", "PERMANENT" );
                         G_write_key_value_file( path, projunits, &out_stat );
                         if( out_stat != 0 )
-                            G_fatal_error("Error writing PROJ_UNITS");
+                            G_fatal_error(_("Error writing PROJ_UNITS"));
 		    }
 		       
 		    if ( (old_cellhd.zone != cellhd.zone) || (old_cellhd.proj != cellhd.proj) ) {
@@ -446,11 +450,11 @@ int main(int argc, char *argv[])
 				        "multiple mapsets g.region -d should be run in each to update the region from\n"
 					"the default.\n");
 		    }
-		    fprintf(stderr, "\nProjection information updated!\n\n");		       
+		    fprintf(stderr, _("\nProjection information updated!\n\n"));		       
 		}
 	        else
-		    fprintf(stderr, "The projection information will not be updated.\n");
-	       	       
+		    G_message(_("The projection information will not be updated."));
+
 	    }	   
 	}       
     }   
