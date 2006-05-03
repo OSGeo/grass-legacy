@@ -26,6 +26,7 @@ source $gmpath/maptool.tcl
 namespace eval MapCanvas {
 	variable array displayrequest # Indexed by mon, true if it wants to get displayed.
 	variable array canmodified # Something's modified the canvas or view, indexed by mon.
+	variable array regionbelief # Belief state of region, indexed by mon and region property.
 	variable array can # mon
 	variable array mapcan # mon
 	variable array mapframe # mon
@@ -234,6 +235,7 @@ proc MapCanvas::drawmap { mon } {
 	variable canvas_w
 	variable can
 	variable canmodified
+	variable regionbelief
 
 	set w [winfo width $can($mon)]
 	set h [winfo height $can($mon)]
@@ -247,6 +249,28 @@ proc MapCanvas::drawmap { mon } {
 	}
 
 	set mymodified $canmodified($mon)
+
+	# Check against our belief state of the region
+	# No need to look for a reason to be dirty if we already are
+	if { ! $mymodified } {
+		# Look at the region
+		if {![catch {open "|g.region -gu" r} input]} {
+			while {[gets $input line] >= 0} {
+				# Compare our belief state to the region
+				regexp -nocase {^([a-z]+)=(.*)$} $line trash regionkey regionvalue
+				if {$regionbelief($mon,$regionkey) != $regionvalue} {
+					# Consider the canvas to be modified this time around
+					set mymodified 1
+					# Save this region as the monitor region so that
+					# it will get used.
+					run_panel "g.region -pu save=mon_$mon --o"
+					# Stop looking for region differences
+					break
+				}
+			}
+			close $input
+		}
+	}
 
 	if { $mymodified } {
 		set canmodified($mon) 0
@@ -273,13 +297,14 @@ proc MapCanvas::mapsettings { mon } {
 	global mapdispwd
 	global mapdispht
 	global mapfile
+	variable regionbelief
 	
 	variable mapcan
 	variable can
 				
 	if {[info exists env(MONITOR_OVERRIDE)]} {unset env(MONITOR_OVERRIDE)}
 
-    set monregion "$gisdbase/$location_name/$mapset/windows/mon_$mon"
+	set monregion "$gisdbase/$location_name/$mapset/windows/mon_$mon"
 	if {[file exists $monregion] } {
 		set cmd "g.region region=mon_$mon"	
 		run_panel $cmd
@@ -290,6 +315,10 @@ proc MapCanvas::mapsettings { mon } {
 		
 	if {![catch {open "|g.region -gu" r} input]} {
 		while {[gets $input line] >= 0} {
+			# Update our belief state of the region
+			regexp -nocase {^([a-z]+)=(.*)$} $line trash regionkey regionvalue
+			set regionbelief($mon,$regionkey) $regionvalue
+			# Pull out the n, s, e, and west values for geometry
 			regexp -nocase {^n=(.*)} $line n1 map_n
 			regexp -nocase {^s=(.*)} $line s1 map_s
 			regexp -nocase {^e=(.*)} $line e1 map_e
@@ -504,8 +533,10 @@ proc MapCanvas::erase { mon } {
 # zoom to current region
 proc MapCanvas::zoom_current { mon } {
 	variable can
-    
-	run "g.region -u save=previous_zoom --o"
+
+	# The current region right now is the one we are zooming to
+	# Don't save it as the previous_zoom, then previous is certainly gone
+	# run "g.region -u save=previous_zoom --o"
 	run_panel "g.region -pu save=mon_$mon --o"
 	
 	$can($mon) delete map$mon
