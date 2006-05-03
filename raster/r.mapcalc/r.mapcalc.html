@@ -83,10 +83,16 @@ The following operators are supported:
      &lt;=         less than or equal         Logical     2
      &amp;&amp;         and                        Logical     1
      ||         or                         Logical     1
+     &amp;&amp;&amp;         and[1]                     Logical     1
+     |||        or[1]                      Logical     1
      #          color separator operator   Arithmetic   
 </PRE></div>
 
 (modulus is the remainder upon division)
+<P>
+[1] The &&& and ||| operators handle null values differently to other
+operators. See the section entitled <b>NULL support</b> below for more
+details.
 <P>
 
 The operators are applied from left to right, with those of higher precedence
@@ -488,7 +494,16 @@ produce a floating-point result, as will using float():
 <menu>
 <li>Division by zero should result in NULL. 
 <li>Modulus by zero should result in NULL. 
-<li>     NULL-values in any arithmetic or logical operation should result in NULL. 
+<li>     NULL-values in any arithmetic or logical operation should result
+         in NULL. (however, &&& and ||| are treated specially, as described below).
+<li>	 The &&& and ||| operators observe the following axioms even when x is NULL:
+<div class="code"><PRE>
+	x &&& false == false
+	false &&& x == false
+
+	x ||| true == true
+	true ||| x == true
+</PRE></div>
 <li>     NULL-values in function arguments should result in NULL (however,
          if(), eval() and isnull() are treated specially, as described below).
 <li>	 The eval() function always returns its last argument

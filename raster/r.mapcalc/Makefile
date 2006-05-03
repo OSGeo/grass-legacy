@@ -21,6 +21,7 @@ COMMON = \
 	$(OBJDIR)/xabs.o \
 	$(OBJDIR)/xadd.o \
 	$(OBJDIR)/xand.o \
+	$(OBJDIR)/xand2.o \
 	$(OBJDIR)/xacos.o \
 	$(OBJDIR)/xasin.o \
 	$(OBJDIR)/xatan.o \
@@ -51,6 +52,7 @@ COMMON = \
 	$(OBJDIR)/xnot.o \
 	$(OBJDIR)/xnull.o \
 	$(OBJDIR)/xor.o \
+	$(OBJDIR)/xor2.o \
 	$(OBJDIR)/xpow.o \
 	$(OBJDIR)/xrand.o \
 	$(OBJDIR)/xround.o \

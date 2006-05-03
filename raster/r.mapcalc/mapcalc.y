@@ -31,7 +31,7 @@
 %token <fval> FLOAT
 %token <fval> DOUBLE
 
-%token GT GE LT LE EQ NE AND OR
+%token GT GE LT LE EQ NE AND OR AND2 OR2
 
 %type <exp> exp
 %type <exp> exp_atom
@@ -172,6 +172,8 @@ exp_cmp		: exp_add
 exp_log		: exp_cmp
 		| exp_log OR exp_cmp	{ $$ = operator("or", "||",6,pair($1,$3));	}
 		| exp_log AND exp_cmp	{ $$ = operator("and","&&",6,pair($1,$3));	}
+		| exp_log OR2 exp_cmp	{ $$ = operator("or2", "|||",6,pair($1,$3));	}
+		| exp_log AND2 exp_cmp	{ $$ = operator("and2","&&&",6,pair($1,$3));	}
 		;
 
 exp_cond	: exp_log

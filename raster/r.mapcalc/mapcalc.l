@@ -158,6 +158,9 @@ F		[fF]
 "&&"		{	return AND;	}
 "||"		{	return OR;	}
 
+"&&&"		{	return AND2;	}
+"|||"		{	return OR2;	}
+
 ">"		{	return GT;	}
 ">="		{	return GE;	}
 "<"		{	return LT;	}
