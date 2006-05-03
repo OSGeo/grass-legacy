@@ -37,6 +37,14 @@ proc MapToolBar::create { tb } {
         -highlightbackground $bgcolor  -activebackground $bgcolor\
         -helptext [G_msg "Display active layers"]
 
+    # zoom to current region  
+    $bbox1 add -image [image create photo -file "$iconpath/gui-zoom_current.gif"] \
+        -command "MapCanvas::zoom_current $mon" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -highlightbackground $bgcolor -activebackground $bgcolor \
+        -helptext [G_msg "Zoom to current region and redraw all layers"]
+
+
     $bbox1 add -image [image create photo -file "$iconpath/module-nviz.gif"] \
         -command {GmGroup::nvdisplay "root"} \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
