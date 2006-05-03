@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
     flag_one_layer = flag.one_layer->answer;
 
     if (!flag_list)
-	fprintf(stderr, _("\nCONVERSION OF %s TO VECTOR FILE:  "),
+	fprintf(stderr, _("\nConversion of %s to vector map:  "),
 		opt.input->answer);
 
     /* open DXF file */

@@ -78,7 +78,7 @@ void write_done(struct Map_info *Map)
 
     fprintf(stderr, _("\nFollowing DXF layers found:\n"));
     for (i = 0; i < num_fields; i++) {
-	fprintf(stderr, _("Layer %d %s\n"), i + 1, field_names[i]);
+	fprintf(stderr, _("Layer %d: %s\n"), i + 1, field_names[i]);
 	G_free(field_names[i]);
 	if (!flag_table) {
 	    if (flag_one_layer && i > 0)
