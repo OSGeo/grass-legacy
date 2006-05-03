@@ -271,8 +271,9 @@ int _hold_signals(int hold)
  *
  * Send all pending graphics commands to the graphics driver and cause 
  * all pending graphics to be drawn (provided the driver is written to 
- * comply).  This routine does more than <i>R_flush()</i> and in many 
- * instances is the more appropriate routine of the two to use.
+ * comply). This function is called automatically when the graphics driver
+ * closes (<i>R_close_driver()</i>). Otherwise it only needs to be used
+ * within a module for flushing interactive graphics.
  *
  *  \param void
  *  \return int
