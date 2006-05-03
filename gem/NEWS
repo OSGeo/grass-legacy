@@ -1,0 +1,33 @@
+RC5
+========
+fixed all compilation warnings
+fixed a few malformated strings that could cause corruption in extensions.db
+
+
+gem 0.98
+========
+New argument --options allows user to pass compiler options.
+
+Support extensions in uncompressed .tar files.
+
+Default compiler option -I/usr/local/grasslib/include/ for people running Lorenzo Moretti's GRASS version on Mac OS X.
+
+Mac OS X systems should no longer show a warning upon removal of temporary extension files by GEM.
+
+Fixed a very nasty bug in temp file handling that could potentially delete wrong directories!
+
+gem 0.97
+========
+Fixed filename handling (installation of extension packages stored
+in different directories).
+
+Invocation: user must now always specify a valid action.
+
+gem 0.95
+========
+Feature-complete version
+Lots of bugfixes
+
+gem 0.9
+=======
+First public release
