@@ -46,8 +46,8 @@ int quit (struct Cell_head *, struct Cell_head *);
 #endif
 
 GLOBAL char *cmd;
-GLOBAL char **rast, **vect, **site, **list;
-GLOBAL int nrasts, nvects, nsites, nlists;
+GLOBAL char **rast, **vect, **list;
+GLOBAL int nrasts, nvects, nlists;
 GLOBAL double U_east, U_west, U_south, U_north;
 GLOBAL int leftb, middleb, rightb;
 GLOBAL char *lefts, *middles, *rights;

@@ -39,8 +39,8 @@ main (int argc, char **argv)
 
     module = G_define_module();
     module->description = 
-	    "Allows the user to change the current geographic "\
-             "region settings interactively, with a mouse.";
+	_("Allows the user to change the current geographic "
+          "region settings interactively, with a mouse.");
 
     /* Conditionalize R_open_driver() so "help" works, open quiet as well */
     R__open_quiet();
@@ -73,7 +73,7 @@ main (int argc, char **argv)
           rmap->answers = rast;
     rmap->required = NO;
     rmap->gisprompt = "old,cell,raster" ;
-    rmap->description = "Name of raster map";
+    rmap->description = _("Name of raster map");
                                                         
     vmap = G_define_option();
     vmap->key = "vector";
@@ -83,7 +83,7 @@ main (int argc, char **argv)
           vmap->answers = vect;
     vmap->required = NO;
     vmap->gisprompt = "old,dig,vector" ;
-    vmap->description = "Name of vector map";
+    vmap->description = _("Name of vector map");
                                                         
     zoom = G_define_option() ;
     zoom->key        = "zoom" ;
@@ -91,7 +91,7 @@ main (int argc, char **argv)
     zoom->required   = NO ;
     zoom->answer     = "0.75" ;
     zoom->options    = "0.001-1000.0" ;
-    zoom->description= "magnification: >1.0 zooms in, <1.0 zooms out" ;
+    zoom->description= _("Magnification: >1.0 zooms in, <1.0 zooms out");
 
 #ifdef QUIET
     quiet = G_define_flag();
@@ -101,23 +101,23 @@ main (int argc, char **argv)
 
     full = G_define_flag();
     full->key = 'f';
-    full->description = "Full menu (zoom + pan) & Quit menu";
+    full->description = _("Full menu (zoom + pan) & Quit menu");
 
     pan = G_define_flag();
     pan->key = 'p';
-    pan->description = "Pan mode";
+    pan->description = _("Pan mode");
 
     hand = G_define_flag();
     hand->key = 'h';
-    hand->description = "Handheld mode";
+    hand->description = _("Handheld mode");
 
     just = G_define_flag();
     just->key = 'j';
-    just->description = "Just redraw given maps using default colors";
+    just->description = _("Just redraw given maps using default colors");
 
     last = G_define_flag();
     last->key = 'r';
-    last->description = "Return to previous zoom";
+    last->description = _("Return to previous zoom");
 
     if(!rast && !vect )
     {
@@ -126,20 +126,20 @@ main (int argc, char **argv)
     }
 
     if ((argc > 1 || (!rast && !vect )) && G_parser(argc,argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
     if(getenv("GRASS_ANOTHER_BUTTON")){
-	    leftb   = 1; lefts   = "Left:  ";
-	    middleb = 3; middles = "Right: ";
-	    rightb  = 2; rights  = "Middle:";
+	    leftb   = 1; lefts   = _("Left:  ");
+	    middleb = 3; middles = _("Right: ");
+	    rightb  = 2; rights  = _("Middle:");
     }else{
-	    leftb   = 1; lefts   = "Left:  ";
-	    middleb = 2; middles = "Middle:";
-	    rightb  = 3; rights  = "Right: ";
+	    leftb   = 1; lefts   = _("Left:  ");
+	    middleb = 2; middles = _("Middle:");
+	    rightb  = 3; rights  = _("Right: ");
     }
 
     if( (full->answer + pan->answer + hand->answer) > 1)
-	G_fatal_error("Please choose only one mode of operation");
+	G_fatal_error(_("Please choose only one mode of operation"));
 
     sscanf(zoom->answer,"%lf", &magnify);
 
@@ -153,13 +153,13 @@ main (int argc, char **argv)
     if (!just->answer)
     {
         if (R_open_driver() != 0)
-	    G_fatal_error ("No graphics device selected");
+	    G_fatal_error(_("No graphics device selected"));
 	stat = R_pad_get_item("list", &list, &nlists);
 	R_close_driver();
 	if (stat || !nlists)
 	{
-	    fprintf(stderr, _("ERROR: can not get \"list\" items\n"));
-	    fprintf(stderr, _("-j flag forced\n"));
+	    G_message(_("ERROR: can not get \"list\" items"));
+	    G_message(_("-j flag forced"));
 	    just->answer = 1;
 	}
 	else
@@ -194,12 +194,10 @@ main (int argc, char **argv)
     }
 
 
-/* Make sure map is available */
+    /* Make sure map is available */
     if (rmap->required == YES && rmap->answers == NULL)
-    {
-	fprintf(stderr, _("ERROR: No map is displayed in GRASS monitor\n"));
-	exit(1);
-    }
+	G_fatal_error(_("No map is displayed in GRASS monitor"));
+
 
     if (rast)
     {
@@ -209,43 +207,37 @@ main (int argc, char **argv)
 	nrasts = i;
 
 	for(i=0; i<nrasts; i++){
-    		mapset = G_find_cell2 (rast[i], "");
-    		if (mapset == NULL)
-    		{
-			char msg[256];
-			sprintf(msg,"Raster file [%s] not available", rast[i]);
-			G_fatal_error(msg) ;
+    	    mapset = G_find_cell2 (rast[i], "");
+    	    if (mapset == NULL)
+	    	G_fatal_error(_("Raster map [%s] not available"), rast[i]);
+
+	    if(G_get_cellhd(rast[i], mapset, &window) >= 0)
+	    {
+		if(first)
+		{
+		    first = 0;
+		    U_east = window.east;
+		    U_west = window.west;
+		    U_south = window.south;
+		    U_north = window.north;
 		}
 		else
 		{
-	 		if(G_get_cellhd(rast[i], mapset, &window) >= 0)
-			{
-	 			if(first)
-	 			{
-					first = 0;
-					U_east = window.east;
-					U_west = window.west;
-					U_south = window.south;
-					U_north = window.north;
-	 			}
-	 			else
-				{
-					if(window.east > U_east)
-						U_east = window.east;
-					if(window.west < U_west)
-						U_west = window.west;
-					if(window.south < U_south)
-						U_south = window.south;
-					if(window.north > U_north)
-						U_north = window.north;
-				}
-			}
+		    if(window.east > U_east)
+			U_east = window.east;
+		    if(window.west < U_west)
+			U_west = window.west;
+		    if(window.south < U_south)
+			U_south = window.south;
+		    if(window.north > U_north)
+			U_north = window.north;
 		}
+	    }
 	}
     }
 
     if (vmap->required == YES && vmap->answers == NULL)
-	exit(0);
+	exit(EXIT_SUCCESS);
 
     if (vect)
     {
@@ -256,39 +248,33 @@ main (int argc, char **argv)
 	nvects = i;
 
 	for(i=0; i<nvects; i++){
-    		mapset = G_find_vector2 (vect[i], "");
-    		if (mapset == NULL)
-    		{
-			char msg[256];
-			sprintf(msg,"Vector file [%s] not available", vect[i]);
-			G_fatal_error(msg) ;
+	    mapset = G_find_vector2 (vect[i], "");
+	    if (mapset == NULL)
+		G_fatal_error(_("Vector map [%s] not available"), vect[i]);
+
+	    if(Vect_open_old(&Map, vect[i], mapset) >= 2)
+	    {
+		Vect_get_map_box (&Map, &box );
+		if(first)
+		{
+		    first = 0;
+		    U_east = box.E;
+		    U_west = box.W;
+		    U_south = box.S;
+		    U_north = box.N;
 		}
 		else
 		{
-			if(Vect_open_old(&Map, vect[i], mapset) >= 2)
-			{
-			        Vect_get_map_box (&Map, &box );
-	 			if(first)
-	 			{
-					first = 0;
-					U_east = box.E;
-					U_west = box.W;
-					U_south = box.S;
-					U_north = box.N;
-	 			}
-	 			else
-				{
-					if(box.E > U_east)
-						U_east = box.E;
-					if(box.W < U_west)
-						U_west = box.W;
-					if(box.S < U_south)
-						U_south = box.S;
-					if(box.N > U_north)
-						U_north = box.N;
-				}
-			}
+		   if(box.E > U_east)
+			U_east = box.E;
+		   if(box.W < U_west)
+			U_west = box.W;
+		   if(box.S < U_south)
+			U_south = box.S;
+		   if(box.N > U_north)
+			U_north = box.N;
 		}
+	    }
 	}
     }
 
@@ -316,7 +302,7 @@ main (int argc, char **argv)
 #endif
 
     if (R_open_driver() != 0)
-        G_fatal_error ("No graphics device selected");
+        G_fatal_error(_("No graphics device selected"));
     
     D_setup(0);
 
@@ -330,14 +316,12 @@ main (int argc, char **argv)
    {
       map = G_find_file ("windows", "previous_zoom", "");
       
-      if (!map) {
-	fprintf(stderr,_("this is the first d.zoom run; no previous zoom availible\n"));
-	return(0);
-      }
+      if (!map)
+	G_fatal_error(_("No previous zoom availible"));
 
       G__get_window (&tmpwin, "windows", "previous_zoom", map);
  
-      fprintf(stderr, "returning to previous zoom\n") ;
+      G_message(_("Returning to previous zoom"));
  
       ux1 = tmpwin.east;
       ux2 = tmpwin.west;
@@ -351,7 +335,8 @@ main (int argc, char **argv)
 
     /* Do the zoom */
     G_get_window(&window);
-    G__put_window(&window, "windows", "previous_zoom"); /* Save current region before it is changed */
+    /* Save current region before it is changed */
+    G__put_window(&window, "windows", "previous_zoom");
     G_get_window(&currwin);
     G_get_default_window(&defwin);
     if ( full->answer == 1 )
@@ -377,6 +362,6 @@ main (int argc, char **argv)
     if (vect)
       R_pad_freelist(vect, nvects);
 
-    fprintf(stdout,_("Zooming finished.\n"));
+    G_message(_("Zooming complete."));
     exit(stat);
 }

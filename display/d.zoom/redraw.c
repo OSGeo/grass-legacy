@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <grass/raster.h>
 #include <grass/display.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 int redraw(void)
@@ -38,20 +39,10 @@ int redraw(void)
               	system(command);
               }
             }
-            
-        /* Redraw site map */
-            if (site)
-            {
-              for(i=0; i<nsites; i++)
-              {
-              	sprintf(command, "d.sites sitefile=%s", site[i]);
-              	system(command);
-              }
-            }
 	}
 
 	if (R_open_driver() != 0)
-	    G_fatal_error ("No graphics device selected");
+	    G_fatal_error(_("No graphics device selected"));
 	D_setup(0);
 
 	return 0;
