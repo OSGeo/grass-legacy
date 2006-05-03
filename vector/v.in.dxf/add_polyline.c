@@ -61,7 +61,8 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
                              tion
 	     ******************************************************************/
 	    /* NOTE: CODE ONLY EXISTS FOR FLAG = 1 (CLOSED POLYLINE) or 0 */
-	    if (polyline_flag & 8 || polyline_flag & 16 || polyline_flag & 32)
+	    G_debug(3, "polyline_flag: %d", polyline_flag);
+	    if (polyline_flag & 8 || polyline_flag & 16 || polyline_flag & 17 || polyline_flag & 32)
 		if (warn_flag70) {
 		    G_warning(_("3-d data in dxf file"));
 		    warn_flag70 = 0;
