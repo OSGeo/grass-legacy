@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 /* Changed for truecolor 24bit support by 
  * Roberto Flor/ITC-Irst, Trento, Italy
@@ -26,54 +27,55 @@ int main(int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"To establish and control use of a graphics display monitor.";
+	   _("To establish and control use of a graphics display monitor.");
 
     start = G_define_option();
     start->key="start";
     start->type=TYPE_STRING;
     start->required=NO;
-    start->description="Name of graphics monitor to start";
+    start->description= _("Name of graphics monitor to start");
 
     stop = G_define_option();
     stop->key="stop";
     stop->type=TYPE_STRING;
     stop->required=NO;
-    stop->description="Name of graphics monitor to stop";
+    stop->description= _("Name of graphics monitor to stop");
 
     select = G_define_option();
     select->key="select";
     select->type=TYPE_STRING;
     select->required=NO;
-    select->description="Name of graphics monitor to select";
+    select->description= _("Name of graphics monitor to select");
 
     unlock = G_define_option();
     unlock->key="unlock";
     unlock->type=TYPE_STRING;
     unlock->required=NO;
-    unlock->description="Name of graphics monitor to unlock";
+    unlock->description= _("Name of graphics monitor to unlock");
 
     list = G_define_flag();
     list->key='l';
-    list->description="List all monitors";
+    list->description= _("List all monitors");
 
     status = G_define_flag();
     status->key='L';
-    status->description="List all monitors (with current status)";
+    status->description= _("List all monitors (with current status)");
 
     print = G_define_flag();
     print->key='p';
-    print->description="Print name of currently selected monitor";
+    print->description= _("Print name of currently selected monitor");
 
     release = G_define_flag();
     release->key='r';
-    release->description="Release currently selected monitor";
+    release->description= _("Release currently selected monitor");
 
     no_auto_select = G_define_flag();
     no_auto_select->key='s';
-    no_auto_select->description="Do not automatically select when starting";
+    no_auto_select->description=
+	_("Do not automatically select when starting");
 
     if (G_parser(argc,argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
     if (unlock->answer)
 	run("release -f",unlock->answer);
@@ -112,7 +114,7 @@ int main(int argc, char *argv[])
 	oops = run("select", select->answer); /* couldn't select */
 	if (oops && start->answer && strcmp (start->answer, select->answer) == 0) /* try once more */
 	{
-	    fprintf (stderr, "Problem selecting %s. Will try once more\n", select->answer);
+	    G_message(_("Problem selecting %s. Will try once more"), select->answer);
 	    oops = run("select", select->answer); /* couldn't select */
 	}
         if(oops) /* needed procedure failed */
@@ -129,7 +131,7 @@ int main(int argc, char *argv[])
     }
     if (print->answer)
 	error += run("which","");
-    exit(error ? 1 : 0);
+    exit(error ? EXIT_FAILURE : EXIT_SUCCESS);
 }
 
 int run (char *pgm, char *name)
