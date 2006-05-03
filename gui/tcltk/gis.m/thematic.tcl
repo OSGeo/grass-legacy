@@ -170,7 +170,7 @@ proc GmThematic::show_data { id } {
 	global bgcolor
 	set mapname $opt($id,1,map)
 	set layer $opt($id,1,layer)
-	if ![catch {open "|v.db.connect map=$mapname layer=$layer -g" r} vdb] {
+	if {![catch {open "|v.db.connect map=$mapname layer=$layer -g" r} vdb]} {
 		set vectdb [read $vdb]
 		catch {close $vdb}
 		set vdblist [split $vectdb " "]
@@ -658,7 +658,7 @@ proc GmThematic::tleg_item { mon id } {
 	set txtx 60
 	set font $opt($id,1,labelfont)
 	regexp {.*\s(\d*)} $font string lineht
-	set yinc [expr $lineht * 2]	
+	set yinc [expr {$lineht * 2}]	
 	
 	set titlefont $opt($id,1,titlefont)
 	set tfontcolor $opt($id,1,tfontcolor)
@@ -678,53 +678,53 @@ proc GmThematic::tleg_item { mon id } {
 		switch $type {
 			title {
 				regexp {.*\s(\d*)\s.*} $titlefont string lineht
-				set yinc [expr $lineht * 2]	
-				set x2 [expr $x1 + 15]
-				set y2 [expr $y1 + 15]
+				set yinc [expr {$lineht * 2}]	
+				set x2 [expr {$x1 + 15}]
+				set y2 [expr {$y1 + 15}]
 				$tlegcan($mon) create text $x1 $y2 -anchor sw -width 250 \
 					-fill $tfontcolor -font $titlefont -text "$label"
 			}
 			subtitle {
 				regexp {.*\s(\d*)\s.*} $subtitlefont string lineht
-				set yinc [expr $lineht * 2]	
-				set x2 [expr $x1 + 15]
-				set y2 [expr $y1 + 15]
+				set yinc [expr {$lineht * 2}]	
+				set x2 [expr {$x1 + 15}]
+				set y2 [expr {$y1 + 15}]
 				$tlegcan($mon) create text $x1 $y2 -anchor sw -width 250 \
 					-fill $tfontcolor -font $subtitlefont -text "$label"
 				incr y2 10
-				$tlegcan($mon) create line $x1 $y2 [expr $x1 + 250] $y2 \
+				$tlegcan($mon) create line $x1 $y2 [expr {$x1 + 250}] $y2 \
 					-width 1 -fill #000000				
 				incr y1 10
 			}
 			text {
 				regexp {.*\s(\d*)\s.*} $labelfont string lineht
-				set yinc [expr $lineht * 2]	
-				set x2 [expr $x1 + 15]
-				set y2 [expr $y1 + 15]
+				set yinc [expr {$lineht * 2}]	
+				set x2 [expr {$x1 + 15}]
+				set y2 [expr {$y1 + 15}]
 				$tlegcan($mon) create text $x1 $y2 -anchor sw -width 250 \
 					-fill $lfontcolor -font $labelfont -text "$label"
 			}
 			area {
 				regexp {.*\s(\d*)\s.*} $labelfont string lineht
-				set yinc [expr $lineht * 2]	
-				set x2 [expr $x1 + 15]
-				set y2 [expr $y1 + 15]
+				set yinc [expr {$lineht * 2}]	
+				set x2 [expr {$x1 + 15}]
+				set y2 [expr {$y1 + 15}]
 				$tlegcan($mon) create rectangle $x1 $y1 $x2 $y2 -fill $xfcolor \
 					-outline $xlcolor
-				$tlegcan($mon) create text [expr $x2 + 15] [expr (($y2-$y1)/2) + $y1] \
+				$tlegcan($mon) create text [expr {$x2 + 15}] [expr {(($y2-$y1)/2) + $y1}] \
 				-fill $lfontcolor -anchor w -font $labelfont -text "$label"
 			}
 			point {
 				regexp {.*\s(\d*)\s.*} $labelfont string lineht
-				set yinc [expr $lineht * 2]	
-				if { $size > [expr $yinc + 2] } {
-					incr y1 [expr int(($size/5) + 2)]
+				set yinc [expr {$lineht * 2}]	
+				if { $size > [expr {$yinc + 2}] } {
+					incr y1 [expr {int(($size/5) + 2)}]
 				}
-				if { $txtx <= [expr $x1 + $size + 15] } {
-					set txtx [expr $x1 + $size + 15]
+				if { $txtx <= [expr {$x1 + $size + 15}] } {
+					set txtx [expr {$x1 + $size + 15}]
 				}
-				set x2 [expr $x1 + $size]
-				set y2 [expr $y1 + $size]
+				set x2 [expr {$x1 + $size}]
+				set y2 [expr {$y1 + $size}]
 				$tlegcan($mon) create oval $x1 $y1 $x2 $y2 -fill $xfcolor \
 					-outline $xlcolor
 				$tlegcan($mon) create text $txtx [expr (($y2-$y1)/2) + $y1] \
@@ -732,9 +732,9 @@ proc GmThematic::tleg_item { mon id } {
 			}
 			line {
 				regexp {.*\s(\d*)\s.*} $labelfont string lineht
-				set yinc [expr $lineht * 2]	
-				set x2 [expr $x1 + 15]
-				set y2 [expr $y1 + 15]
+				set yinc [expr {$lineht * 2}]	
+				set x2 [expr {$x1 + 15}]
+				set y2 [expr {$y1 + 15}]
 				$tlegcan($mon) create line $x1 $y1 $x2 $y2 -width $size  \
 					-fill $xlcolor
 				$tlegcan($mon) create text [expr $x2 + 15] [expr (($y2-$y1)/2) + $y1] \
@@ -743,7 +743,7 @@ proc GmThematic::tleg_item { mon id } {
 			default { break }
 		}
 		if { $size > $yinc } {
-			incr y1 [expr int($size + 2)]
+			incr y1 [expr {int($size + 2)}]
 		} else {
 			incr y1 $yinc
 		}

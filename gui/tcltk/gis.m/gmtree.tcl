@@ -71,8 +71,8 @@ proc GmTree::create { mon } {
 
 	set sw    [ScrolledWindow $pg($mon).sw \
 		-relief flat -borderwidth 0 ]
-    set lw [expr $legend_width + 27]
-    set lh [expr $legend_height + 6]
+    set lw [expr {$legend_width + 27}]
+    set lh [expr {$legend_height + 6}]
 	
     set tree($mon)  [Tree $sw.tree_$mon \
             -relief flat -borderwidth 0 -highlightthickness 0 \
@@ -83,7 +83,7 @@ proc GmTree::create { mon } {
             -deltay $lh -padx $lw ]
             
 	$tree($mon) configure -height $treeht
-	$pgs configure -height [expr $treeht * $lh]
+	$pgs configure -height [expr {$treeht * $lh}]
 	
     $sw setwidget $tree($mon)
     	
@@ -173,7 +173,7 @@ proc GmTree::drop { from to where operation type data } {
     }
 
     if { ($old_parent == $new_parent) && ($new_index > $old_index) } { 
-        set new_index [expr $new_index - 1]
+        set new_index [expr {$new_index - 1}]
     }
 
     $from move $new_parent $data $new_index
@@ -776,7 +776,7 @@ proc GmTree::save_node { depth node } {
 	    	GmCLabels::save $tree($mon) $depth $node
 		}
     } 
-    set depth [expr $depth - 1]
+    set depth [expr {$depth - 1}]
     GmTree::rc_write $depth End
 }
 
@@ -805,7 +805,7 @@ proc GmTree::load { lpth } {
 
     set rcfile [open $fpath r]
     set file_size [file size $fpath]
-    set nrows [expr $file_size / 16]
+    set nrows [expr {$file_size / 16}]
 
     set parent root
     set row 0
@@ -960,7 +960,7 @@ proc GmTree::load { lpth } {
 			} 
 		}			
 		incr row
-		set prg [expr $max_prgindic * $row / $nrows]
+		set prg [expr {$max_prgindic * $row / $nrows}]
 		if { $prg > $max_prgindic } { set prg $max_prgindic }
 		set Gm::prgindic $prg
 	} 
