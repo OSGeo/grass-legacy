@@ -19,8 +19,6 @@ namespace eval GmArrows {
     variable array dup # vector
 }
 
-source $gmpath/mapcanvas.tcl
-
 proc GmArrows::create { tree parent } {
     variable optlist
     variable lfile

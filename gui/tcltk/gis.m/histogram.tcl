@@ -19,8 +19,6 @@ namespace eval GmHist {
     variable array dup # layer
 }
 
-source $gmpath/mapcanvas.tcl
-
 proc GmHist::create { tree parent } {
     variable opt
     variable count
