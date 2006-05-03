@@ -5,7 +5,7 @@
 * AUTHOR(S):    Original author 
 *               Soeren Gebbert soerengebbert@gmx.de
 * 		08 01 2005 Berlin
-* PURPOSE:      Converts 2D raster map slices to one 3D raster map  
+* PURPOSE:      Converts 2D raster map slices to one 3D volume map  
 *
 * COPYRIGHT:    (C) 2005 by the GRASS Development Team
 *
@@ -188,7 +188,7 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-	_("Converts 2D raster map slices to one 3D raster map");
+	_("Converts 2D raster map slices to one 3D raster volume map");
 
     /* Get Parametereters from user */
     SetParameters();
