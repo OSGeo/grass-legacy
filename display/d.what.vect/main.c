@@ -25,11 +25,16 @@ int main(int argc, char **argv)
   struct Option *opt1;
   struct GModule *module;
   char *mapset, *openvect();
-  char temp[128], *str;
+  char *str;
   int i, j, level, width = 0, mwidth = 0;
   
   /* Initialize the GIS calls */
   G_gisinit (argv[0]) ;
+
+  module = G_define_module();
+  module->description = 
+    _("Allows the user to interactively query a vector map layer "
+    "at user-selected locations within the current geographic region.");
 
   /* Conditionalize R_open_driver() so "help" works, open quiet as well */
   R__open_quiet();
@@ -46,51 +51,46 @@ int main(int argc, char **argv)
         R_close_driver();
   }
 
-
   once = G_define_flag();
   once->key = '1';
-  once->description = "Identify just one location";
+  once->description = _("Identify just one location");
   
   opt1 = G_define_option() ;
   opt1->key        = "map" ;
   opt1->type       = TYPE_STRING ;
   opt1->multiple   = YES;
+  opt1->key_desc   = "name";
   if (vect)
           opt1->answers = vect;
   opt1->required   = NO ;
   opt1->gisprompt  = "old,vector,vector" ;
-  opt1->description= "Name of existing vector map" ;
+  opt1->description= _("Name of existing vector map");
   
   terse = G_define_flag();
   terse->key = 't';
-  terse->description = "Terse output. For parsing by programs.";
+  terse->description = _("Terse output. For parsing by programs");
  
   txt = G_define_flag();
   txt->key = 'x';
-  txt->description = "Print information as plain text to terminal window.";
+  txt->description = _("Print information as plain text to terminal window");
   
   topo_flag = G_define_flag();
   topo_flag->key = 'd';
-  topo_flag->description = "Print topological information (debugging).";
+  topo_flag->description = _("Print topological information (debugging)");
  
   flash = G_define_flag();
   flash->key = 'f';
-  flash->description = "Enable flashing (slower).";
+  flash->description = _("Enable flashing (slower)");
  
   edit_flag = G_define_flag();
   edit_flag->key = 'e';
-  edit_flag->description = "Open form in edit mode.";
+  edit_flag->description = _("Open form in edit mode");
  
-  module = G_define_module();
-  module->description = 
-    "Allows the user to interactively query a vector map layer "
-    "at user-selected locations within the current geographic region.";
-
   if(!vect)
       opt1->required = YES;
     	  	      
   if((argc > 1 || !vect) && G_parser(argc,argv))
-    exit(-1);
+	exit(EXIT_FAILURE);
 
   if (opt1->answers && opt1->answers[0])
       vect = opt1->answers;
@@ -106,7 +106,7 @@ int main(int argc, char **argv)
 	{
 	  mapset = openvect(vect[i]);
 	  if(mapset == NULL)
-	     G_fatal_error("Unable to open %s", vect[i]) ;
+	     G_fatal_error(_("Unable to open vector map [%s]"), vect[i]) ;
 	}
 
       Map = (struct Map_info *) G_malloc(nvects * sizeof(struct Map_info));
@@ -126,15 +126,11 @@ int main(int argc, char **argv)
             mwidth = j;
     
           level = Vect_open_old (&Map[i], vect[i], mapset);
-          if (level < 0) {
-    	      sprintf(temp, "Vector file [%s] not available", vect[i]);
-              G_fatal_error (temp);
-    	  }
-    
-          if (level < 2) {
-    	      sprintf(temp, "%s: You must build topology on vector file", vect[i]);
-              G_fatal_error (temp);
-    	  }
+          if (level < 0)
+              G_fatal_error(_("Vector file [%s] not available"), vect[i]);
+
+          if (level < 2)
+              G_fatal_error(_("%s: You must build topology on vector file"), vect[i]);
 
 	  G_message ( _("Building spatial index ...") );
 	  Vect_build_spatial_index ( &Map[i], stderr );
@@ -142,7 +138,7 @@ int main(int argc, char **argv)
     }
 
   if (R_open_driver() != 0)
-    G_fatal_error ("No graphics device selected");
+	G_fatal_error(_("No graphics device selected"));
   D_setup(0);
 
   what(once->answer, txt->answer, terse->answer, flash->answer,
@@ -154,8 +150,8 @@ int main(int argc, char **argv)
   R_close_driver();
   R_pad_freelist(vect, nvects);
 
-  fprintf(stderr, _("Done.\n"));
-  exit(0);
+  G_message(_("Done."));
+  exit(EXIT_SUCCESS);
 }
 
 
