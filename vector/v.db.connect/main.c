@@ -170,9 +170,6 @@ int main (int argc, char **argv)
 			                               fi->database, fi->driver);
 		}
 	    } else { 
-		driver = db_start_driver(fi->driver);
-		if (driver == NULL)
-		    G_warning("Cannot open driver %s", fi->driver) ; /* G_fatal_error ? */
 		fprintf(stderr,"layer <%d> table <%s> in database <%s> through driver <%s> with key <%s>\n", fi->number, fi->table, fi->database, fi->driver, fi->key);
 	    }
           }
@@ -259,7 +256,7 @@ int main (int argc, char **argv)
 		       G_warning ( "Cannot create index" );
 
 		   if (db_grant_on_table (driver, fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
-		       G_fatal_error ( "Cannot grant privileges on table %s", fi->table );
+		       G_warning ( "Cannot grant privileges on table %s", fi->table );
 
 		   G_warning ( "Select privileges were granted on the table." );
 
