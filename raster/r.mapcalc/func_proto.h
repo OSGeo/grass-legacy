@@ -23,6 +23,8 @@ extern args_t c_cmpop	;
 
 extern func_t f_and	;
 extern func_t f_or	;
+extern func_t f_and2	;
+extern func_t f_or2	;
 extern args_t c_logop	;
 
 extern func_t f_not	;

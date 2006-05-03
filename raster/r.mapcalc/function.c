@@ -26,6 +26,9 @@ func_desc func_descs[] = {
 	{"and",		c_logop,	f_and		},
 	{"or",		c_logop,	f_or		},
 
+	{"and2",	c_logop,	f_and2		},
+	{"or2",		c_logop,	f_or2		},
+
 	{"not",		c_not,		f_not		},
 
 	{"sqrt",	c_double1,	f_sqrt		},
