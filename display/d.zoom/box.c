@@ -10,17 +10,15 @@ static int max(int,int);
 
 int make_window_box ( struct Cell_head *window, double magnify, int full, int hand)
 {
-    char buffer[1000] ;
     int screen_x, screen_y ;
     double px, py, ux1, uy1, ux2, uy2 ;
     double ns, ew;
     int button ;
     int cur_screen_x, cur_screen_y ;
     int mode; /* 1, 2 */
-    int resetwin, resetres;
+    int resetwin;
     struct Cell_head defwin;
     int printmenu = 1;
-    int limit, t;
     
     G_get_default_window(&defwin);
 
