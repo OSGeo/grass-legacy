@@ -3,7 +3,7 @@
 # MapCanvas.tcl -TclTk canvas display monitors  and display controls 
 #    for GIS Manager: GUI for GRASS 6 
 #
-# Author: Michael Barton (Arizona State University)
+# Author: Michael Barton (Arizona State University) - Cedric's version
 #
 # January 2006
 #
@@ -288,7 +288,7 @@ proc MapCanvas::mapsettings { mon } {
 		run_panel $cmd
 	}
 		
-	if ![catch {open "|g.region -gu" r} input] {
+	if {![catch {open "|g.region -gu" r} input]} {
 		while {[gets $input line] >= 0} {
 			regexp -nocase {^n=(.*)} $line n1 map_n
 			regexp -nocase {^s=(.*)} $line s1 map_s
@@ -298,24 +298,24 @@ proc MapCanvas::mapsettings { mon } {
 		close $input
 	}
 		
-	set mapwd [expr abs(1.0 * ($map_e - $map_w))]
-	set mapht [expr abs(1.0 * ($map_n - $map_s))]
+	set mapwd [expr {abs(1.0 * ($map_e - $map_w))}]
+	set mapht [expr {abs(1.0 * ($map_n - $map_s))}]
 	
-	if { [expr 1.0 * $canvas_h($mon) / $canvas_w($mon)] > [expr $mapht / $mapwd] } {
-		set mapdispht [expr 1.0 * $canvas_w($mon) * $mapht / $mapwd]
+	if { [expr {1.0 * $canvas_h($mon) / $canvas_w($mon)}] > [expr {$mapht / $mapwd}] } {
+		set mapdispht [expr {1.0 * $canvas_w($mon) * $mapht / $mapwd}]
 		set mapdispwd $canvas_w($mon)
 	} else {
 		set mapdispht $canvas_h($mon)
-		set mapdispwd [expr 1.0 * $canvas_h($mon) * $mapwd / $mapht]
+		set mapdispwd [expr {1.0 * $canvas_h($mon) * $mapwd / $mapht}]
 	}
 
 	# stop display driver in order to set display environment parameters
-	if ![catch {open "|d.mon -L" r} input] {
+	if {![catch {open "|d.mon -L" r} input]} {
 		while {[gets $input line] >= 0} {
 			if {[regexp "^gism.*       running" $line]} {
 				runcmd "d.mon stop=gism"
 				#wait to make sure that the driver is shut down
-				after 500
+				#after 500
 				break
 			}
 		}
@@ -323,8 +323,8 @@ proc MapCanvas::mapsettings { mon } {
 	}
 		
 	#set display environment
-	set env(GRASS_WIDTH) $mapdispwd
-	set env(GRASS_HEIGHT) $mapdispht
+	set env(GRASS_WIDTH) "$mapdispwd"
+	set env(GRASS_HEIGHT) "$mapdispht"
 	set env(GRASS_PNGFILE) "$mapfile($mon)"
 	set env(GRASS_BACKGROUNDCOLOR) "ffffff"
 	set env(GRASS_TRANSPARENT) "TRUE"
@@ -332,7 +332,7 @@ proc MapCanvas::mapsettings { mon } {
 	set env(GRASS_TRUECOLOR) "TRUE"
 		
 	#restart display driver to apply environment settings
-	if ![catch {open "|d.mon -L" r} input] {
+	if {![catch {open "|d.mon -L" r} input]} {
 		while {[gets $input line] >= 0} {
 			if {[regexp "^gism.*       not running" $line]} {
 				runcmd "d.mon start=gism -s"
@@ -658,10 +658,10 @@ proc MapCanvas::zoomregion { mon zoom } {
     # if click and no drag, zoom in or out by 80% of original area
     
 	if {($areaX2 == 0) && ($areaY2 == 0)} {
-		set X2 [expr $areaX1 + (0.8 * $canvas_w($mon) / 2) ]
-		set X1 [expr $areaX1 - (0.8 * $canvas_w($mon) / 2) ]
-		set Y2 [expr $areaY1 + (0.8 * $canvas_h($mon) / 2) ]
-		set Y1 [expr $areaY1 - (0.8 * $canvas_h($mon) / 2) ]	
+		set X2 [expr {$areaX1 + (0.8 * $canvas_w($mon) / 2)} ]
+		set X1 [expr {$areaX1 - (0.8 * $canvas_w($mon) / 2)} ]
+		set Y2 [expr {$areaY1 + (0.8 * $canvas_h($mon) / 2)} ]
+		set Y1 [expr {$areaY1 - (0.8 * $canvas_h($mon) / 2) }]	
 		set areaX1 $X1
 		set areaY1 $Y1
 		set areaX2 $X2
@@ -670,7 +670,7 @@ proc MapCanvas::zoomregion { mon zoom } {
     
 	
 	# get region extents
-	if ![catch {open "|g.region -gu" r} input] {
+	if {![catch {open "|g.region -gu" r} input]} {
 		while {[gets $input line] >= 0} {
 			regexp -nocase {^n=(.*)} $line n1 map_n
 			regexp -nocase {^s=(.*)} $line s1 map_s
@@ -717,10 +717,10 @@ proc MapCanvas::zoomregion { mon zoom } {
 	
 	#zoom out
 	if { $zoom == -1 } {
-		set upnorth [expr $map_n + abs($map_n - $north)]
-		set downsouth [expr $map_s - abs($south - $map_s)]
-		set backeast  [expr $map_e + abs($map_e - $east)]
-		set outwest  [expr $map_w - abs($west - $map_w)]
+		set upnorth [expr {$map_n + abs($map_n - $north)}]
+		set downsouth [expr {$map_s - abs($south - $map_s)}]
+		set backeast  [expr {$map_e + abs($map_e - $east)}]
+		set outwest  [expr {$map_w - abs($west - $map_w)}]
 		run "g.region -u save=previous_zoom --o"
 		set cmd "g.region -p n=$upnorth s=$downsouth \
 			nsres=$yres ewres=$xres \
@@ -816,7 +816,7 @@ proc MapCanvas::pan { mon } {
     set to_n   [scry2mapn $to_y]
     
 	# get region extents
-	if ![catch {open "|g.region -gu" r} input] {
+	if {![catch {open "|g.region -gu" r} input]} {
 		while {[gets $input line] >= 0} {
 			regexp -nocase {n=(.*)} $line n1 map_n
 			regexp -nocase {^s=(.*)} $line s1 map_s
@@ -827,10 +827,10 @@ proc MapCanvas::pan { mon } {
 	}
 
 	# set new region extents
-	set north [expr $map_n - ($to_n - $from_n)]
-	set south [expr $map_s - ($to_n - $from_n)]
-	set east  [expr $map_e - ($to_e - $from_e)]
-	set west  [expr $map_w - ($to_e - $from_e)]
+	set north [expr {$map_n - ($to_n - $from_n)}]
+	set south [expr {$map_s - ($to_n - $from_n)}]
+	set east  [expr {$map_e - ($to_e - $from_e)}]
+	set west  [expr {$map_w - ($to_e - $from_e)}]
 	
 	# reset region and redraw map
 	run "g.region -u save=previous_zoom --o"
@@ -963,8 +963,8 @@ proc MapCanvas::measure { mon } {
 	set north2 [scry2mapn $liney2]
 
 	# calculate line segment length and total length
-	set mlength [expr sqrt(pow(($east1 - $east2), 2) + pow(($north1 - $north2), 2))]
-	set totmlength [expr $totmlength + $mlength]
+	set mlength [expr {sqrt(pow(($east1 - $east2), 2) + pow(($north1 - $north2), 2))}]
+	set totmlength [expr {$totmlength + $mlength}]
 	
 	monitor_annotate $measurement_annotation_handle " --segment length\t= $mlength\n"
 	monitor_annotate $measurement_annotation_handle "cumulative length\t= $totmlength\n"
@@ -994,7 +994,7 @@ proc MapCanvas::querybind { mon } {
 	variable can
 	
 	# set query 'snapping' distance to 10 screen pixels
-	set vdist [expr 10* ($map_ew / $scr_ew) ]
+	set vdist [expr 10* {($map_ew / $scr_ew)} ]
 	
     set MapCanvas::msg($mon) "Click to query feature"
 
@@ -1104,7 +1104,7 @@ proc MapCanvas::coordconv { mon } {
 
 #	get current map coordinates from g.region
 
-	if ![catch {open "|g.region -ug" r} input] {
+	if {![catch {open "|g.region -ug" r} input]} {
 		while {[gets $input line] >= 0} {
 			regexp -nocase {n=(.*)} $line n1 map_n
 			regexp -nocase {^s=(.*)} $line s1 map_s
@@ -1116,13 +1116,13 @@ proc MapCanvas::coordconv { mon } {
 	
 # 	calculate dimensions
 
-	set map_n [expr 1.0*($map_n)]
-	set map_s [expr 1.0*($map_s)]
-	set map_e [expr 1.0*($map_e)]
-	set map_w [expr 1.0*($map_w)]
+	set map_n [expr {1.0*($map_n)}]
+	set map_s [expr {1.0*($map_s)}]
+	set map_e [expr {1.0*($map_e)}]
+	set map_w [expr {1.0*($map_w)}]
 	
-	set map_ew [expr $map_e - $map_w]
-	set map_ns [expr $map_n - $map_s]
+	set map_ew [expr {$map_e - $map_w}]
+	set map_ns [expr {$map_n - $map_s}]
 
 
 #	get current screen geometry
@@ -1145,8 +1145,8 @@ if { [info exists "mapimg.$mon"] } {
 # 	calculate conversion factors. Note screen is from L->R, T->B but map
 # 	is from L->R, B->T
 
-	set map2scrx_conv [expr $scr_ew / $map_ew]
-	set map2scry_conv [expr $scr_ns / $map_ns]
+	set map2scrx_conv [expr {$scr_ew / $map_ew}]
+	set map2scry_conv [expr {$scr_ns / $map_ns}]
 		
 # 	calculate screen dimensions and offsets
 
@@ -1169,7 +1169,7 @@ proc MapCanvas::mapn2scry { north } {
 	global scr_n
 	global map2scry_conv
 
-	return [expr $scr_n + (($map_n - $north) * $map2scry_conv)]
+	return [expr {$scr_n + (($map_n - $north) * $map2scry_conv)}]
 }
 
 # map east to screen x
@@ -1178,7 +1178,7 @@ proc MapCanvas::mape2scrx { east } {
 	global scr_w
 	global map2scrx_conv
 
-	return [expr $scr_w + (($east - $map_w) * $map2scrx_conv)]
+	return [expr {$scr_w + (($east - $map_w) * $map2scrx_conv)}]
 
 }
 
@@ -1188,7 +1188,7 @@ proc MapCanvas::scry2mapn { y } {
 	global scr_n
 	global map2scry_conv
 
-	return [expr $map_n - (($y - $scr_n) / $map2scry_conv)]
+	return [expr {$map_n - (($y - $scr_n) / $map2scry_conv)}]
 
 }
 
@@ -1198,7 +1198,7 @@ proc MapCanvas::scrx2mape { x } {
 	global scr_w
 	global map2scrx_conv
 
-	return [expr $map_w + (($x - $scr_w) / $map2scrx_conv)]
+	return [expr {$map_w + (($x - $scr_w) / $map2scrx_conv)}]
 
 }
 
@@ -1223,9 +1223,9 @@ proc MapCanvas::cleanup { mon destroywin} {
 	}
 
 	# stop gism PNG driver if it is still running due to error
-	if ![catch {open "|d.mon -L" r} input] {
+	if {![catch {open "|d.mon -L" r} input]} {
 		while {[gets $input line] >= 0} {
-			if {[regexp "^gism            Create PNG Map for gism        running" $line]} {
+			if {[regexp {^gism            Create PNG Map for gism        running} $line]} {
 				runcmd "d.mon stop=gism"
 				break
 			}
