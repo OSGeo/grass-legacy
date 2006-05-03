@@ -20,11 +20,6 @@ namespace eval GmVector {
 
 global gmpath
 source $gmpath/group.tcl
-global xmon
-global nextmon
-    
-set xmon 0
-set nextmon 1
 
 ###############################################################################
 # set dynamic legend display in layer tree for vectors
@@ -41,9 +36,9 @@ proc GmVector::legend { id } {
     # area    
     if { $opt($id,1,type_area) || $opt($id,1,type_face)} {
 		set x1 [expr $mar ]
-		set x2 [expr $lw - $mar ]
+		set x2 [expr {$lw - $mar} ]
 		set y1 [expr $mar ]
-		set y2 [expr $lh - $mar ]
+		set y2 [expr {$lh - $mar} ]
 		set lwidth  $opt($id,1,lwidth)
 		if { $lwidth == 0 } { set lwidth 1 }
 		if {$opt($id,1,_use_color) == 1} {
@@ -65,9 +60,9 @@ proc GmVector::legend { id } {
     #line
     if { $opt($id,1,type_line) || $opt($id,1,type_boundary) } {
 		set x1 [expr $mar ]
-		set x2 [expr $lw - $mar ]
+		set x2 [expr {$lw - $mar} ]
 		set y1 [expr $mar ]
-		set y2 [expr $lh - $mar ]
+		set y2 [expr {$lh - $mar} ]
 		set lwidth  $opt($id,1,lwidth)
 		if { $lwidth == 0 } { set lwidth 1 }
 		if {$opt($id,1,_use_color) == 1} {
@@ -77,16 +72,16 @@ proc GmVector::legend { id } {
     }
 
     # point 
-    set xc [expr $lw / 2 + $mar - 1 ]
-    set yc [expr $lh / 2 ]
+    set xc [expr {$lw / 2 + $mar - 1} ]
+    set yc [expr {$lh / 2} ]
     set size $opt($id,1,size)
    
-    set maxpsize  [expr $lw / 3 - 2 ]
+    set maxpsize  [expr {$lw / 3 - 2} ]
     if { $size > $maxpsize } { set size $maxpsize }
-	set x1 [expr $xc - $size / 2 ]
-	set x2 [expr $xc + $size / 2 + 1 ]
-	set y1  [expr $yc - $size / 2 ]
-	set y2  [expr $yc + $size / 2 + 1 ]
+	set x1 [expr {$xc - $size / 2} ]
+	set x2 [expr {$xc + $size / 2 + 1} ]
+	set y1 [expr {$yc - $size / 2 }]
+	set y2 [expr {$yc + $size / 2 + 1} ]
 
     if { $opt($id,1,type_point) || $opt($id,1,type_centroid) } {
         $leg create line $x1 $yc $x2 $yc -fill $opt($id,1,color) -width $lwidth
@@ -251,7 +246,7 @@ proc GmVector::show_data { id } {
 	variable opt
 	set mapname $opt($id,1,vect)
 	set layer $opt($id,1,layer)
-	if ![catch {open "|v.db.connect map=$mapname layer=$layer -g" r} vdb] {
+	if {![catch {open "|v.db.connect map=$mapname layer=$layer -g" r} vdb]} {
 		set vectdb [read $vdb]
 		catch {close $vdb}
 		set vdblist [split $vectdb " "]
@@ -715,8 +710,7 @@ proc GmVector::WorkOnVector { node mod } {
     variable bg
     variable tree
     global mon
-    global xmon
-    global nextmon
+    global env
     
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
@@ -725,44 +719,29 @@ proc GmVector::WorkOnVector { node mod } {
 
     if { $opt($id,1,vect) == "" } { return } 
 
-    if { !$opt($id,1,display_shape) && !$opt($id,1,display_cat) &&
-         !$opt($id,1,display_topo)  && !$opt($id,1,display_dir) &&
-         !$opt($id,1,display_attr) } { return } 
-
-    if { !$opt($id,1,type_point) && !$opt($id,1,type_line) &&
-         !$opt($id,1,type_boundary)  && !$opt($id,1,type_centroid) && 
-         !$opt($id,1,type_area) && !$opt($id,1,type_face) } { return } 
-
     global dmpath 
     
     # start xmon for v.digit
-	if { $xmon < 7 } {    
-		if ![catch {open "|d.mon -L" r} input] {
-			while {[gets $input line] >= 0} {
-            	if {[regexp -nocase "$xmon.*not running" $line]} {
-					runcmd "d.mon start=x$xmon"
-					set nextmon [expr $xmon + 1]
-    				GmGroup::display "root" $mod
-    				eval exec "d.save -o > dsaveout.txt"
-					set bg [exec d.save -o | cut -f1 -d# | tr {\n} {;}]
-    				set bg "$bg"
-					spawn v.digit -n map=$opt($id,1,vect) bgcmd=$bg
+	if {![catch {open "|d.mon -L" r} input]} {
+		while {[gets $input line] >= 0 } {
+			if {[regexp -nocase {x([0-9]+).*not running} $line dummy monnum]} {
+				# $monnum is the monitor number
+				#create list of non-running monitors
+				lappend xmonlist "x$monnum"
+			} 
+		}
 
-            	} elseif {[regexp -nocase "$xmon.* running" $line]} {
-					incr xmon 1
-					runcmd "d.mon select=x$xmon"
-					set nextmon [expr $xmon + 1]
-    				GmGroup::display "root" $mod
-    				eval exec "d.save -o > dsaveout.txt"
-					set bg [exec d.save -o | cut -f1 -d# | tr {\n} {;}]
-    				set bg "$bg"
-					spawn v.digit -n map=$opt($id,1,vect) bgcmd=$bg
-            	}              
-       		}
-    	}
-    }
-    
-    close $input
+	}
+
+	set xmon  [lindex $xmonlist 0]
+	spawn "d.mon start=$xmon"
+	if {[file exists "env(GISBASE)/env(LOCATION_NAME)/env(MAPSET)/vector/$opt($id,1,vect)"]} {
+		run v.digit map=$opt($id,1,vect)
+	} else { 
+		run v.digit -n map=$opt($id,1,vect)
+	}
+	destroy xmonlist
+	close $input
     return
 }
 
