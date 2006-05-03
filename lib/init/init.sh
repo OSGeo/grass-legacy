@@ -628,9 +628,9 @@ case "$GRASS_GUI" in
     # Check for tcltk interface
     tcltk)
 	if [ "$osxaqua" ] ; then
-		"$GISBASE/scripts/d.m" | sh &
+		"$GISBASE/scripts/gis.m" | sh &
 	else
-		"$GISBASE/scripts/d.m" &
+		"$GISBASE/scripts/gis.m" &
 	fi	
 	;;
     
@@ -654,9 +654,9 @@ echo "Help is available with the command:      g.manual -i"
 echo "See the licence terms with:              g.version -c"
 
 if [ "$GRASS_GUI" = "text" ] ; then
-    echo "Start the graphical user interface with: d.m &"
+    echo "Start the graphical user interface with: gis.m &"
 else
-    echo "If required, restart the graphical user interface with: d.m &"
+    echo "If required, restart the graphical user interface with: gis.m &"
 fi
 
 echo "When ready to quit enter:                exit"
