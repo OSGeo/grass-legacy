@@ -1,7 +1,8 @@
+#include <string.h>
 #include "list.h"
 #include <grass/gis.h>
 #include <grass/Vect.h>
-#include <string.h>
+#include <grass/glocale.h>
 
 /* 
  *  returns 0 - success
@@ -21,10 +22,10 @@ int do_remove (int n, char *old)
     hold_signals(1);
     if ( strcmp(list[n].alias, "vect") == 0 ) {
 	if ((mapset = G_find_vector2 (old, "")) == NULL)
-		G_fatal_error ("Vector map <%s> not found\n", old);
+	    G_fatal_error(_("Vector map <%s> not found"), old);
 	ret = Vect_delete ( old );
 	if ( ret == -1 ) {
-	    G_warning ("Cannot delete vector %s", old );
+	    G_warning(_("Cannot delete vector %s"), old );
             result = 1;
 	}
     } else {
