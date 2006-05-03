@@ -24,12 +24,13 @@
 *  Written by the GRASS Team, 02/16/90, -mh .
 */
 
+#ifndef __MINGW32__
 #include <unistd.h>
 #include <stdio.h>
 #include <grass/gis.h>
-#include "trans.h"
 #include <grass/vask.h>
 #include <grass/glocale.h>
+#include "trans.h"
 
 static int shrink_map_coor (void);
 
@@ -138,3 +139,4 @@ static int shrink_map_coor (void)
 	return(k) ;
 
 }
+#endif /* __MINGW32__ */

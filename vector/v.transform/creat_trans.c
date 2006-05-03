@@ -55,9 +55,13 @@ n_points = 0 ;
 ok = 0 ;
 while (! ok)
  {
+#ifdef __MINGW32__       
+        G_fatal_error ( "Points cannot be entered interactively on Windows" );
+#else
 	/*  go to Vask page to enter the coordinates  */
 	if ((n_points =  ask_transform_coor (n_points)) < 0)
 		exit(-1) ;
+#endif
 
 	system("clear") ;
 
