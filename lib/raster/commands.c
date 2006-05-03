@@ -5,9 +5,9 @@
 /*!
  * \brief flush graphics
  *
- * Send all pending graphics commands to
- * the graphics driver. This is done automatically when graphics input requests
- * are made.
+ * Send all pending graphics commands to the graphics driver.
+ * This is done automatically when graphics input requests are made.
+ * Generally this is only needed for interactive graphics.
  *
  *  \param void
  *  \return int
