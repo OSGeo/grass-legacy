@@ -135,7 +135,7 @@ set guioptfont [font create -size 10]
 ###############################################################################
 
 append regexp .* $env(GISBASE) {[^:]*}
-regsub -- $regexp $env(PATH) "&:$env(GISBASE)/etc/gm/script" env(PATH)
+regsub -- $regexp $env(PATH) {&:$env(GISBASE)/etc/gm/script} env(PATH)
 
 
 ###############################################################################
@@ -198,38 +198,29 @@ proc Gm::color { color } {
 ###############################################################################
 
 proc Gm::xmon { type cmd } {
-    global dmpath outtext
-    global env
-    
-    set xmon 0
-    set nextmon 1
-    
-    
-	if { $xmon < 7 } {    
-		if ![catch {open "|d.mon -L" r} input] {
-			while {[gets $input line] >= 0} {
-            	if {[regexp -nocase "$xmon.*not running" $line]} {
-					runcmd "d.mon start=x$xmon"
-					set nextmon [expr $xmon + 1]
-					if { $type == "term" } {
-						term_panel $cmd
-					} else {
-						run_panel $cmd
-					}
-            	} elseif {[regexp -nocase "$xmon.* running" $line]} {
-					incr xmon 1
-					runcmd "d.mon start=x$xmon"
-					set nextmon [expr $xmon + 1]
-					if { $type == "term" } {
-						term_panel $cmd
-					} else {
-						run_panel $cmd
-					}
-            	}              
-       		}
-		    close $input
-    	}
-    }
+
+	if {![catch {open "|d.mon -L" r} input]} {
+		while {[gets $input line] >= 0 } {
+			if {[regexp -nocase {x([0-9]+).*not running} $line dummy monnum]} {
+				# $monnum is the monitor number
+				#create list of non-running monitors
+				lappend xmonlist "x$monnum"
+			} 
+		}
+
+	}
+
+	set xmon  [lindex $xmonlist 0]
+	spawn "d.mon start=$xmon"
+	
+	if { $type == "term" } {
+		term_panel $cmd
+	} else {
+		run_panel $cmd
+	}
+	
+	destroy xmonlist
+	close $input
     return
 }
 
@@ -281,7 +272,7 @@ proc Gm::create { } {
     set pw1 [PanedWindow $mainwindow.pw1 -side left -pad 0 -width 10 ]    
    
     # tree 
-    set treemon [expr $mon + 1]
+    set treemon [expr {$mon + 1}]
     set tree_pane  [$pw1 add  -minsize 50 -weight 1]
 	set pgs [PagesManager $tree_pane.pgs]
 
@@ -486,9 +477,9 @@ proc Gm::cleanup { destroywin } {
 	global mappid
 
 	# stop gism PNG driver if it is still running due to error
-	if ![catch {open "|d.mon -L" r} input] {
+	if {![catch {open "|d.mon -L" r} input]} {
 		while {[gets $input line] >= 0} {
-			if {[regexp "^gism.*       running" $line]} {
+			if {[regexp {^gism.*       running} $line]} {
 				open "|d.mon stop=gism"
 				break
 			}
