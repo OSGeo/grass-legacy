@@ -137,9 +137,7 @@ static unsigned char *read_color (
     unsigned char *table;
     struct Histogram histo;
 
-#ifdef DEBUG
     G_debug(2, "read_color(%s: %s in %s)", file, name, mapset);
-#endif
 
     if(table = get_colors (group, file, name, mapset, min, max))
 	return table;
