@@ -27,22 +27,20 @@
 namespace eval MapCanvas {
 	variable array displayrequest # Indexed by mon, true if it wants to get displayed.
 	variable array canmodified # Something's modified the canvas or view, indexed by mon.
-	variable array can # mon
-	variable array mapcan # mon
-	variable array mapframe # mon
-	variable array canvas_w # mon
+	variable array can # The canvas widgets of the monitors, indexed by mon
+	variable array mapframe # Frame widgets, indexed by mon
+	variable array canvas_w # Width and height of canvas. Indexed by mon
 	variable array canvas_h # mon
-	variable array map_ind # mon
-	variable array coords # mon
-	global array mapfile # mon
-	global array maskfile # mon
-	global array outfile # mon
-	global array complist # mon
-	global array opclist # mon
-	global array masklist # mon
-    variable array tree # mon
-    variable cmstatus
-    variable mapmon
+	variable array driver_w # Actual width and height used while drawing / compositing. Indexed by mon
+	variable array driver_h # Actual width and height used while drawing / compositing. Indexed by mon
+	variable array map_ind # Indicator widgets, indexed by mon
+	# There is a global coords # Text to display in indicator widget, indexed by mon
+	global array mapfile # mon - Driver output file (.ppm)
+	global array maskfile # mon - Driver output mask (.pgm)
+	global array outfile # mon - g.pnmcomp output file (
+	global array complist # mon - List of files to composite
+	global array opclist # mon - Their opacities
+	global array masklist # mon - Their masks
 
 	# Current region and region historys
 	# Indexed by mon, history (1 (current) - zoomhistories), part (n, s, e, w, nsres, ewres).
@@ -57,21 +55,13 @@ set initht 480.0
 set east 0.0
 set north 0.0
 
-#image create photo mapimg.$mon
-
 ###############################################################################
 
 # Create window and canvas for display
 proc MapCanvas::create { } {
-    global gmpath
-    global outtext
     global env
     global initwd
     global initht
-    global east 
-    global north
-    global b1east b1north
-    global tree_pane
     global mon
     global win
     global currmon
@@ -89,11 +79,8 @@ proc MapCanvas::create { } {
 	global tmpdir
 	global mappid
 	
-	variable mapmon
-    variable mapframe
-	variable mapcan
+	variable mapframe
 	variable can
-	variable coords
 	variable map_ind
 	
 	# Initialize window and map geometry
@@ -249,21 +236,14 @@ proc MapCanvas::drawmap { mon } {
 
 # set up map geometry 
 proc MapCanvas::mapsettings { mon } {
-	global outtext
 	global env
-	global gmpath
-	global mapimg.$mon
-	global gisdbase
-	global location_name
 	global mapset
 	variable canvas_h
 	variable canvas_w
-	global mapdispwd
-	global mapdispht
+	variable driver_w
+	variable driver_h
 	global mapfile
 	
-	variable mapcan
-	variable can
 	variable monitor_zooms
 				
 	if {[info exists env(MONITOR_OVERRIDE)]} {unset env(MONITOR_OVERRIDE)}
@@ -278,14 +258,16 @@ proc MapCanvas::mapsettings { mon } {
 	set mapht [expr {abs(1.0 * ($map_n - $map_s))}]
 	
 	if { [expr {1.0 * $canvas_h($mon) / $canvas_w($mon)}] > [expr {$mapht / $mapwd}] } {
-		set mapdispht [expr {1.0 * $canvas_w($mon) * $mapht / $mapwd}]
-		set mapdispwd $canvas_w($mon)
+		set driver_h($mon) [expr {1.0 * $canvas_w($mon) * $mapht / $mapwd}]
+		set driver_w($mon) $canvas_w($mon)
 	} else {
-		set mapdispht $canvas_h($mon)
-		set mapdispwd [expr {1.0 * $canvas_h($mon) * $mapwd / $mapht}]
+		set driver_h($mon) $canvas_h($mon)
+		set driver_w($mon) [expr {1.0 * $canvas_h($mon) * $mapwd / $mapht}]
 	}
 
 	# stop display driver in order to set display environment parameters
+	# Would it be faster / better to just try to
+	# stop it instead of getting a list?
 	if {![catch {open "|d.mon -L" r} input]} {
 		while {[gets $input line] >= 0} {
 			if {[regexp "^gism.*       running" $line]} {
@@ -299,8 +281,8 @@ proc MapCanvas::mapsettings { mon } {
 	}
 		
 	#set display environment
-	set env(GRASS_WIDTH) "$mapdispwd"
-	set env(GRASS_HEIGHT) "$mapdispht"
+	set env(GRASS_WIDTH) "$driver_w($mon)"
+	set env(GRASS_HEIGHT) "$driver_h($mon)"
 	set env(GRASS_PNGFILE) "$mapfile($mon)"
 	set env(GRASS_BACKGROUNDCOLOR) "ffffff"
 	set env(GRASS_TRANSPARENT) "TRUE"
@@ -308,6 +290,7 @@ proc MapCanvas::mapsettings { mon } {
 	set env(GRASS_TRUECOLOR) "TRUE"
 		
 	#restart display driver to apply environment settings
+	# Same here? Just do it?
 	if {![catch {open "|d.mon -L" r} input]} {
 		while {[gets $input line] >= 0} {
 			if {[regexp "^gism.*       not running" $line]} {
@@ -321,24 +304,15 @@ proc MapCanvas::mapsettings { mon } {
 
 # Run the programs to clear the map and draw all of the layers
 proc MapCanvas::runprograms { mon mod } {
-	global outtext
 	global env
-	global gmpath
-	global mapset
 	variable canvas_w
 	variable canvas_h
-	global mapimg.mon
-	global mapfile
 	global drawprog
 	global MapCanvas::msg
-	global mapfile
-	global drawprog
 	global complist
 	global masklist
 	global opclist
 	variable mapframe
-	variable mapcan
-	variable can
 	
 	set drawprog 0
 	
@@ -364,18 +338,15 @@ proc MapCanvas::runprograms { mon mod } {
 
 # composite maps and create canvas
 proc MapCanvas::composite {mon } {
-	global mapdispwd
-	global mapdispht
+	variable driver_w
+	variable driver_h
 	global drawprog
 	global complist
 	global masklist
 	global opclist
-	global mapfile
-	global maskfile
 	global outfile
 	global tmpdir
 	variable mapframe
-	variable mapcan
 	variable can
 
 	$can($mon) delete all
@@ -383,7 +354,7 @@ proc MapCanvas::composite {mon } {
 		set currdir [pwd]
 		cd $tmpdir
 		incr drawprog
-		runcmd "g.pnmcomp in=$complist($mon) mask=$masklist($mon) opacity=$opclist($mon) background=255:255:255 width=$mapdispwd height=$mapdispht out=$outfile($mon)"
+		runcmd "g.pnmcomp in=$complist($mon) mask=$masklist($mon) opacity=$opclist($mon) background=255:255:255 width=$driver_w($mon) height=$driver_h($mon) out=$outfile($mon)"
 	
 		image create photo mapimg.$mon -file "$outfile($mon)" 
 		incr drawprog
@@ -465,8 +436,6 @@ proc MapCanvas::do_resize {mon} {
 
 # erase to white
 proc MapCanvas::erase { mon } {
-    	
-	variable mapcan
 	variable can
 		
 	$can($mon) delete map$mon
@@ -517,9 +486,6 @@ proc MapCanvas::zoom_region { mon } {
 # stop display management tools
 proc MapCanvas::stoptool { mon } {
 	global MapCanvas::msg
-	global stop x y east north
-    global linex1 liney1 linex2 liney2
-    global mlength totmlength
 	variable can
 	
 	if {[$can($mon) find withtag mline] != 0} {
@@ -632,7 +598,6 @@ proc MapCanvas::gregion_zoom {mon args} {
 # zoom bindings
 proc MapCanvas::zoombind { mon zoom } {
 	variable can
-	global mapcursor
 	global MapCanvas::msg
     global areaX1 areaY1 areaX2 areaY2
     
@@ -793,7 +758,6 @@ proc MapCanvas::zoom_back { mon } {
 # pan bindings
 proc MapCanvas::panbind { mon } {
 	variable can
-	global mapcursor
 	global MapCanvas::msg
 
     set MapCanvas::msg($mon) "Drag with mouse to pan"
@@ -877,7 +841,6 @@ proc MapCanvas::pan { mon } {
 ###############################################################################
 
 proc MapCanvas::setcursor { mon  ctype } {
-	global mapcursor
 	variable can
 
 	$can($mon) configure -cursor $ctype
@@ -900,7 +863,6 @@ proc MapCanvas::measurebind { mon } {
 	variable can
 	variable measurement_annotation_handle
 	global mlength totmlength
-	global mapcursor
     global linex1 liney1 linex2 liney2
 	global MapCanvas::msg
 
@@ -1011,18 +973,11 @@ proc MapCanvas::measure { mon } {
 
 # query bindings
 proc MapCanvas::querybind { mon } {
-	global stop
 	global map_ew
 	global map_ns	
 	global scr_ew
 	global scr_ns
 	global vdist
-	global type
-	global options
-	global mapname
-	global selected
-	global mapcursor
-	variable tree
 	variable can
 	
 	# set query 'snapping' distance to 10 screen pixels
@@ -1040,9 +995,7 @@ proc MapCanvas::querybind { mon } {
 
 # query
 proc MapCanvas::query { mon x y } {
-	global stop
 	global vdist
-	variable tree
 	variable can
 
 	set east  [scrx2mape $x]
@@ -1094,7 +1047,6 @@ proc MapCanvas::query { mon x y } {
 
 # print to eps file
 proc MapCanvas::printcanvas { mon } {
-	variable mapcan
 	variable can
 	variable canvas_w
 	variable canvas_h
@@ -1125,11 +1077,8 @@ proc MapCanvas::coordconv { mon } {
 	global scr_ns
 	global map2scrx_conv
 	global map2scry_conv
-	global mapframe.can
 	global mapimg.$mon
 	
-	variable can
-	variable mapframe
 	variable canvas_w
 	variable canvas_h
 	variable monitor_zooms
@@ -1226,15 +1175,6 @@ proc MapCanvas::scrx2mape { x } {
 
 	return [expr {$map_w + (($x - $scr_w) / $map2scrx_conv)}]
 
-}
-
-###############################################################################
-# pass mapcan parameter
-proc MapCanvas::getmapcan { mon } {
-	variable mapcan
-	
-	set mc $mapcan($mon)
-	return $mc
 }
 
 ###############################################################################
