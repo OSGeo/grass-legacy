@@ -355,8 +355,8 @@ int do_symbol(char *buff)
     int ret;
 
 
-    line_color = G_malloc(sizeof(RGB_Color));
-    fill_color = G_malloc(sizeof(RGB_Color));
+    line_color = G_malloc(sizeof(RGBA_Color));
+    fill_color = G_malloc(sizeof(RGBA_Color));
 
     symb_name = G_malloc(sizeof(char) * strlen(buff)+1);  /* well, it won't be any bigger than this */
     line_color_str = G_malloc(sizeof(char) * strlen(buff)+1);
