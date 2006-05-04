@@ -18,9 +18,6 @@ namespace eval GmVector {
     variable array dup # vector
 }
 
-global gmpath
-source $gmpath/group.tcl
-
 ###############################################################################
 # set dynamic legend display in layer tree for vectors
 proc GmVector::legend { id } {
