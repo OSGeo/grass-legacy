@@ -422,16 +422,16 @@ struct Histogram
 
 struct Range
 {
-    CELL min;		
-    CELL max;	
-    int first_time;     /* wether or not range was updated */
+    CELL min;
+    CELL max;
+    int first_time;     /* whether or not range was updated */
 };
 
 struct FPRange
 {
-    DCELL min;		
-    DCELL max;	
-    int first_time;     /* wether or not range was updated */
+    DCELL min;
+    DCELL max;
+    int first_time;     /* whether or not range was updated */
 };
 
 /*
