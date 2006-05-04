@@ -22,6 +22,11 @@
 lappend auto_path $env(GISBASE)/bwidget
 package require -exact BWidget 1.2.1
 
+# Load up all the gis.m layers and things.
+# pkgIndex.tcl only loads the files when they are first called.
+lappend auto_path $env(GISBASE)/etc/gm
+package require -exact GisM 1.0
+
 set env(GISDBASE) [exec g.gisenv get=GISDBASE]
 set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
 set env(MAPSET) [exec g.gisenv get=MAPSET]
@@ -78,36 +83,6 @@ source $env(GISBASE)/etc/gui.tcl
 # $env(GISBASE)/etc/gtcltk/select.tcl
 # $env(GISBASE)/etc/gtcltk/gronsole.tcl
 
-source $gmpath/gmtree.tcl
-source $gmpath/gmtool1.tcl
-source $gmpath/gmtool2.tcl
-source $gmpath/mapcanvas.tcl
-
-# Procedures used in many layers
-source $gmpath/commonlayer.tcl
-
-# Group layer (branch of tree)
-source $gmpath/group.tcl
-
-# Layers:
-source $gmpath/cmd.tcl
-source $gmpath/vector.tcl
-source $gmpath/raster.tcl
-source $gmpath/labels.tcl
-source $gmpath/gridline.tcl
-source $gmpath/rgbhis.tcl
-source $gmpath/histogram.tcl
-source $gmpath/rastnums.tcl
-source $gmpath/rastarrows.tcl
-source $gmpath/legend.tcl
-source $gmpath/frames.tcl
-source $gmpath/barscale.tcl
-source $gmpath/chart.tcl
-source $gmpath/thematic.tcl
-source $gmpath/maptext.tcl
-source $gmpath/maplabels.tcl
-source $gmpath/mapprint.tcl
-
 # Load a console user interface
 source $gmpath/runandoutput.tcl
 
@@ -135,7 +110,7 @@ set guioptfont [font create -size 10]
 ###############################################################################
 
 append regexp .* $env(GISBASE) {[^:]*}
-regsub -- $regexp $env(PATH) {&:$env(GISBASE)/etc/gm/script} env(PATH)
+regsub -- $regexp $env(PATH) "&:$env(GISBASE)/etc/gm/script" env(PATH)
 
 
 ###############################################################################
