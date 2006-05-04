@@ -3,6 +3,7 @@
 #include <unistd.h>
 
 #ifdef __MINGW32__
+#include <windows.h>
 #include <process.h>
 #include <fcntl.h>
 unsigned int _CRT_fmode = _O_BINARY;
@@ -120,6 +121,10 @@ db_start_driver (char *name)
 	return (dbDriver *) NULL;
     }
 
+    /* convert pipes to FILE* */
+    driver->send = fdopen (p1[WRITE], "wb");
+    driver->recv = fdopen (p2[READ],  "rb");
+
     /* Set pipes for stdin/stdout driver */
     if ( (stdin_orig  = _dup(_fileno(stdin ))) == -1  ||
          (stdout_orig = _dup(_fileno(stdout))) == -1 ) 
@@ -141,7 +146,34 @@ db_start_driver (char *name)
      *          otherwise _spawnl fails. The name used as _spawnl 
      *          parameter can be without .exe 
      */ 
-    pid = _spawnl ( _P_NOWAIT, startup, "", NULL );
+    /* spawnl() works but the process inherits all handlers, 
+     * that means, for example p1[WRITE] remains open and if 
+     * module exits the pipe is not close and driver remains running. 
+     * Using CreateProcess() + SetHandleInformation() does not help.
+     * => currently the only know solution is to close all file 
+     *    descriptors in driver (which is another problem)
+     */
+
+     pid = _spawnl ( _P_NOWAIT, startup, "", NULL ); 
+
+    /* This does not help. It runs but pipe remains open when close() is 
+     * called in model but caling close() on that descriptor in driver gives 
+     * error. */
+    /* 
+    {
+        STARTUPINFO    si;
+        PROCESS_INFORMATION  pi;
+
+        GetStartupInfo(&si);
+
+        SetHandleInformation ( stdin, HANDLE_FLAG_INHERIT, HANDLE_FLAG_INHERIT);
+        SetHandleInformation ( stdout, HANDLE_FLAG_INHERIT, HANDLE_FLAG_INHERIT);
+        SetHandleInformation ( driver->send, HANDLE_FLAG_INHERIT, 0);
+        SetHandleInformation ( driver->recv, HANDLE_FLAG_INHERIT, 0);
+
+        CreateProcess(NULL, startup, NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi);
+    }
+    */
 
     /* Reset stdin/stdout for module */
     if ( _dup2(stdin_orig, _fileno(stdin)) != 0 ||
@@ -162,10 +194,6 @@ db_start_driver (char *name)
 
     /* record driver process id in driver struct */
     driver->pid = pid;
-
-    /* convert pipes to FILE* */
-    driver->send = fdopen (p1[WRITE], "wb");
-    driver->recv = fdopen (p2[READ],  "rb");
 
     /* most systems will have to use unbuffered io to get the 
      *  send/recv to work */
