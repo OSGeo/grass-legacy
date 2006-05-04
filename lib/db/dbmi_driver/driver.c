@@ -43,6 +43,35 @@ db_driver (int argc,
 	}
     }
 
+#ifdef __MINGW32__
+    /* TODO: */
+    /* We should close everything except stdin, stdout but _fcloseall()
+     * closes open streams not file descriptors. _getmaxstdio too big number.
+     * 
+     * Because the pipes were created just before this driver was started 
+     * the file descriptors should not be above a closed descriptor
+     * until it was run from a multithread application and some descriptors 
+     * were closed in the mean time. 
+     * Also Windows documentation does not say that new file descriptor is 
+     * the lowest available.
+     */
+ 
+     { 
+         int err_count = 0;
+         int cfd = 2;
+        
+         while ( 1 ) 
+         {
+             if ( close(cfd) == -1 ) err_count++;
+
+             /* no good reason for 10 */  
+             if ( err_count > 10 ) break;
+         
+             cfd++;
+         }
+     }
+#endif
+
     send = stdout;
     recv = stdin;
 
@@ -86,7 +115,6 @@ db_driver (int argc,
 	db__send_failure();
 	exit(1);
     }
-
 
     stat = DB_OK;
     /* get the procedure number */
