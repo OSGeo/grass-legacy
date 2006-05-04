@@ -22,7 +22,7 @@
 # source $env(GISBASE)/etc/gtcltk/select.tcl
 # source $env(GISBASE)/etc/gui.tcl
 # This one is going to be handled by pkgIndex:
-source $gmpath/maptool.tcl
+# source $gmpath/maptool.tcl
 
 namespace eval MapCanvas {
 	variable array displayrequest # Indexed by mon, true if it wants to get displayed.
