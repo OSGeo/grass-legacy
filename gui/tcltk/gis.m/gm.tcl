@@ -100,7 +100,6 @@ global topwin
 global prgtext ""
 global prgindic
 global max_prgindic 
-global helpfont
 global guioptfont
 
 set max_prgindic 20
@@ -217,7 +216,6 @@ proc Gm::create { } {
     global prgtext
     global prgindic
     global keycontrol
-    global helpfont
     
     variable mainframe
     variable tree
@@ -275,8 +273,6 @@ proc Gm::create { } {
     $mainframe showstatusbar status 
 
     pack $mainframe -fill both -expand yes
- 
-    DynamicHelp::configure -font $helpfont -background yellow
 
 	Gm::startmon
 	
