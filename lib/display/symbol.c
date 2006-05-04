@@ -38,7 +38,7 @@
  *  \return int
  */
 
-int D_symbol(SYMBOL *Symb, int x0, int y0, RGB_Color *line_color, RGB_Color *fill_color)
+int D_symbol(SYMBOL *Symb, int x0, int y0, RGBA_Color *line_color, RGBA_Color *fill_color)
 {
     int i, j, k;
     SYMBPART *part;
@@ -56,7 +56,7 @@ int D_symbol(SYMBOL *Symb, int x0, int y0, RGB_Color *line_color, RGB_Color *fil
 
 	    case S_POLYGON:
 		/* draw background fills */
-		if ( (part->fcolor.color == S_COL_DEFAULT && fill_color->set == 1) ||
+		if ( (part->fcolor.color == S_COL_DEFAULT && fill_color->a != RGBA_COLOR_NONE) ||
 		      part->fcolor.color == S_COL_DEFINED )
 		{
 		    if ( part->fcolor.color == S_COL_DEFAULT )
@@ -82,7 +82,7 @@ int D_symbol(SYMBOL *Symb, int x0, int y0, RGB_Color *line_color, RGB_Color *fil
 
 		}
 		/* again, to draw the lines */
-		if ( (part->color.color == S_COL_DEFAULT && line_color->set == 1 ) ||
+		if ( (part->color.color == S_COL_DEFAULT && line_color->a != RGBA_COLOR_NONE ) ||
 		      part->color.color == S_COL_DEFINED  ) 
 		{
 		    if ( part->color.color == S_COL_DEFAULT ) {
@@ -105,7 +105,7 @@ int D_symbol(SYMBOL *Symb, int x0, int y0, RGB_Color *line_color, RGB_Color *fil
 
 	    case S_STRING: 
 		if ( part->color.color == S_COL_NONE ) break;
-		else if ( part->color.color == S_COL_DEFAULT && line_color->set == 1)
+		else if ( part->color.color == S_COL_DEFAULT && line_color->a != RGBA_COLOR_NONE )
 		    R_RGB_color( line_color->r, line_color->g, line_color->b );
 		else R_RGB_color( part->color.r, part->color.g, part->color.b );
 

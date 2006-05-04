@@ -18,7 +18,7 @@ static int *yarray ;
 static float xincr ;
 static float yincr ;
 
-static RGB_Color last_color;
+static RGBA_Color last_color;
 
 int set_graph_stuff (void)
 {
@@ -107,19 +107,19 @@ int do_color (char *buff)
 	if(color == 0) {
 	    G_warning(_("[%s]: No such color"), in_color);
 	    /* store for backup */
-	    last_color.set = 0;
+	    last_color.a = RGBA_COLOR_NONE;
 	    return(-1);
 	}
 	if(color == 1) {
 	    R_RGB_color(R, G, B);
 	    /* store for backup */
-	    set_last_color(R, G, B, 1);
+	    set_last_color(R, G, B, RGBA_COLOR_OPAQUE);
 	}
 	if(color == 2) {  /* color == 'none' */
 	    R = D_translate_color(DEFAULT_BG_COLOR);
 	    R_standard_color(R);
 	    /* store for backup */
-	    last_color.set = -1;
+	    set_last_color(0, 0, 0, RGBA_COLOR_NONE);
 	}
 	return(0);
 }
@@ -351,7 +351,7 @@ int do_symbol(char *buff)
     SYMBOL *Symb;
     double rotation = 0.0;
     char *line_color_str, *fill_color_str;
-    RGB_Color *line_color, *fill_color;
+    RGBA_Color *line_color, *fill_color;
     int ret;
 
 
@@ -385,23 +385,21 @@ int do_symbol(char *buff)
 
     ret = G_str_to_color(line_color_str, &line_color->r, &line_color->g, &line_color->b);
     if (ret == 1) {
-	line_color->a = 1;    /* alpha channel is not used by the display drivers */
-	line_color->set = 1;
+	/* here alpha is only used as an on/off switch, otherwise unused by the display drivers */
+	line_color->a = RGBA_COLOR_OPAQUE;
     }
     else if (ret == 2) 
-	line_color->set = -1; /* "none" */
+	line_color->a = RGBA_COLOR_NONE;
     else {
 	G_warning(_("[%s]: No such color"), line_color_str);
 	return(-1);
     }
 
     ret = G_str_to_color(fill_color_str, &fill_color->r, &fill_color->g, &fill_color->b);
-    if (ret == 1) {
-	fill_color->a = 1;    /* alpha channel is not used by the display drivers */
-	fill_color->set = 1;
-    }
+    if (ret == 1)
+	fill_color->a = RGBA_COLOR_OPAQUE;
     else if (ret == 2)
-	fill_color->set = -1; /* "none" */
+	fill_color->a = RGBA_COLOR_NONE;
     else {
 	G_warning(_("[%s]: No such color"), fill_color_str);
 	return(-1);
@@ -418,11 +416,11 @@ int do_symbol(char *buff)
     D_symbol(Symb, ix, iy, line_color, fill_color);
 
     /* restore previous d.graph draw color */
-    if(last_color.set == 1)
+    if( last_color.a == RGBA_COLOR_OPAQUE )
 	R_RGB_color(last_color.r, last_color.g, last_color.b);
-    else if(last_color.set == -1) /* none */
+    else if( last_color.a == RGBA_COLOR_NONE )
 	D_raster_use_color(D_parse_color(DEFAULT_BG_COLOR,0));
-    else /* unset */
+    else /* unset or bad */
 	R_RGB_color(line_color->r, line_color->g, line_color->b);
 
     G_free(symb_name);
@@ -434,18 +432,17 @@ int do_symbol(char *buff)
     return(0);
 }
 
-/* RGB are 0-255, setval is 0 unset, 1 set, -1 "none" */
-void set_last_color(int R, int G, int B, int setval)
+/* RGBA are 0-255; alpha is only used as an on/off switch. maybe test a<127<a ? */
+void set_last_color(int R, int G, int B, int alpha)
 {
-    if(setval == 1) {
+    if(alpha == RGBA_COLOR_OPAQUE) {
 	last_color.r  = (unsigned char)R;
 	last_color.g  = (unsigned char)G;
 	last_color.b  = (unsigned char)B;
-	last_color.a  = 1; /* unused */
-	last_color.set= 1;
+	last_color.a  = RGBA_COLOR_OPAQUE;
     }
-    else if(setval == -1) {
-	last_color.set= -1;
+    else if(alpha == RGBA_COLOR_NONE) {
+	last_color.a = RGBA_COLOR_NONE;
     }
-    else last_color.set= 0;
+    else last_color.a = RGBA_COLOR_NONE;
 }
