@@ -220,16 +220,6 @@ error:
  * A diagnostic message is printed and -1 is returned if there is an error
  * reading the range file. Otherwise, 0 is returned.
  *
- *  \param name
- *  \param mapset
- *  \param range
- *  \return int
- */
-
- 
-/*!
- * \brief 
- *
  * Old range file (those with 4 numbers) should
  * treat zeros in this file as NULL-values. New range files (those with just 2
  * numbers) should treat these numbers as real data (zeros are real data in this
@@ -239,6 +229,10 @@ error:
  * defined min/max.
  * If the range file is missing and the map is a floating-point map, this
  * function will create a default range by calling <tt>G_construct_default_range()</tt>.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param range
  *
  *  \return int
  */
@@ -343,18 +337,12 @@ error:
  * A diagnostic message is printed and -1 is returned if there is an error
  * writing the range file. Otherwise, 0 is returned.
  *
+ * This routine only writes 2 numbers (min,max) to the range
+ * file, instead of the 4 (pmin,pmax,nmin,nmax) previously written.
+ * If there is no defined min,max, an empty file is written.
+ *
  *  \param name
  *  \param range
- *  \return int
- */
-
- 
-/*!
- * \brief 
- *
- * This routine only writes 2 numbers (min,max) to the range
- * file, instead of the 4 (pmin,pmax,nmin,nmax) previously written. If there is no defined
- * min,max, an empty file is written.
  *
  *  \return int
  */
@@ -454,16 +442,10 @@ error:
  * values in the <b>range</b> structure, modifying the range if <b>cat</b>
  * extends the range.
  *
+ * NULL-values must be detected and ignored.
+ *
  *  \param cat
  *  \param range
- *  \return int
- */
-
- 
-/*!
- * \brief 
- *
- * NULL-values must be detected and ignored.
  *
  *  \return int
  */
@@ -611,17 +593,10 @@ int G_row_update_fp_range (
  * Initializes the <b>range</b> structure for updates by
  * <i>G_update_range</i> and <i>G_row_update_range.</i>
  *
- *  \param range
- *  \return int
- */
-
- 
-/*!
- * \brief 
- *
  * Must set a flag in the range structure that indicates that
  * no min/max have been defined - probably a <tt>"first"</tt> boolean flag.
  *
+ *  \param range
  *  \return int
  */
 
@@ -643,22 +618,16 @@ int G_init_range (struct Range *range)
  * The <b>min</b>inum and <b>max</b>imum CELL
  * values are extracted from the <b>range</b> structure.
  *
+ * If the range structure has no defined min/max
+ * (first!=0) there will not be a valid range. In this case the min and
+ * max returned must be the NULL-value.
+ *
  *  \param range
  *  \param min
  *  \param max
  *  \return int
  */
 
- 
-/*!
- * \brief 
- *
- * If the range structure has no defined min/max
- * (first!=0) there will not be a valid range. In this case the min and max returned must
- * be the NULL-value.
- *
- *  \return int
- */
 
 int G_get_range_min_max(
     struct Range *range,
@@ -748,5 +717,3 @@ int G_get_fp_range_min_max(
     return 0;
 }
 
-/*-------------------------------------------------------------------------*/
-/*-------------------------------------------------------------------------*/
