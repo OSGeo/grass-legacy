@@ -78,10 +78,10 @@ int main (int argc, char **argv)
 
 	    if(color == 1) {
 		R_RGB_color(R, G, B);
-		set_last_color(R, G, B, 1);
+		set_last_color(R, G, B, RGBA_COLOR_OPAQUE);
 	    }
-	    else /* (color==2) is "none", noop */
-		set_last_color(0, 0, 0, -1);
+	    else /* (color==2) is "none" */
+		set_last_color(0, 0, 0, RGBA_COLOR_NONE);
 	}
 
 	if(mapcoords->answer) mapunits = TRUE;

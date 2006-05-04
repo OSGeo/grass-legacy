@@ -123,7 +123,7 @@ int D_scan_int(char *, int *);
 /* setup.c */
 int D_setup(int);
 /* symbol.c */
-int D_symbol(SYMBOL *, int, int, RGB_Color *, RGB_Color *);
+int D_symbol(SYMBOL *, int, int, RGBA_Color *, RGBA_Color *);
 /* tran_colr.c */
 int D_translate_color(const char *);
 int D_translate_or_add_color(const char *, int);

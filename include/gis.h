@@ -248,13 +248,19 @@ struct Colors
     DCELL cmax;
 };
 
+
 typedef struct
 {
-    int set;			/*  0 unset, 1 set, -1 "none"  */
-    unsigned char r, g, b, a;	/* red, green, blue, and alpha */
+    unsigned char r, g, b, a;  /* red, green, blue, and alpha */
 } RGBA_Color ;
 
 typedef RGBA_Color RGB_Color;
+
+/* RGBA_Color alpha presets */
+#define RGBA_COLOR_OPAQUE     255
+#define RGBA_COLOR_TRANSPARENT  0
+#define RGBA_COLOR_NONE         0
+
 
 struct Reclass
 {
