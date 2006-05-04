@@ -38,10 +38,11 @@ int main(int argc, char *argv[])
     char *line = NULL;
     char tmp1[100], tmp2[100], tmp3[100];
     char timebuff[256];
-    int i;
+    int i, ret;
     CELL mincat = 0, maxcat = 0, cat;
     double zmin, zmax;		/* min and max data values */
     FILE *out, *fopen();
+    struct Range crange;
     struct FPRange range;
     struct Cell_head cellhd;
     struct Categories cats;
@@ -248,22 +249,23 @@ int main(int argc, char *argv[])
 		G_fatal_error(_("Cannot allocate memory for string"));
 
 	    if (data_type == CELL_TYPE) {
-		if (G_asprintf
-		    (&line, "  Range of data:    min =  %i max = %i",
-		     (CELL) zmin, (CELL) zmax) > 0)
+		if( 2 == G_read_range(name, mapset, &crange) )
+		    ret = G_asprintf(&line, "  Range of data:    min = nan  max = nan");
+		else
+		    ret = G_asprintf(&line, "  Range of data:    min = %i  max = %i",
+		      (CELL) zmin, (CELL) zmax);
+
+		if (ret > 0)
 		    printline(line);
 		else
 		    G_fatal_error(_("Cannot allocate memory for string"));
-
 	    }
 	    else {
-		if (G_asprintf
-		    (&line, "  Range of data:    min =  %f max = %f", zmin,
-		     zmax) > 0)
+		if (G_asprintf(&line, "  Range of data:    min = %f  max = %f",
+			zmin, zmax) > 0)
 		    printline(line);
 		else
 		    G_fatal_error(_("Cannot allocate memory for string"));
-
 	    }
 	}
 
@@ -368,8 +370,14 @@ int main(int argc, char *argv[])
 
 	if (rflag->answer) {
 	    if (data_type == CELL_TYPE) {
-		fprintf(out, "min=%i\n", (CELL) zmin);
-		fprintf(out, "max=%i\n", (CELL) zmax);
+		if( 2 == G_read_range(name, mapset, &crange) ) {
+		    fprintf(out, "min=nan\n");
+		    fprintf(out, "max=nan\n");
+		}
+		else {
+		    fprintf(out, "min=%i\n", (CELL) zmin);
+		    fprintf(out, "max=%i\n", (CELL) zmax);
+		}
 	    }
 	    else {
 		fprintf(out, "min=%f\n", zmin);
