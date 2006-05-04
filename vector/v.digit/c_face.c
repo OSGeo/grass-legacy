@@ -153,6 +153,8 @@ c_set_on ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 int
 c_tool_centre ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 {
+    G_debug (3, "c_tool_centre()");
+
     tool_centre();
     return TCL_OK;
 }
