@@ -802,17 +802,17 @@ void list_extensions ( char *gisbase ) {
 		if ( errno == ENOENT ) {
 			/* file does not yet exist */
 			fprintf ( stderr, "NONE.\n" );
-			fclose ( f_in );
 			exit ( 0 );
 		} else {
 			/* sth. strange happened */
-			fclose (f_in);
 			print_error ( ERR_LIST,"checking for file '%s': %s\n", file, strerror (errno)); 
 		}
+	} else {
+		fclose ( f_in );
+		dump_ascii ( file, "");
 	}
-	fclose ( f_in );
-	
-	dump_ascii ( file, "");
+
+	return;
 }
 
 
