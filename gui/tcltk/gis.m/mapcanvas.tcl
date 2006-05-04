@@ -268,17 +268,7 @@ proc MapCanvas::mapsettings { mon } {
 	# stop display driver in order to set display environment parameters
 	# Would it be faster / better to just try to
 	# stop it instead of getting a list?
-	if {![catch {open "|d.mon -L" r} input]} {
-		while {[gets $input line] >= 0} {
-			if {[regexp "^gism.*       running" $line]} {
-				runcmd "d.mon stop=gism"
-				#wait to make sure that the driver is shut down
-				#after 500
-				break
-			}
-		}
-		close $input
-	}
+	runcmd "d.mon stop=gism"
 		
 	#set display environment
 	set env(GRASS_WIDTH) "$driver_w($mon)"
@@ -291,15 +281,7 @@ proc MapCanvas::mapsettings { mon } {
 		
 	#restart display driver to apply environment settings
 	# Same here? Just do it?
-	if {![catch {open "|d.mon -L" r} input]} {
-		while {[gets $input line] >= 0} {
-			if {[regexp "^gism.*       not running" $line]} {
-				runcmd "d.mon start=gism -s"
-				break
-			}
-		}
-		close $input
-	}
+	runcmd "d.mon start=gism -s"
 }
 
 # Run the programs to clear the map and draw all of the layers
