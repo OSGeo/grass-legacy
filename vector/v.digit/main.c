@@ -26,6 +26,8 @@ int Tcl_AppInit(Tcl_Interp* interp)
 {
     int ret;
     char buf[1024];
+
+    G_debug (3, "v.digit Tcl_AppInit (...)");
     
     ret = Tcl_Init(interp);
     if (ret != TCL_OK) { return TCL_ERROR; }
@@ -70,6 +72,8 @@ int Tcl_AppInit(Tcl_Interp* interp)
     var_seti ( VAR_SNAP_SCREEN, 10 );
     var_setd ( VAR_SNAP_MAP, 10 );
     
+    G_debug (3, "Starting toolbox.tcl");
+
     sprintf(buf,"%s/etc/v.digit/toolbox.tcl", G_gisbase());
     ret = Tcl_EvalFile(interp, buf);
     if ( ret == TCL_ERROR) {
@@ -192,9 +196,11 @@ int main (int argc, char *argv[])
 
     /* Set tool */
     Tool_next = TOOL_NEW_POINT;
+
+    G_debug (3, "Starting Tk_Main.");
     
     /* Open toolbox */
-    Tk_Main(0, argv, Tcl_AppInit);
+    Tk_Main(argc, argv, Tcl_AppInit);
     
     /* Not reached */
     exit(EXIT_SUCCESS) ;
