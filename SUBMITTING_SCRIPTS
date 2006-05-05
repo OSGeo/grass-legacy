@@ -158,7 +158,7 @@ please take care of following rules:
     include the pathname rather than just "main.c".
 
 14. Tell the other developers about the new code using the following e-mail:
-    grass5@grass.itc.it
+    grass-dev@grass.itc.it
  
     To subscribe to this mailing list, see
     http://grass.itc.it/devel/index.php

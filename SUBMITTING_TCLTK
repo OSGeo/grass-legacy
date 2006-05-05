@@ -46,7 +46,23 @@ please take care of following rules:
 
 4.  Test your program with both tcl/tk 8.3 and tcl/tk 8.4.
 
-5.  Use "GRASS_TCLSH" and "GRASS_WISH" environment variables instead of
+5.  Always use the gettext macros with [G_msg "..."] for user messages.
+    The string must be quoted using quotation marks, not braces, for
+    xgettext to find it. The string cannot include variable ($) or
+    command ([...]) substitutions. If you need substitutions use
+    [format ...].
+
+    Examples:
+    button .ok -text [G_msg "Ok"]
+
+    set statusbartext [format [G_msg "Monitor %d running"] $monitor_number]]
+
+    Use positional parameters if substitutions might be rearranged in another language:
+
+    format [G_msg "We produced %1\$d units in location %2\$s"] $num $city
+    format [G_msg "In location %2\$s we produced %1\$d units"] $num $city
+
+6.  Use "GRASS_TCLSH" and "GRASS_WISH" environment variables instead of
     "tclsh" and "wish" at the start of Tcl/Tk scripts. This allows users to
     override the default names, so that developers don't need worry about the
     shell names.
@@ -64,7 +80,7 @@ please take care of following rules:
 	# the next line restarts using wish \
 	exec $GRASS_WISH "$0" "$@"
 
-6.  Do not source files that have already been sourced.
+7.  Do not source files that have already been sourced.
 
         gui.tcl sources:
             options.tcl 
@@ -74,13 +90,13 @@ please take care of following rules:
     If your code requires something to be sourced before it note so
     in a comment at the top of the file.
 
-7.  Set tabstops in your editor to 8 spaces.
+8.  Set tabstops in your editor to 8 spaces.
     When modifying files use the indentation style that is already present.
     Please use consistent indentation style in your new code. Whether you use
     tabs or spaces to indent please be consistent. Where tabs and spaces are
     mixed please remember that a tab is 8 spaces.
 
-8.  Use the tk options database to control the appearance of your user interface.
+9.  Use the tk options database to control the appearance of your user interface.
     In general do not set options on tk widgets unless that option is truly
     specific to that widget. It makes them harder to customize.
 
@@ -104,13 +120,13 @@ please take care of following rules:
     by options.tcl. You can include it at the start of your script with:
     source $env(GISBASE)/etc/gtcltk/options.tcl
 
-9.  Avoid using global variables. Thay are a frequent source of bugs, make code
+10. Avoid using global variables. Thay are a frequent source of bugs, make code
     harder to understand, and make your program difficult to reuse. Additionally,
     putting code into procs usually makes it run faster (it gets compiled).
 
-10. For consistency, use README rather than README.txt for any README files.
+11. For consistency, use README rather than README.txt for any README files.
 
-11. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
+12. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
     You can re-check before submission with 'cvs diff':
 
     Be sure to create unified ("diff -u") format. "Plain"
@@ -122,17 +138,17 @@ please take care of following rules:
     "cvs diff -u display/d.vect/main.c"; that way, the diff will
     include the pathname rather than just "main.c".
 
-12. Tell the other developers about the new code using the following e-mail:
-    grass5@grass.itc.it
+13. Tell the other developers about the new code using the following e-mail:
+    grass-dev@grass.itc.it
  
     To subscribe to this mailing list, see
     http://grass.itc.it/devel/index.php
 
-13. In case of questions feel free to contact the developers at the above
+14. In case of questions feel free to contact the developers at the above
     mailing list.
     http://grass.itc.it/devel/index.php#submission
 
-14. Try to evaluate things only once. Tcl compiles the program to bytecode which
+15. Try to evaluate things only once. Tcl compiles the program to bytecode which
     can be interpreted fairly quickly. If there are strings that must still be
     evaluated tcl must parse and either compile or interpret them
     each time they are encountered. In general this means put braces around
@@ -162,7 +178,7 @@ please take care of following rules:
     multiple times store it in a variable that will not be destroyed or
     changed between reuse. Tcl stores the compiled regex with the variable.
 
-15. You might want to decompose lists in a somewhat easy way:
+16. You might want to decompose lists in a somewhat easy way:
 
     Difficult and slow:
     # Make x1 y1 x2 y2 the first four things in the list
@@ -178,7 +194,7 @@ please take care of following rules:
 
     Be sure to include a comment as to what you are doing.
 
-16. Use the Tcl list functions (list, lappend etc) for manipulating lists.
+17. Use the Tcl list functions (list, lappend etc) for manipulating lists.
 
     For example, use:
 
@@ -200,7 +216,7 @@ please take care of following rules:
     Overlooking either of these points is likely to result in code which
     fails when a command argument contains a space.
 
-17. Tcl C library:
+18. Tcl C library:
     Memory allocated with Tcl_Alloc (such as the result of Tcl_Merge)
     must be freed with Tcl_Free. This means that the ->freeProc of
     an interpreter when returning a string using Tcl_Merge should be
