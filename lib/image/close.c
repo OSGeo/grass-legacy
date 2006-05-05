@@ -7,7 +7,7 @@
 #include	<stdio.h>
 #include	<stdlib.h>
 #include	<unistd.h>
-#include	"image.h"
+#include	<grass/image.h>
 #include	"local_proto.h"
 
 

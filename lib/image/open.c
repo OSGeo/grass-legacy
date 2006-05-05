@@ -12,7 +12,7 @@
 #include	<unistd.h>
 #include	<sys/stat.h>
 #include	<sys/types.h>
-#include	"image.h"
+#include	<grass/image.h>
 #include	"local_proto.h"
 
 

@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <grass/ogsf_proto.h>
 #include <grass/gstypes.h>
 #include "gsget.h"
 #include "math.h"
@@ -1102,7 +1103,6 @@ void primitive_cylinder(unsigned long col, int caps)
  Draws boxes that are used for histograms by gpd_obj function in gpd.c
  for site_attribute management
 */
-#include "local_proto.h"
 
  /* vertices for box */
 float Box[8][3] = {{ 1.0,  1.0, -1.0},{-1.0,  1.0, -1.0},{-1.0,  1.0,  1.0},{ 1.0,  1.0,  1.0},

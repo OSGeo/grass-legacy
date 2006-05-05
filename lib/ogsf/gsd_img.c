@@ -8,7 +8,7 @@
 #include <sys/types.h>
 
 #include <grass/gis.h>
-#include "image.h"
+#include <grass/image.h>
 #include <grass/gstypes.h>
 
 

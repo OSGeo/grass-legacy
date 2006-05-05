@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <grass/gis.h>
-#include "image.h"
+#include <grass/image.h>
 #include "tiffio.h"
 #include <grass/gstypes.h>
 
