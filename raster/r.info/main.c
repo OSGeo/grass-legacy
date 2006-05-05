@@ -250,7 +250,7 @@ int main(int argc, char *argv[])
 
 	    if (data_type == CELL_TYPE) {
 		if( 2 == G_read_range(name, mapset, &crange) )
-		    ret = G_asprintf(&line, "  Range of data:    min = nan  max = nan");
+		    ret = G_asprintf(&line, "  Range of data:    min = NULL  max = NULL");
 		else
 		    ret = G_asprintf(&line, "  Range of data:    min = %i  max = %i",
 		      (CELL) zmin, (CELL) zmax);
@@ -371,8 +371,8 @@ int main(int argc, char *argv[])
 	if (rflag->answer) {
 	    if (data_type == CELL_TYPE) {
 		if( 2 == G_read_range(name, mapset, &crange) ) {
-		    fprintf(out, "min=nan\n");
-		    fprintf(out, "max=nan\n");
+		    fprintf(out, "min=NULL\n");
+		    fprintf(out, "max=NULL\n");
 		}
 		else {
 		    fprintf(out, "min=%i\n", (CELL) zmin);
