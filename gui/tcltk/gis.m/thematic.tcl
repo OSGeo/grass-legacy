@@ -436,6 +436,26 @@ proc GmThematic::save { tree depth node } {
 
 
 ###############################################################################
+
+# get selected vector map 
+proc GmThematic::mapname { node } {
+    variable opt
+    variable tree
+    global mon
+    
+    set tree($mon) $GmTree::tree($mon)
+    set id [GmTree::node_id $node]
+
+    if { ! ( $opt($id,1,_check) ) } { return "" } 
+
+    if { $opt($id,1,map) == "" } { return ""} 
+
+
+    set mapname $opt($id,1,map)
+	return $mapname
+}
+
+###############################################################################
 # render and composite thematic layer
 
 proc GmThematic::display { node mod } {
