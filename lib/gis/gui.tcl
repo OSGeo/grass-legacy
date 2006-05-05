@@ -2,6 +2,7 @@
 
 lappend auto_path $env(GISBASE)/bwidget
 package require -exact BWidget 1.2.1
+source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 source $env(GISBASE)/etc/gtcltk/options.tcl
 source $env(GISBASE)/etc/gtcltk/select.tcl
 source $env(GISBASE)/etc/gtcltk/gronsole.tcl
@@ -268,7 +269,7 @@ proc run_cmd {dlg} {
 	global opt
 	set gronsole $opt($dlg,gronsole)
 
-	set title "Output"
+	set title [G_msg "Output"]
 	layout_raise_special_frame $dlg [list $title] $title]
 
 	set cmd [mkcmd $dlg]
@@ -323,7 +324,7 @@ proc layout_make_frame {dlg guisection optn} {
 		set label [lindex $guisection 0]
 		# Ungrouped options go under Options
 		if {$label == {}} {
-			set label "Options"
+			set label [G_msg "Options"]
 		}
 		set path $opt($dlg,path)
 		set optpane [$path.nb insert end $label -text $label]
@@ -380,7 +381,7 @@ proc layout_raise_frame {dlg guisection optn} {
 	if {$guisection == {}} {set guisection {{}}}
 	set label [lindex $guisection 0]
 	if {$label == {}} {
-		set label "Options"
+		set label [G_msg "Options"]
 	}
 	$path.nb raise $label
 }
@@ -446,7 +447,7 @@ proc make_command_label {dlg path root} {
 proc make_output {dlg path root} {
 	global opt
 
-	set title "Output"
+	set title [G_msg "Output"]
 	set outpane [layout_get_special_frame $dlg [list $title] $title]
 
 	set gronsole [Gronsole $outpane.gronsole -height 5 -width 60 -bg white]
@@ -469,10 +470,10 @@ proc make_buttons {dlg path root} {
 	set pgm_name $opt($dlg,pgm_name)
 
 	set buttonframe [frame $path.buttonframe]
-	button $buttonframe.run   -text Run   -command "run_cmd $dlg"
-	button $buttonframe.help  -text Help  -command "help_cmd $dlg"
-	button $buttonframe.clear -text Clear -command "clear_cmd $dlg"
-	button $buttonframe.close -text Close -command "close_cmd $dlg"
+	button $buttonframe.run   -text [G_msg "Run"]   -command "run_cmd $dlg"
+	button $buttonframe.help  -text [G_msg "Help"]  -command "help_cmd $dlg"
+	button $buttonframe.clear -text [G_msg "Clear"] -command "clear_cmd $dlg"
+	button $buttonframe.close -text [G_msg "Close"] -command "close_cmd $dlg"
 
 	set opt($dlg,run_button) $buttonframe.run 
 
@@ -543,8 +544,8 @@ proc do_label {dlg optn suf} {
 	set typestring "$name=$typestring"
 	set typestring [expr {$req ? "$typestring" : "\[$typestring\]"}]
 
-	set reqtext [expr {$req ? "required" : "optional"}]
-	set multitext [expr {$multi ? "multiple" : ""}]
+	set reqtext [expr {$req ? [G_msg "required"] : [G_msg "optional"]}]
+	set multitext [expr {$multi ? [G_msg "multiple"] : ""}]
 
 	set typehelp "$name: $multitext $type, $reqtext"
 

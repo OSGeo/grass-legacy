@@ -75,10 +75,9 @@ set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]
 set GRASSVERSION [read -nonewline $fp]
 close $fp
 
-source $env(GISBASE)/etc/gtcltk/gmsg.tcl
-
 source $env(GISBASE)/etc/gui.tcl
 # gui.tcl also sources these:
+# $env(GISBASE)/etc/gtcltk/gmsg.tcl
 # $env(GISBASE)/etc/gtcltk/options.tcl
 # $env(GISBASE)/etc/gtcltk/select.tcl
 # $env(GISBASE)/etc/gtcltk/gronsole.tcl
