@@ -455,6 +455,16 @@ proc GmTree::delete { } {
 
 
 ###############################################################################
+# return selected node
+proc GmTree::getnode { } {
+	variable tree
+	global mon
+
+    set sel [ lindex [$tree($mon)  selection get] 0 ]
+	return $sel
+}
+
+###############################################################################
 
 # display nodes for GRASS display modules
 proc GmTree::display_node { node mod } {
