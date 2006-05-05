@@ -71,7 +71,8 @@ proc MapToolBar::create { tb } {
         -command "MapCanvas::stoptool $mon" \
 		-variable maptools -value pointer  -relief flat -offrelief flat -overrelief raised \
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
-		-activebackground $bgcolor -highlightbackground $bgcolor  ]    
+		-activebackground $bgcolor -highlightbackground $bgcolor  ]
+    DynamicHelp::register $pointer balloon [G_msg "Pointer"]
 
     # zoom in
     set zoomin [radiobutton $tb.zoomin \
@@ -79,7 +80,8 @@ proc MapToolBar::create { tb } {
         -command "MapCanvas::stoptool $mon; MapCanvas::zoombind $mon 1" \
 		-variable maptools -value zoomin -relief flat -offrelief flat -overrelief raised \
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
-		-activebackground $bgcolor -highlightbackground $bgcolor ]    
+		-activebackground $bgcolor -highlightbackground $bgcolor ]   
+    DynamicHelp::register $zoomin balloon [G_msg "Zoom In"]
     
     #zoom out
     set zoomout [radiobutton $tb.zoomout \
@@ -88,6 +90,7 @@ proc MapToolBar::create { tb } {
 		-variable maptools -value zoomout  -relief flat -offrelief flat -overrelief raised \
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]    
+    DynamicHelp::register $zoomout balloon [G_msg "Zoom Out"]
 
     # pan
     set pan [radiobutton $tb.pan \
@@ -96,6 +99,7 @@ proc MapToolBar::create { tb } {
 		-variable maptools -value pan  -relief flat -offrelief flat -overrelief raised \
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]    
+    DynamicHelp::register $pan balloon [G_msg "Pan"]
 
     # query
     set query [radiobutton $tb.query \
@@ -104,6 +108,7 @@ proc MapToolBar::create { tb } {
 		-variable maptools -value query  -relief flat -offrelief flat -overrelief raised \
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]    
+    DynamicHelp::register $query balloon [G_msg "Query"]
 
     # measure
     set measure [radiobutton $tb.measure \
@@ -112,6 +117,7 @@ proc MapToolBar::create { tb } {
 		-variable maptools -value measure -relief flat -offrelief flat -overrelief raised \
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]    
+    DynamicHelp::register $measure balloon [G_msg "Measure"]
 
     pack $pointer $zoomin $zoomout $pan $query $measure -side left -anchor w
 
@@ -186,6 +192,39 @@ proc MapToolBar::create { tb } {
 
 	$mapsave configure -menu $savefile
 
+    set sep5 [Separator $toolbar.sep5 -orient vertical ]
+    pack $sep5 -side left -fill y -padx 5 -anchor w
+
+
+    # Render modes
+
+    # Strict render mode
+    # Uses previous resolution and exact boundaries
+    set strictdraw [radiobutton $tb.strictdraw \
+		-command "MapCanvas::exploremode $mon 0" \
+		-variable MapToolBar::explore($mon) -value strict \
+		-relief flat -offrelief flat -overrelief raised \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-activebackground $bgcolor -highlightbackground $bgcolor ]
+    DynamicHelp::register $strictdraw balloon [G_msg "Strict Draw Mode"]
+    icon_configure $strictdraw drawmode strict
+
+    # Explore render mode
+    # Uses resolution to match display and expanded boundaries to fill display
+    set exploredraw [radiobutton $tb.strictzoom \
+		-command "MapCanvas::exploremode $mon 1" \
+		-variable MapToolBar::explore($mon) -value explore \
+		-relief flat -offrelief flat -overrelief raised \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-activebackground $bgcolor -highlightbackground $bgcolor ]
+    DynamicHelp::register $exploredraw balloon [G_msg "Explore Draw Mode"]
+    icon_configure $exploredraw drawmode explore
+
+    # This does not actually set the mode
+    # it just starts visually in sync with the default
+    set MapToolBar::explore($mon) strict
+
+    pack $strictdraw $exploredraw -side left -anchor w
 }
 
 ###############################################################################
