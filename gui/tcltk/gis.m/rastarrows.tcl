@@ -19,6 +19,7 @@ namespace eval GmArrows {
     variable array dup # vector
 }
 
+###############################################################################
 proc GmArrows::create { tree parent } {
     variable optlist
     variable lfile
@@ -86,6 +87,7 @@ proc GmArrows::create { tree parent } {
     return $node
 }
 
+###############################################################################
 proc GmArrows::set_option { node key value } {
     variable opt
  
@@ -116,6 +118,8 @@ proc GmArrows::select_magmap { id } {
         GmTree::autonamel "arrows for $m"
     }
 }
+
+###############################################################################
 # display histogram options
 proc GmArrows::options { id frm } {
     variable opt
@@ -227,6 +231,7 @@ proc GmArrows::options { id frm } {
     pack $row -side top -fill both -expand yes
 }
 
+###############################################################################
 proc GmArrows::save { tree depth node } {
     variable opt
     variable optlist
@@ -239,6 +244,7 @@ proc GmArrows::save { tree depth node } {
     } 
 }
 
+###############################################################################
 proc GmArrows::display { node mod} {
     global mon
     global mapfile
@@ -278,6 +284,7 @@ proc GmArrows::display { node mod} {
 	GmCommonLayer::display_command [namespace current] $id $cmd
 }
     
+###############################################################################
 proc GmArrows::mapname { node } {
     variable opt
     variable tree
@@ -295,6 +302,7 @@ proc GmArrows::mapname { node } {
     return $mapname
 }
 
+###############################################################################
 proc GmArrows::duplicate { tree parent node id } {
     variable optlist
     variable lfile

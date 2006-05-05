@@ -19,6 +19,7 @@ namespace eval GmRgbhis {
 }
 
 
+###############################################################################
 proc GmRgbhis::create { tree parent } {
     variable optlist
     variable lfile
@@ -85,6 +86,7 @@ proc GmRgbhis::create { tree parent } {
     return $node
 }
 
+###############################################################################
 proc GmRgbhis::set_option { node key value } {
     variable opt
  
@@ -118,6 +120,7 @@ proc GmRgbhis::select_map3 { id } {
         set GmRgbhis::opt($id,1,map3) $m3
     }
 }
+###############################################################################
 # display RGB and HIS options
 proc GmRgbhis::options { id frm } {
     variable opt
@@ -208,6 +211,7 @@ proc GmRgbhis::options { id frm } {
 
 }
 
+###############################################################################
 proc GmRgbhis::save { tree depth node } {
     variable opt
     variable optlist
@@ -221,6 +225,7 @@ proc GmRgbhis::save { tree depth node } {
 }
 
 
+###############################################################################
 proc GmRgbhis::display { node mod} {
     global mon
     global mapfile
@@ -283,6 +288,7 @@ proc GmRgbhis::display { node mod} {
 
 
 
+###############################################################################
 proc GmRgbhis::duplicate { tree parent node id } {
     variable optlist
     variable lfile
@@ -348,6 +354,7 @@ proc GmRgbhis::duplicate { tree parent node id } {
     return $node
 }
 
+###############################################################################
 proc GmRgbhis::mapname { node } {
     variable opt
     variable tree
