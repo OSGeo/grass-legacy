@@ -387,7 +387,7 @@ proc MapCanvas::runprograms { mon mod } {
 	set env(MONITOR_OVERRIDE) "gism"
 	# Setting the font really only needs to be done once per display start
 	runcmd "d.font romans"
-	# incr drawprog
+	incr drawprog
 	# This d.frame -e is no longer necessary since each layer now does it itself
 	# runcmd "d.frame -e"
 	# incr drawprog
@@ -527,6 +527,62 @@ proc MapCanvas::zoom_default { mon } {
 
 ###############################################################################
 
+# zoom to selected map
+proc MapCanvas::zoom_map { mon } {
+	variable can
+    
+	set sel [ GmTree::getnode ]
+    if { $sel == "" } { return }
+
+    set type [GmTree::node_type $sel]
+    if { $type == "" } { return }
+
+    switch $type {
+		"raster" {
+			set regtype "raster"
+			set map [GmRaster::mapname $sel]
+		}
+		"rgbhis" {
+			set regtype "raster"
+			set map [GmRgbhis::mapname $sel]
+		}
+		"rnums" {
+			set regtype "raster"
+			set map [GmRnums::mapname $sel]
+		}
+		"arrows" {
+			set regtype "raster"
+			set map [GmArrows::mapname $sel]
+		}
+		"vector" {
+			set regtype "vector"
+			set map [GmVector::mapname $sel]
+		}
+		"thematic" {
+			set regtype "vector"
+			set map [GmThematic::mapname $sel]
+		}
+		"chart" {
+			set regtype "vector"
+			set map [GmChart::mapname $sel]
+		}
+		default {
+			return
+		}
+    } 
+
+    if { $regtype=="raster" } {
+		MapCanvas::zoom_gregion $mon [list "rast=$map"]
+	}
+    if { $regtype=="vector" } {
+		MapCanvas::zoom_gregion $mon [list "vect=$map"]
+	}
+	$can($mon) delete map$mon
+	MapCanvas::request_redraw $mon 1
+}
+
+###############################################################################
+
 # zoom to saved region
 proc MapCanvas::zoom_region { mon } {
 	variable can
@@ -582,7 +638,6 @@ proc MapCanvas::stoptool { mon } {
 	MapCanvas::restorecursor $mon 		
 	
 }
-
 
 ###############################################################################
 # procedures for interactive zooming in and zooming out
