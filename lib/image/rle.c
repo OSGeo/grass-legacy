@@ -5,7 +5,7 @@
  *
  */
 #include	<stdio.h>
-#include	"image.h"
+#include	<grass/image.h>
 #include	"local_proto.h"
 
 

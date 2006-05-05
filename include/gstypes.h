@@ -331,6 +331,6 @@ extern void (*Cxl_func)();
 extern void (*Swap_func)();
 
 /* Bring all the function prototypes */
-#include "local_proto.h"
+#include "ogsf_proto.h"
 
 #endif /* _GSTYPES_H */

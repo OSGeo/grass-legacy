@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <grass/config.h>
-#include "image.h"
+#include <grass/image.h>
 #include "local_proto.h"
 
 

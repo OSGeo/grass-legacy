@@ -11,8 +11,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "local_proto.h"
-#include "image.h"
+#include <grass/image.h>
+#include <grass/ogsf_proto.h>
 #include <grass/gstypes.h>
 
 /* FFMPEG stuff */

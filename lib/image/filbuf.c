@@ -4,7 +4,7 @@
  *				Paul Haeberli - 1984
  *
  */
-#include	"image.h"
+#include	<grass/image.h>
 #include	"local_proto.h"
 
 

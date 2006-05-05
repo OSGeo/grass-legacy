@@ -6,7 +6,7 @@
  */
 #include	<stdio.h>
 #include	<string.h>
-#include	"image.h"
+#include	<grass/image.h>
 
 
 void isetname(IMAGE *image, char *name)

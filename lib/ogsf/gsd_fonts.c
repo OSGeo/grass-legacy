@@ -15,11 +15,10 @@
 *****************************************************************************/
 
 #include <string.h>
-
-#include <grass/gstypes.h>
-#include "rgbpack.h"
 #include <assert.h>
-#include "local_proto.h"
+#include <grass/gstypes.h>
+#include <grass/ogsf_proto.h>
+#include "rgbpack.h"
 
 
 
