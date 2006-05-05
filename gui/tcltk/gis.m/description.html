@@ -194,23 +194,31 @@ creates a new map. Vector digitizing will either edit an existing map
 new vector map (if the name of the new vector to be created is entered
 in the 'vector name' field of the options panel for a vector map
 layer). <span style="font-style: italic;">See <a href="r.digit.html">r.digit</a> and <a href="v.digit.html">v.digit</a></span>.
+
+
 <h2>MAP DISPLAY BUTTON FUNCTIONS</h2>
 
 <h3>Display active layers (current region)</h3>
 
-Displays all active layers at current resolution and region extents for that map display window.&nbsp;
+<img src="icons/gui-display.gif"> Displays all active layers at current resolution and region extents for that map display window.&nbsp;
+
+<h3>Redisplay all active layers and zoom to current region</h3>
+
+<img src="icons/gui-zoom_current.gif"> Resets the region to
+the resolution and extents to the values set with g.region; forces redisplay and re-rendering
+all active layers. <i>See <a href="g.region.html">g.region</a>.</i>
 
 <h3>NVIZ</h3>
-Starts the NVIZ, n-dimensional visualization module and interactive
+<img src="icons/module-nviz.gif"> Starts the NVIZ, n-dimensional visualization module and interactive
 graphical interface. All active raster and vector layers in the layer
 tree will be displayed in NVIZ. <span style="font-style: italic;">See <a href="nviz.html">nviz</a></span><a href="nviz.html">.</a>
 <h3>Erase to white</h3>
 
-Erases the currently selected monitor to a white background; also removes all frames. <span style="font-style: italic;">See <a href="d.erase.html">d.erase</a> and <a href="d.frame.html">d.frame</a> -e.</span>
+<img src="icons/gui-erase.gif"> Erases the currently selected monitor to a white background; also removes all frames. <span style="font-style: italic;">See <a href="d.erase.html">d.erase</a> and <a href="d.frame.html">d.frame</a> -e.</span>
 <h3>Arrow cursor</h3>
-Select arrow cursor for map display.&nbsp;<span style="font-style: italic;"></span>
+<img src="icons/gui-pointer.gif"> Select arrow cursor for map display.&nbsp;<span style="font-style: italic;"></span>
 <h3>Zoom in</h3>
-Interactive zooming with the mouse in the active display monitor.
+<img src="icons/gui-zoom_in.gif"> Interactive zooming with the mouse in the active display monitor.
 Drawing a box with the mouse (left button) and zoom-in cursor causes
 the display to zoom in so that the area defined by the box fills the
 display. The map resolution is not changed. Clicking with the zoom-in
@@ -222,7 +230,7 @@ displayed). <span style="font-style: italic;">See <a href="g.region.html"><span 
 </span>
 <h3>Zoom out</h3>
 
-Interactive zooming with the mouse in the active display monitor.
+<img src="icons/gui-zoom_out.gif"> Interactive zooming with the mouse in the active display monitor.
 Drawing a box with the mouse (left button) and zoom-out cursor causes the display to
 zoom in so that the area displayed shrinks to fill the area defined by the box. The map
 resolution is not changed. Clicking with the zoom-out cursor causes the
@@ -232,7 +240,7 @@ area
 displayed). <span style="font-style: italic;">See <a href="g.region.html"><span style="text-decoration: underline;">g.region</span></a>.</span><span style="font-weight: bold;"></span>
 <h3><span style="font-weight: bold;">Pan</span></h3>
 
-<span style="font-weight: bold;"></span>Interactive selection of a new
+<img src="icons/gui-pan.gif"> Interactive selection of a new
 center of view in the active display monitor. Drag the pan cursor while
 pressing the left mouse button to pan. Panning changes the
 location of the region extents but not the size of the area displayed
@@ -241,7 +249,7 @@ or the resolution.&nbsp;<span style="font-style: italic;">See <a href="g.region.
 <span style="font-weight: bold;"></span>
 <h3>Query (select map first)</h3>
 
-Query selected raster (only the base map of a draped map will be
+<img src="icons/gui-query.gif"> Query selected raster (only the base map of a draped map will be
 queried), RGB raster map (all three map channels will be queried), or
 vector map using the mouse. A map must be
 selected before query.
@@ -249,48 +257,39 @@ selected before query.
 results of the query will be displayed in the console window.<span style="font-style: italic;"> See <a href="r.what.html">r.what</a> and <a href="v.what.html">v.what</a></span>.<br>
 
 <h3>Measure lengths</h3>
-Interactive measurement of lengths defined with the mouse. The length
+<img src="icons/gui-measure.gif"> Interactive measurement of lengths defined with the mouse. The length
 of each segment and the cumulative length of all segments measuered is
 displayed in the console window. Lengths are
 measured in the current measurement unit. <span style="font-style: italic;">See also <a href="d.measure.html">d.measure</a>.</span><br>
 
 <h3><span style="font-weight: bold;">Return to previous zoom</span></h3>
 
-<span style="font-weight: bold;"></span>Resets the region to the region extents in effect prior to zooming in or out, or panning.<span style="font-weight: bold;"></span>
-<h3>Redisplay all active layers and zoom to current region</h3>
-
-Resets the region to
-the resolution and extents to the values set with g.region; forces redisplay and re-rendering
-all active layers.&nbsp;<span style="font-style: italic;">See <a href="g.region.html"><span style="text-decoration: underline;">g.region</span></a>.</span>
+<img src="icons/gui-zoom_back.gif"> Resets the region to the region extents in effect prior to zooming in or out, or panning.
 
 <h3>Display active layers (saved region)</h3>
 
-Opens a dialog to select a saved region setting. Resets the region to
+<img src="icons/gui-zoom_region.gif">  Opens a dialog to select a saved region setting. Resets the region to
 the resolution and extents of the selected saved region, and displays
 all active layers.&nbsp;<span style="font-style: italic;">See <a href="g.region.html"><span style="text-decoration: underline;">g.region</span></a>.</span>
 
 <h3>Display active layers (default region)</h3>
 
-Resets the region to the default resolution and extents, and displays all
+<img src="icons/gui-zoom_default.gif"> Resets the region to the default resolution and extents, and displays all
 active layers.&nbsp;<span style="font-style: italic;">See <a href="g.region.html"><span style="text-decoration: underline;">g.region</span></a> -d.</span>
 
-<h3>Display active layers (saved region)</h3>
-
-Opens a dialog to select a saved region setting. Resets the region to
-the resolution and extents of the selected saved region, and displays
-all active layers.&nbsp;<span style="font-style: italic;">See <a href="g.region.html"><span style="text-decoration: underline;">g.region</span></a>.</span>
+<h3>Print map</h3>
+<img src="icons/file-print.gif"> Prints map on lpr printer or postscript device; saves visible map
+display (including postscript text and labels) to PDF or EPS file.
+Requires ghostscript for all output except EPS.
 
 <h3>Export map display</h3>
-Exports visible map display to different raster file formats. Exported
-map does not include postscript text or postscript labels.<span style="font-weight: bold;"><br>
+<img src="icons/file-save.gif"> Exports visible map display to different raster file formats. Exported map does not include postscript text or postscript labels.
 
-</span>
-<h3>Print map</h3>
-Prints map on lpr printer or postscript device; saves visible map
-display (including postscript text and labels) to PDF or EPS file.
-Requires ghostscript for all output except EPS.<span style="font-weight: bold;"><br>
-</span><span style="font-weight: bold;"></span><br>
-<br>
+<h3>Strict draw mode</h3>
+<img src="icons/drawmode-strict.gif"> Selects strict draw mode. In strict mode the aspect ratio and resolution from the last zoom are used when drawing the maps. The map will show only the area and resolution selected. It will not usually fill the screen. Strict mode only shows what is asked for.
+
+<h3>Explore draw mode</h3>
+<img src="icons/drawmode-explore.gif"> Selects explore draw mode. In explore mode the region from the last zoom is expanded to fill the entire screen. The resolution is adjusted to match the screen resolution. Explore mode shows as much as possible.
 
 <h2>SEE ALSO</h2> <a href="d.m.html">d.m</a>
 

@@ -26,13 +26,18 @@
 
 namespace eval MapCanvas {
 	variable array displayrequest # Indexed by mon, true if it wants to get displayed.
-	variable array canmodified # Something's modified the canvas or view, indexed by mon.
+
+	# Something's modified the canvas or view, indexed by mon.
+	# Degree of modification 0 - none, 1 - zoom, 2 - canvas
+	variable array canmodified 
+
 	variable array can # The canvas widgets of the monitors, indexed by mon
 	variable array mapframe # Frame widgets, indexed by mon
 	variable array canvas_w # Width and height of canvas. Indexed by mon
 	variable array canvas_h # mon
 	variable array driver_w # Actual width and height used while drawing / compositing. Indexed by mon
 	variable array driver_h # Actual width and height used while drawing / compositing. Indexed by mon
+	variable array exploremode # Whether or not to change regions to match monitor, indexed by mon
 	variable array map_ind # Indicator widgets, indexed by mon
 	# There is a global coords # Text to display in indicator widget, indexed by mon
 	global array mapfile # mon - Driver output file (.ppm)
@@ -48,6 +53,15 @@ namespace eval MapCanvas {
 	# Depth of zoom history to keep
 	variable zoomhistories
 	set zoomhistories 7
+
+	# Regular order for region values in a list representing a region or zoom
+	variable zoom_attrs
+	set zoom_attrs {n s e w nsres ewres}
+
+	# This variable keeps track of which monitor set the gism driver settings last.
+	# They must always be redone if the monitor was different
+	variable previous_monitor
+	set previous_monitor {none}
 }
 
 set initwd 640.0
@@ -82,6 +96,7 @@ proc MapCanvas::create { } {
 	variable mapframe
 	variable can
 	variable map_ind
+	variable exploremode
 	
 	# Initialize window and map geometry
 	
@@ -91,6 +106,8 @@ proc MapCanvas::create { } {
 	set env(GRASS_HEIGHT) $initht
 	set drawprog 0
 	set win ""
+	# Explore mode is off by default
+	set exploremode($mon) 0
 
 	# Zoom to the current region
 	MapCanvas::zoom_gregion $mon
@@ -188,6 +205,47 @@ proc MapCanvas::create { } {
 	bind .mapcan($mon) <Destroy> "MapCanvas::cleanup $mon %W"
 }
 
+###############################################################################
+# Calculate boxes with a given aspect ratio.
+
+# Sense - 0 means largest no larger, 1 means smallest no smaller
+# We will change box 1
+proc MapCanvas::shrinkwrap {sense nsew1 ar2 } {
+	foreach {n1 s1 e1 w1} $nsew1 {break}
+
+	set ns1 [expr {$n1 - $s1}]
+	set ew1 [expr {$e1 - $w1}]
+
+	# Width / height
+	# Big aspect ratio is wide, small aspect ratio is tall
+	set ar1 [expr { 1.0 * $ew1 / $ns1 }]
+	
+	# If box one is wider than box 2.
+	# (or box one isn't wider than box 2 and the sense is inverted)
+	if {($ar1 > $ar2) ^ $sense} {
+		# n1 and s1 are unchanged
+		# e1 and w1 must be scaled by ar2
+		set rn1 $n1
+		set rs1 $s1
+		set goal [expr {$ns1 * $ar2}]
+		set midpoint [expr {$w1 + $ew1 / 2}]
+		set re1 [expr {$midpoint + $goal / 2}]
+		set rw1 [expr {$midpoint - $goal / 2}]
+	} else {
+		# e1 and w1 are unchanged
+		# n1 and s1 must be scaled by 1/ar2
+		set re1 $e1
+		set rw1 $w1
+		set goal [expr {$ew1 / $ar2}]
+		set midpoint [expr {$s1 + $ns1 / 2}]
+		set rn1 [expr {$midpoint + $goal / 2}]
+		set rs1 [expr {$midpoint - $goal / 2}]
+	}
+
+	set result [list $rn1 $rs1 $re1 $rw1]
+	
+	return $result
+}
 
 ###############################################################################
 # map display procedures
@@ -199,14 +257,22 @@ proc MapCanvas::drawmap { mon } {
 	variable can
 	variable canmodified
 	variable monitor_zooms
+	variable previous_monitor
+	variable exploremode
 
 	set w [winfo width $can($mon)]
 	set h [winfo height $can($mon)]
 
+	# Get whether or not the canvas was modified or zoomed
+	# canmodified has levels: 0  is none, 1 is zoom, 2 is geometry.
+	# 1 doesn't require new setting in explore mode
+	set mymodified $canmodified($mon)
+
 	# Make sure canvas_h and canvas_w are correct
 	if { $canvas_w($mon) != $w || $canvas_h($mon) != $h } {
 		# Flag this as a modified canvas
-		set canmodified($mon) 1
+		# Modified canvas is level 2!
+		set mymodified 2
 		set canvas_w($mon) $w
 		set canvas_h($mon) $h
 	}
@@ -216,17 +282,20 @@ proc MapCanvas::drawmap { mon } {
 	# Set the region from our zoom settings
 	MapCanvas::gregion_zoom $mon
 
-	set mymodified $canmodified($mon)
-
-	if { $mymodified } {
+	# Redo the driver settings if the geometry has changed or
+	# if we weren't the previous monitor.
+	if {$mymodified == 2 || \
+	    ($mymodified && ! $exploremode($mon)) || \
+	    $previous_monitor != $mon} {
 		set canmodified($mon) 0
+		set previous_monitor $mon
 		# The canvas or view has been modified
 		# Redo the map settings to match the canvas
-		MapCanvas::mapsettings $mon
+		MapCanvas::driversettings $mon
 	}
 
 	# Render all the layers
-	MapCanvas::runprograms $mon $mymodified
+	MapCanvas::runprograms $mon [expr {$mymodified != 0}]
 	# Composite them and display
 	MapCanvas::composite $mon
 
@@ -234,8 +303,8 @@ proc MapCanvas::drawmap { mon } {
 	run_panel [list g.region region=gism_temp_region --o]
 }
 
-# set up map geometry 
-proc MapCanvas::mapsettings { mon } {
+# set up driver geometry and settings
+proc MapCanvas::driversettings { mon } {
 	global env
 	global mapset
 	variable canvas_h
@@ -245,24 +314,32 @@ proc MapCanvas::mapsettings { mon } {
 	global mapfile
 	
 	variable monitor_zooms
+	variable exploremode
 				
 	if {[info exists env(MONITOR_OVERRIDE)]} {unset env(MONITOR_OVERRIDE)}
 
-	# get region extents
-	set map_n $monitor_zooms($mon,1,n)
-	set map_s $monitor_zooms($mon,1,s)
-	set map_w $monitor_zooms($mon,1,w)
-	set map_e $monitor_zooms($mon,1,e)
-		
-	set mapwd [expr {abs(1.0 * ($map_e - $map_w))}]
-	set mapht [expr {abs(1.0 * ($map_n - $map_s))}]
-	
-	if { [expr {1.0 * $canvas_h($mon) / $canvas_w($mon)}] > [expr {$mapht / $mapwd}] } {
-		set driver_h($mon) [expr {1.0 * $canvas_w($mon) * $mapht / $mapwd}]
+	if {$exploremode($mon)} {
+		# The driver will make an image just the size of the canvas
+		# This is just a little shortcut, the method below would calculate the same
+		set driver_h($mon) $canvas_h($mon)
 		set driver_w($mon) $canvas_w($mon)
 	} else {
-		set driver_h($mon) $canvas_h($mon)
-		set driver_w($mon) [expr {1.0 * $canvas_h($mon) * $mapwd / $mapht}]
+		# Calculate what sized image will fit in the canvas
+		# get region extents
+		foreach {map_n map_s map_e map_w} [MapCanvas::currentzoom $mon] {break}
+		
+		set mapwd [expr {abs(1.0 * ($map_e - $map_w))}]
+		set mapht [expr {abs(1.0 * ($map_n - $map_s))}]
+		set mapar [expr {$mapwd / $mapht}]
+
+		# Calculate the largest box of the map's aspect ratio no larger than
+		# the canvas. First argument 0 is largest no larger.
+		set driver_nsew [MapCanvas::shrinkwrap 0 [list $canvas_h($mon) 0 $canvas_w($mon) 0] $mapar]
+		# Pull out the values
+		foreach {y2 y1 x2 x1} $driver_nsew {break}
+		
+		set driver_h($mon) [expr {round ($y2 - $y1)}]
+		set driver_w($mon) [expr {round ($x2 - $x1)}]
 	}
 
 	# stop display driver in order to set display environment parameters
@@ -308,10 +385,12 @@ proc MapCanvas::runprograms { mon mod } {
 		
 	incr drawprog
 	set env(MONITOR_OVERRIDE) "gism"
+	# Setting the font really only needs to be done once per display start
 	runcmd "d.font romans"
-	incr drawprog
-	runcmd "d.frame -e"
-	incr drawprog
+	# incr drawprog
+	# This d.frame -e is no longer necessary since each layer now does it itself
+	# runcmd "d.frame -e"
+	# incr drawprog
 	GmGroup::display "root" $mod
 	incr drawprog
 	if {[info exists env(MONITOR_OVERRIDE)]} {unset env(MONITOR_OVERRIDE)}
@@ -387,9 +466,7 @@ proc MapCanvas::request_redraw {mon modified} {
 
 	set redrawrequest($mon) 1
 
-	if {$modified} {
-		set canmodified($mon) 1
-	}
+	set canmodified($mon) $modified
 }
 
 # Start the server
@@ -462,6 +539,20 @@ proc MapCanvas::zoom_region { mon } {
 	}
 }
 
+###############################################################################
+
+# Switch in and out of exploremode
+# Pass second argument true to switch in, false to switch out
+proc MapCanvas::exploremode { mon boolean } {
+	variable exploremode
+
+	# Set the explore mode to yes or no (the input)
+	set exploremode($mon) $boolean
+		
+	# Request a redraw with a geometry change (not just a zoom change).
+	# Flag it at as such (2)
+	MapCanvas::request_redraw $mon 2
+}
 
 ###############################################################################
 
@@ -492,27 +583,58 @@ proc MapCanvas::stoptool { mon } {
 	
 }
 
+
 ###############################################################################
 # procedures for interactive zooming in and zooming out
 
+# Get the current zoom region
+# Returns a list in zoom_attrs order (n s e w nsres ewres)
+# Implements explore mode
+proc MapCanvas::currentzoom { mon } {
+	variable zoom_attrs
+	variable exploremode
+	variable monitor_zooms
+	variable canvas_w
+	variable canvas_h
+
+	# Fetch the current zoom settings
+	set region {}
+	foreach attr $zoom_attrs {
+		lappend region $monitor_zooms($mon,1,$attr)
+	}
+
+	# If explore mode is engaged blow up the region to match the canvas
+	if {$exploremode($mon)} {
+		# Set the region to the smallest region no smaller than the canvas
+		set canvas_ar [expr {1.0 * $canvas_w($mon) / $canvas_h($mon)}]
+		set expanded_nsew [MapCanvas::shrinkwrap 1 [lrange $region 0 3] $canvas_ar]
+		foreach {n s e w} $expanded_nsew {break}
+		# Calculate the resolutions
+		lappend expanded_nsew [expr {1.0 * ($n - $s) / $canvas_h($mon)}]
+		lappend expanded_nsew [expr {1.0 * ($e - $w) / $canvas_w($mon)}]
+		set region $expanded_nsew
+	}
+
+	return $region
+}
+
 # Zoom or pan to new bounds in the zoom history
-# Arguments are either n s w e or n s w e nsres ewres
+# Arguments are either n s e w or n s e w nsres ewres
 proc MapCanvas::zoom_new {mon args} {
 	variable monitor_zooms
 	variable zoomhistories
-
-	set attrs {n s w e nsres ewres}
+	variable zoom_attrs
 
 	# Demote all of the zoom history
 	for {set i $zoomhistories} {$i > 1} {incr i -1} {
 		set iminus [expr {$i - 1}]
-		foreach attr $attrs {
+		foreach attr $zoom_attrs {
 			catch {set monitor_zooms($mon,$i,$attr) $monitor_zooms($mon,$iminus,$attr)}
 		}
 	}
 
 	# If cols and rows aren't present we just use what was already here.
-	set present_attrs [lrange $attrs 0 [expr {[llength $args] - 1}]]
+	set present_attrs [lrange $zoom_attrs 0 [expr {[llength $args] - 1}]]
 
 	foreach value $args attr $present_attrs {
 		set monitor_zooms($mon,1,$attr) $value
@@ -523,25 +645,24 @@ proc MapCanvas::zoom_new {mon args} {
 proc MapCanvas::zoom_previous {mon} {
 	variable monitor_zooms
 	variable zoomhistories
-
-	set attrs {n s w e nsres ewres}
+	variable zoom_attrs
 
 	# Remember the first monitor
 	set old1 {}
-	foreach attr $attrs {
+	foreach attr $zoom_attrs {
 		lappend old1 $monitor_zooms($mon,1,$attr)
 	}
 
 	# Promote all of the zoom history
 	for {set i 1} {$i < $zoomhistories } {incr i} {
 		set iplus [expr {$i + 1}]
-		foreach attr $attrs {
+		foreach attr $zoom_attrs {
 			catch {set monitor_zooms($mon,$i,$attr) $monitor_zooms($mon,$iplus,$attr)}
 		}
 	}
 
 	# Set the oldest thing in the history to where we just were
-	foreach value $old1 attr $attrs {
+	foreach value $old1 attr $zoom_attrs {
 		set monitor_zooms($mon,$zoomhistories,$attr) $value
 	}
 }
@@ -556,25 +677,23 @@ proc MapCanvas::zoom_gregion {mon args} {
 		}
 		close $input
 
-		MapCanvas::zoom_new $mon $parts(n) $parts(s) $parts(w) $parts(e) $parts(nsres) $parts(ewres)
+		MapCanvas::zoom_new $mon $parts(n) $parts(s) $parts(e) $parts(w) $parts(nsres) $parts(ewres)
 	}
 }
 
-
-# Set the region from the zoom
+# Set the region from the current zoom
 proc MapCanvas::gregion_zoom {mon args} {
-	variable monitor_zooms
+	variable zoom_attrs
 
-	set attrs {n s w e nsres ewres}
+	set values [MapCanvas::currentzoom $mon]
 
 	set options {}
-	foreach attr $attrs {
-		lappend options "$attr=$monitor_zooms($mon,1,$attr)"
+	foreach attr $zoom_attrs value $values {
+		lappend options "$attr=$value"
 	}
 
 	run_panel [concat g.region $options $args]
 }
-
 
 
 # zoom bindings
@@ -671,10 +790,7 @@ proc MapCanvas::zoomregion { mon zoom } {
     
 	
 	# get region extents
-	set map_n $monitor_zooms($mon,1,n)
-	set map_s $monitor_zooms($mon,1,s)
-	set map_w $monitor_zooms($mon,1,w)
-	set map_e $monitor_zooms($mon,1,e)
+	foreach {map_n map_s map_e map_w} [MapCanvas::currentzoom $mon] {break}
 	
 	# get zoom rectangle extents in canvas coordinates
 	if { $areaX2 < $areaX1 } {
@@ -702,16 +818,22 @@ proc MapCanvas::zoomregion { mon zoom } {
 
 	# zoom in
 	if { $zoom == 1 } {
-		MapCanvas::zoom_new $mon $north $south $west $east
+		MapCanvas::zoom_new $mon $north $south $east $west
 	}
 	
 	#zoom out
+	# Guarantee that the current region fits in the new box on the screen.
 	if { $zoom == -1 } {
-		set upnorth [expr {$map_n + abs($map_n - $north)}]
-		set downsouth [expr {$map_s - abs($south - $map_s)}]
-		set backeast  [expr {$map_e + abs($map_e - $east)}]
-		set outwest  [expr {$map_w - abs($west - $map_w)}]
-		MapCanvas::zoom_new $mon $upnorth $downsouth $outwest $backeast
+		# This effectively zooms out by the maxmimum of the two scales
+		set nsscale [expr { ($map_n - $map_s) / ($north - $south) }]
+		set ewscale [expr { ($map_e - $map_w) / ($east - $west) }]
+
+		set upnorth   [expr { $map_n + $nsscale * ($map_n - $north) }]
+		set downsouth [expr { $map_s + $nsscale * ($map_s - $south) }]
+		set backeast  [expr { $map_e + $ewscale * ($map_e - $east) }]
+		set outwest   [expr { $map_w + $ewscale * ($map_w - $west) }]
+
+		MapCanvas::zoom_new $mon $upnorth $downsouth $backeast $outwest
 	}
 
 	# redraw map
@@ -802,10 +924,7 @@ proc MapCanvas::pan { mon } {
     set to_n   [scry2mapn $to_y]
     
 	# get region extents
-	set map_n $monitor_zooms($mon,1,n)
-	set map_s $monitor_zooms($mon,1,s)
-	set map_w $monitor_zooms($mon,1,w)
-	set map_e $monitor_zooms($mon,1,e)
+	foreach {map_n map_s map_e map_w} [MapCanvas::currentzoom $mon] {break}
 
 	# set new region extents
 	set north [expr {$map_n - ($to_n - $from_n)}]
@@ -814,7 +933,7 @@ proc MapCanvas::pan { mon } {
 	set west  [expr {$map_w - ($to_e - $from_e)}]
 	
 	# reset region and redraw map
-	MapCanvas::zoom_new $mon $north $south $west $east
+	MapCanvas::zoom_new $mon $north $south $east $west
 	
 	$can($mon) delete map$mon
 	MapCanvas::request_redraw $mon 1
@@ -1065,11 +1184,8 @@ proc MapCanvas::coordconv { mon } {
 	variable canvas_h
 	variable monitor_zooms
 
-	# get current region extents
-	set map_n $monitor_zooms($mon,1,n)
-	set map_s $monitor_zooms($mon,1,s)
-	set map_w $monitor_zooms($mon,1,w)
-	set map_e $monitor_zooms($mon,1,e)
+	# get region extents
+	foreach {map_n map_s map_e map_w} [MapCanvas::currentzoom $mon] {break}
 	
 # 	calculate dimensions
 
