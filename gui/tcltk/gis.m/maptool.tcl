@@ -1,6 +1,11 @@
 ###############################################################
 # maptool.tcl - toolbar file GRASS GIS Manager map display canvas
 # January 2006 Michael Barton, Arizona State University
+# COPYRIGHT:	(C) 1999 - 2006 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
 ###############################################################
 
 
@@ -133,6 +138,13 @@ proc MapToolBar::create { tb } {
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1\
         -highlightbackground $bgcolor -activebackground $bgcolor \
         -helptext [G_msg "Return to previous zoom"]
+
+    # zoom to selected map
+    $bbox3 add -image [image create photo -file "$iconpath/gui-zoom_map.gif"] \
+        -command "MapCanvas::zoom_map $mon" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -highlightbackground $bgcolor -activebackground $bgcolor \
+        -helptext [G_msg "Zoom to selected map"]
 
     # zoom to saved region
     $bbox3 add -image [image create photo -file "$iconpath/gui-zoom_region.gif"] \
