@@ -17,6 +17,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <grass/config.h>
+#ifdef HAVE_NANOSLEEP
+#include <time.h>
+#endif
 #include <grass/gis.h>
 #include <grass/display.h>
 #include "global.h"
@@ -123,6 +127,17 @@ tool_centre ( void )
 		display_redraw();
 		driver_close();
 		break;
+	    case TOOL_NOTHING :
+#ifdef HAVE_NANOSLEEP
+                {
+		   struct timespec tm;
+		   tm.tv_sec = 0;
+		   tm.tv_nsec = 200000000;
+
+                   nanosleep ( &tm, NULL );
+                }
+#endif
+                break;
 	}
 	i_prompt ( "Select tool");
 	/* sleep ( 1 ); */
