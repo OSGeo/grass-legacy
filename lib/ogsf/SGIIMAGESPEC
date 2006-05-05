@@ -345,9 +345,7 @@ This program will write out a valid B/W SGI image file:
 #define IXSIZE      (23)
 #define IYSIZE      (15)
  
-putbyte(outf,val)
-FILE *outf;
-unsigned char val;
+putbyte(FILE *outf, unsigned char val)
 {
     unsigned char buf[1];
  
@@ -355,9 +353,7 @@ unsigned char val;
     fwrite(buf,1,1,outf);
 }
  
-putshort(outf,val)
-FILE *outf;
-unsigned short val;
+putshort(FILE *outf, unsigned short val)
 {
     unsigned char buf[2];
  
@@ -366,9 +362,7 @@ unsigned short val;
     fwrite(buf,2,1,outf);
 }
  
-static int putlong(outf,val)
-FILE *outf;
-unsigned long val;
+static int putlong(FILE *outf, unsigned long val)
 {
     unsigned char buf[4];
  
@@ -379,7 +373,7 @@ unsigned long val;
     return fwrite(buf,4,1,outf);
 }
  
-main()
+main(char *argv, int argc)
 {
     FILE *of;
     char iname[80];
@@ -391,6 +385,7 @@ main()
         fprintf(stderr,"sgiimage: can't open output file\n");
         exit(1);
     }
+
     putshort(of,474);       /* MAGIC                       */
     putbyte(of,0);          /* STORAGE is VERBATIM         */
     putbyte(of,1);          /* BPC is 1                    */
@@ -413,5 +408,6 @@ main()
             outbuf[x] = (255*x)/(IXSIZE-1);
         fwrite(outbuf,IXSIZE,1,of);
     }
+
     fclose(of);
 }

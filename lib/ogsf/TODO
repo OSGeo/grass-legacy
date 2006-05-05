@@ -42,3 +42,7 @@ This library needs a general overhaul. There are many places which have
 empty functions containing only return statements, as well as several comments
 that say /* You can do better than this */ which indicates areas for
 improvements.
+
+--------------------------------
+64-bit support needs to be added and properly handled
+
