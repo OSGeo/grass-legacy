@@ -19,6 +19,7 @@ namespace eval GmRnums {
     variable array dup # vector
 }
 
+###############################################################################
 proc GmRnums::create { tree parent } {
     variable optlist
     variable lfile
@@ -81,6 +82,7 @@ proc GmRnums::create { tree parent } {
     return $node
 }
 
+###############################################################################
 proc GmRnums::set_option { node key value } {
     variable opt
  
@@ -100,7 +102,8 @@ proc GmRnums::select_map { id } {
     }
 }
 
-# display histogram options
+###############################################################################
+# Options for displaying cats in raster cells
 proc GmRnums::options { id frm } {
     variable opt
     global gmpath
@@ -168,6 +171,7 @@ proc GmRnums::options { id frm } {
     pack $row -side top -fill both -expand yes
 }
 
+###############################################################################
 proc GmRnums::save { tree depth node } {
     variable opt
     variable optlist
@@ -180,6 +184,7 @@ proc GmRnums::save { tree depth node } {
     } 
 }
 
+###############################################################################
 proc GmRnums::display { node mod } {
     global mapfile
     global maskfile
@@ -243,6 +248,7 @@ proc GmRnums::display { node mod } {
 
 }
     
+###############################################################################
 proc GmRnums::mapname { node } {
     variable opt
     variable tree
@@ -260,6 +266,7 @@ proc GmRnums::mapname { node } {
     return $mapname
 }
 
+###############################################################################
 proc GmRnums::duplicate { tree parent node id } {
     variable optlist
     variable lfile
