@@ -219,7 +219,7 @@ proc Gm::create { } {
     variable mainframe
     variable tree
    
-    set prgtext "Loading GIS Manager"
+    set prgtext [G_msg "Loading GIS Manager"]
     set prgindic -1
     _create_intro
     update
@@ -227,7 +227,7 @@ proc Gm::create { } {
     global env
 	source $gmpath/gmmenu.tcl
 	
-    set prgtext   "Creating MainFrame..."
+    set prgtext [G_msg "Creating MainFrame..."]
     
     set mainframe [MainFrame .mainframe \
                        -menu $descmenu \
@@ -266,7 +266,7 @@ proc Gm::create { } {
     pack $pw1 -side top -expand yes -fill both -anchor n 
 
 	# finish up
-    set prgtext "Done"
+    set prgtext [G_msg "Done"]
 
     set Gm::status [G_msg "Welcome to GRASS GIS"]
     $mainframe showstatusbar status 
@@ -324,8 +324,9 @@ proc Gm::_create_intro { } {
     set ximg  [label $top.x -image [image create photo -file "$gmpath/intro.gif"] ]
 
     set frame [frame $ximg.f -background white]
-    set lab1  [label $frame.lab1 -text "GRASS$GRASSVERSION GIS Manager - $location_name" \
-                     -background white -foreground black -font {times 14}]
+    set lab1  [label $frame.lab1 \
+        -text [format [G_msg "GRASS%s GIS Manager - %s"] $GRASSVERSION $location_name] \
+        -background white -foreground black -font {times 14}]
     set lab2  [label $frame.lab2 -textvariable Gm::prgtext -background white \
     	-font {times 12}]
     set prg   [ProgressBar $frame.prg -width 50 -height 15 -background white \
@@ -483,7 +484,7 @@ proc main {argc argv} {
     global mon
 
     wm withdraw .
-    wm title . [G_msg "GRASS$GRASSVERSION GIS Manager - $location_name"]
+    wm title . [format [G_msg "GRASS%s GIS Manager - %s"] $GRASSVERSION $location_name]
 
     bind . <$keycontrol-Key-o> {
 	Gm::OpenFileBox
