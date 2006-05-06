@@ -6,6 +6,8 @@
 #include <math.h>
 #include "global.h"
 
+static void write_pnts(struct Map_info *, char *, int, int, int);
+
 int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 {
     int code;
@@ -22,6 +24,14 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
     /* variables to create arcs */
     double bulge = 0.0;		/* for arc curves */
     double prev_bulge = 0.0;	/* for arc curves */
+    /* variables for polyface mesh */
+    int vertex_flag = 0;
+    int vertex_idx = 0;
+    int polyface_mesh_started = 0;
+    int mesh_pnts = 0;
+    double *mesh_xpnts = NULL;
+    double *mesh_ypnts = NULL;
+    double *mesh_zpnts = NULL;
 
     strcpy(layer, UNIDENTIFIED_LAYER);
 
@@ -59,10 +69,12 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 
                    32        The polygon mesh is closed in the N direc-
                              tion
+                   64        The polyline is a polyface mesh
 	     ******************************************************************/
 	    /* NOTE: CODE ONLY EXISTS FOR FLAG = 1 (CLOSED POLYLINE) or 0 */
 	    G_debug(3, "polyline_flag: %d", polyline_flag);
-	    if (polyline_flag & 8 || polyline_flag & 16 || polyline_flag & 17 || polyline_flag & 32)
+	    if (polyline_flag & 8 || polyline_flag & 16 || polyline_flag & 17 ||
+		polyline_flag & 32)
 		if (warn_flag70) {
 		    G_warning(_("3-d data in dxf file"));
 		    warn_flag70 = 0;
@@ -94,6 +106,7 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 	    return -1;
 
 	if (strcmp(dxf_buf, "VERTEX") == 0) {
+	    vertex_idx++;
 	    xflag = 0;
 	    yflag = 0;
 	    zflag = 0;
@@ -137,11 +150,14 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 		    break;
 		case 40:	/* starting width */
 		case 41:	/* ending width */
+		    break;
 		case 42:	/* bulge */
 		    bulge = atof(dxf_buf);
 		    break;
 		case 50:	/* curve fit tangent direction */
+		    break;
 		case 70:	/* vertex flag */
+		    vertex_flag = atoi(dxf_buf);
 
 	    /*******************************************************************
              Flag bit value                    Meaning
@@ -152,11 +168,12 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
                              icant if this bit is set.
                    4         Unused (never set in DXF files)
                    8         Spline vertex created by spline fitting
-                   16        Spline frame control point
-                   32        3D Polyline vertex
-                   64        3D polygon mesh vertex
+                  16         Spline frame control point
+                  32         3D Polyline vertex
+                  64         3D polygon mesh vertex
+		 128         Polyface mesh vertex
 	     ******************************************************************/
-		    if (atoi(dxf_buf) == 16) {
+		    if (vertex_flag == 16) {
 			/* spline frame control point: don't draw it! */
 			xflag = 0;
 			yflag = 0;
@@ -164,8 +181,59 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 		    }
 		    break;
 		    /* NOTE: there are more cases possible */
+		case 71:
+		case 72:
+		case 73:
+		case 74:
+		    if (!((vertex_flag & 128) && !(vertex_flag & 64)))
+			break;
+		    if (!polyface_mesh_started) {
+			/* save vertex coordinates to mesh_?pnts */
+			mesh_xpnts =
+			    (double *)G_malloc(arr_size * sizeof(double));
+			mesh_ypnts =
+			    (double *)G_malloc(arr_size * sizeof(double));
+			mesh_zpnts =
+			    (double *)G_malloc(arr_size * sizeof(double));
+			memcpy(mesh_xpnts, xpnts, arr_size * sizeof(double));
+			memcpy(mesh_ypnts, ypnts, arr_size * sizeof(double));
+			memcpy(mesh_zpnts, zpnts, arr_size * sizeof(double));
+
+			write_pnts(Map, layer, polyline_flag, zflag, arr_size);
+			polyface_mesh_started = 1;
+			arr_size = 0;
+			mesh_pnts = 0;
+		    }
+		    vertex_idx = atoi(dxf_buf);
+		    if (vertex_idx > 0) {
+			xpnts[arr_size] = mesh_xpnts[vertex_idx - 1];
+			ypnts[arr_size] = mesh_ypnts[vertex_idx - 1];
+			zpnts[arr_size] = mesh_zpnts[vertex_idx - 1];
+			arr_size++;
+		    }
+		    if (++mesh_pnts == 4 || vertex_idx == 0) {
+			/* check if there are any vertices when vertex_idx is 0
+			 */
+			if (arr_size > 0) {
+			    /* close a mesh */
+			    xpnts[arr_size] = xpnts[0];
+			    ypnts[arr_size] = ypnts[0];
+			    zpnts[arr_size] = zpnts[0];
+			    write_polyline(Map, layer, arr_size + 1);
+			    arr_size = 0;
+			}
+			mesh_pnts = 0;
+		    }
+		    break;
 		}
 	    }
+	}
+
+	if (polyface_mesh_started) {
+	    /* discard a premature mesh */
+	    arr_size = 0;
+	    mesh_pnts = 0;
+	    continue;
 	}
 
 	if (xflag && yflag) {
@@ -175,6 +243,21 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 	    bulge = 0.0;
 	}			/* processing polyline vertex */
     }				/* vertex loop */
+
+    if (polyface_mesh_started) {
+	G_free(mesh_xpnts);
+	G_free(mesh_ypnts);
+	G_free(mesh_zpnts);
+    }
+    else
+	write_pnts(Map, layer, polyline_flag, zflag, arr_size);
+
+    return 0;
+}
+
+static void write_pnts(struct Map_info *Map, char *layer, int polyline_flag,
+		       int zflag, int arr_size)
+{
     /* done reading vertices */
     if (polyline_flag & 1) {	/* only dealing with polyline_flag = 1 */
 	/* check to make sure vertex points describe a closed polyline */
@@ -204,5 +287,5 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 
     write_polyline(Map, layer, arr_size);
 
-    return 0;
+    return;
 }
