@@ -25,6 +25,19 @@ struct context {
     int line;
 };
 
+int translate_output = 0;
+
+/* Returns translated version of a string.
+   If global variable to output strings for translation is set it spits them out */
+char * translate (const char *arg) {
+    if (*arg && translate_output)
+    {
+        fputs (arg, stdout);
+	fputs ("\n", stdout);
+    }
+    return gettext (arg);
+}
+
 static void parse_toplevel(struct context *ctx, const char *cmd)
 {
     if (strcasecmp(cmd, "module") == 0)
@@ -59,15 +72,16 @@ static void parse_toplevel(struct context *ctx, const char *cmd)
 static void parse_module(struct context *ctx, const char *cmd, const char *arg)
 {
 
+    /* Label and description can be internationalized */
     if (strcasecmp(cmd, "label") == 0)
     {
-	ctx->module->label = strdup(arg);
+	ctx->module->label = translate(strdup(arg));
 	return;
     }
 
     if (strcasecmp(cmd, "description") == 0)
     {
-	ctx->module->description = strdup(arg);
+	ctx->module->description = translate(strdup(arg));
 	return;
     }
 
@@ -95,21 +109,22 @@ static void parse_flag(struct context *ctx, const char *cmd, const char *arg)
 	return;
     }
 
+    /* Label, description, and guisection can all be internationalized */
     if (strcasecmp(cmd, "label") == 0)
     {
-	ctx->flag->label = strdup(arg);
+	ctx->flag->label = translate(strdup(arg));
 	return;
     }
 
     if (strcasecmp(cmd, "description") == 0)
     {
-	ctx->flag->description = strdup(arg);
+	ctx->flag->description = translate(strdup(arg));
 	return;
     }
 
     if (strcasecmp(cmd, "guisection") == 0)
     {
-	ctx->flag->guisection = strdup(arg);
+	ctx->flag->guisection = translate(strdup(arg));
 	return;
     }
 
@@ -192,21 +207,22 @@ static void parse_option(struct context *ctx, const char *cmd, const char *arg)
 	return;
     }
 
+    /* Label, description, descriptions, and guisection can all be internationalized */
     if (strcasecmp(cmd, "label") == 0)
     {
-	ctx->option->label = strdup(arg);
+	ctx->option->label = translate(strdup(arg));
 	return;
     }
 
     if (strcasecmp(cmd, "description") == 0)
     {
-	ctx->option->description = strdup(arg);
+	ctx->option->description = translate(strdup(arg));
 	return;
     }
 
     if (strcasecmp(cmd, "descriptions") == 0)
     {
-	ctx->option->descriptions = strdup(arg);
+	ctx->option->descriptions = translate(strdup(arg));
 	return;
     }
 
@@ -224,7 +240,7 @@ static void parse_option(struct context *ctx, const char *cmd, const char *arg)
 
     if (strcasecmp(cmd, "guisection") == 0)
     {
-	ctx->option->guisection = strdup(arg);
+	ctx->option->guisection = translate(strdup(arg));
 	return;
     }
 
@@ -252,13 +268,20 @@ int main(int argc, char *argv[])
     ctx.first_flag = NULL;
     ctx.state = S_TOPLEVEL;
 
-    if (argc < 2)
+    /* Detect request to get strings to translate from a file */
+    /* It comes BEFORE the filename to completely avoid confusion with parser.c behaviours */
+    if (argc >= 2 && (strcmp (argv[1], "-t") == 0)) {
+	/* Turn on translation output */
+	translate_output = 1;
+    }
+
+    if (argc < 2 + translate_output)
     {
-	fprintf(stderr, "Usage: %s <filename> [<argument> ...]\n", argv[0]);
+	fprintf(stderr, "Usage: %s [-t] <filename> [<argument> ...]\n", argv[0]);
 	return 1;
     }
 
-    filename = argv[1];
+    filename = argv[1 + translate_output];
     G_debug ( 2, "filename = %s", filename );
 
     ctx.fp = fopen(filename, "r");
@@ -315,6 +338,11 @@ int main(int argc, char *argv[])
 	perror("Error closing script file");
 	return 1;
     }
+
+    /* Stop here successfully if all that was desired was output of text to translate */
+    /* Continuing from here would get argc and argv all wrong in G_parser. */
+    if (translate_output)
+	return EXIT_SUCCESS;
 
     if (G_parser(argc - 1, argv + 1) < 0)
 	return 1;

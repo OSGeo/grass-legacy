@@ -120,6 +120,14 @@ for opt in $GIS_OPT_INPUT ; do
 done
 </pre></div>
 
+<H2>TRANSLATION</h2>
+
+<em>g.parser</em> provides some support for translating the options of scripts. If called with the -t switch before the script filename like this
+
+<div class="code"><pre>g.parser -t somescriptfile</pre></div>
+
+<em>g.parser</em> will print the text of the translatable options on standard out, one per line, and exit. This is for use in the build system to prepare for translation.
+
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="g.findfile.html">g.findfile</A></EM>
