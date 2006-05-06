@@ -171,7 +171,7 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
                   16         Spline frame control point
                   32         3D Polyline vertex
                   64         3D polygon mesh vertex
-		 128         Polyface mesh vertex
+                 128         Polyface mesh vertex
 	     ******************************************************************/
 		    if (vertex_flag == 16) {
 			/* spline frame control point: don't draw it! */
