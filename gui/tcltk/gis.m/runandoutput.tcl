@@ -41,11 +41,11 @@ proc make_fun_buttons {dlg path} {
 	set pgm_name $opt($dlg,pgm_name)
 
 	set buttonframe [frame $path.buttonframe]
-	button $buttonframe.run   -text Run   -command "run_cmd $dlg"
+	button $buttonframe.run   -text [G_msg "Run"]   -command "run_cmd $dlg"
 	# In the future we'll have a button to make a layer from here:
-	# button $buttonframe.layer -text Layer -command "layer_cmd $dlg"
-	button $buttonframe.help  -text Help  -command "help_cmd $dlg"
-	button $buttonframe.close -text Close -command "close_cmd $dlg"
+	# button $buttonframe.layer -text [G_msg "Layer"] -command "layer_cmd $dlg"
+	button $buttonframe.help  -text [G_msg "Help"]  -command "help_cmd $dlg"
+	button $buttonframe.close -text [G_msg "Close"] -command "close_cmd $dlg"
 
 	set opt($dlg,run_button) $buttonframe.run 
 
@@ -99,13 +99,13 @@ proc command_window {where} {
 	set gronsole [Gronsole $where.gronsole -clickcmd "gronsole_history $cmdwin.text"]
 	set cmdtext [text $cmdwin.text -height 4 -width 80] 
 	$cmdwin setwidget $cmdtext
-	set runbutton [button $cmdpane.run -text "Run" -command "run_disabled $gronsole $cmdpane.run \[string trim \[$cmdtext get 1.0 end\]\]"]
-	set run2button [button $cmdpane.run2 -text "Run (Background)" -command "$gronsole run \[string trim \[$cmdtext get 1.0 end\]\] {} {}"]
-	set runuibutton [button $cmdpane.runui -text "Run UI" -command "run_ui \[string trim \[$cmdtext get 1.0 end\]\]"]
-	set runxterm [button $cmdpane.xterm -text "Run in Xterm" -command "$gronsole run_xterm \[string trim \[$cmdtext get 1.0 end\]\] {}"]
+	set runbutton [button $cmdpane.run -text [G_msg "Run"] -command "run_disabled $gronsole $cmdpane.run \[string trim \[$cmdtext get 1.0 end\]\]"]
+	set run2button [button $cmdpane.run2 -text [G_msg "Run (Background)"] -command "$gronsole run \[string trim \[$cmdtext get 1.0 end\]\] {} {}"]
+	set runuibutton [button $cmdpane.runui -text [G_msg "Run UI"] -command "run_ui \[string trim \[$cmdtext get 1.0 end\]\]"]
+	set runxterm [button $cmdpane.xterm -text [G_msg "Run in Xterm"] -command "$gronsole run_xterm \[string trim \[$cmdtext get 1.0 end\]\] {}"]
 	set outpane [frame $where.output]
-	set savebutton [button $outpane.save -text "Save" -command "$gronsole save"]
-	set clearbutton [button $outpane.clear -text "Clear" -command "$gronsole clear"]
+	set savebutton [button $outpane.save -text [G_msg "Save"] -command "$gronsole save"]
+	set clearbutton [button $outpane.clear -text [G_msg "Clear"] -command "$gronsole clear"]
 
 	pack $runbutton $run2button $runuibutton $runxterm \
 		-side left -expand yes -padx 5 -pady 5
@@ -125,7 +125,7 @@ proc command_window {where} {
 }
 
 toplevel .gronsole
-wm title .gronsole "Output - GIS.m"
+wm title .gronsole [G_msg "Output - GIS.m"]
 
 # If we had our own window manager we could withdraw windows instead of iconifying them:
 wm protocol .gronsole WM_DELETE_WINDOW "wm iconify .gronsole"
