@@ -498,7 +498,7 @@ msgstr "Zeigt einen Maﬂstabsbalken im GRASS-Monitor an."
 
 #: ../display/d.barscale/main.c:40
 msgid "Use mouse to interactively place scale"
-msgstr "Benutze die Maus zum interaktiven Plazieren des Maﬂstabs."
+msgstr "Benutze die Maus zum Interaktiven Plazieren des Maﬂstabs."
 
 #: ../display/d.barscale/main.c:44
 msgid "Use feet/miles instead of meters"
@@ -6005,7 +6005,7 @@ msgstr "Konvertiert ein ESRI ARC/INFO ascii-GRID in eine (bin‰re) GRASS Rasterka
 
 #: ../raster/r.in.arc/main.c:50
 msgid "ARC/INFO ascii raster file (GRID) to be imported"
-msgstr "ARC/INFO ascii Rasterdateien (GRID) zum importieren."
+msgstr "ARC/INFO ascii Rasterdateien (GRID) zum Importieren."
 
 #: ../raster/r.in.arc/main.c:61
 msgid "Storage type for resultant raster map"
@@ -6065,7 +6065,7 @@ msgstr "Konvertiert eine ASCII-Datei in eine (bin‰re) GRASS Rasterkarte."
 
 #: ../raster/r.in.ascii/main.c:49 ../raster3d/r3.in.ascii/main.c:81
 msgid "Ascii raster file to be imported"
-msgstr "ASCII Raster-Datei zum importieren."
+msgstr "ASCII Raster-Datei zum Importieren."
 
 #: ../raster/r.in.ascii/main.c:74
 msgid "String representing NULL value data cell"
@@ -6085,7 +6085,7 @@ msgstr "Double Flieﬂkommawerte sind importiert worden."
 
 #: ../raster/r.in.ascii/main.c:95
 msgid "SURFER (Golden Software) ascii grid file will be imported"
-msgstr "SURFER (Golden Software) ascii grid Datei zum importieren."
+msgstr "SURFER (Golden Software) ascii grid Datei zum Importieren."
 
 #: ../raster/r.in.ascii/main.c:116
 #, c-format
@@ -6123,7 +6123,7 @@ msgstr "Nehme Region-Informationen aus GMT-‰hnlichen Kopfzeilen."
 
 #: ../raster/r.in.bin/main.c:138
 msgid "Bin raster file to be imported"
-msgstr "Bin‰r-Rasterdatei zum importieren."
+msgstr "Bin‰r-Rasterdatei zum Importieren."
 
 #: ../raster/r.in.bin/main.c:155
 msgid "Number of bytes per cell (1, 2, 4)"
@@ -6165,7 +6165,7 @@ msgstr ""
 
 #: ../raster/r.in.gdal/main.c:79
 msgid "Raster file to be imported"
-msgstr "Rasterdatei zum importieren."
+msgstr "Rasterdatei zum Importieren."
 
 #: ../raster/r.in.gdal/main.c:88
 msgid "Band to select (default is all bands)"
@@ -13179,7 +13179,7 @@ msgstr "Quelldatei"
 #: ../vector/v.in.dxf/main.c:98
 #, fuzzy
 msgid "List of layers to import"
-msgstr "Rasterdatei zum importieren."
+msgstr "Rasterdatei zum Importieren."
 
 #: ../vector/v.in.dxf/main.c:110
 #, fuzzy, c-format
