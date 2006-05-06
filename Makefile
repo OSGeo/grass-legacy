@@ -147,7 +147,11 @@ cleandistdirs:
 	-rm -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} 2>/dev/null
 	-rmdir ${ARCH_BINDIR}
 
-clean: cleandistdirs
+# Clean out the strings extracted from scripts for translation
+cleanscriptstrings:
+	rm -f locale/scriptstrings/*.c 2>/dev/null
+
+clean: cleandistdirs cleanscriptstrings
 	@list='$(SUBDIRS)'; \
 	for subdir in $$list; do \
 		$(MAKE) -C $$subdir clean; \
