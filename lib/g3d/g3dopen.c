@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <grass/G3d.h>
+#include <grass/glocale.h>
 #include "G3d_intern.h"
 
 /*---------------------------------------------------------------------------*/
@@ -18,13 +19,13 @@ G3d_openCellOldNoHeader  (char *name, char *mapset)
   G3d_initDefaults ();
 
   if (! G3d_maskOpenOld ()) {
-    G3d_error ("G3d_openCellOldNoHeader: error in G3d_maskOpenOld");
+    G3d_error (_("G3d_openCellOldNoHeader: error in G3d_maskOpenOld"));
     return (void *) NULL;
   }
 
   map = G3d_malloc (sizeof (G3D_Map));
   if (map == NULL) {
-    G3d_error ("G3d_openCellOldNoHeader: error in G3d_malloc");
+    G3d_error (_("G3d_openCellOldNoHeader: error in G3d_malloc"));
     return (void *) NULL;
   }
 
@@ -42,7 +43,7 @@ G3d_openCellOldNoHeader  (char *name, char *mapset)
 
   map->data_fd = G_open_old (buf, buf2, mapset);
   if (map->data_fd < 0) {
-    G3d_error ("G3d_openCellOldNoHeader: error in G_open_old");
+    G3d_error (_("G3d_openCellOldNoHeader: error in G_open_old"));
     return (void *) NULL;
   } 
 
@@ -97,12 +98,12 @@ G3d_openCellOld  (char *name, char *mapset, G3D_Region *window, int typeIntern, 
   
   map = G3d_openCellOldNoHeader (name, mapset);
   if (map == NULL) {
-    G3d_error ("G3d_openCellOld: error in G3d_openCellOldNoHeader");
+    G3d_error (_("G3d_openCellOld: error in G3d_openCellOldNoHeader"));
     return (void *) NULL;
   }
 
   if (lseek(map->data_fd, (long) 0, SEEK_SET) == -1) {
-    G3d_error ("G3d_openCellOld: can't rewind file");
+    G3d_error (_("G3d_openCellOld: can't rewind file"));
     return (void *) NULL;
   }
 
@@ -115,18 +116,18 @@ G3d_openCellOld  (char *name, char *mapset, G3D_Region *window, int typeIntern, 
 			&type, &compression, &useRle, &useLzw, 
 			&precision, &dataOffset, &useXdr, &hasIndex,
 			&unit)) {
-    G3d_error ("G3d_openCellOld: error in G3d_readHeader"); 
+    G3d_error (_("G3d_openCellOld: error in G3d_readHeader")); 
     return 0;
   }
 
   if (window == G3D_DEFAULT_WINDOW) window = G3d_windowPtr ();
 
   if (proj != window->proj) {
-    G3d_error ("G3d_openCellOld: projection does not match window projection");
+    G3d_error (_("G3d_openCellOld: projection does not match window projection"));
     return (void *) NULL;
   }
   if (zone != window->zone) {
-    G3d_error ("G3d_openCellOld: zone does not match window zone");
+    G3d_error (_("G3d_openCellOld: zone does not match window zone"));
     return (void *) NULL;
   }
 
@@ -138,24 +139,24 @@ G3d_openCellOld  (char *name, char *mapset, G3D_Region *window, int typeIntern, 
 			 &(map->indexLongNbytes), 1)) ||
 	(! G3d_readInts (map->data_fd, map->useXdr, 
 			 &(map->indexNbytesUsed), 1))) {
-      G3d_error ("G3d_openCellOld: can't read header");
+      G3d_error (_("G3d_openCellOld: can't read header"));
       return (void *) NULL;
     }
 
     /* if our long is to short to store offsets we can't read the file */
     if (map->indexNbytesUsed > sizeof (long))
-      G3d_fatalError ("G3d_openCellOld: index does not fit into long");
+      G3d_fatalError (_("G3d_openCellOld: index does not fit into long"));
 
-    ltmp = G3d_malloc (map->indexNbytesUsed);
+    ltmp = G3d_malloc (map->indexLongNbytes);
     if (ltmp == NULL) {
-      G3d_error ("G3d_openCellOld: error in G3d_malloc");
+      G3d_error (_("G3d_openCellOld: error in G3d_malloc"));
       return (void *) NULL;
     }
 
     /* convert file long to long */
     if (read (map->data_fd, ltmp, map->indexLongNbytes) != 
 	map->indexLongNbytes) {
-      G3d_error ("G3d_openCellOld: can't read header");
+      G3d_error (_("G3d_openCellOld: can't read header"));
       return (void *) NULL;
     }
     G3d_longDecode (ltmp, &(map->indexOffset), 1, map->indexLongNbytes);
@@ -175,7 +176,7 @@ G3d_openCellOld  (char *name, char *mapset, G3D_Region *window, int typeIntern, 
 			rows, cols, depths, 
 			ew_res, ns_res, tb_res,
 			unit)) {
-    G3d_error ("G3d_openCellOld: error in G3d_fillHeader");
+    G3d_error (_("G3d_openCellOld: error in G3d_fillHeader"));
     return (void *) NULL;
   }
 
@@ -223,7 +224,7 @@ G3d_openCellNew  (char *name, int typeIntern, int cache, G3D_Region *region)
 
   G3d_initDefaults ();
   if (! G3d_maskOpenOld ()) {
-    G3d_error ("G3d_openCellNew: error in G3d_maskOpenOld");
+    G3d_error (_("G3d_openCellNew: error in G3d_maskOpenOld"));
     return (void *) NULL;
   }
 
@@ -232,7 +233,7 @@ G3d_openCellNew  (char *name, int typeIntern, int cache, G3D_Region *region)
 
   map = G3d_malloc (sizeof (G3D_Map));
   if (map == NULL) {
-    G3d_error ("G3d_openCellNew: error in G3d_malloc");
+    G3d_error (_("G3d_openCellNew: error in G3d_malloc"));
     return (void *) NULL;
   }
 
@@ -245,7 +246,7 @@ G3d_openCellNew  (char *name, int typeIntern, int cache, G3D_Region *region)
   map->tempName = G_tempfile ();
   map->data_fd = open (map->tempName, O_RDWR | O_CREAT | O_TRUNC, 0666);
   if (map->data_fd < 0) {
-    G3d_error ("G3d_openCellNew: could not open file");
+    G3d_error (_("G3d_openCellNew: could not open file"));
     return (void *) NULL;
   } 
 
@@ -287,12 +288,12 @@ G3d_openCellNew  (char *name, int typeIntern, int cache, G3D_Region *region)
     if ((! G3d_writeInts (map->data_fd, map->useXdr, 
 			  &(map->indexLongNbytes), 1)) ||
 	(! G3d_writeInts (map->data_fd, map->useXdr, &dummy, 1))) {
-      G3d_error ("G3d_openCellNew: can't write header");
+      G3d_error (_("G3d_openCellNew: can't write header"));
       return (void *) NULL;
     }
     if (write (map->data_fd, &ldummy, map->indexLongNbytes) != 
 	map->indexLongNbytes) {
-      G3d_error ("G3d_openCellNew: can't write header");
+      G3d_error (_("G3d_openCellNew: can't write header"));
       return (void *) NULL;
     }
   }
@@ -315,7 +316,7 @@ G3d_openCellNew  (char *name, int typeIntern, int cache, G3D_Region *region)
 			region->rows, region->cols, region->depths,
 			region->ew_res, region->ns_res, region->tb_res,
 			g3d_unit_default)) {
-    G3d_error ("G3d_openCellNew: error in G3d_fillHeader");
+    G3d_error (_("G3d_openCellNew: error in G3d_fillHeader"));
     return (void *) NULL;
   }
 
