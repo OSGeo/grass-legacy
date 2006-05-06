@@ -5,6 +5,7 @@
 #include <ctype.h>
 
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 enum state
 {
@@ -35,7 +36,8 @@ char * translate (const char *arg) {
         fputs (arg, stdout);
 	fputs ("\n", stdout);
     }
-    return gettext (arg);
+
+    return _(arg);
 }
 
 static void parse_toplevel(struct context *ctx, const char *cmd)
