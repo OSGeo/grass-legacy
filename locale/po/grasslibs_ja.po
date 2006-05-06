@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-22 00:41+0100\n"
+"POT-Creation-Date: 2006-05-06 12:54+0200\n"
 "PO-Revision-Date: 2005-12-30 17:41+0100\n"
 "Last-Translator: Markus Neteler <neteler@itc.it>\n"
 "Language-Team: Japanese <translations@grass.itc.it>\n"
@@ -41,22 +41,22 @@ msgstr ""
 msgid "(no title)"
 msgstr ""
 
-#: ../lib/gis/list.c:113
+#: ../lib/gis/list.c:115
 #, c-format
 msgid "no %s files available in current mapset\n"
 msgstr ""
 
-#: ../lib/gis/list.c:115
+#: ../lib/gis/list.c:117
 #, c-format
 msgid "no %s files available in mapset %s\n"
 msgstr ""
 
-#: ../lib/gis/list.c:129
+#: ../lib/gis/list.c:131
 #, c-format
 msgid "hit RETURN to continue -->"
 msgstr ""
 
-#: ../lib/gis/list.c:198
+#: ../lib/gis/list.c:212
 #, c-format
 msgid "%s files available in mapset %s:\n"
 msgstr ""
@@ -365,7 +365,7 @@ msgstr ""
 msgid "Unable to create header file for [%s]"
 msgstr ""
 
-#: ../lib/gis/history.c:134
+#: ../lib/gis/history.c:134 ../lib/g3d/g3dhistory.c:46
 #, c-format
 msgid "can't get history information for [%s] in mapset [%s]"
 msgstr ""
@@ -433,16 +433,14 @@ msgstr ""
 msgid "Enter 'list' for the list of available datums\n"
 msgstr ""
 
-#: ../lib/gis/get_datum_name.c:56 ../lib/gis/datum.c:242
-#: ../lib/gis/get_ell_name.c:46 ../lib/gis/get_projname.c:59
-#: ../lib/proj/datum.c:300
+#: ../lib/gis/get_datum_name.c:56 ../lib/gis/get_ell_name.c:46
+#: ../lib/gis/get_projname.c:59 ../lib/proj/datum.c:302
 #, c-format
 msgid "Hit RETURN to cancel request\n"
 msgstr ""
 
-#: ../lib/gis/get_datum_name.c:67 ../lib/gis/datum.c:163
-#: ../lib/gis/get_ell_name.c:33 ../lib/gis/get_projname.c:47
-#: ../lib/proj/datum.c:223
+#: ../lib/gis/get_datum_name.c:67 ../lib/gis/get_ell_name.c:33
+#: ../lib/gis/get_projname.c:47 ../lib/proj/datum.c:223
 msgid "Cannot open temp file"
 msgstr ""
 
@@ -453,100 +451,75 @@ msgid ""
 "invalid datum\n"
 msgstr ""
 
-#: ../lib/gis/get_datum.c:80 ../lib/gis/get_ellipse.c:81
-#, c-format
-msgid "Unable to open file %s in %s"
-msgstr ""
-
-#: ../lib/gis/get_datum.c:107
-#, c-format
-msgid "Error reading datum shift parameters for %s from table"
-msgstr ""
-
-#: ../lib/gis/get_datum.c:115
-#, c-format
-msgid "Error reading ellipsoid parameters for %s from table"
-msgstr ""
-
-#: ../lib/gis/get_datum.c:120
-#, c-format
-msgid "No ellipsoid field %s in file %s in %s"
-msgstr ""
-
-#: ../lib/gis/get_datum.c:174
-#, c-format
-msgid "invalid value: field %s in file %s in %s"
-msgstr ""
-
-#: ../lib/gis/proj3.c:68 ../lib/vector/Vlib/header.c:447
+#: ../lib/gis/proj3.c:68 ../lib/vector/Vlib/header.c:458
 msgid "Unknown projection"
 msgstr ""
 
-#: ../lib/gis/parser.c:319
+#: ../lib/gis/parser.c:320
 msgid ""
 "WHERE conditions of SQL statement without 'where' keyword. (example: income "
 "< 1000 and inhab >= 10000)"
 msgstr ""
 
-#: ../lib/gis/parser.c:328 ../lib/gis/parser.c:344
+#: ../lib/gis/parser.c:329 ../lib/gis/parser.c:345
 #, fuzzy
 msgid "Name of input raster map"
 msgstr "���"
 
-#: ../lib/gis/parser.c:336
+#: ../lib/gis/parser.c:337
 #, fuzzy
 msgid "Name of output raster map"
 msgstr "���"
 
-#: ../lib/gis/parser.c:353
+#: ../lib/gis/parser.c:354
 #, fuzzy
 msgid "Name of input raster map(s)"
 msgstr "���"
 
-#: ../lib/gis/parser.c:361
+#: ../lib/gis/parser.c:362
 msgid "Name of base raster map"
 msgstr ""
 
-#: ../lib/gis/parser.c:369
+#: ../lib/gis/parser.c:370
 msgid "Name of cover raster map"
 msgstr ""
 
-#: ../lib/gis/parser.c:378 ../lib/gis/parser.c:394
+#: ../lib/gis/parser.c:379 ../lib/gis/parser.c:395
 #, fuzzy
 msgid "Name of input vector map"
 msgstr "���"
 
-#: ../lib/gis/parser.c:386
+#: ../lib/gis/parser.c:387
 #, fuzzy
 msgid "Name of output vector map"
 msgstr "���"
 
-#: ../lib/gis/parser.c:403
+#: ../lib/gis/parser.c:404
 msgid "Type"
 msgstr ""
 
-#: ../lib/gis/parser.c:410
+#: ../lib/gis/parser.c:411
 msgid "Layer number"
 msgstr ""
 
-#: ../lib/gis/parser.c:416
+#: ../lib/gis/parser.c:417
 msgid "Category value"
 msgstr ""
 
-#: ../lib/gis/parser.c:423
+#: ../lib/gis/parser.c:424
 msgid "Category values"
 msgstr ""
 
-#: ../lib/gis/parser.c:424
+#: ../lib/gis/parser.c:425
 msgid "Example: 1,3,7-9,13"
 msgstr ""
 
-#: ../lib/gis/parser.c:665
+#: ../lib/gis/parser.c:669
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:734
+#: ../lib/gis/parser.c:744
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -555,7 +528,7 @@ msgstr ""
 "\n"
 "説明:\n"
 
-#: ../lib/gis/parser.c:738
+#: ../lib/gis/parser.c:748
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -566,7 +539,7 @@ msgstr ""
 "使い方:\n"
 " "
 
-#: ../lib/gis/parser.c:799
+#: ../lib/gis/parser.c:809
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -575,7 +548,7 @@ msgstr ""
 "\n"
 "フラグ:\n"
 
-#: ../lib/gis/parser.c:822
+#: ../lib/gis/parser.c:832
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -584,63 +557,63 @@ msgstr ""
 "\n"
 "パラメータ:\n"
 
-#: ../lib/gis/parser.c:844
+#: ../lib/gis/parser.c:854
 #, fuzzy, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   デフォルト: %s\n"
 
-#: ../lib/gis/parser.c:1403
+#: ../lib/gis/parser.c:1423
 #, fuzzy, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   オプション: "
 
-#: ../lib/gis/parser.c:1450 ../lib/gis/parser.c:1467
+#: ../lib/gis/parser.c:1470 ../lib/gis/parser.c:1487
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1522
+#: ../lib/gis/parser.c:1542
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1529
+#: ../lib/gis/parser.c:1549
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1614
+#: ../lib/gis/parser.c:1634
 #, c-format
 msgid ""
 "\n"
 "Error: illegal range syntax for parameter <%s>\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1616
+#: ../lib/gis/parser.c:1636
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1619
+#: ../lib/gis/parser.c:1639
 #, c-format
 msgid ""
 "\n"
 "Error: value <%s> out of range for parameter <%s>\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1621
+#: ../lib/gis/parser.c:1641
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1624
+#: ../lib/gis/parser.c:1644
 #, c-format
 msgid ""
 "\n"
 "Error: Missing value for parameter <%s>\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1784
+#: ../lib/gis/parser.c:1804
 #, c-format
 msgid ""
 "\n"
@@ -648,82 +621,82 @@ msgid ""
 "    (%s).\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1887
+#: ../lib/gis/parser.c:1907
 #, c-format
 msgid ""
 "\n"
 "Error: option <%s> must be provided in multiples of %d\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1889
+#: ../lib/gis/parser.c:1909
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1945
+#: ../lib/gis/parser.c:1965
 #, c-format
 msgid "Error: option <%s>: <%s> exists.\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1992
+#: ../lib/gis/parser.c:2012
 #, c-format
 msgid ""
 "\n"
 "FLAG: Set the following flag?\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2005
+#: ../lib/gis/parser.c:2026
 #, c-format
 msgid ""
 "\n"
 "OPTION:   %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2006
+#: ../lib/gis/parser.c:2027
 #, c-format
 msgid "     key: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2008
+#: ../lib/gis/parser.c:2029
 #, c-format
 msgid "  format: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2010
+#: ../lib/gis/parser.c:2031
 #, c-format
 msgid " default: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2011
+#: ../lib/gis/parser.c:2032
 #, c-format
 msgid "required: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2013
+#: ../lib/gis/parser.c:2034
 #, c-format
 msgid "multiple: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2015
+#: ../lib/gis/parser.c:2036
 #, c-format
 msgid " options: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2028
+#: ../lib/gis/parser.c:2051
 #, c-format
 msgid "enter option > "
 msgstr ""
 
-#: ../lib/gis/parser.c:2042 ../lib/gis/parser.c:2053
+#: ../lib/gis/parser.c:2065 ../lib/gis/parser.c:2076
 msgid "   Try again? "
 msgstr ""
 
-#: ../lib/gis/parser.c:2051
+#: ../lib/gis/parser.c:2074
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2062
+#: ../lib/gis/parser.c:2085
 #, c-format
 msgid ""
 "\n"
@@ -731,11 +704,11 @@ msgid ""
 "  %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2063
+#: ../lib/gis/parser.c:2086
 msgid "Is this correct? "
 msgstr ""
 
-#: ../lib/gis/parser.c:2121
+#: ../lib/gis/parser.c:2144
 msgid "to accept the default"
 msgstr ""
 
@@ -795,25 +768,23 @@ msgstr ""
 msgid "default region %s"
 msgstr ""
 
-#: ../lib/gis/get_window.c:120
+#: ../lib/gis/get_window.c:139
 msgid "is not set"
 msgstr ""
 
-#: ../lib/gis/get_window.c:130
+#: ../lib/gis/get_window.c:149
 #, c-format
 msgid ""
 "is invalid\n"
 "%s"
 msgstr ""
 
-#: ../lib/gis/datum.c:358 ../lib/gis/datum.c:438 ../lib/proj/datum.c:346
-#: ../lib/proj/datum.c:420
+#: ../lib/gis/datum.c:172 ../lib/proj/datum.c:348 ../lib/proj/datum.c:424
 #, c-format
 msgid "unable to open datum table file: %s"
 msgstr ""
 
-#: ../lib/gis/datum.c:373 ../lib/gis/datum.c:462 ../lib/proj/datum.c:359
-#: ../lib/proj/datum.c:434
+#: ../lib/gis/datum.c:196 ../lib/proj/datum.c:361 ../lib/proj/datum.c:438
 #, c-format
 msgid "error in datum table file, line %d"
 msgstr ""
@@ -990,12 +961,12 @@ msgstr ""
 msgid "can't read f_range file for [%s in %s]"
 msgstr ""
 
-#: ../lib/gis/range.c:330
+#: ../lib/gis/range.c:324
 #, c-format
 msgid "can't read range file for [%s in %s]"
 msgstr ""
 
-#: ../lib/gis/range.c:390 ../lib/gis/range.c:441
+#: ../lib/gis/range.c:378 ../lib/gis/range.c:429
 #, c-format
 msgid "can't write range file for [%s in %s]"
 msgstr ""
@@ -1045,6 +1016,11 @@ msgstr ""
 msgid "Fail of initial read of compressed file [%s in %s]"
 msgstr ""
 
+#: ../lib/gis/get_ellipse.c:81
+#, c-format
+msgid "Unable to open file %s in %s"
+msgstr ""
+
 #: ../lib/gis/get_ellipse.c:89 ../lib/gis/get_ellipse.c:114
 #, c-format
 msgid "invalid a: field %s in file %s in %s"
@@ -1080,7 +1056,7 @@ msgstr ""
 msgid "Line%s of ellipsoid table file <%s> is invalid"
 msgstr "���"
 
-#: ../lib/gis/home.c:51
+#: ../lib/gis/home.c:52
 msgid "unable to determine user's home directory"
 msgstr ""
 
@@ -1180,147 +1156,147 @@ msgstr ""
 msgid "Output map '%s' is used as input"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:93
+#: ../lib/gis/rd_cellhd.c:136
 msgid "duplicate projection field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:104
+#: ../lib/gis/rd_cellhd.c:147
 msgid "duplicate zone field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:114
+#: ../lib/gis/rd_cellhd.c:157
 #, fuzzy
 msgid "projection field missing"
 msgstr "������"
 
-#: ../lib/gis/rd_cellhd.c:116
+#: ../lib/gis/rd_cellhd.c:159
 #, fuzzy
 msgid "zone field missing"
 msgstr "������"
 
-#: ../lib/gis/rd_cellhd.c:137
+#: ../lib/gis/rd_cellhd.c:181
 msgid "duplicate north field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:146
+#: ../lib/gis/rd_cellhd.c:190
 msgid "duplicate south field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:155
+#: ../lib/gis/rd_cellhd.c:199
 msgid "duplicate east field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:164
+#: ../lib/gis/rd_cellhd.c:208
 msgid "duplicate west field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:173
+#: ../lib/gis/rd_cellhd.c:217
 msgid "duplicate top field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:182
+#: ../lib/gis/rd_cellhd.c:226
 msgid "duplicate bottom field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:191
+#: ../lib/gis/rd_cellhd.c:235
 msgid "duplicate e-w resolution field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:202
+#: ../lib/gis/rd_cellhd.c:246
 msgid "duplicate 3D e-w resolution field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:213
+#: ../lib/gis/rd_cellhd.c:257
 msgid "duplicate n-s resolution field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:224
+#: ../lib/gis/rd_cellhd.c:268
 msgid "duplicate 3D n-s resolution field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:235
+#: ../lib/gis/rd_cellhd.c:279
 msgid "duplicate t-b resolution field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:246
+#: ../lib/gis/rd_cellhd.c:290
 msgid "duplicate rows field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:257
+#: ../lib/gis/rd_cellhd.c:301
 msgid "duplicate 3D rows field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:268
+#: ../lib/gis/rd_cellhd.c:312
 msgid "duplicate cols field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:279
+#: ../lib/gis/rd_cellhd.c:323
 msgid "duplicate 3D cols field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:290
+#: ../lib/gis/rd_cellhd.c:334
 msgid "duplicate depths field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:301
+#: ../lib/gis/rd_cellhd.c:345
 msgid "duplicate format field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:310
+#: ../lib/gis/rd_cellhd.c:354
 msgid "duplicate compressed field"
 msgstr ""
 
-#: ../lib/gis/rd_cellhd.c:321
+#: ../lib/gis/rd_cellhd.c:365
 #, fuzzy
 msgid "north field missing"
 msgstr "������"
 
-#: ../lib/gis/rd_cellhd.c:323
+#: ../lib/gis/rd_cellhd.c:367
 #, fuzzy
 msgid "south field missing"
 msgstr "������"
 
-#: ../lib/gis/rd_cellhd.c:325
+#: ../lib/gis/rd_cellhd.c:369
 #, fuzzy
 msgid "west field missing"
 msgstr "������"
 
-#: ../lib/gis/rd_cellhd.c:327
+#: ../lib/gis/rd_cellhd.c:371
 #, fuzzy
 msgid "east field missing"
 msgstr "������"
 
-#: ../lib/gis/rd_cellhd.c:329
+#: ../lib/gis/rd_cellhd.c:373
 #, fuzzy
 msgid "cols field missing"
 msgstr "������"
 
-#: ../lib/gis/rd_cellhd.c:331
+#: ../lib/gis/rd_cellhd.c:375
 #, fuzzy
 msgid "rows field missing"
 msgstr "������"
 
-#: ../lib/gis/rd_cellhd.c:342
+#: ../lib/gis/rd_cellhd.c:386
 #, fuzzy
 msgid "ewres3 field missing"
 msgstr "������"
 
-#: ../lib/gis/rd_cellhd.c:344
+#: ../lib/gis/rd_cellhd.c:388
 #, fuzzy
 msgid "nsres3 field missing"
 msgstr "������"
 
-#: ../lib/gis/rd_cellhd.c:346
+#: ../lib/gis/rd_cellhd.c:390
 #, fuzzy
 msgid "cols3 field missing"
 msgstr "������"
 
-#: ../lib/gis/rd_cellhd.c:348
+#: ../lib/gis/rd_cellhd.c:392
 #, fuzzy
 msgid "rows3 field missing"
 msgstr "������"
 
-#: ../lib/gis/rd_cellhd.c:404
+#: ../lib/gis/rd_cellhd.c:448
 #, c-format
 msgid "line %d: <%s>"
 msgstr ""
@@ -1393,22 +1369,22 @@ msgstr ""
 msgid "%s - ** illegal name **"
 msgstr ""
 
-#: ../lib/gis/timestamp.c:257
+#: ../lib/gis/timestamp.c:298
 #, c-format
 msgid "Can't create timestamp file for %s map %s in mapset %s"
 msgstr ""
 
-#: ../lib/gis/timestamp.c:267
+#: ../lib/gis/timestamp.c:308
 #, c-format
 msgid "Invalid timestamp specified for %s map %s in mapset %s"
 msgstr ""
 
-#: ../lib/gis/timestamp.c:292
+#: ../lib/gis/timestamp.c:333
 #, c-format
 msgid "Can't open timestamp file for %s map %s in mapset %s"
 msgstr ""
 
-#: ../lib/gis/timestamp.c:302
+#: ../lib/gis/timestamp.c:343
 #, c-format
 msgid "Invalid timestamp file for %s map %s in mapset %s"
 msgstr ""
@@ -1453,77 +1429,87 @@ msgid ""
 "invalid projection\n"
 msgstr ""
 
-#: ../lib/gis/error.c:162
+#: ../lib/gis/error.c:163
 msgid "WARNING: "
 msgstr ""
 
-#: ../lib/gis/error.c:163
+#: ../lib/gis/error.c:164
 msgid "ERROR: "
 msgstr ""
 
-#: ../lib/gis/adj_cellhd.c:69 ../lib/gis/adj_cellhd.c:166
+#: ../lib/gis/adj_cellhd.c:69 ../lib/gis/adj_cellhd.c:208
 msgid "Illegal n-s resolution value"
 msgstr ""
 
-#: ../lib/gis/adj_cellhd.c:74 ../lib/gis/adj_cellhd.c:173
+#: ../lib/gis/adj_cellhd.c:74 ../lib/gis/adj_cellhd.c:215
 msgid "Illegal row value"
 msgstr ""
 
-#: ../lib/gis/adj_cellhd.c:79 ../lib/gis/adj_cellhd.c:180
+#: ../lib/gis/adj_cellhd.c:79 ../lib/gis/adj_cellhd.c:222
 msgid "Illegal e-w resolution value"
 msgstr ""
 
-#: ../lib/gis/adj_cellhd.c:84 ../lib/gis/adj_cellhd.c:187
+#: ../lib/gis/adj_cellhd.c:84 ../lib/gis/adj_cellhd.c:229
 msgid "Illegal col value"
 msgstr ""
 
-#: ../lib/gis/adj_cellhd.c:91 ../lib/gis/adj_cellhd.c:206
+#: ../lib/gis/adj_cellhd.c:103 ../lib/gis/adj_cellhd.c:260
+#, c-format
+msgid "Fixing subtle input data rounding error of north boundary (%g>%g)"
+msgstr ""
+
+#: ../lib/gis/adj_cellhd.c:106 ../lib/gis/adj_cellhd.c:263
 #, fuzzy
 msgid "Illegal latitude for North"
 msgstr "緯度 (dd:mm:ss{N|S})"
 
-#: ../lib/gis/adj_cellhd.c:93 ../lib/gis/adj_cellhd.c:208
+#: ../lib/gis/adj_cellhd.c:111 ../lib/gis/adj_cellhd.c:268
+#, c-format
+msgid "Fixing subtle input data rounding error of south boundary (%g>%g)"
+msgstr ""
+
+#: ../lib/gis/adj_cellhd.c:114 ../lib/gis/adj_cellhd.c:271
 #, fuzzy
 msgid "Illegal latitude for South"
 msgstr "緯度 (dd:mm:ss{N|S})"
 
-#: ../lib/gis/adj_cellhd.c:102 ../lib/gis/adj_cellhd.c:217
+#: ../lib/gis/adj_cellhd.c:144 ../lib/gis/adj_cellhd.c:301
 msgid "North must be north of South"
 msgstr ""
 
-#: ../lib/gis/adj_cellhd.c:104 ../lib/gis/adj_cellhd.c:219
+#: ../lib/gis/adj_cellhd.c:146 ../lib/gis/adj_cellhd.c:303
 msgid "North must be larger than South"
 msgstr ""
 
-#: ../lib/gis/adj_cellhd.c:107 ../lib/gis/adj_cellhd.c:222
+#: ../lib/gis/adj_cellhd.c:149 ../lib/gis/adj_cellhd.c:306
 msgid "East must be larger than West"
 msgstr ""
 
-#: ../lib/gis/adj_cellhd.c:126 ../lib/gis/adj_cellhd.c:259
+#: ../lib/gis/adj_cellhd.c:168 ../lib/gis/adj_cellhd.c:343
 msgid "Invalid coordinates"
 msgstr ""
 
-#: ../lib/gis/adj_cellhd.c:168
+#: ../lib/gis/adj_cellhd.c:210
 msgid "Illegal n-s3 resolution value"
 msgstr ""
 
-#: ../lib/gis/adj_cellhd.c:175
+#: ../lib/gis/adj_cellhd.c:217
 msgid "Illegal row3 value"
 msgstr ""
 
-#: ../lib/gis/adj_cellhd.c:182
+#: ../lib/gis/adj_cellhd.c:224
 msgid "Illegal e-w3 resolution value"
 msgstr ""
 
-#: ../lib/gis/adj_cellhd.c:189
+#: ../lib/gis/adj_cellhd.c:231
 msgid "Illegal col3 value"
 msgstr ""
 
-#: ../lib/gis/adj_cellhd.c:194
+#: ../lib/gis/adj_cellhd.c:236
 msgid "Illegal t-b3 resolution value"
 msgstr ""
 
-#: ../lib/gis/adj_cellhd.c:199
+#: ../lib/gis/adj_cellhd.c:241
 msgid "Illegal depths value"
 msgstr ""
 
@@ -1911,49 +1897,49 @@ msgstr ""
 msgid "Cannot open old vector %s"
 msgstr "���"
 
-#: ../lib/vector/Vlib/open.c:195 ../lib/vector/Vlib/open.c:254
-#: ../lib/vector/Vlib/open.c:270
+#: ../lib/vector/Vlib/open.c:195 ../lib/vector/Vlib/open.c:253
+#: ../lib/vector/Vlib/open.c:269
 #, fuzzy, c-format
 msgid "Cannot open old vector %s on level %d"
 msgstr "���"
 
-#: ../lib/vector/Vlib/open.c:317 ../lib/vector/Vlib/open.c:522
+#: ../lib/vector/Vlib/open.c:316 ../lib/vector/Vlib/open.c:521
 #, fuzzy, c-format
 msgid "Cannot open history file for vector '%s'"
 msgstr "���"
 
-#: ../lib/vector/Vlib/open.c:488 ../lib/vector/Vlib/map.c:108
-#: ../lib/vector/Vlib/map.c:217
+#: ../lib/vector/Vlib/open.c:487 ../lib/vector/Vlib/map.c:152
+#: ../lib/vector/Vlib/map.c:268
 #, c-format
 msgid "Map name is not SQL compliant."
 msgstr ""
 
-#: ../lib/vector/Vlib/open.c:495 ../lib/vector/Vlib/map.c:112
-#: ../lib/vector/Vlib/map.c:221
+#: ../lib/vector/Vlib/open.c:494 ../lib/vector/Vlib/map.c:156
+#: ../lib/vector/Vlib/map.c:272
 #, fuzzy, c-format
 msgid "The vector '%s' already exists and will be overwritten."
 msgstr "���."
 
-#: ../lib/vector/Vlib/open.c:499
+#: ../lib/vector/Vlib/open.c:498
 #, fuzzy, c-format
 msgid "Cannot delete existing vector %s"
 msgstr "���"
 
-#: ../lib/vector/Vlib/open.c:513
+#: ../lib/vector/Vlib/open.c:512
 #, fuzzy, c-format
 msgid "Cannot open new vector %s"
 msgstr "���"
 
-#: ../lib/vector/Vlib/open.c:565
+#: ../lib/vector/Vlib/open.c:564
 #, c-format
 msgid "Could not stat file '%s'"
 msgstr ""
 
-#: ../lib/vector/Vlib/open.c:668
+#: ../lib/vector/Vlib/open.c:667
 msgid "Size of 'coor' file differs from value saved in topo file."
 msgstr ""
 
-#: ../lib/vector/Vlib/open.c:679
+#: ../lib/vector/Vlib/open.c:678
 #, fuzzy, c-format
 msgid "Please rebuild topology for vector '%s@%s'"
 msgstr "���"
@@ -2000,12 +1986,12 @@ msgstr ""
 msgid "Cannot delete line"
 msgstr ""
 
-#: ../lib/vector/Vlib/map.c:229
+#: ../lib/vector/Vlib/map.c:280
 #, fuzzy, c-format
 msgid "Input vector '%s' not found"
 msgstr "���"
 
-#: ../lib/vector/Vlib/map.c:232
+#: ../lib/vector/Vlib/map.c:283
 #, fuzzy, c-format
 msgid "Cannot copy vector '%s' to '%s'"
 msgstr "���"
@@ -2244,6 +2230,11 @@ msgstr ""
 msgid ""
 "taking too long to find points for interpolation--please change the region "
 "to area where your points are. Continuing calculations..."
+msgstr ""
+
+#: ../lib/display/tran_colr.c:127 ../lib/display/tran_colr.c:129
+#, c-format
+msgid "[%s]: No such color"
 msgstr ""
 
 #: ../lib/proj/ellipse.c:85
