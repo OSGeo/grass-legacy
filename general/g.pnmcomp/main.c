@@ -145,13 +145,14 @@ read_pnm(const char *filename, char *buf, int components)
 
 	p = buf;
 
-	for (row = 0; row < height; row++)
-		for (col = 0; col < width; col++)
-			for (i = 0; i < components; i++)
-			{
-				*p = *p * 255 / maxval;
-				p++;
-			}
+	if (maxval != 255)
+		for (row = 0; row < height; row++)
+			for (col = 0; col < width; col++)
+				for (i = 0; i < components; i++)
+				{
+					*p = *p * 255 / maxval;
+					p++;
+				}
 
 	fclose(fp);
 }
@@ -170,11 +171,25 @@ overlay(void)
 			int c1 = *q++;
 			int c0 = 255 - c1;
 
-			for (i = 0; i < 3; i++)
+			switch (c1)
 			{
-				*r = (*r * c0 + *p * c1) / 255;
-				p++;
-				r++;
+			case 0:
+				p += 3;
+				r += 3;
+				break;
+			case 255:
+				*r++ = *p++;
+				*r++ = *p++;
+				*r++ = *p++;
+				break;
+			default:
+				for (i = 0; i < 3; i++)
+				{
+					*r = (*r * c0 + *p * c1) / 255;
+					p++;
+					r++;
+				}
+				break;
 			}
 		}
 }
@@ -187,13 +202,19 @@ overlay_alpha(float alpha)
 	unsigned char *r = out_buf;
 	int row, col, i;
 
-	alpha *= 256.0 / 255;
-
 	for (row = 0; row < height; row++)
 		for (col = 0; col < width; col++)
 		{
-			int c1 = (int) (*q++ * alpha);
+			int c = *q++;
+			int c1 = (int) (c * alpha);
 			int c0 = 255 - c1;
+
+			if (!c)
+			{
+				p += 3;
+				r += 3;
+				continue;
+			}
 
 			for (i = 0; i < 3; i++)
 			{
@@ -307,7 +328,14 @@ main(int argc, char *argv[])
 			read_pnm(infile, in_buf, 3);
 			read_pnm(maskfile, mask_buf, 1);
 			if (opt.alpha->answer)
-				overlay_alpha(atof(opt.alpha->answers[i]));
+			{
+				float alpha = atof(opt.alpha->answers[i]);
+
+				if (alpha == 1.0)
+					overlay();
+				else
+					overlay_alpha(alpha);
+			}
 			else
 				overlay();
 		}
