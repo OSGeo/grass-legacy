@@ -73,7 +73,7 @@ Semi-automated procedure:
   1. In the main GRASS source code directory, run:
      
         ./configured --with-nls [...further options...]
-        make pre
+        make
 
   2. In the locale/ directory, run:
 
@@ -89,6 +89,12 @@ Semi-automated procedure:
       
         make mo         creates the mo files (containing translated messages as
                         binary file)
+
+If you have any difficulty with these instructions please ask for help
+on the grass development mailing list grass-dev@grass.itc.it . Your
+willingness, time, and effort translating are valuable. If necessary,
+all of these steps except for the actual translation can be done by someone
+else on a different computer. 
 
 A convenient software package to translate messages is 'kbabel'.
 It permits to enhance it's message database by loading existing
@@ -127,6 +133,7 @@ DETAILED PROCEDURE :
    This will create
     ./templates/grasslibs.pot
     ./templates/grassmods.pot
+    ./templates/grasstcl.pot
        
     
 3. CREATE LANGUAGE FILES
@@ -147,6 +154,7 @@ DETAILED PROCEDURE :
        to the ./po/ directory (for example German language):
         mv ./template/grasslibs.pot ./po/grasslibs_de.po
         mv ./template/grassmods.pot ./po/grassmods_de.po
+        mv ./template/grasstcl.pot ./po/grasstcl_de.po
 
        Get the two characters indicating the language from this
        list: http://www.loc.gov/standards/iso639-2/englangn.html
@@ -180,10 +188,12 @@ DETAILED PROCEDURE :
    Run 'kbabel' or equivalent program
     kbabel ./po/grasslibs_<LANGUAGE>.po
     kbabel ./po/grassmods_<LANGUAGE>.po
+    kbabel ./po/grasstcl_<LANGUAGE>.po
 
    For example (German):
     kbabel ./po/grasslibs_de.po
     kbabel ./po/grassmods_de.po
+    kbabel ./po/grasstcl_de.po
 
    KBABEL: You may load .po files from other projects [see footnote 1].
            Then use TOOLS -> ROUGH TRANSLATION to auto-translate messages.
@@ -216,6 +226,7 @@ DETAILED PROCEDURE :
    If possible, please send diffs against CVS:
    cvs diff -u grasslibs_LANG.po > grasslibs_LANG_po.diff
    cvs diff -u grassmods_LANG.po > grassmods_LANG_po.diff
+   cvs diff -u grasstcl_LANG.po > grasstcl_LANG_po.diff
 
    If you updated .c files with _() macros as explained
    above, please send C file diffs against CVS:

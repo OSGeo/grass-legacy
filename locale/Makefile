@@ -1,4 +1,5 @@
-# written by MN
+# written by Markus Neteler
+# tcl stuff by Cedric Shock
 
 MODULE_TOPDIR = ..
 include $(MODULE_TOPDIR)/include/Make/Module.make
@@ -12,22 +13,27 @@ all:
 	@echo '   make update-po  merge new messages into existing *.po files'
 	@echo '   make mo         create the *.mo files'
 
+# Directory for installing tcl .msg files:
+MSG_DIR = $(GISBASE)/etc/msgs
 MO_DIR = $(GISBASE)/locale
 PO_DIR = po
 
 #distinguish between library messages and modules:
 LIBDOMAIN = grasslibs
 MODDOMAIN = grassmods
-DOMAINS = $(LIBDOMAIN) $(MODDOMAIN)
+TCLDOMAIN = grasstcl
+DOMAINS = $(LIBDOMAIN) $(MODDOMAIN) $(TCLDOMAIN)
 
 LIB_POTFILES = find ../lib -name '*.c' | xargs grep -l "_(\""
 MOD_POTFILES = find ../ -name '*.c' | grep -v '../lib' | xargs grep -l "_(\""
+TCL_POTFILES = find ../ -name '*.tcl' | xargs grep -l "\\[_ \|\\[G_msg" 
 
 #The xgettext utility is used to automate the creation of
 #portable message files (.po)
 pot:
 	xgettext -k_ -o ./templates/$(LIBDOMAIN).pot `$(LIB_POTFILES)`
 	xgettext -k_ -o ./templates/$(MODDOMAIN).pot `$(MOD_POTFILES)`
+	xgettext -k_ --keyword=G_msg -o ./templates/$(TCLDOMAIN).pot `$(TCL_POTFILES)`
 
 #merge already existing translations with new messages in POT template file and create new po files:
 update-po:
@@ -60,7 +66,12 @@ mo:
 		prefix=`echo $$po | cut -d'_' -f1`; \
 		install -d $(MO_DIR)/$$lingua/LC_MESSAGES/ ; \
 		echo -n $$po": "; \
+		if [ $$prefix = $(TCLDOMAIN) ]; then\
+		msgfmt --statistics --tcl -l $$lingua \
+			-d $(MSG_DIR)/ $$po ;\
+		else \
 		msgfmt --statistics \
 			-o $(MO_DIR)/$$lingua/LC_MESSAGES/$$prefix.mo $$po ;\
+		fi \
 	done \
 	)
