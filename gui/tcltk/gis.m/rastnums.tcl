@@ -212,6 +212,8 @@ proc GmRnums::display { node mod } {
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
 
+    set opt($id,1,mod) $mod
+
     if { $opt($id,1,map) == "" } { return } 
 
     set cmd "d.rast.num map=$opt($id,1,map) grid_color=$opt($id,1,grid_color) \
