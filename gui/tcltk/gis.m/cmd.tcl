@@ -145,7 +145,9 @@ proc GmCmd::display { node mod} {
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
 
-    set opt($id,1,mod) $mod    
+    # If we are told dirty (for zoom) force dirty
+    # Don't remove a dirty from a previous unrendered zoom
+    if {$mod} {set opt($id,1,mod) 1}
 
     if { $opt($id,1,cmd) == "" } { return } 
 
