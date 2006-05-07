@@ -41,6 +41,8 @@ proc DmBarscale::create { tree parent } {
     set opt($count,feet) 0 
     set opt($count,top) 0 
     set opt($count,mouse) 0 
+    set opt($count,arrow) 0 
+    set opt($count,scale) 0 
     
     incr count
     return $node
@@ -90,7 +92,7 @@ proc DmBarscale::options { id frm } {
     checkbutton $row.a -text [G_msg "display N. arrow only "] \
     	-variable DmBarscale::opt($id,arrow) 
     checkbutton $row.b -text [G_msg "display scale only"] \
-    	-variable DmBarscale::opt($id,arrow) 
+    	-variable DmBarscale::opt($id,scale) 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
@@ -126,7 +128,7 @@ proc DmBarscale::save { tree depth node } {
     
     set id [Dm::node_id $node]
 
-    foreach key { _check bcolor bcolor_none tcolor at feet line top mouse } {
+    foreach key { _check bcolor bcolor_none tcolor at feet line top mouse arrow scale } {
         Dm::rc_write $depth "$key $opt($id,$key)"
     } 
 }
@@ -170,6 +172,16 @@ proc DmBarscale::display { node } {
     if { $opt($id,feet) != 0} { 
         append cmd " -f"
     }
+    
+    # arrow only
+    if { $opt($id,arrow) != 0 } { 
+        append cmd " -n"
+    }
+    
+    # scale only
+    if { $opt($id,scale) != 0 } { 
+        append cmd " -s"
+    }
 
     # place with coordinates
     if { $opt($id,at) != "" && $opt($id,mouse) == 0 } { 
@@ -182,7 +194,6 @@ proc DmBarscale::display { node } {
         append cmd " -m"
         term_panel $cmd
     }
-    
     
 }
 
@@ -230,6 +241,8 @@ proc DmBarscale::duplicate { tree parent node id } {
     set opt($count,feet) "$opt($id,feet)"
     set opt($count,top) "$opt($id,top)"
     set opt($count,mouse) "$opt($id,mouse)" 
+    set opt($count,arrow) "$opt($id,arrow)"
+    set opt($count,scale) "$opt($id,scale)" 
 
     incr count
     return $node
