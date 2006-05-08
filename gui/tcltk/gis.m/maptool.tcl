@@ -43,11 +43,11 @@ proc MapToolBar::create { tb } {
         -helptext [G_msg "Display active layers"]
 
     # zoom to current region  
-    $bbox1 add -image [image create photo -file "$iconpath/gui-zoom_current.gif"] \
-        -command "MapCanvas::zoom_current $mon" \
+    $bbox1 add -image [image create photo -file "$iconpath/gui-redraw.gif"] \
+        -command "MapCanvas::request_redraw $mon 1" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
         -highlightbackground $bgcolor -activebackground $bgcolor \
-        -helptext [G_msg "Zoom to current region and redraw all layers"]
+        -helptext [G_msg "Redraw all layers"]
 
 
     $bbox1 add -image [image create photo -file "$iconpath/module-nviz.gif"] \
@@ -130,8 +130,9 @@ proc MapToolBar::create { tb } {
     set sep3 [Separator $toolbar.sep3 -orient vertical -background $bgcolor ]
     pack $sep3 -side left -fill y -padx 5 -anchor w
 
-    set bbox3 [ButtonBox $toolbar.bbox3 -spacing 0  ]
     
+    set bbox3 [ButtonBox $toolbar.bbox3 -spacing 0  ]
+
     # zoom.back
     $bbox3 add -image [image create photo -file "$iconpath/gui-zoom_back.gif"] \
         -command "MapCanvas::zoom_back $mon" \
@@ -139,28 +140,42 @@ proc MapToolBar::create { tb } {
         -highlightbackground $bgcolor -activebackground $bgcolor \
         -helptext [G_msg "Return to previous zoom"]
 
-    # zoom to selected map
-    $bbox3 add -image [image create photo -file "$iconpath/gui-zoom_map.gif"] \
-        -command "MapCanvas::zoom_map $mon" \
-        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
-        -highlightbackground $bgcolor -activebackground $bgcolor \
-        -helptext [G_msg "Zoom to selected map"]
+	set mapzoom [menubutton $tb.mapzoom  \
+		-image [image create photo -file "$iconpath/gui-mapzoom.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief flat -borderwidth 1  \
+        -highlightbackground $bgcolor -activebackground honeydew \
+        -bg $bgcolor -width 32 -indicatoron 0 -direction below]
 
-    # zoom to saved region
-    $bbox3 add -image [image create photo -file "$iconpath/gui-zoom_region.gif"] \
-        -command "MapCanvas::zoom_region $mon" \
-        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
-        -highlightbackground $bgcolor -activebackground $bgcolor \
-        -helptext [G_msg "Zoom to saved region"]
+	# menu zooming display
+	set zoommenu [menu $mapzoom.zm -type normal]
+	
+	set zmimg [image create photo -file "$iconpath/gui-zoom_map.gif"]
+	set zrimg [image create photo -file "$iconpath/gui-zoom_region.gif"]
+	set zcimg [image create photo -file "$iconpath/gui-zoom_current.gif"]
+	set zdimg [image create photo -file "$iconpath/gui-zoom_default.gif"]
 
-    # zoom to default region  
-    $bbox3 add -image [image create photo -file "$iconpath/gui-zoom_default.gif"] \
-        -command "MapCanvas::zoom_default $mon" \
-        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
-        -highlightbackground $bgcolor -activebackground $bgcolor \
-        -helptext [G_msg "Zoom to default region"]
+	$zoommenu add command \
+		-compound top \
+		-label {Zoom to selected map} \
+		-command {MapCanvas::zoom_map $mon}
+	$zoommenu add command \
+		-compound right \
+		-label {Zoom to saved region} \
+		-command {MapCanvas::zoom_region $mon}
+	$zoommenu add command \
+		-compound center \
+		-label {Zoom to current region (set with g.region)} \
+		-command {MapCanvas::zoom_current $mon}
+	$zoommenu add command \
+		-compound center \
+		-label {Zoom to default region} \
+		-command {MapCanvas::zoom_default $mon}
+
+	$mapzoom configure -menu $zoommenu
 
     pack $bbox3 -side left -anchor w
+
+	pack $mapzoom -side left -anchor w -expand no -fill y 
 
     set sep4 [Separator $toolbar.sep4 -orient vertical -background $bgcolor ]
     pack $sep4 -side left -fill y -padx 5 -anchor w
@@ -178,7 +193,7 @@ proc MapToolBar::create { tb } {
 		-image [image create photo -file "$iconpath/file-save.gif"] \
         -highlightthickness 0 -takefocus 0 -relief flat -borderwidth 1  \
         -highlightbackground $bgcolor -activebackground honeydew \
-        -bg $bgcolor -width 28 -indicatoron 0 -direction below]
+        -bg $bgcolor -width 32 -indicatoron 0 -direction below]
 
 
 	pack $mapsave -side left -anchor w -expand no -fill y 
@@ -206,7 +221,6 @@ proc MapToolBar::create { tb } {
 
     set sep5 [Separator $toolbar.sep5 -orient vertical ]
     pack $sep5 -side left -fill y -padx 5 -anchor w
-
 
     # Render modes
 
