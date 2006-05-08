@@ -98,11 +98,17 @@ if [ $? -ne 0 ] ; then
    # nothing defined for layer 1
    echo "Creating new DB connection based on default mapset settings..." 1>&2
    database=`db.connect -p | grep database | cut -d':' -f2`
-   if [ $? -ne 0 ] ; then
-       echo "An error occured. Stop."
+   if [ $? -ne 0 ] ; then  # this tests the result of cut? what if "(null)"? grep -v '(null)'?
+       echo "An error occured. Stop." 1>&2
        exit 1
    fi
    driver=`db.connect -p | grep driver | cut -d':' -f2`
+   if [ "$driver" = "(null)" ] || [ "$database" = "(null)" ] ; then
+      echo "Setting default database driver to DBF." 1>&2
+      database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
+      driver=dbf
+      db.connect driver=$driver database=$database
+   fi
 else
  # there is a definition for layer 1, so we check for the user defined layer
  database=`v.db.connect $GIS_OPT_MAP -g | grep -w $QUERYLAYER | awk '{print $4}'`
