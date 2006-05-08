@@ -215,6 +215,13 @@ proc term {cmd args} {
 }
 
 ###############################################################################
+# Make sure there's an xmon before running some commands.
+# Used in menus. Dummy for now.
+proc guarantee_xmon {} {
+	#pass
+}
+
+###############################################################################
 
 proc read_moncap {} {
 	global env moncap

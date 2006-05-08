@@ -148,6 +148,13 @@ proc spawn {cmd args} {
 }
 
 ###############################################################################
+proc spawn_panel {cmd args} {
+	global gronsole
+
+	$gronsole run $cmd gism {}
+}
+
+###############################################################################
 
 proc run_panel {cmd} {
 	global gronsole
@@ -187,6 +194,27 @@ proc term_panel {cmd} {
 proc term {cmd args} {
 	global env
 	eval exec -- xterm -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd $args &
+}
+
+###############################################################################
+# Make sure there's an xmon before running some commands.
+# Used in menus.
+
+proc guarantee_xmon {} {
+	if {![catch {open "|d.mon -L" r} input]} {
+		while {[gets $input line] >= 0 } {
+			if {[regexp -nocase {(x[0-9]+).*not running} $line dummy monitor]} {
+				# $monnum is the monitor number
+				#create list of non-running monitors
+				lappend xmonlist $monitor
+			}
+		}
+
+	}
+	close $input
+
+	set xmon  [lindex $xmonlist 0]
+	spawn "d.mon start=$xmon"
 }
 
 ###############################################################################
