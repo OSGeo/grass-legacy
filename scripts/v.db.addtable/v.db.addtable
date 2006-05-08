@@ -125,7 +125,7 @@ if [ $GIS_OPT_LAYER -eq 1 ] ; then
 fi
 
 #maybe there is already a table with that name?
-db.tables database=$database driver=$driver | grep $table
+db.tables database=$database driver=$driver 2> /dev/null | grep $table
 if [ $? -ne 0 ] ; then
    #if not existing, create it:
 
