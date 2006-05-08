@@ -720,28 +720,15 @@ proc GmVector::WorkOnVector { node mod } {
 
     global dmpath 
     
-    # start xmon for v.digit
-	if {![catch {open "|d.mon -L" r} input]} {
-		while {[gets $input line] >= 0 } {
-			if {[regexp -nocase {x([0-9]+).*not running} $line dummy monnum]} {
-				# $monnum is the monitor number
-				#create list of non-running monitors
-				lappend xmonlist "x$monnum"
-			} 
-		}
+    if {[Gm::element_exists "vector" $opt($id,1,vect)]} {
+        set cmd [list v.digit "map=$opt($id,1,vect)"]
+    } else { 
+        set cmd [list v.digit -n "map=$opt($id,1,vect)"]
+    }
 
-	}
-
-	set xmon  [lindex $xmonlist 0]
-	spawn "d.mon start=$xmon"
-	if {[file exists "env(GISBASE)/env(LOCATION_NAME)/env(MAPSET)/vector/$opt($id,1,vect)"]} {
-		run v.digit map=$opt($id,1,vect)
-	} else { 
-		run v.digit -n map=$opt($id,1,vect)
-	}
-	destroy xmonlist
-	close $input
-    return
+    # Run v.digit with an xmon started first
+    guarantee_xmon
+    spawn_panel $cmd
 }
 
 ###############################################################################
