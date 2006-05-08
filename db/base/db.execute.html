@@ -11,7 +11,8 @@ do not need to be specified each time.
 If you have a large number of SQL commands to process, it is much much faster
 to place all the SQL statements into a text file and use <em>db.execute</em>'s
 <b>input</b> file parameter than it is to process each statement individually
-in a loop.
+in a loop. If multiple instruction lines are given, each SQL line must end
+with a semicolon.
 <p>
 Please see the individual <a href="sql.html">sql driver</a> pages for how to create
 a new database.
@@ -67,7 +68,7 @@ echo "DROP TABLE fmacopy" | db.execute
 <p>
 
 <em>Update attribute with multiple SQL instructions in file (e.g., file.sql,
-    instruction line must end with semicolon):</em><br>
+    instruction line must end with a semicolon):</em><br>
 <div class="code"><pre>
 UPDATE roads SET travelcost=5 WHERE cat=1;
 UPDATE roads SET travelcost=2 WHERE cat=2;
