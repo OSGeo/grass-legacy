@@ -9,8 +9,14 @@ proc handle_scroll {ammount} {
 
     foreach {x y} {-1 -1} {}
 
+    set window_gone 0
+
     foreach window $bind_scroll_list {
-        if {![winfo exists $window] || ![winfo ismapped $window]} continue
+        if {![winfo exists $window]} {
+            set window_gone 1
+            continue
+        } 
+        if {![winfo ismapped $window]} continue
         set parent [winfo parent $window]
         set keyboard_focus [focus -displayof $window]
         foreach {x y} [winfo pointerxy $window] {break}
@@ -23,6 +29,15 @@ proc handle_scroll {ammount} {
     }
 
     # We should thin out windows that don't exist anymore if we find them
+    if {$window_gone} {
+        set new_bind_scroll_list {}
+        foreach window $bind_scroll_list {
+            if {[winfo exists $window]} {
+                lappend new_bind_scroll_list $window
+            }
+        }
+        set bind_scroll_list $new_bind_scroll_list
+    }
 }
 
 proc bind_scroll {frame} {
