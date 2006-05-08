@@ -1179,14 +1179,21 @@ proc MapCanvas::query { mon x y } {
             set mapname [GmRgbhis::mapname $sel]
 			set cmd "r.what -f input=$mapname east_north=$east,$north\n\n"
         }
-        dframe {
-            return
+        "arrows" {
+            set mapname [GmArrows::mapname $sel]
+			set cmd "r.what -f input=$mapname east_north=$east,$north\n\n"
         }
-        chart {
-            return
+        "rnums" {
+            set mapname [GmRnums::mapname $sel]
+			set cmd "r.what -f input=$mapname east_north=$east,$north\n\n"
         }
-        thematic {
-            return
+        "chart" {
+            set mapname [GmChart::mapname $sel]
+	    	set cmd "v.what -a map=$mapname east_north=$east,$north distance=$vdist\n\n"
+        }
+        "thematic" {
+            set mapname [GmThematic::mapname $sel]
+	    	set cmd "v.what -a map=$mapname east_north=$east,$north distance=$vdist\n\n"
         }
     }
 
