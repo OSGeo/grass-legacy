@@ -686,17 +686,8 @@ proc GmVector::mapname { node } {
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
 
-    if { ! ( $opt($id,1,_check) ) } { return "" } 
 
     if { $opt($id,1,vect) == "" } { return ""} 
-
-    if { !$opt($id,1,display_shape) && !$opt($id,1,display_cat) &&
-         !$opt($id,1,display_topo)  && !$opt($id,1,display_dir) &&
-         !$opt($id,1,display_attr) } { return } 
-
-    if { !$opt($id,1,type_point) && !$opt($id,1,type_line) &&
-         !$opt($id,1,type_boundary)  && !$opt($id,1,type_centroid) && 
-         !$opt($id,1,type_area) && !$opt($id,1,type_face) } { return ""} 
 
     set mapname $opt($id,1,vect)
 	return $mapname

@@ -286,8 +286,6 @@ proc GmChart::mapname { node } {
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
 
-    if { ! ( $opt($id,1,_check) ) } { return "" } 
-
     if { $opt($id,1,map) == "" } { return ""} 
 
 
