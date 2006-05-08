@@ -1,8 +1,9 @@
+# Brad Douglas - Updated coding conventions (05.07.02006)
+#
+#
 
 For Version 1.00 of this spec see:
-
-http://reality.sgi.com/grafica/sgiimage.html
-
+ftp://ftp.sgi.com/graphics/SGIIMAGESPEC
 
 
  
@@ -39,13 +40,12 @@ http://reality.sgi.com/grafica/sgiimage.html
  
  	So, this function will read a short value from the file:
  
- 	    unsigned short getshort(inf)
- 	    FILE *inf;
+ 	    unsigned short getshort(FILE *inf)
  	    {
  		unsigned char buf[2];
  
- 		fread(buf,2,1,inf);
- 		return (buf[0]<<8)+(buf[1]<<0);
+ 		fread(buf, 2, 1, inf);
+ 		return (buf[0] << 8) + (buf[1] << 0);
  	    }
  
      All long values are represented by 4 bytes.  The first byte stores the
@@ -55,13 +55,15 @@ http://reality.sgi.com/grafica/sgiimage.html
  
  	So, this function will read a long value from the file:
  
- 	    static long getlong(inf)
- 	    FILE *inf;
+ 	    static long getlong(FILE *inf)
  	    {
  		unsigned char buf[4];
  
- 		fread(buf,4,1,inf);
- 		return (buf[0]<<24)+(buf[1]<<16)+(buf[2]<<8)+(buf[3]<<0);
+ 		fread(buf, 4, 1, inf);
+ 		return (buf[0] << 24) +
+                       (buf[1] << 16) +
+                       (buf[2] << 8)  +
+                       (buf[3] << 0);
  	    }
  
  
@@ -229,12 +231,12 @@ http://reality.sgi.com/grafica/sgiimage.html
  
  	    unsigned long *starttab, *lengthtab;
  
- 	    tablen = YSIZE*ZSIZE*sizeof(long);
+ 	    tablen = YSIZE * ZSIZE * sizeof(long);
  	    starttab = (unsigned long *)mymalloc(tablen);
  	    lengthtab = (unsigned long *)mymalloc(tablen);
- 	    fseek(inf,512,SEEK_SET);
- 	    readlongtab(inf,starttab);
- 	    readlongtab(ing,lengthtab);
+ 	    fseek(inf, 512, SEEK_SET);
+ 	    readlongtab(inf, starttab);
+ 	    readlongtab(ing, lengthtab);
  
  
  	To find the file offset and RLE data length for a scanline:
@@ -242,8 +244,8 @@ http://reality.sgi.com/grafica/sgiimage.html
  	    rowno is an integer in the range 0 to YSIZE-1
  	    channo is an integer in the range 0 to ZSIZE-1
  
- 	    rleoffset = starttab[rowno+channo*YSIZE]
- 	    rlelength = lengthtab[rowno+channo*YSIZE]
+ 	    rleoffset = starttab[rowno + channo * YSIZE]
+ 	    rlelength = lengthtab[rowno + channo * YSIZE]
      
      It is possible for two identical rows (scanlines) to share compressed 
      data.  A completely white image could be written as a single compressed 
@@ -276,16 +278,14 @@ http://reality.sgi.com/grafica/sgiimage.html
  
  	Here is example code to decompress a scanline:
  
- 	    expandrow(optr,iptr,z)
- 	    unsigned char *optr, *iptr;
- 	    int z;
+ 	    expandrow(unsigned char *optr, unsigned char *iptr, int z)
  	    {
  		unsigned char pixel, count;
  	    
  		optr += z;
  		while(1) {
  		    pixel = *iptr++;
- 		    if ( !(count = (pixel & 0x7f)) )
+ 		    if (!(count = (pixel & 0x7f)))
  			return;
  		    if(pixel & 0x80) {
  			while(count--) {
@@ -350,27 +350,27 @@ putbyte(FILE *outf, unsigned char val)
     unsigned char buf[1];
  
     buf[0] = val;
-    fwrite(buf,1,1,outf);
+    fwrite(buf, 1, 1, outf);
 }
  
 putshort(FILE *outf, unsigned short val)
 {
     unsigned char buf[2];
  
-    buf[0] = (val>>8);
-    buf[1] = (val>>0);
-    fwrite(buf,2,1,outf);
+    buf[0] = (val >> 8);
+    buf[1] = (val >> 0);
+    fwrite(buf, 2, 1, outf);
 }
  
 static int putlong(FILE *outf, unsigned long val)
 {
     unsigned char buf[4];
  
-    buf[0] = (val>>24);
-    buf[1] = (val>>16);
-    buf[2] = (val>>8);
-    buf[3] = (val>>0);
-    return fwrite(buf,4,1,outf);
+    buf[0] = (val >> 24);
+    buf[1] = (val >> 16);
+    buf[2] = (val >> 8);
+    buf[3] = (val >> 0);
+    return fwrite(buf, 4, 1, outf);
 }
  
 main(char *argv, int argc)
@@ -383,30 +383,30 @@ main(char *argv, int argc)
     of = fopen("example.rgb","w");
     if(!of) {
         fprintf(stderr,"sgiimage: can't open output file\n");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
-    putshort(of,474);       /* MAGIC                       */
-    putbyte(of,0);          /* STORAGE is VERBATIM         */
-    putbyte(of,1);          /* BPC is 1                    */
-    putshort(of,2);         /* DIMENSION is 2              */
-    putshort(of,IXSIZE);    /* XSIZE                       */
-    putshort(of,IYSIZE);    /* YSIZE                       */
-    putshort(of,1);         /* ZSIZE                       */
-    putlong(of,0);          /* PIXMIN is 0                 */
-    putlong(of,255);        /* PIXMAX is 255               */
-    for(i=0; i<4; i++)      /* DUMMY 4 bytes       */
-        putbyte(of,0);
+    putshort(of, 474);       /* MAGIC                       */
+    putbyte(of, 0);          /* STORAGE is VERBATIM         */
+    putbyte(of, 1);          /* BPC is 1                    */
+    putshort(of, 2);         /* DIMENSION is 2              */
+    putshort(of, IXSIZE);    /* XSIZE                       */
+    putshort(of, IYSIZE);    /* YSIZE                       */
+    putshort(of, 1);         /* ZSIZE                       */
+    putlong(of, 0);          /* PIXMIN is 0                 */
+    putlong(of, 255);        /* PIXMAX is 255               */
+    for(i=0; i<4; i++)       /* DUMMY 4 bytes       */
+        putbyte(of, 0);
     strcpy(iname,"No Name");
-    fwrite(iname,80,1,of);  /* IMAGENAME           */
-    putlong(of,0);          /* COLORMAP is 0       */
-    for(i=0; i<404; i++)    /* DUMMY 404 bytes     */
-        putbyte(of,0);
+    fwrite(iname, 80, 1, of); /* IMAGENAME           */
+    putlong(of, 0);           /* COLORMAP is 0       */
+    for(i=0; i<404; i++)      /* DUMMY 404 bytes     */
+        putbyte(of, 0);
  
     for(y=0; y<IYSIZE; y++) {
         for(x=0; x<IXSIZE; x++) 
-            outbuf[x] = (255*x)/(IXSIZE-1);
-        fwrite(outbuf,IXSIZE,1,of);
+            outbuf[x] = (255 * x) / (IXSIZE - 1);
+        fwrite(outbuf, IXSIZE, 1, of);
     }
 
     fclose(of);
