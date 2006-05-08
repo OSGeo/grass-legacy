@@ -169,34 +169,20 @@ proc Gm::color { color } {
 
 
 ###############################################################################
+# Deprecated
+# Use guarantee_xmon and any run command instead.
 
 proc Gm::xmon { type cmd } {
-
-	if {![catch {open "|d.mon -L" r} input]} {
-		while {[gets $input line] >= 0 } {
-			if {[regexp -nocase {x([0-9]+).*not running} $line dummy monnum]} {
-				# $monnum is the monitor number
-				#create list of non-running monitors
-				lappend xmonlist "x$monnum"
-			} 
-		}
-
-	}
-
-	set xmon  [lindex $xmonlist 0]
-	spawn "d.mon start=$xmon"
+	guarantee_xmon
 	
 	if { $type == "term" } {
 		term_panel $cmd
 	} else {
 		run_panel $cmd
 	}
-	
-	destroy xmonlist
-	close $input
-    return
-}
 
+	return
+}
 
 ###############################################################################
 
