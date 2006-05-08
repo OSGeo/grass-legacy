@@ -254,7 +254,6 @@ proc Gm::create { } {
 
 	
 	pack $pgs -expand yes -fill both
-    pack $tree_pane -side right -expand yes -fill both
 
 
     # options
@@ -264,8 +263,10 @@ proc Gm::create { } {
     $options_sf configure -height 145 -width 460
     $options_sw setwidget $options_sf
     set options [$options_sf getframe]
-    pack $options_pane -expand yes -fill both 
-    pack $options_sw $options_sf -fill both -expand yes
+    pack $options_sw -fill both -expand yes
+
+    # Scroll the options window with the mouse
+    bind_scroll $options_sf
  
     pack $pw1 -side top -expand yes -fill both -anchor n 
 

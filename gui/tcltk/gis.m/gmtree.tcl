@@ -86,7 +86,9 @@ proc GmTree::create { mon } {
 	$pgs configure -height [expr {$treeht * $lh}]
 	
     $sw setwidget $tree($mon)
-    	
+
+    bind_scroll $tree($mon)
+
     pack $sw  -side top -expand yes -fill both
     pack $tree($mon)  -side top -expand yes -fill both
 
