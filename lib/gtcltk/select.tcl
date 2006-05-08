@@ -1,17 +1,39 @@
 # Frame scrolling that works:
-proc handle_scroll {window ammount} {
-    if {![winfo exists $window] || ![winfo ismapped $window]} return
-    set focus [focus -displayof $window]
-    if {($focus != "") && ([winfo toplevel $window] == [winfo toplevel $focus])} {
-        $window yview scroll [expr {-$ammount/120}] units
+# Scroll if the window exists AND
+# the window is mapped AND
+# This window's parent's descendant has the focus (keyboard or mouse pointer in)
+# We use the parent because the scrollbars are in the parent, and two scrollable
+# Things shouldn't have the same parent.
+proc handle_scroll {ammount} {
+    global bind_scroll_list
+
+    foreach {x y} {-1 -1} {}
+
+    foreach window $bind_scroll_list {
+        if {![winfo exists $window] || ![winfo ismapped $window]} continue
+        set parent [winfo parent $window]
+        set keyboard_focus [focus -displayof $window]
+        foreach {x y} [winfo pointerxy $window] {break}
+        set mouse_focus [winfo containing -displayof $window $x $y]
+	set l [string length $parent]
+        if {[string equal -length $l $parent $keyboard_focus] || \
+            [string equal -length $l $parent $mouse_focus]} {
+            $window yview scroll [expr {-$ammount/120}] units
+        }
     }
+
+    # We should thin out windows that don't exist anymore if we find them
 }
 
 proc bind_scroll {frame} {
-    bind all <MouseWheel> "+handle_scroll $frame %D"
-    bind all <Button-4> "+handle_scroll $frame 120"
-    bind all <Button-5> "+handle_scroll $frame -120"
+    global bind_scroll_list
+
+    lappend bind_scroll_list $frame
 }
+
+bind all <MouseWheel> "handle_scroll %D"
+bind all <Button-4> "handle_scroll 120"
+bind all <Button-5> "handle_scroll -120"
 
 ##############################################################
 
