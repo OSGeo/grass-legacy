@@ -308,9 +308,8 @@ care of following rules:
     The online WWW man pages will be updated every Saturday by CVS.
 
 
-23. Add/update, if required the related d.m and gis.m GUI menus:
-     gui/tcltk/d.m/menu.tcl
-     gui/tcltk/gis.m/gmmenu.tcl
+23. Add/update, if required the related GUI menus:
+     gui/tcltk/menus/menu.tcl
 
 
 24. For consistency, use README rather than README.txt for any README files.
