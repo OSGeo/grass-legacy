@@ -48,6 +48,10 @@ int asc_to_bin(
 		fprintf (stderr,"Error reading ascii file:\n[%s]\n", buff) ;
 		return 0;
 	    }
+	    if (ctype == '#') {
+		G_debug(1, "a2b: Skipping commented line");
+		continue;
+	    }
 
 	    switch(ctype){
 		case 'A':
