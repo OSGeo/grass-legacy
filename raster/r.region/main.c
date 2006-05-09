@@ -52,15 +52,7 @@ int main (int argc, char *argv[])
 	module->description =
 		_("Sets the boundary definitions for a raster map.");
 
-	/* get current region.
-	 * if current region not valid, set it from default
-	 * note: G_get_default_window() dies upon error
-	 */
-	if (G__get_window (&window, "", "WIND", G_mapset()) != NULL)
-	{
-		G_get_default_window (&window);
-		G_put_window (&window);
-	}
+	G_get_window(&window);
 
 	projection = window.proj;
 

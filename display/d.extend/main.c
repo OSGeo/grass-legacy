@@ -56,11 +56,7 @@ main (int argc, char **argv)
     if (rast == NULL && vect == NULL && site == NULL)
     	G_fatal_error("No raster, vector or sites file displayed");
 
-    if(G__get_window(&window, "", "WIND", G_mapset()) != NULL)
-    {
-	    G_get_default_window(&window);
-	    G_put_window(&window);
-    }
+    G_get_window(&window);
 
     if (rast)
     {

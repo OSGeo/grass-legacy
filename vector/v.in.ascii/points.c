@@ -72,9 +72,7 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs,
     tmp_token=(char *) G_malloc(256);
 
     /* fetch projection for LatLong test */
-    if (G__get_window (&window, "", "WIND", G_mapset()) != NULL){
-        G_get_default_window (&window);
-    }
+    G_get_window(&window);
 
     while (1) {
 	len = 0; /* not really needed, but what the heck */
@@ -197,9 +195,7 @@ int points_to_bin( FILE *ascii, int rowlen, struct Map_info *Map, dbDriver *driv
     struct Cell_head window;
 
     /* fetch projection for LatLong test */
-    if (G__get_window (&window, "", "WIND", G_mapset()) != NULL){
-        G_get_default_window (&window);
-    }
+    G_get_window(&window);
 
     rewind(ascii);
     Points = Vect_new_line_struct ();

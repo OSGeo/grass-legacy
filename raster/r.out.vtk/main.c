@@ -141,10 +141,7 @@ int main(int argc, char *argv[])
     CheckInputMaps();
 
     /* Figure out the region from the map */
-    if (G__get_window(&region, "", "WIND", G_mapset()) != NULL) {
-	G_get_default_window(&region);
-	G_put_window(&region);
-    }
+    G_get_window(&region);
 
     /*Set the null Value, maybe i have to check this? */
     null_value = param.null_val->answer;
