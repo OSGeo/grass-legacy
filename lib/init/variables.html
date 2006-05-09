@@ -131,6 +131,10 @@ If the user just specifies a variable name, it defaults to "get" mode. Example:
 <br>&nbsp; set to any value to prevent user mail on error
 -->
 
+<P>GRASS_REGION
+<br>[libgis]
+<br>&nbsp; Override region settings, separate parameters with a ";"
+
 <p>GRASS_TCLSH
 <br>[nviz]
 <br>&nbsp; set tclsh shell name to override 'tclsh'
@@ -158,10 +162,16 @@ If the user just specifies a variable name, it defaults to "get" mode. Example:
 <br>[d.m, nviz]
 <br>&nbsp; set wish shell name to override 'wish'
 
+<p>WIND_OVERRIDE
+<br>[libgis]
+<br>&nbsp; Use a saved region (window) instead of the current g.region
+<tt>$MAPSET/WIND</tt> settings
+
+
 
 <h2>List of selected GRASS variables</h2>
 
-[ Use <tt>g.gisenv</tt> to set/unset/change them ]
+[ Use <tt>g.gisenv</tt> to get/set/unset/change them ]
 
 <p>DEBUG
 <br>[entire GRASS]
