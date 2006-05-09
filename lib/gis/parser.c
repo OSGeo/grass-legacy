@@ -158,6 +158,7 @@ static int interactive( char *);
 static int interactive_flag( struct Flag *);
 static int interactive_option( struct Option *);
 static int gis_prompt( struct Option *, char *);
+static int split_gisprompt (const char *, char *, char *, char *);
 
 static void G_gui (void);
 static void G_tcltk (void);
@@ -706,6 +707,33 @@ int G_parser (int argc, char **argv)
 }
 
 
+static int uses_new_gisprompt (void)
+{
+	struct Option *opt ;
+	char age[KEYLENGTH] ;
+	char element[KEYLENGTH] ;
+	char desc[KEYLENGTH] ;
+
+	/* figure out if any of the options use a "new" gisprompt */
+	/* This is to see if we should spit out the --o flag      */
+	if(n_opts)
+	{
+		opt= &first_option;
+		while(opt != NULL)
+		{
+			if ( opt->gisprompt )
+			{
+				split_gisprompt (opt->gisprompt, age, element, desc) ;
+				if (strcmp (age, "new") == 0)
+					return 1;
+			}
+			opt=opt->next_opt;
+		}
+	}
+
+	return 0;
+}
+
 /*!
  * \brief command line help/usage message
  *
@@ -734,6 +762,9 @@ int G_usage (void)
 	char *key_desc;
 	int maxlen;
 	int len, n;
+	int new_prompt = 0;
+
+	new_prompt = uses_new_gisprompt();
 	
 	if (!pgm_name)		/* v.dave && r.michael */
 	    pgm_name = G_program_name ();
@@ -761,6 +792,11 @@ int G_usage (void)
 			item[n] = flag->key;
 		item[n++] = ']';
 		item[n] = 0;
+		len=show(item,len);
+	}
+	if (new_prompt)
+	{
+		strcpy (item, " [--o]");
 		len=show(item,len);
 	}
 
@@ -804,9 +840,11 @@ int G_usage (void)
 
 	/* Print help info for flags */
 
+	if(n_flags || new_prompt)	
+		fprintf (stderr, _("\nFlags:\n"));
+
 	if(n_flags)
 	{
-		fprintf (stderr, _("\nFlags:\n"));
 		flag= &first_flag;
 		while(flag != NULL)
 		{
@@ -824,6 +862,10 @@ int G_usage (void)
 			flag = flag->next_flag ;
 		}
 	}
+
+	if (new_prompt)
+		fprintf(stderr," --o   %s\n", _("Force overwrite of output files")) ;
+		
 
 	/* Print help info for options */
 
@@ -1098,6 +1140,9 @@ static void G_usage_html (void)
 	struct Flag *flag ;
 	char *type;
 	char *newbuf;
+	int new_prompt = 0;
+
+	new_prompt = uses_new_gisprompt();
 	
 	if (!pgm_name)		/* v.dave && r.michael */
 	    pgm_name = G_program_name ();
@@ -1126,6 +1171,8 @@ static void G_usage_html (void)
 
 	fprintf(stdout, "<b>%s</b>", pgm_name);
 
+
+
 	/* print short version first */
 	if(n_flags)
 	{
@@ -1140,6 +1187,11 @@ static void G_usage_html (void)
 	}
 	else
 	  fprintf(stdout, " ");
+
+	if (new_prompt)
+	{
+		fprintf(stdout, " [--<b>o</b>] ");
+	}
 
 	/* print short version first */
 	if(n_opts)
@@ -1175,7 +1227,6 @@ static void G_usage_html (void)
 			if( !opt->required )
 			     fprintf(stdout,"] ");
 
-
 			opt = opt->next_opt ;
 			fprintf(stdout," ");
 		}
@@ -1184,12 +1235,12 @@ static void G_usage_html (void)
 
 	/* now long version */
 	fprintf(stdout, "\n");
-	if(n_flags)
+	if(n_flags || new_prompt)
 	{
 		flag= &first_flag;
 		fprintf(stdout, "<h3>Flags:</h3>\n");
 		fprintf(stdout, "<DL>\n");
-		while(flag != NULL)
+		while(n_flags && flag != NULL )
 		{
 			fprintf (stdout, "<DT><b>-%c</b></DT>\n", flag->key);
 
@@ -1207,6 +1258,11 @@ static void G_usage_html (void)
 
 			flag = flag->next_flag ;
 			fprintf (stdout, "\n");
+		}
+		if (new_prompt)
+		{
+			fprintf(stdout, "<DT><b>--o</b></DT>\n");
+			fprintf(stdout, "<DD>Force overwrite of output files</DD>");
 		}
 		fprintf(stdout, "</DL>\n");
 	}
@@ -1922,7 +1978,7 @@ static int check_overwrite (void)
 	struct Option *opt ;
 	char age[KEYLENGTH] ;
 	char element[KEYLENGTH] ;
-	char *ptr1, *ptr2 ;
+	char desc[KEYLENGTH] ;
 	int error = 0;
 	char *overstr;
 	int over;
@@ -1935,28 +1991,21 @@ static int check_overwrite (void)
 	    over = atoi ( overstr );
 	}
 
-	if ( overwrite || over )
+	if ( overwrite || over ) {
 	    module_info.overwrite = 1;
+	    /* Set the environment so that programs run in a script also obey --o */
+	    /* G__setenv ( "OVERWRITE", "1" ); */
+	    putenv("OVERWRITE=1");
+	    /* No need to check options for existing files if overwrite is true */
+	    return error;
+	}
 
 	opt= &first_option;
 	while(opt != NULL)
 	{
 		if ((opt->answer != NULL) && (opt->gisprompt != NULL))
 		{
-			for(ptr1=opt->gisprompt,ptr2=age; *ptr1!='\0'; ptr1++, ptr2++)
-			{
-				if (*ptr1 == ',')
-					break ;
-				*ptr2 = *ptr1 ;
-			}
-			*ptr2 = '\0' ;
-			for(ptr1++, ptr2=element; *ptr1!='\0'; ptr1++, ptr2++)
-			{
-				if (*ptr1 == ',')
-					break ;
-				*ptr2 = *ptr1 ;
-			}
-			*ptr2 = '\0' ;
+			split_gisprompt (opt->gisprompt, age, element, desc);
 	    
 			if ( strcmp(age,"new") == 0 ) {
 			    if ( G_find_file (element, opt->answer, G_mapset()) ) /* found */
@@ -2108,14 +2157,12 @@ static int interactive_option(struct Option *opt )
 	return(0) ;
 }
 
-static int gis_prompt (struct Option *opt, char *buff)
+static int split_gisprompt (const char *gisprompt, char *age, char *element, char *desc)
 {
-	char age[KEYLENGTH] ;
-	char element[KEYLENGTH] ;
-	char desc[KEYLENGTH] ;
-	char *ptr1, *ptr2 ;
+	const char *ptr1 ;
+	char *ptr2 ;
 
-	for(ptr1=opt->gisprompt,ptr2=age; *ptr1!='\0'; ptr1++, ptr2++)
+	for(ptr1=gisprompt,ptr2=age; *ptr1!='\0'; ptr1++, ptr2++)
 	{
 		if (*ptr1 == ',')
 			break ;
@@ -2138,6 +2185,19 @@ static int gis_prompt (struct Option *opt, char *buff)
 		*ptr2 = *ptr1 ;
 	}
 	*ptr2 = '\0' ;
+
+	return 0 ;
+}
+
+static int gis_prompt (struct Option *opt, char *buff)
+{
+	char age[KEYLENGTH] ;
+	char element[KEYLENGTH] ;
+	char desc[KEYLENGTH] ;
+	char *ptr1 ;
+
+	split_gisprompt ( opt->gisprompt, age, element, desc );
+
 	/*********ptr1 points to current mapset description***********/
 
 	if (opt->answer)
