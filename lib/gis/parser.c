@@ -1987,15 +1987,21 @@ static int check_overwrite (void)
 		return (0) ;
 
 	over = 0;
+	/* Check the GRASS OVERWRITE variable */
 	if ( (overstr = G__getenv ( "OVERWRITE" )) ) {
 	    over = atoi ( overstr );
+	}
+
+	/* Check the GRASS_OVERWRITE environment variable */
+	if ( (overstr = getenv ( "GRASS_OVERWRITE" )) ) {
+	    if (atoi ( overstr ))
+		over = 1;
 	}
 
 	if ( overwrite || over ) {
 	    module_info.overwrite = 1;
 	    /* Set the environment so that programs run in a script also obey --o */
-	    /* G__setenv ( "OVERWRITE", "1" ); */
-	    putenv("OVERWRITE=1");
+	    putenv("GRASS_OVERWRITE=1");
 	    /* No need to check options for existing files if overwrite is true */
 	    return error;
 	}
