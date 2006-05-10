@@ -72,11 +72,11 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
                    64        The polyline is a polyface mesh
 	     ******************************************************************/
 	    /* NOTE: CODE ONLY EXISTS FOR FLAG = 1 (CLOSED POLYLINE) or 0 */
-	    G_debug(3, "polyline_flag: %d", polyline_flag);
+	    G_debug(1, "polyline_flag: %d", polyline_flag);
 	    if (polyline_flag & 8 || polyline_flag & 16 || polyline_flag & 17 ||
 		polyline_flag & 32)
 		if (warn_flag70) {
-		    G_warning(_("3-d data in dxf file"));
+		    G_warning(_("3-d data in dxf file. Polyline_flag: %d"), polyline_flag);
 		    warn_flag70 = 0;
 		}
 	    break;
@@ -219,7 +219,7 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 			    xpnts[arr_size] = xpnts[0];
 			    ypnts[arr_size] = ypnts[0];
 			    zpnts[arr_size] = zpnts[0];
-			    write_polyline(Map, layer, arr_size + 1);
+			    write_mesh(Map, layer, arr_size + 1);
 			    arr_size = 0;
 			}
 			mesh_pnts = 0;
