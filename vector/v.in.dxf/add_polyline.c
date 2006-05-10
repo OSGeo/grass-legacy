@@ -76,7 +76,8 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 	    if (polyline_flag & 8 || polyline_flag & 16 || polyline_flag & 17 ||
 		polyline_flag & 32)
 		if (warn_flag70) {
-		    G_warning(_("3-d data in dxf file. Polyline_flag: %d"), polyline_flag);
+		    G_warning(_("3-d data in dxf file. Polyline_flag: %d"),
+			      polyline_flag);
 		    warn_flag70 = 0;
 		}
 	    break;
@@ -199,7 +200,9 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 			memcpy(mesh_ypnts, ypnts, arr_size * sizeof(double));
 			memcpy(mesh_zpnts, zpnts, arr_size * sizeof(double));
 
-			write_pnts(Map, layer, polyline_flag, zflag, arr_size);
+			if (flag_frame)
+			    write_pnts(Map, layer, polyline_flag, zflag,
+				       arr_size);
 			polyface_mesh_started = 1;
 			arr_size = 0;
 			mesh_pnts = 0;
@@ -219,7 +222,10 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 			    xpnts[arr_size] = xpnts[0];
 			    ypnts[arr_size] = ypnts[0];
 			    zpnts[arr_size] = zpnts[0];
-			    write_mesh(Map, layer, arr_size + 1);
+			    if (flag_frame)
+				write_polyline(Map, layer, arr_size + 1);
+			    else
+				write_mesh(Map, layer, arr_size + 1);
 			    arr_size = 0;
 			}
 			mesh_pnts = 0;
