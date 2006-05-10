@@ -167,7 +167,12 @@ If the user just specifies a variable name, it defaults to "get" mode. Example:
 <br>&nbsp; Use a saved region (window) instead of the current g.region
 <tt>$MAPSET/WIND</tt> settings
 
-
+<p>GRASS_OVERWRITE
+<br>[all modules]
+<br>&nbsp; toggles map overwrite.
+<br>&nbsp; &nbsp; With 0 maps are protected (default), 
+<br>&nbsp; &nbsp; With 1 maps with identical names will be overwritten.
+<br>This variable is intended for internal use by grass so that the "--o" option is inherited by modules a script runs. Setting either the GRASS_OVERWRITE environment variable or the GRASS OVERWRITE variable below will cause maps with identical names to be overwritten.
 
 <h2>List of selected GRASS variables</h2>
 
@@ -211,9 +216,9 @@ If the user just specifies a variable name, it defaults to "get" mode. Example:
 <br>&nbsp; toggles map overwrite.
 <br>&nbsp; &nbsp; With 0 maps are protected (default), 
 <br>&nbsp; &nbsp; With 1 maps with identical names will be overwritten.
-<br>&nbsp; You can force a protected overwrite by adding "--o" to the command.
-<br>e.g.:
-<br>&nbsp;<tt>g.gisenv set="OVERWRITE=0"</tt>
+<br>&nbsp; Example: <tt>g.gisenv set="OVERWRITE=0"</tt>
+<br>&nbsp; You can force an overwrite for an individual command by adding "--o" to the command: 
+<br>&nbsp; <tt>r.in.gdal --o output=existing_map ...</tt>
 
 
 <h2>GRASS-related Files</h2>
