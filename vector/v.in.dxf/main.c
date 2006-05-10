@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
 	struct Flag *table;
 	struct Flag *invert;
 	struct Flag *one_layer;
+	struct Flag *frame;
     } flag;
     struct
     {
@@ -79,6 +80,10 @@ int main(int argc, char *argv[])
     flag.one_layer->key = '1';
     flag.one_layer->description = _("Import all objects into one layer");
 
+    flag.frame = G_define_flag();
+    flag.frame->key = 'f';
+    flag.frame->description = _("Import polyface meshes as 3D wire frame");
+
     opt.input = G_define_option();
     opt.input->key = "input";
     opt.input->type = TYPE_STRING;
@@ -105,6 +110,7 @@ int main(int argc, char *argv[])
     flag_table = flag.table->answer;
     flag_invert = flag.invert->answer;
     flag_one_layer = flag.one_layer->answer;
+    flag_frame = flag.frame->answer;
 
     if (!flag_list)
 	fprintf(stderr, _("\nConversion of %s to vector map:  "),
