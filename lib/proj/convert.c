@@ -344,7 +344,8 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
 /* -------------------------------------------------------------------- */
 /*      Derive the user name for the projection.                        */
 /* -------------------------------------------------------------------- */
-    {
+     if( pszProj )
+     {
         char	path[4095];
         char    name[80];
 
@@ -353,9 +354,12 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
             G_set_key_value( "name", name, *projinfo );
         else
             G_set_key_value( "name", pszProj, *projinfo );
+	
+	G_set_key_value( "proj", pszProj, *projinfo );
     }
+    else
+	G_warning("No projection name! Projection parameters likely to be meaningless.");
 
-    G_set_key_value( "proj", pszProj, *projinfo );
        
 /* -------------------------------------------------------------------- */
 /*      Find the GRASS datum name and choose parameters either          */
