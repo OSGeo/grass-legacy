@@ -62,10 +62,8 @@ int main(int argc, char **argv)
     G_gisinit (argv[0]) ;
 
     module = G_define_module();
-    module->description = "Create points/segments from imput lines, "
-	   "linear reference system and positions read from stdin in format:\n"
-           "P <pid> <lid> <milepost>+<offset> [<side offset>]\n"
-           "L <sid> <lid> <milepost>+<offset> <milepost>+<offset> [<side offset>]";
+    module->description = "Create points/segments from input lines, "
+	   "linear reference system and positions read from stdin";
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
     in_opt->description = "Input map containing lines";
