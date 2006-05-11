@@ -19,13 +19,13 @@ proc mkcolorPanel { BASE } {
 
     #  Initialize panel info
     if [catch {set Nv_($BASE)}] {
-        set panel [St_create {window name size priority} $BASE "Color" 1 5]
+        set panel [St_create {window name size priority} $BASE "Background Color" 1 5]
     } else {
 	set panel $Nv_($BASE)
     }
 
     frame $BASE  -relief groove -borderwidth 2
-    Nv_mkPanelname $BASE "Color Panel"
+    Nv_mkPanelname $BASE "Background Color Panel"
     
     button $BASE.background -text Background -bg white -fg grey \
 	-activebackground gray20 -activebackground white\
