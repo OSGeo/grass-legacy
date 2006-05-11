@@ -112,7 +112,7 @@ int main(int argc, char **argv)
     G_gisinit (argv[0]) ;
 
     module = G_define_module();
-    module->description = "Create Liner reference system";
+    module->description = "Create Linear reference system";
 
     in_lines_opt = G_define_standard_option(G_OPT_V_INPUT);
     in_lines_opt->key = "in_lines";
@@ -199,7 +199,7 @@ int main(int argc, char **argv)
     thresh_opt->answer      = "1"; 
     thresh_opt->description = "Maximum distance of point to line allowed";
     
-    if(G_parser(argc,argv)) exit(1);
+    if(G_parser(argc,argv)) exit(EXIT_FAILURE);
 
     LCats = Vect_new_cats_struct ();
     PCats = Vect_new_cats_struct ();
@@ -764,7 +764,7 @@ int main(int argc, char **argv)
         Vect_close(&EMap);
     }
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 int cmp_along ( const void *pa, const void *pb)

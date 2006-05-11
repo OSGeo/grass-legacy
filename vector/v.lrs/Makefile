@@ -1,8 +1,6 @@
 
 MODULE_TOPDIR = ../..
 
-DOC=$(GISBASE)/docs/html/lrs.html
-
 SUBDIRS = \
 	lib \
 	v.lrs.create \
@@ -12,10 +10,10 @@ SUBDIRS = \
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-default: subdirs $(DOC)
+default: subdirs htmldir
 
-$(DOC): lrs.html
-	$(INSTALL) -m 644 lrs.html $(DOC)
+#to install documentation:
+PGM = lrs
 
 clean: cleansubdirs
 
