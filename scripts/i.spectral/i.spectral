@@ -53,7 +53,6 @@ if [ ! -x "`which gnuplot`" ] ; then
     echo "$PROG: gnuplot required, please install first" 2>&1
     exit 1
 fi
-GNUPLOT=gnuplot
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
@@ -248,7 +247,7 @@ str=$str" with linespoints pt 779"
 echo $str >> spectrum.gnuplot
 
 
-$GNUPLOT -persist spectrum.gnuplot 
+$GRASS_GNUPLOT spectrum.gnuplot 
  
 
 i=0
