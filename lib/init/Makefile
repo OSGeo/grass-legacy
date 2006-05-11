@@ -20,6 +20,7 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
+PROJSHAREDEFAULT=/usr/local/share/proj
 
 START_UP=grass$(GRASS_VERSION_MAJOR)$(GRASS_VERSION_MINOR)
 
@@ -133,7 +134,12 @@ $(ETC)/gis_set.tcl: gis_set.tcl
 
 $(ETC)/epsg_option.tcl: epsg_option.tcl.in
 	rm -f $@
-	sh ./projshare.sed "$(PROJSHARE)" epsg_option.tcl.in > $@
+	#pre-define PROJSHARE if not set by configure:
+	if [ -z "$(PROJSHARE)" ] ; then \
+		sh ./projshare.sed "$(PROJSHAREDEFAULT)" epsg_option.tcl.in > $@ ; \
+		else \
+		sh ./projshare.sed "$(PROJSHARE)" epsg_option.tcl.in > $@ ; \
+	fi
 	chmod 755 $@
 
 $(ETC)/help.tcl: help.tcl
@@ -146,7 +152,12 @@ $(ETC)/file_option.tcl: file_option.tcl
 
 $(ETC)/make_location_epsg.sh: make_location_epsg.sh.in
 	rm -f $@
-	sh ./projshare.sed "$(PROJSHARE)" make_location_epsg.sh.in > $@
+	#pre-define PROJSHARE if not set by configure:
+	if [ -z "$(PROJSHARE)" ] ; then \
+		sh ./projshare.sed "$(PROJSHAREDEFAULT)" make_location_epsg.sh.in > $@ ; \
+		else \
+		sh ./projshare.sed "$(PROJSHARE)" make_location_epsg.sh.in > $@ ; \
+	fi
 	chmod 755 $@
 
 $(ETC)/grass-run.sh: grass-run.src
