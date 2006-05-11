@@ -48,6 +48,30 @@ int G_get_window (struct Cell_head *window )
 {
     static int first = 1;
     static struct Cell_head dbwindow ;
+    char *regvar;
+
+    /* Optionaly read the region from enviroment variable */
+    regvar = getenv("GRASS_REGION");
+
+    if ( regvar ) 
+    {
+        char **tokens, *delm = ";";
+	char *err;
+         
+        tokens = G_tokenize ( regvar, delm ); 
+
+        err = G__read_Cell_head_array ( tokens, window, 0);
+       
+        G_free_tokens ( tokens );
+
+	if (err)
+	{
+	    G_fatal_error (_("region for current mapset %s\nrun \"g.region\""), err);
+	    G_free (err);
+	}
+
+        return 1;
+    }
 
     if (first)
     {
@@ -108,25 +132,8 @@ char *G__get_window ( struct Cell_head *window,
 {
     FILE *fd ;
     char *err;
-    char *regvar;
 
     G_zero ((char *) window, sizeof (struct Cell_head));
-
-    /* Optionaly read the region from enviroment variable */
-    regvar = getenv("GRASS_REGION");
-
-    if ( regvar ) 
-    {
-        char **tokens, *delm = ";";
-         
-        tokens = G_tokenize ( regvar, delm ); 
-
-        err = G__read_Cell_head_array ( tokens, window, 0);
-       
-        G_free_tokens ( tokens );
-
-        return err; 
-    }
 
     /* Read from file */
     if (!(fd = G_fopen_old (element, name, mapset) ))
