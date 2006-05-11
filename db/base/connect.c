@@ -78,8 +78,7 @@ main(int argc, char *argv[])
 
     /* Set description */
     module              = G_define_module();
-    module->description = _(""\
-    "Connect to the database through DBMI.");
+    module->description = _("Prints/sets general DB connection for current mapset");
 
 
     if(G_parser(argc, argv))
