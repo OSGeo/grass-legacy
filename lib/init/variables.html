@@ -7,7 +7,7 @@
 </head>
 <body bgcolor="white">
 
-<img src="grass.smlogo.gif" alt="GRASS logo"><hr align=center size=6 noshade>
+<img src="grass.smlogo.gif" alt="_\|/_ GRASS logo"><hr align=center size=6 noshade>
 
 <H2>GRASS variables and environment variables</H2>
 
@@ -18,12 +18,18 @@
 <P>
 There are two types of variables:
 <ul>
-<li>environment variables,</li>
-<li>GRASS variables.</li>
+<li><a href="#enviro">environment</a> variables,</li>
+<li><a href="#gisenv">GRASS gisenv</a> variables.</li>
 </ul>
 
 Any setting which needs to be modifiable by a GRASS program (e.g. MONITOR)
 has to be a GRASS variable.
+
+
+<h2>GRASS-related Files</h2>
+GRASS maintains some settings in a number of files on the system. They are
+detailed <a href="#files">below</a>.
+
 
 <h2>Setting environment variables</h2>
 
@@ -47,36 +53,47 @@ into GRASS, store them in:<br>
 
 
 <h2>Setting GRASS variables</h2>
-You have to use "g.gisenv" (within GRASS which then permanently predefines
-GRASS variables in the <tt>.grassrc6</tt> file):<br>
-<p>
-Use: &nbsp;&nbsp;&nbsp; <tt>g.gisenv set=VARIABLE=VALUE</tt>
 
+Use "<a href="g.gisenv.html">g.gisenv</a>" within GRASS. This permanently
+predefines GRASS variables in the <tt>.grassrc6</tt> file.<br>
+<p>
+Usage:<BR>
+<div class="code"><pre>
+g.gisenv set="VARIABLE=VALUE"
+</pre></div>
 <p>
 
-It looks unusual with two equals signs, but g.gisenv does dual duty for
+It looks unusual with two equals signs, but g.gisenv serves dual duty for
 getting and setting GRASS variables.
 <P>
-If the user just specifies a variable name, it defaults to "get" mode. Example:
-<p>
-<tt>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GRASS ~> g.gisenv GRASS_GUI<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text
-</tt>
+If the user just specifies a variable name, it defaults to "get" mode.
+For example:<br>
+<div class="code"><pre>
+GRASS ~> g.gisenv GRASS_GUI
+text
+</pre></div>
 
-
-<hr WIDTH="100%">
+<BR>
+<hr>
+<BR>
+<a name="enviro"></a>
 <h2>List of selected (GRASS related) environment variables</h2>
 
+<blockquote>
+[ To be set from the terminal shell or startup scripts ]
+</blockquote>
+
 <p>GISBASE
-<br>&nbsp; directory where GRASS lives
+<br>&nbsp; directory where GRASS lives. This is set automatically by the startup script.
 
 <p>GISRC
-<br>&nbsp; name of .grassrc6 file
+<br>&nbsp; name of .grassrc6 file. GISRCRC defines the system wide value
+while in a GRASS session.
 
 <p>GRASS_ADDON_PATH
 <br>[grass5] startup script
-<br>&nbsp; allows to specify additional paths to local GRASS modules extra to standard distribution
+<br>&nbsp; allows to specify additional paths to local GRASS modules extra
+to standard distribution
 
 <p>GRASS_ANOTHER_BUTTON
 <br>[various modules]
@@ -131,17 +148,14 @@ If the user just specifies a variable name, it defaults to "get" mode. Example:
 <br>&nbsp; set to any value to prevent user mail on error
 -->
 
-<P>GRASS_REGION
-<br>[libgis]
-<br>&nbsp; Override region settings, separate parameters with a ";"
-
 <p>GRASS_TCLSH
 <br>[nviz]
 <br>&nbsp; set tclsh shell name to override 'tclsh'
 
 <p>GRASS_TRANSPARENT
 <br>[PNGdriver]
-<br>&nbsp; if "TRUE", the image created by the PNG driver will have a transparent background
+<br>&nbsp; if "TRUE", the image created by the PNG driver will have a
+transparent background
 
 <p>GRASS_TRUECOLOR
 <br>[PNGdriver]
@@ -162,21 +176,53 @@ If the user just specifies a variable name, it defaults to "get" mode. Example:
 <br>[d.m, nviz]
 <br>&nbsp; set wish shell name to override 'wish'
 
-<p>WIND_OVERRIDE
-<br>[libgis]
-<br>&nbsp; Use a saved region (window) instead of the current g.region
-<tt>$MAPSET/WIND</tt> settings
+
+<h3>List of selected internal GRASS environment variables</h3>
+<blockquote>
+[ These variables are intended <b>for internal use only</b> by the GRASS
+software to facilitate communiction between the GIS engine, GRASS scripts,
+and the GUI.
+
+The user should not set these in a GRASS session. They are meant to be set
+locally for specific commands. ]
+</blockquote>
+<P></P>
 
 <p>GRASS_OVERWRITE
 <br>[all modules]
 <br>&nbsp; toggles map overwrite.
 <br>&nbsp; &nbsp; With 0 maps are protected (default), 
 <br>&nbsp; &nbsp; With 1 maps with identical names will be overwritten.
-<br>This variable is intended for internal use by grass so that the "--o" option is inherited by modules a script runs. Setting either the GRASS_OVERWRITE environment variable or the GRASS OVERWRITE variable below will cause maps with identical names to be overwritten.
+<br>
+This variable is automatically created by g.parser so that "--o" option will
+be inherited by dependant modules as the script runs. Setting either the
+GRASS_OVERWRITE environment variable or the OVERWRITE gisenv variable detailed
+below will cause maps with identical names to be overwritten.
 
-<h2>List of selected GRASS variables</h2>
+<P>GRASS_REGION
+<br>[libgis]
+<br>&nbsp; Override region settings, separate parameters with a ";". Format
+is the same as in the WIND region settings file. Otherwise use is the same as
+WIND_OVERRIDE.
 
+<p>WIND_OVERRIDE
+<br>[libgis]
+<br>&nbsp; 
+It causes programs to use the specified named region (created with
+e.g. "g.region save=...") to be used as the current region, instead of
+the region from the WIND file.<br>
+This allows programs such as gis.m to run external commands on an
+alternate region without having to modify the WIND file then change it
+back afterwards.
+<BR>
+<BR><HR><BR>
+
+<a name="gisenv"></a>
+<h2>List of selected GRASS gisenv variables</h2>
+
+<blockquote>
 [ Use <tt>g.gisenv</tt> to get/set/unset/change them ]
+</blockquote>
 
 <p>DEBUG
 <br>[entire GRASS]
@@ -221,6 +267,9 @@ If the user just specifies a variable name, it defaults to "get" mode. Example:
 <br>&nbsp; <tt>r.in.gdal --o output=existing_map ...</tt>
 
 
+<BR><BR><HR><BR>
+
+<a name="files"></a>
 <h2>GRASS-related Files</h2>
 
 <p>$HOME/.grassrc6
