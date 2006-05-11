@@ -4,7 +4,7 @@
  * 
  * AUTHOR(S):    Markus Neteler
  *               
- * PURPOSE:      prints DB connection for a given vector map
+ * PURPOSE:      sets/prints DB connection for a given vector map
  *               
  * COPYRIGHT:    (C) 2002 by the GRASS Development Team
  *
@@ -48,7 +48,7 @@ int main (int argc, char **argv)
 
     module = G_define_module();
     module->description =
-	_("Prints/sets DB connection for a vector map");
+	_("Prints/sets DB connection for a vector map to attribute table");
 
     inopt = G_define_standard_option(G_OPT_V_MAP);
 
@@ -89,11 +89,11 @@ int main (int argc, char **argv)
 
     print = G_define_flag();
     print->key               = 'p';
-    print->description       = _("Print current connection parameters and exit");
+    print->description       = _("Print current map connection parameters and exit");
 
     shell_print = G_define_flag();
     shell_print->key               = 'g';
-    shell_print->description       = _("Print current connection parameters and exit (shell script style)\n"
+    shell_print->description       = _("Print current map connection parameters and exit (shell script style)\n"
 				     "\tformat:  layer[/layer name] table key database driver");
 
     columns = G_define_flag();
@@ -130,12 +130,12 @@ int main (int argc, char **argv)
        field = 1;
 
     if (!mapset)
-	G_fatal_error("Vector file [%s] not available in search list", input);
+	G_fatal_error(_("Vector file [%s] not available in search list"), input);
       
     G_debug ( 3, "Mapset = %s", mapset);
 
     if (print->answer && shell_print->answer)
-	G_fatal_error("Please choose only one print style");
+	G_fatal_error(_("Please choose only one print style"));
 
     if (print->answer || shell_print->answer || columns->answer)
       Vect_open_old ( &Map, inopt->answer, mapset);
@@ -149,7 +149,7 @@ int main (int argc, char **argv)
     {
       num_dblinks = Vect_get_num_dblinks(&Map);
       if (num_dblinks <= 0)
-         G_fatal_error("Database connection for map <%s> is not defined in DB file", input);
+         G_fatal_error(_("Database connection for map <%s> is not defined in DB file"), input);
       else /* num_dblinks > 0 */
       {
         if (print->answer || shell_print->answer)
@@ -159,7 +159,7 @@ int main (int argc, char **argv)
 	  }
           for (i = 0; i < num_dblinks; i++) {
             if ( (fi = Vect_get_dblink( &Map, i)) == NULL)
-               G_fatal_error("Database connection not defined");
+               G_fatal_error(_("Database connection not defined"));
 
 	    if ( shell_print->answer ) {
 		if ( fi->name ) {
@@ -177,19 +177,19 @@ int main (int argc, char **argv)
         else /* columns */
         {
           if ( (fi = Vect_get_field( &Map, field)) == NULL)
-               G_fatal_error("Database connection not defined for layer <%d>", field);
+               G_fatal_error(_("Database connection not defined for layer <%d>"), field);
           driver = db_start_driver(fi->driver);
           if (driver == NULL)
-                G_warning("Cannot open driver %s", fi->driver) ; /* G_fatal_error ? */
+                G_warning(_("Cannot open driver %s"), fi->driver) ; /* G_fatal_error ? */
           
           db_init_handle (&handle);
           db_set_handle (&handle, fi->database, NULL);
           if (db_open_database(driver, &handle) != DB_OK)
-             G_fatal_error("Cannot open database <%s>", fi->database);
+             G_fatal_error(_("Cannot open database <%s>"), fi->database);
           db_init_string(&table_name);
           db_set_string(&table_name, fi->table);
           if(db_describe_table (driver, &table_name, &table) != DB_OK)
-             G_fatal_error("Cannot open table <%s>", fi->table);
+             G_fatal_error(_("Cannot open table <%s>"), fi->table);
 
           ncols = db_get_table_number_of_columns(table);
           for (col = 0; col < ncols; col++) {
@@ -222,50 +222,51 @@ int main (int argc, char **argv)
 	     if ( ret == 1) {
 	       /* field already defined */
 	       if( !overwrite->answer )
-		   G_fatal_error("Use -o to overwrite existing link for layer <%d>",atoi(field_opt->answer));
+		   G_fatal_error(_("Use -o to overwrite existing link for layer <%d>"),atoi(field_opt->answer));
 	       else
 	       {
 		   if( db_table_exists ( dbdriver->answer, dbdatabase->answer, dbtable->answer) < 1 )
-		       G_warning("Table <%s> does not exist in database <%s>",dbtable->answer, dbdatabase->answer);
+		       G_warning(_("Table <%s> does not exist in database <%s>"),dbtable->answer, dbdatabase->answer);
 		   ret = Vect_map_del_dblink (  &Map, atoi(field_opt->answer) );
 		   if( Vect_map_add_dblink ( &Map, atoi(field_opt->answer), 
 					     fi->name, fi->table, fi->key, fi->database, fi->driver) == 0) 
 		   {
-		       G_warning ( "The table <%s> is now part of vector map <%s> and may be deleted "
-				   "or overwritten by GRASS modules.", dbtable->answer, input);
+		       G_warning (_("The table <%s> is now part of vector map <%s> and may be deleted "
+				   "or overwritten by GRASS modules"), dbtable->answer, input);
 		   }
 	       }
 	     }
 	     else
 	     { /* field not yet defined, add new field */
 		if( db_table_exists ( dbdriver->answer, dbdatabase->answer, dbtable->answer) < 1 )
-		   G_warning ("Table <%s> does not exist in database <%s>",dbtable->answer, dbdatabase->answer);
+		   G_warning (_("Table <%s> does not exist in database <%s>"),dbtable->answer, dbdatabase->answer);
 
 		if( Vect_map_add_dblink ( &Map, atoi(field_opt->answer), 
 					  fi->name, fi->table, fi->key, fi->database, fi->driver) == 0) 
 		{
-		   G_warning ( "The table <%s> is now part of vector map <%s> and may be deleted "
-			       "or overwritten by GRASS modules.", dbtable->answer, input);
+		   G_warning (_("The table <%s> is now part of vector map <%s> and may be deleted "
+			       "or overwritten by GRASS modules"), dbtable->answer, input);
 
 		   driver = db_start_driver_open_database (fi->driver, Vect_subst_var (fi->database, &Map) );
 
 		   if ( !driver )
-		       G_fatal_error("Cannot open database %s by driver %s", fi->database, fi->driver);
+		       G_fatal_error(_("Cannot open database %s by driver %s"), fi->database, fi->driver);
 
 		   if ( db_create_index2(driver, fi->table, fi->key ) != DB_OK )
-		       G_warning ( "Cannot create index" );
+		       G_warning (_("Cannot create index"));
 
 		   if (db_grant_on_table (driver, fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
-		       G_warning ( "Cannot grant privileges on table %s", fi->table );
+		       G_warning (_("Cannot grant privileges on table %s"), fi->table );
 
-		   G_warning ( "Select privileges were granted on the table." );
+		   G_warning (_("Select privileges were granted on the table"));
 
 		   db_close_database_shutdown_driver(driver);
 		}
 	     }
 	   }
 	   else /* incomplete parameters given */
-	      G_fatal_error("For defining a new connection you have to specify these parameters: driver, database, table [, key [, layer]]");
+	      G_fatal_error(_("For defining a new connection you have to specify these parameters: "
+			      "driver, database, table [, key [, layer]]"));
 	}
     } /* end define new dbln settings */
 
@@ -273,3 +274,4 @@ int main (int argc, char **argv)
     
     exit(EXIT_SUCCESS);
 }
+
