@@ -298,6 +298,9 @@ main (int argc, char *argv[])
 	    layers[i] = i;
     }
 
+    /* Get first imported layer to use for extents and projection check */
+    Ogr_layer = OGR_DS_GetLayer( Ogr_ds, layers[0] );
+   
     if ( spat_opt->answer ) {
         /* See as reference: gdal/ogr/ogr_capi_test.c */
 	
