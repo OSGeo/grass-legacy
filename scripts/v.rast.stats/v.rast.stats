@@ -180,7 +180,7 @@ for i in n min max range mean stddev variance cf_var sum ; do
     fi
   else
     echo "Adding column <$CURRCOLUMN>"
-    v.db.addcol map=$VECTOR columns="$CURRCOLUMN double"
+    v.db.addcol map=$VECTOR columns="$CURRCOLUMN double precision"
     if [ $? -eq 1 ] ; then
       echo "ERROR: Cannot continue (problem to add column)."
       exit 1
