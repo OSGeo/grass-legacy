@@ -206,8 +206,8 @@ int points_to_bin( FILE *ascii, int rowlen, struct Map_info *Map, dbDriver *driv
     db_init_string (&val);
 
     if(skip_lines > 0) {
-	sprintf(buf, "HEADER: (%d lines)\n", skip_lines);
-	Vect_hist_write(Map, buf);
+	sprintf(buf2, "HEADER: (%d lines)\n", skip_lines);
+	Vect_hist_write(Map, buf2);
     }
 
     while ( G_getl2(buf, rowlen, ascii) != 0 ) {
