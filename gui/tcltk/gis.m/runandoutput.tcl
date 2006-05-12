@@ -57,6 +57,11 @@ proc make_fun_buttons {dlg path} {
 	pack $buttonframe.run $buttonframe.help $buttonframe.close \
 		-side left -expand yes -padx 5 -pady 5
 	pack $buttonframe -expand no -fill x -side bottom -before [lindex [pack slaves $path] 0]
+
+	# Set the starting window size if this is a toplevel window
+	if {[winfo toplevel $path] == $path} {
+		wm geometry $path "560x350"
+	}
 }
 
 proc run_ui {cmd} {
