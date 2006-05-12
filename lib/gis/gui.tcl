@@ -55,7 +55,7 @@ proc icon_configure {path class member} {
 
 # Make text in a label wrap:
 proc wrap_text_in_label {path} {
-	bind $path <Configure> "$path configure -wraplength \[winfo width $path\]"
+	bind $path <Configure> "$path configure -wraplength \[expr {\[winfo width $path\] - 5}\]"
 }
 
 ################################################################################
@@ -553,10 +553,13 @@ proc do_label {dlg optn suf} {
 	label $frame.label -text "$label:" -anchor w -justify left
 	label $frame.req -text "($typehelp)" -anchor e -justify right
 	DynamicHelp::register $frame.req balloon $typestring
-	pack $frame.label -side left
 	pack $frame.req -side right
+	pack $frame.label -side left -fill x -expand yes
 	pack $frame -side top -fill x
 	DynamicHelp::register $frame balloon $opt($dlg,$optn,help_text)
+
+	# Make the label text wrap
+	wrap_text_in_label $frame.label
 }
 
 proc do_check {dlg optn suf i s} {
