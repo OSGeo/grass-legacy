@@ -57,12 +57,7 @@ int main(int argc, char *argv[]) {
 
     /* Define the different options */
 
-    inputfile = G_define_option() ;
-    inputfile->key        = "input";
-    inputfile->type       = TYPE_STRING;
-    inputfile->required   = YES;
-    inputfile->gisprompt  = "old,cell,raster" ;
-    inputfile->description= _("Name of an existing raster map");
+    inputfile = G_define_standard_option(G_OPT_R_MAP);
 
     quiet = G_define_flag();
     quiet->key = 'q';
@@ -75,11 +70,11 @@ int main(int argc, char *argv[]) {
     /*** Not yet implemented: Median, 1st Quartile, 3rd Quartile ***
     extended = G_define_flag();
     extended->key = 'e';
-    extended->description = "Calculate extended statistics";
+    extended->description = _("Calculate extended statistics");
     ***/
 
     if (G_parser(argc,argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
     infile = inputfile->answer;
 
@@ -189,7 +184,7 @@ int main(int argc, char *argv[]) {
     G_trim_decimal(sum_str);
 
 
-    if( ! (quiet->answer || shell_style->answer) ) {
+    if( !shell_style->answer ) {
 	fprintf(stdout, "total null and non-null cells: %d\n", rows * cols);
 	fprintf(stdout, "total null cells: %d\n\n", rows * cols - n);
 	fprintf(stdout, "Of the non-null cells:\n----------------------\n");
@@ -230,5 +225,5 @@ int main(int argc, char *argv[]) {
     if( ! ( quiet->answer || shell_style->answer) )
 	fprintf(stdout, "\n");
 
-    return 0;
+    exit(EXIT_SUCCESS);
 }
