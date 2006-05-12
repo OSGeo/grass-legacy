@@ -60,7 +60,13 @@ maps align neatly.
 The user should check the current geographic region settings before running 
 <EM>r.patch</EM>, to ensure that the region boundaries encompass all 
 of the data desired to be included in the composite map and to ensure that the
-region resolution is the resolution of the desired data.
+region resolution is the resolution of the desired data. To set the
+geographic region settings to one or several raster maps, the <EM>g.region</EM>
+program can be used:
+
+<div class="code"><pre>
+g.region rast=map1[,map2[,...]]
+</pre></div>
 
 <P>
 
