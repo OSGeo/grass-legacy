@@ -83,14 +83,14 @@ The following operators are supported:
      &lt;=         less than or equal         Logical     2
      &amp;&amp;         and                        Logical     1
      ||         or                         Logical     1
-     &amp;&amp;&amp;         and[1]                     Logical     1
+     &amp;&amp;&amp;        and[1]                     Logical     1
      |||        or[1]                      Logical     1
      #          color separator operator   Arithmetic   
 </PRE></div>
 
 (modulus is the remainder upon division)
 <P>
-[1] The &&& and ||| operators handle null values differently to other
+[1] The &amp;&amp;&amp; and ||| operators handle null values differently to other
 operators. See the section entitled <b>NULL support</b> below for more
 details.
 <P>
@@ -495,8 +495,8 @@ produce a floating-point result, as will using float():
 <li>Division by zero should result in NULL. 
 <li>Modulus by zero should result in NULL. 
 <li>     NULL-values in any arithmetic or logical operation should result
-         in NULL. (however, &&& and ||| are treated specially, as described below).
-<li>	 The &&& and ||| operators observe the following axioms even when x is NULL:
+         in NULL. (however, &amp;&amp;&amp; and ||| are treated specially, as described below).
+<li>	 The &amp;&amp;&amp; and ||| operators observe the following axioms even when x is NULL:
 <div class="code"><PRE>
 	x &&& false == false
 	false &&& x == false
@@ -815,10 +815,12 @@ by Anil K. Jain (Prentice Hall, NJ, 1989; p 67).
 <A HREF="r.fillnulls.html">r.fillnulls</A>
 </EM>
 
-<H2>AUTHOR</H2>
+<H2>AUTHORS</H2>
 
 Michael Shapiro, U.S.Army Construction Engineering 
 Research Laboratory
+<P>
+Glynn Clements
 <p><i>Last changed: $Date$</i>
 </body>
 </html>
