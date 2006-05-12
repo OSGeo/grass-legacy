@@ -313,21 +313,21 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	    #linea modificata
 	    cat "${TMP}.asc" | v.in.ascii output="$NAME" cat=0 \
 #HB#???? fix:: see v.in.garmin & edit grass.style
-		columns='x double, y double, altitude double, creatdate varchar(10), time varchar(11), comments varchar(40)'
+		columns='x double precision, y double precision, altitude double precision, creatdate varchar(10), time varchar(11), comments varchar(40)'
 	    EXITCODE=$?
 	fi
 	if [ $RTE -eq 1 ] ; then
 	    echo "Importing Routes as points..."
 	    #linea modificata
 	    cat "${TMP}.asc" | v.in.ascii output="$NAME" cat=0 \
-		columns='x double, y double, altitude double, creatdate varchar(10), time varchar(11), comments varchar(40)'
+		columns='x double precision, y double precision, altitude double precision, creatdate varchar(10), time varchar(11), comments varchar(40)'
 	    EXITCODE=$?
 	fi
 	if [ $TRK -eq 1 ] ; then
 	    echo "Importing Track as points..."
 	    #linea modificata
 	    cat "${TMP}.asc" | v.in.ascii output="$NAME" cat=0 \
-		columns='x double, y double, altitude double, creatdate varchar(10), time varchar(11), comments varchar(40)'
+		columns='x double precision, y double precision, altitude double precision, creatdate varchar(10), time varchar(11), comments varchar(40)'
 	EXITCODE=$?
 	fi
 
@@ -482,8 +482,8 @@ else # CREATE_LINES
 	    mv "$TMP.points" "$TMP.gpx2"
 	done
 
-	# create attr table: cat(int), start_time varchar(40), start_lat(double), start_lon(double), \
-	#			end_time varchar(40), end_lat(double), end_lon(double)
+	# create attr table: cat(int), start_time varchar(40), start_lat(double precision), start_lon(double precision), \
+	#			end_time varchar(40), end_lat(double precision), end_lon(double precision)
 	
 	ATTR_FILE="${TMP}.track_atts"
 	ATTR_COLS='cat int, start_time varchar(40), start_lat double precision, start_lon double precision, end_time varchar(40), end_lat double precision, end_lon double precision'
