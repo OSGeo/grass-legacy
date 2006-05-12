@@ -22,11 +22,11 @@ global env
 
 # Put this at the top of the file menu.
 set GuiMenu::Menu_File_Top [subst  {
-	{cascad {[G_msg "Layers"]} {} "" $tmenu {			
-		{command {[G_msg "Open..."]} {} "Open gis.m layers file" {} -accelerator $keyctrl-O -command { Gm::OpenFileBox }}
-		{command {[G_msg "Save"]} {} "Save gis.m layers file" {} -accelerator $keyctrl-S -command { Gm::SaveFileBox }}
-		{command {[G_msg "Save as..."]} {} "Save gis.m layers file as new name" {} -command { set filename($mon) "" ; Gm::SaveFileBox }}
-		{command {[G_msg "Close"]} {} "Close gis.m layers" {} -accelerator $keyctrl-W -command { GmTree::FileClose {}}}
+	{cascad {[G_msg "Workspace"]} {} "" $tmenu {			
+		{command {[G_msg "Open..."]} {} "Open gis.m workspace file" {} -accelerator $keyctrl-O -command { Gm::OpenFileBox }}
+		{command {[G_msg "Save"]} {} "Save gis.m workspace file" {} -accelerator $keyctrl-S -command { Gm::SaveFileBox }}
+		{command {[G_msg "Save as..."]} {} "Save gis.m workspace file as new name" {} -command { set filename($mon) "" ; Gm::SaveFileBox }}
+		{command {[G_msg "Close"]} {} "Close gis.m workspace" {} -accelerator $keyctrl-W -command { GmTree::FileClose {}}}
 	}}
 	{separator}
 }]
