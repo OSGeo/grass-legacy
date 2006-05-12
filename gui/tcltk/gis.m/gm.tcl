@@ -188,18 +188,9 @@ proc Gm::xmon { type cmd } {
 # Determine if an element already exists
 
 proc Gm::element_exists {elem name} {
-	set exists 0
-	if {![catch {open [list "|g.findfile" "element=$elem" "file=$name"] r} input]} {
-		while {[gets $input line] >= 0 } {
-			if {[regexp -nocase {file='.+'} $line dummy]} {
-				set exists 1
-			}
-		}
+	set failure [catch {exec [list "|g.findfile" "element=$elem" "file=$name"] >& /dev/null}]
 
-	}
-	close $input
-
-	return $exists
+	return [expr {! $failure}]
 }
 
 ###############################################################################
