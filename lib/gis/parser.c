@@ -623,15 +623,6 @@ int G_parser (int argc, char **argv)
 			exit(EXIT_SUCCESS);
 		}
 
-		/* If first arg is "--ui" then run G_gui() */
-		/* Do so after parsing any answers on the command line */
-		if (strcmp(argv[1],"--ui") == 0)
-		{
-			force_gui = TRUE;
-			++argv;
-			--argc;
-		}
-
 		/* Loop thru all command line arguments */
 
 		while(--argc)
@@ -643,6 +634,13 @@ int G_parser (int argc, char **argv)
 			{
 			    overwrite = 1;
 			}
+
+			/* Force gui to come up */
+			if ( strncmp(ptr,"--ui", 4) == 0 )
+			{
+			    force_gui = TRUE;
+			}
+
 			/* If we see a flag */
 			else if(*ptr == '-')
 			{
