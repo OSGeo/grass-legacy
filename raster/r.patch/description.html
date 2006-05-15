@@ -79,8 +79,22 @@ composite (patched) raster map layer the name of the original raster map
 layer.
 
 <P>
-
 <EM>r.patch</EM> creates support files for the patched, composite output map. 
+
+
+<H2>EXAMPLE</H2>
+
+Create a list of maps matching a pattern, extend the region to include them
+all, and patch them together to create a mosaic. Overlapping maps will be 
+used in the order listed.
+
+<div class="code"><pre>
+MAPS=`g.mlist type=rast sep=, pat="map_*"`
+g.region rast=$MAPS
+r.patch in=$MAPS out=mosaic
+</pre></div>
+<BR>
+
 
 <H2>SEE ALSO</H2>
 
@@ -98,4 +112,4 @@ U.S. Army Construction Engineering Research Laboratory
 <br>
 -z flag by Huidae Cho
 
-<p><i>Last changed: $Date$</i>
+<p><i>Last changed: $Date$</i></p>
