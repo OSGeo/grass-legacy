@@ -5,10 +5,15 @@ monitor.
 
 <h2>NOTES</h2>
 
-d.vect can simply be used typing <em><b>d.vect map=</b>vector_map</em>. 
+<em>d.vect</em> can simply be used typing <tt><b>d.vect map=</b>vector_map</tt>. 
 There are a large variety of optional parameters which allow the user to
 specify vector type, colors, data fields, SQL queries, label size and 
 justification, etc.
+<P>
+By default <em>d.vect</em> fills in holes in polygons (islands).
+If you only want to show active areas limit the features with, e.g.,
+"<tt>d.vect&nbsp;cats=1-999999</tt>".
+
 <P>
 Colors may be specified in an attribute table column
 named 'GRASSRGB' (which is a <tt>varchar</tt> column containing <tt>RRR:GGG:BBB</tt> values),
@@ -63,4 +68,4 @@ This module can use FreeType/TrueType fonts if they have already been selected w
 
 Radim Blazek, ITC-Irst, Trento, Italy
 
-<p><i>Last changed: $Date$</i>
+<p><i>Last changed: $Date$</i><p>
