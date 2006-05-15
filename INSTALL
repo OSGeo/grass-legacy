@@ -202,7 +202,7 @@ the main source code directory or locally with
 
 You may want to define an alias for this:
     alias gmake6='INST_NOW=y make'
-The simply compile/install the current module with
+Then simply compile/install the current module with
     gmake6
 
 Note: If you keep your module source code outside the standard GRASS
