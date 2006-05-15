@@ -138,7 +138,7 @@ atanb(void)
 						sum+=route[1];
 						nroute++;
 					}
-					if(j+1<=window.cols &&
+					if(j+1<window.cols &&
 					   !IScvNULL(i-1,j+1) &&
 					   cv(i,j)-cv(i-1,j+1)>ZERO){
 						tanB[2]=(cv(i,j)-cv(i-1,j+1))*
