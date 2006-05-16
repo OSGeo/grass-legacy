@@ -77,19 +77,17 @@ int main(int argc, char *argv[])
     struct Cell_head region; 
     struct Range range;
     CELL range_min, range_max;
-    FILE *outf, *fp;
+    FILE *outf;
     char *outfilename;
 
     CELL *cell;
     char *name; 
     char *mapset;
     int fd;
-    int row,col;
     int nrows, ncols;
-    int number;
     double bias;
     char fmt[20];
-	struct GModule *module;
+    struct GModule *module;
     struct
     {
 	struct Option *map ;
@@ -101,12 +99,11 @@ int main(int argc, char *argv[])
 
     G_gisinit (argv[0]);
 
-	module = G_define_module();
+    module = G_define_module();
     module->description =
-		_("Converts a raster map layer into a height-field file for POVRAY.");
+	_("Converts a raster map layer into a height-field file for POVRAY.");
 
-/* Define the different options */
-
+    /* Define the different options */
     parm.map = G_define_option() ;
     parm.map->key        = "map";
     parm.map->type       = TYPE_STRING;
@@ -139,12 +136,12 @@ int main(int argc, char *argv[])
     parm.scaleFactor->description= _("Vertical scaling factor");
 
     if (G_parser(argc, argv))
-       	exit (-1);
+	exit(EXIT_FAILURE);
 
     strcpy (fmt, "%ld ");
     if (parm.hftype->answer != NULL)
     {
-        sscanf (parm.hftype->answer, "%ld", &hfType);
+        sscanf (parm.hftype->answer, "%d", &hfType);
         if (hfType > 0)
             sprintf (fmt, "%%%dld ", hfType);
 	else
@@ -174,51 +171,28 @@ int main(int argc, char *argv[])
     name = parm.map->answer;
     mapset = G_find_cell2 (name, "");
     if (mapset == NULL)
-    {
-        char msg[100];	
-		
-	sprintf (msg, "%s: <%s> cellfile not found\n", G_program_name(), name);
-		G_fatal_error (msg);
-        exit(1);
-    }
+	G_fatal_error(_("Raster map <%s> not found"), name);
 
     fd = G_open_cell_old (name, mapset);
     if (fd < 0)
-    	exit(1);
+    	G_fatal_error(_("Unable to open raster map <%s>"), name);
 
 
     outfilename = parm.tga->answer;
     if (outfilename == NULL)
-    {
-        char msg[100];	
-		
-	sprintf (msg, "%s: <%s> invalid outputfilename\n", G_program_name(), outfilename);
-		G_fatal_error (msg);
-        exit(1);
-    }
+	G_fatal_error(_("Invalid output filename <%s>"), outfilename);
    
     if (NULL == (outf = fopen (outfilename, "wb")))
-    {
-        char msg[100];	
-		
-	sprintf (msg, "%s: <%s> cannot open outputfile\n", G_program_name(), outfilename);
-		G_fatal_error (msg);
-        exit(1);
-    }  
+	G_fatal_error(_("Unable to open output file <%s>"), outfilename);
 
     cell = G_allocate_cell_buf();
 
     nrows = G_window_rows();
     ncols = G_window_cols();
     if (nrows > YMAX || ncols > XMAX)
-    {
-        char msg[100];	
-		
-	sprintf (msg, "%s: cellfile exceeds %ld columns or %ld rows\n", 
-          G_program_name(), outfilename, XMAX, YMAX);
-		G_fatal_error (msg);
-        exit(1);
-    }
+	G_fatal_error(_("Raster map is too big! Exceeds %d columns or %d rows"),
+	  XMAX, YMAX);
+
 
     columnCount = ncols;
     rowCount = nrows;
@@ -237,9 +211,8 @@ int main(int argc, char *argv[])
     G_read_range(name, mapset, &range);
     G_get_range_min_max (&range, &range_min, &range_max);
     if (range.min < 0 || range.max < 0) 
-    {
-      fprintf(stderr, "Warning negative elevation values in input\n");
-    }
+	G_warning(_("Negative elevation values in input"));
+
     elevBounds[0] = range.min;
     elevBounds[1] = range.max; 
 
@@ -259,14 +232,13 @@ int main(int argc, char *argv[])
     fclose (outf);
     G_close_cell(fd);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 
 
 
 void writeHeader (FILE *outputF)
-
 {
    int i;
 
@@ -293,15 +265,10 @@ void writeHeader (FILE *outputF)
  */
 
 void processProfiles (int inputFile, FILE *outputF)
-
 {
    CELL *cell;
-   int             c, r, mod ;
-   int             count, tempInt, lastProfile = 0;
-
-   int             profileID[2], profileSize[2];
-   double          planCoords[2], tempFloat;
-
+   int             c, r;
+   double          tempFloat;
 
    cell = G_allocate_cell_buf();
    for (r = 0; r < rowCount; r++)
@@ -309,9 +276,9 @@ void processProfiles (int inputFile, FILE *outputF)
      if (G_get_map_row (inputFile, cell, r) < 0)
 	exit(1); 
         /* break; */
+
      for (c = 0; c < columnCount; c++)
      {   
-         G_percent (r, rowCount, 2);
          tempFloat = ((float) cell[c] * verticalScale) + hfBias;
 
          /* Normalize */
@@ -326,7 +293,8 @@ void processProfiles (int inputFile, FILE *outputF)
          putc((char)0, outputF);                       /* Blue  empty     */
          putc((char)((int) tempFloat % 256), outputF); /* Green low byte  */
          putc((char)((int) tempFloat / 256), outputF); /* Red   high byte */
-     } 
-    }
-
+     }
+     G_percent (r, rowCount, 2);
+   }
+   G_percent (r, rowCount, 2); /* 100% \n */
 }
