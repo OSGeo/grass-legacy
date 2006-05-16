@@ -28,8 +28,6 @@
 #include "local_proto.h"
 #include <grass/glocale.h>
 
-int quiet = 1;
-
 /* adopted from r.colors */
 static char *icon_files(void)
 {
@@ -108,6 +106,7 @@ main (int argc, char **argv)
 	int colornum = MAX_COLOR_NUM;
 	int size;
 	int width;
+	int quiet;
 	double minreg, maxreg, reg;
 	char map_name[128] ;
 	struct GModule *module;
