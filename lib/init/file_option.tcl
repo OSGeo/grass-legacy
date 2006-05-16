@@ -40,6 +40,7 @@
 
 global browsedepsg 
 
+# G_msg.tcl should be sourced first for internationalized strings.
 
 # the frame used to set EPSG parameters 
 proc fileLocCom args {
@@ -72,16 +73,16 @@ proc fileLocCom args {
 	wm deiconify .fileloc
 	
 	#create the form and buttons
-	set loclab [label .fileloc.lab1 -text "Name of new location" -justify right -height 2]
+	set loclab [label .fileloc.lab1 -text [G_msg "Name of new location"] -justify right -height 2]
 	set locname [entry .fileloc.loc -textvariable fileLocation -width 35 -bg white]
-	set dblab [label .fileloc.lab2 -text "Path to new location" -justify right -height 2]
+	set dblab [label .fileloc.lab2 -text [G_msg "Path to new location"] -justify right -height 2]
 	set dbpath [entry .fileloc.locpath -textvariable locpath -width 35 -bg white]
-	set filelab [label .fileloc.lab3 -text "Path to georeferenced file" -justify right -height 2]
+	set filelab [label .fileloc.lab3 -text [G_msg "Path to georeferenced file"] -justify right -height 2]
 	set fpath [entry .fileloc.filepath -textvariable filepath  -width 35 -bg white]
 	
 	#browse for database path
 	set dbbrowse [button .fileloc.dbbrow -justify center -width 12 \
-		-text "Browse..." -command "set locpath \[tk_getOpenFile\]" ]
+		-text [G_msg "Browse..."] -command "set locpath \[tk_getOpenFile\]" ]
 
         bind $dbpath <Leave> {
              if {$locpath == ""} {
@@ -97,17 +98,17 @@ proc fileLocCom args {
 	
 	#define button to define location
 	set locdefbutton [button .fileloc.def -justify center -width 15 \
-		-text "Define location" -state $buttonstate \
+		-text [G_msg "Define location"] -state $buttonstate \
 		-command {
 			set thelocation "$locpath/$fileLocation";
 			if {[file exists $thelocation ]== 1} {
-				DialogGen .wrnDlg "WARNING: location exists" warning "WARNING: \
-				The location '$thelocation' already exists, please try another name" \
+				DialogGen .wrnDlg [G_msg "WARNING: location exists"] warning \
+				[G_msg "WARNING: The location '$thelocation' already exists, please try another name"] \
 				0 OK;
 			}
 			if {[file exists $filepath]== 0} {
-				DialogGen .wrnDlg "WARNING: file not found" warning "WARNING: \
-				The file was not found!" \
+				DialogGen .wrnDlg [G_msg "WARNING: file not found"\ warning \
+				[G_msg "WARNING: The file was not found!"] \
 				0 OK;
 			}
 			if {[file exists $filepath]== 1} {
@@ -126,7 +127,7 @@ proc fileLocCom args {
 
 	#browse for georeferenced file
 	set filebrowse [button .fileloc.fbrow -justify center -width 12 \
-		-text "Browse..." -command {
+		-text [G_msg "Browse..."] -command {
 				set filepath [tk_getOpenFile]
 				if {$filepath != ""} {
 					.fileloc.def configure -state active
@@ -135,7 +136,7 @@ proc fileLocCom args {
 
 	pack $locdefbutton -side left -fill both -expand 0
 	
-	set cancelbutton [button .fileloc.cancel -justify center -width 15 -text "Cancel" \
+	set cancelbutton [button .fileloc.cancel -justify center -width 15 -text [G_msg "Cancel"] \
 					-command {destroy .fileloc}]
 	pack $cancelbutton -side left -fill both -expand 0
 
@@ -181,18 +182,18 @@ proc infofileloc args {
         .infoPopup.text tag configure info -relief sunken -borderwidth 1 -background white 
     
         # the text to be inserted
-        .infoPopup.text insert end " \nCREATING A NEW GRASS LOCATION USING GEOREFERENCED FILE\n\n " title
-        .infoPopup.text insert end "The file must have georeferencing information readable\n" subtitle
-        .infoPopup.text insert end "by GDAL or OGR, and GRASS must be compiled with GDAL and OGR.\n\n" subtitle
-        .infoPopup.text insert end "\n   Name of new location:\n\n" subtitle
-        .infoPopup.text insert end "\nRequires as input the name of the new location to be created\n\n" info
+        .infoPopup.text insert end [G_msg " \nCREATING A NEW GRASS LOCATION USING GEOREFERENCED FILE\n\n "] title
+        .infoPopup.text insert end [G_msg "The file must have georeferencing information readable\n"] subtitle
+        .infoPopup.text insert end [G_msg "by GDAL or OGR, and GRASS must be compiled with GDAL and OGR.\n\n"] subtitle
+        .infoPopup.text insert end [G_msg "\n   Name of new location:\n\n"] subtitle
+        .infoPopup.text insert end [G_msg "\nRequires as input the name of the new location to be created\n\n"] info
         .infoPopup.text insert end "\n" 
-        .infoPopup.text insert end "\n   Path to location:\n\n" subtitle
-        .infoPopup.text insert end "\nThe folder (Grass database) in which the location should be created\n\n" info
+        .infoPopup.text insert end [G_msg "\n   Path to location:\n\n"] subtitle
+        .infoPopup.text insert end [G_msg "\nThe folder (Grass database) in which the location should be created\n\n"] info
         .infoPopup.text insert end "\n" 
-        .infoPopup.text insert end "\n   Path to georeferenced file:\n\n" subtitle
-        .infoPopup.text insert end "\nGeoreferenced file with projection information that can be read\n" info
-        .infoPopup.text insert end "\nby GDAL (raster) or OGR (vector)\n\n" info
+        .infoPopup.text insert end [G_msg "\n   Path to georeferenced file:\n\n"] subtitle
+        .infoPopup.text insert end [G_msg "\nGeoreferenced file with projection information that can be read\n"] info
+        .infoPopup.text insert end [G_msg "\nby GDAL (raster) or OGR (vector)\n\n"] info
         
         pack .infoPopup.text -side left -fill both 
         
@@ -201,7 +202,7 @@ proc infofileloc args {
                     -command ".infoPopup.text yview"
         pack .infoPopup.vscroll -side right -fill y
         
-        button .infoPopup.ex -justify center -width 6 -text "OK" \
+        button .infoPopup.ex -justify center -width 6 -text [G_msg "OK"] \
                              -command {destroy .infoPopup}			
         pack .infoPopup.ex -side bottom -expand 1 -fill both
 }
