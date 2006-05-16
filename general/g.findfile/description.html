@@ -53,7 +53,12 @@ file.  These variables may be set in the <EM>/bin/sh</EM>
 as follows:
 
 <div class="code"><pre>
-<B>eval `g.findfile element=</B><EM>name </EM><B>mapset=</B><EM>name </EM><B>file=</B><EM>name</EM><B>`</B>
+eval `g.findfile element=name mapset=name file=name`
+</pre></div>
+<P>
+For example (raster map):
+<div class="code"><pre>
+eval `g.findfile element=cell file=mymap`
 </pre></div>
 
 <H2>NOTES</H2>
