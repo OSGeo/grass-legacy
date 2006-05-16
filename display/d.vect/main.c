@@ -120,7 +120,7 @@ main (int argc, char **argv)
 	struct Option *lsize_opt, *font_opt, *xref_opt, *yref_opt;
 	struct Option *attrcol_opt, *maxreg_opt, *minreg_opt;
 	struct Option *width_opt;
-	struct Flag   *_quiet, *id_flag, *table_acolors_flag, *cats_acolors_flag, *x_flag;
+	struct Flag   *quiet_flag, *id_flag, *table_acolors_flag, *cats_acolors_flag, *x_flag;
 	struct cat_list *Clist;
 	int *cats, ncat;
 	LATTR lattr;
@@ -277,9 +277,9 @@ main (int argc, char **argv)
 	maxreg_opt->description= _("Maximum region size (average from height and width) "
 	                         "when map is displayed");
 	
-	_quiet = G_define_flag ();
-	_quiet->key		= 'v';
-	_quiet->description	= _("Run verbosely");
+	quiet_flag = G_define_flag ();
+	quiet_flag->key		= 'v';
+	quiet_flag->description	= _("Run verbosely");
 
 	table_acolors_flag = G_define_flag ();
 	table_acolors_flag->key		= 'a';
@@ -371,7 +371,7 @@ main (int argc, char **argv)
 	    G_fatal_error(_("Unknown color: [%s]"), fcolor_opt->answer);
 	}
 
-	quiet = !_quiet->answer;
+	quiet = !quiet_flag->answer;
 
 	size = atoi (size_opt->answer);
 	Symb = S_read ( icon_opt->answer );
