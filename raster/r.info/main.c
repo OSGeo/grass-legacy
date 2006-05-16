@@ -343,8 +343,8 @@ int main(int argc, char *argv[])
 
 		    if (cat == 0)
 			continue;
-		    if (G_asprintf(&num, "%5ld", (long)cat) < 1) ;
-		    G_fatal_error(_("Cannot allocate memory for string"));
+		    if (G_asprintf(&num, "%5ld", (long)cat) < 1)
+		        G_fatal_error(_("Cannot allocate memory for string"));
 
 		    next = 0;
 		    do {
