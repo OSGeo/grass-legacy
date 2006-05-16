@@ -630,13 +630,13 @@ int G_parser (int argc, char **argv)
 			ptr = *(++argv) ;
 
 			/* Overwrite option */
-			if ( strncmp(ptr,"--o", 3) == 0 || strncmp(ptr,"--overwrite",11) == 0 )
+			if ( strcmp(ptr,"--o") == 0 || strcmp(ptr,"--overwrite") == 0 )
 			{
 			    overwrite = 1;
 			}
 
 			/* Force gui to come up */
-			if ( strncmp(ptr,"--ui", 4) == 0 )
+			else if ( strcmp(ptr,"--ui") == 0 )
 			{
 			    force_gui = TRUE;
 			}
