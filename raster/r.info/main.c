@@ -169,14 +169,14 @@ int main(int argc, char *argv[])
 	    G_format_timestamp(&ts, timebuff);
 
 	    /*Create the r.info timestamp string */
-	    if (G_asprintf(&line, "Timestamp: %s", timebuff) > 0)
+	    if (G_asprintf(&line, "timestamp: %s", timebuff) > 0)
 		printline(line);
 	    else
 		G_fatal_error(_("Cannot allocate memory for string"));
 
 	}
 	else {
-	    if (G_asprintf(&line, "Timestamp: none") > 0)
+	    if (G_asprintf(&line, "timestamp: none") > 0)
 		printline(line);
 	    else
 		G_fatal_error(_("Cannot allocate memory for string"));
@@ -428,11 +428,11 @@ int main(int argc, char *argv[])
 		G_format_timestamp(&ts, timebuff);
 
 		/*Create the r.info timestamp string */
-		fprintf(out, "Timestamp=\"%s\"", timebuff);
+		fprintf(out, "timestamp=\"%s\"\n", timebuff);
 
 	    }
 	    else {
-		fprintf(out, "Timestamp=\"none\"\n");
+		fprintf(out, "timestamp=\"none\"\n");
 	    }
 	}
 
