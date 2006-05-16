@@ -6,7 +6,7 @@
 
 int main (int argc, char *argv[])
 {
-	struct GModule *module;
+    struct GModule *module;
     struct Option *map, *date;
     struct TimeStamp ts;
     char *name;
@@ -15,16 +15,11 @@ int main (int argc, char *argv[])
 
     G_gisinit (argv[0]);
 
-	module = G_define_module();
+    module = G_define_module();
     module->description =
 		_("Print/add/remove a timestamp for a raster map.");
 				        
-    map = G_define_option();
-    map->key = "map";
-    map->required = YES;
-    map->type = TYPE_STRING;
-    map->gisprompt = "old,cell,raster";
-    map->description = _("Raster map name");
+    map = G_define_standard_option(G_OPT_R_MAP);
 
     date = G_define_option();
     date->key = "date";
@@ -34,7 +29,7 @@ int main (int argc, char *argv[])
     date->description = _("Datetime, datetime1/datetime2, or none");
 
     if (G_parser(argc,argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
     name = map->answer;
 
@@ -45,35 +40,32 @@ int main (int argc, char *argv[])
     else
 	mapset = G_find_cell(name,"");
     if(mapset == NULL)
-    {
-	fprintf (stderr, "map <%s> not found %s\n", name,
+	G_fatal_error ( "Map <%s> not found %s", name,
 	    modify ? "in current mapset" : "");
-	exit(1);
-    }
 
     if (!modify)
     {
 	if (G_read_raster_timestamp(name, mapset, &ts) == 1)
 	{
 	    G__write_timestamp(stdout, &ts);
-	    exit(0);
+	    exit(EXIT_SUCCESS);
 	}
 	else
-	    exit(1);
+	    exit(EXIT_FAILURE);
     }
     if (strcmp(date->answer,"none") == 0)
     {
 	G_remove_raster_timestamp(name);
-	exit(0);
+	exit(EXIT_SUCCESS);
     }
     
     if(1 == G_scan_timestamp (&ts, date->answer))
     {
 	G_write_raster_timestamp(name, &ts);
-	exit(0);
+	exit(EXIT_SUCCESS);
     }
     else
- 	G_fatal_error("Invalid timestamp");
+ 	G_fatal_error(_("Invalid timestamp"));
 
-    return(1);
+    exit(EXIT_SUCCESS);
 }
