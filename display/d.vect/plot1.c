@@ -14,7 +14,7 @@
 int plot1 (
     struct Map_info *Map, int type, int area, 
     struct cat_list *Clist, int color, int fcolor, int chcat, SYMBOL *Symb, int size, int id_flag,
-    int table_colors_flag, int cats_color_flag, char *rgb_column)
+    int table_colors_flag, int cats_color_flag, char *rgb_column, int default_width, char *width_column, double width_scale)
 {
     int i, j, k, ltype, nlines = 0, line, cat = -1;
     double *x, *y, xd, yd, xd0 = 0, yd0 = 0;
@@ -27,29 +27,26 @@ int plot1 (
 
     struct field_info *fi = NULL;
     dbDriver *driver = NULL;
-    dbCatValArray cvarr;
-    dbCatVal *cv_rgb = NULL;
-    int nrec;
+    dbCatValArray cvarr_rgb, cvarr_width;
+    dbCatVal *cv_rgb = NULL, *cv_width = NULL;
+    int nrec_rgb, nrec_width;
 
+    int open_db;
     int rgb = 0; /* 0|1 */
     char colorstring[12]; /* RRR:GGG:BBB */
     int red, grn, blu;
     unsigned char which;
+    int width;
 
-    msize = size * ( D_d_to_u_col(2.0) - D_d_to_u_col(1.0 ) ); /* do it better */
+    msize = size * ( D_d_to_u_col(2.0) - D_d_to_u_col(1.0) ); /* do it better */
     
     Points = Vect_new_line_struct ();
     PPoints = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
 
-    if( table_colors_flag ) {
-      /* for reading RRR:GGG:BBB color strings from table */
+    open_db = table_colors_flag || width_column;
 
-      if ( rgb_column == NULL || strlen(rgb_column) == 0 )
-	G_fatal_error(_("Color definition column not specified."));
-
-      db_CatValArray_init (&cvarr);     
-
+    if(open_db){
       fi = Vect_get_field (Map, (Clist->field > 0 ? Clist->field : 1));
       if (fi == NULL) {
 	G_fatal_error (_("Cannot read field info"));
@@ -58,34 +55,70 @@ int plot1 (
       driver = db_start_driver_open_database(fi->driver, fi->database);
       if (driver == NULL)
 	G_fatal_error (_("Cannot open database %s by driver %s"), fi->database, fi->driver);
+    }
 
-      nrec = db_select_CatValArray(driver, fi->table, fi->key, 
-				   rgb_column, NULL, &cvarr);
+    if( table_colors_flag ) {
+      /* for reading RRR:GGG:BBB color strings from table */
 
-      G_debug (3, "nrec (%s) = %d", rgb_column, nrec);
+      if ( rgb_column == NULL || *rgb_column == '\0' )
+	G_fatal_error(_("Color definition column not specified."));
 
-      if (cvarr.ctype != DB_C_TYPE_STRING)
+      db_CatValArray_init (&cvarr_rgb);     
+
+      nrec_rgb = db_select_CatValArray(driver, fi->table, fi->key, 
+				   rgb_column, NULL, &cvarr_rgb);
+
+      G_debug (3, "nrec_rgb (%s) = %d", rgb_column, nrec_rgb);
+
+      if (cvarr_rgb.ctype != DB_C_TYPE_STRING)
 	G_fatal_error (_("Color definition column (%s) not a string. "
 	    "Column must be of form RRR:GGG:BBB where RGB values range 0-255."), rgb_column);
 
-      if ( nrec < 0 )
+      if ( nrec_rgb < 0 )
 	G_fatal_error (_("Cannot select data (%s) from table"), rgb_column);
 
-      G_debug (2, "\n%d records selected from table", nrec);
+      G_debug (2, "\n%d records selected from table", nrec_rgb);
 
-      db_close_database_shutdown_driver(driver);
-
-      for ( i = 0; i < cvarr.n_values; i++ ) {
-	G_debug (4, "cat = %d  %s = %s", cvarr.value[i].cat, rgb_column,
-		 db_get_string(cvarr.value[i].val.s));
+      for ( i = 0; i < cvarr_rgb.n_values; i++ ) {
+	G_debug (4, "cat = %d  %s = %s", cvarr_rgb.value[i].cat, rgb_column,
+		 db_get_string(cvarr_rgb.value[i].val.s));
 
 	/* test for background color */
-	if (test_bg_color (db_get_string(cvarr.value[i].val.s))) {
+	if (test_bg_color (db_get_string(cvarr_rgb.value[i].val.s))) {
 	  G_warning (_("Category <%d>: Line color and background color are the same!"),
-		     cvarr.value[i].cat);
+		     cvarr_rgb.value[i].cat);
 	}
       }
     }
+
+    if ( width_column ) {
+      if ( *width_column == '\0' )
+	G_fatal_error(_("Line width column not specified."));
+
+      db_CatValArray_init (&cvarr_width);     
+
+      nrec_width = db_select_CatValArray(driver, fi->table, fi->key, 
+				   width_column, NULL, &cvarr_width);
+
+      G_debug (3, "nrec_width (%s) = %d", width_column, nrec_width);
+
+      if (cvarr_width.ctype != DB_C_TYPE_INT && cvarr_width.ctype != DB_C_TYPE_DOUBLE)
+	G_fatal_error (_("Line width column (%s) not a number."), width_column);
+
+      if ( nrec_width < 0 )
+	G_fatal_error (_("Cannot select data (%s) from table"), width_column);
+
+      G_debug (2, "\n%d records selected from table", nrec_width);
+
+      for ( i = 0; i < cvarr_width.n_values; i++ ) {
+	G_debug (4, "cat = %d  %s = %d", cvarr_width.value[i].cat, width_column,
+		 (cvarr_width.ctype==DB_C_TYPE_INT?cvarr_width.value[i].val.i:
+		  (int)cvarr_width.value[i].val.d));
+      }
+    }
+
+    if (open_db)
+      db_close_database_shutdown_driver(driver);
 
     Vect_rewind ( Map );
     
@@ -158,13 +191,13 @@ int plot1 (
 	    
 	    /* Read RGB colors from db for current area # */
 	   
-	    if (db_CatValArray_get_value (&cvarr, cat, &cv_rgb) != DB_OK) {
+	    if (db_CatValArray_get_value (&cvarr_rgb, cat, &cv_rgb) != DB_OK) {
 	      rgb = 0;
 	    }
 	    else {
 	      sprintf (colorstring, "%s", db_get_string(cv_rgb -> val.s));
 	    
-	      if (strlen(colorstring) != 0) {
+	      if (*colorstring != '\0') {
 		G_debug (3, "element %d: colorstring: %s", line, colorstring);
 		
 		if ( G_str_to_color(colorstring, &red, &grn, &blu) == 1) {
@@ -219,6 +252,38 @@ int plot1 (
 	    blu = palette[which].B;
 	  }
 	}
+
+	if( nrec_width ) {
+
+	  /* only first category */
+	  cat = Vect_get_line_cat ( Map, line,
+			  (Clist->field > 0 ? Clist->field :
+			   (Cats->n_cats > 0 ? Cats->field[0] : 1)));
+	  
+	  if (cat >= 0) {
+	    G_debug (3, "display element %d, cat %d", line, cat);
+	    
+	    /* Read line width from db for current area # */
+	   
+	    if (db_CatValArray_get_value (&cvarr_width, cat, &cv_width) != DB_OK) {
+	      width = default_width;
+	    }
+	    else {
+	      width = width_scale * (cvarr_width.ctype==DB_C_TYPE_INT?
+			      cv_width->val.i:(int)cv_width->val.d);
+	      if (width < 0) {
+		  G_warning(_("Error in line width column (%s), element %d "
+		    "with cat %d: line width [%d]"), width_column, line, cat, width);
+		  width = default_width;
+	      }
+	    }
+	  } /* end if cat */
+	  else {
+	    width = default_width;
+	  } 
+
+	  R_line_width(width);
+	} /* end if nrec_width */
 
 	x = Points->x;
 	y = Points->y;
