@@ -47,6 +47,7 @@
 
 global browsedepsg 
 
+# G_msg.tcl should be sourced first for internationalized strings.
 
 # the frame used to set EPSG parameters 
 proc epsgLocCom args {
@@ -81,17 +82,17 @@ proc epsgLocCom args {
         wm deiconify .optPopup
         
         #create the form and buttons
-        label .optPopup.input1_ppb -text "Name of new location" -justify right -height 2
+        label .optPopup.input1_ppb -text [G_msg "Name of new location"] -justify right -height 2
         entry .optPopup.input1_ppbEntry -textvariable epsgLocation -width 35 -bg white
-        label .optPopup.input2_ppb -text "Path to new location" -justify right -height 2
+        label .optPopup.input2_ppb -text [G_msg "Path to new location"] -justify right -height 2
         entry .optPopup.input2_ppbEntry -textvariable locpath  -width 35 -bg white
-        label .optPopup.input3_ppb -text "Path to the EPSG-codes file" -justify right -height 2
+        label .optPopup.input3_ppb -text [G_msg "Path to the EPSG-codes file"] -justify right -height 2
         entry .optPopup.input3_ppbEntry -textvariable browsedepsg  -width 35 -bg white
-        label .optPopup.input4_ppb -text "EPSG code number of projection" -justify right -height 2
+        label .optPopup.input4_ppb -text [G_msg "EPSG code number of projection"] -justify right -height 2
         entry .optPopup.input4_ppbEntry -textvariable epsg_code  -width 35 -bg white
         
 		#browse for database path
-        button .optPopup.db -justify center -width 12 -text "Browse..." \
+        button .optPopup.db -justify center -width 12 -text [G_msg "Browse..."] \
 			-command "set locpath \[tk_getOpenFile\]" 
 
         bind .optPopup.db <Leave> {
@@ -101,7 +102,7 @@ proc epsgLocCom args {
         }
 
 		#browse for epsg file
-        button .optPopup.browseepsgfile -justify center -width 12 -text "Browse..." \
+        button .optPopup.browseepsgfile -justify center -width 12 -text [G_msg "Browse..."] \
 			-command "set browsedepsg \[tk_getOpenFile\]" 
                                         
         bind .optPopup.input3_ppbEntry <Leave> {
@@ -111,11 +112,11 @@ proc epsgLocCom args {
         }
 
 		#browse epsg codes in file
-        button .optPopup.codes 	-justify center -width 12 -text "Browse..." \
+        button .optPopup.codes 	-justify center -width 12 -text [G_msg "Browse..."] \
 			-command {
 				if {[file exists $browsedepsg]== 0} {
-					DialogGen .wrnDlg "WARNING: epsg-codes file not found" warning "WARNING: \
-					The epsg-codes file was not found!" \
+					DialogGen .wrnDlg [G_msg "WARNING: epsg-codes file not found"] warning \
+					[G_msg "WARNING: The epsg-codes file was not found!"] \
 					0 OK;
 				}
 				if {[file exists $browsedepsg]== 1} {
@@ -126,21 +127,21 @@ proc epsgLocCom args {
                                      
         pack .optPopup.codes -side left -fill both -expand 0
         
-        button .optPopup.param 	-justify center -bg honeydew2 -text "Help" \
+        button .optPopup.param 	-justify center -bg honeydew2 -text [G_msg "Help"] \
                         -command {infoEpsg}
         pack .optPopup.param -side left -fill both -expand 0
         
-        button .optPopup.submit 	-justify center -width 15 -text "Define location" -state disabled\
+        button .optPopup.submit 	-justify center -width 15 -text [G_msg "Define location"] -state disabled\
 			-command {
 				set thelocation "$locpath/$epsgLocation";
 				if {[file exists $thelocation ]== 1} {
-					DialogGen .wrnDlg "WARNING: location exists" warning "WARNING: \
-					The location '$thelocation' already exists, please try another name" \
+					DialogGen .wrnDlg [G_msg "WARNING: location exists"] warning \
+					[G_msg "WARNING: The location '$thelocation' already exists, please try another name"] \
 					0 OK;
 				}
 				if {[file exists $browsedepsg]== 0} {
-					DialogGen .wrnDlg "WARNING: epsg-codes file not found" warning "WARNING: \
-					The epsg-codes file was not found!" \
+					DialogGen .wrnDlg [G_msg "WARNING: epsg-codes file not found"] warning \
+					[G_msg "WARNING: The epsg-codes file was not found!"] \
 					0 OK;
 				}
 				if {[file exists $browsedepsg]== 1} {
@@ -148,8 +149,8 @@ proc epsgLocCom args {
 						destroy .optPopup; 
 						exec -- xterm -e $env(GISBASE)/etc/make_location_epsg.sh \
 							$epsg_code $epsgLocation $locpath >@stdout 2>@stderr; 
-						DialogGen .wrnDlg "WARNING: restart GRASS please" warning "WARNING: \
-							Please restart GRASS in order find the created location in the list (closing it for you now)" \
+						DialogGen .wrnDlg [G_msg "WARNING: restart GRASS please"] warning \
+						[G_msg "WARNING: Please restart GRASS in order find the created location in the list (closing it for you now)"] \
 							0 OK; 
 						set env(EPSGSCRIPT) {yes};
 						puts stdout "exit";
@@ -165,7 +166,7 @@ proc epsgLocCom args {
 
         pack .optPopup.submit -side left -fill both -expand 0
         
-        button .optPopup.cancel -justify center -width 15 -text "Cancel" \
+        button .optPopup.cancel -justify center -width 15 -text [G_msg "Cancel"] \
                         -command {destroy .optPopup}
         pack .optPopup.submit -side left -fill both -expand 0
 
@@ -221,7 +222,7 @@ proc codesEpsg args {
     
         
         # the text to be inserted
-        .infoPopup.text insert end " \nEPSG CODES (from file: $browsedepsg)\n\n" title
+        .infoPopup.text insert end [format " \n %s\n\n" [format [G_msg "EPSG CODES (from file: %s)"] $browsedepsg]] title
         .infoPopup.text insert end " \n" lefttitle
         .infoPopup.text insert end " \n\n" subtitle
         
@@ -240,7 +241,7 @@ proc codesEpsg args {
                 .infoPopup.text insert end "\n$line\n\n" subtitle
             }
             if {$firstminor != "0" && $firstdash != "0" && $found != "yes"} {
-                .infoPopup.text insert end "\n\nGUESS THAT IS NOT THE EPSG FILE\n\n" title;
+                .infoPopup.text insert end [format "\n\n%s\n\n" [G_msg "GUESS THAT IS NOT THE EPSG FILE"]] title;
                 break;
             }
         }
@@ -252,7 +253,7 @@ proc codesEpsg args {
                     -command ".infoPopup.text yview"
         pack .infoPopup.vscroll -side right -fill y
         
-        button .infoPopup.ex -justify center -width 6 -text "Select" \
+        button .infoPopup.ex -justify center -width 6 -text [G_msg "Select"] \
                              -command {destroy .infoPopup}			
         pack .infoPopup.ex -side bottom -expand 1 -fill both
 }
@@ -284,17 +285,17 @@ proc infoEpsg args {
         .infoPopup.text tag configure info -relief sunken -borderwidth 1 -background white 
     
         # the text to be inserted
-        .infoPopup.text insert end " \nCREATION OF A NEW GRASS LOCATION WITH EPSG\n " title
-        .infoPopup.text insert end "- needed parameters -\n\n" title
+        .infoPopup.text insert end [G_msg " \nCREATION OF A NEW GRASS LOCATION WITH EPSG\n "] title
+        .infoPopup.text insert end [G_msg "- needed parameters -\n\n"] title
         .infoPopup.text insert end "\n" 
-        .infoPopup.text insert end "\n   Name of new location:\n\n" subtitle
-        .infoPopup.text insert end "\nRequires as input the name of the new location to be created\n\n" info
+        .infoPopup.text insert end [G_msg "\n   Name of new location:\n\n"] subtitle
+        .infoPopup.text insert end [G_msg "\nRequires as input the name of the new location to be created\n\n"] info
         .infoPopup.text insert end "\n" 
-        .infoPopup.text insert end "\n   Path to location:\n\n" subtitle
-        .infoPopup.text insert end "\nThe folder (GRASS database) in which the location should be created\n\n" info
+        .infoPopup.text insert end [G_msg "\n   Path to location:\n\n"] subtitle
+        .infoPopup.text insert end [G_msg "\nThe folder (GRASS database) in which the location should be created\n\n"] info
         .infoPopup.text insert end "\n" 
-        .infoPopup.text insert end "\n   EPSG code number of projection:\n\n" subtitle
-        .infoPopup.text insert end "\nEPSG code number of projection (see PROJSHARE/epsg or push the 'EPSG-codes' button)\n\n" info
+        .infoPopup.text insert end [G_msg "\n   EPSG code number of projection:\n\n"] subtitle
+        .infoPopup.text insert end [G_msg "\nEPSG code number of projection (see PROJSHARE/epsg or push the 'EPSG-codes' button)\n\n"] info
         
         pack .infoPopup.text -side left -fill both 
         
@@ -303,7 +304,7 @@ proc infoEpsg args {
                     -command ".infoPopup.text yview"
         pack .infoPopup.vscroll -side right -fill y
         
-        button .infoPopup.ex -justify center -width 6 -text "OK" \
+        button .infoPopup.ex -justify center -width 6 -text [G_msg "OK"] \
                              -command {destroy .infoPopup}			
         pack .infoPopup.ex -side bottom -expand 1 -fill both
 }

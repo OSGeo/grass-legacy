@@ -127,7 +127,7 @@ proc GetDir {entWidget locList mapList} \
     global database
     
     toplevel .getDir
-    wm title .getDir "New location path"
+    wm title .getDir [G_msg "New location path"]
     wm resizable .getDir 0 0
     
     frame .getDir.base 
@@ -151,10 +151,10 @@ proc GetDir {entWidget locList mapList} \
     pack .getDir.buttonFrame -side bottom -fill x
     
     # Create the pushbuttons
-    button .getDir.buttonFrame.add -text "OK" \
+    button .getDir.buttonFrame.add -text [G_msg "OK"] \
     	-command \
 	    "SetDatabase .getDir.base.list .getDir $entWidget $locList $mapList"
-    button .getDir.buttonFrame.quit -text "Cancel" -command {destroy .getDir}
+    button .getDir.buttonFrame.quit -text [G_msg "Cancel"] -command {destroy .getDir}
     pack .getDir.buttonFrame.add .getDir.buttonFrame.quit -side left \
     	-expand 1 -padx 10 -pady 5
 
@@ -281,7 +281,7 @@ proc gisSetWindow {} {
 
     # Window manager configurations
 
-    wm title . "GRASS $GRASSVERSION Startup"
+    wm title . [format [G_msg "GRASS %s Startup"] $GRASSVERSION]
 
     global database
     global location
@@ -556,8 +556,8 @@ proc gisSetWindow {} {
     	-relief raised \
      	-command { 
             if {[file exists "$database/$location/$mapset/WIND"] == 0} {
-                DialogGen .wrnDlg "WARNING: invalid mapset" warning "Warning: \
-		<$mapset> is not a valid mapset" \
+                DialogGen .wrnDlg [G_msg "WARNING: invalid mapset"] warning \
+		[format [G_msg "Warning: <%s> is not a valid mapset"] $mapset] \
                 0 OK;
             }
             if { $mapset != "" && [file exists "$database/$location/$mapset/WIND"] != 0} {
@@ -578,14 +578,14 @@ proc gisSetWindow {} {
     	-bg honeydew2 \
 		-command {
 			if { [winfo exists .help] } {
-				 puts "Help already opened"
+				 puts [G_msg "Help already opened"]
 				 wm deiconify .help
 				 raise .help
 				 return
 			}
 			set help [toplevel .help]
 			help::init $env(GISBASE)/docs/html/helptext.html "" $help 500 400
-			wm title $help "GRASS Help"
+			wm title $help [G_msg "GRASS Help"]
         }
 	
     button .frame0.frameBUTTONS.cancel \
@@ -627,8 +627,8 @@ proc gisSetWindow {} {
     
     if { ! [file exists $database] } \
     {
-      	DialogGen .wrnDlg "WARNING: Invalid Database" warning "WARNING: \
-	    Invalid database. Finding first valid directory in parent tree" \
+      	DialogGen .wrnDlg [G_msg "WARNING: Invalid Database"] warning \
+	    [G_msg "WARNING: Invalid database. Finding first valid directory in parent tree"] \
 	    0 OK
       
       	while { ! [file exists $database] } \
@@ -749,8 +749,8 @@ proc gisSetWindow {} {
         set mapset [%W get [%W nearest %y]]
 	.frame0.frameBUTTONS.ok configure -state normal
 	if {[file exists "$database/$location/$mapset/WIND"] == 0} {
-	    DialogGen .wrnDlg "WARNING: invalid mapset" warning "Warning: \
-	    <$mapset> is not a valid mapset" \
+	    DialogGen .wrnDlg [G_msg "WARNING: invalid mapset"] warning \
+	    [format [G_msg "Warning: <%s> is not a valid mapset"] $mapset] \
 	    0 OK;
 	}
 	if { $mapset != "" && [file exists "$database/$location/$mapset/WIND"] != 0} {

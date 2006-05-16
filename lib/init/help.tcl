@@ -112,21 +112,21 @@ namespace eval help {
  "
  variable btninfo
 #Controls/buttons:  link_name     text/hint  vis_cond  activ_cond  button_name
- array set btninfo "__prev     {[list "Back"     1 {$help::hpos>0} "bback"]}
-                    contents   {[list "Contents" 1 {[lsearch $help::index "contents"]!=-1} "bcont"]}
-                    __dec      {[list "Decrease" 1 {$help::fontsize>6} "bdec"]}
-                    __find     {[list "Find"     1 1 "bfind"]}
-                    __next     {[list "Forward"  1 {$help::hpos<[expr [llength $help::history] - 1]} "bforward"]}
-                    __inc      {[list "Increase" 1 {$help::fontsize<30} "binc"]}
-                    __index    {[list "Index"    1 {$help::index!=""} "bindex"]}
-                    __Next     {[list "Next"     {$help::h4contents!=""} {[lsearch $help::sequence $help::curtopic]<[expr [llength $help::sequence] - 1] && [lsearch $help::sequence $help::curtopic]>-1} "bnext"]}
-                    __open     {[list "Open"     1 1 "bopen"]}
-                    __Prev     {[list "Previous" {$help::h4contents!=""} {[lsearch $help::sequence $help::curtopic]>0} "bprev"]}
-                    __refresh  {[list "Refresh"  1 1 "brefresh"]}
-                    __reload   {[list "Reload"   1 1 "breload"]}
-                    __search   {[list "Search"   1 {$help::index!=""} "bsearch"]}
-                    __stop     {[list "Stop"     1 {$help::showing || $help::insearch} "bstop"]}
-                    __up1level {[list "UpLevel"  {$help::h4contents!=""} {[array names help::up1level $help::curtopic]!=""} "bup"]}
+ array set btninfo "__prev     {[list [G_msg "Back"]     1 {$help::hpos>0} "bback"]}
+                    contents   {[list [G_msg "Contents"] 1 {[lsearch $help::index "contents"]!=-1} "bcont"]}
+                    __dec      {[list [G_msg "Decrease"] 1 {$help::fontsize>6} "bdec"]}
+                    __find     {[list [G_msg "Find"]     1 1 "bfind"]}
+                    __next     {[list [G_msg "Forward"]  1 {$help::hpos<[expr [llength $help::history] - 1]} "bforward"]}
+                    __inc      {[list [G_msg "Increase"] 1 {$help::fontsize<30} "binc"]}
+                    __index    {[list [G_msg "Index"]    1 {$help::index!=""} "bindex"]}
+                    __Next     {[list [G_msg "Next"]     {$help::h4contents!=""} {[lsearch $help::sequence $help::curtopic]<[expr [llength $help::sequence] - 1] && [lsearch $help::sequence $help::curtopic]>-1} "bnext"]}
+                    __open     {[list [G_msg "Open"]     1 1 "bopen"]}
+                    __Prev     {[list [G_msg "Previous"] {$help::h4contents!=""} {[lsearch $help::sequence $help::curtopic]>0} "bprev"]}
+                    __refresh  {[list [G_msg "Refresh"]  1 1 "brefresh"]}
+                    __reload   {[list [G_msg "Reload"]   1 1 "breload"]}
+                    __search   {[list [G_msg "Search"]   1 {$help::index!=""} "bsearch"]}
+                    __stop     {[list [G_msg "Stop"]     1 {$help::showing || $help::insearch} "bstop"]}
+                    __up1level {[list [G_msg "UpLevel"]  {$help::h4contents!=""} {[array names help::up1level $help::curtopic]!=""} "bup"]}
  "
  variable _istitle 0
  variable _t_title
@@ -1563,27 +1563,27 @@ proc help::init {filename {topic contents} {parent {}} {width 450} {height 400} 
   }
 
   menu $w.menu  -tearoff 0
-  $w.menu add command -label "Back" -command "help::show __prev" -accelerator "<--"
-  $w.menu add command -label "Forward" -command "help::show __next"
-  $w.menu add command -label "Stop" -command "set help::abort 1" -accelerator "Esc"
+  $w.menu add command -label [G_msg "Back"] -command "help::show __prev" -accelerator "<--"
+  $w.menu add command -label [G_msg "Forward"] -command "help::show __next"
+  $w.menu add command -label [G_msg "Stop"] -command "set help::abort 1" -accelerator "Esc"
   $w.menu add sep
-  $w.menu add command -label "Copy" -command "event generate $w.text <Control-c>" -accelerator "Ctrl+Ins"
+  $w.menu add command -label [G_msg "Copy"] -command "event generate $w.text <Control-c>" -accelerator "Ctrl+Ins"
   $w.menu add sep
-  $w.menu add command -label "Find..." -command "event generate $w.text <Control-f>" -accelerator "Ctrl+F"
-  $w.menu add command -label "Search in topics..." -command "event generate $w.text <Control-Shift-f>" -accelerator "Ctrl+S"
+  $w.menu add command -label [G_msg "Find..."] -command "event generate $w.text <Control-f>" -accelerator "Ctrl+F"
+  $w.menu add command -label [G_msg "Search in topics..."] -command "event generate $w.text <Control-Shift-f>" -accelerator "Ctrl+S"
   $w.menu add sep
-  $w.menu add command -label "Open file..." -command "event generate $w.text <Control-o>" -accelerator "Ctrl+O"
+  $w.menu add command -label [G_msg "Open file..."] -command "event generate $w.text <Control-o>" -accelerator "Ctrl+O"
   $w.menu add sep
-  $w.menu add command -label "Increase font size" -command "event generate $w.text <Control-bracketright>" -accelerator "Ctrl+\]"
-  $w.menu add command -label "Decrease font size" -command "event generate $w.text <Control-bracketleft>" -accelerator "Ctrl+\["
+  $w.menu add command -label [G_msg "Increase font size"] -command "event generate $w.text <Control-bracketright>" -accelerator "Ctrl+\]"
+  $w.menu add command -label [G_msg "Decrease font size"] -command "event generate $w.text <Control-bracketleft>" -accelerator "Ctrl+\["
   $w.menu add sep
-  $w.menu add command -label "Refresh" -command "event generate $w.text <Control-r>" -accelerator "Ctrl+R"
-  $w.menu add command -label "Reload" -command "event generate $w.text <Control-l>" -accelerator "Ctrl+L"
+  $w.menu add command -label [G_msg "Refresh"] -command "event generate $w.text <Control-r>" -accelerator "Ctrl+R"
+  $w.menu add command -label [G_msg "Reload"] -command "event generate $w.text <Control-l>" -accelerator "Ctrl+L"
   bind $w.text <3> "help::rightclick %X %Y"
 
   menu $w.menuX  -tearoff 0
-  $w.menuX add command -label "About" -command "help::show_about"
-  $w.menuX add command -label "Save as HTML files..." -command "help::help2html"
+  $w.menuX add command -label [G_msg "About"] -command "help::show_about"
+  $w.menuX add command -label [G_msg "Save as HTML files..."] -command "help::help2html"
   bind $w.d <3> "help::rightclickX %X %Y"
  }
 
@@ -1910,7 +1910,7 @@ proc help::show {{topic contents} {modhist 1} {textpos {}}} {
 #sch show directory
      set _text "<font color=#c00000>Topic</font> <b>\"$topic\"</b> <font color=#c00000>not found in \"[pwd]\"!</font>"
 #/sch
-     set title "Topic not found!"
+     set title [G_msg "Topic not found!"]
     }
    }
   } else {
@@ -1975,7 +1975,7 @@ proc help::show {{topic contents} {modhist 1} {textpos {}}} {
 
  bind $w.text <Control-r> "set help::curtopic {}; help::show $topic"
 
- set stat "Creating title..."
+ set stat [G_msg "Creating title..."]
  update
  if {$title==""} {set title "Untitled"}
  $w.title delete all
@@ -2048,7 +2048,7 @@ proc help::show {{topic contents} {modhist 1} {textpos {}}} {
   wm title .tophelpwindow "Help - $title"
  }
 
- set stat "Displaying..."
+ set stat [G_msg "Displaying..."]
  set perc 0
  catch {after cancel "help::updatestate"}
  after 250 "help::updatestate"
@@ -2167,7 +2167,7 @@ proc help::show {{topic contents} {modhist 1} {textpos {}}} {
  $w.text configure -state disabled
  $w.text tag raise fnd
  $w.text tag raise sel
- set stat "Done."
+ set stat [G_msg "Done."]
 }
 
 #-------------------------------------------------------------------------------
@@ -2565,7 +2565,7 @@ proc help::rightclickX {x y} {
  variable w
  variable index
 
- $w.menuX entryconfigure "Save as HTML files..." -state [expr [llength $index]?"normal":"disabled"]
+ $w.menuX entryconfigure [G_msg "Save as HTML files..."] -state [expr [llength $index]?"normal":"disabled"]
  tk_popup $w.menuX $x $y
 }
 
@@ -2705,14 +2705,14 @@ proc help::help2html {} {
 
  set dir [file dirname $curfilename]
  if {[set dir [file dirname [tk_getSaveFile -parent $w -initialdir $dir\
-               -title "Select directory to Save HTML files" \
-               -initialfile "Filename will be ignored"]]]=="."} {
+               -title [G_msg "Select directory to Save HTML files"] \
+               -initialfile [G_msg "Filename will be ignored"]]]]=="."} {
   return
  }
 
  set count 0
  set total [llength $index]
- set stat "Generating HTMLs...."
+ set stat [G_msg "Generating HTMLs...."]
  update 
  foreach topic $index {
   incr count
@@ -2721,10 +2721,10 @@ proc help::help2html {} {
    append topicfname ".htm"
   } 
   if {[catch {set fout [::open [file join $dir $topicfname] "w"]}]!=0} {
-   error "Can't open output file:\n[file join $dir $topicfname]"
+   error [format "%s%s" [G_msg "Can't open output file:"] "\n[file join $dir $topicfname]"]
    continue
   }
-  set stat "Generating HTMLs...  $count of $total  \"$topicfname\""
+  set stat [format [G_msg "Generating HTMLs...  %i of %i  \"%s\""] $count $total $topicfname]
   update idletasks
   catch {fconfigure $fout -eofchar "" -buffersize 32768 -buffering full}
   puts $fout "<html>\n<head>\n<meta name=\"Generator\" content=\"Help System v.1.4\">"
@@ -2939,19 +2939,19 @@ proc help::dlgfind:init {{mode_local 1}} {
  frame .dlgfind.btn
  pack .dlgfind.f .dlgfind.btn -side left -expand 1 -fill y -padx 3
  if {$mode_local} {
-  wm title .dlgfind "Find"
-  button .dlgfind.btn.f -text "Find" -width 8 -default active -command "help::dlgfind:find"
+  wm title .dlgfind [G_msg "Find"]
+  button .dlgfind.btn.f -text [G_msg "Find"] -width 8 -default active -command "help::dlgfind:find"
  } else {
-  wm title .dlgfind "Search in all topics"
-  button .dlgfind.btn.f -text "Find" -width 8 -default active -command "help::dlgfind:search"
+  wm title .dlgfind [G_msg "Search in all topics"]
+  button .dlgfind.btn.f -text [G_msg "Find"] -width 8 -default active -command "help::dlgfind:search"
  }
- button .dlgfind.btn.c -text "Cancel" -width 8 -command "help::dlgfind:destroy"
+ button .dlgfind.btn.c -text [G_msg "Cancel"] -width 8 -command "help::dlgfind:destroy"
  pack .dlgfind.btn.f .dlgfind.btn.c -side top -expand 0 -fill x -pady 3
 
  frame .dlgfind.f.text
  frame .dlgfind.f.b
  pack .dlgfind.f.text .dlgfind.f.b -side top -fill x -expand 1 -anchor w -pady 3
- label .dlgfind.f.text.l -text "Find what: "
+ label .dlgfind.f.text.l -text [G_msg "Find what: "]
  entry .dlgfind.f.text.e -textvariable help::fnd_str -width 30
  pack .dlgfind.f.text.l .dlgfind.f.text.e -side left -fill y -expand 1
  .dlgfind.f.text.e selection range 0 end
@@ -2962,7 +2962,7 @@ proc help::dlgfind:init {{mode_local 1}} {
  if {$mode_local} {
   frame .dlgfind.f.b.dir.p -relief flat -borderwidth 0
   frame .dlgfind.f.b.dir.b -highlightthickness 0 -relief groove -borderwidth 2
-  label .dlgfind.f.b.dir.l -highlightthickness 0 -text "Direction" \
+  label .dlgfind.f.b.dir.l -highlightthickness 0 -text [G_msg "Direction"] \
                           -relief flat -bd 0 -padx 2 -pady 0
   frame .dlgfind.f.b.dir.b.p -relief flat -bd 0 -highlightthickness 0
   frame .dlgfind.f.b.dir.f -relief flat -bd 0 -highlightthickness 0
@@ -2976,12 +2976,12 @@ proc help::dlgfind:init {{mode_local 1}} {
   place .dlgfind.f.b.dir.l -x 5 -anchor nw -y 0
 
   set f .dlgfind.f.b.dir.f
-  radiobutton $f.up -text "Up" -value "-backwards" -variable help::fnd_direction
-  radiobutton $f.down -text "Down" -value "-forwards" -variable help::fnd_direction
+  radiobutton $f.up -text [G_msg "Up"] -value "-backwards" -variable help::fnd_direction
+  radiobutton $f.down -text [G_msg "Down"] -value "-forwards" -variable help::fnd_direction
   pack $f.up $f.down -side left -fill y -expand 1
  }
- checkbutton .dlgfind.f.b.l.case -text "Match case" -onvalue "" -offvalue "-nocase" -variable help::fnd_case
- checkbutton .dlgfind.f.b.l.regexp -text "Regexp expression" -onvalue "-regexp" -offvalue "" -variable help::fnd_regexp
+ checkbutton .dlgfind.f.b.l.case -text [G_msg "Match case"] -onvalue "" -offvalue "-nocase" -variable help::fnd_case
+ checkbutton .dlgfind.f.b.l.regexp -text [G_msg "Regexp expression"] -onvalue "-regexp" -offvalue "" -variable help::fnd_regexp
  pack .dlgfind.f.b.l.regexp .dlgfind.f.b.l.case -side bottom -expand 1 -anchor sw
  bind .dlgfind <Return>  ".dlgfind.btn.f configure -relief sunken; update idletasks; .dlgfind.btn.f configure -relief raised; .dlgfind.btn.f invoke"
  bind .dlgfind <Escape> "help::dlgfind:destroy"
@@ -3092,7 +3092,7 @@ proc help::dlgfind:search {} {
  set searchedtext [list $fnd_str $fnd_case $fnd_regexp]
  
  set found 0
- set data(__@SearchResult@__,title) "Search results"
+ set data(__@SearchResult@__,title) [G_msg "Search results"]
  set data(__@SearchResult@__,text) "<body text=black bgcolor=#ffffd2 link=#006800><ul>"
 # catch {$w.bstop configure -state normal}
  updatehead "__stop"
@@ -3111,7 +3111,7 @@ proc help::dlgfind:search {} {
    set _all_text $data($topic,text)
    set totallen [string length $_all_text]
    set _text_pos 0
-   set stat "Searching in $data($topic,title)..."
+   set stat [format [G_msg "Searching in %s..."] $data($topic,title)]
    update
    set outtext ""
    while {!$abort && $_text_pos!=$totallen} {
@@ -3200,7 +3200,7 @@ proc help::dlgfind:search {} {
 proc help::dlgfind:checkregexp {regexp val} {
  if {$regexp=="-regexp"} {
   if {[catch {regexp -- "$val" {}}]} {
-   error "Error in regular expression:\n\"$val\""
+   error [format [G_msg "Error in regular expression:\n\"%s\""] $val]
    return 0
   } else {
    return 1
