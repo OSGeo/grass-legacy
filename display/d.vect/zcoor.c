@@ -6,8 +6,6 @@
 #include <grass/raster.h>
 #include "plot.h"
 
-extern int width;
-
 int zcoor ( struct Map_info *Map, int type, LATTR *lattr ) {
     int num, el;
     double xl, yl, zl;
@@ -82,9 +80,7 @@ int zcoor ( struct Map_info *Map, int type, LATTR *lattr ) {
 	  }
 	    
 	R_move_abs(X + Xoffset, Y + Yoffset) ;
-	R_line_width(0);
 	R_text(text);
-	R_line_width(width);
     }
 
     Vect_destroy_line_struct (Points);

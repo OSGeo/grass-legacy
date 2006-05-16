@@ -5,8 +5,6 @@
 #include "plot.h"
 #include <grass/glocale.h>
 
-extern int width;
-
 int label (
     struct Map_info *Map, int type, int do_area, 
     struct cat_list *Clist, LATTR *lattr, int chcat)
@@ -141,9 +139,7 @@ int label (
 	      }
 		
 	    R_move_abs(X + Xoffset, Y + Yoffset) ;
-	    R_line_width(0);
   	    R_text(text);
-	    R_line_width(width);
 	}
     }
 
