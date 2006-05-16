@@ -26,7 +26,7 @@ DOMAINS = $(LIBDOMAIN) $(MODDOMAIN) $(TCLDOMAIN)
 
 LIB_POTFILES = find ../lib -name '*.c' | xargs grep -l "_(\""
 MOD_POTFILES = find ../ -name '*.c' | grep -v '../lib' | xargs grep -l "_(\""
-TCL_POTFILES = find ../ -name '*.tcl' | xargs grep -l "\\[_ \|\\[G_msg" 
+TCL_POTFILES = find ../ -name '*.tcl' | grep -v '../dist' | xargs grep -l "\\[_ \|\\[G_msg" 
 
 #The xgettext utility is used to automate the creation of
 #portable message files (.po)
