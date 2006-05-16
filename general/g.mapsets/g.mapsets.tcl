@@ -12,6 +12,9 @@ set env(GISDBASE) [exec g.gisenv get=GISDBASE]
 set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
 set env(MAPSET) [exec g.gisenv get=MAPSET]
 
+# Include the select dialog code because it defines scroll bindings
+source $env(GISBASE)/etc/gtcltk/select.tcl
+
 proc set_mapsets { } {
     global ms_ch ms_name nms
 
@@ -35,7 +38,9 @@ set sw [ScrolledWindow .sw -relief sunken -borderwidth 2]
 set sf [ScrollableFrame .sf -width 150 -height 300]
 $sw setwidget $sf
 
-pack $sw $sf -fill both -expand yes
+bind_scroll $sf
+
+pack $sw -fill both -expand yes
 set sframe [$sf getframe]
 
 
