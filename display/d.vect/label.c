@@ -96,7 +96,7 @@ int label (
 	    for ( i = 0; i < Cats->n_cats; i++ ) {
 		G_debug (3, "cat lab: field = %d, cat = %d", Cats->field[i], Cats->cat[i]);
 	        if ( Cats->field[i] == lattr->field ) { /* all cats of given lfield */
-		     if ( strlen(text) > 0 )
+		     if ( *text != '\0' )
 			 sprintf (text, "%s/", text);
 
 	             sprintf (text, "%s%d", text,  Cats->cat[i]);
