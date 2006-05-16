@@ -28,7 +28,6 @@
 #include "local_proto.h"
 #include <grass/glocale.h>
 
-int width;
 int quiet = 1;
 
 /* adopted from r.colors */
@@ -108,6 +107,7 @@ main (int argc, char **argv)
 	int color, fcolor, r, g, b;
 	int colornum = MAX_COLOR_NUM;
 	int size;
+	int width;
 	double minreg, maxreg, reg;
 	char map_name[128] ;
 	struct GModule *module;
@@ -339,7 +339,6 @@ main (int argc, char **argv)
 	width = atoi(width_opt->answer);
 	if( width < 0 )
 		width = 0;
-	R_line_width(width);
 
 	color = WHITE;
 	/* test for background color */
@@ -559,7 +558,10 @@ main (int argc, char **argv)
 	    if ( overlap < 1 ) 
 		Vect_set_constraint_region (&Map, window.north, window.south, 
 		    window.east, window.west, PORT_DOUBLE_MAX, -PORT_DOUBLE_MAX);
-	     
+
+	    /* default line width */
+	    R_line_width(width);
+
 	    if ( area ) {
 		if ( level >= 2 )
 		    stat = darea ( &Map, Clist, color, fcolor, chcat,
@@ -585,6 +587,12 @@ main (int argc, char **argv)
 		    stat = dir ( &Map, type, Clist, chcat );
 	    }
 
+	    /* reset line width: Do we need to get line width from display
+	     * driver (not implemented)?  It will help restore previous line
+	     * width (not just 0) determined by another module (e.g.,
+	     * d.linewidth). */
+	    R_line_width(0);
+
 	    if ( display & DISP_CAT )
 		stat = label ( &Map, type, area, Clist, &lattr, chcat);
 	    
@@ -609,10 +617,6 @@ main (int argc, char **argv)
 	    D_add_to_dig_list(G_fully_qualified_name(map_name, mapset));
 	}
 
-	/* reset line width: Do we need to get line width from display driver
-	 * (not implemented)?  It will help restore previous line width (not
-	 * just 0) determined by another module (e.g., d.linewidth). */
-	R_line_width(0);
 	R_close_driver();
 
         if (!quiet)
