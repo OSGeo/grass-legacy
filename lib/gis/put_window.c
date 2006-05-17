@@ -11,6 +11,7 @@
  *               1  ok
  *********************************************************************/
 
+#include <stdlib.h>
 #include <grass/gis.h>
 
 /*!
@@ -30,7 +31,11 @@
 
 int G_put_window (struct Cell_head *window )
 {
-    return G__put_window (window,"", "WIND");
+    char *wind = getenv("WIND_OVERRIDE");
+
+    return wind
+	? G__put_window (window, "windows", wind)
+	: G__put_window (window, "", "WIND");
 }
 
 int G__put_window ( struct Cell_head *window , char *dir, char *name)
