@@ -28,7 +28,7 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
     dbDriver *driver = NULL;
     dbCatValArray cvarr_rgb, cvarr_width;
     dbCatVal *cv_rgb = NULL, *cv_width = NULL;
-    int nrec_rgb, nrec_width;
+    int nrec_rgb = 0, nrec_width = 0;
 
     int open_db;
     int i, rgb = 0;  /* 0|1 */
