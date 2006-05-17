@@ -66,6 +66,8 @@ int main (int argc, char **argv)
     dbHandle handle;
     struct line_cats *Cats;
 
+    G_gisinit (argv[0]);
+
     /* set up the options and flags for the command line parser */
     module = G_define_module();
     module->description =
@@ -118,8 +120,6 @@ int main (int argc, char **argv)
     fileopt->description     = _("Text file with category numbers/number ranges ");
 
     whereopt = G_define_standard_option(G_OPT_WHERE) ;
-
-    G_gisinit (argv[0]);
 
     /* heeeerrrrrre's the   PARSER */
     if (G_parser (argc, argv))
