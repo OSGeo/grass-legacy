@@ -188,7 +188,7 @@ main (int argc, char **argv)
 	width_opt->description= _("Line width");
 
 	wcol_opt = G_define_option() ;
-	wcol_opt->key        = "wcol" ;
+	wcol_opt->key        = "wcolumn" ;
 	wcol_opt->type       = TYPE_STRING ;
 	wcol_opt->description= _("Name of column for line widths (these values will be scaled by wscale)");
 
