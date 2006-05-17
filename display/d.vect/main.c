@@ -120,7 +120,7 @@ main (int argc, char **argv)
 	struct Option *lcolor_opt, *bgcolor_opt, *bcolor_opt;
 	struct Option *lsize_opt, *font_opt, *xref_opt, *yref_opt;
 	struct Option *attrcol_opt, *maxreg_opt, *minreg_opt;
-	struct Option *width_opt, *wcol_opt, *wscale_opt;
+	struct Option *width_opt, *wcolumn_opt, *wscale_opt;
 	struct Flag   *quiet_flag, *id_flag, *table_acolors_flag, *cats_acolors_flag, *x_flag;
 	struct cat_list *Clist;
 	int *cats, ncat;
@@ -187,10 +187,10 @@ main (int argc, char **argv)
 	width_opt->answer     = "0" ;
 	width_opt->description= _("Line width");
 
-	wcol_opt = G_define_option() ;
-	wcol_opt->key        = "wcolumn" ;
-	wcol_opt->type       = TYPE_STRING ;
-	wcol_opt->description= _("Name of column for line widths (these values will be scaled by wscale)");
+	wcolumn_opt = G_define_option() ;
+	wcolumn_opt->key        = "wcolumn" ;
+	wcolumn_opt->type       = TYPE_STRING ;
+	wcolumn_opt->description= _("Name of column for line widths (these values will be scaled by wscale)");
 
 	wscale_opt = G_define_option() ;
 	wscale_opt->key        = "wscale" ;
@@ -572,15 +572,15 @@ main (int argc, char **argv)
 		    window.east, window.west, PORT_DOUBLE_MAX, -PORT_DOUBLE_MAX);
 
 	    /* default line width */
-	    if ( !wcol_opt->answer )
+	    if ( !wcolumn_opt->answer )
 	        R_line_width(default_width);
 
 	    if ( area ) {
 		if ( level >= 2 ) {
 		    stat = darea ( &Map, Clist, color, fcolor, chcat,
 			(int) id_flag->answer, table_acolors_flag->answer,
-			cats_acolors_flag->answer, &window, rgbcol_opt->answer, default_width, wcol_opt->answer, width_scale );
-	            if ( wcol_opt->answer )
+			cats_acolors_flag->answer, &window, rgbcol_opt->answer, default_width, wcolumn_opt->answer, width_scale );
+	            if ( wcolumn_opt->answer )
 	                R_line_width(default_width);
 		} else
 		    G_warning(_("Cannot display areas, topology not available"));
@@ -592,8 +592,8 @@ main (int argc, char **argv)
 		} else {
 		    stat = plot1 ( &Map, type, area, Clist, color, fcolor, chcat, Symb,
 			size, (int) id_flag->answer, table_acolors_flag->answer,
-			cats_acolors_flag->answer, rgbcol_opt->answer, default_width, wcol_opt->answer, width_scale) ;
-	            if ( wcol_opt->answer )
+			cats_acolors_flag->answer, rgbcol_opt->answer, default_width, wcolumn_opt->answer, width_scale) ;
+	            if ( wcolumn_opt->answer )
 	                R_line_width(default_width);
 		}
 	    }
@@ -608,7 +608,7 @@ main (int argc, char **argv)
 	     * driver (not implemented)?  It will help restore previous line
 	     * width (not just 0) determined by another module (e.g.,
 	     * d.linewidth). */
-	    if ( !wcol_opt->answer )
+	    if ( !wcolumn_opt->answer )
 	        R_line_width(0);
 
 	    if ( display & DISP_CAT )
