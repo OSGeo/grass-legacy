@@ -74,11 +74,7 @@ int main (int argc, char *argv[])
 	 * if current region not valid, set it from default
 	 * note: G_get_default_window() dies upon error
 	 */
-	if (G__get_window (&window, "", "WIND", G_mapset()) != NULL)
-	{
-		G_get_default_window (&window);
-		G_put_window (&window);
-	}
+	G_get_default_window(&window);
 
 	module = G_define_module();
 	module->description =
@@ -352,8 +348,8 @@ int main (int argc, char *argv[])
 	} else
 		dist_flag = 0;
 
-	if (flag.dflt->answer)
-		G_get_default_window (&window);
+	if (!flag.dflt->answer)
+		G_get_window(&window);
 
 	/* region= */
 	if ((name = parm.region->answer))
