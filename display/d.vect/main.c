@@ -196,7 +196,7 @@ main (int argc, char **argv)
 	wscale_opt->key        = "wscale" ;
 	wscale_opt->type       = TYPE_DOUBLE ;
 	wscale_opt->answer     = "1" ;
-	wscale_opt->description= _("Scale factor for wcol");
+	wscale_opt->description= _("Scale factor for wcolumn");
 
 	color_opt = G_define_option() ;
 	color_opt->key        = "color" ;
