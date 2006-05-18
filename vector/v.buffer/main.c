@@ -221,7 +221,7 @@ main (int argc, char *argv[])
 {
     struct Map_info In, Out;
     struct line_pnts *Points, *BPoints;
-    struct line_cats *Cats;
+    struct line_cats *Cats, *BCats;
     char   *mapset;
     struct GModule *module;
     struct Option *in_opt, *out_opt, *type_opt, *buffer_opt, *tolerance_opt, 
@@ -335,6 +335,7 @@ main (int argc, char *argv[])
     Points = Vect_new_line_struct ();
     BPoints = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
+    BCats = Vect_new_cats_struct ();
 
     /* open input vector */
     if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
@@ -458,7 +459,7 @@ main (int argc, char *argv[])
 
 
 	    Vect_line_buffer ( Points, buffer, tolerance, BPoints );	
-	    Vect_write_line ( &Out, GV_BOUNDARY, BPoints, Cats );  
+	    Vect_write_line ( &Out, GV_BOUNDARY, BPoints, BCats );  
 	}
         fprintf ( stderr, "\n");
     }
@@ -529,7 +530,7 @@ main (int argc, char *argv[])
 	    /* outer ring */
 	    Vect_get_area_points ( &In, area, Points );
 	    Vect_line_buffer ( Points, buffer, tolerance, BPoints );	
-	    Vect_write_line ( &Out, GV_BOUNDARY, BPoints, Cats );  
+	    Vect_write_line ( &Out, GV_BOUNDARY, BPoints, BCats );  
 	    
 	    /* islands */
 	    nisles = Vect_get_area_num_isles (&In, area);
@@ -544,7 +545,7 @@ main (int argc, char *argv[])
 		if ( l/2 < 2*buffer ) continue;
 		
 		Vect_line_buffer ( Points, buffer, tolerance, BPoints );	
-		Vect_write_line ( &Out, GV_BOUNDARY, BPoints, Cats );  
+		Vect_write_line ( &Out, GV_BOUNDARY, BPoints, BCats );  
 	    }
 	}
         fprintf ( stderr, "\n");
