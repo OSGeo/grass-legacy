@@ -134,9 +134,9 @@ please take care of following rules:
 10. Use g.findfile when there is a need to test if a map exists.
 
 	# test for input raster map
-	eval `g.findfile element=cell file="$INPUT"`
-	if [ ! "$file" ] ; then
-	  echo "Input map not found"
+	g.findfile element=cell file="$INPUT" > /dev/null
+	if [ $? -eq 0 ] ; then
+	  echo "Input map not found" 1>&2
 	  exit 1
 	fi
 
