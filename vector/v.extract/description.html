@@ -71,6 +71,14 @@ v.extract -d pol_italy_recl_nam out=pol_italy_regions
 produces a new vector map with common boundaries dissolved
 if the attribute of the left and right polygon is identical.
 
+<h3>Remove islands from polygon map</h3>
+<div class="code"><pre>
+v.extract in=map_with_islands out=maps_without_islands list=1-99999
+# and/or
+v.extract -d in=map_with_islands out=maps_without_islands
+</pre></div>
+
+
 <h2>SEE ALSO</h2>
 
 <em><a HREF="v.category.html">v.category</a></em>,
