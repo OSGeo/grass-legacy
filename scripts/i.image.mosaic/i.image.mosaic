@@ -90,11 +90,11 @@ if [ -z $GIS_OPT_IMAGE3 -a  -z $GIS_OPT_IMAGE4 ]; then
 
      eval `g.findfile element=cell file=$GIS_OPT_IMAGE1`
      mapset1="${mapset}"
-     cat $LOCATION_NAME/$mapset1/colr/$GIS_OPT_IMAGE1 | grep -v '%' | tr -s ' ' '\012' >> $CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic
+     cat $GISDBASE/$LOCATION_NAME/$mapset1/colr/$GIS_OPT_IMAGE1 | grep -v '%' | tr -s ' ' '\012' >> $CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic
 
      eval `g.findfile element=cell file=$GIS_OPT_IMAGE2`
      mapset2="${mapset}"
-     cat $LOCATION_NAME/$mapset2/colr/$GIS_OPT_IMAGE2 | grep -v '%' | tr -s ' ' '\012' | awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic
+     cat $GISDBASE/$LOCATION_NAME/$mapset2/colr/$GIS_OPT_IMAGE2 | grep -v '%' | tr -s ' ' '\012' | awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic
      
      echo "Ready. File $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic created."
      exit
