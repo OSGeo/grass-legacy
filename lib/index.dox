@@ -36,6 +36,23 @@ Main web site: <a href="http://grass.itc.it">http://grass.itc.it</a>
 <I>Missing entries below are either not yet uploaded to CVS (need to be migrated
 from GRASS 5 Programmer's manual or are simply undocumented</I>
 
+<h3>Principal library</h3>
+
+(the name refers to the directory name in lib/ in the source code)
+
+<ul>
+ <li>gis:  GRASS GIS library, with following subsection - \ref gislib
+ <ul>
+   <li>  Raster File Processing - \ref gisrasterlib
+   <li>  Sites File Processing (legacy, merged into vector) - \ref gissiteslib
+   <li>  Vector File Processing - \ref gisvectorlib
+ </ul>
+</ul>
+
+<h3>Further libraries</h3>
+
+(the name refers to the directory name in lib/ in the source code)
+
 <ul>
 <li>bitmap:	bitmap library for X Window Bitmaps - \ref bitmaplib
 <li>btree:	binary tree library - \ref btreelib
@@ -51,12 +68,6 @@ from GRASS 5 Programmer's manual or are simply undocumented</I>
 <li>forms:	forms library - \ref forms
 <li>front.end:	interface for interactive modules library - \ref frontend
 <li>g3d:	G3D raster volume library - \ref g3dlib
-<li>gis:	GRASS GIS library, with following subsection - \ref gislib
-<ul>
- <li>  Raster File Processing - \ref gisrasterlib
- <li>  Sites File Processing (legacy, merged into vector) - \ref gissiteslib
- <li>  Vector File Processing - \ref gisvectorlib
-</ul>
 <li>gmath: 	 generic mathematical functions and BLAS/LAPACK library wrapper - \ref gmathlib
 <li>gtcltk:	Tcl/Tk stuff - \ref gtcltk
 <li>imagery:	imagery library - \ref imagerylib
