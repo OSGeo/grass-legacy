@@ -57,7 +57,24 @@
  *  opt3->options    = "0-99999",
  *  opt3->description= "Number to test parser" ;
  *
- * parser() will respond to the following command lines as described:
+ *
+ * The only functions which can legitimately be called before G_parser() are:
+ *   G_gisinit()
+ *   G_no_gisinit()
+ *   G_define_module()
+ *   G_define_flag()
+ *   G_define_option()
+ *   G_define_standard_option()
+ *   G_disable_interactive()
+ *
+ * The usual order is:
+ *   G_gisinit()
+ *   G_define_module()
+ *   G_define_{flag,option}()
+ *   G_parser()
+ *
+ *
+ * G_parser() will respond to the following command lines as described:
  *
  * command      (No command line arguments)
  *    Parser enters interactive mode.
