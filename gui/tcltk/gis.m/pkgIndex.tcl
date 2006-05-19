@@ -24,4 +24,5 @@ package ifneeded GisM 1.0 [list tclPkgSetup $dir GisM 1.0 {
 	{maptext.tcl source {GmCtext::create}}
 	{maplabels.tcl source {GmCLabels::create}}
 	{mapprint.tcl source {psprint::init}}
+	{profile.tcl source {GmProfile::create}}
 }]
