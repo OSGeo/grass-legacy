@@ -29,7 +29,7 @@ proc fontcreate {font args} {
 	}
 }
 
-fontcreate balloon-help -family Helvetica -size -12 -weight bold
+fontcreate balloon-help -family Helvetica -size -12
 fontcreate default -family Helvetica -size -12
 fontcreate textfont -family Courier -size -12
 
