@@ -5,16 +5,6 @@
 #include "togl.h"
 #include "interface.h"
 
-#ifndef WIN32
-#define X11
-#endif
-
-#ifdef X11
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <GL/glx.h>
-#endif /*X11 */
-
 /*
 static struct Togl *Togl_wins[NV_MAXVIEWS];
 static int Togl_num=0;
