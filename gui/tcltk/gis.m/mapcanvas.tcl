@@ -3,7 +3,7 @@
 # MapCanvas.tcl -TclTk canvas display monitors  and display controls 
 #    for GIS Manager: GUI for GRASS 6 
 #
-# Author: Michael Barton (Arizona State University) - Cedric's version
+# Author: Michael Barton (Arizona State University) & Cedric Shock
 #
 # January 2006
 #
@@ -188,8 +188,7 @@ proc MapCanvas::create { } {
 			GmTree::switchpage $mon
 		} "
 		
-	# Does this do anything? No globals...
-	# I can't remember if bindings happen at global scope.
+	# Displays geographic coordinates in indicator window when cursor moved across canvas
 	bind $can($mon) <Motion> {
 		set scrxmov %x
 		set scrymov %y
@@ -197,6 +196,114 @@ proc MapCanvas::create { } {
 		set northcoord [eval MapCanvas::scry2mapn %y]
 		set coords($mon) "$eastcoord $northcoord"
 	}
+	
+	
+	# TSW - inserting key command ability into gis.m
+	# 9 May 2006
+	# set some key commands to speed use
+	
+	# Redraw changes
+	bind .mapcan($mon) <KeyPress-c> {
+		MapCanvas::request_redraw $mon 0
+	}
+	# Zoom to current and redraw everything
+	bind .mapcan($mon) <KeyPress-space> {
+		MapCanvas::zoom_current $mon
+	}
+	# Return to previous zoom
+	bind .mapcan($mon) <KeyPress-r> {
+		MapCanvas::zoom_back $mon
+	}
+	# Set explore mode
+	bind .mapcan($mon) <KeyPress-e> {
+		MapCanvas::exploremode $mon 1
+	}
+	# set strict mode
+	bind .mapcan($mon) <KeyPress-s> {
+		MapCanvas::exploremode $mon 0
+	}
+	
+	# set key strokes to change between tools
+	# I've provided strokes for both right and left handed 
+	# mouse users
+	
+	# Right handed
+	# x - pointer
+	# Zoom in - zoom in
+	# zoom ouT - zoom out
+	# pAn - pan
+	# Query - query
+	# Distance - measure
+	
+	bind .mapcan($mon) <KeyPress-x> {
+		MapToolBar::changebutton pointer
+		MapCanvas::stoptool $mon
+	}
+	bind .mapcan($mon) <KeyPress-z> {
+		MapCanvas::stoptool $mon
+		MapToolBar::changebutton zoomin
+		MapCanvas::zoombind $mon 1
+	}
+	bind .mapcan($mon) <KeyPress-t> {
+		MapCanvas::stoptool $mon
+		MapToolBar::changebutton zoomout
+		MapCanvas::zoombind $mon -1
+	}
+	bind .mapcan($mon) <KeyPress-a> {
+		MapCanvas::stoptool $mon
+		MapToolBar::changebutton pan
+		MapCanvas::panbind $mon
+	}
+	bind .mapcan($mon) <KeyPress-q> {
+		MapCanvas::stoptool $mon
+		MapToolBar::changebutton query
+		MapCanvas::querybind $mon
+	}
+	bind .mapcan($mon) <KeyPress-d> {
+		MapCanvas::stoptool $mon
+		MapToolBar::changebutton measure
+		MapCanvas::measurebind $mon
+	}
+
+	# Left handed
+	# poiNter - pointer
+	# zoom In - zoom in
+	# zoom Out - zoom out
+	# Pan - pan
+	# qUery - query
+	# Measure - measure
+	
+	bind .mapcan($mon) <KeyPress-n> {
+		MapToolBar::changebutton pointer
+		MapCanvas::stoptool $mon
+	}
+	bind .mapcan($mon) <KeyPress-i> {
+		MapCanvas::stoptool $mon
+		MapToolBar::changebutton zoomin
+		MapCanvas::zoombind $mon 1
+	}
+	bind .mapcan($mon) <KeyPress-o> {
+		MapCanvas::stoptool $mon
+		MapToolBar::changebutton zoomout
+		MapCanvas::zoombind $mon -1
+	}
+	bind .mapcan($mon) <KeyPress-p> {
+		MapCanvas::stoptool $mon
+		MapToolBar::changebutton pan
+		MapCanvas::panbind $mon
+	}
+	bind .mapcan($mon) <KeyPress-question> {
+		MapCanvas::stoptool $mon
+		MapToolBar::changebutton query
+		MapCanvas::querybind $mon
+	}
+	bind .mapcan($mon) <KeyPress-m> {
+		MapCanvas::stoptool $mon
+		MapToolBar::changebutton measure
+		MapCanvas::measurebind $mon
+	}
+
+	
 
 	# window configuration change handler for resizing
 	bind $can($mon) <Configure> "MapCanvas::do_resize $mon"
@@ -833,10 +940,10 @@ proc MapCanvas::zoomregion { mon zoom } {
     # if click and no drag, zoom in or out by 80% of original area
     
 	if {($areaX2 == 0) && ($areaY2 == 0)} {
-		set X2 [expr {$areaX1 + (0.8 * $canvas_w($mon) / 2)} ]
-		set X1 [expr {$areaX1 - (0.8 * $canvas_w($mon) / 2)} ]
-		set Y2 [expr {$areaY1 + (0.8 * $canvas_h($mon) / 2)} ]
-		set Y1 [expr {$areaY1 - (0.8 * $canvas_h($mon) / 2) }]	
+		set X2 [expr {$areaX1 + ($canvas_w($mon) / (2 * sqrt(2)))} ]
+		set X1 [expr {$areaX1 - ($canvas_w($mon) / (2 * sqrt(2)))} ]
+		set Y2 [expr {$areaY1 + ($canvas_h($mon) / (2 * sqrt(2)))} ]
+		set Y1 [expr {$areaY1 - ($canvas_h($mon) / (2 * sqrt(2)))}]	
 		set areaX1 $X1
 		set areaY1 $Y1
 		set areaX2 $X2
@@ -1204,6 +1311,17 @@ proc MapCanvas::query { mon x y } {
 	}
 	
 	run_panel $cmd
+}
+
+###############################################################################
+
+# Open profiling window
+proc MapCanvas::startprofile { mon } {
+	variable can
+	
+	GmProfile::create $can($mon)
+	
+	return
 }
 
 ###############################################################################
