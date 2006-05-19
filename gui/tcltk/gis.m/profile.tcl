@@ -480,19 +480,34 @@ proc GmProfile::perase { mapcan } {
 
 proc GmProfile::cleanup { destroywin mapcan } {
 	# cleanup procedures on closing profile window	
+	variable pcan
+	variable transect
+	variable tottransect
+	variable tlength
+	variable tottlength
+	variable pcoords
+	variable pcoordslist
+	variable profilelist
+	variable first
+	variable linex1
+	variable liney1
 	global mon
 	
-	$pcan delete all
-	$mapcan delete transect
-	$mapcan delete tottransect
 	set tlength 0.0
 	set tottlength 0.0
 	set pcoords ""
 	set pcoordslist ""
 	set profilelist ""
 	set first 1
-	unset linex1
-	unset liney1
+	if { [info exists linex1] } {
+		unset linex1
+	}
+	if { [info exists liney1] } {
+		unset liney1
+	}
+	
+	$mapcan delete transect
+	$mapcan delete tottransect
 	MapCanvas::restorecursor $mon
 
 return
