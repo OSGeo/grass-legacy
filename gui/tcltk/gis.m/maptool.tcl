@@ -106,35 +106,15 @@ proc MapToolBar::create { tb } {
 		-activebackground $bgcolor -highlightbackground $bgcolor ]    
     DynamicHelp::register $pan balloon [G_msg "Pan"]
 
-    # query
-    set query [radiobutton $tb.query \
-		-image [image create photo -file "$iconpath/gui-query.gif"] \
-        -command "MapCanvas::stoptool $mon; MapCanvas::querybind $mon" \
-		-variable maptools -value query  -relief flat -offrelief flat -overrelief raised \
-		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
-		-activebackground $bgcolor -highlightbackground $bgcolor ]    
-    DynamicHelp::register $query balloon [G_msg "Query"]
+    pack $pointer $zoomin $zoomout $pan -side left -anchor w
 
-    # measure
-    set measure [radiobutton $tb.measure \
-		-image [image create photo -file "$iconpath/gui-measure.gif"]  \
-    	-command "MapCanvas::stoptool $mon; MapCanvas::measurebind $mon"\
-		-variable maptools -value measure -relief flat -offrelief flat -overrelief raised \
-		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
-		-activebackground $bgcolor -highlightbackground $bgcolor ]    
-    DynamicHelp::register $measure balloon [G_msg "Measure"]
+    set sep2 [Separator $toolbar.sep2 -orient vertical -background $bgcolor ]
+    pack $sep2 -side left -fill y -padx 5 -anchor w
 
-    pack $pointer $zoomin $zoomout $pan $query $measure -side left -anchor w
-
-
-    set sep3 [Separator $toolbar.sep3 -orient vertical -background $bgcolor ]
-    pack $sep3 -side left -fill y -padx 5 -anchor w
-
-    
-    set bbox3 [ButtonBox $toolbar.bbox3 -spacing 0  ]
+    set bbox2 [ButtonBox $toolbar.bbox2 -spacing 0  ]
 
     # zoom.back
-    $bbox3 add -image [image create photo -file "$iconpath/gui-zoom_back.gif"] \
+    $bbox2 add -image [image create photo -file "$iconpath/gui-zoom_back.gif"] \
         -command "MapCanvas::zoom_back $mon" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1\
         -highlightbackground $bgcolor -activebackground $bgcolor \
@@ -145,6 +125,7 @@ proc MapToolBar::create { tb } {
         -highlightthickness 0 -takefocus 0 -relief flat -borderwidth 1  \
         -highlightbackground $bgcolor -activebackground honeydew \
         -bg $bgcolor -width 32 -indicatoron 0 -direction below]
+    DynamicHelp::register $mapzoom balloon [G_msg "Zoom to..."]
 
 	# menu zooming display
 	set zoommenu [menu $mapzoom.zm -type normal]
@@ -170,19 +151,57 @@ proc MapToolBar::create { tb } {
 		-compound center \
 		-label {Zoom to default region} \
 		-command {MapCanvas::zoom_default $mon}
+	$zoommenu add command \
+		-compound center \
+		-label {Set current region to match display} \
+		-command {MapCanvas::gregion_zoom $mon}
 
 	$mapzoom configure -menu $zoommenu
 
-    pack $bbox3 -side left -anchor w
+    pack $bbox2 -side left -anchor w
 
 	pack $mapzoom -side left -anchor w -expand no -fill y 
+
+    set sep3 [Separator $toolbar.sep3 -orient vertical -background $bgcolor ]
+    pack $sep3 -side left -fill y -padx 5 -anchor w
+
+
+    # query
+    set query [radiobutton $tb.query \
+		-image [image create photo -file "$iconpath/gui-query.gif"] \
+        -command "MapCanvas::stoptool $mon; MapCanvas::querybind $mon" \
+		-variable maptools -value query  -relief flat -offrelief flat -overrelief raised \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-activebackground $bgcolor -highlightbackground $bgcolor ]    
+    DynamicHelp::register $query balloon [G_msg "Query"]
+
+    # measure
+    set measure [radiobutton $tb.measure \
+		-image [image create photo -file "$iconpath/gui-measure.gif"]  \
+    	-command "MapCanvas::stoptool $mon; MapCanvas::measurebind $mon"\
+		-variable maptools -value measure -relief flat -offrelief flat -overrelief raised \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-activebackground $bgcolor -highlightbackground $bgcolor ]    
+    DynamicHelp::register $measure balloon [G_msg "Measure"]
+
+    set bbox3 [ButtonBox $toolbar.bbox3 -spacing 0 ]
+    $bbox3 add -image [image create photo -file "$iconpath/gui-profile.gif"] \
+    	-command "MapCanvas::stoptool $mon; MapCanvas::startprofile $mon" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -highlightbackground $bgcolor -activebackground $bgcolor \
+        -helptext [G_msg "Create profile of raster map"]
+
+
+    pack $query $measure -side left -anchor w
+    pack $bbox3 -side left -anchor w
+
 
     set sep4 [Separator $toolbar.sep4 -orient vertical -background $bgcolor ]
     pack $sep4 -side left -fill y -padx 5 -anchor w
 
     # FILE & PRINT
     set bbox4 [ButtonBox $toolbar.bbox4 -spacing 0 ]
-
+    
     $bbox4 add -image [image create photo -file "$iconpath/file-print.gif"]  \
     	-command "MapCanvas::printcanvas $mon" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
@@ -194,7 +213,7 @@ proc MapToolBar::create { tb } {
         -highlightthickness 0 -takefocus 0 -relief flat -borderwidth 1  \
         -highlightbackground $bgcolor -activebackground honeydew \
         -bg $bgcolor -width 32 -indicatoron 0 -direction below]
-
+    DynamicHelp::register $mapsave balloon [G_msg "Export display to graphics file"]
 
 	pack $mapsave -side left -anchor w -expand no -fill y 
     pack $bbox4 -side left -anchor w
@@ -254,7 +273,14 @@ proc MapToolBar::create { tb } {
 }
 
 ###############################################################################
+# changes button on keypress
+proc MapToolBar::changebutton { rbname } {
+	global maptools
+	
+	set maptools $rbname
+}
 
+###############################################################################
 # procedures for saving files
 
 # save png file
