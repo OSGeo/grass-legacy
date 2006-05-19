@@ -270,7 +270,7 @@ proc MapCanvas::create { } {
 	# zoom In - zoom in
 	# zoom Out - zoom out
 	# Pan - pan
-	# qUery - query
+	# ? - query
 	# Measure - measure
 	
 	bind .mapcan($mon) <KeyPress-n> {
