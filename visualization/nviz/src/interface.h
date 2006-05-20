@@ -359,6 +359,8 @@ int slice_move_down(int, Tcl_Interp *, int, char *[]);
 int slice_get_transp(int, Tcl_Interp *, int, char *[]);
 int slice_set_transp(int, Tcl_Interp *, int, char *[]);
 
+struct Map_info;
+
 /* site_attr_commands.c */
 int site_attr_open_map(geosite *, int, struct Map_info **, int *, char ***, int **, int **);
 int site_attr_set_color(geosite *, int, int, int, char**, char**);
