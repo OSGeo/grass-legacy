@@ -252,7 +252,9 @@ if {$DEBUG} {puts "toplevel made"}
     bind .middle.draw.canvas <Expose> {Nv_expose %W}
     bind .middle.draw.canvas <Configure> {set Nv_(height) %h}
     set tags [bindtags .middle.draw.canvas]
-    update
+
+# the Togl widget can't be redrawn until the main panel has been created
+#    update
 
 #With widget made reset ProcessName variable
 set env(NV_processname) [winfo name .]
