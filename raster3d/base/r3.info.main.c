@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
 
     hflag = G_define_flag();
     hflag->key = 'h';
-    hflag->description = _("Print raster history instead of info");
+    hflag->description = _("Print 3D raster history instead of info");
 
     timestampflag = G_define_flag();
     timestampflag->key = 'p';
