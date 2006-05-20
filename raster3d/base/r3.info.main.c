@@ -67,6 +67,7 @@ int main(int argc, char *argv[])
     struct Flag *tflag;
     struct Flag *timestampflag;
     struct Flag *gflag;
+    struct Flag *hflag;
     int data_type;
 
     struct GModule *module;
@@ -103,10 +104,15 @@ int main(int argc, char *argv[])
     gflag->key = 'g';
     gflag->description = _("Print 3D raster map region only");
 
+    hflag = G_define_flag();
+    hflag->key = 'h';
+    hflag->description = _("Print raster history instead of info");
+
     timestampflag = G_define_flag();
     timestampflag->key = 'p';
     timestampflag->description =
-	_("Print 3D raster map timestamp (day.month.year hour:minute:seconds) only");
+	_
+	("Print 3D raster map timestamp (day.month.year hour:minute:seconds) only");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
@@ -119,7 +125,7 @@ int main(int argc, char *argv[])
     /*We need to open the map */
     g3map =
 	G3d_openCellOld(name, mapset, G3D_DEFAULT_WINDOW, G3D_TILE_SAME_AS_FILE,
-			G3D_USE_CACHE_DEFAULT);
+			G3D_NO_CACHE);
     if (NULL == g3map)
 	G_fatal_error(_("Error opening grid3 file [%s]"), name);
 
@@ -130,6 +136,7 @@ int main(int argc, char *argv[])
     cats_ok = G3d_readCats(name, mapset, &cats) >= 0;
     /*Check the Timestamp */
     time_ok = G_read_grid3_timestamp(name, mapset, &ts) > 0;
+
     /*Check for valid entries, show none if no entire available! */
     if (time_ok) {
 	if (ts.count > 0)
@@ -142,7 +149,7 @@ int main(int argc, char *argv[])
 
     /*Show the info if no flag is set */
     if (!rflag->answer && !sflag->answer && !tflag->answer && !gflag->answer &&
-	!timestampflag->answer) {
+	!timestampflag->answer && !hflag->answer) {
 	divider('+');
 
 	if (G_asprintf
@@ -377,11 +384,27 @@ int main(int argc, char *argv[])
 		     G3D_FLOAT ? "float" : (data_type ==
 					    G3D_DOUBLE ? "double" : "??")));
 
+	}			/*History output */
+	else if (hflag->answer) {
+	    if (hist_ok) {
+		fprintf(out, "Data Source:\n");
+		fprintf(out, "   %s\n", hist.datsrc_1);
+		fprintf(out, "   %s\n", hist.datsrc_2);
+		fprintf(out, "Data Description:\n");
+		fprintf(out, "   %s\n", hist.keywrd);
+		if (hist.edlinecnt) {
+		    fprintf(out, "Comments:\n");
+		    for (i = 0; i < hist.edlinecnt; i++)
+			fprintf(out, "   %s\n", hist.edhist[i]);
+		}
+	    } else {
+		G_fatal_error(_("Error while reading history file"));
+	    }
 	}			/*Timestamp */
 	else if (timestampflag->answer) {
 	    if (time_ok && (first_time_ok || second_time_ok)) {
 
-	        G_format_timestamp(&ts, timebuff);
+		G_format_timestamp(&ts, timebuff);
 
 		/*Create the r.info timestamp string */
 		fprintf(out, "Timestamp=\"%s\"", timebuff);
@@ -394,9 +417,9 @@ int main(int argc, char *argv[])
 
     }
 
-    /*Close the opened map*/
+    /*Close the opened map */
     if (!G3d_closeCell(g3map))
-         G_fatal_error(_("Error closing g3d file"));
+	G_fatal_error(_("Error closing g3d file"));
 
 
     return 0;
@@ -410,3 +433,4 @@ int format_double(double value, char *buf)
     G_trim_decimal(buf);
     return 0;
 }
+
