@@ -35,6 +35,7 @@ SUBDIRS = \
 	r.in.mat \
 	r.in.poly \
 	r.kappa \
+	r.lake \
 	r.le \
 	r.los \
 	r.mapcalc \
