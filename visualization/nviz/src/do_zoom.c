@@ -7,13 +7,10 @@
 
 /* gsf includes */
 
-#ifndef WIN32
-#define X11
-#endif
-
 #define USE_GL_NORMALIZE
 
 #include <grass/config.h>
+
 /* Nvision includes */
 #include "interface.h"
 
@@ -22,7 +19,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef X11
+#ifdef USE_X11
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <GL/glx.h>
@@ -37,9 +34,9 @@ static GLXPbuffer pbuffer;
 Pixmap pixmap;
 static GLXPixmap glxpixmap;
 #endif
-#endif /*X11 */
+#endif /*USE_X11 */
 
-void swap_togl();
+extern void swap_togl(void);
 
 /**********************************************/
 int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
@@ -58,7 +55,7 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
     double aspect;
     char pref[64], filename[1024], cmd[1024], cmd2[1024];
     char inform_text[128];
-#if defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS)
+#if defined(USE_X11) && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS))
     int os_w ;
     int os_h ;
 #endif
@@ -77,7 +74,7 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
     aspect = (double) (c_orig-a_orig)/(d_orig-b_orig);
 
 /* create off-screen context if possible */
-#if defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS)
+#if defined(USE_X11) && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS))
     os_w = atoi(argv[2]);
     os_h = atoi(argv[3]);
 
@@ -197,7 +194,7 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
 
     GS_set_viewport(a_orig, c_orig, b_orig, d_orig);
 
-#if defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS)
+#if defined(USE_X11) && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS))
     Destroy_OS_Ctx();
 #endif
 
@@ -213,6 +210,7 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
 *********************************************/
 void swap_os(void)
 {
+#if defined(USE_X11)
 #ifdef HAVE_PBUFFERS
     if (pbuffer)
     {
@@ -224,6 +222,7 @@ void swap_os(void)
     if (glxpixmap)
 	glXSwapBuffers(dpy, glxpixmap);
 #endif
+#endif
 }
 
 /********************************************
@@ -231,7 +230,7 @@ void swap_os(void)
 ********************************************/
 int Create_OS_Ctx(int width, int height)
 {
-#ifdef X11
+#ifdef USE_X11
     int scr;
 
 #ifdef HAVE_PBUFFERS
@@ -347,7 +346,7 @@ int Create_OS_Ctx(int width, int height)
 
     fprintf(stderr, "It appears that X is not available!\n");
     return (-1);
-#endif /* X11 */
+#endif /* USE_X11 */
 }
 
 
@@ -356,8 +355,7 @@ int Create_OS_Ctx(int width, int height)
 *****************************************************/
 int Destroy_OS_Ctx(void)
 {
-#ifdef X11
-
+#ifdef USE_X11
 #ifdef HAVE_PBUFFERS
     if (pbuffer)
     {
@@ -385,9 +383,7 @@ int Destroy_OS_Ctx(void)
     }
 
 #endif
-    return (1);
-
-#endif /* X11 */
+#endif /* USE_X11 */
     return (1);
 }
 
