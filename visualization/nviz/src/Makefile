@@ -11,7 +11,11 @@ include $(MODULE_TOPDIR)/include/Make/Rules.make
 # These should be set by the doconfigure script
 NVWISH_VER=NVWISH2.2
 
-OGL_LIBS = $(OPENGLULIB) $(OPENGLLIB) $(OPENGL32) $(XLIB) -lXmu -lXext $(MATHLIB) $(DLLIB) $(XDRLIB) $(XEXTRALIBS) $(XLIBPATH)
+ifeq ($(USE_X11),1)
+OGL_LIBS := $(OPENGLULIB) $(OPENGLLIB) $(XLIBPATH) $(XLIB) -lXmu -lXext $(XEXTRALIBS) $(MATHLIB)
+else
+OGL_LIBS := $(OPENGLULIB) $(OPENGLLIB) $(MATHLIB)
+endif
 
 SURFLIB = $(OGSFLIB)
 
@@ -20,15 +24,14 @@ SURFLIB = $(OGSFLIB)
 # DSPINC = -I$(LIBDIR)/libes/dspf
 
 EXTRA_INC = $(VECT_INC)
-EXTRA_CFLAGS= ${XCFLAGS} ${TCLINCDIR} ${TKINCDIR} \
+EXTRA_CFLAGS= $(XCFLAGS) $(TCLINCDIR) $(TKINCDIR) \
 	$(INC) \
 	$(TIFFINCPATH) $(FFMPEGINCPATH) $(DSPINC) \
-	$(VECT_CFLAGS)
-
+	$(VECT_CFLAGS) -DUSE_X11=$(USE_X11)
 
 IMGLIB= $(IMAGELIB)
 
-XTRA_LDFLAGS=$(DFLAGS) $(TCLTKLIBPATH) $(TCLTKLIBS) $(OGL_LIBS)
+XTRA_LDFLAGS=$(TCLTKLIBPATH) $(TCLTKLIBS) $(OGL_LIBS)
 
 OBJS = nvizAppInit.o change_view.o draw.o exag.o glwrappers.o \
 	init_commands.o lights.o map_obj.o misc.o nviz_init.o \
@@ -44,7 +47,7 @@ OBJS = nvizAppInit.o change_view.o draw.o exag.o glwrappers.o \
 
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj)) 
 
-PGM=nviz
+PGM = nviz
 
 default: $(BIN)/$(PGM) htmlcmd
 
