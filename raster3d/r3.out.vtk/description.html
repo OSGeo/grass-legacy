@@ -7,8 +7,9 @@ If <I>output</I> is not specified then <B>stdout</B> is used.
 The module is sensitive to region settings (set with g.region).
 
 <H2>NOTES</H2>
-This filter generates <I>structured points</I> with <I>celldata</I> (default) or <I>pointdata</I>. 
-If requested a <I>structured grid</I> with a top and bottom surface and <I>pointdata</I> are generated.
+This filter generates <I>structured points</I>  with <I>celldata</I> (default) or <I>pointdata</I>. 
+If top  and bottom surfaces are requested a <I>unstructured grid</I> with <I>celldata</I>  or a <I>structured grid</I> with 
+<I>pointdata</I> is generated.
 This data is put in a simple VTK-ASCII file. Nor XML or 
 binary output are supported. It is possible to choose more then one G3D map
 to be written in the VTK-ASCII file. Each celldata is named like the G3D map it represents.
