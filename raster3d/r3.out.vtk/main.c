@@ -50,7 +50,9 @@ void CloseInputMap(int fd);	/*close the map */
 void CheckInputMaps();		/*Check if all maps are available */
 void writeVTKStructuredPointHeader(FILE * fp, char *vtkFile, G3D_Region region, int dp);	/*write the vtk-header */
 void writeVTKStructuredGridHeader(FILE * fp, char *vtkFile, G3D_Region region);	/*write the vtk-header */
-void writeVTKPoints(FILE * fp, G3D_Region region, int dp);	/*Write the outputdata */
+void writeVTKUnstructuredGridHeader(FILE * fp, char *vtkFile, G3D_Region region);	/*write the vtk-header */
+void writeVTKPoints(FILE * fp, G3D_Region region, int dp, int type);	/*Write the point coordinates of type point (1) or celldata (0) */
+void writeVTKUnstructuredGridCells(FILE * fp, G3D_Region region);	/*Write the uGrid Cells */
 void writeVTKData(FILE * fp, G3D_Region region, char *varname, int dp);	/*Write the outputdata */
 void writeVTKRGBVoxelData(void *map_r, void *map_g, void *map_b, FILE * fp, const char *string, G3D_Region region, int dp);	/*Write the rgb voxel data to the output */
 void writeVTKVectorData(void *map_x, void *map_y, void *map_z, FILE * fp, const char *string, G3D_Region region, int dp);	/*Write the vector data to the output */
@@ -127,8 +129,7 @@ void setParams()
     param.bottom->required = NO;
     param.bottom->gisprompt = "old,cell,raster";
     param.bottom->multiple = NO;
-    param.bottom->description =
-	_("bottom surface 2D raster map");
+    param.bottom->description = _("bottom surface 2D raster map");
 
     param.output = G_define_option();
     param.output->key = "output";
@@ -387,9 +388,9 @@ void OpenWriteRGBMaps(G3D_Region region, FILE * fp, int dp)
 void OpenWriteVectorMaps(G3D_Region region, FILE * fp, int dp)
 {
     int i, changemask[3] = { 0, 0, 0 };
-    void *map_x = NULL;		/*The 3D Rastermap Red */
-    void *map_y = NULL;		/*The 3D Rastermap Green */
-    void *map_z = NULL;		/*The 3D Rastermap Blue */
+    void *map_x = NULL;		/*The 3D Rastermap x-direction */
+    void *map_y = NULL;		/*The 3D Rastermap y-direction */
+    void *map_z = NULL;		/*The 3D Rastermap z-direction */
     void *mapvect = NULL;
 
     if (param.vectormaps->answers != NULL) {
@@ -518,7 +519,7 @@ void writeVTKStructuredPointHeader(FILE * fp, char *vtkFile, G3D_Region region,
 
 
 /* ************************************************************************* */
-/* Writes the strcutured grid Header **************************************** */
+/* Writes the strcutured grid header **************************************** */
 /* ************************************************************************* */
 void writeVTKStructuredGridHeader(FILE * fp, char *vtkFile, G3D_Region region)
 {
@@ -537,11 +538,29 @@ void writeVTKStructuredGridHeader(FILE * fp, char *vtkFile, G3D_Region region)
     return;
 }
 
+/* ************************************************************************* */
+/* Writes the unstrcutured grid header ************************************* */
+/* ************************************************************************* */
+void writeVTKUnstructuredGridHeader(FILE * fp, char *vtkFile, G3D_Region region)
+{
+    G_debug(3,
+	    _
+	    ("writeVTKUnstructuredGridHeader: Writing VTKUnstructuredGrid-Header"));
+    fprintf(fp, "# vtk DataFile Version 3.0\n");
+    fprintf(fp, "GRASS 6 Export\n");
+    fprintf(fp, "ASCII\n");
+    fprintf(fp, "DATASET UNSTRUCTURED_GRID\n");	/*We are using the unstructured grid dataset. */
+    /*Only cell data is available, because we creating a hexaeder/vtk-voxel for every voxel */
+    fprintf(fp, "POINTS %i float\n", region.cols * region.rows * region.depths * 8);	/*a Voxel has 8 points */
+
+    return;
+}
+
 
 /* ************************************************************************* */
 /* This function writes the point coordinates ****************************** */
 /* ************************************************************************* */
-void writeVTKPoints(FILE * fp, G3D_Region region, int dp)
+void writeVTKPoints(FILE * fp, G3D_Region region, int dp, int type)
 {
     int x, y, z, status = 0;
     int rows, cols, depths;
@@ -551,6 +570,7 @@ void writeVTKPoints(FILE * fp, G3D_Region region, int dp)
     void *ptr_bottom = NULL;
     double topval = 0, bottomval = 0;
     double zcoor, ycoor, xcoor;
+    double zcoor1, ycoor1, xcoor1;
     double scale;
 
     scale = atof(param.elevscale->answer);
@@ -630,29 +650,157 @@ void writeVTKPoints(FILE * fp, G3D_Region region, int dp)
 			bottomval = *(DCELL *) ptr_bottom;
 		    }
 		}
-		/*Calculate the coordinates */
-		xcoor = region.west + (region.ew_res / 2 + region.ew_res * (x));
-		ycoor =
-		    region.north - (region.ns_res / 2 + region.ns_res * (y));
-		zcoor =
-		    (bottomval +
-		     z * (topval - bottomval) / (depths - 1)) * scale;
 
-		fprintf(fp, "%.*f ", dp, xcoor);
-		fprintf(fp, "%.*f ", dp, ycoor);
-		fprintf(fp, "%.*f\n", dp, zcoor);
+		if (type == 1) {	/*Structured Grid */
+		    /*Calculate the coordinates */
+		    xcoor =
+			region.west + (region.ew_res / 2 + region.ew_res * (x));
+		    ycoor =
+			region.north - (region.ns_res / 2 +
+					region.ns_res * (y));
+		    zcoor =
+			(bottomval +
+			 z * (topval - bottomval) / (depths - 1)) * scale;
+
+		    fprintf(fp, "%.*f ", dp, xcoor);
+		    fprintf(fp, "%.*f ", dp, ycoor);
+		    fprintf(fp, "%.*f\n", dp, zcoor);
+		}
+		else {		/*Unstructured Grid */
+		    /*Write for every cell the coordinates for a hexahedron -> 8 points */
+		    /*VTK Hexaeder */
+		    /* bottom
+		     * 2 --- 3
+		     * |     |
+		     * 0 --- 1
+		     
+		     * top
+		     * 6 --- 7
+		     * |     |
+		     * 4 --- 5
+		     
+		     */
+		    xcoor = region.west + (region.ew_res * (x));	/*0, 3, 4, 7 */
+		    ycoor = region.north - (region.ns_res * (y));	/*2, 3, 6, 7 */
+		    zcoor = (bottomval + z * (topval - bottomval) / (depths)) * scale;	/*0, 1, 2, 3 */
+
+		    xcoor1 = region.west + (region.ew_res + region.ew_res * (x));	/*1, 2, 5, 6 */
+		    ycoor1 = region.north - (region.ns_res + region.ns_res * (y));	/*0, 1, 4, 5 */
+		    zcoor1 = (bottomval + z * (topval - bottomval) / (depths) + (topval - bottomval) / (depths)) * scale;	/*4, 5, ,6 ,7 */
+		    /*0 */
+		    fprintf(fp, "%.*f ", dp, xcoor);
+		    fprintf(fp, "%.*f ", dp, ycoor1);
+		    fprintf(fp, "%.*f\n", dp, zcoor);
+		    /*1 */
+		    fprintf(fp, "%.*f ", dp, xcoor1);
+		    fprintf(fp, "%.*f ", dp, ycoor1);
+		    fprintf(fp, "%.*f\n", dp, zcoor);
+		    /*2 */
+		    fprintf(fp, "%.*f ", dp, xcoor1);
+		    fprintf(fp, "%.*f ", dp, ycoor);
+		    fprintf(fp, "%.*f\n", dp, zcoor);
+		    /*3 */
+		    fprintf(fp, "%.*f ", dp, xcoor);
+		    fprintf(fp, "%.*f ", dp, ycoor);
+		    fprintf(fp, "%.*f\n", dp, zcoor);
+
+		    /*4 */
+		    fprintf(fp, "%.*f ", dp, xcoor);
+		    fprintf(fp, "%.*f ", dp, ycoor1);
+		    fprintf(fp, "%.*f\n", dp, zcoor1);
+		    /*5 */
+		    fprintf(fp, "%.*f ", dp, xcoor1);
+		    fprintf(fp, "%.*f ", dp, ycoor1);
+		    fprintf(fp, "%.*f\n", dp, zcoor1);
+		    /*6 */
+		    fprintf(fp, "%.*f ", dp, xcoor1);
+		    fprintf(fp, "%.*f ", dp, ycoor);
+		    fprintf(fp, "%.*f\n", dp, zcoor1);
+		    /*7 */
+		    fprintf(fp, "%.*f ", dp, xcoor);
+		    fprintf(fp, "%.*f ", dp, ycoor);
+		    fprintf(fp, "%.*f\n", dp, zcoor1);
+		}
 	    }
 	}
     }
 
-    fprintf(fp, "POINT_DATA %i\n", region.cols * region.rows * region.depths);	/*We have pointdata */
+    if (type == 1)
+	fprintf(fp, "POINT_DATA %i\n", region.cols * region.rows * region.depths);	/*We have pointdata */
+
+    return;
+}
+
+/* ************************************************************************* */
+/* This function writes the cell for the unstructured grid ***************** */
+/* ************************************************************************* */
+void writeVTKUnstructuredGridCells(FILE * fp, G3D_Region region)
+{
+    int x, y, z, status;
+    int rows, cols, depths, count;
+
+    rows = region.rows;
+    cols = region.cols;
+    depths = region.depths;
+
+    G_debug(3, _("writeVTKUnstructuredGridCells: Writing the cells"));
+    
+    fprintf(fp, "CELLS %i %i\n", region.cols * region.rows * region.depths,
+	    region.cols * region.rows * region.depths * 9);
+
+    count = 0;
+    status = 0;
+
+    /*The point - cell links */
+    for (z = 0; z < depths; z++) {
+	for (y = 0; y < rows; y++) {
+	    G_percent(status, (rows * depths - 1), 10);
+	    status++;
+
+	    for (x = 0; x < cols; x++) {
+		/*Voxel */
+		fprintf(fp, "%i %i %i %i %i %i %i %i %i\n", 8,
+			count * 8, count * 8 + 1, count * 8 + 3, count * 8 + 2,
+			count * 8 + 4, count * 8 + 5, count * 8 + 7,
+			count * 8 + 6);
+
+		/*Hexaeder 
+		fprintf(fp, "%i %i %i %i %i %i %i %i %i\n", 8,
+		      count * 8, count * 8 + 1, count * 8 + 2, count * 8 + 3,
+		      count * 8 + 4, count * 8 + 5, count * 8 + 6,
+		      count * 8 + 7);
+		*/
+		count++;
+	    }
+	}
+    }
+    status = 0;
+
+    fprintf(fp, "CELL_TYPES %i\n", region.cols * region.rows * region.depths);
+    /*the cell types */
+    for (z = 0; z < depths; z++) {
+	for (y = 0; y < rows; y++) {
+	    G_percent(status, (rows * depths - 1), 10);
+	    status++;
+
+	    for (x = 0; x < cols; x++) {
+		/*Voxel */
+		fprintf(fp, "11\n");
+		/*Hexaeder 
+		fprintf(fp, "12\n");
+		*/
+	    }
+	}
+    }
+
+    fprintf(fp, "CELL_DATA %i\n", region.cols * region.rows * region.depths);	/*We have celldata  */
 
     return;
 }
 
 
 /* ************************************************************************* */
-/* Wwrite the VTK Cell or point data *************************************** */
+/* Write the VTK Cell or point data **************************************** */
 /* ************************************************************************* */
 void writeVTKData(FILE * fp, G3D_Region region, char *varname, int dp)
 {
@@ -1078,8 +1226,15 @@ int main(int argc, char *argv[])
 	bottomMapType = G_raster_map_type(name, mapset);
 
 	/* Write the vtk-header and the points */
-	writeVTKStructuredGridHeader(fp, output, region);
-	writeVTKPoints(fp, region, dp);
+	if (param.point->answer) {
+	    writeVTKStructuredGridHeader(fp, output, region);
+	    writeVTKPoints(fp, region, dp, 1);
+	}
+	else {
+	    writeVTKUnstructuredGridHeader(fp, output, region);
+	    writeVTKPoints(fp, region, dp, 0);
+	    writeVTKUnstructuredGridCells(fp, region);
+	}
 
 	/*Close top and bottom maps */
 	CloseInputMap(top);
