@@ -226,14 +226,14 @@ int main(int argc, char *argv[])
     parm.devi->key = "devi";
     parm.devi->type = TYPE_STRING;
     parm.devi->required = NO;
-    parm.devi->gisprompt = "new,dig,vector";
+    parm.devi->gisprompt = "new,vector,vector";
     parm.devi->description = _("Output deviations vector point file");
 
     parm.cvdev = G_define_option ();
     parm.cvdev->key = "cvdev";
     parm.cvdev->type = TYPE_STRING;
     parm.cvdev->required = NO;
-    parm.cvdev->gisprompt = "new,dig,vector";
+    parm.cvdev->gisprompt = "new,vector,vector";
     parm.cvdev->description = _("Output cross-validation errors vector point file");
 
     parm.elev = G_define_option();

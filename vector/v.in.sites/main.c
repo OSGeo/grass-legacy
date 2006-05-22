@@ -68,7 +68,7 @@ int main (int argc, char *argv[])
     outvect->type         = TYPE_STRING;
     outvect->required     = YES;
     outvect->multiple     = NO;
-    outvect->gisprompt    = "new,dig,vector";
+    outvect->gisprompt    = "new,vector,vector";
 
     if (G_parser(argc, argv)) exit(EXIT_FAILURE);
 
