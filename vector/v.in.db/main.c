@@ -101,7 +101,7 @@ main (int argc, char *argv[])
     outvect->type         = TYPE_STRING;
     outvect->required     = YES;
     outvect->multiple     = NO;
-    outvect->gisprompt    = "new,dig,vector";
+    outvect->gisprompt    = "new,vector,vector";
     outvect->description  = _("Name of vector output file");
 
     if (G_parser(argc, argv)) exit(EXIT_FAILURE);
@@ -132,8 +132,12 @@ main (int argc, char *argv[])
     }
 
     /* check if target table already exists */
-    if( db_table_exists ( driver_opt->answer, database_opt->answer, outvect->answer) == 1 )
-        G_fatal_error(_("Output vector table <%s> already exists"), outvect->answer);
+    G_debug(3, "Output vector table <%s>, driver: <%s>, database: <%s>", 
+                outvect->answer, db_get_default_driver_name(), db_get_default_database_name());
+    if( db_table_exists ( db_get_default_driver_name(), 
+        db_get_default_database_name(), outvect->answer) == 1 )
+           G_fatal_error(_("Output vector table <%s> (driver: <%s>, database: <%s>) already exists"),
+           outvect->answer, db_get_default_driver_name(), db_get_default_database_name());
 
     /* Open select cursor */
     buf = G_malloc(strlen(keycol_opt->answer) + strlen(xcol_opt->answer) + strlen(ycol_opt->answer) + 12);
