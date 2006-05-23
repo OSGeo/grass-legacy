@@ -114,8 +114,16 @@ db_start_driver (char *name)
 #ifdef __MINGW32__
     /* create pipes (0 in array for reading, 1 for writing) */
     /* p1 : module -> driver, p2 driver -> module */
-    if( _pipe(p1, 512, _O_BINARY) == -1 ||
-        _pipe(p2, 512, _O_BINARY) == -1 ) 
+
+    /* I have seen problems with pipes on NT 5.1 probably related
+     * to buffer size (psize, originaly 512 bytes). 
+     * But I am not sure, some problems were fixed by bigger 
+     * buffer but others remain. 
+     * Simple test which failed on NT 5.1 worked on NT 5.2 
+     * But there are probably other factors. 
+     */
+    if( _pipe(p1, 250000, _O_BINARY) == -1 ||
+        _pipe(p2, 250000, _O_BINARY) == -1 ) 
     {
         db_syserror ("can't open any pipes");
 	return (dbDriver *) NULL;
@@ -125,6 +133,9 @@ db_start_driver (char *name)
     driver->send = fdopen (p1[WRITE], "wb");
     driver->recv = fdopen (p2[READ],  "rb");
 
+    fflush (stdout);
+    fflush (stderr);
+
     /* Set pipes for stdin/stdout driver */
     if ( (stdin_orig  = _dup(_fileno(stdin ))) == -1  ||
          (stdout_orig = _dup(_fileno(stdout))) == -1 ) 
@@ -133,8 +144,6 @@ db_start_driver (char *name)
 	return (dbDriver *) NULL;
     }
 
-    fflush (stdout);
-    fflush (stderr);
     if ( _dup2(p1[0], _fileno(stdin)) != 0 ||
          _dup2(p2[1], _fileno(stdout)) != 0 ) 
     {
