@@ -58,7 +58,7 @@ db_driver (int argc,
  
      { 
          int err_count = 0;
-         int cfd = 2;
+         int cfd = 3;
         
          while ( 1 ) 
          {
