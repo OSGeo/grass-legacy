@@ -829,10 +829,10 @@ int Ndraw_all_together_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
                 fringe_nw = Tcl_GetVar(interp, "fringe_nw", TCL_GLOBAL_ONLY);
                 fringe_se = Tcl_GetVar(interp, "fringe_se", TCL_GLOBAL_ONLY);
                 fringe_sw = Tcl_GetVar(interp, "fringe_sw", TCL_GLOBAL_ONLY);
-                flags[0] = atoi(fringe_ne);
-                flags[1] = atoi(fringe_nw);
-                flags[2] = atoi(fringe_se);
-                flags[3] = atoi(fringe_sw);
+                flags[0] = atoi(fringe_nw);
+                flags[1] = atoi(fringe_ne);
+                flags[2] = atoi(fringe_sw);
+                flags[3] = atoi(fringe_se);
                 surf_id = Tcl_GetVar2(interp, "Nv_", "CurrSurf", TCL_GLOBAL_ONLY);
                 id = atoi(surf_id);
 
