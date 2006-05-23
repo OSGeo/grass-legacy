@@ -370,6 +370,7 @@ proc GmProfile::pdraw {} {
     variable profilelist
 	
 	$pcan delete all
+	set profilelist ""
 	
 	# calculate screen length and width
 	set w [winfo width $pcan]
@@ -444,8 +445,6 @@ proc GmProfile::pdraw {} {
 		$pcan create line $profilelist -fill blue
 	}
 	
-	return
-
 }
 ###############################################################################
 # erase profile and clear transects
@@ -471,12 +470,16 @@ proc GmProfile::perase { mapcan } {
 	set pcoordslist ""
 	set profilelist ""
 	set first 1
-	unset linex1
-	unset liney1
-
-
+	if { [info exists linex1] } {
+		unset linex1
+	}
+	if { [info exists liney1] } {
+		unset liney1
+	}
+	
 }
 
+###############################################################################
 
 proc GmProfile::cleanup { destroywin mapcan } {
 	# cleanup procedures on closing profile window	
@@ -509,8 +512,6 @@ proc GmProfile::cleanup { destroywin mapcan } {
 	$mapcan delete transect
 	$mapcan delete tottransect
 	MapCanvas::restorecursor $mon
-
-return
 
 }
 
