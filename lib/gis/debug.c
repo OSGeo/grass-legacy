@@ -59,6 +59,7 @@ int G_debug (int level, char *msg,...)
 	fprintf (fd, "D%d/%d: ", level, grass_debug_level);
 	vfprintf (fd, msg, ap);
 	fprintf (fd, "\n");
+        fflush (fd);
 	
 	if ( filen != NULL ) fclose ( fd );
 	
