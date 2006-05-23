@@ -29,10 +29,10 @@ proc mkscalePanel { BASE } {
     global Nv_
     global n_arrow_size n_arrow
 
-    set panel [St_create {window name size priority} $BASE "Scale" 2 5]
+    set panel [St_create {window name size priority} $BASE "Decorations" 2 5]
     frame $BASE -relief groove -borderwidth 2
-    Nv_mkPanelname $BASE "Scale Panel"
-    
+    Nv_mkPanelname $BASE "Scale and Decorations Panel"
+
     ##########################################################################
     # This section contains widgets for placing a scale object
     frame $BASE.place_scale -relief groove -bd 5
@@ -67,7 +67,7 @@ proc mkscalePanel { BASE } {
     frame $BASE.draw_ruler -relief groove -bd 5
     set rbase $BASE.draw_ruler
 
-    button $rbase.draw -text "Draw Ruler" -command "draw_fringe"
+    button $rbase.draw -text "Draw Fringe" -command "draw_fringe"
 
     frame $rbase.where
     frame $rbase.where.top
