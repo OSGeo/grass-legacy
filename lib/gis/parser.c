@@ -809,11 +809,6 @@ int G_usage (void)
 		item[n] = 0;
 		len=show(item,len);
 	}
-	if (new_prompt)
-	{
-		strcpy (item, " [--o]");
-		len=show(item,len);
-	}
 
 	maxlen = 0;
 	if(n_opts)
@@ -851,6 +846,12 @@ int G_usage (void)
 			opt = opt->next_opt ;
 		}
 	}
+	if (new_prompt)
+	{
+		strcpy (item, " [--overwrite]");
+		len=show(item,len);
+	}
+
 	fprintf (stderr, "\n");
 
 	/* Print help info for flags */
@@ -1203,12 +1204,6 @@ static void G_usage_html (void)
 	else
 	  fprintf(stdout, " ");
 
-	if (new_prompt)
-	{
-		fprintf(stdout, " [--<b>o</b>] ");
-	}
-
-	/* print short version first */
 	if(n_opts)
 	{
 		opt= &first_option;
@@ -1245,8 +1240,13 @@ static void G_usage_html (void)
 			opt = opt->next_opt ;
 			fprintf(stdout," ");
 		}
-		fprintf(stdout, "\n");
 	}
+	if (new_prompt)
+	{
+		fprintf(stdout, " [--<b>overwrite</b>] ");
+	}
+	fprintf(stdout, "\n");
+
 
 	/* now long version */
 	fprintf(stdout, "\n");
@@ -1276,7 +1276,7 @@ static void G_usage_html (void)
 		}
 		if (new_prompt)
 		{
-			fprintf(stdout, "<DT><b>--o</b></DT>\n");
+			fprintf(stdout, "<DT><b>--overwrite</b></DT>\n");
 			fprintf(stdout, "<DD>Force overwrite of output files</DD>");
 		}
 		fprintf(stdout, "</DL>\n");
