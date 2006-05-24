@@ -263,3 +263,96 @@ static int pstrcmp(const void *s1, const void *s2)
 {
     return strcmp(*(char **)s1, *(char **)s2);
 }
+
+/*!
+ * \brief List specified type of elements. Application must release
+          the allocated memory.
+ * \param element Element type (G_ELEMENT_RASTER, G_ELEMENT_VECTOR, 
+                                G_ELEMENT_REGION )
+ * \param gisbase Path to GISBASE
+ * \param location Location name
+ * \param mapset Mapset name
+ * \return Zero terminated array of element names
+ */
+char **G_list(int element, const char *gisbase, const char *location, const char* mapset)
+{
+    char *el;
+    char *buf;
+    DIR *dirp;
+    struct dirent *dp;
+    int count;
+    char **list;
+    
+    switch ( element )
+    {
+        case G_ELEMENT_RASTER:
+            el = "cell";
+            break;
+
+        case G_ELEMENT_GROUP:
+            el = "group";
+            break;
+
+        case G_ELEMENT_VECTOR:
+            el = "vector";
+            break;
+
+        case G_ELEMENT_REGION:
+            el = "window";
+            break;
+
+        default:
+            G_fatal_error ("G_list: Unknown element type." );
+    }			
+	
+    buf = (char *) G_malloc ( strlen(gisbase) + strlen(location)
+                              + strlen(mapset) + strlen(el) + 4 );
+
+    sprintf ( buf, "%s/%s/%s/%s", gisbase, location, mapset, el );
+
+    dirp = opendir(buf);
+    G_free ( buf );		
+
+    if ( dirp == NULL ) /* this can happen if element does not exist */
+    {
+        list = (char **) G_calloc ( 1, sizeof(char *) );
+        return list;
+    }
+
+    count = 0;
+    while((dp = readdir(dirp)) != NULL)
+    {
+	if (dp->d_name[0] == '.') continue;
+        count++;
+    }
+    rewinddir(dirp);
+
+    list = (char **) G_calloc ( count+1, sizeof(char *) );
+    
+    count = 0;
+    while ((dp = readdir(dirp)) != NULL)
+    {
+        if (dp->d_name[0] == '.') continue;
+
+        list[count] = (char *) G_malloc( strlen(dp->d_name)+1 );
+        strcpy ( list[count], dp->d_name );
+        count++;
+    }
+    closedir(dirp);
+
+    return list;
+}
+
+void G_free_list(char **list)
+{
+    int i = 0;
+
+    if ( !list ) return;
+   
+    while ( list[i] )
+    {
+        G_free (list[i]);
+        i++;
+    }
+    G_free (list);
+}

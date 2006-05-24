@@ -667,6 +667,11 @@ int G_intersect_line_segments(double, double, double, double, double, double,
 /* intr_char.c */
 char G_intr_char(void);
 
+/* is.c */
+int G_is_gisbase (const char *);
+int G_is_location (const char *);
+int G_is_mapset (const char *);
+
 /* key_value1.c */
 struct Key_Value *G_create_key_value(void);
 int G_set_key_value(const char *, const char *, struct Key_Value *);
@@ -697,6 +702,8 @@ double G_distance2_point_to_line(double, double, double, double, double,
 /* list.c */
 int G_set_list_hit_return(int);
 int G_list_element(char *, char *, char *, int (*)());
+char **G_list(int, const char *, const char *, const char*);
+void G_free_list(char **);
 
 /* ll_format.c */
 int G_lat_format(double, char *);

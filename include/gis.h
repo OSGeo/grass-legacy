@@ -151,6 +151,14 @@ typedef enum {
 #define GR_FATAL_PRINT   1
 #define GR_FATAL_RETURN  2
 
+/* Element types */
+enum {            /* Dir */
+    G_ELEMENT_RASTER = 1, /* cell */
+    G_ELEMENT_VECTOR = 2, /* vector */ 
+    G_ELEMENT_GROUP  = 3, /* group */ 
+    G_ELEMENT_REGION = 4  /* window */
+};
+
 /*=========================== Typedefs/Structures ==========================*/
 
 typedef int CELL;
