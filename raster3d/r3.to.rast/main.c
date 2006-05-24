@@ -28,6 +28,7 @@ typedef struct
 {
     struct Option *input, *output;
     struct Flag *mask;
+    struct Flag *res;		/*If set, use the same resolution as the input map */
 } paramType;
 
 paramType param;		/*Parameters */
@@ -89,6 +90,13 @@ void setParams()
     param.mask = G_define_flag();
     param.mask->key = 'm';
     param.mask->description = _("Use G3D mask (if exists) with input map");
+
+    param.res = G_define_flag();
+    param.res->key = 'r';
+    param.res->description =
+	_
+	("Use the same resolution as the input G3D map for the 2d output maps, independently from the current region settings.");
+
 }
 
 
@@ -175,7 +183,7 @@ void G3dToRaster(void *map, G3D_Region region, int *fd)
 int main(int argc, char *argv[])
 {
     G3D_Region region;
-    struct Cell_head window2d;
+    struct Cell_head region2d;
     struct GModule *module;
     void *map = NULL;		/*The 3D Rastermap */
     int i = 0, changemask = 0;
@@ -206,34 +214,62 @@ int main(int argc, char *argv[])
 	G3d_fatalError(_("Requested g3d map <%s> not found"),
 		       param.input->answer);
 
-    /* Figure out the region from the map */
+    /*Set the defaults */
     G3d_initDefaults();
-    G3d_getWindow(&region);
 
-    /*Check if the g3d-region is equal to the 2d rows and cols */
-    rows = G_window_rows();
-    cols = G_window_cols();
+    /*Set the resolution of the output maps */
+    if (param.res->answer) {
 
-    /*If not equal, set the 3D window correct */
-    if (rows != region.rows || cols != region.cols) {
-	G_message
-	    ("The 2d and 3d region settings are different. I will use the 2d window settings to adjust the 2d part of the 3d region.");
-	G_get_set_window(&window2d);
-	region.ns_res = window2d.ns_res;
-	region.ew_res = window2d.ew_res;
-	region.rows = window2d.rows;
-	region.cols = window2d.cols;
-	G3d_setWindow(&region);
+	/*Open the map with default region */
+	map = G3d_openCellOld(param.input->answer,
+			      G_find_grid3(param.input->answer, ""),
+			      G3D_DEFAULT_WINDOW, G3D_TILE_SAME_AS_FILE,
+			      G3D_USE_CACHE_DEFAULT);
+	if (map == NULL)
+	    G3d_fatalError(_("Error opening g3d map <%s>"),
+			   param.input->answer);
+
+
+	/*Get the region of the map */
+	G3d_getRegionStructMap(map, &region);
+	/*set this region as current 3d window for map */
+	G3d_setWindowMap(map, &region);
+	/*Set the 2d region appropriate */
+	G3d_extract2dRegion(&region, &region2d);
+	/*Make the new 2d region the default */
+	G_set_window(&region2d);
+
     }
+    else {
+	/* Figure out the region from the map */
+	G3d_getWindow(&region);
 
-    /*Open the g3d map */
-    map = G3d_openCellOld(param.input->answer,
-			  G_find_grid3(param.input->answer, ""),
-			  &region, G3D_TILE_SAME_AS_FILE,
-			  G3D_USE_CACHE_DEFAULT);
+	/*Check if the g3d-region is equal to the 2d rows and cols */
+	rows = G_window_rows();
+	cols = G_window_cols();
 
-    if (map == NULL)
-	G3d_fatalError(_("Error opening g3d map <%s>"), param.input->answer);
+	/*If not equal, set the 3D window correct */
+	if (rows != region.rows || cols != region.cols) {
+	    G_message
+		("The 2d and 3d region settings are different. I will use the 2d window settings to adjust the 2d part of the 3d region.");
+	    G_get_set_window(&region2d);
+	    region.ns_res = region2d.ns_res;
+	    region.ew_res = region2d.ew_res;
+	    region.rows = region2d.rows;
+	    region.cols = region2d.cols;
+	    G3d_setWindow(&region);
+	}
+
+	/*Open the g3d map */
+	map = G3d_openCellOld(param.input->answer,
+			      G_find_grid3(param.input->answer, ""),
+			      &region, G3D_TILE_SAME_AS_FILE,
+			      G3D_USE_CACHE_DEFAULT);
+
+	if (map == NULL)
+	    G3d_fatalError(_("Error opening g3d map <%s>"),
+			   param.input->answer);
+    }
 
     /*Get the output type */
     output_type = G3d_fileTypeMap(map);
@@ -334,4 +370,3 @@ void close_output_map(int fd)
     if (G_close_cell(fd) < 0)
 	G_fatal_error(_("unable to close output map"));
 }
-
