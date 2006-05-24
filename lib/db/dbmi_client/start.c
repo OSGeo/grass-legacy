@@ -122,6 +122,19 @@ db_start_driver (char *name)
      * Simple test which failed on NT 5.1 worked on NT 5.2 
      * But there are probably other factors. 
      */
+    /* More info about pipes from MSDN:
+       - Anonymous pipes are implemented using a named pipe 
+         with a unique name.
+       - CreatePipe() - nSize :
+                   ... The size is only a suggestion; the system uses 
+                   the value to calculate an appropriate buffering 
+                   mechanism. ...
+         => that that the size specified is not significant 
+       - If the pipe buffer is full before all bytes are written, 
+         WriteFile does not return until another process or thread 
+         uses ReadFile to make more buffer space available.
+         (Which does not seem to be true on NT 5.1)
+    */
     if( _pipe(p1, 250000, _O_BINARY) == -1 ||
         _pipe(p2, 250000, _O_BINARY) == -1 ) 
     {
