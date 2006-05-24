@@ -21,10 +21,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
-#include <grass/glocale.h>
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "sw_defs.h"
 #include "defs.h"
 
@@ -87,7 +87,8 @@ main (int argc, char **argv)
   G_gisinit (argv[0]);
 
   module = G_define_module();
-  module->description = "Create a Voronoi triangulation from an input vector of points or centroids.";
+  module->description = _("Create a Voronoi diagram from an input vector "
+	"map containing points or centroids.");
 
   in_opt = G_define_standard_option(G_OPT_V_INPUT);
   out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
@@ -95,16 +96,16 @@ main (int argc, char **argv)
   /*
   all_flag = G_define_flag ();
   all_flag->key = 'a';
-  all_flag->description = "Use all sites (do not limit to current region)";
+  all_flag->description = _("Use all sites (do not limit to current region)");
   */
 
   line_flag = G_define_flag ();
   line_flag->key = 'l';
-  line_flag->description = "Output triangulation as a graph (lines), not areas";
+  line_flag->description = _("Output tessellation as a graph (lines), not areas");
 
   table_flag = G_define_flag ();
   table_flag->key             = 't';
-  table_flag->description     = "Do not create attribute table.";
+  table_flag->description     = _("Do not create attribute table");
 
   if (G_parser (argc, argv))
     exit (1);
@@ -121,14 +122,14 @@ main (int argc, char **argv)
 
   /* open files */
   if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-      G_fatal_error ( "Could not find input map <%s>\n", in_opt->answer);
+      G_fatal_error(_("Could not find input map <%s>"), in_opt->answer);
   }
 
   Vect_set_open_level (2);
   Vect_open_old (&In, in_opt->answer, mapset);
   
   if (0 > Vect_open_new (&Out, out_opt->answer, 0)) {
-    G_fatal_error ( "Not able to open vector file <%s>\n", out_opt->answer);
+    G_fatal_error(_("Not able to open vector map <%s>"), out_opt->answer);
   }
 
   Vect_hist_copy (&In, &Out);
@@ -279,12 +280,12 @@ main (int argc, char **argv)
 
 	    if ( fields[i] == 0 ) continue;
 	
-	    G_message ( "Layer %d", fields[i] );
+	    G_message ( _("Layer %d"), fields[i] );
 
 	    /* Make a list of categories */
 	    IFi = Vect_get_field ( &In, fields[i] );
 	    if ( !IFi ) { /* no table */
-		G_message ( "No table." );
+		G_message ( _("No table.") );
 		continue;
 	    }
 	    
@@ -300,7 +301,7 @@ main (int argc, char **argv)
 		Vect_map_add_dblink ( &Out, OFi->number, OFi->name, OFi->table, 
 				      IFi->key, OFi->database, OFi->driver);
 	    }
-	    G_message ( "Done." );
+	    G_message ( _("Done.") );
 	}
   }
 	  

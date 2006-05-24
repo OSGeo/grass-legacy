@@ -21,9 +21,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
-#include <grass/glocale.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "sw_defs.h"
 #include "defs.h"
 
@@ -41,18 +41,19 @@ main (int argc, char **argv)
   G_gisinit (argv[0]);
 
   module = G_define_module();
-  module->description = "Create a Delaunay triangulation from an input vector of points or centroids.";
+  module->description = _("Create a Delaunay triangulation from an input "
+	"vector map containing points or centroids.");
 
   in_opt = G_define_standard_option(G_OPT_V_INPUT);
   out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 
   reg_flag = G_define_flag ();
   reg_flag->key = 'r';
-  reg_flag->description = "Use only sites in current region";
+  reg_flag->description = _("Use only sites in current region");
 
   line_flag = G_define_flag ();
   line_flag->key = 'l';
-  line_flag->description = "Output triangulation as a graph (lines), not areas";
+  line_flag->description = _("Output triangulation as a graph (lines), not areas");
 
   if (G_parser (argc, argv))
     exit (1);
@@ -69,14 +70,14 @@ main (int argc, char **argv)
 
   /* open files */
   if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-      G_fatal_error ( "Could not find input map <%s>\n", in_opt->answer);
+      G_fatal_error(_("Could not find input map <%s>"), in_opt->answer);
   }
 
   Vect_set_open_level (2);
   Vect_open_old (&In, in_opt->answer, mapset);
   
   if (0 > Vect_open_new (&Out, out_opt->answer, 0)) {
-    G_fatal_error ( "Not able to open vector file <%s>\n", out_opt->answer);
+    G_fatal_error(_("Not able to open vector map <%s>"), out_opt->answer);
   }
 
   Vect_hist_copy (&In, &Out);
