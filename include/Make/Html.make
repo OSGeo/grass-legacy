@@ -74,7 +74,7 @@ htmlgen:
 		else \
 		    INDEXNAME=`echo $$MODCLASS` ; \
 		fi ; \
-		echo "<P><a href=\"index.html\">Main index</a> - <a href=\"$$INDEXNAME.html\">$$INDEXNAME index</a> - <a href=\"full_index.html\">Full index</a>" >> $(PGM).tmp.html ; \
+		echo "<P><a href=\"index.html\">Main index</a> - <a href=\"$$INDEXNAME.html\">$$INDEXNAME index</a> - <a href=\"full_index.html\">Full index</a></P>" >> $(PGM).tmp.html ; \
 		echo "</body>" >> $(PGM).tmp.html ; \
 		echo "</html>" >> $(PGM).tmp.html ; \
 	fi
