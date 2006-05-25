@@ -906,7 +906,7 @@ int Nsave_3dview_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter
 	else
 	    first_surf = (int) atoi(list_space[0]);
 
-	G_free (list_space);
+	Tcl_Free ((char *) list_space);
     }
 
     /* Finally make the GSF library call */
@@ -953,7 +953,7 @@ int Nload_3dview_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter
 	else
 	    first_surf = (int) atoi(list_space[0]);
 
-	G_free (list_space);
+	Tcl_Free ((char *) list_space);
     }
     /* Finally make the GSF library call */
     GS_load_3dview(argv[1], first_surf);

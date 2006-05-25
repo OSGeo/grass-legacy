@@ -715,7 +715,7 @@ int check_blank(Tcl_Interp * interp, int map_id)
 	}
     }
 
-    G_free ((char *) listArgv);
+    Tcl_Free ((char *) listArgv);
     return rval;
 
 }
