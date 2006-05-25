@@ -81,7 +81,10 @@ htmlgen:
 	-$(MKDIR) $(GISBASE)/docs/html
 	-mv -f $(PGM).tmp.html $(GISBASE)/docs/html/$(PGM).html
 	-for file in  *.png *.jpg ; do \
-		$(INSTALL_DATA) $$file $(GISBASE)/docs/html ; \
+		head -n 1 $$file | grep '^#!' > /dev/null ; \
+		if [ $$? -ne 0 ] ; then \
+		   $(INSTALL_DATA) $$file $(GISBASE)/docs/html ; \
+		fi \
 		done 2> /dev/null ; true
 
 htmldesc = \
