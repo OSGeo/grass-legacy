@@ -403,12 +403,12 @@ int Nadd_key_cmd(Nv_data * data,	/* Local data */
 	else {
 	    sprintf(interp->result, "Error: mask constant %s not understood",
 		    listels[i]);
-	    G_free (listels);
+	    Tcl_Free ((char *) listels);
 	    return (TCL_ERROR);
 	}
     }
 
-    G_free (listels);
+    Tcl_Free ((char *) listels);
 
     /* Call the function */
     GK_add_key((float) pos, fmask, force_replace, (float) precis);
