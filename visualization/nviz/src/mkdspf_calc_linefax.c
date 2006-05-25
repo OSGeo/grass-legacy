@@ -128,7 +128,7 @@ viz_calc_linefax(linefax, args, nargs, interp)
     case 2:			/*isolated thresholds as listed on commandline */
 	for (i = 0; i < linefax->nthres; i++)
 	    linefax->tvalue[i] = (float) atof(thresh_values[i]);
-	G_free (thresh_values);
+	Tcl_Free ((char *) thresh_values);
 	break;
 
     case 3:			/* min and max given on commandline as well as interval */
@@ -147,7 +147,7 @@ viz_calc_linefax(linefax, args, nargs, interp)
 			     "  Min thresh ", list_args[0], "\nInterval ",
 			     list_args[2], "\n", NULL);
 
-	    G_free (list_args);
+	    Tcl_Free ((char *) list_args);
 	}
 
 	if ((datarange / interval) > 126.0) {
