@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <grass/gis.h>
 
 int test_path_file ( const char *path, const char *file )
 {
