@@ -209,7 +209,7 @@ proc MapToolBar::create { tb } {
         -helptext [G_msg "Print raster & vector maps to eps file"]
 
 	set mapsave [menubutton $tb.mapsave  \
-		-image [image create photo -file "$iconpath/file-save.gif"] \
+		-image [image create photo -file "$iconpath/gui-filesave.gif"] \
         -highlightthickness 0 -takefocus 0 -relief flat -borderwidth 1  \
         -highlightbackground $bgcolor -activebackground honeydew \
         -bg $bgcolor -width 32 -indicatoron 0 -direction below]
