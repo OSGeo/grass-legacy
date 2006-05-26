@@ -1,0 +1,46 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.edit</em> allows a user to edit a vector map, if a database connection
+is established v.edit can also be used to edit data stored in the database.
+
+<h2>NOTES</h2>
+Still in development, no thing is added to the database. Only points can be
+added.
+
+<h2>EXAMPLES</h2>
+
+<h3>Insert a new vector point</h3>
+<div class="code"><pre>
+v.edit map=soils type=point action=add args=23.5432:34.45433 sql='name="Survey location #43" depth=34'
+</pre></div>
+
+<h3>Insert a new segmented vector line</h3>
+<div class="code"><pre>
+v.edit map=soils type=line action=add args=23.5432:34.45433,23.4742:34.6543:23.7753:34.5435 sql='type="dried stream" code=453'
+</pre></div>
+
+<h3>Insert a new area with 5 points</h3>
+<div class="code"><pre>
+v.edit map=soils type=area action=add args=23.5432:34.45433,23.4742:34.6543,23.7753:34.5435,23.5532:34.6043,23.4232:34.34322 sql='type="dried stream" code=453'
+</pre></div>
+
+<h3>Delete an object</h3>
+<div class="code"><pre>
+v.edit map=soils action=del cat=343
+</pre></div>
+
+<h3>Merge two adjacent areas</h3>
+<div class="code"><pre>
+v.edit map=soils action=merge cat=343,349
+</pre></div>
+
+<h3>Move a point</h3>
+<div class="code"><pre>
+v.edit map=soils action=move type=point cat=343 args=args=23.5432:34.45433
+</pre></div>
+
+<h2>AUTHOR</h2>
+
+Wolf Bergenheim - independent developer
+
+<p><i>Last changed: $Date$</i>
