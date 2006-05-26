@@ -33,7 +33,7 @@ int attr_edit(struct Map_info *Map, int field, int cat, const char *vals);
 int attr_del(struct Map_info *Map, int field, int cat);
 
 global struct Option *map_opt, *act_opt, *typ_opt, *cat_opt, *pnt_opt, *fld_opt, *val_opt;
-global struct Flag *n_flg;
+global struct Flag *n_flg, *t_flg, *d_flg;
 global struct GModule *module;
 global enum mode action_mode;
 global char *mapset;

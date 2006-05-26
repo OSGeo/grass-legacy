@@ -45,15 +45,16 @@ int add_line(struct Map_info *Map, int type, struct line_pnts *Points,
     Cats = Vect_new_cats_struct();
     if(Cats== NULL)
 	return 0;
-    
-    if(!attr_new(Map, field, cat, val_opt->answer))
-	return 0;
+    if(!d_flg->answer) {
+	if(!attr_new(Map, field, cat, val_opt->answer))
+	    return 0;
 
-    if(Vect_cat_set ( Cats, field, cat ) <=0) {
-	attr_del(Map, field, cat);
-	return 0;
+	if(Vect_cat_set ( Cats, field, cat ) <=0) {
+	    attr_del(Map, field, cat);
+	    return 0;
+	}
     }
-
+    
     if(!Vect_write_line(Map, type, Points, Cats )) {
 	attr_del(Map, field, cat);
 	return 0;
