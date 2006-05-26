@@ -764,10 +764,10 @@ int Ndraw_all_together_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
 		       char **argv	/* Argument strings. */
     )
 {
-	char *buf_surf, *buf_vect, *buf_site, *buf_vol;
-	char *buf_north_arrow, *arrow_x, *buf_label, *buf_legend;
-	char *buf_fringe;
-	char* buf_is_drawing = Tcl_GetVar(interp, "is_drawing", TCL_GLOBAL_ONLY);
+	const char *buf_surf, *buf_vect, *buf_site, *buf_vol;
+	const char *buf_north_arrow, *arrow_x, *buf_label, *buf_legend;
+	const char *buf_fringe;
+	const char* buf_is_drawing = Tcl_GetVar(interp, "is_drawing", TCL_GLOBAL_ONLY);
 	
 	if (buf_is_drawing && atoi(buf_is_drawing))
 		return (TCL_OK);
@@ -804,7 +804,7 @@ int Ndraw_all_together_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
         
 	/* North Arrow */
         if (atoi(buf_north_arrow) == 1 && atoi(arrow_x) != 999 ) {
-                char *arrow_y, *arrow_z, *arrow_len;
+                const char *arrow_y, *arrow_z, *arrow_len;
                 float coords[3], len;
 
                 arrow_y = Tcl_GetVar(interp, "n_arrow_y", TCL_GLOBAL_ONLY);
@@ -821,8 +821,8 @@ int Ndraw_all_together_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
         
         /* fringe */
         if (atoi(buf_fringe) == 1) {
-                char *fringe_ne, *fringe_nw, *fringe_se, *fringe_sw;
-                char *surf_id;
+                const char *fringe_ne, *fringe_nw, *fringe_se, *fringe_sw;
+                const char *surf_id;
                 int flags[4], id;
 
                 fringe_ne = Tcl_GetVar(interp, "fringe_ne", TCL_GLOBAL_ONLY);

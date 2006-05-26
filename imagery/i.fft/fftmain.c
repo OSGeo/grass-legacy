@@ -44,7 +44,7 @@ int main (int argc, char *argv[])
         int save_args(); /* function to stash the command line arguments */
 		struct GModule *module;
         struct Option *op1, *op2, *op3, *op4;
-        char *me;
+        const char *me;
         int maskfd;
 
         G_gisinit(argv[0]);

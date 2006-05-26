@@ -38,7 +38,7 @@ int main( int argc, char *argv[])
         int save_args(); /* function to stash the command line arguments */
 		struct GModule *module;
         struct Option *input_map, *output_map, *width, *threshold, *orientations ;
-        char *me ;
+        const char *me ;
 
         G_gisinit(argv[0]);
         me = G_program_name();

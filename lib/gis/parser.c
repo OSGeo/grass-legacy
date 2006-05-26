@@ -145,7 +145,7 @@ static struct Option *current_option ;
 
 static struct GModule module_info; /* general information on the corresponding module */
 
-static char *pgm_name = NULL;
+static const char *pgm_name = NULL;
 
 struct Item
 {
@@ -158,7 +158,7 @@ static struct Item first_item ;
 static struct Item *current_item ;
 static int n_items = 0 ;
 static int show_options(int ,char *);
-static int show(char *,int);
+static int show(const char *,int);
 static int set_flag (int);
 static int contains (char *,int);
 static int set_option( char *);
@@ -1515,7 +1515,7 @@ static int show_options(int maxlen,char *str)
         return 0;
 }
 
-static int show (char *item, int len)
+static int show (const char *item, int len)
 {
 	int n;
 
@@ -2259,8 +2259,10 @@ static int gis_prompt (struct Option *opt, char *buff)
 
 char *G_recreate_command (void)
 {
+	static char *buff;
 	char flg[4] ;
-	static char *buff, *cur, *tmp;
+	char *cur;
+	const char *tmp;
 	struct Flag *flag ;
 	struct Option *opt ;
 	int n , len, slen;

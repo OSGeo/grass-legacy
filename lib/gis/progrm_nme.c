@@ -1,4 +1,3 @@
-#include <grass/gis.h>
 /**********************************************************************
  *
  *   char *
@@ -15,7 +14,9 @@
  *
  **********************************************************************/
 #include <string.h>
-static char *name = "?" ;
+#include <grass/gis.h>
+
+static const char *name = "?" ;
 
 
 /*!
@@ -28,14 +29,13 @@ static char *name = "?" ;
  *  \return char * 
  */
 
-char *G_program_name()
+const char *G_program_name(void)
 {
     return name;
 }
 
-int G_set_program_name ( char *s)
+int G_set_program_name(const char *s)
 {
-    char *G_store();
     int i;
 
     i = strlen (s);

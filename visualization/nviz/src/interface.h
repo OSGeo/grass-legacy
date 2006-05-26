@@ -229,8 +229,7 @@ int Nset_SDscale_cmd(Nv_data *, Tcl_Interp *, int, char **);
 /* nviz_init.c */
 int Ninit(Tcl_Interp *, Tk_Window);
 int Ninitdata(Tcl_Interp *, Nv_data *);
-int Ngetargs(Tcl_Interp *, char ***);
-int parse_command(Nv_data *, Tcl_Interp *, int, char **);
+int Ngetargs(Tcl_Interp *, const char ***);
 /* position.c */
 int Ninit_view_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nget_to_cmd(Nv_data *, Tcl_Interp *, int, char **);

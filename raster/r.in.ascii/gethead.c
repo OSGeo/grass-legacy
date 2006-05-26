@@ -312,7 +312,6 @@ static int missing (int count, char *label)
 static int error( char *msg)
 {
 	static int first = 1;
-	char *G_program_name();
 
 	if (first)
 	{

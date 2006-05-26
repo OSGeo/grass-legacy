@@ -882,7 +882,7 @@ int Nsave_3dview_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter
 		     char **argv	/* Argument strings. */
     )
 {
-    char **list_space;
+    const char **list_space;
     int list_count, first_surf;
 
     /* Check for correct number of arguments */
@@ -929,7 +929,7 @@ int Nload_3dview_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter
 		     char **argv	/* Argument strings. */
     )
 {
-    char **list_space;
+    const char **list_space;
     int list_count, first_surf;
 
     /* Check for correct number of arguments */

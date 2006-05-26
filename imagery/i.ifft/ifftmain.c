@@ -45,7 +45,7 @@ main (int argc, char *argv[])
         int inv_save_args(); /* function to stash the command line arguments */
         struct Option *op1, *op2, *op3;
         struct GModule *module;
-        char *me;
+        const char *me;
 
         G_gisinit(argv[0]);
         me = G_program_name();

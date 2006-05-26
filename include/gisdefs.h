@@ -605,7 +605,7 @@ char *G_gisdbase(void);
 int G_gishelp(char *, char *);
 
 /* gisinit.c */
-int G_gisinit(char *);
+int G_gisinit(const char *);
 int G_no_gisinit(void);
 int G__check_gisinit(void);
 
@@ -888,8 +888,8 @@ FILE *G_popen(char *, char *);
 int G_pclose(FILE *);
 
 /* progrm_nme.c */
-char *G_program_name(void);
-int G_set_program_name(char *);
+const char *G_program_name(void);
+int G_set_program_name(const char *);
 
 /* proj1.c */
 int G_projection(void);
@@ -1057,7 +1057,7 @@ int G_put_site(FILE *, double, double, char *);
 char *G_squeeze(char *);
 
 /* store.c */
-char *G_store(char *);
+char *G_store(const char *);
 
 /* strings.c */
 char *G_strcpy(char *, const char *);
