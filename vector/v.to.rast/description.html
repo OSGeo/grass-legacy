@@ -1,7 +1,8 @@
 <h2>DESCRIPTION</h2>
 
-<em>v.to.rast</em> transforms GRASS vector map
-layers into GRASS raster map layer format.
+<em>v.to.rast</em> transforms GRASS vector map layers into GRASS raster map
+layer format.
+
 
 <h2>NOTES</h2>
 
@@ -12,11 +13,12 @@ therefore ensure that the current geographic region is
 correctly set and that the region resolution is at the
 desired level.
 <P>
-Either the <em><b>col</b></em> parameter or the <em><b>value</b></em>
-parameter must be specified.  The <em><b>use<b></em> option may be 
-specified alone when using option <em>d</em>.
+Either the <em><b>column</b></em> parameter or the <em><b>value</b></em>
+parameter must be specified.  The <em><b>use</b></em> option may be 
+specified alone when using the <em>dir</em> option.
 <P>
 <em><b>use</b></em> options are:
+<ul>
 <LI>
 <em>attr</em> - read values from attribute table (default)
 <LI>
@@ -26,9 +28,10 @@ specified alone when using option <em>d</em>.
 <LI>
 <em>z</em>    - use z coordinate (points or contours only)
 <LI>
-<em>d</em>    - output as flow direction in degrees (lines only)
+<em>dir</em>  - output as flow direction in degrees (lines only)
+</ul>
 <P>
-The <em><b>col</b></em> parameter uses an existing column from the vector map
+The <em><b>column</b></em> parameter uses an existing column from the vector map
 database table as the category value in the output raster map. Existing table 
 columns can be shown by using <em><a href="db.describe.html">db.describe</a></em>.
 <P>
@@ -37,6 +40,7 @@ been assigned category/attribute labels (e.g., through use of
 <a href="v.category.html">v.category option=add</a>). 
 <P>
 Otherwise:
+<ul>
 <LI>
 Labeled areas and/or centroids will produce filled raster coverages with edges 
 that straddle the original area boundary <b>as long as the boundary is NOT 
@@ -48,6 +52,7 @@ original vector line. This tends to be more aggressive than area-only conversion
 <LI>
 Points and orphaned centroids will be converted into single cells on the
 resultant raster map.
+</ul>
 <P>
 <P>
 <b>Flow directions</b> are given in degree from East, counterclockwise.
@@ -81,7 +86,7 @@ v.to.rast in=streams out=streamsdir use=d
 <em>
 <a HREF="db.describe.html">db.describe</a>,
 <a HREF="v.category.html">v.category</a>
-
+</em>
 <br>
 
 <h2>AUTHORS</h2>
