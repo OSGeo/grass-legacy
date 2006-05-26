@@ -1,0 +1,39 @@
+What is this?
+-------------
+	 This is SWIG based python wrapping for GRASS API
+which allows to call GRASS functions from python programs.
+Currently only a limited set of functions (those needed for
+me) are wrapped.
+
+How to INSTALL?
+---------------
+1. Install SWIG
+
+2. Edit the Makefile
+   - set python version
+
+3. Run make
+
+It will create two files, python_grass6.py and _python_grass6.so.
+
+How to use it?
+--------------
+
+import python_grass6
+GRASS functions will be available in this module.
+Eg: 
+	import python_grass6
+	mapset=python_grass6.G_mapset()
+	print mapset
+
+TODO
+-----
+See TODO in this directory.
+
+AUTHOR
+-----
+
+Sajith VK  sajithvk at gmail.com
+Thu, 9 Mar 2006 16:02:50 +0530
+http://grass.itc.it/pipermail/grass-dev/2006-March/021651.html
+http://freegis.gnu.org.in/temporary/python_grass6.tar.bz2
