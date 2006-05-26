@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     int i, ret;
     CELL mincat = 0, maxcat = 0, cat;
     double zmin, zmax;		/* min and max data values */
-    FILE *out, *fopen();
+    FILE *out;
     struct Range crange;
     struct FPRange range;
     struct Cell_head cellhd;
@@ -55,7 +55,6 @@ int main(int argc, char *argv[])
     int is_reclass;
     RASTER_MAP_TYPE data_type;
     struct Reclass reclass;
-    char *G_program_name();
     struct GModule *module;
     struct Option *opt1;
     struct Flag *rflag;

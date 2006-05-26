@@ -23,8 +23,8 @@ grab .wait_ok.wait\n";
 
 int script_mode=0;
 
-int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
-		  int argc, char **argv)
+static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
+			 int argc, const char **argv)
 {
     struct Option *elev, *colr, *vct, *pnt, *vol;
     struct Option *panel_path, *script, *state;
@@ -326,9 +326,10 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
  */
 
 int Ngetargs(Tcl_Interp * interp,	/* Current interpreter. */
-	     char ***args)
+	     const char ***args)
 {
-    char *tmp, *tmp2, *argv0;
+    const char *argv0, *tmp;
+    char *tmp2;
     const char *cmd;
     int argc;
 
@@ -472,7 +473,7 @@ void swap_togl();
 int Ninitdata(Tcl_Interp * interp,	/* Current interpreter. */
 	      Nv_data * data)
 {
-    char **argv;
+    const char **argv;
     int argc;
 
     argc = Ngetargs(interp, &argv);

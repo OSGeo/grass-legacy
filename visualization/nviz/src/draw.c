@@ -439,7 +439,7 @@ int Nauto_draw_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. 
 **********************/
 int auto_draw(Nv_data * dc, Tcl_Interp * interp)
 {
-    char *buf;
+    const char *buf;
     int autodraw;
     char abuf[128];
 
@@ -690,7 +690,7 @@ int Ndone_draw_cmd(void)
    */
 int check_blank(Tcl_Interp * interp, int map_id)
 {
-    char *val, **listArgv;
+    const char *val, **listArgv;
     int listArgc, rval, i;
 
     /* The list of maps to blank is kept in the tcl variable */

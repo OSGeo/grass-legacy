@@ -60,7 +60,6 @@ int main(int argc, char *argv[])
     int cats_ok;
     int hist_ok;
     int time_ok = 0, first_time_ok = 0, second_time_ok = 0;
-    char *G_program_name();
     struct Option *opt1;
     struct Flag *rflag;
     struct Flag *sflag;

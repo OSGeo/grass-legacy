@@ -650,7 +650,8 @@ void site_attr_init(int id)
 
 int site_attr_set(Tcl_Interp *interp, geosite * gp, int nattr, char * attr, int index, char *xlist, char *ylist)
 {
-	int argcPtrX, argcPtrY; char **argvPtrX, **argvPtrY;
+	int argcPtrX, argcPtrY;
+	const char **argvPtrX, **argvPtrY;
 
 	if (nattr >= GPT_MAX_ATTR) {return(TCL_ERROR);} /* too many */
 
@@ -904,7 +905,7 @@ int Nget_interpolated_values_cmd(data, interp, argc, argv)
 	char buf[1024];
 
 	int argcPtrX, argcPtrY;
-	char **argvPtrX, **argvPtrY;
+	const char **argvPtrX, **argvPtrY;
 	float *x, *y, *m, *yr, *yg, *yb, *mr, *mg, *mb, xvalue, yvalue;
 
     if (argc != 5)

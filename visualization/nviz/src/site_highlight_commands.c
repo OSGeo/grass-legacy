@@ -376,7 +376,7 @@ int Nsite_highlight_list_cmd(Nv_data * data, Tcl_Interp *interp, int argc, char 
 {
 /* argv[1] = what (color/size/marker) / argv[2] = id / argv[3] = list of categories / [argv[4] = color] */
 	int argcPtr;
-	char **argvPtr;
+	const char **argvPtr;
 	float value;
 	geosite * gp;
 
@@ -456,7 +456,7 @@ int Nsite_unhighlight_list_cmd(Nv_data * data, Tcl_Interp *interp, int argc, cha
 {
 /* argv[1] = what (color/size/marker) / argv[2] = id / argv[3] = list of categories / [argv[4] = color] */
 	int argcPtr;
-	char **argvPtr;
+	const char **argvPtr;
 	geosite * gp;
 
 	if (argc < 4) return(TCL_ERROR);

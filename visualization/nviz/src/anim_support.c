@@ -347,7 +347,7 @@ int Nadd_key_cmd(Nv_data * data,	/* Local data */
     double pos, precis;
     unsigned long fmask;
     int force_replace;
-    char **listels;
+    const char **listels;
     int numels, i;
 
     if (argc != 5) {

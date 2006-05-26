@@ -16,9 +16,9 @@
 
 struct G__ G__ ;
 static int initialized = 0;
-static int gisinit();
+static int gisinit(void);
 
-int G_gisinit( char *pgm)
+int G_gisinit(const char *pgm)
 {
     char *mapset;
     char msg[100];
@@ -61,7 +61,7 @@ int G_no_gisinit(void)
     return 0;
 }
 
-int G__check_gisinit()
+int G__check_gisinit(void)
 {
     if (initialized) return 1;
     fprintf (stderr, _("\7ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"));
@@ -69,7 +69,7 @@ int G__check_gisinit()
     exit(-1);
 }
 
-static int gisinit()
+static int gisinit(void)
 {
     int i ;
 
