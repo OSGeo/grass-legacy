@@ -958,7 +958,6 @@ int main (int argc, char *argv[])
     if ( !print_flag->answer ) { 
 	db_close_database_shutdown_driver ( driver );
 	db_free_string (&stmt);
-	G_free ( catexist );
 
 	/* print stats */
 	if ( all ) {
@@ -972,6 +971,8 @@ int main (int argc, char *argv[])
 	    fprintf (stderr,"%d categories read from the map don't exist in the table\n", update_notexist);
 	    fprintf (stderr,"%d records updated\n", update_ok);
 	    fprintf (stderr,"%d update errors\n", update_err);
+	
+            G_free ( catexist );
 	}
 
 	Vect_set_db_updated ( &From );
