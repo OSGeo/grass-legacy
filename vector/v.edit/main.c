@@ -23,6 +23,7 @@ int main (int argc, char *argv[])
 {
     G_gisinit(argv[0]);
     struct Map_info Map;
+    int ret;
 
     module = G_define_module();
     module->description = _("Edits a vector map; allows adding, deleteing and modifying objects in a vector map.");
@@ -56,18 +57,23 @@ int main (int argc, char *argv[])
 
     switch(action_mode) {
       case MODE_ADD:
-	do_add(&Map);
+	ret = do_add(&Map);
 	break;
       default:
 	G_warning("Sorry this is not yet implemented");
 	break;
     }
+    
     /* Init maximum categories */
 
-    Vect_build_partial (&Map, GV_BUILD_NONE, NULL);
-    Vect_build ( &Map, stdout );
-
-    Vect_hist_command ( &Map );
+//    Vect_build_partial (&Map, GV_BUILD_NONE, NULL);
+    if(ret) {
+	Vect_build ( &Map, stdout );
+	Vect_hist_command ( &Map );
+    }
+    else {
+	Vect_build ( &Map, NULL );
+    }
 
     Vect_close(&Map);
     G_debug (1, "Map closed");

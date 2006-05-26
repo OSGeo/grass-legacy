@@ -29,15 +29,25 @@ int parser(int argc, char*argv[])
     pnt_opt->multiple    = YES;
     pnt_opt->description = _("An x,y list of points. Required for add and move actions.");
     
+    val_opt = G_define_option();
+    val_opt->key         = "values";
+    val_opt->type        = TYPE_STRING;
+    val_opt->required    = NO;
+    val_opt->multiple    = NO;
+    val_opt->description = _("A comma-separated list of attr=val pairs.");
+
+    fld_opt = G_define_standard_option(G_OPT_V_FIELD);
+
     n_flg = G_define_flag();
     n_flg->key = 'n';
     n_flg->description = _("Create a new map.");
     
     if(G_parser(argc, argv))
 	return 0;
-    
+
     /* check that the given arguments makes sense together*/
-    
+/** @todo check for incorrect extra parameters */
+
     if(strcmp(act_opt->answer, "add")==0) { /* add requires a points argument */
 	action_mode = MODE_ADD;
 	if(pnt_opt->answers == NULL) {

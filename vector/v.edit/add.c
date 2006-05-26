@@ -9,8 +9,13 @@ int do_add(struct Map_info *Map)
 	int i;
 	struct line_pnts *Points;
 
-	for(i=0; pnt_opt->answers[i] != NULL; i++) { 
+	if(pnt_opt->answers[2] != NULL) {
+	    G_warning(_("Adding many points with same attributes"));
+	}
+
+	for(i=0; pnt_opt->answers[i] != NULL; i++) {
 	    double x,y;
+	    
 	    next_cat++;
 	    x = atof(pnt_opt->answers[i]);
 	    y = atof(pnt_opt->answers[++i]);
@@ -20,7 +25,9 @@ int do_add(struct Map_info *Map)
 	    Points = Vect_new_line_struct ();
 	    Vect_append_point ( Points, x, y, 0 );
 
-	    add_line ( Map, GV_POINT, Points, next_cat );
+	    if(!add_line ( Map, GV_POINT, Points, 1, next_cat )) {
+		return 0;
+	    }
 	    cat_max_set(1, next_cat);
 	}
     }
@@ -30,17 +37,27 @@ int do_add(struct Map_info *Map)
     return 1;
 }
 
-int add_line(struct Map_info *Map, int type, struct line_pnts *Points, int cat)
+int add_line(struct Map_info *Map, int type, struct line_pnts *Points, 
+	     int field, int cat)
 {
     int ret;
     struct line_cats *Cats;
     Cats = Vect_new_cats_struct();
+    if(Cats== NULL)
+	return 0;
     
-    Vect_cat_set ( Cats, 1, cat ); 
-    
-    ret = Vect_write_line(Map, type, Points, Cats );
+    if(!attr_new(Map, field, cat, val_opt->answer))
+	return 0;
 
-//    db_add_values(cat);
+    if(Vect_cat_set ( Cats, field, cat ) <=0) {
+	attr_del(Map, field, cat);
+	return 0;
+    }
+
+    if(!Vect_write_line(Map, type, Points, Cats )) {
+	attr_del(Map, field, cat);
+	return 0;
+    }
 
     return 1;
 }
