@@ -52,14 +52,11 @@ int main(int argc, char *argv[])
     output->gisprompt = "new_file,file,output";
     output->description = _("Path to resulting VTK file.");
 
-    feature_opt = G_define_option();
-    feature_opt->key = "feature";
-    feature_opt->type = TYPE_STRING;
-    feature_opt->required = NO;
+    feature_opt = G_define_standard_option(G_OPT_V_TYPE);
     feature_opt->multiple = NO;
     feature_opt->options = "point,kernel,centroid,line,boundary,area,face";
     feature_opt->answer = "line";
-    feature_opt->description = _("Feature that will be exported");
+    feature_opt->description = _("Vector type that will be exported");
 
     dp_opt = G_define_option();
     dp_opt->key = "dp";

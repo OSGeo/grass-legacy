@@ -8,7 +8,7 @@ If the <b>output</b> parameter is not given, the output will be send to stdout.
 
 <h2>NOTES</h2>
 
-Only <emph>one</emph> feature can be exported at a time, available features are:
+Only <emph>one</emph> vector type can be exported at a time, available type are:
 <ul>
 	<li>point</li>
 	<li>line</li>
@@ -18,16 +18,17 @@ Only <emph>one</emph> feature can be exported at a time, available features are:
 	<li>face</li>
 </ul>
 
-Categorie data (cat) for the selected feature and layer will be written as scalar
+Category data (cat) for the selected vector type and layer will be written as scalar
 data with name "cat". If no cat exists, the value will set to -1 as normal cat's are
 always positive.
-If a feature has more categories in one layer, only the first category
+If a vector has more categories in one layer, only the first category
 will be exported.
 <br>
 <br>
 3d vectors are supported by default. The created VTK data always includes x, y and z coordinates.
-If no elevation is available for the choosen feature, 0 will be set as z coordinate.
-You can easily convert your 2d vectors into 3d vectors with v.drape.
+<!-- what does the next sentence mean? -->
+If no elevation is available for the choosen vector, 0 will be set as z coordinate.
+Note that you can easily convert your 2d vectors into 3d vectors with v.drape.
 <br>
 <br>
 The GRASS vector data is converted into the polydata format of VTK: 
@@ -39,14 +40,14 @@ The GRASS vector data is converted into the polydata format of VTK:
 </li>
 </ul>
 <p>
-The data can be visualized
+The VTK file can be visualized with
 <EM><A HREF="http://www.vtk.org">VTK Toolkit</A></EM>,
 <EM><A HREF="http://www.paraview.org">Paraview</A></EM> and
-<EM><A HREF="http://mayavi.sourceforge.net">MayaVi</A></EM> which are based on VTK.
+<EM><A HREF="http://mayavi.sourceforge.net">MayaVi</A></EM>.
 
-<h2>Attention</h2>
+<h3>Attention</h3>
 If areas or faces are exported, the data have to be triangulated within Paraview or
-MayaVi! 
+MayaVi.
 </p>
 
 <h2>EXAMPLE</h2>
@@ -55,15 +56,15 @@ Spearfish example:
 <P>
 Export the soils with cats in layer 1:
 <div class="code"><pre>
-v.out.vtk input=soils feature=area layer=1 output=/tmp/soils.vtk
+v.out.vtk input=soils type=area layer=1 output=/tmp/soils.vtk
 </pre></div>
 Export the streams with cats in layer 1:
 <div class="code"><pre>
-v.out.vtk input=streams feature=line layer=1 output=/tmp/streams.vtk
+v.out.vtk input=streams type=line layer=1 output=/tmp/streams.vtk
 </pre></div>
-Write the archsite vtk outpout to stdout with cats in layer 1:
+Write the archsite vtk output to stdout with cats in layer 1:
 <div class="code"><pre>
-v.out.vtk input=archsites feature=point layer=1
+v.out.vtk input=archsites type=point layer=1
 </pre></div>
 
 <h2>SEE ALSO</h2>
@@ -75,7 +76,7 @@ v.out.vtk input=archsites feature=point layer=1
 </em>
 
 
-<h2>AUTHORS</h2>
+<h2>AUTHOR</h2>
 
 Soeren Gebbert
 

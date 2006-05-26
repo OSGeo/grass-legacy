@@ -28,7 +28,7 @@ int writeVTK(FILE * ascii, struct Map_info *Map, int layer, int feature, int dp)
 	/*break if nothing to generate */
 	if (numpoints == 0)
 	    G_fatal_error(_
-			  ("No coordinates to generate the output! Maybe you choosed the wrong feature?"));
+			  ("No coordinates to generate the output! Maybe wrong vector type chosen?"));
 
 	fprintf(ascii, "POINTS %i float\n", numpoints);
 
@@ -101,7 +101,7 @@ int writeVTK(FILE * ascii, struct Map_info *Map, int layer, int feature, int dp)
 	/*break if nothing to generate */
 	if (numpoints == 0)
 	    G_fatal_error(_
-			  ("No coordinates to generate the output! Maybe you choosed the wrong feature?"));
+			  ("No coordinates to generate the output! Maybe wrong vector type chosen?"));
 
 	fprintf(ascii, "POINTS %i float\n", numpoints);
 
@@ -191,7 +191,7 @@ int writeVTK(FILE * ascii, struct Map_info *Map, int layer, int feature, int dp)
 	/*break if nothing to generate */
 	if (numpoints == 0)
 	    G_fatal_error(_
-			  ("No coordinates to generate the output! Maybe you choosed the wrong feature?"));
+			  ("No coordinates to generate the output! Maybe wrong vector type chosen?"));
 
 	fprintf(ascii, "POINTS %i float\n", numpoints);
 
