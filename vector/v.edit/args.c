@@ -41,7 +41,15 @@ int parser(int argc, char*argv[])
     n_flg = G_define_flag();
     n_flg->key = 'n';
     n_flg->description = _("Create a new map.");
-    
+
+    t_flg = G_define_flag();
+    t_flg->key = 't';
+    t_flg->description = _("Do not use topology.");
+
+    d_flg = G_define_flag();
+    d_flg->key = 'd';
+    d_flg->description = _("No database updates");
+
     if(G_parser(argc, argv))
 	return 0;
 
