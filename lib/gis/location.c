@@ -16,6 +16,7 @@
  *               name.
  **********************************************************************/
 
+#include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <grass/gis.h>
@@ -45,6 +46,7 @@ G_location_path()
     {
 	char msg[400];
 
+	perror("access");
 	sprintf(msg,_("LOCATION  << %s >>  not available"), location) ;
 	G_fatal_error (msg);
     }
