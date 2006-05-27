@@ -18,11 +18,11 @@
  ****************************************************************/
 #define MAIN
 #include "global.h"
+//static int error_routine(const char*msg, int fatal);
 
 int main (int argc, char *argv[])
 {
     G_gisinit(argv[0]);
-    struct Map_info Map;
     int ret;
 
     module = G_define_module();
@@ -31,6 +31,7 @@ int main (int argc, char *argv[])
     if(!parser(argc, argv))
 	exit(EXIT_FAILURE);
 
+//    G_set_error_routine(error_routine);
     mapset = G_find_vector2 (map_opt->answer, G_mapset()); 
 
     if ( mapset == NULL ) {
@@ -78,11 +79,27 @@ int main (int argc, char *argv[])
     Vect_close(&Map);
     G_debug (1, "Map closed");
 
-
-    exit(EXIT_SUCCESS);
-
-
+//    G_unset_error_routine();
+    
+    if(ret)
+	exit(EXIT_SUCCESS);
+    else
+	exit(EXIT_FAILURE);
 }
+/*
+static int error_routine(const char*msg, int fatal)
+{
+    fprintf(stderr,"%s%s\7", fatal?_("ERROR: "),_("WARNING: "), msg);
+    fflush(stderr);
+    if(fatal) {
+	G_debug (1, "In error routine");
+	Vect_build ( &Map, NULL );
+	Vect_close(&Map);
+	G_debug (1, "Map closed");
+    }
+    return 0;
+}
+*/
 /*    
 	struct Map_info map;
 	static struct line_pnts *points;
