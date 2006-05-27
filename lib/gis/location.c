@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/types.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
@@ -47,7 +48,7 @@ G_location_path()
 	char msg[400];
 
 	perror("access");
-	sprintf(msg,_("LOCATION  << %s >>  not available"), location) ;
+	sprintf(msg,_("LOCATION <%s> not available for reuid=%d (real user-id), euid=%d (effective user-id)"), location, getuid(),geteuid()) ;
 	G_fatal_error (msg);
     }
 
