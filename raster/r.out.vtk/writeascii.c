@@ -23,6 +23,45 @@
 #include <grass/glocale.h>
 #include "globaldefs.h"
 
+/*local prototypes */
+double GetRasterValueAsDouble(int maptype, void *ptr, double nullval);
+
+
+/* ************************************************************************* */
+/* Get the value of the current raster pointer as double ******************* */
+/* ************************************************************************* */
+double GetRasterValueAsDouble(int MapType, void *ptr, double nullval)
+{
+    double val = nullval;
+
+    if (MapType == CELL_TYPE) {
+	if (G_is_null_value(ptr, MapType)) {
+	    val = nullval;
+	}
+	else {
+	    val = *(CELL *) ptr;
+	}
+    }
+    if (MapType == FCELL_TYPE) {
+	if (G_is_null_value(ptr, MapType)) {
+	    val = nullval;
+	}
+	else {
+	    val = *(FCELL *) ptr;
+	}
+    }
+    if (MapType == DCELL_TYPE) {
+	if (G_is_null_value(ptr, MapType)) {
+	    val = nullval;
+	}
+	else {
+	    val = *(DCELL *) ptr;
+	}
+    }
+
+    return val;
+}
+
 /* ************************************************************************* */
 /* Write the normal VTK Header, no! Elevation map is supportet ************* */
 /* ************************************************************************* */
@@ -119,10 +158,16 @@ writeVTKStructuredCoordinates(int fd, FILE * fp, char *varname,
     int row, col;
     int rowcount = 0, colcount = 0;
     double nspos = 0.0, ewpos = 0.0;
+    double nullvalue, value;
     void *ptr, *raster;
 
     G_debug(3, _("writeVTKStructuredCoordinates: Writing Coordinates"));
 
+    /*the nullvalue */
+    if (!sscanf(null_value, "%lf", &nullvalue)) {
+	G_warning("Null value is not valid, using 0 instead.");
+	nullvalue = 0;
+    }
 
     raster = G_allocate_raster_buf(out_type);
 
@@ -142,21 +187,8 @@ writeVTKStructuredCoordinates(int fd, FILE * fp, char *varname,
 	     col++, ptr = G_incr_void_ptr(ptr, G_raster_size(out_type))) {
 	    ewpos = region.ew_res / 2 + region.west + colcount * region.ew_res;
 
-	    if (!G_is_null_value(ptr, out_type)) {
-		if (out_type == CELL_TYPE)
-		    fprintf(fp, "%lf %lf %lf\n", ewpos, nspos,
-			    *((CELL *) ptr) * scale);
-		else if (out_type == FCELL_TYPE) {
-		    fprintf(fp, "%lf %lf %lf\n", ewpos, nspos,
-			    *((FCELL *) ptr) * scale);
-		}
-		else if (out_type == DCELL_TYPE) {
-		    fprintf(fp, "%lf %lf %lf\n", ewpos, nspos,
-			    *((DCELL *) ptr) * scale);
-		}
-	    }
-	    else
-		fprintf(fp, "%lf %lf %s\n", ewpos, nspos, null_value);
+	    value = GetRasterValueAsDouble(out_type, ptr, nullvalue);
+	    fprintf(fp, "%9f %9f %9f\n", ewpos, nspos, value);
 
 	    colcount++;
 	}
@@ -166,7 +198,7 @@ writeVTKStructuredCoordinates(int fd, FILE * fp, char *varname,
 }
 
 /* ************************************************************************* */
-/* Write the VTK Data ****************************************************** */
+/* Write Polygonal Coordinates ********************************************* */
 /* ************************************************************************* */
 void
 writeVTKPolygonalCoordinates(int fd, FILE * fp, char *varname,
@@ -178,10 +210,17 @@ writeVTKPolygonalCoordinates(int fd, FILE * fp, char *varname,
     int row, col;
     int rowcount = 0, colcount = 0;
     double nspos = 0.0, ewpos = 0.0;
+    double value, nullvalue;
     void *ptr, *raster;
     int i, j, count;
 
     G_debug(3, _("writeVTKPolygonalCoordinates: Writing VTK Polygonal data"));
+
+    /*the nullvalue */
+    if (!sscanf(null_value, "%lf", &nullvalue)) {
+	G_warning("Null value is not valid, using 0 instead.");
+	nullvalue = 0;
+    }
 
 
     /*First we are writing the coordinate points, the elevation cell is only used for the z coordinate */
@@ -203,21 +242,8 @@ writeVTKPolygonalCoordinates(int fd, FILE * fp, char *varname,
 	     col++, ptr = G_incr_void_ptr(ptr, G_raster_size(out_type))) {
 	    ewpos = region.ew_res / 2 + region.west + colcount * region.ew_res;
 
-	    if (!G_is_null_value(ptr, out_type)) {
-		if (out_type == CELL_TYPE)
-		    fprintf(fp, "%9f %9f %9f\n", ewpos, nspos,
-			    *((CELL *) ptr) * scale);
-		else if (out_type == FCELL_TYPE) {
-		    fprintf(fp, "%9f %9f %9f\n", ewpos, nspos,
-			    *((FCELL *) ptr) * scale);
-		}
-		else if (out_type == DCELL_TYPE) {
-		    fprintf(fp, "%9f %9f %9f\n", ewpos, nspos,
-			    *((DCELL *) ptr) * scale);
-		}
-	    }
-	    else
-		fprintf(fp, "%9f %9f %s\n", ewpos, nspos, null_value);
+	    value = GetRasterValueAsDouble(out_type, ptr, nullvalue);
+	    fprintf(fp, "%9f %9f %9f\n", ewpos, nspos, value);
 
 	    colcount++;
 	}
@@ -292,9 +318,16 @@ writeVTKData(int fd, FILE * fp, char *varname, struct Cell_head region,
     int ncols = region.cols;
     int nrows = region.rows;
     int row, col;
+    double value, nullvalue;
     void *ptr, *raster;
 
     G_debug(3, _("writeVTKData: Writing VTK-Data"));
+
+    /*the nullvalue */
+    if (!sscanf(null_value, "%lf", &nullvalue)) {
+	G_warning("Null value is not valid, using 0 instead.");
+	nullvalue = 0;
+    }
 
     fprintf(fp, "SCALARS %s float 1\n", varname);
     fprintf(fp, "LOOKUP_TABLE default\n");
@@ -312,18 +345,10 @@ writeVTKData(int fd, FILE * fp, char *varname, struct Cell_head region,
 
 	for (col = 0, ptr = raster; col < ncols;
 	     col++, ptr = G_incr_void_ptr(ptr, G_raster_size(out_type))) {
-	    if (!G_is_null_value(ptr, out_type)) {
-		if (out_type == CELL_TYPE)
-		    fprintf(fp, "%d ", *((CELL *) ptr));
-		else if (out_type == FCELL_TYPE) {
-		    fprintf(fp, "%lf ", *((FCELL *) ptr));
-		}
-		else if (out_type == DCELL_TYPE) {
-		    fprintf(fp, "%lf ", *((DCELL *) ptr));
-		}
-	    }
-	    else
-		fprintf(fp, "%s ", null_value);
+
+	    value = GetRasterValueAsDouble(out_type, ptr, nullvalue);
+	    fprintf(fp, "%9f ", value);
+
 	}
 	fprintf(fp, "\n");
     }
@@ -352,7 +377,6 @@ writeVTKRGBImageData(int redfd, int greenfd, int bluefd, FILE * fp,
 
     fprintf(fp, "COLOR_SCALARS %s 3\n", varname);
 
-
     redraster = G_allocate_raster_buf(out_type);
     greenraster = G_allocate_raster_buf(out_type);
     blueraster = G_allocate_raster_buf(out_type);
@@ -379,42 +403,79 @@ writeVTKRGBImageData(int redfd, int greenfd, int bluefd, FILE * fp,
 	     G_incr_void_ptr(redptr, G_raster_size(out_type)), greenptr =
 	     G_incr_void_ptr(greenptr, G_raster_size(out_type)), blueptr =
 	     G_incr_void_ptr(blueptr, G_raster_size(out_type))) {
-	    r = 0;
-	    g = 0;
-	    b = 0;
-	    if (!G_is_null_value(redptr, out_type)
-		&& !G_is_null_value(greenptr, out_type)
-		&& !G_is_null_value(blueptr, out_type)) {
-		if (out_type == CELL_TYPE) {
-		    r = (double)*((CELL *) redptr);
-		    g = (double)*((CELL *) greenptr);
-		    b = (double)*((CELL *) blueptr);
-		}
-		else if (out_type == FCELL_TYPE) {
-		    r = (double)*((FCELL *) redptr);
-		    g = (double)*((FCELL *) greenptr);
-		    b = (double)*((FCELL *) blueptr);
-		}
-		else if (out_type == DCELL_TYPE) {
-		    r = (double)*((DCELL *) redptr);
-		    g = (double)*((DCELL *) greenptr);
-		    b = (double)*((DCELL *) blueptr);
-		}
-		/*Test of valuerange, the data should be 1 byte gray values */
-		if (r > 255 || g > 255 || b > 255 || r < 0 || g < 0 || b < 0) {
-		    G_warning(_
-			      ("Wrong map values! Values should in between 0 and 255!\n"));
-		    fprintf(fp, "0 0 0 \n");
-		}
-		else {
-		    fprintf(fp, "%lf %lf %lf \n", r / 255, g / 255, b / 255);
-		}
 
-	    }
-	    else
+	    r = GetRasterValueAsDouble(out_type, redptr, 0.0);
+	    g = GetRasterValueAsDouble(out_type, greenptr, 0.0);
+	    b = GetRasterValueAsDouble(out_type, blueptr, 0.0);
+
+	    /*Test of valuerange, the data should be 1 byte gray values */
+	    if (r > 255 || g > 255 || b > 255 || r < 0 || g < 0 || b < 0) {
+		G_warning(_
+			  ("Wrong map values! Values should in between 0 and 255!\n"));
 		fprintf(fp, "0 0 0 \n");
+	    }
+	    else {
+		fprintf(fp, "%lf %lf %lf \n", r / 255, g / 255, b / 255);
+	    }
 	}
-	fprintf(fp, "\n");
+    }
+    return;
+
+}
+
+
+/* ************************************************************************* */
+/* Write the VTK Vector Data *********************************************** */
+/* ************************************************************************* */
+void
+writeVTKVectorData(int xfd, int yfd, int zfd, FILE * fp,
+		   const char *varname, struct Cell_head region, int out_type)
+{
+    int ncols = region.cols;
+    int nrows = region.rows;
+    int row, col;
+    void *xptr, *xraster;
+    void *yptr, *yraster;
+    void *zptr, *zraster;
+    double x = 0.0, y = 0.0, z = 0.0;
+
+    G_debug(3, _("writeVTKVectorData: Writing VTK-vector data"));
+
+    fprintf(fp, "VECTORS %s float\n", varname);
+
+    xraster = G_allocate_raster_buf(out_type);
+    yraster = G_allocate_raster_buf(out_type);
+    zraster = G_allocate_raster_buf(out_type);
+
+    for (row = nrows - 1; row >= 0; row--) {
+	G_percent((row - nrows) * (-1), nrows, 10);
+
+	if (G_get_raster_row(xfd, xraster, row, out_type) < 0) {
+	    G_fatal_error(_("Unable to read row %i\n"), row);
+	    return;
+	}
+	if (G_get_raster_row(yfd, yraster, row, out_type) < 0) {
+	    G_fatal_error(_("Unable to read row %i\n"), row);
+	    return;
+	}
+	if (G_get_raster_row(zfd, zraster, row, out_type) < 0) {
+	    G_fatal_error(_("Unable to read row %i\n"), row);
+	    return;
+	}
+
+	for (col = 0, xptr = xraster, yptr = yraster, zptr =
+	     zraster; col < ncols;
+	     col++, xptr =
+	     G_incr_void_ptr(xptr, G_raster_size(out_type)), yptr =
+	     G_incr_void_ptr(yptr, G_raster_size(out_type)), zptr =
+	     G_incr_void_ptr(zptr, G_raster_size(out_type))) {
+
+	    x = GetRasterValueAsDouble(out_type, xptr, 0.0);
+	    y = GetRasterValueAsDouble(out_type, yptr, 0.0);
+	    z = GetRasterValueAsDouble(out_type, zptr, 0.0);
+
+	    fprintf(fp, "%lf %lf %lf \n", x, y, z);
+	}
     }
     return;
 

@@ -7,7 +7,7 @@ If <I>output</I> is not specified then <B>stdout</B> is used.
 The module is sensitive to region settings (set with g.region).
 <br>
 <br>
-Elevation, scaling, point/celldata and RGB Data are supported.
+Elevation, scaling, point/celldata, vector and RGB Data are supported.
 <br>
 <br>
 If no elevation map is given, the user can set the hight of the map by one value. 
@@ -17,8 +17,11 @@ Point or cell data are available. Also scaling is supported for this elevation v
 The RGB input requires three raster maps: red, green, blue  - in this order. 
 The maps must! have values between 0 and 255, otherwise you will get lots of warnings
 and the values are set to 0!
-More than one RGB Dataset (3 maps) is not supported. 
-
+More than one RGB dataset (3 maps) is not supported. 
+<br>
+<br>
+The vector input requires three raster maps: x, y, z -- defining the vector coordiantes  - in this order. 
+More than one vector dataset (3 maps) is not supported. 
 <H2>NOTES</H2>
 This filter generates: 
 <ul>
@@ -82,6 +85,7 @@ paraview --data=/tmp/out.vtk
 g.region -d
 g.region n=4926970 s=4914857 w=591583 e=607793 res=50
 
+#we are using r.in.onearth (available from the grass addon wiki) to create rgb data
 #get some satellite images with r.in.onearth
 r.in.onearth -l output=Sat tmband=Red
 r.in.onearth -l output=Sat tmband=IR1

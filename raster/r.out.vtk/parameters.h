@@ -1,3 +1,4 @@
+
 /****************************************************************************
 *
 * MODULE:       r.out.vtk  
@@ -21,19 +22,19 @@ struct Flag;
 
 typedef struct
 {
-  struct Option *input, *output, *elevationmap, *null_val, *elevscale, *elev,
-    *rgbmaps;
-  struct Flag *usestruct, *usetriangle, *usevertices, *origin, *point;	/*struct Flag *mask;          struct Flag *xml; *//*maybe xml support in the future */
+    struct Option *input, *output, *elevationmap, *null_val, *elevscale, *elev,
+	*rgbmaps, *vectmaps;
+    struct Flag *usestruct, *usetriangle, *usevertices, *origin, *point;	/*struct Flag *mask;          struct Flag *xml; *//*maybe xml support in the future */
 } paramType;
 
-/*global structs*/
+/*global structs */
 #ifdef MAIN
 paramType param;		/*Parameters */
 #else
-extern paramType param;                /*Parameters */
+extern paramType param;		/*Parameters */
 #endif
 
-/*prototype*/
-void SetParameters ();
+/*prototype */
+void SetParameters();
 
 #endif
