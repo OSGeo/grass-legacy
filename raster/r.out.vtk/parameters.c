@@ -54,7 +54,18 @@ void SetParameters()
     param.rgbmaps->multiple = YES;
     param.rgbmaps->description =
 	_
-	("3 raster maps (r,g,b) which are used to create rgb values [redmap,greenmap,bluemap]");
+	("Three (r,g,b) raster maps which are used to create rgb values [redmap,greenmap,bluemap]");
+
+    param.vectmaps = G_define_option();
+    param.vectmaps->key = "vectormaps";
+    param.vectmaps->type = TYPE_STRING;
+    param.vectmaps->required = NO;
+    param.vectmaps->gisprompt = "old,cell,raster";
+    param.vectmaps->multiple = YES;
+    param.vectmaps->description =
+	_
+	("Three (x,y,z) raster maps which are used to create vector values [xmap,ymap,zmap]");
+
 
 
     param.output = G_define_option();

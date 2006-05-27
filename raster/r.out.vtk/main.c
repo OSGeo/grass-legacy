@@ -82,14 +82,40 @@ void CheckInputMaps()
 	    }
 	}
 	else {
-	    G_fatal_error(_("Please provide three RGB maps"));
+	    G_fatal_error(_
+			  ("Cannot create RGB data, please provide three maps [r,g,b]"));
+	}
+    }
+
+    /*Vector raster maps */
+    if (param.vectmaps->answers != NULL) {
+	if (param.vectmaps->answers[0] != NULL &&
+	    param.vectmaps->answers[1] != NULL &&
+	    param.vectmaps->answers[2] != NULL) {
+
+	    /*Loop over all input maps! */
+	    for (i = 0; i < 3; i++) {
+
+		mapset = NULL;
+		mapset = G_find_cell2(param.vectmaps->answers[i], "");
+		if (mapset == NULL) {
+		    G_fatal_error(_("vector cell map [%s] not found\n"),
+				  param.vectmaps->answers[i]);
+		    exit(EXIT_FAILURE);
+		}
+	    }
+	}
+	else {
+	    G_fatal_error(_
+			  ("Cannot create vector data, please provide three maps [x,y,z]"));
 	}
     }
 
     /*Give a warning if no output cell/point or rgb data is specified */
-    if (param.input->answers == NULL && param.rgbmaps->answers == NULL) {
+    if (param.input->answers == NULL && param.rgbmaps->answers == NULL &&
+	param.vectmaps->answers == NULL) {
 	G_warning
-	    ("No g3d data or RGB maps are provided! Will only write the geometry.");
+	    ("No g3d data, RGB or vector maps are provided! Will only write the geometry.");
     }
 
     return;
@@ -109,6 +135,7 @@ int main(int argc, char *argv[])
     int out_type;
     int fd;			/*Normale maps ;) */
     int rgbfd[3];
+    int vectfd[3];
     int celltype[3] = { 0, 0, 0 };
     int headertype;
 
@@ -292,6 +319,55 @@ int main(int argc, char *argv[])
 	}
     }
 
+  /********************** WRITE VECTOR DATA; CELL OR POINT ****************/
+    if (param.vectmaps->answers != NULL) {
+	if (param.vectmaps->answers[0] != NULL &&
+	    param.vectmaps->answers[1] != NULL &&
+	    param.vectmaps->answers[2] != NULL) {
+
+
+	    /*Loop over all three vect input maps! */
+	    for (i = 0; i < 3; i++) {
+		G_debug(3, _("Open Raster file %s"),
+			param.vectmaps->answers[i]);
+
+		mapset = NULL;
+
+		mapset = G_find_cell2(param.vectmaps->answers[i], "");
+		celltype[i] =
+		    G_raster_map_type(param.vectmaps->answers[i], mapset);
+
+		/* open raster file */
+		vectfd[i] = G_open_cell_old(param.vectmaps->answers[i], mapset);
+		if (vectfd[i] < 0) {
+		    G_fatal_error(_("Could not open map %s\n"),
+				  param.vectmaps->answers[i]);
+		    exit(EXIT_FAILURE);
+		}
+	    }
+
+	    /*Maps have to be from the same type */
+	    if (celltype[0] == celltype[1] && celltype[0] == celltype[2]) {
+		G_debug(3, _("Writing VTK Vector Data\n"));
+
+		out_type = celltype[0];
+
+		/*Now write the data */
+		writeVTKVectorData(vectfd[0], vectfd[1], vectfd[2], fp,
+				   "Vector_Data", region, out_type);
+	    }
+	    else {
+		G_warning(_
+			  ("Wrong vector maps. Maps should have the same type! Vector output not added!"));
+		/*do nothing */
+	    }
+
+	    /*Close the maps */
+	    for (i = 0; i < 3; i++)
+		G_close_cell(vectfd[i]);
+	}
+    }
+
     if (param.output->answer && fp != NULL)
 	if (fclose(fp)) {
 	    G_fatal_error(_("Error closing VTK-ASCII file"));
@@ -300,4 +376,3 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-
