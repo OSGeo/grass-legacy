@@ -84,13 +84,16 @@ Point2 *pg_getpoints_reversed(PointGrp *pg)
 {
     int i;
     int iter = pg->npts / 2;
+    double x, y;
 
     for (i = 0; i < iter; i++) {
         /* swap points */
+        x = pg->pnts[i][0];
+        y = pg->pnts[i][1];
         pg->pnts[i][0] = pg->pnts[pg->npts-i-1][0];
         pg->pnts[i][1] = pg->pnts[pg->npts-i-1][1];
-        pg->pnts[pg->npts-i-1][0] = pg->pnts[i][0];
-        pg->pnts[pg->npts-i-1][1] = pg->pnts[i][1];
+        pg->pnts[pg->npts-i-1][0] = x;
+        pg->pnts[pg->npts-i-1][1] = y;
     }
 
     /* call recalc? */
