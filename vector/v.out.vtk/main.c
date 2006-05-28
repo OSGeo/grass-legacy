@@ -1,6 +1,5 @@
-/*
- *
- ****************************************************************************
+
+ /***************************************************************************
  *
  * MODULE:     v.out.vtk  
  * AUTHOR(S):  Soeren Gebbert
@@ -13,9 +12,7 @@
  *              License (>=v2). Read the file COPYING that comes with GRASS
  *              for details.
  *
- ****************************************************************************
- */
-/*  @(#)b_a_dig.c       2.1  6/26/87  */
+ ****************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,8 +27,8 @@
 int main(int argc, char *argv[])
 {
     FILE *ascii;
-    struct Option *input, *output, *feature_opt, *dp_opt, *layer_opt;
-    int feature, dp;
+    struct Option *input, *output, *type_opt, *dp_opt, *layer_opt;
+    int *types = NULL, typenum = 0, dp, i;
     struct Map_info Map;
     struct GModule *module;
     int layer;
@@ -52,11 +49,9 @@ int main(int argc, char *argv[])
     output->gisprompt = "new_file,file,output";
     output->description = _("Path to resulting VTK file.");
 
-    feature_opt = G_define_standard_option(G_OPT_V_TYPE);
-    feature_opt->multiple = NO;
-    feature_opt->options = "point,kernel,centroid,line,boundary,area,face";
-    feature_opt->answer = "line";
-    feature_opt->description = _("Vector type that will be exported");
+    type_opt = G_define_standard_option(G_OPT_V_TYPE);
+    type_opt->answer = "point,kernel,centroid,line,boundary,area,face";
+    type_opt->options = "point,kernel,centroid,line,boundary,area,face";
 
     dp_opt = G_define_option();
     dp_opt->key = "dp";
@@ -75,23 +70,44 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-    /*The default */
-    feature = GV_LINE;
+    for (i = 0; type_opt->answers && type_opt->answers[i]; i++)
+	typenum++;
 
-    if (strcmp(feature_opt->answer, "point") == 0)
-	feature = GV_POINT;
-    if (strcmp(feature_opt->answer, "kernel") == 0)
-	feature = GV_KERNEL;
-    if (strcmp(feature_opt->answer, "line") == 0)
-	feature = GV_LINE;
-    if (strcmp(feature_opt->answer, "boundary") == 0)
-	feature = GV_BOUNDARY;
-    if (strcmp(feature_opt->answer, "centroid") == 0)
-	feature = GV_CENTROID;
-    if (strcmp(feature_opt->answer, "area") == 0)
-	feature = GV_AREA;
-    if (strcmp(feature_opt->answer, "face") == 0)
-	feature = GV_FACE;
+    if (typenum > 0) {
+	types = (int *)calloc(typenum, sizeof(int));
+    }
+    else {
+	G_fatal_error("Usage: Wrong vector type");
+    }
+  
+    i = 0;
+    while (type_opt->answers[i]) {
+        types[i] = -1;
+	switch (type_opt->answers[i][0]) {
+	case 'p':
+	    types[i] = GV_POINT;
+	    break;
+	case 'k':
+	    types[i] = GV_KERNEL;
+	    break;
+	case 'c':
+	    types[i] = GV_CENTROID;
+	    break;
+	case 'l':
+	    types[i] = GV_LINE;
+	    break;
+	case 'b':
+	    types[i] = GV_BOUNDARY;
+	    break;
+	case 'a':
+	    types[i] = GV_AREA;
+	    break;
+	case 'f':
+	    types[i] = GV_FACE;
+	    break;
+	}
+	i++;
+    }
 
     /*We need level 2 functions */
     Vect_set_open_level(2);
@@ -129,8 +145,8 @@ int main(int argc, char *argv[])
 
     /*Write the header */
     writeHead(ascii, &Map);
-    /*Write the geometries features */
-    writeVTK(ascii, &Map, layer, feature, dp);
+    /*Write the geometry and data */
+    writeVTK(ascii, &Map, layer, types, typenum, dp);
 
     if (ascii != NULL)
 	fclose(ascii);
@@ -139,3 +155,4 @@ int main(int argc, char *argv[])
 
     exit(EXIT_SUCCESS);
 }
+

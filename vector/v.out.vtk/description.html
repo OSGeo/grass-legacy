@@ -8,7 +8,7 @@ If the <b>output</b> parameter is not given, the output will be send to stdout.
 
 <h2>NOTES</h2>
 
-Only <emph>one</emph> vector type can be exported at a time, available type are:
+The following vector types can be exported together in one VTK ascii file:
 <ul>
 	<li>point</li>
 	<li>line</li>
@@ -19,15 +19,14 @@ Only <emph>one</emph> vector type can be exported at a time, available type are:
 </ul>
 
 Category data (cat) for the selected vector type and layer will be written as scalar
-data with name "cat". If no cat exists, the value will set to -1 as normal cat's are
+data with name "cat_{vectorname}". If no cat exists, the value will set to -1 as normal cat's are
 always positive.
 If a vector has more categories in one layer, only the first category
 will be exported.
 <br>
 <br>
-3d vectors are supported by default. The created VTK data always includes x, y and z coordinates.
-<!-- what does the next sentence mean? -->
-If no elevation is available for the choosen vector, 0 will be set as z coordinate.
+3d vectors are supported by default. The created VTK data always includes x, y and z coordinates 
+(z = 0 if not a 3d vector map).
 Note that you can easily convert your 2d vectors into 3d vectors with v.drape.
 <br>
 <br>
