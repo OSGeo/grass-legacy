@@ -35,12 +35,15 @@ int main (int argc, char *argv[])
     mapset = G_find_vector2 (map_opt->answer, G_mapset()); 
 
     if ( mapset == NULL ) {
-	if ( n_flg->answer ) {
+	if ( action_mode == MODE_CREATE ) {
 	    Vect_open_new (&Map, map_opt->answer, 0 );
 	    Vect_build ( &Map, NULL );
 	    Vect_close (&Map);
 	    Vect_open_update (&Map, map_opt->answer, G_mapset());
 	    G_message(_("New empty map created."));
+	    Vect_close(&Map);
+	    G_debug (1, "Map closed");
+	    exit(EXIT_SUCCESS);
 	} else {
 	    G_message(_("Map does not exist. Add flag -n to create a new map."));
 	    exit(EXIT_FAILURE);

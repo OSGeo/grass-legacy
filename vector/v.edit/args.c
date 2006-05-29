@@ -10,7 +10,7 @@ int parser(int argc, char*argv[])
     act_opt->required    = YES;
     act_opt->multiple    = NO;
     act_opt->description = _("The edit action to take.");
-    act_opt->options     = "add,delete,move,merge";
+    act_opt->options     = "create,add,delete,move,merge";
 
     typ_opt = G_define_standard_option(G_OPT_V_TYPE);
     typ_opt->required    = NO;
@@ -38,17 +38,21 @@ int parser(int argc, char*argv[])
 
     fld_opt = G_define_standard_option(G_OPT_V_FIELD);
 
-    n_flg = G_define_flag();
-    n_flg->key = 'n';
-    n_flg->description = _("Create a new map.");
-
+    snp_opt = G_define_option();
+    snp_opt->key         = "snap";
+    snp_opt->type        = TYPE_DOUBLE;
+    snp_opt->required    = NO;
+    snp_opt->multiple    = NO;
+    snp_opt->description = _("Object points will snap to existing points within snap units.");
+    snp_opt->answer      = "5.0";
+    
     t_flg = G_define_flag();
     t_flg->key = 't';
     t_flg->description = _("Do not use topology.");
 
     d_flg = G_define_flag();
     d_flg->key = 'd';
-    d_flg->description = _("No database updates");
+    d_flg->description = _("No database updates.");
 
     if(G_parser(argc, argv))
 	return 0;
@@ -56,35 +60,49 @@ int parser(int argc, char*argv[])
     /* check that the given arguments makes sense together*/
 /** @todo check for incorrect extra parameters */
 
+    if(strcmp(act_opt->answer, "create")==0) { /* create requires nothing extra*/
+	action_mode = MODE_CREATE;
+	return 1;
+    }
+    
+    snap = atof(snp_opt->answer);
+    
     if(strcmp(act_opt->answer, "add")==0) { /* add requires a points argument */
 	action_mode = MODE_ADD;
 	if(pnt_opt->answers == NULL) {
 	    help(_("Required parameter <points> not set"));
 	    return 0;
 	};
+	return 1;
     }
-    if(strcmp(act_opt->answer, "del")==0) { /* del requires a cats */
+    else if(strcmp(act_opt->answer, "del")==0) { /* del requires a cats */
 	action_mode = MODE_DEL;
 	if(cat_opt->answers == NULL) {
 	    help(_("Required parameter <cats> not set"));
 	    return 0;
 	};
+	return 1;
     }
-    if(strcmp(act_opt->answer, "move")==0) { /* move requires points and cats arguments */
+    else if(strcmp(act_opt->answer, "move")==0) { /* move requires points and cats arguments */
 	action_mode = MODE_ADD;
 	if((pnt_opt->answers == NULL)||(cat_opt->answers == NULL)) {
 	    help(_("Both parameters <points> and <cats> are required."));
 	    return 0;
 	};
+	return 1;
     }
-    if(strcmp(act_opt->answer, "merge")==0) { /* merge requires a cats argument */
+    else if(strcmp(act_opt->answer, "merge")==0) { /* merge requires a cats argument */
 	action_mode = MODE_ADD;
 	if(cat_opt->answers == NULL) {
 	    help(_("Required parameter <cats> not set"));
 	    return 0;
 	};
+	return 1;
     }
-    return 1;
+    else {
+	help(_("This should never happen."));
+	return 0;
+    }
 }
 
 void help(const char *msg)
