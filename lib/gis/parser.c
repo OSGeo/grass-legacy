@@ -352,7 +352,7 @@ G_define_standard_option (int opt)
 	    Opt->key_desc     = "name";
 	    Opt->required     = YES;
 	    Opt->gisprompt    = "new,cell,raster";
-	    Opt->description  = _("Name of output raster map");
+	    Opt->description  = _("Name for output raster map");
 	    break;
 	case G_OPT_R_MAP:
 	    Opt->key          = "map";
@@ -402,7 +402,7 @@ G_define_standard_option (int opt)
 	    Opt->key_desc     = "name";
 	    Opt->required     = YES;
 	    Opt->gisprompt    = "new,vector,vector";
-	    Opt->description  = _("Name of output vector map");
+	    Opt->description  = _("Name for output vector map");
 	    break;
 	case G_OPT_V_MAP:
 	    Opt->key          = "map";
