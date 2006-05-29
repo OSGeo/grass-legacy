@@ -1,5 +1,6 @@
 #include "global.h"
-
+/**
+ * @todo if same feature is already, then only add cat */
 int do_add(struct Map_info *Map)
 {
     int next_cat;
@@ -16,16 +17,25 @@ int do_add(struct Map_info *Map)
 
 	for(i=0; pnt_opt->answers[i] != NULL; i++) {
 	    double x,y;
+	    int neanode;
 	    
 	    next_cat++;
 	    x = atof(pnt_opt->answers[i]);
 	    y = atof(pnt_opt->answers[++i]);
+
+	    if(snap > 0.0) {
+		neanode = Vect_find_node(Map, x,y,0,snap,0);
+		if(neanode) {
+		    Vect_get_node_coor(Map, neanode, &x, &y, NULL);
+		}
+	    }
+	    
 	    G_debug (1, "Adding a point to map [%s], x=%.10f y=%.10f with cat %d",
 		     map_opt->answer, x, y, next_cat);
 	    
 	    Points = Vect_new_line_struct ();
 	    Vect_append_point ( Points, x, y, 0 );
-
+	    
 	    if(!add_line ( Map, GV_POINT, Points, layer, next_cat )) {
 		return 0;
 	    }
@@ -45,9 +55,16 @@ int do_add(struct Map_info *Map)
 	next_cat++;
 	for(i=0; pnt_opt->answers[i] != NULL; i++) {
 	    double x,y;
+	    int neanode;
 	    
 	    x = atof(pnt_opt->answers[i]);
 	    y = atof(pnt_opt->answers[++i]);
+	    if(snap > 0.0) {
+		neanode = Vect_find_node(Map, x,y,0,snap,0);
+		if(neanode) {
+		    Vect_get_node_coor(Map, neanode, &x, &y, NULL);
+		}
+	    }
 	    G_debug (1, "Adding a point to line in map [%s], x=%.10f y=%.10f with cat %d",
 		     map_opt->answer, x, y, next_cat);
 	    
