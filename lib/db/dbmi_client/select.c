@@ -3,7 +3,35 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 
-static int cmp();
+static int cmp ( const void *pa, const void *pb)
+{
+    int *p1 = (int *) pa;    
+    int *p2 = (int *) pb;
+
+    if( *p1 < *p2 ) return -1;
+    if( *p1 > *p2 ) return 1;
+    return 0;
+}
+
+static int cmpcat ( const void *pa, const void *pb)
+{
+    dbCatVal *p1 = (dbCatVal *) pa;    
+    dbCatVal *p2 = (dbCatVal *) pb;
+
+    if( p1->cat < p2->cat ) return -1;
+    if( p1->cat > p2->cat ) return 1;
+    return 0;
+}
+
+static int cmpcatkey ( const void *pa, const void *pb)
+{
+    int *p1 = (int *) pa;    
+    dbCatVal *p2 = (dbCatVal *) pb;
+
+    if( *p1 < p2->cat ) return -1;
+    if( *p1 > p2->cat ) return 1;
+    return 0;
+}
 
 /*!
  \fn 
@@ -147,36 +175,6 @@ int db_select_value (dbDriver *driver,
     db_free_string ( &stmt );
 
     return (count);
-}
-
-int cmp ( const void *pa, const void *pb)
-{
-    int *p1 = (int *) pa;    
-    int *p2 = (int *) pb;
-
-    if( *p1 < *p2 ) return -1;
-    if( *p1 > *p2 ) return 1;
-    return 0;
-}
-
-int cmpcat ( const void *pa, const void *pb)
-{
-    dbCatVal *p1 = (dbCatVal *) pa;    
-    dbCatVal *p2 = (dbCatVal *) pb;
-
-    if( p1->cat < p2->cat ) return -1;
-    if( p1->cat > p2->cat ) return 1;
-    return 0;
-}
-
-int cmpcatkey ( const void *pa, const void *pb)
-{
-    int *p1 = (int *) pa;    
-    dbCatVal *p2 = (dbCatVal *) pb;
-
-    if( *p1 < p2->cat ) return -1;
-    if( *p1 > p2->cat ) return 1;
-    return 0;
 }
 
 /*!
