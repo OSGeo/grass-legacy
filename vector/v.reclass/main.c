@@ -10,7 +10,7 @@ int inpt (FILE *rulefd, char *buf);
 int key_data (char *buf, char **k, char **d);
 int reclass ( struct Map_info *In, struct Map_info *Out, int type, int field, dbCatValArray *cvarr, int optiond);
 
-int cmpcat ( const void *pa, const void *pb)
+static int cmpcat ( const void *pa, const void *pb)
 {
     dbCatVal *p1 = (dbCatVal *) pa;
     dbCatVal *p2 = (dbCatVal *) pb;
