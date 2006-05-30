@@ -29,7 +29,7 @@ distributions of GRASS.
 <tr><td><a href="dbf.html">dbf</a></td><td>DBF files. Data are stored in DBF files.</td>
 <td><a href="http://shapelib.maptools.org/dbf_api.html">http://shapelib.maptools.org/dbf_api.html</a></td></tr>
 
-<tr><td><a href="sqlite.html">sqlite</a></a></td><td>SQLite embedded database.</td>
+<tr><td><a href="sqlite.html">sqlite</a></td><td>SQLite embedded database.</td>
 <td><a href="http://sqlite.org/">http://sqlite.org/</a></td></tr>
 
 <tr><td><a href="pg.html">pg</a></td><td>PostgreSQL RDBMS.</td>
@@ -87,7 +87,7 @@ v.db.update map=roads col=nulltest value=1 where="cat &gt; 2"
 d.vect roads where="nulltest is null"
 v.db.update map=roads col=nulltest value=2 where="cat &lt;= 2"
 </pre></div>
-</p>
+
 
 <p>Examples of complex expressions in updates (using v.db.* modules):
 <div class="code"><pre>
@@ -95,7 +95,7 @@ v.db.addcol map=roads col="exprtest double"
 v.db.update map=roads col=exprtest value=cat/nulltest
 v.db.update map=roads col=exprtest value=cat/nulltest+cat where=cat=1
 </pre></div>
-</p>
+
 
 <p>Examples of complex expressions in updates (using db.* modules):
 <div class="code"><pre>
@@ -105,22 +105,22 @@ echo "UPDATE roads SET exprtest=cat/2+cat/3" | db.execute
 echo "UPDATE roads SET exprtest=NULL WHERE cat&gt;2" | db.execute
 echo "UPDATE roads SET exprtest=cat/3*(cat+1) WHERE exprtest IS NULL" | db.execute"
 </pre></div>
-</p>
 
 
-<p>You actually don't always have to create/update columns with expressions, but you can use them directly in other commands:
+<p>
+Instead of creating and updating new columns with an expression,
+you can use the expression directly in a command:
 <div class="code"><pre>
 d.vect roads where="(cat/3*(cat+1))&gt;8"
 d.vect roads where="cat&gt;exprtest"
 </pre></div>
-</p>
 
 
 
 <h2>SEE ALSO</h2>
 
-<a href="databaseintro.html">Database management in GRASS GIS</a>,
-<a href="database.html">Help pages for database modules</a><BR>
+<a href="databaseintro.html">Database management in GRASS GIS</a>,<BR>
+<a href="database.html">Help pages for database modules</a>,<BR>
 <a href=http://www.redhat.com/docs/manuals/database/RHDB-2.1-Manual/sql/sqlreference.html>SQL
     Guide and Reference</a> (Red Hat)
 
