@@ -2,7 +2,7 @@ MODULE_TOPDIR = ../../..
 
 PGM = modhead
 
-LIBES = $(GISLIB) $(EDITLIB) $(VASKLIB) $(CURSES)
+LIBES = $(EDITLIB) $(VASKLIB) $(GISLIB) $(CURSES)
 DEPENDENCIES = $(GISDEP) $(EDITDEP) $(VASKDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
