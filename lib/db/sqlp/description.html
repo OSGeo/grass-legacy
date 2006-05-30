@@ -24,15 +24,28 @@ and driver selected.
 The list of available drivers can vary in various binary 
 distributions of GRASS. 
 <p>
+
 <table border=1 >
-<tr><td><a href="dbf.html">dbf</a></td><td>DBF files. Data are stored in DBF files.</td><td><a href="http://shapelib.maptools.org/dbf_api.html">http://shapelib.maptools.org/dbf_api.html</a></td></tr>
-<tr><td><a href="sqlite.html">sqlite</a></a></td><td>SQLite embedded database.</td><td><a href="http://sqlite.org/">http://sqlite.org/</a></td></tr>
-<tr><td><a href="pg.html">pg</a></td><td>PostgreSQL RDBMS.</td><td><a href="http://postgresql.org/">http://postgresql.org/</a></td></tr>
-<tr><td><a href="mysql.html">mysql</a></td><td>MySQL RDBMS.</td><td><a href="http://mysql.org/">http://mysql.org/</a></td></tr>
-<tr><td><a href="mesql.html">mesql</a></td><td>MySQL embedded database.</td><td><a href="http://mysql.org/">http://mysql.org/</a></td></tr>
-<tr><td><a href="odbc.html">odbc</a></td><td>UnixODBC.</td><td><a href="http://www.unixodbc.org/">http://www.unixodbc.org/</a></td></tr>
+<tr><td><a href="dbf.html">dbf</a></td><td>DBF files. Data are stored in DBF files.</td>
+<td><a href="http://shapelib.maptools.org/dbf_api.html">http://shapelib.maptools.org/dbf_api.html</a></td></tr>
+
+<tr><td><a href="sqlite.html">sqlite</a></a></td><td>SQLite embedded database.</td>
+<td><a href="http://sqlite.org/">http://sqlite.org/</a></td></tr>
+
+<tr><td><a href="pg.html">pg</a></td><td>PostgreSQL RDBMS.</td>
+<td><a href="http://postgresql.org/">http://postgresql.org/</a></td></tr>
+
+<tr><td><a href="mysql.html">mysql</a></td><td>MySQL RDBMS.</td>
+<td><a href="http://mysql.org/">http://mysql.org/</a></td></tr>
+
+<tr><td><a href="mesql.html">mesql</a></td><td>MySQL embedded database.</td>
+<td><a href="http://mysql.org/">http://mysql.org/</a></td></tr>
+
+<tr><td><a href="odbc.html">odbc</a></td><td>UnixODBC. (PostgreSQL, Oracle, etc.)</td>
+<td><a href="http://www.unixodbc.org/">http://www.unixodbc.org/</a></td></tr>
 
 </table>
+
 
 <H2>NOTES</H2>
 
@@ -51,6 +64,7 @@ d.vect map where="individual='juvenile' and area='beach'"
      or an unsupported column type (then the GRASS SQL parser needs to be extended).
 <li> DBF column names are limited to 10 characters (DBF API definition)
 </ul>
+
 
 <h2>EXAMPLES</h2>
 
@@ -101,11 +115,17 @@ d.vect roads where="cat&gt;exprtest"
 </pre></div>
 </p>
 
+
+
 <h2>SEE ALSO</h2>
 
-<a href="database.html">database modules</a>
+<a href="databaseintro.html">Database management in GRASS GIS</a>,
+<a href="database.html">Help pages for database modules</a><BR>
+<a href=http://www.redhat.com/docs/manuals/database/RHDB-2.1-Manual/sql/sqlreference.html>SQL
+    Guide and Reference</a> (Red Hat)
 
-<p><i>Last changed: $Date$</i>
+
+<p><i>Last changed: $Date$</i></p>
 <HR>
 <BR><a href=index.html>Help Index</a>
 </body>
