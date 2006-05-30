@@ -55,13 +55,57 @@ echo "
 </pre></div>
 
 
+<h2>Attribute Converters</h2>
+
+CSV import into PostgreSQL:
+<div class="code"><pre>
+\h copy
+COPY t1 FROM 'filename' USING DELIMITERS ',';
+</pre></div>
+
+<a href=http://www.klaban.torun.pl/prog/pg2xbase/>pg2xbase</a>: 
+DBF to PostgreSQL converter.
+<BR>
+
+<h2>PostGIS: PostgreSQL with vector geometry</h2>
+
+<a href=http://postgis.refractions.net/>PostGIS</a>: 
+add geographic object support to PostgreSQL.
+
+<h4>Geometry Converters</h4>
+<ul>
+<li><a href=http://postgis.refractions.net/download/>PostGIS with shp2pgsql</a>:<br>
+ <tt>shp2pgsql -D lakespy2 lakespy2 test > lakespy2.sql</tt>
+<BR><BR>
+<li><a href=http://e00pg.sourceforge.net/>e00pg</a>: E00 to PostGIS filter,
+see also <em><a href="v.in.e00.html">v.in.e00</a></em>.
+<BR><BR>
+<li>GDAL/OGR <a href=http://www.gdal.org/ogr/>ogrinfo and ogr2ogr</a>:
+GIS vector format converter and library, e.g. ArcInfo or SHAPE to PostGIS.<br>
+  <tt>ogr2ogr -f "PostgreSQL" shapefile ??</tt>
+<BR><BR>
+</ul>
+
+
 <H2>SEE ALSO</H2>
 
-<em><a href="http://www.PostgreSQL.org">PostgreSQL web site</a>,
-<a HREF="db.execute.html">db.execute</a>,
+<em><a href="http://www.PostgreSQL.org">PostgreSQL web site</a>,<BR>
+<a HREF="db.execute.html">db.execute</a>,<BR>
+<a HREF="databaseintro.html">Database management in GRASS GIS</a>,<BR>
+<a HREF="database.html">Help pages for database modules</a>,<BR>
 <a HREF="sql.html">SQL support in GRASS GIS</a></em>
+<BR><BR>
+Book: <a href=http://www.postgresql.org/docs/awbook.html>PostgreSQL:
+  Introduction and Concepts</a> by Bruce Momjian<BR>
+<a href=http://www.postgresql.org/docs/>PostgreSQL Documentation</a><BR>
+<a href=http://techdocs.postgresql.org/>PostgreSQL Technical Documentation</a><BR>
+<a href=http://www.gdal.org/ogr/drv_pg.html>GDAL/OGR PostgreSQL driver documentation</a><BR>
+<BR>
 
-<p><i>Last changed: $Date$</i>
+
+
+
+<p><i>Last changed: $Date$</i></p>
 <HR>
 <BR><a href=index.html>Help Index</a>
 </body>
