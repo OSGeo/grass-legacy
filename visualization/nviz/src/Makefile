@@ -58,9 +58,9 @@ default: $(BIN)/$(PGM) htmlcmd
 $(BIN)/$(PGM): $(ARCH_OBJS) $(VECTDEP) $(BITMAPDEP) $(LINKMDEP) $(FORMDEP) $(DBMIDEP $(GISDEP)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(FMODE_OBJ) $(SURFLIB) $(IMGLIB) \
 	$(BITMAPLIB) $(LINKMLIB) $(VECTLIB) $(SITESLIB) $(FORMLIB) $(DBMILIB) \
-	$(GISLIB) $(MATHLIB) $(XDRLIB) \
+	$(G3DLIB) $(GISLIB) $(XDRLIB) \
 	$(DATETIMELIB) $(XTRA_LDFLAGS) $(TIFFLIBPATH) $(TIFFLIB) \
-	$(FFMPEGLIBPATH) $(FFMPEGLIB) $(XLIB) $(G3DLIB)
+	$(FFMPEGLIBPATH) $(FFMPEGLIB) $(XLIB) $(MATHLIB)
 	-$(MKDIR) $(GISBASE)/docs/html
 	-cp -f description.html $(GISBASE)/docs/html/$(PGM).html
 	-$(INSTALL) *.png *.jpg $(GISBASE)/docs/html 2> /dev/null ; true
