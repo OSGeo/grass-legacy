@@ -375,7 +375,7 @@ proc gisSetWindow {} {
 
     label .frame0.frameLOC.label \
     	-anchor {w} \
-    	-text [G_msg "Projection Location"] 
+    	-text [G_msg "Project Location"] 
 
     listbox .frame0.frameLOC.listbox \
     	-relief {sunken} \
