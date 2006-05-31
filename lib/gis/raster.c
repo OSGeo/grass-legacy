@@ -2,22 +2,27 @@
 
 
 /*!
- * \brief 
+ * \brief  Advance void pointer
  *
- * Advances void
- * pointer by n bytes. returns new pointer value. Usefull in raster row
- * processing loops, substitutes 
+ * Advances void pointer by n bytes
+ * Returns new pointer value.
+ *
+ * Useful in raster row processing loops, substitutes
  \code
   CELL *cell; 
   cell += n;
  \endcode
+ *
  * Now 
  \code
   rast = G_incr_void_ptr(rast, G_raster_size(data_type))
  \endcode
+ *
  * (where rast is void* and data_type is RASTER_MAP_TYPE can be used instead
- * of rast++.)  very usefull to generalize the row processing - loop (i.e. void *
- * buf_ptr += G_raster_size(data_type)
+ * of rast++.)
+ *
+ * very useful to generalize the row processing - loop i.e.
+ *   void * buf_ptr += G_raster_size(data_type)
  *
  *  \param ptr
  *  \param size
@@ -35,11 +40,12 @@ void *G_incr_void_ptr(
 
 
 /*!
- * \brief 
+ * \brief  Compares raster values p and q
  *
- * Compares raster vlues p and q. Returns 1 if p > q or only q is
- * null value -1 if p < q or only p is null value 0 if p == q or
- * p==q==null value
+ * Returns:
+ *   1 if p > q or only q is null value
+ *  -1 if p < q or only p is null value
+ *   0 if p == q or p==q==null value
  *
  *  \param p
  *  \param q
@@ -82,10 +88,9 @@ int G_raster_cmp( void *v1,void *v2, RASTER_MAP_TYPE data_type)
 
 
 /*!
- * \brief 
+ * \brief  Copies raster values q into p
  *
- * Copies raster values q into p. If q is null value, sets q to
- * null value.
+ * If q is null value, sets q to null value.
  *
  *  \param p
  *  \param q
@@ -105,11 +110,11 @@ int G_raster_cpy(
 
 
 /*!
- * \brief 
+ * \brief  Places a CELL raster value
  *
  * If G_is_c_null_value(val) is true, sets p to null value.
- * Converts CELL val to data_type (type of p) and stores result in p. Used for
- * assigning CELL values to raster cells of any type.
+ * Converts CELL val to data_type (type of p) and stores result in p.
+ * Used for assigning CELL values to raster cells of any type.
  *
  *  \param p
  *  \param val
@@ -141,11 +146,11 @@ int G_set_raster_value_c(
 
 
 /*!
- * \brief 
+ * \brief  Places a FCELL raster value
  *
  * If G_is_f_null_value(val) is true, sets p to null value.
- * Converts FCELL val to data_type (type of p) and stores result in p. Used for
- * assigning FCELL values to raster cells of any type.
+ * Converts FCELL val to data_type (type of p) and stores result in p.
+ * Used for assigning FCELL values to raster cells of any type.
  *
  *  \param p
  *  \param val
@@ -177,11 +182,11 @@ int G_set_raster_value_f(
 
 
 /*!
- * \brief 
+ * \brief  Places a DCELL raster value
  *
  * If G_is_d_null_value(val) is true, sets p to null value.
- * Converts DCELL val to data_type (type of p) and stores result in p. Used for
- * assigning DCELL values to raster cells of any type.
+ * Converts DCELL val to data_type (type of p) and stores result in p.
+ * Used for assigning DCELL values to raster cells of any type.
  *
  *  \param p
  *  \param val
@@ -213,13 +218,16 @@ int G_set_raster_value_d(
 
 
 /*!
- * \brief 
+ * \brief  Retrieves the value of type data_type from pointer p
  *
  * Retrieves the value of type data_type from pointer p,
- * converts it to CELL type and returns the result. If null value is stored in
- * p, returns CELL null value. Used for retreiving CELL values from raster cells
- * of any type.  NOTE: when data_type != CELL_TYPE, no quantization is used,
- * only type conversion.
+ * converts it to CELL type and returns the result.
+ * If null value is stored in p, returns CELL null value.
+ *
+ * Used for retreiving CELL values from raster cells of any type.
+ *
+ * NOTE: when data_type != CELL_TYPE, no quantization is used, only
+ * type conversion.
  *
  *  \param p
  *  \param data_type
@@ -248,12 +256,13 @@ CELL G_get_raster_value_c(
 
 
 /*!
- * \brief 
+ * \brief  Retrieves the value of type data_type from pointer p
  *
  * Retrieves the value of type data_type from pointer p,
- * converts it to FCELL type and returns the result. If null value is stored in
- * p, returns FCELL null value. Used for retreiving FCELL values from raster
- * cells of any type.
+ * converts it to FCELL type and returns the result.
+ * If null value is stored in p, returns FCELL null value.
+ *
+ * Used for retreiving FCELL values from raster cells of any type.
  *
  *  \param p
  *  \param data_type
@@ -282,12 +291,13 @@ FCELL G_get_raster_value_f(
 
 
 /*!
- * \brief 
+ * \brief  Retrieves the value of type data_type from pointer p,
  *
  * Retrieves the value of type data_type from pointer p,
- * converts it to DCELL type and returns the result. If null value is stored in
- * p, returns DCELL null value. Used for retreiving DCELL values from raster
- * cells of any type.
+ * converts it to DCELL type and returns the result.
+ * If null value is stored in p, returns DCELL null value.
+ 
+ * Used for retreiving DCELL values from raster cells of any type.
  *
  *  \param p
  *  \param data_type
