@@ -40,19 +40,19 @@ Current available are:
 
 <HR>
 <ul>
-<li><A HREF="#intro">Introduction</A></H4>
-<li><A HREF="#dir">Directory structure</A></H4>
-<li><A HREF="#coor">coor Format Specification</A></H4>
-<li><A HREF="#head">head Format Specification</A></H4>
-<li><A HREF="#topo">topo Format Specification</A></H4>
-<li><A HREF="#lib">Library</A></H4>
-<li><A HREF="#structures">New or Modified Constants, Structures, Functions</A></H4>
-<li><A HREF="#attr">Attributes</A></H4>
-<li><A HREF="#other">Other informations</A></H4>
-<li><A HREF="#ascii">Vector ascii Format Specification</A></H4>
-<li><A HREF="#options">Vector modules and options</A></H4>
-<li><A HREF="#status">Vector Modules Status</A></H4>
-<li><A HREF="#example">Example vector module</A></H4>
+<li><A HREF="#intro">Introduction</A>
+<li><A HREF="#dir">Directory structure</A>
+<li><A HREF="#coor">coor Format Specification</A>
+<li><A HREF="#head">head Format Specification</A>
+<li><A HREF="#topo">topo Format Specification</A>
+<li><A HREF="#lib">Library</A>
+<li><A HREF="#structures">New or Modified Constants, Structures, Functions</A>
+<li><A HREF="#attr">Attributes</A>
+<li><A HREF="#other">Other informations</A>
+<li><A HREF="#ascii">Vector ASCII Format Specification</A>
+<li><A HREF="#options">Vector modules and options</A>
+<li><A HREF="#status">Vector Modules Status</A>
+<li><A HREF="#example">Example vector module</A>
 </ul>
 <HR>
 
@@ -137,8 +137,9 @@ The body consists of line records:
   <LI><B>2.-3. bit</B> : type - one of: GV_POINT, GV_LINE, 
                               GV_BOUNDARY, GV_CENTROID
   <LI><B>4.-7. bit</B> : reserved, not used 
-<UL>
+</UL>
 </TD></TR>
+
 <TR><TD>ncats</TD><TD>C</TD><TD>1</TD><TD>number of categories 
     (written only if categories exist) </TD></TR>
 <TR><TD>field</TD><TD>S</TD><TD>ncats</TD><TD>Category identifier, 
@@ -432,12 +433,12 @@ Bounding box information was moved from coor file to topo file.
 
 <HR>
 
-<H2><A NAME="ascii">Vector ascii Format Specification</A></H2>
+<H2><A NAME="ascii">Vector ASCII Format Specification</A></H2>
 <P>
-Ascii format in new version contains categories, new type
-centroid and z-coordinates. Points and centroids are saved 
-as one coordinates pair instead of two. File is saved
-in old dig_ascii directory but the name will be probably changed.
+The ASCII format in the new version contains support for categories,
+z-coordinates, and the new types centroid, face, and kernel.
+Points and centroids are saved as one coordinate pair instead of two.
+File is saved in old dig_ascii directory but the name will be probably changed.
 
 <H3>Head</H3>
 The head of the file is similar as the head file of vector binary
@@ -459,7 +460,7 @@ MAP THRESH
 </PRE>
 
 <H3>Body</H3>
-The body begins by row:
+The body begins with the row:
 <PRE>
 VERTI:
 </PRE>
@@ -473,16 +474,23 @@ TYPE NUMBER_OF_COORDINATES [NUMBER_OF_CATEGORIES]
 ....
 [ FIELD CATEGORY]
 </PRE>
-Everything in <B>[]</B> is optional. 
-TYPE may be:<BR><BR>
-<B>P</B> point (dot) <BR> 
-<B>p</B> dead point (dead dot) <BR> 
-<B>L</B> line  <BR>
-<B>l</B> dead line <BR> 
-<B>B(A)</B> boundary  <BR>
-<B>b(a)</B> dead boundary  <BR>
-<B>C</B> centroid  <BR>
-<B>c</B> dead centroid  <BR>
+
+Everything above in <B>[ ]</B> is optional.
+<BR><BR>
+
+TYPE may be:<BR>
+<ul>
+<li><B>P</B> point (dot) <BR> 
+<li><B>p</B> dead point (dead dot) <BR> 
+<li><B>L</B> line  <BR>
+<li><B>l</B> dead line <BR> 
+<li><B>B(A)</B> boundary  <BR>
+<li><B>b(a)</B> dead boundary  <BR>
+<li><B>C</B> centroid  <BR>
+<li><B>c</B> dead centroid  <BR>
+<li><B>F</B> face (3D boundary) <BR>
+<li><B>K</B> kernel (3D centroid) <BR>
+</ul>
 
 <BR>
 Example of records:
