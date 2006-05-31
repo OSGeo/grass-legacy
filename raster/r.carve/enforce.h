@@ -19,34 +19,43 @@
 
 typedef double Point2[2];
 
-typedef struct{
+typedef struct {
     Point2 pnts[MAX_PTS];
     int npts;
     double sum_x, sum_y, sum_xy, sum_x_sq, slope, yinter;
 } PointGrp;
 
 
+struct parms {
+    struct Option *inrast, *invect, *outrast, *outvect;
+    RASTER_MAP_TYPE raster_type;
+    double swidth, sdepth;
+    int wrap, quiet, noflat;
+};
+
+
 /* enforce_ds.c */
-extern int enforce_downstream(int infd, int outfd, char *outvect,
-                    struct Map_info *Map, struct Map_info *outMap,
-                    RASTER_MAP_TYPE rtype, double width, double depth, 
-                    int noflat, int quiet);
+extern int enforce_downstream(int /*infd*/, int /*outfd*/, 
+                    struct Map_info * /*Map*/, struct Map_info * /*outMap*/,
+                    struct parms * /* parm */);
 
 /* lobf.c */
-extern Point2 *pg_getpoints(PointGrp *pg);
-extern Point2 *pg_getpoints_reversed(PointGrp *pg);
-extern double pg_y_from_x(PointGrp *pg, const double x);
-extern void pg_init(PointGrp *pg);
-extern void pg_addpt(PointGrp *pg, Point2 pt);
+extern Point2 *pg_getpoints(PointGrp *);
+extern Point2 *pg_getpoints_reversed(PointGrp *);
+extern double pg_y_from_x(PointGrp *, const double);
+extern void pg_init(PointGrp *);
+extern void pg_addpt(PointGrp *, Point2);
+
+/* raster.c */
+void *read_raster(void *, const int, const RASTER_MAP_TYPE, const int);
+void *write_raster(void *, const int, const RASTER_MAP_TYPE, const int);
 
 /* support.c */
-extern int update_history(char *raster_name);
+extern int update_rast_history(struct parms *);
 
 /* vect.c */
-extern int open_new_vect(struct Map_info *map, char *vect);
-extern int close_vect(struct Map_info *map, const int build_support);
-extern int write_xyz_points(struct Map_info *map, Point2 *pgxypts, 
-                    Point2 *pgpts, const int npts, const double depth);
+extern int open_new_vect(struct Map_info *, char *);
+extern int close_vect(struct Map_info *, const int);
+
 
 #endif /* __ENFORCE_H__ */
-
