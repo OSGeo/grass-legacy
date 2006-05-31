@@ -13,22 +13,6 @@
 #include "driver.h"
 #include "pad.h"
 
-const struct driver *driver;
-
-int NCOLORS;
-
-int screen_left;
-int screen_right;
-int screen_bottom;
-int screen_top;
-
-int cur_x;
-int cur_y;
-
-double text_size_x;
-double text_size_y;
-double text_rotation;
-
 static jmp_buf save;
 
 static RETSIGTYPE handle_sigpipe(int sig)
@@ -41,9 +25,8 @@ static RETSIGTYPE handle_sigterm(int sig)
 	COM_Graph_close();
 }
 
-int LIB_main(const struct driver *drv, int argc, char **argv)
+int LIB_main(int argc, char **argv)
 {
-	const char *p;
 	char *me;
 	char *connpath;
 	int _wfd;
@@ -57,8 +40,6 @@ int LIB_main(const struct driver *drv, int argc, char **argv)
 	int listenfd;
 #endif
 	struct sigaction sigact;
-
-	driver = drv;
 
 	/* The calling syntax is as follows:
 	   monitor_name [-] "input_fifo output_fifo"
@@ -98,22 +79,6 @@ int LIB_main(const struct driver *drv, int argc, char **argv)
 		G_fatal_error("Unable to start monitor <%s>", me);
 	}
 
-	/* initialize graphics */
-
-	p = getenv ("GRASS_WIDTH");
-	screen_left = 0;
-	screen_right = (p && atoi(p)) ? atoi(p) : DEF_WIDTH;
-
-	p = getenv ("GRASS_HEIGHT");
-	screen_top = 0;
-	screen_bottom = (p && atoi(p)) ? atoi(p) : DEF_HEIGHT;
-
-	if (COM_Graph_set(argc, argv) < 0)
-		exit(1);
-
-	/* Initialize color stuff */
-	COM_Color_table_fixed();
-
 	/* We are free to run now.  No one is using our socket/FIFOs.             */
 	/* If we are to run in background, we will have foreground == 0 from      */
 	/* the syntax check above. */
@@ -132,9 +97,6 @@ int LIB_main(const struct driver *drv, int argc, char **argv)
 #ifdef USE_G_SOCKS
 	listenfd = prepare_connection_sock(me, connpath);
 #endif
-
-	/* initialize the pads */
-	create_pad("");    /* scratch pad */
 
 	fprintf(stderr,"Graphics driver [%s] started\n", me);
 

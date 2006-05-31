@@ -43,6 +43,8 @@ int main(int argc, char **argv)
 	drv.draw_point		= PNG_draw_point;
 	drv.draw_bitmap		= NULL;
 
-	return LIB_main(&drv, argc, argv);
+	LIB_init(&drv, argc, argv);
+
+	return LIB_main(argc, argv);
 }
 

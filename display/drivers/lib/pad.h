@@ -20,13 +20,13 @@ typedef struct _pad_ {
 } PAD;
 
 PAD *pad_list(void);
-PAD *find_pad(char *);
+PAD *find_pad(const char *);
 int delete_pad(PAD *);
-int create_pad(char *);
-int append_item(PAD *, char *, char *, int);
+int create_pad(const char *);
+int append_item(PAD *, const char *, const char *, int);
 int invent_pad(char *);
-int delete_item(PAD *, char *);
-ITEM *find_item(PAD *, char *);
+int delete_item(PAD *, const char *);
+ITEM *find_item(PAD *, const char *);
 
 #endif /* _PAD_H_ */
 

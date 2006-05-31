@@ -26,7 +26,7 @@ static int free_item(ITEM *item)
 	return 0;
 }
 
-static ITEM *new_item(PAD *pad, char *name)
+static ITEM *new_item(PAD *pad, const char *name)
 {
 	ITEM *item;
 
@@ -50,7 +50,7 @@ static ITEM *new_item(PAD *pad, char *name)
 	return item;
 }
 
-static int remove_value(ITEM *item, char *value)
+static int remove_value(ITEM *item, const char *value)
 {
 	LIST **p = &item->list;
 	LIST *l = *p;
@@ -71,7 +71,7 @@ static int remove_value(ITEM *item, char *value)
 	return 0;
 }
 
-int append_item(PAD *pad, char *name, char *value, int replace)
+int append_item(PAD *pad, const char *name, const char *value, int replace)
 {
 	ITEM *item;
 	LIST *cur, *prev;
@@ -94,7 +94,7 @@ int append_item(PAD *pad, char *name, char *value, int replace)
 	/* find the named item for the current pad */
 	item = find_item(pad, name);
 	if (item == NULL)
-		item = new_item(pad,name);
+		item = new_item(pad, name);
 	if (item == NULL)
 		return 0;
 
@@ -115,7 +115,7 @@ int append_item(PAD *pad, char *name, char *value, int replace)
 	return 1;
 }
 
-int delete_item(PAD *pad, char *name)
+int delete_item(PAD *pad, const char *name)
 {
 	ITEM *item;
 
@@ -137,7 +137,7 @@ int delete_item(PAD *pad, char *name)
 	return 1;
 }
 
-ITEM *find_item(PAD *pad, char *name)
+ITEM *find_item(PAD *pad, const char *name)
 {
 	ITEM *item;
 
@@ -169,7 +169,7 @@ static int delink_pad(PAD *pad)
 	return 0;
 }
 
-int create_pad(char *name)
+int create_pad(const char *name)
 {
 	PAD *pad;
 
@@ -211,7 +211,7 @@ int delete_pad(PAD *pad)
 	return 1;
 }
 
-PAD *find_pad(char *name)
+PAD *find_pad(const char *name)
 {
 	PAD *pad;
 

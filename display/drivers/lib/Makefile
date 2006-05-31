@@ -43,6 +43,7 @@ LIB_OBJS =\
 	connect_sock.o\
 	font2.o\
 	font_freetype.o\
+	init.o\
 	main.o\
 	pad.o\
 	text2.o\
