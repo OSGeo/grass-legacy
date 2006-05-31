@@ -22,7 +22,9 @@ OBJS =  \
 	Raster_int.o\
 	Respond.o\
 	main.o\
-	write.o
+	write.o\
+	write_ppm.o\
+	write_png.o
 
 ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 

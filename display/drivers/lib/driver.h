@@ -75,8 +75,10 @@ extern void LIB_assign_fixed_color(int,int);
 extern void LIB_assign_standard_color(int,int);
 /* command.c */
 extern int LIB_command_get_input(void);
+/* init.c */
+extern int LIB_init(const struct driver *drv,int argc,char **argv);
 /* main.c */
-extern int LIB_main(const struct driver *drv,int argc,char **argv);
+extern int LIB_main(int argc,char **argv);
 
 /* Commands */
 
