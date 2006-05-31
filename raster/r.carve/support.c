@@ -6,30 +6,26 @@
 
 
 /*
- * update_history - Update a history file.  Some of the digit file 
+ * update_rast_history - Update a history file.  Some of the digit file 
  * information is placed in the history file.
  * returns  0  -  successful creation of history file
  *         -1  -  error
  */
-int update_history(char *raster_name)
+int update_rast_history(struct parms *parm)
 {
     struct History hist;
 
-    if (raster_name == NULL)
-    {
-        G_warning(_("%s[%d]: No raster file specified."), __FILE__, __LINE__);
-
-        return -1;
-    }
-
-    if (G_read_history(raster_name, G_mapset(), &hist) < 0)
+    if (G_read_history(parm->inrast->answer, G_mapset(), &hist) < 0)
 	return -1;
 
     /* write command line to history */
+    G_short_history(parm->outrast->answer, "raster", &hist);
     sprintf(hist.edhist[0], "%s version %.2f", G_program_name(), APP_VERSION);
-    sprintf(hist.datsrc_1, "raster elevation file: %s", raster_name);
-    hist.edlinecnt = 1;
+    sprintf(hist.edhist[1], "stream width: %.2f", parm->swidth * 2);
+    sprintf(hist.datsrc_1, "raster elevation file: %s", parm->inrast->answer);
+    sprintf(hist.datsrc_2, "vector stream file: %s", parm->invect->answer);
+    hist.edlinecnt = 2;
     G_command_history(&hist);
 
-    return G_write_history(raster_name, &hist);
+    return G_write_history(parm->outrast->answer, &hist);
 }

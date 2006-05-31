@@ -1,4 +1,5 @@
-/* Written by Bill Brown, UIUC GIS Laboratory */
+/* Orinial code by Bill Brown, UIUC GIS Laboratory                  */
+/* Ported to GRASS6 by Brad Douglas <rez at touchofmadness dot com> */
 #include <stdio.h>
 #include <string.h>
 #include <grass/gis.h>
@@ -12,314 +13,195 @@
 #endif
 
 
-#define USE_LOWEST
-
-
 /* function prototypes */
-static void traverse_line_flat(Point2 *pgpts, const int pt, const int npts);
-static void traverse_line_noflat(Point2 *pgpts, const double depth, 
+static inline void clear_bitmap(struct BM *bm);
+static int process_line(struct Map_info *Map, struct Map_info *outMap,
+                void *rbuf, const int line, const struct parms *parm);
+static inline void traverse_line_flat(Point2 *pgpts, const int pt, const int npts);
+static inline void traverse_line_noflat(Point2 *pgpts, const double depth, 
                 const int pt, const int npts);
-static void set_min_point(void *buf, int col, int row,
-                double elev, double depth, RASTER_MAP_TYPE rtype);
-static double lowest_cell_near_point(void *data, RASTER_MAP_TYPE rtype,
-                double px, double py, double rad);
+static inline void set_min_point(void *buf, const int col, const int row,
+                const double elev, const double depth, const RASTER_MAP_TYPE rtype);
+static inline double lowest_cell_near_point(void *data, const RASTER_MAP_TYPE rtype,
+                const double px, const double py, const double rad);
+static void process_line_segment(const int npts, void *rbuf,
+                Point2 *pgxypts, Point2 *pgpts,
+                struct BM *bm, struct Map_info *outMap,
+                const struct parms *parm);
 
 
 /******************************************************************
  * Returns 0 on success, -1 on error, 1 on warning, writing message
  * to errbuf for -1 or 1 */
 
-int enforce_downstream(int infd, int outfd, char *outvect, 
+int enforce_downstream(int infd, int outfd, 
                    struct Map_info *Map, struct Map_info *outMap,
-                   RASTER_MAP_TYPE rtype, double width, double depth, 
-                   int noflat, int quiet)
+                   struct parms *parm)
 {
     struct Cell_head wind;
-    int i, j, retval = 0;
+    int retval = 0;
     int line, nlines;
-    int nrows, ncols;
-    PointGrp pg;
-    PointGrp pgxy;   /* copy any points in region to this one */
-    Point2 pt, ptxy, *pgpts, *pgxypts;
-    struct line_pnts *points;
-    struct line_cats *cats;
-#if 0
-    CELL *inrast = NULL, *outrast = NULL;
-#endif
     void *rbuf = NULL;
-    void *tmpbuf = NULL;
-    struct BM *bm;
 
     /* width used here is actually distance to center of stream */
-    width /= 2.0; 
+    parm->swidth /= 2;
 
     G_get_window(&wind);
 
-    points = Vect_new_line_struct();
-    cats   = Vect_new_cats_struct();
     Vect_set_constraint_region(Map, wind.north, wind.south, wind.east,
 				wind.west, wind.top, wind.bottom);
 
-    ncols = G_window_cols();
-    nrows = G_window_rows();
-
-    bm = BM_create(ncols, nrows);
-
     /* allocate and clear memory for entire raster */
-    rbuf = G_malloc(nrows * ncols * G_raster_size(rtype));
-    memset(rbuf, 0, nrows * ncols * G_raster_size(rtype));
-
-    if (!quiet)
-        G_message(_("Reading raster file... "));
+    rbuf = G_calloc(G_window_rows() * G_window_cols(), G_raster_size(parm->raster_type));
 
     /* first read whole elevation file into buf */
-    tmpbuf = rbuf;
-    for (i = 0; i < nrows; i++) {
-        if (!quiet)
-            G_percent(i + 1, nrows, 10);
+    read_raster(rbuf, infd, parm->raster_type, parm->quiet);
 
-        G_get_raster_row(infd, tmpbuf, i, rtype);
-        tmpbuf = G_incr_void_ptr(tmpbuf, G_raster_size(rtype) * ncols);
-    }
-
-#if 0
-    /* leave for now - may want to eliminate above code eventually and
-     * somehow figure out how to write random, so would need to do this
-     * row by row at that point */
-    inrast  = G_allocate_raster_buf(rtype);
-    outrast = G_allocate_raster_buf(rtype);
-#endif
-
-    if (!quiet)
-        fprintf(stderr, _("Processing lines..."));
+    if (!parm->quiet)
+        fprintf(stderr, _("Processing lines... "));
 
     nlines = Vect_get_num_lines(Map);
-    for (line = 1; line < nlines; line++) {
-        int do_warn = 0;
-        int npts = 0;
-        int prevrow = -1;
-        int in_out = 0;
-        int first_in = -1;
-        double totdist = 0.;
-
-        if (!(Vect_read_line(Map, points, cats, line) & GV_LINE))
-            continue;
-
-        pg_init(&pg);
-        pg_init(&pgxy);
-
-        /* zero out the bitmap */
-        for (i = 0; i < nrows; i++)
-            for (j = 0; j < ncols; j++)
-                BM_set(bm, j, i, 0);
-
-        if (!quiet)
-            G_percent(line, nlines, 10);
-
-        for (i = 0; i < points->n_points; i++) {
-            int row = G_northing_to_row(points->y[i], &wind);
-            int col = G_easting_to_col(points->x[i], &wind);
-
-            /* rough clipping */
-            if (row < 0 || row > nrows - 1 ||
-                col < 0 || col > ncols - 1)
-            {
-                if (first_in != -1)
-                    in_out = 1;
-
-                G_debug(3, "outside region - row: %d col: %d", row, col);
-
-                continue;
-	    }
-
-            if (first_in < 0)
-                first_in = i;
-            else if (in_out)
-                do_warn = 1;
-
-            ptxy[0] = points->x[i];
-            ptxy[1] = points->y[i];
-
-#ifdef USE_LOWEST
-	    pt[1] = lowest_cell_near_point(rbuf, rtype,
-                                ptxy[0], ptxy[1], width);
-
-            /* returns 0. for NULL cell - kludge */
-            if (pt[1] == 0.)
-                continue;
-#else
-            if (row != prevrow)
-                G_get_raster_row(infd, inrast, row, rtype);
-
-            if (G_is_null_value(&inrast[col], rtype))
-                continue;
-
-            pt[1] = inrast[col];
-            prevrow = row;
-#endif
-            /* get distance from this point to previous point */
-            if (i)
-                totdist += G_distance(points->x[i-1], points->y[i-1],
-                                      points->x[i],   points->y[i]);
-
-            pt[0] = totdist;
-            pg_addpt(&pg, pt);
-            pg_addpt(&pgxy, ptxy);
-            npts++;
-        }
-
-        if (do_warn)
-        {
-            G_warning(_("Vect runs out of region and re-enters - "
-                        "this case is not yet implemented."));
-            retval = 1;
-        }
-
-        /* TODO: check for NULL */
-        /* now check to see if points go downslope(inorder) or upslope */
-        if (pg_y_from_x(&pg, 0.0) > pg_y_from_x(&pg, totdist))
-        {
-            G_debug(3, "inorder:1");
-
-            pgpts   = pg_getpoints(&pg);
-            pgxypts = pg_getpoints(&pgxy);
-        } else {
-            G_debug(3, "inorder:0");
-
-            /* pgpts is now high to low */
-            pgpts = pg_getpoints_reversed(&pg);
-
-            for (i = 0; i < npts; i++)
-                pgpts[i][0] = totdist - pgpts[i][0];
-
-            pgxypts = pg_getpoints_reversed(&pgxy);  
-        }
-
-        for (i = 0; i < (npts - 1); i++) {
-            if (noflat)
-                /* make sure there are no flat segments in line */
-                traverse_line_noflat(pgpts, depth, i, npts);
-            else
-                /* ok to have flat segments in line */
-                traverse_line_flat(pgpts, i, npts);
-        }
-
-        /* points are now in order and adjusted to run high to low with
-         * no dips or mounds - if site output file given, write it now */
-        if (outvect)
-            write_xyz_points(outMap, pgxypts, pgpts, npts, depth);
-
-        /* Now for each segment in the line, use distance from segment 
-         * to find beginning row from northernmost point, beginning
-         * col from easternmost, ending row & col, then loop through 
-         * bounding box and use distance from segment to emboss
-         * new elevations */
-	{
-        int row1, row2, col1, col2;
-        int prevcol;
-        double cellx, celly, cy;
-
-        /* kludge - fix for lat_lon */
-        int rowoff = width / wind.ns_res;
-        int coloff = width / wind.ew_res;
-
-        /* get prevrow and prevcol for iteration 0 of following loop */
-        prevrow = G_northing_to_row(pgxypts[0][1], &wind);
-        prevcol = G_easting_to_col(pgxypts[0][0], &wind);
-
-        for (i = 1; i < (npts - 1); i++) {
-            int c, r;
-            int row = G_northing_to_row(pgxypts[i][1], &wind);
-            int col = G_easting_to_col(pgxypts[i][0], &wind);
-
-            /* get bounding box of line points */
-            row1 = MAX(0, MIN(row, prevrow) - rowoff);
-            row2 = MIN(nrows - 1, MAX(row, prevrow) + rowoff);
-            col1 = MAX(0, MIN(col, prevcol) - coloff);
-            col2 = MIN(ncols - 1, MAX(col, prevcol) + coloff);
-
-            for (r = row1; r < row2; r++) {
-                cy = G_row_to_northing(r + 0.5, &wind);
-
-                for (c = col1; c < col2; c++) {
-#if 0
-                    int status;
-#endif
-
-                    cellx = G_col_to_easting(c + 0.5, &wind);
-                    celly = cy;  /* gets written over in distance2... */
-
-                    /* Thought about not going past endpoints (use 
-                     * status to check) but then pieces end up missing 
-                     * from outside corners - if it goes past ends, 
-                     * should probably do some interp or will get flats.
-                     * Here we use a bitmap and only change cells once 
-                     * on the way down */
-
-                    if (dig_distance2_point_to_line(cellx, celly, 0,
-                           pgxypts[i-1][0], pgxypts[i-1][1], 0,
-                           pgxypts[i][0], pgxypts[i][1], 0,
-                           0, &cellx, &celly, NULL, NULL, NULL))
-                    {
-                        if (!BM_get(bm, c, r))
-                        {
-                            double dist, elev;
-
-                            BM_set(bm, c, r, 1);
-
-                            dist = G_distance(pgxypts[i][0], pgxypts[i][1],
-                                              cellx, celly);
-
-                            elev = LINTERP(pgpts[i][1], pgpts[i-1][1],
-                                        (dist / (pgpts[i][0] - pgpts[i-1][0])));
-
-                            /* TODO - may want to use a function for the 
-                             * cross section of stream */
-                            set_min_point(rbuf, c, r, elev, depth, rtype);
-                        }
-                    }
-                }
-            }
-
-            prevrow = row;
-            prevcol = col;
-        }
-        }
-
-        G_debug(3, "start:%.3lf end:%.3lf",
-                pg_y_from_x(&pg, 0.0), pg_y_from_x(&pg, totdist));
-    }
+    for (line = 1; line <= nlines; line++)
+        retval = process_line(Map, outMap, rbuf, line, parm);
 
     /* write output raster file */
-    if (!quiet)
-        fprintf(stderr, _("\nWriting raster file... "));
+    write_raster(rbuf, outfd, parm->raster_type, parm->quiet);
 
-    tmpbuf = rbuf;
-    for (i = 0; i < nrows; i++) {
-        if (!quiet)
-            G_percent(i, nrows, 10);
-
-        G_put_raster_row(outfd, tmpbuf, rtype);
-        tmpbuf = G_incr_void_ptr(tmpbuf, G_raster_size(rtype) * ncols);
-    }
-
-    Vect_destroy_line_struct(points);
-    Vect_destroy_cats_struct(cats);
-    BM_destroy(bm);
-#if 0
-    G_free(inrast);
-    G_free(outrast);
-#endif
     G_free(rbuf);
 
-    if (!quiet)
+    if (!parm->quiet)
         G_message(_("done."));
 
     return retval;
 }
 
 
-static void traverse_line_flat(Point2 *pgpts, const int pt, const int npts)
+static int process_line(struct Map_info *Map, struct Map_info *outMap,
+                        void *rbuf, const int line, const struct parms *parm)
+{
+    int i, j, retval = 0;
+    int do_warn = 0;
+    int npts = 0;
+    int in_out = 0;
+    int first_in = -1;
+    double totdist = 0.;
+    struct Cell_head wind;
+    static struct line_pnts *points = NULL;
+    static struct line_cats *cats   = NULL;
+    static struct BM *bm            = NULL;
+    Point2 *pgpts, *pgxypts;
+    PointGrp pg;
+    PointGrp pgxy;   /* copy any points in region to this one */
+
+    G_get_window(&wind);
+    
+    if (!points)
+        points = Vect_new_line_struct();
+    if (!cats)
+        cats   = Vect_new_cats_struct();
+
+    if (!(Vect_read_line(Map, points, cats, line) & GV_LINE))
+        return 0;
+
+    if (!bm)
+        bm = BM_create(G_window_cols(), G_window_rows());
+    clear_bitmap(bm);
+
+    pg_init(&pg);
+    pg_init(&pgxy);
+
+    if (!parm->quiet)
+        G_percent(line, Vect_get_num_lines(Map), 10);
+
+    for (i = 0; i < points->n_points; i++) {
+        Point2 pt, ptxy;
+        double elev;
+        int row = G_northing_to_row(points->y[i], &wind);
+        int col = G_easting_to_col(points->x[i], &wind);
+
+        /* rough clipping */
+        if (row < 0 || row > G_window_rows() - 1 ||
+            col < 0 || col > G_window_cols() - 1)
+        {
+            if (first_in != -1)
+                in_out = 1;
+
+            G_debug(1, "outside region - row:%d col:%d", row, col);
+
+            continue;
+        }
+
+        if (first_in < 0)
+            first_in = i;
+        else if (in_out)
+            do_warn = 1;
+
+        elev = lowest_cell_near_point(rbuf, parm->raster_type, points->x[i],
+                                       points->y[i], parm->swidth);
+
+        ptxy[0] = points->x[i];
+        ptxy[1] = points->y[i];
+        pt[1]   = elev;
+
+        /* get distance from this point to previous point */
+        if (i)
+            totdist += G_distance(points->x[i-1], points->y[i-1],
+                                  points->x[i],   points->y[i]);
+
+        pt[0] = totdist;
+        pg_addpt(&pg, pt);
+        pg_addpt(&pgxy, ptxy);
+        npts++;
+    }
+
+    if (do_warn)
+    {
+        G_warning(_("Vect runs out of region and re-enters - "
+                    "this case is not yet implemented."));
+        retval = 1;
+    }
+
+    /* now check to see if points go downslope(inorder) or upslope */
+    if (pg_y_from_x(&pg, 0.0) > pg_y_from_x(&pg, totdist))
+    {
+        pgpts   = pg_getpoints(&pg);
+        pgxypts = pg_getpoints(&pgxy);
+    } else {
+        /* pgpts is now high to low */
+        pgpts = pg_getpoints_reversed(&pg);
+
+        for (i = 0; i < npts; i++)
+            pgpts[i][0] = totdist - pgpts[i][0];
+
+        pgxypts = pg_getpoints_reversed(&pgxy);  
+    }
+
+    for (i = 0; i < (npts - 1); i++) {
+        if (parm->noflat)
+            /* make sure there are no flat segments in line */
+            traverse_line_noflat(pgpts, parm->sdepth, i, npts);
+        else
+            /* ok to have flat segments in line */
+            traverse_line_flat(pgpts, i, npts);
+    }
+
+    process_line_segment(npts, rbuf, pgxypts, pgpts, bm, outMap, parm);
+
+    return retval;
+}
+
+
+static inline void clear_bitmap(struct BM *bm)
+{
+    int i, j;
+
+    for (i = 0; i < G_window_rows(); i++)
+        for (j = 0; j < G_window_cols(); j++)
+            BM_set(bm, i, j, 0);
+}
+
+
+static inline void traverse_line_flat(Point2 *pgpts, const int pt, const int npts)
 {
     int j, k;
 
@@ -336,7 +218,7 @@ static void traverse_line_flat(Point2 *pgpts, const int pt, const int npts)
         for (j = (pt + 1); j < npts; j++)
             pgpts[j][1] = pgpts[pt][1];
     } else {
-        /* linear interp between point i and the next <= */
+        /* linear interp between point pt and the next < */
         for (k = (pt + 1); k < j; k++)
             pgpts[k][1] = LINTERP(pgpts[j][1], pgpts[pt][1],
                                  (pgpts[j][0] - pgpts[k][0]) /
@@ -345,7 +227,7 @@ static void traverse_line_flat(Point2 *pgpts, const int pt, const int npts)
 }
 
 
-static void traverse_line_noflat(Point2 *pgpts, const double depth, 
+static inline void traverse_line_noflat(Point2 *pgpts, const double depth, 
                                  const int pt, const int npts)
 {
     int j, k;
@@ -359,26 +241,22 @@ static void traverse_line_noflat(Point2 *pgpts, const double depth,
 
     if (j == npts)
     {
-        /* if we got to the end, lower end by depth OR .01 & INTERP */
+        /* if we got to the end, lower end by depth OR .01 */
         --j;
-        pgpts[j][1] = pgpts[pt][1] - (depth > 0 ? depth : .01);
-
-        for (k = (pt + 1); k < j; k++)
-            pgpts[k][1] = LINTERP(pgpts[j][1], pgpts[pt][1],
-                                 (pgpts[j][0] - pgpts[k][0]) /
-                                 (pgpts[j][0] - pgpts[pt][0]));
-    } else {
-        /* linear interp between point pt and the next < */
-        for (k = (pt + 1); k < j; k++)
-            pgpts[k][1] = LINTERP(pgpts[j][1], pgpts[pt][1],
-                                 (pgpts[j][0] - pgpts[k][0]) / 
-                                 (pgpts[j][0] - pgpts[pt][0]));
+        pgpts[j][1] = pgpts[pt][1] - (depth > 0 ? depth : 0.01);
     }
+
+    /* linear interp between point pt and the next < */
+    for (k = (pt + 1); k < j; k++)
+        pgpts[k][1] = LINTERP(pgpts[j][1], pgpts[pt][1],
+                             (pgpts[j][0] - pgpts[k][0]) / 
+                             (pgpts[j][0] - pgpts[pt][0]));
 }
 
 
-static void set_min_point(void *data, int col, int row,
-                double elev, double depth, RASTER_MAP_TYPE rtype)
+/* sets value for a cell */
+static inline void set_min_point(void *data, const int col, const int row,
+                const double elev, const double depth, const RASTER_MAP_TYPE rtype)
 {
     switch (rtype) {
     case CELL_TYPE:
@@ -386,7 +264,6 @@ static void set_min_point(void *data, int col, int row,
         CELL *cbuf = data;
 
         cbuf[row * G_window_cols() + col] = MIN(cbuf[row * G_window_cols() + col], elev) - (int)depth;
-        G_debug(3, "row:%d col:%d val=%d", row, col, cbuf[row * G_window_cols() + col]);
     }
     break;
     case FCELL_TYPE:
@@ -394,7 +271,6 @@ static void set_min_point(void *data, int col, int row,
         FCELL *fbuf = data;
 
         fbuf[row * G_window_cols() + col] = MIN(fbuf[row * G_window_cols() + col], elev) - depth;
-        G_debug(3, "row:%d col:%d val=%.2lf", row, col, fbuf[row * G_window_cols() + col]);
     }
     break;
     case DCELL_TYPE:
@@ -402,7 +278,6 @@ static void set_min_point(void *data, int col, int row,
         DCELL *dbuf = data;
 
         dbuf[row * G_window_cols() + col] = MIN(dbuf[row * G_window_cols() + col], elev) - depth;
-        G_debug(3, "row:%d col:%d val=%.2lf", row, col, dbuf[row * G_window_cols() + col]);
     }
     break;
     }
@@ -410,14 +285,19 @@ static void set_min_point(void *data, int col, int row,
 
 
 /* returns the lowest value cell within radius rad of px, py */
-static double lowest_cell_near_point(void *data, RASTER_MAP_TYPE rtype,
-            double px, double py, double rad)
+static inline double lowest_cell_near_point(void *data, const RASTER_MAP_TYPE rtype,
+            const double px, const double py, const double rad)
 {
     int r, row, col, row1, row2, col1, col2, rowoff, coloff;
-    double min = 0.;
+    int rastcols, rastrows;
+    double min;
     struct Cell_head wind;
 
     G_get_window(&wind);
+    rastrows = G_window_rows();
+    rastcols = G_window_cols();
+
+    G_set_d_null_value(&min, 1);
 
     /* kludge - fix for lat_lon */
     rowoff = rad / wind.ns_res;
@@ -426,83 +306,92 @@ static double lowest_cell_near_point(void *data, RASTER_MAP_TYPE rtype,
     row = G_northing_to_row(py, &wind);
     col = G_easting_to_col(px, &wind);
 
+    /* get bounding box of line segment */
     row1 = MAX(0, row - rowoff);
-    row2 = MIN(G_window_rows() - 1, row + rowoff);
+    row2 = MIN(rastrows - 1, row + rowoff);
     col1 = MAX(0, col - coloff);
-    col2 = MIN(G_window_cols() - 1, col + coloff);
-
-    G_debug(3, "row:%d col:%d row1:%d col1:%d row2:%d col2:%d",
-               row, col, row1, col1, row2, col2);
+    col2 = MIN(rastcols - 1, col + coloff);
 
     switch (rtype) {
     case CELL_TYPE:
     {
         CELL *cbuf = data;
 
-        if (G_is_c_null_value(&cbuf[row1 * G_window_cols() + col1]))
-            min = 0.;
-        else
-            min = cbuf[row1 * G_window_cols() + col1];
+        if (!(G_is_c_null_value(&cbuf[row1 * rastcols + col1])))
+            min = cbuf[row1 * rastcols + col1];
     }
     break;
     case FCELL_TYPE:
     {
         FCELL *fbuf = data;
 
-        if (G_is_f_null_value(&fbuf[row1 * G_window_cols() + col1]))
-            min = 0.;
-        else
-            min = fbuf[row1 * G_window_cols() + col1];
+        if (!(G_is_f_null_value(&fbuf[row1 * rastcols + col1])))
+            min = fbuf[row1 * rastcols + col1];
     }
     break;
     case DCELL_TYPE:
     {
         DCELL *dbuf = data;
 
-        if (G_is_d_null_value(&dbuf[row1 * G_window_cols() + col1]))
-            min = 0.;
-        else
-            min = dbuf[row1 * G_window_cols() + col1];
+        if (!(G_is_d_null_value(&dbuf[row1 * rastcols + col1])))
+            min = dbuf[row1 * rastcols + col1];
     }
     break;
     }
-
-    if (min == 0.)
-        return min;
 
     for (r = row1; r < row2; r++) {
         double cy = G_row_to_northing(r + 0.5, &wind);
         int c;
 
         for (c = col1; c < col2; c++) {
-            double cellx = G_col_to_easting(c + 0.5, &wind);
-            double celly = cy;  /* gets written over in distance2... */
+            double cx = G_col_to_easting(c + 0.5, &wind);
 
-            if (G_distance(px, py, cellx, celly) <= SQR(rad))
+            if (G_distance(px, py, cx, cy) <= SQR(rad))
             {
                 switch (rtype) {
                 case CELL_TYPE:
                 {
                     CELL *cbuf = data;
 
-                    if (cbuf[r * G_window_cols() + c] < min)
-                        min = cbuf[r * G_window_cols() + c];
+                    if (G_is_d_null_value(&min))
+                    {
+                        if (!(G_is_c_null_value(&cbuf[r * rastcols + c])))
+                            min = cbuf[r * rastcols + c];
+                    } else {
+                        if (!(G_is_c_null_value(&cbuf[r *rastcols + c])))
+                            if (cbuf[r * rastcols + c] < min)
+                                min = cbuf[r * rastcols + c];
+                    }
                 }
 		break;
                 case FCELL_TYPE:
                 {
                     FCELL *fbuf = data;
 
-                    if (fbuf[r * G_window_cols() + c] < min)
-                        min = fbuf[r * G_window_cols() + c];
+                    if (G_is_d_null_value(&min))
+                    {
+                        if (!(G_is_f_null_value(&fbuf[r * rastcols + c])))
+                            min = fbuf[r * rastcols + c];
+                    } else {
+                        if (!(G_is_f_null_value(&fbuf[r * rastcols + c])))
+                            if (fbuf[r * rastcols + c] < min)
+                                min = fbuf[r * rastcols + c];
+                    }
                 }
                 break;
                 case DCELL_TYPE:
                 {
                     DCELL *dbuf = data;
 
-                    if (dbuf[r * G_window_cols() + c] < min)
-                        min = dbuf[r * G_window_cols() + c];
+                    if (G_is_d_null_value(&min))
+                    {
+                        if (!(G_is_d_null_value(&dbuf[r * rastcols + c])))
+                            min = dbuf[r * rastcols + c];
+                    } else {
+                        if (!(G_is_d_null_value(&dbuf[r * rastcols + c])))
+                            if (dbuf[r * rastcols + c] < min)
+                                min = dbuf[r * rastcols + c];
+                    }
                 }
                 break;
                 }
@@ -510,7 +399,104 @@ static double lowest_cell_near_point(void *data, RASTER_MAP_TYPE rtype,
         }
     }
 
-    G_debug(3, "min=%.2lf", min);
+    G_debug(3, "min:%.2lf", min);
 
     return min;
+}
+
+
+/* Now for each segment in the line, use distance from segment 
+ * to find beginning row from northernmost point, beginning
+ * col from easternmost, ending row & col, then loop through 
+ * bounding box and use distance from segment to emboss
+ * new elevations */
+static void process_line_segment(const int npts, void *rbuf,
+                 Point2 *pgxypts, Point2 *pgpts,
+                 struct BM *bm, struct Map_info *outMap,
+                 const struct parms *parm)
+{
+    int i, row1, row2, col1, col2;
+    int prevrow, prevcol;
+    double cellx, celly, cy;
+    struct Cell_head wind;
+    struct line_pnts *points = Vect_new_line_struct();
+    struct line_cats *cats   = Vect_new_cats_struct();
+
+    G_get_window(&wind);
+
+    Vect_cat_set(cats, 1, 1);
+
+    /* kludge - fix for lat_lon */
+    int rowoff = parm->swidth / wind.ns_res;
+    int coloff = parm->swidth / wind.ew_res;
+
+    /* get prevrow and prevcol for iteration 0 of following loop */
+    prevrow = G_northing_to_row(pgxypts[0][1], &wind);
+    prevcol = G_easting_to_col(pgxypts[0][0], &wind);
+
+    for (i = 1; i < (npts - 1); i++) {
+        int c, r;
+
+        int row = G_northing_to_row(pgxypts[i][1], &wind);
+        int col = G_easting_to_col(pgxypts[i][0], &wind);
+
+        /* get bounding box of line segment */
+        row1 = MAX(0, MIN(row, prevrow) - rowoff);
+        row2 = MIN(G_window_rows() - 1, MAX(row, prevrow) + rowoff);
+        col1 = MAX(0, MIN(col, prevcol) - coloff);
+        col2 = MIN(G_window_cols() - 1, MAX(col, prevcol) + coloff);
+
+        for (r = row1; r < row2; r++) {
+            cy = G_row_to_northing(r + 0.5, &wind);
+
+            for (c = col1; c < col2; c++) {
+                cellx = G_col_to_easting(c + 0.5, &wind);
+                celly = cy;  /* gets written over in distance2... */
+
+                /* Thought about not going past endpoints (use 
+                 * status to check) but then pieces end up missing 
+                 * from outside corners - if it goes past ends, 
+                 * should probably do some interp or will get flats.
+                 * Here we use a bitmap and only change cells once 
+                 * on the way down */
+
+                if (dig_distance2_point_to_line(cellx, celly, 0,
+                       pgxypts[i-1][0], pgxypts[i-1][1], 0,
+                       pgxypts[i][0], pgxypts[i][1], 0,
+                       0, &cellx, &celly, NULL, NULL, NULL))
+                {
+                    if (!BM_get(bm, c, r))
+                    {
+                        double dist, elev;
+
+                        Vect_reset_line(points);
+
+                        dist = G_distance(pgxypts[i][0], pgxypts[i][1],
+                                          cellx, celly);
+
+                        elev = LINTERP(pgpts[i][1], pgpts[i-1][1],
+                                    (dist / (pgpts[i][0] - pgpts[i-1][0])));
+
+                        BM_set(bm, c, r, 1);
+
+                        /* TODO - may want to use a function for the 
+                         * cross section of stream */
+                        set_min_point(rbuf, c, r, elev, parm->sdepth, parm->raster_type);
+
+                        /* Add point to output vector map */
+                        if (parm->outvect->answer)
+                        {
+                            Vect_append_point(points, pgxypts[i][0],
+                                                      pgxypts[i][1],
+                                                      elev - parm->sdepth);
+                            Vect_write_line(outMap, GV_POINT, points, cats);
+                        }
+                   }
+                }
+            }
+        }
+
+        prevrow = row;
+        prevcol = col;
+    }
 }

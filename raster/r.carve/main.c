@@ -40,21 +40,16 @@ static int init_projection(struct Cell_head *window, int *wrap_ncols);
 int main(int argc, char **argv) 
 {
     struct GModule *module;
-    struct {
-        struct Option *inrast, *invect, *outrast, *outvect, *width, *depth;
-        struct Flag *quiet, *noflat;
-        double swidth, sdepth;
-    } parm;
-    int retval;
-    char defwidth[80];
+    struct parms parm;
+    struct Option *width, *depth;
+    struct Flag *quiet, *noflat;
 
     char *vmapset, *rmapset; 
     int infd, outfd;
-    int wrap = 0;
     struct Map_info Map;
     struct Map_info outMap;
-    RASTER_MAP_TYPE rtype;
     struct Cell_head win;
+
 
     /* start GIS engine */
     G_gisinit(argv[0]);
@@ -63,23 +58,13 @@ int main(int argc, char **argv)
     module->description = _("Takes vector stream data, transforms it "
                     "to raster, and subtracts depth from the output DEM");
 
-    /* setup lat/lon projection and distance calculations */
-    init_projection(&win, &wrap);
-
-    /* default width - one cell at center */
-    parm.swidth = G_distance((win.east + win.west) / 2,
-                             (win.north + win.south) / 2, 
-                             ((win.east + win.west) / 2) + win.ew_res,
-                             (win.north + win.south) / 2);
-    sprintf(defwidth, "%.6lf", parm.swidth);
-
     parm.inrast = G_define_standard_option(G_OPT_R_INPUT);
     parm.inrast->key           = "rast";
     parm.inrast->description   = _("Name of input raster elevation map");
 
     parm.invect = G_define_standard_option(G_OPT_V_INPUT);
     parm.invect->key           = "vect";
-    parm.invect->description   = _("Name of vector input map containing stream");
+    parm.invect->description   = _("Name of vector input map containing stream(s)");
 
     parm.outrast = G_define_standard_option(G_OPT_R_OUTPUT);
 
@@ -88,67 +73,91 @@ int main(int argc, char **argv)
     parm.outvect->required     = NO;
     parm.outvect->description  = _("Name of output vector map for adjusted stream points");
 
-    parm.width = G_define_option();
-    parm.width->key            = "width";
-    parm.width->type           = TYPE_DOUBLE;
-    parm.width->description    = _("Width of stream (in meters)");
-    parm.width->answer         = defwidth;
+    width = G_define_option();
+    width->key            = "width";
+    width->type           = TYPE_DOUBLE;
+    width->description    = _("Stream width (in meters). "
+                              "Default is raster cell width");
 
-    parm.depth = G_define_option();
-    parm.depth->key            = "depth";
-    parm.depth->type           = TYPE_DOUBLE;
-    parm.depth->description    = _("Additional stream depth");
-    parm.depth->answer         = "0.0";
+    depth = G_define_option();
+    depth->key            = "depth";
+    depth->type           = TYPE_DOUBLE;
+    depth->description    = _("Additional stream depth (in meters)");
 
-    parm.quiet = G_define_flag();
-    parm.quiet->key          = 'q';
-    parm.quiet->description  = _("Quiet - Do not show progress");
+    quiet = G_define_flag();
+    quiet->key          = 'q';
+    quiet->description  = _("Quiet - Do not show progress");
 
-    parm.noflat = G_define_flag();
-    parm.noflat->key         = 'n';
-    parm.noflat->description = _("No flat areas allowed in flow direction");
+    noflat = G_define_flag();
+    noflat->key         = 'n';
+    noflat->description = _("No flat areas allowed in flow direction");
 
     /* parse options */
     if (G_parser(argc, argv))
         exit(EXIT_FAILURE);
 
     G_check_input_output_name(parm.inrast->answer, parm.outrast->answer, GR_FATAL_EXIT);
+    if (parm.outvect->answer)
+        Vect_check_input_output_name(parm.invect->answer, 
+                        parm.outvect->answer, GR_FATAL_EXIT);
 
-    /* convert text params to double format */
-    if (sscanf(parm.width->answer, "%lf", &parm.swidth) != 1)
-        G_warning(_("invalid width value - using default."));
+    /* setup lat/lon projection and distance calculations */
+    init_projection(&win, &parm.wrap);
 
-    if (sscanf(parm.depth->answer, "%ld", &parm.sdepth) != 1)
+    /* default width - one cell at center */
+    if (width->answer == NULL)
     {
-        G_warning(_("invalid depth value - using default."));
-        parm.sdepth = 0.0;
+        parm.swidth = G_distance((win.east + win.west) / 2,
+                                 (win.north + win.south) / 2, 
+                                 ((win.east + win.west) / 2) + win.ew_res,
+                                 (win.north + win.south) / 2);
+    } else {
+        if (sscanf(width->answer, "%lf", &parm.swidth) != 1)
+        {
+            G_warning(_("invalid width value '%s' - using default."), width->answer);
+            parm.swidth = G_distance((win.east + win.west) / 2,
+                                     (win.north + win.south) / 2, 
+                                     ((win.east + win.west) / 2) + win.ew_res,
+                                     (win.north + win.south) / 2);
+        }
     }
+
+    if (depth->answer == NULL)
+        parm.sdepth = 0.0;
+    else {
+        if (sscanf(depth->answer, "%lf", &parm.sdepth) != 1)
+        {
+            G_warning(_("invalid depth value '%s' - using default."), depth->answer);
+            parm.sdepth = 0.0;
+        }
+    }
+
+    parm.quiet  = quiet->answer;
+    parm.noflat = noflat->answer;
 
     /* open input files */
     if ((vmapset = G_find_vector2(parm.invect->answer, "")) == NULL)
-        G_fatal_error(_("Vector map <%s> not found"), parm.invect->answer);
+        G_fatal_error(_("vector map <%s> not found"), parm.invect->answer);
 
     Vect_set_open_level(2);
     Vect_open_old(&Map, parm.invect->answer, vmapset);
 
     if ((rmapset = G_find_file2("cell", parm.inrast->answer, "")) == NULL)
-        G_fatal_error(_("unable to find raster file %s"), parm.inrast->answer);
+        G_fatal_error(_("unable to find raster file [%s]"), parm.inrast->answer);
 
     if ((infd = G_open_cell_old(parm.inrast->answer, rmapset)) == -1)
         G_fatal_error(_("unable to open cellfile for [%s]"), parm.inrast->answer);
 
     /* open new map for output */
-    rtype = G_raster_map_type(parm.inrast->answer, rmapset);
-    if ((outfd = G_open_raster_new(parm.outrast->answer,  rtype)) < 0)
+    parm.raster_type = G_raster_map_type(parm.inrast->answer, rmapset);
+    if ((outfd = G_open_raster_new(parm.outrast->answer,  parm.raster_type)) < 0)
         G_fatal_error(_("unable to open cellfile for [%s]"), parm.outrast->answer);
 
     /* if specified, open vector for output */
     if (parm.outvect->answer)
         open_new_vect(&outMap, parm.outvect->answer);
 
-    retval = enforce_downstream(infd, outfd, parm.outvect->answer, &Map,
-                &outMap, rtype, parm.swidth, parm.sdepth, 
-                parm.noflat->answer, parm.quiet->answer);
+    enforce_downstream(infd, outfd, &Map, &outMap, &parm);
 
     G_close_cell(infd);
     G_close_cell(outfd);
@@ -158,12 +167,12 @@ int main(int argc, char **argv)
         close_vect(&outMap, 1);
 
     /* write command line to history file */
-    update_history(parm.outrast->answer);
+    update_rast_history(&parm);
 
-    if (!parm.quiet->answer)
+    if (!parm.quiet)
 	G_done_msg(G_recreate_command());
 
-    return retval;
+    return EXIT_SUCCESS;
 }
 
 
