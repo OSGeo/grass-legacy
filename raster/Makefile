@@ -35,6 +35,7 @@ SUBDIRS = \
 	r.in.gridatb \
 	r.in.mat \
 	r.in.poly \
+	r.in.xyz \
 	r.kappa \
 	r.lake \
 	r.le \
