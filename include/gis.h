@@ -108,6 +108,38 @@ static const char *GRASS_copyright __attribute__((unused))
 #define GMAPSET_MAX 256
 
 
+/* Macros for type size independent integers                    */
+/* Use these for portability to ensure integers are truly 32bit */
+/* and are handled in a uniform manner                          */
+
+/* Convert integer to 4 bytes - little endian */
+#define serialize_int32_le(buf, x) do { \
+    (buf)[0] = ((x) >>  0) & 0xFF; \
+    (buf)[1] = ((x) >>  8) & 0xFF; \
+    (buf)[2] = ((x) >> 16) & 0xFF; \
+    (buf)[3] = ((x) >> 24) & 0xFF; \
+} while(0)
+
+/* Convert 4 bytes to an integer - little endian */
+#define deserialize_int32_le(buf) (((buf)[0] <<  0) | \
+                                   ((buf)[1] <<  8) | \
+                                   ((buf)[2] << 16) | \
+                                   ((buf)[3] << 24))
+
+/* Convert integer to 4 bytes - big endian */
+#define serialize_int32_be(buf, x) do { \
+    (buf)[0] = ((x) >> 24) & 0xFF; \
+    (buf)[1] = ((x) >> 16) & 0xFF; \
+    (buf)[2] = ((x) >>  8) & 0xFF; \
+    (buf)[3] = ((x) >>  0) & 0xFF; \
+} while(0)
+
+/* Convert 4 bytes to an integer - big endian */
+#define deserialize_int32_be(buf) (((buf)[0] << 24) | \
+                                   ((buf)[1] << 16) | \
+                                   ((buf)[2] <<  8) | \
+                                   ((buf)[3] <<  0))
+
 typedef enum {
     G_OPT_WHERE,    /* SQL where conditions */
 
