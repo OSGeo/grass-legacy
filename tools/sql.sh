@@ -256,7 +256,7 @@ CREATE TABLE prog_exp (
 
 CREATE TABLE libs (
 	library VARCHAR(80) NOT NULL,
-	symbol VARCHAR(150) NOT NULL
+	symbol VARCHAR(160) NOT NULL
 	) ;
 
 \copy libs FROM '$tmpdir/libs.lst'
