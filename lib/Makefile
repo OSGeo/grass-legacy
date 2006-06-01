@@ -6,6 +6,8 @@ SUBDIRS = \
 	gis \
 	gmath \
 	linkm \
+	driver \
+	pngdriver \
 	raster \
 	bitmap \
 	btree \

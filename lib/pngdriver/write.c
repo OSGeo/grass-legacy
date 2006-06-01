@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <grass/config.h>
 #include <grass/gis.h>
 #include "pngdriver.h"
 
@@ -13,14 +14,16 @@ void write_image(void)
 	if (!modified)
 		return;
 
-	if (G_strcasecmp(p, ".png") == 0)
-		write_png();
-	else if (G_strcasecmp(p, ".ppm") == 0)
+	if (G_strcasecmp(p, ".ppm") == 0)
 	{
 		write_ppm();
 		if (has_alpha)
 			write_pgm();
 	}
+#ifdef HAVE_PNG_H
+	else if (G_strcasecmp(p, ".png") == 0)
+		write_png();
+#endif
 	else
 		G_fatal_error("Graph_Close: unknown file type: %s", p);
 
