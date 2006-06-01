@@ -9,6 +9,7 @@
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/gprojects.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 int main (int argc, char *argv[])
@@ -16,7 +17,6 @@ int main (int argc, char *argv[])
     int i, type, stat;
     int day, yr, Out_proj;
     int out_zone = 0;
-    char buffb[1024];
     char *mapset;
     char *omap_name, *map_name, *iset_name, *oset_name, *iloc_name;
     struct pj_info info_in;
@@ -38,43 +38,36 @@ int main (int argc, char *argv[])
     G_gisinit (argv[0]);
  
     module = G_define_module();
-    module->description = "Allows projection conversion of vector files.";
+    module->description = _("Allows projection conversion of vector files.");
 
     /* set up the options and flags for the command line parser */
 
-    mapopt = G_define_option();
-    mapopt->key             = "input";
-    mapopt->type            =  TYPE_STRING;
-    mapopt->required        =  YES;
-    mapopt->description     = "input vector map";
+    mapopt = G_define_standard_option(G_OPT_V_INPUT);
 
     ilocopt = G_define_option();
     ilocopt->key             =  "location";
     ilocopt->type            =  TYPE_STRING;
     ilocopt->required        =  YES;
-    ilocopt->description     =  "location containing input vector map";
+    ilocopt->description     =  _("Location containing input vector map");
 
     isetopt = G_define_option();
     isetopt->key             =  "mapset";
     isetopt->type            =  TYPE_STRING;
     isetopt->required        =  NO;
-    isetopt->description     =  "mapset containing input vector map";
+    isetopt->description     =  _("Mapset containing input vector map");
 
     ibaseopt = G_define_option();
     ibaseopt->key             =  "dbase";
     ibaseopt->type            =  TYPE_STRING;
     ibaseopt->required        =  NO;
-    ibaseopt->description     =  "path to GRASS database of input location";
+    ibaseopt->description     =  _("Path to GRASS database of input location");
 
-    omapopt = G_define_option();
-    omapopt->key             = "output";
-    omapopt->type            =  TYPE_STRING;
+    omapopt = G_define_standard_option(G_OPT_V_OUTPUT);
     omapopt->required        =  NO;
-    omapopt->description     = "output vector map";
 
     flag.list = G_define_flag();
     flag.list->key = 'l';
-    flag.list->description = "List vector files in input location and exit (a dummy value must be given for input)";
+    flag.list->description = _("List vector files in input location and exit (a dummy value must be given for input)");
 
     if (G_parser (argc, argv)) exit (-1);
 		 
@@ -95,7 +88,7 @@ int main (int argc, char *argv[])
     else gbase = G_store (G_gisdbase());
 
     if (strcmp(iloc_name,G_location()) == 0)
-	 G_fatal_error("Input and output locations can not be the same\n");
+	 G_fatal_error(_("Input and output locations can not be the same"));
 
     /* Change the location here and then come back */
     
@@ -113,7 +106,7 @@ int main (int argc, char *argv[])
     if (stat >= 0) {  /* yes, we can access the mapset */
 	/* if requested, list the vector files in source location - MN 5/2001*/
 	if (flag.list->answer) {
-	   fprintf(stderr, "Checking location %s, mapset %s:\n", iloc_name, iset_name);
+	   fprintf(stderr, _("Checking location %s, mapset %s:\n"), iloc_name, iset_name);
 	   G_list_element ("vector", "vector", iset_name, 0);
 	   exit(0); /* leave v.proj after listing*/
 	}
@@ -121,11 +114,8 @@ int main (int argc, char *argv[])
 	G__setenv ("MAPSET", iset_name);
 	/* Make sure map is available */
 	mapset = G_find_vector2 (map_name, iset_name) ;
-	if (mapset == NULL) {
-	    sprintf(buffb,"Vector file [%s] in location [%s] in mapset [%s] not available",
-			    map_name, iloc_name, iset_name);
-	    G_fatal_error(buffb) ;
-	}
+	if (mapset == NULL)
+	    G_fatal_error(_("Vector file [%s] in location [%s] in mapset [%s] not available"), map_name, iloc_name, iset_name);
 
 	 /*** Get projection info for input mapset ***/
 	 in_proj_keys = G_get_projinfo();
@@ -143,10 +133,10 @@ int main (int argc, char *argv[])
     else if (stat < 0)	/* allow 0 (i.e. denied permission) */
 			    /* need to be able to read from others */
     {
-	 sprintf (buffb, "Mapset [%s] in input location [%s] - ",
-						    iset_name, iloc_name);
-	 strcat (buffb,stat == 0 ? "permission denied\n" : "not found\n");
-	 G_fatal_error(buffb) ;
+	 if (stat == 0)
+	     G_fatal_error(_("Mapset [%s] in input location [%s] - permission denied"), iset_name, iloc_name);
+	 else
+	     G_fatal_error(_("Mapset [%s] in input location [%s] - not found"), iset_name, iloc_name);
     }
 
     select_current_env();
@@ -185,7 +175,7 @@ int main (int argc, char *argv[])
     sprintf(date,"%s %d %d",mon,day,yr);
     Vect_set_date ( &Out_Map, date );
 
-    fprintf(stderr,"\nCreating vector file...\n");
+    fprintf(stderr, _("\nCreating vector file...\n"));
 
     /* Initialize the Point / Cat structure */
     Points = Vect_new_line_struct();
@@ -199,12 +189,12 @@ int main (int argc, char *argv[])
 	type = Vect_read_next_line (&Map, Points, Cats); /* read line */
 	if ( type == 0 ) continue; /* Dead */
 
-	if (type == -1) G_fatal_error("Reading input dig file.") ;
+	if (type == -1) G_fatal_error(_("Reading input dig file.")) ;
 	if ( type == -2) break;
 	if(pj_do_transform( Points->n_points, Points->x, Points->y, Points->z,
 		              &info_in,&info_out)<0) 
 	{ 
-	    fprintf(stderr,"Error in pj_do_transform\n");
+	    fprintf(stderr, _("Error in pj_do_transform\n"));
 	    exit(0);
 	}
 
