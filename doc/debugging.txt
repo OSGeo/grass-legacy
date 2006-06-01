@@ -39,6 +39,11 @@ References:
 "Tcl quoting hell"  http://wiki.tcl.tk/1726
 "1 minute intro to tcl"  http://www.pconline.com/~erc/tcl.htm
 
+NVIZ debug tip:
+   at the start of nviz2.2_script, change the DEBUG setting to:
+   set DEBUG 1
+
+
 ----------------------------------------------------
 
 To make gcc less tolerant in accepting errors and code flaws, compile
