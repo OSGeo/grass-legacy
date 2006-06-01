@@ -4,32 +4,14 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-EXTRA_CFLAGS = $(PNGINC) -I../lib
+EXTRA_CFLAGS = $(PNGINC) -I../../../lib/driver -I../../../lib/pngdriver
 
-OBJS =  \
-	Box.o\
-	Can_do.o\
-	Client.o\
-	Color.o\
-	Color_table.o\
-	Draw_line.o\
-	Draw_point.o\
-	Erase.o\
-	Graph_close.o\
-	Graph_set.o\
-	Line_width.o\
-	Raster_RGB.o\
-	Raster_int.o\
-	Respond.o\
-	main.o\
-	write.o\
-	write_ppm.o\
-	write_png.o
+OBJS =  main.o
 
 ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
-LIBES = $(DRIVERLIB) $(GISLIB) $(FTLIB) $(ICONVLIB)
-DEPENDENCIES = $(DRIVERDEP) $(GISLIBDEP)
+LIBES = $(PNGDRIVERLIB) $(DRIVERLIB) $(GISLIB) $(FTLIB) $(ICONVLIB)
+DEPENDENCIES = $(PNGDRIVERDEP) $(DRIVERDEP) $(GISLIBDEP)
 PGM=pngdriver
 
 default: $(DRIVERDIR)/PNG htmlgen moncap

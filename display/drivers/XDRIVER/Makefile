@@ -31,7 +31,7 @@ R3DEFINE=
 # library resolves this problem
 #XEXTRALIBS=-lsun
 
-EXTRA_CFLAGS=$(XCFLAGS) $(R3DEFINE) -I../lib
+EXTRA_CFLAGS=$(XCFLAGS) $(R3DEFINE) -I../../../lib/driver
 
 OBJS =  \
 	Box.o\

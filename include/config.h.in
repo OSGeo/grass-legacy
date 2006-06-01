@@ -140,8 +140,8 @@
 /* define if ODBC exists */
 #undef HAVE_SQL_H
 
-/* define if PNG support exists */
-#undef HAVE_PNG
+/* define if png.h exists */
+#undef HAVE_PNG_H
 
 /* define if jpeglib.h exists */
 #undef HAVE_JPEGLIB_H

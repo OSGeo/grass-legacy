@@ -1,7 +1,7 @@
 
 MODULE_TOPDIR = ../..
 
-SUBDIRS = lib
+SUBDIRS =
 #commented unless HTMLMAP accepts G_plot_area():
 # SUBDIRS = lib HTMLMAP
 

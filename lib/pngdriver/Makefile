@@ -1,0 +1,34 @@
+MODULE_TOPDIR = ../..
+
+PACKAGE ="libpngdriver"
+DEFS=-DPACKAGE=\"$(PACKAGE)\"
+EXTRA_CFLAGS=$(GETHOSTNAME) $(ZLIBINCPATH) $(PNGINC) -I../driver $(PICFLAGS) $(DEFS)
+
+EXTRA_LIBS=$(DRIVERLIB) $(GISLIB) $(PNGLIB)
+LIB_NAME = $(PNGDRIVER_LIBNAME)
+
+include $(MODULE_TOPDIR)/include/Make/Lib.make
+
+LIB_OBJS =	\
+	Box.o			\
+	Can_do.o		\
+	Client.o		\
+	Color.o			\
+	Color_table.o		\
+	Draw_line.o		\
+	Draw_point.o		\
+	Erase.o			\
+	Graph_close.o		\
+	Graph_set.o		\
+	Line_width.o		\
+	Raster_RGB.o		\
+	Raster_int.o		\
+	Respond.o		\
+	write.o			\
+	write_ppm.o		
+
+ifneq ($(USE_PNG),)
+  LIB_OBJS += write_png.o
+endif
+
+default: lib
