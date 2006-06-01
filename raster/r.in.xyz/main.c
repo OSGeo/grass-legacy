@@ -1,0 +1,695 @@
+/*
+ * r.in.xyz
+ *
+ *  Calculates univariate statistics from the non-null cells of a GRASS raster map
+ *
+ *   Copyright 2006 by M. Hamish Bowman, and The GRASS Development Team
+ *   Author: M. Hamish Bowman, University of Otago, Dunedin, New Zealand
+ *
+ *   This program is free software licensed under the GPL (>=v2).
+ *   Read the COPYING file that comes with GRASS for details.
+ *
+ *   This program is intended as a replacement for the GRASS 5 s.cellstats module.
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
+#include "local_proto.h"
+
+
+int main(int argc, char *argv[])
+{
+
+    FILE   *in_fd;
+    int    out_fd;
+    char   *infile, *outmap;
+    int    xcol, ycol, zcol, max_col, percent;
+    int    do_zfilter;
+    int    method = -1;
+    int    bin_n, bin_min, bin_max, bin_sum, bin_sumsq;
+    double zrange_min, zrange_max, d_tmp;
+    char   *fs; /* field delim */
+
+    RASTER_MAP_TYPE rtype;
+    struct History history;
+    void   *n_array, *min_array, *max_array, *sum_array, *sumsq_array;
+    void   *raster_row, *ptr;
+    struct Cell_head region;
+    int    rows, cols; /* scan box size */
+    int    row, col; /* counters */
+
+    int    pass, npasses, line;
+    char   buff[BUFFSIZE];
+    double x,y,z;
+    char   **tokens;
+    int    ntokens;  /* number of tokens */
+    double pass_north, pass_south;
+    int    arr_row, arr_col, count;
+
+    double min = 0.0/0.0; /* init as nan */
+    double max = 0.0/0.0; /* init as nan */
+    size_t offset, n_offset;
+    int    n = 0;
+    double sum = 0.;
+    double sumsq = 0.;
+
+
+    struct GModule *module;
+    struct Option *input_opt, *output_opt, *delim_opt, *percent_opt, *type_opt;
+    struct Option *method_opt, *xcol_opt, *ycol_opt, *zcol_opt, *zrange_opt;
+    struct Flag *scan_flag;
+
+
+
+    G_gisinit(argv[0]);
+
+    module = G_define_module();
+    module->description =
+      _("Create a raster map from an assemblage of many coordinates using univariate statistics.");
+
+    input_opt = G_define_option();
+    input_opt->key	   = "input";
+    input_opt->type	   =  TYPE_STRING;
+    input_opt->required    =  YES;
+    input_opt->key_desc    = "name";
+    input_opt->gisprompt   = "old_file,file,input";
+    input_opt->description = _("ASCII file containing input data");
+
+    output_opt = G_define_standard_option(G_OPT_R_OUTPUT);
+
+    method_opt = G_define_option();
+    method_opt->key = "method";
+    method_opt->type = TYPE_STRING;
+    method_opt->required = NO;
+    method_opt->description = _("Statistic to use for raster values");
+    method_opt->options = "n,min,max,range,sum,mean,stddev,variance,coeff_var";
+    method_opt->answer = "mean";
+
+    type_opt = G_define_option();
+    type_opt->key = "type";
+    type_opt->type = TYPE_STRING;
+    type_opt->required = NO;
+    type_opt->options = "CELL,FCELL,DCELL";
+    type_opt->answer = "CELL";
+    type_opt->description = _("Storage type for resultant raster map");
+
+    delim_opt = G_define_option();
+    delim_opt->key = "fs";
+    delim_opt->type = TYPE_STRING;
+    delim_opt->required = NO;
+    delim_opt->key_desc    = "character";
+    delim_opt->description = _("Field separator");
+    delim_opt->answer = "|";
+
+    xcol_opt = G_define_option();
+    xcol_opt->key = "x";
+    xcol_opt->type = TYPE_INTEGER;
+    xcol_opt->required = NO;
+    xcol_opt->answer = "1";
+    xcol_opt->description =
+	_("Column number of x coordinates in input file (first column is 1)");
+
+    ycol_opt = G_define_option();
+    ycol_opt->key = "y";
+    ycol_opt->type = TYPE_INTEGER;
+    ycol_opt->required = NO;
+    ycol_opt->answer = "2";
+    ycol_opt->description =
+	_("Column number of y coordinates in input file");
+
+    zcol_opt = G_define_option();
+    zcol_opt->key = "z";
+    zcol_opt->type = TYPE_INTEGER;
+    zcol_opt->required = NO;
+    zcol_opt->answer = "3";
+    zcol_opt->description =
+	_("Column number of data values in input file");
+
+    zrange_opt = G_define_option();
+    zrange_opt->key = "zrange";
+    zrange_opt->type = TYPE_DOUBLE;
+    zrange_opt->required = NO;
+    zrange_opt->key_desc   = "min,max";
+    zrange_opt->description = _("Filter range for z data (min,max)");
+
+    percent_opt = G_define_option();
+    percent_opt->key = "percent";
+    percent_opt->type = TYPE_INTEGER;
+    percent_opt->required = NO;
+    percent_opt->answer = "100";
+    percent_opt->options = "1-100";
+    percent_opt->description = _("Percent of map to keep in memory");
+
+    scan_flag = G_define_flag();
+    scan_flag->key = 's';
+    scan_flag->description = _("Scan data file for extent then exit");
+
+
+    if (G_parser(argc,argv))
+	exit(EXIT_FAILURE);
+
+
+    /* parse input values */
+    infile = input_opt->answer;
+    outmap = output_opt->answer;
+ 
+    fs = delim_opt->answer;
+    if ( strcmp(fs,"\\t") == 0 ) fs = "\t";
+    if ( strcmp(fs,"tab") == 0 ) fs = "\t";
+    if ( strcmp(fs,"space") == 0 ) fs = " ";
+
+    xcol = atoi(xcol_opt->answer);
+    ycol = atoi(ycol_opt->answer);
+    zcol = atoi(zcol_opt->answer);
+    if( (xcol < 0) || (ycol < 0) || (zcol < 0))
+	G_fatal_error(_("Please specify a reasonable column number."));
+    max_col = (xcol > ycol) ? xcol : ycol;
+    max_col = (zcol > max_col) ? zcol : max_col;
+
+    percent = atoi(percent_opt->answer);
+
+    /* parse zrange */
+    do_zfilter = FALSE;
+    if (zrange_opt->answer != NULL) {     /* should this be answerS ? */ 
+	sscanf(zrange_opt->answers[0], "%lf", &zrange_min);
+	sscanf(zrange_opt->answers[1], "%lf", &zrange_max);
+	do_zfilter = TRUE;
+
+	if (zrange_min > zrange_max) {
+	    d_tmp = zrange_max;
+	    zrange_max = zrange_min;
+	    zrange_min = d_tmp;
+	}
+    }
+
+   /* figure out what maps we need in memory */
+    /*  n         n
+        min       min
+        max       max
+        range     min max        max - min
+        sum       sum
+        mean      sum n          sum/n
+        stddev    sum sumsq n    sqrt((sumsq - sum*sum/n)/n)
+        variance  sum sumsq n    (sumsq - sum*sum/n)/n
+        coeff_var sum sumsq n    sqrt((sumsq - sum*sum/n)/n) / (sum/n)
+    */
+    bin_n   = FALSE;
+    bin_min = FALSE;
+    bin_max = FALSE;
+    bin_sum = FALSE;
+    bin_sumsq = FALSE;
+
+    if( strcmp(method_opt->answer, "n") == 0 ) {
+	method = METHOD_N;
+	bin_n  = TRUE;
+    }
+    if( strcmp(method_opt->answer, "min") == 0 ) {
+	method = METHOD_MIN;
+	bin_min = TRUE;
+    }
+    if( strcmp(method_opt->answer, "max") == 0 ) {
+	method = METHOD_MAX;
+	bin_max = TRUE;
+    }
+    if( strcmp(method_opt->answer, "range") == 0 ) {
+	method = METHOD_RANGE;
+	bin_min = TRUE;
+	bin_max = TRUE;
+    }
+    if( strcmp(method_opt->answer, "sum") == 0 ) {
+	method = METHOD_SUM;
+	bin_sum = TRUE;
+    }
+    if( strcmp(method_opt->answer, "mean") == 0 ) {
+	method = METHOD_MEAN;
+	bin_sum = TRUE;
+	bin_n = TRUE;
+    }
+    if( strcmp(method_opt->answer, "stddev") == 0 ) {
+	method = METHOD_STDDEV;
+	bin_sum = TRUE;
+	bin_sumsq = TRUE;
+	bin_n = TRUE;
+    }
+    if( strcmp(method_opt->answer, "variance") == 0 ) {
+	method = METHOD_VARIANCE;
+	bin_sum = TRUE;
+	bin_sumsq = TRUE;
+	bin_n = TRUE;
+    }
+    if( strcmp(method_opt->answer, "coeff_var") == 0 ) {
+	method = METHOD_COEFF_VAR;
+	bin_sum = TRUE;
+	bin_sumsq = TRUE;
+	bin_n = TRUE;
+    }
+
+    if(strcmp("CELL", type_opt->answer) == 0)
+	rtype = CELL_TYPE;
+    else if(strcmp("DCELL", type_opt->answer) == 0)
+	rtype = DCELL_TYPE;
+    else 
+	rtype = FCELL_TYPE;
+
+    if(method == METHOD_N)
+	rtype = CELL_TYPE;
+
+
+    G_get_window (&region);
+    rows = (int)(region.rows * (percent/100.0));
+    cols = region.cols;
+
+    G_debug(2, "region.n=%f  region.s=%f  region.ns_res=%f", region.north,
+	region.south, region.ns_res);
+    G_debug(2, "region.rows=%d  [box_rows=%d]  region.cols=%d", region.rows,
+	rows, region.cols);
+
+    npasses = ceil( 1.0 * region.rows / rows);
+
+    if( ! scan_flag->answer) {
+	/* allocate memory (test for enough before we start) */
+	if(bin_n)
+	    n_array = G_calloc((rows+1)*(cols+1), G_raster_size(CELL_TYPE));
+	if(bin_min)
+	    min_array = G_calloc((rows+1)*(cols+1), G_raster_size(rtype));
+	if(bin_max)
+	    max_array = G_calloc((rows+1)*(cols+1), G_raster_size(rtype));
+	if(bin_sum)
+	    sum_array = G_calloc((rows+1)*(cols+1), G_raster_size(rtype));
+	if(bin_sumsq)
+	    sumsq_array = G_calloc((rows+1)*(cols+1), G_raster_size(rtype));
+
+	/* and then free it again */
+	if(n_array) G_free(n_array);
+	if(min_array) G_free(min_array);
+	if(max_array) G_free(max_array);
+	if(sum_array) G_free(sum_array);
+	if(sumsq_array) G_free(sumsq_array);
+	/** end memmory test **/
+    }
+
+
+    /* open input file */
+    if((in_fd = fopen(infile, "r" )) == NULL )
+	G_fatal_error(_("Could not open input file <%s>."), infile);
+
+    if(scan_flag->answer) {
+	if( zrange_opt->answer )
+	    G_warning(_("zrange will not be taken into account during scan"));
+	scan_bounds(in_fd, xcol, ycol, zcol, fs);
+	fclose(in_fd);
+	exit(EXIT_SUCCESS);
+    }
+
+
+    /* open output map */
+    out_fd = G_open_raster_new(outmap, rtype);
+    if (out_fd < 0)
+	G_fatal_error(_("Unable to create raster map <%s>"), outmap);
+
+    /* allocate memory for a single row of output data */
+    raster_row = G_allocate_raster_buf(rtype);
+
+    G_message(_("Scanning data ..."));
+
+    /* main binning loop(s) */
+    for(pass=1; pass <= npasses; pass++ ) {
+	if(npasses > 1)
+	    G_message(_("Pass #%d (of %d) ..."), pass, npasses);
+
+	rewind(in_fd);
+
+	/* figure out segmentation */
+	pass_north = region.north - (pass-1)*rows*region.ns_res;
+	if( pass == npasses )
+	    rows = region.rows - (pass-1)*rows;
+	pass_south = pass_north - rows*region.ns_res;
+
+	G_debug(2, "pass=%d/%d  pass_n=%f  pass_s=%f  rows=%d",
+	  pass, npasses, pass_north, pass_south, rows);
+
+
+	if(bin_n) {
+	    G_debug(2, "allocating n_array");
+	    /* I thought rows*(cols+1) but it needs (rows+1)*(cols+1) for multi-pass ?? */
+	    n_array = G_calloc((rows+1)*(cols+1), G_raster_size(CELL_TYPE));
+	    blank_array(n_array, rows, cols, CELL_TYPE, 0);
+	}
+	if(bin_min) {
+	    G_debug(2, "allocating min_array");
+	    min_array = G_calloc((rows+1)*(cols+1), G_raster_size(rtype));
+	    blank_array(min_array, rows, cols, rtype, -1); /* fill with NULLs */
+	}
+	if(bin_max) {
+	    G_debug(2, "allocating max_array");
+	    max_array = G_calloc((rows+1)*(cols+1), G_raster_size(rtype));
+	    blank_array(max_array, rows, cols, rtype, -1); /* fill with NULLs */
+	}
+	if(bin_sum) {
+	    G_debug(2, "allocating sum_array");
+	    sum_array = G_calloc((rows+1)*(cols+1), G_raster_size(rtype));
+	    blank_array(sum_array, rows, cols, rtype, 0);
+	}
+	if(bin_sumsq) {
+	    G_debug(2, "allocating sumsq_array");
+	    sumsq_array = G_calloc((rows+1)*(cols+1), G_raster_size(rtype));
+	    blank_array(sumsq_array, rows, cols, rtype, 0);
+	}
+
+
+	line = 0;
+	count = 0;
+
+	while( 0 != G_getl2(buff, BUFFSIZE-1, in_fd) ) {
+	    line++;
+
+	    if((buff[0] == '#') || (buff[0] == '\0')) {
+		continue; /* line is a comment or blank */
+	    }
+
+	    G_chop(buff); /* remove leading and trailing whitespace from the string.  unneded?? */
+	    tokens = G_tokenize (buff, fs);
+	    ntokens = G_number_of_tokens ( tokens );
+
+	    if((ntokens < 3) || (max_col > ntokens) )
+		G_fatal_error(_("Not enough data columns. "
+		   "Incorrect delimiter or column number?\n[%s]"), buff);
+
+/* too slow?
+	    if ( G_projection() == PROJECTION_LL ) {
+		G_scan_easting( tokens[xcol-1], &x, region.proj);
+		G_scan_northing( tokens[ycol-1], &y, region.proj);
+	    }
+	    else {
+*/
+	    if( 1 != sscanf(tokens[ycol-1], "%lf", &y) )
+		G_fatal_error(_("Bad y-coordinate line %d column %d. <%s>"), line, ycol, tokens[ycol-1]);
+	    if (y < pass_south || y > pass_north) {
+		G_free_tokens(tokens);
+		continue;
+	    }
+	    if( 1 != sscanf(tokens[xcol-1], "%lf", &x) )
+		G_fatal_error(_("Bad x-coordinate line %d column %d. <%s>"), line, xcol, tokens[xcol-1]);
+	    if (x < region.west || x > region.east) {
+		G_free_tokens(tokens);
+		continue;
+	    }
+	    if( 1 != sscanf(tokens[zcol-1], "%lf", &z) )
+		G_fatal_error(_("Bad z-coordinate line %d column %d. <%s>"), line, zcol, tokens[zcol-1]);
+	    if(zrange_opt->answer) {
+		if (z < zrange_min || z > zrange_max) {
+		    G_free_tokens(tokens);
+		    continue;
+		}
+	    }
+
+	    count++;
+	    G_debug(5, "x: %f, y: %f, z: %f", x, y, z);
+	    G_free_tokens(tokens);
+
+	    /* find the bin in the current array box */
+	    arr_row = (int)((pass_north - y) / region.ns_res);
+	    arr_col = (int)((x - region.west) / region.ew_res);
+
+	    G_debug(5, "arr_row: %d   arr_col: %d", arr_row, arr_col);
+
+	   /* The range should be [0,cols-1]. We use (int) to round down,
+		but if the point exactly on eastern edge arr_col will be /just/
+		on the max edge .0000000 and end up on the next row.
+		We could make above bounds check "if(x>=region.east) continue;"
+		But instead we go to all sorts of trouble so that not one single
+		data point is lost. GE is too small to catch them all.
+		*/
+	    if (arr_col >= cols) {
+		if( ((x - region.west) / region.ew_res) - cols < 10*GRASS_EPSILON)
+		    arr_col--;
+		else { /* oh well, we tried. */
+		    G_free_tokens(tokens);
+		    continue;
+		}
+	    }
+
+	    if(bin_n)
+		update_n(n_array, cols, arr_row, arr_col);
+	    if(bin_min)
+		update_min(min_array, cols, arr_row, arr_col, rtype, z);
+	    if(bin_max)
+		update_max(max_array, cols, arr_row, arr_col, rtype, z);
+	    if(bin_sum)
+		update_sum(sum_array, cols, arr_row, arr_col, rtype, z);
+	    if(bin_sumsq)
+		update_sumsq(sumsq_array, cols, arr_row, arr_col, rtype, z);
+
+	} /* while !EOF */
+	G_debug(2, "pass %d finished, %d coordinates in box", pass, count);
+
+
+	/* calc stats and output */
+	G_message(_("Writing to map ..."));
+	for(row = 0; row<rows; row++) {
+
+	    switch(method)
+	    {
+	    case METHOD_N:  /* n is a straight copy */
+		G_raster_cpy(raster_row, n_array+(row*cols*G_raster_size(CELL_TYPE)),
+		   cols, CELL_TYPE);
+		break;
+
+	    case METHOD_MIN:
+		G_raster_cpy(raster_row, min_array+(row*cols*G_raster_size(rtype)),
+		   cols, rtype);
+		break;
+
+	    case METHOD_MAX:
+		G_raster_cpy(raster_row, max_array+(row*cols*G_raster_size(rtype)),
+		   cols, rtype);
+		break;
+
+	    case METHOD_SUM:
+		G_raster_cpy(raster_row, sum_array+(row*cols*G_raster_size(rtype)),
+		   cols, rtype);
+		break;
+
+	    case METHOD_RANGE:   /* (max-min)*/
+		ptr = raster_row;
+		for (col=0; col<cols; col++) {
+		    offset = (row*cols + col) * G_raster_size(rtype);
+		    min = G_get_raster_value_d(min_array + offset, rtype);
+		    max = G_get_raster_value_d(max_array + offset, rtype);
+		    G_set_raster_value_d(ptr, max - min, rtype);
+		    ptr = G_incr_void_ptr(ptr, G_raster_size(rtype));
+		}
+		break;
+
+	    case METHOD_MEAN:   /* (sum / n) */
+		ptr = raster_row;
+		for (col=0; col<cols; col++) {
+		    offset = (row*cols + col) * G_raster_size(rtype);
+		    n_offset = (row*cols + col) * G_raster_size(CELL_TYPE);
+		    n   = G_get_raster_value_c(n_array + n_offset, CELL_TYPE);
+		    sum = G_get_raster_value_d(sum_array + offset, rtype);
+
+		    if(n == 0)
+			G_set_null_value(ptr, 1, rtype);
+		    else
+			G_set_raster_value_d(ptr, (sum / n), rtype);
+
+		    ptr = G_incr_void_ptr(ptr, G_raster_size(rtype));
+		}
+		break;
+
+	/* maybe combine these next three and switch again for G_set_rast_val() */
+	    case METHOD_STDDEV:   /* sqrt((sumsq - sum*sum/n)/n) */
+		ptr = raster_row;
+		for (col=0; col<cols; col++) {
+		    offset = (row*cols + col) * G_raster_size(rtype);
+		    n_offset = (row*cols + col) * G_raster_size(CELL_TYPE);
+		    n     = G_get_raster_value_c(n_array + n_offset, CELL_TYPE);
+		    sum   = G_get_raster_value_d(sum_array + offset, rtype);
+		    sumsq = G_get_raster_value_d(sumsq_array + offset, rtype);
+
+		    if(n == 0)
+			G_set_null_value(ptr, 1, rtype);
+		    else {
+			d_tmp = (sumsq - sum*sum/n)/n;  /* variance */
+			if( d_tmp < GRASS_EPSILON )
+			    d_tmp = 0.0;
+			G_set_raster_value_d(ptr, sqrt(d_tmp), rtype);
+		    }
+		    ptr = G_incr_void_ptr(ptr, G_raster_size(rtype));
+		}
+		break;
+
+	    case METHOD_VARIANCE:   /* (sumsq - sum*sum/n)/n */
+		ptr = raster_row;
+		for (col=0; col<cols; col++) {
+		    offset = (row*cols + col) * G_raster_size(rtype);
+		    n_offset = (row*cols + col) * G_raster_size(CELL_TYPE);
+		    n     = G_get_raster_value_c(n_array + n_offset, CELL_TYPE);
+		    sum   = G_get_raster_value_d(sum_array + offset, rtype);
+		    sumsq = G_get_raster_value_d(sumsq_array + offset, rtype);
+
+		    if(n == 0)
+			G_set_null_value(ptr, 1, rtype);
+		    else {
+			d_tmp = (sumsq - sum*sum/n)/n;  /* variance */
+			if( d_tmp < GRASS_EPSILON )
+			    d_tmp = 0.0;
+			G_set_raster_value_d(ptr, d_tmp, rtype);
+		    }
+		    ptr = G_incr_void_ptr(ptr, G_raster_size(rtype));
+		}
+		break;
+
+	    case METHOD_COEFF_VAR:   /* 100 * sqrt( (sumsq - sum*sum/n) /n) / (sum/n) */
+		ptr = raster_row;
+		for (col=0; col<cols; col++) {
+		    offset = (row*cols + col) * G_raster_size(rtype);
+		    n_offset = (row*cols + col) * G_raster_size(CELL_TYPE);
+		    n     = G_get_raster_value_c(n_array + n_offset, CELL_TYPE);
+		    sum   = G_get_raster_value_d(sum_array + offset, rtype);
+		    sumsq = G_get_raster_value_d(sumsq_array + offset, rtype);
+
+		    if(n == 0)
+			G_set_null_value(ptr, 1, rtype);
+		    else {
+			d_tmp = (sumsq - sum*sum/n)/n;  /* variance */
+			if( d_tmp < GRASS_EPSILON )
+			    d_tmp = 0.0;
+			G_set_raster_value_d(ptr, 100.0*sqrt(d_tmp)/(sum/n), rtype);
+		    }
+		    ptr = G_incr_void_ptr(ptr, G_raster_size(rtype));
+		}
+		break;
+
+	    default:
+		G_fatal_error("?");
+	    }
+
+	    /* write out line of raster data */
+	    if( 1 != G_put_raster_row(out_fd, raster_row, rtype) ) {
+		G_close_cell(out_fd);
+		G_fatal_error(_("Writing map, row %d"), ((pass-1)*rows)+row);
+	    }
+	}
+
+	/* free memory */
+	if(n_array) G_free(n_array);
+	if(min_array) G_free(min_array);
+	if(max_array) G_free(max_array);
+	if(sum_array) G_free(sum_array);
+	if(sumsq_array) G_free(sumsq_array);
+
+    } /* passes loop */
+
+
+    G_free(raster_row);
+
+    /* close input file */
+    fclose(in_fd);
+
+    /* close raster file & write history */
+    G_close_cell(out_fd);
+
+    G_short_history(outmap, "raster", &history);
+    G_command_history(&history);
+    G_write_history(outmap, &history);
+
+    G_done_msg("");
+    exit(EXIT_SUCCESS);
+
+}
+
+
+
+int scan_bounds(FILE* fp, int xcol, int ycol, int zcol, char *fs)
+{
+    int    line, first, max_col;
+    char   buff[BUFFSIZE];
+    double min_x, max_x, min_y, max_y, min_z, max_z;
+    char   **tokens;
+    int    ntokens;   /* number of tokens */
+    double x,y,z;
+
+    max_col = (xcol > ycol) ? xcol : ycol;
+    max_col = (zcol > max_col) ? zcol : max_col;
+
+    line = 0;
+    first = TRUE;
+
+    while( 0 != G_getl2(buff, BUFFSIZE-1, fp) ) {
+	line++;
+
+	if((buff[0] == '#') || (buff[0] == '\0')) {
+	    continue; /* line is a comment or blank */
+	}
+
+	G_chop(buff); /* remove leading and trailing whitespace. unneded?? */
+	tokens = G_tokenize (buff, fs);
+	ntokens = G_number_of_tokens ( tokens );
+
+	if((ntokens < 3) || (max_col > ntokens) )
+	    G_fatal_error(_("Not enough data columns. "
+	       "Incorrect delimiter or column number?\n[%s]"), buff);
+
+/* too slow?
+	    if ( G_projection() == PROJECTION_LL ) {
+		G_scan_easting( tokens[xcol-1], &x, region.proj);
+		G_scan_northing( tokens[ycol-1], &y, region.proj);
+	    }
+	    else {
+*/
+	if( 1 != sscanf(tokens[xcol-1], "%lf", &x) )
+	    G_fatal_error(_("Bad x-coordinate line %d column %d. <%s>"), line, xcol, tokens[xcol-1]);
+
+	if(first) {
+	    min_x = x;
+	    max_x = x;
+	}
+	else {
+	    if ( x < min_x ) min_x = x;
+	    if ( x > max_x ) max_x = x;
+	}
+
+	if( 1 != sscanf(tokens[ycol-1], "%lf", &y) )
+	    G_fatal_error(_("Bad y-coordinate line %d column %d. <%s>"), line, ycol, tokens[ycol-1]);
+
+	if(first) {
+	    min_y = y;
+	    max_y = y;
+	}
+	else {
+	    if ( y < min_y ) min_y = y;
+	    if ( y > max_y ) max_y = y;
+	}
+
+	if( 1 != sscanf(tokens[zcol-1], "%lf", &z) )
+	    G_fatal_error(_("Bad z-coordinate line %d column %d. <%s>"), line, zcol, tokens[zcol-1]);
+
+	if(first) {
+	    min_z = z;
+	    max_z = z;
+	    first = FALSE;
+	}
+	else {
+	    if ( z < min_z ) min_z = z;
+	    if ( z > max_z ) max_z = z;
+	}
+
+
+	G_free_tokens(tokens);
+    }
+
+    fprintf(stderr,_("Range:     min         max\n"));
+    fprintf(stdout,"x: %11f %11f\n", min_x, max_x);
+    fprintf(stdout,"y: %11f %11f\n", min_y, max_y);
+    fprintf(stdout,"z: %11f %11f\n", min_z, max_z);
+
+    G_debug(1, "Processed %d lines.", line);
+
+    return 0;
+}
