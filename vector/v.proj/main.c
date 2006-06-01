@@ -69,7 +69,7 @@ int main (int argc, char *argv[])
     flag.list->key = 'l';
     flag.list->description = _("List vector files in input location and exit (a dummy value must be given for input)");
 
-    if (G_parser (argc, argv)) exit (-1);
+    if (G_parser (argc, argv)) exit (EXIT_FAILURE);
 		 
     /* start checking options and flags */
     /* set input vector file name and mapset */
@@ -108,7 +108,7 @@ int main (int argc, char *argv[])
 	if (flag.list->answer) {
 	   fprintf(stderr, _("Checking location %s, mapset %s:\n"), iloc_name, iset_name);
 	   G_list_element ("vector", "vector", iset_name, 0);
-	   exit(0); /* leave v.proj after listing*/
+	   exit(EXIT_SUCCESS); /* leave v.proj after listing*/
 	}
 
 	G__setenv ("MAPSET", iset_name);
@@ -119,12 +119,12 @@ int main (int argc, char *argv[])
 
 	 /*** Get projection info for input mapset ***/
 	 in_proj_keys = G_get_projinfo();
-	 if (in_proj_keys == NULL) exit (0);
+	 if (in_proj_keys == NULL) exit (EXIT_FAILURE);
 
 	 in_unit_keys = G_get_projunits();
-	 if (in_unit_keys == NULL) exit (0);
+	 if (in_unit_keys == NULL) exit (EXIT_FAILURE);
 
-	 if (pj_get_kv(&info_in,in_proj_keys,in_unit_keys) < 0) exit (0);
+	 if (pj_get_kv(&info_in,in_proj_keys,in_unit_keys) < 0) exit (EXIT_FAILURE);
 
 	 Vect_set_open_level (1);
 	 G_debug ( 1, "Open old: location: %s mapset : %s", G__location_path(), G_mapset() );
@@ -144,12 +144,12 @@ int main (int argc, char *argv[])
     /****** get the output projection parameters ******/
     Out_proj = G_projection();
     out_proj_keys = G_get_projinfo();
-    if (out_proj_keys == NULL) exit (0);
+    if (out_proj_keys == NULL) exit (EXIT_FAILURE);
 
     out_unit_keys = G_get_projunits();
-    if (out_unit_keys == NULL) exit (0);
+    if (out_unit_keys == NULL) exit (EXIT_FAILURE);
 
-    if (pj_get_kv(&info_out,out_proj_keys,out_unit_keys) < 0) exit (0);
+    if (pj_get_kv(&info_out,out_proj_keys,out_unit_keys) < 0) exit (EXIT_FAILURE);
 
     G_free_key_value(in_proj_keys);
     G_free_key_value(in_unit_keys);
@@ -195,7 +195,7 @@ int main (int argc, char *argv[])
 		              &info_in,&info_out)<0) 
 	{ 
 	    fprintf(stderr, _("Error in pj_do_transform\n"));
-	    exit(0);
+	    exit(EXIT_FAILURE);
 	}
 
 	Vect_write_line (&Out_Map, type, Points, Cats); /* write line */
@@ -209,6 +209,6 @@ int main (int argc, char *argv[])
     Vect_build (&Out_Map, stdout);
     Vect_close (&Out_Map); 
 
-    return 0;
+    exit(EXIT_SUCCESS);
 }
 
