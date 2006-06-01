@@ -19,6 +19,14 @@ better representation of valleys.
 <em>r.carve</em> does not create a depressionless DEM because many
 depressions are in flat areas and not in the streams.
 
+
+<H2>EXAMPLE</H2>
+
+<div class="code"><pre>
+g.region rast=elevation.10m -p
+r.carve rast=elevation.10m vect=streams out=carve_dem width=20 depth=5
+</pre></div>
+
 <H2>BUGS AND CAVEAT</H2>
 
 The module does not operate yet in latitude-longitude locations.  It
