@@ -4,7 +4,6 @@
 /*    first_read    flag to indicate that we haven't read from input */
 /*                  file yet */
 /*    last_read     flag to indicate we have reached EOF on input */
-/*    cell_name     input cell file name */
 /*    row_length    length of each row of the cell file (i.e., number of */
 /*                  columns) */
 /*    n_rows        number of rows in the cell file */
@@ -39,13 +38,10 @@
 #define CATNUM 0
 #define CATLABEL 1
 
-Global char *cell_name;
-Global char *mapset;
 Global int data_type;
 Global int data_size;
 Global struct Map_info Map;
 Global int input_fd;                 /*    input_fd     input cell file descriptor */
-Global struct line_pnts *Points;
 Global struct line_cats *Cats;
 Global struct Cell_head cell_head;
 
@@ -108,14 +104,14 @@ struct equiv_table
 
 /* lines.c */
 int alloc_lines_bufs(int);
-int extract_lines(void);
+int extract_lines(int);
 
 /* lines_io.c */
 int write_line(struct COOR *seed);
 
 /* areas.c */
 int alloc_areas_bufs(int);
-int extract_areas(void);
+int extract_areas(int);
 int more_equivs(void);
 
 /* areas_io.c */
@@ -123,15 +119,10 @@ int write_boundary(struct COOR *seed);
 int write_area(struct area_table *, struct equiv_table *, int, int);
     
 /* points.c */
-int extract_points(int);
+int extract_points(int, int);
 
 /* util.c */
 struct COOR *move(struct COOR *);
 struct COOR *find_end(struct COOR *, int, int *, int *);
 int at_end(struct COOR *);
 int read_row (void *);
-int blank_line(void *buf);
-
-void *xmalloc(int, char *);
-int xfree(void *, char *);
-void *xrealloc(char *, int, char *);

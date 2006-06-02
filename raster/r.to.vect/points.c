@@ -4,12 +4,15 @@
 #include <stdlib.h>
 #include <strings.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
 #include "global.h"
 
-int extract_points( int z_flag )
+
+int extract_points(int z_flag, int quiet)
 {
+    struct line_pnts *points = Vect_new_line_struct();
     CELL	*cellbuf; 
     FCELL	*fcellbuf; 
     DCELL	*dcellbuf; 
@@ -17,7 +20,7 @@ int extract_points( int z_flag )
     double 	x, y;
     int         count;
 
-    switch (data_type){
+    switch (data_type) {
 	case  CELL_TYPE:
 	    cellbuf = G_allocate_c_raster_buf();
 	    break;
@@ -28,14 +31,14 @@ int extract_points( int z_flag )
 	    dcellbuf = G_allocate_d_raster_buf();
 	    break;
     }
-    
+
+    if (!quiet)
+        fprintf(stderr, _("Extracting points ... "));
+
     count = 1;
     for (row = 0; row < cell_head.rows; row++) {
-	int cat, val;
-	double dval;
-	char *lab;
-
-	G_percent(row, cell_head.rows - 1, 2);
+        if (!quiet)
+            G_percent(row, cell_head.rows - 1, 2);
 
 	y = G_row_to_northing((double)(row +.5), &cell_head); 
 
@@ -51,10 +54,13 @@ int extract_points( int z_flag )
 		break;
 	}
 
-	for(col=0; col < cell_head.cols; col++){
+	for (col=0; col < cell_head.cols; col++) {
+            int cat, val;
+            double dval;
+
 	    x = G_col_to_easting((double)(col +.5), &cell_head); 
 
-	    switch (data_type){
+	    switch (data_type) {
 		case  CELL_TYPE:
 		    if (G_is_c_null_value (cellbuf+col)) continue;
 		    val = cellbuf[col];
@@ -70,22 +76,17 @@ int extract_points( int z_flag )
 		    break;
 	    }
 
-	    if(value_flag) { /* raster value */
-		cat = val;  /* value_flag is used only for CELL type */
-	    } else {         /* sequence */
-		cat = count;
-	    }
+	    /* value_flag is used only for CELL type */
+	    cat = (value_flag) ? val : count;
 	    
-	    Vect_reset_line(Points);
-
-	    Vect_append_point(Points, x, y, dval);
-
+	    Vect_reset_line(points);
 	    Vect_reset_cats(Cats);
-	    Vect_cat_set ( Cats, 1, cat);
+	    Vect_cat_set(Cats, 1, cat);
 	    
-	    Vect_write_line(&Map, GV_POINT, Points, Cats);
+	    Vect_append_point(points, x, y, dval);
+	    Vect_write_line(&Map, GV_POINT, points, Cats);
 
-	    if ( driver != NULL && !value_flag ) {
+	    if ((driver != NULL) && !value_flag ) {
 		char buf[1000];
 
 		sprintf ( buf, "insert into %s values (%d", Fi->table, cat);
@@ -98,8 +99,9 @@ int extract_points( int z_flag )
 		
 		db_append_string ( &sql, buf );
 
-
 		if ( has_cats ) {
+                    char *lab;
+
 		    lab = G_get_cat(val, &RastCats); /*cats are loaded only for CELL type */
 
 		    db_set_string (&label, lab);
@@ -113,14 +115,15 @@ int extract_points( int z_flag )
 		G_debug ( 3, db_get_string ( &sql ) );
 
 		if (db_execute_immediate (driver, &sql) != DB_OK )
-		    G_fatal_error ( "Cannot insert new row: %s", db_get_string ( &sql ) );
-
+		    G_fatal_error (_("Cannot insert new row: %s"), db_get_string(&sql));
 	    }
 	    
 	    count++;
 	}
-	
     }
+
+    if (!quiet)
+        G_percent(row, cell_head.rows - 1, 2);
 
     return(1);
 }

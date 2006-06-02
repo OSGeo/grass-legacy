@@ -7,7 +7,7 @@
 #include <grass/Vect.h>
 #include <grass/glocale.h>
 #include "global.h"
-#include "lines.h"
+
 
 /* 
 * Attributes for lines are ignored. For points and area by default unique new category is assigned
@@ -19,7 +19,8 @@ int main (int argc, char *argv[])
 {
     struct GModule *module;
     struct Option *in_opt, *out_opt, *feature_opt;
-    struct Flag *smooth_flg, *value_flg, *z_flg;  
+    struct Flag *smooth_flg, *value_flg, *z_flg, *quiet;
+    char *mapset;
     int feature;
 
     G_gisinit (argv[0]);
@@ -59,48 +60,50 @@ int main (int argc, char *argv[])
     z_flg->description = _("Write raster values as z coordinate. Table is not created. "
 	                   "Currently supported only for points");
 
-    if (G_parser (argc, argv)) exit (EXIT_FAILURE);
+    quiet = G_define_flag();
+    quiet->key = 'q';
+    quiet->description = _("Quiet - Do not show progress");
 
-    cell_name = G_store ( in_opt->answer );
+    if (G_parser (argc, argv))
+        exit(EXIT_FAILURE);
+
     feature = Vect_option_to_types ( feature_opt );
     smooth_flag = (smooth_flg->answer) ? SMOOTH : NO_SMOOTH;
     value_flag = value_flg->answer;
 
-    if ( z_flg->answer && feature != GV_POINT ) {
-	G_fatal_error ("z flag is supported only for points" );
-    }
+    if (z_flg->answer && (feature != GV_POINT))
+	G_fatal_error (_("z flag is supported only for points"));
 
     /* Open files */
     if ( (mapset = G_find_cell(in_opt->answer,"")) == NULL )
-	G_fatal_error ( "Raster '%s' not found", in_opt->answer);
+	G_fatal_error (_("Raster '%s' not found"), in_opt->answer);
 
     if ( (input_fd = G_open_cell_old(in_opt->answer,mapset)) < 0 )
-	G_fatal_error ( "Could not open raster '%s'", in_opt->answer);
+	G_fatal_error (_("Could not open raster '%s'"), in_opt->answer);
 
     data_type = G_raster_map_type(in_opt->answer,mapset);
     data_size = G_raster_size(data_type);
     G_get_window(&cell_head);
 
     if ( value_flag && data_type != CELL_TYPE ) {
-	G_warning ( "Raster is not CELL, '-v' flag ignored, raster values will be written to the table.");
+	G_warning (_("Raster is not CELL, '-v' flag ignored, raster values will be written to the table."));
 	value_flag = 0;
     }
     
-    if ( z_flg->answer ) {
+    if (z_flg->answer)
         Vect_open_new (&Map, out_opt->answer, 1);
-    } else {
+    else
         Vect_open_new (&Map, out_opt->answer, 0);
-    }
 
     Vect_hist_command ( &Map );
 
-    Points = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
 
     /* Open category labels */
-    if ( data_type == CELL_TYPE && (G_read_cats(cell_name, mapset, &RastCats) == 0) )
-	has_cats = 1;
-    else
+    if (data_type == CELL_TYPE) {
+        if (0 == G_read_cats(in_opt->answer, mapset, &RastCats))
+            has_cats = 1;
+    } else
 	has_cats = 0;
 
     db_init_string (&sql);
@@ -117,7 +120,7 @@ int main (int argc, char *argv[])
 
         driver = db_start_driver_open_database ( Fi->driver, Fi->database );
 	if ( driver == NULL ) 
-	    G_fatal_error ( "Cannot open database %s by driver %s", Fi->database, Fi->driver );
+	    G_fatal_error (_("Cannot open database %s by driver %s"), Fi->database, Fi->driver );
 	    
 	/* Create new table */
 	db_zero_string (&sql);
@@ -132,10 +135,10 @@ int main (int argc, char *argv[])
 	}
 
 	if ( has_cats ) {
-	    int i, len, clen;
+	    int i, len;
+	    int clen = 0;
 
 	    /* Get maximum column length */
-	    clen = 0;
 	    for ( i = 0; i < RastCats.ncats; i++) {
 		len = strlen ( RastCats.labels[i] );
 		if ( len > clen ) clen = len;
@@ -151,13 +154,13 @@ int main (int argc, char *argv[])
 	G_debug ( 3, db_get_string ( &sql ) );
 
 	if (db_execute_immediate (driver, &sql) != DB_OK )
-	    G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql )  );
+	    G_fatal_error (_("Cannot create table: %s"), db_get_string (&sql)  );
 
 	if ( db_create_index2(driver, Fi->table, "cat" ) != DB_OK )
-	    G_warning ( "Cannot create index" );
+	    G_warning (_("Cannot create index"));
 
 	if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
-	    G_fatal_error ( "Cannot grant privileges on table %s", Fi->table );
+	    G_fatal_error (_("Cannot grant privileges on table %s"), Fi->table );
 
 	db_begin_transaction ( driver );
 
@@ -175,12 +178,12 @@ int main (int argc, char *argv[])
 
     if ( feature == GV_LINE ) {
         alloc_lines_bufs(row_length + 2);
-	extract_lines();
+	extract_lines(quiet->answer);
     } else if ( feature == GV_AREA ) {
         alloc_areas_bufs(row_length + 2);
-	extract_areas();
-    } else { /* GV_POINT */
-	extract_points ( z_flg->answer );
+	extract_areas(quiet->answer);
+    } else /* GV_POINT */ {
+	extract_points (z_flg->answer, quiet->answer);
     }
     
     G_close_cell(input_fd);
@@ -194,9 +197,9 @@ int main (int argc, char *argv[])
 
 	fidx = Vect_cidx_get_field_index ( &Map, 1 );
 	if ( fidx >= 0 )  {
-	
 	    ncats = Vect_cidx_get_num_cats_by_index (  &Map, fidx ) ;
 	    lastcat = -1;
+
 	    for ( c = 0; c < ncats; c++) {
 		Vect_cidx_get_cat_by_index ( &Map, fidx, c, &cat, &tp, &id );
 
@@ -218,7 +221,7 @@ int main (int argc, char *argv[])
 		G_debug ( 3, db_get_string ( &sql ) );
 
 		if (db_execute_immediate (driver, &sql) != DB_OK ) 
-		    G_fatal_error ( "Cannot insert into table: %s", db_get_string ( &sql )  );
+		    G_fatal_error (_("Cannot insert into table: %s"), db_get_string (&sql));
 
 		lastcat = cat;
 	    }
@@ -234,6 +237,7 @@ int main (int argc, char *argv[])
     }
 
     Vect_close (&Map);
+    G_done_msg("");
 
     exit(EXIT_SUCCESS);
 }

@@ -70,6 +70,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include <grass/dbmi.h>
 #include "global.h"
 
@@ -83,6 +84,7 @@ static int n_areas, area_num, n_equiv, tl_area;
 static struct area_table *a_list, *a_list_new, *a_list_old;
 static struct equiv_table *e_list;
 
+/* function prototypes */
 static int update_list(int);
 static int end_vline();
 static int end_hline();
@@ -98,20 +100,31 @@ static int more_areas();
 static int update_width(struct area_table *,int);
 static int nabors (void);
 
+
 /* extract_areas - trace boundaries of polygons in file */
 
-int extract_areas (void)
+int extract_areas (int quiet)
 {
   int nullVal;
+
   row = col = top = 0;  /* get started for read of first */
   bottom = 1;  /* line from cell file */
   area_num = 0;
   tl_area = 0;
+
   G_set_c_null_value(&nullVal, 1);
-  assign_area(nullVal,0);  /* represents the "outside", the external null values */
+  /* represents the "outside", the external null values */
+  assign_area(nullVal,0);
+
+  if (!quiet)
+    fprintf(stderr, _("Extracting areas ... "));
+
   scan_length = read_next();
   while (read_next())			/* read rest of file, one row at */
   {					/*   a time */
+    if (!quiet)
+      G_percent(row, 1000, 10);
+
     for (col = 0; col < scan_length - 1; col++)
     {
       tl = *(buffer[top] + col);	/* top left in window */
@@ -120,10 +133,16 @@ int extract_areas (void)
       br = *(buffer[bottom] + col + 1);	/* bottom right */
       update_list(nabors());
     }
+
     if (h_ptr != NULPTR)		/* if we have a loose end, */
       end_hline();			/*   tie it down */
+
     row++;
   }
+
+  if (!quiet)
+    G_percent(row, row, 10);
+
   write_area(a_list,e_list,area_num,n_equiv);
 
   G_free(a_list);
@@ -167,8 +186,8 @@ static int update_list (int i)
       } else {
       */
       new_ptr1->left = new_ptr2->right = new_ptr3->left = tl_area;
-
       new_ptr1->right = new_ptr2->left = new_ptr3->right = area_num;
+
       assign_area(br,1);
       update_width(a_list_old,1);
       v_list[col] = new_ptr2;
@@ -185,6 +204,7 @@ static int update_list (int i)
       new_ptr->bptr = h_ptr;
       new_ptr->left = h_ptr->left;
       new_ptr->right = h_ptr->right;
+
       /* update_width(a_list + new_ptr->left,3); */
       v_list[col] = new_ptr;
       h_ptr = NULPTR;
@@ -328,7 +348,6 @@ static int end_hline (void)
 static int start_vline (void)
 {
   struct COOR *new_ptr1, *new_ptr2;
-  struct COOR *get_ptr();
 
   new_ptr1 = get_ptr();
   new_ptr2 = get_ptr();
@@ -343,7 +362,6 @@ static int start_vline (void)
 static int start_hline (void)
 {
   struct COOR *new_ptr1, *new_ptr2;
-  struct COOR *get_ptr();
 
   new_ptr1 = get_ptr();
   new_ptr2 = get_ptr();
@@ -362,14 +380,11 @@ static struct COOR *get_ptr (void)
   static struct COOR *ptr;
 
   ptr = (struct COOR *) G_malloc(sizeof (struct COOR));
-  if (ptr == NULPTR)
-  {
-    G_fatal_error("OUT OF MEMORY");
-  }
   ptr->row = row;
   ptr->col = col;
   ptr->fptr = ptr->bptr = NULPTR;
   ptr->node = ptr->left = ptr->right = 0;
+
   return(ptr);
 }
 
@@ -468,6 +483,7 @@ static int read_next (void)
   top = bottom++;			/* switch top and bottom, */
   bottom = 1 & bottom;			/*   which are always 0 or 1 */
   n = read_row(buffer[bottom]);
+
   return(n);
 }
 
@@ -483,12 +499,14 @@ int alloc_areas_bufs (int size)
   v_list = (struct COOR **) G_malloc(size * sizeof(*v_list));
   n_areas = n_equiv = 500;		/* guess at number of areas, equivs */
   a_list = (struct area_table *) G_malloc(n_areas * sizeof(struct area_table));
+
   for (i = 0; i < n_areas; i++)
   {
     (a_list + i)->width = (a_list + i)->row = (a_list + i)->col = 0;
     (a_list + i)->free = 1;
   }
   a_list_new = a_list_old = a_list;
+
   e_list = (struct equiv_table *) G_malloc(n_equiv * sizeof(struct equiv_table));
   for (i = 0; i < n_equiv; i++)
   {
@@ -520,8 +538,10 @@ static int equiv_areas (int a1, int a2)
     small = a2;
     large = a1;
   }
+
   while (large >= n_equiv)		/* make sure our equivalence tables */
     more_equivs();			/*   are large enough */
+
   if ((e_list + large)->mapped)
   {
     if ((e_list + small)->mapped)	/* small mapped, large mapped */
@@ -553,6 +573,7 @@ static int equiv_areas (int a1, int a2)
     else				/* small not mapped, large not mapped */
       map_area(large,small);
   }
+
   return (0);
 }
 
@@ -577,12 +598,14 @@ static int map_area (
 
   (e_list + x)->mapped = 1;
   (e_list + x)->where = y;
+
   if ((a_list + x)->width > (a_list + y)->width)
   {
     (a_list + y)->width = (a_list + x)->width;
     (a_list + y)->row = (a_list + x)->row;
     (a_list + y)->col = (a_list + x)->col;
   }
+
   if (add_to_list(x,y))			/* if x is not already in y's list */
   {
     n = (e_list + x)->count;
@@ -620,14 +643,17 @@ static int add_to_list (int x, int y)
       if (*(e_list_y->ptr + i) == x)
         return(0);			/* if so, we don't need to add it */
     }
+
     if (n + 1 >= e_list_y->length)	/* add more space for storage */
     {					/*   if necessary */
       e_list_y->length += 10;
       e_list_y->ptr = (int *) G_realloc(e_list_y->ptr,e_list_y->length * sizeof(int));
     }
+
     *(e_list_y->ptr + n) = x;		/* add x to list */
     (e_list_y->count)++;
   }
+
   return(1);				/* indicate addition made */
 }
 
@@ -639,8 +665,10 @@ static int assign_area (CELL cat, int kase)
   a_list_new->free = 0;
   a_list_new->cat = cat;
   area_num++;
+
   if (area_num >= n_areas)
     more_areas();
+
   a_list_old = a_list + area_num - 1;
   a_list_new = a_list + area_num;
 
@@ -655,6 +683,7 @@ static int more_areas (void)
 
   old_n = n_areas;
   n_areas += 250;
+
   a_list = (struct area_table *) G_realloc(a_list,n_areas * sizeof(struct area_table));
   for (i = old_n; i < n_areas; i++)
   {
@@ -673,6 +702,7 @@ int more_equivs (void)
 
   old_n = n_equiv;
   n_equiv += 250;
+
   e_list = (struct equiv_table *) G_realloc(e_list,n_equiv * sizeof(struct equiv_table));
   for (i = old_n; i < n_equiv; i++)
   {
@@ -694,7 +724,7 @@ static int update_width (struct area_table *ptr, int kase)
   { }
 
   if(a == 0)
-    fprintf(stderr,"Area 0, %d \t%d \t%d \t%d \t%d\n", kase, row, col, ptr->width, w);
+    G_message(_("Area 0, %d \t%d \t%d \t%d \t%d"), kase, row, col, ptr->width, w);
 
   if (a < n_equiv)
   {
@@ -702,6 +732,7 @@ static int update_width (struct area_table *ptr, int kase)
     if (ep->mapped)
       ptr = a_list + ep->where;
   }
+
   if (w > ptr->width)
   {
     ptr->width = w;
