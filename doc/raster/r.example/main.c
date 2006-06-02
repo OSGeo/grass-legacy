@@ -69,6 +69,7 @@ int main(int argc, char *argv[])
     int infd, outfd;		/* file descriptor */
     int verbose;
     RASTER_MAP_TYPE data_type;	/* type of the map (CELL/DCELL/...) */
+    struct History history;	/* holds meta-data (title, comments,..) */
 
     struct GModule *module;	/* GRASS module for parsing arguments */
 
@@ -185,5 +186,11 @@ int main(int argc, char *argv[])
     G_close_cell(infd);
     G_close_cell(outfd);
 
-    return 0;
+    /* add command line incantation to history file */
+    G_short_history(result, "raster", &history);
+    G_command_history(&history);
+    G_write_history(result, &history);
+
+
+    exit(EXIT_SUCCESS);
 }
