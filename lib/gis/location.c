@@ -45,11 +45,8 @@ G_location_path()
     location = G__location_path();
     if(access(location,0) != 0) 
     {
-	char msg[400];
-
 	perror("access");
-	sprintf(msg,_("LOCATION << %s >> not available for reuid=%d (real user-id), euid=%d (effective user-id)"), location, getuid(),geteuid()) ;
-	G_fatal_error (msg);
+	G_fatal_error (_("LOCATION << %s >> not available"), location);
     }
 
     return location;
