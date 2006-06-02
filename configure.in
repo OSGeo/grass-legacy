@@ -520,11 +520,21 @@ AC_CHECK_LIB(giconv, libiconv, ICONVLIB=-lgiconv, [
 ])])])])])])
 AC_SUBST(ICONVLIB)
 
+have_socket=1
 AC_CHECK_FUNC(socket, SOCKLIB=, [
 AC_CHECK_LIB(socket, socket, SOCKLIB=-lsocket, [
+    have_socket=0
     AC_MSG_WARN([*** Unable to locate socket() function.])
 ])])
 AC_SUBST(SOCKLIB)
+if test "$have_socket" = 1 ; then
+  HAVE_SOCKET=1
+  AC_DEFINE(HAVE_SOCKET)
+else
+  HAVE_SOCKET=0
+fi
+AC_SUBST(HAVE_SOCKET)
+
 
 # Mandatory zlib dependency
 

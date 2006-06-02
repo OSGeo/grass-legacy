@@ -209,9 +209,12 @@ USE_OPENDWG         = @USE_OPENDWG@
 HAVE_NLS            = @HAVE_NLS@
 
 #Large File Support (LFS)
-USE_LARGEFILES     = @USE_LARGEFILES@
+USE_LARGEFILES      = @USE_LARGEFILES@
 
-MINGW		= @MINGW@
+#BSD sockets
+HAVE_SOCKET         = @HAVE_SOCKET@
+
+MINGW               = @MINGW@
 
 # Cross compilation
 CROSS_COMPILING = @CROSS_COMPILING@ 
