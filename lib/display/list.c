@@ -102,7 +102,7 @@ int D_get_cell_name(char *name )
 	char **list ;
 	int count ;
 
-	if(stat = R_pad_get_item ("cell", &list, &count))
+	if ((stat = R_pad_get_item ("cell", &list, &count)))
 		return(-1) ;
 
 	strcpy(name, list[0]) ;
@@ -145,7 +145,7 @@ int D_get_dig_name(char *name )
 	char **list ;
 	int count ;
 
-	if(stat = R_pad_get_item ("dig", &list, &count))
+	if ((stat = R_pad_get_item ("dig", &list, &count)))
 		return(-1) ;
 
 	strcpy(name, list[0]) ;
@@ -188,7 +188,7 @@ int D_get_site_name(char *name )
 	char **list ;
 	int count ;
 
-	if(stat = R_pad_get_item ("site", &list, &count))
+	if ((stat = R_pad_get_item ("site", &list, &count)))
 		return(-1) ;
 
 	strcpy(name, list[0]) ;
@@ -206,7 +206,7 @@ int D_get_cell_list(char ***list, int *count )
 {
 	int stat ;
 
-	if(stat = R_pad_get_item ("cell_list", list, count))
+	if ((stat = R_pad_get_item ("cell_list", list, count)))
 		return(-1) ;
 
 	return(0) ;
@@ -221,7 +221,7 @@ int D_get_dig_list(char ***list, int *count )
 {
 	int stat ;
 
-	if(stat = R_pad_get_item ("dig_list", list, count))
+	if ((stat = R_pad_get_item ("dig_list", list, count)))
 		return(-1) ;
 
 	return(0) ;
@@ -236,7 +236,7 @@ int D_get_site_list(char ***list, int *count )
 {
 	int stat ;
 
-	if(stat = R_pad_get_item ("site_list", list, count))
+	if ((stat = R_pad_get_item ("site_list", list, count)))
 		return(-1) ;
 
 	return(0) ;
@@ -266,7 +266,7 @@ int D_get_list(char ***list, int *count )
 {
 	int stat ;
 
-	if(stat = R_pad_get_item ("list", list, count))
+	if ((stat = R_pad_get_item ("list", list, count)))
 		return(-1) ;
 
 	return(0) ;
@@ -322,7 +322,7 @@ int D_offset_is( int *num )
 	int count ;
 	int stat ;
 
-	if(stat = R_pad_get_item ("off", &list, &count))
+	if ((stat = R_pad_get_item ("off", &list, &count)))
 	{
 		*num = 0 ;
 		return(-1) ;
@@ -350,7 +350,7 @@ int D_get_erase_color( char *colorname)
 	char **list ;
 	int count ;
 
-	if(stat = R_pad_get_item ("erase", &list, &count))
+	if ((stat = R_pad_get_item ("erase", &list, &count)))
 		return(-1) ;
 
 	strcpy(colorname, list[0]) ;
