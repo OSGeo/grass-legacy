@@ -9,7 +9,11 @@
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
 #include "global.h"
-#include "lines.h"
+
+
+/* function prototypes */
+static int blank_line(void *buf);
+
 
 /* move - move to next point in line */
 
@@ -117,33 +121,9 @@ int read_row (void *buf)
 	return(row_length + 2);
 }
 
-int blank_line(void *buf)
+static int blank_line(void *buf)
 {
 	G_set_null_value(buf, row_length + 2,data_type);
 	
 	return 0;
-}
-
-void *xmalloc(int size,char *label)
-{
-	char *addr;
-
-	addr = G_malloc(size);
-	return(addr);
-}
-
-int xfree(void *addr,char *label)
-{
-	/* G_free (addr);*/
-	G_free(addr);
-
-	return 0;
-}
-
-void *xrealloc(char *addr, int size, char *label)
-{
-	char *addr2;
-
-	addr2 = G_realloc(addr,size);
-	return(addr2);
 }

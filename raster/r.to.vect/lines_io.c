@@ -31,19 +31,22 @@
 #endif
 
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
 #include "global.h"
-#include "lines.h"
 
+
+/* function prototypes */
 static int write_ln(struct COOR *, struct COOR *, int);
+
 
 /* write_line - attempt to write a line to output */
 /* just returns if line is not completed yet */
 
 int write_line(struct COOR *seed)
 {
-    struct COOR *point, *begin, *end, *find_end(), *move();
+    struct COOR *point, *begin, *end;
     int dir, line_type, n, n1;
 
     point = seed;
@@ -54,33 +57,35 @@ int write_line(struct COOR *seed)
 	    return (-1);	/* unfinished line */
 	}
 	direction = dir;
-    }
-    else {			/* in middle of a line */
-
+    } else {			/* in middle of a line */
 	end = find_end(point, FORWARD, &line_type, &n);
 	if (line_type == OPEN) {	/* line not finished */
 	    return (-1);
 	}
+
 	if (line_type == END) {	/* found one end at least *//* look for other one */
 	    begin = find_end(point, BACKWARD, &line_type, &n1);
 	    if (line_type == OPEN) {	/* line not finished */
 		return (-1);
 	    }
+
 	    if (line_type == LOOP) {	/* this should NEVER be the case */
-		fprintf(stderr, "write_line:  found half a loop!\n");
+		G_warning(_("write_line:  found half a loop!"));
 		return (-1);
 	    }
+
 	    direction = at_end(begin);	/* found both ends now; total length */
 	    n += n1;		/*   is sum of distances to each end */
-	}
-	else {			/* line_type = LOOP by default */
+	} else {			/* line_type = LOOP by default */
 	    /* already have correct length */
 	    begin = end;	/* end and beginning are the same */
 	    direction = FORWARD;	/* direction is arbitrary */
 	}
     }
+
     /* if (n > 2) */
     write_ln(begin, end, n);
+
     return (0);
 }
 
@@ -90,6 +95,7 @@ int write_line(struct COOR *seed)
 static int write_ln(struct COOR *begin, struct COOR *end,	/* start and end point of line */
 		    int n)
 {				/* number of points to write */
+    struct line_pnts *points = Vect_new_line_struct();
     double x, y;
     struct COOR *p, *last;
     int i;
@@ -100,37 +106,30 @@ static int write_ln(struct COOR *begin, struct COOR *end,	/* start and end point
     y = cell_head.north - ((double) p->row + 0.5) * cell_head.ns_res;
     x = cell_head.west + ((double) p->col + 0.5) * cell_head.ew_res;
 
-
-/****************************************************************
- * shapiro 27 feb 1992.
- * bug fixed by:  by Jinn-Guey Lay: jinn@uhunix.uhcc.Hawaii.edu
- ***************************************************************/
-    Vect_reset_line(Points);
-/***************************************************************/
-
-    Vect_append_point(Points, x, y, 0.0);
+    Vect_append_point(points, x, y, 0.0);
 
     for (i = 1; i < n; i++) {
 	last = p;
-	if ((p = move(p)) == NULL) {	/* this should NEVER happen */
-	    fprintf(stderr, "write_line:  line terminated unexpectedly\n");
-	    fprintf(stderr, "  previous (%d) point %p (%d,%d,%d) %p %p\n",
+
+	/* this should NEVER happen */
+	if ((p = move(p)) == NULL)
+	    G_fatal_error(_("write_line: line terminated unexpectedly\n"
+                    "  previous (%d) point %p (%d,%d,%d) %p %p"),
 		    direction, last, last->row, last->col, last->node,
 		    last->fptr, last->bptr);
-	    exit(-1);
-	}
+
 	y = cell_head.north - ((double) p->row + 0.5) * cell_head.ns_res;
 	x = cell_head.west + ((double) p->col + 0.5) * cell_head.ew_res;
 
-	Vect_append_point(Points, x, y, 0.0);
+	Vect_append_point(points, x, y, 0.0);
     }
-
 
     /* now free all the pointers */
     p = begin;
 
     for (i = 1; i < n; i++) {
 	last = p;
+
 	if ((p = move(p)) == NULL)
 	    break;
 	if (last == p)
@@ -138,6 +137,7 @@ static int write_ln(struct COOR *begin, struct COOR *end,	/* start and end point
 	if (last->fptr != NULL)
 	    if (last->fptr->fptr == last)
 		last->fptr->fptr = NULL;
+
 	/* now it can already ne NULL */
 	if (last->fptr != NULL)
 	    if (last->fptr->bptr == last)
@@ -150,10 +150,11 @@ static int write_ln(struct COOR *begin, struct COOR *end,	/* start and end point
 		last->bptr->bptr = NULL;
 	G_free(last);
     }				/* end of for i */
+
     if (p != NULL)
 	G_free(p);
 
-    Vect_write_line(&Map, GV_LINE, Points, Cats);
+    Vect_write_line(&Map, GV_LINE, points, Cats);
 
     return 0;
 }
