@@ -3,9 +3,6 @@ void isetname(IMAGE *image, char *name);
 void isetcolormap(IMAGE *image, int colormap);
 
 /* open.c */
-IMAGE *imgopen(int f, char *file, char *mode, unsigned int type,
-            unsigned int dim, unsigned int xsize, unsigned int ysize, 
-            unsigned int zsize);
 unsigned short *ibufalloc(IMAGE *image);
 unsigned long reverse(unsigned long lwrd);
 void cvtshorts(unsigned short buffer[], long n);
