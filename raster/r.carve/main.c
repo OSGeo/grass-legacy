@@ -170,7 +170,7 @@ int main(int argc, char **argv)
     update_rast_history(&parm);
 
     if (!parm.quiet)
-	G_done_msg(G_recreate_command());
+	G_done_msg("");
 
     return EXIT_SUCCESS;
 }
