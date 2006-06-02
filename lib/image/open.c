@@ -33,6 +33,10 @@ static void     putlong       PARM((FILE *, u_long));
 
 typedef unsigned char byte;
 
+static IMAGE *imgopen(int f, char *file, const char *mode,
+                      const u_int type, const u_int dim, const u_int xsize,
+                      const u_int ysize, const u_int zsize);
+
 
 IMAGE *iopen(char *file, char *mode, u_int type, u_int dim,
              u_int xsize, u_int ysize, u_int zsize)
@@ -46,8 +50,9 @@ IMAGE *fiopen(int f, char *mode, u_int type, u_int dim,
     return(imgopen(f, 0, mode, type, dim, xsize, ysize, zsize));
 }
 
-IMAGE *imgopen(int f, char *file, char *mode, u_int type, u_int dim, 
-               u_int xsize, u_int ysize, u_int zsize)
+static IMAGE *imgopen(int f, char *file, const char *mode,
+                      const u_int type, const u_int dim, const u_int xsize,
+                      const u_int ysize, const u_int zsize)
 {
 	register IMAGE 	*image;
 	register rw;
