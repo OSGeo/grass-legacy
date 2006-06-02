@@ -15,9 +15,6 @@ int update_rast_history(struct parms *parm)
 {
     struct History hist;
 
-    if (G_read_history(parm->inrast->answer, G_mapset(), &hist) < 0)
-	return -1;
-
     /* write command line to history */
     G_short_history(parm->outrast->answer, "raster", &hist);
     sprintf(hist.edhist[0], "%s version %.2f", G_program_name(), APP_VERSION);
