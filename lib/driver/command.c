@@ -15,8 +15,8 @@
 #include "pad.h"
 #include <grass/glocale.h>
 
-#define REC(a,b)    if ((eof=rec((a),(b)))) break
-#define RECTEXT(x,s)  if ((eof=rectext(&x,&s))) break
+#define REC(a,b)    if ((ateof=rec((a),(b)))) break
+#define RECTEXT(x,s)  if ((ateof=rectext(&x,&s))) break
 #define SEND(a,b)   _send((a),(b))
 #define SENDTEXT(x)  sendtext((x))
 
@@ -35,7 +35,7 @@ static int atbuf;
 
 static char current_command;
 
-static int eof;
+static int ateof;
 
 static PAD *curpad;       /* current selected pad */
 
@@ -74,7 +74,7 @@ void command_init(int rfd, int wfd)
     atbuf = n_read = 0;
     current_command = 0;
 
-    eof = 0;
+    ateof = 0;
 }
 
 int LIB_command_get_input(void)
@@ -614,7 +614,7 @@ int process_command(int c)
     }
     lc = c;
 
-    return eof;
+    return ateof;
 }
 
 static int read1(char *c)
