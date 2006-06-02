@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     int    n = 0;
     double sum = 0.;
     double sumsq = 0.;
-
+    double variance;
 
     struct GModule *module;
     struct Option *input_opt, *output_opt, *delim_opt, *percent_opt, *type_opt;
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
     type_opt->type = TYPE_STRING;
     type_opt->required = NO;
     type_opt->options = "CELL,FCELL,DCELL";
-    type_opt->answer = "CELL";
+    type_opt->answer = "FCELL";
     type_opt->description = _("Storage type for resultant raster map");
 
     delim_opt = G_define_option();
@@ -273,15 +273,15 @@ int main(int argc, char *argv[])
     if( ! scan_flag->answer) {
 	/* allocate memory (test for enough before we start) */
 	if(bin_n)
-	    n_array = G_calloc((rows+1)*(cols+1), G_raster_size(CELL_TYPE));
+	    n_array = G_calloc(rows*(cols+1), G_raster_size(CELL_TYPE));
 	if(bin_min)
-	    min_array = G_calloc((rows+1)*(cols+1), G_raster_size(rtype));
+	    min_array = G_calloc(rows*(cols+1), G_raster_size(rtype));
 	if(bin_max)
-	    max_array = G_calloc((rows+1)*(cols+1), G_raster_size(rtype));
+	    max_array = G_calloc(rows*(cols+1), G_raster_size(rtype));
 	if(bin_sum)
-	    sum_array = G_calloc((rows+1)*(cols+1), G_raster_size(rtype));
+	    sum_array = G_calloc(rows*(cols+1), G_raster_size(rtype));
 	if(bin_sumsq)
-	    sumsq_array = G_calloc((rows+1)*(cols+1), G_raster_size(rtype));
+	    sumsq_array = G_calloc(rows*(cols+1), G_raster_size(rtype));
 
 	/* and then free it again */
 	if(n_array) G_free(n_array);
@@ -335,28 +335,27 @@ int main(int argc, char *argv[])
 
 	if(bin_n) {
 	    G_debug(2, "allocating n_array");
-	    /* I thought rows*(cols+1) but it needs (rows+1)*(cols+1) for multi-pass ?? */
-	    n_array = G_calloc((rows+1)*(cols+1), G_raster_size(CELL_TYPE));
+	    n_array = G_calloc(rows*(cols+1), G_raster_size(CELL_TYPE));
 	    blank_array(n_array, rows, cols, CELL_TYPE, 0);
 	}
 	if(bin_min) {
 	    G_debug(2, "allocating min_array");
-	    min_array = G_calloc((rows+1)*(cols+1), G_raster_size(rtype));
+	    min_array = G_calloc(rows*(cols+1), G_raster_size(rtype));
 	    blank_array(min_array, rows, cols, rtype, -1); /* fill with NULLs */
 	}
 	if(bin_max) {
 	    G_debug(2, "allocating max_array");
-	    max_array = G_calloc((rows+1)*(cols+1), G_raster_size(rtype));
+	    max_array = G_calloc(rows*(cols+1), G_raster_size(rtype));
 	    blank_array(max_array, rows, cols, rtype, -1); /* fill with NULLs */
 	}
 	if(bin_sum) {
 	    G_debug(2, "allocating sum_array");
-	    sum_array = G_calloc((rows+1)*(cols+1), G_raster_size(rtype));
+	    sum_array = G_calloc(rows*(cols+1), G_raster_size(rtype));
 	    blank_array(sum_array, rows, cols, rtype, 0);
 	}
 	if(bin_sumsq) {
 	    G_debug(2, "allocating sumsq_array");
-	    sumsq_array = G_calloc((rows+1)*(cols+1), G_raster_size(rtype));
+	    sumsq_array = G_calloc(rows*(cols+1), G_raster_size(rtype));
 	    blank_array(sumsq_array, rows, cols, rtype, 0);
 	}
 
@@ -388,7 +387,7 @@ int main(int argc, char *argv[])
 */
 	    if( 1 != sscanf(tokens[ycol-1], "%lf", &y) )
 		G_fatal_error(_("Bad y-coordinate line %d column %d. <%s>"), line, ycol, tokens[ycol-1]);
-	    if (y < pass_south || y > pass_north) {
+	    if (y <= pass_south || y > pass_north) {
 		G_free_tokens(tokens);
 		continue;
 	    }
@@ -423,6 +422,8 @@ int main(int argc, char *argv[])
 		We could make above bounds check "if(x>=region.east) continue;"
 		But instead we go to all sorts of trouble so that not one single
 		data point is lost. GE is too small to catch them all.
+		We don't try to make y happy as percent segmenting will make some
+		points happen twice that way; so instead we use the y<= test above.
 		*/
 	    if (arr_col >= cols) {
 		if( ((x - region.west) / region.ew_res) - cols < 10*GRASS_EPSILON)
@@ -502,8 +503,9 @@ int main(int argc, char *argv[])
 		}
 		break;
 
-	/* maybe combine these next three and switch again for G_set_rast_val() */
-	    case METHOD_STDDEV:   /* sqrt((sumsq - sum*sum/n)/n) */
+	    case METHOD_STDDEV:     /*  sqrt(variance)        */
+	    case METHOD_VARIANCE:   /*  (sumsq - sum*sum/n)/n */
+	    case METHOD_COEFF_VAR:  /*  100 * stdev / mean    */
 		ptr = raster_row;
 		for (col=0; col<cols; col++) {
 		    offset = (row*cols + col) * G_raster_size(rtype);
@@ -515,52 +517,19 @@ int main(int argc, char *argv[])
 		    if(n == 0)
 			G_set_null_value(ptr, 1, rtype);
 		    else {
-			d_tmp = (sumsq - sum*sum/n)/n;  /* variance */
-			if( d_tmp < GRASS_EPSILON )
-			    d_tmp = 0.0;
-			G_set_raster_value_d(ptr, sqrt(d_tmp), rtype);
-		    }
-		    ptr = G_incr_void_ptr(ptr, G_raster_size(rtype));
-		}
-		break;
+			variance = (sumsq - sum*sum/n)/n;
+			if( variance < GRASS_EPSILON )
+			    variance = 0.0;
 
-	    case METHOD_VARIANCE:   /* (sumsq - sum*sum/n)/n */
-		ptr = raster_row;
-		for (col=0; col<cols; col++) {
-		    offset = (row*cols + col) * G_raster_size(rtype);
-		    n_offset = (row*cols + col) * G_raster_size(CELL_TYPE);
-		    n     = G_get_raster_value_c(n_array + n_offset, CELL_TYPE);
-		    sum   = G_get_raster_value_d(sum_array + offset, rtype);
-		    sumsq = G_get_raster_value_d(sumsq_array + offset, rtype);
+			if(method == METHOD_STDDEV)
+			    G_set_raster_value_d(ptr, sqrt(variance), rtype);
 
-		    if(n == 0)
-			G_set_null_value(ptr, 1, rtype);
-		    else {
-			d_tmp = (sumsq - sum*sum/n)/n;  /* variance */
-			if( d_tmp < GRASS_EPSILON )
-			    d_tmp = 0.0;
-			G_set_raster_value_d(ptr, d_tmp, rtype);
-		    }
-		    ptr = G_incr_void_ptr(ptr, G_raster_size(rtype));
-		}
-		break;
+			else if(method == METHOD_VARIANCE)
+			    G_set_raster_value_d(ptr, variance, rtype);
 
-	    case METHOD_COEFF_VAR:   /* 100 * sqrt( (sumsq - sum*sum/n) /n) / (sum/n) */
-		ptr = raster_row;
-		for (col=0; col<cols; col++) {
-		    offset = (row*cols + col) * G_raster_size(rtype);
-		    n_offset = (row*cols + col) * G_raster_size(CELL_TYPE);
-		    n     = G_get_raster_value_c(n_array + n_offset, CELL_TYPE);
-		    sum   = G_get_raster_value_d(sum_array + offset, rtype);
-		    sumsq = G_get_raster_value_d(sumsq_array + offset, rtype);
+			else if(method == METHOD_COEFF_VAR)
+			    G_set_raster_value_d(ptr, 100*sqrt(variance)/(sum/n), rtype);
 
-		    if(n == 0)
-			G_set_null_value(ptr, 1, rtype);
-		    else {
-			d_tmp = (sumsq - sum*sum/n)/n;  /* variance */
-			if( d_tmp < GRASS_EPSILON )
-			    d_tmp = 0.0;
-			G_set_raster_value_d(ptr, 100.0*sqrt(d_tmp)/(sum/n), rtype);
 		    }
 		    ptr = G_incr_void_ptr(ptr, G_raster_size(rtype));
 		}
