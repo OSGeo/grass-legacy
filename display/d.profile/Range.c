@@ -56,7 +56,6 @@ int quick_range (char *name, char *mapset, long *min, long *max)
     struct FPRange fprange;
     CELL xmin,xmax;
     DCELL fpxmin, fpxmax;
-    RASTER_MAP_TYPE a;
 
     switch(G_raster_map_type(name,mapset))
     {
