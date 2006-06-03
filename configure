@@ -6509,7 +6509,7 @@ if test "$have_socket" = 1 ; then
 EOF
 
 else
-  HAVE_SOCKET=0
+  HAVE_SOCKET=
 fi
 
 
