@@ -49,7 +49,7 @@ int WriteProfile(char *raster, char *mapset,
     G_format_northing (profile->n2, coords[3], proj);
     fprintf (outFile, "# From (%s, %s) to (%s, %s)\n",
             coords[0], coords[1], coords[2], coords[3]);
-    fprintf (outFile, "# Stats: Count = %d, Min = %s, Max = %s\n",
+    fprintf (outFile, "# Stats: Count = %ld, Min = %s, Max = %s\n",
             profile->count, 
             _fmt_ucat(&profile->MinCat, &profile->MinCat, buf),
             _fmt_ucat(&profile->MaxCat, &profile->MinCat, buf2));
