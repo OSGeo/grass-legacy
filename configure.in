@@ -531,7 +531,7 @@ if test "$have_socket" = 1 ; then
   HAVE_SOCKET=1
   AC_DEFINE(HAVE_SOCKET)
 else
-  HAVE_SOCKET=0
+  HAVE_SOCKET=
 fi
 AC_SUBST(HAVE_SOCKET)
 
