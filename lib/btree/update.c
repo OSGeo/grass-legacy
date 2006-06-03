@@ -38,10 +38,7 @@ int btree_update (BTREE *B,
 	if (dir == 0)
 	{
 	    free (B->node[q].data);
-	    if(B->node[q].data = store (data, datalen))
-		return 1;
-	    else
-		return 0;
+	    return ((B->node[q].data = store (data, datalen))) ? 1 : 0;
 	}
 	if (dir > 0)
 	    q = B->node[q].left;             /* go left */
