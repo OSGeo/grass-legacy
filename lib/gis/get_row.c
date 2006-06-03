@@ -376,7 +376,7 @@ static void cell_values_float(
 	while (cmapold++ != cmap[i]) /* skip */
 	    if (!xdr_float(xdrs, &c[i]))
 	    {
-		G_fatal_error("cell_values_float: xdr_float failed for index %d.", i);
+		G_fatal_error(_("cell_values_float: xdr_float failed for index %d"), i);
 		return;
 	    } 
 
@@ -566,9 +566,14 @@ static int get_map_row_nomask(int fd, void *rast, int row, RASTER_MAP_TYPE data_
 
 	    if (!fcb->io_error)
 	    {
-		G_warning(_("error reading %smap [%s] in mapset [%s], row %d"),
-			  fcb->cellhd.compressed ? "compressed " : "",
-			  fcb->name, fcb->mapset, r);
+		if (fcb->cellhd.compressed)
+			G_warning(_("error reading compressed map [%s] "
+				"in mapset [%s], row %d"),
+				fcb->name, fcb->mapset, r);
+		else
+			G_warning(_("error reading map [%s] in mapset [%s], row %d"),
+				fcb->name, fcb->mapset, r);
+
 		fcb->io_error = 1;
 	    }
 	    return -1;
@@ -939,7 +944,7 @@ static void get_null_value_row_nomask(int fd, char *flags, int row)
 
     if (row > G__.window.rows || row < 0)   
     {
-	G_warning("[%s in %s] - read request for row %d is outside region",
+	G_warning(_("[%s in %s] - read request for row %d is outside region"),
 		  fcb->name, fcb->mapset, row);
     }
           
@@ -1089,10 +1094,6 @@ static int embed_nulls(
 int G_get_null_value_row(int fd, char *flags, int row)
 {
     get_null_value_row(fd, flags, row, 1);
+
     return 1;
 }
-   
-/*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-

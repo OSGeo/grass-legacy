@@ -208,7 +208,7 @@ int G_put_map_row(int fd, CELL *buf)
 
     if (fcb->map_type != CELL_TYPE)
     {
-	G_fatal_error("G_put_map_row: %s is not integer! Use G_put_[f/d]_raster_row()!",
+	G_fatal_error(_("G_put_map_row: %s is not integer! Use G_put_[f/d]_raster_row()!"),
 		      fcb->name);
         return -1;
     }
@@ -245,29 +245,24 @@ static int check_open(const char *me, int fd, int random)
     switch (fcb->open_mode)
     {
     case OPEN_OLD:
-	G_warning(
-	    "%s: map [%s] not open for write - request ignored",
+	G_warning(_("%s: map [%s] not open for write - request ignored"),
 	    me, fcb->name);
 	break;
     case OPEN_NEW_COMPRESSED:
     case OPEN_NEW_UNCOMPRESSED:
 	if (!random)
 	    return 1;
-	G_warning(
-	    "%s: map [%s] not open for random write - request ignored",
+	G_warning(_("%s: map [%s] not open for random write - request ignored"),
 	    me, fcb->name);
 	break;
     case OPEN_NEW_RANDOM:
 	if (random)
 	    return 1;
-	G_warning(
-	    "%s: map [%s] not open for sequential write - request ignored",
+	G_warning(_("%s: map [%s] not open for sequential write - request ignored"),
 	    me, fcb->name);
 	break;
     default:
-	G_warning( 
-	    "%s: unopened file descriptor - request ignored",
-	    me);
+	G_warning(_("%s: unopened file descriptor - request ignored"), me);
 	break;
     }
 
@@ -396,7 +391,7 @@ static int convert_float(
 
 	if (!xdr_float(xdrs, &f)) 
 	{
-	    G_warning("xdr_float failed for index %d of row %d.",  i, row);
+	    G_warning(_("xdr_float failed for index %d of row %d"),  i, row);
 	    return -1;
 	}
     }
@@ -425,7 +420,7 @@ static int convert_double(
 
 	if (!xdr_double(xdrs, &d)) 
 	{
-	    G_warning("xdr_double failed for index %d of row %d.", i, row);
+	    G_warning(_("xdr_double failed for index %d of row %d"), i, row);
 	    return -1;
 	}
     }
@@ -768,8 +763,7 @@ int G__open_null_write(int fd)
 
     if (access(fcb->null_temp_name, 0) != 0) 
     {
-	G_warning("unable to find a temporary null file %s", 
-		  fcb->null_temp_name);
+	G_warning(_("unable to find a temporary null file %s"), fcb->null_temp_name);
 	return -1;
     }
 
@@ -790,15 +784,16 @@ int G__write_null_bits(int null_fd, unsigned char *flags, int row, int cols, int
 
     if (lseek(null_fd, offset, 0) < 0)
     {
-	G_warning(_("error writing null row %d"),row);
+	G_warning(_("error writing null row %d"), row);
 	return -1;
     }
 
     if (write(null_fd, flags, size) != size)
     {
-	G_warning(_("error writing null row %d"),row);
+	G_warning(_("error writing null row %d"), row);
 	return -1;
     }
+
     return 1;
 }
 
@@ -938,8 +933,3 @@ static int put_raster_row(
     /* write the null row for the data row */
     return G__put_null_value_row(fd, G__.null_buf);
 }
-
-/*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-
