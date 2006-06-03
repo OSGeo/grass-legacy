@@ -56,30 +56,42 @@ d.mon x0
 <BR>
 Map scaling is set from the region settings so should work correctly even 
 when the display's aspect ratio does not match that of the output image.
-<P>
+
+
+<h3>Batch export</h3>
+
 It may be desirable to create a series of image tiles covering a large area.
 An easy way to do this is to run <em>d.out.gpsdrive</em> in a shell loop.
-Here are some ideas to get you started: (contribution of full code welcome!)
+Here is an example Bash script contributed by Manuel Morales:
 <P>
 <div class="code"><pre>
-#get region width and height (in map units)
-eval `g.region -ge`
+#!/bin/bash
+panels=3
+iter=$((panels*2-1))
 
-# shift the region by that amount
-g.region e=e+$ew_extent w=w+$ew_extent
-d.out.gpsdrive tile_${i}_${j}
-i=`expr $i + 1`
-etc.
+eval `g.region -eg`
+scale_x=$(echo "scale=8; $ns_extent / $panels" | bc)
+scale_y=$(echo "scale=8; $ew_extent / $panels" | bc)
+
+for i in `seq 1 $iter`;
+do
+    east=$(echo "scale=8; $west+$scale_x*4/3" | bc)
+    for j in `seq 1 $iter`;
+    do
+        g.region n=$(echo "scale=8; $north-($j-1) * $scale_x/2" | bc) \
+        s=$(echo "scale=8; $north-($j-1) * $scale_x/2-$scale_x" |bc ) \
+        w=$west e=$east ewres=$ewres nsres=$nsres
+        d.redraw
+        d.out.gpsdrive -j tile_${i}_${j}
+        done
+west=$(echo "scale=8; $west+$scale_y/2" | bc)
+done
 </pre></div>
 
 <BR>
-To get a smoother transition between backdrop maps it may be better to create tiles
-which overlap every half or 2/3's of the region's extent:
-<P>
-<div class="code"><pre>
-ew_extent2=`echo $ew_extent | awk '{printf("%f", $1 / 2. )}'`
-g.region e=e+$ew_extent2 w=w+$ew_extent2
-</pre></div>
+Note that to get a smoother transition between backdrop maps this script
+creates overlapping tiles.
+
 
 <BR><BR>
 <H2>SEE ALSO</H2>
