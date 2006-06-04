@@ -66,25 +66,34 @@ Here is an example Bash script contributed by Manuel Morales:
 <P>
 <div class="code"><pre>
 #!/bin/bash
+
+# map scale is determined by "panels" by dividing the N-S
+# region extent into that number of maps. Note that the
+# generated maps overlap by 1/2 along the N-S axis and by
+# approximately 1/2 along the E-W axis.
 panels=3
 iter=$((panels*2-1))
 
 eval `g.region -eg`
-scale_x=$(echo "scale=8; $ns_extent / $panels" | bc)
-scale_y=$(echo "scale=8; $ew_extent / $panels" | bc)
 
-for i in `seq 1 $iter`;
+unit_ns=$(echo "scale=8; $ns_extent / $panels" | bc)
+unit_ew=$(echo "scale=8; $unit_ns * 4/3" | bc)
+
+panels_ew=$(echo "((2*$ew_extent / $unit_ew +.5 ) -1) / 1" | bc)
+
+for i in `seq 1 $panels_ew`;
 do
-    east=$(echo "scale=8; $west+$scale_x*4/3" | bc)
-    for j in `seq 1 $iter`;
+  east=$(echo "scale=8; $west+$unit_ew" | bc)
+  for j in `seq 1 $iter`;
     do
-        g.region n=$(echo "scale=8; $north-($j-1) * $scale_x/2" | bc) \
-        s=$(echo "scale=8; $north-($j-1) * $scale_x/2-$scale_x" |bc ) \
+    g.region n=$(echo "scale=8; $north-($j-1) * $unit_ns/2" |c)        \
+        s=$(echo "scale=8; $north-($j-1) * $unit_ns/2-$unit_ns" | bc ) \
         w=$west e=$east ewres=$ewres nsres=$nsres
         d.redraw
         d.out.gpsdrive -j tile_${i}_${j}
-        done
-west=$(echo "scale=8; $west+$scale_y/2" | bc)
+    done
+  shift_west=$(echo "scale=8; ($ew_extent-$unit_ew)/($panels_ew-1)" | bc)
+  west=$(echo "scale=8; $west+$shift_west" | bc)
 done
 </pre></div>
 
