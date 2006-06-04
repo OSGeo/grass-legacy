@@ -6,6 +6,24 @@ methods in creating the new raster.
 <P>
 <EM>r.in.xyz</EM> is designed for processing massive point swarm datasets,
 for example raw LIDAR or sidescan sonar swath data. 
+<P>
+Available statistics for populating the raster are:<BR>
+<ul>
+<table>
+<tr><td>n</td>        <td>number of points in cell</td></tr>
+<tr><td>min</td>      <td>minimum value of points in cell</td></tr>
+<tr><td>max</td>      <td>maximum value of points in cell</td></tr>
+<tr><td>range</td>    <td>range of points in cell</td></tr>
+<tr><td>sum</td>      <td>sum of points in cell</td></tr>
+<tr><td>mean</td>     <td>average value of points in cell</td></tr>
+<tr><td>stddev</td>   <td>standard deviation of points in cell</td></tr>
+<tr><td>variance</td> <td>variance of points in cell</td></tr>
+<tr><td>coeff_var</td><td>coefficient of variance of points in cell</td></tr>
+</table>
+</ul>
+
+<em>Coefficient of variance</em> is given in percentage and defined as
+<tt>(stddev/mean)*100</tt>.
 
 
 <H2>NOTES</H2>
