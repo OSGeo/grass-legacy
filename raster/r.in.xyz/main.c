@@ -574,7 +574,7 @@ int main(int argc, char *argv[])
 
     } /* passes loop */
 
-
+    G_percent(1,1,1); /* flush */
     G_free(raster_row);
 
     /* close input file */
