@@ -407,14 +407,14 @@ int main(int argc, char *argv[])
 	    }
 
 	    count++;
-	    G_debug(5, "x: %f, y: %f, z: %f", x, y, z);
+/*	    G_debug(5, "x: %f, y: %f, z: %f", x, y, z); */
 	    G_free_tokens(tokens);
 
 	    /* find the bin in the current array box */
 	    arr_row = (int)((pass_north - y) / region.ns_res);
 	    arr_col = (int)((x - region.west) / region.ew_res);
 
-	    G_debug(5, "arr_row: %d   arr_col: %d", arr_row, arr_col);
+/*	    G_debug(5, "arr_row: %d   arr_col: %d", arr_row, arr_col); */
 
 	   /* The range should be [0,cols-1]. We use (int) to round down,
 		but if the point exactly on eastern edge arr_col will be /just/
