@@ -155,6 +155,8 @@ F		[fF]
 "^"		{	return '^';	}
 "%"		{	return '%';	}
 
+"!"		{	return '!';	}
+
 "&&"		{	return AND;	}
 "||"		{	return OR;	}
 
