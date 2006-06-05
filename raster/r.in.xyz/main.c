@@ -573,7 +573,7 @@ int main(int argc, char *argv[])
     G_write_history(outmap, &history);
 
 
-    sprintf(buff, _("%d points found in region"), count_total);
+    sprintf(buff, _("%d points found in region."), count_total);
     G_done_msg(buff);
     exit(EXIT_SUCCESS);
 
