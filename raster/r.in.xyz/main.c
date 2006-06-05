@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
     char   **tokens;
     int    ntokens;  /* number of tokens */
     double pass_north, pass_south;
-    int    arr_row, arr_col, count;
+    int    arr_row, arr_col, count, count_total;
 
     double min = 0.0/0.0; /* init as nan */
     double max = 0.0/0.0; /* init as nan */
@@ -316,6 +316,8 @@ int main(int argc, char *argv[])
 
     G_message(_("Scanning data ..."));
 
+    count_total = 0;
+
     /* main binning loop(s) */
     for(pass=1; pass <= npasses; pass++ ) {
 	if(npasses > 1)
@@ -447,7 +449,7 @@ int main(int argc, char *argv[])
 
 	} /* while !EOF */
 	G_debug(2, "pass %d finished, %d coordinates in box", pass, count);
-
+	count_total += count;
 
 	/* calc stats and output */
 	G_message(_("Writing to map ..."));
@@ -570,7 +572,9 @@ int main(int argc, char *argv[])
     history.datsrc_1[RECORD_LEN-1] = '\0'; /* strncpy() doesn't null terminate if maxfill */
     G_write_history(outmap, &history);
 
-    G_done_msg("");
+
+    sprintf(buff, _("%d points found in region"), count_total);
+    G_done_msg(buff);
     exit(EXIT_SUCCESS);
 
 }
