@@ -125,14 +125,6 @@ int main ( int argc, char *argv[])
     mx2 = mx2o - 2*((int) (stepx / bresx));
     my2 = my2o - 2*((int) (stepy / bresy)); 
 
-  fprintf (stdout, "\n");
-  fprintf (stdout, "Authors: original version L.Mitas, H.Mitasova\n");
-  fprintf (stdout, "         GRASS implementation J. Hofierka\n"); 
-  fprintf (stdout, "see references in manual page or at:\n");
-  fprintf (stdout, "http://www2.gis.uiuc.edu:2280/modviz/papers/listsj.html\n");
-  fprintf (stdout, "\n");
-  fflush(stdout);
-
   parm.elevin = G_define_option();
   parm.elevin->key = "elevin";
   parm.elevin->type = TYPE_STRING;
