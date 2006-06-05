@@ -378,6 +378,7 @@ int main(int argc, char *argv[])
 
 	line = 0;
 	count = 0;
+	G_percent_reset();
 
 	while( 0 != G_getl2(buff, BUFFSIZE-1, in_fd) ) {
 	    line++;
@@ -464,7 +465,6 @@ int main(int argc, char *argv[])
 		update_sumsq(sumsq_array, cols, arr_row, arr_col, rtype, z);
 
 	} /* while !EOF */
-	G_percent(1,1,1); /* flush & reset */
 	G_debug(2, "pass %d finished, %d coordinates in box", pass, count);
 	count_total += count;
 
