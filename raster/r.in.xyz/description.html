@@ -133,7 +133,7 @@ Ridge, NC, LIDAR dataset</a>, and process into a clean DEM:
   r.in.xyz in=lidaratm2.txt out=lidar_min fs=, method=min zrange=-2,50
     # zoom to area of interest
   g.region n=35:57:56.25N s=35:57:13.575N w=75:38:23.7W e=75:37:15.675W
-    # check number of non-null cells (try and keep under 3 million)
+    # check number of non-null cells (try and keep under a few million)
   r.univar lidar_min | grep '^n:'
     # convert to points 
   r.to.vect -z feature=point in=lidar_min out=lidar_min_pt
