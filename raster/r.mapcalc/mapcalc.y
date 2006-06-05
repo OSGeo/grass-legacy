@@ -37,6 +37,7 @@
 %type <exp> exp_atom
 %type <exp> exp_neg
 %type <exp> exp_pow
+%type <exp> exp_not
 %type <exp> exp_mul
 %type <exp> exp_add
 %type <exp> exp_cmp
@@ -149,10 +150,14 @@ exp_pow		: exp_neg
 		| exp_neg '^' exp_pow	{ $$ = operator("pow","^",2,pair($1,$3));	}
 		;
 
-exp_mul		: exp_pow
-		| exp_mul '*' exp_pow	{ $$ = operator("mul","*",3,pair($1,$3));	}
-		| exp_mul '/' exp_pow	{ $$ = operator("div","/",3,pair($1,$3));	}
-		| exp_mul '%' exp_pow	{ $$ = operator("mod","%",3,pair($1,$3));	}
+exp_not		: exp_pow
+		| '!' exp_pow		{ $$ = operator("not","!",1,singleton($2));	}
+		;
+
+exp_mul		: exp_not
+		| exp_mul '*' exp_not	{ $$ = operator("mul","*",3,pair($1,$3));	}
+		| exp_mul '/' exp_not	{ $$ = operator("div","/",3,pair($1,$3));	}
+		| exp_mul '%' exp_not	{ $$ = operator("mod","%",3,pair($1,$3));	}
 		;
 
 exp_add		: exp_mul
