@@ -381,7 +381,7 @@ int main(int argc, char *argv[])
 
 	while( 0 != G_getl2(buff, BUFFSIZE-1, in_fd) ) {
 	    line++;
-	    if( (line%50000 == 0) && (line < estimated_lines) ) /* mod for speed */
+	    if( (line%10000 == 0) && (line < estimated_lines) ) /* mod for speed */
 		G_percent(line, estimated_lines, 3);
 
 	    if((buff[0] == '#') || (buff[0] == '\0')) {
