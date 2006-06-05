@@ -10,20 +10,22 @@ for example raw LIDAR or sidescan sonar swath data.
 Available statistics for populating the raster are:<BR>
 <ul>
 <table>
-<tr><td>n</td>        <td>number of points in cell</td></tr>
-<tr><td>min</td>      <td>minimum value of points in cell</td></tr>
-<tr><td>max</td>      <td>maximum value of points in cell</td></tr>
-<tr><td>range</td>    <td>range of points in cell</td></tr>
-<tr><td>sum</td>      <td>sum of points in cell</td></tr>
-<tr><td>mean</td>     <td>average value of points in cell</td></tr>
-<tr><td>stddev</td>   <td>standard deviation of points in cell</td></tr>
-<tr><td>variance</td> <td>variance of points in cell</td></tr>
-<tr><td>coeff_var</td><td>coefficient of variance of points in cell</td></tr>
-</table>
-</ul>
+<tr><td><em>n</em></td>        <td>number of points in cell</td></tr>
+<tr><td><em>min</em></td>      <td>minimum value of points in cell</td></tr>
+<tr><td><em>max</em></td>      <td>maximum value of points in cell</td></tr>
+<tr><td><em>range</em></td>    <td>range of points in cell</td></tr>
+<tr><td><em>sum</em></td>      <td>sum of points in cell</td></tr>
+<tr><td><em>mean</em></td>     <td>average value of points in cell</td></tr>
+<tr><td><em>stddev</em></td>   <td>standard deviation of points in cell</td></tr>
+<tr><td><em>variance</em></td> <td>variance of points in cell</td></tr>
+<tr><td><em>coeff_var</em></td><td>coefficient of variance of points in cell</td></tr>
+</table><BR>
 
-<em>Coefficient of variance</em> is given in percentage and defined as
+<li><em>Variance</em> and derivatives use the biased estimator (n). [subject to change]
+<li><em>Coefficient of variance</em> is given in percentage and defined as
 <tt>(stddev/mean)*100</tt>.
+</ul>
+<BR>
 
 
 <H2>NOTES</H2>
@@ -66,6 +68,13 @@ can be found by dividing the number of input points by the area covered. e.g.
 
 <h4>Filtering</h4>
 
+Points falling outside the current region will be skipped. This includes
+points falling <em>exactly</em> on the southern region bound.
+(see <em>g.region</em>)
+<P>
+Blank lines and comment lines starting with the hash symbol (<tt>#</tt>)
+will be skipped.
+<P>
 The <b>zrange</b> parameter may be used for filtering the input data by
 vertical extent. Example uses might include preparing multiple raster
 sections to be combined into a 3D raster array with <em>r3.in.rast</em>, or
@@ -157,19 +166,14 @@ values, first quartile, median, third quartile</em>.</li>
 <H2>BUGS</H2>
 
 <ul>
-<li> <em>n</em> map sum can be ever-so-slightly less than `<tt>wc -l</tt>`
-  with e.g. <tt>percent=100-33</tt>
-  <BR>Cause unknown, less worrying. Some or most of these can be accounted for
-  by points falling exactly on the southern region bound being skipped.
-
 <li> <em>n</em> map sum can be ever-so-slightly more than `<tt>wc -l</tt>`
   with e.g. <tt>percent=10</tt>
-  <BR>Cause unknown, more worrying.
+  <BR>Cause unknown.
 
 <li> <em>n</em> map <tt>percent=100</tt> and <tt>percent=xx</tt> maps
   differ slightly (point will fall above/below the segmentation line)
   <BR>Investigate with "<tt>r.mapcalc diff=bin_n.100 - bin_n.33</tt>" etc.
-  <BR>Cause unknown, relatively harmless?
+  <BR>Cause unknown.
 
 <li> "<tt>nan</tt>" can leak into <em>coeff_var</em> maps.
   <BR>Cause unknown. Possible work-around: "<tt>r.null setnull=nan</tt>"
