@@ -33,6 +33,8 @@ int main(int argc, char *argv[])
     int    bin_n, bin_min, bin_max, bin_sum, bin_sumsq;
     double zrange_min, zrange_max, d_tmp;
     char   *fs; /* field delim */
+    unsigned long filesize;
+    int    linesize, estimated_lines;
 
     RASTER_MAP_TYPE rtype;
     struct History history;
@@ -311,6 +313,18 @@ int main(int argc, char *argv[])
     if (out_fd < 0)
 	G_fatal_error(_("Unable to create raster map <%s>"), outmap);
 
+    /* guess at number of lines in the file without actually reading it all in */
+    for(line=0; line<10; line++) {  /* arbitrarily use 10th line for guess */
+	if( 0 == G_getl2(buff, BUFFSIZE-1, in_fd) ) break;
+	linesize = strlen(buff) + 1;
+    }
+    fseek(in_fd, 0L, SEEK_END);
+    filesize = ftell(in_fd);
+    rewind(in_fd);
+    estimated_lines = filesize/linesize;
+    G_debug(2, "estimated number of lines in file: %d", estimated_lines);
+
+
     /* allocate memory for a single row of output data */
     raster_row = G_allocate_raster_buf(rtype);
 
@@ -367,6 +381,8 @@ int main(int argc, char *argv[])
 
 	while( 0 != G_getl2(buff, BUFFSIZE-1, in_fd) ) {
 	    line++;
+	    if( (line%50000 == 0) && (line < estimated_lines) ) /* mod for speed */
+		G_percent(line, estimated_lines, 3);
 
 	    if((buff[0] == '#') || (buff[0] == '\0')) {
 		continue; /* line is a comment or blank */
