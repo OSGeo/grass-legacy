@@ -125,3 +125,17 @@ int G_percent2 (int n,int d,int s, FILE *out)
 
     return 0;
 }
+
+
+/*!
+ * \brief Reset G_percent() to 0%; do not add newline.
+ * \return int
+ */
+
+int G_percent_reset(void)
+{
+    prev = -1;
+    first = 1;
+
+    return 0;
+}

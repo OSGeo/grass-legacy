@@ -867,6 +867,7 @@ char *G_recreate_command(void);
 /* percent.c */
 int G_percent(int, int, int);
 int G_percent2(int, int, int, FILE *);
+int G_percent_reset(void);
 
 /* plot.c */
 int G_setup_plot(double, double, double, double, int (*)(), int (*)());
