@@ -66,12 +66,13 @@ static int no_sleep = 1;
 static int message_id = 1;
 
 extern char *getenv();
-static int print_word ( FILE *,char **,int *,int);
-static void print_sentence ( FILE *, int type, char *);
-static int print_error(char *,int);
-static int mail_msg (char *,int);
-static int write_error(char *, int,char *,long,char *);
-static int log_error (char *,int);
+static int print_word (FILE *, char **, int *, const int);
+static void print_sentence (FILE *, const int, const char *);
+static int print_error (const char *, const int);
+static int mail_msg (const char *, const int);
+static int write_error (const char *, const int, const char *, 
+                        const long, const char *);
+static int log_error (const char *, const int);
 
 /*!
  * \brief Print a message to stderr
@@ -153,7 +154,7 @@ int G_unset_error_routine ()
 }
 
 /* Print info to stderr and optionaly to log file and optionaly send mail */
-static int print_error(char *msg,int type)
+static int print_error(const char *msg, const int type)
 {
     static char *prefix_std[3];
     int fatal, format;
@@ -184,7 +185,7 @@ static int print_error(char *msg,int type)
 
 	    fprintf(stderr,"%s", prefix_std[type] );
 	    len = lead = strlen ( prefix_std[type] );
-	    w = msg;
+	    w = (char *)msg;
 
 	    while (print_word(stderr,&w,&len,lead))
 		    ;
@@ -205,22 +206,22 @@ static int print_error(char *msg,int type)
     return 0;
 }
 
-static int log_error ( char *msg,int fatal)
+static int log_error (const char *msg, const int fatal)
 {
     FILE *pwd;
     char cwd[1024];
-    long clock;
+    time_t clock;
     char *home;
     char *gisbase;
 
-/* get time */
-    clock = time(0);
+    /* get time */
+    clock = time(NULL);
 
-/* get current working directory */
+    /* get current working directory */
     sprintf(cwd,"?");
     if ( (pwd = G_popen ("pwd","r")) )
     {
-	if (fgets(cwd, sizeof cwd, pwd))
+	if (fgets(cwd, sizeof(cwd), pwd))
 	{
 	    char *c;
 
@@ -231,30 +232,27 @@ static int log_error ( char *msg,int fatal)
 	G_pclose (pwd);
     }
 
-/* write the 2 possible error log files */
-    if( (gisbase = G_gisbase ()) )
+    /* write the 2 possible error log files */
+    if ((gisbase = G_gisbase ()))
 	write_error (msg, fatal, gisbase, clock, cwd);
+
     home = G__home();
     if (home && gisbase && strcmp (home, gisbase))
 	write_error (msg, fatal, home, clock, cwd);
 
-
     return 0;
 }
 
-static int write_error ( char *msg, int fatal, char *dir, long clock, char *cwd)
+static int write_error (const char *msg, const int fatal,
+                        const char *dir, const time_t clock,
+                        const char *cwd)
 {
-    char logfile[1000];
+    char logfile[GNAME_MAX];
     FILE *log;
-    char *ctime();
 
     if (dir == 0 || *dir == 0)
 	return 1;
     sprintf (logfile, "%s/GIS_ERROR_LOG", dir) ;
-
-/* logfile must exist and be writeable */
-    if (access (logfile, 0) != 0)
-	return 1;
 
     log = fopen (logfile,"a");
     if (!log)
@@ -273,7 +271,7 @@ static int write_error ( char *msg, int fatal, char *dir, long clock, char *cwd)
     return 0;
 }
 
-static int mail_msg ( char *msg,int fatal)
+static int mail_msg (const char *msg, const int fatal)
 {
     FILE *mail;
     char command[64];
@@ -294,7 +292,7 @@ static int mail_msg ( char *msg,int fatal)
 }
 
 /* Print one word, new line if necessary */
-static int print_word ( FILE *fd, char **word, int *len, int lead)
+static int print_word (FILE *fd, char **word, int *len, const int lead)
 {
     int  wlen, start, totlen;
     int  nl;
@@ -343,28 +341,29 @@ static int print_word ( FILE *fd, char **word, int *len, int lead)
 	fprintf (fd, "%c", *w++);
 
     *word = w;
+
     return 1;
 }
 
 /* Print one message, prefix inserted before each new line */
-static void print_sentence ( FILE *fd, int type, char *msg )
+static void print_sentence (FILE *fd, const int type, const char *msg)
 {
     char *start;
     static char prefix[100];
 
     switch ( type ) {
 	case MSG: 
-    	    sprintf ( prefix, "GRASS_INFO_MESSAGE(%d,%d): ", (int)getpid(), message_id ); 
+    	    sprintf (prefix, "GRASS_INFO_MESSAGE(%d,%d): ", getpid(), message_id);
 	    break;
 	case WARN:
-    	    sprintf ( prefix, "GRASS_INFO_WARNING(%d,%d): ", (int)getpid(), message_id ); 
+    	    sprintf (prefix, "GRASS_INFO_WARNING(%d,%d): ", getpid(), message_id);
 	    break;
 	case ERR:
-    	    sprintf ( prefix, "GRASS_INFO_ERROR(%d,%d): ", (int)getpid(), message_id ); 
+    	    sprintf (prefix, "GRASS_INFO_ERROR(%d,%d): ", getpid(), message_id);
 	    break;
     }
 
-    start = msg;
+    start = (char *)msg;
 
     fprintf(stderr, "\n" );
     while ( *start != '\0' ) {
@@ -381,7 +380,7 @@ static void print_sentence ( FILE *fd, int type, char *msg )
 	
 	fprintf (fd, "\n" );
     }
-    fprintf(stderr, "GRASS_INFO_END(%d,%d)\n", (int)getpid(), message_id );
+    fprintf(stderr, "GRASS_INFO_END(%d,%d)\n", getpid(), message_id );
     message_id++;
 }
     
