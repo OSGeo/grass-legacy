@@ -1071,7 +1071,6 @@ proc GmTree::node_type { node } {
 #digitize
 proc GmTree::vedit { } {
     variable tree
-#    variable options
 	global options
     global mon
 
