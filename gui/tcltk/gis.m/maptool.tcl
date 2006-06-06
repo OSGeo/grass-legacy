@@ -28,10 +28,10 @@ proc MapToolBar::create { tb } {
     global bgcolor
     variable toolbar
     
-    set selcolor #88aa88
-    set maptools "pointer"
+    set selclr #88aa88
     set toolbar $tb
-
+    set maptools "pointer"
+    
     # DISPLAY AND MONITOR SELECTION
     set bbox1 [ButtonBox $toolbar.bbox1 -spacing 0 ]
     
@@ -73,9 +73,9 @@ proc MapToolBar::create { tb } {
     # pointer
     set pointer [radiobutton $tb.pointer \
     	-image [image create photo -file "$iconpath/gui-pointer.gif"] \
-        -command "MapCanvas::stoptool $mon" \
+        -command "MapCanvas::stoptool $mon; MapCanvas::pointer $mon" \
 		-variable maptools -value pointer  -relief flat -offrelief flat -overrelief raised \
-		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
 		-activebackground $bgcolor -highlightbackground $bgcolor  ]
     DynamicHelp::register $pointer balloon [G_msg "Pointer"]
 
@@ -84,7 +84,7 @@ proc MapToolBar::create { tb } {
     	-image [image create photo -file "$iconpath/gui-zoom_in.gif"] \
         -command "MapCanvas::stoptool $mon; MapCanvas::zoombind $mon 1" \
 		-variable maptools -value zoomin -relief flat -offrelief flat -overrelief raised \
-		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]   
     DynamicHelp::register $zoomin balloon [G_msg "Zoom In"]
     
@@ -93,7 +93,7 @@ proc MapToolBar::create { tb } {
 		-image [image create photo -file "$iconpath/gui-zoom_out.gif"] \
         -command "MapCanvas::stoptool $mon; MapCanvas::zoombind $mon -1" \
 		-variable maptools -value zoomout  -relief flat -offrelief flat -overrelief raised \
-		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]    
     DynamicHelp::register $zoomout balloon [G_msg "Zoom Out"]
 
@@ -102,7 +102,7 @@ proc MapToolBar::create { tb } {
 		-image [image create photo -file "$iconpath/gui-pan.gif"] \
         -command "MapCanvas::stoptool $mon; MapCanvas::panbind $mon" \
 		-variable maptools -value pan  -relief flat -offrelief flat -overrelief raised \
-		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]    
     DynamicHelp::register $pan balloon [G_msg "Pan"]
 
@@ -171,7 +171,7 @@ proc MapToolBar::create { tb } {
 		-image [image create photo -file "$iconpath/gui-query.gif"] \
         -command "MapCanvas::stoptool $mon; MapCanvas::querybind $mon" \
 		-variable maptools -value query  -relief flat -offrelief flat -overrelief raised \
-		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]    
     DynamicHelp::register $query balloon [G_msg "Query"]
 
@@ -180,7 +180,7 @@ proc MapToolBar::create { tb } {
 		-image [image create photo -file "$iconpath/gui-measure.gif"]  \
     	-command "MapCanvas::stoptool $mon; MapCanvas::measurebind $mon"\
 		-variable maptools -value measure -relief flat -offrelief flat -overrelief raised \
-		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]    
     DynamicHelp::register $measure balloon [G_msg "Measure"]
 
@@ -249,9 +249,9 @@ proc MapToolBar::create { tb } {
 		-command "MapCanvas::exploremode $mon 0" \
 		-variable MapToolBar::explore($mon) -value strict \
 		-relief flat -offrelief flat -overrelief raised \
-		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]
-    DynamicHelp::register $strictdraw balloon [G_msg "Strict Draw Mode"]
+    DynamicHelp::register $strictdraw balloon [G_msg "Constrain map to region geometry"]
     icon_configure $strictdraw drawmode strict
 
     # Explore render mode
@@ -260,9 +260,9 @@ proc MapToolBar::create { tb } {
 		-command "MapCanvas::exploremode $mon 1" \
 		-variable MapToolBar::explore($mon) -value explore \
 		-relief flat -offrelief flat -overrelief raised \
-		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]
-    DynamicHelp::register $exploredraw balloon [G_msg "Explore Draw Mode"]
+    DynamicHelp::register $exploredraw balloon [G_msg "Map fills display window"]
     icon_configure $exploredraw drawmode explore
 
     # This does not actually set the mode

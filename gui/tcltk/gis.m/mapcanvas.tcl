@@ -46,6 +46,7 @@ namespace eval MapCanvas {
 	global array complist # mon - List of files to composite
 	global array opclist # mon - Their opacities
 	global array masklist # mon - Their masks
+	global geoentry "" # variable holds path of entry widgets that use coordinates from canvas
 
 	# Current region and region historys
 	# Indexed by mon, history (1 (current) - zoomhistories), part (n, s, e, w, nsres, ewres).
@@ -171,9 +172,10 @@ proc MapCanvas::create { } {
 	# mouse handlers
 	# The coordinate transforms should be done per monitor.
 	bind $can($mon) <ButtonPress-1> {
-		global b1east b1north
+		global b1east b1north b1coords
 		set b1east  [MapCanvas::scrx2mape %x]
 		set b1north [MapCanvas::scry2mapn %y]
+		set b1coords "$b1east $b1north"
 	}
 
 	# When a monitor gets the keyboard focus
@@ -310,6 +312,10 @@ proc MapCanvas::create { } {
 
 	# bindings for closing map display window
 	bind .mapcan($mon) <Destroy> "MapCanvas::cleanup $mon %W"
+	
+	#set default pointer tool behavior
+    MapCanvas::pointer $mon
+
 }
 
 ###############################################################################
@@ -745,6 +751,36 @@ proc MapCanvas::stoptool { mon } {
 	MapCanvas::restorecursor $mon 		
 	
 }
+
+###############################################################################
+# set bindings for pointer tool
+proc MapCanvas::pointer { mon } {
+	variable can
+	global b1coords
+	global coords($mon)
+	global geoentry
+
+	bind $can($mon) <ButtonPress-1> {
+		global b1east b1north b1coords
+		set b1east  [MapCanvas::scrx2mape %x]
+		set b1north [MapCanvas::scry2mapn %y]
+		set b1coords "$b1east $b1north"
+		if { [info exists geoentry] } {
+			$geoentry insert 0 $b1coords
+		}	
+		
+	}
+	bind $can($mon) <Motion> {
+		set scrxmov %x
+		set scrymov %y
+		set eastcoord [eval MapCanvas::scrx2mape %x]
+		set northcoord [eval MapCanvas::scry2mapn %y]
+		set coords($mon) "$eastcoord $northcoord"
+	}
+	
+
+}
+
 
 ###############################################################################
 # procedures for interactive zooming in and zooming out
