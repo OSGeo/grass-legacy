@@ -1,7 +1,18 @@
 #include <string.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include <grass/display.h>
 #include <grass/raster.h>
+
+
+/*!
+ * \brief
+ *
+ * Remove display window frame <b>new_wind</b>
+ *
+ *  \param new_wind
+ *  \return int
+ */
 
 int Dremove(char *new_wind)
 {
@@ -15,13 +26,13 @@ int Dremove(char *new_wind)
 	if (! strcmp(new_wind, cur_wind))
 		return(-1) ;
 
-	if(i = D_set_cur_wind(new_wind))
+	if ((i = D_set_cur_wind(new_wind)))
 		return(i) ;
 
 	if (D_get_screen_window(&t, &b, &l, &r))
 		return(-1) ;
 
-/* Do the plotting */
+	/* Do the plotting */
 	R_standard_color(D_translate_color(DEFAULT_BG_COLOR)) ;
 	for(line=t-1; line<b+2; line++)
 	{
@@ -30,9 +41,9 @@ int Dremove(char *new_wind)
 	}
 
 	if (D_remove_window())
-		G_fatal_error("Remove window") ;
+		G_fatal_error(_("Remove window")) ;
 
-/* Reset current window */
+	/* Reset current window */
 	D_set_cur_wind(cur_wind) ;
 
 	return(0) ;

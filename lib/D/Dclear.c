@@ -3,6 +3,14 @@
 #include <grass/display.h>
 
 
+/*!
+ * \brief
+ *
+ * Clear the display window
+ *
+ *  \return int
+ */
+
 int Dclearscreen()
 {
 	char **pads;
