@@ -2,8 +2,8 @@
  *
  * MODULE:       v.in.dxf
  *
- * AUTHOR(S):    Original written by Chuck Ehlschlaeger, 6/89
- * 		 Revised by Dave Gerdes, 12/89
+ * AUTHOR(S):    Original written by Chuck Ehlschlaeger, 6/1989
+ * 		 Revised by Dave Gerdes, 12/1989
  * 		 US Army Construction Engineering Research Lab
  *
  * 		 Contribution:
@@ -11,6 +11,7 @@
  * 		 Michel Wurtz <michel.wurtz teledetection.fr>
  * 		 Jacques Bouchard <bouchard onera.fr>
  * 		 J Moorman
+ * 		 Tom Howard, National Park Service GIS division
  *
  * 		 Rewrite for GRASS 6:
  * 		 Huidae Cho <grass4u gmail.com>
