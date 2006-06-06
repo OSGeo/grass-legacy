@@ -15,7 +15,7 @@ int parser(int argc, char*argv[])
     typ_opt = G_define_standard_option(G_OPT_V_TYPE);
     typ_opt->required    = NO;
     typ_opt->description = _("Select type. Required for add action.");
-    typ_opt->options     = "point,line,area";
+    typ_opt->options     = "point,line,area,centroid,boundary";
     typ_opt->answer      = "point";
     
     cat_opt = G_define_standard_option(G_OPT_V_CATS);
@@ -75,7 +75,7 @@ int parser(int argc, char*argv[])
 	};
 	return 1;
     }
-    else if(strcmp(act_opt->answer, "del")==0) { /* del requires a cats */
+    else if(strcmp(act_opt->answer, "delete")==0) { /* del requires a cats */
 	action_mode = MODE_DEL;
 	if(cat_opt->answers == NULL) {
 	    help(_("Required parameter <cats> not set"));
