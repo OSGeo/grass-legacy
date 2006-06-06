@@ -172,7 +172,14 @@ int main(int argc, char *argv[])
     if (!flag_list) {
 	Vect_close(Map);
 
-	if (!found_layers) {
+	if (found_layers) {
+	    if (Vect_open_old(Map, output, G_mapset())) {
+		if (!Vect_build(Map, stderr))
+		    G_warning(_("Building topology failed"));
+		Vect_close(Map);
+	    }
+	}
+	else {
 	    fprintf(stderr, "REMOVE [%s]\n", output);
 	    Vect_delete(output);
 	}
