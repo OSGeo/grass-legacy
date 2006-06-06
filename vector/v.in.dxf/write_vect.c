@@ -74,8 +74,6 @@ void write_done(struct Map_info *Map)
 	db_close_database_shutdown_driver(driver);
     }
 
-    Vect_build(Map, stderr);
-
     fprintf(stderr, _("\nFollowing DXF layers found:\n"));
     for (i = 0; i < num_fields; i++) {
 	fprintf(stderr, _("Layer %d: %s\n"), i + 1, field_names[i]);
