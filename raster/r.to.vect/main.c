@@ -19,9 +19,10 @@ int main (int argc, char *argv[])
 {
     struct GModule *module;
     struct Option *in_opt, *out_opt, *feature_opt;
-    struct Flag *smooth_flg, *value_flg, *z_flg, *quiet;
+    struct Flag *smooth_flg, *value_flg, *z_flg, *quiet, *no_topol;
     char *mapset;
     int feature;
+
 
     G_gisinit (argv[0]);
 
@@ -60,12 +61,18 @@ int main (int argc, char *argv[])
     z_flg->description = _("Write raster values as z coordinate. Table is not created. "
 	                   "Currently supported only for points");
 
+    no_topol = G_define_flag();
+    no_topol->key = 'b';
+    no_topol->description =
+	_("Do not build vector topology (use with care for massive point export)");
+
     quiet = G_define_flag();
     quiet->key = 'q';
     quiet->description = _("Quiet - Do not show progress");
 
     if (G_parser (argc, argv))
         exit(EXIT_FAILURE);
+
 
     feature = Vect_option_to_types ( feature_opt );
     smooth_flag = (smooth_flg->answer) ? SMOOTH : NO_SMOOTH;
@@ -188,7 +195,9 @@ int main (int argc, char *argv[])
     
     G_close_cell(input_fd);
     
-    Vect_build (&Map, stderr);
+    if( ! no_topol->answer )
+	Vect_build (&Map, stderr);
+
 
     /* insert cats and optionaly labels if raster cats were used */
     if ( driver && value_flag ) {
