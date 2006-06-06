@@ -199,6 +199,7 @@ int G__put_null_value_row(int fd, char *buf)
     }
 
     fcb->null_cur_row++;
+
     return 1;
 }
 
@@ -245,19 +246,20 @@ static int check_open(const char *me, int fd, int random)
     switch (fcb->open_mode)
     {
     case OPEN_OLD:
-	G_warning(_("%s: map [%s] not open for write - request ignored"),
-	    me, fcb->name);
+	G_warning(_("%s: map [%s] not open for write - request ignored"), me, fcb->name);
 	break;
     case OPEN_NEW_COMPRESSED:
     case OPEN_NEW_UNCOMPRESSED:
 	if (!random)
 	    return 1;
+
 	G_warning(_("%s: map [%s] not open for random write - request ignored"),
 	    me, fcb->name);
 	break;
     case OPEN_NEW_RANDOM:
 	if (random)
 	    return 1;
+
 	G_warning(_("%s: map [%s] not open for sequential write - request ignored"),
 	    me, fcb->name);
 	break;
@@ -316,7 +318,7 @@ int G__write_data(int fd, int row, int n)
 
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
-    int nwrite = fcb->nbytes * n;
+    ssize_t nwrite = fcb->nbytes * n;
 
     if (write(fd, G__.work_buf, nwrite) != nwrite)
     {
@@ -348,7 +350,7 @@ static int seek_random(int fd, int row, int col)
     struct fileinfo *fcb = &G__.fileinfo[fd];
     off_t offset = ((off_t) fcb->cellhd.cols * row + col) * fcb->nbytes;
 
-    if (lseek(fd, offset, 0) < 0)
+    if (lseek(fd, offset, SEEK_SET) < 0)
     {
 	write_error(fd, row);
 	return -1;
@@ -363,7 +365,7 @@ static void set_file_pointer(int fd, int row)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
 
-    fcb->row_ptr[row] = lseek(fd, (off_t) 0, 1);
+    fcb->row_ptr[row] = lseek(fd, 0L, SEEK_CUR);
 }
 
 /*--------------------------------------------------------------------------*/
@@ -562,7 +564,7 @@ static void trim_bytes(unsigned char *wk, int n, int slen, int trim)
 
 static int same(const unsigned char *x, const unsigned char *y, int n)
 {
-    return memcmp(x, y, n) == 0;
+    return (memcmp(x, y, n) == 0);
 }
 
 static int count_run(const unsigned char *src, int n, int nbytes)
@@ -625,7 +627,7 @@ static int put_data(int fd, CELL *cell, int row, int col, int n, int zeros_r_nul
     int compressed = fcb->cellhd.compressed;
     int len = compressed ? sizeof(CELL) : fcb->nbytes;
     unsigned char *wk = G__.work_buf;
-    int nwrite;
+    ssize_t nwrite;
 
     if (row < 0 || row >= fcb->cellhd.rows)
         return 0;
@@ -753,6 +755,7 @@ static int put_null_data(int fd, char *flags, int row)
 
     /* remember the null row for i for the future writing */
     G__convert_01_flags(flags, fcb->NULL_ROWS[row - fcb->min_null_row], fcb->cellhd.cols);
+
     return 1;
 }
 
@@ -777,12 +780,12 @@ int G__open_null_write(int fd)
 int G__write_null_bits(int null_fd, unsigned char *flags, int row, int cols, int fd)
 {
     off_t offset;
-    int size;
+    size_t size;
 
     size = G__null_bitstream_size(cols);
     offset = (off_t) size * row;
 
-    if (lseek(null_fd, offset, 0) < 0)
+    if (lseek(null_fd, offset, SEEK_SET) < 0)
     {
 	G_warning(_("error writing null row %d"), row);
 	return -1;
