@@ -321,6 +321,8 @@ int main(int argc, char *argv[])
     fseek(in_fd, 0L, SEEK_END);
     filesize = ftell(in_fd);
     rewind(in_fd);
+    if(linesize < 6)  /* min possible: "0,0,0\n" */
+	linesize = 6;
     estimated_lines = filesize/linesize;
     G_debug(2, "estimated number of lines in file: %d", estimated_lines);
 
@@ -592,6 +594,8 @@ int main(int argc, char *argv[])
 
     sprintf(buff, _("%d points found in region."), count_total);
     G_done_msg(buff);
+    G_debug(1, "Processed %d lines.", line);
+
     exit(EXIT_SUCCESS);
 
 }
