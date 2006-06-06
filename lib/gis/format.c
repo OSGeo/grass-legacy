@@ -172,7 +172,7 @@ int G__write_row_ptrs(int fd)
     unsigned char *buf, *b;
     int len, row, result;
 
-    lseek(fd, 0L, 0);
+    lseek(fd, 0L, SEEK_SET);
 
     len = (nrows + 1) * nbytes + 1;
     b = buf = G_malloc(len);
