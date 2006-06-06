@@ -173,7 +173,7 @@ static int read_data_fp_compressed(int fd, int row, unsigned char *data_buf, int
     size_t readamount = t2 - t1;
     size_t bufsize = fcb->cellhd.cols * fcb->nbytes;
 
-    if (lseek(fd, t1, 0) < 0)
+    if (lseek(fd, t1, SEEK_SET) < 0)
 	return -1;
 
     *nbytes = fcb->nbytes;
@@ -212,11 +212,11 @@ static int read_data_compressed(int fd, int row, unsigned char *data_buf, int *n
     struct fileinfo *fcb = &G__.fileinfo[fd];
     off_t t1 = fcb->row_ptr[row];
     off_t t2 = fcb->row_ptr[row + 1];
-    size_t readamount = t2 - t1;
+    ssize_t readamount = t2 - t1;
     unsigned char *cmp = G__.compressed_buf;
     int n;
 
-    if (lseek(fd, t1, 0) < 0)
+    if (lseek(fd, t1, SEEK_SET) < 0)
 	return -1;
 
     if (read(fd, cmp, readamount) != readamount)
@@ -251,11 +251,11 @@ static int read_data_compressed(int fd, int row, unsigned char *data_buf, int *n
 static int read_data_uncompressed(int fd, int row, unsigned char *data_buf, int *nbytes)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
-    int bufsize = fcb->cellhd.cols * fcb->nbytes;
+    ssize_t bufsize = fcb->cellhd.cols * fcb->nbytes;
 
     *nbytes = fcb->nbytes;
 
-    if (lseek(fd, (off_t) row * bufsize, 0) == -1)
+    if (lseek(fd, (off_t) row * bufsize, SEEK_SET) == -1)
 	return -1;
   
     if (read(fd, data_buf, bufsize) != bufsize)
@@ -375,10 +375,7 @@ static void cell_values_float(
 
 	while (cmapold++ != cmap[i]) /* skip */
 	    if (!xdr_float(xdrs, &c[i]))
-	    {
 		G_fatal_error(_("cell_values_float: xdr_float failed for index %d"), i);
-		return;
-	    } 
 
 	cmapold--;
     }
@@ -422,10 +419,7 @@ static void cell_values_double(
 
 	while (cmapold++ != cmap[i]) /* skip */
 	    if (!xdr_double(xdrs, &c[i]))
-	    {
 		G_fatal_error(_("cell_values_double: xdr_double failed for index %d."), i);
-		return;
-	    } 
 	
 	cmapold--;
     }
@@ -567,8 +561,8 @@ static int get_map_row_nomask(int fd, void *rast, int row, RASTER_MAP_TYPE data_
 	    if (!fcb->io_error)
 	    {
 		if (fcb->cellhd.compressed)
-			G_warning(_("error reading compressed map [%s] "
-				"in mapset [%s], row %d"),
+			G_warning(_("error reading compressed map [%s] in "
+				"mapset [%s], row %d"),
 				fcb->name, fcb->mapset, r);
 		else
 			G_warning(_("error reading map [%s] in mapset [%s], row %d"),
@@ -902,6 +896,7 @@ static int open_null_read(int fd)
     }
 
     fcb->null_file_exists = 1;
+
     return null_fd;
 }
 
@@ -909,7 +904,8 @@ static int read_null_bits(
     int null_fd, unsigned char *flags, int row, int cols, int fd)
 {
     off_t offset;
-    int size, R;
+    ssize_t size;
+    int R;
 
     if (compute_window_row(fd, row, &R) <= 0) 
     {
@@ -923,7 +919,7 @@ static int read_null_bits(
     size = G__null_bitstream_size(cols);
     offset = (off_t) size * R;
 
-    if (lseek(null_fd, offset, 0) < 0)
+    if (lseek(null_fd, offset, SEEK_SET) < 0)
     {
 	G_warning(_("error reading null row %d"), R);
 	return -1;
@@ -934,6 +930,7 @@ static int read_null_bits(
 	G_warning(_("error reading null row %d"), R);
 	return -1;
     }
+
     return 1;
 }
 
@@ -944,7 +941,7 @@ static void get_null_value_row_nomask(int fd, char *flags, int row)
 
     if (row > G__.window.rows || row < 0)   
     {
-	G_warning(_("[%s in %s] - read request for row %d is outside region"),
+	G_warning("[%s in %s] - read request for row %d is outside region",
 		  fcb->name, fcb->mapset, row);
     }
           
