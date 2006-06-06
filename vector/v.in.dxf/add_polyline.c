@@ -1,7 +1,3 @@
-/* Benjamin Horner-Johnson, 10/06/1998
- * J Moorman, 07/23/1990
- */
-
 #include <stdlib.h>
 #include <math.h>
 #include "global.h"

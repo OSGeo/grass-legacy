@@ -1,8 +1,3 @@
-/* Benjamin Horner-Johnson, 10/06/1998
- * J Moorman, 07/23/1990 adapted from undxf.c code written by:
- * Tom Howard, National Park Service GIS division
- */
-
 #include <stdlib.h>
 #include "global.h"
 

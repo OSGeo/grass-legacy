@@ -1,7 +1,3 @@
-/* Dave Gerdes, US Army Construction Engineering Research Lab, 11/1989
- * Benjamin Horner-Johnson, 09/1998, 10/1998
- */
-
 #include <stdlib.h>
 #include "global.h"
 
