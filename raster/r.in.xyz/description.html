@@ -64,6 +64,11 @@ can be found by dividing the number of input points by the area covered. e.g.
   # Lat/Lon location:
   # points_per_sq_m = n_points / (ns_extent * ew_extent*cos(lat) * (1852*60)^2)
 </pre></div>
+<P>
+If you only intend to interpolate the data with <em>r.to.vect</em> and
+<em>v.surf.rst</em>, then there is little point to setting the region
+resolution so fine that you only catch one data point per cell -- you might
+as well use "<tt>v.in.ascii&nbsp;-bt</tt>" directly.
 
 
 <h4>Filtering</h4>
@@ -103,9 +108,13 @@ the input points with <em>m.proj</em> or <em>cs2cs</em> before running
 
 The vector engine's topographic abilities introduce a finite memory overhead
 per vector point which will typically limit a vector map to approximately
-3 million points (~ 1750^2 cells). Run <em>r.univar</em> on your raster map
-to check the number of non-NULL cells and adjust bounds and/or resolution
-as needed before proceeding.
+3 million points (~ 1750^2 cells). If you want more, use the <em>r.to.vect</em>
+<b>-b</b> flag to skip building topology. Without topology, however, all
+you'll be able to do with the vector map is display with <em>d.vect</em> and
+interpolate with <em>v.surf.rst</em>.
+Run <em>r.univar</em> on your raster map to check the number of non-NULL cells
+and adjust bounds and/or resolution as needed before proceeding.
+
 <P>
 Typical commands to create a DEM using a regularized spline fit:
 <div class="code"><pre>
@@ -170,7 +179,7 @@ values, first quartile, median, third quartile</em>.</li>
 
 <ul>
 <li> <em>n</em> map sum can be ever-so-slightly more than `<tt>wc -l</tt>`
-  with e.g. <tt>percent=10</tt>
+  with e.g. <tt>percent=10</tt> or less.
   <BR>Cause unknown.
 
 <li> <em>n</em> map <tt>percent=100</tt> and <tt>percent=xx</tt> maps
@@ -180,6 +189,7 @@ values, first quartile, median, third quartile</em>.</li>
 
 <li> "<tt>nan</tt>" can leak into <em>coeff_var</em> maps.
   <BR>Cause unknown. Possible work-around: "<tt>r.null setnull=nan</tt>"
+<!-- HB: "possible" when someone fixes r.null to allow it ;) -->
 </ul>
 
 If you encounter any problems (or solutions!) please contact the GRASS
