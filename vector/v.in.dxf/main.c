@@ -185,6 +185,7 @@ int main(int argc, char *argv[])
 	}
 
 	G_free(output);
+	G_free(Map);
     }
 
     exit(EXIT_SUCCESS);
