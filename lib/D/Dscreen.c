@@ -1,4 +1,14 @@
 #include <grass/D.h>
+
+
+/*!
+ * \brief
+ *
+ * Clear current display window
+ *
+ *  \return int
+ */
+
 int Dscreen()
 {
     Dclearscreen();

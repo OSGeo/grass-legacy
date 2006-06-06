@@ -1,6 +1,20 @@
 #include <grass/raster.h>
 #include <grass/display.h>
 
+
+/*!
+ * \brief
+ *
+ * Create a new display window <b>name</b>
+ *
+ *  \param name
+ *  \param bot
+ *  \param top
+ *  \param left
+ *  \param right
+ *  \return int
+ */
+
 int Dnew(char *name, float bot,float top,float left,float right)
 {
 	int scr_top, scr_bot, scr_left, scr_rite ;

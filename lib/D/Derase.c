@@ -1,7 +1,18 @@
 #include <stdio.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include <grass/display.h>
 #include <grass/raster.h>
+
+
+/*!
+ * \brief
+ *
+ * Erase the display window with <b>color</b>
+ *
+ *  \param color
+ *  \return int
+ */
 
 int Derase(char *color)
 {
@@ -9,11 +20,10 @@ int Derase(char *color)
 	int colorindex;
 
 	if (D_get_screen_window(&t, &b, &l, &r))
-		G_fatal_error("getting graphics window") ;
+		G_fatal_error(_("getting graphics window")) ;
 
 	if (D_clear_window())
-		G_fatal_error("clearing current graphics window") ;
-
+		G_fatal_error(_("clearing current graphics window")) ;
 
 	/* Parse and select background color */
 	colorindex = D_parse_color (color, 0) ;
