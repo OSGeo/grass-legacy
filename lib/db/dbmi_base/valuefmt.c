@@ -66,7 +66,7 @@ db_convert_value_to_string (dbValue *value, int sqltype, dbString *string)
 	    break;
 	case DB_C_TYPE_DOUBLE:
 	    sprintf (buf, "%lf",db_get_value_double(value));
-	    G_trim_decimal(buf);	
+	    G_trim_decimal(buf);
 	    break;
 	case DB_C_TYPE_STRING:
 	    bp = db_get_value_string(value);
