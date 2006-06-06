@@ -209,7 +209,8 @@ int G_open_update (char *element,char *name)
 {
     int fd;
     fd = G__open (element, name, G_mapset(), 2);
-    if (fd >= 0) lseek (fd, 0L, 2);
+    if (fd >= 0) lseek (fd, 0L, SEEK_END);
+
     return fd;
 }
 
@@ -277,7 +278,7 @@ G_fopen_append (char *element,char *name)
     fd = G__open (element, name, G_mapset(), 2);
     if (fd < 0)
 	return (FILE *) 0;
-    lseek (fd, 0L, 2);
+    lseek (fd, 0L, SEEK_END);
 
     return fdopen (fd, "a");
 }
@@ -289,7 +290,7 @@ FILE *G_fopen_modify (char *element,char *name)
     fd = G__open (element, name, G_mapset(), 2);
     if (fd < 0)
 	return (FILE *) 0;
-    lseek (fd, 0L, 0);
+    lseek (fd, 0L, SEEK_END);
 
     return fdopen (fd, "r+");
 }

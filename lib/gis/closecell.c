@@ -234,7 +234,7 @@ static int close_new (int fd,int ok)
         } /* null_cur_row > 0 */
 
         if (FCB.open_mode == OPEN_NEW_COMPRESSED) { /* auto compression */
-            FCB.row_ptr[FCB.cellhd.rows] = lseek (fd, 0L, 1);
+            FCB.row_ptr[FCB.cellhd.rows] = lseek (fd, 0L, SEEK_CUR);
             G__write_row_ptrs (fd);
         }
 
