@@ -25,4 +25,6 @@ package ifneeded GisM 1.0 [list tclPkgSetup $dir GisM 1.0 {
 	{maplabels.tcl source {GmCLabels::create}}
 	{mapprint.tcl source {psprint::init}}
 	{profile.tcl source {GmProfile::create}}
+	{georect.tcl source {GRMap::startup}}
+	{georecttool.tcl source {GRToolBar::create}}
 }]

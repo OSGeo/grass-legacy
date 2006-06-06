@@ -29,6 +29,8 @@ set GuiMenu::Menu_File_Top [subst  {
 		{command {[G_msg "Close"]} {} "Close gis.m workspace" {} -accelerator $keyctrl-W -command { GmTree::FileClose {}}}
 	}}
 	{separator}
+	{command {[G_msg "Georectify"]} {} "Georectify raster map in xy location" {} -command { GRMap::startup }}
+
 }]
 
 # Put this at the bottom of the file menu.
