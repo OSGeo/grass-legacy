@@ -132,7 +132,6 @@ int attr_edit(struct Map_info *Map, int layer, int cat, const char *vals)
 int attr_del(struct Map_info *Map, int layer, int cat)
 {
     int ret;
-    dbValue value;
     dbString sql;
     dbDriver *driver;
     struct field_info *Fi;

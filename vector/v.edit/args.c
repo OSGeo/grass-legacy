@@ -54,6 +54,14 @@ int parser(int argc, char*argv[])
     d_flg->key = 'd';
     d_flg->description = _("No database updates.");
 
+    b_flg = G_define_flag();
+    b_flg->key = 'b';
+    b_flg->description = _("Give cats to boundaries too.");
+
+    c_flg = G_define_flag();
+    c_flg->key = 'c';
+    c_flg->description = _("Do not close boundaries");
+
     if(G_parser(argc, argv))
 	return 0;
 

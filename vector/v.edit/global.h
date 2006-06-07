@@ -24,6 +24,10 @@ enum mode {
 void help(const char *msg);
 int parser(int argc, char*argv[]);
 
+int do_add(struct Map_info *Map);
+int do_del(struct Map_info *Map);
+
+
 void cat_max_set ( int field, int cat);
 int cat_max_get ( int field );
 void cat_init(struct Map_info *Map);
@@ -34,7 +38,7 @@ int attr_edit(struct Map_info *Map, int field, int cat, const char *vals);
 int attr_del(struct Map_info *Map, int field, int cat);
 
 global struct Option *map_opt, *act_opt, *typ_opt, *cat_opt, *pnt_opt, *fld_opt, *val_opt, *snp_opt;
-global struct Flag *n_flg, *t_flg, *d_flg;
+global struct Flag *n_flg, *t_flg, *d_flg, *b_flg, *c_flg;
 global struct GModule *module;
 global struct Map_info Map;
 global enum mode action_mode;
