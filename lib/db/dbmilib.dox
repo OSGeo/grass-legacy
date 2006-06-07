@@ -1,4 +1,4 @@
-/*! \page DataBase_Management_Interface GRASS DBMI DataBase Management Interface
+/*! \page dbmilib GRASS DBMI DataBase Management Interface
 
 by GRASS Development Team
 
@@ -70,30 +70,28 @@ See details here:<br>
 
 \section dbmi_functions DBMI functions list (incomplete)
 
- [ FIXME: why doesn't doxygen link to the functions?? ]
-
 \subsection DB_alloc_routines DB alloc routines
 
-char *db_store (char *s)
+char *#db_store (char *s)
 
-void db_calloc (int n, int m)
+void #db_calloc (int n, int m)
 
-void db_malloc (int n)
+void #db_malloc (int n)
 
-void db_realloc (void s, int n)
+void #db_realloc (void s, int n)
 
 
 \subsection DB_case_routines DB case routines
 
-int db_nocase_compare (char *a, char *b)
+int #db_nocase_compare (char *a, char *b)
 
-void db_char_to_lowercase (char *s)
+void #db_char_to_lowercase (char *s)
 
-void db_char_to_uppercase (char *s)
+void #db_char_to_uppercase (char *s)
 
-void db_Cstring_to_lowercase (char *s)
+void #db_Cstring_to_lowercase (char *s)
 
-void db_Cstring_to_uppercase (char *s)
+void #db_Cstring_to_uppercase (char *s)
 
 
 \subsection DB_column_routines DB column routines
@@ -104,79 +102,79 @@ void db_Cstring_to_uppercase (char *s)
 
 \subsection DB_connect_routines DB connect routines
 
-int db_get_connection (dbConnection *connection )
+int #db_get_connection (dbConnection *connection )
 
-int db_set_connection (dbConnection *connection )
+int #db_set_connection (dbConnection *connection )
 
 
 \subsection DB_cursor_routines DB *cursor routines
 
-dbTable *db_get_cursor_table (dbCursor *cursor)
+dbTable *#db_get_cursor_table (dbCursor *cursor)
 
-dbToken db_get_cursor_token (dbCursor *cursor)
+dbToken #db_get_cursor_token (dbCursor *cursor)
 
-int db_alloc_cursor_column_flags (dbCursor *cursor)
+int #db_alloc_cursor_column_flags (dbCursor *cursor)
 
-int db_alloc_cursor_table (dbCursor *cursor, int ncols)
+int #db_alloc_cursor_table (dbCursor *cursor, int ncols)
 
-int db_get_cursor_number_of_columns (dbCursor *cursor)
+int #db_get_cursor_number_of_columns (dbCursor *cursor)
 
-int db_test_cursor_any_column_flag (dbCursor *cursor)
+int #db_test_cursor_any_column_flag (dbCursor *cursor)
 
-int db_test_cursor_any_column_for_update (dbCursor *cursor)
+int #db_test_cursor_any_column_for_update (dbCursor *cursor)
 
-int db_test_cursor_column_flag (dbCursor *cursor, int col)
+int #db_test_cursor_column_flag (dbCursor *cursor, int col)
 
 
 \subsection DB_datetime_routines DB datetime routines
 
-int db_test_cursor_column_for_update (dbCursor *cursor, int col)
+int #db_test_cursor_column_for_update (dbCursor *cursor, int col)
 
-int db_test_cursor_mode_insensitive (dbCursor *cursor)
+int #db_test_cursor_mode_insensitive (dbCursor *cursor)
 
-int db_test_cursor_mode_scroll (dbCursor *cursor)
+int #db_test_cursor_mode_scroll (dbCursor *cursor)
 
-int db_test_cursor_type_fetch (dbCursor *cursor)
+int #db_test_cursor_type_fetch (dbCursor *cursor)
 
-int db_test_cursor_type_insert (dbCursor *cursor)
+int #db_test_cursor_type_insert (dbCursor *cursor)
 
-int db_test_cursor_type_update (dbCursor *cursor)
+int #db_test_cursor_type_update (dbCursor *cursor)
 
-void db_free_cursor_column_flags (dbCursor *cursor)
+void #db_free_cursor_column_flags (dbCursor *cursor)
 
-void db_free_cursor (dbCursor *cursor)
+void #db_free_cursor (dbCursor *cursor)
 
-void db_init_cursor (dbCursor *cursor)
+void #db_init_cursor (dbCursor *cursor)
 
-void db_set_cursor_column_flag (dbCursor *cursor, int col)
+void #db_set_cursor_column_flag (dbCursor *cursor, int col)
 
-void db_set_cursor_column_for_update (dbCursor *cursor, int col)
+void #db_set_cursor_column_for_update (dbCursor *cursor, int col)
 
-void db_set_cursor_mode (dbCursor *cursor, int mode)
+void #db_set_cursor_mode (dbCursor *cursor, int mode)
 
-void db_set_cursor_mode_insensitive (dbCursor *cursor)
+void #db_set_cursor_mode_insensitive (dbCursor *cursor)
 
-void db_set_cursor_mode_scroll (dbCursor *cursor)
+void #db_set_cursor_mode_scroll (dbCursor *cursor)
 
-void db_set_cursor_table (dbCursor *cursor, dbTable *table)
+void #db_set_cursor_table (dbCursor *cursor, dbTable *table)
 
-void db_set_cursor_token (dbCursor *cursor, dbToken token)
+void #db_set_cursor_token (dbCursor *cursor, dbToken token)
 
-void db_set_cursor_type_insert (dbCursor *cursor)
+void #db_set_cursor_type_insert (dbCursor *cursor)
 
-void db_set_cursor_type_readonly (dbCursor *cursor)
+void #db_set_cursor_type_readonly (dbCursor *cursor)
 
-void db_set_cursor_type_update (dbCursor *cursor)
+void #db_set_cursor_type_update (dbCursor *cursor)
 
-void db_unset_cursor_column_flag (dbCursor *cursor, int col)
+void #db_unset_cursor_column_flag (dbCursor *cursor, int col)
 
-void db_unset_cursor_column_for_update (dbCursor *cursor, int col)
+void #db_unset_cursor_column_for_update (dbCursor *cursor, int col)
 
-void db_unset_cursor_mode (dbCursor *cursor)
+void #db_unset_cursor_mode (dbCursor *cursor)
 
-void db_unset_cursor_mode_insensitive (dbCursor *cursor)
+void #db_unset_cursor_mode_insensitive (dbCursor *cursor)
 
-void db_unset_cursor_mode_scroll (dbCursor *cursor)
+void #db_unset_cursor_mode_scroll (dbCursor *cursor)
 
 
 \subsection DB_datetime_routines DB datetime routines
@@ -193,13 +191,13 @@ void db_unset_cursor_mode_scroll (dbCursor *cursor)
 
 \subsection DB_default_name_routines DB default_name routines
 
-char *db_get_default_database ( void )
+char *#db_get_default_database ( void )
 
-char *db_get_default_driver ( void )
+char *#db_get_default_driver ( void )
 
-char *db_get_default_group_name ( void )
+char *#db_get_default_group_name ( void )
 
-char *db_get_default_schema_name ( void )
+char *#db_get_default_schema_name ( void )
 
 
 \subsection DB_dirent_routines DB dirent routines
@@ -309,32 +307,32 @@ char *db_get_default_schema_name ( void )
 
 \subsection DB_c_add_col_routines DB c_add_col routines
 
-int db_add_column (dbDriver driver, dbString *tableName, dbColumn column)
+int #db_add_column (dbDriver driver, dbString *tableName, dbColumn column)
 
 
 \subsection DB_c_bindupdate_routines DB c_bindupdate routines
 
-int db_bind_update (dbCursor *cursor)
+int #db_bind_update (dbCursor *cursor)
 
 
 \subsection DB_c_close_cur_routines DB c_close_cur routines
 
-int db_close_cursor (dbCursor *cursor)
+int #db_close_cursor (dbCursor *cursor)
 
 
 \subsection DB_c_closedb_routines DB c_closedb routines
 
-int db_close_database (dbDriver driver)
+int #db_close_database (dbDriver driver)
 
 
 \subsection DB_c_create_idx_routines DB c_create_idx routines
 
-int db_create_index (dbDriver driver, dbIndex index)
+int #db_create_index (dbDriver driver, dbIndex index)
 
 
 \subsection DB_c_create_tab_routines DB c_create_tab routines
 
-int db_create_table (dbDriver driver, dbTable *table)
+int #db_create_table (dbDriver driver, dbTable *table)
 
 
 \subsection DB_c_createdb_routines DB c_createdb routines
@@ -342,82 +340,82 @@ int db_create_table (dbDriver driver, dbTable *table)
 
 \subsection DB_c_createdb_routines DB c_createdb routines
 
-int db_create_database (dbDriver driver, dbHandle *handle)
+int #db_create_database (dbDriver driver, dbHandle *handle)
 
 
 \subsection DB_c_delete_routines DB c_delete routines
 
-int db_delete (dbCursor *cursor)
+int #db_delete (dbCursor *cursor)
 
 
 \subsection DB_c_deletedb_routines DB c_deletedb routines
 
-int db_delete_database (dbDriver driver, dbHandle *handle)
+int #db_delete_database (dbDriver driver, dbHandle *handle)
 
 
 \subsection DB_c_desc_table_routines DB c_desc_table routines
 
-int db_describe_table (dbDriver driver, dbString *name, dbTable *table)
+int #db_describe_table (dbDriver driver, dbString *name, dbTable *table)
 
 
 \subsection DB_c_drop_col_routines DB c_drop_col routines
 
-int db_drop_column (dbDriver driver, dbString *tableName, dbString *columnName)
+int #db_drop_column (dbDriver driver, dbString *tableName, dbString *columnName)
 
 
 \subsection DB_c_drop_index_routines DB c_drop_index routines
 
-int db_drop_index (dbDriver driver, dbString *name)
+int #db_drop_index (dbDriver driver, dbString *name)
 
 
 \subsection DB_c_drop_tab_routines DB c_drop_tab routines
 
-int db_drop_table (dbDriver driver, dbString *name)
+int #db_drop_table (dbDriver driver, dbString *name)
 
 
 \subsection DB_c_execute_routines DB c_execute routines
 
-int db_begin_transaction (dbDriver driver)
+int #db_begin_transaction (dbDriver driver)
 
-int db_commit_transaction (dbDriver driver)
+int #db_commit_transaction (dbDriver driver)
 
-int db_execute_immediate (dbDriver driver, dbString *SQLstatement)
+int #db_execute_immediate (dbDriver driver, dbString *SQLstatement)
 
 
 \subsection DB_c_fetch_routines DB c_fetch routines
 
-int db_fetch (dbCursor *cursor, int position, int more)
+int #db_fetch (dbCursor *cursor, int position, int more)
 
-\subsection DB_c_finddb_routines DB c_finddb routines
+\subsection DB_c_find#db_routines DB c_finddb routines
 
 
-\subsection DB_c_finddb_routines DB c_finddb routines
+\subsection DB_c_find#db_routines DB c_finddb routines
 
-int db_find_database (dbDriver driver, dbHandle *handle, int found)
+int #db_find_database (dbDriver driver, dbHandle *handle, int found)
 
 
 \subsection DB_c_insert_routines DB c_insert routines
-int db_insert (dbCursor *cursor)
+int #db_insert (dbCursor *cursor)
 
 
 \subsection DB_c_list_drivers_routines DB c_list_drivers routines
 
-char *db_list_drivers (void)
+char *#db_list_drivers (void)
 
 
 \subsection DB_c_list_idx_routines DB c_list_idx routines
 
-int db_list_indexes (dbDriver driver, dbString *table_name, dbIndex list, int count)
+int #db_list_indexes (dbDriver driver, dbString *table_name, dbIndex list, int count)
 
 
 \subsection DB_c_list_tabs_routines DB c_list_tabs routines
 
-int db_list_tables (dbDriver driver, dbString *names, int count, int system)
+int #db_list_tables (dbDriver driver, dbString *names, int count, int system)
 
 
 \subsection DB_c_listdb_routines DB c_listdb routines
 
-int db_list_databases (dbDriver driver, dbString *path, int npaths, dbHandle *handles, int count)
+int #db_list_databases (dbDriver driver, dbString *path, int npaths, dbHandle *handles, int count)
 
 
 \subsection DB_c_opendb_routines DB c_opendb routines
@@ -440,7 +438,7 @@ int db_list_databases (dbDriver driver, dbString *path, int npaths, dbHandle *ha
 
 \subsection DB_c_rows_routines DB c_rows routines
 
-int db_get_num_rows ( dbCursor *cursor )
+int #db_get_num_rows ( dbCursor *cursor )
 
 
 \subsection DB_c_update_routines DB c_update routines
@@ -451,25 +449,25 @@ int db_get_num_rows ( dbCursor *cursor )
 
 \subsection DB_copy_tab_routines DB copy_tab routines
 
-int db_copy_table ()
+int #db_copy_table ()
 
-int db_copy_table_by_ints ()
+int #db_copy_table_by_ints ()
 
-int db_copy_table_select ()
+int #db_copy_table_select ()
 
-int db_copy_table_where ()
+int #db_copy_table_where ()
 
 
 \subsection DB_db_routines DB db routines
 
-int db_close_database_shutdown_driver ()
+int #db_close_database_shutdown_driver ()
 
-int db_start_driver_open_database ()
+int #db_start_driver_open_database ()
 
 
 \subsection DB_delete_tab_routines DB delete_tab routines
 
-int db_delete_table ()
+int #db_delete_table ()
 
 
 \subsection DB_printtab_routines DB printtab routines
@@ -552,7 +550,7 @@ int db_delete_table ()
 
 \subsection DB_d_listdb_routines DB d_listdb routines
 
-int db_d_list_databases (void)
+int #db_d_list_databases (void)
 
 
 \subsection DB_d_mkdir_routines DB d_mkdir routines
@@ -587,7 +585,7 @@ int db_d_list_databases (void)
 
 \subsection DB_driver_routines DB driver routines
 
-int db_driver ()
+int #db_driver ()
 
 
 \subsection DB_driver_state_routines DB driver_state routines
