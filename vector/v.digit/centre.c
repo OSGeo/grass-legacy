@@ -107,7 +107,7 @@ tool_centre ( void )
 		break;
 	    case TOOL_ZOOM_OUT_CENTRE :
 		Tool_next = TOOL_NOTHING;
-		zoom_centre ( 2 );
+		zoom_centre ( 1.4142 );  /* sqrt(2) */
 		break;
 	    case TOOL_ZOOM_PAN :
 		Tool_next = TOOL_NOTHING;
