@@ -174,43 +174,43 @@ main (int argc, char *argv[])
 	for ( i = 0; i < ntools; i++ ) {
 	    switch ( tools[i] ) {
 		case ( TOOL_BREAK ) :
-	            fprintf (stderr, "| Break                            |" );	    
+	            fprintf (stderr, "| Break                           |" );	    
 		    break;
 		case ( TOOL_RMDUPL ) :
-	            fprintf (stderr, "| Remove duplicates                |" );	    
+	            fprintf (stderr, "| Remove duplicates               |" );	    
 		    break;
 		case ( TOOL_RMDANGLE ) :
-	            fprintf (stderr, "| Remove dangles                   |" );	    
+	            fprintf (stderr, "| Remove dangles                  |" );	    
 		    break;
 		case ( TOOL_CHDANGLE ) :
-	            fprintf (stderr, "| Change type of boundary dangles  |" );	    
+	            fprintf (stderr, "| Change type of boundary dangles |" );	    
 		    break;
 		case ( TOOL_RMBRIDGE ) :
-	            fprintf (stderr, "| Remove bridges                   |" );	    
+	            fprintf (stderr, "| Remove bridges                  |" );	    
 		    break;
 		case ( TOOL_CHBRIDGE ) :
-	            fprintf (stderr, "| Change type of boundary bridges  |" );	    
+	            fprintf (stderr, "| Change type of boundary bridges |" );	    
 		    break;
 		case ( TOOL_SNAP ) :
-	            fprintf (stderr, "| Snap vertices                    |" );	    
+	            fprintf (stderr, "| Snap vertices                   |" );	    
 		    break;
 		case ( TOOL_RMDAC ) :
-	            fprintf (stderr, "| Remove duplicate area centroids  |" );	    
+	            fprintf (stderr, "| Remove duplicate area centroids |" );	    
 		    break;
 		case ( TOOL_BPOL ) :
-	            fprintf (stderr, "| Break polygons                   |" );	    
+	            fprintf (stderr, "| Break polygons                  |" );	    
 		    break;
 		case ( TOOL_PRUNE ) :
-	            fprintf (stderr, "| Prune                            |" );	    
+	            fprintf (stderr, "| Prune                           |" );	    
 		    break;
 		case ( TOOL_RMAREA ) :
-	            fprintf (stderr, "| Remove small areas               |" );	    
+	            fprintf (stderr, "| Remove small areas              |" );	    
 		    break;
 		case ( TOOL_RMSA ) :
-	            fprintf (stderr, "| Remove small angles at nodes     |" );	    
+	            fprintf (stderr, "| Remove small angles at nodes    |" );	    
 		    break;
 	    }
-	    fprintf (stderr, " %e |\n", threshs[i] );	    
+	    fprintf (stderr, " %13e |\n", threshs[i] );	    
 	}
 	fprintf (stderr,             "+---------------------------------+---------------+\n" );
 		    
