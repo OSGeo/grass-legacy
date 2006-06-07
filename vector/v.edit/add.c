@@ -8,14 +8,13 @@ int do_add(struct Map_info *Map)
     int next_cat=-1;
     int layer=atoi(fld_opt->answer);
     int type;
-    int i,np, cc, ci;
-    struct line_pnts *line, *point;
+    int i,np, cc=0, ci=0;
+    struct line_pnts *line=NULL, *point=NULL;
     struct cat_list * cl=NULL;
 
     if(cat_opt->answer != NULL) {
 	cl = Vect_new_cat_list();
 	Vect_str_to_cat_list(cat_opt->answer, cl);
-	ci=0;
 	next_cat=cl->min[ci];
 	G_debug(1, "next_cat=%d, cl->n_ranges", next_cat, cl->n_ranges);
     }
@@ -48,7 +47,7 @@ int do_add(struct Map_info *Map)
 	type = GV_CENTROID;
     }
     else {
-	G_warning("Sorry this is not yet implemented");
+	G_warning("Sorry I can not add %s",typ_opt->answer);
 	return 0;
     }
 
@@ -91,17 +90,21 @@ int do_add(struct Map_info *Map)
 	}
 	break;
       case GV_LINE:
+	if(np < 2) {
+	    fprintf(stderr, _("ERROR: A line needs at least 2 points"));
+	    return 0;
+	}
       case GV_BOUNDARY:
       case GV_AREA:
-	if(type==GV_LINE) {
-	    if(np < 2) {
-		fprintf(stderr, _("ERROR: A line needs at least 2 points"));
-		return 0;
+	if(type!=GV_LINE) {
+	    G_debug(1, "b_flg=%p", b_flg);
+	    if(b_flg->answer) {
+		cc = next_cat+1;
 	    }
-	}
-	else {
-	    cc = next_cat;
-	    next_cat=0;
+	    else {
+		cc = next_cat;
+		next_cat=0;
+	    }
 	    if(np < 3 ) {
 		fprintf(stderr, _("ERROR: An area needs at least 3 points"));
 		return 0;
@@ -128,8 +131,9 @@ int do_add(struct Map_info *Map)
 	    Vect_append_point ( line, x, y, 0 );
 	}
 	if(type != GV_LINE) {
-	    if(((line->x[0]) != (line->x[line->n_points-1])) ||
-	       ((line->y[0]) != (line->y[line->n_points-1])))
+	    if(!c_flg->answer &&
+	       (((line->x[0]) != (line->x[line->n_points-1])) ||
+	       ((line->y[0]) != (line->y[line->n_points-1]))) )
 	    {
 		G_warning(_("Boundary not closed. Closing it for you"));
 		G_debug (1, "Adding a point to line in map [%s], x=%.10f y=%.10f without cat",
@@ -139,24 +143,17 @@ int do_add(struct Map_info *Map)
 
 	    if(type==GV_AREA) {
 		double xc, yc;
-		xc = yc = 0; /* calculate centroid */
-		for(i = 0; i < line->n_points; i++) {
-		    xc += (line->x[i]) / line->n_points;
-		    yc += (line->y[i]) / line->n_points;
-		}
+		int ret;
 
+//		ret = Vect_get_point_in_poly(line, &xc, &yc);
+		ret = Vect_get_point_in_poly_isl(line, NULL, 0, &xc, &yc);
+		if(ret < 0) { /* could not find point inside polygon */
+		    return 0;
+		}
 		point = Vect_new_line_struct ();
 		Vect_append_point ( point, xc, yc, 0 );
 		G_debug (1, "Adding a centroid to area in map [%s], x=%.10f y=%.10f with cat %d",
 			 map_opt->answer, xc, yc, cc);
-
-		i = segments_x_ray(xc, yc, line);
-		G_debug(1, "segments_x_ray returned %d", i);
-
-		if(i%2==0) {
-		    G_warning(_("Centroid outside boundary. Time to PANIC!"));
-		    return 0;
-		}
 	    }
 	}
 	if(!add_line ( Map, type==GV_LINE?GV_LINE:GV_BOUNDARY, line, 
@@ -188,7 +185,6 @@ int do_add(struct Map_info *Map)
 int add_line(struct Map_info *Map, int type, struct line_pnts *Points,
 	     int layer, int cat)
 {
-    int ret;
     struct line_cats *Cats;
     Cats = Vect_new_cats_struct();
     if(Cats== NULL)

@@ -69,6 +69,7 @@ int main (int argc, char *argv[])
 	break;
       default:
 	G_warning("Sorry this is not yet implemented");
+	ret=0;
 	break;
     }
 
