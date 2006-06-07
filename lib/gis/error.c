@@ -71,7 +71,7 @@ static void print_sentence (FILE *, const int, const char *);
 static int print_error (const char *, const int);
 static int mail_msg (const char *, const int);
 static int write_error (const char *, const int, const char *, 
-                        const long, const char *);
+                        const time_t, const char *);
 static int log_error (const char *, const int);
 
 /*!
