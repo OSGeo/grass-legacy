@@ -53,7 +53,7 @@ proc GRToolBar::create { tb } {
 
     # selector
     set selector [radiobutton $tb.selector \
-    	-image [image create photo -file "$iconpath/gui-pointer.gif"] \
+    	-image [image create photo -file "$iconpath/gui-gcpset.gif"] \
         -command "GRMap::stoptool; GRMap::selector" \
 		-variable maptools -value selector  -relief flat -offrelief flat -overrelief raised \
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
