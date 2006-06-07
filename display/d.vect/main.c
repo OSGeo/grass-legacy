@@ -208,7 +208,7 @@ main (int argc, char **argv)
 	fcolor_opt = G_define_option() ;
 	fcolor_opt->key        = "fcolor" ;
 	fcolor_opt->type       = TYPE_STRING ;
-	fcolor_opt->answer     = "gray" ;
+	fcolor_opt->answer     = "200:200:200" ;
 	fcolor_opt->description= _("Area fill color");
 	fcolor_opt->gisprompt  = GISPROMPT_COLOR;
 
