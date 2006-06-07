@@ -88,33 +88,85 @@ namespace eval GRMap {
 	
 	variable redrawrequest 0
 	
-	#variables to keep track of location and mapset
-	variable currgdb "" # current gisdbase
-	variable currloc "" # current location
-	variable currmset "" # current mapset
-	variable xygdb "" # gisdbase of xy raster
-	variable xyloc "" # location of xy raster
-	variable xymset "" # mapset of xy raster
-	variable xygroup "" # raster group to georectify
-	variable xyrast "" # raster map to display
+	#variables for panning
+	variable start_x 
+	variable start_y
+    variable from_x 
+    variable from_y
+    variable to_x
+    variable to_y
+
 	
 	# gcp variables
-	variable array usegcp # use GCP in RMS calculations and rectification indexed by gcpnum
-	variable array xy # entry widget for GCP xy coordinates indexed by gcpnum
-	variable array geoc # entry widget for GCP georectified coordinates indexed by gcpnum
-	variable array chk # checkbutton widget for GCP use indexed by gcpnum
-	variable array error_rms # entry widget for RMS error value for each GCP indexed by gcpnum
+	# use GCP in RMS calculations and rectification indexed by gcpnum
+	variable array usegcp
+	# entry widget for GCP xy coordinates indexed by gcpnum
+	variable array xy
+	# entry widget for GCP georectified coordinates indexed by gcpnum
+	variable array geoc
+	# checkbutton widget for GCP use indexed by gcpnum
+	variable array chk
+	# entry widget for RMS error value for each GCP indexed by gcpnum
+	variable array error_rms
+	# counter for GCP array variables and for loops indexed by gcpnum
 	variable array errval
-	variable gcpnum # counter for GCP array variables and for loops indexed by gcpnum
+	
+	variable gcpnum 
 	variable totalrms #total rms error for GCP's, displayed in gcp manager indicator window
+
+	#variables to keep track of location and mapset
+	# current gisdbase
+	variable currgdb
+	# current location
+	variable currloc
+	# current mapset
+	variable currmset
+	# gisdbase of xy raster
+	variable xygdb
+	# location of xy raster
+	variable xyloc
+	# mapset of xy raster
+	variable xymset
+	# raster group to georectify
+	variable xygroup
+	# raster map to display
+	variable xyrast
+	# vector map to display and georectify
+	variable xyvect
+	# georectify raster or vector map
+	variable maptype
+	# is target mapset same as current mapset
+	variable selftarget	
+	
+	    #initialize variables
+	set initwd 640.0
+	set initht 480.0
+	set east 0.0
+	set north 0.0
+	set currgdb $env(GISDBASE)
+	set currloc $env(LOCATION_NAME)
+	set currmset $env(MAPSET)
+	set xygdb ""
+	set xyloc ""
+	set xymset ""
+	set xygroup ""
+	set xyrast ""
+	set xyvect ""
+	set maptype ""
+	set selftarget 0
 
 
 }
 
+
+
 ###############################################################################
 # Set location and mapset to selected xy 
 proc GRMap::setxyenv { mset loc } {
+	variable selftarget
 	global env
+	
+	if { $selftarget == 1 } { return }
 	
 	if { $mset != "" && $loc != "" } {
 		run "g.gisenv set=LOCATION_NAME=$loc"
@@ -131,8 +183,11 @@ proc GRMap::setxyenv { mset loc } {
 proc GRMap::resetenv { } {
 	variable currloc
 	variable currmset
+	variable selftarget
 	global env
 	
+	if { $selftarget == 1 } { return }
+
 	run "g.gisenv set=LOCATION_NAME=$currloc"
 	run "g.gisenv set=MAPSET=$currmset"
 	
@@ -150,6 +205,7 @@ proc GRMap::getxygroup { } {
 	variable xygroup
 	variable currloc
 	variable currmset
+	variable selftarget
 
 	# First, switch to xy mapset
 	GRMap::setxyenv $xymset $xyloc
@@ -157,7 +213,11 @@ proc GRMap::getxygroup { } {
     set m [GSelect group]
     if { $m != "" } { 
         set GRMap::xygroup $m
-		set cmd "i.target group=$GRMap::xygroup location=$currloc mapset=$currmset"
+        if { $selftarget == 1 } {
+        	set cmd "i.target -c"
+        } else {
+			set cmd "i.target group=$GRMap::xygroup location=$currloc mapset=$currmset"
+		}
 		runcmd $cmd
     }
     
@@ -169,17 +229,33 @@ proc GRMap::getxygroup { } {
 
 ###############################################################################
 # get raster to display for georectification
-proc GRMap::getxyrast { } {
+proc GRMap::getxymap { type } {
 	variable xyloc
 	variable xymset
 	variable xyrast
+	variable xyvect
+	variable maptype
+
 
 	# First, switch to xy mapset
 	GRMap::setxyenv $xymset $xyloc
     
-    set m [GSelect cell]
-    if { $m != "" } { 
-        set GRMap::xyrast $m
+    if { $type == "rast" } {
+	    set m [GSelect cell]
+    	if { $m != "" } { 
+        	set GRMap::xyrast $m
+        	set GRMap::xyvect ""
+        	set maptype "rast"
+    	}
+    }
+    
+    if { $type == "vect" } {
+	    set m [GSelect vector]
+    	if { $m != "" } { 
+        	set GRMap::xyvect $m
+        	set GRMap::xyrast ""
+        	set maptype "vect"
+    	}
     }
     
     # Return to georectified mapset
@@ -210,10 +286,13 @@ proc GRMap::getmset { } {
 	variable xyloc
 	variable xymset
 	variable currgdb
+	variable currloc
+	variable currmset
 	variable mappid
 	variable grfile
 	variable tmpdir
-
+	variable selftarget
+	
 	set path [tk_chooseDirectory -initialdir $currgdb \
 		-title "Select mapset of raster to georectify" \
 		-mustexist true ]
@@ -225,12 +304,14 @@ proc GRMap::getmset { } {
 	set xyloc [file tail $xylocdir]
 	set xygdb [file dirname $xylocdir]
 	
+	# check to see if the target location and mapset is the current one
+	if { $xyloc == $currloc && $xymset == $currmset } {set selftarget 1 }
+	
 	set GRMap::xymset [file tail $path]
 	
 	# create files in tmp diretory for layer output
 	# First, switch to xy mapset
 	GRMap::setxyenv $xymset $xyloc
-
 
 	set mappid [pid]
 	set grfile [eval exec "g.tempfile pid=$mappid"]
@@ -242,7 +323,6 @@ proc GRMap::getmset { } {
 }
 
 
-
 ###############################################################################
 # select mapset (and location) and raster map to profile, and start georectifying canvas
 
@@ -250,27 +330,16 @@ proc GRMap::startup { } {
 	variable currgdb
 	variable currloc
 	variable currmset
+	variable xygdb
 	variable xyloc
 	variable xymset
 	variable xygroup
 	variable xyrast
+	variable xyvect
     variable initwd
     variable initht
 	global env
-    
-	set initwd 640.0
-	set initht 480.0
-	set east 0.0
-	set north 0.0
-	
-	set currgdb $env(GISDBASE)
-	set currloc $env(LOCATION_NAME)
-	set currmset $env(MAPSET)
-
-    # create a dialog with place to enter location and mapset
-    # place to enter raster to georectify
-    # button to start georectifying
-    
+        
     set grstarttitle "Set up enviroment for georectification"
 	toplevel .grstart
     wm title .grstart [G_msg $grstarttitle]
@@ -279,13 +348,17 @@ proc GRMap::startup { } {
 
 	# create frame for georectify startup
 	set grstartup [frame .grstart.fr ]
+	set rastlabel [labelframe $grstartup.rl -text "2. Set up georectification for raster map(s)" \
+		-padx 4 -pady 10 -fg mediumblue]
+	set vectlabel [labelframe $grstartup.vl -text "2. Set up georectification for vector map"\
+		-padx 4 -pady 10 -fg mediumblue]
 		
     # set xy mapset
     set row [ frame $grstartup.mset ]
-    Button $row.a -text [G_msg "1. Select mapset"] \
+    Button $row.a -text [G_msg "1.  Select mapset"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "Mapset of xy raster group"]\
-        -width 16 -anchor w \
+        -width 16 -anchor w -highlightthickness 4  -fg mediumblue \
 		-command {GRMap::getmset}
     Entry $row.b -width 35 -text "$GRMap::xymset" \
           -textvariable GRMap::xymset 
@@ -293,8 +366,8 @@ proc GRMap::startup { } {
     pack $row -side top -fill both -expand yes
 
     # Run i.group
-    set row [ frame $grstartup.igroup ]
-    Button $row.a -text [G_msg "2. Create/edit group"] \
+    set row [ frame $rastlabel.igroup ]
+    Button $row.a -text [G_msg "a.  Create/edit group"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "Create/edit raster group"] \
         -width 16 -anchor w \
@@ -303,8 +376,8 @@ proc GRMap::startup { } {
     pack $row -side top -fill both -expand yes
 
     # set xy group
-    set row [ frame $grstartup.group ]
-    Button $row.a -text [G_msg "3. Select group"] \
+    set row [ frame $rastlabel.group ]
+    Button $row.a -text [G_msg "b.  Select group"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "Select existing xy raster group to georectify"]\
         -width 16 -anchor w \
@@ -315,23 +388,46 @@ proc GRMap::startup { } {
     pack $row -side top -fill both -expand yes
 			
     # set xy raster
-    set row [ frame $grstartup.rast ]
-    Button $row.a -text [G_msg "4. Select raster"] \
+    set row [ frame $rastlabel.rast ]
+    Button $row.a -text [G_msg "c. Select raster"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "Select xy raster to display for georectification"]\
         -width 16 -anchor w \
-		-command {GRMap::getxyrast}
+		-command {GRMap::getxymap "rast"}
     Entry $row.b -width 35 -text "$GRMap::xyrast" \
           -textvariable GRMap::xyrast 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
+	pack $rastlabel -side top -fill both -expand yes 
+	
+    #or
+    set row [ frame $grstartup.or ]
+    Label $row.a -text [G_msg "OR..."] \
+		-fg MediumBlue -pady 4
+	pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
+    # set xy vector
+    set row [ frame $vectlabel.vect ]
+    Button $row.a -text [G_msg "a. Select vector"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "Select xy vector to display and georectify"]\
+        -width 16 -anchor w \
+		-command {GRMap::getxymap "vect" }
+    Entry $row.b -width 35 -text "$GRMap::xyvect" \
+          -textvariable GRMap::xyvect 
+    pack $row.a $row.b -side left
+    pack $row -side top -fill both -expand yes
+
+	pack $vectlabel -side top -fill both -expand yes
+
     # Start georectify canvas
     set row [ frame $grstartup.start ]
-    Button $row.a -text [G_msg "5. Georectify"] \
+    Button $row.a -text [G_msg "3. Georectify"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "Start georectifying"]\
-        -width 16 -anchor w \
+        -width 16 -anchor w -highlightthickness 4  -fg mediumblue \
 		-command "GRMap::create"
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
@@ -368,6 +464,8 @@ proc GRMap::create { } {
 	variable xymset
 	variable xygroup
 	variable xyrast
+	variable xyvect
+	variable maptype
 
     global env
     global currmon
@@ -375,7 +473,9 @@ proc GRMap::create { } {
 	global GRMap::msg
 	global grcoords
 	
-	if { $xymset == "" || $xygroup == "" || $xyrast == ""} {return}
+	if { $xymset=="" || (($xygroup=="" || $xyrast=="") && $xyvect=="")} {
+		return
+		}
 	
 	# close dialog to select mapset and raster
 	destroy .grstart
@@ -436,7 +536,6 @@ proc GRMap::create { } {
 		set eastcoord [eval GRMap::scrx2mape %x]
 		set northcoord [eval GRMap::scry2mapn %y]
 		set grcoords "$eastcoord $northcoord"
-		puts "grcoords=$grcoords"
 	}
 
 	# When a monitor gets the keyboard focus
@@ -551,6 +650,8 @@ proc GRMap::gcpwin {} {
 	variable xygroup
 	variable gcpnum
 	variable usegcp
+	variable xyvect
+	variable maptype
 	variable xy
 	variable geoc
 	variable chk
@@ -638,29 +739,53 @@ proc GRMap::gcpwin {} {
 		
 	}
 	
-	# import any existing points file
-	set gcpfile "$xygdb/$xyloc/$xymset/group/$xygroup/POINTS"
-	if {[file exists $gcpfile] } {
-		# do the import
-		set gcpnum 1
-		set pfile [open $gcpfile]
-		set points [read $pfile]
-		close $pfile
-		regsub -all {[ ]+} $points " " points
-		set plines [split $points "\n"]
-		foreach gcpline $plines {
-			if {[string match {\#*} $gcpline]} continue
-			if {$gcpline == "" } continue
-        	set gcpline [string trim $gcpline " "] 
-			set fields [split $gcpline { }]
-			# assign variables
-			$xy($gcpnum) insert	0 "[lindex $fields 0] [lindex $fields 1]"
-			$geoc($gcpnum) insert 0 "[lindex $fields 2] [lindex $fields 3]"
-			set usegcp($gcpnum)	"[lindex $fields 4]"
-			incr gcpnum
+	# import any existing points file for raster or gcp file for raster or vector
+	if { $maptype == "rast" } {
+		set gcpfile "$xygdb/$xyloc/$xymset/group/$xygroup/POINTS"
+		if {[file exists $gcpfile] } {
+			# do the import
+			set gcpnum 1
+			set pfile [open $gcpfile]
+			set points [read $pfile]
+			close $pfile
+			regsub -all {[ ]+} $points " " points
+			set plines [split $points "\n"]
+			foreach gcpline $plines {
+				if {[string match {\#*} $gcpline]} continue
+				if {$gcpline == "" } continue
+				set gcpline [string trim $gcpline " "] 
+				set fields [split $gcpline { }]
+				# assign variables
+				$xy($gcpnum) insert	0 "[lindex $fields 0] [lindex $fields 1]"
+				$geoc($gcpnum) insert 0 "[lindex $fields 2] [lindex $fields 3]"
+				set usegcp($gcpnum)	"[lindex $fields 4]"
+				incr gcpnum
+			}
+		}
+	} elseif { $maptype == "vect" } {
+		set gcpfile "$xygdb/$xyloc/$xymset/vector/$xyvect/gcp"
+		if {[file exists $gcpfile] } {
+			# do the import
+			set gcpnum 1
+			set pfile [open $gcpfile]
+			set points [read $pfile]
+			close $pfile
+			regsub -all {[ ]+} $points " " points
+			set plines [split $points "\n"]
+			foreach gcpline $plines {
+				if {[string match {\#*} $gcpline]} continue
+				if {$gcpline == "" } continue
+				set gcpline [string trim $gcpline " "] 
+				set fields [split $gcpline { }]
+				# assign variables
+				$xy($gcpnum) insert	0 "[lindex $fields 0] [lindex $fields 1]"
+				$geoc($gcpnum) insert 0 "[lindex $fields 2] [lindex $fields 3]"
+				set usegcp($gcpnum)	1
+				incr gcpnum
+			}
 		}
 	}
-	
+
 	# set the focus to the first entry
 	focus -force $xy(1)
 	
@@ -696,14 +821,14 @@ proc GRMap::gcptb { gcptb } {
         -command "GRMap::savegcp" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
         -highlightbackground $bgcolor  -activebackground $bgcolor\
-        -helptext [G_msg "save to points file"]
+        -helptext [G_msg "save GCPs to POINTS file"]
 
     # clear
     $bbox add -image [image create photo -file "$iconpath/gui-gcperase.gif"] \
         -command "GRMap::cleargcp" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
         -highlightbackground $bgcolor  -activebackground $bgcolor\
-        -helptext [G_msg "clear all GCP entries"]
+        -helptext [G_msg "clear ALL GCP entries"]
 
     # rms
     $bbox add -image [image create photo -file "$iconpath/gui-rms.gif"] \
@@ -724,13 +849,13 @@ proc GRMap::gcptb { gcptb } {
 	set order [menu $recttype.order -type normal]
 	
 	$order add command \
-		-label {1st order georectification (no warping). Requires 3+ GCPs.} \
+		-label {1st order affine transformation (rasters & vectors). Requires 3+ GCPs.} \
         -command {GRMap::rectify 1}
 	$order add command \
-		-label {2nd order polynomial georectification. Requires 6+ GCPs.} \
+		-label {2nd order polynomial transformation (rasters). Requires 6+ GCPs.} \
         -command {GRMap::rectify 2}
 	$order add command \
-		-label {3rd order polynomial georectification. Requires 10+ GCPs.} \
+		-label {3rd order polynomial transformation (rasters). Requires 10+ GCPs.} \
         -command {GRMap::rectify 3}
 
 	$recttype configure -menu $order
@@ -743,29 +868,50 @@ proc GRMap::gcptb { gcptb } {
 ###############################################################################
 # save GCP's to POINTS file in xy location and mapset
 proc GRMap::savegcp {} {
+	variable currloc
+	variable currmset
 	variable xygdb
 	variable xyloc
 	variable xymset
 	variable xygroup
+	variable xyvect
+	variable maptype
 	variable gcpnum
 	variable xy
 	variable geoc
 	variable usegcp
 	variable array gcpline #array to store gcp coordinates as text for output
 
-	set gcpfile "$xygdb/$xyloc/$xymset/group/$xygroup/POINTS"
-	set output [open $gcpfile w ] 
-		for {set gcpnum 1} {$gcpnum < 21 } { incr gcpnum } {
-			set rowcount 0
-			set gcpline($gcpnum) "     [$xy($gcpnum) get]"
-			append gcpline($gcpnum) "     [$geoc($gcpnum) get]"
-			append gcpline($gcpnum) "     $usegcp($gcpnum)"
-			if { [$xy($gcpnum) get] != "" && [$geoc($gcpnum) get] != ""} {
-				puts $output $gcpline($gcpnum)
-				incr rowcount
+	if { $maptype == "rast" } {
+		set gcpfile "$xygdb/$xyloc/$xymset/group/$xygroup/POINTS"
+		set output [open $gcpfile w ] 
+			for {set gcpnum 1} {$gcpnum < 21 } { incr gcpnum } {
+				set rowcount 0
+				set gcpline($gcpnum) "[$xy($gcpnum) get]"
+				append gcpline($gcpnum) "     [$geoc($gcpnum) get]"
+				append gcpline($gcpnum) "     $usegcp($gcpnum)"
+				if { [$xy($gcpnum) get] != "" && [$geoc($gcpnum) get] != ""} {
+					puts $output $gcpline($gcpnum)
+					incr rowcount
+				}
 			}
-		}
-	close $output
+		close $output
+	} elseif { $maptype == "vect" } {
+		set gcpfile "$xygdb/$xyloc/$xymset/vector/$xyvect/gcp"
+		set output [open $gcpfile w ] 
+			puts $output "# target location: $currloc"
+			puts $output "# target mapset: $currmset"
+			for {set gcpnum 1} {$gcpnum < 21 } { incr gcpnum } {
+				set rowcount 0
+				set gcpline($gcpnum) "[$xy($gcpnum) get]"
+				append gcpline($gcpnum) "     [$geoc($gcpnum) get]"
+				if { [$xy($gcpnum) get] != "" && [$geoc($gcpnum) get] != ""} {
+					puts $output $gcpline($gcpnum)
+					incr rowcount
+				}
+			}
+		close $output
+	}
 }
 
 ###############################################################################
@@ -802,53 +948,116 @@ proc GRMap::rmscalc {} {
 }
 
 ###############################################################################
-# run i.rectify to rectify raster group
+# run i.rectify to rectify raster group or v.transform to rectify vector
 proc GRMap::rectify { rectorder } {
 	variable xygdb
 	variable xyloc
+	variable currloc
 	variable xymset
+	variable currmset
 	variable xygroup
+	variable xyvect
+	variable maptype
 	variable mappid
+	variable selftarget
 
 	# First, switch to xy mapset
 	GRMap::setxyenv $xymset $xyloc
 	
 
-	# count useable GCP's in points file
-	set gcpfile "$xygdb/$xyloc/$xymset/group/$xygroup/POINTS"
-	if {[file exists $gcpfile] } {
-		# do the import
-		set gcpcnt 0
-		set pfile [open $gcpfile]
-		set points [read $pfile]
-		close $pfile
-		regsub -all {[ ]+} $points " " points
-		set plines [split $points "\n"]
-		foreach gcpline $plines {
-			if {[string match {\#*} $gcpline]} continue
-			if {$gcpline == "" } continue
-        	set gcpline [string trim $gcpline " "] 
-			set fields [split $gcpline { }]
-			# count gcps
-			if {[lindex $fields 0]!="" && [lindex $fields 1]!="" && [lindex $fields 2]!=""  
-				&& [lindex $fields 3]!="" && [lindex $fields 4]==1} {
-				incr gcpcnt
+	if { $maptype == "rast" } {
+		# count useable GCP's in points file
+		set gcpfile "$xygdb/$xyloc/$xymset/group/$xygroup/POINTS"
+		if {[file exists $gcpfile] } {
+			# do the import
+			set gcpcnt 0
+			set pfile [open $gcpfile]
+			set points [read $pfile]
+			close $pfile
+			regsub -all {[ ]+} $points " " points
+			set plines [split $points "\n"]
+			foreach gcpline $plines {
+				if {[string match {\#*} $gcpline]} continue
+				if {$gcpline == "" } continue
+				set gcpline [string trim $gcpline " "] 
+				set fields [split $gcpline { }]
+				# count gcps
+				if {[lindex $fields 0]!="" && [lindex $fields 1]!="" && [lindex $fields 2]!=""  
+					&& [lindex $fields 3]!="" && [lindex $fields 4]==1} {
+					incr gcpcnt
+				}
 			}
-		}
-		if { $gcpcnt<3 || ($gcpcnt<6 && $rectorder==2) || ($gcpcnt<10 && $rectorder==3) } {
-			set msg "Insufficient ground control points for georectification method. \
-				You need at least 3 points for 1st order, 6 points for 2nd order, and 10 points for 3rd order"
+			if { $gcpcnt<3 || ($gcpcnt<6 && $rectorder==2) || ($gcpcnt<10 && $rectorder==3) } {
+				set msg "Insufficient ground control points for georectification method. \
+					You need at least 3 points for 1st order, 6 points for 2nd order, and 10 points for 3rd order"
+				tk_messageBox -message $msg -parent .gcpwin -type ok
+			}
+		} else { 
+			set msg "There is no POINTS file of ground control points for group. \
+				You must create ground control points before georectifying map."
+			tk_messageBox -message $msg -parent .gcpwin -type ok
+		}	
+		set cmd "i.rectify -ca group=$xygroup extension=$mappid order=$rectorder"
+		runcmd $cmd
+	} elseif { $maptype == "vect" && $rectorder == 1} {
+		# count useable GCP's in points file
+		set gcpfile "$xygdb/$xyloc/$xymset/vector/$xyvect/gcp"
+		if {[file exists $gcpfile] } {
+			# do the import
+			set gcpcnt 0
+			set pfile [open $gcpfile]
+			set points [read $pfile]
+			close $pfile
+			regsub -all {[ ]+} $points " " points
+			set plines [split $points "\n"]
+			foreach gcpline $plines {
+				if {[string match {\#*} $gcpline]} continue
+				if {$gcpline == "" } continue
+				set gcpline [string trim $gcpline " "] 
+				set fields [split $gcpline { }]
+				# count gcps
+				if {[lindex $fields 0]!="" && [lindex $fields 1]!="" && [lindex $fields 2]!=""  
+					&& [lindex $fields 3]!=""} {
+					incr gcpcnt
+				}
+			}
+			if { $gcpcnt < 1 } {
+				set msg "No valid ground control points in gcp file. \
+				You must create valid ground control points before georectifying map."
+				tk_messageBox -message $msg -parent .gcpwin -type ok
+			}
+		} else { 
+			set msg "There is no gcp file of ground control points for vector. \
+				You must create ground control points before georectifying map."
 			tk_messageBox -message $msg -parent .gcpwin -type ok
 		}
+		set outname "$xyvect"
+		append outname "_"
+		append outname "$mappid"
+		set cmd "v.transform -q input=$xyvect output=$outname pointsfile=$gcpfile"
+		runcmd $cmd
+		# copy vector files from source to target location and mapset
+		if { $selftarget == 0 } {
+			set xysource "$xygdb/$xyloc/$xymset/vector/$outname"
+			set xytarget "$xygdb/$currloc/$currmset/vector/$outname"
+			set xyfile "$xysource"
+			append xyfile "/coor"
+			set counter 1
+			while { $counter < 100 } {
+				if { [file exists $xyfile] } {
+					file copy -force $xysource $xytarget
+					file delete -force $xysource
+					set counter 101
+				}
+				after 100
+				incr counter
+			}
+		}
 	} else { 
-		set msg "There is no POINTS file of ground control points for group. \
-			You must create ground control points before georectifying map."
-		tk_messageBox -message $msg -parent .gcpwin -type ok
+		GRMap::resetenv 
+		return
 	}
-
 	
-	set cmd "i.rectify -ca group=$xygroup extension=$mappid order=$rectorder"
-	runcmd $cmd
 
     # Return to georectified mapset
 	GRMap::resetenv
@@ -862,6 +1071,7 @@ proc GRMap::cleargcp {} {
 	variable usegcp
 	variable error_rms
 	variable gcpnum
+	variable grcan
 
 	for {set gcpnum 1} {$gcpnum < 21 } { incr gcpnum } {
 		set usegcp($gcpnum) 1
@@ -869,86 +1079,8 @@ proc GRMap::cleargcp {} {
 		$geoc($gcpnum) delete 0 end
 		$error_rms($gcpnum) delete 0 end
 	}
+	$grcan delete gcpvert gcphoriz
 }
-
-###############################################################################
-# options for rectifying
-proc GRMap::rectoptions { } {
-# entry to set extension name, spinbox or radio buttons to set order
-# button to start (check to see if there are enough GCPs for each order
-# 1st order needs 3, 2nd order needs 6, 3rd order needs 10
-
-    set rect_title "Rectification options"
-	toplevel .rectopt
-    wm title .rectopt [G_msg $rect_title]
-    wm withdraw .rectopt
-
-
-	# create frame for rectification options
-	set rectoptions [frame .grstart.fr ]
-		
-    # set xy mapset
-    set row [ frame $rectoptions.mset ]
-    LabelEntry $row.b -width 35 -text "$rect_ext"
-    pack $row.a $row.b -side left
-    pack $row -side top -fill both -expand yes
-
-    # Run i.group
-    set row [ frame $rectoptions.igroup ]
-    Button $row.a -text [G_msg "2. Create/edit group"] \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
-        -helptext [G_msg "Create/edit raster group"] \
-        -width 16 -anchor w \
-		-command {GRMap::group}
-    pack $row.a -side left
-    pack $row -side top -fill both -expand yes
-
-    # set xy group
-    set row [ frame $rectoptions.group ]
-    Button $row.a -text [G_msg "3. Select group"] \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
-        -helptext [G_msg "Select existing xy raster group to georectify"]\
-        -width 16 -anchor w \
-		-command {GRMap::getxygroup}
-    Entry $row.b -width 35 -text "$GRMap::xygroup" \
-          -textvariable GRMap::xygroup 
-    pack $row.a $row.b -side left
-    pack $row -side top -fill both -expand yes
-			
-    # set xy raster
-    set row [ frame $rectoptions.rast ]
-    Button $row.a -text [G_msg "4. Select raster"] \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
-        -helptext [G_msg "Select xy raster to display for georectification"]\
-        -width 16 -anchor w \
-		-command {GRMap::getxyrast}
-    Entry $row.b -width 35 -text "$GRMap::xyrast" \
-          -textvariable GRMap::xyrast 
-    pack $row.a $row.b -side left
-    pack $row -side top -fill both -expand yes
-
-    # Start georectify canvas
-    set row [ frame $rectoptions.start ]
-    Button $row.a -text [G_msg "5. Georectify"] \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
-        -helptext [G_msg "Start georectifying"]\
-        -width 16 -anchor w \
-		-command "GRMap::create"
-    pack $row.a -side left
-    pack $row -side top -fill both -expand yes
-    
-    pack $rectoptions -side top -fill both -expand yes
-			    
-    wm deiconify .grstart
-	raise .grstart
-    focus -force .grstart
-
-
-
-
-
-}
-
 
 ###############################################################################
 
@@ -1007,9 +1139,6 @@ proc GRMap::drawmap { } {
 	variable xyloc
 	variable xymset
 
-	# First, switch to xy mapset
-	GRMap::setxyenv $xymset $xyloc
-
 	set w [winfo width $grcan]
 	set h [winfo height $grcan]
 
@@ -1018,37 +1147,46 @@ proc GRMap::drawmap { } {
 	# 1 doesn't require new setting in explore mode
 	set mymodified $grcanmodified
 
-	# Make sure canvas_h and grcanvas_w are correct
+	# Make sure grcanvas_h and grcanvas_w are correct
 	if { $grcanvas_w != $w || $grcanvas_h != $h } {
 		# Flag this as a modified canvas
 		# Modified canvas is level 2!
 		set mymodified 2
 		set grcanvas_w $w
-		set canvas_h $h
+		set grcanvas_h $h
 	}
 
 	# Save the current region so that we do not destroy it
+	# First, switch to xy mapset
+	GRMap::setxyenv $xymset $xyloc
 	run_panel [list g.region -u save=gism_temp_region --o]
+	# Return to georectified mapset
+	GRMap::resetenv
+
+
 	# Set the region from our zoom settings
 	GRMap::gregion_zoom
 
 	# Redo the driver settings if the geometry has changed or
 	# if we weren't the previous monitor.
-	if {$mymodified == 2 } {
+	if {$mymodified != 0 } {
 		set grcanmodified 0
+		set previous_monitor "none"
 		# The canvas or view has been modified
 		# Redo the map settings to match the canvas
 		GRMap::driversettings
 	}
 	
+	# First, switch to xy mapset
+	GRMap::setxyenv $xymset $xyloc
 	# Load the old current region
 	run_panel [list g.region region=gism_temp_region --o]
+	# Return to georectified mapset
+	GRMap::resetenv
 
 	# Render all the layers
 	GRMap::runprograms [expr {$mymodified != 0}]
 
-    # Return to georectified mapset
-	GRMap::resetenv
 }
 
 # set up driver geometry and settings
@@ -1062,9 +1200,6 @@ proc GRMap::driversettings { } {
 	variable xymset
 	variable monitor_zooms
 	global env
-	
-	# First, switch to xy mapset
-    GRMap::setxyenv $xymset $xyloc
 				
 	if {[info exists env(MONITOR_OVERRIDE)]} {unset env(MONITOR_OVERRIDE)}
 
@@ -1075,19 +1210,21 @@ proc GRMap::driversettings { } {
 	runcmd "d.mon stop=gism"
 		
 	#set display environment
+	# First, switch to xy mapset
+    GRMap::setxyenv $xymset $xyloc
 	set env(GRASS_WIDTH) "$driver_w"
 	set env(GRASS_HEIGHT) "$driver_h"
 	set env(GRASS_PNGFILE) "$grfile"
 	set env(GRASS_BACKGROUNDCOLOR) "ffffff"
-	set env(GRASS_TRANSPARENT) "TRUE"
+	set env(GRASS_TRANSPARENT) "FALSE"
 	set env(GRASS_PNG_AUTO_WRITE) "TRUE"
 	set env(GRASS_TRUECOLOR) "TRUE"
+    # Return to georectified mapset
+    GRMap::resetenv
 		
 	#restart display driver to apply environment settings
 	runcmd "d.mon start=gism -s"
 
-    # Return to georectified mapset
-    GRMap::resetenv
 }
 
 # Run the programs to clear the map and draw all of the layers
@@ -1102,6 +1239,8 @@ proc GRMap::runprograms { mod } {
 	variable xyloc
 	variable xymset
 	variable xyrast
+	variable xyvect
+	variable maptype
 	variable xygroup
 	
 	global env
@@ -1125,12 +1264,15 @@ proc GRMap::runprograms { mod } {
 	set cmd "d.frame -e"
 	runcmd $cmd
 	incr drawprog
-	set cmd "g.region rast=$xyrast"
+	# display map for georectification
+	if { $maptype == "rast" } {
+		set cmd "d.rast map=$xyrast"
+	} elseif { $maptype == "vect" } {
+		set cmd "d.vect map=$xyvect"
+	}
 	runcmd $cmd
 	incr drawprog
-	set cmd "d.rast map=$xyrast"
-	runcmd $cmd
-	incr drawprog
+
 	if {[info exists env(MONITOR_OVERRIDE)]} {unset env(MONITOR_OVERRIDE)}
 	incr drawprog
 
@@ -1150,7 +1292,11 @@ proc GRMap::runprograms { mod } {
 
 	GRMap::coordconv
 	set drawprog 0
-	set GRMap::msg "Georectifying $xygroup"
+	if { $maptype == "rast" } {
+		set GRMap::msg "Georectifying $xygroup"
+	} elseif { $maptype == "vect" } {
+		set GRMap::msg "Georectifying $xyvect"
+	}
 	$grmapframe showstatusbar status 
 
     # Return to georectified mapset
@@ -1167,13 +1313,29 @@ proc GRMap::runprograms { mod } {
 
 proc GRMap::display_server {} {
 	variable redrawrequest
+	variable gcpnum
+	variable xy
+	
+	set gcpcnt 0
 
-		if {$redrawrequest} {
-			# Mark that this monitor no longer wants to be redrawn
-			set redrawrequest 0
-			# Redraw the monitor canvas
-			GRMap::drawmap
+	if {$redrawrequest} {
+		# Mark that this monitor no longer wants to be redrawn
+		set redrawrequest 0
+		# Redraw the monitor canvas
+		GRMap::drawmap
+		#draw gcp marks
+		for {set gcpnum 1} {$gcpnum < 21 } { incr gcpnum } {
+			if { [$xy($gcpnum) get] != "" } {
+				set xyfields [split [$xy($gcpnum) get] { }]
+				set mapx [lindex $xyfields 0]
+				set mapy [lindex $xyfields 1]
+				set x [eval GRMap::mape2scrx $mapx]
+				set y [eval GRMap::mapn2scry $mapy]
+				GRMap::markgcp $x $y
+				incr gcpcnt
+			}
 		}
+	}
 
 	# Do me again in a short period of time.
 	# vwait might be appropriate here
@@ -1227,22 +1389,25 @@ proc GRMap::erase { } {
 
 ###############################################################################
 
-# zoom to extents and resolution of displayed raster for georectifying
+# zoom to extents and resolution of displayed map for georectifying
 proc GRMap::zoom_map { } {
 	variable xyrast
+	variable xyvect
 	variable xymset
 	variable xyloc
+	variable maptype
+	variable grcan
 
-	# First, switch to xy mapset
-    GRMap::setxyenv $xymset $xyloc
-				    
-	GRMap::zoom_gregion [list "rast=$xyrast"]
+	# set region to match map to georectify
+	if { $maptype == "rast" } {
+		GRMap::zoom_gregion [list "rast=$xyrast"]
+	} elseif { $maptype == "vect" } {
+		GRMap::zoom_gregion [list "rast=$xyvect"]
+	}		
 
 	$grcan delete gr
 	GRMap::request_redraw 1
 
-    # Return to georectified mapset
-    GRMap::resetenv	
 }
 
 
@@ -1309,13 +1474,14 @@ proc GRMap::selector { } {
 ###############################################################################
 # mark ground control point
 proc GRMap::markgcp { x y } {
+	
 	# create gcp point on georectify canvas for each mouse click
 
 	variable grcan
 	$grcan create line $x [expr $y-5] $x [expr $y+5] -tag gcpv \
-		-fill DarkGreen -width 1
+		-fill DarkGreen -width 2 -tag "gcpvert"
 	$grcan create line [expr $x-5] $y [expr $x+5] $y -tag gcph \
-		-fill red -width 1
+		-fill red -width 2 -tag "gcphoriz"
 	
 }
 
@@ -1333,9 +1499,6 @@ proc GRMap::currentzoom { } {
 	variable xyloc
 	variable xymset
 
-	# First, switch to xy mapset
-    GRMap::setxyenv $xymset $xyloc
-
 	# Fetch the current zoom settings
 	set region {}
 	foreach attr $zoom_attrs {
@@ -1343,16 +1506,13 @@ proc GRMap::currentzoom { } {
 	}
 
 	# Set the region to the smallest region no smaller than the canvas
-	set canvas_ar [expr {1.0 * $grcanvas_w / $grcanvas_h}]
-	set expanded_nsew [GRMap::shrinkwrap 1 [lrange $region 0 3] $canvas_ar]
+	set grcanvas_ar [expr {1.0 * $grcanvas_w / $grcanvas_h}]
+	set expanded_nsew [GRMap::shrinkwrap 1 [lrange $region 0 3] $grcanvas_ar]
 	foreach {n s e w} $expanded_nsew {break}
 	# Calculate the resolutions
 	lappend expanded_nsew [expr {1.0 * ($n - $s) / $grcanvas_h}]
 	lappend expanded_nsew [expr {1.0 * ($e - $w) / $grcanvas_w}]
 	set region $expanded_nsew
-
-    # Return to georectified mapset
-    GRMap::resetenv
 
 	return $region
 }
@@ -1365,9 +1525,6 @@ proc GRMap::zoom_new { args} {
 	variable zoom_attrs
 	variable xyloc
 	variable xymset
-
-	# First, switch to xy mapset
-    GRMap::setxyenv $xymset $xyloc
 
 	# Demote all of the zoom history
 	for {set i $zoomhistories} {$i > 1} {incr i -1} {
@@ -1384,8 +1541,6 @@ proc GRMap::zoom_new { args} {
 		set monitor_zooms(1,$attr) $value
 	}
 
-    # Return to georectified mapset
-    GRMap::resetenv
 }
 
 # Zoom to the previous thing in the zoom history
@@ -1395,9 +1550,6 @@ proc GRMap::zoom_previous {} {
 	variable zoom_attrs
 	variable xyloc
 	variable xymset
-
-	# First, switch to xy mapset
-    GRMap::setxyenv $xymset $xyloc
 
 	# Remember the first monitor
 	set old1 {}
@@ -1418,8 +1570,6 @@ proc GRMap::zoom_previous {} {
 		set monitor_zooms($zoomhistories,$attr) $value
 	}
 
-    # Return to georectified mapset
-    GRMap::resetenv
 }
 
 
@@ -1471,7 +1621,7 @@ proc GRMap::gregion_zoom { args} {
 # zoom bindings
 proc GRMap::zoombind { zoom } {
 	variable grcan
-	variable coords
+	global grcoords
 	global GRMap::msg
     global areaX1 areaY1 areaX2 areaY2
     
@@ -1635,7 +1785,7 @@ proc GRMap::zoom_back { } {
 # pan bindings
 proc GRMap::panbind { } {
 	variable grcan
-	variable coords
+	global grcoords
 	global GRMap::msg
 
     set GRMap::msg "Drag with mouse to pan"
@@ -1658,9 +1808,12 @@ proc GRMap::panbind { } {
 
 
 proc GRMap::startpan { x y} {
-    global start_x start_y
-    global from_x from_y
-    global to_x to_y
+	variable start_x 
+	variable start_y
+    variable from_x 
+    variable from_y
+    variable to_x
+    variable to_y
 	variable grcan
 
     set start_x [$grcan canvasx $x]
@@ -1673,8 +1826,12 @@ proc GRMap::startpan { x y} {
 }
 
 proc GRMap::dragpan { x y} {
-    global start_x start_y
-    global to_x to_y
+	variable start_x 
+	variable start_y
+    variable from_x 
+    variable from_y
+    variable to_x
+    variable to_y
 	variable grcan
 
     set to_x [$grcan canvasx $x]
@@ -1686,8 +1843,12 @@ proc GRMap::dragpan { x y} {
 }
 
 proc GRMap::pan { } {
-    global from_x from_y
-    global to_x to_y
+	variable start_x 
+	variable start_y
+    variable from_x 
+    variable from_y
+    variable to_x
+    variable to_y
 	variable grcan
 	variable monitor_zooms
 	
