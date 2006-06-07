@@ -196,9 +196,11 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 			memcpy(mesh_ypnts, ypnts, arr_size * sizeof(double));
 			memcpy(mesh_zpnts, zpnts, arr_size * sizeof(double));
 
-			if (flag_frame)
-			    write_pnts(Map, layer, polyline_flag, zflag,
-				       arr_size);
+			/*
+			 * if (flag_frame)
+			 * write_pnts(Map, layer, polyline_flag, zflag,
+			 * arr_size);
+			 */
 			polyface_mesh_started = 1;
 			arr_size = 0;
 			mesh_pnts = 0;
@@ -218,10 +220,14 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 			    xpnts[arr_size] = xpnts[0];
 			    ypnts[arr_size] = ypnts[0];
 			    zpnts[arr_size] = zpnts[0];
-			    if (flag_frame)
+			    if (flag_frame) {
+				set_entity("POLYFACE FRAME");
 				write_polyline(Map, layer, arr_size + 1);
-			    else
+			    }
+			    else {
+				set_entity("POLYFACE");
 				write_mesh(Map, layer, arr_size + 1);
+			    }
 			    arr_size = 0;
 			}
 			mesh_pnts = 0;

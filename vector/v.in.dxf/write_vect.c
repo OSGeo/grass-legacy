@@ -10,8 +10,8 @@ static dbDriver *driver = NULL;
 static dbString sql, str;
 static char buf[1000];
 
-void write_vect(struct Map_info *Map, char *layer, int arr_size, int type,
-		char *label)
+void write_vect(struct Map_info *Map, char *layer, char *entity, char *label,
+		int arr_size, int type)
 {
     struct line_cats *Cats;
     int field, cat;
@@ -27,10 +27,18 @@ void write_vect(struct Map_info *Map, char *layer, int arr_size, int type,
 	i = get_field_cat(Map, layer, &field, &cat);
 	sprintf(buf, "insert into %s (%s"
 		", layer"
+		", entity"
 		", label" ") values (%d, '", Fi[i]->table, Fi[i]->key, cat);
 
 	if (layer) {
 	    db_set_string(&str, layer);
+	    db_double_quote_string(&str);
+	    strcat(buf, db_get_string(&str));
+	}
+	strcat(buf, "', '");
+
+	if (entity) {
+	    db_set_string(&str, entity);
 	    db_double_quote_string(&str);
 	    strcat(buf, db_get_string(&str));
 	}
@@ -180,8 +188,9 @@ static int get_field_cat(struct Map_info *Map, char *field_name, int *field,
 
     sprintf(buf, "create table %s (cat integer"
 	    ", layer varchar(%d)"
+	    ", entity varchar(%d)"
 	    ", label varchar(%d)"
-	    ")", Fi[i]->table, DXF_BUF_SIZE, DXF_BUF_SIZE);
+	    ")", Fi[i]->table, DXF_BUF_SIZE, DXF_BUF_SIZE, DXF_BUF_SIZE);
     db_set_string(&sql, buf);
 
     if (db_execute_immediate(driver, &sql) != DB_OK)
