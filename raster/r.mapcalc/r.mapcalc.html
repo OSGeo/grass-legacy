@@ -69,8 +69,8 @@ The following operators are supported:
 <div class="code"><PRE>
      Operator   Meaning                    Type        Precedence
      --------------------------------------------------------------
-     ^          exponentiation             Arithmetic  6
-     !          not[1]                     Logical     5
+     !          not                        Logical     6
+     ^          exponentiation             Arithmetic  5
      %          modulus                    Arithmetic  4
      /          division                   Arithmetic  4
      *          multiplication             Arithmetic  4
@@ -84,18 +84,15 @@ The following operators are supported:
      &lt;=         less than or equal         Logical     2
      &amp;&amp;         and                        Logical     1
      ||         or                         Logical     1
-     &amp;&amp;&amp;        and[2]                     Logical     1
-     |||        or[2]                      Logical     1
+     &amp;&amp;&amp;        and[1]                     Logical     1
+     |||        or[1]                      Logical     1
      #          color separator operator   Arithmetic   
 </PRE></div>
 
 (modulus is the remainder upon division)
 <P>
-[1] The ! operator accepts only integers or CELL maps, e.g. "!0" returns 1 and
-"!1.1" quits with error messages.
-<P>
-[2] The &amp;&amp;&amp; and ||| operators handle null values differently to
-other operators. See the section entitled <b>NULL support</b> below for more
+[1] The &amp;&amp;&amp; and ||| operators handle null values differently to other
+operators. See the section entitled <b>NULL support</b> below for more
 details.
 <P>
 
