@@ -101,6 +101,8 @@ int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
 	Points = Vect_new_line_struct();
 
     while (!feof(dxf->fp)) {
+	set_entity(dxf_buf);
+
 	/* avoid TEXT having object names: '0' should be followed by objects */
 	if (code != 0)
 	    code = dxf_get_code(dxf);
@@ -156,6 +158,15 @@ int check_ext(double x, double y)
 	ext.E = x;
 
     return 0;
+}
+
+void set_entity(char *str)
+{
+    strcpy(entity, str);
+    for (str = entity; *str; str++)
+	*str = tolower(*str);
+
+    return;
 }
 
 static void make_head(struct Map_info *Map)

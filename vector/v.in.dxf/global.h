@@ -29,7 +29,7 @@ GLOBAL int flag_list, flag_extent, flag_table, flag_invert, flag_one_layer,
     flag_frame;
 GLOBAL int num_layers, found_layers;
 GLOBAL char **layers;
-GLOBAL char dxf_buf[DXF_BUF_SIZE];
+GLOBAL char dxf_buf[DXF_BUF_SIZE], entity[DXF_BUF_SIZE];
 GLOBAL int ARR_MAX;
 GLOBAL double *xpnts, *ypnts, *zpnts;
 GLOBAL struct line_pnts *Points;
@@ -37,6 +37,7 @@ GLOBAL struct line_pnts *Points;
 /* dxf_to_vect.c */
 int dxf_to_vect(struct dxf_file *, struct Map_info *);
 int check_ext(double, double);
+void set_entity(char *);
 
 /* layer_list.c */
 void add_layer_to_list(char *);
@@ -68,11 +69,11 @@ int add_lwpolyline(struct dxf_file *, struct Map_info *);
 int make_arc(int, double, double, double, double, double, double, int);
 int make_arc_from_polyline(int, double, double);
 /* write_vect.c */
-#define write_mesh(a, b, c) write_vect(a, b, c, GV_FACE, "")
-#define write_polyline(a, b, c) write_vect(a, b, c, GV_LINE, "")
-#define write_point(a, b) write_vect(a, b, 1, GV_POINT, "")
-#define write_text(a, b, c) write_vect(a, b, 1, GV_POINT, c)
-void write_vect(struct Map_info *, char *, int, int, char *);
+#define write_point(a, b) write_vect(a, b, entity, "", 1, GV_POINT)
+#define write_polyline(a, b, c) write_vect(a, b, entity, "", c, GV_LINE)
+#define write_mesh(a, b, c) write_vect(a, b, entity, "", c, GV_FACE)
+#define write_text(a, b, c) write_vect(a, b, entity, c, 1, GV_POINT)
+void write_vect(struct Map_info *, char *, char *, char *, int, int);
 void write_done(struct Map_info *);
 
 #endif

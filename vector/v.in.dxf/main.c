@@ -1,20 +1,19 @@
-/*******************************************************************************
- *
+/*
  * MODULE:       v.in.dxf
  *
  * AUTHOR(S):    Original written by Chuck Ehlschlaeger, 6/1989
- * 		 Revised by Dave Gerdes, 12/1989
- * 		 US Army Construction Engineering Research Lab
+ *               Revised by Dave Gerdes, 12/1989
+ *               US Army Construction Engineering Research Lab
  *
- * 		 Contribution:
- * 		 Benjamin Horner-Johnson <ben earth.nwu.edu>
- * 		 Michel Wurtz <michel.wurtz teledetection.fr>
- * 		 Jacques Bouchard <bouchard onera.fr>
- * 		 J Moorman
- * 		 Tom Howard, National Park Service GIS division
+ *               Contribution:
+ *               Benjamin Horner-Johnson <ben earth.nwu.edu>
+ *               Michel Wurtz <michel.wurtz teledetection.fr>
+ *               Jacques Bouchard <bouchard onera.fr>
+ *               J Moorman
+ *               Tom Howard, National Park Service GIS division
  *
- * 		 Rewrite for GRASS 6:
- * 		 Huidae Cho <grass4u gmail.com>
+ *               Rewrite for GRASS 6:
+ *               Huidae Cho <grass4u gmail.com>
  *
  * PURPOSE:      Import DXF file
  *
@@ -23,8 +22,7 @@
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
  *               for details.
- *
- ******************************************************************************/
+ */
 
 #define _MAIN_C_
 #include <stdlib.h>
