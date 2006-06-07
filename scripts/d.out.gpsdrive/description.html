@@ -86,7 +86,7 @@ do
   east=$(echo "scale=8; $west+$unit_ew" | bc)
   for j in `seq 1 $iter`;
     do
-    g.region n=$(echo "scale=8; $north-($j-1) * $unit_ns/2" |c)        \
+    g.region n=$(echo "scale=8; $north-($j-1) * $unit_ns/2" | bc)      \
         s=$(echo "scale=8; $north-($j-1) * $unit_ns/2-$unit_ns" | bc ) \
         w=$west e=$east ewres=$ewres nsres=$nsres
         d.redraw
