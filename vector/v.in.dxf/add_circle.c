@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "global.h"
 
 int add_circle(struct dxf_file *dxf, struct Map_info *Map)

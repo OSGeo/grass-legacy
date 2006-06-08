@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <math.h>
+#include <string.h>
 #include "global.h"
 
 static void write_pnts(struct Map_info *, char *, int, int, int);

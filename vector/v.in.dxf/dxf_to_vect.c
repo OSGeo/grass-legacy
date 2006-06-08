@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 #include "global.h"
 
 #ifndef DBL_MAX

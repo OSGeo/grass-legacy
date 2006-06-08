@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <math.h>
+#include <string.h>
 #include "global.h"
 
 int add_3dface(struct dxf_file *dxf, struct Map_info *Map)
