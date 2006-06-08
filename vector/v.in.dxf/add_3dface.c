@@ -15,7 +15,7 @@ int add_3dface(struct dxf_file *dxf, struct Map_info *Map)
 
     strcpy(layer, UNIDENTIFIED_LAYER);
 
-    /* reads in lines and processes information until a 0 is read in */
+    /* read in lines and processes information until a 0 is read in */
     while ((code = dxf_get_code(dxf)) != 0) {
 	if (code == -2)
 	    return -1;
@@ -104,6 +104,7 @@ int add_3dface(struct dxf_file *dxf, struct Map_info *Map)
 	    break;
 	}
 
+	/* read in first four points */
 	if (xflag && yflag && zflag && arr_size < 4) {
 	    arr_size++;
 	    xflag = 0;
