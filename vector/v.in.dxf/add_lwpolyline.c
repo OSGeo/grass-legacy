@@ -5,12 +5,12 @@
 int add_lwpolyline(struct dxf_file *dxf, struct Map_info *Map)
 {
     int code;
+    char layer[DXF_BUF_SIZE];
     int layer_flag = 0;		/* indicates if a layer name has been found */
     int polyline_flag = 0;	/* indicates the type of polyline */
     int xflag = 0;		/* indicates if a x value has been found */
     int yflag = 0;		/* indicates if a y value has been found */
     int arr_size = 0;
-    char layer[DXF_BUF_SIZE];
     /* variables to create arcs */
     double bulge = 0.0;		/* for arc curves */
     double prev_bulge = 0.0;	/* for arc curves */
@@ -18,7 +18,7 @@ int add_lwpolyline(struct dxf_file *dxf, struct Map_info *Map)
     strcpy(layer, UNIDENTIFIED_LAYER);
 
     zpnts[0] = 0.0;
-    /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
+    /* reads in lines and processes information until a 0 is read in */
     while ((code = dxf_get_code(dxf)) != 0) {
 	if (code == -2)
 	    return -1;
@@ -59,24 +59,15 @@ int add_lwpolyline(struct dxf_file *dxf, struct Map_info *Map)
 	case 70:		/* polyline flag */
 
 	    /*******************************************************************
-	     Flag bit value  Meaning
+	         Bit         Meaning
 	           1         closed
-		   128       plinegen
+	         128         plinegen
 	     ******************************************************************/
 	    polyline_flag = atoi(dxf_buf);
 	    break;
 
 	case 40:		/* starting width */
 	case 41:		/* ending width */
-
-	    /* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
-	case 6:		/* linetype name */
-	case 38:		/* elevation if nonzero */
-	case 39:		/* thickness if nonzero */
-	case 62:		/* color number (if not "BYLAYER") */
-	case 210:		/* x extrusion if not parallel to the world z axis */
-	case 220:		/* y extrusion if not parallel to the world z axis */
-	case 230:		/* z extrusion if not parallel to the world z axis */
 	    break;
 	}
 
@@ -115,7 +106,7 @@ int add_lwpolyline(struct dxf_file *dxf, struct Map_info *Map)
 	    zpnts[i] = 0.0;
     }
 
-    write_polyline(Map, layer, arr_size);
+    write_line(Map, layer, arr_size);
 
     return 0;
 }

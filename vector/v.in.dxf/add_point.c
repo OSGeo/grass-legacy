@@ -4,15 +4,15 @@
 int add_point(struct dxf_file *dxf, struct Map_info *Map)
 {
     int code;
+    char layer[DXF_BUF_SIZE];
     int layer_flag = 0;		/* indicates if a layer name has been found */
     int xflag = 0;		/* indicates if a x value has been found */
     int yflag = 0;		/* indicates if a y value has been found */
-    char layer[DXF_BUF_SIZE];
 
     strcpy(layer, UNIDENTIFIED_LAYER);
 
     zpnts[0] = 0.0;
-    /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
+    /* reads in lines and processes information until a 0 is read in */
     while ((code = dxf_get_code(dxf)) != 0) {
 	if (code == -2)
 	    return -1;
@@ -47,31 +47,20 @@ int add_point(struct dxf_file *dxf, struct Map_info *Map)
 	    ypnts[0] = atof(dxf_buf);
 	    yflag = 1;
 	    break;
-	case 30:		/* Z coordinate */
+	case 30:		/* z coordinate */
 	    zpnts[0] = atof(dxf_buf);
 	    break;
 
 	case 50:		/* angle of x axis for the UCS in effect */
-
-	    /* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
-	case 6:		/* linetype name */
-	case 38:		/* elevation if nonzero */
-	case 39:		/* thickness if nonzero */
-	case 62:		/* color number (if not "BYLAYER") */
-	case 210:		/* x extrusion if not parallel to the world z axis */
-	case 220:		/* y extrusion if not parallel to the world z axis */
-	case 230:		/* z extrusion if not parallel to the world z axis */
 	    break;
 	}
     }
 
     if (xflag && yflag) {
-	check_ext(xpnts[0], ypnts[0]);
 	/* xpnts[1] = xpnts[0];
 	 * ypnts[1] = ypnts[0];
 	 * zpnts[1] = zpnts[0];
 	 */
-
 	write_point(Map, layer);
     }
 

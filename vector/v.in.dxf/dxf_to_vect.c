@@ -52,8 +52,8 @@ int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
 		}
 	    }
 	    else if (strcmp(dxf_buf, "$EXTMIN") == 0) {
-		/* READS IN LINES AND PROCESSES INFORMATION UNTIL A 9
-		 * OR A 0 IS READ IN */
+		/* reads in lines and processes information until a 9
+		 * or a 0 is read in */
 		while ((code = dxf_get_code(dxf)) != 9) {
 		    if (code == -2)	/* EOF */
 			return -1;
@@ -125,6 +125,9 @@ int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
 	else if (strcmp(dxf_buf, "CIRCLE") == 0)
 	    add_circle(dxf, Map);
 
+	else if (strcmp(dxf_buf, "3DFACE") == 0)
+	    add_3dface(dxf, Map);
+
 	else if (strcmp(dxf_buf, "TEXT") == 0)
 	    add_text(dxf, Map);
 
@@ -146,16 +149,20 @@ int dxf_to_vect(struct dxf_file *dxf, struct Map_info *Map)
     return 0;
 }
 
-int check_ext(double x, double y)
+int check_ext(double x, double y, double z)
 {
-    if (y < ext.S)
-	ext.S = y;
-    if (y > ext.N)
-	ext.N = y;
     if (x < ext.W)
 	ext.W = x;
     if (x > ext.E)
 	ext.E = x;
+    if (y < ext.S)
+	ext.S = y;
+    if (y > ext.N)
+	ext.N = y;
+    if (z < ext.B)
+	ext.B = z;
+    if (z > ext.T)
+	ext.T = z;
 
     return 0;
 }
