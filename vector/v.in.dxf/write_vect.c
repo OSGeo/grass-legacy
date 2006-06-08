@@ -14,7 +14,10 @@ void write_vect(struct Map_info *Map, char *layer, char *entity, char *label,
 		int arr_size, int type)
 {
     struct line_cats *Cats;
-    int field, cat;
+    int i, field, cat;
+
+    for (i = 0; i < arr_size; i++)
+	check_ext(xpnts[i], ypnts[i], zpnts[i]);
 
     /* copy xyzpnts to Points */
     Vect_copy_xyz_to_pnts(Points, xpnts, ypnts, zpnts, arr_size);
@@ -22,8 +25,6 @@ void write_vect(struct Map_info *Map, char *layer, char *entity, char *label,
     /* set field and cat numbers */
     Cats = Vect_new_cats_struct();
     if (!flag_table) {
-	int i;
-
 	i = get_field_cat(Map, layer, &field, &cat);
 	sprintf(buf, "insert into %s (%s"
 		", layer"

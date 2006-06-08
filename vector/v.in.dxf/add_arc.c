@@ -4,6 +4,7 @@
 int add_arc(struct dxf_file *dxf, struct Map_info *Map)
 {
     int code;
+    char layer[DXF_BUF_SIZE];
     int layer_flag = 0;		/* indicates if a layer name has been found */
     int xflag = 0;		/* indicates if a x value has been found */
     int yflag = 0;		/* indicates if a y value has been found */
@@ -17,11 +18,10 @@ int add_arc(struct dxf_file *dxf, struct Map_info *Map)
     float start_angle = 0;	/* read in from dxf file */
     float finish_angle = 0;	/* read in from dxf file */
     int arr_size = 0;
-    char layer[DXF_BUF_SIZE];
 
     strcpy(layer, UNIDENTIFIED_LAYER);
 
-    /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
+    /* reads in lines and processes information until a 0 is read in */
     while ((code = dxf_get_code(dxf)) != 0) {
 	if (code == -2)
 	    return -1;
@@ -71,24 +71,14 @@ int add_arc(struct dxf_file *dxf, struct Map_info *Map)
 	    finish_angle = atof(dxf_buf);
 	    fflag = 1;
 	    break;
-
-	    /* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
-	case 6:		/* linetype name */
-	case 38:		/* elevation if nonzero */
-	case 39:		/* thickness if nonzero */
-	case 62:		/* color number (if not "BYLAYER") */
-	case 210:		/* x extrusion if not parallel to the world z axis */
-	case 220:		/* y extrusion if not parallel to the world z axis */
-	case 230:		/* z extrusion if not parallel to the world z axis */
-	    break;
 	}
     }
 
     if (xflag && yflag && rflag && sflag && fflag) {
 	arr_size =
 	    make_arc(0, centerx, centery, radius, start_angle, finish_angle,
-		     zcoor, 1);
-	write_polyline(Map, layer, arr_size);
+		     zcoor);
+	write_line(Map, layer, arr_size);
     }
 
     return 0;

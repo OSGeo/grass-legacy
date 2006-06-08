@@ -7,6 +7,7 @@ static void write_pnts(struct Map_info *, char *, int, int, int);
 int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 {
     int code;
+    char layer[DXF_BUF_SIZE];
     int layer_flag = 0;		/* indicates if a layer name has been found */
     int polyline_flag = 0;	/* indicates the type of polyline */
     int warn_flag66 = 1;	/* indicates if error message printed once */
@@ -16,7 +17,6 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
     int yflag = 0;		/* indicates if a y value has been found */
     int zflag = 0;		/* indicates if a z value has been found */
     int arr_size = 0;
-    char layer[DXF_BUF_SIZE];
     /* variables to create arcs */
     double bulge = 0.0;		/* for arc curves */
     double prev_bulge = 0.0;	/* for arc curves */
@@ -31,7 +31,7 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 
     strcpy(layer, UNIDENTIFIED_LAYER);
 
-    /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
+    /* reads in lines and processes information until a 0 is read in */
     while ((code = dxf_get_code(dxf)) != 0) {
 	if (code == -2)
 	    return -1;
@@ -49,7 +49,7 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 	    polyline_flag = atoi(dxf_buf);
 
 	    /*******************************************************************
-             Flag bit value                    Meaning
+                  Bit        Meaning
                     1        This is a closed Polyline (or a polygon
                              mesh closed in the M direction)
                     2        Curve-fit vertices have been added
@@ -67,7 +67,7 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
                              tion
                    64        The polyline is a polyface mesh
 	     ******************************************************************/
-	    /* NOTE: CODE ONLY EXISTS FOR FLAG = 1 (CLOSED POLYLINE) or 0 */
+	    /* NOTE: code only exists for flag = 1 (closed polyline) or 0 */
 	    G_debug(1, "polyline_flag: %d", polyline_flag);
 	    if (polyline_flag & 8 || polyline_flag & 16 || polyline_flag & 17 ||
 		polyline_flag & 32)
@@ -77,27 +77,11 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 		    warn_flag70 = 0;
 		}
 	    break;
-
-	case 8:		/* layer name */
-	case 41:		/* default ending width */
-	case 71:		/* polygon mesh m */
-	case 72:		/* polygon mesh n */
-	case 75:		/* smooth surface type */
-
-	    /* THE FOLLOWING GROUPS USED ONLY IF DIFFERENT THAN DEFAULTS */
-	case 6:		/* linetype name */
-	case 38:		/* elevation if nonzero */
-	case 39:		/* thickness if nonzero */
-	case 62:		/* color number (if not "BYLAYER") */
-	case 210:		/* x extrusion if not parallel to the world z axis */
-	case 220:		/* y extrusion if not parallel to the world z axis */
-	case 230:		/* z extrusion if not parallel to the world z axis */
-	    break;
 	}
     }
 
     zpnts[0] = 0.0;
-    /* LOOP UNTIL SEQEND IN THE DXF FILE */
+    /* loop until SEQEND in the dxf file */
     while (strcmp(dxf_buf, "SEQEND") != 0) {
 	if (feof(dxf->fp))	/* EOF */
 	    return -1;
@@ -110,6 +94,7 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 	    while ((code = dxf_get_code(dxf)) != 0) {
 		if (code == -2)	/* EOF */
 		    return -1;
+
 		switch (code) {
 		case 8:	/* layer name */
 		    /* if no layer previously assigned */
@@ -157,7 +142,7 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 		    vertex_flag = atoi(dxf_buf);
 
 	    /*******************************************************************
-             Flag bit value                    Meaning
+                 Bit         Meaning
                    1         Extra vertex created by curve fitting
                    2         Curve fit tangent defined for this vertex.
                              A curve fit tangent direction of 0 may be
@@ -220,13 +205,14 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 			    xpnts[arr_size] = xpnts[0];
 			    ypnts[arr_size] = ypnts[0];
 			    zpnts[arr_size] = zpnts[0];
+			    arr_size++;
 			    if (flag_frame) {
 				set_entity("POLYFACE FRAME");
-				write_polyline(Map, layer, arr_size + 1);
+				write_line(Map, layer, arr_size);
 			    }
 			    else {
 				set_entity("POLYFACE");
-				write_mesh(Map, layer, arr_size + 1);
+				write_face(Map, layer, arr_size);
 			    }
 			    arr_size = 0;
 			}
@@ -246,7 +232,6 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 
 	if (xflag && yflag) {
 	    arr_size = make_arc_from_polyline(arr_size, bulge, prev_bulge);
-
 	    prev_bulge = bulge;
 	    bulge = 0.0;
 	}			/* processing polyline vertex */
@@ -293,7 +278,7 @@ static void write_pnts(struct Map_info *Map, char *layer, int polyline_flag,
 	    zpnts[i] = 0.0;
     }
 
-    write_polyline(Map, layer, arr_size);
+    write_line(Map, layer, arr_size);
 
     return;
 }
