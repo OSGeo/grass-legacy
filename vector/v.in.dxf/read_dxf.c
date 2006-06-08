@@ -4,7 +4,7 @@
 
 static char *dxf_fgets(char *, int, struct dxf_file *);
 
-/* On error, returns -1, otherwise returns 0 */
+/* on error, returns -1, otherwise returns 0 */
 struct dxf_file *dxf_open(char *file)
 {
     struct dxf_file *dxf;
@@ -48,7 +48,7 @@ void dxf_close(struct dxf_file *dxf)
 int dxf_find_header(struct dxf_file *dxf)
 {
     while (dxf_get_code(dxf) != -2) {
-	/* Some dxf files will not have header information */
+	/* some dxf files will not have header information */
 	if (strcmp(dxf_buf, "HEADER") == 0 || strcmp(dxf_buf, "ENTITIES") == 0)
 	    return strcmp(dxf_buf, "HEADER") == 0;
     }
