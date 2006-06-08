@@ -286,11 +286,11 @@ int main(int argc, char *argv[])
 	    sumsq_array = G_calloc(rows*(cols+1), G_raster_size(rtype));
 
 	/* and then free it again */
-	if(n_array) G_free(n_array);
-	if(min_array) G_free(min_array);
-	if(max_array) G_free(max_array);
-	if(sum_array) G_free(sum_array);
-	if(sumsq_array) G_free(sumsq_array);
+	if(bin_n) G_free(n_array);
+	if(bin_min) G_free(min_array);
+	if(bin_max) G_free(max_array);
+	if(bin_sum) G_free(sum_array);
+	if(bin_sumsq) G_free(sumsq_array);
 	/** end memory test **/
     }
 
@@ -568,11 +568,11 @@ int main(int argc, char *argv[])
 	}
 
 	/* free memory */
-	if(n_array) G_free(n_array);
-	if(min_array) G_free(min_array);
-	if(max_array) G_free(max_array);
-	if(sum_array) G_free(sum_array);
-	if(sumsq_array) G_free(sumsq_array);
+	if(bin_n) G_free(n_array);
+	if(bin_min) G_free(min_array);
+	if(bin_max) G_free(max_array);
+	if(bin_sum) G_free(sum_array);
+	if(bin_sumsq) G_free(sumsq_array);
 
     } /* passes loop */
 
