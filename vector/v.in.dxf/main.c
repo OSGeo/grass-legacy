@@ -26,7 +26,6 @@
 
 #define _MAIN_C_
 #include <stdlib.h>
-#include <string.h>
 #include "global.h"
 
 int main(int argc, char *argv[])
