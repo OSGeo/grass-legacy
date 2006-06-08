@@ -72,7 +72,7 @@
  *   mask exists. (the MASK is taken care of by null values
  *   (if the null file doesn't exist for this map, then the null row
  *   is simulated by assuming that all zeros in raster map are nulls.
- *   Allso all masked out cells become nulls.
+ *   Also all masked out cells become nulls.
  *
  **********************************************************************/
 
