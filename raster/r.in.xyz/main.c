@@ -291,7 +291,7 @@ int main(int argc, char *argv[])
 	if(max_array) G_free(max_array);
 	if(sum_array) G_free(sum_array);
 	if(sumsq_array) G_free(sumsq_array);
-	/** end memmory test **/
+	/** end memory test **/
     }
 
 
