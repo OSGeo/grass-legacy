@@ -231,7 +231,8 @@ proc Nviz_site_save {file_hook} {
 	puts $file_hook "[Nsite$i get_att size]"
 
 	# useatt
-	puts $file_hook "[Nsite$i get_att useatt]"
+# temporarily disabled as causing problems (bug # 4377)
+#	puts $file_hook "[Nsite$i get_att useatt]"
 
 	# display
 	puts $file_hook "[Nsite$i get_att display]"
@@ -288,8 +289,9 @@ proc Nviz_site_load { file_hook } {
 	$new_site set_att size $att_data
 
 	# useatt
-	gets $file_hook att_data
-	$new_site set_att useatt $att_data
+# temporarily disabled as causing problems (bug # 4377)
+#	gets $file_hook att_data
+#	$new_site set_att useatt $att_data
 
 	# display
 	gets $file_hook att_data
