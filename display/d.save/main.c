@@ -121,17 +121,16 @@ int main (int argc, char **argv)
 	opt2 = G_define_option();
 	opt2->key = "remove";
 	opt2->description =
-	  _("List no's to be removed, which are displayed in the right-most "
-	    "comments.\n\t\tNote: 0 means the first drawing(equals 1), -1 "
-	    "means the last one.");
+	  _("List of object numbers to remove which are displayed after \"#\". "
+	  "-1 for the last object.");
 	opt2->type = TYPE_INTEGER;
 	opt2->required = NO;
 	opt2->multiple = YES;
 
 	opt3 = G_define_option();
 	opt3->key = "move";
-	opt3->description = _("List no's to be moved, \"from\" to \"to\".\n"
-	  "\t\tNote: remove option will be done first, if any.");
+	opt3->description = _("List of object numbers to move "
+	  "(\"from\" to \"to\"). remove= option will be done first, if any.");
 	opt3->type = TYPE_INTEGER;
 	opt3->required = NO;
 	opt3->key_desc = "from,to";
