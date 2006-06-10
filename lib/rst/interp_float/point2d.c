@@ -60,12 +60,12 @@ int IL_check_at_points_2d (
   int n1, mm, m, cat;
   double fstar2;
   int inside;
-  Site *site;
+/*  Site *site; */
   char   buf[1024];
 
 
-  if ((site = G_site_new_struct (-1, 2, 0, 1)) == NULL)
-    G_fatal_error ("Memory error for site struct");
+/*  if ((site = G_site_new_struct (-1, 2, 0, 1)) == NULL)
+    G_fatal_error ("Memory error for site struct");*/
 
   fstar2 = params->fi * params->fi / 4.;
   errmax = .0;
