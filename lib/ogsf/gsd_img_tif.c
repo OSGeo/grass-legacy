@@ -28,11 +28,8 @@ int GS_write_tif(char *name)
     unsigned int xsize, ysize;
     int mapsize, linebytes;
     u_char *buf, *tmpptr;
-    unsigned long *pixbuf;
+    unsigned char *pixbuf;
     int swapFlag;
-
-    /* endian test */
-    swapFlag = G_is_little_endian();
 
     gsd_getimage(&pixbuf, &xsize, &ysize);
 
@@ -77,18 +74,9 @@ int GS_write_tif(char *name)
 	tmpptr = buf;
 
 	for (x = 0; x < (xsize); x++) {
-	    if (!swapFlag) {
-		/* big endian: SUN et al. */
-		*tmpptr++ = (pixbuf[yy * xsize + x] & 0xFF000000) >> 24;
-		*tmpptr++ = (pixbuf[yy * xsize + x] & 0x00FF0000) >> 16;
-		*tmpptr++ = (pixbuf[yy * xsize + x] & 0x0000FF00) >> 8;
-	    }
-	    else {
-		/* little endian: Linux et al. */
-		*tmpptr++ = (pixbuf[yy * xsize + x] & 0x000000FF);
-		*tmpptr++ = (pixbuf[yy * xsize + x] & 0x0000FF00) >> 8;
-		*tmpptr++ = (pixbuf[yy * xsize + x] & 0x00FF0000) >> 16;
-	    }
+	    *tmpptr++ = pixbuf[(yy * xsize + x) * 4 + 0];
+	    *tmpptr++ = pixbuf[(yy * xsize + x) * 4 + 1];
+	    *tmpptr++ = pixbuf[(yy * xsize + x) * 4 + 2];
 	}
 
 	if (TIFFWriteScanline(out, buf, y, 0) < 0) {

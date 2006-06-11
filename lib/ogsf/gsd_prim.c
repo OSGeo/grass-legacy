@@ -709,7 +709,7 @@ void gsd_switchlight(int num, int on)
 }
 
 /************************************************************************/
-int gsd_getimage(unsigned long **pixbuf, unsigned int *xsize,
+int gsd_getimage(unsigned char **pixbuf, unsigned int *xsize,
 		 unsigned int *ysize)
 {
     GLuint l, r, b, t;
@@ -729,11 +729,10 @@ int gsd_getimage(unsigned long **pixbuf, unsigned int *xsize,
     *xsize = r - l + 1;
     *ysize = t - b + 1;
 
-    if (NULL == (*pixbuf =
-		 (unsigned long *) malloc(*xsize * *ysize *
-					  sizeof(unsigned long)))) {
+    *pixbuf = malloc(*xsize * *ysize * 4);
+
+    if (!*pixbuf)
 	return (0);
-    }
 
     glReadBuffer(GL_FRONT);
 
@@ -756,14 +755,13 @@ int gsd_getViewport(GLint tmp[4], GLint num[2])
 
 
 /************************************************************************/
-int gsd_writeView(unsigned long **pixbuf, unsigned int xsize,
+int gsd_writeView(unsigned char **pixbuf, unsigned int xsize,
 		  unsigned int ysize)
 {
 
     /* Malloc Buffer for image */
-    if (NULL == (*pixbuf =
-		 (unsigned long *) malloc(xsize * ysize *
-					  sizeof(unsigned long)))) {
+    *pixbuf = malloc(xsize * ysize * 4);
+    if (!*pixbuf) {
 	fprintf(stderr, "MALLOC Failed\n");
 	return (0);
     }

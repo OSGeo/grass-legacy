@@ -12,10 +12,6 @@
 #include <grass/gstypes.h>
 
 
-static unsigned short rbuf[8192];
-static unsigned short gbuf[8192];
-static unsigned short bbuf[8192];
-
 static void ierrfunc(char *ebuf)
 {
     G_message("%s", ebuf);
@@ -28,11 +24,11 @@ int GS_write_rgb(char *name)
     int y, x;
     unsigned int xsize, ysize;
     IMAGE *image;
-    unsigned long *pixbuf;
-    int swapFlag;
+    unsigned char *pixbuf;
+    unsigned short rbuf[8192];
+    unsigned short gbuf[8192];
+    unsigned short bbuf[8192];
 
-    /* endian test */
-    swapFlag = G_is_little_endian();
 
     gsd_getimage(&pixbuf, &xsize, &ysize);
 
@@ -48,18 +44,9 @@ int GS_write_rgb(char *name)
 
 	for (y = 0; y < ysize; y++) {
 	    for (x = 0; x < xsize; x++) {
-		if (!swapFlag) {
-		    /* big endian: SUN et al. */
-		    rbuf[x] = (pixbuf[y * xsize + x] & 0xFF000000) >> 24;
-		    gbuf[x] = (pixbuf[y * xsize + x] & 0x00FF0000) >> 16;
-		    bbuf[x] = (pixbuf[y * xsize + x] & 0x0000FF00) >> 8;
-		}
-		else {
-		    /* little endian: Linux et al. */
-		    rbuf[x] = (pixbuf[y * xsize + x] & 0x000000FF);
-		    gbuf[x] = (pixbuf[y * xsize + x] & 0x0000FF00) >> 8;
-		    bbuf[x] = (pixbuf[y * xsize + x] & 0x00FF0000) >> 16;
-		}
+	        rbuf[x] = pixbuf[(y * xsize + x) * 4 + 0];
+	        gbuf[x] = pixbuf[(y * xsize + x) * 4 + 1];
+	        bbuf[x] = pixbuf[(y * xsize + x) * 4 + 2];
 
 		putrow(image, rbuf, y, 0);	/* red row */
 		putrow(image, gbuf, y, 1);	/* green row */
