@@ -254,8 +254,14 @@ static int write_error (const char *msg, const int fatal,
 	return 1;
     sprintf (logfile, "%s/GIS_ERROR_LOG", dir) ;
 
-    log = fopen (logfile,"a");
+    log = fopen (logfile,"r");
     if (!log)
+    	/* GIS_ERROR_LOG file is not readable or does not exist */
+	return 1;
+
+    log = freopen(logfile, "a", log);
+    if (!log)
+    	/* the user doesn't have write permission */
 	return 1;
 
     fprintf(log,"-------------------------------------\n");
