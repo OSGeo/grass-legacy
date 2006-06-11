@@ -545,7 +545,7 @@ void gsd_init_lightmodel(void);
 void gsd_set_material(int, int, float, float, int);
 void gsd_deflight(int, struct lightdefs *);
 void gsd_switchlight(int, int);
-int gsd_getimage(unsigned long **, unsigned int *, unsigned int *);
+int gsd_getimage(unsigned char **, unsigned int *, unsigned int *);
 void gsd_blend(int);
 void gsd_def_clipplane(int, double *);
 void gsd_set_clipplane(int, int);
@@ -558,7 +558,7 @@ void gsd_calllist(int);
 void gsd_deletelist(GLuint, int);
 void gsd_calllists(int);
 void gsd_getwindow(int *, int *, double *, double *);
-int gsd_writeView(unsigned long **, unsigned int, unsigned int);
+int gsd_writeView(unsigned char **, unsigned int, unsigned int);
 
 /* From gsd_surf.c */
 int gsd_surf(geosurf *);

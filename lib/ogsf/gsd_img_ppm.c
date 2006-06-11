@@ -30,20 +30,12 @@ unsigned char *outbuf, *picture_buf;
 #endif
 /* end FFMPEG stuff */
 
-static unsigned short rbuf[8192];
-static unsigned short gbuf[8192];
-static unsigned short bbuf[8192];
-
 int GS_write_ppm(char *name)
 {
     int y, x;
     unsigned int xsize, ysize;
     FILE *fp;
-    unsigned long *pixbuf;
-    int swapFlag;
-
-    /* endian test */
-    swapFlag = G_is_little_endian();
+    unsigned char *pixbuf;
 
     gsd_getimage(&pixbuf, &xsize, &ysize);
 
@@ -57,21 +49,13 @@ int GS_write_ppm(char *name)
 
     for (y = ysize - 1; y >= 0; y--) {
 	for (x = 0; x < xsize; x++) {
-	    if (!swapFlag) {
-		/* big endian: SUN et al. */
-		rbuf[x] = (pixbuf[y * xsize + x] & 0xFF000000) >> 24;
-		gbuf[x] = (pixbuf[y * xsize + x] & 0x00FF0000) >> 16;
-		bbuf[x] = (pixbuf[y * xsize + x] & 0x0000FF00) >> 8;
-	    }
-	    else {
-		/* little endian: Linux et al. */
-		rbuf[x] = (pixbuf[y * xsize + x] & 0x000000FF);
-		gbuf[x] = (pixbuf[y * xsize + x] & 0x0000FF00) >> 8;
-		bbuf[x] = (pixbuf[y * xsize + x] & 0x00FF0000) >> 16;
-	    }
-	    fputc((int) rbuf[x], fp);
-	    fputc((int) gbuf[x], fp);
-	    fputc((int) bbuf[x], fp);
+	    unsigned char r = pixbuf[(y * xsize + x) * 4 + 0];
+	    unsigned char g = pixbuf[(y * xsize + x) * 4 + 1];
+	    unsigned char b = pixbuf[(y * xsize + x) * 4 + 2];
+
+	    fputc((int) r, fp);
+	    fputc((int) g, fp);
+	    fputc((int) b, fp);
 	}
 
     }
@@ -85,12 +69,7 @@ int GS_write_zoom(char *name, unsigned int xsize, unsigned int ysize)
 {
     int y, x;
     FILE *fp;
-    unsigned long *pixbuf;
-    int swapFlag;
-
-
-    /* endian test */
-    swapFlag = G_is_little_endian();
+    unsigned char *pixbuf;
 
     gsd_writeView(&pixbuf, xsize, ysize);
 
@@ -103,22 +82,13 @@ int GS_write_zoom(char *name, unsigned int xsize, unsigned int ysize)
 
     for (y = ysize - 1; y >= 0; y--) {
 	for (x = 0; x < xsize; x++) {
-	    if (!swapFlag) {
-		/* big endian: SUN et al. */
-		rbuf[x] = (pixbuf[y * xsize + x] & 0xFF000000) >> 24;
-		gbuf[x] = (pixbuf[y * xsize + x] & 0x00FF0000) >> 16;
-		bbuf[x] = (pixbuf[y * xsize + x] & 0x0000FF00) >> 8;
-	    }
-	    else {
-		/* little endian: Linux et al. */
-		rbuf[x] = (pixbuf[y * xsize + x] & 0x000000FF);
-		gbuf[x] = (pixbuf[y * xsize + x] & 0x0000FF00) >> 8;
-		bbuf[x] = (pixbuf[y * xsize + x] & 0x00FF0000) >> 16;
-	    }
+	    unsigned char r = pixbuf[(y * xsize + x) * 4 + 0];
+	    unsigned char g = pixbuf[(y * xsize + x) * 4 + 1];
+	    unsigned char b = pixbuf[(y * xsize + x) * 4 + 2];
 
-	    fputc((int) rbuf[x], fp);
-	    fputc((int) gbuf[x], fp);
-	    fputc((int) bbuf[x], fp);
+	    fputc((int) r, fp);
+	    fputc((int) g, fp);
+	    fputc((int) b, fp);
 	}
 
     }
@@ -241,35 +211,23 @@ int gsd_init_mpeg(char *name)
 int gsd_write_mpegframe()
 {
 #ifdef HAVE_FFMPEG
-unsigned int xsize, ysize;
-int x, y, xy, xy_uv;
-int length;
-int yy, uu, vv;
-unsigned long *pixbuf;
-int swapFlag;
-
-        /* endian test */
-        swapFlag = G_is_little_endian();
+        unsigned int xsize, ysize;
+        int x, y, xy, xy_uv;
+        int length;
+        int yy, uu, vv;
+        unsigned char *pixbuf;
 
         gsd_getimage(&pixbuf, &xsize, &ysize);
         xy = xy_uv = 0;
         for (y = ysize - 1; y >= 0; y--) {
           for (x = 0; x < xsize; x++) {
-            if (!swapFlag) {
-                /* big endian: SUN et al. */
-                rbuf[x] = (pixbuf[y * xsize + x] & 0xFF000000) >> 24;
-                gbuf[x] = (pixbuf[y * xsize + x] & 0x00FF0000) >> 16;
-                bbuf[x] = (pixbuf[y * xsize + x] & 0x0000FF00) >> 8;
-            }
-            else {
-                /* little endian: Linux et al. */
-                rbuf[x] = (pixbuf[y * xsize + x] & 0x000000FF);
-                gbuf[x] = (pixbuf[y * xsize + x] & 0x0000FF00) >> 8;
-                bbuf[x] = (pixbuf[y * xsize + x] & 0x00FF0000) >> 16;
-            }
-            yy = (0.257 * rbuf[x]) + (0.504 * gbuf[x]) + (0.098 * bbuf[x]) + 16;;
-            vv = (0.439 * rbuf[x]) - (0.368 * gbuf[x]) - (0.071 * bbuf[x]) + 128;
-            uu = -(0.148 * rbuf[x]) - (0.291 * gbuf[x]) + (0.439 * bbuf[x]) + 128;
+	    unsigned char r = pixbuf[(y * xsize + x) * 4 + 0];
+	    unsigned char g = pixbuf[(y * xsize + x) * 4 + 1];
+	    unsigned char b = pixbuf[(y * xsize + x) * 4 + 2];
+
+            yy = (0.257 * r) + (0.504 * g) + (0.098 * b) + 16;;
+            vv = (0.439 * r) - (0.368 * g) - (0.071 * b) + 128;
+            uu = -(0.148 * r) - (0.291 * g) + (0.439 * b) + 128;
             fflush(stdout);
             picture->data[0][xy] = yy;
             
@@ -299,7 +257,7 @@ int swapFlag;
 /****************************************
  * close the mpeg, free buffer, and close file
 ****************************************/
-int gsd_close_mpeg()
+int gsd_close_mpeg(void)
 {
 #ifdef HAVE_FFMPEG
 int i;
