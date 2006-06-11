@@ -38,16 +38,20 @@ LIB_OBJS =\
 	Work.o\
 	clip.o\
 	color_support.o\
-	command.o\
-	connect_fifo.o\
-	connect_sock.o\
 	font2.o\
 	font_freetype.o\
 	init.o\
-	main.o\
 	pad.o\
 	text2.o\
 	text3.o
+
+ifneq ($(HAVE_SOCKET),)
+  LIB_OBJS += \
+	main.o\
+	command.o\
+	connect_fifo.o\
+	connect_sock.o
+endif
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
