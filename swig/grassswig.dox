@@ -28,14 +28,32 @@ and non-commercial use.
 
 <h2>Status of GRASS SWIG implementation</h2>
 
-At the moment a prototype is implemented. It permits to use 
-the GRASS raster command <em>r.slope.aspect</em> directly
-from the PERL programming language.
+<h3>GRASS SWIG PERL implementation</h3>
+
+At the moment a prototype is implemented.
 <P>
 See: \ref GRASS_SWIG_PERL 
 
 <P>
 See <a href="http://www.google.com/search?num=20&hl=en&lr=&q=swig+%5BGRASS5%5D+site%3Agrass.itc.it&btnG=Search">here</a> for discussions in the developers mailing list.
+
+<h3>GRASS SWIG PYTHON implementation</h3>
+
+At the moment a prototype is implemented.
+<P>
+See: \ref GRASS_SWIG_PYTHON 
+
+
+<h2>Discussions in the Mailing list</h2>
+See 
+
+<ul>
+<li><a href="http://www.google.com/search?num=20&hl=en&lr=&q=swig+%5BGRASS5%5D+site%3Agrass.itc.it&btnG=Search">here</a> for
+discussions in the old developers mailing list.
+<li><a href="http://www.google.com/search?num=20&hl=en&lr=&q=swig+%5BGRASS-dev%5D+site%3Agrass.itc.it&btnG=Search">here</a>
+for discussions in the new developers mailing list.
+</ul>
+
 
 <h2>Code availability</h2>
 
