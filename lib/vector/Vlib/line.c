@@ -488,7 +488,7 @@ Vect_line_segment ( struct line_pnts *InPoints, double start, double end,
 
 /*!
  \fn double Vect_line_length ( struct line_pnts *Points )
- \brief calculate line length
+ \brief calculate line length, 3D-length in case of 3D vector line
  \return line length
  \param line_pnts * structure
 */
