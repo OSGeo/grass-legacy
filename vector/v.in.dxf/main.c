@@ -166,7 +166,9 @@ int main(int argc, char *argv[])
 
     dxf_close(dxf);
 
-    if (!flag_list) {
+    if (flag_list)
+	init_list();
+    else {
 	Vect_close(Map);
 
 	if (found_layers) {
