@@ -26,3 +26,22 @@ int is_layer_in_list(char *layer)
 
     return *p != NULL;
 }
+
+void init_list(void)
+{
+    char **p;
+
+    if (!layers)
+	return;
+
+    p = layers;
+    while (*p) {
+	G_free(*p);
+	p++;
+    }
+
+    G_free(layers);
+    layers = NULL;
+
+    return;
+}
