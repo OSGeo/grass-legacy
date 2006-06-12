@@ -19,10 +19,10 @@
 #include <grass/gis.h>
 #define MAIN
 #include <grass/segment.h>
+#include <grass/glocale.h>
 #include "cmd_line.h"
 #include "point.h"
 #include "local_proto.h"
-#include <grass/glocale.h>
 
 #define   COLOR_SHIFT      155.0
 #define   COLOR_MAX        255.0
@@ -48,7 +48,6 @@ main (int argc, char *argv[])
 	struct Categories cats;
 	struct Cell_head cellhd_elev, cellhd_patt;
 	extern struct Cell_head window;
-	char buf[1024];
 	FCELL *cell, data, viewpt_elev;
 	SEGMENT seg_in, seg_out, seg_patt;
 	struct point *heads[16],*SEARCH_PT;
@@ -107,7 +106,8 @@ main (int argc, char *argv[])
 	opt6->description= _("Max distance from the viewing point (meters)") ;
 
 	if (G_parser(argc, argv))
-		exit (-1);
+	    exit(EXIT_FAILURE);
+
 
 	G_scan_easting  (opt3->answers[0], &east,  G_projection()) ;
 	G_scan_northing (opt3->answers[1], &north, G_projection()) ;
@@ -127,75 +127,46 @@ main (int argc, char *argv[])
     else
         patt_flag=1;
 
-/* Make sure that the current projection is not lat/long */
-    if ((G_projection() == 3))
-        {
-          char msg[256];
-          sprintf(msg,"lat/long databases not (yet) supported.");
-          G_fatal_error (msg);
-          exit(1);
-        }
-                                                
+
+    if ((G_projection() == PROJECTION_LL))
+	G_fatal_error(
+	  _("Lat/Long support is not (yet) implemented for this module."));
+
     /* check if specified observer location inside window   */
     if(east<window.west || east>window.east
-        || north>window.north || north<window.south)
-    {
-        sprintf (buf,
-            "specified observer location outside database region");
-        G_fatal_error (buf);
-        exit(1);
-    }
+      || north>window.north || north<window.south)
+	G_fatal_error(
+	  _("Specified observer coordinate is outside current region bounds."));
+
 
     search_mapset = "";
     old_mapset = G_find_cell2 (elev_layer, search_mapset);
 
     /*  check if elevation layer present in database    */
     if (old_mapset == NULL)
-    {
-        sprintf (buf, "%s -elev_layer not found", elev_layer);
-        G_fatal_error (buf);
-        exit(1);
-    }
+	G_fatal_error(_("Raster map [%s] not found"), elev_layer);
 
     /* if pattern layer used, check if present in database  */
     if(patt_flag == 1)
     {
         patt_mapset = G_find_cell (patt_layer, search_mapset);
         if(patt_mapset == NULL)
-        {
-            sprintf (buf, "%s - patt_layer not found", patt_layer);
-            G_fatal_error (buf);
-            exit(1);
-        }
+	    G_fatal_error(_("Raster map [%s] not found"), patt_layer);
     }
 
     /* check if specified output layer name is legal    */
     if (G_legal_filename(out_layer) < 0)
-    {
-        sprintf (buf, "%s -the out_layer is illegal name", out_layer);
-        G_fatal_error (buf);
-        exit(1);
-    }
+	G_fatal_error(_("[%s] is an illegal name"), out_layer);
 
     /*  read header info for elevation layer        */
     if(G_get_cellhd(elev_layer,old_mapset,&cellhd_elev)<0)
-    {
-        sprintf (buf, "%s in %s - can't read raster header",
-            elev_layer, old_mapset);
-        G_fatal_error (buf);
-        exit(1);
-    }
+	G_fatal_error(_("[%s]: Cannot read map header"), elev_layer);
 
     /*  if pattern layer present, read in its header info   */
     if(patt_flag == 1)
     {
-        if(G_get_cellhd(patt_layer,patt_mapset,&cellhd_patt)<0)
-        {
-            sprintf (buf, "%s in %s -can't read raster header",
-                patt_layer, patt_mapset);
-            G_fatal_error (buf);
-            exit(1);
-        }
+	if(G_get_cellhd(patt_layer,patt_mapset,&cellhd_patt)<0)
+	    G_fatal_error(_("[%s]: Cannot read map header"), patt_layer);
     }
 
 	/*  find number of rows and columns in elevation map	*/
@@ -206,35 +177,19 @@ main (int argc, char *argv[])
 	/*	open elevation overlay file for reading		*/
 	old = G_open_cell_old (elev_layer, old_mapset);
 	if (old < 0)
-	{
-		char buf[200];
-		sprintf (buf, 
-		    "%s in %s - can't open cell file",elev_layer,old_mapset);
-		G_fatal_error (buf);
-		exit(1);
-	}
+	    G_fatal_error(_("Unable to open raster map [%s]"), elev_layer);
 	
 	/*	open cell layer for writing output 		*/
 	new = G_open_raster_new (out_layer,FCELL_TYPE);
 	if (new < 0)
-	{
-		sprintf(buf, "%s - can't create cell file", out_layer);
-		G_fatal_error (buf);
-		exit(1);
-	}
+	    G_fatal_error(_("Unable to create raster map [%s]."), out_layer);
+
 	/* if pattern layer specified, open it for reading	*/
 	if(patt_flag == 1)
 	{
-		patt = G_open_cell_old (patt_layer, patt_mapset);
-
-		if (old < 0)
-		{
-			char buf[200];
-			sprintf (buf, "%s in %s - can't open cell file", 
-			    patt_layer, patt_mapset);
-			G_fatal_error (buf);
-			exit(1);
-		}
+	    patt = G_open_cell_old (patt_layer, patt_mapset);
+	    if (patt < 0)
+		G_fatal_error(_("Unable to open raster map [%s]"), patt_layer);
 	}
 
 	/*	parameters for map submatrices			*/
@@ -390,5 +345,5 @@ main (int argc, char *argv[])
 	G_set_cats_fmt ("$1 degree$?s", 1.0, 0.0, 0.0, 0.0, &cats);
 	G_write_cats (out_layer, &cats);
 
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
