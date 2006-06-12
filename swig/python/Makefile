@@ -7,6 +7,7 @@ PYTHONVERSION=2.3
 MODULE_TOPDIR = ../..
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
+include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 SWIG=swig
 
 GRASS_LIB_PATH=$(ARCH_LIBDIR)
@@ -28,3 +29,7 @@ python_grass6_wrap.o: python_grass6_wrap.c
 
 python_grass6.so: python_grass6_wrap.o
 	$(LD) $(LDFLAGS) $< -o _python_grass6.so
+
+# doxygen:
+DOXNAME=
+DOXINPUT=grasspython.dox
