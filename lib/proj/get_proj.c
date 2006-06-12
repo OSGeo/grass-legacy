@@ -122,12 +122,12 @@ int pj_get_kv(struct pj_info *info, struct Key_Value *in_proj_keys,
 		 || strcmp(in_proj_keys->key[i], "rf") == 0) {
 	    continue;
 
-	    /* PROJ.4 uses latlong instead of ll as 'projection name' */
+	    /* PROJ.4 uses longlat instead of ll as 'projection name' */
 
 	}
 	else if (strcmp(in_proj_keys->key[i], "proj") == 0) {
 	    if (strcmp(in_proj_keys->value[i], "ll") == 0)
-		sprintf(buffa, "proj=latlong");
+		sprintf(buffa, "proj=longlat");
 	    else
 		sprintf(buffa, "proj=%s", in_proj_keys->value[i]);
 
