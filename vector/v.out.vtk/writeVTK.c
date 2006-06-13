@@ -23,7 +23,7 @@
 
 /*Prototype */
 /*Formated coordinates output */
-void writePointCoordiantes(struct line_pnts *Points, int dp, FILE * ascii);
+void writePointCoordinates(struct line_pnts *Points, int dp, FILE * ascii);
 
 
 /* ************************************************************************* */
@@ -209,7 +209,7 @@ int writeVTKPoints(FILE * ascii, struct Map_info *Map, VTKInfo * info,
 		if (type == -2)	/* EOF */
 		    break;
 		if (type == types[k]) {
-		    writePointCoordiantes(Points, dp, ascii);
+		    writePointCoordinates(Points, dp, ascii);
 
 		    if (Cats->n_cats == 0)
 			info->typeinfo[types[k]]->generatedata = 0;	/*No data generation */
@@ -233,7 +233,7 @@ int writeVTKPoints(FILE * ascii, struct Map_info *Map, VTKInfo * info,
 		if (type == -2)	/* EOF */
 		    break;
 		if (type == types[k]) {
-		    writePointCoordiantes(Points, dp, ascii);
+		    writePointCoordinates(Points, dp, ascii);
 		}
 		cur++;
 	    }
@@ -254,7 +254,7 @@ int writeVTKPoints(FILE * ascii, struct Map_info *Map, VTKInfo * info,
 		if (type == -2)	/* EOF */
 		    break;
 		if (type == types[k]) {
-		    writePointCoordiantes(Points, dp, ascii);
+		    writePointCoordinates(Points, dp, ascii);
 		}
 		cur++;
 	    }
@@ -272,7 +272,7 @@ int writeVTKPoints(FILE * ascii, struct Map_info *Map, VTKInfo * info,
 		    Vect_read_line(Map, NULL, Cats, centroid);
 		}
 		Vect_get_area_points(Map, i, Points);
-		writePointCoordiantes(Points, dp, ascii);
+		writePointCoordinates(Points, dp, ascii);
 	    }
 
 	}
@@ -617,7 +617,7 @@ int writeVTK(FILE * ascii, struct Map_info *Map, int layer, int *types,
 /* ************************************************************************* */
 /* This function writes the point coordinates ****************************** */
 /* ************************************************************************* */
-void writePointCoordiantes(struct line_pnts *Points, int dp, FILE * ascii)
+void writePointCoordinates(struct line_pnts *Points, int dp, FILE * ascii)
 {
     char *xstring = NULL, *ystring = NULL, *zstring = NULL;
     double *xptr, *yptr, *zptr;
