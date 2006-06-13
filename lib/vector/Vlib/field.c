@@ -13,7 +13,8 @@
 *               This program is free software under the GNU General Public
 *   	    	License (>=v2). Read the file COPYING that comes with GRASS
 *   	    	for details.
-*
+* TODO: see Vect_read_dblinks; activate auto-FID detection once 
+*       OGR_L_GetFIDColumn() is working
 *****************************************************************************/
 #include <stdlib.h>
 #include <stdio.h>
@@ -185,6 +186,7 @@ Vect_add_dblink ( struct dblinks *p, int number, char *name, char *table, char *
 {
     int ret;
     
+    G_debug (3, "Field number <%d>, name <%s>", number, name);
     ret = Vect_check_dblink ( p, number );
     if ( ret == 1 ) {
          G_warning (_("Field number <%d> or name <%s> already exists"), number, name);
@@ -362,14 +364,13 @@ struct field_info
  \param pointer to map structure
 */
 int
-Vect_read_dblinks ( struct Map_info *Map )    
+Vect_read_dblinks ( struct Map_info *Map )
 {
     int  ndef;	
     FILE *fd;
     char file[1024], buf[2001];
     char tab[1024], col[1024], db[1024], drv[1024], fldstr[1024], *fldname;
     int  fld;
-    char ogr_fid_col[1024];
     char *c;
     int  row, rule;
     struct dblinks *dbl;
@@ -378,15 +379,17 @@ Vect_read_dblinks ( struct Map_info *Map )
     
     dbl = Map->dblnk;
     Vect_reset_dblinks ( dbl );
-    
+   
     G_debug (3, "Searching for FID column in OGR DB");
     if ( Map->format == GV_FORMAT_OGR ) {
 
-#if GDAL_VERSION_NUM >= 1320
+#if GDAL_VERSION_NUM >= 9999 /* activate once OGR_L_GetFIDColumn() is working */
 	int i, layer, nLayers;
 	OGRDataSourceH Ogr_ds;
 	OGRLayerH Ogr_layer=NULL;
 	OGRFeatureDefnH Ogr_featuredefn;
+	char ogr_fid_col[1024];
+
 
 	G_debug (3, "GDAL_VERSION_NUM: %d", GDAL_VERSION_NUM);
 
@@ -401,38 +404,31 @@ Vect_read_dblinks ( struct Map_info *Map )
 
 	/* Layer number */
 	layer = -1;
-	nLayers = OGR_DS_GetLayerCount (Ogr_ds);
-	G_debug (3, "%d layers found in data source", nLayers);
+	nLayers = OGR_DS_GetLayerCount (Ogr_ds); /* Layers = Maps in OGR DB */
 
-	for (i = 0; i < nLayers; i++) {
-	   Ogr_layer = OGR_DS_GetLayer (Ogr_ds, i);
-	   G_debug (3, "layer %s, FID col name: %s", OGR_FD_GetName (Ogr_featuredefn), OGR_L_GetFIDColumn( Ogr_layer ));
-	   Ogr_featuredefn = OGR_L_GetLayerDefn (Ogr_layer);
-	   if ( strcmp( OGR_FD_GetName (Ogr_featuredefn), Map->fInfo.ogr.layer_name) == 0) {
-		layer = i;
-		break;
-           }
-	}
-	if (layer == -1) {
+	G_debug (3, "%d layers (maps) found in data source", nLayers);
+
+	G_debug (3, "Trying to open OGR layer: %s", Map->fInfo.ogr.layer_name);
+	Ogr_layer = OGR_DS_GetLayerByName (Ogr_ds, Map->fInfo.ogr.layer_name);
+	if (Ogr_layer == NULL) {
 	   OGR_DS_Destroy (Ogr_ds);
 	   G_fatal_error ("Cannot open layer '%s'", Map->fInfo.ogr.layer_name);
 	}
-	G_debug (3, "OGR layer %d opened", layer);
-
-	G_debug (3, "FID col name: %s", OGR_L_GetFIDColumn( Ogr_layer ));
+	Ogr_featuredefn = OGR_L_GetLayerDefn (Ogr_layer);
+        G_debug (3, "layer %s, FID col name: %s", OGR_FD_GetName (Ogr_featuredefn), 
+			OGR_L_GetFIDColumn( Ogr_layer ));
 	Map->fInfo.ogr.layer = Ogr_layer;
 	G_debug (3, "OGR Map->fInfo.ogr.layer %p opened", Map->fInfo.ogr.layer);
 
-	G_debug (3, "fields OGR Map->fInfo.ogr.layer %p opened", Map->fInfo.ogr.layer);
-        G_debug (3, "FID col name: %s", OGR_L_GetFIDColumn( Map->fInfo.ogr.layer ));
+	/* TODO BUG: OGR_L_GetFIDColumn() doesn't return FID name - why?? */
 	sprintf ( ogr_fid_col, "%s", OGR_L_GetFIDColumn( Map->fInfo.ogr.layer ));
-	G_debug (3, "Using %s column in OGR DB", ogr_fid_col);
+	G_debug (0, "Using FID column <%s> in OGR DB", ogr_fid_col);
 	Vect_add_dblink ( dbl, 1, NULL, Map->fInfo.ogr.layer_name, ogr_fid_col, Map->fInfo.ogr.dsn, "ogr") ;
 #else
 	dbDriver *driver;
 	dbCursor cursor;
 	dbString sql;
-	int FID=0, OGC_FID=0, OGR_FID=0;
+	int FID=0, OGC_FID=0, OGR_FID=0, GID=0;
 
 	G_debug (3, "GDAL_VERSION_NUM: %d", GDAL_VERSION_NUM);
 
@@ -446,7 +442,7 @@ Vect_read_dblinks ( struct Map_info *Map )
 	    return -1;
 	}
 
-      /* this is a bit stupid, but we don't have an OGR function to find out the FID name for a driver...: */
+      /* this is a bit stupid, but above FID auto-detection doesn't work yet...: */
 	db_auto_print_errors(0);
 	sprintf ( buf, "select FID from %s where FID > 0", Map->fInfo.ogr.layer_name );
 	db_set_string ( &sql, buf );
@@ -462,17 +458,28 @@ Vect_read_dblinks ( struct Map_info *Map )
 	        G_debug (3, "Failed. Now searching for ogr_fid column in OGR DB");
 	        sprintf ( buf, "select ogr_fid from %s where ogr_fid > 0", Map->fInfo.ogr.layer_name );
 	        db_set_string ( &sql, buf );
-	        if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK) {
-	            /* neither FID nor ogc_fid nor ogr_fid available */
-		    G_debug (3, "Also failed. Neither FID nor ogc_fid nor ogr_fid available in DB table");
-	            db_close_database_shutdown_driver ( driver );
-	            return 0;
+
+		if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK) {
+		   /* Neither FID nor ogc_fid available, so we try gid */
+		   G_debug (3, "Failed. Now searching for gid column in OGR DB");
+		   sprintf ( buf, "select gid from %s where gid > 0", Map->fInfo.ogr.layer_name );
+		   db_set_string ( &sql, buf );
+
+		   if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK) {
+		      /* neither FID nor ogc_fid nor ogr_fid nor gid available */
+		      G_warning ("All FID tests failed. Neither 'FID' nor 'ogc_fid' nor 'ogr_fid' nor 'gid' available in OGR DB table");
+		      db_close_database_shutdown_driver ( driver );
+		      return 0;
+		   } else
+		      GID=1;
 	        } else
 	            OGR_FID=1;
 	    } else
 	        OGC_FID=1;
 	} else
 	    FID=1;
+	
+	G_debug(3,"FID: %d, OGC_FID: %d, OGR_FID: %d, GID: %d",FID, OGC_FID, OGR_FID, GID);
 
 	db_close_cursor(&cursor);
 	db_close_database_shutdown_driver ( driver );
@@ -489,6 +496,11 @@ Vect_read_dblinks ( struct Map_info *Map )
 	         if (OGR_FID) {
 	             G_debug (3, "Using ogr_fid column in OGR DB");
 	             Vect_add_dblink ( dbl, 1, NULL, Map->fInfo.ogr.layer_name, "ogr_fid", Map->fInfo.ogr.dsn, "ogr" ) ;
+		 } else {
+		     if (GID) {
+			G_debug (3, "Using gid column in OGR DB");
+			Vect_add_dblink ( dbl, 1, NULL, Map->fInfo.ogr.layer_name, "gid", Map->fInfo.ogr.dsn, "ogr" ) ;
+		     }
 	         }
 	     }
 	}
