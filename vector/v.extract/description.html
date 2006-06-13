@@ -63,13 +63,23 @@ fulfilled.
 
 <h3>Dissolving based on column attributes</h3>
 <div class="code"><pre>
-v.reclass pol_italy out=pol_italy_recl_nam col=region
-v.extract -d pol_italy_recl_nam out=pol_italy_regions
+# check column names:
+v.info -c polbnda_italy
+
+# reclass based on desired column:
+v.reclass polbnda_italy out=polbnda_italy_recl_nam col=vmap_nam
+
+# verify:
+v.info -c polbnda_italy_recl_nam
+v.db.select polbnda_italy_recl_nam
+
+# dissolve:
+v.extract -d polbnda_italy_recl_nam out=pol_italy_regions
 </pre></div>
 <p>
 
-produces a new vector map with common boundaries dissolved
-if the attribute of the left and right polygon is identical.
+This produces a new vector map with common boundaries dissolved
+where the reclassed attributes of adjacent (left/right) polygons are identical.
 
 <h3>Remove islands from polygon map</h3>
 <div class="code"><pre>
