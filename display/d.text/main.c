@@ -126,6 +126,9 @@ main (int argc, char **argv)
 
         sscanf(opt1->answer,"%f",&size);
 
+        if (R_open_driver() != 0)
+	    G_fatal_error (_("No graphics device selected"));
+
 	/* Parse and select text color */
 	if(sscanf(opt2->answer, "%d:%d:%d", &R, &G, &B) == 3) {
 		if (R>=0 && R<256 && G>=0 && G<256 && B>=0 && B<256) {
@@ -143,10 +146,6 @@ main (int argc, char **argv)
 	    G_fatal_error(_("[%s]: No such color"), opt2->answer);
 
 	rotation = atof(opt5->answer);
-
-	/* Open monitor window */
-        if (R_open_driver() != 0)
-	    G_fatal_error (_("No graphics device selected"));
 
         if (D_get_cur_wind(window_name))
 	    G_fatal_error(_("No current window")) ;
