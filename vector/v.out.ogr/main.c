@@ -39,7 +39,7 @@ char OGRdrivers[2000];
 int 
 main (int argc, char *argv[])
 {
-    int    i, j, k, centroid, otype, wkbtype=wkbUnknown, donocat;
+    int    i, j, k, centroid, otype, donocat;
     char   *mapset;
     int    field;
     struct GModule *module;
@@ -74,6 +74,7 @@ main (int argc, char *argv[])
     OGRFeatureH Ogr_feature;  
     OGRFeatureDefnH Ogr_featuredefn;
     OGRGeometryH Ogr_geometry;
+    unsigned int wkbtype=wkbUnknown;  /* ?? */
     OGRSpatialReferenceH Ogr_projection;
     char **papszDSCO = NULL, **papszLCO = NULL;
 
@@ -86,6 +87,7 @@ main (int argc, char *argv[])
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
 
     type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
+    type_opt->options = "point,kernel,centroid,line,boundary,area,face";
     type_opt->answer = "line,boundary";
     type_opt->description = _("Feature type. Combination of types is not supported"
                               " by all formats.");
@@ -158,15 +160,18 @@ main (int argc, char *argv[])
     if ( otype & GV_POINTS ) wkbtype = wkbPoint;
     else if ( otype & GV_LINES ) wkbtype = wkbLineString;
     else if ( otype & GV_AREA ) wkbtype = wkbPolygon;
+    else if ( otype & GV_FACE ) wkbtype = wkbPolygon25D;
 
     if ( poly_flag->answer ) wkbtype = wkbPolygon;
 
     if ( ((GV_POINTS & otype) && (GV_LINES & otype)) ||
 	 ((GV_POINTS & otype) && (GV_AREA & otype)) || 
-	 ((GV_LINES & otype) && (GV_AREA & otype)) ) 
+	 ((GV_POINTS & otype) && (GV_FACE & otype)) || 
+	 ((GV_LINES & otype) && (GV_AREA & otype)) ||
+	 ((GV_LINES & otype) && (GV_FACE & otype))
+       ) 
       {
 	 G_warning (_("The combination of types is not supported "
-
                       " by all formats."));
           wkbtype=wkbUnknown;
       }
@@ -312,7 +317,10 @@ main (int argc, char *argv[])
     if ( Vect_get_num_primitives(&In, GV_AREA) > 0  && !(otype & GV_AREA) )
        G_warning(_("%d Areas found, but not requested to be exported. Verify 'type' parameter."),Vect_get_num_primitives(&In, GV_AREA));
 
-    /* add? GV_FACE GV_KERNEL */
+    if ( Vect_get_num_primitives(&In, GV_FACE) > 0  && !(otype & GV_FACE) )
+       G_warning(_("%d Faces found, but not requested to be exported. Verify 'type' parameter."),Vect_get_num_primitives(&In, GV_FACE));
+
+    /* add? GV_KERNEL */
 
     /* Lines (run always to count features of different type) */
     if ( (otype & GV_POINTS) || (otype & GV_LINES) ) {
@@ -453,6 +461,63 @@ main (int argc, char *argv[])
 	    OGR_G_DestroyGeometry( Ogr_geometry );
 	}
     }
+
+    /* Faces (run always to count features of different type)  - Faces are similar to lines */
+    if ( otype & GV_FACE ) {
+	fprintf(stderr,"Exporting %i faces (may take some time) ...\n", Vect_get_num_faces(&In) );
+	for ( i = 1; i <= Vect_get_num_faces(&In) ; i++ ) {
+	    OGRGeometryH    ring;
+	    
+	    G_percent(i,Vect_get_num_faces(&In),1);
+	    
+	    type = Vect_read_line(&In, Points, Cats, i);
+	    G_debug(3, "line type = %d", type);
+
+	    cat = -1;
+	    Vect_cat_get (Cats, field, &cat);
+
+	    G_debug (3, "face = %d ncats = %d", i, Cats->n_cats );
+	    if ( cat < 0 && !donocat ) { /* Do not export not labeled */ 
+		nocatskip++;
+		continue; 
+	    }
+
+	    if ( type & GV_FACE ) {
+
+		/* Geometry */
+		Ogr_geometry = OGR_G_CreateGeometry( wkbPolygon25D );
+		ring = OGR_G_CreateGeometry( wkbLinearRing );
+	    
+		/* Face */
+		for ( j = 0; j < Points->n_points; j++ ) {
+		    OGR_G_AddPoint( ring, Points->x[j], Points->y[j], Points->z[j] );
+		}
+	    
+		OGR_G_AddGeometryDirectly ( Ogr_geometry, ring );
+	    
+		/* Output one feature for each category */
+		for ( j = -1; j < Cats->n_cats; j++ ) {
+		  if ( j == -1 ) {
+		    if ( cat >= 0 ) continue; /* cat(s) exists */
+		  } else {
+		    if ( Cats->field[j] == field )
+			cat = Cats->cat[j];
+		    else 
+			continue;
+		  }
+	        
+		  mk_att ( cat, Fi, Driver, ncol, keycol, doatt, Ogr_feature);
+	          OGR_L_CreateFeature( Ogr_layer, Ogr_feature ); 
+		}
+
+		OGR_F_SetGeometry( Ogr_feature, Ogr_geometry ); 
+
+		OGR_G_DestroyGeometry( Ogr_geometry );
+            } /* if type & GV_FACE */
+
+	} /* for */
+    }
+
 	    
     OGR_F_Destroy( Ogr_feature );
     OGR_DS_Destroy( Ogr_ds );
@@ -468,7 +533,7 @@ main (int argc, char *argv[])
     fprintf (stderr, "%d features written\n", fout);
     if ( nocat > 0 ) G_warning ( "%d features without category written", nocat);
     if ( noatt > 0 ) G_warning ( "%d features without attributes written", noatt);
-    if ( nocatskip > 0 ) G_warning ( "%d features without category skip", nocatskip);
+    if ( nocatskip > 0 ) G_warning ( "%d features found without category skip", nocatskip);
 
     /* Enable this? May be confusing that for area type are not reported all boundaries/centroids.
     *  OTOH why should be reported? */
