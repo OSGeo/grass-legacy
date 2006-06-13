@@ -37,7 +37,7 @@
  */
 #define NVIZ_HACK 1
 
-int gsd_getViewport(GLint, GLint);
+int gsd_getViewport(GLint *, GLint *);
 
 static int Surf_ID[MAX_SURFS];
 static int Next_surf = 0;
@@ -2392,7 +2392,7 @@ void GS_zoom_setup(int *a, int *b, int *c, int *d, int *maxx, int *maxy)
 {
     GLint tmp[4];
     GLint num[2];
-    gsd_getViewport(&tmp, &num);
+    gsd_getViewport(tmp, num);
     *a = tmp[0];
     *b = tmp[1];
     *c = tmp[2];
