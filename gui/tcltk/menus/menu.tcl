@@ -101,6 +101,7 @@ set descmenu [subst  {
 		{cascad {[G_msg "Raster map"]} {} "" $tmenu {
 			{command {[G_msg "Multiple formats using GDAL"]} {} "r.in.gdal" {} -command { execute r.in.gdal }}
 			{separator}
+			{command {[G_msg "Aggregate ASCII xyz data into raster grid"]} {} "r.in.xyz" {} -command { execute r.in.xyz }}
 			{command {[G_msg "ASCII GRID (includes GRASS ASCII)"]} {} "r.in.ascii" {} -command { execute r.in.ascii }}
 			{command {[G_msg "Polygons and lines from ASCII file"]} {} "r.in.poly" {} -command { execute r.in.poly }}
 			{separator}
@@ -150,6 +151,7 @@ set descmenu [subst  {
 			{command {[G_msg "PPM image from red, green, blue raster maps"]} {} "r.out.ppm3" {} -command { execute r.out.ppm3 }}
 			{command {[G_msg "POVray height-field"]} {} "r.out.pov" {} -command { execute r.out.pov }}
 			{command {[G_msg "TIFF image (8/24bit)"]} {} "r.out.tiff" {} -command { execute r.out.tiff }}
+			{command {[G_msg "VRML file"]} {} "p.out.vrml" {} -command { execute p.out.vrml }}
 			{command {[G_msg "VTK ASCII file"]} {} "r.out.vtk" {} -command { execute r.out.vtk }}
 		}}
 		{cascad {[G_msg "Vector map"]} {} "" $tmenu {			
@@ -288,6 +290,7 @@ set descmenu [subst  {
 	{cascad {[G_msg "Hydrologic modeling"]} {} "" $tmenu {			
 		{command {[G_msg "Carve stream channels into elevation map using vector streams map"]} {} "r.carve" {} -command {execute r.carve }}
 		{command {[G_msg "Depressionless elevation map and flowline map"]} {} "r.fill.dir" {} -command {execute r.fill.dir }}
+		{command {[G_msg "Fill lake from seed point to specified level"]} {} "r.lake" {} -command {spawn r.lake }}
 		{command {[G_msg "Flow accumulation for massive grids"]} {} "r.terraflow" {} -command {spawn r.terraflow }}
 		{command {[G_msg "Generate flow lines for raster map"]} {} "r.flow" {} -command {exec r.flow > /dev/null & }}
 		{command {[G_msg "SIMWE overland flow modeling"]} {} "r.sim.water" {} -command {execute r.sim.water }}
@@ -403,6 +406,12 @@ set descmenu [subst  {
 	{command {[G_msg "Query by map features"]} {} " v.select" {} -command {execute v.select }}
 	{separator}
 	{command {[G_msg "Create vector buffers"]} {} "v.buffer" {} -command {execute v.buffer }}
+	{cascad {[G_msg "Linear referencing for vectors"]} {} "" $tmenu {			
+		{command {[G_msg "Create linear reference system"]} {} "v.lrs.create" {} -command {execute v.lrs.create }}
+		{command {[G_msg "Create stationing from imput lines, and linear reference system"]} {} "v.lrs.label" {} -command {execute v.lrs.label }}
+		{command {[G_msg "Create points/segments from input lines, linear reference system and positions read from stdin" {} -command {execute v.lrs.segment }}
+		{command {[G_msg "Find line id and real km+offset for given points in vector map using linear reference system"]} {} "v.lrs.where" {} -command {execute v.lrs.where }}
+	}}
 	{cascad {[G_msg "Neighborhood analysis"]} {} "" $tmenu {			
 		{command {[G_msg "Locate nearest features to points or centroids"]} {} "v.distance" {} -command {execute v.distance }}
 		{command {[G_msg "Generate Thiessen polygons around points (Voronoi diagram)"]} {} "v.voronoi" {} -command {execute v.voronoi }}
@@ -520,7 +529,7 @@ set descmenu [subst  {
 		{command {[G_msg "Manage timestamp for grid3D volume"]} {} "r3.timestamp" {} -command {execute r3.timestamp }}
 	}}
 	{command {[G_msg "Create 3D mask for grid3D operations"]} {} "r3.mask" {} -command {execute r3.mask }}
-	{command {[G_msg "Create display file for grid3D volume"]} {} "r3.mkdspf" {} -command { execute r3.mkdspf }}
+	{command {[G_msg "Create 2D raster cross section from grid3d volume"]} {} "r3.cross.rast" {} -command { execute r3.cross.rast }}
 	{command {[G_msg "Map calculator for grid3D operations"]} {} "r3.mapcalculator" {} -command {execute r3.mapcalculator }}
 	{command {[G_msg "Interpolate volume from vector points using splines"]} {} "v.vol.rst" {} -command {execute v.vol.rst }}
 	{cascad {[G_msg "Report and Statistics"]} {} "" $tmenu {			
@@ -530,7 +539,8 @@ set descmenu [subst  {
  {[G_msg "&Databases"]} all options $tmenu {
 	{cascad {[G_msg "Manage database"]} {} "" $tmenu {			
 		{command {[G_msg "Connect to database"]} {} "db.connect" {} -command {execute db.connect }}
-		{command {[G_msg "PERMANTLY remove table"]} {} "db.droptable" {} -command {execute db.droptable }}
+		{command {[G_msg "Login to database"]} {} "db.login" {} -command {execute db.login }}
+		{separator}
 		{command {[G_msg "Copy table"]} {} "db.copy" {} -command {execute db.copy }}
 		{command {[G_msg "Add columns to table"]} {} "v.db.addcol" {} -command {execute v.db.addcol }}
 		{command {[G_msg "Change values in a column"]} {} "v.db.update" {} -command {execute v.db.update }}
