@@ -14,7 +14,7 @@
 *   	    	License (>=v2). Read the file COPYING that comes with GRASS
 *   	    	for details.
 * TODO: see Vect_read_dblinks; activate auto-FID detection once 
-*       OGR_L_GetFIDColumn() is working
+*       OGR_L_GetFIDColumn() is working or solution found if FID not available
 *****************************************************************************/
 #include <stdlib.h>
 #include <stdio.h>
@@ -420,9 +420,9 @@ Vect_read_dblinks ( struct Map_info *Map )
 	Map->fInfo.ogr.layer = Ogr_layer;
 	G_debug (3, "OGR Map->fInfo.ogr.layer %p opened", Map->fInfo.ogr.layer);
 
-	/* TODO BUG: OGR_L_GetFIDColumn() doesn't return FID name - why?? */
+	/* TODO what to do if OGR_L_GetFIDColumn() doesn't return FID name */
 	sprintf ( ogr_fid_col, "%s", OGR_L_GetFIDColumn( Map->fInfo.ogr.layer ));
-	G_debug (0, "Using FID column <%s> in OGR DB", ogr_fid_col);
+	G_debug (3, "Using FID column <%s> in OGR DB", ogr_fid_col);
 	Vect_add_dblink ( dbl, 1, NULL, Map->fInfo.ogr.layer_name, ogr_fid_col, Map->fInfo.ogr.dsn, "ogr") ;
 #else
 	dbDriver *driver;
