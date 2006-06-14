@@ -107,7 +107,7 @@ proc fileLocCom args {
 				0 OK;
 			}
 			if {[file exists $filepath]== 0} {
-				DialogGen .wrnDlg [G_msg "WARNING: file not found"\ warning \
+				DialogGen .wrnDlg [G_msg "WARNING: file not found"] warning \
 				[G_msg "WARNING: The file was not found!"] \
 				0 OK;
 			}
