@@ -17,7 +17,7 @@
 #include <grass/Vect.h>
 
 #ifdef HAVE_OGR
-#include "ogr_api.h"
+#include <ogr_api.h>
 
 /*
 *  Recursively read feature and add all elements to points_cache and types_cache.
