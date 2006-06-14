@@ -17,7 +17,7 @@
 #include <grass/Vect.h>
 
 #ifdef HAVE_OGR
-#include "ogr_api.h"
+#include <ogr_api.h>
 
 /* Rewind vector data file to cause reads to start at beginning. 
 ** returns 0 on success

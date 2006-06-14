@@ -31,7 +31,7 @@
 
 
 #ifdef HAVE_OGR
-#include "ogr_api.h"
+#include <ogr_api.h>
 
 extern FILE *Msgout;
 extern int prnmsg (char *msg, ...);
