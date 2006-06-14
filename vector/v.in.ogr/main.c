@@ -1,17 +1,17 @@
 /****************************************************************
  *
  * MODULE:       v.in.ogr
- * 
+ *
  * AUTHOR(S):    Radim Blazek
  *               Markus Neteler (spatial parm, projection support)
  *               Paul Kelly (projection support)
- *               
+ *
  * PURPOSE:      Import OGR vectors
- *               
+ *
  * COPYRIGHT:    (C) 2003 by the GRASS Development Team
  *
- *               This program is free software under the 
- *               GNU General Public License (>=v2). 
+ *               This program is free software under the
+ *               GNU General Public License (>=v2).
  *               Read the file COPYING that comes with GRASS
  *               for details.
  *
@@ -19,8 +19,8 @@
  **************************************************************/
 #define MAIN
 #include <grass/config.h>
-#include <stdlib.h> 
-#include <string.h> 
+#include <stdlib.h>
+#include <string.h>
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
@@ -32,7 +32,7 @@
 int geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_area, int type, int mk_centr );
 int centroid(OGRGeometryH hGeom, CENTR *Centr, SPATIAL_INDEX *Sindex, int field, int cat, double min_area, int type);
 
-int 
+int
 main (int argc, char *argv[])
 {
     int    i, j, layer, arg_s_num, nogeom, ncnames;
@@ -60,15 +60,15 @@ main (int argc, char *argv[])
     dbDriver *driver;
     dbString sql, strval;
     int dim, with_z;
-    
+
     /* OGR */
     OGRDataSourceH Ogr_ds=NULL;
-    OGRSFDriverH Ogr_driver;  
-    OGRLayerH Ogr_layer;	
-    OGRFieldDefnH Ogr_field; 
+    OGRSFDriverH Ogr_driver;
+    OGRLayerH Ogr_layer;
+    OGRFieldDefnH Ogr_field;
     char *Ogr_fieldname;
     OGRFieldType Ogr_ftype;
-    OGRFeatureH Ogr_feature;  
+    OGRFeatureH Ogr_feature;
     OGRFeatureDefnH Ogr_featuredefn;
     OGRGeometryH Ogr_geometry, Ogr_oRing=NULL, poSpatialFilter=NULL;
     OGRSpatialReferenceH Ogr_projection;
@@ -77,7 +77,7 @@ main (int argc, char *argv[])
     int *layers;  /* layer indexes */
     int nlayers; /* number of layers to import */
     char **available_layer_names; /* names of layers to be imported */
-    int navailable_layers; 
+    int navailable_layers;
     int layer_id;
     int overwrite;
     char *overstr;
@@ -91,10 +91,10 @@ main (int argc, char *argv[])
     sprintf ( buf, _("Convert OGR vectors to GRASS. Available drivers:\n"));
     for ( i = 0; i < OGRGetDriverCount(); i++ ) {
 	Ogr_driver = OGRGetDriver( i );
-	if ( i== 0) 
-	  sprintf (buf, "%s%s", buf, OGR_Dr_GetName ( Ogr_driver) ); 
+	if ( i== 0)
+	  sprintf (buf, "%s%s", buf, OGR_Dr_GetName ( Ogr_driver) );
 	else
-	  sprintf (buf, "%s,%s", buf, OGR_Dr_GetName ( Ogr_driver) ); 
+	  sprintf (buf, "%s,%s", buf, OGR_Dr_GetName ( Ogr_driver) );
     }
     module = G_define_module();
     module->description = G_store(buf);
@@ -142,7 +142,7 @@ main (int argc, char *argv[])
 	      "\t line -> import area boundaries as centroids\n"
 	      "\t boundary -> import lines as area boundaries\n"
 	      "\t centroid -> import points as centroids");
-    
+
     snap_opt = G_define_option();
     snap_opt->key = "snap";
     snap_opt->type = TYPE_DOUBLE;
@@ -176,11 +176,11 @@ main (int argc, char *argv[])
     no_clean_flag = G_define_flag ();
     no_clean_flag->key             = 'c';
     no_clean_flag->description = _("Do not clean polygons (not recommended)");
-    
+
     z_flag = G_define_flag ();
     z_flag->key             = 'z';
     z_flag->description = _("Create 3D output");
-    
+
     notab_flag = G_define_flag ();
     notab_flag->key             = 't';
     notab_flag->description = _("Do not create attribute table");
@@ -193,19 +193,36 @@ main (int argc, char *argv[])
     extend_flag->key = 'e';
     extend_flag->description = _("Extend location extents based on new dataset");
 
-    /* The parser checks if the map already exists in current mapset, this is wrong 
-     * if location options is used, so we switch out the check and do it in the module after the parser */
+    /* The parser checks if the map already exists in current mapset, this is
+     * wrong if location options is used, so we switch out the check and do it
+     * in the module after the parser */
     overwrite = 0;
     if ( (overstr = G__getenv ( "OVERWRITE" )) ) {
 	overwrite = atoi ( overstr );
     }
-    G__setenv ( "OVERWRITE", "1" ); 
+    /* check if inherited GRASS_OVERWRITE is 1 */
+    if ( !overwrite && (overstr = getenv ( "GRASS_OVERWRITE" )) ) {
+	overwrite = atoi ( overstr );
+    }
+    /* check for --o or --overwrite option */
+    if (!overwrite) {
+	for(i = 0; i < argc; i++) {
+	    if (strcmp(argv[i], "--o") == 0 || strcmp(argv[i], "--overwrite") == 0) {
+		overwrite = 1;
+		break;
+	    }
+	}
+    }
+    G__setenv ( "OVERWRITE", "1" );
 
-    if (G_parser (argc, argv)) exit(EXIT_FAILURE); 
-        
-    if ( !outloc_opt->answer && !overwrite ) { /* Check if the map exists */
+    if (G_parser (argc, argv)) exit(EXIT_FAILURE);
+
+    if ( !outloc_opt->answer ) { /* Check if the map exists */
 	if ( G_find_vector2 (out_opt->answer, G_mapset()) ) {
-	    G_fatal_error ( _("The vector '%s' already exists."), out_opt->answer );
+	    if (overwrite)
+	        G_warning ( _("The vector '%s' already exists and will be overwritten."), out_opt->answer );
+	    else
+	        G_fatal_error ( _("The vector '%s' already exists."), out_opt->answer );
 	}
     }
 
@@ -248,21 +265,21 @@ main (int argc, char *argv[])
     /* Make a list of available layers */
     navailable_layers = OGR_DS_GetLayerCount(Ogr_ds);
     available_layer_names = (char **) G_malloc ( navailable_layers * sizeof (char *) );
-    
+
     if ( list_flag->answer )
         fprintf ( stdout, "Data source contains %d layers:\n", navailable_layers );
-    
+
     for ( i = 0; i < navailable_layers; i++ ) {
 	Ogr_layer =  OGR_DS_GetLayer( Ogr_ds, i );
 	Ogr_featuredefn = OGR_L_GetLayerDefn( Ogr_layer );
 	available_layer_names[i] = G_store ( (char *)OGR_FD_GetName( Ogr_featuredefn ) );
-	
+
 	if ( list_flag->answer ) {
 	    if ( i > 0 ) fprintf ( stdout, ", " );
 	    fprintf ( stdout, "%s", available_layer_names[i] );
 	}
     }
-    
+
     if ( list_flag->answer ) {
 	fprintf ( stdout, "\n" );
         exit(EXIT_SUCCESS) ;
@@ -271,7 +288,7 @@ main (int argc, char *argv[])
     /* Make a list of layers to be imported */
     if ( layer_opt->answer ) { /* From option */
 	nlayers = 0;
-	while ( layer_opt->answers[nlayers] ) 
+	while ( layer_opt->answers[nlayers] )
 	    nlayers++;
 
 	layer_names = (char **) G_malloc ( nlayers * sizeof (char *) );
@@ -283,7 +300,7 @@ main (int argc, char *argv[])
 	    layers[i] = -1;
 	    for ( j = 0; j < navailable_layers; j++ ) {
 		if ( strcmp( available_layer_names[j], layer_names[i]) == 0 ) {
-		    layers[i] = j; 
+		    layers[i] = j;
 		    break;
 		}
 	    }
@@ -300,10 +317,10 @@ main (int argc, char *argv[])
 
     /* Get first imported layer to use for extents and projection check */
     Ogr_layer = OGR_DS_GetLayer( Ogr_ds, layers[0] );
-   
+
     if ( spat_opt->answer ) {
         /* See as reference: gdal/ogr/ogr_capi_test.c */
-	
+
         /* cut out a piece of the map */
         /* order: xmin,ymin,xmax,ymax */
         arg_s_num = 0; i = 0;
@@ -326,7 +343,7 @@ main (int argc, char *argv[])
         OGR_G_AddPoint(Ogr_oRing, xmax, ymin, 0.0);
         OGR_G_AddPoint(Ogr_oRing, xmin, ymin, 0.0);
         OGR_G_AddGeometryDirectly(poSpatialFilter, Ogr_oRing);
-	
+
         OGR_L_SetSpatialFilter(Ogr_layer, poSpatialFilter );
      }
 
@@ -360,22 +377,22 @@ main (int argc, char *argv[])
         cellhd.ew_res3= 1.;
         cellhd.tb_res = 1.;
     }
-   
+
     /* Fetch input map projection in GRASS form. */
     proj_info = NULL;
     proj_units = NULL;
     Ogr_projection = OGR_L_GetSpatialRef(Ogr_layer);
- 
+
     /* Do we need to create a new location? */
     if( outloc_opt->answer != NULL )
     {
         /* Convert projection information interactively as it is important
 	 * to set up datum etc. */
-        if ( GPJ_osr_to_grass( &cellhd, &proj_info, 
+        if ( GPJ_osr_to_grass( &cellhd, &proj_info,
 			       &proj_units, Ogr_projection, 1) < 0 )
 	    G_fatal_error (_("Unable to convert input map projection to GRASS "
 			  "format; cannot create new location."));
-	else		  
+	else
             G_make_location( outloc_opt->answer, &cellhd,
 			     proj_info, proj_units, NULL );
     }
@@ -384,7 +401,7 @@ main (int argc, char *argv[])
 	int err;
 
         /* Projection only required for checking so convert non-interactively */
-        if ( GPJ_osr_to_grass( &cellhd, &proj_info, 
+        if ( GPJ_osr_to_grass( &cellhd, &proj_info,
 			       &proj_units, Ogr_projection, 0) < 0 )
             G_warning (_("Unable to convert input map projection information to "
 		      "GRASS format for checking"));
@@ -396,22 +413,22 @@ main (int argc, char *argv[])
         if (loc_wind.proj != PROJECTION_XY) {
             loc_proj_info = G_get_projinfo();
             loc_proj_units = G_get_projunits();
-	}       
-    
+	}
+
         if( over_flag->answer )
         {
             cellhd.proj = loc_wind.proj;
             cellhd.zone = loc_wind.zone;
 	    fprintf(stderr, "Over-riding projection check.\n"
 		            "Proceeding with import...\n");
-        } 
+        }
         else if( loc_wind.proj != cellhd.proj
-              || (err = G_compare_projections( loc_proj_info, loc_proj_units, 
+              || (err = G_compare_projections( loc_proj_info, loc_proj_units,
                                               proj_info, proj_units )) != TRUE)
         {
             int     i_value;
 
-            strcpy( error_msg, 
+            strcpy( error_msg,
                     "Projection of dataset does not"
                     " appear to match current location.\n\n");
 
@@ -422,41 +439,41 @@ main (int argc, char *argv[])
                 {
                     strcat( error_msg, "LOCATION PROJ_INFO is:\n" );
                     for( i_value = 0; i_value < loc_proj_info->nitems; i_value++ )
-                        sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
+                        sprintf( error_msg + strlen(error_msg), "%s: %s\n",
                                  loc_proj_info->key[i_value],
                                  loc_proj_info->value[i_value] );
                     strcat( error_msg, "\n" );
                 }
-      
+
                 if( proj_info != NULL )
                 {
                     strcat( error_msg, "Dataset PROJ_INFO is:\n" );
                     for( i_value = 0; i_value < proj_info->nitems; i_value++ )
-                        sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
+                        sprintf( error_msg + strlen(error_msg), "%s: %s\n",
                                  proj_info->key[i_value],
                                  proj_info->value[i_value] );
                 }
                 else
                 {
                     if( cellhd.proj == PROJECTION_XY )
-                        sprintf( error_msg + strlen(error_msg), 
-                                 "cellhd.proj = %d (unreferenced/unknown)\n", 
+                        sprintf( error_msg + strlen(error_msg),
+                                 "cellhd.proj = %d (unreferenced/unknown)\n",
                                  cellhd.proj );
                     else if( cellhd.proj == PROJECTION_LL )
-                        sprintf( error_msg + strlen(error_msg), 
-                                 "cellhd.proj = %d (lat/long)\n", 
+                        sprintf( error_msg + strlen(error_msg),
+                                 "cellhd.proj = %d (lat/long)\n",
                                  cellhd.proj );
                     else if( cellhd.proj == PROJECTION_UTM )
-                        sprintf( error_msg + strlen(error_msg), 
-                                 "cellhd.proj = %d (UTM), zone = %d\n", 
+                        sprintf( error_msg + strlen(error_msg),
+                                 "cellhd.proj = %d (UTM), zone = %d\n",
                                  cellhd.proj, cellhd.zone );
                     else if( cellhd.proj == PROJECTION_SP )
-                        sprintf( error_msg + strlen(error_msg), 
-                                 "cellhd.proj = %d (State Plane), zone = %d\n", 
+                        sprintf( error_msg + strlen(error_msg),
+                                 "cellhd.proj = %d (State Plane), zone = %d\n",
                                  cellhd.proj, cellhd.zone );
-                    else 
-                        sprintf( error_msg + strlen(error_msg), 
-                                 "cellhd.proj = %d (unknown), zone = %d\n", 
+                    else
+                        sprintf( error_msg + strlen(error_msg),
+                                 "cellhd.proj = %d (unknown), zone = %d\n",
                                  cellhd.proj, cellhd.zone );
                 }
 	    }else{
@@ -464,25 +481,25 @@ main (int argc, char *argv[])
                 {
                     strcat( error_msg, "LOCATION PROJ_UNITS is:\n" );
                     for( i_value = 0; i_value < loc_proj_units->nitems; i_value++ )
-                        sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
+                        sprintf( error_msg + strlen(error_msg), "%s: %s\n",
                                  loc_proj_units->key[i_value],
                                  loc_proj_units->value[i_value] );
                     strcat( error_msg, "\n" );
                 }
-      
+
                 if( proj_units != NULL )
                 {
                     strcat( error_msg, "Dataset PROJ_UNITS is:\n" );
                     for( i_value = 0; i_value < proj_units->nitems; i_value++ )
-                        sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
+                        sprintf( error_msg + strlen(error_msg), "%s: %s\n",
                                  proj_units->key[i_value],
                                  proj_units->value[i_value] );
                 }
 	    }
-            sprintf( error_msg + strlen(error_msg), 
+            sprintf( error_msg + strlen(error_msg),
     	             _("\nYou can use the -o flag to %s to override this check.\n"),
     	    	     G_program_name() );
-            strcat( error_msg, 
+            strcat( error_msg,
              _("Consider to generate a new location with 'location' parameter"
              " from input data set.\n") );
             G_fatal_error( error_msg );
@@ -490,18 +507,18 @@ main (int argc, char *argv[])
         else
 	    fprintf(stderr, _("Projection of input dataset and current location "
 		            "appear to match.\nProceeding with import...\n"));
-   
+
     }
     OSRDestroySpatialReference(Ogr_projection);
-   
+
     db_init_string (&sql);
     db_init_string (&strval);
-	
+
     /* open output vector */
     if ( z_flag->answer )
-        Vect_open_new (&Map, out_opt->answer, 1 ); 
-    else 
-        Vect_open_new (&Map, out_opt->answer, 0 ); 
+        Vect_open_new (&Map, out_opt->answer, 1 );
+    else
+        Vect_open_new (&Map, out_opt->answer, 0 );
 
     Vect_hist_command ( &Map );
 
@@ -517,17 +534,17 @@ main (int argc, char *argv[])
 
 	Ogr_layer = OGR_DS_GetLayer( Ogr_ds, layer_id );
 	Ogr_featuredefn = OGR_L_GetLayerDefn( Ogr_layer );
-	
+
 	/* Add DB link */
 	if ( !notab_flag->answer ) {
 	    char *cat_col_name = "cat";
-	    
+
 	    if ( nlayers == 1 ) { /* one layer only */
 		Fi = Vect_default_field_info ( &Map, layer+1, NULL, GV_1TABLE );
 	    } else {
 		Fi = Vect_default_field_info ( &Map, layer+1, NULL, GV_MTABLE );
 	    }
-	
+
      	    if ( ncnames > 0 ) {
     		cat_col_name = cnames_opt->answers[0];
 	    }
@@ -535,16 +552,16 @@ main (int argc, char *argv[])
 
 	    ncols = OGR_FD_GetFieldCount( Ogr_featuredefn );
 	    G_debug ( 2, "%d columns", ncols );
-	    
+
 	    /* Create table */
 	    sprintf ( buf, "create table %s (%s integer", Fi->table, cat_col_name );
 	    db_set_string ( &sql, buf);
 	    for ( i = 0; i < ncols; i++ ) {
 		char *c;
-		    
+
 		Ogr_field = OGR_FD_GetFieldDefn( Ogr_featuredefn, i );
 		Ogr_ftype = OGR_Fld_GetType( Ogr_field );
-		
+
 		G_debug(3, "Ogr_ftype: %i", Ogr_ftype); /* look up below */
 
 		if ( i < ncnames-1 ) {
@@ -565,24 +582,24 @@ main (int argc, char *argv[])
 		    }
 
 		    c = Ogr_fieldname;
-		    if ( !( *c>='A' && *c<='Z' ) && !( *c>='a' && *c<='z' ) ) { 
+		    if ( !( *c>='A' && *c<='Z' ) && !( *c>='a' && *c<='z' ) ) {
 			*c = 'x';
 		    }
 		    G_debug(3, "Ogr_fieldname: '%s'", Ogr_fieldname);
 
 		}
-		
+
 		/* avoid that we get the 'cat' column twice */
 		if ( strcmp(Ogr_fieldname, "cat") == 0 ) {
 		    sprintf(namebuf, "%s_", Ogr_fieldname);
 		    Ogr_fieldname = strdup ( namebuf );
 		}
-		    
+
 		if ( strcmp ( OGR_Fld_GetNameRef( Ogr_field ), Ogr_fieldname) != 0 ) {
-		    G_warning (_("Column name changed: '%s' -> '%s'"),  
+		    G_warning (_("Column name changed: '%s' -> '%s'"),
 				  OGR_Fld_GetNameRef( Ogr_field ), Ogr_fieldname );
 		}
-		
+
 		/** Simple 32bit integer                     OFTInteger = 0        **/
 		/** List of 32bit integers                   OFTIntegerList = 1    **/
 		/** Double Precision floating point          OFTReal = 2           **/
@@ -593,17 +610,17 @@ main (int argc, char *argv[])
 		/** List of wide strings (unsupported)       OFTWideStringList = 7 **/
 		/** Raw Binary data (unsupported)            OFTBinary = 8         **/
 
-		if( Ogr_ftype == OFTInteger ) { 
+		if( Ogr_ftype == OFTInteger ) {
 		    sprintf (buf, ", %s integer", Ogr_fieldname );
 		} else if( Ogr_ftype == OFTIntegerList ) {
 		    /* hack: treat as string */
 		    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, 40 );
 		    G_warning (_("Writing column <%s> with fixed length 40 chars (may be truncated)"), Ogr_fieldname);
-		} else if( Ogr_ftype == OFTReal ) { 
+		} else if( Ogr_ftype == OFTReal ) {
 		    sprintf (buf, ", %s double precision", Ogr_fieldname );
-		} else if( Ogr_ftype == OFTString ) { 
+		} else if( Ogr_ftype == OFTString ) {
 		    int fwidth;
-		    fwidth = OGR_Fld_GetWidth(Ogr_field); 
+		    fwidth = OGR_Fld_GetWidth(Ogr_field);
 		    /* TODO: read all records first and find the longest string length */
 		    if ( fwidth == 0) {
 			G_warning (_("Width for column '%s' set to 255 (was not specified by OGR), "
@@ -626,10 +643,10 @@ main (int argc, char *argv[])
 
 	    driver = db_start_driver_open_database ( Fi->driver, Vect_subst_var(Fi->database,&Map) );
 	    if ( driver == NULL ) {
-	        G_fatal_error ( _("Cannot open database %s by driver %s"), 
+	        G_fatal_error ( _("Cannot open database %s by driver %s"),
 			             Vect_subst_var(Fi->database,&Map), Fi->driver );
 	    }
-	    
+
 	    if (db_execute_immediate (driver, &sql) != DB_OK ) {
 		db_close_database(driver);
 		db_shutdown_driver(driver);
@@ -648,7 +665,7 @@ main (int argc, char *argv[])
 	/* Import feature */
 	cat = 1;
 	nogeom = 0;
-	OGR_L_ResetReading ( Ogr_layer ); 
+	OGR_L_ResetReading ( Ogr_layer );
 	G_message(_("Importing map %d features..."), OGR_L_GetFeatureCount ( Ogr_layer, 1 ));
 	while( (Ogr_feature = OGR_L_GetNextFeature(Ogr_layer)) != NULL ) {
 	    /* Geometry */
@@ -657,7 +674,7 @@ main (int argc, char *argv[])
 		nogeom++;
 	    } else {
 	        dim = OGR_G_GetCoordinateDimension ( Ogr_geometry );
-		if ( dim > 2 ) 
+		if ( dim > 2 )
 		    with_z = 1;
 
 		geom ( Ogr_geometry, &Map, layer+1, cat, min_area, type, no_clean_flag->answer );
@@ -667,25 +684,25 @@ main (int argc, char *argv[])
 	    if ( !notab_flag->answer ) {
 		sprintf ( buf, "insert into %s values ( %d", Fi->table, cat );
 		db_set_string ( &sql, buf);
-		for ( i = 0; i < ncols; i++ ) { 
+		for ( i = 0; i < ncols; i++ ) {
 		    Ogr_field = OGR_FD_GetFieldDefn( Ogr_featuredefn, i );
 		    Ogr_ftype = OGR_Fld_GetType( Ogr_field );
 		    if( OGR_F_IsFieldSet( Ogr_feature, i ) ) {
-			if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) { 
+			if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) {
 			    sprintf (buf, ", %s", OGR_F_GetFieldAsString( Ogr_feature, i) );
-			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList ) { 
+			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList ) {
 			    db_set_string ( &strval,  (char *) OGR_F_GetFieldAsString( Ogr_feature, i) );
 			    db_double_quote_string (&strval);
 			    sprintf (buf, ", '%s'", db_get_string(&strval) );
 			}
-		 
+
 		    } else {
 			/* G_warning (_("Column value not set" )); */
 
 			/* TODO: change to 'NULL' once supported by dbf driver */
-			if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) { 
+			if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) {
 			    sprintf (buf, ", 0" );
-			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList ) { 
+			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList ) {
 			    sprintf (buf, ", ''" );
 			}
 			/* sprintf (buf, ", NULL" ); */
@@ -701,11 +718,11 @@ main (int argc, char *argv[])
 		    G_fatal_error ( _("Cannot insert new row: %s"), db_get_string ( &sql )  );
 		}
 	    }
-	     
+
 	    OGR_F_Destroy( Ogr_feature );
 	    cat++;
 	}
-	
+
 	if ( !notab_flag->answer ) {
 	    db_commit_transaction ( driver );
 	    db_close_database_shutdown_driver ( driver );
@@ -714,14 +731,14 @@ main (int argc, char *argv[])
 	if ( nogeom > 0 )
 	    G_warning (_("%d %s without geometry"), nogeom, nogeom == 1 ? "feature" : "features" );
     }
-    
-    
+
+
     separator = "-----------------------------------------------------\n";
     fprintf ( stderr, separator );
 
     /* TODO: is it necessary to build here? probably not, consumes time */
     Vect_build ( &Map, stderr );
-    
+
     if ( !no_clean_flag->answer && Vect_get_num_primitives(&Map, GV_BOUNDARY) > 0) {
 	int ret, centr, ncentr, otype, n_overlaps, n_nocat;
         CENTR  *Centr;
@@ -740,11 +757,11 @@ main (int argc, char *argv[])
         Vect_close ( &Map );
 	Vect_open_update (&Map, out_opt->answer, G_mapset());
         Vect_build_partial ( &Map, GV_BUILD_BASE, stderr ); /* Downgrade topo */
-	
+
 	if ( snap >= 0 ) {
 	    fprintf ( stderr, separator );
 	    fprintf ( stderr, "Snap boundaries (threshold = %.3e):\n", snap );
-	    Vect_snap_lines ( &Map, GV_BOUNDARY, snap, NULL, stderr ); 
+	    Vect_snap_lines ( &Map, GV_BOUNDARY, snap, NULL, stderr );
 	}
 
 	/* It is not to clean to snap centroids, but I have seen data with 2 duplicate polygons
@@ -753,29 +770,29 @@ main (int argc, char *argv[])
 	/*
         fprintf ( stderr, separator );
 	fprintf ( stderr, "Snap centroids (threshold 0.000001):\n" );
-	Vect_snap_lines ( &Map, GV_CENTROID, 0.000001, NULL, stderr ); 
+	Vect_snap_lines ( &Map, GV_CENTROID, 0.000001, NULL, stderr );
 	*/
-	
+
         fprintf ( stderr, separator );
 	fprintf ( stderr, "Break polygons:\n" );
-	Vect_break_polygons ( &Map, GV_BOUNDARY, NULL, stderr ); 
-	
+	Vect_break_polygons ( &Map, GV_BOUNDARY, NULL, stderr );
+
 	/* It is important to remove also duplicate centroids in case of duplicate imput polygons */
         fprintf ( stderr, separator );
 	fprintf ( stderr, "Remove duplicates:\n" );
-	Vect_remove_duplicates ( &Map, GV_BOUNDARY | GV_CENTROID, NULL, stderr ); 
-	
+	Vect_remove_duplicates ( &Map, GV_BOUNDARY | GV_CENTROID, NULL, stderr );
+
 	/* Vect_clean_small_angles_at_nodes() can change the geometry so that new intersections
 	 * are created. We must call Vect_break_lines(), Vect_remove_duplicates()
 	 * and Vect_clean_small_angles_at_nodes() until no more small dangles are found */
 	do {
 	    fprintf ( stderr, separator );
 	    fprintf ( stderr, "Break boundaries:\n" );
-	    Vect_break_lines ( &Map, GV_BOUNDARY, NULL, stderr ); 
+	    Vect_break_lines ( &Map, GV_BOUNDARY, NULL, stderr );
 
 	    fprintf ( stderr, separator );
 	    fprintf ( stderr, "Remove duplicates:\n" );
-	    Vect_remove_duplicates ( &Map, GV_BOUNDARY, NULL, stderr ); 
+	    Vect_remove_duplicates ( &Map, GV_BOUNDARY, NULL, stderr );
 
 	    fprintf ( stderr, separator );
 	    fprintf ( stderr, "Clean boundaries at nodes:\n" );
@@ -785,19 +802,19 @@ main (int argc, char *argv[])
         fprintf ( stderr, separator );
 	if ( type & GV_BOUNDARY ) { /* that means lines were converted boundaries */
 	    fprintf ( stderr, "Change boundary dangles to lines:\n" );
-	    Vect_chtype_dangles ( &Map, -1.0, NULL, stderr ); 
+	    Vect_chtype_dangles ( &Map, -1.0, NULL, stderr );
 	} else {
 	    fprintf ( stderr, "Change dangles to lines:\n" );
-	    Vect_remove_dangles ( &Map, GV_BOUNDARY, -1.0, NULL, stderr ); 
+	    Vect_remove_dangles ( &Map, GV_BOUNDARY, -1.0, NULL, stderr );
 	}
 
         fprintf ( stderr, separator );
 	if ( type & GV_BOUNDARY ) {
 	    fprintf ( stderr, "Change boundary bridges to lines:\n" );
-	    Vect_chtype_bridges ( &Map, NULL, stderr ); 
+	    Vect_chtype_bridges ( &Map, NULL, stderr );
 	} else {
 	    fprintf ( stderr, "Remove bridges:\n" );
-	    Vect_remove_bridges ( &Map, NULL, stderr ); 
+	    Vect_remove_bridges ( &Map, NULL, stderr );
 	}
 
 	/* Boundaries are hopefully clean, build areas */
@@ -818,7 +835,7 @@ main (int argc, char *argv[])
 		G_warning (_("Cannot calculate area centroid") );
 		continue;
 	    }
-	    
+
 	    Centr[centr].x = x;
 	    Centr[centr].y = y;
 	    Centr[centr].valid = 1;
@@ -833,7 +850,7 @@ main (int argc, char *argv[])
 	    fprintf (stderr, "Layer: %s\n", layer_names[layer]);
 	    layer_id = layers[layer];
 	    Ogr_layer = OGR_DS_GetLayer( Ogr_ds, layer_id );
-	    OGR_L_ResetReading ( Ogr_layer ); 
+	    OGR_L_ResetReading ( Ogr_layer );
 
 	    cat = 0; /* field = layer + 1 */
 	    while( (Ogr_feature = OGR_L_GetNextFeature(Ogr_layer)) != NULL ) {
@@ -842,8 +859,8 @@ main (int argc, char *argv[])
 		Ogr_geometry = OGR_F_GetGeometryRef(Ogr_feature);
 		if ( Ogr_geometry != NULL ) {
 		    centroid ( Ogr_geometry, Centr, &si, layer+1, cat, min_area, type );
-		} 
-	        
+		}
+
 		OGR_F_Destroy( Ogr_feature );
 	    }
 	}
@@ -866,7 +883,7 @@ main (int argc, char *argv[])
 		n_nocat++;
 		continue;
 	    }
-	    
+
 	    if ( Centr[centr].cats->n_cats > 1 ) {
 	        Vect_cat_set ( Centr[centr].cats, nlayers+1, Centr[centr].cats->n_cats );
 		overlap_area += area;
@@ -878,13 +895,13 @@ main (int argc, char *argv[])
 	    if ( type & GV_POINT ) otype = GV_POINT; else otype = GV_CENTROID;
 	    Vect_write_line ( &Map, otype, Points, Centr[centr].cats);
 	}
-	
+
         fprintf ( stderr, separator );
 	Vect_build_partial (&Map, GV_BUILD_NONE, NULL);
 
         fprintf ( stderr, separator );
         Vect_build ( &Map, stderr );
-        
+
 	fprintf ( stderr, separator );
 
 	if ( n_overlaps > 0 ) {
@@ -894,30 +911,30 @@ main (int argc, char *argv[])
 		    n_overlaps, nlayers+1 );
 	}
 
-	sprintf (buf, _("%d input polygons\n"), n_polygons); 
+	sprintf (buf, _("%d input polygons\n"), n_polygons);
 	fprintf (stderr, buf );
 	Vect_hist_write ( &Map, buf );
 
-	sprintf (buf, "total area: %e (%d areas)\n", total_area, ncentr); 
+	sprintf (buf, "total area: %e (%d areas)\n", total_area, ncentr);
 	fprintf (stderr, buf );
 	Vect_hist_write ( &Map, buf );
 
-	sprintf (buf, "overlapping area: %e (%d areas)\n", overlap_area, n_overlaps); 
+	sprintf (buf, "overlapping area: %e (%d areas)\n", overlap_area, n_overlaps);
 	fprintf (stderr, buf );
 	Vect_hist_write ( &Map, buf );
-	
-	sprintf (buf, "area without category: %e (%d areas)\n", nocat_area, n_nocat ); 
+
+	sprintf (buf, "area without category: %e (%d areas)\n", nocat_area, n_nocat );
 	fprintf (stderr, buf );
 	Vect_hist_write ( &Map, buf );
     }
-    
+
     /* needed?
     * OGR_DS_Destroy( Ogr_ds );
     */
 
     Vect_close ( &Map );
 
-    if (with_z && !z_flag->answer ) 
+    if (with_z && !z_flag->answer )
 	G_warning (_("Input data contains 3D features. Created vector is 2D only, "
 		    "use -z flag to import 3D vector."));
 
