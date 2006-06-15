@@ -11,7 +11,7 @@
 #define METHOD_COEFF_VAR 9
 
 /* main.c */
-int scan_bounds(FILE*, int, int, int, char*);
+int scan_bounds(FILE*, int, int, int, char*, int);
 
 /* support.c */
 int blank_array(void *, int, int, RASTER_MAP_TYPE, int);
