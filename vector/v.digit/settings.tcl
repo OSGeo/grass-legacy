@@ -147,6 +147,7 @@ proc settings {} {
     
     $nb compute_size
 
+
     # --- Symbology ---
     set symbf [$nb insert end colors -text [G_msg "Symbology"]]
 
@@ -249,12 +250,7 @@ proc settings {} {
                 -command { set_color node_2 $symb(node_2,color) }
     pack $row.a -side left; pack $row.c $row.b -side right; pack $row -side top -fill x -expand yes
 
-    # Linewidth
-    set row [ frame $symbf.row13 ]
-    Label $row.a -anchor w -width $clw -text [G_msg "Linewidth (Pixels)"]  
-    Entry $row.b -width 10 -textvariable GVariable(linewidth) \
-                           -command { c_var_set linewidth $GVariable(linewidth) } 
-    pack $row.a -side left; pack $row.b -side right; pack $row -side top -fill x -expand yes
+
 
     # --- Settings ---
     set setf [$nb insert end settings -text [G_msg "Settings"]]
@@ -280,6 +276,21 @@ proc settings {} {
     bind $row.c <KeyRelease> { c_var_set snap_map $GVariable(snap_map) }
     pack $row.a -side left; pack $row.c $row.b -side right; 
     pack $row -side top -fill x -expand no -anchor n 
+
+    # how to make a simple blank spacing line?
+    set row [ frame $setf.row3 ]
+    Label $row.a -anchor w
+    pack $row.a -side left;
+    pack $row -side top -fill x -expand no -anchor n
+
+    # Linewidth
+    set row [ frame $setf.row4 ]
+    Label $row.a -anchor w -text [G_msg "Line width (pixels; 0 is finest)"]
+    Entry $row.b -width 10 -textvariable GVariable(linewidth) \
+                 -command { c_var_set linewidth $GVariable(linewidth) }
+    pack $row.a -side left; pack $row.b -side right;
+    pack $row -side top -fill x -expand no -anchor n
+
 
     # --- Table (define new attribute table) ---
     set tabrow 1
