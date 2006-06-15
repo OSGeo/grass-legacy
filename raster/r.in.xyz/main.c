@@ -63,8 +63,7 @@ int main(int argc, char *argv[])
     struct GModule *module;
     struct Option *input_opt, *output_opt, *delim_opt, *percent_opt, *type_opt;
     struct Option *method_opt, *xcol_opt, *ycol_opt, *zcol_opt, *zrange_opt;
-    struct Flag *scan_flag;
-
+    struct Flag *scan_flag, *shell_style;
 
 
     G_gisinit(argv[0]);
@@ -146,6 +145,10 @@ int main(int argc, char *argv[])
     percent_opt->options = "1-100";
     percent_opt->description = _("Percent of map to keep in memory");
 
+    shell_style = G_define_flag();
+    shell_style->key = 'g';
+    shell_style->description = _("Print the input data extent in shell script style");
+
     scan_flag = G_define_flag();
     scan_flag->key = 's';
     scan_flag->description = _("Scan data file for extent then exit");
@@ -159,6 +162,10 @@ int main(int argc, char *argv[])
     infile = input_opt->answer;
     outmap = output_opt->answer;
  
+    if (shell_style->answer && !scan_flag->answer) {
+        scan_flag->answer = 1;
+    }
+
     fs = delim_opt->answer;
     if ( strcmp(fs,"\\t") == 0 ) fs = "\t";
     if ( strcmp(fs,"tab") == 0 ) fs = "\t";
@@ -302,7 +309,7 @@ int main(int argc, char *argv[])
     if(scan_flag->answer) {
 	if( zrange_opt->answer )
 	    G_warning(_("zrange will not be taken into account during scan"));
-	scan_bounds(in_fd, xcol, ycol, zcol, fs);
+	scan_bounds(in_fd, xcol, ycol, zcol, fs, shell_style->answer);
 	fclose(in_fd);
 	exit(EXIT_SUCCESS);
     }
@@ -603,7 +610,7 @@ int main(int argc, char *argv[])
 
 
 
-int scan_bounds(FILE* fp, int xcol, int ycol, int zcol, char *fs)
+int scan_bounds(FILE* fp, int xcol, int ycol, int zcol, char *fs, int shell_style)
 {
     int    line, first, max_col;
     char   buff[BUFFSIZE];
@@ -681,10 +688,14 @@ int scan_bounds(FILE* fp, int xcol, int ycol, int zcol, char *fs)
 	G_free_tokens(tokens);
     }
 
-    fprintf(stderr,_("Range:     min         max\n"));
-    fprintf(stdout,"x: %11f %11f\n", min_x, max_x);
-    fprintf(stdout,"y: %11f %11f\n", min_y, max_y);
-    fprintf(stdout,"z: %11f %11f\n", min_z, max_z);
+    if (!shell_style) {
+	fprintf(stderr,_("Range:     min         max\n"));
+	fprintf(stdout,"x: %11f %11f\n", min_x, max_x);
+	fprintf(stdout,"y: %11f %11f\n", min_y, max_y);
+	fprintf(stdout,"z: %11f %11f\n", min_z, max_z);
+   } else
+        fprintf(stdout,"n=%f s=%f e=%f w=%f b=%f t=%f\n", 
+	  max_x, min_x, max_y, min_y, min_z, max_z);
 
     G_debug(1, "Processed %d lines.", line);
     G_debug(1, "region template: g.region n=%f s=%f e=%f w=%f",
