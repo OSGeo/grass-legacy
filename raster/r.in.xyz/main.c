@@ -695,7 +695,7 @@ int scan_bounds(FILE* fp, int xcol, int ycol, int zcol, char *fs, int shell_styl
 	fprintf(stdout,"z: %11f %11f\n", min_z, max_z);
    } else
         fprintf(stdout,"n=%f s=%f e=%f w=%f b=%f t=%f\n", 
-	  max_x, min_x, max_y, min_y, min_z, max_z);
+	  max_y, min_y, max_x, min_x, min_z, max_z);
 
     G_debug(1, "Processed %d lines.", line);
     G_debug(1, "region template: g.region n=%f s=%f e=%f w=%f",
