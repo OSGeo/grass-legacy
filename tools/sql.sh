@@ -1,5 +1,78 @@
 #!/bin/bash
 
+#
+# From: Glynn Clements <glynn at gclements.plus.com>
+# Date: Mon, 12 Jun 2006 13:00:25 +0100
+#
+# Usage: after having compiled GRASS, run "tools/sql.sh `pwd`" from the
+# top of the GRASS source tree.
+#
+# Essentially, the script runs "nm" on every object file, library and
+# executable it finds (and "ldd" on all of the executables), processes
+# the output with egrep/sed/awk, then imports the results into a
+# PostgreSQL database.
+#
+# "nm" lists the symbol table of an object file, library, or executable,
+# indicating whether each symbol is imported into, defined in and/or
+# exported from the file.
+#
+# Most of the database tables record which symbols are imported into or
+# exported from which object files, libraries or executables. E.g. the
+# "obj_imp" table lists which symbols are imported into which object
+# files.
+#
+# You can then use simple queries such as:
+#
+# 	grass=> SELECT object FROM obj_imp WHERE symbol = 'I_get_target' ;
+# 	                               object                               
+# 	--------------------------------------------------------------------
+# 	 imagery/i.ortho.photo/photo.2image/OBJ.i686-pc-linux-gnu/target.o
+# 	 imagery/i.ortho.photo/photo.2target/OBJ.i686-pc-linux-gnu/target.o
+# 	 imagery/i.ortho.photo/photo.elev/OBJ.i686-pc-linux-gnu/main.o
+# 	 imagery/i.ortho.photo/photo.rectify/OBJ.i686-pc-linux-gnu/target.o
+# 	 imagery/i.ortho.photo/photo.target/OBJ.i686-pc-linux-gnu/main.o
+# 	 imagery/i.points/OBJ.i686-pc-linux-gnu/target.o
+# 	 imagery/i.rectify/OBJ.i686-pc-linux-gnu/target.o
+# 	 imagery/i.vpoints/OBJ.i686-pc-linux-gnu/target.o
+#
+# to discover which files import a given symbol, or more complex queries
+# such as:
+#
+# 	grass=> SELECT DISTINCT b.object FROM lib_exp a, obj_imp b
+# 	grass-> WHERE a.library = 'libgrass_form.6.1.cvs.so' AND a.symbol = b.symbol ;
+# 	                          object                           
+# 	-----------------------------------------------------------
+# 	 display/d.what.vect/OBJ.i686-pc-linux-gnu/what.o
+# 	 vector/v.digit/OBJ.i686-pc-linux-gnu/attr.o
+# 	 vector/v.digit/OBJ.i686-pc-linux-gnu/line.o
+# 	 vector/v.what/OBJ.i686-pc-linux-gnu/what.o
+# 	 visualization/nviz/src/OBJ.i686-pc-linux-gnu/query_vect.o
+# 	(5 rows)
+#
+# to discover which files import any symbol defined in a specific
+# library. And so on.
+#
+# For simple "which files use this function" queries, a database lookup
+# is quicker and more reliable than grep-ing the source tree.
+#
+# Assuming that the sql.sh script runs successfully (some of it is
+# Linux-specific, other bits are PostgreSQL-specific, but the changes
+# required for a different OS or RDBMS should be quite minor), the
+# easiest way to figure out what is in a given table (apart from looking
+# at the name) is to just sample it, e.g.:
+#
+# 	grass=> SELECT * FROM stlib_exp LIMIT 5 ;
+# 	      library      |   object   |    symbol     
+# 	-------------------+------------+---------------
+# 	 libgrass_manage.a | add_elem.o | add_element
+# 	 libgrass_manage.a | ask.o      | ask_in_mapset
+# 	 libgrass_manage.a | ask.o      | ask_new
+# 	 libgrass_manage.a | ask.o      | ask_old
+# 	 libgrass_manage.a | copyfile.o | copyfile
+# 	(5 rows)
+#
+
+
 tmpdir=/tmp/sql-grass
 dbname=grass
 
