@@ -405,7 +405,7 @@ int main(int argc, char *argv[])
 	    if((ntokens < 3) || (max_col > ntokens) )
 		G_fatal_error(_("Not enough data columns. "
 		   "Incorrect delimiter or column number? "
-		   "Found the following in a row %d:\n[%s]"), line, buff);
+		   "Found the following character(s) in row %d:\n[%s]"), line, buff);
 
 /* too slow?
 	    if ( G_projection() == PROJECTION_LL ) {
