@@ -44,6 +44,14 @@ choosen null value in the VTK-ASCII file.
 If elevation map is choosen, a polygonal grid is created with <i>quads</i>, 
 but the user can choose also <i>triangle strips</i> or <i>vertices</i>. 
 These dataformats a documented at <EM><A HREF="http://www.vtk.org">VTK Toolkit</A></EM>.
+<br>
+<br>
+If the "-c" flag is used and the data should be visualised together with other data exported via *.out.vtk
+modules, be sure the "-c" flag was also set in these modules.
+But this will only work with data from the SAME location 
+(The reference point for the coordinates transformation is based on the default region).
+<br>
+<br>
 
 
 
