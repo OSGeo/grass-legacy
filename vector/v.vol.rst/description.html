@@ -47,7 +47,7 @@ smoothing using <i>smatt</i> option by setting the parameter <i>smatt</i>
 to the value j for the j-th floating point attribute in the input
 vector point file, representing the smoothing parameter for each point.
 When smoothing is used,
-it is possible to output site file <i>devi</i>
+it is possible to output vector map <i>devi</i>
 containing deviations of the resulting volume from the given data. </p>
 <p>User can define a 2D raster file named <i>maskmap</i>, which will
 be used as a mask. The interpolation is skipped for 3-dimensional cells
@@ -137,11 +137,11 @@ Talmi and Gilat, 1977 or Wahba, 1990. </p>
 <p>If a visible connection of segments appears, the program should be
 rerun with higher <i>npmin</i> to get more points from the
 neighborhood of given segment. </p>
-<p>If the number of points in a site file is less then 400, <i>segmax</i>
+<p>If the number of points in a vector map is less then 400, <i>segmax</i>
 should be set to 400 so that segmentation is not performed when it is
 not necessary. </p>
 <p>The program gives warning when user wants to interpolate outside the
-"box" given by minimum and maximum coordinates in site file, zoom into
+"box" given by minimum and maximum coordinates in vector map, zoom into
 the area where the points are is suggested in this case. </p>
 <p>For large data sets (thousands of data points) it is suggested to
 zoom into a smaller representative area and test whether the parameters
