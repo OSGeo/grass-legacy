@@ -21,18 +21,22 @@
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/glocale.h>
-#include "local_proto.h"
 #include <string.h>
+
+#define MAIN
+#include "local_proto.h"
 
 int main(int argc, char *argv[])
 {
     FILE *ascii;
     struct Option *input, *output, *type_opt, *dp_opt, *layer_opt;
+    struct Flag *coorcorr;
     int *types = NULL, typenum = 0, dp, i;
     struct Map_info Map;
     struct GModule *module;
     int layer;
-
+    struct Cell_head region;
+    
     G_gisinit(argv[0]);
 
     module = G_define_module();
@@ -67,6 +71,10 @@ int main(int argc, char *argv[])
     layer_opt->answer = "1";
     layer_opt->description = _("Layer number");
 
+    coorcorr = G_define_flag();                                            
+    coorcorr->key = 'c';                                                   
+    coorcorr->description = _("Correct the coordiantes to fit the VTK precision");
+    
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
@@ -107,6 +115,20 @@ int main(int argc, char *argv[])
 	    break;
 	}
 	i++;
+    }
+
+    /*Correct the coordinates, so the precision of VTK is not hurt :( */
+    if(coorcorr->answer){
+       /*Get the default region for coordiante correction*/
+       G_get_default_window(&region);
+
+       /*Use the center of the current region as extent*/
+       y_extent = (region.north + region.south)/2;
+       x_extent = (region.west + region.east)/2;
+    } else
+    {
+       x_extent = 0;
+       y_extent = 0;
     }
 
     /*We need level 2 functions */

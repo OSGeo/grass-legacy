@@ -627,9 +627,9 @@ void writePointCoordinates(struct line_pnts *Points, int dp, FILE * ascii)
     zptr = Points->z;
 
     while (Points->n_points--) {
-	G_asprintf(&xstring, "%.*f", dp, *xptr++);
+	G_asprintf(&xstring, "%.*f", dp, *xptr++ - x_extent);
 	G_trim_decimal(xstring);
-	G_asprintf(&ystring, "%.*f", dp, *yptr++);
+	G_asprintf(&ystring, "%.*f", dp, *yptr++ - y_extent);
 	G_trim_decimal(ystring);
 	G_asprintf(&zstring, "%.*f", dp, *zptr++);
 	G_trim_decimal(zstring);
