@@ -18,6 +18,7 @@
 #ifndef __R3_OUT_VTK_GLOBALDEFS_H__
 #define __R3_OUT_VTK_GLOBALDEFS_H__
 
+
 typedef struct
 {
     /*G3D maps */
@@ -39,5 +40,13 @@ typedef struct
     int bottomMapType;
 
 } inputMaps;
+
+#ifdef MAIN
+double x_extent;
+double y_extent;
+#else
+extern double x_extent; 
+extern double y_extent; 
+#endif
 
 #endif

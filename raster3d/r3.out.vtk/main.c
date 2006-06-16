@@ -21,14 +21,15 @@
 #include <grass/gis.h>
 #include <grass/G3d.h>
 #include <grass/glocale.h>
+
+#define MAIN
 #include "globalDefs.h"
+#include "parameters.h"
+
+
 #include "writeVTKData.h"
 #include "writeVTKHead.h"
 #include "errorHandling.h"
-
-#define MAIN
-#include "parameters.h"
-
 
 /** prototypes ***************************************************************/
 
@@ -356,6 +357,7 @@ int main(int argc, char *argv[])
     char *output = NULL;
     G3D_Region region;
     struct Cell_head window2d;
+    struct Cell_head default_region;
     FILE *fp = NULL;
     struct GModule *module;
     int dp, i, changemask = 0;
@@ -390,6 +392,20 @@ int main(int argc, char *argv[])
 
     /*Check the input */
     CheckInputMaps();
+   
+    /*Correct the coordinates, so the precision of VTK is not hurt :( */
+    if(param.coorcorr->answer){
+       /*Get the default region for coordiante correction*/
+       G_get_default_window(&default_region);
+
+       /*Use the center of the current region as extent*/
+       y_extent = (default_region.north + default_region.south)/2;
+       x_extent = (default_region.west + default_region.east)/2;
+    } else
+    {
+       x_extent = 0;
+       y_extent = 0;
+    }
 
     /*open the output */
     if (param.output->answer) {

@@ -36,6 +36,15 @@ to 0 and warnings will be printed to stderr.
 The vector data is created from three g3d maps. Each map represents a vector component.
 So x, y and z components are required in this order! This data can be visualized with Glyph3d or 
 StreamTracer filters within Paraview.
+<br>
+<br>
+If the "-c" flag is used and the data should be visualised together with other data exported via *.out.vtk
+modules, be sure the "-c" flag was also set in these modules.
+But this will only work with data from the SAME location 
+(The reference point for the coordinates transformation is based on the default region).
+<br>
+<br>
+
 
 <H3>Difference between point- and celldata</H3>
 
