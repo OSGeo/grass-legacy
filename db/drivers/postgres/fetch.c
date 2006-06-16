@@ -91,6 +91,7 @@ db__driver_fetch (dbCursor *cn, int position, int *more)
 		db_set_string ( &(value->s),  PQgetvalue(c->res, c->row, col) );
 		break;
 
+	    case PG_TYPE_BIT:
 	    case PG_TYPE_INT2:
 	    case PG_TYPE_INT4:
 	    case PG_TYPE_INT8:

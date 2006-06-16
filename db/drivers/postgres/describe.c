@@ -162,6 +162,7 @@ int get_column_info ( PGresult *res, int col, int *pgtype, int *gpgtype, int *sq
     
     /* TODO: we should load field names from pg_type table instead of using copy of #defines */
     switch ( *gpgtype) {
+	case PG_TYPE_BIT:
 	case PG_TYPE_INT2:
 	case PG_TYPE_INT4:
 	case PG_TYPE_INT8:

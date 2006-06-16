@@ -77,7 +77,7 @@ int db__driver_open_database (dbHandle *handle)
 
     /* Read internal codes */
     res = PQexec(pg_conn, "select oid, typname from pg_type where typname in ( "
-	         "'int2', 'int4', 'int8', 'serial', 'oid', "
+	         "'bit', 'int2', 'int4', 'int8', 'serial', 'oid', "
 		 "'float4', 'float8', 'numeric', "
 		 "'char', 'bpchar', 'varchar', 'text', "
 		 "'time', 'date', 'timestamp', "
@@ -100,8 +100,10 @@ int db__driver_open_database (dbHandle *handle)
 
 	pg_types[row][0] = pgtype;	
 
-	if ( strcmp( PQgetvalue(res, row, 1), "int2" ) == 0 )
-	    type = PG_TYPE_INT2;
+	if ( strcmp( PQgetvalue(res, row, 1), "bit" ) == 0 )
+	    type = PG_TYPE_BIT;
+	else if ( strcmp( PQgetvalue(res, row, 1), "int2" ) == 0 )
+            type = PG_TYPE_INT2;
 	else if ( strcmp( PQgetvalue(res, row, 1), "int4" ) == 0 )
 	    type = PG_TYPE_INT4;
 	else if ( strcmp( PQgetvalue(res, row, 1), "int8" ) == 0 )

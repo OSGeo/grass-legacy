@@ -16,7 +16,7 @@ Because of this, type codes must be read from server when database is opened.
 
 Supported types:
 DB_C_TYPE_INT:
-int2, smallint, int4, int, integer, int8, bigint, serial, oid
+bit, int2, smallint, int4, int, integer, int8, bigint, serial, oid
 
 DB_C_TYPE_DOUBLE:
 float4, real, float8, double precision, numeric, decimal
