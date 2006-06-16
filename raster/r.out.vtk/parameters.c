@@ -124,6 +124,11 @@ void SetParameters()
 	("Create VTK point data instead of VTK cell data (if no elevation map is given)");
 
 
+    param.coorcorr = G_define_flag();                                            
+    param.coorcorr->key = 'c';                                                   
+    param.coorcorr->description = _("Correct the coordiantes to fit the VTK precision");
+    
+
     /* 
      * param.mask = G_define_flag ();
      * param.mask->key = 'm';

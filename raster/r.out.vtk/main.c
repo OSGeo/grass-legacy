@@ -20,11 +20,11 @@
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
-#include "globaldefs.h"
 #include "writeascii.h"
 
 #define MAIN
 #include "parameters.h"
+#include "globaldefs.h"
 
 /*local protos */
 void CheckInputMaps();
@@ -128,6 +128,7 @@ void CheckInputMaps()
 int main(int argc, char *argv[])
 {
     struct Cell_head region;
+    struct Cell_head default_region;
     FILE *fp = NULL;
     struct GModule *module;
     int i = 0, polytype = 0;
@@ -166,6 +167,20 @@ int main(int argc, char *argv[])
 
     /*Check the input maps */
     CheckInputMaps();
+    
+    /*Correct the coordinates, so the precision of VTK is not hurt :( */
+    if(param.coorcorr->answer){
+       /*Get the default region for coordiante correction*/
+       G_get_default_window(&default_region);
+
+       /*Use the center of the current region as extent*/
+       y_extent = (default_region.north + default_region.south)/2;
+       x_extent = (default_region.west + default_region.east)/2;
+    } else
+    {
+       x_extent = 0;
+       y_extent = 0;
+    }
 
     /* Figure out the region from the map */
     G_get_window(&region);

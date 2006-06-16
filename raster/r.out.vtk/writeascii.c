@@ -86,10 +86,10 @@ writeVTKNormalHeader(FILE * fp, struct Cell_head region, double elevation,
     fprintf(fp, "SPACING %lf %lf %lf\n", region.ew_res, region.ns_res, 0.0);
 
     if (type)
-	fprintf(fp, "ORIGIN %lf %lf %lf\n", region.west + region.ew_res / 2,
-		region.south + region.ns_res / 2, elevation);
+	fprintf(fp, "ORIGIN %lf %lf %lf\n", (region.west + region.ew_res / 2) - x_extent,
+		(region.south + region.ns_res / 2) - y_extent, elevation);
     else
-	fprintf(fp, "ORIGIN %lf %lf %lf\n", region.west, region.south,
+	fprintf(fp, "ORIGIN %lf %lf %lf\n", region.west - x_extent, region.south - y_extent,
 		elevation);
 
 }
@@ -182,10 +182,12 @@ writeVTKStructuredCoordinates(int fd, FILE * fp, char *varname,
 	}
 
 	nspos = region.ns_res / 2 + region.south + rowcount * region.ns_res;
+	nspos -= y_extent; 
 
 	for (col = 0, ptr = raster; col < ncols;
 	     col++, ptr = G_incr_void_ptr(ptr, G_raster_size(out_type))) {
 	    ewpos = region.ew_res / 2 + region.west + colcount * region.ew_res;
+	    ewpos -= x_extent;
 
 	    value = GetRasterValueAsDouble(out_type, ptr, nullvalue);
 	    fprintf(fp, "%9f %9f %9f\n", ewpos, nspos, value);
@@ -237,10 +239,12 @@ writeVTKPolygonalCoordinates(int fd, FILE * fp, char *varname,
 	}
 
 	nspos = region.ns_res / 2 + region.south + rowcount * region.ns_res;
+	nspos -= y_extent; 
 
 	for (col = 0, ptr = raster; col < ncols;
 	     col++, ptr = G_incr_void_ptr(ptr, G_raster_size(out_type))) {
 	    ewpos = region.ew_res / 2 + region.west + colcount * region.ew_res;
+	    ewpos -= x_extent;
 
 	    value = GetRasterValueAsDouble(out_type, ptr, nullvalue);
 	    fprintf(fp, "%9f %9f %9f\n", ewpos, nspos, value);
