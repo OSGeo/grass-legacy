@@ -159,6 +159,9 @@ void writeVTKPoints(inputMaps * in, FILE * fp, G3D_Region region, int dp,
 			(bottomval +
 			 z * (topval - bottomval) / (depths - 1)) * scale;
 
+		    xcoor -= x_extent;
+		    ycoor -= y_extent;
+
 		    fprintf(fp, "%.*f ", dp, xcoor);
 		    fprintf(fp, "%.*f ", dp, ycoor);
 		    fprintf(fp, "%.*f\n", dp, zcoor);
@@ -184,6 +187,14 @@ void writeVTKPoints(inputMaps * in, FILE * fp, G3D_Region region, int dp,
 		    xcoor1 = region.west + (region.ew_res + region.ew_res * (x));	/*1, 2, 5, 6 */
 		    ycoor1 = region.north - (region.ns_res + region.ns_res * (y));	/*0, 1, 4, 5 */
 		    zcoor1 = (bottomval + z * (topval - bottomval) / (depths) + (topval - bottomval) / (depths)) * scale;	/*4, 5, ,6 ,7 */
+
+		    xcoor -= x_extent;
+		    ycoor -= y_extent;
+
+		    xcoor1 -= x_extent;
+		    ycoor1 -= y_extent;
+
+
 		    /*0 */
 		    fprintf(fp, "%.*f ", dp, xcoor);
 		    fprintf(fp, "%.*f ", dp, ycoor1);

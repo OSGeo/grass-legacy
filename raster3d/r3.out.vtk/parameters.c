@@ -122,6 +122,10 @@ void SetParameters()
 	_
 	("Create 3d elevation output with a top and a bottom surface, both raster maps are required.");
 
+    param.coorcorr = G_define_flag();                                            
+    param.coorcorr->key = 'c';                                                   
+    param.coorcorr->description = _("Correct the coordinates to fit the VTK-OpenGL precision");
+    
     /* Maybe needed in the future
      * param.xml = G_define_flag ();
      * param.xml->key = 'x';

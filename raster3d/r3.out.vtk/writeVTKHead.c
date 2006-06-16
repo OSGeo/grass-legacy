@@ -61,22 +61,22 @@ void writeVTKStructuredPointHeader(FILE * fp, char *vtkFile, G3D_Region region,
     if (param.point->answer) {
 	if (param.origin->answer)
 	    fprintf(fp, "ORIGIN %.*f %.*f %.*f\n", dp,
-		    region.west + region.ew_res / 2, dp,
-		    region.south + region.ns_res / 2, dp,
+		    (region.west + region.ew_res / 2) - x_extent, dp,
+		    (region.south + region.ns_res / 2) - y_extent, dp,
 		    region.bottom * scale + (region.tb_res * scale) / 2);
 	else
 	    fprintf(fp, "ORIGIN %.*f %.*f %.*f\n", dp,
-		    region.west + region.ew_res / 2, dp,
-		    region.south + region.ns_res / 2, dp,
+		    (region.west + region.ew_res / 2) - x_extent, dp,
+		    (region.south + region.ns_res / 2) - y_extent, dp,
 		    region.bottom + (region.tb_res * scale) / 2);
     }
     else {
 	if (param.origin->answer)
-	    fprintf(fp, "ORIGIN %.*f %.*f %.*f\n", dp, region.west, dp,
-		    region.south, dp, region.bottom * scale);
+	    fprintf(fp, "ORIGIN %.*f %.*f %.*f\n", dp, region.west - x_extent, dp,
+		    region.south - y_extent, dp, region.bottom * scale);
 	else
-	    fprintf(fp, "ORIGIN %.*f %.*f %.*f\n", dp, region.west, dp,
-		    region.south, dp, region.bottom);
+	    fprintf(fp, "ORIGIN %.*f %.*f %.*f\n", dp, region.west - x_extent, dp,
+		    region.south - y_extent, dp, region.bottom);
     }
 
     if (param.point->answer)
