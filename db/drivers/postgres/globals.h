@@ -19,7 +19,8 @@ typedef struct {
 typedef enum {     /* name in pg_type, aliases */
   PG_TYPE_UNKNOWN,  /* all types not supported by GRASS */
 
-  PG_TYPE_INT2,	    /* int2,	smallint */
+  PG_TYPE_BIT,       /* bit */
+  PG_TYPE_INT2,      /* int2,	smallint */
   PG_TYPE_INT4,      /* int4,	integer, int */
   PG_TYPE_INT8,      /* int8,	bigint */
   PG_TYPE_SERIAL,    /* serial */
