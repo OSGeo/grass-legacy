@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 
     coorcorr = G_define_flag();                                            
     coorcorr->key = 'c';                                                   
-    coorcorr->description = _("Correct the coordiantes to fit the VTK precision");
+    coorcorr->description = _("Correct the coordinates to fit the VTK-OpenGL precision");
     
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);

@@ -30,6 +30,18 @@ will be exported.
 Note that you can easily convert your 2d vectors into 3d vectors with v.drape.
 <br>
 <br>
+Because of the 32bit limits of OpenGL which is used by VTK, visualisation errors may occure if
+the grass region contains coordinates greater than 1.000.000 and vector coordinates
+with 0.01 - 0.001 meters precisison. For this reason, the flag "-c" was added. The coordiantes are 
+transformed to smaller coordinates (by decreasing the coordiantes with the region center).
+<br>
+<br>
+If the "-c" flag is used and the data should be visualised together with other data exported via *.out.vtk
+modules, be sure the "-c" flag was also set in these modules. 
+But this will only work with data from the SAME location 
+(The reference point for the coordinates transformation is based on the default region).
+<br>
+<br>
 The GRASS vector data is converted into the polydata format of VTK: 
 
 <ul>

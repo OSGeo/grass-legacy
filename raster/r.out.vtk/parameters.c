@@ -126,7 +126,7 @@ void SetParameters()
 
     param.coorcorr = G_define_flag();                                            
     param.coorcorr->key = 'c';                                                   
-    param.coorcorr->description = _("Correct the coordiantes to fit the VTK precision");
+    param.coorcorr->description = _("Correct the coordinates to fit the VTK-OpenGL precision");
     
 
     /* 
