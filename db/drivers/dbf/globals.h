@@ -2,6 +2,15 @@
 
 #define DBF_COL_NAME 20 /* maximum column name (in fact shouldn't be > 10) */
 
+/* 
+* DBF API:      http://shapelib.maptools.org/dbf_api.html
+*            or ../../../lib/external/shapelib/shapefil.h
+*
+* DBFFieldType: FTString, FTInteger, FTDouble, FTLogical, FTInvalid
+*                  0          1          2         4         5
+*                DBF_CHAR   DBF_INT   DBF_DOUBLE
+*                  1          2          3
+*/
 #define DBF_CHAR   1
 #define DBF_INT    2
 #define DBF_DOUBLE 3
