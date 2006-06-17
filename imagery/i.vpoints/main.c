@@ -190,7 +190,7 @@ Curses_write_window (PROMPT_WINDOW,2,12,G_location());
     if (fatal)
 	quit(1);
     Mouse_pointer (&x, &y, &button);
-Curses_clear_window (PROMPT_WINDOW);
-    system("d.frame -s full_screen");
+    Curses_clear_window (PROMPT_WINDOW);
+
     return 0;
 }
