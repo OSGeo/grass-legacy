@@ -1,6 +1,7 @@
 #include <string.h>
 #include <grass/raster.h>
 #include <grass/display.h>
+#include <grass/colors.h>
 #include "vectpoints.h"
 #include <grass/Vect.h>
 #include "globals.h"
@@ -268,27 +269,27 @@ static int choose_vectfile(char *name, char *mapset)
 static int get_clr_name(char *name, int clr)
 {
     switch (clr) {
-    case 5:			/* BLUE */
+    case BLUE:
 	strcpy(name, "blue");
 	break;
 
-    case 10:			/* GRAY */
+    case GRAY:
 	strcpy(name, "gray");
 	break;
 
-    case 4:			/* GREEN */
+    case GREEN:
 	strcpy(name, "green");
 	break;
 
-    case 1:			/* RED */
+    case RED:
 	strcpy(name, "red");
 	break;
 
-    case 8:			/* WHITE */
+    case WHITE:
 	strcpy(name, "white");
 	break;
 
-    case 3:			/* YELLOW */
+    case YELLOW:
 	strcpy(name, "yellow");
 	break;
     }

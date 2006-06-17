@@ -1,5 +1,6 @@
 #include "globals.h"
 #include <grass/display.h>
+#include <grass/colors.h>
 
 static int use = 1;
 static int set_blue(void);
@@ -129,35 +130,29 @@ static int set_cur_clr(int curs_color)
     
     switch(curs_color)
 	{
-	case 5:    /* BLUE */
+	case BLUE:
+	    G_add_color_rule((CELL)241, 90,  90, 200, (CELL)241, 90,  90, 200, colors);
+	    break;
 
-    G_add_color_rule((CELL)241, 90,  90, 200, (CELL)241, 90,  90, 200, colors);
-	break;
+	case GRAY:
+	    G_add_color_rule((CELL)241,180, 180, 180, (CELL)241,180, 180, 180, colors);
+	    break;
 
-	case 10:   /* GRAY */
+	case GREEN:
+	    G_add_color_rule((CELL)241, 90, 200,  90, (CELL)241, 90, 200,  90, colors);
+	    break;
 
-    G_add_color_rule((CELL)241,180, 180, 180, (CELL)241,180, 180, 180, colors);
-	break;
+	case RED:
+	    G_add_color_rule((CELL)241,200,  90,  90, (CELL)241,200,  90,  90, colors);
+	    break;
 
-	case 4:    /* GREEN */
+	case WHITE:
+	    G_add_color_rule((CELL)241,250, 250, 250, (CELL)241,250, 250, 250, colors);
+	    break;
 
-    G_add_color_rule((CELL)241, 90, 200,  90, (CELL)241, 90, 200,  90, colors);
-	break;
-
-	case 1:    /* RED */
-
-    G_add_color_rule((CELL)241,200,  90,  90, (CELL)241,200,  90,  90, colors);
-	break;
-
-	case 8:    /* WHITE */
-
-    G_add_color_rule((CELL)241,250, 250, 250, (CELL)241,250, 250, 250, colors);
-	break;
-
-	case 3:   /* YELLOW */
-
-    G_add_color_rule((CELL)241,200, 200,  10, (CELL)241,200, 200,  10, colors);
-	break;
+	case YELLOW:
+	    G_add_color_rule((CELL)241,200, 200,  10, (CELL)241,200, 200,  10, colors);
+	    break;
     }
 
     set_colors (colors);
