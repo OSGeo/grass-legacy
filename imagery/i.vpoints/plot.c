@@ -12,7 +12,6 @@ int plot (char *name, char *mapset, struct line_pnts *Points)
     int line, nlines;
     struct Cell_head window;
     struct Map_info P_map;
-    char msg[100];
 
     Vect_set_open_level (2);
     Vect_set_fatal_error ( GV_FATAL_RETURN );

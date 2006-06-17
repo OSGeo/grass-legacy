@@ -45,6 +45,8 @@ error:
     strcat (buf, "Please run i.target for group ");
     strcat (buf, group.name);
     G_fatal_error (buf);
+
+    return -1;
 }
 
 int select_current_env (void)
