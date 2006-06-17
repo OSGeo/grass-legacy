@@ -1,13 +1,15 @@
-#define GLOBAL
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
 #include <grass/gis.h>
-#include "globals.h"
-#include "local_proto.h"
 #include <grass/raster.h>
 #include <grass/glocale.h>
+
+#define GLOBAL
+#include "globals.h"
+#include "local_proto.h"
+
 
 #ifdef __GNUC_MINOR__
 int quit (int) __attribute__ ((__noreturn__));
@@ -21,24 +23,24 @@ int main (int argc, char *argv[])
     char name[GNAME_MAX], mapset[GMAPSET_MAX];
     struct Cell_head cellhd;
     struct GModule *module;
-/*    struct Option *grp; */
+    struct Option *grp;
 
     G_gisinit (argv[0]);
     
     module = G_define_module();
     module->description =
 	_("Mark ground control points on image to be rectified.");
-/* Disable parser code for now as we must launch 
+
     grp = G_define_option();
     grp->key		 = "group";
     grp->type		 =  TYPE_STRING;
     grp->required	 =  YES;
     grp->gisprompt	 = "old,group,group";
-    grp->description	 = _("Name of imagery group");
+    grp->description	 = _("Name of imagery group to be registered");
 
     if (G_parser(argc,argv))
-	exit(1);
-*/
+	exit(EXIT_FAILURE);
+
 
     G_suppress_masking();	/* need to do this for target location */
 
@@ -51,26 +53,17 @@ int main (int argc, char *argv[])
     digit_points = G_tempfile();
     digit_results = G_tempfile();
 
-   if (R_open_driver() != 0)
+    if (R_open_driver() != 0)
 	G_fatal_error(_("No graphics device selected"));
 
-/*    group.name = grp->answer; */
-/* temporary parser code: */
-    if(argc == 2) {
-	strncpy(group.name, argv[1], GNAME_MAX);
-	if(group.name[0] == '-')
-	    G_fatal_error("The parser doesn't work here.");
-    }
-    else {
-	if (!I_ask_group_old ("Enter imagery group to be registered", group.name))
-	    exit(0);
-    }
+    strncpy(group.name, grp->answer, GNAME_MAX-1);
+    group.name[GNAME_MAX-1] = '\0'; /* strncpy() doesn't null terminate on overflow */
 
     if (!I_get_group_ref (group.name, &group.ref))
-	G_fatal_error(_("Group [%s] contains no files"), group.name);
+	G_fatal_error(_("Group [%s] contains no maps, run i.group"), group.name);
 
     if (group.ref.nfiles <= 0)
-	G_fatal_error(_("Group [%s] contains no files"), group.name);
+	G_fatal_error(_("Group [%s] contains no maps, run i.group"), group.name);
 
 /* write group files to group list file */
     prepare_group_list();
@@ -166,22 +159,24 @@ int error (char *msg, int fatal)
     char buf[200];
     int x,y,button;
 
-Curses_clear_window (PROMPT_WINDOW);
-Curses_write_window (PROMPT_WINDOW,1,1, "LOCATION:\n");
-Curses_write_window (PROMPT_WINDOW,1,12,G_location());
-Curses_write_window (PROMPT_WINDOW,2,1, "MAPSET:\n");
-Curses_write_window (PROMPT_WINDOW,2,12,G_location());
+    Curses_clear_window (PROMPT_WINDOW);
+    Curses_write_window (PROMPT_WINDOW,1,1, "LOCATION:\n");
+    Curses_write_window (PROMPT_WINDOW,1,12,G_location());
+    Curses_write_window (PROMPT_WINDOW,2,1, "MAPSET:\n");
+    Curses_write_window (PROMPT_WINDOW,2,12,G_location());
+
     Beep();
     if (fatal)
-	sprintf (buf, "ERROR: %s", msg);
+	sprintf (buf, _("ERROR: %s"), msg);
     else
-	sprintf (buf, "WARNING: %s (click mouse to continue)", msg);
+	sprintf (buf, _("WARNING: %s (click mouse to continue)"), msg);
     Menu_msg (buf);
 
     if (fatal)
 	quit(1);
+
     Mouse_pointer (&x, &y, &button);
-Curses_clear_window (PROMPT_WINDOW);
+    Curses_clear_window (PROMPT_WINDOW);
 
     return 0;
 }
