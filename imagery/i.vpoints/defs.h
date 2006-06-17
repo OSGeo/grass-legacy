@@ -1,4 +1,5 @@
 #include <curses.h>
+#include <grass/gis.h>
 #include <grass/imagery.h>
 
 /* this is a curses structure */
@@ -17,8 +18,8 @@ typedef struct
 	int configured;
 	struct Cell_head head;
 	struct Colors colors;
-	char name[100];
-	char mapset[100];
+	char name[GNAME_MAX];
+	char mapset[GMAPSET_MAX];
 	int top, bottom ,left, right;
 	double ew_res, ns_res;	/* original map resolution */
     } cell;
@@ -37,7 +38,7 @@ typedef struct
 
 typedef struct
 {
-    char name[100];
+    char name[GNAME_MAX];
     struct Ref ref;
     struct Control_Points points;
     double E12[10], N12[10], E21[10], N21[10];

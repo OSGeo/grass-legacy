@@ -18,17 +18,39 @@ VERSION DATE: 6-30-92
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 #include <signal.h>
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/glocale.h>
 #define GLOBAL
 #include "globals.h"
-#include <grass/raster.h>
 
 int main (int argc, char *argv[])
 {
-    char name[100], mapset[100];
+    char name[GNAME_MAX], mapset[GMAPSET_MAX];
     struct Cell_head cellhd;
+    struct Option *grp;
+    struct GModule *module;
 
     G_gisinit (argv[0]);
+
+    module = G_define_module();
+    module->description =
+      _("Set registration points for an imagery group from a vector map "
+        "or keyboard entry.");
+
+    grp = G_define_option();
+    grp->key		 = "group";
+    grp->type		 =  TYPE_STRING;
+    grp->required	 =  YES;
+    grp->gisprompt	  = "old,group,group";
+    grp->description	 = _("Name of imagery group to be registered");
+
+    if (G_parser(argc, argv))
+	exit(EXIT_FAILURE);
+
+
     G_suppress_masking();    /* to do this for target location */
 
     interrupt_char = G_intr_char();
@@ -42,16 +64,16 @@ int main (int argc, char *argv[])
 
     R_open_driver();
 
-    if (!I_ask_group_old ("Enter imagery group to be registered", group.name))
-	exit(0);
+
+    strncpy(group.name, grp->answer, GNAME_MAX-1);
+    group.name[GNAME_MAX-1] = '\0'; /* strncpy() doesn't null terminate on overflow */
+
     if (!I_get_group_ref (group.name, &group.ref))
-	exit(1);
+	G_fatal_error(_("Group [%s] contains no maps, run i.group"), group.name);
+
     if (group.ref.nfiles <= 0)
-    {
-	fprintf (stderr, "Group [%s] contains no files\n", group.name);
-	sleep(3);
-	exit(1);
-    }
+	G_fatal_error(_("Group [%s] contains no maps, run i.group"), group.name);
+
 /* write group files to group list file */
     prepare_group_list();
 
@@ -160,9 +182,9 @@ Curses_write_window (PROMPT_WINDOW,2,1, "MAPSET:\n");
 Curses_write_window (PROMPT_WINDOW,2,12,G_location());
     Beep();
     if (fatal)
-	sprintf (buf, "ERROR: %s", msg);
+	sprintf (buf, _("ERROR: %s"), msg);
     else
-	sprintf (buf, "WARNING: %s (click mouse to continue)", msg);
+	sprintf (buf, _("WARNING: %s (click mouse to continue)"), msg);
     Menu_msg (buf);
 
     if (fatal)

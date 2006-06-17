@@ -28,7 +28,6 @@ typedef struct
 
 typedef struct
 {
-    /* char *name; */
     char name[GNAME_MAX];
     struct Ref ref;
     struct Control_Points points;
