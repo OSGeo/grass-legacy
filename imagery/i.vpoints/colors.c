@@ -1,7 +1,6 @@
 #include <grass/display.h>
 #include "globals.h"
 
-static int use = 1;
 static int set_blue(void);
 static int set_gray(void);
 static int set_green(void);
