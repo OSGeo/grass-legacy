@@ -169,7 +169,7 @@ int quit (int n)
     unlink (digit_points);
     unlink (digit_results);
 
-    system("d.frame -s full_screen");
+    system("d.frame -s full_screen -e");
 
     exit(n);
 }
