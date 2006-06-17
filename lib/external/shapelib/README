@@ -1,7 +1,10 @@
 Update history:
 
  - This version of shapelib is taken from GDAL 1.2.6 (2005)
-   including GDAL bugfix #809 (http://208.24.120.44/show_bug.cgi?id=809)
+   including GDAL bugfix #809 (http://bugzilla.remotesensing.org/show_bug.cgi?id=809)
 
- - This version of shapelib is taken from GDAL 1.1.9 (2003)
+ - Use <grass/shapefil.h> etc rather than "shapefil.h"
+   in both shpopen.c and dbfopen.c
+
+ - This version of shapelib is taken from GDAL 1.3.2-CVS (Jun 17 14:42:13 CEST 2006)
 
