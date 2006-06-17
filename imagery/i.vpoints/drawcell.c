@@ -79,7 +79,11 @@ int drawcell (View *view, int initflag)
 	repeat = G_row_repeat_nomask (fd, row);
 	D_d_raster (dcell, ncols, repeat, colors);
     }
-    cellmap_present=1; /* for drawcell */
+
+    /* only set if cell is on the target side (always a group map on the source side) */
+    if (view == VIEW_MAP2 || view == VIEW_MAP2_ZOOM)
+	cellmap_present=1; /* for drawcell */
+
     G_close_cell (fd);
     G_free (dcell);
 
