@@ -1,3 +1,4 @@
+#include <grass/colors.h>
 #include "defs.h"
 
 #ifndef GLOBAL
@@ -53,23 +54,6 @@ GLOBAL int  dotsize INIT(4);
 
 GLOBAL int line_color;
 
-#ifndef WHITE
-/* I think that this is wrong....  WB Hughes, 02/13/1999 */
-/* It's #ifdef-ed so that it won't conflict with the color 
-    definitions in dig_struct.h	*/
-GLOBAL int THE_COLORS[10];
-#define BLACK	THE_COLORS[0]
-#define BLUE	THE_COLORS[1]
-#define BROWN	THE_COLORS[2]
-#define GREEN	THE_COLORS[3]
-#define GREY	THE_COLORS[4]
-#define ORANGE	THE_COLORS[5]
-#define PURPLE	THE_COLORS[6]
-#define RED	THE_COLORS[7]
-#define WHITE	THE_COLORS[8]
-#define YELLOW	THE_COLORS[9]
-#endif
-  
 /* analyze.c */
 int delete_control_point(int);
 int analyze(void);

@@ -1,7 +1,6 @@
 #include <string.h>
 #include <grass/raster.h>
 #include <grass/display.h>
-#include <grass/colors.h>
 #include "vectpoints.h"
 #include <grass/Vect.h>
 #include "globals.h"
