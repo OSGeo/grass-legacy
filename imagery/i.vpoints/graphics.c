@@ -57,18 +57,6 @@ Init_graphics (void)
     SCREEN_LEFT   = R_screen_left();
     SCREEN_RIGHT  = R_screen_rite();
 
-
-    BLACK  = D_translate_color ("black");
-    BLUE   = D_translate_color ("blue");
-    BROWN  = D_translate_color ("brown");
-    GREEN  = D_translate_color ("green");
-    GREY   = D_translate_color ("grey");
-    ORANGE = D_translate_color ("orange");
-    PURPLE = D_translate_color ("purple");
-    RED    = D_translate_color ("red");
-    WHITE  = D_translate_color ("white");
-    YELLOW = D_translate_color ("yellow");
-
     R_standard_color (WHITE);
 
     VIEW_TITLE1      = makeview (97.5, 100.0,  0.0,  50.0);
