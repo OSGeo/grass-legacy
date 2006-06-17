@@ -1,6 +1,6 @@
 Update history:
 
-This version of shapelib is taken from GDAL 1.3.2-CVS (Jun 17 14:42:13 CEST 2006)
+This version of shapelib is taken from GDAL 1.3.2-CVS (Sat Jun 17 22:08:04 CEST 2006)
  ogr/ogrsf_frmts/shape/
 
 Additional fixes:
@@ -9,4 +9,3 @@ Additional fixes:
  - Use <grass/shapefil.h> etc rather than "shapefil.h"
    in both shpopen.c and dbfopen.c
 
- - fixed C++ style comments in dbfopen.c
