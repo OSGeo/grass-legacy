@@ -409,7 +409,7 @@ set descmenu [subst  {
 	{cascad {[G_msg "Linear referencing for vectors"]} {} "" $tmenu {			
 		{command {[G_msg "Create linear reference system"]} {} "v.lrs.create" {} -command {execute v.lrs.create }}
 		{command {[G_msg "Create stationing from imput lines, and linear reference system"]} {} "v.lrs.label" {} -command {execute v.lrs.label }}
-		{command {[G_msg "Create points/segments from input lines, linear reference system and positions read from stdin" {} -command {execute v.lrs.segment }}
+		{command {[G_msg "Create points/segments from input lines, linear reference system and positions read from stdin"]} {} -command {execute v.lrs.segment }}
 		{command {[G_msg "Find line id and real km+offset for given points in vector map using linear reference system"]} {} "v.lrs.where" {} -command {execute v.lrs.where }}
 	}}
 	{cascad {[G_msg "Neighborhood analysis"]} {} "" $tmenu {			
