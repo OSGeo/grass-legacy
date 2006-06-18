@@ -477,17 +477,12 @@ Vect_delete ( char *map )
 	return -1;
     }
 
-    G_debug (3, "unlink directory '%s'", tmp );
-    ret = unlink ( tmp );
-
-    /* It seems that unlink fails if the directory is not empty (it should not)
-       but it is not such problem if temporary file is left there (it is empty) */
-    /* 
+    G_debug (3, "remove directory '%s'", tmp );
+    ret = remove ( tmp );
     if ( ret == -1 ) { 
-	G_warning ( "Cannot unlink directory '%s'", tmp );
+	G_warning ( "Cannot remove directory '%s'", tmp );
 	return -1;
     }
-    */
 
     return 0;
 }
