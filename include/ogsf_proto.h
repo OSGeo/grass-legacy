@@ -461,9 +461,6 @@ int gsd_get_txtheight(int size);
 void do_label_display(GLuint, float *, char *);
 int get_txtxoffset();
 
-/* From gsd_img.c */
-int GS_write_rgb(char *);
-
 /* From gsd_img_ppm.c */
 int GS_write_ppm(char *);
 int gsd_init_mpeg(char *);

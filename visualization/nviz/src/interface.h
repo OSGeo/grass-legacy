@@ -136,7 +136,6 @@ int Nshow_vect_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nshow_vol_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nshow_lab_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nshow_path_cmd(Nv_data *, Tcl_Interp *, int, char **);
-int Nwrite_rgb_cmd(Nv_data *, Tcl_Interp *, int, char **);
 /* change_view.c */
 int Nchange_persp_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nchange_position_cmd(Nv_data *, Tcl_Interp *, int, char **);

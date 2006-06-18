@@ -422,8 +422,6 @@ proc menu2 { menu } {
 	-tearoff 0
 
 	$menu add command \
-	-command dump_rgb -underline 0 -label "IRIS RGB Image" 
-	$menu add command \
 	-command dump_ppm -underline 0 -label "PPM Image"
 	$menu add command \
 	-command dump_tif -underline 0 -label "TIFF Image"
@@ -438,23 +436,6 @@ proc menu2 { menu } {
 	}	
 	} -underline 0 -label "Maximum Resolution PPM"
     }
-
-proc dump_rgb { } {
-    # This routine should use: Nwrite_rgb $fname
-    set fname [create_file_browser .file_browser 1]
-    # show we are busy
-    appBusy
-
-    if {$fname != -1} then {
-	if { [string compare [file extension $fname] ".rgb"] != 0 } then {
-	    append fname ".rgb"
-	}
-	Ndraw_all
-	Nwrite_rgb $fname
-    }
-    # show user can proceed
-    appNotBusy
-}
 
 proc dump_ppm { } {
     # This routine should use: Nwrite_ppm $fname

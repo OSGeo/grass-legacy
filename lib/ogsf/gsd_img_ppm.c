@@ -11,7 +11,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <grass/image.h>
 #include <grass/ogsf_proto.h>
 #include <grass/gstypes.h>
 
