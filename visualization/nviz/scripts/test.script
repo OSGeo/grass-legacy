@@ -32,7 +32,7 @@ for {set iloop2 0} {$iloop2 < 5} {incr iloop2} {
  SendScriptLine "Nsurf_draw_all"
  SendScriptLine "Nvect_draw_all"
  SendScriptLine "Nsite_draw_all"
- SendScriptLine "Nwrite_rgb timages[pad $Frame_Num].rgb"
+ SendScriptLine "Nwrite_ppm timages[pad $Frame_Num].ppm"
  incr Frame_Num
  after 1000
 }

@@ -1022,7 +1022,7 @@ proc build_standalone_script {} {
     puts $file_hook " SendScriptLine \"Nsurf_draw_all\""
     puts $file_hook " SendScriptLine \"Nvect_draw_all\""
     puts $file_hook " SendScriptLine \"Nsite_draw_all\""
-    puts $file_hook " SendScriptLine \"Nwrite_rgb $Build_Image_Name\[pad \$Frame_Num\].rgb\""
+    puts $file_hook " SendScriptLine \"Nwrite_ppm $Build_Image_Name\[pad \$Frame_Num\].ppm\""
     puts $file_hook " incr Frame_Num"
     puts $file_hook " after 1000"
     puts $file_hook "}\n"

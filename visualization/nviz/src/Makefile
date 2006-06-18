@@ -35,8 +35,6 @@ else
 EXTRA_CFLAGS += -DUSE_X11=0
 endif
 
-IMGLIB= $(IMAGELIB)
-
 XTRA_LDFLAGS=$(TCLTKLIBPATH) $(TCLTKLIBS) $(OGL_LIBS)
 
 OBJS = nvizAppInit.o change_view.o draw.o exag.o glwrappers.o \
@@ -62,7 +60,7 @@ default: $(BIN)/$(PGM) htmlcmd
 #	touch nviz_init.c
 
 $(BIN)/$(PGM): $(ARCH_OBJS) $(VECTDEP) $(BITMAPDEP) $(LINKMDEP) $(FORMDEP) $(DBMIDEP $(GISDEP)
-	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(FMODE_OBJ) $(SURFLIB) $(IMGLIB) \
+	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(FMODE_OBJ) $(SURFLIB) \
 	$(BITMAPLIB) $(LINKMLIB) $(VECTLIB) $(SITESLIB) $(FORMLIB) $(DBMILIB) \
 	$(G3DLIB) $(GISLIB) $(XDRLIB) \
 	$(DATETIMELIB) $(XTRA_LDFLAGS) $(TIFFLIBPATH) $(TIFFLIB) \

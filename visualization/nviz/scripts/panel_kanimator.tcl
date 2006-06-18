@@ -1801,10 +1801,6 @@ proc keyanimSaveFrame { fnum } {
 
 inform "Saving Frame $num of [expr int($max_time*$keyanimFrameRate)]"
 
-if {$IMG == 1} {
-    append fname $num ".rgb"
-    Nwrite_rgb $fname
-        }
 if {$IMG == 2} {
         append fname $num ".ppm"
         Nwrite_ppm $fname

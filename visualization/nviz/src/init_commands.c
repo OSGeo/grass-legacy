@@ -101,7 +101,6 @@ Nshow_lab_cmd(),
 Ndelete_key_cmd(),
 Nmove_key_cmd(),
 Nprint_keys_cmd(),
-Nwrite_rgb_cmd(),
 Nwrite_ppm_cmd(),
 Nwrite_tif_cmd(),
 Ninit_mpeg_cmd(),
@@ -325,7 +324,6 @@ int init_commands(Tcl_Interp * interp, Nv_data * data)
     Tcl_CreateCommand(interp, "Ndelete_key", (Tcl_CmdProc *)Ndelete_key_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nmove_key", (Tcl_CmdProc *)Nmove_key_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nprint_keys", (Tcl_CmdProc *)Nprint_keys_cmd, data, NULL);
-    Tcl_CreateCommand(interp, "Nwrite_rgb", (Tcl_CmdProc *)Nwrite_rgb_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nwrite_ppm", (Tcl_CmdProc *)Nwrite_ppm_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nwrite_tif", (Tcl_CmdProc *)Nwrite_tif_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Ninit_mpeg", (Tcl_CmdProc *)Ninit_mpeg_cmd, data, NULL);

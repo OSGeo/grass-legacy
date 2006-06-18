@@ -864,7 +864,6 @@ proc animRunAndSave { BASE } {
     radiobutton .ras_fname.fancy -text "Full Rendering" -variable animSaveRenderStyle -value 1
     button .ras_fname.ok -text "Ok" -command "set animWaitPress true"
     label .ras_fname.label -text "" -relief raised
-    radiobutton .ras_fname.img1 -text "Iris RGB" -variable IMG -value 1
     radiobutton .ras_fname.img2 -text "PPM" -variable IMG -value 2
     radiobutton .ras_fname.img3 -text "TIFF" -variable IMG -value 3
     radiobutton .ras_fname.img4 -text "MPEG-1" -variable IMG -value 4
@@ -914,10 +913,6 @@ proc animSaveFrame { fnum } {
 	set num 0$num
     }
 
-if {$IMG == 1} {
-    append fname $num ".rgb"
-    Nwrite_rgb $fname
-	}
 if {$IMG == 2} {
 	append fname $num ".ppm"
 	Nwrite_ppm $fname
