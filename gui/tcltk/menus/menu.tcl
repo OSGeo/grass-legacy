@@ -48,6 +48,7 @@ proc GuiMenu::tree {} {
 	set dirName [set env(GISBASE)]/etc/gm/Xtns
 	set XtnsMenu "False"
 	set splitError "False"
+	set XtnsMenuList ""
 
 	if { [file exists $dirName] && [file isdirectory $dirName] } {	
 		lappend listNames "Dummy"; # we need this to check for num of elements later
@@ -68,7 +69,7 @@ proc GuiMenu::tree {} {
 					set splitLines [split $line "\r"]
 				}
 				# split up into individual lines for processing
-				foreach line $splitLines {				
+				foreach line $splitLines {
 					# strip off comments
 					set commentPos [string first "#" $line]
 					# 1.: leading comment
@@ -85,11 +86,13 @@ proc GuiMenu::tree {} {
 				set line [join $splitLinesDone]
 				# ... and append to list of submenus
 				lappend XtnsMenuList [subst {$line}]
+				set splitLinesDone ""
 				close $inputFile
 			}
 			set XtnsMenu "True"
 		}
 	}
+		
 
 # This is the menu. This is in the proc GuiMenu::tree. It's not indented for the
 # proc because the menu itself needs heavy indentation.
@@ -409,7 +412,7 @@ set descmenu [subst  {
 	{cascad {[G_msg "Linear referencing for vectors"]} {} "" $tmenu {			
 		{command {[G_msg "Create linear reference system"]} {} "v.lrs.create" {} -command {execute v.lrs.create }}
 		{command {[G_msg "Create stationing from imput lines, and linear reference system"]} {} "v.lrs.label" {} -command {execute v.lrs.label }}
-		{command {[G_msg "Create points/segments from input lines, linear reference system and positions read from stdin"]} {} -command {execute v.lrs.segment }}
+		{command {[G_msg "Create points/segments from input lines, linear reference system and positions read from stdin"]} {} "v.lrs.segment" {} -command {execute v.lrs.segment }}
 		{command {[G_msg "Find line id and real km+offset for given points in vector map using linear reference system"]} {} "v.lrs.where" {} -command {execute v.lrs.where }}
 	}}
 	{cascad {[G_msg "Neighborhood analysis"]} {} "" $tmenu {			
