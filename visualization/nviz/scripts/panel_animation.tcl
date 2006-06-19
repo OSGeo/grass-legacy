@@ -864,6 +864,7 @@ proc animRunAndSave { BASE } {
     radiobutton .ras_fname.fancy -text "Full Rendering" -variable animSaveRenderStyle -value 1
     button .ras_fname.ok -text "Ok" -command "set animWaitPress true"
     label .ras_fname.label -text "" -relief raised
+    # Start at value 2. 1 used to be SGI .rgb support
     radiobutton .ras_fname.img2 -text "PPM" -variable IMG -value 2
     radiobutton .ras_fname.img3 -text "TIFF" -variable IMG -value 3
     radiobutton .ras_fname.img4 -text "MPEG-1" -variable IMG -value 4

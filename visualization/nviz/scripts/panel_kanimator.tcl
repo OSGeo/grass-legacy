@@ -1709,7 +1709,7 @@ proc keyanimRunAndSave { BASE } {
     button .ras_fname.ok -text "Ok" -command "set keyanimWaitPress true"
 
     label .ras_fname.label1 -text "Image:"
-    radiobutton .ras_fname.img1 -text "Iris RGB" -variable IMG -value 1
+    # Start at value 2. 1 used to be SGI .rgb support
     radiobutton .ras_fname.img2 -text "PPM" -variable IMG -value 2
     radiobutton .ras_fname.img3 -text "TIFF" -variable IMG -value 3
     radiobutton .ras_fname.img4 -text "MPEG-1" -variable IMG -value 4
