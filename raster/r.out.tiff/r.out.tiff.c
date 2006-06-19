@@ -66,7 +66,6 @@ main (int argc, char *argv[])
 	int row, linebytes;
 	TIFF *out;
 	int in;
-        size_t len;
 	struct rasterfile h;
 	struct Option *inopt, *outopt, *compopt;
 	struct Flag *pflag, *vflag, *lflag, *tflag;
@@ -74,7 +73,7 @@ main (int argc, char *argv[])
 	struct Cell_head cellhd;
 	struct GModule *module;
 	int col,verbose, tfw, palette, tiled;
-	char *mapset, *filename;
+	char *mapset, *basename, *filename;
 	struct Colors colors;
 	int red, grn, blu, mapsize, isfp;
 
@@ -164,10 +163,10 @@ main (int argc, char *argv[])
 	if ((in = G_open_cell_old (inopt->answer, mapset)) < 0)
 		G_fatal_error(_("%s - can't open raster map"), inopt->answer);
 
-	len = strlen (outopt->answer) + 5;
-	filename = G_malloc (len);
-
-	sprintf (filename, "%s.tif", outopt->answer);
+	basename = G_store(outopt->answer);
+	G_basename(basename, "tif");   
+	G_asprintf(&filename, "%s.tif", basename);
+   
 	out = TIFFOpen(filename, "w");
 	if (out == NULL)
 		exit(EXIT_FAILURE);
@@ -393,11 +392,16 @@ main (int argc, char *argv[])
 	
 	(void) TIFFClose(out);
 	
+	G_free(filename);
+
 	if (tfw)
 	{
-		sprintf (filename, "%s.tfw", outopt->answer);
+		G_asprintf(&filename, "%s.tfw", basename);
 		write_tfw(filename, &cellhd, verbose);
+		G_free(filename);   
 	}
+
+	G_free(basename);   
 	
 	return EXIT_SUCCESS;
 }
