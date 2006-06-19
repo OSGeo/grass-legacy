@@ -35,7 +35,7 @@ proc mkvectPanel { BASE } {
     
     #  Initialize panel info
     if [catch {set Nv_($BASE)}] {
-	set panel [St_create {window name size priority} $BASE "Vector Lines" 1 5]
+	set panel [St_create {window name size priority} $BASE "Vector Lines/3D Polygons" 1 5]
     } else {
 	set panel $Nv_($BASE)
     }

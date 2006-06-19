@@ -15,7 +15,7 @@ proc mkvolPanel { BASE } {
 
     #  Initialize panel info
     if [catch {set Nv_($BASE)}] {
-    set panel [St_create {window name size priority} $BASE "Volumes" 2 5]
+    set panel [St_create {window name size priority} $BASE "Raster volumes" 2 5]
     } else {
     set panel $Nv_($BASE)
     }
