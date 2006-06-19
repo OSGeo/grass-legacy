@@ -148,6 +148,9 @@ int G__check_for_auto_masking(void);
 int G_suppress_masking(void);
 int G_unsuppress_masking(void);
 
+/* basename.c */
+char *G_basename(char *, const char *);
+  
 /* bres_line.c */
 int G_bresenham_line(register int, register int, int, int, int (*)());
 
