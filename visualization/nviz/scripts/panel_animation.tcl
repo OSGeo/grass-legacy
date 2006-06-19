@@ -913,19 +913,16 @@ proc animSaveFrame { fnum } {
 	set num 0$num
     }
 
-if {$IMG == 2} {
+    # Start at 2. 1 used to be SGI .rgb support
+    if {$IMG == 2} {
 	append fname $num ".ppm"
 	Nwrite_ppm $fname
-	}
-if {$IMG == 3} {
+    }
+    if {$IMG == 3} {
 	append fname $num ".tif"
 	Nwrite_tif $fname
-	}
-if {$IMG == 4} {
+    }
+    if {$IMG == 4} {
 	Nwrite_mpeg_frame
-	}
-
+    }
 }
-
-
-
