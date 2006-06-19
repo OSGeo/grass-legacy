@@ -23,6 +23,7 @@
 #%option
 #% key: map
 #% type: string
+#% key_desc: name
 #% gisprompt: old,cell,raster
 #% description: Name of raster angle map
 #% required : yes
