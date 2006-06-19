@@ -20,9 +20,12 @@
  *
  ***********************************************************************/
 
+#include <dirent.h>
 #include <string.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/types.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
@@ -34,7 +37,6 @@ static int find (FILE *fd, char *element);
 int 
 main (int argc, char *argv[])
 {
-    char command[1024];
     char *tempfile;
     int n;
 
@@ -43,10 +45,10 @@ main (int argc, char *argv[])
 
     G_gisinit (argv[0]);
 
-/*
- * this code assumes that the SEARCH PATH is not read
- * until we call G__mapset_name() in find()
- */
+    /*
+     * this code assumes that the SEARCH PATH is not read
+     * until we call G__mapset_name() in find()
+     */
     tempfile = G_tempfile();
 
     G__setenv ("LOCATION_NAME", argv[1]);
@@ -60,24 +62,20 @@ main (int argc, char *argv[])
         /* get this list into a temp file first */
 	fd = fopen (tempfile, "w");
 	if (fd == NULL)
-	{
-	    perror (tempfile);
-	    exit(EXIT_FAILURE);
-	}
-	unlink (argv[n+1]);
+            G_fatal_error(_("Unable to open temp file."));
+
+        remove(argv[n+1]);
 	ok = find (fd, argv[n]);
 	fclose (fd);
 
-/* move the temp file to the real file
- * this allows programs to run i.find in the background
- * and check for completion by looking for the file
- */
+        /* move the temp file to the real file
+         * this allows programs to run i.find in the background
+         * and check for completion by looking for the file
+         */
 	if (ok)
-	{
-	    sprintf (command, "mv %s %s", tempfile, argv[n+1]);
-	    G_system(command);
-	}
-	unlink (tempfile);
+            rename(tempfile, argv[n+1]);
+
+        remove(tempfile);
     }
     G_free(tempfile);
 
@@ -87,54 +85,47 @@ main (int argc, char *argv[])
 
 static int find (FILE *fd, char *element)
 {
-    char command[1024];
     int len1 = 0, len2 = 0;
     char *mapset;
-    char *dir;
     int n;
 
-    strcpy (command, "ls ");
-    dir = command + strlen (command);
-
-    fseek (fd, 0L, 0);
-    fwrite (&len1, sizeof(len1), (size_t)1, fd);
-    fwrite (&len2, sizeof(len2), (size_t)1, fd);
+    fseek (fd, 0L, SEEK_SET);
+    fwrite (&len1, sizeof(len1), 1L, fd);
+    fwrite (&len2, sizeof(len2), 1L, fd);
 
     for (n=0; ((mapset = G__mapset_name(n)) != NULL); n++)
     {
         int len;
-        char name[100];
-        FILE *ls;
+        char *dir;
+        struct dirent *dp;
+        DIR *dfd;
 
 	G__file_name (dir, element, "", mapset);
-	if (access (dir,0) != 0)
-	    continue;
-
-	ls = popen (command, "r");
-	if (ls == NULL) continue;
+        if ((dfd = opendir(dir)) == NULL)
+            continue;
 
 	len = strlen (mapset);
 	if (len > len2)
 	    len2 = len;
 
-	while (fscanf (ls, "%s", name) == 1)
-	{
-	    fprintf (fd, "%s %s\n", name, mapset);
-	    len = strlen (name);
+        while ((dp = readdir(dfd)) != NULL)
+        {
+            fprintf(fd, "%s %s\n", dp->d_name, mapset);
+	    len = strlen(dp->d_name);
 	    if (len > len1)
 		len1 = len;
-	}
+        }
 
-	pclose (ls);
+        closedir(dfd);
     }
 
     if (len1 == 0 || len2 == 0)
 	return 0;
 
     fflush (fd);
-    fseek (fd, 0L, 0);
-    fwrite (&len1, sizeof(len1), (size_t)1, fd);
-    fwrite (&len2, sizeof(len2), (size_t)1, fd);
+    fseek (fd, 0L, SEEK_SET);
+    fwrite (&len1, sizeof(len1), 1L, fd);
+    fwrite (&len2, sizeof(len2), 1L, fd);
 
     return 1;
 }
