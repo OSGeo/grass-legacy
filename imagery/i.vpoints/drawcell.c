@@ -105,6 +105,7 @@ int
 re_fresh_rast (void)
 {
     Erase_view(VIEW_MAP2);
+    Erase_view(VIEW_MAP2_ZOOM);
 
     select_target_env();
     drawcell(VIEW_MAP2,0);
