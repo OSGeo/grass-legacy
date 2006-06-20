@@ -1,7 +1,7 @@
 # translation of grassmods_vi.po to Vietnamese
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the GRASS package.
+# Copyright (C) 2005, GRASS Development Team
 # Tran Van Anh <vananh@sci.osaka-cu.ac.jp>
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 # Markus Neteler <neteler@itc.it>, 2005.
 # van anh <tva_ninh@yahoo.com>, 2005.
 #

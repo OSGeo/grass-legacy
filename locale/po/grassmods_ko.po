@@ -1,6 +1,6 @@
 # Korean translation
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the GRASS package.
+# Copyright (C) 2005, GRASS Development Team
 # Huidae Cho <grass4u@gmail.com>, 2005
 #
 #, fuzzy

@@ -1,7 +1,8 @@
 # translation of grasslibs_de.po to Latvian
-# This file is distributed under the same license as the PACKAGE package.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# This file is distributed under the same license as the GRASS package.
+# Copyright (C) 2005, GRASS Development Team
 # Peteris Bruns <peteris.bruns@gmail.com>, 2005
+
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_lv\n"

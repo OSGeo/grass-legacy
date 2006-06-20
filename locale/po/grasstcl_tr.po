@@ -1,6 +1,6 @@
 # translation of grasstcl_tr.po to Turkish
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Copyright (C) 2006, GRASS Development Team
 # Aras.Gor.O Yalcin Yilmaz <yilmazy@istanbul.edu.tr>
 #
 msgid ""

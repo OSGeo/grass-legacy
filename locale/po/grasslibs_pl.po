@@ -1,6 +1,7 @@
 # translation of grasslibs_pl.po into Polski
 # translation of grasslibs_pl.po into Polish
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the GRASS package.
+# Copyright (C) 2005, GRASS Development Team
 # Artur Nie¶cior <nieart@interia.pl>, 2005.
 #
 msgid ""
