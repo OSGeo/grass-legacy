@@ -1,5 +1,6 @@
 # translation of grasstcl_pt_br.po to Brazilian Portuguese
 # This file is distributed under the same license as the GRASS package.
+# Copyright (C) 2004 GRASS Development Team
 # Paulo Marcondes <paulomarcondes@gmail.com>, 2006.
 #
 msgid ""

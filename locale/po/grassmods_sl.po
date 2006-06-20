@@ -1,5 +1,7 @@
 # translation of grassmods_sl.po to Sloven¹èina
 # translation of grassmods_sl.po to Slovene
+# This file is distributed under the same license as the GRASS package.
+# Copyright (C) 2005 GRASS Development Team
 # Miha Staut <mihastaut@yahoo.co.uk>, 2005.
 #
 msgid ""

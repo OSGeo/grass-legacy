@@ -1,5 +1,7 @@
 # translation of grasslibs_sl.po to Sloven¹èina
 # translation of grasslibs_sl.po to slovenian
+# This file is distributed under the same license as the GRASS package.
+# Copyright (C) 2004 GRASS Development Team
 # Miha Staut <mihastaut@yahoo.co.uk>, 2005.
 #
 msgid ""
