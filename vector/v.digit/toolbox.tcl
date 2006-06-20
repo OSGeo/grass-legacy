@@ -1,6 +1,11 @@
 lappend auto_path $env(GISBASE)/bwidget
 package require -exact BWidget 1.2.1 
 
+# I'm not sure how to grab the map name, so I'll leave it obviously broken
+# in the hope someone will fix it. If you comment out the following line,
+# then the toolbox window takes on the map name! argh! We want both.
+wm title . "v.digit - \$mapname"
+
 source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 source $env(GISBASE)/etc/gtcltk/select.tcl
 

@@ -213,6 +213,15 @@ end ( void )
     Vect_build_partial (&Map, GV_BUILD_NONE, NULL);
     Vect_build ( &Map, stdout );
     Vect_close (&Map);
-    
+
+    if( 1 == G_put_window(&Region) )
+	G_message(_("Region restored to original extent."));
+
+    /* clear the screen */
+    R_open_driver();
+    D_setup(TRUE);
+    D_clear_window();
+    R_close_driver();
+
     return 1;
 }
