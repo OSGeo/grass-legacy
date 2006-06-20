@@ -7,9 +7,15 @@
 
 #define VFILES 12
 
-static int view2on, view2zoomon, numfiles;
-static char vect_file[VFILES][100];
-static char vect_mapset[VFILES][100];
+#define DO_REFRESH -1
+#define DO_NEW      0
+#define DO_ZOOM     1
+#define DO_WARP     2
+
+
+static int view2on, view2zoomon, numfiles = 0;
+static char vect_file[VFILES][GNAME_MAX];
+static char vect_mapset[VFILES][GMAPSET_MAX];
 static char vect_color[VFILES][10];
 static int get_clr_name(char *, int);
 static int choose_vectfile(char *, char *);
@@ -17,30 +23,31 @@ static int drawvect(int, View *, double *, double *, int);
 
 int plotvect(void)
 {
-    return (drawvect(0, (View *) NULL, (double *) NULL, (double *) NULL, 0));
+    return (drawvect(DO_NEW, (View *) NULL, (double *) NULL, (double *) NULL, 0));
 }
 
 int zoomvect(View * zoom_view)
 {
-    return (drawvect(1, zoom_view, (double *) NULL, (double *) NULL, 0));
+    return (drawvect(DO_ZOOM, zoom_view, (double *) NULL, (double *) NULL, 0));
 }
 
 int re_fresh_vect(void)
 {
-    return (drawvect(-1, (View *) NULL, (double *) NULL, (double *) NULL, 0));
+    return (drawvect(DO_REFRESH, (View *) NULL, (double *) NULL, (double *) NULL, 0));
 }
 
 int warpvect(double E[], double N[], int trans_order)
 {
-    return (drawvect(2, VIEW_MAP1, E, N, trans_order));
+    return (drawvect(DO_WARP, VIEW_MAP1, E, N, trans_order));
 }
+
 
 static int drawvect(int zoomit,	/* -1 = refresh, 0 = new image, 1 = zoom, 2 = warp */
 		    View * zoom_view, double E[], double N[], int trans_order)
 {				/* order of tranformation if warping vectors */
     int stat = 0;
     int i;
-    char name[100], mapset[100];
+    char name[GNAME_MAX], mapset[GMAPSET_MAX];
     struct Cell_head cellhd;
     struct line_pnts *Points;
     char msg[100], win_name[100];
@@ -50,21 +57,25 @@ static int drawvect(int zoomit,	/* -1 = refresh, 0 = new image, 1 = zoom, 2 = wa
     int left, top, nrows, ncols;
     static int vectclr[VFILES];
 
-    /* if refresh screen or overlay & no displayed files return */
-    if ((zoomit == -1 || zoomit == 2) && !numfiles)
+
+    /* if refresh screen or overlay & no displayed vector files return */
+    if ((zoomit == DO_REFRESH || zoomit == DO_WARP) && !numfiles) {
+	if (zoomit == DO_REFRESH) display_points(1);
 	return 0;
+    }
 
-    if (numfiles == VFILES) {
-	G_warning
-	    ("Can't display another map; reached maximum number of files");
+    /* numfiles stays at 0 until the end of the first vector map init */
 
+    if (numfiles >= VFILES) {
+	G_warning("Can't display another map; reached maximum number of files");
 	return 0;
     }
 
     select_target_env();
 
-    if (zoomit <= 0) {		/* New Map File or Refresh Screen *//* Draw New Map File */
-	if (!zoomit) { /* zoomit=0 */
+    if (zoomit == DO_REFRESH || zoomit == DO_NEW) { /* New Map File or Refresh Screen */
+
+	if (zoomit == DO_NEW) { /* zoomit==0, Draw New Map File*/
 	    if (!choose_vectfile(name, mapset))
 		return 0;
 
@@ -73,26 +84,25 @@ static int drawvect(int zoomit,	/* -1 = refresh, 0 = new image, 1 = zoom, 2 = wa
 
 	    get_vector_color();	/* ask line_color to draw map */
 
-	    if (!numfiles) {	/* SET VECTOR WINDOW BY WIND */
+	    if (!numfiles) {	/* first map: SET VECTOR WINDOW BY WIND */
 		if (G_get_window(&cellhd) < 0) {
-		    if (G_get_cellhd
-			(vect_file[numfiles], vect_mapset[numfiles],
-			 &cellhd) < 0) {
-			select_current_env();
-			return 0;
-		    }
+		    G_warning("Can't read current region parameters");
+		    return 0;
 		}
 		G_copy(&VIEW_MAP2->cell.head, &cellhd, sizeof(cellhd));
 	    }
-	    else
-		G_copy(&cellhd, &VIEW_MAP2->cell.head, sizeof(cellhd));
+	    else /* not the first map */
+		G_copy(&cellhd, &VIEW_MAP2->cell.head, sizeof(VIEW_MAP2->cell.head));
+
 	    numfiles++;
+
 	}
 	else {	/* zoomit=-1 Refresh Screen */
+	    G_copy(&cellhd, &VIEW_MAP2->cell.head, sizeof(VIEW_MAP2->cell.head));
 
-	    G_copy(&cellhd, &VIEW_MAP2->cell.head,
-		   sizeof(VIEW_MAP2->cell.head));
-	    Erase_view(VIEW_MAP2_ZOOM);
+	    if(!cellmap_present)
+		Erase_view(VIEW_MAP2_ZOOM);
+
 	    VIEW_MAP2_ZOOM->cell.configured = 0;
 	    blank = BLACK;
 	}
@@ -113,7 +123,7 @@ static int drawvect(int zoomit,	/* -1 = refresh, 0 = new image, 1 = zoom, 2 = wa
 
 	active_view = VIEW_MAP2;
     }
-    else {	/* zoomit>0  Zoom Map Files */
+    else {	/* zoomit>0  Zoom Map Files [+Warp?] */
 
 	G_copy(&cellhd, &zoom_view->cell.head, sizeof(zoom_view->cell.head));
 
@@ -149,7 +159,7 @@ static int drawvect(int zoomit,	/* -1 = refresh, 0 = new image, 1 = zoom, 2 = wa
     Outline_box(top, top + nrows - 1, left, left + ncols - 1);
     Points = Vect_new_line_struct();
 
-    if (zoomit != 2) {
+    if (zoomit != DO_WARP) {
 	Curses_clear_window(INFO_WINDOW);
 	Curses_write_window(INFO_WINDOW, 1, 13, "COORDINATES");
 	Curses_write_window(INFO_WINDOW, 3, 2, "MAIN WINDOW");
@@ -172,7 +182,8 @@ static int drawvect(int zoomit,	/* -1 = refresh, 0 = new image, 1 = zoom, 2 = wa
 	Curses_write_window(INFO_WINDOW, 12, 4, msg);
     }
 
-    if (zoomit) {
+    if (zoomit) {  /* ie ! DO_NEW */
+
 	dsp_setup(blank, &cellhd);
 
 	for (i = 0; i < numfiles; i++) {
@@ -182,7 +193,8 @@ static int drawvect(int zoomit,	/* -1 = refresh, 0 = new image, 1 = zoom, 2 = wa
 	    stat = plot(vect_file[i], vect_mapset[i], Points);
 	}
     }
-    else {
+    else { /* ie DO_NEW */
+
 	if (numfiles == 1) {	/* let first file set window */
 	    G_copy(&VIEW_MAP2->cell.head, &cellhd, sizeof(cellhd));
 
@@ -203,9 +215,10 @@ static int drawvect(int zoomit,	/* -1 = refresh, 0 = new image, 1 = zoom, 2 = wa
 	    G_adjust_window_to_box(&cellhd, &VIEW_MAP2->cell.head,
 				   VIEW_MAP2->nrows, VIEW_MAP2->ncols);
 
-	    Configure_view(VIEW_MAP2, vect_file[numfiles - 1],
-			   vect_mapset[numfiles - 1], cellhd.ns_res,
-			   cellhd.ew_res);
+	    if(!cellmap_present) {
+		Configure_view(VIEW_MAP2, vect_file[numfiles - 1],
+			vect_mapset[numfiles - 1], cellhd.ns_res, cellhd.ew_res);
+	    }
 
 	    Curses_write_window(INFO_WINDOW, 15, 2,
 				"WHERE CURSOR-> Mid Button");
@@ -215,6 +228,7 @@ static int drawvect(int zoomit,	/* -1 = refresh, 0 = new image, 1 = zoom, 2 = wa
 
 	R_standard_color(YELLOW);
 	Outline_box(top, top + nrows - 1, left, left + ncols - 1);
+
 	sprintf(msg, "Displaying %s", vect_file[numfiles - 1]);
 	Menu_msg(msg);
 
@@ -234,9 +248,6 @@ static int drawvect(int zoomit,	/* -1 = refresh, 0 = new image, 1 = zoom, 2 = wa
 
     Menu_msg("");
 
-    if (stat == 0)
-	D_add_to_list(G_recreate_command());	/* ??? */
-
     Vect_destroy_line_struct(Points);
 
 /*    VIEW_MAP2->cell.configured = 1; XXX*/
@@ -251,12 +262,15 @@ static int drawvect(int zoomit,	/* -1 = refresh, 0 = new image, 1 = zoom, 2 = wa
 	}
     }
 
-    Curses_clear_window(MENU_WINDOW);
-    Curses_write_window(MENU_WINDOW, 1, 5, "COLOR  MAP FILE");
-    for (i = 0; i < numfiles; i++) {
-	sprintf(msg, "%7s  %s", vect_color[i], vect_file[i]);
-	Curses_write_window(MENU_WINDOW, i + 3, 3, msg);
+    if(numfiles) {
+	Curses_clear_window(MENU_WINDOW);
+	Curses_write_window(MENU_WINDOW, 1, 5, "COLOR  MAP FILE");
+	for (i = 0; i < numfiles; i++) {
+	    sprintf(msg, "%7s  %s", vect_color[i], vect_file[i]);
+	    Curses_write_window(MENU_WINDOW, i + 3, 3, msg);
+	}
     }
+
     return 0;
 }
 

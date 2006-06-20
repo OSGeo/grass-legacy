@@ -2,6 +2,7 @@
 #include <grass/gis.h>
 #include <grass/raster.h>
 #include <grass/display.h>
+#include "globals.h"
 
 /* D_setup (clear)
  *
@@ -49,8 +50,10 @@ int dsp_setup (int blank, struct Cell_head *cellhead)
     if (blank)
     {
 	D_clear_window();
-	R_standard_color(blank);
-	R_box_abs (l, t, r, b);
+	if(!cellmap_present) {
+	    R_standard_color(blank);
+	    R_box_abs (l, t, r, b);
+	}
     }
 
     if (D_check_map_window(cellhead))
@@ -63,7 +66,7 @@ int dsp_setup (int blank, struct Cell_head *cellhead)
     if (D_do_conversions(cellhead, t, b, l, r))
 	G_fatal_error("Error calculating graphics window conversions") ;
 
-D_set_clip_window(t,b,l,r);
+    D_set_clip_window(t,b,l,r);
 
 /* set text clipping, for good measure */
     R_set_window (t, b, l, r);
