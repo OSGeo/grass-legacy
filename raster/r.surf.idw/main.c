@@ -323,18 +323,20 @@ int make_neighbors_list(EW * firstrow, EW * lastrow, EW * curr_row, SHORT row, S
     /* expand row search north and south until all nearest neighbors must occur 
      * within the current search boundaries, then exhaust search region */
     do {
-	if (north)
+	if (north) {
 	    if (nsearch)
 		nsearch = search(&north, head, row, col, npoints, &neighbors,
 				 firstrow, -1);
 	    else
 		exhaust(&north, head, row, col);
-	if (south)
+        }
+	if (south) {
 	    if (ssearch)
 		ssearch = search(&south, head, row, col, npoints, &neighbors,
 				 lastrow, 1);
 	    else
 		exhaust(&south, head, row, col);
+        }
     } while (north || south);
 
     return (1);
@@ -497,11 +499,12 @@ find_neighbors(EW * ewptr, NEIGHBOR * nbr_head, SHORT row, SHORT col,
 	    else if (!replace_neighbor(Mptr, nbr_head, distance))
 		*Mptr = NULL;	/* curtail search in this direction */
 
-	    if (*Mptr)
+	    if (*Mptr) {
 		if (westward)
 		    *Mptr = (*Mptr)->prior;
 		else
 		    *Mptr = (*Mptr)->next;
+            }
 	}
 
 	Mptr = &ewptr->east;
