@@ -1,7 +1,7 @@
 # translation of grassmods_fr.po to Français
 # French translation of grassmods.pot
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2004 THE GRASS'S COPYRIGHT HOLDER
+# Copyright (C) 2004 GRASS Development Team
 # Emmanuel Saracco <esaracco@users.labs.libre-entreprise.org>, 2004.
 # Laurent Courty, 2005.
 # Daniel Calvelo Aros <dca@users.sf.net>, 2005

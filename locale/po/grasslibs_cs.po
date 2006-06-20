@@ -1,7 +1,7 @@
 # translation of grasslibs_cs.po to czech
+# This file is distributed under the same license as the GRASS package.
+# Copyright (C) 2004 GRASS Development Team
 # Radim Blazek <blazek@itc.it>, 2004.
-#
-# translation of grasslibs_cs.po to czech
 # Martin Landa <landa.martin@gmail.com>, 2005.
 # Jachym Cepicky <jachym.cepicky@centrum.cz>, 2005.
 # correction Michal Bil <michal.bil@seznam.cz>, 2005.

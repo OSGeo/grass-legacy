@@ -1,6 +1,6 @@
 # Spanish translation of grassmods.pot
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2004 THE GRASS'S COPYRIGHT HOLDER
+# Copyright (C) 2004 GRASS Development Team
 # el bueno <manzano_jm@yahoo.es>, 2005
 # Luis Izquierdo <luisizq2002@hotmail.com>, 2005
 # Daniel Calvelo Aros (dca@users.sf.net), 2005

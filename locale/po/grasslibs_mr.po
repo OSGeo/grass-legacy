@@ -1,6 +1,6 @@
 # Marathi Localization of Grass 6.0.0
 # Copyright (C) 2005 GRASS Development Team 
-# This file is distributed under the same license as the Grass package.
+# This file is distributed under the same license as the GRASS package.
 # Sheetal Nepte <sheetal_nepte@yahoo.co.in>, 2005.
 #
 msgid ""

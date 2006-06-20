@@ -1,10 +1,9 @@
 # translation of grasslibs_pt_br.po to Português Brasileiro
 # translation of grasslibs_pt_br.po to Brazilian Portuguese
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2004 THE GRASS'S COPYRIGHT HOLDER
+# Copyright (C) 2004 GRASS Development Team
 # Paulo Marcondes <paulomarcondes gmail.com>, Carlos Grohmann <carlos.grohmann gmail.com>, 2005.
-# Paulo Eduardo Pasquini Marcondes <paulomarcondes gmail.com>, 2005.
-# Paulo Eduardo Pasquini Marcondes <paulomarcondes gmail.com>, 2006.
+# Paulo Eduardo Pasquini Marcondes <paulomarcondes gmail.com>, 2005, 2006
 # 
 msgid ""
 msgstr ""

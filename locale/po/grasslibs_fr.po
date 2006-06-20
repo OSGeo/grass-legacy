@@ -1,6 +1,6 @@
 # French translation of grasslibs.pot
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2004 THE GRASS'S COPYRIGHT HOLDER
+# Copyright (C) 2004 GRASS Development Team
 # Emmanuel Saracco <esaracco@users.labs.libre-entreprise.org>, 2004
 # Daniel Calvelo <dca@users.sf.net>, 2005
 # Eve (alias 'phyto') <dendrosociology[a]yahoo.co.uk>, 2005 

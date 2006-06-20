@@ -1,12 +1,12 @@
 # Spanish translation of grasslibs.pot
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2004 THE GRASS'S COPYRIGHT HOLDER
+# Copyright (C) 2004 GRASS Development Team
 # el bueno <manzano_jm@yahoo.es>, 2005
 # Luis Izquierdo <luisizq2002@hotmail.com>, 2005
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: grasslibs_fr\n"
+"Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-05-17 20:49+0200\n"
 "PO-Revision-Date: 2005-03-21 13:50-0800\n"
