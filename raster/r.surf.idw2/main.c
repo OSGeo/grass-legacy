@@ -176,6 +176,8 @@ main (int argc, char *argv[])
     G_free(points);
     G_free(cell);
     G_close_cell(fd);
+    G_done_msg("");
+
     exit(EXIT_SUCCESS);
 }
 
