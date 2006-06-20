@@ -194,12 +194,12 @@ static int zoom2 (int x,int y)
 	pick_view->cell.ns_res, pick_view->cell.ew_res);
 
     if(target_flag)
-       {
-          if(cellmap_present)
-               drawcell (zoom_view,0);
-          zoomvect(zoom_view);
-          VIEW_MAP2_ZOOM->cell.configured = 1;
-       }
+    {
+	if(cellmap_present)
+	    drawcell (zoom_view,0);
+	zoomvect(zoom_view);
+	VIEW_MAP2_ZOOM->cell.configured = 1;
+    }
     else
        drawcell (zoom_view,0);
 
