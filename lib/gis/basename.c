@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <string.h>
 
 /**
@@ -28,14 +29,23 @@ char * G_basename(char *filename, const char *desired_ext)
     if(dot && ((dot - filename) < strlen(filename)) )
     {
         char *ext = dot + 1;
+        int i, match = 1;
 
         /* if the extension matches (case insensitive)
          * then truncate the filename to the basename */
-        if( strncasecmp(ext, desired_ext, strlen(desired_ext)) == 0 )
+        for( i = 0; i < strlen(desired_ext); i++ )
+        {
+            if( (ext[i] == '\0') || (tolower(ext[i]) != tolower(desired_ext[i])) )
+            {
+                match = 0;
+                break;
+            }
+        }
+        
+        if( match )
             *dot = '\0';
 
     }
 
     return filename;
 }
-
