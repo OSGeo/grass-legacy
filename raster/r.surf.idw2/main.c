@@ -43,19 +43,9 @@ main (int argc, char *argv[])
     module->description =
 		_("Surface generation program.");
 					        
-    parm.input = G_define_option() ;
-    parm.input->key        = "input" ;
-    parm.input->type       = TYPE_STRING ;
-    parm.input->required   = YES ;
-    parm.input->description= _("Name of input raster map") ;
-    parm.input->gisprompt  = "old,cell,raster" ;
+    parm.input = G_define_standard_option(G_OPT_R_INPUT);
 
-    parm.output = G_define_option() ;
-    parm.output->key        = "output" ;
-    parm.output->type       = TYPE_STRING ;
-    parm.output->required   = YES;
-    parm.output->description= _("Name of output raster map") ;
-    parm.output->gisprompt  = "new,cell,raster" ;
+    parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
 
     parm.npoints = G_define_option() ;
     parm.npoints->key        = "npoints" ;
@@ -66,31 +56,18 @@ main (int argc, char *argv[])
     parm.npoints->answer = "12";
 
     if (G_parser(argc, argv))
-        exit(1);
+        exit(EXIT_FAILURE);
 
 /* Make sure that the current projection is not lat/long */
     if ((G_projection() == PROJECTION_LL))
-    {
-         char msg[256];
-         sprintf(msg,"lat/long databases not supported by r.surf.idw2.\nUse r.surf.idw instead!");
-         G_fatal_error (msg);
-         exit(1);
-    }
+         G_fatal_error (_("lat/long databases not supported by r.surf.idw2. Use r.surf.idw instead!"));
                             
     if (G_legal_filename(parm.output->answer) < 0)
-    {
-	fprintf (stderr, "%s=%s - illegal name\n", parm.output->key, parm.output->answer);
-	exit(1);
-    }
-
+	G_fatal_error (_("%s=%s - illegal name"), parm.output->key, parm.output->answer);
 
     if(sscanf(parm.npoints->answer,"%d", &search_points) != 1 || search_points<1)
-    {
-	fprintf (stderr, "%s=%s - illegal number of interpolation points\n", 
+	G_fatal_error (_("%s=%s - illegal number of interpolation points"),
 		parm.npoints->key, parm.npoints->answer);
-	G_usage();
-	exit(1);
-    }
 
     list = (struct Point *) G_calloc (search_points, sizeof (struct Point));
 
@@ -98,10 +75,7 @@ main (int argc, char *argv[])
     read_cell (parm.input->answer);
 
     if (npoints == 0)
-    {
-	fprintf (stderr, "%s: no data points found\n", G_program_name());
-	exit(1);
-    }
+	G_fatal_error (_("%s: no data points found"), G_program_name());
     nsearch = npoints < search_points ? npoints : search_points;
 
 /* get the window, allocate buffers, etc. */
@@ -116,10 +90,7 @@ main (int argc, char *argv[])
 
     fd = G_open_cell_new(parm.output->answer);
     if (fd < 0)
-    {
-	fprintf (stderr, "%s: can't create %s\n", G_program_name(), parm.output->answer);
-	exit(1);
-    }
+	G_fatal_error (_("%s: can't create %s"), G_program_name(), parm.output->answer);
 
     fprintf (stderr, "Interpolating raster map <%s> ... %d rows ... ",
 	parm.output->answer, window.rows);
@@ -127,12 +98,12 @@ main (int argc, char *argv[])
     north = window.north - window.ns_res/2.0;
     for (row = 0; row < window.rows; row++)
     {
-        fprintf (stderr, "%-10d\b\b\b\b\b\b\b\b\b\b", window.rows-row);
+        G_percent (row, window.rows, 2);
 
 	if (mask)
 	{
 	    if(G_get_map_row(maskfd, mask, row) < 0)
-		exit(1);
+		G_fatal_error (_("Cannot get row"));
 	}
 	north += window.ns_res;
 	east = window.west - window.ew_res/2.0;
@@ -205,8 +176,7 @@ main (int argc, char *argv[])
     G_free(points);
     G_free(cell);
     G_close_cell(fd);
-    fprintf (stderr, "done          \n");
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 int 
