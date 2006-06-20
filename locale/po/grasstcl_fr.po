@@ -1,16 +1,16 @@
-# translation of grasstcl_de.po to Hindi
-# This file is distributed under the same license as the PACKAGE package.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# translation of grasstcl_fr.po to French
+# This file is distributed under the same license as the GRASS package.
+# Copyright (C) 2005, GRASS Development Team
 # Markus Neteler <neteler@itc.it>, 2006.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: grasstcl_de\n"
+"Project-Id-Version: grasstcl_fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-05-17 20:49+0200\n"
 "PO-Revision-Date: 2006-05-17 21:14+0200\n"
 "Last-Translator: Markus Neteler <neteler@itc.it>\n"
-"Language-Team: Hindi\n"
+"Language-Team: French <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"

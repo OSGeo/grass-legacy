@@ -1,6 +1,6 @@
-# translation of grassmods_de.po to Latvian
-# This file is distributed under the same license as the PACKAGE package.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# translation of grassmods_lv.po to Latvian
+# This file is distributed under the same license as the GRASS package.
+# Copyright (C) 2005, GRASS Development Team
 # Peteris Bruns <peteris.bruns@gmail.com>, 2005
 #
 msgid ""
