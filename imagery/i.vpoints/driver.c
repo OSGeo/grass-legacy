@@ -63,8 +63,8 @@ stop (void)
 static int 
 go_refresh (void)
 {
-    /* re_fresh_rast(); segfault */
-    re_fresh_vect(); /* only vect implemented */
+    re_fresh_rast();
+    re_fresh_vect();
     return 1;
 }
 
@@ -73,7 +73,7 @@ do_re_fresh (void)
 {
     static Objects objects[] =
     {
-	INFO("Refresh vector map? ",&use),
+	INFO("Refresh target map? ",&use),
 	MENU("NO",dont_stop,&use),
 	MENU("YES",go_refresh,&use),
 	{0}
