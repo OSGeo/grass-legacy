@@ -23,8 +23,10 @@
 #include <unistd.h>
 #include <math.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
+
 
 /* TODO: support all types (lines, boundaries, areas for 'from' (from_type) */
 
@@ -39,8 +41,7 @@
 #define DIST       8 /* minimum distance to nearest feature */
 #define TO_ANGLE   9 /* angle of linear feature in nearest point */
 #define TO_ATTR   10 /* attribute of nearest feature */
-
-#define END        11 /* end of list */
+#define END       11 /* end of list */
 
 /* Structure where are stored infos about nearest feature for each category */
 typedef struct {
@@ -59,8 +60,10 @@ typedef struct {
     char *column;   /* column name */
 } UPLOAD;
 
-int cmp_near ( const void *, const void *);
-int cmp_exist ( const void *, const void *);
+
+static int cmp_near ( const void *, const void *);
+static int cmp_exist ( const void *, const void *);
+
 
 int main (int argc, char *argv[])
 {
@@ -98,47 +101,47 @@ int main (int argc, char *argv[])
     module = G_define_module();
     module->description = "Find the nearest element in vector 'to' for elements in vector 'from'. "
             "Various information about this relation may be uploaded to the attribute table of "
-	    "input vector 'from' or printed to stdout.";
+	    "input vector 'from' or printed to stdout";
 
     from_opt = G_define_standard_option(G_OPT_V_INPUT);
     from_opt->key         = "from" ;
-    from_opt->description = "Name of existing vector file.";
+    from_opt->description = _("Name of existing vector file");
 
     to_opt = G_define_standard_option(G_OPT_V_INPUT);
     to_opt->key         = "to" ;
-    to_opt->description = "Name of existing vector file.";
+    to_opt->description = _("Name of existing vector file");
 
     from_type_opt = G_define_standard_option(G_OPT_V_TYPE); 
     from_type_opt->key         = "from_type";
     from_type_opt->options     = "point,centroid";
     from_type_opt->answer      = "point";
-    from_type_opt->description = "From type";
+    from_type_opt->description = _("From type");
 
     to_type_opt = G_define_standard_option(G_OPT_V_TYPE); 
     to_type_opt->key         = "to_type";
     to_type_opt->options     = "point,line,boundary,centroid,area";
     to_type_opt->answer      = "point,line,area";
-    to_type_opt->description = "To type";
+    to_type_opt->description = _("To type");
 
     from_field_opt = G_define_standard_option(G_OPT_V_FIELD) ;     
     from_field_opt->key         = "from_layer";
-    from_field_opt->description = "From layer";
+    from_field_opt->description = _("From layer");
     
     to_field_opt = G_define_standard_option(G_OPT_V_FIELD) ;     
     to_field_opt->key         = "to_layer";
-    to_field_opt->description = "To layer";
+    to_field_opt->description = _("To layer");
     
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
     out_opt->key         = "output";
     out_opt->required    = NO;
-    out_opt->description = "New vector map containing lines connecting nearest elements";
+    out_opt->description = _("New vector map containing lines connecting nearest elements");
     
     max_opt = G_define_option();
     max_opt->key = "dmax";
     max_opt->type = TYPE_DOUBLE;
     max_opt->required = NO;
     max_opt->answer = "-1";
-    max_opt->description = "Maximum distance or -1 for no limit.";
+    max_opt->description = _("Maximum distance or -1 for no limit");
 
     upload_opt = G_define_option();
     upload_opt->key = "upload";
@@ -146,52 +149,54 @@ int main (int argc, char *argv[])
     upload_opt->required = YES;
     upload_opt->multiple = YES;
     upload_opt->options = "cat,dist,to_x,to_y,to_along,to_angle,to_attr";
-    upload_opt->description = "Values describing the relation between two nearest features:\n"
+    upload_opt->description = _("Values describing the relation between two nearest features:\n"
 	"\tcat - category of the nearest feature\n"
 	"\tdist - minimum distance to nearest feature\n"
-     /*	"\tfrom_x - x coordinate of the nearest point on 'from' feature\n" */
-     /*	"\tfrom_y - y coordinate of the nearest point on 'from' feature\n" */
 	"\tto_x - x coordinate of the nearest point on 'to' feature\n"
 	"\tto_y - y coordinate of the nearest point on 'to' feature\n"
-     /* "\tfrom_along - distance to the nearest point on 'from' feature along linear feature\n" */
 	"\tto_along - distance to the nearest point on 'from' feature along linear feature\n"
 	"\tto_angle - angle of linear feature in nearest point, counterclockwise from positive " 
 	              "x axis, in radians, which is between -PI and PI inclusive\n"
-	"\tto_attr - attribute of nearest feature given by to_column option"; 
+	"\tto_attr - attribute of nearest feature given by to_column option");
+
+     /*	"\tfrom_x - x coordinate of the nearest point on 'from' feature\n" */
+     /*	"\tfrom_y - y coordinate of the nearest point on 'from' feature\n" */
+     /* "\tfrom_along - distance to the nearest point on 'from' feature along linear feature\n" */
     
     column_opt = G_define_option();
     column_opt->key = "column";
     column_opt->type = TYPE_STRING;
     column_opt->required = YES;
     column_opt->multiple = YES;
-    column_opt->description = "Column name(s) where values specified by 'upload' option will be uploaded";
+    column_opt->description = _("Column name(s) where values specified by 'upload' option will be uploaded");
 
     to_column_opt = G_define_option();
     to_column_opt->key = "to_column";
     to_column_opt->type = TYPE_STRING;
     to_column_opt->required = NO;
     to_column_opt->multiple = NO;
-    to_column_opt->description = "Column name of nearest feature (used with upload=to_attr)";
+    to_column_opt->description = _("Column name of nearest feature (used with upload=to_attr)");
 
     table_opt = G_define_option();
     table_opt->key = "table";
     table_opt->type = TYPE_STRING;
     table_opt->required = NO;
     table_opt->multiple = NO;
-    table_opt->description = "The name of the table created for output when -a flag is used";
+    table_opt->description = _("The name of the table created for output when -a flag is used");
 
     print_flag = G_define_flag();
     print_flag->key = 'p';
-    print_flag->description = "Print output to stdout, don't update attribute table. "
-	    "First column is always category of 'from' feature called from_cat.";
+    print_flag->description = _("Print output to stdout, don't update attribute table. "
+	    "First column is always category of 'from' feature called from_cat");
     
     all_flag = G_define_flag();
     all_flag->key = 'a';
-    all_flag->description = "Calculate distances to all features within the threshold. "
+    all_flag->description = _("Calculate distances to all features within the threshold. "
       "The output is written to stdout but may be uploaded to a new table created by this module. "
-      "From categories are may be multiple.";
+      "From categories are may be multiple");
     
-    if (G_parser(argc, argv)) exit(-1);
+    if (G_parser(argc, argv))
+        exit(EXIT_FAILURE);
    
     from_type = Vect_option_to_types ( from_type_opt );
     to_type = Vect_option_to_types ( to_type_opt );
@@ -230,7 +235,7 @@ int main (int argc, char *argv[])
 	    Upload[i].upload = TO_ANGLE;
 	else if ( strcmp(upload_opt->answers[i], "to_attr") == 0 ) {
 	    if ( !(to_column_opt->answer) ) {
-		G_fatal_error ("to_column option missing");
+		G_fatal_error(_("to_column option missing"));
 	    }
 	    Upload[i].upload = TO_ATTR;
 	}
@@ -242,14 +247,14 @@ int main (int argc, char *argv[])
     i = 0;
     while (column_opt->answers[i]) {
 	if ( Upload[i].upload == END ) {
-	    G_warning ("Too many column names");
+	    G_warning(_("Too many column names"));
 	    break;
 	}
 	Upload[i].column = G_store ( column_opt->answers[i] );
 	i++;
     }
     if ( Upload[i].upload != END ) 
-	G_fatal_error ("Not enough column names");
+	G_fatal_error(_("Not enough column names"));
     
     if ( all_flag->answer ) all = 1;
 
@@ -257,7 +262,7 @@ int main (int argc, char *argv[])
     mapset = G_find_vector2 (from_opt->answer, "");
     
     if ( !print_flag->answer && strcmp(mapset,G_mapset()) != 0 )
-       G_fatal_error ( "Vector 'from' is not in user mapset and cannot be updated.");
+       G_fatal_error(_("Vector 'from' is not in user mapset and cannot be updated"));
 
     Vect_set_open_level (2);
     Vect_open_old (&From, from_opt->answer, mapset);
@@ -303,26 +308,26 @@ int main (int argc, char *argv[])
 
 	if (!all) {
 	    Fi = Vect_get_field ( &From, from_field);
-	    if ( Fi == NULL ) G_fatal_error ( "Cannot get layer info" );
+	    if ( Fi == NULL ) G_fatal_error(_("Cannot get layer info"));
 	    
 	    driver = db_start_driver_open_database ( Fi->driver, Fi->database );
 	    if ( driver == NULL ) 
-		G_fatal_error ( "Cannot open database %s by driver %s", Fi->database, Fi->driver );
+		G_fatal_error(_("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
 	} else {
 	    driver = db_start_driver_open_database ( NULL, NULL );
 	    if ( driver == NULL ) 
-		G_fatal_error ( "Cannot open default database");
+		G_fatal_error(_("Cannot open default database"));
 	}
     } 
 
     to_driver = NULL;
     if ( to_column_opt->answer ) { 
 	toFi = Vect_get_field ( &To, to_field);
-	if ( toFi == NULL ) G_fatal_error ( "Cannot get layer info" );
+	if ( toFi == NULL ) G_fatal_error(_("Cannot get layer info"));
 	
 	to_driver = db_start_driver_open_database ( toFi->driver, toFi->database );
 	if ( to_driver == NULL ) 
-	    G_fatal_error ( "Cannot open database %s by driver %s", toFi->database, toFi->driver );
+	    G_fatal_error(_("Cannot open database %s by driver %s"), toFi->database, toFi->driver);
 
 	/* Check column types */
 	if ( !print_flag->answer ) {
@@ -346,9 +351,8 @@ int main (int argc, char *argv[])
             	 ( (tctype==DB_C_TYPE_INT || tctype==DB_C_TYPE_DOUBLE )
 		    && (fctype ==DB_C_TYPE_STRING || fctype==DB_C_TYPE_DATETIME) )
 	    ) {
-	    	G_fatal_error ( "Incomatible column types" );
+	    	G_fatal_error(_("Incomatible column types"));
 	    }
-		
 	}
     } 
 
@@ -502,7 +506,6 @@ int main (int argc, char *argv[])
 
 	    Vect_cat_get ( FCats, from_field, &fcat );
 	    if ( fcat < 0 && !all ) continue;
-	    
 
 	    /* select areas by box */
 	    box.E = FPoints->x[0] + max ; box.W = FPoints->x[0] - max ; 
@@ -653,10 +656,10 @@ int main (int argc, char *argv[])
 	G_debug (3, "SQL: %s", db_get_string ( &stmt ));
 	
         if ( db_execute_immediate (driver, &stmt) != DB_OK )
-	    G_fatal_error ("Cannot create table: '%s'", db_get_string ( &stmt ) );
+	    G_fatal_error(_("Cannot create table: '%s'"), db_get_string(&stmt));
 
 	if (db_grant_on_table (driver, table_opt->answer, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
-	    G_fatal_error ( "Cannot grant privileges on table %s", table_opt->answer );
+	    G_fatal_error(_("Cannot grant privileges on table %s"), table_opt->answer);
 		
     } else { /* read existing cats from table */
 	ncatexist = db_select_int( driver, Fi->table, Fi->key, NULL, &catexist);
@@ -678,7 +681,7 @@ int main (int argc, char *argv[])
         G_debug (3, "selected values = %d", nrec );
 
 	if ( cvarr.ctype == DB_C_TYPE_DATETIME ) {
-	    G_warning ( "DATETIME type not yet supported, no attributes will be uploaded" ); 
+	    G_warning(_("DATETIME type not yet supported, no attributes will be uploaded")); 
 	}	
 	db_close_database_shutdown_driver ( to_driver );
     }	
@@ -878,7 +881,6 @@ int main (int argc, char *argv[])
 			        sprintf (buf2, " %d", Near[i].to_cat );
 			    else 
 			        sprintf (buf2, " null");
-
 			    break;
 			case DIST:
 			    sprintf (buf2, " %f", Near[i].dist );
@@ -944,16 +946,15 @@ int main (int argc, char *argv[])
 		update_err++;
 	    }
 	}
-
     }
 
     if ( driver ) 
         db_commit_transaction ( driver );
     
     /* print stats */
-    fprintf (stderr,"Statistics:\n");
-    fprintf (stderr,"%d categories with more than 1 feature in 'from'\n", update_dupl);
-    fprintf (stderr,"%d categories - no nearest feature found\n", update_notfound);
+    G_message(_("Statistics:"));
+    G_message(_("%d categories with more than 1 feature in 'from'"), update_dupl);
+    G_message(_("%d categories - no nearest feature found"), update_notfound);
 
     if ( !print_flag->answer ) { 
 	db_close_database_shutdown_driver ( driver );
@@ -961,17 +962,17 @@ int main (int argc, char *argv[])
 
 	/* print stats */
 	if ( all ) {
-	    fprintf (stderr,"%d distances calculated\n", count);
-	    fprintf (stderr,"%d records inserted\n", update_ok);
-	    fprintf (stderr,"%d insert errors\n", update_err);
+	    G_message(_("%d distances calculated"), count);
+	    G_message(_("%d records inserted"), update_ok);
+	    G_message(_("%d insert errors"), update_err);
 	} else {
-	    fprintf (stderr,"%d categories read from the map\n", nfcats);
-	    fprintf (stderr,"%d categories exist in the table\n", ncatexist);
-	    fprintf (stderr,"%d categories read from the map exist in the table\n", update_exist );
-	    fprintf (stderr,"%d categories read from the map don't exist in the table\n", update_notexist);
-	    fprintf (stderr,"%d records updated\n", update_ok);
-	    fprintf (stderr,"%d update errors\n", update_err);
-	
+	    G_message(_("%d categories read from the map"), nfcats);
+	    G_message(_("%d categories exist in the table"), ncatexist);
+	    G_message(_("%d categories read from the map exist in the table"), update_exist);
+	    G_message(_("%d categories read from the map don't exist in the table"), update_notexist);
+	    G_message(_("%d records updated"), update_ok);
+	    G_message(_("%d update errors"), update_err);
+
             G_free ( catexist );
 	}
 
@@ -980,15 +981,17 @@ int main (int argc, char *argv[])
 
     Vect_close (&From);
     if ( Outp != NULL ) {
-       fprintf (stderr,"\nBuilding topology for %s ...\n", Vect_get_name (Outp) );
+       G_message(_("\nBuilding topology for %s ..."), Vect_get_name(Outp));
        Vect_build ( Outp, stderr );	
        Vect_close ( Outp );
     }
-    
-    exit (0);
+
+    G_done_msg("");
+    exit (EXIT_SUCCESS);
 }
 
-int cmp_near ( const void *pa, const void *pb) {
+
+static int cmp_near ( const void *pa, const void *pb) {
     NEAR *p1 = (NEAR *) pa;
     NEAR *p2 = (NEAR *) pb;
 
@@ -997,7 +1000,8 @@ int cmp_near ( const void *pa, const void *pb) {
     return 0;
 }
 
-int cmp_exist ( const void *pa, const void *pb)
+
+static int cmp_exist ( const void *pa, const void *pb)
 {
     int       *p1 = (int *) pa;
     int       *p2 = (int *) pb;
