@@ -191,6 +191,7 @@ if [ ! -z "$GIS_OPT_EPS" ] ; then
 echo "Generating $GIS_OPT_EPS..."
 
 OUTERRADIUS=$MAXRADIUS
+EPSSCALE=0.1
 FRAMEALLOWANCE=1.1
 HALFFRAME=3000
 CENTER=$HALFFRAME,$HALFFRAME
@@ -198,13 +199,13 @@ CENTER=$HALFFRAME,$HALFFRAME
 SCALE=`echo $HALFFRAME $OUTERRADIUS $FRAMEALLOWANCE | awk '{printf "%f", $1/ ($2 * $3)}'`
 
 # DIAGRAMLINEWIDTH=CEILING ($HALFFRAME / 200)
-DIAGRAMLINEWIDTH=`echo $HALFFRAME | awk '{printf "%f", $1 * ($2 / 200)}'`  # ceil?
+DIAGRAMLINEWIDTH=`echo $HALFFRAME | awk '{printf "%.1f", $1 / 400}'`  # ceil? 200
 # AXESLINEWIDTH=CEILING ($HALFFRAME / 500)
-AXESLINEWIDTH=`echo $HALFFRAME | awk '{printf "%f", $1 * ($2 / 500)}'` # ceil?
+AXESLINEWIDTH=`echo $HALFFRAME | awk '{printf "%.1f", $1 / 500}'` # ceil?
 # AXESFONTSIZE=CEILING ($HALFFRAME / 15)
-AXESFONTSIZE=`echo $HALFFRAME | awk '{printf "%f", $1 * ($2 / 15)}'` # ceil?
+AXESFONTSIZE=`echo $HALFFRAME | awk '{printf "%.1f", $1 / 16}'` # ceil?
 # DIAGRAMFONTSIZE=CEILING ($HALFFRAME / 20)
-DIAGRAMFONTSIZE=`echo $HALFFRAME | awk '{printf "%f", $1 * ($2 / 20)}'` # ceil?
+DIAGRAMFONTSIZE=`echo $HALFFRAME | awk '{printf "%.1f", $1 / 20}'` # ceil?
 HALFFRAME_2=`echo $HALFFRAME | awk '{printf "%.1f", $1 * 2}'`
 
 AVERAGEDIRECTIONCOLOR=1 #(blue)
@@ -230,22 +231,22 @@ ALLDATASTRING="All Data (NULL included)"
 REALDATASTRING="Real Data Angles"
 AVERAGEDIRECTIONSTRING="Avg. Direction"
   
-LEGENDSX=`echo 1.95 * $HALFFRAME | awk '{printf "%f", $1 * $2}'`
-ALLDATALEGENDY=`echo 1.95 * $HALFFRAME | awk '{printf "%f", $1 * $2}'`
-REALDATALEGENDY=`echo 1.90 * $HALFFRAME | awk '{printf "%f", $1 * $2}'`
-AVERAGEDIRECTIONLEGENDY=`echo 1.85 * $HALFFRAME | awk '{printf "%f", $1 * $2}'`
+LEGENDSX=`echo "1.95 $HALFFRAME" | awk '{printf "%.1f", $1 * $2}'`
+ALLDATALEGENDY=`echo "1.95 $HALFFRAME" | awk '{printf "%.1f", $1 * $2}'`
+REALDATALEGENDY=`echo "1.90 $HALFFRAME" | awk '{printf "%.1f", $1 * $2}'`
+AVERAGEDIRECTIONLEGENDY=`echo "1.85 $HALFFRAME" | awk '{printf "%.1f", $1 * $2}'`
 
 ##########
 cat ${GISBASE}/etc/d.polar/ps_defs.eps > $PSOUT
 
 echo "
-0.1 0.1 scale                           %% EPS-SCALE EPS-SCALE scale
+$EPSSCALE $EPSSCALE scale                           %% EPS-SCALE EPS-SCALE scale
 %%
 %% drawing axes
 %%
 
 col0                                    %% colAXES-COLOR
-1 setlinewidth                          %% AXES-LINEWIDTH setlinewidth
+$AXESLINEWIDTH setlinewidth                          %% AXES-LINEWIDTH setlinewidth
 [] 0 setdash
 newpath
  $HALFFRAME     0.0 moveto                  %% HALF-FRAME 0.0 moveto
@@ -254,7 +255,7 @@ newpath
  $HALFFRAME_2  $HALFFRAME lineto                  %% (2 * HALF-FRAME) HALF-FRAME lineto
 stroke
 
-200 /Times-Roman choose-font            %% AXES-FONTSIZE /Times-Roman choose-font
+$AXESFONTSIZE /Times-Roman choose-font            %% AXES-FONTSIZE /Times-Roman choose-font
 (N) $NORTHXSHIFT $NORTHYSHIFT $NORTHJUSTIFICATION just-string         %% NORTH-X-SHIFT NORTH-Y-SHIFT NORTH-JUSTIFICATION just-string
 (E) $EASTXSHIFT $EASTYSHIFT $EASTJUSTIFICATION just-string         %% EAST-X-SHIFT EAST-Y-SHIFT EAST-JUSTIFICATION just-string
 (S) $SOUTHXSHIFT $SOUTHYSHIFT $SOUTHJUSTIFICATION just-string           %% SOUTH-X-SHIFT SOUTH-Y-SHIFT SOUTH-JUSTIFICATION just-string
@@ -265,8 +266,8 @@ stroke
 %%
 
 col2                                    %% colCIRCLE-COLOR
-150 /Times-Roman choose-font            %% DIAGRAM-FONTSIZE /Times-Roman choose-font
-2 setlinewidth                          %% DIAGRAM-LINEWIDTH setlinewidth
+$DIAGRAMFONTSIZE /Times-Roman choose-font            %% DIAGRAM-FONTSIZE /Times-Roman choose-font
+$DIAGRAMLINEWIDTH setlinewidth                          %% DIAGRAM-LINEWIDTH setlinewidth
 [] 0 setdash
 newpath
                                         %% coordinates of rescaled, translated outer circle follow
@@ -289,7 +290,7 @@ echo "stroke
 %%
 
 col4                                    %% colDIAGRAM-COLOR
-2 setlinewidth                          %% DIAGRAM-LINEWIDTH setlinewidth
+$DIAGRAMLINEWIDTH setlinewidth                          %% DIAGRAM-LINEWIDTH setlinewidth
 [] 0 setdash
 newpath
                                         %% coordinates of rescaled, translated diagram follow
@@ -311,7 +312,7 @@ echo "stroke
 %%
 
 col1                                    %% colAVERAGE-DIRECTION-COLOR
-2 setlinewidth                          %% DIAGRAM-LINEWIDTH setlinewidth
+$DIAGRAMLINEWIDTH setlinewidth                          %% DIAGRAM-LINEWIDTH setlinewidth
 [] 0 setdash
 newpath
                                         %% coordinates of rescaled, translated average direction follow
@@ -335,15 +336,15 @@ echo "stroke
 
 col2                                    %% colCIRCLE-COLOR
 %% Line below: (ALL-DATA-STRING) LEGENDS-X ALL-DATA-LEGEND-Y 4 just-string
-(All Data (NULL included)) 5850.0 5850.0 4 just-string
+($ALLDATASTRING) $LEGENDSX $ALLDATALEGENDY 4 just-string
 
 col4                                    %% colDIAGRAM-COLOR
 %% Line below: (REAL-DATA-STRING) LEGENDS-X REAL-DATA-LEGEND-Y 4 just-string
-(Real Data Angles) 5850.0 5700.0 4 just-string
+($REALDATASTRING) $LEGENDSX $REALDATALEGENDY 4 just-string
 
 col1                                    %% colAVERAGE-DIRECTION-COLOR
 %% Line below: (AVERAGE-DIRECTION-STRING) LEGENDS-X AVERAGE-DIRECTION-LEGEND-Y 4 just-string
-(Avg. Direction) 5850.0 5550.0 4 just-string
+($AVERAGEDIRECTIONSTRING) $LEGENDSX $AVERAGEDIRECTIONLEGENDY 4 just-string
 " >> $PSOUT
 
 else
