@@ -9,7 +9,7 @@ include $(MODULE_TOPDIR)/include/Make/Grass.make
 
 default:
 	if [ ! -d $(GISBASE)/bwidget ]; then $(MKDIR) $(GISBASE)/bwidget; fi
-	tar chf - images/* lang/* *.txt *.tcl README.grass | (cd $(GISBASE)/bwidget; tar xf -)
-	chmod 755 $(GISBASE)/bwidget/*.tcl
+	tar chf - images/* lang/* *.txt README.grass | (cd $(GISBASE)/bwidget; tar xf -)
+	$(INSTALL) -m 755 *.tcl $(GISBASE)/bwidget/
 
 clean:
