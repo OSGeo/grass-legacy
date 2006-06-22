@@ -8,6 +8,10 @@
  *
  */
 
+#include <stdlib.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
+
 #define MAIN
 #include "local_proto.h"
 
@@ -20,12 +24,12 @@ static int cont(int, int);
 
 int main(int argc, char *argv[])
 {
-    char *name, *outfile, *mapset, msg[256];
+    char *name, *outfile, *mapset;
     int fd, projection;
     FILE *fp;
     int screen_x, screen_y, button;
     double res;
-    char errbuf[256], *null_string;
+    char *null_string;
     char ebuf[256], nbuf[256], label[512];
     char b1[100], b2[100];
     int n, first = 0;
@@ -48,13 +52,7 @@ int main(int argc, char *argv[])
     module->description =
 	_("Outputs the raster map layer values lying on user-defined line(s).");
 
-    parm.opt1 = G_define_option();
-    parm.opt1->key = "input";
-    parm.opt1->type = TYPE_STRING;
-    parm.opt1->required = YES;
-    parm.opt1->multiple = NO;
-    parm.opt1->gisprompt = "old,cell,raster";
-    parm.opt1->description = _("Name of existing raster map");
+    parm.opt1 = G_define_standard_option(G_OPT_R_INPUT);
 
     parm.output = G_define_option();
     parm.output->key = "output";
@@ -102,12 +100,10 @@ int main(int argc, char *argv[])
 
 
     if (G_parser(argc, argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
-    if ((!parm.i->answer) && (!parm.profile->answer)) {
-	sprintf(msg, "Either -i flag and/or profile parameter must be used.");
-	/* G_fatal_error(msg); */
-    }
+    if ((!parm.i->answer) && (!parm.profile->answer))
+	G_fatal_error(_("Either -i flag and/or profile parameter must be used."));
 
     clr = 0;
     if (parm.c->answer)
@@ -120,10 +116,8 @@ int main(int argc, char *argv[])
     if (parm.res->answer) {
 	res = atof(parm.res->answer);
 	/* Catch bad resolution ? */
-	if (res == 0) {
-	    sprintf(msg, "ILLEGAL Resolution!\n");
-	    G_fatal_error(msg);
-	}
+	if (res == 0) 
+	    G_fatal_error(_("ILLEGAL Resolution!"));
     }
     else {
 	/* Do average of EW and NS res */
@@ -143,16 +137,12 @@ int main(int argc, char *argv[])
 	coords = 1;
 
     /* Open Raster File */
-    if (NULL == (mapset = G_find_cell2(name, ""))) {
-	sprintf(msg, "Cannot find mapset for %s \n", name);
-	G_fatal_error(msg);
-    }
-    if (0 > (fd = G_open_cell_old(name, mapset))) {
-	sprintf(msg, "Cannot open File %s\n", name);
-	G_fatal_error(msg);
-    }
+    if (NULL == (mapset = G_find_cell2(name, "")))
+	G_fatal_error(_("Cannot find map %s"), name);
+    if (0 > (fd = G_open_cell_old(name, mapset)))
+	G_fatal_error(_("Cannot open map %s"), name);
 
-    /* initilaize color structure */
+    /* initialize color structure */
     if (clr)
 	    G_read_colors(name, mapset, &colors);
 
@@ -162,10 +152,8 @@ int main(int argc, char *argv[])
     if ((strcmp("-", outfile)) == 0) {
 	fp = stdout;
     }
-    else if (NULL == (fp = fopen(outfile, "w"))) {
-	sprintf(errbuf, "Not able to open file for [%s]", outfile);
-	G_fatal_error(errbuf);
-    }
+    else if (NULL == (fp = fopen(outfile, "w")))
+	G_fatal_error(_("Not able to open file for [%s]"), outfile);
 
     /* Get Raster Type */
     data_type = G_raster_map_type(name, mapset);
