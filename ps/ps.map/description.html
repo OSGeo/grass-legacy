@@ -1157,13 +1157,14 @@ same lpos then their symbols in legend are merged and label for
 first vector is used.
 <P>
 <B>pat</B> - full path to pattern file. The pattern file contains header and
-simple PS commands. It is similar to EPS but more limited, that means that
-each pattern file is EPS file but EPS files are not usually useful as pattern
-files because contain restricted commands. Color and width of patterns is set
+simple PostScript commands. It is similar to EPS but more limited, meaning that
+while each pattern file is a true EPS file, most EPS files are not useful as pattern
+files because they contain restricted commands. Color and width of patterns are set
 by <B>fcolor</B> and <B>width</B> until overwritten in the pattern file.
 Pattern may be scaled with the <b>scale</b> command. Several standard hatching
 patterns are provided in <tt>$GISBASE/etc/paint/patterns/</tt>. You can also
 create your own custom pattern files in a text editor. Example of pattern file:
+
 
 <div class="code"><PRE>
 %!PS-Adobe-2.0 EPSF-1.2
