@@ -13,8 +13,13 @@ EXTRA_CFLAGS = $(VECT_CFLAGS)
  
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-default: cmd $(PROLOG)
+default: cmd $(PROLOG) patt
 
 $(PROLOG): prolog.ps
 	$(MKDIR) $(ETC)/paint
 	$(INSTALL) -m 644 prolog.ps $(PROLOG)
+
+patt:
+	$(MKDIR) $(ETC)/paint/patterns/
+	$(INSTALL) -m 644 patterns/*.eps $(ETC)/paint/patterns/
+
