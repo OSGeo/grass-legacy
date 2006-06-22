@@ -56,6 +56,9 @@ Scale of the output map,  e.g. 1:25000
 Default:  Auto-sized to fit page<BR>
 This parameter is provided as a convenience.  It is identical
 to the <EM>scale</EM> mapping instruction described below.
+<em>NOTE: Using "scale" from the command line is depreciated and while
+still provided for compatibility reasons it will be removed in the future.
+Please use the "scale" mapping instruction instead.</em>
 
 <P>
 <DT><B>copies=</B><EM>n</EM>
@@ -135,7 +138,9 @@ is less than or equal to zero, the default vertical location is used.
 
 <DT><B>font</B> <EM>font name</EM> 
 
-<DD>The name of the PostScript font.  The default is <EM>Helvetica</EM>.
+<DD>The name of the PostScript font.  The default is Helvetica.
+Other options include Helvetica&nbsp;Bold, 
+<EM>Helvetica&nbsp;Oblique</EM>, <tt>Courier</tt>, etc.
 
 <DT><B>fontsize</B> <EM>font size</EM> 
 
@@ -439,7 +444,7 @@ The default text color is black.
 <P>
 
 This example prints (in red) whatever is in the file <EM>soils.hdr</EM> above
-the map, using a 20/72 inch Courier font.
+the map, using a 20/72 inch <tt>Courier</tt> font.
 <PRE>
 EXAMPLE:	
 	<B>header</B>
@@ -542,7 +547,7 @@ The default background box color is white.
 
 This example prints (in brown) the scale, grid and region information
 immediately below the map and starting 1.5 inches from the left edge
-of the page, using a 12/72 inch Courier font.
+of the page, using a 12/72 inch <tt>Courier</tt> font.
 
 <PRE>
 EXAMPLE:
@@ -1036,11 +1041,11 @@ More than one line of text can be specified by notating the end of a line with
 (e.g. USA<B>\n</B>CERL).
 <P>
 The user can then specify various text features:
-<P>
+<!-- <P>
 <B>font:</B>
 cyrilc gothgbt gothgrt gothitt greekc greekcs greekp greeks italicc
 italiccs italict romanc romancs romand romans romant scriptc scripts
-(The default font is romans);
+(The default font is romans); -->
 <P>
 <B>color</B>
 (see NAMED COLORS);
@@ -1151,19 +1156,23 @@ Default is: map(mapset);
 same lpos then their symbols in legend are merged and label for
 first vector is used.
 <P>
-<B>pat</B> - full path to pattern file. Pattern file contains header and simple PS commands.
-It is similar to EPS but more limited, that means that each pattern file is EPS file but
-EPS files are not usually usefull as pattern files because contain restricted commands. Color and
-width of patterns is set by <B>acolor</B> and <B>pwidth</B> until it is overwritten in 
-pattern file. Currently the only way to create pattern file is text editor. Example of pattern file:
-<PRE>
+<B>pat</B> - full path to pattern file. The pattern file contains header and
+simple PS commands. It is similar to EPS but more limited, that means that
+each pattern file is EPS file but EPS files are not usually useful as pattern
+files because contain restricted commands. Color and width of patterns is set
+by <B>fcolor</B> and <B>width</B> until overwritten in the pattern file.
+Pattern may be scaled with the <b>scale</b> command. Several standard hatching
+patterns are provided in <tt>$GISBASE/etc/paint/patterns/</tt>. You can also
+create your own custom pattern files in a text editor. Example of pattern file:
+
+<div class="code"><PRE>
 %!PS-Adobe-2.0 EPSF-1.2
 %%BoundingBox: 0 0 10 10
 newpath
 5 0 moveto
 5 10 lineto
 stroke
-</PRE>
+</PRE></div>
 
 <P>
 <B>scale</B> - pattern scale
