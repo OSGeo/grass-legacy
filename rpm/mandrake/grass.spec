@@ -26,7 +26,7 @@ Requires:	tk >= 8
 Requires:	proj >= 4.4.5
 Requires:	lesstif
 BuildRequires:	bison
-BuildRequires:	fftw2-devel
+BuildRequires:	fftw3-devel
 BuildRequires:	flex
 BuildRequires:	freetype2-devel 
 BuildRequires:	gcc-g77
