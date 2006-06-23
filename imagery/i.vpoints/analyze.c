@@ -65,27 +65,30 @@ static int do_1st (void)
 {
    strcpy(order_msg,"1st ORDER");
    trans_order = 1;
-   compute_transformation();
+   if( compute_transformation() )
+	return 1; /* back to analyze menu */
 
-   return 0;
+   return 1;
 }
 
 static int do_2nd (void)
 {
    strcpy(order_msg,"2nd ORDER");
    trans_order = 2;
-   compute_transformation();
+   if( compute_transformation() )
+	return 0;
 
-   return 0;
+   return 1;
 }
 
 static int do_3rd (void)
 {
    strcpy(order_msg,"3rd ORDER");
    trans_order = 3;
-   compute_transformation();
+   if( compute_transformation() )
+	return 0;
 
-   return 0;
+   return 1;
 }
 
 static int delete_mark (void)
@@ -318,7 +321,7 @@ static int compute_transformation (void)
        {
           sprintf(msg,"Not Enough Points -- %d are required.",order_pnts[trans_order-1]);
           Menu_msg(msg);
-          sleep(3);
+          sleep(2);
        }
        return 1;
      }
@@ -531,6 +534,7 @@ static int get_order (void)
 
    if(Input_pointer(objects) < 0)
       return -1;
+
    return 1;
 
 }

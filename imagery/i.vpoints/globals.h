@@ -72,8 +72,10 @@ int plotcell(int, int);
 int Outline_cellhd(View *, struct Cell_head *);
 /* colors.c */
 int set_colors(struct Colors *);
-int set_menu_colors(struct Colors *);
-int cursor_color(void);
+/*
+ int set_menu_colors(struct Colors *);
+ int cursor_color(void);
+*/
 int get_vector_color(void);
 /* conv.c */
 int view_to_col(View *, int);

@@ -104,6 +104,10 @@ int drawcell (View *view, int initflag)
 int
 re_fresh_rast (void)
 {
+    /* current location side */
+    drawcell(VIEW_MAP1,0);  /* 0 means don't initialize ZOOM panel */
+
+    /* target side */
     Erase_view(VIEW_MAP2);
     Erase_view(VIEW_MAP2_ZOOM);
 

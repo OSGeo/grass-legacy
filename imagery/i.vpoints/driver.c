@@ -12,13 +12,13 @@ int driver (void)
     static Objects objects[] =
     {
 	MENU("QUIT",really_quit,&use),
-	MENU("zoom",zoom,&use),
+	MENU("ZOOM",zoom,&use),
 	MENU("RASTER",plotcell,&use),
 	MENU("VECTOR",plotvect,&use),
-        MENU("refresh",do_re_fresh,&use),
-	MENU("cursorcol", cursor_color, &use),
+	MENU("REFRESH",do_re_fresh,&use),
+/*	MENU("cursorcol", cursor_color, &use), */
 	MENU("ANALYZE",analyze,&use),
-	INFO("  Input method -> ", &from_flag),
+	INFO(" Input: ", &from_flag),
 /*	OPTION("DIGITIZER",2,&from_digitizer),  */
 	OPTION("KEYBOARD",2,&from_keyboard),
 	OPTION("SCREEN",2,&from_screen),
@@ -73,7 +73,7 @@ do_re_fresh (void)
 {
     static Objects objects[] =
     {
-	INFO("Refresh target map? ",&use),
+	INFO("Refresh display? ",&use),
 	MENU("NO",dont_stop,&use),
 	MENU("YES",go_refresh,&use),
 	{0}
