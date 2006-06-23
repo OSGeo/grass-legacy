@@ -7,7 +7,9 @@ The user does <em>not</em> have to run  <em><a HREF="v.build.html">v.build</a></
 
 <h3>Removing small angles between lines at nodes</h3>
 
-The <em>rmsa</em> tool only concerns angles which are so small that the calculated angle is 0. The user cannot change this threshold. The following figure should help to understand what the tool does.
+The <em>rmsa</em> tool only concerns angles which are so small that the calculated angle
+is 0. The user cannot change this threshold. The following figure should help to 
+understand what the tool does.
 <P>
 <img src="v_clean_rmsa.png">
 
@@ -37,8 +39,6 @@ remove the bridge from the map:
 v.clean input=testmap output=cleanmap tool=snap thresh=1
 </pre></div>
 
-<p>
-
 
 <h3>Cleaning OGR imported data (Simple Feature data)</h3>
 
@@ -58,11 +58,32 @@ v.clean input=lines1 output=lines2 err=points tool=break
 
 Intersection points are written to 'points' map.
 
-<h2>AUTHOR</h2>
+<h3>Break lines</h3>
+
+<em>v.clean</em> will break the lines where they cross, 
+creating new node if needed. Example:
+
+<div class="code"><pre>
+v.in.ascii -n out=crossed_lines format=standard << EOF
+L 2
+ 0 5
+ 10 5
+L 2
+ 5 0
+ 5 10
+EOF
+
+v.clean in=crossed_lines out=crossed_lines_brk \
+        error=intersection tool=break
+</pre></div>
+
+
+
+<h2>AUTHORS</h2>
 
 David Gerdes, U.S. Army Construction Engineering 
 Research Laboratory
 <br>
 Radim Blazek, ITC-Irst, Trento, Italy
 
-<p><i>Last changed: $Date$</i>
+<p><i>Last changed: $Date$</i></p>
