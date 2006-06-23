@@ -11,9 +11,9 @@ static int select_option (Objects *,Objects *);
 static int draw_option_boxes (Objects *);
 static int visible(Objects *);
 
-#define TEXT_COLOR BLACK  
-#define FILL_COLOR GREEN    /* GREY  */
-#define OUTLINE_COLOR WHITE 
+#define TEXT_COLOR BLACK
+#define FILL_COLOR GREY
+#define OUTLINE_COLOR WHITE
 
 /* Input: drive mouse. returns status of handler that returns != 0 */
 int Input_pointer (Objects *objects)

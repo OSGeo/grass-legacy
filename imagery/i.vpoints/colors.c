@@ -1,13 +1,15 @@
 #include <grass/display.h>
 #include "globals.h"
 
+/*
 static int set_blue(void);
 static int set_gray(void);
 static int set_green(void);
 static int set_red(void);
 static int set_white(void);
 static int set_yellow(void);
-static int set_cur_clr( int);
+static int set_cur_clr(int);
+*/
 static int setmap_blue(void);
 static int setmap_gray(void);
 static int setmap_green(void);
@@ -23,6 +25,7 @@ int set_colors (struct Colors *colors)
     return 0;
 }
 
+#ifdef UNUSED
 int set_menu_colors (struct Colors *colors)
 {
 
@@ -61,7 +64,9 @@ int set_menu_colors (struct Colors *colors)
 
     return 0;
 }
+#endif /* set_menu_colors */
 
+#ifdef UNUSED
 int cursor_color (void)
 {
 
@@ -156,7 +161,8 @@ static int set_cur_clr(int curs_color)
     set_colors (colors);
     return 0;
 }
- 
+#endif  /* unused cursor color */
+
 int get_vector_color (void)
 {
     static int use=1;
