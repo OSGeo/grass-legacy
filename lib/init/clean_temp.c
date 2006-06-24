@@ -18,6 +18,8 @@
  *   with an modification time greater then 4 days
  *
  *   2006: Rewritten for GRASS 6 by roberto Flor, ITC-irst
+ *
+ * TODO (?): Implement snprintf() as G_snprintf() for portability
  **************************************************************/
 
 #include <limits.h>
