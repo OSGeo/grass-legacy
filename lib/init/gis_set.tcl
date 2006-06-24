@@ -314,7 +314,7 @@ proc gisSetWindow {} {
     .frame0.intro.msg tag configure all -justify center
     .frame0.intro.msg insert end [G_msg "Welcome to GRASS GIS Version $GRASSVERSION\n"]
     .frame0.intro.msg insert end [G_msg "The world's leading open source GIS\n\n"]
-    .frame0.intro.msg insert end [G_msg "Select an existing project location and GIS mapset\n"]
+    .frame0.intro.msg insert end [G_msg "Select an existing project location and mapset\n"]
     .frame0.intro.msg insert end [G_msg "or define a new project location\n"]
     .frame0.intro.msg tag add all 1.0 end
     .frame0.intro.msg configure -state disabled
@@ -338,7 +338,7 @@ proc gisSetWindow {} {
     label .frame0.frameDB.left.label \
     	-anchor {n} \
     	-justify right \
-    	-text [G_msg "Path to location : "]
+    	-text [G_msg "Path to location:    \n(GRASS Database)"]
 
     entry .frame0.frameDB.mid.entry \
     	-relief {sunken} \
@@ -408,7 +408,7 @@ proc gisSetWindow {} {
 
     label .frame0.frameMS.label \
     	-anchor {w} \
-    	-text [G_msg "(Accessible) GIS Mapsets"] 
+    	-text [G_msg "Accessible Mapsets"] 
 
     listbox .frame0.frameMS.listbox \
     	-relief {sunken} \
@@ -460,7 +460,7 @@ proc gisSetWindow {} {
 
     label .frame0.frameNMS.first.label \
     	-anchor {n} \
-    	-text [G_msg "Create new GIS mapset\nin currrent location"]
+    	-text [G_msg "Create new mapset\nin selected location"]
 
     entry .frame0.frameNMS.second.entry \
     	-relief {sunken} \
@@ -495,7 +495,7 @@ proc gisSetWindow {} {
 
     label .frame0.frameNMS.fourth.label \
     	-anchor {n} \
-    	-text [G_msg "Define new project location"]
+    	-text [G_msg "\nDefine new location by:"]
 
 
     button .frame0.frameNMS.fifth.button \
