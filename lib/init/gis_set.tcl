@@ -314,8 +314,8 @@ proc gisSetWindow {} {
     .frame0.intro.msg tag configure all -justify center
     .frame0.intro.msg insert end [G_msg "Welcome to GRASS GIS Version $GRASSVERSION\n"]
     .frame0.intro.msg insert end [G_msg "The world's leading open source GIS\n\n"]
-    .frame0.intro.msg insert end [G_msg "Select an existing projection location and GIS mapset\n"]
-    .frame0.intro.msg insert end [G_msg "or define a new projection location\n"]
+    .frame0.intro.msg insert end [G_msg "Select an existing project location and GIS mapset\n"]
+    .frame0.intro.msg insert end [G_msg "or define a new project location\n"]
     .frame0.intro.msg tag add all 1.0 end
     .frame0.intro.msg configure -state disabled
 
@@ -495,7 +495,7 @@ proc gisSetWindow {} {
 
     label .frame0.frameNMS.fourth.label \
     	-anchor {n} \
-    	-text [G_msg "Define new projection location"]
+    	-text [G_msg "Define new project location"]
 
 
     button .frame0.frameNMS.fifth.button \

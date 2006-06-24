@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <sys/types.h>
+#include <dirent.h>
 #include <sys/stat.h>
 #include <grass/gis.h>
 #include "local_proto.h"
@@ -14,42 +15,116 @@
  *   been abandoned their processes (pid).
  *
  *   also removes any other file found which is "old"
+ *   with an modification time greater then 4 days
+ *
+ *   2006: Rewritten for GRASS 6 by roberto Flor, ITC-irst
  **************************************************************/
 
+#include <limits.h>
+#include <string.h>
 #include <errno.h>
+#ifdef PATH_MAX
+#define BUF_MAX PATH_MAX
+#else
+#define BUF_MAX 4096
+#endif
+
 extern int errno;
 
 #define SLEEP 30	/* 30 minutes */
 
+/* Recursively scan the directory pathname, removing directory and files */
+
+void clean_dir(const char *pathname,uid_t uid,pid_t pid,time_t now,int max_age)
+{
+    char buf[BUF_MAX];
+    DIR *curdir;
+    struct dirent *cur_entry;
+    struct stat info;
+    int n,pathlen;
+
+    curdir = opendir(pathname);
+    if (curdir == NULL ) {
+	G_warning("Can't open directory %s: %s,skipping\n",pathname,strerror(errno));
+	return;
+    }
+    /* loop over current dir */
+    while ((cur_entry = readdir(curdir)))
+    {
+	if ((G_strcasecmp(cur_entry->d_name,".") == 0 )|| (G_strcasecmp(cur_entry->d_name,"..")==0)) 
+		continue; /* Skip dir and parent dir entries */
+		
+	if ( (pathlen=snprintf(buf,BUF_MAX,"%s/%s",pathname,cur_entry->d_name)) >= BUF_MAX) 
+		G_fatal_error("clean_temp: exceeded maximum pathname length %d, got %d, should'nt happen",BUF_MAX,pathlen);
+
+	if (stat(buf, &info) != 0) {
+		G_warning("Can't stat file %s: %s,skipping\n",buf,strerror(errno));
+		continue;
+	}
+	if ( S_ISDIR(info.st_mode)) { /* It's a dir, recurring */
+		clean_dir(buf,uid,pid,now,max_age);
+		/* Return here means we have completed the subdir recursion */
+		/* Trying to remove the now empty dir */
+		if ( info.st_uid != uid ) /* Not owners of dir */
+			continue;	
+#ifndef DEBUG_CLEAN
+		if (rmdir(buf) != 0 ) {
+			if ( errno != ENOTEMPTY ) {
+			  	G_warning("Can't remove empty directory %s: %s,skipping\n",buf,strerror(errno));
+			}
+		}
+#else
+		G_warning("Removing directory %s\n",buf);
+#endif
+	} else { /* It's a file check it */
+		if ( info.st_uid == uid ) { /* Remove only files owned by current user */
+			if (sscanf (cur_entry->d_name, "%d.%d", &pid, &n) == 2 ) {
+				if (!find_process (pid)) 
+#ifndef DEBUG_CLEAN
+					if ( unlink (buf) != 0 )
+			  			G_warning("Can't remove file %s: %s,skipping\n",buf,strerror(errno));
+#else
+			  			G_warning("Removing file %s\n",buf);
+#endif
+			} else {
+				if ((now - info.st_mtime) > max_age) /* Not modified in 4 days: TODO configurable param */
+#ifndef DEBUG_CLEAN
+					if ( unlink (buf) != 0 )
+			  			G_warning("Can't remove file %s: %s,skipping\n",buf,strerror(errno));
+#else
+			  			G_warning("Removing file %s\n",buf);
+#endif
+			}
+		}
+	}
+    }
+    closedir(curdir);
+    return;
+}
+
 int 
 main (int argc, char *argv[])
 {
-    char buf[300];
     char *mapset;
-    char element[300];
-    int ppid;
-    int pid;
-    int uid;
-    int n;
+    char element[GNAME_MAX];
+    char tmppath[BUF_MAX];
+    pid_t ppid;
+    pid_t pid;
+    uid_t uid;
     time_t now;
-    struct stat info;
     long max_age;
 
-    FILE *ls, *popen();
-
     G_gisinit(argv[0]) ;
+    pid = 0;
     ppid = 0;
     if (argc > 1)
 	sscanf(argv[1],"%d", &ppid);
 
-/* chdir to mapset temp directory */
+/* Get the mapset temp directory */
     G__temp_element(element);
-    G__file_name (buf, element, "", mapset = G_mapset());
-    if (chdir (buf) < 0)
-	    exit(0);
+    G__file_name (tmppath, element, "", mapset = G_mapset());
 
 /* get user id and current time in seconds */
-
 #ifdef __MINGW32__
     /* TODO */
     uid = -1;
@@ -63,10 +138,9 @@ main (int argc, char *argv[])
     max_age = 4 * 24 * 60 * 60 ;
 
 /*
-* execute the ls command
+* Scan the temp directory and subdirectory for 
 * files owned by the user and of the form pid.n
-* are removed if the process is not running
-*
+* to be removed if the process is not running
 * all "old" files are removed as well
 */
 
@@ -74,27 +148,7 @@ main (int argc, char *argv[])
     {
 	if (ppid > 0 && !find_process(ppid))
 	    break;
-	/*fprintf (stderr,"Removing old temporary files in mapset %s\n", mapset);*/
-	if (ls = popen ("ls","r"))
-	{
-	    while (G_getl (buf, sizeof buf, ls))
-	    {
-		if (stat(buf, &info) != 0)
-			continue;
-		if (sscanf (buf, "%d.%d", &pid, &n) == 2 && info.st_uid == uid)
-		{
-		    if (!find_process (pid))
-		    {
-			unlink (buf);
-			continue;
-		    }
-		}
-		if ((now - info.st_ctime) > max_age)
-		    unlink (buf);
-	    }
-
-	    pclose (ls);
-	}
+    	clean_dir(tmppath,uid,pid,now,max_age);
 	if (ppid <= 0)
 	    break;
 	G_sleep(SLEEP);
