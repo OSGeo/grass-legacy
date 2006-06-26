@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh
 
 ############################################################################
 #
@@ -10,10 +10,8 @@
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
 #		for details.
-# REQUIRES:     - GDAL compiled with GRASS support (libgrass)
-#                   http://gdal.velocet.ca/projects/grass/
-#               - or GRASS CVS/libgrass/
-#               - or new GDAL/GRASS plugin
+# REQUIRES:     - GDAL compiled with GRASS-GDAL-OGR plugin
+#                   http://grass.gdf-hannover.de/wiki/Compile_and_install_GRASS_and_QGIS_with_GDAL/OGR_Plugin
 #############################################################################
 
 #%Module
