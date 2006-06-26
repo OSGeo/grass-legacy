@@ -551,7 +551,7 @@ int analyze (void)
 	MENU("FILE", to_file, &use),
 	MENU("OVERLAY", do_warp, &use),
 	MENU(delete_msg, delete_mark, &use),
-        INFO("Transformation->", &use), 
+	INFO("Transform->", &use),
         MENU(order_msg, get_order, &use),
 	INFO(pick_msg, &use),
 	OTHER(pick,&use),
