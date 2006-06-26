@@ -109,9 +109,11 @@ Note: This text contains *some* rules only applicable to the
    FreeGIS:            <freegis-list@intevation.de>
    Geowanking:         <geowanking@lists.burri.to>
 
-   news:comp.infosystems.gis
+   http://groups.google.com/group/comp.infosystems.gis
    http://slashgeo.org/submit.pl
-   http://osgeo.org (? to be defined)
+   http://www.osgeo.org (discuss list)
+   https://webcommittee.osgeo.org/servlets/Scarab  (OSGeo-WebCom as news items for www.osgeo.org)
+   http://grass.osgeo.org
    http://spatialnews.geocomm.com/submitnews.html (not free any more)
    http://freshmeat.net/projects/grass/?highlight=GRASS
    http://linuxtoday.com/contribute.php3
@@ -129,7 +131,6 @@ Note: This text contains *some* rules only applicable to the
    http://news.eoportal.org/cgi-bin/eoportal_header.pl?dw=psr&site=software&words=type
    http://www.osdir.com/Downloads+index-req-viewsdownload-sid-206.phtml
    http://www.foss4g.org/FOSS4G/modules.php?name=Submit_News
-   https://webcommittee.osgeo.org/servlets/Scarab  (OSGeo-WebCom as news items for www.osgeo.org)
    http://groups.google.com/group/Remote-Sensing-GIS-for-a-New-World
 
    ... anywhere else? Please add here.
