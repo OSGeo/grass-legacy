@@ -288,6 +288,7 @@ cleanup()
     \rm -f $TMP3 $TMP3.sort
     \rm -f $TMP4 $TMP4.sort
     \rm -f $TMP5 $TMP5.sort
+    \rm -f $TMP6 $TMP6.sort
 }
 
 # what to do in case of user break:
