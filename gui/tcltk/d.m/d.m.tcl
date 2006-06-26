@@ -822,7 +822,7 @@ global osxaqua
 global HOSTTYPE
     
     set cmd "nviz"
-	if { $HOSTTYPE == "macintosh" || $HOSTTYPE == "powermac" || $HOSTTYPE == "powerpc"} {
+	if { $HOSTTYPE == "macintosh" || $HOSTTYPE == "powermac" || $HOSTTYPE == "powerpc" || $HOSTTYPE == "intel-pc"} {
 		if { $osxaqua == "1"} {
 			spawn $cmd
 		} else {
