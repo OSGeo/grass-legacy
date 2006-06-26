@@ -164,8 +164,9 @@ main (int argc, char *argv[])
 		G_fatal_error(_("%s - can't open raster map"), inopt->answer);
 
 	basename = G_store(outopt->answer);
-	G_basename(basename, "tif");   
-	G_asprintf(&filename, "%s.tif", basename);
+	G_basename(basename, "tif");
+	filename = G_malloc(strlen(basename) + 5);
+	sprintf(filename, "%s.tif", basename);
    
 	out = TIFFOpen(filename, "w");
 	if (out == NULL)
@@ -392,15 +393,13 @@ main (int argc, char *argv[])
 	
 	(void) TIFFClose(out);
 	
-	G_free(filename);
-
 	if (tfw)
 	{
-		G_asprintf(&filename, "%s.tfw", basename);
+		sprintf(filename, "%s.tfw", basename);
 		write_tfw(filename, &cellhd, verbose);
-		G_free(filename);   
 	}
 
+	G_free(filename);
 	G_free(basename);   
 	
 	return EXIT_SUCCESS;
