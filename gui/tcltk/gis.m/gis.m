@@ -10,8 +10,12 @@
 #%End
 
 if [ $# -eq 0 ] ; then
-   exec "$GRASS_WISH" $GISBASE/etc/gm/gm.tcl -name gm_tcl &
-   exit 0
+	if [[ "$HOSTTYPE" = "macintosh" || "$HOSTTYPE" = "powermac" || "$HOSTTYPE" = "powerpc" || "$HOSTTYPE" = "intel-pc" ]] ; then
+		exec "$GRASS_WISH" $GISBASE/etc/gm/gm.tcl -name gm_tcl
+	else
+   		exec "$GRASS_WISH" $GISBASE/etc/gm/gm.tcl -name gm_tcl &
+   	fi
+	exit 0
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
