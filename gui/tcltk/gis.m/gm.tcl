@@ -48,7 +48,6 @@ set keyctrl "Ctrl"
 set execom "execute"
 set msg 0
 set mon 1
-set moncount 1
 
 if {[info exists env(HOSTTYPE)]} {
 	set HOSTTYPE $env(HOSTTYPE)
@@ -90,6 +89,7 @@ namespace eval Gm {
     variable status
     variable array tree # mon
     variable rcfile
+    variable moncount
 	global array filename # mon
 
 }
@@ -213,6 +213,9 @@ proc Gm::create { } {
     
     variable mainframe
     variable tree
+	variable moncount
+
+	set moncount 1
    
     set prgtext [G_msg "Loading GIS Manager"]
     set prgindic -1
@@ -287,7 +290,7 @@ proc Gm::create { } {
 proc Gm::startmon { } {
 	global mainwindow
 	global mon
-	global moncount
+	variable moncount
 	variable tree
 
 	set mon $moncount
@@ -343,7 +346,7 @@ global osxaqua
 global HOSTTYPE
     
     set cmd "nviz"
-	if { $HOSTTYPE == "macintosh" || $HOSTTYPE == "powermac" || $HOSTTYPE == "powerpc"} {
+	if { $HOSTTYPE == "macintosh" || $HOSTTYPE == "powermac" || $HOSTTYPE == "powerpc" || $HOSTTYPE == "intel-pc"} {
 		if { $osxaqua == "1"} {
 			spawn $cmd
 		} else {
@@ -442,7 +445,8 @@ proc Gm::cleanup { destroywin } {
 	global mon
 	global tmpdir
 	global mappid
-
+	variable moncount
+	
 	# stop gism PNG driver if it is still running due to error
 	if {![catch {open "|d.mon -L" r} input]} {
 		while {[gets $input line] >= 0} {
@@ -452,6 +456,11 @@ proc Gm::cleanup { destroywin } {
 			}
 		}
 		close $input
+	}
+		
+	# delete temporary local region files
+	for {set x 1} {$x<$moncount} {incr x} {
+		eval exec "g.remove region=map_$x"
 	}
 
 	# delete all map display ppm files
@@ -464,8 +473,6 @@ proc Gm::cleanup { destroywin } {
 	
 	unset mon
 
-	# delete temporary region files for map displays
-	runcmd "g.mremove -f region=mon_*"
 }
 
 ###############################################################################
@@ -474,13 +481,14 @@ proc main {argc argv} {
     global auto_path
     global GRASSVERSION
     global location_name
+    global mapset
     global keycontrol
     global mainframe
     global filename
     global mon
 
     wm withdraw .
-    wm title . [format [G_msg "GRASS%s GIS Manager - %s"] $GRASSVERSION $location_name]
+    wm title . [format [G_msg "GRASS%s GIS Manager - %s %s"] $GRASSVERSION $location_name $mapset]
 
     bind . <$keycontrol-Key-o> {
 	Gm::OpenFileBox
