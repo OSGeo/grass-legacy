@@ -153,8 +153,8 @@ proc MapToolBar::create { tb } {
 		-command {MapCanvas::zoom_default $mon}
 	$zoommenu add command \
 		-compound center \
-		-label {Set current region to match display} \
-		-command {MapCanvas::gregion_zoom $mon}
+		-label {Set current region (WIND file) to match display} \
+		-command {MapCanvas::set_wind $mon}
 
 	$mapzoom configure -menu $zoommenu
 
