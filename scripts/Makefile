@@ -27,7 +27,6 @@ SUBDIRS = \
 	i.landsat.rgb \
 	i.oif \
 	i.spectral \
-	i.in.spotvgt \
 	i.tasscap \
 	m.proj \
 	r.blend \
@@ -44,6 +43,7 @@ SUBDIRS = \
 	r.shaded.relief \
 	r.tileset \
 	r.univar.sh \
+	r3.mapcalculator \
 	v.build.all \
 	v.convert.all \
 	v.db.addcol \
