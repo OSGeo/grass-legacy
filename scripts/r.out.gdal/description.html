@@ -50,7 +50,16 @@ local GDAL installation. Available may be (incomplete list):<P>
 
 When writing out GeoTIFF format for users of ESRI software or ImageMagick,
 the band interleaving should be switched to pixel interleaving using
-<em>createopt="INTERLEAVE=PIXEL"</em> .
+<em>createopt="INTERLEAVE=PIXEL"</em>. Multiple options have to be
+specified as comma separated list (<em>createopt=TFW=YES,COMPRESS=DEFLATE</em>).
+
+<H2>EXAMPLE</H2>
+
+Export of the map 'elevation.dem' from the Spearfish data set:
+
+<div class="code"><pre>
+r.out.gdal elevation.dem format=GTiff type=Int16 output=elev_dem.tif
+</pre></div>
 
 <H2>REFERENCES</H2>
  
