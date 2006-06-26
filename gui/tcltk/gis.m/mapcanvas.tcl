@@ -63,6 +63,9 @@ namespace eval MapCanvas {
 	# They must always be redone if the monitor was different
 	variable previous_monitor
 	set previous_monitor {none}
+	
+	# Temporary local region setting
+	variable mapregion
 }
 
 set initwd 640.0
@@ -98,6 +101,7 @@ proc MapCanvas::create { } {
 	variable can
 	variable map_ind
 	variable exploremode
+	variable mapregion
 	
 	# Initialize window and map geometry
 	
@@ -109,6 +113,12 @@ proc MapCanvas::create { } {
 	set win ""
 	# Explore mode is off by default
 	set exploremode($mon) 0
+	
+	# create temporary local WIND file to use with WIND_OVERRIDE whenever display has focus
+	if {[info exists env(WIND_OVERRIDE)]} {unset env(WIND_OVERRIDE)}
+	set mapregion "map_$mon"
+	run_panel "g.region -u save=$mapregion --o"
+	set env(WIND_OVERRIDE) $mapregion
 
 	# Zoom to the current region
 	MapCanvas::zoom_gregion $mon
@@ -182,14 +192,15 @@ proc MapCanvas::create { } {
 	# switch monitors in the tree if this isn't the selected one
 	# I suspect that setting win is unnecessary (where is it used?)
 	bind .mapcan($mon) <FocusIn> "
-		global mon currmon win
+		global mon currmon win env
 		set win .mapcan($mon)
+		set env(WIND_OVERRIDE) $mapregion
 		set currmon $mon
 		if { \$mon != $mon } {
 			set mon $mon
 			GmTree::switchpage $mon
 		} "
-		
+				
 	# Displays geographic coordinates in indicator window when cursor moved across canvas
 	bind $can($mon) <Motion> {
 		set scrxmov %x
@@ -309,7 +320,7 @@ proc MapCanvas::create { } {
 
 	# window configuration change handler for resizing
 	bind $can($mon) <Configure> "MapCanvas::do_resize $mon"
-
+	
 	# bindings for closing map display window
 	bind .mapcan($mon) <Destroy> "MapCanvas::cleanup $mon %W"
 	
@@ -391,10 +402,10 @@ proc MapCanvas::drawmap { mon } {
 	}
 
 	# Save the current region so that we do not destroy it
-	run_panel [list g.region -u save=gism_temp_region --o]
+	#run_panel [list g.region -u save=gism_temp_region --o]
 	# Set the region from our zoom settings
 	MapCanvas::gregion_zoom $mon
-
+	
 	# Redo the driver settings if the geometry has changed or
 	# if we weren't the previous monitor.
 	if {$mymodified == 2 || \
@@ -413,7 +424,7 @@ proc MapCanvas::drawmap { mon } {
 	MapCanvas::composite $mon
 
 	# Load the old current region
-	run_panel [list g.region region=gism_temp_region --o]
+	#run_panel [list g.region region=gism_temp_region --o]
 }
 
 # set up driver geometry and settings
@@ -868,6 +879,12 @@ proc MapCanvas::zoom_previous {mon} {
 
 # Zoom to something loaded from a g.region command
 proc MapCanvas::zoom_gregion {mon args} {
+	global env
+	variable mapregion
+
+	# set current region to WIND file	
+	unset env(WIND_OVERRIDE)
+	
 	if {![catch {open [concat "|g.region" "-ug" $args] r} input]} {
 		while {[gets $input line] >= 0} {
 			regexp -nocase {^([a-z]+)=(.*)$} $line trash key value
@@ -875,12 +892,17 @@ proc MapCanvas::zoom_gregion {mon args} {
 		}
 		close $input
 
+		#set current region back to local wind settings
+		set env(WIND_OVERRIDE) $mapregion
+
 		MapCanvas::zoom_new $mon $parts(n) $parts(s) $parts(e) $parts(w) $parts(nsres) $parts(ewres)
 	}
+	
 }
 
 # Set the region from the current zoom
 proc MapCanvas::gregion_zoom {mon args} {
+	global env
 	variable zoom_attrs
 
 	set values [MapCanvas::currentzoom $mon]
@@ -891,8 +913,30 @@ proc MapCanvas::gregion_zoom {mon args} {
 	}
 
 	run_panel [concat g.region $options $args]
+
 }
 
+# Set WIND file to match settings from the current zoom
+proc MapCanvas::set_wind {mon } {
+	variable zoom_attrs
+	variable mapregion
+	global env
+
+	set values [MapCanvas::currentzoom $mon]
+
+	set options {}
+	foreach attr $zoom_attrs value $values {
+		lappend options "$attr=$value"
+	}
+
+	# set current region to WIND file	
+	unset env(WIND_OVERRIDE)
+	
+	open [concat "|g.region " $options]
+	
+	#set current region back to local wind settings
+	set env(WIND_OVERRIDE) $mapregion
+}
 
 # zoom bindings
 proc MapCanvas::zoombind { mon zoom } {
@@ -1494,13 +1538,15 @@ proc MapCanvas::scrx2mape { x } {
 ###############################################################################
 # cleanup procedure on closing window
 proc MapCanvas::cleanup { mon destroywin} {
+	variable mapregion
 	global pgs
 
 	if { $destroywin == ".mapcan($mon)" } { 
 		$pgs delete "page_$mon"
-		# runcmd "g.mremove -f region=mon_$mon "
-		if { [winfo exists .tlegend($mon)] } { destroy .tlegend($mon) }
+		runcmd "g.remove region=$mapregion "
 	}
+
+	if { [winfo exists .tlegend($mon)] } { destroy .tlegend($mon) }
 
 	# stop gism PNG driver if it is still running due to error
 	if {![catch {open "|d.mon -L" r} input]} {
