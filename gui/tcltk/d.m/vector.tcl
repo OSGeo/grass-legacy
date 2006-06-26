@@ -159,6 +159,14 @@ proc DmVector::show_columns { id } {
 		layer=$layernum &		
 }
 
+proc DmVector::show_data { id } {
+	variable opt
+	global bgcolor
+	set mapname $opt($id,map)
+	exec xterm -bg $bgcolor -title "$mapname data" \
+		-geometry 60x40-10+30 -sb -hold -e db.select table=$mapname &
+}
+
 # select symbols from directories
 proc DmVector::select_symbol { id } {
     variable opt
@@ -327,15 +335,21 @@ proc DmVector::options { id frm } {
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
     
-    #show columns
+	#show columns and data
 	set row [ frame $frm.columns ]
-    Label $row.a -text [G_msg "     show attribute columns"] 
+    Label $row.a -text [G_msg "    show attribute columns"] 
     Button $row.b -text [G_msg "columns"] \
             -image [image create photo -file "$dmpath/columns.gif"] \
             -command "DmVector::show_columns $id" \
             -background $bgcolor \
             -helptext [G_msg "Show columns"]
-    pack $row.a $row.b -side left
+    Label $row.c -text [G_msg "     show data"] 
+    Button $row.d -text [G_msg "data"] \
+            -image [image create photo -file "$dmpath/columns.gif"] \
+            -command "DmVector::show_data $id" \
+            -background $bgcolor \
+            -helptext [G_msg "Show data"]
+    pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
 
