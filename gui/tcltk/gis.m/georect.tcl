@@ -138,6 +138,9 @@ namespace eval GRMap {
 	# is target mapset same as current mapset
 	variable selftarget	
 	
+	# Temporary local region setting
+	variable mapregion	
+	
 	    #initialize variables
 	set initwd 640.0
 	set initht 480.0
@@ -466,6 +469,7 @@ proc GRMap::create { } {
 	variable xyrast
 	variable xyvect
 	variable maptype
+	variable mapregion
 
     global env
     global currmon
@@ -482,6 +486,8 @@ proc GRMap::create { } {
 	
 	# set environment to xy location
 	GRMap::setxyenv $xymset $xyloc	
+	
+	# need to turn off wind_override here
 
 	# Initialize window and map geometry	
 	set grcanvas_w $initwd
@@ -491,8 +497,18 @@ proc GRMap::create { } {
 	set drawprog 0
 	set win ""
 
-	# Zoom to the current region
-	GRMap::zoom_gregion
+	# create temporary local WIND file to use with WIND_OVERRIDE whenever display has focus
+	if {[info exists env(WIND_OVERRIDE)]} {unset env(WIND_OVERRIDE)}
+	set mapregion "gr_region"
+	run_panel "g.region -ug save=gr_region --o"
+	set env(WIND_OVERRIDE) $mapregion
+
+	# Zoom to map to georectify
+	if { $maptype == "rast" } {
+		GRMap::zoom_gregion [list "rast=$xyrast"]
+	} elseif { $maptype == "vect" } {
+		GRMap::zoom_gregion [list "vect=$xyvect"]
+	}		
 
 	# Create canvas monitor as top level mainframe
 	toplevel .mapgrcan
@@ -542,7 +558,8 @@ proc GRMap::create { } {
 	# switch monitors in the tree if this isn't the selected one
 	# I suspect that setting win is unnecessary (where is it used?)
 	bind .mapgrcan <FocusIn> "
-		global win
+		global win env
+		set env(WIND_OVERRIDE) $mapregion
 		set win .mapgrcan
 		"
 		
@@ -717,7 +734,7 @@ proc GRMap::gcpwin {} {
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
-	for {set gcpnum 1} {$gcpnum < 21 } { incr gcpnum } {
+	for {set gcpnum 1} {$gcpnum < 51 } { incr gcpnum } {
 		set GRMap::usegcp($gcpnum) 1
 		set row [ frame $gcp.row$gcpnum -bd 0]
 		set chk($gcpnum) [checkbutton $row.a \
@@ -763,7 +780,7 @@ proc GRMap::gcpwin {} {
 			}
 		}
 	} elseif { $maptype == "vect" } {
-		set gcpfile "$xygdb/$xyloc/$xymset/vector/$xyvect/gcp"
+		set gcpfile "$xygdb/$xyloc/$xymset/group/$xyvect/POINTS"
 		if {[file exists $gcpfile] } {
 			# do the import
 			set gcpnum 1
@@ -884,34 +901,30 @@ proc GRMap::savegcp {} {
 
 	if { $maptype == "rast" } {
 		set gcpfile "$xygdb/$xyloc/$xymset/group/$xygroup/POINTS"
-		set output [open $gcpfile w ] 
-			for {set gcpnum 1} {$gcpnum < 21 } { incr gcpnum } {
-				set rowcount 0
-				set gcpline($gcpnum) "[$xy($gcpnum) get]"
-				append gcpline($gcpnum) "     [$geoc($gcpnum) get]"
-				append gcpline($gcpnum) "     $usegcp($gcpnum)"
-				if { [$xy($gcpnum) get] != "" && [$geoc($gcpnum) get] != ""} {
-					puts $output $gcpline($gcpnum)
-					incr rowcount
-				}
-			}
-		close $output
 	} elseif { $maptype == "vect" } {
-		set gcpfile "$xygdb/$xyloc/$xymset/vector/$xyvect/gcp"
-		set output [open $gcpfile w ] 
-			puts $output "# target location: $currloc"
-			puts $output "# target mapset: $currmset"
-			for {set gcpnum 1} {$gcpnum < 21 } { incr gcpnum } {
-				set rowcount 0
-				set gcpline($gcpnum) "[$xy($gcpnum) get]"
-				append gcpline($gcpnum) "     [$geoc($gcpnum) get]"
-				if { [$xy($gcpnum) get] != "" && [$geoc($gcpnum) get] != ""} {
-					puts $output $gcpline($gcpnum)
-					incr rowcount
-				}
-			}
-		close $output
+		set gcpfile "$xygdb/$xyloc/$xymset/group/$xyvect/POINTS"
+		if {![file isdirectory [file dirname $gcpfile]] } {
+			file mkdir [file dirname $gcpfile]
+		}
 	}
+	set output [open $gcpfile w ] 
+		puts $output "# Ground Control Points File"
+		puts $output "# "
+		puts $output "# target location: $currloc"
+		puts $output "# target mapset: $currmset"
+		puts $output "#unrectified xy     georectified east north"
+		puts $output "#--------------     -----------------------"
+		for {set gcpnum 1} {$gcpnum < 51 } { incr gcpnum } {
+			set rowcount 0
+			set gcpline($gcpnum) "[$xy($gcpnum) get]"
+			append gcpline($gcpnum) "     [$geoc($gcpnum) get]"
+			append gcpline($gcpnum) "     $usegcp($gcpnum)"
+			if { [$xy($gcpnum) get] != "" && [$geoc($gcpnum) get] != "" && $usegcp($gcpnum) == 1} {
+				puts $output $gcpline($gcpnum)
+				incr rowcount
+			}
+		}
+	close $output
 }
 
 ###############################################################################
@@ -929,7 +942,7 @@ proc GRMap::rmscalc {} {
 	set totalrms 0.0
 
 	# calculate rms values for each point
-	for {set gcpnum 1} {$gcpnum < 21 } { incr gcpnum } {
+	for {set gcpnum 1} {$gcpnum < 51 } { incr gcpnum } {
 		if { [$xy($gcpnum) get] != "" && [$geoc($gcpnum) get] != "" && $usegcp($gcpnum) == 1} {
 			set xyfields [split [$xy($gcpnum) get] { }]
 			set geocfields [split [$geoc($gcpnum) get] { }]
@@ -1001,7 +1014,7 @@ proc GRMap::rectify { rectorder } {
 		runcmd $cmd
 	} elseif { $maptype == "vect" && $rectorder == 1} {
 		# count useable GCP's in points file
-		set gcpfile "$xygdb/$xyloc/$xymset/vector/$xyvect/gcp"
+		set gcpfile "$xygdb/$xyloc/$xymset/group/$xyvect/POINTS"
 		if {[file exists $gcpfile] } {
 			# do the import
 			set gcpcnt 0
@@ -1073,7 +1086,7 @@ proc GRMap::cleargcp {} {
 	variable gcpnum
 	variable grcan
 
-	for {set gcpnum 1} {$gcpnum < 21 } { incr gcpnum } {
+	for {set gcpnum 1} {$gcpnum < 51 } { incr gcpnum } {
 		set usegcp($gcpnum) 1
 		$xy($gcpnum) delete 0 end
 		$geoc($gcpnum) delete 0 end
@@ -1156,14 +1169,6 @@ proc GRMap::drawmap { } {
 		set grcanvas_h $h
 	}
 
-	# Save the current region so that we do not destroy it
-	# First, switch to xy mapset
-	GRMap::setxyenv $xymset $xyloc
-	run_panel [list g.region -u save=gism_temp_region --o]
-	# Return to georectified mapset
-	GRMap::resetenv
-
-
 	# Set the region from our zoom settings
 	GRMap::gregion_zoom
 
@@ -1177,16 +1182,8 @@ proc GRMap::drawmap { } {
 		GRMap::driversettings
 	}
 	
-	# First, switch to xy mapset
-	GRMap::setxyenv $xymset $xyloc
-	# Load the old current region
-	run_panel [list g.region region=gism_temp_region --o]
-	# Return to georectified mapset
-	GRMap::resetenv
-
 	# Render all the layers
 	GRMap::runprograms [expr {$mymodified != 0}]
-
 }
 
 # set up driver geometry and settings
@@ -1324,7 +1321,7 @@ proc GRMap::display_server {} {
 		# Redraw the monitor canvas
 		GRMap::drawmap
 		#draw gcp marks
-		for {set gcpnum 1} {$gcpnum < 21 } { incr gcpnum } {
+		for {set gcpnum 1} {$gcpnum < 51 } { incr gcpnum } {
 			if { [$xy($gcpnum) get] != "" } {
 				set xyfields [split [$xy($gcpnum) get] { }]
 				set mapx [lindex $xyfields 0]
@@ -1389,42 +1386,13 @@ proc GRMap::erase { } {
 
 ###############################################################################
 
-# zoom to extents and resolution of displayed map for georectifying
-proc GRMap::zoom_map { } {
-	variable xyrast
-	variable xyvect
-	variable xymset
-	variable xyloc
-	variable maptype
-	variable grcan
-
-	# set region to match map to georectify
-	if { $maptype == "rast" } {
-		GRMap::zoom_gregion [list "rast=$xyrast"]
-	} elseif { $maptype == "vect" } {
-		GRMap::zoom_gregion [list "rast=$xyvect"]
-	}		
-
-	$grcan delete gr
-	GRMap::request_redraw 1
-
-}
-
-
-###############################################################################
-
 # stop display management tools
 proc GRMap::stoptool { } {
 	global GRMap::msg
 	variable grcan
-	
-	if {[$grcan find withtag mline] != 0} {
-    	$grcan delete mline
-	}
-
-	if {[$grcan find withtag mline] != 0} {
-    	$grcan delete totmline
-	}
+	variable maptype
+	variable xygroup
+	variable xyvect
 	
 	# release bindings
 	bind $grcan <1> ""
@@ -1434,7 +1402,11 @@ proc GRMap::stoptool { } {
 	bind $grcan <ButtonRelease-1> ""
 
 	# reset status display to normal
-	set GRMap::msg "east & north coordinates under cursor"
+	if { $maptype == "rast" } {
+		set GRMap::msg "Georectifying $xygroup"
+	} elseif { $maptype == "vect" } {
+		set GRMap::msg "Georectifying $xyvect"
+	}
 
 	GRMap::restorecursor 		
 	
@@ -1487,7 +1459,7 @@ proc GRMap::markgcp { x y } {
 
 
 ###############################################################################
-# procedures for interactive zooming in and zooming out
+# procedures for zooming and setting region
 
 # Get the current zoom region
 # Returns a list in zoom_attrs order (n s e w nsres ewres)
@@ -1536,7 +1508,7 @@ proc GRMap::zoom_new { args} {
 
 	# If cols and rows aren't present we just use what was already here.
 	set present_attrs [lrange $zoom_attrs 0 [expr {[llength $args] - 1}]]
-
+	
 	foreach value $args attr $present_attrs {
 		set monitor_zooms(1,$attr) $value
 	}
@@ -1577,16 +1549,24 @@ proc GRMap::zoom_previous {} {
 proc GRMap::zoom_gregion { args} {
 	variable xyloc
 	variable xymset
+	variable mapregion
+	global env
 
 	# First, switch to xy mapset
     GRMap::setxyenv $xymset $xyloc
 
+	# set current region to WIND file	
+	unset env(WIND_OVERRIDE)
+	
 	if {![catch {open [concat "|g.region" "-ug" $args] r} input]} {
 		while {[gets $input line] >= 0} {
 			regexp -nocase {^([a-z]+)=(.*)$} $line trash key value
 			set parts($key) $value	
 		}
 		close $input
+
+		#set current region back to local wind settings
+		set env(WIND_OVERRIDE) $mapregion
 
 		GRMap::zoom_new $parts(n) $parts(s) $parts(e) $parts(w) $parts(nsres) $parts(ewres)
 	}
@@ -1600,9 +1580,8 @@ proc GRMap::gregion_zoom { args} {
 	variable zoom_attrs
 	variable xyloc
 	variable xymset
-
-	# First, switch to xy mapset
-    GRMap::setxyenv $xymset $xyloc
+	variable mapregion
+	global env
 
 	set values [GRMap::currentzoom]
 
@@ -1611,13 +1590,49 @@ proc GRMap::gregion_zoom { args} {
 		lappend options "$attr=$value"
 	}
 
+	# First, switch to xy mapset
+    GRMap::setxyenv $xymset $xyloc
+
 	run_panel [concat g.region $options $args]
 
     # Return to georectified mapset
     GRMap::resetenv
 }
 
+# zoom to extents and resolution of displayed map for georectifying
+proc GRMap::zoom_map { } {
+	variable xyrast
+	variable xyvect
+	variable xymset
+	variable xyloc
+	variable maptype
+	variable grcan
 
+	# set region to match map to georectify
+	if { $maptype == "rast" } {
+		GRMap::zoom_gregion [list "rast=$xyrast"]
+	} elseif { $maptype == "vect" } {
+		GRMap::zoom_gregion [list "vect=$xyvect"]
+	}		
+
+	$grcan delete gr
+	GRMap::request_redraw 1
+
+}
+
+
+# zoom back
+proc GRMap::zoom_back { } {
+	variable grcan
+
+	GRMap::zoom_previous
+	$grcan delete gr
+	GRMap::request_redraw 1
+}
+
+
+###############################################################################
+# interactive zooming procedures
 # zoom bindings
 proc GRMap::zoombind { zoom } {
 	variable grcan
@@ -1696,6 +1711,13 @@ proc GRMap::zoomregion { zoom } {
 	variable grcanvas_h
 	variable grcanvas_w
 	variable monitor_zooms
+	variable map_n
+	variable map_s
+	variable map_e
+	variable map_w
+	variable map_ew
+	variable map_ns	
+	
     global areaX1 areaY1 areaX2 areaY2
     
     # if click and no drag, zoom in or out by 80% of original area
@@ -1738,7 +1760,7 @@ proc GRMap::zoomregion { zoom } {
 	set south [scry2mapn $cbottom]
 	set east  [scrx2mape $cright]
 	set west  [scrx2mape $cleft]
-
+	
 	# zoom in
 	if { $zoom == 1 } {
 		GRMap::zoom_new $north $south $east $west
@@ -1765,18 +1787,6 @@ proc GRMap::zoomregion { zoom } {
 	GRMap::request_redraw  1
 }
 
-
-
-###############################################################################
-
-# zoom back
-proc GRMap::zoom_back { } {
-	variable grcan
-
-	GRMap::zoom_previous
-	$grcan delete gr
-	GRMap::request_redraw 1
-}
 
 
 ###############################################################################
@@ -1851,6 +1861,12 @@ proc GRMap::pan { } {
     variable to_y
 	variable grcan
 	variable monitor_zooms
+	variable map_n
+	variable map_s
+	variable map_e
+	variable map_w
+	variable map_ew
+	variable map_ns	
 	
 	# get map coordinate shift    
     set from_e [scrx2mape $from_x]
@@ -2009,17 +2025,23 @@ proc GRMap::scrx2mape { x } {
 ###############################################################################
 # cleanup procedure on closing window
 proc GRMap::cleanup { destroywin} {
+	variable mapregion
+	variable xymset
+	variable xyloc
 
-	# stop gism PNG driver if it is still running due to error
-	if {![catch {open "|d.mon -L" r} input]} {
-		while {[gets $input line] >= 0} {
-			if {[regexp {^gism            Create PNG Map for gism        running} $line]} {
-				runcmd "d.mon stop=gism"
-				break
-			}
-		}
-		close $input
+	# First, switch to xy mapset
+    GRMap::setxyenv $xymset $xyloc
+
+	if { $destroywin == ".mapgrcan" } { 
+		runcmd "g.mremove -f region=$mapregion "
 	}
+	
+	# close GCP management window too
+	if { [winfo exists .gcpwin] } { destroy .gcpwin }
+	
+	# reset to original location and mapset
+	GRMap::resetenv
+
 	
 }
 
