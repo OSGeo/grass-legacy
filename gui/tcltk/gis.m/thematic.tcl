@@ -11,8 +11,8 @@
 
 namespace eval GmThematic {
     variable array opt # thematic current options
-	variable array tlegend # mon
-	variable array tlegcan # mon
+	variable array tlegend # mon id
+	variable array tlegcan # mon id
     variable count 1
     variable array lfile # raster
     variable array lfilemask # raster
@@ -537,7 +537,7 @@ proc GmThematic::display { node mod } {
 
 	# Legend
     if { $opt($id,1,_check) } {
-		GmThematic::tlegend $mon
+		GmThematic::tlegend $mon $id
 		GmThematic::tleg_item $mon $id
 	}
 	
@@ -615,7 +615,7 @@ proc GmThematic::duplicate { tree parent node id } {
 ###############################################################################
 
 # create graphic legend in separate display canvas
-proc GmThematic::tlegend { mon } {
+proc GmThematic::tlegend { mon id } {
 	global legendtitle
 	global bgcolor
 	global keycontrol
@@ -623,47 +623,48 @@ proc GmThematic::tlegend { mon } {
 	global iconpath
     global env
 
+	variable opt
 	variable tlegend
 	variable tlegcan
 
-	if { [winfo exists .tlegend($mon)] } {return}
+	if { [winfo exists .tlegend($mon,$id)] } {return}
 
-	set legendtitle "Legend for Map $mon"
-	toplevel .tlegend($mon)
-    wm title .tlegend($mon) [G_msg $legendtitle]
+	set legendtitle "Legend for Map $mon, $opt($id,1,map)"
+	toplevel .tlegend($mon,$id)
+    wm title .tlegend($mon,$id) [G_msg $legendtitle]
 
 
-    wm withdraw .tlegend($mon)
+    wm withdraw .tlegend($mon,$id)
     #wm overrideredirect $txt 1
 
 	# create canvas for legend
-	set tlegmf [MainFrame .tlegend($mon).mf ]
-	set tlegcan($mon) [canvas $tlegmf.can -bg white\
+	set tlegmf [MainFrame .tlegend($mon,$id).mf ]
+	set tlegcan($mon,$id) [canvas $tlegmf.can -bg white\
 		-borderwidth 0 -closeenough 1.0 \
         -relief ridge -selectbackground #c4c4c4 \
         -width 300 -height 300 ]
 	   
     # setting geometry
-    place $tlegcan($mon) \
+    place $tlegcan($mon,$id) \
         -in $tlegmf -x 0 -y 0 -anchor nw \
         -bordermode ignore 
 
 	# control buttons
 	set tleg_tb [$tlegmf addtoolbar]
 	set tlbb [ButtonBox $tleg_tb.bb -orient horizontal]
-	$tlbb add -text "clear" -command "GmThematic::tleg_erase $mon" -bg #dddddd \
+	$tlbb add -text "clear" -command "GmThematic::tleg_erase $mon $id" -bg #dddddd \
 		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
         -helptext [G_msg "Clear legend"] -highlightbackground $bgcolor
-	$tlbb add -text "save" -command "GmThematic::tleg_save $mon"  -bg #dddddd \
+	$tlbb add -text "save" -command "GmThematic::tleg_save $mon $id"  -bg #dddddd \
 		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
         -helptext [G_msg "Save legend to EPS file"] -highlightbackground $bgcolor
 
 	pack $tlegmf -expand yes -fill both -padx 0 -pady 0
-	pack $tlegcan($mon) -fill both -expand yes
+	pack $tlegcan($mon,$id) -fill both -expand yes
 	pack $tlbb -side left -anchor w
 			
-	BWidget::place .tlegend($mon) 0 0 at 500 100
-    wm deiconify .tlegend($mon)
+	BWidget::place .tlegend($mon,$id) 0 0 at 500 100
+    wm deiconify .tlegend($mon,$id)
 
 }
 
@@ -673,7 +674,7 @@ proc GmThematic::tleg_item { mon id } {
 	variable tlegcan
 	variable opt
 	
-	GmThematic::tleg_erase $mon 
+	GmThematic::tleg_erase $mon $id
 	set ltxt [open "gismlegend.txt" r]
 	set x1 30
 	set y1 40
@@ -703,7 +704,7 @@ proc GmThematic::tleg_item { mon id } {
 				set yinc [expr {$lineht * 2}]	
 				set x2 [expr {$x1 + 15}]
 				set y2 [expr {$y1 + 15}]
-				$tlegcan($mon) create text $x1 $y2 -anchor sw -width 250 \
+				$tlegcan($mon,$id) create text $x1 $y2 -anchor sw -width 250 \
 					-fill $tfontcolor -font $titlefont -text "$label"
 			}
 			subtitle {
@@ -711,10 +712,10 @@ proc GmThematic::tleg_item { mon id } {
 				set yinc [expr {$lineht * 2}]	
 				set x2 [expr {$x1 + 15}]
 				set y2 [expr {$y1 + 15}]
-				$tlegcan($mon) create text $x1 $y2 -anchor sw -width 250 \
+				$tlegcan($mon,$id) create text $x1 $y2 -anchor sw -width 250 \
 					-fill $tfontcolor -font $subtitlefont -text "$label"
 				incr y2 10
-				$tlegcan($mon) create line $x1 $y2 [expr {$x1 + 250}] $y2 \
+				$tlegcan($mon,$id) create line $x1 $y2 [expr {$x1 + 250}] $y2 \
 					-width 1 -fill #000000				
 				incr y1 10
 			}
@@ -723,7 +724,7 @@ proc GmThematic::tleg_item { mon id } {
 				set yinc [expr {$lineht * 2}]	
 				set x2 [expr {$x1 + 15}]
 				set y2 [expr {$y1 + 15}]
-				$tlegcan($mon) create text $x1 $y2 -anchor sw -width 250 \
+				$tlegcan($mon,$id) create text $x1 $y2 -anchor sw -width 250 \
 					-fill $lfontcolor -font $labelfont -text "$label"
 			}
 			area {
@@ -731,9 +732,9 @@ proc GmThematic::tleg_item { mon id } {
 				set yinc [expr {$lineht * 2}]	
 				set x2 [expr {$x1 + 15}]
 				set y2 [expr {$y1 + 15}]
-				$tlegcan($mon) create rectangle $x1 $y1 $x2 $y2 -fill $xfcolor \
+				$tlegcan($mon,$id) create rectangle $x1 $y1 $x2 $y2 -fill $xfcolor \
 					-outline $xlcolor
-				$tlegcan($mon) create text [expr {$x2 + 15}] [expr {(($y2-$y1)/2) + $y1}] \
+				$tlegcan($mon,$id) create text [expr {$x2 + 15}] [expr {(($y2-$y1)/2) + $y1}] \
 				-fill $lfontcolor -anchor w -font $labelfont -text "$label"
 			}
 			point {
@@ -747,9 +748,9 @@ proc GmThematic::tleg_item { mon id } {
 				}
 				set x2 [expr {$x1 + $size}]
 				set y2 [expr {$y1 + $size}]
-				$tlegcan($mon) create oval $x1 $y1 $x2 $y2 -fill $xfcolor \
+				$tlegcan($mon,$id) create oval $x1 $y1 $x2 $y2 -fill $xfcolor \
 					-outline $xlcolor
-				$tlegcan($mon) create text $txtx [expr (($y2-$y1)/2) + $y1] \
+				$tlegcan($mon,$id) create text $txtx [expr (($y2-$y1)/2) + $y1] \
 				-fill $lfontcolor -anchor w -font $labelfont -text "$label"
 			}
 			line {
@@ -757,9 +758,9 @@ proc GmThematic::tleg_item { mon id } {
 				set yinc [expr {$lineht * 2}]	
 				set x2 [expr {$x1 + 15}]
 				set y2 [expr {$y1 + 15}]
-				$tlegcan($mon) create line $x1 $y1 $x2 $y2 -width $size  \
+				$tlegcan($mon,$id) create line $x1 $y1 $x2 $y2 -width $size  \
 					-fill $xlcolor
-				$tlegcan($mon) create text [expr $x2 + 15] [expr (($y2-$y1)/2) + $y1] \
+				$tlegcan($mon,$id) create text [expr $x2 + 15] [expr (($y2-$y1)/2) + $y1] \
 				-fill $lfontcolor -anchor w -font $labelfont -text "$label"
 			}
 			default { break }
@@ -787,15 +788,15 @@ proc GmThematic::rgb2hex { clr } {
 }
 
 # erase legend canvas
-proc GmThematic::tleg_erase { mon } {
+proc GmThematic::tleg_erase { mon id} {
 	variable tlegcan
 	
-	$tlegcan($mon) delete all
+	$tlegcan($mon,$id) delete all
 	return
 }
 
 #save legend canvas (might use maptool procedures)
-proc GmThematic::tleg_save { mon } {
+proc GmThematic::tleg_save { mon id} {
 	global env
 	variable tlegcan
 		
@@ -811,7 +812,7 @@ proc GmThematic::tleg_save { mon } {
 		set path [tk_getSaveFile -filetypes $types -defaultextension ".eps"]
 	}
 	
-	$tlegcan($mon) postscript -file "$path"
+	$tlegcan($mon,$id) postscript -file "$path"
 
 	return
 }
