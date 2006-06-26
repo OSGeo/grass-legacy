@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/sh -x
 
 ############################################################################
 #
@@ -55,12 +55,14 @@
 #% key: createopt
 #% type: string
 #% description: creation option to the output format driver. Multiple options may be listed
+#% multiple: yes
 #% required : no
 #%END
 #%option
 #% key: metaopt
 #% type: string
 #% description: metadata key passed on the output dataset if possible
+#% multiple: yes
 #% required : no
 #%END
 
@@ -86,8 +88,8 @@ INPUT="$GIS_OPT_INPUT"
 FORMAT="$GIS_OPT_FORMAT"
 TYPE="$GIS_OPT_TYPE"
 OUTPUT="$GIS_OPT_OUTPUT"
-CREATEKEY="-co $GIS_OPT_CREATEOPT"
-METAKEY="-mo $GIS_OPT_METAOPT"
+CREATEKEY="`echo "$GIS_OPT_CREATEOPT" | sed 's+,+ -co +g' | sed 's+^+-co +g'`"
+METAKEY="`echo "$GIS_OPT_METAOPT" | sed 's+,+ -mo +g' | sed 's+^+-mo +g'`"
 
 if [ $GIS_FLAG_L -eq 1 ] ; then
   gdal_translate | grep ':' | grep -v 'Usage' | grep -v 'The following'
