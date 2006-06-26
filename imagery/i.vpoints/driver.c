@@ -63,7 +63,7 @@ stop (void)
 static int 
 go_refresh (void)
 {
-    re_fresh_rast();
+    if(cellmap_present) re_fresh_rast();
     re_fresh_vect();
     return 1;
 }

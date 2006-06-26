@@ -1,5 +1,6 @@
 #include <string.h>
 #include <unistd.h>
+#include <grass/gis.h>
 #include "globals.h"
 #include <grass/raster.h>
 #include "crs.h"
@@ -107,7 +108,7 @@ static int delete_mark (void)
       }
    pager = 1; /* redisplay entire form */
 
-   return 0;
+   return 1;
 }
 
 int delete_control_point (int n)
@@ -321,7 +322,7 @@ static int compute_transformation (void)
        {
           sprintf(msg,"Not Enough Points -- %d are required.",order_pnts[trans_order-1]);
           Menu_msg(msg);
-          sleep(2);
+          G_sleep(2);
        }
        return 1;
      }
