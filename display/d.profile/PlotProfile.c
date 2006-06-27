@@ -27,11 +27,11 @@
  *
  */
 
-#include "profile.h"
+#include <limits.h>
+#include <grass/raster.h>
 #include <grass/display.h>
 #include <grass/D.h>
-#include <grass/raster.h>
-#include <limits.h>
+#include "profile.h"
 
 #define ORIGIN_X	0.13
 #define ORIGIN_Y	0.07
