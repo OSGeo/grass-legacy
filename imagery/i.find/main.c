@@ -96,7 +96,7 @@ static int find (FILE *fd, char *element)
     for (n=0; ((mapset = G__mapset_name(n)) != NULL); n++)
     {
         int len;
-        char *dir;
+        char dir[1024];
         struct dirent *dp;
         DIR *dfd;
 
