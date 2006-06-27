@@ -228,11 +228,13 @@ write_outputs(void)
 		    "# %77s\n", "tt_peak:", "[timestep]");
 	fprintf(fp, "# %-15s Mean simulated Q\n"
 		    "# %77s\n", "Qt_mean:", "[m^3/timestep]");
-	fprintf(fp, "# %-15s Number of non-null cells\n", "ncell:");
+	fprintf(fp, "# %-15s Number of non-NULL cells\n", "ncell:");
 	fprintf(fp, "# %-15s Number of topographic index classes\n",
 			"nidxclass:");
-	fprintf(fp, "# %-15s Number of delay timestep\n", "ndelay:");
-	fprintf(fp, "# %-15s Number of reach timestep\n", "nreach:");
+	fprintf(fp, "# %-15s Number of delay timesteps (delay time between "
+			"rainfall and\n#\t\t\tflow response)\n", "ndelay:");
+	fprintf(fp, "# %-15s Number of reach timesteps "
+			"(time of concentration)\n", "nreach:");
 	fprintf(fp, "# %-15s Areal average of ln(T0) = ln(Te)\n"
 		    "# %77s\n", "lnTe:", "[ln(m^2/timestep)]");
 	fprintf(fp, "# %-15s Main channel routing velocity\n"
@@ -248,7 +250,8 @@ write_outputs(void)
 	fprintf(fp, "#\n");
 	fprintf(fp, "# %-15s Routing timestep\n"
 		    "# %77s\n", "tch:", "[timestep]");
-	fprintf(fp, "# %-15s Difference of area for each reach timestep\n"
+	fprintf(fp, "# %-15s Difference in contribution area for each reach "
+		    "timestep\n"
 		    "# %77s\n", "Ad:", "[m^2]");
 	fprintf(fp, "# %-15s Total flow\n"
 		    "# %77s\n", "Qt:", "[m^3/timestep]");
