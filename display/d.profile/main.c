@@ -10,14 +10,14 @@
 #define MAIN
 #define USE_OLD_CODE  /* Frame set-up still needs old code ATM. */
 #include <stdio.h>
-#include <math.h>
 #include <stdlib.h>
+#include <math.h>
 #include <grass/gis.h>
-#include "profile.h"
-#include <grass/display.h>
 #include <grass/raster.h>
-#include "math.h"
+#include <grass/display.h>
 #include <grass/D.h>
+#include <grass/glocale.h>
+#include "profile.h"
 
 struct Profile profile;
 
@@ -46,8 +46,8 @@ int main (int argc, char **argv)
 
     /* Set description */
     module              = G_define_module();
-    module->description = ""\
-        "Interactive profile plotting utility with optional output.";
+    module->description =
+        _("Interactive profile plotting utility with optional output.");
     
     /* set up command line */
     map              = G_define_option();
@@ -55,23 +55,23 @@ int main (int argc, char **argv)
     map->type        = TYPE_STRING;
     map->required    = YES;
     map->gisprompt   = "old,cell,raster" ;
-    map->description = "Raster map to be profiled";
+    map->description = _("Raster map to be profiled");
 
     dmap              = G_define_option();
     dmap->key         = "drast";
     dmap->type        = TYPE_STRING;
     dmap->required    = NO;
     dmap->gisprompt   = "old,cell,raster" ;
-    dmap->description = "Optional display raster";
+    dmap->description = _("Optional display raster");
     
     plotfile              = G_define_option();
     plotfile->key         = "plotfile";
     plotfile->type        = TYPE_STRING;
     plotfile->required    = NO;
-    plotfile->description = "Output profile data to file(s) with prefix 'name'";
+    plotfile->description = _("Output profile data to file(s) with prefix 'name'");
 
     if (G_parser(argc, argv))
-        exit(1);
+        exit(EXIT_FAILURE);
 
     if(getenv("GRASS_ANOTHER_BUTTON")){
 	    leftb   = 1;
@@ -87,11 +87,7 @@ int main (int argc, char **argv)
 
     old_mapset = G_find_cell2 (old_mapname, "") ;
     if (old_mapset == NULL)
-    {
-        char buf[256];
-        sprintf(buf,"Raster map [%s] not available", old_mapname);
-        G_fatal_error(buf) ;
-    }
+        G_fatal_error(_("Raster map [%s] not available"), old_mapname);
 
     if (plotfile->answer != NULL)
         doplot = 1;
@@ -105,7 +101,7 @@ int main (int argc, char **argv)
         d_mapset  = G_find_cell2 (d_mapname, "") ;
         if (d_mapset == NULL)
         {
-            G_warning("Display raster [%s] not found. Using profile raster.",
+            G_warning(_("Display raster [%s] not found. Using profile raster."),
                     d_mapname);
             d_mapname = old_mapname;
             d_mapset  = old_mapset;
@@ -124,17 +120,17 @@ int main (int argc, char **argv)
 if (!quick_range(old_mapname,old_mapset,&min,&max))
    {
    if (!slow_range(old_mapname,old_mapset,&min,&max))
-      G_fatal_error("Unable to read from cell-file");
+      G_fatal_error(_("Unable to read from cell-file"));
    }
 if (min > 0) min = 0;
 if (max < 0) max = 0;
 */
 
-    fprintf (stdout,"\n\nUse mouse to choose action\n");
+    G_message(_("\n\nUse mouse to choose action"));
 
     /* establish connection with graphics driver */
     if (R_open_driver() != 0)
-        G_fatal_error ("No graphics device selected");
+        G_fatal_error (_("No graphics device selected"));
 
     /* Make sure screen is clear */
     R_standard_color(D_translate_color(DEFAULT_BG_COLOR));
@@ -204,8 +200,8 @@ if (max < 0) max = 0;
             if(button == rightb)
             {
                 D_set_cur_wind (ORIG.name);
-                fprintf (stdout,"Use 'd.frame -e' to remove left over frames\n");
-                return(0) ;
+                G_message(_("Use 'd.frame -e' to remove left over frames"));
+                exit(EXIT_SUCCESS) ;
             }
 
             /* convert to (easting,northing) coordinates */
@@ -297,11 +293,11 @@ if (max < 0) max = 0;
                         DrawText(25,2,1,"       of current window");
                     }
                     else if (err==-2)
-                        G_fatal_error("Error opening cell-file");
+                        G_fatal_error(_("Error opening cell-file"));
                     else if (err==-3)
-                        G_fatal_error("Error reading from cell-file");
+                        G_fatal_error(_("Error reading from cell-file"));
                     else if (err==-4)
-                        G_fatal_error("Mysterious window inconsistancy error");
+                        G_fatal_error(_("Mysterious window inconsistancy error"));
                     else
                     {
                         /* draw profile line on cell-file */
@@ -399,8 +395,8 @@ if (max < 0) max = 0;
         if (button == rightb)
         {
             D_set_cur_wind (ORIG.name);
-            fprintf (stdout, "Use 'd.frame -e' to remove left over frames\n");
-            return(0);
+            G_message(_("Use 'd.frame -e' to remove left over frames"));
+            exit(EXIT_SUCCESS);
         }
         else if (button == middleb)
         {
@@ -420,7 +416,7 @@ if (max < 0) max = 0;
         }
     }
 
-    return 0;
+    exit(EXIT_SUCCESS);
 }
 
 void myDcell (char *name, char *mapset, int overlay)
@@ -438,11 +434,11 @@ void myDcell (char *name, char *mapset, int overlay)
     cell = G_allocate_c_raster_buf();
 
     if ((fd = G_open_cell_old (name, mapset)) < 0)
-        G_fatal_error("%s: Couldn't open raster <%s@%s>",
+        G_fatal_error(_("%s: Couldn't open raster <%s@%s>"),
                             G_program_name(), name, mapset);
 
     if (G_read_colors (name, mapset, &clr) < 0)
-        G_fatal_error("%s: Couldn't read color table for <%s@%s>",
+        G_fatal_error(_("%s: Couldn't read color table for <%s@%s>"),
                             G_program_name(), name, mapset);
     D_set_colors (&clr);
 

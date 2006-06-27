@@ -1,8 +1,9 @@
-#include "stdio.h"
+#include <stdio.h>
+#include <grass/gis.h>
+#include <grass/raster.h>
 #include <grass/display.h>
 #include <grass/D.h>
-#include <grass/raster.h>
-#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "profile.h"
 
 int What(
@@ -27,13 +28,13 @@ buf = G_allocate_cell_buf();
 
 fd = G_open_cell_old(name,mapset);
 if (fd < 0)
-   G_fatal_error("warning: unable to open [%s] in [%s]",name,mapset);
+   G_fatal_error(_("warning: unable to open [%s] in [%s]"),name,mapset);
 
 if (G_read_cats(name,mapset,&cat) < 0)
    NoCatStrings = 1;
 
 if (G_get_map_row (fd,buf,row) < 0)
-   G_fatal_error("error reading cell file");
+   G_fatal_error(_("error reading cell file"));
 else
    {
    R_standard_color(D_translate_color(DEFAULT_BG_COLOR));

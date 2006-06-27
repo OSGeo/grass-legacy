@@ -1,6 +1,7 @@
-#include <grass/gis.h>
-#include <stdlib.h>
 #include <stdio.h> 
+#include <stdlib.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 int WindowRange (char *name, char *mapset, long *min, long *max)
 {
@@ -88,7 +89,7 @@ slow_range (char *name, char *mapset, long *min, long *max)
 
     *min = *max = 0;
 
-    fprintf (stdout,"one moment ...\n");
+    G_message(_("one moment ..."));
     sprintf (buf, "Gdescribe -r -1 '%s in %s'",name,mapset);
     fd = popen (buf,"r");
     if (fd == NULL)

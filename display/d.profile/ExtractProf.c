@@ -38,6 +38,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <float.h>
+#include <grass/glocale.h>
 #include "profile.h"
 
 void ucat_max (UCAT *, UCAT *);
@@ -91,7 +92,7 @@ fprintf (stdout,"(%d,%d)\n"                       ,row2,col2);
 fd = G_open_cell_old(name,mapset);
 if (fd < 0)
    {
-   fprintf(stderr,"warning: unable to open [%s] in [%s]\n",name,mapset);
+   G_warning(_("unable to open [%s] in [%s]"), name, mapset);
    return(-2);
    }
 theCell.type = buf.type = G_raster_map_type(name, mapset);
