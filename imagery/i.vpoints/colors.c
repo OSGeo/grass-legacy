@@ -16,7 +16,7 @@ static int setmap_green(void);
 static int setmap_red(void);
 static int setmap_white(void);
 static int setmap_yellow(void);
-static int done(void);
+/* static int done(void); */
 
 int set_colors (struct Colors *colors)
 {
@@ -213,7 +213,9 @@ static int setmap_yellow (void)
 	return line_color = YELLOW;
 }
 
+#ifdef UNUSED
 static int done (void)
 {
 	return -1;
 } 
+#endif  /* unused cursor color */

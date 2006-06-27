@@ -173,8 +173,6 @@ int select_current_env(void);
 int select_target_env(void);
 /* title.c */
 int display_title(View *);
-/* use_plot1.c */
-int use_plot1(char *, char *);
 /* view.c */
 int Configure_view(View *, char *, char *, double, double);
 int In_view(View *, int, int);
