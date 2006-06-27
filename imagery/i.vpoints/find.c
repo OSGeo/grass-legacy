@@ -14,7 +14,8 @@ int find_target_files (void)
 	G_gisbase(), G_location(), G_mapset(), cell_list, vect_list);
     select_current_env();
 
-    system(command);
+    if( 0 != system(command) )
+	G_fatal_error("Problem running i.find");
 
     return 0;
 }
