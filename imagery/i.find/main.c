@@ -110,10 +110,13 @@ static int find (FILE *fd, char *element)
 
         while ((dp = readdir(dfd)) != NULL)
         {
-            fprintf(fd, "%s %s\n", dp->d_name, mapset);
-	    len = strlen(dp->d_name);
-	    if (len > len1)
-		len1 = len;
+	    if(dp->d_name[0] != '.')
+	    {       	
+		fprintf(fd, "%s %s\n", dp->d_name, mapset);
+		len = strlen(dp->d_name);
+		if (len > len1)
+		    len1 = len;
+	    }	   
         }
 
         closedir(dfd);
