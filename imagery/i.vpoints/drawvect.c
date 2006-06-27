@@ -123,11 +123,11 @@ static int drawvect(int zoomit,	/* -1 = refresh, 0 = new image, 1 = zoom, 2 = wa
 
 	active_view = VIEW_MAP2;
     }
-    else {	/* zoomit>0  Zoom Map Files [+Warp?] */
+    else {	/* zoomit>0   Zoom or Warp */
 
 	G_copy(&cellhd, &zoom_view->cell.head, sizeof(zoom_view->cell.head));
 
-	if (!(zoom_view == VIEW_MAP1)) {
+	if (!(zoom_view == VIEW_MAP1)) {  /* target side */
 	    VIEW_MAP2_ZOOM->cell.configured = 0;
 	    strcpy(win_name, "zoom_map");
 	    if (!view2zoomon) {
@@ -190,7 +190,11 @@ static int drawvect(int zoomit,	/* -1 = refresh, 0 = new image, 1 = zoom, 2 = wa
 	    sprintf(msg, "Displaying %s", vect_file[i]);
 	    Menu_msg(msg);
 	    R_standard_color(vectclr[i]);
-	    stat = plot(vect_file[i], vect_mapset[i], Points);
+	    if(zoomit != DO_WARP)
+		stat = plot(vect_file[i], vect_mapset[i], Points);
+	    else
+		stat = plot_warp(vect_file[i], vect_mapset[i],
+				 Points, E, N, trans_order);
 	}
     }
     else { /* ie DO_NEW */

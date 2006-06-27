@@ -1,6 +1,8 @@
 #include "globals.h"
 #include <grass/raster.h>
 
+/* overlay ground control points on the display */
+
 int display_points (int in_color)
 {
 
