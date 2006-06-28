@@ -26,7 +26,7 @@ int main (int argc, char *argv[])
     struct Option *grp;
 
     /* must run in a term window */
-    setenv("GRASS_UI_TERM","1",TRUE);
+    G_putenv("GRASS_UI_TERM","1");
 
     G_gisinit (argv[0]);
     
