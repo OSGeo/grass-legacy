@@ -33,8 +33,8 @@ int plot (char *name, char *mapset, struct line_pnts *Points)
 
     G_get_set_window (&window);
 
-    G_setup_plot ( D_get_d_north(), D_get_d_south(), D_get_d_west(), D_get_d_east(),
-	           D_move_abs, D_cont_abs);
+    G_setup_plot ( D_get_d_north(), D_get_d_south(), D_get_d_west(),
+		   D_get_d_east(), D_move_abs, D_cont_abs );
 
     nlines = Vect_get_num_lines (&P_map);
 
@@ -62,8 +62,8 @@ int plot (char *name, char *mapset, struct line_pnts *Points)
 	    }
 	    else S_stroke( Symb, SYM_SIZE, 0, 0 );
 
-	   ix = (int)(D_u_to_d_col( Points->x[0])+0.5 );
-	   iy = (int)(D_u_to_d_row( Points->y[0])+0.5 );
+	    ix = (int)(D_u_to_d_col( Points->x[0])+0.5 );
+	    iy = (int)(D_u_to_d_row( Points->y[0])+0.5 );
 
 	    D_symbol(Symb, ix, iy, linecolor_rgb, fillcolor_rgb);
 	}
@@ -91,6 +91,7 @@ int plot (char *name, char *mapset, struct line_pnts *Points)
     return 0;
 }
 
+/* plot inverse coordinate transformation */
 int plot_warp(char *name, char *mapset, struct line_pnts *Points,
 		double E[], double N[], int trans_order)
 {
@@ -113,8 +114,8 @@ int plot_warp(char *name, char *mapset, struct line_pnts *Points,
 
     G_get_set_window (&window);
 
-    G_setup_plot ( D_get_d_north(), D_get_d_south(), D_get_d_west(), D_get_d_east(),
-	           D_move_abs, D_cont_abs);
+    G_setup_plot ( D_get_d_north(), D_get_d_south(), D_get_d_west(),
+		   D_get_d_east(), D_move_abs, D_cont_abs );
 
     nlines = Vect_get_num_lines (&P_map);
 
@@ -142,8 +143,13 @@ int plot_warp(char *name, char *mapset, struct line_pnts *Points,
 	    }
 	    else S_stroke( Symb, SYM_SIZE, 0, 0 );
 
-	   ix = (int)(D_u_to_d_col( Points->x[0])+0.5 );
-	   iy = (int)(D_u_to_d_row( Points->y[0])+0.5 );
+	    x = Points->x;
+	    y = Points->y;
+
+	    CRS_georef(x[0], y[0], &x[0], &y[0], E, N, trans_order);
+
+	    ix = (int)( D_u_to_d_col(x[0]) + 0.5 );
+	    iy = (int)( D_u_to_d_row(y[0]) + 0.5 );
 
 	    D_symbol(Symb, ix, iy, linecolor_rgb, fillcolor_rgb);
 	}
