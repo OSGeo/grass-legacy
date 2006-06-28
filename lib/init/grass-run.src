@@ -1,10 +1,25 @@
 #!/bin/sh
+# script to launch GRASS commands
 
-#script to launch GRASS commands (workaround for systems
-#with xterm is setuid/setgid
+# force command line startup mode
+GRASS_UI_TERM=1
+export GRASS_UI_TERM
 
-#http://grass.itc.it/pipermail/grass5/2004-September/015409.html
 
+# workaround for systems with xterm is setuid/setgid
+#  http://grass.itc.it/pipermail/grass5/2004-September/015409.html
 LD_LIBRARY_PATH_VAR=$GRASS_LD_LIBRARY_PATH
 export LD_LIBRARY_PATH_VAR
-exec "$@"
+
+
+# run command
+$@
+
+EXIT_VAL=$?
+if [ $EXIT_VAL -ne 0 ] ; then
+   echo
+   echo "ERROR: $1 exited abnormally. Press <enter> to continue."
+   read
+fi
+
+exit $EXIT_VAL
