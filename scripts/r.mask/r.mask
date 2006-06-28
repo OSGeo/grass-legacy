@@ -18,16 +18,16 @@
 #%  description: Create a MASK for limiting raster operation
 #%End
 #%option
-#% key: INPUT
+#% key: input
 #% type: string
 #% gisprompt: old,cell,raster
 #% description: Raster map to use as MASK
 #% required : yes
 #%END
 #%option
-#% key: MASKCATS
+#% key: maskcats
 #% type: string
-#% description: Cat values to use for MASK (format: 1 2 3 thru 7 *)
+#% description: Category values to use for MASK (format: 1 2 3 thru 7 *)
 #% answer: *
 #%END
 #%flag
