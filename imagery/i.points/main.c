@@ -151,6 +151,9 @@ int quit (int n)
     unlink (vect_list);
     unlink (digit_points);
     unlink (digit_results);
+
+    system("d.frame -e");
+
     exit(n);
 }
 
