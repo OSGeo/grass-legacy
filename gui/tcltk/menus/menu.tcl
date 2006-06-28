@@ -500,7 +500,7 @@ set descmenu [subst  {
 		{command {[G_msg "Maximum likelyhood classification (MLC)"]} {} "i.maxlik" {} -command {execute i.maxlik }}
 		{command {[G_msg "Sequential maximum a posteriory classification (SMAP)"]} {} "i.smap" {} -command {execute i.smap }}
 		{separator}
-		{command {[G_msg "Interactive input for supervised classification"]} {} "i.class" {} -command {term i.class }}
+		{command {[G_msg "Interactive input for supervised classification"]} {} "i.class" {} -command {guarantee_xmon; term i.class }}
 		{command {[G_msg "Non-interactive input for supervised classification (MLC)"]} {} "i.gensig" {} -command {execute i.gensig }}
 		{command {[G_msg "Non-interactive input for supervised classification (SMAP)"]} {} "i.gensigset" {} -command {execute i.gensigset }}
 	}}
