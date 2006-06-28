@@ -177,6 +177,7 @@ static int warp (void)
 
 static int rast_redraw (void)
 {
+    Erase_view(VIEW_MAP1);
     drawcell(VIEW_MAP1,0);    /* 0 means don't initialize VIEW_MAP2 */
     display_points(1);
     return 0;
