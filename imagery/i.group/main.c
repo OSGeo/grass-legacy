@@ -45,7 +45,6 @@ int main(int argc, char *argv[])
     sgrp->key = "subgroup";
     sgrp->type = TYPE_STRING;
     sgrp->required = NO;
-    sgrp->gisprompt = "old,group,group";
     sgrp->description = _("Name of imagery sub-group");
 
     rast = G_define_option();
