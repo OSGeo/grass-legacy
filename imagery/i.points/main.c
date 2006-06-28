@@ -20,10 +20,13 @@ int error (char *, int);
 
 int main (int argc, char *argv[])
 {
-    char name[GNAME_MAX], mapset[GMAPSET_MAX];
+    char name[GNAME_MAX], mapset[GMAPSET_MAX], xmapset[GMAPSET_MAX];
     struct Cell_head cellhd;
     struct GModule *module;
     struct Option *grp;
+
+    /* must run in a term window */
+    setenv("GRASS_UI_TERM","1",TRUE);
 
     G_gisinit (argv[0]);
     
@@ -56,8 +59,17 @@ int main (int argc, char *argv[])
     if (R_open_driver() != 0)
 	G_fatal_error(_("No graphics device selected"));
 
-    strncpy(group.name, grp->answer, GNAME_MAX-1);
-    group.name[GNAME_MAX-1] = '\0'; /* strncpy() doesn't null terminate on overflow */
+
+    /* parse group name */
+    /* only enforce local-mapset-only due to I_get_group_ref() not liking "@mapset" */
+    if( G__name_is_fully_qualified(grp->answer, group.name, xmapset) ) {
+        if( 0 != strcmp(G_mapset(),xmapset) )
+            G_fatal_error(_("[%s] Only local groups may be used"), grp->answer);
+    }
+    else {
+        strncpy(group.name, grp->answer, GNAME_MAX-1);
+        group.name[GNAME_MAX-1] = '\0'; /* strncpy() doesn't null terminate on overflow */
+    }
 
     if (!I_get_group_ref (group.name, &group.ref))
 	G_fatal_error(_("Group [%s] contains no maps, run i.group"), group.name);
