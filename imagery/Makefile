@@ -20,7 +20,7 @@ SUBDIRS1 = \
 	i.target \
 	i.vpoints 
 
-FFTWBASED = i.cca i.fft i.ifft i.pca i.zc
+FFTWBASED = i.fft i.ifft i.zc
 
 #compile if FFTW present:
 ifneq ($(strip $(FFTWLIB)),)
