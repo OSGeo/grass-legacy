@@ -207,7 +207,7 @@ int Curses_prompt_gets (char *prompt, char *answer)
 	    break;
 
 	getyx (stdscr, y, x);
-	if (c > 037 && c < 0177)
+	if (c > '\037' && c < '\177') /* octal codes: accept space to '~' */
 	{
 	    if (x < PROMPT_WINDOW->right)
 	    {
@@ -218,7 +218,7 @@ int Curses_prompt_gets (char *prompt, char *answer)
 	    }
 	    continue;
 	}
-	if (c == '\b')
+	if (c == '\b' || c == '\177') /* backspace or DEL (decimal 8,127) */
 	{
 	    if (n > 0)
 	    {

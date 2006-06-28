@@ -245,15 +245,15 @@ Get_curses_text (char answer[])
     {
 	newchar = wgetch(MENU_WIN) & 0177 ;
 
-	if ((newchar > 037) && (newchar < 0177))
-	{
+	if ((newchar > '\037') && (newchar < '\177'))
+	{   /* octal codes: accept space to '~' */
 	    *(pointer++) = newchar ;
 	    *pointer = 000 ;
 	    waddch(MENU_WIN,newchar) ;
 	    wrefresh(MENU_WIN) ;
 	}
-	else if (newchar == 010)
-	{
+	else if (newchar == '\b' || newchar == '\177')
+	{   /* backspace or DEL */
 	    if (pointer > answer)
 	    {
 		*(pointer--) = 000 ;
