@@ -1,6 +1,14 @@
 #!/bin/sh
 # script to launch GRASS commands
 
+# change console title to name of module
+#  non-bash proof? need to test $SHELL or $BASH?
+if [ "$TERM" = "xterm" ] ; then
+   TITLE="GRASS: $1"
+   echo -e "\033]0;${TITLE}\007\c"
+fi
+
+
 # force command line startup mode
 GRASS_UI_TERM=1
 export GRASS_UI_TERM
