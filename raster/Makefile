@@ -104,7 +104,7 @@ SUBDIRS = \
 
 GDALBASED = r.in.gdal
 
-FFTWBASED = r.surf.fractal r.surf.gauss r.surf.random
+FFTWBASED = r.surf.fractal
 
 PNGBASED = r.out.png
 
