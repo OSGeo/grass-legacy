@@ -19,6 +19,9 @@ int main (int argc, char **argv)
     struct GModule *module;
     struct Option *output;
 
+    /* must run in a term window */
+    setenv("GRASS_UI_TERM","1",TRUE);
+
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
