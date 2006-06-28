@@ -554,8 +554,7 @@ proc Nv_mkPanelMenu { P { name Panel } } {
     
     menubutton $P -text $name -menu $P.m -underline 0
     menu $P.m
-    
-# DEBUG
+
 if {$DEBUG} {puts "Nv_mkPanelMenu 1"}
 
     set j 0
@@ -573,9 +572,8 @@ if {$DEBUG} {puts "Nv_mkPanelMenu 1"}
 	if {$i == "vol" || $i == "cutplane" || $i == "kanimator"} {
 		$P.m add separator
 	}
-# DEBUG
-if {$DEBUG} {puts "Nv_mkPanelMenu 2 $j"}
 
+if {$DEBUG} {puts "Nv_mkPanelMenu 2 $j  [St_get $panel name]"}
 
 	incr j
     }
