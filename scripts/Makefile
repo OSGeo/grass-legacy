@@ -27,6 +27,7 @@ SUBDIRS = \
 	i.landsat.rgb \
 	i.oif \
 	i.spectral \
+	i.in.spotvgt \
 	i.tasscap \
 	m.proj \
 	r.blend \
