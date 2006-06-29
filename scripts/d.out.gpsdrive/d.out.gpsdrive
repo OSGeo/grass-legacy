@@ -21,7 +21,7 @@
 #
 # REQUIREMENTS:
 #	- awk
-#	- d.info newer than 5 Nov 2005
+#	- d.info newer than 30 June 2006
 #
 #############################################################################
 #
@@ -84,7 +84,8 @@ fi
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
-export LC_NUMERIC=C
+LC_NUMERIC=C
+export LC_NUMERIC
 
 
 if [ ! -d "$HOME/.gpsdrive" ] ; then
@@ -109,13 +110,18 @@ else
    fi
 fi
 
-export GRASS_TRUECOLOR=TRUE
-export GRASS_WIDTH=1280
-export GRASS_HEIGHT=1024
+GRASS_TRUECOLOR=TRUE
+export GRASS_TRUECOLOR
+GRASS_WIDTH=1280
+export GRASS_WIDTH
+GRASS_HEIGHT=1024
+export GRASS_HEIGHT
 
 # get rid of no or double extension
 output="${TYPE}_`basename $GIS_OPT_OUTPUT .png`.png"
-export GRASS_PNGFILE="$HOME/.gpsdrive/$output"
+
+GRASS_PNGFILE="$HOME/.gpsdrive/$output"
+export GRASS_PNGFILE
 
 # As .jpg output will overwrite .png of the same name, we check,
 if [ -e "$GRASS_PNGFILE" ] ; then
@@ -132,7 +138,7 @@ if  [ -n "$monitorcheck" ] ; then
 fi
 
 # check to see we have a new enough version of d.info
-d.info -f  1> /dev/null 2> /dev/null
+d.info -b  1> /dev/null 2> /dev/null
 if [ $? -ne 0 ] ; then
   echo "ERROR: Need a newer version of GRASS." 1>&2
   exit 1
@@ -143,7 +149,7 @@ curr_mon=`d.mon -p | awk '{printf "%s", $4}'`
 #export display to PNG driver
 dsave=`d.save -a`
 d.mon start=PNG
-  FRAME_DIMS="`d.info -f | cut -f2- -d' '`"
+  FRAME_DIMS="`d.info -b | cut -f2- -d' '`"
   eval "$dsave"
 d.mon stop=PNG
 #reset
