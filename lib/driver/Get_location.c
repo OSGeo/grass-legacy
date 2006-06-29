@@ -8,7 +8,7 @@ int COM_Get_location_with_pointer(int *wx, int *wy, int *button, int cmd)
 	if (driver->Get_with_pointer)
 	{
 		ret = (*driver->Get_with_pointer)(wx, wy, button, cmd);
-		if (*button >= 0 && *button <= 3)
+		if (*button >= 1 && *button <= 3)
 			*button = mouse_button[*button-1];
 	}
 
@@ -22,7 +22,7 @@ int COM_Get_location_with_line(int cx, int cy, int *wx, int *wy, int *button, in
 	if (driver->Get_with_line)
 	{
 		ret = (*driver->Get_with_line)(cx, cy, wx, wy, button, cmd);
-		if (*button >= 0 && *button <= 3)
+		if (*button >= 1 && *button <= 3)
 			*button = mouse_button[*button-1];
 	}
 
@@ -36,7 +36,7 @@ int COM_Get_location_with_box(int cx, int cy, int *wx, int *wy, int *button, int
 	if (driver->Get_with_box)
 	{
 		ret = (*driver->Get_with_box)(cx, cy, wx, wy, button, cmd);
-		if (*button >= 0 && *button <= 3)
+		if (*button >= 1 && *button <= 3)
 			*button = mouse_button[*button-1];
 	}
 
