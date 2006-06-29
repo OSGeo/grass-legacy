@@ -169,8 +169,6 @@ Global int aLineSymb; /* number of lines / allocated space (array size + 1) */
 Global int *NodeSymb; /* array of nodes' symbology codes, start from index 1 */
 Global int aNodeSymb; /* number of nodes / allocated space (array size + 1) */
 
-Global int leftb, middleb, rightb;
-
 /* Background commands */
 typedef struct {
     char *cmd;   /* command */

@@ -34,16 +34,6 @@ int main(int argc, char **argv)
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]);
 
-	if(getenv("GRASS_ANOTHER_BUTTON")){
-	    leftb   = 1; lefts   = "left  ";
-	    middleb = 3; middles = "right ";
-	    rightb  = 2; rights  = "middle";
-	}else{
-	    leftb   = 1; lefts   = "left  ";
-	    middleb = 2; middles = "middle";
-	    rightb  = 3; rights  = "right ";
-	}
-
 	/*
 	 * note: grid color used to be an option set with the help of the
 	 * parser, but it was more bother than worth. if black is not what

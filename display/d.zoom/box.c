@@ -28,12 +28,12 @@ int make_window_box ( struct Cell_head *window, double magnify, int full, int ha
         if ( !hand ) {
 	    if ( printmenu ) {
 		fprintf(stderr, "\n\nButtons:\n") ;
-		fprintf(stderr, "%s 1. corner\n", lefts) ;
-		fprintf(stderr, "%s Unzoom\n", middles) ;
+		fprintf(stderr, "Left:   1. corner\n") ;
+		fprintf(stderr, "Middle: Unzoom\n") ;
 		if ( full )
-		    fprintf(stderr, "%s Main menu\n\n", rights) ;
+		    fprintf(stderr, "Right:  Main menu\n\n") ;
 		else 
-		    fprintf(stderr, "%s Quit\n\n", rights) ;
+		    fprintf(stderr, "Right:  Quit\n\n") ;
 
 		printmenu = 0;
 	    }
@@ -61,16 +61,16 @@ int make_window_box ( struct Cell_head *window, double magnify, int full, int ha
         if ( !hand ) 
             print_coor ( window, py, px );
 	
-	if(button == leftb){
+	if(button == 1){
 		if ( !hand ) {
 		    if ( mode == 1 ) {
 			fprintf(stderr, "\n\nButtons:\n") ;
-			fprintf(stderr, "%s 1. corner (reset)\n", lefts) ;
-			fprintf(stderr, "%s 2. corner\n", middles) ;
+			fprintf(stderr, "Left:   1. corner (reset)\n") ;
+			fprintf(stderr, "Middle: 2. corner\n") ;
 			if ( full )
-			    fprintf(stderr, "%s Main menu\n\n", rights) ;
+			    fprintf(stderr, "Right:   Main menu\n\n") ;
 			else 
-			    fprintf(stderr, "%s Quit\n\n", rights) ;
+			    fprintf(stderr, "Right:   Quit\n\n") ;
 		        mode = 2;
 		    }
 		    if ( mode == 2 ) {
@@ -90,7 +90,7 @@ int make_window_box ( struct Cell_head *window, double magnify, int full, int ha
 		    }
 		}
 	}else
-	if(button == middleb){
+	if(button == 2){
 		if ( mode == 1 ) { /* unzoom */
 	            ux2 = D_d_to_u_col((double)screen_x)  ;
 	            uy2 = D_d_to_u_row((double)screen_y)  ;

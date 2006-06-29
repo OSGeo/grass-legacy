@@ -38,9 +38,9 @@ int zoom_window (void)
 	
 	G_debug (2, "button = %d x = %d y = %d", button, sxn, syn);
 
-	if ( button == 0 || button == rightb ) break;
+	if ( button == 0 || button == 3 ) break;
 	
-	if ( mode == 2 && button == middleb ) {
+	if ( mode == 2 && button == 2 ) {
 	    x1 =  D_d_to_u_col ( sxo );
 	    y1 =  D_d_to_u_row ( syo );
 	    x2 =  D_d_to_u_col ( sxn );
@@ -142,9 +142,9 @@ int zoom_pan (void)
 	
 	G_debug (2, "button = %d x = %d y = %d", button, sxn, syn);
 
-	if ( button == 0 || button == rightb ) break;
+	if ( button == 0 || button == 3 ) break;
 	
-	if ( button == leftb ) {
+	if ( button == 1 ) {
 	    x =  D_d_to_u_col ( sxn );
 	    y =  D_d_to_u_row ( syn );
 	

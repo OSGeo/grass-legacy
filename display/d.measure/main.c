@@ -60,16 +60,6 @@ int main (int argc, char **argv)
 	if (argc > 1 && G_parser(argc,argv))
 	    exit(EXIT_FAILURE);
 
-	if(getenv("GRASS_ANOTHER_BUTTON")){
-	    leftb   = 1; lefts   = _("Left:  ");
-	    middleb = 3; middles = _("Right: ");
-	    rightb  = 2; rights  = _("Middle:");
-	}else{
-	    leftb   = 1; lefts   = _("Left:  ");
-	    middleb = 2; middles = _("Middle:");
-	    rightb  = 3; rights  = _("Right: ");
-	}
-
 	if (R_open_driver() != 0)
 	    G_fatal_error (_("No graphics device selected"));
 

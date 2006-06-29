@@ -1,15 +1,6 @@
 #ifndef LOCAL_PROTO_H
 #define	LOCAL_PROTO_H
 
-#ifdef	MAIN
-#define	GLOBAL
-#else
-#define	GLOBAL	extern
-#endif
-
-GLOBAL int leftb, middleb, rightb;
-GLOBAL char *lefts, *middles, *rights;
-
 /* bnw_line.c */
 int black_and_white_line(int, int, int, int);
 /* create_map.c */

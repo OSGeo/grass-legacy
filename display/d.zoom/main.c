@@ -128,16 +128,6 @@ main (int argc, char **argv)
     if ((argc > 1 || (!rast && !vect )) && G_parser(argc,argv))
 	exit(EXIT_FAILURE);
 
-    if(getenv("GRASS_ANOTHER_BUTTON")){
-	    leftb   = 1; lefts   = _("Left:  ");
-	    middleb = 3; middles = _("Right: ");
-	    rightb  = 2; rights  = _("Middle:");
-    }else{
-	    leftb   = 1; lefts   = _("Left:  ");
-	    middleb = 2; middles = _("Middle:");
-	    rightb  = 3; rights  = _("Right: ");
-    }
-
     if( (full->answer + pan->answer + hand->answer) > 1)
 	G_fatal_error(_("Please choose only one mode of operation"));
 

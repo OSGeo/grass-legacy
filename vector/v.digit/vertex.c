@@ -55,9 +55,9 @@ int split_line (void)
 	y =  D_d_to_u_row ( syn );
 	G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
 
-	if ( button == 0 || button == rightb ) break;
+	if ( button == 0 || button == 3 ) break;
 
-	if ( button == leftb ) { /* Select / split */
+	if ( button == 1 ) { /* Select / split */
 	    if ( last_line > 0 ) { /* Line is already selected -> split */
 	        display_line ( last_line, SYMB_BACKGROUND, 1);
 		Vect_get_line_nodes ( &Map, last_line, &node1, &node2 ); 
@@ -113,7 +113,7 @@ int split_line (void)
 		last_seg = seg;
 	    }
 	}
-	if ( button == middleb ) { /* Unselect */
+	if ( button == 2 ) { /* Unselect */
 	    if ( last_line > 0 ) {
 		symb_set_driver_color ( SYMB_BACKGROUND );
 		display_icon ( xo, yo, G_ICON_CROSS, 0, 10, 1);
@@ -180,9 +180,9 @@ int rm_vertex (void)
 	y =  D_d_to_u_row ( syn );
 	G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
 
-	if ( button == 0 || button == rightb ) break;
+	if ( button == 0 || button == 3 ) break;
 
-	if ( button == leftb ) { /* Select / new location */
+	if ( button == 1 ) { /* Select / new location */
 	    if ( last_line > 0 ) { /* Line is already selected */
 	        display_line ( last_line, SYMB_BACKGROUND, 1);
 		Vect_get_line_nodes ( &Map, last_line, &node1, &node2 ); 
@@ -233,7 +233,7 @@ int rm_vertex (void)
 		last_seg = seg;
 	    }
 	}
-	if ( button == middleb ) { /* Unselect */
+	if ( button == 2 ) { /* Unselect */
 	    if ( last_line > 0 ) {
 		symb_set_driver_color ( SYMB_BACKGROUND );
 		display_icon ( xo, yo, G_ICON_BOX, 0, 10, 1);
@@ -299,9 +299,9 @@ int add_vertex (void)
 	y =  D_d_to_u_row ( syn );
 	G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
 
-	if ( button == 0 || button == rightb ) break;
+	if ( button == 0 || button == 3 ) break;
 
-	if ( button == leftb ) { /* Select line segment */
+	if ( button == 1 ) { /* Select line segment */
 	    if ( last_line == 0 ) { /* Select line */ 
                 line = Vect_find_line (&Map, x, y, 0, GV_LINE|GV_BOUNDARY, thresh, 0, 0);
                 G_debug (2, "line found = %d", line );
@@ -385,7 +385,7 @@ int add_vertex (void)
 	    }
 
 	}
-	if ( button == middleb ) { /* Unselect */
+	if ( button == 2 ) { /* Unselect */
 	    if ( last_line > 0 ) {
 		last_line = 0;
 	    }
@@ -445,9 +445,9 @@ int move_vertex (void)
 	y =  D_d_to_u_row ( syn );
 	G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
 
-	if ( button == 0 || button == rightb ) break;
+	if ( button == 0 || button == 3 ) break;
 
-	if ( button == leftb ) { /* Select / new location */
+	if ( button == 1 ) { /* Select / new location */
 	    if ( last_line == 0 ) { /* Select line */ 
                 line = Vect_find_line (&Map, x, y, 0, GV_LINE|GV_BOUNDARY, thresh, 0, 0);
                 G_debug (2, "line found = %d", line );
@@ -494,7 +494,7 @@ int move_vertex (void)
 	    }
 
 	}
-	if ( button == middleb ) { /* Unselect */
+	if ( button == 2 ) { /* Unselect */
 	    if ( last_line > 0 ) {
 		last_line = 0;
 	    }

@@ -16,6 +16,8 @@ extern double text_size_x;
 extern double text_size_y;
 extern double text_rotation;
 
+extern int mouse_button[];
+
 struct driver
 {
 	void (*Box_abs)(int,int,int,int);

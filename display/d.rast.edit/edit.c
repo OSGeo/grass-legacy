@@ -166,12 +166,12 @@ int edit(void)
 			select_count = 2;
 		}
 		/* right key means quit edit mode */
-		if (button == rightb) {
+		if (button == 3) {
 			G_close_cell(fd);
 			break;
 		}
 		/* if left or middle key, find out what's there */
-		if (button == leftb || button == middleb) {
+		if (button == 1 || button == 2) {
 			/* convert display coords to UTM coords */
 			east = D_d_to_u_col((double) screen_x);
 			north = D_d_to_u_row((double) screen_y);
@@ -223,13 +223,13 @@ int edit(void)
 			fprintf (stdout,"%s\n", G_get_d_raster_cat(&buf[col], &cats));
 		}
 		/* middle button means we want to edit that cell */
-		if (button == middleb) {
+		if (button == 2) {
 			int tmpx, tmpy;
 
 			edit_mouse_info2(c, buf[col]);
 			R_get_location_with_pointer(&tmpx, &tmpy, &button);
 
-			if (button == rightb)
+			if (button == 3)
 				while (1) {
 					/*
 					 * get new value from user, make sure
@@ -270,7 +270,7 @@ int edit(void)
 					}
 					break;
 				}
-			if ((button == middleb) || (button == rightb)) {
+			if (button == 2 || button == 3) {
 
 				select_count = 2;
 				c = num;
@@ -320,9 +320,9 @@ int edit_mouse_info (void)
 	fprintf(stderr, "\n     +--------EDIT MODE mouse button menu--------+\n");
 	fprintf(stderr, "     |       Use mouse on graphics monitor       |\n");
 	fprintf(stderr, "     |                                           |\n");
-	fprintf(stderr, "     |%s button:     What's here?            |\n", lefts);
-	fprintf(stderr, "     |%s button:     Edit cell value         |\n", middles);
-	fprintf(stderr, "     |%s button:     Quit edit mode          |\n", rights);
+	fprintf(stderr, "     |left   button:     What's here?            |\n");
+	fprintf(stderr, "     |middle button:     Edit cell value         |\n");
+	fprintf(stderr, "     |right  button:     Quit edit mode          |\n");
 	fprintf(stderr, "     +-------------------------------------------+\n\n");
 
 	return 0;
@@ -355,9 +355,9 @@ int edit_mouse_info2(DCELL def,DCELL current)
 	fprintf(stderr, "     |                                           |\n");
 	fprintf(stderr, "     |       Current value: %5s                |\n", cur_str);
 	fprintf(stderr, "     |                                           |\n");
-	fprintf(stderr, "     |%s button:     Cancel                  |\n", lefts);
-	fprintf(stderr, "     |%s button:     Use value %5s?        |\n", middles, def_str);
-	fprintf(stderr, "     |%s button:     Select new value        |\n", rights);
+	fprintf(stderr, "     |left   button:     Cancel                  |\n");
+	fprintf(stderr, "     |middle button:     Use value %5s?        |\n", def_str);
+	fprintf(stderr, "     |right  button:     Select new value        |\n");
 	fprintf(stderr, "     +-------------------------------------------+\n\n");
 
 	return 0;

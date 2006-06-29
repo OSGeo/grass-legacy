@@ -148,7 +148,7 @@ int new_line ( int type )
 
 	if ( button == 0 ) break; /* Tool broken by GUI */
 
-	if ( first &&  button == rightb ) { /* Quit tool ( points & lines ), first is always for points */
+	if ( first &&  button == 3 ) { /* Quit tool ( points & lines ), first is always for points */
 	    Tool_next = TOOL_NOTHING; 
 	    break;
 	}
@@ -163,7 +163,7 @@ int new_line ( int type )
 	    break;
 	} else { /* GV_LINES */
 	    /* Button may be 1,2,3 */
-	    if ( button == leftb ) { /* New point */
+	    if ( button == 1 ) { /* New point */
 		snap ( &x, &y );
                 Vect_append_point ( Points, x, y, 0 );	
 		
@@ -173,7 +173,7 @@ int new_line ( int type )
 		display_points ( Points, 1);
 		sxo = D_u_to_d_col(x); syo = D_u_to_d_row (y);;
 		first = 0;
-	    } else if ( button == middleb ) { /* Undo last point */
+	    } else if ( button == 2 ) { /* Undo last point */
 		if ( Points->n_points >= 1 ) {
 		    symb_set_driver_color ( SYMB_BACKGROUND ); 
 		    display_points ( Points, 1);
@@ -250,9 +250,9 @@ int edit_line (void) {
 	y =  D_d_to_u_row ( syn );
 	G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
         
-        if (button==0 || button==rightb) break; /* Quit tool */
+        if (button==0 || button==3) break; /* Quit tool */
         
-        if (button!=leftb)
+        if (button!=1)
             continue;
         
         /* Find nearest point or line */
@@ -311,8 +311,8 @@ int edit_line (void) {
 	y =  D_d_to_u_row ( syn );
 	G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
 
-	if ( button == 0 || button==rightb ) break; /* Tool broken by GUI */
-        if ( button == leftb ) { /* New point */
+	if ( button == 0 || button==3 ) break; /* Tool broken by GUI */
+        if ( button == 1 ) { /* New point */
             snap ( &x, &y );
             Vect_append_point ( Points, x, y, 0 );	
             
@@ -322,7 +322,7 @@ int edit_line (void) {
             display_points ( Points, 1);
             sxo=sxn;syo=syn;
             i_prompt_buttons ( "New Point", "Undo Last Point", "Close line");
-        } else if ( button == middleb ) { /* Undo last point */
+        } else if ( button == 2 ) { /* Undo last point */
             if ( Points->n_points > 1 ) {
                 symb_set_driver_color ( SYMB_BACKGROUND ); 
                 display_points ( Points, 1);
@@ -410,9 +410,9 @@ int delete_line (void)
 	    display_line ( last_line, SYMB_DEFAULT, 1);
 	}
 
-	if ( button == 0 || button == rightb ) break; /* Quit tool */
+	if ( button == 0 || button == 3 ) break; /* Quit tool */
 
-	if ( button == leftb ) { /* Confirm / select */
+	if ( button == 1 ) { /* Confirm / select */
             /* Delete last if any */
 	    if ( last_line > 0 ) { 
 		/* Erase line and nodes !!! (because if the line is not connected to any other, nodes will die */
@@ -513,9 +513,9 @@ int move_line (void)
 	y =  D_d_to_u_row ( syn );
 	G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
 
-	if ( button == 0 || button == rightb ) break;
+	if ( button == 0 || button == 3 ) break;
 
-	if ( button == leftb ) { /* Select / new location */
+	if ( button == 1 ) { /* Select / new location */
 	    if ( last_line == 0 ) { /* Select line */ 
 	        line = Vect_find_line (&Map, x, y, 0, GV_POINT|GV_CENTROID, thresh, 0, 0);
 		G_debug (2, "point found = %d", line );
@@ -555,7 +555,7 @@ int move_line (void)
 	    }
 
 	}
-	if ( button == middleb ) { /* Unselect */
+	if ( button == 2 ) { /* Unselect */
 	    if ( last_line > 0 ) {
 		last_line = 0;
 	    }

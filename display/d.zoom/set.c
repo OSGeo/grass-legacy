@@ -75,13 +75,13 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
 
 	    fprintf(stderr, "\nResolution is too low for selected region.\n") ;
 	    fprintf(stderr, "Buttons:\n") ;
-	    fprintf(stderr, "%s Increase resolution to n-s = %g e-w = %g\n", lefts, nsr, ewr);
-	    fprintf(stderr, "%s Cancel (keep previous region)\n", middles) ;
-	    fprintf(stderr, "%s Cancel (keep previous region)\n", rights) ;
+	    fprintf(stderr, "Left:   Increase resolution to n-s = %g e-w = %g\n", nsr, ewr);
+	    fprintf(stderr, "Middle: Cancel (keep previous region)\n") ;
+	    fprintf(stderr, "Right:  Cancel (keep previous region)\n") ;
 	    
 	    R_get_location_with_pointer(&screen_x, &screen_y, &button);
 
-	    if(button == leftb){
+	    if(button == 1){
 		    window->ns_res = nsr;
 		    window->ns_res3 = nsr;
 		    window->ew_res = ewr;
@@ -102,13 +102,13 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
 	ewr = round_to ( window->ew_res * 10, 3); 
 	fprintf(stderr, "\nResolution is too high for selected region.\n") ;
 	fprintf(stderr, "Buttons:\n") ;
-	fprintf(stderr, "%s Decrease resolution to n-s = %.20f e-w = %.20f\n", lefts, nsr, ewr);
-	fprintf(stderr, "%s Keep current resolution\n", middles) ;
-	fprintf(stderr, "%s Keep current resolution\n", rights) ;
+	fprintf(stderr, "Left:   Decrease resolution to n-s = %.20f e-w = %.20f\n", nsr, ewr);
+	fprintf(stderr, "Middle: Keep current resolution\n") ;
+	fprintf(stderr, "Right:  Keep current resolution\n") ;
 
 	R_get_location_with_pointer(&screen_x, &screen_y, &button);
 
-	if(button == leftb){
+	if(button == 1){
 		window->ns_res = nsr;
 		window->ns_res3 = nsr;
 		window->ew_res = ewr;
