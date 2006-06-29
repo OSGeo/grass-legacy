@@ -1,10 +1,10 @@
 #!/bin/sh
-
 ############################################################################
 #
 # MODULE:       d.polar
 # AUTHOR(S):    Markus Neteler. neteler itc.it
 #               algorithm + EPS output by Bruno Caprile
+#               d.graph plotting code by Hamish Bowman
 # PURPOSE:      Draws polar diagram of angle map. The outer circle considers
 #               all cells in the map. If one or many of them are NULL (no data),
 #               the figure will not reach the outer circle. The vector inside
@@ -41,35 +41,49 @@
 #% description: Name of optional EPS output file
 #% required : no
 #%end
+#%flag
+#% key: x
+#% description: Plot using Xgraph
+#%end
+
 
 if  [ -z "$GISBASE" ] ; then
-    echo "You must be in GRASS GIS to run this program."
- exit 1
+    echo "You must be in GRASS GIS to run this program." 1>&2
+    exit 1
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+    exec g.parser "$0" "$@"
 fi
 
 PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 2>&1
+    echo "$PROG: awk required, please install awk or gawk first" 1>&2
     exit 1
 fi
 
+
+if [ -n "$GIS_OPT_EPS" ] && [ $GIS_FLAG_X -eq 1 ] ; then
+    echo "$PROG: Please select only one output method" 1>&2
+    exit 1
+fi
+
+
 #### check if we have xgraph (if no EPS output requested)
-if [ -z "$GIS_OPT_EPS" ] ; then
+if [ $GIS_FLAG_X -eq 1 ] ; then
   if [ ! -x "`which xgraph`" ] ; then
-    echo "$PROG: xgraph required, please install first (www.xgraph.org)" 2>&1
+    echo "$PROG: xgraph required, please install first (www.xgraph.org)" 1>&2
     exit 1
   fi
 fi
 
-# setting environment, so that awk works properly in all languages
+# set environment so that awk works properly in all locales
 unset LC_ALL
-export LC_NUMERIC=C
+LC_NUMERIC=C
+export LC_NUMERIC
+
 
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "${TMP}" ] ; then
@@ -96,12 +110,7 @@ wordcount()
 
 cleanup()
 {
-rm -f ${TMP}_binned ${TMP}_binned_radians \
- ${TMP}_newline \
- ${TMP}_occurencies ${TMP}_outercircle ${TMP}_raw \
- ${TMP}_sine_cosine ${TMP}_sine_cosine_replic \
- ${TMP}_vector ${TMP}_x_unit_vector \
- ${TMP}_y_unit_vector ${TMP}_cos_sums ${TMP}_sine_sums
+\rm -f ${TMP} ${TMP}_*
 }
 
 #################################
@@ -109,7 +118,7 @@ rm -f ${TMP}_binned ${TMP}_binned_radians \
 r.stats -1 "$GIS_OPT_MAP" > ${TMP}_raw
 TOTALNUMBER=`wc -l ${TMP}_raw | awk '{print $1}'`
 
-echo "Calculating statistics for polar diagram... (be patient)"
+echo "Calculating statistics for polar diagram... (be patient)" 1>&2
 
 #wipe out NULL data and undef data if defined by user
 # - generate degree binned to integer, eliminate NO DATA (NULL):
@@ -125,7 +134,7 @@ cat ${TMP}_binned | awk '{printf "%f\n", (3.14159265 * $1 ) / 180.}'  > ${TMP}_b
 TOTALVALIDNUMBER=`wc -l ${TMP}_binned_radians | awk '{print $1}'`
 
 if [ $TOTALVALIDNUMBER == 0 ] ; then
-   echo "No data pixel found"
+   echo "No data pixel found" 1>&2
    cleanup
    exit 1
 fi
@@ -178,16 +187,155 @@ echo "0 0"         >> ${TMP}_vector
 echo "$UNITVECTOR $MAXRADIUS $AUTOSTRETCH" | awk '{printf "%f %f\n", $1 *$3*$4, $2 *$3*$4}' >> ${TMP}_vector
 
 
+###########################################################
 
-# Now output: if user didn't specify EPS output, we use xgraph.
+plot_xgraph()
+{
+# by M.Neteler
+echo "" > ${TMP}_newline
+cat ${TMP}_sine_cosine_replic ${TMP}_newline ${TMP}_outercircle \
+      ${TMP}_newline ${TMP}_vector | xgraph
+}
 
 
-#################################
+
+plot_dgraph()
+{
+# by H.Bowman
+
+# use d.info and d.frame to create a square frame in the center of the window.
+FRAME_DIMS="`d.info -f | cut -f2- -d' '`"
+FRAME_WIDTH="`echo $FRAME_DIMS | awk '{printf("%d", $2 - $1)}'`"
+FRAME_HEIGHT="`echo $FRAME_DIMS | awk '{printf("%d", $4 - $3)}'`"
+
+# take shorter side as length of frame side
+if [ $FRAME_WIDTH -lt $FRAME_HEIGHT ] ; then
+    MIN_SIDE=$FRAME_WIDTH
+else
+    MIN_SIDE=$FRAME_HEIGHT
+fi
+
+DX="`echo $FRAME_WIDTH $MIN_SIDE | awk '{printf("%d", 0.5+(($1 - $2)/2) )}'`"
+DY="`echo $FRAME_HEIGHT $MIN_SIDE | awk '{printf("%d", 0.5+(($1 - $2)/2) )}'`"
+
+FRAME_LEFT="`echo $FRAME_DIMS | cut -f1 -d' '`"
+FRAME_TOP="`echo $FRAME_DIMS | cut -f3 -d' '`"
+
+# new square frame dims in pixels
+DFR_T=`expr $FRAME_TOP + $DY`
+DFR_L=`expr $FRAME_LEFT + $DX`
+DFR_B=`expr $DFR_T + $MIN_SIDE`
+DFR_R=`expr $DFR_L + $MIN_SIDE`
+
+WIN_DIMS="`d.info -d | cut -f2- -d' '`"
+WIN_WIDTH="`echo $WIN_DIMS | cut -f1 -d' '`"
+WIN_HEIGHT="`echo $WIN_DIMS | cut -f2 -d' '`"
+
+# new square frame dims in percentage of overal window
+# note d.info shows 0,0 as top left, d.frame expects 0%,0% as bottom left
+PER_T="`echo $DFR_B $WIN_HEIGHT | awk '{printf("%f", 100 - ($1 * 100. / $2) ) }'`"
+PER_B="`echo $DFR_T $WIN_HEIGHT | awk '{printf("%f", 100 - ($1 * 100. / $2) ) }'`"
+PER_L="`echo $DFR_L $WIN_WIDTH | awk '{printf("%f", $1 * 100. / $2 )}'`"
+PER_R="`echo $DFR_R $WIN_WIDTH | awk '{printf("%f", $1 * 100. / $2 )}'`"
+
+
+# save current frame name to restore later
+ORIG_FRAME="`d.frame -p`"
+
+# create square frame within current frame
+d.frame -c frame=d_polar.$$ at=$PER_T,$PER_B,$PER_L,$PER_R
+
+
+# polyline calculations
+RING=0.95
+cat ${TMP}_sine_cosine_replic | tail +2 | awk -v RING=$RING -v MAX=$MAXRADIUS \
+    '{printf "%f %f\n", (($1 / MAX * RING*RING) +1)*50, (($2 / MAX * RING*RING)+1)*50}' \
+       > ${TMP}_sine_cosine_replic_normalized
+
+# create circle
+PI=3.141592654
+for ANGLE in `seq 0 360` ; do
+  echo "$ANGLE $PI $RING" | awk '{printf("%f %f\n", 50*(1+($3 * sin( $1 * ($2/180)))), \
+	50*(1+($3 * cos( $1 * ($2/180)))) )}' >> ${TMP}_circle
+
+#  X="`echo "$ANGLE $PI $RING" | awk '{printf("%f", 50*(1+($3 * sin( $1 * ($2/180)))) )}'`"
+#  Y="`echo "$ANGLE $PI $RING" | awk '{printf("%f", 50*(1+($3 * cos( $1 * ($2/180)))) )}'`"
+#  echo "$X $Y" >> ${TMP}_circle
+done
+
+# trend vector
+VECT=`cat ${TMP}_vector | tail -n 1 | awk -v RING=$RING -v MAX=$MAXRADIUS \
+    '{printf "%f %f\n", (($1 / MAX * RING*RING) +1)*50, (($2 / MAX * RING*RING)+1)*50}'`
+
+
+# plot it!
+d.erase
+d.graph << EOF
+
+  # draw circle
+  #   mandatory when drawing proportional to non-square frame
+  color 180:255:180
+  polyline
+    `cat ${TMP}_circle`
+
+  # draw axes
+  color 180:180:180
+  width 0
+  move 0 50
+  draw 100 50
+  move 50 0
+  draw 50 100
+
+  # draw the goods
+  color red
+  width 0
+  polyline
+   `cat ${TMP}_sine_cosine_replic_normalized`
+
+  # draw vector
+  color blue
+  width 3
+  move 50 50
+  draw $VECT
+
+  # draw compass text
+  color black
+  width 2
+  size 3 3
+  move 51 97
+   text N
+  move 51 1
+   text S
+  move 1 51
+   text W
+  move 97 51
+   text E
+
+  # draw legend text
+  width 0
+  size 2
+  color 0:180:0
+   move 1.5 96.5
+   text All data (incl. NULLs)
+  color red
+   move 1.5 93.5
+   text Real data angles
+  color blue
+   move 1.5 90.5
+   text Avg. direction
+
+EOF
+
+# back to original frame
+d.frame -s frame="$ORIG_FRAME"
+
+}
+
+
+
+plot_eps()
+{
 # EPS output (by Bruno Caprile, ITC-irst)
-
-PSOUT="`basename $GIS_OPT_EPS .eps`.eps"
-if [ ! -z "$GIS_OPT_EPS" ] ; then
-
 echo "Generating $GIS_OPT_EPS..."
 
 OUTERRADIUS=$MAXRADIUS
@@ -347,12 +495,21 @@ col1                                    %% colAVERAGE-DIRECTION-COLOR
 ($AVERAGEDIRECTIONSTRING) $LEGENDSX $AVERAGEDIRECTIONLEGENDY 4 just-string
 " >> $PSOUT
 
-else
-echo "" > ${TMP}_newline
-cat ${TMP}_sine_cosine_replic ${TMP}_newline ${TMP}_outercircle ${TMP}_newline\
-	 ${TMP}_vector | xgraph
+}
 
+
+# Now output:
+
+if [ -n "$GIS_OPT_EPS" ] ; then
+   PSOUT="`basename $GIS_OPT_EPS .eps`.eps"
+   plot_eps
+else
+   if [ $GIS_FLAG_X -eq 1 ] ; then
+     plot_xgraph
+   else
+     plot_dgraph
+   fi
 fi
-#################################
-#cleanup
+
 cleanup
+exit 0
