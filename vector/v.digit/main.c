@@ -117,17 +117,6 @@ int main (int argc, char *argv[])
     if (G_parser (argc, argv))
 	exit(EXIT_FAILURE); 
 
-
-    if(getenv("GRASS_ANOTHER_BUTTON")){
-	    leftb   = 1;
-	    middleb = 3;
-	    rightb  = 2;
-    } else {
-	    leftb   = 1;
-	    middleb = 2;
-	    rightb  = 3;
-    }
-
     G_debug (2, "Variable = %p", Variable );
  
     /* Read background commands */

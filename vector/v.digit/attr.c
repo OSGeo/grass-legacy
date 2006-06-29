@@ -200,9 +200,9 @@ int display_cats (void)
 	    display_line ( last_cat_line, SYMB_DEFAULT, 1);
 	}
 
-	if ( button == 0 || button == rightb ) break; /* Quit tool */
+	if ( button == 0 || button == 3 ) break; /* Quit tool */
 
-	if ( button == leftb ) { /* Confirm / select */
+	if ( button == 1 ) { /* Confirm / select */
 	    F_clear ();
 	    /* Find nearest point or line (points first!) */
 	    line = Vect_find_line (&Map, x, y, 0, GV_POINTS, thresh, 0, 0);
@@ -275,7 +275,7 @@ int copy_cats (void)
         R_set_update_function ( update );
         R_get_location_with_pointer ( &sxn, &syn, &button); 
         
-        if (button==0 || button==rightb) break; /* Quit tool */
+        if (button==0 || button==3) break; /* Quit tool */
         
 	x =  D_d_to_u_col ( sxn );
 	y =  D_d_to_u_row ( syn );
@@ -285,7 +285,7 @@ int copy_cats (void)
             display_line (src_line, SYMB_DEFAULT, 1);
         if (dest_line>0)
             display_line (dest_line, SYMB_DEFAULT, 1);
-        if (button==leftb) {
+        if (button==1) {
             line = Vect_find_line (&Map, x, y, 0, GV_LINES|GV_POINTS, thresh, 0, 0);
             G_debug (3, "before: src_line=%d dest_line=%d line=%d",src_line,dest_line,line);
             if (dest_line>0) {
@@ -321,7 +321,7 @@ int copy_cats (void)
                     Vect_read_line (&Map, Points, Src_Cats, src_line);
             }
             G_debug (3, "after: src_line=%d dest_line=%d line=%d",src_line,dest_line,line);
-        } else if (button==middleb) {
+        } else if (button==2) {
             /* We need to deselect the last line selected */
             if (dest_line>0) {
                 display_line (dest_line, SYMB_DEFAULT, 1);
@@ -414,9 +414,9 @@ int display_attributes (void)
 	    display_line ( last_line, SYMB_DEFAULT, 1);
 	}
 
-	if ( button == 0 || button == rightb ) break; /* Quit tool */
+	if ( button == 0 || button == 3 ) break; /* Quit tool */
 
-	if ( button == leftb ) { /* Confirm / select */
+	if ( button == 1 ) { /* Confirm / select */
 	    F_clear ();
 	    /* Find nearest point or line (points first!) */
 	    line = Vect_find_line (&Map, x, y, 0, GV_POINTS, thresh, 0, 0);

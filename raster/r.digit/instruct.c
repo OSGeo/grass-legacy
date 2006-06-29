@@ -14,9 +14,9 @@ int instructions (int n)
     {
 	if(Title) fprintf (stdout,"%s\n", Title);
 	fprintf (stdout," Buttons:\n") ;
-	fprintf (stdout,"  %s where am i\n", lefts) ;
-	fprintf (stdout,"  %s mark point\n", middles) ;
-	fprintf (stdout,"  %s done\n\n", rights) ;
+	fprintf (stdout,"  Left:   where am i\n") ;
+	fprintf (stdout,"  Middle: mark point\n") ;
+	fprintf (stdout,"  Right:  done\n\n") ;
 	nlines = 0 ;
     }
     nlines += n;

@@ -45,9 +45,9 @@ int measurements(int color1,int color2, int s_flag, int m_flag, int k_flag)
 	if( ! s_flag )
 	  G_clear_screen() ;
         fprintf (output, "\nButtons:\n") ;
-        fprintf (output, "%s where am i\n", lefts) ;
-        fprintf (output, "%s set FIRST vertex\n", middles) ;
-        fprintf (output, "%s quit this\n", rights) ;
+        fprintf (output, "Left:   where am i\n") ;
+        fprintf (output, "Middle: set FIRST vertex\n") ;
+        fprintf (output, "Right:  quit this\n") ;
 
         screen_y  = (t + b) / 2 ;
         screen_x  = (l + r) / 2 ;
@@ -57,18 +57,18 @@ int measurements(int color1,int color2, int s_flag, int m_flag, int k_flag)
             R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
             cur_uy = D_d_to_u_row((double)screen_y)  ;
             cur_ux = D_d_to_u_col((double)screen_x)  ;
-	    if (button == leftb)
+	    if (button == 1)
 		print_en(cur_ux, cur_uy, s_flag);
-            if(button == rightb)
+            if(button == 3)
                 return(0) ;
-        } while (button != middleb) ;
+        } while (button != 2) ;
 
 	add_point (&x, &y, &npoints, &nalloc, cur_ux, cur_uy);
 	if( ! s_flag )
 	    G_clear_screen() ;
-        fprintf (output, "\n%s where am i\n", lefts) ;
-        fprintf (output, "%s set NEXT vertex\n", middles) ;
-        fprintf (output, "%s FINISH\n", rights) ;
+        fprintf (output, "\nLeft:   where am i\n") ;
+        fprintf (output, "Middle: set NEXT vertex\n") ;
+        fprintf (output, "Right:  FINISH\n") ;
 
         R_move_abs(screen_x, screen_y) ;
         cur_screen_x = screen_x ;
@@ -82,10 +82,10 @@ int measurements(int color1,int color2, int s_flag, int m_flag, int k_flag)
             R_get_location_with_line(cur_screen_x,cur_screen_y,&screen_x, &screen_y, &button) ;
             uy = D_d_to_u_row((double)screen_y)  ;
             ux = D_d_to_u_col((double)screen_x)  ;
-	    if(button == leftb){
+	    if(button == 1){
                 print_en (ux, uy, s_flag);
 	    }else
-	    if(button == middleb){
+	    if(button == 2){
                 draw_line(screen_x,screen_y,cur_screen_x,cur_screen_y,color1,color2)  ;
 		add_point (&x, &y, &npoints, &nalloc, ux, uy);
                 length += G_distance(cur_ux, cur_uy, ux, uy) ;
@@ -95,15 +95,15 @@ int measurements(int color1,int color2, int s_flag, int m_flag, int k_flag)
                 cur_ux = ux ;
                 cur_uy = uy ;
             }
-        } while (button != rightb) ;
+        } while (button != 3) ;
 	R_stabilize();
 	
 	if( ! s_flag )
 	  G_clear_screen() ;
         fprintf (output, "\nButtons:\n") ;
-        fprintf (output, "%s DO ANOTHER\n", lefts) ;
-        fprintf (output, "%s\n", middles) ;
-        fprintf (output, "%s quit this\n", rights) ;
+        fprintf (output, "Left:   DO ANOTHER\n") ;
+        fprintf (output, "Middle:\n") ;
+        fprintf (output, "Right:  quit this\n") ;
 /*
  * 10000 is sq meters per hectare
  * 2589988 is sq meters per sq mile
@@ -124,7 +124,7 @@ int measurements(int color1,int color2, int s_flag, int m_flag, int k_flag)
 	}
 
         R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
-        if (button == rightb)
+        if (button == 3)
             return(0) ;
     }
 

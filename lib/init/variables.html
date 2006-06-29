@@ -95,11 +95,6 @@ while in a GRASS session.
 <br>&nbsp; allows to specify additional paths to local GRASS modules extra
 to standard distribution
 
-<p>GRASS_ANOTHER_BUTTON
-<br>[various modules]
-<br>&nbsp; If the environment variable GRASS_ANOTHER_BUTTON exists,
- the mouse button setting will be changed for two-button mice.
-
 <p>GRASS_BACKGROUNDCOLOR
 <br>[PNGdriver]
 <br>&nbsp; defines the background color of the image created by the PNG driver
@@ -131,6 +126,14 @@ to standard distribution
 <p>GRASS_MESSAGE_FORMAT
 <br>[various modules]
 <br>Maybe set to either "standard" or "gui" (normally GRASS takes care)
+
+<p>GRASS_MOUSE_BUTTON
+<br>[various modules]
+<br>&nbsp; swaps mouse buttons for two-button or left-handed mice. Its value
+has three digits 1, 2, and 3, which represent default left, middle, and right
+buttons respectively. Setting to "132" will swap middle and right buttons. Note
+that this variable should be set before a display driver is initialized (e.g.,
+d.mon x0).
 
 <p>GRASS_PAGER
 <br>[various modules]

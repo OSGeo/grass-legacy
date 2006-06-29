@@ -25,8 +25,6 @@ GLOBAL int real_nrows, real_ncols;
 GLOBAL int colr_ok, cats_ok, quant_ok;
 GLOBAL int change_made;
 GLOBAL RASTER_MAP_TYPE map_type;
-GLOBAL int leftb, middleb, rightb;
-GLOBAL char *lefts, *middles, *rights;
 
 
 /* keeping names straight:

@@ -14,13 +14,13 @@ int quit (struct Cell_head *defwin, struct Cell_head *currwin) {
   double ux1, uy1, ux2, uy2, ew, ns;
   
   fprintf(stderr, "\n\nButtons:\n") ;
-  fprintf(stderr, "%s reset to default region\n", lefts) ;
-  fprintf(stderr, "%s reset to region before d.zoom started\n", middles) ;
-  fprintf(stderr, "%s Quit\n", rights) ;	
+  fprintf(stderr, "Left:   reset to default region\n") ;
+  fprintf(stderr, "Middle: reset to region before d.zoom started\n") ;
+  fprintf(stderr, "Right:  Quit\n") ;
   
   R_get_location_with_pointer(&screen_x, &screen_y, &button);		
   
-  if (button == leftb) {
+  if (button == 1) {
     ew = defwin->east - defwin->west;
     ns = defwin->north - defwin->south;
 
@@ -41,7 +41,7 @@ int quit (struct Cell_head *defwin, struct Cell_head *currwin) {
     return 0;
   }
  
-  if (button == middleb) {
+  if (button == 2) {
     ew = currwin->east - currwin->west;
     ns = currwin->north - currwin->south;
 
@@ -62,7 +62,7 @@ int quit (struct Cell_head *defwin, struct Cell_head *currwin) {
     return 0;
   }
   
-  if (button == rightb) {
+  if (button == 3) {
     return 0;
   }
 

@@ -49,6 +49,4 @@ GLOBAL char *cmd;
 GLOBAL char **rast, **vect, **list;
 GLOBAL int nrasts, nvects, nlists;
 GLOBAL double U_east, U_west, U_south, U_north;
-GLOBAL int leftb, middleb, rightb;
-GLOBAL char *lefts, *middles, *rights;
 
