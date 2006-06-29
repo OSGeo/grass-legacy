@@ -257,10 +257,6 @@ PI=3.141592654
 for ANGLE in `seq 0 360` ; do
   echo "$ANGLE $PI $RING" | awk '{printf("%f %f\n", 50*(1+($3 * sin( $1 * ($2/180)))), \
 	50*(1+($3 * cos( $1 * ($2/180)))) )}' >> ${TMP}_circle
-
-#  X="`echo "$ANGLE $PI $RING" | awk '{printf("%f", 50*(1+($3 * sin( $1 * ($2/180)))) )}'`"
-#  Y="`echo "$ANGLE $PI $RING" | awk '{printf("%f", 50*(1+($3 * cos( $1 * ($2/180)))) )}'`"
-#  echo "$X $Y" >> ${TMP}_circle
 done
 
 # trend vector
