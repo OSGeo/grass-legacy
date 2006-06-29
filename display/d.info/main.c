@@ -22,7 +22,7 @@
 int main(int argc,char *argv[])
 {
 	struct GModule *module;
-	struct Flag *rflag, *dflag, *cflag, *fflag;
+	struct Flag *rflag, *dflag, *cflag, *fflag, *bflag;
 	int l, r, t, b;
 	char window_name[128];
 	struct Cell_head window;
@@ -43,7 +43,11 @@ int main(int argc,char *argv[])
 
 	fflag = G_define_flag();
 	fflag->key = 'f';
-	fflag->description = _("Display active frame dimensions");
+	fflag->description = _("Display active frame rectangle");
+
+	bflag = G_define_flag();
+	bflag->key = 'b';
+	bflag->description = _("Display screen rectangle of current region");
 
 	cflag = G_define_flag();
 	cflag->key = 'c';
@@ -52,7 +56,8 @@ int main(int argc,char *argv[])
 	if (argc > 1 && G_parser(argc, argv))
 		exit(EXIT_FAILURE);
 
-	if(!rflag->answer && !dflag->answer && !cflag->answer && !fflag->answer)
+	if(!rflag->answer && !dflag->answer && !cflag->answer &&
+				!fflag->answer && !bflag->answer)
 	{
 		G_usage();
 		exit(EXIT_FAILURE);
@@ -82,7 +87,13 @@ int main(int argc,char *argv[])
 		fprintf(stdout, "colors: %d\n", colors);
 	}
 
-	if(fflag->answer)
+	if (fflag->answer)
+	{
+		D_get_screen_window(&t, &b, &l, &r);
+		fprintf(stdout, "frame: %d %d %d %d\n", l, r, t, b);
+	}
+
+	if (bflag->answer)
 	{
 	    if (D_get_cur_wind(window_name))
 		G_fatal_error(_("No current window"));
@@ -104,7 +115,7 @@ int main(int argc,char *argv[])
 	    t = D_get_d_north();
 	    b = D_get_d_south();
 
-	    fprintf(stdout, "frame: %d %d %d %d\n", l, r, t, b);
+	    fprintf(stdout, "region: %d %d %d %d\n", l, r, t, b);
 	}
 	
 	R_close_driver();	
