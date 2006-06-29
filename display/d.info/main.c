@@ -35,11 +35,11 @@ int main(int argc,char *argv[])
 
 	rflag = G_define_flag();
 	rflag->key = 'r';
-	rflag->description = _("Display screen rectangle");
+	rflag->description = _("Display screen rectangle (left, right, top, bottom)");
 
 	dflag = G_define_flag();
 	dflag->key = 'd';
-	dflag->description = _("Display screen dimensions");
+	dflag->description = _("Display screen dimensions (width, height)");
 
 	fflag = G_define_flag();
 	fflag->key = 'f';
