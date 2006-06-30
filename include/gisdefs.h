@@ -612,12 +612,6 @@ int G_gisinit(const char *);
 int G_no_gisinit(void);
 int G__check_gisinit(void);
 
-/* grid_dist1.c */
-double G_ellipsoid_grid_dist(double, double, double, double, double, double);
-
-/* grid_dist2.c */
-double G_ellipsoid_grid_dist(double, double, double, double, double, double);
-
 /* histo_eq.c */
 int G_histogram_eq(struct Histogram *, unsigned char **, CELL *, CELL *);
 
