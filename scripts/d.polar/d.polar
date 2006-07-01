@@ -173,7 +173,7 @@ cat ${TMP}_sine_cosine >> ${TMP}_sine_cosine_replic
 echo $REPLICATE >> ${TMP}_sine_cosine_replic
 
 rm -f ${TMP}_outercircle
-echo "\"All Data incl. NULL"           > ${TMP}_outercircle
+echo "\"All Data (incl. NULLs)"           > ${TMP}_outercircle
 for i in `seq 0 360` ; do
  echo "$i $TOTALNUMBER $TOTALVALIDNUMBER $MAXRADIUS" | \
    awk '{printf "%.8f %.8f\n", cos($1 * 3.14159265 / 180.)* $2/$3 * $4, sin($1 * 3.14159265 / 180.) * $2/$3 * $4}' >> ${TMP}_outercircle
@@ -182,7 +182,7 @@ done
 #################################
 # fix vector length to become visible (x? of $MAXRADIUS):
 AUTOSTRETCH="1"
-echo "\"Direction" >  ${TMP}_vector
+echo "\"Avg. direction" >  ${TMP}_vector
 echo "0 0"         >> ${TMP}_vector
 echo "$UNITVECTOR $MAXRADIUS $AUTOSTRETCH" | awk '{printf "%f %f\n", $1 *$3*$4, $2 *$3*$4}' >> ${TMP}_vector
 
