@@ -1,7 +1,8 @@
 <h2>DESCRIPTION</h2>
 
 <em>v.to.points</em> creates points along input lines. It creates an output-dataset with 2 layers.
-Layer 1 holdes information about the line-category and its attributes, layer 2 holds information about the length line-category and its segment-length starting from the 0 to this point.
+Layer 1 holdes information about the line-category and its attributes, layer 2 holds
+information about the length line-category and its segment-length starting from the 0 to this point.
 
 <h2>NOTES</h2>
 
@@ -9,6 +10,17 @@ The <em>dmax</em> parameter is the maximum limit but not an exact
 distance. To place points with exact distance from the beginning
 of the vector line the user should use <em>v.segment</em>.
 
+
+<h2>EXAMPLE</h2>
+
+In this example, the 't_powerlines' vector lines map in the Spearfish
+location is used to create points along the input lines:
+
+<div class="code"><pre>
+v.to.points in=t_powerlines out=t_powerlines_points dmax=120
+d.vect t_powerlines_points
+</pre></div>
+ 
 <h2>SEE ALSO</h2>
 
 <em>

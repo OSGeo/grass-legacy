@@ -184,7 +184,7 @@ int main(int argc, char **argv)
     table_flag->key = 't';
     table_flag->description = _("Do not create attribute table.");
     
-    if(G_parser(argc,argv)) exit(1);
+    if(G_parser(argc,argv)) exit(EXIT_FAILURE);
 
     LCats = Vect_new_cats_struct ();
     PCats = Vect_new_cats_struct ();
@@ -323,6 +323,6 @@ int main(int argc, char **argv)
 
     G_message ( _("%d points written to output map\n"), point_cat - 1);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
