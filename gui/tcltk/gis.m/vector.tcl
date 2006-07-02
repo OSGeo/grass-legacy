@@ -147,7 +147,7 @@ proc GmVector::create { tree parent } {
     set opt($count,1,lcolor) \#000000
     set opt($count,1,_use_color) 1
     set opt($count,1,_use_fcolor) 1
-    set opt($count,1,lwidth) 0
+    set opt($count,1,lwidth) 1
 
     set opt($count,1,symdir) "basic"
     set opt($count,1,icon) "basic/x"
