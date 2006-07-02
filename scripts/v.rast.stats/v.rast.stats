@@ -70,6 +70,7 @@ if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
     exit 1
 fi
 TMPNAME=`basename $TMP`
+SQLTMP=$TMPNAME.sql
 
 cleanup()
 {
@@ -82,7 +83,7 @@ cleanup()
    echo "Restoring previous MASK..."
    g.rename ${TMPNAME}_origmask,MASK > /dev/null
  fi
- rm -f $TMPNAME $TMP.cats
+ rm -f $TMPNAME $TMP.cats $SQLTMP
 }
 
 # what to do in case of user break:
@@ -164,6 +165,9 @@ else
   # in case a table is missing, we'll trap a crash later...
   DBFDRIVER=0
 fi
+# we need this for non-DBF driver:
+DB_SQLDRIVER=`v.db.connect -g $VECTOR | cut -d' ' -f5`
+DB_DATABASE="`v.db.connect -g $VECTOR | cut -d' ' -f4`"
 
 for i in n min max range mean stddev variance cf_var sum ; do
   #check if column already present
@@ -209,15 +213,18 @@ for i in `cat $TMP.cats` ; do
   v.db.update map=$VECTOR col="`echo ${COLPREFIX}_cf_var| cut -b1-10`"   value=$coeff_var where="cat=$i"
   v.db.update map=$VECTOR col="`echo ${COLPREFIX}_sum| cut -b1-10`"      value=$sum      where="cat=$i"
  else
-  v.db.update map=$VECTOR col=${COLPREFIX}_n         value=$n         where="cat=$i"
-  v.db.update map=$VECTOR col=${COLPREFIX}_min       value=$min       where="cat=$i"
-  v.db.update map=$VECTOR col=${COLPREFIX}_max       value=$max       where="cat=$i"
-  v.db.update map=$VECTOR col=${COLPREFIX}_range     value=$range     where="cat=$i"
-  v.db.update map=$VECTOR col=${COLPREFIX}_mean      value=$mean      where="cat=$i"
-  v.db.update map=$VECTOR col=${COLPREFIX}_stddev    value=$stddev    where="cat=$i"
-  v.db.update map=$VECTOR col=${COLPREFIX}_variance  value=$variance  where="cat=$i"
-  v.db.update map=$VECTOR col=${COLPREFIX}_cf_var    value=$coeff_var where="cat=$i"
-  v.db.update map=$VECTOR col=${COLPREFIX}_sum       value=$sum       where="cat=$i"
+  echo "UPDATE $VECTOR SET ${COLPREFIX}_n=$n     WHERE cat=$i;" > $SQLTMP
+  echo "UPDATE $VECTOR SET ${COLPREFIX}_min=$min WHERE cat=$i;" >> $SQLTMP
+  echo "UPDATE $VECTOR SET ${COLPREFIX}_max=$max WHERE cat=$i;" >> $SQLTMP
+  echo "UPDATE $VECTOR SET ${COLPREFIX}_range=$range WHERE cat=$i;" >> $SQLTMP
+  echo "UPDATE $VECTOR SET ${COLPREFIX}_mean=$mean   WHERE cat=$i;" >> $SQLTMP
+  echo "UPDATE $VECTOR SET ${COLPREFIX}_stddev=$stddev     WHERE cat=$i;" >> $SQLTMP
+  echo "UPDATE $VECTOR SET ${COLPREFIX}_variance=$variance WHERE cat=$i;" >> $SQLTMP
+  echo "UPDATE $VECTOR SET ${COLPREFIX}_cf_var=$coeff_var  WHERE cat=$i;" >> $SQLTMP
+  echo "UPDATE $VECTOR SET ${COLPREFIX}_sum=$sum     WHERE cat=$i;" >> $SQLTMP
+
+  # this should be fast:
+  cat $SQLTMP | db.execute database=$DB_DATABASE driver=$DB_SQLDRIVER
  fi
 
  CURRNUM=`expr $CURRNUM + 1`
