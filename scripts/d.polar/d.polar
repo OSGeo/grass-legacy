@@ -177,12 +177,12 @@ if [ -n "$GIS_OPT_EPS" ] || [ $GIS_FLAG_X -eq 1 ] ; then
   rm -f ${TMP}_outercircle
   echo "\"All Data incl. NULLs"           > ${TMP}_outercircle
 
-  awk -v PI=$PI -v TOTALNUMBER=$TOTALNUMBER -v TOTALVALIDNUMBER=$TOTALVALIDNUMBER \
+  awk -v PI=$PI -v TOTAL=$TOTALNUMBER -v TOTALVALID=$TOTALVALIDNUMBER \
       -v MAXRADIUS=$MAXRADIUS 'BEGIN {
 	for(i=0; i<=360; i++) {
 	    printf("%.8f %.8f\n",
-	      cos(i * PI/180) * TOTALNUMBER/TOTALVALIDNUMBER * MAXRADIUS,
-	      sin(i * PI/180) * TOTALNUMBER/TOTALVALIDNUMBER * MAXRADIUS)
+	      cos(i * PI/180) * TOTAL/TOTALVALID * MAXRADIUS,
+	      sin(i * PI/180) * TOTAL/TOTALVALID * MAXRADIUS)
 	}
    }' >> ${TMP}_outercircle
 fi
@@ -258,28 +258,34 @@ d.frame -c frame=d_polar.$$ at=$PER_T,$PER_B,$PER_L,$PER_R
 
 # polyline calculations
 RING=0.95
+SCALEVAL=`awk -v RING=$RING -v TOTAL=$TOTALNUMBER -v TOTALVALID=$TOTALVALIDNUMBER \
+    'BEGIN { print RING * TOTALVALID/TOTAL }'`
 
-cat ${TMP}_sine_cosine_replic | tail +2 | awk -v RING=$RING -v MAX=$MAXRADIUS \
-    '{printf "%f %f\n", ((RING * $1/MAX) +1)*50, ((RING * $2/MAX) +1)*50}' \
+cat ${TMP}_sine_cosine_replic | tail -n +2 | awk -v SCL=$SCALEVAL -v MAX=$MAXRADIUS \
+    '{printf "%f %f\n", ((SCL * $1/MAX) +1)*50, ((SCL * $2/MAX) +1)*50}' \
        > ${TMP}_sine_cosine_replic_normalized
 
 # create circle
 awk -v RING=$RING -v PI=$PI 'BEGIN {
    for(i=0; i<=360; i++) {
-     print 50*(1+(RING * sin(i * (PI/180)))) " " 50*(1+(RING * cos(i * (PI/180))))
+     printf("%f %f\n", 50*(1+(RING * sin(i * (PI/180)))),
+	    50*(1+(RING * cos(i * (PI/180)))) )
    }
  }' > ${TMP}_circle
 
-
 # trend vector
-VECT=`cat ${TMP}_vector | tail -n 1 | awk -v RING=$RING -v MAX=$MAXRADIUS \
-    '{printf "%f %f\n", ((RING * $1/MAX)+1)*50, ((RING * $2/MAX)+1)*50}'`
+VECT=`cat ${TMP}_vector | tail -n 1 | awk -v SCL=$SCALEVAL -v MAX=$MAXRADIUS \
+    '{printf "%f %f\n", ((SCL * $1/MAX)+1)*50, ((SCL * $2/MAX)+1)*50}'`
 
 
-# Possible TODO:
-# to have d.polar survive d.redraw, write d.graph commands to a ${TMP}.dpolar.dgraph
-#  file and then use d.graph input=${TMP}.dpolar.dgraph. The file will be cleaned
-#  up when the grass session exits.
+# Possible TODOs:
+# To have d.polar survive d.redraw, write d.graph commands to a
+#  ${TMP}.dpolar.dgraph file and then use d.graph input=${TMP}.dpolar.dgraph.
+#  The file will be cleaned up when the grass session exits.
+#
+# To fill data area with color, use BOTH d.graph's polyline and polygon commands.
+#  Using polygon alone gives a jagged boundary due to sampling technique (not a bug).
+
 
 # plot it!
 d.erase
@@ -525,10 +531,12 @@ else
    fi
 fi
 
-#TODO:
-#echo "Average vector:"  1>&2
-#echo "direction: $ ??"
-#echo "magnitude: $ ??"
+
+echo "Average vector:"  1>&2
+echo "direction: `echo "$UNITVECTOR" | \
+  awk -v PI=$PI '{ print atan2($2, $1) * 180/PI }'` degrees CCW from East"
+echo "magnitude: `echo "$UNITVECTOR " | \
+  awk '{ print sqrt($1*$1 + $2*$2)*100 }'` percent of fullscale"
 
 
 cleanup
