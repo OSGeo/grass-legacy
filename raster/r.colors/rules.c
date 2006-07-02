@@ -115,7 +115,7 @@ int read_color_rules(
     }
     G_debug(3, "rulemin=%.1f rulemax=%.1f", rulemin, rulemax);
     if((rulemin > min || rulemax < max) && !quiet)
-	G_warning(_("Your color rules do not cover the whole range of data!"));
+	G_warning(_("Your color rules do not cover the whole range of data!\n (rules %f to %f but data %f to %f)"), rulemin, rulemax, min, max);
 
 /* fill in all unset val */
     for (n=0; n < nrules; n++)
