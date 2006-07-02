@@ -42,7 +42,7 @@ htmlgen:
 		echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">' ; \
 		echo '<html>' ; \
 		echo '<head>' ; \
-		echo '<title>$(PGM)</title>' ; \
+		echo '<title>GRASS GIS: $(PGM)</title>' ; \
 		echo '<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">' ; \
 		echo '<link rel="stylesheet" href="grassdocs.css" type="text/css">' ; \
 		echo '</head>' ; \
