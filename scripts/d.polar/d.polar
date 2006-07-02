@@ -172,22 +172,32 @@ echo "\"Real data angles"           >  ${TMP}_sine_cosine_replic
 cat ${TMP}_sine_cosine >> ${TMP}_sine_cosine_replic
 echo $REPLICATE >> ${TMP}_sine_cosine_replic
 
-rm -f ${TMP}_outercircle
-echo "\"All Data (incl. NULLs)"           > ${TMP}_outercircle
-for i in `seq 0 360` ; do
- echo "$i $TOTALNUMBER $TOTALVALIDNUMBER $MAXRADIUS" | \
-   awk '{printf "%.8f %.8f\n", cos($1 * 3.14159265 / 180.)* $2/$3 * $4, sin($1 * 3.14159265 / 180.) * $2/$3 * $4}' >> ${TMP}_outercircle
-done
+PI=3.14159265358979323846
+if [ -n "$GIS_OPT_EPS" ] || [ $GIS_FLAG_X -eq 1 ] ; then
+  rm -f ${TMP}_outercircle
+  echo "\"All Data incl. NULLs"           > ${TMP}_outercircle
 
-#################################
+  awk -v PI=$PI -v TOTALNUMBER=$TOTALNUMBER -v TOTALVALIDNUMBER=$TOTALVALIDNUMBER \
+      -v MAXRADIUS=$MAXRADIUS 'BEGIN {
+	for(i=0; i<=360; i++) {
+	    printf("%.8f %.8f\n",
+	      cos(i * PI/180) * TOTALNUMBER/TOTALVALIDNUMBER * MAXRADIUS,
+	      sin(i * PI/180) * TOTALNUMBER/TOTALVALIDNUMBER * MAXRADIUS)
+	}
+   }' >> ${TMP}_outercircle
+fi
+
+
 # fix vector length to become visible (x? of $MAXRADIUS):
 AUTOSTRETCH="1"
-echo "\"Avg. direction" >  ${TMP}_vector
+echo "\"Avg. Direction" >  ${TMP}_vector
 echo "0 0"         >> ${TMP}_vector
-echo "$UNITVECTOR $MAXRADIUS $AUTOSTRETCH" | awk '{printf "%f %f\n", $1 *$3*$4, $2 *$3*$4}' >> ${TMP}_vector
+echo "$UNITVECTOR $MAXRADIUS $AUTOSTRETCH" | \
+    awk '{printf "%f %f\n", $1 * $3, $2 * $3}' >> ${TMP}_vector
 
 
 ###########################################################
+
 
 plot_xgraph()
 {
@@ -248,21 +258,28 @@ d.frame -c frame=d_polar.$$ at=$PER_T,$PER_B,$PER_L,$PER_R
 
 # polyline calculations
 RING=0.95
+
 cat ${TMP}_sine_cosine_replic | tail +2 | awk -v RING=$RING -v MAX=$MAXRADIUS \
-    '{printf "%f %f\n", (($1 / MAX * RING*RING) +1)*50, (($2 / MAX * RING*RING)+1)*50}' \
+    '{printf "%f %f\n", ((RING * $1/MAX) +1)*50, ((RING * $2/MAX) +1)*50}' \
        > ${TMP}_sine_cosine_replic_normalized
 
 # create circle
-PI=3.141592654
-for ANGLE in `seq 0 360` ; do
-  echo "$ANGLE $PI $RING" | awk '{printf("%f %f\n", 50*(1+($3 * sin( $1 * ($2/180)))), \
-	50*(1+($3 * cos( $1 * ($2/180)))) )}' >> ${TMP}_circle
-done
+awk -v RING=$RING -v PI=$PI 'BEGIN {
+   for(i=0; i<=360; i++) {
+     print 50*(1+(RING * sin(i * (PI/180)))) " " 50*(1+(RING * cos(i * (PI/180))))
+   }
+ }' > ${TMP}_circle
+
 
 # trend vector
 VECT=`cat ${TMP}_vector | tail -n 1 | awk -v RING=$RING -v MAX=$MAXRADIUS \
-    '{printf "%f %f\n", (($1 / MAX * RING*RING) +1)*50, (($2 / MAX * RING*RING)+1)*50}'`
+    '{printf "%f %f\n", ((RING * $1/MAX)+1)*50, ((RING * $2/MAX)+1)*50}'`
 
+
+# Possible TODO:
+# to have d.polar survive d.redraw, write d.graph commands to a ${TMP}.dpolar.dgraph
+#  file and then use d.graph input=${TMP}.dpolar.dgraph. The file will be cleaned
+#  up when the grass session exits.
 
 # plot it!
 d.erase
@@ -331,8 +348,8 @@ d.frame -s frame="$ORIG_FRAME"
 
 plot_eps()
 {
-# EPS output (by Bruno Caprile, ITC-irst)
-echo "Generating $GIS_OPT_EPS..."
+# EPS output (by M.Neteler and Bruno Caprile, ITC-irst)
+echo "Generating $PSOUT ..." 1>&2
 
 OUTERRADIUS=$MAXRADIUS
 EPSSCALE=0.1
@@ -491,6 +508,7 @@ col1                                    %% colAVERAGE-DIRECTION-COLOR
 ($AVERAGEDIRECTIONSTRING) $LEGENDSX $AVERAGEDIRECTIONLEGENDY 4 just-string
 " >> $PSOUT
 
+echo "Done." 1>&2
 }
 
 
@@ -506,6 +524,12 @@ else
      plot_dgraph
    fi
 fi
+
+#TODO:
+#echo "Average vector:"  1>&2
+#echo "direction: $ ??"
+#echo "magnitude: $ ??"
+
 
 cleanup
 exit 0
