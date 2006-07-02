@@ -196,7 +196,7 @@ for i in `cat $TMP.cats` ; do
  r.mapcalc "MASK=if(${VECTOR}_${TMPNAME} == $i, 1, null())" 2> /dev/null
 
  #n, min, max, range, mean, stddev, variance, coeff_var, sum
- eval `r.univar -g $RASTER`
+ eval `r.univar -g $RASTER | sed 's+nan+NULL+g'`
 
  if [ $DBFDRIVER -eq 1 ] ; then
   v.db.update map=$VECTOR col="`echo ${COLPREFIX}_n| cut -b1-10`"        value=$n        where="cat=$i"
