@@ -213,19 +213,39 @@ main (int argc, char *argv[])
 	    fprintf ( stderr, "Minimum number of columns: %d\n", minncols);
 
 	    /* check column numbers */
-	    if ( xcol >= minncols )
+	    if ( xcol >= minncols ) {
+		Vect_delete(new->answer);
 		G_fatal_error(_("x column number > minimum last column number\n(incorrect field separator?)"));
-	    if ( ycol >= minncols )
+	    }
+	    if ( ycol >= minncols ) {
+		Vect_delete(new->answer);
 		G_fatal_error(_("y column number > minimum last column number\n(incorrect field separator?)"));
-	    if ( zcol >= minncols )
+	    }
+	    if ( zcol >= minncols ) {
+		Vect_delete(new->answer);
 		G_fatal_error(_("z column number > minimum last column number\n(incorrect field separator?)"));
-	    if ( catcol >= minncols )
+	    }
+	    if ( catcol >= minncols ) {
+		Vect_delete(new->answer);
 		G_fatal_error(_("cat column number > minimum last column number\n(incorrect field separator?)"));
+	    }
 
-	    if ( coltype[xcol] == DB_C_TYPE_STRING ) G_fatal_error(_("x column is not of number type"));
-	    if ( coltype[ycol] == DB_C_TYPE_STRING ) G_fatal_error(_("y column is not of number type"));
-	    if ( zcol >= 0 && coltype[zcol] == DB_C_TYPE_STRING ) G_fatal_error(_("z column is not of number type"));
-	    if ( catcol >= 0 && coltype[catcol] == DB_C_TYPE_STRING ) G_fatal_error(_("cat column is not of number type"));
+	    if ( coltype[xcol] == DB_C_TYPE_STRING ) {
+		    Vect_delete(new->answer);
+		    G_fatal_error(_("x column is not of number type"));
+	    }
+	    if ( coltype[ycol] == DB_C_TYPE_STRING ) {
+		    Vect_delete(new->answer);
+		    G_fatal_error(_("y column is not of number type"));
+	    }
+	    if ( zcol >= 0 && coltype[zcol] == DB_C_TYPE_STRING ) {
+		    Vect_delete(new->answer);
+		    G_fatal_error(_("z column is not of number type"));
+	    }
+	    if ( catcol >= 0 && coltype[catcol] == DB_C_TYPE_STRING ) {
+		    Vect_delete(new->answer);
+		    G_fatal_error(_("cat column is not of number type"));
+	    }
 
 	    /* Create table */
 	    make_table = 0;
@@ -243,6 +263,7 @@ main (int argc, char *argv[])
 		Fi = Vect_default_field_info ( &Map, 1, NULL, GV_1TABLE );
 		driver = db_start_driver_open_database ( Fi->driver, Vect_subst_var(Fi->database,&Map) );
 		if ( driver == NULL ) {
+			/* Vect_delete(new->answer); ? */
 		    G_fatal_error(_("Cannot open database %s by driver %s"),
 			    Vect_subst_var(Fi->database,&Map), Fi->driver );
 		}
