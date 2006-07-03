@@ -263,7 +263,7 @@ main (int argc, char *argv[])
 		Fi = Vect_default_field_info ( &Map, 1, NULL, GV_1TABLE );
 		driver = db_start_driver_open_database ( Fi->driver, Vect_subst_var(Fi->database,&Map) );
 		if ( driver == NULL ) {
-			/* Vect_delete(new->answer); ? */
+		    Vect_delete(new->answer);
 		    G_fatal_error(_("Cannot open database %s by driver %s"),
 			    Vect_subst_var(Fi->database,&Map), Fi->driver );
 		}
@@ -282,8 +282,10 @@ main (int argc, char *argv[])
 		    if ( i > 0 && !columns_opt->answer ) {
 			db_append_string ( &sql, ", " );
 		    }
-		    if ( catcol == i && coltype[i] != DB_C_TYPE_INT ) 
+		    if ( catcol == i && coltype[i] != DB_C_TYPE_INT ) {
+			Vect_delete(new->answer); 
 			G_fatal_error(_("Category column is not of integer type"));
+		    }
 
 		    switch ( coltype[i] ) {
 			case DB_C_TYPE_INT:
@@ -328,11 +330,13 @@ main (int argc, char *argv[])
 		/* Create table */
 		G_debug ( 3, db_get_string ( &sql ) );
 		if (db_execute_immediate (driver, &sql) != DB_OK ) {
+		    Vect_delete(new->answer);
 		    G_fatal_error(_("Cannot create table: %s"), db_get_string ( &sql )  );
 		}
 
 		/* Grant */
 		if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK ) {
+		    Vect_delete(new->answer);
 		    G_fatal_error(_("Cannot grant privileges on table %s"), Fi->table );
 		}
 
@@ -343,12 +347,15 @@ main (int argc, char *argv[])
 		    dbColumn *column;
 		    
 		    db_set_string ( &sql, Fi->table );
-		    if(db_describe_table (driver, &sql, &table) != DB_OK)
+		    if(db_describe_table (driver, &sql, &table) != DB_OK) {
+			Vect_delete(new->answer);
 			G_fatal_error(_("Cannot describe table %s"), Fi->table);
+		    }
 				
 		    nc = db_get_table_number_of_columns(table);
 
 		    if ( (catcol >= 0 && nc != ncols) || (catcol < 0 && (nc-1) != ncols) ) {
+			Vect_delete(new->answer);
 			G_fatal_error(_("Number of columns defined (%d) does not match number "
 			    "of columns (%d) in input."), catcol < 0 ? nc-1 : nc, ncols);
 		    }
@@ -380,6 +387,7 @@ main (int argc, char *argv[])
 				break;
 			    case DB_C_TYPE_DOUBLE:
 				if ( ctype == DB_C_TYPE_INT ) {
+				    Vect_delete(new->answer);
 				    G_fatal_error(_("Column %d defined as integer has double values"), i+1);
 				} else if ( ctype == DB_C_TYPE_STRING ) {
 				    G_warning(_("Column %d defined as string has double values"), i+1);
@@ -387,11 +395,14 @@ main (int argc, char *argv[])
 				break;
 			    case DB_C_TYPE_STRING:
 				if ( ctype == DB_C_TYPE_INT ) {
+				    Vect_delete(new->answer);
 				    G_fatal_error(_("Column %d defined as integer has string values"), i+1);
 				} else if ( ctype == DB_C_TYPE_DOUBLE ) {
+				    Vect_delete(new->answer);
 				    G_fatal_error(_("Column %d defined as double has string values"), i+1);
 				}
 				if ( length < collen[i] ) {
+				    Vect_delete(new->answer);
 				    G_fatal_error(_("Length of column %d (%d) is less than maximum value "
 						    "length (%d)"), i+1, length, collen[i]);
 				}
