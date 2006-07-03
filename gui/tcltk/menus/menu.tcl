@@ -194,7 +194,7 @@ set descmenu [subst  {
  }
  {[G_msg "&Config"]} all options $tmenu {
 	{cascad {[G_msg "Region"]} {} "" $tmenu {			
-		{command {[G_msg "Display region settings"]} {} "g.region -p" {} -command {run_panel [list g.region -p] }}
+		{command {[G_msg "Display region settings"]} {} "g.region -p" {} -command {run_panel "g.region -p" }}
 		{command {[G_msg "Manage region"]} {} "g.region" {} -command {execute g.region }}
 		{command {[G_msg "Zoom to maximum extent of all displayed maps"]} {} "d.extend" {} -command {run_panel d.extend }}
 		{separator}
@@ -202,11 +202,11 @@ set descmenu [subst  {
 		{command {[G_msg "Manage 3D region"]} {} "g3.setregion" {} -command {execute g3.setregion }}
 	}}
 	{cascad {[G_msg "GRASS working environment"]} {} "" $tmenu {			
-		{command {[G_msg "Modify access by other users to current mapset"]} {} "g.access" {} -command {term g.access }}
+		{command {[G_msg "Modify access by other users to current mapset"]} {} "g.access" {} -command {execute g.access }}
 		{command {[G_msg "Modify mapset search path"]} {} "g.mapsets.tcl" {} -command {spawn $env(GISBASE)/etc/g.mapsets.tcl}}
 		{command {[G_msg "Change current working session to new mapset, location, or GISDBASE"]} {} "g.mapset" {} -command {execute g.mapset }}
-		{command {[G_msg "Show current GRASS environment settings"]} {} "g.gisenv" {} -command {execute g.gisenv }}
-		{command {[G_msg "Show current GRASS version"]} {} "g.version -c" {} -command {run_panel [list g.version -c] }}
+		{command {[G_msg "Show/set current GRASS environment settings"]} {} "g.gisenv" {} -command {execute g.gisenv }}
+		{command {[G_msg "Show current GRASS version"]} {} "g.version -c" {} -command {run_panel "g.version -c" }}
 	}}
 	{cascad {[G_msg "Manage projections"]} {} "" $tmenu {			
 		{command {[G_msg "Create/edit projection information for current location"]} {} "g.setproj" {} -command {term g.setproj }}
@@ -215,7 +215,7 @@ set descmenu [subst  {
 		{command {[G_msg "Convert coordinates from one projection to another"]} {} "m.proj" {} -command {execute m.proj }}
 	}}
 	{cascad {[G_msg "Text"]} {} "" $tmenu {			
-		{command {[G_msg "Select default text font"]} {} "d.font" {} -command {execute term d.font }}
+		{command {[G_msg "Select default text font"]} {} "d.font" {} -command {execute d.font }}
 		{command {[G_msg "Select default freetype text font"]} {} "" {} -command {execute d.font.freetype }}
 		{command {[G_msg "Show standard GRASS fonts"]} {} "show.fonts.sh" {} -command {execute show.fonts.sh }}
 	}}
@@ -305,7 +305,7 @@ set descmenu [subst  {
 		{command {[G_msg "Watershed basin creation"]} {} "r.water.outlet" {} -command {execute r.water.outlet }}
 	}}
 	{cascad {[G_msg "Landscape structure modeling"]} {} "" $tmenu {			
-		{command {[G_msg "Set up sampling and analysis framework"]} {} "r.le.setup" {} -command {guarantee_xmon; term r.le.setup }}
+		{command {[G_msg "Set up sampling and analysis framework"]} {} "r.le.setup" {} -command {term r.le.setup }}
 		{separator}
 		{command {[G_msg "Analyze landscape characteristics"]} {} "r.le.pixel" {} -command {execute r.le.pixel }}
 		{command {[G_msg "Analyze landscape patch characteristics"]} {} " r.le.patch" {} -command {execute r.le.patch }}
@@ -319,7 +319,7 @@ set descmenu [subst  {
 	{separator}
 	{cascad {[G_msg "Change category values and labels"]} {} "" $tmenu {			
 		{command {[G_msg "Edit category values of individual cells for displayed raster map"]} {} "d.rast.edit" {} \
-		-command {guarnatee_xmon; term d.rast.edit }}
+		-command {guarantee_xmon; term d.rast.edit }}
 		{separator}
 		{command {[G_msg "Reclassify categories for areas of specified sizes"]} {} "r.reclass.area" {} -command {execute r.reclass.area }}
 		{command {[G_msg "Reclassify categories using rules"]} {} "r.reclass.rules" {} -command {execute $env(GISBASE)/etc/gm/script/r.reclass.rules }}
@@ -500,7 +500,7 @@ set descmenu [subst  {
 		{command {[G_msg "Maximum likelyhood classification (MLC)"]} {} "i.maxlik" {} -command {execute i.maxlik }}
 		{command {[G_msg "Sequential maximum a posteriory classification (SMAP)"]} {} "i.smap" {} -command {execute i.smap }}
 		{separator}
-		{command {[G_msg "Interactive input for supervised classification"]} {} "i.class" {} -command {guarantee_xmon; term i.class }}
+		{command {[G_msg "Interactive input for supervised classification"]} {} "i.class" {} -command {term i.class }}
 		{command {[G_msg "Non-interactive input for supervised classification (MLC)"]} {} "i.gensig" {} -command {execute i.gensig }}
 		{command {[G_msg "Non-interactive input for supervised classification (SMAP)"]} {} "i.gensigset" {} -command {execute i.gensigset }}
 	}}
