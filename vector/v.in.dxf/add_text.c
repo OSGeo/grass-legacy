@@ -14,7 +14,6 @@ int add_text(struct dxf_file *dxf, struct Map_info *Map)
     char label[DXF_BUF_SIZE];	/* read in from dxf file */
     int label_len = 0;
 
-    /*  initialize defaults */
     strcpy(layer, UNIDENTIFIED_LAYER);
 
     zpnts[0] = 0.0;
