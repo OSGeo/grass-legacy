@@ -422,12 +422,6 @@ newpath
  $HALFFRAME_2  $HALFFRAME lineto                  %% (2 * HALF-FRAME) HALF-FRAME lineto
 stroke
 
-$AXESFONTSIZE /Times-Roman choose-font            %% AXES-FONTSIZE /Times-Roman choose-font
-(N) $NORTHXSHIFT $NORTHYSHIFT $NORTHJUSTIFICATION just-string         %% NORTH-X-SHIFT NORTH-Y-SHIFT NORTH-JUSTIFICATION just-string
-(E) $EASTXSHIFT $EASTYSHIFT $EASTJUSTIFICATION just-string         %% EAST-X-SHIFT EAST-Y-SHIFT EAST-JUSTIFICATION just-string
-(S) $SOUTHXSHIFT $SOUTHYSHIFT $SOUTHJUSTIFICATION just-string           %% SOUTH-X-SHIFT SOUTH-Y-SHIFT SOUTH-JUSTIFICATION just-string
-(W) $WESTXSHIFT $WESTYSHIFT $WESTJUSTIFICATION just-string           %% WEST-X-SHIFT WEST-Y-SHIFT WEST-JUSTIFICATION just-string
-
 %%
 %% drawing outer circle
 %%
@@ -451,6 +445,19 @@ cat ${TMP}_outercircle_lineto | awk '{printf "%.2f %.2f lineto\n",$1*$3+$4, $2*$
 rm -f ${TMP}_outercircle_lineto
 
 echo "stroke
+
+%%
+%% axis titles
+%%
+
+col0                                    %% colAXES-COLOR
+$AXESFONTSIZE /Times-Roman choose-font            %% AXES-FONTSIZE /Times-Roman choose-font
+(N) $NORTHXSHIFT $NORTHYSHIFT $NORTHJUSTIFICATION just-string         %% NORTH-X-SHIFT NORTH-Y-SHIFT NORTH-JUSTIFICATION just-string
+(E) $EASTXSHIFT $EASTYSHIFT $EASTJUSTIFICATION just-string         %% EAST-X-SHIFT EAST-Y-SHIFT EAST-JUSTIFICATION just-string
+(S) $SOUTHXSHIFT $SOUTHYSHIFT $SOUTHJUSTIFICATION just-string           %% SOUTH-X-SHIFT SOUTH-Y-SHIFT SOUTH-JUSTIFICATION just-string
+(W) $WESTXSHIFT $WESTYSHIFT $WESTJUSTIFICATION just-string           %% WEST-X-SHIFT WEST-Y-SHIFT WEST-JUSTIFICATION just-string
+$DIAGRAMFONTSIZE /Times-Roman choose-font            %% DIAGRAM-FONTSIZE /Times-Roman choose-font
+
 
 %%
 %% drawing real data diagram
