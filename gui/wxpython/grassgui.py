@@ -209,7 +209,7 @@ class mainFrame(wxFrame):
             if grass_task['params'][p_count]['required'] == 'no':
                 title = "[optional] " + title
             if grass_task['params'][p_count]['multiple'] == 'yes':
-                title = "[mutiple] " + title
+                title = "[multiple] " + title
             grass_task['params'][p_count]['value'] = grass_task['params'][p_count]['default'] 
             if (len(grass_task['params'][p_count]['values']) > 0):
                 wxStaticText(self.panel, -1, title + ':',
