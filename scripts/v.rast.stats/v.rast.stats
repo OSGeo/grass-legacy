@@ -204,15 +204,15 @@ for i in `cat $TMP.cats` ; do
  eval `r.univar -g $RASTER | sed 's+nan+NULL+g'`
 
  if [ $DBFDRIVER -eq 1 ] ; then
-  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_n| cut -b1-10`"        value=$n        where="cat=$i"
-  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_min| cut -b1-10`"      value=$min      where="cat=$i"
-  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_max| cut -b1-10`"      value=$max      where="cat=$i"
-  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_range| cut -b1-10`"    value=$range    where="cat=$i"
-  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_mean| cut -b1-10`"     value=$mean     where="cat=$i"
-  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_stddev| cut -b1-10`"   value=$stddev   where="cat=$i"
-  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_variance| cut -b1-10`" value=$variance where="cat=$i"
-  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_cf_var| cut -b1-10`"   value=$coeff_var where="cat=$i"
-  v.db.update map=$VECTOR col="`echo ${COLPREFIX}_sum| cut -b1-10`"      value=$sum      where="cat=$i"
+  echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_n| cut -b1-10`=$n     WHERE cat=$i;" > $SQLTMP
+  echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_min| cut -b1-10`=$min WHERE cat=$i;" >> $SQLTMP
+  echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_max| cut -b1-10`=$max WHERE cat=$i;" >> $SQLTMP
+  echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_range| cut -b1-10`=$range WHERE cat=$i;" >> $SQLTMP
+  echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_mean| cut -b1-10`=$mean   WHERE cat=$i;" >> $SQLTMP
+  echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_stddev| cut -b1-10`=$stddev     WHERE cat=$i;" >> $SQLTMP
+  echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_variance| cut -b1-10`=$variance WHERE cat=$i;" >> $SQLTMP
+  echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_cf_var| cut -b1-10`=$coeff_var  WHERE cat=$i;" >> $SQLTMP
+  echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_sum| cut -b1-10`=$sum     WHERE cat=$i;" >> $SQLTMP
  else
   echo "UPDATE $VECTOR SET ${COLPREFIX}_n=$n     WHERE cat=$i;" > $SQLTMP
   echo "UPDATE $VECTOR SET ${COLPREFIX}_min=$min WHERE cat=$i;" >> $SQLTMP
@@ -223,10 +223,9 @@ for i in `cat $TMP.cats` ; do
   echo "UPDATE $VECTOR SET ${COLPREFIX}_variance=$variance WHERE cat=$i;" >> $SQLTMP
   echo "UPDATE $VECTOR SET ${COLPREFIX}_cf_var=$coeff_var  WHERE cat=$i;" >> $SQLTMP
   echo "UPDATE $VECTOR SET ${COLPREFIX}_sum=$sum     WHERE cat=$i;" >> $SQLTMP
-
-  # this should be fast:
-  cat $SQLTMP | db.execute database=$DB_DATABASE driver=$DB_SQLDRIVER
  fi
+
+ cat $SQLTMP | db.execute database=$DB_DATABASE driver=$DB_SQLDRIVER
 
  CURRNUM=`expr $CURRNUM + 1`
 done
