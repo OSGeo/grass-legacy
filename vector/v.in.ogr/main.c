@@ -40,7 +40,7 @@ main (int argc, char *argv[])
     int    ncols, type;
     struct GModule *module;
     double min_area, snap;
-    struct Option *dsn_opt, *out_opt, *layer_opt, *spat_opt, *min_area_opt;
+    struct Option *dsn_opt, *out_opt, *layer_opt, *spat_opt, *where_opt, *min_area_opt;
     struct Option *snap_opt, *type_opt, *outloc_opt, *cnames_opt;
     struct Flag *list_flag, *no_clean_flag, *z_flag, *notab_flag;
     struct Flag *over_flag, *extend_flag, *formats_flag;
@@ -125,6 +125,8 @@ main (int argc, char *argv[])
     spat_opt->multiple = YES;
     spat_opt->required = NO;
     spat_opt->description = _("Import subregion only (xmin,ymin,xmax,ymax  - usually W,S,E,N)");
+
+    where_opt = G_define_standard_option(G_OPT_WHERE);
 
     min_area_opt = G_define_option();
     min_area_opt->key = "min_area";
@@ -345,6 +347,12 @@ main (int argc, char *argv[])
         OGR_G_AddGeometryDirectly(poSpatialFilter, Ogr_oRing);
 
         OGR_L_SetSpatialFilter(Ogr_layer, poSpatialFilter );
+     }
+
+    if ( where_opt->answer ) {
+
+        /* select by attribute */	
+        OGR_L_SetAttributeFilter (Ogr_layer, where_opt->answer );
      }
 
     /* fetch boundaries */
