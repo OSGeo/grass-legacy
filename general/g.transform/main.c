@@ -1,3 +1,17 @@
+/****************************************************************************
+ *
+ * MODULE:       g.transform
+ * AUTHOR(S):    Brian J. Buckley<br>
+ *               Glynn Clements
+ * PURPOSE:      Utility to compute transformation based upon GCPs and 
+ *               output error measurements
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
