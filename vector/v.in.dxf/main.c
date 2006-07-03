@@ -179,10 +179,8 @@ int main(int argc, char *argv[])
 	    }
 	}
 	else {
-	    G_warning(_
-		      ("Failed to import DXF file! The created vector file will be deleted."));
-	    fprintf(stderr, "REMOVE [%s]\n", output);
 	    Vect_delete(output);
+	    G_fatal_error(_("Failed to import DXF file!"));
 	}
 
 	G_free(output);
