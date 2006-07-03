@@ -676,7 +676,7 @@ csh|tcsh)
 
     echo "set prompt = '\\" >> "$cshrc"
     echo "Mapset <${MAPSET}> in Location <${LOCATION_NAME}> \\" >> "$cshrc"
-    echo "GRASS GRASS_VERSION_NUMBER  ($LOCATION_NAME) > '" >> "$cshrc"
+    echo "GRASS GRASS_VERSION_NUMBER > '" >> "$cshrc"
     echo 'set BOGUS=``;unset BOGUS' >> "$cshrc"
 
     if [ -r "$USERHOME/.grass.cshrc" ]
