@@ -64,13 +64,14 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs,
     struct Cell_head window;
     double northing=.0;
     double easting=.0;
-    char *coorbuf, *tmp_token;
+    char *coorbuf, *tmp_token, *sav_buf;
 
     buflen = 1000;
     buf = (char *) G_malloc ( buflen );
     coorbuf=(char *) G_malloc(256);
     tmp_token=(char *) G_malloc(256);
-
+    sav_buf = NULL;
+    
     /* fetch projection for LatLong test */
     G_get_window(&window);
 
@@ -121,7 +122,11 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs,
 	for ( i = 0; i < ntokens; i++ ) {
 	    if ((G_projection() == PROJECTION_LL)){
 	     if (i==xcol || i==ycol ){
-	        /* check if coordinates are DMS or decimal or not latlong at all */
+          if(i==0){ /* Save position of original internal token buffer */
+            /* Prevent memory leaks */
+            sav_buf=tokens[0];
+          }
+        /* check if coordinates are DMS or decimal or not latlong at all */
 	        sprintf(coorbuf,"%s", tokens[i]);
 	        G_debug (4, "token: %s", coorbuf);
 	        if (G_scan_northing ( coorbuf, &northing, window.proj) ){
@@ -141,6 +146,12 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs,
 		 }
                } /* G_scan_northing else */
 	     }
+	     if(i==ntokens-1 && sav_buf != NULL){ 
+         /* Restore original token buffer so free_tokens works */
+         /* Only do this if tokens[0] was re-assigned */
+         tokens[0]=sav_buf;
+         sav_buf = NULL;
+       }         
 	    } /* PROJECTION_LL */
 	    G_debug (4, "row %d col %d: '%s' is_int = %d is_double = %d", 
 		         row, i, tokens[i], is_int(tokens[i]), is_double(tokens[i]) );
@@ -156,7 +167,7 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs,
 	    len = strlen (tokens[i]);
 	    if ( len > collen[i] ) collen[i] = len;
 	}
-
+	G_free_tokens(tokens);
 	row++;
     }
 
@@ -166,9 +177,9 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs,
     *column_type = coltype;
     *column_length = collen;
 
-    G_free_tokens(tokens);
+    G_free(buf);
     G_free(coorbuf);
-    /* G_free(tmp_token); ?? */ 
+    G_free(tmp_token);
 
     return 0;
 }
