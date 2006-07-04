@@ -138,7 +138,8 @@ int describe_table( sqlite3_stmt *statement,
 	    continue;
 	}
 
-        fsize = -1; /* We should probably set something */
+        fsize = 99999; /* sqlite doesn't care, it must be long enough to
+                          satisfy tests in GRASS */
 
 	column = db_get_table_column(*table, nkcols);
 
