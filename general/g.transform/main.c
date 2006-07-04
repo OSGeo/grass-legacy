@@ -38,6 +38,12 @@ struct Stats
 
 static char *name;
 static int order;
+static int summary;
+static char **columns;
+static int need_fwd;
+static int need_rev;
+static int need_fd;
+static int need_rd;
 
 static struct Control_Points points;
 
@@ -55,23 +61,25 @@ static void update_max(struct Max *m, int n, double k)
 	}
 }
 
-static void update_stats(struct Stats *st, int n, double dx, double dy)
+static void update_stats(struct Stats *st, int n, double dx, double dy, double dg, double d2)
 {
-	double d2 = dx*dx + dy*dy;
-	double dg = sqrt(d2);
-
-	st->sum2 += d2;
-
 	update_max(&st->x, n, dx);
 	update_max(&st->y, n, dy);
 	update_max(&st->g, n, dg);
+	st->sum2 += d2;
+}
+
+static void diagonal(double *dg, double *d2, double dx, double dy)
+{
+	*d2 = dx*dx + dy*dy;
+	*dg = sqrt(*d2);
 }
 
 static void compute_transformation(void)
 {
 	static const int order_pnts[3] = {3, 6, 10};
 	double E12[10], N12[10], E21[10], N21[10];
-	int n;
+	int n, i;
 
 	equation_stat = CRS_compute_georef_equations(&points, E12, N12, E21, N21, order);
 
@@ -86,34 +94,65 @@ static void compute_transformation(void)
 	for (n = 0; n < points.count; n++)
 	{
 		double e1, n1, e2, n2;
-		double dx, dy;
+		double fx, fy, fd, fd2;
+		double rx, ry, rd, rd2;
 
 		if (points.status[n] <= 0)
 			continue;
 
 		count++;
 
-		CRS_georef(points.e2[n], points.n2[n], &e1, &n1, E21, N21, order);
-		CRS_georef(points.e1[n], points.n1[n], &e2, &n2, E12, N12, order);
+		if (need_fwd)
+		{
+			CRS_georef(points.e1[n], points.n1[n], &e2, &n2, E12, N12, order);
 
-		/* forward */
+			fx = fabs(e2 - points.e2[n]);
+			fy = fabs(n2 - points.n2[n]);
 
-		dx = fabs(e1 - points.e1[n]);
-		dy = fabs(n1 - points.n1[n]);
+			if (need_fd)
+				diagonal(&fd, &fd2, fx, fy);
 
-		update_stats(&fwd, n, dx, dy);
+			if (summary)
+				update_stats(&fwd, n, fx, fy, fd, fd2);
+		}
 
-		/* reverse */
+		if (need_rev)
+		{
+			CRS_georef(points.e2[n], points.n2[n], &e1, &n1, E21, N21, order);
 
-		dx = fabs(e2 - points.e2[n]);
-		dy = fabs(n2 - points.n2[n]);
+			rx = fabs(e1 - points.e1[n]);
+			ry = fabs(n1 - points.n1[n]);
 
-		update_stats(&rev, n, dx, dy);
+			if (need_rd)
+				diagonal(&rd, &rd2, rx, ry);
+
+			if (summary)
+				update_stats(&rev, n, rx, ry, rd, rd2);
+		}
+
+		if (!columns)
+			continue;
+
+		for (i = 0; ; i++)
+		{
+			const char *col = columns[i];
+
+			if (!col)
+				break;
+
+			if (strcmp("idx", col) == 0)	printf("%d ", n);
+			if (strcmp("src", col) == 0)	printf("%f %f  ", points.e1[n], points.n1[n]);
+			if (strcmp("dst", col) == 0)	printf("%f %f  ", points.e2[n], points.n2[n]);
+			if (strcmp("fwd", col) == 0)	printf("%f %f  ", e2, n2);
+			if (strcmp("rev", col) == 0)	printf("%f %f  ", e1, n1);
+			if (strcmp("fxy", col) == 0)	printf("%f %f  ", fx, fy);
+			if (strcmp("rxy", col) == 0)	printf("%f %f  ", rx, ry);
+			if (strcmp("fd",  col) == 0)	printf("%f  ", fd);
+			if (strcmp("rd",  col) == 0)	printf("%f  ", rd);
+		}
 	}
 
-	/* compute overall RMS error */
-
-	if (count > 0)
+	if (summary && count > 0)
 	{
 		fwd.rms = sqrt(fwd.sum2/count);
 		rev.rms = sqrt(rev.sum2/count);
@@ -144,7 +183,7 @@ static void analyze(void)
 		G_fatal_error("Parameter error");
 	else if (equation_stat == 0)
 		G_fatal_error("No active control points");
-	else
+	else if (summary)
 	{
 		printf("Number of active points: %d\n", count);
 		do_stats("Forward", &fwd);
@@ -152,9 +191,39 @@ static void analyze(void)
 	}
 }
 
+static void parse_format(void)
+{
+	int i;
+
+	if (summary)
+	{
+		need_fwd = need_rev = need_fd = need_rd = 1;
+		return;
+	}
+
+	if (!columns)
+		return;
+
+	for (i = 0; ; i++)
+	{
+		const char *col = columns[i];
+
+		if (!col)
+			break;
+
+		if (strcmp("fwd", col) == 0)	need_fwd = 1;
+		if (strcmp("fxy", col) == 0)	need_fwd = 1;
+		if (strcmp("fd",  col) == 0)	need_fwd = need_fd = 1;
+		if (strcmp("rev", col) == 0)	need_rev = 1;
+		if (strcmp("rxy", col) == 0)	need_rev = 1;
+		if (strcmp("rd",  col) == 0)	need_rev = need_rd = 1;
+	}
+}
+
 int main(int argc, char **argv)
 {
-	struct Option *grp, *val;
+	struct Option *grp, *val, *fmt;
+	struct Flag *sum;
 	struct GModule *module;
 
 	G_gisinit(argv[0]);
@@ -178,17 +247,32 @@ int main(int argc, char **argv)
 	val->options         = "1-3";
 	val->description     = _("Rectification polynomial order");
 
+	fmt = G_define_option();
+	fmt->key             = "format";
+	fmt->type            = TYPE_STRING;
+	fmt->required        = NO;
+	fmt->multiple        = YES;
+	fmt->options         = "idx,src,dst,fwd,rev,fxy,rxy,fd,rd";
+	fmt->answer          = "fd,rd";
+	fmt->description     = _("Output format");
+
+	sum = G_define_flag();
+	sum->key = 's';
+	sum->description     = _("Display summary information");
+
 	if (G_parser (argc, argv))
 		exit (-1);
 
 	name = grp->answer;
 	order = atoi(val->answer);
+	summary = !!sum->answer;
+	columns = fmt->answers;
 
 	I_get_control_points(name, &points);
 
-	compute_transformation();
+	parse_format();
 
-	analyze();
+	compute_transformation();
 
 	I_put_control_points(name, &points);
 
