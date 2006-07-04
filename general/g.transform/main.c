@@ -15,6 +15,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 
 #include <grass/gis.h>
@@ -261,7 +262,7 @@ int main(int argc, char **argv)
 	sum->description     = _("Display summary information");
 
 	if (G_parser (argc, argv))
-		exit (-1);
+		exit (EXIT_FAILURE);
 
 	name = grp->answer;
 	order = atoi(val->answer);
