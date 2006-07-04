@@ -54,4 +54,4 @@ headers:
 clean: cleansubdirs
 
 #doxygen:
-DOXNAME=grasslibs
+DOXNAME=grass
