@@ -463,9 +463,9 @@ int INPUT(void)
     cell2 = G_allocate_f_raster_buf();
     cell3 = G_allocate_f_raster_buf();
 
-    z = (float **)G_malloc (sizeof(float) * (m));
-    o = (float **)G_malloc (sizeof(float) * (m));
-    s = (float **)G_malloc (sizeof(float) * (m));
+    z = (float **)G_malloc (sizeof(float *) * (m));
+    o = (float **)G_malloc (sizeof(float *) * (m));
+    s = (float **)G_malloc (sizeof(float *) * (m));
 
     for (l = 0; l < m; l++) {
 	z[l] = (float *)G_malloc (sizeof(float) * (n));
@@ -489,7 +489,7 @@ int INPUT(void)
 
     if (linkein != NULL) {
 	cell4 = G_allocate_f_raster_buf();
-	li = (float **)G_malloc (sizeof(float) * (m));
+	li = (float **)G_malloc (sizeof(float *) * (m));
 	for (l = 0; l < m; l++)
 	    li[l] = (float *)G_malloc (sizeof(float) * (n));
 
@@ -501,7 +501,7 @@ int INPUT(void)
 
     if (albedo != NULL) {
 	cell5 = G_allocate_f_raster_buf();
-	a = (float **)G_malloc (sizeof(float) * (m));
+	a = (float **)G_malloc (sizeof(float *) * (m));
 	for (l = 0; l < m; l++)
 	    a[l] = (float *)G_malloc (sizeof(float) * (n));
 
@@ -513,7 +513,7 @@ int INPUT(void)
 
     if (latin != NULL) {
 	cell6 = G_allocate_f_raster_buf();
-	la = (float **)G_malloc (sizeof(float) * (m));
+	la = (float **)G_malloc (sizeof(float *) * (m));
 	for (l = 0; l < m; l++)
 	    la[l] = (float *)G_malloc (sizeof(float) * (n));
 
@@ -525,7 +525,7 @@ int INPUT(void)
 
     if (coefbh != NULL) {
 	rast1 = G_allocate_f_raster_buf();
-	cbhr = (float **)G_malloc (sizeof(float) * (m));
+	cbhr = (float **)G_malloc (sizeof(float *) * (m));
 	for (l = 0; l < m; l++)
 	    cbhr[l] = (float *)G_malloc (sizeof(float) * (n));
 
@@ -537,7 +537,7 @@ int INPUT(void)
 
     if (coefdh != NULL) {
 	rast2 = G_allocate_f_raster_buf();
-	cdhr = (float **)G_malloc (sizeof(float) * (m));
+	cdhr = (float **)G_malloc (sizeof(float *) * (m));
 	for (l = 0; l < m; l++)
 	    cdhr[l] = (float *)G_malloc (sizeof(float) * (n));
 
@@ -1178,7 +1178,7 @@ void calculate(void)
     double lum, q1;
 
     if (incidout != NULL) {
-	lumcl = (float **)G_malloc (sizeof(float) * (m));
+	lumcl = (float **)G_malloc (sizeof(float *) * (m));
 	for (l = 0; l < m; l++) {
 	    lumcl[l] = (float *)G_malloc (sizeof(float) * (n));
 	}
@@ -1189,7 +1189,7 @@ void calculate(void)
     }
 
     if (beam_rad != NULL) {
-	beam = (float **)G_malloc (sizeof(float) * (m));
+	beam = (float **)G_malloc (sizeof(float *) * (m));
 	for (l = 0; l < m; l++) {
 	    beam[l] = (float *)G_malloc (sizeof(float) * (n));
 	}
@@ -1201,7 +1201,7 @@ void calculate(void)
     }
 
     if (insol_time != NULL) {
-	insol = (float **)G_malloc (sizeof(float) * (m));
+	insol = (float **)G_malloc (sizeof(float *) * (m));
 	for (l = 0; l < m; l++) {
 	    insol[l] = (float *)G_malloc (sizeof(float) * (n));
 	}
@@ -1213,7 +1213,7 @@ void calculate(void)
     }
 
     if (diff_rad != NULL) {
-	diff = (float **)G_malloc (sizeof(float) * (m));
+	diff = (float **)G_malloc (sizeof(float *) * (m));
 	for (l = 0; l < m; l++) {
 	    diff[l] = (float *)G_malloc (sizeof(float) * (n));
 	}
@@ -1225,7 +1225,7 @@ void calculate(void)
     }
 
     if (refl_rad != NULL) {
-	refl = (float **)G_malloc (sizeof(float) * (m));
+	refl = (float **)G_malloc (sizeof(float *) * (m));
 	for (l = 0; l < m; l++) {
 	    refl[l] = (float *)G_malloc (sizeof(float) * (n));
 	}
