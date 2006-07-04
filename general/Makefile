@@ -15,6 +15,7 @@ SUBDIRS = \
 	g.region \
 	g.setproj \
 	g.tempfile \
+	g.transform \
 	g.version \
 	manage
 
