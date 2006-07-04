@@ -73,12 +73,25 @@ Display all vector points except for LAMAR valley and <i>extensive trapping</i> 
 d.vect trapping_sites_points fcol=black icon=basic/diamond col=white size=13 \
     where="valley <> 'LAMAR' OR (valley = 'LAMAR' AND description = 'extensive trapping')"
 </pre></div>
+
 <p>
 Select all attributes from table where str1 column values are not 'No Name':
 <div class="code"><pre>
 echo "SELECT * FROM archsites WHERE str1 &lt;&gt; 'No Name'" | db.select
 </pre></div>
 <p>
+
+
+<p>Example of subquery expressions (does not work for DBF driver):
+<div class="code"><pre>
+v.db.select mysites where="id IN ('P04', 'P05')"
+</pre></div>
+
+
+<p>Example of pattern matching (does not work for DBF driver):
+<div class="code"><pre>
+v.db.select mysites where="id LIKE 'P__'"
+</pre></div>
 
 <p>Example of null handling:
 <div class="code"><pre>
@@ -91,7 +104,7 @@ v.db.update map=roads col=nulltest value=2 where="cat &lt;= 2"
 
 <p>Examples of complex expressions in updates (using v.db.* modules):
 <div class="code"><pre>
-v.db.addcol map=roads col="exprtest double"
+v.db.addcol map=roads col="exprtest double precision"
 v.db.update map=roads col=exprtest value=cat/nulltest
 v.db.update map=roads col=exprtest value=cat/nulltest+cat where=cat=1
 </pre></div>
