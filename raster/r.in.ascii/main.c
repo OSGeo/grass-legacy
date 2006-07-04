@@ -2,13 +2,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
-#include "local_proto.h"
 #include <grass/glocale.h>
+#include "local_proto.h"
+
 
 FILE *Tmp_fd = NULL;
 char *Tmp_file = NULL;
 
 const float GS_BLANK=1.70141E+038;
+
+static int file_cpy (FILE *, FILE *);
+
 
 int 
 main (int argc, char *argv[])
@@ -88,7 +92,6 @@ main (int argc, char *argv[])
 	flag.d->description = 
 	     _("double floating point values are imported");
 
-
 	flag.s = G_define_flag();
 	flag.s->key = 's';
 	flag.s->description =
@@ -96,18 +99,16 @@ main (int argc, char *argv[])
 
 	if (G_parser(argc,argv))
 		exit(EXIT_FAILURE);
+
 	input = parm.input->answer;
 	output = parm.output->answer;
 
 	temp = G_tempfile();
 	ft=fopen(temp,"w+");
 	if(ft==NULL)
-	{
-		perror("temporary file");
-		exit(-1);
-	}
+            G_fatal_error(_("Unable to open temporary file"));
 
-	if(title = parm.title->answer)
+	if ((title = parm.title->answer))
 		G_strip (title);
         if(strcmp(parm.mult->answer, "1.0 or read from header")==0)
 	    G_set_d_null_value(&mult, 1);
@@ -134,10 +135,10 @@ main (int argc, char *argv[])
 	{
 		Tmp_file = G_tempfile();
 		if (NULL == (Tmp_fd = fopen (Tmp_file, "w+")))
-			perror (Tmp_file), exit(1);
+                    G_fatal_error(_("Unable to open temp file"));
 		unlink (Tmp_file);
 		if (0 > file_cpy(stdin, Tmp_fd))
-			exit(1);
+                    G_fatal_error(_("Unable to read input from stdin"));
 		fd = Tmp_fd;
 	}
 	else
@@ -145,9 +146,9 @@ main (int argc, char *argv[])
 
 	if (fd == NULL)
 	{
-		perror(input);
+                G_warning(_("Unable to read input from '%s'"), input);
 		G_usage();
-		exit(-1) ;
+		exit(EXIT_FAILURE);
 	}
 
 	direction=1;
@@ -230,8 +231,9 @@ main (int argc, char *argv[])
 	}
 	else
 	{
-		fseek(ft,0,SEEK_SET);
+		fseek(ft, 0L, SEEK_SET);
 	}
+
 	for (row=0; row< nrows; row+=1)
 	{
 		fread(rast, G_raster_size(data_type),ncols,ft);
@@ -244,14 +246,16 @@ main (int argc, char *argv[])
 	G_close_cell (cf);
 	if (title)
 		G_put_cell_title (output, title);
-	exit (0);
+
+        G_done_msg("");
+        exit(EXIT_SUCCESS);
 }
 
-int 
-file_cpy (FILE *from, FILE *to)
+
+static int file_cpy (FILE *from, FILE *to)
 {
 	char buf[BUFSIZ];
-	long size;
+	size_t size;
 	int  written = 0;
 
 	while (1)
@@ -262,16 +266,18 @@ file_cpy (FILE *from, FILE *to)
 			if (written)
 			{
 				fflush (to);
-				fseek (to, 0l, 0);
+				fseek (to, 0L, SEEK_SET);
 			}
 			return (0);
 		}
 		if (!fwrite (buf, 1, size, to))
 		{
-			perror ("file copy");
+                        G_warning(_("Unable to write to file"));
 			return (-1);
 		}
 		written = 1;
 	}
+
 	/* NOTREACHED */
+        return -1;
 }

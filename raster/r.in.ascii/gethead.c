@@ -2,16 +2,15 @@
 #include <string.h>
 #include <math.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
+
 
 #define DOT 	   "."		/* for determining data type -tw */
 #define INT	   "int"
 #define FLOAT      "float"
 #define DOUBLE     "double"
 #define TMPBUFSIZE 8192
-/* rsb fix 
-#define SEEK_SET   0
-#define SEEK_CUR   1 */
 
 static int error(char *);
 static int missing(int,char *);
@@ -19,6 +18,7 @@ static int extract(int,char *,char *,void *,int,int (*)());
 static int scan_int(char *,int *,int);
 
 const char gs_ascii_flag[5]={"DSAA"};
+
 
 int getgrdhead (
 FILE *fd,
@@ -35,35 +35,35 @@ struct Cell_head *cellhd)
 	fgets(grd_flag,sizeof(grd_flag),fd);
 	if(strncmp(gs_ascii_flag,grd_flag,strlen(gs_ascii_flag)))
 	{
-		fprintf(stderr,"Input file is not a Surfer ascii grid file.\n");
+		G_warning(_("input file is not a Surfer ascii grid file"));
 		return 0;
 	}
 
 /* read the row and column dimensions */
 	if(fscanf(fd,"%d %d \n",&nc,&nr) != 2 )
 	{
-		fprintf(stderr,"Error reading the column and row dimension from the Surfer grid file\n");
+		G_warning(_("error reading the column and row dimension from the Surfer grid file"));
 		return 0;
 	}
 
 /* read the range of x values */
 	if(fscanf(fd,"%f %f \n", &xmin, &xmax) != 2 )
 	{
-		fprintf(stderr,"Error reading the X range from the Surfer grid file\n");
+		G_warning(_("error reading the X range from the Surfer grid file"));
 		return 0;
 	}
 
 /* read the range of y values */
 	if(fscanf(fd,"%f %f \n", &ymin, &ymax) != 2 )
 	{
-		fprintf(stderr,"Error reading the Y range from the Surfer grid file\n");
+		G_warning(_("error reading the Y range from the Surfer grid file"));
 		return 0;
 	}
 
 /* read the range of z values (not used) */
 	if(fscanf(fd,"%f %f \n", &zmin, &zmax) != 2 )
 	{
-		fprintf(stderr,"Error reading the Z range from the Surfer grid file\n");
+		G_warning(_("error reading the Z range from the Surfer grid file"));
 		return 0;
 	}
 
@@ -94,7 +94,6 @@ RASTER_MAP_TYPE *d_type,
 DCELL *mult,
 char **nval)
 {
-	int ok ;		/* ??? -tw */
 	int n,s,e,w,r,c;
 	char label[100], value[100];
 	char buf[1024];
@@ -113,8 +112,10 @@ char **nval)
         while(1)
 	{
 /* rsb fix */
-	  if(fgetpos(fd, &p) != 0) G_fatal_error("File position error");
-	  if (!G_getl2(buf,sizeof buf, fd)) break;
+	  if (fgetpos(fd, &p) != 0)
+              G_fatal_error(_("error getting file position"));
+
+	  if (!G_getl2(buf, sizeof(buf), fd)) break;
 
 	  len = strlen(buf);
 
@@ -125,43 +126,37 @@ char **nval)
 
 	  if (strcmp (label, "north") == 0)
 	  {
-		if(!extract (n++, label, value, &cellhd->north, cellhd->proj,
-			    G_scan_northing)) ok = 0;
+		extract (n++, label, value, &cellhd->north, cellhd->proj, G_scan_northing);
 		continue;
 	  }
 
 	  if (strcmp (label, "south") == 0)
 	  {
-		if(!extract (s++, label, value, &cellhd->south, cellhd->proj,
-			    G_scan_northing)) ok = 0;
+		extract (s++, label, value, &cellhd->south, cellhd->proj, G_scan_northing);
 		continue;
 	  }
 
 	  if (strcmp (label, "east") == 0)
 	  {
-		if(!extract (e++, label, value, &cellhd->east, cellhd->proj,
-			    G_scan_easting)) ok = 0;
+		extract (e++, label, value, &cellhd->east, cellhd->proj, G_scan_easting);
 		continue;
 	  }
 
 	  if (strcmp (label, "west") == 0)
 	  {
-		if(!extract (w++, label, value, &cellhd->west, cellhd->proj,
-			    G_scan_easting)) ok = 0;
+		extract (w++, label, value, &cellhd->west, cellhd->proj, G_scan_easting);
 		continue;
 	  }
 
 	  if (strcmp (label, "rows") == 0)
 	  {
-		if(!extract (r++, label, value, &cellhd->rows, cellhd->proj,
-			    scan_int)) ok = 0;
+		extract (r++, label, value, &cellhd->rows, cellhd->proj, scan_int);
 		continue;
 	  }
 
 	  if (strcmp (label, "cols") == 0)
 	  {
-		if(!extract (c++, label, value, &cellhd->cols, cellhd->proj,
-			    scan_int)) ok = 0;
+		extract (c++, label, value, &cellhd->cols, cellhd->proj, scan_int);
 		continue;
 	  }
   /* try to read optional header fields */
@@ -171,21 +166,18 @@ char **nval)
 	    if (*d_type < 0) { /* if data type not set on command line */
 		if (!strncmp(value, INT, strlen(INT))) 
 			       *d_type = CELL_TYPE;
-
 		else if (!strncmp(value, FLOAT, strlen(FLOAT))) 
 			       *d_type = FCELL_TYPE; 
-		
 		else if (!strncmp(value, DOUBLE, strlen(DOUBLE))) 
 			       *d_type = DCELL_TYPE;
-
 		else 
 		{
-		     G_warning("illegal type field: using type int ");
+		     G_warning(_("illegal type field: using type int"));
 		     *d_type= CELL_TYPE;
                 }
 	    }
 	    else 
-	       G_warning("ignoring type filed in header, type is set on command line");
+	       G_warning(_("ignoring type filed in header, type is set on command line"));
 	    continue;
 	  }
 
@@ -195,12 +187,12 @@ char **nval)
 	    {
 		  if(sscanf(value, "%lf", mult) != 1)
 		  {
-		     G_warning("illegal multiplier field: using 1.0");
+		     G_warning(_("illegal multiplier field: using 1.0"));
 		     *mult = 1.0;
                   }
 	    }
 	    else 
-	       G_warning("ignoring multiplier filed in header, multiplier is set on command line");
+	       G_warning(_("ignoring multiplier filed in header, multiplier is set on command line"));
 	    continue;
 	  }
 
@@ -209,7 +201,7 @@ char **nval)
 	    if(!(*nval)) /* if null val string not set on command line */
 		*nval = G_store(value);
 	    else 
-	       G_warning("ignoring null filed in header, null string is set on command line");
+	       G_warning(_("ignoring null filed in header, null string is set on command line"));
 	    continue;
 	  }
 
@@ -243,11 +235,12 @@ char **nval)
           }
       }
 
-      if (err = G_adjust_Cell_head (cellhd, 1, 1))
+      if ((err = G_adjust_Cell_head (cellhd, 1, 1)))
       {
         error (err);
         return 0;
       }
+
       return 1;
 }
 
@@ -264,19 +257,6 @@ static int scan_int ( char *s, int *i,int proj)
 	if (*i <= 0)
 		return 0;
 	return 1;
-}
-
-static int scan_string (char *s, char *i, int proj)
-{
-        char dummy[3];
-
-        *dummy = 0;
-
-        if (sscanf (s, "%s%1s", i, dummy) != 1)
-                return 0;
-        if (*dummy)
-                return 0;
-        return 1;
 }
 
 static int extract ( int count,
@@ -315,8 +295,7 @@ static int error( char *msg)
 
 	if (first)
 	{
-		fprintf (stderr, "%s: ** errors detected in header section **\n\n",
-		    G_program_name());
+		G_message(_("** errors detected in header section **\n"));
 		first = 0;
 	}
 	fprintf (stderr, "  %s\n", msg);
@@ -330,7 +309,7 @@ file_scan (FILE *fd)
 {
   long curpos;
   char tmpbuf[TMPBUFSIZE];
-  int  size = TMPBUFSIZE;
+  size_t size = TMPBUFSIZE;
 
   if ((curpos = ftell(fd)) == -1)
 	return -1;
