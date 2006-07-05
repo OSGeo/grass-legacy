@@ -990,22 +990,13 @@ int main (int argc, char *argv[])
 
     if (aspect_fd >= 0)
     {
-        /* colortable for aspect  same as in s.surf.rst
-     G_init_colors (&colors);
-     G_add_color_rule (0, 255, 255, 255, 0, 255, 255, 255, &colors);
-     G_add_color_rule (1, 255, 255, 0, 90, 0, 255, 0, &colors);
-     G_add_color_rule (90, 0, 255, 0, 180, 0, 255, 255, &colors);
-     G_add_color_rule (180, 0, 255, 255, 270, 255, 0, 0, &colors);
-     G_add_color_rule (270, 255, 0, 0, 360, 255, 255, 0, &colors);
-       */
+        DCELL min, max;
+        struct FPRange range;
 
         G_set_null_value(asp_raster, G_window_cols(), data_type);
         G_put_raster_row (aspect_fd, asp_raster, data_type);
         G_close_cell (aspect_fd);
 
-       /* write colortable for aspect  same as in s.surf.rst
-	G_write_colors (aspect_name, G_mapset(), &colors);
-       */
         if(out_type != CELL_TYPE)
            G_quantize_fp_map_range(aspect_name, G_mapset(), 0., 360., 0, 360);
 
@@ -1049,21 +1040,12 @@ int main (int argc, char *argv[])
         G_write_raster_cats (aspect_name, &cats);
         G_free_raster_cats (&cats);
 
-        /*
-        sprintf(buf, "r.colors map='%s' c=aspect",
-		G_fully_qualified_name (aspect_name, G_mapset()));
-	G_system(buf);
-        */
-        
-        {
-        DCELL min, max;
-        struct FPRange range;
+        /* write colors for aspect file */
         G_init_colors (&colors);
-        G_read_fp_range ( aspect_name, G_mapset(), &range);
+        G_read_fp_range (aspect_name, G_mapset(), &range);
         G_get_fp_range_min_max (&range, &min, &max);
         G_make_aspect_fp_colors (&colors, min, max);
         G_write_colors (aspect_name, G_mapset(), &colors);
-        }
 
         /* writing history file */
         G_short_history(aspect_name, "raster", &hist);
