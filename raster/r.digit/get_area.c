@@ -1,4 +1,5 @@
 #include <grass/gis.h>
+#include <grass/raster.h>
 #include "local_proto.h"
 
 int get_area (FILE *fd, struct Categories *labels)
@@ -24,13 +25,15 @@ int get_area (FILE *fd, struct Categories *labels)
 	else
 	{
 	    black_and_white_line (px, py, x, y);
+	    R_flush();
 	}
 	px = x;
 	py = y;
 	fprintf (fd, " %s %s\n", east, north);
     }
     black_and_white_line (x0, y0, x, y);
+    R_flush();
     get_category (fd, "area", labels);
+
     return any;
 }
-

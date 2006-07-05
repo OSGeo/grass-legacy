@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <grass/display.h>
 #include <grass/raster.h>
+
 int 
 black_and_white_line (int screen_x, int screen_y, int cur_screen_x, int cur_screen_y)
 {
@@ -19,6 +20,5 @@ black_and_white_line (int screen_x, int screen_y, int cur_screen_x, int cur_scre
         R_cont_abs(screen_x+1, screen_y) ;
     }
 
-    R_stabilize() ;
     return 0;
 }

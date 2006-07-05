@@ -1,4 +1,5 @@
 #include <grass/gis.h>
+#include <grass/raster.h>
 #include "local_proto.h"
 
 int get_line (FILE *fd, struct Categories *labels)
@@ -21,6 +22,7 @@ int get_line (FILE *fd, struct Categories *labels)
 	else
 	{
 	    black_and_white_line (px, py, x, y);
+	    R_flush();
 	}
 	px = x;
 	py = y;

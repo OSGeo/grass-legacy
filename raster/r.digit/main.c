@@ -17,7 +17,7 @@ int main (int argc, char **argv)
     char *polyfile, *mapname;
     int any;
     struct GModule *module;
-    struct Option *output;
+    struct Option *output, *bgcmd;
 
     /* must run in a term window */
     G_putenv("GRASS_UI_TERM","1");
@@ -31,6 +31,12 @@ int main (int argc, char **argv)
 	" monitor using a pointing device (mouse) and save to a raster map.");
 
     output = G_define_standard_option(G_OPT_R_OUTPUT);
+
+    bgcmd = G_define_option();
+    bgcmd->key = "bgcmd";
+    bgcmd->type =  TYPE_STRING;
+    bgcmd->description =
+	_("Display commands to be used for canvas backdrop (separated by ';')");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
@@ -48,6 +54,9 @@ int main (int argc, char **argv)
 	perror (polyfile);
 	exit(EXIT_FAILURE);
     }
+
+    if(bgcmd->answer)
+	G_system(bgcmd->answer);
 
     /* open the graphics and get it setup */
     if (R_open_driver() != 0)
