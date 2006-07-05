@@ -103,6 +103,9 @@ int PS_vlegend (void)
 	fprintf(PS.fp, "] def\n");
 
 	width = 72.0 * vector.width;
+	if(width <= 0.0)
+	    width = 2.4 * fontsize;
+
 	/* if vector legend is on map... */
 	if (y > PS.map_bot && y <= PS.map_top && x < PS.map_right)
 	{
