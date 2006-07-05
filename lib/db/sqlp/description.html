@@ -82,7 +82,7 @@ echo "SELECT * FROM archsites WHERE str1 &lt;&gt; 'No Name'" | db.select
 <p>
 
 
-<p>Example of subquery expressions (does not work for DBF driver):
+<p>Example of subquery expressions from a list (does not work for DBF driver):
 <div class="code"><pre>
 v.db.select mysites where="id IN ('P04', 'P05')"
 </pre></div>
@@ -90,7 +90,11 @@ v.db.select mysites where="id IN ('P04', 'P05')"
 
 <p>Example of pattern matching (does not work for DBF driver):
 <div class="code"><pre>
+# match exactly number of characters (here: 2):
 v.db.select mysites where="id LIKE 'P__'"
+
+#define wildcard:
+v.db.select mysites where="id LIKE 'P%'"
 </pre></div>
 
 <p>Example of null handling:
