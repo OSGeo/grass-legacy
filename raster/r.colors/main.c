@@ -62,6 +62,7 @@ static int cmp_names(const void *aa, const void *bb)
 {
 	char * const *a = aa;
 	char * const *b = bb;
+
 	return strcmp(*a, *b);
 }
 
@@ -191,7 +192,7 @@ int main (int argc, char *argv[])
 	    return 0;
     }
 
-    overwrite = ( ! flag1->answer);
+    overwrite = (!flag1->answer);
     name = opt1->answer;
     type = opt2->answer;
     cmap = opt3->answer;
@@ -200,30 +201,30 @@ int main (int argc, char *argv[])
     if (!name)
 	G_fatal_error(_("No map specified"));
 
-    if(!cmap && !type && !rules)
+    if (!cmap && !type && !rules)
 	G_fatal_error(_("One of options \"color\", \"rast\" OR \"rules\" MUST be specified!"));
 
-    if(cmap && type)
-	G_warning("Both options \"color\" AND \"rast\" specified - ignoring rast");
+    if (cmap && type)
+	G_warning(_("Both options \"color\" AND \"rast\" specified - ignoring rast"));
 
-    if(rules && type)
-	G_warning("Both options \"color\" AND \"rules\" specified - ignoring rules");
+    if (rules && type)
+	G_warning(_("Both options \"color\" AND \"rules\" specified - ignoring rules"));
 
-    if(rules && cmap)
-	G_warning("Both options \"rast\" AND \"rules\" specified - ignoring rast");
+    if (rules && cmap)
+	G_warning(_("Both options \"rast\" AND \"rules\" specified - ignoring rast"));
 
     mapset = G_find_cell2 (name, "");
     if (mapset == NULL)
 	G_fatal_error(_("%s - map not found"), name);
 
-    
     G_suppress_warnings (1);
     have_colors = G_read_colors (name, mapset, &colors);
     /*if (have_colors >= 0)
 	G_free_colors (&colors);*/
 
     if (have_colors > 0 && !overwrite)
-	exit(0);
+	exit(EXIT_SUCCESS);
+
     G_suppress_warnings (0);
 
     G_sleep_on_error (0);
@@ -253,15 +254,13 @@ int main (int argc, char *argv[])
 	else if (strcmp (type, "grey.eq") == 0)
 	{
 	    if(fp)
-		G_fatal_error
-		   (_("Can't make grey.eq color table for floating point map"));
+		G_fatal_error(_("Can't make grey.eq color table for floating point map"));
 	    eq_grey_colors (name, mapset, &colors, flag2->answer);
 	}
 	else if (strcmp (type, "grey.log") == 0)
 	{
 	    if(fp)
-		G_fatal_error
-		   (_("Can't make logarithmic color table for floating point map"));
+		G_fatal_error(_("Can't make logarithmic color table for floating point map"));
 	    log_grey_colors (name, mapset, &colors, flag2->answer, (CELL) min, (CELL) max);
 	}
 	else if (strcmp (type, "aspect") == 0)
@@ -279,7 +278,7 @@ int main (int argc, char *argv[])
 	else if (strcmp (type, "rules") == 0)
 	{
 	    if (!read_color_rules(stdin, &colors, flag2->answer, min, max, fp))
-	      exit(1); 
+	      exit(EXIT_FAILURE); 
 	}
 	else
 	    G_fatal_error(_("%s - unknown color request"), type);
@@ -287,7 +286,7 @@ int main (int argc, char *argv[])
 	if(fp) G_mark_colors_as_fp(&colors);
 
 	if (G_write_colors (name, mapset, &colors) >= 0 && !flag2->answer)
-	    fprintf (stdout, "Color table for [%s] set to %s\n", name, type);
+	    G_message(_("Color table for [%s] set to %s"), name, type);
     }
     else if (rules)
     {
@@ -298,20 +297,23 @@ int main (int argc, char *argv[])
 	rules_fp = fopen(path, "r");
 	if (!rules_fp)
 	    G_fatal_error(_("Unable to open rules file %s in %s"), rules, path);
+
 	if (!read_color_rules(rules_fp, &colors, flag2->answer, min, max, fp))
 	    exit(EXIT_FAILURE); 
+
 	fclose(rules_fp);
 	if(fp) G_mark_colors_as_fp(&colors);
 
 	if (G_write_colors (name, mapset, &colors) >= 0 && !flag2->answer)
-	    fprintf (stdout, "Color table for [%s] set to %s\n", name, rules);
+	    G_message(_("Color table for [%s] set to %s"), name, rules);
     }
     else
     {  /* use color from another map (cmap) */
 	cmapset = G_find_cell2 (cmap, "");
 	if (cmapset == NULL)
 	    G_fatal_error(_("%s - map not found"), cmap);
-	if(0 > G_read_colors (cmap, cmapset, &colors))
+
+	if (0 > G_read_colors (cmap, cmapset, &colors))
 	    G_fatal_error(_("Unable to read color table for %s"), cmap);
 
 	if(fp) G_mark_colors_as_fp(&colors);
