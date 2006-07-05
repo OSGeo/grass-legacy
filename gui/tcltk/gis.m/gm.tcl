@@ -360,11 +360,11 @@ global HOSTTYPE
 
 ###############################################################################
 
-# fly
+# d.nviz: set up NVIZ flight path (not much use without a backdrop?)
 proc Gm::fly { } {
-    
-    set cmd "d.nviz"
-    eval exec $cmd &
+
+    guarantee_xmon
+    exec d.nviz --ui &
 
 }
 
@@ -372,9 +372,8 @@ proc Gm::fly { } {
 
 # xganim
 proc Gm::xganim { } {
-    
-    set cmd "xganim"
-    eval exec $cmd &
+
+    exec xganim --ui &
 
 }
 
@@ -382,9 +381,9 @@ proc Gm::xganim { } {
 
 # help
 proc Gm::help { } {
-    
-    set cmd "g.manual"
-    term $cmd 
+
+    set cmd [list g.manual --ui]
+    term $cmd
 
 }
 
