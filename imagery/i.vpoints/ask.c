@@ -142,8 +142,8 @@ int ask_gis_files (char *type,char *file,char *xname,char *xmapset,int position)
     rightx = leftx + widthx;
 
 /* save what is under these areas, so they can be restored */
-    R_panel_save (tempfile1, top, bottom, left, right);
-    R_panel_save (tempfile2, topx, bottomx, leftx, rightx);
+    R_panel_save (tempfile1, top, bottom+1, left, right+1);
+    R_panel_save (tempfile2, topx, bottomx+1, leftx, rightx+1);
 
 /* fill it top with GREY, pick area with white */
     R_standard_color (WHITE);
@@ -280,6 +280,7 @@ static int dobox ( struct box *box,
     R_standard_color (BLACK);
     Outline_box (top, bottom, left, right);
     dotext (text, top, bottom, left, right, centered);
+    R_flush();
 
     box->top = top;
     box->bottom = bottom;
@@ -333,6 +334,7 @@ static int pick(int x,int y,int button)
 	which = -2;
 	R_standard_color (RED);
 	Outline_box (cancel.top, cancel.bottom, cancel.left, cancel.right);
+	R_flush();
 	return 0;
     }
 /* search name list. handle double click */
@@ -346,6 +348,7 @@ static int pick(int x,int y,int button)
 	    R_standard_color (RED);
 	    Outline_box (list[n].box.top, list[n].box.bottom,
 		         list[n].box.left, list[n].box.right);
+	    R_flush();
 	    return 0; /* ignore first click */
 	}
 
@@ -368,6 +371,7 @@ cancel_which (void)
 		     list[which].box.left, list[which].box.right);
     }
     which = -1;
+    R_flush();
 
     return 0;
 }
