@@ -69,6 +69,7 @@ static int do_1st (void)
    if( compute_transformation() )
 	return 1; /* back to analyze menu */
 
+   rast_redraw();
    return 1;
 }
 
@@ -79,6 +80,7 @@ static int do_2nd (void)
    if( compute_transformation() )
 	return 0;
 
+   rast_redraw();
    return 1;
 }
 
@@ -89,6 +91,7 @@ static int do_3rd (void)
    if( compute_transformation() )
 	return 0;
 
+   rast_redraw();
    return 1;
 }
 
@@ -309,7 +312,7 @@ static int dotext (
 }
 
 static int compute_transformation (void)
-{
+{ /* returns 0 on success, 1 on fail */
     int n, count;
     double d,d1,d2,sum;
     double e1, e2, n1, n2;
@@ -617,7 +620,7 @@ int analyze (void)
     nums += left;
 
 /* save what is under this area, so it can be restored */
-    R_panel_save (tempfile1, top, bottom, left, right);
+    R_panel_save (tempfile1, top, bottom+1, left, right+1);
 
 
 /* fill it with white */

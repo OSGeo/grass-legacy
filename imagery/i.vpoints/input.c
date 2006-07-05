@@ -230,6 +230,7 @@ static int draw_option_boxes (Objects *objects)
 	if (x->type == OPTION_OBJECT && *x->status > 0)
 	    Outline_box (x->top +1, x->bottom, x->left, x->right -1);
     }
+    R_flush();
 
     return 0;
 }
