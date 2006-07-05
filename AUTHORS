@@ -40,10 +40,17 @@ add "@" and "." as needed.
 
 GRASS 6.1
 -------------------------------------------------
+Additional authors:
 NVIZ
  - ACS - Massimo Cuomo <m.cuomo at acsys.it>: New flythrough navigation
 
+gis.m/tcltk module GUI:
+ - Cedrik Shock <cedricpublic at shockfamily.net>
 
+Source code Quality assessment system
+ - SOCCER Labs at Ecole Polytechnique de Montreal, Canada
+
+[incomplete]
 
 GRASS 5.7/6.0: Primary authors of new source code
 -------------------------------------------------
@@ -52,7 +59,7 @@ GRASS 5.7/6.0: Primary authors of new source code
 Institutions:
  ITC-IRST, Trento, Italy   Providing web structure and various mailing lists
  Intevation GmbH, Germany  Providing CVS and Request Tracker
- Baylor University, USA    Providing users mailing list
+ (Baylor University, USA    Providing users mailing list - till 
 
 VECTOR
  - Radim Blazek <blazek itc it>: vector engine core developer
@@ -273,6 +280,7 @@ Former Institutions
    National Electronics and Computer Technology Center
    Bangkok, Thailand
 
+ - Baylor University: User list 1998- spring 2006
 
 
 The Official home of GRASS is:
@@ -286,7 +294,7 @@ The Official home of GRASS is:
  email: neteler itc.it
 
 Internet:  http://grass.itc.it/      (main site)
-           http://grass.baylor.edu/  (user mailing list and mirror)
            http://grass.ibiblio.org/ (mirror)
+           http://grass.itc.it/mirrors.php (list of mirrors)
 
 with a worldwide distribution network.
