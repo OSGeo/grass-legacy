@@ -19,13 +19,19 @@ export GRASS_UI_TERM
 LD_LIBRARY_PATH_VAR=$GRASS_LD_LIBRARY_PATH
 export LD_LIBRARY_PATH_VAR
 
+echo
+echo "================================================================="
+echo "If you wish to resize the X monitor, do so now. Window size is"
+echo "locked while interactive modules are running."
+echo "================================================================="
+echo
 
 # run command
 $@
 
 EXIT_VAL=$?
 if [ $EXIT_VAL -ne 0 ] ; then
-   echo
+   echo -e "\r"
    echo "ERROR: $1 exited abnormally. Press <enter> to continue."
    read
 fi
