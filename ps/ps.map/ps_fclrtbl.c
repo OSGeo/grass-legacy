@@ -35,6 +35,8 @@ int PS_fcolortable (void)
     struct Colors colors;
     struct FPRange range;
     double ex, cur_d, cur_ex;
+    int do_color;
+    double grey_color_val;
 
     /* let user know what's happenning */
     if (verbose > 1)
@@ -65,6 +67,8 @@ int PS_fcolortable (void)
 
     if (G_read_colors(ct.name, ct.mapset, &colors) == -1)
 	G_warning(_("Unable to read colors for colorbar"));
+
+    do_color = (PS.grey == 0 && PS.level == 2);
 
     /* set font */
     fontsize = (double)ct.fontsize;
@@ -126,7 +130,14 @@ int PS_fcolortable (void)
 /*	val = dmin + i * step;   flip*/
         val = dmax - i * step;
 	G_get_d_raster_color(&val, &R, &G, &B, &colors);
-	fprintf(PS.fp, "%.2f %.2f %.2f C\n", (double)R/255., (double)G/255., (double)B/255.);
+
+	if(do_color)
+	    fprintf(PS.fp, "%.2f %.2f %.2f C\n", (double)R/255., (double)G/255., (double)B/255.);
+	else {
+	    grey_color_val = (.3 * (double)R + .59 * (double)G + .11 * (double)B)/255.;
+	    fprintf(PS.fp, "%.2f setgray\n", grey_color_val);
+	}
+
 	fprintf(PS.fp, "NP\n");
         fprintf(PS.fp, "%f %f M\n", x1, y); 
         fprintf(PS.fp, "%f %f LN\n", x2, y); 
