@@ -119,7 +119,7 @@ analyze (void)
     nums += left;
 
 /* save what is under this area, so it can be restored */
-    R_panel_save (tempfile1, top, bottom, left, right);
+    R_panel_save (tempfile1, top, bottom+1, left, right+1);
 
 
 /* fill it with white */
@@ -321,11 +321,15 @@ static int pick(int x,int y)
 	show_point (first_point+n, 1);
 	return 1;
     }
+
+    /* first click */
     which = n;
     show_point (first_point+n, 0);
     R_standard_color (RED);
-    Outline_box (report.top + n*height, report.top +(n+1)*height,
+    Outline_box ((report.top + n*height)+1, report.top +(n+1)*height,
 		         report.left, report.right-1);
+    R_flush();
+
     return 0; /* ignore first click */
 
 }
@@ -341,7 +345,7 @@ static int cancel_which (void)
     if (which >= 0)
     {
 	R_standard_color (BACKGROUND);
-	Outline_box (report.top + which*height, report.top +(which+1)*height,
+	Outline_box ((report.top + which*height)+1, report.top +(which+1)*height,
 		         report.left, report.right-1);
 	show_point (first_point+which, 1);
     }
