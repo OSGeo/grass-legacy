@@ -8,6 +8,7 @@
 */
 #include <stdlib.h>
 #include <string.h>
+#include <grass/gis.h>
 #include "vector.h"
 #include <grass/Vect.h>
 #include "ps_info.h"
@@ -32,7 +33,7 @@ static char *help[]=
 int 
 read_vareas (char *name, char *mapset)
 {
-    char fullname[100];
+    char fullname[GNAME_MAX+GMAPSET_MAX+5];
     char buf[1024];
     char *key, *data;
     double  width;
