@@ -1,5 +1,6 @@
 #include <math.h>
 #include <grass/gis.h>
+#include <grass/raster.h>
 #include "local_proto.h"
 
 static int first;
@@ -99,6 +100,8 @@ int get_circle (FILE *fd, struct Categories *labels)
 /* 315 to 360 degrees */
     for (i=count-1; i>=0; i--)
 	draw_and_record (fd, points[i].x, -points[i].y, cx, cy);
+
+    R_flush();
 
     get_category (fd, "circle", labels);
     return 1;
