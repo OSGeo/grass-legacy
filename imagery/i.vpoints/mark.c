@@ -43,7 +43,7 @@ int mark_point (View *view,int x,int y)
     Curses_write_window (MENU_WINDOW, 4, 3, buf);
     Curses_clear_window (INFO_WINDOW);
 
-    R_standard_color (YELLOW);  /*ORANGE); */
+    R_standard_color (ORANGE);
 
     save_under_dot (x,y);
 

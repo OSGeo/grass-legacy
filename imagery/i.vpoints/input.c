@@ -222,13 +222,13 @@ static int draw_option_boxes (Objects *objects)
     for (x = objects; x->type; x++)
     {
 	if (x->type == OPTION_OBJECT && *x->status == 0)
-	    Outline_box (x->top, x->bottom, x->left, x->right);
+	    Outline_box (x->top +1, x->bottom, x->left, x->right -1);
     }
     R_standard_color (GREEN);
     for (x = objects; x->type; x++)
     {
 	if (x->type == OPTION_OBJECT && *x->status > 0)
-	    Outline_box (x->top, x->bottom, x->left, x->right);
+	    Outline_box (x->top +1, x->bottom, x->left, x->right -1);
     }
 
     return 0;
