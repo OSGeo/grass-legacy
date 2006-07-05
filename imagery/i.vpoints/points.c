@@ -32,7 +32,7 @@ int display_points_in_view (View *view, int in_color,
     while (count-- > 0)
     {
 	if (in_color && (*status > 0))
-	    R_standard_color (YELLOW); /* GREEN); */
+	    R_standard_color (GREEN);
 	else if (in_color && (*status == 0))
 	    R_standard_color (RED);
 	else

@@ -233,7 +233,6 @@ static int pick(int x,int y)
     n = (y - report.top)/height;
     if (n == cur) /* second click! */
     {
-    
     if(!delete_mode) 
        {
        group.points.status[first_point+n] = !group.points.status[first_point+n];
@@ -250,14 +249,20 @@ static int pick(int x,int y)
       return 1;
       }
    }
+
+    /* first click */
     which = n;
     show_point (first_point+n, 0);
     if(!delete_mode)
         R_standard_color (RED);
-    else  
-        R_standard_color(WHITE);
-    Outline_box (report.top + n*height, report.top +(n+1)*height,
+    else
+        R_standard_color(ORANGE);
+
+    Outline_box ((report.top + n*height)+1, report.top +(n+1)*height,
 		         report.left, report.right-1);
+
+    R_flush();
+
     return 0; /* ignore first click */
 
 }
@@ -273,7 +278,7 @@ static int cancel_which (void)
     if (which >= 0)
     {
 	R_standard_color (BACKGROUND);
-	Outline_box (report.top + which*height, report.top +(which+1)*height,
+	Outline_box ((report.top + which*height)+1, report.top +(which+1)*height,
 		         report.left, report.right-1);
 	show_point (first_point+which, 1);
     }
@@ -511,14 +516,15 @@ static int printcentered (FILE *fd,char *buf,int width)
 static int show_point (int n,int true_color)
 {
     if (!true_color)
-	R_standard_color (WHITE);  /* ORANGE); */
+	R_standard_color (ORANGE);
     else if(group.points.status[n])
-	R_standard_color (YELLOW);  /* GREEN); */
+	R_standard_color (GREEN);
     else
 	R_standard_color (RED);
+
     display_one_point (VIEW_MAP1, group.points.e1[n], group.points.n1[n]);
 
-   return 0;
+    return 0;
 }
 
 static int get_order (void)
