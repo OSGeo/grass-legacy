@@ -300,6 +300,12 @@ main (int argc, char *argv[])
 	  (! (buffer_opt->answer || bufcol_opt->answer)) )
 	G_fatal_error("Select a buffer distance or column, but not both.");
 
+    if(bufcol_opt->answer)
+	G_warning(_("The bufcol option may contain bugs during the cleaning "
+		"step. If you encounter problems, use the debug "
+		"option or clean manually with v.clean tool=break; "
+		"v.category step=0; v.extract -d type=area."));
+
     orig_tolerance = atof( tolerance_opt->answer );
     tolerance = orig_tolerance;
 
