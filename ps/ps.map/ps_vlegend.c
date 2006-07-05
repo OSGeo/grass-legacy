@@ -13,6 +13,8 @@ int PS_vlegend (void)
 {
     int h, i, j, k, l, lc, st, lcount, nopos;
     double x, y, fontsize, dx, dy, xo, yo, xs, ys, margin, width;
+    double llx, lly, urx, ury, sc;
+    char pat[50];
     int **vec, *nvec;
 
     G_debug (2, "vect_legend(): count = %d", vector.count );
@@ -103,6 +105,9 @@ int PS_vlegend (void)
 	fprintf(PS.fp, "] def\n");
 
 	width = 72.0 * vector.width;
+	if(width <= 0.0)
+	    width = 2.4 * fontsize;
+
 	/* if vector legend is on map... */
 	if (y > PS.map_bot && y <= PS.map_top && x < PS.map_right)
 	{
@@ -140,9 +145,34 @@ int PS_vlegend (void)
 
 		if ( vector.layer[i].type == VAREAS ) {  /* added for areas */
 		    /* plot rectangle */
-		    yo = y - 0.1 * fontsize; 
-		    if ( !color_none ( &vector.layer[i].fcolor) ) {
-			set_ps_color( &(vector.layer[i].fcolor) );
+		    yo = y - 0.1 * fontsize;
+
+		    if(vector.layer[i].pat != NULL || !(color_none(&vector.layer[i].fcolor))) {
+
+			if( vector.layer[i].pat != NULL ) {   /* use pattern */
+			    sc = 0.5 * vector.layer[i].scale;  /* half scale */
+
+			    /* load pattern */
+			    eps_bbox( vector.layer[i].pat , &llx, &lly, &urx, &ury);
+			    sprintf ( pat, "APATTEPS%d", i);
+
+			    fprintf(PS.fp, "<<  /PatternType 1\n    /PaintType 1\n    /TilingType 1\n");
+			    fprintf(PS.fp, "    /BBox [%f %f %f %f]\n", llx*sc, lly*sc, urx*sc, ury*sc);
+			    fprintf(PS.fp, "    /XStep %f\n    /YStep %f\n", (urx-llx)*sc, (ury-lly)*sc);
+			    fprintf(PS.fp, "    /PaintProc\n      { begin\n");
+			    fprintf(PS.fp, "        %f %f scale\n", sc, sc);
+			    set_ps_color ( &(vector.layer[i].fcolor) );
+			    fprintf(PS.fp, "        %.8f W\n", vector.layer[i].pwidth );
+			    fprintf(PS.fp, "        %s\n", pat);
+			    fprintf(PS.fp, "        end\n");
+			    fprintf(PS.fp, "      } bind\n>>\n");
+			    sprintf ( pat, "APATT%d", i);
+			    fprintf(PS.fp, " matrix\n makepattern /%s exch def\n", pat);
+			    fprintf(PS.fp, "/Pattern setcolorspace\n %s setcolor\n", pat);
+			}
+			else  /* solid fill color */
+			    set_ps_color( &(vector.layer[i].fcolor) );
+
 			fprintf(PS.fp, "%.1f %.1f %.1f %.1f rectfill\n",
 		    	    x + width/5, yo , 3 * width / 5, 0.8 * fontsize);
 		    }
