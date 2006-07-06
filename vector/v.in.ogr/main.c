@@ -16,7 +16,8 @@
  *               for details.
  *
  * TODO: make fixed field length of OFTIntegerList dynamic
- **************************************************************/
+ * TODO: attrib: change to 'NULL' once supported by dbf driver - now possible? -2006
+**************************************************************/
 #define MAIN
 #include <grass/config.h>
 #include <stdlib.h>
@@ -73,6 +74,8 @@ main (int argc, char *argv[])
     OGRGeometryH Ogr_geometry, Ogr_oRing=NULL, poSpatialFilter=NULL;
     OGRSpatialReferenceH Ogr_projection;
     OGREnvelope oExt;
+    int OFTIntegerListlength = 40; /* hack due to limitation in OGR */
+
     char **layer_names; /* names of layers to be imported */
     int *layers;  /* layer indexes */
     int nlayers; /* number of layers to import */
@@ -622,10 +625,12 @@ main (int argc, char *argv[])
 		    sprintf (buf, ", %s integer", Ogr_fieldname );
 		} else if( Ogr_ftype == OFTIntegerList ) {
 		    /* hack: treat as string */
-		    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, 40 );
-		    G_warning (_("Writing column <%s> with fixed length 40 chars (may be truncated)"), Ogr_fieldname);
+		    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, OFTIntegerListlength );
+		    G_warning (_("Writing column <%s> with fixed length %d chars (may be truncated)"), Ogr_fieldname, OFTIntegerListlength);
 		} else if( Ogr_ftype == OFTReal ) {
 		    sprintf (buf, ", %s double precision", Ogr_fieldname );
+		} else if( Ogr_ftype == OFTDate ) {
+		    sprintf (buf, ", %s date", Ogr_fieldname );
 		} else if( Ogr_ftype == OFTString ) {
 		    int fwidth;
 		    fwidth = OGR_Fld_GetWidth(Ogr_field);
@@ -638,8 +643,8 @@ main (int argc, char *argv[])
 		    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, fwidth );
 		} else if( Ogr_ftype == OFTStringList ) {
 		    /* hack: treat as string */
-		    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, 40 );
-		    G_warning (_("Writing column <%s> with fixed length 40 chars (may be truncated)"), Ogr_fieldname);
+		    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, OFTIntegerListlength );
+		    G_warning (_("Writing column <%s> with fixed length %d chars (may be truncated)"), Ogr_fieldname, OFTIntegerListlength);
 		} else {
 		    G_warning (_("Column type not supported (%s)"), Ogr_fieldname );
 		    buf[0] = 0;
@@ -698,7 +703,8 @@ main (int argc, char *argv[])
 		    if( OGR_F_IsFieldSet( Ogr_feature, i ) ) {
 			if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) {
 			    sprintf (buf, ", %s", OGR_F_GetFieldAsString( Ogr_feature, i) );
-			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList ) {
+			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList || Ogr_ftype == OFTDate ) {
+				/* TODO: correct for date? */
 			    db_set_string ( &strval,  (char *) OGR_F_GetFieldAsString( Ogr_feature, i) );
 			    db_double_quote_string (&strval);
 			    sprintf (buf, ", '%s'", db_get_string(&strval) );
@@ -710,7 +716,7 @@ main (int argc, char *argv[])
 			/* TODO: change to 'NULL' once supported by dbf driver */
 			if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) {
 			    sprintf (buf, ", 0" );
-			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList ) {
+			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList || Ogr_ftype == OFTDate ) {
 			    sprintf (buf, ", ''" );
 			}
 			/* sprintf (buf, ", NULL" ); */
