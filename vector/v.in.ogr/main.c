@@ -15,8 +15,8 @@
  *               Read the file COPYING that comes with GRASS
  *               for details.
  *
- * TODO: make fixed field length of OFTIntegerList dynamic
- * TODO: attrib: change to 'NULL' once supported by dbf driver - now possible? -2006
+ * TODO: - make fixed field length of OFTIntegerList dynamic
+ *       - several other TODOs below
 **************************************************************/
 #define MAIN
 #include <grass/config.h>
@@ -704,7 +704,6 @@ main (int argc, char *argv[])
 			if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) {
 			    sprintf (buf, ", %s", OGR_F_GetFieldAsString( Ogr_feature, i) );
 			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList || Ogr_ftype == OFTDate ) {
-				/* TODO: correct for date? */
 			    db_set_string ( &strval,  (char *) OGR_F_GetFieldAsString( Ogr_feature, i) );
 			    db_double_quote_string (&strval);
 			    sprintf (buf, ", '%s'", db_get_string(&strval) );
@@ -712,14 +711,11 @@ main (int argc, char *argv[])
 
 		    } else {
 			/* G_warning (_("Column value not set" )); */
-
-			/* TODO: change to 'NULL' once supported by dbf driver */
 			if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) {
-			    sprintf (buf, ", 0" );
+			    sprintf (buf, ", NULL" );
 			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList || Ogr_ftype == OFTDate ) {
 			    sprintf (buf, ", ''" );
 			}
-			/* sprintf (buf, ", NULL" ); */
 		    }
 		    db_append_string ( &sql, buf);
 		}
