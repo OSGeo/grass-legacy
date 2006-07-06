@@ -52,6 +52,7 @@
 #include <grass/linkm.h>
 #include <grass/bitmap.h>
 #include <grass/site.h>
+#include <grass/glocale.h>
 
 #define MAIN
 #include <grass/waterglobs.h>
@@ -78,11 +79,11 @@ int main ( int argc, char *argv[])
 
   module = G_define_module();
   module->description =        
-                  "Overland flow hydrologic model based on duality "
-                  "particle-field concept (SIMWE) ";
+                  _("Overland flow hydrologic model based on duality "
+                  "particle-field concept (SIMWE)");
                   
   if (G_get_set_window (&cellhd) == -1)
-    exit (0);
+    exit (EXIT_FAILURE);
 
   conv = G_database_units_to_meters_factor();
 
@@ -131,152 +132,152 @@ int main ( int argc, char *argv[])
   parm.elevin->type = TYPE_STRING;
   parm.elevin->required = YES;
   parm.elevin->gisprompt = "old,cell,raster";
-  parm.elevin->description = "Name of the elevation raster file";
+  parm.elevin->description = _("Name of the elevation raster file");
 
   parm.dxin = G_define_option();
   parm.dxin->key = "dxin";
   parm.dxin->type = TYPE_STRING;
   parm.dxin->required = YES;
   parm.dxin->gisprompt = "old,cell,raster";
-  parm.dxin->description = "Name of the x-derivatives raster file";
+  parm.dxin->description = _("Name of the x-derivatives raster file");
 
   parm.dyin = G_define_option();
   parm.dyin->key = "dyin";
   parm.dyin->type = TYPE_STRING;
   parm.dyin->required = YES;
   parm.dyin->gisprompt = "old,cell,raster";
-  parm.dyin->description = "Name of the y-derivatives raster file";
+  parm.dyin->description = _("Name of the y-derivatives raster file");
 
   parm.rain = G_define_option();
   parm.rain->key = "rain";
   parm.rain->type = TYPE_STRING;
   parm.rain->required = YES;
   parm.rain->gisprompt = "old,cell,raster";
-  parm.rain->description = "Name of the rainfall excess raster file";
+  parm.rain->description = _("Name of the rainfall excess raster file");
 
   parm.infil = G_define_option();
   parm.infil->key = "infil";
   parm.infil->type = TYPE_STRING;
   parm.infil->required = YES;
   parm.infil->gisprompt = "old,cell,raster";
-  parm.infil->description = "Name of the infiltration excess raster file";
+  parm.infil->description = _("Name of the infiltration excess raster file");
 
   parm.traps = G_define_option();
   parm.traps->key = "traps";
   parm.traps->type = TYPE_STRING;
   parm.traps->required = NO;
   parm.traps->gisprompt = "old,cell,raster";
-  parm.traps->description = "Name of the flow control raster file";
+  parm.traps->description = _("Name of the flow control raster file");
 
   parm.manin = G_define_option();
   parm.manin->key = "manin";
   parm.manin->type = TYPE_STRING;
   parm.manin->required = YES;
   parm.manin->gisprompt = "old,cell,raster";
-  parm.manin->description = "Name of the Mannings n raster file";
+  parm.manin->description = _("Name of the Mannings n raster file");
 
   parm.sfile = G_define_option ();
   parm.sfile->key = "sites";
   parm.sfile->type = TYPE_STRING;
   parm.sfile->required = NO;
   parm.sfile->gisprompt = "old,site_lists,sites";
-  parm.sfile->description = "Name of the site file with x,y locations";
+  parm.sfile->description = _("Name of the site file with x,y locations");
 
   parm.depth = G_define_option();
   parm.depth->key = "depth";
   parm.depth->type = TYPE_STRING;
   parm.depth->required = NO;
   parm.depth->gisprompt = "new,cell,raster";
-  parm.depth->description = "Output water depth raster file";
+  parm.depth->description = _("Output water depth raster file");
 
   parm.disch = G_define_option();
   parm.disch->key = "disch";
   parm.disch->type = TYPE_STRING;
   parm.disch->required = NO;
   parm.disch->gisprompt = "new,cell,raster";
-  parm.disch->description = "Output water discharge raster file";
+  parm.disch->description = _("Output water discharge raster file");
 
   parm.err = G_define_option();
   parm.err->key = "err";
   parm.err->type = TYPE_STRING;
   parm.err->required = NO;
   parm.err->gisprompt = "new,cell,raster";
-  parm.err->description = "Output simulation error raster file";
+  parm.err->description = _("Output simulation error raster file");
 
   parm.outwalk = G_define_option ();
   parm.outwalk->key = "outwalk";
   parm.outwalk->type = TYPE_STRING;
   parm.outwalk->required = NO;
   parm.outwalk->gisprompt = "new,site_lists,sites";
-  parm.outwalk->description = "Name of the output walkers site file";
+  parm.outwalk->description = _("Name of the output walkers site file");
 
   parm.nwalk = G_define_option();
   parm.nwalk->key = "nwalk";
   parm.nwalk->type = TYPE_INTEGER;
   parm.nwalk->answer = NWALK;
   parm.nwalk->required = NO;
-  parm.nwalk->description = "Number of walkers";
+  parm.nwalk->description = _("Number of walkers");
 
   parm.niter = G_define_option();
   parm.niter->key = "niter";
   parm.niter->type = TYPE_INTEGER;
   parm.niter->answer = NITER;
   parm.niter->required = NO;
-  parm.niter->description = "Number of time iterations (sec.)";
+  parm.niter->description = _("Number of time iterations (sec.)");
 
   parm.outiter = G_define_option();
   parm.outiter->key = "outiter";
   parm.outiter->type = TYPE_INTEGER;
   parm.outiter->answer = ITEROUT;
   parm.outiter->required = NO;
-  parm.outiter->description = "Time step for saving output maps (sec.)";
+  parm.outiter->description = _("Time step for saving output maps (sec.)");
 
   parm.density = G_define_option();
   parm.density->key = "density";
   parm.density->type = TYPE_INTEGER;
   parm.density->answer = DENSITY;
   parm.density->required = NO;
-  parm.density->description = "Density of output walkers";
+  parm.density->description = _("Density of output walkers");
 
   parm.diffc = G_define_option();
   parm.diffc->key = "diffc";
   parm.diffc->type = TYPE_DOUBLE;
   parm.diffc->answer = DIFFC;
   parm.diffc->required = NO;
-  parm.diffc->description = "Water diffusion constant";
+  parm.diffc->description = _("Water diffusion constant");
 
   parm.hmax = G_define_option();
   parm.hmax->key = "hmax";
   parm.hmax->type = TYPE_DOUBLE;
   parm.hmax->answer = HMAX;
   parm.hmax->required = NO;
-  parm.hmax->description = "Threshold water depth (diffusion increases after this water depth is reached)";
+  parm.hmax->description = _("Threshold water depth (diffusion increases after this water depth is reached)");
 
   parm.halpha = G_define_option();
   parm.halpha->key = "halpha";
   parm.halpha->type = TYPE_DOUBLE;
   parm.halpha->answer = HALPHA;
   parm.halpha->required = NO;
-  parm.halpha->description = "Diffusion increase constant";
+  parm.halpha->description = _("Diffusion increase constant");
 
   parm.hbeta = G_define_option();
   parm.hbeta->key = "hbeta";
   parm.hbeta->type = TYPE_DOUBLE;
   parm.hbeta->answer = HBETA;
   parm.hbeta->required = NO;
-  parm.hbeta->description = "Weighting factor for water flow velocity vector";
+  parm.hbeta->description = _("Weighting factor for water flow velocity vector");
 
   flag.mscale = G_define_flag ();
   flag.mscale->key = 'm';
-  flag.mscale->description = "Multiscale simulation";
+  flag.mscale->description = _("Multiscale simulation");
 
   flag.tserie = G_define_flag ();
   flag.tserie->key = 't';
-  flag.tserie->description = "Time-series (dynamic) output";
+  flag.tserie->description = _("Time-series (dynamic) output");
 
 
   if (G_parser (argc, argv))
-    exit (1);
+    exit (EXIT_FAILURE);
 
   mscale=flag.mscale->answer;
   ts=flag.tserie->answer;
@@ -323,7 +324,7 @@ int main ( int argc, char *argv[])
 
 /* memory allocation for output grids */
 
-        gama = (double **)G_malloc (sizeof(double)*(my));
+        gama = (double **)G_malloc (sizeof(double *)*(my));
            for(l=0;l<my;l++)
               {
                 gama[l]   = (double*)G_malloc (sizeof(double)*(mx));
@@ -336,7 +337,7 @@ int main ( int argc, char *argv[])
 
    if (err != NULL)
       {
-        gammas = (double **)G_malloc (sizeof(double)*(my));
+        gammas = (double **)G_malloc (sizeof(double *)*(my));
            for(l=0;l<my;l++)
               {
                 gammas[l]   = (double*)G_malloc (sizeof(double)*(mx));
@@ -348,7 +349,7 @@ int main ( int argc, char *argv[])
                }
        }
 
-        dif = (float **)G_malloc (sizeof(float)*(my));
+        dif = (float **)G_malloc (sizeof(float *)*(my));
            for(l=0;l<my;l++)
               {
                 dif[l]   = (float*)G_malloc (sizeof(float)*(mx));
@@ -389,6 +390,6 @@ int main ( int argc, char *argv[])
   if (sfile != NULL)
                 fclose(fw);
 
-  exit (0);
+  exit (EXIT_SUCCESS);
 }
 
