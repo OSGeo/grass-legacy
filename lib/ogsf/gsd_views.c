@@ -10,10 +10,18 @@
 /* DEBUG */
 #include <stdio.h>
 
+#include <grass/config.h>
+
+#ifdef OPENGL_AQUA
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#else
+#include <GL/gl.h>
+#include <GL/glu.h>
+#endif
+
 #include <grass/gstypes.h>
 #include "math.h"
-#include "GL/gl.h"
-#include "GL/glu.h"
 
 /*
 #define TRACE_DFUNCS

@@ -154,7 +154,8 @@ LOC_ARG_WITH(postgres, PostgreSQL)
 LOC_ARG_WITH(mysql, MySQL, no)
 LOC_ARG_WITH(sqlite, SQLite, no)
 LOC_ARG_WITH(ffmpeg, FFMPEG, no)
-LOC_ARG_WITH(opengl, OpenGL)
+LOC_ARG_WITH(opengl, OpenGL/X11)
+LOC_ARG_WITH(opengl-aqua, OpenGL/Aqua, no)
 LOC_ARG_WITH(odbc, ODBC, no)
 LOC_ARG_WITH(fftw, FFTW)
 LOC_ARG_WITH(blas, BLAS, no)
@@ -1050,11 +1051,12 @@ AC_SUBST(FFMPEGLIB)
 
 # Enable OpenGL option
 
-LOC_CHECK_USE(opengl,OpenGL,USE_OPENGL)
-
 OPENGLINC=
 OPENGLLIB=
 OPENGLULIB=
+OPENGL_AQUA=
+
+LOC_CHECK_USE(opengl,OpenGL,USE_OPENGL)
 
 if test -n "$USE_OPENGL"; then
 
@@ -1081,12 +1083,44 @@ AC_CHECK_FUNC(glXCreatePbuffer, [AC_DEFINE(HAVE_PBUFFERS)])
 AC_CHECK_FUNC(glXCreateGLXPixmap, [AC_DEFINE(HAVE_PIXMAPS)])
 LDFLAGS=${ac_save_ldflags}
 
+else # $USE_OPENGL
+
+LOC_CHECK_USE(opengl_aqua,OpenGL/Aqua,USE_OPENGL_AQUA)
+
+if test -n "$USE_OPENGL_AQUA"; then
+
+with_opengl_includes=/System/Library/Frameworks/OpenGL.framework/Headers
+with_opengl_libs="-framework OpenGL -framework AGL -framework ApplicationServices"
+
+# With OpenGL includes directory
+
+LOC_CHECK_INC_PATH(opengl,OpenGL,OPENGLINC)
+
+LOC_CHECK_INCLUDES(OpenGL/gl.h OpenGL/glu.h,OpenGL,$OPENGLINC)
+
+# With OpenGL library directory
+
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$with_opengl_libs $LDFLAGS"
+AC_CHECK_FUNC(glBegin,[
+AC_CHECK_FUNC(gluBeginCurve,[
+OPENGLLIB="$with_opengl_libs"
+USE_OPENGL=1
+OPENGL_AQUA=1
+AC_DEFINE(OPENGL_AQUA)
+],[AC_MSG_ERROR([*** Unable to locate GLU library.])])
+],[AC_MSG_ERROR([*** Unable to locate OpenGL library.])])
+LDFLAGS=${ac_save_ldflags}
+
+fi # $USE_OPENGL_AQUA
+
 fi # $USE_OPENGL
 
 AC_SUBST(USE_OPENGL)
 AC_SUBST(OPENGLINC)
 AC_SUBST(OPENGLLIB)
 AC_SUBST(OPENGLULIB)
+AC_SUBST(OPENGL_AQUA)
 
 # Done checking OpenGL
 

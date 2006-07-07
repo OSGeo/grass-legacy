@@ -212,6 +212,9 @@
 /* define if FFMPEG library exists */
 #undef HAVE_FFMPEG
 
+/* define if OpenGL uses Aqua (MacOS X) */
+#undef OPENGL_AQUA
+
 /*
  * configuration information solely dependent on the above
  * nothing below this point should need changing

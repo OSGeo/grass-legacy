@@ -11,11 +11,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include <grass/config.h>
+
+#ifdef OPENGL_AQUA
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#else
+#include <GL/gl.h>
+#include <GL/glu.h>
+#endif
+
 #include <grass/gis.h>
 #include <grass/gstypes.h>
-
-#include "GL/gl.h"
-#include "GL/glu.h"
 
 #define USE_GL_NORMALIZE
 
