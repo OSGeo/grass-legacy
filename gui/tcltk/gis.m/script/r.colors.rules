@@ -35,4 +35,4 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-eval `exec xterm -e r.colors map=$GIS_OPT_INPUT color=rules`
+exec xterm -e "$GISBASE/etc/grass-run.sh" r.colors "map=$GIS_OPT_INPUT" color=rules

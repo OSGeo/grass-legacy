@@ -49,4 +49,4 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-eval `exec r.reclass input=$GIS_OPT_INPUT output=$GIS_OPT_OUTPUT < $GIS_OPT_RULES_FILE`
+exec r.reclass "input=$GIS_OPT_INPUT" "output=$GIS_OPT_OUTPUT" < "$GIS_OPT_RULES_FILE"
