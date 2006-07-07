@@ -1,5 +1,7 @@
 #include <stdlib.h>
+#include <string.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 
@@ -14,10 +16,8 @@ getcells(void)
 
 	data_type = G_raster_map_type(iname,mapset);
 
-	if((fd = G_open_cell_old(iname,mapset)) < 0){
-		fprintf(stderr,"\n* %s - could not read *\n",iname);
-		exit(1);
-	}
+	if((fd = G_open_cell_old(iname,mapset)) < 0)
+	    G_fatal_error(_("Unable to open raster map [%s]"), iname);
 
 	if(data_type == CELL_TYPE)
 		ccell = (CELL *)G_malloc (sizeof(CELL)*window.cols);
@@ -29,7 +29,8 @@ getcells(void)
 	atb  = (DCELL **)G_malloc (sizeof(DCELL *)*window.rows);
 	a    = (DCELL **)G_malloc (sizeof(DCELL *)*window.rows);
 
-	fprintf(stderr,"Reading elevation map:");
+	fprintf(stderr, _("Reading elevation map:"));
+
 	for(i=0;i<window.rows;i++){
 		G_percent(i,window.rows,2);
 
@@ -61,7 +62,7 @@ getcells(void)
 		}else
 		if(G_get_d_raster_row(fd,cell[i],i) < 0){
 			G_close_cell(fd);
-			exit(1);
+			G_fatal_error(_("Unable to read row %d in raster map [%s]"), i, iname);
 		}
 	}
 	if(data_type == CELL_TYPE)
@@ -78,18 +79,23 @@ void
 putcells(void)
 {
 	int	fd,i;
+	struct History history;
 
-	if((fd = G_open_raster_new(oname,DCELL_TYPE)) < 0){
-		fprintf(stderr,"\n* %s - could not write *\n",oname);
-		exit(1);
-	}
+	if((fd = G_open_raster_new(oname,DCELL_TYPE)) < 0)
+	    G_fatal_error(_("Unable to create raster map <%s>"), oname);
 
-	fprintf(stderr,"Writing topographic index map:");
+	fprintf(stderr, _("Writing topographic index map:"));
+
 	for(i=0;i<window.rows;i++){
 		G_percent(i,window.rows,2);
 		G_put_d_raster_row(fd,atb[i]);
 	}
 	G_percent(i,window.rows,2);
 	G_close_cell(fd);
-}
 
+	G_short_history(oname, "raster", &history);
+	strncpy(history.datsrc_1, iname, RECORD_LEN);
+	history.datsrc_1[RECORD_LEN-1] = '\0'; /* strncpy() doesn't null terminate if maxfill */
+	G_write_history(oname, &history);
+
+}
