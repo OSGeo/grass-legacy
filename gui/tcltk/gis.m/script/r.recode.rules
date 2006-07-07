@@ -40,4 +40,4 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-eval `exec xterm -e r.recode input=$GIS_OPT_INPUT output=$GIS_OPT_OUTPUT` 
+exec xterm -e "$GISBASE/etc/grass-run.sh" r.recode "input=$GIS_OPT_INPUT" "output=$GIS_OPT_OUTPUT"
