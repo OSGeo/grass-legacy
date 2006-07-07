@@ -132,10 +132,10 @@ int PS_fcolortable (void)
 	G_get_d_raster_color(&val, &R, &G, &B, &colors);
 
 	if(do_color)
-	    fprintf(PS.fp, "%.2f %.2f %.2f C\n", (double)R/255., (double)G/255., (double)B/255.);
+	    fprintf(PS.fp, "%.3f %.3f %.3f C\n", (double)R/255., (double)G/255., (double)B/255.);
 	else {
 	    grey_color_val = (.3 * (double)R + .59 * (double)G + .11 * (double)B)/255.;
-	    fprintf(PS.fp, "%.2f setgray\n", grey_color_val);
+	    fprintf(PS.fp, "%.3f setgray\n", grey_color_val);
 	}
 
 	fprintf(PS.fp, "NP\n");

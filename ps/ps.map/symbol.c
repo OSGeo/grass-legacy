@@ -95,7 +95,7 @@ symbol_save ( SYMBOL *Symb, PSCOLOR *color, PSCOLOR *fcolor, char *name )
 			    set_ps_color( fcolor );
 			    fprintf(PS.fp, "F\n"); /* Fill polygon */
 		    } else if ( part->fcolor.color == S_COL_DEFINED ) {
-			    fprintf(PS.fp, "%.2f %.2f %.2f C\n", part->fcolor.fr,
+			    fprintf(PS.fp, "%.3f %.3f %.3f C\n", part->fcolor.fr,
 					      part->fcolor.fg, part->fcolor.fb);
 			    fprintf(PS.fp, "F\n");
 		    }
@@ -104,7 +104,7 @@ symbol_save ( SYMBOL *Symb, PSCOLOR *color, PSCOLOR *fcolor, char *name )
 			set_ps_color( color );
 			fprintf(PS.fp, "D\n"); /* Draw boundary */
 		    } else if ( part->color.color == S_COL_DEFINED ) { 
-		        fprintf(PS.fp, "%.2f %.2f %.2f C\n", part->color.fr,
+		        fprintf(PS.fp, "%.3f %.3f %.3f C\n", part->color.fr,
 					      part->color.fg, part->color.fb);
 			fprintf(PS.fp, "D\n");
 		    }
@@ -119,7 +119,7 @@ symbol_save ( SYMBOL *Symb, PSCOLOR *color, PSCOLOR *fcolor, char *name )
 			    set_ps_color( color );
 			    fprintf(PS.fp, "D\n");
 			} else {
-			    fprintf(PS.fp, "%.2f %.2f %.2f C\n", part->color.fr,
+			    fprintf(PS.fp, "%.3f %.3f %.3f C\n", part->color.fr,
 					      part->color.fg, part->color.fb);
 			    fprintf(PS.fp, "D\n");
 			}
