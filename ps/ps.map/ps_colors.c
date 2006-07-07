@@ -85,7 +85,7 @@ int set_rgb_color (int color_number)
     {
 	r = g = b = 0.0;
     }
-    fprintf(PS.fp, "%.2f %.2f %.2f C\n", r, g, b);
+    fprintf(PS.fp, "%.3f %.3f %.3f C\n", r, g, b);
 
     return 0;
 }
@@ -131,7 +131,7 @@ set_color_from_color ( PSCOLOR *pscolor, int color)
 
 int set_ps_color ( PSCOLOR *pscolor )
 {
-    fprintf(PS.fp, "%.2f %.2f %.2f C\n", pscolor->fr, pscolor->fg, pscolor->fb );
+    fprintf(PS.fp, "%.3f %.3f %.3f C\n", pscolor->fr, pscolor->fg, pscolor->fb );
     return 0;
 }
 
