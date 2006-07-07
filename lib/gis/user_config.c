@@ -76,7 +76,7 @@ _make_toplevel (void)
     if ( NULL == ( path = G_calloc ( 1, len ) ) ) {
         return NULL;
     }
-    snprintf ( path, len, "%s%s", homedir, "/.grass" );
+    sprintf ( path, "%s%s", homedir, "/.grass" );
 #else
     me = getuid();
     my_passwd = getpwuid (me);
@@ -87,7 +87,7 @@ _make_toplevel (void)
     if (NULL == (path = G_calloc (1, len)))
         return NULL;
 
-    snprintf (path, len, "%s%s", my_passwd->pw_dir, "/.grass");
+    sprintf (path, "%s%s", my_passwd->pw_dir, "/.grass");
 #endif
 
     status = lstat (path, &buf);
