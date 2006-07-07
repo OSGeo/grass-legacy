@@ -24,6 +24,7 @@ SUBDIRS = \
 	d.linegraph \
 	d.mapgraph \
 	d.measure \
+	d.menu \
 	d.mon \
 	d.nviz \
 	d.paint.labels \
