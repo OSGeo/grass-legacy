@@ -142,8 +142,8 @@ int popup (FILE *fd, int x, int y, char *msg)
     rightx = leftx + widthx;
 
 /* save what is under this window, so it can be restored */
-    R_panel_save (tempfile1, top, bottom, left, right);
-    R_panel_save (tempfile2, topx, bottomx, leftx, rightx);
+    R_panel_save (tempfile1, top, bottom +1, left, right +1);
+    R_panel_save (tempfile2, topx, bottomx +1, leftx, rightx +1);
 
 /* fill it with white */
     R_standard_color (WHITE);
@@ -396,6 +396,7 @@ int outline_box (int top, int bottom, int left, int right)
     R_cont_abs (right, bottom);
     R_cont_abs (right, top);
     R_cont_abs (left,  top);
+    R_flush();
 
     return 0;
 }
