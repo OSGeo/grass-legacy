@@ -168,6 +168,7 @@ OPENGLLIB           = @OPENGLLIB@
 OPENGLULIB          = @OPENGLULIB@
 OPENGLWM            = @OPENGLWM@
 #USE_GLWM            = @USE_GLWM@
+OPENGL_AQUA         = @OPENGL_AQUA@
 
 #tcl/tk stuff
 TCLINCDIR           = @TCLINCDIR@

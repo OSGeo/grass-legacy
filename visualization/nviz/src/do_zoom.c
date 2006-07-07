@@ -55,7 +55,7 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
     double aspect;
     char pref[64], filename[1024], cmd[1024], cmd2[1024];
     char inform_text[128];
-#if defined(USE_X11) && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS))
+#if USE_X11 && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS))
     int os_w ;
     int os_h ;
 #endif
@@ -74,7 +74,7 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
     aspect = (double) (c_orig-a_orig)/(d_orig-b_orig);
 
 /* create off-screen context if possible */
-#if defined(USE_X11) && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS))
+#if USE_X11 && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS))
     os_w = atoi(argv[2]);
     os_h = atoi(argv[3]);
 
@@ -194,7 +194,7 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
 
     GS_set_viewport(a_orig, c_orig, b_orig, d_orig);
 
-#if defined(USE_X11) && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS))
+#if USE_X11 && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS))
     Destroy_OS_Ctx();
 #endif
 
@@ -210,7 +210,7 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
 *********************************************/
 void swap_os(void)
 {
-#if defined(USE_X11)
+#if USE_X11
 #ifdef HAVE_PBUFFERS
     if (pbuffer)
     {
@@ -269,27 +269,32 @@ int Create_OS_Ctx(int width, int height)
 
 #ifdef HAVE_PBUFFERS
 #if defined(GLX_PBUFFER_WIDTH) && defined(GLX_PBUFFER_HEIGHT)
-    fprintf(stderr, "Creating PBuffer Using GLX 1.3\n");
-
-    fbc = glXChooseFBConfig(dpy, scr, 0, &elements);
-    if (fbc)
+    if (!getenv("GRASS_NO_GLX_PBUFFERS"))
     {
-	pbuf_cnt = 0;
-	pbuf_attrib[pbuf_cnt++] = GLX_PBUFFER_WIDTH;
-	pbuf_attrib[pbuf_cnt++] = width + 1;
-	pbuf_attrib[pbuf_cnt++] = GLX_PBUFFER_HEIGHT;
-	pbuf_attrib[pbuf_cnt++] = height + 1;
+	fprintf(stderr, "Creating PBuffer Using GLX 1.3\n");
 
-	pbuffer = glXCreatePbuffer(dpy, fbc[0], pbuf_attrib);
-	if (pbuffer)
-	    glXMakeContextCurrent(dpy, pbuffer, pbuffer, ctx_orig);
+	fbc = glXChooseFBConfig(dpy, scr, 0, &elements);
+	if (fbc)
+	{
+	    pbuf_cnt = 0;
+	    pbuf_attrib[pbuf_cnt++] = GLX_PBUFFER_WIDTH;
+	    pbuf_attrib[pbuf_cnt++] = width + 1;
+	    pbuf_attrib[pbuf_cnt++] = GLX_PBUFFER_HEIGHT;
+	    pbuf_attrib[pbuf_cnt++] = height + 1;
+
+	    pbuffer = glXCreatePbuffer(dpy, fbc[0], pbuf_attrib);
+	    if (pbuffer)
+		glXMakeContextCurrent(dpy, pbuffer, pbuffer, ctx_orig);
+	}
     }
 #endif
 #endif
+
 #ifdef HAVE_PIXMAPS
 #ifdef HAVE_PBUFFERS
     if (!pbuffer)
 #endif
+    if (!getenv("GRASS_NO_GLX_PIXMAPS"))
     {
 	fprintf(stderr, "Create PixMap Using GLX 1.1\n");
 

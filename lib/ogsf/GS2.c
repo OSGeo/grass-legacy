@@ -16,15 +16,22 @@
 #include <string.h>
 #include <math.h>
 
-#include <grass/gis.h>
+#include <grass/config.h>
 
+#ifdef OPENGL_AQUA
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#else
+#include <GL/gl.h>
+#include <GL/glu.h>
+#endif
+
+#include <grass/gis.h>
 #include <grass/gstypes.h>
+
 #include "gsget.h"
 #include "rowcol.h"
 #include "rgbpack.h"
-
-#include "GL/gl.h"
-#include "GL/glu.h"
 
 #ifdef TRACE_FUNCS
 #define TRACE_GS_FUNCS

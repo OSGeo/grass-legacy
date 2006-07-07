@@ -1,6 +1,5 @@
 #define TRACE_GS_FUNCS
 /*----------------- this is the include file section -----------------*/
-#define SGI
 /*
 */
 
@@ -8,17 +7,18 @@
 #include <string.h>
 #include <math.h>
 #include <tk.h>
-#include <grass/gis.h>
-#ifdef SGI
-/*#include <gl.h>*/
+
+#include <grass/config.h>
+
+#ifdef OPENGL_AQUA
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#else
 #include <GL/gl.h>
-/*#include <gl/glws.h>*/
+#include <GL/glu.h>
 #endif
-/*
-#include <X11/Xirisw/GlxMDraw.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-*/
+
+#include <grass/gis.h>
 #include <grass/gsurf.h>
 #include <grass/gstypes.h>
 

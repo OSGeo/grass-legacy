@@ -5,7 +5,15 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "GL/glu.h"
+
+#ifdef OPENGL_AQUA
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#else
+#include <GL/gl.h>
+#include <GL/glu.h>
+#endif
+
 #include <grass/gis.h>
 #include <grass/gstypes.h>
 #include "rgbpack.h"

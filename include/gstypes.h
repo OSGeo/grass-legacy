@@ -10,9 +10,14 @@
 #ifndef _GSTYPES_H
 #define _GSTYPES_H
 
+#include <grass/config.h>
 #include <grass/gsurf.h>
 #include <grass/bitmap.h>
+#ifdef OPENGL_AQUA
+#include <OpenGL/gl.h>
+#else
 #include <GL/gl.h>
+#endif
 
 /*#define TRACE_FUNCS*/
 /*#define DEBUG*/

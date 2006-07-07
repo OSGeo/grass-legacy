@@ -179,7 +179,7 @@ AC_DEFUN(LOC_PAD,[$1[]ifelse(builtin([eval],len($1) > 23),1,[
 AC_DEFUN(LOC_ARG_WITH,[
 AC_ARG_WITH($1,
 LOC_PAD([  --with-$1])[support $2 functionality (default: ]ifelse([$3],,yes,[$3])[)],,
-[with_$1=]ifelse([$3],,yes,[$3]))
+[with_]patsubst([$1], -, _)[=]ifelse([$3],,yes,[$3]))
 ])
 
 AC_DEFUN(LOC_ARG_WITH_INC,[
