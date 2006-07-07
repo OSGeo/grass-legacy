@@ -45,6 +45,7 @@ Cleanup:
 
    rm -f make.pl pm_to_blib Makefile.PL Makefile_grass grass_wrap.c Grass.pm
    rm -rf blib raster vector
+   rm -f *.o Grass.bs
 
 ##############
 Ref:
