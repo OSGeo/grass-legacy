@@ -29,6 +29,7 @@
 #include "global.h"
 #include <grass/gprojects.h>
 #include <grass/glocale.h>
+#include <gdal_version.h> /* needed for OFTDate */
 
 int geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_area, int type, int mk_centr );
 int centroid(OGRGeometryH hGeom, CENTR *Centr, SPATIAL_INDEX *Sindex, int field, int cat, double min_area, int type);
@@ -629,8 +630,10 @@ main (int argc, char *argv[])
 		    G_warning (_("Writing column <%s> with fixed length %d chars (may be truncated)"), Ogr_fieldname, OFTIntegerListlength);
 		} else if( Ogr_ftype == OFTReal ) {
 		    sprintf (buf, ", %s double precision", Ogr_fieldname );
+#if GDAL_VERSION_NUM >= 1320
 		} else if( Ogr_ftype == OFTDate ) {
 		    sprintf (buf, ", %s date", Ogr_fieldname );
+#endif
 		} else if( Ogr_ftype == OFTString ) {
 		    int fwidth;
 		    fwidth = OGR_Fld_GetWidth(Ogr_field);
@@ -703,7 +706,11 @@ main (int argc, char *argv[])
 		    if( OGR_F_IsFieldSet( Ogr_feature, i ) ) {
 			if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) {
 			    sprintf (buf, ", %s", OGR_F_GetFieldAsString( Ogr_feature, i) );
+#if GDAL_VERSION_NUM >= 1320
 			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList || Ogr_ftype == OFTDate ) {
+#else
+			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList ) {
+#endif
 			    db_set_string ( &strval,  (char *) OGR_F_GetFieldAsString( Ogr_feature, i) );
 			    db_double_quote_string (&strval);
 			    sprintf (buf, ", '%s'", db_get_string(&strval) );
@@ -713,7 +720,11 @@ main (int argc, char *argv[])
 			/* G_warning (_("Column value not set" )); */
 			if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) {
 			    sprintf (buf, ", NULL" );
+#if GDAL_VERSION_NUM >= 1320
 			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList || Ogr_ftype == OFTDate ) {
+#else
+			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList ) {
+#endif
 			    sprintf (buf, ", ''" );
 			}
 		    }
