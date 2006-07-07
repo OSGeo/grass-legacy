@@ -353,11 +353,11 @@ int eval_val(int tab, int row, int col, SQLPVALUE * inval, SQLPVALUE *val)
 	  if( val->type == SQLP_I ){
 	    val->d = (double)val->i;
 	    val->s = (char*)G_malloc (32*sizeof(char));
-	    snprintf( val->s, 32*sizeof(char), "%d", val->i );
+	    sprintf( val->s, "%d", val->i );
 	  }else if( val->type == SQLP_D ){
 	    val->i = (int)val->d;
 	    val->s = (char*)G_malloc (32*sizeof(char));
-	    snprintf( val->s, 32*sizeof(char), "%g", val->d );
+	    sprintf( val->s, "%g", val->d );
 	  }else if( val->type == SQLP_S ){
 	    val->i = atoi( val->s );
 	    val->d = atof( val->s );
