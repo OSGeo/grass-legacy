@@ -7,11 +7,11 @@
 /*****************************************************************************/
 
 #include <stdlib.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "param.h"
 #include "nrutil.h"
 
-/* uncomment for debug output */
-/* #define DEBUG */
 
 void process(void)
 {
@@ -64,18 +64,16 @@ void process(void)
     if ((region.ew_res/region.ns_res >= 1.01) || /* If EW and NS resolns are	*/
 	(region.ns_res/region.ew_res >= 1.01))   /* >1% different, warn user.	*/
     {
-	G_warning("E-W and N-S grid resolutions are different. Taking average.");
+	G_warning(_("E-W and N-S grid resolutions are different. Taking average."));
 	resoln = (region.ns_res + region.ew_res)/2;
     }
     else
 	resoln = region.ns_res;
 
 
-
     /*--------------------------------------------------------------------------*/
     /*              RESERVE MEMORY TO HOLD Z VALUES AND MATRICES		*/
     /*--------------------------------------------------------------------------*/ 
-
 
     row_in = (DCELL *) G_malloc(ncols*sizeof(DCELL)*wsize);
 					/* Reserve `wsize' rows of memory.	*/
@@ -85,10 +83,10 @@ void process(void)
     else
       featrow_out = G_allocate_raster_buf(CELL_TYPE); /* Initialise output row buffer. 	*/
 
-    window_ptr = (DCELL *) G_malloc(wsize*wsize*sizeof(DCELL));	
+    window_ptr = (DCELL *) G_malloc(SQR(wsize) * sizeof(DCELL));	
 					/* Reserve enough memory for local wind.*/
 
-    weight_ptr = (double *) G_malloc(wsize*wsize*sizeof(double));	
+    weight_ptr = (double *) G_malloc(SQR(wsize) * sizeof(double));	
 					/* Reserve enough memory weights matrix.*/
 
     normal_ptr = dmatrix(0,5,0,5);	/* Allocate memory for 6*6 matrix	*/
@@ -166,14 +164,11 @@ void process(void)
 
 					/* Express all window values relative	*/
 					/* to the central elevation.		*/
-
 		    *(window_ptr+(wind_row*wsize)+wind_col) = 
 			*(row_in+(wind_row*ncols)+col+wind_col-EDGE) - centre;
 
 
-
     	    /*--- Use LU back substitution to solve normal equations. ---*/
-
 	    find_obs(window_ptr,obs_ptr,weight_ptr);
 
     	    			/*	disp_wind(window_ptr); 
@@ -198,7 +193,6 @@ void process(void)
 	    }			
 
 	    /*--- Calculate terrain parameter based on quad. coefficients. ---*/
-
 	    if (mparam == FEATURE)
 		*(featrow_out+col) = (CELL)feature(obs_ptr);
 	    else
@@ -206,10 +200,10 @@ void process(void)
 
 	    if (mparam == ELEV)
 		*(row_out+col) += centre;	/* Add central elevation back */
-#ifdef DEBUG
- fprintf(stderr,"FEATURE: %i",featrow_out[9]);
-#endif	
+
+            G_debug(1, "FEATURE: %i", featrow_out[9]);
 	}
+
 	if (mparam != FEATURE)
 	   G_put_raster_row(fd_out,row_out,DCELL_TYPE); /* Write the row buffer to the output	*/
 					/* raster.				*/
@@ -241,6 +235,7 @@ void process(void)
       G_free(row_out);
     else
       G_free(featrow_out);
+
     G_free(window_ptr);
     free_dmatrix(normal_ptr,0,5,0,5);
     free_dvector(obs_ptr,0,5);
