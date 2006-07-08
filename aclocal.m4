@@ -872,10 +872,52 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    CC_SEARCH_FLAGS=""
 	    LD_SEARCH_FLAGS=""
 	    ;;
-	NetBSD-*|FreeBSD-[[1-2]].*)
+	NetBSD-*)
+	    # NetBSD has ELF.
+	    SHLIB_CFLAGS="-fPIC"
+	    SHLIB_LD="ld -Bshareable -x"
+	    SHLIB_LD_LIBS="${LIBS}"
+	    SHLIB_SUFFIX=".so"
+	    LDFLAGS='-Wl,-rpath,${LIB_RUNTIME_DIR} -export-dynamic'
+	    CC_SEARCH_FLAGS='-Wl,-rpath,${LIB_RUNTIME_DIR}'
+	    LD_SEARCH_FLAGS='-rpath ${LIB_RUNTIME_DIR}'
+	    if test "${GRASS_THREADS}" = "1" ; then
+		# The -pthread needs to go in the CFLAGS, not LIBS
+		LIBS=`echo $LIBS | sed s/-pthread//`
+		EXTRA_CFLAGS="-pthread"
+		LDFLAGS="$LDFLAGS -pthread"
+	    fi
+	    # NetBSD doesn't handle version numbers with dots.
+	    UNSHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.a'
+	    SHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.so',
+	    GRASS_LIB_VERSIONS_OK=nodots
+	    ;;
+	OpenBSD-*)
+	    SHLIB_LD="${CC} -shared"
+	    SHLIB_LD_LIBS='${LIBS}'
+	    SHLIB_SUFFIX=".so"
+	    LDFLAGS=""
+	    CC_SEARCH_FLAGS=""
+	    LD_SEARCH_FLAGS=""
+	    AC_MSG_CHECKING(for ELF)
+	    AC_EGREP_CPP(yes, [
+#ifdef __ELF__
+	yes
+#endif
+	    ],
+		[AC_MSG_RESULT(yes)
+		SHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.so.1.0'],
+		[AC_MSG_RESULT(no)
+		SHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.so.1.0']
+	    )
+
+	    # OpenBSD doesn't do version numbers with dots.
+	    UNSHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.a'
+	    GRASS_LIB_VERSIONS_OK=nodots
+	    ;;
+	FreeBSD-[[1-2]].*)
 	    # Not available on all versions:  check for include file.
 	    AC_CHECK_HEADER(dlfcn.h, [
-		# NetBSD/SPARC needs -fPIC, -fpic will not do.
 		SHLIB_CFLAGS="-fPIC"
 		SHLIB_LD="ld -Bshareable -x"
 		SHLIB_LD_LIBS=""
@@ -904,32 +946,6 @@ dnl AC_CHECK_TOOL(AR, ar)
 		LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
 		SHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.a'
 	    ])
-
-	    # FreeBSD doesn't handle version numbers with dots.
-
-	    UNSHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.a'
-	    GRASS_LIB_VERSIONS_OK=nodots
-	    ;;
-	OpenBSD-*)
-	    SHLIB_LD="${CC} -shared"
-	    SHLIB_LD_LIBS='${LIBS}'
-	    SHLIB_SUFFIX=".so"
-	    LDFLAGS=""
-	    CC_SEARCH_FLAGS=""
-	    LD_SEARCH_FLAGS=""
-	    AC_MSG_CHECKING(for ELF)
-	    AC_EGREP_CPP(yes, [
-#ifdef __ELF__
-	yes
-#endif
-	    ],
-		[AC_MSG_RESULT(yes)
-		SHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.so.1.0'],
-		[AC_MSG_RESULT(no)
-		SHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.so.1.0']
-	    )
-
-	    # OpenBSD doesn't do version numbers with dots.
 	    UNSHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.a'
 	    GRASS_LIB_VERSIONS_OK=nodots
 	    ;;
