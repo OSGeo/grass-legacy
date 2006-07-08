@@ -22,9 +22,11 @@
 #include "proto.h"
 #include <grass/glocale.h>
 
+
 int rmdac ( struct Map_info *Out );
 void remove_bridges ( struct Map_info *Map, struct Map_info *Err );
 int prune ( struct Map_info *, int, double );
+
 
 int 
 main (int argc, char *argv[])
@@ -62,9 +64,9 @@ main (int argc, char *argv[])
 	tool_opt->multiple = YES;
 	tool_opt->options = "break,rmdupl,rmdangle,chdangle,rmbridge,chbridge,snap,rmdac,bpol,prune,"
 	                    "rmarea,rmsa";
-        tool_opt->description = "Cleaning tool";
+        tool_opt->description = _("Cleaning tool");
         tool_opt->descriptions = 
-	    	"break;break lines at each intersection;"
+	    	_("break;break lines at each intersection;"
 	    	"rmdupl;remove duplicate lines (pay attention to categories!);"
 	    	"rmdangle;remove dangles, threshold ignored if < 0;"
 		"chdangle;change the type of boundary dangle to line, "
@@ -82,7 +84,7 @@ main (int argc, char *argv[])
        			"changed attachement of centroid), first and last segment of the boundary "
 			"is never changed;"
 		"rmarea;remove small areas, the longest boundary with adjacent area is removed;"
-		"rmsa;remove small angles between lines at nodes";
+		"rmsa;remove small angles between lines at nodes");
 	thresh_opt = G_define_option();
 	thresh_opt ->key = "thresh";
 	thresh_opt ->type =  TYPE_DOUBLE;
@@ -96,8 +98,8 @@ main (int argc, char *argv[])
         no_build_flag->description     = _("Do not rebuild and store the topology at the end");
 
         if (G_parser (argc, argv))
-	    exit(-1); 
-	
+	    exit(EXIT_FAILURE);
+
 	otype = Vect_option_to_types ( type_opt );
 	
 	Vect_check_input_output_name ( in_opt->answer, out_opt->answer, GV_FATAL_EXIT );
@@ -168,52 +170,54 @@ main (int argc, char *argv[])
 	}
 
         /* Print tool table */
-	fprintf (stderr,             "+---------------------------------+---------------+\n" );
-	fprintf (stderr,             "| Tool                            | Threshold     |\n" );
-	fprintf (stderr,             "+---------------------------------+---------------+\n" );
+	G_message(_("+---------------------------------+---------------+"));
+	G_message(_("| Tool                            | Threshold     |"));
+	G_message(_("+---------------------------------+---------------+"));
 	for ( i = 0; i < ntools; i++ ) {
 	    switch ( tools[i] ) {
 		case ( TOOL_BREAK ) :
-	            fprintf (stderr, "| Break                           |" );	    
+	            fprintf(stderr, _("| Break                           |  "));
 		    break;
 		case ( TOOL_RMDUPL ) :
-	            fprintf (stderr, "| Remove duplicates               |" );	    
+	            fprintf(stderr, _("| Remove duplicates               |  "));
 		    break;
 		case ( TOOL_RMDANGLE ) :
-	            fprintf (stderr, "| Remove dangles                  |" );	    
+	            fprintf(stderr, _("| Remove dangles                  |  "));
 		    break;
 		case ( TOOL_CHDANGLE ) :
-	            fprintf (stderr, "| Change type of boundary dangles |" );	    
+	            fprintf(stderr, _("| Change type of boundary dangles |  "));
 		    break;
 		case ( TOOL_RMBRIDGE ) :
-	            fprintf (stderr, "| Remove bridges                  |" );	    
+	            fprintf(stderr, _("| Remove bridges                  |  "));
 		    break;
 		case ( TOOL_CHBRIDGE ) :
-	            fprintf (stderr, "| Change type of boundary bridges |" );	    
+	            fprintf(stderr, _("| Change type of boundary bridges |  "));
 		    break;
 		case ( TOOL_SNAP ) :
-	            fprintf (stderr, "| Snap vertices                   |" );	    
+	            fprintf(stderr, _("| Snap vertices                   |  "));
 		    break;
 		case ( TOOL_RMDAC ) :
-	            fprintf (stderr, "| Remove duplicate area centroids |" );	    
+	            fprintf(stderr, _("| Remove duplicate area centroids |  "));
 		    break;
 		case ( TOOL_BPOL ) :
-	            fprintf (stderr, "| Break polygons                  |" );	    
+	            fprintf(stderr, _("| Break polygons                  |  "));
 		    break;
 		case ( TOOL_PRUNE ) :
-	            fprintf (stderr, "| Prune                           |" );	    
+	            fprintf(stderr, _("| Prune                           |  "));
 		    break;
 		case ( TOOL_RMAREA ) :
-	            fprintf (stderr, "| Remove small areas              |" );	    
+	            fprintf(stderr, _("| Remove small areas              |  "));
 		    break;
 		case ( TOOL_RMSA ) :
-	            fprintf (stderr, "| Remove small angles at nodes    |" );	    
+	            fprintf(stderr, _("| Remove small angles at nodes    |  "));
 		    break;
 	    }
-	    fprintf (stderr, " %13e |\n", threshs[i] );	    
+
+	    G_message(_(" %13e |"), threshs[i]);
 	}
-	fprintf (stderr,             "+---------------------------------+---------------+\n" );
-		    
+
+	G_message(_("+---------------------------------+---------------+"));
+
 	/* open input vector */
         if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
 	     G_fatal_error (_("Could not find input map <%s>"), in_opt->answer);
@@ -230,7 +234,7 @@ main (int argc, char *argv[])
 	Vect_set_fatal_error (GV_FATAL_PRINT);
 	if ( 0 > Vect_open_new (&Out, out_opt->answer, with_z)) {
 	     Vect_close (&In);
-	     exit (1);
+	     exit (EXIT_FAILURE);
 	}
 
 	if ( err_opt->answer ) {
@@ -238,7 +242,7 @@ main (int argc, char *argv[])
 	    if (0 > Vect_open_new (&Err, err_opt->answer, with_z)) {
 		 Vect_close (&In);
 		 Vect_close (&Out);
-		 exit (1);
+		 exit (EXIT_FAILURE);
 	    }
 	    pErr = &Err;
 	} else {
@@ -246,7 +250,7 @@ main (int argc, char *argv[])
 	}
 
 	/* Copy input to output */
-	fprintf (stderr, "Copying vector lines ...\n" );
+	G_message(_("Copying vector lines ..."));
 	Vect_copy_head_data (&In, &Out);
 	Vect_hist_copy (&In, &Out);
 	Vect_hist_command ( &Out );
@@ -259,95 +263,84 @@ main (int argc, char *argv[])
 	Vect_close (&In);
 
 	/* Start with GV_BUILD_NONE and for each tool use unly the necessary level! */
-	fprintf (stderr,         "--------------------------------------------------\n" );
+	G_message(_("--------------------------------------------------"));
 	for ( i = 0; i < ntools ; i++ ) { 
 	    if (  tools[i] == TOOL_RMDAC || tools[i] == TOOL_PRUNE || tools[i] == TOOL_RMAREA ) {
 	        if ( Vect_get_built ( &Out ) >= GV_BUILD_CENTROIDS ) {
 		    Vect_build_partial ( &Out, GV_BUILD_CENTROIDS, NULL );
 		} else {
-	            fprintf (stderr,         "Rebuilding parts of topology ...\n" );
+	            G_message(_("Rebuilding parts of topology ..."));
 		    Vect_build_partial ( &Out, GV_BUILD_CENTROIDS, stderr );
-	            fprintf (stderr,         "--------------------------------------------------\n" );
+	            G_message(_("--------------------------------------------------"));
 		}
 	    } else {
 	        if ( Vect_get_built ( &Out ) >= GV_BUILD_BASE )	{
 		    Vect_build_partial ( &Out, GV_BUILD_BASE, NULL );
 		} else {
-	            fprintf (stderr,         "Rebuilding parts of topology ...\n" );
+	            G_message(_("Rebuilding parts of topology ..."));
 		    Vect_build_partial ( &Out, GV_BUILD_BASE, stderr );
-	            fprintf (stderr,         "--------------------------------------------------\n" );
+	            G_message(_("--------------------------------------------------"));
 		}
 	    }
 
 	    switch ( tools[i] ) {
 		case TOOL_BREAK:
-		    fprintf (stderr, "Tool: Break lines at intersections\n" );
-		    fflush ( stderr );
+		    G_message(_("Tool: Break lines at intersections"));
                     Vect_break_lines ( &Out, otype, pErr, stderr );
 		    break;
 		case TOOL_RMDUPL:
-		    fprintf (stderr, "Tool: Remove duplicates\n" );
-		    fflush ( stderr );
+		    G_message(_("Tool: Remove duplicates"));
                     Vect_remove_duplicates ( &Out, otype, pErr, stderr );
 		    break;
 		case TOOL_RMDANGLE:
-		    fprintf (stderr, "Tool: Remove dangles\n" );
-		    fflush ( stderr );
+		    G_message(_("Tool: Remove dangles"));
                     Vect_remove_dangles ( &Out, otype, threshs[i], pErr, stderr );
 		    break;
 		case TOOL_CHDANGLE:
-		    fprintf (stderr, "Tool: Change type of boundary dangles\n" );
-		    fflush ( stderr );
+		    G_message(_("Tool: Change type of boundary dangles"));
                     Vect_chtype_dangles ( &Out, threshs[i], pErr, stderr );
 		    break;
 		case TOOL_RMBRIDGE:
-		    fprintf (stderr, "Tool: Remove bridges\n" );
-		    fflush ( stderr );
+		    G_message(_("Tool: Remove bridges"));
                     Vect_remove_bridges ( &Out, pErr, stderr );
 		    break;
 		case TOOL_CHBRIDGE:
-		    fprintf (stderr, "Tool: Change type of boundary bridges\n" );
-		    fflush ( stderr );
+		    G_message(_("Tool: Change type of boundary bridges"));
                     Vect_chtype_bridges ( &Out, pErr, stderr );
 		    break;
 		case TOOL_RMDAC:
-		    fprintf (stderr, "Tool: Remove duplicate area centroids\n" );
-		    fflush ( stderr );
+		    G_message(_("Tool: Remove duplicate area centroids"));
                     rmdac ( &Out );
 		    break;
 		case TOOL_SNAP:
-		    fprintf (stderr, "Tool: Snap line to vertex in threshold\n" );
-		    fflush ( stderr );
+		    G_message(_("Tool: Snap line to vertex in threshold"));
                     Vect_snap_lines ( &Out, otype, threshs[i], pErr, stderr );
 		    break;
 		case TOOL_BPOL:
-		    fprintf (stderr, "Tool: Break polygons\n" );
-		    fflush ( stderr );
+		    G_message(_("Tool: Break polygons"));
                     Vect_break_polygons ( &Out, otype, pErr, stderr );
 		    break;
 		case TOOL_PRUNE:
-		    fprintf (stderr, "Tool: Prune lines/boundaries\n" );
-		    fflush ( stderr );
+		    G_message(_("Tool: Prune lines/boundaries"));
                     prune ( &Out, otype, threshs[i] );
 		    break;
 		case TOOL_RMAREA:
-		    fprintf (stderr, "Tool: Remove small areas\n" );
-		    fflush ( stderr );
+		    G_message(_("Tool: Remove small areas"));
                     count = Vect_remove_small_areas ( &Out, threshs[i], pErr, stderr, &size );
-		    fprintf (stderr, "%d areas of total size %g removed\n", count, size );
+		    G_message(_("%d areas of total size %g removed"), count, size );
 		    break;
 		case TOOL_RMSA:
-		    fprintf (stderr, "Tool: Remove small angles at nodes\n" );
-		    fflush ( stderr );
+		    G_message(_("Tool: Remove small angles at nodes"));
                     count = Vect_clean_small_angles_at_nodes ( &Out, otype, pErr, stderr );
-		    fprintf (stderr, "%d modifications done\n", count );
+		    G_message(_("%d modifications done"), count);
 		    break;
 	    }
-	    fprintf (stderr,         "--------------------------------------------------\n" );
+
+	    G_message(_("--------------------------------------------------"));
 	}
 
 	if ( !no_build_flag->answer ) {
-	    fprintf (stderr, "Rebuilding topology for output vector ...\n" );	    
+	    G_message(_("Rebuilding topology for output vector ..."));
 	    Vect_build_partial (&Out, GV_BUILD_NONE, NULL);
 	    Vect_build (&Out, stderr);
 	} else { 
@@ -356,13 +349,11 @@ main (int argc, char *argv[])
 	Vect_close (&Out);
 
 	if ( pErr ) {
-	    fprintf (stderr,         "--------------------------------------------------\n" );
-	    fprintf (stderr, "Building topology for error vector ...\n" );
+	    G_message(_("--------------------------------------------------"));
+	    G_message(_("Building topology for error vector ..."));
 	    Vect_build (pErr, stderr);
 	    Vect_close (pErr);
 	}
 
-	exit(0) ;
+	exit(EXIT_SUCCESS);
 }
-
-

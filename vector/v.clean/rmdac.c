@@ -17,6 +17,8 @@
 #include <stdlib.h> 
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
+
 
 int 
 rmdac ( struct Map_info *Out )
@@ -28,7 +30,7 @@ rmdac ( struct Map_info *Out )
         G_debug (1, "nlines =  %d", nlines );
 
 	ndupl = 0;
-	fprintf (stderr, "Duplicate area centroids: %5d", ndupl ); 
+	fprintf (stderr, _("Duplicate area centroids: %5d"), ndupl);
 	for ( i = 1; i <= nlines; i++ ){ 
 	    if ( !Vect_line_alive ( Out, i ) ) continue;
 
@@ -42,10 +44,10 @@ rmdac ( struct Map_info *Out )
 		Vect_delete_line (Out, i); 
 		ndupl++;
 		
-	        fprintf (stderr, "\rDuplicate area centroids: %5d", ndupl ); 
-		fflush ( stderr );
+	        fprintf (stderr, _("\rDuplicate area centroids: %5d"), ndupl);
 	    }
 	}
+
 	fprintf (stderr, "\n" ); 
 
 	return 1;
