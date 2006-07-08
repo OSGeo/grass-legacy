@@ -12,6 +12,7 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
+
 void interface(int argc, char **argv) 
 {
     /*--------------------------------------------------------------------------*/
@@ -170,8 +171,8 @@ void interface(int argc, char **argv)
 
     mapset_out = G_mapset();		/* Set output to current mapset.	*/
 
-    if (!G_legal_filename(rast_out_name))
-	G_fatal_error(_("[%s] is an illegal name"), rast_out_name);
+    /* make sure input and output names are valid */
+    G_check_input_output_name(rast_in_name, rast_out_name, GR_FATAL_EXIT);
 
     /*--------------------------------------------------------------------------*/
     /*                 CHECK WINDOW SIZE IS NOT EVEN OR TOO LARGE		*/

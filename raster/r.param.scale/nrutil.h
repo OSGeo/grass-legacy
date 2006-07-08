@@ -42,8 +42,7 @@ extern int iminarg1,iminarg2;
 
 #define SIGN(a,b) ((b) >= 0.0 ? fabs(a) : -fabs(a))
 
-void nrwarn(char warn_text[]);
-void nrerror(char error_text[]);
+
 float *vector(int nl, int nh);
 int *ivector(int nl, int nh);
 unsigned char *cvector(int nl, int nh);
