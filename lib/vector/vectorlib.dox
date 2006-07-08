@@ -77,10 +77,10 @@ Functions:
 Generally, the vector data model is used to describe geographic
 phenomena which may be represented by geometric entities (primitives)
 like points, lines, and areas. The GRASS vector data model includes
-the description of topology, where besides the coordinates which are
-describing the location of the points, lines, boundaries and centroids
-also their spatial relations are stored. In general, topological GIS
-require a data structure where common boundary between two adjacent
+the description of topology, where besides the coordinates 
+describing the location of the points, lines, boundaries and centroids,
+their spatial relations are also stored. In general, topological GIS
+require a data structure where the common boundary between two adjacent
 areas is stored as a single line, simplifying the map maintenance.
 
 
@@ -92,20 +92,20 @@ vector format.
 This description covers the new GRASS 6 vector library architecture.
 This new architecture overcomes the vector limitations of GRASS
 4.x-5.4.x by extending the vector support with attributes stored in
-external relational databases and by new 3D capabilities. Besides
+external relational databases, and by new 3D capabilities. Besides
 internal file based storage the geometry may alternatively be stored
-in PostGIS database. This enables users to maintain large data sets
+in a PostGIS database. This enables users to maintain large data sets
 with simultaneous write access. External GIS formats such as
-SHAPE-files may be used directly without necessity of format
+SHAPE-files may be used directly, without requiring format
 conversion.
 
-Current implemented are:   
+The current implementation includes:   
 
 <ul>
 <li> multi-layer: features in one vector may represent more layers and 
     may be linked to more external tables (\ref vlib_categories_layers);
 <li> 2D and 3D vector geometry with topology (see \ref  vlib_topology_management);
-<li> multi-format: external data formats supported (SHAPE- file, OGR sources etc.);
+<li> multi-format: external data formats supported (SHAPE-file, OGR sources etc.);
 <li> portability: platform independent internal format, readable on 32bit,
       64bit etc. computer architectures;
 <li> integrated Directed Graph Library (\ref dglib): support for vector network analysis;
@@ -132,15 +132,15 @@ GRASS vector maps are stored in an arc-node representation, consisting
 of curves called arcs. An arc is stored as a series of x,y,z
 coordinate pairs. The two endpoints of an arc are called nodes. Two
 consecutive x,y,z pairs define an arc segment. The user specifies the
-type on input to GRASS, GRASS doesn't decide. GRASS allows for the
-line definition which allows for the multiple type to co-exist in the
+type of input to GRASS; GRASS doesn't decide. GRASS allows for the
+line definition which allows for multiple types to co-exist in the
 same map. Centroid are assigned to area it is within/inside
 (geometrically). An area is identified by an x,y,z centroid point
 geometrically inside with a category number (ID). This identifies the
 area. Such centroids are stored in the same binary 'coor' file with
 other primitives. Each element may have none, one or more categories
 (cats). More cats are distinguished by field number (field). Single
-and multi-category support on modules level is
+and multi-category support on modules level are
 implemented. Z-coordinate is optional and both 2d and 3d files may be
 written.
 
@@ -153,7 +153,7 @@ Besides internal library functions there are two main libraries:
 <li> DGLib (Directed Graph Library), see \ref dglib
 </ul>
 
-For historical reasons, there are internally two libraries for vector:
+For historical reasons, there are two internal libraries for vector:
 
 <ul>
 <li> diglib, dig_*(), DIGLIB, libdig.a, digit library, grass3.x, 4.x<BR>
@@ -274,7 +274,7 @@ The body consists of line records:
 
 \subsubsection head_file_format head file format
 
-The file is unordered list of key/value entries. The <I>key</I>
+The file is an unordered list of key/value entries. The <I>key</I>
 is a string separated from <I>value</I> by a colon and optional
 whitespace. Key words are:<BR>
 
@@ -386,8 +386,8 @@ This is handled correctly in GRASS: A can be filled, B filled differently.
 +---------+
 \endverbatim
 
-In GRASS, whenever 'inner' ring touches the boundary of outside area, even in
-one point, it is no more 'inner' ring, it is simply another area.
+In GRASS, whenever an 'inner' ring touches the boundary of an outside area, even in
+one point, it is no longer an 'inner' ring, it is simply another area.
 A, B above can never be exported from GRASS as polygon A with inner ring B
 because there are only 2 areas A and B and no island.
 
@@ -422,14 +422,14 @@ Topology is generated for all kinds of vector types.  Memory is not
 released by default. The programmer can force the library to release
 the memory by using Vect_set_release_support(). But: The programmer
 cannot run Vect_set_release_support() in mid process because all
-vectors are needed in the spatial index is needed to build topology.
+vectors are needed in the spatial index, which is needed to build topology.
 
-Topology is also necessary for points in case of vector network
-because the graph is built using topology informations about lines
+Topology is also necessary for points in case of a vector network
+because the graph is built using topology information about lines
 and points.
 
 The topology structure does not only store the topology but also
-'line' bounding box and line offset in coor file (index).
+the 'line' bounding box and line offset in coor file (index).
 The existing spatial index is using line ID in 'topology' structure
 to identify lines in 'coor' file. Currently it is not possible to build
 spatial index without topology.
@@ -440,16 +440,16 @@ spatial index without topology.
 Spatial index (based on R-tree) is calculated on the fly.
 
 Spatial index occupies a lot of memory but it is necessary for 
-topology building. Also, it takes long time to release the memory
+topology building. Also, it takes a long time to release the memory
 occupied by spatial index (dig_spidx_free()). 
 
 The function building topology (Vect_build()) is usually called 
-at the end of module (before Vect_close()) so it is faster to call
+at the end of modules (before Vect_close()) so it is faster to call
 exit() and operating system releases all the memory much faster.
 By default the memory is not released.
 
 It is possible to call Vect_set_release_support() before Vect_close()
-to enforce memory release, but it takes long time on large files.
+to enforce memory release, but it takes a long time on large files.
 
 Currently most of the modules do not release the memory occupied for
 spatial index and work like this (pseudocode):
@@ -482,9 +482,9 @@ main
 }
 \endverbatim
 
-but it only takes longer time. 
+but it takes longer. 
 <P>
-It make sense to release spatial index if it is used only at the beginning
+It make sense to release the spatial index if it is used only at the beginning
 of a module or in permanently running programs like QGIS.
 For example:
 
@@ -532,48 +532,48 @@ TINs are simply created as 2D/3D vector polygons consisting of
 
 The old GRASS 4.x 'dig_cats' files are not used any more and
 vectors' attributes are stored in external database.
-Connection with database is done through drivers based on DBMI library
-(odbc, dbf, PostgreSQL and MySQL drivers are available at this time). Records in table
+Connection with the database is done through drivers based on DBMI library
+(odbc, dbf, PostgreSQL and MySQL drivers are available at this time). Records in a table
 are linked to vector entities by field and category number. 
 The field identifies table and the category identifies record.
-I.e., for unique combination map+mapset+field+category exists one
+I.e., for any unique combination map+mapset+field+category, there exists one
 unique combination driver+database+table+row.
 <P>
-For each pair <B>map + field</B> must be defined <B>table, key column,
-database, driver</B>. This definition must be written to $MAPSET/DB text file.
-Each row in DB file contains names separated by spaces in following order
+For each pair <B>map + field</B>, all of <B>table, key column,
+database, driver</B> must be defined. This definition must be written to $MAPSET/DB text file.
+Each row in the DB file contains names separated by spaces in following order
 ([] - optional): <BR><BR>
 
 \verbatim
 map[@mapset] field table [key [database [driver]]]
 \endverbatim
 
-If key, database or driver are omited (on second and higher row only)
-last definition is used. Definition from DB file in other mapset
-may be overwritten by definition in current mapset if mapset is specified 
+If key, database or driver are omitted (on second and higher row only)
+the last definition is used. Definitions from DB file in other mapsets
+may be overwritten by a definition in the current mapset if mapset is specified 
 with map name.
 <P>
 Wild cards <B>*</B> and <B>?</B> may be used in map and mapset names.
 <P>
 Variables <B>$GISDBASE, $LOCATION, $MAPSET, $MAP, $FIELD</B>
 may be used in table, key, database and driver names. Note that
-$MAPSET is not current mapset but mapset of the map the rule is defined for.
+$MAPSET is not the current mapset but mapset of the map the rule is defined for.
 
-<P>Note that features in GRASS vector may have attributes
+<P>Note that features in GRASS vectors may have attributes
 in different tables or may be without attributes. Boundaries
-forms areas but it may happen that some boundaries are not closed
+form areas but it may happen that some boundaries are not closed
 (such boundaries would not appear in polygon layer).
 Boundaries may have attributes. All types may be mixed in one vector.
 <P>
-Link to the table is permanent and it is stored in 'dbln' file in vector
+The link to the table is permanent and it is stored in 'dbln' file in vector
 directory. Tables are considered to be a part of the vector and g.remove,
 for example, deletes linked tables of the vector.
 Attributes must be joined with geometry.
 
 <P>
 <B>Examples:</B>
-Examples are written mostly for dbf driver where database is full path to
-directory with dbf files and table name is name of dbf file without
+Examples are written mostly for the dbf driver, where database is full path to
+the directory with dbf files and table name is the name of dbf file without
 .dbf extension.
 
 <P>
@@ -595,25 +595,25 @@ water* 2 lakes lakeid /home/guser/mydb
 trans* 1 roads key basedb odbc
 trans* 5 rails
 \endverbatim
-These definitions defines more fields for one map i.e. in one map may be more
-features linked to more tables. Definition on first 2 rows are applied for example
+These definitions define more fields for one map i.e. in one map may be more
+features linked to more tables. Definitions on first 2 rows are applied for example
 on maps water1, water2, ... so that more maps may share one table.<BR><BR>
 
 \verbatim
 water@PERMANENT 1 myrivers id /home/guser/mydbf dbf
 \endverbatim
-This definion overwrites definition saved in PERMANENT/DB and 
-links map from PERMANENT mapset to user's table.
+This definion overwrites the definition saved in PERMANENT/DB and 
+links the water map from PERMANENT mapset to the user's table.
 
 <P>
-Modules should be written so that connections to database for each
+Modules should be written so that connections to databases for each
 vector field are independent. It should be possible to read attributes
-of input map from one database and write to some other and even with
+of an input map from one database and write to some other and even with
 some other driver (should not be such problem). 
 
 <P>
-There are open questions however. For example how to distinguish when
-new table should be written and when not. For example definitions:<BR>
+There are open questions, however. For one, how does one distinguish when
+new tables should be written and when not? For example, definitions:<BR>
 \verbatim
 river 1 river id water odbc
 river.backup* 1 NONE
@@ -627,8 +627,8 @@ map river because table is stored in reliable RDBMS.
 The Directed Graph Library or DGLib (Micarelli 2002,
 \ref dglib , http://grass.itc.it/dglib/) provides functionality for vector network
 analysis. This library released under GPL is hosted by the GRASS project (in
-the CVS server within the GRASS source code). As stand-alone library it
-may also be used by other software project.
+the CVS server within the GRASS source code). As a stand-alone library it
+may also be used by other software projects.
 
 The Directed Graph Library library provides functionality to assign costs to
 lines and/or nodes. That means that costs can be accumulated while traveling
@@ -655,7 +655,7 @@ Related vector functions are:
 \section vlibascii Vector ASCII Format Specifications
 
 The ASCII format is (currently) explained in the
-manual page of v.in.ascii, file:
+manual page of v.in.ascii, which is defined in the file:
 
 vector/v.in.ascii/description.html
 
@@ -675,9 +675,9 @@ works on map= at in grass5.0 but if program (system) crashes or treshold was
 specified incorrectly and vector was not backuped, data were lost. 
 In this case map= option should be replaced by input= and output=
 <P>
-Topology is always build by default if coor file was modified.
+Topology is always built by default if the coor file was modified.
 <P>
-Dimension is kept. Input 2D vector is written as 2D, 3D as 3D.
+Dimensionality is generally kept. Input 2D vector is written as 2D, 3D as 3D.
 There are a few modules which change the dimension on purpose.
 
 \subsection vectmodulesopt Modules parameters/flags
