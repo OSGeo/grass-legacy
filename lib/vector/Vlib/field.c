@@ -383,7 +383,7 @@ Vect_read_dblinks ( struct Map_info *Map )
     G_debug (3, "Searching for FID column in OGR DB");
     if ( Map->format == GV_FORMAT_OGR ) {
 
-#if GDAL_VERSION_NUM >= 9999 /* activate once OGR_L_GetFIDColumn() is working */
+#if GDAL_VERSION_NUM > 1320 /* seems to be fixed after 1320 release */
 	int i, layer, nLayers;
 	OGRDataSourceH Ogr_ds;
 	OGRLayerH Ogr_layer=NULL;
@@ -504,7 +504,7 @@ Vect_read_dblinks ( struct Map_info *Map )
 	         }
 	     }
 	}
-#endif /* GDAL_VERSION_NUM >= 1320 */
+#endif /* GDAL_VERSION_NUM > 1320 */
 	return ( 1 );
     } else if ( Map->format != GV_FORMAT_NATIVE ) {
 	G_fatal_error (_("Don't know how to read links for format %d"), Map->format );
