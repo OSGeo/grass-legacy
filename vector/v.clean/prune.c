@@ -17,6 +17,8 @@
 #include <stdlib.h> 
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
+
 
 /* Pruning of boundaries MUST NOT destroy topology of areas. This is guaranteed by 3 rules:
  *
@@ -52,7 +54,7 @@ prune ( struct Map_info *Out, int otype, double thresh )
 
         G_debug (1, "nlines =  %d", nlines );
 
-	fprintf (stderr, "Removed vertices: %5d", nremoved ); 
+	fprintf (stderr, _("Removed vertices: %5d"), nremoved);
 	for ( line = 1; line <= nlines; line++ ){ 
 	    
 	    if ( !Vect_line_alive ( Out, line ) ) continue;
@@ -170,18 +172,16 @@ prune ( struct Map_info *Out, int otype, double thresh )
 		G_debug ( 4, "%d vertices removed", norig - TPoints->n_points );
 	    }
 		
-	    fprintf (stderr, "\rRemoved vertices: %5d", nremoved ); 
+	    fprintf (stderr, _("\rRemoved vertices: %5d"), nremoved);
 	    fflush ( stderr );
 	}
-	fprintf (stderr, "\n" ); 
-	fprintf (stderr, "%d vertices from input %d (vertices of given type) removed, i.e. %.2f %%\n",
-	                 nremoved, nvertices, 100.0*nremoved/nvertices ); 
+
+	G_message(_("\n%d vertices from input %d (vertices of given type) removed, i.e. %.2f %%"),
+	                 nremoved, nvertices, 100.0*nremoved/nvertices);
 
 	if ( not_pruned_lines > 0 )
-	    fprintf (stderr, "%d boundaries not pruned because pruning would damage topology.\n", 
+	    G_message(_("%d boundaries not pruned because pruning would damage topology."), 
 		              not_pruned_lines);
 
 	return 1;
 }
-
-
