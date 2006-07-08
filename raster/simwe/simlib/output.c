@@ -22,7 +22,6 @@ int output_data(int tt, double ft)
    int      i,iarc,j;
    float    gsmax=0,dismax=0.,gmax=0.,ermax=-1.e+12,ermin=1.e+12;
    double   zx, zy, zd, sinsl;
-   char     msg[100];
    struct  Colors colors;
    struct History hist, hist1; /* hist2, hist3, hist4, hist5*/
    char    *depth0=NULL,*disch0=NULL,*err0=NULL;
@@ -47,7 +46,7 @@ int output_data(int tt, double ft)
   if (outwalk != NULL)
   {
       if (ts == 1) {
-        sprintf(buf,"%s.%.*d",outwalk,ndigit,tt);
+        sprintf(buf,"%s%.*d",outwalk,ndigit,tt);
 	outwalk0 = G_store(buf);
 	fdoutwalk = G_fopen_sites_new (outwalk0);
       }
@@ -55,10 +54,7 @@ int output_data(int tt, double ft)
 	fdoutwalk = G_fopen_sites_new (outwalk);
 
     if (fdoutwalk == NULL)
-    {
-      sprintf (msg, "Cannot open %s", outwalk);
-      G_fatal_error (msg);
-    }
+      G_fatal_error ("Cannot open %s", outwalk);
     else
     {
     if(NULL == (sd = G_site_new_struct(-1,2,0,1)))
@@ -100,11 +96,7 @@ int output_data(int tt, double ft)
 	else
       fd6 = G_open_fp_cell_new (depth);
       if (fd6 < 0)
-           {
-           sprintf (msg, "unable to create raster map %s", depth);
-           G_fatal_error (msg);
-                  exit(1);
-           }
+           G_fatal_error ("unable to create raster map %s", depth);
        }
 
    if (disch != NULL)
@@ -118,11 +110,7 @@ int output_data(int tt, double ft)
 	else
       fd7 = G_open_fp_cell_new (disch);
       if (fd7 < 0)
-           {
-           sprintf (msg, "unable to create raster map %s", disch);
-           G_fatal_error (msg);
-                  exit(1);
-           }
+           G_fatal_error("unable to create raster map %s", disch);
        }
 
    if (err != NULL)
@@ -137,11 +125,7 @@ int output_data(int tt, double ft)
       fd8 = G_open_fp_cell_new (err);
 
       if (fd8 < 0)
-           {
-           sprintf (msg, "unable to create raster map %s", err);
-           G_fatal_error (msg);
-                  exit(1);
-           }
+           G_fatal_error ("unable to create raster map %s", err);
        }
 
 
@@ -157,11 +141,7 @@ int output_data(int tt, double ft)
       fd14 = G_open_fp_cell_new (conc);
 
       if (fd14 < 0)
-           {
-           sprintf (msg, "unable to create raster map %s", conc);
-           G_fatal_error (msg);
-                  exit(1);
-           }
+           G_fatal_error ("unable to create raster map %s", conc);
        }
 
    if (flux != NULL)
@@ -176,11 +156,7 @@ int output_data(int tt, double ft)
       fd15 = G_open_fp_cell_new (flux);
 
       if (fd15 < 0)
-           {
-           sprintf (msg, "unable to create raster map %s", flux);
-           G_fatal_error (msg);
-                  exit(1);
-           }
+           G_fatal_error ("unable to create raster map %s", flux);
        }
 
    if (erdep != NULL)
@@ -195,11 +171,7 @@ int output_data(int tt, double ft)
       fd16 = G_open_fp_cell_new (erdep);
 
       if (fd16 < 0)
-           {
-           sprintf (msg, "unable to create raster map %s", erdep);
-           G_fatal_error (msg);
-                  exit(1);
-           }
+           G_fatal_error ("unable to create raster map %s", erdep);
        }
 
 
@@ -207,15 +179,9 @@ int output_data(int tt, double ft)
            exit(3);
 
      if (my != G_window_rows())
-       {
-       fprintf (stderr, "OOPS: rows changed from %d to %d\n", mx, G_window_rows());
-       exit(1);
-       }
+       G_fatal_error ("OOPS: rows changed from %d to %d\n", mx, G_window_rows());
      if (mx != G_window_cols())
-       {
-       fprintf (stderr, "OOPS: cols changed from %d to %d\n", my, G_window_cols());
-       exit(1);
-       }
+       G_fatal_error ("OOPS: cols changed from %d to %d\n", my, G_window_cols());
 
     for(iarc=0;iarc<my;iarc++)
       {
@@ -349,20 +315,14 @@ int output_data(int tt, double ft)
 
     if (ts == 1) {
 	    if ((mapst = G_find_file("fcell", depth0, "")) == NULL)
-	    {
-	        sprintf(msg, "cannot find file %s", depth0);
-	        G_fatal_error(msg);
-	    }
+	        G_fatal_error("cannot find file %s", depth0);
 	    G_write_colors(depth0, mapst, &colors);
 	    G_quantize_fp_map_range(depth0,mapst,0.,(FCELL)gmax,0,(CELL)gmax);
 	    G_free_colors(&colors);
 	    }
 	else {
 	    if ((mapst = G_find_file("fcell", depth, "")) == NULL)
-	    {
-	        sprintf(msg, "cannot find file %s", depth);
-	        G_fatal_error(msg);
-	    }
+	        G_fatal_error("cannot find file %s", depth);
 	    G_write_colors(depth, mapst, &colors);
 	    G_quantize_fp_map_range(depth,mapst,0.,(FCELL)gmax,0,(CELL)gmax);
 	    G_free_colors(&colors);
@@ -392,10 +352,7 @@ int output_data(int tt, double ft)
 
     if (ts == 1) {
 	    if ((mapst = G_find_file("cell", disch0, "")) == NULL)
-	    {
-	        sprintf(msg, "cannot find file %s", disch0);
-	        G_fatal_error(msg);
-	    }
+	        G_fatal_error ("cannot find file %s", disch0);
 	    G_write_colors(disch0, mapst, &colors);
 	    G_quantize_fp_map_range(disch0,mapst,0.,(FCELL)dismax,0,(CELL)dismax);    
             G_free_colors(&colors);
@@ -403,10 +360,7 @@ int output_data(int tt, double ft)
 	else {
 
 	    if ((mapst = G_find_file("cell", disch, "")) == NULL)
-	    {
-	        sprintf(msg, "cannot find file %s", disch);
-	        G_fatal_error(msg);
-	    }
+	        G_fatal_error ("cannot find file %s", disch);
 	    G_write_colors(disch, mapst, &colors);
 	    G_quantize_fp_map_range(disch, mapst,0.,(FCELL)dismax,0,(CELL)dismax);
 	    G_free_colors(&colors);
@@ -432,10 +386,7 @@ int output_data(int tt, double ft)
 
     if (ts == 1) {
             if ((mapst = G_find_file("cell", flux0, "")) == NULL)
-            {
-                sprintf(msg, "cannot find file %s", flux0);
-		G_fatal_error(msg);
-            }
+                G_fatal_error ("cannot find file %s", flux0);
 	    G_write_colors(flux0, mapst, &colors);
 	    G_quantize_fp_map_range(flux0,mapst,0.,(FCELL)dismax,0,(CELL)dismax);
 	    G_free_colors(&colors);
@@ -443,10 +394,7 @@ int output_data(int tt, double ft)
          else {
 		    
             if ((mapst = G_find_file("cell", flux, "")) == NULL)
-            {
-                sprintf(msg, "cannot find file %s", flux);
-                G_fatal_error(msg);
-            }
+                G_fatal_error ("cannot find file %s", flux);
             G_write_colors(flux, mapst, &colors);
             G_quantize_fp_map_range(flux, mapst,0.,(FCELL)dismax,0,(CELL)dismax);
             G_free_colors(&colors);
@@ -485,10 +433,7 @@ int output_data(int tt, double ft)
 
     if (ts == 1) {
             if ((mapst = G_find_file("cell", erdep0, "")) == NULL)
-            {
-                sprintf(msg, "cannot find file %s", erdep0);
-                G_fatal_error(msg);
-            }
+                G_fatal_error ("cannot find file %s", erdep0);
             G_write_colors(erdep0, mapst, &colors);
             G_quantize_fp_map_range(erdep0,mapst,(FCELL)ermin,(FCELL)ermax,(CELL)ermin,(CELL)ermax);
             G_free_colors(&colors);
@@ -502,10 +447,7 @@ int output_data(int tt, double ft)
         else {
 
             if ((mapst = G_find_file("cell", erdep, "")) == NULL)
-            {
-                sprintf(msg, "cannot find file %s", erdep);
-                G_fatal_error(msg);
-            }
+                G_fatal_error ("cannot find file %s", erdep);
             G_write_colors(erdep, mapst, &colors);
             G_quantize_fp_map_range(erdep, mapst,(FCELL)ermin,(FCELL)ermax,(CELL)ermin,(CELL)ermax);
             G_free_colors(&colors);
@@ -559,10 +501,7 @@ int output_data(int tt, double ft)
 	if (ts == 0) {
     mapst = G_find_file ("cell", disch, "");
     if (mapst == NULL)
-    {
-      fprintf (stderr, "file [%s] not found\n", disch);
-      return -1;
-    }
+      G_fatal_error ("file [%s] not found\n", disch);
     G_short_history (disch, type, &hist);
 	} else
     G_short_history (disch0, type, &hist);
@@ -592,10 +531,7 @@ int output_data(int tt, double ft)
         if (ts == 0) {
     mapst = G_find_file ("cell", flux, "");
     if (mapst == NULL)
-    {
-      fprintf (stderr, "file [%s] not found\n", flux);
-      return -1;
-    }
+      G_fatal_error ("file [%s] not found\n", flux);
     G_short_history (flux, type, &hist);
 	} else
     G_short_history (flux0, type, &hist);
@@ -620,9 +556,6 @@ int output_data(int tt, double ft)
     G_write_history (flux, &hist);
   }
 
-
-
-
    return 1;
 }
 
@@ -636,7 +569,6 @@ int output_et()
    int      i,iarc,j;
    float    etmax=-1.e+12,etmin=1.e+12;
    float    trc;
-   char     msg[100];
    struct  Colors colors;
    char *mapst = NULL;
 /*   char buf[256]; */
@@ -657,11 +589,7 @@ int output_et()
       fd17 = G_open_fp_cell_new (et);
 
       if (fd17 < 0)
-           {
-           sprintf (msg, "unable to create raster map %s", et);
-           G_fatal_error (msg);
-                  exit(1);
-           }
+           G_fatal_error ("unable to create raster map %s", et);
        }
 
    if (tc != NULL)
@@ -676,27 +604,17 @@ int output_et()
       fd13 = G_open_fp_cell_new (tc);
 
       if (fd13 < 0)
-           {
-           sprintf (msg, "unable to create raster map %s", tc);
-           G_fatal_error (msg);
-                  exit(1);
-           }
+           G_fatal_error ("unable to create raster map %s", tc);
        }
 
 
      if(G_set_window (&cellhd) < 0)
-           exit(3);
+           G_fatal_error ("G_set_window");
 
      if (my != G_window_rows())
-       {
-       fprintf (stderr, "OOPS: rows changed from %d to %d\n", mx, G_window_rows());
-       exit(1);
-       }
+       G_fatal_error ("OOPS: rows changed from %d to %d\n", mx, G_window_rows());
      if (mx != G_window_cols())
-       {
-       fprintf (stderr, "OOPS: cols changed from %d to %d\n", my, G_window_cols());
-       exit(1);
-       }
+       G_fatal_error ("OOPS: cols changed from %d to %d\n", my, G_window_cols());
 
     for(iarc=0;iarc<my;iarc++)
       {
@@ -772,10 +690,7 @@ int output_et()
 
 /*    if (ts == 1) {
             if ((mapst = G_find_file("cell", et0, "")) == NULL)
-            {
-                sprintf(msg, "cannot find file %s", et0);
-                G_fatal_error(msg);
-            }
+                G_fatal_error ("cannot find file %s", et0);
             G_write_colors(et0, mapst, &colors);
             G_quantize_fp_map_range(et0,mapst,(FCELL)etmin,(FCELL)etmax,(CELL)etmin,(CELL)etmax);
             G_free_colors(&colors);
@@ -783,10 +698,7 @@ int output_et()
         else { */
 
             if ((mapst = G_find_file("cell", et, "")) == NULL)
-            {
-                sprintf(msg, "cannot find file %s", et);
-                G_fatal_error(msg);
-            }
+                G_fatal_error ("cannot find file %s", et);
             G_write_colors(et, mapst, &colors);
             G_quantize_fp_map_range(et, mapst,(FCELL)etmin,(FCELL)etmax,(CELL)etmin,(CELL)etmax);
             G_free_colors(&colors);
