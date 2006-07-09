@@ -1145,7 +1145,24 @@ fi # $OPENGL_AQUA
 
 if test "$OPENGL_WINDOWS" = 1 ; then
 
-AC_MSG_ERROR([*** --with-opengl=windows is not implemented yet.])
+AC_MSG_WARN([*** --with-opengl=windows is untested.])
+
+# With OpenGL includes directory
+
+LOC_CHECK_INC_PATH(opengl,OpenGL,OPENGLINC)
+
+LOC_CHECK_INCLUDES(GL/gl.h GL/glu.h,OpenGL,$OPENGLINC)
+
+# With OpenGL library directory
+
+LOC_CHECK_LIB_PATH(opengl,OpenGL,OPENGL_LIB_PATH)
+
+LOC_CHECK_LIBS(opengl32,glBegin,OpenGL,$OPENGL_LIB_PATH,OPENGLLIB,,,,)
+
+LOC_CHECK_LIBS(glu32,gluBeginCurve,GLU,$OPENGL_LIB_PATH,OPENGLULIB,$OPENGLLIB,,,)
+
+OPENGLLIB="$OPENGL_LIB_PATH $OPENGLLIB"
+OPENGLULIB="$OPENGL_LIB_PATH $OPENGLULIB"
 
 AC_DEFINE(OPENGL_WINDOWS)
 
