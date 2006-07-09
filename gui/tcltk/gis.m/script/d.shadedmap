@@ -42,5 +42,4 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-
-d.his h_map=$GIS_OPT_DRAPEMAP i_map=$GIS_OPT_RELIEFMAP
+exec d.his "h_map=$GIS_OPT_DRAPEMAP" "i_map=$GIS_OPT_RELIEFMAP"
