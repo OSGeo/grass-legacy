@@ -10,12 +10,12 @@
 
 #include <grass/config.h>
 
-#ifdef OPENGL_AQUA
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
-#else
+#if defined(OPENGL_X11) || defined(OPENGL_WINDOWS)
 #include <GL/gl.h>
 #include <GL/glu.h>
+#elif defined(OPENGL_AQUA)
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
 #endif
 
 #include <grass/gis.h>

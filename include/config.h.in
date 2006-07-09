@@ -212,8 +212,14 @@
 /* define if FFMPEG library exists */
 #undef HAVE_FFMPEG
 
+/* define if OpenGL uses X11 */
+#undef OPENGL_X11
+
 /* define if OpenGL uses Aqua (MacOS X) */
 #undef OPENGL_AQUA
+
+/* define if OpenGL uses Windows */
+#undef OPENGL_WINDOWS
 
 /*
  * configuration information solely dependent on the above

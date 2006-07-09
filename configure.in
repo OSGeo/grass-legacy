@@ -154,8 +154,7 @@ LOC_ARG_WITH(postgres, PostgreSQL)
 LOC_ARG_WITH(mysql, MySQL, no)
 LOC_ARG_WITH(sqlite, SQLite, no)
 LOC_ARG_WITH(ffmpeg, FFMPEG, no)
-LOC_ARG_WITH(opengl, OpenGL/X11)
-LOC_ARG_WITH(opengl-aqua, OpenGL/Aqua, no)
+LOC_ARG_WITH(opengl, OpenGL)
 LOC_ARG_WITH(odbc, ODBC, no)
 LOC_ARG_WITH(fftw, FFTW)
 LOC_ARG_WITH(blas, BLAS, no)
@@ -1054,11 +1053,40 @@ AC_SUBST(FFMPEGLIB)
 OPENGLINC=
 OPENGLLIB=
 OPENGLULIB=
+USE_OPENGL=
+OPENGL_X11=
 OPENGL_AQUA=
+OPENGL_WINDOWS=
 
-LOC_CHECK_USE(opengl,OpenGL,USE_OPENGL)
+AC_MSG_CHECKING(whether to use OpenGL)
+AC_MSG_RESULT("$with_opengl")
+case "$with_opengl" in
+	n|no)
+		OPENGL_TYPE=none
+		;;
+	y|yes|x|x11|glx)
+		OPENGL_TYPE=X11
+		USE_OPENGL=1
+		OPENGL_X11=1
+		;;
+	aqua|mac|osx|macosx|agl)
+		OPENGL_TYPE=Aqua
+		USE_OPENGL=1
+		OPENGL_AQUA=1
+		;;
+	win|windows|mswin|wgl)
+		OPENGL_TYPE=Windows
+		USE_OPENGL=1
+		OPENGL_WINDOWS=1
+		;;
+	*)
+		AC_MSG_ERROR([*** Valid arguments for --with-opengl= are yes,no,x11,aqua,windows.])
+		;;
+esac
 
-if test -n "$USE_OPENGL"; then
+if test -n "$USE_OPENGL" ; then
+
+if test "$OPENGL_X11" = 1 ; then
 
 # With OpenGL includes directory
 
@@ -1083,11 +1111,11 @@ AC_CHECK_FUNC(glXCreatePbuffer, [AC_DEFINE(HAVE_PBUFFERS)])
 AC_CHECK_FUNC(glXCreateGLXPixmap, [AC_DEFINE(HAVE_PIXMAPS)])
 LDFLAGS=${ac_save_ldflags}
 
-else # $USE_OPENGL
+AC_DEFINE(OPENGL_X11)
 
-LOC_CHECK_USE(opengl_aqua,OpenGL/Aqua,USE_OPENGL_AQUA)
+fi # $OPENGL_X11
 
-if test -n "$USE_OPENGL_AQUA"; then
+if test "$OPENGL_AQUA" = 1 ; then
 
 with_opengl_includes=/System/Library/Frameworks/OpenGL.framework/Headers
 with_opengl_libs="-framework OpenGL -framework AGL -framework ApplicationServices"
@@ -1107,20 +1135,32 @@ AC_CHECK_FUNC(gluBeginCurve,[
 OPENGLLIB="$with_opengl_libs"
 USE_OPENGL=1
 OPENGL_AQUA=1
-AC_DEFINE(OPENGL_AQUA)
 ],[AC_MSG_ERROR([*** Unable to locate GLU library.])])
 ],[AC_MSG_ERROR([*** Unable to locate OpenGL library.])])
 LDFLAGS=${ac_save_ldflags}
 
-fi # $USE_OPENGL_AQUA
+AC_DEFINE(OPENGL_AQUA)
+
+fi # $OPENGL_AQUA
+
+if test "$OPENGL_WINDOWS" = 1 ; then
+
+AC_MSG_ERROR([*** --with-opengl=windows is not implemented yet.])
+
+AC_DEFINE(OPENGL_WINDOWS)
+
+fi # $OPENGL_WINDOWS
 
 fi # $USE_OPENGL
 
 AC_SUBST(USE_OPENGL)
+AC_SUBST(OPENGL_X11)
+AC_SUBST(OPENGL_AQUA)
+AC_SUBST(OPENGL_WINDOWS)
+
 AC_SUBST(OPENGLINC)
 AC_SUBST(OPENGLLIB)
 AC_SUBST(OPENGLULIB)
-AC_SUBST(OPENGL_AQUA)
 
 # Done checking OpenGL
 
@@ -1467,6 +1507,7 @@ LOC_MSG([ C++ compiler:                ${CXX} ${CXXFLAGS}])
 LOC_MSG([ FORTRAN compiler:            ${F77}])
 LOC_MSG([ Building shared libraries:   ${shared_ok}])
 LOC_MSG([ 64bit support:               ${do64bit}])
+LOC_MSG([ OpenGL platform:             ${OPENGL_TYPE}])
 LOC_MSG()
 LOC_MSG_USE(NVIZ,USE_TOGL)
 LOC_MSG()
@@ -1486,7 +1527,7 @@ LOC_MSG_USE(MySQL support,USE_MYSQL)
 LOC_MSG_USE(NLS support,USE_NLS)
 LOC_MSG_USE(ODBC support,USE_ODBC)
 LOC_MSG_USE(OGR support,USE_OGR)
-LOC_MSG_USE(OpenGL(R) support,USE_OPENGL)
+LOC_MSG_USE(OpenGL support,USE_OPENGL)
 LOC_MSG_USE(PNG support,USE_PNG)
 LOC_MSG_USE(PostgreSQL support,USE_POSTGRES)
 LOC_MSG_USE(Readline support,USE_READLINE)

@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef USE_X11
+#ifdef OPENGL_X11
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <GL/glx.h>
@@ -34,7 +34,7 @@ static GLXPbuffer pbuffer;
 Pixmap pixmap;
 static GLXPixmap glxpixmap;
 #endif
-#endif /*USE_X11 */
+#endif /* OPENGL_X11 */
 
 extern void swap_togl(void);
 
@@ -55,7 +55,7 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
     double aspect;
     char pref[64], filename[1024], cmd[1024], cmd2[1024];
     char inform_text[128];
-#if USE_X11 && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS))
+#if defined(OPENGL_X11) && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS))
     int os_w ;
     int os_h ;
 #endif
@@ -74,7 +74,7 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
     aspect = (double) (c_orig-a_orig)/(d_orig-b_orig);
 
 /* create off-screen context if possible */
-#if USE_X11 && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS))
+#if defined(OPENGL_X11) && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS))
     os_w = atoi(argv[2]);
     os_h = atoi(argv[3]);
 
@@ -194,7 +194,7 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
 
     GS_set_viewport(a_orig, c_orig, b_orig, d_orig);
 
-#if USE_X11 && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS))
+#if defined(OPENGL_X11) && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS))
     Destroy_OS_Ctx();
 #endif
 
@@ -210,7 +210,7 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
 *********************************************/
 void swap_os(void)
 {
-#if USE_X11
+#ifdef OPENGL_X11
 #ifdef HAVE_PBUFFERS
     if (pbuffer)
     {
@@ -230,7 +230,7 @@ void swap_os(void)
 ********************************************/
 int Create_OS_Ctx(int width, int height)
 {
-#ifdef USE_X11
+#ifdef OPENGL_X11
     int scr;
 
 #ifdef HAVE_PBUFFERS
@@ -351,7 +351,7 @@ int Create_OS_Ctx(int width, int height)
 
     fprintf(stderr, "It appears that X is not available!\n");
     return (-1);
-#endif /* USE_X11 */
+#endif /* OPENGL_X11 */
 }
 
 
@@ -360,7 +360,7 @@ int Create_OS_Ctx(int width, int height)
 *****************************************************/
 int Destroy_OS_Ctx(void)
 {
-#ifdef USE_X11
+#ifdef OPENGL_X11
 #ifdef HAVE_PBUFFERS
     if (pbuffer)
     {
@@ -388,7 +388,7 @@ int Destroy_OS_Ctx(void)
     }
 
 #endif
-#endif /* USE_X11 */
+#endif /* OPENGL_X11 */
     return (1);
 }
 
