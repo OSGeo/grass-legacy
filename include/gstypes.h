@@ -13,10 +13,11 @@
 #include <grass/config.h>
 #include <grass/gsurf.h>
 #include <grass/bitmap.h>
+#if defined(OPENGL_X11) || defined(OPENGL_WINDOWS)
+#include <GL/gl.h>
+#endif
 #ifdef OPENGL_AQUA
 #include <OpenGL/gl.h>
-#else
-#include <GL/gl.h>
 #endif
 
 /*#define TRACE_FUNCS*/

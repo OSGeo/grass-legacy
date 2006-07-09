@@ -168,7 +168,9 @@ OPENGLLIB           = @OPENGLLIB@
 OPENGLULIB          = @OPENGLULIB@
 OPENGLWM            = @OPENGLWM@
 #USE_GLWM            = @USE_GLWM@
+OPENGL_X11          = @OPENGL_X11@
 OPENGL_AQUA         = @OPENGL_AQUA@
+OPENGL_WINDOWS      = @OPENGL_WINDOWS@
 
 #tcl/tk stuff
 TCLINCDIR           = @TCLINCDIR@
