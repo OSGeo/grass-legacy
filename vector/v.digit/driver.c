@@ -39,8 +39,8 @@ int driver_open (void)
     Scale = (n - s) / ( D_get_d_south() - D_get_d_north() );
     G_debug (2, "Scale = %f", Scale);
     /*
-    Xscale = ( Region.east - Region.west ) / ( right - left );
-    Yscale = ( Region.north - Region.south ) / ( top - bot );
+    Xscale = ( GRegion.east - GRegion.west ) / ( right - left );
+    Yscale = ( GRegion.north - GRegion.south ) / ( top - bot );
 
     G_debug (2, "Xscale = %f Yscale = %f", Xscale, Yscale);
     */

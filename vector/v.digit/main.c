@@ -132,9 +132,9 @@ int main (int argc, char *argv[])
     for ( i = 0; i < nbgcmd; i++ ) G_debug (2, "cmd %d : %s", i, Bgcmd[i]);
     
     Tool_next = TOOL_NOTHING;
-    G_get_window(&Region);
-    G_debug (1, "Region: N = %f S = %f E = %f W = %f", Region.north,
-	Region.south, Region.east, Region.west);
+    G_get_window(&GRegion);
+    G_debug (1, "Region: N = %f S = %f E = %f W = %f", GRegion.north,
+	GRegion.south, GRegion.east, GRegion.west);
     
     /* Check driver */
     if (R_open_driver() != 0)
@@ -203,7 +203,7 @@ end ( void )
     Vect_build ( &Map, stdout );
     Vect_close (&Map);
 
-    if( 1 == G_put_window(&Region) )
+    if( 1 == G_put_window(&GRegion) )
 	G_message(_("Region restored to original extent."));
 
     /* clear the screen */
