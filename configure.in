@@ -1157,9 +1157,23 @@ LOC_CHECK_INCLUDES(GL/gl.h GL/glu.h,OpenGL,$OPENGLINC)
 
 LOC_CHECK_LIB_PATH(opengl,OpenGL,OPENGL_LIB_PATH)
 
-LOC_CHECK_LIBS(opengl32,glBegin,OpenGL,$OPENGL_LIB_PATH,OPENGLLIB,,,,)
-
-LOC_CHECK_LIBS(glu32,gluBeginCurve,GLU,$OPENGL_LIB_PATH,OPENGLULIB,$OPENGLLIB,,,)
+ac_save_ldflags="$LDFLAGS"
+ac_save_libs="$LIBS"
+LDFLAGS="$OPENGL_LIB_PATH $LDFLAGS"
+AC_MSG_CHECKING(for OpenGL library)
+LIBS="-lopengl32"
+AC_TRY_LINK([#include <GL/gl.h>],[glEnd();],[
+AC_MSG_RESULT(found)
+OPENGLLIB=-lopengl32
+AC_MSG_CHECKING(for GLU library)
+LIBS="-lglu32 $OPENGLLIB"
+AC_TRY_LINK([#include <GL/glu.h>],[gluNewQuadric();],[
+AC_MSG_RESULT(found)
+OPENGLULIB=-lglu32
+],[AC_MSG_ERROR([*** Unable to locate GLU library.])])
+],[AC_MSG_ERROR([*** Unable to locate OpenGL library.])])
+LIBS=${ac_save_libs}
+LDFLAGS=${ac_save_ldflags}
 
 OPENGLLIB="$OPENGL_LIB_PATH $OPENGLLIB"
 OPENGLULIB="$OPENGL_LIB_PATH $OPENGLULIB"
