@@ -53,7 +53,7 @@ void fatalError(void *map, int *fd, int depths, char *errorMsg)
     /* Close files and exit */
     if (map != NULL) {
 	if (!G3d_closeCell(map))
-	    G3d_fatalError(_("Could not close the map"));
+	    G3d_fatalError(_("Could not close the g3d map"));
     }
 
     if (fd != NULL) {
@@ -68,7 +68,7 @@ void fatalError(void *map, int *fd, int depths, char *errorMsg)
 
 
 /* ************************************************************************* */
-/* Set up the arguments we are expexting ********************************** */
+/* Set up the arguments we are expecting ********************************** */
 /* ************************************************************************* */
 void setParams()
 {
@@ -203,11 +203,6 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-
-    /*Check Input, hmmm normaly not needed, but who knows .... */
-    if (param.output->answer == NULL)
-	G3d_fatalError(_("No output maps"));
-
     G_debug(3, _("Open g3d map <%s>"), param.input->answer);
 
     if (NULL == G_find_grid3(param.input->answer, ""))
@@ -251,7 +246,7 @@ int main(int argc, char *argv[])
 	/*If not equal, set the 3D window correct */
 	if (rows != region.rows || cols != region.cols) {
 	    G_message
-		("The 2d and 3d region settings are different. I will use the 2d window settings to adjust the 2d part of the 3d region.");
+		(_("The 2d and 3d region settings are different. I will use the 2d window settings to adjust the 2d part of the 3d region."));
 	    G_get_set_window(&region2d);
 	    region.ns_res = region2d.ns_res;
 	    region.ew_res = region2d.ew_res;
