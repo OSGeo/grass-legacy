@@ -24,10 +24,10 @@ SUBDIRS = \
 	g.mremove \
 	i.fusion.brovey \
 	i.image.mosaic \
+	i.in.spotvgt \
 	i.landsat.rgb \
 	i.oif \
 	i.spectral \
-	i.in.spotvgt \
 	i.tasscap \
 	m.proj \
 	r.blend \
