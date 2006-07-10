@@ -1,3 +1,11 @@
+gem 1.0
+===========
+possible to pass options to configure script of extension
+GUI entries for d.m and gis.m supported
+fixed annoyances related to temporary files clean-up
+fixed registration of HTML man pages
+fixed several bugs
+
 gem 0.98
 ========
 New argument --options allows user to pass compiler options.
