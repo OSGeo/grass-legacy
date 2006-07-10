@@ -37,6 +37,7 @@ SUBDIRS = \
 	db \
 	display \
 	doc \
+	gem \
 	general \
 	gui \
 	imagery \
@@ -252,6 +253,10 @@ real-install: FORCE
 	-sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/monitorcap > ${INST_DIR}/etc/monitorcap
 	@##### -chmod -R 1777 ${INST_DIR}/locks 2>/dev/null
 	-chmod -R a+rX ${INST_DIR} 2>/dev/null
+	#GEM installation
+	-tar cBf - gem/skeleton | (cd ${INST_DIR}/etc ; tar xBf - ) 2>/dev/null
+	-${INSTALL} gem/gem ${BINDIR} 2>/dev/null
+	
 
 install-strip: FORCE
 	${MAKE} strip
