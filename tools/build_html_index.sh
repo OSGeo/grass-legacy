@@ -11,6 +11,7 @@ EXCLUDEHTML="v\.topo\.check\|i\.ask\|i\.find\|photo\.elev\|photo\.target\|helpte
 
 #fetch the ARCH for store the files:
 ARCH="`cat ../include/Make/Platform.make | grep '^ARCH'  | sed 's+ ++g' | cut -d'=' -f2`"
+GEMDIR="../gem"
 HTMLDIR="../dist.$ARCH/docs/html"
 GRASSVERSION=`cat ../dist.$ARCH/etc/VERSIONNUMBER`
 
@@ -67,6 +68,7 @@ GPL'ed), image processing and geographic information system (GIS).
   <li><a href="displaydrivers.html">Display drivers</a></li>
   <li><a href="variables.html">GRASS variables and environment variables</a></li>
  </ul>
+ <li><a href="gem/index.html">The GRASS Extensions Manager (GEM)</a></li>
 </ul>
 <P>
 
@@ -131,6 +133,10 @@ cp -f grassdocs.css $HTMLDIR/nviz/
 #copy over GRASS logo:
 cp -f grass.smlogo.gif $HTMLDIR/
 cp -f grass.smlogo.gif $HTMLDIR/nviz/
+#copy over GEM docs:
+mkdir -p $HTMLDIR/gem
+cp -f $GEMDIR/docs/GEM-Manual/*.html $HTMLDIR/gem/
+cp -f $GEMDIR/docs/GEM-Manual/img* $HTMLDIR/gem/
 
 #process all HTML pages:
 cd $HTMLDIR
@@ -156,7 +162,7 @@ echo "<tr><td>&nbsp;&nbsp;r3.* </td><td>raster3D commands</td></tr>" >> $FULLIND
 echo "<tr><td>&nbsp;&nbsp;v.*  </td><td>vector commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;nviz </td><td>visualization command</td></tr>" >> $FULLINDEX
 echo "</table>" >> $FULLINDEX
- echo "<p>" >> $FULLINDEX
+echo "<p>" >> $FULLINDEX
 
 #generate main index of all modules:
 echo "[ " >> $FULLINDEX
@@ -240,6 +246,9 @@ echo "<li><a href=\"xganim.html\">xganim</a> tool  for animating a raster map se
 	      
 echo "</ul>" >> $FILENAME
 echo "<p>"   >> $FILENAME
+
+#insert a special comment so that GEM will know where to merge docs of extensions
+echo -e "\n<!-- GEM Extensions StartHTML. Do not delete or change this comment! -->\n" >> $FILENAME
 
 
 #############
