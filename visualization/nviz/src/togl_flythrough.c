@@ -388,9 +388,8 @@ void togl_flythrough_timer_cb(struct Togl *togl)
 double this_time(void)
 {
 	struct timeval tv;
-	struct timezone tz;
 
-	gettimeofday(&tv, &tz);
+	gettimeofday(&tv, NULL);
 	return( (float)tv.tv_sec + ((float)tv.tv_usec/1000000.0) );
 }
 

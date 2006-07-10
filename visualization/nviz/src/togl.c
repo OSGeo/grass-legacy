@@ -129,7 +129,6 @@ typedef struct TkClassProcs
  * mode. */
 #  define MAX_CI_COLORMAP_SIZE 4096
 
-#  if TOGL_USE_FONTS != 1
 /* 
  * copy of TkWinColormap from tkWinInt.h
  */
@@ -144,9 +143,6 @@ typedef struct
     Tcl_HashTable refCounts;    /* Hash table of palette entry reference counts
                                  * indexed by pixel value. */
 } TkWinColormap;
-#  else
-#    include "tkWinInt.h"
-#  endif
 
 static  LRESULT(CALLBACK *tkWinChildProc) (HWND hwnd, UINT message,
         WPARAM wParam, LPARAM lParam) = NULL;
@@ -3024,7 +3020,6 @@ Togl_SetColor(const Togl *togl,
 #if TOGL_USE_FONTS == 1
 
 #  if defined(TOGL_WGL)
-#    include "tkWinInt.h"
 #    include "tkFont.h"
 
 /* 

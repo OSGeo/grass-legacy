@@ -623,12 +623,11 @@ int Nnew_map_obj_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
 
     if (log_name == NULL) {
     char temp_space[80];
-    struct timeval tp;
-    struct timezone tzp;
+    time_t tp;
 
     /* Need to generate a random id */
-    gettimeofday(&tp, &tzp);
-    sprintf(temp_space, "%s*%ld", argv[1], tp.tv_sec);
+    time(&tp);
+    sprintf(temp_space, "%s*%ld", argv[1], tp);
 
     new_data->logical_name =
         (char *) G_malloc (sizeof(char) * (strlen(temp_space) + 1));
