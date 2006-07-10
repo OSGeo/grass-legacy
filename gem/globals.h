@@ -143,6 +143,10 @@ EXTERN char GISMAN2_CMD [MAXSTR];
 EXTERN char HTML_CMD [MAXSTR];
 EXTERN char QGIS_CMD [MAXSTR];
 EXTERN char UNINSTALL_CMD [MAXSTR];
+EXTERN char CONFIG_OPTS [MAXSTR];
+
+/* stores current working directory */
+EXTERN char CWD [MAXSTR];
 
 /* this are used to generate a summary message on exit */
 EXTERN int ERROR; /* error code: set to < 0 on abnormal program exit */

@@ -25,21 +25,26 @@
 /* TODO:
 				
 	for 1.0:
+		
 	
 	EASY STUFF:
-	- include $GISBASE/lib in linker path for compilation of extensions [DONE: see lines preceeding INSTALL action case: 693]
+	- include $GISBASE/lib in linker path for compilation of extensions [NOT FIXED: see lines preceeding INSTALL action case: 693
+										-L is added to command line, but problems still exist]
+		MAYBE EXPORT LD_LIBRARY_PATH ??? (only add $GISBASE/lib if it does not already exist)
+		
 	- finish skeleton files: include necessary make stuff for most popular architectures
 	- make sure that no unnecessary stuff is installed in the top-level Makefile section
 	  for real-install
-	- provide patch for GRASS 6.1 Makefiles
-	- uninstall of binary installed extensions results in truncation of menu.tcl (?)
 	- lots of files in the make system still output to /dev/null (cygwin) !!!
 	- make install action to copy executable GEM to /usr/local or wherever grass61
 	  script gets installed to
-	- installation failure from .tar.gz extensions gives weird messages, related to missing dirs
-
+	- all files installed by GEM and the Makefile sections referring to GEM are chown'd root. Can that be a problem?
 		
 	for 1.2 (GRASS 6.2):
+	- make GRASS store its ./configure command line options in a file in the GISBASE/etc directory, so that
+	  it will be possible for GEM to automatically configure extensions according to the system setup
+	  [this means that configure file needs to be kept in sync with GEM; --configure option can be used
+	   to overwrite this behaviour]
 	- configure script should not fail but disable options and create config.msgs the
 	  contents of this should be displayed and deleted afterwards
 	- check if it works with this Mac version of GRASS, as well: http://openosx.com/grass/
@@ -143,13 +148,13 @@ void show_help ( void ) {
 	fprintf (stdout, "Install a GRASS extension from FILE or DIR.\n");
 	fprintf (stdout, "Manage (installed) GRASS extension(s).\n");
 	fprintf (stdout, "\nPossible ACTIONs are:\n");
-	fprintf (stdout, "  -i, --install=\t\tinstall a GRASS extension\n");
+	fprintf (stdout, "  -i, --install=\tinstall a GRASS extension\n");
 	fprintf (stdout, "  -u, --uninstall=\tremove an extension from GRASS\n");
 	fprintf (stdout, "  -q, --query=\t\tdisplay information about extension/list installed\n");
-	fprintf (stdout, "  -d, --details=\t\tdisplay additional details about an extension\n");		
+	fprintf (stdout, "  -d, --details=\tdisplay additional details about an extension\n");		
 	fprintf (stdout, "  -c, --clean=\t\tclean extension's source code directories\n");
 	fprintf (stdout, "  -t, --test=\t\tconfigure and compile extension, but don't install\n");
-	fprintf (stdout, "  -l, --license=\t\tshow copyright information for an extension\n");
+	fprintf (stdout, "  -l, --license=\tshow copyright information for an extension\n");
 	fprintf (stdout, "  -r, --restore\t\trecreate HTML links and GIS Manager entries\n");	
 	fprintf (stdout, "  -h, --help\t\tdisplay this help and exit\n");
 	fprintf (stdout, "  -V, --version\t\toutput version information and exit\n\n");	
@@ -158,6 +163,7 @@ void show_help ( void ) {
 	fprintf (stdout, "  -b, --binary=NAME\tno compilation: use binary files for system NAME\n");
 	fprintf (stdout, "  -f, --force\t\tforce action, regardless of dependencies\n");
 	fprintf (stdout, "  -v, --verbose\t\tdisplay detailed status information\n");
+	fprintf (stdout, "  -x, --configure=OPTS\tpass OPTS to configure script\n");
 	fprintf (stdout, "  -s, --skip-config\tskip configure script\n");
 	fprintf (stdout, "  -o, --options\t\toptions to pass to the C compiler/linker\n");
 	fprintf (stdout, "\nWhen run from within a GRASS session, locations of libs, header files\n");
@@ -225,6 +231,34 @@ void show_version ( void ) {
 }
 
 
+/* determine options to pass to extension's configure script */
+/* TODO: check, if system configuration meets a set of requirements */
+/* THIS FUNCTION IS CURRENTLY NOT USED */
+void get_configure_options ( char *gisbase ) {
+
+	FILE *fp;
+	char str [MAXSTR];
+
+	if ( strcmp ( CONFIG_OPTS, "" ) ) {
+		/* if user has specified config options on the GEM command line: override anything else */
+		return;
+	}
+	
+	/* check if GISBASE/etc/config.system exists and if so, read options from it */
+	sprintf ( str, "%s/etc/config.system", gisbase );
+	fp = fopen ( str, "r" );
+	if ( fp == NULL ) {
+		print_warning ("could not open %s for read access. Using default configure options.\n", str );
+		return;
+	}
+
+	/* config.system may also contain nothing, only comments and/or whitespace */	
+	if ( nc_fgets_nb ( str, MAXSTR, fp )  != NULL ) {
+		strcpy ( CONFIG_OPTS, str );
+	}
+}
+
+
 int main (int argc, char *argv[]) {
 	char *gisbase;
 	char *grass_version;	
@@ -278,8 +312,9 @@ int main (int argc, char *argv[]) {
 		{ "options", 1, NULL, 'o' },
 		{ "binary", 1, NULL, 'b' },
 		{ "force", 0, NULL, 'f' },
-		{ "verbose", 0, NULL, 'v' },		
+		{ "verbose", 0, NULL, 'v' },
 		{ "skip-config", 0, NULL, 's' },
+		{ "configure", 1, NULL, 'x' },		
 		
 		{ 0, 0, 0, 0 }
 	};
@@ -311,7 +346,10 @@ int main (int argc, char *argv[]) {
 	strcpy (TMP_AUTHORS,"");
 	strcpy (TMP_HTML,"");
 	strcpy (TMP_NULL,"");
-		
+	
+	strcpy (CONFIG_OPTS,"");
+	
+	getcwd ( CWD, MAXSTR );	
 	
 	/* reset terminal colors */
 	fprintf (stdout, "\033[0m");
@@ -336,12 +374,13 @@ int main (int argc, char *argv[]) {
 	gisbase = NULL;
 	
 	opterr = 0;
-	option = getopt_long ( argc, argv, ":i:u:q:d:c:t:l:o:rhVg:b:fvs", long_options, &option_index );
+	option = getopt_long ( argc, argv, ":i:u:q:d:c:t:l:o:x:rhVg:b:fvs", long_options, &option_index );
 	while ( option  != -1 ) {
-	
+											
 		if ( option == '?' ) {
 			print_error (ERR_INVOCATION,"unknown option or action specified.\n");
 		}
+		
 		
 		/* check for missing arguments */
 		if ( option == ':' ) {
@@ -355,6 +394,9 @@ int main (int argc, char *argv[]) {
 			if ( optopt == 'b' ) {
 				print_error (ERR_INVOCATION,"missing name of binary architecture.\n");
 			}
+			if ( optopt == 'b' ) {
+				print_error (ERR_INVOCATION,"missing configure options.\n");
+			}			
 			if ( optopt == 'q' ) {
 				/* '-q' w/o filename is list action */
 				action = LIST;
@@ -409,7 +451,8 @@ int main (int argc, char *argv[]) {
 				/* orgname will always preserve the commandline option */
 				strcpy ( orgname, optarg );
 			}			
-		}
+		}		
+		
 		/* set options */
 		if ( option == 'g' ) {
 			gisbase = malloc ( sizeof (char) * ( strlen ( optarg ) + 1 ) );
@@ -420,12 +463,18 @@ int main (int argc, char *argv[]) {
 			strcpy ( bins, optarg );
 			action = BIN_INSTALL;
 		}
+		if ( option == 'x' ) {
+			/* configure script options */			
+			strcpy ( &CONFIG_OPTS[0], optarg );				
+		}
+		
 		if ( option == 'f' ) {
 			FORCE = 1;
 		}
 		if ( option == 'v' ) {
 			VERBOSE = 1;
 		}
+				
 		if ( option == 's' ) {
 			SKIP_CFG = 1;
 		}
@@ -438,8 +487,9 @@ int main (int argc, char *argv[]) {
 		}
 		
 		/* get next option from command line */
-		option = getopt_long ( argc, argv, ":i:u:q:d:c:t:l:o:rhVg:b:fvs", long_options, &option_index );
+		option = getopt_long ( argc, argv, ":i:u:q:d:c:t:l:o:x:rhVg:b:fvs", long_options, &option_index );
 	}
+	
 		
 	if ( valid < 1 ) {
 		print_error ( ERR_INVOCATION,"please specify a valid action.\n" );
@@ -657,14 +707,13 @@ int main (int argc, char *argv[]) {
 		f = fopen ( version_file, "r" );
 		if ( f == NULL ) {
 			/* still NULL? Abort! */
-			print_warning ("GRASS version unknown. Extension might not work after installation.\n");
+			print_error (ERR_VERSION, "Could not read GRASS version. Did you specify the right path?\n");
 		} else {
 			grass_version = malloc ( sizeof(char) * 16);
 			error = fscanf (f, "%s", grass_version);
 			fclose (f);
 			if ( error < 1 ) {
-				print_warning ("GRASS version unknown. Extension might not work after installation.\n");			
-				grass_version = NULL;
+				print_error (ERR_VERSION, "Could not read GRASS version. Did you specify the right path?\n");			
 			}
 		}
 	}	

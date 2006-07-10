@@ -174,12 +174,14 @@
 \stepcounter{section}
 \stepcounter{subsection}
 \stepcounter{subsection}
-\stepcounter{subsection}
 {\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap1211}%
+\lthtmlpictureA{tex2html_wrap1186}%
 \framebox{\parbox[t][1\totalheight]{1\columnwidth}{%
-Note: please be aware that GEM can only install modules in a specially
-prepared package. See section 4 for how to do this.%
+Note: please make sure that you system-wide linker path includes the
+location of the GRASS dynamic libraries (e.g. \emph{/usr/local/grass-6.1.cvs/libs}).
+This is usually done by adding an appropriate entry to \emph{/etc/ld.so.conf}
+and running \emph{ldconfig}. You may have to consult your system's
+administrator.%
 }}%
 %
 \lthtmlpictureZ
@@ -187,178 +189,34 @@ prepared package. See section 4 for how to do this.%
 
 \stepcounter{subsection}
 {\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap1235}%
+\lthtmlpictureA{tex2html_wrap1268}%
 \framebox{\parbox[t][1\totalheight]{1\columnwidth}{%
-Note: Operation of GEM under Cygwin is only possible in verbose mode
-(option {}``-v'' or {}``--verbose'')! Please read section A.2
-on Windows specific issues.%
+Note: if configuration fails, this is likely due to your operating
+system missing some external default software (such as the PostgreSQL
+database). You can use GEM's {}``--configure='' option to pass the
+same options that you passed to the GRASS configuration script (use
+quotation marks for more than one option), e.g. --configure='--with-nls
+--without-postgres' will configure the extension to use national language
+support but not try to find the PostgreSQL software.%
 }}%
 %
 \lthtmlpictureZ
 \lthtmlcheckvsize\clearpage}
 
-{\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap1243}%
-\framebox{\begin{minipage}[t][1\totalheight]{1\columnwidth}%
-Note: in order to install extensions that do not provide binaries,
-you need to have a C compiler (preferably GNU CC) and make tools installed.
-Please refer to the OS specific section A for more details.
-\par
-For unpacking extension packages you need the appropriate software.
-Depending on the format of the archive, this could be \emph{tar},
-\emph{gzip}, \emph{bunzip2} and \emph{unzip}.
-\par
-If you want to get extensions from an internet source (http or ftp),
-you also need \emph{wget}. These programs will very likely already
-be installed on your system. If not, you will find it easy to locate
-a copy for your OS using an internet search engine.%
-\end{minipage}}%
-%
-\lthtmlpictureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap1289}%
-\framebox{\begin{minipage}[t][1\totalheight]{1\columnwidth}%
-Note: an extension may also provide shell scripts that do not need
-to be compiled. Installation does, however, by default work in the
-same way. Look for the keyword {}``scripts'' in the extension details
-(under {}``Binary installation files'') by querying it as discussed
-in section 3.5 on installation of binaries. If it exists, you can
-perform a binary install (again, see section 3.5) for {}``scripts'',
-skipping configuration and compilation steps and avoiding the need
-to have C development tools installed. %
-\end{minipage}}%
-%
-\lthtmlpictureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap1363}%
-\framebox{\begin{minipage}[t][1\totalheight]{1\columnwidth}%
-Note: Awful detail: you must use the short action name {}``-q''
-in this case, not {}``--query='' and it has to be at the end of
-the GEM command line!%
-\end{minipage}}%
-%
-\lthtmlpictureZ
-\lthtmlcheckvsize\clearpage}
-
+\stepcounter{subsection}
 \stepcounter{subsection}
 \stepcounter{subsection}
 \stepcounter{subsection}
 \stepcounter{section}
-{\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap1519}%
-\framebox{\begin{minipage}[t][1\totalheight]{1\columnwidth}%
-Note: if your extension needs to install {}``unusual'' things (additional
-fonts, tcl widgets, ...) you may need to adapt the top-level Makefile
-in your extension package.%
-\end{minipage}}%
-%
-\lthtmlpictureZ
-\lthtmlcheckvsize\clearpage}
-
-\stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap1531}%
-\framebox{\begin{minipage}[t][1\totalheight]{1\columnwidth}%
-Note: the {}``--test='' action simulates the entire installation
-process, including checks for dependencies and already installed extensions.
-This means that testing may result in an error message after successful
-compilation. If this annoys, you, use the {}``--force'' option.%
-\end{minipage}}%
-%
-\lthtmlpictureZ
-\lthtmlcheckvsize\clearpage}
-
-\stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap1547}%
-\framebox{\begin{minipage}[t][1\totalheight]{1\columnwidth}%
-Note: please always provide licensing information!%
-\end{minipage}}%
-%
-\lthtmlpictureZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsection}
 \stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap1569}%
-\framebox{\begin{minipage}[t][1\totalheight]{1\columnwidth}%
-Note: all other things inside {}``<'' and {}``>'' will be filtered
-out as HTML tags, even if they are not!%
-\end{minipage}}%
-%
-\lthtmlpictureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap1575}%
-\framebox{\begin{minipage}[t][1\totalheight]{1\columnwidth}%
-Note: your modules' individual HTML manual pages have to be slightly
-adapted: please prefix \texttt{<a href=>} style references to GRASS
-modules that are not part of the extension with \texttt{../../html/}. %
-\end{minipage}}%
-%
-\lthtmlpictureZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsection}
 \stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap1603}%
-\framebox{\begin{minipage}[t][1\totalheight]{1\columnwidth}%
-Note: be very careful when adapting the \emph{uninstall} script! It
-is run with superuser privileges (or those of whatever user owns the
-GRASS installation directory). If you provide wrong paths there is
-no limit to the damage it can do to the user's system! Try to keep
-your changes to a minimum if you have to make any.%
-\end{minipage}}%
-%
-\lthtmlpictureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap1609}%
-\framebox{\begin{minipage}[t][1\totalheight]{1\columnwidth}%
-Note: be very careful when adapting the \emph{post} script! It is
-run with superuser privileges (or those of whatever user owns the
-GRASS installation directory). If you add flawed commands there is
-no limit to the damage it can do to the user's system!%
-\end{minipage}}%
-%
-\lthtmlpictureZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsection}
 \stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap1627}%
-\framebox{\begin{minipage}[t][1\totalheight]{1\columnwidth}%
-Note: due to great heterogenity of installed system libraries, it
-is probably not worth the effort trying to create generic linux binaries.
-Binaries will work better for homogeneous platforms such as Cygwin
-and Lorenzo Moretti's GRASS for Mac OS X.%
-\end{minipage}}%
-%
-\lthtmlpictureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap1725}%
-\framebox{\begin{minipage}[t][1\totalheight]{1\columnwidth}%
-Note: if your extension consists of only platform independent things
-that need not be compiled (shell script, tcl code, ...), you can create
-a set of binaries on any system in the same way as described above
-and call the binary set \char`\"{}scripts\char`\"{} this will allow
-the user to install those scripts without having developer tools installed!%
-\end{minipage}}%
-%
-\lthtmlpictureZ
-\lthtmlcheckvsize\clearpage}
-
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
 \stepcounter{subsection}
 \stepcounter{subsection}
 \stepcounter{subsubsection}
@@ -369,30 +227,7 @@ the user to install those scripts without having developer tools installed!%
 \appendix
 \stepcounter{section}
 \stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap1807}%
-\framebox{\begin{minipage}[t][1\totalheight]{1\columnwidth}%
-Note: if you want to be able to use any extension package, not only
-those that provide binaries for Mac OS X, you need to install the
-complete GNU C development tools from the Mac OS X installation media.%
-\end{minipage}}%
-%
-\lthtmlpictureZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap1825}%
-\framebox{\parbox[t][1\totalheight]{1\columnwidth}{%
-Note: Operation of GEM under Cygwin is only possible in verbose mode
-(option {}``-v'' or {}``--verbose'')! The problem is that Windows
-cannot redirect output to stderr. This interferes with GEM's message
-hiding.%
-}}%
-%
-\lthtmlpictureZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsubsection}
 \stepcounter{section}
 \stepcounter{subsection}

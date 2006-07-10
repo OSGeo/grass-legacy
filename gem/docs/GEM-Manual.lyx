@@ -1,4 +1,4 @@
-#LyX 1.4.0 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.1 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -82,6 +82,10 @@ status open
 to produce one HTML page from this manual: use lyx to export to latex format;
  run latex 3 times on the exported .tex document to get references right;
  use latex2html: latex2html -split 0 -show_section_numbers GEM-Manual.tex
+\end_layout
+
+\begin_layout Standard
+Clean up: rm *.dvi *.toc *.log *.aux *.tex
 \end_layout
 
 \begin_layout Standard
@@ -475,6 +479,44 @@ Installation from Source Code
 \end_layout
 
 \begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 1
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Standard
+Note: please make sure that you system-wide linker path includes the location
+ of the GRASS dynamic libraries (e.g.
+ 
+\emph on
+/usr/local/grass-6.1.cvs/libs
+\emph default
+).
+ This is usually done by adding an appropriate entry to 
+\emph on
+/etc/ld.so.conf
+\emph default
+ and running 
+\emph on
+ldconfig
+\emph default
+.
+ You may have to consult your system's administrator.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 You must have a C compiler, preferably GNU C, and the corresponding make
  tools installed.
  Most Linux/Unix systems should come with these installed.
@@ -589,7 +631,50 @@ ExtensionName
 \end_layout
 
 \begin_layout Standard
-Provide the superuser password if needed.
+You will now have to be patient as the extension is verified, configured
+ and its source code compiled.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 1
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Standard
+Note: if configuration fails, this is likely due to your operating system
+ missing some external default software (such as the PostgreSQL database).
+ You can use GEM's 
+\begin_inset Quotes eld
+\end_inset
+
+--configure=
+\begin_inset Quotes erd
+\end_inset
+
+ option to pass the same options that you passed to the GRASS configuration
+ script (use quotation marks for more than one option), e.g.
+ --configure='--with-nls --without-postgres' will configure the extension
+ to use national language support but not try to find the PostgreSQL software.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To finish the installation, GEM needs to write the extension's new module
+ files into the directory where GRASS has been installed.
+ In many cases, this will be a system directory with restricted write access.
+ Provide the superuser password if GEM asks you for it.
  Restart GIS Manager and look in the 
 \begin_inset Quotes eld
 \end_inset
@@ -598,7 +683,7 @@ Xtns
 \begin_inset Quotes erd
 \end_inset
 
- menu for new modules (some modules may not provide such entries).
+ menu for new modules (some modules may not provide GIS Manager entries).
  If anything goes wrong or confuses you: read the rest of this section!
 \end_layout
 
@@ -1600,6 +1685,23 @@ src
 \end_layout
 
 \begin_layout Standard
+You will find the skeleton package files in the subdirectory 
+\emph on
+$GISBASE/etc/gem/skeleton
+\emph default
+ (replace 
+\emph on
+$GISBASE
+\emph default
+ with the path to your GRASS 6.1 install, e.g.
+ 
+\emph on
+/usr/local/grass-6.1.cvs
+\emph default
+).
+\end_layout
+
+\begin_layout Standard
 Look into the skeleton extension directory and open the ASCII files with
  a texteditor of your choice.
  You will find lots of comments that help you make sense of their contents.
@@ -2229,7 +2331,7 @@ GEM currently supports the installation of menu items for GIS Manager: the
 \emph on
 d.m
 \emph default
-) and the new one (
+) and the new on (
 \emph on
 gis.m
 \emph default
@@ -2416,6 +2518,86 @@ d.m
 gis.m
 \emph default
  need to be restarted to see the effects of installing new menu entries.
+\end_layout
+
+\begin_layout Subsection
+Customizing the configure script
+\end_layout
+
+\begin_layout Standard
+If an extension is to be installed from source code, it needs to be configured
+ first.
+ This is done by the script 
+\emph on
+configure
+\emph default
+ in the 
+\emph on
+src
+\emph default
+ directory of the extension package.
+ The original GRASS configure script checks the system for a number of optional
+ dependencies, such as PostgreSQL or Tcl/Tk which are not strictly required
+ to run GRASS but may greatly enhance the sytem's functionality.
+ Certain GRASS modules may or may not be compiled depending on what optional
+ sofware is installed on the system (and correctly detected by the configure
+ script).
+ In certain situations (such as a missing PostgreSQL installation), the
+ GRASS configure script will fail and compilation not start unless the user
+ specifies explicitly that e.g.
+ PostgreSQL support is not wanted.
+\end_layout
+
+\begin_layout Standard
+If one or more modules of an extension need a certain external software
+ dependency to be satisfied, the extension author needs to modify the configure
+ script of that extension accordingly.
+\end_layout
+
+\begin_layout Standard
+E.g.
+ if PostgreSQL is an absolute requirement for all modules and configure
+ should fail in case it cannot be found, set the option
+\end_layout
+
+\begin_layout LyX-Code
+with_postgres=yes
+\end_layout
+
+\begin_layout Standard
+in the configure script for your extension (options start at ca.
+ line 2600).
+ Other dependencies might require more complicated modifications to 
+\emph on
+configure
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+Arbitrary options can be passed to an extensions 
+\emph on
+configure
+\emph default
+ script using GEM's 
+\begin_inset Quotes eld
+\end_inset
+
+--configure=
+\begin_inset Quotes erd
+\end_inset
+
+ option.
+\end_layout
+
+\begin_layout Standard
+The default configure script, that ships with the skeleton extension has
+ all optional dependencies disabled (ca.
+ line 2600 and following of the configure script).
+ The check for the proj program and libraries (mandatory for GRASS 6.1) has
+ been completely removed.
+ If your extension code calls proj directly, you may want to add this part
+ of the configure script back in.
 \end_layout
 
 \begin_layout Subsection
@@ -2788,6 +2970,38 @@ description
 info
 \emph default
 , respectively).
+ HTML man pages for individual modules have to be named 
+\emph on
+description.html
+\emph default
+ and copied into the respective module's source code directory.
+\end_layout
+
+\begin_layout Standard
+Use an HTML manual page of an existing GRASS 6.1 module for a template.
+\end_layout
+
+\begin_layout Standard
+At the top of your description.html file, right after the 
+\family typewriter
+<h2>NAME</h2>
+\family default
+ tag, include a line like this (user lowercase for the 
+\family typewriter
+<em> </em>
+\family default
+ tags!):
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+<em><b>r.modulename</b></em> - Description of module in one line.
+\end_layout
+
+\begin_layout Standard
+This line will be displayed right after the link to your module in the documenta
+tion index and will make it easier for the user to find what he needs.
 \end_layout
 
 \begin_layout Subsubsection
@@ -3328,9 +3542,17 @@ configure script
 
 \begin_layout Standard
 Everything that checks for optional system libraries and could cause configure
- to fail went out.
+ to fail went has been set to default to 
+\begin_inset Quotes eld
+\end_inset
+
+no
+\begin_inset Quotes erd
+\end_inset
+
+.
  This means that extensions that have to check for optional system libraries
- will have to re-add these checks.
+ may have to set these defaults differently or even add custom checks.
 \end_layout
 
 \begin_layout Standard
@@ -3624,6 +3846,10 @@ Possible OPTIONs are:
 
 \begin_layout LyX-Code
   -v, --verbose         display detailed status information
+\end_layout
+
+\begin_layout LyX-Code
+  -x, --configure=OPTS  pass OPTS to configure script 
 \end_layout
 
 \begin_layout LyX-Code
