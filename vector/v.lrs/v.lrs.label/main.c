@@ -1,6 +1,6 @@
 /*
-*  v.lrs.stationing - Generate stationing as new vector file and labels from imput map 
-*                     for existing linear reference system
+*  v.lrs.stationing - Generate stationing as new vector file and labels from
+*                     input map for existing linear reference system
 *
 */
 
@@ -97,7 +97,7 @@ int main(int argc, char **argv)
     G_gisinit (argv[0]) ;
 
     module = G_define_module();
-    module->description = "Create stationing from imput lines, "
+    module->description = "Create stationing from input lines, "
 	   "and linear reference system";
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
