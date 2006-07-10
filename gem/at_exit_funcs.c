@@ -61,6 +61,11 @@ void exit_tmp ( void ) {
 	}	
 	
 	if ( TMPCLEAN == 0 ) { /* a dirty trick to make sure this only runs once */
+	
+		/* step out of temporary dir, in case this extension has been */
+		/* installed from an archived dir */
+		chdir ( CWD );
+	
 		sprintf (tmp, "rm -rf %s/*", TMPDIR);
 	
 		if ( VERBOSE ) {
@@ -89,6 +94,10 @@ void exit_db ( void ) {
 	char tmp [MAXSTR];
 	
 	if ( TMPDBCLEAN == 0 ) { /* a dirty trick to make sure this only runs once */
+	
+		/* step out of temporary dir, in case this extension has been */
+		/* installed from an archived dir */
+		chdir ( CWD );	
 			
 		if ( VERBOSE ) {
 			fprintf (stdout, "Removing temporary registration files...");

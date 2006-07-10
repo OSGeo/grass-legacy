@@ -270,12 +270,13 @@ void source_install ( char *package, char *gisbase, char *pkg_short_name,
 	
 	if ( !SKIP_CFG ) {
 		if ( VERBOSE ) {
-			fprintf (stdout, "Running configure script:\n");	
-			error = system ("sh configure");
+			fprintf (stdout, "Running configure script:\n");
+			sprintf (sysstr, "sh configure %s", CONFIG_OPTS );	
+			error = system (sysstr);
 		} else {
 			fprintf (stdout, "Configuring...");
-			sprintf ( sysstr, "sh configure --quiet &> %s", TMP_NULL );
-			error = system ( sysstr );
+			sprintf (sysstr, "sh configure %s --quiet &> %s", CONFIG_OPTS, TMP_NULL ); 
+			error = system (sysstr);
 		}
 		if ( error == -1 ) {
 			print_error ( ERR_MISSING_CFG, "could not run configure script.\n");
@@ -540,11 +541,12 @@ void test_install ( char *package, char *gisbase, char *pkg_short_name,
 	
 	if ( !SKIP_CFG ) {
 		if ( VERBOSE ) {
-			fprintf (stdout, "Running configure script:\n");	
-			error = system ("sh configure");
+			fprintf (stdout, "Running configure script:\n");
+			sprintf (sysstr, "sh configure %s", CONFIG_OPTS );	
+			error = system (sysstr);
 		} else {
 			fprintf (stdout, "Configuring...");
-			sprintf (sysstr, "sh configure --quiet &> %s", TMP_NULL ); 
+			sprintf (sysstr, "sh configure %s --quiet &> %s", CONFIG_OPTS, TMP_NULL ); 
 			error = system (sysstr);
 		}
 		if ( error == -1 ) {
@@ -802,17 +804,17 @@ void list_extensions ( char *gisbase ) {
 		if ( errno == ENOENT ) {
 			/* file does not yet exist */
 			fprintf ( stderr, "NONE.\n" );
+			fclose ( f_in );
 			exit ( 0 );
 		} else {
 			/* sth. strange happened */
+			fclose (f_in);
 			print_error ( ERR_LIST,"checking for file '%s': %s\n", file, strerror (errno)); 
 		}
-	} else {
-		fclose ( f_in );
-		dump_ascii ( file, "");
 	}
-
-	return;
+	fclose ( f_in );
+	
+	dump_ascii ( file, "");
 }
 
 
