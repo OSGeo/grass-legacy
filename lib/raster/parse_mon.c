@@ -24,13 +24,8 @@ struct MON_CAP *R_parse_monitorcap(int field, char *key)
 	char file[500];
 	char *gisbase;
 
-	gisbase = getenv ("GISBASE");
-	if (gisbase == NULL)
-	{
-		fprintf (stderr, _("ERROR: GISBASE not set\n"));
-		sleep(2);
-		exit(1);
-	}
+	gisbase = G_gisbase();
+
 	rewound = 0;
 	if (!(field == MON_NEXT || field == MON_NAME ||
 	    field == MON_PATH || field == MON_LINK || field == MON_CLOSE))
@@ -39,11 +34,7 @@ struct MON_CAP *R_parse_monitorcap(int field, char *key)
 	{
 		sprintf (file, "%s/etc/monitorcap", gisbase) ;
 		if ((monitors = fopen(file,"r")) == NULL)
-		{
-			perror (file);
-			sleep(2);
-			exit(1);
-		}
+			G_fatal_error("Unable to open %s", file);
 	}
 	else
 	{
