@@ -80,7 +80,7 @@ interact (struct Categories *categories, struct Colors *colors, char *name, char
 		{
 		     Clear_message();
 		     Write_message(2, "Bye   ") ;
-		     sleep(2) ;
+		     G_sleep(2) ;
 
 		     Close_curses() ;
 		     return(0) ;
@@ -315,9 +315,9 @@ static int save_colors( char *name,char *mapset, struct Colors *colors)
 
     if (G_write_colors(name, mapset, colors) == -1)
     {
-	sleep(1);
+	G_sleep(1);
 	Write_message(2, "Can't write color table  ") ;
-	sleep(2) ;
+	G_sleep(2) ;
 	return 0;
     }
     else

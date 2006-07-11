@@ -184,7 +184,7 @@ void show_patch (char *fn, double *msc, char *cmd)
         }
         else{
            G_warning("\nThe patch is not in the patch-list.\n");
-	   sleep(1);
+	   G_sleep(1);
         }
      }
   }
