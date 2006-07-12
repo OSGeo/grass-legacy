@@ -17,6 +17,7 @@ int font_is_freetype(void);
 void reset_color(int,int,int,int);
 /* Set_window.c */
 int window_clip(double *,double *,double *,double *);
+int window_box_clip(double *,double *,double *,double *);
 /* Text2.c */
 void drawchar(double,double,double,double,unsigned char);
 void soft_text_ext(int x,int,double,double,double,const char *);
