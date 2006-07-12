@@ -79,7 +79,7 @@ static void read_row(void *handle, char *buf, int type, int depth, int row)
 		{
 			double x;
 
-			G3d_getValueRegion(
+			G3d_getValue(
 				handle, i, row, depth, (char *) &x, G3D_DOUBLE);
 			if (G3d_isNullValueNum(&x, G3D_DOUBLE))
 				SET_NULL_C(&((CELL*)buf)[i]);
@@ -92,7 +92,7 @@ static void read_row(void *handle, char *buf, int type, int depth, int row)
 		{
 			float x;
 
-			G3d_getValueRegion(
+			G3d_getValue(
 				handle, i, row, depth, (char *) &x, G3D_FLOAT);
 			if (G3d_isNullValueNum(&x, G3D_FLOAT))
 				SET_NULL_F(&((FCELL*)buf)[i]);
@@ -105,7 +105,7 @@ static void read_row(void *handle, char *buf, int type, int depth, int row)
 		{
 			double x;
 
-			G3d_getValueRegion(
+			G3d_getValue(
 				handle, i, row, depth, (char *) &x, G3D_DOUBLE);
 			if (G3d_isNullValueNum(&x, G3D_DOUBLE))
 				SET_NULL_D(&((DCELL*)buf)[i]);
