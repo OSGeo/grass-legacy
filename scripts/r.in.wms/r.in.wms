@@ -196,7 +196,7 @@ if [ ! -x "`which sed`" ] ; then
 fi
 
 # check if we have gdalwarp -> used in r.in.gdalwarp
-if [ $GIS_FLAG_p -ne 1 ] ; then
+if [ $GIS_FLAG_P -ne 1 ] ; then
     if [ ! -x "`which gdalwarp`" ] ; then
         echo "gdalwarp is required, please install it first" 2>&1
         exit 1
@@ -217,7 +217,7 @@ export PATH
 # usage: message level text
 
 message () {
-	if [ $1 -lt $GIS_OPT_v ] ; then
+	if [ $1 -lt $GIS_OPT_V ] ; then
 		shift
 		echo "$@"  
 	fi
@@ -282,12 +282,12 @@ listLayers() {
 
 	CAPABILITIES_FILE=${TMP}capabilities.xml
     
-	STRING="service=WMS&request=GetCapabilities&${GIS_OPT_wmsquery}";
+	STRING="service=WMS&request=GetCapabilities&${GIS_OPT_WMSQUERY}";
 
 	### wget the XML and grep the lines with layer names
-	echo "List of layers for server ${GIS_OPT_mapserver}:"
-	wget ${GIS_OPT_wgetopt} --post-data=${STRING} $GIS_OPT_mapserver -O $CAPABILITIES_FILE;
-	message 1 wget ${GIS_OPT_wgetopt} --post-data=${STRING} $GIS_OPT_mapserver -O $CAPABILITIES_FILE;
+	echo "List of layers for server ${GIS_OPT_MAPSERVER}:"
+	wget ${GIS_OPT_WGETOPT} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
+	message 1 wget ${GIS_OPT_WGETOPT} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
 
 	# use xml2
 	if [ -x "`which xml2`" ]; then
@@ -324,14 +324,14 @@ listLayers() {
 
 #### Test for listing layers
 
-if [ $GIS_FLAG_l -eq 1 ] ; then
+if [ $GIS_FLAG_L -eq 1 ] ; then
 	listLayers
 fi
 
 #### Exit if there is no map
 # It would be a good idea to test if the map already exists here too
 
-if [ -z "${GIS_OPT_output}" ] ; then
+if [ -z "${GIS_OPT_OUTPUT}" ] ; then
 	echo "No output map specified"
 	exit 1;
 fi
@@ -343,36 +343,36 @@ GDALWARP=""
 eval `g.gisenv`
 
 #Job number one: pick a folder
-if [ -z "${GIS_OPT_folder}" ] ; then
-	GIS_OPT_folder=${GISDBASE}/wms_download
+if [ -z "${GIS_OPT_FOLDER}" ] ; then
+	GIS_OPT_FOLDER=${GISDBASE}/wms_download
 fi
 
-PREFIX=${GIS_OPT_output}
-REQUESTFILE=${GIS_OPT_folder}/${PREFIX}_${GIS_OPT_region}.wget
+PREFIX=${GIS_OPT_OUTPUT}
+REQUESTFILE=${GIS_OPT_FOLDER}/${PREFIX}_${GIS_OPT_REGION}.wget
 
-addflag REQUEST o ${GIS_FLAG_o}
-addflag REQUEST c ${GIS_FLAG_c}
-addflag REQUEST p ${GIS_FLAG_p}
-addargument REQUEST folder "${GIS_OPT_folder}"
+addflag REQUEST o ${GIS_FLAG_O}
+addflag REQUEST c ${GIS_FLAG_C}
+addflag REQUEST p ${GIS_FLAG_P}
+addargument REQUEST folder "${GIS_OPT_FOLDER}"
 addargument REQUEST prefix ${PREFIX}
-addargument REQUEST region ${GIS_OPT_region}
-addargument REQUEST mapserver ${GIS_OPT_mapserver}
-addargument REQUEST layers ${GIS_OPT_layers}
-addargument REQUEST styles ${GIS_OPT_styles}
-addargument REQUEST srs ${GIS_OPT_srs}
-addargument REQUEST format ${GIS_OPT_format}
-addargument REQUEST wmsquery ${GIS_OPT_wmsquery}
-addargument REQUEST maxcols ${GIS_OPT_maxcols}
-addargument REQUEST maxrows ${GIS_OPT_maxrows}
-addargument REQUEST tileoptions "${GIS_OPT_tileoptions}"
+addargument REQUEST region ${GIS_OPT_REGION}
+addargument REQUEST mapserver ${GIS_OPT_MAPSERVER}
+addargument REQUEST layers ${GIS_OPT_LAYERS}
+addargument REQUEST styles ${GIS_OPT_STYLES}
+addargument REQUEST srs ${GIS_OPT_SRS}
+addargument REQUEST format ${GIS_OPT_FORMAT}
+addargument REQUEST wmsquery ${GIS_OPT_WMSQUERY}
+addargument REQUEST maxcols ${GIS_OPT_MAXCOLS}
+addargument REQUEST maxrows ${GIS_OPT_MAXROWS}
+addargument REQUEST tileoptions "${GIS_OPT_TILEOPTIONS}"
 
-if [ $GIS_FLAG_d -eq 0 ] ; then
+if [ $GIS_FLAG_D -eq 0 ] ; then
 	message 0 "wms.request $REQUEST"
 	eval "wms.request $REQUEST"
 fi
 
 addargument DOWNLOAD requestfile "${REQUESTFILE}"
-addargument DOWNLOAD wgetoptions "${GIS_OPT_wgetoptions}"
+addargument DOWNLOAD wgetoptions "${GIS_OPT_WGETOPTIONS}"
 
 message 0 "wms.download $DOWNLOAD"
 eval "wms.download $DOWNLOAD"
@@ -394,12 +394,12 @@ for line in $CONTENTS ; do
 done
 
 addflag GDALWARP c 1
-addflag GDALWARP k ${GIS_FLAG_k}
-addflag GDALWARP p ${GIS_FLAG_p}
+addflag GDALWARP k ${GIS_FLAG_K}
+addflag GDALWARP p ${GIS_FLAG_P}
 addargument GDALWARP input "$FILES"
-addargument GDALWARP output ${GIS_OPT_output}
-addargument GDALWARP method ${GIS_OPT_method}
-addargument GDALWARP s_srs ${GIS_OPT_srs}
+addargument GDALWARP output ${GIS_OPT_OUTPUT}
+addargument GDALWARP method ${GIS_OPT_METHOD}
+addargument GDALWARP s_srs ${GIS_OPT_SRS}
 
 message 0 "r.in.gdalwarp $GDALWARP"
 eval "r.in.gdalwarp $GDALWARP"
