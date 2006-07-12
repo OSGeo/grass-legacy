@@ -163,7 +163,7 @@ defaultIFS=$IFS
 # usage: message level text
 
 message () {
-	if [ $1 -lt $GIS_OPT_v ] ; then
+	if [ $1 -lt $GIS_OPT_V ] ; then
 		shift
 		echo "$@"  
 	fi
@@ -371,31 +371,31 @@ bboxesIntersect() {
 
 ### Fetch destination projection and region
 
-SOURCE_PROJ=$GIS_OPT_sourceproj
-SOURCE_SCALE=$GIS_OPT_sourcescale
+SOURCE_PROJ=$GIS_OPT_SOURCEPROJ
+SOURCE_SCALE=$GIS_OPT_SOURCESCALE
 
 # Take into account those extra pixels we'll be a addin'
-#MAX_COLS=$GIS_OPT_maxcols
-#MAX_ROWS=$GIS_OPT_maxrows
-OVERLAP=$GIS_OPT_overlap
-calculate MAX_COLS "$GIS_OPT_maxcols - $OVERLAP"
-calculate MAX_ROWS "$GIS_OPT_maxrows - $OVERLAP"
+#MAX_COLS=$GIS_OPT_MAXCOLS
+#MAX_ROWS=$GIS_OPT_MAXROWS
+OVERLAP=$GIS_OPT_OVERLAP
+calculate MAX_COLS "$GIS_OPT_MAXCOLS - $OVERLAP"
+calculate MAX_ROWS "$GIS_OPT_MAXROWS - $OVERLAP"
 
 message 0 "Getting destination projection:"
 
-if [ -z "$GIS_OPT_destproj" ] ; then
+if [ -z "$GIS_OPT_DESTPROJ" ] ; then
 	DEST_PROJ=`g.proj -j`
 else
-	DEST_PROJ=`echo $GIS_OPT_destproj`
+	DEST_PROJ=`echo $GIS_OPT_DESTPROJ`
 fi
 
 	message 0 "Getting projection scale:"
 
-if [ -z "$GIS_OPT_destscale" ] ; then
+if [ -z "$GIS_OPT_DESTSCALE" ] ; then
 	eval `g.proj -p | $GREP meters | $SED "s/\\s*:\\s*/=/"`
 	DEST_SCALE=$meters;
 else
-	DEST_SCALE=$GIS_OPT_destscale
+	DEST_SCALE=$GIS_OPT_DESTSCALE
 fi
 
 # Strip newlines from both the source and destination projections
@@ -407,10 +407,10 @@ makeProjector SOURCE_PROJ $SOURCE_SCALE DEST_PROJ $DEST_SCALE SOURCE_TO_DEST
 makeProjector DEST_PROJ $DEST_SCALE SOURCE_PROJ $SOURCE_SCALE DEST_TO_SOURCE
 
 message 0 "Getting destination region:"
-if [ -z $GIS_OPT_region ] ; then
+if [ -z $GIS_OPT_REGION ] ; then
 	eval `g.region -g`
 else
-	eval `g.region region=$GIS_OPT_region -g`
+	eval `g.region region=$GIS_OPT_REGION -g`
 fi
 
 
@@ -535,12 +535,12 @@ for ((xi=0;xi<ximax;xi+=1)); do
 		pointsToBbox TILE_DEST_BBOX_POINTS TILE_DEST_BBOX
 		bboxesIntersect TILE_DEST_BBOX DEST_BBOX intersect
 		if [ $intersect ] ; then
-			if [ $GIS_FLAG_w -eq 1 ] ; then
+			if [ $GIS_FLAG_W -eq 1 ] ; then
 				echo "bbox=${TILE_BBOX[0]},${TILE_BBOX[1]},${TILE_BBOX[2]},${TILE_BBOX[3]}&width=${TILE_SIZE_OVERLAP[0]}&height=${TILE_SIZE_OVERLAP[1]}"
-			elif [ $GIS_FLAG_g -eq 1 ] ; then
+			elif [ $GIS_FLAG_G -eq 1 ] ; then
 				echo "w=${TILE_BBOX[0]};s=${TILE_BBOX[1]};e=${TILE_BBOX[2]};n=${TILE_BBOX[3]};cols=${TILE_SIZE_OVERLAP[0]};rows=${TILE_SIZE_OVERLAP[1]};"
 			else
-				echo "${TILE_BBOX[0]}$GIS_OPT_fs${TILE_BBOX[1]}$GIS_OPT_fs${TILE_BBOX[2]}$GIS_OPT_fs${TILE_BBOX[3]}$GIS_OPT_fs${TILE_SIZE_OVERLAP[0]}$GIS_OPT_fs${TILE_SIZE_OVERLAP[1]}"
+				echo "${TILE_BBOX[0]}$GIS_OPT_FS${TILE_BBOX[1]}$GIS_OPT_FS${TILE_BBOX[2]}$GIS_OPT_FS${TILE_BBOX[3]}$GIS_OPT_FS${TILE_SIZE_OVERLAP[0]}$GIS_OPT_FS${TILE_SIZE_OVERLAP[1]}"
 			fi
 		fi 
 	done

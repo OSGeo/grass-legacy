@@ -63,7 +63,7 @@ defaultIFS=$IFS
 # usage: message level text
 
 message () {
-	if [ $1 -lt $GIS_OPT_v ] ; then
+	if [ $1 -lt $GIS_OPT_V ] ; then
 		shift
 		echo "$@"  
 	fi
@@ -161,8 +161,8 @@ GetData() {
 
 # Initialize variables:
 #wget has many options
-WGET_OPTIONS=${GIS_OPT_wgetoptions}
-REQUESTFILE=${GIS_OPT_requestfile}
+WGET_OPTIONS=${GIS_OPT_WGETOPTIONS}
+REQUESTFILE=${GIS_OPT_REQUESTFILE}
 
 #Get all the data
 GetTiles

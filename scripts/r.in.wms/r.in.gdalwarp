@@ -99,7 +99,7 @@ exitprocedure()
 trap "exitprocedure" 2 3 15
 
 # check if we have gdalwarp
-if [ $GIS_FLAG_p -ne 1 ] ; then
+if [ $GIS_FLAG_P -ne 1 ] ; then
     if [ ! -x "`which gdalwarp`" ] ; then
         echo "gdalwarp is required, please install it first" 2>&1
         exit 1
@@ -119,8 +119,8 @@ warpimport () {
 	TMPMAPNAME=${2}_tmp
 
 	# Warp it and convert it to geotiff with alpha band to be sure we get nulls:
-	echo "gdalwarp -s_srs \"$GIS_OPT_s_srs\" -t_srs \"`g.proj -wf`\" \"$FILE\" \"$WARPFILE\" -co \"ALPHA=yes\" -dstalpha" $GIS_OPT_warpoptions $METHOD 1>&2
-	gdalwarp -s_srs "$GIS_OPT_s_srs" -t_srs "`g.proj -wf`" "$FILE" "$WARPFILE" -co "ALPHA=yes" -dstalpha $GIS_OPT_warpoptions $METHOD
+	echo "gdalwarp -s_srs \"$GIS_OPT_S_SRS\" -t_srs \"`g.proj -wf`\" \"$FILE\" \"$WARPFILE\" -co \"ALPHA=yes\" -dstalpha" $GIS_OPT_WARPOPTIONS $METHOD 1>&2
+	gdalwarp -s_srs "$GIS_OPT_S_SRS" -t_srs "`g.proj -wf`" "$FILE" "$WARPFILE" -co "ALPHA=yes" -dstalpha $GIS_OPT_WARPOPTIONS $METHOD
 
 	#Import it into a temporary map:
 	r.in.gdal $FLAGS input="$WARPFILE" output="$TMPMAPNAME"
@@ -145,7 +145,7 @@ $CHANNEL_SUFFIXES" | sort -u`
 	done
 
 	# Find the alpha layer
-	if [ $GIS_FLAG_k -eq 1 ] ; then
+	if [ $GIS_FLAG_K -eq 1 ] ; then
 		ALPHALAYER=${TMPMAPNAME}${LAST_SUFFIX}
 	else
 		ALPHALAYER=${TMPMAPNAME}.alpha
@@ -206,16 +206,16 @@ $CHANNEL_SUFFIXES" | sort -u`
 
 # Compute flags for r.in.gdal
 FLAGS=""
-if [ $GIS_FLAG_e -eq 1 ] ; then
+if [ $GIS_FLAG_E -eq 1 ] ; then
 	FLAGS="${FLAGS} -e"
 fi
-if [ $GIS_FLAG_k -eq 1 ] ; then
+if [ $GIS_FLAG_K -eq 1 ] ; then
 	FLAGS="${FLAGS} -k"
 fi
 
 # And options for gdalwarp:
 
-case "${GIS_OPT_method}" in
+case "${GIS_OPT_METHOD}" in
     "nearest") METHOD="-rn"
                ;;
     "bilinear") METHOD="-rb"
@@ -231,11 +231,11 @@ SUFFIXES=""
 # We need a way to make sure patches are intialized correctly
 TITER=0
 # Import all the tiles:
-for input in $GIS_OPT_input ; do
+for input in $GIS_OPT_INPUT ; do
 	IFS=$defaultIFS
-	TMPTILENAME=${GIS_OPT_output}_tile_$TITER
+	TMPTILENAME=${GIS_OPT_OUTPUT}_tile_$TITER
 	if [ -f "$input" ] ; then
-		if [ $GIS_FLAG_p -eq 1 ] ; then
+		if [ $GIS_FLAG_P -eq 1 ] ; then
 			nowarpimport $input $TMPTILENAME
 		else
 			warpimport $input $TMPTILENAME
@@ -252,7 +252,7 @@ if [ $NUM_TILES -eq 1 ] ; then
 	for SUFFIX in $CHANNEL_SUFFIXES ; do
 		eval "$SUFFIX"
 		#Rename tile 0 to be the output
-		g.rename rast=${GIS_OPT_output}_tile_0${sfx},${GIS_OPT_output}${sfx}
+		g.rename rast=${GIS_OPT_OUTPUT}_tile_0${sfx},${GIS_OPT_OUTPUT}${sfx}
 	done
 else
 	# Patch together each channel:
@@ -263,7 +263,7 @@ else
 		eval "PATCHES=\${PATCHES_$sfx2}"
 		# Patch these together (using nulls only):
 		echo "Patching [$sfx] channel" 1>&2
-		r.patch input=$PATCHES output=${GIS_OPT_output}${sfx}
+		r.patch input=$PATCHES output=${GIS_OPT_OUTPUT}${sfx}
 		# Remove the temporary patches we made
 		g.remove rast=$PATCHES
 	done
@@ -286,9 +286,9 @@ for SUFFIX in $SUFFIXES ; do
 done
 
 # Make a composite image if asked for and colors exist
-if [ $COLORS -eq 3 ] && [ $GIS_FLAG_c -eq 1 ] ; then
+if [ $COLORS -eq 3 ] && [ $GIS_FLAG_C -eq 1 ] ; then
 	echo "Building Color Image" 1>&2
-	r.composite red=${GIS_OPT_output}.red green=${GIS_OPT_output}.green blue=${GIS_OPT_output}.blue output=${GIS_OPT_output}
+	r.composite red=${GIS_OPT_OUTPUT}.red green=${GIS_OPT_OUTPUT}.green blue=${GIS_OPT_OUTPUT}.blue output=${GIS_OPT_OUTPUT}
 fi
 
 # Clean up:
