@@ -36,6 +36,7 @@ int Reset_color( unsigned char ,unsigned char ,unsigned char , int );
 void close_mon(void);
 int Set_window(int, int, int, int);
 int window_clip(double *, double *, double *, double *);
+int window_box_clip(double *, double *, double *, double *);
 int Text( char *);
 int Text_size(int,int);
 int Text_rotation(float);

@@ -236,10 +236,25 @@ static void draw_bitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y)
 {
 	static unsigned char *buf;
 	static int nalloc;
-	int w = bitmap->width;
-	int h = bitmap->rows;
+	int w, h;
+	int bw = bitmap->width;
+	int bh = bitmap->rows;
 	const unsigned char *sbuf = bitmap->buffer;
-	int i, j;
+	int offset, i, j;
+	double x1, y1, x2, y2;
+
+	x1 = (double)x;
+	y1 = (double)y;
+	x2 = x1 + (double)bw;
+	y2 = y1 + (double)bh;
+	window_box_clip(&x1, &y1, &x2, &y2);
+
+	w = x2 - x1;
+	h = y2 - y1;
+	if (w <= 0 || h <= 0)
+		return;
+
+	offset = ((int)y1 - y) * bw + (int)x1 - x;
 
 	if (nalloc < w * h)
 	{
@@ -249,9 +264,9 @@ static void draw_bitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y)
 
 	for (j = 0; j < h; j++)
 		for (i = 0; i < w; i++)
-			buf[j * w + i] = sbuf[j * w + i] > 128 ? 1 : 0;
+			buf[j * w + i] = sbuf[offset + j * bw + i] > 128 ? 1:0;
 
-	COM_Move_abs(x, y);
+	COM_Move_abs(x1, y1);
 	DRV_draw_bitmap(w, h, buf);
 }
 #endif
