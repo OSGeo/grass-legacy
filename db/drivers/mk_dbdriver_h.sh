@@ -11,7 +11,9 @@ cat <<'EOT'> dbdriver.h
 
 EOT
 
-grep -h '^\( *int *\)\?db__driver' *.c | sed -e 's/^\( *int *\)*/int /' -e 's/ *(.*).*$/();/' > $tmp
+grep -h '^\( *int *\)\?db__driver' *.c | sed \
+	-e 's/^\( *int *\)*/int /' \
+	-e 's/ *(.*$/();/' > $tmp
 cat $tmp >> dbdriver.h
 
 cat <<'EOT' >> dbdriver.h
