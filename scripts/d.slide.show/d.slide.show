@@ -44,6 +44,7 @@
 #% key: mapsets
 #% type: string
 #% description: mapsets to use. Specify multiple mapsets comma separated
+#% multiple : yes
 #% required : no
 #%end
 
@@ -75,7 +76,12 @@ if [ -r $LOCATION/SEARCH_PATH ]
 then
 	MAPSETS=`cat $LOCATION/SEARCH_PATH | tr -s '\012' ' '`
 else
-	MAPSETS=`echo $MAPSET PERMANENT`
+	if [ "$MAPSET" = "PERMANENT" ]
+	then
+		MAPSETS="$MAPSET"
+	else
+		MAPSETS="$MAPSET PERMANENT"
+	fi
 fi
 
 if [ -n "$GIS_OPT_PREFIX" ] ; then
@@ -88,7 +94,7 @@ if [ -n "$GIS_OPT_ACROSS" ] ; then
    ACROSS=$GIS_OPT_ACROSS
 fi
 if [ -n "$GIS_OPT_MAPSETS" ] ; then
-   MAPSETS=$GIS_OPT_MAPSETS
+   MAPSETS=`echo $GIS_OPT_MAPSETS | sed 's/,/ /g'`
 fi
 
 if [ $GIS_FLAG_V -eq 1 ] ; then
@@ -96,6 +102,22 @@ if [ $GIS_FLAG_V -eq 1 ] ; then
 else
    SHOW_VECT=0
 fi
+
+# Check if mapset exists
+mapsets=""
+for mapset in $MAPSETS
+do
+	if [ -d $LOCATION/../$mapset ]
+	then
+		mapsets="$mapsets $mapset"
+	fi
+done
+if [ "$mapsets" = "" ]
+then
+	echo "$MAPSETS: No such mapsets found"
+	exit 1
+fi
+MAPSETS=$mapsets
 
 drawframes()
 {
@@ -205,17 +227,6 @@ drawvector()
 # main code
 
 drawframes
-
-# Get list of current mapsets
-if [ ! "$MAPSETS" = "" ]
-then
-	if [ -r $LOCATION/SEARCH_PATH ]
-	then
-		MAPSETS=`cat $LOCATION/SEARCH_PATH`
-	else
-		MAPSETS=`echo $MAPSET PERMANENT`
-	fi
-fi
 
 # Draw the maps
 
