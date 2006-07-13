@@ -12,12 +12,6 @@
  *              This program is free software under the GNU General Public
  *              License (>=v2). Read the file COPYING that comes with GRASS
  *              for details.
- *
- * Improved March 15, 1989: take it a little more seriously, but not too much.
- *
- * Revised for Grass4.0- converted for new command parser 1/91 -dks
- *   BUT--still needs to be set up for binary input before
- *   moved from alpha to main installation.
  */
 
 #define _MAIN_C_
@@ -64,9 +58,8 @@ int main(int argc, char *argv[])
 	exit(EXIT_FAILURE);
 
     /* open input vector */
-    if ((mapset = G_find_vector2(input->answer, "")) == NULL) {
+    if ((mapset = G_find_vector2(input->answer, "")) == NULL)
 	G_fatal_error(_("Could not find input map <%s>."), input->answer);
-    }
 
     if (output->answer)
 	dxf_file = G_store(output->answer);
@@ -170,9 +163,8 @@ int add_plines(struct Map_info *Map, double textsize)
 	    layer = "centroid";
 	    llayer = "centroid_label";
 	}
-	else {
+	else
 	    continue;
-	}
 
 	if (ltype & GV_POINTS) {
 	    dxf_point(layer, Points->x[0], Points->y[0], Points->z[0]);
@@ -183,9 +175,8 @@ int add_plines(struct Map_info *Map, double textsize)
 	else {			/* lines */
 	    dxf_polyline(layer);
 
-	    for (i = 0; i < Points->n_points; i++) {
+	    for (i = 0; i < Points->n_points; i++)
 		dxf_vertex(layer, Points->x[i], Points->y[i], Points->z[i]);
-	    }
 
 	    dxf_poly_end(layer);
 	}
