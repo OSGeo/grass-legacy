@@ -9,7 +9,7 @@
 #define GLOBAL extern
 #endif
 
-GLOBAL FILE *fpdxf;
+GLOBAL FILE *dxf_fp;
 
 /* write_dxf.c */
 int dxf_open(char *);
@@ -32,7 +32,7 @@ int dxf_layer0(void);
 int dxf_layer(char *, int, char *, int);
 
 /* entities */
-int dxf_point (char *, double, double, double);
+int dxf_point(char *, double, double, double);
 int dxf_polyline(char *);
 int dxf_vertex(char *, double, double, double);
 int dxf_text(char *, double, double, double, double, int, char *);
