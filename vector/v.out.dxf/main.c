@@ -124,8 +124,8 @@ int make_layername(void)
     dxf_layer("line", 2, "CONTINUOUS", 0);
     dxf_layer("boundary", 3, "CONTINUOUS", 0);
     dxf_layer("centroid", 4, "CONTINUOUS", 0);
-    dxf_layer("point-label", 5, "CONTINUOUS", 0);
-    dxf_layer("centroid-label", 6, "CONTINUOUS", 0);
+    dxf_layer("point_label", 5, "CONTINUOUS", 0);
+    dxf_layer("centroid_label", 6, "CONTINUOUS", 0);
 
     dxf_endtable();
     dxf_endsec();
@@ -158,7 +158,7 @@ int add_plines(struct Map_info *Map, double textsize)
 
 	if (ltype == GV_POINT) {
 	    layer = "point";
-	    llayer = "point-label";
+	    llayer = "point_label";
 	}
 	else if (ltype == GV_LINE) {
 	    layer = "line";
@@ -168,7 +168,7 @@ int add_plines(struct Map_info *Map, double textsize)
 	}
 	else if (ltype == GV_CENTROID) {
 	    layer = "centroid";
-	    llayer = "centroid-label";
+	    llayer = "centroid_label";
 	}
 	else {
 	    continue;
