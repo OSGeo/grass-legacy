@@ -79,14 +79,15 @@ int main(int argc, char *argv[])
     Vect_open_old(&In, input->answer, mapset);
 
     dxf_open(dxf_file);		/* open output */
+    G_free(dxf_file);
+
     textsize = do_limits(&In);	/* does header in dxf_fp */
     make_layername();
     dxf_entities();
     add_plines(&In, textsize);	/* puts plines in dxf_fp */
+
     dxf_endsec();
     dxf_eof();			/* puts final stuff in dxf_fp, closes file */
-
-    G_free(output);
 
     exit(EXIT_SUCCESS);
 }
@@ -109,7 +110,6 @@ double do_limits(struct Map_info *Map)
 
     return textsize;
 }
-
 
 int make_layername(void)
 {
