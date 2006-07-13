@@ -10,9 +10,10 @@
 
 
 /* 
-* Attributes for lines are ignored. For points and area by default unique new category is assigned
-* to each and raster value is written to 'value' column. Labels are written to 'label' column
-* if exists. If value flag (-v) is used and type is CELL, raster values are used as categories. 
+* Attributes for lines are ignored. For points and area by default unique new
+* category is assigned to each and raster value is written to 'value' column.
+* Labels are written to 'label' column if exists. If value flag (-v) is used
+* and type is CELL, raster values are used as categories. 
 */
 
 int main (int argc, char *argv[])

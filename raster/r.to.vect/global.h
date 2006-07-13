@@ -64,7 +64,7 @@ struct COOR
 {
   struct COOR *bptr, *fptr;		/* pointers to neighboring points */
   int row, col, node;			/* row, column of point; node flag */
-  CELL right, left;			/* areas to right and left of line */
+  double right, left;			/* areas to right and left of line */
 
 };
 
@@ -83,7 +83,7 @@ struct line_hdr
 struct area_table
 {
   int free;				/* this entry is not taken yet */
-  CELL cat;				/* category number for this area */
+  double cat;				/* category number for this area */
   int row;				/* row and column of point where the */
   int col;				/*   area is widest */
   int width;				/*   and width there */
