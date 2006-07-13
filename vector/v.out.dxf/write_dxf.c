@@ -10,12 +10,31 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <grass/gis.h>
 #include "global.h"
 
 int dxf_open(char *filename)
 {
+    if ((dxf_fp = fopen(filename, "r")) != NULL) {
+	int overwrite;
+	char *overstr;
+
+	fclose(dxf_fp);
+
+	overwrite = 0;
+	if ((overstr = G__getenv("OVERWRITE")))
+	    overwrite = atoi(overstr);
+	if (!overwrite && (overstr = getenv("GRASS_OVERWRITE")))
+	    overwrite = atoi(overstr);
+	if (!overwrite)
+	    G_fatal_error(_("The file '%s' already exists."), filename);
+
+	G_warning(_("The file '%s' already exists and will be overwritten."),
+		  filename);
+    }
     if ((dxf_fp = fopen(filename, "w")) == NULL)
-	G_fatal_error(_("%s: Cannot write dxf file"), filename);
+	G_fatal_error(_("%s: Cannot write dxf file."), filename);
 
     return 0;
 }
