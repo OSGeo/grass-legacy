@@ -5,8 +5,6 @@
  * This file supports Version 10 of dxf.
  *
  * written by: Chuck Ehlschlaeger
- *
- * last revised: March 10, 1989
  */
 
 #include <stdio.h>
