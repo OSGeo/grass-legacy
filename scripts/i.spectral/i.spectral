@@ -107,8 +107,8 @@ RASTERMAPS="$lists"
 
 # ## get data from list of files and set the x-axis labels
 else
-  RASTERMAPS="$GIS_OPT_BANDS"
-  news=`echo $GIS_OPT_BANDS | sed 's+,+ +g'`
+  RASTERMAPS="$GIS_OPT_RASTER"
+  news=`echo $GIS_OPT_RASTER | sed 's+,+ +g'`
   as=0
   for g in $news; do 
     as=`expr $as + 1`
