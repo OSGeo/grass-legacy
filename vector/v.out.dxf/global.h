@@ -20,10 +20,8 @@ int dxf_blocks(void);
 int dxf_entities(void);
 int dxf_endsec(void);
 int dxf_eof(void);
-
 /* header stuff */
 int dxf_limits(double, double, double, double);
-
 /* tables stuff */
 int dxf_linetype_table(int);
 int dxf_layer_table(int);
@@ -31,7 +29,6 @@ int dxf_endtable(void);
 int dxf_solidline(void);
 int dxf_layer0(void);
 int dxf_layer(char *, int, char *, int);
-
 /* entities */
 int dxf_point(char *, double, double, double);
 int dxf_polyline(char *);
