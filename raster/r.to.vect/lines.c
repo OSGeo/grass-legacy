@@ -79,7 +79,7 @@ int extract_lines (int quiet)
 				CELL* b = &((CELL*)bottom)[1];
 
 				if (!quiet)
-					G_percent(rows, 1000, 10);
+					G_percent(rows, n_rows, 2);
 
 				for (col = 1; col < n_cols - 1; col++,t++,m++,b++) {
 					m = &((CELL*)middle)[col];
@@ -103,7 +103,7 @@ int extract_lines (int quiet)
 			}
 
 			if (!quiet)
-				G_percent(rows, rows, 10);
+				G_percent(rows, n_rows, 2);
 			break;
 		}
 		case FCELL_TYPE:
@@ -116,7 +116,7 @@ int extract_lines (int quiet)
 				FCELL* b = &((FCELL*)bottom)[1];
 
 				if (!quiet)
-					G_percent(rows, 100, 10);
+					G_percent(rows, n_rows, 2);
 
 				for (col = 1; col < n_cols - 1; col++,t++,m++,b++) {
 					m = &((FCELL*)middle)[col];
@@ -140,7 +140,7 @@ int extract_lines (int quiet)
 			}
 
 			if (!quiet)
-				G_percent(rows, rows, 10);
+				G_percent(rows, n_rows, 2);
 			break;
 		}
 		case DCELL_TYPE:
@@ -153,7 +153,7 @@ int extract_lines (int quiet)
 				DCELL* b = &((DCELL*)bottom)[1];
 
 				if (!quiet)
-					G_percent(rows, 100, 10);
+					G_percent(rows, n_rows, 2);
 
 				for (col = 1; col < n_cols - 1; col++,t++,m++,b++) {
 					m = &((DCELL*)middle)[col];
@@ -176,7 +176,7 @@ int extract_lines (int quiet)
 			}
 
 			if (!quiet)
-				G_percent(rows, rows, 10);
+				G_percent(rows, n_rows, 2);
 			break;
 		}
 	}
