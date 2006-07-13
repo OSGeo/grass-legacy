@@ -1,26 +1,39 @@
-/*      will convert vector files into autocad files.  This program is
-        a small demo and not to be taken seriously.                     
+/* 
+ * MODULE:      v.out.dxf
+ *
+ * AUTHOR(S):   Chuck Ehlschlaeger
+ *              Update to GRASS 5.7 by Radim Blazek
+ *
+ * PURPOSE:     Convert vector files into DXF files.  This program is a
+ *              small demo and not to be taken seriously.                     
+ *
+ * COPYRIGHT:   (C) 1989-2006 by the GRASS Development Team
+ *
+ *              This program is free software under the GNU General Public
+ *              License (>=v2). Read the file COPYING that comes with GRASS
+ *              for details.
+ *
+ * Improved March 15, 1989: take it a little more seriously, but not too much.
+ *
+ * Revised for Grass4.0- converted for new command parser 1/91 -dks
+ *   BUT--still needs to be set up for binary input before
+ *   moved from alpha to main installation.
+ */
 
-**      written by Chuck Ehlschlaeger                                   
-**      improved March 15, 1989:  take it a little more seriously, but
-        not too much.                                                   
-
-**      Revised for Grass4.0- converted for new command parser 1/91 -dks
-**         BUT--still needs to be set up for binary input before
-	   moved from alpha to main installation.
-
-**/
-
+#define _MAIN_C_
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
-#include "dxf.h"
-#include "local_proto.h"
+#include "global.h"
 
-/* size of text compared to screen=1					*/
+/* size of text compared to screen=1 */
 #define TEXT_SIZE	.003
 #define CENTERED	4
+
+static double do_limits ( struct Map_info * );
+static int make_layername ( void );
+static int add_plines (struct Map_info *, double );
     
 int 
 main (int argc, char *argv[])
@@ -72,7 +85,7 @@ main (int argc, char *argv[])
     dxf_entities();
     add_plines ( &In, textsize );          /* puts plines in fpdxf                */
     dxf_endsec();
-    do_eof();                    /* puts final stuff in fpdxf, closes file */
+    dxf_eof();                    /* puts final stuff in fpdxf, closes file */
     exit(0);
 }
 
@@ -169,12 +182,4 @@ add_plines (struct Map_info *Map, double textsize )
 	}
     }
     return (0);
-}
-
-int 
-do_eof (void)
-{
-    dxf_eof();
-
-    return 0;
 }

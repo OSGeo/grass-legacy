@@ -1,25 +1,23 @@
-/* to.dxf.h is a header file to facilitate the transfer of  
-** information to the dxf format.  It attempts to be input
-** nuetral (so when digit gets replaced ten years from now
-** it will still be good...).
-**
-** This header file supports Version 10 of dxf 
-**
-** written by: Chuck Ehlschlaeger
-**
-** last revised: March 10, 1989
-*/
+/* write_dxf.c is a file to facilitate the transfer of  
+ * information to the dxf format.  It attempts to be input
+ * nuetral (so when digit gets replaced ten years from now
+ * it will still be good...).
+ *
+ * This file supports Version 10 of dxf.
+ *
+ * written by: Chuck Ehlschlaeger
+ *
+ * last revised: March 10, 1989
+ */
 
 #include <stdio.h>
-#include <ctype.h>
-
-FILE	*fpdxf;
+#include "global.h"
 
 int dxf_open (char *filename)
 {
 	if((fpdxf = fopen(filename, "w")) == NULL)	{
 		fprintf(stderr,
-			"ERROR, autocad file:%s cannot be opened\n",
+			"ERROR, DXF file:%s cannot be opened\n",
 			filename);
 		exit(1);
 	}
@@ -27,14 +25,48 @@ int dxf_open (char *filename)
 	return 0;
 }
 
-#define dxf_header() fprintf(fpdxf,"  0\nSECTION\n  2\nHEADER\n")
-#define dxf_tables() fprintf(fpdxf,"  0\nSECTION\n  2\nTABLES\n")
-#define dxf_blocks() fprintf(fpdxf,"  0\nSECTION\n  2\nBLOCKS\n")
-#define dxf_entities() \
-	fprintf(fpdxf,"  0\nSECTION\n  2\nENTITIES\n")
-#define dxf_endsec() fprintf(fpdxf,"  0\nENDSEC\n")
-#define dxf_eof() fprintf(fpdxf,"  0\nEOF\n"); \
-		fclose(fpdxf)
+int dxf_header(void)
+{
+	fprintf(fpdxf,"  0\nSECTION\n  2\nHEADER\n");
+
+	return 0;
+}
+
+int dxf_tables(void)
+{
+	fprintf(fpdxf,"  0\nSECTION\n  2\nTABLES\n");
+
+	return 0;
+}
+
+int dxf_blocks(void)
+{
+	fprintf(fpdxf,"  0\nSECTION\n  2\nBLOCKS\n");
+
+	return 0;
+}
+
+int dxf_entities(void)
+{
+	fprintf(fpdxf,"  0\nSECTION\n  2\nENTITIES\n");
+
+	return 0;
+}
+
+int dxf_endsec(void)
+{
+	fprintf(fpdxf,"  0\nENDSEC\n");
+
+	return 0;
+}
+
+int dxf_eof(void)
+{
+	fprintf(fpdxf,"  0\nEOF\n");
+	fclose(fpdxf);
+
+	return 0;
+}
 
 /* header stuff	
 */
@@ -52,13 +84,26 @@ int dxf_limits (double top, double bottom, double right, double left)
 /* tables stuff
 */
 
-#define dxf_linetype_table(numlines) \
-	fprintf(fpdxf,"  0\nTABLE\n  2\nLTYPE\n 70\n%6d\n", \
-		(numlines))
-#define dxf_layer_table(numlayers) \
-	fprintf(fpdxf,"  0\nTABLE\n  2\nLAYER\n 70\n%6d\n", \
-		(numlayers))
-#define dxf_endtable() fprintf(fpdxf,"  0\nENDTAB\n")
+int dxf_linetype_table(int numlines)
+{
+	fprintf(fpdxf,"  0\nTABLE\n  2\nLTYPE\n 70\n%6d\n", numlines);
+
+	return 0;
+}
+
+int dxf_layer_table(int numlayers)
+{
+	fprintf(fpdxf,"  0\nTABLE\n  2\nLAYER\n 70\n%6d\n", numlayers);
+
+	return 0;
+}
+
+int dxf_endtable(void)
+{
+	fprintf(fpdxf,"  0\nENDTAB\n");
+
+	return 0;
+}
 
 int dxf_solidline (void)
 {
@@ -112,7 +157,7 @@ int dxf_polyline (char *layer)
 	return 0;
 }
 
-int dxf_vertex (char layer[], double x, double y, double z)
+int dxf_vertex (char *layer, double x, double y, double z)
 {
 	fprintf(fpdxf,"0\nVERTEX\n");
 	fprintf(fpdxf,"8\n%s\n", layer);
@@ -121,10 +166,7 @@ int dxf_vertex (char layer[], double x, double y, double z)
 	return 0;
 }
 
-#define dxf_poly_end(layer) \
-	fprintf(fpdxf,"  0\nSEQEND\n  8\n%s\n",(layer))
-	
-int dxf_text (char layer[], double x, double y, double z, double size, int just, char text[])
+int dxf_text (char *layer, double x, double y, double z, double size, int just, char *text)
 {
 	fprintf(fpdxf,"  0\nTEXT\n  8\n%s\n 10\n%f\n 20\n",layer,x);
 	fprintf(fpdxf,"%f\n 30\n%f\n 40\n%f\n  1\n%s\n",y,z,size,text);
@@ -135,3 +177,9 @@ int dxf_text (char layer[], double x, double y, double z, double size, int just,
 	return 0;
 }
 
+int dxf_poly_end(char *layer)
+{
+	fprintf(fpdxf,"  0\nSEQEND\n  8\n%s\n", layer);
+
+	return 0;
+}
