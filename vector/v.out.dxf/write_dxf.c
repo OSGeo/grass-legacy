@@ -1,7 +1,6 @@
-/* write_dxf.c is a file to facilitate the transfer of  
- * information to the dxf format.  It attempts to be input
- * nuetral (so when digit gets replaced ten years from now
- * it will still be good...).
+/* write_dxf.c is a file to facilitate the transfer of information to the dxf
+ * format.  It attempts to be input nuetral (so when digit gets replaced ten
+ * years from now it will still be good...).
  *
  * This file supports Version 10 of dxf.
  *
@@ -15,10 +14,8 @@
 
 int dxf_open(char *filename)
 {
-    if ((dxf_fp = fopen(filename, "w")) == NULL) {
-	fprintf(stderr, "ERROR, DXF file:%s cannot be opened\n", filename);
-	exit(1);
-    }
+    if ((dxf_fp = fopen(filename, "w")) == NULL)
+	G_fatal_error(_("%s: Cannot write dxf file"), filename);
 
     return 0;
 }

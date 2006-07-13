@@ -2,6 +2,7 @@
 #define _GLOBAL_H_
 
 #include <stdio.h>
+#include <grass/glocale.h>
 
 #ifdef _MAIN_C_
 #define GLOBAL

@@ -1,11 +1,11 @@
-/* 
+/*
  * MODULE:      v.out.dxf
  *
  * AUTHOR(S):   Chuck Ehlschlaeger
  *              Update to GRASS 5.7 by Radim Blazek
  *
  * PURPOSE:     Convert vector files into DXF files.  This program is a
- *              small demo and not to be taken seriously.                     
+ *              small demo and not to be taken seriously.
  *
  * COPYRIGHT:   (C) 1989-2006 by the GRASS Development Team
  *
@@ -21,6 +21,7 @@
  */
 
 #define _MAIN_C_
+#include <stdio.h>
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/dbmi.h>
@@ -38,54 +39,56 @@ static int add_plines(struct Map_info *, double);
 int main(int argc, char *argv[])
 {
     double textsize;
-    struct Option *old, *new;
-    char *mapset;
-    struct GModule *module;
+    char *mapset, *dxf_file;
     struct Map_info In;
+    struct GModule *module;
+    struct Option *input, *output;
 
     G_gisinit(argv[0]);
 
     /* Set description */
     module = G_define_module();
-    module->description = "Exports GRASS vector files to DXF file format.";
+    module->description = _("Exports GRASS vector files to DXF file format.");
 
-    old = G_define_option();
-    old->key = "input";
-    old->type = TYPE_STRING;
-    old->required = YES;
-    old->multiple = NO;
-    old->gisprompt = "old,vector,vector";
-    old->description = "vector input file";
+    input = G_define_standard_option(G_OPT_V_INPUT);
 
-    new = G_define_option();
-    new->key = "output";
-    new->type = TYPE_STRING;
-    new->required = YES;
-    new->multiple = NO;
-    new->description = "dxf output file";
+    output = G_define_option();
+    output->key = "output";
+    output->type = TYPE_STRING;
+    output->required = NO;
+    output->multiple = NO;
+    output->gisprompt = "new_file,file,output";
+    output->description = _("DXF output file");
 
     if (G_parser(argc, argv))
-	exit(-1);
+	exit(EXIT_FAILURE);
 
     /* open input vector */
-    if ((mapset = G_find_vector2(old->answer, "")) == NULL) {
-	G_fatal_error("Could not find input map <%s>\n", old->answer);
+    if ((mapset = G_find_vector2(input->answer, "")) == NULL) {
+	G_fatal_error(_("Could not find input map <%s>"), input->answer);
+    }
+
+    if (output->answer)
+	dxf_file = G_store(output->answer);
+    else {
+	dxf_file = G_malloc(strlen(input->answer) + 5);
+	sprintf(dxf_file, "%s.dxf", input->answer);
     }
 
     Vect_set_open_level(2);
-    Vect_open_old(&In, old->answer, mapset);
+    Vect_open_old(&In, input->answer, mapset);
 
-    /* open output */
-    dxf_open(new->answer);
-
-    textsize = do_limits(&In);	/* does header in dxf_fp                 */
+    dxf_open(dxf_file);		/* open output */
+    textsize = do_limits(&In);	/* does header in dxf_fp */
     make_layername();
     dxf_entities();
-    add_plines(&In, textsize);	/* puts plines in dxf_fp                */
+    add_plines(&In, textsize);	/* puts plines in dxf_fp */
     dxf_endsec();
     dxf_eof();			/* puts final stuff in dxf_fp, closes file */
 
-    exit(0);
+    G_free(output);
+
+    exit(EXIT_SUCCESS);
 }
 
 double do_limits(struct Map_info *Map)
@@ -104,7 +107,7 @@ double do_limits(struct Map_info *Map)
     else
 	textsize = (box.N - box.S) * TEXT_SIZE;
 
-    return (textsize);
+    return textsize;
 }
 
 
@@ -147,6 +150,8 @@ int add_plines(struct Map_info *Map, double textsize)
     for (line = 1; line <= nlines; line++) {
 	int i, ltype;
 
+	G_percent(line, nlines, 2);
+
 	ltype = Vect_read_line(Map, Points, Cats, line);
 	Vect_cat_get(Cats, 1, &cat);
 	sprintf(cat_num, "%d", cat);
@@ -185,5 +190,6 @@ int add_plines(struct Map_info *Map, double textsize)
 	    dxf_poly_end(layer);
 	}
     }
-    return (0);
+
+    return 0;
 }
