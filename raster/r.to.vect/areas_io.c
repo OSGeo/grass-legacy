@@ -294,11 +294,11 @@ int write_area(struct area_table *a_list,	/* list of areas */
     catNum = 1;
 
     for (i = 0, p = a_list; i < n_areas; i++, p++) {
-	if (equivs[i] == i && p->width > 0 && !G_is_c_null_value(&(p->cat))) {
+	if (equivs[i] == i && p->width > 0 && !G_is_d_null_value(&(p->cat))) {
 	    char buf[1000];
 
 	    if (value_flag) {	/* raster value */
-		cat = p->cat;
+		cat = (int)p->cat;
 	    } else {		/* sequence */
 		cat = catNum;
 		catNum++;
@@ -308,8 +308,23 @@ int write_area(struct area_table *a_list,	/* list of areas */
 				  (p->width / 2.0)) * cell_head.ew_res;
 	    y = cell_head.north - (p->row + 0.5) * cell_head.ns_res;
 
-	    G_debug(3, "vector x = %.3f, y = %.3f, cat = %d; raster cat = %d",
-		    x, y, cat, p->cat);
+	    switch(data_type){
+	    case CELL_TYPE:
+		    G_debug(3,
+			"vector x = %.3f, y = %.3f, cat = %d; raster cat = %d",
+		    	x, y, cat, (int)p->cat);
+		    break;
+	    case FCELL_TYPE:
+		    G_debug(3,
+			"vector x = %.3f, y = %.3f, cat = %d; raster cat = %f",
+		    	x, y, cat, (float)p->cat);
+		    break;
+	    case DCELL_TYPE:
+		    G_debug(3,
+			"vector x = %.3f, y = %.3f, cat = %d; raster cat = %lf",
+		    	x, y, cat, p->cat);
+		    break;
+	    }
 
 	    Vect_reset_line(points);
 	    Vect_append_point(points, x, y, 0.0);
@@ -320,9 +335,20 @@ int write_area(struct area_table *a_list,	/* list of areas */
 	    Vect_write_line(&Map, GV_CENTROID, points, Cats);
 
 	    if (driver != NULL && !value_flag) {
-		sprintf(buf, "insert into %s values (%d, %d", Fi->table, cat,
-			p->cat);
+		sprintf(buf, "insert into %s values (%d, ", Fi->table, cat);
 		db_set_string(&sql, buf);
+		switch(data_type){
+		case CELL_TYPE:
+			sprintf(buf, "%d", (int)p->cat);
+			break;
+		case FCELL_TYPE:
+			sprintf(buf, "%f", (float)p->cat);
+			break;
+		case DCELL_TYPE:
+			sprintf(buf, "%lf", p->cat);
+			break;
+		}
+		db_append_string(&sql, buf);
 
 		if (has_cats) {
 		    temp_buf = G_get_cat(p->cat, &RastCats);

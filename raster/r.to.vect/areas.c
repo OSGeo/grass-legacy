@@ -75,10 +75,10 @@
 #include "global.h"
 
 static int col, row, top, bottom;
-static CELL tl, tr, bl, br;
+static double tl, tr, bl, br;
 static struct COOR **v_list;
 static struct COOR *h_ptr;
-static CELL *buffer[2];
+static void *buffer[2];
 static int scan_length;
 static int n_areas, area_num, n_equiv, tl_area;
 static struct area_table *a_list, *a_list_new, *a_list_old;
@@ -95,24 +95,26 @@ static int read_next();
 static int equiv_areas(int,int);
 static int map_area(int,int);
 static int add_to_list(int,int);
-static int assign_area(CELL,int);
+static int assign_area(double,int);
 static int more_areas();
 static int update_width(struct area_table *,int);
 static int nabors (void);
 
+#define get_raster_value(ptr, col) \
+	G_get_raster_value_d(G_incr_void_ptr(ptr, (col)*data_size), data_type)
 
 /* extract_areas - trace boundaries of polygons in file */
 
 int extract_areas (int quiet)
 {
-  int nullVal;
+  double nullVal;
 
   row = col = top = 0;  /* get started for read of first */
   bottom = 1;  /* line from cell file */
   area_num = 0;
   tl_area = 0;
 
-  G_set_c_null_value(&nullVal, 1);
+  G_set_d_null_value(&nullVal, 1);
   /* represents the "outside", the external null values */
   assign_area(nullVal,0);
 
@@ -127,10 +129,10 @@ int extract_areas (int quiet)
 
     for (col = 0; col < scan_length - 1; col++)
     {
-      tl = *(buffer[top] + col);	/* top left in window */
-      tr = *(buffer[top] + col + 1);	/* top right */
-      bl = *(buffer[bottom] + col);	/* bottom left */
-      br = *(buffer[bottom] + col + 1);	/* bottom right */
+      tl = get_raster_value(buffer[top], col);		/* top left in window */
+      tr = get_raster_value(buffer[top], col+1);	/* top right */
+      bl = get_raster_value(buffer[bottom], col);	/* bottom left */
+      br = get_raster_value(buffer[bottom], col+1);	/* bottom right */
       update_list(nabors());
     }
 
@@ -160,7 +162,7 @@ int extract_areas (int quiet)
 static int update_list (int i)
 {
   struct COOR *new_ptr, *new_ptr1, *new_ptr2, *new_ptr3;
-  CELL right, left;
+  double right, left;
 
   switch (i)
   {
@@ -416,20 +418,28 @@ static struct COOR *get_ptr (void)
 
 static int nabors (void)
 {
-  if (tl != tr)				/* 0, 4, 5, 6, 8, 9, 10 */
+  int tl_null = G_is_d_null_value(&tl);
+  int tr_null = G_is_d_null_value(&tr);
+  int bl_null = G_is_d_null_value(&bl);
+  int br_null = G_is_d_null_value(&br);
+
+  /* if both a and b are NULLs, thery are equal */
+#define cmp(a, b) (a##_null+b##_null==1 || (a##_null+b##_null==0 && a != b))
+
+  if (cmp(tl, tr) != 0)			/* 0, 4, 5, 6, 8, 9, 10 */
   {
-    if (tl != bl)			/* 4, 6, 8, 10 */
+    if (cmp(tl, bl) != 0)		/* 4, 6, 8, 10 */
     {
-      if (bl != br)			/* 8, 10 */
+      if (cmp(bl, br) != 0)		/* 8, 10 */
       {
-        if (tr != br)
+        if (cmp(tr, br) != 0)
           return(10);
         else
           return(8);
       }
       else				/* 4, 6 */
       {
-        if (tr != br)
+        if (cmp(tr, br) != 0)
           return(6);
         else
           return(4);
@@ -437,9 +447,9 @@ static int nabors (void)
     }
     else				/* 0, 5, 9 */
     {
-      if (bl != br)			/* 0, 9 */
+      if (cmp(bl, br) != 0)		/* 0, 9 */
       {
-        if (tr != br)
+        if (cmp(tr, br) != 0)
           return(9);
         else
           return(0);
@@ -450,11 +460,11 @@ static int nabors (void)
   }
   else					/* 1, 2, 3, 7, 11 */
   {
-    if (tl != bl)			/* 2, 3, 7 */
+    if (cmp(tl, bl) != 0)		/* 2, 3, 7 */
     {
-      if (bl != br)			/* 3, 7 */
+      if (cmp(bl, br) != 0)		/* 3, 7 */
       {
-        if (tr != br)
+        if (cmp(tr, br) != 0)
           return(7);
         else
           return(3);
@@ -464,7 +474,7 @@ static int nabors (void)
     }
     else				/* 1, 11 */
     {
-      if (bl != br)
+      if (cmp(bl, br) != 0)
         return(1);
       else
         return(11);
@@ -494,8 +504,8 @@ int alloc_areas_bufs (int size)
 {
   int i;
 
-  buffer[0] = (CELL *) G_calloc(size, sizeof(CELL));
-  buffer[1] = (CELL *) G_calloc(size, sizeof(CELL));
+  buffer[0] = (void *) G_malloc(size * data_size);
+  buffer[1] = (void *) G_malloc(size * data_size);
   v_list = (struct COOR **) G_malloc(size * sizeof(*v_list));
   n_areas = n_equiv = 500;		/* guess at number of areas, equivs */
   a_list = (struct area_table *) G_malloc(n_areas * sizeof(struct area_table));
@@ -660,7 +670,7 @@ static int add_to_list (int x, int y)
 /* assign_area - make current area number correspond to the passed */
 /* category number and allocate more space to store areas if necessary */
 
-static int assign_area (CELL cat, int kase)
+static int assign_area (double cat, int kase)
 {
   a_list_new->free = 0;
   a_list_new->cat = cat;
@@ -720,8 +730,8 @@ static int update_width (struct area_table *ptr, int kase)
   struct equiv_table *ep;
 
   a = (ptr - a_list);
-  for (j = col + 1, w = 0; j < scan_length && *(buffer[bottom] + j) == br; j++, w++)
-  { }
+  for (j = col + 1, w = 0; j < scan_length &&
+		  get_raster_value(buffer[bottom], j) == br; j++, w++);
 
   if(a == 0)
     G_message(_("Area 0, %d \t%d \t%d \t%d \t%d"), kase, row, col, ptr->width, w);
