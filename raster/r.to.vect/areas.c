@@ -123,7 +123,7 @@ int extract_areas (int quiet)
   while (read_next())			/* read rest of file, one row at */
   {					/*   a time */
     if (!quiet)
-      G_percent(row, 1000, 10);
+      G_percent(row, n_rows, 2);
 
     for (col = 0; col < scan_length - 1; col++)
     {
@@ -141,7 +141,7 @@ int extract_areas (int quiet)
   }
 
   if (!quiet)
-    G_percent(row, row, 10);
+    G_percent(row, n_rows, 2);
 
   write_area(a_list,e_list,area_num,n_equiv);
 

@@ -38,7 +38,7 @@ int extract_points(int z_flag, int quiet)
     count = 1;
     for (row = 0; row < cell_head.rows; row++) {
         if (!quiet)
-            G_percent(row, cell_head.rows - 1, 2);
+            G_percent(row, n_rows, 2);
 
 	y = G_row_to_northing((double)(row +.5), &cell_head); 
 
@@ -123,7 +123,7 @@ int extract_points(int z_flag, int quiet)
     }
 
     if (!quiet)
-        G_percent(row, cell_head.rows - 1, 2);
+        G_percent(row, n_rows, 2);
 
     return(1);
 }
