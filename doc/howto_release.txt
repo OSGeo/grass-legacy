@@ -6,6 +6,14 @@ Note: This text contains *some* rules only applicable to the
       development coordinators (currently Markus Neteler, Radim Blazek).
 
 
+###########################################
+Contents
+  (A) HOWTO create a release
+  (B) HOWTO create a branch
+
+###########################################
+(A) HOWTO create a release
+
 1. Local work (basically at ITC-irst)
 
  o - cleanup rubbish:
@@ -33,7 +41,7 @@ Note: This text contains *some* rules only applicable to the
      echo $CVSBRANCH
      #version:
      MAJOR=6
-     MINOR=0
+     MINOR=1
      RELEASE=`cat include/VERSION | head -3 | tail -1`
      VERSION=${MAJOR}.${MINOR}.${RELEASE}
      echo $VERSION
@@ -69,7 +77,7 @@ Note: This text contains *some* rules only applicable to the
  o Store the source tarball in (use scp -p FILES grass:):
      http://grass.itc.it/grass/grass$MAJOR$MINOR/source/
    along with associated files:
-     scp grass-$VERSION.* AUTHORS ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING neteler@grass.itc.it:www/grass$MAJOR$MINOR/source/
+     scp grass-$VERSION.* AUTHORS ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING SUBMITTING_TCLTK SUBMITTING_SCRIPTS neteler@grass.itc.it:www/grass$MAJOR$MINOR/source/
 
  o update web site to new version (HTML in Web-CVS)
       - main.inc
@@ -134,4 +142,26 @@ Note: This text contains *some* rules only applicable to the
    http://groups.google.com/group/Remote-Sensing-GIS-for-a-New-World
 
    ... anywhere else? Please add here.
+
+###########################################
+(B) HOWTO create a branch
+
+1. update from CVS into clean directory
+
+2. create the branch:
+
+BRANCH="releasebranch_6_1"
+cvs tag -b $BRANCH
+
+3. checkout the branch into new directory:
+
+yourcvsid=markus
+export CVSROOT=:ext:$yourcvsid@grasscvs:/grassrepository
+cvs -z3 checkout -r $BRANCH grass6
+
+
+4. Take care that relevant HEAD changes are backported.
+
+5. For releasing beta1,..betaN, RC1..RCN, follow the
+   standard release rules.
 
