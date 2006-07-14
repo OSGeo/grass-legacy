@@ -17,9 +17,8 @@
  *   also removes any other file found which is "old"
  *   with an modification time greater then 4 days
  *
- *   2006: Rewritten for GRASS 6 by roberto Flor, ITC-irst
+ *   2006: Rewritten for GRASS 6 by Roberto Flor, ITC-irst
  *
- * TODO (?): Implement snprintf() as G_snprintf() for portability
  **************************************************************/
 
 #include <limits.h>
@@ -56,7 +55,7 @@ void clean_dir(const char *pathname,uid_t uid,pid_t pid,time_t now,int max_age)
 	if ((G_strcasecmp(cur_entry->d_name,".") == 0 )|| (G_strcasecmp(cur_entry->d_name,"..")==0)) 
 		continue; /* Skip dir and parent dir entries */
 		
-	if ( (pathlen=snprintf(buf,BUF_MAX,"%s/%s",pathname,cur_entry->d_name)) >= BUF_MAX) 
+	if ( (pathlen=G_snprintf(buf,BUF_MAX,"%s/%s",pathname,cur_entry->d_name)) >= BUF_MAX) 
 		G_fatal_error("clean_temp: exceeded maximum pathname length %d, got %d, should'nt happen",BUF_MAX,pathlen);
 
 	if (stat(buf, &info) != 0) {

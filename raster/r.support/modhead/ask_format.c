@@ -21,7 +21,7 @@ int ask_format(char *name, struct Cell_head *cellhd, long filesize)
     G_zero(no_zeros, (int)sizeof(no_zeros));
     maptype = G_raster_map_type(name, G_mapset());
 
-    snprintf(title, sizeof(title), _("Please enter the following "
+    G_snprintf(title, sizeof(title), _("Please enter the following "
                    "information for [%s]:"), name);
 
     V_clear();
@@ -46,7 +46,7 @@ int ask_format(char *name, struct Cell_head *cellhd, long filesize)
     if (maptype == CELL_TYPE && cellhd->compressed == 0 && 
         cellhd->rows * cellhd->cols * cellhd->format != filesize) {
 
-        snprintf(buf, sizeof(buf), _("rows * cols * bytes per cell "
+        G_snprintf(buf, sizeof(buf), _("rows * cols * bytes per cell "
                        "must be same as file size (%ld)"), filesize);
         V_line(6, buf);
         V_line(7, _("If you need help figuring them out, just hit ESC"));

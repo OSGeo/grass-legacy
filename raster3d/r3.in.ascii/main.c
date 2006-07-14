@@ -122,7 +122,7 @@ readHeaderString  (FILE *fp, char *valueString, double *value)
 {
   static char format[100];
 
-  snprintf (format, 100, "%s %%lf", valueString); /*to avoid bufferoverflows we use snprintf*/
+  G_snprintf (format, 100, "%s %%lf", valueString); /*to avoid buffer overflows we use snprintf*/
   if (fscanf (fp, format, value) != 1)
     fatalError ("readHeaderString: header value invalid");
 

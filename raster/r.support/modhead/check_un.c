@@ -59,7 +59,7 @@ int check_uncompressed(struct Cell_head *cellhd, long filesize)
     fclose(fd);
 
     /* display valid combinations */
-    snprintf(command, sizeof(command), "$GRASS_PAGER %s", tempfile);
+    G_snprintf(command, sizeof(command), "$GRASS_PAGER %s", tempfile);
     G_system(command);
 
     /* remove temp file */
