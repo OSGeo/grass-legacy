@@ -1051,6 +1051,9 @@ FILE *G_fopen_sites_new(char *);
 int G_get_site(FILE *, double *, double *, char **);
 int G_put_site(FILE *, double, double, char *);
 
+/* snprintf.c */
+int G_snprintf(char *, size_t, const char *, ...);
+
 /* squeeze.c */
 char *G_squeeze(char *);
 
