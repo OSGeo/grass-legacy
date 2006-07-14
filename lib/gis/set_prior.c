@@ -177,7 +177,10 @@ int set_uid_to_user ()
 	return (-1);
     }
 
-    setuid (user);
+    if (setuid (user) == -1) {
+        fprintf (stderr, "Set_uid_to_user () failed!\n");
+        return (-1);
+    }
 #endif /* __MINGW32__ */   
     return (0);
 }
