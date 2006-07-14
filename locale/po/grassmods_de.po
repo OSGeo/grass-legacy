@@ -1237,7 +1237,7 @@ msgstr "Anzahl der Frames."
 
 #: ../display/d.nviz/main.c:120
 msgid "Start frame number (default=0)"
-msgstr "Start-Frame Nummer (Standar: 0)."
+msgstr "Start-Frame Nummer (Standard: 0)."
 
 #: ../display/d.nviz/main.c:125
 msgid "Interactively select route"
