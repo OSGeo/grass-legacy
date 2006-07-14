@@ -222,7 +222,7 @@ int main(int argc, char *argv[])
         /* Write a file of no-nulls */
         G_message(_("Removing null file for [%s]...\n"), raster->answer);
 
-        snprintf(element, sizeof(element), "cell_misc/%s", raster->answer);
+        G_snprintf(element, sizeof(element), "cell_misc/%s", raster->answer);
         null_fd = G_open_new(element, "null");
         G__file_name(path, element, "null", mapset);
         unlink(path);

@@ -26,7 +26,7 @@ int check_stats(char *name, char *mapset)
     data_type = G_raster_map_type(name, mapset);
 
     /* Exit if not updating statistics */
-    snprintf(question, sizeof(question), _("Update the statistics "
+    G_snprintf(question, sizeof(question), _("Update the statistics "
              "(histogram, range) for [%s]? "), name);
     if (!G_yes(question, 0))
         return EXIT_FAILURE;

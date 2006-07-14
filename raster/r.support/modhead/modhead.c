@@ -197,7 +197,7 @@ int main (int argc, char *argv[])
 
     /* If we create a new cell header, find out if file is compressed */
     if (!cellhd_ok) {
-        snprintf(buffer, sizeof(buffer), _("[%s] appears to be compressed. Is it? "), name);
+        G_snprintf(buffer, sizeof(buffer), _("[%s] appears to be compressed. Is it? "), name);
         cellhd.compressed = 0;
 
         if ((compressed_new || compressed_old) && G_yes(buffer, -1)) {

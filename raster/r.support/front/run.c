@@ -13,7 +13,7 @@ int run_etc_support(char *pgm, char *rast)
     char buf[1024];
     int stat;
 
-    snprintf(buf, sizeof(buf), "%s/etc/support/%s '%s'",
+    G_snprintf(buf, sizeof(buf), "%s/etc/support/%s '%s'",
              G_gisbase(), pgm, rast);
 
     if ((stat = G_system(buf)))
@@ -33,7 +33,7 @@ int run_system(char *pgm)
     char buf[1024];
     int stat;
 
-    snprintf(buf, sizeof(buf), "%s", pgm);
+    G_snprintf(buf, sizeof(buf), "%s", pgm);
     if ((stat = G_system(buf)))
 	G_sleep(3);
 

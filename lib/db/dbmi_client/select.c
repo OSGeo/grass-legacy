@@ -63,9 +63,9 @@ int db_select_int (dbDriver *driver, char *tab, char *col, char *where, int **pv
     val = (int *) G_malloc ( alloc * sizeof(int));
 
     if ( where == NULL || strlen(where) == 0 )
-        snprintf(buf,1023, "SELECT %s FROM %s", col, tab);
+        G_snprintf(buf,1023, "SELECT %s FROM %s", col, tab);
     else
-        snprintf(buf,1023, "SELECT %s FROM %s WHERE %s", col, tab, where);
+        G_snprintf(buf,1023, "SELECT %s FROM %s WHERE %s", col, tab, where);
 
     G_debug (3, "  SQL: %s", buf );
     
