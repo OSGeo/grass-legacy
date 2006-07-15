@@ -69,6 +69,7 @@ static int scan_ll (
     int d,m,s;
     char ps[20], *pps;
     double p, f;
+    double pm = 0.0;
     char tbuf[100];
 
     sprintf (tbuf, "%s%c", buf, MARKER); /* add a marker at end of string */
@@ -88,6 +89,17 @@ static int scan_ll (
     {
 	p = 0.0;
     }
+    else if (sscanf (buf, "%d:%d.%[0123456789]%[^\n]", &d, &m, ps, h) == 4)
+    {
+	s = 0;
+	p = 0.0;
+	f = .1;
+	for (pps = ps; *pps; pps++)
+	{
+	    pm += (*pps - '0') * f;
+	    f /= 10.0;
+	}
+    }
     else if (sscanf (buf, "%d:%d%[^\n]", &d, &m, h) == 3)
     {
 	p = 0.0;
@@ -104,29 +116,35 @@ static int scan_ll (
     if (d < 0) return 0;
     if (m < 0 || m >= 60) return 0;
     if (s < 0 || s >= 60) return 0;
+
     if (max)
     {
 	if (d > max) return 0;
 	if (d == max && (m > 0 || s > 0 || p > 0.0)) return 0;
     }
+
     if (m && !check_minutes(buf)) return 0;
     if (s && !check_seconds(buf)) return 0;
 
-    *result = d + m/60.0 + (s + p)/3600.0;
+    *result = d + (m + pm)/60.0 + (s + p)/3600.0;
 
     G_strip (h);
 
     if (*result == 0.0 && *h == MARKER)
 	return (1);
 
-    if (*h >= 'A' && *h <= 'Z') *h += 'a' - 'A';
+    if (*h >= 'A' && *h <= 'Z')
+	*h += 'a' - 'A';
+
     if (*h != dir[0] && *h != dir[1])
 	return 0;
+
     if (h[1] != MARKER)
 	return 0;
 
     if (*h == dir[0] && *result != 0.0)
 	*result = -(*result);
+
     return 1;
 }
 
