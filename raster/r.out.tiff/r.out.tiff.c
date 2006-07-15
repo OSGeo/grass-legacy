@@ -103,7 +103,7 @@ main (int argc, char *argv[])
 	compopt->key		= "compression";
 	compopt->type		= TYPE_STRING;
 	compopt->required       = NO;
-	compopt->options        = "none,packbit,deflate";
+	compopt->options        = "none,packbit,deflate,lzw";
 	compopt->description    = _("TIFF file compression");
 	compopt->answer         = "none";
 	
@@ -130,6 +130,8 @@ main (int argc, char *argv[])
 		compression = COMPRESSION_PACKBITS;
 	else if (strncmp(compopt->answer, "deflate", 7) == 0)
 		compression = COMPRESSION_DEFLATE;
+	else if (strncmp(compopt->answer, "lzw", 3) == 0)
+		compression = COMPRESSION_LZW;
 	else
 		compression = COMPRESSION_NONE;
 	
