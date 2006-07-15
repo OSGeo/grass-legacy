@@ -249,22 +249,11 @@ awk  -f "$TMP" -v east=$e west=$w north=$n south=$s ea=$ea no=$no typeflag=$type
 
 rm -f "$TMP"
 
-
-#if [ type='int' ]
-#then 
 echo "Running r.in.ascii, please stand by.."
 r.in.ascii `echo $typeflag` i="$TMP".2 o=$name
 
-dat=`date +'%a %b %e %T %Y'`
-user=`logname`
-cat > $LOCATION/hist/$name << EOF2
-$dat
-$MAPSET
-$name
-$user
-`echo $ctype`
-EOF2
-#fi
+r.support $name hist="$PROG name=$name dip=$dip azimuth=$az easting=$ea \\"
+r.support $name hist="northing=$no elevation=$el type=$type"
 
 echo "Done."
 echo ""
