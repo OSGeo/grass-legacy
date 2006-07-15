@@ -200,8 +200,6 @@ void process(void)
 
 	    if (mparam == ELEV)
 		*(row_out+col) += centre;	/* Add central elevation back */
-
-            G_debug(1, "FEATURE: %i", featrow_out[9]);
 	}
 
 	if (mparam != FEATURE)
