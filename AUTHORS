@@ -40,6 +40,8 @@ add "@" and "." as needed.
 
 GRASS 6.1
 -------------------------------------------------
+(work in progress: please complete and correct, this list may be incomplete)
+
 Additional authors:
 NVIZ
  - ACS - Massimo Cuomo <m.cuomo at acsys.it>: New flythrough navigation
@@ -58,16 +60,14 @@ Power user tester:
    Maciej "Maciek" Sieczka <werchowyna at epf.pl>
 
 
-[incomplete]
 
 GRASS 5.7/6.0: Primary authors of new source code
 -------------------------------------------------
-(work in progress: please complete and correct)
 
 Institutions:
  ITC-IRST, Trento, Italy   Providing web structure and various mailing lists
  Intevation GmbH, Germany  Providing CVS and Request Tracker
- (Baylor University, USA    Providing users mailing list - till 
+ Baylor University, USA    Providing user mailing list 1998-5/2006
 
 VECTOR
  - Radim Blazek <blazek itc it>: vector engine core developer
@@ -195,7 +195,7 @@ incomplete official list for GRASS 5.0-5.4:
 Institutions:
  ITC-IRST, Trento, Italy   Providing web structure and various mailing lists
  Intevation GmbH, Germany  Providing CVS and Request Tracker
- Baylor University, USA    Providing users mailing list
+ Baylor University, USA    Providing user mailing list 1998-5/2006
 
 
 GRASS 5 Core Team (most have CVS write access):
@@ -288,7 +288,7 @@ Former Institutions
    National Electronics and Computer Technology Center
    Bangkok, Thailand
 
- - Baylor University: User list 1998- spring 2006
+ - Baylor University: Hosting the user mailing list, 1998-5/2006
 
 
 The Official home of GRASS is:
