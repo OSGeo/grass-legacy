@@ -119,9 +119,8 @@ Contents
 
    http://groups.google.com/group/comp.infosystems.gis
    http://slashgeo.org/submit.pl
-   http://www.osgeo.org (discuss list)
-   https://webcommittee.osgeo.org/servlets/Scarab  (OSGeo-WebCom as news items for www.osgeo.org)
-   http://grass.osgeo.org
+   http://www.osgeo.org (discuss list + news_item@osgeo.org)
+   http://grass.osgeo.org (is fed through grass-announce@grass.itc.it)
    http://spatialnews.geocomm.com/submitnews.html (not free any more)
    http://freshmeat.net/projects/grass/?highlight=GRASS
    http://linuxtoday.com/contribute.php3
