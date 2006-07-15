@@ -1,39 +1,26 @@
-/*
-* Name
-* 	r.proj -- convert a map to a new geographic projection.
+/***************************************************************************
 *
-* Usage:
-*	r.proj input=name location=name [output=name] [mapset=name]
-*		  [dbase=name] [method=name]
+* MODULE:       r.proj
 *
-*
-* Description:
-*	r.proj converts a map to a new geographic projection. It reads a
-*	map from a different location, projects it and write it out
-*	to the current location. The projected data is resampled with
-*	one of three different methods: nearest neighbor, bilinear and
-*	cubic convolution.
-*
-*
-* Parameters:
-*
-*	input   	input raster map
-*	location   	location of input map
-*	output		output raster map
-*	mapset		mapset of input map
-*	dbase		database of input map
-*	method		interpolation method to use
-*
-*
-*
-* Author:
-*		 Martin Schroeder
+* AUTHOR(S):    Martin Schroeder
 *		 University of Heidelberg
 *		 Dept. of Geography
 *		 emes@geo0.geog.uni-heidelberg.de
 *
 * 		 (With the help of a lot of existing GRASS sources, in 
 *		  particular v.proj) 
+*
+* PURPOSE:      r.proj converts a map to a new geographic projection. It reads a
+*	        map from a different location, projects it and write it out
+*	        to the current location. The projected data is resampled with
+*	        one of three different methods: nearest neighbor, bilinear and
+*	        cubic convolution.
+*
+* COPYRIGHT:    (C) 2001 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*               License (>=v2). Read the file COPYING that comes with GRASS
+*               for details.
 *
 * Changes
 *		 Morten Hulden <morten@ngb.se>, Aug 2000:
@@ -57,7 +44,8 @@
 *		 assymetrical rounding errors. Added missing offset outcellhd.ew_res/2 
 *		 to initial xcoord for each row in main projection loop (we want to  project 
 *		 center of cell, not border).
-*/
+*****************************************************************************/
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -197,7 +185,7 @@ int main (int argc, char **argv)
 	nocrop->description = _("Do not perform region cropping optimization");
 
 	if (G_parser(argc, argv))
-		exit(1);
+		exit(EXIT_FAILURE);
 
 	/* get the method */
 	for (method = 0; (ipolname = menu[method].name); method++)
@@ -205,31 +193,27 @@ int main (int argc, char **argv)
 			break;
 
 	if (!ipolname)
-	{
-		fprintf(stderr, "<%s=%s> unknown %s\n",
+		G_fatal_error(_("<%s=%s> unknown %s"),
 			interpol->key, interpol->answer, interpol->key);
-		G_usage();
-		exit(1);
-	}
 	interpolate = menu[method].method;
 
 	mapname = outmap->answer ? outmap->answer : inmap->answer;
 	setname = imapset->answer ? imapset->answer : G_store(G_mapset());
 
 	if (strcmp(inlocation->answer, G_location()) == 0)
-		G_fatal_error("You have to use a different location for input than the current");
+		G_fatal_error(_("You have to use a different location for input than the current"));
 
 	G_get_window(&outcellhd);
 
 	/* Get projection info for output mapset */
 	if ((out_proj_info = G_get_projinfo()) == NULL)
-		G_fatal_error("Can't get projection info of output map");
+		G_fatal_error(_("Can't get projection info of output map"));
 
 	if ((out_unit_info = G_get_projunits()) == NULL)
-		G_fatal_error("Can't get projection units of output map");
+		G_fatal_error(_("Can't get projection units of output map"));
 
 	if (pj_get_kv(&oproj, out_proj_info, out_unit_info) < 0)
-		G_fatal_error("Can't get projection key values of output map");
+		G_fatal_error(_("Can't get projection key values of output map"));
 
 	/* Change the location 		 */
 	G__create_alt_env();
@@ -251,11 +235,11 @@ int main (int argc, char **argv)
 			fprintf(stderr, "Checking location %s, mapset %s:\n",
 				inlocation->answer, setname);
 		G_list_element ("cell", "raster", setname, 0);
-		exit(0); /* leave r.proj after listing*/
+		exit(EXIT_SUCCESS); /* leave r.proj after listing*/
 	}
 
 	if (!G_find_cell(inmap->answer, setname))
-		G_fatal_error("Input map [%s] in location [%s] in mapset [%s] not found.",
+		G_fatal_error(_("Input map [%s] in location [%s] in mapset [%s] not found."),
 			      inmap->answer, inlocation->answer, setname);
 
 	/* Read input map colour table */   
@@ -263,13 +247,13 @@ int main (int argc, char **argv)
    
 	/* Get projection info for input mapset */
 	if ((in_proj_info = G_get_projinfo()) == NULL)
-		G_fatal_error("Can't get projection info of input map");
+		G_fatal_error(_("Can't get projection info of input map"));
 
 	if ((in_unit_info = G_get_projunits()) == NULL)
-		G_fatal_error("Can't get projection units of input map");
+		G_fatal_error(_("Can't get projection units of input map"));
 
 	if (pj_get_kv(&iproj, in_proj_info, in_unit_info) < 0)
-		G_fatal_error("Can't get projection key values of input map");
+		G_fatal_error(_("Can't get projection key values of input map"));
    
         G_free_key_value( in_proj_info );	   
         G_free_key_value( in_unit_info );
@@ -284,7 +268,7 @@ int main (int argc, char **argv)
 	cell_type = G_raster_map_type(inmap->answer, setname);
 
 	if (G_projection() == PROJECTION_XY)
-		G_fatal_error("Can't work with xy data");
+		G_fatal_error(_("Can't work with xy data"));
 
 	/* Save default borders so we can show them later */
 	inorth = incellhd.north;
@@ -430,7 +414,7 @@ int main (int argc, char **argv)
 		}
 
 		if (G_put_raster_row(fdo, obuffer, cell_type) < 0)
-			G_fatal_error("error writing output map");
+			G_fatal_error(_("Error writing output map"));
 
 		xcoord1 = xcoord2 = outcellhd.west + (outcellhd.ew_res / 2);
 		ycoord2 -= outcellhd.ns_res;
@@ -445,8 +429,9 @@ int main (int argc, char **argv)
 		G_write_colors(mapname, G_mapset(), &colr);
 		G_free_colors(&colr);
 	}
-   
-	return 0;		/* OK */
+	
+	G_done_msg("");
+	exit(EXIT_SUCCESS);		/* OK */
 }
 
 static char *make_ipol_list(void)
