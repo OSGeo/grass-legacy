@@ -459,7 +459,7 @@ proc Gm::cleanup { destroywin } {
 		
 	# delete temporary local region files
 	for {set x 1} {$x<$moncount} {incr x} {
-		eval exec "g.remove region=map_$x"
+		exec g.remove region=map_$x
 	}
 
 	# delete all map display ppm files

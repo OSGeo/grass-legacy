@@ -162,14 +162,14 @@ proc MapCanvas::create { } {
 	
 	# set tempfile for ppm output
 	set mappid [pid]
-	set mapfile($mon) [eval exec "g.tempfile pid=$mappid"]
+	set mapfile($mon) [exec g.tempfile pid=$mappid]
 	set maskfile($mon) $mapfile($mon)
 	append mapfile($mon) ".ppm"
 	append maskfile($mon) ".pgm"
 	
 	# set tempfile and tmp directory path for composite output
 	set mappid [pid]
-	set outfile($mon) [eval exec "g.tempfile pid=$mappid"]
+	set outfile($mon) [exec g.tempfile pid=$mappid]
 	set tmpdir [file dirname $outfile($mon)]
 	set outfile($mon) [file tail $outfile($mon)]
 	append outfile($mon) ".ppm"

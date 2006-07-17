@@ -317,7 +317,7 @@ proc GRMap::getmset { } {
 	GRMap::setxyenv $xymset $xyloc
 
 	set mappid [pid]
-	set grfile [eval exec "g.tempfile pid=$mappid"]
+	set grfile [exec g.tempfile pid=$mappid]
 	append grfile ".ppm"
 	set tmpdir [file dirname $grfile]
 	

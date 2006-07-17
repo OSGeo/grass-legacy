@@ -19,17 +19,16 @@ proc set_mapsets { } {
     global ms_ch ms_name nms
 
     set first 1
-    set cmd "g.mapsets mapset="
+    set arg "mapset="
     for {set i 0} {$i < $nms} {incr i 1} {
         set ms $ms_name($i)
         if { $ms_ch($ms) } { 
-            if { !$first } {  append cmd "," }
-            append cmd "$ms"
+            if { !$first } {  append arg "," }
+            append arg "$ms"
             set first 0
         }
     }
-    puts  $cmd
-    eval exec $cmd
+    exec g.mapsets $arg
 }
 
 set mainw [ScrolledWindow .mainw -relief sunken -borderwidth 2]
