@@ -21,7 +21,7 @@
 #% key: input
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: Name of raster map for color management
+#% description: Name of raster map for support file management
 #% required : yes
 #%end
 
@@ -35,4 +35,4 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-exec xterm -e "$GISBASE/etc/grass-run.sh" r.support "map=$GIS_OPT_INPUT"
+eval `exec xterm -e r.support map=$GIS_OPT_INPUT`
