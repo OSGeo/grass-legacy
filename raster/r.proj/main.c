@@ -154,11 +154,8 @@ int main (int argc, char **argv)
 	indbase->required = NO;
 	indbase->description = _("Path to GRASS database of input location");
 
-	outmap = G_define_option();
-	outmap->key = "output";
-	outmap->type = TYPE_STRING;
+	outmap = G_define_standard_option(G_OPT_R_OUTPUT);
 	outmap->required = NO;
-	outmap->description = _("Output raster map");
 
 	ipolname = make_ipol_list();
 
