@@ -14,13 +14,11 @@
  *
  */
 
+#define	MAIN
 #include <stdio.h>
 #include <stdlib.h>
-
-#define	MAIN
-#include "local_proto.h"
-#undef	MAIN
 #include <grass/glocale.h>
+#include "global.h"
 
 
 int
@@ -49,7 +47,6 @@ main (int argc, char **argv)
 	struct
 	{
 		struct	Flag	*input;
-		struct	Flag	*overwr;
 	} flag;
 
 	/* Initialize GRASS and parse command line */
@@ -172,11 +169,6 @@ main (int argc, char **argv)
 	flag.input->description		=
 		_("Input data given for (o/i)");
 
-	flag.overwr			= G_define_flag();
-	flag.overwr->key		= 'o';
-	flag.overwr->description	=
-		_("Overwrite outputs");
-
 	if(G_parser(argc, argv)){
 	        exit(-1);
 	}
@@ -205,7 +197,7 @@ main (int argc, char **argv)
 	misc.idxclass	= atoi(param.idxclass->answer);
 
 	flg.input	= flag.input->answer;
-	flg.overwr	= flag.overwr->answer;
+	flg.overwr	= module->overwrite;
 
 
 	gisbase = G_gisbase();
