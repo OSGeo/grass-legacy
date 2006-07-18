@@ -15,11 +15,9 @@
  */
 
 #define	MAIN
-#include "local_proto.h"
-#undef	MAIN
-
 #include <grass/gis.h>
 #include <grass/glocale.h>
+#include "global.h"
 
 int
 main(int argc, char **argv)
