@@ -30,7 +30,9 @@ int PS_vlegend (void)
      *        index for both start at 0, lpos in script starts from 1
      * If position is not used by any vector it is used for next not used vector without
      * lpos or lpos > vector.count */
+
     nopos = -1; /* last used without position in script or position > count */
+
     for ( l = 0; l < vector.count; l++ ) {
 	nvec[l] = 0;
 	for ( i = vector.count-1; i >= 0; i-- ) { /* last in script plot first */
@@ -51,6 +53,7 @@ int PS_vlegend (void)
 	    }
 	}
     }
+
     /* find last used row */
     lcount = 0; /* number of used rows in legend */
     for ( i = vector.count-1; i >=0; i-- ) {
@@ -108,9 +111,9 @@ int PS_vlegend (void)
 	if(width <= 0.0)
 	    width = 2.4 * fontsize;
 
+/* HB 2006: always figure width & draw so the border will always work. */
 	/* if vector legend is on map... */
-	if (y > PS.map_bot && y <= PS.map_top && x < PS.map_right)
-	{
+/* 	if (y > PS.map_bot && y <= PS.map_top && x < PS.map_right) {   */
 	    fprintf(PS.fp, "/mg %.1f def\n", margin);
 
     	    /* get width of widest string in PostScript variable "w" */
@@ -122,10 +125,19 @@ int PS_vlegend (void)
     	    fprintf(PS.fp, "1 1 1 C ");
     	    fprintf(PS.fp, "%.1f %.1f w %.1f B fill \n", 
 		x - margin,  y - lc * dy - margin, y);
+/*	} */
+
+	/* draw the border, if set */
+	if(vector.border != -1) {
+	    set_rgb_color(vector.border);
+
+	    fprintf(PS.fp, "%.1f %.1f w %.1f B\n",
+		x - margin,  y - lc * dy - margin, y);
+	    fprintf(PS.fp, "D\n");
 	}
 
 	/* make the legend */
-	for ( j = h*lc; j < st; j++ ) { /*each row */
+	for ( j = h*lc; j < st; j++ ) { /* each row */
     	    G_debug (4, "  row = %d", j );
 	    y -= dy; /* set position of next row */
 	    for (k = 0; k < nvec[j]; k++) {
