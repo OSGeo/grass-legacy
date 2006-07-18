@@ -1,5 +1,5 @@
 #include <grass/gis.h>
-#include "local_proto.h"
+#include "global.h"
 
 
 void

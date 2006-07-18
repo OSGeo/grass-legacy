@@ -1,4 +1,4 @@
-#include "local_proto.h"
+#include "global.h"
 
 
 /* The Green-and-Ampt Model */
