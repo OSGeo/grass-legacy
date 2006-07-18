@@ -1,6 +1,7 @@
 # translation of grasstcl_pl.po into Polski
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2005 GRASS Development Team
+# Copyright (C) 2005, GRASS Development Team
+# Artur Niecior <nieart@interia.pl>, 2005, 2006.
 #
 msgid ""
 msgstr ""
@@ -8,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-05-19 20:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Artur NieÃ‚Â¶cior <nieart@interia.pl>\n"
+"Last-Translator: Artur Nie¶cior <nieart@interia.pl>\n"
 "Language-Team: Polska <translation@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
@@ -43,21 +44,21 @@ msgstr ""
 #: ../gui/tcltk/d.m/chart.tcl:96 ../gui/tcltk/d.m/chart.tcl:100
 #: ../gui/tcltk/d.m/fttext.tcl:83 ../gui/tcltk/d.m/fttext.tcl:87
 msgid "Help"
-msgstr ""
+msgstr "Pomoc"
 
 #: ../i18n/tcltkgrass-i18n/main/help-netscape.tcl:5
 msgid "html-browser"
-msgstr ""
+msgstr "przegl±darka html"
 
 #: ../i18n/tcltkgrass-i18n/main/tksys.tcl:171
 msgid "System Information\n"
-msgstr ""
+msgstr "Informacje systemowe\n"
 
 #: ../i18n/tcltkgrass-i18n/main/tksys.tcl:201
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:599
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:851
 msgid "Quit"
-msgstr ""
+msgstr "Wyjd¼"
 
 #: ../i18n/tcltkgrass-i18n/main/tksys.tcl:202
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:852
@@ -65,7 +66,7 @@ msgstr ""
 #: ../gui/tcltk/gis.m/runandoutput.tcl:112 ../gui/tcltk/gis.m/gmmenu.tcl:27
 #: ../gui/tcltk/d.m/menu.tcl:17
 msgid "Save"
-msgstr ""
+msgstr "Zapisz"
 
 #: ../i18n/tcltkgrass-i18n/main/tksys.tcl:203
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:854
@@ -74,7 +75,7 @@ msgstr ""
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_main.tcl:80 ../lib/gis/gui.tcl:475
 #: ../gui/tcltk/gis.m/runandoutput.tcl:113
 msgid "Clear"
-msgstr ""
+msgstr "Wyczy¶æ"
 
 #: ../i18n/tcltkgrass-i18n/main/tksys.tcl:212
 msgid "TK System Information"
@@ -90,7 +91,7 @@ msgstr ""
 
 #: ../i18n/tcltkgrass-i18n/main/about.tcl:5
 msgid "About "
-msgstr ""
+msgstr "O programie"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:322
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:731
@@ -98,7 +99,7 @@ msgstr ""
 #: ../gui/tcltk/gis.m/runandoutput.tcl:44
 #: ../gui/tcltk/gis.m/runandoutput.tcl:107
 msgid "Run"
-msgstr ""
+msgstr "Uruchom"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:334
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:816
@@ -123,23 +124,23 @@ msgstr ""
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:576
 msgid "Size:"
-msgstr ""
+msgstr "Rozmiar:"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:580
 msgid "Weight:"
-msgstr ""
+msgstr "Szeroko¶æ:"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:581
 msgid "normal"
-msgstr ""
+msgstr "normalna"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:584
 msgid "bold"
-msgstr ""
+msgstr "pogrubiona"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:588
 msgid "Slant:"
-msgstr ""
+msgstr "Pochylona"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:589
 msgid "roman"
@@ -160,11 +161,11 @@ msgstr ""
 #: ../i18n/etc/nviz2.2-i18n/scripts/colorPopup.tcl:57
 #: ../lib/init/file_option.tcl:205 ../lib/init/gis_set.tcl:154
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:615
 msgid "Display dimensions"
-msgstr ""
+msgstr "Wy¶wietl wymiary"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:618
 msgid "XDriver default LEFT position"
@@ -207,18 +208,18 @@ msgstr ""
 #: ../lib/init/file_option.tcl:139 ../lib/init/gis_set.tcl:157
 #: ../lib/init/gis_set.tcl:592
 msgid "Cancel"
-msgstr ""
+msgstr "Anuluj"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:761
 msgid "Running ..."
-msgstr ""
+msgstr "Proces w toku"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:775
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:779
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:795 ../lib/init/help.tcl:128
 #: ../lib/init/help.tcl:1568
 msgid "Stop"
-msgstr ""
+msgstr "Zatrzymaj"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:776
 msgid "Right button to KILL"
@@ -255,79 +256,79 @@ msgstr ""
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1394
 msgid "CANCEL"
-msgstr ""
+msgstr "Anuluj"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1407
 msgid "Do you want to start a script session?"
-msgstr ""
+msgstr "Czy chcesz zapocz±tkowaæ sesjê skryptu?"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1414
 msgid "Scripting already running, stop first"
-msgstr ""
+msgstr "Sesja skryptu jest ju¿ uruchomiona, najpierw zakoñcz poprzedni±"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1427
 msgid "select or enter a filename to save the generated script"
-msgstr ""
+msgstr "wybierz lub wprowad¼ nazwê pliku dla zapisania utworzonego skryptu"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1432
 msgid "Enter filename to save script"
-msgstr ""
+msgstr "Wprowad¼ nazwê pliku aby zapisaæ skrypt"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1435
 msgid "No filename given, discard recorded script?"
-msgstr ""
+msgstr "Nie wprowadzono ¿adnej nazwy pliku, porzuciæ zarejestrowany skrypt?"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1455
 msgid "Scripting not running, start first"
-msgstr ""
+msgstr "Sesja skryptu nie zosta³a uruchomiona, uruchom najpierw sesjê"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1470
 msgid "Script recording in progress, stop first"
-msgstr ""
+msgstr "Rejestrowanie skryptu w toku, zakoñcz najpierw sesjê skryptu"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1472
 msgid "Open recorded script file for replay"
-msgstr ""
+msgstr "Otwórz w odpowiedzi zarejestrowany plik skryptu"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1474
 msgid "No filename, quitting"
-msgstr ""
+msgstr "Brak nazwy pliku, koñczenie"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1482
 msgid "is empty file"
-msgstr ""
+msgstr "pusty plik"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1486
 msgid "is not a valid tcltkgrass script:"
-msgstr ""
+msgstr "nie jest to prawid³owy skrypt tcltkgrass:"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1489
 msgid "invalid script file:"
-msgstr ""
+msgstr "nieprawid³owy plik skryptu:"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1500
 msgid "Error executing script"
-msgstr ""
+msgstr "B³±d podczas wykonywania skryptu"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1502
 msgid "Script"
-msgstr ""
+msgstr "Skrypt"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1502
 msgid "executed"
-msgstr ""
+msgstr "wykonany"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1540
 msgid "path not found:"
-msgstr ""
+msgstr "nie znaleziono ¶cie¿ki:"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1544
 msgid "no html page found in"
-msgstr ""
+msgstr "nie znaleziono strony html"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1544
 msgid "for"
-msgstr ""
+msgstr "dla"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1562
 msgid ""
@@ -341,23 +342,23 @@ msgstr ""
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1575
 msgid "Configure html-browser"
-msgstr ""
+msgstr "Konfiguruj przegl±darkê html"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1577
 msgid "html browser (netscape)"
-msgstr ""
+msgstr "przegl±darka html (netscape)"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1580
 msgid "path or url for html manual pages"
-msgstr ""
+msgstr "¶ciezka lub adres dla stron podrêcznika w formacie html"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1583
 msgid "prefix for html path or url (file:)"
-msgstr ""
+msgstr "prefix dla ¶cie¿ki lub adresu html (plik:)"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1586
 msgid "postfix for html files (.html)"
-msgstr ""
+msgstr "postfix dla plików html (.html)"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1589
 msgid "auto raise window of browser"
@@ -412,42 +413,42 @@ msgstr ""
 #: ../i18n/tcltkgrass-i18n/script/gis_set.tcl:281
 #: ../epsg_start/gis_set.tcl:290
 msgid "Please select location and mapset\n"
-msgstr ""
+msgstr "Proszê wybraæ lokacjê i mapset\n"
 
 #: ../i18n/tcltkgrass-i18n/script/gis_set.tcl:282
 #: ../epsg_start/gis_set.tcl:291
 msgid "or define a new location\n"
-msgstr ""
+msgstr "lub zdefiniowaæ now± lokacjê\n"
 
 #: ../i18n/tcltkgrass-i18n/script/gis_set.tcl:304
 #: ../epsg_start/gis_set.tcl:313
 msgid "Database : "
-msgstr ""
+msgstr "Baza danych : "
 
 #: ../i18n/tcltkgrass-i18n/script/gis_set.tcl:318
 #: ../epsg_start/gis_set.tcl:328 ../lib/init/file_option.tcl:85
 #: ../lib/init/file_option.tcl:130 ../lib/init/gis_set.tcl:357
 msgid "Browse..."
-msgstr ""
+msgstr "Przegl±daj..."
 
 #: ../i18n/tcltkgrass-i18n/script/gis_set.tcl:338
 #: ../epsg_start/gis_set.tcl:349
 msgid "Location"
-msgstr ""
+msgstr "Lokacja"
 
 #: ../i18n/tcltkgrass-i18n/script/gis_set.tcl:370
 msgid "Mapset"
-msgstr ""
+msgstr "Mapset"
 
 #: ../i18n/tcltkgrass-i18n/script/gis_set.tcl:400
 #: ../epsg_start/gis_set.tcl:458
 msgid "Use Selection"
-msgstr ""
+msgstr "U¿yj Zaznaczenia"
 
 #: ../i18n/tcltkgrass-i18n/script/gis_set.tcl:417
 #: ../epsg_start/gis_set.tcl:475
 msgid "Create New Location"
-msgstr ""
+msgstr "Utwórz Now± Lokacjê"
 
 #: ../i18n/documents/nviz/help_frame-i18n.tcl:23
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_vect.tcl:44
@@ -465,16 +466,16 @@ msgstr ""
 #: ../gui/tcltk/gis.m/mapprint.tcl:337 ../gui/tcltk/gis.m/gmmenu.tcl:29
 #: ../gui/tcltk/d.m/print.tcl:281 ../gui/tcltk/d.m/menu.tcl:19
 msgid "Close"
-msgstr ""
+msgstr "Zamknij"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_vect.tcl:24
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_main.tcl:51
 msgid "Vectors"
-msgstr ""
+msgstr "Wektory"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_vect.tcl:29
 msgid "Vector Panel"
-msgstr ""
+msgstr "Panel Wektorów"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_vect.tcl:32
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_mkdspf.tcl:173
@@ -482,14 +483,14 @@ msgstr ""
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:94
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_cutplane.tcl:91
 msgid "Current:"
-msgstr ""
+msgstr "Bie¿±cy:"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_vect.tcl:34
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_site.tcl:35
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:96
 #: ../gui/tcltk/d.m/menu.tcl:15
 msgid "New"
-msgstr ""
+msgstr "Nowy"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_vect.tcl:35
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_mkdspf.tcl:169
@@ -499,12 +500,12 @@ msgstr ""
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:266
 #: ../vector/v.digit/cats.tcl:20
 msgid "Delete"
-msgstr ""
+msgstr "Usuñ"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_vect.tcl:59
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_site.tcl:93
 msgid "Line Width"
-msgstr ""
+msgstr "Grubo¶æ Linii"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_vect.tcl:61
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_scale.tcl:100
@@ -514,57 +515,57 @@ msgstr ""
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:61
 #: ../i18n/etc/nviz2.2-i18n/scripts/colorPopup.tcl:19
 msgid "Color"
-msgstr ""
+msgstr "Kolor"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_vect.tcl:63
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_site.tcl:81
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:104
 msgid "Draw Current"
-msgstr ""
+msgstr "Przerysuj Bie¿±cy"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_vect.tcl:73
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_site.tcl:118
 msgid "Display on surface(s):"
-msgstr ""
+msgstr "Wy¶wietl na powierzchni(ach):"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_mkdspf.tcl:46
 msgid "Mkdspf"
-msgstr ""
+msgstr "Mkdspf"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_mkdspf.tcl:48
 msgid "Mkdspf Panel"
-msgstr ""
+msgstr "Panel Mkdspf"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_mkdspf.tcl:56
 msgid "Input File:"
-msgstr ""
+msgstr "Wprowad¼ Plik:"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_mkdspf.tcl:57
 msgid "Output File:"
-msgstr ""
+msgstr "Plik Wyj¶ciowy"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_mkdspf.tcl:58
 msgid "Color File:"
-msgstr ""
+msgstr "Plik Koloru"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_mkdspf.tcl:79
 msgid "Lighting Model"
-msgstr ""
+msgstr "Model O¶wietlenia"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_mkdspf.tcl:80
 msgid "flat"
-msgstr ""
+msgstr "p³aski"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_mkdspf.tcl:82
 msgid "gradient"
-msgstr ""
+msgstr "gradient"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_mkdspf.tcl:93
 #: ../i18n/etc/nviz2.2-i18n/scripts/fileBrowser.tcl:110
 #: ../i18n/etc/nviz2.2-i18n/scripts/mapBrowser.tcl:221
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:103
 msgid "Accept"
-msgstr ""
+msgstr "Zatwierd¼"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_mkdspf.tcl:104
 msgid "Threshold Type"
@@ -616,7 +617,7 @@ msgstr ""
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_kanimator.tcl:108
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:265
 msgid "Add"
-msgstr ""
+msgstr "Dodaj"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_mkdspf.tcl:177
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_mkdspf.tcl:199
@@ -1422,77 +1423,77 @@ msgstr ""
 #: ../i18n/etc/nviz2.2-i18n/scripts/mapBrowser.tcl:96
 #: ../gui/tcltk/menus/menu.tcl:191
 msgid "Region"
-msgstr ""
+msgstr "Region"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/mapBrowser.tcl:98
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:216
 msgid "Labels"
-msgstr ""
+msgstr "Etykiety"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/mapBrowser.tcl:100
 msgid "Icons"
-msgstr ""
+msgstr "Ikony"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/mapBrowser.tcl:194
 msgid "3d.view"
-msgstr ""
+msgstr "Widok 3d"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_color.tcl:30
 msgid "Color Panel"
-msgstr ""
+msgstr "Panel Kolorów"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_color.tcl:32
 #: ../vector/v.digit/settings.tcl:155 ../vector/v.digit/settings.tcl:297
 msgid "Background"
-msgstr ""
+msgstr "T³o"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:36
 msgid "Surfaces"
-msgstr ""
+msgstr "Powierzchnie"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:42
 msgid "Surface Panel"
-msgstr ""
+msgstr "Panel Powierzchni"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:48
 msgid "Grid Resolution"
-msgstr ""
+msgstr "Rozdzielczo¶æ Grida"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:50
 msgid "Polygon Resolution"
-msgstr ""
+msgstr "Rozdzielczo¶æ Poligonu"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:61
 msgid "Current Surface Only"
-msgstr ""
+msgstr "Tylko Bie¿±ca Powierzchnia"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:63
 msgid "All Surfaces"
-msgstr ""
+msgstr "Wszystkie Powierzchnie"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:71
 msgid "Surface Style:"
-msgstr ""
+msgstr "Styl Poweirzchni:"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:74
 msgid "Polygon"
-msgstr ""
+msgstr "Poligon"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:76
 msgid "Wire/Poly"
-msgstr ""
+msgstr "Siatka/Poligony"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:80
 msgid "Shading:"
-msgstr ""
+msgstr "Cieniowanie:"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:81
 msgid "Flat"
-msgstr ""
+msgstr "P³askie"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:84
 msgid "Gouraud"
-msgstr ""
+msgstr "Gouraud"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:113
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:115
@@ -1501,11 +1502,11 @@ msgstr ""
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:117
 msgid "Wire Color"
-msgstr ""
+msgstr "Kolor Siatki"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:120
 msgid "Position"
-msgstr ""
+msgstr "Pozycja"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_surf.tcl:406
 msgid "WireColor"
@@ -1530,65 +1531,65 @@ msgstr ""
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:73
 msgid "New Map"
-msgstr ""
+msgstr "Nowa Mapa"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:76
 msgid "Remove Mask"
-msgstr ""
+msgstr "Usuñ Maskê"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:77
 msgid "Invert Mask"
-msgstr ""
+msgstr "Odwróæ Maskê"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:82
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:87
 msgid "New Constant"
-msgstr ""
+msgstr "Nowa Sta³a"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:83
 msgid "Use as color"
-msgstr ""
+msgstr "U¿yj jako koloru"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:98
 msgid "Status: "
-msgstr ""
+msgstr "Status: "
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:197
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:201
 msgid "not set"
-msgstr ""
+msgstr "nie ustawiony"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:214
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:298
 msgid "color:"
-msgstr ""
+msgstr "kolor"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:214
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:298
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:214
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:298
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:214
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:290
 msgid "Surface Color"
-msgstr ""
+msgstr "Kolor Powierzchni"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:298
 msgid "b"
-msgstr ""
+msgstr "b"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:317
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:356
 msgid "mask not set"
-msgstr ""
+msgstr "maska nie ustawiona"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:431
 #: ../i18n/etc/nviz2.2-i18n/scripts/attPopup.tcl:467
@@ -1817,7 +1818,7 @@ msgstr ""
 
 #: ../lib/init/help.tcl:123
 msgid "Open"
-msgstr ""
+msgstr "Otwórz"
 
 #: ../lib/init/help.tcl:125 ../lib/init/help.tcl:1580
 msgid "Refresh"
@@ -1849,7 +1850,7 @@ msgstr ""
 
 #: ../lib/init/help.tcl:1575
 msgid "Open file..."
-msgstr ""
+msgstr "Otwórz plik..."
 
 #: ../lib/init/help.tcl:1577
 msgid "Increase font size"
@@ -2994,23 +2995,23 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:25
 msgid "Workspace"
-msgstr ""
+msgstr "Przestrzeñ pracy"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:26 ../gui/tcltk/d.m/menu.tcl:16
 msgid "Open..."
-msgstr ""
+msgstr "Otwórz..."
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:28 ../gui/tcltk/d.m/menu.tcl:18
 msgid "Save as..."
-msgstr ""
+msgstr "Zapisz jako..."
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:37
 msgid "Create ps.map file for postscript printing"
-msgstr ""
+msgstr "Utwórz plik mapa.ps dla wydruku postskryptowego"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:39 ../gui/tcltk/d.m/menu.tcl:29
 msgid "E&xit"
-msgstr ""
+msgstr "Zakoñcz"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:46 ../gui/tcltk/d.m/menu.tcl:36
 msgid "&Help"
@@ -3259,31 +3260,31 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:100
 msgid "Import"
-msgstr ""
+msgstr "Importuj"
 
 #: ../gui/tcltk/menus/menu.tcl:101 ../gui/tcltk/menus/menu.tcl:136
 msgid "Raster map"
-msgstr ""
+msgstr "Mapa rastrowa"
 
 #: ../gui/tcltk/menus/menu.tcl:102 ../gui/tcltk/menus/menu.tcl:137
 msgid "Multiple formats using GDAL"
-msgstr ""
+msgstr "Ró¿norodne formaty poprzez sterownik GDAL"
 
 #: ../gui/tcltk/menus/menu.tcl:104
 msgid "ASCII GRID (includes GRASS ASCII)"
-msgstr ""
+msgstr "GRID ASCII (w tym format ASCII GRASS'a)"
 
 #: ../gui/tcltk/menus/menu.tcl:105
 msgid "Polygons and lines from ASCII file"
-msgstr ""
+msgstr "Poligony i linie z pliku ASCII"
 
 #: ../gui/tcltk/menus/menu.tcl:107
 msgid "Binary file (includes GTOPO30 format)"
-msgstr ""
+msgstr "Plik binarny (w tym format GTOPO30)"
 
 #: ../gui/tcltk/menus/menu.tcl:108
 msgid "ESRI Arc/Info ASCII grid"
-msgstr ""
+msgstr "ESRI Arc/Info ASCII grid"
 
 #: ../gui/tcltk/menus/menu.tcl:109 ../gui/tcltk/menus/menu.tcl:142
 msgid "GRIDATB.FOR map file (TOPMODEL)"
@@ -3363,31 +3364,31 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:135
 msgid "Export"
-msgstr ""
+msgstr "Eksportuj"
 
 #: ../gui/tcltk/menus/menu.tcl:139
 msgid "ASCII grid (for GRASS, Surfer, Modflow, etc)"
-msgstr ""
+msgstr "Grid ASCII (dla GRASS, Surfer, Modflow, itd)"
 
 #: ../gui/tcltk/menus/menu.tcl:141
 msgid "ESRI ARC/INFO ASCII grid"
-msgstr ""
+msgstr "Grid ASCII ESRI ARC/INFO"
 
 #: ../gui/tcltk/menus/menu.tcl:145
 msgid "Binary file"
-msgstr ""
+msgstr "Plik binarny"
 
 #: ../gui/tcltk/menus/menu.tcl:147
 msgid "MPEG-1 animations"
-msgstr ""
+msgstr "Animacja MPEG-1"
 
 #: ../gui/tcltk/menus/menu.tcl:148
 msgid "PNG image (not georeferenced)"
-msgstr ""
+msgstr "Obraz PNG (bez georeferencji)"
 
 #: ../gui/tcltk/menus/menu.tcl:149
 msgid "PPM image (24bit)"
-msgstr ""
+msgstr "Obraz PPM (24bit)"
 
 #: ../gui/tcltk/menus/menu.tcl:150
 msgid "PPM image from red, green, blue raster maps"
@@ -3399,64 +3400,64 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:152
 msgid "TIFF image (8/24bit)"
-msgstr ""
+msgstr "Obraz TIFF (8/24bit)"
 
 #: ../gui/tcltk/menus/menu.tcl:153 ../gui/tcltk/menus/menu.tcl:161
 #: ../gui/tcltk/menus/menu.tcl:166
 msgid "VTK ASCII file"
-msgstr ""
+msgstr "Plik ASCII VTK"
 
 #: ../gui/tcltk/menus/menu.tcl:156
 msgid "Various formats using OGR (SHAPE, MapInfo etc)"
-msgstr ""
+msgstr "Ró¿ne formaty przy u¿yciu sterownika OGR (SHAPE, MapInfo etc)"
 
 #: ../gui/tcltk/menus/menu.tcl:158
 msgid "DXF file (ASCII)"
-msgstr ""
+msgstr "Plik DXF (ASCII)"
 
 #: ../gui/tcltk/menus/menu.tcl:159
 msgid "ASCII vector or point file/old GRASS ASCII vector file"
-msgstr ""
+msgstr "Wektorowy lub punktowy plik ASCII/stary wektorowy plik ASCII GRASS'a"
 
 #: ../gui/tcltk/menus/menu.tcl:160
 msgid "POV-Ray format"
-msgstr ""
+msgstr "Format POV-Ray"
 
 #: ../gui/tcltk/menus/menu.tcl:170
 msgid "Manage maps and volumes"
-msgstr ""
+msgstr "Zarz±dzanie mapami i danymi"
 
 #: ../gui/tcltk/menus/menu.tcl:171
 msgid "Copy maps"
-msgstr ""
+msgstr "Kopiuj mapê"
 
 #: ../gui/tcltk/menus/menu.tcl:172
 msgid "List maps"
-msgstr ""
+msgstr "Lista map"
 
 #: ../gui/tcltk/menus/menu.tcl:173
 msgid "List maps using expressions and 'wildcards'"
-msgstr ""
+msgstr "Lista map z u¿yciem wyra¿enia i 'wildcards'"
 
 #: ../gui/tcltk/menus/menu.tcl:174
 msgid "Rename maps"
-msgstr ""
+msgstr "Zmieñ nazwê mapy"
 
 #: ../gui/tcltk/menus/menu.tcl:175
 msgid "Remove maps"
-msgstr ""
+msgstr "Usuñ mapy"
 
 #: ../gui/tcltk/menus/menu.tcl:176
 msgid "Remove maps using expressions and 'wildcards'"
-msgstr ""
+msgstr "Usuñ mapy z u¿yciem wyra¿enia i 'wildcards'"
 
 #: ../gui/tcltk/menus/menu.tcl:178
 msgid "Map type conversions"
-msgstr ""
+msgstr "Konwersje typów map"
 
 #: ../gui/tcltk/menus/menu.tcl:179
 msgid "Raster to vector map"
-msgstr ""
+msgstr "Mapa rastrowa do mapy wektorowej"
 
 #: ../gui/tcltk/menus/menu.tcl:180
 msgid "Raster map series to volume"
@@ -3464,15 +3465,15 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:181
 msgid "Vector to raster"
-msgstr ""
+msgstr "Wektor do rastra"
 
 #: ../gui/tcltk/menus/menu.tcl:182
 msgid "Vector to vector"
-msgstr ""
+msgstr "Wektor do wektora"
 
 #: ../gui/tcltk/menus/menu.tcl:183
 msgid "Vector lines to points"
-msgstr ""
+msgstr "Wektorowe linie do punktów"
 
 #: ../gui/tcltk/menus/menu.tcl:184
 msgid "Vector 3D points to volume voxels"
@@ -3492,79 +3493,79 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:192
 msgid "Display region settings"
-msgstr ""
+msgstr "Wy¶wietl ustawienia regionu"
 
 #: ../gui/tcltk/menus/menu.tcl:193
 msgid "Manage region"
-msgstr ""
+msgstr "Zarz±dzaj regionem"
 
 #: ../gui/tcltk/menus/menu.tcl:194
 msgid "Zoom to maximum extent of all displayed maps"
-msgstr ""
+msgstr "Powiêksz do maksymalnego zasiêgu wszystkich wy¶wietlanych map"
 
 #: ../gui/tcltk/menus/menu.tcl:196
 msgid "Create WIND3 (default 3D window) from current 2D region"
-msgstr ""
+msgstr "Utwórz WIND3 (domy¶lne okno 3D) z bie¿±cego regionu 2D"
 
 #: ../gui/tcltk/menus/menu.tcl:197
 msgid "Manage 3D region"
-msgstr ""
+msgstr "Zarz±dzaj regionem 3D"
 
 #: ../gui/tcltk/menus/menu.tcl:199
 msgid "GRASS working environment"
-msgstr ""
+msgstr "¦rodowisko pracy GRASS"
 
 #: ../gui/tcltk/menus/menu.tcl:200
 msgid "Modify access by other users to current mapset"
-msgstr ""
+msgstr "Zmieñ dostêp innych u¿ytkowników do bie¿±cego mapsetu"
 
 #: ../gui/tcltk/menus/menu.tcl:201
 msgid "Modify mapset search path"
-msgstr ""
+msgstr "Zmieñ ¶cie¿kê mapsetu"
 
 #: ../gui/tcltk/menus/menu.tcl:202
 msgid "Change current working session to new mapset, location, or GISDBASE"
-msgstr ""
+msgstr "Zmieñ bie¿±c± sesjê pracy na nowy mapset, lokacjê, lub GISBAZÊ"
 
 #: ../gui/tcltk/menus/menu.tcl:203
 msgid "Show current GRASS environment settings"
-msgstr ""
+msgstr "Poka¿ bie¿±ce ustawienia ¶rodowiska GRASS"
 
 #: ../gui/tcltk/menus/menu.tcl:204
 msgid "Show current GRASS version"
-msgstr ""
+msgstr "Poka¿ bie¿±c± wersjê GRASS"
 
 #: ../gui/tcltk/menus/menu.tcl:206
 msgid "Manage projections"
-msgstr ""
+msgstr "Zarz±dzaj projekcjami"
 
 #: ../gui/tcltk/menus/menu.tcl:207
 msgid "Create/edit projection information for current location"
-msgstr ""
+msgstr "Utwórz/edytuj informacje o projekcji dla bie¿±cej lokacji"
 
 #: ../gui/tcltk/menus/menu.tcl:208
 msgid "Show projection information and create projection files"
-msgstr ""
+msgstr "Poka¿ informacje o projekcji i utwórz pliki projekcji"
 
 #: ../gui/tcltk/menus/menu.tcl:210
 msgid "Convert coordinates from one projection to another"
-msgstr ""
+msgstr "Konwertuj wspó³rzêdne z danej projekcji do innej"
 
 #: ../gui/tcltk/menus/menu.tcl:212
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #: ../gui/tcltk/menus/menu.tcl:213
 msgid "Select default text font"
-msgstr ""
+msgstr "Wybierz domysln± czcionkê tekstu"
 
 #: ../gui/tcltk/menus/menu.tcl:214
 msgid "Select default freetype text font"
-msgstr ""
+msgstr "Wybierz domysln± czcionkê tekstu typu freetype"
 
 #: ../gui/tcltk/menus/menu.tcl:215
 msgid "Show standard GRASS fonts"
-msgstr ""
+msgstr "Poka¿ standardowe czcionki GRASS"
 
 #: ../gui/tcltk/menus/menu.tcl:217
 msgid "X-monitor displays"
@@ -4478,11 +4479,11 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:531
 msgid "Manage database"
-msgstr ""
+msgstr "Zarz±dzaj baz± danych"
 
 #: ../gui/tcltk/menus/menu.tcl:532
 msgid "Connect to database"
-msgstr ""
+msgstr "Po³±cz z baz± danych"
 
 #: ../gui/tcltk/menus/menu.tcl:533
 msgid "PERMANTLY remove table"
@@ -4490,23 +4491,23 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:534
 msgid "Copy table"
-msgstr ""
+msgstr "Kopiuj tabelê"
 
 #: ../gui/tcltk/menus/menu.tcl:535
 msgid "Add columns to table"
-msgstr ""
+msgstr "Dodaj kolumnê do tabeli"
 
 #: ../gui/tcltk/menus/menu.tcl:536
 msgid "Change values in a column"
-msgstr ""
+msgstr "Zmieñ warto¶ci w kolumnie"
 
 #: ../gui/tcltk/menus/menu.tcl:537
 msgid "Test database"
-msgstr ""
+msgstr "Testuj bazê danych"
 
 #: ../gui/tcltk/menus/menu.tcl:539
 msgid "Database information"
-msgstr ""
+msgstr "Informacja o bazie danych"
 
 #: ../gui/tcltk/menus/menu.tcl:540
 msgid "Describe table"
@@ -4514,23 +4515,23 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:541
 msgid "List columns"
-msgstr ""
+msgstr "Wy¶wietl listê kolumn"
 
 #: ../gui/tcltk/menus/menu.tcl:542
 msgid "List drivers"
-msgstr ""
+msgstr "Wy¶wietl listê sterowników"
 
 #: ../gui/tcltk/menus/menu.tcl:543
 msgid "List tables"
-msgstr ""
+msgstr "Wy¶wietl tabelê"
 
 #: ../gui/tcltk/menus/menu.tcl:547
 msgid "Query data (SQL select)"
-msgstr ""
+msgstr "Zapytanie do bazy danych (SQL select)"
 
 #: ../gui/tcltk/menus/menu.tcl:548
 msgid "Execute SQL statement"
-msgstr ""
+msgstr "Wykonaj wyra¿enie SQL"
 
 #: ../gui/tcltk/menus/menu.tcl:557
 msgid "&Xtns"
@@ -4917,43 +4918,43 @@ msgstr ""
 
 #: ../gui/tcltk/d.m/fttext.tcl:126
 msgid "     text rotation (degrees counterclockwise)"
-msgstr ""
+msgstr "      obracanie tekstu (stopnie, kierunek przeciwny do wskazówek zegara)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:129
 msgid "rotation in radians"
-msgstr ""
+msgstr "k±t obrotu w radianach"
 
 #: ../gui/tcltk/d.m/fttext.tcl:164
 msgid "height in pixels instead of %"
-msgstr ""
+msgstr "wysoko¶æ w pikselach zamiast %"
 
 #: ../gui/tcltk/d.m/menu.tcl:14
 msgid "Groups"
-msgstr ""
+msgstr "Grupy"
 
 #: ../gui/tcltk/d.m/menu.tcl:15
 msgid "Create new group file"
-msgstr ""
+msgstr "Utwórz now± grupê"
 
 #: ../gui/tcltk/d.m/menu.tcl:16
 msgid "Open group file"
-msgstr ""
+msgstr "Otwórz grupê"
 
 #: ../gui/tcltk/d.m/menu.tcl:17
 msgid "Save group file"
-msgstr ""
+msgstr "Zapisz grupê"
 
 #: ../gui/tcltk/d.m/menu.tcl:18
 msgid "Save group file as name"
-msgstr ""
+msgstr "Zapisza grupê jako"
 
 #: ../gui/tcltk/d.m/menu.tcl:19
 msgid "Close group"
-msgstr ""
+msgstr "Zamknij grupê"
 
 #: ../gui/tcltk/d.m/menu.tcl:22
 msgid "Save display to image file"
-msgstr ""
+msgstr "Zapisz zawarto¶æ monitora do pliku obrazu"
 
 #: ../gui/tcltk/d.m/menu.tcl:23
 msgid "XWD (Save display, selected with mouse, to map.xwd in home directory )"
@@ -4965,16 +4966,16 @@ msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:26
 msgid "Save map to Postscript file"
-msgstr ""
+msgstr "Zapisz mapê do pliku Postscript"
 
 #: ../gui/tcltk/d.m/menu.tcl:27
 msgid "Print to default printer"
-msgstr ""
+msgstr "Drukuj do domy¶lnej drukarki"
 
 #: ../gui/tcltk/d.m/menu.tcl:27
 msgid "print"
-msgstr ""
+msgstr "drukuj"
 
 #: ../gui/tcltk/d.m/menu.tcl:29
 msgid "Exit Display Manager"
-msgstr ""
+msgstr "Wyjd¼"
