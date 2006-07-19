@@ -39,7 +39,7 @@ main (int argc, char **argv)
 	int do_text;
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4;
-	struct Flag *noborder, *notext, *geogrid, *nogrid;
+	struct Flag *noborder, *notext, *geogrid, *nogrid, *wgs84;
 	struct pj_info info_in;  /* Proj structures */
 	struct pj_info info_out; /* Proj structures */
 
@@ -86,7 +86,11 @@ main (int argc, char **argv)
 
 	geogrid = G_define_flag();
 	geogrid->key = 'g';
-	geogrid->description = _("Draw geographic grid");
+	geogrid->description = _("Draw geographic grid (referenced to current ellipsoid)");
+
+	wgs84 = G_define_flag();
+	wgs84->key = 'w';
+	wgs84->description = _("Draw geographic grid (referenced to WGS84 ellipsoid)");
 
 	nogrid = G_define_flag();
 	nogrid->key = 'n';
@@ -113,6 +117,8 @@ main (int argc, char **argv)
 		G_fatal_error(_("Geo-Grid option is not available for LL projection"));
 	if (geogrid->answer && G_projection() == PROJECTION_XY)
 		G_fatal_error(_("Geo-Grid option is not available for XY projection"));
+	if (wgs84->answer)
+		geogrid->answer = 1; /* -w implies -g */
 	
 	if(notext->answer) do_text = FALSE;
 	else do_text = TRUE;
@@ -165,7 +171,7 @@ main (int argc, char **argv)
 		if (geogrid->answer)
 		{
 			/* initialzie proj stuff */
-			init_proj(&info_in, &info_out);
+			init_proj(&info_in, &info_out, wgs84->answer);
 			plot_geogrid(gsize, info_in, info_out, do_text);
 		} else {
 			/* Do the grid plotting */
