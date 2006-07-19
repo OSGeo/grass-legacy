@@ -231,7 +231,7 @@ struct Cell_head window ;
  * initialze projection stuff and return proj structures
 ********************************************************/
 void
-init_proj(struct pj_info *info_in, struct pj_info *info_out)
+init_proj(struct pj_info *info_in, struct pj_info *info_out, int wgs84)
 {
 struct Key_Value *out_proj_keys, *out_unit_keys;
 
@@ -241,12 +241,49 @@ out_proj_keys = G_get_projinfo();
 out_unit_keys = G_get_projunits();
 if (pj_get_kv(info_out,out_proj_keys,out_unit_keys) < 0)
         G_fatal_error( _("Can't get projection key values of current location"));   
-G_free_key_value( out_proj_keys);
-G_free_key_value( out_unit_keys);
 
 /* In Info */
-if (GPJ_get_equivalent_latlong(info_in, info_out) < 0)
-   G_fatal_error(_("Unable to set up lat/long projection parameters"));   
+if(!wgs84)
+{
+    /* Set lat/long to same ellipsoid as location if we're not looking
+     * for the WGS84 values */
+    if (GPJ_get_equivalent_latlong(info_in, info_out) < 0)
+        G_fatal_error(_("Unable to set up lat/long projection parameters"));   
+
+}
+else
+{
+    struct Key_Value *in_proj_info, *in_unit_info;
+    char buff[100], dum[100];
+	  
+    in_proj_info = G_create_key_value();
+    in_unit_info = G_create_key_value();
+
+    /* Check that datumparams are defined for this location (otherwise
+     * the WGS84 values would be meaningless), and if they are set the 
+     * input datum to WGS84 */
+    if( G_get_datumparams_from_projinfo(out_proj_keys, buff, dum) < 0 )
+        G_fatal_error(_("WGS84 grid output not possible as this location does not contain\n"
+			"datum transformation parameters. Try running g.setproj."));
+    else
+        G_set_key_value("datum", "wgs84", in_proj_info);
+        
+    /* set input projection to lat/long */
+    G_set_key_value("proj", "ll", in_proj_info);
+        
+    G_set_key_value("unit", "degree", in_unit_info);
+    G_set_key_value("units", "degrees", in_unit_info);
+    G_set_key_value("meters", "1.0", in_unit_info);
+
+    if (pj_get_kv(info_in, in_proj_info, in_unit_info) < 0)
+        G_fatal_error(_("Unable to set up lat/long projection parameters"));
+        
+    G_free_key_value( in_proj_info );
+    G_free_key_value( in_unit_info );
+}
+G_free_key_value( out_proj_keys);
+G_free_key_value( out_unit_keys);
+		
 
 return;
 
