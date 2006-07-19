@@ -245,10 +245,7 @@ G_free_key_value( out_proj_keys);
 G_free_key_value( out_unit_keys);
 
 /* In Info */
-info_in->zone = 0;
-info_in->meters = 1.;
-sprintf(info_in->proj, "ll");
-if ((info_in->pj = pj_latlong_from_proj(info_out->pj)) == NULL)
+if (GPJ_get_equivalent_latlong(info_in, info_out) < 0)
    G_fatal_error(_("Unable to set up lat/long projection parameters"));   
 
 return;
