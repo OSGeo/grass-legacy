@@ -256,41 +256,20 @@ int do_geogrid_numbers (void)
 void 
 init_proj(struct pj_info *info_in, struct pj_info *info_out)
 {
-double a, es;
-struct Key_Value *in_proj_keys, *in_unit_keys;
 struct Key_Value *out_proj_keys, *out_unit_keys;
-char buff[100];
-
 
 /* Proj stuff for geo grid */
 /* Out Info */
 out_proj_keys = G_get_projinfo();
 out_unit_keys = G_get_projunits();
-if (pj_get_kv(*&info_out,out_proj_keys,out_unit_keys) < 0) 
+if (pj_get_kv(info_out,out_proj_keys,out_unit_keys) < 0) 
 	G_fatal_error("Can't get projection key values of current location");
-
-/* In Info */
-in_proj_keys = G_create_key_value();
-in_unit_keys = G_create_key_value();
-	    
-G_set_key_value("proj", "ll", in_proj_keys);
-G_get_ellipsoid_parameters(&a, &es);
-sprintf(buff, "%f", a);
-G_set_key_value("a", buff, in_proj_keys);
-sprintf(buff, "%f", es);
-G_set_key_value("es", buff, in_proj_keys);
-
-G_set_key_value("unit", "degree", in_unit_keys);
-G_set_key_value("units", "degrees", in_unit_keys);
-G_set_key_value("meters", "1.0", in_unit_keys);
-
-if (pj_get_kv(*&info_in, in_proj_keys, in_unit_keys) < 0)
-    G_fatal_error("Unable to set up lat/long projection parameters");
-
-G_free_key_value( in_proj_keys);
-G_free_key_value( in_unit_keys);
 G_free_key_value( out_proj_keys);
 G_free_key_value( out_unit_keys);
+
+/* In Info */
+if (GPJ_get_equivalent_latlong(info_in, info_out) < 0)
+    G_fatal_error("Unable to set up lat/long projection parameters");
 
 return;
 
