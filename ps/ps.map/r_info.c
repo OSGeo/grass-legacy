@@ -18,6 +18,7 @@ static char *help[] =
     "fontsize   fontsize",
     "color      color",
     "background color|none",
+    "border     color|none",
     ""
 };
 
@@ -26,13 +27,15 @@ read_info (void)
 {	
     char buf[1024];
     char *key, *data;
-    int color, bgcolor, fontsize;
+    int color, bgcolor, border, fontsize;
     double x, y;
 
     fontsize = 0;
     color   = BLACK;
     bgcolor = WHITE;
+    border = -1;
     x = y = 0.0;
+
     while (input(2, buf, help))
     {
 	if (!key_data(buf, &key, &data)) continue;
@@ -76,6 +79,17 @@ read_info (void)
 	    continue;
 	}
 
+        if (KEY("border"))
+        {
+            border = get_color_number(data);
+            if (border < 0) {
+                if( border != -999) /* here -999 is "none" */
+                    error(key, data, "illegal border request");
+                border = -1;
+            }
+            continue;
+        }
+
 	if (KEY("font"))
 	{
 	    get_font(data);
@@ -88,6 +102,7 @@ read_info (void)
     m_info.y = y;
     m_info.color = color;
     m_info.bgcolor = bgcolor;
+    m_info.border = border;
     if (fontsize) m_info.fontsize = fontsize;
 
     return 0;
