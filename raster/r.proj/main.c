@@ -98,6 +98,7 @@ int main (int argc, char **argv)
 		  ieast, iwest;
 
 	struct Colors colr;		 /* Input map colour table       */
+	struct History history;
    
 	struct pj_info iproj,		 /* input map proj parameters	 */
 	          oproj;		 /* output map proj parameters	 */
@@ -420,15 +421,19 @@ int main (int argc, char **argv)
 	}
 
 	G_close_cell(fdo);
-   
+
 	if(have_colors > 0)
 	{    
 		G_write_colors(mapname, G_mapset(), &colr);
 		G_free_colors(&colr);
 	}
-	
+
+	G_short_history(mapname, "raster", &history);
+	G_command_history(&history);
+	G_write_history(mapname, &history);
+
 	G_done_msg("");
-	exit(EXIT_SUCCESS);		/* OK */
+	exit(EXIT_SUCCESS);
 }
 
 static char *make_ipol_list(void)
