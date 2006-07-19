@@ -78,10 +78,7 @@ int main (int argc, char **argv)
        {
 	  /* Set output to same ellipsoid as input if we're not looking
 	   * for the WGS84 values */
-	  oproj.zone = 0;
-	  oproj.meters = 1.;
-	  sprintf(oproj.proj, "ll");
-	  if ((oproj.pj = pj_latlong_from_proj(iproj.pj)) == NULL)
+	  if (GPJ_get_equivalent_latlong(&oproj, &iproj) < 0)
 	     G_fatal_error(_("Unable to set up lat/long projection parameters"));            
 
        }
