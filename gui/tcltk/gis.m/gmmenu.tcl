@@ -28,13 +28,12 @@ set GuiMenu::Menu_File_Top [subst  {
 		{command {[G_msg "Save as..."]} {} "Save gis.m workspace file as new name" {} -command { set filename($mon) "" ; Gm::SaveFileBox }}
 		{command {[G_msg "Close"]} {} "Close gis.m workspace" {} -accelerator $keyctrl-W -command { GmTree::FileClose {}}}
 	}}
-	{separator}
-	{command {[G_msg "Georectify"]} {} "Georectify raster map in xy location" {} -command { GRMap::startup }}
-
 }]
 
 # Put this at the bottom of the file menu.
 set GuiMenu::Menu_File_Bottom [subst  {
+	{separator}
+	{command {[G_msg "Georectify"]} {} "Georectify raster map in xy location" {} -command { GRMap::startup }}
 	{separator}
 	{command {[G_msg "Create ps.map file for postscript printing"]} {} "ps.map" {} -command { execute ps.map }}
 	{separator}
