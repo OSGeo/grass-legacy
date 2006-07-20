@@ -21,6 +21,7 @@
 # source $env(GISBASE)/etc/gtcltk/select.tcl
 # source $env(GISBASE)/etc/gui.tcl
 # This one is going to be handled by pkgIndex:
+# georecttool.tcl
 
 namespace eval GRMap {
 	variable displayrequest # true if it wants to get displayed.
