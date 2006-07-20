@@ -202,9 +202,9 @@ set descmenu [subst  {
 		{command {[G_msg "Manage 3D region"]} {} "g3.setregion" {} -command {execute g3.setregion }}
 	}}
 	{cascad {[G_msg "GRASS working environment"]} {} "" $tmenu {			
-		{command {[G_msg "Modify access by other users to current mapset"]} {} "g.access" {} -command {execute g.access }}
-		{command {[G_msg "Modify mapset search path"]} {} "g.mapsets.tcl" {} -command {spawn $env(GISBASE)/etc/g.mapsets.tcl}}
+		{command {[G_msg "Access other mapsets in current location"]} {} "g.mapsets.tcl" {} -command {spawn $env(GISBASE)/etc/g.mapsets.tcl}}
 		{command {[G_msg "Change current working session to new mapset, location, or GISDBASE"]} {} "g.mapset" {} -command {execute g.mapset }}
+		{command {[G_msg "Modify access by other users to current mapset"]} {} "g.access" {} -command {execute g.access }}
 		{command {[G_msg "Show current GRASS environment settings"]} {} "g.gisenv" {} -command {run_panel g.gisenv }}
 		{command {[G_msg "Set GRASS environment settings"]} {} "g.gisenv" {} -command {execute g.gisenv }}
 		{command {[G_msg "Show current GRASS version"]} {} "g.version -c" {} -command {run_panel "g.version -c" }}
@@ -218,7 +218,6 @@ set descmenu [subst  {
 	{cascad {[G_msg "Text"]} {} "" $tmenu {			
 		{command {[G_msg "Select default text font"]} {} "d.font" {} -command {execute d.font }}
 		{command {[G_msg "Select default freetype text font"]} {} "" {} -command {execute d.font.freetype }}
-		{command {[G_msg "Show standard GRASS fonts"]} {} "show.fonts.sh" {} -command {execute show.fonts.sh }}
 	}}
 	{cascad {[G_msg "X-monitor displays"]} {} "" $tmenu {
 		{command {[G_msg "Configure xmonitor displays"]} {} "d.mon" {} -command {execute d.mon }}
