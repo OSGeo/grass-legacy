@@ -113,12 +113,12 @@ main (int argc, char **argv)
 	/* do some checking */
 	if (nogrid->answer && noborder->answer)
 		G_fatal_error(_("Both grid and border drawing are disabled"));
+	if (wgs84->answer)
+		geogrid->answer = 1; /* -w implies -g */
 	if (geogrid->answer && G_projection() == PROJECTION_LL)
 		G_fatal_error(_("Geo-Grid option is not available for LL projection"));
 	if (geogrid->answer && G_projection() == PROJECTION_XY)
 		G_fatal_error(_("Geo-Grid option is not available for XY projection"));
-	if (wgs84->answer)
-		geogrid->answer = 1; /* -w implies -g */
 	
 	if(notext->answer) do_text = FALSE;
 	else do_text = TRUE;
