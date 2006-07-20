@@ -31,21 +31,30 @@ proc set_mapsets { } {
     exec g.mapsets $arg
 }
 
-set mainw [ScrolledWindow .mainw -relief sunken -borderwidth 2]
+set mainw [TitleFrame .mainw -relief sunken -borderwidth 1 \
+	-text "Check mapsets to access" -fg mediumblue -side center -baseline top]
+set mainfr [$mainw getframe]
+pack $mainw -fill both -expand yes
 
-set sw [ScrolledWindow .sw -relief sunken -borderwidth 2]
-set sf [ScrollableFrame .sf -width 150 -height 300]
+set sw [ScrolledWindow $mainfr.sw -relief flat -borderwidth 2]
+set sf [ScrollableFrame $mainfr.sf -width 175 -height 200]
+
 $sw setwidget $sf
 
 bind_scroll $sf
 
 pack $sw -fill both -expand yes
+
 set sframe [$sf getframe]
 
 
 # Add current mapset and PERMANENT
 set current [exec g.gisenv get=MAPSET]
-set msts [list $current PERMANENT]
+if { $current == "PERMANENT" } {
+	set msts $current
+} else {
+	set msts [list $current PERMANENT]
+}
 
 set tmp_msts [ lsort [split [exec g.mapsets -l] " \n"] ]
 foreach ms $tmp_msts {
@@ -60,7 +69,7 @@ foreach ms $msts {
     pack $fr -side top -anchor w 
     set cb [checkbutton $fr.cb -text "$ms" -variable ms_ch($ms) -command set_mapsets]
     if { $ms == $current } { 
-	$cb configure -state disabled 
+		$cb configure -state disabled 
     }
     pack $cb -side left
     set ms_name($nms) $ms
@@ -78,6 +87,8 @@ foreach ms $msts {
     set ms_ch($ms) 1
 }
 
-set close [button $mainw.close -text "Close" -command { exit } ]
-pack $mainw
+set close [button $mainw.close -text "OK" -command { exit } ]
+
+
+#pack $mainw
 pack $close -side bottom
