@@ -771,8 +771,7 @@ proc GmThematic::tleg_item { mon id } {
 			incr y1 $yinc
 		}
 	}
-	
-
+	close $ltxt
 	return
 }
 
