@@ -33,8 +33,8 @@ namespace eval MapCanvas {
 
 	variable array can # The canvas widgets of the monitors, indexed by mon
 	variable array mapframe # Frame widgets, indexed by mon
-	variable array canvas_w # Width and height of canvas. Indexed by mon
-	variable array canvas_h # mon
+	global array canvas_w # Width and height of canvas. Indexed by mon
+	global array canvas_h # mon
 	variable array driver_w # Actual width and height used while drawing / compositing. Indexed by mon
 	variable array driver_h # Actual width and height used while drawing / compositing. Indexed by mon
 	variable array exploremode # Whether or not to change regions to match monitor, indexed by mon
@@ -83,8 +83,8 @@ proc MapCanvas::create { } {
     global mon
     global win
     global currmon
-    variable canvas_w
-    variable canvas_h
+    global canvas_w
+    global canvas_h
     global drawprog
 	global array MapCanvas::msg # mon
 	global mapcursor
@@ -376,8 +376,8 @@ proc MapCanvas::shrinkwrap {sense nsew1 ar2 } {
 
 # draw map using png driver and open in canvas
 proc MapCanvas::drawmap { mon } {
-	variable canvas_h
-	variable canvas_w
+	global canvas_h
+	global canvas_w
 	variable can
 	variable canmodified
 	variable monitor_zooms
@@ -431,8 +431,8 @@ proc MapCanvas::drawmap { mon } {
 proc MapCanvas::driversettings { mon } {
 	global env
 	global mapset
-	variable canvas_h
-	variable canvas_w
+	global canvas_h
+	global canvas_w
 	variable driver_w
 	variable driver_h
 	global mapfile
@@ -488,8 +488,8 @@ proc MapCanvas::driversettings { mon } {
 # Run the programs to clear the map and draw all of the layers
 proc MapCanvas::runprograms { mon mod } {
 	global env
-	variable canvas_w
-	variable canvas_h
+	global canvas_w
+	global canvas_h
 	global drawprog
 	global MapCanvas::msg
 	global complist
@@ -599,8 +599,8 @@ after idle MapCanvas::display_server
 ###############################################################################
 
 proc MapCanvas::do_resize {mon} {
-	variable canvas_w
-	variable canvas_h
+	global canvas_w
+	global canvas_h
 	variable can
 
 	# Get the actual width and height of the canvas
@@ -803,8 +803,8 @@ proc MapCanvas::currentzoom { mon } {
 	variable zoom_attrs
 	variable exploremode
 	variable monitor_zooms
-	variable canvas_w
-	variable canvas_h
+	global canvas_w
+	global canvas_h
 
 	# Fetch the current zoom settings
 	set region {}
@@ -1012,8 +1012,8 @@ proc MapCanvas::drawzoom { mon x y } {
 # zoom region
 proc MapCanvas::zoomregion { mon zoom } {
 	variable can
-	variable canvas_h
-	variable canvas_w
+	global canvas_h
+	global canvas_w
 	variable monitor_zooms
     global areaX1 areaY1 areaX2 areaY2
     
@@ -1409,8 +1409,8 @@ proc MapCanvas::startprofile { mon } {
 # print to eps file
 proc MapCanvas::printcanvas { mon } {
 	variable can
-	variable canvas_w
-	variable canvas_h
+	global canvas_w
+	global canvas_h
 	
 	set cv $can($mon)
 	
@@ -1440,8 +1440,8 @@ proc MapCanvas::coordconv { mon } {
 	global map2scry_conv
 	global mapimg.$mon
 	
-	variable canvas_w
-	variable canvas_h
+	global canvas_w
+	global canvas_h
 	variable monitor_zooms
 
 	# get region extents
