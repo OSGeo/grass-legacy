@@ -72,6 +72,10 @@
 [Oo][Rr][Dd][Ee][Rr]		{ return ORDER; }
 [Bb][Yy]			{ return BY; }
 [Ii][Ss]			{ return IS; }
+[Ll][Ii][Kk][Ee]		{
+				  yylval.strval = (char*)strdup("~");
+				  return COMPARISON_OPERATOR;
+				}
 %{
  /* [Dd][Ii][Ss][Tt][Ii][Nn][Cc][Tt]	{ return DISTINCT; } */
  /***************************************
