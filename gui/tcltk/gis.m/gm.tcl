@@ -470,6 +470,8 @@ proc Gm::cleanup { destroywin } {
 		file delete $file
 	}
 	
+	if {[file exists "~/gismlegend.txt"]} {file delete -force "~/gismlegend.txt"}
+
 	unset mon
 
 }
