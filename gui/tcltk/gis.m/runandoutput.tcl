@@ -198,7 +198,7 @@ proc term_panel {cmd} {
 ###############################################################################
 proc term {cmd args} {
 	global env
-	exec -- xterm -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd $args &
+	eval exec -- xterm -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd $args &
 }
 
 ###############################################################################
@@ -219,7 +219,7 @@ proc guarantee_xmon {} {
 	close $input
 
 	set xmon  [lindex $xmonlist 0]
-	spawn "d.mon start=$xmon"
+	spawn d.mon start=$xmon
 }
 
 ###############################################################################
