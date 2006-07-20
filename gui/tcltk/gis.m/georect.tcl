@@ -941,29 +941,27 @@ proc GRMap::gcpwin {} {
     	set rbstate "normal"
     }
     
-    # setting rectification method
-    set row [ frame $gcp.methodtxt ]
+    # setting rectification method    
+    set row [ frame $gcp.method ]
     Label $row.a -text [G_msg "Select rectification method for rasters"] \
     	-fg MediumBlue
-    
-    set row [ frame $gcp.method ]
-    set first [radiobutton $row.a -variable GRMap::rectorder -value 1 \
+    set first [radiobutton $row.b -variable GRMap::rectorder -value 1 \
 		-text [G_msg "1st order"] -highlightthickness 0]
 		DynamicHelp::register $first balloon [G_msg "affine transformation \
 			(rasters & vectors). Requires 3+ GCPs."]
 	$first select
 
-    set second [radiobutton $row.b -variable GRMap::rectorder -value 2 \
+    set second [radiobutton $row.c -variable GRMap::rectorder -value 2 \
 		-text [G_msg "2nd order"] -highlightthickness 0 -state $rbstate]
 		DynamicHelp::register $first balloon [G_msg "polynomial transformation \
 			(rasters only). Requires 6+ GCPs."]
 
-    set third [radiobutton $row.c -variable GRMap::rectorder -value 3 \
+    set third [radiobutton $row.d -variable GRMap::rectorder -value 3 \
 		-text [G_msg "3rd order"] -highlightthickness 0 -state $rbstate]
 		DynamicHelp::register $first balloon [G_msg "polynomial transformation \
 			(rasters only). Requires 10+ GCPs."]
 
-    pack $row.a $row.b $row.c -side left
+    pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
  
     set row [ frame $gcp.header ]
@@ -1184,9 +1182,7 @@ proc GRMap::gcp_error { } {
 
 	set gcpfile "$xygdb/$xyloc/$xymset/group/$xygroup/POINTS"
 	if {![file exists $gcpfile] } { return }
-	
-	puts "rectorder = $rectorder"
-	
+		
 	# First, switch to xy mapset
 	GRMap::setxyenv $xymset $xyloc
 	# calculate diagonal distance error for each GCP
