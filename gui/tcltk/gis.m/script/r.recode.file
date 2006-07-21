@@ -34,7 +34,7 @@
 #%option
 #% key: rules_file
 #% type: string
-#% gisprompt: file,file,file
+#% gisprompt: new_file,file,file
 #% description: ASCII file containing reclassification rules
 #% required : yes
 #%end
@@ -48,4 +48,4 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-exec r.recode "input=$GIS_OPT_INPUT" "output=$GIS_OPT_OUTPUT" < "$GIS_OPT_RULES_FILE"
+eval `exec r.recode input=$GIS_OPT_INPUT output=$GIS_OPT_OUTPUT < $GIS_OPT_RULES_FILE` 
