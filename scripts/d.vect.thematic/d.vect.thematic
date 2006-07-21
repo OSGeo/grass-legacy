@@ -7,7 +7,7 @@
 #               by Martin Landa, Jachym Cepicky, Daniel Calvelo Aros and Moritz Lennert
 # PURPOSE:	    Displays thematic vector map with graduated colors
 #               or graduated points and line thickneses
-# COPYRIGHT:	(C) 2005 by the GRASS Development Team
+# COPYRIGHT:	(C) 2006 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -175,7 +175,7 @@
 #%end
 #%flag 
 #%key: s
-#%description: Save graphic legend output in tlegend.txt file for d.graph display in GIS Manager
+#%description: Save graphic legend output for display in GIS Manager
 #%end
 #%flag 
 #%key: m
@@ -1072,7 +1072,10 @@ fi
 
 # Create text file to use with d.graph in GIS Manager
 if [ "$GIS_FLAG_S" -eq 1 ] ; then
-    cp $TMP6 "gismlegend.txt"
+	tmpdir=`eval dirname $TMP6`
+	tlegfile="$tmpdir/gismlegend.txt"
+	echo $tlegfile > outtxt.txt
+    cp $TMP6 $tlegfile
 fi
 
 cleanup
