@@ -149,7 +149,7 @@ proc execute {cmd} {
 
 ###############################################################################
 proc spawn {cmd args} {
-	exec -- $cmd $args &
+	eval [list exec -- $cmd] $args &
 }
 
 ###############################################################################
@@ -173,7 +173,7 @@ proc run {cmd args} {
 	# These used to go to stdout and stderr
 	# but we don't want to pollute that console.
 	# eval exec -- $cmd $args >@ stdout 2>@ stderr
-	eval exec -- $cmd $args >& /dev/null
+	eval [list exec -- $cmd] $args >& /dev/null
 }
 
 ###############################################################################
@@ -198,7 +198,7 @@ proc term_panel {cmd} {
 ###############################################################################
 proc term {cmd args} {
 	global env
-	eval exec -- xterm -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd $args &
+	eval [list exec -- xterm -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd] $args &
 }
 
 ###############################################################################
