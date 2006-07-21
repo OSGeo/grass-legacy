@@ -444,6 +444,7 @@ proc Gm::cleanup { destroywin } {
 	global mon
 	global tmpdir
 	global mappid
+	global legfile
 	variable moncount
 	
 	# stop gism PNG driver if it is still running due to error
@@ -470,7 +471,7 @@ proc Gm::cleanup { destroywin } {
 		file delete $file
 	}
 	
-	if {[file exists "~/gismlegend.txt"]} {file delete -force "~/gismlegend.txt"}
+	if {[file exists $legfile]} {file delete -force $legfile}
 
 	unset mon
 
