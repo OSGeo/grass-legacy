@@ -7,5 +7,4 @@ default:
 	@echo "Please run 'make' in the individual subdirectories"
 
 # doxygen:
-DOXNAME=
-DOXINPUT=grassswig.dox
+DOXNAME=swig
