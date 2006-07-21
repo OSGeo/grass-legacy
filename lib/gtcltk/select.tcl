@@ -21,7 +21,7 @@ proc handle_scroll {ammount} {
         set keyboard_focus [focus -displayof $window]
         foreach {x y} [winfo pointerxy $window] {break}
         set mouse_focus [winfo containing -displayof $window $x $y]
-	set l [string length $parent]
+		set l [string length $parent]
         if {[string equal -length $l $parent $keyboard_focus] || \
             [string equal -length $l $parent $mouse_focus]} {
             $window yview scroll [expr {-$ammount/120}] units
@@ -104,9 +104,13 @@ proc GSelect_::create { element } {
 	foreach dir [exec g.mapsets -p] {
 	    set windfile "$location_path/$dir/WIND"
 	    if { ! [ file exists $windfile ] } { continue }
-	    $tree insert end root ms_$dir -text $dir -data $dir -open 1 \
-		-image [Bitmap::get openfold] -drawcross auto
-
+	    if { $dir == $current_mapset } {
+			$tree insert end root ms_$dir -text $dir -data $dir -open 1 \
+			-image [Bitmap::get openfold] -drawcross auto
+	    } else {
+			$tree insert end root ms_$dir -text $dir -data $dir -open 0 \
+			-image [Bitmap::get folder] -drawcross auto
+		}
 	    set path "$location_path/$dir/$element/"
 	    foreach fp [ lsort [glob -nocomplain $path/*] ]  {
 		set file [file tail $fp]
@@ -126,9 +130,9 @@ proc GSelect_::create { element } {
 		-image [Bitmap::get folder] -drawcross auto
 
 	    foreach ic_file [ lsort [glob -nocomplain $sympath/$dir_tail/*] ]  {
-		set file [file tail $ic_file]
-		$tree insert end ms_$dir_tail $file@$dir_tail -text $file -data $file \
-		    -image [Bitmap::get file] -drawcross never
+			set file [file tail $ic_file]
+			$tree insert end ms_$dir_tail $file@$dir_tail -text $file -data $file \
+				-image [Bitmap::get file] -drawcross never
 	    }
 	}
     }
@@ -202,7 +206,7 @@ proc GSelect_::selectclose { tree node } {
 }
 
 proc GSelect_::moddir { idx tree node } {
-    if { $idx && [$tree itemcget $node -drawcross] == "allways" } {
+    if { $idx && [$tree itemcget $node -drawcross] == "always" } {
         getdir $tree $node [$tree itemcget $node -data]
         if { [llength [$tree nodes $node]] } {
             $tree itemconfigure $node -image [Bitmap::get openfold]
