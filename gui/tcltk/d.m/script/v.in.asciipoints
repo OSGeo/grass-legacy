@@ -20,7 +20,7 @@
 #%option
 #% key: input
 #% type: string
-#% gisprompt: file,file,file
+#% gisprompt: new_file,file,file
 #% description: ASCII points file to import (default format xcol|ycol|val|...)
 #% required : yes
 #%end
