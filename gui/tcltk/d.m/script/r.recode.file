@@ -34,7 +34,7 @@
 #%option
 #% key: rules_file
 #% type: string
-#% gisprompt: new_file,file,file
+#% gisprompt: old_file,file,file
 #% description: ASCII file containing reclassification rules
 #% required : yes
 #%end
