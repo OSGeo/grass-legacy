@@ -312,17 +312,16 @@ proc MapToolBar::savefile { type quality } {
 				return
 			}
 			"tif" { 
-				eval exec {gdal_translate $path.ppm $path.tif -of GTIFF}
-				eval exec "rm $path.ppm"
+				exec gdal_translate $path.ppm $path.tif -of GTIFF
+				exec rm $path.ppm
 			}
 			"bmp" { 
-				eval exec {gdal_translate $path.ppm $path.bmp -of BMP}
-				eval exec "rm $path.ppm"
+				exec gdal_translate $path.ppm $path.bmp -of BMP
+				exec rm $path.ppm
 			}
 			"jpg" { 
-				eval exec {gdal_translate $path.ppm $path.jpg -of JPEG -co \
-					QUALITY=$quality}
-				eval exec "rm $path.ppm"
+				exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=$quality
+				exec rm $path.ppm
 			}
 		}
 	}

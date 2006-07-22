@@ -69,7 +69,7 @@ proc psprint::init { } {
 	set mbottom 1
 	
 	# check for ghostscript
-	if ![catch {set input [eval exec "gs -help"]}] {
+	if ![catch {set input [exec gs -help]}] {
 		regexp ".*Available devices:(.*)Search path:" $input string gsdevices 
 		set gsstate "normal"
 		set printmode "lpr"
@@ -392,8 +392,8 @@ proc psprint::print { cv } {
 		}		
 		after 500
 		close $printmap
-		eval exec "cat $tmppsfile | gs  $format -sDEVICE=png16m -r$res -sNOPAUSE -sOutputFile=$tmppngfile -dBATCH - " 
-		eval exec "lpr $tmppngfile" 
+		exec cat $tmppsfile | gs  $format -sDEVICE=png16m -r$res -sNOPAUSE -sOutputFile=$tmppngfile -dBATCH -  
+		exec lpr $tmppngfile 
     }
 
 	# postsript printing via ghostsript
@@ -414,7 +414,7 @@ proc psprint::print { cv } {
 		}		
 		after 500
 		close $printmap
-		eval exec "cat $tmppsfile | gs  $format -sDEVICE=$printer -r$res -sNOPAUSE -dBATCH - " 
+		exec cat $tmppsfile | gs  $format -sDEVICE=$printer -r$res -sNOPAUSE -dBATCH - 
 	}
 
 	# output to pdf file via ghostscript	
@@ -435,7 +435,7 @@ proc psprint::print { cv } {
 		}		
 		after 500
 		close $printmap
-		eval exec "cat $tmppsfile | gs  $format -sDEVICE=pdfwrite -r$res -sNOPAUSE -sOutputFile=$pdffile -dBATCH - " 
+		exec cat $tmppsfile | gs  $format -sDEVICE=pdfwrite -r$res -sNOPAUSE -sOutputFile=$pdffile -dBATCH - 
 	}
 
 	# output to eps file
