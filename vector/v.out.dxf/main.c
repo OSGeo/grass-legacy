@@ -57,6 +57,8 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
+    overwrite = module->overwrite;
+
     /* open input vector */
     if ((mapset = G_find_vector2(input->answer, "")) == NULL)
 	G_fatal_error(_("Could not find input map <%s>."), input->answer);
