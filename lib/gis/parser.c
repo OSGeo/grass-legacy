@@ -2237,9 +2237,9 @@ static int gis_prompt (struct Option *opt, char *buff)
 		ptr1 = G_ask_in_mapset("", buff, element, desc) ;
 	else if (! strcmp("any",age))
 		ptr1 = G_ask_any("", buff, element, desc, 1) ;
-	else if (! strcmp("old_file",age))
+	else if (! strcmp("old_file",age)) /* file must exist */
 		ptr1 = G_ask_old_file("", buff, element, desc) ;
-	else if (! strcmp("new_file",age))
+	else if (! strcmp("new_file",age)) /* file shouldn't exist unless overwrite is enabled*/
 		ptr1 = G_ask_new_file("", buff, element, desc) ;
 	else if (! strcmp("color",age))
 		/* These prompts are only implemented in the gui */
