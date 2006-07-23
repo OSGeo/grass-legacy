@@ -34,7 +34,6 @@
 #include <grass/glocale.h>
 #include "G.h"
 
-#define FCB G__.fileinfo[fd]
 #define FORMAT_FILE "f_format"
 #define NULL_FILE   "null"
 
@@ -77,9 +76,11 @@ static char CELL_DIR[100];
 
 int G_close_cell (int fd)
 {
-    if (fd < 0 || fd >= MAXFILES || FCB.open_mode <= 0)
+    struct fileinfo *fcb = &G__.fileinfo[fd];
+
+    if (fd < 0 || fd >= G__.fileinfo_count || fcb->open_mode <= 0)
 	return -1;
-    if (FCB.open_mode == OPEN_OLD)
+    if (fcb->open_mode == OPEN_OLD)
 	return close_old (fd);
 
     return close_new (fd, 1);
@@ -108,9 +109,11 @@ int G_close_cell (int fd)
 
 int G_unopen_cell (int fd)
 {
-    if (fd < 0 || fd >= MAXFILES || FCB.open_mode <= 0)
+    struct fileinfo *fcb = &G__.fileinfo[fd];
+
+    if (fd < 0 || fd >= G__.fileinfo_count || fcb->open_mode <= 0)
 	return -1;
-    if (FCB.open_mode == OPEN_OLD)
+    if (fcb->open_mode == OPEN_OLD)
 	return close_old (fd);
     else
 	return close_new (fd, 0);
@@ -118,7 +121,8 @@ int G_unopen_cell (int fd)
 
 static int close_old (int fd)
 {
-   int i;
+    struct fileinfo *fcb = &G__.fileinfo[fd];
+    int i;
 
     /* if G__.auto_mask was only allocated for reading map rows to create
        non-existant null rows, and not for actuall mask, free G__.mask_row 
@@ -128,23 +132,23 @@ static int close_old (int fd)
     */
 
     for (i=0;i<NULL_ROWS_INMEM;i++)
-       G_free (FCB.NULL_ROWS[i]);
-    G_free (FCB.null_work_buf);
+       G_free (fcb->NULL_ROWS[i]);
+    G_free (fcb->null_work_buf);
 
-    if (FCB.cellhd.compressed)
-	G_free (FCB.row_ptr);
-    G_free (FCB.col_map);
-    G_free (FCB.mapset);
-    G_free (FCB.data);
-    G_free (FCB.name);
-    if (FCB.reclass_flag)
-	G_free_reclass (&FCB.reclass);
-    FCB.open_mode = -1;
+    if (fcb->cellhd.compressed)
+	G_free (fcb->row_ptr);
+    G_free (fcb->col_map);
+    G_free (fcb->mapset);
+    G_free (fcb->data);
+    G_free (fcb->name);
+    if (fcb->reclass_flag)
+	G_free_reclass (&fcb->reclass);
+    fcb->open_mode = -1;
 
-    if(FCB.map_type != CELL_TYPE)
+    if(fcb->map_type != CELL_TYPE)
     {
-        G_quant_free(&FCB.quant);
-        xdr_destroy(&FCB.xdrstream);
+        G_quant_free(&fcb->quant);
+        xdr_destroy(&fcb->xdrstream);
     } 
     close (fd);
 
@@ -153,6 +157,7 @@ static int close_old (int fd)
 
 static int close_new (int fd,int ok)
 {
+    struct fileinfo *fcb = &G__.fileinfo[fd];
     int stat;
     struct Categories cats;
     struct History hist;
@@ -162,34 +167,34 @@ static int close_new (int fd,int ok)
     char element[100];
 
     if (ok) {
-        switch (FCB.open_mode)
+        switch (fcb->open_mode)
         {
         case OPEN_NEW_COMPRESSED:
-            G_debug(1, "close %s compressed", FCB.name); 
+            G_debug(1, "close %s compressed", fcb->name); 
             break;
         case OPEN_NEW_UNCOMPRESSED:
-            G_debug(1, "close %s uncompressed", FCB.name);
+            G_debug(1, "close %s uncompressed", fcb->name);
             break;
         case OPEN_NEW_RANDOM:
-            G_debug(1, "close %s random", FCB.name);
+            G_debug(1, "close %s random", fcb->name);
             break;
         }
 
-	if (FCB.open_mode != OPEN_NEW_RANDOM && FCB.cur_row < FCB.cellhd.rows) {
-	    G_zero_raster_buf (FCB.data, FCB.map_type);
-	    for (row = FCB.cur_row; row < FCB.cellhd.rows; row++)
-	        G_put_raster_row (fd, FCB.data, FCB.map_type);
-            G_free (FCB.data);
-	    FCB.data = NULL;
+	if (fcb->open_mode != OPEN_NEW_RANDOM && fcb->cur_row < fcb->cellhd.rows) {
+	    G_zero_raster_buf (fcb->data, fcb->map_type);
+	    for (row = fcb->cur_row; row < fcb->cellhd.rows; row++)
+	        G_put_raster_row (fd, fcb->data, fcb->map_type);
+            G_free (fcb->data);
+	    fcb->data = NULL;
 	}
 
         /* create path : full null file name */
-        sprintf(element,"cell_misc/%s",FCB.name);
+        sprintf(element,"cell_misc/%s",fcb->name);
         G__file_name(path, element, NULL_FILE, G_mapset());
         G__make_mapset_element(element);
         remove ( path );
 
-        if(FCB.null_cur_row > 0) {
+        if(fcb->null_cur_row > 0) {
         /* if temporary NULL file exists, write it into cell_misc/name/null */
             int null_fd;
 
@@ -199,65 +204,65 @@ static int close_new (int fd,int ok)
 
             /* first finish writing null file */
             /* write out the rows stored in memory */
-	    for (row = FCB.min_null_row; 
-                  row < FCB.null_cur_row; row++)
-             G__write_null_bits(null_fd, FCB.NULL_ROWS[row - FCB.min_null_row], 
-                                               row, FCB.cellhd.cols, fd); 
+	    for (row = fcb->min_null_row; 
+                  row < fcb->null_cur_row; row++)
+             G__write_null_bits(null_fd, fcb->NULL_ROWS[row - fcb->min_null_row], 
+                                               row, fcb->cellhd.cols, fd); 
 
             /* write missing rows */
-	    if (FCB.open_mode != OPEN_NEW_RANDOM 
-                && FCB.null_cur_row < FCB.cellhd.rows)
+	    if (fcb->open_mode != OPEN_NEW_RANDOM 
+                && fcb->null_cur_row < fcb->cellhd.rows)
             {
-                G__init_null_bits(FCB.null_work_buf, FCB.cellhd.cols);
-	        for (row = FCB.null_cur_row; row < FCB.cellhd.rows; row++)
-                      G__write_null_bits(null_fd, FCB.null_work_buf, row, 
-                                                          FCB.cellhd.cols, fd);
+                G__init_null_bits(fcb->null_work_buf, fcb->cellhd.cols);
+	        for (row = fcb->null_cur_row; row < fcb->cellhd.rows; row++)
+                      G__write_null_bits(null_fd, fcb->null_work_buf, row, 
+                                                          fcb->cellhd.cols, fd);
             }
             close (null_fd);
             
 #ifdef __MINGW32__
-	    if ( CopyFile ( FCB.null_temp_name, path, FALSE ) == 0 ) {
+	    if ( CopyFile ( fcb->null_temp_name, path, FALSE ) == 0 ) {
 #else
-	    if(link (FCB.null_temp_name, path) < 0) {
+	    if(link (fcb->null_temp_name, path) < 0) {
 #endif
-		if(rename(FCB.null_temp_name, path)) {
+		if(rename(fcb->null_temp_name, path)) {
 	            G_warning(_("closecell: can't move %s\nto null file %s"),
-		                FCB.null_temp_name, path);
+		                fcb->null_temp_name, path);
 	            stat = -1;
 	        }
 	    } else {
-                remove ( FCB.null_temp_name );
+                remove ( fcb->null_temp_name );
             }
         } else {
-            remove ( FCB.null_temp_name );
+            remove ( fcb->null_temp_name );
             remove ( path );
         } /* null_cur_row > 0 */
 
-        if (FCB.open_mode == OPEN_NEW_COMPRESSED) { /* auto compression */
-            FCB.row_ptr[FCB.cellhd.rows] = lseek (fd, 0L, SEEK_CUR);
+        if (fcb->open_mode == OPEN_NEW_COMPRESSED) { /* auto compression */
+            fcb->row_ptr[fcb->cellhd.rows] = lseek (fd, 0L, SEEK_CUR);
             G__write_row_ptrs (fd);
         }
 
-        if(FCB.map_type != CELL_TYPE) {  /* floating point map */
+        if(fcb->map_type != CELL_TYPE) {  /* floating point map */
            int cell_fd;
 
             if (G__write_fp_format(fd) != 0) {
-               G_warning(_("Error writing floating point format file for map %s"), FCB.name);
+               G_warning(_("Error writing floating point format file for map %s"), fcb->name);
                stat = -1;
             }
 
             /* now write 0-length cell file */
             G__make_mapset_element ("cell");
-            cell_fd = creat (G__file_name(path, "cell", FCB.name, FCB.mapset), 0666);
+            cell_fd = creat (G__file_name(path, "cell", fcb->name, fcb->mapset), 0666);
             close( cell_fd);
             strcpy(CELL_DIR, "fcell");
        } else {
             /* remove fcell/name file */
-   	    G__file_name (path, "fcell", FCB.name, FCB.mapset);
+   	    G__file_name (path, "fcell", fcb->name, fcb->mapset);
             remove ( path );
             /* remove cell_misc/name/f_format */
-            sprintf(element,"cell_misc/%s",FCB.name);
-   	    G__file_name (path, element, "f_format", FCB.mapset);
+            sprintf(element,"cell_misc/%s",fcb->name);
+   	    G__file_name (path, element, "f_format", fcb->mapset);
             remove ( path );
             strcpy(CELL_DIR, "cell");
             close (fd);
@@ -267,16 +272,16 @@ static int close_new (int fd,int ok)
 
     close (fd);
     /* remember open_mode */
-    open_mode = FCB.open_mode;
-    FCB.open_mode = -1;
+    open_mode = fcb->open_mode;
+    fcb->open_mode = -1;
 
-    if (FCB.data != NULL)
-	G_free (FCB.data);
+    if (fcb->data != NULL)
+	G_free (fcb->data);
 
-    if (FCB.null_temp_name != NULL)
+    if (fcb->null_temp_name != NULL)
     {
-	G_free (FCB.null_temp_name);
-        FCB.null_temp_name = NULL;
+	G_free (fcb->null_temp_name);
+        fcb->null_temp_name = NULL;
     }
 
 /* if the cell file was written to a temporary file
@@ -285,105 +290,105 @@ static int close_new (int fd,int ok)
  * the support files
  */
     stat = 1;
-    if (ok && (FCB.temp_name != NULL)) {
-	G__file_name (path, CELL_DIR, FCB.name, FCB.mapset);
+    if (ok && (fcb->temp_name != NULL)) {
+	G__file_name (path, CELL_DIR, fcb->name, fcb->mapset);
         remove ( path );
 #ifdef __MINGW32__
-        if ( CopyFile ( FCB.temp_name, path, FALSE ) == 0 ) {
+        if ( CopyFile ( fcb->temp_name, path, FALSE ) == 0 ) {
 #else
-	if(link (FCB.temp_name, path) < 0) {
+	if(link (fcb->temp_name, path) < 0) {
 #endif
-	    if(rename(FCB.temp_name, path)) {
+	    if(rename(fcb->temp_name, path)) {
 	        G_warning(_("closecell: can't move %s\nto cell file %s"),
-	                    FCB.temp_name, path);
+	                    fcb->temp_name, path);
 	        stat = -1;
 	    }
         } else {
-            remove ( FCB.temp_name );
+            remove ( fcb->temp_name );
         }
     }
 
-    if (FCB.temp_name != NULL) {
-	G_free (FCB.temp_name);
+    if (fcb->temp_name != NULL) {
+	G_free (fcb->temp_name);
     }
 
     if (ok) {
 	/* remove color table */
-	G_remove_colr (FCB.name);
+	G_remove_colr (fcb->name);
 
 	/* create a history file */
-        G_short_history (FCB.name, "raster", &hist);
-	G_write_history (FCB.name, &hist);
+        G_short_history (fcb->name, "raster", &hist);
+	G_write_history (fcb->name, &hist);
 
 	/* write the range */
-        if(FCB.map_type == CELL_TYPE) {
-       	     G_write_range (FCB.name, &FCB.range);
-             G__remove_fp_range(FCB.name);
+        if(fcb->map_type == CELL_TYPE) {
+       	     G_write_range (fcb->name, &fcb->range);
+             G__remove_fp_range(fcb->name);
         }
 	/*NOTE: int range for floating point maps is not written out */
-        else /* if(FCB.map_type != CELL_TYPE) */
+        else /* if(fcb->map_type != CELL_TYPE) */
         {
-       	     G_write_fp_range (FCB.name, &FCB.fp_range);
-	     G_construct_default_range(&FCB.range);
+       	     G_write_fp_range (fcb->name, &fcb->fp_range);
+	     G_construct_default_range(&fcb->range);
 	    /* this range will be used to add default rule to quant structure */
         }
 
-        if ( FCB.map_type != CELL_TYPE)
-           FCB.cellhd.format = -1;
+        if ( fcb->map_type != CELL_TYPE)
+           fcb->cellhd.format = -1;
         else /* CELL map */
-	   FCB.cellhd.format = FCB.nbytes - 1;
+	   fcb->cellhd.format = fcb->nbytes - 1;
 
 	/* write header file */
-        G_put_cellhd (FCB.name, &FCB.cellhd);
+        G_put_cellhd (fcb->name, &fcb->cellhd);
 
 	/* if map is floating point write the quant rules, otherwise remove f_quant */
-        if(FCB.map_type != CELL_TYPE) {
+        if(fcb->map_type != CELL_TYPE) {
 	/* DEFAULT RANGE QUANT
-	     G_get_fp_range_min_max(&FCB.fp_range, &dcell_min, &dcell_max);
+	     G_get_fp_range_min_max(&fcb->fp_range, &dcell_min, &dcell_max);
 	     if(!G_is_d_null_value(&dcell_min) && !G_is_d_null_value(&dcell_max))
              {
-		G_get_range_min_max(&FCB.range, &cell_min, &cell_max);
-	        G_quant_add_rule(&FCB.quant, dcell_min, dcell_max, 
+		G_get_range_min_max(&fcb->range, &cell_min, &cell_max);
+	        G_quant_add_rule(&fcb->quant, dcell_min, dcell_max, 
 					     cell_min, cell_max);
              }
         */
-	     G_quant_round(&FCB.quant);
-             if( G_write_quant (FCB.name, FCB.mapset, &FCB.quant) < 0)
+	     G_quant_round(&fcb->quant);
+             if( G_write_quant (fcb->name, fcb->mapset, &fcb->quant) < 0)
                       G_warning(_("unable to write quant file!"));
         } else {
             /* remove cell_misc/name/f_quant */
-            sprintf(element,"cell_misc/%s",FCB.name);
-   	    G__file_name (path, element, "f_quant", FCB.mapset);
+            sprintf(element,"cell_misc/%s",fcb->name);
+   	    G__file_name (path, element, "f_quant", fcb->mapset);
             remove ( path );
         }
 
 	/* create empty cats file */
-       G_get_range_min_max(&FCB.range, &cell_min, &cell_max);
+       G_get_range_min_max(&fcb->range, &cell_min, &cell_max);
        if(G_is_c_null_value(&cell_max)) cell_max = 0;
        G_init_cats (cell_max, (char *)NULL, &cats);
-       G_write_cats (FCB.name, &cats);
+       G_write_cats (fcb->name, &cats);
        G_free_cats (&cats);
 
 	/* write the histogram */
 	/* only works for integer maps */
-       if((FCB.map_type == CELL_TYPE)
-            &&(FCB.want_histogram)) {
-        	    G_write_histogram_cs (FCB.name, &FCB.statf);
-  	            G_free_cell_stats (&FCB.statf);
+       if((fcb->map_type == CELL_TYPE)
+            &&(fcb->want_histogram)) {
+        	    G_write_histogram_cs (fcb->name, &fcb->statf);
+  	            G_free_cell_stats (&fcb->statf);
        } else {
-            G_remove_histogram(FCB.name);
+            G_remove_histogram(fcb->name);
        }
     } /* OK */
 
-    G_free (FCB.name);
-    G_free (FCB.mapset);
+    G_free (fcb->name);
+    G_free (fcb->mapset);
 
     for (i=0;i<NULL_ROWS_INMEM;i++)
-       G_free (FCB.NULL_ROWS[i]);
-    G_free (FCB.null_work_buf);
+       G_free (fcb->NULL_ROWS[i]);
+    G_free (fcb->null_work_buf);
 
-    if(FCB.map_type != CELL_TYPE)
-       G_quant_free(&FCB.quant);
+    if(fcb->map_type != CELL_TYPE)
+       G_quant_free(&fcb->quant);
 
     return stat;
 }
@@ -391,28 +396,29 @@ static int close_new (int fd,int ok)
 /* returns 0 on success, 1 on failure */
 int G__write_fp_format (int fd)
 {
+   struct fileinfo *fcb = &G__.fileinfo[fd];
    struct Key_Value *format_kv;
    char element[100], path[4096];
    int stat;
 
-   if(FCB.map_type == CELL_TYPE)
+   if(fcb->map_type == CELL_TYPE)
    {
        G_warning(_("unable to write f_format file for CELL maps"));
        return 0;
    }
    format_kv = G_create_key_value();
-   if(FCB.map_type == FCELL_TYPE)
+   if(fcb->map_type == FCELL_TYPE)
        G_set_key_value ("type", "float", format_kv);
    else 
        G_set_key_value ("type", "double", format_kv);
 
    G_set_key_value ("byte_order", "xdr", format_kv);
 
-   if (FCB.open_mode == OPEN_NEW_COMPRESSED)
+   if (fcb->open_mode == OPEN_NEW_COMPRESSED)
       G_set_key_value ("lzw_compression_bits", "-1", format_kv);
 
-   sprintf(element,"cell_misc/%s",FCB.name);
-   G__file_name(path,element,FORMAT_FILE,FCB.mapset);
+   sprintf(element,"cell_misc/%s",fcb->name);
+   G__file_name(path,element,FORMAT_FILE,fcb->mapset);
 
    G__make_mapset_element(element);
    G_write_key_value_file (path, format_kv, &stat);

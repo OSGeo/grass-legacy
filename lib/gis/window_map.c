@@ -28,15 +28,9 @@
 #include <grass/gis.h>
 #include "G.h"
 
-#define FCB     G__.fileinfo[fd]
-#define CMAP    FCB.col_map
-#define CELLHD  FCB.cellhd
-#define WINDOW  G__.window
-#define WINDOW_NCOLS  WINDOW.cols
-#define WINDOW_NROWS  WINDOW.rows
-
 int G__create_window_mapping (int fd)
 {
+    struct fileinfo *fcb = &G__.fileinfo[fd];
     COLUMN_MAPPING *col;
     int i;
     int x;
@@ -47,12 +41,12 @@ int G__create_window_mapping (int fd)
 
 #define alloc_index(n) (COLUMN_MAPPING *) G_malloc((n)*sizeof(COLUMN_MAPPING))
 
-    if (FCB.open_mode >= 0 && FCB.open_mode != OPEN_OLD)  /* open for write? */
+    if (fcb->open_mode >= 0 && fcb->open_mode != OPEN_OLD)  /* open for write? */
         return 0;
-    if (FCB.open_mode == OPEN_OLD) /* already open ? */
-        G_free (CMAP);
+    if (fcb->open_mode == OPEN_OLD) /* already open ? */
+        G_free (fcb->col_map);
 
-    col = CMAP = alloc_index (WINDOW_NCOLS) ;
+    col = fcb->col_map = alloc_index (G__.window.cols) ;
 
 /*
  * for each column in the window, go to center of the cell,
@@ -62,39 +56,39 @@ int G__create_window_mapping (int fd)
  * for lat/lon move window so that west is bigger than
  * cellhd west.
  */
-    west = WINDOW.west;
-    if (WINDOW.proj == PROJECTION_LL)
+    west = G__.window.west;
+    if (G__.window.proj == PROJECTION_LL)
     {
-	while (west > CELLHD.west + 360.0)
+	while (west > fcb->cellhd.west + 360.0)
 	    west -=360.0;
-	while (west < CELLHD.west)
+	while (west < fcb->cellhd.west)
 	    west += 360.0;
     }
 
-    C1 = WINDOW.ew_res / CELLHD.ew_res ;
-    C2 = (west - CELLHD.west + WINDOW.ew_res/2.0) / CELLHD.ew_res; 
-    for (i = 0; i < WINDOW_NCOLS; i++)
+    C1 = G__.window.ew_res / fcb->cellhd.ew_res ;
+    C2 = (west - fcb->cellhd.west + G__.window.ew_res/2.0) / fcb->cellhd.ew_res; 
+    for (i = 0; i < G__.window.cols; i++)
     {
 	x = C2;
 	if (C2 < x)    /* adjust for rounding of negatives */
 	    x--;
-	if (x < 0 || x >= CELLHD.cols) /* not in data file */
+	if (x < 0 || x >= fcb->cellhd.cols) /* not in data file */
 	    x = -1;
 	*col++ = x+1;
 	C2 += C1;
     }
 
 /* do wrap around for lat/lon */
-    if (WINDOW.proj == PROJECTION_LL)
+    if (G__.window.proj == PROJECTION_LL)
     {
-	col = CMAP;
-	C2 = (west - 360.0 - CELLHD.west + WINDOW.ew_res/2.0) / CELLHD.ew_res; 
-	for (i = 0; i < WINDOW_NCOLS; i++)
+	col = fcb->col_map;
+	C2 = (west - 360.0 - fcb->cellhd.west + G__.window.ew_res/2.0) / fcb->cellhd.ew_res; 
+	for (i = 0; i < G__.window.cols; i++)
 	{
 	    x = C2;
 	    if (C2 < x)    /* adjust for rounding of negatives */
 		x--;
-	    if (x < 0 || x >= CELLHD.cols) /* not in data file */
+	    if (x < 0 || x >= fcb->cellhd.cols) /* not in data file */
 		x = -1;
 	    if (*col == 0)  /* only change those not already set */
 		*col = x+1;
@@ -104,17 +98,17 @@ int G__create_window_mapping (int fd)
     }
 
 #ifdef DEBUG
-fprintf (stderr, "create window mapping (%d cols)", WINDOW_NCOLS);
-    for (i = 0; i < WINDOW_NCOLS; i++)
-	fprintf (stderr, "%s%ld", i%15?" ":"\n", (long)CMAP[i]);
+fprintf (stderr, "create window mapping (%d cols)", G__.window.cols);
+    for (i = 0; i < G__.window.cols; i++)
+	fprintf (stderr, "%s%ld", i%15?" ":"\n", (long)fcb->col_map[i]);
     fprintf (stderr, "\n");
 #endif
 
 /*
  * compute C1,C2 for row window mapping 
  */
-    FCB.C1 = WINDOW.ns_res / CELLHD.ns_res ;
-    FCB.C2 = (CELLHD.north - WINDOW.north + WINDOW.ns_res/2.0) / CELLHD.ns_res; 
+    fcb->C1 = G__.window.ns_res / fcb->cellhd.ns_res ;
+    fcb->C2 = (fcb->cellhd.north - G__.window.north + G__.window.ns_res/2.0) / fcb->cellhd.ns_res; 
 
     return 0;
 }
@@ -262,7 +256,7 @@ int G_window_rows ()
 {
     G__init_window () ;
 
-    return WINDOW_NROWS;
+    return G__.window.rows;
 }
 
 
@@ -296,7 +290,7 @@ int G_window_cols ()
 {
     G__init_window () ;
     
-    return WINDOW_NCOLS;
+    return G__.window.cols;
 }
 
 int G__init_window ()
@@ -319,6 +313,7 @@ int G__init_window ()
 
 int G_row_repeat_nomask (int fd, int row)
 {
+    struct fileinfo *fcb = &G__.fileinfo[fd];
     double f;
     int r1, r2;
     int count;
@@ -329,14 +324,14 @@ int G_row_repeat_nomask (int fd, int row)
  * r2 is the next row(s) in the cell file
  * see get_row.c for details on this calculation
  */
-    f = row * FCB.C1 + FCB.C2;
+    f = row * fcb->C1 + fcb->C2;
     r1 = f;
     if (f < r1)
 	r1--;
 
-    while (++row < WINDOW_NROWS)
+    while (++row < G__.window.rows)
     {
-	f = row * FCB.C1 + FCB.C2;
+	f = row * fcb->C1 + fcb->C2;
 	r2 = f;
 	if (f < r2)
 	    r2--;

@@ -82,7 +82,10 @@ int G_debug (int level, char *msg,...)
  *
 */
 
-int G_dump (int fd){
+int G_dump(int fd)
+{
+    struct fileinfo *fcb = &G__.fileinfo[fd];
+
     G_message(_("G_dump: memory allocated to G__"));
     G_message(_("Size of cell in fp maps = %d"), G__.fp_nbytes);
     G_message(_("type for writing floating maps = %d"), G__.fp_type);
@@ -101,34 +104,34 @@ int G_dump (int fd){
     G_message(_("Histogram request %d"), G__.want_histogram);
 
     G_message(_("G_dump: file #%d"), fd);
-    G_message(_("open mode = %d"), G__.fileinfo[fd].open_mode);
-    G_message(_("Cell header %p"),&G__.fileinfo[fd].cellhd);
-    G_message(_("Table reclass %p"), &G__.fileinfo[fd].reclass);
-    G_message(_("Cell stats %p"), &G__.fileinfo[fd].statf);
-    G_message(_("Range structure %p"), &G__.fileinfo[fd].range);
-    G_message(_("float Range structure %p"), &G__.fileinfo[fd].fp_range);
-    G_message(_("want histogram?  %d"), G__.fileinfo[fd].want_histogram);
-    G_message(_("Automatic reclass flag %d"), G__.fileinfo[fd].reclass_flag);
-    G_message(_("File row addresses %p"), G__.fileinfo[fd].row_ptr);
-    G_message(_("Data to window col mapping %p"), G__.fileinfo[fd].col_map);
-    G_message(_("Data to window row constants %f,%f"), G__.fileinfo[fd].C1,G__.fileinfo[fd].C2);
-    G_message(_("Current data row in memory %d"), G__.fileinfo[fd].cur_row);
-    G_message(_("Current null row in memory %d"), G__.fileinfo[fd].null_cur_row);
-    G_message(_("nbytes per cell for current row %d"), G__.fileinfo[fd].cur_nbytes);
-    G_message(_("Decompressed data buffer %s"), G__.fileinfo[fd].data);
-    G_message(_("bytes per cell %d"), G__.fileinfo[fd].nbytes);
-    G_message(_("type: int, float or double map %d"), G__.fileinfo[fd].map_type);
-    G_message(_("Temporary name for NEW files %s"), G__.fileinfo[fd].temp_name);
-    G_message(_("Temporary name for NEW NULL files %s"), G__.fileinfo[fd].null_temp_name);
-    G_message(_("for existing raster maps %d"), G__.fileinfo[fd].null_file_exists);
-    G_message(_("Name of open file %s"), G__.fileinfo[fd].name);
-    G_message(_("Mapset of open file %s"), G__.fileinfo[fd].mapset);
-    G_message(_("io error warning given %d"), G__.fileinfo[fd].io_error);
-    G_message(_("xdr stream for reading fp %p"), &G__.fileinfo[fd].xdrstream);
-    G_message(_("NULL_ROWS array[%d] = %p"), NULL_ROWS_INMEM, G__.fileinfo[fd].NULL_ROWS);
-    G_message(_("data buffer for reading null rows %p"), G__.fileinfo[fd].null_work_buf);
-    G_message(_("Minimum row null row number in memory %d"), G__.fileinfo[fd].min_null_row);
-    G_message(_("Quant ptr = %p"), &G__.fileinfo[fd].quant);
+    G_message(_("open mode = %d"), fcb->open_mode);
+    G_message(_("Cell header %p"),&fcb->cellhd);
+    G_message(_("Table reclass %p"), &fcb->reclass);
+    G_message(_("Cell stats %p"), &fcb->statf);
+    G_message(_("Range structure %p"), &fcb->range);
+    G_message(_("float Range structure %p"), &fcb->fp_range);
+    G_message(_("want histogram?  %d"), fcb->want_histogram);
+    G_message(_("Automatic reclass flag %d"), fcb->reclass_flag);
+    G_message(_("File row addresses %p"), fcb->row_ptr);
+    G_message(_("Data to window col mapping %p"), fcb->col_map);
+    G_message(_("Data to window row constants %f,%f"), fcb->C1,fcb->C2);
+    G_message(_("Current data row in memory %d"), fcb->cur_row);
+    G_message(_("Current null row in memory %d"), fcb->null_cur_row);
+    G_message(_("nbytes per cell for current row %d"), fcb->cur_nbytes);
+    G_message(_("Decompressed data buffer %s"), fcb->data);
+    G_message(_("bytes per cell %d"), fcb->nbytes);
+    G_message(_("type: int, float or double map %d"), fcb->map_type);
+    G_message(_("Temporary name for NEW files %s"), fcb->temp_name);
+    G_message(_("Temporary name for NEW NULL files %s"), fcb->null_temp_name);
+    G_message(_("for existing raster maps %d"), fcb->null_file_exists);
+    G_message(_("Name of open file %s"), fcb->name);
+    G_message(_("Mapset of open file %s"), fcb->mapset);
+    G_message(_("io error warning given %d"), fcb->io_error);
+    G_message(_("xdr stream for reading fp %p"), &fcb->xdrstream);
+    G_message(_("NULL_ROWS array[%d] = %p"), NULL_ROWS_INMEM, fcb->NULL_ROWS);
+    G_message(_("data buffer for reading null rows %p"), fcb->null_work_buf);
+    G_message(_("Minimum row null row number in memory %d"), fcb->min_null_row);
+    G_message(_("Quant ptr = %p"), &fcb->quant);
     G_message(_("G_dump: end"));
 
     return 0;
