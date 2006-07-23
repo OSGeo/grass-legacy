@@ -51,25 +51,25 @@ for i in "$@" ; do
     	# Check if the user asked for help
 	help|-h|-help|--help)
 	    echo "Usage:"
-	    echo "  $CMD_NAME [-h | -help | --help] [-text | -tcltk | -gui] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]"
+	    echo "  $CMD_NAME [-h | -help | --help] [-text | -gui | -tcltk] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]"
 	    echo
             echo "Flags:"
             echo "  -h or -help or --help          print this help message"
             echo "  -text                          use text based interface and set as default"
-            echo "  -tcltk or -gui                 use Tcl/Tk based graphical user interface"
+            echo "  -gui or -tcltk                 use Tcl/Tk based graphical user interface"
             echo "                                   and set as default"
             echo
             echo "Parameters:"
-            echo "  GISDBASE                       initial database"
+            echo "  GISDBASE                       initial database (path to GIS data)"
             echo "  LOCATION_NAME                  initial location"
             echo "  MAPSET                         initial mapset"
             echo
-            echo "  GISDBASE/LOCATION_NAME/MAPSET  fully qualified initial LOCATION directory"
+            echo "  GISDBASE/LOCATION_NAME/MAPSET  fully qualified initial mapset directory"
             echo
-            echo "Environment variables:"
+            echo "Environment variables relevant for startup:"
             echo "  GRASS_TCLSH                    set tclsh shell name to override 'tclsh'"
             echo "  GRASS_WISH                     set wish shell name to override 'wish'"
-            echo "  GRASS_HTML_BROWSER             set html browser for help pages"
+            echo "  GRASS_HTML_BROWSER             set html web browser for help pages"
             echo "  GRASS_ADDON_PATH               set additional path(s) to local GRASS modules"
 	    exit
 	    ;;
