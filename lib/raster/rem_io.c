@@ -14,6 +14,7 @@
 #include <grass/raster.h>
 #include <grass/graphics.h>
 
+#include "transport.h"
 #include "open.h"
 
 #define BUFFERSIZ   2048
@@ -180,7 +181,7 @@ char *_get_text_2(void)
     return buf;
 }
 
-int R__open_quiet(void)
+int REM__open_quiet(void)
 {
     _quiet = 1;
 
@@ -279,7 +280,7 @@ int _hold_signals(int hold)
  *  \return int
  */
 
-int R_stabilize(void)
+int REM_stabilize(void)
 {
     char c;
 
@@ -290,7 +291,7 @@ int R_stabilize(void)
     return 0;
 }
 
-int R_kill_driver(void)
+int REM_kill_driver(void)
 {
     char dummy;
     _send_ident(GRAPH_CLOSE);
@@ -310,7 +311,7 @@ int R_kill_driver(void)
  *  \return int
  */
 
-int R_close_driver(void)
+int REM_close_driver(void)
 {
     R_stabilize();
 
@@ -322,7 +323,7 @@ int R_close_driver(void)
     return 0;
 }
 
-int R_release_driver(void)
+int REM_release_driver(void)
 {
     close(_rfd);
     close(_wfd);

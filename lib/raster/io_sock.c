@@ -45,7 +45,7 @@ int unlock_driver(int wipeout)
 }
 
 
-int R_open_driver(void)
+int REM_open_driver(void)
 {
     int verbose;
     int try;

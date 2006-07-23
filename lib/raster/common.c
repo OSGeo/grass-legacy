@@ -1,6 +1,7 @@
 
 #include <grass/gis.h>
 #include <grass/raster.h>
+#include <grass/graphics.h>
 
 /*!
  * \brief flush graphics
@@ -54,11 +55,9 @@ int R_call_update_function(int wx, int wy)
  * \return 0 not set 
  */
 
-int R_has_update_function()
+int R_has_update_function(void)
 {
-	if (update_function) return 1;
-
-	return 0;
+	return update_function ? 1 : 0;
 }
 
 static int cancel;
@@ -133,6 +132,42 @@ int R_raster(int num, int nrows, int withzero, const int *ras)
 		chararray[i] = (unsigned char) ras[i];
 
 	R_raster_char(num, nrows, withzero, chararray);
+
+	return 0;
+}
+
+int R_pad_perror(const char *msg, int code)
+{
+	const char *err;
+
+	switch (code)
+	{
+	case OK:		err = "";			break;
+	case NO_CUR_PAD:	err = "no current pad";		break;
+	case NO_PAD:		err = "pad not found";		break;
+	case NO_MEMORY:		err = "out of memory";		break;
+	case NO_ITEM:		err = "item not found";		break;
+	case ILLEGAL:		err = "illegal request";	break;
+	case DUPLICATE:		err = "duplicate name";		break;
+	default:		err = "unknown error";		break;
+	}
+
+	fprintf(stderr, "%s%s%s\n", msg, *msg ? " : " : "", err);
+
+	return 0;
+}
+
+int R_pad_freelist(char **list, int count)
+{
+	int i;
+
+	if (count <= 0)
+		return 0;
+
+	for (i = 0; i < count; i++)
+		G_free(list[i]);
+
+	G_free(list);
 
 	return 0;
 }
