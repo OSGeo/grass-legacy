@@ -10,6 +10,8 @@
 #include <grass/raster.h>
 #include <grass/graphics.h>
 
+#include "transport.h"
+
 /*!
  * \brief screen left edge
  *
@@ -19,7 +21,7 @@
  *  \return int
  */
 
-int R_screen_left(void)
+int REM_screen_left(void)
 {
 	int l;
 	_send_ident(SCREEN_LEFT);
@@ -36,7 +38,7 @@ int R_screen_left(void)
  *  \return int
  */
 
-int R_screen_rite(void)
+int REM_screen_rite(void)
 {
 	int r;
 	_send_ident(SCREEN_RITE);
@@ -54,7 +56,7 @@ int R_screen_rite(void)
  *  \return int
  */
 
-int R_screen_bot(void)
+int REM_screen_bot(void)
 {
 	int b;
 	_send_ident(SCREEN_BOT);
@@ -72,7 +74,7 @@ int R_screen_bot(void)
  *  \return int
  */
 
-int R_screen_top(void)
+int REM_screen_top(void)
 {
 	int t;
 	_send_ident(SCREEN_TOP);
@@ -80,7 +82,7 @@ int R_screen_top(void)
 	return t;
 }
 
-int R_get_num_colors(int *n)
+int REM_get_num_colors(int *n)
 {
 	_send_ident(GET_NUM_COLORS);
 	_get_int(n);
@@ -101,7 +103,7 @@ int R_get_num_colors(int *n)
  *  \return int
  */
 
-int R_color_table_float(void)
+int REM_color_table_float(void)
 {
 	int i;
 	_send_ident(COLOR_TABLE_FLOAT);
@@ -122,7 +124,7 @@ int R_color_table_float(void)
  *  \return int
  */
 
-int R_color_table_fixed(void)
+int REM_color_table_fixed(void)
 {
 	int i;
 	_send_ident(COLOR_TABLE_FIXED);
@@ -130,7 +132,7 @@ int R_color_table_fixed(void)
 	return(i);
 }
 
-int R_color_offset(int n)
+int REM_color_offset(int n)
 {
 	_send_ident(COLOR_OFFSET);
 	_send_int(&n);
@@ -148,7 +150,7 @@ int R_color_offset(int n)
  *  \return int
  */
 
-int R_color(int index)
+int REM_color(int index)
 {
 	_send_ident(COLOR);
 	_send_int(&index);
@@ -169,7 +171,7 @@ int R_color(int index)
  *  \return int
  */
 
-int R_standard_color(int index)
+int REM_standard_color(int index)
 {
 	_send_ident(STANDARD_COLOR);
 	_send_int(&index);
@@ -191,7 +193,7 @@ int R_standard_color(int index)
  *  \return int
  */
 
-int R_RGB_color(unsigned char red, unsigned char grn, unsigned char blu)
+int REM_RGB_color(unsigned char red, unsigned char grn, unsigned char blu)
 {
 	_send_ident(RGB_COLOR);
 	_send_char(&red);
@@ -214,7 +216,7 @@ int R_RGB_color(unsigned char red, unsigned char grn, unsigned char blu)
  *  \return int
  */
 
-int R_reset_color(unsigned char red, unsigned char grn, unsigned char blu,
+int REM_reset_color(unsigned char red, unsigned char grn, unsigned char blu,
 		  int index)
 {
 	if (index < 0)
@@ -244,7 +246,7 @@ int R_reset_color(unsigned char red, unsigned char grn, unsigned char blu,
  *  \return int
  */
 
-int R_reset_colors(int min, int max,
+int REM_reset_colors(int min, int max,
 		   unsigned char *red, unsigned char *grn, unsigned char *blu)
 {
 	/* only send a chunk at a time - to avoid malloc() in the driver */
@@ -280,7 +282,7 @@ int R_reset_colors(int min, int max,
  *  \return int
  */
 
-int R_line_width(int width)
+int REM_line_width(int width)
 {
 	_send_ident(LINE_WIDTH);
 	_send_int(&width);
@@ -297,7 +299,7 @@ int R_line_width(int width)
  *  \return int
  */
 
-int R_erase(void)
+int REM_erase(void)
 {
 	_send_ident(ERASE);
 
@@ -315,7 +317,7 @@ int R_erase(void)
  *  \return int
  */
 
-int R_move_abs(int x, int y)
+int REM_move_abs(int x, int y)
 {
 	_send_ident(MOVE_ABS);
 	_send_int(&x);
@@ -339,7 +341,7 @@ int R_move_abs(int x, int y)
  *  \return int
  */
 
-int R_move_rel(int x, int y)
+int REM_move_rel(int x, int y)
 {
 	_send_ident(MOVE_REL);
 	_send_int(&x);
@@ -360,7 +362,7 @@ int R_move_rel(int x, int y)
  *  \return int
  */
 
-int R_cont_abs(int x, int y)
+int REM_cont_abs(int x, int y)
 {
 	_send_ident(CONT_ABS);
 	_send_int(&x);
@@ -386,7 +388,7 @@ int R_cont_abs(int x, int y)
  *  \return int
  */
 
-int R_cont_rel(int x, int y)
+int REM_cont_rel(int x, int y)
 {
 	_send_ident(CONT_REL);
 	_send_int(&x);
@@ -408,7 +410,7 @@ int R_cont_rel(int x, int y)
  *  \return int
  */
 
-int R_polydots_abs(int *xarray, int *yarray, int number)
+int REM_polydots_abs(int *xarray, int *yarray, int number)
 {
 	_send_ident(POLYDOTS_ABS);
 	_send_int(&number);
@@ -433,7 +435,7 @@ int R_polydots_abs(int *xarray, int *yarray, int number)
  *  \return int
  */
 
-int R_polydots_rel(int *xarray, int  *yarray, int number)
+int REM_polydots_rel(int *xarray, int  *yarray, int number)
 {
 	_send_ident(POLYDOTS_REL);
 	_send_int(&number);
@@ -459,7 +461,7 @@ int R_polydots_rel(int *xarray, int  *yarray, int number)
  *  \return int
  */
 
-int R_polyline_abs(int *xarray, int  *yarray, int number)
+int REM_polyline_abs(int *xarray, int  *yarray, int number)
 {
 	_send_ident(POLYLINE_ABS);
 	_send_int(&number);
@@ -486,7 +488,7 @@ int R_polyline_abs(int *xarray, int  *yarray, int number)
  *  \return int
  */
 
-int R_polyline_rel(int *xarray, int *yarray, int number)
+int REM_polyline_rel(int *xarray, int *yarray, int number)
 {
 	_send_ident(POLYLINE_REL);
 	_send_int(&number);
@@ -509,7 +511,7 @@ int R_polyline_rel(int *xarray, int *yarray, int number)
  *  \return int
  */
 
-int R_polygon_abs(int *xarray, int *yarray, int number)
+int REM_polygon_abs(int *xarray, int *yarray, int number)
 {
 	_send_ident(POLYGON_ABS);
 	_send_int(&number);
@@ -534,7 +536,7 @@ int R_polygon_abs(int *xarray, int *yarray, int number)
  *  \return int
  */
 
-int R_polygon_rel(int *xarray, int *yarray, int number)
+int REM_polygon_rel(int *xarray, int *yarray, int number)
 {
 	_send_ident(POLYGON_REL);
 	_send_int(&number);
@@ -558,7 +560,7 @@ int R_polygon_rel(int *xarray, int *yarray, int number)
  *  \return int
  */
 
-int R_box_abs(int x1, int y1, int x2, int y2)
+int REM_box_abs(int x1, int y1, int x2, int y2)
 {
 	_send_ident(BOX_ABS);
 	_send_int(&x1);
@@ -582,7 +584,7 @@ int R_box_abs(int x1, int y1, int x2, int y2)
  *  \return int
  */
 
-int R_box_rel(int x, int y)
+int REM_box_rel(int x, int y)
 {
 	_send_ident(BOX_REL);
 	_send_int(&x);
@@ -601,7 +603,7 @@ int R_box_rel(int x, int y)
  *  \return int
  */
 
-int R_text_size(int width, int height)
+int REM_text_size(int width, int height)
 {
 	_send_ident(TEXT_SIZE);
 	_send_int(&width);
@@ -610,7 +612,7 @@ int R_text_size(int width, int height)
 	return 0;
 }
 
-int R_text_rotation(float rotation)
+int REM_text_rotation(float rotation)
 {
 	_send_ident(TEXT_ROTATION);
 	_send_float(&rotation);
@@ -631,7 +633,7 @@ int R_text_rotation(float rotation)
  *  \return int
  */
 
-int R_set_window(int t, int b, int l, int r)
+int REM_set_window(int t, int b, int l, int r)
 {
 	_send_ident(SET_WINDOW);
 	_send_int(&t);
@@ -652,7 +654,7 @@ int R_set_window(int t, int b, int l, int r)
  *  \return int
  */
 
-int R_text(const char *sometext)
+int REM_text(const char *sometext)
 {
 	_send_ident(TEXT);
 	_send_text(sometext);
@@ -677,7 +679,7 @@ int R_text(const char *sometext)
  *  \return int
  */
 
-int R_get_text_box(const char *sometext, int *t, int *b, int *l, int *r)
+int REM_get_text_box(const char *sometext, int *t, int *b, int *l, int *r)
 {
 	_send_ident(GET_TEXT_BOX);
 	_send_text(sometext);
@@ -735,7 +737,7 @@ static int select_font(const char *name)
  *  \return int
  */
 
-int R_font(const char *name)
+int REM_font(const char *name)
 {
 	if(!select_font(name))
 	    select_font("romand");
@@ -743,7 +745,7 @@ int R_font(const char *name)
 	return 0;
 }
 
-int R_font_freetype(const char *name)
+int REM_font_freetype(const char *name)
 {
 	int stat;
 
@@ -754,7 +756,7 @@ int R_font_freetype(const char *name)
 	return stat == 0;
 }
 
-int R_charset(const char *name)
+int REM_charset(const char *name)
 {
 	int stat;
 
@@ -765,7 +767,7 @@ int R_charset(const char *name)
 	return stat == 0;
 }
 
-int R_font_freetype_release(void)
+int REM_font_freetype_release(void)
 {
 	int stat;
 
@@ -775,7 +777,7 @@ int R_font_freetype_release(void)
 	return stat == 0;
 }
 
-int R_panel_save(const char *name, int t, int b, int l, int r)
+int REM_panel_save(const char *name, int t, int b, int l, int r)
 {
 	close(creat(name, 0666));
 
@@ -790,7 +792,7 @@ int R_panel_save(const char *name, int t, int b, int l, int r)
 	return 0;
 }
 
-int R_panel_restore(const char *name)
+int REM_panel_restore(const char *name)
 {
 	_send_ident(PANEL_RESTORE);
 	_send_text(name);
@@ -799,7 +801,7 @@ int R_panel_restore(const char *name)
 	return 0;
 }
 
-int R_panel_delete(const char *name)
+int REM_panel_delete(const char *name)
 {
 	_send_ident(PANEL_DELETE);
 	_send_text(name);
@@ -826,7 +828,7 @@ int R_panel_delete(const char *name)
  *  \return int
  */
 
-int R_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *b)
+int REM_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *b)
 {
 	_send_ident(RGB_COLORS);
 	_send_char_array(256, r);
@@ -859,7 +861,7 @@ int R_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *b)
  *  \return int
  */
 
-int R_RGB_raster(int n, int nrows,
+int REM_RGB_raster(int n, int nrows,
 	unsigned char *red, unsigned char *grn, unsigned char *blu,
 	unsigned char *nul)
 {
@@ -907,7 +909,7 @@ int R_RGB_raster(int n, int nrows,
  *
  */
 
-int R_raster_char(int num, int nrows, int withzero, const unsigned char *ras)
+int REM_raster_char(int num, int nrows, int withzero, const unsigned char *ras)
 {
 	_send_ident(RASTER_CHAR);
 	_send_int(&num);
@@ -918,7 +920,7 @@ int R_raster_char(int num, int nrows, int withzero, const unsigned char *ras)
 	return 0;
 }
 
-int R_raster_int(int num, int nrows, int withzero, const int *ras)
+int REM_raster_int(int num, int nrows, int withzero, const int *ras)
 {
 	_send_ident(RASTER_INT);
 	_send_int(&num);

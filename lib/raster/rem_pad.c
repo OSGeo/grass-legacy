@@ -6,6 +6,8 @@
 #include <grass/raster.h>
 #include <grass/graphics.h>
 
+#include "transport.h"
+
 /* PAD FUNCTIONS
        The monitor has a very simple database management capabil­
        ity  which supports the windowing.  There are scratch pads
@@ -44,22 +46,7 @@ static int _get_list(char ***list, int *count)
     return 1;
 }
 
-int R_pad_freelist(char **list, int count)
-{
-	int i;
-
-	if (count <= 0)
-		return 0;
-
-	for (i = 0; i < count; i++)
-		G_free(list[i]);
-
-	G_free(list);
-
-	return 0;
-}
-
-int R_pad_create(const char *pad)
+int REM_pad_create(const char *pad)
 {
 	char result;
 
@@ -74,7 +61,7 @@ int R_pad_create(const char *pad)
 	return result;
 }
 
-int R_pad_current(char *name)
+int REM_pad_current(char *name)
 {
 	char result;
 
@@ -89,7 +76,7 @@ int R_pad_current(char *name)
 	return result;
 }
 
-int R_pad_delete(void)
+int REM_pad_delete(void)
 {
 	char result;
 
@@ -103,7 +90,7 @@ int R_pad_delete(void)
 	return result ;
 }
 
-int R_pad_invent(char *pad)
+int REM_pad_invent(char *pad)
 {
 	_hold_signals(1);
 
@@ -115,7 +102,7 @@ int R_pad_invent(char *pad)
 	return 0;
 }
 
-int R_pad_list(char ***list, int *count)
+int REM_pad_list(char ***list, int *count)
 {
 	_hold_signals(1);
 
@@ -127,7 +114,7 @@ int R_pad_list(char ***list, int *count)
 	return 0;
 }
 
-int R_pad_select(const char *pad)
+int REM_pad_select(const char *pad)
 {
 	char result;
 
@@ -142,7 +129,7 @@ int R_pad_select(const char *pad)
 	return result;
 }
 
-int R_pad_append_item(const char *item, const char *value, int replace)
+int REM_pad_append_item(const char *item, const char *value, int replace)
 {
     char result;
 
@@ -159,7 +146,7 @@ int R_pad_append_item(const char *item, const char *value, int replace)
     return result;
 }
 
-int R_pad_delete_item(const char *name)
+int REM_pad_delete_item(const char *name)
 {
     char result;
 
@@ -174,7 +161,7 @@ int R_pad_delete_item(const char *name)
     return result;
 }
 
-int R_pad_get_item(const char *item, char ***list, int *count)
+int REM_pad_get_item(const char *item, char ***list, int *count)
 {
     char result;
 
@@ -192,7 +179,7 @@ int R_pad_get_item(const char *item, char ***list, int *count)
     return result;
 }
 
-int R_pad_list_items(char ***list, int *count)
+int REM_pad_list_items(char ***list, int *count)
 {
     char result;
 
@@ -208,7 +195,7 @@ int R_pad_list_items(char ***list, int *count)
     return result;
 }
 
-int R_pad_set_item(const char *item, const char *value)
+int REM_pad_set_item(const char *item, const char *value)
 {
     char result;
 
@@ -222,26 +209,5 @@ int R_pad_set_item(const char *item, const char *value)
     _hold_signals(0);
 
     return result;
-}
-
-int R_pad_perror(const char *msg, int code)
-{
-	const char *err;
-
-	switch (code)
-	{
-	case OK:		err = "";			break;
-	case NO_CUR_PAD:	err = "no current pad";		break;
-	case NO_PAD:		err = "pad not found";		break;
-	case NO_MEMORY:		err = "out of memory";		break;
-	case NO_ITEM:		err = "item not found";		break;
-	case ILLEGAL:		err = "illegal request";	break;
-	case DUPLICATE:		err = "duplicate name";		break;
-	default:		err = "unknown error";		break;
-	}
-
-	fprintf(stderr, "%s%s%s\n", msg, *msg ? " : " : "", err);
-
-	return 0;
 }
 

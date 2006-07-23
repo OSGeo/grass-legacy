@@ -315,7 +315,7 @@ static int fifoto(char *input, char *output, int alarm_time)
  *  \return int
  */
 
-int R_open_driver(void)
+int REM_open_driver(void)
 {
     int verbose;
     int try;
