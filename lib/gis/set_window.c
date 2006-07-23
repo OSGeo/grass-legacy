@@ -48,7 +48,7 @@ int G_set_window (struct Cell_head *window)
  * and zone as new window
  */
     maskfd = G__.auto_mask > 0 ? G__.mask_fd : - 1;
-    for (i = 0; i < MAXFILES; i++)
+    for (i = 0; i < G__.fileinfo_count; i++)
     {
 	if (G__.fileinfo[i].open_mode == OPEN_OLD)
 	{
@@ -82,7 +82,7 @@ int G_set_window (struct Cell_head *window)
  * also the memory for reading and writing must be reallocated for all opened
  * cell files
 */
-    for (i = 0; i < MAXFILES; i++)
+    for (i = 0; i < G__.fileinfo_count; i++)
     {
         if(G__.fileinfo[i].open_mode != OPEN_OLD &&
            G__.fileinfo[i].open_mode != OPEN_NEW_UNCOMPRESSED &&

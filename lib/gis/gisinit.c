@@ -79,12 +79,6 @@ static int gisinit(void)
 /* no histograms */
     G__.want_histogram = 0;
 
-/* Mark all cell files as closed */
-    for (i = 0; i < MAXFILES; i++)
-    {
-	G__.fileinfo[i].open_mode = -1;
-    }
-
 /* Set compressed data buffer size to zero */
     G__.compressed_buf_size = 0;
     G__.work_buf_size = 0;

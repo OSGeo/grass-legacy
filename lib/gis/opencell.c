@@ -108,11 +108,32 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
-#define FCB G__.fileinfo[fd]
-#define WINDOW G__.window
-#define DATA_NROWS  FCB.cellhd.rows
-#define DATA_NCOLS  FCB.cellhd.cols
 static int allocate_compress_buf(int);
+
+static struct fileinfo *new_fileinfo(int fd)
+{
+    int oldsize = G__.fileinfo_count;
+    int newsize = oldsize;
+    int i;
+
+    if (fd < oldsize)
+	return &G__.fileinfo[fd];
+
+    if (!newsize)
+	newsize = 20;
+    else
+	newsize *= 2;
+
+    G__.fileinfo = G_realloc(G__.fileinfo, newsize * sizeof(struct fileinfo));
+
+    /* Mark all cell files as closed */
+    for (i = oldsize; i < newsize; i++)
+	G__.fileinfo[i].open_mode = -1;
+
+    G__.fileinfo_count = newsize;
+
+    return &G__.fileinfo[fd];
+}
 
 /*!
  * \brief open an existing
@@ -216,6 +237,7 @@ int G__open_cell_old (
     char *name,
     char *mapset)
 {
+    struct fileinfo *fcb;
     int fd;
     char cell_dir[100];
     char *r_name ;
@@ -324,45 +346,41 @@ int G__open_cell_old (
     if (fd < 0)
         return -1;
 
-    if (fd >= MAXFILES)
-    {
-        close (fd);
-        G_warning("Too many open raster files");
-        return -1;
-    }
-    FCB.map_type = MAP_TYPE;
+    fcb = new_fileinfo(fd);
+
+    fcb->map_type = MAP_TYPE;
 
 /* Save cell header */
-    G_copy ((char *) &FCB.cellhd, (char *) &cellhd, sizeof(cellhd));
+    G_copy ((char *) &fcb->cellhd, (char *) &cellhd, sizeof(cellhd));
 
     /* allocate null bitstream buffers for reading null rows */
     for (i=0;i< NULL_ROWS_INMEM; i++)
-       FCB.NULL_ROWS[i] = G__allocate_null_bits(WINDOW.cols);
-    FCB.null_work_buf = G__allocate_null_bits(FCB.cellhd.cols);
+       fcb->NULL_ROWS[i] = G__allocate_null_bits(G__.window.cols);
+    fcb->null_work_buf = G__allocate_null_bits(fcb->cellhd.cols);
     /* initialize : no NULL rows in memory */
-    FCB.min_null_row = (-1) * NULL_ROWS_INMEM; 
+    fcb->min_null_row = (-1) * NULL_ROWS_INMEM; 
 
 /* mark closed */
-    FCB.open_mode = -1;
+    fcb->open_mode = -1;
 
 /* save name and mapset */
     {
     char xname[512], xmapset[512];
     if (G__name_is_fully_qualified(name, xname, xmapset))
-	FCB.name   = G_store (xname);
+	fcb->name   = G_store (xname);
     else
-	FCB.name   = G_store (name);
+	fcb->name   = G_store (name);
     }
-    FCB.mapset = G_store (mapset);
+    fcb->mapset = G_store (mapset);
 
 /* mark no data row in memory  */
-    FCB.cur_row = -1;
-/* FCB.null_cur_row is not used for reading, only for writing */
-    FCB.null_cur_row = -1;
+    fcb->cur_row = -1;
+/* fcb->null_cur_row is not used for reading, only for writing */
+    fcb->null_cur_row = -1;
 
 /* if reclass, copy reclass structure */
-    if ((FCB.reclass_flag = reclass_flag))
-	G_copy ((char *) &FCB.reclass, (char *) &reclass, sizeof(reclass));
+    if ((fcb->reclass_flag = reclass_flag))
+	G_copy ((char *) &fcb->reclass, (char *) &reclass, sizeof(reclass));
 
 /* check for compressed data format, making initial reads if necessary */
     if(G__check_format (fd) < 0)
@@ -379,10 +397,10 @@ int G__open_cell_old (
  * number of bytes per cell is cellhd.format+1
  */
 
-    /* for reading FCB.data is allocated to be FCB.cellhd.cols * FCB.nbytes 
-      (= XDR_FLOAT/DOUBLE_NBYTES) and G__.work_buf to be WINDOW.cols * 
+    /* for reading fcb->data is allocated to be fcb->cellhd.cols * fcb->nbytes 
+      (= XDR_FLOAT/DOUBLE_NBYTES) and G__.work_buf to be G__.window.cols * 
       sizeof(CELL or DCELL or FCELL) */
-    FCB.data = (unsigned char *) G_calloc (FCB.cellhd.cols, MAP_NBYTES);
+    fcb->data = (unsigned char *) G_calloc (fcb->cellhd.cols, MAP_NBYTES);
     
     G__reallocate_work_buf(INTERN_SIZE);
     G__reallocate_mask_buf();
@@ -395,24 +413,24 @@ int G__open_cell_old (
     allocate_compress_buf (fd);
 
 /* initialize/read in quant rules for float point maps */
-    if(FCB.map_type != CELL_TYPE)
+    if(fcb->map_type != CELL_TYPE)
     {
-     if (FCB.reclass_flag)
-       G_read_quant (FCB.reclass.name, FCB.reclass.mapset, &(FCB.quant));
+     if (fcb->reclass_flag)
+       G_read_quant (fcb->reclass.name, fcb->reclass.mapset, &(fcb->quant));
      else
-       G_read_quant (FCB.name, FCB.mapset, &(FCB.quant));
+       G_read_quant (fcb->name, fcb->mapset, &(fcb->quant));
     }
 
 /* now mark open for read: this must follow create_window_mapping() */
-    FCB.open_mode = OPEN_OLD;
-    FCB.io_error = 0;
-    FCB.map_type = MAP_TYPE;
-    FCB.nbytes = MAP_NBYTES;
-    FCB.null_file_exists = -1;
+    fcb->open_mode = OPEN_OLD;
+    fcb->io_error = 0;
+    fcb->map_type = MAP_TYPE;
+    fcb->nbytes = MAP_NBYTES;
+    fcb->null_file_exists = -1;
 
-    if(FCB.map_type != CELL_TYPE)
-        	xdrmem_create (&FCB.xdrstream, (caddr_t) FCB.data, 
-            (u_int) (FCB.nbytes * FCB.cellhd.cols), XDR_DECODE);
+    if(fcb->map_type != CELL_TYPE)
+        	xdrmem_create (&fcb->xdrstream, (caddr_t) fcb->data, 
+            (u_int) (fcb->nbytes * fcb->cellhd.cols), XDR_DECODE);
 
     return fd;
 }
@@ -588,6 +606,7 @@ clean_check_raster_name (char *inmap, char **outmap, char **outmapset)
 /* opens a f-cell or cell file depending on WRITE_MAP_TYPE */
 static int G__open_raster_new (char *name, int open_mode)
 {
+    struct fileinfo *fcb;
     int i, null_fd, fd;
     char *tempname;
     char *map;
@@ -621,16 +640,7 @@ static int G__open_raster_new (char *name, int open_mode)
         return -1;
     }
 
-    if (fd >= MAXFILES)
-    {
-        G_free (tempname);
-	G_free (map);
-	G_free (mapset);
-        close (fd);
-        G_warning("G__open_raster_new: too many open files");
-        return -1;
-    }
-
+    fcb = new_fileinfo(fd);
 /*
  * since we are bypassing the normal open logic
  * must create the cell element 
@@ -638,14 +648,14 @@ static int G__open_raster_new (char *name, int open_mode)
     G__make_mapset_element (cell_dir);
 
 /* mark closed */
-    FCB.map_type = WRITE_MAP_TYPE;
-    FCB.open_mode = -1;
+    fcb->map_type = WRITE_MAP_TYPE;
+    fcb->open_mode = -1;
 
-    /* for writing FCB.data is allocated to be WINDOW.cols * 
-       sizeof(CELL or DCELL or FCELL) and G__.work_buf to be WINDOW.cols *
-       FCB.nbytes (= XDR_FLOAT/DOUBLE_NBYTES) */
-    FCB.data = (unsigned char *) G_calloc (WINDOW.cols, 
-		  G_raster_size(FCB.map_type));
+    /* for writing fcb->data is allocated to be G__.window.cols * 
+       sizeof(CELL or DCELL or FCELL) and G__.work_buf to be G__.window.cols *
+       fcb->nbytes (= XDR_FLOAT/DOUBLE_NBYTES) */
+    fcb->data = (unsigned char *) G_calloc (G__.window.cols, 
+		  G_raster_size(fcb->map_type));
 
     G__reallocate_null_buf();
     /* we need null buffer to automatically write embeded nulls in put_row */
@@ -660,66 +670,67 @@ static int G__open_raster_new (char *name, int open_mode)
  *   allocate space to hold the row address array
  *   allocate/enlarge both the compress_buf and the work_buf
  */
-    G_copy ((char *) &FCB.cellhd, (char *) &WINDOW, sizeof (FCB.cellhd));
-    if (open_mode == OPEN_NEW_COMPRESSED && FCB.map_type == CELL_TYPE)
+    G_copy ((char *) &fcb->cellhd, (char *) &G__.window, sizeof (fcb->cellhd));
+
+    if (open_mode == OPEN_NEW_COMPRESSED && fcb->map_type == CELL_TYPE)
     {
-	FCB.row_ptr = G_calloc(DATA_NROWS + 1, sizeof(off_t)) ;
-	G_zero(FCB.row_ptr,(DATA_NROWS + 1) * sizeof(off_t)) ;
+	fcb->row_ptr = G_calloc(fcb->cellhd.rows + 1, sizeof(off_t)) ;
+	G_zero(fcb->row_ptr,(fcb->cellhd.rows + 1) * sizeof(off_t)) ;
 	G__write_row_ptrs (fd);
-	FCB.cellhd.compressed = COMPRESSION_TYPE;
+	fcb->cellhd.compressed = COMPRESSION_TYPE;
 
 	allocate_compress_buf(fd);
-	FCB.nbytes = 1;		/* to the minimum */
+	fcb->nbytes = 1;		/* to the minimum */
         G__reallocate_work_buf(sizeof(CELL));
         G__reallocate_mask_buf();
         G__reallocate_temp_buf();
     }
     else
     {
-        FCB.nbytes = WRITE_NBYTES ;
+        fcb->nbytes = WRITE_NBYTES ;
         if(open_mode == OPEN_NEW_COMPRESSED)
         {
-	      FCB.row_ptr = G_calloc(DATA_NROWS + 1, sizeof(off_t)) ;
-      	      G_zero(FCB.row_ptr,(DATA_NROWS + 1) * sizeof(off_t)) ;
+	      fcb->row_ptr = G_calloc(fcb->cellhd.rows + 1, sizeof(off_t)) ;
+      	      G_zero(fcb->row_ptr,(fcb->cellhd.rows + 1) * sizeof(off_t)) ;
 	      G__write_row_ptrs (fd);
-	      FCB.cellhd.compressed = COMPRESSION_TYPE;
+	      fcb->cellhd.compressed = COMPRESSION_TYPE;
         }
         else
-	      FCB.cellhd.compressed = 0;
-        G__reallocate_work_buf(FCB.nbytes);
+	      fcb->cellhd.compressed = 0;
+        G__reallocate_work_buf(fcb->nbytes);
         G__reallocate_mask_buf();
         G__reallocate_temp_buf();
 
-        if(FCB.map_type != CELL_TYPE)
+        if(fcb->map_type != CELL_TYPE)
         {
-             G_quant_init (&(FCB.quant));
+             G_quant_init (&(fcb->quant));
         }
 
 	if (open_mode == OPEN_NEW_RANDOM)
         {
             G_warning(_("Can't write embedded null values for map open for random access"));
-            if(FCB.map_type == CELL_TYPE)
-                    G_write_zeros (fd, (long) WRITE_NBYTES * DATA_NCOLS * DATA_NROWS);
-            else if(FCB.map_type == FCELL_TYPE)
+            if(fcb->map_type == CELL_TYPE)
+                    G_write_zeros (fd, (long) WRITE_NBYTES * fcb->cellhd.cols * fcb->cellhd.rows);
+            else if(fcb->map_type == FCELL_TYPE)
             {
-                    if (G__random_f_initialize_0 (fd, DATA_NROWS, DATA_NCOLS)<0)
+                    if (G__random_f_initialize_0 (fd, fcb->cellhd.rows, fcb->cellhd.cols)<0)
                           return -1;
             }
             else
             {
-                    if (G__random_d_initialize_0 (fd, DATA_NROWS, DATA_NCOLS)<0)
+                    if (G__random_d_initialize_0 (fd, fcb->cellhd.rows, fcb->cellhd.cols)<0)
                           return -1;
             }
         }
     }
 
 /* save name and mapset, and tempfile name */
-    FCB.name      = map;
-    FCB.mapset    = mapset;
-    FCB.temp_name = tempname;
+    fcb->name      = map;
+    fcb->mapset    = mapset;
+    fcb->temp_name = tempname;
 
 /* next row to be written (in order) is zero */
-    FCB.cur_row = 0;
+    fcb->cur_row = 0;
 
 /* open a null tempfile name */
     tempname = G_tempfile ();
@@ -728,52 +739,40 @@ static int G__open_raster_new (char *name, int open_mode)
     {   
         G_warning ("opencell opening temp null file: no temp files available");
         G_free (tempname);
-	G_free (FCB.name);
-	G_free (FCB.mapset);
-	G_free (FCB.temp_name);
+	G_free (fcb->name);
+	G_free (fcb->mapset);
+	G_free (fcb->temp_name);
 	close (fd);
         return -1;
     }
 
-    if (null_fd >= MAXFILES)
-    {
-        G_free (tempname);
-        close (null_fd);
-	G_free (FCB.name);
-	G_free (FCB.mapset);
-	G_free (FCB.temp_name);
-	close (fd);
-        G_warning("opencell: too many open files");
-        return -1;
-    }
-
-    FCB.null_temp_name = tempname;
+    fcb->null_temp_name = tempname;
     close(null_fd);
 
 /* next row to be written (in order) is zero */
-    FCB.null_cur_row = 0;
+    fcb->null_cur_row = 0;
 
     /* allocate null bitstream buffers for writing */
     for (i=0;i< NULL_ROWS_INMEM; i++)
-       FCB.NULL_ROWS[i] = G__allocate_null_bits(FCB.cellhd.cols);
-    FCB.min_null_row = (-1) * NULL_ROWS_INMEM;
-    FCB.null_work_buf = G__allocate_null_bits(FCB.cellhd.cols);
+       fcb->NULL_ROWS[i] = G__allocate_null_bits(fcb->cellhd.cols);
+    fcb->min_null_row = (-1) * NULL_ROWS_INMEM;
+    fcb->null_work_buf = G__allocate_null_bits(fcb->cellhd.cols);
 
 /* init cell stats */
 /* now works only for int maps */
-if(FCB.map_type == CELL_TYPE)
-    if ((FCB.want_histogram = G__.want_histogram))
-	G_init_cell_stats (&FCB.statf);
+if(fcb->map_type == CELL_TYPE)
+    if ((fcb->want_histogram = G__.want_histogram))
+	G_init_cell_stats (&fcb->statf);
 
 /* init range and if map is double/float init d/f_range */
-    G_init_range (&FCB.range);
+    G_init_range (&fcb->range);
 
-    if(FCB.map_type != CELL_TYPE)
-        G_init_fp_range (&FCB.fp_range);
+    if(fcb->map_type != CELL_TYPE)
+        G_init_fp_range (&fcb->fp_range);
   
 /* mark file as open for write */
-    FCB.open_mode = open_mode;
-    FCB.io_error = 0;
+    fcb->open_mode = open_mode;
+    fcb->io_error = 0;
 
     return fd;
 }
@@ -786,9 +785,10 @@ if(FCB.map_type == CELL_TYPE)
  */
 static int allocate_compress_buf(int fd)
 {
+    struct fileinfo *fcb = &G__.fileinfo[fd];
     int n;
-    n = FCB.cellhd.cols * (sizeof(CELL) + 1) + 1;
-    if (FCB.cellhd.compressed && FCB.map_type == CELL_TYPE && (n > G__.compressed_buf_size))
+    n = fcb->cellhd.cols * (sizeof(CELL) + 1) + 1;
+    if (fcb->cellhd.compressed && fcb->map_type == CELL_TYPE && (n > G__.compressed_buf_size))
     {
         if (G__.compressed_buf_size <= 0)
             G__.compressed_buf = (unsigned char *) G_malloc (n);
@@ -805,7 +805,7 @@ static int allocate_compress_buf(int fd)
 int G__reallocate_work_buf (int bytes_per_cell)
 {
     int n;
-    n = WINDOW.cols * (bytes_per_cell + 1) + 1;
+    n = G__.window.cols * (bytes_per_cell + 1) + 1;
     if (n > G__.work_buf_size)
     {
         if (G__.work_buf_size <= 0)
@@ -825,7 +825,7 @@ int G__reallocate_work_buf (int bytes_per_cell)
 int G__reallocate_null_buf (void)
 {
     int n;
-    n = (WINDOW.cols + 1) * sizeof(char);
+    n = (G__.window.cols + 1) * sizeof(char);
     if (n > G__.null_buf_size)
     {
         if (G__.null_buf_size <= 0)
@@ -844,7 +844,7 @@ int G__reallocate_null_buf (void)
 int G__reallocate_mask_buf (void)
 {
     int n;
-    n = (WINDOW.cols + 1) * sizeof(CELL);
+    n = (G__.window.cols + 1) * sizeof(CELL);
     if (n > G__.mask_buf_size)
     {
         if (G__.mask_buf_size <= 0)
@@ -863,7 +863,7 @@ int G__reallocate_mask_buf (void)
 int G__reallocate_temp_buf (void)
 {
     int n;
-    n = (WINDOW.cols + 1) * sizeof(CELL);
+    n = (G__.window.cols + 1) * sizeof(CELL);
     if (n > G__.temp_buf_size)
     {
         if (G__.temp_buf_size <= 0)
@@ -1069,28 +1069,29 @@ int G_open_raster_new_uncompressed (char *name, RASTER_MAP_TYPE wr_type)
 
  int G_set_quant_rules (int fd, struct Quant *q)
 {
+   struct fileinfo *fcb = &G__.fileinfo[fd];
    CELL cell;
    DCELL dcell;
    struct Quant_table *p;
 
-   if(FCB.open_mode!=OPEN_OLD)
+   if(fcb->open_mode!=OPEN_OLD)
    {
       G_warning("G_set_quant_rules can be called only for raster maps opened for reading");
       return -1;
    }
-   /* copy all info from q to FCB.quant) */
-   G_quant_init(&FCB.quant);
+   /* copy all info from q to fcb->quant) */
+   G_quant_init(&fcb->quant);
    if(q->truncate_only) 
    {
-      G_quant_truncate (&FCB.quant);
+      G_quant_truncate (&fcb->quant);
       return 0;
    }
    for (p = &(q->table[q->nofRules - 1]); p >= q->table; p--)
-      G_quant_add_rule(&FCB.quant, p->dLow, p->dHigh, p->cLow, p->cHigh);
+      G_quant_add_rule(&fcb->quant, p->dLow, p->dHigh, p->cLow, p->cHigh);
    if(G_quant_get_neg_infinite_rule (q, &dcell, &cell)>0)
-      G_quant_set_neg_infinite_rule (&FCB.quant, dcell, cell);
+      G_quant_set_neg_infinite_rule (&fcb->quant, dcell, cell);
    if(G_quant_get_pos_infinite_rule (q, &dcell, &cell)>0)
-      G_quant_set_pos_infinite_rule (&FCB.quant, dcell, cell);
+      G_quant_set_pos_infinite_rule (&fcb->quant, dcell, cell);
 
    return 0;
 }

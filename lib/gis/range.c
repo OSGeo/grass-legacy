@@ -176,13 +176,6 @@ int G_read_fp_range (
 	if (fd< 0 )
 	    goto error;
 
-        if (fd >= MAXFILES)
-        {
-           close (fd);
-           G_warning(_("Too many open files"));
-           return -1;
-        }
-
         if(read(fd, xdr_buf, 2 * XDR_DOUBLE_NBYTES) != 2 * XDR_DOUBLE_NBYTES )
 	   return 2;
 

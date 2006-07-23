@@ -888,13 +888,6 @@ static int open_null_read(int fd)
     if (null_fd < 0)
 	return -1;
 
-    if (null_fd >= MAXFILES)
-    {
-	close(null_fd);
-	G_warning(_("Too many open raster files"));
-	return -1;
-    }
-
     fcb->null_file_exists = 1;
 
     return null_fd;
