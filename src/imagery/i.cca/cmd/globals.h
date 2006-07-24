@@ -9,6 +9,6 @@ char groupname[50], subgroup[50], signame[50];
 #else
 extern char outputfile[50];
 extern char groupname[50], subgroup[50], signame[50];
-extern struct Command_keys Command_keys[];
+extern struct Command_keys *Command_keys;
 #endif
 

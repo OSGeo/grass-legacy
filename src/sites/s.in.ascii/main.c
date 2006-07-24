@@ -181,9 +181,7 @@ G_site_put_new (FILE *fptr, Site *s, int has_cat)
 {
   char ebuf[MAX_SITE_STRING], nbuf[MAX_SITE_STRING];
   char xbuf[MAX_SITE_STRING], buf[MAX_SITE_LEN];
-  static int format_double ();
   int fmt, i, j, k;
-  int G_format_northing(), G_format_easting(), G_projection();
 
   fmt = G_projection ();
 

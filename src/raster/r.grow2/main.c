@@ -9,11 +9,6 @@ static int size;
 static int count;
 static int (*neighbors)[2];
 
-static int abs(int x)
-{
-	return (x < 0) ? -x : x;
-}
-
 static int max(int a, int b)
 {
 	return (a > b) ? a : b;
