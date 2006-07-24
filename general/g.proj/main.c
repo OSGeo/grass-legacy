@@ -251,7 +251,6 @@ int main(int argc, char *argv[])
 		GPJ_osr_to_grass(&cellhd, &projinfo, &projunits, ogr_srs, 1);
 
 		OGR_DS_Destroy(ogr_ds);
-		OSRDestroySpatialReference(ogr_srs);
 	    }
 	    else
 		G_fatal_error(_("Could not read georeferenced file %s using "
