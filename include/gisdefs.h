@@ -751,6 +751,7 @@ char *G__machine_name(void);
 int G_make_colors(char *, char *, struct Colors *);
 
 /* make_loc.c */
+int G__make_location(char *, struct Cell_head *, struct Key_Value *, struct Key_Value *, FILE *);
 int G_make_location(char *, struct Cell_head *, struct Key_Value *, struct Key_Value *, FILE *);
 int G_compare_projections( struct Key_Value *, struct Key_Value *, struct Key_Value *, struct Key_Value *);
 

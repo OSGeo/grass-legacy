@@ -164,7 +164,6 @@ int main(int argc, char *argv[])
     else if (inwkt->answer) {
 	FILE *infd;
 	char buff[8192];
-	char *wktstring;
 	int interactive = 1;
 
 	if (strcmp(inwkt->answer, "-") == 0) {
@@ -175,16 +174,19 @@ int main(int argc, char *argv[])
 	    infd = fopen(inwkt->answer, "r");
 
 	if (infd) {
-	    fgets(buff, 8192, infd);
-	    fclose(infd);
-	    G_asprintf(&wktstring, buff);
+	    fread(buff, sizeof(buff), 1, infd);
+	    if (ferror(infd))
+	        G_fatal_error(_("Error reading WKT projection description"));
+	    else
+	        fclose(infd);
+	    /* Get rid of newlines */
+	    G_squeeze(buff);
 	}
 	else
 	    G_fatal_error(_("Unable to open file [%s] for reading"), inwkt->answer);
 
-	GPJ_wkt_to_grass(&cellhd, &projinfo, &projunits, wktstring,
+	GPJ_wkt_to_grass(&cellhd, &projinfo, &projunits, buff,
 			 interactive);
-	G_free(wktstring);
     }
     else if (inproj4->answer) {
 	FILE *infd;
@@ -387,11 +389,18 @@ int main(int argc, char *argv[])
 #endif
        
         if (create->answer) {
-	    
+	    int retval;
 	    if(location->answer) {
-	        if( G_make_location( location->answer, &cellhd, 
-                                     projinfo, projunits, NULL ) == 0)
+	        retval = G__make_location( location->answer, &cellhd, projinfo, projunits, NULL );
+	        if( retval == 0)
 		    G_message(_("Location %s created!"), location->answer);
+	        else if( retval == -1)
+		    G_fatal_error(_("Cannot create location: %s"), strerror(errno));
+	        else if( retval == -2)
+		    G_fatal_error(_("Cannot create projection files: %s"), strerror(errno));
+	        else
+		    /* Shouldn't happen */
+		    G_fatal_error("Unspecified error while creating new location");
 	    }
 	    else {
 	        /* Create flag given but no location specified; overwrite
