@@ -26,11 +26,11 @@ extern int xr21[];
 extern int xr22[];
 extern int xr23[];
 
-extern struct SDTS_module *Mod;
-extern struct SDTS_ddr_elems *Ddr_elem;
-extern struct dddf *Dddf;
-extern struct ddom *Ddom;
-extern struct ddsh *Ddsh;
+extern struct SDTS_module Mod[];
+extern struct SDTS_ddr_elems Ddr_elem[];
+extern struct dddf Dddf[];
+extern struct ddom Ddom[];
+extern struct ddsh Ddsh[];
 
 
 struct SDTS_module {
