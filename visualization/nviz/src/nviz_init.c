@@ -288,6 +288,18 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
     }
 
     if (vct->answers) {
+	if (!elev->answers && GS_num_surfs() == 0)
+	{
+		char tmp[30];
+		int i;
+		int *surf_list;
+
+            	arglist[1] = "surf";
+            	Nnew_map_obj_cmd(data, interp, 2, arglist);
+
+    		surf_list = GS_get_surf_list(&i);
+		GS_set_att_const(surf_list[0], ATT_TRANSP, 255);
+	}
 	for (i = 0; vct->answers[i]; i++) {
 	    arglist[1] = "vect";
 	    arglist[2] = vct->answers[i];
@@ -296,6 +308,18 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
     }
 
     if (pnt->answers) {
+	    if (!elev->answers && GS_num_surfs() == 0)
+            {
+                char tmp[30];
+                int i;
+                int *surf_list;
+
+                arglist[1] = "surf";
+                Nnew_map_obj_cmd(data, interp, 2, arglist);
+
+                surf_list = GS_get_surf_list(&i);
+                GS_set_att_const(surf_list[0], ATT_TRANSP, 255);
+            }
 	    for (i = 0; pnt->answers[i]; i++) {
 		    arglist[1] = "site";
 		    arglist[2] = pnt->answers[i];
