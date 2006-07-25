@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-29 19:54+0200\n"
+"POT-Creation-Date: 2006-07-12 16:55+0200\n"
 "PO-Revision-Date: 2006-06-29 20:19+0200\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
@@ -67,7 +67,8 @@ msgstr ""
 #: ../lib/db/dbmi_base/legal_dbname.c:30
 #, c-format
 msgid "Illegal table map name <%s>. Must start with a letter.\n"
-msgstr "Unbekannter Tabellenname <%s>. Der Name muss mit einem Buchstaben beginnen.\n"
+msgstr ""
+"Unbekannter Tabellenname <%s>. Der Name muss mit einem Buchstaben beginnen.\n"
 
 #: ../lib/db/dbmi_base/legal_dbname.c:36
 #, c-format
@@ -150,7 +151,8 @@ msgstr "G3d_openCellNew: Fehler in G3d_fillHeader"
 #: ../lib/g3d/g3dhistory.c:46 ../lib/gis/history.c:134
 #, c-format
 msgid "can't get history information for [%s] in mapset [%s]"
-msgstr "Kann die History-Informationen der Karte [%s] in Mapset [%s] nicht finden."
+msgstr ""
+"Kann die History-Informationen der Karte [%s] in Mapset [%s] nicht finden."
 
 #: ../lib/gis/adj_cellhd.c:69 ../lib/gis/adj_cellhd.c:208
 msgid "Illegal n-s resolution value"
@@ -171,7 +173,8 @@ msgstr "Ungültiger Spaltenwert"
 #: ../lib/gis/adj_cellhd.c:103 ../lib/gis/adj_cellhd.c:260
 #, c-format
 msgid "Fixing subtle input data rounding error of north boundary (%g>%g)"
-msgstr "Repariere ungenauen Rundungsfehler des Nordrandes der Eingabe-Daten (%g>%g)."
+msgstr ""
+"Repariere ungenauen Rundungsfehler des Nordrandes der Eingabe-Daten (%g>%g)."
 
 #: ../lib/gis/adj_cellhd.c:106 ../lib/gis/adj_cellhd.c:263
 msgid "Illegal latitude for North"
@@ -180,7 +183,8 @@ msgstr "Ungültige geographische Länge für Norden"
 #: ../lib/gis/adj_cellhd.c:111 ../lib/gis/adj_cellhd.c:268
 #, c-format
 msgid "Fixing subtle input data rounding error of south boundary (%g>%g)"
-msgstr "Repariere ungenauen Rundungsfehler des Südrandes der Eingabe-Daten (%g>%g)."
+msgstr ""
+"Repariere ungenauen Rundungsfehler des Südrandes der Eingabe-Daten (%g>%g)."
 
 #: ../lib/gis/adj_cellhd.c:114 ../lib/gis/adj_cellhd.c:271
 msgid "Illegal latitude for South"
@@ -334,16 +338,6 @@ msgstr "(kein Titel)"
 msgid "Unable to open automatic MASK file"
 msgstr "Kann automatische MASK-Datei nicht öffnen."
 
-#: ../lib/gis/cats.c:384
-#, c-format
-msgid "category support for [%s] in mapset [%s] %s"
-msgstr "Kategorie Unterstützung für [%s] im Mapset [%s] %s"
-
-#: ../lib/gis/cats.c:423
-#, c-format
-msgid "category support for vector file [%s] in mapset [%s] %s"
-msgstr "Kategorie Unterstützung für die Vektordatei [%s] in Mapset [%s] %s"
-
 #: ../lib/gis/sample.c:74
 msgid "unknown interpolation type"
 msgstr "Unbekannte Interpolationsmethode."
@@ -355,6 +349,16 @@ msgstr "\"NO DATA\"-Label gefunden; setzte es auf NULL"
 #: ../lib/gis/sample.c:487
 msgid "problem reading raster cell file"
 msgstr "Problem beim Lesen der Raster-Cell-Datei."
+
+#: ../lib/gis/cats.c:384
+#, c-format
+msgid "category support for [%s] in mapset [%s] %s"
+msgstr "Kategorie Unterstützung für [%s] im Mapset [%s] %s"
+
+#: ../lib/gis/cats.c:423
+#, c-format
+msgid "category support for vector file [%s] in mapset [%s] %s"
+msgstr "Kategorie Unterstützung für die Vektordatei [%s] in Mapset [%s] %s"
 
 #: ../lib/gis/closecell.c:224
 #, c-format
@@ -635,9 +639,9 @@ msgstr "Quant ptr = %p"
 msgid "G_dump: end"
 msgstr "G_dump: Ende"
 
-#: ../lib/gis/done_msg.c:29
-#, c-format
-msgid "%s complete. %s\n"
+#: ../lib/gis/done_msg.c:6
+#, fuzzy, c-format
+msgid "%s complete. %s"
 msgstr "%s komplett. %s\n"
 
 #: ../lib/gis/env.c:268
@@ -859,7 +863,8 @@ msgstr "cell_values_double: xdr_double ist fehlerhaft für Index %d."
 #: ../lib/gis/get_row.c:564
 #, c-format
 msgid "error reading compressed map [%s] in mapset [%s], row %d"
-msgstr "Fehler beim Lesen der komprimierten Karte [%s] im Mapset [%s], Zeile %d."
+msgstr ""
+"Fehler beim Lesen der komprimierten Karte [%s] im Mapset [%s], Zeile %d."
 
 #: ../lib/gis/get_row.c:568
 #, c-format
@@ -960,7 +965,8 @@ msgstr "Kann die History-Informationen der Karte [%s] nicht schreiben."
 
 #: ../lib/gis/history.c:269
 msgid "Not enough room in history file to record command line."
-msgstr "Nicht genügend Platz in der History-Datei um die Kommandozeile zu speichern."
+msgstr ""
+"Nicht genügend Platz in der History-Datei um die Kommandozeile zu speichern."
 
 #: ../lib/gis/history.c:291
 msgid "Not enough room in history file for command line (truncated)."
@@ -1197,7 +1203,8 @@ msgstr "opencell: %s - ungültiger Dateiname"
 
 #: ../lib/gis/opencell.c:700
 msgid "Can't write embedded null values for map open for random access"
-msgstr "Kann keine embedded NULL Werte für Karte mit random access Zugriff schreiben"
+msgstr ""
+"Kann keine embedded NULL Werte für Karte mit random access Zugriff schreiben"
 
 #: ../lib/gis/opencell.c:931 ../lib/gis/opencell.c:952
 #, c-format
@@ -1316,7 +1323,7 @@ msgstr ""
 
 #: ../lib/gis/parser.c:883
 msgid "Force overwrite of output files"
-msgstr "Überschreibe die Ausgabedateo"
+msgstr "Überschreibe die Ausgabedatei"
 
 #: ../lib/gis/parser.c:890
 #, c-format
@@ -1520,22 +1527,29 @@ msgstr "Kann Header-Datei für [%s] nicht erstellen."
 #: ../lib/gis/put_row.c:212
 #, c-format
 msgid "G_put_map_row: %s is not integer! Use G_put_[f/d]_raster_row()!"
-msgstr "G_put_map_row: %s ist keine Interger-Karte! Benutzen Sie G_put_[f/d]_raster_row()!"
+msgstr ""
+"G_put_map_row: %s ist keine Interger-Karte! Benutzen Sie G_put_[f/d]"
+"_raster_row()!"
 
 #: ../lib/gis/put_row.c:249
 #, c-format
 msgid "%s: map [%s] not open for write - request ignored"
-msgstr "%s: Karte [%s] ist nicht zum Schreiben geöffnet - Anfrage wird ignoriert."
+msgstr ""
+"%s: Karte [%s] ist nicht zum Schreiben geöffnet - Anfrage wird ignoriert."
 
 #: ../lib/gis/put_row.c:256
 #, c-format
 msgid "%s: map [%s] not open for random write - request ignored"
-msgstr "%s Karte [%s] ist nicht zum zufälligen Schreiben geöffnet - Anfrage wird ignoriert."
+msgstr ""
+"%s Karte [%s] ist nicht zum zufälligen Schreiben geöffnet - Anfrage wird "
+"ignoriert."
 
 #: ../lib/gis/put_row.c:263
 #, c-format
 msgid "%s: map [%s] not open for sequential write - request ignored"
-msgstr "%s: Karte [%s] ist nicht für sequentielles Schreiben geöffnet - Anfrage wird ignoriert."
+msgstr ""
+"%s: Karte [%s] ist nicht für sequentielles Schreiben geöffnet - Anfrage wird "
+"ignoriert."
 
 #: ../lib/gis/put_row.c:267
 #, c-format
@@ -1907,7 +1921,8 @@ msgstr ""
 
 #: ../lib/gis/view.c:548
 #, c-format
-msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgid ""
+" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr ""
 " Nur %d%% des in \"%s\" abgespeicherten Fensters überlappt mit dem "
 "derzeitigen GRASS-Fenster."
@@ -1920,6 +1935,36 @@ msgstr "ungültiger Ellipsoid %s in Datei."
 #: ../lib/proj/ellipse.c:128
 msgid "No ellipsoid info given in file"
 msgstr "Keine Ellipsoid-Informationen in Datei."
+
+#: ../lib/raster/io.c:42
+#, c-format
+msgid "ERROR %s from graphics driver.\n"
+msgstr "Graphik-Treiber liefert FEHLER %s.\n"
+
+#: ../lib/raster/io.c:171
+#, c-format
+msgid "Unable to allocate memory\n"
+msgstr "Kann keinen Speicher belegen.\n"
+
+#: ../lib/raster/io.c:218
+#, c-format
+msgid "ERROR - eof from graphics monitor.\n"
+msgstr "FEHLER - Unerwartetes Dateiende vom Monitor übermittelt.\n"
+
+#: ../lib/raster/io.c:235
+#, c-format
+msgid "Warning - no response from graphics monitor <%s>.\n"
+msgstr "Warnung - keine Antwort vom Graphikmonitor <%s>.\n"
+
+#: ../lib/raster/io.c:237
+#, c-format
+msgid "Check to see if the mouse is still active.\n"
+msgstr "Kontrollieren Sie bitte, ob die Maus noch aktiv ist.\n"
+
+#: ../lib/raster/io.c:240
+#, c-format
+msgid "ERROR - no response from graphics monitor <%s>.\n"
+msgstr "Fehler - keine Antwort vom Graphikmonitor <%s>.\n"
 
 #: ../lib/raster/io_fifo.c:341 ../lib/raster/io_sock.c:65
 #, c-format
@@ -2021,47 +2066,13 @@ msgstr "Nicht verbunden...\n"
 #: ../lib/raster/io_sock.c:142
 #, c-format
 msgid "Couldn't connect to monitor. Will try once more.\n"
-msgstr "Kann nicht mit einem Monitor verbinden. Versuche es noch ein weiteres Mal.\n"
+msgstr ""
+"Kann nicht mit einem Monitor verbinden. Versuche es noch ein weiteres Mal.\n"
 
 #: ../lib/raster/io_sock.c:148
 #, c-format
 msgid "Connection failed.\n"
 msgstr "Verbindung fehlgeschlagen.\n"
-
-#: ../lib/raster/io.c:42
-#, c-format
-msgid "ERROR %s from graphics driver.\n"
-msgstr "Graphik-Treiber liefert FEHLER %s.\n"
-
-#: ../lib/raster/io.c:171
-#, c-format
-msgid "Unable to allocate memory\n"
-msgstr "Kann keinen Speicher belegen.\n"
-
-#: ../lib/raster/io.c:218
-#, c-format
-msgid "ERROR - eof from graphics monitor.\n"
-msgstr "FEHLER - Unerwartetes Dateiende vom Monitor übermittelt.\n"
-
-#: ../lib/raster/io.c:235
-#, c-format
-msgid "Warning - no response from graphics monitor <%s>.\n"
-msgstr "Warnung - keine Antwort vom Graphikmonitor <%s>.\n"
-
-#: ../lib/raster/io.c:237
-#, c-format
-msgid "Check to see if the mouse is still active.\n"
-msgstr "Kontrollieren Sie bitte, ob die Maus noch aktiv ist.\n"
-
-#: ../lib/raster/io.c:240
-#, c-format
-msgid "ERROR - no response from graphics monitor <%s>.\n"
-msgstr "Fehler - keine Antwort vom Graphikmonitor <%s>.\n"
-
-#: ../lib/raster/parse_mon.c:30
-#, c-format
-msgid "ERROR: GISBASE not set\n"
-msgstr "FEHLER: Variable GISBASE ist nicht gesetzt\n"
 
 #: ../lib/rst/interp_float/segmen2d.c:123
 msgid ""
@@ -2164,8 +2175,10 @@ msgstr "Kann die Symbol-Linien-Koordinaten %s nicht lesen."
 
 #: ../lib/symbol/read.c:252
 #, c-format
-msgid "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
-msgstr "Falscher Symbolname: '%s' (sollte sein: Gruppe/Name oder Gruppe/Name@Mapset)."
+msgid ""
+"Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
+msgstr ""
+"Falscher Symbolname: '%s' (sollte sein: Gruppe/Name oder Gruppe/Name@Mapset)."
 
 #: ../lib/symbol/read.c:274
 #, c-format
@@ -2423,7 +2436,8 @@ msgstr ""
 #: ../lib/vector/Vlib/legal_vname.c:34
 #, c-format
 msgid "Illegal vector map name <%s>. Character <%c> not allowed.\n"
-msgstr "Ungültiger Name der Vektorkarte <%s>. Zeichenfolge <%c> ist nicht erlaubt.\n"
+msgstr ""
+"Ungültiger Name der Vektorkarte <%s>. Zeichenfolge <%c> ist nicht erlaubt.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:59 ../lib/vector/Vlib/legal_vname.c:61
 #, c-format
@@ -2505,7 +2519,8 @@ msgstr "Kann Datei '%s' nicht anfordern."
 
 #: ../lib/vector/Vlib/open.c:667
 msgid "Size of 'coor' file differs from value saved in topo file."
-msgstr "Größe der 'coor' Datei unterscheidet sich vom Werte in der 'topo' Datei."
+msgstr ""
+"Größe der 'coor' Datei unterscheidet sich vom Werte in der 'topo' Datei."
 
 #: ../lib/vector/Vlib/open.c:678
 #, c-format
@@ -2543,7 +2558,8 @@ msgstr "Kann die Linie nicht nochmal schreiben."
 #: ../lib/vector/Vlib/write.c:197
 #, c-format
 msgid "Cannot delete the line, map '%s' is not opened on level 2"
-msgstr "Kann die Linie nicht löschen; die Karte '%s' ist nicht auf Level 2 geöffnet."
+msgstr ""
+"Kann die Linie nicht löschen; die Karte '%s' ist nicht auf Level 2 geöffnet."
 
 #: ../lib/vector/Vlib/write.c:201
 #, c-format
@@ -2575,3 +2591,5 @@ msgstr "Monitor: get_command: Vorzeitiges EOF\n"
 msgid "Monitor: _send: write returned short count: %d of %d\n"
 msgstr ""
 
+#~ msgid "ERROR: GISBASE not set\n"
+#~ msgstr "FEHLER: Variable GISBASE ist nicht gesetzt\n"
