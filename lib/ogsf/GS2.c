@@ -1975,6 +1975,12 @@ int GS_get_exag_guess(int id, float *exag)
     gs = gs_get_surf(id);
     guess = 1.0;
 
+    /* if gs is type const return guess = 1.0 */
+    if (CONST_ATT == gs_get_att_src(gs, ATT_TOPO))
+    {
+	return(1);
+    }
+
     if (gs) {
 	if (gs->zrange_nz == 0.0) {
 	    *exag = 0.0;
