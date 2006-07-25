@@ -507,7 +507,7 @@ int Nnew_map_obj_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
     }
 
     /* Initialize display parameters */
-    GP_set_sitemode(new_id, ST_ATT_NONE, 0xFFFFFF, 2, 100, ST_X);
+    GP_set_sitemode(new_id, ST_ATT_NONE, 0xFF0000, 2, 100, ST_X);
     surf_list = GS_get_surf_list(&num_surfs);
     if (num_surfs) {
         for (i = 0; i < num_surfs; i++) {
@@ -541,7 +541,7 @@ int Nnew_map_obj_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
 
     /* Initialize display parameters */
     /* automatically select all surfaces to draw vector */
-    GV_set_vectmode(new_id, 1, 0xFFFFFF, 2, 0);
+    GV_set_vectmode(new_id, 1, 0xFF0000, 2, 0);
     surf_list = GS_get_surf_list(&num_surfs);
     if (num_surfs) {
         for (i = 0; i < num_surfs; i++) {
