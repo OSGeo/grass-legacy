@@ -2,7 +2,7 @@
 #include <math.h>
 #include <grass/gis.h>
 
-int trans ( double *x, double *y, int n_points, double angle, double scale, 
+static int trans ( double *x, double *y, int n_points, double angle, double scale, 
                      double xc, double yc ) {
     int i;
     double r, a;
