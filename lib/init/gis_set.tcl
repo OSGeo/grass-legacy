@@ -707,7 +707,6 @@ proc gisSetWindow {} {
            set database [exec pwd]
         }
 	.frame0.frameBUTTONS.ok configure -state disabled
-	.frame0.frameNMS.right.button configure -state disabled
   }
 
   bind .frame0.frameLOC.listbox <Double-ButtonPress-1> {
