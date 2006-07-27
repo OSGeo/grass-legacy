@@ -1,3 +1,6 @@
+#include <grass/config.h>
+
+#ifdef HAVE_SOCKET
 
 #include <stdio.h>
 
@@ -930,4 +933,6 @@ int REM_raster_int(int num, int nrows, int withzero, const int *ras)
 
 	return 0;
 }
+
+#endif /* HAVE_SOCKET */
 

@@ -1,6 +1,6 @@
-#ifndef __MINGW32__
-
 #include <grass/config.h>
+
+#ifdef HAVE_SOCKET
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -333,7 +333,4 @@ int REM_release_driver(void)
     return 0;
 }
 
-#else /* __MINGW32__ */
-
-
-#endif /* __MINGW32__ */
+#endif /* HAVE_SOCKET */

@@ -86,6 +86,8 @@ struct transport loc_trans =
 	LOC_pad_set_item
 };
 
+#ifdef HAVE_SOCKET
+
 struct transport rem_trans =
 {
 	REM_open_driver,
@@ -156,6 +158,8 @@ struct transport rem_trans =
 	REM_pad_set_item
 };
 
+#endif
+
 const struct transport *trans;
 
 static void init_transport(void)
@@ -167,9 +171,13 @@ static void init_transport(void)
 
 	p = getenv("GRASS_RENDER_IMMEDIATE");
 
+#ifdef HAVE_SOCKET
 	trans = (p && strcmp(p, "TRUE") == 0)
 		? &loc_trans
 		: &rem_trans;
+#else
+	trans = &loc_trans;
+#endif
 }
 
 int R_open_driver(void)

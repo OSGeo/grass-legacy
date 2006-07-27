@@ -1,5 +1,8 @@
-#include <grass/gis.h>
+#include <grass/config.h>
 
+#ifdef HAVE_SOCKET
+
+#include <grass/gis.h>
 #include <grass/raster.h>
 #include <grass/graphics.h>
 
@@ -178,3 +181,6 @@ int REM_get_location_with_pointer_old(int *wx, int *wy, int *button)
 	_get_int(button) ;
 	return 0;
 }
+
+#endif /* HAVE_SOCKET */
+

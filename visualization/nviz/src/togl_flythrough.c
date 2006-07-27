@@ -133,6 +133,9 @@ WARNING: 	remember to add "togl_flythrough.o"
 #include "interface.h"
 
 #include <sys/time.h>
+#ifdef __MINGW32__
+#include <sys/timeb.h>
+#endif
 #include <math.h>
 #include <grass/gis.h>
 
@@ -387,10 +390,17 @@ void togl_flythrough_timer_cb(struct Togl *togl)
 
 double this_time(void)
 {
+#ifdef __MINGW32__
+	struct timeb tb;
+
+	ftime(&tb);
+	return( (float)tb.time + ((float)tb.millitm/1000.0) );
+#else
 	struct timeval tv;
 
 	gettimeofday(&tv, NULL);
 	return( (float)tv.tv_sec + ((float)tv.tv_usec/1000000.0) );
+#endif
 }
 
 void event_proc(ClientData clientData, XEvent *eventPtr)

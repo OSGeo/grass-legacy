@@ -783,8 +783,13 @@ int Nwrite_tif_cmd(Nv_data * data,	/* Local data */
 	return (TCL_ERROR);
     }
 
+#ifdef HAVE_TIFFIO_H
     /* Call the function */
     GS_write_tif(argv[1]);
+#else
+    interp->result = "Error: no TIFF support";
+    return (TCL_ERROR);
+#endif
 
     return (TCL_OK);
 
