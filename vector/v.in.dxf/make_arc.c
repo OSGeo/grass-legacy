@@ -12,7 +12,6 @@ int make_arc(int offset,	/* offset into array of points */
     float theta;		/* the angle used for calculating a given point */
     float alpha;		/* theta converted into radians for use in math */
     int arr_size;
-    int i;
 
     arr_size = offset;
     G_debug(3,
