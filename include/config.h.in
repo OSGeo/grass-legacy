@@ -140,6 +140,9 @@
 /* define if ODBC exists */
 #undef HAVE_SQL_H
 
+/* define if tiffio.h exists */
+#undef HAVE_TIFFIO_H
+
 /* define if png.h exists */
 #undef HAVE_PNG_H
 

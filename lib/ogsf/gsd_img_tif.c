@@ -6,6 +6,9 @@
  * Created new function GS_write_tif based
  * on RGB dump 
  */
+#include <grass/config.h>
+
+#ifdef HAVE_TIFFIO_H
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -87,3 +90,6 @@ int GS_write_tif(char *name)
 
     return (0);
 }
+
+#endif /* HAVE_TIFF */
+

@@ -1,3 +1,7 @@
+#include <grass/config.h>
+
+#ifdef HAVE_SOCKET
+
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -210,4 +214,6 @@ int REM_pad_set_item(const char *item, const char *value)
 
     return result;
 }
+
+#endif /* HAVE_SOCKET */
 
