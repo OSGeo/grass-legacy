@@ -746,6 +746,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
 		  echo "  layer $GIS_OPT_LAYER" >> $TMP4
 		  echo "  where $sqlwhere" >> $TMP4
 		  echo "  color $linecolor" >> $TMP4
+		  echo "  label $rangemin - $rangemax" >> $TMP4
 		  echo "end" >> $TMP4
         elif [ "$GIS_OPT_TYPE" = "point" -o "$GIS_OPT_TYPE" = "centroid" ] ; then
 		  echo "vpoints $GIS_OPT_MAP" >> $TMP4
@@ -755,6 +756,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
 		  echo "  color $linecolor" >> $TMP4
 		  echo "  fcolor $themecolor" >> $TMP4
 		  echo "  symbol $GIS_OPT_ICON" >> $TMP4
+		  echo "  label $rangemin - $rangemax" >> $TMP4
 		  echo "end" >> $TMP4
 		else
 		  echo "vareas $GIS_OPT_MAP" >> $TMP4
@@ -762,6 +764,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
 		  echo "  where $sqlwhere" >> $TMP4
 		  echo "  color $linecolor" >> $TMP4
 		  echo "  fcolor $themecolor" >> $TMP4
+		  echo "  label $rangemin - $rangemax" >> $TMP4
 		  echo "end" >> $TMP4
 		fi
 
@@ -1026,6 +1029,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
 	  echo "  fcolor $themecolor" >> $TMP4
 	  echo "  symbol $GIS_OPT_ICON" >> $TMP4
 	  echo "  size $ptsize" >> $TMP4
+	  echo "  label $rangemin - $rangemax" >> $TMP4
 	  echo "end" >> $TMP4
 
 
