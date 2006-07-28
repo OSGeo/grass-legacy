@@ -124,6 +124,11 @@ proc GmProfile::create { mapcan } {
 	# profile control buttons
 	set pcan_tb [$profilemf addtoolbar]
 	set pcanbb [ButtonBox $pcan_tb.bb -orient horizontal]
+	$pcanbb add -image [image create photo -file "$iconpath/element-cell.gif"] \
+		-command "GmProfile::select_rast" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -highlightbackground $bgcolor  -activebackground $bgcolor\
+        -helptext [G_msg "Select raster map to profile"] -highlightbackground $bgcolor
 	$pcanbb add  -image [image create photo -file "$iconpath/gui-profiledefine.gif"] \
 		-command "GmProfile::profilebind $mapcan" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
@@ -134,11 +139,6 @@ proc GmProfile::create { mapcan } {
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
         -highlightbackground $bgcolor  -activebackground $bgcolor\
         -helptext [G_msg "Draw profile"] -highlightbackground $bgcolor
-	$pcanbb add -image [image create photo -file "$iconpath/element-cell.gif"] \
-		-command "GmProfile::select_rast" \
-        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
-        -highlightbackground $bgcolor  -activebackground $bgcolor\
-        -helptext [G_msg "Select raster map to profile"] -highlightbackground $bgcolor
 	$pcanbb add -image [image create photo -file "$iconpath/gui-erase.gif"] \
 		-command "GmProfile::perase $mapcan" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
