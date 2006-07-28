@@ -1017,9 +1017,13 @@ proc MapCanvas::zoomregion { mon zoom } {
 	variable monitor_zooms
     global areaX1 areaY1 areaX2 areaY2
     
-    # if click and no drag, zoom in or out by 80% of original area
+    # if click and no drag, zoom in or out by fraction of original area and center on the click spot
+    set clickzoom 0
     
 	if {($areaX2 == 0) && ($areaY2 == 0)} {
+		set clickzoom 1
+		set center_x $areaX1
+		set center_y $areaY1
 		set X2 [expr {$areaX1 + ($canvas_w($mon) / (2 * sqrt(2)))} ]
 		set X1 [expr {$areaX1 - ($canvas_w($mon) / (2 * sqrt(2)))} ]
 		set Y2 [expr {$areaY1 + ($canvas_h($mon) / (2 * sqrt(2)))} ]
@@ -1028,6 +1032,7 @@ proc MapCanvas::zoomregion { mon zoom } {
 		set areaY1 $Y1
 		set areaX2 $X2
 		set areaY2 $Y2
+
 	}
     
 	
@@ -1057,26 +1062,33 @@ proc MapCanvas::zoomregion { mon zoom } {
 	set south [scry2mapn $cbottom]
 	set east  [scrx2mape $cright]
 	set west  [scrx2mape $cleft]
-
-	# zoom in
-	if { $zoom == 1 } {
-		MapCanvas::zoom_new $mon $north $south $east $west
-	}
-	
+		
 	#zoom out
 	# Guarantee that the current region fits in the new box on the screen.
 	if { $zoom == -1 } {
+		# Center map at point clicked for one-click zooming
+		if { $clickzoom == 1} {
+			set to_center_e [scrx2mape $center_x]
+			set to_center_n [scry2mapn $center_y]
+			set from_center_e [expr {$map_w+(($map_e - $map_w)/2)}]
+			set from_center_n [expr {$map_s+(($map_n - $map_s)/2)}]
+			set map_n [expr {$map_n + ($to_center_n - $from_center_n)}]
+			set map_s [expr {$map_s + ($to_center_n - $from_center_n)}]
+			set map_e [expr {$map_e + ($to_center_e - $from_center_e)}]
+			set map_w [expr {$map_w + ($to_center_e - $from_center_e)}]
+		}
 		# This effectively zooms out by the maxmimum of the two scales
 		set nsscale [expr { ($map_n - $map_s) / ($north - $south) }]
 		set ewscale [expr { ($map_e - $map_w) / ($east - $west) }]
 
-		set upnorth   [expr { $map_n + $nsscale * ($map_n - $north) }]
-		set downsouth [expr { $map_s + $nsscale * ($map_s - $south) }]
-		set backeast  [expr { $map_e + $ewscale * ($map_e - $east) }]
-		set outwest   [expr { $map_w + $ewscale * ($map_w - $west) }]
-
-		MapCanvas::zoom_new $mon $upnorth $downsouth $backeast $outwest
+		set north   [expr { $map_n + ($nsscale * ($map_n - $north)) }]
+		set south 	[expr { $map_s + ($nsscale * ($map_s - $south)) }]
+		set east  	[expr { $map_e + ($ewscale * ($map_e - $east)) }]
+		set west   	[expr { $map_w + ($ewscale * ($map_w - $west)) }]
 	}
+
+	MapCanvas::zoom_new $mon $north $south $east $west
+
 
 	# redraw map
 	$can($mon) delete map$mon
