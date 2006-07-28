@@ -15,13 +15,15 @@ EXTRA_CLEAN_FILES = font.bin
 
 FNT = $(FONTDIR)/cyrilc 
 
+FONTMAPS := $(shell cd ../fonts && ls *.hmp | sed 's/.hmp//')
+
 default: $(OBJDIR)/font.bin $(FNT)
 
 $(FNT): $(OBJDIR)/splitfont $(OBJDIR)/font.bin
-	$(OBJDIR)/splitfont $(FONTDIR) < $(OBJDIR)/font.bin
+	$(OBJDIR)/splitfont $(OBJDIR)/font.bin $(FONTDIR) $(FONTMAPS)
 
 $(OBJDIR)/font.bin: $(OBJDIR)/font_2_bin $(RAWFONT)
-	cat $(RAWFONT) | $(OBJDIR)/font_2_bin > $@
+	cat $(RAWFONT) | $(OBJDIR)/font_2_bin $@
 
 $(OBJDIR)/font_2_bin: $(OBJDIR)/font_2_bin.o
 	$(CC) $(LDFLAGS) $(OBJDIR)/font_2_bin.o -o $@
