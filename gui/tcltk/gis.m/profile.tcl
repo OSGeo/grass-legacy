@@ -59,9 +59,13 @@ proc GmProfile::select_rast { } {
     }
     
     #calculate elevation range so all profiles with same window geometry with have
-    # same scale
-    
-   	if {![catch {open "|r.info -r map=$pmap" r} input]} {
+    # same scale. Scale depends on region.
+        
+   	#set input [exec r.describe -rdq map=$pmap]
+	#regexp -nocase {^([0-9]+) thru ([0-9]+)} $input trash elevmin elevmax
+	#set elevrange [expr $elevmax - $elevmin]		
+	
+	if {![catch {open "|r.info -r map=$pmap" r} input]} {
 		while {[gets $input line] >= 0} {
 			regexp -nocase {^([a-z]+)=(.*)$} $line trash key value
 			set elev($key) $value	
@@ -72,6 +76,8 @@ proc GmProfile::select_rast { } {
 		set elevmin $elev(min)
 		set elevrange [expr $elev(max) - $elev(min)]		
 	}
+
+
 
 	# put map name in status bar
     set GmProfile::status [G_msg "Profile for $pmap"]
@@ -409,35 +415,45 @@ proc GmProfile::pdraw {} {
 		-anchor n \
 		-justify center
 		
-	$pcan create text $right $xscaletop \
-		-text "$tottlength" \
-		-anchor n \
-		-justify center
-
 	# add tick marks
 	$pcan create line $right $bottom $right [expr $bottom + 5]
 	$pcan create line [expr $left - 5] $top $left $top
 	
 	# add transect segment markers
-		
 	foreach {x} $pcoordslist {
 		set segx [expr $left + (($x * $width) / $tottlength)]
 		$pcan create line $segx $bottom $segx $top -fill grey
 	}
 
 	
-	# run r.profile
+	# run r.profile first time to calculate total transect distance (needed for lat lon regions)
+   	if {![catch {open "|r.profile input=$pmap profile=$pcoords" r} input]} {
+		while {[gets $input line] >= 0} {
+			if { [regexp -nocase {^([0-9].*) ([0-9].*)$} $line trash dist elev] } {
+				set cumdist $dist
+			}
+		}
+		catch close $input
+	}
+
+	# add label for total transect distance
+	$pcan create text $right $xscaletop \
+		-text "$cumdist" \
+		-anchor n \
+		-justify center
+
+	# run r.profile again to
 	# convert dist elev (stdout) to xy coordinates of profile line
-				
    	if {![catch {open "|r.profile input=$pmap profile=$pcoords" r} input]} {
 		while {[gets $input line] >= 0} {
 			if { [regexp -nocase {^([0-9].*) ([0-9].*)$} $line trash dist elev] } {
 				set pelev [expr $bottom - ($height * ($elev - $elevmin) / $elevrange)] 
-				set pdist [expr $left + (($dist * $width) / $tottlength)]
+				set pdist [expr $left + (($dist * $width) / $cumdist)]
 				lappend profilelist $pdist $pelev 
 			}
 		}
 		catch close $input
+		#puts "profile list = $profilelist"
 	}
 	
 	# draw profile line
@@ -450,6 +466,7 @@ proc GmProfile::pdraw {} {
 # erase profile and clear transects
 proc GmProfile::perase { mapcan } {
 	variable pcan
+	variable pmap
 	variable transect
 	variable tottransect
 	variable tlength
@@ -460,6 +477,9 @@ proc GmProfile::perase { mapcan } {
 	variable first
 	variable linex1
 	variable liney1
+	variable elevrange
+	variable elevmax
+	variable elevmin
 	
 	$pcan delete all
 	$mapcan delete transect
@@ -477,6 +497,12 @@ proc GmProfile::perase { mapcan } {
 		unset liney1
 	}
 	
+    #recalculate elevation range in case region has changed
+        
+   	#set input [exec r.describe -rdq map=$pmap]
+	#regexp -nocase {^([0-9]+) thru ([0-9]+)} $input trash elevmin elevmax
+	#set elevrange [expr $elevmax - $elevmin]		
+
 }
 
 ###############################################################################
