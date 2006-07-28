@@ -14,7 +14,7 @@
 long *findex = 0;
 long nchars = 0;
 
-int main (void)
+int main (int argc, char **argv)
 {
     long offset;
     int font;
@@ -22,7 +22,7 @@ int main (void)
     unsigned char x[256],y[256];
     int i;
 
-    font = 1; /* stdout */
+    font = open(argv[1], O_CREAT|O_WRONLY, 0666);
 
 /* index to the font ids will be written at end of font file.
  * pointer to index is written at top of file. write zero now

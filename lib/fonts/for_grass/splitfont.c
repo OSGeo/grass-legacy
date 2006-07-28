@@ -21,17 +21,18 @@ int main (int argc, char **argv)
 	long *index;
 	int size;
 	FILE *fn ;
+	int i;
 
 	int font;
 	int newfont ;
 
-	if (argc != 2)
+	if (argc < 3)
 	{
-		fprintf (stdout,"USAGE: splitfont directory\n") ;
+		fprintf (stdout,"USAGE: splitfont <filename> <directory> [<fontmap> ...]\n") ;
 		exit(-1) ;
 	}
 
-	font = 0; /* stdin */
+	font = open(argv[1], O_RDONLY);
 
 	read (font, &offset, sizeof(offset));
 	lseek (font, offset, 0);
@@ -45,21 +46,9 @@ int main (int argc, char **argv)
 		exit(1);
 	}
 
-
-	fn = popen ("cd ../fonts; ls *.hmp | sed 's/.hmp//'", "r");
-	while (1)
+	for (i = 3; i < argc; i++)
 	{
-		if (NULL == fgets(buf,80,fn))
-		{
-			pclose(fn) ;
-			break;
-		}
-
-		/* strip off new line */
-		bptr = buf ;
-		while(*bptr != '\0') bptr++ ;
-		*(--bptr) = '\0' ;
-
+		char *buf = argv[i];
 		memset(map, '\0', sizeof(map));
 		nmap = fontmap (buf, map);
 		if (nmap < 0)
@@ -73,7 +62,7 @@ int main (int argc, char **argv)
 			continue;
 		}
 
-		sprintf(buf2,"%s/%s", argv[1], buf) ;
+		sprintf(buf2,"%s/%s", argv[2], buf) ;
 		newfont = creat (buf2, 0644);
 		if (newfont < 0)
 		{
