@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../../..
 
-PGM = modcolr
+PGM = modcolr$(EXE)
 
 LIBES = $(GISLIB) 
 DEPENDENCIES = $(GISDEP)

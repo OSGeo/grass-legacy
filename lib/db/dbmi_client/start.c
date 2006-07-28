@@ -6,7 +6,6 @@
 #include <windows.h>
 #include <process.h>
 #include <fcntl.h>
-unsigned int _CRT_fmode = _O_BINARY;
 #endif
 
 #include <grass/dbmi.h>

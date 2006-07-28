@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../../..
 
-PGM = modhead
+PGM = modhead$(EXE)
 
 LIBES = $(EDITLIB) $(VASKLIB) $(GISLIB) $(CURSES)
 DEPENDENCIES = $(GISDEP) $(EDITDEP) $(VASKDEP)

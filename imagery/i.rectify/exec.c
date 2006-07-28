@@ -95,10 +95,7 @@ int exec_rectify (int order, char *extension)
 
 	    select_current_env();
 	    time (&rectify_time);
-	    if (compress(result))
-		time (&compress_time);
-	    else
-		compress_time = rectify_time;
+	    compress_time = rectify_time;
 	    report (name, mapset, result, rectify_time-start_time, compress_time-rectify_time, 1);
 	}
 	else
