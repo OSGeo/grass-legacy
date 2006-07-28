@@ -47,8 +47,6 @@ GLOBAL double E12a, E12b, E12c, N12a, N12b, N12c;
 GLOBAL double E21a, E21b, E21c, N21a, N21b, N21c;
 */
 GLOBAL struct Cell_head target_window;
-/* compress.c */
-int compress(char *);
 /* cp.c */
 int get_control_points(char *, int);
 /* env.c */

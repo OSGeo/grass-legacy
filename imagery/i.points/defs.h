@@ -1,3 +1,4 @@
+#include <grass/config.h>
 #include <curses.h>
 #include <grass/gis.h>
 #include <grass/imagery.h>

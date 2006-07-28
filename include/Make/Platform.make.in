@@ -63,7 +63,7 @@ SHLIB_LD_FLAGS      = @SHLIB_LD_FLAGS@
 SHLIB_LD_LIBS       = @SHLIB_LD_LIBS@
 SHLIB_CFLAGS        = @SHLIB_CFLAGS@
 SHLIB_SUFFIX        = @SHLIB_SUFFIX@
-EXE_SUFFIX          = @EXE_SUFFIX@
+EXE                 = @EXEEXT@
 
 
 # GRASS dirs

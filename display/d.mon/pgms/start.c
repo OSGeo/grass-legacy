@@ -65,8 +65,10 @@ int start_mon (char *name)
 	if ((mon = R_parse_monitorcap(MON_NAME,name)) == NULL)
 		G_fatal_error("no such monitor '%s'", name);
 
+#ifndef __MINGW32__
 	if (*mon->tty != '\0' && strcmp(mon->tty,ttyname(0)) != 0)
 		G_fatal_error("Error:  must start %s from %s\n You are on %s",name,mon->where,ttyname(0));
+#endif
 
 	execl(	mon->path,
 		mon->path,
