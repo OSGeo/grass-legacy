@@ -82,6 +82,7 @@ int G_put_cell_title (char *name, char *title)
 
     fclose (in);
     fclose (out);
+    remove ( tempfile );
 
     return 1;
 }
