@@ -315,7 +315,7 @@ proc gisSetWindow {} {
     .frame0.intro.msg insert end [G_msg "Welcome to GRASS GIS Version $GRASSVERSION\n"]
     .frame0.intro.msg insert end [G_msg "The world's leading open source GIS\n\n"]
     .frame0.intro.msg insert end [G_msg "Select an existing project location and mapset\n"]
-    .frame0.intro.msg insert end [G_msg "or define a new project location\n"]
+    .frame0.intro.msg insert end [G_msg "or define a new location\n"]
     .frame0.intro.msg tag add all 1.0 end
     .frame0.intro.msg configure -state disabled
 
@@ -338,7 +338,7 @@ proc gisSetWindow {} {
     label .frame0.frameDB.left.label \
     	-anchor {n} \
     	-justify right \
-    	-text [G_msg "Path to location:    \n(GRASS Database)"]
+    	-text [G_msg "GIS Data Directory: "]
 
     entry .frame0.frameDB.mid.entry \
     	-relief {sunken} \
@@ -375,7 +375,7 @@ proc gisSetWindow {} {
 
     label .frame0.frameLOC.label \
     	-anchor {w} \
-    	-text [G_msg "Project Location"] 
+    	-text [G_msg "Project Location\n(projection/coordinate system)"] 
 
     listbox .frame0.frameLOC.listbox \
     	-relief {sunken} \
@@ -408,7 +408,7 @@ proc gisSetWindow {} {
 
     label .frame0.frameMS.label \
     	-anchor {w} \
-    	-text [G_msg "Accessible Mapsets"] 
+    	-text [G_msg "Accessible Mapsets\n(directories of GIS files)"] 
 
     listbox .frame0.frameMS.listbox \
     	-relief {sunken} \
@@ -495,11 +495,23 @@ proc gisSetWindow {} {
 
     label .frame0.frameNMS.fourth.label \
     	-anchor {n} \
-    	-text [G_msg "\nDefine new location by:"]
+    	-text [G_msg "Define new location with..."]
 
+
+    button .frame0.frameNMS.seventh.button \
+    	-text [G_msg "Georeferenced file"] \
+    	-width 20 \
+    	-relief raised \
+    	-command {fileLocCom}
+
+    button .frame0.frameNMS.sixth.button \
+    	-text [G_msg "EPSG codes"] \
+    	-width 20 \
+    	-relief raised \
+    	-command {epsgLocCom}
 
     button .frame0.frameNMS.fifth.button \
-    	-text [G_msg "Use projection values"] \
+    	-text [G_msg "Projection values"] \
     	-width 20 \
     	-relief raised \
     	-command {
@@ -514,18 +526,6 @@ proc gisSetWindow {} {
             putGRASSRC $gisrc_name
             destroy . 
             }
-
-    button .frame0.frameNMS.sixth.button \
-    	-text [G_msg "Use EPSG values"] \
-    	-width 20 \
-    	-relief raised \
-    	-command {epsgLocCom}
-
-    button .frame0.frameNMS.seventh.button \
-    	-text [G_msg "Use georeferenced file"] \
-    	-width 20 \
-    	-relief raised \
-    	-command {fileLocCom}
 
     pack append .frame0.frameNMS
     pack .frame0.frameNMS.first.label -side top
@@ -575,6 +575,7 @@ proc gisSetWindow {} {
     button .frame0.frameBUTTONS.help \
     	-text [G_msg "Help"] \
     	-relief raised \
+    	-width 10 \
     	-bg honeydew2 \
 		-command {
 			if { [winfo exists .help] } {
@@ -707,6 +708,7 @@ proc gisSetWindow {} {
            set database [exec pwd]
         }
 	.frame0.frameBUTTONS.ok configure -state disabled
+	.frame0.frameNMS.right.button configure -state disabled
   }
 
   bind .frame0.frameLOC.listbox <Double-ButtonPress-1> {
