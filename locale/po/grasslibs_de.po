@@ -9,10 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-12 16:55+0200\n"
-"PO-Revision-Date: 2006-06-29 20:19+0200\n"
+"POT-Creation-Date: 2006-07-30 10:44+0200\n"
+"PO-Revision-Date: 2006-07-30 10:57+0200\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
-"Language-Team: Deutsch <translations@grass.itc.it>\n"
+"Language-Team: deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -67,8 +67,7 @@ msgstr ""
 #: ../lib/db/dbmi_base/legal_dbname.c:30
 #, c-format
 msgid "Illegal table map name <%s>. Must start with a letter.\n"
-msgstr ""
-"Unbekannter Tabellenname <%s>. Der Name muss mit einem Buchstaben beginnen.\n"
+msgstr "Unbekannter Tabellenname <%s>. Der Name muss mit einem Buchstaben beginnen.\n"
 
 #: ../lib/db/dbmi_base/legal_dbname.c:36
 #, c-format
@@ -151,8 +150,7 @@ msgstr "G3d_openCellNew: Fehler in G3d_fillHeader"
 #: ../lib/g3d/g3dhistory.c:46 ../lib/gis/history.c:134
 #, c-format
 msgid "can't get history information for [%s] in mapset [%s]"
-msgstr ""
-"Kann die History-Informationen der Karte [%s] in Mapset [%s] nicht finden."
+msgstr "Kann die History-Informationen der Karte [%s] in Mapset [%s] nicht finden."
 
 #: ../lib/gis/adj_cellhd.c:69 ../lib/gis/adj_cellhd.c:208
 msgid "Illegal n-s resolution value"
@@ -173,8 +171,7 @@ msgstr "Ungültiger Spaltenwert"
 #: ../lib/gis/adj_cellhd.c:103 ../lib/gis/adj_cellhd.c:260
 #, c-format
 msgid "Fixing subtle input data rounding error of north boundary (%g>%g)"
-msgstr ""
-"Repariere ungenauen Rundungsfehler des Nordrandes der Eingabe-Daten (%g>%g)."
+msgstr "Repariere ungenauen Rundungsfehler des Nordrandes der Eingabe-Daten (%g>%g)."
 
 #: ../lib/gis/adj_cellhd.c:106 ../lib/gis/adj_cellhd.c:263
 msgid "Illegal latitude for North"
@@ -183,8 +180,7 @@ msgstr "Ungültige geographische Länge für Norden"
 #: ../lib/gis/adj_cellhd.c:111 ../lib/gis/adj_cellhd.c:268
 #, c-format
 msgid "Fixing subtle input data rounding error of south boundary (%g>%g)"
-msgstr ""
-"Repariere ungenauen Rundungsfehler des Südrandes der Eingabe-Daten (%g>%g)."
+msgstr "Repariere ungenauen Rundungsfehler des Südrandes der Eingabe-Daten (%g>%g)."
 
 #: ../lib/gis/adj_cellhd.c:114 ../lib/gis/adj_cellhd.c:271
 msgid "Illegal latitude for South"
@@ -338,6 +334,16 @@ msgstr "(kein Titel)"
 msgid "Unable to open automatic MASK file"
 msgstr "Kann automatische MASK-Datei nicht öffnen."
 
+#: ../lib/gis/cats.c:384
+#, c-format
+msgid "category support for [%s] in mapset [%s] %s"
+msgstr "Kategorie Unterstützung für [%s] im Mapset [%s] %s"
+
+#: ../lib/gis/cats.c:423
+#, c-format
+msgid "category support for vector file [%s] in mapset [%s] %s"
+msgstr "Kategorie Unterstützung für die Vektordatei [%s] in Mapset [%s] %s"
+
 #: ../lib/gis/sample.c:74
 msgid "unknown interpolation type"
 msgstr "Unbekannte Interpolationsmethode."
@@ -350,17 +356,7 @@ msgstr "\"NO DATA\"-Label gefunden; setzte es auf NULL"
 msgid "problem reading raster cell file"
 msgstr "Problem beim Lesen der Raster-Cell-Datei."
 
-#: ../lib/gis/cats.c:384
-#, c-format
-msgid "category support for [%s] in mapset [%s] %s"
-msgstr "Kategorie Unterstützung für [%s] im Mapset [%s] %s"
-
-#: ../lib/gis/cats.c:423
-#, c-format
-msgid "category support for vector file [%s] in mapset [%s] %s"
-msgstr "Kategorie Unterstützung für die Vektordatei [%s] in Mapset [%s] %s"
-
-#: ../lib/gis/closecell.c:224
+#: ../lib/gis/closecell.c:229
 #, c-format
 msgid ""
 "closecell: can't move %s\n"
@@ -369,12 +365,12 @@ msgstr ""
 "closecell: Kann  %s\n"
 "nicht in die NULLdatei %s bewegen."
 
-#: ../lib/gis/closecell.c:245
+#: ../lib/gis/closecell.c:250
 #, c-format
 msgid "Error writing floating point format file for map %s"
 msgstr "Fehler beim Schreiben der Flißekommakarte %s."
 
-#: ../lib/gis/closecell.c:297
+#: ../lib/gis/closecell.c:302
 #, c-format
 msgid ""
 "closecell: can't move %s\n"
@@ -383,11 +379,11 @@ msgstr ""
 "closecell: Kann %s\n"
 "nicht in die Datei %s verschieben."
 
-#: ../lib/gis/closecell.c:352
+#: ../lib/gis/closecell.c:357
 msgid "unable to write quant file!"
 msgstr "Kann quant-Datei nicht schreiben!"
 
-#: ../lib/gis/closecell.c:400
+#: ../lib/gis/closecell.c:406
 msgid "unable to write f_format file for CELL maps"
 msgstr "Kann f_format Datei nicht schreiben."
 
@@ -411,238 +407,238 @@ msgstr "Fehler in Datums-Tabelle in Reihe %d."
 msgid "Cannot open debug file '%s'"
 msgstr "Kann die Debug-Datei '%s' nicht öffnen."
 
-#: ../lib/gis/debug.c:86
+#: ../lib/gis/debug.c:89
 msgid "G_dump: memory allocated to G__"
 msgstr "G_dump: Speicher belegt für G__"
 
-#: ../lib/gis/debug.c:87
+#: ../lib/gis/debug.c:90
 #, c-format
 msgid "Size of cell in fp maps = %d"
 msgstr "Größe der Float-Karte = %d"
 
-#: ../lib/gis/debug.c:88
+#: ../lib/gis/debug.c:91
 #, c-format
 msgid "type for writing floating maps = %d"
 msgstr "Typ zum Schreiben von Float-Karten = %d"
 
-#: ../lib/gis/debug.c:89
+#: ../lib/gis/debug.c:92
 #, c-format
 msgid "current window = %p"
 msgstr "Derzeitige Fenstergröße = %p"
 
-#: ../lib/gis/debug.c:90
+#: ../lib/gis/debug.c:93
 #, c-format
 msgid "Flag: window set? %d"
 msgstr "Flag: Fenster gesetzt? %d"
 
-#: ../lib/gis/debug.c:91
+#: ../lib/gis/debug.c:94
 #, c-format
 msgid "File descriptor for automatic mask %d"
 msgstr "Dateizeiger für due automatische Maske %d."
 
-#: ../lib/gis/debug.c:92
+#: ../lib/gis/debug.c:95
 #, c-format
 msgid "Flag denoting automatic masking %d"
 msgstr "Flag, das das automatischeMaskieren anzeigt %d"
 
-#: ../lib/gis/debug.c:93
+#: ../lib/gis/debug.c:96
 #, c-format
 msgid "CELL mask buffer %p"
 msgstr "CELL Maskenpuffer %p"
 
-#: ../lib/gis/debug.c:94
+#: ../lib/gis/debug.c:97
 #, c-format
 msgid "buffer for reading null rows %p"
 msgstr "Puffer zum Lesen von Null-Reihen: %p"
 
-#: ../lib/gis/debug.c:95
+#: ../lib/gis/debug.c:98
 #, c-format
 msgid "Pre/post compressed data buffer %p"
 msgstr "Datenpuffer %p vor/nach der Kompression."
 
-#: ../lib/gis/debug.c:96
+#: ../lib/gis/debug.c:99
 #, c-format
 msgid "sizeof compressed_buf %d"
 msgstr "Größe von compressed_buf %d"
 
-#: ../lib/gis/debug.c:97
+#: ../lib/gis/debug.c:100
 #, c-format
 msgid "work data buffer %p"
 msgstr "Arbeitsdatenpuffer %p"
 
-#: ../lib/gis/debug.c:98
+#: ../lib/gis/debug.c:101
 #, c-format
 msgid "sizeof work_buf %d"
 msgstr "Größe von work_buf %d"
 
-#: ../lib/gis/debug.c:99
+#: ../lib/gis/debug.c:102
 #, c-format
 msgid "sizeof null_buf %d"
 msgstr "Größe von null_buf %d"
 
-#: ../lib/gis/debug.c:100
+#: ../lib/gis/debug.c:103
 #, c-format
 msgid "sizeof mask_buf %d"
 msgstr "Größe von mask_buf %d"
 
-#: ../lib/gis/debug.c:101
+#: ../lib/gis/debug.c:104
 #, c-format
 msgid "Histogram request %d"
 msgstr "Histogramm-Anfrage %d"
 
-#: ../lib/gis/debug.c:103
+#: ../lib/gis/debug.c:106
 #, c-format
 msgid "G_dump: file #%d"
 msgstr "G_dump: Datei #%d"
 
-#: ../lib/gis/debug.c:104
+#: ../lib/gis/debug.c:107
 #, c-format
 msgid "open mode = %d"
 msgstr "Öffnen-Modus = %d"
 
-#: ../lib/gis/debug.c:105
+#: ../lib/gis/debug.c:108
 #, c-format
 msgid "Cell header %p"
 msgstr "Zellen-Kopf %p"
 
-#: ../lib/gis/debug.c:106
+#: ../lib/gis/debug.c:109
 #, c-format
 msgid "Table reclass %p"
 msgstr "Tabellenreklassifizierung %p"
 
-#: ../lib/gis/debug.c:107
+#: ../lib/gis/debug.c:110
 #, c-format
 msgid "Cell stats %p"
 msgstr "Zellenstatistik %p"
 
-#: ../lib/gis/debug.c:108
+#: ../lib/gis/debug.c:111
 #, c-format
 msgid "Range structure %p"
 msgstr "Spannenstruktur %p"
 
-#: ../lib/gis/debug.c:109
+#: ../lib/gis/debug.c:112
 #, c-format
 msgid "float Range structure %p"
 msgstr "Floating Spannenstruktur %p"
 
-#: ../lib/gis/debug.c:110
+#: ../lib/gis/debug.c:113
 #, c-format
 msgid "want histogram?  %d"
 msgstr "Möchten Sie ein Histogramm?  %d"
 
-#: ../lib/gis/debug.c:111
+#: ../lib/gis/debug.c:114
 #, c-format
 msgid "Automatic reclass flag %d"
 msgstr "Automatisches Reklassifizierungsflag %d"
 
-#: ../lib/gis/debug.c:112
+#: ../lib/gis/debug.c:115
 #, c-format
 msgid "File row addresses %p"
 msgstr "Dateispalten-Adressen %p"
 
-#: ../lib/gis/debug.c:113
+#: ../lib/gis/debug.c:116
 #, c-format
 msgid "Data to window col mapping %p"
 msgstr "Daten-zu-Fenster Reihenmapping %p."
 
-#: ../lib/gis/debug.c:114
+#: ../lib/gis/debug.c:117
 #, c-format
 msgid "Data to window row constants %f,%f"
 msgstr "Daten-zu-Fenster Reihenkonstante %f,%f"
 
-#: ../lib/gis/debug.c:115
+#: ../lib/gis/debug.c:118
 #, c-format
 msgid "Current data row in memory %d"
 msgstr "Aktuelle Datenreihe im Speicher %d"
 
-#: ../lib/gis/debug.c:116
+#: ../lib/gis/debug.c:119
 #, c-format
 msgid "Current null row in memory %d"
 msgstr "Aktuelle Nullreige im Speicher %d"
 
-#: ../lib/gis/debug.c:117
+#: ../lib/gis/debug.c:120
 #, c-format
 msgid "nbytes per cell for current row %d"
 msgstr "nbytes pro Zelle für die aktuelle Reihe %d."
 
-#: ../lib/gis/debug.c:118
+#: ../lib/gis/debug.c:121
 #, c-format
 msgid "Decompressed data buffer %s"
 msgstr "Dekomprimierter Datenpuffer %s."
 
-#: ../lib/gis/debug.c:119
+#: ../lib/gis/debug.c:122
 #, c-format
 msgid "bytes per cell %d"
 msgstr "bytes pro Zelle %d"
 
-#: ../lib/gis/debug.c:120
+#: ../lib/gis/debug.c:123
 #, c-format
 msgid "type: int, float or double map %d"
 msgstr "Typ: integer, float oder double Karte %d"
 
-#: ../lib/gis/debug.c:121
+#: ../lib/gis/debug.c:124
 #, c-format
 msgid "Temporary name for NEW files %s"
 msgstr "Temporärer Name für die neue Datei: %s"
 
-#: ../lib/gis/debug.c:122
+#: ../lib/gis/debug.c:125
 #, c-format
 msgid "Temporary name for NEW NULL files %s"
 msgstr "Temporärer Name für neue Null-Datei %s."
 
-#: ../lib/gis/debug.c:123
+#: ../lib/gis/debug.c:126
 #, c-format
 msgid "for existing raster maps %d"
 msgstr "für eine existierende Rasterkarte %d."
 
-#: ../lib/gis/debug.c:124
+#: ../lib/gis/debug.c:127
 #, c-format
 msgid "Name of open file %s"
 msgstr "Name der offenen Datei %s."
 
-#: ../lib/gis/debug.c:125
+#: ../lib/gis/debug.c:128
 #, c-format
 msgid "Mapset of open file %s"
 msgstr "Mapset der offenen Datei %s."
 
-#: ../lib/gis/debug.c:126
+#: ../lib/gis/debug.c:129
 #, c-format
 msgid "io error warning given %d"
 msgstr "io Fehler-Warnung ausgegeben %d."
 
-#: ../lib/gis/debug.c:127
+#: ../lib/gis/debug.c:130
 #, c-format
 msgid "xdr stream for reading fp %p"
 msgstr "xdr stream zum Lesen fp %p"
 
-#: ../lib/gis/debug.c:128
+#: ../lib/gis/debug.c:131
 #, c-format
 msgid "NULL_ROWS array[%d] = %p"
 msgstr "NULL_ROWS array[%d] = %p"
 
-#: ../lib/gis/debug.c:129
+#: ../lib/gis/debug.c:132
 #, c-format
 msgid "data buffer for reading null rows %p"
 msgstr "Datenpuffer zum Lesen der Nullreihe %p."
 
-#: ../lib/gis/debug.c:130
+#: ../lib/gis/debug.c:133
 #, c-format
 msgid "Minimum row null row number in memory %d"
 msgstr "Minimale Nullreihe im Speicher %d"
 
-#: ../lib/gis/debug.c:131
+#: ../lib/gis/debug.c:134
 #, c-format
 msgid "Quant ptr = %p"
 msgstr "Quant ptr = %p"
 
-#: ../lib/gis/debug.c:132
+#: ../lib/gis/debug.c:135
 msgid "G_dump: end"
 msgstr "G_dump: Ende"
 
 #: ../lib/gis/done_msg.c:6
-#, fuzzy, c-format
+#, c-format
 msgid "%s complete. %s"
-msgstr "%s komplett. %s\n"
+msgstr "%s komplett. %s"
 
 #: ../lib/gis/env.c:268
 msgid "GISRC - variable not set"
@@ -863,24 +859,19 @@ msgstr "cell_values_double: xdr_double ist fehlerhaft für Index %d."
 #: ../lib/gis/get_row.c:564
 #, c-format
 msgid "error reading compressed map [%s] in mapset [%s], row %d"
-msgstr ""
-"Fehler beim Lesen der komprimierten Karte [%s] im Mapset [%s], Zeile %d."
+msgstr "Fehler beim Lesen der komprimierten Karte [%s] im Mapset [%s], Zeile %d."
 
 #: ../lib/gis/get_row.c:568
 #, c-format
 msgid "error reading map [%s] in mapset [%s], row %d"
 msgstr "Fehler beim Lesen der Karte [%s] im Mapset [%s], Zeile %d."
 
-#: ../lib/gis/get_row.c:894
-msgid "Too many open raster files"
-msgstr "Zu viele geöffnete Rasterdateien."
-
-#: ../lib/gis/get_row.c:924 ../lib/gis/get_row.c:930
+#: ../lib/gis/get_row.c:917 ../lib/gis/get_row.c:923
 #, c-format
 msgid "error reading null row %d"
 msgstr "Fehler beim Lesen der null Zeile %d."
 
-#: ../lib/gis/get_row.c:1011
+#: ../lib/gis/get_row.c:1004
 msgid "Could not realloc buffer"
 msgstr "Kann Puffer nicht wiederbelegen."
 
@@ -965,8 +956,7 @@ msgstr "Kann die History-Informationen der Karte [%s] nicht schreiben."
 
 #: ../lib/gis/history.c:269
 msgid "Not enough room in history file to record command line."
-msgstr ""
-"Nicht genügend Platz in der History-Datei um die Kommandozeile zu speichern."
+msgstr "Nicht genügend Platz in der History-Datei um die Kommandozeile zu speichern."
 
 #: ../lib/gis/history.c:291
 msgid "Not enough room in history file for command line (truncated)."
@@ -1155,12 +1145,12 @@ msgstr "Bitte weisen Sie die GRASS Entwickler auf diesen Fehler hin.\n"
 msgid "G_set_null_value: wrong data type!"
 msgstr "G_set_null_value: falscher Datentyp!"
 
-#: ../lib/gis/opencell.c:166
+#: ../lib/gis/opencell.c:187
 #, c-format
 msgid "unable to open raster map [%s in %s]"
 msgstr "Kann Rasterkarte [%s in %s] nicht öffnen."
 
-#: ../lib/gis/opencell.c:249
+#: ../lib/gis/opencell.c:271
 #, c-format
 msgid ""
 "unable to open [%s] in [%s] since it is a reclass of [%s] in [%s] which does "
@@ -1169,12 +1159,12 @@ msgstr ""
 "Kann Karte [%s] in [%s] nicht öffnen, da sie eine reklassifizierte Karte von "
 "[%s] in [%s] ist. Diese existiert jedoch nicht."
 
-#: ../lib/gis/opencell.c:272
+#: ../lib/gis/opencell.c:294
 #, c-format
 msgid "[%s] in mapset [%s]-format field in header file invalid"
 msgstr "[%s] in Mapset [%s]-Format-Feld im Header ist ungültig."
 
-#: ../lib/gis/opencell.c:281
+#: ../lib/gis/opencell.c:303
 #, c-format
 msgid ""
 "[%s] in mapset [%s] - in different projection than current region:\n"
@@ -1184,27 +1174,26 @@ msgstr ""
 "ausgewählte Location:\n"
 " Habe Karte [%s] in <%s> gefunden, sollte jedoch <%s> sein."
 
-#: ../lib/gis/opencell.c:288
+#: ../lib/gis/opencell.c:310
 #, c-format
 msgid "[%s] in mapset [%s] - in different zone [%d] than current region [%d]"
 msgstr ""
 "[%s] in Mapset [%s] ist in einer unterschiedlichen Zone [%d] als die gerade "
 "ausgewählte Region [%d]."
 
-#: ../lib/gis/opencell.c:296
+#: ../lib/gis/opencell.c:318
 #, c-format
 msgid "[%s] in [%s] - bytes per cell (%d) too large"
 msgstr "[%s] in [%s] - Bytes pro Zelle (%d) ist zu groß."
 
-#: ../lib/gis/opencell.c:599
+#: ../lib/gis/opencell.c:618
 #, c-format
 msgid "opencell: %s - illegal file name"
 msgstr "opencell: %s - ungültiger Dateiname"
 
-#: ../lib/gis/opencell.c:700
+#: ../lib/gis/opencell.c:711
 msgid "Can't write embedded null values for map open for random access"
-msgstr ""
-"Kann keine embedded NULL Werte für Karte mit random access Zugriff schreiben"
+msgstr "Kann keine embedded NULL Werte für Karte mit random access Zugriff schreiben"
 
 #: ../lib/gis/opencell.c:931 ../lib/gis/opencell.c:952
 #, c-format
@@ -1534,8 +1523,7 @@ msgstr ""
 #: ../lib/gis/put_row.c:249
 #, c-format
 msgid "%s: map [%s] not open for write - request ignored"
-msgstr ""
-"%s: Karte [%s] ist nicht zum Schreiben geöffnet - Anfrage wird ignoriert."
+msgstr "%s: Karte [%s] ist nicht zum Schreiben geöffnet - Anfrage wird ignoriert."
 
 #: ../lib/gis/put_row.c:256
 #, c-format
@@ -1631,21 +1619,17 @@ msgstr "Kann keine quant-Regeln schreiben: Karte %s ist eine Integerkarte."
 msgid "Cannot write quant rules for map %s"
 msgstr "Kann keine quant-Regeln für Karte %s schreiben."
 
-#: ../lib/gis/range.c:182
-msgid "Too many open files"
-msgstr "Zu viele Dateien geöffnet."
-
-#: ../lib/gis/range.c:206
+#: ../lib/gis/range.c:199
 #, c-format
 msgid "can't read f_range file for [%s in %s]"
 msgstr "Kann f_range Datei für [%s in %s] nicht lesen."
 
-#: ../lib/gis/range.c:324
+#: ../lib/gis/range.c:317
 #, c-format
 msgid "can't read range file for [%s in %s]"
 msgstr "Kann range Datei für [%s in %s] nicht lesen."
 
-#: ../lib/gis/range.c:378 ../lib/gis/range.c:429
+#: ../lib/gis/range.c:371 ../lib/gis/range.c:422
 #, c-format
 msgid "can't write range file for [%s in %s]"
 msgstr "Kann range Datei für [%s in %s] nicht schreiben."
@@ -1921,8 +1905,7 @@ msgstr ""
 
 #: ../lib/gis/view.c:548
 #, c-format
-msgid ""
-" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr ""
 " Nur %d%% des in \"%s\" abgespeicherten Fensters überlappt mit dem "
 "derzeitigen GRASS-Fenster."
@@ -1935,36 +1918,6 @@ msgstr "ungültiger Ellipsoid %s in Datei."
 #: ../lib/proj/ellipse.c:128
 msgid "No ellipsoid info given in file"
 msgstr "Keine Ellipsoid-Informationen in Datei."
-
-#: ../lib/raster/io.c:42
-#, c-format
-msgid "ERROR %s from graphics driver.\n"
-msgstr "Graphik-Treiber liefert FEHLER %s.\n"
-
-#: ../lib/raster/io.c:171
-#, c-format
-msgid "Unable to allocate memory\n"
-msgstr "Kann keinen Speicher belegen.\n"
-
-#: ../lib/raster/io.c:218
-#, c-format
-msgid "ERROR - eof from graphics monitor.\n"
-msgstr "FEHLER - Unerwartetes Dateiende vom Monitor übermittelt.\n"
-
-#: ../lib/raster/io.c:235
-#, c-format
-msgid "Warning - no response from graphics monitor <%s>.\n"
-msgstr "Warnung - keine Antwort vom Graphikmonitor <%s>.\n"
-
-#: ../lib/raster/io.c:237
-#, c-format
-msgid "Check to see if the mouse is still active.\n"
-msgstr "Kontrollieren Sie bitte, ob die Maus noch aktiv ist.\n"
-
-#: ../lib/raster/io.c:240
-#, c-format
-msgid "ERROR - no response from graphics monitor <%s>.\n"
-msgstr "Fehler - keine Antwort vom Graphikmonitor <%s>.\n"
 
 #: ../lib/raster/io_fifo.c:341 ../lib/raster/io_sock.c:65
 #, c-format
@@ -2066,13 +2019,42 @@ msgstr "Nicht verbunden...\n"
 #: ../lib/raster/io_sock.c:142
 #, c-format
 msgid "Couldn't connect to monitor. Will try once more.\n"
-msgstr ""
-"Kann nicht mit einem Monitor verbinden. Versuche es noch ein weiteres Mal.\n"
+msgstr "Kann nicht mit einem Monitor verbinden. Versuche es noch ein weiteres Mal.\n"
 
 #: ../lib/raster/io_sock.c:148
 #, c-format
 msgid "Connection failed.\n"
 msgstr "Verbindung fehlgeschlagen.\n"
+
+#: ../lib/raster/rem_io.c:43
+#, c-format
+msgid "ERROR %s from graphics driver.\n"
+msgstr "Graphik-Treiber liefert FEHLER %s.\n"
+
+#: ../lib/raster/rem_io.c:172
+#, c-format
+msgid "Unable to allocate memory\n"
+msgstr "Kann keinen Speicher belegen.\n"
+
+#: ../lib/raster/rem_io.c:219
+#, c-format
+msgid "ERROR - eof from graphics monitor.\n"
+msgstr "FEHLER - Unerwartetes Dateiende vom Monitor übermittelt.\n"
+
+#: ../lib/raster/rem_io.c:236
+#, c-format
+msgid "Warning - no response from graphics monitor <%s>.\n"
+msgstr "Warnung - keine Antwort vom Graphikmonitor <%s>.\n"
+
+#: ../lib/raster/rem_io.c:238
+#, c-format
+msgid "Check to see if the mouse is still active.\n"
+msgstr "Kontrollieren Sie bitte, ob die Maus noch aktiv ist.\n"
+
+#: ../lib/raster/rem_io.c:241
+#, c-format
+msgid "ERROR - no response from graphics monitor <%s>.\n"
+msgstr "Fehler - keine Antwort vom Graphikmonitor <%s>.\n"
 
 #: ../lib/rst/interp_float/segmen2d.c:123
 msgid ""
@@ -2175,17 +2157,16 @@ msgstr "Kann die Symbol-Linien-Koordinaten %s nicht lesen."
 
 #: ../lib/symbol/read.c:252
 #, c-format
-msgid ""
-"Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
-msgstr ""
-"Falscher Symbolname: '%s' (sollte sein: Gruppe/Name oder Gruppe/Name@Mapset)."
+msgid "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
+msgstr "Falscher Symbolname: '%s' (sollte sein: Gruppe/Name oder Gruppe/Name@Mapset)."
 
 #: ../lib/symbol/read.c:274
 #, c-format
 msgid "Cannot find/open symbol: '%s'"
 msgstr "Kann Symbol '%s' nicht finden/öffnen."
 
-#: ../lib/symbol/read.c:363 ../lib/symbol/read.c:375
+#: ../lib/symbol/read.c:358 ../lib/symbol/read.c:367 ../lib/symbol/read.c:374
+#: ../lib/symbol/read.c:383
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "Falsche Symbolfarbe: '%s', benutze Standardfarbe."
@@ -2436,8 +2417,7 @@ msgstr ""
 #: ../lib/vector/Vlib/legal_vname.c:34
 #, c-format
 msgid "Illegal vector map name <%s>. Character <%c> not allowed.\n"
-msgstr ""
-"Ungültiger Name der Vektorkarte <%s>. Zeichenfolge <%c> ist nicht erlaubt.\n"
+msgstr "Ungültiger Name der Vektorkarte <%s>. Zeichenfolge <%c> ist nicht erlaubt.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:59 ../lib/vector/Vlib/legal_vname.c:61
 #, c-format
@@ -2519,8 +2499,7 @@ msgstr "Kann Datei '%s' nicht anfordern."
 
 #: ../lib/vector/Vlib/open.c:667
 msgid "Size of 'coor' file differs from value saved in topo file."
-msgstr ""
-"Größe der 'coor' Datei unterscheidet sich vom Werte in der 'topo' Datei."
+msgstr "Größe der 'coor' Datei unterscheidet sich vom Werte in der 'topo' Datei."
 
 #: ../lib/vector/Vlib/open.c:678
 #, c-format
@@ -2558,8 +2537,7 @@ msgstr "Kann die Linie nicht nochmal schreiben."
 #: ../lib/vector/Vlib/write.c:197
 #, c-format
 msgid "Cannot delete the line, map '%s' is not opened on level 2"
-msgstr ""
-"Kann die Linie nicht löschen; die Karte '%s' ist nicht auf Level 2 geöffnet."
+msgstr "Kann die Linie nicht löschen; die Karte '%s' ist nicht auf Level 2 geöffnet."
 
 #: ../lib/vector/Vlib/write.c:201
 #, c-format
@@ -2589,7 +2567,5 @@ msgstr "Monitor: get_command: Vorzeitiges EOF\n"
 #: ../lib/driver/command.c:728
 #, c-format
 msgid "Monitor: _send: write returned short count: %d of %d\n"
-msgstr ""
+msgstr "Monitor: _send: write hat verkürtzte Anzahl zurückgegeben: %d von %d\n"
 
-#~ msgid "ERROR: GISBASE not set\n"
-#~ msgstr "FEHLER: Variable GISBASE ist nicht gesetzt\n"
