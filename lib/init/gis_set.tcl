@@ -498,7 +498,7 @@ proc gisSetWindow {} {
     	-text [G_msg "Define new location with..."]
 
 
-    button .frame0.frameNMS.seventh.button \
+    button .frame0.frameNMS.fifth.button \
     	-text [G_msg "Georeferenced file"] \
     	-width 20 \
     	-relief raised \
@@ -510,7 +510,7 @@ proc gisSetWindow {} {
     	-relief raised \
     	-command {epsgLocCom}
 
-    button .frame0.frameNMS.fifth.button \
+    button .frame0.frameNMS.seventh.button \
     	-text [G_msg "Projection values"] \
     	-width 20 \
     	-relief raised \
@@ -590,7 +590,7 @@ proc gisSetWindow {} {
         }
 	
     button .frame0.frameBUTTONS.cancel \
-    	-text [G_msg "Cancel"] \
+    	-text [G_msg "Exit"] \
     	-width 10 \
     	-relief raised \
     	-command { 
@@ -708,7 +708,6 @@ proc gisSetWindow {} {
            set database [exec pwd]
         }
 	.frame0.frameBUTTONS.ok configure -state disabled
-	.frame0.frameNMS.right.button configure -state disabled
   }
 
   bind .frame0.frameLOC.listbox <Double-ButtonPress-1> {
