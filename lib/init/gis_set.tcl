@@ -406,7 +406,7 @@ proc gisSetWindow {} {
     frame .frame0.frameMS \
     	-borderwidth {2}
 
-    Label .frame0.frameMS.label \
+    label .frame0.frameMS.label \
     	-anchor {w} \
     	-text [G_msg "Accessible Mapsets\n(directories of GIS files)"] 
 
