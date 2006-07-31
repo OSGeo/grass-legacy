@@ -127,7 +127,7 @@ proc GetDir {entWidget locList mapList} \
     global database
     
     toplevel .getDir
-    wm title .getDir [G_msg "New location path"]
+    wm title .getDir [G_msg "New GIS data directory"]
     wm resizable .getDir 0 0
     
     frame .getDir.base 
@@ -531,9 +531,9 @@ proc gisSetWindow {} {
     pack .frame0.frameNMS.first.label -side top
     pack .frame0.frameNMS.second.entry -side top -fill x
     pack .frame0.frameNMS.third.button -side top -fill x
-    pack .frame0.frameNMS.seventh.button -side bottom -fill x
-    pack .frame0.frameNMS.sixth.button -side bottom -fill x
     pack .frame0.frameNMS.fifth.button -side bottom -fill x
+    pack .frame0.frameNMS.sixth.button -side bottom -fill x
+    pack .frame0.frameNMS.seventh.button -side bottom -fill x
     pack .frame0.frameNMS.fourth.label -side bottom
     pack .frame0.frameNMS.first -side top  -anchor n
     pack .frame0.frameNMS.second -side top -expand yes
