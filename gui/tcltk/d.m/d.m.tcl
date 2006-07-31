@@ -389,7 +389,8 @@ proc Dm::create { } {
     $options_sw setwidget $options_sf
     set options [$options_sf getframe]
     pack $options_sw -fill both -expand yes
- 
+    bind_scroll $options_sf
+
     # output
     set output_pane  [$pw2 add -minsize 50 -weight 1 ] 
     pack $pw2 -fill both -expand yes
