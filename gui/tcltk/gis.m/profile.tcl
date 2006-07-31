@@ -49,23 +49,32 @@ namespace eval GmProfile {
 proc GmProfile::select_rast { } {
 	variable pmap
 	variable status
-	variable elevrange
-	variable elevmax
-	variable elevmin
     
     set m [GSelect cell]
     if { $m != "" } { 
         set pmap $m
     }
     
+    GmProfile::setelev $pmap
+	# put map name in status bar
+    set GmProfile::status [G_msg "Profile for $pmap"]    
+
+}
+
+###############################################################################
+proc GmProfile::setelev { pmap } {
+	variable elevrange
+	variable elevmax
+	variable elevmin
+	
     #calculate elevation range so all profiles with same window geometry with have
-    # same scale. Scale depends on region.
+    # same scale. Elevation range calcuated within currently displayed region.
         
    	#set input [exec r.describe -rdq map=$pmap]
 	#regexp -nocase {^([0-9]+) thru ([0-9]+)} $input trash elevmin elevmax
 	#set elevrange [expr $elevmax - $elevmin]		
 	
-	if {![catch {open "|r.info -r map=$pmap" r} input]} {
+	if {![catch {open "|r.univar -qg map=$pmap" r} input]} {
 		while {[gets $input line] >= 0} {
 			regexp -nocase {^([a-z]+)=(.*)$} $line trash key value
 			set elev($key) $value	
@@ -74,14 +83,8 @@ proc GmProfile::select_rast { } {
 	
 		set elevmax $elev(max)
 		set elevmin $elev(min)
-		set elevrange [expr $elev(max) - $elev(min)]		
+		set elevrange $elev(range)	
 	}
-
-
-
-	# put map name in status bar
-    set GmProfile::status [G_msg "Profile for $pmap"]
-    
 
 }
 
@@ -92,6 +95,7 @@ proc GmProfile::create { mapcan } {
 	global iconpath
     global env
     global bgcolor
+    global mon
 	variable pmap
 	variable pcan
 	
@@ -128,7 +132,7 @@ proc GmProfile::create { mapcan } {
 		-command "GmProfile::select_rast" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
         -highlightbackground $bgcolor  -activebackground $bgcolor\
-        -helptext [G_msg "Select raster map to profile"] -highlightbackground $bgcolor
+        -helptext [G_msg "Select raster map to profile.\nCurrently selected raster is default."] -highlightbackground $bgcolor
 	$pcanbb add  -image [image create photo -file "$iconpath/gui-profiledefine.gif"] \
 		-command "GmProfile::profilebind $mapcan" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
@@ -162,6 +166,21 @@ proc GmProfile::create { mapcan } {
 
 	BWidget::place .profile 0 0 at 500 100
     wm deiconify .profile
+    
+    # get currently selected raster map as default to profile
+    set tree($mon) $GmTree::tree($mon)
+    
+    set sel [ lindex [$tree($mon) selection get] 0 ]
+
+    if { $sel != "" } { 
+    	set type [GmTree::node_type $sel]
+    	if {$type == "raster" } {
+    		set pmap [GmRaster::mapname $sel]
+    		GmProfile::setelev $pmap
+    		set GmProfile::status [G_msg "Profile for $pmap"]    
+    	}
+    }
+    
     
 	# bindings for closing profile window
 	bind .profile <Destroy> "GmProfile::cleanup %W $mapcan"
@@ -374,6 +393,17 @@ proc GmProfile::pdraw {} {
     variable pcoords
     variable pcoordslist
     variable profilelist
+    
+	if {$pmap == ""} {
+		tk_messageBox -message "You must select a raster to profile" -type ok -icon warning
+		return
+	}    
+	
+	if {$pcoords == ""} {
+		tk_messageBox -message "You must draw a transect to profile" -type ok -icon warning
+		return
+	}
+	
 	
 	$pcan delete all
 	set profilelist ""
