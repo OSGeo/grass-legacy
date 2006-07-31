@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
 int path ( struct Map_info *, struct Map_info *, int, double, int );
 
@@ -35,11 +36,7 @@ int main(int argc, char **argv)
     G_gisinit (argv[0]) ;
 
     module = G_define_module();
-    module->description = "Find shortest path on vector network. Reads start/end points"
-	    "from standard input in 2 possible formats:\n"
-	    "id start_point_category end_point_category\n"
-	    "id start_point_x start_point_y end_point_x end_point_y\n"
-	    "Points specified by category must be exactly on network nodes.";
+    module->description = _("Find shortest path on vector network.");
 
     input_opt = G_define_standard_option(G_OPT_V_INPUT);
     output_opt = G_define_standard_option(G_OPT_V_OUTPUT);
@@ -47,56 +44,56 @@ int main(int argc, char **argv)
     type_opt =  G_define_standard_option(G_OPT_V_TYPE);
     type_opt->options    = "line,boundary";
     type_opt->answer     = "line,boundary";
-    type_opt->description = "Arc type";
+    type_opt->description = _("Arc type");
 
     afield_opt = G_define_standard_option(G_OPT_V_FIELD);
     afield_opt->key = "alayer";
     afield_opt->answer = "1";
-    afield_opt->description = "Arc layer";
+    afield_opt->description = _("Arc layer");
     
     nfield_opt = G_define_standard_option(G_OPT_V_FIELD);
     nfield_opt->key = "nlayer";
     nfield_opt->answer = "2";
-    nfield_opt->description = "Node layer";
+    nfield_opt->description = _("Node layer");
 
     afcol = G_define_option() ;
     afcol->key         = "afcolumn" ;
     afcol->type        = TYPE_STRING ;
     afcol->required    = NO ; 
-    afcol->description = "Arc forward/both direction(s) cost column" ;
+    afcol->description = _("Arc forward/both direction(s) cost column");
     
     abcol = G_define_option() ;
     abcol->key         = "abcolumn" ;
     abcol->type        = TYPE_STRING ;
     abcol->required    = NO ; 
-    abcol->description = "Arc backward direction cost column" ;
+    abcol->description = _("Arc backward direction cost column");
     
     ncol = G_define_option() ;
     ncol->key         = "ncolumn" ;
     ncol->type        = TYPE_STRING ;
     ncol->required    = NO ; 
-    ncol->description = "Node cost column" ;
+    ncol->description = _("Node cost column");
 
     max_dist = G_define_option() ;
     max_dist->key = "dmax";
     max_dist->type = TYPE_DOUBLE;
     max_dist->required = NO;
     max_dist->answer = "1000";
-    max_dist->description = "Maximum distance to the network if start/end are given as coordinates. "
+    max_dist->description = _("Maximum distance to the network if start/end are given as coordinates. "
 			    "If start/end point is outside this threshold, the path is not found "
 			    "and error message is printed. To speed up the process, keep this "
-			    "value as low as possible.";
+			    "value as low as possible.");
     
     geo_f = G_define_flag ();
     geo_f->key             = 'g';
-    geo_f->description     = "Use geodesic calculation for longitude-latitude locations";
+    geo_f->description     = _("Use geodesic calculation for longitude-latitude locations");
     
     segments_f = G_define_flag ();
     segments_f->key             = 's';
-    segments_f->description     = "Write output as original input segments, not each path as one line.";
+    segments_f->description     = _("Write output as original input segments, not each path as one line.");
     
     if(G_parser(argc,argv))
-        exit(-1);
+        exit(EXIT_FAILURE);
 
     type = Vect_option_to_types ( type_opt ); 
     afield = atoi (afield_opt->answer);
@@ -115,7 +112,7 @@ int main(int argc, char **argv)
     mapset = G_find_vector2 (input_opt->answer, NULL); 
       
     if ( mapset == NULL) 
-      G_fatal_error ("Could not find input vector '%s'\n", input_opt->answer);
+      G_fatal_error (_("Could not find input vector '%s'"), input_opt->answer);
 
     Vect_set_open_level(2);
     Vect_open_old (&In, input_opt->answer, mapset); 
@@ -123,7 +120,7 @@ int main(int argc, char **argv)
     Vect_set_fatal_error (GV_FATAL_PRINT);
     if (1 > Vect_open_new (&Out, output_opt->answer, Vect_is_3d(&In) )){
         Vect_close (&In);
-	G_fatal_error ("Failed opening output vector file");
+	G_fatal_error (_("Failed opening output vector file '%s'"), output_opt->answer);
     }
     Vect_hist_command ( &Out );
 
@@ -137,8 +134,6 @@ int main(int argc, char **argv)
     Vect_build (&Out, stdout);
     Vect_close(&Out);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
-
-
 
