@@ -137,7 +137,7 @@
 #% option
 #% key: monitor
 #% type: string
-#% description: Select display monitor for legend
+#% description: Select x11 display monitor for legend
 #% options: x0,x1,x2,x3,x4,x5,x6,none
 #% answer: x1
 #% required : no
@@ -171,11 +171,11 @@
 #%end
 #%flag 
 #%key: l
-#%description: Create graphic legend in display monitor
+#%description: Create graphic legend in x11 display monitor
 #%end
 #%flag 
 #%key: s
-#%description: Save graphic legend output for display in GIS Manager
+#%description: Save legend output for display in GIS Manager
 #%end
 #%flag 
 #%key: m
@@ -1078,7 +1078,7 @@ fi
 if [ "$GIS_FLAG_S" -eq 1 ] ; then
 	tmpdir=`eval dirname $TMP6`
 	tlegfile="$tmpdir/gismlegend.txt"
-	echo $tlegfile > outtxt.txt
+#	echo $tlegfile > outtxt.txt
     cp $TMP6 $tlegfile
 fi
 
