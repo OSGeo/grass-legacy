@@ -55,38 +55,10 @@ proc GmProfile::select_rast { } {
         set pmap $m
     }
     
-    GmProfile::setelev $pmap
-	# put map name in status bar
     set GmProfile::status [G_msg "Profile for $pmap"]    
 
 }
 
-###############################################################################
-proc GmProfile::setelev { pmap } {
-	variable elevrange
-	variable elevmax
-	variable elevmin
-	
-    #calculate elevation range so all profiles with same window geometry with have
-    # same scale. Elevation range calcuated within currently displayed region.
-        
-   	#set input [exec r.describe -rdq map=$pmap]
-	#regexp -nocase {^([0-9]+) thru ([0-9]+)} $input trash elevmin elevmax
-	#set elevrange [expr $elevmax - $elevmin]		
-	
-	if {![catch {open "|r.univar -qg map=$pmap" r} input]} {
-		while {[gets $input line] >= 0} {
-			regexp -nocase {^([a-z]+)=(.*)$} $line trash key value
-			set elev($key) $value	
-		}
-		close $input
-	
-		set elevmax $elev(max)
-		set elevmin $elev(min)
-		set elevrange $elev(range)	
-	}
-
-}
 
 ###############################################################################
 # create canvas for displaying profile
@@ -119,7 +91,7 @@ proc GmProfile::create { mapcan } {
 		-borderwidth 0 -closeenough 1.0 \
         -relief ridge -selectbackground #c4c4c4 \
         -width 600 -height 200 ]
-	   
+        	   
     # setting geometry
     place $pcan \
         -in $profile_frame -x 0 -y 0 -anchor nw \
@@ -167,28 +139,41 @@ proc GmProfile::create { mapcan } {
 	BWidget::place .profile 0 0 at 500 100
     wm deiconify .profile
     
-    # get currently selected raster map as default to profile
-    set tree($mon) $GmTree::tree($mon)
-    
-    set sel [ lindex [$tree($mon) selection get] 0 ]
-
-    if { $sel != "" } { 
-    	set type [GmTree::node_type $sel]
-    	if {$type == "raster" } {
-    		set pmap [GmRaster::mapname $sel]
-    		GmProfile::setelev $pmap
-    		set GmProfile::status [G_msg "Profile for $pmap"]    
-    	}
-    }
-    
-    
 	# bindings for closing profile window
 	bind .profile <Destroy> "GmProfile::cleanup %W $mapcan"
-
+	    
 }
 
+###############################################################################
+proc GmProfile::setelev { pmap } {
+	variable elevrange
+	variable elevmax
+	variable elevmin
+	
+    #calculate elevation range so all profiles with same window geometry with have
+    # same scale. Elevation range calcuated within currently displayed region.
+        
+   	#set input [exec r.describe -rdq map=$pmap]
+	#regexp -nocase {^([0-9]+) thru ([0-9]+)} $input trash elevmin elevmax
+	#set elevrange [expr $elevmax - $elevmin]		
+	
+    
+	if {![catch {open "|r.univar -qg map=$pmap" r} input]} {
+		while {[gets $input line] >= 0} {
+			regexp -nocase {^([a-z]+)=(.*)$} $line trash key value
+			set elev($key) $value	
+		}
+		close $input
+	
+		set elevmax $elev(max)
+		set elevmin $elev(min)
+		set elevrange $elev(range)	
+	}
+	
+	#vwait elevrange
+    #set GmProfile::status [G_msg "Profile for $pmap"]    
 
-
+}
 ###############################################################################
 # save profile to eps file
 proc GmProfile::psave { } {
@@ -377,7 +362,7 @@ proc GmProfile::getcoords { mapcan } {
 
 ###############################################################################
 # draw profile
-proc GmProfile::pdraw {} {
+proc GmProfile::pdraw { } {
 	variable pcan
 	variable pmap
 	variable tottlength
@@ -393,18 +378,39 @@ proc GmProfile::pdraw {} {
     variable pcoords
     variable pcoordslist
     variable profilelist
+    variable status
+    global mon
+    
+    set cumdist 0.0
     
 	if {$pmap == ""} {
-		tk_messageBox -message "You must select a raster to profile" -type ok -icon warning
-		return
+	   # get currently selected raster map as default to profile if nothing else chosen
+		set tree($mon) $GmTree::tree($mon)
+		set sel [ lindex [$tree($mon) selection get] 0 ]	
+		if { $sel != "" } {
+			set type [GmTree::node_type $sel]
+			if {$type == "raster" } {
+				set GmProfile::pmap [GmRaster::mapname $sel]
+			}
+		} else {
+			tk_messageBox -message "You must select a raster to profile" -type ok -icon warning
+			return
+		}
 	}    
 	
 	if {$pcoords == ""} {
 		tk_messageBox -message "You must draw a transect to profile" -type ok -icon warning
 		return
 	}
+
 	
-	
+	set GmProfile::status [G_msg "Please wait while profile elevations are calculated"] 
+	update
+	# calculate elevation max, min, and range
+	GmProfile::setelev $pmap
+	# put map name back in status bar
+	set GmProfile::status [G_msg "Profile for $pmap"]    
+
 	$pcan delete all
 	set profilelist ""
 	
@@ -455,11 +461,10 @@ proc GmProfile::pdraw {} {
 		$pcan create line $segx $bottom $segx $top -fill grey
 	}
 
-	
 	# run r.profile first time to calculate total transect distance (needed for lat lon regions)
    	if {![catch {open "|r.profile input=$pmap profile=$pcoords" r} input]} {
 		while {[gets $input line] >= 0} {
-			if { [regexp -nocase {^([0-9].*) ([0-9].*)$} $line trash dist elev] } {
+			if { [regexp -nocase {^([0-9].*) ([[.-.]0-9].*)$} $line trash dist elev] } {
 				set cumdist $dist
 			}
 		}
@@ -476,14 +481,13 @@ proc GmProfile::pdraw {} {
 	# convert dist elev (stdout) to xy coordinates of profile line
    	if {![catch {open "|r.profile input=$pmap profile=$pcoords" r} input]} {
 		while {[gets $input line] >= 0} {
-			if { [regexp -nocase {^([0-9].*) ([0-9].*)$} $line trash dist elev] } {
+			if { [regexp -nocase {^([0-9].*) ([[.-.]0-9].*)$} $line trash dist elev] } {
 				set pelev [expr $bottom - ($height * ($elev - $elevmin) / $elevrange)] 
 				set pdist [expr $left + (($dist * $width) / $cumdist)]
 				lappend profilelist $pdist $pelev 
 			}
 		}
 		catch close $input
-		#puts "profile list = $profilelist"
 	}
 	
 	# draw profile line
@@ -495,8 +499,8 @@ proc GmProfile::pdraw {} {
 ###############################################################################
 # erase profile and clear transects
 proc GmProfile::perase { mapcan } {
-	variable pcan
 	variable pmap
+	variable pcan
 	variable transect
 	variable tottransect
 	variable tlength
@@ -527,11 +531,6 @@ proc GmProfile::perase { mapcan } {
 		unset liney1
 	}
 	
-    #recalculate elevation range in case region has changed
-        
-   	#set input [exec r.describe -rdq map=$pmap]
-	#regexp -nocase {^([0-9]+) thru ([0-9]+)} $input trash elevmin elevmax
-	#set elevrange [expr $elevmax - $elevmin]		
 
 }
 
