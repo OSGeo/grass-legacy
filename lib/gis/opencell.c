@@ -119,10 +119,9 @@ static struct fileinfo *new_fileinfo(int fd)
     if (fd < oldsize)
 	return &G__.fileinfo[fd];
 
-    if (!newsize)
-	newsize = 20;
-    else
-	newsize *= 2;
+    newsize *= 2;
+    if (newsize <= fd)
+	newsize = fd + 20;
 
     G__.fileinfo = G_realloc(G__.fileinfo, newsize * sizeof(struct fileinfo));
 
