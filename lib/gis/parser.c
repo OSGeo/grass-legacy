@@ -1380,6 +1380,23 @@ static void generate_tcl(FILE *fp)
 
 	optn = 1;
     
+	if (n_flags)
+	{
+		struct Flag *flag;
+
+		for (flag = &first_flag; flag; flag = flag->next_flag, optn++) {
+			fprintf(fp, "add_flag %d {\n", optn);
+			fprintf(fp, " name {%c}\n", flag->key);
+			fprintf(fp, " desc {%s}\n", flag->description);
+			fprintf(fp, " answer %d\n", flag->answer);
+			/* It should be up to the gui as to what
+			   to do with the label and description */
+			fprintf(fp, " label {%s}\n", flag->label ? flag->label : "");
+			fprintf(fp, " guisection {%s}\n", flag->guisection ? flag->guisection : "");
+			fprintf(fp, "}\n");
+		}
+	}
+
 	if (n_opts)
 	{
 		struct Option *opt;
@@ -1417,23 +1434,6 @@ static void generate_tcl(FILE *fp)
 			   to do with the label and description */
 			fprintf(fp, " label {%s}\n", opt->label ? opt->label : "");
 			fprintf(fp, " guisection {%s}\n", opt->guisection ? opt->guisection : "");
-			fprintf(fp, "}\n");
-		}
-	}
-
-	if (n_flags)
-	{
-		struct Flag *flag;
-
-		for (flag = &first_flag; flag; flag = flag->next_flag, optn++) {
-			fprintf(fp, "add_flag %d {\n", optn);
-			fprintf(fp, " name {%c}\n", flag->key);
-			fprintf(fp, " desc {%s}\n", flag->description);
-			fprintf(fp, " answer %d\n", flag->answer);
-			/* It should be up to the gui as to what
-			   to do with the label and description */
-			fprintf(fp, " label {%s}\n", flag->label ? flag->label : "");
-			fprintf(fp, " guisection {%s}\n", flag->guisection ? flag->guisection : "");
 			fprintf(fp, "}\n");
 		}
 	}
