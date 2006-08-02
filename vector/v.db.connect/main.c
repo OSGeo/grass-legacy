@@ -141,7 +141,7 @@ int main (int argc, char **argv)
       Vect_open_old ( &Map, inopt->answer, mapset);
     else
     {
-      if ( Vect_open_update_head ( &Map, inopt->answer, G_mapset()) != 0 )
+      if ( Vect_open_update_head ( &Map, inopt->answer, G_mapset()) < 1 )
                G_fatal_error(_("Cannot edit vector map stored in other mapset."));
       Vect_hist_command ( &Map );
     }
