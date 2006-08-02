@@ -11,6 +11,7 @@
 #include <grass/bitmap.h>
 /* get from gislib: */
 #include <grass/version.h>
+#include <grass/glocale.h>
 
 char startup_script[] = "toplevel .wait_ok\n\
 label .wait_ok.wait -text \"Please wait...\" -fg red -bg black\n\
@@ -50,7 +51,7 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
 
     module = G_define_module();
     module->description =
-	"nviz - Visualization and animation tool for GRASS data";
+	_("nviz - Visualization and animation tool for GRASS data");
 
     elev = G_define_option();
     elev->key = "elevation";
@@ -58,7 +59,7 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
     elev->required = NO;
     elev->multiple = YES;
     elev->gisprompt = "old,cell,Raster";
-    elev->description = "Raster file(s) for Elevation";
+    elev->description = _("Raster file(s) for Elevation");
 
     colr = G_define_option();
     colr->key = "color";
@@ -66,7 +67,7 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
     colr->required = NO;
     colr->multiple = YES;
     colr->gisprompt = "old,cell,Raster";
-    colr->description = "Raster file(s) for Color";
+    colr->description = _("Raster file(s) for Color");
 
     vct = G_define_option();
     vct->key = "vector";
@@ -74,7 +75,7 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
     vct->required = NO;
     vct->multiple = YES;
     vct->gisprompt = "old,vector,Vector";
-    vct->description = "Vector lines/areas overlay file(s)";
+    vct->description = _("Vector lines/areas overlay file(s)");
 
     pnt = G_define_option();
     pnt->key = "points";
@@ -82,7 +83,7 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
     pnt->required = NO;
     pnt->multiple = YES;
     pnt->gisprompt = "old,vector,Vector";
-    pnt->description = "Vector points overlay file(s)";
+    pnt->description = _("Vector points overlay file(s)");
 
     vol = G_define_option();
     vol->key = "volume";
@@ -90,44 +91,44 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
     vol->required = NO;
     vol->multiple = YES;
     vol->gisprompt = "old,grid3,3d raster";
-    vol->description = "Name of existing 3dcell map";
+    vol->description = _("Name of existing 3dcell map");
 
     no_args = G_define_flag();
     no_args->key = 'q';
-    no_args->description = "Quickstart - Do not load any data";
+    no_args->description = _("Quickstart - Do not load any data");
 
     script_kill = G_define_flag();
     script_kill->key = 'k';
-    script_kill->description = "Script kill option";
+    script_kill->description = _("Script kill option");
 
     demo = G_define_flag();
     demo->key = 'x';
-    demo->description = "Start in Demo mode";
+    demo->description = _("Start in Demo mode");
 
     verbose = G_define_flag();
     verbose->key = 'v';
-    verbose->description = "Output more comments (default=quiet)";
+    verbose->description = _("Output more comments (default=quiet)");
 
     panel_path = G_define_option();
     panel_path->key = "path";
     panel_path->type = TYPE_STRING;
     panel_path->required = NO;
-    panel_path->description = "Set alternative panel path";
+    panel_path->description = _("Set alternative panel path");
 
     script = G_define_option();
     script->key = "script";
     script->type = TYPE_STRING;
     script->required = NO;
-    script->description = "Execute script file at startup";
+    script->description = _("Execute script file at startup");
 
     state = G_define_option();
     state->key = "state";
     state->type = TYPE_STRING;
     state->required = NO;
-    state->description = "Load previosly saved state file";
+    state->description = _("Load previosly saved state file");
 
     if (G_parser(argc, argv))
-	exit(0);
+	exit(EXIT_FAILURE);
 
     /* Exit status is zero to avoid TCL complaints */
 
@@ -256,7 +257,7 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
 	}
 	if (ee != cc)
 	    G_fatal_error
-		("Number of elevation files does not match number of colors files");
+		(_("Number of elevation files does not match number of colors files"));
     }
 
     if (elev->answers) {
@@ -290,7 +291,6 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
     if (vct->answers) {
 	if (!elev->answers && GS_num_surfs() == 0)
 	{
-		char tmp[30];
 		int i;
 		int *surf_list;
 
@@ -310,7 +310,6 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
     if (pnt->answers) {
 	    if (!elev->answers && GS_num_surfs() == 0)
             {
-                char tmp[30];
                 int i;
                 int *surf_list;
 
