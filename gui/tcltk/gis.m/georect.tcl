@@ -570,7 +570,7 @@ proc GRMap::startup { } {
     set grstart_mf [MainFrame .grstart.mf \
    		-textvariable GRMap::grstartmsg]
    	
-   	set GRMap::grstartmsg "set up environment for georectifying rasters or vectors"
+   	set GRMap::grstartmsg "Set up environment for georectifying rasters or vectors"
    		
 	set grstartup [$grstart_mf getframe ]
 	
@@ -643,12 +643,23 @@ proc GRMap::startup { } {
 		-command "GRMap::refmap"
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
+
+    # quit
+    set row [ frame $grstartup.quit ]
+    Button $row.a -text [G_msg "Quit"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "Quit the Georectifier tool"]\
+        -width 16 -anchor w -highlightthickness 0 \
+		-command "destroy .grstart"
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
     
     pack $grstart_mf
-	pack $grstartup -side top -fill both -expand yes 
+    pack $grstartup -side top -fill both -expand yes 
 	
-	#cleanup for window closing
-	bind .grstart <Destroy> "GRMap::cleanup %W"
+    #cleanup for window closing
+    bind .grstart <Destroy> "GRMap::cleanup %W"
 			    
     wm deiconify .grstart
 	raise .grstart
