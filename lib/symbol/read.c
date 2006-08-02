@@ -354,25 +354,33 @@ S_read ( char *sname )
 	    if ( G_strcasecmp (data, "NONE" ) == 0 ) {
 		part->color.color = S_COL_NONE;
 	    } else if ( sscanf( data, "%d %d %d", &r, &g, &b) == 3) {
-		fr = r / 255; fg = g / 255; fb = b / 255;
-		part->color.color = S_COL_DEFINED;
-		part->color.r = r; part->color.g = g; part->color.b = b;
-		part->color.fr = fr; part->color.fg = fg; part->color.fb = fb;
-		G_debug ( 4, "  color %d %d %d = %.2f %.2f %.2f", r, g, b, fr, fg, fb );
+		if( r<0 || r>255 || g<0 || g>255 || b<0 || b>255 )
+		    G_warning(_("Incorrect symbol color: '%s', using default."), buf);
+		else {
+		    fr = r / 255.0; fg = g / 255.0; fb = b / 255.0;
+		    part->color.color = S_COL_DEFINED;
+		    part->color.r = r; part->color.g = g; part->color.b = b;
+		    part->color.fr = fr; part->color.fg = fg; part->color.fb = fb;
+		    G_debug(4, "  color [%d %d %d] = [%.3f %.3f %.3f]", r, g, b, fr, fg, fb);
+		}
 	    } else {
-	        G_warning(_("Incorrect symbol color: '%s', using default."), buf); 
+	        G_warning(_("Incorrect symbol color: '%s', using default."), buf);
 	    }
 	} else if ( strcmp ( key, "FCOLOR" ) == 0 ) {
 	    if ( G_strcasecmp (data, "NONE" ) == 0 ) {
 		part->fcolor.color = S_COL_NONE;
 	    } else if ( sscanf( data, "%d %d %d", &r, &g, &b) == 3) {
-		fr = r / 255; fg = g / 255; fb = b / 255;
-		part->fcolor.color = S_COL_DEFINED;
-		part->fcolor.r = r; part->fcolor.g = g; part->fcolor.b = b;
-		part->fcolor.fr = fr; part->fcolor.fg = fg; part->fcolor.fb = fb;
-		G_debug ( 4, "  color %d %d %d = %.2f %.2f %.2f", r, g, b, fr, fg, fb );
+		if( r<0 || r>255 || g<0 || g>255 || b<0 || b>255 )
+		    G_warning(_("Incorrect symbol color: '%s', using default."), buf);
+		else {
+		    fr = r / 255.0; fg = g / 255.0; fb = b / 255.0;
+		    part->fcolor.color = S_COL_DEFINED;
+		    part->fcolor.r = r; part->fcolor.g = g; part->fcolor.b = b;
+		    part->fcolor.fr = fr; part->fcolor.fg = fg; part->fcolor.fb = fb;
+		    G_debug(4, "  color [%d %d %d] = [%.3f %.3f %.3f]", r, g, b, fr, fg, fb);
+		}
 	    } else {
-	        G_warning(_("Incorrect symbol color: '%s', using default."), buf); 
+	        G_warning(_("Incorrect symbol color: '%s', using default."), buf);
 	    }
 	} else {
 	    sprintf ( buf, "Unknown keyword in symbol: '%s'", buf); 

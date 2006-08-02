@@ -78,11 +78,11 @@ main(int argc, char *argv[])
 
     /* Set description */
     module              = G_define_module();
-    module->description = _("Prints/sets general DB connection for current mapset");
+    module->description = _("Prints/sets general DB connection for current mapset and exits.");
 
 
     if(G_parser(argc, argv))
-	exit(ERROR);
+	exit(EXIT_FAILURE);
 
     /* set connection*/
     if( !print->answer) 
@@ -116,6 +116,6 @@ main(int argc, char *argv[])
 	    G_fatal_error(_("No db connection settings defined. Set with db.connect"));
     }
 
-    return 0;
+    exit(EXIT_SUCCESS);
 }
 

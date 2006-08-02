@@ -47,12 +47,14 @@ int do_scalebar(void)
 
     if (strcmp(sb.type, "f") == 0) {
 	/* draw fancy scale bar */
+
 	for (i = 0; i < seg; i++) {
 	    /* draw a filled rectangle */
 	    x1 = 72.0 * (x + (length / seg) * i) + 0.5;
 	    y1 = 72.0 * (PS.page_height - sb.y);
 	    x2 = 72.0 * (x + (length / seg) * (i + 1)) + 0.5;
 	    y2 = (72.0 * (PS.page_height - sb.y)) + (width * 72.0);
+
 	    /* Alternate black and white */
 	    if (j == 0) {
 		fprintf(PS.fp, "0.0 0.0 0.0 C\n");
@@ -63,11 +65,13 @@ int do_scalebar(void)
 		j = 0;
 	    }
 	    fprintf(PS.fp, "%.1f %.1f %.1f %.1f B\n", x1, y1, x2, y2);
+
 	    /* set outline to black */
 	    fprintf(PS.fp, "F 0.0 0.0 0.0 C\n");
 	    fprintf(PS.fp, "D\n");
 
 	    lab++;
+
 	    /* do text */
 	    if (i == 0 || lab == sb.numbers) {
 		sprintf(num, "%s", nice_number((sb.length / sb.segment) * i));
@@ -80,11 +84,12 @@ int do_scalebar(void)
 		fprintf(PS.fp, "TIB\n");
 		lab = 0;
 	    }
+
 	    if ((lab > 0 && i == seg - 1) || (sb.numbers == 1 && i == seg - 1)) {
 		/* special case for last label */
 		sprintf(num, "%s", nice_number(sb.length));
 		text_box_path(x2, y2 + margin, CENTER, LOWER, num, sb.fontsize, 0);
-		if(sb.bgcolor) { /* TODO: take bg color, not just [white|none] */
+		if(sb.bgcolor) {
 		    set_rgb_color(WHITE);
 		    fprintf(PS.fp, "F ");
 		}
@@ -97,15 +102,20 @@ int do_scalebar(void)
     }
     else {
 	/* draw simple scalebar */
+
 	x1 = 72.0 * x + 0.5;
 	y1 = (72.0 * (PS.page_height - sb.y)) + (width * 72.0);
 	x2 = 72.0 * x + 0.5;
 	y2 = 72.0 * (PS.page_height - sb.y);
+
 	fprintf(PS.fp, "%.1f %.1f %.1f %.1f L D\n", x1, y1, x2, y2);
+
 	/* draw label */
 	text_box_path(x1, y1 + margin, CENTER, LOWER, "0", sb.fontsize, 0);
-	set_rgb_color(WHITE);
-	fprintf(PS.fp, "F ");
+	if(sb.bgcolor) {
+	    set_rgb_color(WHITE);
+	    fprintf(PS.fp, "F ");
+	}
 	set_rgb_color(BLACK);
 	fprintf(PS.fp, "TIB\n");
 
@@ -121,14 +131,16 @@ int do_scalebar(void)
 	x2 = 72.0 * (x + length) + 0.5;
 	y1 = 72.0 * (PS.page_height - sb.y);
 	fprintf(PS.fp, "%.1f %.1f %.1f %.1f L D\n", x1, y1, x2, y2);
+
 	/* draw label */
 	sprintf(num, "%s", nice_number(sb.length));
 	text_box_path(x1, y2 + margin, CENTER, LOWER, num, sb.fontsize, 0);
-	set_rgb_color(WHITE);
-	fprintf(PS.fp, "F ");
+	if(sb.bgcolor) {
+	    set_rgb_color(WHITE);
+	    fprintf(PS.fp, "F ");
+	}
 	set_rgb_color(BLACK);
 	fprintf(PS.fp, "TIB\n");
-
 
 
 	for (i = 1; i < seg; i++) {
@@ -141,13 +153,16 @@ int do_scalebar(void)
 	    fprintf(PS.fp, "%.1f %.1f %.1f %.1f L D\n", x1, y1, x2, y2);
 
 	    lab++;
+
 	    /* do text */
 	    if (lab == sb.numbers) {
 		sprintf(num, "%s", nice_number((sb.length / sb.segment) * i));
-		text_box_path(x1, y3 + margin, CENTER, LOWER, num, sb.fontsize,
-			      0);
-		set_rgb_color(WHITE);
-		fprintf(PS.fp, "F ");
+
+		text_box_path(x1, y3 + margin, CENTER, LOWER, num, sb.fontsize, 0);
+		if(sb.bgcolor) {
+	    	    set_rgb_color(WHITE);
+	    	    fprintf(PS.fp, "F ");
+		}
 		set_rgb_color(BLACK);
 		fprintf(PS.fp, "TIB\n");
 		lab = 0;

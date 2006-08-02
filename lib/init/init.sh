@@ -51,25 +51,25 @@ for i in "$@" ; do
     	# Check if the user asked for help
 	help|-h|-help|--help)
 	    echo "Usage:"
-	    echo "  $CMD_NAME [-h | -help | --help] [-text | -tcltk | -gui] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]"
+	    echo "  $CMD_NAME [-h | -help | --help] [-text | -gui | -tcltk] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]"
 	    echo
             echo "Flags:"
             echo "  -h or -help or --help          print this help message"
             echo "  -text                          use text based interface and set as default"
-            echo "  -tcltk or -gui                 use Tcl/Tk based graphical user interface"
+            echo "  -gui or -tcltk                 use Tcl/Tk based graphical user interface"
             echo "                                   and set as default"
             echo
             echo "Parameters:"
-            echo "  GISDBASE                       initial database"
+            echo "  GISDBASE                       initial database (path to GIS data)"
             echo "  LOCATION_NAME                  initial location"
             echo "  MAPSET                         initial mapset"
             echo
-            echo "  GISDBASE/LOCATION_NAME/MAPSET  fully qualified initial LOCATION directory"
+            echo "  GISDBASE/LOCATION_NAME/MAPSET  fully qualified initial mapset directory"
             echo
-            echo "Environment variables:"
+            echo "Environment variables relevant for startup:"
             echo "  GRASS_TCLSH                    set tclsh shell name to override 'tclsh'"
             echo "  GRASS_WISH                     set wish shell name to override 'wish'"
-            echo "  GRASS_HTML_BROWSER             set html browser for help pages"
+            echo "  GRASS_HTML_BROWSER             set html web browser for help pages"
             echo "  GRASS_ADDON_PATH               set additional path(s) to local GRASS modules"
 	    exit
 	    ;;
@@ -146,7 +146,7 @@ fi
 export GRASS_GUI
 
 # Set PATH to GRASS bin, ETC to GRASS etc
-ETC=$GISBASE/etc
+ETC="$GISBASE/etc"
 
 if [ "$LC_ALL" ] ; then
 	LCL=`echo "$LC_ALL" | sed 's/\(..\)\(.*\)/\1/'`
@@ -165,13 +165,13 @@ export PATH
 
 # Set LD_LIBRARY_PATH to find GRASS shared libraries
 if [ ! "$LD_LIBRARY_PATH_VAR" ] ; then
-  LD_LIBRARY_PATH_VAR=$GISBASE/lib
+  LD_LIBRARY_PATH_VAR="$GISBASE/lib"
 else
-  LD_LIBRARY_PATH_VAR=$GISBASE/lib:$LD_LIBRARY_PATH_VAR
+  LD_LIBRARY_PATH_VAR="$GISBASE/lib:$LD_LIBRARY_PATH_VAR"
 fi
 export LD_LIBRARY_PATH_VAR
 # Additional copy of variable to use with grass-run.sh
-GRASS_LD_LIBRARY_PATH=$LD_LIBRARY_PATH_VAR
+GRASS_LD_LIBRARY_PATH="$LD_LIBRARY_PATH_VAR"
 export GRASS_LD_LIBRARY_PATH
 
 # Once the new environment system is committed we can delete these lines
@@ -576,7 +576,7 @@ GISDBASE=`g.gisenv GISDBASE`
 LOCATION_NAME=`g.gisenv LOCATION_NAME`
 MAPSET=`g.gisenv MAPSET`
 
-LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
+LOCATION="${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}"
 
 # Check for concurrent use
 lockfile="$LOCATION/.gislock"

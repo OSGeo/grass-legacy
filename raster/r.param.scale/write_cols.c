@@ -23,7 +23,7 @@ void write_cols(void)
     /*                       FILL OUT COLORS STRUCTURE                        */
     /*------------------------------------------------------------------------*/ 
 
-    G_add_color_rule(	FLAT,   255,255,255,			/* White      */
+    G_add_color_rule(	FLAT,   180,180,180,			/* White      */
     			PIT,    0,  0,  0,  &colours);		/* Black      */
     G_add_color_rule(	CHANNEL,0,  0,  255,			/* Blue       */
     			PASS,   0,  255,0,  &colours);		/* Green      */

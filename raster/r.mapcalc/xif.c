@@ -16,7 +16,7 @@ f_if_i(int argc, const int *argt, void **args)
 {
 	CELL *res = args[0];
 	DCELL *arg1 = args[1];
-	CELL *arg2 = args[2];
+	CELL *arg2 = (argc >= 2) ? args[2] : NULL;
 	CELL *arg3 = (argc >= 3) ? args[3] : NULL;
 	CELL *arg4 = (argc >= 4) ? args[4] : NULL;
 	int i;
@@ -103,7 +103,7 @@ f_if_f(int argc, const int *argt, void **args)
 {
 	FCELL *res = args[0];
 	DCELL *arg1 = args[1];
-	FCELL *arg2 = args[2];
+	FCELL *arg2 = (argc >= 2) ? args[2] : NULL;
 	FCELL *arg3 = (argc >= 3) ? args[3] : NULL;
 	FCELL *arg4 = (argc >= 4) ? args[4] : NULL;
 	int i;
@@ -185,7 +185,7 @@ f_if_d(int argc, const int *argt, void **args)
 {
 	DCELL *res = args[0];
 	DCELL *arg1 = args[1];
-	DCELL *arg2 = args[2];
+	DCELL *arg2 = (argc >= 2) ? args[2] : NULL;
 	DCELL *arg3 = (argc >= 3) ? args[3] : NULL;
 	DCELL *arg4 = (argc >= 4) ? args[4] : NULL;
 	int i;
@@ -307,9 +307,9 @@ c_if(int argc, int *argt)
 	if (argc >= 4 && argt[4] == DCELL_TYPE) argt[0] = DCELL_TYPE;
 
 	argt[1] = DCELL_TYPE;
-	argt[2] = argt[0];
-	argt[3] = argt[0];
-	argt[4] = argt[0];
+	if (argc >= 2) argt[2] = argt[0];
+	if (argc >= 3) argt[3] = argt[0];
+	if (argc >= 4) argt[4] = argt[0];
 
 	return 0;
 }

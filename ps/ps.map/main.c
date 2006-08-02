@@ -696,9 +696,9 @@ int main(int argc,char *argv[])
 
 	    ret = G_str_to_color( data, &r,  &g,  &b);
 	    if ( ret == 1 ) {
-		PS.mask_r = r/255;
-		PS.mask_g = g/255;
-		PS.mask_b = b/255;
+		PS.mask_r = r / 255.0;
+		PS.mask_g = g / 255.0;
+		PS.mask_b = b / 255.0;
 		PS.mask_color = 1;
 		continue;
 	    } else if ( ret == 2 ) { /* none */

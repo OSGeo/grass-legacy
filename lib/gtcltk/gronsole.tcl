@@ -497,7 +497,7 @@ proc Gronsole::run_xterm {path cmd tags} {
 
 	Gronsole::annotate $path $cmd [concat xterm $tags]
 
-	eval exec -- xterm -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd &
+	exec -- xterm -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd &
 
 	update idletasks
 }

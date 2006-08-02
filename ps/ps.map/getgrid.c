@@ -42,6 +42,7 @@ int getgrid (void)
     PS.grid_color = BLACK;
     PS.grid_numbers = 0;
     PS.grid_cross = 0.;
+    PS.grid_width = 0.25;
 
     while (input(2, buf, help))
     {
@@ -58,6 +59,12 @@ int getgrid (void)
 	if (KEY("numbers"))
 	{
 	    spacing = -1;
+
+	    if(strlen(data) == 0) {
+		spacing = 1;
+		color = BLACK;
+	    }
+
 	    switch (sscanf(data, "%d %[^\n]", &spacing, temp))
 	    {
 	    	case 1: color = BLACK; 
@@ -66,7 +73,8 @@ int getgrid (void)
 			if (color < 0) spacing = -1;
 		        break;
 	    }
-	    if (spacing < 0) error(key, data, "illegal numbers request");
+	    if (spacing < 0)
+		error(key, data, "illegal numbers request");
 	    else
 	    {
 		PS.grid_numbers = spacing;
@@ -74,22 +82,18 @@ int getgrid (void)
 	    }
 	    continue;
 	}
-	
-  
+
         if (KEY("cross"))
         {
                 PS.grid_cross = atof(data);
                 continue;
         }
 
-
 	if (KEY("fontsize"))
 	{
 	    fontsize = atoi(data);
-	    if (fontsize < PS_FONT_MIN_SIZE ||
-	               fontsize > PS_FONT_MAX_SIZE ) {
-		               fontsize = PS_FONT_DEFAULT_SIZE;
-		 }
+	    if (fontsize < PS_FONT_MIN_SIZE || fontsize > PS_FONT_MAX_SIZE )
+		fontsize = PS_FONT_DEFAULT_SIZE;
 	    continue;
 	}
 
@@ -134,6 +138,7 @@ int getgeogrid (void)
     PS.geogrid_fontsize = 0;
     PS.geogrid_color = BLACK;
     PS.geogrid_numbers = 0;
+    PS.geogrid_width = 0.25;
 
     while (input(2, buf, help2))
     {
@@ -150,6 +155,12 @@ int getgeogrid (void)
 	if (KEY("numbers"))
 	{
 	    spacing = -1;
+
+	    if(strlen(data) == 0) {
+		spacing = 1;
+		color = BLACK;
+	    }
+
 	    switch (sscanf(data, "%d %[^\n]", &spacing, temp))
 	    {
 	    	case 1: color = BLACK; 
@@ -158,12 +169,15 @@ int getgeogrid (void)
 			if (color < 0) spacing = -1;
 		        break;
 	    }
-	    if (spacing < 0) error(key, data, "illegal numbers request");
+
+	    if (spacing < 0)
+		error(key, data, "illegal numbers request");
 	    else
 	    {
 		PS.geogrid_numbers = spacing;
 		PS.geogrid_numbers_color = color;
 	    }
+
 	    continue;
 	}
 
@@ -187,7 +201,7 @@ int getgeogrid (void)
 	{
 	    PS.geogrid_width = -1.;
 	    ch = ' ';
-	    if((sscanf(data, "%lf%c", &PS.geogrid_width, &ch)<1)||(PS.geogrid_width < 0.))
+	    if((sscanf(data, "%lf%c", &PS.geogrid_width, &ch)<1) || (PS.geogrid_width < 0.))
 	    {
 	       PS.geogrid_width = 1.;
 	       error(key, data, "illegal grid width request");

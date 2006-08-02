@@ -16,8 +16,9 @@ static char *help[] =
     "where      x y",
     "font       fontname",
     "fontsize   fontsize",
-    "width	width",
-    "cols	cols",
+    "width	sample box width",
+    "cols	number of columns",
+    "border	color|none",
     ""
 };
 
@@ -26,13 +27,15 @@ read_vlegend (void)
 {	
     char buf[1024];
     char *key, *data;
-    int fontsize, cols;
+    int fontsize, cols, border;
     double x, y, width;
 
     fontsize = 0;
     x = y = 0.0;
     width = -1;
     cols = 1;
+    border = -1;
+
     while (input(2, buf, help))
     {
 	if (!key_data(buf, &key, &data)) continue;
@@ -74,6 +77,17 @@ read_vlegend (void)
 	    continue;
 	}
 
+	if (KEY("border"))
+	{
+	    border = get_color_number(data);
+	    if (border < 0) {
+		if( border != -999) /* here -999 is "none" */
+		    error(key, data, "illegal border request");
+		border = -1;
+	    }
+	    continue;
+	}
+
 	error(key, data, "illegal vlegend sub-request");
     }
     vector.x = x;
@@ -84,6 +98,7 @@ read_vlegend (void)
     else vector.width = 3 * fontsize / 72.0;
 
     vector.cols = cols;
+    vector.border = border;
 
     return 0;
 }

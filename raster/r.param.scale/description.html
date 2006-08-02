@@ -74,6 +74,15 @@ Note that the aspect map is calculated differently from
 Fix bug when `constrain through central cell' option selected. Create color
 tables for all output files (presently only on features).
 
+<h2>EXAMPLE</h2>
+
+The next commands will create a morphology map of the Spearfish region:
+
+<div class="code"><pre>
+g.region rast=elevation.10m -p
+r.param.scale in=elevation.10m output=morphology param=feature
+</pre></div>
+
 <h2>SEE ALSO</h2>
 <!-- not ported to GRASS 6 due to non-GPLness of numerical recipes.
 <i><a href="d.param.scale.html">d.param.scale</a></i>

@@ -49,35 +49,16 @@ namespace eval GmProfile {
 proc GmProfile::select_rast { } {
 	variable pmap
 	variable status
-	variable elevrange
-	variable elevmax
-	variable elevmin
     
     set m [GSelect cell]
     if { $m != "" } { 
         set pmap $m
     }
     
-    #calculate elevation range so all profiles with same window geometry with have
-    # same scale
-    
-   	if {![catch {open "|r.info -r map=$pmap" r} input]} {
-		while {[gets $input line] >= 0} {
-			regexp -nocase {^([a-z]+)=(.*)$} $line trash key value
-			set elev($key) $value	
-		}
-		close $input
-	
-		set elevmax $elev(max)
-		set elevmin $elev(min)
-		set elevrange [expr $elev(max) - $elev(min)]		
-	}
-
-	# put map name in status bar
-    set GmProfile::status [G_msg "Profile for $pmap"]
-    
+    set GmProfile::status [G_msg "Profile for $pmap"]    
 
 }
+
 
 ###############################################################################
 # create canvas for displaying profile
@@ -86,6 +67,7 @@ proc GmProfile::create { mapcan } {
 	global iconpath
     global env
     global bgcolor
+    global mon
 	variable pmap
 	variable pcan
 	
@@ -109,7 +91,7 @@ proc GmProfile::create { mapcan } {
 		-borderwidth 0 -closeenough 1.0 \
         -relief ridge -selectbackground #c4c4c4 \
         -width 600 -height 200 ]
-	   
+        	   
     # setting geometry
     place $pcan \
         -in $profile_frame -x 0 -y 0 -anchor nw \
@@ -118,6 +100,11 @@ proc GmProfile::create { mapcan } {
 	# profile control buttons
 	set pcan_tb [$profilemf addtoolbar]
 	set pcanbb [ButtonBox $pcan_tb.bb -orient horizontal]
+	$pcanbb add -image [image create photo -file "$iconpath/element-cell.gif"] \
+		-command "GmProfile::select_rast" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -highlightbackground $bgcolor  -activebackground $bgcolor\
+        -helptext [G_msg "Select raster map to profile.\nCurrently selected raster is default."] -highlightbackground $bgcolor
 	$pcanbb add  -image [image create photo -file "$iconpath/gui-profiledefine.gif"] \
 		-command "GmProfile::profilebind $mapcan" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
@@ -128,11 +115,6 @@ proc GmProfile::create { mapcan } {
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
         -highlightbackground $bgcolor  -activebackground $bgcolor\
         -helptext [G_msg "Draw profile"] -highlightbackground $bgcolor
-	$pcanbb add -image [image create photo -file "$iconpath/element-cell.gif"] \
-		-command "GmProfile::select_rast" \
-        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
-        -highlightbackground $bgcolor  -activebackground $bgcolor\
-        -helptext [G_msg "Select raster map to profile"] -highlightbackground $bgcolor
 	$pcanbb add -image [image create photo -file "$iconpath/gui-erase.gif"] \
 		-command "GmProfile::perase $mapcan" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
@@ -159,11 +141,39 @@ proc GmProfile::create { mapcan } {
     
 	# bindings for closing profile window
 	bind .profile <Destroy> "GmProfile::cleanup %W $mapcan"
-
+	    
 }
 
+###############################################################################
+proc GmProfile::setelev { pmap } {
+	variable elevrange
+	variable elevmax
+	variable elevmin
+	
+    #calculate elevation range so all profiles with same window geometry with have
+    # same scale. Elevation range calcuated within currently displayed region.
+        
+   	#set input [exec r.describe -rdq map=$pmap]
+	#regexp -nocase {^([0-9]+) thru ([0-9]+)} $input trash elevmin elevmax
+	#set elevrange [expr $elevmax - $elevmin]		
+	
+    
+	if {![catch {open "|r.univar -qg map=$pmap" r} input]} {
+		while {[gets $input line] >= 0} {
+			regexp -nocase {^([a-z]+)=(.*)$} $line trash key value
+			set elev($key) $value	
+		}
+		close $input
+	
+		set elevmax $elev(max)
+		set elevmin $elev(min)
+		set elevrange $elev(range)	
+	}
+	
+	#vwait elevrange
+    #set GmProfile::status [G_msg "Profile for $pmap"]    
 
-
+}
 ###############################################################################
 # save profile to eps file
 proc GmProfile::psave { } {
@@ -352,7 +362,7 @@ proc GmProfile::getcoords { mapcan } {
 
 ###############################################################################
 # draw profile
-proc GmProfile::pdraw {} {
+proc GmProfile::pdraw { } {
 	variable pcan
 	variable pmap
 	variable tottlength
@@ -368,7 +378,39 @@ proc GmProfile::pdraw {} {
     variable pcoords
     variable pcoordslist
     variable profilelist
+    variable status
+    global mon
+    
+    set cumdist 0.0
+    
+	if {$pmap == ""} {
+	   # get currently selected raster map as default to profile if nothing else chosen
+		set tree($mon) $GmTree::tree($mon)
+		set sel [ lindex [$tree($mon) selection get] 0 ]	
+		if { $sel != "" } {
+			set type [GmTree::node_type $sel]
+			if {$type == "raster" } {
+				set GmProfile::pmap [GmRaster::mapname $sel]
+			}
+		} else {
+			tk_messageBox -message "You must select a raster to profile" -type ok -icon warning
+			return
+		}
+	}    
 	
+	if {$pcoords == ""} {
+		tk_messageBox -message "You must draw a transect to profile" -type ok -icon warning
+		return
+	}
+
+	
+	set GmProfile::status [G_msg "Please wait while profile elevations are calculated"] 
+	update
+	# calculate elevation max, min, and range
+	GmProfile::setelev $pmap
+	# put map name back in status bar
+	set GmProfile::status [G_msg "Profile for $pmap"]    
+
 	$pcan delete all
 	set profilelist ""
 	
@@ -409,31 +451,39 @@ proc GmProfile::pdraw {} {
 		-anchor n \
 		-justify center
 		
-	$pcan create text $right $xscaletop \
-		-text "$tottlength" \
-		-anchor n \
-		-justify center
-
 	# add tick marks
 	$pcan create line $right $bottom $right [expr $bottom + 5]
 	$pcan create line [expr $left - 5] $top $left $top
 	
 	# add transect segment markers
-		
 	foreach {x} $pcoordslist {
 		set segx [expr $left + (($x * $width) / $tottlength)]
 		$pcan create line $segx $bottom $segx $top -fill grey
 	}
 
-	
-	# run r.profile
-	# convert dist elev (stdout) to xy coordinates of profile line
-				
+	# run r.profile first time to calculate total transect distance (needed for lat lon regions)
    	if {![catch {open "|r.profile input=$pmap profile=$pcoords" r} input]} {
 		while {[gets $input line] >= 0} {
-			if { [regexp -nocase {^([0-9].*) ([0-9].*)$} $line trash dist elev] } {
+			if { [regexp -nocase {^([0-9].*) ([[.-.]0-9].*)$} $line trash dist elev] } {
+				set cumdist $dist
+			}
+		}
+		catch close $input
+	}
+
+	# add label for total transect distance
+	$pcan create text $right $xscaletop \
+		-text "$cumdist" \
+		-anchor n \
+		-justify center
+
+	# run r.profile again to
+	# convert dist elev (stdout) to xy coordinates of profile line
+   	if {![catch {open "|r.profile input=$pmap profile=$pcoords" r} input]} {
+		while {[gets $input line] >= 0} {
+			if { [regexp -nocase {^([0-9].*) ([[.-.]0-9].*)$} $line trash dist elev] } {
 				set pelev [expr $bottom - ($height * ($elev - $elevmin) / $elevrange)] 
-				set pdist [expr $left + (($dist * $width) / $tottlength)]
+				set pdist [expr $left + (($dist * $width) / $cumdist)]
 				lappend profilelist $pdist $pelev 
 			}
 		}
@@ -449,6 +499,7 @@ proc GmProfile::pdraw {} {
 ###############################################################################
 # erase profile and clear transects
 proc GmProfile::perase { mapcan } {
+	variable pmap
 	variable pcan
 	variable transect
 	variable tottransect
@@ -460,6 +511,9 @@ proc GmProfile::perase { mapcan } {
 	variable first
 	variable linex1
 	variable liney1
+	variable elevrange
+	variable elevmax
+	variable elevmin
 	
 	$pcan delete all
 	$mapcan delete transect
@@ -477,6 +531,7 @@ proc GmProfile::perase { mapcan } {
 		unset liney1
 	}
 	
+
 }
 
 ###############################################################################
