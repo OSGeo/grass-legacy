@@ -185,8 +185,8 @@ proc GRMap::setxyenv { mset loc } {
 	if { $selftarget == 1 } { return }
 	
 	if { $mset != "" && $loc != "" } {
-		run "g.gisenv set=LOCATION_NAME=$loc"
-		run "g.gisenv set=MAPSET=$mset"
+		runcmd "g.gisenv set=LOCATION_NAME=$loc"
+		runcmd "g.gisenv set=MAPSET=$mset"
 		
 		set env(LOCATION_NAME) $loc
 		set env(MAPSET) $mset
@@ -204,8 +204,8 @@ proc GRMap::resetenv { } {
 	
 	if { $selftarget == 1 } { return }
 
-	run "g.gisenv set=LOCATION_NAME=$currloc"
-	run "g.gisenv set=MAPSET=$currmset"
+	runcmd "g.gisenv set=LOCATION_NAME=$currloc"
+	runcmd "g.gisenv set=MAPSET=$currmset"
 	
 	set env(LOCATION_NAME) $currloc
 	set env(MAPSET) $currmset
@@ -646,9 +646,9 @@ proc GRMap::startup { } {
 
     # quit
     set row [ frame $grstartup.quit ]
-    Button $row.a -text [G_msg "Quit"] \
+    Button $row.a -text [G_msg "Cancel"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
-        -helptext [G_msg "Quit the Georectifier tool"]\
+        -helptext [G_msg "Cancel georectification"]\
         -width 16 -anchor w -highlightthickness 0 \
 		-command "destroy .grstart"
     pack $row.a -side left
@@ -1114,8 +1114,6 @@ proc GRMap::get_gcp { } {
 			incr gcpnum
 		}
 	}
-	
-	# run g.transform here and put the information in fwd_error and rev_error
 }
 
 
@@ -2270,35 +2268,36 @@ proc GRMap::cleanup { destroywin} {
 	variable mapregion
 	variable xymset
 	variable xyloc
-
-
-	if { $destroywin == ".mapgrcan" } { 
-		# First, switch to xy mapset
-		GRMap::setxyenv $xymset $xyloc
-		runcmd "g.mremove -f region=$mapregion "
-		# reset to original location and mapset
-		GRMap::resetenv
-		# close all georectifying windows
-		if { [winfo exists .grstart] } { destroy .grstart }
-		if { [winfo exists .gcpwin] } { destroy .gcpwin }
-		if { [winfo exists .vgwin] } { destroy .vgwin }
+	
+	switch $destroywin {
+		".grstart" { GRMap::resetenv }
+		".mapgrcan" { 
+			# First, switch to xy mapset
+			GRMap::setxyenv $xymset $xyloc
+			runcmd "g.mremove -f region=$mapregion "
+			# reset to original location and mapset
+			GRMap::resetenv
+			# close all georectifying windows
+			if { [winfo exists .grstart] } { destroy .grstart }
+			if { [winfo exists .gcpwin] } { destroy .gcpwin }
+			if { [winfo exists .vgwin] } { destroy .vgwin }
+			return
+			}
+		".vgwin" { 
+			GRMap::resetenv 
+			return
+			}
+		".gcpwin" { 
+			# close all georectifying windows
+			if { [winfo exists .grstart] } { destroy .grstart }
+			if { [winfo exists .mapgrcan] } { destroy .mapgrcan }
+			if { [winfo exists .vgwin] } { destroy .vgwin }
+			# reset to original location and mapset
+			GRMap::resetenv
+			return
+			}
+		default { GRMap::resetenv }
 	}
-	
-	if { $destroywin == ".grstart" } { GRMap::resetenv }
-	if { $destroywin == ".vgwin" } { GRMap::resetenv }
-	
-
-	if { $destroywin == ".gcpwin" } { 
-		# close all georectifying windows
-		if { [winfo exists .grstart] } { destroy .grstart }
-		if { [winfo exists .mapgrcan] } { destroy .mapgrcan }
-		if { [winfo exists .vgwin] } { destroy .vgwin }
-		# reset to original location and mapset
-		GRMap::resetenv
-	}
-	
-	# reset to original location and mapset
-	GRMap::resetenv
 	
 }
 
