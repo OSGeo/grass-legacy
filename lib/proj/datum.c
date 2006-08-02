@@ -28,12 +28,12 @@
 
 struct datum_transform_list
 {
-    int count;			/* Transform Number (ordered list) */
-    char *params;		/* PROJ.4-style datum transform parameters */
-    char *where_used;		/* Comment text describing where (geographically)
+    int count;			/**< Transform Number (ordered list) */
+    char *params;		/**< PROJ.4-style datum transform parameters */
+    char *where_used;		/**< Comment text describing where (geographically)
 				 * the transform is valid */
-    char *comment;		/* Additional Comments */
-    struct datum_transform_list *next;	/* Pointer to next set of 
+    char *comment;		/**< Additional Comments */
+    struct datum_transform_list *next;	/**< Pointer to next set of 
 					 * transform parameters in linked list */
 };
 
@@ -73,12 +73,30 @@ int GPJ_get_datum_by_name(const char *name, struct gpj_datum *dstruct)
     return -1;
 }
 
-/* Kind of a "last resort" function as there really is no such thing
+/**
+ * \brief "Last resort" function to retrieve a "default" set of datum
+ * parameters for a datum (N.B. there really is no such thing as a
+ * catch-all default!)
+ * 
+ * Kind of a "last resort" function as there really is no such thing
  * as a default set of datum transformation parameters. Only should 
  * really be used where user interaction to choose a set of parameters
  * is not desirable. Use of this function is not likely to result in
  * selection of the optimum set of datum transformation parameters
- * for the location */
+ * for the location
+ *
+ * \param name      String containing GRASS datum name for which default
+ *                  parameters are to be retrieved
+ * 
+ * \param params    Pointer to a pointer which will have memory
+ *                  allocated and into which a string containing
+ *                  the datum parameters (if present) will
+ *                  be placed
+ * 
+ * \return          The number of possible parameter sets GRASS knows
+ *                  about for this datum
+ * 
+ **/
 
 int GPJ_get_default_datum_params_by_name(const char *name, char **params)
 {
@@ -110,6 +128,28 @@ int GPJ_get_default_datum_params_by_name(const char *name, char **params)
    
 }
 
+/**
+ *  
+ * \brief Extract the datum transformation-related parameters for
+ *  the current location.
+ * 
+ *  This function can be used to test if a location's co-ordinate
+ *  system set-up supports datum transformation.
+ *  
+ * \param name      Pointer to a pointer which will have memory 
+ *                  allocated and into which a string containing the 
+ *                  datum name (if present) will be placed. Otherwise 
+ *                  set to NULL.
+ * 
+ * \param params    Pointer to a pointer which will have memory
+ *                  allocated and into which a string containing
+ *                  the datum parameters (if present) will
+ *                  be placed. Otherwise set to NULL.
+ *
+ * \return  -1 error or no datum information found, 
+ *           1 only datum name found, 2 params found
+ * 
+ **/
 
 int GPJ_get_datum_params(char **name, char **params)
 {
@@ -122,33 +162,32 @@ int GPJ_get_datum_params(char **name, char **params)
     return ret;
 }
 
-/***********************************************************
+/**
  *  
  * \brief Extract the datum transformation-related parameters from a 
  *  set of general PROJ_INFO parameters.
  * 
- *  This function can be used to test if a location set-up 
- *  supports datum transformation.
+ *  This function can be used to test if a location's co-ordinate
+ *  system set-up supports datum transformation.
  *  
  * \param projinfo  Set of key_value pairs containing
  *                  projection information in PROJ_INFO file
  *                  format
  * 
- * \param datumname Pointer to a pointer which will
- *                  have memory allocated and into which 
- *                  a string containing
- *                  the datum name (if present) will be
- *                  placed.
+ * \param datumname Pointer to a pointer which will have memory 
+ *                  allocated and into which a string containing the 
+ *                  datum name (if present) will be placed. Otherwise 
+ *                  set to NULL.
  * 
  * \param params    Pointer to a pointer which will have memory
  *                  allocated and into which a string containing
  *                  the datum parameters (if present) will
- *                  be placed.
+ *                  be placed. Otherwise set to NULL.
  *
  * \return  -1 error or no datum information found, 
  *           1 only datum name found, 2 params found
  * 
- ************************************************************/
+ **/
 
 int GPJ__get_datum_params(struct Key_Value *projinfo,
 			  char **datumname, char **params)
@@ -193,22 +232,29 @@ int GPJ__get_datum_params(struct Key_Value *projinfo,
 
 }
 
-/***********************************************************
- *  GPJ_ask_datum_params(datumname, params)
- *     char *datumname   String containing datum name that
+/**
+ *  \brief Interactively ask for datum parameters for a particular datum
+ * 
+ *  Uses traditional GRASS interactive prompt interface to provide 
+ *  information to user and encourage him/her to select the most 
+ *  appropriate set of datum transformation parameters for the location.
+ *  Could really benefit from an abstracted user interaction library
+ *  for seamless GUI interaction.
+ *
+ *  \param datumname     String containing datum name that
  *                       parameters are to be found for. Must
  *                       exist in datum.table or be "custom"
- *     char **params     Pointer to a pointer that will have 
+ * 
+ *  \param params        Pointer to a pointer that will have 
  *                       memory allocated and into which a string 
  *                       containing the datum parameters chosen 
  *                       by the user will be placed.
  *
- *  Interactively ask for datum parameters for a particular datum
- *  
- *  returns: 1 ok, -1 error
- ************************************************************/
+ *  \return 1 ok, -1 error or user cancelled
+ * 
+ **/
 
-int GPJ_ask_datum_params(char *datumname, char **params)
+int GPJ_ask_datum_params(const char *datumname, char **params)
 {
     char buff[1024], answer[100];
     char *Tmp_file;
@@ -319,8 +365,8 @@ int GPJ_ask_datum_params(char *datumname, char **params)
 }
 
 /**
- *  Internal function to find all possible sets of 
- *  transformation parameters for a particular datum
+ * \brief Internal function to find all possible sets of 
+ *        transformation parameters for a particular datum
  *  
  * \param inputname   String containing the datum name we
  *                    are going to look up parameters for
@@ -408,6 +454,16 @@ static struct datum_transform_list *get_datum_transform_by_name(const char
 
 }
 
+/**
+ * \brief Read the current GRASS datum.table from disk and store in
+ *        memory
+ * 
+ * The datum information is stored in a datum_list linked list structure.
+ * 
+ * \return Pointer to first datum_list element in linked list, or NULL
+ *         if unable to open datum.table file
+ **/
+
 struct datum_list *read_datum_table(void)
 {
     FILE *fd;
@@ -458,7 +514,7 @@ struct datum_list *read_datum_table(void)
 }
 
 /**
- * Free the memory used for the strings in a gpj_datum struct
+ * \brief Free the memory used for the strings in a gpj_datum struct
  * 
  * \param dstruct gpj_datum struct to be freed
  **/
@@ -470,6 +526,12 @@ void GPJ_free_datum(struct gpj_datum *dstruct)
     G_free(dstruct->ellps);
     return;
 }
+
+/**
+ * \brief Free the memory used by a datum_list linked list structure
+ * 
+ * \param dstruct datum_list struct to be freed
+ **/
 
 void free_datum_list(struct datum_list *dstruct)
 {
