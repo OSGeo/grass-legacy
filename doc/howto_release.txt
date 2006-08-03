@@ -51,9 +51,13 @@ Contents
      gzip ChangeLog_$VERSION
 
  o   Tag release:
+          echo grass_${MAJOR}_${MINOR}_${RELEASE}
+
           cvs tag grass_${MAJOR}_${MINOR}_${RELEASE}
 
  o create source package (in the source directory):
+     echo grass-${VERSION}
+
      mkdir grass-${VERSION}
      mv * grass-${VERSION}/
      # do not include the debian control files:
@@ -86,6 +90,7 @@ Contents
       - devel/grasshist.html
       - devel/grassreleases.html
       - bugtracking/bugreport.html (not always)
+      - devel/cvstags.inc (add tag)
 
      write announcement
       - store in Web as announces/announce_grass$MAJOR$MINOR$RELEASE.html
@@ -99,7 +104,7 @@ Contents
 
  * If release candidate:
     - <grass-announce@grass.itc.it>
-    - <grass5@grass.itc.it>
+    - <grass-dev@grass.itc.it>
 
  * If official release:
    - publish related announcement press release at:
