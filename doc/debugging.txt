@@ -74,16 +74,28 @@ C Code debugging Software:
 1) Debugger (command-line)
       gdb `which r.plane`
       r <flags> <parameters>
-      bt
- 
+      bt full
+
+
+   To debug in a running process, find out the process ID (PID)
+      ps -aef
+   and then use
+      gdb --pid=PID
+
+   to attach to running process PID. It will stop, enter 'c'
+   to continue and so forth (bt full for backtrace).
+
 2a) Graphical front-end for command-line debugger: ddd
       ddd `which r.plane`
       RUN -> here enter Parameters/Flags
     
-   http://www.gnu.org/software/ddd/
+      http://www.gnu.org/software/ddd/
        (GNU DDD is a graphical front-end for command-line debuggers such as
         GDB, DBX, WDB, Ladebug, JDB, XDB, the Perl debugger, the bash debugger, or the
         Python debugger. )
+
+    See mini tutorial here:
+    http://grass.gdf-hannover.de/wiki/GRASS_Debugging
 
 2b) Graphical front-end for command-line debugger: kdbg
       Use the menus
