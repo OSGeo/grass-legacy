@@ -1,6 +1,3 @@
-/*
-* $Id$
-*/
 /***************************************************************
  *
  * MODULE:       pick_vect_commands.c 1.0
@@ -203,11 +200,11 @@ int query_vect_cats( char *name, double x, double y, double maxdist, int ** foun
     if (Cats->n_cats > 0) {
 		int i;
 
-		*found_cats = (int*) malloc(Cats->n_cats*sizeof(int));
+		*found_cats = (int*) G_malloc(Cats->n_cats*sizeof(int));
 
 		for (i = 0; i < Cats->n_cats; i++) {
 			(*found_cats)[i] = Cats->cat[i];
-//			printf("##################### field: %d category: %d\n", Cats->field[i], Cats->cat[i] );
+			G_debug(3, "##################### field: %d category: %d\n", Cats->field[i], Cats->cat[i] );
 		}
     } else {
 		goto error;
