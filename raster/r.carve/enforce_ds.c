@@ -79,7 +79,7 @@ int enforce_downstream(int infd, int outfd,
 static int process_line(struct Map_info *Map, struct Map_info *outMap,
                         void *rbuf, const int line, const struct parms *parm)
 {
-    int i, j, retval = 0;
+    int i, retval = 0;
     int do_warn = 0;
     int npts = 0;
     int in_out = 0;
@@ -421,14 +421,15 @@ static void process_line_segment(const int npts, void *rbuf,
     struct Cell_head wind;
     struct line_pnts *points = Vect_new_line_struct();
     struct line_cats *cats   = Vect_new_cats_struct();
+    int rowoff, coloff;
 
     G_get_window(&wind);
 
     Vect_cat_set(cats, 1, 1);
 
     /* kludge - fix for lat_lon */
-    int rowoff = parm->swidth / wind.ns_res;
-    int coloff = parm->swidth / wind.ew_res;
+    rowoff = parm->swidth / wind.ns_res;
+    coloff = parm->swidth / wind.ew_res;
 
     /* get prevrow and prevcol for iteration 0 of following loop */
     prevrow = G_northing_to_row(pgxypts[0][1], &wind);
