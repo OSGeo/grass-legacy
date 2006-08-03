@@ -286,16 +286,16 @@ set descmenu [subst  {
 	}}
 	{cascad {[G_msg "Transform features"]} {} "" $tmenu {			
 		{command {[G_msg "Clump small areas (statistics calculated by r.volume)"]} {} "r.clump" {} -command {execute r.clump }}
-		{command {[G_msg "Grow areas"]} {} "r.grow2" {} -command {execute r.grow2 }}
+		{command {[G_msg "Grow areas"]} {} "r.grow" {} -command {execute r.grow }}
 		{command {[G_msg "Thin linear features"]} {} "r.thin" {} -command {execute r.thin }}
 	}}
 	{separator}
 	{cascad {[G_msg "Hydrologic modeling"]} {} "" $tmenu {			
 		{command {[G_msg "Carve stream channels into elevation map using vector streams map"]} {} "r.carve" {} -command {execute r.carve }}
 		{command {[G_msg "Depressionless elevation map and flowline map"]} {} "r.fill.dir" {} -command {execute r.fill.dir }}
-		{command {[G_msg "Fill lake from seed point to specified level"]} {} "r.lake" {} -command {spawn r.lake }}
-		{command {[G_msg "Flow accumulation for massive grids"]} {} "r.terraflow" {} -command {spawn r.terraflow }}
-		{command {[G_msg "Generate flow lines for raster map"]} {} "r.flow" {} -command {exec r.flow > /dev/null & }}
+		{command {[G_msg "Fill lake from seed point to specified level"]} {} "r.lake" {} -command {execute r.lake }}
+		{command {[G_msg "Flow accumulation for massive grids"]} {} "r.terraflow" {} -command {execute r.terraflow }}
+		{command {[G_msg "Generate flow lines for raster map"]} {} "r.flow" {} -command {execute r.flow }}
 		{command {[G_msg "SIMWE overland flow modeling"]} {} "r.sim.water" {} -command {execute r.sim.water }}
 		{command {[G_msg "SIMWE sediment erosion, transport, & deposition modeling"]} {} "r.sim.sediment" {} -command {execute r.sim.sediment }}
 		{command {[G_msg "Topographic index map"]} {} "r.topidx" {} -command {execute r.topidx }}
