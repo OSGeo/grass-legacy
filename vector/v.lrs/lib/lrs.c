@@ -278,13 +278,13 @@ int offset_in_rsegment ( RSEGMENT *rseg, double multip, double mpost, double off
 
     *map_offset = 0.0;
 
-    // Check if >= start
+    /* Check if >= start */
     ret = LR_cmp_mileposts ( mpost, offset, rseg->start_mp, rseg->start_off );
     if ( ret == -1 ) {
 	G_debug(4, "  < start");
 	return 0;
     }
-    // Check if <= end
+    /* Check if <= end */
     ret = LR_cmp_mileposts ( mpost, offset, rseg->end_mp, rseg->end_off );
     if ( ret == 1 ) { 
 	G_debug(4, "  > end");
