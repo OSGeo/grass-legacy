@@ -85,6 +85,8 @@ SUBDIRS = \
 	r.surf.contour \
 	r.surf.idw \
 	r.surf.idw2 \
+	r.surf.random \
+	r.surf.gauss \
 	r.texture \
 	r.thin \
 	r.timestamp \
