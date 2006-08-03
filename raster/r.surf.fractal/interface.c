@@ -30,12 +30,7 @@ interface (
 
     module = G_define_module();
     module->description =
-		_("GRASS module to create a fractal surface of a given "
-		"fractal dimension. Uses spectral synthesis method. "
-		"Can create intermediate layers showing the build up "
-		"of different spectral coefficients (see Saupe, pp.106-107 "
-		"for an example of this). Use this module to generate "
-		"naturally looking synthetical elevation models (DEM).");
+		_("Creates a fractal surface of a given fractal dimension.");
 
     /*---------------------------------------------------------------------*/
     /*                              SET PARSER OPTIONS                     */
