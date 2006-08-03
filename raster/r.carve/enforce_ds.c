@@ -14,15 +14,15 @@
 
 
 /* function prototypes */
-static inline void clear_bitmap(struct BM *bm);
+static void clear_bitmap(struct BM *bm);
 static int process_line(struct Map_info *Map, struct Map_info *outMap,
                 void *rbuf, const int line, const struct parms *parm);
-static inline void traverse_line_flat(Point2 *pgpts, const int pt, const int npts);
-static inline void traverse_line_noflat(Point2 *pgpts, const double depth, 
+static void traverse_line_flat(Point2 *pgpts, const int pt, const int npts);
+static void traverse_line_noflat(Point2 *pgpts, const double depth, 
                 const int pt, const int npts);
-static inline void set_min_point(void *buf, const int col, const int row,
+static void set_min_point(void *buf, const int col, const int row,
                 const double elev, const double depth, const RASTER_MAP_TYPE rtype);
-static inline double lowest_cell_near_point(void *data, const RASTER_MAP_TYPE rtype,
+static double lowest_cell_near_point(void *data, const RASTER_MAP_TYPE rtype,
                 const double px, const double py, const double rad);
 static void process_line_segment(const int npts, void *rbuf,
                 Point2 *pgxypts, Point2 *pgpts,
@@ -191,7 +191,7 @@ static int process_line(struct Map_info *Map, struct Map_info *outMap,
 }
 
 
-static inline void clear_bitmap(struct BM *bm)
+static void clear_bitmap(struct BM *bm)
 {
     int i, j;
 
@@ -201,7 +201,7 @@ static inline void clear_bitmap(struct BM *bm)
 }
 
 
-static inline void traverse_line_flat(Point2 *pgpts, const int pt, const int npts)
+static void traverse_line_flat(Point2 *pgpts, const int pt, const int npts)
 {
     int j, k;
 
@@ -227,7 +227,7 @@ static inline void traverse_line_flat(Point2 *pgpts, const int pt, const int npt
 }
 
 
-static inline void traverse_line_noflat(Point2 *pgpts, const double depth, 
+static void traverse_line_noflat(Point2 *pgpts, const double depth, 
                                  const int pt, const int npts)
 {
     int j, k;
@@ -255,7 +255,7 @@ static inline void traverse_line_noflat(Point2 *pgpts, const double depth,
 
 
 /* sets value for a cell */
-static inline void set_min_point(void *data, const int col, const int row,
+static void set_min_point(void *data, const int col, const int row,
                 const double elev, const double depth, const RASTER_MAP_TYPE rtype)
 {
     switch (rtype) {
@@ -285,7 +285,7 @@ static inline void set_min_point(void *data, const int col, const int row,
 
 
 /* returns the lowest value cell within radius rad of px, py */
-static inline double lowest_cell_near_point(void *data, const RASTER_MAP_TYPE rtype,
+static double lowest_cell_near_point(void *data, const RASTER_MAP_TYPE rtype,
             const double px, const double py, const double rad)
 {
     int r, row, col, row1, row2, col1, col2, rowoff, coloff;
