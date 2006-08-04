@@ -11,6 +11,8 @@
 
 #define KEY(x) (strcmp(key,x)==0)
 
+extern int rotate_plot;
+
 static char *help[] =
 {
     "width      #",
@@ -27,49 +29,50 @@ read_paper (void)
 {	
     char buf[1024];
     char *key, *data;
+    double w, h, t, l, b, r;
     
     while (input(2, buf, help))
     {
 	if (!key_data(buf, &key, &data)) continue;
 
         if (KEY("width")) {
-	    PS.page_width = atof (data);
-	    if ( PS.page_width <= 0 ) {
+	    w = atof (data);
+	    if ( w <= 0 ) {
 		error(key, data, "illegal page width request");
 	    }
 	    continue;
 	}
         if (KEY("height")) {
-	    PS.page_height = atof (data);
-	    if ( PS.page_height <= 0 ) {
+	    h = atof (data);
+	    if ( h <= 0 ) {
 		error(key, data, "illegal page height request");
 	    }
 	    continue;
 	}
         if (KEY("left")) {
-	    PS.left_marg = atof (data);
-	    if ( PS.left_marg < 0 ) {
+	    l = atof (data);
+	    if ( l < 0 ) {
 		error(key, data, "illegal page left margin request");
 	    }
 	    continue;
 	}
         if (KEY("right")) {
-	    PS.right_marg = atof (data);
-	    if ( PS.right_marg < 0 ) {
+	    r = atof (data);
+	    if ( r < 0 ) {
 		error(key, data, "illegal page right margin request");
 	    }
 	    continue;
 	}
         if (KEY("top")) {
-	    PS.top_marg = atof (data);
-	    if ( PS.top_marg < 0 ) {
+	    t = atof (data);
+	    if ( t < 0 ) {
 		error(key, data, "illegal page top margin request");
 	    }
 	    continue;
 	}
         if (KEY("bottom")) {
-	    PS.bot_marg = atof (data);
-	    if ( PS.bot_marg < 0 ) {
+	    b = atof (data);
+	    if ( b < 0 ) {
 		error(key, data, "illegal page bottom margin request");
 	    }
 	    continue;
@@ -77,6 +80,13 @@ read_paper (void)
 
 	error(key, data, "illegal page sub-request");
     }
+
+    PS.page_width = (rotate_plot) ? h : w;
+    PS.page_height = (rotate_plot) ? w : h;
+    PS.left_marg = (rotate_plot) ? t : l;
+    PS.right_marg = (rotate_plot) ? b : r;
+    PS.top_marg = (rotate_plot) ? l : t;
+    PS.bot_marg = (rotate_plot) ? r : b;
 
     return 0;
 }
