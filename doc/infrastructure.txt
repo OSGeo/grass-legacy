@@ -1,0 +1,118 @@
+How the GRASS Webserver and related infrastructure works
+
+written by M. Neteler, $Date$
+
+== GRASS Web server ==
+
+Maintainer: M. Neteler
+
+* http://grass.itc.it
+* 3Ghz Dual Core Pentium, sponsored by ITC-irst, Trento, Italy
+* Apache Server with PHP
+* OS: RHEL4 with overnight security updates
+
+* Web pages:
+** hosted in the CVS server (developers can modify), downloaded to Web server
+   via cronjob every three hours
+** written in simple PHP/HTML (just include() statement for menus)
+** mirrored to selected tier-1 sites via rsync (hardcoded IPs to avoid
+   that too many sites connect)
+** tier-1 sites are mirrored via rsync to tier-2 mirrors (no hardcoded IPs)
+
+* Weekly snapshots (generated Saturday morning Italian time):
+** Source code tarball of CVS HEAD
+** Linux binary snapshot is compiled
+*** GRASS is compiled with GDAL, PROJ, SQLite, MySQL, PostgreSQL, FFTW support
+*** binary tar.gz is moved into Web space
+
+* GRASS user manual HTML:
+** generated during compilation of weekly Linux binary snapshot
+
+* GRASS programmer's manual:
+** HTML: job manually run by M Neteler from time to time (not on grass.itc.it)
+** PDF: currently broken since PDFs aren't created for unknown reasons in cronjob
+
+* i18N translation statistics:
+** generated during compilation of Linux binary snapshot, stats of
+   (cd locale; make) are extracted into text file
+** text file parsed by PHP page and shown as table
+
+* GRASS 5 tutorial (generated Saturday morning Italian time):
+** downloaded to Web server via cronjob
+** built with docbook
+
+* GRASS user map
+** GDF is creating png output via mapserver
+** fetched every three hours via cronjob from http://mapserver.gdf-hannover.de/tmp/
+
+* GRASS-Mapserver demo
+** currently broken after grass.itc.it update
+
+* Search engine
+** htdig runs once a week
+
+* FTP server
+** no longer available due to security risk
+
+* Mailman mailing lists + Spam filtering
+** Mailman is doing the job, only registered users can post
+** each incoming email first passes 'bogofilter', then a set of handwritten
+   procmail rules filter standard rubbish
+** 'bogofilter' is autotrained
+** the few spams which arrive through the bugtracker or into the open 'weblist'
+   are manually added to /var/mail/bogofilter-train-as-spam folder
+** bobofilter learn script which reads /var/mail/bogofilter-train-as-spam and
+   /var/mail/bogofilter-train-as-ham runs every night via cronjob
+
+* Backup of mailing lists (mbox files)
+** manually done by MN and Intevation (into freegis.org FTP space)
+
+* Webalizer (http://grass.itc.it/webalizer/ )
+** runs daily as cronjob
+
+
+Summary: The system should run almost autonomous.
+
+
+== GRASS Wiki ==
+
+Maintainer: Stephan Holl, Otto Dassau
+
+* http://grass.gdf-hannover.de
+* Mediawiki, sponsored by GDF Hannover, Germany
+* requires registration to keep spammers out
+
+Summary: The system should run almost autonomous. An eye must be
+         be kept on people trying to spam the site
+
+
+== GRASS Source code repository ==
+
+Maintainer: Bernhard Reiter, Jan-Oliver Wagner
+
+* intevation.de
+* CVS, sponsored by Intevation GmbH, Germany
+
+
+== GRASS Bugtracker ==
+
+Maintainer: Bernhard Reiter, Jan-Oliver Wagner
+
+* https://intevation.de/rt/webrt?q_queue=grass
+* webRT, sponsored by Intevation GmbH, Germany
+* spamassasin spamfilter
+* reports are directly sent to GRASS Developers mailing list for notification
+
+
+== GRASS Quality Control ==
+
+Maintainer: Giulio Antoniol
+
+* http://web.soccerlab.polymtl.ca/grass-evolution/grass-browsers/grass-index-en.html
+  sponsored by École Polytechnique de Montréal, Canada
+* Realtime analysis is sent to: http://grass.itc.it/mailman/listinfo/grass-qa
+
+Further notification/functionality test systems:
+* http://cia.navi.cx/stats/project/GRASS
+* http://www-pool.math.tu-berlin.de/~soeren/grass/GRASS_TestSuite/?C=M;O=D
+
