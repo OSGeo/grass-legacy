@@ -127,3 +127,40 @@ Using valgrind to find memory leaks (http://valgrind.org/):
      memusage -t -T v.in.ogr -o dsn=clcit2000 layer=LAB,ARC \
                              type=centroid,boundary output=corine2000_it
 
+----------------------------------------------------
+Profiling GRASS with GCC:
+
+Profiling allows the compiler to insert code that collects various 
+statistics for later analysis.  Profiling with GCC is particularly 
+useful for quickly locating bottleneck functions, determining how 
+much time is spent in a particular function, and how many times that 
+function was called.
+
+To profile the entire GRASS package, the following steps should be 
+followed for success:
+
+ * Before running 'configure', both the CFLAGS and LDFLAGS environment 
+   variables need to be altered by adding the -pg flag to enable 
+   profiling. This can be accomplished by the following:
+
+   CFLAGS='-pg' LDFLAGS='-pg' ./configure ...
+
+   CFLAGS and LINK_FLAGS in include/Make/Platform.make can be manually 
+   edited after running 'configure', also.
+
+ * 'configure' must be called with --disable-shared if you intend to 
+   profile GRASS libraries (recommended)
+
+ * make GRASS as normal
+
+ * In order to run GRASS without errors, lib/init must be recompiled 
+   without linking using the -pg flag.  Edit include/Make/Platform.make 
+   and remove -pg from LINK_FLAGS.  'cd lib/init; make clean; make'.  
+   GRASS can now be installed as normal.
+
+When running a GRASS C module, a file called gmon.out is created when 
+the module completes execution.  This file can be analyzed with 
+the GCC tool 'gprof'.
+
+Note that when 'make distclean' is run, the manual changes to 
+include/Make/Profile.make are also removed.
