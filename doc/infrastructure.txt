@@ -22,7 +22,7 @@ Maintainer: M. Neteler
 * Weekly snapshots (generated Saturday morning Italian time):
 ** Source code tarball of CVS HEAD
 ** Linux binary snapshot is compiled
-*** GRASS is compiled with GDAL, PROJ, SQLite, MySQL, PostgreSQL, FFTW support
+*** GRASS is compiled with GDAL, PROJ, SQLite, MySQL, PostgreSQL, FFTW, C++ support
 *** binary tar.gz is moved into Web space
 
 * GRASS user manual HTML:
@@ -61,7 +61,7 @@ Maintainer: M. Neteler
 ** 'bogofilter' is autotrained
 ** the few spams which arrive through the bugtracker or into the open 'weblist'
    are manually added to /var/mail/bogofilter-train-as-spam folder
-** bobofilter learn script which reads /var/mail/bogofilter-train-as-spam and
+** bogofilter learn script which reads /var/mail/bogofilter-train-as-spam and
    /var/mail/bogofilter-train-as-ham runs every night via cronjob
 
 * Backup of mailing lists (mbox files)
