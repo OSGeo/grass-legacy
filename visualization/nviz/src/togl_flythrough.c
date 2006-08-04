@@ -797,15 +797,15 @@ int Ndraw_all_together_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
         buf_legend = Tcl_GetVar(interp, "legend", TCL_GLOBAL_ONLY);
         buf_fringe = Tcl_GetVar(interp, "fringe", TCL_GLOBAL_ONLY);
 
-	if (atoi(buf_surf) == 1)
+	if (buf_surf && atoi(buf_surf) == 1)
 		surf_draw_all_together(data, interp);
-	if (atoi(buf_vect) == 1)
+	if (buf_vect && atoi(buf_vect) == 1)
 		vect_draw_all_together(data, interp);
-	if (atoi(buf_site) == 1)
+	if (buf_site && atoi(buf_site) == 1)
 		site_draw_all_together(data, interp);
-	if (atoi(buf_vol) == 1)
+	if (buf_vol  &&atoi(buf_vol) == 1)
 	    	vol_draw_all_cmd(data, interp, argc, argv);
-	    	
+	
 	GS_done_draw();
         GS_set_draw(GSD_BACK);
         
