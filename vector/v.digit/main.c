@@ -93,7 +93,8 @@ int main (int argc, char *argv[])
     struct Option *map_opt, *bgcmd_opt;
     struct Flag *new_f;
     char   *mapset;
-    char   **tokens; 
+    char   **tokens;
+    char *fake_argv[2];
     
     G_gisinit(argv[0]);
 
@@ -189,7 +190,9 @@ int main (int argc, char *argv[])
     G_debug (3, "Starting Tk_Main.");
     
     /* Open toolbox */
-    Tk_Main(argc, argv, Tcl_AppInit);
+    fake_argv[0] = argv[0];
+    fake_argv[1] = NULL;
+    Tk_Main(1, fake_argv, Tcl_AppInit);
     
     /* Not reached */
     exit(EXIT_SUCCESS) ;
