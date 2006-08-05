@@ -2,6 +2,7 @@ How the GRASS Webserver and related infrastructure works
 
 written by M. Neteler, $Date$
 
+
 == GRASS Web server ==
 
 Maintainer: M. Neteler
@@ -85,6 +86,17 @@ Maintainer: Stephan Holl, Otto Dassau
 Summary: The system should run almost autonomous. An eye must be
          be kept on people trying to spam the site
 
+
+== GRASS IRC ==
+
+Channel: irc://irc.freenode.net/grass
+
+* channel owner: Alessandro Frigeri <afrigeri unipg.it> ("geoalf")
+* quasi guru: Markus Neteler ("markusN")
+* further operators:
+   - Jachym ("jachym")
+   - Luca ("doktoreas")
+   - Soeren ("huhabla")
 
 == GRASS Source code repository ==
 
