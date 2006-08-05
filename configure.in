@@ -375,6 +375,11 @@ case $target in
     *mingw* | *MINGW*)
 	MINGW=yes
 	;;
+    *)
+	if test "$MINGW32" = "yes"; then
+	    MINGW=yes
+	fi
+	;;
 esac
 
 # Hack for cross compilation with MINGW on Linux (how to do that better?)
