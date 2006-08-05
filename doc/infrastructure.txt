@@ -74,6 +74,37 @@ Maintainer: M. Neteler
 
 Summary: The system should run almost autonomous.
 
+== GRASS Mailing lists ==
+
+Maintainer: Markus Neteler
+
+Available lists:
+grass-abm  	Integration of GRASS with JAVA based agent based modeling (ABM)
+grass-announce 	GRASS announcements (moderated by M. Neteler)
+grass-commit 	Mailing list to distribute GRASS-CVS commits (limited posters)
+grass-dev 	GRASS GIS Development mailing list
+grass-qa 	GRASS Quality Assessment and monitoring list (limited posters)
+grassgui 	GRASSGUI mailing list
+grassuser 	GRASS user list
+nvizlist 	List to discuss GRASS/NVIZ visualization tools
+sqlgrass 	GRASS and SQL support
+statsgrass 	GRASS and statistical software
+translations 	Translation of GRASS (i18N)
+weblist 	GRASS website mailing list
+winGRASS 	winGRASS - Using GRASS on MS-Windows systems mailing list
+
+Notes:
+* The old user list at Baylor university, Texas, USA is still functional. The
+  new grassuser list at ITC-irst is subscribed at Baylor to transport messages
+  posted there to the new list.
+* grass-announce posts to announce AT grass.osgeo.org. The latter is moderated
+  by M. Neteler.
+* grass-qa is receiving posts from the GRASS Quality Control System at
+  Ecole Polytechnique de Montreal, Canada. Not open for other postings.
+* grass-commit is receiving posts from the GRASS CVS server at intevation.de.
+  Not open for other postings.
+* weblist is an open list (posting without subscription possible)
+
 
 == GRASS Wiki ==
 
@@ -121,7 +152,7 @@ Maintainer: Bernhard Reiter, Jan-Oliver Wagner
 Maintainer: Giulio Antoniol
 
 * http://web.soccerlab.polymtl.ca/grass-evolution/grass-browsers/grass-index-en.html
-  sponsored by École Polytechnique de Montréal, Canada
+  implemented and sponsored by Ecole Polytechnique de Montreal, Canada
 * Realtime analysis is sent to: http://grass.itc.it/mailman/listinfo/grass-qa
 
 Further notification/functionality test systems:
