@@ -4545,7 +4545,7 @@ if test "$MINGW" = "yes"; then
     EXE_SUFFIX=".exe"
 
     SHLIB_LD="${CC} -shared"
-    LDFLAGS="-Wl,--export-dynamic"
+    LDFLAGS="-Wl,--export-dynamic $LIBRARY_DIRS"
     CC_SEARCH_FLAGS=""
     LD_SEARCH_FLAGS=""
     LD_LIBRARY_PATH_VAR="PATH"
@@ -4568,7 +4568,7 @@ XLIB=
 XTLIB=
 
 if test "$enable_w11" = "yes" ; then
-    X_CFLAGS=-I${SRCDIR}/src/display/devices/windows/libW11
+    X_CFLAGS=-I${SRCDIR}/display/drivers/windows/libW11
     X_LIBS='-L$(LIBDIR)'
     
     
