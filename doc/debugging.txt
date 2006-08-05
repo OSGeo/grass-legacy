@@ -163,4 +163,4 @@ the module completes execution.  This file can be analyzed with
 the GCC tool 'gprof'.
 
 Note that when 'make distclean' is run, the manual changes to 
-include/Make/Profile.make are also removed.
+include/Make/Platform.make are also removed.
