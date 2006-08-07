@@ -117,6 +117,9 @@ int main (int argc, char **argv)
 		write (newfont, &newoffset, sizeof(newoffset));
 		close (newfont);
 	}
+
+	close(font);
+
 	return 0;
 }
 
