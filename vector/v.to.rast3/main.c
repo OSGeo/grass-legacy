@@ -123,7 +123,9 @@ int main(int argc, char *argv[])
 	    continue;
         }
 
-        row = (int) floor ( (Points->y[0] - region.south ) / region.ns_res);
+	/*Because the g3d lib is row oriented and counts therefore from north to south,
+	* we have to do the same here*/
+        row = (int) floor ( (region.north - Points->y[0]) / region.ns_res); 
         col = (int) floor ( (Points->x[0] - region.west ) / region.ew_res);
 	depth = (int) floor ( (Points->z[0] - region.bottom ) / region.tb_res ) ;
 
