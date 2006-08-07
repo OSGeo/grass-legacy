@@ -26,11 +26,12 @@ $(OBJDIR)/font.bin: $(OBJDIR)/font_2_bin $(RAWFONT)
 	cat $(RAWFONT) | $(OBJDIR)/font_2_bin $@
 
 $(OBJDIR)/font_2_bin: $(OBJDIR)/font_2_bin.o
-	$(CC) $(LDFLAGS) $(OBJDIR)/font_2_bin.o -o $@
+	$(CC) $(LDFLAGS) $(OBJDIR)/font_2_bin.o $(FMODE_OBJ) -o $@
 
 $(OBJDIR)/splitfont: $(OBJDIR)/splitfont.o $(OBJDIR)/fontmap.o
-	$(CC) $(LDFLAGS) $(OBJDIR)/splitfont.o $(OBJDIR)/fontmap.o -o $@
+	$(CC) $(LDFLAGS) $(OBJDIR)/splitfont.o $(OBJDIR)/fontmap.o $(FMODE_OBJ)\
+		-o $@
 
 try: $(OBJDIR)/try.o $(OBJDIR)/showchar.o $(OBJDIR)/font.o
 	$(CC) $(LDFLAGS) $(OBJDIR)/try.o $(OBJDIR)/showchar.o $(OBJDIR)/font.o \
-	      -o $(OBJDIR)/try $(CURSES)
+	      $(FMODE_OBJ) -o $(OBJDIR)/try $(CURSES)
