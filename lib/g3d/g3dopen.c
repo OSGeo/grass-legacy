@@ -320,6 +320,11 @@ G3d_openCellNew  (char *name, int typeIntern, int cache, G3D_Region *region)
     return (void *) NULL;
   }
 
+  /*Set the map window to the map region */
+  G3d_regionCopy (&(map->window), region);
+  /*Set the resampling function to nearest neighbor for data access */
+  G3d_getNearestNeighborFunPtr (&(map->resampleFun));
+
   G3d_maskOff (map);
 
   return (void *) map;
