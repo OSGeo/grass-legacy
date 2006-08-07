@@ -1,21 +1,23 @@
 # translation of grasstcl_it.po to Italian
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2006, GRASS Development Team
-# Markus Neteler <neteler@itc.it>, 2006.
 # Lorenzo Moretti <lorenzo.moretti@bologna.enea.it>
 #
+# Markus Neteler <neteler@itc.it>, 2006.
+# Luciano Montanaro <mikelima@cirulla.net>, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-05-17 20:49+0200\n"
-"PO-Revision-Date: 2006-06-15 23:46+0200\n"
-"Last-Translator: Lorenzo Moretti <lorenzo.moretti@bologna.enea.it>\n"
-"Language-Team: Italian <translations@grass.itc.it>\n"
+"PO-Revision-Date: 2006-08-06 17:26+0200\n"
+"Last-Translator: Luciano Montanaro <mikelima@cirulla.net>\n"
+"Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10.2\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../i18n/tcltkgrass-i18n/main/help.tcl:5 ../lib/gis/gui.tcl:474
 #: ../lib/init/gis_set.tcl:576 ../gui/tcltk/gis.m/labels.tcl:134
@@ -167,7 +169,7 @@ msgstr "corsivo"
 #: ../i18n/etc/nviz2.2-i18n/scripts/colorPopup.tcl:57
 #: ../lib/init/file_option.tcl:205 ../lib/init/gis_set.tcl:154
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:615
 msgid "Display dimensions"
@@ -218,14 +220,14 @@ msgstr "Annulla"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:761
 msgid "Running ..."
-msgstr ""
+msgstr "Esecuzione..."
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:775
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:779
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:795 ../lib/init/help.tcl:128
 #: ../lib/init/help.tcl:1568
 msgid "Stop"
-msgstr ""
+msgstr "Alt"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:776
 msgid "Right button to KILL"
@@ -234,7 +236,7 @@ msgstr "Pulsante destro per USCIRE"
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:785
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:789
 msgid "Cont"
-msgstr ""
+msgstr "Cont"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:786
 msgid "Stopped ..."
@@ -302,11 +304,11 @@ msgstr "Nessun nome di file, esco"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1482
 msgid "is empty file"
-msgstr "e' un file vuoto"
+msgstr "è un file vuoto"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1486
 msgid "is not a valid tcltkgrass script:"
-msgstr "non e' un valido script tcltkgrass:"
+msgstr "non è uno script tcltkgrass valido:"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1489
 msgid "invalid script file:"
@@ -314,7 +316,7 @@ msgstr "file script non valido:"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1500
 msgid "Error executing script"
-msgstr "Errore nella esecuzione dello script"
+msgstr "Errore nell'esecuzione dello script"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1502
 msgid "Script"
@@ -340,7 +342,8 @@ msgstr "per"
 msgid ""
 "ist not running or not in your path or an other error occurred. Please try "
 "starting"
-msgstr "non sta eseguendo o non e' nel percorso o un altro errore si e' verificato. Riprova"
+msgstr ""
+"non sta eseguendo o non è nel percorso o un altro errore si è verificato. Riprova"
 "avvia"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1562
@@ -365,7 +368,7 @@ msgstr "prefisso per il percorso html o url (file:)"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1586
 msgid "postfix for html files (.html)"
-msgstr "suffisso per files html (.html)"
+msgstr "suffisso per file html (.html)"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1589
 msgid "auto raise window of browser"
@@ -397,7 +400,7 @@ msgstr "Location:"
 
 #: ../i18n/tcltkgrass-i18n/main/gui.tcl:1883
 msgid "Loading ..."
-msgstr "Carica ..."
+msgstr "Caricamento..."
 
 #: ../i18n/tcltkgrass-i18n/main/grassabout.tcl:7 ../lib/init/help.tcl:1585
 msgid "About"
@@ -415,7 +418,8 @@ msgstr "Grass 6.0 Data Selection"
 msgid ""
 "Welcome to GRASS GIS Version 5.0\n"
 "\n"
-msgstr "Benvenuti in GRASS GIS Version 6 \n"
+msgstr ""
+"Benvenuti in GRASS GIS Version 6 \n"
 "\n"
 
 #: ../i18n/tcltkgrass-i18n/script/gis_set.tcl:281
@@ -585,7 +589,7 @@ msgstr "Grandezza Intervallo:"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_mkdspf.tcl:121
 msgid "Min:"
-msgstr ""
+msgstr "Min:"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_mkdspf.tcl:125
 msgid "Max:"
@@ -653,11 +657,11 @@ msgstr "Interroga mappa: Nessuna"
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_query.tcl:52
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_query.tcl:62
 msgid "What's Here?"
-msgstr "Che cosa c'e' qui?"
+msgstr "Che cosa c'è qui?"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_query.tcl:58
 msgid "What's Here Panel"
-msgstr "Pannello Che cosa c'e' qui?"
+msgstr "Pannello Che cosa c'è qui?"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_query.tcl:64
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_query_pg.tcl:64
@@ -757,7 +761,7 @@ msgstr "Punto non sulla superficie"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_query.tcl:402
 msgid "Postgres: "
-msgstr ""
+msgstr "Postgres: "
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_query.tcl:447
 msgid "xy distance from previous:  "
@@ -990,7 +994,7 @@ msgstr "Vuoi cancellare questo keyframe?"
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_kanimator.tcl:1630
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_kanimator.tcl:1784
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_animation.tcl:509
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_animation.tcl:535
@@ -1016,7 +1020,7 @@ msgstr "Esci"
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_kanimator.tcl:850
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_kanimator.tcl:984
 msgid "Internal Error"
-msgstr ""
+msgstr "Errore interno"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_animation.tcl:534
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_kanimator.tcl:851
@@ -1035,7 +1039,7 @@ msgstr "Sostituisci Tasto"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_animation.tcl:684
 msgid "There is already a keyframe at this time, do you wish to replace it?"
-msgstr "C'e' gia' un keyframe in questo punto, vuoi sostituirlo?"
+msgstr "C'è già un keyframe in questo punto, vuoi sostituirlo?"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_animation.tcl:730
 msgid "Do you really want to delete all keyframes?"
@@ -1131,7 +1135,7 @@ msgstr "Nessuno Selezionato"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_main.tcl:35
 msgid "Auto:"
-msgstr ""
+msgstr "Auto:"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_main.tcl:39
 msgid "Draw"
@@ -1307,7 +1311,7 @@ msgstr "Cancella i keys selezionati?"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_kanimator.tcl:1084
 msgid "There is already a keyframe at this time, replace it?"
-msgstr "C'e' gia' un keyframe in questo punto, sostituisci?"
+msgstr "C'è già un keyframe in questo punto, sostituisci?"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_kanimator.tcl:1238
 msgid "keyanimtag"
@@ -1323,7 +1327,7 @@ msgstr "Non ci sono keys da salvare nella presente animazione"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_kanimator.tcl:1783
 msgid "Warning - Current animation has not been saved, continue?"
-msgstr "Attenzione - L'attuale animazione non e' stata salvata, continui?"
+msgstr "Attenzione - L'attuale animazione non è stata salvata, continui?"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_kanimator.tcl:1797
 msgid "File Error"
@@ -1440,7 +1444,7 @@ msgstr ""
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/mapBrowser.tcl:100
 msgid "Icons"
-msgstr ""
+msgstr "Icone"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/mapBrowser.tcl:194
 msgid "3d.view"
@@ -1622,7 +1626,7 @@ msgstr "Panello Label"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:58
 msgid "Font Size:"
-msgstr "Grandezza Font:"
+msgstr "Grandezza font:"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:83
 msgid "Italic"
@@ -1634,7 +1638,7 @@ msgstr "Grassetto"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:102
 msgid "Place Label"
-msgstr "Posiziona Label"
+msgstr "Posiziona label"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:103
 msgid "Undo"
@@ -1642,7 +1646,7 @@ msgstr "Annulla"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:108
 msgid "Label Text"
-msgstr "Testo Label"
+msgstr "Testo label"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:127
 msgid "Legend"
@@ -1655,15 +1659,15 @@ msgstr "Inverti"
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:134
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:262
 msgid "Category Values"
-msgstr "Valori Categoria"
+msgstr "Valori categoria"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:136
 msgid "Category Labels"
-msgstr "Labels Categoria"
+msgstr "Label categoria"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:143
 msgid "Use Range"
-msgstr "Usa Range"
+msgstr "Usa range"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:148
 msgid "Low:"
@@ -1675,23 +1679,24 @@ msgstr "Alto:"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:173
 msgid "Discrete Categories"
-msgstr "Categoria Discrete"
+msgstr "Categorie discrete"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:179
 msgid "Use List"
-msgstr "Usa Lista"
+msgstr "Usa lista"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:182
 msgid "Current List"
-msgstr "Lista Corrente"
+msgstr "Lista corrente"
 
+# XXX Credo che significa "dai un'etichetta ad un sito...
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:207
 msgid "  Label Sites  "
-msgstr "  Label Sites  "
+msgstr "  Label sites  "
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:208
 msgid "In Box"
-msgstr "In Box"
+msgstr "In box"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:214
 msgid "Values"
@@ -1699,7 +1704,7 @@ msgstr "Valori"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:240
 msgid "LabelColor"
-msgstr "Colore Label"
+msgstr "Colore label"
 
 #: ../i18n/etc/nviz2.2-i18n/scripts/panel_label.tcl:260
 msgid "cat_list"
@@ -1872,11 +1877,11 @@ msgstr "Decrementa grandezza font"
 
 #: ../lib/init/help.tcl:1586 ../lib/init/help.tcl:2568
 msgid "Save as HTML files..."
-msgstr "Salva come files HTML..."
+msgstr "Salva come file HTML..."
 
 #: ../lib/init/help.tcl:1913
 msgid "Topic not found!"
-msgstr "Sezione non trovata"
+msgstr "Sezione non trovata!"
 
 #: ../lib/init/help.tcl:1978
 msgid "Creating title..."
@@ -1892,11 +1897,11 @@ msgstr "Fatto."
 
 #: ../lib/init/help.tcl:2708
 msgid "Select directory to Save HTML files"
-msgstr "Seleziona directory per salvare files HTML"
+msgstr "Seleziona directory per salvare file HTML"
 
 #: ../lib/init/help.tcl:2709
 msgid "Filename will be ignored"
-msgstr "Nome File sara' ignorato"
+msgstr "Nome File sarà ignorato"
 
 #: ../lib/init/help.tcl:2715
 msgid "Generating HTMLs...."
@@ -1929,7 +1934,7 @@ msgstr "Su"
 
 #: ../lib/init/help.tcl:2980
 msgid "Down"
-msgstr "Giu'"
+msgstr "Giù"
 
 #: ../lib/init/help.tcl:2983
 msgid "Match case"
@@ -1937,7 +1942,7 @@ msgstr ""
 
 #: ../lib/init/help.tcl:2984
 msgid "Regexp expression"
-msgstr ""
+msgstr "Espressione regolare"
 
 #: ../lib/init/help.tcl:3095
 msgid "Search results"
@@ -2065,7 +2070,7 @@ msgid ""
 "Georeferenced file with projection information that can be read\n"
 msgstr ""
 "\n"
-"File georeferenziato con informazione sulla proiezione che puo' essere letto\n"
+"File georeferenziato con informazione sulla proiezione che può essere letto\n"
 
 #: ../lib/init/file_option.tcl:196
 msgid ""
@@ -2153,11 +2158,11 @@ msgstr "ATTENZIONE: mapset non valido"
 #: ../lib/init/gis_set.tcl:560 ../lib/init/gis_set.tcl:753
 #, tcl-format
 msgid "Warning: <%s> is not a valid mapset"
-msgstr "Attenzione: <%s> non e' un mapset valido"
+msgstr "Attenzione: <%s> non è un mapset valido"
 
 #: ../lib/init/gis_set.tcl:581
 msgid "Help already opened"
-msgstr "Aiuto gia' aperto"
+msgstr "Aiuto già aperto"
 
 #: ../lib/init/gis_set.tcl:588
 msgid "GRASS Help"
@@ -2269,7 +2274,7 @@ msgstr ""
 
 #: ../vector/v.digit/settings.tcl:288
 msgid "Line width (pixels; 0 is finest)"
-msgstr "Grandezza linea (pixels; 0 e' piu' sottile)"
+msgstr "Grandezza linea (pixels; 0 è più sottile)"
 
 #: ../vector/v.digit/settings.tcl:297
 msgid "Table"
@@ -2281,15 +2286,15 @@ msgstr "Benvenuto in v.digit"
 
 #: ../vector/v.digit/toolbox.tcl:16
 msgid "Left mouse button"
-msgstr "Bottone mouse sinistro"
+msgstr "Tasto mouse sinistro"
 
 #: ../vector/v.digit/toolbox.tcl:17
 msgid "Middle mouse button"
-msgstr "Bottone mouse in mezzo"
+msgstr "Tasto mouse centrale"
 
 #: ../vector/v.digit/toolbox.tcl:18
 msgid "Right mouse button"
-msgstr "Bottone mouse destro"
+msgstr "Tasto mouse destro"
 
 #: ../vector/v.digit/toolbox.tcl:40
 msgid "Layer"
@@ -2771,7 +2776,7 @@ msgstr "selez. vettore esistente per salvare oggetti interrogati"
 
 #: ../gui/tcltk/gis.m/vector.tcl:498 ../gui/tcltk/d.m/vector.tcl:354
 msgid "Display when avg. region dimension is"
-msgstr "Visual. quando la dimen. media della regione e'"
+msgstr "Visual. quando la dimen. media della regione è"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:137 ../gui/tcltk/d.m/gridline.tcl:77
 msgid "draw grid"
@@ -3054,15 +3059,15 @@ msgstr "Aggiungi un livello labels raster (usando file v.labels)"
 
 #: ../gui/tcltk/gis.m/gmtool1.tcl:128
 msgid "Add postscript labels layer (using v.labels file)"
-msgstr "Aggiungi un livello labels postcript"
+msgstr "Aggiungi un livello label PostScript"
 
 #: ../gui/tcltk/gis.m/gmtool1.tcl:135
 msgid "Add posttscript text layer"
-msgstr "Aggiungi un livello testo postscript"
+msgstr "Aggiungi un livello testo PostScript"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:216
 msgid "Postscript and LPR printing of map display"
-msgstr "Stampa Postscript e LPR della mappa visualizzata"
+msgstr "Stampa PostScript e LPR della mappa visualizzata"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:230
 msgid "Preset paper type"
@@ -3106,11 +3111,11 @@ msgstr "Invia a una stampante LPR*"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:292
 msgid "Send to postscript device* "
-msgstr "Invia a una device postscript* "
+msgstr "Invia a una device PostScript* "
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:296
 msgid "list devices"
-msgstr " lista device"
+msgstr "lista device"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:298
 msgid "list ghostscript output devices"
@@ -3148,7 +3153,7 @@ msgstr "Apri..."
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:28 ../gui/tcltk/d.m/menu.tcl:18
 msgid "Save as..."
-msgstr "Salva come"
+msgstr "Salva come..."
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:32
 msgid "Georectify"
@@ -3156,7 +3161,7 @@ msgstr "Georettifica"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:37
 msgid "Create ps.map file for postscript printing"
-msgstr "Crea un file ps.map per la stampa postscript"
+msgstr "Crea un file ps.map per la stampa PostScript"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:39 ../gui/tcltk/d.m/menu.tcl:29
 msgid "E&xit"
@@ -3477,7 +3482,7 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:118 ../gui/tcltk/menus/menu.tcl:157
 msgid "Vector map"
-msgstr "Mappa Vettoriale"
+msgstr "Mappa vettoriale"
 
 #: ../gui/tcltk/menus/menu.tcl:119
 msgid "Various formats using OGR"
@@ -3497,7 +3502,7 @@ msgstr "DXF file"
 
 #: ../gui/tcltk/menus/menu.tcl:125
 msgid "ESRI e00 format"
-msgstr "ESRI e00"
+msgstr "Formato ESRI e00"
 
 #: ../gui/tcltk/menus/menu.tcl:126
 msgid "Garmin GPS Waypoints/Routes/Tracks"
@@ -3513,19 +3518,19 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:129
 msgid "Matlab and MapGen files"
-msgstr "Matlab e MapGen files"
+msgstr "File Matlab e MapGen"
 
 #: ../gui/tcltk/menus/menu.tcl:131 ../gui/tcltk/menus/menu.tcl:165
 msgid "Grid 3D"
-msgstr ""
+msgstr "Griglia 3D"
 
 #: ../gui/tcltk/menus/menu.tcl:132 ../gui/tcltk/menus/menu.tcl:166
 msgid "ASCII 3D file"
-msgstr ""
+msgstr "file ASCII 3D"
 
 #: ../gui/tcltk/menus/menu.tcl:133 ../gui/tcltk/menus/menu.tcl:167
 msgid "Vis5D file"
-msgstr ""
+msgstr "File Vis5D"
 
 #: ../gui/tcltk/menus/menu.tcl:136
 msgid "Export"
@@ -3533,48 +3538,48 @@ msgstr "Esporta"
 
 #: ../gui/tcltk/menus/menu.tcl:140
 msgid "ASCII grid (for GRASS, Surfer, Modflow, etc)"
-msgstr "ASCII grid (per GRASS, Surfer, Modflow, etc)"
+msgstr "Griglia ASCII (per GRASS, Surfer, Modflow, etc)"
 
 #: ../gui/tcltk/menus/menu.tcl:142
 msgid "ESRI ARC/INFO ASCII grid"
-msgstr "ESRI ARC/INFO ASCII grid"
+msgstr "Griglia ESRI ARC/INFO ASCII"
 
 #: ../gui/tcltk/menus/menu.tcl:146
 msgid "Binary file"
-msgstr "File Binario"
+msgstr "File binario"
 
 #: ../gui/tcltk/menus/menu.tcl:148
 msgid "MPEG-1 animations"
-msgstr "MPEG-1 animazione"
+msgstr "Animazioni MPEG-1"
 
 #: ../gui/tcltk/menus/menu.tcl:149
-msgid "PNG image (not georeferenziata)"
-msgstr "PNG file  (non georeferenced)"
+msgid "PNG image (not georeferenced)"
+msgstr "Immagine PNG (non georeferenziata)"
 
 #: ../gui/tcltk/menus/menu.tcl:150
 msgid "PPM image (24bit)"
-msgstr "PPM file (24bit)"
+msgstr "Immagine PPM (24bit)"
 
 #: ../gui/tcltk/menus/menu.tcl:151
 msgid "PPM image from red, green, blue raster maps"
-msgstr "PPM file da mappe raster red, green, blue"
+msgstr "immagine PPM da mappe raster red, green, blue"
 
 #: ../gui/tcltk/menus/menu.tcl:152
 msgid "POVray height-field"
-msgstr "POVray height-field"
+msgstr "campo di altezze di POVray"
 
 #: ../gui/tcltk/menus/menu.tcl:153
 msgid "TIFF image (8/24bit)"
-msgstr "TIFF file (8/24bit)"
+msgstr "Immagine TIFF (8/24bit)"
 
 #: ../gui/tcltk/menus/menu.tcl:154
 msgid "VRML file"
-msgstr "VRML file"
+msgstr "File VRML"
 
 #: ../gui/tcltk/menus/menu.tcl:155 ../gui/tcltk/menus/menu.tcl:163
 #: ../gui/tcltk/menus/menu.tcl:168
 msgid "VTK ASCII file"
-msgstr "VTK ASCII file"
+msgstr "File VTK ASCII"
 
 #: ../gui/tcltk/menus/menu.tcl:158
 msgid "Various formats using OGR (SHAPE, MapInfo etc)"
@@ -3582,7 +3587,7 @@ msgstr "Vari formati usando OGR (SHAPE, MapInfo etc)"
 
 #: ../gui/tcltk/menus/menu.tcl:160
 msgid "DXF file (ASCII)"
-msgstr ""
+msgstr "file DXF (ASCII)"
 
 #: ../gui/tcltk/menus/menu.tcl:161
 msgid "ASCII vector or point file/old GRASS ASCII vector file"
@@ -3590,11 +3595,11 @@ msgstr "ASCII vettore o file punti vecchio formato GRASS ASCII"
 
 #: ../gui/tcltk/menus/menu.tcl:162
 msgid "POV-Ray format"
-msgstr "POV-Ray formato"
+msgstr "Formato POV-Ray"
 
 #: ../gui/tcltk/menus/menu.tcl:172
 msgid "Manage maps and volumes"
-msgstr "Gestione Mappe e volumi"
+msgstr "Gestione mappe e volumi"
 
 #: ../gui/tcltk/menus/menu.tcl:173
 msgid "Copy maps"
@@ -3794,7 +3799,7 @@ msgstr "Quantizazzione per le mappe floating-point"
 
 #: ../gui/tcltk/menus/menu.tcl:236
 msgid "Resample (change resolution) using nearest neighbor method"
-msgstr "Ricampiona (cambia risoluzione) usando il metodo dei punti piu' vicini"
+msgstr "Ricampiona (cambia risoluzione) usando il metodo dei punti più vicini"
 
 #: ../gui/tcltk/menus/menu.tcl:237
 msgid "Resample (change resolution) using regularized spline tension"
@@ -3854,7 +3859,7 @@ msgstr "Crea MASK raster"
 
 #: ../gui/tcltk/menus/menu.tcl:256
 msgid "Locate closest points between areas in 2 raster maps"
-msgstr "Localizza i punti piu' vicini tra le aree in 2 mappe raster"
+msgstr "Localizza i punti più vicini tra le aree in 2 mappe raster"
 
 #: ../gui/tcltk/menus/menu.tcl:257
 msgid "Map calculator"
@@ -3942,7 +3947,7 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:282
 msgid "Visibility/line of sight"
-msgstr "Visibilita'/linea di vista"
+msgstr "Visibilità/linea di vista"
 
 #: ../gui/tcltk/menus/menu.tcl:284
 msgid "Transform features"
@@ -3998,7 +4003,7 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:299
 msgid "TOPMODEL simulation"
-msgstr ""
+msgstr "Simulazione TOPMODEL"
 
 #: ../gui/tcltk/menus/menu.tcl:300
 msgid "Watershed subbasins"
@@ -4239,7 +4244,7 @@ msgstr "Crea/ricostruisci la topologia"
 
 #: ../gui/tcltk/menus/menu.tcl:383
 msgid "Clean vector files"
-msgstr "Pulisci files vettoriali"
+msgstr "Pulisci file vettoriali"
 
 #: ../gui/tcltk/menus/menu.tcl:385
 msgid "Break lines at intersections"
@@ -4331,7 +4336,7 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:416
 msgid "Locate nearest features to points or centroids"
-msgstr "Localizza caratteristiche piu' vicine ai punti o centroidi"
+msgstr "Localizza caratteristiche più vicine ai punti o centroidi"
 
 #: ../gui/tcltk/menus/menu.tcl:417
 msgid "Generate Thiessen polygons around points (Voronoi diagram)"
@@ -4355,11 +4360,11 @@ msgstr "Gestione Network"
 
 #: ../gui/tcltk/menus/menu.tcl:423
 msgid "Shortest route"
-msgstr "Percorso piu' corto"
+msgstr "Percorso più corto"
 
 #: ../gui/tcltk/menus/menu.tcl:424
 msgid "Shortest route (visualization only)"
-msgstr "Percorso piu' breve (solo visualizzazione)"
+msgstr "Percorso più breve (solo visualizzazione)"
 
 #: ../gui/tcltk/menus/menu.tcl:425
 msgid "Split net to bands between cost isolines"
@@ -5095,7 +5100,7 @@ msgstr "    colore diagramma outline:"
 
 #: ../gui/tcltk/d.m/fttext.tcl:102
 msgid "     (leave blank to place with mouse; position will not save)"
-msgstr "     (lascia vuotoper posizionare con il mouse; la posizione non sara' salvata)"
+msgstr "     (lascia vuotoper posizionare con il mouse; la posizione non sarà salvata)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:108
 msgid "     coordinate type"
@@ -5164,7 +5169,7 @@ msgstr "Salva monitor in vari formati grafici"
 
 #: ../gui/tcltk/d.m/menu.tcl:26
 msgid "Save map to Postscript file"
-msgstr "Salva mappa come file Postscript"
+msgstr "Salva mappa come file PostScript"
 
 #: ../gui/tcltk/d.m/menu.tcl:27
 msgid "Print to default printer"
