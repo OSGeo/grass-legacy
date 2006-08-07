@@ -97,8 +97,10 @@ Notes:
 * The old user list at Baylor university, Texas, USA is still functional. The
   new grassuser list at ITC-irst is subscribed at Baylor to transport messages
   posted there to the new list.
-* grass-announce posts to announce AT grass.osgeo.org. The latter is moderated
-  by M. Neteler.
+* grass-announce:
+  * posts to 'announce AT grass.osgeo.org'. The latter is moderated by M. Neteler
+  * has monthly password reminder disabled to avoid leakage into publicly archived
+    lists such as 'announce AT grass.osgeo.org'
 * grass-qa is receiving posts from the GRASS Quality Control System at
   Ecole Polytechnique de Montreal, Canada. Not open for other postings.
 * grass-commit is receiving posts from the GRASS CVS server at intevation.de.
