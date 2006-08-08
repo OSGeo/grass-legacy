@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <!--	grass-interface.dtd
 
 	Copyright (C) 2000 by the GRASS Development Team
@@ -10,7 +9,7 @@
 	   * make <default> optional  // Should it reference <value> ?
 	   
 	2001-07-09:
-	   * Make an explicity flag element
+	   * Make an explicit flag element
 	   * make keydesc and gispropmpt elements
 	   * move elements directly under "task"
 
