@@ -3,33 +3,21 @@
 <EM>r.statistics</EM> is a tool, where different class, resp. object
 oriented statistical analysis methods are possible.<BR>
 
-The methods are the following:
-<P>
-<DD>[english] - [german]
-<P>
-<DD>distribution - Verteilung in Prozent
-<P>
-<DD>average - Durchschnitt
-<P>
-<DD>mode - Modalwert
-<P>
-<DD>median - Median
-<P>
-<DD>average deviation - Durchschnittliche Abweichung
-<P>
-<DD>standard deviation - Standardabweichung
-<P>
-<DD>variance - Varianz
-<P>
-<DD>skewness - Schiefe der Verteilung
-<P>
-<DD>kurtosis - Relative Abflachung (-) oder Zuspitzung (+)
-<P>
-<DD>minimum - Minimum
-<P>
-<DD>maximum - Maximum
-<P>
-<DD>sum - Summe
+The methods are the following (english - german):
+<ul>
+<li>distribution - Verteilung in Prozent</li>
+<li>average - Durchschnitt</li>
+<li>mode - Modalwert</li>
+<li>median - Median</li>
+<li>average deviation - Durchschnittliche Abweichung</li>
+<li>standard deviation - Standardabweichung</li>
+<li>variance - Varianz</li>
+<li>skewness - Schiefe der Verteilung</li>
+<li>kurtosis - Relative Abflachung (-) oder Zuspitzung (+)</li>
+<li>minimum - Minimum</li>
+<li>maximum - Maximum</li>
+<li>sum - Summe</li>
+</ul>
 
 The calculations will be performed for areas with data of the
 covering-layers which belong in the base-layer o the same category.
@@ -52,19 +40,32 @@ In the 1. column are the category values of the base-layer (a), in the 2.
 column the associated value of the cover-Layers (b) and in the 3. column the
 percentage of b from a. Example:
 
-<PRE>
-                                 1   124  23
-                                 1   201  47
-                                 1   273  30
-                                 2   101  5
-                                 2   152  16
-                                 2   167  60
-                                 2   187  19
-                                      .
-                                      .
-                                      .
-</PRE>
+<div class="code"><pre>
+1   124  23
+1   201  47
+1   273  30
+2   101  5
+2   152  16
+2   167  60
+2   187  19
+     .
+     .
+     .
+</pre></div>
 
+To transfer the values stored as category labels into cell values,
+<em>r.mapcalc</em> can be used ('@' operator).
+
+<H2>EXAMPLE</H2>
+
+Calculation of average elevation of each field in the Spearfish region:
+
+<div class="code"><pre>
+r.statistics base=fields cover=elevation.dem out=elevstats method=average
+r.cats elevstats
+r.mapcalc "fieldelev=@elevstats"
+r.univar fieldelev
+</pre></div>
 
 <H2>REMARK</H2>
 The source code of average, mode and median was taken from some GRASS raster
@@ -75,12 +76,15 @@ unkown
 
 <H2>SEE ALSO</H2>
 
-<EM><A HREF="r.mode.html">r.mode</A>,
+<EM>
+<A HREF="r.mode.html">r.mode</A>,
 <A HREF="r.median.html">r.median</A>,
 <A HREF="r.average.html">r.average</A>,
-<A HREF="r.neighbors.html">r.neighbors</A></EM>
+<A HREF="r.mapcalc.html">r.mapcalc</A>,
+<A HREF="r.neighbors.html">r.neighbors</A>
+</EM>
 
 <H2>AUTHOR</H2>
 Martin Schroeder, Geographisches Institut Heidelberg, Germany
 
-<p><i>Last changed: $Date$</i>
+<p><i>Last changed: $Date$</i></p>
