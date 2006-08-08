@@ -35,7 +35,6 @@
 #%option
 #% key: output
 #% type: string
-#% gisprompt: new,cell,raster
 #% description: Base name for red, green, & blue output maps containing the blend
 #% key_desc : name
 #% required : yes
@@ -49,7 +48,6 @@
 #% required : no
 #%end
 
-
 if  [ -z "$GISBASE" ] ; then
    echo "You must be in GRASS GIS to run this program." 1>&2
    exit 1
@@ -59,14 +57,15 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
    exec g.parser "$0" "$@"
 fi
 
-for MAP in r g b ; do
-   g.findfile elem=cell file=${GIS_OPT_OUTPUT}.$MAP > /dev/null
-   if [ $? -eq 0 ] ; then
-      echo "Raster map <${GIS_OPT_OUTPUT}.$MAP> already exists." 1>&2
-      exit 1
-   fi
-done
-
+if [ "$GRASS_OVERWRITE" != 1 ] ; then
+   for MAP in r g b ; do
+      g.findfile elem=cell file=${GIS_OPT_OUTPUT}.$MAP > /dev/null
+      if [ $? -eq 0 ] ; then
+         echo "Raster map <${GIS_OPT_OUTPUT}.$MAP> already exists." 1>&2
+         exit 1
+      fi
+   done
+fi
 
 PERC_INV=`expr 100 - $GIS_OPT_PERCENT`
 
