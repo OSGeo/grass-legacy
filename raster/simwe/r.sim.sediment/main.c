@@ -315,7 +315,7 @@ int main ( int argc, char *argv[])
 /* mandatory for si,sigma */
 
 
-   si = (double **)G_malloc (sizeof(double)*(my));
+   si = (double **)G_malloc (sizeof(double *)*(my));
        for(l=0;l<my;l++)
           {
             si[l]   = (double*)G_malloc (sizeof(double)*(mx));
@@ -326,7 +326,7 @@ int main ( int argc, char *argv[])
               si[j][i] = 0.;
              }
 
-   sigma = (double **)G_malloc (sizeof(double)*(my));
+   sigma = (double **)G_malloc (sizeof(double *)*(my));
        for(l=0;l<my;l++)
           {
             sigma[l]   = (double*)G_malloc (sizeof(double)*(mx));
@@ -339,7 +339,7 @@ int main ( int argc, char *argv[])
 
 /* memory allocation for output grids */
 
-        dif = (float **)G_malloc (sizeof(float)*(my));
+        dif = (float **)G_malloc (sizeof(float *)*(my));
            for(l=0;l<my;l++)
               {
                 dif[l]   = (float*)G_malloc (sizeof(float)*(mx));
@@ -352,7 +352,7 @@ int main ( int argc, char *argv[])
 
    if (erdep != NULL || et != NULL)
       {
-        er = (float **)G_malloc (sizeof(float)*(my));
+        er = (float **)G_malloc (sizeof(float *)*(my));
            for(l=0;l<my;l++)
               {
                 er[l]   = (float*)G_malloc (sizeof(float)*(mx));
