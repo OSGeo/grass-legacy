@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     parm.output->key        = "output";
     parm.output->type       = TYPE_STRING;
     parm.output->required   = YES;
-    parm.output->gisprompt  = "old,cell,raster" ;
+    parm.output->gisprompt  = "new_file,file,output";
     parm.output->description= _("Name of an output ARC-GID map (use out=- for stdout)");
 
     parm.dp = G_define_option() ;
@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
     flag.singleline->description = _("List one entry per line instead of full row");
 
     if (G_parser(argc, argv))
-       	exit (-1);
+       	exit (EXIT_FAILURE);
 
     sscanf(parm.dp->answer, "%d", &dp);
     if(dp>20 || dp < 0)

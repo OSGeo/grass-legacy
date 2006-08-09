@@ -455,8 +455,10 @@ main(int argc, char *argv[]) {
   Rtimer rtTotal;    
   char buf[BUFSIZ];
 
+/* this disturbs the parser
   fprintf(stderr, "r.terraflow December 2003\n");
   fflush(stderr);
+*/
 
   /* initialize GIS library */
   G_gisinit(argv[0]);
@@ -484,16 +486,17 @@ main(int argc, char *argv[]) {
     nrows = (dimension_type)nr;
     ncols = (dimension_type)nc;
   }
-  fprintf(stderr, "region size is %d x %d\n", nrows, ncols);
-  fflush(stderr);  
-  
+
   /* read user options; fill in global <opt> */  
   opt = (userOptions*)malloc(sizeof(userOptions));
   assert(opt);
   
   parse_args(argc, argv);
   check_args();
-  
+
+  fprintf(stderr, "region size is %d x %d\n", nrows, ncols);
+  fflush(stderr);
+ 
   /* check STREAM path (the place where intermediate STREAMs are placed) */
   sprintf(buf, "%s=%s",STREAM_TMPDIR, opt->streamdir);
   putenv(buf);

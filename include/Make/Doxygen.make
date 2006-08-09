@@ -2,6 +2,7 @@
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 
 DOXINPUT=$(DOXNAME)lib.dox
+DOXOUTPUT=$(DOXNAME)lib
 
 #check for program
 checkdoxygen:
@@ -42,9 +43,9 @@ pdfdocs: checkdoxygen cleandocs
 	doxygen $(MODULE_TOPDIR)/include/Make/Doxyfile_arch_latex
 #this hack is needed to make Acroread's search engine happy:
 	(cd ./latex ; echo "\usepackage[T1]{fontenc}" >> doxygen.sty)
-	(cd ./latex && $(MAKE) refman.pdf && mv refman.pdf grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}$(DOXINPUT)_`date '+%Y_%m_%d'`_refman.pdf)
+	(cd ./latex && $(MAKE) refman.pdf && mv refman.pdf grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}$(DOXOUTPUT)_`date '+%Y_%m_%d'`_refman.pdf)
 	@mv $(DOXINPUT).org $(DOXINPUT)
-	@echo "PDF reference in directory ./latex/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}$(DOXINPUT)_`date '+%Y_%m_%d'`_refman.pdf"
+	@echo "PDF reference in directory ./latex/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}$(DOXOUTPUT)_`date '+%Y_%m_%d'`_refman.pdf"
 
 cleandocs:
 	rm -rf ./latex ./html

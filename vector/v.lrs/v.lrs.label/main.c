@@ -272,7 +272,7 @@ int main(int argc, char **argv)
     rseg = (RSEGMENT *) G_malloc ( arseg * sizeof (RSEGMENT) );
 
     nlines = Vect_get_num_lines ( &In );
-    //for ( line = 19; line <= 19; line++ ) {
+    /* for ( line = 19; line <= 19; line++ ) { */
     for ( line = 1; line <= nlines; line++ ) {
 	G_debug(0, "  line = %d / %d", line, nlines);
 	type = Vect_read_line ( &In, LPoints, LCats, line );
@@ -347,7 +347,7 @@ int main(int argc, char **argv)
 				
 	/* Go through all segments of current line */
 	G_debug(1, "    write");
-	//t1 = clock();
+	/* t1 = clock(); */
 	t1 = (double)time(NULL);
 	nstat = 0;
 	for ( seg = 0; seg < nrseg; seg++ ) {
@@ -366,7 +366,7 @@ int main(int argc, char **argv)
                 ret = LR_get_offset( driver, table_opt->answer, "lcat", "lid",
                       "start_map", "end_map", "start_mp", "start_off", "end_mp", "end_off",
 		      rseg[seg].lid, mp, sta * sta_multip, mp_multip, &lcat, &map_offset );
-	        //G_debug(1, "      get offset time = %d", t2 - t1);
+	        /* G_debug(1, "      get offset time = %d", t2 - t1); */
 	        G_debug(1, "      get offset");
 		
                 if ( ret == 0 ) {
@@ -442,11 +442,12 @@ int main(int argc, char **argv)
 	    }
 
 	}
-	//t2 = clock();
+	/* t2 = clock(); */
 	t2 = (double) time(NULL);
 	dt = (t2 - t1)/nstat;
 	G_debug(1, "    time / seg = %f, time = %f, nstat = %d", dt, t2 - t1, nstat);
-	//break; //debug 
+	/* break; */
+	/* debug */
 
     }
 

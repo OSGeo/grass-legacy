@@ -18,6 +18,10 @@
 #%  description: removes existing attribute table of a vector map
 #%End
 
+#%flag
+#%  key: f
+#%  description: force removal (don't ask)
+#%end
 #%option
 #% key: map
 #% type: string
@@ -97,8 +101,12 @@ driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'
 echo "Removing table <$table> linked to layer <$GIS_OPT_LAYER> of vector map <$GIS_OPT_MAP>"
 
 # this may not work in GUI mode:
-echo "Are you sure (y/n)? [n]"
-read ans
+if [ $GIS_FLAG_f -eq 0 ] ; then
+  echo "Are you sure (y/n)? [n]"
+  read ans
+else
+  ans="y"
+fi
 
 if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
    echo "Dropping table <$table>..."

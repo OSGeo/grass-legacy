@@ -120,15 +120,15 @@ proc GmGroup::nvdisplay { node } {
     }
 
 	if { $nvelev!= "" } {
-		set cmd "nviz elevation=$nvelev color=$nvcolor"
+		set cmd [list nviz elevation=$nvelev color=$nvcolor]
 		if {$nvlines != ""} {
-			append cmd " vector=$nvlines"
+			lappend cmd vector=$nvlines
 		}
 		if {$nvpoints != ""} {
-			append cmd " points=$nvpoints"
+			lappend cmd points=$nvpoints
 		}
 		
-		append cmd " &"
+		lappend cmd &
 		eval exec $cmd
 	}
 

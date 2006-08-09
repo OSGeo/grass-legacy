@@ -2,17 +2,17 @@
 # 
 ############################################################################
 #
-# MODULE:       v.in.gpsbabel
+# MODULE:      v.in.gpsbabel
 #
-# PURPOSE:      Import GPS data from a GPS receiver or file into a GRASS
+# PURPOSE:     Import GPS data from a GPS receiver or file into a GRASS
 #	       vector map using gpsbabel
 #
-# COPYRIGHT:    (c) 2000-2006 the GRASS Development Team
+# COPYRIGHT:   (c) 2000-2006 the GRASS Development Team
 #	       This program is free software under the GNU General Public
 #	       License (>=v2). Read the file COPYING that comes with GRASS
 #	       for details.
 #
-# AUTHORS:      Claudio Porta & Lucio Davide Spano, students of Computer 
+# AUTHORS:     Claudio Porta & Lucio Davide Spano, students of Computer 
 #		  Science, University of Pisa (Italy).
 #		Commission from Faunalia Pontedera (PI)
 #
@@ -133,7 +133,7 @@ if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
 fi
 
 #### trap ctrl-c so that we can clean up tmp
-trap 'rm -f ${TMP}*' 2 3 15
+trap 'rm -f ${TMP}.*' 2 3 15
 
 
 #### process command line arguments 
@@ -161,13 +161,13 @@ fi
 
 if [ $GIS_FLAG_W -eq 1 ] && ([ $GIS_FLAG_R -eq 1 ] || [ $GIS_FLAG_T -eq 1 ]) ; then
     echo "One feature at a time please. Use v.patch if you need to combine them."
-    rm -f ${TMP}*
+    rm -f ${TMP}.*
     exit 1
 fi
 # logic eludes me at pressent..  [combine with above]
 if [ $GIS_FLAG_R -eq 1 ] && [ $GIS_FLAG_T -eq 1 ] ; then
     echo "One feature at a time please. Use v.patch if you need to combine them."
-    rm -f ${TMP}*
+    rm -f ${TMP}.*
     exit 1
 fi
 
@@ -215,7 +215,7 @@ read PROJ_TYPE < $TMP.tmp
 
 if [ $PROJ_TYPE -eq 0 ] && [ $KEEP_WGS84 -ne 1 ] ; then
     echo "Cannot project to a XY location." 1>&2
-    rm -f ${TMP}*
+    rm -f ${TMP}.*
     exit 1
 fi
 
@@ -232,17 +232,17 @@ STYLE="$GISBASE/etc/grass_write_ascii.style"
 #### receive data ... modificato
 
 if [ $CREATE_POINTS -eq 1 ] ; then
-    echo "Uploading Waypoints from GPS" 1>&2
+    echo "Downloading Waypoints from GPS" 1>&2
     gpsbabel -w -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o xcsv,style="$STYLE" -F "$TMP".gpst
     EXITCODE=$?
 else
     if [ $RTE -eq 1 ] ; then
-	echo "Uploading Routes from GPS" 1>&2
+	echo "Downloading Routes from GPS" 1>&2
 	gpsbabel -r -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o gpx,style="$STYLE" -F "$TMP".gpx
 	EXITCODE=$?
     fi
     if [ $TRK -eq 1 ] ; then
-	echo "Uploading Tracks from GPS" 1>&2
+	echo "Downloading Tracks from GPS" 1>&2
 	gpsbabel -t -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o gpx,style="$STYLE" -F "$TMP".gpx
 	EXITCODE=$?
     fi
@@ -251,7 +251,7 @@ fi
 #### check success/failure
 if [ $EXITCODE -ne 0 ] ; then
     echo "$PROG: Error retrieving data" 1>&2
-    rm -f ${TMP}*
+    rm -f ${TMP}.*
     exit 1
 fi
 
@@ -333,7 +333,7 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 
 	if [ $EXITCODE -ne 0 ] ; then
 	    echo "$PROG: Error importing data" 1>&2
-	    rm -f ${TMP}*
+	    rm -f ${TMP}.*
 	    exit 1
 	fi
 
@@ -609,7 +609,7 @@ fi
 
 
 #### clean up the mess
-#rm -f ${TMP}* 1>&2 > /dev/null
+rm -f ${TMP}.* 1>&2 > /dev/null
 
 #### end
 echo 1>&2

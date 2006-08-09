@@ -141,16 +141,18 @@ static void compute_transformation(void)
 			if (!col)
 				break;
 
-			if (strcmp("idx", col) == 0)	printf("%d ", n);
-			if (strcmp("src", col) == 0)	printf("%f %f  ", points.e1[n], points.n1[n]);
-			if (strcmp("dst", col) == 0)	printf("%f %f  ", points.e2[n], points.n2[n]);
-			if (strcmp("fwd", col) == 0)	printf("%f %f  ", e2, n2);
-			if (strcmp("rev", col) == 0)	printf("%f %f  ", e1, n1);
-			if (strcmp("fxy", col) == 0)	printf("%f %f  ", fx, fy);
-			if (strcmp("rxy", col) == 0)	printf("%f %f  ", rx, ry);
-			if (strcmp("fd",  col) == 0)	printf("%f  ", fd);
-			if (strcmp("rd",  col) == 0)	printf("%f  ", rd);
+			if (strcmp("idx", col) == 0)	printf(" %d", n);
+			if (strcmp("src", col) == 0)	printf(" %f %f", points.e1[n], points.n1[n]);
+			if (strcmp("dst", col) == 0)	printf(" %f %f", points.e2[n], points.n2[n]);
+			if (strcmp("fwd", col) == 0)	printf(" %f %f", e2, n2);
+			if (strcmp("rev", col) == 0)	printf(" %f %f", e1, n1);
+			if (strcmp("fxy", col) == 0)	printf(" %f %f", fx, fy);
+			if (strcmp("rxy", col) == 0)	printf(" %f %f", rx, ry);
+			if (strcmp("fd",  col) == 0)	printf(" %f", fd);
+			if (strcmp("rd",  col) == 0)	printf(" %f", rd);
 		}
+
+		printf("\n");
 	}
 
 	if (summary && count > 0)

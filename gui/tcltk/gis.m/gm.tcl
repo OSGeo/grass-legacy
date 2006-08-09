@@ -444,6 +444,7 @@ proc Gm::cleanup { destroywin } {
 	global mon
 	global tmpdir
 	global mappid
+	global legfile
 	variable moncount
 	
 	# stop gism PNG driver if it is still running due to error
@@ -459,7 +460,7 @@ proc Gm::cleanup { destroywin } {
 		
 	# delete temporary local region files
 	for {set x 1} {$x<$moncount} {incr x} {
-		eval exec "g.remove region=map_$x"
+		exec g.remove region=map_$x
 	}
 
 	# delete all map display ppm files
@@ -470,6 +471,8 @@ proc Gm::cleanup { destroywin } {
 		file delete $file
 	}
 	
+	if {[file exists $legfile]} {file delete -force $legfile}
+
 	unset mon
 
 }

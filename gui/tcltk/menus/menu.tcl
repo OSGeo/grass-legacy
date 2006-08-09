@@ -202,9 +202,9 @@ set descmenu [subst  {
 		{command {[G_msg "Manage 3D region"]} {} "g3.setregion" {} -command {execute g3.setregion }}
 	}}
 	{cascad {[G_msg "GRASS working environment"]} {} "" $tmenu {			
-		{command {[G_msg "Modify access by other users to current mapset"]} {} "g.access" {} -command {execute g.access }}
-		{command {[G_msg "Modify mapset search path"]} {} "g.mapsets.tcl" {} -command {spawn $env(GISBASE)/etc/g.mapsets.tcl}}
+		{command {[G_msg "Access other mapsets in current location"]} {} "g.mapsets.tcl" {} -command {spawn $env(GISBASE)/etc/g.mapsets.tcl}}
 		{command {[G_msg "Change current working session to new mapset, location, or GISDBASE"]} {} "g.mapset" {} -command {execute g.mapset }}
+		{command {[G_msg "Modify access by other users to current mapset"]} {} "g.access" {} -command {execute g.access }}
 		{command {[G_msg "Show current GRASS environment settings"]} {} "g.gisenv" {} -command {run_panel g.gisenv }}
 		{command {[G_msg "Set GRASS environment settings"]} {} "g.gisenv" {} -command {execute g.gisenv }}
 		{command {[G_msg "Show current GRASS version"]} {} "g.version -c" {} -command {run_panel "g.version -c" }}
@@ -218,7 +218,6 @@ set descmenu [subst  {
 	{cascad {[G_msg "Text"]} {} "" $tmenu {			
 		{command {[G_msg "Select default text font"]} {} "d.font" {} -command {execute d.font }}
 		{command {[G_msg "Select default freetype text font"]} {} "" {} -command {execute d.font.freetype }}
-		{command {[G_msg "Show standard GRASS fonts"]} {} "show.fonts.sh" {} -command {execute show.fonts.sh }}
 	}}
 	{cascad {[G_msg "X-monitor displays"]} {} "" $tmenu {
 		{command {[G_msg "Configure xmonitor displays"]} {} "d.mon" {} -command {execute d.mon }}
@@ -287,16 +286,16 @@ set descmenu [subst  {
 	}}
 	{cascad {[G_msg "Transform features"]} {} "" $tmenu {			
 		{command {[G_msg "Clump small areas (statistics calculated by r.volume)"]} {} "r.clump" {} -command {execute r.clump }}
-		{command {[G_msg "Grow areas"]} {} "r.grow2" {} -command {execute r.grow2 }}
+		{command {[G_msg "Grow areas"]} {} "r.grow" {} -command {execute r.grow }}
 		{command {[G_msg "Thin linear features"]} {} "r.thin" {} -command {execute r.thin }}
 	}}
 	{separator}
 	{cascad {[G_msg "Hydrologic modeling"]} {} "" $tmenu {			
 		{command {[G_msg "Carve stream channels into elevation map using vector streams map"]} {} "r.carve" {} -command {execute r.carve }}
 		{command {[G_msg "Depressionless elevation map and flowline map"]} {} "r.fill.dir" {} -command {execute r.fill.dir }}
-		{command {[G_msg "Fill lake from seed point to specified level"]} {} "r.lake" {} -command {spawn r.lake }}
-		{command {[G_msg "Flow accumulation for massive grids"]} {} "r.terraflow" {} -command {spawn r.terraflow }}
-		{command {[G_msg "Generate flow lines for raster map"]} {} "r.flow" {} -command {exec r.flow > /dev/null & }}
+		{command {[G_msg "Fill lake from seed point to specified level"]} {} "r.lake" {} -command {execute r.lake }}
+		{command {[G_msg "Flow accumulation for massive grids"]} {} "r.terraflow" {} -command {execute r.terraflow }}
+		{command {[G_msg "Generate flow lines for raster map"]} {} "r.flow" {} -command {execute r.flow }}
 		{command {[G_msg "SIMWE overland flow modeling"]} {} "r.sim.water" {} -command {execute r.sim.water }}
 		{command {[G_msg "SIMWE sediment erosion, transport, & deposition modeling"]} {} "r.sim.sediment" {} -command {execute r.sim.sediment }}
 		{command {[G_msg "Topographic index map"]} {} "r.topidx" {} -command {execute r.topidx }}

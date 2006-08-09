@@ -7,10 +7,10 @@
 
 #include <string.h>
 #include <math.h>
+#include <grass/gprojects.h>
+
 #include "ps_info.h"
 #include "local_proto.h"
-
-#include <grass/gprojects.h>
 
 #define LEFT 0
 #define RIGHT 1
@@ -43,15 +43,15 @@ int do_geogrid (void)
 
     grid = (double) PS.geogrid; /* default to degrees */
 
-    if( strcmp(PS.geogridunit, "d") == 0)
+    if( strncmp(PS.geogridunit, "d", 1) == 0)
 	    grid = (double) PS.geogrid; /* degrees */
-    if( strcmp(PS.geogridunit, "m") == 0)
+    if( strncmp(PS.geogridunit, "m", 1) == 0)
 	    grid = (double) PS.geogrid/60. ; /* minutes */
-    if( strcmp(PS.geogridunit, "s") == 0)
+    if( strncmp(PS.geogridunit, "s", 1) == 0)
 	    grid = (double) PS.geogrid/3600.; /* seconds */
 
 
-    /* set color and set line width to 1 */
+    /* set color and set line width */
     set_rgb_color(PS.geogrid_color);
     set_line_width(PS.geogrid_width);
 
@@ -60,15 +60,16 @@ int do_geogrid (void)
      * start with first grid line just south of the window north
      */
 
-	/* initialze projection stuff */
-	init_proj(&info_in, &info_out);
-	
-	/* get lat long min max */
-	/* probably need something like boardwalk ?? */
-	get_ll_bounds(&west, &east, &south, &north);
+    /* initialze projection stuff */
+    init_proj(&info_in, &info_out);
 
-	fprintf(stderr, "BOUNDS %f %f %f %f\n", west, east, south, north);
-	
+    /* get lat long min max */
+    /* probably need something like boardwalk ?? */
+    get_ll_bounds(&west, &east, &south, &north);
+
+    G_debug(1, "do_geogrid() LL BOUNDS:  w=%f  e=%f  s=%f  n=%f",
+			west, east, south, north);
+
     /* Lines of Latitude */
     g = floor(north / grid) * grid ;
     e1 = east;
@@ -148,11 +149,11 @@ int do_geogrid_numbers (void)
     if (PS.geogrid <= 0 || PS.geogrid_numbers <= 0) return 1;
     
     grid = (double) PS.geogrid; /* default to degrees */
-    if( strcmp(PS.geogridunit, "d") == 0)
+    if( strncmp(PS.geogridunit, "d", 1) == 0)
 	    grid = (double) PS.geogrid; /* degrees */
-    if( strcmp(PS.geogridunit, "m") == 0)
+    if( strncmp(PS.geogridunit, "m", 1) == 0)
 	    grid = (double) PS.geogrid/60. ; /* minutes */
-    if( strcmp(PS.geogridunit, "s") == 0)
+    if( strncmp(PS.geogridunit, "s", 1) == 0)
 	    grid = (double) PS.geogrid/3600.; /* seconds */
     
     grid = grid * PS.geogrid_numbers;
@@ -255,41 +256,20 @@ int do_geogrid_numbers (void)
 void 
 init_proj(struct pj_info *info_in, struct pj_info *info_out)
 {
-double a, es;
-struct Key_Value *in_proj_keys, *in_unit_keys;
 struct Key_Value *out_proj_keys, *out_unit_keys;
-char buff[100];
-
 
 /* Proj stuff for geo grid */
 /* Out Info */
 out_proj_keys = G_get_projinfo();
 out_unit_keys = G_get_projunits();
-if (pj_get_kv(*&info_out,out_proj_keys,out_unit_keys) < 0) 
+if (pj_get_kv(info_out,out_proj_keys,out_unit_keys) < 0) 
 	G_fatal_error("Can't get projection key values of current location");
-
-/* In Info */
-in_proj_keys = G_create_key_value();
-in_unit_keys = G_create_key_value();
-	    
-G_set_key_value("proj", "ll", in_proj_keys);
-G_get_ellipsoid_parameters(&a, &es);
-sprintf(buff, "%f", a);
-G_set_key_value("a", buff, in_proj_keys);
-sprintf(buff, "%f", es);
-G_set_key_value("es", buff, in_proj_keys);
-
-G_set_key_value("unit", "degree", in_unit_keys);
-G_set_key_value("units", "degrees", in_unit_keys);
-G_set_key_value("meters", "1.0", in_unit_keys);
-
-if (pj_get_kv(*&info_in, in_proj_keys, in_unit_keys) < 0)
-    G_fatal_error("Unable to set up lat/long projection parameters");
-
-G_free_key_value( in_proj_keys);
-G_free_key_value( in_unit_keys);
 G_free_key_value( out_proj_keys);
 G_free_key_value( out_unit_keys);
+
+/* In Info */
+if (GPJ_get_equivalent_latlong(info_in, info_out) < 0)
+    G_fatal_error("Unable to set up lat/long projection parameters");
 
 return;
 

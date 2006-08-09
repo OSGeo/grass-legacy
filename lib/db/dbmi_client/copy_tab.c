@@ -38,12 +38,14 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
     dbHandle from_handle, to_handle;
     dbString tblname, sql;
     dbString value_string;
+    dbString *tblnames;
     dbTable *table, *out_table;
     dbCursor cursor;
     dbColumn *column;
     dbValue *value;
     char *colname;
     dbDriver *from_driver, *to_driver;
+    int count, i;
 
     G_debug ( 3, "db_copy_table():\n  from driver = %s, db = %s, table = %s\n"
 	         "  to driver = %s, db = %s, table = %s, where = %s, select = %s", 
@@ -94,7 +96,10 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
 	if (db_open_database(to_driver, &to_handle) != DB_OK) {
 	    G_warning ( "Cannot open database '%s'", to_dbname);
 	    db_close_database_shutdown_driver(to_driver);
-	    db_close_database_shutdown_driver(from_driver);
+	    if ( from_driver != to_driver ) 
+	    {
+	      db_close_database_shutdown_driver(from_driver);
+	    }
 	    return DB_FAILED;
 	}
     }
@@ -105,14 +110,33 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
        if 'schema' is modified (create table), we have to open
        cursor twice */
 
-    /* Create new table */
-    /* TODO test if the tables exist */
+    /* test if the table exists */
+    if (db_list_tables(to_driver, &tblnames, &count, 0) != DB_OK) {
+	    G_warning("Cannot list tables in database '%s'", to_dbname);
+	    db_close_database_shutdown_driver(to_driver);
+            if (from_driver != to_driver)
+	        db_close_database_shutdown_driver(from_driver);
 
+	    return DB_FAILED;
+    }
+
+    for (i = 0; i < count; i++) {
+        char *tblname = db_get_string(&tblnames[i]);
+
+        if (strcmp(to_tblname, tblname) == 0) {
+	    G_warning("Table '%s' already exists", to_dbname);
+	    db_close_database_shutdown_driver(to_driver);
+            if (from_driver != to_driver)
+	        db_close_database_shutdown_driver(from_driver);
+
+	    return DB_FAILED;
+        }
+    }
+
+    /* Create new table */
     /* Open cursor for data structure */
     if ( select ) {
-	char *tmp;
         db_set_string ( &sql, select );
-        
 
 	/* TODO!: cannot use this because it will not work if a query 
          *         ends with 'group by' for example */
@@ -141,7 +165,10 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
     if (db_open_select_cursor(from_driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK) {
 	G_warning ( "Cannot open select cursor: '%s'", db_get_string(&sql) );
 	db_close_database_shutdown_driver(to_driver);
-	db_close_database_shutdown_driver(from_driver);
+	if ( from_driver != to_driver ) 
+	{
+	    db_close_database_shutdown_driver(from_driver);
+	}
 	return DB_FAILED;
     }
     G_debug ( 3, "Select cursor opened" );
@@ -188,7 +215,10 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
     if ( db_create_table ( to_driver, out_table ) != DB_OK ) {
 	G_warning ( "Cannot create new table" );
 	db_close_database_shutdown_driver(to_driver);
-	db_close_database_shutdown_driver(from_driver);
+	if ( from_driver != to_driver ) 
+	{
+	    db_close_database_shutdown_driver(from_driver);
+	}
 	return DB_FAILED;
     }	
 
@@ -208,7 +238,10 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
     if (db_open_select_cursor(from_driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK) {
 	G_warning ( "Cannot open select cursor: '%s'", db_get_string(&sql) );
 	db_close_database_shutdown_driver(to_driver);
-	db_close_database_shutdown_driver(from_driver);
+	if ( from_driver != to_driver ) 
+	{
+	    db_close_database_shutdown_driver(from_driver);
+	}
 	return DB_FAILED;
     }
     G_debug ( 3, "Select cursor opened" );
@@ -225,7 +258,10 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
 	    G_warning ( "Cannot fetch row" );
 	    db_close_cursor(&cursor);
 	    db_close_database_shutdown_driver(to_driver);
-	    db_close_database_shutdown_driver(from_driver);
+	    if ( from_driver != to_driver ) 
+	    {
+		db_close_database_shutdown_driver(from_driver);
+	    }
 	    return DB_FAILED;
 	}
 	if (!more) break;
@@ -272,7 +308,10 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
 		    G_warning ( "Unknown column type (%s)", colname);
 		    db_close_cursor(&cursor);
 		    db_close_database_shutdown_driver(to_driver);
-		    db_close_database_shutdown_driver(from_driver);
+		    if ( from_driver != to_driver ) 
+		    {
+			db_close_database_shutdown_driver(from_driver);
+		    }
 		    return DB_FAILED;
 	    }
 	}
@@ -283,7 +322,10 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
 	    G_warning ( "Cannot insert new record: '%s'", db_get_string(&sql) );
 	    db_close_cursor(&cursor);
 	    db_close_database_shutdown_driver(to_driver);
-	    db_close_database_shutdown_driver(from_driver);
+	    if ( from_driver != to_driver ) 
+	    {
+		db_close_database_shutdown_driver(from_driver);
+	    }
 	    return DB_FAILED;
 	}
     }

@@ -10,7 +10,7 @@
 #%End
 
 if [ $# -eq 0 ] ; then
-	if [[ "$HOSTTYPE" = "macintosh" || "$HOSTTYPE" = "powermac" || "$HOSTTYPE" = "powerpc" || "$HOSTTYPE" = "intel-pc" ]] ; then
+	if [ "$HOSTTYPE" = "macintosh" -o "$HOSTTYPE" = "powermac" -o "$HOSTTYPE" = "powerpc" -o "$HOSTTYPE" = "intel-pc" ] ; then
 		exec "$GRASS_WISH" $GISBASE/etc/gm/gm.tcl -name gm_tcl
 	else
    		exec "$GRASS_WISH" $GISBASE/etc/gm/gm.tcl -name gm_tcl &

@@ -15,16 +15,8 @@
 int dxf_open(char *filename)
 {
     if ((dxf_fp = fopen(filename, "r")) != NULL) {
-	int overwrite;
-	char *overstr;
-
 	fclose(dxf_fp);
 
-	overwrite = 0;
-	if ((overstr = G__getenv("OVERWRITE")))
-	    overwrite = atoi(overstr);
-	if (!overwrite && (overstr = getenv("GRASS_OVERWRITE")))
-	    overwrite = atoi(overstr);
 	if (!overwrite)
 	    G_fatal_error(_("The file '%s' already exists."), filename);
 

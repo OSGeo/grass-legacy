@@ -11,6 +11,7 @@
 #endif
 
 GLOBAL FILE *dxf_fp;
+GLOBAL int overwrite;
 
 /* write_dxf.c */
 int dxf_open(char *);

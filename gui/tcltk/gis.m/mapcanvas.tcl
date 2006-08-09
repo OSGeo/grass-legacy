@@ -33,8 +33,8 @@ namespace eval MapCanvas {
 
 	variable array can # The canvas widgets of the monitors, indexed by mon
 	variable array mapframe # Frame widgets, indexed by mon
-	variable array canvas_w # Width and height of canvas. Indexed by mon
-	variable array canvas_h # mon
+	global array canvas_w # Width and height of canvas. Indexed by mon
+	global array canvas_h # mon
 	variable array driver_w # Actual width and height used while drawing / compositing. Indexed by mon
 	variable array driver_h # Actual width and height used while drawing / compositing. Indexed by mon
 	variable array exploremode # Whether or not to change regions to match monitor, indexed by mon
@@ -83,8 +83,8 @@ proc MapCanvas::create { } {
     global mon
     global win
     global currmon
-    variable canvas_w
-    variable canvas_h
+    global canvas_w
+    global canvas_h
     global drawprog
 	global array MapCanvas::msg # mon
 	global mapcursor
@@ -162,14 +162,14 @@ proc MapCanvas::create { } {
 	
 	# set tempfile for ppm output
 	set mappid [pid]
-	set mapfile($mon) [eval exec "g.tempfile pid=$mappid"]
+	set mapfile($mon) [exec g.tempfile pid=$mappid]
 	set maskfile($mon) $mapfile($mon)
 	append mapfile($mon) ".ppm"
 	append maskfile($mon) ".pgm"
 	
 	# set tempfile and tmp directory path for composite output
 	set mappid [pid]
-	set outfile($mon) [eval exec "g.tempfile pid=$mappid"]
+	set outfile($mon) [exec g.tempfile pid=$mappid]
 	set tmpdir [file dirname $outfile($mon)]
 	set outfile($mon) [file tail $outfile($mon)]
 	append outfile($mon) ".ppm"
@@ -376,8 +376,8 @@ proc MapCanvas::shrinkwrap {sense nsew1 ar2 } {
 
 # draw map using png driver and open in canvas
 proc MapCanvas::drawmap { mon } {
-	variable canvas_h
-	variable canvas_w
+	global canvas_h
+	global canvas_w
 	variable can
 	variable canmodified
 	variable monitor_zooms
@@ -431,8 +431,8 @@ proc MapCanvas::drawmap { mon } {
 proc MapCanvas::driversettings { mon } {
 	global env
 	global mapset
-	variable canvas_h
-	variable canvas_w
+	global canvas_h
+	global canvas_w
 	variable driver_w
 	variable driver_h
 	global mapfile
@@ -488,8 +488,8 @@ proc MapCanvas::driversettings { mon } {
 # Run the programs to clear the map and draw all of the layers
 proc MapCanvas::runprograms { mon mod } {
 	global env
-	variable canvas_w
-	variable canvas_h
+	global canvas_w
+	global canvas_h
 	global drawprog
 	global MapCanvas::msg
 	global complist
@@ -599,8 +599,8 @@ after idle MapCanvas::display_server
 ###############################################################################
 
 proc MapCanvas::do_resize {mon} {
-	variable canvas_w
-	variable canvas_h
+	global canvas_w
+	global canvas_h
 	variable can
 
 	# Get the actual width and height of the canvas
@@ -803,8 +803,8 @@ proc MapCanvas::currentzoom { mon } {
 	variable zoom_attrs
 	variable exploremode
 	variable monitor_zooms
-	variable canvas_w
-	variable canvas_h
+	global canvas_w
+	global canvas_h
 
 	# Fetch the current zoom settings
 	set region {}
@@ -1012,14 +1012,18 @@ proc MapCanvas::drawzoom { mon x y } {
 # zoom region
 proc MapCanvas::zoomregion { mon zoom } {
 	variable can
-	variable canvas_h
-	variable canvas_w
+	global canvas_h
+	global canvas_w
 	variable monitor_zooms
     global areaX1 areaY1 areaX2 areaY2
     
-    # if click and no drag, zoom in or out by 80% of original area
+    # if click and no drag, zoom in or out by fraction of original area and center on the click spot
+    set clickzoom 0
     
 	if {($areaX2 == 0) && ($areaY2 == 0)} {
+		set clickzoom 1
+		set center_x $areaX1
+		set center_y $areaY1
 		set X2 [expr {$areaX1 + ($canvas_w($mon) / (2 * sqrt(2)))} ]
 		set X1 [expr {$areaX1 - ($canvas_w($mon) / (2 * sqrt(2)))} ]
 		set Y2 [expr {$areaY1 + ($canvas_h($mon) / (2 * sqrt(2)))} ]
@@ -1028,6 +1032,7 @@ proc MapCanvas::zoomregion { mon zoom } {
 		set areaY1 $Y1
 		set areaX2 $X2
 		set areaY2 $Y2
+
 	}
     
 	
@@ -1057,26 +1062,33 @@ proc MapCanvas::zoomregion { mon zoom } {
 	set south [scry2mapn $cbottom]
 	set east  [scrx2mape $cright]
 	set west  [scrx2mape $cleft]
-
-	# zoom in
-	if { $zoom == 1 } {
-		MapCanvas::zoom_new $mon $north $south $east $west
-	}
-	
+		
 	#zoom out
 	# Guarantee that the current region fits in the new box on the screen.
 	if { $zoom == -1 } {
+		# Center map at point clicked for one-click zooming
+		if { $clickzoom == 1} {
+			set to_center_e [scrx2mape $center_x]
+			set to_center_n [scry2mapn $center_y]
+			set from_center_e [expr {$map_w+(($map_e - $map_w)/2)}]
+			set from_center_n [expr {$map_s+(($map_n - $map_s)/2)}]
+			set map_n [expr {$map_n + ($to_center_n - $from_center_n)}]
+			set map_s [expr {$map_s + ($to_center_n - $from_center_n)}]
+			set map_e [expr {$map_e + ($to_center_e - $from_center_e)}]
+			set map_w [expr {$map_w + ($to_center_e - $from_center_e)}]
+		}
 		# This effectively zooms out by the maxmimum of the two scales
 		set nsscale [expr { ($map_n - $map_s) / ($north - $south) }]
 		set ewscale [expr { ($map_e - $map_w) / ($east - $west) }]
 
-		set upnorth   [expr { $map_n + $nsscale * ($map_n - $north) }]
-		set downsouth [expr { $map_s + $nsscale * ($map_s - $south) }]
-		set backeast  [expr { $map_e + $ewscale * ($map_e - $east) }]
-		set outwest   [expr { $map_w + $ewscale * ($map_w - $west) }]
-
-		MapCanvas::zoom_new $mon $upnorth $downsouth $backeast $outwest
+		set north   [expr { $map_n + ($nsscale * ($map_n - $north)) }]
+		set south 	[expr { $map_s + ($nsscale * ($map_s - $south)) }]
+		set east  	[expr { $map_e + ($ewscale * ($map_e - $east)) }]
+		set west   	[expr { $map_w + ($ewscale * ($map_w - $west)) }]
 	}
+
+	MapCanvas::zoom_new $mon $north $south $east $west
+
 
 	# redraw map
 	$can($mon) delete map$mon
@@ -1409,8 +1421,8 @@ proc MapCanvas::startprofile { mon } {
 # print to eps file
 proc MapCanvas::printcanvas { mon } {
 	variable can
-	variable canvas_w
-	variable canvas_h
+	global canvas_w
+	global canvas_h
 	
 	set cv $can($mon)
 	
@@ -1440,8 +1452,8 @@ proc MapCanvas::coordconv { mon } {
 	global map2scry_conv
 	global mapimg.$mon
 	
-	variable canvas_w
-	variable canvas_h
+	global canvas_w
+	global canvas_h
 	variable monitor_zooms
 
 	# get region extents

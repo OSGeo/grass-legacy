@@ -247,15 +247,15 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 ###################################
 
     if [ $WPT -eq 1 ] ; then
-	cat "${TMP}.gpst" | sed -e '1d' | awk '{print $8 " " $7}' > "$TMP".base
+	cat "${TMP}.gpst" | sed -e '1d' | awk -F '\t' '{print $6 " " $5}' > "$TMP".base
 	cat "${TMP}.gpst" | sed -e '1d' | cut -f1,2,3 | tr '\t' '|' > "$TMP".attributes
     fi
     if [ $RTE -eq 1 ] ; then
- 	cat "${TMP}.gpst" | sed -e '1d' | grep '^W' | awk '{print $8 " " $7}' > "$TMP".base
+ 	cat "${TMP}.gpst" | sed -e '1d' | grep '^W' | awk -F '\t' '{print $6 " " $5}' > "$TMP".base
  	cat "${TMP}.gpst" | sed -e '1d' | grep '^W' | cut -f1,2,3 | tr '\t' '|' > "$TMP".attributes
     fi
     if [ $TRK -eq 1 ] ; then
- 	cat "${TMP}.gpst" | sed -e '1d' | grep '^T' | awk '{print $5 " " $4}' > "$TMP".base
+ 	cat "${TMP}.gpst" | sed -e '1d' | grep '^T' | awk -F '\t' '{print $4 " " $3}' > "$TMP".base
  	cat "${TMP}.gpst" | sed -e '1d' | grep '^T' | cut -f1,2 | tr '\t' '|' > "$TMP".attributes
     fi
 

@@ -186,7 +186,7 @@ proc GmVector::create { tree parent } {
 
 	# create files in tmp diretory for layer output
 	set mappid [pid]
-	set lfile($count) [eval exec "g.tempfile pid=$mappid"]
+	set lfile($count) [exec g.tempfile pid=$mappid]
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"
 	append lfilemask($count) ".pgm"
@@ -782,7 +782,7 @@ proc GmVector::duplicate { tree parent node id } {
 	
 	# create files in tmp directory for layer output
 	set mappid [pid]
-	set lfile($count) [eval exec "g.tempfile pid=$mappid"]
+	set lfile($count) [exec g.tempfile pid=$mappid]
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"
 	append lfilemask($count) ".pgm"
