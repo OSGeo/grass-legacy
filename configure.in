@@ -1511,6 +1511,42 @@ fi
 AC_SUBST(USE_LARGEFILES)
 # Done large file support
 
+# Python check
+
+AC_MSG_CHECKING(for --with-python)
+AC_ARG_WITH(python, [  --with-python=BIN  Path to specific Python binary],
+[
+  AC_SUBST(PYTHON_BIN)
+  PYTHON_BIN="$withval"
+  AC_MSG_RESULT($PYTHON_BIN)
+],
+AC_MSG_RESULT(no))
+
+# check for Python executable
+if test -z "$PYTHON_BIN"; then
+  AC_PATH_PROG(PYTHON_BIN, python)
+  if test -z "$PYTHON_BIN"; then
+    AC_MSG_ERROR(python binary not found in path)
+  fi
+fi
+
+# find out python version
+AC_MSG_CHECKING(Python version)
+PYVERSION=`$PYTHON_BIN -c ['import sys; print sys.version[:3]'`]
+PYMAJVERSION=`$PYTHON_BIN -c ['import sys; print sys.version[:1]'`]
+PYMINVERSION=`$PYTHON_BIN -c ['import sys; print sys.version[2:3]'`]
+AC_MSG_RESULT($PYVERSION)
+AC_SUBST(PYVERSION)
+
+# make sure Python is version 2
+if test "$PYMAJVERSION" -lt "2" || \
+   (test "$PYMAJVERSION" -eq "2" && test "$PYMINVERSION" -lt "2"); then
+  AC_MSG_ERROR([This version of GRASS requires at least Python version 2.3.  
+The one you have seems to be $PYVERSION.  You can specify an alternate python 
+by using (for example) --with-python=/usr/bin/python2.3])
+fi
+
+
 USE_TERMIO=
 AC_SUBST(USE_TERMIO)
 
@@ -1520,7 +1556,7 @@ AC_SUBST(STRIPFLAG)
 GRASS_HOME=${DSTDIR}
 AC_SUBST(GRASS_HOME)
 
-AC_OUTPUT(include/Make/Grass.make include/Make/Platform.make include/version.h include/winname.h swig/perl/Makefile.PL swig/perl2/make.pl grass.pc)
+AC_OUTPUT(include/Make/Grass.make include/Make/Platform.make include/version.h include/winname.h swig/perl/Makefile.PL swig/perl2/make.pl swig/python/Makefile grass.pc)
 
 LOC_MSG([Copying config.status to config.status.${ARCH}])
 cp -f config.status config.status.${ARCH}
