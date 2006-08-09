@@ -100,7 +100,7 @@ care of following rules:
     Examples:
     
     void G_something(void);
-    int G_somethingElse(int, int);
+    int G_something_else(int, int);
     
     void G_something(void)
     {
@@ -109,7 +109,7 @@ care of following rules:
 	return;
     }
     
-    int G_somethingElse(int x, int y)
+    int G_something_else(int x, int y)
     {
     	/* Snipped out code */
 	
@@ -187,8 +187,13 @@ care of following rules:
 	Could somebody please add others (please verify that they are
 	useful and safe first)
 
+12. Use function names which fulfil the official GNU naming convention.
+    http://www.gnu.org/prep/standards/html_node/Names.html#Names
 
-12. Don't use the C++ comment style! This confuses several compilers.
+    Instead of naming a function like: MyNewFunction() use underscores
+    for seperation and lower case letters: my_new_function().
+
+13. Don't use the C++ comment style! This confuses several compilers.
     Use instead:
        /* C-comments */
 
@@ -205,12 +210,12 @@ care of following rules:
     ). See lib/gis/*.c for examples.
 
 
-13. PLEASE take the time to add comments throughout your code explaining what
+14. PLEASE take the time to add comments throughout your code explaining what
     the code is doing. It will save a HUGE amount of time and frustration for
     other programmers that may have to change your code in the future.
 
 
-14. To promote a consistent coding style, please use the "indent" program
+15. To promote a consistent coding style, please use the "indent" program
     on all new C modules using the following switches:
     
      $ indent -nbad -bap -bbb -nbbo -nbc -br -bli1 -bls -cbi0 -ncdb -nce \
@@ -225,12 +230,12 @@ care of following rules:
     making it hard for others to follow the change or fix any new bugs.
 
 
-15. Platform dependent code:
+16. Platform dependent code:
     Do not remove #ifdef __CYGWIN__ and/or #ifndef __CYGWIN__ lines and 
     their encapsulated lines from source code (one example was that someone
     removed drand48 definition.)
 
-16. Suggested compiler flags:
+17. Suggested compiler flags:
     We suggest to use very strict compiler flags to capture errors
     at the very beginning. Here our list of flags, please use them
     to configure you development version of GRASS:
@@ -246,10 +251,10 @@ care of following rules:
 
     MS-Windows: [to be suggested]
 
-17. Make sure a new line is at the end of each file.
+18. Make sure a new line is at the end of each file.
 
 
-18. When writing Makefiles, use the current standard.
+19. When writing Makefiles, use the current standard.
 
     If you have to use commands, please check for:
     
@@ -269,23 +274,23 @@ care of following rules:
 
     If you are unsure, please ask on the GRASS Developers list.
 
-19. Have a look at ./INSTALL
+20. Have a look at ./INSTALL
 
 
-20. Have a function included in your module which writes to the history
+21. Have a function included in your module which writes to the history
     file of the map (e.g. command line, parameters etc.). See eg
     raster/r.patch/main.c
 
-    (the same applies to vector modules!)
+    (the same applies to vector and g3d modules!)
 
 
-21. Standard parser options: use G_define_standard_option() whenever possible
+22. Standard parser options: use G_define_standard_option() whenever possible
     to define standard module command line options. This will save you time,
     create fewer bugs, and make things easier on the translators.
     See lib/gis/parser.c for details of the function definition.
 
 
-22. Module manual page:
+23. Module manual page:
     Place the documentation in HTML format into 'description.html'.
     The easiest way to do this is to study an existing HTML page
     (to get the page style, e.g. vector/v.to.db/description.html).
@@ -308,20 +313,20 @@ care of following rules:
     The online WWW man pages will be updated every Saturday by CVS.
 
 
-23. Add/update, if required the related GUI menus:
+24. Add/update, if required the related GUI menus:
      gui/tcltk/menus/menu.tcl
 
 
-24. For consistency, use README rather than README.txt for any README files.
+25. For consistency, use README rather than README.txt for any README files.
 
 
-25. GRASS/Environment variables:
+26. GRASS/Environment variables:
     If you add a new variable, please follow the naming convention.
     All variables are described in
     lib/init/variables.html
 
 
-26. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
+27. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
     You can re-check before submission with 'cvs diff':
 
     Be sure to create unified ("diff -u") format. "Plain" diffs (the default
@@ -332,15 +337,49 @@ care of following rules:
     "cvs diff -u display/d.vect/main.c"; that way, the diff will
     include the pathname rather than just "main.c".
 
+28. Try to use module names which describe shortly the intended purpose of the module.
 
-27. Tell the other developers about the new code using the following e-mail:
+    The first letters for module name should be:
+	d. 	- display commands
+	db. 	- database commands
+	g. 	- general commands
+	g3. 	- general3D commands
+	i. 	- imagery commands
+	p. 	- paint commands
+	pg. 	- postGRASS commands
+	ps. 	- postscript commands
+	r. 	- raster commands
+	r3. 	- raster3D commands
+	v. 	- vector commands
+
+    Some additional naming conventions
+    * export modules: (type).out.(format) eg: r.out.arc,  v.out.ascii
+    * import module: (type).in.(format) eg: r.in.arc, v.in.ascii
+    * conversion modules: (type).to.(type) eg: r.to.vect, v.to.rast, r3.to.rast
+
+    Avoid module names with more than two dots in the name. 
+    Example:
+       instead of r.to.rast3.elev use r.to.rast3elev    
+
+28. Use the grass test suite to test your modules.
+
+    http://www-pool.math.tu-berlin.de/~soeren/grass/GRASS_TestSuite
+
+    You can easily write specific tests for your modules.
+
+    If your module is part of grass and you created some standard test cases, 
+    please contact the developers to add your tests to the default test suite.
+    This will automatize complex test scenarios and assure to find bugs much
+    faster, if changes were made to your modules or to the grass library.  
+
+29. Tell the other developers about the new code using the following e-mail:
     grass-dev@grass.itc.it
  
     To subscribe to this mailing list, see
     http://grass.itc.it/devel/index.php
 
 
-28. In case of questions feel free to contact the developers at the above
+30. In case of questions feel free to contact the developers at the above
     mailing list.
     http://grass.itc.it/devel/index.php#submission
 
