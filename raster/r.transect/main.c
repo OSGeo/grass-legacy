@@ -34,12 +34,8 @@ int main (int argc, char *argv[])
 	_("Outputs raster map layer values lying along "
 	"user defined transect line(s).");
 
-    parms.map = G_define_option();
-    parms.map->key = "map";
-    parms.map->type = TYPE_STRING;
+    parms.map = G_define_standard_option(G_OPT_R_MAP);
     parms.map->description = _("Raster map to be queried");
-    parms.map->required = YES;
-    parms.map->multiple = NO;
 
 /*  parms.result = G_define_option();
     parms.result->key = "result";
@@ -79,7 +75,7 @@ int main (int argc, char *argv[])
 	_("Output easting and northing in first two columns of four column output");
 
     if (G_parser(argc,argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
     projection = G_projection();
 
@@ -89,7 +85,7 @@ int main (int argc, char *argv[])
 	fprintf(stderr,"<%s=%s> ** illegal value **\n",
 	    parms.width->key, parms.width->answer);
 	G_usage();
-	exit(1);
+	exit(EXIT_FAILURE);
     }
 */
 
@@ -97,11 +93,8 @@ int main (int argc, char *argv[])
     mapset = G_find_cell(name,"");
 
     if (mapset == NULL)
-    {
-	fprintf (stderr, "%s: <%s> raster map not found\n",
+	G_fatal_error ( _("%s: <%s> raster map not found"),
 		G_program_name(), name);
-	exit(1);
-    }
 
     if(coord->answer)  
 	strcpy(coord_str, "-g");
@@ -136,7 +129,7 @@ int main (int argc, char *argv[])
     if (err)
     {
 	G_usage();
-	exit(1);
+	exit(EXIT_FAILURE);
     }
     exit (system(command));
 }
