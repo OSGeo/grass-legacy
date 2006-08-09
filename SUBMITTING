@@ -343,19 +343,17 @@ care of following rules:
 	d. 	- display commands
 	db. 	- database commands
 	g. 	- general commands
-	g3. 	- general3D commands
 	i. 	- imagery commands
 	p. 	- paint commands
-	pg. 	- postGRASS commands
 	ps. 	- postscript commands
 	r. 	- raster commands
 	r3. 	- raster3D commands
 	v. 	- vector commands
 
     Some additional naming conventions
-    * export modules: (type).out.(format) eg: r.out.arc,  v.out.ascii
-    * import module: (type).in.(format) eg: r.in.arc, v.in.ascii
-    * conversion modules: (type).to.(type) eg: r.to.vect, v.to.rast, r3.to.rast
+    * export modules:     (type).out.(format) eg: r.out.arc,  v.out.ascii
+    * import module:      (type).in.(format)  eg: r.in.arc, v.in.ascii
+    * conversion modules: (type).to.(type)    eg: r.to.vect, v.to.rast, r3.to.rast
 
     Avoid module names with more than two dots in the name. 
     Example:
@@ -371,6 +369,11 @@ care of following rules:
     please contact the developers to add your tests to the default test suite.
     This will automatize complex test scenarios and assure to find bugs much
     faster, if changes were made to your modules or to the grass library.  
+
+    Consider to subscribe to the GRASS Quality Assessment System to
+    get immediate notification about the code quality:
+
+    http://grass.itc.it/mailman/listinfo/grass-qa
 
 29. Tell the other developers about the new code using the following e-mail:
     grass-dev@grass.itc.it
