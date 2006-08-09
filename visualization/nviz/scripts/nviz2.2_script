@@ -913,8 +913,12 @@ global Nv_
 
 appBusy
 load_state_aux $NvizLoadState
+
 appNotBusy
 }
+
+if {$DEBUG} {puts "Finished loading, call draw all"}
+Ndraw_all
 
 # *********************************************************************
 # Automatics command line script playing functions
