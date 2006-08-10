@@ -422,7 +422,7 @@ int main(int argc, char **argv)
     } 
     fprintf ( stdout, "Number of Steiner points set to %d\n", nsp );
     
-    testnode = (int *) G_malloc ( (nnodes + 1) * sizeof(int *) );
+    testnode = (int *) G_malloc ( (nnodes + 1) * sizeof(int) );
     for ( i = 1; i <= nnodes; i++) 
 	testnode[i] = 1;
     
@@ -574,7 +574,7 @@ int main(int argc, char **argv)
     Vect_close(&Map);
     Vect_close(&Out);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 int cmp ( const void *pa, const void *pb)
