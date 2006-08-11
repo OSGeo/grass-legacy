@@ -1,0 +1,17 @@
+MODULE_TOPDIR = ../../..
+
+PGM = v.bspline
+
+LIDAR_LIBNAME      = grass_lidar
+LIDARLIB = -l$(LIDAR_LIBNAME)
+
+LIBES = $(LIDARLIB) $(VECTLIB) $(GISLIB) $(MATHLIB) $(SEGMENTLIB) $(GMATHLIB)
+DEPENDENCIES= $(LIDARDEP) $(VECTDEP) $(GISDEP) $(BSPLINE_ARCH_OBJ) $(GMATHDEP) 
+
+EXTRA_INC = $(VECT_INC)
+EXTRA_CFLAGS = $(VECT_CFLAGS)
+
+include $(MODULE_TOPDIR)/include/Make/Module.make
+
+default: cmd
+
