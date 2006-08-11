@@ -63,7 +63,8 @@ SUBDIRS = \
 	v.voronoi \
 	v.what \
 	v.what.rast\
-	v.vol.rst 
+	v.vol.rst \
+	lidar
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
