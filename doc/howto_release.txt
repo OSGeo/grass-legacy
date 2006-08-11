@@ -108,15 +108,18 @@ Contents
 
  * If official release:
    - publish related announcement press release at:
-
+   
    Our GRASS web site: /announces/
 
-   Our mailing lists:  http://grass.itc.it/mailman/listinfo/grass-announce
+   Our main mailing lists:
+                       http://grass.itc.it/mailman/listinfo/grass-announce
                          <grass-announce@grass.itc.it>
-                       http://grass.itc.it/mailman/listinfo/grass5
-                         <grass5@grass.itc.it>
-                       http://grass.itc.it/community/support.php#int_list
-                         <grasslist@baylor.edu>
+                       http://grass.itc.it/mailman/listinfo/grass-dev
+                         <grass-dev@grass.itc.it>
+                       http://grass.itc.it/mailman/listinfo/grassuser
+                         <grassuser@grass.itc.it>
+                       http://grass.itc.it/mailman/listinfo/wingrass
+                         <wingrass@grass.itc.it>
 
    DebianGIS:          <pkg-grass-general@lists.alioth.debian.org>
    FreeGIS:            <freegis-list@intevation.de>
