@@ -1,0 +1,57 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.lidar.edgedetection</em> is the first of three step to filter
+LIDAR data. It detects the edge of each single feature over the
+terrain surface of a LIDAR point surface. First of all, those points
+with a high gradient value are determined. Then, it is valued the
+difference between the observation of those points and a generic
+interpolated surface with splines. If the difference is positive, then
+the point could supposed to be inside the object, else the point could
+supposed to be outside the object. The final output will be a vector
+map in which points has been classified as TERRAIN, EDGE or
+UNKNOWN. This output will be the input of <em>v.lidar.growing</em>
+module.
+
+<h2>NOTES</h2>
+
+In this module, an external table will be created which will be
+useful for the next module of the procedure of LIDAR data
+filtering. In this table the interpolated height values of each point
+will be recorded.
+
+The final result of the whole procedure (v.lidar.edgedetection,
+v.lidar.growing, v.lidar.correction) will be a point classification in
+four categories:
+
+<br>
+TERRAIN SINGLE PULSE
+<br>
+TERRAIN DOUBLE PULSE
+<br>
+OBJECT SINGLE PULSE
+<br>
+OBJECT DOUBLE PULSE
+<br>
+
+
+<h2>EXAMPLES</h2>
+
+<h4>Basic edge detection</h4>
+<div class="code"><pre>
+v.lidar.edgedetection input=vector_last output=edge see=8 sen=8 lambda_g=0.5
+</pre></div>
+
+<h2>SEE ALSO</h2>
+<em><a HREF="v.lidar.growing.html">v.lidar.growing</a></em>,
+<em><a HREF="v.lidar.correction.html">v.lidar.correction</a></em>
+
+<h2>AUTHORS</h2>
+Original version of program in GRASS 5.4:
+<BR>
+Maria Antonia Brovelli, Massimiliano Cannata, Ulisse Longoni and Mirko Reguzzoni
+<BR><BR>
+Update for GRASS 6.X:
+<BR>
+Roberto Antolin and Gonzalo Moreno
+
+<p><i>Last changed: $Date$</i>
