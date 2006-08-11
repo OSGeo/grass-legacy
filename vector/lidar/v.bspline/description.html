@@ -1,0 +1,52 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.bspline</em> makes a bilinear/bicubic interpolation with
+Tykhonov regularization. The required input is a vector of only
+points that will be used for interpolate a reference surface.  If an
+extra input vector is used, an estimation using the reference surface
+will be done on the points of this last vector. In other case, the
+interpolation will be done with the points of the former vector.  The
+output format can be a vector in which case the interpolation will be
+done on the sparse points, or a raster map. In this last case, the
+interpolation will be on a regular grid.
+
+<h2>EXAMPLES</h2>
+
+<h4>Basic interpolation</h4>
+
+<div class="code"><pre>
+v.bspline input=point_vector output=interpolate_surface type=bicubic
+</pre></div>
+
+In this case, a bicubic spline interpolation will be done and an
+estimation of the points of vector will be the output.
+
+<h4>Basic interpolation and raster output with a long spline step</h4>
+
+<div class="code"><pre>
+v.bspline input=point_vector raster_out=interpolate_surface sie=25 sin=25
+</pre></div>
+
+Now, a bilinear spline interpolation will be done on a grid.
+<h4>Estimation on sparse points</h4>
+
+<div class="code"><pre>
+v.bspline input=point_vector int_ext=sparse_points output=interpolate_surface
+</pre></div>
+
+In this last case, an estimation of the point within sparse points
+will be done using the parameters estimated with the points of
+point_vector.
+
+<h2>SEE ALSO</h2>
+
+<h2>AUTHORS</h2>
+Original version of program in GRASS 5.4:
+<BR>
+Maria Antonia Brovelli, Massimiliano Cannata, Ulisse Longoni, Mirko Reguzzoni
+<BR><BR>
+Update for GRASS 6.X:
+<BR>
+Roberto Antolin
+
+<p><i>Last changed: $Date$</i>

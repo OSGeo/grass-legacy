@@ -1,0 +1,52 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.lidar.growing</em> is the second of three step to filter LIDAR
+data. It identifies which is the internal area of every object on a
+LIDAR point surface. The input data is the output result of the
+<em>v.lidar.correction</em> module. It is based on the hypothesis that
+inside the object the heights are, in general, higher than on the
+contour. The output will be a vector map which points are
+pre-classified as TERRAIN SINGLE PULSE, TERRAIN DOUBLE PULSE, OBJECT
+SINGLE PULSE or OBJECT DOUBLE PULSE. The input of this module should
+be the output of <em>v.lidar.edgedetection</em> module, and the output
+of this module will be the input of <em>v.lidar.correction</em>
+module.
+
+<h2>NOTES</h2>
+
+The final result of the whole procedure (v.lidar.edgedetection,
+v.lidar.growing, v.lidar.correction) will be a point classification in
+four categories:
+
+<br>
+TERRAIN SINGLE PULSE
+<br>
+TERRAIN DOUBLE PULSE
+<br>
+OBJECT SINGLE PULSE
+<br>
+OBJECT DOUBLE PULSE
+<br>
+
+<h2>EXAMPLES</h2>
+
+<h4>Basic region growing procedure</h4>
+<div class="code"><pre>
+v.lidar.growing input=edge output=growing
+</pre></div>
+
+<h2>SEE ALSO</h2>
+<em><a HREF="v.lidar.edgedetection.html">v.lidar.edgedetection</a></em>,
+<em><a HREF="v.lidar.correction.html">v.lidar.correction</a></em>
+
+<h2>AUTHOR</h2>
+Original version of program in GRASS 5.4:
+<BR>
+Maria Antonia Brovelli, Massimiliano Cannata, Ulisse Longoni and Mirko Reguzzoni
+<BR><BR>
+Update for GRASS 6.X:
+<BR>
+Roberto Antolin and Gonzalo Moreno
+
+<p><i>Last changed: $Date$</i>
+
