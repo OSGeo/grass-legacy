@@ -369,6 +369,7 @@ int main (int argc, char *argv[])
 	if (G_put_cellhd(parm.map->answer, &cellhd) < 0)
 		G_fatal_error(_("unable to update boundaries"));
 
+	G_done_msg("");
 	return 0;
 }
 
