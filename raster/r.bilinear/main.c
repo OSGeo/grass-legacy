@@ -15,8 +15,8 @@ int main( int argc, char *argv[])
     struct Option 	*eastoff, *northoff;
     char                *inmap;
     FILEDESC    	infile = (FILEDESC)NULL, outfile = (FILEDESC)NULL;
-    CELL		*inbuf1, *inbuf2;
-    FCELL		*outbuf;
+    DCELL		*inbuf1, *inbuf2;
+    DCELL		*outbuf;
     int			row, col; 
     struct Cell_head    w, mapw;
     float               o_east, o_north;
@@ -67,8 +67,8 @@ int main( int argc, char *argv[])
     G_set_window(&mapw);
 
     /* G_malloc 2 buffers for input rows */
-    inbuf1 = G_allocate_cell_buf();
-    inbuf2 = G_allocate_cell_buf();
+    inbuf1 = G_allocate_d_raster_buf();
+    inbuf2 = G_allocate_d_raster_buf();
 
     /* open old map */
     if ((infile = G_open_cell_old(rastin->answer, inmap)) == -1)
@@ -79,10 +79,10 @@ int main( int argc, char *argv[])
     /* reset window to current region */
     G_set_window(&w);
  
-    outbuf = G_allocate_f_raster_buf();
+    outbuf = G_allocate_d_raster_buf();
 
     /* open new map */
-    if ((outfile = G_open_raster_new(rastout->answer, FCELL_TYPE)) < 0)
+    if ((outfile = G_open_raster_new(rastout->answer, DCELL_TYPE)) < 0)
     {
 	G_fatal_error(_("Not able to open cellfile for [%s]"), rastout->answer);
     }
@@ -91,7 +91,7 @@ int main( int argc, char *argv[])
     
     {
 	double east, north, mapeast, mapnorth, t, u, new;
-	CELL *tmp, c1, c2, c3, c4;
+	DCELL *tmp, c1, c2, c3, c4;
 	int maprow1, mapcol1, maprow2, mapcol2;
 	int bufrow1, bufrow2;
 	double maprow_f, mapcol_f;
@@ -106,8 +106,8 @@ int main( int argc, char *argv[])
 	    
 	    /* in region? */
 	    if(north > mapw.north || north <= mapw.south){
-		G_set_f_null_value(outbuf, w.cols);
-		G_put_f_raster_row(outfile, outbuf);
+		G_set_d_null_value(outbuf, w.cols);
+		G_put_d_raster_row(outfile, outbuf);
 		continue;
 	    }
 
@@ -142,9 +142,9 @@ fprintf(stderr,"row %d maprow1 %d maprow2 %d\n", row, maprow1, maprow2);
 
 	    if(bufrow1 < 0){  /* read both */
 		G_set_window(&mapw);
-		G_get_c_raster_row(infile, inbuf1, maprow1);
+		G_get_d_raster_row(infile, inbuf1, maprow1);
 		bufrow1 = maprow1;
-		G_get_c_raster_row(infile, inbuf2, maprow2);
+		G_get_d_raster_row(infile, inbuf2, maprow2);
 		bufrow2 = maprow2;
 		G_set_window(&w);
 	    }
@@ -156,15 +156,15 @@ fprintf(stderr,"row %d maprow1 %d maprow2 %d\n", row, maprow1, maprow2);
 		    inbuf2 = tmp;
 		    bufrow1 = maprow1;
 		    G_set_window(&mapw);
-		    G_get_c_raster_row(infile, inbuf2, maprow2);
+		    G_get_d_raster_row(infile, inbuf2, maprow2);
 		    bufrow2 = maprow2;
 		    G_set_window(&w);
 		}
 		else{ /* need to read both */
 		    G_set_window(&mapw);
-		    G_get_c_raster_row(infile, inbuf1, maprow1);
+		    G_get_d_raster_row(infile, inbuf1, maprow1);
 		    bufrow1 = maprow1;
-		    G_get_c_raster_row(infile, inbuf2, maprow2);
+		    G_get_d_raster_row(infile, inbuf2, maprow2);
 		    bufrow2 = maprow2;
 		    G_set_window(&w);
 		}
@@ -176,7 +176,7 @@ fprintf(stderr,"row %d maprow1 %d maprow2 %d\n", row, maprow1, maprow2);
 
 		/* in region? */
 		if(east < mapw.west || east >= mapw.east){
-		    G_set_f_null_value(&outbuf[col], 1);
+		    G_set_d_null_value(&outbuf[col], 1);
 		    continue;
 		}
 
@@ -211,12 +211,12 @@ fprintf(stderr,"row %d maprow1 %d maprow2 %d\n", row, maprow1, maprow2);
 		c3 = inbuf2[mapcol1];
 		c4 = inbuf2[mapcol2];
 
-		if (G_is_c_null_value(&c1) ||
-		    G_is_c_null_value(&c2) ||
-		    G_is_c_null_value(&c3) ||
-		    G_is_c_null_value(&c4))
+		if (G_is_d_null_value(&c1) ||
+		    G_is_d_null_value(&c2) ||
+		    G_is_d_null_value(&c3) ||
+		    G_is_d_null_value(&c4))
 		{
-			G_set_f_null_value(&outbuf[col], 1);
+			G_set_d_null_value(&outbuf[col], 1);
 		}
 		else
 		{
@@ -225,12 +225,10 @@ fprintf(stderr,"row %d maprow1 %d maprow2 %d\n", row, maprow1, maprow2);
 			t * u * c4 +
 			u * (1.0 - t) * c3;
 
-		    outbuf[col] =  (new + .5);
+		    outbuf[col] = new;
 		}
 	    }
-	    G_put_f_raster_row(outfile, outbuf);
-
-
+	    G_put_d_raster_row(outfile, outbuf);
 	}
     }
 
