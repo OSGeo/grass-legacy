@@ -39,7 +39,7 @@ f_rand(int argc, const int *argt, void **args)
 			int lo = arg1[i];
 			int hi = arg2[i];
 			if (lo > hi) { int tmp = lo; lo = hi; hi = tmp; }
-			res[i] = lo + x % (hi - lo);
+			res[i] = (lo == hi) ? lo : lo + x % (hi - lo);
 		}
 		return 0;
 	}
