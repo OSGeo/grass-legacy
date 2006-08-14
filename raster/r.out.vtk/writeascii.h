@@ -21,24 +21,24 @@
 
 struct Cell_head;		/*Definition needed here */
 
-void writeVTKNormalHeader(FILE * fp, struct Cell_head region, double elevation,
+void write_vtk_normal_header(FILE * fp, struct Cell_head region, double elevation,
 			  int type);
-void writeVTKStructuredElevationHeader(FILE * fp, struct Cell_head region);
-void writeVTKPolygonalElevationHeader(FILE * fp, struct Cell_head region);
-void writeVTKCellDataHeader(FILE * fp, struct Cell_head region);
-void writeVTKPointDataHeader(FILE * fp, struct Cell_head region);
-void writeVTKData(int fd, FILE * fp, char *varname, struct Cell_head region,
+void write_vtk_structured_elevation_header(FILE * fp, struct Cell_head region);
+void write_vtk_polygonal_elevation_header(FILE * fp, struct Cell_head region);
+void write_vtk_celldata_header(FILE * fp, struct Cell_head region);
+void write_vtk_pointdata_header(FILE * fp, struct Cell_head region);
+void write_vtk_data(int fd, FILE * fp, char *varname, struct Cell_head region,
 		  int out_type, char *null_value);
-void writeVTKRGBImageData(int redfd, int greenfd, int bluefd, FILE * fp,
+void write_vtk_rgb_image_data(int redfd, int greenfd, int bluefd, FILE * fp,
 			  const char *varname, struct Cell_head region,
 			  int out_type);
-void writeVTKVectorData(int xfd, int yfd, int zfd, FILE * fp,
+void write_vtk_vector_data(int xfd, int yfd, int zfd, FILE * fp,
 			const char *varname, struct Cell_head region,
 			int out_type);
-void writeVTKStructuredCoordinates(int fd, FILE * fp, char *varname,
+void write_vtk_structured_coordinates(int fd, FILE * fp, char *varname,
 				   struct Cell_head region, int out_type,
 				   char *null_value, double scale);
-void writeVTKPolygonalCoordinates(int fd, FILE * fp, char *varname,
+void write_vtk_polygonal_coordinates(int fd, FILE * fp, char *varname,
 				  struct Cell_head region, int out_type,
 				  char *null_value, double scale, int polytype);
 #endif

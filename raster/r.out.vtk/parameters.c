@@ -17,6 +17,7 @@
 *****************************************************************************/
 #include <grass/gis.h>
 #include <grass/glocale.h>
+#include <grass/config.h>
 #include "parameters.h"
 
 
@@ -25,16 +26,9 @@
 /* PARAMETERS ************************************************************** */
 /* ************************************************************************* */
 
-void SetParameters()
+void set_params()
 {
-    param.input = G_define_option();
-    param.input->key = "input";
-    param.input->type = TYPE_STRING;
-    param.input->required = NO;
-    param.input->gisprompt = "old,cell,raster";
-    param.input->multiple = YES;
-    param.input->description =
-	_("Raster map(s) to be converted to VTK-ASCII data format");
+    param.input = G_define_standard_option(G_OPT_R_INPUTS);
 
     param.elevationmap = G_define_option();
     param.elevationmap->key = "elevation";
@@ -65,8 +59,6 @@ void SetParameters()
     param.vectmaps->description =
 	_
 	("Three (x,y,z) raster maps which are used to create vector values [xmap,ymap,zmap]");
-
-
 
     param.output = G_define_option();
     param.output->key = "output";
@@ -122,7 +114,6 @@ void SetParameters()
     param.point->description =
 	_
 	("Create VTK point data instead of VTK cell data (if no elevation map is given)");
-
 
     param.coorcorr = G_define_flag();                                            
     param.coorcorr->key = 'c';                                                   

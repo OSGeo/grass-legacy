@@ -166,9 +166,9 @@ int main(int argc, char *argv[])
     }
 
     /*Write the header */
-    writeHead(ascii, &Map);
+    write_vtk_head(ascii, &Map);
     /*Write the geometry and data */
-    writeVTK(ascii, &Map, layer, types, typenum, dp);
+    write_vtk(ascii, &Map, layer, types, typenum, dp);
 
     if (ascii != NULL)
 	fclose(ascii);

@@ -22,7 +22,7 @@
 #include <grass/glocale.h>
 #include "local_proto.h"
 
-int writeHead(FILE * fp, struct Map_info *Map)
+int write_vtk_head(FILE * fp, struct Map_info *Map)
 {
     G_debug(3, _("writeVTKHeader: Writing VTK-Header"));
     fprintf(fp, "# vtk DataFile Version 3.0\n");
