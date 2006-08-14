@@ -48,7 +48,7 @@ void texture_fore()
 {  
   FILE  *fp0, *fp1, *fp2, *fp3, *fp4, *fp5;
 
-  fprintf(stdout, "\nR.LE.PIXEL IS WORKING....;\n\n", stderr);
+  fprintf(stdout, "\nR.LE.PIXEL IS WORKING....;\n\n");
 
 					/* check for input raster map */
 

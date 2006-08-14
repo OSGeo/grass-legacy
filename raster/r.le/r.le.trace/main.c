@@ -94,6 +94,8 @@ int main (int argc, char *argv[])
      set_map(choice->fn, window, t0, bot, l0, right, NULL);
 
   G_free (choice) ;
+
+  return (EXIT_SUCCESS);
 }
 
 
@@ -1290,14 +1292,14 @@ i,j,i+1,j-1,*(*(buf + i + 1) + j - 1),*(*(patchmap + i + 1) + j - 1),
 
         twist2 = (int ***)G_calloc(trows + 3, sizeof(int **));
         for (i = 0; i < trows + 3; i++) {
-           twist2[i] = (int **)G_calloc(tcols + 3, sizeof(int));
+           twist2[i] = (int **)G_calloc(tcols + 3, sizeof(int*));
            for (j = 0; j < tcols + 3; j++)
               twist2[i][j] = (int *)G_calloc(7, sizeof(int));
         }
 
         twistP = (float ***)G_calloc(trows + 3, sizeof(float **));
         for (i = 0; i < trows + 3; i++) {
-          twistP[i] = (float **)G_calloc(tcols + 3, sizeof(float));
+          twistP[i] = (float **)G_calloc(tcols + 3, sizeof(float*));
           for (j = 0; j < tcols + 3; j++)
              twistP[i][j] = (float *)G_calloc(7, sizeof(float));
         }

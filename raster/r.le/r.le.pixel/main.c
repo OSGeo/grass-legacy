@@ -125,7 +125,7 @@ int main (int argc, char **argv)
   texture_fore();
   G_free (choice);
 
-  return 0;
+  return (EXIT_SUCCESS);
 }
 
 
