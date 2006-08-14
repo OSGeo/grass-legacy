@@ -20,6 +20,7 @@
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
+#include <grass/config.h>
 #include "writeascii.h"
 
 #define MAIN
@@ -27,13 +28,13 @@
 #include "globaldefs.h"
 
 /*local protos */
-void CheckInputMaps();
+void check_input_maps();
 
 
 /* ************************************************************************* */
 /* Check the input maps **************************************************** */
 /* ************************************************************************* */
-void CheckInputMaps()
+void check_input_maps()
 {
     char *mapset = NULL;
     int i;
@@ -111,7 +112,7 @@ void CheckInputMaps()
 	}
     }
 
-    /*Give a warning if no output cell/point or rgb data is specified */
+    /*Give a warning if no output cell/point or rgb data was specified */
     if (param.input->answers == NULL && param.rgbmaps->answers == NULL &&
 	param.vectmaps->answers == NULL) {
 	G_warning
@@ -147,7 +148,7 @@ int main(int argc, char *argv[])
     module->description = _("Converts raster maps into the VTK-Ascii format");
 
     /* Get parameters from user */
-    SetParameters();
+    set_params();
 
     /* Have GRASS get inputs */
     if (G_parser(argc, argv))
@@ -166,7 +167,7 @@ int main(int argc, char *argv[])
 	fp = stdout;
 
     /*Check the input maps */
-    CheckInputMaps();
+    check_input_maps();
     
     /*Correct the coordinates, so the precision of VTK is not hurt :( */
     if(param.coorcorr->answer){
@@ -192,10 +193,10 @@ int main(int argc, char *argv[])
     if (param.elevationmap->answer) {
 	/*If the elevation is set, write the correct Header */
 	if (param.usestruct->answer) {
-	    writeVTKStructuredElevationHeader(fp, region);
+	    write_vtk_structured_elevation_header(fp, region);
 	}
 	else {
-	    writeVTKPolygonalElevationHeader(fp, region);
+	    write_vtk_polygonal_elevation_header(fp, region);
 	}
 
 	G_debug(3, _("Open Raster file %s"), param.elevationmap->answer);
@@ -213,7 +214,7 @@ int main(int argc, char *argv[])
 
 	/*The write the Coordinates */
 	if (param.usestruct->answer) {
-	    writeVTKStructuredCoordinates(fd, fp, param.elevationmap->answer,
+	    write_vtk_structured_coordinates(fd, fp, param.elevationmap->answer,
 					  region, out_type, null_value,
 					  atof(param.elevscale->answer));
 	}
@@ -226,7 +227,7 @@ int main(int argc, char *argv[])
 	    if (param.usevertices->answer)
 		polytype = VERTICES;
 
-	    writeVTKPolygonalCoordinates(fd, fp, param.elevationmap->answer,
+	    write_vtk_polygonal_coordinates(fd, fp, param.elevationmap->answer,
 					 region, out_type, null_value,
 					 atof(param.elevscale->answer),
 					 polytype);
@@ -242,11 +243,11 @@ int main(int argc, char *argv[])
 
 	/*If no elevation is given, write the normal Header */
 	if (param.origin->answer)
-	    writeVTKNormalHeader(fp, region,
+	    write_vtk_normal_header(fp, region,
 				 atof(param.elevscale->answer) *
 				 (atof(param.elev->answer)), headertype);
 	else
-	    writeVTKNormalHeader(fp, region, atof(param.elev->answer),
+	    write_vtk_normal_header(fp, region, atof(param.elev->answer),
 				 headertype);
     }
 
@@ -254,9 +255,9 @@ int main(int argc, char *argv[])
   /******************** WRITE THE POINT OR CELL DATA HEADER ******************/
     if (param.input->answers != NULL || param.rgbmaps->answers != NULL) {
 	if (param.point->answer || param.elevationmap->answer)
-	    writeVTKPointDataHeader(fp, region);
+	    write_vtk_pointdata_header(fp, region);
 	else
-	    writeVTKCellDataHeader(fp, region);
+	    write_vtk_celldata_header(fp, region);
     }
 
   /********************** WRITE NORMAL DATA; CELL OR POINT *******************/
@@ -280,7 +281,7 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	    }
 	    /*Now write the data */
-	    writeVTKData(fd, fp, param.input->answers[i], region, out_type,
+	    write_vtk_data(fd, fp, param.input->answers[i], region, out_type,
 			 null_value);
 	    G_close_cell(fd);
 	}
@@ -319,7 +320,7 @@ int main(int argc, char *argv[])
 		out_type = celltype[0];
 
 		/*Now write the data */
-		writeVTKRGBImageData(rgbfd[0], rgbfd[1], rgbfd[2], fp,
+		write_vtk_rgb_image_data(rgbfd[0], rgbfd[1], rgbfd[2], fp,
 				     "RGB_Image", region, out_type);
 	    }
 	    else {
@@ -368,7 +369,7 @@ int main(int argc, char *argv[])
 		out_type = celltype[0];
 
 		/*Now write the data */
-		writeVTKVectorData(vectfd[0], vectfd[1], vectfd[2], fp,
+		write_vtk_vector_data(vectfd[0], vectfd[1], vectfd[2], fp,
 				   "Vector_Data", region, out_type);
 	    }
 	    else {

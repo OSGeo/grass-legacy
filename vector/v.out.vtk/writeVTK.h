@@ -46,15 +46,15 @@ typedef struct
 
 
 /*Writes the point cooridanets for every vector type */
-int writeVTKPoints(FILE * ascii, struct Map_info *Map, VTKInfo * info,
+int write_vtk_points(FILE * ascii, struct Map_info *Map, VTKInfo * info,
 		   int *type, int typenum, int dp);
 /*Writes the polydata cells for every vector type */
-int writeVTKCells(FILE * ascii, struct Map_info *Map, VTKInfo * info,
+int write_vtk_cells(FILE * ascii, struct Map_info *Map, VTKInfo * info,
 		  int *type, int typenum);
 /*Write the category (the first available) as cell or point data */
-int writeVTKCatData(FILE * ascii, struct Map_info *Map, VTKInfo * info,
+int write_vtk_cat_data(FILE * ascii, struct Map_info *Map, VTKInfo * info,
 		    int layer, int *type, int typenum, int dp);
 /*If a database connection is given, write the db data as cell or point data */
-int writeVTKDBData(FILE * ascii, struct Map_info *Map, VTKInfo * info,
+int write_vtk_db_data(FILE * ascii, struct Map_info *Map, VTKInfo * info,
 		   int layer, int *type, int typenum, int dp);
 #endif

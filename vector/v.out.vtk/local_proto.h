@@ -27,9 +27,9 @@ extern double y_extent;
 #endif
 
 /*Write the vtk output */
-int writeVTK(FILE * ascii, struct Map_info *, int layer, int *types,
+int write_vtk(FILE * ascii, struct Map_info *, int layer, int *types,
 	     int typenum, int dp);
 /*Write the VTK header */
-int writeHead(FILE * ascii, struct Map_info *Map);
+int write_vtk_head(FILE * ascii, struct Map_info *Map);
 
 #endif

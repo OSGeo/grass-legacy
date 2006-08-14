@@ -35,6 +35,6 @@ extern paramType param;		/*Parameters */
 #endif
 
 /*prototype */
-void SetParameters();
+void set_params();
 
 #endif
