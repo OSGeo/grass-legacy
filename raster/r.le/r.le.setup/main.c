@@ -147,6 +147,8 @@ main (int argc, char *argv[])
   				/* invoke the setup modules */
 
   set_map(map_name, v_name, s_name, window, t0, bot, l0, right);
+
+  return (EXIT_SUCCESS);
 }
 
 
