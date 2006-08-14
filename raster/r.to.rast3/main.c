@@ -20,32 +20,33 @@
 #include <grass/gis.h>
 #include <grass/G3d.h>
 #include <grass/glocale.h>
+#include <grass/config.h>
 
-
-/*- Parameters and global variables -----------------------------------------*/
+/*- params and global variables -----------------------------------------*/
 typedef struct
 {
     struct Option *input, *output;
-} ParameterType;
+    struct Flag *mask;
+} paramType;
 
-ParameterType Parameter;		/*Parameters */
+paramType param;		/*params */
 int globalRastMapType;
 int globalG3dMapType;
 
 
 /*- prototypes --------------------------------------------------------------*/
-void FatalError(void *map, int *fd, int depths, char *errorMsg);	/*Simple Error message */
-void SetParameters();		/*Fill the ParameterType structure */
-void RasterToG3D(void *map, G3D_Region region, int *fd);	/*Write the raster */
-int  OpenInputMap(char *name, char *mapset);	/*opens the outputmap */
-void CloseInputMap(int fd);	/*close the map */
+void fatal_error(void *map, int *fd, int depths, char *errorMsg);	/*Simple Error message */
+void set_params();		/*Fill the paramType structure */
+void raster_to_g3d(void *map, G3D_Region region, int *fd);	/*Write the raster */
+int  open_input_raster_map(char *name, char *mapset);	/*opens the outputmap */
+void close_input_raster_map(int fd);	/*close the map */
 
 
 
 /* ************************************************************************* */
 /* Error handling ********************************************************** */
 /* ************************************************************************* */
-void FatalError(void *map, int *fd, int depths, char *errorMsg)
+void fatal_error(void *map, int *fd, int depths, char *errorMsg)
 {
     int i;
 
@@ -58,7 +59,7 @@ void FatalError(void *map, int *fd, int depths, char *errorMsg)
 
     if (fd != NULL) {
 	for (i = 0; i < depths; i++)
-	    CloseInputMap(fd[i]);
+	    close_input_raster_map(fd[i]);
     }
 
     G3d_fatalError(errorMsg);
@@ -69,23 +70,22 @@ void FatalError(void *map, int *fd, int depths, char *errorMsg)
 /* ************************************************************************* */
 /* Setg up the arguments we are expecting ********************************** */
 /* ************************************************************************* */
-void SetParameters()
+void set_params()
 {
-    Parameter.input = G_define_option();
-    Parameter.input->key = "input";
-    Parameter.input->type = TYPE_STRING;
-    Parameter.input->required = YES;
-    Parameter.input->description = _("2d raster maps which represent the slices");
-    Parameter.input->gisprompt = "old,cell,raster";
-    Parameter.input->multiple = YES;
+    param.input = G_define_option();
+    param.input->key = "input";
+    param.input->type = TYPE_STRING;
+    param.input->required = YES;
+    param.input->description = _("2d raster maps which represent the slices");
+    param.input->gisprompt = "old,cell,raster";
+    param.input->multiple = YES;
 
-    Parameter.output = G_define_option();
-    Parameter.output->key = "output";
-    Parameter.output->type = TYPE_STRING;
-    Parameter.output->required = YES;
-    Parameter.output->gisprompt = "new,grid3,3d-raster";
-    Parameter.output->description =
-	_("output 3dcell map which will be filled with the 2D raster slices");
+    param.output = G_define_standard_option(G_OPT_R3_OUTPUT);
+
+    param.mask = G_define_flag();
+    param.mask->key = 'm';
+    param.mask->description = _("Use G3D mask (if exists) with output map");
+    
 }
 
 
@@ -93,7 +93,7 @@ void SetParameters()
 /* ************************************************************************* */
 /* Write the raster maps into one G3D map ********************************** */
 /* ************************************************************************* */
-void RasterToG3D(void *map, G3D_Region region, int *fd)
+void raster_to_g3d(void *map, G3D_Region region, int *fd)
 {
     int x, y, z;
     int rows, cols, depths;
@@ -108,17 +108,17 @@ void RasterToG3D(void *map, G3D_Region region, int *fd)
 
     rast = G_allocate_raster_buf(globalRastMapType);
 
-    G_debug(3, _("RasterToG3D: Writing %i raster maps with rows %i cols."),
+    G_debug(3, _("raster_to_g3d: Writing %i raster maps with rows %i cols."),
 	    depths, rows, cols);
 
     /*Every Rastermap */
     for (z = 0; z < depths; z++) {	/*From the bottom to the top */
-	G_debug(2, _("Writing g3d slice %i\n"), z + 1);
+	G_debug(4, _("Writing g3d slice %i\n"), z + 1);
 	for (y = 0; y < rows; y++) {
 	    G_percent(y, rows - 1, 10);
 
 	    if (!G_get_raster_row(fd[z], rast, y, globalRastMapType))
-		FatalError(map, fd, depths, _("Cold not get raster row \n"));
+		fatal_error(map, fd, depths, _("Cold not get raster row \n"));
 
 	    for (x = 0, ptr = rast; x < cols; x++,
 		 ptr = G_incr_void_ptr(ptr, G_raster_size(globalRastMapType))) {
@@ -130,7 +130,7 @@ void RasterToG3D(void *map, G3D_Region region, int *fd)
 			dvalue = *(CELL *) ptr;
 		    }
 		if (G3d_putValue(map, x, y, z, (char *) &dvalue, G3D_DOUBLE) < 0)
-				FatalError(map, fd, depths, "error writing double data");		    
+				fatal_error(map, fd, depths, "error writing double data");		    
 		}
 		else if (globalRastMapType == FCELL_TYPE) {
 		    if (G_is_null_value(ptr, globalRastMapType)) {
@@ -140,7 +140,7 @@ void RasterToG3D(void *map, G3D_Region region, int *fd)
 			fvalue = *(FCELL *) ptr;
 		    }
 		if (G3d_putValue(map, x, y, z, (char *) &fvalue, G3D_FLOAT) < 0)
-				FatalError(map, fd, depths, "error writing float data");		    
+				fatal_error(map, fd, depths, "error writing float data");		    
 
 		}
 		else if (globalRastMapType == DCELL_TYPE) {
@@ -151,7 +151,7 @@ void RasterToG3D(void *map, G3D_Region region, int *fd)
 			dvalue = *(DCELL *) ptr;
 		    }
 		if (G3d_putValue(map, x, y, z, (char *) &dvalue, G3D_DOUBLE) < 0)
-				FatalError(map, fd, depths, "error writing double data");		    
+				fatal_error(map, fd, depths, "error writing double data");		    
 
 		}
 
@@ -181,6 +181,7 @@ int main(int argc, char *argv[])
     int cols, rows, opencells;
     char *name;
     char *mapset;
+    int changemask = 0;
     int maptype_tmp, nofile = 0;
 
     /* Initialize GRASS */
@@ -190,8 +191,8 @@ int main(int argc, char *argv[])
     module->description =
 	_("Converts 2D raster map slices to one 3D raster volume map");
 
-    /* Get Parametereters from user */
-    SetParameters();
+    /* Get parameters from user */
+    set_params();
 
     /* Have GRASS get inputs */
     if (G_parser(argc, argv))
@@ -199,7 +200,7 @@ int main(int argc, char *argv[])
 
 
     /*Check ob Input */
-    if (Parameter.output->answer == NULL)
+    if (param.output->answer == NULL)
 	G3d_fatalError(_("No output map"));
 
     /* Figure out the region from the map */
@@ -209,6 +210,8 @@ int main(int argc, char *argv[])
     /*Check if the g3d-region is equal to the 2d rows and cols */
     rows = G_window_rows();
     cols = G_window_cols();
+
+    G_debug(2, _("Check the 2d and 3d region settings\n"));
 
     /*If not equal, set the 2D windows correct*/
     if (rows != region.rows || cols != region.cols) {
@@ -226,10 +229,10 @@ int main(int argc, char *argv[])
     fd = (int *)G_malloc(region.depths * sizeof(int));
 
     if (fd == NULL)
-	FatalError(map, NULL, 0, _("out of memory!"));
+	fatal_error(map, NULL, 0, _("out of memory!"));
 
-    if (G_legal_filename(Parameter.output->answer) < 0)
-	FatalError(map, NULL, 0, _("Illegal output file name"));
+    if (G_legal_filename(param.output->answer) < 0)
+	fatal_error(map, NULL, 0, _("Illegal output file name"));
 
 
     mapset = NULL;
@@ -243,14 +246,14 @@ int main(int argc, char *argv[])
     /*Loop over all output maps! open */
     for (i = 0; i < region.depths; i++) {
 	/*Open only existing maps */
-	if (Parameter.input->answers[i] != NULL && nofile == 0) {
+	if (param.input->answers[i] != NULL && nofile == 0) {
 	    mapset = NULL;
 	    name = NULL;
-	    name = Parameter.input->answers[i];
+	    name = param.input->answers[i];
 	    mapset = G_find_cell2(name, "");
 
 	    if (mapset == NULL) {
-		FatalError(map, fd, opencells, _("Cell file not found\n"));
+		fatal_error(map, fd, opencells, _("Cell file not found\n"));
 	    }
 	}
 	else {
@@ -259,7 +262,7 @@ int main(int argc, char *argv[])
 
 	/*if only one map is given, open it depths - times */
 	G_message(_("Open raster map %s - one time for each depth (%d/%d)"), name, i+1, region.depths );
-	fd[i] = OpenInputMap(name, mapset);
+	fd[i] = open_input_raster_map(name, mapset);
 	opencells++;
 
 	/*maptype */
@@ -269,7 +272,7 @@ int main(int argc, char *argv[])
 	maptype_tmp = G_raster_map_type(name, mapset);
 
 	if (maptype_tmp != globalRastMapType) {
-	    FatalError(map, fd, opencells,
+	    fatal_error(map, fd, opencells,
 		       _
 		       ("Input maps have to be from the same type. CELL, FCELL or DCELL!"));
 	}
@@ -278,34 +281,53 @@ int main(int argc, char *argv[])
     G_message(_("Creating 3D raster map\n"));
     map = NULL;
 
+
     if (globalRastMapType == CELL_TYPE) {
 	map =
-	    G3d_openCellNew(Parameter.output->answer, G3D_DOUBLE,
+	    G3d_openCellNew(param.output->answer, G3D_DOUBLE,
 			    G3D_USE_CACHE_DEFAULT, &region);
 	globalG3dMapType = G3D_DOUBLE;
     }
     else if (globalRastMapType == FCELL_TYPE) {
 	map =
-	    G3d_openCellNew(Parameter.output->answer, G3D_FLOAT,
+	    G3d_openCellNew(param.output->answer, G3D_FLOAT,
 			    G3D_USE_CACHE_DEFAULT, &region);
 	globalG3dMapType = G3D_FLOAT;
     }
     else if (globalRastMapType == DCELL_TYPE) {
 	map =
-	    G3d_openCellNew(Parameter.output->answer, G3D_DOUBLE,
+	    G3d_openCellNew(param.output->answer, G3D_DOUBLE,
 			    G3D_USE_CACHE_DEFAULT, &region);
 	globalG3dMapType = G3D_DOUBLE;
     }
 
     if (map == NULL)
-	FatalError(map, fd, opencells, _("error opening g3d file"));
+	fatal_error(map, fd, opencells, _("error opening g3d file"));
+
+    /*if requested set the Mask on */
+    if (param.mask->answer) {
+        if (G3d_maskFileExists()) {
+            changemask = 0;
+            if (G3d_maskIsOff(map)) {
+                G3d_maskOn(map);
+                changemask = 1;
+            }
+        }
+    }
 
     /*Create the G3D Rastermap */
-    RasterToG3D(map, region, fd);
+    raster_to_g3d(map, region, fd);
+
+    /*We set the Mask off, if it was off before */
+    if (param.mask->answer) {
+        if (G3d_maskFileExists())
+            if (G3d_maskIsOn(map) && changemask)
+                G3d_maskOff(map);
+    }
 
     /*Loop over all output maps! close */
     for (i = 0; i < region.depths; i++)
-	CloseInputMap(fd[i]);
+	close_input_raster_map(fd[i]);
 
     if (fd)
 	G_free(fd);
@@ -316,6 +338,8 @@ int main(int argc, char *argv[])
 
     map = NULL;
 
+    G_debug(2, _("Done\n"));
+
     return (EXIT_SUCCESS);
 }
 
@@ -324,7 +348,7 @@ int main(int argc, char *argv[])
 /* ************************************************************************* */
 /* Open the raster input map *********************************************** */
 /* ************************************************************************* */
-int OpenInputMap(char *name, char *mapset)
+int open_input_raster_map(char *name, char *mapset)
 {
     int fd;
 
@@ -344,7 +368,7 @@ int OpenInputMap(char *name, char *mapset)
 /* ************************************************************************* */
 /* Close the raster input map ********************************************** */
 /* ************************************************************************* */
-void CloseInputMap(int fd)
+void close_input_raster_map(int fd)
 {
     if (G_close_cell(fd) < 0)
 	G_fatal_error(_("unable to close input map"));
