@@ -118,6 +118,10 @@ fi
 
 PROG=`basename $0`
 
+# setting environment, so that awk works properly in all languages
+unset LC_ALL
+export LC_NUMERIC=C
+
 alt=$GIS_OPT_ALTITUDE
 az=$GIS_OPT_AZIMUTH
 elev=$GIS_OPT_MAP
