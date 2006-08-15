@@ -265,13 +265,13 @@ main (int argc,char *argv[])
 	    G_debug(3, _("read vector region map"));
 	    observ = P_Read_Vector_Correction (&In, &elaboration_reg, &npoints, &nterrain, dim_vect);
 
-	    G_debug (0, _("npoints = %d, nterrain = %d"), npoints, nterrain);
+	    G_debug (5, _("npoints = %d, nterrain = %d"), npoints, nterrain);
 	    if (npoints > 0) {				/* If there is any point falling into elaboration_reg. */
 		count_terrain = 0;
 		nparameters = nsplx * nsply;
 
 	/* Mean's calculation */
-		G_debug (0, _("Mean's calculation"));
+		G_debug (3, _("Mean's calculation"));
 		mean = P_Mean_Calc (&elaboration_reg, observ, npoints); 
 		
 	/*Least Squares system*/
@@ -284,7 +284,7 @@ main (int argc,char *argv[])
 		lineVect = G_alloc_ivector (npoints+1);
 
 	/* Setting obsVect vector & Q matrix */
-		G_debug (0, _("Only TERRAIN points"));
+		G_debug (3, _("Only TERRAIN points"));
 		for (i=0; i<npoints; i++) {
 		    if (observ[i].cat == TERRAIN_SINGLE) {
 		    	obsVect[count_terrain][0] = observ[i].coordX;
@@ -296,7 +296,7 @@ main (int argc,char *argv[])
 		    lineVect[i] = observ[i].lineID;
 		}
 		
-		G_debug (0, _("M.Q. solution"));
+		G_debug (3, _("M.Q. solution"));
 		normalDefBilin (N, TN, Q, obsVect, passoE, passoN, nsplx, nsply, elaboration_reg.west, elaboration_reg.south, \
 					nterrain, nparameters, BW);
 		nCorrectGrad (N, lambda, nsplx, nsply, passoE, passoN);
@@ -315,7 +315,7 @@ main (int argc,char *argv[])
 		    }
 		}
 
-		G_debug (0, _("Correction and creation of terrain vector"));
+		G_debug (3, _("Correction and creation of terrain vector"));
 		P_Sparse_Correction (&In, &Out, &Out_Terrain, &elaboration_reg, general_box, overlap_box, obsVect, parVect, lineVect,\
 				dims.overlap, npoints, driver, mean);	
 
@@ -328,15 +328,10 @@ main (int argc,char *argv[])
 	}	/*! END WHILE; last_column = TRUE*/
     }	/*! END WHILE; last_row = TRUE*/
 
-    /* Dropping auxiliar table */
-    G_debug (3, _("Dropping Auxiliar table"));
-    if (flag_auxiliar == TRUE) {
- 	db_init_string (&sql);
-	db_append_string (&sql, "DROP TABLE Auxiliar_correction_table");
-	G_debug (3, _("Dropping <Auxiliar_correction_table>"));
-	if (db_execute_immediate (driver, &sql) != DB_OK)
-	    G_fatal_error (_("<Auxiliar_correction_table> could not be dropped"));
-    }
+/* Dropping auxiliar table */
+    G_debug (3, _("Dropping <s>"), table_name);
+    if (P_Drop_Aux_Table (driver, table_name) != DB_OK)
+    	G_fatal_error(_("<Auxiliar_correction_table> could not be dropped"));
 
     db_close_database_shutdown_driver (driver);
 
