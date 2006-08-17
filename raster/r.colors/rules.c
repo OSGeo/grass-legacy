@@ -209,7 +209,7 @@ static int read_rule(
 		badrule(tty,buf,line);
 		continue;
 	    }
-	    *val = (n==100.0 ? max : min + ((double)max-(double)min)*n/100.0);
+	    *val = min + ((double)max-(double)min)*(n/100.0);
 	    *set = 1;
 	    return 1;
 	}
@@ -223,7 +223,7 @@ static int read_rule(
 		badrule(tty,buf,line);
 		continue;
 	    }
-	    *val = (n==100.0 ? max : min + ((double)max-(double)min)*n/100.0);
+	    *val = min + ((double)max-(double)min)*(n/100.0);
 	    *set = 1;
 	    return 1;
 	}
@@ -338,7 +338,7 @@ static int read_rule(
 		badrule(tty,buf,line);
 		continue;
 	    }
-	    *val = (n==100.0 ? max : min + ((double)max-(double)min)*n/100.0);
+	    *val = min + ((double)max-(double)min)*(n/100.0);
 	    *set = 1;
 	    return 1;
 	}
