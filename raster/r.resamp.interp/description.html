@@ -1,0 +1,49 @@
+<H2>DESCRIPTION</H2>
+
+<p>
+<EM>r.resamp.interp</EM> fills a grid cell (raster) matrix with interpolated values
+generated from a set of input layer data points. A choice of three
+interpolation methods is available; each uses the weighted values of a different
+number of adjacent cells in the input map to determine the value of each
+cell in the output map as follows:
+<ul>
+<li>nearest neighbour (1 cell)</li>
+<li>bilinear (4 cells)</li>
+<li>bicubic (12 cells)</li>
+</ul>
+</p>
+
+
+<P>
+If there is a current working mask, it applies to the output
+raster file.  Only those cells falling within the mask will be
+assigned interpolated values.  The procedure for 
+selection of input data will consider all 
+input data relevant to interpolating values at the cell centers of the
+current geographic region, ignoring the curent mask.  Note that for bilinear
+and bicubic interpolation,
+cells of the output raster that cannot be bounded by the appropriate number
+of input cell centers are set to null.
+</p>
+
+<H2>NOTES</H2>
+
+<P>
+For longitude-latitude databases, the interpolation algorithm is based on
+degree fractions, not on the absolute distances between cell centers.  Any
+attempt to implement the latter would violate the integrity of the
+interpolation method.
+</p>
+
+
+<H2>SEE ALSO</H2>
+
+<EM><a href="g.region.html">g.region</a></EM>,
+<EM><a href="r.resample.html">r.resample</a></EM>,
+<EM><a href="r.resamp.rst.html">r.resamp.rst</a></EM>
+
+<H2>AUTHOR</H2>
+
+Glynn Clements
+
+<p><i>Last changed: $Date$</i>
