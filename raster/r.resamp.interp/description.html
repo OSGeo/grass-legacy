@@ -9,18 +9,13 @@ cell in the output map as follows:
 <ul>
 <li>nearest neighbour (1 cell)</li>
 <li>bilinear (4 cells)</li>
-<li>bicubic (12 cells)</li>
+<li>bicubic (16 cells)</li>
 </ul>
 </p>
 
 
 <P>
-If there is a current working mask, it applies to the output
-raster file.  Only those cells falling within the mask will be
-assigned interpolated values.  The procedure for 
-selection of input data will consider all 
-input data relevant to interpolating values at the cell centers of the
-current geographic region, ignoring the curent mask.  Note that for bilinear
+Note that for bilinear
 and bicubic interpolation,
 cells of the output raster that cannot be bounded by the appropriate number
 of input cell centers are set to null.
