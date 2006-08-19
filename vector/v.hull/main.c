@@ -138,7 +138,7 @@ int loadSiteCoordinates(FILE* fdsite, struct Point **points , int all, struct Ce
     {
         if(all || G_site_in_region(site, window) )
         {
-            if ((pointIdx % ALLOC_CHUNK) == 0);
+            if ((pointIdx % ALLOC_CHUNK) == 0)
                *points = (struct Point *) G_realloc(*points, (pointIdx + ALLOC_CHUNK) * sizeof(struct Point));
 
             (*points)[pointIdx].x = site->east;
