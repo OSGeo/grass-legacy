@@ -1,6 +1,7 @@
 #include <stdlib.h>				/* imported libraries */
 #include <stdio.h>
 #include <math.h>
+#include <grass/gis.h>
 
 #include "PolimiFunct.h"
 
