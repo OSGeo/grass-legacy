@@ -2,6 +2,7 @@
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/site.h>
+#include <grass/glocale.h>
 
 int main(int argc, char *argv[])
 {

@@ -1,22 +1,23 @@
-/* ***************************************************************
- * *
- * * MODULE:       v.topo.check
- * * 
- * * AUTHOR(S):    Radim Blazek
- * *               
- * * PURPOSE:      Check vector topology.
- * *               
- * * COPYRIGHT:    (C) 2001 by the GRASS Development Team
- * *
- * *               This program is free software under the 
- * *               GNU General Public License (>=v2). 
- * *               Read the file COPYING that comes with GRASS
- * *               for details.
- * *
- * **************************************************************/
+/***************************************************************
+ *
+ * MODULE:       v.topo.check
+ * 
+ * AUTHOR(S):    Radim Blazek
+ *               
+ * PURPOSE:      Check vector topology.
+ *               
+ * COPYRIGHT:    (C) 2001 by the GRASS Development Team
+ *
+ *               This program is free software under the 
+ *               GNU General Public License (>=v2). 
+ *               Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ **************************************************************/
 #include <stdlib.h> 
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
 int 
 main (int argc, char *argv[])
