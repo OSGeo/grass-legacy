@@ -16,6 +16,9 @@
  *
  * TODO:       
  ****************************************************************/
+#include <grass/gis.h>
+#include <grass/glocale.h>
+
 #define MAIN
 #include "global.h"
 //static int error_routine(const char*msg, int fatal);

@@ -18,10 +18,11 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/site.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
-#include <stdlib.h>
 
 static int loop; /* added #cat support for site_list 11/99 M. Neteler
                   * required for s.to.vect and s.to.rast */
