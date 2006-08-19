@@ -65,6 +65,7 @@ main (int argc,char *argv[])
 /*------------------------------------------------------------------------------------------*/
 /* Options' declaration */
     module = G_define_module ();
+    module->keywords = _("vector, LIDAR, edges");
     module->description = _("Detect the object's edges from a LIDAR data set.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);

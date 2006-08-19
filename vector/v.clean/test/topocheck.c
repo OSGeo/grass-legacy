@@ -36,7 +36,8 @@ main (int argc, char *argv[])
 	double tarea1, tarea2, darea, pdarea;
 
 	module = G_define_module();
-	module->description = "Break lines at intersections.";
+	module->keywords = _("vector");
+    module->description = "Break lines at intersections.";
 
 	in_opt = G_define_standard_option(G_OPT_V_INPUT);
 	out_opt = G_define_standard_option(G_OPT_V_OUTPUT);

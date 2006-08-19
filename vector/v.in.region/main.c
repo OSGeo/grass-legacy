@@ -34,6 +34,7 @@ int main(int argc, char **argv)
     G_gisinit (argv[0]) ;
 
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = "Create a new vector from current region.";
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT); 

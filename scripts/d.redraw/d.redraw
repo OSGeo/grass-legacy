@@ -14,7 +14,8 @@
 #############################################################################
 
 #%Module
-#% description: redraw current displayed maps in GRASS monitor
+#%  description: redraw current displayed maps in GRASS monitor
+#%  keywords: display
 #%End
 
 #GUI is not very useful here, commented:

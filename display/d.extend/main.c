@@ -1,8 +1,6 @@
 /*
  * d.extend: set window region from displayed maps.
  *
- * $Id$
- *
  *	Copyright (C) 2000 by the GRASS Development Team
  *	Author: Huidae Cho <grass4u@gmail.com>
  *
@@ -17,11 +15,12 @@
 #include <grass/Vect.h>
 #include <grass/raster.h>
 #include <grass/display.h>
+#include <grass/glocale.h>
 
 int 
 main (int argc, char **argv)
 {
-	struct GModule *module;
+    struct GModule *module;
     int i, first=1;
     char *mapset;
     char **rast, **vect, **site;
@@ -30,8 +29,9 @@ main (int argc, char **argv)
 
     G_gisinit(argv[0]) ;
 
-	module = G_define_module();
-	module->description =
+    module = G_define_module();
+    module->keywords = _("display, setup");
+    module->description =
 		"Set window region so that all currently displayed raster, "
 		"vector and sites maps can be shown in a monitor.";
 

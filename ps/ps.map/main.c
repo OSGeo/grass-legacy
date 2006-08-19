@@ -95,6 +95,7 @@ int main(int argc,char *argv[])
     
     /* Set description */
     module              = G_define_module();
+    module->keywords = _("postscript, map, printing");
     module->description = _("Hardcopy PostScript map output utility.");
 
     rflag = G_define_flag();

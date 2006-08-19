@@ -33,6 +33,7 @@
 #include "v5d.h"
 #include <grass/gis.h>
 #include <grass/G3d.h>
+#include <grass/glocale.h>
 
 #define MAX(a,b) (a > b ? a : b)
 
@@ -198,7 +199,8 @@ main  (int argc, char *argv[])
 
   G_gisinit(argv[0]);
   module = G_define_module();
-  module->description =
+  module->keywords = _("raster3d, voxel");
+    module->description =
    "  import of 3-dimensional Vis5D files (i.e. the v5d file with 1 variable and 1 time step)";
 
   setParams ();

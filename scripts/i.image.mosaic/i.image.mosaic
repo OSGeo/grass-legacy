@@ -15,7 +15,8 @@
 
 
 #% Module
-#% description: Mosaics up to 4 images and extends colormap; creates map *.mosaic
+#%  description: Mosaics up to 4 images and extends colormap; creates map *.mosaic
+#%  keywords: raster, imagery, mosaicking
 #% End
 #% option
 #% key: image1

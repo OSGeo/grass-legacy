@@ -99,6 +99,7 @@ main(int argc, char **argv)
     printattributes->description = _("Print attribute information");
   
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = 
     _("Allows the user to interactively query a vector map layer "
       "at user-selected locations within the current geographic region");

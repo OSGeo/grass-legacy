@@ -46,6 +46,7 @@
 
 #% Module
 #%  description: Creates shaded relief map from an elevation map (DEM).
+#%  keywords: raster, elevation
 #% End
 #% option
 #%  key: map

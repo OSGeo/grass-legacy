@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include <grass/display.h>
 #include <grass/raster.h>
 #include "colors.h"
@@ -34,6 +35,7 @@ main (int argc, char **argv)
     }
 
     module = G_define_module();
+    module->keywords = _("display");
     module->description =
 	"Allows the user to interactively change the color table "
 	"of a raster map layer displayed on the graphics monitor.";

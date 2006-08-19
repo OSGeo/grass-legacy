@@ -16,6 +16,7 @@
 
 #% Module
 #% description: Resizes active display monitor
+#% keywords: display, setup
 #% End
 #% option
 #% key: width

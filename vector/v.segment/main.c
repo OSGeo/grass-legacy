@@ -20,6 +20,7 @@
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
+#include <grass/glocale.h>
 
 int find_line ( struct Map_info *Map, int lfield, int cat );
     
@@ -43,6 +44,7 @@ int main(int argc, char **argv)
     G_gisinit (argv[0]) ;
 
     module = G_define_module();
+    module->keywords = _("vector, geometry");
     module->description = "Create points/segments from input lines, "
 	   "and positions read from stdin in format:\n"
            "P <point id> <line cat> <offset> [<side offset>]\n"

@@ -44,7 +44,8 @@ int main (int argc, char *argv[])
     pgm_name = argv[0];
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("raster");
+    module->description =
 		_("Creates a raster map layer showing buffer zones "
 		"surrounding cells that contain non-NULL category values.");
 

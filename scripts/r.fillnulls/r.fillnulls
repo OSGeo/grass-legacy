@@ -21,6 +21,7 @@
 
 #%Module
 #% description: Fills no-data areas in raster maps using v.surf.rst splines interpolation
+#% keywords: raster, elevation, interpolation
 #%End
 #%option
 #% key: input

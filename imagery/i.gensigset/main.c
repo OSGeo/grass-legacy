@@ -1,5 +1,7 @@
 #include <stdlib.h>
+#include <grass/gis.h>
 #include <grass/imagery.h>
+#include <grass/glocale.h>
 #include "files.h"
 #include "parms.h"
 #include "local_proto.h"
@@ -15,8 +17,9 @@ int main (int argc, char *argv[])
 
     G_gisinit (argv[0]);
 
-	module = G_define_module();
-	module->description =
+    module = G_define_module();
+    module->keywords = _("imagery");
+    module->description =
 		"Generate statistics for i.smap from raster map layer.";
 
     parse (argc,argv, &parms);
