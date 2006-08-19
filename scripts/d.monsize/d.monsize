@@ -23,6 +23,7 @@
 
 #%Module
 #%  description: Selects/starts specified monitor at specified size
+#%  keywords: display, setup
 #%End
 #%option
 #% key: setmonitor

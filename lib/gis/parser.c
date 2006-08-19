@@ -862,6 +862,10 @@ int G_usage (void)
 		fprintf (stderr, _("\nDescription:\n"));
 		fprintf (stderr, " %s\n", module_info.description);
 	}
+	if (module_info.keywords) {
+		fprintf (stderr, _("\nKeywords:\n"));
+		fprintf (stderr, " %s\n", module_info.keywords);
+	}
 
 	fprintf (stderr, _("\nUsage:\n "));
 
@@ -1064,6 +1068,12 @@ static void G_usage_xml (void)
 		fprintf(stdout, "\n\t</description>\n");
 	}
 
+	if (module_info.keywords) {
+		fprintf(stdout, "\t<keywords>\n\t\t");
+		print_escaped_for_xml (stdout, module_info.keywords);
+		fprintf(stdout, "\n\t</keywords>\n");
+	}
+
 	/***** Don't use parameter-groups for now.  We'll reimplement this later 
 	 ***** when we have a concept of several mutually exclusive option
 	 ***** groups
@@ -1251,6 +1261,12 @@ static void G_usage_html (void)
 	if (module_info.description) {
 		fprintf(stdout, " - ");
 		fprintf(stdout, "%s", module_info.description);
+		fprintf(stdout, "\n");
+	}
+
+	fprintf(stdout, "<h2>KEYWORDS</h2>\n");
+	if (module_info.keywords) {
+		fprintf(stdout, "%s", module_info.keywords);
 		fprintf(stdout, "\n");
 	}
 	fprintf(stdout, "<h2>SYNOPSIS</h2>\n");
@@ -1448,6 +1464,7 @@ static void generate_tcl(FILE *fp)
 	fprintf(fp, "begin_dialog {%s} {\n", pgm_name);
 	fprintf(fp, " label {%s}\n", module_info.label ? module_info.label : "");
 	fprintf(fp, " desc {%s}\n", module_info.description ? module_info.description : "");
+	fprintf(fp, " key {%s}\n", module_info.keywords ? module_info.keywords : "");
 	fprintf(fp, "}\n");
 
 	optn = 1;

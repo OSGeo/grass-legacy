@@ -18,6 +18,7 @@
 
 #%Module
 #%  description: Saves active display monitor to graphics file in home directory
+#%  keywords: display, export
 #%End
 #%option
 #% key: output

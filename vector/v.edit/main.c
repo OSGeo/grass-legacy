@@ -27,7 +27,8 @@ int main (int argc, char *argv[])
     FILE *output=stdout;
 
     module = G_define_module();
-    module->description = _("Edits a vector map; allows adding, deleteing and modifying objects in a vector map.");
+    module->keywords = _("vector, editing");
+    module->description = _("Edits a vector map; allows adding, deleting and modifying objects in a vector map.");
 
     if(!parser(argc, argv))
 	exit(EXIT_FAILURE);

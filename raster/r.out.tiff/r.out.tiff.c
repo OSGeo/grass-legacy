@@ -81,7 +81,8 @@ main (int argc, char *argv[])
 	
 	/* Set description */
 	module              = G_define_module();
-	module->description = 
+	module->keywords = _("raster");
+    module->description = 
 	    _("Exports a GRASS raster file to a 8/24bit TIFF image file "
 	    "at the pixel resolution of the currently defined region.");
 

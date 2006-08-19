@@ -567,6 +567,7 @@ struct GModule                      /* Structure that stores module info  */
 {
     char *label;                    /* Optional short description for GUI */
     char *description;              /* String describing module */
+    char *keywords;                 /* Keywords describing module */
 	/* further items are possible: author(s), version */
     int overwrite; /* overwrite old files */
 };

@@ -70,6 +70,7 @@ main (int argc,char *argv[])
 /*-------------------------------------------------------------------------------------------*/
 /* Options' declaration */
     module = G_define_module();
+    module->keywords = _("vector, interpolation");
     module->description = _("Bicubic or bilineal interpolation with Tykhonov regularization");
 
     in_opt = G_define_option () ;

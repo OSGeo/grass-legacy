@@ -135,7 +135,8 @@ main (int argc, char **argv)
 	SYMBOL *Symb;
 	
 	module = G_define_module();
-	module->description = _("Displays GRASS vector data in the active frame on the "
+	module->keywords = _("display");
+    module->description = _("Displays GRASS vector data in the active frame on the "
 		              "graphics monitor.");
 
 	map_opt = G_define_standard_option(G_OPT_V_MAP); 

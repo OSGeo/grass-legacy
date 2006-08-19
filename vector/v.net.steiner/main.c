@@ -20,6 +20,7 @@
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
+#include <grass/glocale.h>
 
 /* costs between 2 terminals */
 typedef struct {
@@ -315,6 +316,7 @@ int main(int argc, char **argv)
     G_gisinit (argv[0]) ;
 
     module = G_define_module();
+    module->keywords = _("vector, networking");
     module->description = "Create Steiner tree for the network and given terminals. "
 	    "Note that 'Minimum Steiner Tree' problem is NP-hard "
 	    "and heuristic algorithm is used in this module so the the result may be sub optimal.";

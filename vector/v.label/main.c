@@ -59,6 +59,7 @@ main (int argc, char **argv)
 
     G_gisinit(argv[0]);
     module = G_define_module();
+    module->keywords = _("vector, paint labels");
     module->description =
 	_("Create paint labels for GRASS vector file and attached attributes.");
 

@@ -144,7 +144,8 @@ main(int argc, char **argv)
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("display");
+    module->description =
 	    _("Draws text in the graphics monitor's active display frame using TrueType fonts.");
 
 	param.text = G_define_option();

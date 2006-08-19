@@ -153,6 +153,7 @@ int main(int argc, char *argv[])
     struct History history;
 
     module = G_define_module();
+    module->keywords = _("raster");
     module->description =
         _("Fills lake from seed at given level");
 

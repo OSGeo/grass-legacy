@@ -1,22 +1,24 @@
-/* ***************************************************************
- * *
- * * MODULE:       v.type
- * * 
- * * AUTHOR(S):    Radim Blazek
- * *               
- * * PURPOSE:      Category manipulations
- * *               
- * * COPYRIGHT:    (C) 2001 by the GRASS Development Team
- * *
- * *               This program is free software under the 
- * *               GNU General Public License (>=v2). 
- * *               Read the file COPYING that comes with GRASS
- * *               for details.
- * *
- * **************************************************************/
+/***************************************************************
+ *
+ * MODULE:       v.type
+ * 
+ * AUTHOR(S):    Radim Blazek
+ *               
+ * PURPOSE:      Category manipulations
+ *               
+ * COPYRIGHT:    (C) 2001 by the GRASS Development Team
+ *
+ *               This program is free software under the 
+ *               GNU General Public License (>=v2). 
+ *               Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ **************************************************************/
+
 #include <stdlib.h> 
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
 int 
 main (int argc, char *argv[])
@@ -32,6 +34,7 @@ main (int argc, char *argv[])
     int    ntypes; /* number of types (number of pairs * 2) */	
 
     module = G_define_module();
+    module->keywords = _("vector, geometry");
     module->description = "Change the type of geometry elements.";
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
