@@ -1,6 +1,6 @@
 #include <math.h>
 #include <grass/gis.h>
-#include "local_proto.h"
+#include <grass/stats.h>
 
 static void percentile(DCELL *result, DCELL *values, int n, double percent)
 {

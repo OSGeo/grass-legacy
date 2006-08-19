@@ -4,23 +4,22 @@
 
 #include <grass/gis.h>
 #include <grass/glocale.h>
-
-#include "local_proto.h"
+#include <grass/stats.h>
 
 struct menu
 {
-	cfunc *method;	/* routine to compute new value */
-	char *name;  	/* method name */
-	char *text;	/* menu display - full description */
+	stat_func *method;	/* routine to compute new value */
+	char *name;		/* method name */
+	char *text;		/* menu display - full description */
 } menu[] = {
 	{c_ave,    "average",   "average value"},
 	{c_count,  "count",     "count of non-NULL cells"},
 	{c_median, "median",    "median value"},
 	{c_mode,   "mode",      "most frequently occuring value"},
 	{c_min,    "minimum",   "lowest value"},
-	{c_minx,   "min_raster",     "raster with lowest value"}, 
+	{c_minx,   "min_raster","raster with lowest value"}, 
 	{c_max,    "maximum",   "highest value"},
-	{c_maxx,   "max_raster",     "raster with highest value"}, 
+	{c_maxx,   "max_raster","raster with highest value"}, 
 	{c_stddev, "stddev",    "standard deviation"},
 	{c_sum,    "sum",       "sum of values"},
 	{c_var,    "variance",  "statistical variance"},
@@ -71,7 +70,7 @@ int main (int argc, char *argv[])
 	} flag;
 	int verbose;
 	int method;
-	cfunc *method_fn;
+	stat_func *method_fn;
 	int i;
 	int num_inputs;
 	struct input *inputs;

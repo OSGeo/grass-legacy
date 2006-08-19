@@ -1,3 +1,4 @@
+
 struct ncb  /* neighborhood control block */
 {
     DCELL **buf;     /* for reading cell file */
@@ -13,12 +14,7 @@ struct ncb  /* neighborhood control block */
 	char *mapset;
     }
     oldcell, newcell;
-    long changed;
-    DCELL *center;
 };
 
-#ifdef MAIN
-    struct ncb ncb;
-#else
-    extern struct ncb ncb;
-#endif
+extern struct ncb ncb;
+

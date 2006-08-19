@@ -1,7 +1,6 @@
-
 #include <stdlib.h>
 #include <grass/gis.h>
-#include "local_proto.h"
+#include <grass/stats.h>
 
 static int ascending(const void *aa, const void *bb)
 {

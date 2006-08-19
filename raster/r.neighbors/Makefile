@@ -2,8 +2,8 @@ MODULE_TOPDIR = ../..
 
 PGM = r.neighbors
 
-LIBES = $(GISLIB)
-DEPENDENCIES = $(GISDEP)
+LIBES = $(STATSLIB) $(GISLIB)
+DEPENDENCIES = $(STATSDEP) $(GISDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 

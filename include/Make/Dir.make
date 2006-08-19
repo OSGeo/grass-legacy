@@ -18,7 +18,3 @@ cleansubdirs:
 	    echo $$subdir ; \
 	    $(MAKE) -C $$subdir clean; \
 	done
-
-# HTML page rules:
-include $(MODULE_TOPDIR)/include/Make/Html.make
-

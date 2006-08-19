@@ -1,34 +1,32 @@
 #include <grass/gis.h>
 #include "ncb.h"
+
 /*
    given the starting col of the neighborhood,
    copy the cell values from the bufs into the array of values
    and return the number of values copied.
-   note: n-data cells are not copied or counted
-	 unless all values are np-data
 */
 
-int gather (DCELL *values,int offset)
+int gather(DCELL *values, int offset)
 {
-    int n;
-    int row;
-    int col;
-    DCELL *c;
+    int row, col;
+    int n = 0;
 
     *values = 0;
-    n = 0;
 
     for (row = 0; row < ncb.nsize; row++)
-    {
-	c = ncb.buf[row] + offset; 
-	for (col = 0; col < ncb.nsize; col++, c++)
+	for (col = 0; col < ncb.nsize; col++)
 	{
+	    DCELL *c = &ncb.buf[row][offset + col];
+
 	    if (G_is_d_null_value(c))
-		continue;
-	    *values++ = *c;
+		G_set_d_null_value(&values[n], 1);
+	    else
+		values[n] = *c;
+
 	    n++;
 	}
-    }
 
     return n ? n : -1;
 }
+
