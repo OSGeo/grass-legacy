@@ -1,11 +1,13 @@
 /* bufs.c */
-int allocate_bufs(void);
-int rotate_bufs(void);
-/* c_var.c */
-double d_var(register DCELL *, int, RASTER_MAP_TYPE);
+extern int allocate_bufs(void);
+extern int rotate_bufs(void);
 /* gather */
-int gather (DCELL *,int);
+extern int gather(DCELL *,int);
 /* readcell.c */
-int readcell(int, int, int, int);
-/* sort_cell.c */
-int sort_cell (DCELL *,int,int);
+extern int readcell(int, int, int, int);
+/* divr_cats.c */
+extern int divr_cats(void);
+/* intr_cats.c */
+extern int intr_cats(void);
+/* null_cats.c */
+extern int null_cats(void);

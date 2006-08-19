@@ -31,7 +31,8 @@ SUBDIRS = \
 	dspf \
 	symbol \
 	init \
-	cdhc
+	cdhc \
+	stats
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 include $(MODULE_TOPDIR)/include/Make/Doxygen.make

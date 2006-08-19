@@ -28,4 +28,4 @@ scriptstrings = \
 
 scriptstrings:
 	$(call scriptstrings,$(PGM))
-	
+

@@ -1,6 +1,6 @@
 #include <math.h>
 #include <grass/gis.h>
-#include "local_proto.h"
+#include <grass/stats.h>
 
 void c_stddev(DCELL *result, DCELL *values, int n)
 {

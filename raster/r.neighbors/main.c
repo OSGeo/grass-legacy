@@ -3,17 +3,42 @@
 #include <unistd.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
-#define MAIN
+#include <grass/stats.h>
 #include "ncb.h"
-#include "method.h"
 #include "local_proto.h"
 #include <grass/glocale.h>
 
-/*
- * July 99 - BB - added RASTER_MAP_TYPE args to methods in order
- * to eliminate integer truncation allowance ( + .5 ) when
- * map_type != CELL
- */
+typedef int (*ifunc)(void);
+
+struct menu
+{
+	stat_func *method;	/* routine to compute new value */
+	ifunc cat_names;	/* routine to make category names */
+	int copycolr;		/* flag if color table can be copied */
+	int half;		/* whether to add 0.5 to result */
+	char *name;		/* method name */
+	char *text;		/* menu display - full description */
+};
+
+#define NO_CATS 0
+
+/* modify this table to add new methods */
+static struct menu menu[] =
+{
+	{c_ave,    NO_CATS,	1, 1, "average", "average value"},
+	{c_median, NO_CATS,	1, 0, "median","median value"},
+	{c_mode,   NO_CATS,	1, 0, "mode",  "most frequently occuring value"},
+	{c_min,    NO_CATS,	1, 0, "minimum", "lowest value"},
+	{c_max,    NO_CATS,	1, 0, "maximum", "highest value"},
+	{c_stddev, NO_CATS,	0, 1, "stddev", "standard deviation"},
+	{c_sum,    NO_CATS,	1, 0, "sum", "sum of values"},
+	{c_var,    NO_CATS,	0, 1, "variance", "statistical variance"},
+	{c_divr,   divr_cats,	0, 0, "diversity", "number of different values"},
+	{c_intr,   intr_cats,	0, 0, "interspersion", "number of values different than center value"},
+	{0,0,0,0,0}
+};
+
+struct ncb ncb;
 
 int main (int argc, char *argv[])
 {
@@ -22,28 +47,28 @@ int main (int argc, char *argv[])
 	int verbose;
 	int in_fd;
 	int out_fd;
-	void *rp;
-	void *result;
+	DCELL *result;
 	RASTER_MAP_TYPE map_type;
 	int row, col;
 	int readrow;
 	int nrows, ncols;
 	int n;
 	int copycolr;
-	cfunc newvalue;
+	int half;
+	stat_func *newvalue;
 	ifunc cat_names;
 	struct Colors colr;
 	struct Cell_head cellhd;
 	struct Cell_head window;
 	struct GModule *module;
 	struct
-	    {
+	{
 		struct Option *input, *output;
 		struct Option *method, *size;
 		struct Option *title;
 	} parm;
 	struct
-	    {
+	{
 		struct Flag *quiet, *align;
 	} flag;
 
@@ -54,9 +79,9 @@ int main (int argc, char *argv[])
 	module = G_define_module();
 	module->description =
 		_("Makes each cell category value a "
-		"function of the category values assigned to the cells "
-		"around it, and stores new cell values in an output raster "
-		"map layer.");
+		  "function of the category values assigned to the cells "
+		  "around it, and stores new cell values in an output raster "
+		  "map layer.");
 
 	parm.input = G_define_option() ;
 	parm.input->key        = "input" ;
@@ -116,14 +141,14 @@ int main (int argc, char *argv[])
 	if(NULL == (ncb.oldcell.mapset = G_find_cell2(p,"")))
 	{
 		fprintf (stderr, "%s: <%s> raster file not found\n",
-		    G_program_name(), p);
+			 G_program_name(), p);
 		exit(1);
 	}
 	p = ncb.newcell.name = parm.output->answer;
 	if (G_legal_filename(p) < 0)
 	{
 		fprintf (stderr, "%s: <%s> illegal file name\n",
-		    G_program_name(), p);
+			 G_program_name(), p);
 		exit(1);
 	}
 	ncb.newcell.mapset = G_mapset();
@@ -159,10 +184,12 @@ int main (int argc, char *argv[])
 	if (!p)
 	{
 		fprintf (stderr, "<%s=%s> unknown %s\n",
-		    parm.method->key, parm.method->answer, parm.method->key);
+			 parm.method->key, parm.method->answer, parm.method->key);
 		G_usage();
 		exit(1);
 	}
+
+	half = menu[method].half;
 
 	/* copy color table? */
 	copycolr = menu[method].copycolr;
@@ -180,15 +207,14 @@ int main (int argc, char *argv[])
 	/* allocate the cell buffers */
 	allocate_bufs ();
 	values = (DCELL *) G_malloc (ncb.nsize * ncb.nsize * sizeof (DCELL));
-	result = G_allocate_raster_buf (map_type);
-
+	result = G_allocate_d_raster_buf();
 
 	/* get title, initialize the category and stat info */
 	if (parm.title->answer)
 		strcpy (ncb.title, parm.title->answer);
 	else
 		sprintf (ncb.title,"%dx%d neighborhood: %s of %s",
-		    ncb.nsize, ncb.nsize, menu[method].name, ncb.oldcell.name);
+			 ncb.nsize, ncb.nsize, menu[method].name, ncb.oldcell.name);
 
 
 	/* initialize the cell bufs with 'dist' rows of the old cellfile */
@@ -212,28 +238,25 @@ int main (int argc, char *argv[])
 
 	if (verbose = !flag.quiet->answer)
 		fprintf (stderr, "Percent complete ... ");
-	ncb.changed = 0;
 	for (row = 0; row < nrows; row++)
 	{
 		if (verbose)
 			G_percent (row, nrows, 2);
 		readcell (in_fd, readrow++, nrows, ncols);
-		ncb.center = ncb.buf[ncb.dist] + ncb.dist;
-		rp = result;
 		for (col = 0; col < ncols; col++)
 		{
+			DCELL *rp = &result[col];
 			n = gather (values, col);
 			if (n < 0)
-			    G_set_null_value(rp, 1, map_type);
+				G_set_d_null_value (rp, 1);
 			else
 			{
-			    DCELL out_val = newvalue (values, n, map_type);
-			    G_set_raster_value_d(rp, out_val, map_type);
+				newvalue(rp, values, n);
+				if (half && !G_is_d_null_value(rp))
+					*rp += 0.5;
 			}
-			rp = G_incr_void_ptr(rp, G_raster_size(map_type));
-			ncb.center++;
 		}
-		G_put_raster_row (out_fd, result, map_type);
+		G_put_d_raster_row(out_fd, result);
 	}
 	if (verbose)
 		G_percent (row, nrows, 2);
