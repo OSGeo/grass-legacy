@@ -182,8 +182,8 @@ P_Regular_Points (struct Cell_head *Elaboration, BOUND_BOX General, BOUND_BOX Ov
     int col, row;
     double X, Y, interpolation, weight, csi, eta;
     struct Cell_head Original;
-    extern int nsplx, nsply;
-    extern double passoN, passoE;
+    int nsplx, nsply;
+    double passoN, passoE;
 
     G_get_window (&Original);
     for (row = 0; row < nrows; row++) {
