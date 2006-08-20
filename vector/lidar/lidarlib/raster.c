@@ -30,7 +30,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
     
     for (i=0; i<num_points; i++){
 	
-	if ( Vect_point_in_box (obs[i][0], obs[i][1], mean, &General) ) {	//Here mean is just for asking if obs point is in box
+	if ( Vect_point_in_box (obs[i][0], obs[i][1], mean, &General) ) {	/*Here mean is just for asking if obs point is in box */
 	
 	   if (bilin)
 		interpolation = dataInterpolateBilin (obs[i][0], obs[i][1], pe, pn, nsplx, nsply, Elaboration->west, \
@@ -42,7 +42,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 	interpolation += mean;
 	Vect_copy_xyz_to_pnts (point, &obs[i][0], &obs[i][1], &interpolation, 1);
 
-	    if (Vect_point_in_box (obs[i][0], obs[i][1], interpolation, &Overlap)) {  //(5)
+	    if (Vect_point_in_box (obs[i][0], obs[i][1], interpolation, &Overlap)) {  /*(5)*/
 		Vect_write_line (Out, GV_POINT, point, categories);	
 	    
 	    } else {
@@ -59,7 +59,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 
 		if ((point->x[0] > Overlap.E)) {
 
-		    if ((*point->y > Overlap.N)) {		//(3)
+		    if ((*point->y > Overlap.N)) {		/*(3)*/
 			csi = (*point->x - Overlap.E)/overlap;
 			eta = (*point->y - Overlap.N)/overlap;
 			weight = (1-csi)*(1-eta);
@@ -73,7 +73,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 			if (db_execute_immediate (driver, &sql) != DB_OK) 
 			    G_fatal_error (_("It was no possible writting in <%s>."), tab_name);
 
-		    } else if ((*point->y < Overlap.S)) {	//(1)
+		    } else if ((*point->y < Overlap.S)) {	/*(1)*/
 		        csi = (*point->x - Overlap.E)/overlap;
 			eta = (*point->y - General.S)/overlap;
 			weight = (1-csi)*eta;
@@ -87,7 +87,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 			if (db_execute_immediate (driver, &sql) != DB_OK) 
 			    G_fatal_error (_("It was no possible writting in <%s>."), tab_name);
 
-		    } else {					//(1)
+		    } else {					/*(1)*/
 		        weight = (*point->x - Overlap.E)/overlap;
 			*point->z = weight*interpolation;
 
@@ -101,7 +101,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 		    }
 
 		} else if ((point->x[0] < Overlap.W)) {
-		    if ((*point->y > Overlap.N)) {		//(4)
+		    if ((*point->y > Overlap.N)) {		/*(4)*/
 		        csi = (*point->x - General.W)/overlap;
 			eta = (*point->y - Overlap.N)/overlap;
 			weight = (1-eta)*csi;
@@ -115,7 +115,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 			if (db_execute_immediate (driver, &sql) != DB_OK) 
 			    G_fatal_error (_("It was no possible writting in <%s>."), tab_name);
 			
-		    } else if ((*point->y < Overlap.S)) {	//(2)
+		    } else if ((*point->y < Overlap.S)) {	/*(2)*/
 		            csi = (*point->x - General.W)/overlap;
 			    eta = (*point->y - General.S)/overlap;
 			    weight = csi*eta;
@@ -129,7 +129,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 			if (db_execute_immediate (driver, &sql) != DB_OK) 
 			    G_fatal_error (_("It was no possible writting in <%s>."), tab_name);
 
-		    } else {					//(2)
+		    } else {					/*(2)*/
 		            weight = (Overlap.W - *point->x)/overlap;
 			    *point->z = weight*interpolation;
 
@@ -143,7 +143,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 	    	    }
 
 		} else {
-		    if ((point->y[0] > Overlap.N)) {		//(3)
+		    if ((point->y[0] > Overlap.N)) {		/*(3)*/
 		    	weight = (*point->y - Overlap.N)/overlap;
 		    	*point->z = weight*interpolation;
 
@@ -154,7 +154,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 
 			if (db_execute_immediate (driver, &sql) != DB_OK) 
 			    G_fatal_error (_("It was no possible writting in <%s>."), tab_name);
-		    } else {						//(1)
+		    } else {						/*(1)*/
 		    	weight = (Overlap.S - *point->y)/overlap;
 		    	*point->z = weight*interpolation;
 
@@ -168,8 +168,8 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 		    }
 		} 
 	    }
-	} //IF
-    }	//FOR	
+	} /*IF*/
+    }	/*FOR*/
     return;
 }
 
@@ -182,8 +182,8 @@ P_Regular_Points (struct Cell_head *Elaboration, BOUND_BOX General, BOUND_BOX Ov
     int col, row;
     double X, Y, interpolation, weight, csi, eta;
     struct Cell_head Original;
-    extern int nsplx, nsply;
-    extern double passoN, passoE;
+    int nsplx, nsply;
+    double passoN, passoE;
 
     G_get_window (&Original);
     for (row = 0; row < nrows; row++) {
