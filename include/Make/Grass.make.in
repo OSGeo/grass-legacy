@@ -172,7 +172,10 @@ SYMB_LIBNAME     = grass_symb
 CDHC_LIBNAME     = grass_cdhc
 
 # Lidar
-LIDAR_LIBNAME      = grass_lidar
+LIDAR_LIBNAME    = grass_lidar
+
+# Raster/SIMWE
+SIM_LIBNAME      = grass_sim
 
 # Sites (legacy)
 SITES_LIBNAME    = grass_sites
@@ -255,6 +258,9 @@ CDHCLIB     = -l$(CDHC_LIBNAME)
 # Lidar
 LIDARLIB    = -l$(LIDAR_LIBNAME)
 
+# Raster/SIMWE
+SIMLIB      = -l$(SIM_LIBNAME)
+
 # Sites (legacy)
 SITESLIB    = -l$(SITES_LIBNAME) 
 
@@ -335,7 +341,10 @@ SYMBDEP     = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(SYMB_LIBNAME)$(LIB_SUFFIX)
 CDHCDEP     = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(CDHC_LIBNAME)$(LIB_SUFFIX)
 
 # Lidar
-LIDARDEP     = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(LIDAR_LIBNAME)$(LIB_SUFFIX)
+LIDARDEP    = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(LIDAR_LIBNAME)$(LIB_SUFFIX)
+
+# Raster/SIMWE
+SIMDEP      = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(SIM_LIBNAME)$(LIB_SUFFIX)
 
 # Sites (legacy)
 SITESDEP    = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(SITES_LIBNAME)$(LIB_SUFFIX)
