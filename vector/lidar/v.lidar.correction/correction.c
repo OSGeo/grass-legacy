@@ -143,12 +143,12 @@ P_Sparse_Correction (struct Map_info *In, struct Map_info *Out, struct Map_info 
 		    }
 		} 
 	    }
-	} //IF
+	} /*IF*/
 	
 	Vect_reset_line (points);
 	Vect_reset_cats (cats); 
 	
-    }	//FOR	
+    }	/*FOR*/	
 
     Vect_destroy_line_struct (points);
     Vect_destroy_cats_struct (cats);
@@ -156,7 +156,7 @@ P_Sparse_Correction (struct Map_info *In, struct Map_info *Out, struct Map_info 
     return;
 }
 
-//--------------------------------------------------------------------------------------------------------------
+/*--------------------------------------------------------------------------------------------------------------*/
 double ** 
 P_Regular_Correction (struct Cell_head *Elaboration, BOUND_BOX General, BOUND_BOX Overlap, double **matrix, double *param,\
 			double overlap, double mean, int nrows, int ncols) {
@@ -174,21 +174,21 @@ P_Regular_Correction (struct Cell_head *Elaboration, BOUND_BOX General, BOUND_BO
 	X = G_col_to_easting((double)(col) + 0.5, &Original);
 	Y = G_row_to_northing((double)(row) + 0.5, &Original);
 	
-	if (Vect_point_in_box (X, Y, mean, &General)) {	//Here, mean is just for asking if obs point is in box
+	if (Vect_point_in_box (X, Y, mean, &General)) {	/*Here, mean is just for asking if obs point is in box*/
 	
 	    interpolation = dataInterpolateBilin (X, Y, passoE, passoN, nsplx, nsply, Elaboration->west, \
 	     			Elaboration->south, param); 
 
 	    interpolation += mean;
 
-	    if (Vect_point_in_box (X, Y, interpolation, &Overlap)) {  //(5)
+	    if (Vect_point_in_box (X, Y, interpolation, &Overlap)) {  /*(5)*/
 	    	matrix[row][col] = interpolation;
 	
 	    } else {
 		
 		if ((X > Overlap.E)) {
 		
-		    if ((Y > Overlap.N)) {			//(3)
+		    if ((Y > Overlap.N)) {			/*(3)*/
 			csi = (X - Overlap.E)/overlap;
 			eta = (Y - Overlap.N)/overlap;
 			weight = (1-csi)*(1-eta);
@@ -196,7 +196,7 @@ P_Regular_Correction (struct Cell_head *Elaboration, BOUND_BOX General, BOUND_BO
 			
 			matrix[row][col] += interpolation;
 
-		    } else if ((Y < Overlap.S)) {		//(1)
+		    } else if ((Y < Overlap.S)) {		/*(1)*/
 		        csi = (X - Overlap.E)/overlap;
 			eta = (Y - General.S)/overlap;
 			weight = (1-csi)*eta;
@@ -204,7 +204,7 @@ P_Regular_Correction (struct Cell_head *Elaboration, BOUND_BOX General, BOUND_BO
 			
 			matrix[row][col] = interpolation;
 			
-		    } else {					//(1)
+		    } else {					/*(1)*/
 		        weight = (X - Overlap.E)/overlap;
 			interpolation *= weight;
 			
@@ -213,7 +213,7 @@ P_Regular_Correction (struct Cell_head *Elaboration, BOUND_BOX General, BOUND_BO
 		
 		} else if ((X < Overlap.W)) {
 		
-		    if ((Y > Overlap.N)) {			//(4)
+		    if ((Y > Overlap.N)) {			/*(4)*/
 		        csi = (X - General.W)/overlap;
 			eta = (Y - Overlap.N)/overlap;
 			weight = (1-eta)*csi;
@@ -221,7 +221,7 @@ P_Regular_Correction (struct Cell_head *Elaboration, BOUND_BOX General, BOUND_BO
 			
 			matrix[row][col] += interpolation;
 			
-		    } else if ((Y < Overlap.S)) {		//(2)
+		    } else if ((Y < Overlap.S)) {		/*(2)*/
 		        csi = (X - General.W)/overlap;
 			eta = (Y - General.S)/overlap;
 			weight = csi*eta;
@@ -229,7 +229,7 @@ P_Regular_Correction (struct Cell_head *Elaboration, BOUND_BOX General, BOUND_BO
 			
 			matrix[row][col] += interpolation;
 			
-		    } else {					//(2)
+		    } else {					/*(2)*/
 		        weight = (Overlap.W - X)/overlap;
 			interpolation *= weight;
 			
@@ -238,12 +238,12 @@ P_Regular_Correction (struct Cell_head *Elaboration, BOUND_BOX General, BOUND_BO
 	    	    }
 		
 		} else {
-		    if ((Y > Overlap.N)){			//(3)
+		    if ((Y > Overlap.N)){			/*(3)*/
 		    	weight = (Y - Overlap.N)/overlap;
 		    	interpolation *= weight;
 		
 		    	matrix[row][col] += interpolation;
-		    } else {					//(1)
+		    } else {					/*(1)*/
 		    	weight = (Overlap.S - Y)/overlap;
 		    	interpolation *= weight;
 		
@@ -252,8 +252,8 @@ P_Regular_Correction (struct Cell_head *Elaboration, BOUND_BOX General, BOUND_BO
 	    	}
 	    }
 	}
-      }	//END COL
-    }	//END ROW
+      }	/*END COL*/
+    }	/*END ROW*/
     return matrix;
 }
 
