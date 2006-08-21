@@ -171,7 +171,10 @@ SYMB_LIBNAME     = grass_symb
 # Normality
 CDHC_LIBNAME     = grass_cdhc
 
-# Sites
+# Lidar
+LIDAR_LIBNAME      = grass_lidar
+
+# Sites (legacy)
 SITES_LIBNAME    = grass_sites
 
 ##################### library names and dependencies #################################
@@ -249,7 +252,10 @@ SYMBLIB     = -l$(SYMB_LIBNAME)
 # Normality
 CDHCLIB     = -l$(CDHC_LIBNAME)
 
-# Sites
+# Lidar
+LIDARLIB    = -l$(LIDAR_LIBNAME)
+
+# Sites (legacy)
 SITESLIB    = -l$(SITES_LIBNAME) 
 
 # These always static
@@ -328,7 +334,10 @@ SYMBDEP     = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(SYMB_LIBNAME)$(LIB_SUFFIX)
 # Normality
 CDHCDEP     = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(CDHC_LIBNAME)$(LIB_SUFFIX)
 
-# Sites
+# Lidar
+LIDARDEP     = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(LIDAR_LIBNAME)$(LIB_SUFFIX)
+
+# Sites (legacy)
 SITESDEP    = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(SITES_LIBNAME)$(LIB_SUFFIX)
 
 ##################### rules #############################################
