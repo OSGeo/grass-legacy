@@ -5,6 +5,8 @@ DEPENDENCIES= $(VECTDEP) $(GISDEP) $(BSPLINE_ARCH_OBJ) $(GMATHDEP)
 EXTRA_INC = $(VECT_INC)
 EXTRA_CFLAGS = $(VECT_CFLAGS)
 
+LIB_NAME = $(LIDAR_LIBNAME)
+
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
 default: $(ARCH_INCDIR)/PolimiFunct.h lib

@@ -210,6 +210,7 @@ ldiv
 localtime
 longjmp
 malloc
+memcmp
 memcpy
 memmove
 memset
@@ -227,6 +228,7 @@ rewind
 scanf
 setbuf
 setjmp
+setvbuf
 signal
 sprintf
 srand

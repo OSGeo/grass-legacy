@@ -71,6 +71,7 @@ SUBDIRS = \
 	r.report \
 	r.resample \
 	r.resamp.rst \
+	r.resamp.interp \
 	r.rescale \
 	r.rescale.eq \
 	r.series \

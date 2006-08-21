@@ -95,174 +95,183 @@ endif
 
 ##################### library names #####################################
 
-BITMAP_LIBNAME   = grass_bitmap
-BTREE_LIBNAME    = grass_btree
-COORCNV_LIBNAME  = grass_coorcnv
-DATETIME_LIBNAME = grass_datetime
-DBDIALOG_LIBNAME = grass_dbdialog
-DISPLAY_LIBNAME  = grass_display
-DLG_LIBNAME      = grass_dlg
-DSPF_LIBNAME     = grass_dspf
-D__LIBNAME       = grass_D
-DRIVER_LIBNAME   = grass_driver
-PNGDRIVER_LIBNAME= grass_pngdriver
-EDIT_LIBNAME     = grass_edit
-G3D_LIBNAME	 = grass_g3d
-GIS_LIBNAME	 = grass_gis
-GMATH_LIBNAME    = grass_gmath
-GPROJ_LIBNAME    = grass_gproj
-IBTREE_LIBNAME   = grass_ibtree
-ICON_LIBNAME     = grass_icon
-IMAGERY_LIBNAME  = grass_I
-IORTHO_LIBNAME   = grass_Iortho
-ISMAP_LIBNAME    = grass_ismap
-LINKM_LIBNAME    = grass_linkm
-LOCK_LIBNAME     = grass_lock
-MANAGE_LIBNAME   = grass_manage
-RASTER_LIBNAME   = grass_raster
-ROWIO_LIBNAME    = grass_rowio
-SEGMENT_LIBNAME  = grass_segment
-STATS_LIBNAME	 = grass_stats
-VASK_LIBNAME	 = grass_vask
-XGD_LIBNAME	 = grass_Xgd
-XGI_LIBNAME	 = grass_Xgi
-XPM_LIBNAME	 = grass_Xpm
+BITMAP_LIBNAME        = grass_bitmap
+BTREE_LIBNAME         = grass_btree
+COORCNV_LIBNAME       = grass_coorcnv
+DATETIME_LIBNAME      = grass_datetime
+DBDIALOG_LIBNAME      = grass_dbdialog
+DISPLAY_LIBNAME       = grass_display
+DLG_LIBNAME           = grass_dlg
+DSPF_LIBNAME          = grass_dspf
+D__LIBNAME            = grass_D
+DRIVER_LIBNAME        = grass_driver
+PNGDRIVER_LIBNAME     = grass_pngdriver
+EDIT_LIBNAME          = grass_edit
+G3D_LIBNAME	      = grass_g3d
+GIS_LIBNAME	      = grass_gis
+GMATH_LIBNAME         = grass_gmath
+GPROJ_LIBNAME         = grass_gproj
+IBTREE_LIBNAME        = grass_ibtree
+ICON_LIBNAME          = grass_icon
+IMAGERY_LIBNAME       = grass_I
+IORTHO_LIBNAME        = grass_Iortho
+ISMAP_LIBNAME         = grass_ismap
+LINKM_LIBNAME         = grass_linkm
+LOCK_LIBNAME          = grass_lock
+MANAGE_LIBNAME        = grass_manage
+RASTER_LIBNAME        = grass_raster
+ROWIO_LIBNAME         = grass_rowio
+SEGMENT_LIBNAME       = grass_segment
+STATS_LIBNAME	      = grass_stats
+VASK_LIBNAME	      = grass_vask
+XGD_LIBNAME	      = grass_Xgd
+XGI_LIBNAME	      = grass_Xgi
+XPM_LIBNAME	      = grass_Xpm
 
 # Vector
-DIG_LIBNAME      = grass_dig
-DIG2_LIBNAME     = grass_dig2
-VECTR_LIBNAME    = grass_vect
-TRANS_LIBNAME    = grass_trans
+DIG_LIBNAME           = grass_dig
+DIG2_LIBNAME          = grass_dig2
+VECTR_LIBNAME         = grass_vect
+TRANS_LIBNAME         = grass_trans
 
-SHAPE_LIBNAME    = grass_shape
-GRAPH_LIBNAME    = grass_dgl
-RTREE_LIBNAME    = grass_rtree
+SHAPE_LIBNAME         = grass_shape
+GRAPH_LIBNAME         = grass_dgl
+RTREE_LIBNAME         = grass_rtree
 
 # Interpolation
-INTERPDATA_LIBNAME = grass_interpdata
-INTERPFL_LIBNAME   = grass_interpfl
-QTREE_LIBNAME      = grass_qtree
+INTERPDATA_LIBNAME    = grass_interpdata
+INTERPFL_LIBNAME      = grass_interpfl
+QTREE_LIBNAME         = grass_qtree
 
 # NVIZ related
-OGSF_LIBNAME       = grass_ogsf
+OGSF_LIBNAME          = grass_ogsf
 
 # triangulation libraries
-SOS_LIBNAME      = grass_sos
-LIA_LIBNAME      = grass_lia
-OPTRI_LIBNAME    = grass_optri
-BASIC_LIBNAME    = grass_basic
+SOS_LIBNAME           = grass_sos
+LIA_LIBNAME           = grass_lia
+OPTRI_LIBNAME         = grass_optri
+BASIC_LIBNAME         = grass_basic
 
-XDISPLAY_LIBNAME = grass_Xdisplay
+XDISPLAY_LIBNAME      = grass_Xdisplay
 
 # DBMI
-DBMI_LIBNAME     = grass_dbmi
-DBMIBASE_LIBNAME     = grass_dbmibase
-DBMICLIENT_LIBNAME   = grass_dbmiclient
-DBMIDRIVER_LIBNAME   = grass_dbmidriver
-SQLP_LIBNAME     = grass_sqlp
-DBSTUBS_LIBNAME  = grass_dbstubs
+DBMI_LIBNAME          = grass_dbmi
+DBMIBASE_LIBNAME      = grass_dbmibase
+DBMICLIENT_LIBNAME    = grass_dbmiclient
+DBMIDRIVER_LIBNAME    = grass_dbmidriver
+SQLP_LIBNAME          = grass_sqlp
+DBSTUBS_LIBNAME       = grass_dbstubs
 
 # database forms
-FORM_LIBNAME     = grass_form
+FORM_LIBNAME          = grass_form
 
 # Symbols (icons, patterns)
-SYMB_LIBNAME     = grass_symb
+SYMB_LIBNAME          = grass_symb
 
 # Normality
-CDHC_LIBNAME     = grass_cdhc
+CDHC_LIBNAME          = grass_cdhc
 
 # Lidar
-LIDAR_LIBNAME    = grass_lidar
+LIDAR_LIBNAME         = grass_lidar
 
 # Raster/SIMWE
-SIM_LIBNAME      = grass_sim
+SIM_LIBNAME           = grass_sim
 
 # Sites (legacy)
-SITES_LIBNAME    = grass_sites
+SITES_LIBNAME         = grass_sites
 
-##################### library names and dependencies #################################
-BITMAPLIB   = -l$(BITMAP_LIBNAME)
-BTREELIB    = -l$(BTREE_LIBNAME)
-COORCNVLIB  = -l$(COORCNV_LIBNAME)
-DATETIMELIB = -l$(DATETIME_LIBNAME)
-DBDIALOGLIB = -l$(DBDIALOG_LIBNAME)
-DISPLAYLIB  = -l$(DISPLAY_LIBNAME)
-DLGLIB      = -l$(DLG_LIBNAME)
-DSPFLIB     = -l$(DSPF_LIBNAME)
-D_LIB       = -l$(D__LIBNAME)
-DRIVERLIB   = -l$(DRIVER_LIBNAME) $(FTLIB) $(ICONVLIB)
-PNGDRIVERLIB= -l$(PNGDRIVER_LIBNAME) $(DRIVERLIB) $(PNGLIB)
-EDITLIB     = -l$(EDIT_LIBNAME)
-G3DLIB      = -l$(G3D_LIBNAME)
-GISLIB      = -l$(GIS_LIBNAME) $(DATETIMELIB) $(XDRLIB) $(SOCKLIB) $(INTLLIB)
-GMATHLIB    = -l$(GMATH_LIBNAME) $(FFTWLIB) $(LAPACKLIB) $(BLASLIB)
-GPROJLIB    = -l$(GPROJ_LIBNAME) $(PROJLIB) $(GDALLIBS)
-IBTREELIB   = -l$(IBTREE_LIBNAME)
-ICONLIB     = -l$(ICON_LIBNAME)
-IMAGERYLIB  = -l$(IMAGERY_LIBNAME)
-IORTHOLIB   = -l$(IORTHO_LIBNAME)
-ISMAPLIB    = -l$(ISMAP_LIBNAME)
-LINKMLIB    = -l$(LINKM_LIBNAME)
-LOCKLIB     = -l$(LOCK_LIBNAME)
-MANAGELIB   = -l$(MANAGE_LIBNAME)
-RASTERLIB   = -l$(RASTER_LIBNAME) $(PNGDRIVERLIB)
-ROWIOLIB    = -l$(ROWIO_LIBNAME)
-SEGMENTLIB  = -l$(SEGMENT_LIBNAME)
-STATSLIB    = -l$(STATS_LIBNAME)
-VASKLIB     = -l$(VASK_LIBNAME)
-XGDLIB      = -l$(XGD_LIBNAME)
-XGILIB      = -l$(XGI_LIBNAME)
-XPMLIB      = -l$(XPM_LIBNAME)
+# LRS
+LRS_LIBNAME           = grass_lrs
+
+##################### library switches ##################################
+
+BITMAPLIB     = -l$(BITMAP_LIBNAME) $(LINKMLIB) 
+BTREELIB      = -l$(BTREE_LIBNAME)
+COORCNVLIB    = -l$(COORCNV_LIBNAME)
+DATETIMELIB   = -l$(DATETIME_LIBNAME)
+DBDIALOGLIB   = -l$(DBDIALOG_LIBNAME)
+DISPLAYLIB    = -l$(DISPLAY_LIBNAME) $(GISLIB) $(RASTERLIB) 
+DLGLIB        = -l$(DLG_LIBNAME)
+DSPFLIB       = -l$(DSPF_LIBNAME)
+D_LIB         = -l$(D__LIBNAME) $(DISPLAYLIB) $(GISLIB) $(RASTERLIB) 
+DRIVERLIB     = -l$(DRIVER_LIBNAME) $(GISLIB) $(FTLIB) $(ICONVLIB) 
+PNGDRIVERLIB  = -l$(PNGDRIVER_LIBNAME) $(DRIVERLIB) $(GISLIB) $(PNGLIB) 
+EDITLIB       = -l$(EDIT_LIBNAME) $(GISLIB) $(VASKLIB) 
+G3DLIB        = -l$(G3D_LIBNAME) $(GISLIB) 
+GISLIB        = -l$(GIS_LIBNAME) $(DATETIMELIB) $(XDRLIB) $(SOCKLIB) $(INTLLIB) 
+GMATHLIB      = -l$(GMATH_LIBNAME) $(GISLIB) 
+GPROJLIB      = -l$(GPROJ_LIBNAME) $(GISLIB) $(PROJLIB) $(GDALLIBS) 
+IBTREELIB     = -l$(IBTREE_LIBNAME)
+ICONLIB       = -l$(ICON_LIBNAME)
+IMAGERYLIB    = -l$(IMAGERY_LIBNAME) $(GISLIB) $(GMATHLIB) $(VASKLIB) 
+IORTHOLIB     = -l$(IORTHO_LIBNAME) $(IMAGERYLIB) $(GISLIB) 
+ISMAPLIB      = -l$(ISMAP_LIBNAME)
+LINKMLIB      = -l$(LINKM_LIBNAME)
+LOCKLIB       = -l$(LOCK_LIBNAME)
+MANAGELIB     = -l$(MANAGE_LIBNAME)
+RASTERLIB     = -l$(RASTER_LIBNAME) $(PNGDRIVERLIB) $(DRIVERLIB) $(GISLIB) 
+ROWIOLIB      = -l$(ROWIO_LIBNAME)
+SEGMENTLIB    = -l$(SEGMENT_LIBNAME) $(GISLIB) 
+STATSLIB      = -l$(STATS_LIBNAME) $(GISLIB) 
+VASKLIB       = -l$(VASK_LIBNAME)
+XGDLIB        = -l$(XGD_LIBNAME)
+XGILIB        = -l$(XGI_LIBNAME)
+XPMLIB        = -l$(XPM_LIBNAME)
 
 # DBMI
-DBMIBASELIB     = -l$(DBMIBASE_LIBNAME)
-DBMICLIENTLIB   = -l$(DBMICLIENT_LIBNAME)
-DBMIDRIVERLIB   = -l$(DBMIDRIVER_LIBNAME)
-DBMILIB         = $(DBMICLIENTLIB) $(DBMIBASELIB) $(DBMIEXTRALIB)
-SQLPLIB     = -l$(SQLP_LIBNAME)
-DBSTUBSLIB  = -l$(DBSTUBS_LIBNAME)
+DBMIBASELIB   = -l$(DBMIBASE_LIBNAME) $(GISLIB) 
+DBMICLIENTLIB = -l$(DBMICLIENT_LIBNAME) $(DBMIBASELIB) $(GISLIB) 
+DBMIDRIVERLIB = -l$(DBMIDRIVER_LIBNAME) $(DBMIBASELIB) $(DBSTUBSLIB) $(GISLIB) 
+SQLPLIB       = -l$(SQLP_LIBNAME)
+DBSTUBSLIB    = -l$(DBSTUBS_LIBNAME) $(DBMIBASELIB) $(GISLIB) 
+DBMILIB       = $(DBMICLIENTLIB) $(DBMIBASELIB) $(DBMIEXTRALIB)
 
 # Vector
-DIGLIB      = -l$(DIG_LIBNAME)
-DIG2LIB     = -l$(DIG2_LIBNAME)
-VECTRLIB    = -l$(VECTR_LIBNAME)
-TRANSLIB    = -l$(TRANS_LIBNAME)
-SHAPELIB    = -l$(SHAPE_LIBNAME)
-GRAPHLIB    = -l$(GRAPH_LIBNAME)
-RTREELIB    = -l$(RTREE_LIBNAME)
-VECTLIB     = $(VECTRLIB) $(DIG2LIB) $(GRAPHLIB) $(RTREELIB) $(LINKMLIB) $(DBMILIB) $(GDALLIBS)
+DIGLIB        = -l$(DIG_LIBNAME)
+DIG2LIB       = -l$(DIG2_LIBNAME) $(GISLIB) $(RTREELIB) 
+VECTRLIB      = -l$(VECTR_LIBNAME) $(DBMIBASELIB) $(DBMICLIENTLIB) $(GRAPHLIB) $(DIG2LIB) $(GISLIB) $(LINKMLIB) $(RTREELIB) 
+TRANSLIB      = -l$(TRANS_LIBNAME)
+SHAPELIB      = -l$(SHAPE_LIBNAME)
+GRAPHLIB      = -l$(GRAPH_LIBNAME)
+RTREELIB      = -l$(RTREE_LIBNAME)
+VECTLIB       = $(VECTRLIB) $(DIG2LIB) $(GRAPHLIB) $(RTREELIB) $(LINKMLIB) $(DBMILIB) $(GDALLIBS)
 
 # Interpolation
 INTERPDATALIB = -l$(INTERPDATA_LIBNAME)
-INTERPFLLIB   = -l$(INTERPFL_LIBNAME)
+INTERPFLLIB   = -l$(INTERPFL_LIBNAME) $(BITMAPLIB) $(DBMIBASELIB) $(DBMICLIENTLIB) $(GISLIB) $(GMATHLIB) $(INTERPDATALIB) $(QTREELIB) $(VECTRLIB) 
 QTREELIB      = -l$(QTREE_LIBNAME)
 
 # NVIZ related
-OGSFLIB      = -l$(OGSF_LIBNAME)
+OGSFLIB       = -l$(OGSF_LIBNAME) $(BITMAPLIB) $(G3DLIB) $(GISLIB) $(SITESLIB) $(VECTRLIB) 
 
 # triangulation libraries
-SOSLIB      = -l$(SOS_LIBNAME)
-LIALIB      = -l$(LIA_LIBNAME)
-OPTRILIB    = -l$(OPTRI_LIBNAME)
-BASICLIB    = -l$(BASIC_LIBNAME)
-GEOMLIB     = $(OPTRILIB) $(SOSLIB) $(LIALIB) $(BASICLIB)		
+SOSLIB        = -l$(SOS_LIBNAME)
+LIALIB        = -l$(LIA_LIBNAME)
+OPTRILIB      = -l$(OPTRI_LIBNAME)
+BASICLIB      = -l$(BASIC_LIBNAME)
+GEOMLIB       = $(OPTRILIB) $(SOSLIB) $(LIALIB) $(BASICLIB)		
 
 # misc
-XDISPLAYLIB = -l$(XDISPLAY_LIBNAME)
-FORMLIB     = -l$(FORM_LIBNAME)
-SYMBLIB     = -l$(SYMB_LIBNAME)
+XDISPLAYLIB   = -l$(XDISPLAY_LIBNAME)
+FORMLIB       = -l$(FORM_LIBNAME) $(DBMIBASELIB) $(DBMICLIENTLIB) $(GISLIB) 
+SYMBLIB       = -l$(SYMB_LIBNAME) $(GISLIB) 
 
 # Normality
-CDHCLIB     = -l$(CDHC_LIBNAME)
+CDHCLIB       = -l$(CDHC_LIBNAME)
 
 # Lidar
-LIDARLIB    = -l$(LIDAR_LIBNAME)
+LIDARLIB      = -l$(LIDAR_LIBNAME) $(DBMIBASELIB) $(DBMICLIENTLIB) $(GISLIB) $(GMATHLIB) $(VECTRLIB) 
 
 # Raster/SIMWE
-SIMLIB      = -l$(SIM_LIBNAME)
+SIMLIB        = -l$(SIM_LIBNAME) $(GISLIB) $(SITESLIB) 
 
 # Sites (legacy)
-SITESLIB    = -l$(SITES_LIBNAME) 
+SITESLIB      = -l$(SITES_LIBNAME) $(DATETIMELIB) $(DBMIBASELIB) $(DBMICLIENTLIB) $(GISLIB) $(VECTRLIB) 
+
+# LRS
+LRSLIB        = -l$(LRS_LIBNAME) $(DBMIBASELIB) $(DBMICLIENTLIB) $(GISLIB) 
+
+##################### library dependencies ##############################
 
 # These always static
 ISMAPDEP    = $(ARCH_LIBDIR)/$(STLIB_PREFIX)$(ISMAP_LIBNAME)$(STLIB_SUFFIX)
@@ -348,6 +357,9 @@ SIMDEP      = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(SIM_LIBNAME)$(LIB_SUFFIX)
 
 # Sites (legacy)
 SITESDEP    = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(SITES_LIBNAME)$(LIB_SUFFIX)
+
+# LRS
+LRSDEP      = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(LRS_LIBNAME)$(LIB_SUFFIX)
 
 ##################### rules #############################################
 # first found target
