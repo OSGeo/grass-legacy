@@ -5,10 +5,6 @@ DEPENDENCIES = $(GISDEP) $(DBMIDEP) $(GMATLIBDEP) $(LINKMDEP) $(XDRDEP) $(SITESD
 EXTRA_INC = $(VECT_INC)
 EXTRA_CFLAGS = $(VECT_CFLAGS)
 
-SIM_LIBNAME      = grass_sim
-
-LIB_NAME = $(SIM_LIBNAME)
-
 LIB_OBJS = input.o random.o hydro.o output.o erod.o
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
