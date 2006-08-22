@@ -4,13 +4,16 @@
 elevation map
 <P>
 where
+<DL>
 <DD>a: the area of the hillslope per unit contour length that drains through any point
 <P>
 <DD>tan(beta): the local surface topographic slope (delta vertical) / (delta horizontal)
+</DL>
 <P>
-Elevation map need not to be rectangular if study basin was already determined.  Non-interesting region may have NULL values.  Study basin map can be taken from <EM>r.water.outlet</EM> then the following <EM>r.mapcalc</EM> statements will create study basin extracted elevation map.
-<P>
-<DD>r.mapcalc "belev = if(isnull(basin), basin, elev)"
+Input maps may have NULL values.  For example, if you have a MASK for a watershed (basin map from <EM>r.water.outlet</EM>), the following command will create a masked elevation map (belev):
+<div class="code"><pre>
+r.mapcalc "belev = if(isnull(basin), basin, elev)"
+</pre></div>
 <P>
 
 <EM>r.stats -Anc</EM> prints out averaged statistics for topographic index.
