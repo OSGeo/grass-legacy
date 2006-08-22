@@ -36,7 +36,7 @@ export GRASS_VERSION
 # Get the command name
 CMD_NAME=START_UP
 
-# Get tye system name
+# Get the system name
 SYSTEM=`uname -s`
 case $SYSTEM in
 MINGW*)
