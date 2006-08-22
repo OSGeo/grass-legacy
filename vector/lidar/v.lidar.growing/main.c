@@ -2,7 +2,7 @@
  *								*
  * MODULE:	v.lidar.growing				*
  * 								*
- * AUTHOR(S):  	Roberto Antol� & Gonzalo Moreno		*
+ * AUTHOR(S):  	Roberto Antolin & Gonzalo Moreno		*
  *               						*
  * PURPOSE:	Building contour determination and Region	* 
  *		Growing algorithm for determining the building	*
@@ -164,7 +164,7 @@ main (int argc,char *argv[])
 	    G_fatal_error( _("No db connection for driver <%s> defined. Run db.connect"), dbdriver->answer);
 
 /* Setting regions and boxes */
-    G_debug (0, _("Setting regions and boxes"));
+    G_debug (1, _("Setting regions and boxes"));
     G_get_set_window (&original_reg);
     G_get_set_window (&elaboration_reg);
 
@@ -231,8 +231,8 @@ main (int argc,char *argv[])
 	    nrows = G_window_rows ();
 	    ncols = G_window_cols ();
 
-	    G_debug (0,_("Rows = %d"), nrows);
-	    G_debug (0,_("Columns = %d"), ncols);
+	    G_debug (1,_("Rows = %d"), nrows);
+	    G_debug (1,_("Columns = %d"), ncols);
 
 	    raster_matrix = structMatrix (0, nrows, 0, ncols);
 	    MaxPoints = nrows * ncols;
@@ -341,7 +341,7 @@ main (int argc,char *argv[])
 
 	/* REGION GROWING */
 	    if (region == TRUE) {
-		G_debug (0, _("Region Growing"));
+		G_debug (1, _("Region Growing"));
 
 		punti_bordo = G_alloc_matrix (MaxPoints, 3);
 		P = Pvector(0, MaxPoints);

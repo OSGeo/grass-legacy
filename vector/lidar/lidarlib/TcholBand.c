@@ -2,8 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <grass/gis.h>
-
-#include "PolimiFunct.h"
+#include <grass/PolimiFunct.h>
 
 /*--------------------------------------------------------------------------------------*/
 /* Tcholetsky decomposition -> T= Lower Triangular Matrix */

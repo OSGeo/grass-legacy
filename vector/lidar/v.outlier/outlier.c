@@ -239,34 +239,6 @@ int Select_Outlier (double *Interp, int line_num, dbDriver *driver)
     return DB_OK;
 }
 
-int P_Create_AuxOutlier_Table (dbDriver *driver)
-{
-	dbTable *table;
-	dbColumn *ID_col, *Interp_col;
-	int created;
-
-	table = db_alloc_table (2);
-	db_set_table_name (table, "Auxiliar_outlier_table");
-	db_set_table_description (table, "It is used for the intermediate interpolated and gradient values");
-
-	ID_col = db_get_table_column (table,0);
-	db_set_column_name (ID_col, "ID");
-	db_set_column_sqltype (ID_col, DB_SQL_TYPE_INTEGER);
-
-	Interp_col = db_get_table_column (table,1);
-	db_set_column_name (Interp_col, "Interp");
-	db_set_column_sqltype (Interp_col, DB_SQL_TYPE_REAL);
-
-	if (db_create_table (driver, table) == DB_OK) {
-		G_debug (3, _("<Auxiliar_outlier_table> created in database."));
-		created = TRUE;
-	}
-
-	else return FALSE;
-
-	return created;
-}
-
 int P_is_outlier (double pippo)
 {
     extern double Thres_Outlier;

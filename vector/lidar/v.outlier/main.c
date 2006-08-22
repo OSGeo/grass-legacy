@@ -2,7 +2,7 @@
  *									*
  * MODULE:       v.outlier						*
  * 									*
- * AUTHOR(S):    Roberto Antol�						*
+ * AUTHOR(S):    Roberto Antolin					*
  *               							*
  * PURPOSE:      Removal of data outliers				*
  *               							*
@@ -25,6 +25,7 @@
 #include <grass/dbmi.h>
 #include <grass/glocale.h>
 
+#include <grass/PolimiFunct.h>
 #include "outlier.h"
 
 /* GLOBAL VARIABLES DEFINITIONS */
@@ -50,7 +51,7 @@ main (int argc,char *argv[])
     struct Map_info In, Out, Outlier, Qgis;
     struct Option *in_opt, *out_opt, *outlier_opt, *qgis_opt, *dbdriver, *dbdatabase, *passoE_opt, *passoN_opt, \
     	*lambda_f_opt, *Thres_O_opt;
-    struct Flag *qgis_flag; 
+    /*struct Flag *qgis_flag;*/ 
     struct GModule *module;
 
     struct Cell_head elaboration_reg, original_reg;
@@ -133,16 +134,15 @@ main (int argc,char *argv[])
         Thres_O_opt->required    = NO;
         Thres_O_opt->description = _("Threshold for the outliers");
         Thres_O_opt->answer      = "50";
-
+/*
     qgis_flag = G_define_flag();
         qgis_flag->key          = 'q';
         qgis_flag->description  = _("QGIS vector output");
-
-
+*/
 
 /* Parsing */	
     G_gisinit (argv[0]);
-    
+
     if (G_parser (argc, argv))
 	exit (EXIT_FAILURE); 
 
@@ -162,10 +162,8 @@ main (int argc,char *argv[])
     }
 
 /* Open output vector */
-    if (qgis_flag->answer) {
-	if (0 > Vect_open_new (&Qgis, qgis_opt->answer, WITHOUT_Z))
-	    G_fatal_error (_("Vector <%s> could not be open"), qgis_opt->answer);
-    }
+    if (0 > Vect_open_new (&Qgis, qgis_opt->answer, WITHOUT_Z))
+	G_fatal_error (_("Vector <%s> could not be open"), qgis_opt->answer);
 
     if (0 > Vect_open_new (&Out, out_opt->answer, WITH_Z)) {
 	Vect_close (&Qgis);
@@ -244,7 +242,7 @@ main (int argc,char *argv[])
 	if (nsply > NSPLY_MAX) {
 	    nsply = NSPLY_MAX;
 	}
-	G_debug (0, _("nsply = %d"), nsply);
+	G_debug (1, _("nsply = %d"), nsply);
 	
 	elaboration_reg.east = original_reg.west;
 	last_column = FALSE;
@@ -266,7 +264,7 @@ main (int argc,char *argv[])
 	    if (nsplx > NSPLX_MAX) {
 		    nsplx = NSPLX_MAX;
 	    }
-	    G_debug (0, _("nsplx = %d"), nsplx);
+	    G_debug (1, _("nsplx = %d"), nsplx);
 
 	/*Setting the active region*/
 	    dim_vect = nsplx * nsply;
@@ -281,7 +279,7 @@ main (int argc,char *argv[])
 		mean = P_Mean_Calc (&elaboration_reg, observ, npoints);
 
 	    /* Least Squares system */
-		G_debug (3, _("Allocation memory for bilinear interpolation"));
+		G_debug (1, _("Allocation memory for bilinear interpolation"));
 		BW = P_get_BandWidth (P_BILINEAR, nsply);		/* Bilinear interpolation */
 		N = G_alloc_matrix (nparameters, BW);		/* Normal matrix */
 		TN = G_alloc_vector (nparameters);		/* vector */
@@ -299,7 +297,7 @@ main (int argc,char *argv[])
 		    Q[i] = 1;					/* Q=I */
 		}
 
-		G_debug (3, _("Bilinear interpolation"));
+		G_debug (1, _("Bilinear interpolation"));
 		normalDefBilin (N, TN, Q, obsVect, passoE, passoN, nsplx, nsply, elaboration_reg.west, elaboration_reg.south, \
 					npoints, nparameters, BW);
 		nCorrectGrad (N, lambda, nsplx, nsply, passoE, passoN);
@@ -310,8 +308,8 @@ main (int argc,char *argv[])
 		G_free_vector (Q);
 
 		if (flag_auxiliar == FALSE) {
-		    G_debug (3, _("Creating auxiliar table for archiving overlaping zones"));
-		    if ((flag_auxiliar = P_Create_AuxOutlier_Table (driver)) == FALSE)
+		    G_debug (1, _("Creating auxiliar table for archiving overlaping zones"));
+		    if ((flag_auxiliar = P_Create_Aux_Table (driver, table_name)) == FALSE)
 			G_fatal_error (_("It was impossible to create <Auxiliar_outlier_table>."));
 		}
 
@@ -329,7 +327,7 @@ main (int argc,char *argv[])
     }		/*! END WHILE; last_row = TRUE*/
 
 /* Dropping auxiliar table */
-    G_debug (3, _("Dropping <s>"), table_name);
+    G_debug (1, _("Dropping <%s>"), table_name);
     if (P_Drop_Aux_Table (driver, table_name) != DB_OK)
     	G_fatal_error(_("Auxiliar Table could not be drop"));
 

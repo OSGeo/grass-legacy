@@ -4,7 +4,8 @@
 #include <math.h>
 #include <string.h>
 
-#include "PolimiFunct.h"
+#include <grass/PolimiFunct.h>
+
 /*----------------------------------------------------------------------------*/
 /* Abscissa node index computation */
 

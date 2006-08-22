@@ -38,9 +38,9 @@ main (int argc,char *argv[])
 {
 
 /* Variables' declarations */
-    int nsply, nsplx, nlines, nrows, ncols, dim_vect, raster, nparameters, BW;
+    int nlines, nrows, ncols, dim_vect, raster, nparameters, BW;
     int last_row, last_column, bilin, grid, flag_ext, flag_auxiliar = FALSE; 	/* booleans */
-    double passoN, passoE, lambda, mean;		
+    double lambda, mean;		
     
     char *mapset, *dvr, *db, *vector, *map, table_name[1024];			/* */
     
@@ -245,7 +245,7 @@ main (int argc,char *argv[])
     sprintf (table_name, "%s_aux", out_opt->answer);
 
 /* Setting regions and boxes */    
-    G_debug (0, _("Setting regions and boxes"));
+    G_debug (1, _("Setting regions and boxes"));
     G_get_window (&original_reg);
     G_get_window (&elaboration_reg);
     Vect_region_box (&elaboration_reg, &overlap_box);
@@ -285,7 +285,7 @@ main (int argc,char *argv[])
 
 	    P_set_regions(&elaboration_reg, &general_box, &overlap_box, dims, FIRST_ROW);
 	    nsply = ceil((elaboration_reg.north - elaboration_reg.south)/passoN)+1;
-	    G_debug (0, _("nsply = %d"), nsply);
+	    G_debug (1, _("nsply = %d"), nsply);
 	    if (nsply > NSPLY_MAX) 
 		nsply = NSPLY_MAX;
 	}
@@ -295,7 +295,7 @@ main (int argc,char *argv[])
 	    P_set_regions(&elaboration_reg, &general_box, &overlap_box, dims, LAST_ROW);
 	    nsply=ceil((elaboration_reg.north - elaboration_reg.south)/passoN)+1;
 	    last_row = TRUE;
-	    G_debug (0, _("nsply = %d"), nsply);
+	    G_debug (1, _("nsply = %d"), nsply);
 	    if (nsply > NSPLY_MAX) 
 		nsply = NSPLY_MAX;
 	}
@@ -312,7 +312,7 @@ main (int argc,char *argv[])
 		
 		P_set_regions(&elaboration_reg, &general_box, &overlap_box, dims, FIRST_COLUMN);
 		nsplx=ceil((elaboration_reg.east - elaboration_reg.west)/passoE)+1;
-		G_debug (0, _("nsplx = %d"), nsplx);
+		G_debug (1, _("nsplx = %d"), nsplx);
 		if (nsplx > NSPLX_MAX) 
 		    nsplx = NSPLX_MAX;
 	    }
@@ -322,7 +322,7 @@ main (int argc,char *argv[])
 		P_set_regions(&elaboration_reg, &general_box, &overlap_box, dims, LAST_COLUMN);
 		last_column = TRUE;
 		nsplx=ceil((elaboration_reg.east - elaboration_reg.west)/passoE)+1;
-		G_debug (0, _("nsplx = %d"), nsplx);
+		G_debug (1, _("nsplx = %d"), nsplx);
 		if (nsplx > NSPLX_MAX) 
 		    nsplx = NSPLX_MAX;
 	    }
@@ -330,7 +330,7 @@ main (int argc,char *argv[])
 	/*Setting the active region*/
 	    dim_vect = nsplx * nsply;
 	    observ = P_Read_Vector_Region_Map (&In, &elaboration_reg, &npoints, dim_vect);
-	    G_debug (3, _("Points number in <elaboration_box> is %d"), npoints);
+	    G_debug (1, _("Points number in <elaboration_box> is %d"), npoints);
 		    
 	    if (npoints > 0) {				/*  */
 	        int i;
@@ -378,10 +378,7 @@ main (int argc,char *argv[])
 		/* Auxiliar table creation */
 		    if (flag_auxiliar == FALSE) {
 			if ((flag_auxiliar = P_Create_Aux_Table (driver, table_name)) == FALSE) {
-			    Vect_close (&In);
-			    #ifdef notdef
-			    if (flag_ext != FALSE) G_fatal_error (_(""));
-			    #endif
+			    G_fatal_error(_("Auxiliar Table could not be created"));
 			}
 		    }
 			
@@ -442,7 +439,7 @@ main (int argc,char *argv[])
 	    	P_Aux_to_Vector (&In_ext, &Out, driver, table_name);
   
     	/* Dropping auxiliar table */
-	    G_debug (3, _("Dropping <s>"), table_name);
+	    G_debug (1, _("Dropping <s>"), table_name);
 	    if (P_Drop_Aux_Table (driver, table_name) != DB_OK)
 	    	G_fatal_error(_("Auxiliar Table could not be drop"));
     	}
