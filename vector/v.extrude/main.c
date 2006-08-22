@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     static struct line_pnts *NewPoints;
     struct GModule *module;
     struct line_cats *Cats;
-    int i, type, cat, fdrast = 0, areanum = 0;
+    int i, type, cat, ctype, fdrast = 0, areanum = 0;
     char *mapset;
     struct Option *old, *new, *zshift, *height, *elevation, *hcolumn, *type_opt,
 	*field_opt;
@@ -263,9 +263,8 @@ int main(int argc, char *argv[])
 	}			/* /foreach area */
 
     }
-    /* if not type=area */
-    else {
 
+    if (type > 0) {
 	G_debug(1, "drawing other than areas");
 	i = 1;
 	/* loop through each line in the dataset */
@@ -314,10 +313,20 @@ int main(int argc, char *argv[])
 
                 /* objheight value */
 		value = db_get_column_value(column);
+		/* host_type -> ctype ? 
 		objheight = 
 		    db_get_value_as_double(value,
 					   db_get_column_host_type(column));
-
+		*/
+		ctype = db_sqltype_to_Ctype (db_get_column_sqltype(column));
+		if (ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_STRING &&
+		    ctype != DB_C_TYPE_DOUBLE) {
+		  G_fatal_error (_("Column <%s>: invalid data type."),
+				   db_get_column_name (column));
+		}
+		objheight = 
+		  db_get_value_as_double(value, ctype);
+					   
 		/* only draw if hcolumn was defined */
 		if (objheight != 0) {
 		    G_debug(3, "area centroid %d: object height: %f", centroid,
@@ -355,6 +364,7 @@ static long extrude(struct Map_info Out, struct line_cats *Cats,
     int k;			/* Points->n_points */
     float estimated_elevation = 0.;
     long result = 0;
+    double voffset_dem = 0.0;
 
     /* base */
     /*Vect_write_line ( &Out, GV_FACE, Points, Cats ); 
@@ -374,23 +384,23 @@ static long extrude(struct Map_info Out, struct line_cats *Cats,
 			G_get_raster_sample(fdrast, &window, NULL, 
                                 Points->y[k], Points->x[k], 0, NEAREST);
 		    if (trace) {
-			voffset = estimated_elevation;
+		        voffset_dem = estimated_elevation;
 		    }
 		    else {
 
 			if (k == 0) {
-			    voffset = estimated_elevation;
+			    voffset_dem = estimated_elevation;
 			}
 			else {
-			    voffset =
-				estimated_elevation <
-				voffset ? estimated_elevation : voffset;
+			    voffset_dem =
+			        estimated_elevation <
+			        voffset_dem ? estimated_elevation : voffset_dem;
 			}
 		    }
 		}		/* /if(fdrast) */
 
 		Vect_append_point(NewPoints, Points->x[k], Points->y[k],
-				  Points->z[k] + objheight + voffset);
+				  Points->z[k] + objheight + voffset + voffset_dem);
 
 	    }
 	    Vect_write_line(&Out, GV_FACE, NewPoints, Cats);
@@ -412,8 +422,8 @@ static long extrude(struct Map_info Out, struct line_cats *Cats,
                             Points->y[k + 1], Points->x[k + 1], 0, NEAREST);
             }
             else {
-                voffset_curr = voffset;
-                voffset_next = voffset;
+                voffset_curr = voffset + voffset_dem;
+                voffset_next = voffset + voffset_dem;
             }
 
 	    Vect_append_point(NewPoints, Points->x[k], Points->y[k],
