@@ -1,3 +1,6 @@
+#ifndef _POLIMIFUNCT_H_
+#define _POLIMIFUNCT_H_
+
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
@@ -211,3 +214,5 @@ void obsEstimateBilin(double **obsV, double *obsE, double *parV, double deltX,
 double dataInterpolateBilin(double x, double y, double deltaX, double deltaY,
 			    int xNum, int yNum, double xMin, double yMin,
 			    double *parVect);
+
+#endif
