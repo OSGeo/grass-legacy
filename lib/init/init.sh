@@ -36,6 +36,18 @@ export GRASS_VERSION
 # Get the command name
 CMD_NAME=START_UP
 
+# Get tye system name
+SYSTEM=`uname -s`
+case $SYSTEM in
+MINGW*)
+	MINGW=1
+	;;
+CYGWIN*)
+	CYGWIN=1
+	;;
+esac
+
+
 # Go through the command line options
 for i in "$@" ; do
     
@@ -96,7 +108,14 @@ export GIS_LOCK
 GISRCRC="$HOME/.grassrc6"
 
 # Set the session grassrc file
-USER="`whoami`"
+if [ "$MINGW" ] ; then
+	USER="$USERNAME"
+	if [ ! "$USER" ] ; then
+		USER="user_name"
+	fi
+else
+	USER="`whoami`"
+fi
 
 ## use TMPDIR if it exists, otherwise /tmp
 #tmp=${TMPDIR-/tmp}
@@ -225,8 +244,6 @@ if [ ! "$GRASS_WISH" ] ; then
 fi
 export GRASS_WISH
 
-CYGWIN=`uname | grep CYGWIN`
-
 if [ ! "$GRASS_HTML_BROWSER" ] ; then
     for i in `echo "$PATH" | sed 's/^:/.:/
                                 s/::/:.:/g
@@ -260,7 +277,7 @@ if [ ! "$GRASS_HTML_BROWSER" ] ; then
         elif [ "$HOSTTYPE" = "arm" ] ; then
             GRASS_HTML_BROWSER=dillo2
             break
-	elif [ "$CYGWIN" ] ; then
+	elif [ "$MINGW" -o "$CYGWIN" ] ; then
 	    iexplore="$SYSTEMDRIVE/Program Files/Internet Explorer/iexplore.exe"
 	    if [ -f "$iexplore" ] ; then
 		GRASS_HTML_BROWSER=$iexplore
@@ -576,7 +593,7 @@ lockfile="$LOCATION/.gislock"
 case $? in
     0) ;;
     1)
-    	echo `whoami` is currently running GRASS in selected mapset. Concurrent use not allowed.
+    	echo $USER is currently running GRASS in selected mapset. Concurrent use not allowed.
     	rm -rf "$tmp"  # remove session files from tmpdir
     	exit 1 ;;
     *)
@@ -632,7 +649,13 @@ case "$GRASS_GUI" in
 esac
 
 # Display the version and license info
-tput clear
+if [ "$MINGW" ] ; then
+	:
+# TODO: uncomment when PDCurses works.
+#	cls
+else
+	tput clear
+fi
 
 if [ -f "$GISBASE/locale/$LCL/etc/welcome" ] ; then
 	cat "$GISBASE/locale/$LCL/etc/welcome"
@@ -758,14 +781,26 @@ GRASS-GRID > "
 
     export PS1
 
-    "$ETC/run" "$SHELL"
+    if [ "$MINGW" ] ; then
+	# "$ETC/run" doesn't work at all???
+        "$SHELL"
+    else
+    	"$ETC/run" "$SHELL"
+    fi
     ;;
 esac
 
 trap 2 3 15
 
 # GRASS session finished
-tput clear
+if [ "$MINGW" ] ; then
+	:
+# TODO: uncomment when PDCurses works.
+#	cls
+else
+	tput clear
+fi
+
 echo "Closing monitors....."
 for MON  in `d.mon -L | grep running | grep -v "not running" | sed 's/ .*//'`
 do 
