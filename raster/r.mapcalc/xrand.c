@@ -12,7 +12,7 @@ rand(lo,hi) random values between a and b
 ****************************************************************/
 
 #if !defined(HAVE_DRAND48)
-#define drand48() ((double)rand()/((double)RAND_MAX + 1)
+#define drand48() ((double)rand()/((double)RAND_MAX + 1))
 #define lrand48() ((long)rand())
 #endif
 
