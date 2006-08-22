@@ -137,7 +137,7 @@ P_Mean_Calc (struct Cell_head *Elaboration, struct Point *obs, int npoints) {
 	if (mean_count == 0)
 	    mean = .0;
 	else
-	    mean /= mean_count;
+	    mean /= (double) mean_count;
 
 	return mean;
 }
@@ -200,7 +200,7 @@ P_Read_Vector_Region_Map (struct Map_info *Map, struct Cell_head *Elaboration, i
 int 
 P_Create_Aux_Table (dbDriver *driver, char *tab_name){
 	dbTable *auxiliar_tab;
-	dbColumn *ID_column, *Iterp_column;
+	dbColumn *ID_column, *Interp_column;
 	int created = FALSE;
 
 	auxiliar_tab = db_alloc_table (2);		
@@ -211,13 +211,14 @@ P_Create_Aux_Table (dbDriver *driver, char *tab_name){
 	db_set_column_name (ID_column, "ID");
 	db_set_column_sqltype (ID_column, DB_SQL_TYPE_INTEGER);
 			    
-	Iterp_column = db_get_table_column (auxiliar_tab,1);
-	db_set_column_name (Iterp_column, "Interp");
-	db_set_column_sqltype (Iterp_column, DB_SQL_TYPE_REAL);
+	Interp_column = db_get_table_column (auxiliar_tab,1);
+	db_set_column_name (Interp_column, "Interp");
+	db_set_column_sqltype (Interp_column, DB_SQL_TYPE_REAL);
 			    
 	if (db_create_table (driver, auxiliar_tab) == DB_OK) {
-	    G_debug (3, _("<%s> created in database."), tab_name);
+	    G_debug (1, _("<%s> created in database."), tab_name);
 	    created = TRUE;
+	    return created;
 	} 
 	else G_fatal_error(_("<%s> has not been created in database."), tab_name);
 	

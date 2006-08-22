@@ -2,7 +2,7 @@
  *									*
  * MODULE:       v.lidar.edgedetection				*
  * 									*
- * AUTHOR(S):    Roberto Antol� & Gonzalo Moreno			*
+ * AUTHOR(S):    Roberto Antolin & Gonzalo Moreno			*
  *               							*
  * PURPOSE:      Detection of object's edges on a LIDAR data set	*
  *               							*
@@ -26,6 +26,7 @@
 #include <grass/glocale.h>
 #include <grass/config.h>
 
+#include <grass/PolimiFunct.h>
 #include "edgedetection.h"
 
 int nsply, nsplx, line_out_counter, first_it;
@@ -230,7 +231,7 @@ main (int argc,char *argv[])
 	if (nsply > NSPLY_MAX) {
 	    nsply = NSPLY_MAX;
 	}
-	G_debug (0, _("nsply = %d"), nsply);
+	G_debug (1, _("nsply = %d"), nsply);
 	
 	elaboration_reg.east = original_reg.west;
 	last_column = FALSE;
@@ -252,11 +253,11 @@ main (int argc,char *argv[])
 	    if (nsplx > NSPLX_MAX) {
 		    nsplx = NSPLX_MAX;
 	    }
-	    G_debug (0, _("nsplx = %d"), nsplx);
+	    G_debug (1, _("nsplx = %d"), nsplx);
 	    
 	/*Setting the active region*/
 	    dim_vect = nsplx * nsply;
-	    G_debug(3, _("read vector region map"));
+	    G_debug (1, _("read vector region map"));
 	    observ = P_Read_Vector_Region_Map (&In, &elaboration_reg, &npoints, dim_vect);
 
 	    if (npoints > 0) {				/* If there is any point falling into elaboration_reg... */
@@ -268,7 +269,7 @@ main (int argc,char *argv[])
 		mean = P_Mean_Calc (&elaboration_reg, observ, npoints);
 
 	/* Least Squares system */
-		G_debug (3, _("Allocation memory for bilinear interpolation"));
+		G_debug (1, _("Allocation memory for bilinear interpolation"));
 		BW = P_get_BandWidth (BILINEAR, nsply);		/* Bilinear interpolation */
 		N = G_alloc_matrix (nparameters, BW);		/* Normal matrix */
 		TN = G_alloc_vector (nparameters);		/* vector */
@@ -287,7 +288,7 @@ main (int argc,char *argv[])
 		    Q[i] = 1;					/* Q=I */
 		}
 		
-		G_debug (3, _("Bilinear interpolation"));
+		G_debug (1, _("Bilinear interpolation"));
 		normalDefBilin (N, TN, Q, obsVect, passoE, passoN, nsplx, nsply, elaboration_reg.west, elaboration_reg.south, \
 					npoints, nparameters, BW);
 		nCorrectGrad (N, lambda_B, nsplx, nsply, passoE, passoN);
@@ -296,12 +297,12 @@ main (int argc,char *argv[])
 		G_free_matrix (N);
 		for (tn = 0; tn < nparameters; tn++) TN[tn] = 0;
 
-		G_debug (3, _("Allocation memory for bicubic interpolation"));
+		G_debug (1, _("Allocation memory for bicubic interpolation"));
 		BW = P_get_BandWidth (P_BICUBIC, nsply);
 		N = G_alloc_matrix (nparameters, BW);			/* Normal matrix */
 		parVect_bicub = G_alloc_vector (nparameters);		/* Bicubic parameters vector */
 
-		G_debug (3, _("Bicubic interpolation"));
+		G_debug (1, _("Bicubic interpolation"));
 		normalDefBicubic (N, TN, Q, obsVect, passoE, passoN, nsplx, nsply, elaboration_reg.west, 
 				    elaboration_reg.south, npoints, nparameters, BW);
 		nCorrectLapl (N, lambda_F, nsplx, nsply, passoE, passoN);
@@ -312,13 +313,13 @@ main (int argc,char *argv[])
 		G_free_vector (Q);
 
 		if (flag_auxiliar == FALSE) {
-		    G_debug (3, _("Creating auxiliar table for archiving overlaping zones"));
+		    G_debug (1, _("Creating auxiliar table for archiving overlaping zones"));
 		    if ((flag_auxiliar = Create_AuxEdge_Table (driver, table_name)) == FALSE) {
 			P_Drop_Aux_Table (driver, table_name);
 			G_fatal_error (_("It was impossible to create <%s>."), table_name);
 		    }
 		}
-		G_debug(3, _("Point classification"));
+		G_debug (1, _("Point classification"));
 		classification (&Out, elaboration_reg, general_box, overlap_box, obsVect, parVect_bilin, parVect_bicub, \
 				mean, alpha, grad_H, grad_L, dims.overlap, lineVect, npoints, driver, out_opt->answer);
 
@@ -334,7 +335,7 @@ main (int argc,char *argv[])
     }		/*! END WHILE; last_row = TRUE*/
 
 /* Dropping auxiliar table */
-    G_debug (3, _("Dropping <%s>"), table_name);
+    G_debug (1, _("Dropping <%s>"), table_name);
     if (P_Drop_Aux_Table (driver, table_name) != DB_OK)
     	G_warning (_("Auxiliar Table could not be drop. Should be cancelled manually"));
 

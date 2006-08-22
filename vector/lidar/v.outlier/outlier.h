@@ -34,5 +34,4 @@ int Select_Outlier (double *,		/**/
 	    int, 				/**/
 	    dbDriver *				/**/);
 
-int P_Create_AuxOutlier_Table (dbDriver *);
 int P_is_outlier (double);

@@ -2,7 +2,7 @@
  *									*
  * MODULE:       v.lidar.correction					*
  * 									*
- * AUTHOR(S):    Roberto Antol� & Gonzalo Moreno			*
+ * AUTHOR(S):    Roberto Antolin & Gonzalo Moreno			*
  *               							*
  * PURPOSE:      Correction of the v.growing output			*
  *               							*
@@ -25,6 +25,7 @@
 #include <grass/dbmi.h>
 #include <grass/glocale.h>
 
+#include <grass/PolimiFunct.h>
 #include "correction.h"
 
 /*DEFINES*/
@@ -62,7 +63,6 @@ main (int argc,char *argv[])
     struct Point *observ;
 
     dbDriver *driver;
-    dbString sql;
 
 /*----------------------------------------------------------------------------------------------------------*/
 /* Options' declaration */
@@ -242,7 +242,7 @@ main (int argc,char *argv[])
 	if (nsply > NSPLY_MAX) {
 	        nsply = NSPLY_MAX;
 	}
-	G_debug (0, _("nsply = %d"), nsply);
+	G_debug (1, _("nsply = %d"), nsply);
 
 	elaboration_reg.east = original_reg.west;
 	last_column = FALSE;
@@ -264,10 +264,10 @@ main (int argc,char *argv[])
 	    if (nsplx > NSPLX_MAX) {
 		    nsplx = NSPLX_MAX;
 	    }
-	    G_debug (0, _("nsplx = %d"), nsplx);
+	    G_debug (1, _("nsplx = %d"), nsplx);
 
 	    dim_vect = nsplx * nsply;
-	    G_debug(3, _("read vector region map"));
+	    G_debug(1, _("read vector region map"));
 	    observ = P_Read_Vector_Correction (&In, &elaboration_reg, &npoints, &nterrain, dim_vect);
 
 	    G_debug (5, _("npoints = %d, nterrain = %d"), npoints, nterrain);
@@ -334,7 +334,7 @@ main (int argc,char *argv[])
     }	/*! END WHILE; last_row = TRUE*/
 
 /* Dropping auxiliar table */
-    G_debug (3, _("Dropping <s>"), table_name);
+    G_debug (1, _("Dropping <s>"), table_name);
     if (P_Drop_Aux_Table (driver, table_name) != DB_OK)
     	G_fatal_error(_("<Auxiliar_correction_table> could not be dropped"));
 
