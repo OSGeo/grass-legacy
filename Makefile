@@ -168,7 +168,7 @@ distclean: clean
 	-rm -f config.cache config.log config.status config.status.${ARCH} 2>/dev/null
 	-rm -f ChangeLog ChangeLog.bak error.log grass.pc
 	-rm -f include/config.h include/version.h include/winname.h include/Make/Grass.make include/Make/Platform.make 2>/dev/null
-	-rm -f swig/perl/Makefile.PL swig/python/Makefile swig/python/grass.i 2>/dev/null
+	-rm -f swig/perl/Makefile.PL swig/perl2/make.pl swig/python/Makefile swig/python/grass.i 2>/dev/null
 
 strip: FORCE
 	@ if [ ! -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} ] ; then \
