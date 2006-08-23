@@ -146,6 +146,18 @@ d.mon x0).
 <br>[PNGdriver]
 <br>&nbsp; name of PNG output file
 
+<p>GRASS_PNG_AUTO_WRITE
+<br>[PNGdriver]
+<br>&nbsp; tells the PNG driver to write the image to a file whenever a
+client disconnects, rather than waiting until you stop the monitor
+
+<p>GRASS_RENDER_IMMEDIATE
+<br>[PNGdriver]
+<br>&nbsp; tells the raster library to use its built-in PNG driver rather
+than connecting to an external monitor process using sockets. If
+GRASS_RENDER_IMMEDIATE=TRUE is set, there is no need to run 
+"<tt>d.mon&nbsp;start=PNG</tt>"
+
 <!-- HB Sept 2005: I don't think this exists anymore:
 <p>GRASS_STDERR
 <br>&nbsp; set to any value to prevent user mail on error
