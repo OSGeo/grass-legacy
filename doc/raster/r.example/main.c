@@ -81,7 +81,8 @@ int main(int argc, char *argv[])
 
     /* initialize module */
     module = G_define_module();
-    module->description = _("My first raster module.");
+    module->keywords = _("keyword1, keyword2, keyword3");
+    module->description = _("My first raster module");
 
     /* Define the different options as defined in gis.h */
     input  = G_define_standard_option(G_OPT_R_INPUT);
@@ -93,7 +94,7 @@ int main(int argc, char *argv[])
     flag1->key = 'q';
     flag1->description = _("Quiet");
 
-    /* options and flags pareser */
+    /* options and flags parser */
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
