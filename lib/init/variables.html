@@ -95,10 +95,6 @@ while in a GRASS session.
 <br>&nbsp; allows to specify additional paths to local GRASS modules extra
 to standard distribution
 
-<p>GRASS_BACKGROUNDCOLOR
-<br>[PNGdriver]
-<br>&nbsp; defines the background color of the image created by the PNG driver
-
 <p>GRASS_ERROR_MAIL
 <br>&nbsp; set to any value to send user mail on an error or warning that 
  happens while stderr is being redirected.
@@ -142,22 +138,6 @@ d.mon x0).
 <p>GRASS_PERL
 <br>&nbsp; set perl with path
 
-<p>GRASS_PNGFILE
-<br>[PNGdriver]
-<br>&nbsp; name of PNG output file
-
-<p>GRASS_PNG_AUTO_WRITE
-<br>[PNGdriver]
-<br>&nbsp; tells the PNG driver to write the image to a file whenever a
-client disconnects, rather than waiting until you stop the monitor
-
-<p>GRASS_RENDER_IMMEDIATE
-<br>[PNGdriver]
-<br>&nbsp; tells the raster library to use its built-in PNG driver rather
-than connecting to an external monitor process using sockets. If
-GRASS_RENDER_IMMEDIATE=TRUE is set, there is no need to run 
-"<tt>d.mon&nbsp;start=PNG</tt>"
-
 <!-- HB Sept 2005: I don't think this exists anymore:
 <p>GRASS_STDERR
 <br>&nbsp; set to any value to prevent user mail on error
@@ -166,15 +146,6 @@ GRASS_RENDER_IMMEDIATE=TRUE is set, there is no need to run
 <p>GRASS_TCLSH
 <br>[nviz]
 <br>&nbsp; set tclsh shell name to override 'tclsh'
-
-<p>GRASS_TRANSPARENT
-<br>[PNGdriver]
-<br>&nbsp; if "TRUE", the image created by the PNG driver will have a
-transparent background
-
-<p>GRASS_TRUECOLOR
-<br>[PNGdriver]
-<br>&nbsp; if "TRUE", the PNG driver generates a true-color image
 
 <p>GRASS_UI_TERM
 <br>&nbsp; set to any value to use the terminal based parser
@@ -190,6 +161,48 @@ transparent background
 <p>GRASS_WISH
 <br>[d.m, nviz]
 <br>&nbsp; set wish shell name to override 'wish'
+
+
+
+<h3>List of selected GRASS PNG driver environment variables</h3>
+<blockquote>
+[ These variables control the function of the
+   <a href="pngdriver.html">PNG Driver</a>. ]
+</blockquote>
+<P></P>
+
+<p>GRASS_PNGFILE
+<br>&nbsp; name of PNG output file
+
+<p>GRASS_WIDTH
+<br>&nbsp; defines the width of GRASS monitor, see also GRASS_HEIGHT
+
+<p>GRASS_HEIGHT
+<br>&nbsp; defines the height of GRASS monitor, see also GRASS_WIDTH
+
+<p>GRASS_BACKGROUNDCOLOR
+<br>&nbsp; defines the background color of the image created by the PNG driver
+
+<p>GRASS_TRANSPARENT
+<br>&nbsp; if "TRUE", the image created by the PNG driver will have a
+transparent background
+
+<p>GRASS_PNG_COMPRESSION
+<br>&nbsp; compression level of PNG files (0 = none, 1 = fastest, 9 = best)
+
+<p>GRASS_TRUECOLOR
+<br>&nbsp; if "TRUE", the PNG driver generates a true-color image
+
+<p>GRASS_PNG_AUTO_WRITE
+<br>&nbsp; tells the PNG driver to write the image to a file whenever a
+client disconnects, rather than waiting until you stop the monitor
+
+<p>GRASS_RENDER_IMMEDIATE
+<br>&nbsp; tells the raster library to use its built-in PNG driver rather
+than connecting to an external monitor process using sockets. If
+GRASS_RENDER_IMMEDIATE=TRUE is set, there is no need to run 
+"<tt>d.mon&nbsp;start=PNG</tt>"
+
 
 
 <h3>List of selected internal GRASS environment variables</h3>
