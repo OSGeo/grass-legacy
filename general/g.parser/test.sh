@@ -4,6 +4,7 @@
 
 #%Module
 #%  description: g.parser test script   
+#%  keywords: keyword1, keyword2
 #%End
 #%flag
 #%  key: f
