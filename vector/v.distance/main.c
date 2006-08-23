@@ -99,6 +99,7 @@ int main (int argc, char *argv[])
     G_gisinit (argv[0]);
 
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = "Find the nearest element in vector 'to' for elements in vector 'from'. "
             "Various information about this relation may be uploaded to the attribute table of "
 	    "input vector 'from' or printed to stdout";

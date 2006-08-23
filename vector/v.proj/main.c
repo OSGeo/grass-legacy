@@ -38,6 +38,7 @@ int main (int argc, char *argv[])
     G_gisinit (argv[0]);
  
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = _("Allows projection conversion of vector files.");
 
     /* set up the options and flags for the command line parser */

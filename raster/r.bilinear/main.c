@@ -25,7 +25,8 @@ int main( int argc, char *argv[])
     G_gisinit (argv[0]);
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("raster");
+    module->description =
 		_("Bilinear interpolation utility for raster map layers.");
 
     rastin = G_define_standard_option(G_OPT_R_INPUT);

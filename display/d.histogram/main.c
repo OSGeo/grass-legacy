@@ -66,7 +66,8 @@ int main (int argc, char **argv)
 	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("display");
+    module->description =
 		_("Displays a histogram in the form of a pie or bar chart "
 		"for a user-specified raster file.");
 

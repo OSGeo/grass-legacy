@@ -27,6 +27,7 @@ int main(
     G_gisinit (argv[0]);
 
     module = G_define_module();
+    module->keywords = _("raster");
     module->description =
 		_("Sums up the raster cell values.");
 

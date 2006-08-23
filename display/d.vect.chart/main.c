@@ -55,6 +55,7 @@ main (int argc, char **argv)
 		      };
     
     module = G_define_module();
+    module->keywords = _("display");
     module->description = _("Displays charts of GRASS vector data in the active frame on the "
 	                  "graphics monitor");
 

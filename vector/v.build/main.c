@@ -1,22 +1,24 @@
-/* ***************************************************************
- * *
- * * MODULE:       v.build
- * * 
- * * AUTHOR(S):    Radim Blazek
- * *               
- * * PURPOSE:      Build topology
- * *               
- * * COPYRIGHT:    (C) 2001 by the GRASS Development Team
- * *
- * *               This program is free software under the 
- * *               GNU General Public License (>=v2). 
- * *               Read the file COPYING that comes with GRASS
- * *               for details.
- * *
- * **************************************************************/
+/***************************************************************
+ *
+ * MODULE:       v.build
+ * 
+ * AUTHOR(S):    Radim Blazek
+ *               
+ * PURPOSE:      Build topology
+ *               
+ * COPYRIGHT:    (C) 2001 by the GRASS Development Team
+ *
+ *               This program is free software under the 
+ *               GNU General Public License (>=v2). 
+ *               Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ **************************************************************/
+
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
 int 
 main (int argc, char *argv[])
@@ -29,7 +31,9 @@ main (int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module(); 
+    module->keywords = _("vector, topology");
     module->description = "Creates topology for GRASS vector data.";
+
     map_opt = G_define_standard_option(G_OPT_V_MAP);
     
     err_opt = G_define_standard_option(G_OPT_V_OUTPUT);

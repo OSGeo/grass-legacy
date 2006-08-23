@@ -19,7 +19,8 @@
 #  - if you send cs2cs a third data column, beware it might be treated as "z"
 
 #%Module
-#% description: Convert coordinates from one projection to another (cs2cs frontend).
+#%  description: Convert coordinates from one projection to another (cs2cs frontend).
+#%  keywords: miscellaneous, projection
 #%End
 #%option
 #% key: input

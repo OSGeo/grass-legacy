@@ -73,6 +73,7 @@ main (int argc,char *argv[])
 /*------------------------------------------------------------------------------------------*/
 /* Options' declaration */;
     module = G_define_module();
+    module->keywords = _("vector, LIDAR");
     module->description = _("Building contour determination and Region Growing " 
     				"algorithm for determining the building inside");	
 
