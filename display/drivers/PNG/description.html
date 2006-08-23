@@ -42,7 +42,11 @@ of the PNG driver.
   <LI><B>GRASS_PNG_AUTO_WRITE=[TRUE|FALSE]</B><BR>
      if set to "TRUE", the image file will be written after each 
      operation (i.e. whenever a client disconnects), rather than
-     only being written out when the driver terminates.
+     only being written out when the driver terminates.<BR><BR>
+  <LI><B>GRASS_RENDER_IMMEDIATE=[TRUE|FALSE]</B><BR>
+     tells the raster library to use its built-in PNG driver rather
+     than connecting to an external monitor process using sockets. If
+     "<tt>TRUE</tt>", there is no need to run "<tt>d.mon&nbsp;start=PNG</tt>"
 </UL>
 
 <H3>Example</H3>
