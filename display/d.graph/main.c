@@ -70,6 +70,10 @@ int main (int argc, char **argv)
 	    infile = stdin;
 
 
+	/* open graphics window */
+	if (R_open_driver() != 0)
+	    G_fatal_error(_("No graphics device selected"));
+
 	/* Parse and select color */
 	if (opt2->answer != NULL) {
 	    color = G_str_to_color(opt2->answer, &R, &G, &B);
@@ -87,10 +91,6 @@ int main (int argc, char **argv)
 
 	if(mapcoords->answer) mapunits = TRUE;
 	else mapunits = FALSE;
-
-	/* open graphics window */
-	if (R_open_driver() != 0)
-	    G_fatal_error(_("No graphics device selected"));
 
 	if (D_get_cur_wind(window_name))
 	    G_fatal_error(_("No current window"));
