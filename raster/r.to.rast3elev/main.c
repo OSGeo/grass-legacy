@@ -399,7 +399,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, raster3d, voxel");
     module->description =
 	_
 	("Creates a 3D volume map based on 2D elevation and value raster maps");
