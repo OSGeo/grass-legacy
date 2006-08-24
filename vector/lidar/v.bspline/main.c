@@ -28,19 +28,15 @@
 
 #include <grass/PolimiFunct.h>
 
-/*Variable's declaration*/
-int nsply, nsplx;
-double passoN, passoE;
-
 /*-------------------------------------------------------------------------------------------*/
 int
 main (int argc,char *argv[])
 {
 
 /* Variables' declarations */
-    int nlines, nrows, ncols, dim_vect, raster, nparameters, BW;
-    int last_row, last_column, bilin, grid, flag_ext, flag_auxiliar = FALSE; 	/* booleans */
-    double lambda, mean;		
+    int  nsply, nsplx, nlines, nrows, ncols, dim_vect, raster, nparameters, BW;
+    int last_row, last_column, grid, bilin, flag_ext, flag_auxiliar; 	/* booleans */
+    double passoN, passoE, lambda, mean;		
     
     char *mapset, *dvr, *db, *vector, *map, table_name[1024];			/* */
     
@@ -167,6 +163,7 @@ main (int argc,char *argv[])
     passoE = atof (passoE_opt->answer);
     lambda = atof (lambda_f_opt->answer);
 
+    flag_auxiliar = FALSE;
     vector = out_opt->answer;
     map = out_map_opt->answer;
 
@@ -206,7 +203,12 @@ main (int argc,char *argv[])
 
 /* Open output vector or raster*/
     if (vector && !map) {
+	if ( strcmp(dbdriver->answer, "dbf") == 0)
+	    G_fatal_error (_("Sorry, <%s> driver is not allowed for vector output in this module. \
+	    			Try with a raster output or other driver"), dbdriver->answer); 
+
     	Vect_check_input_output_name (in_opt->answer, out_opt->answer, GV_FATAL_EXIT);
+    	grid = FALSE;
     	if (0 > Vect_open_new (&Out, out_opt->answer, WITH_Z)) {
 	    Vect_close (&In);
 	    G_fatal_error (_("Vector <%s> could not be open"), out_opt->answer);
@@ -256,7 +258,6 @@ main (int argc,char *argv[])
     raster_matrix = G_alloc_matrix (nrows, ncols);
 
 /* Fixxing parameters of the elaboration region */
-
     P_zero_dim (&dims);					/* Set to zero the dim struct*/
     dims.latoE = NSPLX_MAX * passoE;
     dims.latoN = NSPLY_MAX * passoN;
@@ -377,18 +378,20 @@ main (int argc,char *argv[])
 		if (grid == FALSE) {		/*OBSERVATION POINTS INTERPOLATION*/
 		/* Auxiliar table creation */
 		    if (flag_auxiliar == FALSE) {
-			if ((flag_auxiliar = P_Create_Aux_Table (driver, table_name)) == FALSE) {
-			    G_fatal_error(_("Auxiliar Table could not be created"));
-			}
+		    	G_debug (1, _("Creating auxiliar table for archiving overlapping zones"));
+		    	if ((flag_auxiliar = P_Create_Aux_Table (driver, table_name)) == FALSE) {
+		    	    P_Drop_Aux_Table (driver, table_name);
+		    	    G_fatal_error (_("It was impossible to create table <%s>."), table_name);
+		    	}
 		    }
-			
+		    
 		    if (flag_ext == FALSE) {
 			P_Sparse_Points (&Out, &elaboration_reg, general_box, overlap_box, obsVect, parVect, lineVect, passoE, passoN, \
 				dims.overlap, nsplx, nsply, npoints, bilin, categories, driver, mean, table_name);
 			G_free_matrix (obsVect);
 			G_free_vector (parVect);
 		    }
-			    		
+
 		    else {
 			int npoints_ext, *lineVect_ext=NULL;
 			double **obsVect_ext, mean_ext = .0;
@@ -407,8 +410,8 @@ main (int argc,char *argv[])
 			}
 			
 			G_free (observ_ext);
-			P_Sparse_Points (&Out, &elaboration_reg, general_box, overlap_box, obsVect_ext, parVect, lineVect_ext, passoE,
-				passoN,	dims.overlap, nsplx, nsply, npoints, bilin, categories, driver, mean_ext, table_name);
+			P_Sparse_Points (&Out, &elaboration_reg, general_box, overlap_box, obsVect_ext, parVect, lineVect_ext, passoE, \
+				passoN, dims.overlap, nsplx, nsply, npoints, bilin, categories, driver, mean_ext, table_name);
 			
 			G_free_matrix (obsVect_ext);
 			G_free_vector (parVect);
@@ -419,8 +422,8 @@ main (int argc,char *argv[])
 		else {			/*GRID INTERPOLATION ==> INTERPOLATION INTO A RASTER*/ 
 		    G_free_matrix (obsVect);
 		    flag_auxiliar = TRUE;
- 		    raster_matrix = P_Regular_Points (&elaboration_reg, general_box, overlap_box, raster_matrix, parVect, \
-		    					dims.overlap, nsplx, mean, nrows, ncols);	
+		    raster_matrix = P_Regular_Points (&elaboration_reg, general_box, overlap_box, raster_matrix, parVect, \
+		    					passoN, passoE, dims.overlap, mean, nsplx, nsply, nrows, ncols, bilin);	
 		    G_free_vector (parVect);
 		}
 	    }
@@ -453,10 +456,9 @@ main (int argc,char *argv[])
      
     Vect_close (&In);
     if (flag_ext != FALSE) Vect_close (&In_ext);
-    if (!map) 
-    	Vect_close (&Out);
+    if (vector) Vect_close (&Out);
     
-    if (!vector) G_close_cell (raster);
+    if (map) G_close_cell (raster);
 
     G_done_msg("");
     exit(EXIT_SUCCESS);

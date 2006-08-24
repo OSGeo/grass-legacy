@@ -17,7 +17,13 @@ P_Sparse_Correction (struct Map_info *,		/**/
 			double **, 			/**/
 			double *,			/**/
 			int *, 				/**/
+			double,				/**/
+			double,				/**/
+			double,				/**/
 			double, 			/**/
+			double, 			/**/
+			int, 				/**/
+			int, 				/**/
 			int, 				/**/
 			dbDriver *,			/**/
 			double				/**/);
@@ -44,4 +50,4 @@ P_Read_Vector_Correction (struct Map_info *,	/**/
 			  int			/**/);
 
 void P_Aux_to_Raster (double **, int);
-int correction (int, double, double);
+int correction (int, double, double, double, double);

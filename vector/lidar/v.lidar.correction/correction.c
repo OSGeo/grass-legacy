@@ -9,13 +9,11 @@
 
 void 
 P_Sparse_Correction (struct Map_info *In, struct Map_info *Out, struct Map_info *Terrain, struct Cell_head *Elaboration, BOUND_BOX General,\
-		BOUND_BOX Overlap, double **obs, double *param, int *line_num, double overlap, int num_points, dbDriver *driver,\
-		double mean) 
+		BOUND_BOX Overlap, double **obs, double *param, int *line_num, double passoN, double passoE, double overlap, double HighThresh,\
+		double LowThresh, int nsplx, int nsply, int num_points,dbDriver *driver, double mean)
 {
     int i=0, class;
     double interpolation, csi, eta, weight;
-    extern int nsplx, nsply;
-    extern double passoN, passoE;
     
     struct line_pnts *points;
     struct line_cats *cats;
@@ -34,7 +32,7 @@ P_Sparse_Correction (struct Map_info *In, struct Map_info *Out, struct Map_info 
 	    if (Vect_point_in_box (*points->x, *points->y, *points->z, &Overlap)) {  /*(5)*/
 
 		Vect_cat_get (cats, F_CLASSIFICATION, &class);
-		class = correction (class, *points->z, interpolation);
+		class = correction (class, *points->z, interpolation, HighThresh, LowThresh);
 		Vect_cat_del (cats, F_CLASSIFICATION);
 		Vect_cat_set (cats, F_CLASSIFICATION, class);
 
@@ -84,7 +82,7 @@ P_Sparse_Correction (struct Map_info *In, struct Map_info *Out, struct Map_info 
 				G_fatal_error (_("Impossible to read the database"));
 
 			Vect_cat_get (cats, F_CLASSIFICATION, &class);
-			class = correction (class, *points->z, interpolation);
+			class = correction (class, *points->z, interpolation, HighThresh, LowThresh);
 			Vect_cat_set (cats, F_CLASSIFICATION, class);
 		
 			Vect_write_line (Out, GV_POINT, points, cats);	
@@ -110,7 +108,7 @@ P_Sparse_Correction (struct Map_info *In, struct Map_info *Out, struct Map_info 
 				G_fatal_error (_("Impossible to read the database"));
 
 			Vect_cat_get (cats, F_CLASSIFICATION, &class);
-			class = correction (class, *points->z, interpolation);
+			class = correction (class, *points->z, interpolation, HighThresh, LowThresh);
 			Vect_cat_set (cats, F_CLASSIFICATION, class);
 
 			Vect_write_line (Out, GV_POINT, points, cats);	
@@ -128,7 +126,7 @@ P_Sparse_Correction (struct Map_info *In, struct Map_info *Out, struct Map_info 
 				G_fatal_error (_("Impossible to read the database"));
 
 			Vect_cat_get (cats, F_CLASSIFICATION, &class);
-			class = correction (class, *points->z, interpolation);
+			class = correction (class, *points->z, interpolation, HighThresh, LowThresh);
 			Vect_cat_set (cats, F_CLASSIFICATION, class);
 
 			Vect_write_line (Out, GV_POINT, points, cats);	
@@ -157,11 +155,8 @@ P_Sparse_Correction (struct Map_info *In, struct Map_info *Out, struct Map_info 
 }
 
 /*------------------------------------------------------------------------------------------------*/
-int correction (int class, double obsZ, double interpolation)
+int correction (int class, double obsZ, double interpolation, double HighThresh, double LowThresh)
 {
-
-    extern double HighThresh, LowThresh;
-
     if ((class == TERRAIN_SINGLE) && ((obsZ - interpolation) >= HighThresh))
 	return OBJECT_SINGLE;
 
