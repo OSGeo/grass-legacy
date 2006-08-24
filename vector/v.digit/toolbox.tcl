@@ -70,9 +70,9 @@ proc new_line_options { create } {
     }
 }
 
-# button frame
+
+# button frame row 2
 set bbox1 [ButtonBox .bbox1 -spacing 1 -padx 1 -pady 1]
-pack $bbox1 -side top -anchor w
 
 # --- Draw new ---
 $bbox1 add -image [image create photo -file "$vdpath/new.point.gif"] \
@@ -131,8 +131,9 @@ $bbox1 add -image [image create photo -file "$vdpath/delete.line.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
         -helptext [G_msg "Delete point, line, boundary, or centroid"]
 
+
+# button frame row 1
 set bbox2 [ButtonBox .bbox2 -spacing 1 -padx 1 -pady 1]
-pack $bbox2 -side top -anchor w
 
 # --- Zoom / Display ---
 $bbox2 add -image [image create photo -file "$vdpath/zoom.window.gif"] \
@@ -205,6 +206,10 @@ $bbox2 add -image [image create photo -file "$vdpath/exit.gif"] \
         -command "c_next_tool exit" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
         -helptext [G_msg "Save and exit"]
+
+pack $bbox2 -side top -anchor w
+pack $bbox1 -side top -anchor w
+
 
 frame .pf
 pack .pf -fill x -side top
