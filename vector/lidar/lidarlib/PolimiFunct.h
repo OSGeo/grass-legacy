@@ -136,6 +136,10 @@ P_Regular_Points (struct Cell_head *,	/**/
 			double *, 		/**/
 			double, 		/**/
 			double, 		/**/
+                        double,                 /**/
+                        double,                 /**/
+                        int,                    /**/
+                        int,                    /**/
 			int, 			/**/
 			int, 			/**/
 			int			/**/);

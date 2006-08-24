@@ -28,20 +28,14 @@
 #include <grass/PolimiFunct.h>
 #include "correction.h"
 
-/*DEFINES*/
-
-/*Variable's declaration*/
-int nsply, nsplx, nlines;
-double passoN, passoE, HighThresh, LowThresh;
-
 /*----------------------------------------------------------------------------------------------------------*/
 int
 main (int argc,char *argv[])
 {
 /* Declarations */
-    int dim_vect, nparameters, BW, npoints, nrows, ncols;
+    int dim_vect, nparameters, BW, npoints, nrows, ncols, nsply, nsplx;
     char *dvr, *db, *mapset, table_name[1024]; 
-    double lambda, ew_resol, ns_resol, mean;
+    double lambda, ew_resol, ns_resol, mean, passoN, passoE, HighThresh, LowThresh;
 
     int i, nterrain, count_terrain;
 
@@ -322,7 +316,7 @@ main (int argc,char *argv[])
 
 		G_debug (3, _("Correction and creation of terrain vector"));
 		P_Sparse_Correction (&In, &Out, &Out_Terrain, &elaboration_reg, general_box, overlap_box, obsVect, parVect, lineVect,\
-				dims.overlap, npoints, driver, mean);	
+				passoN, passoE, dims.overlap, HighThresh, LowThresh, nsplx, nsply, npoints, driver, mean);	
 
 		G_free_matrix (obsVect);
 		G_free_ivector (lineVect);

@@ -177,13 +177,11 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 /*------------------------------------------------------------------------------------------------*/
 double ** 
 P_Regular_Points (struct Cell_head *Elaboration, BOUND_BOX General, BOUND_BOX Overlap, double **matrix, double *param,\
-			double overlap, double mean, int nrows, int ncols, int bilin) {
+			double passoN, double passoE, double overlap, double mean, int nsplx, int nsply, int nrows, int ncols, int bilin) {
 
     int col, row;
     double X, Y, interpolation, weight, csi, eta;
     struct Cell_head Original;
-    int nsplx, nsply;
-    double passoN, passoE;
 
     G_get_window (&Original);
     for (row = 0; row < nrows; row++) {
