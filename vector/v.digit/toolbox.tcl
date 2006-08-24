@@ -1,5 +1,5 @@
 lappend auto_path $env(GISBASE)/bwidget
-package require -exact BWidget 1.2.1 
+package require -exact BWidget 1.2.1
 
 # I'm not sure how to grab the map name, so I'll leave it obviously broken
 # in the hope someone will fix it. If you comment out the following line,
@@ -9,7 +9,7 @@ wm title . "v.digit - \$mapname"
 source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 source $env(GISBASE)/etc/gtcltk/select.tcl
 
-set vdpath $env(GISBASE)/etc/v.digit/ 
+set vdpath $env(GISBASE)/etc/v.digit/
 source $vdpath/settings.tcl
 source $vdpath/cats.tcl
 
@@ -36,36 +36,34 @@ set coor ""
 proc new_line_options { create } {
     global GVariable GWidget
     if { $create } {
-	set lineopt [frame .lineopt]
-	pack $lineopt -fill x -side top
+    set lineopt [frame .lineopt]
+    pack $lineopt -fill x -side top
 
-	set row1 [frame $lineopt.row1]
-	pack $row1 -fill x -side top
+    set row1 [frame $lineopt.row1]
+    pack $row1 -fill x -side top
 
-	Label $row1.flab -padx 2 -pady 2 -relief sunken -anchor w -text [G_msg "Layer"]
-	set GWidget(field) [Entry $row1.fval -width 10 -textvariable GVariable(field) \
-			    -command { c_var_set field $GVariable(field) } ]
-        bind $GWidget(field) <KeyRelease> { c_var_set field $GVariable(field) } 
-	Label $row1.clab -padx 2 -pady 2 -relief sunken -anchor w -text [G_msg "Category"]
-	set GWidget(cat) [Entry $row1.cval -width 10 -textvariable GVariable(cat) \
-			    -command { c_var_set cat $GVariable(cat) }]
-        bind $GWidget(cat) <KeyRelease> { c_var_set cat $GVariable(cat) } 
-	set GWidget(cat_mode) [ComboBox $row1.cmode -label [G_msg "Mode"] -width 20  -textvariable cmode \
-			-modifycmd {
-			    set GVariable(cat_mode) [ $GWidget(cat_mode) getvalue]
+    Label $row1.flab -padx 2 -pady 2 -relief flat -anchor w -text [G_msg "  Layer"]
+    set GWidget(field) [Entry $row1.fval -width 6 -textvariable GVariable(field) \
+                -command { c_var_set field $GVariable(field) } ]
+        bind $GWidget(field) <KeyRelease> { c_var_set field $GVariable(field) }
+    Label $row1.clab -padx 2 -pady 2 -relief flat -anchor w -text [G_msg "  Category"]
+    set GWidget(cat) [Entry $row1.cval -width 6 -textvariable GVariable(cat) \
+                -command { c_var_set cat $GVariable(cat) }]
+        bind $GWidget(cat) <KeyRelease> { c_var_set cat $GVariable(cat) }
+    set GWidget(cat_mode) [ComboBox $row1.cmode -label [G_msg "  Mode "] -width 12 -textvariable cmode \
+            -modifycmd {
+                set GVariable(cat_mode) [ $GWidget(cat_mode) getvalue]
                             c_var_set cat_mode $GVariable(cat_mode)
-			 }]
+             }]
+    pack $row1.flab $GWidget(field) $row1.clab $GWidget(cat) $GWidget(cat_mode) -fill x  -side left
 
-	pack $row1.flab $GWidget(field) $row1.clab $GWidget(cat) $GWidget(cat_mode) -fill x  -side left
+    set row2 [frame $lineopt.row2]
+    pack $row2 -fill x -side top
 
-	set row2 [frame $lineopt.row2]
-	pack $row2 -fill x -side top
-        
-        checkbutton $row2.ins -variable GVariable(insert) \
-                              -command { c_var_set insert $GVariable(insert) }
-	Label $row2.ilab -padx 2 -pady 2 -anchor w -text [G_msg "Insert new record into table"]
-    
-	pack $row2.ins $row2.ilab -fill x  -side left
+    checkbutton $row2.ins -variable GVariable(insert) \
+            -padx 8 -pady 5 -text [G_msg "Insert new record into table"]\
+            -command { c_var_set insert $GVariable(insert) }
+    pack $row2.ins -fill x  -side left
 
     } else {
         destroy .lineopt
@@ -74,8 +72,7 @@ proc new_line_options { create } {
 
 # button frame
 set bbox1 [ButtonBox .bbox1 -spacing 1 -padx 1 -pady 1]
-set bbox2 [ButtonBox .bbox2 -spacing 1 -padx 1 -pady 1]
-pack $bbox1 $bbox2 -side top -anchor w
+pack $bbox1 -side top -anchor w
 
 # --- Draw new ---
 $bbox1 add -image [image create photo -file "$vdpath/new.point.gif"] \
@@ -134,6 +131,9 @@ $bbox1 add -image [image create photo -file "$vdpath/delete.line.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
         -helptext [G_msg "Delete point, line, boundary, or centroid"]
 
+set bbox2 [ButtonBox .bbox2 -spacing 1 -padx 1 -pady 1]
+pack $bbox2 -side top -anchor w
+
 # --- Zoom / Display ---
 $bbox2 add -image [image create photo -file "$vdpath/zoom.window.gif"] \
         -command "c_next_tool zoom_window" \
@@ -158,7 +158,7 @@ $bbox2 add -image [image create photo -file "$vdpath/zoom.default.gif"] \
 proc zoom_region { } {
     set reg [GSelect windows]
     if { $reg != "" } {
-        c_var_set zoom_region $reg 
+        c_var_set zoom_region $reg
         c_next_tool zoom_region
     }
 }
@@ -208,25 +208,25 @@ $bbox2 add -image [image create photo -file "$vdpath/exit.gif"] \
 
 frame .pf
 pack .pf -fill x -side top
-Label .pf.prompt -width 61 -padx 3 -pady 2 -relief sunken -anchor w  -textvariable prompt
+Label .pf.prompt -padx 3 -pady 2 -relief flat -anchor w -textvariable prompt
 pack .pf.prompt -fill x  -side left
 
-frame .bpf
-pack .bpf -fill x -side top
-Label .bpf.left -width 20 -padx 1 -pady 2 -relief sunken -anchor w -textvariable prompt_left
-Label .bpf.middle -width 20 -padx 1 -pady 2 -relief sunken -anchor w -textvariable prompt_middle
-Label .bpf.right -width 20 -padx 1 -pady 2 -relief sunken -anchor w -textvariable prompt_right
-pack .bpf.left .bpf.middle .bpf.right -fill x -side left
+labelframe .bpf -text [G_msg "mouse button actions (left, right, center)"] -labelanchor n
+pack .bpf -fill x -side top -padx 8
+Label .bpf.left -width 10  -pady 5 -relief raised -anchor center -textvariable prompt_left
+Label .bpf.middle -width 10 -padx 2 -pady 5 -relief raised -anchor center -textvariable prompt_middle
+Label .bpf.right -width 10 -pady 5 -relief raised -anchor center -textvariable prompt_right
+pack .bpf.left .bpf.middle .bpf.right -fill x -side left -expand yes -padx 4 -pady 8
 
 frame .coorf
-pack .coorf -fill x -side top
-Label .coorf.prompt -width 61 -padx 3 -pady 2 -relief sunken -anchor w  -textvariable coor
+pack .coorf -fill x -side top -padx 8 -pady 5
+Label .coorf.prompt -width 50 -padx 3 -pady 2 -relief flat -anchor w    -textvariable coor
 pack .coorf.prompt -fill x  -side left
 
-set destroyed 0 
+set destroyed 0
 bind . <Destroy> { if { "%W" == "."} { c_next_tool exit; set destroyed 1 } }
 
-# Strart tool centre in C and wait until the end 
+# Strart tool centre in C and wait until the end
 c_tool_centre
 
 # Exit
