@@ -16,8 +16,8 @@ EXTRA_INC = -I$(GRASS_LIBDIR)/db/dbmi_driver
 
 DEPENDENCIES = $(GISDEP)
 
-DRVDOC=$(GISBASE)/docs/html/mysql.html
-EDRVDOC=$(GISBASE)/docs/html/mesql.html
+DRVDOC=$(GISBASE)/docs/html/grass-mysql.html
+EDRVDOC=$(GISBASE)/docs/html/grass-mesql.html
 
 OBJS 	=  \
 	create_table.o \
@@ -60,8 +60,8 @@ $(OBJDIR)/dbe.o : db.c $(DEPENDENCIES) $(LOCAL_HEADERS)
 	$(CC) -DMESQL=1 $(CFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) $(EXTRA_INC) $(INC) \
 		-o $@ -c db.c
 					
-$(DRVDOC): mysql.html
-	$(INSTALL) -m 644 mysql.html $(DRVDOC)
+$(DRVDOC): grass-mysql.html
+	$(INSTALL) -m 644 grass-mysql.html $(DRVDOC)
 
-$(EDRVDOC): mesql.html
-	$(INSTALL) -m 644 mesql.html $(EDRVDOC)
+$(EDRVDOC): grass-mesql.html
+	$(INSTALL) -m 644 grass-mesql.html $(EDRVDOC)
