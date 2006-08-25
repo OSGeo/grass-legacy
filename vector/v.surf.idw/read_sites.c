@@ -16,7 +16,7 @@
 void read_sites ( char *name, int field, char *col)
 {
     extern long npoints;
-    int   nrec, ctype = 0, nlines, line;
+    int   nrec, ctype = 0, type;
     struct Map_info Map;
     struct field_info *Fi;
     dbDriver *Driver;
@@ -24,7 +24,6 @@ void read_sites ( char *name, int field, char *col)
     struct line_pnts *Points;
     struct line_cats *Cats;
   
-    Vect_set_open_level (2);
     Vect_open_old (&Map, name, "");
 
     if (field > 0)
@@ -58,18 +57,15 @@ void read_sites ( char *name, int field, char *col)
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct ();
 
-    nlines = Vect_get_num_lines ( &Map );
-
-    for ( line = 1; line <= nlines; line++) {
-	int type, cat, ival, ret;
+    while((type = Vect_read_next_line ( &Map, Points, Cats )) >= 0)
+    {	
 	double dval;
-	
-	type = Vect_read_line ( &Map, Points, Cats, line );
 
 	if ( !(type & GV_POINTS ) ) continue;
 
 	if (field > 0)
 	{
+  	    int cat, ival, ret;
 	    /* TODO: what to do with multiple cats */
 	    Vect_cat_get ( Cats, field, &cat );
 	    if ( cat < 0 ) continue;
@@ -82,7 +78,7 @@ void read_sites ( char *name, int field, char *col)
 	    }
 
 	    if ( ret != DB_OK ) {
-	        G_warning (_("No record for line (cat = %d)"), cat );
+	        G_warning (_("No record for point (cat = %d)"), cat );
 	        continue;
 	    }
 	}
