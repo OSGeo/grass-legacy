@@ -93,6 +93,7 @@ default: builddemolocation
 	@echo "Finished compilation: `date`" >> $(GRASS_HOME)/error.log
 	@echo "(In case of errors please change into the directory with error and run 'make')" >> $(GRASS_HOME)/error.log
 	@cat $(GRASS_HOME)/error.log
+	@if [ `cat "$(GRASS_HOME)/error.log" | wc -l` -gt 8 ] ; then false ; else true ; fi
 
 LIBDIRS = \
 	lib/external/shapelib \
