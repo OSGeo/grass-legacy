@@ -10,7 +10,6 @@ SUBDIRS = \
 	v.convert \
 	v.db.connect \
 	v.db.select \
-	v.digit \
 	v.distance \
 	v.drape \
 	v.extract \
@@ -73,6 +72,13 @@ OGRBASED = v.out.ogr v.in.ogr v.external
 #compile if OGR present:
 ifneq ($(USE_OGR),)
     SUBDIRS += $(OGRBASED)
+endif
+
+TCLTKBASED = v.digit
+
+#compile if Tcl/Tk present:
+ifneq ($(strip $(TCLTKLIBS)),)
+    SUBDIRS += $(TCLTKBASED)
 endif
 
 
