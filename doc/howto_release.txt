@@ -3,7 +3,7 @@ How to release GRASS binaries and source code
 $Date$
 
 Note: This text contains *some* rules only applicable to the
-      development coordinators (currently Markus Neteler, Radim Blazek).
+      development coordinators at ITC-irst (currently Markus Neteler).
 
 
 ###########################################
@@ -124,20 +124,21 @@ Contents
    DebianGIS:          <pkg-grass-general@lists.alioth.debian.org>
    FreeGIS:            <freegis-list@intevation.de>
    Geowanking:         <geowanking@lists.burri.to>
+   OSGeo.org:          <announce@mail.osgeo.org> + <discuss@mail.osgeo.org>
+                       at https://mail.osgeo.org/servlets/ProjectMailingListList
+                       <news_item@osgeo.org>
+                       http://grass.osgeo.org (is fed through <grass-announce@grass.itc.it>)
 
-   http://groups.google.com/group/comp.infosystems.gis
    http://slashgeo.org/submit.pl
-   http://www.osgeo.org (discuss list + news_item@osgeo.org)
-   http://grass.osgeo.org (is fed through grass-announce@grass.itc.it)
    http://spatialnews.geocomm.com/submitnews.html (not free any more)
-   http://freshmeat.net/projects/grass/?highlight=GRASS
+   http://freshmeat.net/projects/grass/?highlight=GRASS (update, MN)
    http://linuxtoday.com/contribute.php3
    http://www.newsforge.com/submit.pl
    http://programming.newsforge.com/submit.pl
    http://osx.macnn.com/    (email to news tips)
    http://www.gis-news.de/  (news@gismngt.de)
    http://www.giscafe.com/  (link: submit material, needs registration)
-   http://www.freegis.org
+   http://www.freegis.org   (update, MN)
    http://www.directionsmag.com/pressreleases.php (News -> Post Press Release)
    http://www.gismonitor.com/news/submit_news.php
    http://www.gisdevelopment.net (click on 'Submit Press Release')
@@ -147,6 +148,7 @@ Contents
    http://www.osdir.com/Downloads+index-req-viewsdownload-sid-206.phtml
    http://www.foss4g.org/FOSS4G/modules.php?name=Submit_News
    http://groups.google.com/group/Remote-Sensing-GIS-for-a-New-World
+   http://groups.google.com/group/comp.infosystems.gis
 
    ... anywhere else? Please add here.
 
