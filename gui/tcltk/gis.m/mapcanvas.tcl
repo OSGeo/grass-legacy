@@ -59,6 +59,8 @@ namespace eval MapCanvas {
 	# zoom_attrs used in g.region command to set WIND file
 	variable zoom_attrs
 	set zoom_attrs {n s e w nsres ewres}
+	variable rows
+	variable cols
 
 	# string with region information to show in status bar
 	variable regionstr
@@ -79,6 +81,8 @@ set east 0.0
 set north 0.0
 set gregion ""
 set gregionproj ""
+set rows 0
+set cols 0
 
 ###############################################################################
 
@@ -483,7 +487,7 @@ proc MapCanvas::runprograms { mon mod } {
 	global masklist
 	global opclist
 	variable mapframe
-	variable gregionproj
+	variable zoom_attrs
 
 	set drawprog 0
 
@@ -492,10 +496,36 @@ proc MapCanvas::runprograms { mon mod } {
 	set opclist($mon) ""
 	set masklist($mon) ""
 
-	# Create a settings string to use with GRASS_WIND
-	set gregion $gregionproj
-	foreach {n s e w ewres nsres} [MapCanvas::currentzoom $mon] {break}
-	append gregion "north: $n; south: $s; east: $e; west: $w; e-w resol: $ewres; n-s resol: $nsres"
+	set gregion ""
+
+	# Create a settings string to use with GRASS_WIND. This is a real pain!
+	# First get the current region values in normal number form (including decimal degrees)
+	set values [MapCanvas::currentzoom $mon]
+	set options {}
+	foreach attr $zoom_attrs value $values {
+		lappend options "$attr=$value"
+	}
+
+	# Now use the region values to get the region printed back out in -p format
+	# including lat long now as dd:mm:ss
+	if {![catch {open [concat "|g.region" "-up" $options] r} input]} {
+		while {[gets $input line] >= 0} {
+			regexp -nocase {^([a-z]+)\:[ ]+(.*)$} $line trash key value
+			set parts($key) $value
+		}
+		close $input
+		# Finally put this into wind file format to use with GRASS_REGION
+		regexp -nocase {^.* (\(.*\))} $parts(projection) trash end
+		set parts(projection) [string trim $parts(projection) $end]
+
+		set gregion "projection:$parts(projection); zone:$parts(zone); north:$parts(north); south:$parts(south); east:$parts(east); west:$parts(west); e-w resol:$parts(ewres);	 n-s resol:$parts(nsres)"
+	}
+
+
+
+#	set gregion $gregionproj
+#	foreach {n s e w ewres nsres} [MapCanvas::currentzoom $mon] {break}
+#	append gregion "north: $n; south: $s; east: $e; west: $w; e-w resol: $ewres; n-s resol: $nsres"
 
 	set MapCanvas::msg($mon) "please wait..."
 	$mapframe($mon) showstatusbar progression
@@ -503,6 +533,13 @@ proc MapCanvas::runprograms { mon mod } {
 	incr drawprog
 	# only use dynamic region for display geometry; use WIND for computational geometry
 	set env(GRASS_REGION) $gregion
+
+	if {![catch {open [concat "|g.region" "-up"] r} input2]} {
+		while {[gets $input2 line] >= 0} {
+		}
+		catch close $input
+	}
+
 	set env(GRASS_RENDER_IMMEDIATE) "TRUE"
 
 	# Setting the font really only needs to be done once per display start
@@ -859,6 +896,8 @@ proc MapCanvas::currentzoom { mon } {
 	variable exploremode
 	variable monitor_zooms
 	variable regionstr
+	variable rows
+	variable cols
 	global MapCanvas::msg
 	global canvas_w
 	global canvas_h
@@ -884,8 +923,8 @@ proc MapCanvas::currentzoom { mon } {
 	}
 
 	# create region information string for status bar message
-	set rows [expr int(abs([lindex $region 0] - [lindex $region 1])/[lindex $region 4])]
-	set cols [expr int(abs([lindex $region 2] - [lindex $region 3])/[lindex $region 5])]
+#	set rows [expr int(abs([lindex $region 0] - [lindex $region 1])/[lindex $region 4])]
+#	set cols [expr int(abs([lindex $region 2] - [lindex $region 3])/[lindex $region 5])]
 	set nsres [lindex $region 4]
 	set ewres [lindex $region 5]
 	set MapCanvas::regionstr "Region: rows=$rows cols=$cols N-S res=$nsres E-W res=$ewres"
@@ -949,19 +988,21 @@ proc MapCanvas::zoom_previous {mon} {
 proc MapCanvas::zoom_gregion {mon args} {
 	global env
 	variable gregionproj
+	variable rows
+	variable cols
 
-	if {![catch {open [concat "|g.region" "-up" $args] r} input]} {
+
+	if {![catch {open [concat "|g.region" "-ug" $args] r} input]} {
 		while {[gets $input line] >= 0} {
-			regexp -nocase {^([a-z]+)\:*(.*)$} $line trash key value
-			set value [string trim $value "(UTM)"]
-			set value [string trim $value "(x,y)"]
-			set value [string trim $value]
+			regexp -nocase {^([a-z]+)=(.*)$} $line trash key value
 			set parts($key) $value
 		}
 		close $input
 
-		MapCanvas::zoom_new $mon $parts(north) $parts(south) $parts(east) $parts(west) $parts(nsres) $parts(ewres)
-		set gregionproj "proj: $parts(projection); zone: $parts(zone); "
+		MapCanvas::zoom_new $mon $parts(n) $parts(s) $parts(e) $parts(w) $parts(nsres) $parts(ewres)
+
+		set rows $parts(rows)
+		set cols $parts(cols)
 	}
 }
 
@@ -977,14 +1018,12 @@ proc MapCanvas::set_wind {mon args overwrite} {
 	foreach attr $zoom_attrs value $values {
 		lappend options "$attr=$value"
 	}
-	set args [list $args]
-	puts "options = $options"
-	puts "args = $args"
 
 	if {$overwrite == 1} {
 		open [concat "|g.region -a --o" $options $args]
 	} else {
 		open [concat "|g.region -a" $options $args]
+		puts "g.region -a $options $args"
 	}
 }
 
