@@ -14,6 +14,13 @@ of the vector line the user should use
 <a HREF="v.segment.html">v.segment</a>.
 
 <p>
+The -v parameter is used to digitize points that fall on the line's vertices <em>only</em>.
+<em>dmax</em> is ignored in this case. 
+<p>
+If the -i flag is used in conjunction with the -v parameter, <em>v.to.points</em> will digitize points  
+on the line vertices, as well as interpolate points between line vertices using <em>dmax</em> as the 
+maximum allowable spacing.
+<p>
 To get points created for the beginning, middle and end only, use
 the -i switch and set <em>dmax</em> so that:
 <p>
