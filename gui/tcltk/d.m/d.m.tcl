@@ -192,7 +192,7 @@ proc spawn {cmd args} {
 proc term_panel {cmd} {
 	global outtext
     global env
-    eval exec -- xterm -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd &
+    eval exec -- $env(GISBASE)/etc/grass-xterm-wrapper -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd &
     set str $cmd
 	$outtext insert end "$cmd\n"
 	$outtext yview end
@@ -211,7 +211,7 @@ proc run {cmd args} {
 ###############################################################################
 proc term {cmd args} {
     global env
-    eval exec -- xterm -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd $args &
+    eval exec -- $env(GISBASE)/etc/grass-xterm-wrapper -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd $args &
 }
 
 ###############################################################################

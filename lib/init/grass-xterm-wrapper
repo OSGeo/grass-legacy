@@ -1,0 +1,19 @@
+#!/bin/sh
+# script to wrap xterm 
+
+# workaround for systems with xterm is setuid/setgid
+#  http://grass.itc.it/pipermail/grass5/2004-September/015409.html
+LD_LIBRARY_PATH=$GRASS_LD_LIBRARY_PATH
+export LD_LIBRARY_PATH
+
+if  [ -z "$GRASS_XTERM" ] ; then
+    #### check if we have x-terminal-emulator
+    if [ -x "`which x-terminal-emulator`" ] ; then
+	    GRASS_XTERM=x-terminal-emulator
+    else
+	    GRASS_XTERM=xterm
+    fi
+fi
+
+# run command
+exec $GRASS_XTERM "$@"
