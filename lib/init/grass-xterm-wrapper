@@ -1,0 +1,14 @@
+#!/bin/sh
+# script to wrap xterm 
+
+if  [ -z "$GRASS_XTERM" ] ; then
+    #### check if we have x-terminal-emulator
+    if [ -x "`which x-terminal-emulator`" ] ; then
+	    GRASS_XTERM=x-terminal-emulator
+    else
+	    GRASS_XTERM=xterm
+    fi
+fi
+
+# run command
+exec $GRASS_XTERM "$@"
