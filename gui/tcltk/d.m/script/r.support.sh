@@ -35,4 +35,4 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-eval `exec xterm -e r.support map=$GIS_OPT_INPUT`
+eval `exec "$GISBASE/etc/grass-xterm-wrapper" -e r.support map=$GIS_OPT_INPUT`
