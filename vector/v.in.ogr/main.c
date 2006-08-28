@@ -101,6 +101,7 @@ main (int argc, char *argv[])
 	  sprintf (buf, "%s,%s", buf, OGR_Dr_GetName ( Ogr_driver) );
     }
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = G_store(buf);
 
     dsn_opt = G_define_option();

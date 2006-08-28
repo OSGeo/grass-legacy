@@ -37,6 +37,7 @@
 
 #%Module
 #%  description: Displays a raster map and its legend on a graphics window
+#%  keywords: display
 #%End
 #%flag
 #%  key: n

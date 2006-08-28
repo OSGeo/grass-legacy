@@ -32,7 +32,8 @@ int main (int argc, char *argv[])
 
 /* Get Args */
   module = G_define_module();
-  module->description =
+  module->keywords = _("imagery");
+    module->description =
 	_("Rectifies an image by computing a coordinate "
 	"transformation for each pixel in the image based on the "
 	"control points");

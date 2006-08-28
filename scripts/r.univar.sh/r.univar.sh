@@ -15,6 +15,7 @@
 
 #%Module
 #% description: calculates univariate statistics from a GRASS raster map
+#% keywords: raster, statistics
 #%End
 #%flag
 #%  key: e

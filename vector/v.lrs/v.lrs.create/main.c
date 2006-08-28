@@ -30,6 +30,7 @@
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
+#include <grass/glocale.h>
 #include "../lib/lrs.h"
 
 /* MP is milepost */
@@ -112,6 +113,7 @@ int main(int argc, char **argv)
     G_gisinit (argv[0]) ;
 
     module = G_define_module();
+    module->keywords = _("vector, LRS, networking");
     module->description = "Create Linear reference system";
 
     in_lines_opt = G_define_standard_option(G_OPT_V_INPUT);

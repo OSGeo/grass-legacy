@@ -18,6 +18,7 @@
 
 #%Module
 #%  description: Saves active display monitor to PNG file in home directory
+#%  keywords: display, export
 #%End
 #%option
 #% key: output

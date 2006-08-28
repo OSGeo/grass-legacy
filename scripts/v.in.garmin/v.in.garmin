@@ -29,6 +29,7 @@
 
 #%Module
 #%  description: Upload Waypoints, Routes, and Tracks from a Garmin GPS receiver into a vector map.
+#%  keywords: vector, import, GPS
 #%End
 #%flag
 #%  key: v

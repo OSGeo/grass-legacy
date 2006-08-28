@@ -19,6 +19,7 @@
 #include <unistd.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
 /* TODO: add more methods */
 
@@ -43,6 +44,7 @@ int main (int argc, char *argv[])
     G_gisinit (argv[0]);
 
     module = G_define_module();
+    module->keywords = _("vector, raster, aggregation");
     module->description = "Makes each cell value a "
 	    "function of the attribute values assigned to the vector points or centroids "
 	    "around it, and stores new cell values in an output raster map layer.";

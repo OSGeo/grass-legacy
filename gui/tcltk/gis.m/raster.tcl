@@ -1,11 +1,11 @@
 ##########################################################################
 # raster.tcl - raster layer options file for GRASS GIS Manager
 # March 2006 Michael Barton, Arizona State University
-# COPYRIGHT:	(C) 1999 - 2006 by the GRASS Development Team
+# COPYRIGHT:    (C) 1999 - 2006 by the GRASS Development Team
 #
-#		This program is free software under the GNU General Public
-#		License (>=v2). Read the file COPYING that comes with GRASS
-#		for details.
+#       This program is free software under the GNU General Public
+#       License (>=v2). Read the file COPYING that comes with GRASS
+#       for details.
 #
 ##########################################################################
 
@@ -35,55 +35,55 @@ proc GmRaster::create { tree parent } {
 
     set node "raster:$count"
 
-	#create form for layer tree entry
+    #create form for layer tree entry
     set frm [ frame .rastericon$count]
     set check [checkbutton $frm.check \
-		-variable GmRaster::opt($count,1,_check) \
-		-height 1 -padx 0 -width 0]
+        -variable GmRaster::opt($count,1,_check) \
+        -height 1 -padx 0 -width 0]
 
     image create photo rico -file "$iconpath/element-cell.gif"
     set ico [label $frm.ico -image rico -bd 1 -relief raised]
     pack $check $ico -side left
 
-	#insert new layer
-	if {[$tree selection get] != "" } {
-		set sellayer [$tree index [$tree selection get]]
-    } else { 
-    	set sellayer "end" 
+    #insert new layer
+    if {[$tree selection get] != "" } {
+        set sellayer [$tree index [$tree selection get]]
+    } else {
+        set sellayer "end"
     }
 
     $tree insert $sellayer $parent $node \
-	-text  "raster $count"\
-	-window    $frm \
-	-drawcross auto  
-    
+    -text  "raster $count"\
+    -window    $frm \
+    -drawcross auto
+
     #set default option values
-    set opt($count,1,_check) 1 
+    set opt($count,1,_check) 1
     set dup($count) 0
 
-	set opt($count,1,opacity) 1.0
-    set opt($count,1,map) "" 
-    set opt($count,1,drapemap) "" 
-    set opt($count,1,querytype) "cat" 
-    set opt($count,1,rastquery) "" 
-    set opt($count,1,rasttype) "" 
-    set opt($count,1,bkcolor) "" 
-    set opt($count,1,overlay) 1 
+    set opt($count,1,opacity) 1.0
+    set opt($count,1,map) ""
+    set opt($count,1,drapemap) ""
+    set opt($count,1,querytype) "cat"
+    set opt($count,1,rastquery) ""
+    set opt($count,1,rasttype) ""
+    set opt($count,1,bkcolor) ""
+    set opt($count,1,overlay) 1
     set opt($count,1,mod) 1
-    
-	set optlist {_check map drapemap querytype rastquery rasttype bkcolor \
-		overlay}
+
+    set optlist {_check map drapemap querytype rastquery rasttype bkcolor \
+        overlay}
 
     foreach key $optlist {
-		set opt($count,0,$key) $opt($count,1,$key)
-    } 
-    
-	# create files in tmp diretory for layer output
-	set mappid [pid]
-	set lfile($count) [exec g.tempfile pid=$mappid]
-	set lfilemask($count) $lfile($count)
-	append lfile($count) ".ppm"
-	append lfilemask($count) ".pgm"
+        set opt($count,0,$key) $opt($count,1,$key)
+    }
+
+    # create files in tmp diretory for layer output
+    set mappid [pid]
+    set lfile($count) [exec g.tempfile pid=$mappid]
+    set lfilemask($count) $lfile($count)
+    append lfile($count) ".ppm"
+    append lfilemask($count) ".pgm"
 
     incr count
     return $node
@@ -94,7 +94,7 @@ proc GmRaster::create { tree parent } {
 
 proc GmRaster::set_option { node key value } {
     variable opt
- 
+
     set id [GmTree::node_id $node]
     set opt($id,1,$key) $value
 }
@@ -106,9 +106,9 @@ proc GmRaster::select_map { id } {
     variable tree
     variable node
     global mon
-    
+
     set m [GSelect cell]
-    if { $m != "" } { 
+    if { $m != "" } {
         set GmRaster::opt($id,1,map) $m
         GmTree::autonamel $m
     }
@@ -119,9 +119,9 @@ proc GmRaster::select_drapemap { id } {
     variable tree
     variable node
     global mon
-    
+
     set m [GSelect cell]
-    if { $m != "" } { 
+    if { $m != "" } {
         set GmRaster::opt($id,1,drapemap) $m
         GmTree::autonamel $m
     }
@@ -139,29 +139,29 @@ proc GmRaster::options { id frm } {
     # Panel heading
     set row [ frame $frm.heading ]
     Label $row.a -text "Display raster maps" \
-    	-fg MediumBlue
+        -fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
-	#opacity
-	set row [ frame $frm.opc]
-	Label $row.a -text [G_msg "Opaque "]
-	scale $row.b -from 1.0 -to 0.0 -showvalue 1 \
-		-orient horizontal -length 300 -resolution 0.01 -fg "#656565"\
-		-variable GmRaster::opt($id,1,opacity) 
-	Label $row.c -text [G_msg " Transparent"]
+    #opacity
+    set row [ frame $frm.opc]
+    Label $row.a -text [G_msg "Opaque "]
+    scale $row.b -from 1.0 -to 0.0 -showvalue 1 \
+        -orient horizontal -length 300 -resolution 0.01 -fg "#656565"\
+        -variable GmRaster::opt($id,1,opacity)
+    Label $row.c -text [G_msg " Transparent"]
     pack $row.a $row.b $row.c -side left
-    pack $row -side top -fill both -expand yes	
-	
+    pack $row -side top -fill both -expand yes
+
     # raster name
     set row [ frame $frm.name ]
     Label $row.a -text "Base map:        "
     Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "base raster map to display"]\
-		-command "GmRaster::select_map $id"
+        -command "GmRaster::select_map $id"
     Entry $row.c -width 35 -text " $opt($id,1,map)" \
-          -textvariable GmRaster::opt($id,1,map) 
+          -textvariable GmRaster::opt($id,1,map)
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
             -image [image create photo -file "$iconpath/gui-help.gif"] \
@@ -174,10 +174,10 @@ proc GmRaster::options { id frm } {
     # raster query
     set row [ frame $frm.rquery ]
     Label $row.a -text "     values to display"
-    LabelEntry $row.b -textvariable GmRaster::opt($id,1,rastquery) -width 35 
+    LabelEntry $row.b -textvariable GmRaster::opt($id,1,rastquery) -width 35
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
-    
+
     # drape name
     set row [ frame $frm.drapeinfo1 ]
     Label $row.a -text "     Optional color draping. Use base map for shading,"
@@ -194,16 +194,16 @@ proc GmRaster::options { id frm } {
     Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "raster map to drape over base map"]\
-		-command "GmRaster::select_drapemap $id"
+        -command "GmRaster::select_drapemap $id"
     Entry $row.c -width 35 -text " $opt($id,1,drapemap)" \
-          -textvariable GmRaster::opt($id,1,drapemap) 
+          -textvariable GmRaster::opt($id,1,drapemap)
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
-        
+
     # overlay
     set row [ frame $frm.over ]
     checkbutton $row.a -text [G_msg "overlay maps from other layers (transparent null value cells)"] \
-        -variable GmRaster::opt($id,1,overlay) 
+        -variable GmRaster::opt($id,1,overlay)
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
@@ -212,7 +212,7 @@ proc GmRaster::options { id frm } {
     Label $row.a -text " Set background color (colored null value cells)"
     ComboBox $row.b -padx 2 -width 10 -textvariable GmRaster::opt($id,1,bkcolor) \
                     -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
-                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} 
+                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"}
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 }
@@ -224,12 +224,12 @@ proc GmRaster::save { tree depth node } {
     variable opt
     variable optlist
     global mon
-    
+
     set id [GmTree::node_id $node]
 
     foreach key $optlist {
          GmTree::rc_write $depth "$key $opt($id,1,$key)"
-    } 
+    }
 }
 
 
@@ -240,15 +240,15 @@ proc GmRaster::addelev {node nvelev} {
     variable opt
     variable tree
     global mon
-    
+
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
-    
-    if { ! ( $opt($id,1,_check) ) } { return } 
 
-	set nvelev "$opt($id,1,map)"
-	
-	return $nvelev
+    if { ! ( $opt($id,1,_check) ) } { return }
+
+    set nvelev "$opt($id,1,map)"
+
+    return $nvelev
 }
 
 # append drape colors to display lists for NVIZ
@@ -256,17 +256,17 @@ proc GmRaster::addcolor {node nvcolor} {
     variable opt
     variable tree
     global mon
-    
+
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
 
-    if { ! ( $opt($id,1,_check) ) } { return } 
+    if { ! ( $opt($id,1,_check) ) } { return }
 
-	if { $opt($id,1,drapemap) != "" } {
-		set nvcolor $opt($id,1,drapemap)
-	} else { 
-		set nvcolor $opt($id,1,map)
-    } 
+    if { $opt($id,1,drapemap) != "" } {
+        set nvcolor $opt($id,1,drapemap)
+    } else {
+        set nvcolor $opt($id,1,map)
+    }
     return $nvcolor
 }
 
@@ -281,7 +281,7 @@ proc GmRaster::display { node mod } {
     global opclist
     global masklist
     variable optlist
-    variable lfile 
+    variable lfile
     variable lfilemask
     variable opt
     variable tree
@@ -300,46 +300,50 @@ proc GmRaster::display { node mod } {
     # Don't remove a dirty from a previous unrendered zoom
     if {$mod} {set opt($id,1,mod) 1}
 
-    if { $opt($id,1,map) == "" } { return } 
+    if { $opt($id,1,map) == "" } { return }
 
     set cmd "d.rast map=$opt($id,1,map)"
 
     # overlay
-    if { $opt($id,1,overlay) } { 
+    if { $opt($id,1,overlay) } {
         append cmd " -o"
     }
 
     # set raster type
-     set rt [open "|r.info map=$opt($id,1,map) -t" r]
-     set rasttype [read $rt]
-     close $rt
-        if {[regexp -nocase ".=CELL" $rasttype]} {
-            set querytype "cat"
-        } else {
-            set querytype "vallist"
-        }
+    set rasttype ""
+    set rt ""
+    if {![catch {open "|r.info map=$opt($id,1,map) -t" r} rt]} {
+        set rasttype [read $rt]
+        catch {close $rt}
+    }
+
+    if {$rasttype == "" || [regexp -nocase ".=CELL" $rasttype]} {
+        set querytype "cat"
+    } else {
+        set querytype "vallist"
+    }
 
 
     # raster query
-    if { $opt($id,1,rastquery) != "" } { 
+    if { $opt($id,1,rastquery) != "" } {
         append cmd " {$querytype=$opt($id,1,rastquery)}"
     }
-    
+
     # background color
-    if { $opt($id,1,bkcolor) != "" } { 
+    if { $opt($id,1,bkcolor) != "" } {
         append cmd " bg=$opt($id,1,bkcolor)"
     }
-    
+
     set cmd2 "d.his h_map=$opt($id,1,drapemap) i_map=$opt($id,1,map)"
 
-	if { $opt($id,1,drapemap) == "" } {
-		# set cmd $cmd
-	} else {
-		set cmd $cmd2
-	}
+    if { $opt($id,1,drapemap) == "" } {
+        # set cmd $cmd
+    } else {
+        set cmd $cmd2
+    }
 
-	# Decide whether to run, run command, and copy files to temp
-	GmCommonLayer::display_command [namespace current] $id $cmd	
+    # Decide whether to run, run command, and copy files to temp
+    GmCommonLayer::display_command [namespace current] $id $cmd
 }
 
 ###############################################################################
@@ -349,12 +353,12 @@ proc GmRaster::mapname { node } {
     variable opt
     variable tree
     global mon
-    
+
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
 
-    if { $opt($id,1,map) == "" } { return } 
-    
+    if { $opt($id,1,map) == "" } { return }
+
     set mapname $opt($id,1,map)
     return $mapname
 }
@@ -374,55 +378,55 @@ proc GmRaster::duplicate { tree parent node id } {
     global mon
 
     set node "raster:$count"
-	set dup($count) 1
+    set dup($count) 1
 
     set frm [ frame .rastericon$count]
     set check [checkbutton $frm.check \
-		-variable GmRaster::opt($count,1,_check) \
-		-height 1 -padx 0 -width 0]
+        -variable GmRaster::opt($count,1,_check) \
+        -height 1 -padx 0 -width 0]
 
     image create photo rico -file "$iconpath/element-cell.gif"
     set ico [label $frm.ico -image rico -bd 1 -relief raised]
-    
+
     pack $check $ico -side left
 
-	# where to insert new layer
-	if {[$tree selection get] != "" } {
-		set sellayer [$tree index [$tree selection get]]
-    } else { 
-    	set sellayer "end" 
+    # where to insert new layer
+    if {[$tree selection get] != "" } {
+        set sellayer [$tree index [$tree selection get]]
+    } else {
+        set sellayer "end"
     }
 
-	if { $opt($id,1,map) == ""} {
-	    $tree insert $sellayer $parent $node \
-		-text      "raster $count" \
-		-window    $frm \
-		-drawcross auto
-	} else {
-	    $tree insert $sellayer $parent $node \
-		-text      "$opt($id,1,map)" \
-		-window    $frm \
-		-drawcross auto
-	}
+    if { $opt($id,1,map) == ""} {
+        $tree insert $sellayer $parent $node \
+        -text      "raster $count" \
+        -window    $frm \
+        -drawcross auto
+    } else {
+        $tree insert $sellayer $parent $node \
+        -text      "$opt($id,1,map)" \
+        -window    $frm \
+        -drawcross auto
+    }
 
-	set opt($count,1,opacity) $opt($id,1,opacity)
+    set opt($count,1,opacity) $opt($id,1,opacity)
 
-	set optlist {_check map drapemap querytype rastquery rasttype bkcolor \
-		overlay}
+    set optlist {_check map drapemap querytype rastquery rasttype bkcolor \
+        overlay}
 
     foreach key $optlist {
-    	set opt($count,1,$key) $opt($id,1,$key)
-		set opt($count,0,$key) $opt($count,1,$key)
-    } 
-    
-	set id $count
+        set opt($count,1,$key) $opt($id,1,$key)
+        set opt($count,0,$key) $opt($count,1,$key)
+    }
 
-	# create files in tmp directory for layer output
-	set mappid [pid]
-	set lfile($count) [exec g.tempfile pid=$mappid]
-	set lfilemask($count) $lfile($count)
-	append lfile($count) ".ppm"
-	append lfilemask($count) ".pgm"
+    set id $count
+
+    # create files in tmp directory for layer output
+    set mappid [pid]
+    set lfile($count) [exec g.tempfile pid=$mappid]
+    set lfilemask($count) $lfile($count)
+    append lfile($count) ".ppm"
+    append lfilemask($count) ".pgm"
 
     incr count
     return $node

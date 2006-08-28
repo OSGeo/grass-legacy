@@ -7,6 +7,7 @@
 
 #include <string.h>
 #include <math.h>
+#include <grass/gis.h>
 #include <grass/gprojects.h>
 
 #include "ps_info.h"

@@ -16,6 +16,7 @@
 
 #%Module
 #%  description: convert all old GRASS < V5.7 sites maps to vector maps in current mapset
+#%  keywords: sites, vector, import
 #%End
 #%flag
 #%  key: r

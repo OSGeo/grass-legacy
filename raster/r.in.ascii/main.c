@@ -46,7 +46,8 @@ main (int argc, char *argv[])
 	G_gisinit (argv[0]);
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("raster");
+    module->description =
 		_("Convert an ASCII raster text file into a (binary) raster map layer.");
 
 	parm.input = G_define_standard_option(G_OPT_R_INPUT);

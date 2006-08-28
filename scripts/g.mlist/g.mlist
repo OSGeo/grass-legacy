@@ -15,6 +15,7 @@
 
 #%Module
 #%  description: Apply regular expressions and wildcards to g.list
+#%  keywords: general, map management 
 #%End
 #%flag
 #%  key: r
