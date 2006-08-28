@@ -22,26 +22,27 @@ Contents
        find . -name '*.bak' | xargs rm
        find . -name '.#*' | xargs rm
 
+   - Create release branch (only if not yet existing)
+
    - Update VERSION file to release version:
       vim include/VERSION
 
 #example:
 6
-0
-2RC1
+2
+0RC1
 2006
       rm -f include/VERSION~
 
    - submit include/VERSION to CVS
    - cvs up -dP
-   - Create release branch (only if not yet existing)
 
  o Create Changelog file
      CVSBRANCH=`cat CVS/Entries | grep AUTHORS | cut -d'/' -f6 | cut -b2-`
      echo $CVSBRANCH
      #version:
-     MAJOR=6
-     MINOR=1
+     MAJOR=`cat include/VERSION | head -1 | tail -1`
+     MINOR=`cat include/VERSION | head -2 | tail -1`
      RELEASE=`cat include/VERSION | head -3 | tail -1`
      VERSION=${MAJOR}.${MINOR}.${RELEASE}
      echo $VERSION
@@ -74,9 +75,10 @@ Contents
 
 #example
 6
-0
-2cvs
+2
+0cvs
 2006
+
 
  o Store the source tarball in (use scp -p FILES grass:):
      http://grass.itc.it/grass/grass$MAJOR$MINOR/source/
