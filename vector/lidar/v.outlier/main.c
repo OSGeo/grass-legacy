@@ -329,7 +329,7 @@ main (int argc,char *argv[])
 /* Dropping auxiliar table */
     G_debug (1, _("Dropping <%s>"), table_name);
     if (P_Drop_Aux_Table (driver, table_name) != DB_OK)
-    	G_fatal_error(_("Auxiliar Table could not be drop"));
+    	G_fatal_error(_("Auxiliar Table could not be dropped"));
 
     db_close_database_shutdown_driver (driver);
 
