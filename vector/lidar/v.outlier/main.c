@@ -321,15 +321,20 @@ main (int argc,char *argv[])
 		G_free_ivector (lineVect);
 
 	    }	/*! END IF; npoints > 0*/
+	    else
+		G_message(_("npoints = 0, nothing to do"));
+
 	    G_free (observ);
 	    first_it = FALSE;
 	}	/*! END WHILE; last_column = TRUE*/
     }		/*! END WHILE; last_row = TRUE*/
 
 /* Dropping auxiliar table */
-    G_debug (1, _("Dropping <%s>"), table_name);
-    if (P_Drop_Aux_Table (driver, table_name) != DB_OK)
-    	G_fatal_error(_("Auxiliar Table could not be dropped"));
+    if (npoints > 0) {
+      G_debug (1, _("Dropping <%s>"), table_name);
+      if (P_Drop_Aux_Table (driver, table_name) != DB_OK)
+	 G_fatal_error(_("Auxiliar Table could not be dropped"));
+    }
 
     db_close_database_shutdown_driver (driver);
 
