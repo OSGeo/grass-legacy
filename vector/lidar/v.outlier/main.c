@@ -321,9 +321,6 @@ main (int argc,char *argv[])
 		G_free_ivector (lineVect);
 
 	    }	/*! END IF; npoints > 0*/
-	    else
-		G_message(_("npoints = 0, nothing to do"));
-
 	    G_free (observ);
 	    first_it = FALSE;
 	}	/*! END WHILE; last_column = TRUE*/
