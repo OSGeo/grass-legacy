@@ -43,6 +43,10 @@ proc GmCommonLayer::display_commands {namespace id cmds} {
 	global opclist
 	global masklist
 	namespace_import_variables $namespace lfile lfilemask opt optlist dup first
+	
+	puts "mapfile is $mapfile($mon)"
+	
+	if {[info exists $mapfile($mon)] == ""} {return}
 
 	# There's no point in doing any of this unless the layer is actually on
 	if {! $opt($id,1,_check) } {
@@ -65,8 +69,8 @@ proc GmCommonLayer::display_commands {namespace id cmds} {
 				run_panel $cmd
 			}
 		}
-		file rename -force $mapfile($mon) $lfile($id)
-		file rename -force $maskfile($mon) $lfilemask($id)
+		catch {file rename -force $mapfile($mon) $lfile($id)}
+		catch {file rename -force $maskfile($mon) $lfilemask($id)}
 		# reset options changed flag
 		set opt($id,1,mod) 0
 		set dup($id) 0
