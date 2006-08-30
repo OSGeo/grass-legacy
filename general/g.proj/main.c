@@ -16,6 +16,7 @@
 
 #include <grass/config.h>
 #include <stdio.h>
+#include <errno.h>
 #include <grass/gis.h>
 #include <grass/gprojects.h>
 #include <grass/glocale.h>
