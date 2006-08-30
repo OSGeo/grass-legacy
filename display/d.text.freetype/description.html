@@ -11,9 +11,10 @@ fonts already installed on the user's system.
 
 <DL>
 
-<DT><B>east_north=</B><EM>easting,northing</EM>
-<DD>Locates the text at these map coordinates. If this option is omitted, 
-     the user will be prompted to use the mouse to specify the location.
+<DT><B>at=</B><EM>x,y</EM>
+<DD>Locates the text at this screen position (percentage, [0,0] is bottom
+    left). If this option is omitted, 
+    the user will be prompted to use the mouse to specify the location.
 <DT><B>font=</B><EM>name</EM>
 <DD>Specifies a font listed in the GRASS 'freetypecap' definition file.
 
@@ -96,7 +97,7 @@ To end input, press Ctrl-d on a blank line.
 
 <H4>Standard mode:</H4>
 
-<TT><B>d.text.freetype</B> text="GRASS GIS" east_north=2107055,5603133 \<BR>
+<TT><B>d.text.freetype</B> text="GRASS GIS" -g at=2107055,5603133 \<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size=7 path=/usr/X11R6/lib/X11/fonts/TTF/luximb.ttf</TT>
 <P>
 
