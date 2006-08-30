@@ -38,10 +38,6 @@
 #include <grass/colors.h>
 #include <grass/glocale.h>
 
-/* less speedy
-#define	FLUSH_EACH_CHAR
- */
-
 #define	DEFAULT_CHARSET		"UTF-8"
 #define	DEFAULT_SIZE		"5"
 #define	DEFAULT_COLOR		"gray"
@@ -911,9 +907,10 @@ set_font(FT_Library library, FT_Face *face, char *path)
 static void
 get_dimension(FT_Face face, unsigned char *out, int l, FT_Vector *dim)
 {
-	int	i, index, first = 1, minx, maxx, miny, maxy, ch;
+	int	i, first = 1, minx, maxx, miny, maxy, ch;
 	FT_Matrix	matrix;
 	FT_Vector	pen;
+	FT_GlyphSlot	slot = face->glyph;
 
 	set_matrix(&matrix, 0);
 
@@ -926,39 +923,42 @@ get_dimension(FT_Face face, unsigned char *out, int l, FT_Vector *dim)
 
 		FT_Set_Transform(face, &matrix, &pen);
 
-		if(!(index = FT_Get_Char_Index(face, ch)))
+		if(FT_Load_Char(face, ch, FT_LOAD_NO_BITMAP))
 			continue;
-		if(FT_Load_Glyph(face, index, FT_LOAD_DEFAULT))
+		if(FT_Render_Glyph(slot, ft_render_mode_mono))
+		{
+			/* FT_Render_Glyph fails for spaces */
+			pen.x += slot->advance.x;
+			pen.y += slot->advance.y;
 			continue;
-		if(FT_Render_Glyph(face->glyph, ft_render_mode_mono))
-			continue;
+		}
 
 		if(first)
 		{
 			first = 0;
-			minx = face->glyph->bitmap_left;
-			maxx = minx + face->glyph->bitmap.width;
-			miny = - face->glyph->bitmap_top;
-			maxy = miny + face->glyph->bitmap.rows;
+			minx = slot->bitmap_left;
+			maxx = minx + slot->bitmap.width;
+			miny = - slot->bitmap_top;
+			maxy = miny + slot->bitmap.rows;
 		}
 		else
 		{
-			if(minx > face->glyph->bitmap_left)
-				minx = face->glyph->bitmap_left;
-			if(maxx < face->glyph->bitmap_left +
-					face->glyph->bitmap.width)
-				maxx = face->glyph->bitmap_left +
-					face->glyph->bitmap.width;
-			if(miny > - face->glyph->bitmap_top)
-				miny = - face->glyph->bitmap_top;
-			if(maxy < - face->glyph->bitmap_top +
-					face->glyph->bitmap.rows)
-				maxy = - face->glyph->bitmap_top +
-					face->glyph->bitmap.rows;
+			if(minx > slot->bitmap_left)
+				minx = slot->bitmap_left;
+			if(maxx < slot->bitmap_left +
+					slot->bitmap.width)
+				maxx = slot->bitmap_left +
+					slot->bitmap.width;
+			if(miny > - slot->bitmap_top)
+				miny = - slot->bitmap_top;
+			if(maxy < - slot->bitmap_top +
+					slot->bitmap.rows)
+				maxy = - slot->bitmap_top +
+					slot->bitmap.rows;
 		}
 
-		pen.x += face->glyph->advance.x;
-		pen.y += face->glyph->advance.y;
+		pen.x += slot->advance.x;
+		pen.y += slot->advance.y;
 	}
 
 	dim->x = maxx - minx;
@@ -1027,30 +1027,29 @@ static int
 draw_character(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
 		int ch, int color)
 {
-	int	i, j, l, start_row, start_col, rows, width, w, index;
+	int	i, j, l, start_row, start_col, rows, width, w;
 	char	*buffer;
 	rectinfo	rect;
+	FT_GlyphSlot	slot = face->glyph;
 
 	FT_Set_Transform(face, matrix, pen);
 
-	if(!(index = FT_Get_Char_Index(face, ch)))
+	if(FT_Load_Char(face, ch, FT_LOAD_NO_BITMAP))
 		return -1;
-	if(FT_Load_Glyph(face, index, FT_LOAD_DEFAULT))
-		return -2;
-	if(FT_Render_Glyph(face->glyph, ft_render_mode_mono))
+	if(FT_Render_Glyph(slot, ft_render_mode_mono))
 	{
 		/* FT_Render_Glyph fails for spaces */
-		pen->x += face->glyph->advance.x;
-		pen->y += face->glyph->advance.y;
-		return -3;
+		pen->x += slot->advance.x;
+		pen->y += slot->advance.y;
+		return -2;
 	}
 
-	rows  = face->glyph->bitmap.rows;
-	width = face->glyph->bitmap.width;
+	rows  = slot->bitmap.rows;
+	width = slot->bitmap.width;
 
-	rect.t = - face->glyph->bitmap_top;
+	rect.t = - slot->bitmap_top;
 	rect.b = rect.t + rows;
-	rect.l = face->glyph->bitmap_left;
+	rect.l = slot->bitmap_left;
 	rect.r = rect.l + width;
 
 	if((l = rows * width) > 0 &&
@@ -1060,12 +1059,12 @@ draw_character(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
 		buffer = (char *) G_malloc(l);
 		memset(buffer, 0, l);
 
-		j = face->glyph->bitmap.pitch;
+		j = slot->bitmap.pitch;
 
 	/* note in FreeType bitmap.buffer [0,0] is lower left */
 		for(i = 0; i < l; i++)
 		{
-			if(face->glyph->bitmap.buffer
+			if(slot->bitmap.buffer
 			  [ (i / width) * j + (i % width) / 8 ]
 			    & (1 << (7 - (i % width) % 8)) )
 				buffer[i] = color;
@@ -1079,7 +1078,8 @@ draw_character(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
 			for(i=0; i<rows; i++) {
 				for(k=0; k<width; k++) {
 					if(buffer[(i*width)+k])
-						fprintf(stdout, "%c", ch);
+						/* accented character is not printable in some encodings */
+						fprintf(stdout, "%c", (ch>126?'\\':ch));
 					else
 						fprintf(stdout, ".");
 				}
@@ -1112,16 +1112,11 @@ draw_character(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
 			R_raster_char(w, 1, 0, buffer + width * i + start_col);
 		}
 
-#ifdef	FLUSH_EACH_CHAR
-		/* less speedy */
-		R_flush();
-#endif
-
 		G_free(buffer);
 	}
 
-	pen->x += face->glyph->advance.x;
-	pen->y += face->glyph->advance.y;
+	pen->x += slot->advance.x;
+	pen->y += slot->advance.y;
 
 	return 0;
 }
@@ -1140,10 +1135,6 @@ draw_text(rectinfo win, FT_Face face, FT_Vector *pen,
 		ch = (out[i+2] << 8) | out[i+3];
 		draw_character(win, face, &matrix, pen, ch, color);
 	}
-
-#ifndef	FLUSH_EACH_CHAR
-	R_flush();
-#endif
 
 	return;
 }
