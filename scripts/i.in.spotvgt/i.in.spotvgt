@@ -26,6 +26,7 @@
 
 #%Module
 #%  description: Import of SPOT VGT NDVI file into a raster map
+#%  keywords: raster, imagery, import
 #%End
 #%flag
 #% key: a

@@ -22,6 +22,7 @@
 #include <grass/raster.h>
 #include <grass/display.h>
 #include <grass/D.h>
+#include <grass/glocale.h>
 
 int 
 main (int argc, char *argv[])
@@ -40,6 +41,7 @@ main (int argc, char *argv[])
     G_gisinit (argv[0]);
 
     module = G_define_module();
+    module->keywords = _("general");
     module->description = "Change current mapset";
 
     mapset_opt = G_define_option() ;

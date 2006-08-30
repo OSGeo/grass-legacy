@@ -155,6 +155,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
+    module->keywords = _("vector");
     module->description =
 	_("Spatial approximation and topographic analysis from given "
 	"point or isoline data in vector format to floating point "

@@ -22,6 +22,7 @@
 #include <math.h>
 #include <string.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 #define DEG2RAD(a) ((a) * M_PI / 180.0)
 #define RAD2DEG(a) ((a) * 180.0 / M_PI)
@@ -244,7 +245,8 @@ main (int argc, char **argv)
    G_gisinit(argv[0]);
 
    module                  = G_define_module();
-   module->description     = "A simple utility for converting bearing and distance "\
+   module->keywords = _("miscellaneous");
+    module->description     = "A simple utility for converting bearing and distance "\
                              "measurements to coordinates\n and vice versa. "
                              "It assumes a cartesian coordinate system";
    

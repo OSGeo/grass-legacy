@@ -1,6 +1,7 @@
-#include <grass/gis.h>
-#include "local_proto.h"
 #include <stdlib.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
+#include "local_proto.h"
 
 int zoom (struct Cell_head *window,char *name,char *mapset)
 {
@@ -21,11 +22,8 @@ int zoom (struct Cell_head *window,char *name,char *mapset)
     fd = G_open_cell_old (name, mapset);
     if (fd < 0)
     {
-	char msg[100];
-
-	sprintf (msg, "Unable to open raster map <%s> in <%s>",
-		name, mapset);
-	G_fatal_error (msg);
+	G_fatal_error (_("Unable to open raster map <%s> in <%s>"),
+		       name, mapset);
     }
     raster = G_allocate_raster_buf(map_type);
 
@@ -37,7 +35,7 @@ int zoom (struct Cell_head *window,char *name,char *mapset)
     for (row = 0; row < nrows; row++)
     {
 	if (G_get_raster_row (fd, rast_ptr = raster,row,map_type) < 0)
-	    G_fatal_error ("Could not read from <%s>",name);
+	    G_fatal_error (_("Could not read from <%s>"),name);
 	for (col = 0; col < ncols; col++)
 	{
 	    if (!G_is_null_value(rast_ptr, map_type))

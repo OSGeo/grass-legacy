@@ -24,6 +24,7 @@ main(int argc, char *argv[])
 
     /* Set description */
     module              = G_define_module();
+    module->keywords = _("database, SQL");
     module->description = _("Copy a table. Either 'from_table' (optionaly with 'where') can be used "
 			"or 'select' option, but not 'from_table' and 'select' at the same time.");
 
