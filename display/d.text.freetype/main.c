@@ -67,26 +67,23 @@ typedef	struct	{
 	int	t, b, l, r;
 } rectinfo;
 
-static int	read_capfile(char *capfile, capinfo **fonts, int *fonts_count,
-			int *cur_font, char **font_names);
-static int	find_font(capinfo *fonts, int fonts_count, char *name);
-static char	*transform_string(char *str, int (*func)(int));
-static int	convert_text(char *charset, char *text, unsigned char **out);
-static int	get_coordinates(rectinfo win, char **ans, char pixel,
-			char percent, double *east, double *north,
-			int *x, int *y);
-static void	get_color(char *tcolor, int *color);
+static int	read_capfile(char *, capinfo **, int *, int *, char **);
+static int	find_font(capinfo *, int, char *);
+static char	*transform_string(char *, int (*)(int));
+static int	convert_text(char *, char *, unsigned char **);
+static int	get_coordinates(rectinfo, char **, char, char, double *,
+			double *, int *, int *);
+static void	get_color(char *, int *);
 
-static int	set_font(FT_Library library, FT_Face *face, char *path);
-static void	get_dimension(FT_Face face, unsigned char *out, int l,
-			FT_Vector *dim);
-static void	get_ll_coordinates(FT_Face face, unsigned char *out, int l,
-			char *align, double rotation, FT_Vector *pen);
-static void	set_matrix(FT_Matrix *matrix, double rotation);
-static int	draw_character(rectinfo win, FT_Face face, FT_Matrix *matrix,
-			FT_Vector *pen, int ch, int color);
-static void	draw_text(rectinfo win, FT_Face face, FT_Vector *pen,
-			unsigned char *out, int l, int color, double rotation);
+static int	set_font(FT_Library, FT_Face *, char *);
+static void	get_dimension(FT_Face, unsigned char *, int, FT_Vector *);
+static void	get_ll_coordinates(FT_Face, unsigned char *, int, char *,
+			double, FT_Vector *);
+static void	set_matrix(FT_Matrix *, double);
+static int	draw_character(rectinfo, FT_Face, FT_Matrix *, FT_Vector *, int,
+			int);
+static void	draw_text(rectinfo, FT_Face, FT_Vector *, unsigned char *, int,
+			int, double);
 
 
 int
@@ -96,7 +93,7 @@ main(int argc, char **argv)
 	struct
 	{
 		struct	Option	*text;
-		struct	Option	*east_north;
+		struct	Option	*at;
 		struct	Option	*font;
 		struct	Option	*path;
 		struct	Option	*charset;
@@ -112,7 +109,7 @@ main(int argc, char **argv)
 		struct	Flag	*b;
 		struct	Flag	*r;
 		struct	Flag	*p;
-		struct	Flag	*n;
+		struct	Flag	*m;
 		struct	Flag	*s;
 		struct	Flag	*c;
 	} flag;
@@ -150,12 +147,12 @@ main(int argc, char **argv)
 	param.text->required    = NO;
 	param.text->description = _("Text to display");
 
-	param.east_north = G_define_option();
-	param.east_north->key         = "east_north";
-	param.east_north->type        = TYPE_DOUBLE;
-	param.east_north->required    = NO;
-	param.east_north->key_desc    = "east,north";
-	param.east_north->description = _("Map coordinates");
+	param.at = G_define_option();
+	param.at->key         = "at";
+	param.at->type        = TYPE_DOUBLE;
+	param.at->required    = NO;
+	param.at->key_desc    = "x,y";
+	param.at->description = _("Screen position (percentage, [0,0] is bottom left)");
 
 	read_capfile(getenv("GRASS_FREETYPECAP"), &fonts, &fonts_count,
 			&cur_font, &font_names);
@@ -224,6 +221,14 @@ main(int argc, char **argv)
 	param.linespacing->answer      = DEFAULT_LINESPACING;
 	param.linespacing->description = _("Line spacing");
 
+	flag.p = G_define_flag();
+	flag.p->key         = 'p';
+	flag.p->description = _("Screen position in pixels ([0,0] is top left)");
+
+	flag.m = G_define_flag();
+	flag.m->key         = 'm';
+	flag.m->description =_( "Screen position in map coordinates");
+
 	flag.b = G_define_flag();
 	flag.b->key         = 'b';
 	flag.b->description = _("Use bold text");
@@ -231,14 +236,6 @@ main(int argc, char **argv)
 	flag.r = G_define_flag();
 	flag.r->key         = 'r';
 	flag.r->description = _("Use radians instead of degrees for rotation");
-
-	flag.p = G_define_flag();
-	flag.p->key         = 'p';
-	flag.p->description = _("Coordinates are in pixels ([0,0] is top left)");
-
-	flag.n = G_define_flag();
-	flag.n->key         = 'n';
-	flag.n->description =_( "Coordinates are percentage of frame ([0,0] is bottom left)");
 
 	flag.s = G_define_flag();
 	flag.s->key         = 's';
@@ -257,7 +254,7 @@ main(int argc, char **argv)
 
 	text = param.text->answer;
 
-	if(flag.p->answer && flag.n->answer)
+	if(flag.p->answer && flag.m->answer)
 		G_fatal_error(_("Choose only one coordinate system for placement"));
 
 	if(!flag.c->answer && !param.path->answer) {
@@ -342,8 +339,8 @@ main(int argc, char **argv)
 
 	if(!flag.c->answer)
 	{
-		if(get_coordinates(win, param.east_north->answers,
-					flag.p->answer, flag.n->answer,
+		if(get_coordinates(win, param.at->answers,
+					flag.p->answer, flag.m->answer,
 					&east, &north, &x, &y))
 		{
 			deinit();
@@ -374,10 +371,10 @@ main(int argc, char **argv)
 			draw_text(win, face, &pen, out, ol, color, rotation);
 		}
 
-		if(param.east_north->answer)
+		if(param.at->answer)
 			D_add_to_list(G_recreate_command());
 		else{
-			sprintf(buf, "%s east_north=%f,%f",
+			sprintf(buf, "%s at=%f,%f",
 					G_recreate_command(), east, north);
 			D_add_to_list(buf);
 		}
@@ -396,10 +393,10 @@ main(int argc, char **argv)
 		linefeed = 1;
 		setx = sety = setl = 0;
 
-		if(param.east_north->answer)
+		if(param.at->answer)
 		{
-			if(get_coordinates(win, param.east_north->answers,
-					flag.p->answer, flag.n->answer,
+			if(get_coordinates(win, param.at->answers,
+					flag.p->answer, flag.m->answer,
 					&east, &north, &x, &y))
 			{
 				deinit();
@@ -807,7 +804,7 @@ convert_text(char *charset, char *text, unsigned char **out)
 }
 
 static int
-get_coordinates(rectinfo win, char **ans, char pixel, char percent, 
+get_coordinates(rectinfo win, char **ans, char pixel, char mapcoor,
 		double *east, double *north, int *x, int *y)
 {
 	int	i;
@@ -824,17 +821,17 @@ get_coordinates(rectinfo win, char **ans, char pixel, char percent,
 			e = D_d_to_u_col((double)*x);
 			n = D_d_to_u_row((double)*y);
 		}
-		else if(percent)
+		else if(mapcoor)
+		{
+			*x = (int)D_u_to_d_col(e);
+			*y = (int)D_u_to_d_row(n);
+		}
+		else
 		{
 			*x = win.l+(int)((win.r-win.l)*e/100.);
 			*y = win.t+(int)((win.b-win.t)*(100.-n)/100.);
 			e = D_d_to_u_col((double)*x);
 			n = D_d_to_u_row((double)*y);
-		}
-		else
-		{
-			*x = (int)D_u_to_d_col(e);
-			*y = (int)D_u_to_d_row(n);
 		}
 		
 	}
