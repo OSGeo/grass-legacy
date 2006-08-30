@@ -25,26 +25,34 @@ and environmental consulting companies.
 
 <h2>Introduction</h2>
 GRASS data are stored in a directory referred to as DATABASE
-(also called ``GISDBASE'').  This directory has to be created
+(also called "GISDBASE").  This directory has to be created
 with <tt>mkdir</tt> or a file manager, before starting to work
 with GRASS.  Within this DATABASE, the projects are organized
 by project areas stored in subdirectories called LOCATIONs.
-<P>
+<p>
 A LOCATION is defined by its coordinate system, map projection and
 geographical boundaries. The subdirectories and files defining a
 LOCATION are created automatically when GRASS is started the first
 time with a new LOCATION.
-<P>
-Each LOCATION can have several MAPSETs. One motivation to maintain
-different mapsets is to store maps related to project issues or
-subregions. Another motivation is to support simultaneous access of
-several users to the map layers stored within the same LOCATION,
-i.e. teams working on the same project. For teams a centralized GRASS
-DATABASE would be defined in a network file system (e.g.
-NFS). Besides access to his/her own MAPSET, each user can also read
-map layers in other users' MAPSETs, but s/he can modify or remove only
-the map layers in his/her own MAPSET.
-<P>
+<p>
+Each LOCATION can have many MAPSETs. Each MAPSET is a LOCATION's
+subdirectory. New MAPSET can be added at Grass startup. To remove a
+MAPSET, remove it's directory using your file manager or by <tt>rm
+-rf /path/to/the/mapset_to_delete</tt>.
+<p>
+One motivation to maintain different mapsets is to store maps
+related to project issues or subregions. Another motivation is to
+support simultaneous access of several users to the map layers
+stored within the same LOCATION, i.e. teams working on the same
+project. For teams a centralized GRASS DATABASE would be defined
+in a network file system (e.g. NFS). Besides access to his/her own
+MAPSET, each user can also read map layers in other users' MAPSETs,
+but s/he can modify or remove only the map layers in his/her own
+MAPSET.
+<p>
+You can learn more about mapsets from
+<a href="g.mapsets.html">g.mapsets</a> documentation.
+<p>
 When creating a new LOCATION, GRASS automatically creates a special
 MAPSET called PERMANENT where the core data for the project can be
 stored. Data in the PERMANENT MAPSET can only be added, modified or
