@@ -1038,7 +1038,12 @@ draw_character(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
 	if(FT_Load_Glyph(face, index, FT_LOAD_DEFAULT))
 		return -2;
 	if(FT_Render_Glyph(face->glyph, ft_render_mode_mono))
+	{
+		/* FT_Render_Glyph fails for spaces */
+		pen->x += face->glyph->advance.x;
+		pen->y += face->glyph->advance.y;
 		return -3;
+	}
 
 	rows  = face->glyph->bitmap.rows;
 	width = face->glyph->bitmap.width;
