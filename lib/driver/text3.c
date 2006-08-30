@@ -202,7 +202,12 @@ static void draw_text(FT_Face face, FT_Vector* pen, FT_Matrix* matrix, const uns
 			continue;
    		ans = FT_Render_Glyph(face->glyph, ft_render_mode_normal);
    		if (ans)
+		{
+			/* FT_Render_Glyph fails for spaces */
+			pen->x += slot->advance.x;
+			pen->y += slot->advance.y;
 			continue;
+		}
 		/* draw bitmap */
 		if (!fdont_draw)
 			draw_bitmap(&slot->bitmap, slot->bitmap_left, screen_bottom-slot->bitmap_top);
