@@ -41,7 +41,7 @@ int main(int argc, char **argv)
 	drv.color		= PNG_color;
 	drv.draw_line		= PNG_draw_line;
 	drv.draw_point		= PNG_draw_point;
-	drv.draw_bitmap		= NULL;
+	drv.draw_bitmap		= PNG_draw_bitmap;
 
 	LIB_init(&drv, argc, argv);
 

@@ -286,6 +286,14 @@ int process_command(int c)
 	REC(&y, sizeof y);
 	COM_Move_rel(x, y);
 	break;
+    case BITMAP:
+	REC(&x, sizeof x);
+	REC(&y, sizeof y);
+	REC(&index, sizeof index);
+	blua = (unsigned char *) xalloc(blua, &blu_alloc, x * y, sizeof(*blua));
+	REC(blua, x * y * sizeof(char));
+	COM_Bitmap(x, y, index, blua);
+	break;
     case RASTER_CHAR:
 	REC(&x, sizeof x);
 	REC(&y, sizeof y);

@@ -15,6 +15,7 @@ LIB_OBJS =	\
 	Client.o		\
 	Color.o			\
 	Color_table.o		\
+	Draw_bitmap.o		\
 	Draw_line.o		\
 	Draw_point.o		\
 	Erase.o			\

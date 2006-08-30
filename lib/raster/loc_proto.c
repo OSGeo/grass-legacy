@@ -807,3 +807,10 @@ int LOC_raster_int(int num, int nrows, int withzero, const int *ras)
 	return 0;
 }
 
+int LOC_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf)
+{
+	COM_Bitmap(ncols, nrows, threshold, buf);
+
+	return 0;
+}
+

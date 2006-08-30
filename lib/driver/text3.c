@@ -264,10 +264,10 @@ static void draw_bitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y)
 
 	for (j = 0; j < h; j++)
 		for (i = 0; i < w; i++)
-			buf[j * w + i] = sbuf[offset + j * bw + i] > 128 ? 1:0;
+			buf[j * w + i] = sbuf[offset + j * bw + i];
 
 	COM_Move_abs(x1, y1);
-	DRV_draw_bitmap(w, h, buf);
+	DRV_draw_bitmap(w, h, 128, buf);
 }
 #endif
 

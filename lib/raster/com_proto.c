@@ -701,3 +701,8 @@ int R_raster_int(int num, int nrows, int withzero, const int *ras)
 	return trans->raster_int(num, nrows, withzero, ras);
 }
 
+int R_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf)
+{
+	return trans->bitmap(ncols, nrows, threshold, buf);
+}
+

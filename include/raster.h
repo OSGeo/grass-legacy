@@ -118,5 +118,6 @@ int R_set_RGB_color(unsigned char *,unsigned char *,unsigned char *);
 int R_RGB_raster(int,int,unsigned char *,unsigned char *,unsigned char *,unsigned char *);
 int R_raster_char(int,int,int,const unsigned char *);
 int R_raster_int(int,int,int,const int *);
+int R_bitmap(int,int,int,const unsigned char *);
 
 #endif

@@ -95,6 +95,9 @@
 /* line attributes */
 #define LINE_WIDTH                  79
 
+/* bitmap */
+#define BITMAP                      80
+
 /* Original functions without call to update function */
 #define GET_LOCATION_WITH_BOX_OLD     81
 #define GET_LOCATION_WITH_LINE_OLD    82
