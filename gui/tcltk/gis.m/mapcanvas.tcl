@@ -59,8 +59,6 @@ namespace eval MapCanvas {
 	# zoom_attrs used in g.region command to set WIND file
 	variable zoom_attrs
 	set zoom_attrs {n s e w nsres ewres}
-	variable rows
-	variable cols
 
 	# string with region information to show in status bar
 	variable regionstr
@@ -896,8 +894,6 @@ proc MapCanvas::currentzoom { mon } {
 	variable exploremode
 	variable monitor_zooms
 	variable regionstr
-	variable rows
-	variable cols
 	global MapCanvas::msg
 	global canvas_w
 	global canvas_h
@@ -923,8 +919,8 @@ proc MapCanvas::currentzoom { mon } {
 	}
 
 	# create region information string for status bar message
-#	set rows [expr int(abs([lindex $region 0] - [lindex $region 1])/[lindex $region 4])]
-#	set cols [expr int(abs([lindex $region 2] - [lindex $region 3])/[lindex $region 5])]
+	set rows [expr int(abs([lindex $region 0] - [lindex $region 1])/[lindex $region 4])]
+	set cols [expr int(abs([lindex $region 2] - [lindex $region 3])/[lindex $region 5])]
 	set nsres [lindex $region 4]
 	set ewres [lindex $region 5]
 	set MapCanvas::regionstr "Region: rows=$rows cols=$cols N-S res=$nsres E-W res=$ewres"
@@ -988,8 +984,6 @@ proc MapCanvas::zoom_previous {mon} {
 proc MapCanvas::zoom_gregion {mon args} {
 	global env
 	variable gregionproj
-	variable rows
-	variable cols
 
 
 	if {![catch {open [concat "|g.region" "-ug" $args] r} input]} {
@@ -999,10 +993,9 @@ proc MapCanvas::zoom_gregion {mon args} {
 		}
 		close $input
 
-		MapCanvas::zoom_new $mon $parts(n) $parts(s) $parts(e) $parts(w) $parts(nsres) $parts(ewres)
+		MapCanvas::zoom_new $mon $parts(n) $parts(s) $parts(e) \
+			$parts(w) $parts(nsres) $parts(ewres)
 
-		set rows $parts(rows)
-		set cols $parts(cols)
 	}
 }
 
