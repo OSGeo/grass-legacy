@@ -139,6 +139,12 @@ $bbox2 add -image [image create photo -file "$vdpath/delete.line.gif"] \
 set bbox1 [ButtonBox .bbox1 -spacing 1 -padx 1 -pady 1]
 
 # --- Zoom / Display ---
+
+$bbox1 add -image [image create photo -file "$vdpath/redraw.gif"] \
+        -command "c_next_tool redraw" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
+        -helptext [G_msg "Redraw"]
+
 $bbox1 add -image [image create photo -file "$vdpath/zoom.window.gif"] \
         -command "c_next_tool zoom_window" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
@@ -171,11 +177,6 @@ $bbox1 add -image [image create photo -file "$vdpath/zoom.region.gif"] \
         -command "zoom_region" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
         -helptext [G_msg "Zoom to region"]
-
-$bbox1 add -image [image create photo -file "$vdpath/redraw.gif"] \
-        -command "c_next_tool redraw" \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
-        -helptext [G_msg "Redraw"]
 
 # --- Attributes ---
 $bbox1 add -image [image create photo -file "$vdpath/display.cats.gif"] \
@@ -220,11 +221,11 @@ Label .pf.prompt -padx 3 -pady 2 -relief flat -anchor w -textvariable prompt
 pack .pf.prompt -fill x  -side left
 
 labelframe .bpf -text [G_msg "mouse button actions (left, right, center)"]\
-    -labelanchor n -bg HoneyDew2
+    -labelanchor n
 pack .bpf -fill x -side top -padx 8
-Label .bpf.left -width 10  -pady 5 -relief raised -anchor center -textvariable prompt_left -bg WhiteSmoke
-Label .bpf.middle -width 10 -padx 2 -pady 5 -relief raised -anchor center -textvariable prompt_middle -bg WhiteSmoke
-Label .bpf.right -width 10 -pady 5 -relief raised -anchor center -textvariable prompt_right -bg WhiteSmoke
+Label .bpf.left -width 10  -pady 5 -relief raised -anchor center -textvariable prompt_left -bg grey95 
+Label .bpf.middle -width 10 -padx 2 -pady 5 -relief raised -anchor center -textvariable prompt_middle -bg grey95
+Label .bpf.right -width 10 -pady 5 -relief raised -anchor center -textvariable prompt_right -bg grey95
 pack .bpf.left .bpf.middle .bpf.right -fill x -side left -expand yes -padx 4 -pady 8
 
 frame .coorf
