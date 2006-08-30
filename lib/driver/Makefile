@@ -7,6 +7,7 @@ EXTRA_LIBS=$(GISLIB) $(FTLIB) $(ICONVLIB)
 LIB_NAME = $(DRIVER_LIBNAME)
 
 LIB_OBJS =\
+	Bitmap.o\
 	Box.o\
 	Can_do.o\
 	Client.o\

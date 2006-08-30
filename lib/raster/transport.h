@@ -68,6 +68,7 @@ extern int LOC_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *
 extern int LOC_RGB_raster(int n, int nrows, unsigned char *red, unsigned char *grn, unsigned char *blu, unsigned char *nul);
 extern int LOC_raster_char(int num, int nrows, int withzero, const unsigned char *ras);
 extern int LOC_raster_int(int num, int nrows, int withzero, const int *ras);
+extern int LOC_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf);
 
 extern int REM_get_location_with_box(int cx,int cy, int *wx, int *wy, int *button);
 extern int REM_get_location_with_box_old(int cx,int cy, int *wx, int *wy, int *button);
@@ -135,6 +136,7 @@ extern int REM_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *
 extern int REM_RGB_raster(int n, int nrows, unsigned char *red, unsigned char *grn, unsigned char *blu, unsigned char *nul);
 extern int REM_raster_char(int num, int nrows, int withzero, const unsigned char *ras);
 extern int REM_raster_int(int num, int nrows, int withzero, const int *ras);
+extern int REM_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf);
 
 struct transport
 {
@@ -188,6 +190,7 @@ struct transport
 	int (*RGB_raster)(int n, int nrows, unsigned char *, unsigned char *, unsigned char *, unsigned char *);
 	int (*raster_char)(int, int, int, const unsigned char *);
 	int (*raster_int)(int, int, int, const int *);
+	int (*bitmap)(int, int, int, const unsigned char *);
 
 	int (*get_location_with_box)(int, int, int *, int *, int *);
 	int (*get_location_with_box_old)(int, int, int *, int *, int *);

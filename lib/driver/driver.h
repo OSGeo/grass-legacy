@@ -64,7 +64,7 @@ struct driver
 	void (*color)(int);
 	void (*draw_line)(int,int,int,int);
 	void (*draw_point)(int,int);
-	void (*draw_bitmap)(int,int,const unsigned char *);
+	void (*draw_bitmap)(int,int,int,const unsigned char *);
 };
 
 /* Library Functions */
@@ -84,6 +84,8 @@ extern int LIB_main(int argc,char **argv);
 
 /* Commands */
 
+/* Bitmap.c */
+extern void COM_Bitmap(int,int,int,const unsigned char *);
 /* Box.c */
 extern void COM_Box_abs(int,int,int,int);
 extern void COM_Box_rel(int,int);
@@ -176,7 +178,7 @@ extern void DRV_color(int);
 /* Color_table.c */
 extern int DRV_get_table_type(void);
 /* Draw.c */
-extern void DRV_draw_bitmap(int,int,const unsigned char *);
+extern void DRV_draw_bitmap(int,int,int,const unsigned char *);
 extern void DRV_draw_line(int x0, int y0, int x1, int y1);
 extern void DRV_draw_point(int x, int y);
 /* Reset_colors.c */

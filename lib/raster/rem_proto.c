@@ -934,5 +934,16 @@ int REM_raster_int(int num, int nrows, int withzero, const int *ras)
 	return 0;
 }
 
+int REM_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf)
+{
+	_send_ident(BITMAP);
+	_send_int(&ncols);
+	_send_int(&nrows);
+	_send_int(&threshold);
+	_send_char_array(ncols * nrows, buf);
+
+	return 0;
+}
+
 #endif /* HAVE_SOCKET */
 

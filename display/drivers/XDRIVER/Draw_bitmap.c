@@ -4,7 +4,7 @@
 #include "includes.h"
 #include "XDRIVER.h"
 
-void XD_draw_bitmap(int ncols, int nrows, const unsigned char *array)
+void XD_draw_bitmap(int ncols, int nrows, int threshold, const unsigned char *array)
 {
 	static GC and_gc, or_gc;
 	static int have_gcs;
@@ -39,7 +39,7 @@ void XD_draw_bitmap(int ncols, int nrows, const unsigned char *array)
 
 	for (j = 0; j < nrows; j++)
 		for (i = 0; i < ncols; i++)
-			XPutPixel(grimage, i, j, array[j * ncols + i] ? 1 : 0);
+			XPutPixel(grimage, i, j, array[j * ncols + i] > threshold ? 1 : 0);
 
 	XPutImage(dpy, bkupmap, and_gc, grimage, 0, 0, cur_x, cur_y, ncols, nrows);
 
