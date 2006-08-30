@@ -2,7 +2,7 @@
 #include "driverlib.h"
 
 static char filename[256];
-static char charset[50] = "EUC-JP";
+static char charset[50] = "ISO-8859-1";
 
 int font_init_freetype(const char *name)
 {
