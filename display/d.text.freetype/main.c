@@ -799,10 +799,10 @@ convert_text(char *charset, char *text, unsigned char **out)
 	p2 = *out;
 	for(i = 0; i <= l; i++)
 	{
-		p2[2*i+0] = 0;
-		p2[2*i+1] = 0;
-		p2[2*i+2] = 0;
-		p2[2*i+3] = text[i];
+		p2[4*i+0] = 0;
+		p2[4*i+1] = 0;
+		p2[4*i+2] = 0;
+		p2[4*i+3] = text[i];
 	}
 	ol = l * 4;
 #endif
