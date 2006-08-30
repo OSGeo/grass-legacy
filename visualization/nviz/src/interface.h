@@ -287,7 +287,7 @@ int Tcl_AppInit(Tcl_Interp *);
 /* tkBind.c */
 int TkCopyAndGlobalEval(Tcl_Interp *, char *);
 /* tkSend.c */
-#if TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==4
+#if TK_MAJOR_VERSION==8 && TK_MINOR_VERSION > 3
     CONST char *Tk_SetAppName(Tk_Window, CONST char *);
 #else
     char *Tk_SetAppName(Tk_Window, char *);
