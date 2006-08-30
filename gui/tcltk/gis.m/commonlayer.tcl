@@ -43,9 +43,7 @@ proc GmCommonLayer::display_commands {namespace id cmds} {
 	global opclist
 	global masklist
 	namespace_import_variables $namespace lfile lfilemask opt optlist dup first
-	
-	puts "mapfile is $mapfile($mon)"
-	
+		
 	if {[info exists $mapfile($mon)] == ""} {return}
 
 	# There's no point in doing any of this unless the layer is actually on
