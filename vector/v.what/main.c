@@ -78,7 +78,7 @@ main(int argc, char **argv)
     maxdistance->key = "distance";
     maxdistance->answer = "0";
     maxdistance->multiple = NO;
-    maxdistance->description = _("Maximum distance");
+    maxdistance->description = _("Query threshold distance");
 
     opt1 = G_define_option() ;
     opt1->key        = "map" ;
