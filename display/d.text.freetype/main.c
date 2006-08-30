@@ -109,7 +109,7 @@ main(int argc, char **argv)
 		struct	Flag	*b;
 		struct	Flag	*r;
 		struct	Flag	*p;
-		struct	Flag	*m;
+		struct	Flag	*g;
 		struct	Flag	*s;
 		struct	Flag	*c;
 	} flag;
@@ -225,9 +225,9 @@ main(int argc, char **argv)
 	flag.p->key         = 'p';
 	flag.p->description = _("Screen position in pixels ([0,0] is top left)");
 
-	flag.m = G_define_flag();
-	flag.m->key         = 'm';
-	flag.m->description =_( "Screen position in map coordinates");
+	flag.g = G_define_flag();
+	flag.g->key         = 'g';
+	flag.g->description =_( "Screen position in geographic coordinates");
 
 	flag.b = G_define_flag();
 	flag.b->key         = 'b';
@@ -254,7 +254,7 @@ main(int argc, char **argv)
 
 	text = param.text->answer;
 
-	if(flag.p->answer && flag.m->answer)
+	if(flag.p->answer && flag.g->answer)
 		G_fatal_error(_("Choose only one coordinate system for placement"));
 
 	if(!flag.c->answer && !param.path->answer) {
@@ -340,7 +340,7 @@ main(int argc, char **argv)
 	if(!flag.c->answer)
 	{
 		if(get_coordinates(win, param.at->answers,
-					flag.p->answer, flag.m->answer,
+					flag.p->answer, flag.g->answer,
 					&east, &north, &x, &y))
 		{
 			deinit();
@@ -396,7 +396,7 @@ main(int argc, char **argv)
 		if(param.at->answer)
 		{
 			if(get_coordinates(win, param.at->answers,
-					flag.p->answer, flag.m->answer,
+					flag.p->answer, flag.g->answer,
 					&east, &north, &x, &y))
 			{
 				deinit();
@@ -804,7 +804,7 @@ convert_text(char *charset, char *text, unsigned char **out)
 }
 
 static int
-get_coordinates(rectinfo win, char **ans, char pixel, char mapcoor,
+get_coordinates(rectinfo win, char **ans, char pixel, char geocoor,
 		double *east, double *north, int *x, int *y)
 {
 	int	i;
@@ -821,7 +821,7 @@ get_coordinates(rectinfo win, char **ans, char pixel, char mapcoor,
 			e = D_d_to_u_col((double)*x);
 			n = D_d_to_u_row((double)*y);
 		}
-		else if(mapcoor)
+		else if(geocoor)
 		{
 			*x = (int)D_u_to_d_col(e);
 			*y = (int)D_u_to_d_row(n);
