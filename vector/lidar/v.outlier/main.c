@@ -84,7 +84,7 @@ main (int argc,char *argv[])
     	qgis_opt->key = "qgis";
     	qgis_opt->type = TYPE_STRING;
     	qgis_opt->key_desc     = "name";
-	qgis_opt->required     = YES;
+	qgis_opt->required     = NO; 
 	qgis_opt->gisprompt    = "new,vector,vector";
 	qgis_opt->description  = _("Name of vector map for visualization in qgis");
 
