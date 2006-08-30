@@ -33,6 +33,7 @@ int main (int argc, char *argv[])
     struct Map_info Out_Map;
     struct { 
 	struct Flag *list;               /* list files in source location */
+	struct Flag *transformz;         /* treat z as ellipsoidal height */
     } flag;
 
     G_gisinit (argv[0]);
@@ -71,6 +72,10 @@ int main (int argc, char *argv[])
     flag.list->key = 'l';
     flag.list->description = _("List vector files in input location and exit (a dummy value must be given for input)");
 
+    flag.transformz = G_define_flag();
+    flag.transformz->key = 'z';
+    flag.transformz->description = _("(3-D vectors only) Assume z co-ordinate is ellipsoidal height and transform if possible");
+   
     if (G_parser (argc, argv)) exit (EXIT_FAILURE);
 		 
     /* start checking options and flags */
@@ -193,7 +198,8 @@ int main (int argc, char *argv[])
 
 	if (type == -1) G_fatal_error(_("Reading input dig file.")) ;
 	if ( type == -2) break;
-	if(pj_do_transform( Points->n_points, Points->x, Points->y, Points->z,
+	if(pj_do_transform( Points->n_points, Points->x, Points->y, 
+			    flag.transformz->answer? Points->z : NULL,
 		              &info_in,&info_out)<0) 
 	{ 
 	    fprintf(stderr, _("Error in pj_do_transform\n"));
