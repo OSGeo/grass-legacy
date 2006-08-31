@@ -384,11 +384,13 @@ set descmenu [subst  {
 		{separator}
 		{command {[G_msg "Create/rebuild topology"]} {} "v.build" {} -command {execute v.build }}
 		{command {[G_msg "Clean vector files"]} {} "v.clean" {} -command {execute v.clean }}
+		{command {[G_msg "Add missing centroids"]} {} "v.centroids" {} -command {execute v.centroids }}
 		{separator}
 		{command {[G_msg "Break lines at intersections"]} {} "v.topo.check" {} -command {execute v.topo.check }}
 		{command {[G_msg "Build polylines from adjacent segments"]} {} "v.build.polylines" {} -command {execute v.build.polylines }}
 		{command {[G_msg "Split polylines into segments"]} {} "v.segment" {} -command {execute v.segment }}
 		{command {[G_msg "Create lines parallel to existing lines"]} {} "v.parallel" {} -command {execute v.parallel }}
+		{command {[G_msg "Dissolve common boundaries"]} {} "v.dissolve" {} -command {execute v.dissolve }}
 		{separator}
 		{command {[G_msg "Convert vector feature types"]} {} "v.type" {} -command {execute v.type }}
 		{command {[G_msg "Convert 2D vector to 3D by sampling raster"]} {} "v.drape" {} -command {execute v.drape }}
