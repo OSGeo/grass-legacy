@@ -129,7 +129,7 @@ main (int argc,char *argv[])
         lambda_f_opt->answer      = "0.1";
 
     Thres_O_opt = G_define_option();
-        Thres_O_opt->key         = "thres_O";
+        Thres_O_opt->key         = "thres_o";
         Thres_O_opt->type        = TYPE_DOUBLE;
         Thres_O_opt->required    = NO;
         Thres_O_opt->description = _("Threshold for the outliers");
