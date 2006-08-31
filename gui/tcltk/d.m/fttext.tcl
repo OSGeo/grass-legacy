@@ -34,7 +34,7 @@ proc DmFTtext::create { tree parent } {
     set opt($count,_check) 1 
 
     set opt($count,text) "" 
-    set opt($count,east_north) "" 
+    set opt($count,at) "" 
     set opt($count,font) "luximr" 
     set opt($count,charset) "UTF-8" 
     set opt($count,path) "" 
@@ -44,7 +44,7 @@ proc DmFTtext::create { tree parent } {
     set opt($count,rotation) 0 
     set opt($count,linespacing) 1.1 
     set opt($count,bold) 0 
-    set opt($count,textcoord) "geographic" 
+    set opt($count,textcoord) "percent" 
     set opt($count,radians) 0 
     set opt($count,htpixel) 0 
     
@@ -89,9 +89,9 @@ proc DmFTtext::options { id frm } {
     pack $row -side top -fill both -expand yes
     
     # coordinates1
-    set row [ frame $frm.east_north ]
-    Label $row.a -text "Text placement: coordinates east,north or x,y"
-    LabelEntry $row.b -textvariable DmFTtext::opt($id,east_north) -width 25 \
+    set row [ frame $frm.at ]
+    Label $row.a -text "Text placement: coordinates x,y or east,north"
+    LabelEntry $row.b -textvariable DmFTtext::opt($id,at) -width 25 \
             -entrybg white
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -107,7 +107,7 @@ proc DmFTtext::options { id frm } {
     set row [ frame $frm.textcoord3 ]
     Label $row.a -text [G_msg "     coordinate type"] 
     ComboBox $row.b -padx 2 -width 10 -textvariable DmFTtext::opt($id,textcoord) \
-                    -values {"geographic" "percent" "pixels" } -entrybg white
+                    -values {"percent" "pixels" "geographic"} -entrybg white
     Label $row.c -text [G_msg "  align text with coordinate point"] 
     ComboBox $row.d -padx 2 -width 2 -textvariable DmFTtext::opt($id,align) \
                     -values {"ll" "lc" "lr" "cl" "cc" "cr" "ul" "uc" "ur" } -entrybg white
@@ -182,7 +182,7 @@ proc DmFTtext::save { tree depth node } {
     
     set id [Dm::node_id $node]
 
-    foreach key { _check text east_north font path charset color \
+    foreach key { _check text at font path charset color \
             size align rotation linespacing bold textcoord radians htpixel } {
         Dm::rc_write $depth "$key $opt($id,$key)"
     } 
@@ -216,10 +216,10 @@ proc DmFTtext::display { node } {
             {text=$opt($id,text)}"
 
     # coordinates
-    if { $opt($id,east_north) != "" } { 
-#    	set $opt($id,east_north) \"$opt($id,east_north)\"
-        append cmd " east_north=$opt($id,east_north)"
-#        append cmd " {east_north=$opt($id,east_north)}"
+    if { $opt($id,at) != "" } { 
+#    	set $opt($id,at) \"$opt($id,at)\"
+        append cmd " at=$opt($id,at)"
+#        append cmd " {at=$opt($id,at)}"
     }
 
     # font
@@ -232,14 +232,14 @@ proc DmFTtext::display { node } {
         append cmd " {path=$opt($id,path)}"
     }
 
-    # textcoord percent
-    if { $opt($id,textcoord) == "percent" } { 
-        append cmd " -n"
-    }
-
     # textcoord pixel
     if { $opt($id,textcoord) == "pixel" } { 
         append cmd " -p"
+    }
+
+    # textcoord geographic
+    if { $opt($id,textcoord) == "geographic" } { 
+        append cmd " -g"
     }
 
     # font height in pixels
@@ -302,7 +302,7 @@ proc DmFTtext::duplicate { tree parent node id } {
     set opt($count,_check) $opt($id,_check)
 
     set opt($count,text) $opt($id,text) 
-    set opt($count,east_north) $opt($id,east_north)
+    set opt($count,at) $opt($id,at)
     set opt($count,font) $opt($id,font) 
     set opt($count,path) $opt($id,path)
     set opt($count,charset) $opt($id,charset) 
