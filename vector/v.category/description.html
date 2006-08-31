@@ -5,9 +5,20 @@ geometry. These categories (IDs) are used to link a vector map to an
 attribute table.
 
 <h2>NOTES</h2>
-
-Use <em>v.to.db</em> to upload the related categories a linked attribute
+<p>
+Use <em>v.to.db</em> to upload related categories to a linked attribute
 table.
+<p>
+The <b>type</b> parameter specifies the type of geometry objects to which the category is added;
+it is similar to an input filter - only the geometry specified in 'type' is processed.
+<p>
+If the <b>type</b> parameter is set to <b>centroid</b> and the <b>option</b> parameter set to <b>add</b>,
+new categories will be added to existing centroids. Note however, that new centroids cannot be created this way. 
+To do so, they must be added manually using v.digit or by running v.category with the type parameter set 
+to area (see below also).
+<p>
+Areas are a special case because it is impossible to attach a cat to an area without a centroid;
+in this case, the module places new centroids in areas automatically.
 
 <h2>EXAMPLES</h2>
 
