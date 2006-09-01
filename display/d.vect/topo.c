@@ -19,7 +19,8 @@ int topo ( struct Map_info *Map, int type, int do_area, LATTR *lattr ) {
 
     R_color(lattr->color) ;
     R_text_size(lattr->size, lattr->size) ;
-    R_font(lattr->font) ;
+    if (lattr->font)
+        R_font(lattr->font) ;
 	
     Vect_rewind ( Map );
 

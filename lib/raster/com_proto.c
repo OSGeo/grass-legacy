@@ -69,9 +69,9 @@ int R_screen_top(void)
 	return trans->screen_top();
 }
 
-int R_get_num_colors(int *n)
+void R_get_num_colors(int *n)
 {
-	return trans->get_num_colors(n);
+	trans->get_num_colors(n);
 }
 
 /*!
@@ -110,9 +110,9 @@ int R_color_table_fixed(void)
 	return trans->color_table_fixed();
 }
 
-int R_color_offset(int n)
+void R_color_offset(int n)
 {
-	return trans->color_offset(n);
+	trans->color_offset(n);
 }
 
 /*!
@@ -125,9 +125,9 @@ int R_color_offset(int n)
  *  \return int
  */
 
-int R_color(int index)
+void R_color(int index)
 {
-	return trans->color(index);
+	trans->color(index);
 }
 
 /*!
@@ -142,9 +142,9 @@ int R_color(int index)
  *  \return int
  */
 
-int R_standard_color(int index)
+void R_standard_color(int index)
 {
-	return trans->standard_color(index);
+	trans->standard_color(index);
 }
 
 /*!
@@ -161,11 +161,9 @@ int R_standard_color(int index)
  *  \return int
  */
 
-int R_RGB_color(unsigned char red, unsigned char grn, unsigned char blu)
+void R_RGB_color(unsigned char red, unsigned char grn, unsigned char blu)
 {
-	return trans->RGB_color(red, grn, blu);
-
-	return 0;
+	trans->RGB_color(red, grn, blu);
 }
 
 /*!
@@ -181,10 +179,10 @@ int R_RGB_color(unsigned char red, unsigned char grn, unsigned char blu)
  *  \return int
  */
 
-int R_reset_color(unsigned char red, unsigned char grn, unsigned char blu,
+void R_reset_color(unsigned char red, unsigned char grn, unsigned char blu,
 		  int index)
 {
-	return trans->reset_color(red, grn, blu, index);
+	trans->reset_color(red, grn, blu, index);
 }
 
 /*!
@@ -202,10 +200,10 @@ int R_reset_color(unsigned char red, unsigned char grn, unsigned char blu,
  *  \return int
  */
 
-int R_reset_colors(int min, int max,
+void R_reset_colors(int min, int max,
 		   unsigned char *red, unsigned char *grn, unsigned char *blu)
 {
-	return trans->reset_colors(min, max, red, grn, blu);
+	trans->reset_colors(min, max, red, grn, blu);
 }
 
 /*!
@@ -217,9 +215,9 @@ int R_reset_colors(int min, int max,
  *  \return int
  */
 
-int R_line_width(int width)
+void R_line_width(int width)
 {
-	return trans->line_width(width);
+	trans->line_width(width);
 }
 
 /*!
@@ -231,9 +229,9 @@ int R_line_width(int width)
  *  \return int
  */
 
-int R_erase(void)
+void R_erase(void)
 {
-	return trans->erase();
+	trans->erase();
 }
 
 /*!
@@ -247,9 +245,9 @@ int R_erase(void)
  *  \return int
  */
 
-int R_move_abs(int x, int y)
+void R_move_abs(int x, int y)
 {
-	return trans->move_abs(x, y);
+	trans->move_abs(x, y);
 }
 
 /*!
@@ -267,9 +265,9 @@ int R_move_abs(int x, int y)
  *  \return int
  */
 
-int R_move_rel(int x, int y)
+void R_move_rel(int x, int y)
 {
-	return trans->move_rel(x, y);
+	trans->move_rel(x, y);
 }
 
 /*!
@@ -284,9 +282,9 @@ int R_move_rel(int x, int y)
  *  \return int
  */
 
-int R_cont_abs(int x, int y)
+void R_cont_abs(int x, int y)
 {
-	return trans->cont_abs(x, y);
+	trans->cont_abs(x, y);
 }
 
 /*!
@@ -306,9 +304,9 @@ int R_cont_abs(int x, int y)
  *  \return int
  */
 
-int R_cont_rel(int x, int y)
+void R_cont_rel(int x, int y)
 {
-	return trans->cont_rel(x, y);
+	trans->cont_rel(x, y);
 }
 
 /*!
@@ -324,9 +322,9 @@ int R_cont_rel(int x, int y)
  *  \return int
  */
 
-int R_polydots_abs(int *xarray, int *yarray, int number)
+void R_polydots_abs(int *xarray, int *yarray, int number)
 {
-	return trans->polydots_abs(xarray, yarray, number);
+	trans->polydots_abs(xarray, yarray, number);
 }
 
 /*!
@@ -344,9 +342,9 @@ int R_polydots_abs(int *xarray, int *yarray, int number)
  *  \return int
  */
 
-int R_polydots_rel(int *xarray, int  *yarray, int number)
+void R_polydots_rel(int *xarray, int  *yarray, int number)
 {
-	return trans->polydots_rel(xarray, yarray, number);
+	trans->polydots_rel(xarray, yarray, number);
 }
 
 /*!
@@ -365,9 +363,9 @@ int R_polydots_rel(int *xarray, int  *yarray, int number)
  *  \return int
  */
 
-int R_polyline_abs(int *xarray, int  *yarray, int number)
+void R_polyline_abs(int *xarray, int  *yarray, int number)
 {
-	return trans->polyline_abs(xarray, yarray, number);
+	trans->polyline_abs(xarray, yarray, number);
 }
 
 /*!
@@ -387,9 +385,9 @@ int R_polyline_abs(int *xarray, int  *yarray, int number)
  *  \return int
  */
 
-int R_polyline_rel(int *xarray, int *yarray, int number)
+void R_polyline_rel(int *xarray, int *yarray, int number)
 {
-	return trans->polyline_rel(xarray, yarray, number);
+	trans->polyline_rel(xarray, yarray, number);
 }
 
 /*!
@@ -405,9 +403,9 @@ int R_polyline_rel(int *xarray, int *yarray, int number)
  *  \return int
  */
 
-int R_polygon_abs(int *xarray, int *yarray, int number)
+void R_polygon_abs(int *xarray, int *yarray, int number)
 {
-	return trans->polygon_abs(xarray, yarray, number);
+	trans->polygon_abs(xarray, yarray, number);
 }
 
 /*!
@@ -425,9 +423,9 @@ int R_polygon_abs(int *xarray, int *yarray, int number)
  *  \return int
  */
 
-int R_polygon_rel(int *xarray, int *yarray, int number)
+void R_polygon_rel(int *xarray, int *yarray, int number)
 {
-	return trans->polygon_rel(xarray, yarray, number);
+	trans->polygon_rel(xarray, yarray, number);
 }
 
 /*!
@@ -444,9 +442,9 @@ int R_polygon_rel(int *xarray, int *yarray, int number)
  *  \return int
  */
 
-int R_box_abs(int x1, int y1, int x2, int y2)
+void R_box_abs(int x1, int y1, int x2, int y2)
 {
-	return trans->box_abs(x1, y1, x2, y2);
+	trans->box_abs(x1, y1, x2, y2);
 }
 
 
@@ -462,9 +460,9 @@ int R_box_abs(int x1, int y1, int x2, int y2)
  *  \return int
  */
 
-int R_box_rel(int x, int y)
+void R_box_rel(int x, int y)
 {
-	return trans->box_rel(x, y);
+	trans->box_rel(x, y);
 }
 
 /*!
@@ -477,14 +475,14 @@ int R_box_rel(int x, int y)
  *  \return int
  */
 
-int R_text_size(int width, int height)
+void R_text_size(int width, int height)
 {
-	return trans->text_size(width, height);
+	trans->text_size(width, height);
 }
 
-int R_text_rotation(float rotation)
+void R_text_rotation(float rotation)
 {
-	return trans->text_rotation(rotation);
+	trans->text_rotation(rotation);
 }
 
 /*!
@@ -500,9 +498,9 @@ int R_text_rotation(float rotation)
  *  \return int
  */
 
-int R_set_window(int t, int b, int l, int r)
+void R_set_window(int t, int b, int l, int r)
 {
-	return trans->set_window(t, b, l, r);
+	trans->set_window(t, b, l, r);
 }
 
 /*!
@@ -515,9 +513,9 @@ int R_set_window(int t, int b, int l, int r)
  *  \return int
  */
 
-int R_text(const char *text)
+void R_text(const char *text)
 {
-	return trans->text(text);
+	trans->text(text);
 }
 
 /*!
@@ -537,9 +535,9 @@ int R_text(const char *text)
  *  \return int
  */
 
-int R_get_text_box(const char *text, int *t, int *b, int *l, int *r)
+void R_get_text_box(const char *text, int *t, int *b, int *l, int *r)
 {
-	return trans->get_text_box(text, t, b, l, r);
+	trans->get_text_box(text, t, b, l, r);
 }
 
 /*!
@@ -574,39 +572,39 @@ int R_get_text_box(const char *text, int *t, int *b, int *l, int *r)
  *  \return int
  */
 
-int R_font(const char *name)
+void R_font(const char *name)
 {
-	return trans->font(name);
+	trans->font(name);
 }
 
-int R_font_freetype(const char *name)
+void R_font_freetype(const char *name)
 {
-	return trans->font_freetype(name);
+	trans->font_freetype(name);
 }
 
-int R_charset(const char *name)
+void R_charset(const char *name)
 {
-	return trans->charset(name);
+	trans->charset(name);
 }
 
-int R_font_freetype_release(void)
+void R_font_freetype_release(void)
 {
-	return trans->font_freetype_release();
+	trans->font_freetype_release();
 }
 
-int R_panel_save(const char *name, int t, int b, int l, int r)
+void R_panel_save(const char *name, int t, int b, int l, int r)
 {
-	return trans->panel_save(name, t, b, l, r);
+	trans->panel_save(name, t, b, l, r);
 }
 
-int R_panel_restore(const char *name)
+void R_panel_restore(const char *name)
 {
-	return trans->panel_restore(name);
+	trans->panel_restore(name);
 }
 
-int R_panel_delete(const char *name)
+void R_panel_delete(const char *name)
 {
-	return trans->panel_delete(name);
+	trans->panel_delete(name);
 }
 
 /*!
@@ -625,9 +623,9 @@ int R_panel_delete(const char *name)
  *  \return int
  */
 
-int R_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *b)
+void R_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *b)
 {
-	return trans->set_RGB_color(r, g, b);
+	trans->set_RGB_color(r, g, b);
 }
 
 /*!
@@ -653,11 +651,11 @@ int R_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *b)
  *  \return int
  */
 
-int R_RGB_raster(int n, int nrows,
+void R_RGB_raster(int n, int nrows,
 	unsigned char *red, unsigned char *grn, unsigned char *blu,
 	unsigned char *nul)
 {
-	return trans->RGB_raster(n, nrows, red, grn, blu, nul);
+	trans->RGB_raster(n, nrows, red, grn, blu, nul);
 }
 
 /*!
@@ -691,18 +689,18 @@ int R_RGB_raster(int n, int nrows,
  *
  */
 
-int R_raster_char(int num, int nrows, int withzero, const unsigned char *ras)
+void R_raster_char(int num, int nrows, int withzero, const unsigned char *ras)
 {
-	return trans->raster_char(num, nrows, withzero, ras);
+	trans->raster_char(num, nrows, withzero, ras);
 }
 
-int R_raster_int(int num, int nrows, int withzero, const int *ras)
+void R_raster_int(int num, int nrows, int withzero, const int *ras)
 {
-	return trans->raster_int(num, nrows, withzero, ras);
+	trans->raster_int(num, nrows, withzero, ras);
 }
 
-int R_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf)
+void R_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf)
 {
-	return trans->bitmap(ncols, nrows, threshold, buf);
+	trans->bitmap(ncols, nrows, threshold, buf);
 }
 

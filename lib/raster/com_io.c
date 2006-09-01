@@ -188,29 +188,29 @@ int R_open_driver(void)
 	return trans->open_driver();
 }
 
-int R__open_quiet(void)
+void R__open_quiet(void)
 {
 	init_transport();
-	return trans->open_quiet();
+	trans->open_quiet();
 }
 
-int R_stabilize(void)
+void R_stabilize(void)
 {
-	return trans->stabilize();
+	trans->stabilize();
 }
 
-int R_kill_driver(void)
+void R_kill_driver(void)
 {
-	return trans->kill_driver();
+	trans->kill_driver();
 }
 
-int R_close_driver(void)
+void R_close_driver(void)
 {
-	return trans->close_driver();
+	trans->close_driver();
 }
 
-int R_release_driver(void)
+void R_release_driver(void)
 {
-	return trans->release_driver();
+	trans->release_driver();
 }
 
