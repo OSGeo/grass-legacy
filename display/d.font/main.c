@@ -30,9 +30,8 @@ int main( int argc , char **argv )
 			"on the user's graphics monitor.");
 
         /* find out what fonts we have */
-        fonts = G_malloc(1);
-	fonts[0] = '\0';
-	fonts_len = 1;
+        fonts = NULL;
+	fonts_len = 0;
         sprintf (buf, "%s/fonts", G_gisbase());
 	if ((dirp = opendir(buf)) != NULL)
         {
@@ -45,8 +44,12 @@ int main( int argc , char **argv )
 			fonts_len += strlen(dp->d_name) + 1;
 			fonts = (char *)G_realloc(fonts, fonts_len);
                         if (found)
+			{
 				strcat(fonts, ",");
-                        strcat(fonts, dp->d_name);
+                	        strcat(fonts, dp->d_name);
+			}
+			else
+				strcpy(fonts, dp->d_name);
 			found = 1;
                 }
                 closedir(dirp);
@@ -145,9 +148,8 @@ read_ftcap(void)
 		}
 	}
 
-	font_names = G_malloc(1);
-	font_names[0] = '\0';
-	font_names_len = 1;
+	font_names = NULL;
+	font_names_len = 0;
 	fonts_count = 0;
 
 	while(fgets(buf, sizeof(buf), fp) && !feof(fp))
@@ -169,8 +171,12 @@ read_ftcap(void)
 		font_names = (char *)G_realloc(font_names, font_names_len);
 
 		if(fonts_count > 0)
+		{
 			strcat(font_names, ",");
-		strcat(font_names, ifont);
+			strcat(font_names, ifont);
+		}
+		else
+			strcpy(font_names, ifont);
 
 		fonts_count++;
 	}
