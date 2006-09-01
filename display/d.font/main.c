@@ -13,7 +13,8 @@ static char *read_ftcap(void);
 int main( int argc , char **argv )
 {
         char *fonts, *ftfonts;
-	int fonts_len = 0;
+	int fonts_len;
+	int found;
         char buf[1024];
 	DIR *dirp;
 	struct dirent *dp;
@@ -30,9 +31,11 @@ int main( int argc , char **argv )
 
         /* find out what fonts we have */
         fonts = NULL;
+	fonts_len = 0;
         sprintf (buf, "%s/fonts", G_gisbase());
 	if ((dirp = opendir(buf)) != NULL)
         {
+		found = 0;
                 while ((dp = readdir(dirp)) != NULL)
                 {
 			if(dp->d_name[0] == '.')
@@ -40,17 +43,22 @@ int main( int argc , char **argv )
 
 			fonts_len += strlen(dp->d_name) + 1;
 			fonts = (char *)G_realloc(fonts, fonts_len);
-                        if (*fonts)
+                        if (found)
 				strcat(fonts, ",");
                         strcat(fonts, dp->d_name);
+			found = 1;
                 }
                 closedir(dirp);
         }
 	if ((ftfonts = read_ftcap()))
 	{
+		if(fonts)
+			found = 1;
+		else
+			found = 0;
 		fonts_len += strlen(ftfonts) + 1;
 		fonts = (char *)G_realloc(fonts, fonts_len);
-		if (*fonts)
+		if (found)
 			strcat(fonts, ",");
 		strcat(fonts, ftfonts);
 		G_free(ftfonts);
