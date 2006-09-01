@@ -26,8 +26,8 @@ int main( int argc , char **argv )
 	module = G_define_module();
 	module->keywords = _("display");
 	module->description =
-			"Selects the font in which text will be displayed "
-			"on the user's graphics monitor.";
+			_("Selects the font in which text will be displayed "
+			"on the user's graphics monitor.");
 
         /* find out what fonts we have */
         fonts = NULL;
@@ -112,7 +112,8 @@ int main( int argc , char **argv )
 	D_add_to_list(G_recreate_command());
         R_close_driver();
 
-	G_free(fonts);
+	if (fonts)
+		G_free(fonts);
 
         exit(EXIT_SUCCESS);
 }
@@ -121,13 +122,11 @@ static char *
 read_ftcap(void)
 {
 	char *capfile, file[4096];
-	int fonts_count = 0;
-	int font_names_len = 0;
+	int fonts_count;
+	int font_names_len;
 	char *font_names;
 	char buf[4096], ifont[128], ipath[4096];
 	FILE *fp, *fp2;
-
-	font_names = NULL;
 
 	fp = NULL;
 	if((capfile = getenv("GRASS_FT_CAP")))
@@ -141,9 +140,13 @@ read_ftcap(void)
 		if((fp = fopen(file, "r")) == NULL)
 		{
 			G_warning("%s: No FreeType definition file", file);
-			return 0;
+			return NULL;
 		}
 	}
+
+	font_names = NULL;
+	font_names_len = 0;
+	fonts_count = 0;
 
 	while(fgets(buf, sizeof(buf), fp) && !feof(fp))
 	{
