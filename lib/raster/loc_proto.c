@@ -1,5 +1,5 @@
+
 #include <stdio.h>
-#include <string.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -9,8 +9,6 @@
 #include <grass/gis.h>
 #include <grass/raster.h>
 #include <grass/graphics.h>
-
-#include <grass/freetypecap.h>
 
 #include "driver.h"
 #include "transport.h"
@@ -618,26 +616,9 @@ static int select_font(const char *name)
 {
 	char filename[4096];
 	int stat;
-	int i;
-	extern struct FT_CAP *ftcap;
-	FILE *fp;
 
-	/* check if freetype font is available in freetypecap */
-	for(i=0; ftcap[i].name && strcmp(name, ftcap[i].name) != 0; i++);
-
-	/* use freetype font */
-	if(ftcap[i].name)
-		return LOC_font_freetype(ftcap[i].path);
-
-	/* freetype font path:charset */
-	if(name[0] == '/' && (fp = fopen(name, "r")))
-	{
-		fclose(fp);
-		return LOC_font_freetype(name);
-	}
-
-	/* stroke fonts */
 	sprintf(filename, "%s/fonts/%s", G_gisbase(), name);
+
 	stat = COM_Font_get(filename);
 
 	return stat == 0;
