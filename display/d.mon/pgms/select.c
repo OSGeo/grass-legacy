@@ -12,6 +12,9 @@ main (int argc, char *argv[])
 {
 	char command[1024];
 	char name[128];
+	const char *ftfont = getenv("GRASS_FT_FONT");
+	const char *ftenc = getenv("GRASS_FT_ENCODING");
+	const char *font = getenv("GRASS_FONT");
 
 	if (argc != 2)
 	{
@@ -42,7 +45,11 @@ main (int argc, char *argv[])
 	/* Don't do anything else if connecting to the driver fails */
 	if (R_open_driver() != 0)
 	    exit(EXIT_FAILURE);
-	R_font ("romans");
+
+	R_font((ftfont ? ftfont : (font ? font : "romans")));
+
+	if (ftenc)
+		R_charset(ftenc);
 
 	if (D_get_cur_wind(name) != 0)
 		D_new_window("full_screen",

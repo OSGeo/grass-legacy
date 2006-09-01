@@ -163,6 +163,7 @@ struct transport rem_trans =
 #endif
 
 const struct transport *trans;
+struct FT_CAP *ftcap;
 
 static void init_transport(void)
 {
@@ -180,6 +181,8 @@ static void init_transport(void)
 #else
 	trans = &loc_trans;
 #endif
+
+	ftcap = R_parse_freetypecap();
 }
 
 int R_open_driver(void)
@@ -206,6 +209,8 @@ int R_kill_driver(void)
 
 int R_close_driver(void)
 {
+	R_free_freetypecap(ftcap);
+
 	return trans->close_driver();
 }
 
