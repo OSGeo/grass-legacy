@@ -597,7 +597,6 @@ get_coordinates(int *x, int *y, double *east, double *north,
 	    e = D_d_to_u_col((double)*x);
 	    n = D_d_to_u_row((double)*y);
 	}
-
     }
     else
 	return 1;
