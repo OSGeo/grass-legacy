@@ -2,6 +2,7 @@
 #define _GRASS_RASTER_H
 
 #include <grass/monitors.h>
+#include <grass/freetypecap.h>
 
 /* commands.c */
 int R_flush(void);
@@ -65,6 +66,10 @@ int R_pad_perror(const char *,int);
 
 /* parse_mon.c */
 struct MON_CAP *R_parse_monitorcap(int,char *);
+
+/* parse_ft.c */
+struct FT_CAP *R_parse_freetypecap(void);
+void R_free_freetypecap(struct FT_CAP *);
 
 /* protocol.c */
 int R_screen_left(void);
