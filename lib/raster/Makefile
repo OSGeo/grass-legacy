@@ -10,7 +10,10 @@ LIB_NAME = $(RASTER_LIBNAME)
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 
-default: lib
+default: lib ftcap
+
+ftcap:
+	@cp freetypecap $(ETC)/freetypecap
 
 #doxygen:
 DOXNAME=rastergraphics
