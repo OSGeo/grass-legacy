@@ -46,7 +46,13 @@ main (int argc, char *argv[])
 	if (R_open_driver() != 0)
 	    exit(EXIT_FAILURE);
 
-	R_font((ftfont ? ftfont : (font ? font : "romans")));
+	if (ftfont)
+		R_font_freetype(ftfont);
+	else
+	if (font)
+		R_font(font);
+	else
+		R_font("romans");
 
 	if (ftenc)
 		R_charset(ftenc);
