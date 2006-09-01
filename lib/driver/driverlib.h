@@ -60,3 +60,6 @@ void command_init(int,int);
 int get_command(char *);
 int process_command(int);
 
+/* parse_ftcap.c */
+extern struct FT_CAP *parse_freetypecap(void);
+extern void free_freetypecap(struct FT_CAP *ftcap);
