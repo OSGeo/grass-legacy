@@ -256,10 +256,6 @@ main (int argc, char **argv)
 	font_opt = G_define_option() ;
 	font_opt->key        = "font" ;
 	font_opt->type       = TYPE_STRING ;
-	font_opt->answer     = "romans" ;
-	font_opt->options    = "cyrilc,gothgbt,gothgrt,gothitt,"
-	    "greekc,greekcs,greekp,greeks,italicc,italiccs,italict,"
-	    "romanc,romancs,romand,romans,romant,scriptc,scripts" ;
 	font_opt->description= _("Font name");
 
 	xref_opt = G_define_option() ;

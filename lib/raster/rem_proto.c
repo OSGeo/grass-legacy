@@ -85,12 +85,10 @@ int REM_screen_top(void)
 	return t;
 }
 
-int REM_get_num_colors(int *n)
+void REM_get_num_colors(int *n)
 {
 	_send_ident(GET_NUM_COLORS);
 	_get_int(n);
-
-	return 0;
 }
 
 /*!
@@ -132,15 +130,13 @@ int REM_color_table_fixed(void)
 	int i;
 	_send_ident(COLOR_TABLE_FIXED);
 	_get_int(&i);
-	return(i);
+	return i;
 }
 
-int REM_color_offset(int n)
+void REM_color_offset(int n)
 {
 	_send_ident(COLOR_OFFSET);
 	_send_int(&n);
-
-	return 0;
 }
 
 /*!
@@ -150,15 +146,12 @@ int REM_color_offset(int n)
  * used in subsequent draw commands.
  *
  *  \param index
- *  \return int
  */
 
-int REM_color(int index)
+void REM_color(int index)
 {
 	_send_ident(COLOR);
 	_send_int(&index);
-
-	return 0;
 }
 
 
@@ -171,15 +164,12 @@ int REM_color(int index)
  * See Display_Graphics_Library.
  *
  *  \param index
- *  \return int
  */
 
-int REM_standard_color(int index)
+void REM_standard_color(int index)
 {
 	_send_ident(STANDARD_COLOR);
 	_send_int(&index);
-
-	return 0;
 }
 
 /*!
@@ -193,17 +183,14 @@ int REM_standard_color(int index)
  *  \param red
  *  \param grn
  *  \param blue
- *  \return int
  */
 
-int REM_RGB_color(unsigned char red, unsigned char grn, unsigned char blu)
+void REM_RGB_color(unsigned char red, unsigned char grn, unsigned char blu)
 {
 	_send_ident(RGB_COLOR);
 	_send_char(&red);
 	_send_char(&grn);
 	_send_char(&blu);
-
-	return 0;
 }
 
 /*!
@@ -216,10 +203,9 @@ int REM_RGB_color(unsigned char red, unsigned char grn, unsigned char blu)
  *  \param grn
  *  \param blu
  *  \param num number
- *  \return int
  */
 
-int REM_reset_color(unsigned char red, unsigned char grn, unsigned char blu,
+void REM_reset_color(unsigned char red, unsigned char grn, unsigned char blu,
 		  int index)
 {
 	if (index < 0)
@@ -230,8 +216,6 @@ int REM_reset_color(unsigned char red, unsigned char grn, unsigned char blu,
 	_send_char(&grn);
 	_send_char(&blu);
 	_send_int(&index);
-
-	return 0;
 }
 
 /*!
@@ -246,10 +230,9 @@ int REM_reset_color(unsigned char red, unsigned char grn, unsigned char blu,
  *  \param red
  *  \param grn
  *  \param blue
- *  \return int
  */
 
-int REM_reset_colors(int min, int max,
+void REM_reset_colors(int min, int max,
 		   unsigned char *red, unsigned char *grn, unsigned char *blu)
 {
 	/* only send a chunk at a time - to avoid malloc() in the driver */
@@ -272,8 +255,6 @@ int REM_reset_colors(int min, int max,
 		_send_char_array(n, blu); blu += n;
 		min += n;
 	}
-
-	return 0;
 }
 
 /*!
@@ -282,15 +263,12 @@ int REM_reset_colors(int min, int max,
  * Changes the <b>width</b> of line to be used in subsequent draw commands.
  *
  *  \param width
- *  \return int
  */
 
-int REM_line_width(int width)
+void REM_line_width(int width)
 {
 	_send_ident(LINE_WIDTH);
 	_send_int(&width);
-
-	return 0;
 }
 
 /*!
@@ -299,14 +277,11 @@ int REM_line_width(int width)
  * Erases the entire screen to black.
  *
  *  \param void
- *  \return int
  */
 
-int REM_erase(void)
+void REM_erase(void)
 {
 	_send_ident(ERASE);
-
-	return 0;
 }
 
 /*!
@@ -317,16 +292,13 @@ int REM_erase(void)
  *
  *  \param x
  *  \param y
- *  \return int
  */
 
-int REM_move_abs(int x, int y)
+void REM_move_abs(int x, int y)
 {
 	_send_ident(MOVE_ABS);
 	_send_int(&x);
 	_send_int(&y);
-
-	return 0;
 }
 
 /*!
@@ -341,16 +313,13 @@ int REM_move_abs(int x, int y)
  *
  *  \param x dx
  *  \param y dy
- *  \return int
  */
 
-int REM_move_rel(int x, int y)
+void REM_move_rel(int x, int y)
 {
 	_send_ident(MOVE_REL);
 	_send_int(&x);
 	_send_int(&y);
-
-	return 0;
 }
 
 /*!
@@ -362,16 +331,13 @@ int REM_move_rel(int x, int y)
  *
  *  \param x
  *  \param y
- *  \return int
  */
 
-int REM_cont_abs(int x, int y)
+void REM_cont_abs(int x, int y)
 {
 	_send_ident(CONT_ABS);
 	_send_int(&x);
 	_send_int(&y);
-
-	return 0;
 }
 
 /*!
@@ -388,16 +354,13 @@ int REM_cont_abs(int x, int y)
  *
  *  \param x
  *  \param y
- *  \return int
  */
 
-int REM_cont_rel(int x, int y)
+void REM_cont_rel(int x, int y)
 {
 	_send_ident(CONT_REL);
 	_send_int(&x);
 	_send_int(&y);
-
-	return 0;
 }
 
 /*!
@@ -410,17 +373,14 @@ int REM_cont_rel(int x, int y)
  *  \param xarray x
  *  \param yarray y
  *  \param number
- *  \return int
  */
 
-int REM_polydots_abs(int *xarray, int *yarray, int number)
+void REM_polydots_abs(int *xarray, int *yarray, int number)
 {
 	_send_ident(POLYDOTS_ABS);
 	_send_int(&number);
 	_send_int_array(number, xarray);
 	_send_int_array(number, yarray);
-
-	return 0;
 }
 
 /*!
@@ -435,17 +395,14 @@ int REM_polydots_abs(int *xarray, int *yarray, int number)
  *  \param xarray x
  *  \param yarray y
  *  \param number
- *  \return int
  */
 
-int REM_polydots_rel(int *xarray, int  *yarray, int number)
+void REM_polydots_rel(int *xarray, int  *yarray, int number)
 {
 	_send_ident(POLYDOTS_REL);
 	_send_int(&number);
 	_send_int_array(number, xarray);
 	_send_int_array(number, yarray);
-
-	return 0;
 }
 
 /*!
@@ -461,17 +418,14 @@ int REM_polydots_rel(int *xarray, int  *yarray, int number)
  *  \param xarray x
  *  \param yarray y
  *  \param number
- *  \return int
  */
 
-int REM_polyline_abs(int *xarray, int  *yarray, int number)
+void REM_polyline_abs(int *xarray, int  *yarray, int number)
 {
 	_send_ident(POLYLINE_ABS);
 	_send_int(&number);
 	_send_int_array(number, xarray);
 	_send_int_array(number, yarray);
-
-	return 0;
 }
 
 /*!
@@ -488,17 +442,14 @@ int REM_polyline_abs(int *xarray, int  *yarray, int number)
  *  \param xarray x
  *  \param yarray y
  *  \param number
- *  \return int
  */
 
-int REM_polyline_rel(int *xarray, int *yarray, int number)
+void REM_polyline_rel(int *xarray, int *yarray, int number)
 {
 	_send_ident(POLYLINE_REL);
 	_send_int(&number);
 	_send_int_array(number, xarray);
 	_send_int_array(number, yarray);
-
-	return 0;
 }
 
 /*!
@@ -511,17 +462,14 @@ int REM_polyline_rel(int *xarray, int *yarray, int number)
  *  \param xarray x
  *  \param yarray y
  *  \param number
- *  \return int
  */
 
-int REM_polygon_abs(int *xarray, int *yarray, int number)
+void REM_polygon_abs(int *xarray, int *yarray, int number)
 {
 	_send_ident(POLYGON_ABS);
 	_send_int(&number);
 	_send_int_array(number, xarray);
 	_send_int_array(number, yarray);
-
-	return 0;
 }
 
 /*!
@@ -536,17 +484,14 @@ int REM_polygon_abs(int *xarray, int *yarray, int number)
  *  \param xarray x
  *  \param yarray y
  *  \param number
- *  \return int
  */
 
-int REM_polygon_rel(int *xarray, int *yarray, int number)
+void REM_polygon_rel(int *xarray, int *yarray, int number)
 {
 	_send_ident(POLYGON_REL);
 	_send_int(&number);
 	_send_int_array(number, xarray);
 	_send_int_array(number, yarray);
-
-	return 0;
 }
 
 /*!
@@ -560,18 +505,15 @@ int REM_polygon_rel(int *xarray, int *yarray, int number)
  *  \param y1
  *  \param x2
  *  \param y2
- *  \return int
  */
 
-int REM_box_abs(int x1, int y1, int x2, int y2)
+void REM_box_abs(int x1, int y1, int x2, int y2)
 {
 	_send_ident(BOX_ABS);
 	_send_int(&x1);
 	_send_int(&y1);
 	_send_int(&x2);
 	_send_int(&y2);
-
-	return 0;
 }
 
 
@@ -584,16 +526,13 @@ int REM_box_abs(int x1, int y1, int x2, int y2)
  *
  *  \param x
  *  \param y
- *  \return int
  */
 
-int REM_box_rel(int x, int y)
+void REM_box_rel(int x, int y)
 {
 	_send_ident(BOX_REL);
 	_send_int(&x);
 	_send_int(&y);
-
-	return 0;
 }
 
 /*!
@@ -603,24 +542,19 @@ int REM_box_rel(int x, int y)
  *
  *  \param width
  *  \param height
- *  \return int
  */
 
-int REM_text_size(int width, int height)
+void REM_text_size(int width, int height)
 {
 	_send_ident(TEXT_SIZE);
 	_send_int(&width);
 	_send_int(&height);
-
-	return 0;
 }
 
-int REM_text_rotation(float rotation)
+void REM_text_rotation(float rotation)
 {
 	_send_ident(TEXT_ROTATION);
 	_send_float(&rotation);
-
-	return 0;
 }
 
 /*!
@@ -633,18 +567,15 @@ int REM_text_rotation(float rotation)
  *  \param b bottom
  *  \param l left
  *  \param r right
- *  \return int
  */
 
-int REM_set_window(int t, int b, int l, int r)
+void REM_set_window(int t, int b, int l, int r)
 {
 	_send_ident(SET_WINDOW);
 	_send_int(&t);
 	_send_int(&b);
 	_send_int(&l);
 	_send_int(&r);
-
-	return 0;
 }
 
 /*!
@@ -654,15 +585,12 @@ int REM_set_window(int t, int b, int l, int r)
  * width and height, starting at the current screen location.
  *
  *  \param sometext
- *  \return int
  */
 
-int REM_text(const char *sometext)
+void REM_text(const char *sometext)
 {
 	_send_ident(TEXT);
 	_send_text(sometext);
-
-	return 0;
 }
 
 /*!
@@ -679,10 +607,9 @@ int REM_text(const char *sometext)
  *  \param b bottom
  *  \param l left
  *  \param r right
- *  \return int
  */
 
-int REM_get_text_box(const char *sometext, int *t, int *b, int *l, int *r)
+void REM_get_text_box(const char *sometext, int *t, int *b, int *l, int *r)
 {
 	_send_ident(GET_TEXT_BOX);
 	_send_text(sometext);
@@ -690,8 +617,6 @@ int REM_get_text_box(const char *sometext, int *t, int *b, int *l, int *r)
 	_get_int(b);
 	_get_int(l);
 	_get_int(r);
-
-	return 0;
 }
 
 /*!
@@ -723,53 +648,40 @@ int REM_get_text_box(const char *sometext, int *t, int *b, int *l, int *r)
  </table>
  *
  *  \param name
- *  \return int
  */
 
-int REM_font(const char *name)
+void REM_font(const char *name)
 {
 	int stat;
 
 	_send_ident(FONT);
 	_send_text(name);
-	_get_int(&stat);
-
-	return stat == 0;
 }
 
-int REM_font_freetype(const char *name)
+void REM_font_freetype(const char *name)
 {
 	int stat;
 
 	_send_ident(FONT_FREETYPE);
 	_send_text(name);
-	_get_int(&stat);
-
-	return stat == 0;
 }
 
-int REM_charset(const char *name)
+void REM_charset(const char *name)
 {
 	int stat;
 
 	_send_ident(CHARSET);
 	_send_text(name);
-	_get_int(&stat);
-
-	return stat == 0;
 }
 
-int REM_font_freetype_release(void)
+void REM_font_freetype_release(void)
 {
 	int stat;
 
 	_send_ident(FONT_FREETYPE_RELEASE);
-	_get_int(&stat);
-
-	return stat == 0;
 }
 
-int REM_panel_save(const char *name, int t, int b, int l, int r)
+void REM_panel_save(const char *name, int t, int b, int l, int r)
 {
 	close(creat(name, 0666));
 
@@ -780,28 +692,22 @@ int REM_panel_save(const char *name, int t, int b, int l, int r)
 	_send_int(&l);
 	_send_int(&r);
 	R_stabilize();
-
-	return 0;
 }
 
-int REM_panel_restore(const char *name)
+void REM_panel_restore(const char *name)
 {
 	_send_ident(PANEL_RESTORE);
 	_send_text(name);
 	R_stabilize();
-
-	return 0;
 }
 
-int REM_panel_delete(const char *name)
+void REM_panel_delete(const char *name)
 {
 	_send_ident(PANEL_DELETE);
 	_send_text(name);
 	R_stabilize();
 
 	unlink(name);
-
-	return 0;
 }
 
 /*!
@@ -817,17 +723,14 @@ int REM_panel_delete(const char *name)
  *  \param r red
  *  \param g green
  *  \param b blue
- *  \return int
  */
 
-int REM_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *b)
+void REM_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *b)
 {
 	_send_ident(RGB_COLORS);
 	_send_char_array(256, r);
 	_send_char_array(256, g);
 	_send_char_array(256, b);
-
-	return 0;
 }
 
 /*!
@@ -850,10 +753,9 @@ int REM_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *b)
  *  \param grn
  *  \param blu
  *  \param nul withzero
- *  \return int
  */
 
-int REM_RGB_raster(int n, int nrows,
+void REM_RGB_raster(int n, int nrows,
 	unsigned char *red, unsigned char *grn, unsigned char *blu,
 	unsigned char *nul)
 {
@@ -866,8 +768,6 @@ int REM_RGB_raster(int n, int nrows,
 	_send_char_array(n, blu);
 	_send_char_array(n, nul ? nul : red);
 	_send_int(&z);
-
-	return 0;
 }
 
 /*!
@@ -901,37 +801,31 @@ int REM_RGB_raster(int n, int nrows,
  *
  */
 
-int REM_raster_char(int num, int nrows, int withzero, const unsigned char *ras)
+void REM_raster_char(int num, int nrows, int withzero, const unsigned char *ras)
 {
 	_send_ident(RASTER_CHAR);
 	_send_int(&num);
 	_send_int(&nrows);
 	_send_int(&withzero);
 	_send_char_array(num, ras);
-
-	return 0;
 }
 
-int REM_raster_int(int num, int nrows, int withzero, const int *ras)
+void REM_raster_int(int num, int nrows, int withzero, const int *ras)
 {
 	_send_ident(RASTER_INT);
 	_send_int(&num);
 	_send_int(&nrows);
 	_send_int(&withzero);
 	_send_int_array(num, ras);
-
-	return 0;
 }
 
-int REM_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf)
+void REM_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf)
 {
 	_send_ident(BITMAP);
 	_send_int(&ncols);
 	_send_int(&nrows);
 	_send_int(&threshold);
 	_send_char_array(ncols * nrows, buf);
-
-	return 0;
 }
 
 #endif /* HAVE_SOCKET */

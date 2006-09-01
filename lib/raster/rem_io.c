@@ -248,7 +248,7 @@ static RETSIGTYPE dead(int sig)
     no_mon = 1 ;
 }
 
-int _hold_signals(int hold)
+void _hold_signals(int hold)
 {
     static RETSIGTYPE (*sigint)(int);
     static RETSIGTYPE (*sigquit)(int);
@@ -263,8 +263,6 @@ int _hold_signals(int hold)
         signal(SIGINT, sigint);
         signal(SIGQUIT, sigquit);
     }
-
-    return 0;
 }
 
 /*!
@@ -280,26 +278,22 @@ int _hold_signals(int hold)
  *  \return int
  */
 
-int REM_stabilize(void)
+void REM_stabilize(void)
 {
     char c;
 
     flushout();
     _send_ident(RESPOND);
     _get_char(&c);
-
-    return 0;
 }
 
-int REM_kill_driver(void)
+void REM_kill_driver(void)
 {
     char dummy;
     _send_ident(GRAPH_CLOSE);
     flushout();
     read(_rfd, &dummy, 1);
     R_release_driver();
-
-    return 0;
 }
 
 /*!
@@ -311,7 +305,7 @@ int REM_kill_driver(void)
  *  \return int
  */
 
-int REM_close_driver(void)
+void REM_close_driver(void)
 {
     R_stabilize();
 
@@ -319,18 +313,14 @@ int REM_close_driver(void)
     close(_wfd);
     _wfd = _rfd = -1;
     unlock_driver(0);
-
-    return 0;
 }
 
-int REM_release_driver(void)
+void REM_release_driver(void)
 {
     close(_rfd);
     close(_wfd);
     _wfd = _rfd = -1;
     unlock_driver(1);
-
-    return 0;
 }
 
 #endif /* HAVE_SOCKET */

@@ -437,22 +437,18 @@ int process_command(int c)
 	break;
     case FONT:
 	RECTEXT(text, text_size);
-	x = COM_Font_get(text);
-	SEND(&x, sizeof x);
+	COM_Font_get(text);
 	break;
     case FONT_FREETYPE:
 	RECTEXT(text, text_size);
-	x = COM_Font_freetype_get(text);
-	SEND(&x, sizeof x);
+	COM_Font_freetype_get(text);
 	break;
     case FONT_FREETYPE_RELEASE:
-	x = COM_Font_freetype_release();
-	SEND(&x, sizeof x);
+	COM_Font_freetype_release();
 	break;
     case CHARSET:
 	RECTEXT(text, text_size);
-	x = COM_Font_init_charset(text);
-	SEND(&x, sizeof x);
+	COM_Font_init_charset(text);
 	break;
     case TEXT:
 	RECTEXT(text, text_size);

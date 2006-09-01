@@ -110,34 +110,26 @@ int LOC__open_quiet(void)
 	return 0;
 }
 
-int LOC_stabilize(void)
+void LOC_stabilize(void)
 {
 	COM_Respond();
-
-	return 0;
 }
 
-int LOC_kill_driver(void)
+void LOC_kill_driver(void)
 {
 	COM_Graph_close();
-
-	return 0;
 }
 
-int LOC_close_driver(void)
+void LOC_close_driver(void)
 {
 	LOC_stabilize();
 	COM_Client_Close();
 	LOC_kill_driver();
-
-	return 0;
 }
 
-int LOC_release_driver(void)
+void LOC_release_driver(void)
 {
 	LOC_stabilize();
 	COM_Client_Close();
-
-	return 0;
 }
 

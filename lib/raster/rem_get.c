@@ -8,7 +8,7 @@
 
 #include "transport.h"
 
-static int do_get(int *wx, int *wy, int *button)
+static void do_get(int *wx, int *wy, int *button)
 {
 	R_set_cancel(0);
 
@@ -45,8 +45,6 @@ static int do_get(int *wx, int *wy, int *button)
 	R_flush();
 	R_set_cancel(0);
 	R_set_update_function(NULL);
-	
-	return 0;
 }
 
 /*!
@@ -64,10 +62,13 @@ static int do_get(int *wx, int *wy, int *button)
  *  \return 0 function was canceled by R_set_cancel (1)
  */
 
-int REM_get_location_with_box(int cx,int cy, int *wx, int *wy, int *button)
+void REM_get_location_with_box(int cx,int cy, int *wx, int *wy, int *button)
 {
 	if ( !R_has_update_function() )
-	    return R_get_location_with_box_old ( cx, cy, wx, wy, button );
+	{
+	    R_get_location_with_box_old ( cx, cy, wx, wy, button );
+	    return;
+	}
 
 	_send_ident(GET_LOCATION_WITH_BOX) ;
 	_send_int(&cx) ;
@@ -75,10 +76,10 @@ int REM_get_location_with_box(int cx,int cy, int *wx, int *wy, int *button)
 	_send_int(wx) ;
 	_send_int(wy) ;
 
-	return do_get(wx, wy, button);
+	do_get(wx, wy, button);
 }
 
-int REM_get_location_with_box_old(int cx,int cy, int *wx, int *wy, int *button)
+void REM_get_location_with_box_old(int cx,int cy, int *wx, int *wy, int *button)
 {
 	_send_ident(GET_LOCATION_WITH_BOX_OLD) ;
 	_send_int(&cx) ;
@@ -88,7 +89,6 @@ int REM_get_location_with_box_old(int cx,int cy, int *wx, int *wy, int *button)
 	_get_int(wx) ;
 	_get_int(wy) ;
 	_get_int(button) ;
-	return 0;
 }
 
 /*!
@@ -109,10 +109,13 @@ int REM_get_location_with_box_old(int cx,int cy, int *wx, int *wy, int *button)
  *  \return 0 function was canceled by R_set_cancel (1)
  */
 
-int REM_get_location_with_line(int cx, int cy, int *wx, int *wy, int *button)
+void REM_get_location_with_line(int cx, int cy, int *wx, int *wy, int *button)
 {
 	if ( !R_has_update_function() )
-	    return R_get_location_with_line_old ( cx, cy, wx, wy, button );
+	{
+	    R_get_location_with_line_old ( cx, cy, wx, wy, button );
+	    return;
+	}
 
 	_send_ident(GET_LOCATION_WITH_LINE) ;
 	_send_int(&cx) ;
@@ -120,10 +123,10 @@ int REM_get_location_with_line(int cx, int cy, int *wx, int *wy, int *button)
 	_send_int(wx) ;
 	_send_int(wy) ;
 
-	return do_get(wx, wy, button);
+	do_get(wx, wy, button);
 }
 
-int REM_get_location_with_line_old(int cx, int cy, int *wx, int *wy, int *button)
+void REM_get_location_with_line_old(int cx, int cy, int *wx, int *wy, int *button)
 {
 	_send_ident(GET_LOCATION_WITH_LINE_OLD) ;
 	_send_int(&cx) ;
@@ -133,7 +136,6 @@ int REM_get_location_with_line_old(int cx, int cy, int *wx, int *wy, int *button
 	_get_int(wx) ;
 	_get_int(wy) ;
 	_get_int(button) ;
-	return 0;
 }
 
 /*!
@@ -153,10 +155,13 @@ int REM_get_location_with_line_old(int cx, int cy, int *wx, int *wy, int *button
  *  \return int
  */
 
-int REM_get_location_with_pointer(int *wx, int *wy, int *button)
+void REM_get_location_with_pointer(int *wx, int *wy, int *button)
 {
 	if ( !R_has_update_function() )
-	    return R_get_location_with_pointer_old ( wx, wy, button );
+	{
+	    R_get_location_with_pointer_old ( wx, wy, button );
+	    return;
+	}
 
 	*button = 0; /* ?, how button = -1 is used (see driver) */
 
@@ -165,10 +170,10 @@ int REM_get_location_with_pointer(int *wx, int *wy, int *button)
 	_send_int(wy) ;
 	_send_int(button) ;
 
-	return do_get(wx, wy, button);
+	do_get(wx, wy, button);
 }
 
-int REM_get_location_with_pointer_old(int *wx, int *wy, int *button)
+void REM_get_location_with_pointer_old(int *wx, int *wy, int *button)
 {
 	*button = 0; /* ?, how button = -1 is used (see driver) */
 
@@ -179,7 +184,6 @@ int REM_get_location_with_pointer_old(int *wx, int *wy, int *button)
 	_get_int(wx) ;
 	_get_int(wy) ;
 	_get_int(button) ;
-	return 0;
 }
 
 #endif /* HAVE_SOCKET */

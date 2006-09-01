@@ -21,7 +21,7 @@
        the displaylib library calls.
  */
 
-static int _get_list(char ***list, int *count)
+static void _get_list(char ***list, int *count)
 {
     char **a;
     int n;
@@ -46,8 +46,6 @@ static int _get_list(char ***list, int *count)
 
     *list = a ;
     *count = n;
-
-    return 1;
 }
 
 int REM_pad_create(const char *pad)

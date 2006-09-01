@@ -86,11 +86,9 @@ int LOC_screen_top(void)
 	return t;
 }
 
-int LOC_get_num_colors(int *n)
+void LOC_get_num_colors(int *n)
 {
 	COM_Number_of_colors(n);
-
-	return 0;
 }
 
 /*!
@@ -129,11 +127,9 @@ int LOC_color_table_fixed(void)
 	return COM_Color_table_fixed();
 }
 
-int LOC_color_offset(int n)
+void LOC_color_offset(int n)
 {
 	COM_Color_offset(n);
-
-	return 0;
 }
 
 /*!
@@ -146,11 +142,9 @@ int LOC_color_offset(int n)
  *  \return int
  */
 
-int LOC_color(int index)
+void LOC_color(int index)
 {
 	COM_Color(index);
-
-	return 0;
 }
 
 /*!
@@ -165,11 +159,9 @@ int LOC_color(int index)
  *  \return int
  */
 
-int LOC_standard_color(int index)
+void LOC_standard_color(int index)
 {
 	COM_Standard_color(index);
-
-	return 0;
 }
 
 /*!
@@ -186,11 +178,9 @@ int LOC_standard_color(int index)
  *  \return int
  */
 
-int LOC_RGB_color(unsigned char red, unsigned char grn, unsigned char blu)
+void LOC_RGB_color(unsigned char red, unsigned char grn, unsigned char blu)
 {
 	COM_Color_RGB(red, grn, blu);
-
-	return 0;
 }
 
 /*!
@@ -206,15 +196,13 @@ int LOC_RGB_color(unsigned char red, unsigned char grn, unsigned char blu)
  *  \return int
  */
 
-int LOC_reset_color(unsigned char red, unsigned char grn, unsigned char blu,
+void LOC_reset_color(unsigned char red, unsigned char grn, unsigned char blu,
 		  int index)
 {
 	if (index < 0)
 		index = 256 - index;
 
 	COM_Reset_color(red, grn, blu, index);
-
-	return 0;
 }
 
 /*!
@@ -232,12 +220,10 @@ int LOC_reset_color(unsigned char red, unsigned char grn, unsigned char blu,
  *  \return int
  */
 
-int LOC_reset_colors(int min, int max,
+void LOC_reset_colors(int min, int max,
 		   unsigned char *red, unsigned char *grn, unsigned char *blu)
 {
 	COM_Reset_colors(min, max, red, grn, blu);
-
-	return 0;
 }
 
 /*!
@@ -249,11 +235,9 @@ int LOC_reset_colors(int min, int max,
  *  \return int
  */
 
-int LOC_line_width(int width)
+void LOC_line_width(int width)
 {
 	COM_Line_width(width);
-
-	return 0;
 }
 
 /*!
@@ -265,11 +249,9 @@ int LOC_line_width(int width)
  *  \return int
  */
 
-int LOC_erase(void)
+void LOC_erase(void)
 {
 	COM_Erase();
-
-	return 0;
 }
 
 /*!
@@ -283,11 +265,9 @@ int LOC_erase(void)
  *  \return int
  */
 
-int LOC_move_abs(int x, int y)
+void LOC_move_abs(int x, int y)
 {
 	COM_Move_abs(x, y);
-
-	return 0;
 }
 
 /*!
@@ -305,11 +285,9 @@ int LOC_move_abs(int x, int y)
  *  \return int
  */
 
-int LOC_move_rel(int x, int y)
+void LOC_move_rel(int x, int y)
 {
 	COM_Move_rel(x, y);
-
-	return 0;
 }
 
 /*!
@@ -324,11 +302,9 @@ int LOC_move_rel(int x, int y)
  *  \return int
  */
 
-int LOC_cont_abs(int x, int y)
+void LOC_cont_abs(int x, int y)
 {
 	COM_Cont_abs(x, y);
-
-	return 0;
 }
 
 /*!
@@ -348,11 +324,9 @@ int LOC_cont_abs(int x, int y)
  *  \return int
  */
 
-int LOC_cont_rel(int x, int y)
+void LOC_cont_rel(int x, int y)
 {
 	COM_Cont_rel(x, y);
-
-	return 0;
 }
 
 /*!
@@ -368,11 +342,9 @@ int LOC_cont_rel(int x, int y)
  *  \return int
  */
 
-int LOC_polydots_abs(int *xarray, int *yarray, int number)
+void LOC_polydots_abs(int *xarray, int *yarray, int number)
 {
 	COM_Polydots_abs(xarray, yarray, number);
-
-	return 0;
 }
 
 /*!
@@ -390,11 +362,9 @@ int LOC_polydots_abs(int *xarray, int *yarray, int number)
  *  \return int
  */
 
-int LOC_polydots_rel(int *xarray, int  *yarray, int number)
+void LOC_polydots_rel(int *xarray, int  *yarray, int number)
 {
 	COM_Polydots_rel(xarray, yarray, number);
-
-	return 0;
 }
 
 /*!
@@ -413,11 +383,9 @@ int LOC_polydots_rel(int *xarray, int  *yarray, int number)
  *  \return int
  */
 
-int LOC_polyline_abs(int *xarray, int  *yarray, int number)
+void LOC_polyline_abs(int *xarray, int  *yarray, int number)
 {
 	COM_Polyline_abs(xarray, yarray, number);
-
-	return 0;
 }
 
 /*!
@@ -437,11 +405,9 @@ int LOC_polyline_abs(int *xarray, int  *yarray, int number)
  *  \return int
  */
 
-int LOC_polyline_rel(int *xarray, int *yarray, int number)
+void LOC_polyline_rel(int *xarray, int *yarray, int number)
 {
 	COM_Polyline_rel(xarray, yarray, number);
-
-	return 0;
 }
 
 /*!
@@ -457,11 +423,9 @@ int LOC_polyline_rel(int *xarray, int *yarray, int number)
  *  \return int
  */
 
-int LOC_polygon_abs(int *xarray, int *yarray, int number)
+void LOC_polygon_abs(int *xarray, int *yarray, int number)
 {
 	COM_Polygon_abs(xarray, yarray, number);
-
-	return 0;
 }
 
 /*!
@@ -479,11 +443,9 @@ int LOC_polygon_abs(int *xarray, int *yarray, int number)
  *  \return int
  */
 
-int LOC_polygon_rel(int *xarray, int *yarray, int number)
+void LOC_polygon_rel(int *xarray, int *yarray, int number)
 {
 	COM_Polygon_rel(xarray, yarray, number);
-
-	return 0;
 }
 
 /*!
@@ -500,11 +462,9 @@ int LOC_polygon_rel(int *xarray, int *yarray, int number)
  *  \return int
  */
 
-int LOC_box_abs(int x1, int y1, int x2, int y2)
+void LOC_box_abs(int x1, int y1, int x2, int y2)
 {
 	COM_Box_abs(x1, y1, x2, y2);
-
-	return 0;
 }
 
 
@@ -520,11 +480,9 @@ int LOC_box_abs(int x1, int y1, int x2, int y2)
  *  \return int
  */
 
-int LOC_box_rel(int x, int y)
+void LOC_box_rel(int x, int y)
 {
 	COM_Box_rel(x, y);
-
-	return 0;
 }
 
 /*!
@@ -537,18 +495,14 @@ int LOC_box_rel(int x, int y)
  *  \return int
  */
 
-int LOC_text_size(int width, int height)
+void LOC_text_size(int width, int height)
 {
 	COM_Text_size(width, height);
-
-	return 0;
 }
 
-int LOC_text_rotation(float rotation)
+void LOC_text_rotation(float rotation)
 {
 	COM_Text_rotation(rotation);
-
-	return 0;
 }
 
 /*!
@@ -564,11 +518,9 @@ int LOC_text_rotation(float rotation)
  *  \return int
  */
 
-int LOC_set_window(int t, int b, int l, int r)
+void LOC_set_window(int t, int b, int l, int r)
 {
 	COM_Set_window(t, b, l, r);
-
-	return 0;
 }
 
 /*!
@@ -581,11 +533,9 @@ int LOC_set_window(int t, int b, int l, int r)
  *  \return int
  */
 
-int LOC_text(const char *text)
+void LOC_text(const char *text)
 {
 	COM_Text(text);
-
-	return 0;
 }
 
 /*!
@@ -605,11 +555,9 @@ int LOC_text(const char *text)
  *  \return int
  */
 
-int LOC_get_text_box(const char *text, int *t, int *b, int *l, int *r)
+void LOC_get_text_box(const char *text, int *t, int *b, int *l, int *r)
 {
 	COM_Get_text_box(text, t, b, l, r);
-
-	return 0;
 }
 
 /*!
@@ -644,52 +592,46 @@ int LOC_get_text_box(const char *text, int *t, int *b, int *l, int *r)
  *  \return int
  */
 
-int LOC_font(const char *name)
+void LOC_font(const char *name)
 {
-	return COM_Font_get(name) == 0;
+	COM_Font_get(name);
 }
 
-int LOC_font_freetype(const char *name)
+void LOC_font_freetype(const char *name)
 {
-	return COM_Font_freetype_get(name) == 0;
+	COM_Font_freetype_get(name);
 }
 
-int LOC_charset(const char *name)
+void LOC_charset(const char *name)
 {
-	return COM_Font_init_charset(name) == 0;
+	COM_Font_init_charset(name);
 }
 
-int LOC_font_freetype_release(void)
+void LOC_font_freetype_release(void)
 {
-	return COM_Font_freetype_release() == 0;
+	COM_Font_freetype_release();
 }
 
-int LOC_panel_save(const char *name, int t, int b, int l, int r)
+void LOC_panel_save(const char *name, int t, int b, int l, int r)
 {
 	close(creat(name, 0666));
 
 	COM_Panel_save(name, t, b, l, r);
 	R_stabilize();
-
-	return 0;
 }
 
-int LOC_panel_restore(const char *name)
+void LOC_panel_restore(const char *name)
 {
 	COM_Panel_restore(name);
 	R_stabilize();
-
-	return 0;
 }
 
-int LOC_panel_delete(const char *name)
+void LOC_panel_delete(const char *name)
 {
 	COM_Panel_delete(name);
 	R_stabilize();
 
-	unlink(name);
-
-	return 0;
+	remove(name);
 }
 
 /*!
@@ -708,11 +650,9 @@ int LOC_panel_delete(const char *name)
  *  \return int
  */
 
-int LOC_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *b)
+void LOC_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *b)
 {
 	COM_RGB_set_colors(r, g, b);
-
-	return 0;
 }
 
 /*!
@@ -738,13 +678,11 @@ int LOC_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *b)
  *  \return int
  */
 
-int LOC_RGB_raster(int n, int nrows,
+void LOC_RGB_raster(int n, int nrows,
 	unsigned char *red, unsigned char *grn, unsigned char *blu,
 	unsigned char *nul)
 {
 	COM_RGB_raster(n, nrows, red, grn, blu, nul);
-
-	return 0;
 }
 
 /*!
@@ -778,24 +716,18 @@ int LOC_RGB_raster(int n, int nrows,
  *
  */
 
-int LOC_raster_char(int num, int nrows, int withzero, const unsigned char *ras)
+void LOC_raster_char(int num, int nrows, int withzero, const unsigned char *ras)
 {
 	COM_Raster_char(num, nrows, ras, withzero, 1);
-
-	return 0;
 }
 
-int LOC_raster_int(int num, int nrows, int withzero, const int *ras)
+void LOC_raster_int(int num, int nrows, int withzero, const int *ras)
 {
 	COM_Raster_int(num, nrows, ras, withzero, 1);
-
-	return 0;
 }
 
-int LOC_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf)
+void LOC_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf)
 {
 	COM_Bitmap(ncols, nrows, threshold, buf);
-
-	return 0;
 }
 

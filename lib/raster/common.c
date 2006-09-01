@@ -14,10 +14,9 @@
  *  \return int
  */
 
-int R_flush(void)
+void R_flush(void)
 {
 	R_stabilize();
-	return 0;
 }
 
 static int (*update_function)(int, int);
@@ -42,11 +41,10 @@ void R_set_update_function(int (*func)(int, int))
  * \return int
  */
 
-int R_call_update_function(int wx, int wy)
+void R_call_update_function(int wx, int wy)
 {
 	if (update_function)
 		(*update_function)(wx, wy);
-	return 1;
 }
 
 /*!
@@ -102,7 +100,7 @@ int R_get_cancel(void)
  *  \return int
  */
 
-int R_raster(int num, int nrows, int withzero, const int *ras)
+void R_raster(int num, int nrows, int withzero, const int *ras)
 {
 	static unsigned char *chararray;
 	static int nalloc;
@@ -117,7 +115,7 @@ int R_raster(int num, int nrows, int withzero, const int *ras)
 		if (cc != xc)
 		{
 			R_raster_int(num, nrows, withzero, ras);
-			return 0;
+			return;
 		}
 	}
 
@@ -132,11 +130,9 @@ int R_raster(int num, int nrows, int withzero, const int *ras)
 		chararray[i] = (unsigned char) ras[i];
 
 	R_raster_char(num, nrows, withzero, chararray);
-
-	return 0;
 }
 
-int R_pad_perror(const char *msg, int code)
+void R_pad_perror(const char *msg, int code)
 {
 	const char *err;
 
@@ -153,22 +149,18 @@ int R_pad_perror(const char *msg, int code)
 	}
 
 	fprintf(stderr, "%s%s%s\n", msg, *msg ? " : " : "", err);
-
-	return 0;
 }
 
-int R_pad_freelist(char **list, int count)
+void R_pad_freelist(char **list, int count)
 {
 	int i;
 
 	if (count <= 0)
-		return 0;
+		return;
 
 	for (i = 0; i < count; i++)
 		G_free(list[i]);
 
 	G_free(list);
-
-	return 0;
 }
 
