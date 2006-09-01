@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <grass/gis.h>
 #include "driver.h"
 #include "driverlib.h"
 
