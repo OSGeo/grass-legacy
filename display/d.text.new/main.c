@@ -51,9 +51,11 @@
  *      .<SPACE>                                comments
  */
 
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <grass/gis.h>
 #include <grass/display.h>
 #include <grass/raster.h>
@@ -373,7 +375,7 @@ int main(int argc, char **argv)
 
 	if (buf[0] == '.' && buf[1] != '.') {
 	    int i;
-	    double d, d2;
+	    double d;
 
 	    G_squeeze(buf);	/* added 6/91 DBS @ CWU */
 	    for (buf_ptr = buf + 2; *buf_ptr == ' '; buf_ptr++) ;
