@@ -3,7 +3,7 @@
 
 void COM_Get_text_box(const char *text, int *t, int *b, int *l, int *r)
 {
-	if (font_is_freetype()==-1)
+	if (!font_is_freetype())
 	{
 		soft_text_ext(cur_x, cur_y, 
 			text_size_x, text_size_y, text_rotation, text);

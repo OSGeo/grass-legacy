@@ -2,6 +2,8 @@
 #ifndef _DRIVER_H
 #define _DRIVER_H
 
+#include <grass/freetypecap.h>
+
 extern int NCOLORS;
 
 extern int screen_left;
@@ -17,6 +19,8 @@ extern double text_size_y;
 extern double text_rotation;
 
 extern int mouse_button[];
+
+extern struct FT_CAP *ftcap;
 
 struct driver
 {

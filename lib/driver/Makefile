@@ -43,6 +43,7 @@ LIB_OBJS =\
 	font_freetype.o\
 	init.o\
 	pad.o\
+	parse_ftcap.o\
 	text2.o\
 	text3.o
 
