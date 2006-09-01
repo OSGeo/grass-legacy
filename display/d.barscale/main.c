@@ -158,16 +158,8 @@ int main (int argc, char **argv)
 		
 		sprintf(cmdbuf, "%s at=%f,%f", argv[0],east, north);
 		
-		if(opt1->answer)
-		{
-			sprintf(buffer, " bcolor=%s",opt1->answer);
-			strcat(cmdbuf, buffer);
-		}
-		if(opt2->answer)
-		{
-			sprintf(buffer, " tcolor=%s",opt2->answer);
-			strcat(cmdbuf, buffer);
-		}
+		sprintf(cmdbuf, "%s bcolor=%s", cmdbuf, opt1->answer);
+		sprintf(cmdbuf, "%s tcolor=%s", cmdbuf, opt2->answer);
 		if(top->answer)
 			strcat(cmdbuf, " -t");
 		if(feet->answer)
