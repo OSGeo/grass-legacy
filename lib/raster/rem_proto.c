@@ -694,20 +694,6 @@ int REM_get_text_box(const char *sometext, int *t, int *b, int *l, int *r)
 	return 0;
 }
 
-static int select_font(const char *name)
-{
-	char filename[4096];
-	int stat;
-
-	sprintf(filename, "%s/fonts/%s", G_gisbase(), name);
-
-	_send_ident(FONT);
-	_send_text(filename);
-	_get_int(&stat);
-
-	return stat == 0;
-}
-
 /*!
  * \brief choose font
  *
@@ -742,10 +728,13 @@ static int select_font(const char *name)
 
 int REM_font(const char *name)
 {
-	if(!select_font(name))
-	    select_font("romand");
+	int stat;
 
-	return 0;
+	_send_ident(FONT);
+	_send_text(name);
+	_get_int(&stat);
+
+	return stat == 0;
 }
 
 int REM_font_freetype(const char *name)

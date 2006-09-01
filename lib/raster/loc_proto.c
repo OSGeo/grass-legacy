@@ -612,18 +612,6 @@ int LOC_get_text_box(const char *text, int *t, int *b, int *l, int *r)
 	return 0;
 }
 
-static int select_font(const char *name)
-{
-	char filename[4096];
-	int stat;
-
-	sprintf(filename, "%s/fonts/%s", G_gisbase(), name);
-
-	stat = COM_Font_get(filename);
-
-	return stat == 0;
-}
-
 /*!
  * \brief choose font
  *
@@ -658,10 +646,7 @@ static int select_font(const char *name)
 
 int LOC_font(const char *name)
 {
-	if (!select_font(name))
-		select_font("romand");
-
-	return 0;
+	return COM_Font_get(name) == 0;
 }
 
 int LOC_font_freetype(const char *name)
