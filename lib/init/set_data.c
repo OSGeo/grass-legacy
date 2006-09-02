@@ -134,7 +134,8 @@ int main (int argc, char *argv[])
 		for(p=tmp; *p; p++)
 			if(*p == '\\')
 				*p = '/';
-		sprintf(gisdbase, "%s%s", tmp, gisdbase);
+		strcat(tmp, gisdbase);
+		strcpy(gisdbase, tmp);
 	}
 	if (!gisdbase[1] || gisdbase[1] != ':')
 #else
