@@ -639,7 +639,7 @@ proc gisSetWindow {} {
     }
     
     cd $database
-    foreach i [exec ls -a [exec pwd]] {
+    foreach i [exec ls -a [pwd]] {
       	if { [string compare $i "."] != 0 && \
             [string compare $i ".."] != 0 && \
             [file isdirectory $i] } {
@@ -665,7 +665,7 @@ proc gisSetWindow {} {
     if { [file exists $location] } \
     {
 	cd $location
-	foreach i [exec ls -a [exec pwd]] {
+	foreach i [exec ls -a [pwd]] {
      	    if { [string compare $i "."] != 0 && \
         	[string compare $i ".."] != 0 && \
         	[file isdirectory $i] && [file owned $i] } {
@@ -697,7 +697,7 @@ proc gisSetWindow {} {
            %W insert 0 $new_path
            cd $new_path
            .frame0.frameLOC.listbox delete 0 end
-           foreach i [exec ls -a [exec pwd]] {
+           foreach i [exec ls -a [pwd]] {
                if { [string compare $i "."] != 0 && \
                     [string compare $i ".."] != 0 && \
                     [file isdirectory $i] } {
@@ -705,7 +705,7 @@ proc gisSetWindow {} {
                }
            }
            .frame0.frameMS.listbox delete 0 end
-           set database [exec pwd]
+           set database [pwd]
         }
 	.frame0.frameBUTTONS.ok configure -state disabled
   }
@@ -716,7 +716,7 @@ proc gisSetWindow {} {
         set location [%W get [%W nearest %y]]
         cd $location
         .frame0.frameMS.listbox delete 0 end
-        foreach i [exec ls -a [exec pwd]] {
+        foreach i [exec ls -a [pwd]] {
            if { [string compare $i "."] != 0 && \
                 [string compare $i ".."] != 0 && \
                 [file isdirectory $i] && [file owned $i] } { 
@@ -733,7 +733,7 @@ proc gisSetWindow {} {
         set location [%W get [%W nearest %y]]
         cd $location
         .frame0.frameMS.listbox delete 0 end
-        foreach i [exec ls -a [exec pwd]] {
+        foreach i [exec ls -a [pwd]] {
            if { [string compare $i "."] != 0 && \
                 [string compare $i ".."] != 0 && \
                 [file isdirectory $i] && [file owned $i] } {

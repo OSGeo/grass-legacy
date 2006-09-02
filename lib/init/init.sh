@@ -340,7 +340,7 @@ fi
 echo "Starting GRASS ..."
 
 # Check if we are running X windows by checking the DISPLAY variable
-if [ "$DISPLAY" ] ; then
+if [ "$DISPLAY" -o "$MINGW" ] ; then
 
     # Check if we need to find wish
     if [ "$GRASS_GUI" = "tcltk" ] ; then
