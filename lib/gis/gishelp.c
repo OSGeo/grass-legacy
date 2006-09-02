@@ -47,7 +47,11 @@ int G_gishelp( char *helpfile , char *request )
     if (! access(file, 04))
     {
 	fprintf(stderr, _("one moment...\n")) ;
+#ifdef __MINGW32__
+	sprintf(buffer, "%%GRASS_PAGER%% %s", file) ;
+#else
 	sprintf(buffer, "$GRASS_PAGER %s", file) ;
+#endif
 	system(buffer) ;
     }
     else

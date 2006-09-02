@@ -74,7 +74,11 @@ int G_ask_datum_name(char *datumname, char *ellpsname)
                 }
                 fclose(Tmp_fd);
                 if (isatty(1)) {
+#ifdef __MINGW32__
+                    sprintf(buff,"%%GRASS_PAGER%% %s",Tmp_file);
+#else
                     sprintf(buff,"$GRASS_PAGER %s",Tmp_file);
+#endif
                 }
                 else
                     sprintf(buff,"cat %s",Tmp_file);

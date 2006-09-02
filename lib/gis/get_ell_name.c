@@ -50,7 +50,11 @@ int G_ask_ellipse_name( char *spheriod)
           if(strlen(answer)==0) return -1;
           if (strcmp(answer,"list") == 0) {
             if (isatty(1)) {
+#ifdef __MINGW32__
+	      sprintf(buff,"%%GRASS_PAGER%% %s",Tmp_file);
+#else
 	      sprintf(buff,"$GRASS_PAGER %s",Tmp_file);
+#endif
             }
             else
 	      sprintf(buff,"cat %s",Tmp_file);
