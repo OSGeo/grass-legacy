@@ -131,7 +131,7 @@ read_env ( int loc )
 	     * auto-transformed to win32 path by the MSYS shell. */
 	    if (strcmp(name, "GISDBASE") == 0 && value[1] != ':')
 	    {
-		char *p, *p2;
+		char *p;
 
 		sprintf(tmp, "%s", getenv("WD"));
 		/* the default $WD = C:\msys\1.0\\bin\ */
