@@ -114,7 +114,7 @@ read_env ( int loc )
 
     if ((fd = open_env ("r", loc)))
     {
-	while (G_getl (buf, sizeof buf, fd))
+	while (G_getl2 (buf, sizeof buf, fd))
 	{
 	    for (name = value = buf; *value; value++)
 		if (*value == ':')
