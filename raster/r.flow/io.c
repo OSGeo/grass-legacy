@@ -98,7 +98,9 @@ parse_command_line (int argc, char *argv[])
     struct Flag *fup, *flg, *fmem, *fquiet, *fcprght;
     int default_skip, larger, default_bound;
     double default_offset;
+#if 0
     char *default_offset_ans, *offset_opt; 
+#endif
     char *default_skip_ans, *default_bound_ans, *skip_opt;
     
 	module = G_define_module();
@@ -126,6 +128,9 @@ parse_command_line (int argc, char *argv[])
 					  sizeof (char));
     sprintf (default_bound_ans, "0-%d", default_bound);
 
+    /* UNUSED: offset_opt (size=log10(1.0)+4=4) tries to store "0.0-500.0"
+     * (size=9)! */
+#if 0
 /* below fix changed from 0.0 to 1.0 and its effect disabled in calc.c, Helena June 2005 */
     default_offset = 1.0; /* fixed 20. May 2001 Helena */
     default_offset_ans = (char *) G_calloc((int) log10( default_offset) + 2,
@@ -134,6 +139,7 @@ parse_command_line (int argc, char *argv[])
     offset_opt = (char *) G_calloc((int) log10( default_offset) + 4,
 				   sizeof (char)); 
     sprintf (offset_opt, "0.0-500.0");
+#endif
     
     pelevin = parameter("elevin", TYPE_STRING, YES, NULL, "old,cell,raster",
 			_("Input elevation file"), NULL);
