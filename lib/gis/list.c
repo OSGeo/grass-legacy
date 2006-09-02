@@ -85,15 +85,23 @@ int G_list_element (
     count = 0;
     if (desc == 0 || *desc == 0)
 	desc = element;
+
+    /* G_popen() does not work with MinGW? */
+#ifndef __MINGW32__
 /*
  * G_popen() the more command to page the output
  */
     if (isatty(1))
     {
+#ifdef __MINGW32__
+	more = G_popen ("%GRASS_PAGER%","w");
+#else
 	more = G_popen ("$GRASS_PAGER","w");
+#endif
 	if (!more) more = stdout;
     }
     else
+#endif
 	more = stdout;
     fprintf (more,"----------------------------------------------\n");
 
