@@ -122,7 +122,24 @@ int main (int argc, char *argv[])
 	    strcpy (gisdbase, D_GISDBASE);
 	    continue;
 	}
+#ifdef __MINGW32__
+	if (*gisdbase == '/')
+	{
+		char tmp[200], *p;
+		sprintf(tmp, "%s", getenv("WD"));
+		for(p=tmp+strlen(tmp); --p>=tmp && *p=='\\';);
+		for(; --p>=tmp && *p!='\\';);
+		for(; --p>=tmp && *p=='\\';);
+		*(p+1) = 0;
+		for(p=tmp; *p; p++)
+			if(*p == '\\')
+				*p = '/';
+		sprintf(gisdbase, "%s%s", tmp, gisdbase);
+	}
+	if (!gisdbase[1] || gisdbase[1] != ':')
+#else
 	if (*gisdbase != '/')
+#endif
 	{
 	    char temp[200];
 	    fprintf (stderr, "DATABASE <%s> - must start with /\n", gisdbase);
