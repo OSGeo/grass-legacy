@@ -425,10 +425,16 @@ proc Gronsole::execwait {path ci mark fh} {
 
 proc Gronsole::execout {path cmd ci execcmd} {
 	global env
+	global mingw
+
 	set mark cmdinsert$ci
 
 	# Actually run the program
-	set cmd [concat | $cmd 2>@ stdout]
+	if { $mingw == "1" } {
+		set cmd [concat | $cmd]
+	} {
+		set cmd [concat | $cmd 2>@ stdout]
+	}
 
 	set message_env [exec g.gisenv get=GRASS_MESSAGE_FORMAT]
         set env(GRASS_MESSAGE_FORMAT) gui
