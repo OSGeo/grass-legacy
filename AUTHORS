@@ -1,10 +1,11 @@
-GRASS GIS 6.0 Author List
-=========================
+GRASS GIS 6 List of Authors
+===========================
+
 $Date$
 
 
-Many people have contributed to the GRASS GIS. Without any one of them, 
-GRASS would not exist in its current form. 
+Many people have contributed to GRASS GIS. Without any one of them the
+project would not exist in its current form.
 
 The authors of the individual programs are listed at the end of their 
 manual page in the GRASS users manuals or in the source code. However, 
@@ -23,14 +24,14 @@ inception in 1982. Please check the GRASS 1.x - 5.0 credits list at:
  http://grass.itc.it/devel/grasscredits.html
 
 
-GRASS 6.0 is made up of entirely new code for much of the vector and 
+GRASS 6.0 was made up of entirely new code for much of the vector and 
 database management subsystems. The raster, display, and projection 
 subsystems are largely directly inherited from GRASS 5.4 without change. 
 The core GIS, GUI, and build subsystems are a hybrid of old and new code.
 
 Thus we must also thank and credit the members of the 5.0 core
-development team, listed below, as most are still active in the 
-project and GRASS 6.0 owes much of itself to the generosity of 
+development team, listed below, as many are still active in the 
+project and GRASS 6 owes much of itself to the generosity of 
 their bright minds.
 
 
@@ -38,7 +39,7 @@ Email addresses below have been spam-proofed to protect the innocent;
 add "@" and "." as needed.
 
 
-GRASS 6.1
+New contributions specific to GRASS 6.1 and 6.2:
 -------------------------------------------------
 (work in progress: please complete and correct, this list may be incomplete)
 
@@ -115,8 +116,8 @@ WEB SITE
  - M. Hamish Bowman <hbowman albers otago ac nz>: contributions
 
 
-GRASS 6.0/6.1 major project contributers
-------------------------------------
+GRASS 6.0 - 6.2 major project contributers
+------------------------------------------
 
 PROJECT INTEGRATION
  - Markus Neteler <neteler itc it>: GRASS project coordination
@@ -171,7 +172,7 @@ SPECIAL THANKS:
     He plays a key role in (Free) GIS interoperability.
 
 
-In addition, we must thank those that have packaged GRASS 6.0 into the
+In addition, we must thank those that have packaged GRASS 6 into the
 easy to install binary packages which are at the forefront of the users'
 software experience.
 
