@@ -132,7 +132,7 @@ binary-arch: build install
 #	dh_installinit
 #	dh_installcron
 #	dh_installinfo
-	dh_installman -pgrass debian/grass61.1
+	dh_installman -pgrass debian/grass63.1
 	dh_link
 	dh_strip
 	dh_compress

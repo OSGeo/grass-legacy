@@ -1,10 +1,10 @@
-.TH grass6 1 "" "GRASS 6.1.cvs" "Grass User's Manual"
+.TH grass6 3 "" "GRASS 6.3.cvs" "Grass User's Manual"
 .SH NAME
-\fI\fBgrass61\fR\fR  - The GRASS startup program
+\fI\fBgrass63\fR\fR  - The GRASS startup program
 .br
 
 .SH SYNOPSIS
-\fBgrass61\fR [\fB-\fR] [\fB-v\fR] [\fB-h | -help | --help\fR] [\fB-text | -tcltk | -gui\fR]
+\fBgrass63\fR [\fB-\fR] [\fB-v\fR] [\fB-h | -help | --help\fR] [\fB-text | -tcltk | -gui\fR]
 [[[\fB/\fR]\fB/\fR]
 \fB\fR]
 .br
@@ -21,14 +21,14 @@ mapset to work on.
 .PP
 
 The GRASS program will save both the desired user interface and mapset.
-Thus, the next time the user runs GRASS, typing \fIgrass61\fR (without any
+Thus, the next time the user runs GRASS, typing \fIgrass63\fR (without any
 options) will start grass with the previous settings for the user interface
 and mapset.
 .PP
 
-If you specify a graphical user interface (eg Tcl/Tk) the \fIgrass61\fR
+If you specify a graphical user interface (eg Tcl/Tk) the \fIgrass63\fR
 program will try to verify that the system you specified exists and that you
-can access it successfully. If any of these checks fail, then \fIgrass61\fR
+can access it successfully. If any of these checks fail, then \fIgrass63\fR
 will automatically switch back to the text user interface mode.
 .SH OPTIONS
 .PP
@@ -72,14 +72,14 @@ GISDBASE/LOCATION_NAME/MAPSET
 .SS User Interface Environment Variable
 .PP
 
-The \fIgrass61\fR program will check for the existence of an environment
+The \fIgrass63\fR program will check for the existence of an environment
 variable called GRASS_GUI which indicates the type of user interface for
-GRASS to use. If this variable is not set when \fIgrass61\fR is run, then
+GRASS to use. If this variable is not set when \fIgrass63\fR is run, then
 it will be created and then saved in the $HOME/.grassrc6 file for the next
 time GRASS is run.
 .PP
 
-There is an order of precedence in the way \fIgrass61\fR determines the user
+There is an order of precedence in the way \fIgrass63\fR determines the user
 interface to use. The following is the hierarchy from highest precedence to
 lowest.
 .PP
@@ -180,7 +180,7 @@ MAPSET = PERMANENT
 Start GRASS with the following command:
 .br
 
-grass61 -
+grass63 -
 .br
 
 GRASS will start with the mapset defined by LOCATION since the LOCATION
@@ -203,7 +203,7 @@ MAPSET = PERMANENT
 Start GRASS with the following command:
 .br
 
-grass61 -
+grass63 -
 .br
 
 GRASS will start with the mapset defined by
@@ -229,7 +229,7 @@ MAPSET = PERMANENT
 Start GRASS with the following command:
 .br
 
-grass61 /usr/home/grass/data/thailand/forests
+grass63 /usr/home/grass/data/thailand/forests
 .br
 
 GRASS will start with the mapset /home/grass/data/thailand/forests which
@@ -255,7 +255,7 @@ MAPSET = PERMANENT
 Start GRASS with the following command:
 .br
 
-grass61 swamps
+grass63 swamps
 .br
 
 GRASS will start with the mapset defined by GISDBASE/LOCATION_NAME/swamps
@@ -282,7 +282,7 @@ MAPSET = PERMANENT
 Start GRASS with the following command:
 .br
 
-grass61 thailand/forests
+grass63 thailand/forests
 .br
 
 GRASS will start with the mapset defined by GISDBASE/thailand/forests
@@ -300,16 +300,16 @@ required for the UNIX shell that you use.
 .PP
 
 The following are some examples of how you could start GRASS
-.IP "\fBgrass61\fR
+.IP "\fBgrass63\fR
 Start GRASS using the default user interface. The user will be prompted
 to choose the appropriate location and mapset.
-.IP "\fBgrass61 -tcltk\fR
+.IP "\fBgrass63 -tcltk\fR
 Start GRASS using the Tcl/Tk based user interface. The user will be
 prompted to choose the appropriate location and mapset.
-.IP "\fBgrass61 -text\fR
+.IP "\fBgrass63 -text\fR
 Start GRASS using the text based user interface. The user will be
 prompted to choose the appropriate location and mapset.
-.IP "\fBgrass61 -tcltk -\fR
+.IP "\fBgrass63 -tcltk -\fR
 Start GRASS using the Tcl/Tk based user interface and try to obtain
 the location and mapset from environment variables.
 .IP "\fBOther examples\fR
@@ -337,11 +337,11 @@ that the version you want to use with GRASS is the first version found in
 your $PATH variable. GRASS searches your $PATH variable until it finds the 
 first version of \fIwish\fR.
 .SH FILES
-\fI$UNIX_BIN/grass61\fR - GRASS startup program
+\fI$UNIX_BIN/grass63\fR - GRASS startup program
 .br
 
 \fI$GISBASE/etc/Init.sh\fR - GRASS initialization script called by
-\fIgrass61\fR
+\fIgrass63\fR
 .br
 
 \fI$GISBASE/tcltkgrass/script/gis_set.tcl\fR - Tcl/Tk script to set the
