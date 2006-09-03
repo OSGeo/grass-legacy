@@ -98,3 +98,9 @@ if {[info exists env(osxaqua)]} {
 if { $osxaqua == "1"} {
     set keycontrol "Command"
 }
+
+if {[info exists env(MSYSCON)]} {
+    set mingw "1"
+} else {
+    set mingw "0"
+}
