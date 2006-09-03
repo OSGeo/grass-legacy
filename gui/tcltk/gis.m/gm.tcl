@@ -69,6 +69,14 @@ if { $osxaqua == "1"} {
     set execom "spawn"
 }
 
+if {[info exists env(MSYSCON)]} {
+    set mingw "1"
+} {
+    set mingw "0"
+}
+
+set devnull [expr { $mingw == "1" ? "nul" : "/dev/null" }]
+
 #fetch GRASS Version number:
 set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]
 set GRASSVERSION [read -nonewline $fp]
@@ -188,7 +196,9 @@ proc Gm::xmon { type cmd } {
 # Determine if an element already exists
 
 proc Gm::element_exists {elem name} {
-	set failure [catch {exec [list "|g.findfile" "element=$elem" "file=$name"] >& /dev/null}]
+	global devnull
+
+	set failure [catch {exec [list "|g.findfile" "element=$elem" "file=$name"] >& $devnull}]
 
 	return [expr {! $failure}]
 }
