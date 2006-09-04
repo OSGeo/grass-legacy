@@ -195,11 +195,8 @@ set descmenu [subst  {
  {[G_msg "&Config"]} all options $tmenu {
 	{cascad {[G_msg "Region"]} {} "" $tmenu {			
 		{command {[G_msg "Display region settings"]} {} "g.region -p" {} -command {run_panel "g.region -p" }}
-		{command {[G_msg "Manage region"]} {} "g.region" {} -command {execute g.region }}
+		{command {[G_msg "Change region settings"]} {} "g.region" {} -command {execute g.region }}
 		{command {[G_msg "Zoom to maximum extent of all displayed maps"]} {} "d.extend" {} -command {run_panel d.extend }}
-		{separator}
-		{command {[G_msg "Create WIND3 (default 3D window) from current 2D region"]} {} "g3.createwind" {} -command {execute g3.createwind }}
-		{command {[G_msg "Manage 3D region"]} {} "g3.setregion" {} -command {execute g3.setregion }}
 	}}
 	{cascad {[G_msg "GRASS working environment"]} {} "" $tmenu {			
 		{command {[G_msg "Access other mapsets in current location"]} {} "g.mapsets.tcl" {} -command {spawn $env(GISBASE)/etc/g.mapsets.tcl}}
@@ -386,7 +383,6 @@ set descmenu [subst  {
 		{command {[G_msg "Clean vector files"]} {} "v.clean" {} -command {execute v.clean }}
 		{command {[G_msg "Add missing centroids"]} {} "v.centroids" {} -command {execute v.centroids }}
 		{separator}
-		{command {[G_msg "Break lines at intersections"]} {} "v.topo.check" {} -command {execute v.topo.check }}
 		{command {[G_msg "Build polylines from adjacent segments"]} {} "v.build.polylines" {} -command {execute v.build.polylines }}
 		{command {[G_msg "Split polylines into segments"]} {} "v.segment" {} -command {execute v.segment }}
 		{command {[G_msg "Create lines parallel to existing lines"]} {} "v.parallel" {} -command {execute v.parallel }}
