@@ -17,6 +17,10 @@
 #include "tiffio.h"
 #include <grass/gstypes.h>
 
+#ifdef __MINGW32__
+typedef unsigned char u_char;
+typedef unsigned short u_short;
+#endif
 
 u_short config = PLANARCONFIG_CONTIG;
 u_short compression = -1;
