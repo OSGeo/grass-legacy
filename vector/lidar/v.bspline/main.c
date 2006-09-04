@@ -1,19 +1,19 @@
 /***********************************************************************
- *									
- * MODULE:       v.bspline						
- * 									
- * AUTHOR(S):    Roberto Antolin & Gonzalo Moreno			
- *               							
- * PURPOSE:      Spline Interpolation					
- *               							
- * COPYRIGHT:    (C) 2006 by Politecnico di Milano - 			
- *			     Polo Regionale di Como			
- *									
- *               This program is free software under the 		
- *               GNU General Public License (>=v2). 			
- *               Read the file COPYING that comes with GRASS		
- *               for details.						
- *									
+ *
+ * MODULE:       v.surf.bspline
+ *
+ * AUTHOR(S):    Roberto Antolin & Gonzalo Moreno
+ *
+ * PURPOSE:      Spline Interpolation
+ *
+ * COPYRIGHT:    (C) 2006 by Politecnico di Milano -
+ *			     Polo Regionale di Como
+ *
+ *               This program is free software under the
+ *               GNU General Public License (>=v2).
+ *               Read the file COPYING that comes with GRASS
+ *               for details.
+ *
  **************************************************************************/
 
 /*INCLUDES*/
@@ -168,7 +168,7 @@ main (int argc,char *argv[])
     map = out_map_opt->answer;
 
     if (vector && map) 
-	G_fatal_error (_("Not both vector and raster output are possible"));
+	G_fatal_error (_("Choose either vector or raster output, not both."));
 
     if (!vector && !map)
 	G_fatal_error (_("No raster nor vector output"));
