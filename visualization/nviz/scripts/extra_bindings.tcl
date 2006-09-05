@@ -49,9 +49,17 @@ bind Scale <Any-Leave> {
 
 proc appBusy {} {
     global Nv_
+    global mingw
 
-    . configure -cursor {watch blue}
-    $Nv_(APP) configure -cursor {watch blue}
+    if { $mingw == "1" } {
+        # fix for "bad cursor spec"
+        # no color for windows cursors?
+        . configure -cursor {watch}
+        $Nv_(APP) configure -cursor {watch}
+    } {
+        . configure -cursor {watch blue}
+        $Nv_(APP) configure -cursor {watch blue}
+    }
     $Nv_(AREA).menu.wait_pls configure -fg red -bg black
     grab $Nv_(AREA).menu.wait_pls
     update
