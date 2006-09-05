@@ -31,6 +31,14 @@ int			pipefd[2];
 *
 *  returns: 0 success
 */
+#ifdef __MINGW32__
+int 
+F_open ( char *title,  char *html ) 
+{
+    G_fatal_error("F_open is not supported on Windows");
+    return 1;
+}
+#else
 int 
 F_open ( char *title,  char *html ) 
 {
@@ -129,6 +137,7 @@ F_open ( char *title,  char *html )
     
     return 0;
 }
+#endif
 
 /* Clear old forms from window
 *
