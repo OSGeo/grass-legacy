@@ -12,11 +12,21 @@
 #Get ProcessName varaible set from nviz2.2_script
  set ProcessName $env(NV_processname)
 
+if {[info exists env(MSYSCON)]} {
+    set mingw "1"
+} {
+    set mingw "0"
+}
+
 # Set up auto_path directories
 if {[catch {set env(Nviz_PanelPath)} user_path]} then {
     set user_path [list]
 } else {
-    set user_path [split $user_path :]
+    if { $mingw == "1" } {
+        set user_path [split $user_path ;]
+    } {
+        set user_path [split $user_path :]
+    }
 }
 
 # If the -path option was used then append that directory also
@@ -33,7 +43,12 @@ foreach i $user_path {
 }
 
 # add the execution directory to the path
-set env(PATH) "$default_panel_path:$nv_path:$env(PATH)"
+# MinGW
+if { $mingw == "1" } {
+    set env(PATH) "$default_panel_path;$nv_path;$env(PATH)"
+} {
+    set env(PATH) "$default_panel_path:$nv_path:$env(PATH)"
+}
 
 # Override bindings for tk widgets
 source $src_boot/etc/nviz2.2/scripts/extra_bindings.tcl

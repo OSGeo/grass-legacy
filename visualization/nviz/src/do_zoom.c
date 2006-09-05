@@ -391,9 +391,9 @@ int Destroy_OS_Ctx(void)
     }
 
 #endif
-#endif /* OPENGL_X11 */
     XCloseDisplay(dpy);
     dpy = NULL;
+#endif /* OPENGL_X11 */
 
     return (1);
 }

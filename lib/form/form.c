@@ -13,6 +13,7 @@
 #include <grass/form.h>
 
 #ifdef __MINGW32__
+#include <winsock.h>
 #define        F_SETFL         4       /* Set file status flags.  */
 #define        O_NONBLOCK      0x0004  /* Non-blocking I/O.  */
 #endif
@@ -290,7 +291,9 @@ main ( int argc, char *argv[] )
         }
 
 	ret = read ( fileno(stdin) , &(buf[0]), 1);
+#ifndef __MINGW32__
 	fcntl ( fileno(child_recv), F_SETFL, O_NONBLOCK); /* Don't wait if pipe is empty */
+#endif
 	if ( ret == 0 ) break; /* Pipe was closed by parent -> quit */
 	if ( ret == 1 ) {
 	    G_debug ( 3, "Form: received = '%c'", buf[0] );

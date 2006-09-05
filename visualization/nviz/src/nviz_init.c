@@ -360,6 +360,16 @@ int Ngetargs(Tcl_Interp * interp,	/* Current interpreter. */
     argv0 = Tcl_GetVar(interp, "argv0", TCL_LEAVE_ERR_MSG);
     tmp = Tcl_GetVar(interp, "argv", TCL_LEAVE_ERR_MSG);
     cmd = Tcl_GetNameOfExecutable();
+#ifdef __MINGW32__
+    /* argv0: C:\path\to\nviz.exe
+     *   cmd: C:/path/to/nviz.exe
+     *
+     * modify argv0 to compare with cmd.
+     */
+    for(tmp2=argv0; *tmp2; tmp2++)
+	    if(*tmp2 == '\\')
+		    *tmp2 = '/';
+#endif
 
     if (strstr(argv0, "script_tools") != NULL ||
 		    strstr(argv0, "script_play") != NULL ||
