@@ -76,6 +76,9 @@ int main(int argc, char *argv[])
 
 
 	G_gisinit(argv[0]);
+   
+        if( strcmp(G_mapset(), "PERMANENT") != 0 )
+            G_fatal_error("You must have the PERMANENT mapset selected to run g.setproj");
 
 	G_geo_init_table();
         /***
