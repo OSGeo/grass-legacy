@@ -17,14 +17,9 @@
 #include "tiffio.h"
 #include <grass/gstypes.h>
 
-#ifdef __MINGW32__
-typedef unsigned char u_char;
-typedef unsigned short u_short;
-#endif
-
-u_short config = PLANARCONFIG_CONTIG;
-u_short compression = -1;
-u_short rowsperstrip = 0;
+unsigned short config = PLANARCONFIG_CONTIG;
+unsigned short compression = -1;
+unsigned short rowsperstrip = 0;
 
 
 int GS_write_tif(char *name)
@@ -33,7 +28,7 @@ int GS_write_tif(char *name)
     int y, x;
     unsigned int xsize, ysize;
     int mapsize, linebytes;
-    u_char *buf, *tmpptr;
+    unsigned char *buf, *tmpptr;
     unsigned char *pixbuf;
     int swapFlag;
 
@@ -61,14 +56,14 @@ int GS_write_tif(char *name)
     linebytes = ((xsize * ysize + 15) >> 3) & ~1;
 
     if (TIFFScanlineSize(out) > linebytes) {
-	buf = (u_char *)G_malloc(linebytes);
+	buf = (unsigned char *)G_malloc(linebytes);
     }
     else {
-	buf = (u_char *)G_malloc(TIFFScanlineSize(out));
+	buf = (unsigned char *)G_malloc(TIFFScanlineSize(out));
     }
 
-    if (rowsperstrip != (u_short) - 1) {
-	rowsperstrip = (u_short) (8 * 1024 / linebytes);
+    if (rowsperstrip != (unsigned short) - 1) {
+	rowsperstrip = (unsigned short) (8 * 1024 / linebytes);
     }
 
     TIFFSetField(out, TIFFTAG_ROWSPERSTRIP,
