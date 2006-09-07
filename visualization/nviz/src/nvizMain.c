@@ -39,7 +39,6 @@ int main(int argc,		/* Number of command-line arguments. */
 	if (argc > 1) {
 		if (strstr(argv[1], "-f") != argv[1])
 		{
-			argv = (char **)G_realloc(argv, (argc+1)*sizeof(char *));
 			for (i = argc; i > 1; i--)
 				argv[i] = argv[i-1];
 			argv[1] = (char *)G_malloc (3 * sizeof(char));
