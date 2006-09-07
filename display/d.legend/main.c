@@ -586,8 +586,8 @@ int main( int argc, char **argv )
 		    else
 			hide_catstr = hidestr->answer;
 
-		    /* nothing, box only */
-		    buff[0] = 0;
+		    buff[0] = 0; /* blank string */
+
 		    if(!hide_catnum){ /* num */
 			    sprintf(buff, DispFormat, tcell);
 			    if(!hide_catstr) /* both */
@@ -597,12 +597,16 @@ int main( int argc, char **argv )
 			    sprintf(buff+strlen(buff), " %s", cstr);
 		}
 		else {   /* ie FP map */
-		    if(!flip)
-			val = dmin + k * (dmax - dmin)/(steps-1);
-		    else
-			val = dmax - k * (dmax - dmin)/(steps-1); 
+		    if(hide_catnum)
+			buff[0] = 0; /* no text */
+		    else {
+			if(!flip)
+			    val = dmin + k * (dmax - dmin)/(steps-1);
+			else
+			    val = dmax - k * (dmax - dmin)/(steps-1); 
 
-		    sprintf(buff, DispFormat, val);
+			sprintf(buff, DispFormat, val);
+		    }
 		}
 
 		/* this probably shouldn't happen mid-loop as text sizes 
