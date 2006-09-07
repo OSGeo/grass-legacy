@@ -111,8 +111,8 @@ fi
 if [ 0 -eq $GIS_FLAG_P ] ; then
    for i in $RED $GREEN $BLUE ; do
       echo "Processing <$i> .."
-      MIN=`r.univar.sh -e $i per=2  | grep Percentile | cut -d' ' -f3`
-      MAX=`r.univar.sh -e $i per=$BRIGHTNESS | grep Percentile | cut -d' ' -f3`
+      MIN=`r.univar -ge $i perc=2 | grep "^percentile_" | cut -d'=' -f2`
+      MAX=`r.univar -ge $i perc=$BRIGHTNESS | grep "^percentile_" | cut -d'=' -f2`
       #echo "[$i]:  min=$MIN   max=$MAX"
       r.colors $i col=rules << EOF
 	0% black
@@ -126,8 +126,8 @@ else
    ALL_MIN=255
    for i in $RED $GREEN $BLUE ; do
       echo "Processing <$i> .."
-      MIN=`r.univar.sh -e $i per=2  | grep Percentile | cut -d' ' -f3`
-      MAX=`r.univar.sh -e $i per=$BRIGHTNESS | grep Percentile | cut -d' ' -f3`
+      MIN=`r.univar -ge $i perc=2  | grep "^percentile_" | cut -d'=' -f2`
+      MAX=`r.univar -ge $i perc=$BRIGHTNESS | grep "^percentile_" | cut -d'=' -f2`
       #echo "[$i]:  min=$MIN   max=$MAX"
       if [ $MAX -gt $ALL_MAX ] ; then
 	ALL_MAX=$MAX
