@@ -19,7 +19,7 @@
  *
  * Legal file names will <b>not</b> begin with '.' or NULL and must 
  * not contain the characters, ' ' (space), '/', '"'. '\'' (single 
- * quote), and all other non-alphanumeric charaters within.
+ * quote), and all other non-alphanumeric characters within.
  *
  * Returns 1 if <b>name</b> is ok, -1 otherwise.
  *
