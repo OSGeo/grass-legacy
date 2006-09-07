@@ -1,5 +1,28 @@
-/* d.legend a.k.a d.leg.thin 
- * $Id$
+/* d.legend a.k.a d.leg.thin
+ *
+ * MODULE:	d.legend
+ *
+ *		Based on the old d.leg.thin, which replaced an even older
+ *		module called "d.legend".
+ *
+ * PURPOSE:	Draw a graphical legend for a raster on the display mon
+ *
+ * AUTHORS:
+ *	Original version:
+ *	   Bill Brown, U.S. Army Construction Engineering Research Laboratories
+ *	FP Support:
+ *	   Radim Blazek
+ *	Merge of original "d.legend" code into d.leg.thin (now this module):
+ *	   Markus Neteler
+ *	Late 2002: Rewrite of much of the code:
+ *	   Hamish Bowman, Otago University, New Zealand
+ *
+ * COPYRIGHT:	(c) 2006 The GRASS Development Team
+ *
+ *		This program is free software under the GNU General Public
+ *		License (>=v2). Read the file COPYING that comes with GRASS
+ *		for details.
+ *
  */
 
 #include <stdlib.h>
