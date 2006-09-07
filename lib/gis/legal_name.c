@@ -17,6 +17,10 @@
 /*!
  * \brief check for legal database file names
  *
+ * Legal file names will <b>not</b> begin with '.' or NULL and must 
+ * not contain the characters, ' ' (space), '/', '"'. '\'' (single 
+ * quote), and all other non-alphanumeric charaters within.
+ *
  * Returns 1 if <b>name</b> is ok, -1 otherwise.
  *
  *  \param name
