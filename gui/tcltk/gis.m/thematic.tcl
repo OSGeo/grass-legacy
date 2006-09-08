@@ -130,24 +130,21 @@ proc GmThematic::select_map { id } {
 
 ###############################################################################
 # select fonts for legend
-proc GmThematic::select_tfont { id } {
+proc GmThematic::select_tfont { id frm} {
 	variable opt
-    global frm 
     
     set fon [SelectFont $frm.font -type dialog -sampletext 1 -title "Select font"]
 	if { $fon != "" } {set opt($id,1,titlefont) $fon}
 }
 
-proc GmThematic::select_stfont { id } {
+proc GmThematic::select_stfont { id frm} {
 	variable opt
-    global frm 
     
     set fon [SelectFont $frm.font -type dialog -sampletext 1 -title "Select font"]
 	if { $fon != "" } {set opt($id,1,subtitlefont) $fon}
 }
-proc GmThematic::select_lfont { id } {
+proc GmThematic::select_lfont { id frm} {
 	variable opt
-    global frm 
     
     set fon [SelectFont $frm.font -type dialog -sampletext 1 -title "Select font"]
 	if { $fon != "" } {set opt($id,1,labelfont) $fon}
@@ -198,7 +195,6 @@ proc GmThematic::select_symbol { id } {
 # set thematic options
 proc GmThematic::options { id frm } {
     variable opt
-    global gmpath
     global iconpath
     global bgcolor
 
@@ -370,7 +366,7 @@ proc GmThematic::options { id frm } {
     Button $row.b -image [image create photo -file "$iconpath/gui-font.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "title font for legend"] \
-	    -command "GmThematic::select_tfont $id"
+	    -command "GmThematic::select_tfont $id $frm"
     Entry $row.c -width 15 -text "$opt($id,1,titlefont)" \
 	    -textvariable GmThematic::opt($id,1,titlefont)  
     Label $row.d -text " font color"
@@ -384,7 +380,7 @@ proc GmThematic::options { id frm } {
     Button $row.b -image [image create photo -file "$iconpath/gui-font.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "subtitle font for legend"] \
-	    -command "GmThematic::select_stfont $id"
+	    -command "GmThematic::select_stfont $id $frm"
     Entry $row.c -width 15 -text "$opt($id,1,subtitlefont)" \
 	    -textvariable GmThematic::opt($id,1,subtitlefont)  
     pack $row.a $row.b $row.c -side left
@@ -396,7 +392,7 @@ proc GmThematic::options { id frm } {
     Button $row.b -image [image create photo -file "$iconpath/gui-font.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "label font for legend"] \
-	    -command "GmThematic::select_lfont $id"
+	    -command "GmThematic::select_lfont $id $frm"
     Entry $row.c -width 15 -text "$opt($id,1,labelfont)" \
 	    -textvariable GmThematic::opt($id,1,labelfont)  
     Label $row.d -text " font color"
@@ -458,11 +454,6 @@ proc GmThematic::mapname { node } {
 
 proc GmThematic::display { node mod } {
     global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
     variable optlist
     variable lfile 
     variable lfilemask
@@ -616,13 +607,9 @@ proc GmThematic::duplicate { tree parent node id } {
 
 # create graphic legend in separate display canvas
 proc GmThematic::tlegend { mon id } {
-	global legendtitle
 	global bgcolor
-	global keycontrol
-	global gmpath
 	global iconpath
     global env
-
 	variable opt
 	variable tlegend
 	variable tlegcan
@@ -680,6 +667,7 @@ proc GmThematic::tleg_item { mon id } {
 	set mappid [pid]
 	set tmpdir [file dirname [exec g.tempfile pid=$mappid]]
 	set legfile "$tmpdir/gismlegend.txt"
+	if {![file exists $legfile]} {return}
 	set ltxt [open $legfile r]
 	set x1 30
 	set y1 40
