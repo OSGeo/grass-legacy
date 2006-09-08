@@ -28,7 +28,6 @@ proc GmGridline::create { tree parent } {
     variable first
 	variable dup
     global mon
-    global gmpath
     global iconpath
 
     set node "gridline:$count"
@@ -109,8 +108,7 @@ proc GmGridline::set_option { node key value } {
 
 # display gridline options
 proc GmGridline::options { id frm } {
-    variable opt
-    global gmpath
+    variable opt    
     global bgcolor
     global iconpath
 
@@ -237,11 +235,6 @@ proc GmGridline::save { tree depth node } {
 
 proc GmGridline::display { node mod } {
     global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
     variable optlist
     variable lfile 
     variable lfilemask
@@ -305,8 +298,8 @@ proc GmGridline::duplicate { tree parent node id } {
     variable opt
     variable count
 	variable dup
+	variable first
 	global iconpath
-	global first
 
     set node "gridline:$count"
 	set dup($count) 1

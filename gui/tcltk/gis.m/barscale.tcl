@@ -31,7 +31,6 @@ proc GmBarscale::create { tree parent } {
     variable first
 	variable dup
     global mon
-    global gmpath
     global iconpath
 
     set node "barscale:$count"
@@ -103,8 +102,7 @@ proc GmBarscale::set_option { node key value } {
 ###############################################################################
 # barscale options
 proc GmBarscale::options { id frm } {
-    variable opt
-    global gmpath
+    variable opt    
     global bgcolor
     global iconpath
 
@@ -211,13 +209,7 @@ proc GmBarscale::save { tree depth node } {
 # render and composite barscale layer
 
 proc GmBarscale::display { node mod } {
-    global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
-    global gmpath
+    global mon    
     variable optlist
     variable lfile 
     variable lfilemask
@@ -289,8 +281,8 @@ proc GmBarscale::duplicate { tree parent node id } {
     variable opt
     variable count
 	variable dup
+	variable first
 	global iconpath
-	global first
 
     set node "barscale:$count"
 	set dup($count) 1

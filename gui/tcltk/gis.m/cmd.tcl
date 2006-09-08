@@ -28,7 +28,6 @@ proc GmCmd::create { tree parent } {
     variable optlist
 	variable dup
     global mon
-    global gmpath
     global iconpath
 
     set node "cmd:$count"
@@ -128,12 +127,6 @@ proc GmCmd::save { tree depth node } {
 }
 
 proc GmCmd::display { node mod} {
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
-    global gmpath
     global mon
     variable optlist
     variable lfile 

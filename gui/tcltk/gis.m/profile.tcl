@@ -39,6 +39,7 @@ namespace eval GmProfile {
     variable elevmax 0.0
     variable elevmin 0.0
     variable elev 0.0
+    variable msg
 }
 
 
@@ -211,8 +212,8 @@ proc GmProfile::profilebind { mapcan } {
     variable linex2
     variable liney2
     variable first
+    variable msg
     global mon
-	global GmProfile::msg
 		
 	# Make the output for the measurement
 	set measurement_annotation_handle [monitor_annotation_start $mon "Measurement" {}]
@@ -247,6 +248,7 @@ proc GmProfile::marktransect {mapcan x y} {
     variable firsteast
     variable firstnorth
     variable pcoords
+    global mon
     
     #start line
     if { ![info exists linex1] } {
@@ -255,8 +257,8 @@ proc GmProfile::marktransect {mapcan x y} {
     }
 
 	if { $first == 1 } {
-		set firsteast  [MapCanvas::scrx2mape $linex1]
-		set firstnorth [MapCanvas::scry2mapn $liney1]
+		set firsteast  [MapCanvas::scrx2mape $mon $linex1]
+		set firstnorth [MapCanvas::scry2mapn $mon $liney1]
 		set pcoords "$firsteast,$firstnorth"
 	}
 
@@ -275,7 +277,6 @@ proc GmProfile::marktransect {mapcan x y} {
 
 # draw profile transect
 proc GmProfile::drawtransect { mapcan x y } {
-	
 	variable measurement_annotation_handle
 	variable transect
 	variable tlength 
@@ -285,11 +286,12 @@ proc GmProfile::drawtransect { mapcan x y } {
     variable linex2
     variable liney2
     variable pcoords
+    global mon
 	    
 	set scrxmov $x
 	set scrymov $y
-	set eastcoord [eval MapCanvas::scrx2mape $x]
-	set northcoord [eval MapCanvas::scry2mapn $y]
+	set eastcoord [eval MapCanvas::scrx2mape $mon $x]
+	set northcoord [eval MapCanvas::scry2mapn $mon $y]
 	set coords "$eastcoord,$northcoord"
 	set xc [$mapcan canvasx $x]
 	set yc [$mapcan canvasy $y]
@@ -324,6 +326,7 @@ proc GmProfile::getcoords { mapcan } {
     variable north2
     variable pcoords
     variable pcoordslist
+    global mon
 		
 	# draw cumulative line
 	$mapcan addtag tottransect withtag \
@@ -332,10 +335,10 @@ proc GmProfile::getcoords { mapcan } {
 
 	# get line endpoints in map coordinates
 	
-	set east1  [MapCanvas::scrx2mape $linex1]
-	set north1 [MapCanvas::scry2mapn $liney1]
-	set east2  [MapCanvas::scrx2mape $linex2]
-	set north2 [MapCanvas::scry2mapn $liney2]
+	set east1  [MapCanvas::scrx2mape $mon $linex1]
+	set north1 [MapCanvas::scry2mapn $mon $liney1]
+	set east2  [MapCanvas::scrx2mape $mon $linex2]
+	set north2 [MapCanvas::scry2mapn $mon $liney2]
 	
 	# coordinates for use in r.profile
 	append pcoords "," $east2 "," $north2
