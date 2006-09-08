@@ -11,26 +11,23 @@
 
 namespace eval MapToolBar {
 	variable toolbar
+	variable array maptools
 }
 
 
 ###############################################################################
 
 proc MapToolBar::create { tb } {
-	global gmpath
 	global bgcolor
 	global mon
 	global env
-	global maptools
-	global selclr
-	global mapfile
 	global iconpath
-	global bgcolor
 	variable toolbar
+	variable maptools
 
 	set selclr #88aa88
 	set toolbar $tb
-	set maptools "pointer"
+	set maptools($mon) "pointer"
 
 	# DISPLAY AND MONITOR SELECTION
 	set bbox1 [ButtonBox $toolbar.bbox1 -spacing 0 ]
@@ -74,7 +71,7 @@ proc MapToolBar::create { tb } {
 	set pointer [radiobutton $tb.pointer \
 		-image [image create photo -file "$iconpath/gui-pointer.gif"] \
 		-command "MapCanvas::stoptool $mon; MapCanvas::pointer $mon" \
-		-variable maptools -value pointer  -relief flat -offrelief flat -overrelief raised \
+		-variable maptools($mon) -value pointer  -relief flat -offrelief flat -overrelief raised \
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
 		-activebackground $bgcolor -highlightbackground $bgcolor  ]
 	DynamicHelp::register $pointer balloon [G_msg "Pointer"]
@@ -83,7 +80,7 @@ proc MapToolBar::create { tb } {
 	set zoomin [radiobutton $tb.zoomin \
 		-image [image create photo -file "$iconpath/gui-zoom_in.gif"] \
 		-command "MapCanvas::stoptool $mon; MapCanvas::zoombind $mon 1" \
-		-variable maptools -value zoomin -relief flat -offrelief flat -overrelief raised \
+		-variable maptools($mon) -value zoomin -relief flat -offrelief flat -overrelief raised \
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]
 	DynamicHelp::register $zoomin balloon [G_msg "Zoom In"]
@@ -92,7 +89,7 @@ proc MapToolBar::create { tb } {
 	set zoomout [radiobutton $tb.zoomout \
 		-image [image create photo -file "$iconpath/gui-zoom_out.gif"] \
 		-command "MapCanvas::stoptool $mon; MapCanvas::zoombind $mon -1" \
-		-variable maptools -value zoomout  -relief flat -offrelief flat -overrelief raised \
+		-variable maptools($mon) -value zoomout  -relief flat -offrelief flat -overrelief raised \
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]
 	DynamicHelp::register $zoomout balloon [G_msg "Zoom Out"]
@@ -101,7 +98,7 @@ proc MapToolBar::create { tb } {
 	set pan [radiobutton $tb.pan \
 		-image [image create photo -file "$iconpath/gui-pan.gif"] \
 		-command "MapCanvas::stoptool $mon; MapCanvas::panbind $mon" \
-		-variable maptools -value pan  -relief flat -offrelief flat -overrelief raised \
+		-variable maptools($mon) -value pan  -relief flat -offrelief flat -overrelief raised \
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]
 	DynamicHelp::register $pan balloon [G_msg "Pan"]
@@ -173,7 +170,7 @@ proc MapToolBar::create { tb } {
 	set query [radiobutton $tb.query \
 		-image [image create photo -file "$iconpath/gui-query.gif"] \
 		-command "MapCanvas::stoptool $mon; MapCanvas::querybind $mon" \
-		-variable maptools -value query	 -relief flat -offrelief flat -overrelief raised \
+		-variable maptools($mon) -value query	 -relief flat -offrelief flat -overrelief raised \
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]
 	DynamicHelp::register $query balloon [G_msg "Query"]
@@ -182,7 +179,7 @@ proc MapToolBar::create { tb } {
 	set measure [radiobutton $tb.measure \
 		-image [image create photo -file "$iconpath/gui-measure.gif"]  \
 		-command "MapCanvas::stoptool $mon; MapCanvas::measurebind $mon"\
-		-variable maptools -value measure -relief flat -offrelief flat -overrelief raised \
+		-variable maptools($mon) -value measure -relief flat -offrelief flat -overrelief raised \
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]
 	DynamicHelp::register $measure balloon [G_msg "Measure"]
@@ -279,9 +276,10 @@ proc MapToolBar::create { tb } {
 ###############################################################################
 # changes button on keypress
 proc MapToolBar::changebutton { rbname } {
-	global maptools
+	global mon
+	variable maptools
 
-	set maptools $rbname
+	set maptools($mon) $rbname
 }
 
 ###############################################################################
@@ -291,9 +289,8 @@ proc MapToolBar::changebutton { rbname } {
 proc MapToolBar::savefile { type quality } {
 	global env
 	global mon
-	global outfile
-	global tmpdir
-
+	
+	set outfile($mon) $MapCanvas::outfile($mon)
 
 	if { [info exists HOME] } {
 		set dir $env(HOME)

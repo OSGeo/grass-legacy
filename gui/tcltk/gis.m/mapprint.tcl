@@ -12,61 +12,76 @@
 
 
 namespace eval psprint {
+	variable docht
+	variable docwd
+	variable epsfile
+	variable format
+	variable gsdevices
+	variable gsexists
+	variable gspresent
+	variable gsstate
+	variable ldevice
+	variable mbottom
+	variable mleft
+	variable mright
+	variable mtop
+	variable orient
+	variable paper
+	variable paper_preset
+	variable pdffile
+	variable pght
+	variable pgwd
+	variable printer
+	variable printmode
+	variable res
+	variable tmppngfile
+	variable tmpppmfile
+	variable tmppsfile 
+	variable tmpscript 
+    variable PPap 
+    variable PVar 
+    variable PView
+    variable PWid 
 	global array can # mon
-	global pgwd
-	global pght
-	global paper
-	global paper_preset
-	global printmode
-	global printer
-	global gsexists
-	global res
-	global format
-	global orient
-	global epsfile
-	global pdffile
-	global tmpscript 
-	global tmppsfile 
-	global tmpppmfile
 }
 
 
 #initialize variables
 proc psprint::init { } {
-	global pgwd
-	global pght
-	global docwd
-	global docht
-	global paper
-	global paper_preset
-	global printmode
-	global printer
-	global gsexists
-	global orient
-	global res
+	variable pgwd
+	variable pght
+	variable docwd
+	variable docht
+	variable paper
+	variable paper_preset
+	variable printmode
+	variable printer
+	variable gsexists
+	variable orient
+	variable mleft
+	variable mright
+	variable mtop
+	variable mbottom
+	variable gsstate
+	variable ldevice
+	variable gsdevices
+	variable res
 	global mon
-	global mleft
-	global mright
-	global mtop
-	global mbottom
-	global gsstate
-	global ldevice
-	global gsdevices
 
-    set pgwd 8.5
-    set pght 11
-    set docwd 7.5
-    set docht 10
-    set paper "preset"
-    set paper_preset "letter"
-    set printer ""
-    set gsexists 1
-    set orient "landscape"
-    set res 300
-	set mleft 1
-	set mright 1
-	set mtop 1
-	set mbottom 1
+    set psprint::pgwd 8.5
+    set psprint::pght 11
+    set psprint::docwd 7.5
+    set psprint::docht 10
+    set psprint::paper "preset"
+    set psprint::paper_preset "letter"
+    set psprint::printer ""
+    set psprint::gsexists 1
+    set psprint::orient "landscape"
+    set psprint::res 300
+	set psprint::mleft 1
+	set psprint::mright 1
+	set psprint::mtop 1
+	set psprint::mbottom 1
 	
 	# check for ghostscript
 	if ![catch {set input [exec gs -help]}] {
@@ -77,26 +92,27 @@ proc psprint::init { } {
 		regsub -all { } $gsdevices \n gsdevices
 		regsub -all \n\n $gsdevices \n gsdevices
 	} else {
-		set gsdevices ""
+		set gsdevices "none available"
 		set gsstate "disabled"
 		set printmode "eps"
 	}
+		puts "gsdevices: $gsdevices"
 }	
 
 # calculate paper size and document size on paper (all in inches)  
 proc psprint::paper { } {
-	global paper
-	global paper_preset
-	global printmode
-	global pgwd
-	global pght
-	global mleft
-	global mright
-	global mtop
-	global mbottom
-	global docwd
-	global docht
-	global orient
+	variable paper
+	variable paper_preset
+	variable printmode
+	variable pgwd
+	variable pght
+	variable mleft
+	variable mright
+	variable mtop
+	variable mbottom
+	variable docwd
+	variable docht
+	variable orient
     
     # set paper dimensions
 	if { $paper == "preset" } {
@@ -156,9 +172,9 @@ proc psprint::paper { } {
 
 # initialize tmpfiles for poscript printing
 proc psprint::init_tmpfiles { } {
-	global tmpscript
-	global tmppsfile
-	global tmppngfile
+	variable tmpscript
+	variable tmppsfile
+	variable tmppngfile
 
     # get temporary file for postscript printing
     set pid [ pid ]
@@ -171,7 +187,7 @@ proc psprint::init_tmpfiles { } {
 
 # show gs printer devices in output window
 proc psprint::show_devices { } {
-	global gsdevices
+	variable gsdevices
 
 	set ah [monitor_annotation_start {} "Ghostscript Output Devices" {}]
 	monitor_annotate $ah $gsdevices
@@ -180,28 +196,28 @@ proc psprint::show_devices { } {
 
 # create printer options window
 proc psprint::window { cm cv cx cy } {
-	global pgwd
-	global pght
-	global paper
-	global paper_preset
-	global printmode
-	global printer
-	global gsexists
-	global epsfile
-	global pdffile
-	global orient
-	global res
-	global pgwd
-	global pght
+	variable pgwd
+	variable pght
+	variable paper
+	variable paper_preset
+	variable printmode
+	variable printer
+	variable gsexists
+	variable epsfile
+	variable pdffile
+	variable orient
+	variable res
+	variable pgwd
+	variable pght
+	variable mleft
+	variable mright
+	variable mtop
+	variable mbottom
+	variable gspresent
+	variable ldevice
+	variable gsdevices
+	variable gsstate
 	global mon
-	global mleft
-	global mright
-	global mtop
-	global mbottom
-	global gspresent
-	global ldevice
-	global gsdevices
-	global gsstate
 	
     set mon $cm
 	
@@ -225,10 +241,10 @@ proc psprint::window { cm cv cx cy } {
 
 	# preset paper sizes (from ghostscript)
     set row [ frame $PWid(paper).row1 ]
-    radiobutton $row.a -variable paper -value "preset" \
+    radiobutton $row.a -variable psprint::paper -value "preset" \
 		-highlightthickness 0 
     Label $row.b -anchor w -text [G_msg "Preset paper type"]
-    ComboBox $row.c -label "" -width 20  -textvariable paper_preset \
+    ComboBox $row.c -label "" -width 20  -textvariable psprint::paper_preset \
 		-values {"letter" "a4" "legal" "11x17" "a3" "ledger" "a0" "a1" "a2" } \
 		-modifycmd psprint::paper
     pack $row.a $row.b $row.c -side left;
@@ -236,26 +252,26 @@ proc psprint::window { cm cv cx cy } {
 
 	# custom paper sizes
     set row [ frame $PWid(paper).row2 ]
-    radiobutton $row.a -variable paper -value "custom" \
+    radiobutton $row.a -variable psprint::paper -value "custom" \
 		-highlightthickness 0
     Label $row.b -anchor w -text [G_msg "Custom paper size"]
     Label $row.c -anchor w -text [G_msg "width:"]
-    Entry $row.d -width 10 -textvariable pgwd
+    Entry $row.d -width 10 -textvariable psprint::pgwd
     Label $row.e -anchor w -text [G_msg "  height:"]
-    Entry $row.f -width 10 -textvariable pght 
+    Entry $row.f -width 10 -textvariable psprint::pght 
     pack $row.a $row.b $row.c $row.d $row.e $row.f -side left;
     pack $row -side top -fill x -expand no -anchor n
     
 	#margins
     set row [ frame $PWid(paper).row3]
     Label $row.a -anchor w -text [G_msg "Margins  left:"]
-    Entry $row.b -width 10 -textvariable mleft 
+    Entry $row.b -width 10 -textvariable psprint::mleft 
     Label $row.c -anchor w -text [G_msg " right:"] 
-    Entry $row.d -width 10 -textvariable mright 
+    Entry $row.d -width 10 -textvariable psprint::mright 
     Label $row.e -anchor w -text [G_msg " top:"]
-    Entry $row.f -width 10 -textvariable mtop 
+    Entry $row.f -width 10 -textvariable psprint::mtop 
     Label $row.g -anchor w -text [G_msg " bottom:"]
-    Entry $row.h -width 10 -textvariable mbottom 
+    Entry $row.h -width 10 -textvariable psprint::mbottom 
 
     pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g $row.h -side left;
 	pack $row -side top -fill x -expand no -anchor n
@@ -263,11 +279,11 @@ proc psprint::window { cm cv cx cy } {
     # portrait or landscape
     set row [ frame $PWid(paper).row4 ]
 	LabelEntry $row.a -label [G_msg "Resolution (dpi) for printing and PDF "] \
-		-textvariable res -width 4
+		-textvariable psprint::res -width 4
     Label $row.b -anchor w -text "  "
-    radiobutton $row.c -variable orient -value "landscape" \
+    radiobutton $row.c -variable psprint::orient -value "landscape" \
 		-text "landscape mode" -highlightthickness 0
-    radiobutton $row.d -variable orient -value "portrait" \
+    radiobutton $row.d -variable psprint::orient -value "portrait" \
 		-text "portrait mode  " -highlightthickness 0
     pack $row.a $row.b $row.c $row.d -side left;
     pack $row -side top -fill x -expand no -anchor n
@@ -278,48 +294,44 @@ proc psprint::window { cm cv cx cy } {
 
     # LPR printer
     set row [ frame $PWid(output).lpr ]
-    radiobutton $row.a -variable printmode -value "lpr" \
-    	-state $gsstate -highlightthickness 0
+    radiobutton $row.a -variable psprint::printmode -value "lpr" \
+    	-state $psprint::gsstate -highlightthickness 0
     Label $row.b -anchor w -text [G_msg "Send to LPR printer*"] \
-    	-state $gsstate
+    	-state $psprint::gsstate
     pack $row.a $row.b -side left;
     pack $row -side top -fill x -expand no -anchor n
 
     # Postscript printer
     set row [ frame $PWid(output).psprinter ]
-    radiobutton $row.a -variable printmode -value "psprint" \
-    	-state $gsstate -highlightthickness 0
+    radiobutton $row.a -variable psprint::printmode -value "psprint" \
+    	-state $psprint::gsstate -highlightthickness 0
     Label $row.b -anchor w -text [G_msg "Send to postscript device* "] \
-    	-state $gsstate
-    Entry $row.c -width 30 -textvariable printer  \
-    	-state $gsstate
-    Button $row.d -text [G_msg "list devices"] \
-    	-command "psprint::show_devices" \
-		-helptext [G_msg "list ghostscript output devices"] \
-    	-state $gsstate
-    pack $row.a $row.b $row.c $row.d -side left;
+    	-state $psprint::gsstate
+    ComboBox $row.c -width 20 -textvariable psprint::printer  \
+    	-values $psprint::gsdevices -editable 0 -entrybg white
+    pack $row.a $row.b $row.c -side left;
     pack $row -side top -fill x -expand no -anchor n
 
     # PDF file
     set row [ frame $PWid(output).pdffile]
-    radiobutton $row.a -variable printmode -value "pdf" \
-    	-state $gsstate -highlightthickness 0 
+    radiobutton $row.a -variable psprint::printmode -value "pdf" \
+    	-state $psprint::gsstate -highlightthickness 0 
     Label $row.b -anchor w -text [G_msg "Save to PDF file*              "]  \
-    	-state $gsstate 
-    Entry $row.c -width 30 -textvariable pdffile  -state $gsstate
-    Button $row.d -text [G_msg "Browse"]  -command { set pdffile \
+    	-state $psprint::gsstate 
+    Entry $row.c -width 30 -textvariable psprint::pdffile  -state $gsstate
+    Button $row.d -text [G_msg "Browse"]  -command { set psprint::pdffile \
 		[tk_getSaveFile -title "Output PDF file" -defaultextension ".pdf"]} \
-    	-state $gsstate
+    	-state $psprint::gsstate
     pack $row.a $row.b $row.c $row.d -side left;
     pack $row -side top -fill x -expand no -anchor n
 
     # EPS file
     set row [ frame $PWid(output).epsfile ]
-    radiobutton $row.a -variable printmode -value "eps" \
+    radiobutton $row.a -variable psprint::printmode -value "eps" \
      	-highlightthickness 0 
     Label $row.b -anchor w -text [G_msg "Save to EPS file               "] 
-    Entry $row.c -width 30 -textvariable epsfile 
-    Button $row.d -text [G_msg "Browse"] -command { set epsfile \
+    Entry $row.c -width 30 -textvariable psprint::epsfile 
+    Button $row.d -text [G_msg "Browse"] -command { set psprint::epsfile \
            [ tk_getSaveFile -title "Output EPS file" -defaultextension ".eps"] }
     pack $row.a $row.b $row.c $row.d -side left;
     pack $row -side top -fill x -expand no -anchor n
@@ -340,24 +352,24 @@ proc psprint::window { cm cv cx cy } {
 }
 
 proc psprint::print { cv } {
-	global paper
-	global paper_preset
-	global printmode
-	global printer
-	global gsexists
-	global res
-	global format
-	global orient
-	global epsfile
-	global pdffile
-	global tmppsfile 
-	global tmppngfile
+	variable paper
+	variable paper_preset
+	variable printmode
+	variable printer
+	variable gsexists
+	variable res
+	variable format
+	variable orient
+	variable epsfile
+	variable pdffile
+	variable tmppsfile 
+	variable tmppngfile
+	variable pgwd
+	variable pght
+	variable docwd
+	variable docht
 	global gmpath
-	global pgwd
-	global pght
 	global mon
-	global docwd
-	global docht
     
     psprint::init_tmpfiles
    	psprint::paper
@@ -373,6 +385,8 @@ proc psprint::print { cv } {
 	set h [expr round($pght * $res)]
 	set format "-g$w"
 	append format "x$h"
+	
+	puts "printmode = $printmode"
 
 	# lpr printing		
     if { $printmode == "lpr" } {
@@ -394,6 +408,7 @@ proc psprint::print { cv } {
 		close $printmap
 		exec cat $tmppsfile | gs  $format -sDEVICE=png16m -r$res -sNOPAUSE -sOutputFile=$tmppngfile -dBATCH -  
 		exec lpr $tmppngfile 
+		puts "lpr printing"
     }
 
 	# postsript printing via ghostsript
@@ -415,6 +430,7 @@ proc psprint::print { cv } {
 		after 500
 		close $printmap
 		exec cat $tmppsfile | gs  $format -sDEVICE=$printer -r$res -sNOPAUSE -dBATCH - 
+		puts "ps printing"
 	}
 
 	# output to pdf file via ghostscript	
@@ -436,6 +452,7 @@ proc psprint::print { cv } {
 		after 500
 		close $printmap
 		exec cat $tmppsfile | gs  $format -sDEVICE=pdfwrite -r$res -sNOPAUSE -sOutputFile=$pdffile -dBATCH - 
+		puts "pdf printing"
 	}
 
 	# output to eps file
@@ -445,6 +462,7 @@ proc psprint::print { cv } {
 		} else {
 			$cv postscript -file "$epsfile" -rotate 1
 		}
+		puts "eps printing"
 	}
 	
 	psprint::clean
@@ -452,7 +470,10 @@ proc psprint::print { cv } {
 
 
 proc psprint::set_option { key value } {
-    global PWid PVar PPap PView
+    variable PWid 
+    variable PVar 
+    variable PPap 
+    variable PView
 
     set PVar($key) $value
 
@@ -460,8 +481,8 @@ proc psprint::set_option { key value } {
 
 # Delete temporary files
 proc psprint::clean {  } {
-    global tmppsfile
-    global tmppngfile
+    variable tmppsfile
+    variable tmppngfile
 
     file delete $tmppsfile
     file delete $tmppngfile

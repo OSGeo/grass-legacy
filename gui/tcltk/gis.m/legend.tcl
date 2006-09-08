@@ -29,7 +29,7 @@ proc GmLegend::create { tree parent } {
     variable optlist
     variable first
 	variable dup
-    global gmpath
+    
 
     set node "legend:$count"
 	set dup($count) 1
@@ -117,7 +117,6 @@ proc GmLegend::select_map { id } {
 # legend options
 proc GmLegend::options { id frm } {
     variable opt
-    global gmpath
     global bgcolor
 
     # Panel heading
@@ -265,11 +264,6 @@ proc GmLegend::save { tree depth node } {
 # render and composite legend layer
 proc GmLegend::display { node mod } {
     global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
     variable optlist
     variable lfile 
     variable lfilemask

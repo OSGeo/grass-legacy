@@ -27,7 +27,6 @@ proc GmArrows::create { tree parent } {
     variable opt
     variable count
     variable dup
-    global gmpath
     global iconpath
     global mon
 
@@ -123,7 +122,6 @@ proc GmArrows::select_magmap { id } {
 # display histogram options
 proc GmArrows::options { id frm } {
     variable opt
-    global gmpath
     global bgcolor
     global iconpath
 
@@ -247,11 +245,6 @@ proc GmArrows::save { tree depth node } {
 ###############################################################################
 proc GmArrows::display { node mod} {
     global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
     variable optlist
     variable lfile 
     variable lfilemask
@@ -259,11 +252,6 @@ proc GmArrows::display { node mod} {
     variable tree
     variable dup
     variable count
-
-    set currmon ""
-    set input ""
-    global gmpath
-    global mon
 
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
@@ -312,7 +300,6 @@ proc GmArrows::duplicate { tree parent node id } {
     variable opt
     variable count
     variable dup
-    global gmpath
     global iconpath
     global mon
     

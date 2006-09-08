@@ -270,7 +270,6 @@ proc GmVector::select_symbol { id } {
 # display and set vector options
 proc GmVector::options { id frm } {
     variable opt
-    global gmpath
     global bgcolor
     global iconpath
     
@@ -544,7 +543,7 @@ proc GmVector::vecttype { vect } {
 
 	set rv [open "|v.info map=$vect" r]
 	set vinfo [read $rv]
-	close $rv
+	catch {close $rv}
 	regexp {points:       (\d*)} $vinfo string points
 	if { $points > 0} {
 		set vecttype "points"
@@ -560,11 +559,6 @@ proc GmVector::vecttype { vect } {
 # display vector map and output to graphic file for compositing
 proc GmVector::display { node mod } {
     global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
     variable optlist
     variable lfile 
     variable lfilemask
@@ -681,7 +675,6 @@ proc GmVector::mapname { node } {
     variable opt
     variable tree
     global mon
-    global vdist
     
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
@@ -708,8 +701,6 @@ proc GmVector::WorkOnVector { node mod } {
     if { ! ( $opt($id,1,_check) ) } { return } 
 
     if { $opt($id,1,vect) == "" } { return } 
-
-    global dmpath 
     
     if {[Gm::element_exists "vector" $opt($id,1,vect)]} {
         set cmd [list v.digit "map=$opt($id,1,vect)"]

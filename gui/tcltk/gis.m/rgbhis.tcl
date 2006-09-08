@@ -27,7 +27,6 @@ proc GmRgbhis::create { tree parent } {
     variable opt
     variable count
     variable dup
-    global gmpath
     global iconpath
     global mon
 
@@ -124,7 +123,6 @@ proc GmRgbhis::select_map3 { id } {
 # display RGB and HIS options
 proc GmRgbhis::options { id frm } {
     variable opt
-    global gmpath
     global bgcolor
     global iconpath
 
@@ -228,11 +226,6 @@ proc GmRgbhis::save { tree depth node } {
 ###############################################################################
 proc GmRgbhis::display { node mod} {
     global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
     variable optlist
     variable lfile 
     variable lfilemask
@@ -243,7 +236,7 @@ proc GmRgbhis::display { node mod} {
     
     set line ""
     set input ""
-    global gmpath
+    
     set cmd1 ""
     set cmd2 ""
 
@@ -298,7 +291,6 @@ proc GmRgbhis::duplicate { tree parent node id } {
     variable opt
     variable count
     variable dup
-    global gmpath
     global iconpath
     global mon
 
