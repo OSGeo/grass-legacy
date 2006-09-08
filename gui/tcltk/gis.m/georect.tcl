@@ -40,8 +40,8 @@ namespace eval GRMap {
     variable initwd
     variable initht
     variable grcursor
-    variable win
     variable tmpdir # TMP directory for raster display images used in canvas
+    variable msg # status bar message
 
     # variables for coordinate conversions and zooming
     variable linex1
@@ -62,6 +62,10 @@ namespace eval GRMap {
     variable scr_ns
     variable map2scrx_conv
     variable map2scry_conv
+	variable areaX1 
+	variable areaY1 
+	variable areaX2 
+	variable areaY2
 
     #variable grcoords # geographic coordinates from mouse click
     variable grcoords_mov # geographic coordinates from mouse movement to display in indicator widget
@@ -100,12 +104,13 @@ namespace eval GRMap {
     variable to_x
     variable to_y
 
-
     # gcp variables
     # use GCP in RMS calculations and rectification indexed by gcpnum
     variable array usegcp
     # entry widget for GCP xy coordinates indexed by gcpnum
     variable array xy
+    # gcp form has been created and can be accessed
+    variable drawform
     # entry widget for GCP georectified coordinates indexed by gcpnum
     variable array geoc
     # checkbutton widget for GCP use indexed by gcpnum
@@ -151,36 +156,40 @@ namespace eval GRMap {
     # rectification method (1,2,3)
     variable rectorder
 
-    #initialize variables
-    set initwd 640.0
-    set initht 480.0
-    set east 0.0
-    set north 0.0
-    set currgdb $env(GISDBASE)
-    set currloc $env(LOCATION_NAME)
-    set currmset $env(MAPSET)
-    set xygdb ""
-    set xyloc ""
-    set xymset ""
-    set xygroup ""
-    set xymap ""
-    set xyvect ""
-    set maptype ""
-    set xyvect ""
-    set selftarget 0
-    set rectorder 1
-    set errorlist ""
-    set fwd_rmserror 0.0
-    set rev_rmserror 0.0
-}
+	# initialize variables
+	set gcpnum 1
+	set chk($gcpnum) ""
+	set currgdb $env(GISDBASE)
+	set currloc $env(LOCATION_NAME)
+	set currmset $env(MAPSET)
+	set east 0.0
+	set errorlist ""
+	set fwd_error($gcpnum) ""
+	set fwd_rmserror 0.0
+	set geoc($gcpnum) ""
+	set gregion ""
+	set gregionproj ""
+	set initht 480.0
+	set initwd 640.0
+	set maptype ""
+	set north 0.0
+	set rectorder 1
+	set regionstr ""
+	set rev_error($gcpnum) ""
+	set rev_rmserror 0.0
+	set selftarget 0
+	set usegcp($gcpnum) 1
+	set xy($gcpnum) ""
+	set xygdb ""
+	set xygroup ""
+	set xyloc ""
+	set xymap ""
+	set xymset ""
+	set xyvect ""
+	set drawform 0
 
-set regionstr ""
-set initwd 640.0
-set initht 480.0
-set east 0.0
-set north 0.0
-set gregion ""
-set gregionproj ""
+
+}
 
 
 ###############################################################################
@@ -689,7 +698,6 @@ proc GRMap::refmap { } {
     variable initwd
     variable initht
     variable grcursor
-    variable win
     variable grcanvas_w
     variable grcanvas_h
     variable mappid
@@ -704,11 +712,9 @@ proc GRMap::refmap { } {
     variable xygroup
     variable xymap
     variable maptype
-
+    variable msg
     global env
-    global currmon
     global drawprog
-    global GRMap::msg
     global grcoords
 
     if { $xymset=="" || $xygroup=="" || $xymap=="" } {
@@ -729,7 +735,6 @@ proc GRMap::refmap { } {
     set env(GRASS_WIDTH) $initwd
     set env(GRASS_HEIGHT) $initht
     set drawprog 0
-    set win ""
 
     # Make sure that we are using the WIND file for everything except displays
     if {[info exists env(WIND_OVERRIDE)]} {unset env(WIND_OVERRIDE)}
@@ -788,14 +793,6 @@ proc GRMap::refmap { } {
             set northcoord [eval GRMap::scry2mapn %y]
             set grcoords "$eastcoord $northcoord"
     }
-
-    # When a monitor gets the keyboard focus
-    # switch monitors in the tree if this isn't the selected one
-    # I suspect that setting win is unnecessary (where is it used?)
-    bind .mapgrcan <FocusIn> "
-            global win env
-            set win .mapgrcan
-            "
 
     # Displays geographic coordinates in indicator window when cursor moved across canvas
     bind $grcan <Motion> {
@@ -888,7 +885,6 @@ proc GRMap::refmap { } {
     GRMap::gcpwin
 
     # bindings for closing windows
-    #bind .mapgrcan <Destroy> "GRMap::cleanup %W"
     bind .mapgrcan <Destroy> {
         if { "%W" == ".mapgrcan" } { GRMap::cleanup }
     }
@@ -913,22 +909,11 @@ proc GRMap::gcpwin {} {
     variable rev_error
     variable fwd_rmserror
     variable rev_rmserror
+    variable drawform
     global xyentry
     global geoentry
     global grcoords
     global b1coords
-
-    # initialize variables
-    set gcpnum 1
-    set usegcp($gcpnum) 1
-    set xy($gcpnum) ""
-    set geoc($gcpnum) ""
-    set chk($gcpnum) ""
-    set rectorder 1
-    set fwd_error($gcpnum) ""
-    set rev_error($gcpnum) ""
-    set $fwd_rmserror 0.0
-    set $rev_rmserror 0.0
 
     toplevel .gcpwin
 
@@ -1040,7 +1025,6 @@ proc GRMap::gcpwin {} {
     wm deiconify .gcpwin
 
     # cleanup for window closing
-    #bind .gcpwin <Destroy> "GRMap::cleanup %W"
     bind .gcpwin <Destroy> {
         if { "%W" == ".gcpwin" } { GRMap::cleanup }
     }
@@ -1442,37 +1426,6 @@ proc GRMap::drawmap { } {
     GRMap::runprograms [expr {$mymodified != 0}]
 }
 
-# set up driver geometry and settings
-proc GRMap::driversettings { } {
-    variable grcanvas_h
-    variable grcanvas_w
-    variable driver_w
-    variable driver_h
-    variable grfile
-    variable xyloc
-    variable xymset
-    variable monitor_zooms
-    global env
-
-    set driver_h $grcanvas_h
-    set driver_w $grcanvas_w
-
-    #set display environment
-    # First, switch to xy mapset
-    GRMap::setxyenv $xymset $xyloc
-
-    set env(GRASS_WIDTH) "$driver_w"
-    set env(GRASS_HEIGHT) "$driver_h"
-    set env(GRASS_PNGFILE) "$grfile"
-    set env(GRASS_BACKGROUNDCOLOR) "ffffff"
-    set env(GRASS_TRANSPARENT) "FALSE"
-    set env(GRASS_PNG_AUTO_WRITE) "TRUE"
-    set env(GRASS_TRUECOLOR) "TRUE"
-
-    # Return to georectified mapset
-    GRMap::resetenv
-}
-
 # Run the programs to clear the map and draw all of the layers
 proc GRMap::runprograms { mod } {
     variable grcan
@@ -1482,26 +1435,50 @@ proc GRMap::runprograms { mod } {
     variable grfile
     variable tmpdir
     variable xygroup
+    variable xygdb
     variable xyloc
     variable xymset
     variable xymap
     variable maptype
     variable xygroup
     variable gregionproj
+    variable msg
+    variable zoom_attrs
+    variable gcpnum
+	variable xy
 
     global env
     global drawprog
-    global GRMap::msg
 
     # First, switch to xy mapset
     GRMap::setxyenv $xymset $xyloc
 
     set drawprog 0
 
-    # Create a settings string to use with GRASS_WIND
-    set gregion $gregionproj
-    foreach {n s e w ewres nsres} [GRMap::currentzoom] {break}
-    append gregion "north: $n; south: $s; east: $e; west: $w; e-w resol: $ewres; n-s resol: $nsres"
+	set gregion ""
+
+	# Create a settings string to use with GRASS_WIND. 
+	# First get the current region values in normal number form (including decimal degrees)
+	set values [GRMap::currentzoom]
+	set options {}
+	foreach attr $zoom_attrs value $values {
+		lappend options "$attr=$value"
+	}
+
+	# Now use the region values to get the region printed back out in -p format
+	# including lat long now as dd:mm:ss
+	if {![catch {open [concat "|g.region" "-up" $options] r} input]} {
+		while {[gets $input line] >= 0} {
+			regexp -nocase {^([a-z]+)\:[ ]+(.*)$} $line trash key value
+			set parts($key) $value
+		}
+		close $input
+		# Finally put this into wind file format to use with GRASS_REGION
+		regexp -nocase {^.* (\(.*\))} $parts(projection) trash end
+		set parts(projection) [string trim $parts(projection) $end]
+
+		set gregion "projection:$parts(projection); zone:$parts(zone); north:$parts(north); south:$parts(south); east:$parts(east); west:$parts(west); e-w resol:$parts(ewres);	 n-s resol:$parts(nsres)"
+	}
 
     set GRMap::msg "please wait..."
     $grmapframe showstatusbar progression
@@ -1543,6 +1520,45 @@ proc GRMap::runprograms { mod } {
             -tag gr
     cd $currdir
 
+	#draw gcp marks
+	if {$xy($gcpnum) != ""} {
+		#draw GCP marks from GCP form
+		for {set gcpnum 1} {$gcpnum < 51 } { incr gcpnum } {
+			if { [$xy($gcpnum) get] != "" } {
+				set xyfields [split [$xy($gcpnum) get] { }]
+				set mapx [lindex $xyfields 0]
+				set mapy [lindex $xyfields 1]
+				set x [eval GRMap::mape2scrx $mapx]
+				set y [eval GRMap::mapn2scry $mapy]
+				GRMap::markgcp $x $y
+			}
+        }
+	} else {
+		#draw GCP marks from any existing POINTS file
+		set gcpfile "$xygdb/$xyloc/$xymset/group/$xygroup/POINTS"
+		if {[file exists $gcpfile] } {
+			# do the import
+			set gcpnum 1
+			set pfile [open $gcpfile]
+			set points [read $pfile]
+			close $pfile
+			regsub -all {[ ]+} $points " " points
+			set plines [split $points "\n"]
+			foreach gcpline $plines {
+				if {[string match {\#*} $gcpline]} continue
+				if {$gcpline == "" } continue
+				set gcpline [string trim $gcpline " "]
+				set fields [split $gcpline { }]
+				# assign variables            
+				set mapx [lindex $fields 0]      
+				set mapy  [lindex $fields 1]
+				set x [eval GRMap::mape2scrx $mapx]
+				set y [eval GRMap::mapn2scry $mapy]
+				GRMap::markgcp $x $y
+			}
+		}
+	}
+	
     set drawprog 100
 
     GRMap::coordconv
@@ -1557,6 +1573,38 @@ proc GRMap::runprograms { mod } {
 
 }
 
+# set up driver geometry and settings
+proc GRMap::driversettings { } {
+    variable grcanvas_h
+    variable grcanvas_w
+    variable driver_w
+    variable driver_h
+    variable grfile
+    variable xyloc
+    variable xymset
+    variable monitor_zooms
+    global env
+
+    set driver_h $grcanvas_h
+    set driver_w $grcanvas_w
+
+    #set display environment
+    # First, switch to xy mapset
+    GRMap::setxyenv $xymset $xyloc
+
+    set env(GRASS_WIDTH) "$driver_w"
+    set env(GRASS_HEIGHT) "$driver_h"
+    set env(GRASS_PNGFILE) "$grfile"
+    set env(GRASS_BACKGROUNDCOLOR) "ffffff"
+    set env(GRASS_TRANSPARENT) "FALSE"
+    set env(GRASS_PNG_AUTO_WRITE) "TRUE"
+    set env(GRASS_TRUECOLOR) "TRUE"
+
+    # Return to georectified mapset
+    GRMap::resetenv
+}
+
+
 ###############################################################################
 # map display server
 # The job of these procedures is to make sure that:
@@ -1567,7 +1615,8 @@ proc GRMap::display_server {} {
     variable redrawrequest
     variable gcpnum
     variable xy
-
+    variable drawform
+    
     set gcpcnt 0
 
     if {$redrawrequest} {
@@ -1575,18 +1624,6 @@ proc GRMap::display_server {} {
         set redrawrequest 0
         # Redraw the monitor canvas
         GRMap::drawmap
-        #draw gcp marks
-        for {set gcpnum 1} {$gcpnum < 51 } { incr gcpnum } {
-            if { [$xy($gcpnum) get] != "" } {
-                set xyfields [split [$xy($gcpnum) get] { }]
-                set mapx [lindex $xyfields 0]
-                set mapy [lindex $xyfields 1]
-                set x [eval GRMap::mape2scrx $mapx]
-                set y [eval GRMap::mapn2scry $mapy]
-                GRMap::markgcp $x $y
-                incr gcpcnt
-            }
-        }
     }
 
     # Do me again in a short period of time.
@@ -1642,7 +1679,7 @@ proc GRMap::erase { } {
 
 # stop display management tools
 proc GRMap::stoptool { } {
-    global GRMap::msg
+    variable msg
     variable grcan
     variable maptype
     variable xygroup
@@ -1857,9 +1894,12 @@ proc GRMap::zoom_back { } {
 # zoom bindings
 proc GRMap::zoombind { zoom } {
     variable grcan
+    variable msg
+	variable areaX1 
+	variable areaY1 
+	variable areaX2 
+	variable areaY2
     global grcoords
-    global GRMap::msg
-    global areaX1 areaY1 areaX2 areaY2
 
     # initialize zoom rectangle corners
 
@@ -1893,7 +1933,10 @@ proc GRMap::zoombind { zoom } {
 
 # start zoom rectangle
 proc GRMap::markzoom { x y} {
-    global areaX1 areaY1 areaX2 areaY2
+	variable areaX1 
+	variable areaY1 
+	variable areaX2 
+	variable areaY2
     variable grcan
 
     # initialize corners
@@ -1909,7 +1952,10 @@ proc GRMap::markzoom { x y} {
 # draw zoom rectangle
 proc GRMap::drawzoom { x y } {
     variable grcan
-    global areaX1 areaY1 areaX2 areaY2
+	variable areaX1 
+	variable areaY1 
+	variable areaX2 
+	variable areaY2
 
     set xc [$grcan canvasx $x]
     set yc [$grcan canvasy $y]
@@ -1937,7 +1983,10 @@ proc GRMap::zoomregion { zoom } {
     variable map_w
     variable map_ew
     variable map_ns
-    global areaX1 areaY1 areaX2 areaY2
+	variable areaX1 
+	variable areaY1 
+	variable areaX2 
+	variable areaY2
 
     # if click and no drag, zoom in or out by 80% of original area
 
@@ -2014,8 +2063,8 @@ proc GRMap::zoomregion { zoom } {
 # pan bindings
 proc GRMap::panbind { } {
     variable grcan
+    variable msg
     global grcoords
-    global GRMap::msg
 
     set GRMap::msg "Drag with mouse to pan"
 
@@ -2128,7 +2177,7 @@ proc GRMap::restorecursor {} {
 
 ###############################################################################
 
-#       Set up initial variables for screen to map conversion
+# Set up initial variables for screen to map conversion
 proc GRMap::coordconv { } {
 
     variable map_n
@@ -2148,7 +2197,6 @@ proc GRMap::coordconv { } {
     variable grcanvas_w
     variable grcanvas_h
     variable monitor_zooms
-    global grimg
 
     # get region extents
     foreach {map_n map_s map_e map_w} [GRMap::currentzoom] {break}
