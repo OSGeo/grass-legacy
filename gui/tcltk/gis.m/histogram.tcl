@@ -28,7 +28,6 @@ proc GmHist::create { tree parent } {
     variable first
 	variable dup
     global mon
-    global gmpath
     global iconpath
 
     set node "histogram:$count"
@@ -107,7 +106,6 @@ proc GmHist::select_map { id } {
 # display histogram options
 proc GmHist::options { id frm } {
     variable opt
-    global gmpath
     global bgcolor
     global iconpath
 
@@ -184,11 +182,6 @@ proc GmHist::save { tree depth node } {
 
 proc GmHist::display { node mod } {
     global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
     variable optlist
     variable lfile 
     variable lfilemask
@@ -199,12 +192,6 @@ proc GmHist::display { node mod } {
     variable first
 
     set rasttype ""
-    set currmon ""
-    set line ""
-    set input ""
-    global gmpath
-    global mon
-
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
 
@@ -260,8 +247,8 @@ proc GmHist::duplicate { tree parent node id } {
     variable opt
     variable count
 	variable dup
+	variable first
 	global iconpath
-	global first
 
     set node "hist:$count"
 	set dup($count) 1

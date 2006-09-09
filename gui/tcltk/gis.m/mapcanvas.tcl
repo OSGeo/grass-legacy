@@ -33,19 +33,56 @@ namespace eval MapCanvas {
 
 	variable array can # The canvas widgets of the monitors, indexed by mon
 	variable array mapframe # Frame widgets, indexed by mon
-	global array canvas_w # Width and height of canvas. Indexed by mon
-	global array canvas_h # mon
+	variable array canvas_w # Width and height of canvas. Indexed by mon
+	variable array canvas_h # mon
 	variable array driver_w # Actual width and height used while drawing / compositing. Indexed by mon
 	variable array driver_h # Actual width and height used while drawing / compositing. Indexed by mon
 	variable array exploremode # Whether or not to change regions to match monitor, indexed by mon
 	variable array map_ind # Indicator widgets, indexed by mon
+	variable array msg # status message, indexed by mon
+	variable b1north # capture north coordinate on clicking mouse
+	variable b1east # capture east coordinate on clicking mouse
+
+	
+	# zoom box corners indexed by mon
+	variable array areaX1 
+	variable array areaY1 
+	variable array areaX2 
+	variable array areaY2
+	
+	# pan coordinates
+	variable start_x 
+	variable start_y
+	variable from_x 
+	variable from_y
+	variable to_x 
+	variable to_y
+	
+	# measure tool coordinates
+	variable mlength 
+	variable totmlength
+	variable linex1 
+	variable liney1 
+	variable linex2 
+	variable liney2
+	
 	# There is a global coords # Text to display in indicator widget, indexed by mon
-	global array mapfile # mon - Driver output file (.ppm)
-	global array maskfile # mon - Driver output mask (.pgm)
-	global array outfile # mon - g.pnmcomp output file (
-	global array complist # mon - List of files to composite
-	global array opclist # mon - Their opacities
-	global array masklist # mon - Their masks
+	
+	# Process ID for temp files
+	variable mappid
+	# Driver output file (.ppm)
+	variable array mapfile 
+	# Driver output mask (.pgm)
+	variable array maskfile 
+	# g.pnmcomp output file (
+	variable array outfile 
+	# List of files to composite
+	variable array complist 
+	# Their opacities
+	variable array opclist 
+	# Their masks
+	variable array masklist 
+
 	global geoentry "" # variable holds path of entry widgets that use coordinates from canvas
 
 	# Current region and region historys
@@ -54,6 +91,22 @@ namespace eval MapCanvas {
 	# Depth of zoom history to keep
 	variable zoomhistories
 	set zoomhistories 7
+	
+	# zooming and coordinate conversion variables indexed by mon
+	variable array north_extent
+	variable array south_extent
+	variable array east_extent
+	variable array west_extent
+	variable array map_ew
+	variable array map_ns
+	variable array scr_lr
+	variable array scr_tb
+	variable array scr_top
+	variable array scr_bottom
+	variable array scr_right
+	variable array scr_left
+	variable array map2scrx_conv
+	variable array map2scry_conv
 
 	# Regular order for region values in a list representing a region or zoom
 	# zoom_attrs used in g.region command to set WIND file
@@ -67,60 +120,50 @@ namespace eval MapCanvas {
 	# They must always be redone if the monitor was different
 	variable previous_monitor
 	set previous_monitor {none}
+	
+	# default cursor for display canvas
+	variable mapcursor
 
 	# Current projection and zone for dynamic region setting for displays
-	variable gregionproj
 }
 
 set regionstr ""
-set initwd 640.0
-set initht 480.0
-set east 0.0
-set north 0.0
-set gregion ""
-set gregionproj ""
-set rows 0
-set cols 0
 
 ###############################################################################
 
 # Create window and canvas for display
 proc MapCanvas::create { } {
-	global env
-	global initwd
-	global initht
-	global mon
-	global win
-	global currmon
-	global canvas_w
-	global canvas_h
-	global drawprog
-	global array MapCanvas::msg # mon
-	global mapcursor
-	global mapfile
-	global maskfile
-	global outfile
-	global complist
-	global opclist
-	global masklist
-	global tmpdir
-	global mappid
-
+	variable canvas_w
+	variable canvas_h
+	variable mapfile
+	variable maskfile
+	variable outfile
+	variable complist
+	variable opclist
+	variable masklist
 	variable mapframe
 	variable can
 	variable map_ind
 	variable exploremode
 	variable mapregion
 	variable regionstr
+	variable msg
+	variable mapcursor
+	variable b1east 
+	variable b1north 
+	variable mappid
+	global drawprog
+	global tmpdir
+	global env
+	global mon
 
 	# Initialize window and map geometry
 
-	set canvas_w($mon) $initwd
-	set canvas_h($mon) $initht
-	set env(GRASS_WIDTH) $initwd
-	set env(GRASS_HEIGHT) $initht
+	set canvas_w($mon) 640.0
+	set canvas_h($mon) 480.0
+	set env(GRASS_WIDTH) 640.0
+	set env(GRASS_HEIGHT) 480.0
 	set drawprog 0
-	set win ""
 	# Explore mode is off by default
 	set exploremode($mon) 0
 
@@ -163,10 +206,6 @@ proc MapCanvas::create { } {
 
 	MapCanvas::coordconv $mon
 
-	# bindings for display canvas
-
-	set currmon $mon
-
 	# set tempfile for ppm output
 	set mappid [pid]
 	set mapfile($mon) [exec g.tempfile pid=$mappid]
@@ -185,35 +224,26 @@ proc MapCanvas::create { } {
 	set opclist($mon) ""
 	set masklist($mon) ""
 
-
+	# bindings for display canvas
 	# mouse handlers
 	# The coordinate transforms should be done per monitor.
-	bind $can($mon) <ButtonPress-1> {
-		global b1east b1north b1coords
-		set b1east	[MapCanvas::scrx2mape %x]
-		set b1north [MapCanvas::scry2mapn %y]
-		set b1coords "$b1east $b1north"
-	}
+
 
 	# When a monitor gets the keyboard focus
 	# switch monitors in the tree if this isn't the selected one
-	# I suspect that setting win is unnecessary (where is it used?)
 	bind .mapcan($mon) <FocusIn> "
-		global mon currmon win env
-		set win .mapcan($mon)
-		set currmon $mon
+		global mon env
 		if { \$mon != $mon } {
 			set mon $mon
 			GmTree::switchpage $mon
 		} "
 
-
 	# Displays geographic coordinates in indicator window when cursor moved across canvas
 	bind $can($mon) <Motion> {
 		set scrxmov %x
 		set scrymov %y
-		set eastcoord [eval MapCanvas::scrx2mape %x]
-		set northcoord [eval MapCanvas::scry2mapn %y]
+		set eastcoord [eval MapCanvas::scrx2mape $mon %x]
+		set northcoord [eval MapCanvas::scry2mapn $mon %y]
 		set coords($mon) "$eastcoord $northcoord"
 	}
 
@@ -383,8 +413,8 @@ proc MapCanvas::shrinkwrap {sense nsew1 ar2 } {
 
 # draw map using png driver and open in canvas
 proc MapCanvas::drawmap { mon } {
-	global canvas_h
-	global canvas_w
+	variable canvas_h
+	variable canvas_w
 	variable can
 	variable canmodified
 	variable monitor_zooms
@@ -430,11 +460,11 @@ proc MapCanvas::drawmap { mon } {
 proc MapCanvas::driversettings { mon } {
 	global env
 	global mapset
-	global canvas_h
-	global canvas_w
+	variable canvas_h
+	variable canvas_w
 	variable driver_w
 	variable driver_h
-	global mapfile
+	variable mapfile
 
 	variable monitor_zooms
 	variable exploremode
@@ -476,16 +506,16 @@ proc MapCanvas::driversettings { mon } {
 
 # Run the programs to clear the map and draw all of the layers
 proc MapCanvas::runprograms { mon mod } {
-	global env
-	global canvas_w
-	global canvas_h
-	global drawprog
-	global MapCanvas::msg
-	global complist
-	global masklist
-	global opclist
+	variable canvas_w
+	variable canvas_h
+	variable msg
+	variable complist
+	variable masklist
+	variable opclist
 	variable mapframe
 	variable zoom_attrs
+	global env
+	global drawprog
 
 	set drawprog 0
 
@@ -519,12 +549,6 @@ proc MapCanvas::runprograms { mon mod } {
 		set gregion "projection:$parts(projection); zone:$parts(zone); north:$parts(north); south:$parts(south); east:$parts(east); west:$parts(west); e-w resol:$parts(ewres);	 n-s resol:$parts(nsres)"
 	}
 
-
-
-#	set gregion $gregionproj
-#	foreach {n s e w ewres nsres} [MapCanvas::currentzoom $mon] {break}
-#	append gregion "north: $n; south: $s; east: $e; west: $w; e-w resol: $ewres; n-s resol: $nsres"
-
 	set MapCanvas::msg($mon) "please wait..."
 	$mapframe($mon) showstatusbar progression
 
@@ -553,19 +577,20 @@ proc MapCanvas::runprograms { mon mod } {
 proc MapCanvas::composite {mon } {
 	variable driver_w
 	variable driver_h
-	global drawprog
-	global complist
-	global masklist
-	global opclist
-	global outfile
-	global tmpdir
+	variable complist
+	variable masklist
+	variable opclist
+	variable outfile
 	variable mapframe
 	variable can
+	global tmpdir
+	global drawprog
 
 	$can($mon) delete all
 	if {$complist($mon) != ""} {
 		set currdir [pwd]
 		cd $tmpdir
+		
 		incr drawprog
 		run_panel "g.pnmcomp in=$complist($mon) mask=$masklist($mon) opacity=$opclist($mon) background=255:255:255 width=$driver_w($mon) height=$driver_h($mon) out=$outfile($mon)"
 
@@ -582,7 +607,6 @@ proc MapCanvas::composite {mon } {
 
 	MapCanvas::coordconv $mon
 	set drawprog 0
-	#set MapCanvas::msg($mon) "east & north coordinates under cursor"
 	$mapframe($mon) showstatusbar status
 	return
 
@@ -626,8 +650,8 @@ after idle MapCanvas::display_server
 ###############################################################################
 
 proc MapCanvas::do_resize {mon} {
-	global canvas_w
-	global canvas_h
+	variable canvas_w
+	variable canvas_h
 	variable can
 
 	# Get the actual width and height of the canvas
@@ -828,7 +852,7 @@ proc MapCanvas::exploremode { mon boolean } {
 
 # stop display management tools
 proc MapCanvas::stoptool { mon } {
-	global MapCanvas::msg
+	variable msg
 	variable regionstr
 	variable can
 
@@ -849,7 +873,6 @@ proc MapCanvas::stoptool { mon } {
 
 	# reset status display to normal
 	set MapCanvas::msg($mon) $regionstr
-	#set MapCanvas::msg($mon) "east & north coordinates under cursor"
 
 	MapCanvas::restorecursor $mon
 
@@ -859,14 +882,15 @@ proc MapCanvas::stoptool { mon } {
 # set bindings for pointer tool
 proc MapCanvas::pointer { mon } {
 	variable can
-	global b1coords
+	variable b1east
+	variable b1north 
 	global coords($mon)
 	global geoentry
 
 	bind $can($mon) <ButtonPress-1> {
-		global b1east b1north b1coords
-		set b1east	[MapCanvas::scrx2mape %x]
-		set b1north [MapCanvas::scry2mapn %y]
+		global b1coords mon
+		set b1east	[MapCanvas::scrx2mape $mon %x]
+		set b1north [MapCanvas::scry2mapn $mon %y]
 		set b1coords "$b1east $b1north"
 		if { [info exists geoentry] } {
 			$geoentry insert 0 $b1coords
@@ -874,10 +898,11 @@ proc MapCanvas::pointer { mon } {
 
 	}
 	bind $can($mon) <Motion> {
+		global mon
 		set scrxmov %x
 		set scrymov %y
-		set eastcoord [eval MapCanvas::scrx2mape %x]
-		set northcoord [eval MapCanvas::scry2mapn %y]
+		set eastcoord [eval MapCanvas::scrx2mape $mon %x]
+		set northcoord [eval MapCanvas::scry2mapn $mon %y]
 		set coords($mon) "$eastcoord $northcoord"
 	}
 }
@@ -894,9 +919,9 @@ proc MapCanvas::currentzoom { mon } {
 	variable exploremode
 	variable monitor_zooms
 	variable regionstr
-	global MapCanvas::msg
-	global canvas_w
-	global canvas_h
+	variable msg
+	variable canvas_w
+	variable canvas_h
 
 	# Fetch the current zoom settings if explorer mode not enabled
 	set region {}
@@ -983,15 +1008,13 @@ proc MapCanvas::zoom_previous {mon} {
 # Zoom to something loaded from a g.region command
 proc MapCanvas::zoom_gregion {mon args} {
 	global env
-	variable gregionproj
-
 
 	if {![catch {open [concat "|g.region" "-ug" $args] r} input]} {
 		while {[gets $input line] >= 0} {
 			regexp -nocase {^([a-z]+)=(.*)$} $line trash key value
 			set parts($key) $value
 		}
-		close $input
+		catch {close $input}
 
 		MapCanvas::zoom_new $mon $parts(n) $parts(s) $parts(e) \
 			$parts(w) $parts(nsres) $parts(ewres)
@@ -1022,160 +1045,174 @@ proc MapCanvas::set_wind {mon args overwrite} {
 
 # zoom bindings
 proc MapCanvas::zoombind { mon zoom } {
-		variable can
-		global MapCanvas::msg
-	global areaX1 areaY1 areaX2 areaY2
+	variable can
+	variable areaX1 
+	variable areaY1 
+	variable areaX2 
+	variable areaY2
+	variable msg
 
 	# initialize zoom rectangle corners
 
-		set areaX1 0
-		set areaY1 0
-		set areaX2 0
-		set areaY2 0
+	set areaX1($mon) 0
+	set areaY1($mon) 0
+	set areaX2($mon) 0
+	set areaY2($mon) 0
 
-		MapCanvas::setcursor $mon "plus"
+	MapCanvas::setcursor $mon "plus"
 
-		if {$zoom == 1} {
-				set MapCanvas::msg($mon) "Drag or click mouse to zoom"
-		} elseif {$zoom == -1} {
-				set MapCanvas::msg($mon) "Drag or click mouse to unzoom"
-		}
+	if {$zoom == 1} {
+		set MapCanvas::msg($mon) "Drag or click mouse to zoom"
+	} elseif {$zoom == -1} {
+		set MapCanvas::msg($mon) "Drag or click mouse to unzoom"
+	}
 
-		bind $can($mon) <1> {
-				MapCanvas::markzoom $mon %x %y
-				}
-		bind $can($mon) <B1-Motion> {
-				set scrxmov %x
-				set scrymov %y
-				set eastcoord [eval MapCanvas::scrx2mape %x]
-				set northcoord [eval MapCanvas::scry2mapn %y]
-				set coords($mon) "$eastcoord $northcoord"
-				MapCanvas::drawzoom $mon %x %y
-				}
-		bind $can($mon) <ButtonRelease-1> "MapCanvas::zoomregion $mon $zoom"
+	bind $can($mon) <1> {
+		MapCanvas::markzoom $mon %x %y
+	}
+
+	bind $can($mon) <B1-Motion> {
+		global mon
+		set scrxmov %x
+		set scrymov %y
+		set eastcoord [eval MapCanvas::scrx2mape $mon %x]
+		set northcoord [eval MapCanvas::scry2mapn $mon %y]
+		set coords($mon) "$eastcoord $northcoord"
+		MapCanvas::drawzoom $mon %x %y
+	}
+	
+	bind $can($mon) <ButtonRelease-1> "MapCanvas::zoomregion $mon $zoom"
 
 }
 
 # start zoom rectangle
 proc MapCanvas::markzoom {mon x y} {
-	global areaX1 areaY1 areaX2 areaY2
+	variable areaX1 
+	variable areaY1 
+	variable areaX2 
+	variable areaY2
 	variable can
 
-		# initialize corners
-		set areaX1 0
-		set areaY1 0
-		set areaX2 0
-		set areaY2 0
+	# initialize corners
+	set areaX1($mon) 0
+	set areaY1($mon) 0
+	set areaX2($mon) 0
+	set areaY2($mon) 0
 
-	set areaX1 [$can($mon) canvasx $x]
-	set areaY1 [$can($mon) canvasy $y]
+	set areaX1($mon) [$can($mon) canvasx $x]
+	set areaY1($mon) [$can($mon) canvasy $y]
 	$can($mon) delete area
 }
 
 # draw zoom rectangle
 proc MapCanvas::drawzoom { mon x y } {
-		variable can
-	global areaX1 areaY1 areaX2 areaY2
+	variable can
+	variable areaX1 
+	variable areaY1 
+	variable areaX2 
+	variable areaY2
 
-		set xc [$can($mon) canvasx $x]
-		set yc [$can($mon) canvasy $y]
+	set xc [$can($mon) canvasx $x]
+	set yc [$can($mon) canvasy $y]
 
-		if {($areaX1 != $xc) && ($areaY1 != $yc)} {
-				$can($mon) delete area
-				$can($mon) addtag area withtag \
-						[$can($mon) create rect $areaX1 $areaY1 $xc $yc \
-						-outline yellow -width 2]
-				set areaX2 $xc
-				set areaY2 $yc
-		}
+	if {($areaX1($mon) != $xc) && ($areaY1($mon) != $yc)} {
+			$can($mon) delete area
+			$can($mon) addtag area withtag \
+					[$can($mon) create rect $areaX1($mon) $areaY1($mon) $xc $yc \
+					-outline yellow -width 2]
+			set areaX2($mon) $xc
+			set areaY2($mon) $yc
+	}
 }
 
 
 # zoom region
 proc MapCanvas::zoomregion { mon zoom } {
-		variable can
-		global canvas_h
-		global canvas_w
-		variable monitor_zooms
-	global areaX1 areaY1 areaX2 areaY2
+	variable can
+	variable canvas_h
+	variable canvas_w
+	variable monitor_zooms
+	variable areaX1 
+	variable areaY1 
+	variable areaX2 
+	variable areaY2
 
 	# if click and no drag, zoom in or out by fraction of original area and center on the click spot
 	set clickzoom 0
 
-		if {($areaX2 == 0) && ($areaY2 == 0)} {
-				set clickzoom 1
-				set center_x $areaX1
-				set center_y $areaY1
-				set X2 [expr {$areaX1 + ($canvas_w($mon) / (2 * sqrt(2)))} ]
-				set X1 [expr {$areaX1 - ($canvas_w($mon) / (2 * sqrt(2)))} ]
-				set Y2 [expr {$areaY1 + ($canvas_h($mon) / (2 * sqrt(2)))} ]
-				set Y1 [expr {$areaY1 - ($canvas_h($mon) / (2 * sqrt(2)))}]
-				set areaX1 $X1
-				set areaY1 $Y1
-				set areaX2 $X2
-				set areaY2 $Y2
+	if {($areaX2($mon) == 0) && ($areaY2($mon) == 0)} {
+		set clickzoom 1
+		set center_x $areaX1($mon)
+		set center_y $areaY1($mon)
+		set X2 [expr {$areaX1($mon) + ($canvas_w($mon) / (2 * sqrt(2)))} ]
+		set X1 [expr {$areaX1($mon) - ($canvas_w($mon) / (2 * sqrt(2)))} ]
+		set Y2 [expr {$areaY1($mon) + ($canvas_h($mon) / (2 * sqrt(2)))} ]
+		set Y1 [expr {$areaY1($mon) - ($canvas_h($mon) / (2 * sqrt(2)))}]
+		set areaX1($mon) $X1
+		set areaY1($mon) $Y1
+		set areaX2($mon) $X2
+		set areaY2($mon) $Y2
+	}
 
+
+	# get region extents	
+	foreach {map_n map_s map_e map_w} [MapCanvas::currentzoom $mon] {break}
+
+	# get zoom rectangle extents in canvas coordinates
+	if { $areaX2($mon) < $areaX1($mon) } {
+			set cright $areaX1($mon)
+			set cleft $areaX2($mon)
+	} else {
+			set cleft $areaX1($mon)
+			set cright $areaX2($mon)
+	}
+
+	if { $areaY2($mon) < $areaY1($mon) } {
+			set cbottom $areaY1($mon)
+			set ctop $areaY2($mon)
+	} else {
+			set ctop $areaY1($mon)
+			set cbottom $areaY2($mon)
+	}
+
+	# get zoom rectangle extents in map coordinates
+
+	set north [scry2mapn $mon $ctop]
+	set south [scry2mapn $mon $cbottom]
+	set east  [scrx2mape $mon $cright]
+	set west  [scrx2mape $mon $cleft]
+
+
+	#zoom out
+	# Guarantee that the current region fits in the new box on the screen.
+	if { $zoom == -1 } {
+			# Center map at point clicked for one-click zooming
+		if { $clickzoom == 1} {
+			set to_center_e [scrx2mape $mon $center_x]
+			set to_center_n [scry2mapn $mon $center_y]
+			set from_center_e [expr {$map_w+(($map_e - $map_w)/2)}]
+			set from_center_n [expr {$map_s+(($map_n - $map_s)/2)}]
+			set map_n [expr {$map_n + ($to_center_n - $from_center_n)}]
+			set map_s [expr {$map_s + ($to_center_n - $from_center_n)}]
+			set map_e [expr {$map_e + ($to_center_e - $from_center_e)}]
+			set map_w [expr {$map_w + ($to_center_e - $from_center_e)}]
 		}
+		# This effectively zooms out by the maxmimum of the two scales
+		set nsscale [expr { ($map_n - $map_s) / ($north - $south) }]
+		set ewscale [expr { ($map_e - $map_w) / ($east - $west) }]
 
+		set north [expr { $map_n + ($nsscale * ($map_n - $north)) }]
+		set south [expr { $map_s + ($nsscale * ($map_s - $south)) }]
+		set east [expr { $map_e + ($ewscale * ($map_e - $east)) }]
+		set west [expr { $map_w + ($ewscale * ($map_w - $west)) }]
+	}
 
-		# get region extents
-		foreach {map_n map_s map_e map_w} [MapCanvas::currentzoom $mon] {break}
+	MapCanvas::zoom_new $mon $north $south $east $west
 
-		# get zoom rectangle extents in canvas coordinates
-		if { $areaX2 < $areaX1 } {
-				set cright $areaX1
-				set cleft $areaX2
-		} else {
-				set cleft $areaX1
-				set cright $areaX2
-		}
-
-		if { $areaY2 < $areaY1 } {
-				set cbottom $areaY1
-				set ctop $areaY2
-		} else {
-				set ctop $areaY1
-				set cbottom $areaY2
-		}
-
-		# get zoom rectangle extents in map coordinates
-
-		set north [scry2mapn $ctop]
-		set south [scry2mapn $cbottom]
-		set east  [scrx2mape $cright]
-		set west  [scrx2mape $cleft]
-
-		#zoom out
-		# Guarantee that the current region fits in the new box on the screen.
-		if { $zoom == -1 } {
-				# Center map at point clicked for one-click zooming
-				if { $clickzoom == 1} {
-						set to_center_e [scrx2mape $center_x]
-						set to_center_n [scry2mapn $center_y]
-						set from_center_e [expr {$map_w+(($map_e - $map_w)/2)}]
-						set from_center_n [expr {$map_s+(($map_n - $map_s)/2)}]
-						set map_n [expr {$map_n + ($to_center_n - $from_center_n)}]
-						set map_s [expr {$map_s + ($to_center_n - $from_center_n)}]
-						set map_e [expr {$map_e + ($to_center_e - $from_center_e)}]
-						set map_w [expr {$map_w + ($to_center_e - $from_center_e)}]
-				}
-				# This effectively zooms out by the maxmimum of the two scales
-				set nsscale [expr { ($map_n - $map_s) / ($north - $south) }]
-				set ewscale [expr { ($map_e - $map_w) / ($east - $west) }]
-
-				set north	[expr { $map_n + ($nsscale * ($map_n - $north)) }]
-				set south		[expr { $map_s + ($nsscale * ($map_s - $south)) }]
-				set east		[expr { $map_e + ($ewscale * ($map_e - $east)) }]
-				set west		[expr { $map_w + ($ewscale * ($map_w - $west)) }]
-		}
-
-		MapCanvas::zoom_new $mon $north $south $east $west
-
-
-		# redraw map
-		$can($mon) delete map$mon
-		$can($mon) delete area
-		MapCanvas::request_redraw $mon 1
+	# redraw map
+	$can($mon) delete map$mon
+	$can($mon) delete area
+	MapCanvas::request_redraw $mon 1
 }
 
 
@@ -1197,33 +1234,39 @@ proc MapCanvas::zoom_back { mon } {
 
 # pan bindings
 proc MapCanvas::panbind { mon } {
-		variable can
-		global MapCanvas::msg
+	variable can
+	variable msg
 
 	set MapCanvas::msg($mon) "Drag with mouse to pan"
 
-		MapCanvas::setcursor $mon "hand2"
+	MapCanvas::setcursor $mon "hand2"
 
-		bind $can($mon) <1> {MapCanvas::startpan $mon %x %y}
-		bind $can($mon) <B1-Motion> {
-				set scrxmov %x
-				set scrymov %y
-				set eastcoord [eval MapCanvas::scrx2mape %x]
-				set northcoord [eval MapCanvas::scry2mapn %y]
-				set coords($mon) "$eastcoord $northcoord"
-				MapCanvas::dragpan $mon %x %y
-				}
-		bind $can($mon) <ButtonRelease-1> {
-				MapCanvas::pan $mon
-				}
+	bind $can($mon) <1> {MapCanvas::startpan $mon %x %y}
+
+	bind $can($mon) <B1-Motion> {
+		global mon
+		set scrxmov %x
+		set scrymov %y
+		set eastcoord [eval MapCanvas::scrx2mape $mon %x]
+		set northcoord [eval MapCanvas::scry2mapn $mon %y]
+		set coords($mon) "$eastcoord $northcoord"
+		MapCanvas::dragpan $mon %x %y
+	}
+
+	bind $can($mon) <ButtonRelease-1> {
+		MapCanvas::pan $mon
+	}
 }
 
 
 proc MapCanvas::startpan {mon x y} {
-	global start_x start_y
-	global from_x from_y
-	global to_x to_y
-		variable can
+	variable start_x 
+	variable start_y
+	variable from_x 
+	variable from_y
+	variable to_x 
+	variable to_y
+	variable can
 
 	set start_x [$can($mon) canvasx $x]
 	set start_y [$can($mon) canvasy $y]
@@ -1235,61 +1278,71 @@ proc MapCanvas::startpan {mon x y} {
 }
 
 proc MapCanvas::dragpan {mon x y} {
-	global start_x start_y
-	global to_x to_y
-		variable can
+	variable start_x 
+	variable start_y
+	variable from_x 
+	variable from_y
+	variable to_x 
+	variable to_y
+	variable can
+	variable can
 
 	set to_x [$can($mon) canvasx $x]
 	set to_y [$can($mon) canvasy $y]
 	$can($mon) move current [expr {$to_x-$start_x}] [expr {$to_y-$start_y}]
 
 	set start_y $to_y
-		set start_x $to_x
+	set start_x $to_x
 }
 
 proc MapCanvas::pan { mon } {
-	global from_x from_y
-	global to_x to_y
-		variable can
-		variable monitor_zooms
+	variable start_x 
+	variable start_y
+	variable from_x 
+	variable from_y
+	variable to_x 
+	variable to_y
+	variable can
+	variable can
+	variable monitor_zooms
 
-		# get map coordinate shift
-	set from_e [scrx2mape $from_x]
-	set from_n [scry2mapn $from_y]
-	set to_e   [scrx2mape $to_x]
-	set to_n   [scry2mapn $to_y]
+	# get map coordinate shift
+	set from_e [scrx2mape $mon $from_x]
+	set from_n [scry2mapn $mon $from_y]
+	set to_e   [scrx2mape $mon $to_x]
+	set to_n   [scry2mapn $mon $to_y]
 
-		# get region extents
-		foreach {map_n map_s map_e map_w} [MapCanvas::currentzoom $mon] {break}
+	# get region extents
+	foreach {map_n map_s map_e map_w} [MapCanvas::currentzoom $mon] {break}
 
-		# set new region extents
-		set north [expr {$map_n - ($to_n - $from_n)}]
-		set south [expr {$map_s - ($to_n - $from_n)}]
-		set east  [expr {$map_e - ($to_e - $from_e)}]
-		set west  [expr {$map_w - ($to_e - $from_e)}]
+	# set new region extents
+	set north [expr {$map_n - ($to_n - $from_n)}]
+	set south [expr {$map_s - ($to_n - $from_n)}]
+	set east  [expr {$map_e - ($to_e - $from_e)}]
+	set west  [expr {$map_w - ($to_e - $from_e)}]
 
-		# reset region and redraw map
-		MapCanvas::zoom_new $mon $north $south $east $west
+	# reset region and redraw map
+	MapCanvas::zoom_new $mon $north $south $east $west
 
-		$can($mon) delete map$mon
-		MapCanvas::request_redraw $mon 1
+	$can($mon) delete map$mon
+	MapCanvas::request_redraw $mon 1
 }
 
 ###############################################################################
 
 proc MapCanvas::setcursor { mon	 ctype } {
-		variable can
+	variable can
 
-		$can($mon) configure -cursor $ctype
-		return
+	$can($mon) configure -cursor $ctype
+	return
 }
 
 proc MapCanvas::restorecursor {mon} {
-		global mapcursor
-		variable can
+	variable mapcursor
+	variable can
 
-		$can($mon) configure -cursor $mapcursor
-		return
+	$can($mon) configure -cursor $mapcursor
+	return
 }
 
 ###############################################################################
@@ -1297,42 +1350,50 @@ proc MapCanvas::restorecursor {mon} {
 
 # measurement bindings
 proc MapCanvas::measurebind { mon } {
-		variable can
-		variable measurement_annotation_handle
-		global mlength totmlength
-	global linex1 liney1 linex2 liney2
-		global MapCanvas::msg
+	variable can
+	variable measurement_annotation_handle
+	variable mlength 
+	variable totmlength
+	variable linex1 
+	variable liney1 
+	variable linex2 
+	variable liney2
+	variable msg
 
-		# Make the output for the measurement
-		set measurement_annotation_handle [monitor_annotation_start $mon "Measurement" {}]
+	# Make the output for the measurement
+	set measurement_annotation_handle [monitor_annotation_start $mon "Measurement" {}]
 
-		if {[info exists linex1]} {unset linex1}
-		if {[info exists liney1]} {unset liney1}
-		if {[info exists linex2]} {unset linex2}
-		if {[info exists liney2]} {unset liney2}
+	if {[info exists linex1]} {unset linex1}
+	if {[info exists liney1]} {unset liney1}
+	if {[info exists linex2]} {unset linex2}
+	if {[info exists liney2]} {unset liney2}
 
-		bind $can($mon) <1> "MapCanvas::markmline $mon %x %y"
-		bind $can($mon) <B1-Motion> {
-				set scrxmov %x
-				set scrymov %y
-				set eastcoord [eval MapCanvas::scrx2mape %x]
-				set northcoord [eval MapCanvas::scry2mapn %y]
-				set coords($mon) "$eastcoord $northcoord"
-				MapCanvas::drawmline $mon %x %y
-				}
-		bind $can($mon) <ButtonRelease-1> "MapCanvas::measure $mon"
+	bind $can($mon) <1> "MapCanvas::markmline $mon %x %y"
+	bind $can($mon) <B1-Motion> {
+		global mon
+		set scrxmov %x
+		set scrymov %y
+		set eastcoord [eval MapCanvas::scrx2mape $mon %x]
+		set northcoord [eval MapCanvas::scry2mapn $mon %y]
+		set coords($mon) "$eastcoord $northcoord"
+		MapCanvas::drawmline $mon %x %y
+		}
+	bind $can($mon) <ButtonRelease-1> "MapCanvas::measure $mon"
 
 	set MapCanvas::msg($mon) "Draw measure line with mouse"
 
-		MapCanvas::setcursor $mon "pencil"
-		set mlength 0
-		set totmlength 0
+	MapCanvas::setcursor $mon "pencil"
+	set mlength 0
+	set totmlength 0
 
 }
 
 # start measurement line
 proc MapCanvas::markmline {mon x y} {
-	global linex1 liney1 linex2 liney2
+	variable linex1 
+	variable liney1 
+	variable linex2 
+	variable liney2
 	variable can
 
 	#start line
@@ -1341,67 +1402,71 @@ proc MapCanvas::markmline {mon x y} {
 		set liney1 [$can($mon) canvasy $y]
 	}
 
-		#check for click with no drag
+	#check for click with no drag
 	if { ![info exists linex2] } {
-				set linex2 $linex1
-		}
+		set linex2 $linex1
+	}
 	if { ![info exists liney2] } {
-				set liney2 $liney1
-		}
+		set liney2 $liney1
+	}
 
 	$can($mon) delete mline
 }
 
 # draw measurement line
 proc MapCanvas::drawmline { mon x y } {
-		variable can
+	variable can
+	variable linex1 
+	variable liney1 
+	variable linex2 
+	variable liney2
 
-	global linex1 liney1 linex2 liney2
+	set xc [$can($mon) canvasx $x]
+	set yc [$can($mon) canvasy $y]
 
-		set xc [$can($mon) canvasx $x]
-		set yc [$can($mon) canvasy $y]
-
-		# draw line segment
-		if {($linex1 != $xc) && ($liney1 != $yc)} {
-				$can($mon) delete mline
-				$can($mon) addtag mline withtag \
-						[$can($mon) create line $linex1 $liney1 $xc $yc \
-						-fill red -arrow both -width 2]
-				set linex2 $xc
-				set liney2 $yc
-		}
+	# draw line segment
+	if {($linex1 != $xc) && ($liney1 != $yc)} {
+		$can($mon) delete mline
+		$can($mon) addtag mline withtag \
+			[$can($mon) create line $linex1 $liney1 $xc $yc \
+			-fill red -arrow both -width 2]
+		set linex2 $xc
+		set liney2 $yc
+	}
 }
 
 # measure line length
 proc MapCanvas::measure { mon } {
-		variable can
+	variable can
 	variable measurement_annotation_handle
+	variable mlength 
+	variable totmlength
+	variable linex1 
+	variable liney1 
+	variable linex2 
+	variable liney2
 
-	# These should all be variables of the canvas, not globals:
-	global linex1 liney1 linex2 liney2
-	global mlength totmlength
+	# draw cumulative line
+	$can($mon) addtag totmline withtag \
+		[$can($mon) create line $linex1 $liney1 $linex2 $liney2 \
+		-fill green -arrow both -width 2]
 
-		# draw cumulative line
-		$can($mon) addtag totmline withtag \
-				[$can($mon) create line $linex1 $liney1 $linex2 $liney2 \
-				-fill green -arrow both -width 2]
+	# get line endpoints in map coordinates
 
-		# get line endpoints in map coordinates
+	set east1  [scrx2mape $mon $linex1]
+	set north1 [scry2mapn $mon $liney1]
+	set east2  [scrx2mape $mon $linex2]
+	set north2 [scry2mapn $mon $liney2]
 
-		set east1  [scrx2mape $linex1]
-		set north1 [scry2mapn $liney1]
-		set east2  [scrx2mape $linex2]
-		set north2 [scry2mapn $liney2]
+	# calculate line segment length and total length
+	set mlength [expr {sqrt(pow(($east1 - $east2), 2) + pow(($north1 - $north2), 2))}]
+	set totmlength [expr {$totmlength + $mlength}]
 
-		# calculate line segment length and total length
-		set mlength [expr {sqrt(pow(($east1 - $east2), 2) + pow(($north1 - $north2), 2))}]
-		set totmlength [expr {$totmlength + $mlength}]
+	monitor_annotate $measurement_annotation_handle " --segment length\t= $mlength\n"
+	monitor_annotate $measurement_annotation_handle "cumulative length\t= $totmlength\n"
 
-		monitor_annotate $measurement_annotation_handle " --segment length\t= $mlength\n"
-		monitor_annotate $measurement_annotation_handle "cumulative length\t= $totmlength\n"
-
-		set linex1 $linex2
-		set liney1 $liney2
+	set linex1 $linex2
+	set liney1 $liney2
 }
 
 
@@ -1410,35 +1475,32 @@ proc MapCanvas::measure { mon } {
 
 # query bindings
 proc MapCanvas::querybind { mon } {
-		global map_ew
-		global map_ns
-		global scr_ew
-		global scr_ns
-		global vdist
-		variable can
-
-		# set query 'snapping' distance to 10 screen pixels
-		set vdist [expr 10* {($map_ew / $scr_ew)} ]
+	variable msg
+	variable can
 
 	set MapCanvas::msg($mon) "Click to query feature"
 
-		bind $can($mon) <1> {
-				MapCanvas::query $mon %x %y
-				}
+	bind $can($mon) <1> {
+		MapCanvas::query $mon %x %y
+	}
 
-		MapCanvas::setcursor $mon "crosshair"
+	MapCanvas::setcursor $mon "crosshair"
 
 }
 
 # query
 proc MapCanvas::query { mon x y } {
-		global vdist
-		variable can
+	variable map_ew
+	variable scr_ew
+	variable can
 
-		set east  [scrx2mape $x]
-		set north [scry2mapn $y]
+	set east  [scrx2mape $mon $x]
+	set north [scry2mapn $mon $y]
 
-		# get currently selected map for querying
+	# set query 'snapping' distance to 10 screen pixels
+	set vdist($mon) [expr 10* {($map_ew($mon) / $scr_ew($mon))} ]
+	
+	# get currently selected map for querying
 	set tree($mon) $GmTree::tree($mon)
 
 	set sel [ lindex [$tree($mon) selection get] 0 ]
@@ -1450,38 +1512,38 @@ proc MapCanvas::query { mon x y } {
 	switch $type {
 		"raster" {
 			set mapname [GmRaster::mapname $sel]
-						set cmd "r.what -f input=$mapname east_north=$east,$north\n\n"
+			set cmd "r.what -f input=$mapname east_north=$east,$north\n\n"
 		}
 		"vector" {
 			set mapname [GmVector::mapname $sel]
-				set cmd "v.what -a map=$mapname east_north=$east,$north distance=$vdist\n\n"
+			set cmd "v.what -a map=$mapname east_north=$east,$north distance=$vdist($mon)\n\n"
 		}
 		"rgbhis" {
 			set mapname [GmRgbhis::mapname $sel]
-						set cmd "r.what -f input=$mapname east_north=$east,$north\n\n"
+			set cmd "r.what -f input=$mapname east_north=$east,$north\n\n"
 		}
 		"arrows" {
 			set mapname [GmArrows::mapname $sel]
-						set cmd "r.what -f input=$mapname east_north=$east,$north\n\n"
+			set cmd "r.what -f input=$mapname east_north=$east,$north\n\n"
 		}
 		"rnums" {
 			set mapname [GmRnums::mapname $sel]
-						set cmd "r.what -f input=$mapname east_north=$east,$north\n\n"
+			set cmd "r.what -f input=$mapname east_north=$east,$north\n\n"
 		}
 		"chart" {
 			set mapname [GmChart::mapname $sel]
-				set cmd "v.what -a map=$mapname east_north=$east,$north distance=$vdist\n\n"
+			set cmd "v.what -a map=$mapname east_north=$east,$north distance=$vdist($mon)\n\n"
 		}
 		"thematic" {
 			set mapname [GmThematic::mapname $sel]
-				set cmd "v.what -a map=$mapname east_north=$east,$north distance=$vdist\n\n"
+			set cmd "v.what -a map=$mapname east_north=$east,$north distance=$vdist($mon)\n\n"
 		}
 	}
 
 		if { $mapname == "" } {
-				set ah [monitor_annotation_start $mon "Query" {}]
-				monitor_annotate $ah "You must select a map to query\n"
-				return
+			set ah [monitor_annotation_start $mon "Query" {}]
+			monitor_annotate $ah "You must select a map to query\n"
+			return
 		}
 
 		run_panel $cmd
@@ -1491,97 +1553,94 @@ proc MapCanvas::query { mon x y } {
 
 # Open profiling window
 proc MapCanvas::startprofile { mon } {
-		variable can
+	variable can
 
-		GmProfile::create $can($mon)
+	GmProfile::create $can($mon)
 
-		return
+	return
 }
 
 ###############################################################################
 
 # print to eps file
 proc MapCanvas::printcanvas { mon } {
-		variable can
-		global canvas_w
-		global canvas_h
+	variable can
+	variable canvas_w
+	variable canvas_h
 
-		set cv $can($mon)
+	set cv $can($mon)
 
-		# open print window
-		psprint::init
+	# open print window
+	psprint::init
 	psprint::window $mon $cv $canvas_w($mon) $canvas_h($mon)
 }
 
 ###############################################################################
 
-#		Set up initial variables for screen to map conversion
+# Set up initial variables for screen to map conversion
 proc MapCanvas::coordconv { mon } {
 
-		global map_n
-		global map_s
-		global map_e
-		global map_w
-		global map_ew
-		global map_ns
-		global scr_n
-		global scr_s
-		global scr_e
-		global scr_w
-		global scr_ew
-		global scr_ns
-		global map2scrx_conv
-		global map2scry_conv
-		global mapimg.$mon
-
-		global canvas_w
-		global canvas_h
-		variable monitor_zooms
-
-		# get region extents
-		foreach {map_n map_s map_e map_w} [MapCanvas::currentzoom $mon] {break}
-
-#		calculate dimensions
-
-		set map_n [expr {1.0*($map_n)}]
-		set map_s [expr {1.0*($map_s)}]
-		set map_e [expr {1.0*($map_e)}]
-		set map_w [expr {1.0*($map_w)}]
-
-		set map_ew [expr {$map_e - $map_w}]
-		set map_ns [expr {$map_n - $map_s}]
+	variable north_extent
+	variable south_extent
+	variable east_extent
+	variable west_extent
+	variable map_ew
+	variable map_ns
+	variable scr_lr
+	variable scr_tb
+	variable scr_top
+	variable scr_bottom
+	variable scr_right
+	variable scr_left
+	variable map2scrx_conv
+	variable map2scry_conv
+	variable canvas_w
+	variable canvas_h
+	variable monitor_zooms
 
 
-#		get current screen geometry
-if { [info exists "mapimg.$mon"] } {
-		set scr_ew [image width "mapimg.$mon"]
-		set scr_ns [image height "mapimg.$mon"]
-		set scr_e [image width "mapimg.$mon"]
-		set scr_s [image height "mapimg.$mon"]
-}		else {
-		set scr_ew $canvas_w($mon)
-		set scr_ns $canvas_h($mon)
-		set scr_e $canvas_w($mon)
-		set scr_s $canvas_h($mon)
-}
+	# get region extents
+	foreach {n s e w} [MapCanvas::currentzoom $mon] {break}
 
-		set scr_n 0.0
-		set scr_w 0.0
+	# calculate dimensions
 
+	set north_extent($mon) [expr {1.0*$n}]
+	set south_extent($mon) [expr {1.0*$s}]
+	set east_extent($mon) [expr {1.0*$e}]
+	set west_extent($mon) [expr {1.0*$w}]
 
-#		calculate conversion factors. Note screen is from L->R, T->B but map
-#		is from L->R, B->T
+	set map_ew($mon) [expr {$east_extent($mon) - $west_extent($mon)}]
+	set map_ns($mon) [expr {$north_extent($mon) - $south_extent($mon)}]
 
-		set map2scrx_conv [expr {$scr_ew / $map_ew}]
-		set map2scry_conv [expr {$scr_ns / $map_ns}]
+	# get current screen geometry
+	if { [info exists "mapimg.$mon"] } {
+		set scr_lr($mon) [image width "mapimg.$mon"]
+		set scr_tb($mon) [image height "mapimg.$mon"]
+		set scr_right($mon) [image width "mapimg.$mon"]
+		set scr_bottom($mon) [image height "mapimg.$mon"]
+	} else {
+		set scr_lr($mon) $canvas_w($mon)
+		set scr_tb($mon) $canvas_h($mon)
+		set scr_right($mon) $canvas_w($mon)
+		set scr_bottom($mon) $canvas_h($mon)
+	}
 
-#		calculate screen dimensions and offsets
+	set scr_top($mon) 0.0
+	set scr_left($mon) 0.0
 
-		if { $map2scrx_conv > $map2scry_conv } {
-				set map2scrx_conv $map2scry_conv
-		} else {
-				set map2scry_conv $map2scrx_conv
-		}
+	# calculate conversion factors. Note screen is from L->R, T->B but map
+	# is from L->R, B->T
+
+	set map2scrx_conv($mon) [expr {$scr_lr($mon) / $map_ew($mon)}]
+	set map2scry_conv($mon) [expr {$scr_tb($mon) / $map_ns($mon)}]
+
+	# calculate screen dimensions and offsets
+
+	if { $map2scrx_conv($mon) > $map2scry_conv($mon) } {
+			set map2scrx_conv($mon) $map2scry_conv($mon)
+	} else {
+			set map2scry_conv($mon) $map2scrx_conv($mon)
+	}
 
 }
 
@@ -1591,64 +1650,51 @@ if { [info exists "mapimg.$mon"] } {
 # screen to map and map to screen conversion procedures
 
 # map north to screen y
-proc MapCanvas::mapn2scry { north } {
-	global map_n
-	global scr_n
-	global map2scry_conv
+proc MapCanvas::mapn2scry { mon north } {
+	variable north_extent
+	variable scr_top
+	variable map2scry_conv
 
-	return [expr {$scr_n + (($map_n - $north) * $map2scry_conv)}]
+	return [expr {$scr_top($mon) + (($north_extent($mon) - $north) * $map2scry_conv($mon))}]
 }
 
 # map east to screen x
-proc MapCanvas::mape2scrx { east } {
-	global map_w
-	global scr_w
-	global map2scrx_conv
+proc MapCanvas::mape2scrx { mon east } {
+	variable west_extent
+	variable scr_left
+	variable map2scrx_conv
 
-	return [expr {$scr_w + (($east - $map_w) * $map2scrx_conv)}]
+	return [expr {$scr_left($mon) + (($east - $west_extent($mon)) * $map2scrx_conv($mon))}]
 }
 
 # screen y to map north
-proc MapCanvas::scry2mapn { y } {
-	global map_n
-	global scr_n
-	global map2scry_conv
+proc MapCanvas::scry2mapn { mon y } {
+	variable north_extent
+	variable scr_top
+	variable map2scry_conv
 
-	return [expr {$map_n - (($y - $scr_n) / $map2scry_conv)}]
+	return [expr {$north_extent($mon) - (($y - $scr_top($mon)) / $map2scry_conv($mon))}]
 }
 
 # screen x to map east
-proc MapCanvas::scrx2mape { x } {
-	global map_w
-	global scr_w
-	global map2scrx_conv
-
-	return [expr {$map_w + (($x - $scr_w) / $map2scrx_conv)}]
+proc MapCanvas::scrx2mape { mon x } {
+	variable west_extent
+	variable scr_left
+	variable map2scrx_conv
+	
+	return [expr {$west_extent($mon) + (($x - $scr_left($mon)) / $map2scrx_conv($mon))}]
 }
 
 ###############################################################################
 # cleanup procedure on closing window
 proc MapCanvas::cleanup { mon destroywin} {
-	variable mapregion
 	global pgs
-
+	
 	if { $destroywin == ".mapcan($mon)" } {
 		$pgs delete "page_$mon"
 	}
-
+	
 	if { [winfo exists .tlegend($mon)] } { destroy .tlegend($mon) }
-
-	# stop gism PNG driver if it is still running due to error
-	if {![catch {open "|d.mon -L" r} input]} {
-		while {[gets $input line] >= 0} {
-			if {[regexp {^gism			  Create PNG Map for gism		 running} $line]} {
-				runcmd "d.mon stop=gism"
-				break
-			}
-		}
-		close $input
-	}
-
 }
 
 ###############################################################################

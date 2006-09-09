@@ -29,7 +29,6 @@ proc GmRaster::create { tree parent } {
     variable opt
     variable count
     variable dup
-    global gmpath
     global iconpath
     global mon
 
@@ -132,7 +131,6 @@ proc GmRaster::select_drapemap { id } {
 # set and display raster options
 proc GmRaster::options { id frm } {
     variable opt
-    global gmpath
     global iconpath
     global bgcolor
 
@@ -275,11 +273,6 @@ proc GmRaster::addcolor {node nvcolor} {
 # display raster map and output to graphic file for compositing
 proc GmRaster::display { node mod } {
     global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
     variable optlist
     variable lfile
     variable lfilemask
@@ -289,9 +282,6 @@ proc GmRaster::display { node mod } {
     variable count
 
     set rasttype ""
-    set currmon ""
-    set line ""
-    set input ""
 
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
@@ -373,7 +363,6 @@ proc GmRaster::duplicate { tree parent node id } {
     variable opt
     variable count
     variable dup
-    global gmpath
     global iconpath
     global mon
 

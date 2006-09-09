@@ -144,7 +144,7 @@ proc GmChart::show_data { id } {
 # chart options
 proc GmChart::options { id frm } {
     variable opt
-    global gmpath
+    
     global bgcolor
 	global iconpath
 	
@@ -297,11 +297,6 @@ proc GmChart::mapname { node } {
 
 proc GmChart::display { node mod } {
     global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
     variable optlist
     variable lfile 
     variable lfilemask
@@ -312,7 +307,7 @@ proc GmChart::display { node mod } {
 
     set line ""
     set input ""
-    global gmpath
+    
     set cmd ""
 
     set tree($mon) $GmTree::tree($mon)

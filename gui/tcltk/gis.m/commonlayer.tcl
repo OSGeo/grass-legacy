@@ -37,13 +37,11 @@ proc namespace_import_variables {namespace args} {
 # directory and add it to the compositing list)
 proc GmCommonLayer::display_commands {namespace id cmds} {
 	global mon
-	global mapfile
-	global maskfile
-	global complist
-	global opclist
-	global masklist
 	namespace_import_variables $namespace lfile lfilemask opt optlist dup first
-		
+	
+	set mapfile($mon) $MapCanvas::mapfile($mon)
+	set maskfile($mon) $MapCanvas::maskfile($mon)
+
 	if {[info exists $mapfile($mon)] == ""} {return}
 
 	# There's no point in doing any of this unless the layer is actually on
@@ -76,26 +74,27 @@ proc GmCommonLayer::display_commands {namespace id cmds} {
 	}
 	
 	#add lfile, maskfile, and opacity to compositing lists
-	if {$complist($mon) != "" } {
-		append complist($mon) ","
-		append complist($mon) [file tail $lfile($id)]
+	if {$MapCanvas::complist($mon) != "" } {
+		append MapCanvas::complist($mon) ","
+		append MapCanvas::complist($mon) [file tail $lfile($id)]
 	} else {
-		append complist($mon) [file tail $lfile($id)]
+		append MapCanvas::complist($mon) [file tail $lfile($id)]
 	}	
 
-	if {$masklist($mon) != "" } {
-		append masklist($mon) ","
-		append masklist($mon) [file tail $lfilemask($id)]
+	if {$MapCanvas::masklist($mon) != "" } {
+		append MapCanvas::masklist($mon) ","
+		append MapCanvas::masklist($mon) [file tail $lfilemask($id)]
 	} else {
-		append masklist($mon) [file tail $lfilemask($id)]
+		append MapCanvas::masklist($mon) [file tail $lfilemask($id)]
 	}	
 	
-	if {$opclist($mon) != "" } {
-		append opclist($mon) ","
-		append opclist($mon) $opt($id,1,opacity)
+	if {$MapCanvas::opclist($mon) != "" } {
+		append MapCanvas::opclist($mon) ","
+		append MapCanvas::opclist($mon) $opt($id,1,opacity)
 	} else {
-		append opclist($mon) $opt($id,1,opacity)
+		append MapCanvas::opclist($mon) $opt($id,1,opacity)
 	}
+	
 }
 
 # Display something on the canvas
