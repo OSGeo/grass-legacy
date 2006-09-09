@@ -125,12 +125,17 @@ regsub -- $regexp $env(PATH) "&:$env(GISBASE)/etc/gm/script" env(PATH)
 proc read_moncap {} {
 	global env moncap
 
-	set file [open [file join $env(GISBASE) etc monitorcap] r]
+	set moncap {}
+
+	# MS-Windows doesn't have monitorcap.
+	if {[catch {set file [open [file join $env(GISBASE) etc monitorcap] r]}]} {
+		return
+	}
+
 	set data [read $file]
 	close $file
 
 	set data [subst -nocommands -novariables $data]
-	set moncap {}
 	foreach line [split $data \n] {
 		if {[string match {\#*} $line]} continue
 		if {![string match {*:*:*:*:*:*} $line]} continue
