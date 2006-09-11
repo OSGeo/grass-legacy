@@ -801,6 +801,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
     # reset rendering for GUI use
 	if [ "$GIS_FLAG_S"  -eq 1 ] ; then
 		d.mon stop=PNG
+		d.mon select=$currmon
 		export GRASS_RENDER_IMMEDIATE=$rendermode
 		export GRASS_PNG_AUTO_WRITE=$autowrite
 	fi
@@ -1073,6 +1074,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
     # reset rendering for GUI use
 	if [ "$GIS_FLAG_S"  -eq 1 ] ; then
 		d.mon stop=PNG
+		d.mon select=$currmon
 		export GRASS_RENDER_IMMEDIATE=$rendermode
 		export GRASS_PNG_AUTO_WRITE=$autowrite
 	fi
