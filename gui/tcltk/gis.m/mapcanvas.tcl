@@ -1491,14 +1491,14 @@ proc MapCanvas::querybind { mon } {
 # query
 proc MapCanvas::query { mon x y } {
 	variable map_ew
-	variable scr_ew
+	variable scr_lr
 	variable can
 
 	set east  [scrx2mape $mon $x]
 	set north [scry2mapn $mon $y]
 
 	# set query 'snapping' distance to 10 screen pixels
-	set vdist($mon) [expr 10* {($map_ew($mon) / $scr_ew($mon))} ]
+	set vdist($mon) [expr 10* {($map_ew($mon) / $scr_lr($mon))} ]
 	
 	# get currently selected map for querying
 	set tree($mon) $GmTree::tree($mon)
