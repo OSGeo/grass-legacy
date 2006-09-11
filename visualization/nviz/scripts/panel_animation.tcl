@@ -873,7 +873,7 @@ proc animRunAndSave { BASE } {
     pack .ras_fname.frame2 -side bottom -fill both -expand 1
     pack .ras_fname.title .ras_fname.enter -side top \
     -in .ras_fname.frame1 -fill both
-    pack .ras_fname.img1 .ras_fname.img2 .ras_fname.img3 .ras_fname.img4 \
+    pack .ras_fname.img2 .ras_fname.img3 .ras_fname.img4 \
     -in .ras_fname.frame1 -side left -fill both
     pack .ras_fname.label .ras_fname.norm .ras_fname.fancy -side top \
 	-in .ras_fname.frame2 -fill both
