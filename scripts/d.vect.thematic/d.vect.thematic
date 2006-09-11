@@ -176,7 +176,7 @@
 #%end
 #%flag 
 #%key: s
-#%description: Save legend output for display in GIS Manager
+#%description: Use with GIS Manager (special legend and display output)
 #%end
 #%flag 
 #%key: m
@@ -576,6 +576,17 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
 
     i=1
     first="true"
+
+	# if running in GUI, turn off immediate mode rendering so that the
+	# iterated d.vect commands will composite using the display driver
+	if [ "$GIS_FLAG_S"  -eq 1 ] ; then
+		rendermode=$GRASS_RENDER_IMMEDIATE
+		autowrite=$GRASS_PNG_AUTO_WRITE
+		export GRASS_RENDER_IMMEDIATE=FALSE
+		export GRASS_PNG_AUTO_WRITE=FALSE
+		d.mon start=PNG
+	fi
+
     while [ $i -le $numint ]     
         do 
         if [ "$GIS_FLAG_M" -eq 1 ] ; then
@@ -735,6 +746,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
             echo "  End" >> "$TMP3"
         fi
         
+        
         # display theme vector map
 
         d.vect map=$GIS_OPT_MAP type=$GIS_OPT_TYPE layer=$GIS_OPT_LAYER \
@@ -785,6 +797,13 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
         let line2=line2-4
         let line3=line3-4
     done
+    
+    # reset rendering for GUI use
+	if [ "$GIS_FLAG_S"  -eq 1 ] ; then
+		d.mon stop=PNG
+		export GRASS_RENDER_IMMEDIATE=$rendermode
+		export GRASS_PNG_AUTO_WRITE=$autowrite
+	fi
 fi
 
 #graduated points and line widths thematic mapping
@@ -876,6 +895,17 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
 
     i=$numint
     ptsize=$GIS_OPT_MAXSIZE
+
+	# if running in GUI, turn off immediate mode rendering so that the
+	# iterated d.vect commands will composite using the display driver
+	if [ "$GIS_FLAG_S"  -eq 1 ] ; then
+		rendermode=$GRASS_RENDER_IMMEDIATE
+		autowrite=$GRASS_PNG_AUTO_WRITE
+		export GRASS_RENDER_IMMEDIATE=FALSE
+		export GRASS_PNG_AUTO_WRITE=FALSE
+		d.mon start=PNG
+	fi
+
     while [ $i -ge 1 ]     
         do 
         if [ "$GIS_FLAG_M" -eq 1 ] ; then
@@ -1040,6 +1070,12 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
         let line2=line2-$lineht
         let i=i-1
     done
+    # reset rendering for GUI use
+	if [ "$GIS_FLAG_S"  -eq 1 ] ; then
+		d.mon stop=PNG
+		export GRASS_RENDER_IMMEDIATE=$rendermode
+		export GRASS_PNG_AUTO_WRITE=$autowrite
+	fi
 
 fi
 
