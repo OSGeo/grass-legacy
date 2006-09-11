@@ -70,7 +70,7 @@ proc GmRaster::create { tree parent } {
     set opt($count,1,overlay) 1
     set opt($count,1,mod) 1
 
-    set optlist {_check map drapemap querytype rastquery rasttype bkcolor \
+    set optlist {_check opacity map drapemap querytype rastquery rasttype bkcolor \
         overlay}
 
     foreach key $optlist {

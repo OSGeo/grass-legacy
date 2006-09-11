@@ -67,7 +67,7 @@ proc GmHist::create { tree parent } {
     set opt($count,1,mod) 1
     set first 1
 
-	set optlist {_check map color style nsteps nulls}
+	set optlist {_check map opacity color style nsteps nulls}
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
