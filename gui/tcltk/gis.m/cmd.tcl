@@ -61,7 +61,7 @@ proc GmCmd::create { tree parent } {
     set opt($count,1,cmd) ""
     set opt($count,1,mod) 1
 
-	set optlist { _check cmd}
+	set optlist { _check opacity cmd}
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)

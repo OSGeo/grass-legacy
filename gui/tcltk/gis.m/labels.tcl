@@ -64,7 +64,7 @@ proc GmLabels::create { tree parent } {
     set opt($count,1,ignore_rot) 0 
     set opt($count,1,mod) 1
 
-	set optlist { _check map minreg maxreg}
+	set optlist { _check map opacity minreg maxreg}
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)

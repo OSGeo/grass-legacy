@@ -73,7 +73,7 @@ proc GmBarscale::create { tree parent } {
     set opt($count,1,mod) 1
     set first 1
     
-    set optlist { _check bcolor bcolor_none tcolor at feet line top arrow scale}
+    set optlist { _check opacity bcolor bcolor_none tcolor at feet line top arrow scale}
     
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)

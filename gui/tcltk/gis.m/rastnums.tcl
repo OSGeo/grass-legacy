@@ -64,7 +64,7 @@ proc GmRnums::create { tree parent } {
     set opt($count,1,cellcolor) 0 
     set opt($count,1,mod) 1
 
-	set optlist {_check map grid_color text_color cellcolor}
+	set optlist {_check map opacity grid_color text_color cellcolor}
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
