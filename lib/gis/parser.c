@@ -1540,10 +1540,17 @@ static void G_gui (void)
 	if (!pgm_name)
 		pgm_name = "??";
 
+#ifdef __MINGW32__
+	if (getenv("GRASS_DEBUG_GUI"))
+		fp = popen("tee gui_dump.tcl | %GRASS_WISH%", "w");
+	else
+		fp = popen("%GRASS_WISH%", "w");
+#else
 	if (getenv("GRASS_DEBUG_GUI"))
 		fp = popen("tee gui_dump.tcl | $GRASS_WISH", "w");
 	else
 		fp = popen("$GRASS_WISH", "w");
+#endif
 
 	if (!fp)
 		G_fatal_error("unable to spawn wish");
