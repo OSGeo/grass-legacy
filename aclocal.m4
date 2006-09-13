@@ -1465,13 +1465,25 @@ AC_DEFUN([AC_HAVE_LARGEFILES],
  * We can't simply "#define LARGE_OFF_T 9223372036854775807",
  * since some C++ compilers masquerading as C compilers
  * incorrectly reject 9223372036854775807.
+ *
+ * For MinGW, off64_t should be used and __MSVCRT_VERSION__ >= 0x0601
+ * (msvcrt.dll version 6.10 or higher) is needed for _fstat64 and _stat64.
  */
+#ifdef __MINGW32__
+#   define LARGE_OFF_T (((off64_t) 1 << 62) - 1 + ((off64_t) 1 << 62))
+#else
 #   define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
+#endif
     int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 			&& LARGE_OFF_T % 2147483647 == 1)
 		       ? 1 : -1];
+#ifdef __MINGW32__
+return !fseeko64;
+return !ftello64;
+#else
 return !fseeko;
-return !ftello;],
+return !ftello;
+#endif],
      		[ac_cv_largefiles=yes],
      		[ac_cv_largefiles=no])])
 	if test $ac_cv_largefiles = yes; then
