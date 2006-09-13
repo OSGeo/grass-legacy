@@ -233,7 +233,7 @@ proc MapToolBar::create { tb } {
 			-command {MapToolBar::savefile jpg 75}
 		$jpgfile add command -label "high quality (95)" \
 			-command {MapToolBar::savefile jpg 95}
-		$jpgfile add command -label "very high resolution (300% your current resolution" \
+		$jpgfile add command -label "very high resolution (300% your current resolution)" \
 			-command {MapToolBar::savefile jpg 300}
 	$savefile add command -label "BMP*" -command {MapToolBar::savefile bmp 0}
 	$savefile add command -label "(* requires gdal)" -state disabled
