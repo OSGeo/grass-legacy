@@ -36,13 +36,14 @@
 int
 main(int argc, char **argv)
 {
-  struct Flag *printattributes, *topo_flag;
+  struct Flag *printattributes, *topo_flag, *stdin_flag;
   struct Option *opt1, *opt4, *maxdistance;
   struct Cell_head window;
   struct GModule *module;
   char *mapset;
   char *str;
-  int i, j, level, width = 0, mwidth = 0;
+  char buf[2000];
+  int i, j, level, width = 0, mwidth = 0, ret;
   double xval, yval, xres, yres, maxd, x;
   double EW_DIST1, EW_DIST2, NS_DIST1, NS_DIST2;
   char nsres[30], ewres[30];
@@ -98,6 +99,10 @@ main(int argc, char **argv)
     printattributes->key = 'a';
     printattributes->description = _("Print attribute information");
   
+    stdin_flag = G_define_flag();
+    stdin_flag->key = 's';
+    stdin_flag->description = _("Read coordinates from standard input");
+
     module = G_define_module();
     module->keywords = _("vector");
     module->description = 
@@ -114,8 +119,6 @@ main(int argc, char **argv)
         vect = opt1->answers;
 
    maxd = atof(maxdistance->answer);
-   xval = atof(opt4->answers[0]);
-   yval = atof(opt4->answers[1]);
 
 /*  
 *  fprintf(stdout, maxdistance->answer);
@@ -179,7 +182,24 @@ main(int argc, char **argv)
        }
     }
 
-  what(xval, yval, maxd, width, mwidth, topo_flag->answer,printattributes->answer); 
+  if( stdin_flag->answer ) {
+      setvbuf(stdin,  NULL, _IOLBF, 0);
+      setvbuf(stdout, NULL, _IOLBF, 0);
+      while ( fgets (buf, sizeof(buf), stdin) != NULL ) { 
+          ret=sscanf( buf, "%lf,%lf", &xval, &yval);
+	  if( ret == 2) {
+	       what(xval, yval, maxd, width, mwidth, topo_flag->answer,printattributes->answer);
+	  } else {
+	        G_warning ( "Wrong input format: %s", buf);
+		continue;
+	  }
+      };
+
+  } else {
+      xval = atof(opt4->answers[0]);
+      yval = atof(opt4->answers[1]);
+      what(xval, yval, maxd, width, mwidth, topo_flag->answer,printattributes->answer); 
+  }
 
   for(i=0; i<nvects; i++)
       Vect_close (&Map[i]);
