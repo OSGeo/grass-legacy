@@ -1,12 +1,25 @@
-/* Written by Bill Brown, USA-CERL
-   Thu Jul 27, 1995
- */
+/****************************************************************************
+ *
+ * MODULE:       r.bilinear
+ *
+ * AUTHOR(S):    Bill Brown - CERL (Thu Jul 27, 1995)
+ *
+ * PURPOSE:      Bilinear interpolation for raster map layers
+ *
+ * COPYRIGHT:    (C) 2005 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+****************************************************************************/
 
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
 typedef int FILEDESC;
+
 
 int main( int argc, char *argv[])
 {

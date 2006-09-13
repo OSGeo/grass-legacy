@@ -1,3 +1,21 @@
+/****************************************************************************
+ *
+ * MODULE:       r.average
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      Finds the average of values in a cover map within 
+ *               areas assigned the same category value in a
+ *               user-specified base map.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+****************************************************************************/
+
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
