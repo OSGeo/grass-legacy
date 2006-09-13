@@ -289,6 +289,7 @@ proc MapToolBar::changebutton { rbname } {
 proc MapToolBar::savefile { type quality } {
 	global env
 	global mon
+	global tmpdir
 	
 	set outfile($mon) $MapCanvas::outfile($mon)
 
