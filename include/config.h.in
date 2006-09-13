@@ -256,6 +256,12 @@
 #undef HAVE_FSEEKO		/* Do we need this? If HAVE_LARGEFILES is  */
 				/* defined, we have fseeko()		   */
 
+#ifdef __MINGW32__
+#define off_t off64_t
+#define fseeko fseeko64
+#define ftello ftello64
+#endif
+
 #endif	/* HAVE_LARGEFILES */
 #endif	/* USE_LARGEFILES */
 
