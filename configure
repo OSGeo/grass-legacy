@@ -14113,16 +14113,28 @@ int main() {
  * We can't simply "#define LARGE_OFF_T 9223372036854775807",
  * since some C++ compilers masquerading as C compilers
  * incorrectly reject 9223372036854775807.
+ *
+ * For MinGW, off64_t should be used and __MSVCRT_VERSION__ >= 0x0601
+ * (msvcrt.dll version 6.10 or higher) is needed for _fstat64 and _stat64.
  */
+#ifdef __MINGW32__
+#   define LARGE_OFF_T (((off64_t) 1 << 62) - 1 + ((off64_t) 1 << 62))
+#else
 #   define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
+#endif
     int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 			&& LARGE_OFF_T % 2147483647 == 1)
 		       ? 1 : -1];
+#ifdef __MINGW32__
+return !fseeko64;
+return !ftello64;
+#else
 return !fseeko;
 return !ftello;
+#endif
 ; return 0; }
 EOF
-if { (eval echo configure:14126: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:14138: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   ac_cv_largefiles=yes
 else
@@ -14152,7 +14164,7 @@ fi
 
 
 echo $ac_n "checking whether to use PYTHON""... $ac_c" 1>&6
-echo "configure:14156: checking whether to use PYTHON" >&5
+echo "configure:14168: checking whether to use PYTHON" >&5
 echo "$ac_t"""$with_python"" 1>&6
 case "$with_python" in
 	"no")	USE_PYTHON=	;;
@@ -14170,7 +14182,7 @@ if test -z "$PYTHON_BIN"; then
   # Extract the first word of "python", so it can be a program name with args.
 set dummy python; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:14174: checking for $ac_word" >&5
+echo "configure:14186: checking for $ac_word" >&5
 
 case "$PYTHON_BIN" in
   /*)
@@ -14203,7 +14215,7 @@ fi
     # Extract the first word of "python2.3", so it can be a program name with args.
 set dummy python2.3; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:14207: checking for $ac_word" >&5
+echo "configure:14219: checking for $ac_word" >&5
 
 case "$PYTHON_BIN" in
   /*)
@@ -14236,7 +14248,7 @@ fi
       # Extract the first word of "python2.4", so it can be a program name with args.
 set dummy python2.4; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:14240: checking for $ac_word" >&5
+echo "configure:14252: checking for $ac_word" >&5
 
 case "$PYTHON_BIN" in
   /*)
@@ -14280,7 +14292,7 @@ if test -z "$PYTHON_BIN"; then
   # Extract the first word of "python", so it can be a program name with args.
 set dummy python; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:14284: checking for $ac_word" >&5
+echo "configure:14296: checking for $ac_word" >&5
 
 case "$PYTHON_BIN" in
   /*)
@@ -14316,7 +14328,7 @@ fi
 
 # find out python version
 echo $ac_n "checking Python version""... $ac_c" 1>&6
-echo "configure:14320: checking Python version" >&5
+echo "configure:14332: checking Python version" >&5
 PYVERSION=`$PYTHON_BIN -c 'import sys; print sys.version[:3]'`
 PYMAJVERSION=`$PYTHON_BIN -c 'import sys; print sys.version[:1]'`
 PYMINVERSION=`$PYTHON_BIN -c 'import sys; print sys.version[2:3]'`
