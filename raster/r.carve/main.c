@@ -1,6 +1,21 @@
-/* Written by Bill Brown, UIUC GIS Laboratory */
-/* Ported to GRASS6 by Brad Douglas <rez@touchofmadness.com> */
-
+/****************************************************************************
+ *
+ * MODULE:       r.carve
+ *
+ * AUTHOR(S):    Original author Bill Brown, UIUC GIS Laboratory
+ *               Brad Douglas <rez touchofmadness com>
+ *
+ * PURPOSE:      Takes vector stream data, converts it to 3D raster and
+ *               subtracts a specified depth
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+****************************************************************************/
+ 
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>

@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       r.basins.fill
+ *
+ * AUTHOR(S):    Dale White - Dept. of Geography, Pennsylvania State U.
+ *               Larry Band - Dept. of Geography, University of Toronto
+ *
+ * PURPOSE:      Generates a raster map layer showing watershed subbasins.
+ *
+ * COPYRIGHT:    (C) 2005 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+****************************************************************************/
+
 #include <grass/gis.h>
 #include "local_proto.h"
 
