@@ -1,11 +1,23 @@
-/* This program creates distance zones from non-zero
- * cells in a grid layer. Distances are specified in
- * meters (on the command-line). Window does not have to
- * have square cells. Works both for planimetric (UTM, State Plane)
- * and lat-long.
- *
- * Author: Michael Shapiro. US Army CERL.
- */
+/***************************************************************************
+*
+* MODULE:    r.buffer
+*
+* AUTHOR(S): Michael Shapiro, US Army Construction Engineering Research Laboratory
+*	     James Westervelt, US Army CERL
+*
+* PURPOSE:   This program creates distance zones from non-zero
+*	     cells in a grid layer. Distances are specified in
+*	     meters (on the command-line). Window does not have to
+*	     have square cells. Works both for planimetric (UTM,
+*	     State Plane) and lat-long.
+*
+* COPYRIGHT: (c) 2006 by the GRASS Development Team
+*
+*	     This program is free software under the GNU General Public
+*	     License (>=v2). Read the file COPYING that comes with GRASS
+*	     for details.
+*
+**************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,31 +32,28 @@ int main (int argc, char *argv[])
 {
     struct Distance *pd;
     char *input, *output, *mapset;
-    char *type;
     char **zone_list;
-    char buf[512];
-    double dd;
     double to_meters;
     char *units;
     int offset;
-    int count, i, k;
+    int count;
     int step, nsteps;
     struct History hist;
     int quiet;
-	struct GModule *module;
+
+    struct GModule *module;
     struct Option *opt1, *opt2, *opt3, *opt4;
     struct Flag *flag1;
     struct Flag *flag2;
     int ZEROFLAG;
 
-	/* initialize GRASS */
-
+    /* initialize GRASS */
     G_gisinit(argv[0]);
 
     pgm_name = argv[0];
 
-	module = G_define_module();
-	module->keywords = _("raster");
+    module = G_define_module();
+    module->keywords = _("raster, buffer");
     module->description =
 		_("Creates a raster map layer showing buffer zones "
 		"surrounding cells that contain non-NULL category values.");
@@ -81,9 +90,7 @@ int main (int argc, char *argv[])
 
     init_grass();
 
-	/* get input, output map names */
-
-
+    /* get input, output map names */
     input     = opt1->answer; 
     output    = opt2->answer; 
     zone_list = opt3->answers;
@@ -99,10 +106,6 @@ int main (int argc, char *argv[])
 
     if (G_legal_filename(output) < 0)
 	G_fatal_error(_("%s: %s - illegal name"), pgm_name, output);
-
-/* Initialze History */
-	type = "raster";
-	G_short_history(output, type, &hist);
 
         /* parse units */
     if (opt4->answer == NULL)
@@ -138,36 +141,19 @@ int main (int argc, char *argv[])
     offset = 0;
 
     nsteps = (count - 1) / MAX_DIST + 1;
-
-/* Write out History Structure History */
-	sprintf(hist.title, "%s", output);
-	sprintf(hist.datsrc_1, "%s", input);
-	sprintf(hist.edhist[0], "Created from: r.buffer");
-	sprintf(hist.edhist[1], "input=%s output=%s units=%s", input, output, units);
-	sprintf(hist.edhist[2], "distances=");
-
-	for (i=0; opt3->answers[i]; i++) {
-	k = i;
-	}
-	for (i=0; i <= k ; i++) {
-	sscanf(opt3->answers[i], "%lf", &dd);
-	sprintf(buf, "%.2f ", dd);
-	strcat(hist.edhist[2], buf);
-	}
-	hist.edlinecnt = k+1;
-/* Done with history */
-
 	
     pd = distances;
     for (step = 1; count > 0; step++)
     {
-       if ( ! quiet)
-	  if (nsteps > 1) fprintf (stderr, "Pass %d (of %d)\n", step, nsteps);
-        ndist = count;
+	if(!quiet) {
+	    if (nsteps > 1)
+		G_message(_("Pass %d (of %d)"), step, nsteps);
+	}
+	ndist = count;
 	if (ndist > MAX_DIST)
 	    ndist = MAX_DIST;
 	if(count_rows_with_data > 0) 
-	      execute_distance(quiet);
+	    execute_distance(quiet);
 	write_output_map(output, offset, quiet);
 	offset += ndist;
 	distances += ndist;
@@ -176,9 +162,17 @@ int main (int argc, char *argv[])
     distances = pd;
     make_support_files (output, units);
 
-/* Write out New History */
-	G_write_history (output, &hist);
+    /* write map history (meta data) */
+    G_short_history(output, "raster", &hist);
+    sprintf(hist.datsrc_1, "%s", input);
+    if( strlen(opt3->answer) < (RECORD_LEN - 14) ) {
+	sprintf(hist.edhist[0], "Buffer distance%s:", ndist>1 ? "s" : "");
+	sprintf(hist.edhist[1], " %s %s", opt3->answer, units);
+	hist.edlinecnt = 2;
+    }
+    G_command_history(&hist);
+    G_write_history (output, &hist);
+
 
     exit(EXIT_SUCCESS);
 }
-
