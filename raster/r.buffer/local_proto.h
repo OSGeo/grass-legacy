@@ -1,3 +1,26 @@
+/****************************************************************************
+ *
+ * MODULE:       r.buffer
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      This program creates distance zones from non-zero
+ *               cells in a grid layer. Distances are specified in
+ *               meters (on the command-line). Window does not have to
+ *               have square cells. Works both for planimetric
+ *               (UTM, State Plane) and lat-long.
+ *
+ * COPYRIGHT:    (C) 2005 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+****************************************************************************/
+
+#ifndef __LOCAL_PROTO_H__
+#define __LOCAL_PROTO_H__
+
 /* execute.c */
 int execute_distance(int);
 /* find_dist.c */
@@ -23,3 +46,5 @@ int read_input_map(char *, char *, int, int);
 int make_support_files(char *, char *);
 /* write_map.c */
 int write_output_map(char *, int, int);
+
+#endif /* __LOCAL_PROTO_H__ */

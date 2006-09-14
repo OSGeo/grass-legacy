@@ -1,3 +1,26 @@
+/****************************************************************************
+ *
+ * MODULE:       r.buffer
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      This program creates distance zones from non-zero
+ *               cells in a grid layer. Distances are specified in
+ *               meters (on the command-line). Window does not have to
+ *               have square cells. Works both for planimetric
+ *               (UTM, State Plane) and lat-long.
+ *
+ * COPYRIGHT:    (C) 2005 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+****************************************************************************/
+
+#ifndef __DISTANCE_H__
+#define __DISTANCE_H__
+
 #include <grass/gis.h>
 #ifndef GLOBAL
 #define GLOBAL extern
@@ -38,3 +61,5 @@ GLOBAL int count_rows_with_data;
 #define MILES_TO_METERS 1609.344
 #define NAUT_MILES_TO_METERS 1852.0
 #define KILOMETERS_TO_METERS 1000.0
+
+#endif /* __DISTANCE_H__ */

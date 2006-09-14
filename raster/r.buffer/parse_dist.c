@@ -1,8 +1,30 @@
+/****************************************************************************
+ *
+ * MODULE:       r.buffer
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      This program creates distance zones from non-zero
+ *               cells in a grid layer. Distances are specified in
+ *               meters (on the command-line). Window does not have to
+ *               have square cells. Works both for planimetric
+ *               (UTM, State Plane) and lat-long.
+ *
+ * COPYRIGHT:    (C) 2005 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+****************************************************************************/
+
 #include <stdlib.h>
 #include "distance.h"
+#include <grass/glocale.h>
 
 static int cmp (const void *, const void *);
 static int scan_dist (char *, double *);
+
 
 int parse_distances (char **zone_list, double to_meters)
 {
@@ -31,7 +53,7 @@ int parse_distances (char **zone_list, double to_meters)
     {
 	if (!scan_dist(zone_list[i], &dist))
 	{
-	    fprintf (stderr, "%s: %s - illegal distance specification\n",
+	    G_warning(_("%s: %s - illegal distance specification"),
 		pgm_name, zone_list[i]);
 	    return 0;
 	}

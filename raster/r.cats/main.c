@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       r.cats
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      Prints category values and labels associated with
+ *		 user-specified raster map layers.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -7,6 +24,7 @@
 
 static char fs = '\t';
 static struct Categories cats;
+
 
 int 
 main (int argc, char *argv[])
