@@ -29,10 +29,10 @@ int main (int argc, char **argv)
 	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
-	module->keywords = _("display");
-    module->description =
-		_("Program for generating and displaying simple graphics on the "
-		"display monitor.");
+	module->keywords = _("display, cartography");
+	module->description =
+	    _("Program for generating and displaying simple graphics on the "
+	      "display monitor.");
 
 	opt1 = G_define_option() ;
 	opt1->key        = "input" ;
@@ -68,7 +68,6 @@ int main (int argc, char **argv)
 	}
 	else
 	    infile = stdin;
-
 
 	/* open graphics window */
 	if (R_open_driver() != 0)
