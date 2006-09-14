@@ -1,8 +1,26 @@
+/****************************************************************************
+ *
+ * MODULE:       r.clump
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      Recategorizes data in a raster map layer by grouping cells
+ *		 that form physically discrete areas into unique categories.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
 #include "local_proto.h"
 #include <grass/glocale.h>
+
 
 int 
 main (int argc, char *argv[])
@@ -22,7 +40,6 @@ main (int argc, char *argv[])
     struct Option *opt2 ;
     struct Option *opt3 ;
     static int verbose = 1;
-    char rname[GNAME_MAX], rmapset[GMAPSET_MAX];
 
     G_gisinit (argv[0]);
 

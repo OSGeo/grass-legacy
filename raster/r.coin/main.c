@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       r.coin
+ *
+ * AUTHOR(S):    Michael O'Shea - CERL
+ *               Michael Shapiro - CERL
+ *
+ * PURPOSE:      Calculates the coincidence of two raster map layers.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #define GLOBAL
 #include <stdlib.h>
 #include <unistd.h>
@@ -39,5 +56,6 @@ midline = "---------------------------------------------------------------------
 
     unlink (dumpname);
     unlink (statname);
+
     exit(0);
 }

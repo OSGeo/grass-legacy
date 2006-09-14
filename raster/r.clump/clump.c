@@ -1,8 +1,27 @@
+/****************************************************************************
+ *
+ * MODULE:       r.clump
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      Recategorizes data in a raster map layer by grouping cells
+ *               that form physically discrete areas into unique categories.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #include <time.h>
 #include <grass/gis.h>
 #include "local_proto.h"
+#include <grass/glocale.h>
 
 #define INCR 1024
+
 
 CELL
 clump(int in_fd, int out_fd, int verbose)
@@ -79,11 +98,11 @@ clump(int in_fd, int out_fd, int verbose)
 	label = 0;
 
 	if (verbose)
-	    fprintf (stderr, "CLUMP PASS %d ... ", pass); fflush (stderr);
+	    fprintf (stderr, _("CLUMP PASS %d ... "), pass); fflush (stderr);
 	for (row = 0; row < nrows; row++)
 	{
 	    if (G_get_map_row (in_fd, cur_in+1, row) < 0)
-		G_fatal_error ("can't properly read input raster file");
+		G_fatal_error (_("Unable to properly read input raster file"));
 
 	    if (verbose)
 		G_percent(row, nrows, 2);
@@ -214,7 +233,7 @@ clump(int in_fd, int out_fd, int verbose)
 		    out_cell[col] = index[cur_clump[col]];
 
 		if (G_put_raster_row (out_fd, out_cell+1, CELL_TYPE) < 0)
-		    G_fatal_error ("can't properly write output raster file");
+		    G_fatal_error (_("Unable to properly write output raster file"));
 	    */
 		col = ncols;
 		temp_clump = cur_clump + 1;       /* skip left edge */
@@ -229,7 +248,7 @@ clump(int in_fd, int out_fd, int verbose)
 		       G_set_null_value(&out_cell[column],1,CELL_TYPE);
 		}
 		if (G_put_raster_row (out_fd, out_cell, CELL_TYPE) < 0)
-		    G_fatal_error ("can't properly write output raster file");
+		    G_fatal_error (_("Unable to properly write output raster file"));
 	    }
 
     /* switch the buffers so that the current buffer becomes the previous */
@@ -272,5 +291,6 @@ print_time (long *start)
     else
 	fprintf (stderr, "%d seconds", seconds);
     fprintf (stderr, "\n");
+
     return 0;
 }

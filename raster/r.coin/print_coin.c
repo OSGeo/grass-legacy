@@ -1,4 +1,23 @@
+/****************************************************************************
+ *
+ * MODULE:       r.coin
+ *
+ * AUTHOR(S):    Michael O'Shea - CERL
+ *               Michael Shapiro - CERL
+ *
+ * PURPOSE:      Calculates the coincidence of two raster map layers.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #include "coin.h"
+#include <grass/glocale.h>
+
 
 int 
 print_coin (int Conformat, int out_cols, int tofile)
@@ -23,7 +42,7 @@ print_coin (int Conformat, int out_cols, int tofile)
 
     if (tofile)
     {
-	fprintf (stderr, "preparing report ..."); fflush (stderr);
+	fprintf(stderr, _("Preparing report ...")); fflush (stderr);
 	dumpfile = fopen(dumpname,"w");
     }
     else
