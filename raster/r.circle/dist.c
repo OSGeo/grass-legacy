@@ -1,10 +1,20 @@
-/*
- * Written by Bill Brown, USA-CERL
- * January, 1993
+/****************************************************************************
  *
- * added min/max, -b 5/2001: Markus Neteler
- *       useful for i.(i)fft filters
- */
+ * MODULE:       r.cats
+ *
+ * AUTHOR(S):    Bill Brown - CERL (Jan, 1993)
+ *               Markus Neteler
+ *
+ * PURPOSE:      Creates a raster map containing concentric rings
+ *	         around a given point.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
 
 #include <stdlib.h>
 #include <strings.h>
@@ -13,11 +23,12 @@
 #include <grass/glocale.h>
 
 typedef int FILEDESC;
-double distance ( double *,double *, double, double, int);
+static double distance ( double *,double *, double, double, int);
 
 #ifndef HUGE_VAL
 #define HUGE_VAL        1.7976931348623157e+308
 #endif
+
 
 int main(
     int argc,
@@ -27,7 +38,6 @@ int main(
     struct GModule *module;
     struct Option 	*coord, *out_file, *min, *max, *mult;
     struct Flag         *flag;
-    char 		errbuf[100];
     int			*int_buf;
     struct Cell_head	w;
     FILEDESC    	cellfile = (FILEDESC) NULL;
@@ -95,29 +105,25 @@ int main(
     	fmax=HUGE_VAL;
 
     if (fmin > fmax)
-	G_fatal_error("you specified min > max radius which is nonsensical");
-	
+	G_fatal_error(_("Please specify a radius in which min < max"));
+
     if(mult->answer)
 	if(1 != sscanf(mult->answer,"%lf", &fmult)) fmult=1.0;
 
 /* nonsense test */
     if(flag->answer && (!min->answer && !max->answer) )
-    	G_fatal_error("binary flag doesn't make much sense without min and/or max radius specification.");
-    	
+    	G_fatal_error(_("Please specify min and/or max radius when "
+                        "using the binary flag"));
+
     if(flag->answer)
 	binary=1; /* generate binary pattern only, useful for MASK */
     else
         binary=0;
 
-
     G_get_set_window (&w); 
 
     if ((cellfile = G_open_cell_new(out_file->answer)) == -1)
-    {
-	sprintf(errbuf,"Unable to create cellfile for [%s]",out_file->answer);
-	G_fatal_error(errbuf);
-    }
-
+	G_fatal_error(_("Unable to create cell file for [%s]"), out_file->answer);
 
     int_buf = (int *)G_malloc (w.cols * sizeof (int));
     {
@@ -148,7 +154,7 @@ int main(
 
 /*******************************************************************/
 
-double distance ( double from[2],double to[2], double min, double max, int binary)
+static double distance ( double from[2],double to[2], double min, double max, int binary)
 {
     static int first=1;
     double dist;

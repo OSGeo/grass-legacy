@@ -1,7 +1,26 @@
+/****************************************************************************
+ *
+ * MODULE:       r.cats
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      Prints category values and labels associated with
+ *               user-specified raster map layers.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 static struct Cell_stats statf;
+
 
 int get_cats (char *name, char *mapset)
 {
@@ -25,7 +44,7 @@ int get_cats (char *name, char *mapset)
     G_init_cell_stats (&statf);
 
 /* read the cell file */
-    fprintf (stderr, "Reading %s in %s ...", name, mapset);
+    fprintf (stderr, _("Reading %s in %s ..."), name, mapset);
     for (row = 0; row < nrows; row++)
     {
 	G_percent (row, nrows, 2);
@@ -53,5 +72,6 @@ next_cat (long *x)
 	*x = cat;
 	return 1;
     }
+
     return 0;
 }

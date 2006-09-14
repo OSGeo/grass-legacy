@@ -1,5 +1,27 @@
+/****************************************************************************
+ *
+ * MODULE:       r.buffer
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      This program creates distance zones from non-zero
+ *               cells in a grid layer. Distances are specified in
+ *               meters (on the command-line). Window does not have to
+ *               have square cells. Works both for planimetric
+ *               (UTM, State Plane) and lat-long.
+ *
+ * COPYRIGHT:    (C) 2005 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+****************************************************************************/
+
 #include <stdlib.h>
 #include "distance.h"
+#include <grass/glocale.h>
+
 
     /* read the input map. convert non-nulls to 1 */
 
@@ -16,10 +38,8 @@ int read_input_map (char *input, char *mapset, int quiet, int ZEROFLAG)
 
     fd = G_open_cell_old (input, mapset);
     if (fd < 0)
-    {
-	fprintf (stderr, "%s: %s - can't open\n", pgm_name, input);
-	exit(1);
-    }
+	G_fatal_error(_("%s: %s - can't open"), pgm_name, input);
+
     cell = G_allocate_cell_buf();
 
     ptr = map;
@@ -28,7 +48,7 @@ int read_input_map (char *input, char *mapset, int quiet, int ZEROFLAG)
     mincol = window.cols; maxcol = 0;
 
     if ( ! quiet )
-       fprintf (stderr, "Reading input map (%s)    ... ", input);
+       fprintf(stderr, _("Reading input map (%s)    ... "), input);
 
     count_rows_with_data = 0;
 
@@ -39,15 +59,13 @@ int read_input_map (char *input, char *mapset, int quiet, int ZEROFLAG)
 	   G_percent (row, window.rows, 2);
 
 	if (G_get_c_raster_row (fd, cell, row) < 0)
-	{
-	    fprintf (stderr, "%s - ERROR reading %s\n", pgm_name, input);
-	    exit(1);
-	}
+	    G_fatal_error(_("%s - ERROR reading %s"), pgm_name, input);
+
 	for (col = 0; col < window.cols; col++)
 	{
 	    if (ZEROFLAG)
 	    {
-	      if(*ptr++ = (*cell++ != 0))
+	      if ((*ptr++ = (*cell++ != 0)))
 		    {
 			if (minrow < 0) minrow = row;
 			maxrow = row;
@@ -62,7 +80,7 @@ int read_input_map (char *input, char *mapset, int quiet, int ZEROFLAG)
 	    }
 	    else /* use NULL */
 	    {
-	      if(*ptr++ = !G_is_c_null_value(cell++))
+	      if ((*ptr++ = !G_is_c_null_value(cell++)))
 		    {
 			if (minrow < 0) minrow = row;
 			maxrow = row;
