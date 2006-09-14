@@ -352,7 +352,7 @@ int do_symbol(char *buff)
     double rotation = 0.0;
     char *line_color_str, *fill_color_str;
     RGBA_Color *line_color, *fill_color;
-    int ret;
+    int R, G, B, ret;
 
 
     line_color = G_malloc(sizeof(RGBA_Color));
@@ -383,7 +383,12 @@ int do_symbol(char *buff)
 	iy = b - (int)(yper * yincr);
     }
 
-    ret = G_str_to_color(line_color_str, &line_color->r, &line_color->g, &line_color->b);
+    /* parse line color */
+    ret = G_str_to_color(line_color_str, &R, &G, &B);
+    line_color->r = (unsigned char) R;
+    line_color->g = (unsigned char) G;
+    line_color->b = (unsigned char) B;
+
     if (ret == 1) {
 	/* here alpha is only used as an on/off switch, otherwise unused by the display drivers */
 	line_color->a = RGBA_COLOR_OPAQUE;
@@ -395,7 +400,12 @@ int do_symbol(char *buff)
 	return(-1);
     }
 
-    ret = G_str_to_color(fill_color_str, &fill_color->r, &fill_color->g, &fill_color->b);
+    /* parse fill color */
+    ret = G_str_to_color(fill_color_str, &R, &G, &B);
+    fill_color->r = (unsigned char) R;
+    fill_color->g = (unsigned char) G;
+    fill_color->b = (unsigned char) B;
+
     if (ret == 1)
 	fill_color->a = RGBA_COLOR_OPAQUE;
     else if (ret == 2)
