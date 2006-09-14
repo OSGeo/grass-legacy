@@ -1,3 +1,23 @@
+/****************************************************************************
+ *
+ * MODULE:       r.coin
+ *
+ * AUTHOR(S):    Michael O'Shea - CERL
+ *               Michael Shapiro - CERL
+ *
+ * PURPOSE:      Calculates the coincidence of two raster map layers.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
+#ifndef __LOCAL_PROTO_H__
+#define __LOCAL_PROTO_H__
+
 /* check.c */
 int check_report_size(void);
 /* cmd.c */
@@ -22,3 +42,5 @@ int print_percent(double);
 /* totals.c */
 int row_total(int, int, long *, double *);
 int col_total(int, int, long *, double *);
+
+#endif /* __LOCAL_PROTO_H__ */

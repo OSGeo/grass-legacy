@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       r.coin
+ *
+ * AUTHOR(S):    Michael O'Shea - CERL
+ *               Michael Shapiro - CERL
+ *
+ * PURPOSE:      Calculates the coincidence of two raster map layers.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #include <stdlib.h>
 #include <string.h>
 #include "coin.h"
@@ -21,40 +38,41 @@ command_version (int argc, char *argv[])
 	module = G_define_module();
 	module->keywords = _("raster");
     module->description =
-			"Tabulates the mutual occurrence (coincidence) "
-			"of categories for two raster map layers.";
+			_("Tabulates the mutual occurrence (coincidence) "
+			"of categories for two raster map layers.");
 
     parm.map1 = G_define_option();
     parm.map1->key = "map1";
     parm.map1->required = YES;
     parm.map1->type = TYPE_STRING;
 	parm.map1->gisprompt  = "old,cell,raster" ;
-    parm.map1->description = "Name of first raster map";
+    parm.map1->description = _("Name of first raster map");
 
     parm.map2 = G_define_option();
     parm.map2->key = "map2";
     parm.map2->required = YES;
     parm.map2->type = TYPE_STRING;
 	parm.map2->gisprompt  = "old,cell,raster" ;
-    parm.map2->description = "Name of second raster map";
+    parm.map2->description = _("Name of second raster map");
 
     parm.units = G_define_option();
     parm.units->key = "units";
     parm.units->required = YES;
     parm.units->type = TYPE_STRING;
-    parm.units->description = "Unit of measure";
+    parm.units->description = _("Unit of measure");
     parm.units->options = "c,p,x,y,a,h,k,m";
 
     flag.q = G_define_flag();
     flag.q->key = 'q';
-    flag.q->description = "Quiet";
+    flag.q->description = _("Quiet");
 
     flag.w = G_define_flag();
     flag.w->key = 'w';
-    flag.w->description = "Wide report, 132 columns (default: 80)";
+    flag.w->description = _("Wide report, 132 columns (default: 80)");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
+
     strcpy (map1name, parm.map1->answer);
     strcpy (map2name, parm.map2->answer);
     mapset1 = G_find_cell2 (map1name, "");

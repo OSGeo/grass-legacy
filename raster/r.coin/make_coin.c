@@ -1,17 +1,35 @@
 /*
  * $Id$
  */
+
+/****************************************************************************
+ *
+ * MODULE:       r.coin
+ *
+ * AUTHOR(S):    Michael O'Shea - CERL
+ *               Michael Shapiro - CERL
+ *
+ * PURPOSE:      Calculates the coincidence of two raster map layers.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
  
 #include <string.h>
 #include <stdlib.h>
 #include "coin.h"
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 static int cmp (const void *, const void *);
 
+
 int 
 make_coin (int verbose)
-
 {
     FILE *fd;
     FILE *statfd;
@@ -28,11 +46,9 @@ make_coin (int verbose)
     int count;
 
     if (verbose)
-    {
-	fprintf(stderr,"\n\nTabulating Coincidence between '%s' and '%s'\n",
-				    map1name,map2name);
-	fflush (stderr);
-    }
+	G_message(_("\n\nTabulating Coincidence between '%s' and '%s'"),
+				    map1name, map2name);
+
     sprintf (buf, "r.stats -anrc%s fs=: input='", verbose?"":"q");
     strcat(buf, G_fully_qualified_name(map1name, mapset1));
     strcat(buf, ",");
@@ -40,18 +56,11 @@ make_coin (int verbose)
     strcat(buf, "'");
     statfd = fopen (statname, "w");
     if (statfd == NULL)
-    {
-	G_fatal_error ("can't create any tempfiles");
-	exit(1);
-    }
-    /*G_fatal_error(buf);*/
+	G_fatal_error (_("Unable to create any tempfiles"));
     
     fd = popen (buf, "r");
     if (fd == NULL)
-    {
-	G_fatal_error ("can't run r.stats");
-	exit(1);
-    }
+	G_fatal_error (_("Unable to run r.stats"));
 
 /* need to find the number of cats in each file */
     count = 0;
@@ -61,8 +70,7 @@ make_coin (int verbose)
 	    &stats.cat1, &stats.cat2, &stats.area, &stats.count) != 4)
 	{
 	    pclose (fd);
-	    G_fatal_error ("Unexpected output from r.stats");
-	    exit(1);
+	    G_fatal_error (_("Unexpected output from r.stats"));
 	}
 	fwrite (&stats, sizeof (stats), 1, statfd);
 	count++;
@@ -73,10 +81,7 @@ make_coin (int verbose)
 
     statfd = fopen (statname, "r");
     if (statfd == NULL)
-    {
-	G_fatal_error ("can't open tempfile");
-	exit(1);
-    }
+	G_fatal_error (_("Unable to open tempfile"));
 
 /* build a sorted list of cats in both maps */
     catlist1 = (long *) G_calloc (count*2, sizeof(long));
