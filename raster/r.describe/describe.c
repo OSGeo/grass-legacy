@@ -1,5 +1,23 @@
+/****************************************************************************
+ *
+ * MODULE:       r.describe
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      Prints terse list of category values found in a raster
+ *               map layer.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #include <grass/gis.h>
 #include "local_proto.h"
+
 
 int describe (
     char *name,char *mapset, int compact, int verbose,

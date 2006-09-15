@@ -1,4 +1,22 @@
+/****************************************************************************
+ *
+ * MODULE:       r.describe
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      Prints terse list of category values found in a raster
+ *               map layer.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #include <grass/gis.h>
+
 
 #define INCR 10
 #define NCATS 100
@@ -15,6 +33,7 @@ static NODE *tree = 0 ;  /* tree of values */
 static int tlen ;               /* allocated tree size */
 static int N;                   /* number of actual nodes in tree */
 
+
 int 
 plant_tree (void)
 {
@@ -24,6 +43,8 @@ plant_tree (void)
 	tlen = INCR;
 	tree = (NODE *) G_malloc (tlen * sizeof (NODE));
     }
+
+    return 0;
 }
 
 int 
@@ -53,7 +74,8 @@ add_node_to_tree (register CELL cat)
 	tree[N].cat[offset] = 1;
 	tree[N].left = 0;
 	tree[N].right = 0;
-	return;
+
+	return 0;
     }
 
     q = 1;
@@ -63,7 +85,8 @@ add_node_to_tree (register CELL cat)
 	if (tree[q].idx == idx)
 	{
 	    tree[q].cat[offset] = 1;
-	    return;                       /* found */
+
+	    return 0;                       /* found */
 	}
 	if (tree[q].idx > idx)
 	    q = tree[q].left;             /* go left */
@@ -94,10 +117,14 @@ add_node_to_tree (register CELL cat)
 	tree[N].right = tree[p].right; /* copy right link/thread */
 	tree[p].right = N;             /* add right */
     }
+
+    return 0;
 }
 
 static int curp;
+#ifdef COMMENT_OUT
 static int curoffset;
+#endif
 
 int 
 first_node (void)
@@ -106,8 +133,10 @@ first_node (void)
 
 /* start at root and go all the way to the left */
     curp = 1;
-    while (q = tree[curp].left)
+    while ((q = tree[curp].left))
 	curp = q;
+
+    return 0;
 }
 
 int 
@@ -127,7 +156,7 @@ next_node (void)
 	return 1;
     }
 
-    while (q = tree[curp].left)   /* now go all the way left */
+    while ((q = tree[curp].left))   /* now go all the way left */
 	curp = q;
 
     return 1;
@@ -169,5 +198,7 @@ next_cat (CELL *cat)
 	    return 1;
 	}
     }
+
+    return 0;
 }
 #endif
