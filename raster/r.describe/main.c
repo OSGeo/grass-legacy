@@ -1,9 +1,27 @@
+/****************************************************************************
+ *
+ * MODULE:       r.describe
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      Prints terse list of category values found in a raster 
+ *               map layer.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include <grass/gis.h>
 #include "local_proto.h"
 #include <grass/glocale.h>
+
 
 int main (int argc, char *argv[])
 {
@@ -96,11 +114,13 @@ int main (int argc, char *argv[])
                option.nsteps->key,option.nsteps->answer);
 	strcpy (name, option.map->answer);
 
-	if (mapset =  G_find_cell2 (name, ""))
+	if ((mapset =  G_find_cell2 (name, "")))
 	{
 		describe(name, mapset, compact, verbose, no_data_str,
 			range, windowed, nsteps, as_int);
 		exit(EXIT_SUCCESS);
 	}
 	G_fatal_error ( _("%s: [%s] not found"), G_program_name(), name);
+
+	return EXIT_SUCCESS;
 }
