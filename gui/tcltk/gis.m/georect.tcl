@@ -1302,8 +1302,8 @@ proc GRMap::rectify { } {
                 # wait to make sure georectified file is written
                 while { $counter < 100 } {
                     if { [file exists $xyfile] } {
-                        file copy -force $xysource $xytarget
-                        file delete -force $xysource
+                        catch {file copy -force $xysource $xytarget}
+                        catch {file delete -force $xysource}
                         set counter 101
                     }
                     after 100

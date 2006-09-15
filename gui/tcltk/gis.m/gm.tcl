@@ -469,10 +469,10 @@ proc Gm::cleanup { } {
 	set deletefile $mappid
 	append deletefile ".*"
 	foreach file [glob -nocomplain $deletefile] {
-		file delete $file
+		catch {file delete $file}
 	}
 
-	if {[file exists $legfile]} {file delete -force $legfile}
+	if {[file exists $legfile]} {catch {file delete -force $legfile}}
 
 	unset mon
 

@@ -59,6 +59,7 @@ proc epsgLocCom args {
         global thelocation
         global browsedepsg 
         global locpath
+	global mingw
         
 	# NOTE: the epsg file is generated in GDAL for PROJ4 
 	# with gdal/pymod/epsg_tr.py
@@ -147,8 +148,13 @@ proc epsgLocCom args {
 				if {[file exists $browsedepsg]== 1} {
 					if {[file exists $thelocation ]==0} {  
 						destroy .optPopup; 
-						exec -- $env(GISBASE)/etc/grass-xterm-wrapper -e $env(GISBASE)/etc/make_location_epsg.sh \
-							$epsg_code $epsgLocation $locpath >@stdout 2>@stderr; 
+						if { $mingw == "1" } {
+							exec -- $env(GISBASE)/etc/grass-xterm-wrapper -e $env(GISBASE)/etc/make_location_epsg.sh \
+								$epsg_code $epsgLocation $locpath;
+						} else {
+							exec -- $env(GISBASE)/etc/grass-xterm-wrapper -e $env(GISBASE)/etc/make_location_epsg.sh \
+								$epsg_code $epsgLocation $locpath >@stdout 2>@stderr;
+						}
 						DialogGen .wrnDlg [G_msg "WARNING: restart GRASS please"] warning \
 						[G_msg "WARNING: Please restart GRASS in order find the created location in the list (closing it for you now)"] \
 							0 OK; 

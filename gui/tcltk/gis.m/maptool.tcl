@@ -306,7 +306,7 @@ proc MapToolBar::savefile { type quality } {
 	set currdir [pwd]
 	cd $tmpdir
 
-	file copy -force $outfile($mon) $path.ppm
+	catch {file copy -force $outfile($mon) $path.ppm}
 
 	cd $currdir
 
