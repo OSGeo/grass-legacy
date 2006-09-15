@@ -179,4 +179,3 @@ $(ETC)/grass-xterm-wrapper: grass-xterm-wrapper
 
 $(ETC)/grass-xterm-wrapper.exe: grass-xterm-wrapper.c
 	$(CC) -o $@ $< -Wall
-	$(INSTALL) -m 755 grass-xterm-wrapper.exe $(ETC)
