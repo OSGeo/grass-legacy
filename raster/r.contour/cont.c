@@ -1,13 +1,27 @@
-/*
-** Written by: Terry Baker 3 1992
-** US Army Construction Engineering Research Lab
-*/
+/****************************************************************************
+ *
+ * MODULE:       r.contour
+ *
+ * AUTHOR(S):    Terry Baker - CERL
+ *               Andrea Aime <aaime liberto it>
+ *
+ * PURPOSE:      Produces a vector map of specified contours from a
+ *               raster map layer.
+ *
+ * COPYRIGHT:    (C) 2001 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
 
 #include <stdio.h>
 #include <math.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include "local_proto.h"
+
 
 struct cell{
 	DCELL z[4];
@@ -21,6 +35,7 @@ static int findcrossing (struct cell *, double,
 	struct Cell_head , struct line_pnts *, int);
 static void getpoint (struct cell *curr, double,
         struct Cell_head , struct line_pnts *);
+
 
 void contour (
     double levels[],

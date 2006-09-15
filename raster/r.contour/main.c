@@ -1,7 +1,22 @@
-/*
- * Originally written by: Terry Baker 3 1992
- * US Army Construction Engineering Research Lab
+/****************************************************************************
  *
+ * MODULE:       r.contour
+ *
+ * AUTHOR(S):    Terry Baker - CERL
+ *               Andrea Aime <aaime liberto it>
+ *
+ * PURPOSE:      Produces a vector map of specified contours from a 
+ *               raster map layer.
+ *
+ * COPYRIGHT:    (C) 2001 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
+/*
  * Fixes 3/2001: Andrea Aime  <aaime libero.it>
  *
  * o category support bug has been fixed: r.contour now produces also dig_cats
@@ -33,6 +48,7 @@
 #include <grass/Vect.h>
 #include "local_proto.h"
 #include <grass/glocale.h>
+
 
 int main ( int argc, char *argv[])
 {

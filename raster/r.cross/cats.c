@@ -1,7 +1,25 @@
+/****************************************************************************
+ *
+ * MODULE:       r.cross
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      Creates a cross product of the category values from
+ *               multiple raster map layers.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #include <string.h>
 #include "glob.h"
 
 static char *get_label( CELL,struct Categories *);
+
 
 int set_cat (CELL result, CELL *cat, struct Categories *pcats)
 {

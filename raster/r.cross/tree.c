@@ -1,4 +1,22 @@
+/****************************************************************************
+ *
+ * MODULE:       r.cross
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      Creates a cross product of the category values from
+ *               multiple raster map layers.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #include "glob.h"
+
 
 int 
 plant_tree (void)
@@ -33,7 +51,7 @@ first_node (CELL **cat, CELL **result)
 
 /* start at root and go all the way to the left */
     p = 1;
-    while (q = tree[p].left)
+    while ((q = tree[p].left))
 	p = q;
     *cat = tree[p].cat;
     *result = tree[p].result;
@@ -59,7 +77,7 @@ next_node (int p, CELL **cat, CELL **result)
 	return p;
     }
 
-    while (q = tree[p].left)   /* now go all the way left */
+    while ((q = tree[p].left))   /* now go all the way left */
 	p = q;
 
     *cat = tree[p].cat;

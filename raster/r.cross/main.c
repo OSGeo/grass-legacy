@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       r.cross
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      Creates a cross product of the category values from 
+ *               multiple raster map layers.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #define GLOBAL
 #include <string.h>
 #include <stdlib.h>
@@ -7,6 +24,7 @@
 #include <grass/glocale.h>
 
 static int cmp(const void *, const void *);
+
 
 int 
 main (int argc, char *argv[])
@@ -81,7 +99,7 @@ main (int argc, char *argv[])
     verbose  = (! flag.q->answer);
     non_zero = flag.z->answer;
 
-    for (nfiles = 0; name = parm.input->answers[nfiles]; nfiles++)
+    for (nfiles = 0; (name = parm.input->answers[nfiles]); nfiles++)
     {
         if (nfiles >= NFILES)
             G_fatal_error (_("%s: more than %d files not allowed"), G_program_name(), NFILES);

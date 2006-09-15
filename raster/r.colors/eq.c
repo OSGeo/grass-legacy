@@ -1,5 +1,24 @@
+/****************************************************************************
+ *
+ * MODULE:       r.colors
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *               David Johnson
+ *
+ * PURPOSE:      Allows creation and/or modification of the color table 
+ *               for a raster map layer.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #include <stdlib.h>
 #include <grass/gis.h>
+
 
 int eq_grey_colors (char *name, char *mapset, struct Colors *colors, int quiet)
 {

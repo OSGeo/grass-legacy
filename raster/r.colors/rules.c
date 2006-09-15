@@ -1,3 +1,21 @@
+/****************************************************************************
+ *
+ * MODULE:       r.colors
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *               David Johnson
+ *
+ * PURPOSE:      Allows creation and/or modification of the color table
+ *               for a raster map layer.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -438,7 +456,7 @@ static int show_colors (FILE *fp)
     char *color;
 
     len = 0;
-    for (i = 0; color = G_color_name(i); i++)
+    for (i = 0; (color = G_color_name(i)); i++)
     {
 	n = strlen (color) + 1;
 	if (len + n > 78)
