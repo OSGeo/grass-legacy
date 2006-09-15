@@ -1,3 +1,23 @@
+/****************************************************************************
+ *
+ * MODULE:       r.cross
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      Creates a cross product of the category values from
+ *               multiple raster map layers.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
+#ifndef __R_CROSS_GLOB_H__
+#define __R_CROSS_GLOB_H__
+
 #include <grass/gis.h>
 
 #define NFILES 10  /* maximum number of layers */
@@ -42,3 +62,5 @@ typedef struct
 
 GLOBAL RECLASS *reclass INIT(NULL);
 GLOBAL CELL *table INIT(NULL);
+
+#endif /* __R_CROSS_GLOB_H__ */

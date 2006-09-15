@@ -1,4 +1,21 @@
 /****************************************************************************
+ *
+ * MODULE:       r.compress
+ *
+ * AUTHOR(S):    James Westervelt - CERL
+ *               Michael Shapiro - CERL
+ *
+ * PURPOSE:      Compress and decompress raster map files.
+ *
+ * COPYRIGHT:    (C) 2003 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
+/****************************************************************************
  * compress_cell converts straight grid_cell files into compressed grid_cell
  * files.  Compressed files have the following format:
  *
@@ -63,7 +80,7 @@ int main (int argc, char *argv[])
     if (G_parser(argc,argv))
 	exit(EXIT_FAILURE);
     stat = 0;
-    for (n = 0; name = map->answers[n]; n++)
+    for (n = 0; (name = map->answers[n]); n++)
 	if (process (name, uncompress->answer, quiet->answer))
 	    stat = 1;
     exit (stat);

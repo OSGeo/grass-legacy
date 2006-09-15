@@ -1,9 +1,27 @@
+/****************************************************************************
+ *
+ * MODULE:       r.covar
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      Outputs a covariance/correlation matrix for 
+ *               user-specified raster map layer(s).
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
+
 
 int main(int argc, char *argv[])
 {
