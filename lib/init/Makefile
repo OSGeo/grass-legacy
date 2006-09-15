@@ -34,6 +34,12 @@ else
 SET_DATA_PROG =
 endif
 
+ifdef MINGW
+XTERM_WRAPPER=$(ETC)/grass-xterm-wrapper.exe
+else
+XTERM_WRAPPER=$(ETC)/grass-xterm-wrapper
+endif
+
 default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/Init.sh \
 	$(SET_DATA_PROG) \
@@ -53,7 +59,7 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/help.tcl \
 	$(ETC)/make_location_epsg.sh \
 	$(ETC)/grass-run.sh \
-	$(ETC)/grass-xterm-wrapper
+	$(XTERM_WRAPPER)
 	$(MKDIR) $(GISBASE)/docs/html
 	$(INSTALL) -m 644 variables.html $(GISBASE)/docs/html/variables.html
 	$(INSTALL) -m 644 grass6.html $(GISBASE)/docs/html/grass6.html
@@ -171,3 +177,6 @@ $(ETC)/grass-run.sh: grass-run.src
 $(ETC)/grass-xterm-wrapper: grass-xterm-wrapper
 	$(INSTALL) -m 755 grass-xterm-wrapper $(ETC)
 
+$(ETC)/grass-xterm-wrapper.exe: grass-xterm-wrapper.c
+	$(CC) -o $@ $< -Wall
+	$(INSTALL) -m 755 grass-xterm-wrapper.exe $(ETC)

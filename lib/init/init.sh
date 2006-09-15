@@ -775,10 +775,7 @@ cygwin)
 
 *)
 
-PS1="
-Mapset <$MAPSET> in Location <$LOCATION_NAME>
-GRASS-GRID > "
-
+    PS1="GRASS $GRASS_VERSION ($LOCATION_NAME):\w > "
     export PS1
 
     if [ "$MINGW" ] ; then

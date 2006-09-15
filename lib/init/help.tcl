@@ -2898,7 +2898,7 @@ proc help::help2html {} {
   update idletasks
   if {[catch {$data($im) write [file join $dir $parfname] -format GIF}]} {
    if {[set dt [$data($im) cget -file]]!=""} {
-    file copy -force -- $dt [file join $dir $parfname]
+    catch {file copy -force -- $dt [file join $dir $parfname]}
    } elseif {[set dt [$data($im) cget -data]]!=""} {
     if {[catch {set fout [::open [file join $dir $parfname] "w"]}]!=0} {
      error "Can't open output file:\n[file join $dir $parfname]"

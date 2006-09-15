@@ -431,7 +431,8 @@ proc Gronsole::execout {path cmd ci execcmd} {
 
 	# Actually run the program
 	if { $mingw == "1" } {
-		set cmd [concat | $cmd]
+		# shell scripts require sh.exe.
+		set cmd [concat | sh -c '$cmd']
 	} {
 		set cmd [concat | $cmd 2>@ stdout]
 	}

@@ -19,6 +19,12 @@
 #
 #############################################################################
 
+if {[info exists env(MSYSCON)]} {
+	set mingw "1"
+} else {
+	set mingw "0"
+}
+
 source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 #############################################################################
 #
@@ -483,11 +489,11 @@ proc gisSetWindow {} {
                 puts $varfp "DB_DRIVER: dbf"
                 puts $varfp "DB_DATABASE: \$GISDBASE/\$LOCATION_NAME/\$MAPSET/dbf/"
                 close $varfp
-                file attributes $mymapset/VAR -permissions u+rw,go+r
+                catch {file attributes $mymapset/VAR -permissions u+rw,go+r}
                 file mkdir $mymapset/dbf
                 #copy over the WIND definition:
-                file copy $mymapset/../PERMANENT/WIND $mymapset
-                file attributes $mymapset/WIND -permissions u+rw,go+r
+		catch {file copy $mymapset/../PERMANENT/WIND $mymapset}
+                catch {file attributes $mymapset/WIND -permissions u+rw,go+r}
                 .frame0.frameMS.listbox insert end $mymapset
                 #TODO: select new MAPSET
             }

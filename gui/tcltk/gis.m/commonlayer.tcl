@@ -65,6 +65,10 @@ proc GmCommonLayer::display_commands {namespace id cmds} {
 				run_panel $cmd
 			}
 		}
+		# work around MS-Windows TclTk bug:
+		# file rename -force returns bad code.
+		catch {file delete $lfile($id)}
+		catch {file delete $lfilemask($id)}
 		catch {file rename -force $mapfile($mon) $lfile($id)}
 		catch {file rename -force $maskfile($mon) $lfilemask($id)}
 		# reset options changed flag
