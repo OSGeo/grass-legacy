@@ -109,11 +109,13 @@ GISRCRC="$HOME/.grassrc6"
 
 # Set the session grassrc file
 if [ "$MINGW" ] ; then
+	PWD=`pwd -W`
 	USER="$USERNAME"
 	if [ ! "$USER" ] ; then
 		USER="user_name"
 	fi
 else
+	PWD=`pwd`
 	USER="`whoami`"
 fi
 
@@ -323,7 +325,7 @@ if [ ! -f "$GISRC" ] ; then
     read ans
 
     #for convenience, define pwd as GISDBASE:
-    echo "GISDBASE: `pwd`" > "$GISRC"
+    echo "GISDBASE: $PWD" > "$GISRC"
     echo 'LOCATION_NAME: <UNKNOWN>' >> "$GISRC"
     echo 'MAPSET: <UNKNOWN>' >> "$GISRC"
 
@@ -412,9 +414,9 @@ else
 
     if [ "$L" ] ; then
 	if [ "$L" = "." ] ; then
-	    L=`pwd`
+	    L=$PWD
 	elif [ `echo "$L" | cut -c 1` != "/" ] ; then
-    	    L="`pwd`/$L"
+    	    L="$PWD/$L"
     	fi
 
     	MAPSET=`basename "$L"`
@@ -779,8 +781,11 @@ cygwin)
     export PS1
 
     if [ "$MINGW" ] ; then
+	# change directory. otherwise prompt would be C:/msys/1.0/home/user.
+	cd $HOME
 	# "$ETC/run" doesn't work at all???
         "$SHELL"
+	rm -rf "$LOCATION/.tmp"/*  # remove gis.m session files from .tmp
     else
     	"$ETC/run" "$SHELL"
     fi
