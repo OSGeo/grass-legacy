@@ -299,6 +299,8 @@ proc gisSetWindow {} {
     global grassrc_list
     global gisrc_name
 
+    global mingw
+
     # ---------------------------
     # build .frame0
     # ---------------------------
@@ -359,10 +361,31 @@ proc gisSetWindow {} {
     	-width 12 \
     	-orient {horizontal}
  
-    button .frame0.frameDB.right.button \
-    	-text [G_msg "Browse..."] \
-    	-command {GetDir .frame0.frameDB.mid.entry .frame0.frameLOC.listbox \
-    	    .frame0.frameMS.listbox}
+    if { $mingw == "1" } {
+       # We cannot use Double-Button-1 (change dir) and Button-1 (select dir)
+       # events at the same time because of MS-Windows TclTk's event bug.
+       button .frame0.frameDB.right.button \
+    	   -text [G_msg "Browse..."] \
+    	   -command {set database [tk_chooseDirectory -initialdir $database \
+	   	-parent .frame0 -title "New GIS data directory" -mustexist true]
+
+		cd $database
+		.frame0.frameLOC.listbox delete 0 end
+		.frame0.frameMS.listbox delete 0 end
+		foreach filename [lsort [glob -nocomplain *]] \
+		{
+			if {[file isdirectory $filename]} \
+			{
+				.frame0.frameLOC.listbox insert end $filename
+			}
+		}
+		.frame0.frameBUTTONS.ok configure -state disabled}
+    } else {
+       button .frame0.frameDB.right.button \
+    	   -text [G_msg "Browse..."] \
+    	   -command {GetDir .frame0.frameDB.mid.entry .frame0.frameLOC.listbox \
+    	       .frame0.frameMS.listbox}
+    }
 
 
     pack .frame0.frameDB.left.label -side top
