@@ -1,3 +1,21 @@
+/****************************************************************************
+ *
+ * MODULE:       r.grow2
+ *
+ * AUTHOR(S):    Marjorie Larson - CERL
+ *               Glynn Clements
+ *
+ * PURPOSE:      Generates a raster map layer with contiguous areas 
+ *               grown by one cell.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
