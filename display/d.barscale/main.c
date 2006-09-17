@@ -32,8 +32,8 @@ int main (int argc, char **argv)
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->keywords = _("display");
-    module->description =
+	module->keywords = _("display, cartography");
+	module->description =
 		_("Displays a barscale on GRASS monitor.");
 
 	mouse = G_define_flag() ;
@@ -90,6 +90,7 @@ int main (int argc, char **argv)
 	if (G_parser(argc, argv) < 0)
 		exit(EXIT_FAILURE);
 
+
 	G_get_window(&W) ;
 	if (W.proj == PROJECTION_LL)
 	    G_fatal_error(_("%s does not work with a latitude-longitude location"), argv[0]);
@@ -107,17 +108,9 @@ int main (int argc, char **argv)
 	if(scalebar->answer)
 		draw = 2;
 
-        /* Parse and select background color */
-	color1 = D_parse_color(opt1->answer, 1);
-	if (color1 == 0)
-	    do_background = 0;
-
-	/* Parse and select foreground color */
-	color2 = D_parse_color(opt2->answer, 0);
-
-
 	sscanf(opt3->answers[0], "%lf", &east) ;
 	sscanf(opt3->answers[1], "%lf", &north) ;
+
 
 	if (R_open_driver() != 0)
 	    G_fatal_error (_("No graphics device selected"));
@@ -127,6 +120,16 @@ int main (int argc, char **argv)
 
 	if (D_set_cur_wind(window_name))
 	    G_fatal_error(_("Current window not available"));
+
+
+        /* Parse and select background color */
+	color1 = D_parse_color(opt1->answer, 1);
+	if (color1 == 0)
+	    do_background = 0;
+
+	/* Parse and select foreground color */
+	color2 = D_parse_color(opt2->answer, 0);
+
 
 	/* Read in the map window associated with window */
 	G_get_window(&window);
@@ -157,7 +160,7 @@ int main (int argc, char **argv)
 		char buffer[255];
 		
 		sprintf(cmdbuf, "%s at=%f,%f", argv[0],east, north);
-		
+
 		sprintf(cmdbuf, "%s bcolor=%s", cmdbuf, opt1->answer);
 		sprintf(cmdbuf, "%s tcolor=%s", cmdbuf, opt2->answer);
 		if(top->answer)
