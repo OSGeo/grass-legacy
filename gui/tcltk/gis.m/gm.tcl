@@ -72,11 +72,11 @@ if { $osxaqua == "1"} {
 
 if {[info exists env(MSYSCON)]} {
 	set mingw "1"
+	set devnull "nul"
 } else {
 	set mingw "0"
+	set devnull "/dev/null"
 }
-  	 
-  	 set devnull [expr { $mingw == "1" ? "nul" : "/dev/null" }]
 
 
 #fetch GRASS Version number:

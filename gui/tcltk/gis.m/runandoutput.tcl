@@ -66,10 +66,16 @@ proc make_fun_buttons {dlg path} {
 
 proc run_ui {cmd} {
     global dlg path
+    global mingw
 
     set program [lindex $cmd 0]
 
-    set code [exec -- $program --tcltk]
+    if { $mingw == "1" } {
+	# shell scripts for MSys
+	set code [exec -- sh -c '$program --tcltk']
+    } else {
+	set code [exec -- $program --tcltk]
+    }
 
     set path .dialog$dlg
     toplevel $path
