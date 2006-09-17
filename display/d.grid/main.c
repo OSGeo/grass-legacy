@@ -124,13 +124,6 @@ main (int argc, char **argv)
 	if(notext->answer) do_text = FALSE;
 	else do_text = TRUE;
 
-	/* Parse and select grid color */
-	colorg = D_parse_color (opt1->answer, 0);	
-	
-	/* Parse and select border color */
-	colorb = D_parse_color (opt4->answer, 0);
-
-
 	/* get grid size */
 	if (geogrid->answer)
 	{
@@ -160,6 +153,12 @@ main (int argc, char **argv)
 	/* Setup driver and check important information */
 	if (R_open_driver() != 0)
 		G_fatal_error (_("No graphics device selected"));
+
+	/* Parse and select grid color */
+	colorg = D_parse_color (opt1->answer, 0);	
+	
+	/* Parse and select border color */
+	colorb = D_parse_color (opt4->answer, 0);
 
 	D_setup(0);
 
