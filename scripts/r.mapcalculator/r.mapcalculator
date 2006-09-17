@@ -163,20 +163,27 @@ elif [ "$GIS_FLAG_O" = 1 ]; then
 		fi
 fi
 
-# replace map names
+# replace map names: two passes are needed to make sure that sed parses all map
+# names. e.g., A+B => amap+B => amap+bmap
 command=`
-echo ${GIS_OPT_FORMULA} | sed \
-	-e "s/A/ \"$GIS_OPT_AMAP\" /g" \
-	-e "s/B/ \"$GIS_OPT_BMAP\" /g" \
-	-e "s/C/ \"$GIS_OPT_CMAP\" /g" \
-	-e "s/D/ \"$GIS_OPT_DMAP\" /g" \
-	-e "s/E/ \"$GIS_OPT_EMAP\" /g" \
-	-e "s/F/ \"$GIS_OPT_FMAP\" /g"
+echo "(${GIS_OPT_FORMULA})" | sed \
+	-e "s/\([^a-zA-Z0-9]\)A\([^a-zA-Z0-9]\)/\1 \"$GIS_OPT_AMAP\" \2/g" \
+	-e "s/\([^a-zA-Z0-9]\)A\([^a-zA-Z0-9]\)/\1 \"$GIS_OPT_AMAP\" \2/g" \
+	-e "s/\([^a-zA-Z0-9]\)B\([^a-zA-Z0-9]\)/\1 \"$GIS_OPT_BMAP\" \2/g" \
+	-e "s/\([^a-zA-Z0-9]\)B\([^a-zA-Z0-9]\)/\1 \"$GIS_OPT_BMAP\" \2/g" \
+	-e "s/\([^a-zA-Z0-9]\)C\([^a-zA-Z0-9]\)/\1 \"$GIS_OPT_CMAP\" \2/g" \
+	-e "s/\([^a-zA-Z0-9]\)C\([^a-zA-Z0-9]\)/\1 \"$GIS_OPT_CMAP\" \2/g" \
+	-e "s/\([^a-zA-Z0-9]\)D\([^a-zA-Z0-9]\)/\1 \"$GIS_OPT_DMAP\" \2/g" \
+	-e "s/\([^a-zA-Z0-9]\)D\([^a-zA-Z0-9]\)/\1 \"$GIS_OPT_DMAP\" \2/g" \
+	-e "s/\([^a-zA-Z0-9]\)E\([^a-zA-Z0-9]\)/\1 \"$GIS_OPT_EMAP\" \2/g" \
+	-e "s/\([^a-zA-Z0-9]\)E\([^a-zA-Z0-9]\)/\1 \"$GIS_OPT_EMAP\" \2/g" \
+	-e "s/\([^a-zA-Z0-9]\)F\([^a-zA-Z0-9]\)/\1 \"$GIS_OPT_FMAP\" \2/g" \
+	-e "s/\([^a-zA-Z0-9]\)F\([^a-zA-Z0-9]\)/\1 \"$GIS_OPT_FMAP\" \2/g"
 `
 
-echo r.mapcalc "$GIS_OPT_OUTFILE" ="($command)" # Show the resulting commandline
+echo r.mapcalc "$GIS_OPT_OUTFILE" = "$command" # Show the resulting commandline
 
-eval `r.mapcalc "$GIS_OPT_OUTFILE" ="($command)"` # Start the command
+eval `r.mapcalc "$GIS_OPT_OUTFILE" = "($command)"` # Start the command
 
 echo ""
 echo ""
