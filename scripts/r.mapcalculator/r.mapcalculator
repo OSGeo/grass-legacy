@@ -1,10 +1,11 @@
-#!/bin/bash
+#!/bin/sh
 ############################################################################
 #
 # MODULE:	r.mapcalculator v.1.0 for GRASS 5.7 (2004/05/15)
 #		based on mapcalculator.sh for GRASS 5
-# AUTHOR(S):	R. Brunzema (r.brunzema@web.de); 
+# AUTHOR(S):	R. Brunzema (r.brunzema@web.de);
 #		updated to GRASS 5.7 by Michael Barton (michael.barton@asu.edu)
+#		removed bashism by Huidae Cho (grass4u@gmail.com)
 # PURPOSE:	Provides GUI front-end to r.mapcalc
 # COPYRIGHT:	(C) 2004 by the GRASS Development Team
 #
@@ -21,42 +22,42 @@
 #% key: amap
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: A: 
+#% description: A:
 #% required : no
 #%end
 #%option
 #% key: bmap
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: B: 
+#% description: B:
 #% required : no
 #%end
 #%option
 #% key: cmap
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: C: 
+#% description: C:
 #% required : no
 #%end
 #%option
 #% key: dmap
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: D: 
+#% description: D:
 #% required : no
 #%end
 #%option
 #% key: emap
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: E: 
+#% description: E:
 #% required : no
 #%end
 #%option
 #% key: fmap
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: F: 
+#% description: F:
 #% required : no
 #%end
 #%option
@@ -69,13 +70,13 @@
 #% key: outfile
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: Resulting output map 
+#% description: Resulting output map
 #% required : yes
 #%end
 #%option
 #% key: help
 #% type: string
-#% description: Show help 
+#% description: Show help
 #% options: -,help,man
 #% answer: -
 #% required : no
@@ -86,11 +87,11 @@
 #%end
 #%flag
 #% key: o
-#% description: Don't overwrite existing map 
+#% description: Don't overwrite existing map
 #%end
 
 
-function display_help {
+display_help(){
 	echo ""
 	echo "***** BRIEF HELP *****"
 	echo ""
@@ -106,7 +107,7 @@ function display_help {
 	echo "Use no blanks!"
 	echo ""
 	echo "For details on creating an r.mapcalc expression,"
-	echo "select 'man' in the help field to see the r.mapcalc manual page" 
+	echo "select 'man' in the help field to see the r.mapcalc manual page"
 	echo "(or type g.manual r.mapcalc from the command line)."
 }
 
@@ -136,12 +137,12 @@ esac
 
 # use old style mapcalc
 
-if [ $GIS_FLAG_E = 1 ] ; then
+if [ "$GIS_FLAG_E" = 1 ] ; then
 	exec "$GISBASE/etc/grass-xterm-wrapper" -e r.mapcalc &
 	exit 0
 fi
 
-	
+
 # Check for required arguments
 if [ -z "$GIS_OPT_FORMULA" ]; then
 	echo "ERROR: Missing formula!"
@@ -153,48 +154,25 @@ if [ -z "$GIS_OPT_OUTFILE" ]; then
 	echo "ERROR: Missing name of outputfile!"
 	echo "Please enter a name for the resulting map and try again."
 	exit 1
-elif [ $GIS_FLAG_O = 1 ]; then
+elif [ "$GIS_FLAG_O" = 1 ]; then
 		echo `g.list type=rast | grep -w "$GIS_OPT_OUTFILE" `
 		outtest=`g.list type=rast | grep -w $GIS_OPT_OUTFILE`
 		if [ -n "$outtest" ]; then
 			echo "File $GIS_OPT_OUTFILE exists. Exiting."
 			exit 0
-		fi		
+		fi
 fi
 
-typeset -i form_length=${#GIS_OPT_FORMULA}
-typeset -i count=0
-
-# Get the parts of the formula,
-while [ $count -le $form_length ] 
-	do
-	compart[$count]="${GIS_OPT_FORMULA:$count:1}"
-	# ... get the rasterfile names
-	case ${compart[$count]} in
-		A)
-		# ... replace them
-		compart[count]=" \"$GIS_OPT_AMAP\" "
-		;;
-		B)
-		compart[count]=" \"$GIS_OPT_BMAP\" "
-		;;
-		C)
-		compart[count]=" \"$GIS_OPT_CMAP\" "
-		;;
-		D)
-		compart[count]=" \"$GIS_OPT_DMAP\" "
-		;;
-		E)
-		compart[count]=" \"$GIS_OPT_EMAP\" "
-		;;
-		F)
-		compart[count]=" \"$GIS_OPT_FMAP\" "
-		;;
-	esac
-	# .. and put the formula together again
-	command="$command${compart[$count]}"
-	let count=count+1
-done
+# replace map names
+command=`
+echo ${GIS_OPT_FORMULA} | sed \
+	-e "s/A/ \"$GIS_OPT_AMAP\" /g" \
+	-e "s/B/ \"$GIS_OPT_BMAP\" /g" \
+	-e "s/C/ \"$GIS_OPT_CMAP\" /g" \
+	-e "s/D/ \"$GIS_OPT_DMAP\" /g" \
+	-e "s/E/ \"$GIS_OPT_EMAP\" /g" \
+	-e "s/F/ \"$GIS_OPT_FMAP\" /g"
+`
 
 echo r.mapcalc "$GIS_OPT_OUTFILE" ="($command)" # Show the resulting commandline
 
@@ -209,4 +187,4 @@ if [ $? -ne 0 ]; then
 	echo "Error calculating $GIS_OPT_OUTFILE. Try expert mode."
 fi
 
-exit	
+exit 0
