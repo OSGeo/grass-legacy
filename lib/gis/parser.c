@@ -572,7 +572,7 @@ int G_parser (int argc, char **argv)
 	while (--i >= 0)
 	{
 #ifdef __MINGW32__
-		if (pgm_name[i] == '\\')
+		if (pgm_name[i] == '/' || pgm_name[i] == '\\')
 #else
 		if (pgm_name[i] == '/')
 #endif
