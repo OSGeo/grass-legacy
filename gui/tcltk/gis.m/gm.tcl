@@ -127,11 +127,7 @@ proc read_moncap {} {
 
 	set moncap {}
 
-	# MS-Windows doesn't have monitorcap.
-	if {[catch {set file [open [file join $env(GISBASE) etc monitorcap] r]}]} {
-		return
-	}
-
+	set file [open [file join $env(GISBASE) etc monitorcap] r]
 	set data [read $file]
 	close $file
 
