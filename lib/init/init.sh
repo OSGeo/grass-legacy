@@ -114,6 +114,10 @@ if [ "$MINGW" ] ; then
 	if [ ! "$USER" ] ; then
 		USER="user_name"
 	fi
+	if [ ! -f "$GISBASE/etc/monitorcap" ] ; then
+		# create an empty monitorcap
+		touch "$GISBASE/etc/monitorcap"
+	fi
 else
 	PWD=`pwd`
 	USER="`whoami`"

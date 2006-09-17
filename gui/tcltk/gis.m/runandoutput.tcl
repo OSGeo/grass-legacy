@@ -155,7 +155,13 @@ proc execute {cmd} {
 
 ###############################################################################
 proc spawn {cmd args} {
-	eval [list exec -- $cmd] $args &
+	global mingw
+
+	if { $mingw == "1" } {
+		eval [list exec -- sh -c '$cmd] $args' &
+	} else {
+		eval [list exec -- $cmd] $args &
+	}
 }
 
 ###############################################################################
@@ -175,13 +181,18 @@ proc run_panel {cmd} {
 
 ###############################################################################
 proc run {cmd args} {
+	global mingw
 	global devnull
 
 	# This and runcmd are being used to run command in the background
 	# These used to go to stdout and stderr
 	# but we don't want to pollute that console.
 	# eval exec -- $cmd $args >@ stdout 2>@ stderr
-	eval [list exec -- $cmd] $args >& $devnull
+	if { $mingw == "1" } {
+		eval [list exec -- sh -c '$cmd] $args' >& $devnull
+	} else {
+		eval [list exec -- $cmd] $args >& $devnull
+	}
 }
 
 ###############################################################################
