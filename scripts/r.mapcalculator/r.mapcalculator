@@ -183,7 +183,7 @@ echo "(${GIS_OPT_FORMULA})" | sed \
 
 echo r.mapcalc "$GIS_OPT_OUTFILE" = "$command" # Show the resulting commandline
 
-eval `r.mapcalc "$GIS_OPT_OUTFILE" = "($command)"` # Start the command
+eval `r.mapcalc "$GIS_OPT_OUTFILE" = "$command"` # Start the command
 
 echo ""
 echo ""
