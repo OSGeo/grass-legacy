@@ -3,10 +3,10 @@
 
 %module python_grass6
 %{
-#include "include/gis.h"
-#include "include/gisdefs.h"
-#include "include/imagery.h"
-#include "include/imagedefs.h"
+#include <grass/gis.h>
+#include <grass/gisdefs.h>
+#include <grass/imagery.h>
+#include <grass/imagedefs.h>
 %}
 
 %include "my_typemaps.i"
