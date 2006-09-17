@@ -785,8 +785,6 @@ cygwin)
     export PS1
 
     if [ "$MINGW" ] ; then
-	# change directory. otherwise prompt would be C:/msys/1.0/home/user.
-	cd $HOME
 	# "$ETC/run" doesn't work at all???
         "$SHELL"
 	rm -rf "$LOCATION/.tmp"/*  # remove gis.m session files from .tmp
