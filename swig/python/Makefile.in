@@ -18,7 +18,10 @@ LDFLAGS=-shared $(GRASS_LIB_PATH)/libgrass_D.so $(GRASS_LIB_PATH)/libgrass_I.so 
 default: python_grass6.so
 
 clean:
-	-rm -f *.o *.so python_grass6_wrap.c python_grass6.pyc python_grass6.py Makefile
+	-rm -f *.o *.so python_grass6_wrap.c python_grass6.pyc python_grass6.py
+
+distclean: clean
+	-rm -f Makefile
 
 python_grass6_wrap.c: python_grass6.i
 	$(SWIG) -python -shadow $<
