@@ -80,7 +80,7 @@ proc GmGridline::create { tree parent } {
     set first 1
     set opt($count,1,mod) 1
     
-	set optlist { _check gridcolor gridborder gridsize gridorigin griddraw gridgeod \
+	set optlist { _check opacity gridcolor gridborder gridsize gridorigin griddraw gridgeod \
     			borderdraw textdraw rhumbdraw rhumbcoor geoddraw geodcoor geodcolor \
     			geodtxtcolor} 
 
