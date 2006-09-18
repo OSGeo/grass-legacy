@@ -151,6 +151,7 @@ Contents
    http://www.foss4g.org/FOSS4G/modules.php?name=Submit_News
    http://groups.google.com/group/Remote-Sensing-GIS-for-a-New-World
    http://groups.google.com/group/comp.infosystems.gis
+   admin@cartographyonline.com
 
    ... anywhere else? Please add here.
 
