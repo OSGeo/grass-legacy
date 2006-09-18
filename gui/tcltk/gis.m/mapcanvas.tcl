@@ -886,17 +886,44 @@ proc MapCanvas::pointer { mon } {
 	variable b1north 
 	global coords($mon)
 	global geoentry
+	global objentry
+	global xentry
+	global yentry
+	
+	set objentry ""
+	set xentry ""
+	set yentry ""
 
 	bind $can($mon) <ButtonPress-1> {
 		global b1coords mon
+		global screenpct objentry
 		set b1east	[MapCanvas::scrx2mape $mon %x]
 		set b1north [MapCanvas::scry2mapn $mon %y]
 		set b1coords "$b1east $b1north"
 		if { [info exists geoentry] } {
 			$geoentry insert 0 $b1coords
 		}
-
+		
+		set w [winfo width .mapcan($mon).mf.frame.mapcanvas]
+		set h [winfo height .mapcan($mon).mf.frame.mapcanvas]
+		set xpct [expr int(100 * %x/$w)]
+		set ypct [expr int(100 * %y/$h)]
+		# insert x and y coordinate pair into entry widget as percents
+		if { $objentry != "" } {
+			$objentry delete 0 end
+			$objentry insert 0 "$xpct,$ypct"
+		}
+		#insert x and y coordinates into separate entry widgets as pixel values
+		if { $xentry != "" } {
+			$xentry delete 0 end
+			$xentry insert 0 %x
+		}
+		if { $yentry != "" } {
+			$yentry delete 0 end
+			$yentry insert 0 %y
+		}
 	}
+	
 	bind $can($mon) <Motion> {
 		global mon
 		set scrxmov %x
@@ -1141,6 +1168,8 @@ proc MapCanvas::zoomregion { mon zoom } {
 	set clickzoom 0
 
 	if {($areaX2($mon) == 0) && ($areaY2($mon) == 0)} {
+		# set one click zoom-in rectangle. Zooming by a function of the 
+		# square root of 2
 		set clickzoom 1
 		set center_x $areaX1($mon)
 		set center_y $areaY1($mon)
@@ -1155,7 +1184,7 @@ proc MapCanvas::zoomregion { mon zoom } {
 	}
 
 
-	# get region extents	
+	# get current region extents	
 	foreach {map_n map_s map_e map_w} [MapCanvas::currentzoom $mon] {break}
 
 	# get zoom rectangle extents in canvas coordinates
@@ -1184,27 +1213,28 @@ proc MapCanvas::zoomregion { mon zoom } {
 
 
 	#zoom out
-	# Guarantee that the current region fits in the new box on the screen.
 	if { $zoom == -1 } {
-			# Center map at point clicked for one-click zooming
+		# Center map at point clicked for one-click zooming
 		if { $clickzoom == 1} {
-			set to_center_e [scrx2mape $mon $center_x]
-			set to_center_n [scry2mapn $mon $center_y]
-			set from_center_e [expr {$map_w+(($map_e - $map_w)/2)}]
-			set from_center_n [expr {$map_s+(($map_n - $map_s)/2)}]
-			set map_n [expr {$map_n + ($to_center_n - $from_center_n)}]
-			set map_s [expr {$map_s + ($to_center_n - $from_center_n)}]
-			set map_e [expr {$map_e + ($to_center_e - $from_center_e)}]
-			set map_w [expr {$map_w + ($to_center_e - $from_center_e)}]
-		}
-		# This effectively zooms out by the maxmimum of the two scales
-		set nsscale [expr { ($map_n - $map_s) / ($north - $south) }]
-		set ewscale [expr { ($map_e - $map_w) / ($east - $west) }]
+			# no change in map centering with one-click zooming
+			# zooms out by a function of the square root of 2, like zooming in
+			set nsscale [expr { (sqrt(2) - 1) * ($map_n - $map_s) / 2 }]
+			set ewscale [expr { (sqrt(2) - 1) * ($map_e - $map_w) / 2 }]			
+			set north [expr {$map_n + $nsscale}]
+			set south [expr {$map_s - $nsscale}]
+			set east [expr {$map_e + $ewscale}]
+			set west [expr {$map_w - $ewscale}]
 
-		set north [expr { $map_n + ($nsscale * ($map_n - $north)) }]
-		set south [expr { $map_s + ($nsscale * ($map_s - $south)) }]
-		set east [expr { $map_e + ($ewscale * ($map_e - $east)) }]
-		set west [expr { $map_w + ($ewscale * ($map_w - $west)) }]
+		} else {
+			# This effectively zooms out by the maxmimum of the two scales
+			# so that the visible map shrinks to fit inside the zoom rectangle
+			set nsscale [expr { ($map_n - $map_s) / ($north - $south) }]
+			set ewscale [expr { ($map_e - $map_w) / ($east - $west) }]
+			set north [expr { $map_n + ($nsscale * ($map_n - $north)) }]
+			set south [expr { $map_s + ($nsscale * ($map_s - $south)) }]
+			set east [expr { $map_e + ($ewscale * ($map_e - $east)) }]
+			set west [expr { $map_w + ($ewscale * ($map_w - $west)) }]
+		}
 	}
 
 	MapCanvas::zoom_new $mon $north $south $east $west
