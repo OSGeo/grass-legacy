@@ -155,12 +155,12 @@ if [ -z "$GIS_OPT_OUTFILE" ]; then
 	echo "Please enter a name for the resulting map and try again."
 	exit 1
 elif [ "$GIS_FLAG_O" = 1 ]; then
-		echo `g.list type=rast | grep -w "$GIS_OPT_OUTFILE" `
-		outtest=`g.list type=rast | grep -w $GIS_OPT_OUTFILE`
-		if [ -n "$outtest" ]; then
-			echo "File $GIS_OPT_OUTFILE exists. Exiting."
-			exit 0
-		fi
+	echo `g.list type=rast | grep -w "$GIS_OPT_OUTFILE" `
+	outtest=`g.list type=rast | grep -w $GIS_OPT_OUTFILE`
+	if [ -n "$outtest" ]; then
+		echo "File $GIS_OPT_OUTFILE exists. Exiting."
+		exit 0
+	fi
 fi
 
 # replace map names: two passes are needed to make sure that sed parses all map
@@ -183,15 +183,16 @@ echo "(${GIS_OPT_FORMULA})" | sed \
 
 echo r.mapcalc "$GIS_OPT_OUTFILE" = "$command" # Show the resulting commandline
 
-eval `r.mapcalc "$GIS_OPT_OUTFILE" = "$command"` # Start the command
-
-echo ""
-echo ""
-echo "Done"
+r.mapcalc "$GIS_OPT_OUTFILE" = "$command" # Start the command
 
 # Check for errors
 if [ $? -ne 0 ]; then
 	echo "Error calculating $GIS_OPT_OUTFILE. Try expert mode."
+	exit 1
 fi
+
+echo ""
+echo ""
+echo "Done"
 
 exit 0
