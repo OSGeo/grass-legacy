@@ -433,7 +433,7 @@ proc Gronsole::execout {path cmd ci execcmd} {
 	if { $mingw == "1" } {
 		# shell scripts require sh.exe.
 		set cmd [concat | sh -c '$cmd']
-	} {
+	} else {
 		set cmd [concat | $cmd 2>@ stdout]
 	}
 
