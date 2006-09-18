@@ -281,7 +281,8 @@ main (int argc, char *argv[]) {
   /* Initialize GRASS */
   G_gisinit(argv[0]);
   module = G_define_module();
-  module->description =
+  module->keywords = _("raster3d, voxel");
+    module->description =
    _("Export of GRASS 3D raster file to 3-dimensional Vis5D file.");
 
   /* Get parameters from user */

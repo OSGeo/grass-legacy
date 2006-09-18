@@ -24,8 +24,6 @@ proc GmCLabels::create { tree parent } {
     variable optlist
 	variable dup
     global mon
-    global frm
-    global gmpath
     global iconpath
 
     set node "clabels:$count"
@@ -94,9 +92,8 @@ proc GmCLabels::select_labels { id } {
     }
 }
 
-proc GmCLabels::select_font { id } {
+proc GmCLabels::select_font { id frm } {
 	global mon
-	global frm
 	variable opt
     
     set fon [SelectFont $frm.lfont -type dialog -sampletext 1 -title "Select label font"]
@@ -106,7 +103,6 @@ proc GmCLabels::select_font { id } {
 # display labels options
 proc GmCLabels::options { id frm } {
     variable opt
-    global gmpath
     global iconpath
 
     # Panel heading1
@@ -179,7 +175,7 @@ proc GmCLabels::options { id frm } {
     Button $row.b -image [image create photo -file "$iconpath/gui-font.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "select font for label"] \
-	    -command "GmCLabels::select_font $id"
+	    -command "GmCLabels::select_font $id $frm"
     Entry $row.c -width 15 -text "$opt($id,1,lfont)" \
 	    -textvariable GmCLabels::opt($id,1,lfont)  
     Label $row.d -text [G_msg "  color"] 

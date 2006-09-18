@@ -96,7 +96,8 @@ main (int argc, char *argv[])
 	
 	/* Set description */
 	module              = G_define_module();
-	module->description =
+	module->keywords = _("raster");
+    module->description =
 	_("Simulates elliptically anisotropic spread on a graphics window and "
 	"generates a raster map of the cumulative time of spread, "
 	"given raster maps containing the rates of spread (ROS), the ROS "

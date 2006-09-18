@@ -102,7 +102,8 @@ parse_command_line (int argc, char *argv[])
     char *default_skip_ans, *default_bound_ans, *skip_opt;
     
 	module = G_define_module();
-	module->description =
+	module->keywords = _("raster");
+    module->description =
 		_("Construction of slope curves (flowlines), flowpath "
 		"lengths, and flowline densities (upslope areas) from "
 		"a raster digital elevation model (DEM)");

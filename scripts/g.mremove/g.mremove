@@ -18,6 +18,7 @@
 
 #%Module
 #%  description: Apply regular expressions and wildcards to g.remove
+#%  keywords: general, map management
 #%End
 
 #%flag

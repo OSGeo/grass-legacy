@@ -50,6 +50,7 @@ int main (int argc, char *argv[])
     G_gisinit(argv[0]) ;
 
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = _("Transforms an vector map layer from one "
 			  "coordinate system into another coordinate system.");
 

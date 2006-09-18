@@ -28,7 +28,6 @@ proc GmLabels::create { tree parent } {
     variable optlist
 	variable dup
     global mon
-    global gmpath
     global iconpath
 
     set node "labels:$count"
@@ -65,7 +64,7 @@ proc GmLabels::create { tree parent } {
     set opt($count,1,ignore_rot) 0 
     set opt($count,1,mod) 1
 
-	set optlist { _check map minreg maxreg}
+	set optlist { _check map opacity minreg maxreg}
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -100,7 +99,6 @@ proc GmLabels::select_labels { id } {
 # display labels options
 proc GmLabels::options { id frm } {
     variable opt
-    global gmpath
     global bgcolor
     global iconpath
 
@@ -181,11 +179,6 @@ proc GmLabels::save { tree depth node } {
 
 proc GmLabels::display { node mod } {
     global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
     variable optlist
     variable lfile 
     variable lfilemask

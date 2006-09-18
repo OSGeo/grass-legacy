@@ -1,0 +1,66 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.lidar.correction</em> is the last of three step to filter LIDAR
+data. It makes a comparison between the LIDAR observations and an
+interpolated surface in which only terrain points have been used. Once
+the new reference surface is obtained, a point reclassification is
+done:
+
+<br><br>
+<b>a)</b> Points classified as TERRAIN differing more than a threshold
+    value are interpreted and reclassified as OBJECT.
+<br>
+<b>b)</b> Points classified as OBJECT and closed enough to the
+    interpolated surface are interpreted and reclassified as TERRAIN.
+<br><br>
+
+The input should be the output of <em>v.lidar.growing</em> module or
+the output of this <em>v.lidar.correction</em> itself. That means,
+this module could be applied more times (although, two are enough) for
+a better filter solution. The outputs are a vector map with a final
+point classification as as TERRAIN SINGLE PULSE, TERRAIN DOUBLE PULSE,
+OBJECT SINGLE PULSE or OBJECT DOUBLE PULSE; and an vector map with
+only the points classified as TERRAIN SINGLE PULSE or TERRAIN DOUBLE
+PULSE.
+
+<h2>NOTES</h2>
+The final result of the whole procedure (v.lidar.edgedetection,
+v.lidar.growing, v.lidar.correction) will be a point classification in
+four categories:
+<br>
+TERRAIN SINGLE PULSE
+<br>
+TERRAIN DOUBLE PULSE
+<br>
+OBJECT SINGLE PULSE
+<br>
+OBJECT DOUBLE PULSE
+<br>
+
+<h2>EXAMPLES</h2>
+
+<h4>Basic correction procedure</h4>
+<div class="code"><pre>
+v.lidar.correction input=growing output=correction out_terrain=only_terrain
+</pre></div>
+
+<h4>Second correction procedure</h4>
+<div class="code"><pre>
+v.lidar.correction input=correction output=correction_bis out_terrain=only_terrain_bis
+</pre></div>
+
+<h2>SEE ALSO</h2>
+<em><a HREF="v.lidar.edgedetection.html">v.lidar.edgedetection</a></em>,
+<em><a HREF="v.lidar.growing.html">v.lidar.growing</a></em>
+
+<h2>AUTHORS</h2>
+Original version of program in GRASS 5.4:
+<BR>
+Maria Antonia Brovelli, Massimiliano Cannata, Ulisse Longoni and Mirko Reguzzoni
+<BR><BR>
+Update for GRASS 6.X:
+<BR>
+Roberto Antolin and Gonzalo Moreno
+
+<p><i>Last changed: $Date$</i>
+

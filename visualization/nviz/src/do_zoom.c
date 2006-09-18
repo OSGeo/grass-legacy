@@ -230,7 +230,7 @@ void swap_os(void)
 ********************************************/
 int Create_OS_Ctx(int width, int height)
 {
-#ifdef OPENGL_X11
+#if defined(OPENGL_X11) && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS))
     int scr;
 
 #ifdef HAVE_PBUFFERS
@@ -325,6 +325,9 @@ int Create_OS_Ctx(int width, int height)
     }
 #endif
 
+    if (!pbuffer && !glxpixmap)
+	    return 1;
+
     /* hide togl canvas before init_ctx 
      * This prevents bindings from re-initializing
      * togl */
@@ -351,7 +354,7 @@ int Create_OS_Ctx(int width, int height)
 
     fprintf(stderr, "It appears that X is not available!\n");
     return (-1);
-#endif /* OPENGL_X11 */
+#endif /* defined(OPENGL_X11) && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS)) */
 }
 
 
@@ -389,6 +392,9 @@ int Destroy_OS_Ctx(void)
 
 #endif
 #endif /* OPENGL_X11 */
+    XCloseDisplay(dpy);
+    dpy = NULL;
+
     return (1);
 }
 

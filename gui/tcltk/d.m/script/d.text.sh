@@ -83,5 +83,5 @@ fi
 
 echo $cmd
 
-eval `exec xterm -e $cmd`
+eval `exec "$GISBASE/etc/grass-xterm-wrapper" -e $cmd`
 

@@ -2,8 +2,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <tcl.h>
-#include <tk.h>
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/form.h>

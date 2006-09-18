@@ -130,7 +130,7 @@ esac
 # use old style mapcalc
 
 if [ $GIS_FLAG_E = 1 ] ; then
-	exec xterm -e r3.mapcalc &
+	exec "$GISBASE/etc/grass-xterm-wrapper" -e r3.mapcalc &
 	exit 0
 fi
 
