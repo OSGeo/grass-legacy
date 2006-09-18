@@ -17,6 +17,7 @@ namespace eval GmBarscale {
     variable optlist
     variable first
     variable array dup # layer
+    variable placement #LabelEntry widget for scale bar placment coordinates
 }
 
 
@@ -30,8 +31,10 @@ proc GmBarscale::create { tree parent } {
     variable optlist
     variable first
 	variable dup
+	variable can
     global mon
     global iconpath
+    global screenpct
 
     set node "barscale:$count"
 
@@ -71,9 +74,10 @@ proc GmBarscale::create { tree parent } {
     set opt($count,1,arrow) 0 
     set opt($count,1,scale) 0 
     set opt($count,1,mod) 1
+    set opt($count,1,mouseset) 0
     set first 1
-    
-    set optlist { _check opacity bcolor bcolor_none tcolor at feet line top arrow scale}
+        
+    set optlist { _check bcolor bcolor_none tcolor at feet line top arrow scale mouseset}
     
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -85,8 +89,9 @@ proc GmBarscale::create { tree parent } {
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"
 	append lfilemask($count) ".pgm"
-	
+		
     incr count
+
     return $node
 }
 
@@ -96,6 +101,23 @@ proc GmBarscale::set_option { node key value } {
  
     set id [GmTree::node_id $node]
     set opt($id,1,$key) $value
+
+}
+
+
+###############################################################################
+
+proc GmBarscale::mouseset { id } {
+	# use mouse to set scalebar placement coordinates
+	global mon objentry
+	variable placement
+
+	if { $GmBarscale::opt($id,1,mouseset) == 1 } {
+		set objentry $GmBarscale::placement
+	} else {
+		set objentry ""
+	}
+
 }
 
 
@@ -103,8 +125,11 @@ proc GmBarscale::set_option { node key value } {
 # barscale options
 proc GmBarscale::options { id frm } {
     variable opt    
+    variable placement
     global bgcolor
     global iconpath
+    global mon
+    global screenpct
 
     # Panel heading
     set row [ frame $frm.heading1 ]
@@ -183,9 +208,16 @@ proc GmBarscale::options { id frm } {
     # at
     set row [ frame $frm.at2 ]
     Label $row.a -text "    enter x,y for scale lower left corner"
-    LabelEntry $row.b -textvariable GmBarscale::opt($id,1,at) -width 8 
-    pack $row.a $row.b -side left
+    set placement [LabelEntry $row.b -width 8 \
+    	-textvariable GmBarscale::opt($id,1,at)]
+    checkbutton $row.c -text [G_msg "use mouse to place scale"] \
+    	-variable GmBarscale::opt($id,1,mouseset) \
+    	-command "GmBarscale::mouseset $id"
+    pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
+
+
+# -variable GmBarscale::opt($id,1,at) 
 }
 
 
@@ -209,7 +241,7 @@ proc GmBarscale::save { tree depth node } {
 # render and composite barscale layer
 
 proc GmBarscale::display { node mod } {
-    global mon    
+    global mon screenpct
     variable optlist
     variable lfile 
     variable lfilemask
@@ -238,7 +270,7 @@ proc GmBarscale::display { node mod } {
     if { $opt($id,1,bcolor_none) == 1 } { 
         set bcolor "none"
     }
-
+    
     set cmd "d.barscale tcolor=$tcolor bcolor=$bcolor at=$opt($id,1,at)"
 
     # line scale
@@ -312,7 +344,7 @@ proc GmBarscale::duplicate { tree parent node id } {
 	set opt($count,1,opacity) $opt($id,1,opacity)
     set first 1
 
-    set optlist { _check bcolor bcolor_none tcolor at feet line top arrow scale}
+    set optlist { _check bcolor bcolor_none tcolor at feet line top arrow scale mouseset}
     
     foreach key $optlist {
     	set opt($count,1,$key) $opt($id,1,$key)
