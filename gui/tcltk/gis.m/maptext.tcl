@@ -11,6 +11,8 @@
 
 namespace eval GmCtext {
     variable array opt # ctext options
+    variable xplacement #entry widget for x coordinate
+    variable yplacement #entry widget for y coordinate
     variable count 1
 }
 
@@ -55,11 +57,13 @@ proc GmCtext::create { tree parent } {
     set opt($count,anchor) "center_left" 
     set opt($count,justify) "left" 
     set opt($count,coordinates) "pixels" 
+    set opt($count,mouset) 0
     
     incr count
     return $node
 }
 
+###############################################################################
 proc GmCtext::select_font { id frm } {
 	global mon
 	variable opt
@@ -68,6 +72,7 @@ proc GmCtext::select_font { id frm } {
 	if { $fon != "" } {set opt($id,font) $fon}
 }
 
+###############################################################################
 proc GmCtext::set_option { node key value } {
     variable opt
  
@@ -75,10 +80,30 @@ proc GmCtext::set_option { node key value } {
     set opt($id,$key) $value
 }
 
+###############################################################################
+
+proc GmCtext::mouseset { id } {
+	# use mouse to set scalebar placement coordinates
+	global mon xentry yentry
+	variable xplacement
+	variable yplacement
+
+	if { $GmCtext::opt($id,mouseset) == 1 } {
+		set xentry $GmCtext::xplacement
+		set yentry $GmCtext::yplacement
+	} else {
+		set xentry ""
+		set yentry ""
+	}
+
+}
+###############################################################################
 
 # ctext options
 proc GmCtext::options { id frm } {
     variable opt
+	variable xplacement
+	variable yplacement
     global iconpath
 
     # Panel heading
@@ -98,8 +123,8 @@ proc GmCtext::options { id frm } {
     # coordinates1
     set row [ frame $frm.east_north ]
     Label $row.a -text "Text placement:   x & y coordinates (from upper left) "
-    LabelEntry $row.b -textvariable GmCtext::opt($id,xcoord) -width 8
-    LabelEntry $row.c -textvariable GmCtext::opt($id,ycoord) -width 8 
+    set xplacement [LabelEntry $row.b -textvariable GmCtext::opt($id,xcoord) -width 8]
+    set yplacement [LabelEntry $row.c -textvariable GmCtext::opt($id,ycoord) -width 8]
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
         
@@ -108,7 +133,10 @@ proc GmCtext::options { id frm } {
     Label $row.a -text [G_msg "     coordinate type for text placement"] 
     ComboBox $row.b -padx 2 -width 10 -textvariable GmCtext::opt($id,coordinates) \
                     -values {"pixels" "percent" "geographic" } 
-    pack $row.a $row.b -side left
+    checkbutton $row.c -text [G_msg "place with mouse] \
+    	-variable GmCtext::opt($id,mouseset) \
+    	-command "GmCtext::mouseset $id"
+    pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
         
     # text options1
