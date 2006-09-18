@@ -74,7 +74,7 @@ proc GmChart::create { tree parent } {
     set opt($count,1,fcolors) "" 
     set opt($count,1,mod) 1
     
-	set optlist { _check map layer ctype columns sizecol csize cscale ocolor fcolors \
+	set optlist { _check map opacity layer ctype columns sizecol csize cscale ocolor fcolors \
              type_point type_line type_boundary type_centroid type_area} 
 
     foreach key $optlist {

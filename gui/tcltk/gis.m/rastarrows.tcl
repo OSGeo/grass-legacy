@@ -68,7 +68,7 @@ proc GmArrows::create { tree parent } {
     set opt($count,1,scale) 1.0 
     set opt($count,1,mod) 1
 
-	set optlist {_check map type arrow_color grid_color x_color unknown_color \
+	set optlist {_check map opacity type arrow_color grid_color x_color unknown_color \
     	skip magnitude_map scale} 
 
     foreach key $optlist {

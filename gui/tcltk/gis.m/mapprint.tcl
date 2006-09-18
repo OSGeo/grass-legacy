@@ -484,8 +484,8 @@ proc psprint::clean {  } {
     variable tmppsfile
     variable tmppngfile
 
-    file delete $tmppsfile
-    file delete $tmppngfile
+    catch {file delete $tmppsfile}
+    catch {file delete $tmppngfile}
 
 }
 

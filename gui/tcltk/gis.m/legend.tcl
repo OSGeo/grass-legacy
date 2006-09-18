@@ -75,7 +75,7 @@ proc GmLegend::create { tree parent } {
     set opt($count,1,flip) 0 
     set opt($count,1,mod) 1
     
-	set optlist { _check map color lines thin labelnum at use range \
+	set optlist { _check map opacity color lines thin labelnum at use range \
              nolbl noval skip smooth flip}
              
     foreach key $optlist {

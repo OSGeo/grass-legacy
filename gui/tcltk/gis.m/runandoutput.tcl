@@ -66,10 +66,16 @@ proc make_fun_buttons {dlg path} {
 
 proc run_ui {cmd} {
     global dlg path
+    global mingw
 
     set program [lindex $cmd 0]
 
-    set code [exec -- $program --tcltk]
+    if { $mingw == "1" } {
+	# shell scripts for MSys
+	set code [exec -- sh -c '$program --tcltk']
+    } else {
+	set code [exec -- $program --tcltk]
+    }
 
     set path .dialog$dlg
     toplevel $path
@@ -149,7 +155,13 @@ proc execute {cmd} {
 
 ###############################################################################
 proc spawn {cmd args} {
-	eval [list exec -- $cmd] $args &
+	global mingw
+
+	if { $mingw == "1" } {
+		eval [list exec -- sh -c '$cmd] $args' &
+	} else {
+		eval [list exec -- $cmd] $args &
+	}
 }
 
 ###############################################################################
@@ -169,13 +181,18 @@ proc run_panel {cmd} {
 
 ###############################################################################
 proc run {cmd args} {
+	global mingw
 	global devnull
 
 	# This and runcmd are being used to run command in the background
 	# These used to go to stdout and stderr
 	# but we don't want to pollute that console.
 	# eval exec -- $cmd $args >@ stdout 2>@ stderr
-	eval [list exec -- $cmd] $args >& $devnull
+	if { $mingw == "1" } {
+		eval [list exec -- sh -c '$cmd] $args' >& $devnull
+	} else {
+		eval [list exec -- $cmd] $args >& $devnull
+	}
 }
 
 ###############################################################################

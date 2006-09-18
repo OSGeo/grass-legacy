@@ -127,7 +127,7 @@ proc GmVector::create { tree parent } {
     set opt($count,1,_check) 1 
 
     set opt($count,1,vect) "" 
-	set opt($count,1,opacity) 1.0
+    set opt($count,1,opacity) 1.0
     set opt($count,1,display_shape) 1 
     set opt($count,1,display_cat) 0
     set opt($count,1,display_topo) 0 
@@ -171,7 +171,7 @@ proc GmVector::create { tree parent } {
     set opt($count,1,maxreg) "" 
     set opt($count,1,mod) 1
 
-	set optlist { _check vect display_shape display_cat display_topo display_dir \
+	set optlist { _check vect opacity display_shape display_cat display_topo display_dir \
 				display_attr type_point type_line type_boundary type_centroid \
 				type_area type_face color _use_color fcolor _use_fcolor lcolor \
 				rdmcolor sqlcolor icon size lwidth layer lfield attribute \

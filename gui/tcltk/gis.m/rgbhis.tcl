@@ -68,7 +68,7 @@ proc GmRgbhis::create { tree parent } {
     set opt($count,1,mod) 1
 
 
-	set optlist { _check map1 map2 map3 rgb his overlay}
+	set optlist { _check map1 map2 map3 opacity rgb his overlay}
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)

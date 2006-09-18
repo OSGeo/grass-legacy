@@ -72,11 +72,11 @@ if { $osxaqua == "1"} {
 
 if {[info exists env(MSYSCON)]} {
 	set mingw "1"
+	set devnull "nul"
 } else {
 	set mingw "0"
+	set devnull "/dev/null"
 }
-  	 
-  	 set devnull [expr { $mingw == "1" ? "nul" : "/dev/null" }]
 
 
 #fetch GRASS Version number:
@@ -127,11 +127,7 @@ proc read_moncap {} {
 
 	set moncap {}
 
-	# MS-Windows doesn't have monitorcap.
-	if {[catch {set file [open [file join $env(GISBASE) etc monitorcap] r]}]} {
-		return
-	}
-
+	set file [open [file join $env(GISBASE) etc monitorcap] r]
 	set data [read $file]
 	close $file
 
@@ -469,10 +465,10 @@ proc Gm::cleanup { } {
 	set deletefile $mappid
 	append deletefile ".*"
 	foreach file [glob -nocomplain $deletefile] {
-		file delete $file
+		catch {file delete $file}
 	}
 
-	if {[file exists $legfile]} {file delete -force $legfile}
+	if {[file exists $legfile]} {catch {file delete -force $legfile}}
 
 	unset mon
 

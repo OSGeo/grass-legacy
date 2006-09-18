@@ -89,7 +89,7 @@ proc GmThematic::create { tree parent } {
     set opt($count,1,lfontcolor) \#000000  
     set opt($count,1,mod) 1
 
-	set optlist { _check map type column themetype themecalc breakpoints where \
+	set optlist { _check map opacity type column themetype themecalc breakpoints where \
              layer icon ptsize maxsize nint colorscheme pointcolor linecolor\
              startcolor endcolor border update_rgb math psmap \
              titlefont tfontcolor subtitlefont labelfont lfontcolor} 

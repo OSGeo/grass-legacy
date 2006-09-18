@@ -233,6 +233,8 @@ proc MapToolBar::create { tb } {
 			-command {MapToolBar::savefile jpg 75}
 		$jpgfile add command -label "high quality (95)" \
 			-command {MapToolBar::savefile jpg 95}
+		$jpgfile add command -label "very high resolution (300% your current resolution)" \
+			-command {MapToolBar::savefile jpg 300}
 	$savefile add command -label "BMP*" -command {MapToolBar::savefile bmp 0}
 	$savefile add command -label "(* requires gdal)" -state disabled
 
@@ -289,6 +291,7 @@ proc MapToolBar::changebutton { rbname } {
 proc MapToolBar::savefile { type quality } {
 	global env
 	global mon
+	global tmpdir
 	
 	set outfile($mon) $MapCanvas::outfile($mon)
 
@@ -303,7 +306,7 @@ proc MapToolBar::savefile { type quality } {
 	set currdir [pwd]
 	cd $tmpdir
 
-	file copy -force $outfile($mon) $path.ppm
+	catch {file copy -force $outfile($mon) $path.ppm}
 
 	cd $currdir
 
@@ -321,8 +324,13 @@ proc MapToolBar::savefile { type quality } {
 				exec rm $path.ppm
 			}
 			"jpg" {
-				exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=$quality
+			       if { $quality == 300 } {
+				exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=95 -outsize 300% 300% 
 				exec rm $path.ppm
+				} else {
+				exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=$quality 
+				exec rm $path.ppm
+				}
 			}
 		}
 	}
