@@ -56,7 +56,7 @@ proc appBusy {} {
         # no color for windows cursors?
         . configure -cursor {watch}
         $Nv_(APP) configure -cursor {watch}
-    } {
+    } else {
         . configure -cursor {watch blue}
         $Nv_(APP) configure -cursor {watch blue}
     }
