@@ -14,7 +14,7 @@
 
 if {[info exists env(MSYSCON)]} {
     set mingw "1"
-} {
+} else {
     set mingw "0"
 }
 
@@ -24,7 +24,7 @@ if {[catch {set env(Nviz_PanelPath)} user_path]} then {
 } else {
     if { $mingw == "1" } {
         set user_path [split $user_path ;]
-    } {
+    } else {
         set user_path [split $user_path :]
     }
 }
@@ -46,7 +46,7 @@ foreach i $user_path {
 # MinGW
 if { $mingw == "1" } {
     set env(PATH) "$default_panel_path;$nv_path;$env(PATH)"
-} {
+} else {
     set env(PATH) "$default_panel_path:$nv_path:$env(PATH)"
 }
 
