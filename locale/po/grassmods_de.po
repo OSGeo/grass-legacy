@@ -15106,7 +15106,7 @@ msgstr "in in"
 #: ../vector/v.clean/main.c:95
 msgid "Threshold in map units, one value for each tool (default: 0.0[,0.0,...])"
 msgstr ""
-"Schwellenwert in Karteneinheiten, einen Wert für jedesWerkzeug (Standard: 0.0"
+"Schwellenwert in Karteneinheiten, einen Wert für jedes Werkzeug (Standard: 0.0"
 "[,0.0,...])."
 
 #: ../vector/v.clean/main.c:99
