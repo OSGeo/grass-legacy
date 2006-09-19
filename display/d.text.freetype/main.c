@@ -74,6 +74,7 @@ static int	convert_text(char *, char *, unsigned char **);
 static int	get_coordinates(rectinfo, char **, char, char, double *,
 			double *, int *, int *);
 static void	get_color(char *, int *);
+static void	init_colors(void);
 
 static int	set_font(FT_Library, FT_Face *, char *);
 static void	get_dimension(FT_Face, unsigned char *, int, FT_Vector *);
@@ -333,7 +334,7 @@ main(int argc, char **argv)
 			error(_("Unable to set size"));
 	}
 
-	R_color_table_fixed();
+	init_colors();
 
 	get_color(tcolor, &color);
 
@@ -888,6 +889,19 @@ get_color(char *tcolor, int *color)
 	}
 
 	return;
+}
+
+static void
+init_colors(void)
+{
+	int i;
+
+	for (i = 0; i < MAX_COLOR_NUM; i++)
+	{
+		const struct color_rgb *col = &standard_colors_rgb[i];
+
+		R_reset_color(col->r, col->g, col->b, i);
+	}
 }
 
 static int

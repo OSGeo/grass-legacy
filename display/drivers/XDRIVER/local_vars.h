@@ -10,7 +10,7 @@ extern int use_bit_depth;
 
 extern int scrn;
 extern GC gc;
-extern Colormap floatcmap, fixedcmap;
+extern Colormap fixedcmap;
 extern Cursor cur_xh, cur_clock;
 extern u_long gemask;
 extern Pixmap bkupmap;

@@ -40,10 +40,6 @@ int display(
     if (!overlay)
 	D_clear_window();
 
-    /* Get color offset value for current window and pass to driver */
-    D_offset_is(&offset) ;
-    R_color_offset(offset) ;
-
     /* Set the colors for the display */
     D_set_colors (&colors);
 

@@ -43,8 +43,6 @@ static View *makeview (double bottom, double top, double left, double right)
 
 int Init_graphics (void)
 {
-    R_color_table_fixed();
-    R_color_offset (0);
     R_font("romans");
     R_text_size(3*NORMAL_TEXT_SIZE/4,NORMAL_TEXT_SIZE);
 

@@ -91,10 +91,7 @@ void XD_Raster_int(int num, int nrows, const int *array, int withzeros, int colo
 			array = array2;
 		}
 
-		if (DRV_get_table_type() == FLOAT)
-			for (i = 0; i < num; i++)
-				XPutPixel(grimage, i, 0, (u_long) array[i]);
-		else if (use_visual->class >= TrueColor)
+		if (use_visual->class >= TrueColor)
 			for (i = 0; i < num; i++)
 				XPutPixel(grimage, i, 0, (u_long) array[i]);
 		else
@@ -141,9 +138,7 @@ void XD_Raster_int(int num, int nrows, const int *array, int withzeros, int colo
 					c = LIB_get_color_index(c);
 
 				/* non-zero pixel, put into the image */
-				if (DRV_get_table_type() == FLOAT)
-					XPutPixel(grimage, width++, 0, (u_long) c);
-				else if (use_visual->class >= TrueColor)
+				if (use_visual->class >= TrueColor)
 					XPutPixel(grimage, width++, 0, (u_long) c);
 				else
 					XPutPixel(grimage, width++, 0, (u_long) xpixels[c]);

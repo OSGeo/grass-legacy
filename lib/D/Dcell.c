@@ -46,10 +46,6 @@ static int cell_draw( char *, char *, struct Colors *, int);
 	D_check_map_window(&wind) ;
 	G_set_window (&wind);
 
-	/* Get color offset value for current window and pass to driver */
-	D_offset_is(&offset) ;
-	R_color_offset(offset) ;
-
 	/* Set the colors for the display */
 	if (G_read_colors(name, mapset, &colors) == -1)
 		G_fatal_error(_("Color file for [%s] not available"), name) ;

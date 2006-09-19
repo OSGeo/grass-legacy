@@ -73,10 +73,6 @@ int R_screen_bot(void);
 int R_screen_top(void);
 void R_get_num_colors(int *);
 
-int R_color_table_float(void);
-int R_color_table_fixed(void);
-void R_color_offset(int);
-
 void R_color(int);
 void R_standard_color(int);
 void R_RGB_color(unsigned char,unsigned char,unsigned char);

@@ -66,9 +66,6 @@ int LIB_init(const struct driver *drv, int argc, char **argv)
 	if (COM_Graph_set(argc, argv) < 0)
 		exit(1);
 
-	/* Initialize color stuff */
-	COM_Color_table_fixed();
-
 	/* initialize the pads */
 	create_pad("");    /* scratch pad */
 

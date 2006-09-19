@@ -1,11 +1,8 @@
 #include "driver.h"
 
 extern void XD_Box_abs(int,int,int,int);
-extern int XD_Can_do_float(void);
 extern void XD_Client_Close(void);
 extern void XD_Client_Open(void);
-extern int XD_Color_table_fixed(void);
-extern int XD_Color_table_float(void);
 extern void XD_Do_work(int);
 extern int XD_Get_location_with_box(int,int,int *,int *,int *,int);
 extern int XD_Get_location_with_line(int,int,int *,int *,int *,int);
@@ -31,6 +28,4 @@ extern void XD_color(int);
 extern void XD_draw_bitmap(int,int,int,const unsigned char *);
 extern void XD_draw_line(int,int,int,int);
 extern void XD_draw_point(int,int);
-extern int XD_get_table_type(void);
 extern int XD_lookup_color(int, int, int);
-extern void XD_reset_color(int,int,int,int);

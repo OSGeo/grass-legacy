@@ -11,7 +11,6 @@ LIB_NAME = $(PNGDRIVER_LIBNAME)
 
 LIB_OBJS =	\
 	Box.o			\
-	Can_do.o		\
 	Client.o		\
 	Color.o			\
 	Color_table.o		\

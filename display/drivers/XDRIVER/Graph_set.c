@@ -41,7 +41,7 @@ int use_bit_depth;
 int scrn;
 Screen *use_screen;
 GC gc;
-Colormap floatcmap, fixedcmap;
+Colormap fixedcmap;
 Cursor cur_xh, cur_clock;
 u_long gemask = StructureNotifyMask;
 Pixmap bkupmap;
@@ -341,23 +341,6 @@ int XD_Graph_set(int argc, char **argv)
 	fprintf(stderr,"ncolors: %d\n", NCOLORS);
 
 	XSetWindowColormap(dpy, grwin, fixedcmap);
-
-	if (COM_Can_do_float())
-	{
-		/* Allocate floating colormap */
-		XColor *xcolors = (XColor *) G_malloc(NCOLORS * sizeof(XColor));
-
-		floatcmap = XCreateColormap(dpy, use_screen->root,
-					    use_visual, AllocAll);
-
-		for (i = 0; i < NCOLORS; i++)
-			xcolors[i].pixel = i;
-
-		XQueryColors(dpy, fixedcmap, xcolors, NCOLORS);
-		XStoreColors(dpy, floatcmap, xcolors, NCOLORS);
-
-		G_free(xcolors);
-	}
 
 	/* Create the cursors to be used later */
 

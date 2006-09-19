@@ -53,9 +53,9 @@
 #define _____UNUSED_3               33
 #define _____UNUSED_4               34
 #define _____UNUSED_5               35
-#define COLOR_TABLE_FIXED           36
-#define COLOR_TABLE_FLOAT           37
-#define COLOR_OFFSET                38
+/* #define COLOR_TABLE_FIXED           36 */
+/* #define COLOR_TABLE_FLOAT           37 */
+/* #define COLOR_OFFSET                38 */
 #define TEXT_ROTATION               39
 #define SET_WINDOW                  40
 #define _____UNUSED_6               41

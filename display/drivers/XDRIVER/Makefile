@@ -35,7 +35,6 @@ EXTRA_CFLAGS=$(XCFLAGS) $(R3DEFINE) -I../../../lib/driver
 
 OBJS =  \
 	Box.o\
-	Can_do.o\
 	Client.o\
 	Color_table.o\
 	Color.o\

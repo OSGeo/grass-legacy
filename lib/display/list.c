@@ -1,11 +1,5 @@
 /*  Routines to manage the graphics window contents list
  *
- * D_claim_offset_is(num)
- *     Remembers color offset as num
- *
- * D_offset_is(num)
- *     Returns saved color offset for window
- *
  * D_clear_window()
  *     Removes all information about current window
  *
@@ -302,38 +296,9 @@ int D_clear_window()
 	R_pad_delete_item("cell_list") ;
 	R_pad_delete_item("dig_list") ;
 	R_pad_delete_item("site_list") ;
-	R_pad_delete_item("off") ;
 	R_pad_delete_item("m_win") ;
 	R_pad_delete_item("erase");
 	return 0;
-}
-
-int D_claim_offset_is( int num )
-{
-	char buf[32] ;
-
-	sprintf(buf,"%d",num) ;
-	return(R_pad_set_item ("off", buf)) ;
-}
-
-int D_offset_is( int *num )
-{
-	char **list ;
-	int count ;
-	int stat ;
-
-	if ((stat = R_pad_get_item ("off", &list, &count)))
-	{
-		*num = 0 ;
-		return(-1) ;
-	}
-
-	if (sscanf(list[0],"%d",num) != 1)
-		*num = 0 ;
-
-	R_pad_freelist (list,count) ;
-
-	return(0) ;
 }
 
 int D_set_erase_color( char *colorname)

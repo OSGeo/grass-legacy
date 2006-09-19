@@ -8,11 +8,8 @@ int main(int argc, char **argv)
 
 	drv.Box_abs		= PNG_Box_abs;
 	drv.Box_rel		= NULL;
-	drv.Can_do_float	= PNG_Can_do_float;
 	drv.Client_Open		= NULL;
 	drv.Client_Close	= PNG_Client_Close;
-	drv.Color_table_float	= PNG_Color_table_float;
-	drv.Color_table_fixed	= PNG_Color_table_fixed;
 	drv.Erase		= PNG_Erase;
 	drv.Get_with_box	= NULL;
 	drv.Get_with_line	= NULL;
@@ -35,9 +32,7 @@ int main(int argc, char **argv)
 	drv.Respond		= PNG_Respond;
 	drv.Work_stream		= NULL;
 	drv.Do_work		= NULL;
-	drv.reset_color		= PNG_reset_color;
 	drv.lookup_color	= PNG_lookup_color;
-	drv.get_table_type	= PNG_get_table_type;
 	drv.color		= PNG_color;
 	drv.draw_line		= PNG_draw_line;
 	drv.draw_point		= PNG_draw_point;
