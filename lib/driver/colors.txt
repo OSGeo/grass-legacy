@@ -7,38 +7,28 @@ color specifiers are:
 actual 32-bit 0xAARRGGBB value written to the framebuffer. In XDRIVER,
 this is either:
 
-a) the actual X Pixel value used by XSetForeground() etc (in FLOAT
-mode or for TrueColor/DirectColor visuals), or
+a) the actual X Pixel value used by XSetForeground() etc (for
+TrueColor/DirectColor visuals), or
 
-b) the index into the xpixels array (in FIXED mode for other visuals),
-which maps either gray levels or indices into the color-cube palette
-to actual Pixel values.
+b) the index into the xpixels array (for other visuals), which maps
+either gray levels or indices into the color-cube palette to actual
+Pixel values.
 
 2. "fixed". An index into the fixed color table maintained by the
-library. The table can be modified using LIB_assign_fixed_color() or,
-in FIXED mode, COM_Reset_color[s].
+library. The table can be modified using LIB_assign_fixed_color() or
+COM_Reset_color[s]. "fixed" colors can be translated to "internal"
+colors using LIB_get_color_index[_array].
 
-3. "float". An index into the (hardware) palette used by the driver in
-FLOAT mode. The internal value is obtained by adding the color offset
-and the maximum number of standard colors to the float value, modulo
-the total number of colors in the hardware palette. 
-
-The hardware palette can be modified using COM_Reset_color[s] (only in
-FLOAT color mode).
-
-"fixed" and "float" colors can be translated to "internal" colors
-using LIB_get_color_index[_array].
-
-4. "standard". An index into the standard color table maintained by
+3. "standard". An index into the standard color table maintained by
 the library. The table is initialized using LIB_assign_standard_color()
 to contain the 13 standard colors defined in colors.h; it cannot be
 modified by clients.
 
-5. "absolute" RGB values, in the range 0-255. These values will be
+4. "absolute" RGB values, in the range 0-255. These values will be
 written directly to a 24-bit framebuffer or palette, or scaled for
 lower bit depths.
 
-6. "logical" RGB values. These are indices into the R/G/B translation
+5. "logical" RGB values. These are indices into the R/G/B translation
 tables set using COM_RGB_set_colors(). The values passed to
 COM_RGB_raster() are logical values.
 
@@ -47,10 +37,6 @@ void DRV_color(int color)
 
 int DRV_get_color(void)
 	return:	internal color number
-
-void DRV_reset_color(int color, int r, int g, int b)
-	color:	internal color number (palette index; only used in FLOAT mode)
-	r,g,b:	absolute R/G/B values
 
 int DRV_lookup_color(int r, int g, int b)
 	r,g,b:	absolute R/G/B values
@@ -63,14 +49,14 @@ void COM_Color_RGB(int r, int g, int b)
 	r,g,b:	absolute R/G/B values
 
 void COM_Standard_color(int color)
-	color:	standard color number (FIXED) or float color number (FLOAT)
+	color:	standard color number
 
 int LIB_get_color_index(int color)
-	color:	fixed color number (FIXED) or float color number (FLOAT)
+	color:	fixed color number
 	return:	internal color number
 
 void LIB_get_color_index_array(int *dst, const int *src, int num)
-	src:	fixed color numbers (FIXED) or float color numbers (FLOAT)
+	src:	fixed color numbers
 	dst:	internal color numbers
 
 void LIB_assign_fixed_color(int user, int real)
@@ -83,7 +69,7 @@ void LIB_assign_standard_color(int user, int real)
 
 void COM_Reset_color(unsigned char r, unsigned char g, unsigned char b, int color)
 	r,g,b:	absolute R/G/B values
-	color:	fixed color number (FIXED) or float color number (FLOAT)
+	color:	fixed color number
 
 void COM_Reset_colors(
 	int min, int max,
@@ -92,7 +78,7 @@ void COM_Reset_colors(
 	const unsigned char *b)
 
 	r,g,b:	absolute R/G/B values (array[0] defines min, array[max-min] defines max)
-	min,max: fixed color numbers (FIXED) or float color numbers (FLOAT)
+	min,max: fixed color numbers
 
 void COM_RGB_set_colors(const unsigned char *r, const unsigned char *g, const unsigned char *b)
 	r,g,b:	index = logical R/G/B value, value = absolute R/G/B value
