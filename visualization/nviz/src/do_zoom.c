@@ -281,6 +281,7 @@ int Create_OS_Ctx(int width, int height)
 	    pbuf_attrib[pbuf_cnt++] = width + 1;
 	    pbuf_attrib[pbuf_cnt++] = GLX_PBUFFER_HEIGHT;
 	    pbuf_attrib[pbuf_cnt++] = height + 1;
+	    pbuf_attrib[pbuf_cnt++] = None;
 
 	    pbuffer = glXCreatePbuffer(dpy, fbc[0], pbuf_attrib);
 	    if (pbuffer)
