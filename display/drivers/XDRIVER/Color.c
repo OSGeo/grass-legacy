@@ -22,9 +22,7 @@ void XD_color(int number)
 
 	current_color = number;
 
-	if (DRV_get_table_type() == FLOAT)
-		current_color = number;
-	else if (use_visual->class >= TrueColor)
+	if (use_visual->class >= TrueColor)
 		current_color = number;
 	else
 		current_color = xpixels[number];

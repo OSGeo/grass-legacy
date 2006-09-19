@@ -21,7 +21,7 @@ void COM_Screen_top(int *index)
 	*index = screen_top;
 }
 
-void COM_Get_num_colors(int *ncolors)
+void COM_Number_of_colors(int *ncolors)
 {
 	*ncolors = NCOLORS;
 }

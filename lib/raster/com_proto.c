@@ -75,47 +75,6 @@ void R_get_num_colors(int *n)
 }
 
 /*!
- * \brief select floating color table
- *
- * Selects a
- * float color table to be used for subsequent color calls. It is expected that
- * the user will follow this call with a call to erase and reinitialize the
- * entire graphics screen.
- * Returns 0 if successful, non-zero if unsuccessful.
- *
- *  \param void
- *  \return int
- */
-
-int R_color_table_float(void)
-{
-	return trans->color_table_float();
-}
-
-/*!
- * \brief select fixed color table
- *
- * Selects a fixed
- * color table to be used for subsequent color calls. It is expected that the
- * user will follow this call with a call to erase and reinitialize the entire
- * graphics screen.
- * Returns 0 if successful, non-zero if unsuccessful.
- *
- *  \param void
- *  \return int
- */
-
-int R_color_table_fixed(void)
-{
-	return trans->color_table_fixed();
-}
-
-void R_color_offset(int n)
-{
-	trans->color_offset(n);
-}
-
-/*!
  * \brief select color
  *
  * Selects the <b>color</b> to be

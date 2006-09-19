@@ -5,8 +5,6 @@
 #include <grass/colors.h>
 #include "XDRIVER.h"
 
-static int table_type = FIXED;
-
 static int Red[256], Grn[256], Blu[256];
 static int Gray[256];
 
@@ -221,7 +219,6 @@ Colormap init_color_table(Colormap cmap)
 	int r, g, b, y, i;
 	int colorindex;
 
-	/* "truecolor" really indicates that we can't do "float" color mode */
 	switch (use_visual->class)
 	{
 	case GrayScale:
@@ -336,80 +333,5 @@ int XD_lookup_color(int r, int g, int b)
 		return 0;
 		break;
 	}
-}
-
-void XD_reset_color(int number, int red, int grn, int blu)
-{
-	XColor xcolor;
-
-	if (table_type != FLOAT)
-	{
-		G_warning("reset_color: called in FIXED color mode\n");
-		return;
-	}
-
-	/* out-of-range check */
-	if (number >= NCOLORS || number < 0)
-	{
-		G_warning("reset_color: can't set color %d\n", number);
-		return;
-	}
-
-	xcolor.pixel  = (unsigned long) number;
-	xcolor.red    = (unsigned short) (red * 0xFFFF / 0xFF);
-	xcolor.green  = (unsigned short) (grn * 0xFFFF / 0xFF);
-	xcolor.blue   = (unsigned short) (blu * 0xFFFF / 0xFF);
-	xcolor.flags  = DoRed | DoGreen | DoBlue;
-
-	XStoreColor(dpy, floatcmap, &xcolor);
-}
-
-int XD_Color_table_float(void)
-{
-	int colorindex;
-
-	if (!COM_Can_do_float())
-	{
-		G_warning("Color_table_float: not available on this device\n");
-		return -1;
-	}
-
-	table_type = FLOAT;
-
-	XSetWindowColormap(dpy, grwin, floatcmap);
-
-	COM_Color_offset(0);
-
-	/* Reset float standard colors */
-	for (colorindex = 1; colorindex <= MAX_COLOR_NUM; colorindex++)
-		DRV_reset_color(colorindex,
-			(int) standard_colors_rgb[colorindex].r,
-			(int) standard_colors_rgb[colorindex].g,
-			(int) standard_colors_rgb[colorindex].b);
-
-	return 0;
-}
-int XD_Color_table_fixed(void)
-{
-	int colorindex;
-
-	table_type = FIXED;
-
-	/* Generate lookup for fixed colors */
-	for (colorindex = 1; colorindex <= MAX_COLOR_NUM; colorindex++)
-		LIB_assign_fixed_color(
-			colorindex,
-			DRV_lookup_color(
-				(int) standard_colors_rgb[colorindex].r,
-				(int) standard_colors_rgb[colorindex].g,
-				(int) standard_colors_rgb[colorindex].b));
-
-	XSetWindowColormap(dpy, grwin, fixedcmap);
-	return 0;
-}
-
-int XD_get_table_type(void)
-{
-	return table_type;
 }
 

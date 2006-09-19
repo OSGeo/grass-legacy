@@ -10,7 +10,6 @@ extern const struct driver *driver;
 
 /* Color.c */
 void color(int);
-int get_color_offset(void);
 /* Font.c */
 int font_is_freetype(void);
 /* Reset_colors.c */

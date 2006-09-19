@@ -92,10 +92,6 @@ main (int argc, char **argv)
 
 	D_set_cell_name("his result") ;
 
-	/* Get color offset value for current graphics window and pass to driver */
-	D_offset_is(&offset) ;
-	R_color_offset(offset) ;
-
 	/* Prepare the raster cell drawing functions */
 	D_get_screen_window(&t, &b, &l, &r) ;
 	D_cell_draw_setup_RGB(t, b, l, r) ;

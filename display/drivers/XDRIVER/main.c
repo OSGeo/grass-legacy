@@ -8,11 +8,8 @@ int main(int argc, char **argv)
 
 	drv.Box_abs		= XD_Box_abs;
 	drv.Box_rel		= NULL;
-	drv.Can_do_float	= XD_Can_do_float;
 	drv.Client_Open		= XD_Client_Open;
 	drv.Client_Close	= XD_Client_Close;
-	drv.Color_table_float	= XD_Color_table_float;
-	drv.Color_table_fixed	= XD_Color_table_fixed;
 	drv.Erase		= NULL;
 	drv.Get_with_box	= XD_Get_location_with_box;
 	drv.Get_with_line	= XD_Get_location_with_line;
@@ -35,9 +32,7 @@ int main(int argc, char **argv)
 	drv.Respond		= XD_Respond;
 	drv.Work_stream		= XD_Work_stream;
 	drv.Do_work		= XD_Do_work;
-	drv.reset_color		= XD_reset_color;
 	drv.lookup_color	= XD_lookup_color;
-	drv.get_table_type	= XD_get_table_type;
 	drv.color		= XD_color;
 	drv.draw_line		= XD_draw_line;
 	drv.draw_point		= XD_draw_point;

@@ -6,7 +6,6 @@
 #include <grass/colors.h>
 #include "pngdriver.h"
 
-static int table_type = FIXED;
 static int Red[256], Grn[256], Blu[256];
 
 static void set_color(int i, int red, int grn, int blu)
@@ -15,23 +14,6 @@ static void set_color(int i, int red, int grn, int blu)
 	palette[i][1] = grn;
 	palette[i][2] = blu;
 	palette[i][3] = 0;
-}
-
-void PNG_reset_color(int number, int red, int grn, int blu)
-{
-	if (table_type != FLOAT)
-	{
-		G_warning("reset_color: called in FIXED color mode\n");
-		return;
-	}
-
-	if (number >= NCOLORS || number < 0)
-	{
-		G_warning("reset_color: can't set color %d\n", number);
-		return;
-	}
-
-	set_color(number, red, grn, blu);
 }
 
 static void init_colors_rgb(void)
@@ -100,46 +82,6 @@ void init_color_table(void)
 				(int) standard_colors_rgb[colorindex].b)) ;
 }
 
-int PNG_Color_table_float(void)
-{
-	int colorindex;
-	if (!COM_Can_do_float())
-	{
-		G_warning("Color_table_float: not available on this device\n");
-		return -1;
-	}
-
-	table_type = FLOAT;
-
-	COM_Color_offset(0);
-
-	/* Reset float standard colors */
-	for (colorindex = 1; colorindex <= MAX_COLOR_NUM; colorindex++)
-		DRV_reset_color(colorindex,
-				(int) standard_colors_rgb[colorindex].r,
-				(int) standard_colors_rgb[colorindex].g,
-				(int) standard_colors_rgb[colorindex].b);
-
-	return 0;
-}
-
-int PNG_Color_table_fixed(void)
-{
-	int colorindex;
-	table_type = FIXED;
-
-	/* Generate lookup for fixed colors */
-	for (colorindex = 1; colorindex <= MAX_COLOR_NUM; colorindex++)
-		LIB_assign_fixed_color(
-			colorindex,
-			DRV_lookup_color(
-				(int) standard_colors_rgb[colorindex].r,
-				(int) standard_colors_rgb[colorindex].g,
-				(int) standard_colors_rgb[colorindex].b)) ;
-
-	return 0;
-}
-
 static int get_color_rgb(int r, int g, int b)
 {
 	return (r << 16) + (g << 8) + b;
@@ -158,10 +100,5 @@ int PNG_lookup_color(int r, int g, int b)
 	return true_color
 		? get_color_rgb(r, g, b)
 		: get_color_indexed(r, g, b);
-}
-
-int PNG_get_table_type(void)
-{
-	return table_type;
 }
 

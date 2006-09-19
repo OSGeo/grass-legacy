@@ -43,9 +43,6 @@ static View *makeview (double bottom, double top, double left, double right)
 
 int Init_graphics (void)
 {
-    /* R_color_table_fixed(); */
-    R_color_offset (0);
-
     /* Dclearscreen(); */
     Dscreen();
 

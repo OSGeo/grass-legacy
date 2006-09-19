@@ -26,11 +26,8 @@ struct driver
 {
 	void (*Box_abs)(int,int,int,int);
 	void (*Box_rel)(int,int);
-	int (*Can_do_float)(void);
 	void (*Client_Open)(void);
 	void (*Client_Close)(void);
-	int (*Color_table_float)(void);
-	int (*Color_table_fixed)(void);
 	void (*Erase)(void);
 	int (*Get_with_box)(int,int,int *,int *,int *,int);
 	int (*Get_with_line)(int,int,int *,int *,int *,int);
@@ -62,9 +59,7 @@ struct driver
 	int (*Work_stream)(void);
 	void (*Do_work)(int);
 
-	void (*reset_color)(int,int,int,int);
 	int (*lookup_color)(int,int,int);
-	int (*get_table_type)(void);
 	void (*color)(int);
 	void (*draw_line)(int,int,int,int);
 	void (*draw_point)(int,int);
@@ -93,8 +88,6 @@ extern void COM_Bitmap(int,int,int,const unsigned char *);
 /* Box.c */
 extern void COM_Box_abs(int,int,int,int);
 extern void COM_Box_rel(int,int);
-/* Can_do.c */
-extern int COM_Can_do_float(void);
 /* Client.c */
 extern void COM_Client_Open(void);
 extern void COM_Client_Close(void);
@@ -102,10 +95,6 @@ extern void COM_Client_Close(void);
 extern void COM_Color(int);
 extern void COM_Color_RGB(unsigned char,unsigned char,unsigned char);
 extern void COM_Standard_color(int);
-extern void COM_Color_offset(int);
-/* Color_table.c */
-extern int COM_Color_table_float(void);
-extern int COM_Color_table_fixed(void);
 /* Cont.c */
 extern void COM_Cont_abs(int,int);
 extern void COM_Cont_rel(int,int);
@@ -130,8 +119,6 @@ extern void COM_Line_width(int);
 /* Move.c */
 extern void COM_Move_abs(int,int);
 extern void COM_Move_rel(int,int);
-/* Num_colors.c */
-extern void COM_Number_of_colors(int *);
 /* Panel.c */
 extern void COM_Panel_save(const char *,int,int,int,int);
 extern void COM_Panel_restore(const char *);
@@ -161,7 +148,7 @@ extern void COM_Screen_left(int *);
 extern void COM_Screen_rite(int *);
 extern void COM_Screen_bot(int *);
 extern void COM_Screen_top(int *);
-extern void COM_Get_num_colors(int *);
+extern void COM_Number_of_colors(int *);
 /* Set_window.c */
 extern void COM_Set_window(int,int,int,int);
 /* Text.c */
@@ -179,14 +166,10 @@ extern void COM_Do_work(int);
 /* Color.c */
 extern int DRV_lookup_color(int,int,int);
 extern void DRV_color(int);
-/* Color_table.c */
-extern int DRV_get_table_type(void);
 /* Draw.c */
 extern void DRV_draw_bitmap(int,int,int,const unsigned char *);
 extern void DRV_draw_line(int x0, int y0, int x1, int y1);
 extern void DRV_draw_point(int x, int y);
-/* Reset_colors.c */
-extern void DRV_reset_color(int,int,int,int);
 
 #endif /* _DRIVER_H */
 

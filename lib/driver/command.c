@@ -133,18 +133,6 @@ int process_command(int c)
 	REC(&blu, sizeof blu);
 	COM_Color_RGB(red, grn, blu);
 	break;
-    case COLOR_TABLE_FIXED:
-	x = COM_Color_table_fixed();
-	SEND(&x, sizeof x);
-	break;
-    case COLOR_TABLE_FLOAT:
-	x = COM_Color_table_float();
-	SEND(&x, sizeof x);
-	break;
-    case COLOR_OFFSET:
-	REC(&index, sizeof index);
-	COM_Color_offset(index);
-	break;
     case COLOR_PRINT:
 	break;
     case LINE_WIDTH:

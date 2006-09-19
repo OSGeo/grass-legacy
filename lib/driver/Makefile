@@ -9,9 +9,7 @@ LIB_NAME = $(DRIVER_LIBNAME)
 LIB_OBJS =\
 	Bitmap.o\
 	Box.o\
-	Can_do.o\
 	Client.o\
-	Color_table.o\
 	Color.o\
 	Cont.o\
 	Draw.o\
@@ -22,7 +20,6 @@ LIB_OBJS =\
 	Graph.o\
 	Line_width.o\
 	Move.o\
-	Num_colors.o \
 	Panel.o\
 	Polydots.o\
 	Polyline.o\

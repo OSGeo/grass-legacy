@@ -63,8 +63,6 @@ int D_get_site_list(char ***, int *);
 int D_add_to_list(char *);
 int D_get_list(char ***, int *);
 int D_clear_window(void);
-int D_claim_offset_is(int);
-int D_offset_is(int *);
 int D_set_erase_color(char *);
 int D_get_erase_color(char *);
 /* popup.c */
