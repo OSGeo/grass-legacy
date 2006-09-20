@@ -149,15 +149,18 @@ INTERNATIONALIZATION
      A. Hagiwara, and N. Hattori)
  - Multi-byte text support: FOSS4G members, see http://www.foss4g.org
  - Translators: There are as many to thank as there are languages to speak
+    - Chinese: Zhang Jun
     - Czech: Martin Landa, Jachym Cepicky, Michal Bil, Radim Blazek
     - German: Stephan Holl 
     - French: Emmanuel Saracco, Daniel Calvelo, Laurent Courty
-    - Italian: Maurizio Napolitano
+    - Italian: Maurizio Napolitano, Luciano Montanaro, Lorenzo Moretti
     - Japanese: Susumu Nonogaki
+    - Polish: Artur Niecior
     - Russian: Alexander Shevlakov
     - Slovenia: Miha Staut
     - Spanish: el bueno (manzano_jm), Luis Izquierdo, Daniel Calvelo
-    - Vietnamese: Tran Van Anh 
+    - Turkish: Aras.Gor.O Yalcin Yilmaz
+    - Vietnamese: Tran Van Anh, Bui Huu Manh (Mystus vittatus)
 
 NVIZ
  - Radim Blazek <blazek itc it>: updated vector and 3D vector support
