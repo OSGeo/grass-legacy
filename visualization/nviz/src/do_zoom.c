@@ -269,7 +269,7 @@ int Create_OS_Ctx(int width, int height)
 
 #ifdef HAVE_PBUFFERS
 #if defined(GLX_PBUFFER_WIDTH) && defined(GLX_PBUFFER_HEIGHT)
-    if (!getenv("GRASS_NO_GLX_PBUFFERS"))
+    if (getenv("GRASS_GLX_PBUFFERS"))
     {
 	fprintf(stderr, "Creating PBuffer Using GLX 1.3\n");
 
@@ -295,7 +295,7 @@ int Create_OS_Ctx(int width, int height)
 #ifdef HAVE_PBUFFERS
     if (!pbuffer)
 #endif
-    if (!getenv("GRASS_NO_GLX_PIXMAPS"))
+    if (getenv("GRASS_GLX_PIXMAPS"))
     {
 	fprintf(stderr, "Create PixMap Using GLX 1.1\n");
 
