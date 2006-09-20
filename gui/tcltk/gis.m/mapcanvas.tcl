@@ -1229,9 +1229,9 @@ proc MapCanvas::zoomregion { mon zoom } {
 			# This effectively zooms out by the maxmimum of the two scales
 			# so that the visible map shrinks to fit inside the zoom rectangle
 			set nsscale [expr { ($map_n - $map_s) / ($north - $south) }]
-			if {$nsscale < 1} {set nsscale 0.0}
+			if {$nsscale <= 1.0} {set nsscale 0.0}
 			set ewscale [expr { ($map_e - $map_w) / ($east - $west) }]
-			if {$ewscale < 1} {set ewscale 0.0}
+			if {$ewscale <= 1.0} {set ewscale 0.0}
 			set north [expr { $map_n + ($nsscale * ($map_n - $north)) }]
 			set south [expr { $map_s + ($nsscale * ($map_s - $south)) }]
 			set east [expr { $map_e + ($ewscale * ($map_e - $east)) }]
