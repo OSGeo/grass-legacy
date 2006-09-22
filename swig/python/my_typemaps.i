@@ -58,10 +58,6 @@ typedef char * string_allows_none;
 		PyObject obj;
 		len=G_window_cols();
 		$1=G_allocate_cell_buf();
-		for(i=0;i<len;i++)
-		{
-		$1[i]=(int)PyInt_AsLong(PyList_GetItem($input,i));
-		}
 }
 
 %typemap(python,argout) return_string (char * temp) {
