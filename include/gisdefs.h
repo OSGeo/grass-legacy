@@ -1077,12 +1077,6 @@ void G_str_to_lower (char *);
 /* strip.c */
 int G_strip(char *);
 
-/* support.c */
-int G_open_support_old(char *, char *, char *);
-FILE *G_fopen_support_old(char *, char *, char *);
-int G_open_support_new(char *, char *, char *);
-FILE *G_fopen_support_new(char *, char *, char *);
-
 /* svd.c */
 int G_svdcmp(double **, int, int, double *, double **);
 int G_svbksb(double **, double [], double **, int, int, double [], double []);
