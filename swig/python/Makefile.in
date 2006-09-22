@@ -10,10 +10,9 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 SWIG=swig
 
-GRASS_LIB_PATH=$(ARCH_LIBDIR)
 CFLAGS=-c -fpic -I/usr/include/python$(PYTHONVERSION) -I./ -I$(ARCH_DISTDIR)/include
 
-LDFLAGS=-shared $(GRASS_LIB_PATH)/libgrass_D.so $(GRASS_LIB_PATH)/libgrass_I.so $(GRASS_LIB_PATH)/libgrass_Iortho.so $(GRASS_LIB_PATH)/libgrass_bitmap.so $(GRASS_LIB_PATH)/libgrass_btree.so $(GRASS_LIB_PATH)/libgrass_cdhc.so $(GRASS_LIB_PATH)/libgrass_datetime.so $(GRASS_LIB_PATH)/libgrass_dbmibase.so $(GRASS_LIB_PATH)/libgrass_dbmiclient.so $(GRASS_LIB_PATH)/libgrass_dbmidriver.so $(GRASS_LIB_PATH)/libgrass_dbstubs.so $(GRASS_LIB_PATH)/libgrass_dgl.so $(GRASS_LIB_PATH)/libgrass_display.so $(GRASS_LIB_PATH)/libgrass_dspf.so $(GRASS_LIB_PATH)/libgrass_edit.so $(GRASS_LIB_PATH)/libgrass_form.so $(GRASS_LIB_PATH)/libgrass_g3d.so $(GRASS_LIB_PATH)/libgrass_gis.so $(GRASS_LIB_PATH)/libgrass_gmath.so $(GRASS_LIB_PATH)/libgrass_gproj.so $(GRASS_LIB_PATH)/libgrass_interpdata.so $(GRASS_LIB_PATH)/libgrass_interpfl.so $(GRASS_LIB_PATH)/libgrass_linkm.so $(GRASS_LIB_PATH)/libgrass_qtree.so $(GRASS_LIB_PATH)/libgrass_raster.so $(GRASS_LIB_PATH)/libgrass_rowio.so $(GRASS_LIB_PATH)/libgrass_rtree.so $(GRASS_LIB_PATH)/libgrass_segment.so $(GRASS_LIB_PATH)/libgrass_shape.so $(GRASS_LIB_PATH)/libgrass_sites.so $(GRASS_LIB_PATH)/libgrass_symb.so $(GRASS_LIB_PATH)/libgrass_trans.so $(GRASS_LIB_PATH)/libgrass_vask.so $(GRASS_LIB_PATH)/libgrass_vect.so
+LDFLAGS=-shared -L$(ARCH_LIBDIR) -lgrass_D -lgrass_I -lgrass_Iortho -lgrass_bitmap -lgrass_btree -lgrass_cdhc -lgrass_datetime -lgrass_dbmibase -lgrass_dbmiclient -lgrass_dbmidriver -lgrass_dbstubs -lgrass_dgl -lgrass_display -lgrass_dspf -lgrass_edit -lgrass_form -lgrass_g3d -lgrass_gis -lgrass_gmath -lgrass_gproj -lgrass_interpdata -lgrass_interpfl -lgrass_linkm -lgrass_qtree -lgrass_raster -lgrass_rowio -lgrass_rtree -lgrass_segment -lgrass_shape -lgrass_sites -lgrass_symb -lgrass_trans -lgrass_vask -lgrass_vect
 
 default: python_grass6.so
 
