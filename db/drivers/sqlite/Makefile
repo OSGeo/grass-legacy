@@ -6,7 +6,7 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-DRIVER=$(DBDRIVERDIR)/sqlite$(EXE_SUFFIX)
+DRIVER=$(DBDRIVERDIR)/sqlite$(EXE)
 
 LIBES = $(DBMIDRIVERLIB) $(DBMIBASELIB) $(DBMIEXTRALIB) $(DBSTUBSLIB) \
 	$(GISLIB) $(DATETIMELIB) $(SQLITELIB)

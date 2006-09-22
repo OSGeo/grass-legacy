@@ -7,10 +7,10 @@ DEPENDENCIES = $(G3DDEP) $(GISDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-R3INFO = $(BIN)/r3.info$(EXE_SUFFIX)
-R3MASK = $(BIN)/r3.mask$(EXE_SUFFIX)
-R3NULL = $(BIN)/r3.null$(EXE_SUFFIX)
-R3TIMESTAMP = $(BIN)/r3.timestamp$(EXE_SUFFIX)
+R3INFO = $(BIN)/r3.info$(EXE)
+R3MASK = $(BIN)/r3.mask$(EXE)
+R3NULL = $(BIN)/r3.null$(EXE)
+R3TIMESTAMP = $(BIN)/r3.timestamp$(EXE)
 
 default: \
 	$(R3INFO) \
