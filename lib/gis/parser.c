@@ -1258,7 +1258,7 @@ static void G_usage_html (void)
 	fprintf(stdout, "<link rel=\"stylesheet\" href=\"grassdocs.css\" type=\"text/css\">\n"),
 	fprintf(stdout, "</head>\n"),
 	fprintf(stdout, "<body bgcolor=\"white\">\n\n"),
-	fprintf(stdout, "<img src=\"grass.smlogo.gif\" alt=\"GRASS logo\"><hr align=center size=6 noshade>\n\n"),
+	fprintf(stdout, "<img src=\"grass_logo.png\" alt=\"GRASS logo\"><hr align=center size=6 noshade>\n\n"),
 	fprintf(stdout, "<h2>NAME</h2>\n"),
 	fprintf(stdout, "<em><b>%s</b></em> ", pgm_name);
 

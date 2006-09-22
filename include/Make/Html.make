@@ -47,7 +47,7 @@ htmlgen:
 		echo '<link rel="stylesheet" href="grassdocs.css" type="text/css">' ; \
 		echo '</head>' ; \
 		echo '<body bgcolor="white">' ; \
-		echo '<img src="grass.smlogo.gif" alt="GRASS logo"><hr align=center size=6 noshade>' ; \
+		echo '<img src="grass_logo.png" alt="GRASS logo"><hr align=center size=6 noshade>' ; \
 		echo '<h2>NAME</h2>' ; \
 		echo '<em><b>$(PGM)</b></em>' ; \
 		} > $(PGM).tmp.html.header ; \
