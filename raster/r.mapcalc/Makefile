@@ -4,8 +4,8 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 
 NAME2 = r.mapcalc
 NAME3 = r3.mapcalc
-PGM2 = $(NAME2)$(EXE_SUFFIX)
-PGM3 = $(NAME3)$(EXE_SUFFIX)
+PGM2 = $(NAME2)$(EXE)
+PGM3 = $(NAME3)$(EXE)
 
 COMMON = \
 	$(OBJDIR)/y.tab.o \

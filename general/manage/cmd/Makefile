@@ -8,10 +8,10 @@ DEPENDENCIES = $(GISDEP) $(VECTDEP) $(DBMIDEP) $(MANAGEDEP)
 EXTRA_INC = -I..
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-COPY_MOD = $(BIN)/g.copy$(EXE_SUFFIX)
-LIST_MOD = $(BIN)/g.list$(EXE_SUFFIX)
-REMOVE_MOD = $(BIN)/g.remove$(EXE_SUFFIX)
-RENAME_MOD = $(BIN)/g.rename$(EXE_SUFFIX)
+COPY_MOD = $(BIN)/g.copy$(EXE)
+LIST_MOD = $(BIN)/g.list$(EXE)
+REMOVE_MOD = $(BIN)/g.remove$(EXE)
+RENAME_MOD = $(BIN)/g.rename$(EXE)
 
 default: \
 	$(COPY_MOD) \

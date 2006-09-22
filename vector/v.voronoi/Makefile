@@ -1,8 +1,8 @@
 
 MODULE_TOPDIR = ../..
 
-VORONOI = v.voronoi$(EXE_SUFFIX)
-DELAUNAY = v.delaunay$(EXE_SUFFIX)
+VORONOI = v.voronoi$(EXE)
+DELAUNAY = v.delaunay$(EXE)
 
 PROGRAMS = $(VORONOI) $(DELAUNAY)
 
