@@ -26,6 +26,15 @@ Eg:
 	mapset=python_grass6.G_mapset()
 	print mapset
 
+DEBUGGING
+----------
+
+gdb --args python <script.py>
+
+e.g. 
+    gdb --args python rasteraccess.py
+
+
 TODO
 -----
 See TODO in this directory.
