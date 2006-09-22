@@ -424,9 +424,6 @@ int G_get_datumparams_from_projinfo(struct Key_Value *projinfo,
 /* debug.c */
 int G_debug(int,char *,...);
 
-/* def_window.c */
-int G_def_window(struct Cell_head *);
-
 /* distance.c */
 int G_begin_distance_calculations(void);
 double G_distance(double, double, double, double);
