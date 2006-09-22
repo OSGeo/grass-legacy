@@ -52,7 +52,7 @@ proc new_line_options { create } {
     set GWidget(cat) [Entry $row1.cval -width 6 -textvariable GVariable(cat) \
                 -bg white -command { c_var_set cat $GVariable(cat) }]
         bind $GWidget(cat) <KeyRelease> { c_var_set cat $GVariable(cat) }
-    set GWidget(cat_mode) [ComboBox $row1.cmode -label [G_msg "  Mode "]\
+    set GWidget(cat_mode) [ComboBox $row1.cmode -label [G_msg "  Mode "] \
             -entrybg white -width 12 -textvariable cmode \
             -modifycmd {
                 set GVariable(cat_mode) [ $GWidget(cat_mode) getvalue]
@@ -64,7 +64,7 @@ proc new_line_options { create } {
     pack $row2 -fill x -side top
 
     checkbutton $row2.ins -variable GVariable(insert) \
-            -padx 8 -pady 5 -text [G_msg "Insert new record into table"]\
+            -padx 8 -pady 5 -text [G_msg "Insert new record into table"] \
             -command { c_var_set insert $GVariable(insert) }
     pack $row2.ins -fill x  -side left
 
@@ -220,7 +220,7 @@ pack .pf -fill x -side top
 Label .pf.prompt -padx 3 -pady 2 -relief flat -anchor w -textvariable prompt
 pack .pf.prompt -fill x  -side left
 
-labelframe .bpf -text [G_msg "mouse button actions (left, right, center)"]\
+labelframe .bpf -text [G_msg "mouse button actions (left, right, center)"] \
     -labelanchor n
 pack .bpf -fill x -side top -padx 8
 Label .bpf.left -width 10  -pady 5 -relief raised -anchor center -textvariable prompt_left -bg grey95 
