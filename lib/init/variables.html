@@ -237,6 +237,16 @@ be inherited by dependant modules as the script runs. Setting either the
 GRASS_OVERWRITE environment variable or the OVERWRITE gisenv variable detailed
 below will cause maps with identical names to be overwritten.
 
+<p>GRASS_VERBOSE
+<br>[all modules]
+<br>&nbsp; toggles verbosity level
+<br>&nbsp; &nbsp; With 0 only errors and warnings are printed
+<br>&nbsp; &nbsp; With 1 progress messages are printed
+<br>&nbsp; &nbsp; With 2 all module messages are printed
+<br>
+This variable is automatically created by g.parser so that "--v" or "--q" option will
+be inherited by dependant modules as the script runs.
+
 <P>GRASS_REGION
 <br>[libgis]
 <br>&nbsp; Override region settings, separate parameters with a ";". Format

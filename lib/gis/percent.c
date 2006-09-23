@@ -90,7 +90,10 @@ int G_percent2 (int n,int d,int s, FILE *out)
     x = (d <= 0 || s <= 0)
 	? 100
 	: 100 * n / d;
-	
+
+    /* be verbose only 1> */
+    if (G_verbose() < 1)
+        return 0;
 
     if (n <= 0 || n >= d || x > prev + s)
     {

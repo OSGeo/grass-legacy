@@ -1129,6 +1129,11 @@ int G_sock_accept(int);
 int G_sock_connect(const char *);
 int G_sock_socketpair(int, int, int, int *);
 
+/* verbose.c */
+int G_verbose(void);
+int G_verbose_min(void);
+int G_verbose_max(void);
+
 /* version.c */
 int G_version(char **, char **, char **);
 

@@ -164,7 +164,11 @@ static int print_error(const char *msg, const int type)
 	prefix_std[1] = _("WARNING: ");
 	prefix_std[2] = _("ERROR: ");
     }
-    
+
+    /* messages will be printed only when verbosity level is 2> */
+    if (G_verbose() < 2 && type < 1) 
+        return 0;
+
     if ( type == ERR )
 	fatal = 1;
     else /* WARN */
