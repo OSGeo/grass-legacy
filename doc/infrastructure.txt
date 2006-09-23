@@ -130,6 +130,7 @@ Channel: irc://irc.freenode.net/grass
    - Jachym ("jachym")
    - Luca ("doktoreas")
    - Soeren ("huhabla")
+   - Brad ("bdouglas")
 
 == GRASS Source code repository ==
 
