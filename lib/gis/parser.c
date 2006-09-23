@@ -728,6 +728,28 @@ int G_parser (int argc, char **argv)
 			    overwrite = 1;
 			}
 
+			/* Verbose option */
+                        else if ( strcmp(ptr,"--v") == 0 || strcmp(ptr,"--verbose") == 0 )
+			{
+                            char buff[32];
+                            /* print everything: verbosity level 2 */
+			    module_info.verbose = G_verbose_max();
+                            sprintf(buff,"GRASS_VERBOSE=%d",G_verbose_max()) ;
+                            putenv(G_store(buff));
+			}
+
+			/* Quiet option */
+                        else if ( strcmp(ptr,"--q") == 0 || strcmp(ptr,"--quiet") == 0 )
+			{
+                            char buff[32];
+                            /* print nothing, but errors and warnings */
+			    module_info.verbose = G_verbose_min();
+                            sprintf(buff,"GRASS_VERBOSE=%d",G_verbose_min()) ;
+                            putenv(G_store(buff));
+			}
+
+
+
 			/* Force gui to come up */
 			else if ( strcmp(ptr,"--ui") == 0 )
 			{
@@ -932,6 +954,13 @@ int G_usage (void)
 		len=show(item,len);
 	}
 
+        strcpy (item, " [--verbose]");
+        len=show(item,len);
+
+        strcpy (item, " [--quiet]");
+        len=show(item,len);
+
+
 	fprintf (stderr, "\n");
 
 	/* Print help info for flags */
@@ -960,8 +989,10 @@ int G_usage (void)
 	}
 
 	if (new_prompt)
-		fprintf(stderr," --o   %s\n", _("Force overwrite of output files")) ;
-		
+	        fprintf(stderr," --o   %s\n", _("Force overwrite of output files")) ;
+
+        fprintf(stderr," --v   %s\n", _("Verbose module output")) ;
+        fprintf(stderr," --q   %s\n", _("Quiet module output")) ;
 
 	/* Print help info for options */
 
@@ -1334,9 +1365,11 @@ static void G_usage_html (void)
 		}
 	}
 	if (new_prompt)
-	{
 		fprintf(stdout, " [--<b>overwrite</b>] ");
-	}
+	
+        fprintf(stdout, " [--<b>verbose</b>] ");
+        fprintf(stdout, " [--<b>quiet</b>] ");
+
 	fprintf(stdout, "\n");
 
 
@@ -1371,6 +1404,13 @@ static void G_usage_html (void)
 			fprintf(stdout, "<DT><b>--overwrite</b></DT>\n");
 			fprintf(stdout, "<DD>Force overwrite of output files</DD>");
 		}
+
+                fprintf(stdout, "<DT><b>--verbose</b></DT>\n");
+                fprintf(stdout, "<DD>Force verbose output</DD>");
+
+                fprintf(stdout, "<DT><b>--quiet</b></DT>\n");
+                fprintf(stdout, "<DD>Force quiet output</DD>");
+
 		fprintf(stdout, "</DL>\n");
 	}
 
