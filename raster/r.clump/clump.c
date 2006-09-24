@@ -24,7 +24,7 @@
 
 
 CELL
-clump(int in_fd, int out_fd, int verbose)
+clump(int in_fd, int out_fd)
 {
     register int col;
     register CELL *prev_clump, *cur_clump;
@@ -97,15 +97,13 @@ clump(int in_fd, int out_fd, int verbose)
     /* initialize clump labels */
 	label = 0;
 
-	if (verbose)
-	    fprintf (stderr, _("CLUMP PASS %d ... "), pass); fflush (stderr);
+        G_message ( _("CLUMP PASS %d ... "), pass); fflush (stderr);
 	for (row = 0; row < nrows; row++)
 	{
 	    if (G_get_map_row (in_fd, cur_in+1, row) < 0)
 		G_fatal_error (_("Unable to properly read input raster file"));
 
-	    if (verbose)
-		G_percent(row, nrows, 2);
+            G_percent(row, nrows, 2);
 	    X = 0;
 	    for (col = 1; col <= ncols; col++)
 	    {
@@ -260,11 +258,9 @@ clump(int in_fd, int out_fd, int verbose)
 	    cur_clump  = prev_clump;
 	    prev_clump = temp_clump;
 	}
-	if (verbose)
-	{
-	    G_percent(row, nrows, 2);
-	    print_time (&cur_time);
-	}
+        G_percent(row, nrows, 2);
+        print_time (&cur_time);
+	
     }
     return 0;
 }
@@ -285,12 +281,11 @@ print_time (long *start)
     seconds = seconds % 60;
 
     if (hours)
-	fprintf (stderr, "%2d:%02d:%02d", hours, minutes, seconds);
+	G_message ("%2d:%02d:%02d", hours, minutes, seconds);
     else if (minutes)
-	fprintf (stderr, "%d:%02d", minutes, seconds);
+	G_message ("%d:%02d", minutes, seconds);
     else
-	fprintf (stderr, "%d seconds", seconds);
-    fprintf (stderr, "\n");
+	G_message ( "%d seconds", seconds);
 
     return 0;
 }
