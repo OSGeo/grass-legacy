@@ -18769,7 +18769,7 @@ msgstr ""
 "\t\tcat  - pou¾ije hodnoty kategorií\n"
 "\t\tval  - pou¾ije hodnotu specifikovanou volbou value\n"
 "\t\tz    - pou¾ije souøadnice z (pouze body a vrstevnice)\n"
-"\t\td    - výstup jako smìr odtoku (pouze linie)"
+"\t\tdir  - výstup jako smìr odtoku (pouze linie)"
 
 #: ../vector/v.to.rast/main.c:62 ../vector/v.to.rast3/main.c:56
 msgid "Column name (type must be numeric)"
