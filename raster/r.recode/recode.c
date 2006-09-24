@@ -50,7 +50,6 @@ int do_recode (void)
    out_rast = G_allocate_raster_buf(out_type);
    in_rast = G_allocate_raster_buf(in_type);
 
-   fprintf (stderr, "percent complete: ");
    for (row = 0; row < nrows; row++)
    {
      G_percent (row, nrows, 2);
