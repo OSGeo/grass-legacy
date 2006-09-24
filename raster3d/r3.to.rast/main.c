@@ -33,12 +33,11 @@ typedef struct
 
 paramType param;		/*Parameters */
 
-
 /*- prototypes --------------------------------------------------------------*/
-void fatalError(void *map, int *fd, int depths, char *errorMsg);	/*Simple Error message */
-void setParams();		/*Fill the paramType structure */
-void G3dToRaster(void *map, G3D_Region region, int *fd);	/*Write the raster */
-int open_output_map(const char *name, int res_type);	/*opens the outputmap */
+void fatal_error(void *map, int *fd, int depths, char *errorMsg);	/*Simple Error message */
+void set_params();		/*Fill the paramType structure */
+void g3d_to_raster(void *map, G3D_Region region, int *fd);	/*Write the raster */
+int  open_output_map(const char *name, int res_type);	/*opens the outputmap */
 void close_output_map(int fd);	/*close the map */
 
 
@@ -46,7 +45,7 @@ void close_output_map(int fd);	/*close the map */
 /* ************************************************************************* */
 /* Error handling ********************************************************** */
 /* ************************************************************************* */
-void fatalError(void *map, int *fd, int depths, char *errorMsg)
+void fatal_error(void *map, int *fd, int depths, char *errorMsg)
 {
     int i;
 
@@ -66,11 +65,10 @@ void fatalError(void *map, int *fd, int depths, char *errorMsg)
 
 }
 
-
 /* ************************************************************************* */
 /* Set up the arguments we are expecting ********************************** */
 /* ************************************************************************* */
-void setParams()
+void set_params()
 {
     param.input = G_define_option();
     param.input->key = "input";
@@ -99,12 +97,10 @@ void setParams()
 
 }
 
-
-
 /* ************************************************************************* */
 /* Write the slices to seperate raster maps ******************************** */
 /* ************************************************************************* */
-void G3dToRaster(void *map, G3D_Region region, int *fd)
+void g3d_to_raster(void *map, G3D_Region region, int *fd)
 {
     double d1 = 0, f1 = 0;
     int x, y, z, check = 0;
@@ -117,7 +113,7 @@ void G3dToRaster(void *map, G3D_Region region, int *fd)
     depths = region.depths;
 
 
-    G_debug(2, _("G3dToRaster: Writing %i raster maps with rows %i cols."),
+    G_debug(2, _("g3d_to_raster: Writing %i raster maps with rows %i cols."),
 	    depths, rows, cols);
 
     typeIntern = G3d_tileTypeMap(map);
@@ -153,14 +149,14 @@ void G3dToRaster(void *map, G3D_Region region, int *fd)
 	    if (typeIntern == G3D_FLOAT) {
 		check = G_put_f_raster_row(fd[pos], fcell);
 		if (check != 1)
-		    fatalError(map, fd, depths,
+		    fatal_error(map, fd, depths,
 			       _("Could not write raster row"));
 	    }
 
 	    if (typeIntern == G3D_DOUBLE) {
 		check = G_put_d_raster_row(fd[pos], dcell);
 		if (check != 1)
-		    fatalError(map, fd, depths,
+		    fatal_error(map, fd, depths,
 			       _("Could not write raster row"));
 	    }
 	}
@@ -176,6 +172,28 @@ void G3dToRaster(void *map, G3D_Region region, int *fd)
 
 }
 
+/* ************************************************************************* */
+/* Open the raster output map ********************************************** */
+/* ************************************************************************* */
+int open_output_map(const char *name, int res_type)
+{
+    int fd;
+
+    fd = G_open_raster_new((char *)name, res_type);
+    if (fd < 0)
+	G_fatal_error(_("cannot create output map [%s]"), name);
+
+    return fd;
+}
+
+/* ************************************************************************* */
+/* Close the raster output map ********************************************* */
+/* ************************************************************************* */
+void close_output_map(int fd)
+{
+    if (G_close_cell(fd) < 0)
+	G_fatal_error(_("unable to close output map"));
+}
 
 /* ************************************************************************* */
 /* Main function, open the G3D map and create the raster maps ************** */
@@ -198,7 +216,7 @@ int main(int argc, char *argv[])
     module->description = _("Converts 3D raster maps to 2D raster maps");
 
     /* Get parameters from user */
-    setParams();
+    set_params();
 
     /* Have GRASS get inputs */
     if (G_parser(argc, argv))
@@ -275,10 +293,10 @@ int main(int argc, char *argv[])
     fd = (int *)G_malloc(region.depths * sizeof(int));
 
     if (fd == NULL)
-	fatalError(map, NULL, 0, _("out of memory!"));
+	fatal_error(map, NULL, 0, _("out of memory!"));
 
     if (G_legal_filename(param.output->answer) < 0)
-	fatalError(map, NULL, 0, _("Illegal output file name"));
+	fatal_error(map, NULL, 0, _("Illegal output file name"));
 
     G_message(_("Creating %i raster maps\n"), region.depths);
 
@@ -312,7 +330,7 @@ int main(int argc, char *argv[])
     }
 
     /*Create the Rastermaps */
-    G3dToRaster(map, region, fd);
+    g3d_to_raster(map, region, fd);
 
     /*Loop over all output maps! close */
     for (i = 0; i < region.depths; i++)
@@ -335,34 +353,10 @@ int main(int argc, char *argv[])
 
     /* Close files and exit */
     if (!G3d_closeCell(map))
-	fatalError(map, NULL, 0, _("Error closing g3d file"));
+	fatal_error(map, NULL, 0, _("Error closing g3d file"));
 
     map = NULL;
 
     return (EXIT_SUCCESS);
 }
 
-
-
-/* ************************************************************************* */
-/* Open the raster output map ********************************************** */
-/* ************************************************************************* */
-int open_output_map(const char *name, int res_type)
-{
-    int fd;
-
-    fd = G_open_raster_new((char *)name, res_type);
-    if (fd < 0)
-	G_fatal_error(_("cannot create output map [%s]"), name);
-
-    return fd;
-}
-
-/* ************************************************************************* */
-/* Close the raster output map ********************************************* */
-/* ************************************************************************* */
-void close_output_map(int fd)
-{
-    if (G_close_cell(fd) < 0)
-	G_fatal_error(_("unable to close output map"));
-}
