@@ -14,7 +14,6 @@ int main (int argc, char *argv[])
     char *name;
     char *mapset;
 /* flags */
-    int verbose;
     int raw_data;
     int with_coordinates;
     int with_xy;
@@ -143,10 +142,6 @@ int main (int argc, char *argv[])
     flag.l->key         = 'l' ;
     flag.l->description = _("Print category labels") ;
 
-    flag.q = G_define_flag() ;
-    flag.q->key         = 'q' ;
-    flag.q->description = _("Quiet") ;
-
     flag.n = G_define_flag() ;
     flag.n->key         = 'n' ;
     flag.n->description = _("Suppress reporting of any NULLs") ;
@@ -211,7 +206,6 @@ int main (int argc, char *argv[])
     with_areas = flag.a->answer;
     with_labels = flag.l->answer;
 
-    verbose = (! flag.q->answer);
     no_nulls = flag.n->answer;
     no_nulls_all = flag.N->answer;
     no_data_str = option.nv->answer;
@@ -221,10 +215,6 @@ int main (int argc, char *argv[])
     with_xy = flag.x->answer;
     if(with_coordinates || with_xy)
 	raw_data = 1;
-
-/* turn off verbose if stdout not a tty */
-    if (raw_data && verbose)
-	verbose = !isatty(1);
 
 /* get field separator */
     strcpy(fs, " ");
@@ -330,8 +320,8 @@ int main (int argc, char *argv[])
 	sprintf (fmt, "%%.%dlf", dp);
 
     if (raw_data)
-	raw_stats (fd, verbose, with_coordinates, with_xy, with_labels);
+	raw_stats (fd,  with_coordinates, with_xy, with_labels);
     else
-	cell_stats (fd, verbose, with_percents, with_counts, with_areas, with_labels, fmt);
+	cell_stats (fd, with_percents, with_counts, with_areas, with_labels, fmt);
     exit(0);
 }
