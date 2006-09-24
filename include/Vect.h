@@ -254,7 +254,7 @@ int Vect_select_areas_by_polygon ( struct Map_info *, struct line_pnts *, int, s
 int Vect_point_in_area (struct Map_info *, int, double, double);
 int Vect_tin_get_z (struct Map_info *, double, double, double *, double *, double *);
 int Vect_get_point_in_area (struct Map_info *, int, double *, double *);
-int Vect_point_in_islands (struct Map_info *, int, double, double);
+/* int Vect_point_in_islands (struct Map_info *, int, double, double); */
 int Vect_find_poly_centroid (struct line_pnts *, double *, double *);
 int Vect_get_point_in_poly_isl (struct line_pnts *, struct line_pnts **, int, double *, double *);
 int Vect__intersect_line_with_poly (struct line_pnts *, double, struct line_pnts *);
@@ -323,7 +323,6 @@ int Vect_line_check_intersection ( struct line_pnts *, struct line_pnts *, int )
 char *Vect_subst_var ( char *str, struct Map_info *Map);
 
 /* Internal functions, MUST NOT be used in modules */
-int Vect_init (void);
 int Vect_print_header (struct Map_info *);
 int Vect__init_head (struct Map_info *);
 
@@ -353,7 +352,6 @@ int V1_close_ogr (struct Map_info *);
 int V2_close_ogr (struct Map_info *);
 
     /* Read/write lines */
-int Vect_read_line_by_offset (struct Map_info *, struct line_pnts *, struct line_cats *, long);
 int V1_read_line_nat (struct Map_info *, struct line_pnts *, struct line_cats *, long);
 int V1_read_next_line (struct Map_info *, struct line_pnts *, struct line_cats *);
 int V1_read_next_line_nat (struct Map_info *, struct line_pnts *, struct line_cats *);
