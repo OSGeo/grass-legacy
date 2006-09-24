@@ -39,7 +39,6 @@ int main (int argc, char *argv[])
     int count;
     int step, nsteps;
     struct History hist;
-    int quiet;
 
     struct GModule *module;
     struct Option *opt1, *opt2, *opt3, *opt4;
@@ -77,10 +76,6 @@ int main (int argc, char *argv[])
     opt4->description= _("Units of distance") ;
     opt4->answer     = "meters";
 
-    flag1 = G_define_flag() ;
-    flag1->key         = 'q';
-    flag1->description = _("Run quietly");
-
     flag2 = G_define_flag() ;
     flag2->key         = 'z' ;  
     flag2->description = _("Ignore zero (0) data cells instead of NULL cells") ;
@@ -96,7 +91,6 @@ int main (int argc, char *argv[])
     zone_list = opt3->answers;
     units     = opt4->answer;
 
-    quiet = flag1->answer;
     ZEROFLAG = 0; /* default: use NULL for non-data cells */
     ZEROFLAG = (flag2->answer);                                               
         
@@ -136,7 +130,7 @@ int main (int argc, char *argv[])
 	 *         2 == distance zone #1,   3 == distance zone #2, etc.
 	 */
 
-    read_input_map (input, mapset, quiet, ZEROFLAG);
+    read_input_map (input, mapset, ZEROFLAG);
 
     offset = 0;
 
@@ -145,16 +139,14 @@ int main (int argc, char *argv[])
     pd = distances;
     for (step = 1; count > 0; step++)
     {
-	if(!quiet) {
-	    if (nsteps > 1)
-		G_message(_("Pass %d (of %d)"), step, nsteps);
-	}
+        if (nsteps > 1)
+            G_message(_("Pass %d (of %d)"), step, nsteps);
 	ndist = count;
 	if (ndist > MAX_DIST)
 	    ndist = MAX_DIST;
 	if(count_rows_with_data > 0) 
-	    execute_distance(quiet);
-	write_output_map(output, offset, quiet);
+	    execute_distance();
+	write_output_map(output, offset);
 	offset += ndist;
 	distances += ndist;
 	count -= ndist;

@@ -25,7 +25,7 @@
 
     /* read the input map. convert non-nulls to 1 */
 
-int read_input_map (char *input, char *mapset, int quiet, int ZEROFLAG)
+int read_input_map (char *input, char *mapset, int ZEROFLAG)
 {
     int fd;
     int row;
@@ -47,16 +47,14 @@ int read_input_map (char *input, char *mapset, int quiet, int ZEROFLAG)
     minrow = -1; maxrow = -1;
     mincol = window.cols; maxcol = 0;
 
-    if ( ! quiet )
-       fprintf(stderr, _("Reading input map (%s)    ... "), input);
+    G_message(_("Reading input map (%s)    ... "), input);
 
     count_rows_with_data = 0;
 
     for (row = 0; row < window.rows; row++)
     {
 	hit = 0;
-        if ( ! quiet )
-	   G_percent (row, window.rows, 2);
+        G_percent (row, window.rows, 2);
 
 	if (G_get_c_raster_row (fd, cell, row) < 0)
 	    G_fatal_error(_("%s - ERROR reading %s"), pgm_name, input);
@@ -96,8 +94,7 @@ int read_input_map (char *input, char *mapset, int quiet, int ZEROFLAG)
 	}
 	cell -= window.cols;
     }
-    if ( ! quiet )
-       G_percent (row, window.rows, 2);
+    G_percent (row, window.rows, 2);
     G_close_cell(fd);
     G_free (cell);
 
