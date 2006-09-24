@@ -7,13 +7,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-18 00:02+0200\n"
-"PO-Revision-Date: 2006-08-12 11:19+0200\n"
+"POT-Creation-Date: 2006-09-24 11:25+0200\n"
+"PO-Revision-Date: 2006-09-24 12:51+0200\n"
 "Last-Translator: Martin Landa <landa.martin@gmail.com>\n"
 "Language-Team: Czech <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: ../gui/tcltk/d.m/barscale.tcl:67 ../gui/tcltk/d.m/legend.tcl:106
 msgid "Text color: "
@@ -43,22 +43,22 @@ msgstr " "
 #: ../gui/tcltk/d.m/raster.tcl:94 ../gui/tcltk/d.m/rgbhis.tcl:130
 #: ../gui/tcltk/d.m/rgbhis.tcl:137 ../gui/tcltk/d.m/thematic.tcl:121
 #: ../gui/tcltk/d.m/thematic.tcl:125 ../gui/tcltk/d.m/vector.tcl:194
-#: ../gui/tcltk/d.m/vector.tcl:198 ../gui/tcltk/gis.m/barscale.tcl:133
-#: ../gui/tcltk/gis.m/barscale.tcl:137 ../gui/tcltk/gis.m/chart.tcl:178
-#: ../gui/tcltk/gis.m/chart.tcl:182 ../gui/tcltk/gis.m/frames.tcl:117
-#: ../gui/tcltk/gis.m/frames.tcl:121 ../gui/tcltk/gis.m/gridline.tcl:141
-#: ../gui/tcltk/gis.m/gridline.tcl:178 ../gui/tcltk/gis.m/gridline.tcl:205
-#: ../gui/tcltk/gis.m/histogram.tcl:140 ../gui/tcltk/gis.m/histogram.tcl:143
-#: ../gui/tcltk/gis.m/labels.tcl:134 ../gui/tcltk/gis.m/labels.tcl:138
-#: ../gui/tcltk/gis.m/legend.tcl:149 ../gui/tcltk/gis.m/legend.tcl:152
-#: ../gui/tcltk/gis.m/rastarrows.tcl:162 ../gui/tcltk/gis.m/rastarrows.tcl:165
-#: ../gui/tcltk/gis.m/raster.tcl:166 ../gui/tcltk/gis.m/raster.tcl:170
-#: ../gui/tcltk/gis.m/rastnums.tcl:144 ../gui/tcltk/gis.m/rastnums.tcl:147
-#: ../gui/tcltk/gis.m/rgbhis.tcl:188 ../gui/tcltk/gis.m/rgbhis.tcl:195
-#: ../gui/tcltk/gis.m/runandoutput.tcl:47 ../gui/tcltk/gis.m/thematic.tcl:238
-#: ../gui/tcltk/gis.m/thematic.tcl:242 ../gui/tcltk/gis.m/vector.tcl:306
-#: ../gui/tcltk/gis.m/vector.tcl:310 ../lib/gis/gui.tcl:474
-#: ../lib/init/gis_set.tcl:576
+#: ../gui/tcltk/d.m/vector.tcl:198 ../gui/tcltk/gis.m/barscale.tcl:156
+#: ../gui/tcltk/gis.m/barscale.tcl:160 ../gui/tcltk/gis.m/chart.tcl:178
+#: ../gui/tcltk/gis.m/chart.tcl:182 ../gui/tcltk/gis.m/frames.tcl:115
+#: ../gui/tcltk/gis.m/frames.tcl:119 ../gui/tcltk/gis.m/gridline.tcl:139
+#: ../gui/tcltk/gis.m/gridline.tcl:176 ../gui/tcltk/gis.m/gridline.tcl:203
+#: ../gui/tcltk/gis.m/histogram.tcl:138 ../gui/tcltk/gis.m/histogram.tcl:141
+#: ../gui/tcltk/gis.m/labels.tcl:132 ../gui/tcltk/gis.m/labels.tcl:136
+#: ../gui/tcltk/gis.m/legend.tcl:148 ../gui/tcltk/gis.m/legend.tcl:151
+#: ../gui/tcltk/gis.m/rastarrows.tcl:160 ../gui/tcltk/gis.m/rastarrows.tcl:163
+#: ../gui/tcltk/gis.m/raster.tcl:164 ../gui/tcltk/gis.m/raster.tcl:168
+#: ../gui/tcltk/gis.m/rastnums.tcl:142 ../gui/tcltk/gis.m/rastnums.tcl:145
+#: ../gui/tcltk/gis.m/rgbhis.tcl:186 ../gui/tcltk/gis.m/rgbhis.tcl:193
+#: ../gui/tcltk/gis.m/runandoutput.tcl:47 ../gui/tcltk/gis.m/thematic.tcl:234
+#: ../gui/tcltk/gis.m/thematic.tcl:238 ../gui/tcltk/gis.m/vector.tcl:305
+#: ../gui/tcltk/gis.m/vector.tcl:309 ../lib/gis/gui.tcl:474
+#: ../lib/init/gis_set.tcl:605
 msgid "Help"
 msgstr "Nápovìda"
 
@@ -66,7 +66,7 @@ msgstr "Nápovìda"
 msgid "display N. arrow only "
 msgstr "zobrazit pouze smìrovou rù¾ici "
 
-#: ../gui/tcltk/d.m/barscale.tcl:94 ../gui/tcltk/gis.m/barscale.tcl:156
+#: ../gui/tcltk/d.m/barscale.tcl:94 ../gui/tcltk/gis.m/barscale.tcl:179
 msgid "display scale only"
 msgstr "zobrazit pouze mìøítko"
 
@@ -74,11 +74,11 @@ msgstr "zobrazit pouze mìøítko"
 msgid "line scale instead of bar scale "
 msgstr "liniové namísto prou¾kového mìøítka "
 
-#: ../gui/tcltk/d.m/barscale.tcl:103 ../gui/tcltk/gis.m/barscale.tcl:164
+#: ../gui/tcltk/d.m/barscale.tcl:103 ../gui/tcltk/gis.m/barscale.tcl:187
 msgid "text on top of scale, instead of to right"
 msgstr "text umístit nad mìøítkem, namísto umístìní vpravo"
 
-#: ../gui/tcltk/d.m/barscale.tcl:110 ../gui/tcltk/gis.m/barscale.tcl:174
+#: ../gui/tcltk/d.m/barscale.tcl:110 ../gui/tcltk/gis.m/barscale.tcl:197
 msgid "use feet/miles instead of meters"
 msgstr "pou¾ít stopy/míle namísto metrù"
 
@@ -95,27 +95,27 @@ msgid "Vector type:"
 msgstr "Vektorovı typ:"
 
 #: ../gui/tcltk/d.m/chart.tcl:107 ../gui/tcltk/d.m/vector.tcl:219
-#: ../gui/tcltk/gis.m/chart.tcl:189 ../gui/tcltk/gis.m/vector.tcl:331
+#: ../gui/tcltk/gis.m/chart.tcl:189 ../gui/tcltk/gis.m/vector.tcl:330
 msgid "points"
 msgstr "body"
 
 #: ../gui/tcltk/d.m/chart.tcl:108 ../gui/tcltk/d.m/vector.tcl:221
-#: ../gui/tcltk/gis.m/chart.tcl:190 ../gui/tcltk/gis.m/vector.tcl:333
+#: ../gui/tcltk/gis.m/chart.tcl:190 ../gui/tcltk/gis.m/vector.tcl:332
 msgid "lines"
 msgstr "linie"
 
 #: ../gui/tcltk/d.m/chart.tcl:109 ../gui/tcltk/d.m/vector.tcl:223
-#: ../gui/tcltk/gis.m/chart.tcl:191 ../gui/tcltk/gis.m/vector.tcl:335
+#: ../gui/tcltk/gis.m/chart.tcl:191 ../gui/tcltk/gis.m/vector.tcl:334
 msgid "boundaries"
 msgstr "hranièní linie"
 
 #: ../gui/tcltk/d.m/chart.tcl:110 ../gui/tcltk/d.m/vector.tcl:225
-#: ../gui/tcltk/gis.m/chart.tcl:192 ../gui/tcltk/gis.m/vector.tcl:337
+#: ../gui/tcltk/gis.m/chart.tcl:192 ../gui/tcltk/gis.m/vector.tcl:336
 msgid "centroids"
 msgstr "centroidy"
 
 #: ../gui/tcltk/d.m/chart.tcl:111 ../gui/tcltk/d.m/vector.tcl:227
-#: ../gui/tcltk/gis.m/chart.tcl:193 ../gui/tcltk/gis.m/vector.tcl:339
+#: ../gui/tcltk/gis.m/chart.tcl:193 ../gui/tcltk/gis.m/vector.tcl:338
 msgid "areas"
 msgstr "plochy"
 
@@ -125,13 +125,13 @@ msgstr "  zobrazit atributové sloupce"
 
 #: ../gui/tcltk/d.m/chart.tcl:121 ../gui/tcltk/d.m/thematic.tcl:151
 #: ../gui/tcltk/d.m/vector.tcl:341 ../gui/tcltk/gis.m/chart.tcl:207
-#: ../gui/tcltk/gis.m/thematic.tcl:266 ../gui/tcltk/gis.m/vector.tcl:460
+#: ../gui/tcltk/gis.m/thematic.tcl:262 ../gui/tcltk/gis.m/vector.tcl:459
 msgid "columns"
 msgstr "sloupce"
 
 #: ../gui/tcltk/d.m/chart.tcl:125 ../gui/tcltk/d.m/thematic.tcl:155
 #: ../gui/tcltk/d.m/vector.tcl:345 ../gui/tcltk/gis.m/chart.tcl:211
-#: ../gui/tcltk/gis.m/thematic.tcl:270 ../gui/tcltk/gis.m/vector.tcl:464
+#: ../gui/tcltk/gis.m/thematic.tcl:266 ../gui/tcltk/gis.m/vector.tcl:463
 msgid "Show columns"
 msgstr "Zobrazit sloupce"
 
@@ -143,15 +143,15 @@ msgstr "Typ grafu: "
 msgid "    chart outline color:"
 msgstr "    barva obrysu grafu"
 
-#: ../gui/tcltk/d.m/cmd.tcl:52 ../gui/tcltk/gis.m/cmd.tcl:112
+#: ../gui/tcltk/d.m/cmd.tcl:52 ../gui/tcltk/gis.m/cmd.tcl:111
 msgid "Command:"
 msgstr "Pøíkaz:"
 
-#: ../gui/tcltk/d.m/d.m.tcl:314 ../gui/tcltk/gis.m/gm.tcl:220
+#: ../gui/tcltk/d.m/d.m.tcl:314 ../gui/tcltk/gis.m/gm.tcl:228
 msgid "Loading GIS Manager"
 msgstr "Nahrát GIS Manager"
 
-#: ../gui/tcltk/d.m/d.m.tcl:404 ../gui/tcltk/gis.m/gm.tcl:268
+#: ../gui/tcltk/d.m/d.m.tcl:404 ../gui/tcltk/gis.m/gm.tcl:275
 msgid "Done"
 msgstr "Hotovo."
 
@@ -167,11 +167,11 @@ msgstr "Volby textu: barva"
 msgid "bold text"
 msgstr "tuènı text"
 
-#: ../gui/tcltk/d.m/frames.tcl:60 ../gui/tcltk/gis.m/frames.tcl:111
+#: ../gui/tcltk/d.m/frames.tcl:60 ../gui/tcltk/gis.m/frames.tcl:109
 msgid "create and select frame"
 msgstr "vytvoøit a vybrat rámec"
 
-#: ../gui/tcltk/d.m/frames.tcl:62 ../gui/tcltk/gis.m/frames.tcl:113
+#: ../gui/tcltk/d.m/frames.tcl:62 ../gui/tcltk/gis.m/frames.tcl:111
 msgid "select frame"
 msgstr "vybrat rámec"
 
@@ -208,13 +208,13 @@ msgstr "     otoèení textu (stupnì proti smìru hodinovıch ruèièek)"
 msgid "rotation in radians"
 msgstr "otoèení v radiánech"
 
-#: ../gui/tcltk/d.m/fttext.tcl:144 ../gui/tcltk/gis.m/maplabels.tcl:178
-#: ../gui/tcltk/gis.m/maptext.tcl:137
+#: ../gui/tcltk/d.m/fttext.tcl:144 ../gui/tcltk/gis.m/maplabels.tcl:174
+#: ../gui/tcltk/gis.m/maptext.tcl:163
 msgid "Font:"
 msgstr "Písmo:"
 
-#: ../gui/tcltk/d.m/fttext.tcl:149 ../gui/tcltk/gis.m/maplabels.tcl:185
-#: ../gui/tcltk/gis.m/maptext.tcl:144
+#: ../gui/tcltk/d.m/fttext.tcl:149 ../gui/tcltk/gis.m/maplabels.tcl:181
+#: ../gui/tcltk/gis.m/maptext.tcl:170
 msgid "  color"
 msgstr "  barva"
 
@@ -222,11 +222,11 @@ msgstr "  barva"
 msgid "height in pixels instead of %"
 msgstr "vı¹ka v pixelech namísto %"
 
-#: ../gui/tcltk/d.m/gridline.tcl:77 ../gui/tcltk/gis.m/gridline.tcl:137
+#: ../gui/tcltk/d.m/gridline.tcl:77 ../gui/tcltk/gis.m/gridline.tcl:135
 msgid "draw grid"
 msgstr "vykreslit møí¾ku"
 
-#: ../gui/tcltk/d.m/gridline.tcl:78 ../gui/tcltk/gis.m/gridline.tcl:138
+#: ../gui/tcltk/d.m/gridline.tcl:78
 msgid "geodetic grid"
 msgstr "zemìpisná møí¾ka"
 
@@ -234,44 +234,43 @@ msgstr "zemìpisná møí¾ka"
 msgid " grid color "
 msgstr " barva møí¾ky"
 
-#: ../gui/tcltk/d.m/gridline.tcl:85 ../gui/tcltk/gis.m/gridline.tcl:145
+#: ../gui/tcltk/d.m/gridline.tcl:85 ../gui/tcltk/gis.m/gridline.tcl:143
 msgid "Help for grids"
 msgstr "Nápovìda pro tvorbu møí¾ky"
 
-#: ../gui/tcltk/d.m/gridline.tcl:86 ../gui/tcltk/gis.m/gridline.tcl:146
+#: ../gui/tcltk/d.m/gridline.tcl:86 ../gui/tcltk/gis.m/gridline.tcl:144
 msgid " grid color"
 msgstr " barva møí¾ky"
 
-#: ../gui/tcltk/d.m/gridline.tcl:92 ../gui/tcltk/gis.m/gridline.tcl:152
-#: ../gui/tcltk/gis.m/vector.tcl:408
+#: ../gui/tcltk/d.m/gridline.tcl:92 ../gui/tcltk/gis.m/vector.tcl:407
 msgid "     "
 msgstr "     "
 
-#: ../gui/tcltk/d.m/gridline.tcl:93 ../gui/tcltk/gis.m/gridline.tcl:153
+#: ../gui/tcltk/d.m/gridline.tcl:93 ../gui/tcltk/gis.m/gridline.tcl:151
 msgid "draw grid border"
 msgstr "zobrazit rámeèek møí¾ky"
 
-#: ../gui/tcltk/d.m/gridline.tcl:94 ../gui/tcltk/gis.m/gridline.tcl:154
+#: ../gui/tcltk/d.m/gridline.tcl:94
 msgid "draw border text"
 msgstr "vykreslit popisek rámeèku"
 
-#: ../gui/tcltk/d.m/gridline.tcl:95 ../gui/tcltk/gis.m/gridline.tcl:155
+#: ../gui/tcltk/d.m/gridline.tcl:95
 msgid " border & text color"
 msgstr " barva rámeèek & textu"
 
-#: ../gui/tcltk/d.m/gridline.tcl:119 ../gui/tcltk/gis.m/gridline.tcl:177
+#: ../gui/tcltk/d.m/gridline.tcl:119 ../gui/tcltk/gis.m/gridline.tcl:175
 msgid "draw geodesic line"
 msgstr "vykreslit geodetickou èáru"
 
-#: ../gui/tcltk/d.m/gridline.tcl:124 ../gui/tcltk/gis.m/gridline.tcl:182
+#: ../gui/tcltk/d.m/gridline.tcl:124 ../gui/tcltk/gis.m/gridline.tcl:180
 msgid "Help for geodesic lines"
 msgstr "Nápovìda pro geodetické èáry"
 
-#: ../gui/tcltk/d.m/gridline.tcl:149 ../gui/tcltk/gis.m/gridline.tcl:204
+#: ../gui/tcltk/d.m/gridline.tcl:149 ../gui/tcltk/gis.m/gridline.tcl:202
 msgid "draw rhumbline"
 msgstr "vykreslit rhumbline"
 
-#: ../gui/tcltk/d.m/gridline.tcl:154 ../gui/tcltk/gis.m/gridline.tcl:209
+#: ../gui/tcltk/d.m/gridline.tcl:154 ../gui/tcltk/gis.m/gridline.tcl:207
 msgid "Help for rhumblines"
 msgstr "Nápovìda pro rthumblines"
 
@@ -279,15 +278,15 @@ msgstr "Nápovìda pro rthumblines"
 msgid "Labels name:"
 msgstr "Název popiskù:"
 
-#: ../gui/tcltk/d.m/labels.tcl:80 ../gui/tcltk/gis.m/labels.tcl:144
+#: ../gui/tcltk/d.m/labels.tcl:80 ../gui/tcltk/gis.m/labels.tcl:142
 msgid "Display constraints:"
 msgstr "Zobrazit omezení:"
 
-#: ../gui/tcltk/d.m/labels.tcl:85 ../gui/tcltk/gis.m/labels.tcl:149
+#: ../gui/tcltk/d.m/labels.tcl:85 ../gui/tcltk/gis.m/labels.tcl:147
 msgid "region size"
 msgstr "velikost regionu"
 
-#: ../gui/tcltk/d.m/labels.tcl:91 ../gui/tcltk/gis.m/labels.tcl:155
+#: ../gui/tcltk/d.m/labels.tcl:91 ../gui/tcltk/gis.m/labels.tcl:153
 msgid " ignore rotation setting and draw horizontally"
 msgstr " ignorovat nastavené otoèení a vykreslit vodorovnì"
 
@@ -335,7 +334,7 @@ msgstr "Novı"
 msgid "Create new group file"
 msgstr "Vytvoøit novou skupinu souborù"
 
-#: ../gui/tcltk/d.m/menu.tcl:16 ../gui/tcltk/gis.m/gmmenu.tcl:26
+#: ../gui/tcltk/d.m/menu.tcl:16 ../gui/tcltk/gis.m/gmmenu.tcl:27
 msgid "Open..."
 msgstr "Otevøít..."
 
@@ -343,8 +342,9 @@ msgstr "Otevøít..."
 msgid "Open group file"
 msgstr "Otevøít skupinu souborù"
 
-#: ../gui/tcltk/d.m/menu.tcl:17 ../gui/tcltk/gis.m/gmmenu.tcl:27
-#: ../gui/tcltk/gis.m/runandoutput.tcl:112
+#: ../gui/tcltk/d.m/menu.tcl:17 ../gui/tcltk/gis.m/gmmenu.tcl:28
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:806
+#: ../gui/tcltk/gis.m/runandoutput.tcl:118
 msgid "Save"
 msgstr "Ulo¾it"
 
@@ -352,7 +352,7 @@ msgstr "Ulo¾it"
 msgid "Save group file"
 msgstr "Ulo¾it skupinu souborù"
 
-#: ../gui/tcltk/d.m/menu.tcl:18 ../gui/tcltk/gis.m/gmmenu.tcl:28
+#: ../gui/tcltk/d.m/menu.tcl:18 ../gui/tcltk/gis.m/gmmenu.tcl:29
 msgid "Save as..."
 msgstr "Ulo¾it jako..."
 
@@ -361,7 +361,7 @@ msgid "Save group file as name"
 msgstr "Ulo¾it skupinu souborù jako název"
 
 #: ../gui/tcltk/d.m/menu.tcl:19 ../gui/tcltk/d.m/print.tcl:281
-#: ../gui/tcltk/gis.m/gmmenu.tcl:29 ../gui/tcltk/gis.m/mapprint.tcl:337
+#: ../gui/tcltk/gis.m/gmmenu.tcl:30 ../gui/tcltk/gis.m/mapprint.tcl:349
 #: ../gui/tcltk/gis.m/runandoutput.tcl:48 ../lib/gis/gui.tcl:476
 msgid "Close"
 msgstr "Zavøít"
@@ -396,7 +396,7 @@ msgstr "Tisknout na vıchozí tiskárnì"
 msgid "print"
 msgstr "tisknout"
 
-#: ../gui/tcltk/d.m/menu.tcl:29 ../gui/tcltk/gis.m/gmmenu.tcl:40
+#: ../gui/tcltk/d.m/menu.tcl:29 ../gui/tcltk/gis.m/gmmenu.tcl:41
 msgid "E&xit"
 msgstr "&Konec"
 
@@ -404,35 +404,35 @@ msgstr "&Konec"
 msgid "Exit Display Manager"
 msgstr "Ukonèit Display Manager"
 
-#: ../gui/tcltk/d.m/menu.tcl:36 ../gui/tcltk/gis.m/gmmenu.tcl:47
+#: ../gui/tcltk/d.m/menu.tcl:36 ../gui/tcltk/gis.m/gmmenu.tcl:48
 msgid "&Help"
 msgstr "&Nápovìda"
 
-#: ../gui/tcltk/d.m/menu.tcl:41 ../gui/tcltk/gis.m/gmmenu.tcl:52
+#: ../gui/tcltk/d.m/menu.tcl:41 ../gui/tcltk/gis.m/gmmenu.tcl:53
 msgid "GRASS help"
 msgstr "Nápovìda GRASSu"
 
-#: ../gui/tcltk/d.m/menu.tcl:42 ../gui/tcltk/gis.m/gmmenu.tcl:53
+#: ../gui/tcltk/d.m/menu.tcl:42 ../gui/tcltk/gis.m/gmmenu.tcl:54
 msgid "GIS Manager &help"
 msgstr "&Nápovìda GIS Manageru"
 
-#: ../gui/tcltk/d.m/menu.tcl:42 ../gui/tcltk/gis.m/gmmenu.tcl:53
+#: ../gui/tcltk/d.m/menu.tcl:42 ../gui/tcltk/gis.m/gmmenu.tcl:54
 msgid "GIS Manager help"
 msgstr "Nápovìda GIS Manageru"
 
-#: ../gui/tcltk/d.m/menu.tcl:43 ../gui/tcltk/gis.m/gmmenu.tcl:54
+#: ../gui/tcltk/d.m/menu.tcl:43 ../gui/tcltk/gis.m/gmmenu.tcl:55
 msgid "About &GRASS"
 msgstr "O &GRASSu"
 
-#: ../gui/tcltk/d.m/menu.tcl:43 ../gui/tcltk/gis.m/gmmenu.tcl:54
+#: ../gui/tcltk/d.m/menu.tcl:43 ../gui/tcltk/gis.m/gmmenu.tcl:55
 msgid "About GRASS"
 msgstr "O GRASSu"
 
-#: ../gui/tcltk/d.m/menu.tcl:44 ../gui/tcltk/gis.m/gmmenu.tcl:55
+#: ../gui/tcltk/d.m/menu.tcl:44 ../gui/tcltk/gis.m/gmmenu.tcl:56
 msgid "About &System"
 msgstr "O &systému"
 
-#: ../gui/tcltk/d.m/menu.tcl:44 ../gui/tcltk/gis.m/gmmenu.tcl:55
+#: ../gui/tcltk/d.m/menu.tcl:44 ../gui/tcltk/gis.m/gmmenu.tcl:56
 msgid "About System"
 msgstr "O systému"
 
@@ -500,7 +500,7 @@ msgstr "Formát papíru"
 msgid "Custom"
 msgstr "U¾ivatelskı"
 
-#: ../gui/tcltk/d.m/print.tcl:181 ../gui/tcltk/gis.m/mapprint.tcl:242
+#: ../gui/tcltk/d.m/print.tcl:181 ../gui/tcltk/gis.m/mapprint.tcl:258
 msgid "width:"
 msgstr "¹íøka:"
 
@@ -530,7 +530,7 @@ msgstr "Soubor PS"
 
 #: ../gui/tcltk/d.m/print.tcl:212 ../gui/tcltk/d.m/print.tcl:223
 #: ../gui/tcltk/d.m/print.tcl:234 ../gui/tcltk/d.m/print.tcl:261
-#: ../gui/tcltk/gis.m/mapprint.tcl:310 ../gui/tcltk/gis.m/mapprint.tcl:322
+#: ../gui/tcltk/gis.m/mapprint.tcl:322 ../gui/tcltk/gis.m/mapprint.tcl:334
 msgid "Browse"
 msgstr "Procházet"
 
@@ -554,7 +554,7 @@ msgstr "Tiskárna:"
 msgid "Script file:"
 msgstr "Skript:"
 
-#: ../gui/tcltk/d.m/print.tcl:279 ../gui/tcltk/gis.m/mapprint.tcl:336
+#: ../gui/tcltk/d.m/print.tcl:279 ../gui/tcltk/gis.m/mapprint.tcl:348
 msgid "Print"
 msgstr "Tisk"
 
@@ -583,7 +583,7 @@ msgid "show legend for drape map in monitor"
 msgstr "zobrazit legendu pro pøekrıvající mapu v monitoru"
 
 #: ../gui/tcltk/d.m/raster.tcl:143 ../gui/tcltk/d.m/rgbhis.tcl:147
-#: ../gui/tcltk/gis.m/raster.tcl:205 ../gui/tcltk/gis.m/rgbhis.tcl:205
+#: ../gui/tcltk/gis.m/raster.tcl:203 ../gui/tcltk/gis.m/rgbhis.tcl:203
 msgid "overlay maps from other layers (transparent null value cells)"
 msgstr ""
 "pøekrıvající se mapy z ostatních vrstev (transparentní jsou buòky s prázdnou "
@@ -601,33 +601,33 @@ msgstr "zelená (RGB) nebo intenzita (HIS)"
 msgid "blue (RGB) or saturation (HIS):"
 msgstr "modrá (RGB) nebo sytost (HIS):"
 
-#: ../gui/tcltk/d.m/rgbhis.tcl:128 ../gui/tcltk/gis.m/rgbhis.tcl:186
+#: ../gui/tcltk/d.m/rgbhis.tcl:128 ../gui/tcltk/gis.m/rgbhis.tcl:184
 msgid "display maps as RGB"
 msgstr "zobrazit mapy jako RGB"
 
-#: ../gui/tcltk/d.m/rgbhis.tcl:134 ../gui/tcltk/gis.m/rgbhis.tcl:192
+#: ../gui/tcltk/d.m/rgbhis.tcl:134 ../gui/tcltk/gis.m/rgbhis.tcl:190
 msgid "Help for RGB"
 msgstr "Nápovìda pro RGB"
 
-#: ../gui/tcltk/d.m/rgbhis.tcl:135 ../gui/tcltk/gis.m/rgbhis.tcl:193
+#: ../gui/tcltk/d.m/rgbhis.tcl:135 ../gui/tcltk/gis.m/rgbhis.tcl:191
 msgid "display maps as HIS"
 msgstr "zobrazit mapy jako HIS"
 
-#: ../gui/tcltk/d.m/rgbhis.tcl:141 ../gui/tcltk/gis.m/rgbhis.tcl:199
+#: ../gui/tcltk/d.m/rgbhis.tcl:141 ../gui/tcltk/gis.m/rgbhis.tcl:197
 msgid "Help for HIS"
 msgstr "Nápovìda pro HIS"
 
-#: ../gui/tcltk/d.m/thematic.tcl:116 ../gui/tcltk/gis.m/thematic.tcl:230
-#: ../gui/tcltk/gis.m/vector.tcl:298
+#: ../gui/tcltk/d.m/thematic.tcl:116 ../gui/tcltk/gis.m/thematic.tcl:226
+#: ../gui/tcltk/gis.m/vector.tcl:297
 msgid "Vector map:"
 msgstr "Vektorová mapová vrstva:"
 
-#: ../gui/tcltk/d.m/thematic.tcl:131 ../gui/tcltk/gis.m/thematic.tcl:248
+#: ../gui/tcltk/d.m/thematic.tcl:131 ../gui/tcltk/gis.m/thematic.tcl:244
 msgid "    vector type"
 msgstr "    vektorovı typ"
 
 #: ../gui/tcltk/d.m/thematic.tcl:150 ../gui/tcltk/d.m/vector.tcl:340
-#: ../gui/tcltk/gis.m/thematic.tcl:265 ../gui/tcltk/gis.m/vector.tcl:459
+#: ../gui/tcltk/gis.m/thematic.tcl:261 ../gui/tcltk/gis.m/vector.tcl:458
 msgid "    show attribute columns"
 msgstr "    zobrazit atributové sloupce"
 
@@ -636,35 +636,35 @@ msgid "     show data"
 msgstr "     zobrazit data"
 
 #: ../gui/tcltk/d.m/thematic.tcl:157 ../gui/tcltk/d.m/vector.tcl:347
-#: ../gui/tcltk/gis.m/chart.tcl:213 ../gui/tcltk/gis.m/thematic.tcl:272
-#: ../gui/tcltk/gis.m/vector.tcl:466
+#: ../gui/tcltk/gis.m/chart.tcl:213 ../gui/tcltk/gis.m/thematic.tcl:268
+#: ../gui/tcltk/gis.m/vector.tcl:465
 msgid "data"
 msgstr "data"
 
 #: ../gui/tcltk/d.m/thematic.tcl:161 ../gui/tcltk/d.m/vector.tcl:351
-#: ../gui/tcltk/gis.m/chart.tcl:217 ../gui/tcltk/gis.m/thematic.tcl:276
-#: ../gui/tcltk/gis.m/vector.tcl:470
+#: ../gui/tcltk/gis.m/chart.tcl:217 ../gui/tcltk/gis.m/thematic.tcl:272
+#: ../gui/tcltk/gis.m/vector.tcl:469
 msgid "Show data"
 msgstr "Zobrazit data"
 
-#: ../gui/tcltk/d.m/thematic.tcl:168 ../gui/tcltk/gis.m/thematic.tcl:282
+#: ../gui/tcltk/d.m/thematic.tcl:168 ../gui/tcltk/gis.m/thematic.tcl:278
 msgid "Thematic map: type"
 msgstr "Tématická mapa: typ"
 
-#: ../gui/tcltk/d.m/thematic.tcl:171 ../gui/tcltk/gis.m/thematic.tcl:285
+#: ../gui/tcltk/d.m/thematic.tcl:171 ../gui/tcltk/gis.m/thematic.tcl:281
 msgid " map by"
 msgstr " mapa "
 
 #: ../gui/tcltk/d.m/thematic.tcl:205 ../gui/tcltk/d.m/vector.tcl:237
-#: ../gui/tcltk/gis.m/thematic.tcl:317 ../gui/tcltk/gis.m/vector.tcl:349
+#: ../gui/tcltk/gis.m/thematic.tcl:313 ../gui/tcltk/gis.m/vector.tcl:348
 msgid "icon"
 msgstr "ikona"
 
-#: ../gui/tcltk/d.m/thematic.tcl:210 ../gui/tcltk/gis.m/thematic.tcl:321
+#: ../gui/tcltk/d.m/thematic.tcl:210 ../gui/tcltk/gis.m/thematic.tcl:317
 msgid "point color"
 msgstr "barva bodu"
 
-#: ../gui/tcltk/d.m/thematic.tcl:212 ../gui/tcltk/gis.m/thematic.tcl:323
+#: ../gui/tcltk/d.m/thematic.tcl:212 ../gui/tcltk/gis.m/thematic.tcl:319
 msgid "line color"
 msgstr "barva linie"
 
@@ -672,11 +672,11 @@ msgstr "barva linie"
 msgid "Graduate colors: preset color schemes"
 msgstr "Odstupòované barvy: uveïte schéma barev"
 
-#: ../gui/tcltk/d.m/thematic.tcl:243 ../gui/tcltk/gis.m/thematic.tcl:355
+#: ../gui/tcltk/d.m/thematic.tcl:243 ../gui/tcltk/gis.m/thematic.tcl:351
 msgid "draw border"
 msgstr "vykreslit hranice"
 
-#: ../gui/tcltk/d.m/thematic.tcl:250 ../gui/tcltk/gis.m/thematic.tcl:362
+#: ../gui/tcltk/d.m/thematic.tcl:250 ../gui/tcltk/gis.m/thematic.tcl:358
 msgid "save thematic colors to GRASSRGB column of vector file"
 msgstr "ulo¾it barvy tématické mapy do GRASSRGB sloupce vektorového souboru"
 
@@ -684,7 +684,7 @@ msgstr "ulo¾it barvy tématické mapy do GRASSRGB sloupce vektorového souboru"
 msgid "create graphic legend"
 msgstr "vytvoøit grafickou legendu"
 
-#: ../gui/tcltk/d.m/thematic.tcl:260 ../gui/tcltk/gis.m/thematic.tcl:410
+#: ../gui/tcltk/d.m/thematic.tcl:260 ../gui/tcltk/gis.m/thematic.tcl:406
 msgid "use math notation in legend"
 msgstr "pou¾ít v legendì matematickou notaci"
 
@@ -704,8 +704,8 @@ msgstr "Zobrazit aktivní vrstvy ve vıchozím regionu"
 msgid "Display active layers in saved region setting"
 msgstr "Zobrazit aktivní vrstvy v ulo¾eném regionu"
 
-#: ../gui/tcltk/d.m/tool1.tcl:40 ../gui/tcltk/gis.m/georecttool.tcl:45
-#: ../gui/tcltk/gis.m/maptool.tcl:64
+#: ../gui/tcltk/d.m/tool1.tcl:40 ../gui/tcltk/gis.m/georecttool.tcl:46
+#: ../gui/tcltk/gis.m/maptool.tcl:61
 msgid "Erase to white"
 msgstr "Smazat obsah s vıchozí barvou bílou"
 
@@ -725,8 +725,8 @@ msgstr "Animovat serii rastrovıch map"
 msgid "Zoom"
 msgstr "Transfokace"
 
-#: ../gui/tcltk/d.m/tool1.tcl:87 ../gui/tcltk/gis.m/georecttool.tcl:102
-#: ../gui/tcltk/gis.m/maptool.tcl:121
+#: ../gui/tcltk/d.m/tool1.tcl:87 ../gui/tcltk/gis.m/georecttool.tcl:103
+#: ../gui/tcltk/gis.m/maptool.tcl:118
 msgid "Return to previous zoom"
 msgstr "Vrátit na pøedchozí zvìt¹ení"
 
@@ -840,61 +840,61 @@ msgstr "Název vektorové vrstvy:"
 msgid "Display:"
 msgstr "Zobrazit:"
 
-#: ../gui/tcltk/d.m/vector.tcl:205 ../gui/tcltk/gis.m/vector.tcl:317
+#: ../gui/tcltk/d.m/vector.tcl:205 ../gui/tcltk/gis.m/vector.tcl:316
 msgid "shapes"
 msgstr "tvary"
 
-#: ../gui/tcltk/d.m/vector.tcl:207 ../gui/tcltk/gis.m/vector.tcl:319
+#: ../gui/tcltk/d.m/vector.tcl:207 ../gui/tcltk/gis.m/vector.tcl:318
 msgid "categories"
 msgstr "kategorie"
 
-#: ../gui/tcltk/d.m/vector.tcl:209 ../gui/tcltk/gis.m/vector.tcl:321
+#: ../gui/tcltk/d.m/vector.tcl:209 ../gui/tcltk/gis.m/vector.tcl:320
 msgid "topology"
 msgstr "topologie"
 
-#: ../gui/tcltk/d.m/vector.tcl:211 ../gui/tcltk/gis.m/vector.tcl:323
+#: ../gui/tcltk/d.m/vector.tcl:211 ../gui/tcltk/gis.m/vector.tcl:322
 msgid "line directions"
 msgstr "smìr linií"
 
-#: ../gui/tcltk/d.m/vector.tcl:218 ../gui/tcltk/gis.m/vector.tcl:330
+#: ../gui/tcltk/d.m/vector.tcl:218 ../gui/tcltk/gis.m/vector.tcl:329
 msgid "            "
 msgstr "            "
 
-#: ../gui/tcltk/d.m/vector.tcl:229 ../gui/tcltk/gis.m/vector.tcl:341
+#: ../gui/tcltk/d.m/vector.tcl:229 ../gui/tcltk/gis.m/vector.tcl:340
 msgid "faces"
 msgstr "stìna"
 
-#: ../gui/tcltk/d.m/vector.tcl:251 ../gui/tcltk/gis.m/vector.tcl:361
+#: ../gui/tcltk/d.m/vector.tcl:251 ../gui/tcltk/gis.m/vector.tcl:360
 msgid "Draw lines:"
 msgstr "Vykreslit linie:"
 
 #: ../gui/tcltk/d.m/vector.tcl:254 ../gui/tcltk/d.m/vector.tcl:270
-#: ../gui/tcltk/d.m/vector.tcl:286 ../gui/tcltk/gis.m/vector.tcl:364
-#: ../gui/tcltk/gis.m/vector.tcl:380
+#: ../gui/tcltk/d.m/vector.tcl:286 ../gui/tcltk/gis.m/vector.tcl:363
+#: ../gui/tcltk/gis.m/vector.tcl:379
 msgid "color"
 msgstr "barva"
 
-#: ../gui/tcltk/d.m/vector.tcl:267 ../gui/tcltk/gis.m/vector.tcl:377
+#: ../gui/tcltk/d.m/vector.tcl:267 ../gui/tcltk/gis.m/vector.tcl:376
 msgid "Fill areas:"
 msgstr "Vyplnit plochy:"
 
-#: ../gui/tcltk/d.m/vector.tcl:273 ../gui/tcltk/gis.m/vector.tcl:383
+#: ../gui/tcltk/d.m/vector.tcl:273 ../gui/tcltk/gis.m/vector.tcl:382
 msgid "  "
 msgstr "  "
 
-#: ../gui/tcltk/d.m/vector.tcl:274 ../gui/tcltk/gis.m/vector.tcl:384
+#: ../gui/tcltk/d.m/vector.tcl:274 ../gui/tcltk/gis.m/vector.tcl:383
 msgid "random colors"
 msgstr "náhodné barvy"
 
-#: ../gui/tcltk/d.m/vector.tcl:276 ../gui/tcltk/gis.m/vector.tcl:386
+#: ../gui/tcltk/d.m/vector.tcl:276 ../gui/tcltk/gis.m/vector.tcl:385
 msgid "GRASSRGB column colors"
 msgstr "sloupec GRASSRGB s barvami"
 
-#: ../gui/tcltk/d.m/vector.tcl:283 ../gui/tcltk/gis.m/vector.tcl:393
+#: ../gui/tcltk/d.m/vector.tcl:283 ../gui/tcltk/gis.m/vector.tcl:392
 msgid "Label vectors:"
 msgstr "Popisek vektorovıch vrstev:"
 
-#: ../gui/tcltk/d.m/vector.tcl:284 ../gui/tcltk/gis.m/vector.tcl:394
+#: ../gui/tcltk/d.m/vector.tcl:284 ../gui/tcltk/gis.m/vector.tcl:393
 msgid "label"
 msgstr "popisek"
 
@@ -902,7 +902,7 @@ msgstr "popisek"
 msgid " size"
 msgstr "velikost"
 
-#: ../gui/tcltk/d.m/vector.tcl:291 ../gui/tcltk/gis.m/vector.tcl:401
+#: ../gui/tcltk/d.m/vector.tcl:291 ../gui/tcltk/gis.m/vector.tcl:400
 msgid "text size"
 msgstr "velikost textu"
 
@@ -910,11 +910,11 @@ msgstr "velikost textu"
 msgid " align with pt"
 msgstr " zarovnaní [pt]"
 
-#: ../gui/tcltk/d.m/vector.tcl:307 ../gui/tcltk/gis.m/vector.tcl:422
+#: ../gui/tcltk/d.m/vector.tcl:307 ../gui/tcltk/gis.m/vector.tcl:421
 msgid "     layer for labels"
 msgstr "     vrstva pro popisky"
 
-#: ../gui/tcltk/d.m/vector.tcl:310 ../gui/tcltk/gis.m/vector.tcl:424
+#: ../gui/tcltk/d.m/vector.tcl:310 ../gui/tcltk/gis.m/vector.tcl:423
 msgid " attribute col for labels"
 msgstr " atributovı sloupec s popisky"
 
@@ -922,7 +922,7 @@ msgstr " atributovı sloupec s popisky"
 msgid "Query vectors: "
 msgstr "Dotazovat vektorové vrstvy: "
 
-#: ../gui/tcltk/d.m/vector.tcl:319 ../gui/tcltk/gis.m/vector.tcl:432
+#: ../gui/tcltk/d.m/vector.tcl:319 ../gui/tcltk/gis.m/vector.tcl:431
 msgid "layer for query"
 msgstr "vrstva pro dotazování"
 
@@ -950,7 +950,7 @@ msgstr "editovat atributy (mód formuláøe)"
 msgid "results as text in terminal"
 msgstr "vısledky jako text v terminálu"
 
-#: ../gui/tcltk/d.m/vector.tcl:368 ../gui/tcltk/gis.m/vector.tcl:498
+#: ../gui/tcltk/d.m/vector.tcl:368 ../gui/tcltk/gis.m/vector.tcl:497
 msgid "Display when avg. region dimension is"
 msgstr "Zobrazit pokud je prùmìrnı rozmìr regionu"
 
@@ -962,55 +962,60 @@ msgstr "©íøka linie pro mapovı vıstup ps.map:"
 msgid "Line width used for printing"
 msgstr "©íøka linie pou¾itá pøi tisku"
 
-#: ../gui/tcltk/gis.m/barscale.tcl:120 ../gui/tcltk/gis.m/chart.tcl:160
-#: ../gui/tcltk/gis.m/cmd.tcl:102 ../gui/tcltk/gis.m/gridline.tcl:126
-#: ../gui/tcltk/gis.m/histogram.tcl:123 ../gui/tcltk/gis.m/labels.tcl:116
-#: ../gui/tcltk/gis.m/legend.tcl:132 ../gui/tcltk/gis.m/rastarrows.tcl:145
-#: ../gui/tcltk/gis.m/raster.tcl:148 ../gui/tcltk/gis.m/rastnums.tcl:127
-#: ../gui/tcltk/gis.m/rgbhis.tcl:140 ../gui/tcltk/gis.m/thematic.tcl:220
-#: ../gui/tcltk/gis.m/vector.tcl:288
+#: ../gui/tcltk/gis.m/barscale.tcl:143 ../gui/tcltk/gis.m/chart.tcl:160
+#: ../gui/tcltk/gis.m/cmd.tcl:101 ../gui/tcltk/gis.m/gridline.tcl:124
+#: ../gui/tcltk/gis.m/histogram.tcl:121 ../gui/tcltk/gis.m/labels.tcl:114
+#: ../gui/tcltk/gis.m/legend.tcl:131 ../gui/tcltk/gis.m/rastarrows.tcl:143
+#: ../gui/tcltk/gis.m/raster.tcl:146 ../gui/tcltk/gis.m/rastnums.tcl:125
+#: ../gui/tcltk/gis.m/rgbhis.tcl:138 ../gui/tcltk/gis.m/thematic.tcl:216
+#: ../gui/tcltk/gis.m/vector.tcl:287
 msgid "Opaque "
 msgstr "Neprùhlednı "
 
-#: ../gui/tcltk/gis.m/barscale.tcl:124 ../gui/tcltk/gis.m/chart.tcl:164
-#: ../gui/tcltk/gis.m/cmd.tcl:106 ../gui/tcltk/gis.m/gridline.tcl:130
-#: ../gui/tcltk/gis.m/histogram.tcl:127 ../gui/tcltk/gis.m/labels.tcl:120
-#: ../gui/tcltk/gis.m/legend.tcl:136 ../gui/tcltk/gis.m/rastarrows.tcl:149
-#: ../gui/tcltk/gis.m/raster.tcl:152 ../gui/tcltk/gis.m/rastnums.tcl:131
-#: ../gui/tcltk/gis.m/rgbhis.tcl:144 ../gui/tcltk/gis.m/thematic.tcl:224
-#: ../gui/tcltk/gis.m/vector.tcl:292
+#: ../gui/tcltk/gis.m/barscale.tcl:147 ../gui/tcltk/gis.m/chart.tcl:164
+#: ../gui/tcltk/gis.m/cmd.tcl:105 ../gui/tcltk/gis.m/gridline.tcl:128
+#: ../gui/tcltk/gis.m/histogram.tcl:125 ../gui/tcltk/gis.m/labels.tcl:118
+#: ../gui/tcltk/gis.m/legend.tcl:135 ../gui/tcltk/gis.m/rastarrows.tcl:147
+#: ../gui/tcltk/gis.m/raster.tcl:150 ../gui/tcltk/gis.m/rastnums.tcl:129
+#: ../gui/tcltk/gis.m/rgbhis.tcl:142 ../gui/tcltk/gis.m/thematic.tcl:220
+#: ../gui/tcltk/gis.m/vector.tcl:291
 msgid " Transparent"
 msgstr " Prùhlednı"
 
-#: ../gui/tcltk/gis.m/barscale.tcl:130
+#: ../gui/tcltk/gis.m/barscale.tcl:153
 msgid "Scale appearance:  text color"
 msgstr "Vzhled mìøítka:  barva textu"
 
-#: ../gui/tcltk/gis.m/barscale.tcl:132 ../gui/tcltk/gis.m/barscale.tcl:145
+#: ../gui/tcltk/gis.m/barscale.tcl:155 ../gui/tcltk/gis.m/barscale.tcl:168
+#: ../gui/tcltk/gis.m/gridline.tcl:150
 msgid "   "
 msgstr "   "
 
-#: ../gui/tcltk/gis.m/barscale.tcl:143
+#: ../gui/tcltk/gis.m/barscale.tcl:166
 msgid "    background color "
 msgstr "    barva pozadí"
 
-#: ../gui/tcltk/gis.m/barscale.tcl:146
+#: ../gui/tcltk/gis.m/barscale.tcl:169
 msgid "transparent background"
 msgstr "prùhledné pozadí"
 
-#: ../gui/tcltk/gis.m/barscale.tcl:153 ../gui/tcltk/gis.m/barscale.tcl:163
-#: ../gui/tcltk/gis.m/barscale.tcl:171 ../gui/tcltk/gis.m/vector.tcl:439
-#: ../gui/tcltk/gis.m/vector.tcl:448 ../gui/tcltk/gis.m/vector.tcl:476
+#: ../gui/tcltk/gis.m/barscale.tcl:176 ../gui/tcltk/gis.m/barscale.tcl:186
+#: ../gui/tcltk/gis.m/barscale.tcl:194 ../gui/tcltk/gis.m/vector.tcl:438
+#: ../gui/tcltk/gis.m/vector.tcl:447 ../gui/tcltk/gis.m/vector.tcl:475
 msgid "    "
 msgstr "    "
 
-#: ../gui/tcltk/gis.m/barscale.tcl:154
+#: ../gui/tcltk/gis.m/barscale.tcl:177
 msgid "display N. arrow only"
 msgstr "zobrazit pouze smìrovou rù¾ici"
 
-#: ../gui/tcltk/gis.m/barscale.tcl:172
+#: ../gui/tcltk/gis.m/barscale.tcl:195
 msgid "line scale instead of bar"
 msgstr "Liniové namísto prou¾kového mìøítka"
+
+#: ../gui/tcltk/gis.m/barscale.tcl:213
+msgid "use mouse to place scale"
+msgstr "pou¾ijte my¹ pro vlo¾ení mìøítka"
 
 #: ../gui/tcltk/gis.m/chart.tcl:173
 msgid "vector map to chart"
@@ -1020,7 +1025,7 @@ msgstr "vektorová mapa jako graf"
 msgid "     show attribute columns"
 msgstr "     zobrazit atributové sloupce"
 
-#: ../gui/tcltk/gis.m/chart.tcl:212 ../gui/tcltk/gis.m/vector.tcl:465
+#: ../gui/tcltk/gis.m/chart.tcl:212 ../gui/tcltk/gis.m/vector.tcl:464
 msgid "   show attribute data"
 msgstr "   zobrazit atributová data"
 
@@ -1028,221 +1033,222 @@ msgstr "   zobrazit atributová data"
 msgid "     chart outline color:"
 msgstr "     barva okraje grafu"
 
-#: ../gui/tcltk/gis.m/frames.tcl:115
+#: ../gui/tcltk/gis.m/frames.tcl:113
 msgid "remove all frames   "
 msgstr "odstranit v¹echny rámce"
 
-#: ../gui/tcltk/gis.m/georect.tcl:403
+#: ../gui/tcltk/gis.m/georect.tcl:419
 msgid "Create/replace vector group"
 msgstr "Vytvoøit/nahradit vektorovou skupinu"
 
-#: ../gui/tcltk/gis.m/georect.tcl:429
+#: ../gui/tcltk/gis.m/georect.tcl:445
 msgid "group name"
 msgstr "název skupiny"
 
-#: ../gui/tcltk/gis.m/georect.tcl:431
+#: ../gui/tcltk/gis.m/georect.tcl:447
 msgid "Select existing vector group or name new group"
 msgstr "Vybrat existující vektorovou skupinu nebo název nové skupiny"
 
-#: ../gui/tcltk/gis.m/georect.tcl:441
+#: ../gui/tcltk/gis.m/georect.tcl:457
 msgid "vector"
 msgstr "vektorová vrstva"
 
-#: ../gui/tcltk/gis.m/georect.tcl:443
+#: ../gui/tcltk/gis.m/georect.tcl:459
 msgid "Select xy vector(s) for group"
 msgstr "Vybrat xy vektorovou vrstvu/y pro skupinu"
 
-#: ../gui/tcltk/gis.m/georect.tcl:456
+#: ../gui/tcltk/gis.m/georect.tcl:469
 msgid "Vector group"
 msgstr "Vektorová skupina"
 
-#: ../gui/tcltk/gis.m/georect.tcl:582
+#: ../gui/tcltk/gis.m/georect.tcl:599
 msgid "Georeference raster"
 msgstr "Georeferencování rastrové vrstvy"
 
-#: ../gui/tcltk/gis.m/georect.tcl:586
+#: ../gui/tcltk/gis.m/georect.tcl:603
 msgid "Georeference vector"
 msgstr "Georeferencování vektorové vrstvy"
 
-#: ../gui/tcltk/gis.m/georect.tcl:593
+#: ../gui/tcltk/gis.m/georect.tcl:610
 msgid "1. Select mapset"
 msgstr "1. Vybrat mapset"
 
-#: ../gui/tcltk/gis.m/georect.tcl:595
+#: ../gui/tcltk/gis.m/georect.tcl:612
 msgid "Mapset of xy raster group"
 msgstr "Mapset xy rastrové skupiny"
 
-#: ../gui/tcltk/gis.m/georect.tcl:605
-msgid "2.  Create/edit group"
-msgstr "2.  Vytvoøit/modifikovat skupinu"
+#: ../gui/tcltk/gis.m/georect.tcl:622
+msgid "2. Create/edit group"
+msgstr "2. Vytvoøit/modifikovat skupinu"
 
-#: ../gui/tcltk/gis.m/georect.tcl:607
+#: ../gui/tcltk/gis.m/georect.tcl:624
 msgid "Create/edit group (rasters or vectors to georectify)"
 msgstr ""
 "Vytvoøit/modifikovat skupinu (rastrové nebo vektorové vrstvy pro "
 "georektifikování)"
 
-#: ../gui/tcltk/gis.m/georect.tcl:615
-msgid "3.  Select group"
-msgstr "3.  Vybrat skupinu"
+#: ../gui/tcltk/gis.m/georect.tcl:632
+msgid "3. Select group"
+msgstr "3. Vybrat skupinu"
 
-#: ../gui/tcltk/gis.m/georect.tcl:617
+#: ../gui/tcltk/gis.m/georect.tcl:634
 msgid "Select existing group to georectify"
 msgstr "Vybrat existující skupinu pro georektifikování"
 
-#: ../gui/tcltk/gis.m/georect.tcl:627
+#: ../gui/tcltk/gis.m/georect.tcl:644
 msgid "4. Select ref. map"
 msgstr "4. Vybrat ref. mapovou vrstvu"
 
-#: ../gui/tcltk/gis.m/georect.tcl:629
+#: ../gui/tcltk/gis.m/georect.tcl:646
 msgid "Select raster or vector to display for marking ground control points"
 msgstr ""
 "Vybrat rastrovou nebo vektorovou vrstvu jako podklad pro oznaèení "
 "vlícovacích bodù"
 
-#: ../gui/tcltk/gis.m/georect.tcl:639
+#: ../gui/tcltk/gis.m/georect.tcl:656
 msgid "5. Start georectifying"
 msgstr "5. Spustit proces georektifikování"
 
-#: ../gui/tcltk/gis.m/georect.tcl:641
+#: ../gui/tcltk/gis.m/georect.tcl:658
 msgid "Start georectifying"
 msgstr "Spustit proces georektifikování"
 
-#: ../gui/tcltk/gis.m/georect.tcl:649 ../lib/init/file_option.tcl:139
-#: ../lib/init/gis_set.tcl:157 ../lib/init/help.tcl:2948
+#: ../gui/tcltk/gis.m/georect.tcl:666 ../gui/tcltk/gis.m/mapcanvas.tcl:802
+#: ../lib/init/file_option.tcl:139 ../lib/init/gis_set.tcl:163
+#: ../lib/init/help.tcl:2948
 msgid "Cancel"
 msgstr "Ukonèit"
 
-#: ../gui/tcltk/gis.m/georect.tcl:651
+#: ../gui/tcltk/gis.m/georect.tcl:668
 msgid "Cancel georectification"
 msgstr "Ukonèit orthorektifikaci"
 
-#: ../gui/tcltk/gis.m/georect.tcl:958
+#: ../gui/tcltk/gis.m/georect.tcl:957
 msgid "Select rectification method for rasters"
 msgstr "Vybrat metodu georektifikace pro rastrovou vrstvu"
 
-#: ../gui/tcltk/gis.m/georect.tcl:961
+#: ../gui/tcltk/gis.m/georect.tcl:960
 msgid "1st order"
 msgstr "první stupeò"
 
-#: ../gui/tcltk/gis.m/georect.tcl:962
+#: ../gui/tcltk/gis.m/georect.tcl:961
 msgid "affine transformation  (rasters & vectors). Requires 3+ GCPs."
 msgstr ""
 "afinní transformace (rasttové & vektorové vrstvy). Vy¾aduje nejménì 3 "
 "vlícovací body."
 
-#: ../gui/tcltk/gis.m/georect.tcl:967
+#: ../gui/tcltk/gis.m/georect.tcl:966
 msgid "2nd order"
 msgstr "druhı stupeò"
 
-#: ../gui/tcltk/gis.m/georect.tcl:968
+#: ../gui/tcltk/gis.m/georect.tcl:967
 msgid "polynomial transformation  (rasters only). Requires 6+ GCPs."
 msgstr ""
 "polynomní transformace (pouze rastrové vrstvy). Vy¾aduje minimálnì 6 "
 "vlícovacích bodù."
 
-#: ../gui/tcltk/gis.m/georect.tcl:972
+#: ../gui/tcltk/gis.m/georect.tcl:971
 msgid "3rd order"
 msgstr "tøetí stupeò"
 
-#: ../gui/tcltk/gis.m/georect.tcl:973
+#: ../gui/tcltk/gis.m/georect.tcl:972
 msgid "polynomial transformation  (rasters only). Requires 10+ GCPs."
 msgstr ""
 "polynomní transformace (pouze rastrové vrstvy). Vy¾aduje minimálnì 10 "
 "vlícovacích bodù."
 
-#: ../gui/tcltk/gis.m/georect.tcl:980
+#: ../gui/tcltk/gis.m/georect.tcl:979
 msgid "Use"
 msgstr "Pou¾ít"
 
-#: ../gui/tcltk/gis.m/georect.tcl:982
+#: ../gui/tcltk/gis.m/georect.tcl:981
 msgid "xy coordinates"
 msgstr "souøadnice xy"
 
-#: ../gui/tcltk/gis.m/georect.tcl:984
+#: ../gui/tcltk/gis.m/georect.tcl:983
 msgid "geographic coordinates"
 msgstr "zemìpisné souøadnice"
 
-#: ../gui/tcltk/gis.m/georect.tcl:986
+#: ../gui/tcltk/gis.m/georect.tcl:985
 msgid "forward error"
 msgstr "dopøedná chyba"
 
-#: ../gui/tcltk/gis.m/georect.tcl:988
+#: ../gui/tcltk/gis.m/georect.tcl:987
 msgid "backward error"
 msgstr "zpìtná chyba"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1031
+#: ../gui/tcltk/gis.m/georect.tcl:1023
 msgid "Manage ground control points (GCPs)"
 msgstr "Urèit vlícovací body (GCPs)"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1052
+#: ../gui/tcltk/gis.m/georect.tcl:1048
 msgid "save GCPs to POINTS file"
 msgstr "ulo¾it GCPs do souboru POINTS"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1059
+#: ../gui/tcltk/gis.m/georect.tcl:1055
 msgid "clear ALL GCP entries"
 msgstr "vymazat V©ECHNY záznamy GCP"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1066
+#: ../gui/tcltk/gis.m/georect.tcl:1062
 msgid "calculate RMS error"
 msgstr "vypoèítat chybu RMS (støední kvadratická chyba)"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1073
+#: ../gui/tcltk/gis.m/georect.tcl:1069
 msgid "Rectify maps in group"
 msgstr "Rektifikovat mapy ve skupinì"
 
-#: ../gui/tcltk/gis.m/georecttool.tcl:38 ../gui/tcltk/gis.m/maptool.tcl:43
+#: ../gui/tcltk/gis.m/georecttool.tcl:39 ../gui/tcltk/gis.m/maptool.tcl:40
 msgid "Display active layers"
 msgstr "Zobrazit aktivní vrstvy"
 
-#: ../gui/tcltk/gis.m/georecttool.tcl:61
+#: ../gui/tcltk/gis.m/georecttool.tcl:62
 msgid "Set ground control points"
 msgstr "Nastavit vlícovací body"
 
-#: ../gui/tcltk/gis.m/georecttool.tcl:70 ../gui/tcltk/gis.m/maptool.tcl:89
+#: ../gui/tcltk/gis.m/georecttool.tcl:71 ../gui/tcltk/gis.m/maptool.tcl:86
 msgid "Zoom In"
 msgstr "Zvìt¹it"
 
-#: ../gui/tcltk/gis.m/georecttool.tcl:79 ../gui/tcltk/gis.m/maptool.tcl:98
+#: ../gui/tcltk/gis.m/georecttool.tcl:80 ../gui/tcltk/gis.m/maptool.tcl:95
 msgid "Zoom Out"
 msgstr "Zmen¹it"
 
-#: ../gui/tcltk/gis.m/georecttool.tcl:88 ../gui/tcltk/gis.m/maptool.tcl:107
-#: ../vector/v.digit/toolbox.tcl:150
+#: ../gui/tcltk/gis.m/georecttool.tcl:89 ../gui/tcltk/gis.m/maptool.tcl:104
+#: ../vector/v.digit/toolbox.tcl:161
 msgid "Pan"
 msgstr "Posun"
 
-#: ../gui/tcltk/gis.m/georecttool.tcl:109
+#: ../gui/tcltk/gis.m/georecttool.tcl:110
 msgid "Zoom to map"
 msgstr "Zvìt¹it podle mapové vrstvy"
 
-#: ../gui/tcltk/gis.m/gm.tcl:228
+#: ../gui/tcltk/gis.m/gm.tcl:235
 msgid "Creating MainFrame..."
 msgstr "Vytváøím MainFrame..."
 
-#: ../gui/tcltk/gis.m/gm.tcl:270
+#: ../gui/tcltk/gis.m/gm.tcl:277
 msgid "Welcome to GRASS GIS"
 msgstr "Vítejte v GRASS GIS"
 
-#: ../gui/tcltk/gis.m/gm.tcl:327
+#: ../gui/tcltk/gis.m/gm.tcl:335
 #, tcl-format
 msgid "GRASS%s GIS Manager - %s"
 msgstr "GRASS%s GIS Manager - %s"
 
-#: ../gui/tcltk/gis.m/gm.tcl:493
+#: ../gui/tcltk/gis.m/gm.tcl:490
 #, tcl-format
 msgid "GRASS%s GIS Manager - %s %s"
 msgstr "GRASS%s GIS Manager - %s %s"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:25
+#: ../gui/tcltk/gis.m/gmmenu.tcl:26
 msgid "Workspace"
 msgstr "Pracovní oblast"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:36
+#: ../gui/tcltk/gis.m/gmmenu.tcl:37
 msgid "Georectify"
 msgstr "Georektifikace"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:38
+#: ../gui/tcltk/gis.m/gmmenu.tcl:39
 msgid "Create ps.map file for postscript printing"
 msgstr "Vytvoøit soubor ps.map pro tisk do postscriptového souboru"
 
@@ -1281,176 +1287,188 @@ msgstr ""
 msgid "Add posttscript text layer"
 msgstr "Pøidat vrstvu s textem ve formátu postscript"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:140
-msgid " grid color   "
-msgstr " barva møí¾ky   "
+#: ../gui/tcltk/gis.m/gridline.tcl:136
+msgid "geodetic grid  "
+msgstr "zemìpisná møí¾ka  "
 
-#: ../gui/tcltk/gis.m/histogram.tcl:167
+#: ../gui/tcltk/gis.m/gridline.tcl:138
+msgid " grid & text color   "
+msgstr " barva møí¾ky & textu   "
+
+#: ../gui/tcltk/gis.m/gridline.tcl:152
+msgid "draw border text  "
+msgstr "vykreslit rámeèek okolo textu  "
+
+#: ../gui/tcltk/gis.m/gridline.tcl:154
+msgid " border color"
+msgstr " barva rámeèeku"
+
+#: ../gui/tcltk/gis.m/histogram.tcl:165
 msgid "include null values"
 msgstr "obsahuje prázdné hodnoty"
 
-#: ../gui/tcltk/gis.m/labels.tcl:126 ../gui/tcltk/gis.m/maplabels.tcl:128
+#: ../gui/tcltk/gis.m/labels.tcl:124 ../gui/tcltk/gis.m/maplabels.tcl:124
 msgid "Labels file:"
 msgstr "Soubor s popisky:"
 
-#: ../gui/tcltk/gis.m/labels.tcl:129 ../gui/tcltk/gis.m/maplabels.tcl:131
+#: ../gui/tcltk/gis.m/labels.tcl:127 ../gui/tcltk/gis.m/maplabels.tcl:127
 msgid "labels file to display"
 msgstr "soubor s popisky k zobrazení"
 
-#: ../gui/tcltk/gis.m/labels.tcl:163 ../gui/tcltk/gis.m/maplabels.tcl:193
+#: ../gui/tcltk/gis.m/labels.tcl:161 ../gui/tcltk/gis.m/maplabels.tcl:189
 msgid "v.label"
 msgstr "v.label"
 
-#: ../gui/tcltk/gis.m/legend.tcl:171
+#: ../gui/tcltk/gis.m/legend.tcl:170
 msgid "Legend appearance: text color"
 msgstr "Vzhled legendy: barva textu"
 
-#: ../gui/tcltk/gis.m/legend.tcl:181
+#: ../gui/tcltk/gis.m/legend.tcl:180
 msgid "do not display labels"
 msgstr "nezobrazovat popisky"
 
-#: ../gui/tcltk/gis.m/legend.tcl:183
+#: ../gui/tcltk/gis.m/legend.tcl:182
 msgid "do not display values"
 msgstr "nezobrazovat hodnoty"
 
-#: ../gui/tcltk/gis.m/legend.tcl:194
+#: ../gui/tcltk/gis.m/legend.tcl:193
 msgid "invert legend"
 msgstr "invertovat legendu"
 
-#: ../gui/tcltk/gis.m/legend.tcl:210
+#: ../gui/tcltk/gis.m/legend.tcl:209
 msgid "draw smooth gradient (fp maps)"
 msgstr ""
 "vykreslit vyhlazenı gradient (mapové vrstvy s plovoucí desetinnou èárkou)"
 
-#: ../gui/tcltk/gis.m/legend.tcl:228
+#: ../gui/tcltk/gis.m/legend.tcl:227
 msgid "skip categories with no labels"
 msgstr "pøeskoèit kategorie bez popiskù"
 
-#: ../gui/tcltk/gis.m/maplabels.tcl:140
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:783
+msgid "Save current display geometry to named region"
+msgstr "Ulo¾it souèasnı vıøez do pojmenovaného regionu"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:789
+msgid "Enter region name"
+msgstr "Zadejte jméno regionu"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:136
 msgid "Override offset, alignment, and color settings in v.labels file: "
 msgstr "Potlaèit offset, zarovnání a barevné nastavení v souboru v.labels: "
 
-#: ../gui/tcltk/gis.m/maplabels.tcl:147
+#: ../gui/tcltk/gis.m/maplabels.tcl:143
 msgid "Align label with vector object: "
 msgstr "Zarovnat popisek s vektorovım objektem: "
 
-#: ../gui/tcltk/gis.m/maplabels.tcl:156
+#: ../gui/tcltk/gis.m/maplabels.tcl:152
 msgid "Offset label from vector object: "
 msgstr "Odsadit popisek od vektorového objektu: "
 
-#: ../gui/tcltk/gis.m/maplabels.tcl:157
+#: ../gui/tcltk/gis.m/maplabels.tcl:153
 msgid "x offset"
 msgstr "odsazení ve smìru x"
 
-#: ../gui/tcltk/gis.m/maplabels.tcl:160
+#: ../gui/tcltk/gis.m/maplabels.tcl:156
 msgid "y offset"
 msgstr "odsazení ve smìru y"
 
-#: ../gui/tcltk/gis.m/maplabels.tcl:168
+#: ../gui/tcltk/gis.m/maplabels.tcl:164
 msgid "Justification: "
 msgstr "Zarovnání: "
 
-#: ../gui/tcltk/gis.m/maplabels.tcl:181
+#: ../gui/tcltk/gis.m/maplabels.tcl:177
 msgid "select font for label"
 msgstr "vybrat písmo pro popisek"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:216
+#: ../gui/tcltk/gis.m/mapprint.tcl:232
 msgid "Postscript and LPR printing of map display"
 msgstr "Tisk zobrazené mapy LPR nebo do formátu Postscript"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:230
+#: ../gui/tcltk/gis.m/mapprint.tcl:246
 msgid "Preset paper type"
 msgstr "Nastavení typu papíru"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:241
+#: ../gui/tcltk/gis.m/mapprint.tcl:257
 msgid "Custom paper size"
 msgstr "U¾ivatelská velikost papíru"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:244
+#: ../gui/tcltk/gis.m/mapprint.tcl:260
 msgid "  height:"
 msgstr "  vı¹ka:"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:251
+#: ../gui/tcltk/gis.m/mapprint.tcl:267
 msgid "Margins  left:"
 msgstr "Levı okraj:"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:253
+#: ../gui/tcltk/gis.m/mapprint.tcl:269
 msgid " right:"
 msgstr " pravı:"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:255
+#: ../gui/tcltk/gis.m/mapprint.tcl:271
 msgid " top:"
 msgstr " horní:"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:257
+#: ../gui/tcltk/gis.m/mapprint.tcl:273
 msgid " bottom:"
 msgstr " dolní:"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:265
+#: ../gui/tcltk/gis.m/mapprint.tcl:281
 msgid "Resolution (dpi) for printing and PDF "
 msgstr "Rozli¹ení (dpi) pro tisk a PDF soubor "
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:283
+#: ../gui/tcltk/gis.m/mapprint.tcl:299
 msgid "Send to LPR printer*"
 msgstr "Odeslat na tiskárnu LPR"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:292
+#: ../gui/tcltk/gis.m/mapprint.tcl:308
 msgid "Send to postscript device* "
 msgstr "Odeslat na postscriptové zaøízení* "
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:296
-msgid "list devices"
-msgstr "seznam zaøízení"
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:298
-msgid "list ghostscript output devices"
-msgstr "seznam vıstupních zaøízení ghostscript"
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:307
+#: ../gui/tcltk/gis.m/mapprint.tcl:319
 msgid "Save to PDF file*              "
 msgstr "Ulo¾it do souboru PDF*              "
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:320
+#: ../gui/tcltk/gis.m/mapprint.tcl:332
 msgid "Save to EPS file               "
 msgstr "Ulo¾it do souboru EPS               "
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:328
+#: ../gui/tcltk/gis.m/mapprint.tcl:340
 msgid "*requires ghostscript to be installed and in path"
 msgstr "*vy¾aduje instalovanı ghostscript a cestu k nìmu"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:110
+#: ../gui/tcltk/gis.m/maptext.tcl:133
 msgid "     coordinate type for text placement"
 msgstr "     typ souøadnic pro umístìní textu"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:118
+#: ../gui/tcltk/gis.m/maptext.tcl:144
 msgid "     align text with coordinate point  "
 msgstr "     zarovnání textu na základì souøadnic bodu  "
 
-#: ../gui/tcltk/gis.m/maptext.tcl:127
+#: ../gui/tcltk/gis.m/maptext.tcl:153
 msgid "     justification"
 msgstr "     zarovnání"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:140
+#: ../gui/tcltk/gis.m/maptext.tcl:166
 msgid "select font for text"
 msgstr "vyberte písmo pro text"
 
-#: ../gui/tcltk/gis.m/maptool.tcl:50
+#: ../gui/tcltk/gis.m/maptool.tcl:47
 msgid "Redraw all layers"
 msgstr "Pøekreslit v¹echny vrstvy"
 
-#: ../gui/tcltk/gis.m/maptool.tcl:57
+#: ../gui/tcltk/gis.m/maptool.tcl:54
 msgid "Start NVIZ using active layers in current region"
 msgstr "Spustit NVIZ s aktivními vrstvami v aktuálním regionu"
 
-#: ../gui/tcltk/gis.m/maptool.tcl:80
+#: ../gui/tcltk/gis.m/maptool.tcl:77
 msgid "Pointer"
 msgstr "Ukazatel"
 
-#: ../gui/tcltk/gis.m/maptool.tcl:128
+#: ../gui/tcltk/gis.m/maptool.tcl:125
 msgid "Zoom to..."
 msgstr "Zvìt¹it na..."
 
-#: ../gui/tcltk/gis.m/maptool.tcl:176 ../gui/tcltk/menus/menu.tcl:559
+#: ../gui/tcltk/gis.m/maptool.tcl:176 ../gui/tcltk/menus/menu.tcl:557
 msgid "Query"
 msgstr "Dotaz"
 
@@ -1470,15 +1488,15 @@ msgstr "Tisknout rastrové & vektorové mapové vrstvy do souboru eps"
 msgid "Export display to graphics file"
 msgstr "Exportovat obsah do grafického souboru"
 
-#: ../gui/tcltk/gis.m/maptool.tcl:254
+#: ../gui/tcltk/gis.m/maptool.tcl:256
 msgid "Constrain map to region geometry"
 msgstr "Omezit mapu podle geometrie regionu"
 
-#: ../gui/tcltk/gis.m/maptool.tcl:265
+#: ../gui/tcltk/gis.m/maptool.tcl:267
 msgid "Map fills display window"
 msgstr "Vyplnit mapu obsah okna"
 
-#: ../gui/tcltk/gis.m/profile.tcl:107
+#: ../gui/tcltk/gis.m/profile.tcl:108
 msgid ""
 "Select raster map to profile.\n"
 "Currently selected raster is default."
@@ -1486,172 +1504,172 @@ msgstr ""
 "Vyberte rastrovou mapu pro profil\n"
 "Vıchozí je souèasná oznaèená rastrová mapa."
 
-#: ../gui/tcltk/gis.m/profile.tcl:112
+#: ../gui/tcltk/gis.m/profile.tcl:113
 msgid "Draw profile transect in map display"
 msgstr "Vykreslit profil v mapovém oknì"
 
-#: ../gui/tcltk/gis.m/profile.tcl:117
+#: ../gui/tcltk/gis.m/profile.tcl:118
 msgid "Draw profile"
 msgstr "Vykreslit profil"
 
-#: ../gui/tcltk/gis.m/profile.tcl:122
+#: ../gui/tcltk/gis.m/profile.tcl:123
 msgid "Clear profile"
 msgstr "Smazat profil"
 
-#: ../gui/tcltk/gis.m/profile.tcl:127
+#: ../gui/tcltk/gis.m/profile.tcl:128
 msgid "Save profile to EPS file"
 msgstr "Ulo¾it profil do souboru EPS"
 
-#: ../gui/tcltk/gis.m/profile.tcl:407
+#: ../gui/tcltk/gis.m/profile.tcl:410
 msgid "Please wait while profile elevations are calculated"
 msgstr "Prosím poèkejte chvíli, ne¾ bude vypoèítán profil elevace"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:228
+#: ../gui/tcltk/gis.m/rastarrows.tcl:226
 msgid "    scale factor for computing arrow length"
 msgstr "    mìøítkovı faktor pro vıpoèet délky ¹ipky"
 
-#: ../gui/tcltk/gis.m/raster.tcl:161
+#: ../gui/tcltk/gis.m/raster.tcl:159
 msgid "base raster map to display"
 msgstr "základová rastrová mapová vrstva"
 
-#: ../gui/tcltk/gis.m/raster.tcl:196
+#: ../gui/tcltk/gis.m/raster.tcl:194
 msgid "raster map to drape over base map"
 msgstr "rastrová mapová vrstva pøekrıvající základovou mapu"
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:168
+#: ../gui/tcltk/gis.m/rastnums.tcl:166
 msgid "use raster colors for cell values"
 msgstr "pou¾ít rastrové barvy pro hodnoty bunìk"
 
-#: ../gui/tcltk/gis.m/rgbhis.tcl:153
+#: ../gui/tcltk/gis.m/rgbhis.tcl:151
 msgid "raster map for red or hue channel"
 msgstr "rastrová mapa pro kanál èervené nebo jasu"
 
-#: ../gui/tcltk/gis.m/rgbhis.tcl:165
+#: ../gui/tcltk/gis.m/rgbhis.tcl:163
 msgid "raster map for green or intensity channel"
 msgstr "rastrová mapa pro kanál zelené nebo intenzity"
 
-#: ../gui/tcltk/gis.m/rgbhis.tcl:177
+#: ../gui/tcltk/gis.m/rgbhis.tcl:175
 msgid "raster map for blue or saturation channel"
 msgstr "rastrová mapa pro kanál modré nebo sytosti"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:44
-#: ../gui/tcltk/gis.m/runandoutput.tcl:107 ../lib/gis/gui.tcl:473
+#: ../gui/tcltk/gis.m/runandoutput.tcl:113 ../lib/gis/gui.tcl:473
 msgid "Run"
 msgstr "Spustit"
 
-#: ../gui/tcltk/gis.m/runandoutput.tcl:108
+#: ../gui/tcltk/gis.m/runandoutput.tcl:114
 msgid "Run (Background)"
 msgstr "Spustit (na pozadí)"
 
-#: ../gui/tcltk/gis.m/runandoutput.tcl:109
+#: ../gui/tcltk/gis.m/runandoutput.tcl:115
 msgid "Run UI"
 msgstr "Spustit UI"
 
-#: ../gui/tcltk/gis.m/runandoutput.tcl:110
+#: ../gui/tcltk/gis.m/runandoutput.tcl:116
 msgid "Run in Xterm"
 msgstr "Spustit v pøíkazové konzoli (Xterm)"
 
-#: ../gui/tcltk/gis.m/runandoutput.tcl:113 ../lib/gis/gui.tcl:475
+#: ../gui/tcltk/gis.m/runandoutput.tcl:119 ../lib/gis/gui.tcl:475
 msgid "Clear"
 msgstr "Vyèistit"
 
-#: ../gui/tcltk/gis.m/runandoutput.tcl:133
+#: ../gui/tcltk/gis.m/runandoutput.tcl:139
 msgid "Output - GIS.m"
 msgstr "Vıstup - GIS.m"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:233
+#: ../gui/tcltk/gis.m/thematic.tcl:229
 msgid "vector for thematic mapping"
 msgstr "vektorová vrstva pro tématickou mapu"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:271
+#: ../gui/tcltk/gis.m/thematic.tcl:267
 msgid "   show data"
 msgstr "   zobrazit data"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:341
+#: ../gui/tcltk/gis.m/thematic.tcl:337
 msgid "Graduated colors: preset color schemes"
 msgstr "Odstupòované barvy: urèit schéma barev"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:369
+#: ../gui/tcltk/gis.m/thematic.tcl:365
 msgid "Legend: title font "
 msgstr "Legenda: písmo titulku "
 
-#: ../gui/tcltk/gis.m/thematic.tcl:372
+#: ../gui/tcltk/gis.m/thematic.tcl:368
 msgid "title font for legend"
 msgstr "písmo titulku legendy"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:383
+#: ../gui/tcltk/gis.m/thematic.tcl:379
 msgid "    subtitle font    "
 msgstr "    písmo podtitulku    "
 
-#: ../gui/tcltk/gis.m/thematic.tcl:386
+#: ../gui/tcltk/gis.m/thematic.tcl:382
 msgid "subtitle font for legend"
 msgstr "písmo podtitulku legendy"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:395
+#: ../gui/tcltk/gis.m/thematic.tcl:391
 msgid "    label font       "
 msgstr "    písmo popisku       "
 
-#: ../gui/tcltk/gis.m/thematic.tcl:398
+#: ../gui/tcltk/gis.m/thematic.tcl:394
 msgid "label font for legend"
 msgstr "písmo popisku legendy"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:657
+#: ../gui/tcltk/gis.m/thematic.tcl:644
 msgid "Clear legend"
 msgstr "Vyèistit legendu"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:660
+#: ../gui/tcltk/gis.m/thematic.tcl:647
 msgid "Save legend to EPS file"
 msgstr "Ulo¾it legendu do souboru EPS"
 
-#: ../gui/tcltk/gis.m/vector.tcl:301
+#: ../gui/tcltk/gis.m/vector.tcl:300
 msgid "vector map to display"
 msgstr "vektorová mapa k zobrazení"
 
-#: ../gui/tcltk/gis.m/vector.tcl:316
+#: ../gui/tcltk/gis.m/vector.tcl:315
 msgid "Display: "
 msgstr "Zobrazit: "
 
-#: ../gui/tcltk/gis.m/vector.tcl:396
+#: ../gui/tcltk/gis.m/vector.tcl:395
 msgid "text color"
 msgstr "barva textu"
 
-#: ../gui/tcltk/gis.m/vector.tcl:399
+#: ../gui/tcltk/gis.m/vector.tcl:398
 msgid " text size"
 msgstr "velikost textu"
 
-#: ../gui/tcltk/gis.m/vector.tcl:409
+#: ../gui/tcltk/gis.m/vector.tcl:408
 msgid "label part to align with vector point"
 msgstr "èást popisku pro zarování s vektorovım bodem"
 
-#: ../gui/tcltk/gis.m/vector.tcl:413
+#: ../gui/tcltk/gis.m/vector.tcl:412
 msgid " justification"
 msgstr " zarovnání"
 
-#: ../gui/tcltk/gis.m/vector.tcl:431
+#: ../gui/tcltk/gis.m/vector.tcl:430
 msgid "Query vectors for display: "
 msgstr "Dotazovat vektorové vrstvy pro zobrazení: "
 
-#: ../gui/tcltk/gis.m/vector.tcl:440
+#: ../gui/tcltk/gis.m/vector.tcl:439
 msgid "query cat values    "
 msgstr "dotazovat hodnoty karegorií    "
 
-#: ../gui/tcltk/gis.m/vector.tcl:451
+#: ../gui/tcltk/gis.m/vector.tcl:450
 msgid "use SQL query"
 msgstr "pou¾ít SQL dotaz"
 
-#: ../gui/tcltk/gis.m/vector.tcl:477
+#: ../gui/tcltk/gis.m/vector.tcl:476
 msgid "save displayed objects to new vector file "
 msgstr "ulo¾it zobrazené objekty do nového vektorové souboru "
 
-#: ../gui/tcltk/gis.m/vector.tcl:479
+#: ../gui/tcltk/gis.m/vector.tcl:478
 msgid "overwrite existing"
 msgstr "pøepsat existující"
 
-#: ../gui/tcltk/gis.m/vector.tcl:486
+#: ../gui/tcltk/gis.m/vector.tcl:485
 msgid "     new vector"
 msgstr "     nová vektorová vrstva"
 
-#: ../gui/tcltk/gis.m/vector.tcl:490
+#: ../gui/tcltk/gis.m/vector.tcl:489
 msgid "select existing vector for saving queried objects"
 msgstr "vybrat existující vektorovou vrstvu pro ulo¾ení dotazovanıch objektù"
 
@@ -1909,177 +1927,169 @@ msgid "Display region settings"
 msgstr "Zobrazit nastavení regionu"
 
 #: ../gui/tcltk/menus/menu.tcl:198
-msgid "Manage region"
-msgstr "Správa regionu"
+msgid "Change region settings"
+msgstr "Zmìnit nastavení regionu"
 
 #: ../gui/tcltk/menus/menu.tcl:199
 msgid "Zoom to maximum extent of all displayed maps"
 msgstr "Zvìt¹it na maximální vıøez pokrıvající v¹echny zobrazené mapové vrstvy"
 
 #: ../gui/tcltk/menus/menu.tcl:201
-msgid "Create WIND3 (default 3D window) from current 2D region"
-msgstr "Vytvoøit WIND3 (vıchozí 3D window) z aktuálního 2D regionu"
-
-#: ../gui/tcltk/menus/menu.tcl:202
-msgid "Manage 3D region"
-msgstr "Správa 3D regionu"
-
-#: ../gui/tcltk/menus/menu.tcl:204
 msgid "GRASS working environment"
 msgstr "Pracovní prostøední GRASSu"
 
-#: ../gui/tcltk/menus/menu.tcl:205
+#: ../gui/tcltk/menus/menu.tcl:202
 msgid "Access other mapsets in current location"
 msgstr "Pøístupová práva k jinım mapsetùm v aktuální location"
 
-#: ../gui/tcltk/menus/menu.tcl:206
+#: ../gui/tcltk/menus/menu.tcl:203
 msgid "Change current working session to new mapset, location, or GISDBASE"
 msgstr "Zmìnit aktuální sezení na novı mapset, location nebo GISDBASE"
 
-#: ../gui/tcltk/menus/menu.tcl:207
+#: ../gui/tcltk/menus/menu.tcl:204
 msgid "Modify access by other users to current mapset"
 msgstr "Upravit pøístupová práva ostatním u¾ivatelùm aktuální mapsetu"
 
-#: ../gui/tcltk/menus/menu.tcl:208
+#: ../gui/tcltk/menus/menu.tcl:205
 msgid "Show current GRASS environment settings"
 msgstr "Zobrazit aktuální nastavení prostøedí GRASSu"
 
-#: ../gui/tcltk/menus/menu.tcl:209
+#: ../gui/tcltk/menus/menu.tcl:206
 msgid "Set GRASS environment settings"
 msgstr "Nastavit prostøedí GRASSu"
 
-#: ../gui/tcltk/menus/menu.tcl:210
+#: ../gui/tcltk/menus/menu.tcl:207
 msgid "Show current GRASS version"
 msgstr "Zobrazit aktuální verzi GRASSu"
 
-#: ../gui/tcltk/menus/menu.tcl:212
+#: ../gui/tcltk/menus/menu.tcl:209
 msgid "Manage projections"
 msgstr "Správa kartografickıch zobrazení"
 
-#: ../gui/tcltk/menus/menu.tcl:213
+#: ../gui/tcltk/menus/menu.tcl:210
 msgid "Create/edit projection information for current location"
 msgstr ""
 "Vytvoøit/modifikovat informace o kartografické zobrazení aktuální lokace"
 
-#: ../gui/tcltk/menus/menu.tcl:214
+#: ../gui/tcltk/menus/menu.tcl:211
 msgid "Show projection information and create projection files"
 msgstr ""
 "Zobrazit informace o kartografickém zobrazení a vytvoøit související soubory"
 
-#: ../gui/tcltk/menus/menu.tcl:216
+#: ../gui/tcltk/menus/menu.tcl:213
 msgid "Convert coordinates from one projection to another"
 msgstr "Transformovat souøadnice z jednoho souøadnicového systému do druhého"
 
-#: ../gui/tcltk/menus/menu.tcl:218
+#: ../gui/tcltk/menus/menu.tcl:215
 msgid "Text"
 msgstr "Text"
 
-#: ../gui/tcltk/menus/menu.tcl:219
+#: ../gui/tcltk/menus/menu.tcl:216
 msgid "Select default text font"
 msgstr "Vybrat vıchozí písmo textu"
 
-#: ../gui/tcltk/menus/menu.tcl:220
+#: ../gui/tcltk/menus/menu.tcl:217
 msgid "Select default freetype text font"
 msgstr "Vybrat vıchozí písmo freetype textu"
 
-#: ../gui/tcltk/menus/menu.tcl:222
+#: ../gui/tcltk/menus/menu.tcl:219
 msgid "X-monitor displays"
 msgstr "Zobrazovací jednotka X-monitor"
 
-#: ../gui/tcltk/menus/menu.tcl:223
+#: ../gui/tcltk/menus/menu.tcl:220
 msgid "Configure xmonitor displays"
 msgstr "Konfigurovat zobrazovací jednotku xmonitor"
 
-#: ../gui/tcltk/menus/menu.tcl:224
+#: ../gui/tcltk/menus/menu.tcl:221
 msgid "Configure frames for xmonitors"
 msgstr "Konfigurovat rámce pro xmonitors"
 
-#: ../gui/tcltk/menus/menu.tcl:225
+#: ../gui/tcltk/menus/menu.tcl:222
 msgid "Start/restart xmonitor at specified window size"
 msgstr "Otevøít/restartovat xmonitor o specifikované velikosti okna"
 
-#: ../gui/tcltk/menus/menu.tcl:226
+#: ../gui/tcltk/menus/menu.tcl:223
 msgid "Set active xmonitor to specified size"
 msgstr "Nastavit aktivní xmonitor na specifikovanou velikost"
 
-#: ../gui/tcltk/menus/menu.tcl:227
+#: ../gui/tcltk/menus/menu.tcl:224
 msgid "Display information about active xmonitor"
 msgstr "Zobrazit informace o aktivním xmonitoru"
 
-#: ../gui/tcltk/menus/menu.tcl:230
+#: ../gui/tcltk/menus/menu.tcl:227
 msgid "&Raster"
 msgstr "&Rastr"
 
-#: ../gui/tcltk/menus/menu.tcl:231 ../gui/tcltk/menus/menu.tcl:382
+#: ../gui/tcltk/menus/menu.tcl:228 ../gui/tcltk/menus/menu.tcl:379
 msgid "Develop map"
 msgstr "Tvorba mapovıch vrstev"
 
-#: ../gui/tcltk/menus/menu.tcl:232
+#: ../gui/tcltk/menus/menu.tcl:229
 msgid "Digitize raster"
 msgstr "Vektorizovat rastrovou vrstvu"
 
-#: ../gui/tcltk/menus/menu.tcl:234
+#: ../gui/tcltk/menus/menu.tcl:231
 msgid "Compress/decompress raster file"
 msgstr "Komprimovat/dekomprimovat rastrovı soubor"
 
-#: ../gui/tcltk/menus/menu.tcl:235
+#: ../gui/tcltk/menus/menu.tcl:232
 msgid "Manage boundary definitions"
 msgstr "Správa definic hranic"
 
-#: ../gui/tcltk/menus/menu.tcl:236
+#: ../gui/tcltk/menus/menu.tcl:233
 msgid "Manage null values"
 msgstr "Správa prázdnıch hodnot"
 
-#: ../gui/tcltk/menus/menu.tcl:237
+#: ../gui/tcltk/menus/menu.tcl:234
 msgid "Manage timestamps for files"
 msgstr "Správa èasovıch znaèek pro soubory"
 
-#: ../gui/tcltk/menus/menu.tcl:238
+#: ../gui/tcltk/menus/menu.tcl:235
 msgid "Quantization for floating-point maps"
 msgstr "Kvantizace mapovıch vrstev s plovoucí desetinnou èárkou"
 
-#: ../gui/tcltk/menus/menu.tcl:239
+#: ../gui/tcltk/menus/menu.tcl:236
 msgid "Resample (change resolution) using nearest neighbor method"
 msgstr "Pøevzorkování (zmìna rozli¹ení) metodou nejbli¾¹ího souseda"
 
-#: ../gui/tcltk/menus/menu.tcl:240
+#: ../gui/tcltk/menus/menu.tcl:237
 msgid "Resample (change resolution) using regularized spline tension"
 msgstr ""
 "Pøevzorkování (zmìna rozli¹ení) pomocí RST (regularized spline tension)"
 
-#: ../gui/tcltk/menus/menu.tcl:241
+#: ../gui/tcltk/menus/menu.tcl:238
 msgid "Support file creation and maintenance"
 msgstr "Vytvoøení a správa podpùrného souboru"
 
-#: ../gui/tcltk/menus/menu.tcl:243
+#: ../gui/tcltk/menus/menu.tcl:240
 msgid "Reproject raster from other location"
 msgstr "Transformovat rastrovou vrstvy z jiné location"
 
-#: ../gui/tcltk/menus/menu.tcl:244
+#: ../gui/tcltk/menus/menu.tcl:241
 msgid "Generate tiling for other projection"
 msgstr "Vytvoø dla¾idice pro jinou projekci"
 
-#: ../gui/tcltk/menus/menu.tcl:246
+#: ../gui/tcltk/menus/menu.tcl:243
 msgid "Manage map colors"
 msgstr "Správa barevné ¹kály mapovıch vrstev"
 
-#: ../gui/tcltk/menus/menu.tcl:247
+#: ../gui/tcltk/menus/menu.tcl:244
 msgid "Set colors to predefined color tables"
 msgstr "Nastavit barevnou ¹kálu podle pøedefinované tabulky barev"
 
-#: ../gui/tcltk/menus/menu.tcl:248
+#: ../gui/tcltk/menus/menu.tcl:245
 msgid "Set colors using color rules"
 msgstr "Nastavit barevnou ¹kálu podle pravidel"
 
-#: ../gui/tcltk/menus/menu.tcl:250
+#: ../gui/tcltk/menus/menu.tcl:247
 msgid "Blend 2 color maps to produce 3 RGB files"
 msgstr "Spojit 2 barevné mapové vrstvy a vytvoøit 3 soubory RGB"
 
-#: ../gui/tcltk/menus/menu.tcl:251
+#: ../gui/tcltk/menus/menu.tcl:248
 msgid "Create color image from RGB files"
 msgstr "Vytvoøit barevnı obraz ze souborù RGB"
 
-#: ../gui/tcltk/menus/menu.tcl:252
+#: ../gui/tcltk/menus/menu.tcl:249
 msgid ""
 "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) "
 "maps"
@@ -2087,491 +2097,495 @@ msgstr ""
 "Vytvoøit 3 mapové vrstvy RGB (red, green, blue) ze 3 vrstev HIS (hue, "
 "intensity, saturation)"
 
-#: ../gui/tcltk/menus/menu.tcl:255 ../gui/tcltk/menus/menu.tcl:408
+#: ../gui/tcltk/menus/menu.tcl:252 ../gui/tcltk/menus/menu.tcl:406
 msgid "Query by coordinate(s)"
 msgstr "Souøadnicovı dotaz"
 
-#: ../gui/tcltk/menus/menu.tcl:257
+#: ../gui/tcltk/menus/menu.tcl:254
 msgid "Create raster buffers"
 msgstr "Vytvoøit rastrovou obalovou zónu"
 
-#: ../gui/tcltk/menus/menu.tcl:258
+#: ../gui/tcltk/menus/menu.tcl:255
 msgid "Create raster MASK"
 msgstr "Vytvoøit rastrovou masku (MASK)"
 
-#: ../gui/tcltk/menus/menu.tcl:259
+#: ../gui/tcltk/menus/menu.tcl:256
 msgid "Locate closest points between areas in 2 raster maps"
 msgstr "Lokalizovat nejbli¾¹í body mezi plochami ve 2 rastrovıch vrstvách"
 
-#: ../gui/tcltk/menus/menu.tcl:260
+#: ../gui/tcltk/menus/menu.tcl:257
 msgid "Map calculator"
 msgstr "Mapovı kalkulátor"
 
-#: ../gui/tcltk/menus/menu.tcl:261 ../gui/tcltk/menus/menu.tcl:418
+#: ../gui/tcltk/menus/menu.tcl:258 ../gui/tcltk/menus/menu.tcl:416
 msgid "Neighborhood analysis"
 msgstr "Analıza okolí"
 
-#: ../gui/tcltk/menus/menu.tcl:262
+#: ../gui/tcltk/menus/menu.tcl:259
 msgid "Moving window analysis of raster cells"
 msgstr "Lokální filtrování obrazu (pohybující se okno)"
 
-#: ../gui/tcltk/menus/menu.tcl:263
+#: ../gui/tcltk/menus/menu.tcl:260
 msgid "Analyze vector points in neighborhood of raster cells"
 msgstr "Analyzovat vektorové body v okolí rastrovıch bunìk"
 
-#: ../gui/tcltk/menus/menu.tcl:265 ../gui/tcltk/menus/menu.tcl:432
+#: ../gui/tcltk/menus/menu.tcl:262 ../gui/tcltk/menus/menu.tcl:430
 msgid "Overlay maps"
 msgstr "Pøekrytí mapovıch vrstev"
 
-#: ../gui/tcltk/menus/menu.tcl:266
+#: ../gui/tcltk/menus/menu.tcl:263
 msgid "Cross product"
 msgstr "Vısledek pøelo¾ení"
 
-#: ../gui/tcltk/menus/menu.tcl:267
+#: ../gui/tcltk/menus/menu.tcl:264
 msgid "Function of map series (time series)"
 msgstr "Funkce øady mapovıch vrstev (èasová øada)"
 
-#: ../gui/tcltk/menus/menu.tcl:268
+#: ../gui/tcltk/menus/menu.tcl:265
 msgid "Patch maps"
 msgstr "Spojit mapové vrstvy"
 
-#: ../gui/tcltk/menus/menu.tcl:270
+#: ../gui/tcltk/menus/menu.tcl:267
 msgid "Statistical calculations for cover map over base map"
 msgstr "Sestavení statistiky krycí a podkladové mapové vrstvy"
 
-#: ../gui/tcltk/menus/menu.tcl:272
+#: ../gui/tcltk/menus/menu.tcl:269
 msgid "Solar radiance and shadows"
 msgstr "Solární záøení a stíny"
 
-#: ../gui/tcltk/menus/menu.tcl:273
+#: ../gui/tcltk/menus/menu.tcl:270
 msgid "Solar irradiance and daily irradiation"
 msgstr "Solární denní intenzita záøení"
 
-#: ../gui/tcltk/menus/menu.tcl:274
+#: ../gui/tcltk/menus/menu.tcl:271
 msgid "Shadows map for sun position or date/time"
 msgstr "Stínová mapová vrstva pro danou pozici slunce nebo datum/èas"
 
-#: ../gui/tcltk/menus/menu.tcl:276
+#: ../gui/tcltk/menus/menu.tcl:273
 msgid "Terrain analysis"
 msgstr "Terenní analıza"
 
-#: ../gui/tcltk/menus/menu.tcl:277
+#: ../gui/tcltk/menus/menu.tcl:274
 msgid "Calculate cumulative movement costs between locales"
 msgstr "Vıpoèet kumulativního pohyby nákladù mezi lokacemi"
 
-#: ../gui/tcltk/menus/menu.tcl:278
+#: ../gui/tcltk/menus/menu.tcl:275
 msgid "Cost surface"
 msgstr "Povrch nákladù"
 
-#: ../gui/tcltk/menus/menu.tcl:279
+#: ../gui/tcltk/menus/menu.tcl:276
 msgid "Least cost route or flow"
 msgstr "Nejménì nákladná cesta nebo dráha odtoku"
 
-#: ../gui/tcltk/menus/menu.tcl:280
+#: ../gui/tcltk/menus/menu.tcl:277
 msgid "Profile analysis"
 msgstr "Analıza profilu"
 
-#: ../gui/tcltk/menus/menu.tcl:281
+#: ../gui/tcltk/menus/menu.tcl:278
 msgid "Shaded relief map"
 msgstr "Mapa stínovaného reliefu"
 
-#: ../gui/tcltk/menus/menu.tcl:282
+#: ../gui/tcltk/menus/menu.tcl:279
 msgid "Slope and aspect"
 msgstr "Míra svahu a expozice"
 
-#: ../gui/tcltk/menus/menu.tcl:283
+#: ../gui/tcltk/menus/menu.tcl:280
 msgid "Terrain parameters"
 msgstr "Parametry terénu"
 
-#: ../gui/tcltk/menus/menu.tcl:284
+#: ../gui/tcltk/menus/menu.tcl:281
 msgid "Textural features"
 msgstr "Texturální prvky"
 
-#: ../gui/tcltk/menus/menu.tcl:285
+#: ../gui/tcltk/menus/menu.tcl:282
 msgid "Visibility/line of sight"
 msgstr "Viditelnost/linie viditelnosti"
 
-#: ../gui/tcltk/menus/menu.tcl:287
+#: ../gui/tcltk/menus/menu.tcl:284
 msgid "Transform features"
 msgstr "Prvky transformace"
 
-#: ../gui/tcltk/menus/menu.tcl:288
+#: ../gui/tcltk/menus/menu.tcl:285
 msgid "Clump small areas (statistics calculated by r.volume)"
 msgstr "Nahromadit malé plochy (statistika vytvoøena pomocí r.volume)"
 
-#: ../gui/tcltk/menus/menu.tcl:289
+#: ../gui/tcltk/menus/menu.tcl:286
 msgid "Grow areas"
 msgstr "Zvìt¹it plochy"
 
-#: ../gui/tcltk/menus/menu.tcl:290
+#: ../gui/tcltk/menus/menu.tcl:287
 msgid "Thin linear features"
 msgstr "Ztenèit liniové prvky"
 
-#: ../gui/tcltk/menus/menu.tcl:293
+#: ../gui/tcltk/menus/menu.tcl:290
 msgid "Hydrologic modeling"
 msgstr "Hydrologické modelování"
 
-#: ../gui/tcltk/menus/menu.tcl:294
+#: ../gui/tcltk/menus/menu.tcl:291
 msgid "Carve stream channels into elevation map using vector streams map"
 msgstr "Zaznamenat trasu toku do vı¹kového modelu pomocí vektorové vrstvy toku"
 
-#: ../gui/tcltk/menus/menu.tcl:295
+#: ../gui/tcltk/menus/menu.tcl:292
 msgid "Depressionless elevation map and flowline map"
 msgstr "Mape elevace zbavená depresí a mapa drah povrchového odtoku"
 
-#: ../gui/tcltk/menus/menu.tcl:296
+#: ../gui/tcltk/menus/menu.tcl:293
 msgid "Fill lake from seed point to specified level"
 msgstr "Vyplnit jezero ze zvoleného bodu na specifikovanou hladinu"
 
-#: ../gui/tcltk/menus/menu.tcl:297
+#: ../gui/tcltk/menus/menu.tcl:294
 msgid "Flow accumulation for massive grids"
 msgstr "Akumulace toku gridu"
 
-#: ../gui/tcltk/menus/menu.tcl:298
+#: ../gui/tcltk/menus/menu.tcl:295
 msgid "Generate flow lines for raster map"
 msgstr "Vytvoøit rozvodnice pro rastrovou vrstvu"
 
-#: ../gui/tcltk/menus/menu.tcl:299
+#: ../gui/tcltk/menus/menu.tcl:296
 msgid "SIMWE overland flow modeling"
 msgstr "Modelování povrchového odtoku SIMWE"
 
-#: ../gui/tcltk/menus/menu.tcl:300
+#: ../gui/tcltk/menus/menu.tcl:297
 msgid "SIMWE sediment erosion, transport, & deposition modeling"
 msgstr "Modelování SIMWE eroze, transport & deponování"
 
-#: ../gui/tcltk/menus/menu.tcl:301
+#: ../gui/tcltk/menus/menu.tcl:298
 msgid "Topographic index map"
 msgstr "Mapa s topografickım indexem"
 
-#: ../gui/tcltk/menus/menu.tcl:302
+#: ../gui/tcltk/menus/menu.tcl:299
 msgid "TOPMODEL simulation"
 msgstr "Simulace TOPMODEL"
 
-#: ../gui/tcltk/menus/menu.tcl:303
+#: ../gui/tcltk/menus/menu.tcl:300
 msgid "Watershed subbasins"
 msgstr "Rozvodnice subpovodí"
 
-#: ../gui/tcltk/menus/menu.tcl:304
+#: ../gui/tcltk/menus/menu.tcl:301
 msgid "Watershed analysis"
 msgstr "Analıza povodí"
 
-#: ../gui/tcltk/menus/menu.tcl:305
+#: ../gui/tcltk/menus/menu.tcl:302
 msgid "Watershed basin creation"
 msgstr "Vytvoøení rozvodnice povodí"
 
-#: ../gui/tcltk/menus/menu.tcl:307
+#: ../gui/tcltk/menus/menu.tcl:304
 msgid "Landscape structure modeling"
 msgstr "Modelování struktury krajiny"
 
-#: ../gui/tcltk/menus/menu.tcl:308
+#: ../gui/tcltk/menus/menu.tcl:305
 msgid "Set up sampling and analysis framework"
 msgstr "Nastavit vzorkování a analızu rámce"
 
-#: ../gui/tcltk/menus/menu.tcl:310
+#: ../gui/tcltk/menus/menu.tcl:307
 msgid "Analyze landscape characteristics"
 msgstr "Analıza charakteristik krajiny"
 
-#: ../gui/tcltk/menus/menu.tcl:311
+#: ../gui/tcltk/menus/menu.tcl:308
 msgid "Analyze landscape patch characteristics"
 msgstr "Analıza krajinıch \"patch\" charakteristik"
 
-#: ../gui/tcltk/menus/menu.tcl:312
+#: ../gui/tcltk/menus/menu.tcl:309
 msgid "Output landscape patch information"
 msgstr "Vıstupní krajinná \"patch\" informace"
 
-#: ../gui/tcltk/menus/menu.tcl:314
+#: ../gui/tcltk/menus/menu.tcl:311
 msgid "Wildfire modeling"
 msgstr "Modelování po¾áru"
 
-#: ../gui/tcltk/menus/menu.tcl:315
+#: ../gui/tcltk/menus/menu.tcl:312
 msgid "Generate rate of spread (ROS) maps"
 msgstr "Vytvoøit mapovou vrstvu rychlosti ¹íøení (ROS)"
 
-#: ../gui/tcltk/menus/menu.tcl:316
+#: ../gui/tcltk/menus/menu.tcl:313
 msgid "Generate least-cost spread paths"
 msgstr "Vytvoøit trasy s nejmen¹ím odporem ¹íøení"
 
-#: ../gui/tcltk/menus/menu.tcl:317
+#: ../gui/tcltk/menus/menu.tcl:314
 msgid "Simulate anisotropic spread phenomena"
 msgstr "Simulovat anisotropickı jev ¹íøení"
 
-#: ../gui/tcltk/menus/menu.tcl:320
+#: ../gui/tcltk/menus/menu.tcl:317
 msgid "Change category values and labels"
 msgstr "Modifikovat hodnoty kategorií a ¹títky"
 
-#: ../gui/tcltk/menus/menu.tcl:321
+#: ../gui/tcltk/menus/menu.tcl:318
 msgid "Edit category values of individual cells for displayed raster map"
 msgstr ""
 "Editovat hodnoty kategorií individuálních bunìk zobrazené rastrové vrstvy"
 
-#: ../gui/tcltk/menus/menu.tcl:324
+#: ../gui/tcltk/menus/menu.tcl:321
 msgid "Reclassify categories for areas of specified sizes"
 msgstr "Reklasifikovat kategorie ploch o specifikované velikosti"
 
-#: ../gui/tcltk/menus/menu.tcl:325
+#: ../gui/tcltk/menus/menu.tcl:322
 msgid "Reclassify categories using rules"
 msgstr "Reklasifikovat kategorie na základì pravidel"
 
-#: ../gui/tcltk/menus/menu.tcl:326
+#: ../gui/tcltk/menus/menu.tcl:323
 msgid "Reclassify categories using rules file"
 msgstr "Reklasifikovat kategorie na základì souboru s pravidly"
 
-#: ../gui/tcltk/menus/menu.tcl:328
+#: ../gui/tcltk/menus/menu.tcl:325
 msgid "Recode categories using rules (create new map)"
 msgstr "Pøekódovat kategorie na základì pravidel (vytvoøit novou mapu)"
 
-#: ../gui/tcltk/menus/menu.tcl:329
+#: ../gui/tcltk/menus/menu.tcl:326
 msgid "Recode categories using rules file (create new map)"
 msgstr ""
 "Pøekódovat kategorie na základì souboru s pravidly (vytvoøit novou mapu)"
 
-#: ../gui/tcltk/menus/menu.tcl:331
+#: ../gui/tcltk/menus/menu.tcl:328
 msgid "Rescale categories (create new map)"
 msgstr "Upravit rozsah kategorií (vytvoøit novou mapovou vrstvu)"
 
-#: ../gui/tcltk/menus/menu.tcl:332
+#: ../gui/tcltk/menus/menu.tcl:329
 msgid "Rescale categories with equalized histogram (create new map)"
 msgstr ""
 "Upravit rozsah kategorií vèetnì ekvalizovaného histogramu (vytvoøit novou "
 "mapovou vrstvu)"
 
-#: ../gui/tcltk/menus/menu.tcl:335
+#: ../gui/tcltk/menus/menu.tcl:332
 msgid "Generate concentric circles around points"
 msgstr "Vytvoøit soustøedné kruhy z danıch bodù"
 
-#: ../gui/tcltk/menus/menu.tcl:336
+#: ../gui/tcltk/menus/menu.tcl:333
 msgid "Generate random raster cells"
 msgstr "Vytvoøit rastrovou vrstvu s náhodnımi hodnotami"
 
-#: ../gui/tcltk/menus/menu.tcl:337
+#: ../gui/tcltk/menus/menu.tcl:334
 msgid "Generate random cells"
 msgstr "Vytvoøit rastrovou vrstvu s náhodnımi hodnotami"
 
-#: ../gui/tcltk/menus/menu.tcl:338
+#: ../gui/tcltk/menus/menu.tcl:335
 msgid "Generate random cells and vector points from raster map"
 msgstr "Vytvoøit rastrovou vrstvu a vektorové body s náhodnımi hodnotami"
 
-#: ../gui/tcltk/menus/menu.tcl:340
+#: ../gui/tcltk/menus/menu.tcl:337
 msgid "Generate surfaces"
 msgstr "Vytvoøit povrch"
 
-#: ../gui/tcltk/menus/menu.tcl:341
+#: ../gui/tcltk/menus/menu.tcl:338
 msgid "Generate density surface using moving Gausian kernal"
 msgstr "Vytvoø povrch s hustotou za pou¾ití pohyblivého Gaussova okna"
 
-#: ../gui/tcltk/menus/menu.tcl:342
+#: ../gui/tcltk/menus/menu.tcl:339
 msgid "Generate fractal surface"
 msgstr "Vytvoøit povrch na základì fraktálu"
 
-#: ../gui/tcltk/menus/menu.tcl:343
+#: ../gui/tcltk/menus/menu.tcl:340
 msgid "Generate gaussian deviates surface"
 msgstr "Vytvoø povrch Gaussovıch odchylek"
 
-#: ../gui/tcltk/menus/menu.tcl:344
+#: ../gui/tcltk/menus/menu.tcl:341
 msgid "Generate plane"
 msgstr "Vytvoøit rovinnı povrch"
 
-#: ../gui/tcltk/menus/menu.tcl:345
+#: ../gui/tcltk/menus/menu.tcl:342
 msgid "Generate random deviates surface"
 msgstr "Vytvoø náhodnı povrch"
 
-#: ../gui/tcltk/menus/menu.tcl:346
+#: ../gui/tcltk/menus/menu.tcl:343
 msgid "Generate random surface with spatial dependence"
 msgstr "Vytvoøit náhodnı povrch s prostorovım vztahem"
 
-#: ../gui/tcltk/menus/menu.tcl:348
+#: ../gui/tcltk/menus/menu.tcl:345
 msgid "Generate vector contour lines"
 msgstr "Vytvoøit vektorové vrstevnice"
 
-#: ../gui/tcltk/menus/menu.tcl:349
+#: ../gui/tcltk/menus/menu.tcl:346
 msgid "Interpolate surfaces"
 msgstr "Interpolovat povrch"
 
-#: ../gui/tcltk/menus/menu.tcl:350
+#: ../gui/tcltk/menus/menu.tcl:347
 msgid "Bilinear interpolation from raster points"
 msgstr "Bilineární interpolace z rastrovıch bunìk"
 
-#: ../gui/tcltk/menus/menu.tcl:351
+#: ../gui/tcltk/menus/menu.tcl:348
 msgid "Inverse distance weighted interpolation from raster points"
 msgstr "Interpolace IDW (inverse distance weighted) rastrovıch bodù"
 
-#: ../gui/tcltk/menus/menu.tcl:352
+#: ../gui/tcltk/menus/menu.tcl:349
 msgid "Interpolation from raster contours"
 msgstr "Interpolace z rastrovıch vrstevnic"
 
-#: ../gui/tcltk/menus/menu.tcl:354
+#: ../gui/tcltk/menus/menu.tcl:351
 msgid "Inverse distance weighted interpolation from vector points"
 msgstr "Interpolace IDW (inverse distance weighted) vektorovıch bodù"
 
-#: ../gui/tcltk/menus/menu.tcl:355
+#: ../gui/tcltk/menus/menu.tcl:352
 msgid "Regularized spline tension interpolation from vector points or contours"
 msgstr ""
 "Interpolace RST (regularized spline tension) vektorovıch bodù nebo vrstevnic"
 
-#: ../gui/tcltk/menus/menu.tcl:357
+#: ../gui/tcltk/menus/menu.tcl:354
 msgid "Fill NULL cells by interpolation using regularized spline tension"
 msgstr ""
 "Vyplnit buòky s prázdnou hodnotou vyu¾itím interpolace RST (regularized "
 "spline tension)"
 
-#: ../gui/tcltk/menus/menu.tcl:360 ../gui/tcltk/menus/menu.tcl:464
-#: ../gui/tcltk/menus/menu.tcl:520
+#: ../gui/tcltk/menus/menu.tcl:357 ../gui/tcltk/menus/menu.tcl:462
+#: ../gui/tcltk/menus/menu.tcl:518
 msgid "Reports and statistics"
 msgstr "Zprávy a statistiky"
 
-#: ../gui/tcltk/menus/menu.tcl:361 ../gui/tcltk/menus/menu.tcl:521
+#: ../gui/tcltk/menus/menu.tcl:358 ../gui/tcltk/menus/menu.tcl:519
 msgid "Report basic file information"
 msgstr "Vypsat základní informace o souboru"
 
-#: ../gui/tcltk/menus/menu.tcl:362
+#: ../gui/tcltk/menus/menu.tcl:359
 msgid "Report category labels and values"
 msgstr "Vypsat popisky a hodnoty kategorii"
 
-#: ../gui/tcltk/menus/menu.tcl:364
+#: ../gui/tcltk/menus/menu.tcl:361
 msgid "General statistics"
 msgstr "Základní statistiky"
 
-#: ../gui/tcltk/menus/menu.tcl:365
+#: ../gui/tcltk/menus/menu.tcl:362
 msgid "Range of all category values"
 msgstr "Rozsah hodnot kategorii"
 
-#: ../gui/tcltk/menus/menu.tcl:366
+#: ../gui/tcltk/menus/menu.tcl:363
 msgid "Sum all cell category values"
 msgstr "Souèet v¹ech hodnot kategorií bunìk"
 
-#: ../gui/tcltk/menus/menu.tcl:367
+#: ../gui/tcltk/menus/menu.tcl:364
 msgid "Sum area by map and category"
 msgstr "Suma vımìry ploch podle kategorií a v mapì"
 
-#: ../gui/tcltk/menus/menu.tcl:368
+#: ../gui/tcltk/menus/menu.tcl:365
 msgid "Summary statistics for clumped cells (works with r.clump)"
 msgstr "Souhrnná statistika spojenıch bunìk (po pou¾ití r.clump)"
 
-#: ../gui/tcltk/menus/menu.tcl:369
+#: ../gui/tcltk/menus/menu.tcl:366
 msgid "Total surface area corrected for topography"
 msgstr "Celková plocha povrchu s topografickou korekcí"
 
-#: ../gui/tcltk/menus/menu.tcl:370 ../gui/tcltk/menus/menu.tcl:468
+#: ../gui/tcltk/menus/menu.tcl:367 ../gui/tcltk/menus/menu.tcl:466
 msgid "Univariate statistics"
 msgstr "Univariatní statistika"
 
-#: ../gui/tcltk/menus/menu.tcl:371
+#: ../gui/tcltk/menus/menu.tcl:368
 msgid "Univariate statistics (script version)"
 msgstr "Univariatní statistika (skriptová verze)"
 
-#: ../gui/tcltk/menus/menu.tcl:373
+#: ../gui/tcltk/menus/menu.tcl:370
 msgid "Sample values along transects"
 msgstr "Kontrolní hodnoty profilu"
 
-#: ../gui/tcltk/menus/menu.tcl:374
+#: ../gui/tcltk/menus/menu.tcl:371
 msgid "Sample values along transects (use azimuth, distance)"
 msgstr "Kontrolní hdonoty profilu (pou¾ít azimut, vzdálenost)"
 
-#: ../gui/tcltk/menus/menu.tcl:376
+#: ../gui/tcltk/menus/menu.tcl:373
 msgid "Covariance/correlation"
 msgstr "Kovariance/korelace"
 
-#: ../gui/tcltk/menus/menu.tcl:377
+#: ../gui/tcltk/menus/menu.tcl:374
 msgid "Linear regression between 2 maps"
 msgstr "Lineární regrese mezi 2 mapovımi vrstvami"
 
-#: ../gui/tcltk/menus/menu.tcl:378
+#: ../gui/tcltk/menus/menu.tcl:375
 msgid "Mutual category occurences (coincidence)"
 msgstr "Spoleènı vıskyt kategorie (koincidence)"
 
-#: ../gui/tcltk/menus/menu.tcl:381
+#: ../gui/tcltk/menus/menu.tcl:378
 msgid "&Vector"
 msgstr "&Vectorová vrstva"
 
-#: ../gui/tcltk/menus/menu.tcl:383
+#: ../gui/tcltk/menus/menu.tcl:380
 msgid "Digitize"
 msgstr "Digitalizace"
 
-#: ../gui/tcltk/menus/menu.tcl:385
+#: ../gui/tcltk/menus/menu.tcl:382
 msgid "Create/rebuild topology"
 msgstr "Vytvoøit/znovu sestavit topologii"
 
-#: ../gui/tcltk/menus/menu.tcl:386
+#: ../gui/tcltk/menus/menu.tcl:383
 msgid "Clean vector files"
 msgstr "Vyèistit vektorové soubory"
 
-#: ../gui/tcltk/menus/menu.tcl:388
-msgid "Break lines at intersections"
-msgstr "Pøeru¹it linie v pruseciku"
+#: ../gui/tcltk/menus/menu.tcl:384
+msgid "Add missing centroids"
+msgstr "Pøidat chybìjící centroidy"
 
-#: ../gui/tcltk/menus/menu.tcl:389
+#: ../gui/tcltk/menus/menu.tcl:386
 msgid "Build polylines from adjacent segments"
 msgstr "Sestavit polygony ze sousedních segmentù"
 
-#: ../gui/tcltk/menus/menu.tcl:390
+#: ../gui/tcltk/menus/menu.tcl:387
 msgid "Split polylines into segments"
 msgstr "Rozdìlit polygony na segmenty"
 
-#: ../gui/tcltk/menus/menu.tcl:391
+#: ../gui/tcltk/menus/menu.tcl:388
 msgid "Create lines parallel to existing lines"
 msgstr "Vytvoøit linie rovnobì¾né s existující linií"
 
-#: ../gui/tcltk/menus/menu.tcl:393
+#: ../gui/tcltk/menus/menu.tcl:389
+msgid "Dissolve common boundaries"
+msgstr "Rozlo¾í spoleèné hranice "
+
+#: ../gui/tcltk/menus/menu.tcl:391
 msgid "Convert vector feature types"
 msgstr "Konvertovat typy vektorovıch prvkù"
 
-#: ../gui/tcltk/menus/menu.tcl:394
+#: ../gui/tcltk/menus/menu.tcl:392
 msgid "Convert 2D vector to 3D by sampling raster"
 msgstr "Konvertovat 2D vektorovou vrstvu na 3D pomocí vzorkování rastru"
 
-#: ../gui/tcltk/menus/menu.tcl:395
+#: ../gui/tcltk/menus/menu.tcl:393
 msgid "Extrude 2D vector into 3D vector"
 msgstr "Vytvoøit 3D vektorovı objekt na základì 2D vektorového obrysu"
 
-#: ../gui/tcltk/menus/menu.tcl:397
+#: ../gui/tcltk/menus/menu.tcl:395
 msgid "Create text label file for vector features"
 msgstr "Vytvoøit textovı popisek pro vektorové prvky"
 
-#: ../gui/tcltk/menus/menu.tcl:399
+#: ../gui/tcltk/menus/menu.tcl:397
 msgid "Reproject vector from other location"
 msgstr "Transformovat vektorovou vrstvu z jiné lokace"
 
-#: ../gui/tcltk/menus/menu.tcl:401
+#: ../gui/tcltk/menus/menu.tcl:399
 msgid "Vector<->database connections"
 msgstr "Spojení vektorová vrstva<->databáze"
 
-#: ../gui/tcltk/menus/menu.tcl:402
+#: ../gui/tcltk/menus/menu.tcl:400
 msgid "Create new vector as link to external OGR layer"
 msgstr "Vytvoøit novou vektorovou vrstvu jako link na externí vrstvu OGR"
 
-#: ../gui/tcltk/menus/menu.tcl:403
+#: ../gui/tcltk/menus/menu.tcl:401
 msgid "Set database connection for vector attributes"
 msgstr "Nastavit databázové spojení pro vektorové atributy"
 
-#: ../gui/tcltk/menus/menu.tcl:405
+#: ../gui/tcltk/menus/menu.tcl:403
 msgid "Rectify and georeference vector map"
 msgstr "Rektifikovat a georeferencovat vektorovou vrstvu"
 
-#: ../gui/tcltk/menus/menu.tcl:407
+#: ../gui/tcltk/menus/menu.tcl:405
 msgid "Query by attributes"
 msgstr "Atributovı dotaz"
 
-#: ../gui/tcltk/menus/menu.tcl:409
+#: ../gui/tcltk/menus/menu.tcl:407
 msgid "Query by map features"
 msgstr "Dotaz na prvky mapové vrstvy"
 
-#: ../gui/tcltk/menus/menu.tcl:411
+#: ../gui/tcltk/menus/menu.tcl:409
 msgid "Create vector buffers"
 msgstr "Vytvoøit vektorovou obalovou zónu"
 
-#: ../gui/tcltk/menus/menu.tcl:412
+#: ../gui/tcltk/menus/menu.tcl:410
 msgid "Linear referencing for vectors"
 msgstr "Lineární referencování pro vektorové vrstvy"
 
-#: ../gui/tcltk/menus/menu.tcl:413
+#: ../gui/tcltk/menus/menu.tcl:411
 msgid "Create linear reference system"
 msgstr "Vytvoøit lineární referenèní systém"
 
-#: ../gui/tcltk/menus/menu.tcl:414
+#: ../gui/tcltk/menus/menu.tcl:412
 msgid "Create stationing from imput lines, and linear reference system"
 msgstr "Vytvoøit stanièení ze vstupních linií a lineární referenèní systém"
 
-#: ../gui/tcltk/menus/menu.tcl:415
+#: ../gui/tcltk/menus/menu.tcl:413
 msgid ""
 "Create points/segments from input lines, linear reference system and "
 "positions read from stdin"
@@ -2579,7 +2593,7 @@ msgstr ""
 "Vytvoøit body/segmenty ze vstupních linií, lineární referenèní systém a "
 "pozice naètené ze standardního vstupu (stdin)"
 
-#: ../gui/tcltk/menus/menu.tcl:416
+#: ../gui/tcltk/menus/menu.tcl:414
 msgid ""
 "Find line id and real km+offset for given points in vector map using linear "
 "reference system"
@@ -2587,420 +2601,420 @@ msgstr ""
 "Nalézt id linie a skuteèné km+odsazení pro dané body ve vektorové vrstvì s "
 "vyu¾itím liniárního referenèního systému"
 
-#: ../gui/tcltk/menus/menu.tcl:419
+#: ../gui/tcltk/menus/menu.tcl:417
 msgid "Locate nearest features to points or centroids"
 msgstr "Lokalizovat nejbli¾¹í prvky od daného bodu èi centroidu"
 
-#: ../gui/tcltk/menus/menu.tcl:420
+#: ../gui/tcltk/menus/menu.tcl:418
 msgid "Generate Thiessen polygons around points (Voronoi diagram)"
 msgstr "Vytvoøit Thuessenovy polygony v bodové vrstvì (Voronoi diagram)"
 
-#: ../gui/tcltk/menus/menu.tcl:421
+#: ../gui/tcltk/menus/menu.tcl:419
 msgid "Connect points to create Delaunay triangles"
 msgstr "Spojit body a vytvoøit Delaunayovu triangulaèní sí»"
 
-#: ../gui/tcltk/menus/menu.tcl:423
+#: ../gui/tcltk/menus/menu.tcl:421
 msgid "Network analysis"
 msgstr "Sí»ová analıza"
 
-#: ../gui/tcltk/menus/menu.tcl:424
+#: ../gui/tcltk/menus/menu.tcl:422
 msgid "Allocate subnets"
 msgstr "Alokovat podsítì"
 
-#: ../gui/tcltk/menus/menu.tcl:425
+#: ../gui/tcltk/menus/menu.tcl:423
 msgid "Network maintenance"
 msgstr "Správa sítì"
 
-#: ../gui/tcltk/menus/menu.tcl:426
+#: ../gui/tcltk/menus/menu.tcl:424
 msgid "Shortest route"
 msgstr "Nejkrat¹í cesta"
 
-#: ../gui/tcltk/menus/menu.tcl:427
+#: ../gui/tcltk/menus/menu.tcl:425
 msgid "Shortest route (visualization only)"
 msgstr "Nejkrat¹í cesta (pouze vizualizace)"
 
-#: ../gui/tcltk/menus/menu.tcl:428
+#: ../gui/tcltk/menus/menu.tcl:426
 msgid "Split net to bands between cost isolines"
 msgstr "Rozdìlit sí» do skupin mezi izoliniemi nákladù"
 
-#: ../gui/tcltk/menus/menu.tcl:429
+#: ../gui/tcltk/menus/menu.tcl:427
 msgid "Steiner tree"
 msgstr "Steinerùv strom"
 
-#: ../gui/tcltk/menus/menu.tcl:430
+#: ../gui/tcltk/menus/menu.tcl:428
 msgid "Traveling salesman analysis"
 msgstr "Problém obchodního cestujícího"
 
-#: ../gui/tcltk/menus/menu.tcl:433
+#: ../gui/tcltk/menus/menu.tcl:431
 msgid "Overlay/combine 2 vector maps"
 msgstr "Pøekrıt/kombinovat 2 vektorové vrstvy"
 
-#: ../gui/tcltk/menus/menu.tcl:434
+#: ../gui/tcltk/menus/menu.tcl:432
 msgid "Patch multiple maps (combine)"
 msgstr "Spojit rùzné mapové vrstvy (kombinace)"
 
-#: ../gui/tcltk/menus/menu.tcl:436
+#: ../gui/tcltk/menus/menu.tcl:434
 msgid "Generate area feature for extent of current region"
 msgstr "Vytvoøit plochu pokrıvající aktuální region"
 
-#: ../gui/tcltk/menus/menu.tcl:437
+#: ../gui/tcltk/menus/menu.tcl:435
 msgid "Generate rectangular vector grid"
 msgstr "Vytvoøit pravoúhlou vektorovou møí¾ku"
 
-#: ../gui/tcltk/menus/menu.tcl:439
+#: ../gui/tcltk/menus/menu.tcl:437
 msgid "Change attributes"
 msgstr "Zmìnit atributy"
 
-#: ../gui/tcltk/menus/menu.tcl:440
+#: ../gui/tcltk/menus/menu.tcl:438
 msgid "Attach, delete, or report categories"
 msgstr "Pøipojit, odstranit a vypsat kategorie"
 
-#: ../gui/tcltk/menus/menu.tcl:441
+#: ../gui/tcltk/menus/menu.tcl:439
 msgid "Reclassify features using rules file"
 msgstr "Reklasifikovat prvky na základì souboru s pravidly"
 
-#: ../gui/tcltk/menus/menu.tcl:444
+#: ../gui/tcltk/menus/menu.tcl:442
 msgid "Work with vector points"
 msgstr "Pracovat s vektorovımi body"
 
-#: ../gui/tcltk/menus/menu.tcl:445
+#: ../gui/tcltk/menus/menu.tcl:443
 msgid "Generate points"
 msgstr "Vytvoøit bodovou vrstvu"
 
-#: ../gui/tcltk/menus/menu.tcl:446
+#: ../gui/tcltk/menus/menu.tcl:444
 msgid "Generate points from database with x/y coordinates"
 msgstr "Vytvoøit bodovou vrstvu na základì souøadnic x/y ulo¾enıch v databázi"
 
-#: ../gui/tcltk/menus/menu.tcl:447
+#: ../gui/tcltk/menus/menu.tcl:445
 msgid "Generate random points"
 msgstr "Vytvoøit náhodnou bodovou vrstvu"
 
-#: ../gui/tcltk/menus/menu.tcl:448
+#: ../gui/tcltk/menus/menu.tcl:446
 msgid "Random location perturbations of points"
 msgstr "Náhodná lokální pertubace bodù"
 
-#: ../gui/tcltk/menus/menu.tcl:450
+#: ../gui/tcltk/menus/menu.tcl:448
 msgid "Generate areas from points"
 msgstr "Vytvoøit plochy z bodovıch dat"
 
-#: ../gui/tcltk/menus/menu.tcl:451
+#: ../gui/tcltk/menus/menu.tcl:449
 msgid "Generate convex hull for point set"
 msgstr "Vytvoøit konvexní obálku bodové vrstvy"
 
-#: ../gui/tcltk/menus/menu.tcl:452
+#: ../gui/tcltk/menus/menu.tcl:450
 msgid "Generate Delaunay triangles for point set"
 msgstr "Vytvoøit Delaunayovu triangulaèní sí» bodové vrstvy"
 
-#: ../gui/tcltk/menus/menu.tcl:453
+#: ../gui/tcltk/menus/menu.tcl:451
 msgid "Generate Voronoi diagram/Thiessen polygons for point set"
 msgstr "Vytvoøit Voronoi diagram/Thiessenovy polygony bodové vrstvy"
 
-#: ../gui/tcltk/menus/menu.tcl:455
+#: ../gui/tcltk/menus/menu.tcl:453
 msgid "Sample raster maps"
 msgstr "Vzorkovat rastrové vrstvy"
 
-#: ../gui/tcltk/menus/menu.tcl:456
+#: ../gui/tcltk/menus/menu.tcl:454
 msgid "Calculate statistics for raster map overlain by vector map"
 msgstr "Sestavit statistiku rastrové vrstvy pøekryté vektorovou vrstvou"
 
-#: ../gui/tcltk/menus/menu.tcl:457
+#: ../gui/tcltk/menus/menu.tcl:455
 msgid "Sample raster map at point locations"
 msgstr "Vzorkovat rastrovou vrstvu z daného bodu"
 
-#: ../gui/tcltk/menus/menu.tcl:458
+#: ../gui/tcltk/menus/menu.tcl:456
 msgid "Sample raster neighborhood around points"
 msgstr "Vzorkovat okolí v rastrové vrstvì v okolí daného bodu"
 
-#: ../gui/tcltk/menus/menu.tcl:460
+#: ../gui/tcltk/menus/menu.tcl:458
 msgid "Partition points into test/training sets for k-fold cross validatation"
 msgstr "Body do testovacích/tréningovıch souborù pro k-fold validaci"
 
-#: ../gui/tcltk/menus/menu.tcl:461
+#: ../gui/tcltk/menus/menu.tcl:459
 msgid "Transfer attribute data from queried vector map to points"
 msgstr "Pøevést atributová data z dotazované vektorové vrstvy na body"
 
-#: ../gui/tcltk/menus/menu.tcl:465
+#: ../gui/tcltk/menus/menu.tcl:463
 msgid "Basic information"
 msgstr "Základní informace"
 
-#: ../gui/tcltk/menus/menu.tcl:466
+#: ../gui/tcltk/menus/menu.tcl:464
 msgid "Load vector attributes to database or create reports"
 msgstr "Naèíst vektorové atributy do databáze nebo vytvoøit zprávu"
 
-#: ../gui/tcltk/menus/menu.tcl:467
+#: ../gui/tcltk/menus/menu.tcl:465
 msgid "Report areas for vector attribute categories"
 msgstr "Zpráva o plochách pro kategorie atributù"
 
-#: ../gui/tcltk/menus/menu.tcl:470
+#: ../gui/tcltk/menus/menu.tcl:468
 msgid "Test normality of point distribution"
 msgstr "Test normality rozlo¾ení bodù"
 
-#: ../gui/tcltk/menus/menu.tcl:471
+#: ../gui/tcltk/menus/menu.tcl:469
 msgid "Calculate stats for raster map underlying vector objects"
 msgstr ""
 "Sestavit statistiku pro rastrovou vrstvu pøekrıvající vektorové objekty"
 
-#: ../gui/tcltk/menus/menu.tcl:472
+#: ../gui/tcltk/menus/menu.tcl:470
 msgid "Indices of point counts in quadrats"
 msgstr "Seznamy poètu bodù v kvadrantech"
 
-#: ../gui/tcltk/menus/menu.tcl:475
+#: ../gui/tcltk/menus/menu.tcl:473
 msgid "&Image"
 msgstr "&Obrazovı soubor"
 
-#: ../gui/tcltk/menus/menu.tcl:476
+#: ../gui/tcltk/menus/menu.tcl:474
 msgid "Develop images and groups"
 msgstr "Vytvoøit obrazovı soubor a skupiny"
 
-#: ../gui/tcltk/menus/menu.tcl:477
+#: ../gui/tcltk/menus/menu.tcl:475
 msgid "Create/edit imagery group"
 msgstr "Vytvoøit/modifikovat obrazovou skupinu"
 
-#: ../gui/tcltk/menus/menu.tcl:478
+#: ../gui/tcltk/menus/menu.tcl:476
 msgid "Target imagery group"
 msgstr "Cílová obrazová skupina"
 
-#: ../gui/tcltk/menus/menu.tcl:480
+#: ../gui/tcltk/menus/menu.tcl:478
 msgid "Mosaic up to 4 adjacent images"
 msgstr "Vytvoøit mozaiku více jak 4 sousední obrazové soubory"
 
-#: ../gui/tcltk/menus/menu.tcl:482
+#: ../gui/tcltk/menus/menu.tcl:480
 msgid "Manage image colors"
 msgstr "Sprava barevné ¹kály obrazovıch dat"
 
-#: ../gui/tcltk/menus/menu.tcl:483
+#: ../gui/tcltk/menus/menu.tcl:481
 msgid ""
 "Color balance and enhance color tables of multiband imagery for rgb display"
 msgstr ""
 "Zvıraznìní a vyrovnání barev tabulky barev pro multikanálová obrazová data"
 
-#: ../gui/tcltk/menus/menu.tcl:484
+#: ../gui/tcltk/menus/menu.tcl:482
 msgid ""
 "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
 msgstr ""
 "Pøevést obrazovı soubor z HIS (Hue/Intensity/Saturation) na RGB (Red/Green/"
 "Blue)"
 
-#: ../gui/tcltk/menus/menu.tcl:485
+#: ../gui/tcltk/menus/menu.tcl:483
 msgid ""
 "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
 msgstr ""
 "Pøevést obrazovı soubor z RGB (Red/Green/Blue) na HIS (Hue/Intensity/"
 "Saturation)"
 
-#: ../gui/tcltk/menus/menu.tcl:487
+#: ../gui/tcltk/menus/menu.tcl:485
 msgid "Rectify and georeference image group"
 msgstr "Rektifikovat a georeferencovat obrazovou skupinu"
 
-#: ../gui/tcltk/menus/menu.tcl:488
+#: ../gui/tcltk/menus/menu.tcl:486
 msgid "Set ground control points (GCP's) from raster map or keyboard entry"
 msgstr ""
 "Oznaèit vlícovací body (ground control points - GCP) na podkladové rastrové "
 "vrstvì nebo pomocí klávesnice"
 
-#: ../gui/tcltk/menus/menu.tcl:490
+#: ../gui/tcltk/menus/menu.tcl:488
 msgid "Set ground control points (GCP's) from vector map or keyboard entry"
 msgstr ""
 "Oznaèit vlícovací body (ground control points - GCP) na podkladové vektorové "
 "vrstvì nebo pomocí klávesnice"
 
-#: ../gui/tcltk/menus/menu.tcl:492
+#: ../gui/tcltk/menus/menu.tcl:490
 msgid "Affine and Polynomial rectification (rubber sheet)"
 msgstr "Afinní a polynomní rektifikace"
 
-#: ../gui/tcltk/menus/menu.tcl:493
+#: ../gui/tcltk/menus/menu.tcl:491
 msgid "Ortho photo rectification"
 msgstr "Ortofoto rektifikace"
 
-#: ../gui/tcltk/menus/menu.tcl:496
+#: ../gui/tcltk/menus/menu.tcl:494
 msgid "Brovey transformation and pan sharpening"
 msgstr "Broveyova transformace a ostøení"
 
-#: ../gui/tcltk/menus/menu.tcl:497
+#: ../gui/tcltk/menus/menu.tcl:495
 msgid "Classify image"
 msgstr "Klasifikace obrazovıch dat"
 
-#: ../gui/tcltk/menus/menu.tcl:498
+#: ../gui/tcltk/menus/menu.tcl:496
 msgid "Clustering input for unsupervised classification"
 msgstr "Metoda shlukování pro neøízenou klasifikaci"
 
-#: ../gui/tcltk/menus/menu.tcl:500
+#: ../gui/tcltk/menus/menu.tcl:498
 msgid "Maximum likelyhood classification (MLC)"
 msgstr "Gaussùv klasifikátor MLC (Maximum likelihood classification)"
 
-#: ../gui/tcltk/menus/menu.tcl:501
+#: ../gui/tcltk/menus/menu.tcl:499
 msgid "Sequential maximum a posteriory classification (SMAP)"
 msgstr "Klasifikátor SMAP (Sequential maximum a posteriory)"
 
-#: ../gui/tcltk/menus/menu.tcl:503
+#: ../gui/tcltk/menus/menu.tcl:501
 msgid "Interactive input for supervised classification"
 msgstr "Interativní vstup pro øízenou klasifikaci"
 
-#: ../gui/tcltk/menus/menu.tcl:504
+#: ../gui/tcltk/menus/menu.tcl:502
 msgid "Non-interactive input for supervised classification (MLC)"
 msgstr "Neinteraktivní vstup pro øízenou klasifikaci (MLC)"
 
-#: ../gui/tcltk/menus/menu.tcl:505
+#: ../gui/tcltk/menus/menu.tcl:503
 msgid "Non-interactive input for supervised classification (SMAP)"
 msgstr "Neinteraktivní vstup pro øízenou klasifikaci (SMAP)"
 
-#: ../gui/tcltk/menus/menu.tcl:507
+#: ../gui/tcltk/menus/menu.tcl:505
 msgid "Filter image"
 msgstr "Filrace obrazu"
 
-#: ../gui/tcltk/menus/menu.tcl:508
+#: ../gui/tcltk/menus/menu.tcl:506
 msgid "Zero edge crossing detection"
 msgstr "Detekce hran (zero edge crossing)"
 
-#: ../gui/tcltk/menus/menu.tcl:509
+#: ../gui/tcltk/menus/menu.tcl:507
 msgid "User defined matrix/convolving filter"
 msgstr "U¾ivatelská definice maticového filtru"
 
-#: ../gui/tcltk/menus/menu.tcl:511
+#: ../gui/tcltk/menus/menu.tcl:509
 msgid "Spectral response"
 msgstr "Spektrální odezva"
 
-#: ../gui/tcltk/menus/menu.tcl:512
+#: ../gui/tcltk/menus/menu.tcl:510
 msgid "Tassled cap vegetation index"
 msgstr "Vegetaèní index (tassled cap)"
 
-#: ../gui/tcltk/menus/menu.tcl:513
+#: ../gui/tcltk/menus/menu.tcl:511
 msgid "Transform image"
 msgstr "Transformace obrazu"
 
-#: ../gui/tcltk/menus/menu.tcl:514
+#: ../gui/tcltk/menus/menu.tcl:512
 msgid "Canonical component"
 msgstr "Kanonické komponenty"
 
-#: ../gui/tcltk/menus/menu.tcl:515
+#: ../gui/tcltk/menus/menu.tcl:513
 msgid "Principal component"
 msgstr "Hlavní komponenty"
 
-#: ../gui/tcltk/menus/menu.tcl:516
+#: ../gui/tcltk/menus/menu.tcl:514
 msgid "Fast Fourier Transform"
 msgstr "Fourierova transformace"
 
-#: ../gui/tcltk/menus/menu.tcl:517
+#: ../gui/tcltk/menus/menu.tcl:515
 msgid "Inverse Fast Fourier Transform"
 msgstr "Inverzní Fourierova transformace"
 
-#: ../gui/tcltk/menus/menu.tcl:522
+#: ../gui/tcltk/menus/menu.tcl:520
 msgid "Range of image values"
 msgstr "Rozsah obrazovıch hodnot"
 
-#: ../gui/tcltk/menus/menu.tcl:524
+#: ../gui/tcltk/menus/menu.tcl:522
 msgid "Bit pattern comparison for ID of low quality pixels"
 msgstr "Korelace (bit pattern comparsion) pro ID pixelù s nízkou kvalitou"
 
-#: ../gui/tcltk/menus/menu.tcl:525
+#: ../gui/tcltk/menus/menu.tcl:523
 msgid "Kappa classification accuracy assessment"
 msgstr "Urèení pøesnosti kappa klasifikace"
 
-#: ../gui/tcltk/menus/menu.tcl:526
+#: ../gui/tcltk/menus/menu.tcl:524
 msgid "Optimum index factor for LandSat TM"
 msgstr "Faktor optimálního indexu pro LandSat TM"
 
-#: ../gui/tcltk/menus/menu.tcl:529
+#: ../gui/tcltk/menus/menu.tcl:527
 msgid "&Grid3D"
 msgstr "3D &Grid"
 
-#: ../gui/tcltk/menus/menu.tcl:530
+#: ../gui/tcltk/menus/menu.tcl:528
 msgid "Develop grid3D volumes"
 msgstr "Vytvoøit grid3D volumes"
 
-#: ../gui/tcltk/menus/menu.tcl:531
+#: ../gui/tcltk/menus/menu.tcl:529
 msgid "Manage nulls for grid3D volume"
 msgstr "Správa prázdnıch hodnot pro grid3D volume"
 
-#: ../gui/tcltk/menus/menu.tcl:532
+#: ../gui/tcltk/menus/menu.tcl:530
 msgid "Manage timestamp for grid3D volume"
 msgstr "Správa èasovıch znaèek pro grid3D volume"
 
-#: ../gui/tcltk/menus/menu.tcl:534
+#: ../gui/tcltk/menus/menu.tcl:532
 msgid "Create 3D mask for grid3D operations"
 msgstr "Vytvoøit 3D masku (mask) pro operace na grid3D"
 
-#: ../gui/tcltk/menus/menu.tcl:535
+#: ../gui/tcltk/menus/menu.tcl:533
 msgid "Create 2D raster cross section from grid3d volume"
 msgstr "Vytvoøí 2D rastrovou mapu protnutí 3D-rastrovıch objemù"
 
-#: ../gui/tcltk/menus/menu.tcl:536
+#: ../gui/tcltk/menus/menu.tcl:534
 msgid "Map calculator for grid3D operations"
 msgstr "Mapovı kalkulátor pro operace grid3D"
 
-#: ../gui/tcltk/menus/menu.tcl:537
+#: ../gui/tcltk/menus/menu.tcl:535
 msgid "Interpolate volume from vector points using splines"
 msgstr "Interpolovat volume z vektorovıch bodù pomocí RST (splines)"
 
-#: ../gui/tcltk/menus/menu.tcl:538
+#: ../gui/tcltk/menus/menu.tcl:536
 msgid "Report and Statistics"
 msgstr "Vıpis a statistiky"
 
-#: ../gui/tcltk/menus/menu.tcl:539
+#: ../gui/tcltk/menus/menu.tcl:537
 msgid "Display information about grid3D volume"
 msgstr "Zobrazit informace o grid3D volume"
 
-#: ../gui/tcltk/menus/menu.tcl:542
+#: ../gui/tcltk/menus/menu.tcl:540
 msgid "&Databases"
 msgstr "&Databáze"
 
-#: ../gui/tcltk/menus/menu.tcl:543
+#: ../gui/tcltk/menus/menu.tcl:541
 msgid "Manage database"
 msgstr "Správa databáze"
 
-#: ../gui/tcltk/menus/menu.tcl:544
+#: ../gui/tcltk/menus/menu.tcl:542
 msgid "Connect to database"
 msgstr "Spojení s databází"
 
-#: ../gui/tcltk/menus/menu.tcl:545
+#: ../gui/tcltk/menus/menu.tcl:543
 msgid "Login to database"
 msgstr "Pøihlá¹ení do databáze"
 
-#: ../gui/tcltk/menus/menu.tcl:547
+#: ../gui/tcltk/menus/menu.tcl:545
 msgid "Copy table"
 msgstr "Kopírovat tabulku"
 
-#: ../gui/tcltk/menus/menu.tcl:548
+#: ../gui/tcltk/menus/menu.tcl:546
 msgid "Add columns to table"
 msgstr "Pøidat sloupec do tabulky"
 
-#: ../gui/tcltk/menus/menu.tcl:549
+#: ../gui/tcltk/menus/menu.tcl:547
 msgid "Change values in a column"
 msgstr "Zmìnit hodnoty ve sloupci"
 
-#: ../gui/tcltk/menus/menu.tcl:550
+#: ../gui/tcltk/menus/menu.tcl:548
 msgid "Test database"
 msgstr "Test spojení s databází"
 
-#: ../gui/tcltk/menus/menu.tcl:552
+#: ../gui/tcltk/menus/menu.tcl:550
 msgid "Database information"
 msgstr "Informace o databázi"
 
-#: ../gui/tcltk/menus/menu.tcl:553
+#: ../gui/tcltk/menus/menu.tcl:551
 msgid "Describe table"
 msgstr "Popsat tabulku"
 
-#: ../gui/tcltk/menus/menu.tcl:554
+#: ../gui/tcltk/menus/menu.tcl:552
 msgid "List columns"
 msgstr "Seznam sloupcù"
 
-#: ../gui/tcltk/menus/menu.tcl:555
+#: ../gui/tcltk/menus/menu.tcl:553
 msgid "List drivers"
 msgstr "Seznam ovladaèù"
 
-#: ../gui/tcltk/menus/menu.tcl:556
+#: ../gui/tcltk/menus/menu.tcl:554
 msgid "List tables"
 msgstr "Seznam tabulek"
 
-#: ../gui/tcltk/menus/menu.tcl:560
+#: ../gui/tcltk/menus/menu.tcl:558
 msgid "Query data (SQL select)"
 msgstr "Datovı dotaz (SQL select)"
 
-#: ../gui/tcltk/menus/menu.tcl:561
+#: ../gui/tcltk/menus/menu.tcl:559
 msgid "Execute SQL statement"
 msgstr "Vykonat SQL pøíkaz"
 
-#: ../gui/tcltk/menus/menu.tcl:570
+#: ../gui/tcltk/menus/menu.tcl:568
 msgid "&Xtns"
 msgstr "&Xtns"
 
@@ -3037,7 +3051,7 @@ msgid "Path to georeferenced file"
 msgstr "Cesta ke georeferencovanému souboru"
 
 #: ../lib/init/file_option.tcl:85 ../lib/init/file_option.tcl:130
-#: ../lib/init/gis_set.tcl:357
+#: ../lib/init/gis_set.tcl:368 ../lib/init/gis_set.tcl:385
 msgid "Browse..."
 msgstr "Prohlí¾et..."
 
@@ -3148,38 +3162,38 @@ msgstr ""
 "knihovnou GDAL (rastrová vrstva) nebo OGR (vektorová vrstva)\n"
 "\n"
 
-#: ../lib/init/file_option.tcl:205 ../lib/init/gis_set.tcl:154
+#: ../lib/init/file_option.tcl:205 ../lib/init/gis_set.tcl:160
 msgid "OK"
 msgstr "OK"
 
-#: ../lib/init/gis_set.tcl:130
+#: ../lib/init/gis_set.tcl:136
 msgid "New GIS data directory"
 msgstr "Novı adresáø s GIS daty"
 
-#: ../lib/init/gis_set.tcl:284
+#: ../lib/init/gis_set.tcl:290
 #, tcl-format
 msgid "GRASS %s Startup"
 msgstr "GRASS %s spu¹tìní"
 
-#: ../lib/init/gis_set.tcl:316
+#: ../lib/init/gis_set.tcl:324
 msgid ""
 "The world's leading open source GIS\n"
 "\n"
 msgstr "Celosvìtovì roz¹íøenı open source GIS\n"
 
-#: ../lib/init/gis_set.tcl:317
+#: ../lib/init/gis_set.tcl:325
 msgid "Select an existing project location and mapset\n"
 msgstr "Vyberte existující location projektu a mapset\n"
 
-#: ../lib/init/gis_set.tcl:318
+#: ../lib/init/gis_set.tcl:326
 msgid "or define a new location\n"
 msgstr "oder definieren Sie eine neue Location.\n"
 
-#: ../lib/init/gis_set.tcl:341
+#: ../lib/init/gis_set.tcl:349
 msgid "GIS Data Directory: "
 msgstr "Adresáø s daty GIS: "
 
-#: ../lib/init/gis_set.tcl:378
+#: ../lib/init/gis_set.tcl:407
 msgid ""
 "Project Location\n"
 "(projection/coordinate system)"
@@ -3187,7 +3201,7 @@ msgstr ""
 "Location projektu\n"
 "(projekce/souøadnı systém)"
 
-#: ../lib/init/gis_set.tcl:411
+#: ../lib/init/gis_set.tcl:440
 msgid ""
 "Accessible Mapsets\n"
 "(directories of GIS files)"
@@ -3195,7 +3209,7 @@ msgstr ""
 "Pøítomné mapsety\n"
 "(adresáøe s daty GIS)"
 
-#: ../lib/init/gis_set.tcl:463
+#: ../lib/init/gis_set.tcl:492
 msgid ""
 "Create new mapset\n"
 "in selected location"
@@ -3203,56 +3217,56 @@ msgstr ""
 "Vytvoøit novı mapset\n"
 "ve vybrané location"
 
-#: ../lib/init/gis_set.tcl:472
+#: ../lib/init/gis_set.tcl:501
 msgid "Create new mapset"
 msgstr "Vytvoøit novı mapset"
 
-#: ../lib/init/gis_set.tcl:498
+#: ../lib/init/gis_set.tcl:527
 msgid "Define new location with..."
 msgstr "Definovat novou location location s ..."
 
-#: ../lib/init/gis_set.tcl:502
+#: ../lib/init/gis_set.tcl:531
 msgid "Georeferenced file"
 msgstr "Georeferencovanı soubor"
 
-#: ../lib/init/gis_set.tcl:508
+#: ../lib/init/gis_set.tcl:537
 msgid "EPSG codes"
 msgstr "Kódy EPSG"
 
-#: ../lib/init/gis_set.tcl:514
+#: ../lib/init/gis_set.tcl:543
 msgid "Projection values"
 msgstr "Hodnoty projekce"
 
-#: ../lib/init/gis_set.tcl:554
+#: ../lib/init/gis_set.tcl:583
 msgid "Enter GRASS"
 msgstr "Spustit GRASS"
 
-#: ../lib/init/gis_set.tcl:559 ../lib/init/gis_set.tcl:752
+#: ../lib/init/gis_set.tcl:588 ../lib/init/gis_set.tcl:781
 msgid "WARNING: invalid mapset"
 msgstr "UPOZORNÌNÍ: neplatnı mapset"
 
-#: ../lib/init/gis_set.tcl:560 ../lib/init/gis_set.tcl:753
+#: ../lib/init/gis_set.tcl:589 ../lib/init/gis_set.tcl:782
 #, tcl-format
 msgid "Warning: <%s> is not a valid mapset"
 msgstr "Upozornìní: <%s> není platnı mapset"
 
-#: ../lib/init/gis_set.tcl:582
+#: ../lib/init/gis_set.tcl:611
 msgid "Help already opened"
 msgstr "Nápovìda je ji¾ otevøena"
 
-#: ../lib/init/gis_set.tcl:589
+#: ../lib/init/gis_set.tcl:618
 msgid "GRASS Help"
 msgstr "Nápovìda GRASSu"
 
-#: ../lib/init/gis_set.tcl:593
+#: ../lib/init/gis_set.tcl:622
 msgid "Exit"
 msgstr "Konec"
 
-#: ../lib/init/gis_set.tcl:631
+#: ../lib/init/gis_set.tcl:660
 msgid "WARNING: Invalid Database"
 msgstr "UPOZORNÌNÍ: Neplatná databáze"
 
-#: ../lib/init/gis_set.tcl:632
+#: ../lib/init/gis_set.tcl:661
 msgid "WARNING: Invalid database. Finding first valid directory in parent tree"
 msgstr ""
 "Upozornìní: Neplatná databáze. Hledám první platnı adresáø v adresáøovém "
@@ -3546,149 +3560,168 @@ msgstr "©íøka linie (pixelyl; 0 je nejten¹í)"
 msgid "Table"
 msgstr "Tabulka"
 
-#: ../vector/v.digit/toolbox.tcl:20
+#: ../vector/v.digit/toolbox.tcl:22
 msgid "Welcome to v.digit"
 msgstr "Vítejte v modulu v.digit"
 
-#: ../vector/v.digit/toolbox.tcl:21
+#: ../vector/v.digit/toolbox.tcl:23
 msgid "Left mouse button"
 msgstr "Levé tlaèítko my¹i"
 
-#: ../vector/v.digit/toolbox.tcl:22
+#: ../vector/v.digit/toolbox.tcl:24
 msgid "Middle mouse button"
 msgstr "Støední tlaèítko my¹i"
 
-#: ../vector/v.digit/toolbox.tcl:23
+#: ../vector/v.digit/toolbox.tcl:25
 msgid "Right mouse button"
 msgstr "Pravé tlaèítko my¹i"
 
-#: ../vector/v.digit/toolbox.tcl:45
-msgid "Layer"
-msgstr "Vrstva"
+#: ../vector/v.digit/toolbox.tcl:47
+msgid "  Layer"
+msgstr "  Vrstva"
 
-#: ../vector/v.digit/toolbox.tcl:49
-msgid "Category"
-msgstr "Kategorie"
+#: ../vector/v.digit/toolbox.tcl:51
+msgid "  Category"
+msgstr "  Kategorie"
 
-#: ../vector/v.digit/toolbox.tcl:53
-msgid "Mode"
-msgstr "Mód"
+#: ../vector/v.digit/toolbox.tcl:55
+msgid "  Mode "
+msgstr "  Mód"
 
-#: ../vector/v.digit/toolbox.tcl:66
+#: ../vector/v.digit/toolbox.tcl:67
 msgid "Insert new record into table"
 msgstr "Vlo¾it novı záznam do tabulky"
 
-#: ../vector/v.digit/toolbox.tcl:83
+#: ../vector/v.digit/toolbox.tcl:84
 msgid "Digitize new point"
 msgstr "Digitalizaovat novı bod"
 
-#: ../vector/v.digit/toolbox.tcl:88
+#: ../vector/v.digit/toolbox.tcl:89
 msgid "Digitize new line"
 msgstr "Digitalizovat novou linii"
 
-#: ../vector/v.digit/toolbox.tcl:93
+#: ../vector/v.digit/toolbox.tcl:94
 msgid "Digitize new boundary"
 msgstr "Digitalizovat novou hranièní linii"
 
-#: ../vector/v.digit/toolbox.tcl:98
+#: ../vector/v.digit/toolbox.tcl:99
 msgid "Digitize new centroid"
 msgstr "Digitalizovat novı centroid"
 
-#: ../vector/v.digit/toolbox.tcl:104
+#: ../vector/v.digit/toolbox.tcl:105
 msgid "Move vertex"
 msgstr "Pøemístit opìrnı bod"
 
-#: ../vector/v.digit/toolbox.tcl:109
+#: ../vector/v.digit/toolbox.tcl:110
 msgid "Add vertex"
 msgstr "Pøidat opìrnı bod"
 
-#: ../vector/v.digit/toolbox.tcl:114
+#: ../vector/v.digit/toolbox.tcl:115
 msgid "Remove vertex"
 msgstr "Odstranit opìrnı bod"
 
-#: ../vector/v.digit/toolbox.tcl:119
+#: ../vector/v.digit/toolbox.tcl:120
 msgid "Split line"
 msgstr "Rozdìlit linie"
 
-#: ../vector/v.digit/toolbox.tcl:124
+#: ../vector/v.digit/toolbox.tcl:125
 msgid "Edit line/boundary"
 msgstr "Editovat linii/hranièní linii"
 
-#: ../vector/v.digit/toolbox.tcl:129
+#: ../vector/v.digit/toolbox.tcl:130
 msgid "Move point, line, boundary, or centroid"
 msgstr "Pøemístit bod, linii, hranièní linii nebo centroid"
 
-#: ../vector/v.digit/toolbox.tcl:134
+#: ../vector/v.digit/toolbox.tcl:135
 msgid "Delete point, line, boundary, or centroid"
 msgstr "Odstranit bod, linii, hranièní linii nebo centroid"
 
-#: ../vector/v.digit/toolbox.tcl:140
-msgid "Zoom in by window"
-msgstr "Zvìt¹it podle okna"
-
-#: ../vector/v.digit/toolbox.tcl:145
-msgid "Zoom out"
-msgstr "Zmen¹it"
-
-#: ../vector/v.digit/toolbox.tcl:155
-msgid "Zoom to default region"
-msgstr "Zvìt¹it podle vıchozí regionu"
-
-#: ../vector/v.digit/toolbox.tcl:168
-msgid "Zoom to region"
-msgstr "Zvìt¹it podle regionu"
-
-#: ../vector/v.digit/toolbox.tcl:173
+#: ../vector/v.digit/toolbox.tcl:146
 msgid "Redraw"
 msgstr "Pøekreslit"
 
+#: ../vector/v.digit/toolbox.tcl:151
+msgid "Zoom in by window"
+msgstr "Zvìt¹it podle okna"
+
+#: ../vector/v.digit/toolbox.tcl:156
+msgid "Zoom out"
+msgstr "Zmen¹it"
+
+#: ../vector/v.digit/toolbox.tcl:166
+msgid "Zoom to default region"
+msgstr "Zvìt¹it podle vıchozí regionu"
+
 #: ../vector/v.digit/toolbox.tcl:179
+msgid "Zoom to region"
+msgstr "Zvìt¹it podle regionu"
+
+#: ../vector/v.digit/toolbox.tcl:185
 msgid "Display categories"
 msgstr "Zobrazit kategorie"
 
-#: ../vector/v.digit/toolbox.tcl:184
+#: ../vector/v.digit/toolbox.tcl:190
 msgid "Copy categories"
 msgstr "Kopírovat kategorie"
 
-#: ../vector/v.digit/toolbox.tcl:189
+#: ../vector/v.digit/toolbox.tcl:195
 msgid "Display attributes"
 msgstr "Zobrazit atributy"
 
-#: ../vector/v.digit/toolbox.tcl:201
+#: ../vector/v.digit/toolbox.tcl:207
 msgid "Open settings"
 msgstr "Otevøít nastavení"
 
-#: ../vector/v.digit/toolbox.tcl:206
+#: ../vector/v.digit/toolbox.tcl:212
 msgid "Save and exit"
 msgstr "Ulo¾it a ukonèit"
 
+#: ../vector/v.digit/toolbox.tcl:223
+msgid "mouse button actions (left, right, center)"
+msgstr "akce tlaèítek my¹i (levé, pravé, prostøední)"
+
+#~ msgid "list devices"
+#~ msgstr "seznam zaÅ™Ã­zenÃ­"
+
+#~ msgid "list ghostscript output devices"
+#~ msgstr "seznam vÃ½stupnÃ­ch zaÅ™Ã­zenÃ­ ghostscript"
+
+#~ msgid "Create WIND3 (default 3D window) from current 2D region"
+#~ msgstr "VytvoÅ™it WIND3 (vÃ½chozÃ­ 3D window) z aktuÃ¡lnÃ­ho 2D regionu"
+
+#~ msgid "Manage 3D region"
+#~ msgstr "SprÃ¡va 3D regionu"
+
+#~ msgid "Break lines at intersections"
+#~ msgstr "PÅ™eruÅ¡it linie v pruseciku"
+
 #~ msgid "Path to the EPSG-codes file"
-#~ msgstr "Cesta k souboru s EPSG kódy"
+#~ msgstr "Cesta k souboru s EPSG kÃ³dy"
 
 #~ msgid "EPSG code number of projection"
-#~ msgstr "Èíslo EPSG kódu projekce"
+#~ msgstr "ÄŒÃ­slo EPSG kÃ³du projekce"
 
 #~ msgid "WARNING: epsg-codes file not found"
-#~ msgstr "UPOZORNÌNÍ: soubor s EPSG kódy nebyl nalezen"
+#~ msgstr "UPOZORNÄšNÃ: soubor s EPSG kÃ³dy nebyl nalezen"
 
 #~ msgid "WARNING: The epsg-codes file was not found!"
-#~ msgstr "UPOZORNÌNÍ: Soubor s EPSG kódy nebyl nalezen!"
+#~ msgstr "UPOZORNÄšNÃ: Soubor s EPSG kÃ³dy nebyl nalezen!"
 
 #~ msgid "WARNING: restart GRASS please"
-#~ msgstr "VAROVÁNÍ: prosím, restartujte GRASS"
+#~ msgstr "VAROVÃNÃ: prosÃ­m, restartujte GRASS"
 
 #~ msgid ""
 #~ "WARNING: Please restart GRASS in order find the created location in the "
 #~ "list (closing it for you now)"
 #~ msgstr ""
-#~ "VAROVÁNÍ: Pro zobrazení zalo¾ené location v tomto seznamu je potøeba "
-#~ "restartovat GRASS (zavøít jej nyní)"
+#~ "VAROVÃNÃ: Pro zobrazenÃ­ zaloÅ¾enÃ© location v tomto seznamu je potÅ™eba "
+#~ "restartovat GRASS (zavÅ™Ã­t jej nynÃ­)"
 
 #~ msgid "EPSG CODES (from file: %s)"
-#~ msgstr "Kódy EPSG (ze souboru: %s)"
+#~ msgstr "KÃ³dy EPSG (ze souboru: %s)"
 
 #~ msgid "GUESS THAT IS NOT THE EPSG FILE"
-#~ msgstr "MYSLÍM, ®E TOTO NENÍ SOUBOR S EPSG KÓDY"
+#~ msgstr "MYSLÃM, Å½E TOTO NENÃ SOUBOR S EPSG KÃ“DY"
 
 #~ msgid "Select"
 #~ msgstr "Vybrat"
@@ -3699,14 +3732,14 @@ msgstr "Ulo¾it a ukonèit"
 #~ " "
 #~ msgstr ""
 #~ " \n"
-#~ "VYTVOØIT NOVOU GRASS LOCATION S EPSG\n"
+#~ "VYTVOÅ˜IT NOVOU GRASS LOCATION S EPSG\n"
 #~ " "
 
 #~ msgid ""
 #~ "- needed parameters -\n"
 #~ "\n"
 #~ msgstr ""
-#~ "- potøebuje parametry -\n"
+#~ "- potÅ™ebuje parametry -\n"
 #~ "\n"
 
 #~ msgid ""
@@ -3715,7 +3748,7 @@ msgstr "Ulo¾it a ukonèit"
 #~ "\n"
 #~ msgstr ""
 #~ "\n"
-#~ "Adresáø (GRASS database) v nìm¾ má bıt location vytvoøena\n"
+#~ "AdresÃ¡Å™ (GRASS database) v nÄ›mÅ¾ mÃ¡ bÃ½t location vytvoÅ™ena\n"
 #~ "\n"
 
 #~ msgid ""
@@ -3724,7 +3757,7 @@ msgstr "Ulo¾it a ukonèit"
 #~ "\n"
 #~ msgstr ""
 #~ "\n"
-#~ "   Èíslo EPSG kódu projekce: \n"
+#~ "   ÄŒÃ­slo EPSG kÃ³du projekce: \n"
 #~ "\n"
 
 #~ msgid ""
@@ -3734,6 +3767,6 @@ msgstr "Ulo¾it a ukonèit"
 #~ "\n"
 #~ msgstr ""
 #~ "\n"
-#~ "Èíslo EPSG kódu projekce (viz /usr/local/share/proj/epsg nebo stisknìte "
-#~ "tlaèítko'EPSG-codes')\n"
+#~ "ÄŒÃ­slo EPSG kÃ³du projekce (viz /usr/local/share/proj/epsg nebo stisknÄ›te "
+#~ "tlaÄÃ­tko'EPSG-codes')\n"
 #~ "\n"
