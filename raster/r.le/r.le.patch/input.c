@@ -197,7 +197,7 @@ void user_input (int argc, char **argv)
 
 
    if (G_parser(argc,argv)) {
-      exit(-1);
+      exit(EXIT_FAILURE);
    }
                          /* record the user inputs for map,
                             sam and out parameters */
@@ -213,7 +213,7 @@ void user_input (int argc, char **argv)
          fprintf(stderr, "   ***************************************************\n");
          fprintf(stderr, "    You can use the out parameter only when sam=w,u,r \n");
          fprintf(stderr, "   ***************************************************\n");
-         exit(0);
+         exit(EXIT_FAILURE);
    } 
    else
       G_strcpy(choice->out,"");
@@ -229,7 +229,7 @@ void user_input (int argc, char **argv)
           fprintf(stderr, "   ***************************************************\n");
           fprintf(stderr, "    You input an unacceptable value for parameter sam \n");
           fprintf(stderr, "   ***************************************************\n");
-          exit(0);
+          exit(EXIT_FAILURE);
    }
 
   
@@ -244,7 +244,7 @@ void user_input (int argc, char **argv)
              fprintf(stderr, "   ***************************************************\n");
              fprintf(stderr, "    You input an unacceptable value for parameter sh1 \n");
              fprintf(stderr, "   ***************************************************\n");
-             exit(0);
+             exit(EXIT_FAILURE);
       }
    }
 
@@ -258,7 +258,7 @@ void user_input (int argc, char **argv)
          fprintf(stderr, "    You input multiple values for parameter sam, \n");
          fprintf(stderr, "    but only one is allowed                      \n");
          fprintf(stderr, "   **********************************************\n");
-         exit(0);
+         exit(EXIT_FAILURE);
       }
 
    if (shape->answer)
@@ -268,7 +268,7 @@ void user_input (int argc, char **argv)
          fprintf(stderr, "    You input multiple values for parameter sh1, \n");
          fprintf(stderr, "    but only one is allowed                      \n");
          fprintf(stderr, "   **********************************************\n");
-         exit(0);
+         exit(EXIT_FAILURE);
       }
 
                          /* if the core flag -c is specified,
@@ -285,7 +285,7 @@ void user_input (int argc, char **argv)
       fprintf(stderr, "    cores, by using flag -c, but this option      \n");
       fprintf(stderr, "    is only available when sam=w                  \n");
       fprintf(stderr, "   ***********************************************\n");
-      exit(0);
+      exit(EXIT_FAILURE);
    }
 
                          /* if the pat flag -n is specified,
@@ -303,7 +303,7 @@ void user_input (int argc, char **argv)
       fprintf(stderr, "    numbers, by using flag -n, but this option   \n");
       fprintf(stderr, "    is only available when sam=w                 \n");
       fprintf(stderr, "   **********************************************\n");
-      exit(0);
+      exit(EXIT_FAILURE);
    }
 
 
@@ -337,7 +337,7 @@ void user_input (int argc, char **argv)
       fprintf(stderr, "    units, by using flag -u, but this option is only  \n");
       fprintf(stderr, "    available when sam=u                              \n");
       fprintf(stderr, "   ***************************************************\n");
-      exit(0);
+      exit(EXIT_FAILURE);
    }
 
 
@@ -356,7 +356,7 @@ void user_input (int argc, char **argv)
            fprintf(stderr, "    You chose values for co1 that are either less \n");
            fprintf(stderr, "    than 0 or too large                           \n");
            fprintf(stderr, "   ***********************************************\n");
-           exit(0);
+           exit(EXIT_FAILURE);
       }
    }
 
@@ -375,7 +375,7 @@ void user_input (int argc, char **argv)
            fprintf(stderr, "    input the name of the region using the reg=   \n");
            fprintf(stderr, "    parameter                                     \n");
            fprintf(stderr, "   ***********************************************\n");
-           exit(0);
+           exit(EXIT_FAILURE);
       }
    }
 
@@ -387,7 +387,7 @@ void user_input (int argc, char **argv)
            fprintf(stderr, "    the reg= parameter, but did not input the     \n");
            fprintf(stderr, "    sam=r parameter                               \n");
            fprintf(stderr, "   ***********************************************\n");
-           exit(0);
+           exit(EXIT_FAILURE);
    }
 
                          /* initialize flag arrays in choice
@@ -463,7 +463,7 @@ void user_input (int argc, char **argv)
               fprintf(stderr, "    cores, by using flag -c, but did not input    \n");
               fprintf(stderr, "    both parameter co1 and co2                    \n");
               fprintf(stderr, "   ***********************************************\n");
-              exit(0);
+              exit(EXIT_FAILURE);
          }
          else {
               fprintf(stderr, "\n");
@@ -471,7 +471,7 @@ void user_input (int argc, char **argv)
               fprintf(stderr, "    You requested core size measures, but did not \n");
               fprintf(stderr, "    input both parameter co1 and co2              \n");
               fprintf(stderr, "   ***********************************************\n");
-              exit(0);
+              exit(EXIT_FAILURE);
          }
       }
    }
@@ -501,7 +501,7 @@ void user_input (int argc, char **argv)
            fprintf(stderr, "    You requested shape measurement, but did not \n");
            fprintf(stderr, "    input both parameter sh1 and sh2             \n");
            fprintf(stderr, "   **********************************************\n");
-           exit(0);
+           exit(EXIT_FAILURE);
       }
    }
 
@@ -535,7 +535,7 @@ void user_input (int argc, char **argv)
       fprintf(stderr, "    You can only choose up to 25 simultaneous measures \n");
       fprintf(stderr, "    when using sam=m.  Please redo your request.       \n");
       fprintf(stderr, "   ****************************************************\n");
-      exit(0);
+      exit(EXIT_FAILURE);
    }
 
    if (!att->answer && !size->answer && !shape->answer && !shape_m->answer
@@ -544,8 +544,8 @@ void user_input (int argc, char **argv)
       fprintf(stderr, "   **************************************************\n");
       fprintf(stderr, "    You did not select any measures to be calculated \n");
       fprintf(stderr, "   **************************************************\n");
-      exit(0);
+      exit(EXIT_FAILURE);
    }
+
    return;
 }
-

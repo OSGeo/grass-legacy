@@ -42,7 +42,7 @@ void cell_clip_drv (int col0, int row0, int ncols, int nrows, double **value, in
   FCELL		*cor_fcell_buf;
   DCELL         **buf, **cor, *cor_dcell_buf;
   DCELL		**null_buf;
-  int 		i, j, fd, fe, p, infd, x, centernull=0, empty=1;
+  int 		i, j, fd, fe, p, infd, centernull=0, empty=1;
   int 		hist_ok, colr_ok, cats_ok, range_ok;
   char          *mapset, *name;
   PATCH  	*list_head;
@@ -51,7 +51,6 @@ void cell_clip_drv (int col0, int row0, int ncols, int nrows, double **value, in
   struct Categories newcats;
   struct Cell_stats stats;
   struct Colors colr;
-  struct Cell_head cellhd;
   struct Range range;
   struct FPRange fprange;
   struct Quant quant;
@@ -163,6 +162,7 @@ void cell_clip_drv (int col0, int row0, int ncols, int nrows, double **value, in
 				   pixel must also not be null */
 
   if (!empty)
+  {
      if (choice->wrum != 'm') {
         trace(nrows, ncols, buf, null_buf, pat, cor);
      } 
@@ -170,7 +170,7 @@ void cell_clip_drv (int col0, int row0, int ncols, int nrows, double **value, in
         if (!centernull)
            trace(nrows, ncols, buf, null_buf, pat, cor);
      }
-
+  }
 				/* if a map of patch cores was requested */
 
   if (choice->coremap) {
@@ -216,8 +216,10 @@ void cell_clip_drv (int col0, int row0, int ncols, int nrows, double **value, in
               G_zero_raster_buf (cor_cell_buf, CELL_TYPE);
               for (j = 1; j < ncols + 1; j++)
                  *(cor_cell_buf + j - 1) = (int)(*(*(cor + i) + j));
+
               if (G_put_raster_row(fe, cor_cell_buf, CELL_TYPE) < 0)
-	         exit(1);
+	         exit(EXIT_FAILURE);
+
               G_update_cell_stats(cor_cell_buf, ncols + 1, &stats);
            }
            break;
@@ -229,8 +231,9 @@ void cell_clip_drv (int col0, int row0, int ncols, int nrows, double **value, in
               for (j = 1; j < ncols + 1; j++) {
                  *(cor_fcell_buf + j - 1) = (float)(*(*(cor + i) + j));
               }
+
               if (G_put_raster_row(fe, cor_fcell_buf, FCELL_TYPE) < 0)
-	         exit(1);
+	         exit(EXIT_FAILURE);
            }
            break;
         case DCELL_TYPE:
@@ -240,8 +243,9 @@ void cell_clip_drv (int col0, int row0, int ncols, int nrows, double **value, in
               G_zero_raster_buf (cor_dcell_buf, DCELL_TYPE);
               for (j = 1; j < ncols + 1; j++)
                  *(cor_dcell_buf + j - 1) = (double)(*(*(cor + i) + j));
+
               if (G_put_raster_row(fe, cor_dcell_buf, DCELL_TYPE) < 0)
-	         exit(1);
+	         exit(EXIT_FAILURE);
            }
            break;
      }
@@ -258,8 +262,9 @@ void cell_clip_drv (int col0, int row0, int ncols, int nrows, double **value, in
         G_zero_raster_buf (pat_buf, CELL_TYPE);
         for (j = 1; j < ncols + 1; j++)
            *(pat_buf + j - 1) = *(*(pat + i) + j);
+
         if (G_put_raster_row(fd, pat_buf, CELL_TYPE) < 0)
-	   exit(1);
+	   exit(EXIT_FAILURE);
      }
   }
 
@@ -504,7 +509,7 @@ void cell_clip (DCELL **buf, DCELL **null_buf, int row0, int col0, int nrows, in
         fprintf(stderr, "    but the region map specified with the 'reg=' parameter\n");
         fprintf(stderr, "    cannot be found in the current mapset.                \n");
         fprintf(stderr, "   *******************************************************\n");
-        exit(1);
+        exit(EXIT_FAILURE);
      }
      if (G_raster_map_type(choice->reg, G_mapset()) > 0) {
         fprintf(stderr, "\n");
@@ -514,7 +519,7 @@ void cell_clip (DCELL **buf, DCELL **null_buf, int row0, int col0, int nrows, in
         fprintf(stderr, "    must be an integer map, and it is floating point or   \n");
         fprintf(stderr, "    double instead.                                       \n");
         fprintf(stderr, "   *******************************************************\n");
-        exit(1);
+        exit(EXIT_FAILURE);
      }
      tmp1 =  G_allocate_raster_buf(CELL_TYPE);
      G_zero_raster_buf (tmp1, CELL_TYPE);
@@ -766,7 +771,7 @@ void trace (int nrows, int ncols, DCELL **buf, DCELL **null_buf, CELL **pat, DCE
 
 {
   double        class=0.0;
-  register int  i, j, x;
+  register int  i, j;
   PATCH     	*tmp, *find_any, *list_head;
 
 /*
@@ -822,8 +827,8 @@ void trace (int nrows, int ncols, DCELL **buf, DCELL **null_buf, CELL **pat, DCE
 
            list_head = patch_list;
 
-           if (find_any = get_bd(i, j, nrows, ncols, class, buf, null_buf,
-               list_head, pat, cor)) {                      /*4*/
+           if ((find_any = get_bd(i, j, nrows, ncols, class, buf, null_buf,
+               list_head, pat, cor))) {                      /*4*/
 
  				/* if the first patch, make tmp point to
 				   the patch list and add the first patch
@@ -887,10 +892,10 @@ PATCH *get_bd (int row0, int col0, int nrows, int ncols, double class, DCELL **b
 {
   int       i = row0, j = col0, pts=0, di=0, dj=-1,
             not_done, k, m, tmp, lng=0, roww=0, rowe=0,
-            coln=0, cols=0, row1, col1, di2, dj2, p, q,
+            row1, col1, di2, dj2, p, q,
             area, per, corearea, edgearea, nozero;
-  int    ***twist2, trows, tcols, n, e, a, b, twistnum=0;
-  float  ***twistP, sumT, omega;
+  int    ***twist2, trows, tcols, n, e, a, b;
+  float  ***twistP, sumT;
   PATCH    *patch;
   CELL	  **patchmap;
   PT	   *ptrfirst, *ptrthis, *ptrnew, *ptrfree;
