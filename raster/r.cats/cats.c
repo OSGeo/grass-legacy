@@ -44,7 +44,7 @@ int get_cats (char *name, char *mapset)
     G_init_cell_stats (&statf);
 
 /* read the cell file */
-    fprintf (stderr, _("Reading %s in %s ..."), name, mapset);
+    G_message (_("Reading %s in %s ..."), name, mapset);
     for (row = 0; row < nrows; row++)
     {
 	G_percent (row, nrows, 2);
