@@ -91,6 +91,7 @@ SUBDIRS = \
 	r.thin \
 	r.timestamp \
 	r.to.rast3 \
+	r.to.rast3elev \
 	r.to.vect \
 	r.topidx \
 	r.topmodel \
