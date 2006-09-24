@@ -88,6 +88,7 @@ main (int argc, char *argv[])
 
     tempfile1 = G_tempfile();
     tempfile2 = G_tempfile();
+    G_message("%s:",STATS);
     sprintf (command, "%s -anC input='%s,%s' fs=space > %s",
 	STATS, basemap->answer, covermap->answer, tempfile1);
     if ((stat = G_system(command)))
@@ -147,6 +148,7 @@ main (int argc, char *argv[])
     out(fd2, b1, b2, sum1, sum2);
     fclose (fd1);
     fclose (fd2);
+    G_message("%s:",RECODE);
     sprintf (command, "%s input='%s' output='%s' < %s",
 	RECODE, basemap->answer, outputmap->answer, tempfile2);
     stat = G_system(command);
