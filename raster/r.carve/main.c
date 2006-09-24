@@ -57,7 +57,7 @@ int main(int argc, char **argv)
     struct GModule *module;
     struct parms parm;
     struct Option *width, *depth;
-    struct Flag *quiet, *noflat;
+    struct Flag *noflat;
 
     char *vmapset, *rmapset; 
     int infd, outfd;
@@ -99,10 +99,6 @@ int main(int argc, char **argv)
     depth->key            = "depth";
     depth->type           = TYPE_DOUBLE;
     depth->description    = _("Additional stream depth (in meters)");
-
-    quiet = G_define_flag();
-    quiet->key          = 'q';
-    quiet->description  = _("Quiet - Do not show progress");
 
     noflat = G_define_flag();
     noflat->key         = 'n';
@@ -148,7 +144,6 @@ int main(int argc, char **argv)
         }
     }
 
-    parm.quiet  = quiet->answer;
     parm.noflat = noflat->answer;
 
     /* open input files */
@@ -184,9 +179,6 @@ int main(int argc, char **argv)
 
     /* write command line to history file */
     update_rast_history(&parm);
-
-    if (!parm.quiet)
-	G_done_msg("");
 
     return EXIT_SUCCESS;
 }

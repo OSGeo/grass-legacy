@@ -48,7 +48,7 @@ struct parms {
     struct Option *inrast, *invect, *outrast, *outvect;
     RASTER_MAP_TYPE raster_type;
     double swidth, sdepth;
-    int wrap, quiet, noflat;
+    int wrap,  noflat;
 };
 
 
@@ -65,8 +65,8 @@ extern void pg_init(PointGrp *);
 extern void pg_addpt(PointGrp *, Point2);
 
 /* raster.c */
-void *read_raster(void *, const int, const RASTER_MAP_TYPE, const int);
-void *write_raster(void *, const int, const RASTER_MAP_TYPE, const int);
+void *read_raster(void *, const int, const RASTER_MAP_TYPE );
+void *write_raster(void *, const int, const RASTER_MAP_TYPE);
 
 /* support.c */
 extern int update_rast_history(struct parms *);

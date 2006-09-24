@@ -71,22 +71,18 @@ int enforce_downstream(int infd, int outfd,
     rbuf = G_calloc(G_window_rows() * G_window_cols(), G_raster_size(parm->raster_type));
 
     /* first read whole elevation file into buf */
-    read_raster(rbuf, infd, parm->raster_type, parm->quiet);
+    read_raster(rbuf, infd, parm->raster_type);
 
-    if (!parm->quiet)
-        fprintf(stderr, _("Processing lines... "));
+    G_message(_("Processing lines... "));
 
     nlines = Vect_get_num_lines(Map);
     for (line = 1; line <= nlines; line++)
         retval = process_line(Map, outMap, rbuf, line, parm);
 
     /* write output raster file */
-    write_raster(rbuf, outfd, parm->raster_type, parm->quiet);
+    write_raster(rbuf, outfd, parm->raster_type);
 
     G_free(rbuf);
-
-    if (!parm->quiet)
-        G_message(_("done."));
 
     return retval;
 }
@@ -126,8 +122,7 @@ static int process_line(struct Map_info *Map, struct Map_info *outMap,
     pg_init(&pg);
     pg_init(&pgxy);
 
-    if (!parm->quiet)
-        G_percent(line, Vect_get_num_lines(Map), 10);
+    G_percent(line, Vect_get_num_lines(Map), 10);
 
     for (i = 0; i < points->n_points; i++) {
         Point2 pt, ptxy;
