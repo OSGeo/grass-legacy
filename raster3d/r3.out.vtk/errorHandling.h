@@ -21,12 +21,10 @@
 struct inputMaps;
 
 /*Simple Error message */
-void fatalError(char *errorMsg, inputMaps * in);
+void fatal_error(char *errorMsg, inputMaps * in);
 
 /*Free the input maps structure und close all open maps */
-void ReleaseInputMapsStruct(inputMaps * in);
-
-/*close a raster input map */
-void CloseInputMap(int fd);
+void release_input_maps_struct(inputMaps * in);
 
 #endif
+

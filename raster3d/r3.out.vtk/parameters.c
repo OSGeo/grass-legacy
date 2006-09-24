@@ -22,7 +22,7 @@
 /* ************************************************************************* */
 /* Setg up the arguments we are expecting ********************************** */
 /* ************************************************************************* */
-void SetParameters()
+void set_params()
 {
     param.input = G_define_option();
     param.input->key = "input";
@@ -134,3 +134,4 @@ void SetParameters()
 
     return;
 }
+
