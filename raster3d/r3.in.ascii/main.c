@@ -172,7 +172,7 @@ asciiToG3d  (FILE *fp, G3D_Region *region, int convertNull, double nullValue)
 {
   int x, y, z;
   double value;
-/*
+
   int tileX, tileY, tileZ;
   
   G3d_getTileDimensionsMap (map, &tileX, &tileY, &tileZ);
@@ -180,16 +180,16 @@ asciiToG3d  (FILE *fp, G3D_Region *region, int convertNull, double nullValue)
 
   G3d_autolockOn (map);
   G3d_unlockAll (map);
-fprintf(stderr,"rows=%d cols=%d depths=%d\n",region->rows,region->cols,region->depths);
-*/
+  G_message("rows=%d cols=%d depths=%d\n",region->rows,region->cols,region->depths);
+
 
  G_debug (3, "asciiToG3d: writing the g3d map, with rows %i cols %i depths %i", region->rows, region->cols, region->depths);
 
   for (z = 0; z < region->depths; z++) {
-/*
+
     if ((z % tileZ) == 0) G3d_unlockAll (map);
-*/
-    for (y = region->rows-1; y >= 0; y--)    /* go north to south */
+
+    for (y = region->rows-1; y >= 0; y--)    /* go south to north */
       for (x = 0; x < region->cols; x++) {
 	if (fscanf (fp, "%lf", &value) != 1)
 	  fatalError ("asciiToG3d: read failed");
@@ -198,21 +198,21 @@ fprintf(stderr,"rows=%d cols=%d depths=%d\n",region->rows,region->cols,region->d
 	  G3d_setNullValue (&value, 1, G3D_DOUBLE);
 	G3d_putDouble (map, x, y, z, value);
       }
-/*
+
     if (! G3d_flushTilesInCube (map, 
 				0, 0, MAX (0, z - tileZ),
 				region->rows - 1,
 				region->cols - 1, z))
       fatalError ("asciiTog3d: error flushing tiles");
-*/
+
   }
-/*
+
   if (! G3d_flushAllTiles (map))  
     fatalError ("asciiTog3d: error flushing tiles");
 
   G3d_autolockOff (map);
   G3d_unlockAll (map);
-*/
+
 }
 
 /*---------------------------------------------------------------------------*/
