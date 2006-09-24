@@ -39,7 +39,6 @@ main (int argc, char *argv[])
     struct Option *opt1 ;
     struct Option *opt2 ;
     struct Option *opt3 ;
-    static int verbose = 1;
 
     G_gisinit (argv[0]);
 
@@ -62,16 +61,8 @@ main (int argc, char *argv[])
     opt3->required   = NO;
     opt3->description= _("Title, in quotes");
 
-/* Define the different flags */
-
-    flag1 = G_define_flag() ;
-    flag1->key         = 'q' ;
-    flag1->description = _("Quiet") ;
-
     if (G_parser(argc, argv) < 0)
 	exit(EXIT_FAILURE);
-
-    verbose = (! flag1->answer);
 
     INPUT  = opt1->answer;
     OUTPUT = opt2->answer;
@@ -92,10 +83,9 @@ main (int argc, char *argv[])
     if (out_fd < 0)
         G_fatal_error (_("%s: Cannot open <%s>"), G_program_name(), OUTPUT);
 
-    clump (in_fd, out_fd, verbose);
+    clump (in_fd, out_fd);
 
-    if (verbose)
-    	G_message (_("CREATING SUPPORT FILES ..."));
+    G_message (_("CREATING SUPPORT FILES ..."));
   
     G_close_cell (in_fd);
     G_close_cell (out_fd);
