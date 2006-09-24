@@ -378,10 +378,6 @@ long V1_rewrite_line_ogr (struct Map_info *, long offset, int type, struct line_
     /* Miscellaneous */
 int Vect_build_nat ( struct Map_info *, int, FILE *);
 int Vect_build_ogr ( struct Map_info *, int, FILE *);
-int Vect_type_to_code (int);
-int Vect_code_to_type (int);
-int Vect_type_to_store (int);
-int Vect_type_from_store (int);
 int Vect_build_line_area ( struct Map_info *, int, int);
 int Vect_isle_find_area ( struct Map_info *, int);
 int Vect_attach_isle ( struct Map_info *, int);
