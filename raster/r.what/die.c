@@ -1,10 +1,13 @@
 #include <grass/gis.h>
 #include "local_proto.h"
 
-int die (char *a, char *b)
+void die (char *a, char *b)
 {
-    char msg[256];
+    char *message;
 
-    sprintf (msg, "%s: %s %s", G_program_name(), a, b);
-    G_fatal_error (msg);
+    G_asprintf (&message, "%s: %s %s", G_program_name(), a, b);
+    G_fatal_error (message);
+
+return;
 }
+

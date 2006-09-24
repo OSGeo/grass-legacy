@@ -22,8 +22,11 @@ struct order {
 static int by_row(const void *, const void *);
 static int by_point(const void *, const void *);
 
-static int tty;
+static int tty = 0;
 
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
 int main(int argc,char *argv[])
 {
   char *mapset;
@@ -43,6 +46,7 @@ int main(int argc,char *argv[])
   int line;
   char buffer[1024];
   char **ptr;
+  char *message;
   struct Option *opt1, *opt2, *opt3, *opt4;
   struct Flag *flag1, *flag2, *flag3;
   int Cache_size;
@@ -54,7 +58,7 @@ int main(int argc,char *argv[])
   int cache_hit= 0, cache_miss= 0;
   int cache_hit_tot= 0, cache_miss_tot= 0;
   int pass = 0;
-  int debug;
+  int cache_report = 0;
   char tmp_buf[500], *null_str;
   struct GModule *module;
   
@@ -111,7 +115,7 @@ int main(int argc,char *argv[])
   flag3->description = _("Output integer category values, not cell values");
 
   if (G_parser(argc, argv))
-      exit(-1);
+      exit(EXIT_FAILURE);
 
   tty = isatty (0);
 
@@ -131,10 +135,12 @@ int main(int argc,char *argv[])
 
   cache = (struct order *) G_malloc (sizeof (struct order) * Cache_size);
   
-
   /* note this is not kosher */
   withcats = flag1->answer;
-  debug = flag2->answer;
+
+  /*enable cache report*/
+  if(flag2->answer)
+  cache_report = 1;
 
   ptr = opt1->answers;
   for (; *ptr != NULL; ptr++)
@@ -143,9 +149,9 @@ int main(int argc,char *argv[])
 
       if (nfiles >= NFILES)
       {
-	  fprintf (stderr, "%s: can only do up to %d cell files, sorry\n",
+	  G_asprintf (&message, _("%s: can only do up to %d cell files, sorry\n"),
 	      G_program_name(), NFILES);
-	  exit(1);
+	  G_fatal_error(message);
       }
 
       strcpy (name, *ptr);
@@ -183,7 +189,7 @@ int main(int argc,char *argv[])
   while (!done)
   {
     pass++;
-    if (debug & !tty)
+    if (cache_report & !tty)
 	fprintf (stderr, "Pass %3d  Line %6d   - ", pass, line);
 
     cache_hit = cache_miss = 0;
@@ -321,10 +327,9 @@ int main(int argc,char *argv[])
 
     for (point = 0 ; point < point_cnt ; point++)
     {
-#ifdef DEBUG
-    fprintf (stderr, "%s|%s at col %d, row %d\n",
+
+    G_debug(1, "%s|%s at col %d, row %d\n",
       cache[point].east_buf, cache[point].north_buf, cache[point].col, cache[point].row);
-#endif
 
 
       fprintf (stdout,"%s|%s|%s", cache[point].east_buf, cache[point].north_buf, 
@@ -358,7 +363,7 @@ int main(int argc,char *argv[])
       fprintf (stdout,"\n");
     }
 
-    if (debug & !tty)
+    if (cache_report & !tty)
 	fprintf (stderr, "Cache  Hit: %6d  Miss: %6d\n", 
 	    cache_hit, cache_miss);
 
@@ -366,12 +371,15 @@ int main(int argc,char *argv[])
     cache_miss_tot += cache_miss;
     cache_hit = cache_miss = 0;
   }
-    if (debug & !tty)
+    if (cache_report & !tty)
 	fprintf (stderr, "Total:    Cache  Hit: %6d  Miss: %6d\n", 
 	    cache_hit_tot, cache_miss_tot);
-  exit(0);
+  exit(EXIT_SUCCESS);
 }
 
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
 int 
 oops (int line, char *buf, char *msg)
 {
@@ -380,25 +388,33 @@ oops (int line, char *buf, char *msg)
     {
 	if (first)
 	{
-	    fprintf (stderr, "%s: ** input errors **\n",
+	    G_warning("%s: ** input errors **\n",
 		G_program_name());
 	    first = 0;
 	}
-	fprintf (stderr, "line %d: %s\n", line, buf);
+	G_warning("line %d: %s\n", line, buf);
     }
-    fprintf (stderr, "** %s **\n", msg);
+    G_warning ("** %s **\n", msg);
 
     return 0;
 }
 
 
-/* for qsort,  order list by row */
+/* *************************************************************** */
+/* for qsort,  order list by row ********************************* */
+/* *************************************************************** */
+
+
 static int by_row (const void *ii, const void *jj)
 {
   const struct order *i = ii, *j = jj;
   return i->row - j->row;
 }
 
+
+/* *************************************************************** */
+/* for qsort,  order list by point ******************************* */
+/* *************************************************************** */
 
 /* for qsort,  order list by point */
 static int by_point (const void *ii, const void *jj)

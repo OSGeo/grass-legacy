@@ -1,6 +1,9 @@
+#ifndef _LOCAL_PROTO_H_
+#define _LOCAL_PROTO_H_
 /* die.c */
-int die(char *, char *);
+void die(char *, char *);
 /* main.c */
 int oops(int, char *, char *);
 /* usage.c */
-int usage(void);
+void usage(void);
+#endif

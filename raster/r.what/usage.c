@@ -2,8 +2,12 @@
 #include <grass/gis.h>
 #include "local_proto.h"
 
-int usage (void)
+void usage (void)
 {
-    fprintf (stderr, "%s [-fci] [null=string] layer1 [layer2] ...\n", G_program_name());
-    exit (1);
+    char *message;
+
+    G_asprintf (&message, "%s [-fci] [null=string] layer1 [layer2] ...", G_program_name());
+    G_fatal_error(message);
+
+return;
 }
