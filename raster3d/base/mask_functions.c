@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "mask_functions.h"
 
 /*local prototypes */
@@ -78,7 +79,7 @@ static void parse_d_mask_rule(char *vallist, d_Mask * d_mask, char *where)
 
     /* #-# */
     if (sscanf(vallist, "%lf-%lf", &a, &b) == 2) {
-	fprintf(stdout, "adding rule: %lf - %lf\n", a, b);
+	G_message(_("adding rule: %lf - %lf\n"), a, b);
 	add_d_mask_rule(d_mask, a, b, 0);
     }
     /* inf-# */
@@ -95,8 +96,8 @@ static void parse_d_mask_rule(char *vallist, d_Mask * d_mask, char *where)
 
     else {
 	if (where)
-	    fprintf(stderr, "%s: ", where);
-	fprintf(stderr, "%s: illegal value spec\n", vallist);
+	    G_message("%s: ", where);
+	G_warning(_("%s: illegal value spec\n"), vallist);
 	G_usage();
 	exit(EXIT_FAILURE);
     }
