@@ -16,10 +16,14 @@
 *   G_warning()
 ******************************************************************/
 #include <grass/config.h>
+#include <stdlib.h>
+
 #define MAXLEVEL 2 
 #define MINLEVEL 0
 
+
 static int verbose; /* current verbosity level */
+
 
 /*!
  * \brief get current verbosity level
