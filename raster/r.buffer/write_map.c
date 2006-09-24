@@ -25,7 +25,7 @@
 
     /* write out result */
 
-int write_output_map (char *output, int offset, int quiet)
+int write_output_map (char *output, int offset)
 {
     int fd_in=0, fd_out;
     int row;
@@ -45,15 +45,13 @@ int write_output_map (char *output, int offset, int quiet)
 	    G_fatal_error(_("%s: unable to re-open %s"), pgm_name, output);
     }
     cell = G_allocate_cell_buf();
-    if ( ! quiet )
-       fprintf(stderr, _("Writing output map (%s)   ... "), output);
+    G_message( _("Writing output map (%s)   ... "), output);
 
     ptr = map;
 
     for (row = 0; row < window.rows; row++)
     {
-        if ( ! quiet )
-           G_percent (row, window.rows, 2);
+        G_percent (row, window.rows, 2);
 	col = window.cols;
 	if (!offset)
 	{
@@ -82,8 +80,7 @@ int write_output_map (char *output, int offset, int quiet)
 	    G_fatal_error(_("%s - ERROR writing %s"), pgm_name, output);
     }
 
-    if ( ! quiet )
-       G_percent (row, window.rows, 2);
+    G_percent (row, window.rows, 2);
     G_free(cell);
 
     if (offset)

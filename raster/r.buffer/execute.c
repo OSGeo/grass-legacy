@@ -23,15 +23,14 @@
 #include <grass/glocale.h>
 
 
-int execute_distance (int quiet)
+int execute_distance (void)
 {
     int row, col, nrows;
     MAPTYPE *ptr;
 
 	/* find the first 1 in each row, and process that row */
 
-    if ( ! quiet )
-       fprintf (stderr, _("Finding buffer zones ... "));
+    G_message (_("Finding buffer zones ... "));
 
     nrows = 0;
     for (row = minrow; row <= maxrow; row++)
@@ -41,16 +40,14 @@ int execute_distance (int quiet)
 	{
 	    if (*ptr++ == 1)
 	    {
-                if ( ! quiet )
-		   G_percent (nrows++, count_rows_with_data, 2);
+                G_percent (nrows++, count_rows_with_data, 2);
 		process_row (row, col);
 		break;
 	    }
 	}
     }
 
-    if ( ! quiet )
-       G_percent (nrows, count_rows_with_data, 2);
+    G_percent (nrows, count_rows_with_data, 2);
 
     return 0;
 }

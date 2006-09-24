@@ -22,7 +22,7 @@
 #define __LOCAL_PROTO_H__
 
 /* execute.c */
-int execute_distance(int);
+int execute_distance(void);
 /* find_dist.c */
 int begin_distance(int);
 int find_distances(int);
@@ -41,10 +41,10 @@ int process_right(int, int, int, int);
 /* process_row.c */
 int process_row(int, int);
 /* read_map.c */
-int read_input_map(char *, char *, int, int);
+int read_input_map(char *, char *,  int);
 /* support.c */
 int make_support_files(char *, char *);
 /* write_map.c */
-int write_output_map(char *, int, int);
+int write_output_map(char *, int);
 
 #endif /* __LOCAL_PROTO_H__ */
