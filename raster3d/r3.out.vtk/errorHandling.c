@@ -25,15 +25,19 @@
 #include "errorHandling.h"
 
 
+/* prototypes ************************************************************* */
+int close_input_raster3d_map(void *map);
+
+
 /* ************************************************************************* */
 /* Error handling ********************************************************** */
 /* ************************************************************************* */
-void fatalError(char *errorMsg, inputMaps * in)
+void fatal_error(char *errorMsg, inputMaps * in)
 {
     G_warning("%s\n", errorMsg);
 
     /*close all open maps and free memory */
-    ReleaseInputMapsStruct(in);
+    release_input_maps_struct(in);
 
     G3d_fatalError("Break because of errors.");
 }
@@ -56,7 +60,7 @@ int CloseInputRasterMap(int fd)
 /* ************************************************************************* */
 /* Close the raster g3d input map ****************************************** */
 /* ************************************************************************* */
-int CloseInputRaster3dMap(void *map)
+int close_input_raster3d_map(void *map)
 {
     if (map != NULL) {
 	if (!G3d_closeCell(map)) {
@@ -73,18 +77,18 @@ int CloseInputRaster3dMap(void *map)
 /* ************************************************************************* */
 /* Close alls open raster and g3d maps and free memory ********************* */
 /* ************************************************************************* */
-void ReleaseInputMapsStruct(inputMaps * in)
+void release_input_maps_struct(inputMaps * in)
 {
     int error = 0;		/*0 == true, 1 = false */
     int i;
 
-    error += CloseInputRaster3dMap(in->map);
-    error += CloseInputRaster3dMap(in->map_r);
-    error += CloseInputRaster3dMap(in->map_g);
-    error += CloseInputRaster3dMap(in->map_b);
-    error += CloseInputRaster3dMap(in->map_x);
-    error += CloseInputRaster3dMap(in->map_y);
-    error += CloseInputRaster3dMap(in->map_z);
+    error += close_input_raster3d_map(in->map);
+    error += close_input_raster3d_map(in->map_r);
+    error += close_input_raster3d_map(in->map_g);
+    error += close_input_raster3d_map(in->map_b);
+    error += close_input_raster3d_map(in->map_x);
+    error += close_input_raster3d_map(in->map_y);
+    error += close_input_raster3d_map(in->map_z);
 
     error += CloseInputRasterMap(in->top);
     error += CloseInputRasterMap(in->bottom);
@@ -104,3 +108,4 @@ void ReleaseInputMapsStruct(inputMaps * in)
 
     return;
 }
+

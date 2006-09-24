@@ -23,29 +23,29 @@
 #include <grass/glocale.h>
 
 
-/*- Parameter and global variables -----------------------------------------*/
+/*- param and global variables -----------------------------------------*/
 typedef struct
 {
     struct Option *input, *output, *elevation;
     struct Flag *mask;
-} ParameterType;
+} paramType;
 
-ParameterType Parameter;	/*Parameter */
+paramType param;	/*param */
 int globalElevMapType;
 
 
 /*- prototypes --------------------------------------------------------------*/
-void FatalError(void *map, int elevfd, int outfd, char *errorMsg);	/*Simple Error message */
-void SetParameter();		/*Fill the ParameterType structure */
-void G3dCrossRaster(void *map, G3D_Region region, int elevfd, int outfd);	/*Write the raster */
-void CloseOutputMap(int fd);	/*close the map */
+void fatal_error(void *map, int elevfd, int outfd, char *errorMsg);	/*Simple Error message */
+void set_params();		/*Fill the paramType structure */
+void rast3d_cross_section(void *map, G3D_Region region, int elevfd, int outfd);	/*Write the raster */
+void close_output_map(int fd);	/*close the map */
 
 
 
 /* ************************************************************************* */
 /* Error handling ********************************************************** */
 /* ************************************************************************* */
-void FatalError(void *map, int elevfd, int outfd, char *errorMsg)
+void fatal_error(void *map, int elevfd, int outfd, char *errorMsg)
 {
 
     /* Close files and exit */
@@ -60,7 +60,7 @@ void FatalError(void *map, int elevfd, int outfd, char *errorMsg)
 	G_unopen_cell(outfd);
 
     if (elevfd != -1)
-	CloseOutputMap(elevfd);
+	close_output_map(elevfd);
 
     G3d_fatalError(errorMsg);
     exit(EXIT_FAILURE);
@@ -69,35 +69,45 @@ void FatalError(void *map, int elevfd, int outfd, char *errorMsg)
 
 
 /* ************************************************************************* */
+/* Close the raster map ********************************************* */
+/* ************************************************************************* */
+void close_output_map(int fd)
+{
+    if (G_close_cell(fd) < 0)
+	G_fatal_error(_("unable to close output map"));
+}
+
+
+/* ************************************************************************* */
 /* Set up the arguments we are expecting *********************************** */
 /* ************************************************************************* */
-void SetParameter()
+void set_params()
 {
-    Parameter.input = G_define_option();
-    Parameter.input->key = "input";
-    Parameter.input->type = TYPE_STRING;
-    Parameter.input->required = YES;
-    Parameter.input->gisprompt = "old,grid3,3d-raster";
-    Parameter.input->description = _("Input 3D raster map for cross section.");
+    param.input = G_define_option();
+    param.input->key = "input";
+    param.input->type = TYPE_STRING;
+    param.input->required = YES;
+    param.input->gisprompt = "old,grid3,3d-raster";
+    param.input->description = _("Input 3D raster map for cross section.");
 
-    Parameter.elevation = G_define_option();
-    Parameter.elevation->key = "elevation";
-    Parameter.elevation->type = TYPE_STRING;
-    Parameter.elevation->required = YES;
-    Parameter.elevation->description =
+    param.elevation = G_define_option();
+    param.elevation->key = "elevation";
+    param.elevation->type = TYPE_STRING;
+    param.elevation->required = YES;
+    param.elevation->description =
 	_("2D elevation map used to create the cross section map");
-    Parameter.elevation->gisprompt = "old,cell,raster";
+    param.elevation->gisprompt = "old,cell,raster";
 
-    Parameter.output = G_define_option();
-    Parameter.output->key = "output";
-    Parameter.output->type = TYPE_STRING;
-    Parameter.output->required = YES;
-    Parameter.output->description = _("Resulting cross section 2D raster map");
-    Parameter.output->gisprompt = "new,cell,raster";
+    param.output = G_define_option();
+    param.output->key = "output";
+    param.output->type = TYPE_STRING;
+    param.output->required = YES;
+    param.output->description = _("Resulting cross section 2D raster map");
+    param.output->gisprompt = "new,cell,raster";
 
-    Parameter.mask = G_define_flag();
-    Parameter.mask->key = 'm';
-    Parameter.mask->description = _("Use g3d mask (if exists) with input map");
+    param.mask = G_define_flag();
+    param.mask->key = 'm';
+    param.mask->description = _("Use g3d mask (if exists) with input map");
 }
 
 
@@ -105,7 +115,7 @@ void SetParameter()
 /* ************************************************************************* */
 /* Calulates the resulting raster map ************************************** */
 /* ************************************************************************* */
-void G3dCrossRaster(void *map, G3D_Region region, int elevfd, int outfd)
+void rast3d_cross_section(void *map, G3D_Region region, int elevfd, int outfd)
 {
     double d1 = 0, f1 = 0;
     int x, y, z, check = 0;
@@ -148,7 +158,7 @@ void G3dCrossRaster(void *map, G3D_Region region, int elevfd, int outfd)
 
 	/*Read the input map row */
 	if (!G_get_raster_row(elevfd, elevrast, y, globalElevMapType))
-	    FatalError(map, elevfd, outfd,
+	    fatal_error(map, elevfd, outfd,
 		       _("Could not get elevation raster row \n"));
 
 	for (x = 0, ptr = elevrast; x < cols; x++, ptr =
@@ -216,13 +226,13 @@ void G3dCrossRaster(void *map, G3D_Region region, int elevfd, int outfd)
 	if (typeIntern == G3D_FLOAT) {
 	    check = G_put_f_raster_row(outfd, fcell);
 	    if (check != 1)
-		FatalError(map, elevfd, outfd, _("Could not write raster row"));
+		fatal_error(map, elevfd, outfd, _("Could not write raster row"));
 	}
 
 	if (typeIntern == G3D_DOUBLE) {
 	    check = G_put_d_raster_row(outfd, dcell);
 	    if (check != 1)
-		FatalError(map, elevfd, outfd, _("Could not write raster row"));
+		fatal_error(map, elevfd, outfd, _("Could not write raster row"));
 	}
     }
     G_debug(3, _("\nDone\n"));
@@ -260,17 +270,17 @@ int main(int argc, char *argv[])
 	_
 	("Creates cross section 2D raster map from g3d raster volume map based on 2D elevation map");
 
-    /* Get Parametereters from user */
-    SetParameter();
+    /* Get parameters from user */
+    set_params();
 
     /* Have GRASS get inputs */
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-    G_debug(3, _("Open 3D raster file %s"), Parameter.input->answer);
+    G_debug(3, _("Open 3D raster file %s"), param.input->answer);
 
-    if (NULL == G_find_grid3(Parameter.input->answer, ""))
-	G3d_fatalError(_("Requested g3d file not found <%s>"), Parameter.input->answer);
+    if (NULL == G_find_grid3(param.input->answer, ""))
+	G3d_fatalError(_("Requested g3d file not found <%s>"), param.input->answer);
 
     /* Figure out the region from the map */
     G3d_initDefaults();
@@ -297,13 +307,13 @@ int main(int argc, char *argv[])
     /*Open the g3d map */
 
     /*******************/
-    map = G3d_openCellOld(Parameter.input->answer,
-			  G_find_grid3(Parameter.input->answer, ""),
+    map = G3d_openCellOld(param.input->answer,
+			  G_find_grid3(param.input->answer, ""),
 			  &region, G3D_TILE_SAME_AS_FILE,
 			  G3D_USE_CACHE_DEFAULT);
 
     if (map == NULL)
-	G3d_fatalError(_("Error opening g3d file <%s>"), Parameter.input->answer);
+	G3d_fatalError(_("Error opening g3d file <%s>"), param.input->answer);
 
     /*Get the output type */
     output_type = G3d_fileTypeMap(map);
@@ -314,18 +324,18 @@ int main(int argc, char *argv[])
 	/*Open the elevation raster map */
 
 	/********************************/
-	mapset = G_find_cell2(Parameter.elevation->answer, "");
+	mapset = G_find_cell2(param.elevation->answer, "");
 
 	if (mapset == NULL) {
-	    FatalError(map, -1, -1, _("Elevation map not found\n"));
+	    fatal_error(map, -1, -1, _("Elevation map not found\n"));
 	}
 
-	elevfd = G_open_cell_old(Parameter.elevation->answer, mapset);
+	elevfd = G_open_cell_old(param.elevation->answer, mapset);
 	if (elevfd <= 0)
-	    FatalError(map, -1, -1, _("Could not open elevation map\n"));
+	    fatal_error(map, -1, -1, _("Could not open elevation map\n"));
 
 	globalElevMapType =
-	    G_raster_map_type(Parameter.elevation->answer, mapset);
+	    G_raster_map_type(param.elevation->answer, mapset);
 
 	/**********************/
 	/*Open the Outputmap */
@@ -333,25 +343,25 @@ int main(int argc, char *argv[])
 	/**********************/
 
 	/*Filename check for output map */
-	if (G_legal_filename(Parameter.output->answer) < 0)
-	    FatalError(map, elevfd, -1, _("Illegal output file name"));
+	if (G_legal_filename(param.output->answer) < 0)
+	    fatal_error(map, elevfd, -1, _("Illegal output file name"));
 
-	if (G_find_cell2(Parameter.output->answer, ""))
+	if (G_find_cell2(param.output->answer, ""))
 	    G_message(_("Output map already exists. Will be overwritten!\n"));
 
 	if (output_type == G3D_FLOAT) {
-	    outfd = G_open_raster_new(Parameter.output->answer, FCELL_TYPE);
+	    outfd = G_open_raster_new(param.output->answer, FCELL_TYPE);
 	    if (outfd < 0)
-		FatalError(map, elevfd, -1, _("Could not open output map\n"));
+		fatal_error(map, elevfd, -1, _("Could not open output map\n"));
 	}
 	else if (output_type == G3D_DOUBLE) {
-	    outfd = G_open_raster_new(Parameter.output->answer, DCELL_TYPE);
+	    outfd = G_open_raster_new(param.output->answer, DCELL_TYPE);
 	    if (outfd < 0)
-		FatalError(map, elevfd, -1, _("Could not open output map\n"));
+		fatal_error(map, elevfd, -1, _("Could not open output map\n"));
 	}
 
 	/*if requested set the Mask on */
-	if (Parameter.mask->answer) {
+	if (param.mask->answer) {
 	    if (G3d_maskFileExists()) {
 		changemask = 0;
 		if (G3d_maskIsOff(map)) {
@@ -365,40 +375,30 @@ int main(int argc, char *argv[])
 	/*Create the Rastermaps */
 
 	/************************/
-	G3dCrossRaster(map, region, elevfd, outfd);
+	rast3d_cross_section(map, region, elevfd, outfd);
 
 	/*We set the Mask off, if it was off before */
-	if (Parameter.mask->answer) {
+	if (param.mask->answer) {
 	    if (G3d_maskFileExists())
 		if (G3d_maskIsOn(map) && changemask)
 		    G3d_maskOff(map);
 	}
 
 	if (G_close_cell(outfd) < 0)
-	    FatalError(map, elevfd, -1, _("unable to close output map"));
+	    fatal_error(map, elevfd, -1, _("unable to close output map"));
 	if (G_close_cell(elevfd) < 0)
-	    FatalError(map, -1, -1, _("unable to close elevation map"));
+	    fatal_error(map, -1, -1, _("unable to close elevation map"));
 
     }
     else {
-	FatalError(map, -1, -1,
+	fatal_error(map, -1, -1,
 		   _("Wrong G3D Datatype! Cannot create raster map."));
     }
 
     /* Close files and exit */
     if (!G3d_closeCell(map))
-	G3d_fatalError(_("Could not close G3D map <%s>"), Parameter.input->answer);
+	G3d_fatalError(_("Could not close G3D map <%s>"), param.input->answer);
 
     return (EXIT_SUCCESS);
-}
-
-
-/* ************************************************************************* */
-/* Close the raster map ********************************************* */
-/* ************************************************************************* */
-void CloseOutputMap(int fd)
-{
-    if (G_close_cell(fd) < 0)
-	G_fatal_error(_("unable to close output map"));
 }
 
