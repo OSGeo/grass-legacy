@@ -9,7 +9,9 @@ some GRASS library functions directly from the PYTHON programming language.
 
 At the moment a prototype is implemented.
 <P>
-See: python_grass6_wrap.i
+See: python_grass6_wrap.c 
+
+See: python_grass6_wrap.py
 
 */
 
