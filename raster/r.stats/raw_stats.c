@@ -3,7 +3,7 @@
 #include "global.h"
 
 int 
-raw_stats (int fd[], int verbose, int with_coordinates, int with_xy, int with_labels)
+raw_stats (int fd[], int with_coordinates, int with_xy, int with_labels)
 {
     CELL null_cell;
     void **rast, **rastp;
@@ -32,14 +32,10 @@ raw_stats (int fd[], int verbose, int with_coordinates, int with_xy, int with_la
 	G_get_set_window (&window);
 
 /* here we go */
-    if (verbose)
-	fprintf (stderr, "%s: ", G_program_name());
-
     G_set_c_null_value(&null_cell, 1);
     for (row = 0; row < nrows; row++)
     {
-	if (verbose)
-	    G_percent (row, nrows, 2);
+        G_percent (row, nrows, 2);
 
         /* read the rows and set the pointers */
 	for (i = 0; i < nfiles; i++)
@@ -116,8 +112,7 @@ raw_stats (int fd[], int verbose, int with_coordinates, int with_xy, int with_la
 	}
     }
 
-    if (verbose)
-	G_percent (row, nrows, 2);
+    G_percent (row, nrows, 2);
 
     return 0;
 }
