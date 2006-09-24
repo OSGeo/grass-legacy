@@ -25,13 +25,12 @@ int main (int argc, char *argv[])
 	char	drain_name[80], *drain_mapset, E_f, dr_f, ba_f, N_f,  errr;
 	struct GModule *module;
         struct Option *opt1, *opt2, *opt3, *opt4;
-	char buf[400];
+	char *buf;
 
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->keywords = _("raster");
-    module->description =
+	module->description =
 		_("Watershed basin creation program.");
 
 	opt1 = G_define_option() ;
@@ -66,36 +65,33 @@ int main (int argc, char *argv[])
 
 	/*   Parse command line */
 	if (G_parser(argc, argv))
-		exit(-1);
+		exit(EXIT_FAILURE);
 
 	if (G_get_window(&window) < 0)
 	{
-		sprintf (buf,"can't read current window parameters");
+		G_asprintf (&buf,_("can't read current window parameters"));
 		G_fatal_error (buf);
-		exit(1);
 	}
 
                     strcpy (drain_name, opt1->answer);
                     strcpy (basin_name, opt2->answer);
                     if(!G_scan_easting(*opt3->answers, &E, G_projection()))
 		{
-			fprintf (stderr, "Illegal east coordinate <%s>\n",
-					 *opt3->answer);
+			G_warning (_("Illegal east coordinate <%s>\n"),
+					 opt3->answer);
 			G_usage();
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 	if(!G_scan_northing(*opt4->answers, &N, G_projection()))
 		{
-			fprintf (stderr, "Illegal north coordinate <%s>\n",
-					 *opt4->answer);
+			G_warning (_("Illegal north coordinate <%s>\n"), opt4->answer);
 			G_usage();
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 
 	if(E < window.west ||  E > window.east ||  N < window.south ||  N > window.north)
 		{
-			fprintf(stderr,"Warning, ignoring point outside window: \n") ;
-			fprintf(stderr,"   %.4f,%.4f\n", E, N) ;
+			G_warning(_("Warning, ignoring point outside window: \n    %.4f,%.4f\n"), E, N) ;
 		}
 
 	G_get_set_window (&window);
@@ -109,10 +105,14 @@ int main (int argc, char *argv[])
 	nrows_less_one = nrows - 1;
 	ncols_less_one = ncols - 1;
 	drain_fd = G_open_cell_old (drain_name, drain_mapset);
-	if (drain_fd < 0) G_fatal_error ("unable to open drainage pointer map");
+
+	if (drain_fd < 0) 
+		G_fatal_error (_("unable to open drainage pointer map"));
+
 	drain_ptrs = (char *) G_malloc (sizeof(char) * size_array (&pt_seg, nrows, ncols));
 	bas = (CELL *) G_calloc (size_array (&ba_seg, nrows, ncols), sizeof(CELL));
 	cell_buf = G_allocate_cell_buf();
+
 	for (row = 0; row < nrows; row++) {
 		G_get_map_row (drain_fd, cell_buf, row);
 		for (col = 0; col < ncols; col++) {
@@ -129,8 +129,10 @@ int main (int argc, char *argv[])
 	G_free (drain_ptrs);
 	cell_buf = G_allocate_cell_buf();
 	basin_fd = G_open_cell_new (basin_name);
+
 	if (basin_fd < 0)
-		G_fatal_error ("unable to open new basin map");
+		G_fatal_error (_("unable to open new basin map"));
+
 	for (row = 0; row < nrows; row++) {
 		for (col = 0; col < ncols; col++) {
 		    cell_buf[col] = bas[SEG_INDEX(ba_seg, row, col)];
@@ -140,7 +142,7 @@ int main (int argc, char *argv[])
 	G_free (bas);
 	G_free (cell_buf);
 	if (G_close_cell (basin_fd) < 0) 
-		G_fatal_error ("unable to close new basin map layer");
+		G_fatal_error (_("unable to close new basin map layer"));
 
 	return 0;
 }
