@@ -1,6 +1,6 @@
 %module Grass
 %{
-#include "grass/gis.h"
+#include <grass/gis.h>
 %}
 %include "../dist.@ARCH@/include/grass/gisdefs.h"
 
