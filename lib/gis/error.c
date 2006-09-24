@@ -166,7 +166,7 @@ static int print_error(const char *msg, const int type)
     }
 
     /* messages will be printed only when verbosity level is 2> */
-    if (G_verbose() < 2 && type < 1) 
+    if (G_verbose() < 2 && type == MSG) 
         return 0;
 
     if ( type == ERR )
