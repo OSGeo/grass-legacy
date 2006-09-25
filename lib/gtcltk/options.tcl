@@ -32,6 +32,8 @@ proc fontcreate {font args} {
 fontcreate balloon-help -family Helvetica -size -12
 fontcreate default -family Helvetica -size -12
 fontcreate textfont -family Courier -size -12
+fontcreate bolddefault -family Helvetica -size 12 -weight bold
+fontcreate introfont -family Helvetica -size 14 -weight bold
 
 ##############################################################################
 # Configure balloon help:
@@ -55,6 +57,7 @@ option add *ButtonBox*add.highlightBackground HoneyDew2
 option add *MainFrame.background HoneyDew2
 option add *PanedWindow.background HoneyDew2
 option add *Menu.background HoneyDew2
+option add *listbox.background white
 option add *addindicator.background white
 
 # Things that are selected:
@@ -70,6 +73,7 @@ option add *troughColor HoneyDew3
 
 # Entry widgets and text widgets should have a white background
 option add *Entry.background white
+option add *entry.background white
 option add *Entry.highlightbackground #dddddd
 option add *entrybg white
 option add *Text.background white
@@ -97,10 +101,4 @@ if {[info exists env(osxaqua)]} {
 
 if { $osxaqua == "1"} {
     set keycontrol "Command"
-}
-
-if {[info exists env(MSYSCON)]} {
-    set mingw "1"
-} else {
-    set mingw "0"
 }
