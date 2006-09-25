@@ -74,9 +74,13 @@
 
 struct Cell_head window;
 
+
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
 int main(int argc, char *argv[])
 {
-    void *dtm_cell, *cost_cell, *cum_cell, *cell2;
+    void *dtm_cell, *cost_cell, *cum_cell, *cell2 = NULL;
     SEGMENT dtm_in_seg, cost_in_seg, out_seg;
     char *dtm_mapset, *cost_mapset;
     char *cum_cost_mapset;
@@ -91,7 +95,7 @@ int main(int argc, char *argv[])
     double min_cost, old_min_cost;
     double zero = 0.0;
     int at_percent = 0;
-    int col, row, nrows, ncols;
+    int col = 0, row = 0, nrows = 0, ncols = 0;
     int maxcost, par_number;
     int maxmem;
     int nseg;
@@ -104,7 +108,6 @@ int main(int argc, char *argv[])
     double a, b, c, d, lambda, slope_factor;
     int srows, scols;
     int total_reviewed;
-    int verbose = 1;
     int keep_nulls = 1;
     int start_with_raster_vals = 1;
     int neighbor;
@@ -112,7 +115,7 @@ int main(int argc, char *argv[])
     long n_processed = 0;
     long total_cells;
     struct GModule *module;
-    struct Flag *flag1, *flag2, *flag3, *flag4;
+    struct Flag *flag2, *flag3, *flag4;
     struct Option *opt1, *opt2, *opt3, *opt4, *opt5, *opt6, *opt7, *opt8;
     struct Option *opt9, *opt10, *opt11, *opt12, *opt13, *opt14;
     struct cost *pres_cell, *new_cell;
@@ -121,7 +124,7 @@ int main(int argc, char *argv[])
     struct start_pt *pres_stop_pt = NULL;
 
     void *ptr2;
-    RASTER_MAP_TYPE dtm_data_type, data_type2, cost_data_type, cum_data_type, cat;
+    RASTER_MAP_TYPE dtm_data_type, data_type2, cost_data_type, cum_data_type = DCELL_TYPE, cat;
     double peak = 0.0;
     int dtm_dsize, cost_dsize;
 
@@ -258,10 +261,6 @@ int main(int argc, char *argv[])
     opt13->description =
 	_("Slope factor determines travel energy cost per height step");
 
-    flag1 = G_define_flag();
-    flag1->key = 'v';
-    flag1->description = _("Run verbosely");
-
     flag2 = G_define_flag();
     flag2->key = 'k';
     flag2->description =
@@ -301,7 +300,6 @@ int main(int argc, char *argv[])
 
     G_set_d_null_value(&null_cost, 1);
 
-    verbose = flag1->answer;
     if (flag2->answer)
 	total_reviewed = 16;
     else
@@ -327,7 +325,7 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Missing required value: got %d instead of 4"),
 		      par_number);
     else {
-	if (verbose)
+	
 	    G_message(_("Walking costs are a=%lf b=%lf c=%lf d=%lf"), a, b, c,
 		      d);
     }
@@ -336,7 +334,7 @@ int main(int argc, char *argv[])
     if ((par_number = sscanf(opt11->answer, "%lf", &lambda)) != 1)
 	G_fatal_error(_("Missing required value: %d"), par_number);
     else {
-	if (verbose)
+	
 	    G_message(_("Lambda is %lf"), lambda);
     }
 
@@ -344,24 +342,24 @@ int main(int argc, char *argv[])
     if ((par_number = sscanf(opt13->answer, "%lf", &slope_factor)) != 1)
 	G_fatal_error(_("Missing required value: %d"), par_number);
     else {
-	if (verbose)
+	
 	    G_message(_("Slope_factor is %lf"), slope_factor);
     }
 
     if ((par_number = sscanf(opt14->answer, "%d", &nseg)) != 1)
 	G_fatal_error(_("Missing required value: %d"), par_number);
     else {
-	if (verbose)
+	
 	    G_message(_("Nseg is %d"), nseg);
     }
 
     if ((opt6->answer == NULL) ||
 	(sscanf(opt6->answer, "%lf", &null_cost) != 1)) {
-	if (verbose)
+	
 	    G_message(_("Null cells excluded from cost evaluation."));
 	G_set_d_null_value(&null_cost, 1);
     }
-    else if (verbose && keep_nulls)
+    else if (keep_nulls)
 	G_message(_("Input null cell will be retained into output map"));
 
 
@@ -537,7 +535,7 @@ int main(int argc, char *argv[])
 
     /*   Parameters for map submatrices   */
 
-    if (verbose) {
+     
 	switch (dtm_data_type) {
 	case (CELL_TYPE):
 	    G_message(_("DTM_Source map is: Integer cell type"));
@@ -551,9 +549,9 @@ int main(int argc, char *argv[])
 	    break;
 	}
 	G_message(_(" %d rows, %d cols"), dtm_cellhd.rows, dtm_cellhd.cols);
-    }
+    
 
-    if (verbose) {
+     
 	switch (cost_data_type) {
 	case (CELL_TYPE):
 	    G_message(_("COST_Source map is: Integer cell type"));
@@ -568,7 +566,7 @@ int main(int argc, char *argv[])
 	    break;
 	}
 	G_message(_(" %d rows, %d cols."), cost_cellhd.rows, cost_cellhd.cols);
-    }
+    
     if (cost_data_type != dtm_data_type) {
 	switch (cost_data_type) {
 	case (CELL_TYPE):
@@ -592,7 +590,7 @@ int main(int argc, char *argv[])
 	/* Data type are equal, it doesn't matter */
 	cum_data_type = dtm_data_type;
 
-    if (verbose) {
+     
 	switch (cum_data_type) {
 	case (CELL_TYPE):
 	    G_message(_("Output map is: Integer cell type"));
@@ -609,7 +607,7 @@ int main(int argc, char *argv[])
 	G_message(_(" EW resolution %s (%lf)"), buf, window.ew_res);
 	G_format_resolution(window.ns_res, buf, window.proj);
 	G_message(_(" NS resolution %s (%lf)"), buf, window.ns_res);
-    }
+    
 
     srows = nrows / nseg + 1;
     scols = ncols / nseg + 1;
@@ -621,7 +619,7 @@ int main(int argc, char *argv[])
 
     /*   Create segmented format files for cost layer and output layer  */
 
-    if (verbose)
+    
 	G_message(_("Creating some temporary files ..."));
 
     dtm_in_fd = creat(dtm_in_file, 0600);
@@ -649,7 +647,7 @@ int main(int argc, char *argv[])
 
     /*   Write the cost layer in the segmented file  */
 
-    if (verbose)
+    
 	G_message(_("Reading %s ..."), dtm_layer);
 
     start_with_raster_vals = flag4->answer;
@@ -662,7 +660,7 @@ int main(int argc, char *argv[])
 	p = 0.0;
 
 	for (row = 0; row < nrows; row++) {
-	    if (verbose)
+	    
 		G_percent(row, nrows, 2);
 	    if (G_get_raster_row(dtm_fd, dtm_cell, row, dtm_data_type) < 0)
 		G_fatal_error(_("Can't get row %d from raster map %s"), row,
@@ -711,7 +709,7 @@ int main(int argc, char *argv[])
 	}
     }
 
-    if (verbose)
+    
 	G_message(_("Reading %s ..."), cost_layer);
 
     {
@@ -721,7 +719,7 @@ int main(int argc, char *argv[])
 	cost_dsize = G_raster_size(cost_data_type);
 	p = 0.0;
 	for (row = 0; row < nrows; row++) {
-	    if (verbose)
+	    
 		G_percent(row, nrows, 2);
 	    if (G_get_raster_row(cost_fd, cost_cell, row, cost_data_type) < 0)
 		G_fatal_error(_("Can't get row %d from raster map %s"), row,
@@ -773,13 +771,13 @@ int main(int argc, char *argv[])
     segment_flush(&dtm_in_seg);
     segment_flush(&cost_in_seg);
 
-    if (verbose)
+    
 	G_percent(row, nrows, 2);
 
     /* Initialize output map with NULL VALUES */
 
     /*   Initialize segmented output file  */
-    if (verbose)
+    
 	G_message(_("Initializing output "));
     {
 	double *fbuff;
@@ -793,7 +791,7 @@ int main(int argc, char *argv[])
 	G_set_d_null_value(fbuff, ncols);
 
 	for (row = 0; row < nrows; row++) {
-	    if (verbose) {
+	     {
 		G_percent(row, nrows, 2);
 	    }
 	    for (i = 0; i < ncols; i++) {
@@ -802,7 +800,7 @@ int main(int argc, char *argv[])
 
 	}
 	segment_flush(&out_seg);
-	if (verbose)
+	
 	    G_percent(row, nrows, 2);
 	G_free(fbuff);
     }
@@ -834,10 +832,10 @@ int main(int argc, char *argv[])
 	    G_fatal_error(_
 			  ("Memory allocation error on reading start points from raster map %s"),
 			  cum_cost_layer);
-	if (verbose)
+	
 	    G_message(_("Reading %s ... "), cum_cost_layer);
 	for (row = 0; row < nrows; row++) {
-	    if (verbose)
+	    
 		G_percent(row, nrows, 2);
 	    if (G_get_raster_row(cum_fd, cell2, row, data_type2) < 0)
 		G_fatal_error(_("Can't get row %d from raster map %s"), row,
@@ -861,7 +859,7 @@ int main(int argc, char *argv[])
 		ptr2 = G_incr_void_ptr(ptr2, dsize2);
 	    }
 	}
-	if (verbose)
+	
 	    G_percent(row, nrows, 2);
 
 	G_close_cell(cum_fd);
@@ -896,10 +894,10 @@ int main(int argc, char *argv[])
      *   3) Free the memory allocated to the present cell.
      */
 
-    if (verbose) {
-	system("date");
+     
+	/*system("date");*/
 	G_message(_("Finding cost path"));
-    }
+    
     n_processed = 0;
     total_cells = nrows * ncols;
     at_percent = 0;
@@ -936,7 +934,7 @@ int main(int argc, char *argv[])
 	if (G_is_d_null_value(&my_cost))
 	    continue;
 
-	if (verbose)
+	
 	    G_percent(++n_processed, total_cells, 1);
 
 	/*          9    10       Order in which neighbors 
@@ -1344,7 +1342,7 @@ int main(int argc, char *argv[])
 
 	pres_cell = get_lowest();
 	if (pres_cell == NULL) {
-	    if (verbose)
+	    
 		G_message(_("End of map!"));
 	    goto OUT;
 	}
@@ -1361,22 +1359,22 @@ int main(int argc, char *argv[])
     segment_flush(&out_seg);
 
     /*  Copy segmented map to output map  */
-    if (verbose) {
-	system("date");
+     
+	/* system("date"); */
 	G_message(_("Writing output raster map %s ... "), cum_cost_layer);
-    }
+    
     if (keep_nulls) {
-	if (verbose)
+	
 	    G_message(_("Will copy input map null values into output map"));
 	cell2 = G_allocate_raster_buf(dtm_data_type);
     }
     if (cum_data_type == CELL_TYPE) {
 	int *p;
 	int *p2;
-	if (verbose)
+	
 	    G_message(_("Integer cell type.\nWriting..."));
 	for (row = 0; row < nrows; row++) {
-	    if (verbose)
+	    
 		G_percent(row, nrows, 2);
 	    if (keep_nulls) {
 		if (G_get_raster_row(dtm_fd, cell2, row, dtm_data_type) < 0)
@@ -1409,10 +1407,10 @@ int main(int argc, char *argv[])
     else if (cum_data_type == FCELL_TYPE) {
 	float *p;
 	float *p2;
-	if (verbose)
+	
 	    G_message(_("Float cell type.\nWriting..."));
 	for (row = 0; row < nrows; row++) {
-	    if (verbose)
+	    
 		G_percent(row, nrows, 2);
 	    if (keep_nulls) {
 		if (G_get_raster_row(dtm_fd, cell2, row, dtm_data_type) < 0)
@@ -1445,10 +1443,10 @@ int main(int argc, char *argv[])
     else if (cum_data_type == DCELL_TYPE) {
 	double *p;
 	double *p2;
-	if (verbose)
+	
 	    G_message(_("Double cell type.\nWriting..."));
 	for (row = 0; row < nrows; row++) {
-	    if (verbose)
+	    
 		G_percent(row, nrows, 2);
 	    if (keep_nulls) {
 		if (G_get_raster_row(dtm_fd, cell2, row, dtm_data_type) < 0)
@@ -1477,10 +1475,10 @@ int main(int argc, char *argv[])
 	}
     }
 
-    if (verbose)
+    
 	G_percent(row, nrows, 2);
 
-    if (verbose)
+    
 	G_message(_("Peak cost value: %f"), peak);
 
     segment_release(&dtm_in_seg);	/* release memory  */
@@ -1512,6 +1510,9 @@ int main(int argc, char *argv[])
     exit(EXIT_SUCCESS);
 }
 
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
 int
 process_answers(char **answers, struct start_pt **points,
 		struct start_pt **top_start_pt)
@@ -1564,6 +1565,9 @@ process_answers(char **answers, struct start_pt **points,
     return (got_one);
 }
 
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
 int time_to_stop(int row, int col)
 {
     static int total = 0;

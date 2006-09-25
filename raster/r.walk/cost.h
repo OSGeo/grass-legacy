@@ -8,6 +8,9 @@
 /*                                                             */
 /***************************************************************/
 
+#ifndef __R_COST_H__
+#define __R_COST_H__
+
 struct cost{
     double  min_cost;
     int row;
@@ -27,4 +30,6 @@ int show(struct cost *);
 int show_all();
 int delete(struct cost *);
 int check(char *, struct cost *);
+
+#endif
 /***************************************************************/
