@@ -19,6 +19,12 @@
 #
 #############################################################################
 
+if {[info exists env(MSYSCON)]} {
+	set mingw "1"
+} else {
+	set mingw "0"
+}
+
 source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 #############################################################################
 #
@@ -288,6 +294,8 @@ proc gisSetWindow {} {
     global grassrc_list
     global gisrc_name
 
+    global mingw
+
     # Window manager configurations
 
     wm title . [format [G_msg "GRASS %s Startup"] $GRASSVERSION]
@@ -353,10 +361,31 @@ proc gisSetWindow {} {
     	-width 12 \
     	-orient {horizontal}
  
-    button .frame0.frameDB.right.button \
-    	-text [G_msg "Browse..."] \
-    	-command {GetDir .frame0.frameDB.mid.entry .frame0.frameLOC.listbox \
-    	    .frame0.frameMS.listbox}
+    if { $mingw == "1" } {
+       # We cannot use Double-Button-1 (change dir) and Button-1 (select dir)
+       # events at the same time because of MS-Windows TclTk's event bug.
+       button .frame0.frameDB.right.button \
+    	   -text [G_msg "Browse..."] \
+    	   -command {set database [tk_chooseDirectory -initialdir $database \
+	   	-parent .frame0 -title "New GIS data directory" -mustexist true]
+
+		cd $database
+		.frame0.frameLOC.listbox delete 0 end
+		.frame0.frameMS.listbox delete 0 end
+		foreach filename [lsort [glob -nocomplain *]] \
+		{
+			if {[file isdirectory $filename]} \
+			{
+				.frame0.frameLOC.listbox insert end $filename
+			}
+		}
+		.frame0.frameBUTTONS.ok configure -state disabled}
+    } else {
+       button .frame0.frameDB.right.button \
+    	   -text [G_msg "Browse..."] \
+    	   -command {GetDir .frame0.frameDB.mid.entry .frame0.frameLOC.listbox \
+    	       .frame0.frameMS.listbox}
+    }
 
 
     pack .frame0.frameDB.left.label -side top
@@ -480,11 +509,11 @@ proc gisSetWindow {} {
                 puts $varfp "DB_DRIVER: dbf"
                 puts $varfp "DB_DATABASE: \$GISDBASE/\$LOCATION_NAME/\$MAPSET/dbf/"
                 close $varfp
-                file attributes $mymapset/VAR -permissions u+rw,go+r
+                catch {file attributes $mymapset/VAR -permissions u+rw,go+r}
                 file mkdir $mymapset/dbf
                 #copy over the WIND definition:
-                file copy $mymapset/../PERMANENT/WIND $mymapset
-                file attributes $mymapset/WIND -permissions u+rw,go+r
+				catch {file copy $mymapset/../PERMANENT/WIND $mymapset}
+                catch {file attributes $mymapset/WIND -permissions u+rw,go+r}
                 .frame0.frameMS.listbox insert end $mymapset
                 #TODO: select new MAPSET
             }
@@ -636,7 +665,7 @@ proc gisSetWindow {} {
     }
     
     cd $database
-    foreach i [exec ls -a [exec pwd]] {
+    foreach i [exec ls -a [pwd]] {
       	if { [string compare $i "."] != 0 && \
             [string compare $i ".."] != 0 && \
             [file isdirectory $i] } {
@@ -662,7 +691,7 @@ proc gisSetWindow {} {
     if { [file exists $location] } \
     {
 	cd $location
-	foreach i [exec ls -a [exec pwd]] {
+	foreach i [exec ls -a [pwd]] {
      	    if { [string compare $i "."] != 0 && \
         	[string compare $i ".."] != 0 && \
         	[file isdirectory $i] && [file owned $i] } {
@@ -694,7 +723,7 @@ proc gisSetWindow {} {
            %W insert 0 $new_path
            cd $new_path
            .frame0.frameLOC.listbox delete 0 end
-           foreach i [exec ls -a [exec pwd]] {
+           foreach i [exec ls -a [pwd]] {
                if { [string compare $i "."] != 0 && \
                     [string compare $i ".."] != 0 && \
                     [file isdirectory $i] } {
@@ -702,7 +731,7 @@ proc gisSetWindow {} {
                }
            }
            .frame0.frameMS.listbox delete 0 end
-           set database [exec pwd]
+           set database [pwd]
         }
 	.frame0.frameBUTTONS.ok configure -state disabled
   }
@@ -713,7 +742,7 @@ proc gisSetWindow {} {
         set location [%W get [%W nearest %y]]
         cd $location
         .frame0.frameMS.listbox delete 0 end
-        foreach i [exec ls -a [exec pwd]] {
+        foreach i [exec ls -a [pwd]] {
            if { [string compare $i "."] != 0 && \
                 [string compare $i ".."] != 0 && \
                 [file isdirectory $i] && [file owned $i] } { 
@@ -730,7 +759,7 @@ proc gisSetWindow {} {
         set location [%W get [%W nearest %y]]
         cd $location
         .frame0.frameMS.listbox delete 0 end
-        foreach i [exec ls -a [exec pwd]] {
+        foreach i [exec ls -a [pwd]] {
            if { [string compare $i "."] != 0 && \
                 [string compare $i ".."] != 0 && \
                 [file isdirectory $i] && [file owned $i] } {
