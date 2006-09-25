@@ -59,11 +59,10 @@ proc epsgLocCom args {
         global thelocation
         global browsedepsg 
         global locpath
-	global mingw
         
 	# NOTE: the epsg file is generated in GDAL for PROJ4 
 	# with gdal/pymod/epsg_tr.py
-	set browsedepsg "PROJSHARE/epsg"
+	set browsedepsg "/Library/Frameworks/PROJ.framework/Resources/proj/epsg"
         set epsgLocation "newLocation"
         set epsg_code ""
         set locpath $database
@@ -84,13 +83,13 @@ proc epsgLocCom args {
         
         #create the form and buttons
         label .optPopup.input1_ppb -text [G_msg "Name of new location"] -justify right -height 2
-        entry .optPopup.input1_ppbEntry -textvariable epsgLocation -width 35 -bg white
+        entry .optPopup.input1_ppbEntry -textvariable epsgLocation -width 35
         label .optPopup.input2_ppb -text [G_msg "Path to new location"] -justify right -height 2
-        entry .optPopup.input2_ppbEntry -textvariable locpath  -width 35 -bg white
+        entry .optPopup.input2_ppbEntry -textvariable locpath  -width 35
         label .optPopup.input3_ppb -text [G_msg "Path to the EPSG-codes file"] -justify right -height 2
-        entry .optPopup.input3_ppbEntry -textvariable browsedepsg  -width 35 -bg white
+        entry .optPopup.input3_ppbEntry -textvariable browsedepsg  -width 35 
         label .optPopup.input4_ppb -text [G_msg "EPSG code number of projection"] -justify right -height 2
-        entry .optPopup.input4_ppbEntry -textvariable epsg_code  -width 35 -bg white
+        entry .optPopup.input4_ppbEntry -textvariable epsg_code  -width 35
         
 		#browse for database path
         button .optPopup.db -justify center -width 12 -text [G_msg "Browse..."] \
@@ -108,7 +107,7 @@ proc epsgLocCom args {
                                         
         bind .optPopup.input3_ppbEntry <Leave> {
              if {$browsedepsg == ""} {
-                set browsedepsg "PROJSHARE/epsg"
+                set browsedepsg "/Library/Frameworks/PROJ.framework/Resources/proj/epsg"
             }
         }
 
@@ -148,13 +147,8 @@ proc epsgLocCom args {
 				if {[file exists $browsedepsg]== 1} {
 					if {[file exists $thelocation ]==0} {  
 						destroy .optPopup; 
-						if { $mingw == "1" } {
-							exec -- $env(GISBASE)/etc/grass-xterm-wrapper -e $env(GISBASE)/etc/make_location_epsg.sh \
-								$epsg_code $epsgLocation $locpath;
-						} else {
-							exec -- $env(GISBASE)/etc/grass-xterm-wrapper -e $env(GISBASE)/etc/make_location_epsg.sh \
-								$epsg_code $epsgLocation $locpath >@stdout 2>@stderr;
-						}
+						exec -- $env(GISBASE)/etc/grass-xterm-wrapper -e $env(GISBASE)/etc/make_location_epsg.sh \
+							$epsg_code $epsgLocation $locpath >@stdout 2>@stderr; 
 						DialogGen .wrnDlg [G_msg "WARNING: restart GRASS please"] warning \
 						[G_msg "WARNING: Please restart GRASS in order find the created location in the list (closing it for you now)"] \
 							0 OK; 
@@ -301,7 +295,7 @@ proc infoEpsg args {
         .infoPopup.text insert end [G_msg "\nThe folder (GRASS database) in which the location should be created\n\n"] info
         .infoPopup.text insert end "\n" 
         .infoPopup.text insert end [G_msg "\n   EPSG code number of projection:\n\n"] subtitle
-        .infoPopup.text insert end [G_msg "\nEPSG code number of projection (see PROJSHARE/epsg or push the 'EPSG-codes' button)\n\n"] info
+        .infoPopup.text insert end [G_msg "\nEPSG code number of projection (see /Library/Frameworks/PROJ.framework/Resources/proj/epsg or push the 'EPSG-codes' button)\n\n"] info
         
         pack .infoPopup.text -side left -fill both 
         

@@ -19,12 +19,6 @@
 #
 #############################################################################
 
-if {[info exists env(MSYSCON)]} {
-	set mingw "1"
-} else {
-	set mingw "0"
-}
-
 source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 #############################################################################
 #
@@ -32,6 +26,7 @@ source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 #   the EPSG codes    (routines epsgLocCom and infoEpsg)
 #
 #############################################################################
+source $env(GISBASE)/etc/gtcltk/options.tcl
 source $env(GISBASE)/etc/epsg_option.tcl
 source $env(GISBASE)/etc/file_option.tcl
 
@@ -284,22 +279,18 @@ proc CheckLocation {} \
 
 proc gisSetWindow {} {
     global GRASSVERSION
-
-    # Window manager configurations
-
-    wm title . [format [G_msg "GRASS %s Startup"] $GRASSVERSION]
-
     global database
     global location
     global mymapset
     global mapset
     global oldDb oldLoc oldMap
     global env
-
     global grassrc_list
     global gisrc_name
 
-    global mingw
+    # Window manager configurations
+
+    wm title . [format [G_msg "GRASS %s Startup"] $GRASSVERSION]
 
     # ---------------------------
     # build .frame0
@@ -313,8 +304,10 @@ proc gisSetWindow {} {
     	"$env(GISBASE)/etc/gintro.gif"]]
     set introtitle [text $titlefrm.msg -height 5 \
     	-relief flat -fg darkgreen \
-    	-font {Helvetica -14 bold} \
+    	-bg #dddddd \
+    	-font introfont \
     	-width 50 ]
+
     pack $titlefrm -side top
 	pack $introimg -side top
     pack $introtitle -side top
@@ -352,8 +345,7 @@ proc gisSetWindow {} {
     	-relief {sunken} \
     	-textvariable database \
 		-width 40 \
-    	-xscrollcommand { .frame0.frameDB.mid.hscrollbar set} \
-    	-bg white
+    	-xscrollcommand { .frame0.frameDB.mid.hscrollbar set}
     
     scrollbar .frame0.frameDB.mid.hscrollbar \
     	-command { .frame0.frameDB.mid.entry xview} \
@@ -361,31 +353,10 @@ proc gisSetWindow {} {
     	-width 12 \
     	-orient {horizontal}
  
-    if { $mingw == "1" } {
-       # We cannot use Double-Button-1 (change dir) and Button-1 (select dir)
-       # events at the same time because of MS-Windows TclTk's event bug.
-       button .frame0.frameDB.right.button \
-    	   -text [G_msg "Browse..."] \
-    	   -command {set database [tk_chooseDirectory -initialdir $database \
-	   	-parent .frame0 -title "New GIS data directory" -mustexist true]
-
-		cd $database
-		.frame0.frameLOC.listbox delete 0 end
-		.frame0.frameMS.listbox delete 0 end
-		foreach filename [lsort [glob -nocomplain *]] \
-		{
-			if {[file isdirectory $filename]} \
-			{
-				.frame0.frameLOC.listbox insert end $filename
-			}
-		}
-		.frame0.frameBUTTONS.ok configure -state disabled}
-    } else {
-       button .frame0.frameDB.right.button \
-    	   -text [G_msg "Browse..."] \
-    	   -command {GetDir .frame0.frameDB.mid.entry .frame0.frameLOC.listbox \
-    	       .frame0.frameMS.listbox}
-    }
+    button .frame0.frameDB.right.button \
+    	-text [G_msg "Browse..."] \
+    	-command {GetDir .frame0.frameDB.mid.entry .frame0.frameLOC.listbox \
+    	    .frame0.frameMS.listbox}
 
 
     pack .frame0.frameDB.left.label -side top
@@ -410,8 +381,7 @@ proc gisSetWindow {} {
     	-relief {sunken} \
     	-exportselection false \
     	-yscrollcommand {.frame0.frameLOC.vscrollbar set} \
-    	-xscrollcommand {.frame0.frameLOC.hscrollbar set} \
-    	-bg white
+    	-xscrollcommand {.frame0.frameLOC.hscrollbar set}
 
     scrollbar .frame0.frameLOC.vscrollbar -width 12 \
     	-command {.frame0.frameLOC.listbox yview} \
@@ -442,8 +412,7 @@ proc gisSetWindow {} {
     listbox .frame0.frameMS.listbox \
     	-relief {sunken} \
     	-yscrollcommand {.frame0.frameMS.vscrollbar set} \
-    	-xscrollcommand {.frame0.frameMS.hscrollbar set} \
-    	-bg white
+    	-xscrollcommand {.frame0.frameMS.hscrollbar set}
 
     scrollbar .frame0.frameMS.vscrollbar -width 12 \
     	-command {.frame0.frameMS.listbox yview} \
@@ -494,8 +463,7 @@ proc gisSetWindow {} {
     entry .frame0.frameNMS.second.entry \
     	-relief {sunken} \
     	-textvariable mymapset \
-    	-width 22 \
-    	-bg white
+    	-width 22 
 	
     button .frame0.frameNMS.third.button \
     	-text [G_msg "Create new mapset"] \
@@ -512,11 +480,11 @@ proc gisSetWindow {} {
                 puts $varfp "DB_DRIVER: dbf"
                 puts $varfp "DB_DATABASE: \$GISDBASE/\$LOCATION_NAME/\$MAPSET/dbf/"
                 close $varfp
-                catch {file attributes $mymapset/VAR -permissions u+rw,go+r}
+                file attributes $mymapset/VAR -permissions u+rw,go+r
                 file mkdir $mymapset/dbf
                 #copy over the WIND definition:
-		catch {file copy $mymapset/../PERMANENT/WIND $mymapset}
-                catch {file attributes $mymapset/WIND -permissions u+rw,go+r}
+                file copy $mymapset/../PERMANENT/WIND $mymapset
+                file attributes $mymapset/WIND -permissions u+rw,go+r
                 .frame0.frameMS.listbox insert end $mymapset
                 #TODO: select new MAPSET
             }
@@ -668,7 +636,7 @@ proc gisSetWindow {} {
     }
     
     cd $database
-    foreach i [exec ls -a [pwd]] {
+    foreach i [exec ls -a [exec pwd]] {
       	if { [string compare $i "."] != 0 && \
             [string compare $i ".."] != 0 && \
             [file isdirectory $i] } {
@@ -694,7 +662,7 @@ proc gisSetWindow {} {
     if { [file exists $location] } \
     {
 	cd $location
-	foreach i [exec ls -a [pwd]] {
+	foreach i [exec ls -a [exec pwd]] {
      	    if { [string compare $i "."] != 0 && \
         	[string compare $i ".."] != 0 && \
         	[file isdirectory $i] && [file owned $i] } {
@@ -726,7 +694,7 @@ proc gisSetWindow {} {
            %W insert 0 $new_path
            cd $new_path
            .frame0.frameLOC.listbox delete 0 end
-           foreach i [exec ls -a [pwd]] {
+           foreach i [exec ls -a [exec pwd]] {
                if { [string compare $i "."] != 0 && \
                     [string compare $i ".."] != 0 && \
                     [file isdirectory $i] } {
@@ -734,7 +702,7 @@ proc gisSetWindow {} {
                }
            }
            .frame0.frameMS.listbox delete 0 end
-           set database [pwd]
+           set database [exec pwd]
         }
 	.frame0.frameBUTTONS.ok configure -state disabled
   }
@@ -745,7 +713,7 @@ proc gisSetWindow {} {
         set location [%W get [%W nearest %y]]
         cd $location
         .frame0.frameMS.listbox delete 0 end
-        foreach i [exec ls -a [pwd]] {
+        foreach i [exec ls -a [exec pwd]] {
            if { [string compare $i "."] != 0 && \
                 [string compare $i ".."] != 0 && \
                 [file isdirectory $i] && [file owned $i] } { 
@@ -762,7 +730,7 @@ proc gisSetWindow {} {
         set location [%W get [%W nearest %y]]
         cd $location
         .frame0.frameMS.listbox delete 0 end
-        foreach i [exec ls -a [pwd]] {
+        foreach i [exec ls -a [exec pwd]] {
            if { [string compare $i "."] != 0 && \
                 [string compare $i ".."] != 0 && \
                 [file isdirectory $i] && [file owned $i] } {
