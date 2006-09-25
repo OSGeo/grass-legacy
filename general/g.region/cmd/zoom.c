@@ -47,7 +47,7 @@ int zoom (struct Cell_head *window,char *name,char *mapset)
 	if (row < top) top = row;
 	if (row > bottom) bottom = row;
 	if (col < left) left = col;
-	for (mark = col++; col < ncols; col++)
+	for (mark = col; col < ncols; col++)
 	{
 	    if (!G_is_null_value(rast_ptr, map_type))
 		mark = col;
