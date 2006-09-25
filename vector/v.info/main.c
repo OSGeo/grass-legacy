@@ -40,7 +40,7 @@ main (int argc, char *argv[])
 {
   struct GModule *module;
   struct Option *in_opt, *fieldopt;
-  struct Flag *histf, *columns, *gflag;
+  struct Flag *histf, *columns, *gflag, *tflag;
   struct Map_info Map;
   struct dig_head v_head;
   BOUND_BOX box;
@@ -77,6 +77,10 @@ main (int argc, char *argv[])
   gflag = G_define_flag();
   gflag->key            = 'g';
   gflag->description    = _("Print vector map region only");
+  
+  tflag = G_define_flag();
+  tflag->key            = 't';
+  tflag->description    = _("Print topology information only");
 
   if (G_parser(argc,argv))
     exit(EXIT_FAILURE);
@@ -96,20 +100,66 @@ main (int argc, char *argv[])
       while ( Vect_hist_read ( buf, 1000, &Map ) != NULL ) {
 	 fprintf ( stdout, "%s\n", buf );
       }
-  } else if (gflag->answer){
-       Vect_get_map_box (&Map, &box );
-       G_format_northing (box.N, tmp1, Vect_get_proj(&Map));
-       G_format_northing (box.S, tmp2, Vect_get_proj(&Map));
-       fprintf(stdout, "north=%s\n", tmp1);
-       fprintf(stdout, "south=%s\n", tmp2);
-            
-       G_format_easting (box.E, tmp1, Vect_get_proj(&Map));
-       G_format_easting (box.W, tmp2, Vect_get_proj(&Map));
-       fprintf(stdout, "east=%s\n", tmp1);
-       fprintf(stdout, "west=%s\n", tmp2);
-       fprintf(stdout, "top=%f\n", box.T);
-       fprintf(stdout, "bottom=%f\n", box.B);
-     } else {
+  }
+  else if (gflag->answer || tflag->answer ){
+       if (gflag->answer) {
+            Vect_get_map_box (&Map, &box );
+            G_format_northing (box.N, tmp1, Vect_get_proj(&Map));
+            G_format_northing (box.S, tmp2, Vect_get_proj(&Map));
+            fprintf(stdout, "north=%s\n", tmp1);
+            fprintf(stdout, "south=%s\n", tmp2);
+                    
+            G_format_easting (box.E, tmp1, Vect_get_proj(&Map));
+            G_format_easting (box.W, tmp2, Vect_get_proj(&Map));
+            fprintf(stdout, "east=%s\n", tmp1);
+            fprintf(stdout, "west=%s\n", tmp2);
+            fprintf(stdout, "top=%f\n", box.T);
+            fprintf(stdout, "bottom=%f\n", box.B);
+       }
+       if (tflag->answer) {
+            long int nprimitives = 0;
+            nprimitives += (long)Vect_get_num_primitives(&Map, GV_POINT);
+            nprimitives += (long)Vect_get_num_primitives(&Map, GV_LINE);
+            nprimitives += (long)Vect_get_num_primitives(&Map, GV_BOUNDARY);
+            nprimitives += (long)Vect_get_num_primitives(&Map, GV_FACE);
+            nprimitives += (long)Vect_get_num_primitives(&Map, GV_CENTROID);
+            nprimitives += (long)Vect_get_num_primitives(&Map, GV_KERNEL);
+
+
+            fprintf (stdout, "nodes=%ld\n", (long)Vect_get_num_nodes(&Map));
+            fflush(stdout);
+            fprintf (stdout, "points=%ld\n", (long)Vect_get_num_primitives(&Map, GV_POINT));
+            fflush(stdout);
+
+            fprintf (stdout, "lines=%ld\n", (long)Vect_get_num_primitives(&Map, GV_LINE));
+            fflush(stdout);
+
+            fprintf (stdout, "boundaries=%ld\n", (long)Vect_get_num_primitives(&Map, GV_BOUNDARY));
+            fflush(stdout);
+
+            fprintf (stdout, "centroids=%ld\n",  (long)Vect_get_num_primitives(&Map, GV_CENTROID));
+            fflush(stdout);
+
+            fprintf (stdout, "areas=%ld\n", (long)Vect_get_num_areas(&Map));
+            fflush(stdout);
+
+            fprintf (stdout, "islands=%ld\n", (long)Vect_get_num_islands(&Map));
+            fflush(stdout);
+
+            fprintf (stdout, "faces=%ld\n", (long)Vect_get_num_primitives(&Map, GV_FACE));
+            fflush(stdout);
+
+            fprintf (stdout, "kernels=%ld\n", (long)Vect_get_num_primitives(&Map, GV_KERNEL));
+            fflush(stdout);
+
+            fprintf (stdout, "primitives=%ld\n", nprimitives);
+            fflush(stdout);
+
+            fprintf (stdout, "map3d=%d\n", Vect_is_3d(&Map));
+            fflush(stdout);
+       }
+     } 
+  else {
      if ( columns->answer ) {
       num_dblinks = Vect_get_num_dblinks(&Map);
       if (num_dblinks <= 0) {
