@@ -1,5 +1,5 @@
-%include typemaps.i
-%typemap(python,in) string_allows_none {
+#ifdef SWIGPYTHON
+%typemap(in) string_allows_none {
 	if($input==Py_None) {
 		$1=NULL;
 	} else {
@@ -14,7 +14,7 @@
 typedef char * string_allows_none;
 %}
 
-%typemap(python,out) char ** {
+%typemap(out) char ** {
 	int len=0,i;
 	PyObject * stringobject;
 
@@ -38,29 +38,66 @@ typedef char * string_allows_none;
 //		G_free_list($1);
 	}
 }
-%typemap(python,in,numinputs=0) return_string (char * temp) {
+%typemap(in,numinputs=0) return_string (char * temp) {
 	temp=NULL;
 	$1=&temp;
 }
 
 
-%typemap(python,argout) CELL * {
+%typemap(argout) CELL * {
 		int len=0,i;
 		len=G_window_cols();
 		$result=PyList_New(len);
-		for(i=0;i<len;i++)
-		{
-			PyList_SetItem($result,i,PyInt_FromLong($1[i]));
-		}
+                for(i=0;i<len;i++)
+                {
+                  PyList_SetItem($result,i,PyInt_FromLong($1[i]));
+                }
 }
-%typemap(python,in)CELL  * {
+
+%typemap(argout) FCELL * {
+		int len=0,i;
+		len=G_window_cols();
+                $result=PyList_New(len);
+                for(i=0;i<len;i++)
+                {
+                  PyList_SetItem($result,i,PyFloat_FromDouble($1[i]) );
+                }                
+}
+
+%typemap(argout) DCELL * {
+		int len=0,i;
+		len=G_window_cols();
+		$result=PyList_New(len);
+                for(i=0;i<len;i++)
+                {
+                  PyList_SetItem($result,i,PyFloat_FromDouble($1[i]));
+                }                
+}
+
+
+%typemap(in)CELL  * {
 		int len=0,i=0; CELL *tmp;
 		PyObject obj;
 		len=G_window_cols();
 		$1=G_allocate_cell_buf();
 }
 
-%typemap(python,argout) return_string (char * temp) {
+%typemap(in)FCELL  * {
+		int len=0,i=0; FCELL *tmp;
+		PyObject obj;
+		len=G_window_cols();
+		$1=G_allocate_f_raster_buf();
+}
+
+%typemap(in)DCELL  * {
+		int len=0,i=0; FCELL *tmp;
+		PyObject obj;
+		len=G_window_cols();
+		$1=G_allocate_d_raster_buf();
+}
+
+
+%typemap(argout) return_string (char * temp) {
 	if($1 && *$1) {
 		$result=t_output_helper($result,PyString_FromString(*$1));
 		G_free(*$1);
@@ -74,4 +111,4 @@ typedef char * string_allows_none;
 %inline %{
 typedef char ** return_string;
 %}
-
+#endif
