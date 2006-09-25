@@ -29,18 +29,21 @@
 struct cost* first_free = NULL;
 struct cost* first = NULL;
 struct cost* last = NULL;
+
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
 int allocate() 
 {
 	struct cost* data, *p1, *p2;
 	int i;
 
-/*  	fprintf(stderr,"allocate()\n"); */
+  	G_debug(2,"allocate()\n"); 
 
 	data = (struct cost*)G_malloc(NUM_IN_BLOCK*sizeof(struct cost));
 
 	if (data == NULL) {
-		/* G_warning( */
-		fprintf(stderr,"allocat(): error %s\n",strerror(errno));
+		G_warning("allocat(): error %s\n",strerror(errno));
 		return 0;
 	}
 
@@ -73,6 +76,9 @@ int allocate()
 	return 1;
 }
 
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
 int release() {
 	struct cost* p = first;
 	struct cost* next;
@@ -88,26 +94,28 @@ int release() {
 
 	first = last = first_free = NULL;
 }
-			   
+
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
 struct cost* get() {
 	struct cost* p;
 
 	if (first_free == NULL) {
-		if (allocate() < 0) {
-			/* exit(1); */
-		}
+		allocate();
 	}
 
 	p = first_free;
 	first_free=p->lower;
 	if (first_free->lower == NULL) {
-		if (allocate() < 0) {
-			/* exit(1); */
-		}
+		allocate();
 	}
 	return p;
 }
 
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
 int give(struct cost* p) {
 	if (p == NULL)
 		return 0;
@@ -119,7 +127,4 @@ int give(struct cost* p) {
 	
 	return 1;
 }
-
-
-
 

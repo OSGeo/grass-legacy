@@ -23,6 +23,9 @@ static struct cost *start_cell = NULL ;
 /*  static int show(struct cost *); */
 static int do_quit(double,int,int);
 
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
 struct cost *insert(double min_cost,int row,int col)
 {
 	struct cost *new_cell, *next_cell ;
@@ -30,8 +33,8 @@ struct cost *insert(double min_cost,int row,int col)
 /*  	new_cell = (struct cost *)(G_malloc(sizeof(struct cost))); */
 	new_cell = get();
 	if (new_cell == NULL) {
-			fprintf(stderr,"new_cell is NULL\n");
-}
+			G_fatal_error("new_cell is NULL\n");
+        }
 	new_cell->min_cost = min_cost;
 	new_cell->row = row;
 	new_cell->col = col;
@@ -83,7 +86,9 @@ struct cost *insert(double min_cost,int row,int col)
 	}
 }
 
-
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
 struct cost *find(double min_cost,int row,int col)
 {
 	struct cost *next_cell ;
@@ -108,7 +113,7 @@ struct cost *find(double min_cost,int row,int col)
 				next_cell = next_cell->lower ;
 				continue ;
 			}
-			fprintf(stderr, "1 ");
+			G_message("1 ");
 			return NULL;
 			do_quit(min_cost, row, col) ;
 		}
@@ -119,20 +124,26 @@ struct cost *find(double min_cost,int row,int col)
 				next_cell = next_cell->higher ;
 				continue ;
 			}
-			fprintf(stderr, "2 ");
+			G_message("2 ");
 			return NULL;
 			do_quit(min_cost, row, col) ;
 		}
 	}
 }
 
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
 static int do_quit(double min_cost,int row,int col)
 {
-	fprintf(stderr,"Can't find %d,%d:%f\n", row,col,min_cost) ;
+	G_warning("Can't find %d,%d:%f\n", row,col,min_cost) ;
 	show_all() ;
-	exit(-1) ;
+	exit(EXIT_FAILURE) ;
 }
 
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
 struct cost *
 get_lowest (void)
 {
@@ -152,12 +163,12 @@ get_lowest (void)
 	if(next_cell->row == -1)
 	{
 /*
-fprintf(stderr, "Deleting %d\n", next_cell) ;
+G_message("Deleting %d\n", next_cell) ;
 show_all() ;
 */
 		delete(next_cell) ;
 /*
-fprintf(stderr, "Deleted %d\n", next_cell) ;
+G_message("Deleted %d\n", next_cell) ;
 show_all() ;
 */
 		return(get_lowest()) ;
@@ -166,11 +177,14 @@ show_all() ;
 	return(next_cell) ;
 }
 
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
 int delete(struct cost *delete_cell)
 {
 	if (delete_cell == NULL)
 	{
-		fprintf(stderr,"Illegal delete request\n") ;
+		G_warning("Illegal delete request\n") ;
 		return 0;
 	}
 
@@ -376,11 +390,14 @@ int delete(struct cost *delete_cell)
 	return 0;
 }
 
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
 int show_all(void)
 {
 	if (start_cell == NULL)
 	{
-		fprintf(stderr, "Nothing to show\n") ;
+		G_message("Nothing to show\n") ;
 		return 1;
 	}
 	show(start_cell) ;
@@ -388,13 +405,16 @@ int show_all(void)
 	return 0;
 }
 
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
 int show(struct cost *next)
 {
 	struct cost *next_cell ;
 	if(next == NULL)
 		return 0;
 	for (next_cell=next;next_cell!=NULL;next_cell=next_cell->nexttie)
-		fprintf(stderr, "%p %d,%d,%f %p %p %p %p\n",
+		G_message("%p %d,%d,%f %p %p %p %p\n",
 			next_cell,
 			next_cell->row,
 			next_cell->col,
@@ -409,19 +429,24 @@ int show(struct cost *next)
 	return 0;
 }
 
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
 int check_all(char *str)
 {
-	fprintf(stderr,"\n") ;
+	G_message("\n") ;
 	if(start_cell->above != NULL)
 	{
-		fprintf(stderr,"Bad Start Cell\n") ;
-		exit(-1) ;
+		G_fatal_error("Bad Start Cell\n") ;
 	}
 	check(str, start_cell) ;
 
 	return 0;
 }
 
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
 int check(char *str,struct cost *start)
 {
 	if (start == NULL)
@@ -431,32 +456,32 @@ int check(char *str,struct cost *start)
 	{
 		if (start->min_cost < start->lower->min_cost)
 		{
-			fprintf(stderr,"%s %f-%f lower cost higher or equal\n", str,
+			G_warning("%s %f-%f lower cost higher or equal\n", str,
 				start->min_cost, start->lower->min_cost) ;
 			show_all() ;
-			exit(-1) ;
+			exit(EXIT_FAILURE) ;
 		}
 		if (start->lower->above != start)
 		{
-			fprintf(stderr,"%s lower above pointer wrong\n", str) ;
+			G_warning("%s lower above pointer wrong\n", str) ;
 			show_all() ;
-			exit(-1) ;
+			exit(EXIT_FAILURE) ;
 		}
 	}
 	if (start->higher != NULL)
 	{
 		if (start->min_cost >= start->higher->min_cost)
 		{
-			fprintf(stderr,"%s %f-%f higher cost lower\n", str,
+			G_warning("%s %f-%f higher cost lower\n", str,
 				start->min_cost, start->higher->min_cost) ;
 			show_all() ;
-			exit(-1) ;
+			exit(EXIT_FAILURE) ;
 		}
 		if (start->higher->above != start)
 		{
-			fprintf(stderr,"%s higher above pointer wrong\n", str) ;
+			G_warning("%s higher above pointer wrong\n", str) ;
 			show_all() ;
-			exit(-1) ;
+			exit(EXIT_FAILURE) ;
 		}
 	}
 	check(str, start->lower) ;
