@@ -1,5 +1,9 @@
 //File : python_grass6.i
 
+%include "carrays.i"
+%array_functions(int, intArray);
+%array_functions(float, floatArray);
+%array_functions(double, doubleArray);
 
 %module python_grass6
 %{
@@ -10,6 +14,7 @@
 #include <grass/imagery.h>
 #include <grass/imagedefs.h>
 #include <grass/Vect.h>
+#include <grass/vect/dig_structs.h>
 %}
 
 %include "my_typemaps.i"
@@ -19,3 +24,4 @@
 %include "interfaces/imagery.i"
 %include "interfaces/imagedefs.i"
 %include "interfaces/vect.i"
+%include "interfaces/dig_structs.i"
