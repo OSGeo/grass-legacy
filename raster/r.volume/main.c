@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
     CELL *data_buf, *clump_buf;
     CELL i, max;
     int row, col, rows, cols;
-    int quiet, out_mode, use_MASK, *n, *e;
+    int out_mode, use_MASK, *n, *e;
     long int *count;
     int fd_data, fd_clump;
     char buf[200], datamap[100], clumpmap[100], site_list[100];
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     Site_head site_info;
     struct GModule *module;
     struct Option *opt1, *opt2, *opt3;
-    struct Flag *flag1, *flag2;
+    struct Flag *flag1;
 
     /* Initialize GIS */
     G_gisinit(argv[0]);
@@ -79,10 +79,6 @@ int main(int argc, char *argv[])
     flag1->key = 'f';
     flag1->description = _("Generate unformatted report");
 
-    flag2 = G_define_flag();
-    flag2->key = 'q';
-    flag2->description = _("Run quietly");
-
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
@@ -108,7 +104,6 @@ int main(int argc, char *argv[])
 	site_list[0] = '\0';
 
     out_mode = (!flag1->answer);
-    quiet = flag2->answer;
 
     if (*datamap == 0)
 	G_fatal_error(_("No data map specified"));
@@ -168,11 +163,9 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Data or Clump file not open."));
 
     /* now get the data -- first pass */
-    if (!quiet)
-	fprintf(stderr, "Complete ...");
+    G_message("Complete ...");
     for (row = 0; row < rows; row++) {
-	if (!quiet)
-	    G_percent(row, rows, 2);
+	G_percent(row, rows, 2);
 	G_get_map_row(fd_data, data_buf, row);
 	G_get_map_row(fd_clump, clump_buf, row);
 	for (col = 0; col < cols; col++) {
@@ -190,8 +183,7 @@ int main(int argc, char *argv[])
 	    sum[i] += data_buf[col];
 	}
     }
-    if (!quiet)
-	G_percent(row, rows, 2);
+    G_percent(row, rows, 2);
     /* free some buffer space */
     G_free(data_buf);
     G_free(clump_buf);

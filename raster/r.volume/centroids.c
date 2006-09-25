@@ -63,7 +63,8 @@ int centroids(int fd,		/* File descriptor of map layer to process */
     /* compute averages */
     if (method > 0)
 	for (i = 0; i <= max; i++) {
-	    if (numb = count[i]) {
+	    if (count[i]) {
+	        numb = count[i];
 		e[i] /= numb;
 		n[i] /= numb;
 	    }
@@ -78,11 +79,12 @@ int centroids(int fd,		/* File descriptor of map layer to process */
 		/* get cell at row,col */
 		G_get_map_row(fd, cell_buf, row);
 		v = cell_buf[col];
-		if (v > 0)
+		if (v > 0) {
 		    if (v == i)
 			count[i] = 0;	/* weighted is acceptable */
 		    else
 			adjusted++;
+		}
 	    }
 	}
     }
