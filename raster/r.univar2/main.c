@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
     int fd;
 
     struct Option *inputfile, *percentile;
-    struct Flag *quiet, *shell_style, *extended;
+    struct Flag *shell_style, *extended;
     struct GModule *module;
 
 
@@ -80,9 +80,6 @@ int main(int argc, char *argv[]) {
     percentile->description =
 	_("Percentile to calculate (requires extended statistics flag)");
 
-    quiet = G_define_flag();
-    quiet->key = 'q';
-    quiet->description = _("Quiet mode");
 
     shell_style = G_define_flag();
     shell_style->key = 'g';
@@ -205,10 +202,10 @@ int main(int argc, char *argv[]) {
 	    }
 	    ptr = G_incr_void_ptr(ptr, G_raster_size(map_type));
 	}
-	if( ! (quiet->answer || shell_style->answer) )
+	if( ! (shell_style->answer) )
 	    G_percent(row, rows, 2);
     }
-    if( ! (quiet->answer || shell_style->answer) )
+    if( ! (shell_style->answer) )
 	G_percent(row, rows, 2);  /* finish it off */
 
     /* all these calculations get promoted to doubles, so any DIV0 becomes nan */
@@ -258,8 +255,8 @@ int main(int argc, char *argv[]) {
 
 /* TODO: mode, skewness, kurtosis */
     if(extended->answer) {
-	double quartile_25, quartile_75, quartile_perc;
-	double median;
+	double quartile_25 = 0.0, quartile_75 = 0.0, quartile_perc = 0.0;
+	double median = 0.0;
 	int qpos_25, qpos_75, qpos_perc;
 
 	qpos_25   = (int) (n * 0.25 - 0.5);
@@ -334,8 +331,8 @@ int main(int argc, char *argv[]) {
     }
 
 
-    if( ! ( quiet->answer || shell_style->answer) )
-	fprintf(stdout, "\n");
+    if( ! ( shell_style->answer) )
+	G_message("\n");
 
 
     exit(EXIT_SUCCESS);
