@@ -74,11 +74,11 @@ proc fileLocCom args {
 	
 	#create the form and buttons
 	set loclab [label .fileloc.lab1 -text [G_msg "Name of new location"] -justify right -height 2]
-	set locname [entry .fileloc.loc -textvariable fileLocation -width 35 -bg white]
+	set locname [entry .fileloc.loc -textvariable fileLocation -width 35]
 	set dblab [label .fileloc.lab2 -text [G_msg "Path to new location"] -justify right -height 2]
-	set dbpath [entry .fileloc.locpath -textvariable locpath -width 35 -bg white]
+	set dbpath [entry .fileloc.locpath -textvariable locpath -width 35]
 	set filelab [label .fileloc.lab3 -text [G_msg "Path to georeferenced file"] -justify right -height 2]
-	set fpath [entry .fileloc.filepath -textvariable filepath  -width 35 -bg white]
+	set fpath [entry .fileloc.filepath -textvariable filepath  -width 35]
 	
 	#browse for database path
 	set dbbrowse [button .fileloc.dbbrow -justify center -width 12 \
