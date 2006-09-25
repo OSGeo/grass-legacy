@@ -30,7 +30,7 @@ static int verbose; /* current verbosity level */
  *
  * Currently, there are 3 levels of verbosity:
  * \param 0 - module should print nothing but errors and warnings (G_fatal_error, G_warning)
- * \param 1 - module will print progres information (G_percent)
+ * \param 1 - module will print progress information (G_percent)
  * \param 2 - module will print all messages (G_message)
  */
 int G_verbose (void)
