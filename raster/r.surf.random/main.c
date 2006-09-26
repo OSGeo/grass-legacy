@@ -30,6 +30,7 @@ main (int argc, char *argv[])
 					recalled using G_program_name(). */
 
 	module = G_define_module();
+    module->keywords = _("raster");
     module->description =
 		_("Produces a raster map layer of uniform "
 		"random deviates whose range can be expressed by the user.");

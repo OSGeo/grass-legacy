@@ -27,7 +27,6 @@ proc GmRnums::create { tree parent } {
     variable opt
     variable count
     variable dup
-    global gmpath
     global iconpath
     global mon
 
@@ -65,7 +64,7 @@ proc GmRnums::create { tree parent } {
     set opt($count,1,cellcolor) 0 
     set opt($count,1,mod) 1
 
-	set optlist {_check map grid_color text_color cellcolor}
+	set optlist {_check map opacity grid_color text_color cellcolor}
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -106,7 +105,6 @@ proc GmRnums::select_map { id } {
 # Options for displaying cats in raster cells
 proc GmRnums::options { id frm } {
     variable opt
-    global gmpath
     global bgcolor
     global iconpath
 
@@ -186,15 +184,7 @@ proc GmRnums::save { tree depth node } {
 
 ###############################################################################
 proc GmRnums::display { node mod } {
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
-    global gmpath
     global mon
-	global mapdispwd
-	global mapdispht
 	global env
     variable optlist
     variable lfile 
@@ -204,10 +194,6 @@ proc GmRnums::display { node mod } {
     variable tree
     variable dup
     variable count
-
-    set currmon ""
-    global gmpath
-    global mon
 
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
@@ -276,7 +262,6 @@ proc GmRnums::duplicate { tree parent node id } {
     variable opt
     variable count
     variable dup
-    global gmpath
     global iconpath
     global mon
 

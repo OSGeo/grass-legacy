@@ -1,5 +1,5 @@
 /*
- * s.kcv
+ * from s.kcv
  * Copyright (C) 1993-1994. James Darrell McCauley.
  *
  * Author: James Darrell McCauley darrell@mccauley-usa.com
@@ -30,6 +30,7 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "kcv.h"
 
 #ifndef RAND_MAX 
@@ -72,6 +73,7 @@ main (int argc, char *argv[])
     dbString sql;
 
     module = G_define_module();
+    module->keywords = _("vector, statistics");
     module->description = "Randomly partition points into test/train sets.";
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);

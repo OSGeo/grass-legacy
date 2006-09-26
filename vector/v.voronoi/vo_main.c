@@ -87,7 +87,8 @@ main (int argc, char **argv)
   G_gisinit (argv[0]);
 
   module = G_define_module();
-  module->description = _("Create a Voronoi diagram from an input vector "
+  module->keywords = _("vector");
+    module->description = _("Create a Voronoi diagram from an input vector "
 	"map containing points or centroids.");
 
   in_opt = G_define_standard_option(G_OPT_V_INPUT);

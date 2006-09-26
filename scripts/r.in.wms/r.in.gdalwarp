@@ -18,6 +18,7 @@
 
 #%Module
 #%  description: Warps and imports GDAL supported raster file complete with correct NULL values
+#%  keywords: raster, rotate, reproject
 #%End
 #%flag
 #% key: p

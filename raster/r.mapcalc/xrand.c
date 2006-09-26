@@ -12,7 +12,7 @@ rand(lo,hi) random values between a and b
 ****************************************************************/
 
 #if !defined(HAVE_DRAND48)
-#define drand48() ((double)rand()/RAND_MAX)
+#define drand48() ((double)rand()/((double)RAND_MAX + 1))
 #define lrand48() ((long)rand())
 #endif
 
@@ -39,7 +39,7 @@ f_rand(int argc, const int *argt, void **args)
 			int lo = arg1[i];
 			int hi = arg2[i];
 			if (lo > hi) { int tmp = lo; lo = hi; hi = tmp; }
-			res[i] = lo + x % (hi - lo);
+			res[i] = (lo == hi) ? lo : lo + x % (hi - lo);
 		}
 		return 0;
 	}

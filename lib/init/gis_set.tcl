@@ -26,6 +26,7 @@ source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 #   the EPSG codes    (routines epsgLocCom and infoEpsg)
 #
 #############################################################################
+source $env(GISBASE)/etc/gtcltk/options.tcl
 source $env(GISBASE)/etc/epsg_option.tcl
 source $env(GISBASE)/etc/file_option.tcl
 
@@ -278,11 +279,6 @@ proc CheckLocation {} \
 
 proc gisSetWindow {} {
     global GRASSVERSION
-
-    # Window manager configurations
-
-    wm title . [format [G_msg "GRASS %s Startup"] $GRASSVERSION]
-
     global database
     global location
     global mymapset
@@ -292,6 +288,10 @@ proc gisSetWindow {} {
 
     global grassrc_list
     global gisrc_name
+
+    # Window manager configurations
+
+    wm title . [format [G_msg "GRASS %s Startup"] $GRASSVERSION]
 
     # ---------------------------
     # build .frame0
@@ -305,8 +305,10 @@ proc gisSetWindow {} {
     	"$env(GISBASE)/etc/gintro.gif"]]
     set introtitle [text $titlefrm.msg -height 5 \
     	-relief flat -fg darkgreen \
-    	-font {Helvetica -14 bold} \
+	-bg #dddddd \
+	-font introfont \
     	-width 50 ]
+
     pack $titlefrm -side top
 	pack $introimg -side top
     pack $introtitle -side top
@@ -344,9 +346,8 @@ proc gisSetWindow {} {
     	-relief {sunken} \
     	-textvariable database \
 		-width 40 \
-    	-xscrollcommand { .frame0.frameDB.mid.hscrollbar set} \
-    	-bg white
-    
+    	-xscrollcommand { .frame0.frameDB.mid.hscrollbar set}
+
     scrollbar .frame0.frameDB.mid.hscrollbar \
     	-command { .frame0.frameDB.mid.entry xview} \
     	-relief {sunken} \
@@ -381,8 +382,7 @@ proc gisSetWindow {} {
     	-relief {sunken} \
     	-exportselection false \
     	-yscrollcommand {.frame0.frameLOC.vscrollbar set} \
-    	-xscrollcommand {.frame0.frameLOC.hscrollbar set} \
-    	-bg white
+    	-xscrollcommand {.frame0.frameLOC.hscrollbar set}
 
     scrollbar .frame0.frameLOC.vscrollbar -width 12 \
     	-command {.frame0.frameLOC.listbox yview} \
@@ -413,8 +413,7 @@ proc gisSetWindow {} {
     listbox .frame0.frameMS.listbox \
     	-relief {sunken} \
     	-yscrollcommand {.frame0.frameMS.vscrollbar set} \
-    	-xscrollcommand {.frame0.frameMS.hscrollbar set} \
-    	-bg white
+    	-xscrollcommand {.frame0.frameMS.hscrollbar set}
 
     scrollbar .frame0.frameMS.vscrollbar -width 12 \
     	-command {.frame0.frameMS.listbox yview} \
@@ -465,8 +464,7 @@ proc gisSetWindow {} {
     entry .frame0.frameNMS.second.entry \
     	-relief {sunken} \
     	-textvariable mymapset \
-    	-width 22 \
-    	-bg white
+    	-width 22
 	
     button .frame0.frameNMS.third.button \
     	-text [G_msg "Create new mapset"] \

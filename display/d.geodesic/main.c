@@ -3,6 +3,7 @@
 #include <grass/gis.h>
 #include <grass/display.h>
 #include <grass/raster.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 int main (int argc, char *argv[])
@@ -13,7 +14,7 @@ int main (int argc, char *argv[])
     double lon1,lat1,lon2,lat2;
     char msg[100];
     char *deftcolor;
-	struct GModule *module;
+    struct GModule *module;
     struct
     {
 	struct Option *lcolor, *tcolor, *coor;
@@ -21,8 +22,9 @@ int main (int argc, char *argv[])
 
     G_gisinit (argv[0]);
 
-	module = G_define_module();
-	module->description =
+    module = G_define_module();
+    module->keywords = _("display");
+    module->description =
 		"Displays a geodesic line, tracing the shortest distance "
 		"between two geographic points along a great circle, in "
 		"a longitude/latitude data set.";

@@ -12,7 +12,6 @@
  *               for details.
  *
  *****************************************************************************/
-/***********************************************************************/
 /*
   v.build.polylines
 
@@ -74,6 +73,7 @@
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "global.h"
 #include "walk.h"
 
@@ -102,6 +102,7 @@ int main (int argc, char **argv)
   G_gisinit(argv[0]) ;
 
   module = G_define_module();
+  module->keywords = _("vector, topology");
   module->description = "Build polylines from lines.";
 
   /* Define the options */

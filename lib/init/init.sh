@@ -94,7 +94,7 @@ export GIS_LOCK
 
 # Set the global grassrc file
 GISRCRC="$HOME/.grassrc6"
-export GISRCRC
+
 # Set the session grassrc file
 USER="`whoami`"
 
@@ -142,9 +142,6 @@ if [ ! "$GRASS_GUI" ] ; then
     fi
 fi
 
-# Export the user interface variable
-export GRASS_GUI
-
 # Set PATH to GRASS bin, ETC to GRASS etc
 ETC="$GISBASE/etc"
 
@@ -174,18 +171,14 @@ export LD_LIBRARY_PATH_VAR
 GRASS_LD_LIBRARY_PATH="$LD_LIBRARY_PATH_VAR"
 export GRASS_LD_LIBRARY_PATH
 
-# Once the new environment system is committed we can delete these lines
-# Export the PAGER environment variable for those who have it set
-if [ "$PAGER" ] ; then
-    export PAGER
-fi
-
 # Set some environment variables if they are not set
 if [ ! "$GRASS_PAGER" ] ; then
     if [ -x /bin/more ] || [ -x /usr/bin/more ] ; then
         GRASS_PAGER=more
-    else 
+    elif [ -x /bin/less ] || [ -x /usr/bin/less ] ; then
         GRASS_PAGER=less
+    else
+        GRASS_PAGER=cat
     fi
     export GRASS_PAGER
 fi
@@ -341,7 +334,6 @@ if [ "$DISPLAY" ] ; then
 
 	    # Set the tcltkgrass base directory
 	    TCLTKGRASSBASE="$ETC"
-	    export TCLTKGRASSBASE
 	else
 
 	    # Wish was not found - switch to text interface mode

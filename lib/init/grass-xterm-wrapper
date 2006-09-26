@@ -1,0 +1,9 @@
+#!/bin/sh
+# script to wrap xterm 
+
+if [ -z "$GRASS_XTERM" ] ; then
+   GRASS_XTERM=xterm
+fi
+
+# run command
+exec $GRASS_XTERM "$@"

@@ -10,10 +10,7 @@
  *
  *   	    	This program is free software under the GPL (>=v2)
  *   	    	Read the file COPYING that comes with GRASS for details.
- ****************************************************************************
- *
- * TODO: if bottom > top, the tbres becomes negative and window struct is reset. BUG
- */
+ ****************************************************************************/
 
 #include <string.h>
 #include <stdlib.h>
@@ -77,7 +74,8 @@ int main (int argc, char *argv[])
 	G_get_default_window(&window);
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("general");
+    module->description =
 		_("Program to manage the boundary definitions for the "
 		"geographic region.");
 
@@ -321,7 +319,7 @@ int main (int argc, char *argv[])
 	parm.save->guisection  = _("Effects");
 
 	if (G_parser(argc,argv))
-		exit(1);
+		exit(EXIT_FAILURE);
 
 	projection = window.proj;
 
@@ -765,7 +763,7 @@ int main (int argc, char *argv[])
 	if (print_flag)
 	    print_window (&window, print_flag, dist_flag, flag.z->answer, flag.gprint->answer, flag.bbox->answer);
 
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
 
 static void die(struct Option *parm)

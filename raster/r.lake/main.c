@@ -153,6 +153,7 @@ int main(int argc, char *argv[])
     struct History history;
 
     module = G_define_module();
+    module->keywords = _("raster");
     module->description =
         _("Fills lake from seed at given level");
 
@@ -275,8 +276,8 @@ int main(int argc, char *argv[])
     }
 
     /* Pointers to rows. Row = ptr to 'col' size array. */
-    in_terran = G_malloc(rows * sizeof(FCELL *));
-    out_water = G_malloc(rows * sizeof(FCELL *));
+    in_terran = (FCELL **)G_malloc(rows * sizeof(FCELL *));
+    out_water = (FCELL **)G_malloc(rows * sizeof(FCELL *));
     if (in_terran == NULL || out_water == NULL)
          G_fatal_error(_("Failure to allocate memory for row pointers"));
 
@@ -285,8 +286,8 @@ int main(int argc, char *argv[])
     /* foo_rows[row] == array with data (2d array). */
     for (row = 0; row < rows; row++)
     {
-        in_terran[row] = G_malloc(cols * sizeof(FCELL *));
-        out_water[row] = G_calloc(sizeof(FCELL *), cols);
+        in_terran[row] = (FCELL *)G_malloc(cols * sizeof(FCELL));
+        out_water[row] = (FCELL *)G_calloc(cols, sizeof(FCELL));
 
         /* In newly created space load data from file.*/
         if (G_get_f_raster_row(in_terran_fd, in_terran[row], row)!=1)
