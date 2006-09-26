@@ -32,7 +32,7 @@ command_version (int argc, char *argv[])
     } parm;
     struct
     {
-	struct Flag *w, *q;
+	struct Flag *w;
     } flag;
 
 	module = G_define_module();
@@ -62,10 +62,6 @@ command_version (int argc, char *argv[])
     parm.units->description = _("Unit of measure");
     parm.units->options = "c,p,x,y,a,h,k,m";
 
-    flag.q = G_define_flag();
-    flag.q->key = 'q';
-    flag.q->description = _("Quiet");
-
     flag.w = G_define_flag();
     flag.w->key = 'w';
     flag.w->description = _("Wide report, 132 columns (default: 80)");
@@ -82,7 +78,7 @@ command_version (int argc, char *argv[])
     if(!mapset2)
         G_fatal_error (_("%s: <%s> raster map not found"), argv[0], map2name);
 
-    make_coin(!flag.q->answer);
+    make_coin();
     print_coin (*parm.units->answer, flag.w->answer?132:80, 0);
 
   exit(EXIT_SUCCESS);

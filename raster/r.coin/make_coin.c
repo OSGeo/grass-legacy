@@ -29,7 +29,7 @@ static int cmp (const void *, const void *);
 
 
 int 
-make_coin (int verbose)
+make_coin (void)
 {
     FILE *fd;
     FILE *statfd;
@@ -45,11 +45,10 @@ make_coin (int verbose)
     char buf[512];
     int count;
 
-    if (verbose)
-	G_message(_("\n\nTabulating Coincidence between '%s' and '%s'"),
-				    map1name, map2name);
+    G_message(_("Tabulating Coincidence between '%s' and '%s'"),
+                                map1name, map2name);
 
-    sprintf (buf, "r.stats -anrc%s fs=: input='", verbose?"":"q");
+    sprintf (buf, "r.stats -anrc fs=: input='");
     strcat(buf, G_fully_qualified_name(map1name, mapset1));
     strcat(buf, ",");
     strcat(buf, G_fully_qualified_name(map2name, mapset2));
