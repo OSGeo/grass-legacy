@@ -20,6 +20,7 @@
 ##########################################################################
 
 lappend auto_path $env(GISBASE)/bwidget
+
 package require -exact BWidget 1.2.1
 
 # Load up all the gis.m layers and things.
@@ -69,6 +70,15 @@ if { $osxaqua == "1"} {
     set execom "spawn"
 }
 
+if {[info exists env(MSYSCON)]} {
+	set mingw "1"
+	set devnull "nul"
+} else {
+	set mingw "0"
+	set devnull "/dev/null"
+}
+
+
 #fetch GRASS Version number:
 set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]
 set GRASSVERSION [read -nonewline $fp]
@@ -115,12 +125,13 @@ regsub -- $regexp $env(PATH) "&:$env(GISBASE)/etc/gm/script" env(PATH)
 proc read_moncap {} {
 	global env moncap
 
+	set moncap {}
+
 	set file [open [file join $env(GISBASE) etc monitorcap] r]
 	set data [read $file]
 	close $file
 
 	set data [subst -nocommands -novariables $data]
-	set moncap {}
 	foreach line [split $data \n] {
 		if {[string match {\#*} $line]} continue
 		if {![string match {*:*:*:*:*:*} $line]} continue
@@ -187,7 +198,9 @@ proc Gm::xmon { type cmd } {
 # Determine if an element already exists
 
 proc Gm::element_exists {elem name} {
-	set failure [catch {exec [list "|g.findfile" "element=$elem" "file=$name"] >& /dev/null}]
+	global devnull
+	
+	set failure [catch {exec [list "|g.findfile" "element=$elem" "file=$name"] >& $devnull}]
 
 	return [expr {! $failure}]
 }
@@ -451,10 +464,10 @@ proc Gm::cleanup { } {
 	set deletefile $mappid
 	append deletefile ".*"
 	foreach file [glob -nocomplain $deletefile] {
-		file delete $file
+		catch {file delete $file}
 	}
 
-	if {[file exists $legfile]} {file delete -force $legfile}
+	if {[file exists $legfile]} {catch {file delete -force $legfile}}
 
 	unset mon
 
