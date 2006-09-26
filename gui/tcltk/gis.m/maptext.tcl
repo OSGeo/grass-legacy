@@ -49,7 +49,7 @@ proc GmCtext::create { tree parent } {
     set opt($count,text) "" 
     set opt($count,xcoord) 100
     set opt($count,ycoord) 100
-    set opt($count,font) "times 12" 
+    set opt($count,font) default
     set opt($count,fill) \#000000 
     set opt($count,width)  100
     set opt($count,anchor) "center_left" 

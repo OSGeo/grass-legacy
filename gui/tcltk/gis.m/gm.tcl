@@ -333,9 +333,8 @@ proc Gm::_create_intro { } {
     set frame [frame $ximg.f -background white]
     set lab1  [label $frame.lab1 \
 		-text [format [G_msg "GRASS%s GIS Manager - %s"] $GRASSVERSION $location_name] \
-		-background white -foreground black -font {times 14}]
-    set lab2  [label $frame.lab2 -textvariable Gm::prgtext -background white \
-		-font {times 12}]
+		-background white -foreground black -font introfont]
+    set lab2  [label $frame.lab2 -textvariable Gm::prgtext -background white]
     set prg   [ProgressBar $frame.prg -width 50 -height 15 -background white \
 		   -variable Gm::prgindic -maximum $max_prgindic]
     pack $lab1 $prg -side left -fill both -expand yes

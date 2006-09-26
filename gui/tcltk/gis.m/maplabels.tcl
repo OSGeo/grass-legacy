@@ -58,7 +58,7 @@ proc GmCLabels::create { tree parent } {
     set opt($count,1,xoffset) 1.0 
     set opt($count,1,yoffset) 1.0 
     set opt($count,1,labels) "" 
-    set opt($count,1,lfont) "times 10" 
+    set opt($count,1,lfont) default 
     set opt($count,1,lfill) \#000000 
     set opt($count,1,lwidth)  100
     set opt($count,1,lanchor) "center_left" 
