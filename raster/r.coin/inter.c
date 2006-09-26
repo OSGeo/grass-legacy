@@ -42,7 +42,7 @@ int interactive_version (void)
     if(!mapset2)
 	    exit (0);
 
-    make_coin(1);
+    make_coin();
     check_report_size();
 
 

@@ -59,7 +59,7 @@ int format_double(double, char *, int);
 /* inter.c */
 int interactive_version(void);
 /* make_coin.c */
-int make_coin(int);
+int make_coin(void);
 int collapse(long *, int);
 /* print_coin.c */
 int print_coin(int, int, int);
