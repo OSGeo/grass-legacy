@@ -54,8 +54,8 @@ main (int argc, char *argv[])
 	    {
 		if(G_is_reclassed_to(name, mapset, &nrmaps, &rmaps) > 0)
 		{
-		    fprintf(stderr,
-		       "[%s@%s] is a base map. Remove reclassed map%s first:\n",
+		    G_warning(
+		       _("[%s@%s] is a base map. Remove reclassed map%s first:"),
 					name, mapset, (nrmaps > 1 ? "s" : ""));
 
 		    fprintf(stderr, " %s", *rmaps);
@@ -67,6 +67,7 @@ main (int argc, char *argv[])
 		if(G_is_reclass(name, mapset, rname, rmapset) > 0 &&
 		   G_is_reclassed_to(rname, rmapset, &nrmaps, &rmaps) > 0)
 		{
+
 		    char *p = strchr(rname, '@');
 		    if (p)
 			*p = '\0';
