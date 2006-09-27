@@ -93,31 +93,11 @@ main (int argc, char *argv[])
       strcpy(v_name, name);
      }
 
-				/* query for a site map overlay */
-
-  fprintf(stderr, "\n") ;
-  fprintf(stderr, "OPTION   Site map to overlay.\n") ;
-  fprintf(stderr, "     key:site\n") ;
-  fprintf(stderr, "required:NO\n") ;
-  fprintf(stderr, "\n") ;
-
-
-   if ( G_yes("Overlay a site file? ",0)) {
-      mapset=G_ask_sites_old("enter site map to overlay", info) ;
-      if (mapset == NULL) exit(0) ;
-      G_fopen_sites_old(info,mapset) ;
-      s_name = G_malloc(30);
-      strcpy(s_name, info);
-   }
-
-
   get_pwd();
 
-  				/* setup the current window for 
-				   display */
+  /* setup the current window for display & clear screen */
+  D_setup(1);
 
-  /* G_system(" d.colormode fixed");*/
-  G_system(" d.frame -e");
   Rw_l = (double)G_window_cols()/G_window_rows();
   /*R_open_driver(); */
   /* R_font("romant");*/
