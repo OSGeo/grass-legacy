@@ -15,7 +15,7 @@ int do_remove (int n, char *old)
     char *mapset;
     int result = 0;
 
-    fprintf (stdout,"REMOVE [%s]\n", old);
+    G_message ("REMOVE [%s]", old);
 
     len = get_description_len(n);
 
@@ -29,22 +29,26 @@ int do_remove (int n, char *old)
             result = 1;
 	}
     } else {
-	for (i = 0; i < list[n].nelem; i++)
-	{
-	    fprintf (stdout," %-*s ", len, list[n].desc[i]);
-	    fflush (stdout);
+        /* 
+         if ((mapset = G_find_cell2 (old, "")) == NULL)
+            G_fatal_error(_("Raster file <%s> not found"), old);
+        */
+
+        for (i = 0; i < list[n].nelem; i++) {
 
 	    switch (G_remove (list[n].element[i], old))
 	    {
 	    case -1: 
-		fprintf (stdout,"COULD NOT REMOVE"); 
+                G_warning (" %-*s %s", len, list[n].desc[i],_("COULD NOT REMOVE"));
                 result = 1;
 		break;
 	    case  0: 
-		fprintf (stdout,"MISSING"); 
+                G_message (" %-*s %s", len, list[n].desc[i],_("MISSING"));
+		break;
+            case 1:
+                G_message (" %-*s ", len, list[n].desc[i]);
 		break;
 	    }
-	    fprintf (stdout,"\n");
 	}
     }
     if (strcmp (list[n].element[0], "cell") == 0)
