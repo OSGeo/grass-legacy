@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_vi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-27 15:53+0200\n"
+"POT-Creation-Date: 2006-09-27 15:45+0200\n"
 "PO-Revision-Date: 2006-09-20 16:09+0200\n"
 "Last-Translator: Bui Huu Manh <bhmanh73@yahoo.com>\n"
 "Language-Team: Vietnamese <translations@grass.itc.it>\n"
@@ -74,6 +74,30 @@ msgstr "Tên bản đồ bảng không hợp lệ <%s>. Ký tự <%c> không đ�
 #, c-format
 msgid "[%s]: No such color"
 msgstr "[%s]: không có màu như vậy"
+
+#: ../lib/driver/command.c:612
+#, c-format
+msgid ""
+"\n"
+"Unknown command: %d last: %d\n"
+msgstr ""
+"\n"
+"Lệnh không biết: %d sau cùng: %d\n"
+
+#: ../lib/driver/command.c:654
+#, c-format
+msgid "Monitor: get_command: Premature EOF\n"
+msgstr "Màn hình: get_command: EOF sớm\n"
+
+#: ../lib/driver/command.c:728
+#, c-format
+msgid "Monitor: _send: write returned short count: %d of %d\n"
+msgstr "Màn hình: _send: việc ghi trả lại phép đếm thiếu: %d trong %d\n"
+
+#: ../lib/g3d/g3dhistory.c:46 ../lib/gis/history.c:134
+#, c-format
+msgid "can't get history information for [%s] in mapset [%s]"
+msgstr "không thể lấy thông tin lịch sử cho [%s] trong tập hợp bản đồ [%s] "
 
 #: ../lib/g3d/g3dopen.c:22
 msgid "G3d_openCellOldNoHeader: error in G3d_maskOpenOld"
@@ -143,10 +167,10 @@ msgstr "G3d_openCellNew: không thể ghi header"
 msgid "G3d_openCellNew: error in G3d_fillHeader"
 msgstr "G3d_openCellNew: lỗi trong G3d_fillHeader"
 
-#: ../lib/g3d/g3dhistory.c:46 ../lib/gis/history.c:134
+#: ../lib/gis/done_msg.c:6
 #, c-format
-msgid "can't get history information for [%s] in mapset [%s]"
-msgstr "không thể lấy thông tin lịch sử cho [%s] trong tập hợp bản đồ [%s] "
+msgid "%s complete. %s"
+msgstr "%s hoàn tất. %s"
 
 #: ../lib/gis/adj_cellhd.c:69 ../lib/gis/adj_cellhd.c:208
 msgid "Illegal n-s resolution value"
@@ -225,6 +249,244 @@ msgstr "Giá trị độ sâu không hợp lệ"
 #: ../lib/gis/adj_cellhd.c:308
 msgid "Top must be larger than Bottom"
 msgstr "Cận trên phải lớn hơn cận dưới"
+
+#: ../lib/gis/null_val.c:94
+msgid "EmbedGivenNulls: wrong data type!"
+msgstr "EmbedGivenNulls: kiểu dữ liệu sai!"
+
+#: ../lib/gis/null_val.c:115
+msgid "Null values have not been initialized. "
+msgstr "Các giá trị null không được khởi tạo"
+
+#: ../lib/gis/null_val.c:116
+msgid "G_gisinit() must be called first. "
+msgstr "G_gisinit() phải được gọi trước."
+
+#: ../lib/gis/null_val.c:117
+msgid "Please advise GRASS developers of this error.\n"
+msgstr "Vui lòng báo cho các nhà phát triển GRASS về lỗi này.\n"
+
+#: ../lib/gis/null_val.c:231
+msgid "G_set_null_value: wrong data type!"
+msgstr "G_set_null_value: kiểu dữ liệu sai"
+
+#: ../lib/gis/get_cellhd.c:73 ../lib/gis/get_cellhd.c:102
+#, c-format
+msgid "Can't read header file for [%s in %s]\n"
+msgstr "Không thể đọc tập tin header của [%s trong %s]\n"
+
+#: ../lib/gis/get_cellhd.c:75
+#, c-format
+msgid "It is a reclass of [%s in %s] "
+msgstr "Nó là phép phân loại lại của [%s trong %s]"
+
+#: ../lib/gis/get_cellhd.c:78
+#, c-format
+msgid "which is missing"
+msgstr "bị thiếu"
+
+#: ../lib/gis/get_cellhd.c:80
+#, c-format
+msgid "whose header file can't be opened"
+msgstr "tập tin header của nó không thể mở được"
+
+#: ../lib/gis/get_cellhd.c:90
+#, c-format
+msgid "Can't open header file for [%s in %s]"
+msgstr "Không thể mở tập tin header của [%s trong %s]"
+
+#: ../lib/gis/get_cellhd.c:106
+#, c-format
+msgid "It is a reclass of [%s in %s] whose header file is invalid\n"
+msgstr ""
+"Nó là phép phân loại lại của [%s trong %s] với tập tin header không hợp lệ\n"
+
+#: ../lib/gis/get_cellhd.c:110
+#, c-format
+msgid "Invalid format\n"
+msgstr "Định dạng không hợp lệ\n"
+
+#: ../lib/gis/get_datum_name.c:53
+#, c-format
+msgid ""
+"\n"
+"Please specify datum name\n"
+msgstr ""
+"\n"
+"Vui lòng chỉ định tên mốc tọa độ chuẩn\n"
+
+#: ../lib/gis/get_datum_name.c:54
+#, c-format
+msgid "Enter 'list' for the list of available datums\n"
+msgstr "Nhập 'list' để có danh sách các mốc tọa độ chuẩn khả dụng\n"
+
+#: ../lib/gis/get_datum_name.c:56 ../lib/gis/get_ell_name.c:46
+#: ../lib/gis/get_projname.c:59 ../lib/proj/datum.c:348
+#, c-format
+msgid "Hit RETURN to cancel request\n"
+msgstr "Bấm RETURN để hủy yêu cầu\n"
+
+#: ../lib/gis/get_datum_name.c:67 ../lib/gis/get_ell_name.c:33
+#: ../lib/gis/get_projname.c:47 ../lib/proj/datum.c:269
+msgid "Cannot open temp file"
+msgstr "Không thể mở tập tin tạm"
+
+#: ../lib/gis/get_datum_name.c:91
+#, c-format
+msgid ""
+"\n"
+"invalid datum\n"
+msgstr ""
+"\n"
+"mốc tọa độ chuẩn không hợp lệ\n"
+
+#: ../lib/gis/get_ell_name.c:44
+#, c-format
+msgid ""
+"\n"
+"Please specify ellipsoid name\n"
+msgstr ""
+"\n"
+"Vui lòng chỉ định tên ellipsoid\n"
+
+#: ../lib/gis/get_ell_name.c:45
+#, c-format
+msgid "Enter 'list' for the list of available ellipsoids\n"
+msgstr "Nhập 'list' để biết danh sách các ellipsoid đang có\n"
+
+#: ../lib/gis/get_ell_name.c:62
+#, c-format
+msgid ""
+"\n"
+"invalid ellipsoid\n"
+msgstr ""
+"\n"
+"ellipsoid không hợp lệ\n"
+
+#: ../lib/gis/get_ellipse.c:81
+#, c-format
+msgid "Unable to open file %s in %s"
+msgstr "Không thể mở tập tin %s trong %s"
+
+#: ../lib/gis/get_ellipse.c:89 ../lib/gis/get_ellipse.c:114
+#, c-format
+msgid "invalid a: field %s in file %s in %s"
+msgstr "Ungültig a: Feld %s in Datei %s in %s"
+
+#: ../lib/gis/get_ellipse.c:102
+#, c-format
+msgid "invalid ellipsoid %s in file %s in %s"
+msgstr "ellipsoid khônng hợp lệ %s trong tập tin %s trong %s"
+
+#: ../lib/gis/get_ellipse.c:119
+#, c-format
+msgid "invalid es: field %s in file %s in %s"
+msgstr "es không hợp lệ : trường %s trong tập tin %s trong %s"
+
+#: ../lib/gis/get_ellipse.c:133
+#, c-format
+msgid "No ellipsoid info given in file %s in %s"
+msgstr "Không có thông tin về ellipsoid trong tập tin %s trong %s"
+
+#: ../lib/gis/get_ellipse.c:406 ../lib/proj/ellipse.c:228
+#, c-format
+msgid "unable to open ellipsoid table file: %s"
+msgstr "không thể mở tập tin bảng ellipsoid : %s"
+
+#: ../lib/gis/get_ellipse.c:455
+#, c-format
+msgid "Lines%s of ellipsoid table file <%s> are invalid"
+msgstr "Các dòng %s của tập tin bảng ellipsoid <%s> không hợp lệ"
+
+#: ../lib/gis/get_ellipse.c:456
+#, c-format
+msgid "Line%s of ellipsoid table file <%s> is invalid"
+msgstr "Dòng %s của tập tin bảng ellipsoid <%s> không hợp lệ"
+
+#: ../lib/gis/get_projinfo.c:17 ../lib/gis/get_projinfo.c:45
+#, c-format
+msgid "%s file not found for location %s\n"
+msgstr "không tìm thấy tập tin %s cho location %s\n"
+
+#: ../lib/gis/get_projinfo.c:24 ../lib/gis/get_projinfo.c:52
+#, c-format
+msgid "ERROR in reading %s file for location %s\n"
+msgstr "LỖI trong khi đang đọc tập tin %s tại location %s\n"
+
+#: ../lib/gis/opencell.c:186
+#, c-format
+msgid "unable to open raster map [%s in %s]"
+msgstr "không thể mở bản đồ raster [%s in %s]"
+
+#: ../lib/gis/opencell.c:270
+#, c-format
+msgid ""
+"unable to open [%s] in [%s] since it is a reclass of [%s] in [%s] which does "
+"not exist"
+msgstr ""
+"không thể mở [%s] ở [%s] vì nó là phân loại lại của [%s] trong [%s] không "
+"tồn tại"
+
+#: ../lib/gis/opencell.c:293
+#, c-format
+msgid "[%s] in mapset [%s]-format field in header file invalid"
+msgstr ""
+"[%s] trong bộ bản đồ [%s]-định dạng trường trong tập tin header không hợp lệ"
+
+#: ../lib/gis/opencell.c:302
+#, c-format
+msgid ""
+"[%s] in mapset [%s] - in different projection than current region:\n"
+" found map [%s] in: <%s>, should be <%s> "
+msgstr ""
+"[%s] trong bộ bản đồ [%s] - ở phép chiếu khác với vùng hiện hành:\n"
+"tìm thấy bản đồ [%s] trong: <%s>, lẽ ra phải là <%s>"
+
+#: ../lib/gis/opencell.c:309
+#, c-format
+msgid "[%s] in mapset [%s] - in different zone [%d] than current region [%d]"
+msgstr ""
+"[%s] trong bộ bản đồ [%s] - ở một múi [%d] khác với vùng hiện hành [%d]"
+
+#: ../lib/gis/opencell.c:317
+#, c-format
+msgid "[%s] in [%s] - bytes per cell (%d) too large"
+msgstr "[%s] trong [%s] - số byte trên ô (%d) quá lớn"
+
+#: ../lib/gis/opencell.c:617
+#, c-format
+msgid "opencell: %s - illegal file name"
+msgstr "opencell: %s - tên tập tin không hợp lệ"
+
+#: ../lib/gis/opencell.c:710
+msgid "Can't write embedded null values for map open for random access"
+msgstr ""
+"Không thể ghi các giá trị null nhúng để mở bản đồ cho truy cập ngẫu nhiên"
+
+#: ../lib/gis/opencell.c:930 ../lib/gis/opencell.c:951
+#, c-format
+msgid "unable to find [%s] in [%s]"
+msgstr "không thể tìm thấy [%s] trong [%s]"
+
+#: ../lib/gis/opencell.c:982
+#, c-format
+msgid "unable to find [%s]"
+msgstr "không thể tìm thấy [%s]"
+
+#: ../lib/gis/opencell.c:988
+#, c-format
+msgid "Unable to open %s"
+msgstr "không thể mở %s"
+
+#: ../lib/gis/opencell.c:997
+#, c-format
+msgid "invalid type: field %s in file %s "
+msgstr "kiểu không hợp lệ: trường %s trong tập tin %s"
+
+#: ../lib/gis/opencell.c:1042
+#, c-format
+msgid "%s - ** illegal name **"
+msgstr "%s - ** tên không hợp lệ **"
 
 #: ../lib/gis/ask.c:339
 msgid "to cancel request"
@@ -319,6 +581,41 @@ msgstr ""
 msgid "ask: can't happen"
 msgstr "yêu cầu: không thể xảy ra"
 
+#: ../lib/gis/get_projname.c:35
+#, c-format
+msgid "%s not found"
+msgstr "không tìm thấy %s"
+
+#: ../lib/gis/get_projname.c:41
+#, c-format
+msgid "ERROR in reading %s"
+msgstr "LỖI khi đang đọc %s"
+
+#: ../lib/gis/get_projname.c:57
+#, c-format
+msgid ""
+"\n"
+"\n"
+"Please specify projection name\n"
+msgstr ""
+"\n"
+"\n"
+"Vui lòng chỉ định tên phép chiếu\n"
+
+#: ../lib/gis/get_projname.c:58
+#, c-format
+msgid "Enter 'list' for the list of available projections\n"
+msgstr "Gõ 'list' để biết danh sách các phép chiếu hiện có\n"
+
+#: ../lib/gis/get_projname.c:77
+#, c-format
+msgid ""
+"\n"
+"invalid projection\n"
+msgstr ""
+"\n"
+"phép chiếu không hợp lệ\n"
+
 #: ../lib/gis/ask_cell.c:56 ../lib/gis/ask_cell.c:75 ../lib/gis/ask_cell.c:94
 #: ../lib/gis/ask_cell.c:101
 msgid "with titles"
@@ -328,9 +625,355 @@ msgstr "với các tiêu đề"
 msgid "(no title)"
 msgstr "(không tiêu đề)"
 
+#: ../lib/gis/get_row.c:110
+#, c-format
+msgid "[%s in %s] - read request for row %d is outside region"
+msgstr "[%s trong %s] - đọc yêu cầu cho hàng %d nằm ngoài vùng"
+
+#: ../lib/gis/get_row.c:378
+#, c-format
+msgid "cell_values_float: xdr_float failed for index %d"
+msgstr "cell_values_float: xdr_float thất bại đối với chỉ mục %d."
+
+#: ../lib/gis/get_row.c:422
+#, c-format
+msgid "cell_values_double: xdr_double failed for index %d."
+msgstr "cell_values_double: xdr_double thất bại đối với chỉ mục %d."
+
+#: ../lib/gis/get_row.c:564
+#, c-format
+msgid "error reading compressed map [%s] in mapset [%s], row %d"
+msgstr "lỗi khi đang đọc bản đồ nén %s [%s] trong bộ bản đồ [%s], hàng %d"
+
+#: ../lib/gis/get_row.c:568
+#, c-format
+msgid "error reading map [%s] in mapset [%s], row %d"
+msgstr "lỗi khi đang đọc bản đồ %s [%s] trong bộ bản đồ [%s], hàng %d"
+
+#: ../lib/gis/get_row.c:917 ../lib/gis/get_row.c:923
+#, c-format
+msgid "error reading null row %d"
+msgstr "lỗi khi đang đọc hàng null %d"
+
+#: ../lib/gis/get_row.c:1004
+msgid "Could not realloc buffer"
+msgstr "Không thể cấp phát lại vùng đệm "
+
+#: ../lib/gis/get_window.c:69 ../lib/gis/get_window.c:88
+#, c-format
+msgid ""
+"region for current mapset %s\n"
+"run \"g.region\""
+msgstr ""
+"vùng cho bộ bản đồ hiện tại %s\n"
+"chạy \"g.region\""
+
+#: ../lib/gis/get_window.c:124
+#, c-format
+msgid "default region %s"
+msgstr "vùng mặc định %s"
+
+#: ../lib/gis/get_window.c:146
+msgid "is not set"
+msgstr "không được thiết lập"
+
+#: ../lib/gis/get_window.c:156
+#, c-format
+msgid ""
+"is invalid\n"
+"%s"
+msgstr ""
+"không hợp lệ\n"
+"%s"
+
 #: ../lib/gis/auto_mask.c:53
 msgid "Unable to open automatic MASK file"
 msgstr "Không thể mở tập tin MASK tự động"
+
+#: ../lib/gis/parser.c:338
+msgid ""
+"WHERE conditions of SQL statement without 'where' keyword. (example: income "
+"< 1000 and inhab >= 10000)"
+msgstr ""
+"Các điều kiện WHERE của câu lệnh SQL không có từ khóa 'where' . (ví dụ "
+"income < 1000 and inhab >= 10000)"
+
+#: ../lib/gis/parser.c:347 ../lib/gis/parser.c:363
+msgid "Name of input raster map"
+msgstr "Tên của bản đồ raster đầu vào"
+
+#: ../lib/gis/parser.c:355
+msgid "Name for output raster map"
+msgstr "Tên của bản đồ raster đầu ra"
+
+#: ../lib/gis/parser.c:372
+msgid "Name of input raster map(s)"
+msgstr "Tên của (các) bản đồ raster đầu vào"
+
+#: ../lib/gis/parser.c:380
+msgid "Name of base raster map"
+msgstr "Tên của bản đồ raster nền"
+
+#: ../lib/gis/parser.c:388
+msgid "Name of cover raster map"
+msgstr "Tên của bản đồ raster lớp phủ"
+
+#: ../lib/gis/parser.c:397 ../lib/gis/parser.c:413
+msgid "Name of input vector map"
+msgstr "Tên của bản đồ vector đầu vào"
+
+#: ../lib/gis/parser.c:405
+msgid "Name for output vector map"
+msgstr "Tên của bản đồ vector đầu ra"
+
+#: ../lib/gis/parser.c:422
+msgid "Type"
+msgstr "Kiểu"
+
+#: ../lib/gis/parser.c:429
+msgid "Layer number"
+msgstr "Lớp số"
+
+#: ../lib/gis/parser.c:435
+msgid "Category value"
+msgstr "Giá trị phạm trù"
+
+#: ../lib/gis/parser.c:442
+msgid "Category values"
+msgstr "Các giá trị phạm trù"
+
+#: ../lib/gis/parser.c:443
+msgid "Example: 1,3,7-9,13"
+msgstr "Ví dụ: 1,3,7-9,13"
+
+#: ../lib/gis/parser.c:685
+#, c-format
+msgid "Sorry <%s> is not a valid option\n"
+msgstr "Xin lỗi <%s> không phải là tùy chọn hợp lệ\n"
+
+#: ../lib/gis/parser.c:790
+#, c-format
+msgid ""
+"\n"
+"Description:\n"
+msgstr ""
+"\n"
+"Mô tả:\n"
+
+#: ../lib/gis/parser.c:794
+#, c-format
+msgid ""
+"\n"
+"Keywords:\n"
+msgstr ""
+"\n"
+"Các từ khóa:\n"
+
+#: ../lib/gis/parser.c:798
+#, c-format
+msgid ""
+"\n"
+"Usage:\n"
+" "
+msgstr ""
+"\n"
+"Cách sử dụng:\n"
+" "
+
+#: ../lib/gis/parser.c:864
+#, c-format
+msgid ""
+"\n"
+"Flags:\n"
+msgstr ""
+"\n"
+"Các cờ:\n"
+
+#: ../lib/gis/parser.c:887
+msgid "Force overwrite of output files"
+msgstr "Buộc ghi đè các tập tin đầu ra"
+
+#: ../lib/gis/parser.c:894
+#, c-format
+msgid ""
+"\n"
+"Parameters:\n"
+msgstr ""
+"\n"
+"Các tham số:\n"
+
+#: ../lib/gis/parser.c:916
+#, c-format
+msgid "  %*s   default: %s\n"
+msgstr "  %*s    mặc định: %s\n"
+
+#: ../lib/gis/parser.c:1511
+#, c-format
+msgid "  %*s   options: "
+msgstr "  %*s   tùy_chọn: "
+
+#: ../lib/gis/parser.c:1558 ../lib/gis/parser.c:1575
+#, c-format
+msgid "Sorry, <%c> is not a valid flag\n"
+msgstr "Xin lỗi, <%c> không phải là cờ hợp lệ\n"
+
+#: ../lib/gis/parser.c:1630
+#, c-format
+msgid "Sorry, <%s=> is ambiguous\n"
+msgstr "Xin lỗi, <%s=> không rõ ràng\n"
+
+#: ../lib/gis/parser.c:1637
+#, c-format
+msgid "Sorry, <%s> is not a valid parameter\n"
+msgstr "Xin lỗi, <%s> không phải là tham số hợp lệ\n"
+
+#: ../lib/gis/parser.c:1722
+#, c-format
+msgid ""
+"\n"
+"Error: illegal range syntax for parameter <%s>\n"
+msgstr ""
+"\n"
+"Lỗi: Cú pháp miền cho tham số không hợp lệ <%s>\n"
+
+#: ../lib/gis/parser.c:1724
+#, c-format
+msgid "       Presented as: %s\n"
+msgstr "       Được biểu diễn thành: %s\n"
+
+#: ../lib/gis/parser.c:1727
+#, c-format
+msgid ""
+"\n"
+"Error: value <%s> out of range for parameter <%s>\n"
+msgstr ""
+"\n"
+"Lỗi: giá trị <%s> nằm ngoài miền cho tham số <%s>\n"
+
+#: ../lib/gis/parser.c:1729
+#, c-format
+msgid "       Legal range: %s\n"
+msgstr "       Miền hợp lệ: %s\n"
+
+#: ../lib/gis/parser.c:1732
+#, c-format
+msgid ""
+"\n"
+"Error: Missing value for parameter <%s>\n"
+msgstr ""
+"\n"
+"Lỗi: Giá trị cho tham số bị thiếu <%s>\n"
+
+#: ../lib/gis/parser.c:1892
+#, c-format
+msgid ""
+"\n"
+"ERROR: Required parameter <%s> not set:\n"
+"    (%s).\n"
+msgstr ""
+"\n"
+"LỖI: Tham số yêu cầu <%s> không được thiết lập:\n"
+"    (%s).\n"
+
+#: ../lib/gis/parser.c:1995
+#, c-format
+msgid ""
+"\n"
+"Error: option <%s> must be provided in multiples of %d\n"
+msgstr ""
+"\n"
+"Lỗi: tùy_chọn <%s> phải được cung cấp ở dạng bội số của %d\n"
+
+#: ../lib/gis/parser.c:1997
+#, c-format
+msgid "       You provided %d items:\n"
+msgstr "       Bạn đã cung cấp %d mục:\n"
+
+#: ../lib/gis/parser.c:2052
+#, c-format
+msgid "Error: option <%s>: <%s> exists.\n"
+msgstr "Lỗi: tùy_chọn <%s>: <%s> đã có.\n"
+
+#: ../lib/gis/parser.c:2099
+#, c-format
+msgid ""
+"\n"
+"FLAG: Set the following flag?\n"
+msgstr ""
+"\n"
+"CỜ: Thiết lập cờ sau?\n"
+
+#: ../lib/gis/parser.c:2113
+#, c-format
+msgid ""
+"\n"
+"OPTION:   %s\n"
+msgstr ""
+"\n"
+"TÙY_CHỌN:   %s\n"
+
+#: ../lib/gis/parser.c:2114
+#, c-format
+msgid "     key: %s\n"
+msgstr "     khóa: %s\n"
+
+#: ../lib/gis/parser.c:2116
+#, c-format
+msgid "  format: %s\n"
+msgstr "  định dạng: %s\n"
+
+#: ../lib/gis/parser.c:2118
+#, c-format
+msgid " default: %s\n"
+msgstr " mặc định: %s\n"
+
+#: ../lib/gis/parser.c:2119
+#, c-format
+msgid "required: %s\n"
+msgstr "cần có: %s\n"
+
+#: ../lib/gis/parser.c:2121
+#, c-format
+msgid "multiple: %s\n"
+msgstr "bội: %s\n"
+
+#: ../lib/gis/parser.c:2123
+#, c-format
+msgid " options: %s\n"
+msgstr " tùy_chọn: %s\n"
+
+#: ../lib/gis/parser.c:2138
+#, c-format
+msgid "enter option > "
+msgstr "nhập tùy_chọn > "
+
+#: ../lib/gis/parser.c:2152 ../lib/gis/parser.c:2163
+msgid "   Try again? "
+msgstr "   Thử lại? "
+
+#: ../lib/gis/parser.c:2161
+#, c-format
+msgid "Sorry, %s is not accepted.\n"
+msgstr "Xin lỗi, %s không được chấp nhận.\n"
+
+#: ../lib/gis/parser.c:2172
+#, c-format
+msgid ""
+"\n"
+"You have chosen:\n"
+"  %s\n"
+msgstr ""
+"\n"
+"Bạn đã chọn:\n"
+"  %s\n"
+
+#: ../lib/gis/parser.c:2173
+msgid "Is this correct? "
+msgstr "Đã đúng chưa? "
+
+#: ../lib/gis/parser.c:2242
+msgid "to accept the default"
+msgstr "để chấp nhận mặc định"
 
 #: ../lib/gis/cats.c:384
 #, c-format
@@ -342,17 +985,31 @@ msgstr "hỗ trợ phạm trù cho [%s] trong bộ bản đồ [%s] %s"
 msgid "category support for vector file [%s] in mapset [%s] %s"
 msgstr "hỗ trợ phạm trù cho tập tin vector [%s] trong bộ bản đồ [%s] %s"
 
-#: ../lib/gis/sample.c:74
-msgid "unknown interpolation type"
-msgstr "kiểu nội suy không hiểu"
+#: ../lib/gis/gishelp.c:49
+#, c-format
+msgid "one moment...\n"
+msgstr "chờ một chút...\n"
 
-#: ../lib/gis/sample.c:473
-msgid "\"no data\" label found; setting to zero"
-msgstr "tìm thấy nhãn \"no data\"; thiết lập về 0"
+#: ../lib/gis/gishelp.c:55
+#, c-format
+msgid "No help available for command [%s]\n"
+msgstr "Không có trợ giúp cho lệnh [%s]\n"
 
-#: ../lib/gis/sample.c:487
-msgid "problem reading raster cell file"
-msgstr "trục khi đang đọc tập tin cell raster"
+#: ../lib/gis/gisinit.c:38
+#, c-format
+msgid "MAPSET %s - permission denied"
+msgstr "BỘ BẢN ĐỒ %s - không được phép "
+
+#: ../lib/gis/gisinit.c:43 ../lib/gis/mapset.c:60
+#, c-format
+msgid "MAPSET %s not found"
+msgstr "không tìm thấy BỘ BẢN ĐỒ %s "
+
+#: ../lib/gis/gisinit.c:67
+#, c-format
+msgid "ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
+msgstr ""
+"LỖI: Hệ thống không được khởi chạy. Lập trình viên quên gọi G_gisinit()\n"
 
 #: ../lib/gis/closecell.c:229
 #, c-format
@@ -385,10 +1042,178 @@ msgstr "không thể tập tin quant!"
 msgid "unable to write f_format file for CELL maps"
 msgstr "Không thể ghi tập tin f_format cho các bản đồ CELL."
 
+#: ../lib/gis/histogram.c:60
+#, c-format
+msgid "Histogram for [%s in %s] missing (run r.support)"
+msgstr "Biểu đồ histogram cho [%s in %s] bị thiếu (chạy r.support)"
+
+#: ../lib/gis/histogram.c:67
+#, c-format
+msgid "Can't read histogram for [%s in %s]"
+msgstr "Không thể đọc biểu đồ histogram cho [%s in %s]"
+
+#: ../lib/gis/histogram.c:78 ../lib/gis/histogram.c:87
+#, c-format
+msgid "Invalid histogram file for [%s in %s]"
+msgstr "Tập tin histogram cho [%s in %s] không hợp lệ"
+
+#: ../lib/gis/histogram.c:341
+#, c-format
+msgid "can't create histogram for [%s in %s]"
+msgstr "không thể tạo histogram cho [%s in %s]"
+
+#: ../lib/gis/history.c:184
+#, c-format
+msgid "can't write history information for [%s]"
+msgstr "không thể ghi thông tin lịch sử cho [%s] trong tập hợp bản đồ [%s] "
+
+#: ../lib/gis/history.c:269
+msgid "Not enough room in history file to record command line."
+msgstr "Không đủ không gian trong tập tin lịch để ghi dòng lệnh"
+
+#: ../lib/gis/history.c:291
+msgid "Not enough room in history file for command line (truncated)."
+msgstr "Không đủ không gian trong tập tin lịch để ghi dòng lệnh (cắt bớt)."
+
+#: ../lib/gis/home.c:52
+msgid "unable to determine user's home directory"
+msgstr "không thể xác định thư mục home của người sử dụng"
+
+#: ../lib/gis/legal_name.c:33
+#, c-format
+msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
+msgstr "Tên tập tin không hợp lệ. Không thể là '.' hay 'NULL'\n"
+
+#: ../lib/gis/legal_name.c:39
+#, c-format
+msgid "Illegal filename. character <%c> not allowed."
+msgstr "Tên tập tin không hợp lệ. ký tự <%c> không được phép"
+
+#: ../lib/gis/legal_name.c:65 ../lib/gis/legal_name.c:67
+#, c-format
+msgid "Output name '%s' is not valid rast name."
+msgstr "Tên đầu ra '%s' không phải là tên raster hợp lệ"
+
+#: ../lib/gis/legal_name.c:78 ../lib/gis/legal_name.c:80
+#: ../lib/vector/Vlib/legal_vname.c:72 ../lib/vector/Vlib/legal_vname.c:74
+#, c-format
+msgid "Cannot find input map '%s'"
+msgstr "Không thể tìm thấy bản đồ đầu vào '%s'"
+
+#: ../lib/gis/legal_name.c:98 ../lib/gis/legal_name.c:100
+#: ../lib/vector/Vlib/legal_vname.c:92 ../lib/vector/Vlib/legal_vname.c:94
+#, c-format
+msgid "Output map '%s' is used as input"
+msgstr "Bản đồ đầu ra '%s' được sử dụng làm đầu vào"
+
 #: ../lib/gis/color_read.c:123
 #, c-format
 msgid "color support for [%s] in mapset [%s] %s"
 msgstr "hỗ trợ màu cho [%s] trong bộ bản đồ [%s] %s"
+
+#: ../lib/gis/list.c:115
+#, c-format
+msgid "no %s files available in current mapset\n"
+msgstr "Keine %s Dateien im aktuellen Mapset vorhanden\n"
+
+#: ../lib/gis/list.c:117
+#, c-format
+msgid "no %s files available in mapset %s\n"
+msgstr "Các tập tin %s không có trong bộ bản đồ %s\n"
+
+#: ../lib/gis/list.c:131
+#, c-format
+msgid "hit RETURN to continue -->"
+msgstr "Bấm RETURN để tiếp tục -->"
+
+#: ../lib/gis/list.c:212
+#, c-format
+msgid "%s files available in mapset %s:\n"
+msgstr "Các tập tin %s có trong bộ bản đồ %s:\n"
+
+#: ../lib/gis/location.c:49
+#, c-format
+msgid "LOCATION << %s >> not available"
+msgstr "LOCATION  << %s >>  không có"
+
+#: ../lib/gis/make_colr.c:41
+#, c-format
+msgid " The raster map %s@%s is empty"
+msgstr " Bản đồ raster %s@%s rỗng"
+
+#: ../lib/gis/make_colr.c:49
+#, c-format
+msgid ""
+"\n"
+"\n"
+"Color table needed for file [%s] in mapset [%s].\n"
+msgstr ""
+"\n"
+"\n"
+"Bảng màu cần cho tập tin [%s] trong bộ bản đồ [%s].\n"
+
+#: ../lib/gis/make_colr.c:52
+#, c-format
+msgid ""
+"\n"
+"Please identify the type desired:\n"
+msgstr ""
+"\n"
+"Hãy xác định kiểu mong muốn:\n"
+
+#: ../lib/gis/make_colr.c:53
+#, c-format
+msgid "    1:  Random colors\n"
+msgstr "    1:  Các màu ngẫu nhiên\n"
+
+#: ../lib/gis/make_colr.c:54
+#, c-format
+msgid "    2:  Red, green, and blue color ramps\n"
+msgstr "    2:  Đỏ, lục, và xanh tăng dần\n"
+
+#: ../lib/gis/make_colr.c:55
+#, c-format
+msgid "    3:  Color wave\n"
+msgstr "    3:  Farbenwelle\n"
+
+#: ../lib/gis/make_colr.c:56
+#, c-format
+msgid "    4:  Gray scale\n"
+msgstr "    4:  Cấp độ xám\n"
+
+#: ../lib/gis/make_colr.c:57
+#, c-format
+msgid "    5:  Aspect\n"
+msgstr "    5:  Hướng\n"
+
+#: ../lib/gis/make_colr.c:58
+#, c-format
+msgid "    6:  Rainbow colors\n"
+msgstr "    6:  Mầu cầu vồng\n"
+
+#: ../lib/gis/make_colr.c:59
+#, c-format
+msgid "    7:  Red through yellow to green\n"
+msgstr "    7:  Đỏ qua vàng đến lục\n"
+
+#: ../lib/gis/make_colr.c:60
+#, c-format
+msgid "    8:  Green through yellow to red\n"
+msgstr "    8:  Lục qua vàng rồi đến đỏ\n"
+
+#: ../lib/gis/make_colr.c:61
+#, c-format
+msgid "RETURN  quit\n"
+msgstr "ENTER  thoát ra\n"
+
+#: ../lib/gis/make_colr.c:82
+#, c-format
+msgid ""
+"\n"
+"%s invalid; Try again > "
+msgstr ""
+"\n"
+"%s không hợp lệ; Hãy thử lại > "
 
 #: ../lib/gis/datum.c:172 ../lib/proj/datum.c:394 ../lib/proj/datum.c:480
 #, c-format
@@ -399,6 +1224,10 @@ msgstr "Không thể mở tập tin bảng mốc tọa độ chuẩn: %s"
 #, c-format
 msgid "error in datum table file, line %d"
 msgstr "lỗi trong tập tin bảng mốc tọa độ chuẩn, dòng %d"
+
+#: ../lib/gis/mapset.c:41
+msgid "MAPSET is not set"
+msgstr "BỘ BẢN ĐỒ %s không tìm thấy"
 
 #: ../lib/gis/debug.c:52
 #, c-format
@@ -633,19 +1462,27 @@ msgstr "Quant ptr = %p"
 msgid "G_dump: end"
 msgstr "G_dump: kết thúc"
 
-#: ../lib/gis/done_msg.c:6
+#: ../lib/gis/mapset_msc.c:69
 #, c-format
-msgid "%s complete. %s"
-msgstr "%s hoàn tất. %s"
+msgid "can't make mapset element %s (%s)"
+msgstr "không thể tạo ra yếu tố thành phần %s (%s) cho bộ bản đồ"
 
-#: ../lib/gis/env.c:318
+#: ../lib/gis/env.c:268
 msgid "GISRC - variable not set"
 msgstr "GISRC - biến không được thiết lập"
 
-#: ../lib/gis/env.c:344 ../lib/gis/env.c:356
+#: ../lib/gis/env.c:294 ../lib/gis/env.c:306
 #, c-format
 msgid "%s not set"
 msgstr "%s không được thiết lập"
+
+#: ../lib/gis/proj2.c:49
+msgid "Latitude-Longitude"
+msgstr "Vĩ độ - Kinh độ"
+
+#: ../lib/gis/proj2.c:51
+msgid "Other Projection"
+msgstr "Phép chiếu khác"
 
 #: ../lib/gis/error.c:164
 msgid "WARNING: "
@@ -654,451 +1491,6 @@ msgstr "CẢNH BÁO: "
 #: ../lib/gis/error.c:165
 msgid "ERROR: "
 msgstr "LỖI: "
-
-#: ../lib/gis/format.c:162
-#, c-format
-msgid "Fail of initial read of compressed file [%s in %s]"
-msgstr "Thất bại trong việc đọc ban đầu tập tin nén [%s trong %s]"
-
-#: ../lib/gis/get_cellhd.c:73 ../lib/gis/get_cellhd.c:102
-#, c-format
-msgid "Can't read header file for [%s in %s]\n"
-msgstr "Không thể đọc tập tin header của [%s trong %s]\n"
-
-#: ../lib/gis/get_cellhd.c:75
-#, c-format
-msgid "It is a reclass of [%s in %s] "
-msgstr "Nó là phép phân loại lại của [%s trong %s]"
-
-#: ../lib/gis/get_cellhd.c:78
-#, c-format
-msgid "which is missing"
-msgstr "bị thiếu"
-
-#: ../lib/gis/get_cellhd.c:80
-#, c-format
-msgid "whose header file can't be opened"
-msgstr "tập tin header của nó không thể mở được"
-
-#: ../lib/gis/get_cellhd.c:90
-#, c-format
-msgid "Can't open header file for [%s in %s]"
-msgstr "Không thể mở tập tin header của [%s trong %s]"
-
-#: ../lib/gis/get_cellhd.c:106
-#, c-format
-msgid "It is a reclass of [%s in %s] whose header file is invalid\n"
-msgstr "Nó là phép phân loại lại của [%s trong %s] với tập tin header không hợp lệ\n"
-
-#: ../lib/gis/get_cellhd.c:110
-#, c-format
-msgid "Invalid format\n"
-msgstr "Định dạng không hợp lệ\n"
-
-#: ../lib/gis/get_datum_name.c:53
-#, c-format
-msgid ""
-"\n"
-"Please specify datum name\n"
-msgstr ""
-"\n"
-"Vui lòng chỉ định tên mốc tọa độ chuẩn\n"
-
-#: ../lib/gis/get_datum_name.c:54
-#, c-format
-msgid "Enter 'list' for the list of available datums\n"
-msgstr "Nhập 'list' để có danh sách các mốc tọa độ chuẩn khả dụng\n"
-
-#: ../lib/gis/get_datum_name.c:56 ../lib/gis/get_ell_name.c:46
-#: ../lib/gis/get_projname.c:59 ../lib/proj/datum.c:348
-#, c-format
-msgid "Hit RETURN to cancel request\n"
-msgstr "Bấm RETURN để hủy yêu cầu\n"
-
-#: ../lib/gis/get_datum_name.c:67 ../lib/gis/get_ell_name.c:33
-#: ../lib/gis/get_projname.c:47 ../lib/proj/datum.c:269
-msgid "Cannot open temp file"
-msgstr "Không thể mở tập tin tạm"
-
-#: ../lib/gis/get_datum_name.c:91
-#, c-format
-msgid ""
-"\n"
-"invalid datum\n"
-msgstr ""
-"\n"
-"mốc tọa độ chuẩn không hợp lệ\n"
-
-#: ../lib/gis/get_ell_name.c:44
-#, c-format
-msgid ""
-"\n"
-"Please specify ellipsoid name\n"
-msgstr ""
-"\n"
-"Vui lòng chỉ định tên ellipsoid\n"
-
-#: ../lib/gis/get_ell_name.c:45
-#, c-format
-msgid "Enter 'list' for the list of available ellipsoids\n"
-msgstr "Nhập 'list' để biết danh sách các ellipsoid đang có\n"
-
-#: ../lib/gis/get_ell_name.c:62
-#, c-format
-msgid ""
-"\n"
-"invalid ellipsoid\n"
-msgstr ""
-"\n"
-"ellipsoid không hợp lệ\n"
-
-#: ../lib/gis/get_ellipse.c:81
-#, c-format
-msgid "Unable to open file %s in %s"
-msgstr "Không thể mở tập tin %s trong %s"
-
-#: ../lib/gis/get_ellipse.c:89 ../lib/gis/get_ellipse.c:114
-#, c-format
-msgid "invalid a: field %s in file %s in %s"
-msgstr "Ungültig a: Feld %s in Datei %s in %s"
-
-#: ../lib/gis/get_ellipse.c:102
-#, c-format
-msgid "invalid ellipsoid %s in file %s in %s"
-msgstr "ellipsoid khônng hợp lệ %s trong tập tin %s trong %s"
-
-#: ../lib/gis/get_ellipse.c:119
-#, c-format
-msgid "invalid es: field %s in file %s in %s"
-msgstr "es không hợp lệ : trường %s trong tập tin %s trong %s"
-
-#: ../lib/gis/get_ellipse.c:133
-#, c-format
-msgid "No ellipsoid info given in file %s in %s"
-msgstr "Không có thông tin về ellipsoid trong tập tin %s trong %s"
-
-#: ../lib/gis/get_ellipse.c:406 ../lib/proj/ellipse.c:228
-#, c-format
-msgid "unable to open ellipsoid table file: %s"
-msgstr "không thể mở tập tin bảng ellipsoid : %s"
-
-#: ../lib/gis/get_ellipse.c:455
-#, c-format
-msgid "Lines%s of ellipsoid table file <%s> are invalid"
-msgstr "Các dòng %s của tập tin bảng ellipsoid <%s> không hợp lệ"
-
-#: ../lib/gis/get_ellipse.c:456
-#, c-format
-msgid "Line%s of ellipsoid table file <%s> is invalid"
-msgstr "Dòng %s của tập tin bảng ellipsoid <%s> không hợp lệ"
-
-#: ../lib/gis/get_projinfo.c:17 ../lib/gis/get_projinfo.c:45
-#, c-format
-msgid "%s file not found for location %s\n"
-msgstr "không tìm thấy tập tin %s cho location %s\n"
-
-#: ../lib/gis/get_projinfo.c:24 ../lib/gis/get_projinfo.c:52
-#, c-format
-msgid "ERROR in reading %s file for location %s\n"
-msgstr "LỖI trong khi đang đọc tập tin %s tại location %s\n"
-
-#: ../lib/gis/get_projname.c:35
-#, c-format
-msgid "%s not found"
-msgstr "không tìm thấy %s"
-
-#: ../lib/gis/get_projname.c:41
-#, c-format
-msgid "ERROR in reading %s"
-msgstr "LỖI khi đang đọc %s"
-
-#: ../lib/gis/get_projname.c:57
-#, c-format
-msgid ""
-"\n"
-"\n"
-"Please specify projection name\n"
-msgstr ""
-"\n"
-"\n"
-"Vui lòng chỉ định tên phép chiếu\n"
-
-#: ../lib/gis/get_projname.c:58
-#, c-format
-msgid "Enter 'list' for the list of available projections\n"
-msgstr "Gõ 'list' để biết danh sách các phép chiếu hiện có\n"
-
-#: ../lib/gis/get_projname.c:77
-#, c-format
-msgid ""
-"\n"
-"invalid projection\n"
-msgstr ""
-"\n"
-"phép chiếu không hợp lệ\n"
-
-#: ../lib/gis/get_row.c:110
-#, c-format
-msgid "[%s in %s] - read request for row %d is outside region"
-msgstr "[%s trong %s] - đọc yêu cầu cho hàng %d nằm ngoài vùng"
-
-#: ../lib/gis/get_row.c:378
-#, c-format
-msgid "cell_values_float: xdr_float failed for index %d"
-msgstr "cell_values_float: xdr_float thất bại đối với chỉ mục %d."
-
-#: ../lib/gis/get_row.c:422
-#, c-format
-msgid "cell_values_double: xdr_double failed for index %d."
-msgstr "cell_values_double: xdr_double thất bại đối với chỉ mục %d."
-
-#: ../lib/gis/get_row.c:564
-#, c-format
-msgid "error reading compressed map [%s] in mapset [%s], row %d"
-msgstr "lỗi khi đang đọc bản đồ nén %s [%s] trong bộ bản đồ [%s], hàng %d"
-
-#: ../lib/gis/get_row.c:568
-#, c-format
-msgid "error reading map [%s] in mapset [%s], row %d"
-msgstr "lỗi khi đang đọc bản đồ %s [%s] trong bộ bản đồ [%s], hàng %d"
-
-#: ../lib/gis/get_row.c:917 ../lib/gis/get_row.c:923
-#, c-format
-msgid "error reading null row %d"
-msgstr "lỗi khi đang đọc hàng null %d"
-
-#: ../lib/gis/get_row.c:1004
-msgid "Could not realloc buffer"
-msgstr "Không thể cấp phát lại vùng đệm "
-
-#: ../lib/gis/get_window.c:69 ../lib/gis/get_window.c:88
-#, c-format
-msgid ""
-"region for current mapset %s\n"
-"run \"g.region\""
-msgstr ""
-"vùng cho bộ bản đồ hiện tại %s\n"
-"chạy \"g.region\""
-
-#: ../lib/gis/get_window.c:124
-#, c-format
-msgid "default region %s"
-msgstr "vùng mặc định %s"
-
-#: ../lib/gis/get_window.c:146
-msgid "is not set"
-msgstr "không được thiết lập"
-
-#: ../lib/gis/get_window.c:156
-#, c-format
-msgid ""
-"is invalid\n"
-"%s"
-msgstr ""
-"không hợp lệ\n"
-"%s"
-
-#: ../lib/gis/gishelp.c:49
-#, c-format
-msgid "one moment...\n"
-msgstr "chờ một chút...\n"
-
-#: ../lib/gis/gishelp.c:55
-#, c-format
-msgid "No help available for command [%s]\n"
-msgstr "Không có trợ giúp cho lệnh [%s]\n"
-
-#: ../lib/gis/gisinit.c:38
-#, c-format
-msgid "MAPSET %s - permission denied"
-msgstr "BỘ BẢN ĐỒ %s - không được phép "
-
-#: ../lib/gis/gisinit.c:43 ../lib/gis/mapset.c:60
-#, c-format
-msgid "MAPSET %s not found"
-msgstr "không tìm thấy BỘ BẢN ĐỒ %s "
-
-#: ../lib/gis/gisinit.c:67
-#, c-format
-msgid "ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
-msgstr "LỖI: Hệ thống không được khởi chạy. Lập trình viên quên gọi G_gisinit()\n"
-
-#: ../lib/gis/histogram.c:60
-#, c-format
-msgid "Histogram for [%s in %s] missing (run r.support)"
-msgstr "Biểu đồ histogram cho [%s in %s] bị thiếu (chạy r.support)"
-
-#: ../lib/gis/histogram.c:67
-#, c-format
-msgid "Can't read histogram for [%s in %s]"
-msgstr "Không thể đọc biểu đồ histogram cho [%s in %s]"
-
-#: ../lib/gis/histogram.c:78 ../lib/gis/histogram.c:87
-#, c-format
-msgid "Invalid histogram file for [%s in %s]"
-msgstr "Tập tin histogram cho [%s in %s] không hợp lệ"
-
-#: ../lib/gis/histogram.c:341
-#, c-format
-msgid "can't create histogram for [%s in %s]"
-msgstr "không thể tạo histogram cho [%s in %s]"
-
-#: ../lib/gis/history.c:184
-#, c-format
-msgid "can't write history information for [%s]"
-msgstr "không thể ghi thông tin lịch sử cho [%s] trong tập hợp bản đồ [%s] "
-
-#: ../lib/gis/history.c:269
-msgid "Not enough room in history file to record command line."
-msgstr "Không đủ không gian trong tập tin lịch để ghi dòng lệnh"
-
-#: ../lib/gis/history.c:291
-msgid "Not enough room in history file for command line (truncated)."
-msgstr "Không đủ không gian trong tập tin lịch để ghi dòng lệnh (cắt bớt)."
-
-#: ../lib/gis/home.c:52
-msgid "unable to determine user's home directory"
-msgstr "không thể xác định thư mục home của người sử dụng"
-
-#: ../lib/gis/legal_name.c:29
-#, c-format
-msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
-msgstr "Tên tập tin không hợp lệ. Không thể là '.' hay 'NULL'\n"
-
-#: ../lib/gis/legal_name.c:35
-#, c-format
-msgid "Illegal filename. character <%c> not allowed."
-msgstr "Tên tập tin không hợp lệ. ký tự <%c> không được phép"
-
-#: ../lib/gis/legal_name.c:61 ../lib/gis/legal_name.c:63
-#, c-format
-msgid "Output name '%s' is not valid rast name."
-msgstr "Tên đầu ra '%s' không phải là tên raster hợp lệ"
-
-#: ../lib/gis/legal_name.c:74 ../lib/gis/legal_name.c:76
-#: ../lib/vector/Vlib/legal_vname.c:72 ../lib/vector/Vlib/legal_vname.c:74
-#, c-format
-msgid "Cannot find input map '%s'"
-msgstr "Không thể tìm thấy bản đồ đầu vào '%s'"
-
-#: ../lib/gis/legal_name.c:94 ../lib/gis/legal_name.c:96
-#: ../lib/vector/Vlib/legal_vname.c:92 ../lib/vector/Vlib/legal_vname.c:94
-#, c-format
-msgid "Output map '%s' is used as input"
-msgstr "Bản đồ đầu ra '%s' được sử dụng làm đầu vào"
-
-#: ../lib/gis/list.c:115
-#, c-format
-msgid "no %s files available in current mapset\n"
-msgstr "Keine %s Dateien im aktuellen Mapset vorhanden\n"
-
-#: ../lib/gis/list.c:117
-#, c-format
-msgid "no %s files available in mapset %s\n"
-msgstr "Các tập tin %s không có trong bộ bản đồ %s\n"
-
-#: ../lib/gis/list.c:131
-#, c-format
-msgid "hit RETURN to continue -->"
-msgstr "Bấm RETURN để tiếp tục -->"
-
-#: ../lib/gis/list.c:212
-#, c-format
-msgid "%s files available in mapset %s:\n"
-msgstr "Các tập tin %s có trong bộ bản đồ %s:\n"
-
-#: ../lib/gis/location.c:49
-#, c-format
-msgid "LOCATION << %s >> not available"
-msgstr "LOCATION  << %s >>  không có"
-
-#: ../lib/gis/make_colr.c:41
-#, c-format
-msgid " The raster map %s@%s is empty"
-msgstr " Bản đồ raster %s@%s rỗng"
-
-#: ../lib/gis/make_colr.c:49
-#, c-format
-msgid ""
-"\n"
-"\n"
-"Color table needed for file [%s] in mapset [%s].\n"
-msgstr ""
-"\n"
-"\n"
-"Bảng màu cần cho tập tin [%s] trong bộ bản đồ [%s].\n"
-
-#: ../lib/gis/make_colr.c:52
-#, c-format
-msgid ""
-"\n"
-"Please identify the type desired:\n"
-msgstr ""
-"\n"
-"Hãy xác định kiểu mong muốn:\n"
-
-#: ../lib/gis/make_colr.c:53
-#, c-format
-msgid "    1:  Random colors\n"
-msgstr "    1:  Các màu ngẫu nhiên\n"
-
-#: ../lib/gis/make_colr.c:54
-#, c-format
-msgid "    2:  Red, green, and blue color ramps\n"
-msgstr "    2:  Đỏ, lục, và xanh tăng dần\n"
-
-#: ../lib/gis/make_colr.c:55
-#, c-format
-msgid "    3:  Color wave\n"
-msgstr "    3:  Farbenwelle\n"
-
-#: ../lib/gis/make_colr.c:56
-#, c-format
-msgid "    4:  Gray scale\n"
-msgstr "    4:  Cấp độ xám\n"
-
-#: ../lib/gis/make_colr.c:57
-#, c-format
-msgid "    5:  Aspect\n"
-msgstr "    5:  Hướng\n"
-
-#: ../lib/gis/make_colr.c:58
-#, c-format
-msgid "    6:  Rainbow colors\n"
-msgstr "    6:  Mầu cầu vồng\n"
-
-#: ../lib/gis/make_colr.c:59
-#, c-format
-msgid "    7:  Red through yellow to green\n"
-msgstr "    7:  Đỏ qua vàng đến lục\n"
-
-#: ../lib/gis/make_colr.c:60
-#, c-format
-msgid "    8:  Green through yellow to red\n"
-msgstr "    8:  Lục qua vàng rồi đến đỏ\n"
-
-#: ../lib/gis/make_colr.c:61
-#, c-format
-msgid "RETURN  quit\n"
-msgstr "ENTER  thoát ra\n"
-
-#: ../lib/gis/make_colr.c:82
-#, c-format
-msgid ""
-"\n"
-"%s invalid; Try again > "
-msgstr ""
-"\n"
-"%s không hợp lệ; Hãy thử lại > "
-
-#: ../lib/gis/mapset.c:41
-msgid "MAPSET is not set"
-msgstr "BỘ BẢN ĐỒ %s không tìm thấy"
-
-#: ../lib/gis/mapset_msc.c:69
-#, c-format
-msgid "can't make mapset element %s (%s)"
-msgstr "không thể tạo ra yếu tố thành phần %s (%s) cho bộ bản đồ"
 
 #: ../lib/gis/mask_info.c:42
 #, c-format
@@ -1113,415 +1505,6 @@ msgstr "không"
 msgid "not known"
 msgstr "không biết"
 
-#: ../lib/gis/myname.c:48
-msgid "Unknown Location"
-msgstr "Location không biết"
-
-#: ../lib/gis/null_val.c:94
-msgid "EmbedGivenNulls: wrong data type!"
-msgstr "EmbedGivenNulls: kiểu dữ liệu sai!"
-
-#: ../lib/gis/null_val.c:115
-msgid "Null values have not been initialized. "
-msgstr "Các giá trị null không được khởi tạo"
-
-#: ../lib/gis/null_val.c:116
-msgid "G_gisinit() must be called first. "
-msgstr "G_gisinit() phải được gọi trước."
-
-#: ../lib/gis/null_val.c:117
-msgid "Please advise GRASS developers of this error.\n"
-msgstr "Vui lòng báo cho các nhà phát triển GRASS về lỗi này.\n"
-
-#: ../lib/gis/null_val.c:231
-msgid "G_set_null_value: wrong data type!"
-msgstr "G_set_null_value: kiểu dữ liệu sai"
-
-#: ../lib/gis/opencell.c:186
-#, c-format
-msgid "unable to open raster map [%s in %s]"
-msgstr "không thể mở bản đồ raster [%s in %s]"
-
-#: ../lib/gis/opencell.c:270
-#, c-format
-msgid ""
-"unable to open [%s] in [%s] since it is a reclass of [%s] in [%s] which does "
-"not exist"
-msgstr ""
-"không thể mở [%s] ở [%s] vì nó là phân loại lại của [%s] trong [%s] không "
-"tồn tại"
-
-#: ../lib/gis/opencell.c:293
-#, c-format
-msgid "[%s] in mapset [%s]-format field in header file invalid"
-msgstr "[%s] trong bộ bản đồ [%s]-định dạng trường trong tập tin header không hợp lệ"
-
-#: ../lib/gis/opencell.c:302
-#, c-format
-msgid ""
-"[%s] in mapset [%s] - in different projection than current region:\n"
-" found map [%s] in: <%s>, should be <%s> "
-msgstr ""
-"[%s] trong bộ bản đồ [%s] - ở phép chiếu khác với vùng hiện hành:\n"
-"tìm thấy bản đồ [%s] trong: <%s>, lẽ ra phải là <%s>"
-
-#: ../lib/gis/opencell.c:309
-#, c-format
-msgid "[%s] in mapset [%s] - in different zone [%d] than current region [%d]"
-msgstr "[%s] trong bộ bản đồ [%s] - ở một múi [%d] khác với vùng hiện hành [%d]"
-
-#: ../lib/gis/opencell.c:317
-#, c-format
-msgid "[%s] in [%s] - bytes per cell (%d) too large"
-msgstr "[%s] trong [%s] - số byte trên ô (%d) quá lớn"
-
-#: ../lib/gis/opencell.c:617
-#, c-format
-msgid "opencell: %s - illegal file name"
-msgstr "opencell: %s - tên tập tin không hợp lệ"
-
-#: ../lib/gis/opencell.c:710
-msgid "Can't write embedded null values for map open for random access"
-msgstr "Không thể ghi các giá trị null nhúng để mở bản đồ cho truy cập ngẫu nhiên"
-
-#: ../lib/gis/opencell.c:930 ../lib/gis/opencell.c:951
-#, c-format
-msgid "unable to find [%s] in [%s]"
-msgstr "không thể tìm thấy [%s] trong [%s]"
-
-#: ../lib/gis/opencell.c:982
-#, c-format
-msgid "unable to find [%s]"
-msgstr "không thể tìm thấy [%s]"
-
-#: ../lib/gis/opencell.c:988
-#, c-format
-msgid "Unable to open %s"
-msgstr "không thể mở %s"
-
-#: ../lib/gis/opencell.c:997
-#, c-format
-msgid "invalid type: field %s in file %s "
-msgstr "kiểu không hợp lệ: trường %s trong tập tin %s"
-
-#: ../lib/gis/opencell.c:1042
-#, c-format
-msgid "%s - ** illegal name **"
-msgstr "%s - ** tên không hợp lệ **"
-
-#: ../lib/gis/parser.c:355
-msgid ""
-"WHERE conditions of SQL statement without 'where' keyword. (example: income "
-"< 1000 and inhab >= 10000)"
-msgstr ""
-"Các điều kiện WHERE của câu lệnh SQL không có từ khóa 'where' . (ví dụ income < "
-"1000 and inhab >= 10000)"
-
-#: ../lib/gis/parser.c:365 ../lib/gis/parser.c:390
-msgid "Name of input raster map"
-msgstr "Tên của bản đồ raster đầu vào"
-
-#: ../lib/gis/parser.c:374 ../lib/gis/parser.c:399
-msgid "Name of input raster map(s)"
-msgstr "Tên của (các) bản đồ raster đầu vào"
-
-#: ../lib/gis/parser.c:382
-msgid "Name for output raster map"
-msgstr "Tên của bản đồ raster đầu ra"
-
-#: ../lib/gis/parser.c:407
-msgid "Name of base raster map"
-msgstr "Tên của bản đồ raster nền"
-
-#: ../lib/gis/parser.c:415
-msgid "Name of cover raster map"
-msgstr "Tên của bản đồ raster lớp phủ"
-
-#: ../lib/gis/parser.c:423
-msgid "Name of elevation raster map"
-msgstr "Tên của bản đồ raster độ cao"
-
-#: ../lib/gis/parser.c:432
-msgid "Name of elevation raster map(s)"
-msgstr "Tên của (các) bản đồ raster độ cao"
-
-#: ../lib/gis/parser.c:442
-msgid "Name of input raster3d map"
-msgstr "Tên của bản đồ raster 3d đầu vào"
-
-#: ../lib/gis/parser.c:451
-msgid "Name of input raster3d map(s)"
-msgstr "Tên của (các) bản đồ raster 3d đầu vào"
-
-#: ../lib/gis/parser.c:459
-msgid "Name for output raster3d map"
-msgstr "Tên của bản đồ raster 3d đầu ra"
-
-#: ../lib/gis/parser.c:469 ../lib/gis/parser.c:485
-msgid "Name of input vector map"
-msgstr "Tên của bản đồ vector đầu vào"
-
-#: ../lib/gis/parser.c:477
-msgid "Name for output vector map"
-msgstr "Tên của bản đồ vector đầu ra"
-
-#: ../lib/gis/parser.c:494
-msgid "Type"
-msgstr "Kiểu"
-
-#: ../lib/gis/parser.c:501
-msgid "Layer number"
-msgstr "Lớp số"
-
-#: ../lib/gis/parser.c:507
-msgid "Category value"
-msgstr "Giá trị phạm trù"
-
-#: ../lib/gis/parser.c:514
-msgid "Category values"
-msgstr "Các giá trị phạm trù"
-
-#: ../lib/gis/parser.c:515
-msgid "Example: 1,3,7-9,13"
-msgstr "Ví dụ: 1,3,7-9,13"
-
-#: ../lib/gis/parser.c:757
-#, c-format
-msgid "Sorry <%s> is not a valid option\n"
-msgstr "Xin lỗi <%s> không phải là tùy chọn hợp lệ\n"
-
-#: ../lib/gis/parser.c:862
-#, c-format
-msgid ""
-"\n"
-"Description:\n"
-msgstr ""
-"\n"
-"Mô tả:\n"
-
-#: ../lib/gis/parser.c:866
-#, c-format
-msgid ""
-"\n"
-"Keywords:\n"
-msgstr ""
-"\n"
-"Các từ khóa:\n"
-
-#: ../lib/gis/parser.c:870
-#, c-format
-msgid ""
-"\n"
-"Usage:\n"
-" "
-msgstr ""
-"\n"
-"Cách sử dụng:\n"
-" "
-
-#: ../lib/gis/parser.c:936
-#, c-format
-msgid ""
-"\n"
-"Flags:\n"
-msgstr ""
-"\n"
-"Các cờ:\n"
-
-#: ..b//lib/gis/parser.c:959
-msgid "Force overwrite of output files"
-msgstr "Buộc ghi đè các tập tin đầu ra"
-
-#: ../lib/gis/parser.c:966
-#, c-format
-msgid ""
-"\n"
-"Parameters:\n"
-msgstr ""
-"\n"
-"Các tham số:\n"
-
-#: ../lib/gis/parser.c:988
-#, c-format
-msgid "  %*s   default: %s\n"
-msgstr "  %*s    mặc định: %s\n"
-
-#: ../lib/gis/parser.c:1583
-#, c-format
-msgid "  %*s   options: "
-msgstr "  %*s   tùy_chọn: "
-
-#: ../lib/gis/parser.c:1630 ../lib/gis/parser.c:1647
-#, c-format
-msgid "Sorry, <%c> is not a valid flag\n"
-msgstr "Xin lỗi, <%c> không phải là cờ hợp lệ\n"
-
-#: ../lib/gis/parser.c:1702
-#, c-format
-msgid "Sorry, <%s=> is ambiguous\n"
-msgstr "Xin lỗi, <%s=> không rõ ràng\n"
-
-#: ../lib/gis/parser.c:1709
-#, c-format
-msgid "Sorry, <%s> is not a valid parameter\n"
-msgstr "Xin lỗi, <%s> không phải là tham số hợp lệ\n"
-
-#: ../lib/gis/parser.c:1794
-#, c-format
-msgid ""
-"\n"
-"Error: illegal range syntax for parameter <%s>\n"
-msgstr ""
-"\n"
-"Lỗi: Cú pháp miền cho tham số không hợp lệ <%s>\n"
-
-#: ../lib/gis/parser.c:1796
-#, c-format
-msgid "       Presented as: %s\n"
-msgstr "       Được biểu diễn thành: %s\n"
-
-#: ../lib/gis/parser.c:1799
-#, c-format
-msgid ""
-"\n"
-"Error: value <%s> out of range for parameter <%s>\n"
-msgstr ""
-"\n"
-"Lỗi: giá trị <%s> nằm ngoài miền cho tham số <%s>\n"
-
-#: ../lib/gis/parser.c:1801
-#, c-format
-msgid "       Legal range: %s\n"
-msgstr "       Miền hợp lệ: %s\n"
-
-#: ../lib/gis/parser.c:1804
-#, c-format
-msgid ""
-"\n"
-"Error: Missing value for parameter <%s>\n"
-msgstr ""
-"\n"
-"Lỗi: Giá trị cho tham số bị thiếu <%s>\n"
-
-#: ../lib/gis/parser.c:1964
-#, c-format
-msgid ""
-"\n"
-"ERROR: Required parameter <%s> not set:\n"
-"    (%s).\n"
-msgstr ""
-"\n"
-"LỖI: Tham số yêu cầu <%s> không được thiết lập:\n"
-"    (%s).\n"
-
-#: ../lib/gis/parser.c:2067
-#, c-format
-msgid ""
-"\n"
-"Error: option <%s> must be provided in multiples of %d\n"
-msgstr ""
-"\n"
-"Lỗi: tùy_chọn <%s> phải được cung cấp ở dạng bội số của %d\n"
-
-#: ../lib/gis/parser.c:2069
-#, c-format
-msgid "       You provided %d items:\n"
-msgstr "       Bạn đã cung cấp %d mục:\n"
-
-#: ../lib/gis/parser.c:2124
-#, c-format
-msgid "Error: option <%s>: <%s> exists.\n"
-msgstr "Lỗi: tùy_chọn <%s>: <%s> đã có.\n"
-
-#: ../lib/gis/parser.c:2171
-#, c-format
-msgid ""
-"\n"
-"FLAG: Set the following flag?\n"
-msgstr ""
-"\n"
-"CỜ: Thiết lập cờ sau?\n"
-
-#: ../lib/gis/parser.c:2185
-#, c-format
-msgid ""
-"\n"
-"OPTION:   %s\n"
-msgstr ""
-"\n"
-"TÙY_CHỌN:   %s\n"
-
-#: ../lib/gis/parser.c:2186
-#, c-format
-msgid "     key: %s\n"
-msgstr "     khóa: %s\n"
-
-#: ../lib/gis/parser.c:2188
-#, c-format
-msgid "  format: %s\n"
-msgstr "  định dạng: %s\n"
-
-#: ../lib/gis/parser.c:2190
-#, c-format
-msgid " default: %s\n"
-msgstr " mặc định: %s\n"
-
-#: ../lib/gis/parser.c:2191
-#, c-format
-msgid "required: %s\n"
-msgstr "cần có: %s\n"
-
-#: ../lib/gis/parser.c:2193
-#, c-format
-msgid "multiple: %s\n"
-msgstr "bội: %s\n"
-
-#: ../lib/gis/parser.c:2195
-#, c-format
-msgid " options: %s\n"
-msgstr " tùy_chọn: %s\n"
-
-#: ../lib/gis/parser.c:2210
-#, c-format
-msgid "enter option > "
-msgstr "nhập tùy_chọn > "
-
-#: ../lib/gis/parser.c:2224 ../lib/gis/parser.c:2235
-msgid "   Try again? "
-msgstr "   Thử lại? "
-
-#: ../lib/gis/parser.c:2233
-#, c-format
-msgid "Sorry, %s is not accepted.\n"
-msgstr "Xin lỗi, %s không được chấp nhận.\n"
-
-#: ../lib/gis/parser.c:2244
-#, c-format
-msgid ""
-"\n"
-"You have chosen:\n"
-"  %s\n"
-msgstr ""
-"\n"
-"Bạn đã chọn:\n"
-"  %s\n"
-
-#: ../lib/gis/parser.c:2245
-msgid "Is this correct? "
-msgstr "Đã đúng chưa? "
-
-#: ../lib/gis/parser.c:2314
-msgid "to accept the default"
-msgstr "để chấp nhận mặc định"
-
-#: ../lib/gis/proj2.c:49
-msgid "Latitude-Longitude"
-msgstr "Vĩ độ - Kinh độ"
-
-#: ../lib/gis/proj2.c:51
-msgid "Other Projection"
-msgstr "Phép chiếu khác"
-
 #: ../lib/gis/proj3.c:68 ../lib/vector/Vlib/header.c:458
 msgid "Unknown projection"
 msgstr "Phép chiếu không biết"
@@ -1530,6 +1513,15 @@ msgstr "Phép chiếu không biết"
 #, c-format
 msgid "Unable to create header file for [%s]"
 msgstr "Không thể tạo ra tập tin header cho [%s]"
+
+#: ../lib/gis/format.c:162
+#, c-format
+msgid "Fail of initial read of compressed file [%s in %s]"
+msgstr "Thất bại trong việc đọc ban đầu tập tin nén [%s trong %s]"
+
+#: ../lib/gis/myname.c:48
+msgid "Unknown Location"
+msgstr "Location không biết"
 
 #: ../lib/gis/put_row.c:212
 #, c-format
@@ -1788,8 +1780,7 @@ msgstr "Quá nhiều phạm trù phân loại lại cho [%s ở %s]"
 #, c-format
 msgid "Illegal reclass format in header file for [%s in %s]"
 msgstr ""
-"Định dạng phân loại lại không hợp lệ trong tập tin "
-"header của [%s ở %s] "
+"Định dạng phân loại lại không hợp lệ trong tập tin header của [%s ở %s] "
 
 #: ../lib/gis/reclass.c:236
 msgid "Illegal reclass request"
@@ -1809,13 +1800,24 @@ msgstr "Không thể tạo ra tập tin header cho [%s ở %s]"
 msgid "Unable to create dependency file in [%s in %s]"
 msgstr "Không thể tạo ra tập tin phụ thuộc cho [%s ở %s]"
 
+#: ../lib/gis/sample.c:74
+msgid "unknown interpolation type"
+msgstr "kiểu nội suy không hiểu"
+
+#: ../lib/gis/sample.c:473
+msgid "\"no data\" label found; setting to zero"
+msgstr "tìm thấy nhãn \"no data\"; thiết lập về 0"
+
+#: ../lib/gis/sample.c:487
+msgid "problem reading raster cell file"
+msgstr "trục khi đang đọc tập tin cell raster"
+
 #: ../lib/gis/set_window.c:60
 msgid ""
 "G_set_window(): projection/zone differs from that of currently open raster "
 "files"
 msgstr ""
-"G_set_window(): phép chiếu/múi khác với của tập tin raster hiện "
-"đang mở"
+"G_set_window(): phép chiếu/múi khác với của tập tin raster hiện đang mở"
 
 #: ../lib/gis/spawn.c:65
 msgid "too many arguments"
@@ -1882,22 +1884,20 @@ msgstr "Kann keine Zeitstempel-Datei für %s Karte %s in Mapset %s erzeugen."
 #, c-format
 msgid "Invalid timestamp specified for %s map %s in mapset %s"
 msgstr ""
-"Không thể tạo ra tập tin đánh dấu thời gian cho %s bản đồ %s "
-"trong bộ bản đồ %s"
+"Không thể tạo ra tập tin đánh dấu thời gian cho %s bản đồ %s trong bộ bản đồ "
+"%s"
 
 #: ../lib/gis/timestamp.c:333
 #, c-format
 msgid "Can't open timestamp file for %s map %s in mapset %s"
 msgstr ""
-"Không thể mở tập tin đánh dấu thời gian cho %s bản đồ %s "
-"trong bộ bản đồ %s"
+"Không thể mở tập tin đánh dấu thời gian cho %s bản đồ %s trong bộ bản đồ %s"
 
 #: ../lib/gis/timestamp.c:343
 #, c-format
 msgid "Invalid timestamp file for %s map %s in mapset %s"
 msgstr ""
-"Tập tin đánh dấu thời gian không hợp lệ cho %s bản đồ %s t"
-"rong bộ bản đồ %s"
+"Tập tin đánh dấu thời gian không hợp lệ cho %s bản đồ %s trong bộ bản đồ %s"
 
 #: ../lib/gis/view.c:164
 #, c-format
@@ -1921,8 +1921,10 @@ msgstr "Cửa sổ đã lưu trong \"%s\" hoàn toàn nằm ngoài cửa sổ GR
 
 #: ../lib/gis/view.c:548
 #, c-format
-msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
-msgstr "Chỉ có %d%% của cửa sổ được lưu ở \"%s\" chồng với cửa sổ GRASS hiện tại. "
+msgid ""
+" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgstr ""
+"Chỉ có %d%% của cửa sổ được lưu ở \"%s\" chồng với cửa sổ GRASS hiện tại. "
 
 #: ../lib/proj/ellipse.c:85
 #, c-format
@@ -2071,8 +2073,8 @@ msgid ""
 "taking too long to find points for interpolation--please change the region "
 "to area where your points are. Continuing calculations..."
 msgstr ""
-"mất quá lâu để tìm các điểm dùng cho nội suy--vui lòng thay đổi vùng đến "
-"khu vực có các điểm của bạn. Tiếp tục tính toán..."
+"mất quá lâu để tìm các điểm dùng cho nội suy--vui lòng thay đổi vùng đến khu "
+"vực có các điểm của bạn. Tiếp tục tính toán..."
 
 #: ../lib/rst/interp_float/vinput2d.c:81
 msgid "Vector is not 3D"
@@ -2090,7 +2092,8 @@ msgstr "Không thể mở CSDL"
 #: ../lib/rst/interp_float/vinput2d.c:99
 #, c-format
 msgid "Cannot find z column <%s> (please verify name, e.g. with v.info)"
-msgstr "Không tìm thấy cột z <%s> (xin kiểm tra lại tên, ví dụ như bằng v.info)"
+msgstr ""
+"Không tìm thấy cột z <%s> (xin kiểm tra lại tên, ví dụ như bằng v.info)"
 
 #: ../lib/rst/interp_float/vinput2d.c:101
 msgid "Column type of z column is not supported (must be integer or double)"
@@ -2134,8 +2137,8 @@ msgid ""
 "%d points given for interpolation (after thinning) is less than given NPMIN=%"
 "d"
 msgstr ""
-"%d điểm được cung cấp để nội suy (sau khi làm mảnh) ít hơn NPMIN=% "
-"được cung cấp"
+"%d điểm được cung cấp để nội suy (sau khi làm mảnh) ít hơn NPMIN=% được cung "
+"cấp"
 
 #: ../lib/rst/interp_float/vinput2d.c:316
 #, c-format
@@ -2157,8 +2160,10 @@ msgstr "Không thể đọc các tọa độ dòng của biểu tượng: %s"
 
 #: ../lib/symbol/read.c:252
 #, c-format
-msgid "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
-msgstr "Tên biểu tượng không đúng: '%s' (phải là: nhóm/tên hoặc nhóm/tên@bộ_bản_đồ)"
+msgid ""
+"Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
+msgstr ""
+"Tên biểu tượng không đúng: '%s' (phải là: nhóm/tên hoặc nhóm/tên@bộ_bản_đồ)"
 
 #: ../lib/symbol/read.c:274
 #, c-format
@@ -2397,7 +2402,8 @@ msgstr "'Bọ': cố gắng cập nhật bản đồ không ở trong bộ bản
 #: ../lib/vector/Vlib/legal_vname.c:22
 #, c-format
 msgid "Illegal vector map name <%s>. May not contain '.' or 'NULL'.\n"
-msgstr "Tên bản đồ vector không hợp lệ <%s>. Có thể được chứa '.' hoặc 'NULL'.\n"
+msgstr ""
+"Tên bản đồ vector không hợp lệ <%s>. Có thể được chứa '.' hoặc 'NULL'.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:28
 #, c-format
@@ -2452,7 +2458,8 @@ msgstr "Không tìm thấy vector %s"
 
 #: ../lib/vector/Vlib/open.c:167
 msgid "A map which is not in the current mapset cannot be opened for update."
-msgstr "Một bản đồ không ở trong bản đồ hiện hành thì không thể mở để cập nhật. "
+msgstr ""
+"Một bản đồ không ở trong bản đồ hiện hành thì không thể mở để cập nhật. "
 
 #: ../lib/vector/Vlib/open.c:185
 #, c-format
@@ -2536,22 +2543,17 @@ msgstr "Không thể xóa đường, bản đồ '%s' không được mở ở c
 msgid "Cannot delete line"
 msgstr "Không thể xóa đường"
 
-#: ../lib/driver/command.c:612
-#, c-format
-msgid ""
-"\n"
-"Unknown command: %d last: %d\n"
-msgstr ""
-"\n"
-"Lệnh không biết: %d sau cùng: %d\n"
+#~ msgid "Name of elevation raster map"
+#~ msgstr "Tên của bản đồ raster độ cao"
 
-#: ../lib/driver/command.c:654
-#, c-format
-msgid "Monitor: get_command: Premature EOF\n"
-msgstr "Màn hình: get_command: EOF sớm\n"
+#~ msgid "Name of elevation raster map(s)"
+#~ msgstr "Tên của (các) bản đồ raster độ cao"
 
-#: ../lib/driver/command.c:728
-#, c-format
-msgid "Monitor: _send: write returned short count: %d of %d\n"
-msgstr "Màn hình: _send: việc ghi trả lại phép đếm thiếu: %d trong %d\n"
+#~ msgid "Name of input raster3d map"
+#~ msgstr "Tên của bản đồ raster 3d đầu vào"
 
+#~ msgid "Name of input raster3d map(s)"
+#~ msgstr "Tên của (các) bản đồ raster 3d đầu vào"
+
+#~ msgid "Name for output raster3d map"
+#~ msgstr "Tên của bản đồ raster 3d đầu ra"

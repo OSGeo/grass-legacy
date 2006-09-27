@@ -11,13 +11,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-20 15:53+0200\n"
+"POT-Creation-Date: 2006-09-27 15:45+0200\n"
 "PO-Revision-Date: 2006-09-22 18:58+0200\n"
 "Last-Translator: Záboj Hrázský <zabojhrazsky@seznam.cz>\n"
 "Language-Team: Czech <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: ../lib/D/Dcell.c:35
 msgid "Setting map window"
@@ -31,16 +31,16 @@ msgstr "Aktuální okno nelze nastavit"
 msgid "Can't clear current graphics window"
 msgstr "Nemohu vyèistit aktuální grafické okno"
 
-#: ../lib/D/Dcell.c:51
+#: ../lib/D/Dcell.c:55
 #, c-format
 msgid "Color file for [%s] not available"
 msgstr "Soubor barev pro [%s] není dostupný"
 
-#: ../lib/D/Dcell.c:86
+#: ../lib/D/Dcell.c:90
 msgid "Cannot use current window"
 msgstr "Nemohu pou¾ít aktuální okno"
 
-#: ../lib/D/Dcell.c:92
+#: ../lib/D/Dcell.c:96
 #, c-format
 msgid "Not able to open cellfile for [%s]"
 msgstr "Nemohu otevøít rastrový soubor pro [%s]"
@@ -77,7 +77,7 @@ msgstr "Neplatné název tabulky vektorové mapy <%s>. Znak <%c> není povolen.\n"
 msgid "[%s]: No such color"
 msgstr "[%s]: Neznámá barva"
 
-#: ../lib/driver/command.c:604
+#: ../lib/driver/command.c:612
 #, c-format
 msgid ""
 "\n"
@@ -86,25 +86,15 @@ msgstr ""
 "\n"
 "Neznámý pøíkaz: %d poslední: %d\n"
 
-#: ../lib/driver/command.c:646
+#: ../lib/driver/command.c:654
 #, c-format
 msgid "Monitor: get_command: Premature EOF\n"
 msgstr "Monitor: get_command: Neoèekávaný konec souboru (EOF)\n"
 
-#: ../lib/driver/command.c:720
+#: ../lib/driver/command.c:728
 #, c-format
 msgid "Monitor: _send: write returned short count: %d of %d\n"
 msgstr "Monitor: _send: zápis vrátil krátký poèet: %d z %d\n"
-
-#: ../lib/driver/parse_ftcap.c:21
-#, c-format
-msgid "%s: Unable to read FreeType definition file; use the default"
-msgstr "%s: Neschopen èíst soubor s definicí FreeType; pou¾ívám výchozí"
-
-#: ../lib/driver/parse_ftcap.c:27
-#, c-format
-msgid "%s: No FreeType definition file"
-msgstr "%: ®ádný soubor s definicí FreeType"
 
 #: ../lib/g3d/g3dhistory.c:46 ../lib/gis/history.c:134
 #, c-format
@@ -343,7 +333,7 @@ msgstr "Pro ukonèení po¾adavku stisknìte RETURN\n"
 msgid "Cannot open temp file"
 msgstr "Nelze otevøít doèasný soubor"
 
-#: ../lib/gis/get_datum_name.c:95
+#: ../lib/gis/get_datum_name.c:91
 #, c-format
 msgid ""
 "\n"
@@ -366,7 +356,7 @@ msgstr ""
 msgid "Enter 'list' for the list of available ellipsoids\n"
 msgstr "Zadejte 'list' pro výpis dostupných ref. elipsoidù\n"
 
-#: ../lib/gis/get_ell_name.c:66
+#: ../lib/gis/get_ell_name.c:62
 #, c-format
 msgid ""
 "\n"
@@ -618,7 +608,7 @@ msgstr ""
 msgid "Enter 'list' for the list of available projections\n"
 msgstr "Zadejte 'list' pro výpis dostupných mapových projekcí\n"
 
-#: ../lib/gis/get_projname.c:81
+#: ../lib/gis/get_projname.c:77
 #, c-format
 msgid ""
 "\n"
@@ -701,7 +691,7 @@ msgstr ""
 msgid "Unable to open automatic MASK file"
 msgstr "Nelze automaticky otevøít soubor MASK"
 
-#: ../lib/gis/parser.c:357
+#: ../lib/gis/parser.c:338
 msgid ""
 "WHERE conditions of SQL statement without 'where' keyword. (example: income "
 "< 1000 and inhab >= 10000)"
@@ -709,80 +699,60 @@ msgstr ""
 "WHERE podmínka SQL výrazu bez klíèového slova 'WHERE' (pøíklad: prijem < "
 "1000 and obyvatel >= 10000)"
 
-#: ../lib/gis/parser.c:367 ../lib/gis/parser.c:392
+#: ../lib/gis/parser.c:347 ../lib/gis/parser.c:363
 msgid "Name of input raster map"
 msgstr "Název vstupní rastrové mapy"
 
-#: ../lib/gis/parser.c:376 ../lib/gis/parser.c:401
-msgid "Name of input raster map(s)"
-msgstr "Název vstupní rastrové mapy"
-
-#: ../lib/gis/parser.c:384
+#: ../lib/gis/parser.c:355
 msgid "Name for output raster map"
 msgstr "Název výstupní rastrové mapy"
 
-#: ../lib/gis/parser.c:409
+#: ../lib/gis/parser.c:372
+msgid "Name of input raster map(s)"
+msgstr "Název vstupní rastrové mapy"
+
+#: ../lib/gis/parser.c:380
 msgid "Name of base raster map"
 msgstr "Název pùvodní rastrové mapy"
 
-#: ../lib/gis/parser.c:417
+#: ../lib/gis/parser.c:388
 msgid "Name of cover raster map"
 msgstr "Název pøekrývající rastrové mapy"
 
-#: ../lib/gis/parser.c:425
-msgid "Name of elevation raster map"
-msgstr "Název rastrové vrstvy vý¹kového modelu"
-
-#: ../lib/gis/parser.c:434
-msgid "Name of elevation raster map(s)"
-msgstr "Název rastrové vrstvy/vrstev vý¹kového modelu"
-
-#: ../lib/gis/parser.c:444
-msgid "Name of input raster3d map"
-msgstr "Název vstupní 3d rastrové vrstvy"
-
-#: ../lib/gis/parser.c:453
-msgid "Name of input raster3d map(s)"
-msgstr "Název vstupní 3d rastrové vrstvy/vrstev"
-
-#: ../lib/gis/parser.c:461
-msgid "Name for output raster3d map"
-msgstr "Název výstupní 3d rastrové vrstvy"
-
-#: ../lib/gis/parser.c:471 ../lib/gis/parser.c:487
+#: ../lib/gis/parser.c:397 ../lib/gis/parser.c:413
 msgid "Name of input vector map"
 msgstr "Název vstupní vektorové mapy"
 
-#: ../lib/gis/parser.c:479
+#: ../lib/gis/parser.c:405
 msgid "Name for output vector map"
 msgstr "Název výstupní vektorové mapy"
 
-#: ../lib/gis/parser.c:496
+#: ../lib/gis/parser.c:422
 msgid "Type"
 msgstr "Typ"
 
-#: ../lib/gis/parser.c:503
+#: ../lib/gis/parser.c:429
 msgid "Layer number"
 msgstr "Èíslo vrstvy"
 
-#: ../lib/gis/parser.c:509
+#: ../lib/gis/parser.c:435
 msgid "Category value"
 msgstr "Kategorie"
 
-#: ../lib/gis/parser.c:516
+#: ../lib/gis/parser.c:442
 msgid "Category values"
 msgstr "Hodnoty kategorie"
 
-#: ../lib/gis/parser.c:517
+#: ../lib/gis/parser.c:443
 msgid "Example: 1,3,7-9,13"
 msgstr "Napø.: 1,3,7-9,13"
 
-#: ../lib/gis/parser.c:770
+#: ../lib/gis/parser.c:685
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "Promiòte, ale <%s> není platná volba\n"
 
-#: ../lib/gis/parser.c:878
+#: ../lib/gis/parser.c:790
 #, c-format
 msgid ""
 "\n"
@@ -791,7 +761,7 @@ msgstr ""
 "\n"
 "Popis:\n"
 
-#: ../lib/gis/parser.c:882
+#: ../lib/gis/parser.c:794
 #, c-format
 msgid ""
 "\n"
@@ -800,7 +770,7 @@ msgstr ""
 "\n"
 "Klíèová slova:\n"
 
-#: ../lib/gis/parser.c:886
+#: ../lib/gis/parser.c:798
 #, c-format
 msgid ""
 "\n"
@@ -811,7 +781,7 @@ msgstr ""
 "Pou¾ití:\n"
 " "
 
-#: ../lib/gis/parser.c:956
+#: ../lib/gis/parser.c:864
 #, c-format
 msgid ""
 "\n"
@@ -820,15 +790,11 @@ msgstr ""
 "\n"
 "Pøepínaèe:\n"
 
-#: ../lib/gis/parser.c:979
+#: ../lib/gis/parser.c:887
 msgid "Force overwrite of output files"
 msgstr "Vynutit pøepsání výstupního souboru"
 
-#: ../lib/gis/parser.c:981
-msgid "Verbose module output"
-msgstr "Roz¹íøený výstup z modulu"
-
-#: ../lib/gis/parser.c:987
+#: ../lib/gis/parser.c:894
 #, c-format
 msgid ""
 "\n"
@@ -837,32 +803,32 @@ msgstr ""
 "\n"
 "Parametry:\n"
 
-#: ../lib/gis/parser.c:1009
+#: ../lib/gis/parser.c:916
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   výchozí: %s\n"
 
-#: ../lib/gis/parser.c:1616
+#: ../lib/gis/parser.c:1511
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   volby:"
 
-#: ../lib/gis/parser.c:1663 ../lib/gis/parser.c:1680
+#: ../lib/gis/parser.c:1558 ../lib/gis/parser.c:1575
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Promiòte, ale <%c> není platný pøepínaè\n"
 
-#: ../lib/gis/parser.c:1735
+#: ../lib/gis/parser.c:1630
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Promiòte, ale <%s=> je dvojznaèný\n"
 
-#: ../lib/gis/parser.c:1742
+#: ../lib/gis/parser.c:1637
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Promiòte, ale <%s> není platný parametr\n"
 
-#: ../lib/gis/parser.c:1827
+#: ../lib/gis/parser.c:1722
 #, c-format
 msgid ""
 "\n"
@@ -871,12 +837,12 @@ msgstr ""
 "\n"
 "Chyba: neplatná syntaxe rozsahu pro parametr <%s>\n"
 
-#: ../lib/gis/parser.c:1829
+#: ../lib/gis/parser.c:1724
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Zadáno: %s\n"
 
-#: ../lib/gis/parser.c:1832
+#: ../lib/gis/parser.c:1727
 #, c-format
 msgid ""
 "\n"
@@ -885,12 +851,12 @@ msgstr ""
 "\n"
 "Chyba: hodnota <%s> mimo rozsah parametru <%s>\n"
 
-#: ../lib/gis/parser.c:1834
+#: ../lib/gis/parser.c:1729
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Povolený rozsah: %s\n"
 
-#: ../lib/gis/parser.c:1837
+#: ../lib/gis/parser.c:1732
 #, c-format
 msgid ""
 "\n"
@@ -899,7 +865,7 @@ msgstr ""
 "\n"
 "Chyba: Chybí hodnota pro parametr <%s>\n"
 
-#: ../lib/gis/parser.c:1997
+#: ../lib/gis/parser.c:1892
 #, c-format
 msgid ""
 "\n"
@@ -910,7 +876,7 @@ msgstr ""
 "CHYBA: Povinný parametr <%s> nebyl zadán:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:2100
+#: ../lib/gis/parser.c:1995
 #, c-format
 msgid ""
 "\n"
@@ -919,17 +885,17 @@ msgstr ""
 "\n"
 "CHYBA: volba <%s> musí být zadána jako násobek %d\n"
 
-#: ../lib/gis/parser.c:2102
+#: ../lib/gis/parser.c:1997
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Bylo zadáno %d polo¾ek:\n"
 
-#: ../lib/gis/parser.c:2157
+#: ../lib/gis/parser.c:2052
 #, c-format
 msgid "Error: option <%s>: <%s> exists.\n"
 msgstr "Chyba: volba <%s>: <%s> existuje.\n"
 
-#: ../lib/gis/parser.c:2229
+#: ../lib/gis/parser.c:2099
 #, c-format
 msgid ""
 "\n"
@@ -938,7 +904,7 @@ msgstr ""
 "\n"
 "PØEPÍNAÈ: Nastavit nasledující pøepínaè?\n"
 
-#: ../lib/gis/parser.c:2243
+#: ../lib/gis/parser.c:2113
 #, c-format
 msgid ""
 "\n"
@@ -947,51 +913,51 @@ msgstr ""
 "\n"
 "VOLBY:   %s\n"
 
-#: ../lib/gis/parser.c:2244
+#: ../lib/gis/parser.c:2114
 #, c-format
 msgid "     key: %s\n"
 msgstr "     klíè: %s\n"
 
-#: ../lib/gis/parser.c:2246
+#: ../lib/gis/parser.c:2116
 #, c-format
 msgid "  format: %s\n"
 msgstr "  formát: %s\n"
 
-#: ../lib/gis/parser.c:2248
+#: ../lib/gis/parser.c:2118
 #, c-format
 msgid " default: %s\n"
 msgstr " výchozí: %s\n"
 
-#: ../lib/gis/parser.c:2249
+#: ../lib/gis/parser.c:2119
 #, c-format
 msgid "required: %s\n"
 msgstr "povinný: %s\n"
 
-#: ../lib/gis/parser.c:2251
+#: ../lib/gis/parser.c:2121
 #, c-format
 msgid "multiple: %s\n"
 msgstr "vícenásobný: %s\n"
 
-#: ../lib/gis/parser.c:2253
+#: ../lib/gis/parser.c:2123
 #, c-format
 msgid " options: %s\n"
 msgstr " volby: %s\n"
 
-#: ../lib/gis/parser.c:2268
+#: ../lib/gis/parser.c:2138
 #, c-format
 msgid "enter option > "
 msgstr "zadejte volbu > "
 
-#: ../lib/gis/parser.c:2282 ../lib/gis/parser.c:2293
+#: ../lib/gis/parser.c:2152 ../lib/gis/parser.c:2163
 msgid "   Try again? "
 msgstr "   Zkusit znovu? "
 
-#: ../lib/gis/parser.c:2291
+#: ../lib/gis/parser.c:2161
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Promiòte, ale %s není akceptován.\n"
 
-#: ../lib/gis/parser.c:2302
+#: ../lib/gis/parser.c:2172
 #, c-format
 msgid ""
 "\n"
@@ -1002,11 +968,11 @@ msgstr ""
 "Bylo vybráno:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2303
+#: ../lib/gis/parser.c:2173
 msgid "Is this correct? "
 msgstr "Je to správnì? "
 
-#: ../lib/gis/parser.c:2372
+#: ../lib/gis/parser.c:2242
 msgid "to accept the default"
 msgstr "pou¾ít výchozí"
 
@@ -1025,7 +991,7 @@ msgstr "podpora kategorií pro vektorový soubor [%s] v mapsetu [%s] %s"
 msgid "one moment...\n"
 msgstr "momentíèek...\n"
 
-#: ../lib/gis/gishelp.c:59
+#: ../lib/gis/gishelp.c:55
 #, c-format
 msgid "No help available for command [%s]\n"
 msgstr "Nápovìda pro pøíkaz [%s] není dostupná\n"
@@ -1150,22 +1116,22 @@ msgstr "Výstupní mapa '%s' je pou¾ita jako vstup."
 msgid "color support for [%s] in mapset [%s] %s"
 msgstr "podpora barev pro [%s] v mapsetu [%s] %s"
 
-#: ../lib/gis/list.c:123
+#: ../lib/gis/list.c:115
 #, c-format
 msgid "no %s files available in current mapset\n"
 msgstr "v aktuálním mapsetu nejsou dostupné ¾ádné %s soubory\n"
 
-#: ../lib/gis/list.c:125
+#: ../lib/gis/list.c:117
 #, c-format
 msgid "no %s files available in mapset %s\n"
 msgstr "v mapsetu %s nejsou dostupné ¾ádné %s soubory\n"
 
-#: ../lib/gis/list.c:139
+#: ../lib/gis/list.c:131
 #, c-format
 msgid "hit RETURN to continue -->"
 msgstr "stisknìte RETURN pro pokraèování -->"
 
-#: ../lib/gis/list.c:220
+#: ../lib/gis/list.c:212
 #, c-format
 msgid "%s files available in mapset %s:\n"
 msgstr "%s soubory dostupné v mapsetu %s:\n"
@@ -1506,11 +1472,11 @@ msgstr "G_dump: konec"
 msgid "can't make mapset element %s (%s)"
 msgstr "nelze vytvoøit prvek %s(%s) mapsetu"
 
-#: ../lib/gis/env.c:318
+#: ../lib/gis/env.c:268
 msgid "GISRC - variable not set"
 msgstr "GISRC - promìnná není nastavena"
 
-#: ../lib/gis/env.c:344 ../lib/gis/env.c:356
+#: ../lib/gis/env.c:294 ../lib/gis/env.c:306
 #, c-format
 msgid "%s not set"
 msgstr "%s není nastaveno"
@@ -1523,11 +1489,11 @@ msgstr "Zemìpisná ¹íøka a délka"
 msgid "Other Projection"
 msgstr "Ostatní mapové projekce"
 
-#: ../lib/gis/error.c:166
+#: ../lib/gis/error.c:164
 msgid "WARNING: "
 msgstr "UPOZORNÌNÍ: "
 
-#: ../lib/gis/error.c:167
+#: ../lib/gis/error.c:165
 msgid "ERROR: "
 msgstr "CHYBA: "
 
@@ -2578,3 +2544,26 @@ msgstr "Nelze odstranit linii, mapa '%s' není otevøena v módu pro 'zápis'"
 msgid "Cannot delete line"
 msgstr "Nelze odstranit linii"
 
+#~ msgid "%s: Unable to read FreeType definition file; use the default"
+#~ msgstr "%s: Neschopen èíst soubor s definicí FreeType; pou¾ívám výchozí"
+
+#~ msgid "%s: No FreeType definition file"
+#~ msgstr "%: ®ádný soubor s definicí FreeType"
+
+#~ msgid "Name of elevation raster map"
+#~ msgstr "Název rastrové vrstvy vý¹kového modelu"
+
+#~ msgid "Name of elevation raster map(s)"
+#~ msgstr "Název rastrové vrstvy/vrstev vý¹kového modelu"
+
+#~ msgid "Name of input raster3d map"
+#~ msgstr "Název vstupní 3d rastrové vrstvy"
+
+#~ msgid "Name of input raster3d map(s)"
+#~ msgstr "Název vstupní 3d rastrové vrstvy/vrstev"
+
+#~ msgid "Name for output raster3d map"
+#~ msgstr "Název výstupní 3d rastrové vrstvy"
+
+#~ msgid "Verbose module output"
+#~ msgstr "Roz¹íøený výstup z modulu"
