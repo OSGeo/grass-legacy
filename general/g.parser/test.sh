@@ -32,7 +32,7 @@
 #%end
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+  exec $GISBASE/bin/g.parser "$0" "$@"
 fi
 
 #add your code here
