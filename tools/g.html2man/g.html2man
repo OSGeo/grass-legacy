@@ -204,6 +204,9 @@ sub DoList {
   s#^ *<LI> *$#.IP#i;
   s#<LI>#.IP\n#i;
 
+  s#<td>#| #i;
+  s#<TR>#\n#i;
+
   return 1;
 }
 
