@@ -235,7 +235,7 @@ set descmenu [subst  {
 		{command {[G_msg "Quantization for floating-point maps"]} {} "r.quant" {} -command {execute r.quant }}
 		{command {[G_msg "Resample (change resolution) using nearest neighbor method"]} {} "r.resample" {} -command {execute r.resample }}
 		{command {[G_msg "Resample (change resolution) using regularized spline tension"]} {} "r.resamp.rst" {} -command {execute r.resamp.rst }}
-		{command {[G_msg "Support file creation and maintenance"]} {} "r.support" {} -command {execute r.support.sh }}
+		{command {[G_msg "Support file creation and maintenance"]} {} "r.support" {} -command {term r.support }}
 		{separator}
 		{command {[G_msg "Reproject raster from other location"]} {} "r.proj" {} -command {execute r.proj }}
 		{command {[G_msg "Generate tiling for other projection"]} {} "r.tileset" {} -command {execute r.tileset }}
