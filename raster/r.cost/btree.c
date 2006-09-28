@@ -40,6 +40,7 @@
 #include "local_proto.h"
 #include "memory.h"
 #include <stdlib.h>
+#include <grass/glocale.h>
 
 static struct cost *start_cell = NULL ;
 /*  static int show(struct cost *); */
@@ -52,8 +53,8 @@ struct cost *insert(double min_cost,int row,int col)
 /*  	new_cell = (struct cost *)(G_malloc(sizeof(struct cost))); */
 	new_cell = get();
 	if (new_cell == NULL) {
-			fprintf(stderr,"new_cell is NULL\n");
-}
+            G_message(_("new_cell is NULL"));
+        }
 	new_cell->min_cost = min_cost;
 	new_cell->row = row;
 	new_cell->col = col;
@@ -130,7 +131,7 @@ struct cost *find(double min_cost,int row,int col)
 				next_cell = next_cell->lower ;
 				continue ;
 			}
-			fprintf(stderr, "1 ");
+			G_message( "1 ");
 			return NULL;
 			do_quit(min_cost, row, col) ;
 		}
@@ -141,7 +142,7 @@ struct cost *find(double min_cost,int row,int col)
 				next_cell = next_cell->higher ;
 				continue ;
 			}
-			fprintf(stderr, "2 ");
+			G_message( "2 ");
 			return NULL;
 			do_quit(min_cost, row, col) ;
 		}
@@ -150,9 +151,9 @@ struct cost *find(double min_cost,int row,int col)
 
 static int do_quit(double min_cost,int row,int col)
 {
-	fprintf(stderr,"Can't find %d,%d:%f\n", row,col,min_cost) ;
+	G_warning(_("Can't find %d,%d:%f"), row,col,min_cost) ;
 	show_all() ;
-	exit(-1) ;
+	exit(EXIT_FAILURE) ;
 }
 
 struct cost *
@@ -192,7 +193,7 @@ int delete(struct cost *delete_cell)
 {
 	if (delete_cell == NULL)
 	{
-		fprintf(stderr,"Illegal delete request\n") ;
+		G_warning(_("Illegal delete request")) ;
 		return 0;
 	}
 
@@ -402,7 +403,7 @@ int show_all(void)
 {
 	if (start_cell == NULL)
 	{
-		fprintf(stderr, "Nothing to show\n") ;
+		G_warning(_( "Nothing to show")) ;
 		return 1;
 	}
 	show(start_cell) ;
@@ -433,11 +434,9 @@ int show(struct cost *next)
 
 int check_all(char *str)
 {
-	fprintf(stderr,"\n") ;
 	if(start_cell->above != NULL)
 	{
-		fprintf(stderr,"Bad Start Cell\n") ;
-		exit(-1) ;
+		G_fatal_error(_("Bad Start Cell")) ;
 	}
 	check(str, start_cell) ;
 
@@ -453,32 +452,32 @@ int check(char *str,struct cost *start)
 	{
 		if (start->min_cost < start->lower->min_cost)
 		{
-			fprintf(stderr,"%s %f-%f lower cost higher or equal\n", str,
+			G_warning(_("%s %f-%f lower cost higher or equal"), str,
 				start->min_cost, start->lower->min_cost) ;
 			show_all() ;
-			exit(-1) ;
+			exit(EXIT_FAILURE) ;
 		}
 		if (start->lower->above != start)
 		{
-			fprintf(stderr,"%s lower above pointer wrong\n", str) ;
+			G_warning(_("%s lower above pointer wrong"), str) ;
 			show_all() ;
-			exit(-1) ;
+			exit(EXIT_FAILURE) ;
 		}
 	}
 	if (start->higher != NULL)
 	{
 		if (start->min_cost >= start->higher->min_cost)
 		{
-			fprintf(stderr,"%s %f-%f higher cost lower\n", str,
+			G_warning(_("%s %f-%f higher cost lower"), str,
 				start->min_cost, start->higher->min_cost) ;
 			show_all() ;
-			exit(-1) ;
+			exit(EXIT_FAILURE) ;
 		}
 		if (start->higher->above != start)
 		{
-			fprintf(stderr,"%s higher above pointer wrong\n", str) ;
+			G_warning(_("%s higher above pointer wrong"), str) ;
 			show_all() ;
-			exit(-1) ;
+			exit(EXIT_FAILURE) ;
 		}
 	}
 	check(str, start->lower) ;
