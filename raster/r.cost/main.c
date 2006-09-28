@@ -94,7 +94,6 @@ int main(int argc, char *argv[])
     double null_cost;
     int srows, scols;
     int total_reviewed;
-    int verbose = 1;
     int keep_nulls = 1;
     int start_with_raster_vals = 1;
     int neighbor;
@@ -102,7 +101,7 @@ int main(int argc, char *argv[])
     long n_processed = 0;
     long total_cells;
     struct GModule *module;
-    struct Flag *flag1, *flag2, *flag3, *flag4;
+    struct Flag *flag2, *flag3, *flag4;
     struct Option *opt1, *opt2, *opt3, *opt4, *opt5, *opt6, *opt7, *opt8;
     struct Option *opt9, *opt10;
     struct cost *pres_cell, *new_cell;
@@ -196,10 +195,6 @@ int main(int argc, char *argv[])
     opt10->answer = "100";
     opt10->description = _("Percent of map to keep in memory");
 
-    flag1 = G_define_flag();
-    flag1->key = 'v';
-    flag1->description = _("Run verbosely");
-
     flag2 = G_define_flag();
     flag2->key = 'k';
     flag2->description =
@@ -237,7 +232,6 @@ int main(int argc, char *argv[])
 
     G_set_d_null_value(&null_cost, 1);
 
-    verbose = flag1->answer;
     if (flag2->answer)
 	total_reviewed = 16;
     else
@@ -278,11 +272,10 @@ int main(int argc, char *argv[])
 
     if ((opt6->answer == NULL) ||
 	(sscanf(opt6->answer, "%lf", &null_cost) != 1)) {
-	if (verbose)
-	    G_message (_("Null cells excluded from cost evaluation."));
+        G_message (_("Null cells excluded from cost evaluation."));
 	G_set_d_null_value(&null_cost, 1);
     }
-    else if (verbose && keep_nulls)
+    else if (keep_nulls)
 	G_message (_("Input null cell will be retained into output map"));
 
     if (opt7->answer) {
@@ -334,20 +327,18 @@ int main(int argc, char *argv[])
 
     /*   Parameters for map submatrices   */
 
-    if (verbose) {
-	switch (data_type) {
-	case (CELL_TYPE):
-	    G_message(_("Source map is: Integer cell type"));
-	    break;
-	case (FCELL_TYPE):
-	    G_message(_("Source map is: Floating point (float) cell type"));
-	    break;
-	case (DCELL_TYPE):
-	    G_message(_("Source map is: Floating point (double) cell type"));
-	    break;
-	}
-	G_message(_(" %d rows, %d cols."), nrows, ncols);
+    switch (data_type) {
+    case (CELL_TYPE):
+        G_message(_("Source map is: Integer cell type"));
+        break;
+    case (FCELL_TYPE):
+        G_message(_("Source map is: Floating point (float) cell type"));
+        break;
+    case (DCELL_TYPE):
+        G_message(_("Source map is: Floating point (double) cell type"));
+        break;
     }
+    G_message(_(" %d rows, %d cols."), nrows, ncols);
 
     srows = scols = SEGCOLSIZE;
     if (maxmem > 0)
@@ -358,8 +349,7 @@ int main(int argc, char *argv[])
 
     /*   Create segmented format files for cost layer and output layer  */
 
-    if (verbose)
-	G_message(_("Creating some temporary files ..."));
+    G_message(_("Creating some temporary files"));
 
     in_fd = creat(in_file, 0666);
     segment_format(in_fd, nrows, ncols, srows, scols, sizeof(double));
@@ -380,8 +370,7 @@ int main(int argc, char *argv[])
 
     /*   Write the cost layer in the segmented file  */
 
-    if (verbose)
-	G_message(_("Reading %s ..."), cost_layer);
+    G_message(_("Reading %s"), cost_layer);
 
     {
 	int i;
@@ -391,8 +380,7 @@ int main(int argc, char *argv[])
 	p = 0.0;
 
 	for (row = 0; row < nrows; row++) {
-	    if (verbose)
-		G_percent(row, nrows, 2);
+            G_percent(row, nrows, 2);
 	    if (G_get_raster_row(cost_fd, cell, row, data_type) < 0)
 		G_fatal_error(_("Can't get row %d from raster map %s"), row,
 		              cost_layer);
@@ -441,14 +429,12 @@ int main(int argc, char *argv[])
 	}
     }
     segment_flush(&in_seg);
-    if (verbose)
-	G_percent(row, nrows, 2);
+    G_percent(row, nrows, 2);
 
     /* Initialize output map with NULL VALUES */
 
     /*   Initialize segmented output file  */
-    if (verbose)
-	G_message(_("Initializing output "));
+    G_message(_("Initializing output "));
     
     {
 	double *fbuff;
@@ -462,17 +448,14 @@ int main(int argc, char *argv[])
 	G_set_d_null_value(fbuff, ncols);
 
 	for (row = 0; row < nrows; row++) {
-	    if (verbose) {
-		G_percent(row, nrows, 2);
-	    }
+            G_percent(row, nrows, 2);
 
 	    for (i = 0; i < ncols; i++) {
 		segment_put(&out_seg, &fbuff[i], row, i);
 	    }
 	}
 	segment_flush(&out_seg);
-	if (verbose)
-	    G_percent(row, nrows, 2);
+        G_percent(row, nrows, 2);
 	G_free(fbuff);
     }
 
@@ -600,11 +583,9 @@ int main(int argc, char *argv[])
 	if (!cell2)
 	    G_fatal_error(_("Unable to allocate memory"));
 
-	if (verbose)
-	    G_message(_("Reading %s ... "), opt9->answer);
+        G_message(_("Reading %s"), opt9->answer);
 	for (row = 0; row < nrows; row++) {
-	    if (verbose)
-		G_percent(row, nrows, 2);
+            G_percent(row, nrows, 2);
 	    if (G_get_raster_row(fd, cell2, row, data_type2) < 0)
 		G_fatal_error(_("Error reading map %s"), opt9->answer);
 	    ptr2 = cell2;
@@ -627,8 +608,7 @@ int main(int argc, char *argv[])
 		ptr2 = G_incr_void_ptr(ptr2, dsize2);
 	    }
 	}
-	if (verbose)
-	    G_percent(row, nrows, 2);
+        G_percent(row, nrows, 2);
 
 	G_close_cell(fd);
 	G_free(cell2);
@@ -664,10 +644,7 @@ int main(int argc, char *argv[])
      *   3) Free the memory allocated to the present cell.
      */
 
-    if (verbose) {
-	system("date");
-	G_message(_("Finding cost path"));
-    }
+    G_message(_("Finding cost path"));
     n_processed = 0;
     total_cells = nrows * ncols;
     at_percent = 0;
@@ -694,8 +671,7 @@ int main(int argc, char *argv[])
 
 	segment_get(&in_seg, &my_cost, pres_cell->row, pres_cell->col);
 
-	if (verbose)
-	    G_percent(++n_processed, total_cells, 1);
+        G_percent(++n_processed, total_cells, 1);
 
 	/*          9    10       Order in which neighbors 
 	 *       13 5  3  6 14    are visited (Knight move).
@@ -893,8 +869,7 @@ int main(int argc, char *argv[])
 
 	pres_cell = get_lowest();
 	if (pres_cell == NULL) {
-	    if (verbose)
-		G_message(_("End of map!"));
+            G_message(_("End of map!"));
 	    goto OUT;
 	}
 	if (ct == pres_cell)
@@ -910,26 +885,20 @@ int main(int argc, char *argv[])
     segment_flush(&out_seg);
 
     /*  Copy segmented map to output map  */
-    if (verbose) {
-	system("date");
-	G_message(_("Writing %s ... "), cum_cost_layer);
-    }
+    G_message(_("Writing %s"), cum_cost_layer);
 
     if (keep_nulls) {
-	if (verbose)
-	    G_message(_
-		    ("Will copy input map null values into output map"));
+        G_message(_
+                ("Will copy input map null values into output map"));
 	cell2 = G_allocate_raster_buf(data_type);
     }
 
      if (data_type == CELL_TYPE) {
 	int *p;
 	int *p2;
-	if (verbose)
-	    G_message(_("Integer cell type.\nWriting..."));
+        G_message(_("Integer cell type.\nWriting"));
 	for (row = 0; row < nrows; row++) {
-	    if (verbose)
-		G_percent(row, nrows, 2);
+            G_percent(row, nrows, 2);
 	    if (keep_nulls) {
 		if (G_get_raster_row(cost_fd, cell2, row, data_type) < 0)
 		    G_fatal_error(_("Error getting input null cells"));
@@ -959,11 +928,9 @@ int main(int argc, char *argv[])
     else if (data_type == FCELL_TYPE) {
 	float *p;
 	float *p2;
-	if (verbose)
-	    G_message(_("Float cell type.\nWriting..."));
+        G_message(_("Float cell type.\nWriting"));
 	for (row = 0; row < nrows; row++) {
-	    if (verbose)
-		G_percent(row, nrows, 2);
+            G_percent(row, nrows, 2);
 	    if (keep_nulls) {
 		if (G_get_raster_row(cost_fd, cell2, row, data_type) < 0)
 		    G_fatal_error(_("Error getting input null cells"));
@@ -993,11 +960,9 @@ int main(int argc, char *argv[])
     else if (data_type == DCELL_TYPE) {
 	double *p;
 	double *p2;
-	if (verbose)
-	    G_message(_("Double cell type.\nWriting..."));
+        G_message(_("Double cell type.\nWriting"));
 	for (row = 0; row < nrows; row++) {
-	    if (verbose)
-		G_percent(row, nrows, 2);
+            G_percent(row, nrows, 2);
 	    if (keep_nulls) {
 		if (G_get_raster_row(cost_fd, cell2, row, data_type) < 0)
 		    G_fatal_error(_("Error getting input null cells"));
@@ -1025,11 +990,9 @@ int main(int argc, char *argv[])
 	}
     }
 
-    if (verbose)
-	G_percent(row, nrows, 2);
+    G_percent(row, nrows, 2);
 
-    if (verbose)
-	G_message(_("Peak cost value: %f"), peak);
+    G_message(_("Peak cost value: %f"), peak);
 
     segment_release(&in_seg);	/* release memory  */
     segment_release(&out_seg);
