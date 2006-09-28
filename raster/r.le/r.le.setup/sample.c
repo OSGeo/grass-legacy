@@ -1475,6 +1475,8 @@ void draw_box (int x0, int y0, int xp, int yp, int thick)
      R_cont_abs(xp + i, y0 - i);
      R_cont_abs(x0 - i, y0 - i);
    }
+   R_flush();
+
    return;
 }	
  
@@ -1519,10 +1521,10 @@ void draw_circle (int x0, int y0, int xp, int yp, int thick)
         R_cont_abs(xstart + (int)xinc, ystart + (int)yinc);
      }
   }
+  R_flush();
+
   return;
 }
-
-
 
 
 
