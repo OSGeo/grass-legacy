@@ -35,14 +35,12 @@ int main(int argc, char *argv[])
     int nfiles;
     int i,j;
     int row, col;
-    int verbose;
     int correlation;
     struct GModule *module;
     struct Option *maps;
     struct
     {
 	struct Flag *r;
-	struct Flag *q;
     } flag;
 
     G_gisinit (argv[0]);
@@ -59,15 +57,10 @@ int main(int argc, char *argv[])
     flag.r->key = 'r';
     flag.r->description = _("Print correlation matrix");
 
-    flag.q = G_define_flag();
-    flag.q->key = 'q';
-    flag.q->description = _("Quiet");
-
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
 /* flags */
-    verbose = !flag.q->answer;
     correlation = flag.r->answer;
 
 /* count the number of raster maps */
@@ -94,13 +87,11 @@ int main(int argc, char *argv[])
     nrows = G_window_rows();
     ncols = G_window_cols();
 
-    if (verbose)
-	fprintf (stderr, "%s: complete ... ", G_program_name());
+    G_message ( _("%s: complete ... "), G_program_name());
     count = 0;
     for (row = 0; row < nrows; row++)
     {
-	if (verbose)
-	    G_percent (row, nrows, 2);
+        G_percent (row, nrows, 2);
 	for (i = 0; i < nfiles; i++)
 	{
   	    if (G_get_d_raster_row (fd[i], dcell[i], row) < 0)
@@ -122,8 +113,7 @@ int main(int argc, char *argv[])
 	    }
 	}
     }
-    if (verbose)
-	G_percent (row, nrows, 2);
+    G_percent (row, nrows, 2);
     if (count <= 1.1)
 	G_fatal_error(_("No non-null values"));
 
