@@ -104,12 +104,12 @@ process (char *name, int uncompress, int quiet)
 
     if (G_find_cell (name, G_mapset()) == NULL)
     {
-	fprintf (stdout,"[%s] not found\n", name);
+	G_warning (_("[%s] not found"), name);
 	return 1;
     }
     if (G_is_reclass (name, G_mapset(), rname, rmapset) > 0)
     {
-	fprintf (stdout,"[%s] is a reclass file of map <%s> in mapset <%s> - can't %scompress\n", name, rname, rmapset, uncompress?"un":"");
+	G_warning (_("[%s] is a reclass file of map <%s> in mapset <%s> - can't %scompress"), name, rname, rmapset, uncompress?"un":"");
 	return 1;
     }
 
@@ -145,19 +145,20 @@ process (char *name, int uncompress, int quiet)
     if (map_type != CELL_TYPE && quant_ok)
 	G_write_quant (name, G_mapset(), &quant);
     diff = newsize - oldsize;
-    fprintf (stdout,"DONE: %scompressed file is ", uncompress?"un":"");
     if (diff < 0)
     {
 	diff = -diff;
-	fprintf (stdout,"%ld byte%s smaller\n", diff, diff==1?"":"s");
+        G_message (_("DONE: %scompressed file is %ld byte%s smaller"), 
+                uncompress?"un":"", diff, diff==1?"":"s");
     }
     else if (diff > 0)
     {
-	fprintf (stdout,"%ld byte%s bigger\n", diff, diff==1?"":"s");
+        G_message (_("DONE: %scompressed file is %ld byte%s bigger"), 
+                uncompress?"un":"", diff, diff==1?"":"s");
     }
     else
     {
-	fprintf (stdout,"same size\n");
+	G_message ("same size");
     }
     return 0;
 }
@@ -181,16 +182,16 @@ doit (char *name, int uncompress, RASTER_MAP_TYPE map_type, int quiet)
 /* check if already compressed/decompressed */
     if (uncompress && cellhd.compressed == 0)
     {
-	fprintf (stdout,"[%s] already uncompressed\n", name);
+	G_warning (_("[%s] already uncompressed"), name);
 	return 1;
     }
     else if (!uncompress && cellhd.compressed > 0)
     {
-	fprintf (stdout,"[%s] already compressed\n", name);
+	G_warning (_("[%s] already compressed"), name);
 	return 1;
     }
 
-    fprintf (stdout,"\n%sCOMPRESS [%s]\n\n", uncompress?"UN":"", name);
+    G_message (_("\n%sCOMPRESS [%s]"), uncompress?"UN":"", name);
 
     G_set_window (&cellhd);
 
