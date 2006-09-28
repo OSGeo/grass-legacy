@@ -31,6 +31,11 @@
 #% required : yes
 #%end
 
+if [ -z "$GISBASE" ] ; then
+    echo "You must be in GRASS GIS to run this program." 1>&2
+    exit 1
+fi
+
 if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec $GISBASE/bin/g.parser "$0" "$@"
 fi
