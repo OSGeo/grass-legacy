@@ -60,7 +60,6 @@ int main ( int argc, char *argv[])
     struct Option *max;
     struct Option *step;
     struct Option *cut;
-    struct Flag *quiet, *noerr;
 
     int i;
 
@@ -124,14 +123,6 @@ int main ( int argc, char *argv[])
     cut->answer = "0";
     cut->description= _("Minimum number of points for a contour line (0 -> no limit)") ;
 
-    quiet = G_define_flag() ;
-    quiet->key        = 'q';
-    quiet->description = _("Suppress progress report & min/max information") ;
-
-    noerr = G_define_flag() ;
-    noerr->key        = 'n';
-    noerr->description = _("Suppress single crossing error messages") ;
-
     if (G_parser(argc, argv))
         exit (-1);
 
@@ -174,16 +165,16 @@ int main ( int argc, char *argv[])
     }
 
     if ( db_create_index2(Driver, Fi->table, "cat" ) != DB_OK )
-	G_warning ( "Cannot create index" );
+	G_warning ( _("Cannot create index") );
 
     if (db_grant_on_table (Driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
 	G_fatal_error ( _("Cannot grant privileges on table %s"), Fi->table );
     
-    z_array = get_z_array (fd,Wind.rows,Wind.cols, quiet->answer);
-    lev = getlevels(levels, max, min, step, &range, &nlevels, quiet->answer);
-    displaceMatrix(z_array, Wind.rows, Wind.cols, lev, nlevels, quiet->answer);
+    z_array = get_z_array (fd,Wind.rows,Wind.cols);
+    lev = getlevels(levels, max, min, step, &range, &nlevels);
+    displaceMatrix(z_array, Wind.rows, Wind.cols, lev, nlevels);
     n_cut = atoi(cut->answer);
-    contour(lev, nlevels,  Map, z_array, Wind, quiet->answer, noerr->answer, n_cut);
+    contour(lev, nlevels,  Map, z_array, Wind, n_cut);
 
     /* Write levels */
     for ( i = 0; i < nlevels; i++ ) {
@@ -202,30 +193,25 @@ int main ( int argc, char *argv[])
     Vect_build (&Map, stderr);
     Vect_close (&Map);
 
-    if (!quiet->answer)
-	    G_message(_("Finished"));
+    G_message(_("Finished"));
 
     exit (EXIT_SUCCESS);
 }
 
 /*********************************************************************/
-DCELL **get_z_array ( int fd, int nrow,int ncol, int quiet)
+DCELL **get_z_array ( int fd, int nrow,int ncol)
 {
    DCELL **z_array;
    int i;
 
     z_array = (DCELL **) G_malloc (nrow*sizeof(DCELL *));
-    if (!quiet)
-    {
-        fprintf (stderr, "Reading data.\n");
-        fprintf (stderr, "Percent complete: ");
-    }
+    G_message (_("Reading data."));
+    G_message (_("Percent complete: "));
     for(i = 0; i < nrow; i++)
     {
 	z_array[i] = (DCELL *) G_malloc (ncol * sizeof(DCELL));
         G_get_d_raster_row (fd,z_array[i],i);
-	if (!quiet)
-	    G_percent (i+1, nrow , 2);
+        G_percent (i+1, nrow , 2);
 	    
     }
    return z_array;
@@ -238,7 +224,7 @@ double *getlevels(
     struct Option *max,struct Option *min,
     struct Option *step,
     struct FPRange *range,
-    int *num,int quiet)
+    int *num)
 {
     double dmax, dmin, dstep;
     int nlevels, i, k, n;
@@ -249,13 +235,10 @@ double *getlevels(
 
     G_get_fp_range_min_max(range,&zmin,&zmax);
 
-    if(!quiet)
-    {
-      if(!G_is_d_null_value(&zmin) && !G_is_d_null_value(&zmax))
-        fprintf(stderr, "FPRange of data:    min =  %f max = %f\n", zmin, zmax);
-      else
-        fprintf(stderr, "FPRange of data:    empty\n");
-    }
+    if(!G_is_d_null_value(&zmin) && !G_is_d_null_value(&zmax))
+        G_message(_("FPRange of data:    min =  %f max = %f"), zmin, zmax);
+    else
+        G_message(_("FPRange of data:    empty"));
     
     nlevels = 0;
     if(levels->answers)
@@ -284,9 +267,9 @@ double *getlevels(
 		dstep = atof (step->answer);
 		/* fix if step < 1, Roger Bivand 1/2001: */
 		dmax = (max->answer) ? atof (max->answer) : dstep == 0 ?
-	                       G_fatal_error("This step value is not allowed.") : zmax - fmod(zmax, dstep);
+	                       G_fatal_error(_("This step value is not allowed.")) : zmax - fmod(zmax, dstep);
 		dmin = (min->answer) ? atof (min->answer) : dstep == 0 ?
-	                       G_fatal_error("This step value is not allowed.") :
+	                       G_fatal_error(_("This step value is not allowed.")) :
 	                       fmod(zmin,dstep) ? zmin - fmod(zmin,dstep) +dstep: zmin;
 
 		while (dmin < zmin)
@@ -314,11 +297,9 @@ double *getlevels(
 		}
 		dmin = dmin < zmin ? zmin : dmin;
 		dmax = dmax > zmax ? zmax : dmax;
-		if (!quiet)
-		{
-	    	    fprintf (stderr, "Minimum level will be %f\n", dmin);
-		    fprintf (stderr, "Maximum level will be %f\n", dmax);
-		}
+
+                G_message (_("Minimum level will be %f"), dmin);
+                G_message (_("Maximum level will be %f"), dmax);
 
 		nlevels = (dmax - dmin)/dstep + 2;
 		lev=(double *) G_malloc (nlevels * sizeof(double));
@@ -332,7 +313,7 @@ double *getlevels(
 	}
  	else
 	{
-	    G_fatal_error("ERROR: neither \"levels\" nor \"step\" parameter specified.\n");
+	    G_fatal_error(_("neither \"levels\" nor \"step\" parameter specified."));
 	}
 	*num=nlevels;
 	return lev;
@@ -344,33 +325,29 @@ double *getlevels(
 /*	contour level. Contours values are added DBL_EPSILON*val, which	*/
 /*	is defined in K&R as the minimum double x such as 1.0+x != 1.0	*/
 /********************************************************************/
-void displaceMatrix(DCELL** z, int nrow, int ncol, double* lev, int nlevels, int quiet)
+void displaceMatrix(DCELL** z, int nrow, int ncol, double* lev, int nlevels)
 {
 	int i, j, k;
 	double *currRow;
 	double currVal;
 	
-	if (!quiet)
-    {
-        fprintf (stderr, "Displacing data.\n");
-        fprintf (stderr, "Percent complete: ");
-    }
+        G_message (_("Displacing data."));
+        G_message (_("Percent complete: "));
 	
 	for(i = 0; i < nrow; i++)
 	{
-		currRow = z[i];
-		for(j = 0; j < ncol; j++)
-		{
-			currVal = currRow[j];
-			for(k = 0; k < nlevels; k++)
-				if(currVal == lev[k])
-				{
-					currRow[j] = currVal + currVal * DBL_EPSILON;
-					break;
-				}
-		}
-		if (!quiet)
-			G_percent (i+1, nrow , 2);
+            currRow = z[i];
+            for(j = 0; j < ncol; j++)
+            {
+                    currVal = currRow[j];
+                    for(k = 0; k < nlevels; k++)
+                            if(currVal == lev[k])
+                            {
+                                    currRow[j] = currVal + currVal * DBL_EPSILON;
+                                    break;
+                            }
+            }
+            G_percent (i+1, nrow , 2);
 	}
 }
 
