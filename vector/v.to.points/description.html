@@ -14,10 +14,33 @@ of the vector line the user should use
 <a HREF="v.segment.html">v.segment</a>.
 
 <p>
-The -v parameter is used to digitize points that fall on the line's vertices <em>only</em>.
+The <em>type</em> parameter is used to control which input vector geometry types to convert into points. 
+Some caveats to consider about this parameter:
+</p>
+<p>
+<li>
+Points and centroids can be considered as "lines" with only one node. Consequently, the result of selecting <em>point</em> or 
+<em>centroid</em> as the type parameter is that all points/centroids get written into the output vector. The 
+original category numbers of the input points/centroids get written to the '<em><i>lcat</i></em>' attribute in layer 2
+of the output vector. All values for <em>along</em> are zero in the output vector, as only point geometry was used for input
+(there is no linear distance to calculate <i>along</i>, as each point/centroid is the start <em><i>and</i></em> end of its own "line".
+</p>
+<p>
+<li>
+Boundaries are treated as lines, with points getting interpolated along the boundary perimeter according to <em>dmax</em>. If two 
+adjoining polygons share a topological boundary, the boundary only gets converted to points once.
+</p>
+<p>
+<li>
+If the <em>type</em> paramter is set to <em>area</em>, the boundary of each area is converted to points <i>regardless</i> of whether
+or not there is a topological boundary between adjacent areas. In other words, the common boundary of two adjoining areas,
+for example, gets converted to points twice. The centroid is not converted to a point in the output vector for <em>type=area</em>.
+</p>
+<p>
+The -v flag is used to digitize points that fall on the line's vertices <em>only</em>.
 <em>dmax</em> is ignored in this case. 
 <p>
-If the -i flag is used in conjunction with the -v parameter, <em>v.to.points</em> will digitize points  
+If the -i flag is used in conjunction with the -v flag, <em>v.to.points</em> will digitize points  
 on the line vertices, as well as interpolate points between line vertices using <em>dmax</em> as the 
 maximum allowable spacing.
 <p>
