@@ -142,7 +142,7 @@ int main (int argc, char *argv[])
     char *rules;
     int fp;
     struct GModule *module;
-    struct Flag *flag1, *flag2, *flag3;
+    struct Flag *flag1, *flag3;
     struct Option *opt1, *opt2, *opt3, *opt4;
 
     G_gisinit (argv[0]);
@@ -193,10 +193,6 @@ int main (int argc, char *argv[])
     flag1 = G_define_flag();
     flag1->key = 'w';
     flag1->description = _("Keep existing color table");
-
-    flag2 = G_define_flag();
-    flag2->key = 'q';
-    flag2->description = _("Quietly");
 
     flag3 = G_define_flag();
     flag3->key = 'l';
@@ -274,13 +270,13 @@ int main (int argc, char *argv[])
 	{
 	    if(fp)
 		G_fatal_error(_("Can't make grey.eq color table for floating point map"));
-	    eq_grey_colors (name, mapset, &colors, flag2->answer);
+	    eq_grey_colors (name, mapset, &colors);
 	}
 	else if (strcmp (type, "grey.log") == 0)
 	{
 	    if(fp)
 		G_fatal_error(_("Can't make logarithmic color table for floating point map"));
-	    log_grey_colors (name, mapset, &colors, flag2->answer, (CELL) min, (CELL) max);
+	    log_grey_colors (name, mapset, &colors, (CELL) min, (CELL) max);
 	}
 	else if (strcmp (type, "aspect") == 0)
 	    G_make_aspect_fp_colors (&colors, min, max);
@@ -296,7 +292,7 @@ int main (int argc, char *argv[])
 	    G_make_byg_fp_colors (&colors, min, max);
 	else if (strcmp (type, "rules") == 0)
 	{
-	    if (!read_color_rules(stdin, &colors, flag2->answer, min, max, fp))
+	    if (!read_color_rules(stdin, &colors, min, max, fp))
 	      exit(EXIT_FAILURE); 
 	}
 	else
@@ -304,7 +300,7 @@ int main (int argc, char *argv[])
 	
 	if(fp) G_mark_colors_as_fp(&colors);
 
-	if (G_write_colors (name, mapset, &colors) >= 0 && !flag2->answer)
+	if (G_write_colors (name, mapset, &colors) >= 0 )
 	    G_message(_("Color table for [%s] set to %s"), name, type);
     }
     else if (rules)
@@ -317,13 +313,13 @@ int main (int argc, char *argv[])
 	if (!rules_fp)
 	    G_fatal_error(_("Unable to open rules file %s in %s"), rules, path);
 
-	if (!read_color_rules(rules_fp, &colors, flag2->answer, min, max, fp))
+	if (!read_color_rules(rules_fp, &colors, min, max, fp))
 	    exit(EXIT_FAILURE); 
 
 	fclose(rules_fp);
 	if(fp) G_mark_colors_as_fp(&colors);
 
-	if (G_write_colors (name, mapset, &colors) >= 0 && !flag2->answer)
+	if (G_write_colors (name, mapset, &colors) >= 0 )
 	    G_message(_("Color table for [%s] set to %s"), name, rules);
     }
     else
@@ -337,7 +333,7 @@ int main (int argc, char *argv[])
 
 	if(fp) G_mark_colors_as_fp(&colors);
 
-	if (G_write_colors (name, mapset, &colors) >= 0 && !flag2->answer)
+	if (G_write_colors (name, mapset, &colors) >= 0 )
 	    G_message(_("Color table for [%s] set to %s"), name, cmap);
     }
 

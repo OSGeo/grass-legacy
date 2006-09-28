@@ -18,9 +18,10 @@
 
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 
-int eq_grey_colors (char *name, char *mapset, struct Colors *colors, int quiet)
+int eq_grey_colors (char *name, char *mapset, struct Colors *colors)
 {
     struct Cell_stats statf;
     CELL *cell;
@@ -34,18 +35,15 @@ int eq_grey_colors (char *name, char *mapset, struct Colors *colors, int quiet)
     ncols = G_window_cols();
 
     G_init_cell_stats (&statf);
-    if (!quiet)
-	fprintf (stderr, "Reading %s ...", name);
+    G_message (_("Reading %s ..."), name);
     for (row = 0; row < nrows; row++)
     {
-	if (!quiet)
-	    G_percent (row, nrows, 2);
+        G_percent (row, nrows, 2);
 	if (G_get_c_raster_row(fd, cell, row) < 0)
 	    exit(1);
 	G_update_cell_stats(cell, ncols, &statf);
     }
-    if (!quiet)
-	G_percent (row, nrows, 2);
+    G_percent (row, nrows, 2);
     G_close_cell (fd);
     G_free (cell);
     G_make_histogram_eq_colors (colors, &statf);
