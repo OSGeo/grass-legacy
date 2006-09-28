@@ -39,6 +39,7 @@ char *D_color_list(void);
 /* draw.c */
 int D_set_clip_window(int, int, int, int);
 int D_set_clip_window_to_map_window(void);
+int D_set_clip_window_to_screen_window(void);
 int D_cont_abs(int, int);
 int D_cont_rel(int, int);
 int D_move_abs(int, int);
