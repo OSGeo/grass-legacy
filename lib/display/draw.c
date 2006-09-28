@@ -7,6 +7,8 @@
  *   D_set_clip_window_to_map_window ()
  *     set clipping to pixels corresponding to the current map region
  *     (default)
+ *   D_set_clip_window_to_screen_window ()
+ *     set clipping to full extent of the window (ie disables clipping on screen)
  *
  * Moves.
  *   D_move_abs(x,y)   move to x,y.
@@ -100,6 +102,25 @@ int D_set_clip_window_to_map_window ()
 	(int)D_get_d_west(),
 	(int)D_get_d_east()
 		      ) ;
+
+    return 0;
+}
+
+
+/*!
+ * \brief set clipping window to screen window
+ *
+ * Sets the clipping window to the pixel window that corresponds to the
+ * full screen window. Off screen rendering is still clipped.
+ *
+ *  \param ~
+ *  \return int
+ */
+
+int D_set_clip_window_to_screen_window ()
+{
+    D_get_screen_window (&top, &bottom, &left, &right);
+    D_set_clip_window(top, bottom, left, right);
 
     return 0;
 }
