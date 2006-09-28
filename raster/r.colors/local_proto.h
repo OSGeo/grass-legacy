@@ -20,14 +20,14 @@
 #define __LOCAL_PROTO_H__
 
 /* eq.c */
-int eq_grey_colors(char *, char *, struct Colors *, int);
+int eq_grey_colors(char *, char *, struct Colors *);
 /* log.c */
-int log_grey_colors(char *, char *, struct Colors *, int, int, int);
+int log_grey_colors(char *, char *, struct Colors *,  int, int);
 int G_make_histogram_log_colors(struct Colors *, struct Cell_stats *, int, int);
 /* main.c */
 int main(int, char *[]);
 int more_usage(void);
 /* rules.c */
-int read_color_rules(FILE *, struct Colors *, int, DCELL, DCELL, int);
+int read_color_rules(FILE *, struct Colors *, DCELL, DCELL, int);
 
 #endif /* __LOCAL_PROTO_H__ */
