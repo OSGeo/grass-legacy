@@ -35,7 +35,7 @@ main (int argc, char *argv[])
     char *name;
     char *output;
     char *mapset;
-    int verbose, non_zero;
+    int non_zero;
     struct Range range;
     CELL ncats, max_cats;
     int primary;
@@ -51,7 +51,7 @@ main (int argc, char *argv[])
     } parm;
     struct
     {
-	struct Flag *q, *z;
+	struct Flag *z;
     } flag;
 
     G_gisinit (argv[0]);
@@ -77,10 +77,6 @@ main (int argc, char *argv[])
 
 /* Define the different flags */
 
-    flag.q = G_define_flag() ;
-    flag.q->key         = 'q' ;
-    flag.q->description = _("Quiet") ;
-
     flag.z = G_define_flag() ;
     flag.z->key         = 'z' ;
     flag.z->description = _("Non-zero data only") ;
@@ -92,11 +88,9 @@ main (int argc, char *argv[])
     ncols = G_window_cols();
 
     nfiles = 0;
-    verbose = 1;
     non_zero = 0;
   
 
-    verbose  = (! flag.q->answer);
     non_zero = flag.z->answer;
 
     for (nfiles = 0; (name = parm.input->answers[nfiles]); nfiles++)
@@ -139,14 +133,10 @@ main (int argc, char *argv[])
     G_init_cats ((CELL) 0, buf, &pcats);
 
 /* first step is cross product, but un-ordered */
-    result = cross (fd, verbose, non_zero, primary, outfd);
+    result = cross (fd, non_zero, primary, outfd);
 
 /* print message STEP mesage */
-    if (verbose)
-    {
-	fprintf (stderr, "%s: STEP 2 ...",G_program_name());
-	fflush (stderr);
-    }
+    G_message (_("%s: STEP 2 ..."),G_program_name());
 
 /* now close all files */
     for (i = 0; i < nfiles; i++)
@@ -175,17 +165,13 @@ main (int argc, char *argv[])
     for (i = 0; i < nfiles; i++)
 	G_free_cats (&labels[i]);
 
-    if (verbose)
-	fprintf (stderr, "\n");
-
 /* reopen the output cell for reading and for writing */
     fd[0] = G_open_cell_old (output, G_mapset());
     outfd = G_open_cell_new (output);
 
-    renumber (fd[0], outfd, verbose);
+    renumber (fd[0], outfd);
 
-    if (verbose)
-	fprintf (stderr, "Creating support files for %s\n", output);
+    G_message (_("Creating support files for %s"), output);
     G_close_cell (fd[0]);
     G_close_cell (outfd);
     G_write_cats (output, &pcats);
@@ -196,7 +182,7 @@ main (int argc, char *argv[])
 	G_write_colors (output, G_mapset(), &pcolr);
     }
 
-    fprintf (stdout,"%ld categories\n", (long) result);
+    G_message (_("%ld categories"), (long) result);
     exit(EXIT_SUCCESS);
 }
 

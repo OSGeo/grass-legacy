@@ -18,9 +18,10 @@
 #include <stdlib.h>
 #include "glob.h"
 #include "local_proto.h"
+#include <grass/glocale.h>
 
 
-CELL cross (int fd[],int verbose,int non_zero,int primary,int outfd)
+CELL cross (int fd[],int non_zero,int primary,int outfd)
 {
     CELL *cell[NFILES];
     CELL *result_cell, *rp;
@@ -47,12 +48,10 @@ CELL cross (int fd[],int verbose,int non_zero,int primary,int outfd)
 
 /* here we go */
     plant_tree ();
-    if (verbose)
-	fprintf (stderr, "%s: STEP 1 ... ", G_program_name());
+    G_message (_("%s: STEP 1 ... "), G_program_name());
     for (row = 0; row < nrows; row++)
     {
-	if (verbose)
-	    G_percent (row, nrows, 5);
+        G_percent (row, nrows, 5);
 
 /* read the primary file first, even if not first in the list */
 	if (G_get_map_row (fd[primary], cell[0], row) < 0)
@@ -183,8 +182,7 @@ CELL cross (int fd[],int verbose,int non_zero,int primary,int outfd)
 	}
 	G_put_raster_row (outfd, result_cell, CELL_TYPE);
     }
-    if (verbose)
-	G_percent (nrows, nrows, 5);
+    G_percent (nrows, nrows, 5);
 
 /* free some memory */
     uproot_tree();
