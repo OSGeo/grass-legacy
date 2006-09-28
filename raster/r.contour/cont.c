@@ -20,6 +20,7 @@
 #include <math.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 
@@ -32,7 +33,7 @@ struct cell{
 static int getnewcell(struct cell *, int ,int , DCELL **);
 static void newedge (struct cell *);
 static int findcrossing (struct cell *, double,
-	struct Cell_head , struct line_pnts *, int);
+	struct Cell_head , struct line_pnts *);
 static void getpoint (struct cell *curr, double,
         struct Cell_head , struct line_pnts *);
 
@@ -43,7 +44,7 @@ void contour (
     struct Map_info Map,
     DCELL  **z,
     struct Cell_head Cell,
-    int quiet,int noerr,int n_cut)
+    int n_cut)
 {
     int nrow, ncol;  	     /* number of rows and columns in current region */
     int startrow, startcol;  /* start row and col of current line */
@@ -67,14 +68,12 @@ void contour (
     for (i = 0; i < nrow-1; i++)
 	hit[i] = (char *) G_malloc ((ncol-1) * sizeof (char));
     
-    if (!quiet)
-	fprintf(stderr,"Total levels: %4d   Current level:     ", nlevels);
+    G_message(_("Total levels: %4d   Current level:     "), nlevels);
     
     for (n = 0; n < nlevels; n++)
     {
 	level = levels[n];
-	if (!quiet)
-	    fprintf( stderr, "\b\b\b\b%4d", n+1); /* print level number */
+        G_percent(n,nlevels,2); /* print progress */
 
 	/* initialize hit array */
 	for ( i = 0; i < nrow-1; i++)
@@ -112,7 +111,7 @@ void contour (
 			while ( ! outside )
 			{
 			    hit [current.r][current.c] +=
-				findcrossing(&current, level, Cell, Points, noerr);
+				findcrossing(&current, level, Cell, Points);
 			    newedge (&current);
 			    outside = getnewcell(&current, nrow, ncol, z);
 			}
@@ -153,7 +152,7 @@ void contour (
 			while ( ! outside )
 			{
 			    hit[current.r][current.c] +=
-				findcrossing(&current, level, Cell, Points, noerr);
+				findcrossing(&current, level, Cell, Points);
 			    newedge (&current);
 			    outside = getnewcell(&current, nrow, ncol, z);
 			}
@@ -184,7 +183,7 @@ void contour (
 		    {
 			getpoint (&current, level, Cell, Points);
 			hit[current.r][current.c] +=
-			    findcrossing(&current, level, Cell, Points, noerr);
+			    findcrossing(&current, level, Cell, Points);
 			newedge (&current); 
 			outside = getnewcell(&current,nrow, ncol, z);
 
@@ -193,7 +192,7 @@ void contour (
 			  ((current.r != startrow) || (current.c != startcol)))
 			{
 			    hit[current.r][current.c] += 
-				findcrossing(&current, level, Cell, Points, noerr);
+				findcrossing(&current, level, Cell, Points);
 			    newedge (&current);
 			    outside = getnewcell(&current,nrow, ncol, z);
 			}
@@ -271,7 +270,7 @@ static void newedge (struct cell *current)
   0 otherwise.
 ****************************************************************************/
 static int findcrossing (struct cell *current, double level,
-	struct Cell_head Cell, struct line_pnts *Points, int noerr)
+	struct Cell_head Cell, struct line_pnts *Points)
 {
 	int i, j;
 	int numcross; /* number of crossings found in this Cell */
@@ -318,9 +317,9 @@ static int findcrossing (struct cell *current, double level,
 	}
 	else 
 	{
-		if(!(noerr && (1 == numcross)))
-		fprintf (stderr, "Error, %d crossings in Cell %d, %d\n", 
-		         numcross, current->r,current->c);
+		if(1 == numcross)
+                    G_warning (_("%d crossings in Cell %d, %d"), 
+                            numcross, current->r,current->c);
 		cellhit = 1;
 	}
 	return cellhit;
