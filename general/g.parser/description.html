@@ -30,10 +30,12 @@ For flags, the value will be "1" if the flag was given, and "0"
 otherwise.
 <P>
 
+<h3>Example code for SHELL</h3>
+
 <div class="code"><pre>
 #!/bin/sh
 
-# g.parser demo script
+# g.parser demo script for shell programing
 
 #%Module
 #%  description: g.parser test script   
@@ -63,8 +65,13 @@ otherwise.
 #% required : yes
 #%end
 
+if [ -z "$GISBASE" ] ; then
+    echo "You must be in GRASS GIS to run this program." 1&gt;&amp;2
+    exit 1
+fi
+
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+  exec $GISBASE/bin/g.parser "$0" "$@"
 fi
 
 #add your code here
@@ -85,15 +92,177 @@ echo "Value of GIS_OPT_VECTOR: '$GIS_OPT_VECTOR'"
 
 #add your code here
 </pre></div>
+<h3>Example code for Python</h3>
+
+<div class="code"><pre>
+#!/usr/bin/python
+
+# g.parser demo script for python programing
+
+import os
+import sys
+
+#%Module
+#%  description: g.parser test script (python)
+#%End
+#%flag
+#%  key: f
+#%  description: a flag
+#%END
+#%option
+#% key: raster
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map
+#% required : yes
+#%end
+#%option
+#% key: vector
+#% type: string
+#% gisprompt: old,vector,vector
+#% description: vector input map
+#% required : yes
+#%end
+#%option
+#% key: option1
+#% type: string
+#% description: an option
+#% required : yes
+#%end
+
+def main():
+
+    #add your code here
+
+    print ""
+    if ( os.getenv('GIS_FLAG_F') == "1" ):
+        print "Flag -f set"
+    else:
+        print "Flag -f not set"
+
+    #test if parameter present:
+    if ( os.getenv("GIS_OPT_OPTION1") != "" ):
+        print "Value of GIS_OPT_OPTION1: '%s'" % os.getenv('GIS_OPT_OPTION1')
+
+    print "Value of GIS_OPT_RASTER: '%s'" % os.getenv('GIS_OPT_RASTER')
+    print "Value of GIS_OPT_VECTOR: '%s'" % os.getenv('GIS_OPT_VECTOR')
+
+    #end of your code 
+    
+if __name__ == "__main__":
+    args = ""
+    for arg in sys.argv:
+        args += arg+" "
+
+    if !os.getenv("GISBASE"):
+        print &gt;&gt; sys.stderr, "You must be in GRASS GIS to run this program."
+        sys.exit(0)
+
+
+    try:
+        if ( sys.argv[1] != "@ARGS_PARSED@" ):
+            os.system("g.parser %s " % (args))
+    except IndexError:
+        os.system("g.parser %s" % (args))
+
+    if sys.argv[1] == "@ARGS_PARSED@":
+        main();
+
+</pre></div>
 
 <P>
-The <tt>test.sh</tt> script will provide following help text:
+The <tt>test.py</tt> script will provide following help text:
 <P>
 <div class="code"><pre>
-./test.sh --help
+./test.py --help
 
 Description:
- g.parser test script
+ g.parser test script (python)
+ 
+Usage:
+ test.sh [-f] option=name
+ 
+Flags:
+  -f   a flag
+ 
+Parameters:
+  option   an option
+</pre></div>
+<h3>Example code for Perl</h3>
+
+<div class="code"><pre>
+#!/usr/bin/perl -w
+use strict;
+
+# g.parser demo script
+
+#%Module
+#%  description: g.parser test script (perl) 
+#%  keywords: keyword1, keyword2
+#%End
+#%flag
+#%  key: f
+#%  description: a flag
+#%END
+#%option
+#% key: raster
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map
+#% required : yes
+#%end
+#%option
+#% key: vector
+#% type: string
+#% gisprompt: old,vector,vector
+#% description: vector input map
+#% required : yes
+#%end
+#%option
+#% key: option1
+#% type: string
+#% description: an option
+#% required : yes
+#%end
+
+if ( !$ENV{'GISBASE'} ) {
+    printf(STDERR  "You must be in GRASS GIS to run this program.\n");
+    exit 1;
+}
+
+ 
+if( $ARGV[0] ne '@ARGS_PARSED@' ){
+    my $arg = "";
+    for (my $i=0; $i < @ARGV;$i++) {
+        $arg .= " $ARGV[$i] ";
+    }
+    system("$ENV{GISBASE}/bin/g.parser $0 $arg");
+    exit;
+}
+ 
+ #add your code here
+ print  "\n";
+ if ( $ENV{'GIS_FLAG_F'} eq "1" ){
+   print "Flag -f set\n"
+ }
+ else {
+   print "Flag -f not set\n"
+ }
+ 
+ printf ("Value of GIS_OPT_option1: '%s'\n", $ENV{'GIS_OPT_OPTION1'});
+ printf ("Value of GIS_OPT_raster: '%s'\n", $ENV{'GIS_OPT_RASTER'});
+ printf ("Value of GIS_OPT_vect: '%s'\n", $ENV{'GIS_OPT_VECTOR'});
+ 
+ #end of your code
+</pre></div>
+<P>
+The <tt>test.pl</tt> script will provide following help text:
+<P>
+<div class="code"><pre>
+./test.pl --help
+
+Description:
+ g.parser test script (perl)
  
 Usage:
  test.sh [-f] option=name
@@ -130,7 +299,7 @@ done
 
 <H2>SEE ALSO</H2>
 
-<EM><A HREF="g.findfile.html">g.findfile</A></EM>
+<EM><A HREF="g.findfile.html">g.findfile</A></EM> and <code>SUBMITTING_SCRIPTS</code> file in GRASS source directory.
 
 <H2>AUTHOR</H2>
 
