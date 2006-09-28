@@ -31,10 +31,10 @@
 int  tag = 0;
 
 
-				/* SAMPLING UNIT SETUP DRIVER */
 
-void sample (int t0, int b0, int l0, int r0, char *name, char *name1, char *name2, double *msc)
-
+/* SAMPLING UNIT SETUP DRIVER */
+void sample (int t0, int b0, int l0, int r0, char *name, char *name1,
+		char *name2, double *msc)
 {
   int    btn, d, fmask;
   double tmp;
@@ -93,22 +93,18 @@ keyboard:
 
      G_close_cell(fmask);
   }
+  /* if neither, then exit */
+  else exit(0);
 
-				/* if neither, then exit */
-
-  else
-     exit(0);
   return;
 }
 
 
 
 
-
-				/* DEFINE SAMPLING UNITS MANUALLY */
-
-void man_unit (int t, int b, int l, int r, char *n1, char *n2, char *n3, double *mx, int fmask)
-
+/* DEFINE SAMPLING UNITS MANUALLY */
+void man_unit (int t, int b, int l, int r, char *n1, char *n2, char *n3,
+		double *mx, int fmask)
 {
   int      i, j, dx, dy, w_w, w_l, u_w, u_l,
 	   method, l0, t0, randflag=0, unit_num, num=0, scales,
@@ -641,14 +637,9 @@ last:
 
 
 
-
-
-
-				/* FOR STRATIFIED RANDOM DISTRIBUTION,
-				   DRAW THE STRATA ON THE SCREEN */
-
-void draw_grid (int l, int t, int w_w, int w_l, int h_d, int v_d, int starty, int startx, double colratio, double rowratio)
-
+/* FOR STRATIFIED RANDOM DISTRIBUTION, DRAW THE STRATA ON THE SCREEN */
+void draw_grid (int l, int t, int w_w, int w_l, int h_d, int v_d, int starty,
+		int startx, double colratio, double rowratio)
 {
    int j, k, l0, t0, itmp, dx, dy, initl, tmp;
 
@@ -712,15 +703,12 @@ void draw_grid (int l, int t, int w_w, int w_l, int h_d, int v_d, int starty, in
 
 
 
-
-
-
-
-				/* CALCULATE THE COORDINATES OF THE
-				   TOP LEFT CORNER OF THE SAMPLING
-				   UNITS */
-
-int calc_unit_loc (double radius, int top, int bot, int left, int right, double ratio, int u_w, int u_l, int method, double intv, int num, int h_d, int v_d, double *ux, double *uy, int *sites, double startx, int starty, int fmask, double nx, double x, double y)
+/* CALCULATE THE COORDINATES OF THE TOP LEFT CORNER OF THE SAMPLING UNITS */
+int calc_unit_loc (double radius, int top, int bot, int left, int right,
+		   double ratio, int u_w, int u_l, int method, double intv,
+		   int num, int h_d, int v_d, double *ux, double *uy,
+		   int *sites, double startx, int starty, int fmask,
+		   double nx, double x, double y)
 {
   char	  *sites_mapset, sites_file_name[GNAME_MAX], *desc, *cmd;
   FILE	  *sites_fp;
@@ -955,9 +943,7 @@ back:
 
 
 
-
-				/* FIND THE CORRECT RANDOM NUMBER */
-
+/* FIND THE CORRECT RANDOM NUMBER */
 void get_rd (int exp1, int exp2, int dx, int dy, int u_w, int u_l, int *l, int *t)
 {
    int  rdl,rdt;
@@ -974,23 +960,18 @@ void get_rd (int exp1, int exp2, int dx, int dy, int u_w, int u_l, int *l, int *
 
 
 
-				/* */
-
+/* */
 void  f()
- {
+{
   tag = 1;
   longjmp(jmp, 1);
   return;
- }
+}
 
 
 
-
-
-				/* CHECK IF 2 SAMPLING UNITS OVERLAP */
-
+/* CHECK IF 2 SAMPLING UNITS OVERLAP */
 int overlap (int x1, int y1, int x2, int y2, int dx, int dy)
-
 {
   if (x1 >= x2+dx || x2 >= x1+dx || y1 >= y2+dy || y2 >= y1+dy)
      return 0;
@@ -1002,13 +983,9 @@ int overlap (int x1, int y1, int x2, int y2, int dx, int dy)
 
 
 
-
-
-				/* CALCULATE MAXIMUM POSSIBLE NUMBER
-				   OF SAMPLING UNITS */
-
-int calc_num (int w_w, int w_l, double ratio, int u_w, int u_l, int method, double intv, int startx, int starty, int size, int count)
-
+/* CALCULATE MAXIMUM POSSIBLE NUMBER OF SAMPLING UNITS */
+int calc_num (int w_w, int w_l, double ratio, int u_w, int u_l, int method,
+	      double intv, int startx, int starty, int size, int count)
 {
   int        nx, ny, max;
 
@@ -1443,13 +1420,8 @@ back2:
 
 
 
-
-
-				/* DRAW A RECTANGULAR BOX WITH 
-				   THICKNESS OF "THICK" */
-
+/* DRAW A RECTANGULAR BOX WITH THICKNESS OF "THICK" */
 void draw_box (int x0, int y0, int xp, int yp, int thick)
-
 {
   int i;
 
@@ -1475,14 +1447,15 @@ void draw_box (int x0, int y0, int xp, int yp, int thick)
      R_cont_abs(xp + i, y0 - i);
      R_cont_abs(x0 - i, y0 - i);
    }
+   R_flush();
+
    return;
 }	
- 
 
-				/* DRAW A CIRCLE WITH THICKNESS OF "THICK" */
 
+
+/* DRAW A CIRCLE WITH THICKNESS OF "THICK" */
 void draw_circle (int x0, int y0, int xp, int yp, int thick)
-
 {
   int i, j, xstart, ystart, x2, yr;
   double ang, xinc, yinc;
@@ -1519,19 +1492,15 @@ void draw_circle (int x0, int y0, int xp, int yp, int thick)
         R_cont_abs(xstart + (int)xinc, ystart + (int)yinc);
      }
   }
+  R_flush();
+
   return;
 }
 
 
 
-
-
-
-
-				/* READ USER DIGITAL INPUT FROM THE SCREEN */
-
+/* READ USER DIGITAL INPUT FROM THE SCREEN */
 void numtrap (int n, double *a)
-
 {
   char   num[31], *s;
   int    i = 0, j, k = 1, c;
@@ -1600,4 +1569,3 @@ void numtrap (int n, double *a)
   }
   return;
 }
-
