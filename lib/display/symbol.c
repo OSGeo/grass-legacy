@@ -9,7 +9,6 @@
  */
 
 #include "grass/gis.h"
-#include "grass/display.h"
 #include "grass/raster.h"
 #include "grass/symbol.h"
 #include "grass/glocale.h"
@@ -96,8 +95,8 @@ int D_symbol(SYMBOL *Symb, int x0, int y0, RGBA_Color *line_color, RGBA_Color *f
 			for ( k = 0; k < chain->scount; k++ ) { 
 			    xp = x0 + chain->sx[k];
 			    yp = y0 - chain->sy[k];
-			    if ( k == 0 ) D_move_abs( xp, yp );
-			    else D_cont_abs( xp, yp );
+			    if ( k == 0 ) R_move_abs( xp, yp );
+			    else R_cont_abs( xp, yp );
 			}
 		    }
 		}
@@ -114,8 +113,8 @@ int D_symbol(SYMBOL *Symb, int x0, int y0, RGBA_Color *line_color, RGBA_Color *f
 		for ( j = 0; j < chain->scount; j++ ) { 
 		    xp  = x0 + chain->sx[j];
 		    yp  = y0 - chain->sy[j];
-		    if ( j == 0 ) D_move_abs ( xp, yp );
-		    else D_cont_abs ( xp, yp );
+		    if ( j == 0 ) R_move_abs ( xp, yp );
+		    else R_cont_abs ( xp, yp );
 		}
 		break;
 
