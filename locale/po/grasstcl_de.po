@@ -108,7 +108,7 @@ msgid ""
 "The world's leading open source GIS\n"
 "\n"
 msgstr ""
-"Das weltweicht führende quelloffene GIS\n"
+"Das weltweit führende quelloffene GIS\n"
 "\n"
 
 #: ../lib/init/gis_set.tcl:317
