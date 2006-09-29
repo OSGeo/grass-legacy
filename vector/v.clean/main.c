@@ -47,7 +47,7 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->keywords = _("vector");
-    module->description = _("Toolset to clean vector topology");
+    module->description = _("Toolset for cleaning the vector topology");
 
 	in_opt = G_define_standard_option(G_OPT_V_INPUT);
 	out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
@@ -96,7 +96,7 @@ main (int argc, char *argv[])
 
         no_build_flag = G_define_flag ();
         no_build_flag->key             = 'b';
-        no_build_flag->description     = _("Do not rebuild and store the topology at the end");
+        no_build_flag->description     = _("Don't build topology for the output vector");
 
         if (G_parser (argc, argv))
 	    exit(EXIT_FAILURE);
