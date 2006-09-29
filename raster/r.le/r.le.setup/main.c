@@ -74,7 +74,7 @@ int main (int argc, char *argv[])
   setbuf (stdout, NULL);	/* unbuffered */
   setbuf (stderr, NULL);
 
-  G_sleep_on_error(0);
+  G_sleep_on_error(1);
 
 
   map_name = input->answer;
