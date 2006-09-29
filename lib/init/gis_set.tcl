@@ -610,9 +610,13 @@ proc gisSetWindow {} {
 				 raise .help
 				 return
 			}
-			set help [toplevel .help]
-			help::init $env(GISBASE)/docs/html/helptext.html "" $help 500 400
-			wm title $help [G_msg "GRASS Help"]
+			if { $mingw == "1" } {
+				exec -- $env(GISBASE)/etc/grass-xterm-wrapper -e $env(GRASS_HTML_BROWSER) \
+				file://$env(GISBASE)/docs/html/helptext.html &;
+			} else {
+				exec -- $env(GISBASE)/etc/grass-xterm-wrapper -e $env(GRASS_HTML_BROWSER) \
+				file://$env(GISBASE)/docs/html/helptext.html >@stdout 2>@stderr &;
+			}
         }
 	
     button .frame0.frameBUTTONS.cancel \
