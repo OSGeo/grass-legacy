@@ -1,15 +1,12 @@
 #include <stdlib.h>
 #include <sys/types.h>
-
+#include <grass/config.h>
 
 #ifndef USE_RAND
 
-#if defined(__CYGWIN__) || defined(__APPLE__) || defined(__MINGW32__)
+#ifndef HAVE_DRAND48
 #define lrand48() ((long)((double) rand() * (1<<31) / RAND_MAX))
 #define srand48(sv) (srand((unsigned)(sv)))
-#else
-extern long lrand48();
-extern void srand48();
 #endif 
 
 extern time_t time();
