@@ -1,9 +1,13 @@
 <h2>DESCRIPTION</h2>
 
-<em>v.clean</em> allows the user to automatically change (repair) vector files.
-The user does <em>not</em> have to run  <em><a HREF="v.build.html">v.build</a></em> afterwards.
+<em>v.clean</em> allows the user to automatically fix topology of vector files.
 
 <h2>NOTES</h2>
+
+The user does <b>not</b> have to run <em><a HREF="v.build.html">v.build</a></em>
+on the <em>output</em> vector, unless the <em>-b</em> flag was used. The
+<em>-b</em> flag affects <b>only</b> the <em>output</em> vector - topology is
+always built for <em>error</em> vector.
 
 <h3>Removing small angles between lines at nodes</h3>
 
