@@ -91,8 +91,10 @@ int main (int argc, char **argv)
     outopt = G_define_standard_option(G_OPT_V_OUTPUT);
 
     typopt = G_define_standard_option(G_OPT_V_TYPE);
-    typopt->answer     = "point,line,boundary,centroid,area,face" ;
-    typopt->options    = "point,line,boundary,centroid,area,face" ;
+
+    typopt->answer           = "point,line,boundary,centroid,area,face" ;
+    typopt->options          = "point,line,boundary,centroid,area,face" ;
+    typopt->description      = _("Types to be extracted ");
 
     fieldopt = G_define_standard_option(G_OPT_V_FIELD);
     fieldopt->description = _("Layer number. If -1, all features in all layers of given type "
@@ -103,7 +105,7 @@ int main (int argc, char **argv)
     newopt->type             =  TYPE_INTEGER;
     newopt->required         =  NO;
     newopt->answer           = "-1";
-    newopt->description      = _("Enter -1 to keep original category or a desired NEW category value. "
+    newopt->description      = _("Enter -1 to keep original categories or the desired NEW category value. "
 	                       "If new >= 0, table is not copied.");
 
     listopt = G_define_option();
@@ -118,7 +120,7 @@ int main (int argc, char **argv)
     fileopt->key             = "file";
     fileopt->type            =  TYPE_STRING;
     fileopt->required        =  NO;
-    fileopt->description     = _("Text file with category numbers/number ranges ");
+    fileopt->description     = _("Input text file with category numbers/number ranges to be extracted ");
 
     whereopt = G_define_standard_option(G_OPT_WHERE) ;
 
