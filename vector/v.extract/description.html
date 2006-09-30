@@ -12,54 +12,48 @@ areas have the same output category, the boundary is removed.
 Only features with a category number will be extracted. So if you want to 
 extract boundaries (which are usually without category, as that information
 is normally held in the area's centroid) you must first use 
-<a HREF="v.category.html">v.category</a> to add them.
+<em><a HREF="v.category.html">v.category</a></em> to add them.
 
 <h2>EXAMPLES</h2>
 
-<h3>Extract areas by category number with dissolving</h3>
+<h3>Extract areas by category number with dissolving #1</h3>
 <div class="code"><pre>
-v.extract -d list=1,2,3,4 input=soils output=soil_groupa type=area new=1
+v.extract -d list=1,2,3,4 input=soils output=soil_groupa type=area new=0
 </pre></div>
 
 <p>
-produces a new vector area file <em>soil_groupa</em> containing 'area'
-boundaries from <em>soils</em> with area category numbers of 1 thru 4;  any
-common boundaries are dissolved, and all areas of the new map will be
-assigned category number 1.
+produces a new vector <b>soil_groupa</b>, containing those areas from vector
+<b>soils</b> which have category numbers <b>1 thru 4</b>; any common boundaries are
+dissolved, and all areas in the new map will be assigned category number 0.
 
-
-<h3>Extract areas by category label with dissolving</h3>
+<h3>Extract areas by category number with dissolving #2</h3>
 <div class="code"><pre>
-v.extract -d list=Abc,Def1,12A,WWd input=soils output=soil_groupa type=area new=0
+v.extract -d list=1-4 input=soils output=soil_groupa type=area new=-1
 </pre></div>
 <p>
-produces a new vector area file <em>soil_groupa</em> containing 'area'
-boundaries from <em>soils</em> with area category labels of Abc,Def1, 12A,WWd;
-these labels correspond to numbers 1 thru 4 of <em>soils</em>.  Any common
-boundaries are dissolved, all areas of the new map will be retain their
-original category numbers 1 thru 4, in this case, since new was set to
-0.
+produces a new vector map <b>soil_groupa</b> containing the areas from vector
+<b>soils</b> which have categories <b>1 thru 4</b>. Any common boundaries are
+dissolved, all areas in the new map will retain their original category
+numbers 1 thru 4, since <em>new</em> was set to -1.
 
-<h3>Extract areas to uniquely labeled area</h3>
+<h3>Extract all areas and assign the same category to all</h3>
 <div class="code"><pre>
-v.extract input=soils output=soil_groupa type=area new=1 file=sample
+v.extract input=soils output=soil_groupa type=area new=1
 </pre></div>
 <p>
 
-produces a new vector area file <em>soil_groupa</em> containing 'area'
-boundaries from <em>soils</em>.  No common boundaries are dissolved, all areas
-of the new map will be assigned category number 1.
+produces a new vector map <b>soil_groupa</b> containing all areas from
+<b>soils</b>. No common boundaries are dissolved, all areas of the new
+map will be assigned category number 1.
 
 <h3>Extract vectors with SQL</h3>
 <div class="code"><pre>
-v.extract input=markveggy.shp output=markveggy.1 new=1 \
-          where="(VEGTYPE = 'Wi') or (VEGTYPE = 'PS') or (PRIME_TYPE='Wi')"
+v.extract input=markveggy.shp output=markveggy.1 new=13 where="(VEGTYPE = 'Wi') or (VEGTYPE = 'PS') or (PRIME_TYPE='Wi')"
 </pre></div>
 <p>
 
-produces a new vector map with category label 1 if the SQL statement is
+produces a new vector map with category number 13 if the SQL statement is
 fulfilled.
-
 
 <h3>Dissolving based on column attributes</h3>
 <div class="code"><pre>
@@ -78,8 +72,8 @@ v.extract -d polbnda_italy_recl_nam out=pol_italy_regions
 </pre></div>
 <p>
 
-This produces a new vector map with common boundaries dissolved
-where the reclassed attributes of adjacent (left/right) polygons are identical.
+produces a new vector map with common boundaries dissolved where the reclassed
+attributes of adjacent (left/right) areas are identical.
 
 <h3>Remove islands from polygon map</h3>
 <div class="code"><pre>
