@@ -39,16 +39,12 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <grass/geo.h>
 #include <grass/gis.h>
 #include "local_proto.h"
-#define MAIN
 
 /* some global variables */
-int ier, proj_index, zone, snum, spath;
-
-double radius, kfact, mfact, msfact, nfact, 
-       qfact, wfact, unit_fact, x_false, y_false, heigh, azim, tilt;
+int ier, zone;
+double radius;
 
 int main(int argc, char *argv[])
 {
@@ -70,17 +66,16 @@ int main(int argc, char *argv[])
 	FILE *FPROJ;
 	int exist = 0;
 	char spheroid[100];
-	int j, k, in_stat, npr, sph_check;
+	int j, k, sph_check;
 	struct Cell_head cellhd;
 	char datum[100], dat_ellps[100], dat_params[100]; 
-
+	struct proj_parm *proj_parms;
 
 	G_gisinit(argv[0]);
    
         if( strcmp(G_mapset(), "PERMANENT") != 0 )
             G_fatal_error("You must have the PERMANENT mapset selected to run g.setproj");
 
-	G_geo_init_table();
         /***
          * no longer necessary, table is a static struct 
 	 * init_unit_table();
@@ -161,38 +156,27 @@ int main(int argc, char *argv[])
 		break;
            }
 	case PROJECTION_OTHER:
-		while (1) {
-			if (G_ask_proj_name(proj_out, proj_name) < 0) {
-				leave(SP_NOCHANGE);
-			}
-			proj_index = G_geo_get_proj_index(proj_out);
-			switch(proj_index)
-		     {
-		      case LL:
-				Out_proj = PROJECTION_LL;
-			break;
-		      case UTM:
-                                Out_proj = PROJECTION_UTM;
-			break;
-		      case STP:
-			        Out_proj = PROJECTION_SP;
-			break;
-		      default:
-			Out_proj = PROJECTION_OTHER;
-		     }
-				break;
-		}
-		break;
+	    if (G_ask_proj_name(proj_out, proj_name) < 0)
+		leave(SP_NOCHANGE);
+
+	    if (G_strcasecmp(proj_out, "LL") == 0)
+		Out_proj = PROJECTION_LL;
+	    else if (G_strcasecmp(proj_out, "UTM") == 0)
+		Out_proj = PROJECTION_UTM;
+	    else if (G_strcasecmp(proj_out, "STP") == 0)
+		Out_proj = PROJECTION_SP;
+	    else
+		Out_proj = PROJECTION_SP;
+	    break;
 	default:
-		G_fatal_error("Unknown projection");
+	    G_fatal_error("Unknown projection");
 	}
 	cellhd.proj = Out_proj;
    
-	proj_index = G_geo_get_proj_index(proj_out);
-	if (proj_index < 0) {
-		sprintf(buff, "Projection %s is not specified in the table", proj_out);
-		G_fatal_error(buff);
-	}
+	proj_parms = get_proj_parms(proj_out);
+	if (!proj_parms)
+	    G_fatal_error("Projection %s is not specified in the table", proj_out);
+
 	G_set_key_value("name", proj_name, out_proj_keys);
 
     sph_check = 0;
@@ -243,20 +227,22 @@ int main(int argc, char *argv[])
 
         if (Out_proj != PROJECTION_SP) {	/* some projections have 
 						 fixed spheroids */
-            if ((proj_index == ALSK) || (proj_index == GS48) || 
-		                            (proj_index == GS50)) {
+            if (G_strcasecmp(proj_out, "ALSK") == 0 ||
+		G_strcasecmp(proj_out, "GS48") == 0 || 
+		G_strcasecmp(proj_out, "GS50") == 0) {
 	        sprintf(spheroid, "%s", "clark66");
 		G_set_key_value("ellps", spheroid, out_proj_keys);
 		sph_check = 1;
-	    } else if ((proj_index == LABRD) || (proj_index == NZMG)) {
+	    } else if (G_strcasecmp(proj_out, "LABRD") == 0 ||
+		       G_strcasecmp(proj_out, "NZMG") == 0) {
 	        sprintf(spheroid, "%s", "international");
 		G_set_key_value("ellps", spheroid, out_proj_keys);
 		sph_check = 1;
-	    } else if (proj_index == SOMERC) {
+	    } else if (G_strcasecmp(proj_out, "SOMERC") == 0) {
 		sprintf(spheroid, "%s", "bessel");
 		G_set_key_value("ellps", spheroid, out_proj_keys);
 		sph_check = 1;
-	    } else if (proj_index == OB_TRAN) {
+	    } else if (G_strcasecmp(proj_out, "OB_TRAN") == 0) {
 			/* Hard coded to use "Equidistant Cylincrical"
 			   until g.setproj has been changed to run
 			   recurively, to allow input of options for
@@ -286,7 +272,7 @@ int main(int argc, char *argv[])
 		} else
 		    sph_check = G_ask_ellipse_name(spheroid);
 	    }
-	}		/* if proj_index = ALSK ... OB_TRANS */
+	}
 
 	if (sph_check > 0)
 	{
@@ -308,32 +294,16 @@ int main(int argc, char *argv[])
 
 
 	/* create the PROJ_INFO & PROJ_UNITS files, if required */
-	switch (proj_index) {
-	case LL:
-		break;
-
-	case STP:
-/*
-                if (Out_proj == PROJECTION_SP) {
-			if (get_stp_code(old_zone, buffb, STP1927PARAMS) == 0) {
-				sprintf(buff, "Invalid State Plane Zone : %d", old_zone);
-				G_fatal_error(buff);
-			}
-		} else {
- */
-			get_stp_proj(buffb);
-/*		}*/
-		break;
-
-	default:
-		if (sph_check != 2) {
-			G_strip(spheroid);
-			if (G_get_spheroid_by_name(spheroid, &aa, &e2, &f) == 0)
-				G_fatal_error("invalid input ellipsoid");
-		}
-		break;
+	if (G_strcasecmp(proj_out, "LL") == 0)
+		;
+	else if (G_strcasecmp(proj_out, "STP") == 0)
+		get_stp_proj(buffb);
+	else if (sph_check != 2)
+	{
+		G_strip(spheroid);
+		if (G_get_spheroid_by_name(spheroid, &aa, &e2, &f) == 0)
+			G_fatal_error("invalid input ellipsoid");
 	}
-
 
       write_file:
 	/*
@@ -351,8 +321,8 @@ int main(int argc, char *argv[])
 	/*
 	   **   Include MISC parameters for PROJ_INFO
 	 */
-	switch (proj_index) {
-	case STP:
+	if (G_strcasecmp(proj_out, "STP") == 0)
+	{
 		for (i = 0; i < strlen(buffb); i++)
 			if (buffb[i] == ' ')
 				buffb[i] = '\t';
@@ -369,13 +339,14 @@ int main(int argc, char *argv[])
 				G_set_key_value(buffa, buffb, out_proj_keys);
 			}
 		}
-		break;
-	case LL:
+	}
+	else if (G_strcasecmp(proj_out, "LL") == 0)
+	{
 		G_set_key_value("proj", "ll", out_proj_keys);
 		G_set_key_value("ellps", spheroid, out_proj_keys);
-		break;
-
-	default:
+	}
+	else
+	{
 		if (sph_check != 2) {
 			G_set_key_value("proj", proj_out, out_proj_keys);
 			G_set_key_value("ellps", spheroid, out_proj_keys);
@@ -394,278 +365,105 @@ int main(int argc, char *argv[])
 			G_set_key_value("f", "0.0", out_proj_keys);
 		}
 
-		for (i = 0; i < NOPTIONS; i++) {
-			if (TABLE[proj_index][i].ask == 1) {
-				if (i == SOUTH) {
-					sprintf(buff, "\nIs this %s ", DESC[i]);
-					if (G_yes(buff, 0)) {
-						G_set_key_value("south", "defined", out_proj_keys);
-					        cellhd.zone = -abs(cellhd.zone);
+		for (i = 0; ; i++)
+		{
+			struct proj_parm *parm = &proj_parms[i];
+			struct proj_desc *desc;
+
+			if (!parm->name)
+				break;
+
+			desc = get_proj_desc(parm->name);
+			if (!desc)
+				break;
+
+			if (parm->ask)
+			{
+				if (G_strcasecmp(desc->type, "bool") == 0)
+				{
+					if (G_yes((char *) desc->desc, 0))
+					{
+						G_set_key_value(desc->key, "defined", out_proj_keys);
+						if (G_strcasecmp(parm->name, "SOUTH") == 0)
+							cellhd.zone = -abs(cellhd.zone);
 					}
-				} else if (i == GUAM) {
-					sprintf(buff, "\nDo You Want to set %s ", DESC[i]);
-					if (G_yes(buff, 1))
-						G_set_key_value("guam", "defined", out_proj_keys);
-				} else if (i == NOROT) {
-					sprintf(buff, "\nDo You Want to %s ", DESC[i]);
-					if (G_yes(buff, 1))
-						G_set_key_value("no_rot", "defined", out_proj_keys);
-				} else if (i == NOCUT) {
-					sprintf(buff, "\nDo You Want to Show %s ", DESC[i]);
-					if (G_yes(buff, 1))
-						G_set_key_value("no_cut", "defined", out_proj_keys);
-				} else if (i == NOSKEW) {
-					sprintf(buff, "\nDo You Want to %s ", DESC[i]);
-					if (G_yes(buff, 1))
-						G_set_key_value("ns", "defined", out_proj_keys);
-				} else if (i == NOUOFF) {
-					sprintf(buff, "\nDo You Want to %s ", DESC[i]);
-					if (G_yes(buff, 1))
-						G_set_key_value("no_uoff", "defined", out_proj_keys);
-				} else if (i == ROTCONV) {
-					sprintf(buff, "\nCalculations by %s ", DESC[i]);
-					if (G_yes(buff, 1))
-						G_set_key_value("rot_conv", "defined", out_proj_keys);
-				} else if (i == LOTSA) {
-					sprintf(buff, "\nDo you want to set %s ", DESC[i]);
-					if (G_yes(buff, 1))
-						G_set_key_value("lotsa", "defined", out_proj_keys);
-				} else {
-					for (;;) {
-						/* G_clear_screen(); */
-						if (i < LATHIGH)
-							    if (get_LL_stuff(1, i))
-								break;
-						if ((i > LONLOW) && i < LONHIGH)
-							    if (get_LL_stuff(0, i))
-								break;
-						if (i == ZONE) {
-							if ((Out_proj == PROJECTION_UTM) && (old_zone != 0)) {
-								fprintf(stderr, "The UTM zone is now set to %d\n", old_zone);
-								if (!G_yes("Would you want to change UTM zone", 0)) {
-									fprintf(stderr, "zone information will not be updated\n");
-									zone = old_zone;
-									break;
-								} else {
-									fprintf(stderr, "But if you change zone, all the existing data will be interpreted \n");
-									fprintf(stderr, "by projection software. GRASS will not automatically\n");
-									fprintf(stderr, "re-project or even change the headers for existing maps\n");
-									if (!G_yes("Would you still want to change UTM zone?", 0)) {
-										zone = old_zone;
-										break;
-									}
-								}
-							}	/* UTM */
-							if (get_zone())
-								break;
-						}	/* zone */
-						if (i == KFACT)
-							if (get_KFACT(proj_index))
-								break;
-						if (i == MFACT)
-							if (get_MFACT(proj_index))
-								break;
-						if (i == MSFACT)
-							if (get_MSFACT(proj_index))
-								break;
-						if (i == NFACT)
-							if (get_NFACT(proj_index))
-								break;
-						if (i == QFACT)
-							if (get_QFACT(proj_index))
-								break;
-						if (i == WFACT)
-							if (get_WFACT(proj_index))
-								break;
-						if (i == X0)
-							if (get_x0(proj_index))
-								break;
-						if (i == Y0)
-							if (get_y0(proj_index))
-								break;
-						if (i == HEIGH)
-							if (get_HEIGH(proj_index))
-								break;
-						if (i == AZIM)
-							if (get_AZIM(proj_index))
-								break;
-						if (i == TILT)
-							if (get_TILT(proj_index))
-								break;
-						if (i == SNUM)
-							if (get_SNUM(proj_index))
-								break;
-						if (i == SPATH)
-							if (get_SPATH(proj_index))
-								break;
-					}	/* for */
 				}
-			} else if (TABLE[proj_index][i].def_exists == 1) {	/* don't ask, use the default */
-				if (i < NLLSTUFF)
-					LLSTUFF[i] = TABLE[proj_index][i].deflt;
-				if (i == KFACT)
-					kfact = TABLE[proj_index][i].deflt;
-				if (i == MFACT)
-					mfact = TABLE[proj_index][i].deflt;
-				if (i == MSFACT)
-					msfact = TABLE[proj_index][i].deflt;
-				if (i == NFACT)
-					nfact = TABLE[proj_index][i].deflt;
-				if (i == QFACT)
-					qfact = TABLE[proj_index][i].deflt;
-				if (i == WFACT)
-					wfact = TABLE[proj_index][i].deflt;
-				if (i == X0)
-					x_false = TABLE[proj_index][i].deflt;
-				if (i == Y0)
-					y_false = TABLE[proj_index][i].deflt;
-				if (i == HEIGH)
-					heigh = TABLE[proj_index][i].deflt;
-				if (i == AZIM)
-					azim = TABLE[proj_index][i].deflt;
-				if (i == TILT)
-					tilt = TABLE[proj_index][i].deflt;
-				if (i == SNUM)
-					snum = (int) TABLE[proj_index][i].deflt;
-				if (i == SPATH)
-					spath = (int) TABLE[proj_index][i].deflt;
-			} else
-				continue;
-			
-			/* set_nonbool_opts */
-			switch (i) {
-			case LAT0:
-				sprintf(tmp_buff, "%.10f", LLSTUFF[i]);
-				G_set_key_value("lat_0", tmp_buff, out_proj_keys);
-				break;
-			case LON0:
-				sprintf(tmp_buff, "%.10f", LLSTUFF[i]);
-				G_set_key_value("lon_0", tmp_buff, out_proj_keys);
-				break;
-			case LAT1:
-				sprintf(tmp_buff, "%.10f", LLSTUFF[i]);
-				G_set_key_value("lat_1", tmp_buff, out_proj_keys);
-				strcat(cmnd2, buff);
-				break;
-			case LON1:
-				sprintf(tmp_buff, "%.10f", LLSTUFF[i]);
-				G_set_key_value("lon_1", tmp_buff, out_proj_keys);
-				break;
-			case LAT2:
-				sprintf(tmp_buff, "%.10f", LLSTUFF[i]);
-				G_set_key_value("lat_2", tmp_buff, out_proj_keys);
-				break;
-			case LON2:
-				sprintf(tmp_buff, "%.10f", LLSTUFF[i]);
-				G_set_key_value("lon_2", tmp_buff, out_proj_keys);
-				break;
-			case LAT3:
-				sprintf(tmp_buff, "%.10f", LLSTUFF[i]);
-				G_set_key_value("lat_2", tmp_buff, out_proj_keys);
-				break;
-			case LON3:
-				sprintf(tmp_buff, "%.10f", LLSTUFF[i]);
-				G_set_key_value("lon_3", tmp_buff, out_proj_keys);
-				break;
-			case LATTS:
-				sprintf(tmp_buff, "%.10f", LLSTUFF[i]);
-				G_set_key_value("lat_ts", tmp_buff, out_proj_keys);
-				break;
-			case LATB:
-				sprintf(tmp_buff, "%.10f", LLSTUFF[i]);
-				G_set_key_value("lat_b", tmp_buff, out_proj_keys);
-				break;
-			case LONC:
-				sprintf(tmp_buff, "%.10f", LLSTUFF[i]);
-				G_set_key_value("lon_c", tmp_buff, out_proj_keys);
-				break;
-			case ALPHA:
-				sprintf(tmp_buff, "%.10f", LLSTUFF[i]);
-				G_set_key_value("alpha", tmp_buff, out_proj_keys);
-				break;
-			case THETA:
-				sprintf(tmp_buff, "%.10f", LLSTUFF[i]);
-				G_set_key_value("theta", tmp_buff, out_proj_keys);
-				break;
-			case OLONP:
-				sprintf(tmp_buff, "%.10f", LLSTUFF[i]);
-				G_set_key_value("o_lon_p", tmp_buff, out_proj_keys);
-				break;
-			case OLATP:
-				sprintf(tmp_buff, "%.10f", LLSTUFF[i]);
-				G_set_key_value("o_lat_p", tmp_buff, out_proj_keys);
-				break;
-			case ZONE:
-				/*
-				   if (Out_proj == 1) 
-				   {
-				   sprintf(tmp_buff, "%d", G_zone());
-				   G_set_key_value ("zone", tmp_buff, out_proj_keys);
-				   } else */  {
+				else if (G_strcasecmp(desc->type, "lat") == 0)
+				{
+					double val;
+					while (!get_LL_stuff(parm, desc, 1, &val))
+						;
+					sprintf(tmp_buff, "%.10f", val);
+					G_set_key_value(desc->key, tmp_buff, out_proj_keys);
+				}
+				else if (G_strcasecmp(desc->type, "lon") == 0)
+				{
+					double val;
+					while (!get_LL_stuff(parm, desc, 0, &val))
+						;
+					sprintf(tmp_buff, "%.10f", val);
+					G_set_key_value(desc->key, tmp_buff, out_proj_keys);
+				}
+				else if (G_strcasecmp(desc->type, "float") == 0)
+				{
+					double val;
+					while (!get_double(parm, desc, &val))
+						;
+					sprintf(tmp_buff, "%.10f", val);
+					G_set_key_value(desc->key, tmp_buff, out_proj_keys);
+				}
+				else if (G_strcasecmp(desc->type, "int") == 0)
+				{
+					int val;
+					while (!get_int(parm, desc, &val))
+						;
+					sprintf(tmp_buff, "%d", val);
+					G_set_key_value(desc->key, tmp_buff, out_proj_keys);
+				}
+				else if (G_strcasecmp(desc->type, "zone") == 0)
+				{
+					if ((Out_proj == PROJECTION_UTM) && (old_zone != 0)) {
+						fprintf(stderr, "The UTM zone is now set to %d\n", old_zone);
+						if (!G_yes("Would you want to change UTM zone", 0)) {
+							fprintf(stderr, "zone information will not be updated\n");
+							zone = old_zone;
+							break;
+						} else {
+							fprintf(stderr, "But if you change zone, all the existing data will be interpreted \n");
+							fprintf(stderr, "by projection software. GRASS will not automatically\n");
+							fprintf(stderr, "re-project or even change the headers for existing maps\n");
+							if (!G_yes("Would you still want to change UTM zone?", 0)) {
+								zone = old_zone;
+								break;
+							}
+						}
+					}	/* UTM */
+
+					while (!get_zone())
+						;
+
 					sprintf(tmp_buff, "%d", zone);
 					G_set_key_value("zone", tmp_buff, out_proj_keys);
 					cellhd.zone = zone;
 				}
-				break;
-			case KFACT:
-				sprintf(tmp_buff, "%.10f", kfact);
-				G_set_key_value("k_0", tmp_buff, out_proj_keys);
-				break;
-			case MFACT:
-				sprintf(tmp_buff, "%.10f", mfact);
-				G_set_key_value("m", tmp_buff, out_proj_keys);
-				break;
-			case MSFACT:
-				sprintf(tmp_buff, "%.10f", msfact);
-				G_set_key_value("M", tmp_buff, out_proj_keys);
-				break;
-			case NFACT:
-				sprintf(tmp_buff, "%.10f", nfact);
-				G_set_key_value("n", tmp_buff, out_proj_keys);
-				break;
-			case QFACT:
-				sprintf(tmp_buff, "%.10f", qfact);
-				G_set_key_value("q", tmp_buff, out_proj_keys);
-				break;
-			case WFACT:
-				sprintf(tmp_buff, "%.10f", wfact);
-				G_set_key_value("W", tmp_buff, out_proj_keys);
-				break;
-			case X0:
-				sprintf(tmp_buff, "%.10f", x_false);
-				G_set_key_value("x_0", tmp_buff, out_proj_keys);
-				break;
-			case Y0:
-				sprintf(tmp_buff, "%.10f", y_false);
-				G_set_key_value("y_0", tmp_buff, out_proj_keys);
-				break;
-			case HEIGH:
-				sprintf(tmp_buff, "%.10f", heigh);
-				G_set_key_value("h", tmp_buff, out_proj_keys);
-				break;
-			case AZIM:
-				sprintf(tmp_buff, "%.10f", azim);
-				G_set_key_value("azi", tmp_buff, out_proj_keys);
-				break;
-			case TILT:
-				sprintf(tmp_buff, "%.10f", tilt);
-				G_set_key_value("tilt", tmp_buff, out_proj_keys);
-				break;
-			case SNUM:
-				sprintf(tmp_buff, "%d", snum);
-				G_set_key_value("lsat", tmp_buff, out_proj_keys);
-				break;
-			case SPATH:
-				sprintf(tmp_buff, "%d", spath);
-				G_set_key_value("path", tmp_buff, out_proj_keys);
-				break;
-			default:
-				break;
-			}	/* switch i */
-		}		/* for OPTIONS */
-		break;
-	}			/* switch proj_index */
+			}
+			else if (parm->def_exists)
+			{
+				/* don't ask, use the default */
 
+				if (G_strcasecmp(desc->type, "float") == 0)
+				{
+					sprintf(tmp_buff, "%.10f", parm->deflt);
+					G_set_key_value(desc->key, tmp_buff, out_proj_keys);
+				}
+				else if (G_strcasecmp(desc->type, "int") == 0)
+				{
+					sprintf(tmp_buff, "%d", (int) parm->deflt);
+					G_set_key_value(desc->key, tmp_buff, out_proj_keys);
+				}
+			}
+		}		/* for OPTIONS */
+	}
 
 	/* create the PROJ_INFO & PROJ_UNITS files, if required */
 
@@ -740,37 +538,37 @@ int main(int argc, char *argv[])
 			G_set_key_value("meters", "1.0", in_unit_keys);
 			break;
 		default:
-			if (proj_index != LL) {
-				/* G_clear_screen(); */
+			if (G_strcasecmp(proj_out, "LL") != 0)
+			{
 				fprintf(stderr, "Enter plural form of units [meters]: ");
 				G_gets(answer);
 				if (strlen(answer) == 0) {
 					G_set_key_value("unit", "meter", in_unit_keys);
 					G_set_key_value("units", "meters", in_unit_keys);
 					G_set_key_value("meters", "1.0", in_unit_keys);
-				} else {
+				}
+				else
+				{
+					const struct proj_unit *unit;
 					G_strip(answer);
-					npr = strlen(answer);
-					for (i = 0; i < NUNITS; i++) {
-						in_stat = min1(npr, strlen(UNITS[i].units));
-						if (strncmp(UNITS[i].units, answer, in_stat) == 0) {
-							unit_fact = UNITS[i].fact;
-							break;
-						}
-					}
-					if (i < NUNITS) {
+					unit = get_proj_unit(answer);
+					if (unit)
+					{
 #ifdef FOO
-						if (proj_index == STP && !strcmp(answer, "feet")) {
+						if (G_strcasecmp(proj_out, "STP") == 0 && !strcmp(answer, "feet")) {
 							fprintf(stderr, "%cPROJECTION 99 State Plane cannot be in FEET.\n", 7);
 							remove(path);	/* remove file */
 							leave(SP_FATAL);
 						}
 #endif
-						G_set_key_value("unit", UNITS[i].unit, in_unit_keys);
-						G_set_key_value("units", answer, in_unit_keys);
-						sprintf(buffb, "%.10f", unit_fact);
+						G_set_key_value("unit", unit->unit, in_unit_keys);
+						G_set_key_value("units", unit->units, in_unit_keys);
+						sprintf(buffb, "%.10f", unit->fact);
 						G_set_key_value("meters", buffb, in_unit_keys);
-					} else {
+					}
+					else
+					{
+						double unit_fact;
 						while (1) {
 							fprintf(stderr, "Enter singular for unit: ");
 							G_gets(answer1);
