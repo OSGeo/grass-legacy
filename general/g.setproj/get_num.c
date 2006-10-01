@@ -1,106 +1,27 @@
 #include <string.h>
 #include <math.h>
 #include <grass/gis.h>
-#include <grass/geo.h>
 #include "local_proto.h"
 
-char answer[200];
-double LLSTUFF[NLLSTUFF];
-
-int get_KFACT(int indx)
+int get_double(const struct proj_parm *parm, const struct proj_desc *desc, double *val)
 {
-	sprintf(answer, "Enter %s ", DESC[KFACT]);
-	kfact = prompt_num_double(answer, TABLE[indx][KFACT].deflt, 1);
-	return (1);
+	char answer[200];
+	sprintf(answer, "Enter %s ", desc->desc);
+	*val = prompt_num_double(answer, parm->deflt, 1);
+	return 1;
 }
 
-int get_MFACT(int indx)
+int get_int(const struct proj_parm *parm, const struct proj_desc *desc, int *val)
 {
-	sprintf(answer, "Enter %s ", DESC[MFACT]);
-	mfact = prompt_num_double(answer, TABLE[indx][MFACT].deflt, 1);
-	return (1);
-}
-
-int get_MSFACT(int indx)
-{
-	sprintf(answer, "Enter %s ", DESC[MSFACT]);
-	msfact = prompt_num_double(answer, TABLE[indx][MSFACT].deflt, 1);
-	return (1);
-}
-
-int get_NFACT(int indx)
-{
-	sprintf(answer, "Enter %s ", DESC[NFACT]);
-	nfact = prompt_num_double(answer, TABLE[indx][NFACT].deflt, 1);
-	return (1);
-}
-
-int get_QFACT(int indx)
-{
-	sprintf(answer, "Enter %s ", DESC[QFACT]);
-	qfact = prompt_num_double(answer, TABLE[indx][QFACT].deflt, 1);
-	return (1);
-}
-
-int get_WFACT(int indx)
-{
-	sprintf(answer, "Enter %s ", DESC[WFACT]);
-	wfact = prompt_num_double(answer, TABLE[indx][WFACT].deflt, 1);
-	return (1);
-}
-
-
-int get_x0(int indx)
-{
-	sprintf(answer, "Enter %s ", DESC[X0]);
-	x_false = prompt_num_double(answer, TABLE[indx][X0].deflt, 1);
-	return (1);
-}
-
-int get_y0(int indx)
-{
-	sprintf(answer, "Enter %s ", DESC[Y0]);
-	y_false = prompt_num_double(answer, TABLE[indx][Y0].deflt, 1);
-	return (1);
-}
-
-int get_HEIGH(int indx)
-{
-	sprintf(answer, "Enter %s ", DESC[HEIGH]);
-	heigh = prompt_num_double(answer, TABLE[indx][HEIGH].deflt, 1);
-	return (1);
-}
-
-int get_AZIM(int indx)
-{
-	sprintf(answer, "Enter %s ", DESC[AZIM]);
-	azim = prompt_num_double(answer, TABLE[indx][AZIM].deflt, 1);
-	return (1);
-}
-
-int get_TILT(int indx)
-{
-	sprintf(answer, "Enter %s ", DESC[TILT]);
-	tilt = prompt_num_double(answer, TABLE[indx][TILT].deflt, 1);
-	return (1);
-}
-
-int get_SNUM(int indx)
-{
-	sprintf(answer, "Enter %s ", DESC[SNUM]);
-	snum = prompt_num_int(answer, (int) TABLE[indx][SNUM].deflt, 1);
-	return (1);
-}
-
-int get_SPATH(int indx)
-{
-	sprintf(answer, "Enter %s ", DESC[SPATH]);
-	spath = prompt_num_int(answer, (int) TABLE[indx][SPATH].deflt, 1);
-	return (1);
+	char answer[200];
+	sprintf(answer, "Enter %s ", desc->desc);
+	*val = prompt_num_int(answer, (int) parm->deflt, 1);
+	return 1;
 }
 
 int get_zone(void)
 {
+	char answer[200];
 	int first_time = 1;
 
 	zone = -1;
@@ -119,29 +40,30 @@ int get_zone(void)
 /*
    *    Get the Prime Meridian value and std parallel value
    **** */
-int get_LL_stuff(int lat, int index)
+int get_LL_stuff(const struct proj_parm *parm, const struct proj_desc *desc, int lat, double *val)
 {
+	char answer[200];
 	char buff[256];
 
 	/*  get LONCEN value arguements */
-	if (TABLE[proj_index][index].def_exists == 1) {
+	if (parm->def_exists == 1) {
 		if (lat == 1) {
-			G_format_northing(TABLE[proj_index][index].deflt, buff, PROJECTION_LL);
-			fprintf(stderr, "\n    Enter %s (%s) :", DESC[index], buff);
+			G_format_northing(parm->deflt, buff, PROJECTION_LL);
+			fprintf(stderr, "\n    Enter %s (%s) :", desc->desc, buff);
 		} else {
-			G_format_easting((TABLE[proj_index][index].deflt), buff, PROJECTION_LL);
-			fprintf(stderr, "\n    Enter %s (%s) :", DESC[index], buff);
+			G_format_easting((parm->deflt), buff, PROJECTION_LL);
+			fprintf(stderr, "\n    Enter %s (%s) :", desc->desc, buff);
 		}
 		G_gets(answer);
 		if (strlen(answer) == 0) {
-			LLSTUFF[index] = TABLE[proj_index][index].deflt;
+			*val = parm->deflt;
 			return (1);
 		}
 	} else {
-		fprintf(stderr, "\n    Enter %s :", DESC[index]);
+		fprintf(stderr, "\n    Enter %s :", desc->desc);
 		G_gets(answer);
 		if (strlen(answer) == 0) {
-			LLSTUFF[index] = 0.0;
+			*val = 0.0;
 			return (0);
 		}
 	}
@@ -154,7 +76,7 @@ int get_LL_stuff(int lat, int index)
 			return (0);
 		}
 	}
-	sscanf(answer, "%lf", &(LLSTUFF[index]));
+	sscanf(answer, "%lf", val);
 	return (1);
 }
 

@@ -1,28 +1,45 @@
-#include <grass/geo.h>
+
+/* exit codes */
+#define SP_FATAL     1	 /* [ G_fatal_error () returns 1 ] */
+#define SP_NOCHANGE  2
+#define SP_UNKOWN    3
 
 /* $GISBASE-relative locations of parameter files */
 #define STP1927PARAMS "/etc/state27"
 #define STP1983PARAMS "/etc/state83"
 
+#define RADIUS_DEF 6370997.
+
+struct proj_unit
+{
+	const char *units;
+	const char *unit;
+	double fact;
+};
+
+struct proj_desc
+{
+	const char *name;
+	const char *type;
+	const char *key;
+	const char *desc;
+};
+
+struct proj_parm
+{
+	const char *name;
+	int ask;
+	int def_exists;
+	double deflt;
+};
+
 /* get_deg.c */
 int get_deg(char *, int);
 /* get_num.c */
-extern double LLSTUFF[NLLSTUFF];
-int get_KFACT(int);
-int get_MFACT(int);
-int get_MSFACT(int);
-int get_NFACT(int);
-int get_QFACT(int);
-int get_WFACT(int);
-int get_AZIM(int);
-int get_TILT(int);
-int get_HEIGH(int);
-int get_SNUM(int);
-int get_SPATH(int);
-int get_x0(int);
-int get_y0(int);
+int get_double(const struct proj_parm *, const struct proj_desc *, double *);
+int get_int(const struct proj_parm *, const struct proj_desc *, int *);
+int get_LL_stuff(const struct proj_parm *, const struct proj_desc *, int, double *);
 int get_zone(void);
-int get_LL_stuff(int, int);
 double prompt_num_double(char *, double, int);
 int prompt_num_int(char *, int, int);
 /* get_stp.c */
@@ -51,3 +68,8 @@ int init_unit_table(void);
 
 /* get_datum.c */
 int ask_datum(char *, char *, char *);
+
+/* proj.c */
+struct proj_unit *get_proj_unit(const char *arg);
+struct proj_desc *get_proj_desc(const char *arg);
+struct proj_parm *get_proj_parms(const char *arg);
