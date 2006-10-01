@@ -1750,7 +1750,7 @@ msgstr "Utiliser des codes EPSG"
 #: ../lib/init/gis_set.tcl:525
 #: ../lib/init/gis_set.tcl:554
 msgid "Enter GRASS"
-msgstr "Entrer dans GRASS"
+msgstr "Lancer GRASS"
 
 #: ../lib/init/gis_set.tcl:559
 #: ../lib/init/gis_set.tcl:752
