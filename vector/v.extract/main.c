@@ -80,7 +80,7 @@ int main (int argc, char **argv)
 
     d_flag = G_define_flag();
     d_flag->key              = 'd';
-    d_flag->description      = _("Dissolve common boundaries (default is no) ");
+    d_flag->description      = _("Dissolve common boundaries (default is no)");
     
     t_flag = G_define_flag();
     t_flag->key              = 't';
@@ -120,7 +120,7 @@ int main (int argc, char **argv)
     fileopt->key             = "file";
     fileopt->type            =  TYPE_STRING;
     fileopt->required        =  NO;
-    fileopt->description     = _("Input text file with category numbers/number ranges to be extracted ");
+    fileopt->description     = _("Input text file with category numbers/number ranges to be extracted");
 
     whereopt = G_define_standard_option(G_OPT_WHERE) ;
 
