@@ -582,8 +582,7 @@ proc gisSetWindow {} {
 				 raise .help
 				 return
 			}
-			exec -- $env(GISBASE)/etc/grass-xterm-wrapper -e $env(GRASS_HTML_BROWSER) \
-			file://$env(GISBASE)/docs/html/helptext.html >@stdout 2>@stderr &;
+			exec -- $env(GRASS_HTML_BROWSER) file://$env(GISBASE)/docs/html/helptext.html >@stdout 2>@stderr &;
         }
 	
     button .frame0.frameBUTTONS.cancel \
