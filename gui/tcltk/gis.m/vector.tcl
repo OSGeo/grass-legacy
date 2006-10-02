@@ -242,8 +242,8 @@ proc GmVector::show_columns { id } {
 proc GmVector::show_data { id } { 
 	variable opt
 	set mapname $opt($id,1,vect)
-	set layer $opt($id,1,layer)
-	if {![catch {open "|v.db.connect map=$mapname layer=$layer -g" r} vdb]} {
+	set layernum $opt($id,1,layer)
+	if {![catch {open "|v.db.connect map=$mapname layer=$layernum -g" r} vdb]} {
 		set vectdb [read $vdb]
 		catch {close $vdb}
 		set vdblist [split $vectdb " "]
