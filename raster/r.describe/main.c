@@ -26,7 +26,6 @@
 int main (int argc, char *argv[])
 {
         int as_int;
-	int verbose;
 	int compact;
 	int range;
 	int windowed;
@@ -39,7 +38,6 @@ int main (int argc, char *argv[])
 	{
 	  struct Flag *one;
 	  struct Flag *r;
-	  struct Flag *q;
 	  struct Flag *d;
 	  struct Flag *i;
 	} flag;
@@ -86,10 +84,6 @@ int main (int argc, char *argv[])
 	flag.r->key         = 'r';
 	flag.r->description = _("Only print the range of the data");
 
-	flag.q =G_define_flag() ;
-	flag.q->key        = 'q';
-	flag.q->description = _("Quiet");
-
 	flag.d =G_define_flag() ;
 	flag.d->key        = 'd';
 	flag.d->description = _("Use the current region");
@@ -98,12 +92,9 @@ int main (int argc, char *argv[])
 	flag.i->key        = 'i';
 	flag.i->description = _("Read fp map as integer");
 
-	verbose = 1;
-
 	if (0 > G_parser(argc,argv))
 		exit(EXIT_FAILURE);
 
-	verbose = (! flag.q->answer);
 	compact = (! flag.one->answer);
 	range =  flag.r->answer;
 	windowed =  flag.d->answer;
@@ -116,7 +107,7 @@ int main (int argc, char *argv[])
 
 	if ((mapset =  G_find_cell2 (name, "")))
 	{
-		describe(name, mapset, compact, verbose, no_data_str,
+		describe(name, mapset, compact,  no_data_str,
 			range, windowed, nsteps, as_int);
 		exit(EXIT_SUCCESS);
 	}

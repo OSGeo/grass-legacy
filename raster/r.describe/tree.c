@@ -64,7 +64,7 @@ add_node_to_tree (register CELL cat)
 	offset = cat - idx*NCATS;
     }
     if (offset < 0 || offset >= NCATS)
-	fprintf (stdout,"OOPS: cat %ld got offset %d - shouldn't happen\n",(long)cat,offset);
+	G_warning ("cat %ld got offset %d - shouldn't happen",(long)cat,offset);
 /* first node is special case */
     if (N == 0)
     {

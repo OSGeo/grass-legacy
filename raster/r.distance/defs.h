@@ -46,8 +46,7 @@ struct Map
 struct Parms
 {
     struct Map map1, map2;       /* two raster maps to analyze */
-    int verbose,                 /* boolean: verbose mode      */
-	labels;                  /* boolean: report includes cat labels */
+    int labels;                  /* boolean: report includes cat labels */
     char *fs;                    /* report field separator     */
 };
 
@@ -55,7 +54,7 @@ struct Parms
 void find_minimum_distance(struct CatEdgeList *, struct CatEdgeList *, double *, double *, double *, double *, double *, struct Cell_head *);
 /* edges.c */
 void print_edge_info(struct Map *);
-void find_edge_cells(struct Map *, int);
+void find_edge_cells(struct Map *);
 void add_edge_cell(struct Map *, CELL, int, int);
 void init_edge_list(struct Map *);
 void sort_edge_list(struct Map *);
