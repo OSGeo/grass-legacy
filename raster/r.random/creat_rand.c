@@ -5,7 +5,7 @@
 #ifndef USE_RAND
 
 #ifndef HAVE_DRAND48
-#define lrand48() ((long)((double) rand() * (1<<31) / RAND_MAX))
+#define lrand48() (((long) rand() ^ ((long) rand() << 16)) & 0x7FFFFFFF)
 #define srand48(sv) (srand((unsigned)(sv)))
 #endif 
 
