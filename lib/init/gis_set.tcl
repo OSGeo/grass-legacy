@@ -611,11 +611,9 @@ proc gisSetWindow {} {
 				 return
 			}
 			if { $mingw == "1" } {
-				exec -- $env(GISBASE)/etc/grass-xterm-wrapper -e $env(GRASS_HTML_BROWSER) \
-				file://$env(GISBASE)/docs/html/helptext.html &;
+				exec -- $env(GRASS_HTML_BROWSER) file://$env(GISBASE)/docs/html/helptext.html &;
 			} else {
-				exec -- $env(GISBASE)/etc/grass-xterm-wrapper -e $env(GRASS_HTML_BROWSER) \
-				file://$env(GISBASE)/docs/html/helptext.html >@stdout 2>@stderr &;
+				exec -- $env(GRASS_HTML_BROWSER) file://$env(GISBASE)/docs/html/helptext.html >@stdout 2>@stderr &;
 			}
         }
 	
