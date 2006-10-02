@@ -154,17 +154,25 @@ proc DmVector::show_columns { id } {
 	global bgcolor
 	set mapname $opt($id,map)
 	set layernum $opt($id,field)
-	exec $env(GISBASE)/etc/grass-xterm-wrapper -bg $bgcolor -title "$mapname columns" \
-		-geometry 40x25-10+30 -sb -hold -e v.info -c map=$mapname \
-		layer=$layernum &		
+        set cmd "v.info -c map=$mapname layer=$layernum"
+        run_panel $cmd
 }
 
 proc DmVector::show_data { id } {
 	variable opt
 	global bgcolor
 	set mapname $opt($id,map)
-	exec $env(GISBASE)/etc/grass-xterm-wrapper -bg $bgcolor -title "$mapname data" \
-		-geometry 60x40-10+30 -sb -hold -e db.select table=$mapname &
+	set layernum $opt($id,field)
+	if {![catch {open "|v.db.connect map=$mapname layer=$layernum -g" r} vdb]} {
+		set vectdb [read $vdb]
+		catch {close $vdb}
+		set vdblist [split $vectdb " "]
+		set tbl [lindex $vdblist 1]
+		set db [lindex $vdblist 3]
+		set drv [lindex $vdblist 4]
+		set cmd "db.select table=$tbl database=$db driver=$drv"
+		run_panel $cmd
+	}
 }
 
 # select symbols from directories
