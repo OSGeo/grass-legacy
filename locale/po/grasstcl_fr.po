@@ -3321,7 +3321,7 @@ msgstr "Utiliser des valeurs de projection"
 
 #: ../lib/init/gis_set.tcl:552
 msgid "Enter GRASS"
-msgstr "Entrer dans GRASS"
+msgstr "Lancer GRASS"
 
 #: ../lib/init/gis_set.tcl:557 ../lib/init/gis_set.tcl:750
 msgid "WARNING: invalid mapset"
