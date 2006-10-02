@@ -20,7 +20,7 @@
 
 
 int describe (
-    char *name,char *mapset, int compact, int verbose,
+    char *name,char *mapset, int compact, 
     char *no_data_str, int range,int windowed,int nsteps,int as_int)
 {
     int fd;
@@ -96,12 +96,10 @@ int describe (
     nrows = G_window_rows();
     ncols = G_window_cols();
 
-    if (verbose)
-	fprintf (stderr,"READING [%s in %s] ...", name,mapset);
+    G_message ("reading [%s in %s] ...", name,mapset);
     for (row = 0 ; row < nrows; row++)
     {
-	if (verbose)
-	    G_percent (row, nrows, 2);
+        G_percent (row, nrows, 2);
 	if((*get_row) (fd, b = buf, row) < 0)
 	    break;
 	if (range)
@@ -135,8 +133,7 @@ int describe (
 	else
 	    G_update_cell_stats (buf, ncols, &statf);
     }
-    if (verbose)
-	G_percent (nrows, nrows, 2);
+    G_percent (nrows, nrows, 2);
     G_close_cell (fd);
     G_free (buf);
 

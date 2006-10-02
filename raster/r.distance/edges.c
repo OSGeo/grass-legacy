@@ -27,7 +27,7 @@ void print_edge_info (struct Map *map)
     fprintf (stdout,"\n");
 }
 
-void find_edge_cells (struct Map *map, int verbose)
+void find_edge_cells (struct Map *map)
 {
     void init_edge_list();
     void add_edge_cell();
@@ -37,8 +37,7 @@ void find_edge_cells (struct Map *map, int verbose)
     int fd;
     CELL *buf0, *buf1, *buf2, *tmp;
 
-    if (verbose)
-	fprintf (stderr, "Reading map %s ...", map->fullname);
+    G_message ("Reading map %s ...", map->fullname);
 
     ncols = G_window_cols();
     nrows = G_window_rows();
@@ -61,8 +60,7 @@ void find_edge_cells (struct Map *map, int verbose)
 
     for (row = 0; row < nrows; row++)
     {
-	if (verbose)
-	    G_percent (row, nrows, 2);
+        G_percent (row, nrows, 2);
 	/* rotate the input buffers */
 	tmp = buf0;
 	buf0 = buf1;
@@ -83,8 +81,7 @@ void find_edge_cells (struct Map *map, int verbose)
 		add_edge_cell (map, buf1[col], row, col-1);
 	}
     }
-    if (verbose)
-	G_percent (row, nrows, 2);
+    G_percent (row, nrows, 2);
 
     G_close_cell (fd);
 

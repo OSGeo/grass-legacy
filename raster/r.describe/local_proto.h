@@ -19,7 +19,7 @@
 #define __R_DESC_LOCAL_PROTO_H__
 
 /* describe.c */
-int describe(char *, char *, int, int, char *, int, int, int, int);
+int describe(char *, char *, int, char *, int, int, int, int);
 /* dumplist.c */
 int long_list(struct Cell_stats *, DCELL, DCELL, char *, RASTER_MAP_TYPE, int);
 int compact_list(struct Cell_stats *, DCELL, DCELL, char *, RASTER_MAP_TYPE, int);

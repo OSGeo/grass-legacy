@@ -38,8 +38,7 @@ report (struct Parms *parms)
     map2 = &parms->map2;
     fs   = parms->fs;
 
-    if (parms->verbose)
-	fprintf (stderr, "Processing...\n");
+    G_message ("Processing...");
 
     for (i1 = 0; i1 < map1->edges.ncats; i1++)
     {
