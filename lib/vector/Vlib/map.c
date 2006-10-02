@@ -478,7 +478,8 @@ Vect_delete ( char *map )
     }
 
     G_debug (3, "remove directory '%s'", tmp );
-    ret = remove ( tmp );
+    /* Warning: remove() fails on Windows */
+    ret = rmdir ( tmp );
     if ( ret == -1 ) { 
 	G_warning ( "Cannot remove directory '%s'", tmp );
 	return -1;
