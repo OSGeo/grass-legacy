@@ -11,12 +11,14 @@ main (int argc, char *argv[])
     int i,n;
     struct GModule *module;
     struct Option **parm, *p;
+    struct Flag *force_flag;
     char *name, *mapset;
     char rname[256], rmapset[256];
     int nrmaps;
     char **rmaps, *location_path, buf1[256], buf2[256];
     FILE *fp;
     int result = 0;
+    int force = 0;
 
     init (argv[0]);
 
@@ -25,6 +27,10 @@ main (int argc, char *argv[])
     module->description =
 		_("Removes data base element files from "
 		"the user's current mapset.");
+
+    force_flag = G_define_flag();
+    force_flag->key         = 'f';
+    force_flag->description = _("Force remove");
 
     parm = (struct Option **) G_calloc (nlist, sizeof(struct Option *));
 
@@ -47,6 +53,9 @@ main (int argc, char *argv[])
     location_path = G__location_path();
     mapset = G_mapset();
 
+    if (force_flag->answer)
+	force = 1;
+
     for (n = 0; n < nlist; n++)
     {
 	if (parm[n]->answers)
@@ -54,15 +63,21 @@ main (int argc, char *argv[])
 	    {
 		if(G_is_reclassed_to(name, mapset, &nrmaps, &rmaps) > 0)
 		{
-		    G_warning(
-		       _("[%s@%s] is a base map. Remove reclassed map%s first:"),
-					name, mapset, (nrmaps > 1 ? "s" : ""));
-
-		    fprintf(stderr, " %s", *rmaps);
-		    for(rmaps++; *rmaps; rmaps++)
-		        fprintf(stderr, ",%s", *rmaps);
-		    fprintf(stderr, "\n");
-		    continue;
+		    for(; *rmaps; rmaps++) {
+                        /* force remove */
+                        if ( force ) {
+                            G_warning(
+                            _("[%s@%s] is a base map for [%s]. Remove forced."),
+                                                name, mapset,  *rmaps);
+                        }
+                        else {
+                            G_warning(
+                            _("[%s@%s] is a base map. Remove reclassed map first: %s"),
+                                                name, mapset,  *rmaps);
+                        }
+                    }
+                    if ( !force ) 
+                        continue;
 		}
 		if(G_is_reclass(name, mapset, rname, rmapset) > 0 &&
 		   G_is_reclassed_to(rname, rmapset, &nrmaps, &rmaps) > 0)
@@ -77,17 +92,30 @@ main (int argc, char *argv[])
 
 		    if(nrmaps == 1 && !strcmp(rmaps[0], buf2))
 		    {
-			remove(buf1);
+			
+		        if (  remove(buf1) < 0 ) {
+                            G_warning(
+                            _("Removing information about reclassed map from [%s@%s] failed"),
+                                                rname, rmapset);
+                        }
+
 		    }
 		    else
 		    {
-		        fp = fopen(buf1, "w");
-		        for(; *rmaps; rmaps++)
-		        {
-			    if(strcmp(*rmaps, buf2))
-			        fprintf(fp, "%s\n", *rmaps);
-		        }
-		        fclose(fp);
+		        if ( (fp = fopen(buf1, "w")) ) {
+                            for(; *rmaps; rmaps++)
+                            {
+                                if(strcmp(*rmaps, buf2))
+                                    fprintf(fp, "%s\n", *rmaps);
+                            }
+                            fclose(fp);
+                        }
+                        else {
+                            G_warning(
+                            _("Removing information about reclassed map from [%s@%s] failed"),
+                                                rname, rmapset);
+
+                        }
 		    }
 		}
 		if ( do_remove (n, name) == 1 )
