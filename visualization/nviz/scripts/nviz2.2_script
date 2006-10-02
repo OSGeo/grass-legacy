@@ -724,13 +724,11 @@ proc nviz_browse { URL dummy } {
 global env
 
 #OLD: exec  $env(GISBASE)/docs/html/nviz/help_frame.tcl $env(GISBASE)/docs/html/nviz/$URL &
- if {[info exists env(MSYSCON)]} {
-	exec -- $env(GISBASE)/etc/grass-xterm-wrapper -e $env(GRASS_HTML_BROWSER) \
-	file://$env(GISBASE)/docs/html/nviz/$URL &;
- } else {
-	exec -- $env(GISBASE)/etc/grass-xterm-wrapper -e $env(GRASS_HTML_BROWSER) \
-	file://$env(GISBASE)/docs/html/nviz/$URL >@stdout 2>@stderr &;
- }
+    if {[info exists env(MSYSCON)]} {
+	    exec -- $env(GRASS_HTML_BROWSER) file://$env(GISBASE)/docs/html/nviz/$URL &;
+    } else {
+	    exec -- $env(GRASS_HTML_BROWSER) file://$env(GISBASE)/docs/html/nviz/$URL >@stdout 2>@stderr &;
+    }
 }
 
 proc load_state_aux { new_file} {
