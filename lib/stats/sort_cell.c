@@ -32,3 +32,16 @@ int sort_cell(DCELL *array, int n)
 	return i;
 }
 
+int sort_cell_w(DCELL (*array)[2], int n)
+{
+	int i;
+
+	qsort(array, n, 2 * sizeof(DCELL), ascending);
+
+	for (i = 0; i < n; i++)
+		if (G_is_d_null_value(&array[i][0]))
+			break;
+
+	return i;
+}
+

@@ -39,3 +39,47 @@ void c_perc90(DCELL *result, DCELL *values, int n)
 	percentile(result, values, n, 90.0);
 }
 
+static void percentile_w(DCELL *result, DCELL (*values)[2], int n, double percent)
+{
+	DCELL total;
+	int i;
+	DCELL k;
+
+	n = sort_cell_w(values, n);
+
+	if (n < 1)
+	{
+		G_set_d_null_value(result, 1);
+		return;
+	}
+
+	total = 0.0;
+	for (i = 0; i < n; i++)
+		total += values[i][1];
+
+	k = 0.0;
+	for (i = 0; i < n; i++)
+	{
+		k += values[i][1];
+		if (k >= total * percent / 100)
+			break;
+	}
+
+	*result = values[i][0];
+}
+
+void w_quart1(DCELL *result, DCELL (*values)[2], int n)
+{
+	percentile_w(result, values, n, 25.0);
+}
+
+void w_quart3(DCELL *result, DCELL (*values)[2], int n)
+{
+	percentile_w(result, values, n, 75.0);
+}
+
+void w_perc90(DCELL *result, DCELL (*values)[2], int n)
+{
+	percentile_w(result, values, n, 90.0);
+}
+
