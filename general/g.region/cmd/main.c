@@ -75,7 +75,7 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->keywords = _("general");
-    module->description =
+	module->description =
 		_("Program to manage the boundary definitions for the "
 		"geographic region.");
 
@@ -689,8 +689,8 @@ int main (int argc, char *argv[])
 		window.ns_res = x;
 	
 		if (flag.res_set->answer) {
-			window.north = 2 * x * ( (int)(window.north/2/x));
-                	window.south = 2 * x * ( (int)(window.south/2/x));
+			window.north =  ceil(window.north/x) * x ;
+			window.south = floor(window.south/x) * x ;
 		}
 	}
 
@@ -702,8 +702,8 @@ int main (int argc, char *argv[])
 		window.ew_res = x;
 		
 		if (flag.res_set->answer) {
-			window.east =  2 * x * ( (int)(window.east/2/x));
-                	window.west =  2 * x * ( (int)(window.west/2/x));
+			window.east = ceil(window.east/x) * x ;
+			window.west = floor(window.west/x) * x ;
 		}
 	}
 
@@ -715,8 +715,8 @@ int main (int argc, char *argv[])
 		window.tb_res = x;
 
 		if (flag.res_set->answer) {
-			window.top =  2 * x * ( (int)(window.top/2/x));
-                	window.bottom =  2 * x * ( (int)(window.bottom/2/x));
+			window.top = ceil(window.top/x) * x ;
+			window.bottom = floor(window.bottom/x) * x ;
 		}
 	}
 
