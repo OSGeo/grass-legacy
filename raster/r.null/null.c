@@ -131,9 +131,9 @@ int main(int argc, char *argv[])
 	map_type = G_raster_map_type(name, mapset);
 
         sprintf(element, "cell_misc/%s", name);
-        if(only_null && !G_find_file(element, "null", mapset))
+        if(only_null && G_find_file(element, "null", mapset))
 	{
-	     sprintf (buf, "%s doesn't have null bitmap file! Exiting", name);
+	     sprintf (buf, "%s already has a null bitmap file! Exiting", name);
 	     G_warning(buf);
 	     exit(0);
 	}
