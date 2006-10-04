@@ -1,4 +1,3 @@
-#define MAIN
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -7,7 +6,10 @@
 #include "mask.h"
 #include "local_proto.h"
 
-struct Cell_head cellhd;
+d_Mask d_mask;
+DCELL new_null;
+
+static struct Cell_head cellhd;
 static int parse_vallist (char **, d_Mask *);
 
 int main(int argc, char *argv[])
@@ -19,7 +21,6 @@ int main(int argc, char *argv[])
     unsigned char *null_bits;
     RASTER_MAP_TYPE map_type;
     int change_null=0, create, remove, only_int, only_fp, only_null;
-    char buf[1024];
     int is_reclass;
 
     struct GModule *module;
@@ -100,10 +101,7 @@ int main(int argc, char *argv[])
         name = parms.map->answer;
         mapset = G_find_cell2 (name, "");
 	if (mapset == NULL)
-        {
-	    sprintf (buf, "%s - not found", name);
-	    G_fatal_error (buf);
-        }
+	    G_fatal_error ("%s - not found", name);
 
         is_reclass = (G_is_reclass (name, mapset, rname, rmapset) > 0);
         if (is_reclass)
@@ -111,21 +109,14 @@ int main(int argc, char *argv[])
 
 
 	if(strcmp(mapset, G_mapset()) != 0)
-        {
-	    sprintf (buf, "%s is not in your mapset (%s)", name, G_mapset());
-	    G_fatal_error (buf);
-	}
+	    G_fatal_error ("%s is not in your mapset (%s)", name, G_mapset());
 
 	if(parms.null->answer)
 	{
 	   if(sscanf(parms.null->answer, "%lf", &new_null) == 1)
 	       change_null =1;
            else
-	   {
-	     sprintf (buf, "%s is illegal entry for null", 
-					  parms.null->answer);
-	     G_fatal_error (buf);
-           }
+	       G_fatal_error ("%s is illegal entry for null", parms.null->answer);
         }
 
 	map_type = G_raster_map_type(name, mapset);
@@ -133,8 +124,7 @@ int main(int argc, char *argv[])
         sprintf(element, "cell_misc/%s", name);
         if(only_null && G_find_file(element, "null", mapset))
 	{
-	     sprintf (buf, "%s already has a null bitmap file! Exiting", name);
-	     G_warning(buf);
+	     G_warning("%s already has a null bitmap file! Exiting", name);
 	     exit(0);
 	}
 
@@ -142,33 +132,26 @@ int main(int argc, char *argv[])
 	{
 	   if(only_fp)
 	   {
-	     sprintf (buf, "%s is integer! Exiting", name);
-	     G_warning(buf);
+	     G_warning("%s is integer! Exiting", name);
 	     exit(0);
            }
 
 	   if((double)((int) new_null) != new_null)
 	   {
-	     sprintf (buf, 
-		 "%s is an integer map! Using null=%d", name, (int) new_null);
-	     G_warning(buf);
+	     G_warning("%s is an integer map! Using null=%d", name, (int) new_null);
 	     new_null = (double) ((int) new_null);
            }
         }
 	else if(only_int)
 	{
-	     sprintf (buf, "%s is floating point! Exiting", name);
-	     G_warning(buf);
+	     G_warning("%s is floating point! Exiting", name);
 	     exit(0);
 	}
 
         parse_vallist (parms.setnull->answers, &d_mask);
 
 	if (G_get_cellhd (name, mapset, &cellhd) < 0)
-	{
-	    fprintf (stdout,buf, "Can't read cell header for %s", name);
-	    G_fatal_error(buf);
-        }
+	    G_fatal_error("Can't read cell header for %s", name);
 
     if(create)
     {
@@ -181,16 +164,13 @@ int main(int argc, char *argv[])
 	sprintf(element,"cell_misc/%s",name);
 	null_fd = G_open_new (element, "null");
  
-	fprintf(stdout, "Writing new null file for [%s]... ", name);
+	G_message("Writing new null file for [%s]... ", name);
 	
 	for(row=0; row < cellhd.rows; row++)
 	{
 	   G_percent (row, cellhd.rows, 1);
 	   if( G__write_null_bits(null_fd, null_bits, row, cellhd.cols, 0) < 0)
-	   {
-	       sprintf(buf, "Error writing null row %d", row); 
-	       G_fatal_error(buf);
-           }
+	       G_fatal_error("Error writing null row %d", row);
 	}
 	G_percent (row, cellhd.rows, 1);
 	close(null_fd);
@@ -200,12 +180,12 @@ int main(int argc, char *argv[])
     if(remove)
     {
 	/* write a file of no-nulls */
-	fprintf(stdout, "Removing null file for [%s]... ", name);
+	G_message("Removing null file for [%s]... ", name);
 	sprintf(element,"cell_misc/%s",name);
 	null_fd = G_open_new (element, "null");
         G__file_name(path, element, "null", mapset);
 	unlink (path);
-	fprintf(stdout, "Done.\n");
+	G_message("Done");
         exit(0);
     }
     
@@ -256,10 +236,7 @@ parse_d_mask_rule (char *vallist, d_Mask *d_mask, char *where)
 
 /* #-# */
     if (sscanf (vallist,"%lf-%lf",&a,&b) == 2)
-    {
-	fprintf (stdout,"adding rule: %f - %f\n", a,b);
 	add_d_mask_rule (d_mask, a, b, 0);
-    }
 /* inf-# */
     else if (sscanf (vallist,"%[^ -\t]-%lf", junk, &a) == 2)
 	add_d_mask_rule (d_mask, a, a, -1);
@@ -275,10 +252,9 @@ parse_d_mask_rule (char *vallist, d_Mask *d_mask, char *where)
     else
     {
 	if(where)
-	    fprintf (stderr, "%s: ", where);
-	fprintf (stderr, "%s: illegal value spec\n", vallist);
-	G_usage();
-	exit(1);
+	    G_fatal_error("%s: %s: illegal value spec", where, vallist);
+	else
+	    G_fatal_error("%s: illegal value spec", vallist);
     }
 
     return 0;
@@ -333,29 +309,22 @@ int
 doit (char *name, char *mapset, int change_null, RASTER_MAP_TYPE map_type)
 {
     int new, old, row;
-    char buf[256];
     void *rast;
 
     G_set_window (&cellhd);
 
     old = G_open_cell_old (name, mapset);
     if (old < 0)
-    {
-       sprintf(buf, ", Can't open %s (old)", name);
-       G_fatal_error(buf);
-    }
+       G_fatal_error("Can't open %s (old)", name);
 
     new = G_open_raster_new(name, map_type);
 
     if (new < 0)
-    {
-       sprintf(buf, ", Can't open %s (new)", name);
-       G_fatal_error(buf);
-    }
+       G_fatal_error("Can't open %s (new)", name);
+
     rast = G_allocate_raster_buf(map_type);
 
-    fprintf(stdout, "Writing new data for [%s]... ", name);
-    fflush(stdout);
+    G_message("Writing new data for [%s]... ", name);
     /* the null file is written automatically */
     for(row = 0; row < cellhd.rows; row++)
     {
@@ -363,8 +332,7 @@ doit (char *name, char *mapset, int change_null, RASTER_MAP_TYPE map_type)
 
        if(G_get_raster_row_nomask(old, rast, row, map_type) < 0)
        {
-	  sprintf(buf, "Can't read row %d\n", row);
-	  G_warning(buf);
+	  G_warning("Can't read row %d", row);
 	  break;
        }
 
@@ -372,8 +340,7 @@ doit (char *name, char *mapset, int change_null, RASTER_MAP_TYPE map_type)
 
        if(G_put_raster_row(new, rast, map_type) < 0)
        {
-	  sprintf(buf, "Can't write row %d\n", row);
-	  G_warning(buf);
+	  G_warning("Can't write row %d", row);
 	  break;
        }
     }
@@ -387,6 +354,4 @@ doit (char *name, char *mapset, int change_null, RASTER_MAP_TYPE map_type)
     }
     G_close_cell (new);
     return 0;
-    fprintf(stdout,"\n");
-    fflush(stdout);
 }
