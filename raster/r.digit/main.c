@@ -1,6 +1,20 @@
-/*
- *   Digitize a raster map on the screen image
- */
+/****************************************************************************
+ *
+ * MODULE:       r.digit
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      Interactive tool used to draw and save vector features 
+ *               on a graphics monitor using a pointing device (mouse) 
+ *               and save to a raster map.
+ *
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
 
 #define MAIN
 #include <stdlib.h>
@@ -10,6 +24,7 @@
 #include <grass/raster.h>
 #include "local_proto.h"
 #include <grass/glocale.h>
+
 
 int main (int argc, char **argv)
 {
