@@ -15,7 +15,7 @@ static int parse_vallist (char **, d_Mask *);
 int main(int argc, char *argv[])
 {
     char *name, *mapset;
-    char rname[256], rmapset[256];
+    char rname[GNAME_MAX], rmapset[GMAPSET_MAX];
     int row, col, null_fd;
     char element[300], path[400];
     unsigned char *null_bits;
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("raster");
     module->description =
-	"Creates explicitly the NULL-value bitmap file.";
+	_("Creates explicitly the NULL-value bitmap file.");
 
     parms.map = G_define_option();
     parms.map->key    = "map";
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     parms.map->required = YES ;
     parms.map->multiple = NO ;
     parms.map->gisprompt  = "old,cell,raster" ;
-    parms.map->description = "Raster map for which to edit null file";
+    parms.map->description = _("Raster map for which to edit null file");
 
     parms.setnull = G_define_option();
     parms.setnull->key   = "setnull";
@@ -60,37 +60,37 @@ int main(int argc, char *argv[])
     parms.setnull->type   = TYPE_STRING ;
     parms.setnull->required = NO ;
     parms.setnull->multiple = YES ;
-    parms.setnull->description = "List of cell values to be set to NULL";
+    parms.setnull->description = _("List of cell values to be set to NULL");
 
     parms.null = G_define_option();
     parms.null->key    = "null";
     parms.null->type   = TYPE_DOUBLE;
     parms.null->required   = NO;
     parms.null->multiple   = NO;
-    parms.null->description= "The value to replace the null value by";
+    parms.null->description= _("The value to replace the null value by");
 
     flags.f = G_define_flag();
     flags.f->key = 'f';
-    flags.f->description = "Only do the work if the map is floating-point";
+    flags.f->description = _("Only do the work if the map is floating-point");
 
     flags.i = G_define_flag();
     flags.i->key = 'i';
-    flags.i->description = "Only do the work if the map is integer";
+    flags.i->description = _("Only do the work if the map is integer");
 
     flags.n = G_define_flag();
     flags.n->key = 'n';
-    flags.n->description = "Only do the work if the map doesn't have a NULL-value bitmap file";
+    flags.n->description = _("Only do the work if the map doesn't have a NULL-value bitmap file");
 
     flags.c = G_define_flag();
     flags.c->key = 'c';
-    flags.c->description = "create NULL-value bitmap file validating all data cells";
+    flags.c->description = _("Create NULL-value bitmap file validating all data cells");
 
     flags.r = G_define_flag();
     flags.r->key = 'r';
-    flags.r->description = "remove NULL-value bitmap file";
+    flags.r->description = _("Remove NULL-value bitmap file");
 
     if (G_parser(argc,argv))
-	exit(0);
+	exit(EXIT_FAILURE);
 
     only_int  = flags.i->answer;
     only_fp   = flags.f->answer;
@@ -123,18 +123,12 @@ int main(int argc, char *argv[])
 
     sprintf(element, "cell_misc/%s", name);
     if(only_null && G_find_file(element, "null", mapset))
-    {
-	G_warning("%s already has a null bitmap file! Exiting", name);
-	exit(0);
-    }
+	G_fatal_error ("%s already has a null bitmap file!", name);
 
     if(map_type == CELL_TYPE)
     {
 	if(only_fp)
-	{
-	    G_warning("%s is integer! Exiting", name);
-	    exit(0);
-	}
+	    G_fatal_error ("%s is integer!", name);
 
 	if((double)((int) new_null) != new_null)
 	{
@@ -143,10 +137,7 @@ int main(int argc, char *argv[])
 	}
     }
     else if(only_int)
-    {
-	G_warning("%s is floating point! Exiting", name);
-	exit(0);
-    }
+	G_fatal_error ("%s is floating point!", name);
 
     parse_vallist (parms.setnull->answers, &d_mask);
 
@@ -174,7 +165,8 @@ int main(int argc, char *argv[])
 	}
 	G_percent (row, cellhd.rows, 1);
 	close(null_fd);
-        exit(0);
+	G_message("Done");
+        exit(EXIT_SUCCESS);
     }
 
     if(remove)
@@ -186,11 +178,11 @@ int main(int argc, char *argv[])
         G__file_name(path, element, "null", mapset);
 	unlink (path);
 	G_message("Done");
-        exit(0);
+        exit(EXIT_SUCCESS);
     }
     
     process(name, mapset, change_null, map_type);
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 static int parse_vallist ( char **vallist, d_Mask *d_mask)
