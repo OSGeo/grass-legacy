@@ -19,7 +19,8 @@
  *
  * Legal file names will <b>not</b> begin with '.' or NULL and must 
  * not contain the characters, ' ' (space), '/', '"'. '\'' (single 
- * quote), '@', and all other non-alphanumeric characters within.
+ * quote), '@', ',', '=', '*', and all other non-alphanumeric
+ * characters within.
  *
  * Returns 1 if <b>name</b> is ok, -1 otherwise.
  *
@@ -34,8 +35,9 @@ int G_legal_filename (char *s)
 	return -1;
     }
 
-    for ( ; *s; s++)
-	if (*s == '/' || *s == '"' || *s == '\'' || *s <= ' ' || *s == '@' || *s > 0176) {
+    for (; *s; s++)
+	if (*s == '/' || *s == '"' || *s == '\'' || *s <= ' ' || 
+            *s == '@' || *s == ',' || *s == '=' || *s == '*' || *s > 0176) {
 		fprintf(stderr, _("Illegal filename. character <%c> not allowed.\n"), *s);
 	    return -1;
 	}
