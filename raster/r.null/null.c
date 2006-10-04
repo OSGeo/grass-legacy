@@ -39,119 +39,119 @@ int main(int argc, char *argv[])
         struct Flag *r;
     } flags;
 
-        G_gisinit (argv[0]);
+    G_gisinit (argv[0]);
 
-	module = G_define_module();
-	module->keywords = _("raster");
-	module->description =
-		"Creates explicitly the NULL-value bitmap file.";
+    module = G_define_module();
+    module->keywords = _("raster");
+    module->description =
+	"Creates explicitly the NULL-value bitmap file.";
 
-	parms.map = G_define_option();
-	parms.map->key    = "map";
-	parms.map->type   = TYPE_STRING ;
-	parms.map->required = YES ;
-	parms.map->multiple = NO ;
-	parms.map->gisprompt  = "old,cell,raster" ;
-	parms.map->description = "Raster map for which to edit null file";
+    parms.map = G_define_option();
+    parms.map->key    = "map";
+    parms.map->type   = TYPE_STRING ;
+    parms.map->required = YES ;
+    parms.map->multiple = NO ;
+    parms.map->gisprompt  = "old,cell,raster" ;
+    parms.map->description = "Raster map for which to edit null file";
 
-	parms.setnull = G_define_option();
-	parms.setnull->key   = "setnull";
-	parms.setnull->key_desc    = "val[-val]";
-	parms.setnull->type   = TYPE_STRING ;
-	parms.setnull->required = NO ;
-	parms.setnull->multiple = YES ;
-	parms.setnull->description = "List of cell values to be set to NULL";
+    parms.setnull = G_define_option();
+    parms.setnull->key   = "setnull";
+    parms.setnull->key_desc    = "val[-val]";
+    parms.setnull->type   = TYPE_STRING ;
+    parms.setnull->required = NO ;
+    parms.setnull->multiple = YES ;
+    parms.setnull->description = "List of cell values to be set to NULL";
 
-        parms.null = G_define_option();
-        parms.null->key    = "null";
-        parms.null->type   = TYPE_DOUBLE;
-	parms.null->required   = NO;
-        parms.null->multiple   = NO;
-        parms.null->description= "The value to replace the null value by";
+    parms.null = G_define_option();
+    parms.null->key    = "null";
+    parms.null->type   = TYPE_DOUBLE;
+    parms.null->required   = NO;
+    parms.null->multiple   = NO;
+    parms.null->description= "The value to replace the null value by";
 
-	flags.f = G_define_flag();
-	flags.f->key = 'f';
-	flags.f->description = "Only do the work if the map is floating-point";
+    flags.f = G_define_flag();
+    flags.f->key = 'f';
+    flags.f->description = "Only do the work if the map is floating-point";
 
-	flags.i = G_define_flag();
-	flags.i->key = 'i';
-	flags.i->description = "Only do the work if the map is integer";
+    flags.i = G_define_flag();
+    flags.i->key = 'i';
+    flags.i->description = "Only do the work if the map is integer";
 
-	flags.n = G_define_flag();
-	flags.n->key = 'n';
-	flags.n->description = "Only do the work if the map doesn't have a NULL-value bitmap file";
+    flags.n = G_define_flag();
+    flags.n->key = 'n';
+    flags.n->description = "Only do the work if the map doesn't have a NULL-value bitmap file";
 
-	flags.c = G_define_flag();
-	flags.c->key = 'c';
-	flags.c->description = "create NULL-value bitmap file validating all data cells";
+    flags.c = G_define_flag();
+    flags.c->key = 'c';
+    flags.c->description = "create NULL-value bitmap file validating all data cells";
 
-	flags.r = G_define_flag();
-	flags.r->key = 'r';
-	flags.r->description = "remove NULL-value bitmap file";
+    flags.r = G_define_flag();
+    flags.r->key = 'r';
+    flags.r->description = "remove NULL-value bitmap file";
 
-	if (G_parser(argc,argv))
-		exit(0);
+    if (G_parser(argc,argv))
+	exit(0);
 
-	only_int  = flags.i->answer;
-	only_fp   = flags.f->answer;
-	only_null = flags.n->answer;
-	create    = flags.c->answer;
-	remove    = flags.r->answer;
+    only_int  = flags.i->answer;
+    only_fp   = flags.f->answer;
+    only_null = flags.n->answer;
+    create    = flags.c->answer;
+    remove    = flags.r->answer;
 
-        name = parms.map->answer;
-        mapset = G_find_cell2 (name, "");
-	if (mapset == NULL)
-	    G_fatal_error ("%s - not found", name);
+    name = parms.map->answer;
+    mapset = G_find_cell2 (name, "");
+    if (mapset == NULL)
+	G_fatal_error ("%s - not found", name);
 
-        is_reclass = (G_is_reclass (name, mapset, rname, rmapset) > 0);
-        if (is_reclass)
-            G_fatal_error("%s is a reclass of map <%s> in mapset <%s>. Consider to generate a copy with r.mapcalc. Exiting.", name, rname, rmapset);
+    is_reclass = (G_is_reclass (name, mapset, rname, rmapset) > 0);
+    if (is_reclass)
+	G_fatal_error("%s is a reclass of map <%s> in mapset <%s>. Consider to generate a copy with r.mapcalc. Exiting.", name, rname, rmapset);
 
 
-	if(strcmp(mapset, G_mapset()) != 0)
-	    G_fatal_error ("%s is not in your mapset (%s)", name, G_mapset());
+    if(strcmp(mapset, G_mapset()) != 0)
+	G_fatal_error ("%s is not in your mapset (%s)", name, G_mapset());
 
-	if(parms.null->answer)
+    if(parms.null->answer)
+    {
+	if(sscanf(parms.null->answer, "%lf", &new_null) == 1)
+	    change_null =1;
+	else
+	    G_fatal_error ("%s is illegal entry for null", parms.null->answer);
+    }
+
+    map_type = G_raster_map_type(name, mapset);
+
+    sprintf(element, "cell_misc/%s", name);
+    if(only_null && G_find_file(element, "null", mapset))
+    {
+	G_warning("%s already has a null bitmap file! Exiting", name);
+	exit(0);
+    }
+
+    if(map_type == CELL_TYPE)
+    {
+	if(only_fp)
 	{
-	   if(sscanf(parms.null->answer, "%lf", &new_null) == 1)
-	       change_null =1;
-           else
-	       G_fatal_error ("%s is illegal entry for null", parms.null->answer);
-        }
-
-	map_type = G_raster_map_type(name, mapset);
-
-        sprintf(element, "cell_misc/%s", name);
-        if(only_null && G_find_file(element, "null", mapset))
-	{
-	     G_warning("%s already has a null bitmap file! Exiting", name);
-	     exit(0);
+	    G_warning("%s is integer! Exiting", name);
+	    exit(0);
 	}
 
-        if(map_type == CELL_TYPE)
+	if((double)((int) new_null) != new_null)
 	{
-	   if(only_fp)
-	   {
-	     G_warning("%s is integer! Exiting", name);
-	     exit(0);
-           }
-
-	   if((double)((int) new_null) != new_null)
-	   {
-	     G_warning("%s is an integer map! Using null=%d", name, (int) new_null);
-	     new_null = (double) ((int) new_null);
-           }
-        }
-	else if(only_int)
-	{
-	     G_warning("%s is floating point! Exiting", name);
-	     exit(0);
+	    G_warning("%s is an integer map! Using null=%d", name, (int) new_null);
+	    new_null = (double) ((int) new_null);
 	}
+    }
+    else if(only_int)
+    {
+	G_warning("%s is floating point! Exiting", name);
+	exit(0);
+    }
 
-        parse_vallist (parms.setnull->answers, &d_mask);
+    parse_vallist (parms.setnull->answers, &d_mask);
 
-	if (G_get_cellhd (name, mapset, &cellhd) < 0)
-	    G_fatal_error("Can't read cell header for %s", name);
+    if (G_get_cellhd (name, mapset, &cellhd) < 0)
+	G_fatal_error("Can't read cell header for %s", name);
 
     if(create)
     {
@@ -159,7 +159,7 @@ int main(int argc, char *argv[])
 	null_bits = (unsigned char *) G__allocate_null_bits (cellhd.cols);
 	/* init all cells to 0's */
 	for (col = 0; col < G__null_bitstream_size(cellhd.cols); col++)
-	     null_bits[col] = 0;
+	    null_bits[col] = 0;
 
 	sprintf(element,"cell_misc/%s",name);
 	null_fd = G_open_new (element, "null");
@@ -168,9 +168,9 @@ int main(int argc, char *argv[])
 	
 	for(row=0; row < cellhd.rows; row++)
 	{
-	   G_percent (row, cellhd.rows, 1);
-	   if( G__write_null_bits(null_fd, null_bits, row, cellhd.cols, 0) < 0)
-	       G_fatal_error("Error writing null row %d", row);
+	    G_percent (row, cellhd.rows, 1);
+	    if( G__write_null_bits(null_fd, null_bits, row, cellhd.cols, 0) < 0)
+		G_fatal_error("Error writing null row %d", row);
 	}
 	G_percent (row, cellhd.rows, 1);
 	close(null_fd);
@@ -234,18 +234,18 @@ parse_d_mask_rule (char *vallist, d_Mask *d_mask, char *where)
     double a,b;
     char junk[128];
 
-/* #-# */
+    /* #-# */
     if (sscanf (vallist,"%lf-%lf",&a,&b) == 2)
 	add_d_mask_rule (d_mask, a, b, 0);
-/* inf-# */
+    /* inf-# */
     else if (sscanf (vallist,"%[^ -\t]-%lf", junk, &a) == 2)
 	add_d_mask_rule (d_mask, a, a, -1);
 
-/* #-inf */
+    /* #-inf */
     else if (sscanf (vallist,"%lf-%[^ \t]", &a, junk) == 2)
 	add_d_mask_rule (d_mask, a, a, 1);
 
-/* # */
+    /* # */
     else if (sscanf (vallist,"%lf",&a) == 1)
 	add_d_mask_rule (d_mask, a, a, 0);
 
@@ -279,9 +279,9 @@ process (char *name, char *mapset, int change_null, RASTER_MAP_TYPE map_type)
 
     if(map_type != CELL_TYPE)
     {
-       G_quant_init(&quant);
-       quant_ok = G_read_quant(name, mapset, &quant);
-       G_suppress_warnings(0);
+        G_quant_init(&quant);
+        quant_ok = G_read_quant(name, mapset, &quant);
+        G_suppress_warnings(0);
     }
 
     if (doit(name, mapset, change_null, map_type)) return 1;
@@ -315,12 +315,12 @@ doit (char *name, char *mapset, int change_null, RASTER_MAP_TYPE map_type)
 
     old = G_open_cell_old (name, mapset);
     if (old < 0)
-       G_fatal_error("Can't open %s (old)", name);
+	G_fatal_error("Can't open %s (old)", name);
 
     new = G_open_raster_new(name, map_type);
 
     if (new < 0)
-       G_fatal_error("Can't open %s (new)", name);
+	G_fatal_error("Can't open %s (new)", name);
 
     rast = G_allocate_raster_buf(map_type);
 
@@ -328,21 +328,21 @@ doit (char *name, char *mapset, int change_null, RASTER_MAP_TYPE map_type)
     /* the null file is written automatically */
     for(row = 0; row < cellhd.rows; row++)
     {
-       G_percent (row, cellhd.rows, 1);
+	G_percent (row, cellhd.rows, 1);
 
-       if(G_get_raster_row_nomask(old, rast, row, map_type) < 0)
-       {
-	  G_warning("Can't read row %d", row);
-	  break;
-       }
+	if(G_get_raster_row_nomask(old, rast, row, map_type) < 0)
+	{
+	    G_warning("Can't read row %d", row);
+	    break;
+	}
 
-       mask_raster_array(rast, cellhd.cols, change_null, map_type);
+	mask_raster_array(rast, cellhd.cols, change_null, map_type);
 
-       if(G_put_raster_row(new, rast, map_type) < 0)
-       {
-	  G_warning("Can't write row %d", row);
-	  break;
-       }
+	if(G_put_raster_row(new, rast, map_type) < 0)
+	{
+	    G_warning("Can't write row %d", row);
+	    break;
+	}
     }
     G_percent (row, cellhd.rows, 1);
     G_free (rast);
