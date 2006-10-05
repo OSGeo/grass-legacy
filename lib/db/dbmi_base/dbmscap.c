@@ -28,13 +28,14 @@ dbmscap_filename(err_flag)
     if (file)
 	return file;
 
-    for (i = 0; file = dbmscap_files[i]; i++)
+    for (i = 0; (file = dbmscap_files[i]); i++)
     {
 	if (access (file, 0) == 0)
 	    return file;
     }
     if(err_flag)
 	db_error ("DBMSCAP not set");
+
     return ((char *)NULL);
 }
 
@@ -101,7 +102,6 @@ db_read_dbmscap()
     char comment[1024];
     int  line;
     */
-    char   buf[1024];
     char   *dirpath;
     DIR    *dir;	
     struct dirent *ent;	
@@ -172,7 +172,7 @@ db_read_dbmscap()
     G_free (dirpath);
     
     /* read all drivers */
-    while ( ent = readdir (dir) )
+    while ((ent = readdir (dir)))
       {
 	char *name;
 

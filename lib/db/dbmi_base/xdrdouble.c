@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include "xdr.h"
 
+
+int
 db__send_double(d)
     double d;
 {
@@ -16,11 +18,12 @@ db__send_double(d)
 
     if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
+
     return stat;
 }
 
-db__recv_double (d)
-    double *d;
+int
+db__recv_double (double *d)
 {
     XDR xdrs;
     int stat;
@@ -33,12 +36,13 @@ db__recv_double (d)
 
     if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
+
     return stat;
 }
 
-db__send_double_array (x, n)
-    double *x;
-    int n;
+
+int
+db__send_double_array (double *x, int n)
 {
     XDR xdrs;
     int i;
@@ -50,6 +54,7 @@ db__send_double_array (x, n)
 
     if(!xdr_int (&xdrs, &n))
 	stat = DB_PROTOCOL_ERR;
+
     for (i = 0; stat == DB_OK && i < n; i++)
     {
 	if(!xdr_double (&xdrs, x))
@@ -61,15 +66,14 @@ db__send_double_array (x, n)
 
     if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
+
     return stat;
 }
 
 /* returns an allocated array of doubles */
 /* caller is responsible for free() */
-
-db__recv_double_array (x, n)
-    double **x;
-    int *n;
+int
+db__recv_double_array (double **x, int *n)
 {
     XDR xdrs;
     int i, count, stat;
@@ -115,5 +119,6 @@ db__recv_double_array (x, n)
 	db_protocol_error();
 
     xdr_end_recv (&xdrs);
+
     return stat;
 }

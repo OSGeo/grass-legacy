@@ -56,7 +56,7 @@ db_dirent  (char *dirname, int *n)
 /* count the number of entries and get the strlen of the longest name */
     count = 0;
     max = 0;
-    while (entry = readdir(dp))
+    while ((entry = readdir(dp)))
     {
 	count++;
 	len = strlen (entry->d_name);

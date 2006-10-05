@@ -14,17 +14,17 @@
 
 void
 db_strip  (char *buf)
-
 {
     char *a, *b;
 
-/* remove leading white space */
+    /* remove leading white space */
     for (a = b = buf; *a == ' ' || *a == '\t'; a++)
 	    ;
     if (a != b)
-	while (*b++ = *a++)
+	while ((*b++ = *a++))
 	    ;
-/* remove trailing white space */
+
+    /* remove trailing white space */
     for (a = buf; *a; a++)
 	    ;
     if (a != buf)

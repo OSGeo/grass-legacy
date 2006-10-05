@@ -1,8 +1,9 @@
 #include <grass/dbmi.h>
 #include "macros.h"
 
-db__send_datetime  (dbDateTime *t)
 
+int
+db__send_datetime  (dbDateTime *t)
 {
     DB_SEND_CHAR(t->current);
     if (!t->current)
@@ -18,8 +19,8 @@ db__send_datetime  (dbDateTime *t)
     return DB_OK;
 }
 
+int
 db__recv_datetime  (dbDateTime *t)
-
 {
     DB_RECV_CHAR(&t->current);
     if (!t->current)

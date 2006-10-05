@@ -1,8 +1,9 @@
 #include <grass/dbmi.h>
 #include "macros.h"
 
-db__send_index (dbIndex *index)
 
+int
+db__send_index (dbIndex *index)
 {
     int i;
 
@@ -20,8 +21,8 @@ db__send_index (dbIndex *index)
     return DB_OK;
 }
 
+int
 db__send_index_array  (dbIndex *list, int count)
-
 {
     int i;
 
@@ -33,10 +34,10 @@ db__send_index_array  (dbIndex *list, int count)
     return DB_OK;
 }
 
+int
 db__recv_index (dbIndex *index)
-
 {
-    int i,ncols;
+    int i, ncols;
 
     db_init_index (index);
     DB_RECV_STRING (&index->indexName);
@@ -56,8 +57,8 @@ db__recv_index (dbIndex *index)
     return DB_OK;
 }
 
+int
 db__recv_index_array  (dbIndex **list, int *count)
-
 {
     int i;
 

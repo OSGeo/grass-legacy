@@ -1,8 +1,9 @@
 #include <grass/dbmi.h>
 #include "macros.h"
 
-db__send_table_definition (dbTable *table)
 
+int
+db__send_table_definition (dbTable *table)
 {
     int i;
 
@@ -21,10 +22,10 @@ db__send_table_definition (dbTable *table)
     return DB_OK;
 }
 
+int
 db__recv_table_definition (dbTable **table)
-
 {
-    int i,ncols;
+    int i, ncols;
     dbTable *t;
 
     DB_RECV_INT (&ncols);
@@ -46,10 +47,10 @@ db__recv_table_definition (dbTable **table)
     return DB_OK;
 }
 
+int
 db__send_table_data (dbTable *table)
-
 {
-    int i,ncols;
+    int i, ncols;
 
     ncols = table->numColumns;
     DB_SEND_INT (ncols);
@@ -61,8 +62,8 @@ db__send_table_data (dbTable *table)
     return DB_OK;
 }
 
+int
 db__recv_table_data (dbTable *table)
-
 {
     int i,ncols;
 

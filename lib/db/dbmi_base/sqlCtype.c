@@ -6,8 +6,8 @@
  \return 
  \param 
 */
+int
 db_sqltype_to_Ctype (int sqltype)
-
 {	
     switch (sqltype)
     {

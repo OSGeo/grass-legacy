@@ -1,10 +1,10 @@
 #include "xdr.h"
 #include "macros.h"
 
-/******** client only ***************/
 
-db__start_procedure_call (procnum)
-    int procnum;
+/******** client only ***************/
+int
+db__start_procedure_call (int procnum)
 {
     int reply;
 
@@ -22,6 +22,7 @@ db__start_procedure_call (procnum)
 	}
 	return DB_PROTOCOL_ERR;
     }
+
     return DB_OK;
 }
 
@@ -31,8 +32,8 @@ db__start_procedure_call (procnum)
  * DB_OK  ok
  * DB_EOF eof from client
  */
-db__recv_procnum (n)
-    int *n;
+int
+db__recv_procnum (int *n)
 {
     XDR xdrs;
     int stat;
@@ -47,14 +48,14 @@ db__recv_procnum (n)
     return stat;
 }
 
-db__send_procedure_ok(n)
-    int n;
+int
+db__send_procedure_ok(int n)
 {
     return db__send_int (n);
 }
 
-db__send_procedure_not_implemented(n)
-    int n;
+int
+db__send_procedure_not_implemented(int n)
 {
-    return db__send_int (n?0:-1);
+    return db__send_int (n ? 0 : -1);
 }

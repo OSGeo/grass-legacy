@@ -203,10 +203,12 @@ db_get_index_column_name  (dbIndex *index, int column_num)
  \return 
  \param 
 */
+int
 db_set_index_type_unique  (dbIndex *index)
-
 {
     index->unique = 1;
+
+    return 0;
 }
 
 /*!
@@ -215,10 +217,12 @@ db_set_index_type_unique  (dbIndex *index)
  \return 
  \param 
 */
+int
 db_set_index_type_non_unique  (dbIndex *index)
-
 {
     index->unique = 0;
+
+    return 0;
 }
 
 /*!
@@ -227,8 +231,8 @@ db_set_index_type_non_unique  (dbIndex *index)
  \return 
  \param 
 */
+int
 db_test_index_type_unique  (dbIndex *index)
-
 {
     return index->unique != 0;
 }
@@ -239,8 +243,8 @@ db_test_index_type_unique  (dbIndex *index)
  \return 
  \param 
 */
+int
 db_print_index (FILE *fd, dbIndex *index)
-
 {
     int i, nCols;
 
@@ -252,6 +256,7 @@ db_print_index (FILE *fd, dbIndex *index)
     fprintf(fd, "Table: %s\n", db_get_index_table_name(index));
     nCols = db_get_index_number_of_columns(index);
     fprintf(fd, "Number of columns: %d\nColumns:\n", nCols);
+
     for (i = 0; i < nCols; i++) {
 	fprintf(fd, "  %s\n", db_get_index_column_name(index, i));
     }

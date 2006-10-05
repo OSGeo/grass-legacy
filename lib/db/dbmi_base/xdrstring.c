@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include "xdr.h"
 
-db__send_string_array(a, count)
-    dbString *a;
-    int count;
+
+int
+db__send_string_array(dbString *a, int count)
 {
     int i;
     int stat;
@@ -17,10 +17,8 @@ db__send_string_array(a, count)
 }
 
 /* note: dbString *a; ...(...,&a...) */
-
-db__recv_string_array (a, n)
-    dbString **a;
-    int *n;
+int
+db__recv_string_array (dbString **a, int *n)
 {
     int i,count;
     int stat;
@@ -36,6 +34,7 @@ db__recv_string_array (a, n)
 	db_protocol_error();
 	return DB_PROTOCOL_ERR;
     }
+
     b = db_alloc_string_array(count);
     if (b == NULL)
 	return DB_MEMORY_ERR;
@@ -51,11 +50,12 @@ db__recv_string_array (a, n)
     }
     *n = count;
     *a = b;
+
     return DB_OK;
 }
 
-db__send_string(x)
-    dbString *x;
+int
+db__send_string(dbString *x)
 {
     XDR xdrs;
     int len;
@@ -78,6 +78,7 @@ db__send_string(x)
 
     if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
+
     return stat;
 }
 
@@ -90,8 +91,8 @@ db__send_string(x)
  *
  * NOTE: caller MUST initialize x by calling db_init_string()
  */
-db__recv_string(x)
-    dbString *x;
+int
+db__recv_string(dbString *x)
 {
     XDR xdrs;
     int len;
@@ -108,6 +109,7 @@ db__recv_string(x)
     {
 	stat = db_enlarge_string (x, len);
     }
+
     s = db_get_string(x);
     if(stat == DB_OK && !xdr_string (&xdrs, &s, len))
 	stat = DB_PROTOCOL_ERR;
@@ -115,15 +117,17 @@ db__recv_string(x)
     xdr_end_recv (&xdrs);
     if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
+
     return stat;
 }
 
-db__send_Cstring(s)
-    char *s;
+int
+db__send_Cstring(char *s)
 {
     dbString x;
 
     db_init_string (&x);
     db_set_string_no_copy (&x, s);
+
     return db__send_string (&x);
 }
