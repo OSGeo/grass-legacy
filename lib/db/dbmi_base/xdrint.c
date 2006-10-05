@@ -1,8 +1,9 @@
 #include <stdlib.h>
 #include "xdr.h"
 
-db__send_int(n)
-    int n;
+
+int
+db__send_int(int n)
 {
     XDR xdrs;
     int stat;
@@ -19,8 +20,8 @@ db__send_int(n)
     return stat;
 }
 
-db__recv_int (n)
-    int *n;
+int
+db__recv_int (int *n)
 {
     XDR xdrs;
     int stat;
@@ -38,9 +39,8 @@ db__recv_int (n)
     return stat;
 }
 
-db__send_int_array (x, n)
-    int *x;
-    int n;
+int
+db__send_int_array (int *x, int n)
 {
     XDR xdrs;
     int i;
@@ -67,10 +67,8 @@ db__send_int_array (x, n)
 
 /* returns an allocated array of ints */
 /* caller is responsible for free() */
-
-db__recv_int_array (x, n)
-    int **x;
-    int *n;
+int
+db__recv_int_array (int **x, int *n)
 {
     XDR xdrs;
     int i, count, stat;
@@ -117,5 +115,6 @@ db__recv_int_array (x, n)
 	db_protocol_error();
 
     xdr_end_recv (&xdrs);
+
     return stat;
 }

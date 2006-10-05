@@ -1,7 +1,8 @@
 #include "xdr.h"
 
-db__send_char(d)
-    char d;
+
+int
+db__send_char(int d)
 {
     XDR xdrs;
     int stat;
@@ -17,11 +18,13 @@ db__send_char(d)
 
     if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
+
     return stat;
 }
 
-db__recv_char (d)
-    char *d;
+
+int
+db__recv_char (char *d)
 {
     XDR xdrs;
     int stat;
@@ -34,5 +37,6 @@ db__recv_char (d)
 
     if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
+
     return stat;
 }

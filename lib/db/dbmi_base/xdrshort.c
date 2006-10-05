@@ -1,8 +1,9 @@
 #include <stdlib.h>
 #include "xdr.h"
 
-db__send_short(n)
-    short n;
+
+int
+db__send_short(int n)
 {
     XDR xdrs;
     int stat;
@@ -19,11 +20,12 @@ db__send_short(n)
 
     if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
+
     return stat;
 }
 
-db__recv_short (n)
-    short *n;
+int
+db__recv_short (short *n)
 {
     XDR xdrs;
     int stat;
@@ -41,9 +43,8 @@ db__recv_short (n)
     return stat;
 }
 
-db__send_short_array (x, n)
-    short *x;
-    int n;
+int
+db__send_short_array (short *x, int n)
 {
     XDR xdrs;
     int i;
@@ -65,15 +66,14 @@ db__send_short_array (x, n)
 
     if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
+
     return stat;
 }
 
 /* returns an allocated array of shorts */
 /* caller is responsible for free() */
-
-db__recv_short_array (x, n)
-    short **x;
-    int *n;
+int
+db__recv_short_array (short **x, int *n)
 {
     XDR xdrs;
     int i, count, stat;
@@ -120,5 +120,6 @@ db__recv_short_array (x, n)
 	db_protocol_error();
 
     xdr_end_recv (&xdrs);
+
     return stat;
 }
