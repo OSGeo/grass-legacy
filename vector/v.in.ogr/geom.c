@@ -14,6 +14,7 @@
  *               for details.
  *
  **************************************************************/
+
 #include <stdlib.h> 
 #include <string.h> 
 #include <grass/gis.h>
@@ -21,6 +22,7 @@
 #include <grass/Vect.h>
 #include "ogr_api.h"
 #include "global.h"
+
 
 /* Add categories to centroids inside polygon */
 int 
