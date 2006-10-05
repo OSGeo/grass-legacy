@@ -975,7 +975,7 @@ proc MapCanvas::currentzoom { mon } {
 	set cols [expr int(abs([lindex $region 2] - [lindex $region 3])/[lindex $region 5])]
 	set nsres [lindex $region 4]
 	set ewres [lindex $region 5]
-	set MapCanvas::regionstr "Region: rows=$rows cols=$cols N-S res=$nsres E-W res=$ewres"
+	set MapCanvas::regionstr "Display: rows=$rows cols=$cols N-S res=$nsres E-W res=$ewres"
 	set MapCanvas::msg($mon) $regionstr
 
 	# region contains values for n s e w ewres nsres
@@ -1066,7 +1066,6 @@ proc MapCanvas::set_wind {mon args overwrite} {
 		open [concat "|g.region -a --o" $options $args]
 	} else {
 		open [concat "|g.region -a" $options $args]
-		puts "g.region -a $options $args"
 	}
 }
 
@@ -1164,30 +1163,15 @@ proc MapCanvas::zoomregion { mon zoom } {
 	variable areaX2 
 	variable areaY2
 
-	# if click and no drag, zoom in or out by fraction of original area and center on the click spot
 	set clickzoom 0
+	
+	# get display extents in geographic coordinates
+	set dispnorth [scry2mapn $mon 0]
+	set dispsouth [scry2mapn $mon $canvas_h($mon)]
+	set dispeast  [scrx2mape $mon $canvas_w($mon)]
+	set dispwest  [scrx2mape $mon 0]
 
-	if {($areaX2($mon) == 0) && ($areaY2($mon) == 0)} {
-		# set one click zoom-in rectangle. Zooming by a function of the 
-		# square root of 2
-		set clickzoom 1
-		set center_x $areaX1($mon)
-		set center_y $areaY1($mon)
-		set X2 [expr {$areaX1($mon) + ($canvas_w($mon) / (2 * sqrt(2)))} ]
-		set X1 [expr {$areaX1($mon) - ($canvas_w($mon) / (2 * sqrt(2)))} ]
-		set Y2 [expr {$areaY1($mon) + ($canvas_h($mon) / (2 * sqrt(2)))} ]
-		set Y1 [expr {$areaY1($mon) - ($canvas_h($mon) / (2 * sqrt(2)))}]
-		set areaX1($mon) $X1
-		set areaY1($mon) $Y1
-		set areaX2($mon) $X2
-		set areaY2($mon) $Y2
-	}
-
-
-	# get current region extents	
-	foreach {map_n map_s map_e map_w} [MapCanvas::currentzoom $mon] {break}
-
-	# get zoom rectangle extents in canvas coordinates
+	# get zoom rectangle extents in geographic coordinates
 	if { $areaX2($mon) < $areaX1($mon) } {
 			set cright $areaX1($mon)
 			set cleft $areaX2($mon)
@@ -1204,39 +1188,82 @@ proc MapCanvas::zoomregion { mon zoom } {
 			set cbottom $areaY2($mon)
 	}
 
-	# get zoom rectangle extents in map coordinates
-
 	set north [scry2mapn $mon $ctop]
 	set south [scry2mapn $mon $cbottom]
 	set east  [scrx2mape $mon $cright]
 	set west  [scrx2mape $mon $cleft]
+	# (this is all you need to zoom in with box)
 
+	# if click and no drag, zoom in or out by fraction of original area and center on the click spot
+	if {($areaX2($mon) == 0) && ($areaY2($mon) == 0)} {set clickzoom 1}
+	# get first click location in map coordinates for recentering with 1-click zooming
+	set newcenter_n [scry2mapn $mon $areaY1($mon)]
+	set newcenter_e [scrx2mape $mon $areaX1($mon)]	
 
-	#zoom out
-	if { $zoom == -1 } {
-		# Center map at point clicked for one-click zooming
-		if { $clickzoom == 1} {
-			# no change in map centering with one-click zooming
-			# zooms out by a function of the square root of 2, like zooming in
-			set nsscale [expr { (sqrt(2) - 1) * ($map_n - $map_s) / 2 }]
-			set ewscale [expr { (sqrt(2) - 1) * ($map_e - $map_w) / 2 }]			
-			set north [expr {$map_n + $nsscale}]
-			set south [expr {$map_s - $nsscale}]
-			set east [expr {$map_e + $ewscale}]
-			set west [expr {$map_w - $ewscale}]
+	# get current region extents for box zooming out and recentering	
+	foreach {map_n map_s map_e map_w} [MapCanvas::currentzoom $mon] {break}
+		
+	# get original map center for recentering after 1-click zooming
+	set oldcenter_n [expr $map_s + ($map_n - $map_s)/2]
+	set oldcenter_e [expr $map_w + ($map_e - $map_w)/2]
+	
+	# set shift for recentering after 1-click zooming
+	set shift_n [expr $newcenter_n - $oldcenter_n]
+	set shift_e [expr $newcenter_e - $oldcenter_e]
 
-		} else {
-			# This effectively zooms out by the maxmimum of the two scales
-			# so that the visible map shrinks to fit inside the zoom rectangle
-			set nsscale [expr { ($map_n - $map_s) / ($north - $south) }]
-			if {$nsscale <= 1.0} {set nsscale 0.0}
-			set ewscale [expr { ($map_e - $map_w) / ($east - $west) }]
-			if {$ewscale <= 1.0} {set ewscale 0.0}
-			set north [expr { $map_n + ($nsscale * ($map_n - $north)) }]
-			set south [expr { $map_s + ($nsscale * ($map_s - $south)) }]
-			set east [expr { $map_e + ($ewscale * ($map_e - $east)) }]
-			set west [expr { $map_w + ($ewscale * ($map_w - $west)) }]
+	# 1-click zooming--zooms in or out by function of square root of 2 and 
+	# recenters region in display window at spot clicked
+	if {$clickzoom == 1} {
+		# calculate amount to zoom in or out in geographic distance
+		set nsscale [expr (($dispnorth - $dispsouth) - ($dispnorth - $dispsouth)/sqrt(2))/2]
+		set ewscale [expr (($dispeast - $dispwest) - ($dispeast - $dispwest)/sqrt(2))/2]
+		if {$zoom == 1} {
+			# zoom in
+			set north [expr {$dispnorth - $nsscale + $shift_n}]
+			set south [expr {$dispsouth + $nsscale + $shift_n}]
+			set east [expr {$dispeast - $ewscale + $shift_e}]
+			set west [expr {$dispwest + $ewscale + $shift_e}]
+		} elseif {$zoom == -1} {
+			# zoom out
+			set north [expr {$dispnorth + $nsscale + $shift_n}]
+			set south [expr {$dispsouth - $nsscale + $shift_n}]
+			set east [expr {$dispeast + $ewscale + $shift_e}]
+			set west [expr {$dispwest - $ewscale + $shift_e}]
 		}
+	}
+
+
+	# zoom out with box
+	# box determines zoom out proportion, longest box dimension determines zoom,
+	# and box center becomes region center. Zoom out relative to the geographic
+	# extents of the display rather than the current region to deal with mismatches
+	# between geometry of region and display window.
+	if { $zoom == -1 && $clickzoom == 0} {
+		# Calculate the box geometry--to be used for new region geometry
+		set box_ns [expr $north-$south]
+		set box_ew [expr $east-$west]
+		# calcuate aspect ratio for zoom box
+		set box_aspect [expr $box_ns/$box_ew]
+		# calculate zoomout ratio for longest box dimension
+		if { $box_ns > $box_ew } {
+			set zoomratio [expr ($dispnorth - $dispsouth)/$box_ns]
+			set new_ns [expr ($dispnorth - $dispsouth) * $zoomratio]
+			set new_ew [expr $new_ns / $box_aspect]
+		} else {
+			set zoomratio [expr ($dispeast - $dispwest)/$box_ew]
+			set new_ew [expr ($dispeast - $dispwest) * $zoomratio]
+			set new_ns [expr $new_ew * $box_aspect]
+		}
+
+		# get zoom-out box center
+		set boxcenter_n [expr $south + (($north - $south)/2)]
+		set boxcenter_e [expr $west + (($east - $west)/2)]
+		
+		# zoom out to new extents
+		set north [expr $boxcenter_n + ($new_ns/2)]
+		set south [expr $boxcenter_n - ($new_ns/2)]
+		set east [expr $boxcenter_e + ($new_ew/2)]
+		set west [expr $boxcenter_e - ($new_ew/2)]
 	}
 
 	MapCanvas::zoom_new $mon $north $south $east $west
@@ -1246,7 +1273,6 @@ proc MapCanvas::zoomregion { mon zoom } {
 	$can($mon) delete area
 	MapCanvas::request_redraw $mon 1
 }
-
 
 
 ###############################################################################
