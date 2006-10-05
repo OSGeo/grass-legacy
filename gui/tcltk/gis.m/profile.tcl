@@ -159,7 +159,7 @@ proc GmProfile::setelev { pmap } {
 	#set elevrange [expr $elevmax - $elevmin]		
 	
     
-	if {![catch {open "|r.univar -qg map=$pmap" r} input]} {
+	if {![catch {open "|r.univar --qg map=$pmap" r} input]} {
 		while {[gets $input line] >= 0} {
 			regexp -nocase {^([a-z]+)=(.*)$} $line trash key value
 			set elev($key) $value	

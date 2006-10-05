@@ -1288,7 +1288,7 @@ proc GRMap::rectify { } {
             append outname "_$mappid"
             # First, switch to xy mapset
             GRMap::setxyenv $xymset $xyloc
-            set cmd "v.transform -q input=$vect output=$outname pointsfile=$gcpfile"
+            set cmd "v.transform --q input=$vect output=$outname pointsfile=$gcpfile"
             runcmd $cmd
             # Return to georectified mapset
             GRMap::resetenv
