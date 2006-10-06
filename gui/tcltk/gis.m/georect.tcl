@@ -332,7 +332,8 @@ proc GRMap::group { } {
     if { $maptype == "rast" } {
         # First, switch to xy mapset
         GRMap::setxyenv $xymset $xyloc
-        run_panel "i.group"
+        set cmd "i.group"
+        run_panel $cmd
         # Return to georectified mapset
         GRMap::resetenv
     } elseif { $maptype == "vect" } {
