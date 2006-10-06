@@ -42,83 +42,25 @@
 #define EQ(a, b)    (a-b < 0.01 && a-b > -0.01 )
 #define BIG   1000000000.0
 
-#ifdef MAIN
-jmp_buf jmp;
-#else
 extern jmp_buf jmp;
-#endif
-
-struct  dirent {
-	off_t           d_off;          /* offset of next disk dir entry */
-	unsigned long   d_fileno;       /* file number of entry */
-	unsigned short  d_reclen;       /* length of this record */
-	unsigned short  d_namlen;       /* length of string in d_name */
-	char            d_name[255+1];  /* name (up to MAXNAMLEN + 1) */
-};
-
-
-typedef struct __dirdesc {
-	int     dd_fd;          /* file descriptor */
-	long    dd_loc;         /* buf offset of entry from last readddir() */
-	long    dd_size;        /* amount of valid data in buffer */
-	long    dd_bsize;       /* amount of entries read at a time */
-	long    dd_off;         /* Current offset in dir (for telldir) */
-	char    *dd_buf;        /* directory data buffer */
-} DIR;
-
-extern  DIR *opendir(/* char *dirname */);
-extern  struct dirent *readdir(/* DIR *dirp */);
-extern  int closedir(/* DIR *dirp */);
-
-/** main.c **/
-
-void  get_pwd();
 
 /** sample.c **/
-void  sample();
-void  man_unit();
-void  draw_grid();
-int   calc_unit_loc(double, int, int, int, int, double, int, int, int,
-		    double, int, int, int, double *, double *, int *,
-		    double, int, int, double, double, double);
-void  get_rd();
-void  f();
-int   overlap(int, int, int, int, int, int);
-int   calc_num();
-void  graph_unit();
-void  draw_box();
-void  draw_circle();
-void  numtrap();
-
+extern void sample (int t0, int b0, int l0, int r0, char *name, char *name1,
+	char *name2, double *msc);
+extern void draw_box (int x0, int y0, int xp, int yp, int thick);
+extern void draw_circle (int x0, int y0, int xp, int yp, int thick);
+extern void numtrap (int n, double *a);
 
 /** mv_wind.c **/
-void  mov_wind();
-
+extern void mov_wind (int t, int b, int l, int r, char *n1, char *n2, char *n3, double *mx);
 
 /** ask_group.c **/
-int  ask_group();
-int  get_group_drv();
-void  ask_limits();
-void  ask_move_recl();
-void  get_index();
-void  ask_reclass();
-void  get_1recl();
-void  ask_fromto();
-int   search_fn();
-FILE  *fopen0();
-
+extern int ask_group (char **sel);
+extern int get_group_drv (char **sel);
+extern FILE *fopen0 (char *name, char *flag);
 
 /** setup.c **/
-void  set_map();
-void  change_color();
-void  set_frame();
-void  set_rgn();
-void  def_rgn();
-void  ppoint();
-void  pbutton();
-void  save_rgn();
-void  print_hd();
-void  scr_cell();
-void  paint_map();
 
+extern void set_map (char *name, char *name1, char *name2, struct Cell_head window, int top, int bot, int left, int right);
+extern void paint_map (char *n1, char *n2, char *n3);
 
