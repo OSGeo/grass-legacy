@@ -58,6 +58,7 @@ int G_asprintf(char **out, const char *fmt, ...)
 {
     va_list ap;
     int ret_status = EOF;
+    char *file_name;
     FILE *fp = NULL;
     char *work = NULL;
 
@@ -65,7 +66,17 @@ int G_asprintf(char **out, const char *fmt, ...)
 
     va_start(ap, fmt);
 
-    if ( fp = tmpfile() ) {
+    /* Warning: tmpfile() does not work well on Windows (MinGW)
+     *          if user does not have write access on the drive where 
+     *          working dir is? */
+#ifdef __MINGW32__
+    file_name = G_tempfile();
+    fp = fopen ( file_name, "w+" );
+#else
+    fp = tmpfile(); 
+#endif /* __MINGW32__ */
+
+    if ( fp ) {
 	int count;
 
 	count = vfprintf(fp, fmt, ap);
@@ -82,6 +93,10 @@ int G_asprintf(char **out, const char *fmt, ...)
 	    }
 	}
 	fclose(fp);
+#ifdef __MINGW32__
+	/* unlink ( file_name ); */
+        free ( file_name );
+#endif /* __MINGW32__ */
     }
     va_end(ap);
     *out = work;
