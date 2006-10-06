@@ -28,9 +28,24 @@
 #include <grass/display.h>
 
 
+static int calc_unit_loc (double radius, int top, int bot, int left, int right,
+	double ratio, int u_w, int u_l, int method, double intv,
+	int num, int h_d, int v_d, double *ux, double *uy,
+	int *sites, double startx, int starty, int fmask,
+	double nx, double x, double y);
+static void draw_grid (int l, int t, int w_w, int w_l, int h_d, int v_d, int starty,
+	int startx, double colratio, double rowratio);
+static void man_unit (int t, int b, int l, int r, char *n1, char *n2, char *n3,
+	double *mx, int fmask);
+static void get_rd (int exp1, int exp2, int dx, int dy, int u_w, int u_l, int *l, int *t);
+static int overlap (int x1, int y1, int x2, int y2, int dx, int dy);
+static int calc_num (int w_w, int w_l, double ratio, int u_w, int u_l, int method,
+	double intv, int startx, int starty, int size, int count);
+static void graph_unit (int t, int b, int l, int r, char *n1, char *n2, char *n3, double *mx, int fmask);
+
 int  tag = 0;
 
-
+static RETSIGTYPE f(int);
 
 /* SAMPLING UNIT SETUP DRIVER */
 void sample (int t0, int b0, int l0, int r0, char *name, char *name1,
@@ -103,8 +118,8 @@ keyboard:
 
 
 /* DEFINE SAMPLING UNITS MANUALLY */
-void man_unit (int t, int b, int l, int r, char *n1, char *n2, char *n3,
-		double *mx, int fmask)
+static void man_unit (int t, int b, int l, int r, char *n1, char *n2, char *n3,
+	double *mx, int fmask)
 {
   int      i, j, dx, dy, w_w, w_l, u_w, u_l,
 	   method, l0, t0, randflag=0, unit_num, num=0, scales,
@@ -639,8 +654,8 @@ last:
 
 
 /* FOR STRATIFIED RANDOM DISTRIBUTION, DRAW THE STRATA ON THE SCREEN */
-void draw_grid (int l, int t, int w_w, int w_l, int h_d, int v_d, int starty,
-		int startx, double colratio, double rowratio)
+static void draw_grid (int l, int t, int w_w, int w_l, int h_d, int v_d, int starty,
+	int startx, double colratio, double rowratio)
 {
    int j, k, l0, t0, itmp, dx, dy, initl, tmp;
 
@@ -705,11 +720,12 @@ void draw_grid (int l, int t, int w_w, int w_l, int h_d, int v_d, int starty,
 
 
 /* CALCULATE THE COORDINATES OF THE TOP LEFT CORNER OF THE SAMPLING UNITS */
-int calc_unit_loc (double radius, int top, int bot, int left, int right,
-		   double ratio, int u_w, int u_l, int method, double intv,
-		   int num, int h_d, int v_d, double *ux, double *uy,
-		   int *sites, double startx, int starty, int fmask,
-		   double nx, double x, double y)
+static int calc_unit_loc (
+	double radius, int top, int bot, int left, int right,
+	double ratio, int u_w, int u_l, int method, double intv,
+	int num, int h_d, int v_d, double *ux, double *uy,
+	int *sites, double startx, int starty, int fmask,
+	double nx, double x, double y)
 {
   char	  *sites_mapset, sites_file_name[GNAME_MAX], *desc, *cmd;
   FILE	  *sites_fp;
@@ -945,7 +961,7 @@ back:
 
 
 /* FIND THE CORRECT RANDOM NUMBER */
-void get_rd (int exp1, int exp2, int dx, int dy, int u_w, int u_l, int *l, int *t)
+static void get_rd (int exp1, int exp2, int dx, int dy, int u_w, int u_l, int *l, int *t)
 {
    int  rdl,rdt;
 
@@ -962,7 +978,7 @@ void get_rd (int exp1, int exp2, int dx, int dy, int u_w, int u_l, int *l, int *
 
 
 /* */
-void  f()
+static RETSIGTYPE f(int sig)
 {
   tag = 1;
   longjmp(jmp, 1);
@@ -972,7 +988,7 @@ void  f()
 
 
 /* CHECK IF 2 SAMPLING UNITS OVERLAP */
-int overlap (int x1, int y1, int x2, int y2, int dx, int dy)
+static int overlap (int x1, int y1, int x2, int y2, int dx, int dy)
 {
   if (x1 >= x2+dx || x2 >= x1+dx || y1 >= y2+dy || y2 >= y1+dy)
      return 0;
@@ -983,8 +999,8 @@ int overlap (int x1, int y1, int x2, int y2, int dx, int dy)
 
 
 /* CALCULATE MAXIMUM POSSIBLE NUMBER OF SAMPLING UNITS */
-int calc_num (int w_w, int w_l, double ratio, int u_w, int u_l, int method,
-	      double intv, int startx, int starty, int size, int count)
+static int calc_num (int w_w, int w_l, double ratio, int u_w, int u_l, int method,
+	double intv, int startx, int starty, int size, int count)
 {
   int        nx, ny, max;
 
@@ -1017,7 +1033,7 @@ int calc_num (int w_w, int w_l, double ratio, int u_w, int u_l, int method,
 				/* USE THE MOUSE TO DEFINE SAMPLING
 				   UNITS GRAPHICALLY */
 
-void graph_unit (int t, int b, int l, int r, char *n1, char *n2, char *n3, double *mx, int fmask)
+static void graph_unit (int t, int b, int l, int r, char *n1, char *n2, char *n3, double *mx, int fmask)
 
 {
   int  		 x0=0, y0=0, xp, yp, ux[250], uy[250], u_w, u_l, btn=0, k=0,
