@@ -373,7 +373,7 @@ proc mk_hgt_slider {W} {
 
     # make sliders
     set Nv_(HEIGHT_SLIDER) $W.height
-    Nv_mkFloatScale $W.height v height $max $min $val update_height 2
+    Nv_mkFloatScale $W.height v Height $max $min $val update_height 2
 
     return $W.height
 }
@@ -386,7 +386,22 @@ proc update_exag {exag} {
 	Nv_setEntry $Nv_(main_BASE).midf.zexag.f.entry $exag
 	Nv_floatscaleCallback $Nv_(main_BASE).midf.zexag e 2 null $exag
     }
+
+    set ht1 [lindex [Nget_real_position 1] 2]
+    set ht2 [lindex [Nget_height] 0]
+
     Nchange_exag $exag
+
+    ## Update height to avoid scene jump
+    ## Changing the exag changes the height
+    if {$ht1 == $ht2} {
+	Nv_floatscaleCallback $Nv_(HEIGHT_SLIDER) b 2 update_height $ht2
+    } else {
+	Nv_floatscaleCallback $Nv_(HEIGHT_SLIDER) b 2 update_height \
+	     [lindex [Nget_real_position 1] 2]
+    }
+
+
 #*** ACS_MODIFY 1.0 BEGIN ******************************************************
 	if {$Nv_(FlyThrough) == 0} {
 		# original 2 lines
@@ -487,6 +502,7 @@ proc update_height {h} {
 	set h [expr int((100.0*($h -$min))/($max - $min))]
 	Nv_floatscaleCallback $Nv_(LIGHT_HGT) b 2 set_lgt_hgt $h
     }
+
 }
 
 

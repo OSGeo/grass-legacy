@@ -34,6 +34,7 @@
 
 #%Module
 #%  description: Download Waypoints, Routes, and Tracks from a GPS receiver or a GPS ascii file into a vector map.
+#%  keywords: vector, import, GPS
 #%End
 #%flag
 #%  key: v

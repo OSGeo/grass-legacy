@@ -43,6 +43,7 @@ int main (int argc, char **argv)
     char *buf = NULL;
 
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = _("Print vector attributes");
 
     map_opt = G_define_standard_option(G_OPT_V_MAP);

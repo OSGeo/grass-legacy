@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "pv.h"
 
 
@@ -28,8 +29,9 @@ int main(int argc, char *argv[])
     shh = color_ok = 0;
 
     module = G_define_module();
+    module->keywords = _("paint, VRML");
     module->description =
-	"module to output GRASS data in the format of Virtual Reality Modeling Language (VRML)";
+	"Outputs GRASS data in the format of Virtual Reality Modeling Language (VRML)";
 
     rast_el = G_define_option();
     rast_el->key            	= "elev";

@@ -52,6 +52,7 @@
 
 #%Module
 #%  description: Export display monitor to a GpsDrive compatible backdrop image
+#%  keywords: display, export, GPS
 #%End
 #%option
 #% key: output

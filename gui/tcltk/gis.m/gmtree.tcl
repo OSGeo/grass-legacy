@@ -47,12 +47,8 @@ proc GmTree::create { mon } {
     variable pg
     variable page
     variable node
-    global treefile
-	global tree_pane
 	global pgs
-	global sw
 	global options
-	global win
 	global filename
 	global keycontrol
 	
@@ -106,10 +102,14 @@ proc GmTree::create { mon } {
 # switch page when monitor selected
 proc GmTree::switchpage { mon } {
 	global pgs
-	global options.fr
+	global options
 	global opt
 	variable tree
 	
+	if {[info exists options]} {
+	    destroy $options.fr
+	}
+
 	$pgs raise "page_$mon"
 
     pack $tree($mon)  -side top -expand yes -fill both

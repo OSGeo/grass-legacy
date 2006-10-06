@@ -11,20 +11,21 @@
 
 namespace eval GRToolBar {
     variable toolbar
+    variable grmaptools
 }
 
 
 ###############################################################################
 
 proc GRToolBar::create { tb } {
+    variable grmaptools
+    variable toolbar
     global gmpath
     global bgcolor
-    global maptools
     global iconpath
-    variable toolbar
     
     set selcolor #88aa88
-    set maptools "selector"
+    set grmaptools "selector"
     set toolbar $tb
 
     # DISPLAY AND MONITOR SELECTION
@@ -32,7 +33,7 @@ proc GRToolBar::create { tb } {
     
     # display
     $bbox1 add -image [image create photo -file "$iconpath/gui-display.gif"] \
-        -command "GRMap::request_redraw 0" \
+        -command "GRMap::request_redraw 1" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
         -highlightbackground $bgcolor  -activebackground $bgcolor\
         -helptext [G_msg "Display active layers"]
@@ -55,7 +56,7 @@ proc GRToolBar::create { tb } {
     set selector [radiobutton $tb.selector \
     	-image [image create photo -file "$iconpath/gui-gcpset.gif"] \
         -command "GRMap::stoptool; GRMap::selector" \
-		-variable maptools -value selector  -relief flat -offrelief flat -overrelief raised \
+		-variable grmaptools -value selector  -relief flat -offrelief flat -overrelief raised \
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
 		-activebackground $bgcolor -highlightbackground $bgcolor  ]
     DynamicHelp::register $selector balloon [G_msg "Set ground control points"]
@@ -64,7 +65,7 @@ proc GRToolBar::create { tb } {
     set zoomin [radiobutton $tb.zoomin \
     	-image [image create photo -file "$iconpath/gui-zoom_in.gif"] \
         -command "GRMap::stoptool; GRMap::zoombind 1" \
-		-variable maptools -value zoomin -relief flat -offrelief flat -overrelief raised \
+		-variable grmaptools -value zoomin -relief flat -offrelief flat -overrelief raised \
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]   
     DynamicHelp::register $zoomin balloon [G_msg "Zoom In"]
@@ -73,7 +74,7 @@ proc GRToolBar::create { tb } {
     set zoomout [radiobutton $tb.zoomout \
 		-image [image create photo -file "$iconpath/gui-zoom_out.gif"] \
         -command "GRMap::stoptool; GRMap::zoombind -1" \
-		-variable maptools -value zoomout  -relief flat -offrelief flat -overrelief raised \
+		-variable grmaptools -value zoomout  -relief flat -offrelief flat -overrelief raised \
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]    
     DynamicHelp::register $zoomout balloon [G_msg "Zoom Out"]
@@ -82,7 +83,7 @@ proc GRToolBar::create { tb } {
     set pan [radiobutton $tb.pan \
 		-image [image create photo -file "$iconpath/gui-pan.gif"] \
         -command "GRMap::stoptool; GRMap::panbind" \
-		-variable maptools -value pan  -relief flat -offrelief flat -overrelief raised \
+		-variable grmaptools -value pan  -relief flat -offrelief flat -overrelief raised \
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]    
     DynamicHelp::register $pan balloon [G_msg "Pan"]
@@ -114,7 +115,7 @@ proc GRToolBar::create { tb } {
 ###############################################################################
 # changes button on keypress
 proc GRToolBar::changebutton { rbname } {
-	global maptools
+	variable grmaptools
 	
-	set maptools $rbname
+	set grmaptools $rbname
 }

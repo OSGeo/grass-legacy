@@ -15,7 +15,8 @@
 #############################################################################
 
 #%Module
-#% description: Calculates univariate statistics from a GRASS raster map based on vector objects
+#%  description: Calculates univariate statistics from a GRASS raster map based on vector objects
+#%  keywords: vector, raster, statistics
 #%End
 #%flag
 #%  key: c
