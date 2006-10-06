@@ -25,8 +25,11 @@
 #include <grass/raster.h>
 #include <grass/display.h>
 #include <grass/config.h>
+#include <grass/glocale.h>
+
 #include "r.le.trace.h"
 #include "local_proto.h"
+
 struct CHOICE 		*choice;
 int   			finput;
 int   			total_patches=0;
@@ -34,12 +37,10 @@ PATCH 			*patch_list = NULLPTR;
 FILE  			*fp;
 
 
-
 				/* MAIN PROGRAM */
-
 int main (int argc, char *argv[])
-
 {
+  struct GModule *module;
   struct Cell_head  window;
   int               bot, right, t0, b0, l0, r0, clear=0;
   double 	    Rw_l, Rscr_wl;
@@ -48,15 +49,21 @@ int main (int argc, char *argv[])
 
   setbuf (stdout, NULL);	/* unbuffered */
   setbuf (stderr, NULL);
-  G_gisinit(argv[0]); 
-
 
   choice = (struct CHOICE *) G_calloc(1, sizeof(struct CHOICE));
 
+  G_gisinit(argv[0]); 
+    module = G_define_module();
+    module->keywords = _("raster");
+    module->description =
+      _("Display the boundary of each r.le patch and show how the boundary "
+	"is traced, display the attribute, size, perimeter, and shape "
+	"indices for each patch, and save the data in an output file.");
+
   user_input(argc,argv) ;
 
-  				/* setup the current window for display */
 
+  				/* setup the current window for display */
   G_system(" d.colormode float");
   G_system(" d.frame -e");
   Rw_l = (double)G_window_cols()/G_window_rows();
