@@ -23,36 +23,39 @@
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 #include <grass/config.h>
 #define MAIN
 #include "patch.h"
 
 
-
 struct CHOICE *choice;
 
+
 int main (int argc, char **argv)
-
 {
+  struct GModule *module;
 
-					/* initialize the GRASS GIS system */
-
-  G_gisinit(argv[0]); 
-
-					/* allocate space for the choice
-				   	   data structure */
-
-
+  /* allocate space for the choice data structure */
   choice = (struct CHOICE *)G_calloc(1, sizeof(struct CHOICE));
 
-					/* call user_input to read in the 
-				  	   parameters */
 
+  /* initialize the GRASS GIS system */
+  G_gisinit(argv[0]); 
+
+  module = G_define_module();
+  module->keywords = _("raster");
+  module->description =
+      _("Calculates attribute, patch size, core (interior) size, shape, "
+        "fractal dimension, and perimeter measures for sets of patches "
+	"in a landscape.");
+
+  /* call user_input to read in the parameters */
   user_input(argc,argv) ;
 
-  					/* display the parameter choices */
 
+  					/* display the parameter choices */
   fprintf(stderr, "\nPARAMETER CHOICES:\n");
   fprintf(stderr, "\tMAP:\t  %s\n", choice->fn);
   if (choice->wrum == 'r')
