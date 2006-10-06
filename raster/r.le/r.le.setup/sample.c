@@ -108,9 +108,10 @@ void man_unit (int t, int b, int l, int r, char *n1, char *n2, char *n3,
 {
   int      i, j, dx, dy, w_w, w_l, u_w, u_l,
 	   method, l0, t0, randflag=0, unit_num, num=0, scales,
-	   h_d=1, v_d=1, *ux, *uy, itmp, thick, sites, *row_buf, fr, k,
+	   h_d=1, v_d=1, itmp, thick, sites, *row_buf, fr, k,
 	   count=0, maxsize=0, nx=0, ny=0, numx=0, numy=0,
 	   al=0, ar=0, at=0, ab=0, au_w=0, au_l=0;
+  double   *ux, *uy;
   FILE     *fp ;
   double   dtmp, ratio, size, intv=0.0, start[2], cnt=0, radius=0.0;
   char     *sites_mapset;
@@ -547,21 +548,21 @@ tryagain:
 				   units */
 
 	if (method != 5) {
-	   ux = (int *)G_calloc(num+1, sizeof(int));
-           uy = (int *)G_calloc(num+1, sizeof(int));
+	    ux = G_calloc(num+1, sizeof(double));
+	    uy = G_calloc(num+1, sizeof(double));
 	}
 
 	else {
-	   ux = (int *)G_calloc(250, sizeof(int));
-           uy = (int *)G_calloc(250, sizeof(int));
+	    ux = G_calloc(250, sizeof(double));
+	    uy = G_calloc(250, sizeof(double));
 	}
 
 				/* calculate the upper left corner of sampling
 				   units and store them in arrays ux and uy */
 
-        if (!calc_unit_loc(radius, t, b, l, r, ratio, u_w, u_l, method, intv, num, h_d,
-	   v_d, ux, uy, &sites, (int)(start[1]), (int)(start[0]), fmask, nx,
-           mx[0], mx[1]))
+        if (!calc_unit_loc(radius, t, b, l, r, ratio, u_w, u_l, method, intv,
+		num, h_d, v_d, ux, uy, &sites, (int)(start[1]), (int)(start[0]),
+		fmask, nx, mx[0], mx[1]))
 	   goto last;
 
         signal (SIGINT, SIG_DFL);
@@ -615,7 +616,7 @@ last:
         radius, (i+1));
 
      for(j = 0; j < num; j++)
-	fprintf(fp, "%10d%10d   left, top of unit[%d]\n", ux[j], uy[j], j+1);
+	fprintf(fp, "%10d%10d   left, top of unit[%d]\n", (int)ux[j], (int)uy[j], j+1);
 
      if (i < scales - 1 && G_yes("\n\n    Refresh the screen?   ", 1)) {
 	paint_map(n1, n2, n3);
@@ -850,7 +851,7 @@ back:
 
 	   lap = 0;
            for (j = 0; j < cnt; j++) {
-	      if (overlap(l+left1, t+top1, ux[j], uy[j], u_w, u_l))
+	      if (overlap(l+left1, t+top1, (int)ux[j], (int)uy[j], u_w, u_l))
 	         lap = 1;
 	   }
            if (lap)
@@ -981,8 +982,6 @@ int overlap (int x1, int y1, int x2, int y2, int dx, int dy)
 
 
 
-
-
 /* CALCULATE MAXIMUM POSSIBLE NUMBER OF SAMPLING UNITS */
 int calc_num (int w_w, int w_l, double ratio, int u_w, int u_l, int method,
 	      double intv, int startx, int starty, int size, int count)
@@ -990,7 +989,6 @@ int calc_num (int w_w, int w_l, double ratio, int u_w, int u_l, int method,
   int        nx, ny, max;
 
 				/* for random nonoverlapping */
-
   if (method == 1) {
      max = count/size;
   }
@@ -1012,8 +1010,6 @@ int calc_num (int w_w, int w_l, double ratio, int u_w, int u_l, int method,
   }
   return max;
 }
-
-
 
 
 

@@ -78,10 +78,12 @@ void  get_pwd();
 void  sample();
 void  man_unit();
 void  draw_grid();
-int   calc_unit_loc();
+int   calc_unit_loc(double, int, int, int, int, double, int, int, int,
+		    double, int, int, int, double *, double *, int *,
+		    double, int, int, double, double, double);
 void  get_rd();
 void  f();
-int   overlap();
+int   overlap(int, int, int, int, int, int);
 int   calc_num();
 void  graph_unit();
 void  draw_box();
