@@ -333,7 +333,7 @@ proc GRMap::group { } {
         # First, switch to xy mapset
         GRMap::setxyenv $xymset $xyloc
         set cmd "i.group"
-        run_panel $cmd
+        run_ui $cmd
         # Return to georectified mapset
         GRMap::resetenv
     } elseif { $maptype == "vect" } {
