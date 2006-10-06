@@ -23,16 +23,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include <sys/types.h>
+#include <dirent.h>
+
 #include <grass/gis.h>
 #include <grass/raster.h>
 #include <grass/display.h>
 #include <grass/glocale.h>
 
-#define MAIN
 #include "setup.h"
 #include <grass/config.h>
 
 
+static void get_pwd(void);
+
+jmp_buf jmp;
 				/* MAIN PROGRAM */
 
 int main (int argc, char *argv[])
@@ -126,7 +132,7 @@ int main (int argc, char *argv[])
 
 
 /* SETUP THE R.LE.PARA DIRECTORY */
-void   get_pwd()
+static void get_pwd(void)
 {
   DIR    *dp;
 
