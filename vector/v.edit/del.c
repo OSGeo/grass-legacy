@@ -31,12 +31,12 @@ int do_del(struct Map_info *Map)
 		Vect_get_node_coor(Map, id, &x, &y, NULL);
 		area = Vect_find_area(Map, x, y);
 		G_debug(1, "Deleteing area %d: id=%d, area=%d",cat,id,area);
-//		Vect_delete_line(Map, id);
-//		Vect_delete_line(Map, area);
+/* 		Vect_delete_line(Map, id); */
+/* 		Vect_delete_line(Map, area); */
 		attr_del(Map, layer, cat);
 	    }
 	    else {
-//		Vect_delete_line(Map, id);
+/* 		Vect_delete_line(Map, id); */
 		attr_del(Map, layer, cat);
 	    }
 	}
