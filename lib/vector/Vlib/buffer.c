@@ -117,6 +117,7 @@ int point_in_buf ( struct line_pnts *Points, double px, double py, double d )
 void clean_parallel ( struct line_pnts *Points, struct line_pnts *origPoints, double d , int rm_end )
 {
     int i, j, np, npn, sa, sb;
+    int sa_max = 0;
     int first=0, current, last, lcount;
     double *x, *y, px, py, ix, iy;
     static struct line_pnts *sPoints = NULL;
@@ -148,6 +149,10 @@ void clean_parallel ( struct line_pnts *Points, struct line_pnts *origPoints, do
             G_debug (5, "  current = %d, last = %d, lcount = %d", current, last, lcount);
 	}
 	if ( lcount == 0 ) { break; }   /* loop not found */
+
+	/* ensure sa is monotonically increasing, so npn doesn't reset low */
+	if (sa > sa_max ) sa_max = sa;
+	if (sa < sa_max ) break;
 
 	/* remove loop if in buffer */
 	if ( (sb-sa) == 1 ){ /* neighbouring lines overlap */
