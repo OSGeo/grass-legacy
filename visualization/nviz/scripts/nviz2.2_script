@@ -721,13 +721,12 @@ proc load_state { dummy  } {
 
 #Procedure to load NVIZ HTML pages
 proc nviz_browse { URL dummy } {
-global env
+    global env
 
-#OLD: exec  $env(GISBASE)/docs/html/nviz/help_frame.tcl $env(GISBASE)/docs/html/nviz/$URL &
     if {[info exists env(MSYSCON)]} {
-	    exec -- $env(GRASS_HTML_BROWSER) file://$env(GISBASE)/docs/html/nviz/$URL &;
+	exec -- $env(GRASS_HTML_BROWSER) file://$env(GISBASE)/docs/html/nviz/$URL &;
     } else {
-	    exec -- $env(GRASS_HTML_BROWSER) file://$env(GISBASE)/docs/html/nviz/$URL >@stdout 2>@stderr &;
+	exec -- $env(GRASS_HTML_BROWSER) file://$env(GISBASE)/docs/html/nviz/$URL >@stdout 2>@stderr &;
     }
 }
 
