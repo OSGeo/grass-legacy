@@ -580,7 +580,7 @@ main (int argc, char *argv[])
      * calculate different threshold for each map, depending on map's bounding box */
     fprintf ( stderr, "Snapping boundaries ...\n" );
     Vect_snap_lines ( &Out, GV_BOUNDARY, 1e-7, NULL, stderr );
-    
+
     fprintf ( stderr, "Breaking boundaries ...\n" );
     Vect_break_lines ( &Out, GV_BOUNDARY, NULL, stderr );
 
@@ -602,9 +602,11 @@ main (int argc, char *argv[])
     /* Calculate new centroids for all areas */
     nareas = Vect_get_num_areas ( &Out );
     Areas = (char *) G_calloc ( nareas+1, sizeof(char) );
+
     for ( area = 1; area <= nareas; area++ ) {
 	G_debug ( 3, "area = %d", area );
 
+/*** BUG *** if dynamic bufcol was used, "buffer" will only hold last value ***/
 	ret = area_in_buffer ( &In, &Out, area, type, buffer, tolerance );
 
 	if ( ret ) {
@@ -685,7 +687,8 @@ main (int argc, char *argv[])
 	G_debug ( 3, "area = %d", area );
 
 	if ( !Vect_area_alive ( &Out, area ) ) continue;
-	
+
+/*** BUG *** if dynamic bufcol was used, "buffer" will only hold last value ***/	
 	ret = area_in_buffer ( &In, &Out, area, type, buffer, tolerance );
 
 	if ( ret ) {
