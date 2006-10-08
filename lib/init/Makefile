@@ -50,7 +50,6 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/epsg_option.tcl \
 	$(ETC)/file_option.tcl \
 	$(ETC)/gintro.gif \
-	$(ETC)/help.tcl \
 	$(ETC)/make_location_epsg.sh \
 	$(ETC)/grass-run.sh \
 	$(ETC)/grass-xterm-wrapper
@@ -142,10 +141,6 @@ $(ETC)/epsg_option.tcl: epsg_option.tcl.in
 		sh ./projshare.sed "$(PROJSHARE)" epsg_option.tcl.in > $@ ; \
 	fi
 	chmod 755 $@
-
-$(ETC)/help.tcl: help.tcl
-	rm -f $@
-	$(INSTALL) -m 755 help.tcl $(ETC)
 
 $(ETC)/file_option.tcl: file_option.tcl
 	rm -f $@
