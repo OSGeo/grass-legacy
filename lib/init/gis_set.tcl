@@ -41,19 +41,6 @@ set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]
 set GRASSVERSION [read -nonewline $fp]
 close $fp
 
-#HTML help
-source $env(GISBASE)/etc/help.tcl
-proc make_help_window { w } {
-
-        frame $w
-        frame $w.f2
-        frame $w.f1
-
-        pack $w -side top -expand 1 -fill both
-        pack $w.f1 -side top -expand 1 -fill both
-        pack $w.f2 -side bottom -expand 0 -fill both
-
-}
 
 proc searchGISRC { filename } {
  
@@ -616,7 +603,7 @@ proc gisSetWindow {} {
 				exec -- $env(GRASS_HTML_BROWSER) file://$env(GISBASE)/docs/html/helptext.html >@stdout 2>@stderr &;
 			}
         }
-	
+
     button .frame0.frameBUTTONS.cancel \
     	-text [G_msg "Exit"] \
     	-width 10 \
