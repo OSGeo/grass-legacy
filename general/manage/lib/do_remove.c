@@ -1,8 +1,8 @@
 #include <string.h>
-#include "list.h"
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/glocale.h>
+#include "list.h"
 
 /* 
  *  returns 0 - success
@@ -11,53 +11,69 @@
 int do_remove (int n, char *old)
 {
     int i, ret;
-    int len;
+    /* int len; */
     char *mapset;
     int result = 0;
+    int removed = 0;
 
-    G_message ("REMOVE [%s]", old);
+    G_message ("Remove <%s>", old);
 
-    len = get_description_len(n);
+    /* len = get_description_len(n); */
 
     hold_signals(1);
-    if ( strcmp(list[n].alias, "vect") == 0 ) {
-	if ((mapset = G_find_vector2 (old, "")) == NULL)
-	    G_fatal_error(_("Vector map <%s> not found"), old);
+    if ( G_strcasecmp(list[n].alias, "vect") == 0 ) {
 	ret = Vect_delete ( old );
 	if ( ret == -1 ) {
-	    G_warning(_("Cannot delete vector %s"), old );
-            result = 1;
+	    result = 1;
+	}
+	else {
+	    removed = 1;
 	}
     } else {
-        /* 
-         if ((mapset = G_find_cell2 (old, "")) == NULL)
-            G_fatal_error(_("Raster file <%s> not found"), old);
-        */
-
+	removed = 0;
         for (i = 0; i < list[n].nelem; i++) {
 
 	    switch (G_remove (list[n].element[i], old))
 	    {
 	    case -1: 
-                G_warning (" %-*s %s", len, list[n].desc[i],_("COULD NOT REMOVE"));
+                G_warning ("%s: %s", list[n].desc[i],_("couldn't be removed"));
                 result = 1;
 		break;
 	    case  0: 
-                G_message (" %-*s %s", len, list[n].desc[i],_("MISSING"));
+		G_debug (1, "%s: %s", list[n].desc[i],_("missing"));
 		break;
             case 1:
-                G_message (" %-*s ", len, list[n].desc[i]);
+                G_debug (1, "%s: %s", list[n].desc[i],_("removed"));
+		removed = 1;
 		break;
 	    }
 	}
     }
-    if (strcmp (list[n].element[0], "cell") == 0)
+
+    if (G_strcasecmp (list[n].element[0], "cell") == 0)
     {
 	char colr2[50];
 	sprintf (colr2, "colr2/%s", G_mapset());
-	G_remove (colr2, old);
+	switch (G_remove (colr2, old))
+	{
+	case -1: 
+	    G_warning ("%s: %s", colr2, _("couldn't be removed"));
+	    result = 1;
+	    break;
+	case  0: 
+	    G_debug (1, "%s: %s", colr2, _("missing"));
+	    break;
+	case 1:
+	    G_debug (1, "%s: %s", colr2, _("removed"));
+	    removed = 1;
+	    break;
+	}
     }
+
     hold_signals(0);
 
+    if (!removed)
+	G_warning (_("<%s> nothing removed"), old);
+    
     return result;
 }
