@@ -315,6 +315,7 @@ fi
 
 table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
 database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
+driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'`
 
 if [ -z "$table" ]
     then
@@ -325,7 +326,7 @@ if [ -z "$table" ]
 # update color values to the table?
 if [ "$GIS_FLAG_U" -eq 1 ] ; then
     # test, if the column GRASSRGB is in the table
-    if [ "`db.columns table=$table database=$database | grep -i grassrgb`" == "" ] ; then
+    if [ "`db.columns table=$table database=$database driver=$driver| grep -i grassrgb`" == "" ] ; then
         echo "Creating column 'grassrgb' in table '$table'"
         echo "ALTER TABLE $table ADD COLUMN grassrgb varchar(11)" | db.execute database=$database
     fi
@@ -342,9 +343,9 @@ echo "Group $group" > "$TMP3"
 
 # Calculate statistics for thematic intervals
 if [ -z "$GIS_OPT_WHERE" ] ; then
-  v.univar.sh -e database=$database table=$table column=$GIS_OPT_COLUMN > "$TMP1"
+  v.univar.sh -e database=$database table=$table driver=$driver column=$GIS_OPT_COLUMN > "$TMP1"
 else
-  v.univar.sh -e database=$database table=$table column=$GIS_OPT_COLUMN where="$GIS_OPT_WHERE" > "$TMP1"
+  v.univar.sh -e database=$database table=$table driver=$driver column=$GIS_OPT_COLUMN where="$GIS_OPT_WHERE" > "$TMP1"
 fi
   
 min="`grep 'Minimum:' $TMP1 | sed s/Minimum://`"
