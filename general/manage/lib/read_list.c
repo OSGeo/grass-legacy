@@ -37,8 +37,8 @@ read_list (int check_if_empty)
     list = 0;
     any = 0;
 
-    if ((env = getenv ("ELEMENT_LIST")))
-	strcpy (element_list, env);
+    if ((env = G__getenv ("ELEMENT_LIST")))
+	G_strcpy (element_list, env);
     else
 	sprintf (element_list, "%s/etc/element_list", G_gisbase());
     fd = fopen (element_list, "r");
@@ -47,7 +47,7 @@ read_list (int check_if_empty)
 	G_fatal_error("can't open database element list <%s>", element_list);
 
     line = 0;
-    while (G_getl (buf, sizeof buf, fd))
+    while (G_getl (buf, sizeof (buf), fd))
     {
 	line++;
 	if (*buf == '#') continue;

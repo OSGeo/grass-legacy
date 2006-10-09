@@ -17,13 +17,13 @@ main (int argc, char *argv[])
     int nrmaps;
     char **rmaps, *location_path, buf1[256], buf2[256];
     FILE *fp;
-    int result = 0;
+    int result = EXIT_SUCCESS;
     int force = 0;
 
     init (argv[0]);
 
     module = G_define_module();
-    module->keywords = _("general");
+    module->keywords = _("general,manage");
     module->description =
 		_("Removes data base element files from "
 		"the user's current mapset.");
@@ -48,9 +48,9 @@ main (int argc, char *argv[])
     }
 
     if (G_parser(argc, argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
-    location_path = G__location_path();
+    location_path = G_location_path();
     mapset = G_mapset();
 
     if (force_flag->answer)
@@ -90,7 +90,7 @@ main (int argc, char *argv[])
 				    location_path, rmapset, rname);
 		    sprintf(buf2, "%s@%s", name, mapset);
 
-		    if(nrmaps == 1 && !strcmp(rmaps[0], buf2))
+		    if(nrmaps == 1 && !G_strcasecmp(rmaps[0], buf2))
 		    {
 			
 		        if (  remove(buf1) < 0 ) {
@@ -105,7 +105,7 @@ main (int argc, char *argv[])
 		        if ( (fp = fopen(buf1, "w")) ) {
                             for(; *rmaps; rmaps++)
                             {
-                                if(strcmp(*rmaps, buf2))
+                                if(G_strcasecmp(*rmaps, buf2))
                                     fprintf(fp, "%s\n", *rmaps);
                             }
                             fclose(fp);
@@ -120,7 +120,7 @@ main (int argc, char *argv[])
 		}
 		if ( do_remove (n, name) == 1 )
                 {
-		    result = 1;
+		    result = EXIT_FAILURE;
                 }
 	    }
     }
