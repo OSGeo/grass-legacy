@@ -220,8 +220,11 @@ pack .pf -fill x -side top
 Label .pf.prompt -padx 3 -pady 2 -relief flat -anchor w -textvariable prompt
 pack .pf.prompt -fill x  -side left
 
-labelframe .bpf -text [G_msg "mouse button actions (left, right, center)"] \
-    -labelanchor n
+LabelFrame .bpf -text [G_msg "mouse button actions (left, middle, right)"] \
+    -side top -anchor n -background HoneyDew2
+# why doesn't the frame render?
+#    -relief groove -borderwidth 1
+
 pack .bpf -fill x -side top -padx 8
 Label .bpf.left -width 10  -pady 5 -relief raised -anchor center -textvariable prompt_left -bg grey95 
 Label .bpf.middle -width 10 -padx 2 -pady 5 -relief raised -anchor center -textvariable prompt_middle -bg grey95
