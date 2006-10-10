@@ -559,7 +559,7 @@ main (int argc, char **argv)
 		             window.east < box.W ||
 			     window.west > G_adjust_easting(box.E, &window) ) )
 	{
-	    fprintf (stdout,_("The bounding box of the map outside current region, nothing displayed.\n"));
+	    G_message(_("The bounding box of the map is outside the current region, nothing displayed."));
 	    stat = 0;
 	} else { 
 	    overlap =  G_window_percentage_overlap(&window, box.N, box.S, box.E, box.W);
