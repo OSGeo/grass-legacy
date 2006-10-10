@@ -21,7 +21,6 @@
 #include <grass/G3d.h>
 #include <grass/glocale.h>
 
-/*---------------------------------------------------------------------------*/
 /*- prototypes --------------------------------------------------------------*/
 
 static void fatalError (char *errorMsg);       /*Simple Error message */
@@ -39,9 +38,6 @@ static FILE * openAscii (char *asciiFile, G3D_Region *region); /*open the g3d as
 /*This function does all the work, it reads the values from the g3d ascii-file and put 
 it into an g3d-map*/
 static void asciiToG3d (FILE *fp, G3D_Region *region, int convertNull, double nullValue);
-
-
-
 
 
 /*---------------------------------------------------------------------------*/
@@ -78,15 +74,11 @@ setParams ()
   param.input->key = "input";
   param.input->type = TYPE_STRING;
   param.input->required = YES;
+  param.input->key_desc = "name";
+  param.input->gisprompt = "old_file,file,input";
   param.input->description = _("Ascii raster file to be imported");
 
-  param.output = G_define_option();
-  param.output->key = "output";
-  param.output->type = TYPE_STRING;
-  param.output->required = YES;
-  param.output->multiple = NO ;
-  param.output->gisprompt = _("any,grid3,3d raster");
-  param.output->description = _("Name for G3d raster map");
+  param.output = G_define_standard_option(G_OPT_R3_OUTPUT);
 
   param.nv = G_define_option();
   param.nv->key = "nv";
@@ -235,13 +227,14 @@ main  (int argc, char *argv[])
   G_gisinit(argv[0]);
   module = G_define_module();
   module->keywords = _("raster3d, voxel");
-    module->description =
-   _("Convert a 3D ASCII raster text file into a (binary) 3D raster map layer ");
+  module->description =
+     _("Convert a 3D ASCII raster text file into a (binary) 3D raster map layer");
 
   setParams ();
   G3d_setStandard3dInputParams ();
 
-  if (G_parser (argc, argv)) exit(1);
+  if (G_parser (argc, argv))
+	exit(EXIT_FAILURE);
 
   getParams (&input, &output, &convertNull, &nullValue);
   if (! G3d_getStandard3dParams (&useTypeDefault, &type, 
@@ -249,7 +242,7 @@ main  (int argc, char *argv[])
 				 &useRleDefault, &doRle, 
 				 &usePrecisionDefault, &precision, 
 				 &useDimensionDefault, &tileX, &tileY, &tileZ))
-    fatalError ("main: error getting standard parameters");
+	fatalError ("main: error getting standard parameters");
 
   fp = openAscii (input, &region);
   
@@ -267,11 +260,8 @@ main  (int argc, char *argv[])
     fatalError ("main: error closing new g3d file");
     
   map = NULL;
-  if (fclose (fp)) fatalError ("main: error closing ascii file");
+  if (fclose (fp))
+	fatalError ("main: error closing ascii file");
 
-  return 0;
+  return EXIT_SUCCESS;
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

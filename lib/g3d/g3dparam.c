@@ -1,5 +1,6 @@
 #include <string.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "G3d_intern.h"
 
 /*----------------------------------------------------------------------------*/
@@ -48,8 +49,9 @@ G3d_setStandard3dInputParams()
   param->type->required = NO;
   param->type->multiple = NO;
   param->type->answer = "default";
-  param->type->description = "Data type used in the output file";
   param->type->options = "default,double,float";
+  param->type->description =
+	_("Data type used in the output file");
 
   param->precision = G_define_option();
   param->precision->key = "precision";
@@ -58,7 +60,7 @@ G3d_setStandard3dInputParams()
   param->precision->multiple = NO;
   param->precision->answer = "default";
   param->precision->description = 
-    "Precision used in the output file (default, max, or 0 to 52)";
+	_("Precision used in the output file (default, max, or 0 to 52)");
 
   param->compression = G_define_option();
   param->compression->key = "compression";
@@ -66,25 +68,28 @@ G3d_setStandard3dInputParams()
   param->compression->required = NO;
   param->compression->multiple = NO;
   param->compression->answer = "default";
-  param->compression->description = 
-    "The compression method used in the output file";
   param->compression->options = "default,rle,none";
+  param->compression->description = 
+	_("The compression method used in the output file");
 
   param->dimension = G_define_option();
   param->dimension->key = "tiledimension";
   param->dimension->type = TYPE_STRING;
   param->dimension->required = NO;
   param->dimension->multiple = NO;
+  param->dimension->key_desc = "XxYxZ";
   param->dimension->answer = "default";
   param->dimension->description = 
-    "The dimension of the tiles used in the output file";
+	_("The dimensions of the tiles used in the output file");
 }
 
 /*----------------------------------------------------------------------------*/
 
-int
-G3d_getStandard3dParams  (int *useTypeDefault, int *type, int *useLzwDefault, int *doLzw, int *useRleDefault, int *doRle, int *usePrecisionDefault, int *precision, int *useDimensionDefault, int *tileX, int *tileY, int *tileZ)
-
+int G3d_getStandard3dParams(int *useTypeDefault, int *type, int *useLzwDefault,
+			int *doLzw, int *useRleDefault, int *doRle,
+			int *usePrecisionDefault, int *precision,
+			int *useDimensionDefault, int *tileX, int *tileY,
+			int *tileZ)
 {
   int doCompress;
 
@@ -110,7 +115,7 @@ G3d_getStandard3dParams  (int *useTypeDefault, int *type, int *useLzwDefault, in
     else
       if ((sscanf (param->precision->answer, "%d", precision) != 1) ||
 	  (*precision < 0)) {
-	G3d_error ("G3d_getStandard3dParams: precision value invalid");
+	G3d_error(_("G3d_getStandard3dParams: precision value invalid"));
 	return 0;
       }
   } else
@@ -138,7 +143,7 @@ G3d_getStandard3dParams  (int *useTypeDefault, int *type, int *useLzwDefault, in
   if (strcmp (param->dimension->answer, "default") != 0) {
     if (sscanf (param->dimension->answer, "%dx%dx%d", 
 		tileX, tileY, tileZ) != 3) {
-      G3d_error ("G3d_getStandard3dParams: tile dimension value invalid");
+      G3d_error(_("G3d_getStandard3dParams: tile dimension value invalid"));
       return 0;
     }
   } else
@@ -163,7 +168,7 @@ G3d_setWindowParams()
   windowParam->required = NO;
   windowParam->multiple = NO;
   windowParam->answer = NULL;
-  windowParam->description = "Window replacing the default.";
+  windowParam->description = _("Window replacing the default");
 }
 
 /*----------------------------------------------------------------------------*/
