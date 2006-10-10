@@ -21,6 +21,7 @@ static const struct menu
 	{c_quart1, w_quart1, "quart1",    "first quartile"},
 	{c_quart3, w_quart3, "quart3",    "third quartile"},
 	{c_perc90, w_perc90, "perc90",    "ninetieth percentile"},
+	{c_sum,    w_sum,    "sum",       "sum of values"},
 	{NULL,     NULL,        NULL}
 };
 
