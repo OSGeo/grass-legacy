@@ -80,6 +80,8 @@
 %token DATE
 %token ORDER BY
 %token IS
+%token ASC
+%token DESC
 
 %{
  
@@ -280,8 +282,14 @@ y_column:
 		NAME				{$$ = sqpNewColumnNode (  $1 );}
 	;
 
-y_order:
-		NAME 				{ sqpOrderColumn( $1 ); }
+y_order: y_order_asc | y_order_desc;
+
+y_order_asc:
+		NAME 				{ sqpOrderColumn( $1, SORT_ASC ); }
+	|	NAME ASC 			{ sqpOrderColumn( $1, SORT_ASC ); }
+	;
+y_order_desc:
+		NAME DESC			{ sqpOrderColumn( $1, SORT_DESC ); }
 	;
 %%
 

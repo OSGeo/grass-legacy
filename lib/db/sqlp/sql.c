@@ -190,10 +190,11 @@ void sqpAssignment( char *col, char *strval, int intval, double dblval, SQLPNODE
     return;
 }
 
-void sqpOrderColumn( char *col )
+void sqpOrderColumn( char *col, int dir )
 {
     sqlpStmt->orderCol = (char *) realloc (sqlpStmt->orderCol, strlen(col)+1);
     strcpy ( sqlpStmt->orderCol, col );
+    sqlpStmt->orderDir = dir;
     return;
 }
 

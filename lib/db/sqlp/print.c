@@ -158,8 +158,15 @@ int sqpPrintStmt(SQLPSTMT *st)
 	print_node ( sqlpStmt->upperNodeptr, 0 );
     }
 
-    if ( sqlpStmt->command == SQLP_SELECT )
-        fprintf( stderr, "ORDER BY: %s\n", sqlpStmt->orderCol );
+
+    if ( sqlpStmt->command == SQLP_SELECT ) {
+       if ( sqlpStmt->orderDir ) {
+         fprintf( stderr, "ORDER BY: %s %s\n", sqlpStmt->orderCol, sqlpStmt->orderDir );
+       } else {
+         fprintf( stderr, "ORDER BY: %s\n", sqlpStmt->orderCol );
+       } 
+    }
+
     
     fprintf( stderr, "***************************************\n" );
 

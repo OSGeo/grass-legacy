@@ -57,6 +57,11 @@
 #define SQLP_NODE_VALUE      2
 #define SQLP_NODE_EXPRESSION 3
 
+/* Order direction */
+#define SORT_ASC  1
+#define SORT_DESC 2
+
+
 typedef struct
 {
     int    type; /* SQLP_S, SQLP_I, SQLP_D, SQLP_NULL, SQL_EXPR */
@@ -94,6 +99,7 @@ typedef struct
     int	      nVal;
     SQLPNODE  *upperNodeptr;
     char      *orderCol;  /* column name which should be used for sorting (ORDER BY) or NULL (no sorting) */
+    int       orderDir;   /* direction of ordering (ASC or DESC) */   
 } SQLPSTMT;
 
 int	my_yyinput(char *buf, int max_size);
@@ -120,7 +126,7 @@ void sqpColumn( char *column );
 void sqpColumnDef( char *column, int type, int width, int decimals );
 void sqpValue( char *strval, int intval, double dblval, int type );
 void sqpAssignment( char *column, char *strval, int intval, double dblval, SQLPNODE *expr, int type );
-void sqpOrderColumn( char *col );
+void sqpOrderColumn( char *col , int dir);
 int sqpOperatorCode( char *);
 char *sqpOperatorName( int );
 

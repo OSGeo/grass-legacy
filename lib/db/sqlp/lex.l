@@ -71,6 +71,8 @@
 [Nn][Oo][Tt]			{ return NOT; }
 [Oo][Rr][Dd][Ee][Rr]		{ return ORDER; }
 [Bb][Yy]			{ return BY; }
+[Aa][Ss][Cc]			{ return ASC; }
+[Dd][Ee][Ss][Cc]		{ return DESC; }
 [Ii][Ss]			{ return IS; }
 [Ll][Ii][Kk][Ee]		{
 				  yylval.strval = (char*)strdup("~");

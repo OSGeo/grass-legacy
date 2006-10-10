@@ -437,7 +437,7 @@ int set_val(int tab, int row, int col, SQLPVALUE * val)
 /* Comparison of 2 rows */
 static int cur_cmp_table;
 static int cur_cmp_ocol;
-static int cmp_row ( const void *pa, const void *pb ) 
+static int cmp_row_asc ( const void *pa, const void *pb ) 
 {
     int *row1 = (int*) pa;
     int *row2 = (int*) pb;
@@ -470,6 +470,13 @@ static int cmp_row ( const void *pa, const void *pb )
 	    break;
     }
     return 0;
+}
+
+static int cmp_row_desc ( const void *pa, const void *pb ) 
+{
+   
+   return -cmp_row_asc (pa, pb);
+
 }
 
 /* Select records, sets 'selset' to new array of items and returns
@@ -563,7 +570,14 @@ int sel(SQLPSTMT * st, int tab, int **selset)
 	}
 
 	cur_cmp_table = tab;
-	qsort(set, nset, sizeof(int), cmp_row);
+	if  (st->orderDir == SORT_DESC ) 
+	{
+	  qsort(set, nset, sizeof(int), cmp_row_desc);
+	} else {
+	  qsort(set, nset, sizeof(int), cmp_row_asc);
+	}
+
+	
     }
     
     *selset = set;
