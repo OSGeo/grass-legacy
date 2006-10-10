@@ -252,7 +252,7 @@ int
 Vect_cidx_find_next ( struct Map_info *Map, int field_index, int cat, int type_mask,
                                   int start_index, int *type, int *id )
 {
-    int    *catp, cat_index, tmp_cat_index;
+    int    *catp, cat_index;
     struct Cat_index *ci;
 
     G_debug (3, "Vect_cidx_find_next() cat = %d, type_mask = %d, start_index = %d", cat, type_mask, start_index);
@@ -293,7 +293,7 @@ Vect_cidx_find_next ( struct Map_info *Map, int field_index, int cat, int type_m
     
     do {
         G_debug (3, "  cat_index = %d", cat_index);
-	if ( ci->cat[cat_index][1] & type_mask ) {
+	if ( ci->cat[cat_index][0] == cat && ci->cat[cat_index][1] & type_mask ) {
 	    *type = ci->cat[cat_index][1];
 	    *id = ci->cat[cat_index][2];
             G_debug (3, "  type match -> record found");
@@ -304,6 +304,47 @@ Vect_cidx_find_next ( struct Map_info *Map, int field_index, int cat, int type_m
     
     return -1;
 }
+
+
+/*!
+ 
+ \fn  void Vect_cidx_find_all ( struct Map_info *Map, int layer, int type_mask, int cat, struct ilist *lines )
+ \brief find all line/area id's for given category
+ \param Map
+ \param layer
+ \param type_mask type of objects to search for
+ \param cat category
+ \param lines array of ids of found lines/points */
+
+void Vect_cidx_find_all ( struct Map_info *Map, int layer, int type_mask, int cat, struct ilist *lines )
+{
+      int type, line;
+      struct Cat_index *ci;
+
+      Vect_reset_list ( lines );
+      int field_index = Vect_cidx_get_field_index ( Map, layer );
+      ci = &(Map->plus.cidx[field_index]);
+
+      int idx = Vect_cidx_find_next ( Map, field_index, cat,
+                                  type_mask, 0, &type, &line );
+
+      if ( idx == -1 ) 
+       {
+        return;
+       }
+
+      do {
+          if ( !(ci->cat[idx][1] & type_mask)
+               ||  ci->cat[idx][0]  != cat )
+          {
+               break;
+           }
+           Vect_list_append ( lines, ci->cat[idx][2] );
+           idx++;
+       } while (   idx < ci->n_cats );
+       return;
+}
+
 
 #define SEP "------------------------------------------------------------------------------------------\n"
 

@@ -113,6 +113,7 @@ int Vect_cidx_get_type_count_by_index ( struct Map_info *, int, int, int *, int 
 int Vect_cidx_get_type_count ( struct Map_info *, int, int);
 int Vect_cidx_get_cat_by_index ( struct Map_info *, int, int, int *, int *, int *);
 int Vect_cidx_find_next ( struct Map_info *, int, int, int, int, int *, int *);
+void Vect_cidx_find_all ( struct Map_info *, int, int, int, struct ilist * );
 int Vect_cidx_dump ( struct Map_info *, FILE *);
 int Vect_cidx_save ( struct Map_info *);
 int Vect_cidx_open ( struct Map_info *, int);
