@@ -22,7 +22,7 @@
 #define MINLEVEL 0
 
 
-static int verbose; /* current verbosity level */
+static int verbose = -1; /* current verbosity level */
 
 
 /*!
@@ -39,14 +39,14 @@ int G_verbose (void)
     char *verstr; /* string for GRASS_VERBOSE content */
 
     /* verbose not defined -> get it from env. */ 
-    if ( !verbose ) {
+    if ( verbose < 0 ) {
 
         if ( (verstr = getenv ( "GRASS_VERBOSE" )) ) {
             if (verbose = atoi ( verstr ))
                 ;
         }
         else
-            verbose = MINLEVEL;
+            verbose = MAXLEVEL;
     }
     return verbose;
 }
