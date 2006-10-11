@@ -82,7 +82,6 @@ SUBDIRS = \
 	r.sun \
 	r.sunmask \
 	r.support \
-	r.support.null \
 	r.support.stats \
 	r.surf.area \
 	r.surf.contour \
