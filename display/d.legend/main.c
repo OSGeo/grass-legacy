@@ -298,8 +298,8 @@ int main( int argc, char **argv )
 		    sscanf(opt7->answers[3], "%lf", &X1);
 		}
 		else {	/* default */
-		    Y1 = 88;
-		    Y0 = 12;
+		    Y1 = 12;
+		    Y0 = 88;
 		    X0 = 3;
 		    X1 = 7;
 		}
