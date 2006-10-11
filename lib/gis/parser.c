@@ -1502,6 +1502,7 @@ static void G_usage_html (void)
 
 static void generate_tcl(FILE *fp)
 {
+	int new_prompt = uses_new_gisprompt();
 	char *type;
 	int optn;
 
@@ -1571,6 +1572,18 @@ static void generate_tcl(FILE *fp)
 		}
 	}
    
+	if (new_prompt)
+	{
+		fprintf(fp, "add_xflag %d {\n", optn);
+		fprintf(fp, " name {overwrite}\n");
+		fprintf(fp, " desc {Force overwrite of output files}\n");
+		fprintf(fp, " answer %d\n", overwrite);
+		fprintf(fp, " label {Overwrite}\n");
+		fprintf(fp, " guisection {}\n");
+		fprintf(fp, "}\n");
+		optn++;
+	}
+
 	fprintf(fp, "end_dialog %d\n", optn - 1);
 }
 
