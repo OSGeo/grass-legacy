@@ -209,9 +209,7 @@ asciiToG3d  (FILE *fp, G3D_Region *region, int convertNull, double nullValue)
 
 /*---------------------------------------------------------------------------*/
 
-int
-main  (int argc, char *argv[])
-
+int main  (int argc, char *argv[])
 {
   char *input, *output;
   int convertNull;
@@ -221,6 +219,7 @@ main  (int argc, char *argv[])
   G3D_Region region;
   FILE *fp;
   struct GModule *module;
+  struct History history;
 
   map = NULL;
 
@@ -245,7 +244,7 @@ main  (int argc, char *argv[])
 	fatalError ("main: error getting standard parameters");
 
   fp = openAscii (input, &region);
-  
+
   /*Open the new G3D map*/
   map = G3d_openNewParam (output, G3D_DOUBLE, G3D_USE_CACHE_XY,
 			  &region,
@@ -258,7 +257,13 @@ main  (int argc, char *argv[])
 
   if (! G3d_closeCell (map)) 
     fatalError ("main: error closing new g3d file");
-    
+
+  /* write input name to map history */
+  G3d_readHistory(output, G_mapset(), &history);
+  strncpy(history.datsrc_1, input, RECORD_LEN);
+  history.datsrc_1[RECORD_LEN-1] = '\0'; /* strncpy() doesn't null terminate if maxfill */
+  G3d_writeHistory(output, &history);
+
   map = NULL;
   if (fclose (fp))
 	fatalError ("main: error closing ascii file");

@@ -92,9 +92,8 @@ void set_params()
     param.res = G_define_flag();
     param.res->key = 'r';
     param.res->description =
-	_
-	("Use the same resolution as the input G3D map for the 2d output maps, independently from the current region settings.");
-
+	_("Use the same resolution as the input G3D map for the 2d output "
+	  "maps, independent of the current region settings");
 }
 
 /* ************************************************************************* */
@@ -126,7 +125,7 @@ void g3d_to_raster(void *map, G3D_Region region, int *fd)
     pos = 0;
     /*Every Rastermap */
     for (z = 0; z < depths; z++) {	/*From the bottom to the top */
-	G_debug(3, _("Writing raster map %i\n"), z + 1);
+	G_debug(2, "Writing raster map %d of %d", z + 1, depths);
 	for (y = 0; y < rows; y++) {
 	    G_percent(y, rows - 1, 10);
 
@@ -160,7 +159,7 @@ void g3d_to_raster(void *map, G3D_Region region, int *fd)
 			       _("Could not write raster row"));
 	    }
 	}
-	G_debug(3, _("\nDone\n"));
+	G_debug(2, "Finished writing map %d.", z+1);
 	pos++;
     }
 
@@ -203,6 +202,7 @@ int main(int argc, char *argv[])
     G3D_Region region;
     struct Cell_head region2d;
     struct GModule *module;
+    struct History history;
     void *map = NULL;		/*The 3D Rastermap */
     int i = 0, changemask = 0;
     int *fd = NULL, output_type, cols, rows;
@@ -264,8 +264,8 @@ int main(int argc, char *argv[])
 
 	/*If not equal, set the 3D window correct */
 	if (rows != region.rows || cols != region.cols) {
-	    G_message
-		(_("The 2d and 3d region settings are different. I will use the 2d window settings to adjust the 2d part of the 3d region."));
+	    G_message(_("The 2d and 3d region settings are different. "
+	      "Using the 2D window settings to adjust the 2D part of the 3D region."));
 	    G_get_set_window(&region2d);
 	    region.ns_res = region2d.ns_res;
 	    region.ew_res = region2d.ew_res;
@@ -293,22 +293,22 @@ int main(int argc, char *argv[])
     fd = (int *)G_malloc(region.depths * sizeof(int));
 
     if (fd == NULL)
-	fatal_error(map, NULL, 0, _("out of memory!"));
+	fatal_error(map, NULL, 0, _("Out of memory!"));
 
     if (G_legal_filename(param.output->answer) < 0)
 	fatal_error(map, NULL, 0, _("Illegal output file name"));
 
-    G_message(_("Creating %i raster maps\n"), region.depths);
+    G_message(_("Creating %i raster maps"), region.depths);
 
     /*Loop over all output maps! open */
     for (i = 0; i < region.depths; i++) {
 	/*Create the outputmaps */
 	G_asprintf(&RasterFileName, "%s_%i", param.output->answer, i + 1);
-	G_message(_("Raster map %i Filename: %s\n"), i + 1, RasterFileName);
+	G_message(_("Raster map %i Filename: %s"), i + 1, RasterFileName);
 
 	if (G_find_cell2(RasterFileName, ""))
-	    G_message(_
-		      ("Raster map %i Filename: %s already exists. Will be overwritten!\n"),
+	    G_message(
+	      _("Raster map %d Filename: %s already exists. Will be overwritten!"),
 		      i + 1, RasterFileName);
 
 	if (output_type == G3D_FLOAT)
@@ -333,8 +333,28 @@ int main(int argc, char *argv[])
     g3d_to_raster(map, region, fd);
 
     /*Loop over all output maps! close */
-    for (i = 0; i < region.depths; i++)
+    for (i = 0; i < region.depths; i++) {
 	close_output_map(fd[i]);
+
+	/* write history */
+	G_asprintf(&RasterFileName, "%s_%i", param.output->answer, i + 1);
+	G_debug(4, "Raster map %d Filename: %s", i + 1, RasterFileName);
+	G_short_history(RasterFileName, "raster", &history);
+
+	strncpy(history.datsrc_1, param.input->answer, RECORD_LEN);
+	history.datsrc_1[RECORD_LEN-1] = '\0'; /* strncpy() doesn't null terminate if maxfill */
+
+        sprintf(history.edhist[0], "Level %d of %d", i+1, region.depths);
+        sprintf(history.edhist[1], "Level z-range: %f to %f", 
+	   region.bottom + (i*region.tb_res), region.bottom + (i+1*region.tb_res) );
+        sprintf(history.edhist[3], "3D input map full z-range: %f to %f",
+	   region.bottom, region.top);
+        sprintf(history.edhist[4], "3D input map z-resolution: %f", region.tb_res);
+        history.edlinecnt = 5;
+
+	G_command_history(&history);
+	G_write_history(RasterFileName, &history);
+    }
 
     /*We set the Mask off, if it was off before */
     if (param.mask->answer) {
