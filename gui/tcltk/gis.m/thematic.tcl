@@ -82,9 +82,9 @@ proc GmThematic::create { tree parent } {
     set opt($count,1,math) 0 
     set opt($count,1,psmap) "" 
     set opt($count,1,border) 1 
-    set opt($count,1,titlefont) introfont 
-    set opt($count,1,subtitlefont) bolddefault
-    set opt($count,1,labelfont) default 
+    set opt($count,1,titlefont) "{times} 14 bold" 
+    set opt($count,1,subtitlefont) "{times} 12 bold"
+    set opt($count,1,labelfont) "{times} 12" 
     set opt($count,1,tfontcolor) \#000000  
     set opt($count,1,lfontcolor) \#000000  
     set opt($count,1,mod) 1
