@@ -51,7 +51,7 @@ proc GmCtext::create { tree parent } {
     set opt($count,text) "" 
     set opt($count,xcoord) 100
     set opt($count,ycoord) 100
-    set opt($count,font) default
+    set opt($count,font) "times 12" 
     set opt($count,fill) \#000000 
     set opt($count,width)  100
     set opt($count,anchor) "center_left" 
@@ -133,7 +133,7 @@ proc GmCtext::options { id frm } {
     Label $row.a -text [G_msg "     coordinate type for text placement"] 
     ComboBox $row.b -padx 2 -width 10 -textvariable GmCtext::opt($id,coordinates) \
                     -values {"pixels" "percent" "geographic" } 
-    checkbutton $row.c -text [G_msg "place with mouse] \
+    checkbutton $row.c -text [G_msg "place with mouse"] \
     	-variable GmCtext::opt($id,mouseset) \
     	-command "GmCtext::mouseset $id"
     pack $row.a $row.b $row.c -side left
