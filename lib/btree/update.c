@@ -8,7 +8,8 @@ int btree_update (BTREE *B,
     char *key,int keylen,
     char *data,int datalen)
 {
-    register int p,q;
+    int p = 0;
+    int q;
     int N;
     int (*cmp)();
     int dir;
