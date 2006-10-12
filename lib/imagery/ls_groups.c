@@ -9,6 +9,7 @@
 
 static char *tempfile = NULL;
 
+
 int I_list_groups (int full)
 {
     char *element;
@@ -37,15 +38,15 @@ int I_list_groups (int full)
     G__file_name (buf+strlen(buf), element, "", G_mapset());
     strcat (buf, ";ls");
     if (!full) strcat (buf, " -C");
-    if(ls = popen (buf, "r"))
+    if ((ls = popen (buf, "r")))
     {
-	while (G_getl(buf, sizeof buf, ls))
+	while (G_getl(buf, sizeof(buf), ls))
 	{
 	    any=1;
 	    fprintf (temp, "%s", buf);
 	    if (full)
 	    {
-		I_get_group_title (buf, title, sizeof title);
+		I_get_group_title (buf, title, sizeof(title));
 		if (*title)
 		    fprintf (temp, " (%s)", title);
 		fprintf (temp, "\n");
@@ -93,7 +94,7 @@ int I_list_subgroups (char *group,int full)
 
     temp = fopen (tempfile, "w");
     if (temp == NULL)
-	G_fatal_error ("can't open any temp files");
+	G_fatal_error ("Unable to open any temporary file");
     fprintf (temp, "Available subgroups in group %s\n", group);
     fprintf (temp, "---------------------------------\n");
 
@@ -102,9 +103,9 @@ int I_list_subgroups (char *group,int full)
     G__file_name (buf+strlen(buf), element, "", G_mapset());
     strcat (buf, ";ls");
     if (!full) strcat (buf, " -C");
-    if(ls = popen (buf, "r"))
+    if ((ls = popen (buf, "r")))
     {
-	while (G_getl(buf, sizeof buf, ls))
+	while (G_getl(buf, sizeof(buf), ls))
 	{
 	    any=1;
 	    fprintf (temp, "%s\n", buf);

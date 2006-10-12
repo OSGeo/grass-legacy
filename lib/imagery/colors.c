@@ -139,7 +139,7 @@ static unsigned char *read_color (
 
     G_debug(2, "read_color(%s: %s in %s)", file, name, mapset);
 
-    if(table = get_colors (group, file, name, mapset, min, max))
+    if ((table = get_colors (group, file, name, mapset, min, max)))
 	return table;
 
     I_get_histogram (name, mapset, &histo);
