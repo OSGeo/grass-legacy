@@ -21,7 +21,7 @@ int btree_next (BTREE *B,char **key,char **data)
     if (B->cur < 0)           /* thread. stop here */
 	B->cur = -(B->cur) ;
     else                       /* go all the way left */
-	while (q = B->node[B->cur].left)
+	while ((q = B->node[B->cur].left))
 	    B->cur = q;
 
     *key  = B->node[B->cur].key ;
