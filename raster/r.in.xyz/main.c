@@ -146,13 +146,13 @@ int main(int argc, char *argv[])
     percent_opt->options = "1-100";
     percent_opt->description = _("Percent of map to keep in memory");
 
-    shell_style = G_define_flag();
-    shell_style->key = 'g';
-    shell_style->description = _("Print the input data extent in shell script style");
-
     scan_flag = G_define_flag();
     scan_flag->key = 's';
     scan_flag->description = _("Scan data file for extent then exit");
+
+    shell_style = G_define_flag();
+    shell_style->key = 'g';
+    shell_style->description = _("In scan mode, print using shell script style");
 
 
     if (G_parser(argc,argv))
