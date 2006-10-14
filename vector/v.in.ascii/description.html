@@ -10,16 +10,6 @@ binary format. The module may import two formats:
     x,y,z coordinates and category values.
 </DL>
 
-<P> 
-The input is read from a file specified by <B>input</B> option or from standard input.
-<P>
-Field separator may be a character, the word 'tab' (or '\t') for tab,
-or 'space' (or '&nbsp;') for blank.
-<P>
-In special cases of data import, such as the import of large points map from LIDAR, it will
-be desired to disable topology support (GRASS vector level 1). This can be done by setting
-the <em>-b</em> flag. Only very few vector modules support points data processing at
-vector level 1, usually topology is required (vector level 2).
 
 <P>
 The <em><a HREF="v.out.ascii.html">v.out.ascii</a></em> GRASS module 
@@ -33,7 +23,27 @@ machines.
 
 <h2>NOTES</h2>
 
+ 
+The input is read from the file specified by the <B>input</B> option or
+from standard input.
+
+<P>
+Field separator may be a character, the word 'tab' (or '\t') for tab,
+or 'space' (or '&nbsp;') for blank.
+
+<P>
 Use the <b>-z</b> flag to convert ASCII data into a 3D binary vector map.
+
+<P>
+In special cases of data import, such as the import of large LIDAR datasets
+(millions of data points), it may be necessary to disable topology support
+(creating a GRASS vector level 1 vector map) due to memory constraints.
+This is done with the <b>-b</b> flag. As only very few vector modules
+support points data processing at vector level 1, usually topology is
+required (vector level 2). Therefore it is recommened that the user first
+try to import the data without creating a database (the <b>-t</b> flag)
+or within a subregion (the <b>-r</b> flag) before resorting the to
+disabling of topology.
 
 <P>
 A GRASS ASCII vector file (in <B>standard</B> mode) may contain a mix of 
@@ -64,7 +74,7 @@ The order of coordinates is <BR>
 
 <h3>Import of files without category ID column</h3>
 
-If the input file does not contain any vector ID column,
+If the input file does not contain a vector ID column,
 there is the possibility to auto-generate these IDs (categories). 
 To automatically add an additional column named 'cat', the 
 <b>cat</b> parameter must be set to the virtual column number 0 
@@ -99,8 +109,9 @@ the longitude columns to be defined as varchars(), not as numbers.
 A warning will be issued which can be ignored.
 
 <h3>Importing only selected columns</h3>
-Although v.in.ascii doesn't have an option to specify which columns should be imported, 
-you can use a shell filter to achieve the same effect, e.g.:
+Although <em>v.in.ascii</em> doesn't have an option to specify which columns
+should be imported, you can use a shell filter to achieve the same effect,
+e.g.:
 
 <div class="code"><pre>
 # Print out the column number for each field, supposing the file has a header
@@ -263,13 +274,17 @@ cat $MAPSET/group/$GROUP/POINTS | v.in.ascii out=$GROUP_gcp fs=space skip=3 \
 
 <h2>SEE ALSO</h2>
 
-<em><a HREF="db.execute.html">db.execute</a></em><BR>
-<em><a HREF="v.db.connect.html">v.db.connect</a></em><BR>
-<em><a HREF="v.out.ascii.html">v.out.ascii</a></em><BR>
-<em><a HREF="v.info.html">v.info</a></em><BR>
-<em><a HREF="v.build.html">v.build</a></em><BR>
-<em><a HREF="v.build.polylines.html">v.build.polylines</a></em><BR>
-<em><a HREF="v.clean.html">v.clean</a></em><BR>
+<EM>
+<a HREF="db.execute.html">db.execute</a><BR>
+<a HREF="r.in.ascii.html">r.in.ascii</a><BR>
+<a HREF="r.in.xyz.html">r.in.xyz</a><BR>
+<a HREF="v.db.connect.html">v.db.connect</a><BR>
+<a HREF="v.out.ascii.html">v.out.ascii</a><BR>
+<a HREF="v.info.html">v.info</a><BR>
+<a HREF="v.build.html">v.build</a><BR>
+<a HREF="v.build.polylines.html">v.build.polylines</a><BR>
+<a HREF="v.clean.html">v.clean</a><BR>
+</EM>
 <a HREF="sql.html">SQL command notes</a> for creating databases<BR>
 <a HREF="http://freegis.org/cgi-bin/viewcvs.cgi/~checkout~/grass6/doc/vector/vector.html#ascii">Vector ASCII Format Specification</a>
 

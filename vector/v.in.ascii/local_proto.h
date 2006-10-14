@@ -3,7 +3,7 @@
 
 int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs, int *rowlength,
 		     int *ncolumns, int *minncolumns, int **column_type,
-		     int **column_length, int skip_lines, int xcol, int ycol );
+		     int **column_length, int skip_lines, int xcol, int ycol, int region_flag);
 
 int points_to_bin( FILE *ascii, int rowlen, struct Map_info *Map, dbDriver *driver,
 		   char *table, char *fs, int ncols, int *coltype,
