@@ -41,8 +41,8 @@
 #include <grass/glocale.h>
 
 long newsize, oldsize;
-int process(char *, int, int);
-int doit(char *, int, RASTER_MAP_TYPE, int);
+int process(char *, int);
+int doit(char *, int, RASTER_MAP_TYPE);
 
 int main (int argc, char *argv[])
 {
@@ -51,7 +51,10 @@ int main (int argc, char *argv[])
     char *name;
 	struct GModule *module;
     struct Option *map;
-    struct Flag *uncompress, *quiet;
+    struct Flag *uncompress;
+
+    /* please, remove before GRASS 7 released */
+    struct Flag *q_flag;
 
     G_gisinit (argv[0]);
 
@@ -72,23 +75,31 @@ int main (int argc, char *argv[])
     uncompress->key = 'u';
     uncompress->description = _("Uncompress the map");
 
-    quiet = G_define_flag() ;
-    quiet->key         = 'q' ;
-    quiet->description = _("Run quietly") ;
-
+    /* please, remove before GRASS 7 released */
+    q_flag = G_define_flag() ;
+    q_flag->key         = 'q' ;  
+    q_flag->description = _("Run quietly") ;
 
     if (G_parser(argc,argv))
 	exit(EXIT_FAILURE);
+
+    /* please, remove before GRASS 7 released */
+    if(q_flag->answer) {
+        G_putenv("GRASS_VERBOSE","0");
+        G_warning(_("The '-q' flag is superseded and will be removed "
+            "in future. Please use '--quiet' instead."));
+    }
+
     stat = 0;
     for (n = 0; (name = map->answers[n]); n++)
-	if (process (name, uncompress->answer, quiet->answer))
+	if (process (name, uncompress->answer))
 	    stat = 1;
     exit (stat);
 }
 
 
 int 
-process (char *name, int uncompress, int quiet)
+process (char *name, int uncompress)
 {
     struct Colors colr;
     struct History hist;
@@ -127,7 +138,7 @@ process (char *name, int uncompress, int quiet)
        G_suppress_warnings(0);
     }
 
-    if (doit(name,uncompress, map_type, quiet)) return 1;
+    if (doit(name,uncompress, map_type)) return 1;
 
     if (colr_ok)
     {
@@ -164,7 +175,7 @@ process (char *name, int uncompress, int quiet)
 }
 
 int 
-doit (char *name, int uncompress, RASTER_MAP_TYPE map_type, int quiet)
+doit (char *name, int uncompress, RASTER_MAP_TYPE map_type)
 {
     struct Cell_head cellhd ;
     int new, old, nrows, row;
@@ -225,8 +236,7 @@ doit (char *name, int uncompress, RASTER_MAP_TYPE map_type, int quiet)
     /* the null file is written automatically */
     for (row = 0; row < nrows; row++)
     {
-       if (!quiet)
-           G_percent (row, nrows, 2);
+        G_percent (row, nrows, 2);
        if (G_get_raster_row_nomask (old, rast, row, map_type) < 0)
            break;
        if (G_put_raster_row (new, rast, map_type) < 0)
