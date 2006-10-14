@@ -28,6 +28,9 @@ parse (int argc, char *argv[], struct Parms *parms)
     struct Flag *labels;
     char *name, *mapset;
 
+    /* please, remove before GRASS 7 released */
+    struct Flag *q_flag;
+
     maps = G_define_option();
 
     maps->key = "maps";
@@ -50,8 +53,20 @@ parse (int argc, char *argv[], struct Parms *parms)
     labels -> key = 'l';
     labels->description = _("Include category labels in the output");
 
+    /* please, remove before GRASS 7 released */
+    q_flag = G_define_flag() ;
+    q_flag->key         = 'q' ;  
+    q_flag->description = _("Run quietly") ;
+
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
+
+    /* please, remove before GRASS 7 released */
+    if(q_flag->answer) {
+        G_putenv("GRASS_VERBOSE","0");
+        G_warning(_("The '-q' flag is superseded and will be removed "
+            "in future. Please use '--quiet' instead."));
+    }
 
     name = parms->map1.name = maps->answers[0];
     mapset = parms->map1.mapset = G_find_cell (name, "");
