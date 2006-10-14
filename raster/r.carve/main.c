@@ -119,9 +119,9 @@ int main(int argc, char **argv)
 
     /* please, remove before GRASS 7 released */
     if(q_flag->answer) {
+        G_putenv("GRASS_VERBOSE","0");
         G_warning(_("The '-q' flag is superseded and will be removed "
             "in future. Please use '--quiet' instead."));
-        G_putenv("GRASS_VERBOSE","0");
     }
 
     G_check_input_output_name(parm.inrast->answer, parm.outrast->answer, GR_FATAL_EXIT);
